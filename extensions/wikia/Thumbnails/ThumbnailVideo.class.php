@@ -33,7 +33,7 @@ class ThumbnailVideo extends ThumbnailImage {
 		global $wgWikiaVideoImageHost;
 		parent::__construct( $file, $url, $width, $height, $path, $page );
 
-		// handle videos comming from shared repo (video.wikia.com)
+		// handle videos coming from shared repo (video.wikia.com)
 		if ( !empty( $wgWikiaVideoImageHost ) && ( $file instanceof WikiaForeignDBFile ) ) {
 			// replace with a proper video domain for production
 			$domain = parse_url( $this->url, PHP_URL_HOST );

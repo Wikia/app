@@ -54,48 +54,20 @@ class ThumbnailController extends WikiaController {
 	public function video() {
 		wfProfileIn( __METHOD__ );
 
+		$this->mediaType = 'video';
+
 		$file = $this->getVal( 'file' );
 		$imgSrc = $this->getVal( 'url', '' );
 		$width = $this->getVal( 'width', 0 );
 		$height = $this->getVal( 'height', 0 );
 		$options = $this->getVal( 'options', array() );
 
-		// default value
-		$linkAttribs = [];
-
-		// get id for a tag
-		if ( !empty( $options['id'] ) ) {
-			$linkAttribs['id'] = $options['id'];
-		}
-
-		// let extension override any link attributes
-		if ( isset( $options['linkAttribs'] ) && is_array( $options['linkAttribs'] ) ) {
-			$linkAttribs = array_merge( $linkAttribs, $options['linkAttribs'] );
-		}
-
-		// get class for a tag
-		$linkClasses = [];
-		if ( empty( $options['noLightbox'] ) ) {
-			$linkClasses[] = 'image';
-			$linkClasses[] = 'lightbox';
-		}
-
-		if ( !empty( $linkAttribs['class'] ) ) {
-			if ( !is_array( $linkAttribs['class'] ) ) {
-				$linkAttribs['class'] = explode( ' ', $linkAttribs['class'] );
-			}
-
-			$linkClasses = array_merge( $linkClasses, $linkAttribs['class'] );
-			unset( $linkAttribs['class'] );
-		}
-
-		// hide play button
-		if ( !empty( $options['hidePlayButton'] ) ) {
-			$linkClasses[] = 'hide-play';
-		}
-
 		/** @var Title $title */
 		$title = $file->getTitle();
+
+		$linkClasses = $this->getVideoLinkClasses( $options );
+		$linkAttribs = $this->getVideoLinkAttribs( $file, $options );
+		$imgAttribs  = $this->getVideoImgAttribs( $file, $options );
 
 		// get href for a tag
 		$linkHref = $title->getFullURL();
@@ -105,7 +77,6 @@ class ThumbnailController extends WikiaController {
 			$archive_name = $file->getArchiveName();
 			if ( !empty( $archive_name ) ) {
 				$linkHref .= '?t='.$file->getTimestamp();
-				$linkAttribs['data-timestamp'] = $file->getTimestamp();
 			}
 		}
 
@@ -113,20 +84,9 @@ class ThumbnailController extends WikiaController {
 		$imgClass = empty( $options['imgClass'] ) ? '' : $options['imgClass'];
 
 		// update src for img tag
-		if ( !empty( $options['src'] ) ) {
-			$imgSrc = $options['src'];
-		}
+		$imgSrc = empty( $options['src'] ) ? $imgSrc : $options['src'];
 
 		$lazyLoadImg = empty( $options['noLazyLoad'] ) && ImageLazyLoad::isValidLazyLoadedImage( $imgSrc );
-
-		// get alt for img tag
-		$imgAttribs['alt'] = empty( $options['alt'] ) ? $title->getText() : $options['alt'];
-		$imgAttribs['alt'] = htmlspecialchars( $imgAttribs['alt'] );
-
-		// set data-params for img tag on mobile
-		if ( !empty( $options['dataParams'] ) ) {
-			$imgAttribs['data-params'] = ThumbnailHelper::getDataParams( $file, $imgSrc, $options );
-		}
 
 		// set duration
 		$duration = $file->getMetadataDuration();
@@ -158,8 +118,6 @@ class ThumbnailController extends WikiaController {
 		if ( empty( $options[ 'fluid' ] ) ) {
 			$this->imgWidth = $width;
 			$this->imgHeight = $height;
-		} else {
-			$linkClasses[] = 'fluid';
 		}
 
 		// set link attributes
@@ -180,7 +138,6 @@ class ThumbnailController extends WikiaController {
 		$this->imgClass = $imgClass;
 		$this->imgAttrs = ThumbnailHelper::getAttribs( $imgAttribs );
 
-		$this->mediaType = 'video';
 
 
 		// data-src attribute in case of lazy loading
@@ -208,6 +165,84 @@ class ThumbnailController extends WikiaController {
 		wfProfileOut( __METHOD__ );
 	}
 
+	/**
+	 * Create an array of needed classes for video thumbs anchors.
+	 *
+	 * @param array $options The thumbnail options passed to toHTML.  This method cares about:
+	 *
+	 * - $options['noLightbox']
+	 * - $options['linkAttribs']['class']
+	 * - $options['hidePlayButton']
+	 * - $options[ 'fluid' ]
+	 *
+	 * @return array
+	 */
+	protected function getVideoLinkClasses( array &$options ) {
+		$linkClasses = [];
+		if ( empty( $options['noLightbox'] ) ) {
+			$linkClasses[] = 'image';
+			$linkClasses[] = 'lightbox';
+		}
+
+		// Pull out any classes found in the linkAttribs parameter
+		if ( !empty( $options['linkAttribs']['class'] ) ) {
+			$classes = $options['linkAttribs']['class'];
+
+			// If we got a string, treat it like space separated values and turn it into an array
+			if ( !is_array( $classes ) ) {
+				$classes = explode( ' ', $classes );
+			}
+
+			$linkClasses = array_merge( $linkClasses, $classes );
+			unset( $options['linkAttribs']['class'] );
+		}
+
+		// Hide the play button
+		if ( !empty( $options['hidePlayButton'] ) ) {
+			$linkClasses[] = 'hide-play';
+		}
+
+		// Check for fluid
+		if ( ! empty( $options[ 'fluid' ] ) ) {
+			$linkClasses[] = 'fluid';
+		}
+
+		return array_unique( $linkClasses );
+	}
+
+	protected function getVideoLinkAttribs( File $file, array $options ) {
+		$linkAttribs = [];
+
+		// Get the id parameter for a tag
+		if ( !empty( $options['id'] ) ) {
+			$linkAttribs['id'] = $options['id'];
+		}
+
+		// Let extension override any link attributes
+		if ( isset( $options['linkAttribs'] ) && is_array( $options['linkAttribs'] ) ) {
+			$linkAttribs = array_merge( $linkAttribs, $options['linkAttribs'] );
+		}
+
+		return $linkAttribs;
+	}
+
+	protected function getVideoImgAttribs( File $file, array $options ) {
+		// Get alt for img tag
+		$title = $file->getTitle();
+
+		$alt = empty( $options['alt'] ) ? $title->getText() : $options['alt'];
+		$imgAttribs['alt'] = htmlspecialchars( $alt );
+
+		// set data-params for img tag on mobile
+		if ( !empty( $options['dataParams'] ) ) {
+			$imgSrc = empty( $options['src'] ) ? null : $options['src'];
+
+			$imgAttribs['data-params'] = ThumbnailHelper::getDataParams( $file, $imgSrc, $options );
+		}
+
+		return $imgAttribs;
+	}
+
 	public function imgTag() {
 		$this->response->setData( $this->request->getParams() );
 	}
@@ -216,8 +251,152 @@ class ThumbnailController extends WikiaController {
 	 * @todo Implement image controller
 	 */
 	public function image() {
+		/** @var File $file */
+		$file    = $this->getVal( 'file' );
+		$imgSrc  = $this->getVal( 'url', '' );
+		$width   = $this->getVal( 'width', 0 );
+		$height  = $this->getVal( 'height', 0 );
+		$options = $this->getVal( 'options', array() );
+
 		$this->mediaType = 'image';
+
+		$title = $file->getTitle();
+
+		$linkAttribs = $this->getImageAnchorAttribs($options);
+		$imgAttribs = $this->getImageImgAttribs($options);
+
+		$alt = empty( $options['alt'] ) ? $title->getText() : $options['alt'];
+
+		// Comes from hooks BeforeParserFetchFileAndTitle and only LinkedRevs subscribes
+		// to this and it doesn't seem to be loaded ... ask if used and add logging to see if used
+		$query = empty( $options['desc-query'] )  ? '' : $options['desc-query'];
+
+		if ( !empty( $options['custom-url-link'] ) ) {
+			$linkAttribs = array( 'href' => $options['custom-url-link'] );
+			if ( !empty( $options['title'] ) ) {
+				$linkAttribs['title'] = $options['title'];
+			}
+			if ( !empty( $options['custom-target-link'] ) ) {
+				$linkAttribs['target'] = $options['custom-target-link'];
+			}
+		} elseif ( !empty( $options['custom-title-link'] ) ) {
+			$title = $options['custom-title-link'];
+			$linkAttribs = array(
+				'href' => $title->getLinkURL(),
+				'title' => empty( $options['title'] ) ? $title->getFullText() : $options['title']
+			);
+		} elseif ( !empty( $options['desc-link'] ) ) {
+			$linkAttribs = $this->getDescLinkAttribs( empty( $options['title'] ) ? null : $options['title'], $query );
+		} elseif ( !empty( $options['file-link'] ) ) {
+			$linkAttribs = array( 'href' => $this->file->getURL() );
+		} else {
+			$linkAttribs = false;
+		}
+
+		$attribs = array(
+			'alt' => $alt,
+			'src' => $this->url,
+			'width' => $this->width,
+			'height' => $this->height,
+		);
+		if ( !empty( $options['valign'] ) ) {
+			$attribs['style'] = "vertical-align: {$options['valign']}";
+		}
+		if ( !empty( $options['img-class'] ) ) {
+			$attribs['class'] = $options['img-class'];
+		}
+
+		/**
+		 * Wikia change begin
+		 * @author Federico "Lox" Lucignano <federico@wikia-inc.com>
+		 * @author Liz Lee
+		 */
+		$fileTitle = $this->file->getTitle();
+		if ( $fileTitle instanceof Title ) {
+			$attribs['data-image-name'] = htmlspecialchars($fileTitle->getText());
+			$attribs['data-image-key'] = htmlspecialchars(urlencode($fileTitle->getDBKey()));
+		}
+
+		$html = $this->linkWrap( $linkAttribs, Xml::element( 'img', $attribs ) );
+
+
+
+		// FROM IMAGE TWEAKS
+
+		if (
+			empty( $options['custom-url-link'] ) &&
+			empty( $options['custom-title-link'] ) &&
+			!empty( $options['desc-link'] )
+		) {
+			if ( is_array( $linkAttribs ) ) {
+				if (
+					!empty( $options['custom-title-link'] ) &&
+					$options['custom-title-link'] instanceof Title
+				) {
+					// Caption is set but image is not a "thumb" so the caption gets set as the title attribute
+					$title = $options['custom-title-link'];
+					$linkAttribs['title'] = $title->getFullText();
+				} elseif ( !empty( $options['file-link'] ) && empty( $options['desc-link'] ) ) {
+					$linkAttribs['class'] = empty($linkAttribs['class']) ? ' lightbox' : $linkAttribs['class'] . ' lightbox';
+				}
+
+				//override any previous value if title is passed as an option
+				if ( !empty( $options['title'] ) ) {
+					$linkAttribs['title'] = $options['title'];
+				}
+			}
+
+			$contents = Xml::element( 'img', $imgAttribs );
+
+			$html = ( $linkAttribs ) ? Xml::tags( 'a', $linkAttribs, $contents ) : $contents;
+
+			// END FROM IMAGE TWEAKS
+		}
+
+		// Set output variables here
+		// $this->foo = $foo;
 	}
+
+/////////////// DON'T USE
+
+	/**
+	 * Wrap some XHTML text in an anchor tag with the given attributes
+	 *
+	 * @param $linkAttribs array
+	 * @param $contents string
+	 *
+	 * @return string
+	 */
+	protected function linkWrap( $linkAttribs, $contents ) {
+		if ( $linkAttribs ) {
+			return Xml::tags( 'a', $linkAttribs, $contents );
+		} else {
+			return $contents;
+		}
+	}
+
+	/**
+	 * @param $title string
+	 * @param $params array
+	 * @return array
+	 */
+	public function getDescLinkAttribs( $title = null, $params = '' ) {
+		$query = $this->page ? ( 'page=' . urlencode( $this->page ) ) : '';
+		if( $params ) {
+			$query .= $query ? '&'.$params : $params;
+		}
+		$attribs = array(
+			'href' => $this->file->getTitle()->getLocalURL( $query ),
+			'class' => 'image',
+		);
+		if ( $title ) {
+			$attribs['title'] = $title;
+		}
+		return $attribs;
+	}
+
+///////////////// DON'T USE
+
 
 	/**
 	 * Article figure tags with thumbnails inside

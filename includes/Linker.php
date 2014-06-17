@@ -530,8 +530,7 @@ class Linker {
 	 * @param $widthOption: Used by the parser to remember the user preference thumbnailsize
 	 * @return String: HTML for an image, with links, wrappers, etc.
 	 */
-	public static function makeImageLink2( Title $title, $file, $frameParams = array(),
-		$handlerParams = array(), $time = false, $query = "", $widthOption = null )
+	public static function makeImageLink2( Title $title, $file, $frameParams = array(), $handlerParams = array(), $time = false, $query = "", $widthOption = null )
 	{
 		$res = null;
 		$dummy = new DummyLinker;
@@ -757,8 +756,7 @@ class Linker {
 	 * @param string $query
 	 * @return mixed
 	 */
-	public static function makeThumbLink2( Title $title, $file, $frameParams = array(),
-		$handlerParams = array(), $time = false, $query = "" )
+	public static function makeThumbLink2( Title $title, $file, $frameParams = array(), $handlerParams = array(), $time = false, $query = "" )
 	{
 		global $wgStylePath, $wgContLang;
 		$exists = $file && $file->exists();
@@ -830,7 +828,7 @@ class Linker {
 		$origHTML = null;
 
 		/* Wikia change/refactor start - @author Liz */
-
+// HERE
 		// TODO: Look into making this a separate function
 		if ( !$exists ) {
 			$origHTML = self::makeBrokenImageLinkObj( $title, $fp['title'], '', '', '', $time == true );
