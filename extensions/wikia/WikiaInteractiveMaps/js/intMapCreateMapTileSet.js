@@ -3,7 +3,7 @@ define(
 	[
 		'jquery',
 		'wikia.window',
-		'wikia.intMap.createMap.utils'
+		'wikia.intMap.utils'
 	],
 	function($, w, utils) {
 		'use strict';

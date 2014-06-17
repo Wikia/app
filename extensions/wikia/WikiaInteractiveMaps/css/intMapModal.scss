@@ -1,5 +1,5 @@
 
-.intMapCreateMapModal {
+.intMapModal {
 	.hidden {
 		display: none !important;
 	}
@@ -9,9 +9,17 @@
 		padding-left: 0;
 		padding-right: 0;
 		width: 100%;
-		input {
+
+		input,
+		select,
+		textarea {
 			box-sizing: border-box;
 			width: 100%;
+		}
+
+		textarea {
+			height: 50px;
+			resize: none;
 		}
 	}
 }

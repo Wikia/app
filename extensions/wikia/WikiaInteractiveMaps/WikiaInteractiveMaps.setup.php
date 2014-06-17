@@ -16,8 +16,10 @@ $wgExtensionCredits[ 'specialpage' ][] = [
 ];
 
 // controller classes
-$wgAutoloadClasses[ 'WikiaInteractiveMapsController' ] = $dir . 'WikiaInteractiveMapsController.class.php';
-$wgAutoloadClasses[ 'WikiaInteractiveMapsParserTagController' ] = $dir . 'WikiaInteractiveMapsParserTagController.class.php';
+$wgAutoloadClasses[ 'WikiaInteractiveMapsController' ] = $dir . '/controllers/WikiaInteractiveMapsController.class.php';
+$wgAutoloadClasses[ 'WikiaInteractiveMapsParserTagController' ] = $dir . '/controllers/WikiaInteractiveMapsParserTagController.class.php';
+$wgAutoloadClasses[ 'WikiaInteractiveMapsBaseController' ] = $dir . '/controllers/WikiaInteractiveMapsBaseController.class.php';
+$wgAutoloadClasses[ 'WikiaInteractiveMapsPoiController' ] = $dir . '/controllers/WikiaInteractiveMapsPoiController.class.php';
 
 // helper classes
 $wgAutoloadClasses[ 'WikiaInteractiveMapsHooks' ] = $dir . 'WikiaInteractiveMapsHooks.class.php';
@@ -36,12 +38,17 @@ $wgHooks[ 'SkinAfterBottomScripts' ][] = 'WikiaInteractiveMapsHooks::onSkinAfter
 
 // i18n mapping
 $wgExtensionMessagesFiles[ 'WikiaInteractiveMaps' ] = $dir . 'WikiaInteractiveMaps.i18n.php';
+
 JSMessages::registerPackage( 'WikiaInteractiveMaps', [
 	'wikia-interactive-maps-map-placeholder-error'
 ] );
 
 JSMessages::registerPackage( 'WikiaInteractiveMapsCreateMap', [
 	'wikia-interactive-maps-create-map-*'
+] );
+
+JSMessages::registerPackage( 'WikiaInteractiveMapsEditPOI', [
+	'wikia-interactive-maps-edit-poi-*'
 ] );
 
 JSMessages::registerPackage( 'WikiaInteractiveMapsDeleteMap', [

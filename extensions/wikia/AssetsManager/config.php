@@ -1769,11 +1769,23 @@ $config['bucky_js'] = array(
 );
 
 /* extension/wikia/WikiaInteractiveMaps */
+
+$config['int_map_special_page_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => ['oasis'],
+	'assets' => [
+		'//resources/wikia/libraries/Ponto/ponto.js',
+		'//extensions/wikia/WikiaInteractiveMaps/js/intMapUtils.js',
+		'//extensions/wikia/WikiaInteractiveMaps/js/intMapPontoBridge.js',
+		'//extensions/wikia/WikiaInteractiveMaps/js/WikiaInteractiveMaps.js'
+	]
+];
+
 $config['int_map_create_map_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => ['oasis'],
 	'assets' => [
-		'//extensions/wikia/WikiaInteractiveMaps/js/intMapCreateMapUtils.js',
+		'//extensions/wikia/WikiaInteractiveMaps/js/intMapUtils.js',
 		'//extensions/wikia/WikiaInteractiveMaps/js/intMapCreateMapTileSet.js',
 		'//extensions/wikia/WikiaInteractiveMaps/js/intMapCreateMapPreview.js',
 		'//extensions/wikia/WikiaInteractiveMaps/js/intMapCreateMapPinTypes.js',
@@ -1781,11 +1793,20 @@ $config['int_map_create_map_js'] = [
 	]
 ];
 
+$config['int_map_edit_poi_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => ['oasis'],
+	'assets' => [
+		'//extensions/wikia/WikiaInteractiveMaps/js/intMapEditPOI.js'
+	]
+];
+
 $config['int_map_delete_map_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => ['oasis'],
 	'assets' => [
-		'//extensions/wikia/WikiaInteractiveMaps/js/intMapCreateMapUtils.js',
+		'//extensions/wikia/WikiaInteractiveMaps/js/intMapUtils.js',
 		'//extensions/wikia/WikiaInteractiveMaps/js/intMapDeleteMap.js',
 	]
 ];
+
