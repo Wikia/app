@@ -30,7 +30,7 @@ class WebProcessor {
 	 *
 	 * @param array $context
 	 * @param string $type
-	 * @return int
+	 * @return int amount of context arrays for the current type, including $context
 	 */
 	public function pushContext(array $context, $type=self::RECORD_TYPE_CONTEXT) {
 		if (!isset($this->contextStack[$type])) {
@@ -40,7 +40,7 @@ class WebProcessor {
 		array_unshift($this->contextStack[$type], $context);
 		$this->prepareContext($type);
 
-		return count($this->contextStack);
+		return count($this->contextStack[$type]);
 	}
 
 	/**
@@ -59,11 +59,11 @@ class WebProcessor {
 
 	/**
 	 * @param string $type
-	 * @return mixed
+	 * @return array list of context objects for the given $type
 	 */
 	private function prepareContext($type) {
 		$this->sharedContext[$type] = call_user_func_array('array_merge', array_reverse($this->contextStack[$type]));
-		return $this->sharedContext;
+		return $this->sharedContext[$type];
 	}
 
 } 
