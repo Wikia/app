@@ -141,6 +141,28 @@ abstract class BaseXWikiImage {
 		return $errorNo;
 	}
 
+	protected function loadImageFromPath( $path ) {
+		$sourceImage = null;
+		$imgInfo = getimagesize( $path );
+
+		switch ( $imgInfo['mime'] ) {
+			case 'image/gif':
+				$sourceImage = @imagecreatefromgif( $path );
+				break;
+			case 'image/pjpeg':
+			case 'image/jpeg':
+			case 'image/jpg':
+				$sourceImage = @imagecreatefromjpeg( $path );
+				break;
+			case 'image/x-png':
+			case 'image/png':
+				$sourceImage = @imagecreatefrompng( $path );
+				break;
+		}
+		imagesavealpha( $sourceImage, true );
+		return $sourceImage;
+	}
+
 	private function postProcessImageInternal( $sourceTempFilePath, &$errorNo = UPLOAD_ERR_OK, &$errorMsg = '' ) {
 		$imgInfo = getimagesize( $sourceTempFilePath );
 
@@ -154,27 +176,8 @@ abstract class BaseXWikiImage {
 			return $errorNo;
 		}
 
-		$sourceImage = null;
-
-		switch ( $imgInfo['mime'] ) {
-			case 'image/gif':
-				$sourceImage = @imagecreatefromgif( $sourceTempFilePath );
-				break;
-			case 'image/pjpeg':
-			case 'image/jpeg':
-			case 'image/jpg':
-				$sourceImage = @imagecreatefromjpeg( $sourceTempFilePath );
-				break;
-			case 'image/x-png':
-			case 'image/png':
-				$sourceImage = @imagecreatefrompng( $sourceTempFilePath );
-				break;
-		}
-
 		$targetFilePath = $this->getFullPath();
-
-		$imageOperationsHelper = new ImageOperationsHelper();
-		$imgObject = $imageOperationsHelper->postProcess( $sourceImage, [ 'width' => $imgInfo[0], 'height' => $imgInfo[1] ] );
+		$imgObject = $this->loadImageFromPath( $sourceTempFilePath );
 
 		/**
 		 * save to new file ... but create folder for it first
