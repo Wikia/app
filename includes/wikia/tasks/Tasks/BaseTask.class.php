@@ -247,6 +247,7 @@ abstract class BaseTask {
 	public function getAdminExecuteableMethods() {
 		$ignoredMethods = [
 			'__construct',
+			'getAdminExecuteableMethods',
 			'init',
 		];
 
