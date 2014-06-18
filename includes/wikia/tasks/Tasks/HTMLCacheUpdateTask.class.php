@@ -11,6 +11,15 @@ namespace Wikia\Tasks\Tasks;
 
 class HTMLCacheUpdateTask extends BaseTask {
 	/**
+	 * @return array black list of method names to hide on Special:Tasks
+	 */
+	public function getAdminNonExecuteables() {
+		$blacklist = parent::getAdminNonExecuteables();
+		$blacklist[] = 'purge';
+		return $blacklist;
+	}
+
+	/**
 	 * Purge the cache for backlinking pages (that is, pages containing
 	 * a reference to the Title associated with this task)
 	 *
