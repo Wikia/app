@@ -8,7 +8,7 @@ class GlobalHeaderController extends WikiaController {
 		wfProfileIn( __METHOD__ );
 
 		$this->menuNodes = $this->prepareMenuData( 'shared-Globalnavigation', 3 );
-		$this->menuNodesAB = $this->prepareMenuData( 'shared-global-navigation', 7 );
+		$this->menuNodesAB = $this->prepareMenuData( 'shared-global-navigation-abtest', 7 );
 
 		wfProfileOut( __METHOD__ );
 	}
