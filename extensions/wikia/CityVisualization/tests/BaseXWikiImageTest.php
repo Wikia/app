@@ -3,15 +3,15 @@ include_once dirname( __FILE__ ) . '/../classes/BaseXWikiImage.class.php';
 
 class TmpImageClass extends BaseXWikiImage {
 	protected function getContainerDirectory() {
-		return "/images/c/container/test";
+		return "/images/p/promote/images";
 	}
 
 	protected function getSwiftContainer() {
-		return "container";
+		return "promote";
 	}
 
 	protected function getSwiftPathPrefix() {
-		return "/test";
+		return "/images";
 	}
 }
 
@@ -37,7 +37,7 @@ class BaseXWikiImageTest extends WikiaBaseTest {
 
 	public function testGetFullPath_returnsCorrectValue() {
 		$t = new TmpImageClass("name");
-		$this->assertEquals( $t->getFullPath(), '/images/c/container/test/4/40/name.png' );
+		$this->assertEquals( $t->getFullPath(), '/images/p/promote/images/4/40/name.png' );
 	}
 
 	public function testGetLocalPath_returnsCorrectValue() {
@@ -59,5 +59,16 @@ class BaseXWikiImageTest extends WikiaBaseTest {
 		$fn = self::getFn( $t, 'uploadByUrl' );
 		$srcFile = GlobalFile::newFromText( "Wiki-wordmark.png", 831 );
 		$this->assertEquals( $fn($srcFile->getUrl()), UPLOAD_ERR_OK );
+		// check uploaded file
+		$this->assertEquals( $fn($t->getUrl()), UPLOAD_ERR_OK);
+	}
+
+	public function testUploadByUrl_checksThumbnailAccessibility() {
+		$t = new TmpImageClass("name");
+		$fn = self::getFn( $t, 'uploadByUrl' );
+		$srcFile = GlobalFile::newFromText( "Wiki-wordmark.png", 831 );
+		$this->assertEquals( $fn($srcFile->getUrl()), UPLOAD_ERR_OK );
+		// check uploaded file
+		$this->assertEquals( $fn($t->getThumbnailUrl(10)), UPLOAD_ERR_OK);
 	}
 }
