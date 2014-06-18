@@ -30,7 +30,7 @@ class HTMLCacheUpdateTask extends BaseTask {
 
 		// abort if no pages link to the associated Title
 		if ( $affectedCount == 0 ) {
-			return;
+			return 0;
 		}
 
 		$dbw = wfGetDB( DB_MASTER );
@@ -53,6 +53,8 @@ class HTMLCacheUpdateTask extends BaseTask {
 				\HTMLFileCache::clearFileCache( $title );
 			}
 		}
+
+		return $affectedCount;
 	}
 
 	/**
