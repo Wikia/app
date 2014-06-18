@@ -38,6 +38,35 @@ if ( !isset( $options['limit'] ) ) {
 	exit( "Invalid limit specified. Please specify an integer limit greater than 0.\n" );
 }
 
+// First get the WAM index
+$wamWikis = array();
+$app = F::app();
+$apiOffset = 0;
+$apiLimit = WAMApiController::DEFAULT_PAGE_SIZE;
+echo "Gathering WAM rankings";
+while ( $apiOffset < 5000 ) {
+	echo '.';
+	$wamData = $app->sendRequest( 'WAMApi', 'getWAMIndex', array( 'offset' => $apiOffset ) )->getData();
+
+	if ( empty( $wamData ) || !is_array( $wamData['wam_index'] ) ) {
+		// Unexpected return values -- is something broken?
+		echo "\nWarning: Invalid or missing data returned from WAM API.\n";
+		break;
+	}
+	elseif ( empty( $wamData['wam_index'] ) ) {
+		// Unexpectedly reached end of list
+		echo "\nWarning: Unexpectedly reached end of WAM list (less than 5000 wikis indexed).\n";
+		break;
+	}
+
+	foreach ( $wamData['wam_index'] as $wikiId => $data ) {
+		$wamWikis[$wikiId] = $data['wam_rank'];
+	}
+
+	$apiOffset += $apiLimit;
+}
+
+echo "\n";
 // Get all wiki IDs from the database
 $dbr = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
 
@@ -56,6 +85,11 @@ $affected = 0;
 foreach ( $allWikis as $wiki ) {
 	if ( $forceVisualEditor && isset( $excludedWikis[$wiki->city_id] ) ) {
 		// If the wiki is in the exclusion list, continue
+		echo "Skipping ".$wiki->city_title." because it is in exclusion list.\n";
+		continue;
+	} elseif ( !$forceVisualEditor && isset( $wamWikis[$wiki->city_id] ) ) {
+		// if disabling VE and wiki is in WAM, continue
+		echo "Skipping ".$wiki->city_title." because it is in WAM list.\n";
 		continue;
 	}
 
