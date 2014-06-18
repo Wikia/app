@@ -118,13 +118,6 @@ abstract class BaseTask {
 		return $this->calls[$index];
 	}
 
-	/**
-	 * @return array black list of method names to hide on Special:Tasks
-	 */
-	public function getAdminNonExecuteables() {
-		return ['__construct', 'init'];
-	}
-
 	public function createdBy($createdBy=null) {
 		if ($createdBy !== null) {
 			$this->createdBy = $createdBy;
@@ -244,6 +237,35 @@ abstract class BaseTask {
 	public function taskId($taskId) {
 		$this->taskId = $taskId;
 		return $this;
+	}
+
+	/**
+	 * get a list of all task methods this class can execute via Special:Tasks
+	 *
+	 * @return array
+	 */
+	public function getAdminExecuteableMethods() {
+		$ignoredMethods = [
+			'__construct',
+			'init',
+		];
+
+		$mirror = new \ReflectionClass($this);
+		$mirrorClass = $mirror->getName();
+		$methods = [];
+
+		foreach ($mirror->getMethods(\ReflectionMethod::IS_PUBLIC) as $methodMirror) {
+			$methodClass = $methodMirror->getDeclaringClass();
+			$methodName = $methodMirror->getName();
+
+			if (in_array($methodName, $ignoredMethods) || $methodClass->getName() != $mirrorClass) {
+				continue;
+			}
+
+			$methods[] = $methodName;
+		}
+
+		return $methods;
 	}
 
 	/** @see Loggable::getLoggerContext */

@@ -41,19 +41,10 @@ class TasksModel {
 		/** @var \Wikia\Tasks\Tasks\BaseTask $instance */
 		$instance = new $class();
 		$mirror = new ReflectionClass($class);
-		$mirrorClass = $mirror->getName();
 
 		$methods = [];
-		foreach ($mirror->getMethods(ReflectionMethod::IS_PUBLIC) as $methodMirror) {
-			$methodClass = $methodMirror->getDeclaringClass();
-			$methodName = $methodMirror->getName();
-
-			if ($methodName == 'getAdminNonExecuteables' ||
-				in_array($methodName, $instance->getAdminNonExecuteables()) ||
-				$methodClass->getName() != $mirrorClass) {
-					continue;
-			}
-
+		foreach ($instance->getAdminExecuteableMethods() as $methodName) {
+			$methodMirror = $mirror->getMethod($methodName);
 			$methodDocsRaw = $methodMirror->getDocComment();
 			$paramDocs = [];
 			$methodDoc = "";
