@@ -83,7 +83,7 @@ echo count( $allWikis ) . " wikis found.\n";
 
 $affected = 0;
 foreach ( $allWikis as $wiki ) {
-	if ( $forceVisualEditor && isset( $excludedWikis[$wiki->city_id] ) ) {
+	if ( isset( $excludedWikis[$wiki->city_id] ) ) {
 		// If the wiki is in the exclusion list, continue
 		echo "Skipping ".$wiki->city_title." because it is in exclusion list.\n";
 		continue;
