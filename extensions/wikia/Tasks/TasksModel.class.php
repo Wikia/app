@@ -51,9 +51,10 @@ class TasksModel {
 			$methodClass = $methodMirror->getDeclaringClass();
 			$methodName = $methodMirror->getName();
 
-			if ($methodName == 'getAdminNonExecuteables' ||
-				in_array($methodName, $instance->getAdminNonExecuteables()) ||
+			if (in_array($methodName, $instance->getAdminNonExecuteables()) ||
 				$methodClass->getName() != $mirrorClass) {
+					// if the method is blacklisted or is not declared directly
+					// on the task class, don't list it
 					continue;
 			}
 
