@@ -30,7 +30,10 @@ class VideoService extends WikiaModel {
 				$title = Title::newFromText( str_replace(array('[[',']]'),array('',''),$url), NS_FILE );
 			}
 			if ( !$title || !WikiaFileHelper::isFileTypeVideo($title) ) {
-				list( $file, $title ) = $this->getVideoByUrl( $url );
+				$file = $this->getVideoFileByUrl( $url );
+				if ( $file ) {
+					$title = $file->getTitle();
+				}
 			}
 			if ( $title && WikiaFileHelper::isFileTypeVideo($title) ) {
 				$videoTitle = $title;
@@ -106,14 +109,13 @@ class VideoService extends WikiaModel {
 	}
 
 	/**
-	 * Get Video file and title by given URL
+	 * Get Video file by given URL
 	 * @param string $url
-	 * @return array [File, Title], [null, null] if not found
+	 * @return File|null
 	 */
-	public function getVideoByUrl( $url ) {
+	public function getVideoFileByUrl( $url ) {
 		global $wgContLang;
 
-		$title = null;
 		$file = null;
 
 		$nsFileTranslated = $wgContLang->getNsText( NS_FILE );
@@ -122,21 +124,12 @@ class VideoService extends WikiaModel {
 		$pattern = '/(File:|Video:|' . $nsFileTranslated . ':)(.+)$/';
 		if ( preg_match( $pattern, $url, $matches ) ) {
 			$file = wfFindFile( $matches[2] );
-			if ( !$file ) { // bugID: 26721
+			if ( !$file && preg_match( $pattern, urldecode( $url ), $matches ) ) { // bugID: 26721
 				$file = wfFindFile( urldecode( $matches[2] ) );
 			}
-		} elseif ( preg_match( $pattern, urldecode( $url ), $matches ) ) {
-			$file = wfFindFile( $matches[2] );
-			if ( !$file ) { // bugID: 26721
-				$file = wfFindFile( $matches[2] );
-			}
 		}
 
-		if ( $file ) {
-			$title = $file->getTitle();
-		}
-
-		return [$file, $title];
+		return $file;
 	}
 
 }

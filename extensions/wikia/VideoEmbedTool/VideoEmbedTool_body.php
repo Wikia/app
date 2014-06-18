@@ -119,9 +119,9 @@ class VideoEmbedTool {
 		} else { // if not a supported 3rd party ( non-premium ) video, try to parse link for File:
 			// get the video file
 			$videoService = new VideoService();
-			list( $file, $title ) = $videoService->getVideoByUrl( $url );
+			$file = $videoService->getVideoFileByUrl( $url );
 
-			if ( !$title ) {
+			if ( !$file ) {
 				header( 'X-screen-type: error' );
 				if ( $nonPremiumException ) {
 					if ( empty( F::app()->wg->allowNonPremiumVideos ) ) {
@@ -137,12 +137,6 @@ class VideoEmbedTool {
 
 				wfProfileOut( __METHOD__ );
 				return wfMessage( 'vet-bad-url' )->plain();
-			}
-
-			if ( !$file ) {
-				header( 'X-screen-type: error' );
-				wfProfileOut( __METHOD__ );
-				return wfMessage( 'vet-non-existing' )->plain();
 			}
 
 			// Loading this to deal with video descriptions
