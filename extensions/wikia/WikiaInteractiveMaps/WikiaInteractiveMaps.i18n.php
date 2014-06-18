@@ -147,8 +147,8 @@ $messages[ 'qqq' ] = [
 	'wikia-interactive-maps-edit-poi-description-placeholder' => 'Textarea placeholder for pin description in edit pin modal',
 	'wikia-interactive-maps-edit-poi-error-name' => 'Error message - missing pin name in add pin UI',
 	'wikia-interactive-maps-edit-poi-error-poi-category-id' => 'Error message - pin type not set in add pin UI',
-	'wikia-interactive-maps-embed-map-code-header' => 'Embed Map modal header',
-	'wikia-interactive-maps-embed-map-code-info' => 'Information fo the user to copy code below in order to embed map to personal site',
+	'wikia-interactive-maps-embed-map-code-header' => 'Embed Map modal header - the title of "window" with embed map code',
+	'wikia-interactive-maps-embed-map-code-info' => 'Information for the user to copy code below in order to embed map to personal site',
 	'wikia-interactive-maps-embed-map-code-size-label' => 'Label for embed map size buttons',
 
 
