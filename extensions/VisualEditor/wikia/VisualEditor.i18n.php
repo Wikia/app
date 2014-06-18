@@ -45,6 +45,8 @@ $messages['en'] = array(
 	'wikia-visualeditor-dialog-orientation-headline' => 'Welcome',
 	'wikia-visualeditor-dialog-orientation-text' => 'This page is created, edited and maintained by people just like yourself. Make your first contribution today.',
 	'wikia-visualeditor-dialog-orientation-start-button' => 'Start editing',
+	'wikia-visualeditor-dialog-meta-languages-readonlynote' => 'This is a list of pages in other languages that are linked to this one. For now, it can only be edited in source mode.',
+	'wikia-visualeditor-dialog-transclusion-no-template-description' => 'You are editing the "$1" template.',
 );
 
 /** Message documentation (Message documentation)
@@ -316,6 +318,8 @@ $messages['de'] = array(
 	'wikia-visualeditor-dialog-orientation-headline' => 'Willkommen',
 	'wikia-visualeditor-dialog-orientation-text' => 'Diese Seite wurde von Leuten wie Dir erstellt, bearbeitet und verwaltet. Mach heute gleich Deinen ersten Beitrag!',
 	'wikia-visualeditor-dialog-orientation-start-button' => 'Bearbeitung beginnen',
+	'wikia-visualeditor-dialog-meta-languages-readonlynote' => 'Dies ist eine Liste der Sprachen, in denen diese Seite verfügbar ist. Vorerst kann sie nur im Quelltext-Modus bearbeitet werden.',
+	'wikia-visualeditor-dialog-transclusion-no-template-description' => 'Du bearbeitest die Vorlage „$1“.',
 );
 
 /** Zazaki (Zazaki)
@@ -408,6 +412,8 @@ $messages['es'] = array(
 	'wikia-visualeditor-dialog-orientation-headline' => 'Bienvenida',
 	'wikia-visualeditor-dialog-orientation-text' => 'Esta página es creada, editada y mantenida por personas como tú. Haz tu primera contribución hoy.',
 	'wikia-visualeditor-dialog-orientation-start-button' => 'Comenzar a editar',
+	'wikia-visualeditor-dialog-meta-languages-readonlynote' => 'Esta es una lista de páginas en otros idiomas que estan enlazados a esta. Por ahora, solo puede ser editada en el modo fuente.',
+	'wikia-visualeditor-dialog-transclusion-no-template-description' => 'Estas editando la plantilla "$1".',
 );
 
 /** Persian (فارسی)
@@ -445,6 +451,8 @@ $messages['fi'] = array(
 	'wikia-visualeditor-toolbar-savedialog' => 'Julkaise',
 	'wikia-visualeditor-dialog-wikiasourcemode-apply-button' => 'Hyväksy muutokset',
 	'wikia-visualeditor-dialog-wikiasourcemode-help-link' => 'Help:Wikitext',
+	'wikia-visualeditor-dialog-meta-languages-readonlynote' => 'Tämä on lista tähän sivuun linkitetyistä muiden kielten sivuista. Toistaiseksi sitä voi muokata ainoastaan lähdekooditilassa.',
+	'wikia-visualeditor-dialog-transclusion-no-template-description' => 'Olet muokkaamassa mallinetta "$1".',
 );
 
 /** Faroese (føroyskt)
@@ -520,6 +528,8 @@ $messages['fr'] = array(
 	'wikia-visualeditor-notification-media-permission-denied' => 'Permission refusée',
 	'wikia-visualeditor-notification-video-preview-not-available' => "Désolé, l'aperçu de cette vidéo n'est pas disponible.",
 	'wikia-visualeditor-loading' => 'Chargement de VisualEditor',
+	'wikia-visualeditor-dialog-meta-languages-readonlynote' => 'Ceci est la liste des pages dans d\'autres langues liées à celle-ci. Pour l\'instant, elle ne peut être modifiée qu\'en mode source.',
+	'wikia-visualeditor-dialog-transclusion-no-template-description' => 'Vous modifiez le modèle «$1».',
 );
 
 /** Galician (galego)
@@ -692,12 +702,16 @@ $messages['it'] = array(
 	'wikia-visualeditor-dialog-orientation-headline' => 'Benvenuto',
 	'wikia-visualeditor-dialog-orientation-text' => 'Questa pagina è stata creata, modificata e mantenuta da utenti come te. Fai oggi la tua prima modifica.',
 	'wikia-visualeditor-dialog-orientation-start-button' => 'Inizia a contribuire',
+	'wikia-visualeditor-dialog-meta-languages-readonlynote' => 'Questa è una lista di pagine in altre lingue collegate a questa pagina. Per il momento può essere modificata solo in modalità codice sorgente.',
+	'wikia-visualeditor-dialog-transclusion-no-template-description' => 'Stai modificando il template "$1".',
 );
 
 $messages['ja'] = array(
 	'wikia-visualeditor-dialog-orientation-headline' => 'ようこそ',
 	'wikia-visualeditor-dialog-orientation-text' => 'このページはあなたのような編集者によって作られ、編集され、メンテナンスされています。初めての投稿してみて下さい。',
 	'wikia-visualeditor-dialog-orientation-start-button' => '編集を始める',
+	'wikia-visualeditor-dialog-meta-languages-readonlynote' => 'これはここにリンクされている他の言語がリストされているページです。今後はソースモードでのみ編集することができます。',
+	'wikia-visualeditor-dialog-transclusion-no-template-description' => '「$1」テンプレートを編集中です。',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
@@ -950,6 +964,8 @@ $messages['nl'] = array(
 	'wikia-visualeditor-notification-media-only-premium-videos-allowed' => 'Deze wiki staat alleen gelicenseerde inhoud toe die van <a href="http://video.wikia.com" target="_blank">Wikia Video Library</a> wordt toegevoegd. Ga naar <a href="http://video.wikia.com" target="_blank">video.wikia.com</a> om te zoeken voor video\'s.',
 	'wikia-visualeditor-notification-media-query-failed' => 'We konden helaas geen ondersteunde afbeelding of video vinden op die URL.',
 	'wikia-visualeditor-notification-media-permission-denied' => 'Geen toegang',
+	'wikia-visualeditor-dialog-meta-languages-readonlynote' => 'Dit is een lijst van pagina\'s in andere talen die hieraan gelinkt zijn. Voorlopig kan dit enkel bewerkt worden in bronmodus.',
+	'wikia-visualeditor-dialog-transclusion-no-template-description' => 'Je bent het "$1"-sjabloon aan het bewerken.',
 );
 
 /** Occitan (occitan)
@@ -1017,6 +1033,8 @@ $messages['pl'] = array(
 	'wikia-visualeditor-dialog-orientation-headline' => 'Witaj',
 	'wikia-visualeditor-dialog-orientation-text' => 'Ta strona jest tworzona, edytowana i utrzymywana przez ludzi takich jak Ty. Rozpocznij edytowanie już dziś!',
 	'wikia-visualeditor-dialog-orientation-start-button' => 'Rozpocznij edycję',
+	'wikia-visualeditor-dialog-meta-languages-readonlynote' => 'To jest lista stron w innych językach połączonych z tą. Na chwilę obecną można ją edytować wyłącznie w trybie źródłowym.',
+	'wikia-visualeditor-dialog-transclusion-no-template-description' => 'Edytujesz szablon „$1”.',
 );
 
 /** Pashto (پښتو)
@@ -1046,6 +1064,8 @@ $messages['pt'] = array(
 	'wikia-visualeditor-dialog-orientation-headline' => 'Bem-vindo',
 	'wikia-visualeditor-dialog-orientation-text' => 'Essa página foi criada, editada e mantida por pessoas como você. Faça a sua primeira contribuição hoje.',
 	'wikia-visualeditor-dialog-orientation-start-button' => 'Comece a editar',
+	'wikia-visualeditor-dialog-meta-languages-readonlynote' => 'Esta é uma lista de páginas em outros idiomas que estão interligadas com esta. No momento, ela só pode editada no modo fonte.',
+	'wikia-visualeditor-dialog-transclusion-no-template-description' => 'Você está editando a predefinição "$1".',
 );
 
 /** Brazilian Portuguese (português do Brasil)
@@ -1089,6 +1109,8 @@ $messages['pt-br'] = array(
 	'wikia-visualeditor-dialog-orientation-headline' => 'Bem-vindo',
 	'wikia-visualeditor-dialog-orientation-text' => 'Essa página foi criada, editada e mantida por pessoas como você. Faça a sua primeira contribuição hoje.',
 	'wikia-visualeditor-dialog-orientation-start-button' => 'Comece a editar',
+	'wikia-visualeditor-dialog-meta-languages-readonlynote' => 'Esta é uma lista de páginas em outros idiomas que estão interligadas com esta. No momento, ela só pode editada no modo fonte.',
+	'wikia-visualeditor-dialog-transclusion-no-template-description' => 'Você está editando a predefinição "$1".',
 );
 
 /** Romanian (română)
@@ -1203,6 +1225,8 @@ $messages['ru'] = array(
 	'wikia-visualeditor-dialog-orientation-headline' => 'Добро пожаловать',
 	'wikia-visualeditor-dialog-orientation-text' => 'Эта страница была создана, редактируется и поддерживается такими же участниками, как и вы. Сделайте свою первую правку сегодня.',
 	'wikia-visualeditor-dialog-orientation-start-button' => 'Начать редактирование',
+	'wikia-visualeditor-dialog-meta-languages-readonlynote' => 'Это список страниц на других языках, которые связаны с этой страницей. В данный момент, эти ссылки могут быть отредактированы только в режиме Исходного кода.',
+	'wikia-visualeditor-dialog-transclusion-no-template-description' => 'Вы редактируете шаблон «$1».',
 );
 
 /** Scots (Scots)
@@ -1277,6 +1301,8 @@ $messages['sv'] = array(
 	'wikia-visualeditor-notification-media-permission-denied' => 'Tillstånd nekad',
 	'wikia-visualeditor-notification-video-preview-not-available' => 'Tyvärr, detta videoklipp är inte tillgänglig för förhandsvisning.',
 	'wikia-visualeditor-loading' => 'Läser in VisualEditor...',
+	'wikia-visualeditor-dialog-meta-languages-readonlynote' => 'Detta är en lista med sidor på andra språk som är länkade till denna sida. För stunden kan den redigeras endast i källkodsläge.',
+	'wikia-visualeditor-dialog-transclusion-no-template-description' => 'Du håller på att redigera mallen "$1".',
 );
 
 /** Tamil (தமிழ்)
@@ -1464,6 +1490,8 @@ $messages['zh-hans'] = array(
 	'wikia-visualeditor-dialog-orientation-headline' => '欢迎',
 	'wikia-visualeditor-dialog-orientation-text' => '这个页面是由像您一样的用户创建、编辑和维护的。您也可以立刻作出贡献。',
 	'wikia-visualeditor-dialog-orientation-start-button' => '开始编辑',
+	'wikia-visualeditor-dialog-meta-languages-readonlynote' => '这是拥有其它语言链接的页面列表。当下只能使用源代码进行编辑。',
+	'wikia-visualeditor-dialog-transclusion-no-template-description' => '您正在编辑\"$1\"个模版。',
 );
 
 /** Traditional Chinese (中文（繁體）‎)
