@@ -57,6 +57,3 @@ JSMessages::registerPackage( 'WikiaInteractiveMapsDeleteMap', [
 JSMessages::registerPackage( 'WikiaInteractiveMapsEmbedMapCode', [
 	'wikia-interactive-maps-embed-map-code-*'
 ] );
-
-
-
