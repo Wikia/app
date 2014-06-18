@@ -1,0 +1,56 @@
+/*
+ * Right rail affiliate module
+ */
+@import 'skins/oasis/css/core/color';
+@import 'skins/oasis/css/core/layout';
+
+.WikiaRail .affiliate-module-rail {
+	h1 {
+		display: block;
+		font-size: 20px;
+		margin-bottom: 13px;
+	}
+
+	.affiliate {
+		img.prodimg {
+			width: 70px;
+			height: 70px;
+			border: 1px solid #CCC;
+			padding: 1px;
+			float: left;
+		}
+		.placard {
+			padding-left: 10px;
+			float: left;
+			line-height: 1.4;
+			width: 60%;
+			font-size: 14px;
+		}
+		.vendor {
+			width: 95%;
+			float: left;
+			margin: 10px 0px 0px;
+			padding: 0px 6px 0px 0px;
+			margin-bottom: 35px;
+		}
+		.vendorlogo {
+			float: left;
+			background-image: url(/extensions/wikia/AffiliateModule/images/logo_amazon.png);
+			width: 100px;
+			height: 15px;
+			padding-top: 7px;
+			padding-bottom: 3px;
+		}
+		.vendorsee {
+			float: right;
+			margin: 2px 0px 0px 10px;
+		}
+		.vendorprice {
+			float: right;
+			font-weight: bold;
+			font-size: 14px;
+			margin: 3px 0px 1px;
+		}
+	}
+
+}

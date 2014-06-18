@@ -1774,3 +1774,12 @@ $config['bucky_js'] = array(
 		'//extensions/wikia/Bucky/vendor/BuckyClient/bucky.js',
 	)
 );
+
+/* Affiliate Module */
+$config['affiliate_module_css'] = array(
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => array( 'oasis', 'monobook' ),
+	'assets' => array(
+		'//extensions/wikia/AffiliateModule/styles/AffiliateModule.scss',
+	)
+);
