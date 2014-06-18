@@ -27,15 +27,21 @@ class MigrateToXWiki extends Maintenance {
 		$mdb = wfGetDB( DB_MASTER, [], $wgExternalSharedDB );
 		foreach ($wikis as $wiki) {
 			echo 'Working on ' . $wiki['city_id'] . PHP_EOL;
+
+			if ($wiki['city_id'] != 4541)
+				continue;
+
 			$count++;
 
 			if ($this->insertWikiToXwiki( $wiki, $mdb )) {
-				echo 'Uploading images...' . PHP_EOL;
-				$images = $this->getCityVisualizationImages( $wiki['city_id'] );
-				$this->uploadXwikiImages( $images );
+				echo $wiki['city_id'] . ' inserted to DB' . PHP_EOL;
 			} else {
-				echo 'NOT uploading images...' . PHP_EOL;
+				echo $wiki['city_id'] . ' FAILED at insert to DB' . PHP_EOL;
 			}
+
+			echo 'Uploading images...' . PHP_EOL;
+			$images = $this->getCityVisualizationImages( $wiki['city_id'] );
+			$this->uploadXwikiImages( $images, $wiki['city_id'], $mdb );
 		}
 	}
 
@@ -106,10 +112,74 @@ class MigrateToXWiki extends Maintenance {
 		return $images;
 	}
 
-	private function uploadXwikiImages( $images ) {
+
+	/**
+	 * @param $images
+	 * @param $wiki_id
+	 * @param $db Database
+	 */
+	private function uploadXwikiImages( $images, $wiki_id, $db ) {
 		foreach ($images as $image) {
-			// todo: implement upload
+			$file = GlobalFile::newFromText( $image['image_name'], $image['city_id'] );
+
+			if ($file->exists()) {
+				//$image_name = implode( '.', [$wiki_id, 'TestUPLOAD'] );
+				$image_name = implode( '.', [$wiki_id, time(), uniqid()] );
+
+				echo $image['image_name'] . ' is being uploaded as ' . $image_name . ' ...', PHP_EOL;
+
+
+				$xwiki_file = new PromoXWikiImage($image_name);
+
+				$update = [
+					'city_id' => $image['city_id'],
+					'city_lang_code' => $image['city_lang_code'],
+					'image_type' => (mb_ereg_match( '.*Wikia-Visualization-Main.*', $image['image_name'] ) > 0 ? 0 : 1),
+					'image_index' => $image['image_index'],
+					'image_name' => $image_name,
+					'image_review_status' => $image['image_review_status'],
+					'last_edited' => $image['last_edited'],
+					'review_start' => $image['review_start'],
+					'review_end' => $image['review_end'],
+					'reviewer_id' => $image['reviewer_id'],
+				];
+
+				$uploadResult = $xwiki_file->uploadByUrl( $file->getUrl() );
+				if ($uploadResult == 0) {
+					echo $image_name . ' finished uploading' . PHP_EOL;
+					echo $image_name . ' access url: ' . $xwiki_file->getUrl() . PHP_EOL;
+					$updateResult = $this->insertImageToXwiki( $update, $db );
+					if ($updateResult) {
+						echo $image_name . ' stored in DB' . PHP_EOL;
+					} else {
+						echo $image_name . ' storing in DB failed' . PHP_EOL;
+					}
+				} else {
+					echo $image_name . ' returned error code ' . $uploadResult . PHP_EOL;
+				}
+			} else {
+				echo $image['image_name'] . ' does not exist' . PHP_EOL;
+			}
+
 		}
+	}
+
+	/**
+	 * @param $update
+	 * @param $db Database
+	 */
+	private function insertImageToXwiki( $update, $db ) {
+		$result = true;
+		$oldIgnore = $db->ignoreErrors( false );
+
+		try {
+			$db->insert( 'city_visualization_images_xwiki', $update );
+		} catch (DBQueryError $e) {
+			$result = false;
+		}
+		$db->ignoreErrors( $oldIgnore );
+
+		return $result;
 	}
 }
 

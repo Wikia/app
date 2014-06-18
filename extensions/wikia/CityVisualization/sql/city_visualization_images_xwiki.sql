@@ -9,7 +9,6 @@ CREATE TABLE `city_visualization_images_xwiki` (
   `review_start` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `review_end` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `reviewer_id` int(11) DEFAULT NULL,
-  PRIMARY KEY `city_visualization_images_xwiki_pk` (`city_id`,`city_lang_code`,`image_type`,`image_index`),
   KEY `city_visualization_images_xwiki_ifbk_1` (`city_id`),
   KEY `cvix_image_type` (`image_type`),
   KEY `cvix_image_review_status` (`image_review_status`),
