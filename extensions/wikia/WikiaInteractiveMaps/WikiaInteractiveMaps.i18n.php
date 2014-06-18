@@ -48,6 +48,7 @@ $messages[ 'en' ] = [
 	'wikia-interactive-maps-create-map-add-pin-type' => 'Add Another Pin Type',
 	'wikia-interactive-maps-create-map-delete-pin-type' => 'Delete',
 	'wikia-interactive-maps-create-map-pin-type-name-placeholder' => 'Pin Type Title',
+	'wikia-interactive-maps-create-map-pin-type-select-category' => 'Parent Category',
 	'wikia-interactive-maps-create-map-pin-type-form-error' => 'Please fill all fields',
 
 	'wikia-interactive-maps-edit-poi-header-add-poi' => 'Add Pin Point',
@@ -143,6 +144,7 @@ $messages[ 'qqq' ] = [
 	'wikia-interactive-maps-create-map-add-pin-type' => 'Link for adding new blank input for Pin Type in edit/create Pin types UI',
 	'wikia-interactive-maps-create-map-delete-pin-type' => 'Link title for deleting Pin Type in edit/create Pin types UI',
 	'wikia-interactive-maps-create-map-pin-type-name-placeholder' => 'Input placeholder for pin types title',
+	'wikia-interactive-maps-create-map-pin-type-select-category' => 'Label for no category selected',
 	'wikia-interactive-maps-create-map-pin-type-form-error' => 'An error displayed to a user when pin type form is not valid',
 
 	'wikia-interactive-maps-edit-poi-header-add-poi' => 'Modal header for add pin to map',

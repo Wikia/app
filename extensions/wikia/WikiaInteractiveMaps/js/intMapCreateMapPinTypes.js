@@ -24,6 +24,7 @@ define('wikia.intMap.createMap.pinTypes',
 			pinTypeTemplateData = {
 				delete: $.msg('wikia-interactive-maps-create-map-delete-pin-type'),
 				placeholder: $.msg('wikia-interactive-maps-create-map-pin-type-name-placeholder'),
+				emptyOption: $.msg('wikia-interactive-maps-create-map-pin-type-select-category'),
 				parentPinTypes: []
 			},
 
@@ -159,6 +160,7 @@ define('wikia.intMap.createMap.pinTypes',
 		function savePinTypes() {
 			sendPinTypes(validate(utils.serializeForm($form)));
 		}
+
 		/**
 		 * @desc validates pin types
 		 * @param {object} serializedForm - object with serialized form

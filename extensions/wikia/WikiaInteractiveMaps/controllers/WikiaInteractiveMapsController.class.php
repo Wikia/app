@@ -509,18 +509,18 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 		$mapId = $this->getCreationData( 'mapId' );
 		$pinTypesNames = $this->getCreationData( 'pinTypeNames' );
 		$pinTypesParents = $this->getCreationData( 'pinTypeParents' );
-		$pinTypesNamesLength = count($pinTypesNames);
-		//TODO
-		$defaultParent = 1;
+		$pinTypesNamesLength = count( $pinTypesNames );
 
 		$createdPinTypes = 0;
 		$logEntries = [];
 		for ( $i = 0; $i < $pinTypesNamesLength; $i++ ) {
-			$pinTypeParent = (!empty($pinTypesParents[$i])) ? $pinTypesParents[$i] : $defaultParent;
+			$pinTypeParent = ( !empty( $pinTypesParents[ $i ] ) ) ?
+				(int) $pinTypesParents[ $i ] :
+				$this->mapsModel->getDefaultParentPoiCategory();
 
 			$response = $this->mapsModel->savePinType( [
 				'map_id' => $mapId,
-				'name' => $pinTypesNames[$i],
+				'name' => $pinTypesNames[ $i ],
 				'parent_poi_category_id' => $pinTypeParent,
 				'created_by' => $this->getCreationData( 'createdBy' ),
 			] );
@@ -529,7 +529,7 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 				$logEntries[] = WikiaMapsLogger::newLogEntry(
 					WikiaMapsLogger::ACTION_CREATE_PIN_TYPE,
 					$mapId,
-					$pinTypesNames[$i],
+					$pinTypesNames[ $i ],
 					[ $response->id ]
 				);
 				$createdPinTypes++;
@@ -556,7 +556,7 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 		if( $createdPinTypes !== $requestedCreations ) {
 			$response[ 'success' ] = false;
 			$response[ 'content' ] = new stdClass();
-			$response[ 'message' ] = wfMessage(
+			$response[ 'content' ]->message = wfMessage(
 				'wikia-interactive-maps-create-pin-types-error',
 				$createdPinTypes,
 				$requestedCreations

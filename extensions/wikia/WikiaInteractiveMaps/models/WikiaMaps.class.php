@@ -411,6 +411,19 @@ class WikiaMaps {
 	}
 
 	/**
+	 * Returns default parent_poi_category_id from config or 0
+	 *
+	 * @return integer
+	 */
+	public function getDefaultParentPoiCategory() {
+		if( isset( $this->config[ 'default-parent-poi-category-id' ] ) ) {
+			return $this->config[ 'default-parent-poi-category-id' ];
+		}
+
+		return 0;
+	}
+
+	/**
 	 * Returns results array with success and content elements
 	 *
 	 * @param MWHttpRequest $response
