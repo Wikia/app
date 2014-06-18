@@ -37,5 +37,12 @@ $wgAutoloadClasses['WikiListConditionerForCollection'] = $dir.'classes/WikiListC
 $wgAutoloadClasses['PromoImage'] = $dir.'/classes/PromoImage.class.php';
 
 //classes
+$classDir = $dir . '/classes';
+$wgAutoloadClasses['PromoImage'] = $classDir.'/PromoImage.class.php';
+$wgAutoloadClasses['BaseXWikiImage'] = $classDir.'/BaseXWikiImage.class.php';
+$wgAutoloadClasses['PromoXWikiImage'] = $classDir.'/PromoXWikiImage.class.php';
+
 $wgAutoloadClasses['WikiaHomePageHelper'] =  $dir.'/helpers/WikiaHomePageHelper.class.php';
 $wgAutoloadClasses['CityVisualization'] =  $dir.'/models/CityVisualization.class.php';
+
+

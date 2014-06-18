@@ -1,5 +1,5 @@
 <?php
-include_once dirname( __FILE__ ) . '/../classes/BaseXWikiImage.class.php';
+//include_once dirname( __FILE__ ) . '/../classes/BaseXWikiImage.class.php';
 
 class TmpImageClass extends BaseXWikiImage {
 	protected function getContainerDirectory() {
