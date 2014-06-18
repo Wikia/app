@@ -22,7 +22,7 @@ class HTMLCacheUpdateTask extends BaseTask {
 		$affectedTitles = $this->getAffectedTitles( (array)$tables );
 		$affectedCount  = count( $affectedTitles );
 
-		\Wikia\Logger\WikiaLogger::instance()->info( "Purge Request", [
+		$this->info( "Purge Request", [
 			'title' => $this->title->getPrefixedText(),
 			'count' => $affectedCount,
 			'tables' => $tables,
@@ -34,20 +34,13 @@ class HTMLCacheUpdateTask extends BaseTask {
 		}
 
 		$dbw = wfGetDB( DB_MASTER );
-		$dbw->update( 'page',
-			array(
-				'page_touched' => $dbw->timestamp(),
-			),
-			array(
-				'page_id' => array_map(
-					function($t) {
-						return $t->getArticleID();
-					},
-					$affectedTitles
-				),
-			),
-			__METHOD__
-		);
+		( new \WikiaSQL() )
+			->UPDATE( 'page' )
+			->SET( 'page_touched', $dbw->timestamp() )
+			->WHERE( 'page_id' )->IN( array_map(function($t) {
+				return $t->getArticleID();
+			}, $affectedTitles) )
+			->run( $dbw );
 
 		// Update squid/varnish
 		if ( $wgUseSquid ) {
