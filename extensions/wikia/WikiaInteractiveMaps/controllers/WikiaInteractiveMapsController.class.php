@@ -90,7 +90,7 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 
 		$urlParams = [];
 		if ( !is_null( $selectedSort ) ) {
-			$urlParams['sort'] = $selectedSort;
+			$urlParams[ 'sort' ] = $selectedSort;
 		}
 
 		$url = $this->getContext()->getTitle()->getFullURL( $urlParams );
