@@ -47,6 +47,7 @@ define('ext.wikia.adEngine.adConfigLate', [
 			US: true
 		},
 		dartBtfSlots = {
+			INCONTENT_BOXAD_1: true,
 			LEFT_SKYSCRAPER_3: true,
 			PREFOOTER_LEFT_BOXAD: true,
 			PREFOOTER_RIGHT_BOXAD: true
