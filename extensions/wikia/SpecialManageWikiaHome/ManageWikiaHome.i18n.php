@@ -254,6 +254,11 @@ $messages['ar'] = array(
 	'manage-wikia-home-wikis-in-slots-heading' => 'إعداد فتحات',
 	'manage-wikia-home-wikis-in-slots-total' => 'العدد الكلي للفتحات: $1',
 	'manage-wikia-home-visualization-wikis' => 'شركات ويكي مصورة:',
+	'manage-wikia-home-hubs-slot' => 'خانة $1',
+	'manage-wikia-home-hubs-slot-name' => 'اسم النادي',
+	'manage-wikia-home-hubs-slot-description' => 'وصف النادي',
+	'manage-wikia-home-hubs-slot-more-links' => 'روابط "المزيد في..."',
+	'manage-wikia-home-hubs-slot-empty-option' => '-- خانة فارغة --',
 	'manage-wikia-home-wikis-in-slots-success' => 'تغيرت أرقام الفتحات.',
 	'manage-wikia-home-collections-success' => 'تم حفظ المجموعات.',
 	'manage-wikia-home-collections-add-success' => 'تم إضافة ويكي بنجاح إلى المجموعة.',
@@ -271,6 +276,7 @@ $messages['ar'] = array(
 	'manage-wikia-home-wiki-name-filter' => 'ابدأ بكتابة اسم ويكي وستصبح القائمة أقصر:',
 	'manage-wikia-home-wiki-filter' => 'مرشّح',
 	'manage-wikia-home-wiki-filter-reset' => 'إزالة',
+	'manage-wikia-home-wiki-list-download' => 'تنزيل القائمة الكاملة',
 	'manage-wikia-home-wiki-list-id' => 'معرف',
 	'manage-wikia-home-wiki-list-vertical' => 'رأسي',
 	'manage-wikia-home-wiki-list-headline' => 'اسم الويكي',
@@ -517,6 +523,7 @@ $messages['ca'] = array(
  */
 $messages['ce'] = array(
 	'manage-wikia-home-hubs-slot' => 'Слот $1',
+	'manage-wikia-home-hubs-slot-name' => 'Хабан цӀе',
 	'manage-wikia-home-wiki-list-blocked' => 'Блоктоьхна',
 );
 
@@ -1000,6 +1007,15 @@ $messages['id'] = array(
 	'manage-wikia-home-collection-add-file-button' => 'Tambahkan foto',
 );
 
+/** Italian (italiano)
+ * @author PeppeAeco
+ */
+$messages['it'] = array(
+	'manage-wikia-home-hubs-slot' => 'Slot $1',
+	'manage-wikia-home-hubs-slot-empty-option' => '-- Slot vuoto --',
+	'manage-wikia-home-stats-failure' => 'I dati non sono stati salvati. Si prega di correggere errori e riprovare.',
+);
+
 /** Japanese (日本語)
  * @author Dude1717
  */
@@ -1049,6 +1065,7 @@ $messages['lb'] = array(
 	'manage-wikia-home-hubs-slot-more-links' => '"Méi op..." Linken',
 	'manage-wikia-home-hubs-slot-empty-option' => '-- Eidele Slot --',
 	'manage-wikia-home-change-button' => 'Änneren',
+	'manage-wikia-home-wiki-filter' => 'Filter',
 	'manage-wikia-home-wiki-filter-reset' => 'Eidel maachen',
 	'manage-wikia-home-wiki-list-blocked-no' => 'Neen',
 	'manage-wikia-home-wiki-list-blocked-yes' => 'Jo',
@@ -1344,6 +1361,7 @@ $messages['oc'] = array(
  * @author Pan Cube
  * @author Pio387
  * @author Sovq
+ * @author Vengir
  */
 $messages['pl'] = array(
 	'managewikiahome' => 'Zarządzenie Wikia Home',
@@ -1373,6 +1391,8 @@ $messages['pl'] = array(
 	'manage-wikia-home-wiki-name-filter' => 'Zacznij wpisywać nazwę wiki a lista się skróci',
 	'manage-wikia-home-wiki-filter' => 'Filtr',
 	'manage-wikia-home-wiki-filter-reset' => 'Wyczyść',
+	'manage-wikia-home-wiki-list-download' => 'Pobierz pełną listę',
+	'manage-wikia-home-wiki-list-download-tooltip' => 'Wartości oddzielone przecinkami (plik CSV) z kodowaniem UTF-8.',
 	'manage-wikia-home-wiki-list-id' => 'ID',
 	'manage-wikia-home-wiki-list-vertical' => 'Vertical',
 	'manage-wikia-home-wiki-list-headline' => 'Nazwa wiki',
@@ -1833,6 +1853,7 @@ $messages['tr'] = array(
 
 /** Ukrainian (українська)
  * @author Andriykopanytsia
+ * @author Ua2004
  */
 $messages['uk'] = array(
 	'managewikiahome' => 'Управління Будинком Вікія',
@@ -1864,6 +1885,8 @@ $messages['uk'] = array(
 	'manage-wikia-home-wiki-name-filter' => 'Почніть вводити назву вікі і список стане коротшим:',
 	'manage-wikia-home-wiki-filter' => 'Фільтр',
 	'manage-wikia-home-wiki-filter-reset' => 'Очистити',
+	'manage-wikia-home-wiki-list-download' => 'Завантажити повний список',
+	'manage-wikia-home-wiki-list-download-tooltip' => 'CSV-файл із кодуванням UTF-8.',
 	'manage-wikia-home-wiki-list-id' => 'ID',
 	'manage-wikia-home-wiki-list-vertical' => 'Вертикаль',
 	'manage-wikia-home-wiki-list-headline' => 'Назва вікі',
@@ -1955,6 +1978,7 @@ $messages['zh-hans'] = array(
 	'manage-wikia-home-wikis-in-visualization-heading' => '已实现可视化的维基列表',
 	'manage-wikia-home-wiki-filter' => '过滤器',
 	'manage-wikia-home-wiki-filter-reset' => '清除',
+	'manage-wikia-home-wiki-list-download' => '下载完整列表',
 	'manage-wikia-home-wiki-list-id' => '身份',
 	'manage-wikia-home-wiki-list-vertical' => '垂直',
 	'manage-wikia-home-wiki-list-headline' => '维基名字',
@@ -1992,6 +2016,8 @@ $messages['zh-hans'] = array(
 	'manage-wikia-home-stats-header' => '公司的主页面统计',
 	'manage-wikia-home-stats-visitors-label' => '每月访客',
 	'manage-wikia-home-stats-mobile-percentage-label' => '% 移动端访客',
+	'manage-wikia-home-stats-edits-default-label' => '更改今天备选',
+	'manage-wikia-home-stats-total-pages-label' => '总页面备选',
 	'manage-wikia-home-stats-success' => '统计更新成功！',
 	'manage-wikia-home-stats-failure' => '数据未保存。请更正表单中的错误并重试。',
 );

@@ -464,6 +464,16 @@ $messages['kn'] = array(
 	'file-page-tab-metadata' => 'ಮೇಲ್ದರ್ಜೆ ಮಾಹಿತಿ',
 );
 
+/** Korean (한국어)
+ * @author 관인생략
+ * @author 아라
+ */
+$messages['ko'] = array(
+	'video-page-default-description-header-and-text' => '==설명==
+여기에 설명을 입력하세요.',
+	'file-page-more-links' => '전체 목록 보기',
+);
+
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */

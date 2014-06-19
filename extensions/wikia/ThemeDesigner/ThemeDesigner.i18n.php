@@ -163,6 +163,7 @@ $messages['af'] = array(
 /** Arabic (العربية)
  * @author Achraf94
  * @author Claw eg
+ * @author Kuwaity26
  * @author Meno25
  * @author OsamaK
  */
@@ -195,7 +196,7 @@ $messages['ar'] = array(
 	'themedesigner-tab-wordmark' => 'الشعار',
 	'themedesigner-preview-mode' => 'وضع المعاينة...',
 	'themedesigner-previous-versions' => 'النسخ السابقة',
-	'themedesigner-button-save-im-done' => 'إحفظ، لقد إنتهيت',
+	'themedesigner-button-save-im-done' => 'حفظ',
 	'themedesigner-button-cancel' => 'إلغاء',
 	'themedesigner-pick-a-color' => 'اختيار لون',
 	'themedesigner-enter-your-own' => 'أدخل الخاصة بك',

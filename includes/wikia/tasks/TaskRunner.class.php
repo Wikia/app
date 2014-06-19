@@ -21,13 +21,20 @@ class TaskRunner {
 
 		$taskList = json_decode($taskList, true);
 		foreach ($taskList as $taskData) {
-			/** @var \Wikia\Tasks\Tasks\BaseTask $task */
-			$task = new $taskData['class']();
-			$task->taskId($taskId);
-			$task->createdBy($createdBy);
-			$task->unserialize($taskData['context'], $taskData['calls']);
-
 			try {
+				if (!class_exists($taskData['class'])) {
+					\Wikia\Logger\WikiaLogger::instance()->error('Error running task: Class does not exist', [
+						'class' => $taskData['class'],
+						'task_id' => $taskId,
+					]);
+					throw new InvalidArgumentException("Class {$taskData['class']} not found");
+				}
+
+				/** @var \Wikia\Tasks\Tasks\BaseTask $task */
+				$task = new $taskData['class']();
+				$task->taskId($taskId);
+				$task->createdBy($createdBy);
+				$task->unserialize($taskData['context'], $taskData['calls']);
 				$task->init();
 			} catch (Exception $e) {
 				$this->exception = $e;
@@ -99,7 +106,7 @@ class TaskRunner {
 			'CreatePdfThumbnailsJob',
 //		'CreateWikiLocalJob',
 			'ImageReviewTask',
-			'PromoteImageReviewTask',
+//			'PromoteImageReviewTask',
 			'UserRollback',
 //			'UserRename',
 		]);

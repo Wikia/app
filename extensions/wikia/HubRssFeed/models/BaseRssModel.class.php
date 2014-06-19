@@ -219,6 +219,10 @@ abstract class BaseRssModel extends WikiaService {
 		return $wikisData;
 	}
 
+	protected function getWikiService(){
+		return new WikiService();
+	}
+
 	protected function getArticleDetail( $wikiId, $articleId ) {
 		$res = ApiService::foreignCall( WikiFactory::IDtoDB( $wikiId ),[ 'ids' => $articleId ],  self::ENDPOINT_DETAILS );
 		if ( !$res ) {
@@ -227,15 +231,15 @@ abstract class BaseRssModel extends WikiaService {
 
 		$article = $res[ 'items' ][ $articleId ];
 		if ( !$article[ 'thumbnail' ] ) {
-			$ws = new WikiService();
-			$article[ 'thumbnail' ] = $ws->getWikiWordmark( $wikiId );
+			$wikiService = $this->getWikiService();
+			$article[ 'thumbnail' ] = $wikiService->getWikiWordmark( $wikiId );
 		} else {
 			$article[ 'thumbnail' ] = ImagesService::getFileUrlFromThumbUrl( $article[ 'thumbnail' ] );
 		}
 		return [ 'img' => [
 			'url' => $article[ 'thumbnail' ],
 			'width' => $article[ 'original_dimensions' ][ 'width' ] < self::MIN_IMAGE_SIZE ? self::MIN_IMAGE_SIZE : $article[ 'original_dimensions' ][ 'width' ],
-			'height' => $article[ 'original_dimensions' ][ 'height' ] < self::MIN_IMAGE_SIZE ? self::MIN_IMAGE_SIZE : $article[ 'original_dimensions' ][ 'width' ]
+			'height' => $article[ 'original_dimensions' ][ 'height' ] < self::MIN_IMAGE_SIZE ? self::MIN_IMAGE_SIZE : $article[ 'original_dimensions' ][ 'height' ]
 		],
 			'title' => $article[ 'title' ]
 		];
