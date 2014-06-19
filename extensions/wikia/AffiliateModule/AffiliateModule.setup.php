@@ -22,18 +22,15 @@ $wgExtensionCredits['affiliatemodule'][] = [
 
 $dir = dirname( __FILE__ ) . '/';
 
-/**
- * controllers
- */
+// controllers
 $wgAutoloadClasses['AffiliateModuleController'] =  $dir . 'AffiliateModuleController.class.php';
 
-/**
- * hooks
- */
+// classes
+$wgAutoloadClasses['AffiliateModuleHelper'] = $dir . 'AffiliateModuleHelper.class.php';
 $wgAutoloadClasses['AffiliateModuleHooks'] =  $dir . 'AffiliateModuleHooks.class.php';
+
+// hooks
 $wgHooks['GetRailModuleList'][] = 'AffiliateModuleHooks::onGetRailModuleList';
 
-/**
- * messages
- */
+// i18n mapping
 $wgExtensionMessagesFiles['AffiliateModule'] = $dir . 'AffiliateModule.i18n.php';

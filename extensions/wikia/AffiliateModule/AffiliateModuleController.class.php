@@ -6,7 +6,8 @@ class AffiliateModuleController extends WikiaController {
 
 	/**
 	 * AffiliateModule
-	 * Returns products to populate the Affiliate Module.
+	 * Returns products to populate the affiliate module.
+	 * @requestParam string option [rail/bottom/bottomAds]
 	 * @responseParam string title
 	 * @responseParam array products - list of products
 	 */
@@ -41,9 +42,25 @@ class AffiliateModuleController extends WikiaController {
 		$this->title = wfMessage( 'affiliate-module-title' )->escaped();
 		$this->products = $products;
 		$this->buttonLabel = wfMessage( 'affiliate-module-button-label' )->plain();
-		$this->className = ( $this->request->getVal( 'position' ) == 'rail' ) ? 'module' : '';
+		$this->className = ( $this->request->getVal( 'option' ) == 'rail' ) ? 'module' : '';
 
 		wfProfileOut( __METHOD__ );
+	}
+
+	/**
+	 * Show affiliate module at the bottom of the page
+	 */
+	public function showModule() {
+		if ( AffiliateModuleHelper::canShowModule( 'bottomAds' ) ) {
+			$this->wg->HideBottomAds = true;
+		}
+
+		if ( !AffiliateModuleHelper::canShowModule() && empty( $this->wg->HideBottomAds ) ) {
+			$this->skipRendering();
+			return true;
+		}
+
+		$this->forward( 'AffiliateModule', 'index' );
 	}
 
 }

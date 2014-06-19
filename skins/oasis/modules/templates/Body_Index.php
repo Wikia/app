@@ -122,15 +122,17 @@
 				<?php } ?>
 
 				<?php
-					if (!empty($wg->EnableAffiliateModuleExt)) {
-						echo $app->renderView( 'AffiliateModule', 'index' );
+					if ( !empty( $wg->EnableAffiliateModuleExt ) ) {
+						echo $app->renderView( 'AffiliateModule', 'showModule' );
 					}
 				?>
 
+				<?php if ( empty( $wg->HideBottomAds ) ) { ?>
 				<div id="WikiaArticleBottomAd" class="noprint">
 					<?= $app->renderView('Ad', 'Index', ['slotName' => 'PREFOOTER_LEFT_BOXAD']) ?>
 					<?= $app->renderView('Ad', 'Index', ['slotName' => 'PREFOOTER_RIGHT_BOXAD']) ?>
 				</div>
+				<?php } ?>
 			</div>
 		</article><!-- WikiaMainContent -->
 
