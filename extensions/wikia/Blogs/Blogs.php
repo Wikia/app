@@ -152,8 +152,3 @@ $wgHooks['FilePageImageUsageSingleLink'][] = 'BlogsHelper::onFilePageImageUsageS
 include( __DIR__ . "/BlogTemplate.php");
 include( __DIR__ . "/BlogArticle.php");
 include( __DIR__ . "/BlogLockdown.php");
-
-/**
- * add task
- */
-$wgAutoloadClasses['Wikia\\Blogs\\BlogTask'] = __DIR__.'/BlogTask.class.php';
