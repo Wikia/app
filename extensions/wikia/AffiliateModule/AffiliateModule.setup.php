@@ -4,7 +4,7 @@
  * Affiliate Module
  *
  * @author James Ogura
- * @author John Limmordino
+ * @author John Immordino
  * @author Saipetch Kongkatong
  * @author Ted Gill
  */
@@ -13,7 +13,7 @@ $wgExtensionCredits['affiliatemodule'][] = [
 	'name' => 'AffiliateModule',
 	'author' => [
 		'James Ogura',
-		'John Limmordino',
+		'John Immordino',
 		'Saipetch Kongkatong',
 		'Ted Gill',
 	],
