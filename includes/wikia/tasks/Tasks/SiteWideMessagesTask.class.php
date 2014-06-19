@@ -113,8 +113,6 @@ class SiteWideMessagesTask extends BaseTask {
 	}
 
 	/**
-	 * sendMessageToGroup
-	 *
 	 * sends a message to specified group of users
 	 *
 	 * @access private
@@ -128,22 +126,16 @@ class SiteWideMessagesTask extends BaseTask {
 		global $wgExternalSharedDB;
 
 		$DB = wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB);
-		$this->info('Step 1 of 3: get list of all active wikis');
+		$this->info('get list of all active wikis');
 
-		$dbResult = $DB->Query (
-			'SELECT city_id, city_dbname'
-			. ' FROM city_list'
-			. ' WHERE city_public = 1'
-			. ' AND city_useshared = 1'
-			. ';'
-			, __METHOD__
-		);
-
-		$wikisDB = array();
-		while ($row = $DB->FetchObject($dbResult)) {
-			$wikisDB[$row->city_id] = $row->city_dbname;
-		}
-		$DB->FreeResult($dbResult);
+		$wikisDB = (new \WikiaSQL())
+			->SELECT('city_id', 'city_dbname')
+			->FROM('city_list')
+			->WHERE('city_public')->EQUAL_TO(1)
+				->AND_('city_useshared')->EQUAL_TO(1)
+			->runLoop($DB, function(&$result, $row) {
+				$result[$row->city_id] = $row->city_dbname;
+			});
 
 		$result = $this->sendMessageHelperToGroup($wikisDB, $params);
 
@@ -176,7 +168,7 @@ class SiteWideMessagesTask extends BaseTask {
 					'user_name' => $userName,
 				]);
 			} else {
-				$sqlValues[] = "(0, $userId, {$params['messageId']}, " . MSG_STATUS_UNSEEN . ')';
+				$sqlValues[] = [0, $userId, $params['messageId'], MSG_STATUS_UNSEEN];
 			}
 		}
 
@@ -203,12 +195,9 @@ class SiteWideMessagesTask extends BaseTask {
 	 * @return boolean: result of sending
 	 */
 	private function sendMessageToListOfWikis( $params ) {
-		global $wgExternalSharedDB;
 		$result = true;
 		$sqlValues = array();
 		$wikisDB = array();
-
-		$dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
 
 		$this->info( 'Get Wiki IDs for the supplied wikis', [
 			'wikis' => count( $params['wikiNames'] ),
@@ -216,7 +205,8 @@ class SiteWideMessagesTask extends BaseTask {
 
 		foreach ( $params['wikiNames'] as $wikiName ) {
 			$wikiID = null;
-			$wikiDomains = array( '', '.wikia.com', '.sjc.wikia-inc.com' );
+			$wikiDomains = [ '', '.wikia.com', '.sjc.wikia-inc.com' ];
+
 			foreach( $wikiDomains as $wikiDomain ) {
 				if( !is_null( $wikiID = \WikiFactory::DomainToID( $wikiName . $wikiDomain ) ) ) {
 					break;
@@ -240,17 +230,10 @@ class SiteWideMessagesTask extends BaseTask {
 
 			case 'ANONS':
 				foreach ( $wikisDB as $mWikiId => $mWikiDB ) {
-					$sqlValues[] = array(
-						'msg_wiki_id' => $mWikiId,
-						'msg_recipient_id' => 0,
-						'msg_id' => $params['messageId'],
-						'msg_status' => MSG_STATUS_UNSEEN
-					);
+					$sqlValues[] = [$mWikiId, 0, $params['messageId'], MSG_STATUS_UNSEEN];
 				}
-				$result = (boolean)$dbw->insert(
-					MSG_STATUS_DB,
-					$sqlValues
-				);
+
+				$result = $this->sendMessageHelperToUsers($sqlValues);
 				break;
 
 			case 'EDITCOUNT':
@@ -277,27 +260,25 @@ class SiteWideMessagesTask extends BaseTask {
 		global $wgExternalSharedDB;
 		$result = true;
 		$sqlValues = array();
-		$where = array();
-		$wikisDB = array();
 
 		$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
-		$dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
+
+		$sql = (new \WikiaSQL())
+			->SELECT('city_id', 'city_dbname')
+			->FROM('city_list')
+			->WHERE('city_public')->EQUAL_TO(1);
 
 		switch ( $params['wcOption'] ) {
 			case 'after':
-				$where[] = "city_created > {$dbr->addQuotes( $params['wcStartDate'] )}";
+				$sql->AND_('city_created')->GREATER_THAN($params['wcStartDate']);
 				break;
-
 			case 'before':
-				$where[] = "city_created < {$dbr->addQuotes( $params['wcStartDate'] )}";
+				$sql->AND_('city_created')->LESS_THAN($params['wcStartDate']);
 				break;
-
 			case 'between':
-				$where[] = "city_created BETWEEN {$dbr->addQuotes( $params['wcStartDate'] )} AND {$dbr->addQuotes( $params['wcEndDate'] )}";
+				$sql->AND_('city_created')->BETWEEN($params['wcStartDate'], $params['wcEndDate']);
 				break;
 		}
-		// Only get active wikis
-		$where['city_public'] = 1;
 
 		$this->info('get wiki ids based on creation date params', [
 			'option' => $params['wcOption'],
@@ -305,17 +286,9 @@ class SiteWideMessagesTask extends BaseTask {
 			'end_date' => $params['wcEndDate'],
 		]);
 
-		$res = $dbr->select(
-			array( 'city_list' ),
-			array( 'city_id', 'city_dbname' ),
-			$where,
-			__METHOD__
-		);
-
-		while ( $row = $dbr->fetchObject( $res ) ) {
-			$wikisDB[$row->city_id] = $row->city_dbname;
-		}
-		$dbr->freeResult( $res );
+		$wikisDB = $sql->runLoop($dbr, function(&$result, $row) {
+			$result[$row->city_id] = $row->city_dbname;
+		});
 
 		$this->info('send message to the retrieved', ['wikis' => count($wikisDB)]);
 		switch ( $params['sendModeUsers'] ) {
@@ -330,17 +303,10 @@ class SiteWideMessagesTask extends BaseTask {
 
 			case 'ANONS':
 				foreach ( $wikisDB as $mWikiId => $mWikiDB ) {
-					$sqlValues[] = array(
-						'msg_wiki_id' => $mWikiId,
-						'msg_recipient_id' => 0,
-						'msg_id' => $params['messageId'],
-						'msg_status' => MSG_STATUS_UNSEEN
-					);
+					$sqlValues[] = [$mWikiId, 0, $params['messageId'], MSG_STATUS_UNSEEN];
 				}
-				$result = (boolean)$dbw->insert(
-					MSG_STATUS_DB,
-					$sqlValues
-				);
+
+				$result = $this->sendMessageHelperToUsers($sqlValues);
 				break;
 
 			case 'EDITCOUNT':
@@ -365,22 +331,23 @@ class SiteWideMessagesTask extends BaseTask {
 	 */
 	private function sendMessageToRegistered( $params ) {
 		global $wgExternalSharedDB;
-		$sqlValues = array();
-		$where = array();
 
-		$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
+		$dbr = wfGetDB( DB_SLAVE, [], $wgExternalSharedDB );
+		$sql = (new \WikiaSQL())
+			->SELECT('user_id')
+			->FROM('user');
 
 		switch ( $params['regOption'] ) {
 			case 'after':
-				$where[] = "user_registration > {$dbr->addQuotes( $params['regStartDate'] )}";
+				$sql->WHERE('user_registration')->GREATER_THAN($params['regStartDate']);
 				break;
 
 			case 'before':
-				$where[] = "user_registration < {$dbr->addQuotes( $params['regStartDate'] )}";
+				$sql->WHERE('user_registration')->LESS_THAN($params['regStartDate']);
 				break;
 
 			case 'between':
-				$where[] = "user_registration BETWEEN {$dbr->addQuotes( $params['regStartDate'] )} AND {$dbr->addQuotes( $params['regEndDate'] )}";
+				$sql->WHERE('user_registration')->BETWEEN($params['regStartDate'], $params['regEndDate']);
 				break;
 		}
 
@@ -390,25 +357,15 @@ class SiteWideMessagesTask extends BaseTask {
 			'end_date' => $params['regEndDate'],
 		]);
 
-		$res = $dbr->select(
-			array( '`user`' ),
-			array( 'user_id' ),
-			$where,
-			__METHOD__
-		);
-		while ( $row = $dbr->fetchObject( $res ) ) {
-			$sqlValues[] = "(0, {$row->user_id}, {$params['messageId']}, " . MSG_STATUS_UNSEEN . ')';
-		}
-		$dbr->freeResult( $res );
+		$sqlValues = $sql->runLoop($dbr, function(&$results, $row) use ($params) {
+			$results []= [0, $row->user_id, $params['messageId'], MSG_STATUS_UNSEEN];
+		});
 
 		$this->info('add records about new message to right users', [
 			'users' => count($sqlValues),
 		]);
 
-		$result = $this->sendMessageHelperToUsers( $sqlValues );
-
-		unset( $sqlValues );
-		return $result;
+		return $this->sendMessageHelperToUsers( $sqlValues );
 	}
 
 	/**
@@ -425,22 +382,23 @@ class SiteWideMessagesTask extends BaseTask {
 	 */
 	private function sendMessageByEditcountGlobal( $params ) {
 		global $wgStatsDB;
-		$sqlValues = array();
-		$having = '';
 
-		$dbr = wfGetDB( DB_SLAVE, array(), $wgStatsDB );
+		$sql = (new \WikiaSQL())
+			->SELECT('user_id', 'count(*) as editcnt')
+			->FROM('events')
+			->WHERE('event_type')->EQUAL_TO(1)
+				->OR_('event_type')->EQUAL_TO(2)
+			->GROUP_BY('user_id');
 
 		switch ( $params['editCountOption'] ) {
 			case 'more':
-				$having = "editcnt > {$dbr->addQuotes( $params['editCountStart'] )}";
+				$sql->HAVING('editcnt')->GREATER_THAN($params['editCountStart']);
 				break;
-
 			case 'less':
-				$having = "editcnt < {$dbr->addQuotes( $params['editCountStart'] )}";
+				$sql->HAVING('editcnt')->LESS_THAN($params['editCountStart']);
 				break;
-
 			case 'between':
-				$having = "editcnt BETWEEN {$dbr->addQuotes( $params['editCountStart'] )} AND {$dbr->addQuotes( $params['editCountEnd'] )}";
+				$sql->HAVING('editcnt')->BETWEEN($params['editCountStart'], $params['editCountEnd']);
 				break;
 		}
 
@@ -450,29 +408,15 @@ class SiteWideMessagesTask extends BaseTask {
 			'edits_max' => $params['editCountEnd'],
 		]);
 
-		$res = $dbr->select(
-			array( 'events' ),
-			array( 'user_id', 'count(*) as editcnt' ),
-			array( ' ( event_type = 1 ) or ( event_type = 2 ) ' ),
-			__METHOD__,
-			array(
-				'GROUP BY' => 'user_id',
-				'HAVING' => $having
-			)
-		);
+		$sqlValues = $sql->runLoop(wfGetDB( DB_SLAVE, [], $wgStatsDB ), function(&$results, $row) use ($params) {
+			$results []= [0, $row->user_id, $params['messageId'], MSG_STATUS_UNSEEN];
+		});
 
-		while ( $row = $dbr->fetchObject( $res ) ) {
-			$sqlValues[] = "(0, {$row->user_id}, {$params['messageId']}, " . MSG_STATUS_UNSEEN . ')';
-		}
-
-		$dbr->freeResult( $res );
 		$this->info('add records about new message to correct users', [
 			'users' => count($sqlValues),
 		]);
-		$result = $this->sendMessageHelperToUsers( $sqlValues );
 
-		unset( $sqlValues );
-		return $result;
+		return $this->sendMessageHelperToUsers( $sqlValues );
 	}
 
 	/**
@@ -488,55 +432,12 @@ class SiteWideMessagesTask extends BaseTask {
 	 * @return boolean: result of sending
 	 */
 	private function sendMessageByEditcountLocal( $params ) {
-		global $wgExternalSharedDB;
 		$result = true;
-		$sqlValues = array();
-		$having = '';
 
-		$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
-
-		switch ( $params['editCountOption'] ) {
-			case 'more':
-				$having = "editcnt > {$dbr->addQuotes( $params['editCountStart'] )}";
-				break;
-
-			case 'less':
-				$having = "editcnt < {$dbr->addQuotes( $params['editCountStart'] )}";
-				break;
-
-			case 'between':
-				$having = "editcnt BETWEEN {$dbr->addQuotes( $params['editCountStart'] )} AND {$dbr->addQuotes( $params['editCountEnd'] )}";
-				break;
-		}
-
-		$wikiID = null;
-		$wikiDomains = array( '', '.wikia.com', '.sjc.wikia-inc.com' );
-		foreach( $wikiDomains as $wikiDomain ) {
-			if( !is_null( $wikiID = \WikiFactory::DomainToID( $params['wikiName'] . $wikiDomain ) ) ) {
-				break;
-			}
-		}
-		if ( is_null( $wikiID ) ) {
+		list($isShared, $wikiID) = $this->isWikiShared($params['wikiName']);
+		if (!$isShared) {
 			return false;
 		}
-
-		$dbResult = $dbr->select(
-			array( 'city_list' ),
-			array( 'city_useshared' ),
-			array( 'city_id' => $wikiID ),
-			__METHOD__
-		);
-
-		if( $row = $dbr->fetchObject( $dbResult ) ) {
-			if ( $row->city_useshared != '1' ) {
-				$this->warning('wiki does not use a shared database, message was not sent', [
-					'wiki_id' => $wikiID,
-				]);
-
-				return false;
-			}
-		}
-		$dbr->freeResult( $dbResult );
 
 		$wikiDB = \WikiFactory::IDtoDB($wikiID);
 		$this->info('look into selected wiki for users that have a specific edit count', [
@@ -548,21 +449,26 @@ class SiteWideMessagesTask extends BaseTask {
 		]);
 
 		$db = wfGetDB( DB_SLAVE, array(), $wikiDB );
-		$res = $db->select(
-			array( 'revision' ),
-			array( 'rev_user', 'count(*) as editcnt' ),
-			'',
-			__METHOD__,
-			array(
-				'GROUP BY' => 'rev_user',
-				'HAVING' => $having
-			)
-		);
+		$sql = (new \WikiaSQL())
+			->SELECT('rev_user', 'count(*) as editcnt')
+			->FROM('revision')
+			->GROUP_BY('rev_user');
 
-		while ( $row = $db->fetchObject( $res ) ) {
-			$sqlValues[] = "($wikiID, {$row->rev_user}, {$params['messageId']}, " . MSG_STATUS_UNSEEN . ')';
+		switch ( $params['editCountOption'] ) {
+			case 'more':
+				$sql->HAVING('editcnt')->GREATER_THAN($params['editCountStart']);
+				break;
+			case 'less':
+				$sql->HAVING('editcnt')->LESS_THAN($params['editCountStart']);
+				break;
+			case 'between':
+				$sql->HAVING('editcnt')->BETWEEN($params['editCountStart'], $params['editCountEnd']);
+				break;
 		}
-		$db->freeResult( $res );
+
+		$sqlValues = $sql->runLoop($db, function(&$results, $row) use ($wikiID, $params) {
+			$results []= [$wikiID, $row->rev_user, $params['messageId'], MSG_STATUS_UNSEEN];
+		});
 
 		$this->info('add records about new messages to users', [
 			'users' => count($sqlValues),
@@ -572,7 +478,6 @@ class SiteWideMessagesTask extends BaseTask {
 			$result = $this->sendMessageHelperToUsers( $sqlValues );
 		}
 
-		unset( $sqlValues );
 		return $result;
 	}
 
@@ -583,21 +488,22 @@ class SiteWideMessagesTask extends BaseTask {
 	 */
 	private function sendMessageByEditcountList( $wikisDB, $params ) {
 		$result = true;
-		$sqlValues = array();
-		$having = '';
-		$dbr = wfGetDB( DB_SLAVE );
+		$sqlValues = [];
+
+		$sql = (new \WikiaSQL())
+			->SELECT('rev_user', 'count(*) as editcnt')
+			->FROM('revision')
+			->GROUP_BY('rev_user');
 
 		switch ( $params['editCountOption'] ) {
 			case 'more':
-				$having = "editcnt > {$dbr->addQuotes( $params['editCountStart'] )}";
+				$sql->HAVING('editcnt')->GREATER_THAN($params['editCountStart']);
 				break;
-
 			case 'less':
-				$having = "editcnt < {$dbr->addQuotes( $params['editCountStart'] )}";
+				$sql->HAVING('editcnt')->LESS_THAN($params['editCountStart']);
 				break;
-
 			case 'between':
-				$having = "editcnt BETWEEN {$dbr->addQuotes( $params['editCountStart'] )} AND {$dbr->addQuotes( $params['editCountEnd'] )}";
+				$sql->HAVING('editcnt')->BETWEEN($params['editCountStart'], $params['editCountEnd']);
 				break;
 		}
 
@@ -611,21 +517,9 @@ class SiteWideMessagesTask extends BaseTask {
 			]);
 
 			$db = wfGetDB( DB_SLAVE, array(), $wikiDB );
-			$res = $db->select(
-				array( 'revision' ),
-				array( 'rev_user', 'count(*) as editcnt' ),
-				'',
-				__METHOD__,
-				array(
-					'GROUP BY' => 'rev_user',
-					'HAVING' => $having
-				)
-			);
-
-			while ( $row = $db->fetchObject( $res ) ) {
-				$sqlValues[] = "($wikiID, {$row->rev_user}, {$params['messageId']}, " . MSG_STATUS_UNSEEN . ')';
-			}
-			$db->freeResult( $res );
+			$sql->runLoop($db, function($_, $row) use ($wikiID, $params, &$sqlValues) {
+				$sqlValues []= [$wikiID, $row->rev_user, $params['messageId'], MSG_STATUS_UNSEEN];
+			});
 		}
 
 		$this->info('add records about new message to users', [
@@ -637,7 +531,6 @@ class SiteWideMessagesTask extends BaseTask {
 			$result = $this->sendMessageHelperToUsers( $sqlValues );
 		}
 
-		unset( $sqlValues );
 		return $result;
 	}
 
@@ -654,38 +547,12 @@ class SiteWideMessagesTask extends BaseTask {
 	 * @return boolean: result of sending
 	 */
 	private function sendMessageToWiki($params) {
-		global $wgExternalSharedDB;
 		$result = true;
 
-		$wikiID = null;
-		$wikiDomains = array('', '.wikia.com', '.sjc.wikia-inc.com');
-		foreach($wikiDomains as $wikiDomain) {
-			if(!is_null($wikiID = \WikiFactory::DomainToID($params['wikiName'] . $wikiDomain))) {
-				break;
-			}
-		}
-		if (is_null($wikiID)) {
+		list($isShared, $wikiID) = $this->isWikiShared($params['wikiName']);
+		if (!$isShared) {
 			return false;
 		}
-
-		$DB = wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB);
-		$dbResult = $DB->Query (
-			'SELECT city_useshared'
-			. ' FROM city_list'
-			. " WHERE city_id = $wikiID"
-			. ';'
-			, __METHOD__
-		);
-
-		if($row = $DB->FetchObject($dbResult)) {
-			if ($row->city_useshared != '1') {
-				$this->warning('wiki does not use shared database, message not sent', [
-					'wiki_id' => $wikiID
-				]);
-				return false;
-			}
-		}
-		$DB->FreeResult($dbResult);
 
 		$wikiDB = \WikiFactory::IDtoDB($wikiID);
 		$this->info('look into wiki for users that belong to a specific group', [
@@ -972,15 +839,12 @@ class SiteWideMessagesTask extends BaseTask {
 	 */
 	private function sendMessageHelperToUsers(&$sqlValues) {
 		global $wgExternalSharedDB;
-		$DB = wfGetDB(DB_MASTER, array(), $wgExternalSharedDB);
-		$dbResult = (boolean)$DB->Query (
-			'INSERT INTO ' . MSG_STATUS_DB
-			. ' (msg_wiki_id, msg_recipient_id, msg_id, msg_status)'
-			. ' VALUES ' . implode(',', $sqlValues)
-			. ';'
-			, __METHOD__
-		);
-		return $dbResult;
+
+		$db = wfGetDB(DB_MASTER, array(), $wgExternalSharedDB);
+		return (new \WikiaSQL())
+			->INSERT()->INTO(MSG_STATUS_DB, ['msg_wiki_id', 'msg_recipient_id', 'msg_id', 'msg_status'])
+			->VALUES($sqlValues)
+			->run($db);
 	}
 
 	/**
@@ -1054,7 +918,6 @@ class SiteWideMessagesTask extends BaseTask {
 				array('GROUP BY' => 'wiki_id, user_id')
 			);
 
-			//step 3 of 3: add records about new message to right users
 			while ($row = $dbr->FetchObject($dbResult)) {
 				$sqlValues[] = "({$row->wiki_id}, {$row->user_id}, {$params['messageId']}, " . MSG_STATUS_UNSEEN . ')';
 			}
@@ -1070,5 +933,44 @@ class SiteWideMessagesTask extends BaseTask {
 
 		unset($sqlValues);
 		return $result;
+	}
+
+	private function isWikiShared($wikiName) {
+		global $wgExternalSharedDB;
+
+		$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
+		$wikiID = null;
+		$wikiDomains = [ '', '.wikia.com', '.sjc.wikia-inc.com' ];
+
+		foreach( $wikiDomains as $wikiDomain ) {
+			if ( !is_null( $wikiID = \WikiFactory::DomainToID( $wikiName . $wikiDomain ) ) ) {
+				break;
+			}
+		}
+
+		if ( is_null( $wikiID ) ) {
+			return [false, null];
+		}
+
+		$isShared = (new \WikiaSQL())
+			->SELECT('city_useshared')
+			->FROM('city_list')
+			->WHERE('city_id')->EQUAL_TO($wikiID)
+			->run($dbr, function($res) use ($this, $wikiID) {
+				/** @var \ResultWrapper $res */
+				if ($row = $res->fetchObject()) {
+					if ($row->city_useshared != '1') {
+						$this->warning('wiki does not use a shared database, message was not sent', [
+							'wiki_id' => $wikiID,
+						]);
+
+						return false;
+					}
+				}
+
+				return true;
+			});
+
+		return [$isShared, $wikiID];
 	}
 }
