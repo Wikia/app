@@ -246,6 +246,13 @@ abstract class BaseTask {
 		return $this;
 	}
 
+	/**
+	 * @return string
+	 */
+	public function getTaskId() {
+		return $this->taskId;
+	}
+
 	/** @see Loggable::getLoggerContext */
 	protected function getLoggerContext() {
 		return [

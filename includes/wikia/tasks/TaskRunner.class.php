@@ -108,7 +108,7 @@ class TaskRunner {
 			'ImageReviewTask',
 //			'PromoteImageReviewTask',
 			'UserRollback',
-//			'UserRename',
+			'UserRename',
 		]);
 	}
 }
