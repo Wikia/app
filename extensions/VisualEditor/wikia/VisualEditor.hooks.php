@@ -55,4 +55,15 @@ class VisualEditorWikiaHooks {
 		return true;
 	}
 
+	/**
+	 * Sets VisualEditor to be the default editor on a new wiki for anonymous and new users.
+	 * This hook should be temporary until the wgForceVisualEditor variable is retired.
+	 *
+	 * @param array $wikiData Some wiki details passed from the CreateNewWikiTask class
+	 * @return boolean
+	 */
+	public static function onCreateNewWiki( $wikiData ) {
+		WikiFactory::setVarByName( 'wgForceVisualEditor', $wikiData['city_id'], true );
+		return true;
+	}
 }
