@@ -1783,3 +1783,11 @@ $config['affiliate_module_css'] = array(
 		'//extensions/wikia/AffiliateModule/styles/AffiliateModule.scss',
 	)
 );
+
+$config['affiliate_module_js'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => array( 'oasis', 'monobook' ),
+	'assets' => array(
+		'//extensions/wikia/AffiliateModule/scripts/AffiliateModule.js',
+	)
+);

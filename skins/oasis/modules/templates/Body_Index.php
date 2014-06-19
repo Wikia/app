@@ -121,6 +121,12 @@
 					</div>
 				<?php } ?>
 
+				<?php
+					if (!empty($wg->EnableAffiliateModuleExt)) {
+						echo $app->renderView( 'AffiliateModule', 'index' );
+					}
+				?>
+
 				<div id="WikiaArticleBottomAd" class="noprint">
 					<?= $app->renderView('Ad', 'Index', ['slotName' => 'PREFOOTER_LEFT_BOXAD']) ?>
 					<?= $app->renderView('Ad', 'Index', ['slotName' => 'PREFOOTER_RIGHT_BOXAD']) ?>

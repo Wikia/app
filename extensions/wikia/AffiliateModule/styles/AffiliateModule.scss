@@ -4,7 +4,7 @@
 @import 'skins/oasis/css/core/color';
 @import 'skins/oasis/css/core/layout';
 
-.WikiaRail .affiliate-module-rail {
+.affiliate-module {
 	h1 {
 		display: block;
 		font-size: 20px;
@@ -20,11 +20,15 @@
 			float: left;
 		}
 		.placard {
+			font-weight: bold;
+			color: $color-text;
 			padding-left: 10px;
 			float: left;
 			line-height: 1.4;
 			width: 60%;
 			font-size: 14px;
+			overflow: visible;
+			white-space: normal;
 		}
 		.vendor {
 			width: 95%;
@@ -36,8 +40,8 @@
 		.vendorlogo {
 			float: left;
 			background-image: url(/extensions/wikia/AffiliateModule/images/logo_amazon.png);
-			width: 100px;
-			height: 15px;
+			width: 88px;
+			height: 12px;
 			padding-top: 7px;
 			padding-bottom: 3px;
 		}
@@ -52,5 +56,11 @@
 			margin: 3px 0px 1px;
 		}
 	}
+}
 
+.WikiaMainContent .affiliate-module .affiliate {
+	width: 32%;
+	padding: 8px 0px 4px 6px;
+	float: left;
+	min-width: 200px;
 }

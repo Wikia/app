@@ -14,6 +14,7 @@ class AffiliateModuleController extends WikiaController {
 		wfProfileIn( __METHOD__ );
 
 		$this->response->addAsset( 'affiliate_module_css' );
+		$this->response->addAsset( 'affiliate_module_js' );
 
 		$products = [
 			[
@@ -33,13 +34,14 @@ class AffiliateModuleController extends WikiaController {
 				'name' => 'J.R.R. Tolkien 4-Book Boxed Set: The Hobbit and The Lord of the Rings (Movie Tie-in): The Hobbit, The Fellowship of the Ring, The Two Towers, The Return of the King',
 				'url' => 'http://www.amazon.com/gp/product/0345538374/ref=as_li_tl?ie=UTF8&camp=1789&creative=390957&creativeASIN=0345538374&linkCode=as2&tag=lotrwikia-mcb-reg-f-20&linkId=KRY56KEPJ5XYKDIO',
 				'thumbUrl' => 'http://ecx.images-amazon.com/images/I/51GJzbM5vTL._AA160_.jpg',
-				'logo' => '$21.76',
+				'price' => '$21.76',
 			],
 		];
 
 		$this->title = wfMessage( 'affiliate-module-title' )->escaped();
 		$this->products = $products;
 		$this->buttonLabel = wfMessage( 'affiliate-module-button-label' )->plain();
+		$this->className = ( $this->request->getVal( 'position' ) == 'rail' ) ? 'module' : '';
 
 		wfProfileOut( __METHOD__ );
 	}

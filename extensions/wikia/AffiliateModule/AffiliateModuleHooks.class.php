@@ -16,7 +16,7 @@ class AffiliateModuleHooks {
 		if ( self::canShowModule() ) {
 			// Use a different position depending on whether the user is logged in
 			$position = F::App()->wg->User->isAnon() ? 1300 : 1275;
-			$modules[$position] = [ 'AffiliateModule', 'index', null ];
+			$modules[$position] = [ 'AffiliateModule', 'index', [ 'position' => 'rail' ] ];
 		}
 
 		wfProfileOut(__METHOD__);
