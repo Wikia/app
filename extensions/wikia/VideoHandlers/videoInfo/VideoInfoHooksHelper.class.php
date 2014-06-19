@@ -287,6 +287,7 @@ class VideoInfoHooksHelper {
 
 	/**
 	 * Hook: check if the file is deleted
+	 * @todo re-implement this w/o reliance on request origination data
 	 * @param File $file
 	 * @param boolean $isDeleted
 	 * @return true
@@ -300,8 +301,10 @@ class VideoInfoHooksHelper {
 		$req = F::app()->wg->Request;
 		$controller = $req->getVal( 'controller', '' );
 		$method = $req->getVal( 'method', '' );
+		$title = $req->getVal( 'title', '' );
 		if ( $controller == 'VideoEmbedTool'
 			 || $method == 'insertVideo'
+			 || $title == 'Special:WikiaVideoAdd'
 			 || ( $controller == 'Videos' && $method == 'addVideo' )
 			 || ( $controller == 'Lightbox' && $method = 'getMediaDetail' )
 		) {
