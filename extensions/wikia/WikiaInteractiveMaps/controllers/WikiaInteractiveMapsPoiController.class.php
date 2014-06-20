@@ -138,6 +138,7 @@ class WikiaInteractiveMapsPoiController extends WikiaInteractiveMapsBaseControll
 		$this->setData( 'mapId', $this->request->getInt( 'mapId' ) );
 		$this->setData( 'poiCategoryNames', $this->request->getArray( 'poiCategoryNames' ) );
 		$this->setData( 'poiCategoryParents', $this->request->getArray( 'poiCategoryParents' ) );
+		$this->setData( 'poiCategoryMarkers', $this->request->getArray( 'poiCategoryMarkers' ) );
 
 		$this->validatePoiCategoriesCreation();
 
@@ -191,21 +192,29 @@ class WikiaInteractiveMapsPoiController extends WikiaInteractiveMapsBaseControll
 		$mapId = $this->getData( 'mapId' );
 		$poiCategoryNames = $this->getData( 'poiCategoryNames' );
 		$poiCategoryParents = $this->getData( 'poiCategoryParents' );
-		$poiCategoryNamesLength = count( $poiCategoryNames );
+		$poiCategoryMarkers = $this->getData( 'poiCategoryMarkers' );
 
-		$createdPoiCategories = 0;
+		$numberOfPoiCategories = count( $poiCategoryNames );
+		$numberOfPoiCategoriesCreated = 0;
+
 		$logEntries = [];
-		for ( $i = 0; $i < $poiCategoryNamesLength; $i++ ) {
-			$poiCategoryParent = ( !empty( $poiCategoryParents[ $i ] ) ) ?
+		for ( $i = 0; $i < $numberOfPoiCategories; $i++ ) {
+			$poiCategoryData = [
+				'map_id' => $mapId,
+				'name' => $poiCategoryNames[ $i ],
+				'created_by' => $this->getData( 'createdBy' ),
+			];
+
+			$poiCategoryData[ 'parent_poi_category_id' ] = ( !empty( $poiCategoryParents[ $i ] ) ) ?
 				(int) $poiCategoryParents[ $i ] :
 				$this->mapsModel->getDefaultParentPoiCategory();
 
-			$response = $this->mapsModel->savePoiCategory( [
-				'map_id' => $mapId,
-				'name' => $poiCategoryNames[ $i ],
-				'parent_poi_category_id' => $poiCategoryParent,
-				'created_by' => $this->getData( 'createdBy' ),
-			] );
+			// if user didn't upload marker then this is empty string. we don't want to send it to api.
+			if ( !empty( $pinTypesMarkers[ $i ] ) ) {
+				$poiCategoryData[ 'marker' ] = $poiCategoryMarkers[ $i ];
+			}
+
+			$response = $this->mapsModel->savePoiCategory( $poiCategoryData );
 
 			if ( true === $response[ 'success' ]  ) {
 				$logEntries[] = WikiaMapsLogger::newLogEntry(
@@ -214,14 +223,14 @@ class WikiaInteractiveMapsPoiController extends WikiaInteractiveMapsBaseControll
 					$poiCategoryNames[ $i ],
 					[ $response->id ]
 				);
-				$createdPoiCategories++;
+				$numberOfPoiCategoriesCreated++;
 			}
 		}
 		if ( !empty( $logEntries ) ) {
 			WikiaMapsLogger::addLogEntries( $logEntries );
 		}
 
-		$this->setData( 'createdPoiCategories', $createdPoiCategories );
+		$this->setData( 'createdPoiCategories', $numberOfPoiCategoriesCreated );
 	}
 
 	/**
