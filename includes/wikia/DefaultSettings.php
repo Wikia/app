@@ -1438,3 +1438,9 @@ $wgXhprofUDPPort = '3911';
  * Threshold for total time spent in function to be reported (set to 0 to report all entries)
  */
 $wgXhprofMinimumTime = 0.001;
+
+/*
+ * @name $wgForceVisualEditor
+ * Uses VisualEditor as the default editor for anonymous and new users when set to true
+ */
+$wgForceVisualEditor = true;
