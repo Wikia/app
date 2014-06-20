@@ -8,6 +8,8 @@
 namespace Wikia\Tasks\Tasks;
 
 
+use FluentSql\StaticSQL;
+
 class SiteWideMessagesTask extends BaseTask {
 	public function getAdminExecuteableMethods() {
 		return [];
@@ -788,8 +790,9 @@ class SiteWideMessagesTask extends BaseTask {
 				->SELECT('user_id', 'wiki_id')
 				->FROM('specials.events_local_users')
 				->WHERE('wiki_id')->IN(array_keys($wikisDB))
-					->AND_('single_group')->EQUAL_TO($params['groupName'])
-					->OR_('all_groups')->LIKE("%{$params['groupName']}%")
+					->AND_(StaticSQL::RAW(
+						'(single_group = ? OR all_groups LIKE ?)', ["%{$params['groupName']}%"]
+					))
 				->GROUP_BY('wiki_id', 'user_id')
 				->runLoop($dbr, function(&$results, $row) USE ($params) {
 					$results []= [$row->wiki_id, $row->user_id, $params['messageId'], MSG_STATUS_UNSEEN];
@@ -879,8 +882,9 @@ class SiteWideMessagesTask extends BaseTask {
 			]);
 
 			if ($clusterId == 1) {
-				$sql->AND_('city_cluster')->IS_NULL()
-					->OR_('city_cluster')->EQUAL_TO('c1');
+				$sql->AND_(StaticSQL::RAW(
+					'(city_cluster IS NULL OR city_cluster = ?)', ['c1']
+				));
 			} else {
 				$sql->AND_('city_cluster')->EQUAL_TO("c{$clusterId}");
 			}
