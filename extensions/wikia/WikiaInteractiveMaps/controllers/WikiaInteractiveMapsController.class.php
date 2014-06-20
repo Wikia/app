@@ -438,6 +438,9 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 		$this->creationData[ $name ] = $value;
 	}
 
+	/**
+	 * Returns parent/default POI categories recieved from the service
+	 */
 	public function getParentPinTypes() {
 		$parentPinTypesResponse = $this->mapsModel->cachedRequest( 'getParentPinTypes', [] );
 		$this->setVal( 'results', $parentPinTypesResponse );
