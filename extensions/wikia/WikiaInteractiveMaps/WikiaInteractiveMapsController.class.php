@@ -632,9 +632,10 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 	/**
 	 * Generate extension translations file
 	 */
-	public function executeTranslation() {
+	public function translation() {
 		$messages = [];
 		include( dirname( __FILE__ ) . '/WikiaInteractiveMapsService.i18n.php' );
 		$this->response->setVal( 'messages', $messages );
+		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 	}
 }

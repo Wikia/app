@@ -209,7 +209,10 @@ class WikiaMaps {
 	 * @return string
 	 */
 	public function getMapRenderUrl( Array $params ) {
+		global $wgLang;
 		$entryPointParams = array_shift( $params );
+		// Add user language as param
+		$params['uselang'] = $wgLang->getCode();
 		return $this->buildUrl( self::ENTRY_POINT_RENDER . '/' . $entryPointParams, $params );
 	}
 
