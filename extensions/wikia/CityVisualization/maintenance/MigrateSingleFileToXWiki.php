@@ -38,8 +38,8 @@ class MigrateSingleFileToXWiki extends Maintenance {
 			'city_lang_code' => $this->getArg(2),
 			'image_type' => $this->getArg(3),
 			'image_index' => $this->getArg(4),
-			'image_review_status' => $this->getArg(5),
-			'last_edited' => $this->getArg(6),
+			'last_edited' => $this->getArg(5),
+			'image_review_status' => $this->getArg(6),
 			'review_start' => $this->getArg(7),
 			'review_end' => $this->getArg(8),
 			'reviewer_id' => $this->getArg(9)
