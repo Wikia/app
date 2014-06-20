@@ -7,9 +7,7 @@
 @import "../../../../skins/oasis/css/mixins/transform";
 @import "../../UserLogin/mixins/tooltip-icon";
 
-$hub-color-slot-1 : get_command_line_param("hub-color-slot-1", $color-wikiahome-videogames);
-$hub-color-slot-2 : get_command_line_param("hub-color-slot-2", $color-wikiahome-entertainment);
-$hub-color-slot-3 : get_command_line_param("hub-color-slot-3", $color-wikiahome-lifestyle);
+$default-border-color: #d8e3e9;
 
 @mixin interstitial-toggle-animation {
 	-webkit-animation: InterstitialToggle 900ms;
@@ -771,55 +769,30 @@ $color-wikiahome-border-primary-brand-color: #c7d1d8;
 					text-decoration: none;
 				}
 			}
-			&:first-child {
+			&:nth-child( 3n + 1 ) {
 				margin-left: 0;
 			}
 			&.videogames {
 				h2 {
 					border-bottom-color: $color-wikiahome-videogames;
 				}
-				ul li a {
-					color: $color-wikiahome-videogames;
-				}
 			}
 			&.entertainment {
 				h2 {
 					border-bottom-color: $color-wikiahome-entertainment;
-				}
-				ul li a {
-					color: $color-wikiahome-entertainment;
 				}
 			}
 			&.lifestyle {
 				h2 {
 					border-bottom-color: $color-wikiahome-lifestyle;
 				}
-				ul li a {
-					color: $color-wikiahome-lifestyle;
-				}
 			}
-			&.hub-slot-1 {
-				h2 {
-					border-bottom-color: $hub-color-slot-1;
-				}
-				ul li a {
-					color: $hub-color-slot-1;
-				}
-			}
-			&.hub-slot-2 {
-				h2 {
-					border-bottom-color: $hub-color-slot-2;
-				}
-				ul li a {
-					color: $hub-color-slot-2;
-				}
-			}
-			&.hub-slot-3 {
-				h2 {
-					border-bottom-color: $hub-color-slot-3;
-				}
-				ul li a {
-					color: $hub-color-slot-3;
+
+			@for $i from 1 through 7 {
+				&.hub-slot-#{$i} {
+					h2 {
+						border-bottom-color: get_command_line_param("hub-color-slot-#{$i}", $default-border-color);
+					}
 				}
 			}
 		}

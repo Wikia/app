@@ -11,15 +11,11 @@
 		<?= F::app()->renderView('WikiaHomePageController', 'visualization', array()); ?>
 	</section>
 	<div class="wikiahomepage-hubs">
-		<? if( isset( $hubsSlots[0] ) ): ?>
-			<?= F::app()->renderView('WikiaHomePageController', 'renderHubSection', $hubsSlots[0] ) ?>
-		<? endif ?>
-		<? if( isset( $hubsSlots[1] ) ): ?>
-			<?= F::app()->renderView('WikiaHomePageController', 'renderHubSection', $hubsSlots[1] ) ?>
-		<? endif ?>
-		<? if( isset( $hubsSlots[2] ) ): ?>
-			<?= F::app()->renderView('WikiaHomePageController', 'renderHubSection', $hubsSlots[2] ) ?>
-		<? endif ?>
+		<? foreach ( $hubsSlots as $hubsSlot ): ?>
+			<? if ( !empty($hubsSlot) ): ?>
+				<?= $app->renderView('WikiaHomePageController', 'renderHubSection', $hubsSlot ) ?>
+			<? endif ?>
+		<? endforeach ?>
 	</div>
 	<div class="wikiahomepage-community">
 		<section class="wikiahomepage-community-section grid-2 alpha">

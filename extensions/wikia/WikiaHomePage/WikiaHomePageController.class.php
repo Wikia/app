@@ -726,9 +726,6 @@ class WikiaHomePageController extends WikiaController {
 		$this->heading = $this->request->getVal('heading');
 		$this->heroimageurl = $heroImageUrl;
 		$this->herourl = $heroUrl;
-		$this->creative = $this->request->getVal('creative');
-		$this->moreheading = $this->request->getVal('moreheading');
-		$this->morelist = $this->request->getVal('morelist');
 	}
 
 	/**
