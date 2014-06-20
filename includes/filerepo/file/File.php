@@ -695,7 +695,7 @@ abstract class File {
 	 *
 	 * @param $handlerParams array
 	 *
-	 * @return string
+	 * @return MediaTransformOutput
 	 */
 	function getUnscaledThumb( $handlerParams = array() ) {
 		$hp =& $handlerParams;
