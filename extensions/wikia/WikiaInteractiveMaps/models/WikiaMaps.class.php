@@ -212,7 +212,7 @@ class WikiaMaps {
 		global $wgLang;
 		$entryPointParams = array_shift( $params );
 		// Add user language as param
-		$params['uselang'] = $wgLang->getCode();
+		$params[ 'uselang' ] = $wgLang->getCode();
 		return $this->buildUrl( self::ENTRY_POINT_RENDER . '/' . $entryPointParams, $params );
 	}
 
