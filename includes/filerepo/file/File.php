@@ -1000,8 +1000,20 @@ abstract class File {
 		// Purge cache of all pages using this file
 		$title = $this->getTitle();
 		if ( $title ) {
-			$update = new HTMLCacheUpdate( $title, 'imagelinks' );
-			$update->doUpdate();
+			// Wikia change begin @author Scott Rabin (srabin@wikia-inc.com)
+			if ( TaskRunner::isModern('HTMLCacheUpdate') ) {
+				global $wgCityId;
+
+				$task = ( new \Wikia\Tasks\Tasks\HTMLCacheUpdateTask() )
+					->wikiId( $wgCityId )
+					->title( $title );
+				$task->call( 'purge', 'imagelinks' );
+				$task->queue();
+			} else {
+				$update = new HTMLCacheUpdate( $title, 'imagelinks' );
+				$update->doUpdate();
+			}
+			// Wikia change end
 		}
 	}
 

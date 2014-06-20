@@ -1163,15 +1163,39 @@ class LocalFile extends File {
 		wfRunHooks( 'FileUpload', array( $this, $reupload, $descTitle->exists() ) );
 
 		# Invalidate cache for all pages using this file
-		$update = new HTMLCacheUpdate( $this->getTitle(), 'imagelinks' );
-		$update->doUpdate();
+		// Wikia change begin @author Scott Rabin (srabin@wikia-inc.com)
+		if ( TaskRunner::isModern('HTMLCacheUpdate') ) {
+			global $wgCityId;
+
+			$task = ( new \Wikia\Tasks\Tasks\HTMLCacheUpdateTask() )
+				->wikiId( $wgCityId )
+				->title( $this->getTitle() );
+			$task->call( 'purge', 'imagelinks' );
+			$task->queue();
+		} else {
+			$update = new HTMLCacheUpdate( $this->getTitle(), 'imagelinks' );
+			$update->doUpdate();
+		}
+		// Wikia change end
 
 		# Invalidate cache for all pages that redirects on this page
 		$redirs = $this->getTitle()->getRedirectsHere();
 
 		foreach ( $redirs as $redir ) {
-			$update = new HTMLCacheUpdate( $redir, 'imagelinks' );
-			$update->doUpdate();
+			// Wikia change begin @author Scott Rabin (srabin@wikia-inc.com)
+			if ( TaskRunner::isModern('HTMLCacheUpdate') ) {
+				global $wgCityId;
+
+				$task = ( new \Wikia\Tasks\Tasks\HTMLCacheUpdateTask() )
+					->wikiId( $wgCityId )
+					->title( $redir );
+				$task->call( 'purge', 'imagelinks' );
+				$task->queue();
+			} else {
+				$update = new HTMLCacheUpdate( $redir, 'imagelinks' );
+				$update->doUpdate();
+			}
+			// Wikia change end
 		}
 
 		return true;

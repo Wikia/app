@@ -122,7 +122,7 @@ abstract class BaseTask {
 	 * @return array black list of method names to hide on Special:Tasks
 	 */
 	public function getAdminNonExecuteables() {
-		return ['__construct', 'init'];
+		return ['__construct', 'init', 'getAdminNonExecuteables'];
 	}
 
 	public function createdBy($createdBy=null) {
