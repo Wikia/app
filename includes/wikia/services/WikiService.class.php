@@ -358,23 +358,41 @@ class WikiService extends WikiaModel {
 		$images = array();
 		try {
 			$db = wfGetDB( DB_SLAVE, array(), $this->wg->ExternalSharedDB );
-			$tables = array( 'city_visualization' );
-			$fields = array( 'city_id', 'city_main_image' );
-			$conds = array( 'city_id' => $wikiIds );
+			$tables = [
+				'city_visualization_images_xwiki'
+			];
+			$fields = [
+				'city_id',
+				'image_type',
+				'image_index',
+				'image_name',
+				'last_edited'
+			];
+			$conds = [
+				'city_id' => $wikiIds,
+				'image_type' => PromoImage::MAIN,
+				'image_review_status' => ImageReviewStatuses::STATE_APPROVED
+			];
+
 			$results = $db->select( $tables, $fields, $conds, __METHOD__, array(), array() );
+			$main_images = [];
 
 			while ( $row = $results->fetchObject() ) {
-				$promoImage = PromoImage::fromPathname($row->city_main_image);
-				$promoImage->ensureCityIdIsSet($row->city_id);
-
-				$file = $promoImage->corporateFileByLang($this->wg->ContLanguageCode);
-				if ( $file->exists() ) {
-					$imageServing = new ImageServing( null, $imageWidth, $imageHeight );
-					$images[ $row->city_id ] = ImagesService::overrideThumbnailFormat(
-						$imageServing->getUrl( $file, $file->getWidth(), $file->getHeight() ),
-						ImagesService::EXT_JPG
-					);
+				if( empty( $main_images[ $row->city_id ] ) ) {
+					$main_images[ strval( $row->city_id ) ] = [];
 				}
+
+				$main_images[$row->city_id][$row->last_edited] = $row->image_name;
+			}
+
+			foreach ( $main_images as $wiki_id => $wiki_main_images ) {
+				// Pick the most recently uploaded image
+				$main_image = array_shift($wiki_main_images);
+				$file_handler = new PromoXWikiImage( $main_image);
+				$images[$wiki_id] = ImagesService::overrideThumbnailFormat(
+					$file_handler->getThumbnailUrl( $imageWidth ),
+					ImagesService::EXT_JPG
+				);
 			}
 		} catch ( Exception $e ) {
 			Wikia::log( __METHOD__, false, $e->getMessage() );

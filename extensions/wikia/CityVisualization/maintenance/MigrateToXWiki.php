@@ -23,15 +23,9 @@ class MigrateToXWiki extends Maintenance {
 
 		$wikis = $this->getCityVisualizationWikis();
 
-		$count = 0;
 		$mdb = wfGetDB( DB_MASTER, [], $wgExternalSharedDB );
 		foreach ($wikis as $wiki) {
-			if ($wiki['city_id'] != 4541)
-				continue;
-
 			echo 'Working on ' . $wiki['city_id'] . PHP_EOL;
-
-			$count++;
 
 			if ($this->insertWikiToXwiki( $wiki, $mdb )) {
 				echo $wiki['city_id'] . ' inserted to DB' . PHP_EOL;
