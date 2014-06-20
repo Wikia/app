@@ -1,0 +1,10 @@
+<div class="input-group">
+    <select name="poiCategoryParents[]">
+        <option value="">{{emptyOption}}</option>
+        {{#parentPoiCategories}}
+            {{> parentPoiCategory}}
+        {{/parentPoiCategories}}
+    </select>
+	<input type="text" name="poiCategoryNames[]" placeholder="{{placeholder}}" value="{{name}}">
+	<a href="" title="{{delete}}" class="deleteIcon modalEvent" data-event="deletePoiCategory">{{delete}}</a>
+</div>

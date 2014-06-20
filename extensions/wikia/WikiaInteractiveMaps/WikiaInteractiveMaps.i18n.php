@@ -45,11 +45,11 @@ $messages[ 'en' ] = [
 	'wikia-interactive-maps-create-map-choose-type-custom' => 'Custom Map',
 	'wikia-interactive-maps-create-map-title-placeholder' => 'Title',
 	'wikia-interactive-maps-create-map-browse-tile-set' => 'Browse existing tile sets',
-	'wikia-interactive-maps-create-map-add-pin-type' => 'Add Another Pin Type',
-	'wikia-interactive-maps-create-map-delete-pin-type' => 'Delete',
-	'wikia-interactive-maps-create-map-pin-type-name-placeholder' => 'Pin Type Title',
-	'wikia-interactive-maps-create-map-pin-type-select-category' => 'Parent Category',
-	'wikia-interactive-maps-create-map-pin-type-form-error' => 'Please fill all fields',
+	'wikia-interactive-maps-create-map-add-poi-category' => 'Add Another Pin Type',
+	'wikia-interactive-maps-create-map-delete-poi-category' => 'Delete',
+	'wikia-interactive-maps-create-map-poi-category-name-placeholder' => 'Pin Type Title',
+	'wikia-interactive-maps-create-map-poi-category-select-category' => 'Parent Category',
+	'wikia-interactive-maps-create-map-poi-category-form-error' => 'Please fill all fields',
 
 	'wikia-interactive-maps-edit-poi-header-add-poi' => 'Add Pin Point',
 	'wikia-interactive-maps-edit-poi-header-edit-poi' => 'Edit Pin Point',
@@ -83,7 +83,7 @@ $messages[ 'en' ] = [
 	'wikia-interactive-maps-delete-map-client-error' => 'There was an error while deleting a map.',
 	'wikia-interactive-maps-delete-map-success' => 'Map was succesfuly deleted!',
 
-	'wikia-interactive-maps-create-pin-types-error' => 'Unfortunately, we could not create all pin types. Some of them might have been created, though. Check which are missing and try adding them again, please.',
+	'wikia-interactive-maps-create-poi-categories-error' => 'Unfortunately, we could not create all pin types. Some of them might have been created, though. Check which are missing and try adding them again, please.',
 
 	'wikia-interactive-maps-log-name' => 'Maps',
 	'wikia-interactive-maps-log-description' => 'This is a log of maps actions',
@@ -141,11 +141,11 @@ $messages[ 'qqq' ] = [
 	'wikia-interactive-maps-create-map-choose-type-custom' => 'Button for choosing custom map type',
 	'wikia-interactive-maps-create-map-title-placeholder' => 'Input placeholder for map title',
 	'wikia-interactive-maps-create-map-browse-tile-set' => 'Link to browse tile set step in create map modal',
-	'wikia-interactive-maps-create-map-add-pin-type' => 'Link for adding new blank input for Pin Type in edit/create Pin types UI',
-	'wikia-interactive-maps-create-map-delete-pin-type' => 'Link title for deleting Pin Type in edit/create Pin types UI',
-	'wikia-interactive-maps-create-map-pin-type-name-placeholder' => 'Input placeholder for pin types title',
-	'wikia-interactive-maps-create-map-pin-type-select-category' => 'Label for no category selected',
-	'wikia-interactive-maps-create-map-pin-type-form-error' => 'An error displayed to a user when pin type form is not valid',
+	'wikia-interactive-maps-create-map-add-poi-category' => 'Link for adding new blank input for Pin Type in edit/create Pin types UI',
+	'wikia-interactive-maps-create-map-delete-poi-category' => 'Link title for deleting Pin Type in edit/create Pin types UI',
+	'wikia-interactive-maps-create-map-poi-category-name-placeholder' => 'Input placeholder for pin types title',
+	'wikia-interactive-maps-create-map-poi-category-select-category' => 'Label for no category selected',
+	'wikia-interactive-maps-create-map-poi-category-form-error' => 'An error displayed to a user when pin type form is not valid',
 
 	'wikia-interactive-maps-edit-poi-header-add-poi' => 'Modal header for add pin to map',
 	'wikia-interactive-maps-edit-poi-header-edit-poi' => 'Modal header for edit pin to map',
@@ -179,7 +179,7 @@ $messages[ 'qqq' ] = [
 	'wikia-interactive-maps-delete-map-client-error' => 'Text (in modal) about error during deletion of the map',
 	'wikia-interactive-maps-delete-map-success' => 'Notification text about succesful deletion of the map',
 
-	'wikia-interactive-maps-create-pin-types-error' => 'An error message displayed when creating pin types failed',
+	'wikia-interactive-maps-create-poi-categories-error' => 'An error message displayed when creating pin types failed',
 
 	'wikia-interactive-maps-log-name' => 'Name for Special:Log filter',
 	'wikia-interactive-maps-log-description' => 'Description for Special:Log filter',

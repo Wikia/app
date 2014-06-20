@@ -24,9 +24,9 @@ require(
 							'extensions/wikia/WikiaInteractiveMaps/templates/intMapCreateMapChooseTileSet.mustache',
 							'extensions/wikia/WikiaInteractiveMaps/templates/intMapCreateMapTileSetThumb.mustache',
 							'extensions/wikia/WikiaInteractiveMaps/templates/intMapCreateMapPreview.mustache',
-							'extensions/wikia/WikiaInteractiveMaps/templates/intMapCreateMapPinTypes.mustache',
-							'extensions/wikia/WikiaInteractiveMaps/templates/intMapCreateMapPinType.mustache',
-							'extensions/wikia/WikiaInteractiveMaps/templates/intMapCreateMapParentPinType.mustache'
+							'extensions/wikia/WikiaInteractiveMaps/templates/intMapCreateMapPoiCategories.mustache',
+							'extensions/wikia/WikiaInteractiveMaps/templates/intMapCreateMapPoiCategory.mustache',
+							'extensions/wikia/WikiaInteractiveMaps/templates/intMapCreateMapParentPoiCategory.mustache'
 						]
 					},
 					origin: 'wikia-int-map-create-map',

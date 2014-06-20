@@ -6,7 +6,7 @@ class WikiaMaps {
 	const ENTRY_POINT_MAP = 'map';
 	const ENTRY_POINT_RENDER = 'render';
 	const ENTRY_POINT_TILE_SET = 'tile_set';
-	const ENTRY_POINT_PIN_TYPE = 'poi_category';
+	const ENTRY_POINT_POI_CATEGORY = 'poi_category';
 	const ENTRY_POINT_POI = 'poi';
 
 	const STATUS_DONE = 0;
@@ -301,12 +301,12 @@ class WikiaMaps {
 		);
 	}
 
-	public function getParentPinTypes() {
+	public function getParentPoiCategories() {
 		$params = [
 			'parents' => 1
 		];
 
-		$url = $this->buildUrl( [ self::ENTRY_POINT_PIN_TYPE ], $params );
+		$url = $this->buildUrl( [ self::ENTRY_POINT_POI_CATEGORY ], $params );
 
 		//TODO: consider caching the response
 		$response = $this->processServiceResponse(
@@ -321,16 +321,16 @@ class WikiaMaps {
 	}
 
 	/**
-	 * Sends a request to IntMap Service API to create a pin type with given parameters
+	 * Sends a request to IntMap Service API to create a POI category with given parameters
 	 *
-	 * @param Array $pinTypeData array with required parameters to service API
+	 * @param Array $poiCategoryData array with required parameters to service API
 	 *
 	 * @return Array
 	 */
-	public function savePinType( $pinTypeData ) {
+	public function savePoiCategory( $poiCategoryData ) {
 		return $this->postRequest(
-			$this->buildUrl( [ self::ENTRY_POINT_PIN_TYPE ] ),
-			$pinTypeData
+			$this->buildUrl( [ self::ENTRY_POINT_POI_CATEGORY ] ),
+			$poiCategoryData
 		);
 	}
 
@@ -403,7 +403,7 @@ class WikiaMaps {
 	 * @return integer
 	 */
 	public function getGeoMapTilesetId() {
-		if( isset( $this->config[ 'geo-tileset-id' ] ) ) {
+		if ( isset( $this->config[ 'geo-tileset-id' ] ) ) {
 			return $this->config[ 'geo-tileset-id' ];
 		}
 
@@ -416,7 +416,7 @@ class WikiaMaps {
 	 * @return integer
 	 */
 	public function getDefaultParentPoiCategory() {
-		if( isset( $this->config[ 'default-parent-poi-category-id' ] ) ) {
+		if ( isset( $this->config[ 'default-parent-poi-category-id' ] ) ) {
 			return $this->config[ 'default-parent-poi-category-id' ];
 		}
 
