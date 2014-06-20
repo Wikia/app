@@ -26,10 +26,10 @@ class MigrateToXWiki extends Maintenance {
 		$count = 0;
 		$mdb = wfGetDB( DB_MASTER, [], $wgExternalSharedDB );
 		foreach ($wikis as $wiki) {
-			echo 'Working on ' . $wiki['city_id'] . PHP_EOL;
-
 			if ($wiki['city_id'] != 4541)
 				continue;
+
+			echo 'Working on ' . $wiki['city_id'] . PHP_EOL;
 
 			$count++;
 
@@ -123,11 +123,10 @@ class MigrateToXWiki extends Maintenance {
 			$file = GlobalFile::newFromText( $image['image_name'], $image['city_id'] );
 
 			if ($file->exists()) {
-				//$image_name = implode( '.', [$wiki_id, 'TestUPLOAD'] );
 				$image_name = implode( '.', [$wiki_id, time(), uniqid()] );
+				$source_url = $file->getUrl();
 
-				echo $image['image_name'] . ' is being uploaded as ' . $image_name . ' ...', PHP_EOL;
-
+				echo $image['image_name'] . ' from ' . $source_url . ' is being uploaded as ' . $image_name . ' ...', PHP_EOL;
 
 				$xwiki_file = new PromoXWikiImage($image_name);
 
@@ -144,7 +143,7 @@ class MigrateToXWiki extends Maintenance {
 					'reviewer_id' => $image['reviewer_id'],
 				];
 
-				$uploadResult = $xwiki_file->uploadByUrl( $file->getUrl() );
+				$uploadResult = $xwiki_file->uploadByUrl( $source_url );
 				if ($uploadResult == 0) {
 					echo $image_name . ' finished uploading' . PHP_EOL;
 					echo $image_name . ' access url: ' . $xwiki_file->getUrl() . PHP_EOL;
