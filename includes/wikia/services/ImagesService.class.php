@@ -290,6 +290,75 @@ class ImagesService extends Service {
 		return $result;
 	}
 
+	public static function getCut( $dis, $srcWidth, $srcHeight, $align = "center", $issvg = false  ) {
+		wfProfileIn( __METHOD__ );
+
+		//rescale of png always use width 512;
+		if( $issvg ) {
+			$srcHeight = round( ( 512 * $srcHeight) / $srcWidth );
+			$srcWidth = 512;
+		}
+
+		// make sure these are numeric and nonzero (BugId:20644, BugId:25965)
+		$srcWidth = max(1, intval($srcWidth));
+		$srcHeight = max(1, intval($srcHeight));
+		// in case we're missing some proportions, maintain the original aspect ratio
+		if (empty($dis->proportion['h']) && !empty($dis->proportion['w'])) {
+			$dis->proportion['h'] = (float)$srcHeight * $dis->proportion['w'] / $srcWidth;
+		}
+		if (empty($dis->proportion['w']) && !empty($dis->proportion['h'])) {
+			$dis->proportion['w'] = (float)$srcWidth * $dis->proportion['h'] / $srcHeight;
+		}
+
+		$pHeight = round( ( $srcWidth ) * ( $dis->proportion['h'] / $dis->proportion['w'] ) );
+//		$top=0;
+		if( $pHeight >= $srcHeight ) {
+			$pWidth =  round( $srcHeight * ( $dis->proportion['w'] / $dis->proportion['h'] ) );
+			$top = 0;
+			if ( $align == "center" ) {
+				$left = round( $srcWidth / 2 - $pWidth / 2 );
+				if ( $pHeight != $srcHeight ) {
+					$left++;
+				}
+			} else if ( $align == "origin" ) {
+				$left = 0;
+			}
+			$right = $left + $pWidth + 1;
+			$bottom = $srcHeight;
+		} else {
+			if ( $align == "center" ) {
+				$deltaY = isset( $dis->tmpDeltaY ) ? $dis->tmpDeltaY : self::getDeltaY($dis);
+				unset( $dis->tmpDeltaY );
+				$deltaYpx = round( $srcHeight * $deltaY );
+				$bottom = $pHeight + $deltaYpx;
+				$top = $deltaYpx;
+			} else if ( $align == "origin" ) {
+				$bottom = $pHeight;
+				$top = 0;
+			}
+
+			if( $bottom > $srcHeight ) {
+				$bottom = $pHeight;
+				$top = 0;
+			}
+
+			$left = 0;
+			$right = $srcWidth;
+		}
+
+		wfProfileOut( __METHOD__ );
+		return "{$dis->width}px-$left,$right,$top,$bottom";
+	}
+
+	public static function getDeltaY($dis) {
+		if (is_null($dis->deltaY)) {
+			$dis->deltaY = ( $dis->proportion['w'] / $dis->proportion['h'] - 1 ) * 0.1;
+		}
+		return $dis->deltaY;
+	}
+
+
+
 	/**
 	 * get image page url
 	 * @param integer $wikiId
