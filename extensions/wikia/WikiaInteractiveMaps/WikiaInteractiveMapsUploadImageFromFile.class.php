@@ -14,6 +14,8 @@ class WikiaInteractiveMapsUploadImageFromFile extends UploadFromFile {
 	 * Validates uploaded file. Currently it checks pin type marker dimensions.
 	 * @param String $uploadType
 	 * @return array
+	 *
+	 * TODO: add unit tests for the method
 	 */
 	public function verifyUpload( $uploadType ) {
 		$details = parent::verifyUpload();
