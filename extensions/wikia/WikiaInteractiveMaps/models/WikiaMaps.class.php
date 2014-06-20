@@ -261,7 +261,7 @@ class WikiaMaps {
 	/**
 	 * Sends a request to delete a map instance
 	 *
-	 * @param array $data
+	 * @param integer $mapId
 	 *
 	 * @return bool
 	 */
@@ -464,4 +464,3 @@ class WikiaMaps {
 		return $options;
 	}
 }
-

@@ -21,7 +21,8 @@ define('wikia.intMap.createMap.pinTypes',
 			},
 			pinTypeTemplateData = {
 				delete: $.msg('wikia-interactive-maps-create-map-delete-pin-type'),
-				placeholder: $.msg('wikia-interactive-maps-create-map-pin-type-name-placeholder')
+				placeholder: $.msg('wikia-interactive-maps-create-map-pin-type-name-placeholder'),
+				wgBlankImgUrl: w.wgBlankImgUrl
 			},
 
 			events = {
@@ -34,6 +35,15 @@ define('wikia.intMap.createMap.pinTypes',
 				deletePinType: [
 					deletePinType
 				],
+				uploadMarkerImage: [
+					uploadMarkerImage
+				],
+				saveMarkerImage: [
+					saveMarkerImage
+				],
+				previewMarkerImage: [
+					previewMarkerImage
+				],
 				savePinTypes: [
 					savePinTypes
 				],
@@ -45,6 +55,7 @@ define('wikia.intMap.createMap.pinTypes',
 				'#intMapNext': 'savePinTypes'
 			},
 			mapUrl,
+			// marker image upload entry point
 			$form;
 
 		/**
@@ -59,6 +70,11 @@ define('wikia.intMap.createMap.pinTypes',
 			pinTypeTemplate = _pinTypeTemplate;
 
 			utils.bindEvents(modal, events);
+
+			// TODO: figure out where is better place to place it and move it there
+			modal.$element.on('change', '.pin-type-marker-image-upload', function (event) {
+				modal.trigger('uploadMarkerImage', event.target);
+			});
 		}
 
 		/**
@@ -131,11 +147,48 @@ define('wikia.intMap.createMap.pinTypes',
 		}
 
 		/**
-		 * @desc handler method triggered by savePinTypes event
+		 * @desc uploads marker image to backend
+		 * @param {Element} inputElement - file input element
 		 */
-		function savePinTypes() {
-			sendPinTypes(validate(utils.serializeForm($form)));
+		function uploadMarkerImage(inputElement) {
+			var file = inputElement.files[0],
+				formData = new FormData(),
+				$inputElement = $(inputElement),
+				$inputElementWrapper = $inputElement.closest('.pin-type-marker');
+
+			formData.append('wpUploadFile', file);
+
+			utils.upload(modal, formData, 'marker', function (data) {
+				modal.trigger('saveMarkerImage', data, $inputElementWrapper);
+				modal.trigger('previewMarkerImage', data, $inputElement, $inputElementWrapper);
+			});
 		}
+
+		/**
+		 * @desc hides file input and shows marker image instead
+		 * @param {object} data - data returned from backend
+		 * @param {$} $inputElementWrapper - file input element wrapper
+		 */
+		function saveMarkerImage(data, $inputElementWrapper) {
+			$inputElementWrapper
+				.find('.pin-type-marker-image-url')
+				.val(data['fileThumbUrl']);
+		}
+
+		/**
+		 * @desc hides file input and shows marker image instead
+		 * @param {object} data - data returned from backend
+		 * @param {$} $inputElement - file input element
+		 * @param {$} $inputElementWrapper - file input element wrapper
+		 */
+		function previewMarkerImage(data, $inputElement, $inputElementWrapper) {
+			$inputElement.addClass('hidden');
+			$inputElementWrapper
+				.find('.pin-type-marker-image')
+				.attr('src', data['fileThumbUrl'])
+				.removeClass('hidden');
+		}
+
 		/**
 		 * @desc validates pin types
 		 * @param {object} serializedForm - object with serialized form
@@ -190,6 +243,13 @@ define('wikia.intMap.createMap.pinTypes',
 					modal.trigger('error', response.results.content.message);
 				}
 			});
+		}
+
+		/**
+		 * @desc handler method triggered by savePinTypes event
+		 */
+		function savePinTypes() {
+			sendPinTypes(validate(utils.serializeForm($form)));
 		}
 
 		/**

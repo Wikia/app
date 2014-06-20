@@ -86,8 +86,6 @@ define(
 					helper: getTileSetThumbs
 				}
 			},
-			// image upload entry point
-			uploadEntryPoint = '/wikia.php?controller=WikiaInteractiveMaps&method=uploadMap&format=json',
 			// stack for holding choose tile set steps
 			stepsStack = [],
 			// cached selectors
@@ -207,6 +205,11 @@ define(
 			});
 		}
 
+		/**
+		 * @desc shows tile set thumbnails
+		 * @param tileSets
+		 */
+
 		function showTileSetThumbs(tileSets) {
 			var html = '';
 
@@ -218,31 +221,16 @@ define(
 		}
 
 		/**
-		 * @desc uploads image to backend
+		 * @desc uploads tile set image to backend
 		 * @param {object} form - html form node element
 		 */
 
 		function uploadMapImage(form) {
-			$.ajax({
-				contentType: false,
-				data: new FormData(form),
-				processData: false,
-				type: 'POST',
-				url: w.wgScriptPath + uploadEntryPoint,
-				success: function(response) {
-					var data = response.results;
+			var formData = new FormData(form);
 
-					if (data && data.success) {
-						modal.trigger('cleanUpError');
-						data.type = 'custom';
-						modal.trigger('previewTileSet', data);
-					} else {
-						modal.trigger('error', data.errors.pop());
-					}
-				},
-				error: function(response) {
-					modal.trigger('error', response.results.error);
-				}
+			utils.upload(modal, formData, 'map', function (data) {
+				data.type = 'custom';
+				modal.trigger('previewTileSet', data);
 			});
 		}
 

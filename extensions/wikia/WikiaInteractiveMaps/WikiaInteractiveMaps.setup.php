@@ -23,6 +23,7 @@ $wgAutoloadClasses[ 'WikiaInteractiveMapsPoiController' ] = $dir . '/controllers
 
 // helper classes
 $wgAutoloadClasses[ 'WikiaInteractiveMapsHooks' ] = $dir . 'WikiaInteractiveMapsHooks.class.php';
+$wgAutoloadClasses[ 'WikiaInteractiveMapsUploadImageFromFile' ] = $dir . 'WikiaInteractiveMapsUploadImageFromFile.class.php';
 
 // model classes
 $wgAutoloadClasses[ 'WikiaMaps' ] = $dir . '/models/WikiaMaps.class.php';
