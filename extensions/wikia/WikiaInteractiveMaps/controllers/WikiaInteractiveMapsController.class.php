@@ -628,7 +628,7 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 	 */
 	public function translation() {
 		$messages = [];
-		require_once( dirname( __FILE__ ) . '/WikiaInteractiveMapsService.i18n.php' );
+		require_once( dirname( __FILE__ ) . '/../WikiaInteractiveMapsService.i18n.php' );
 		$this->response->setVal( 'messages', $messages );
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 	}
