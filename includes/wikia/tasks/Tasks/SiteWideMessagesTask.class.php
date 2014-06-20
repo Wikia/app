@@ -15,6 +15,18 @@ class SiteWideMessagesTask extends BaseTask {
 		return [];
 	}
 
+	public function init() {
+		parent::init();
+
+		if (!defined('MSG_STATUS_DB')) {
+			define('MSG_STATUS_DB', 'messages_status');
+		}
+
+		if (!defined('MSG_STATUS_UNSEEN')) {
+			define('MSG_STATUS_UNSEEN', '0');
+		}
+	}
+
 	public function send($args) {
 		$this->info("begin process of sending messages", [
 			'wiki_mode' => $args['sendModeWikis'],
@@ -830,7 +842,7 @@ class SiteWideMessagesTask extends BaseTask {
 			->SELECT('city_useshared')
 			->FROM('city_list')
 			->WHERE('city_id')->EQUAL_TO($wikiID)
-			->run($dbr, function($res) use ($this, $wikiID) {
+			->run($dbr, function($res) use ($wikiID) {
 				/** @var \ResultWrapper $res */
 				if ($row = $res->fetchObject()) {
 					if ($row->city_useshared != '1') {
