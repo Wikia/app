@@ -581,7 +581,6 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 	 * @param $hubSlotsValues
 	 */
 	private function prepareHubsForm( $hubSlotsValues ) {
-		// TODO default value = 0
 		$this->hubsForm->setFieldsValues($hubSlotsValues);
 
 		$response = $this->app->sendRequest(
@@ -616,7 +615,7 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 		}
 
 		$choices[] = [
-			'value' => '0',
+			'value' => '',
 			'option' => wfMessage('manage-wikia-home-hubs-slot-empty-option')->plain()
 		];
 
