@@ -354,7 +354,7 @@ class WikiService extends WikiaModel {
 	 *
 	 * @return mixed|null|string
 	 */
-	public function getWikiImages( $wikiIds, $imageWidth, $imageHeight = self::IMAGE_HEIGHT_KEEP_ASPECT_RATIO ) {
+	public function getWikiImages( $wikiIds, $imageWidth, $imageHeight = null ) {
 		$images = array();
 		try {
 			$db = wfGetDB( DB_SLAVE, array(), $this->wg->ExternalSharedDB );
@@ -390,7 +390,9 @@ class WikiService extends WikiaModel {
 				$main_image = array_shift($wiki_main_images);
 				$file_handler = new PromoXWikiImage( $main_image);
 				$images[$wiki_id] = ImagesService::overrideThumbnailFormat(
-					$file_handler->getThumbnailUrl( $imageWidth ),
+					$file_handler->getThumbnailUrl(
+						empty($imageHeight)?$imageWidth:implode('x', [$imageWidth, $imageHeight])
+					),
 					ImagesService::EXT_JPG
 				);
 			}
