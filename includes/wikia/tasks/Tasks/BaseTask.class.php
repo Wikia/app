@@ -240,6 +240,13 @@ abstract class BaseTask {
 	}
 
 	/**
+	 * @return string
+	 */
+	public function getTaskId() {
+		return $this->taskId;
+	}
+
+	/**
 	 * get a list of all task methods this class can execute via Special:Tasks
 	 *
 	 * @return array
