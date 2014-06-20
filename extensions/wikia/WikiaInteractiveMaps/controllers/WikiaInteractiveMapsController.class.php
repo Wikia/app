@@ -409,6 +409,13 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 				self::PAGE_NAME . '/' . $response[ 'content' ]->id,
 				NS_SPECIAL
 			)->getFullUrl();
+
+			// Log new map created
+			WikiaMapsLogger::addLogEntry(
+				WikiaMapsLogger::ACTION_CREATE_MAP,
+				$mapId,
+				$this->getCreationData( 'title' )
+			);
 		}
 
 		return $response;
@@ -537,6 +544,10 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 			if( $response['success'] === true ) {
 				$numberOfPinTypesCreated++;
 			}
+		}
+
+		if ( !empty( $logEntries ) ) {
+			WikiaMapsLogger::addLogEntries( $logEntries );
 		}
 
 		$this->setCreationData( 'createdPinTypes', $numberOfPinTypesCreated );

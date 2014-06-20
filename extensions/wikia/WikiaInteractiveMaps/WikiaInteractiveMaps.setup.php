@@ -27,6 +27,7 @@ $wgAutoloadClasses[ 'WikiaInteractiveMapsUploadImageFromFile' ] = $dir . 'WikiaI
 
 // model classes
 $wgAutoloadClasses[ 'WikiaMaps' ] = $dir . '/models/WikiaMaps.class.php';
+$wgAutoloadClasses[ 'WikiaMapsLogger' ] = $dir . '/models/WikiaMapsLogger.class.php';
 
 // special pages
 $wgSpecialPages[ 'InteractiveMaps' ] = 'WikiaInteractiveMapsController';
@@ -55,3 +56,21 @@ JSMessages::registerPackage( 'WikiaInteractiveMapsDeleteMap', [
 	'wikia-interactive-maps-delete-map-client-*'
 ] );
 
+// Logs
+$wgLogTypes[] = 'maps';
+$wgLogNames['maps'] = 'wikia-interactive-maps-log-name';
+$wgLogHeaders['maps'] = 'wikia-interactive-maps-log-description';
+
+$logActionsHandler = 'WikiaMapsLogger::formatLogEntry';
+
+$wgLogActionsHandlers[ 'maps/create_map' ] = $logActionsHandler;
+$wgLogActionsHandlers[ 'maps/update_map' ] = $logActionsHandler;
+$wgLogActionsHandlers[ 'maps/delete_map' ] = $logActionsHandler;
+
+$wgLogActionsHandlers[ 'maps/create_pin_type' ] = $logActionsHandler;
+$wgLogActionsHandlers[ 'maps/update_pin_type' ] = $logActionsHandler;
+$wgLogActionsHandlers[ 'maps/delete_pin_type' ] = $logActionsHandler;
+
+$wgLogActionsHandlers[ 'maps/create_pin' ] = $logActionsHandler;
+$wgLogActionsHandlers[ 'maps/update_pin' ] = $logActionsHandler;
+$wgLogActionsHandlers[ 'maps/delete_pin' ] = $logActionsHandler;

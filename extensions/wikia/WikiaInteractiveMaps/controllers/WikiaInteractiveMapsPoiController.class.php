@@ -29,9 +29,11 @@ class WikiaInteractiveMapsPoiController extends WikiaInteractiveMapsBaseControll
 	 */
 	public function editPoi() {
 		$poiId = $this->request->getInt( 'id' );
+		$mapId = $this->request->getInt( 'mapId' );
+		$name = $this->request->getVal( 'name' );
 		$this->setData( 'poiId', $poiId );
-		$this->setData( 'mapId', $this->request->getInt( 'mapId' ) );
-		$this->setData( 'name', $this->request->getVal( 'name' ) );
+		$this->setData( 'mapId', $mapId );
+		$this->setData( 'name', $name );
 		$this->setData( 'poiCategoryId', $this->request->getInt( 'poi_category_id' ) );
 		$this->setData( 'articleLink', $this->request->getVal( 'link' ) );
 		$this->setData( 'lat', (float) $this->request->getVal( 'lat' ) );
@@ -43,8 +45,22 @@ class WikiaInteractiveMapsPoiController extends WikiaInteractiveMapsBaseControll
 
 		if( $poiId > 0 ) {
 			$results = $this->updatePoi();
+			if ( true === $results[ 'success' ] ) {
+				WikiaMapsLogger::addLogEntry(
+					WikiaMapsLogger::ACTION_UPDATE_PIN,
+					$mapId,
+					$name
+				);
+			}
 		} else {
 			$results = $this->createPoi();
+			if ( true === $results[ 'success' ] ) {
+				WikiaMapsLogger::addLogEntry(
+					WikiaMapsLogger::ACTION_CREATE_PIN,
+					$mapId,
+					$name
+				);
+			}
 		}
 
 		$this->setVal( 'results', $results );
@@ -60,11 +76,21 @@ class WikiaInteractiveMapsPoiController extends WikiaInteractiveMapsBaseControll
 	 */
 	public function deletePoi() {
 		$this->setAction( self::ACTION_DELETE );
-		$this->setData( 'poiId', $this->request->getInt( 'id' ) );
+		$poiId = $this->request->getInt( 'id' );
+		$mapId = $this->request->getInt( 'mapId' );
+		$this->setData( 'poiId', $poiId );
 
 		$this->validatePoiData();
 
-		$this->setVal( 'results', $this->mapsModel->deletePoi( $this->getData( 'poiId' ) ) );
+		$results = $this->mapsModel->deletePoi( $this->getData( 'poiId' ) );
+		if ( true === $results[ 'success' ] ) {
+			WikiaMapsLogger::addLogEntry(
+				WikiaMapsLogger::ACTION_DELETE_PIN,
+				$mapId,
+				$poiId
+			);
+		}
+		$this->setVal( 'results', $results );
 	}
 
 	/**
