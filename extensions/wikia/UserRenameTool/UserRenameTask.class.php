@@ -34,6 +34,18 @@ class UserRenameTask extends BaseTask {
 
 		$noErrors = true;
 
+		// ComSup wants the StaffLogger to keep track of renames...
+		$this->staffLog(
+			'start',
+			$params,
+			\RenameUserLogFormatter::start(
+				$params['requestor_name'],
+				$params['rename_old_name'],
+				$params['rename_new_name'],
+				$params['reason'],
+				[ $this->getTaskId() ]
+			)
+		);
 		foreach ($wikiCityIds as $cityId) {
 			/**
 			 * execute maintenance script
@@ -72,11 +84,23 @@ class UserRenameTask extends BaseTask {
 				'output' => $output,
 			];
 			if ( $exitCode > 0 ) {
-				\Wikia\Logger\WikiaLogger::instance()->error($logMessage, $logContext);
+				$this->error($logMessage, $logContext);
 				$noErrors = false;
 			} else {
-				\Wikia\Logger\WikiaLogger::instance()->info($logMessage, $logContext);
+				$this->info($logMessage, $logContext);
 			}
+			$this->staffLog(
+				'log',
+				$params,
+				\RenameUserLogFormatter::wiki(
+					$params['requestor_name'],
+					$params['rename_old_name'],
+					$params['rename_new_name'],
+					$cityId,
+					$params['reason'],
+					$exitCode > 0
+				)
+			);
 		}
 
 		// clean up pre-process setup
@@ -100,7 +124,61 @@ class UserRenameTask extends BaseTask {
 			}
 		}
 
+		if ( $noErrors ) {
+			$this->staffLog(
+				'finish',
+				$params,
+				\RenameUserLogFormatter::finish(
+					$params['requestor_name'],
+					$params['rename_old_name'],
+					$params['rename_new_name'],
+					$params['reason'],
+					[ $this->getTaskId() ]
+				)
+			);
+		} else {
+			$this->staffLog(
+				'fail',
+				$params,
+				\RenameUserLogFormatter::fail(
+					$params['requestor_name'],
+					$params['rename_old_name'],
+					$params['rename_new_name'],
+					$params['reason'],
+					[ $this->getTaskId() ]
+				)
+			);
+		}
+
 		return $noErrors;
+	}
+
+	/**
+	 * Shim compatibility with RenameUserProcess calling ->log on this object
+	 *
+	 * @param string $text
+	 */
+	public function log( $text ) {
+		$this->info( $text );
+	}
+
+	/**
+	 * Curry the StaffLogger function
+	 *
+	 * @param string $action Which action to log ('start', 'complete', 'fail', 'log')
+	 * @param array $params The params given to `#renameUser`
+	 * @param string $text The text to log
+	 */
+	protected function staffLog( $action, array $params, $text ) {
+		\StaffLogger::log(
+			'renameuser',
+			$action,
+			$params['requestor_id'],
+			$params['requestor_name'],
+			$params['rename_user_id'],
+			$params['rename_new_name'],
+			$text
+		);
 	}
 
 	/**

@@ -99,9 +99,10 @@ class TaskRunner {
 			'CreatePdfThumbnailsJob',
 //		'CreateWikiLocalJob',
 			'ImageReviewTask',
-			'PromoteImageReviewTask',
+//			'PromoteImageReviewTask',
 			'UserRollback',
-//			'UserRename',
+			'UserRename',
+			'HTMLCacheUpdate',
 		]);
 	}
 }
