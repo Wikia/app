@@ -2,7 +2,10 @@
 
 /**
  * Script that migrates single non-xwiki file to xwiki promote data
- *
+ * Example usage:
+ * SERVER_ID=177 php extensions/wikia/CityVisualization/maintenance/MigrateSingleFileToXWiki.php \
+ * 	http://img3.wikia.nocookie.net/__cb20131015191159/runescape/images/f/f0/Wikia-Visualization-Main.png 304 en 0 0 \
+ * "2013-06-17 06:43:58" 2 "2013-06-17 06:43:58" "2013-06-17 06:43:58" 4068340
  * @ingroup Maintenance
  */
 
