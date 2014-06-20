@@ -105,11 +105,12 @@ class TaskRunner {
 		return in_array($taskName, [
 			'CreatePdfThumbnailsJob',
 //		'CreateWikiLocalJob',
+			'HTMLCacheUpdate',
 			'ImageReviewTask',
 //			'PromoteImageReviewTask',
 			'UserRollback',
 			'UserRename',
-			'HTMLCacheUpdate',
+			'SWMSendToGroupTask',
 		]);
 	}
 }
