@@ -39,7 +39,7 @@
 				<?php
 
 				foreach($imageList as $n => $image) {
-					$id = "img-{$image['wikiId']}-{$image['pageId']}";
+					$id = "img-{$image['wikiId']}-{$image['name']}";
 					$stateId = intval($image['state']);
 					?>
 
