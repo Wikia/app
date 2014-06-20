@@ -36,11 +36,11 @@ class UserApiController extends WikiaApiController {
 		$users = (new UserService())->getUsers( $ids );
 		$items = array();
 		foreach ( $users as $user ) {
-			$userName = $user->getName() ? $user->getName() : 'Anonymous';
+			$userName = $user->getName();
 
 			$item = array(
 				'user_id' => $user->getId(),
-				'title' => $user->getTitleKey() ? $user->getTitleKey() : 'Anonymous',
+				'title' => $user->getTitleKey(),
 				'name' => $userName,
 				'url' => AvatarService::getUrl( $userName ),
 				'numberofedits' => (int) $user->getEditCountLocal()
