@@ -1,6 +1,6 @@
 <?php
 
-class WikiaMaps {
+class WikiaMaps extends WikiaObject {
 
 	const DEFAULT_MEMCACHE_EXPIRE_TIME = 3600;
 	const ENTRY_POINT_MAP = 'map';
@@ -37,6 +37,7 @@ class WikiaMaps {
 	];
 
 	public function __construct( $config ) {
+		parent::__construct();
 		$this->config = $config;
 	}
 
@@ -201,16 +202,16 @@ class WikiaMaps {
 	}
 
 	/**
-	 * Returns render empty point for map
+	 * Returns render empty point for map (adds the language for each request)
 	 *
-	 * @param Array $params the first element is required and it should be concatenated {mapId}/{zoom}/{lat}/{lon}
-	 *                      rest of the array elements will get added as URI parameters after ? sign
-	 *
-	 * @return string
+	 * @param array $segments URL segments
+	 * @param array $params Additional get params
+	 * @return string URL
 	 */
-	public function getMapRenderUrl( Array $params ) {
-		$entryPointParams = array_shift( $params );
-		return $this->buildUrl( self::ENTRY_POINT_RENDER . '/' . $entryPointParams, $params );
+	public function getMapRenderUrl( Array $segments, Array $params = []) {
+		array_unshift( $segments, self::ENTRY_POINT_RENDER );
+		$params[ 'uselang' ] = $this->wg->lang->getCode();
+		return $this->buildUrl( $segments, $params );
 	}
 
 	/**
