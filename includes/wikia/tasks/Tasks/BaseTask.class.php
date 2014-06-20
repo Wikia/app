@@ -253,13 +253,6 @@ abstract class BaseTask {
 		return $this->taskId;
 	}
 
-	/** @see Loggable::getLoggerContext */
-	protected function getLoggerContext() {
-		return [
-			'task_id' => $this->taskId,
-		];
-	}
-
 	// following are wrappers that will eventually call the same functions in AsyncTaskList
 
 	/**
