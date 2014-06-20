@@ -21,6 +21,9 @@ $excludedWikis = array(
 	90248 => 'archie',
 	4385  => 'darkhorse',
 	2446  => 'imagecomics',
+	4470  => 'saintsrow',
+	1221  => 'es.pokemon',
+	3035  => 'fallout',
 );
 
 function getVEForcedValue( $wikiId ) {
