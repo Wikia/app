@@ -1,6 +1,8 @@
 @import '../../../../skins/oasis/css/core/color';
 @import '../../../../skins/oasis/css/mixins/clearfix';
 
+$default-border-color: #d8e3e9;
+
 .wkhome {
 	>h1 {
 		font-size: 1.6em;
@@ -12,15 +14,13 @@
 	.wkhome-section {
 		@include clearfix;
 		margin-top: 10px;
-		&.wkhome-games .wkhome-hero {
-			border-top: 5px solid $color-wikiahome-videogames;
+
+		@for $i from 1 through 7 {
+			&.hub-slot-#{$i} .wkhome-hero{
+				border-top: 5px solid get_command_line_param("hub-color-slot-#{$i}", $default-border-color);
+			}
 		}
-		&.wkhome-entertainment .wkhome-hero {
-			border-top: 5px solid $color-wikiahome-entertainment;
-		}
-		&.wkhome-lifestyle .wkhome-hero {
-			border-top: 5px solid $color-wikiahome-lifestyle;
-		}
+
 		&.wkhome-community .wkhome-hero {
 			background-color: #f4f4f4;
 			border-top: 5px solid $color-wikiahome-community;

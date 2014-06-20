@@ -256,10 +256,8 @@ class WikiaHomePageController extends WikiaController {
 	}
 
 	public function wikiaMobileIndex() {
-		//$this->response->addAsset('extensions/wikia/WikiaHomePage/css/WikiaHomePageMobile.scss');
-		$response = $this->app->sendRequest('WikiaHomePageController', 'getHubImages');
 		$this->lang = $this->wg->contLang->getCode();
-		$this->hubImages = $response->getVal('hubImages', '');
+		$this->hubsSlots = $this->prepareHubsSectionSlots();
 	}
 
 	public function footer() {
