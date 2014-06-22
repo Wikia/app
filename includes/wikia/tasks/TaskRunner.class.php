@@ -98,7 +98,8 @@ class TaskRunner {
 		return in_array($taskName, [
 			'CreatePdfThumbnailsJob',
 //		'CreateWikiLocalJob',
-//			'PromoteImageReviewTask',
+			'ImageReviewTask',
+			'PromoteImageReviewTask',
 			'UserRollback',
 //			'UserRename',
 		]);
