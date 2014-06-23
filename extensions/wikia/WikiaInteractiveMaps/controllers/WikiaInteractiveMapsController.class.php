@@ -188,6 +188,12 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 			$result = $this->mapsModel->deleteMapById( $mapId )[ 'success' ];
 		}
 		if ( $result ) {
+			WikiaMapsLogger::addLogEntry(
+				WikiaMapsLogger::ACTION_DELETE_MAP,
+				$mapId,
+				$mapId
+			);
+
 			NotificationsController::addConfirmation( wfMessage( 'wikia-interactive-maps-delete-map-success' ) );
 			$this->response->setVal(
 				'redirectUrl',
