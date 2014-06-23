@@ -5,6 +5,7 @@ require_once( dirname( __FILE__ ) . '/IndexerWorkerBase.php' );
 class ReindexEventGenerator extends IndexerWorkerBase {
 
 	const WG_CONTENT_NAMESPACES_KEY = 'wgContentNamespaces';
+	const DELAY = 200; //1m = 1sec
 
 	protected function preprocess() {
 		$db = wfGetDB( DB_SLAVE );
@@ -15,6 +16,7 @@ class ReindexEventGenerator extends IndexerWorkerBase {
 				$msg->cityId = $this->city_id;
 				$msg->pageId = $row->page_id;
 				$this->publish('article.index', $msg);
+				usleep(static::DELAY);
 			});
 	}
 }
