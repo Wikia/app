@@ -146,10 +146,10 @@ your email preferences here: http://community.wikia.com/Special:Preferences',
 	'forum-activity-module-started' => '$1 started a discussion $2',
 
 	/* Contribution/RC */
-	'forum-contributions-line' => '$5 ($6 | $7) $8 <a href="$1">$2</a> on the <a href="$3">$4 board</a>',
+	'forum-contributions-line' => '[[$1|$2]] on the [[$3|$4 board]]',
 
-	'forum-recentchanges-new-message' => 'on the <a href="$1">$2 Board</a>',
-	'forum-recentchanges-edit' => '(edited message)',
+	'forum-recentchanges-new-message' => 'on the [[$1|$2 Board]]',
+	'forum-recentchanges-edit' => 'edited message',
 	'forum-recentchanges-removed-thread' => 'removed thread "[[$1|$2]]" from the [[$3|$4 Board]]',
 	'forum-recentchanges-removed-reply' => 'removed reply from "[[$1|$2]]" from the [[$3|$4 Board]]',
 	'forum-recentchanges-restored-thread' => 'restored thread "[[$1|$2]]" to the [[$3|$4 Board]]',
@@ -361,10 +361,7 @@ Parameters:
 	'forum-contributions-line' => "Contributions item. Parameters:
 * $2 is the thread title
 * $4 is the board title
-* $5 is the timestamp
-* $6 is the diff link if applicable
-* $7 is the history link
-* $8 is N if it's a new thread",
+",
 	'forum-recentchanges-new-message' => 'The text added after the article link on recent changes entries. Parameters:
 * $2 is the board title',
 	'forum-recentchanges-edit' => 'Default edit summary text on recent changes',
@@ -583,9 +580,9 @@ ___________________________________________<br />
 	'forum-related-module-heading' => 'مواضيع ذات صلة',
 	'forum-activity-module-posted' => '$1 رد على $2',
 	'forum-activity-module-started' => 'بدأ $1 نقاشًا $2',
-	'forum-contributions-line' => '$5 ($6 | $7) $8 <a href="$1">$2</a> على <a href="$3">جدار $4</a>',
-	'forum-recentchanges-new-message' => 'على <a href="$1">$2 لوحة</a>',
-	'forum-recentchanges-edit' => '(تم تعديل الرسالة)',
+	'forum-contributions-line' => '[[$1|$2]] على [[$3|جدار $4]]',
+	'forum-recentchanges-new-message' => 'على [[$1|$2 لوحة]]',
+	'forum-recentchanges-edit' => 'تم تعديل الرسالة',
 	'forum-recentchanges-removed-thread' => 'قام بحذف النقاش "[[$1|$2]]"  من [[$3|جدار $4]]',
 	'forum-recentchanges-removed-reply' => 'حذف الرد من  "[[$1|$2]]" من [[$3|جدار $4]]',
 	'forum-recentchanges-restored-thread' => 'استعاد النقاش "[[$1|$2]]" إلى [[$3|جدار $4]]',
@@ -741,8 +738,8 @@ ___________________________________________
 	'forum-related-module-heading' => 'Neudennadoù liammet',
 	'forum-activity-module-posted' => '$1 en deus postet ur respont $2',
 	'forum-activity-module-started' => '$1 en deus kroget gant ur gaoz $2',
-	'forum-recentchanges-new-message' => 'en <a href="$1">isforom $2</a>',
-	'forum-recentchanges-edit' => '(kemennadenn aozet)',
+	'forum-recentchanges-new-message' => 'en [[$1|isforom $2]]',
+	'forum-recentchanges-edit' => 'kemennadenn aozet',
 	'forum-recentchanges-deleted-reply-title' => 'Ur gemennadenn',
 	'forum-recentchanges-namespace-selector-message-wall' => 'Isforom',
 	'forum-recentchanges-history-link' => 'istor an isforom',
@@ -970,9 +967,9 @@ abmelden oder deine E-Mail-Einstellungen hier ändern: http://community.wikia.co
 	'forum-related-module-heading' => 'Ähnliche Threads',
 	'forum-activity-module-posted' => '$1 hinterließ eine Antwort $2',
 	'forum-activity-module-started' => '$1 startete eine Diskussion $2',
-	'forum-contributions-line' => '$5 ($6 | $7) $8 <a href="$1">$2</a> auf dem <a href="$3">Board $4</a>',
-	'forum-recentchanges-new-message' => 'auf dem <a href="$1">Board $2</a>',
-	'forum-recentchanges-edit' => '(Nachricht bearbeitet)',
+	'forum-contributions-line' => '[[$1|$2]] auf dem [[$3|Board $4]]',
+	'forum-recentchanges-new-message' => 'auf dem [[$1|Board $2]]',
+	'forum-recentchanges-edit' => 'Nachricht bearbeitet',
 	'forum-recentchanges-removed-thread' => 'Thread „[[$1|$2]]“ vom [[$3|Board $4]] entfernt',
 	'forum-recentchanges-removed-reply' => 'Antwort von „[[$1|$2]]“ aus dem [[$3|Board $4]] entfernt',
 	'forum-recentchanges-restored-thread' => 'Thread „[[$1|$2]]“ auf dem [[$3|Board $4]] wiederhergestellt',
@@ -1153,9 +1150,9 @@ ___________________________________________ <br />
 	'forum-related-module-heading' => 'Temas relacionados',
 	'forum-activity-module-posted' => '$1 publicó una respuesta $2',
 	'forum-activity-module-started' => '$1 abrió un nuevo tema $2',
-	'forum-contributions-line' => '$5 ($6 | $7) $8 <a href="$1">$2</a> en el <a href="$3">subforo $4</a>',
-	'forum-recentchanges-new-message' => 'en el <a href="$1">subforo $2</a>',
-	'forum-recentchanges-edit' => '(mensaje editado)',
+	'forum-contributions-line' => '[[$1|$2]] en el [[$3|subforo $4]]',
+	'forum-recentchanges-new-message' => 'en el [[$1|subforo $2]]',
+	'forum-recentchanges-edit' => 'mensaje editado',
 	'forum-recentchanges-removed-thread' => 'borró el tema "[[$1|$2]]" del [[$3|subforo $4]]',
 	'forum-recentchanges-removed-reply' => 'borró una respuesta en "[[$1|$2]]" del [[$3|subforo $4]]',
 	'forum-recentchanges-restored-thread' => 'restauró el tema "[[$1|$2]]" del [[$3|subforo $4]]',
@@ -1349,9 +1346,9 @@ ___________________________________________<br />
 	'forum-related-module-heading' => 'Tähän liittyvät keskustelut',
 	'forum-activity-module-posted' => '$1 vastasi $2',
 	'forum-activity-module-started' => '$1 aloitti keskustelun $2',
-	'forum-contributions-line' => '$5 ($6 | $7) $8 <a href="$1">$2</a> palstalla <a href="$3">$4</a>',
-	'forum-recentchanges-new-message' => '<a href="$1">$2 -palstalla</a>',
-	'forum-recentchanges-edit' => '(muokkasi viestiä)',
+	'forum-contributions-line' => '[[$1|$2]] palstalla [[$3|$4]]',
+	'forum-recentchanges-new-message' => '[[$1|$2 -palstalla]]',
+	'forum-recentchanges-edit' => 'muokkasi viestiä',
 	'forum-recentchanges-removed-thread' => 'poisti keskustelun "[[$1|$2]]" palstalta [[$3|$4]]',
 	'forum-recentchanges-removed-reply' => 'poisti vastauksen [[$3|$4 -palstan]] keskustelusta "[[$1|$2]]"',
 	'forum-recentchanges-restored-thread' => 'palautti keskustelun "[[$1|$2]]" [[$3|$4 -palstalle]]',
@@ -1528,9 +1525,9 @@ ___________________________________________
 	'forum-related-module-heading' => 'Discussions connexes',
 	'forum-activity-module-posted' => '$1 a envoyé une réponse $2',
 	'forum-activity-module-started' => '$1 a démarré une discussion $2',
-	'forum-contributions-line' => '$5 ($6 | $7) $8 <a href="$1">$2</a> sur le <a href="$3">sous-forum $4</a>',
-	'forum-recentchanges-new-message' => 'sur le <a href="$1">sous-forum $2</a>',
-	'forum-recentchanges-edit' => '(message modifié)',
+	'forum-contributions-line' => '[[$1|$2]] sur le [[$3|sous-forum $4]]',
+	'forum-recentchanges-new-message' => 'sur le [[$1|sous-forum $2]]',
+	'forum-recentchanges-edit' => 'message modifié',
 	'forum-recentchanges-removed-thread' => 'a retiré la discussion «&nbsp;[[$1|$2]]&nbsp;» du [[$3|sous-forum $4]]',
 	'forum-recentchanges-removed-reply' => 'a retiré une réponse à «&nbsp;[[$1|$2]]&nbsp;» sur le [[$3|sous-forum $4]]',
 	'forum-recentchanges-restored-thread' => 'a restauré la discussion «&nbsp;[[$1|$2]]&nbsp;» sur le [[$3|sous-forum $4]]',
@@ -1617,7 +1614,7 @@ Antes de colaborar nos foros de {{SITENAME}} teña en conta as seguintes prácti
 :Por favor, tome un momento para visitar os subforos deste wiki e ver se xa existe un debate sobre o que quere falar. Se non atopa o que busca, comeza unha nova conversa!
 
 '''Pida axuda.'''
-:Algo non se ve como debería? Ten algunha pregunta? Pida axuda aquí, no foro! Se necesita a axuda do persoal de Wikia, pode ir á nosa [[w:c:community|central da comunidade]] ou preguntar a través de [[Special:Contact|Contacto]]. 
+:Algo non se ve como debería? Ten algunha pregunta? Pida axuda aquí, no foro! Se necesita a axuda do persoal de Wikia, pode ir á nosa [[w:c:community|central da comunidade]] ou preguntar a través de [[Special:Contact|Contacto]].
 
 '''Divírtase!'''
 :A comunidade de {{SITENAME}} alégrase de que estea aquí. Queremos ver como fala sobre o tema que máis nos gusta.
@@ -1706,9 +1703,9 @@ as preferencias de correo electrónico aquí: http://community.wikia.com/Special
 	'forum-related-module-heading' => 'Fíos relacionados',
 	'forum-activity-module-posted' => '$1 publicou unha resposta $2',
 	'forum-activity-module-started' => '$1 empezou unha conversa $2',
-	'forum-contributions-line' => '$5 ($6 | $7) $8 <a href="$1">$2</a> no <a href="$3">taboleiro "$4"</a>',
-	'forum-recentchanges-new-message' => 'no <a href="$1">taboleiro "$2"</a>',
-	'forum-recentchanges-edit' => '(mensaxe editada)',
+	'forum-contributions-line' => '[[$1|$2]] no [[$3|taboleiro "$4"]]',
+	'forum-recentchanges-new-message' => 'no [[$1|taboleiro "$2"]]',
+	'forum-recentchanges-edit' => 'mensaxe editada',
 	'forum-recentchanges-removed-thread' => 'eliminou o fío "[[$1|$2]]" do [[$3|taboleiro "$4"]]',
 	'forum-recentchanges-removed-reply' => 'eliminou a resposta "[[$1|$2]]" do [[$3|taboleiro "$4"]]',
 	'forum-recentchanges-restored-thread' => 'restaurou o fío "[[$1|$2]]" no [[$3|taboleiro "$4"]]',
@@ -1889,7 +1886,7 @@ $MESSAGE_NO_HTML
 
 ウィキア
 ___________________________________________
-* ウィキアの最新情報は ja.community.wikia.com で確認できます。	
+* ウィキアの最新情報は ja.community.wikia.com で確認できます。
 * メールの受信に関する設定は以下のページで行えます: http://ja.community.wikia.com/Special:Preferences',
 	'forum-mail-notification-body-HTML' => '$WATCHER さん、
 <p>$SUBJECT</p>
@@ -1899,7 +1896,7 @@ ___________________________________________
 <p><a style="padding: 4px 10px;background-color: #006CB0; color: #FFF !important;text-decoration: none;" href="$MESSAGE_LINK">スレッドを見る</a></p>
 <p>ウィキア</p>
 ___________________________________________<br />
-* ウィキアの最新情報は ja.community.wikia.com で確認できます。<br />	
+* ウィキアの最新情報は ja.community.wikia.com で確認できます。<br />
 * メールの受信に関する設定は以下のページで行えます: http://ja.community.wikia.com/Special:Preferences',
 	'forum-wiki-activity-msg' => '-- $1',
 	'forum-wiki-activity-msg-name' => '$1板',
@@ -1907,9 +1904,9 @@ ___________________________________________<br />
 	'forum-related-module-heading' => '関連スレッド',
 	'forum-activity-module-posted' => '$1 による返信の投稿: $2',
 	'forum-activity-module-started' => '$1 によるスレッドの作成: $2',
-	'forum-contributions-line' => '$5 ($6 | $7) $8 <a href="$1">$2</a> -- <a href="$3">$4板</a>',
-	'forum-recentchanges-new-message' => '-- <a href="$1">$2板</a>',
-	'forum-recentchanges-edit' => '(メッセージを編集)',
+	'forum-contributions-line' => '[[$1|$2]] -- [[$3|$4板]]',
+	'forum-recentchanges-new-message' => '-- [[$1|$2板]]',
+	'forum-recentchanges-edit' => 'メッセージを編集',
 	'forum-recentchanges-removed-thread' => 'が[[$3|$4板]]からスレッド「[[$1|$2]]」を除去しました',
 	'forum-recentchanges-removed-reply' => 'が[[$3|$4板]]のスレッド「[[$1|$2]]」から返信を除去しました',
 	'forum-recentchanges-restored-thread' => 'が[[$3|$4板]]にスレッド「[[$1|$2]]」を復帰しました',
@@ -2151,9 +2148,9 @@ keutamaan e-mel anda di sini: http://community.wikia.com/Special:Preferences',
 	'forum-related-module-heading' => 'Kiriman yang Berkaitan',
 	'forum-activity-module-posted' => '$1 telah mengirimkan jawapan $2',
 	'forum-activity-module-started' => '$1 telah memulakan perbincangan $2',
-	'forum-contributions-line' => '$5 ($6 | $7) $8 <a href="$1">$2</a> di <a href="$3">papan $4</a>',
-	'forum-recentchanges-new-message' => 'di <a href="$1">Papan $2</a>',
-	'forum-recentchanges-edit' => '(pesanan diubah)',
+	'forum-contributions-line' => '[[$1|$2]] di [[$3|papan $4]]',
+	'forum-recentchanges-new-message' => 'di [[$1|Papan $2]]',
+	'forum-recentchanges-edit' => 'pesanan diubah',
 	'forum-recentchanges-removed-thread' => 'kiriman "[[$1|$2]]" dibuang daripada [[$3|Papan $4]]',
 	'forum-recentchanges-removed-reply' => 'jawapan daripada "[[$1|$2]]" dibuang daripada [[$3|Papan $4]]',
 	'forum-recentchanges-restored-thread' => 'kiriman "[[$1|$2]]" dipulihkan ke [[$3|Papan $4]]',
@@ -2302,9 +2299,9 @@ e-mailvoorkeuren wijzingen: http://community.wikia.com/Special:Preferences',
 	'forum-related-module-heading' => 'Gerelateerde onderwerpen',
 	'forum-activity-module-posted' => '$1 heeft $2 gereageerd',
 	'forum-activity-module-started' => '$1 heeft $2 een onderwerp geplaatst',
-	'forum-contributions-line' => '$5 ($6 | $7) $8 <a href="$1">$2</a> op het <a href="$3">prikbord $4</a>',
-	'forum-recentchanges-new-message' => 'op het <a href="$1">prikbord $2</a>',
-	'forum-recentchanges-edit' => '(bericht bewerkt)',
+	'forum-contributions-line' => '[[$1|$2]] op het [[$3|prikbord $4]]',
+	'forum-recentchanges-new-message' => 'op het [[$1|prikbord $2]]',
+	'forum-recentchanges-edit' => 'bericht bewerkt',
 	'forum-recentchanges-deleted-reply-title' => 'Een bericht',
 	'forum-recentchanges-namespace-selector-message-wall' => 'Forumprikbord',
 	'forum-recentchanges-thread-history-link' => 'draadgeschiedenis',
@@ -2431,17 +2428,17 @@ $MESSAGE_NO_HTML
 -- $AUTHOR
 
 Przejdź do wiadomości($MESSAGE_LINK)
- 
+
 Zespół Wikii
 
 ___________________________________________
 * Znajdź pomoc w Centrum Społeczności: http://spolecznosc.wikia.com
 * Nie chcesz otrzymywać wiadomości? Możesz zmienić ustawienia tutaj: http://community.wikia.com/Special:Preferences',
 	'forum-mail-notification-body-HTML' => 'Witaj $WATCHER,
-<p>$SUBJECT.</p> 
+<p>$SUBJECT.</p>
 <p><a href="$MESSAGE_LINK">$METATITLE</a></p>
 <p>$MESSAGE_HTML</p>
-<p>-- $AUTHOR_SIGNATURE<p> 			
+<p>-- $AUTHOR_SIGNATURE<p>
 <p><a style="padding: 4px 10px;background-color: #006CB0; color: #FFF !important;text-decoration: none;" href="$MESSAGE_LINK">Przejdź do wiadomości</a></p>
 <p>Zespół Wikii</p>
 ___________________________________________<br />
@@ -2453,9 +2450,9 @@ ___________________________________________<br />
 	'forum-related-module-heading' => 'Podobne wątki',
 	'forum-activity-module-posted' => '$1 napisał(a) odpowiedź $2',
 	'forum-activity-module-started' => '$1 rozpoczął dyskusję $2',
-	'forum-contributions-line' => '$5 ($6 | $7) $8 <a href="$1">$2</a> na <a href="$3">subforum $4</a>',
-	'forum-recentchanges-new-message' => 'na <a href="$1">subforum $2</a>',
-	'forum-recentchanges-edit' => '(edytowano wiadomość)',
+	'forum-contributions-line' => '[[$1|$2]] na [[$3|subforum $4]]',
+	'forum-recentchanges-new-message' => 'na [[$1|subforum $2]]',
+	'forum-recentchanges-edit' => 'edytowano wiadomość',
 	'forum-recentchanges-removed-thread' => '{{GENDER:$5|usunął|usunęła}} wątek "[[$1|$2]]" z [[$3|subforum $4]]', # Fuzzy
 	'forum-recentchanges-removed-reply' => '{{GENDER:$5|usunął|usunęła}} odpowiedź z "[[$1|$2]]" na [[$3|subforum $4]]', # Fuzzy
 	'forum-recentchanges-restored-thread' => '{{GENDER:$5|przywrócił|przywróciła}} wątek "[[$1|$2]]" na [[$3|subforum $4]]', # Fuzzy
@@ -2627,9 +2624,9 @@ ___________________________________________<br />
 	'forum-related-module-heading' => 'Conversas relacionadas',
 	'forum-activity-module-posted' => '$1 postou uma resposta $2',
 	'forum-activity-module-started' => '$1 começou uma discussão $2',
-	'forum-contributions-line' => '$5 ($6 | $7) $8 <a href="$1">$2</a> no <a href="$3">quadro $4</a>',
-	'forum-recentchanges-new-message' => 'no <a href="$1"> Quadro $2</a>',
-	'forum-recentchanges-edit' => '(mensagem editada)',
+	'forum-contributions-line' => '[[$1|$2]] no [[$3|quadro $4]]',
+	'forum-recentchanges-new-message' => 'no [[$1|Quadro $2]]',
+	'forum-recentchanges-edit' => 'mensagem editada',
 	'forum-recentchanges-removed-thread' => 'conversa removida "[[$1|$2]]" no [[$3|$4 Quadro]]',
 	'forum-recentchanges-removed-reply' => 'resposta removida "[[$1|$2]]" no [[$3|$4 Quadro]]',
 	'forum-recentchanges-restored-thread' => 'conversa restaurada "[[$1|$2]]" no [[$3|$4 Quadro]]',
@@ -2729,9 +2726,9 @@ $messages['pt-br'] = array(
 	'forum-discussion-placeholder-message-short' => 'Postar uma nova mensagem',
 	'forum-activity-module-posted' => '$1 postou uma resposta $2',
 	'forum-activity-module-started' => '$1 iniciou uma discussão $2',
-	'forum-contributions-line' => '$5 ($6 | $7) $8 <a href="$1">$2</a> no <a href="$3">painel $4</a>',
-	'forum-recentchanges-new-message' => 'no <a href="$1">Painel $2</a>',
-	'forum-recentchanges-edit' => '(mensagem editada)',
+	'forum-contributions-line' => '[[$1|$2]] no [[$3|painel $4]]',
+	'forum-recentchanges-new-message' => 'no [[$1|Painel $2]]',
+	'forum-recentchanges-edit' => 'mensagem editada',
 	'forum-recentchanges-history-link' => 'histórico do painel',
 	'forum-recentchanges-thread-history-link' => 'histórico do tópico',
 	'forum-board-history-title' => 'histórico do painel',
@@ -2873,9 +2870,9 @@ ___________________________________________<br />
 	'forum-related-module-heading' => 'Связанные темы',
 	'forum-activity-module-posted' => '$1 опубликовал ответ $2',
 	'forum-activity-module-started' => '$1 начал обсуждение $2',
-	'forum-contributions-line' => '$5 ($6 | $7) $8 <a href="$1">$2</a> в разделе <a href="$3">$4</a>',
-	'forum-recentchanges-new-message' => 'в <a href="$1">разделе $2</a>',
-	'forum-recentchanges-edit' => '(отредактированное сообщение)',
+	'forum-contributions-line' => '[[$1|$2]] в разделе [[$3|$4]]',
+	'forum-recentchanges-new-message' => 'в [[$1|разделе $2]]',
+	'forum-recentchanges-edit' => 'отредактированное сообщение',
 	'forum-recentchanges-removed-thread' => 'удалена тема «[[$1|$2]]» в разделе [[$3|$4]]',
 	'forum-recentchanges-removed-reply' => 'удалён ответ «[[$1|$2]]» в разделе [[$3|$4]]',
 	'forum-recentchanges-restored-thread' => 'восстановлена тема «[[$1|$2]]» в разделе [[$3|$4]]',
@@ -3047,9 +3044,9 @@ ___________________________________________<br />
 	'forum-related-module-heading' => 'Relaterade trådar',
 	'forum-activity-module-posted' => '$1 svarade $2',
 	'forum-activity-module-started' => '$1 startade en diskussion $2',
-	'forum-contributions-line' => '$5 ($6 | $7) $8 <a href="$1">$2</a> i <a href="$3">underforumet $4</a>',
-	'forum-recentchanges-new-message' => 'i <a href="$1">underforumet $2</a>',
-	'forum-recentchanges-edit' => '(redigerat meddelande)',
+	'forum-contributions-line' => '[[$1|$2]] i [[$3|underforumet $4]]',
+	'forum-recentchanges-new-message' => 'i [[$1|underforumet $2]]',
+	'forum-recentchanges-edit' => 'redigerat meddelande',
 	'forum-recentchanges-removed-thread' => 'tog bort tråden "[[$1|$2]]" från [[$3|underforumet $4]]',
 	'forum-recentchanges-removed-reply' => 'tog bort svar från "[[$1|$2]]" från [[$3|underforumet $4]]',
 	'forum-recentchanges-restored-thread' => 'återställde tråden "[[$1|$2]]" till [[$3|underforumet $4]]',
@@ -3122,32 +3119,32 @@ $messages['te'] = array(
 	'forum-specialpage-board-lastpostby' => 'చివరి టపా చేసినది',
 	'forum-specialpage-policies-edit' => 'మార్చు',
 	'forum-specialpage-policies' => 'వేదిక విధానాలు / FAQ',
-	'forum-policies-and-faq' => "==వేదిక విధానాలు== 
+	'forum-policies-and-faq' => "==వేదిక విధానాలు==
 {{SITENAME}} వేదికల్లో పాల్గొనే ముందు, అక్కడి నడవడిక విషయమై కొన్ని ఉత్తమ పద్ధతులను మనసులో పెట్టుకోండి.
 
-'''చక్కగా, ప్రజల పట్ల మర్యాదగా ఉండండి.''' 
+'''చక్కగా, ప్రజల పట్ల మర్యాదగా ఉండండి.'''
 : ప్రపంచవ్యాప్తంగా ఉన్న ప్రజలు ఈ వికీలోను, ఇక్కడి వేదికల్లోనూ చదవడం రాయడం చేస్తూంటారు. సామూహిక కార్యక్రమాలన్నింటిలో లానే, ప్రతీసారీ ప్రతీ ఒక్కరూ ఏకాభిప్రాయానికి రారు. చర్చల్లో మర్యాదగా ఉండండి. భిన్నాభిప్రాయాలను స్వాగతించండి. ఒకే అంశాన్ని ఇష్టపడేవాళ్లం కాబట్టే మనందరం ఇక్కడకు చేరాం.
 
-'''ఈసరికే జరిగిన చర్చల కోసం చూడండి. అయితే కొత్త తీగను మొదలుపెట్టడానికి వెనకాడకండి.''' 
-:ఒక్క నిముషం సమయం తీసుకోండి. మీరు చర్చించదలచిన విషయంపై {{SITENAME}} వేదిక బోర్డులలో ఈసరికే ఏదైనా చర్చ జరిగిందేమో చూడండి. మీకు కావలసినది దొరక్కపోతే, వెంటనే రంగంలోకి దూకండి, కొత్త చర్చను మొదలుపెట్టండి! 
+'''ఈసరికే జరిగిన చర్చల కోసం చూడండి. అయితే కొత్త తీగను మొదలుపెట్టడానికి వెనకాడకండి.'''
+:ఒక్క నిముషం సమయం తీసుకోండి. మీరు చర్చించదలచిన విషయంపై {{SITENAME}} వేదిక బోర్డులలో ఈసరికే ఏదైనా చర్చ జరిగిందేమో చూడండి. మీకు కావలసినది దొరక్కపోతే, వెంటనే రంగంలోకి దూకండి, కొత్త చర్చను మొదలుపెట్టండి!
 
-'''సాయం అడగండి.''' 
+'''సాయం అడగండి.'''
 :ఏదైనా సరిగ్గా ఉన్నట్టు అనిపించలేదా? ఏదైనా సందేహముందా? ఇక్కడ, వేదికల్లో సాయం అడగండి! Wikia సిబ్బంది నుండి సాయం అసరమైతే, [[w:c:community|సముదాయ కేంద్రం]] లేదా [[Special:Contact]] ద్వారా సంప్రదించండి.
 
-'''పండగ చేసుకోండి!''' 
-:మీరిక్కడికి రావడం {{SITENAME}} సముదాయానికి సంతోషంగా ఉంది. మనందరం ఇష్టపడే ఈ అంశం గురించి చేసే చర్చలో మీరు పాల్గొనడం కోసం మేం ఎదురుచూస్తూంటాం. 
+'''పండగ చేసుకోండి!'''
+:మీరిక్కడికి రావడం {{SITENAME}} సముదాయానికి సంతోషంగా ఉంది. మనందరం ఇష్టపడే ఈ అంశం గురించి చేసే చర్చలో మీరు పాల్గొనడం కోసం మేం ఎదురుచూస్తూంటాం.
 
-==వేదిక FAQ== 
-'''నాకు ఆసక్తి ఉన్న చర్చల పట్ల తాజా సమాచారం ఎప్పటికప్పుడు నాకు ఎలా తెలుస్తుంది?''' 
-: Wikia వాడుకరి ఖాతా ఉంటే, మీరు ఎంచుకున్న చర్చలను అనుసరించవచ్చు. తాజాగా చర్చ ఏమైనా జరిగితే మీకు వార్తా సందేశాలు వస్తాయి (సైటులోగానీ, ఈమెయిలు ద్వారాగానీ). మీకు Wikia ఖాతా లేకపోతే, [[Special:UserSignup|ఖాతా తెరవండి]]. 
+==వేదిక FAQ==
+'''నాకు ఆసక్తి ఉన్న చర్చల పట్ల తాజా సమాచారం ఎప్పటికప్పుడు నాకు ఎలా తెలుస్తుంది?'''
+: Wikia వాడుకరి ఖాతా ఉంటే, మీరు ఎంచుకున్న చర్చలను అనుసరించవచ్చు. తాజాగా చర్చ ఏమైనా జరిగితే మీకు వార్తా సందేశాలు వస్తాయి (సైటులోగానీ, ఈమెయిలు ద్వారాగానీ). మీకు Wikia ఖాతా లేకపోతే, [[Special:UserSignup|ఖాతా తెరవండి]].
 
-'''దుశ్చర్యను తొలగించడం ఎలా?''' 
-: ఏదైనా తీగలో దుశ్చర్యగానీ, స్పాముగానీ కనిపిస్తే, సదరు పాఠ్యం మీదకు మీ మౌసును తీసుకుపోండి. \"మరింత\" అనే బొత్తాం ఒకటి కనిపిస్తుంది. \"మరింత\" మెనూలో, \"తీసివెయ్యి\" అనే లింకు కనిపిస్తుంది. దీని సాయంతో దుశ్చర్యను తీసెయ్యవచ్చు. కావాలనుకుంటే నిర్వాహకునికి సమాచారం ఇవ్వవచ్చు కూడాను. 
+'''దుశ్చర్యను తొలగించడం ఎలా?'''
+: ఏదైనా తీగలో దుశ్చర్యగానీ, స్పాముగానీ కనిపిస్తే, సదరు పాఠ్యం మీదకు మీ మౌసును తీసుకుపోండి. \"మరింత\" అనే బొత్తాం ఒకటి కనిపిస్తుంది. \"మరింత\" మెనూలో, \"తీసివెయ్యి\" అనే లింకు కనిపిస్తుంది. దీని సాయంతో దుశ్చర్యను తీసెయ్యవచ్చు. కావాలనుకుంటే నిర్వాహకునికి సమాచారం ఇవ్వవచ్చు కూడాను.
 
-'''ఈభలేలు ఏమిటి?''' 
-: ఏదైనా చర్చగానీ, జవాబుగానీ ఆసక్తికరంగా ఉన్నా, ఆలోచనాత్మకంగా ఉన్నా, ముచ్చటగొలుపుతున్నా మీ మెప్పును వెంటనే భలే ఇవ్వడం ద్వారా చెప్పెయ్యవచ్చు. వోటేసే సందర్భాల్లో కూడా అది ఉపయోగపడుతుంది. 
+'''ఈభలేలు ఏమిటి?'''
+: ఏదైనా చర్చగానీ, జవాబుగానీ ఆసక్తికరంగా ఉన్నా, ఆలోచనాత్మకంగా ఉన్నా, ముచ్చటగొలుపుతున్నా మీ మెప్పును వెంటనే భలే ఇవ్వడం ద్వారా చెప్పెయ్యవచ్చు. వోటేసే సందర్భాల్లో కూడా అది ఉపయోగపడుతుంది.
 
-'''అంశాలంటే ఏమిటి?''' 
+'''అంశాలంటే ఏమిటి?'''
 : వేదిక చర్చలను వికీ వ్యాసానికి అనుసంధించడానికి అంశాలు పనికొస్తాయి. వేదికలను ఒక పద్ధతిలో పెట్టేందుకు, ప్రజలు తమకిష్టమైన చర్చలను తేలిగ్గా కనుక్కునేలా చేసేందుకు ఇదో పద్ధతి. ఉదాహరణకు, \"ఆంధ్ర ప్రదేశ్ విభజన\" అనే అంశం కలిగిన వేదిక తీగ \"ఆంధ్ర ప్రదేశ్ విభజన\" అనే వ్యాసపు అడుగున కనిపిస్తుంది.",
 	'forum-board-title' => '$1 బోర్డు',
 	'forum-board-topic-title' => '$1 గురించి చర్చలు',
@@ -3219,9 +3216,9 @@ ___________________________________________<br />
 	'forum-related-module-heading' => 'సంబంధిత తీగలు',
 	'forum-activity-module-posted' => '$2, $1 జవాబిచ్చారు',
 	'forum-activity-module-started' => '$2 $1 ఓ చర్చను మొదలుపెట్టారు',
-	'forum-contributions-line' => '$5 ($6 | $7) $8 <a href="$1">$2</a>, <a href="$3">$4 బోర్డు</a>లో',
-	'forum-recentchanges-new-message' => '<a href="$1">$2 బోర్డు</a>లో',
-	'forum-recentchanges-edit' => '(సరిదిద్దిన సందేశం)',
+	'forum-contributions-line' => '[[$1|$2]], [[$3|$4 బోర్డు]]లో',
+	'forum-recentchanges-new-message' => '[[$1|$2 బోర్డు]]లో',
+	'forum-recentchanges-edit' => 'సరిదిద్దిన సందేశం',
 	'forum-recentchanges-removed-thread' => '[[$3|$4 బోర్డు]] నుండి "[[$1|$2]]" తీగ తొలగించబడింది',
 	'forum-recentchanges-removed-reply' => '[[$3|$4 బోర్డు]] నుండి "[[$1|$2]]" జవాబు తొలగించబడింది',
 	'forum-recentchanges-restored-thread' => '[[$3|$4 బోర్డు]] లోకి "[[$1|$2]]" తీగ పునస్థాపించబడింది',
@@ -3406,9 +3403,9 @@ ___________________________________________<br />
 	'forum-related-module-heading' => 'Схожі потоки',
 	'forum-activity-module-posted' => '$1 відправив відповідь $2',
 	'forum-activity-module-started' => '$1 розпочав обговорення $2',
-	'forum-contributions-line' => '$5 ($6 | $7) $8 <a href="$1">$2</a> на <a href="$3">стіні $4</a>',
-	'forum-recentchanges-new-message' => 'на <a href="$1">стіні $2</a>',
-	'forum-recentchanges-edit' => '(відредаговане повідомлення)',
+	'forum-contributions-line' => '[[$1|$2]] на [[$3|стіні $4]]',
+	'forum-recentchanges-new-message' => 'на [[$1|стіні $2]]',
+	'forum-recentchanges-edit' => 'відредаговане повідомлення',
 	'forum-recentchanges-removed-thread' => 'вилучено тему "[[$1|$2]]" із [[$3|стіни $4]]',
 	'forum-recentchanges-removed-reply' => 'вилучено відповідь із "[[$1|$2]]" на [[$3|стіні $4]]',
 	'forum-recentchanges-restored-thread' => 'відновлено тему "[[$1|$2]]" на [[$3|стіну $4]]',
@@ -3581,9 +3578,9 @@ ___________________________________________<br />
 	'forum-related-module-heading' => 'Chủ đề liên quan',
 	'forum-activity-module-posted' => '$1 gửi một trả lời cách đây $2',
 	'forum-activity-module-started' => '$1 bắt đầu một cuộc thảo luận cách đây $2',
-	'forum-contributions-line' => '$5 ($6 | $7) $8 <a href="$1">$2</a> trên <a href="$3">tường của $4</a>',
-	'forum-recentchanges-new-message' => 'trên các <a href="$1">Board $2</a>',
-	'forum-recentchanges-edit' => '(sửa đổi tin nhắn)',
+	'forum-contributions-line' => '[[$1|$2]] trên [[$3|tường của $4]]',
+	'forum-recentchanges-new-message' => 'trên các [[$1|Board $2]]',
+	'forum-recentchanges-edit' => 'sửa đổi tin nhắn',
 	'forum-recentchanges-removed-thread' => 'dời bỏ các chủ đề "[[$1|$2]]" từ các [[$3|Board $4]]',
 	'forum-recentchanges-removed-reply' => 'dời bỏ trả lời từ "[[$1|$2]]" từ [[$3|Board $4]]',
 	'forum-recentchanges-restored-thread' => 'khôi phục các chủ đề "[[$1|$2]]" từ [[$3|Board $4]]',
@@ -3782,10 +3779,10 @@ ___________________________________________<br />
 	'forum-activity-module-started' => '$1发起了话题$2',
 
 	/* Contribution/RC */
-	'forum-contributions-line' => '$5 ($6 | $7) $8 <a href="$1">$2</a>在<a href="$3">$4上</a>',
+	'forum-contributions-line' => '[[$1|$2]]在[[$3|$4上]]',
 
-	'forum-recentchanges-new-message' => '在<a href="$1">$2上</a>',
-	'forum-recentchanges-edit' => '(编辑信息)',
+	'forum-recentchanges-new-message' => '在[[$1|$2上]]',
+	'forum-recentchanges-edit' => '编辑信息',
 	'forum-recentchanges-removed-thread' => '从[[$3|$4]]移除"[[$1|$2]]"',
 	'forum-recentchanges-removed-reply' => '从[[$3|$4]]的"[[$1|$2]]"移除回复',
 	'forum-recentchanges-restored-thread' => '恢复[[$3|$4]]上的"[[$1|$2]]"',
@@ -3982,9 +3979,9 @@ ___________________________________________<br />
 	'forum-related-module-heading' => '相关讨论',
 	'forum-activity-module-posted' => '$1在$2发布了一条回复',
 	'forum-activity-module-started' => '$1发起了讨论$2',
-	'forum-contributions-line' => '$5（$6|$7）$8<a href="$1">$2</a>在<a href="$3">$4板面</a>',
-	'forum-recentchanges-new-message' => '在<a href="$1">$2板面</a>',
-	'forum-recentchanges-edit' => '(编辑信息)',
+	'forum-contributions-line' => '[[$1|$2]]在[[$3|$4板面]]',
+	'forum-recentchanges-new-message' => '在[[$1|$2板面]]',
+	'forum-recentchanges-edit' => '编辑信息',
 	'forum-recentchanges-removed-thread' => '已从[[$3|$4 板块]]移除回复“[[$1|$2]]”',
 	'forum-recentchanges-deleted-reply-title' => '一个主题',
 	'forum-recentchanges-namespace-selector-message-wall' => '论坛讨论区',
@@ -4111,9 +4108,9 @@ $messages['zh-hant'] = array(
 	'forum-related-module-heading' => '相關討論',
 	'forum-activity-module-posted' => '$1在$2發布了一條回覆',
 	'forum-activity-module-started' => '$1 在$2 發起了一個討論',
-	'forum-contributions-line' => '$5（$6|$7）$8<a href="$1">$2</a>在<a href="$3">$4板面</a>',
-	'forum-recentchanges-new-message' => '在<a href="$1">$2板面</a>',
-	'forum-recentchanges-edit' => '(編輯訊息)',
+	'forum-contributions-line' => '[[$1|$2]]在[[$3|$4板面]]',
+	'forum-recentchanges-new-message' => '在[[$1|$2板面]]',
+	'forum-recentchanges-edit' => '編輯訊息',
 	'forum-recentchanges-removed-thread' => ' 從[[$3|$4 板面]]移除討論串 "[[$1|$2]]"',
 	'forum-recentchanges-removed-reply' => '從[[$3|$4 板面]]移除 "[[$1|$2]]"討論串',
 	'forum-recentchanges-restored-thread' => '將討論串 "[[$1|$2]]" 儲存到 [[$3|$4 板面]]',
