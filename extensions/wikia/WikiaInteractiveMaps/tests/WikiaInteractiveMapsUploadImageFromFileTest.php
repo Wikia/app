@@ -8,7 +8,8 @@ class WikiaInteractiveMapsUploadImageFromFileTest extends WikiaBaseTest {
 		$uploadImageFromFileMock = $this->getUploadImageFromFileMock(
 			$expected,
 			true,
-			false
+			false,
+			true
 		);
 
 		$uploadImageFromFileMock
@@ -29,6 +30,7 @@ class WikiaInteractiveMapsUploadImageFromFileTest extends WikiaBaseTest {
 		$expected = [ 'status' => 'success' ];
 		$uploadImageFromFileMock = $this->getUploadImageFromFileMock(
 			$expected,
+			true,
 			true,
 			true
 		);
@@ -53,6 +55,7 @@ class WikiaInteractiveMapsUploadImageFromFileTest extends WikiaBaseTest {
 		$uploadImageFromFileMock = $this->getUploadImageFromFileMock(
 			[ 'status' => 'success' ],
 			true,
+			true,
 			true
 		);
 
@@ -71,12 +74,41 @@ class WikiaInteractiveMapsUploadImageFromFileTest extends WikiaBaseTest {
 		);
 	}
 
-	private function getUploadImageFromFileMock( $uploadDetailsMock, $isUploadSuccessfulMock, $isUploadPoiCategoryMock ) {
+	public function testVerifyUpload_failed_file_extension() {
+		$expected = [ 'status' => UploadBase::FILETYPE_BADTYPE ];
+		$uploadImageFromFileMock = $this->getUploadImageFromFileMock(
+			[ 'status' => 'success' ],
+			true,
+			false,
+			false
+		);
+
+		$uploadImageFromFileMock
+			->expects( $this->never() )
+			->method( 'getUploadedImageSize' );
+
+		/**
+		 * @var WikiaInteractiveMapsUploadImageFromFile $uploadImageFromFileMock
+		 */
+		$this->assertEquals(
+			$expected,
+			$uploadImageFromFileMock->verifyUpload( 'mocked type' ),
+			'Failed update due to wrong file extension'
+		);
+	}
+
+	private function getUploadImageFromFileMock(
+		$uploadDetailsMock,
+		$isUploadSuccessfulMock,
+		$isUploadPoiCategoryMock,
+		$isValidFileExtensionMock
+	) {
 		$uploadImageFromFileMock = $this->getMock( 'WikiaInteractiveMapsUploadImageFromFile', [
 			'getUploadDetails',
 			'isUploadSuccessful',
 			'isUploadPoiCategory',
 			'getUploadedImageSize',
+			'isValidFileExtension',
 		] );
 
 		$uploadImageFromFileMock
@@ -93,6 +125,11 @@ class WikiaInteractiveMapsUploadImageFromFileTest extends WikiaBaseTest {
 			->expects( $this->once() )
 			->method( 'isUploadPoiCategory' )
 			->will( $this->returnValue( $isUploadPoiCategoryMock ) );
+
+		$uploadImageFromFileMock
+			->expects( $this->once() )
+			->method( 'isValidFileExtension' )
+			->will( $this->returnValue( $isValidFileExtensionMock ) );
 
 		return $uploadImageFromFileMock;
 	}
