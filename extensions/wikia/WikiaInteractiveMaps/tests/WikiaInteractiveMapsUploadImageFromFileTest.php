@@ -6,7 +6,14 @@ class WikiaInteractiveMapsUploadImageFromFileTest extends WikiaBaseTest {
 	/**
 	 * @dataProvider verifyUploadDataProvider
 	 */
-	public function testVerifyUpload( $testDescription, $uploadDetailsMock, $isUploadSuccessfulMock, $isUploadPoiCategoryMock, $expected ) {
+	public function testVerifyUpload(
+		$testDescription,
+		$uploadDetailsMock,
+		$isUploadSuccessfulMock,
+		$isUploadPoiCategoryMock,
+		$uploadImageSizeMock,
+		$expected
+	) {
 		$uploadImageFromFileMock = $this->getMock( 'WikiaInteractiveMapsUploadImageFromFile', [
 			'getUploadDetails',
 			'isUploadSuccessful',
@@ -32,7 +39,7 @@ class WikiaInteractiveMapsUploadImageFromFileTest extends WikiaBaseTest {
 		$uploadImageFromFileMock
 			->expects( $this->any() )
 			->method( 'getUploadedImageSize' )
-			->will( $this->returnValue( [ 1, 2 ] ) );
+			->will( $this->returnValue( $uploadImageSizeMock ) );
 
 		/**
 		 * @var WikiaInteractiveMapsUploadImageFromFile $uploadImageFromFileMock
@@ -43,11 +50,28 @@ class WikiaInteractiveMapsUploadImageFromFileTest extends WikiaBaseTest {
 	public function verifyUploadDataProvider() {
 		return [
 			[
-				'Successful update which is not POI category image upload',
+				'Successful update which IS NOT POI category image upload',
 				'uploadDetailsMock' => [ 'status' => 'success' ],
 				'isUploadSuccessfulMock' => true,
 				'isUploadPoiCategory' => false,
+				'uploadImageSizeMock' => [ 1, 2 ],
 				'expected' => [ 'status' => 'success' ],
+			],
+			[
+				'Successful update which IS POI category image upload',
+				'uploadDetailsMock' => [ 'status' => 'success' ],
+				'isUploadSuccessfulMock' => true,
+				'isUploadPoiCategory' => true,
+				'uploadImageSizeMock' => [ 64, 64 ],
+				'expected' => [ 'status' => 'success' ],
+			],
+			[
+				'Failed update which IS POI category image upload',
+				'uploadDetailsMock' => [ 'status' => 'success' ],
+				'isUploadSuccessfulMock' => true,
+				'isUploadPoiCategory' => true,
+				'uploadImageSizeMock' => [ 1, 2 ],
+				'expected' => [ 'status' => WikiaInteractiveMapsUploadImageFromFile::PIN_TYPE_MARKER_IMAGE_TOO_SMALL_ERROR ],
 			],
 		];
 	}
