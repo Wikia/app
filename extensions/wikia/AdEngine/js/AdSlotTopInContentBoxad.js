@@ -49,6 +49,7 @@ define('ext.wikia.adEngine.slot.topInContentBoxad', [
 		}
 
 		adPlace.className += ' top-right-ads-in-content';
+		adPlace.style.height = '250px';
 		wikiaArticleCloneDiv.style.position = 'absolute';
 		wikiaArticleCloneDiv.style.visibility = 'hidden';
 
