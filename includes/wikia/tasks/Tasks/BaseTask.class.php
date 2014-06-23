@@ -23,7 +23,7 @@ abstract class BaseTask {
 	protected $createdBy;
 
 	/** @var \User the loaded createdBy user */
-	protected $cretedByUser;
+	protected $createdByUser;
 
 	/** @var \Title title this task is operating on */
 	protected $title = null;
