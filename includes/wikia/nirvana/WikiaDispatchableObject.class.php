@@ -293,7 +293,8 @@ abstract class WikiaDispatchableObject extends WikiaObject {
 	 * @return string The absolute URL
 	 */
 	public static function getNoCookieUrl( $method, $params = null, $format = null ) {
-		return F::app()->wg->CdnApiUrl . self::getLocalUrl( $method, $params, $format );
+		$app = F::app();
+		return wfExpandUrl( F::app()->wg->CdnApiUrl . $app->wg->ScriptPath . self::getLocalUrl( $method, $params, $format ) );
 	}
 
 

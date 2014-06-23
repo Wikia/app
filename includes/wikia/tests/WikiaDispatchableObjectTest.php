@@ -64,12 +64,14 @@ class WikiaDispatchableObjectTest extends WikiaBaseTest {
 	public function testGetNoCookieUrl( $methodName, $params, $format, $encodedParams ) {
 		$className = get_class( $this->dispatchableMock );
 		$mockCdnApiUrl = "api.nocookie.test-server";
-		$requestURI = "{$mockCdnApiUrl}/wikia.php?controller={$className}&method={$methodName}{$encodedParams}";
+		$scriptPath = "/test-path";
+		$requestURI = "{$mockCdnApiUrl}{$scriptPath}/wikia.php?controller={$className}&method={$methodName}{$encodedParams}";
 		if ( !empty( $format ) ) {
 			$requestURI .= '&format=' . $format;
 		}
 
 		$this->mockGlobalVariable( 'wgCdnApiUrl', $mockCdnApiUrl );
+		$this->mockGlobalVariable( 'wgScriptPath', $scriptPath );
 
 		$this->assertEquals( $requestURI, $className::getNoCookieUrl( $methodName, $params, $format ) );
 	}
