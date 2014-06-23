@@ -425,9 +425,9 @@ $facebook-background-color: #3c5b9b;
 		}
 		.subnav {
 			border: none;
-			width: 424px;
+			width: 328px;
 			&.show {
-				left: -425px;
+				left: -329px;
 				top: 0px;
 			}
 			background-color: #fff;
@@ -526,7 +526,7 @@ $facebook-background-color: #3c5b9b;
 
 	@media screen and (max-width: $new-breakpoint-small - 1) {
 		.page-width-container {
-			padding-right: 92px;
+			padding-right: 94px;
 			width: 768px;
 
 			.WikiaLogo {
@@ -562,12 +562,19 @@ $facebook-background-color: #3c5b9b;
 			.AccountNavigation > li > a {
 				padding: 15px 16px 15px 26px;
 			}
+
+			#WallNotifications .subnav {
+				width: 324px;
+				&.show {
+					left: -325px;
+				}
+			}
 		}
 	}
 
 	@media screen and (min-width: $new-breakpoint-small) and (max-width: $new-breakpoint-big)  {
 		.page-width-container {
-			padding-right: 100px;
+			padding-right: 102px;
 			width: $new-breakpoint-small;
 
 			.WikiaLogo {
@@ -597,6 +604,13 @@ $facebook-background-color: #3c5b9b;
 
 			.AccountNavigation > li > a {
 				padding: 15px 19px 15px 31px;
+			}
+
+			#WallNotifications .subnav {
+				width: 292px;
+				&.show {
+					left: -293px;
+				}
 			}
 		}
 	}
