@@ -54,7 +54,7 @@ class WikiaInteractiveMapsUploadImageFromFile extends UploadFromFile {
 	 * @param $status
 	 * @return bool
 	 */
-	private function isUploadSuccessful( $status ) {
+	public function isUploadSuccessful( $status ) {
 		return $status === self::OK;
 	}
 
@@ -64,7 +64,7 @@ class WikiaInteractiveMapsUploadImageFromFile extends UploadFromFile {
 	 * @param String $uploadType
 	 * @return bool
 	 */
-	private function isUploadPoiCategory( $uploadType ) {
+	public function isUploadPoiCategory( $uploadType ) {
 		return $uploadType === self::UPLOAD_TYPE_PIN_TYPE_MARKER;
 	}
 
