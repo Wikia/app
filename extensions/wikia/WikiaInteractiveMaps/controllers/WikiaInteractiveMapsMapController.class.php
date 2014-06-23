@@ -1,7 +1,7 @@
 <?php
 /**
  * Class WikiaInteractiveMapsMapController
- * AJAX entry points for actions connecte dto map creation
+ * AJAX entry points for actions connected to map creation
  */
 class WikiaInteractiveMapsMapController extends WikiaInteractiveMapsBaseController {
 
