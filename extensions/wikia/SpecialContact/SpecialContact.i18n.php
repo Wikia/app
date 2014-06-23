@@ -250,9 +250,9 @@ Wenn du gewöhnliche E-Mails bevorzugst oder Anhänge hast, kannst du uns unter 
  * @author Mirzali
  */
 $messages['diq'] = array(
-	'contact' => 'Wikia İrtibat',
-	'specialcontact-wikia' => 'Wikia İrtibat',
-	'specialcontact-pagetitle' => 'Wikia İrtibat',
+	'contact' => 'Wikia de irtıbat kewe',
+	'specialcontact-wikia' => 'Wikia de irtıbat kewe',
+	'specialcontact-pagetitle' => 'Wikia de irtıbat kewe',
 	'specialcontact-username' => 'Namey Karberi', # Fuzzy
 	'specialcontact-realname' => 'Nameyê şıma',
 	'specialcontact-yourmail' => 'Adresê e-posta',
@@ -556,6 +556,16 @@ $messages['ja'] = array(
 	'specialcontact-mailsubcc' => 'ウィキアへの連絡メールの控え',
 	'specialcontact-ccheader' => 'このメールはあなたがウィキアのサポートに送信した連絡メッセージの控えです',
 	'specialcontact-submitcomplete' => 'ウィキアへご連絡いただきありがとうございます。',
+);
+
+/** Kannada (ಕನ್ನಡ)
+ * @author VASANTH S.N.
+ */
+$messages['kn'] = array(
+	'specialcontact-realname' => 'ನಿಮ್ಮ ಹೆಸರು:',
+	'specialcontact-yourmail' => 'ಮಿಂಚಂಚೆ ವಿಳಾಸ',
+	'specialcontact-problem' => 'ವಿಷಯ',
+	'specialcontact-problemdesc' => 'ಸಂದೇಶ',
 );
 
 /** Korean (한국어)

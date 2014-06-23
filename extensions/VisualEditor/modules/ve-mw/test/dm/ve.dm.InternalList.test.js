@@ -1,7 +1,7 @@
 /*!
  * VisualEditor DataModel MediaWiki-specific InternalList tests.
  *
- * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
@@ -13,12 +13,12 @@ QUnit.test( 'addNode/removeNode', 6, function ( assert ) {
 	var doc = ve.dm.mwExample.createExampleDocument( 'references' ),
 		newInternalList = new ve.dm.InternalList( doc ),
 		referenceNodes = [
-			doc.documentNode.children[0].children[0],
-			doc.documentNode.children[1].children[1],
-			doc.documentNode.children[1].children[3],
-			doc.documentNode.children[1].children[5],
-			doc.documentNode.children[2].children[0],
-			doc.documentNode.children[2].children[1]
+			doc.getDocumentNode().children[0].children[0],
+			doc.getDocumentNode().children[1].children[1],
+			doc.getDocumentNode().children[1].children[3],
+			doc.getDocumentNode().children[1].children[5],
+			doc.getDocumentNode().children[2].children[0],
+			doc.getDocumentNode().children[2].children[1]
 		],
 		expectedNodes = {
 			'mwReference/': {
@@ -78,7 +78,6 @@ QUnit.test( 'addNode/removeNode', 6, function ( assert ) {
 	newInternalList.addNode( 'mwReference/', 'literal/bar', 1, referenceNodes[1] );
 	newInternalList.addNode( 'mwReference/', 'auto/0', 0, referenceNodes[0] );
 	newInternalList.onTransact();
-
 
 	assert.deepEqualWithNodeTree(
 		newInternalList.nodes,

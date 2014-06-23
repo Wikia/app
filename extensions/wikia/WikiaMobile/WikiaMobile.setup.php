@@ -153,7 +153,6 @@ if ( empty( $wgWikiaMobileIncludeJSGlobals ) ) {
 			'wgCdnRootUrl',
 			'wgAssetsManagerQuery',
 			'wgContentLanguage',
-			'wgMedusaSlot',
 			'wgResourceBasePath',
 			'wgMainPageTitle',
 			'wgSitename',
@@ -195,18 +194,4 @@ if ( empty( $wgWikiaMobileIncludeJSGlobals ) ) {
 			'fbUseMarkup',
 			'wgLoginToken'
 		];
-}
-
-//list of Videos provides that we support
-if ( empty( $wgWikiaMobileSupportedVideos ) ) {
-	$wgWikiaMobileSupportedVideos = [
-		'screenplay',
-		'ign',
-		'ooyala',
-		'youtube',
-		'dailymotion',
-		'vimeo',
-		'bliptv',
-		'uStream'
-	];
 }

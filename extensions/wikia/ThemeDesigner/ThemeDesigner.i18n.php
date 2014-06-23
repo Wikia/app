@@ -80,7 +80,7 @@ $messages['qqq'] = array(
 	'themedesigner-desc' => '{{desc}}',
 	'themedesigner-background' => '{{Identical|Background}}',
 	'themedesigner-page' => '{{Identical|Page}}',
-	'themedesigner-color' => '{{Identical|Main}}',
+	'themedesigner-color' => 'Primary background color. {{Identical|Main}}',
 	'themedesigner-color-middle' => 'Background color between background image (when background image is split to two parts in fluid layout.
 {{Identical|Middle}}',
 	'themedesigner-rules-color-middle' => 'Information about position and purpose of color and that can be different from standard background color',
@@ -163,6 +163,7 @@ $messages['af'] = array(
 /** Arabic (العربية)
  * @author Achraf94
  * @author Claw eg
+ * @author Kuwaity26
  * @author Meno25
  * @author OsamaK
  */
@@ -195,7 +196,7 @@ $messages['ar'] = array(
 	'themedesigner-tab-wordmark' => 'الشعار',
 	'themedesigner-preview-mode' => 'وضع المعاينة...',
 	'themedesigner-previous-versions' => 'النسخ السابقة',
-	'themedesigner-button-save-im-done' => 'إحفظ، لقد إنتهيت',
+	'themedesigner-button-save-im-done' => 'حفظ',
 	'themedesigner-button-cancel' => 'إلغاء',
 	'themedesigner-pick-a-color' => 'اختيار لون',
 	'themedesigner-enter-your-own' => 'أدخل الخاصة بك',
@@ -1180,6 +1181,18 @@ $messages['km'] = array(
 	'themedesigner-dimensions-error' => 'រូបភាពធំជាងវិមាត្រកំហិត',
 	'themedesigner-type-error' => 'ប្រភេទឯកសារមិនត្រឹមត្រូវ',
 	'themedesigner-unknown-error' => 'មានបញ្ហាកើតឡើង ដោយយើងមិនដឹងថាមកពីមូលហេតុអ្វី។ សូមសាកល្បងម្ដងទៀត',
+);
+
+/** Kannada (ಕನ್ನಡ)
+ * @author VASANTH S.N.
+ */
+$messages['kn'] = array(
+	'themedesigner-page' => 'ಪುಟ',
+	'themedesigner-color' => 'ಮುಖ್ಯ',
+	'themedesigner-small' => 'ಸಣ್ಣ',
+	'themedesigner-large' => 'ದೊಡ್ಡದು',
+	'themedesigner-size' => 'ಗಾತ್ರ',
+	'themedesigner-button-save' => 'ಉಳಿಸಿ',
 );
 
 /** Korean (한국어)

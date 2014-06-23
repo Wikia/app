@@ -88,8 +88,11 @@ class BlogsHelper {
 		wfProfileIn( __METHOD__ );
 		// schedule a BloglistDeferredPurge job if the article is a blog article.
 		if ( NS_BLOG_ARTICLE == $oArticle->getTitle()->getNamespace() ) {
-			$oJob = new BloglistDeferredPurgeJob( $oArticle->getTitle() );
-			$oJob->insert();
+			global $wgCityId;
+
+			$task = (new \Wikia\Blogs\BlogTask())->wikiId($wgCityId);
+			$task->call('deferredPurge');
+			$task->queue();
 		}
 		wfProfileOut( __METHOD__ );
 		// Always...

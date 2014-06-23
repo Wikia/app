@@ -1,7 +1,7 @@
 /*!
  * VisualEditor DataModel MWInlineImage class.
  *
- * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
@@ -52,7 +52,7 @@ ve.dm.MWInlineImageNode.static.matchTagNames = [ 'span' ];
 ve.dm.MWInlineImageNode.static.blacklistedAnnotationTypes = [ 'link' ];
 
 ve.dm.MWInlineImageNode.static.getMatchRdfaTypes = function () {
-	return Object.keys( this.rdfaToType );
+	return ve.getObjectKeys( this.rdfaToType );
 };
 
 ve.dm.MWInlineImageNode.static.toDataElement = function ( domElements, converter ) {
@@ -74,6 +74,7 @@ ve.dm.MWInlineImageNode.static.toDataElement = function ( domElements, converter
 
 	attributes.width = width !== undefined && width !== '' ? Number( width ) : null;
 	attributes.height = height !== undefined && height !== '' ? Number( height ) : null;
+
 	attributes.isLinked = $firstChild.is( 'a' );
 	if ( attributes.isLinked ) {
 		attributes.href = $firstChild.attr( 'href' );
@@ -149,8 +150,6 @@ ve.dm.MWInlineImageNode.static.toDomElements = function ( data, doc ) {
 			this.typeToRdfa[this.rdfaToType[rdfa]] = rdfa;
 		}
 	}
-
-	span.setAttribute( 'typeof', this.typeToRdfa[data.attributes.type] );
 
 	span.setAttribute( 'typeof', this.typeToRdfa[data.attributes.type] );
 

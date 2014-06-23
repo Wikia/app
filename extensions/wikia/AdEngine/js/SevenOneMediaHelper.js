@@ -31,7 +31,7 @@ define('ext.wikia.adEngine.sevenOneMediaHelper', [
 				SOI_PD: true,    // pushdown
 				SOI_BB: true,    // billboard
 				SOI_WP: true,    // wallpaper
-				SOI_FP: !window.wgAdDriverSevenOneMediaDisableFirePlaces     // fireplace
+				SOI_FP: false    // fireplace
 			},
 			'rectangle1': {
 				SOI_RT1: true,

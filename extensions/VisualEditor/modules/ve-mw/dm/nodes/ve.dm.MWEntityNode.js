@@ -1,7 +1,7 @@
 /*!
  * VisualEditor DataModel MWEntityNode class.
  *
- * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
@@ -34,7 +34,7 @@ ve.dm.MWEntityNode.static.matchTagNames = [ 'span' ];
 ve.dm.MWEntityNode.static.matchRdfaTypes = [ 'mw:Entity' ];
 
 ve.dm.MWEntityNode.static.toDataElement = function ( domElements ) {
-	return { 'type': 'mwEntity', 'attributes': { 'character': domElements[0].textContent } };
+	return { 'type': this.name, 'attributes': { 'character': domElements[0].textContent } };
 };
 
 ve.dm.MWEntityNode.static.toDomElements = function ( dataElement, doc ) {

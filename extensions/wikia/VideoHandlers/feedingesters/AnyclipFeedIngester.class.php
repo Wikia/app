@@ -68,8 +68,8 @@ class AnyclipFeedIngester extends VideoFeedIngester {
 			// check for video id
 			$elements = $item->getElementsByTagNameNS( 'http://search.yahoo.com/mrss/', 'embed' );
 			if ( $elements->length > 0 ) {
-				foreach ( $elements->item(0)->getElementsByTagNameNS('http://search.yahoo.com/mrss/', 'param') as $element ) {
-					if ( $element->getAttribute('name') == 'clipId' ) {
+				foreach ( $elements->item(0)->getElementsByTagNameNS( 'http://search.yahoo.com/mrss/', 'param' ) as $element ) {
+					if ( $element->getAttribute( 'name' ) == 'clipId' ) {
 						$clipData['videoId'] = $element->textContent;
 					}
 				}
@@ -98,11 +98,11 @@ class AnyclipFeedIngester extends VideoFeedIngester {
 
 			$this->getTitleName( $clipData['titleName'], $clipData['videoId'] );
 
-			$clipData['published'] = strtotime( $item->getElementsByTagName('pubDate')->item(0)->textContent );
-			$clipData['videoUrl'] = $item->getElementsByTagName('link')->item(0)->textContent;
+			$clipData['published'] = strtotime( $item->getElementsByTagName( 'pubDate' )->item(0)->textContent );
+			$clipData['videoUrl'] = $item->getElementsByTagName( 'link' )->item(0)->textContent;
 
 			$elements = $item->getElementsByTagNameNS( 'http://search.yahoo.com/mrss/', 'thumbnail' );
-			$clipData['thumbnail'] = ( $elements->length > 0 ) ? $elements->item(0)->getAttribute('url') : '' ;
+			$clipData['thumbnail'] = ( $elements->length > 0 ) ? $elements->item(0)->getAttribute( 'url' ) : '' ;
 
 			$elements = $item->getElementsByTagNameNS( 'http://search.yahoo.com/mrss/', 'keywords' );
 			$clipData['keywords'] = ( $elements->length > 0 ) ? $elements->item(0)->textContent : '' ;
@@ -114,13 +114,13 @@ class AnyclipFeedIngester extends VideoFeedIngester {
 					$clipData['type'] = 'Clip';
 				}
 
-				$clipData['name'] = $elements->item(0)->getAttribute('label');
+				$clipData['name'] = $elements->item(0)->getAttribute( 'label' );
 			}
 
 			$elements = $item->getElementsByTagNameNS( 'http://search.yahoo.com/mrss/', 'content' );
 			if ( $elements->length > 0 ) {
-				$clipData['language'] = $this->getCldrCode( $elements->item(0)->getAttribute('lang'), 'language', false );
-				$clipData['duration'] = $elements->item(0)->getAttribute('duration');
+				$clipData['language'] = $this->getCldrCode( $elements->item(0)->getAttribute( 'lang' ), 'language', false );
+				$clipData['duration'] = $elements->item(0)->getAttribute( 'duration' );
 			}
 
 			$genres = array();
@@ -133,7 +133,7 @@ class AnyclipFeedIngester extends VideoFeedIngester {
 			$actors = array();
 			$elements = $item->getElementsByTagNameNS( 'http://search.yahoo.com/mrss/', 'credit' );
 			foreach ( $elements as $element ) {
-				if ( $element->getAttribute('role') == 'actor' ) {
+				if ( $element->getAttribute( 'role' ) == 'actor' ) {
 					$actors[] = $element->textContent;
 				}
 			}

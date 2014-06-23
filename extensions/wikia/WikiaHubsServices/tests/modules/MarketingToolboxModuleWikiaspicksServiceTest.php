@@ -63,7 +63,8 @@ class MarketingToolboxModuleWikiasPicksServiceTest extends WikiaBaseTest
 					'imageAlt' => null,
 					'imageLink' => null,
 					'sponsoredImageUrl' => null,
-					'sponsoredImageAlt' => null
+					'sponsoredImageAlt' => null,
+					'photoName' => null
 				)
 			),
 			array(
@@ -80,7 +81,8 @@ class MarketingToolboxModuleWikiasPicksServiceTest extends WikiaBaseTest
 					'imageAlt' => 'FakeFileNameAlt.png',
 					'imageLink' => 'http://www.wikia.com',
 					'sponsoredImageUrl' => null,
-					'sponsoredImageAlt' => null
+					'sponsoredImageAlt' => null,
+					'photoName' => 'FakeFileName.png'
 				)
 			),
 			array(
@@ -93,10 +95,11 @@ class MarketingToolboxModuleWikiasPicksServiceTest extends WikiaBaseTest
 					'title' => 'fake title',
 					'text' => 'fake text',
 					'imageUrl' => null,
-					'imageAlt' => null,
+					'imageAlt'  => null,
 					'imageLink' => null,
 					'sponsoredImageUrl' => 'http://example.com/OtherFakeFileName.png',
-					'sponsoredImageAlt' => 'OtherFakeFileNameAlt.png'
+					'sponsoredImageAlt' => 'OtherFakeFileNameAlt.png',
+					'photoName' => null
 				)
 			),
 			array(
@@ -114,7 +117,8 @@ class MarketingToolboxModuleWikiasPicksServiceTest extends WikiaBaseTest
 					'imageAlt' => 'FakeFileNameAlt.png',
 					'imageLink' => 'http://www.wikia.com',
 					'sponsoredImageUrl' => 'http://example.com/OtherFakeFileName.png',
-					'sponsoredImageAlt' => 'OtherFakeFileNameAlt.png'
+					'sponsoredImageAlt' => 'OtherFakeFileNameAlt.png',
+					'photoName' => 'FakeFileName.png'
 				)
 			),
 		);

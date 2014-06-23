@@ -112,7 +112,8 @@ Want to control which emails you receive? Go to: {{fullurl:{{ns:special}}:Prefer
 
 	//WikiaMobile skin
 	'wikiamobile-sendpassword-label' => 'Send new password',
-	'wikiamobile-facebook-connect-fail' => 'Sorry, your Facebook account is not currently linked with a Wikia account.'
+	'wikiamobile-facebook-connect-fail' => 'Sorry, your Facebook account is not currently linked with a Wikia account.',
+	'wikiamobile-go-to-login' => 'Have an account? [[Special:UserLogin|Log in now >]]'
 );
 
 /** Message documentation (Message documentation)
@@ -144,7 +145,8 @@ $messages['qqq'] = array(
 * $1 - the URL address to usersignup page. Please append userlang as appropriate.
 * $2 - the tabindex of this link tag.
 {{Identical|Do not have an account}}',
-	'userlogin-error-invalid-username' => 'Error message upon signup attempt stating username is badly formatted, or invalid',
+	'userlogin-error-invalid-username' => 'Error message upon signup attempt stating username is badly formatted, or invalid.
+{{Identical|Invalid username}}',
 	'userlogin-error-userlogin-unable-info' => 'Error message upon signup attempt stating account cannot be create currently.',
 	'userlogin-error-user-not-allowed' => 'Error message upon signup attempt stating username is unacceptable.',
 	'userlogin-error-captcha-createaccount-fail' => 'Error message upon signup attempt stating CAPTCHA has failed or not entered correctly.',
@@ -188,6 +190,7 @@ $messages['qqq'] = array(
 * $1 is an action link using the message {{msg-wikia|userlogin-loginreqlink}}.',
 	'wikiamobile-sendpassword-label' => 'Label for the button used to request a new password for recovery',
 	'wikiamobile-facebook-connect-fail' => "Shown when a user tries to log in via FBConnect but there's no matching account in our DB, please keep the message as short as possible as the space at disposal is really limited",
+	'wikiamobile-go-to-login' => 'Message on UserSignup that ask user to login if he has an account',
 );
 
 /** Aragonese (aragonés)
@@ -201,6 +204,7 @@ $messages['an'] = array(
 /** Arabic (العربية)
  * @author Achraf94
  * @author Claw eg
+ * @author Kuwaity26
  * @author Mutarjem horr
  * @author ترجمان05
  */
@@ -209,7 +213,7 @@ $messages['ar'] = array(
 	'userlogin-forgot-password' => 'هل نسيت كلمتك للمرور؟',
 	'userlogin-forgot-password-button' => 'واصل',
 	'userlogin-forgot-password-go-to-login' => 'لديك كلمة مرورك فعلا؟ [[Special:UserLogin|سجل الدخول]]',
-	'userlogin-remembermypassword' => 'إبقى مسجلاً الدخول',
+	'userlogin-remembermypassword' => 'ابق مسجل الدخول',
 	'userlogin-error-noname' => 'عفوا، يرجى ملء خانة اسم المستخدم.',
 	'userlogin-error-sessionfailure' => 'انتهت مهلة تسجيل الدخول الخاصة بك. الرجاء تسجيل الدخول مرة أخرى.',
 	'userlogin-error-nosuchuser' => 'لا يمكننا قبول هذا الاسم. تذكر أن أسماء المستخدمين حساسة لحالة الأحرف.',
@@ -597,6 +601,7 @@ Möchtest du deine E-Mail-Einstellungen ändern? Besuche {{fullurl:{{ns:special}
 	'userlogin-changepassword-needlogin' => 'Du musst dich $1, um dein Passwort zu ändern.',
 	'wikiamobile-sendpassword-label' => 'Schicke neues Passwort',
 	'wikiamobile-facebook-connect-fail' => 'Dein Facebook-Konto ist momentan nicht mit deinem Wikia-Benutzerkonto verbunden.',
+	'wikiamobile-go-to-login' => 'Hast du bereits ein Benutzerkonto? [[Special:UserLogin|Jetzt anmelden >]]',
 );
 
 /** Zazaki (Zazaki)
@@ -703,6 +708,7 @@ Para comprobar los acontecimientos más recientes en Wikia, visita http://comuni
 	'userlogin-changepassword-needlogin' => 'Necesitas $1 para cambiar la contraseña.',
 	'wikiamobile-sendpassword-label' => 'Enviar una nueva contraseña',
 	'wikiamobile-facebook-connect-fail' => 'Lo sentimos, pero tu cuenta en Facebook no está actualmente vinculada con una cuenta Wikia.',
+	'wikiamobile-go-to-login' => '¿Tienes una cuenta? [[Special:UserLogin|Inicia sesión >]]',
 );
 
 /** Persian (فارسی)
@@ -909,6 +915,7 @@ Vous souhaitez contrôler les courriels que vous recevez ? Allez à : {{fullurl:
 	'userlogin-changepassword-needlogin' => 'Vous devez $1 pour changer votre mot de passe.',
 	'wikiamobile-sendpassword-label' => 'Envoyer un nouveau mot de passe',
 	'wikiamobile-facebook-connect-fail' => 'Désolé, votre compte Facebook n’est pour le moment pas relié à un compte Wikia.',
+	'wikiamobile-go-to-login' => 'Vous avez un compte ? [[Special:UserLogin|Connectez-vous maintenant >]]',
 );
 
 /** Galician (galego)
@@ -1165,7 +1172,7 @@ $messages['it'] = array(
 	'userlogin-error-userexists' => 'Questo username è già utilizzato da un altro utente. Provane un altro!',
 	'userlogin-error-invalidemailaddress' => 'Per favore inserisci un indirizzo email valido.',
 	'userlogin-get-account' => 'Non hai un account? <a href="$1" tabindex="$2">Registrati</a>',
-	'userlogin-error-invalid-username' => 'Username non valido',
+	'userlogin-error-invalid-username' => 'Nome utente non valido',
 	'userlogin-error-userlogin-unable-info' => 'Ci dispiace, al momento non è stato possibile registrare il tuo account.',
 	'userlogin-error-user-not-allowed' => 'Questo username non è permesso.',
 	'userlogin-error-captcha-createaccount-fail' => 'La parola che hai inserito non corrisponde alla parola nel riquadro, prova di nuovo!',
@@ -1189,7 +1196,7 @@ $messages['it'] = array(
 <br /><br />
 Se non hai richiesto una nuova password, non preoccuparti! Il tuo account è al sicuro. Puoi ignorare questa email e continuare a effettuare il login su Wikia con la tua vecchia password.
 <br /><br />
-Domande o dubbi? Sentiti libero di contattarci.', # Fuzzy
+Domande o dubbi? Sentiti libero di <a href="http://community.wikia.com/wiki/Special:Contact/account-issue">contattarci</a>.',
 	'userlogin-password-email-signature' => 'Wikia Community Support',
 	'userlogin-password-email-body' => 'Ciao $2,
 
@@ -1197,7 +1204,7 @@ Per favore usa questa password temporarea per effettuare il login su Wikia: "$3"
 
 Se non hai richiesto una nuova password, non preoccuparti! Il tuo account è al sicuro. Puoi ignorare questa email e continuare a effettuare il login su Wikia con la tua vecchia password.
 
-Domande o dubbi? Sentiti libero di contattarci.
+Domande o dubbi? Sentiti libero di contattarci: http://community.wikia.com/wiki/Special:Contact/account-issue
 
 Wikia Community Support
 
@@ -1205,7 +1212,7 @@ Wikia Community Support
 ___________________________________________
 
 Per tenerti informato sulle novità di Wikia, visita http://it.community.wikia.com
-Vuoi controllare quali email ricevi? Vai a: {{fullurl:{{ns:special}}:Preferenze}}', # Fuzzy
+Vuoi controllare quali email ricevi? Vai a: {{fullurl:{{ns:special}}:Preferenze}}',
 	'userlogin-email-footer-line1' => 'Per tenerti informato sulle novità di Wikia, visita <a style="color:#2a87d5;text-decoration:none;" href="http://it.community.wikia.com">it.community.wikia.com</a>',
 	'userlogin-email-footer-line2' => '
 Vuoi controllare quali email ricevi? Vai alle tue <a href="{{fullurl:{{ns:special}}:Preferences}}" style="color:#2a87d5;text-decoration:none;">Preferenze</a>',
@@ -1307,6 +1314,13 @@ $messages['krc'] = array(
 	'userlogin-loginreqlink' => 'кириу',
 );
 
+/** Kurdish (Latin script) (Kurdî (latînî)‎)
+ * @author Ghybu
+ */
+$messages['ku-latn'] = array(
+	'userlogin-login-heading' => 'Têkeve',
+);
+
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */
@@ -1386,7 +1400,7 @@ $messages['mk'] = array(
 	'userlogin-forgot-password-go-to-login' => 'Веќе имате лозинка? [[Special:UserLogin|Најавете се]]',
 	'userlogin-remembermypassword' => 'Задржи ме најавен',
 	'userlogin-error-noname' => 'Пополнете го полето за корисничко име.',
-	'userlogin-error-sessionfailure' => 'Најавната сесија ви истече. Најавете се повторно.',
+	'userlogin-error-sessionfailure' => 'Најавната седница ви истече. Најавете се повторно.',
 	'userlogin-error-nosuchuser' => 'Ова име не се признава. Не заборавајте дека системот разликува мали и големи букви.',
 	'userlogin-error-wrongpassword' => 'Погрешна лозинка. Проверете да не пишувате со големи букви и обидете се повторно.',
 	'userlogin-error-wrongpasswordempty' => 'Пополнете го полето за лозинка.',
@@ -1538,6 +1552,7 @@ Ingin mengawal e-mel yang anda terima? Pergi ke: {{fullurl:{{ns:special}}:Prefer
 	'userlogin-changepassword-needlogin' => 'Anda perlu $1 untuk menukar kata laluan baru.',
 	'wikiamobile-sendpassword-label' => 'Hantar kata laluan baru',
 	'wikiamobile-facebook-connect-fail' => 'Maaf, akaun Facebook anda sekarang tidak berpautan dengan sebarang akaun Wikia.',
+	'wikiamobile-go-to-login' => 'Ada akaun? [[Special:UserLogin|Log masuk sekarang >]]',
 );
 
 /** Norwegian Bokmål (norsk bokmål)
@@ -1699,6 +1714,7 @@ $messages['oc'] = array(
 /** Polish (polski)
  * @author Nandy
  * @author Sovq
+ * @author Vengir
  */
 $messages['pl'] = array(
 	'userlogin-login-heading' => 'Zaloguj się',
@@ -1772,6 +1788,7 @@ Chcesz zmienić ustawienia otrzymywanych powiadomień? Zajrzyj tutaj: {{fullurl:
 	'userlogin-changepassword-needlogin' => '$1, aby zmienić swoje hasło.',
 	'wikiamobile-sendpassword-label' => 'Wyślij nowe hasło',
 	'wikiamobile-facebook-connect-fail' => 'Przepraszamy, Twoje konto na Facebooku nie jest obecnie połączone z kontem na Wikii.',
+	'wikiamobile-go-to-login' => 'Masz konto? [[Specjalna:Zaloguj|Zaloguj się >]]', # Fuzzy
 );
 
 /** Piedmontese (Piemontèis)
@@ -2088,6 +2105,7 @@ ___________________________________________
 	'userlogin-changepassword-needlogin' => 'Вам нужно $1, чтобы изменить свой пароль.',
 	'wikiamobile-sendpassword-label' => 'Отправить новый пароль',
 	'wikiamobile-facebook-connect-fail' => 'К сожалению, ваш аккаунт на Facebook в настоящее время не связан с учётной записью Викия.',
+	'wikiamobile-go-to-login' => 'Есть учётная запись? [[Special:UserLogin|Тогда войдите>]]',
 );
 
 /** Scots (Scots)
@@ -2101,49 +2119,49 @@ $messages['sco'] = array(
 	'userlogin-remembermypassword' => 'Stey loggit in',
 	'userlogin-error-noname' => 'Oops, please fil in the uisername field.',
 	'userlogin-error-sessionfailure' => 'Yer log in session haes timed oot. Please log in again.',
-	'userlogin-error-nosuchuser' => 'Hm, we dinna recognize this name. Dinna ferget, uisernames ar case sensitive.',
-	'userlogin-error-wrongpassword' => 'Oops, wrang passwaird. Mak sair that the caps lock is aff n try again.',
+	'userlogin-error-nosuchuser' => 'Hm, we dinna recognise this name. Dinna ferget, uisernames ar case sensitive.',
+	'userlogin-error-wrongpassword' => 'Oops, wrang passwaird. Mak sair that the caps lock is aff n gie it anither shot.',
 	'userlogin-error-wrongpasswordempty' => 'Oops, please fil in the passwaird field.',
 	'userlogin-error-resetpass_announce' => 'It luiks like ye uised ae temparie passwaird. Pick ae new passwaird here tae continue loggin in.',
-	'userlogin-error-login-throttled' => "Ye'v tried tae log in wi the wrang passwaird ower monie times. Wait ae while afore tryin again.",
+	'userlogin-error-login-throttled' => "Ye'v tried tae log in wi the wrang passwaird ower monie times. Wait ae while afore giein it anither shot.",
 	'userlogin-error-login-userblocked' => 'Yer uisername haes been blockit n canna be uised tae log in.',
 	'userlogin-error-edit-account-closed-flag' => 'Yer accoont haes been disabled bi Wikia.',
-	'userlogin-error-cantcreateaccount-text' => 'Yer IP address isna permited tae cræft new accoonts.',
-	'userlogin-error-userexists' => 'Somebodie awreadie haes this uisername. Try ae different yin!',
-	'userlogin-error-invalidemailaddress' => 'Please enter ae valid wab-mail address.',
+	'userlogin-error-cantcreateaccount-text' => 'Yer IP address isna alloued tae creaut new accoonts.',
+	'userlogin-error-userexists' => 'Somebodie awreadie haes this uisername. Gie anither yin ae shot!',
+	'userlogin-error-invalidemailaddress' => 'Please enter ae valid e-mail address.',
 	'userlogin-get-account' => 'Dinna hae aen accoont? <a href="$1" tabindex="$2">Sign up</a>',
 	'userlogin-error-invalid-username' => 'Onvalid uisername',
 	'userlogin-error-userlogin-unable-info' => "Sorrie, we'r no able tae register yer accoont at this time.",
-	'userlogin-error-user-not-allowed' => 'This uisername isna permited.',
+	'userlogin-error-user-not-allowed' => 'This uisername isna alloued.',
 	'userlogin-error-captcha-createaccount-fail' => 'The waird that ye entered didna match the waird in the kist, gie it anither shot!',
 	'userlogin-error-userlogin-bad-birthday' => 'Oops, please fil oot day, month, n year.',
-	'userlogin-error-externaldberror' => 'Sorrie! Oor site is currentlie haein aen issue, please try again later.',
-	'userlogin-error-noemailtitle' => 'Please enter ae valid wab-mail address.',
-	'userlogin-error-acct_creation_throttle_hit' => 'Sorrie, this IP address haes cræfted ower monie accoonts theday. Please try again later.',
+	'userlogin-error-externaldberror' => 'Sorrie! Oor site is haein aen issue the nou, please gie it anither later.',
+	'userlogin-error-noemailtitle' => 'Please enter ae valid e-mail address.',
+	'userlogin-error-acct_creation_throttle_hit' => 'Sorrie, this IP address haes creautit ower monie accoonts theday. Please gie it another shot later.',
 	'userlogin-error-resetpass_forbidden' => 'Passwairds canna be chynged',
-	'userlogin-error-blocked-mailpassword' => 'Ye canna request ae new passwaird cause this IP address is blockit bi Wikia.',
-	'userlogin-error-throttled-mailpassword' => "We'v awreadi sent ae passwaird reminder til this accoont in the laist {{PLURAL:$1|hoor|$1 hoors}}. Please check yer wab-mail.",
-	'userlogin-error-mail-error' => 'Oops, thaur wis ae problem sendin yer wab-mail. Please [[Special:Contact/general|contact us]].',
-	'userlogin-password-email-sent' => "We'v sent ae new passwaird til the wab-mail address fer $1.",
-	'userlogin-error-unconfirmed-user' => "Sorrie, ye'v no confirmed yer wab-mail. Please confirm yer wab-mail firstwhile.",
-	'userlogin-error-confirmation-reminder-already-sent' => 'Confirmation reminder wab-mail awreadie sent.',
+	'userlogin-error-blocked-mailpassword' => 'Ye canna speir fer ae new passwaird cause this IP address is blockit bi Wikia.',
+	'userlogin-error-throttled-mailpassword' => "We'v awreadie sent ae passwaird reminder tae this accoont in the laist {{PLURAL:$1|hoor|$1 hoors}}. Please check yer e-mail.",
+	'userlogin-error-mail-error' => 'Oops, thaur wis ae proablem sendin yer e-mail. Please [[Special:Contact/general|contact us]].',
+	'userlogin-password-email-sent' => "We'v sent ae new passwaird tae the e-mail address fer $1.",
+	'userlogin-error-unconfirmed-user' => "Sorrie, ye'v no confirmed yer e-mail. Please confirm yer e-mail first.",
+	'userlogin-error-confirmation-reminder-already-sent' => 'Confirmation reminder e-mail awreadie sent.',
 	'userlogin-password-page-title' => 'Chynge yer passwaird',
 	'userlogin-oldpassword' => 'Auld passwaird',
 	'userlogin-newpassword' => 'New passwaird',
 	'userlogin-retypenew' => 'Retype new passwaird',
 	'userlogin-password-email-subject' => 'Fergotten passwaird request',
 	'userlogin-password-email-greeting' => 'Hallo $USERNAME,',
-	'userlogin-password-email-content' => 'Please uise this temparie passwaird tae log in til Wikia: "$NEWPASSWORD"
+	'userlogin-password-email-content' => 'Please uise this temparie passwaird tae log in tae Wikia: "$NEWPASSWORD"
 <br /><br />
-Gif ye didna request ae new passwaird, dinna fash! Yer accoont is safe n secure. Ye can ignore this wab-mail n continue tae log in til Wikia wi yer auld passwaird.
+Gif ye didna speir fer ae new passwaird, dinna fash! Yer accoont is safe n secure. Ye can ignore this e-mail n continue tae log in tae Wikia wi yer auld passwaird.
 <br /><br />
 Speirins or concerns? Feel free tae <a href="http://community.wikia.com/wiki/Special:Contact/account-issue">contact us</a>.',
 	'userlogin-password-email-signature' => 'Wikia Communitie Support',
 	'userlogin-password-email-body' => 'Hallo $2,
 
-Please uise this temparie passwaird tae log in til Wikia: "$3"
+Please uise this temparie passwaird tae log in tae Wikia: "$3"
 
-Gif ye didna request ae new passwaird, dinna fash! Yer accoont is safe n secure. Ye can ignore this wab-mail n continue tae log in til Wikia wi yer auld passwaird.
+Gif ye didna speir fer ae new passwaird, dinna fash! Yer accoont is safe n secure. Ye can ignore this e-mail n continue tae log in tae Wikia wi yer auld passwaird.
 
 Speirins or concerns? Feel free tae contact us: http://community.wikia.com/wiki/Special:Contact/account-issue
 
@@ -2154,17 +2172,17 @@ ___________________________________________
 
 Tae check oot the latest happenins oan Wikia, veesit http://community.wikia.com
 Want tae control whit wab-mails ye receive? Gang til: {{fullurl:{{ns:special}}:Preferences}}',
-	'userlogin-email-footer-line1' => 'Tae check oot the latest happenins oan Wikia, veesit <a style="color:#2a87d5;text-decoration:none;" href="http://community.wikia.com">community.wikia.com</a>',
-	'userlogin-email-footer-line2' => 'Want tae control whit wab-mails ye receive? Gang til yer <a href="{{fullurl:{{ns:special}}:Preferences}}" style="color:#2a87d5;text-decoration:none;">Preferences</a>',
+	'userlogin-email-footer-line1' => 'Tae check oot the maist recynt happenins oan Wikia, veesit <a style="color:#2a87d5;text-decoration:none;" href="http://community.wikia.com">community.wikia.com</a>',
+	'userlogin-email-footer-line2' => 'Want tae control whit e-mails ye receeve? Gang tae yer <a href="{{fullurl:{{ns:special}}:Preferances}}" style="color:#2a87d5;text-decoration:none;">Preferances</a>',
 	'userlogin-provider-or' => 'Or',
 	'userlogin-provider-tooltip-facebook' => 'Clap oan the button tae log in wi Facebook',
 	'userlogin-provider-tooltip-facebook-signup' => 'Clap oan the button tae sign up wi Facebook',
-	'userlogin-facebook-show-preferences' => 'Shaw Facebook feed preferences',
+	'userlogin-facebook-show-preferences' => 'Shaw Facebook feed preferances',
 	'userlogin-facebook-hide-preferences' => 'Skauk Facebook feed preferences',
 	'userlogin-loginreqlink' => 'log in',
 	'userlogin-changepassword-needlogin' => 'Ye need tae $1 tae chynge yer passwaird.',
 	'wikiamobile-sendpassword-label' => 'Send new passwaird',
-	'wikiamobile-facebook-connect-fail' => 'Sorrie, yer Facebook accoont isna linked wi ae Wikia accoont richt nou.',
+	'wikiamobile-facebook-connect-fail' => 'Sorrie, yer Facebook accoont is no airtit wi ae Wikia accoont richt nou.',
 );
 
 /** Serbian (Cyrillic script) (српски (ћирилица)‎)
@@ -2318,6 +2336,7 @@ Vill du kontrollera vilka e-postmeddelanden du får? Gå till: {{fullurl:{{ns:sp
 	'userlogin-changepassword-needlogin' => 'Du måste $1 för att ändra ditt lösenord.',
 	'wikiamobile-sendpassword-label' => 'Skicka nytt lösenord',
 	'wikiamobile-facebook-connect-fail' => 'Tyvärr, ditt Facebook-konto är för tillfället inte är länkat med ett Wikia-konto.',
+	'wikiamobile-go-to-login' => 'Har du ett konto? [[Special:UserLogin|Logga in nu >]]',
 );
 
 /** Tamil (தமிழ்)
@@ -2568,6 +2587,7 @@ $messages['tzm'] = array(
  * @author Andriykopanytsia
  * @author Base
  * @author Olvin
+ * @author Ua2004
  */
 $messages['uk'] = array(
 	'userlogin-login-heading' => 'Увійти',
@@ -2640,6 +2660,7 @@ ___________________________________________
 	'userlogin-changepassword-needlogin' => 'Вам необхідно  $1  щоб змінити свій пароль.',
 	'wikiamobile-sendpassword-label' => 'Надіслати новий пароль',
 	'wikiamobile-facebook-connect-fail' => "На жаль, ваш обліковий запис на Facebook наразі не пов'язаний з обліковим записом Wikia.",
+	'wikiamobile-go-to-login' => 'Уже маєте обліковий запис? [[Special:UserLogin|Авторизуйтеся >]]',
 );
 
 /** Uzbek (oʻzbekcha)
@@ -2740,6 +2761,7 @@ Muốn kiểm soát email mà bạn nhận được? Đi đến: {{fullurl:{{ns:
  * @author Bencmq
  * @author Dimension
  * @author Hzy980512
+ * @author Liuxinyu970226
  * @author Sam Wang
  * @author Xiaomingyan
  * @author Yfdyh000
@@ -2815,6 +2837,7 @@ _______________________________________
 	'userlogin-changepassword-needlogin' => '您需要$1来更改您的密码。',
 	'wikiamobile-sendpassword-label' => '发送新密码',
 	'wikiamobile-facebook-connect-fail' => '对不起，您的Facebook帐户现在未链接到WIkia帐户。',
+	'wikiamobile-go-to-login' => '有账户？[[Special:UserLogin|现在就登录吧！！！]]',
 );
 
 /** Traditional Chinese (中文（繁體）‎)

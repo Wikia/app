@@ -220,6 +220,15 @@ class Parser {
 	}
 
 	/**
+	 * Allow extensions to clean up when the parser is cloned
+	 *
+	 * Wikia change - backported from MW 1.21 (CE-815)
+	 */
+	function __clone() {
+		wfRunHooks( 'ParserCloned', array( $this ) );
+	}
+
+	/**
 	 * Do various kinds of initialisation on the first call of the parser
 	 */
 	function firstCallInit() {

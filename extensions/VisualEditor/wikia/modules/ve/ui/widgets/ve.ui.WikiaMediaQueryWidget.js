@@ -31,7 +31,7 @@ ve.ui.WikiaMediaQueryWidget = function VeUiWikiaMediaQueryWidget( config ) {
 	this.request = null;
 	this.requestMediaCallback = ve.bind( this.requestMedia, this );
 	this.timeout = null;
-	this.upload = new ve.ui.WikiaUploadWidget( { '$': this.$ } );
+	this.upload = new ve.ui.WikiaUploadWidget( { '$': this.$, 'icon': true } );
 	this.$outerWrapper = this.$( '<div>' );
 	this.$inputWrapper = this.$( '<div>' );
 	this.$uploadWrapper = this.$( '<div>' );
@@ -250,6 +250,6 @@ ve.ui.WikiaMediaQueryWidget.prototype.hideUpload = function () {
 ve.ui.WikiaMediaQueryWidget.prototype.displayMessages = {
 	'mustbeloggedin': ve.msg( 'wikia-visualeditor-notification-media-must-be-logged-in' ),
 	'onlyallowpremium': ve.msg( 'wikia-visualeditor-notification-media-only-premium-videos-allowed' ),
-	'permissiondenied' : ve.msg( 'wikia-visualeditor-notification-media-permission-denied' ),
+	'permissiondenied': ve.msg( 'wikia-visualeditor-notification-media-permission-denied' ),
 	'mediaqueryfailed': ve.msg( 'wikia-visualeditor-notification-media-query-failed' )
 };

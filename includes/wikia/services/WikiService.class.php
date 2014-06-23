@@ -15,8 +15,6 @@ class WikiService extends WikiaModel {
 	const FLAG_PROMOTED = 4;
 	const FLAG_BLOCKED = 8;
 	const FLAG_OFFICIAL = 16;
-	const DBNAME_REGEXP = '/^Wikia-Visualization-Main(,[a-z0-9]+)?(\.[a-z0-9]{3,4}$)/';
-	const CV_IMAGENAME = 'Wikia-Visualization-Main';
 	static $botGroups = array('bot', 'bot-global');
 	static $excludedWikiaUsers = array(
 		22439, //Wikia
@@ -366,8 +364,10 @@ class WikiService extends WikiaModel {
 			$results = $db->select( $tables, $fields, $conds, __METHOD__, array(), array() );
 
 			while ( $row = $results->fetchObject() ) {
-				$imageName = $this->checkCVImageName( $row->city_main_image, $row->city_id );
-				$file = GlobalFile::newFromText( $imageName, self::WIKIAGLOBAL_CITY_ID );
+				$promoImage = PromoImage::fromPathname($row->city_main_image);
+				$promoImage->ensureCityIdIsSet($row->city_id);
+
+				$file = $promoImage->corporateFileByLang($this->wg->ContLanguageCode);
 				if ( $file->exists() ) {
 					$imageServing = new ImageServing( null, $imageWidth, $imageHeight );
 					$images[ $row->city_id ] = ImagesService::overrideThumbnailFormat(
@@ -381,16 +381,6 @@ class WikiService extends WikiaModel {
 		}
 		return $images;
 	}
-
-	protected function checkCVImageName( $imageName, $cityId ) {
-		if ( preg_match( self::DBNAME_REGEXP, $imageName, $matches ) ) {
-			if ( empty( $matches[ 1 ] ) ) {
-				$imageName = self::CV_IMAGENAME. ',' . WikiFactory::IDtoDB( $cityId ) . $matches[ 2 ];
-			}
-		}
-		return $imageName;
-	}
-
 
 	public function getWikiWordmark( $wikiId ) {
 		$url = '';
@@ -840,7 +830,7 @@ class WikiService extends WikiaModel {
 					'desc' => $row->city_description,
 					//this is stored in a pretty peculiar format,
 					//see extensions/wikia/CityVisualization/models/CityVisualization.class.php
-					'image' => $row->city_main_image,
+					'image' => PromoImage::fromPathname($row->city_main_image)->ensureCityIdIsSet($row->city_id)->getPathname(),
 					'flags' => array(
 						'official' => ( ( $row->city_flags & self::FLAG_OFFICIAL ) == self::FLAG_OFFICIAL ),
 						'promoted' => ( ( $row->city_flags & self::FLAG_PROMOTED ) == self::FLAG_PROMOTED )

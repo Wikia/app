@@ -1,0 +1,16 @@
+{
+    "@metadata": {
+        "authors": [
+            "Milicevic01",
+            "Nikola Smolenski",
+            "Милан Јелисавчић"
+        ]
+    },
+    "tag-visualeditor": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor]]",
+    "tag-visualeditor-description": "Измена начињена [[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor]]-ом",
+    "tag-visualeditor-needcheck": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor: Потребна провера]]",
+    "visualeditor-feedback-link": "Project:VisualEditor/Feedback",
+    "visualeditor-feedback-tool": "Оставите повратну информацију",
+    "visualeditor-help-label": "Прочитајте кориснички водич",
+    "visualeditor-help-title": "Кориснички водич са упутством за коришћење уређивача"
+}

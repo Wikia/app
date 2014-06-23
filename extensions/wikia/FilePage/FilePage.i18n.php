@@ -12,6 +12,7 @@ $messages['en'] = array(
 	'video-page-global-file-list-header' => 'Appears on these wikis',
 	'video-page-from-provider' => 'From $1',
 	'video-page-expires' => 'Content expires on $1',
+	'video-page-regional-restrictions' => 'This video can only be viewed in $1',
 	'video-page-views' => '$1 {{PLURAL:$1|View|Views}}',
 	'video-page-see-more-info' => 'Show more info',
 	'video-page-see-less-info' => 'Show less info',
@@ -42,12 +43,15 @@ $messages['qqq'] = array(
 * $1 is the provider name.',
 	'video-page-expires' => 'After the date specified, the video content will no longer be available to view. Parameters:
 * $1 is a date',
+	'video-page-regional-restrictions' => 'Denotes the countries where the video is available for viewing. Parameters:
+* $1 - comma-separated country names.',
 	'video-page-views' => 'Shows total number of views (plays) of the video. Parameters:
 * $1 - a number of views (integer)
 {{Identical|View}}',
 	'video-page-see-more-info' => 'Label to uncollapse UI that shows more info',
 	'video-page-see-less-info' => 'Label to collapse UI that shows more info',
-	'video-page-description-heading' => 'Description heading',
+	'video-page-description-heading' => 'Description heading.
+{{Identical|Description}}',
 	'video-page-description-zero-state' => 'Placeholder file page content that states there is no description',
 	'video-page-add-description-link-text' => 'This is a link that takes you to the edit page where you can add a description for a video or image. The description, once added, will be a section in the file page content.',
 	'video-page-file-list-pagination' => 'Pagination for file listing.  e.g. 1 of 2.  $1 is current page, $2 is total pages',
@@ -447,6 +451,27 @@ $messages['ka'] = array(
 	'file-page-tab-history' => 'ფაილის ისტორია',
 	'file-page-tab-metadata' => 'მეტამონაცემები',
 	'file-page-more-links' => 'იხილე სრული სია',
+);
+
+/** Kannada (ಕನ್ನಡ)
+ * @author VASANTH S.N.
+ */
+$messages['kn'] = array(
+	'video-page-description-heading' => 'ವಿವರ',
+	'video-page-file-list-pagination' => '$1 ಇಂದ $2',
+	'file-page-tab-about' => 'ಕುರಿತು',
+	'file-page-tab-history' => 'ಕಡತದ ಇತಿಹಾಸ',
+	'file-page-tab-metadata' => 'ಮೇಲ್ದರ್ಜೆ ಮಾಹಿತಿ',
+);
+
+/** Korean (한국어)
+ * @author 관인생략
+ * @author 아라
+ */
+$messages['ko'] = array(
+	'video-page-default-description-header-and-text' => '==설명==
+여기에 설명을 입력하세요.',
+	'file-page-more-links' => '전체 목록 보기',
 );
 
 /** Luxembourgish (Lëtzebuergesch)

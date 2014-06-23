@@ -1,0 +1,26 @@
+{
+	"@metadata": {
+		"authors": [
+			"Calak",
+			"Muhammed taha"
+		]
+	},
+	"visualeditor": "دەستکاریکەری دیداری",
+	"visualeditor-aliennode-tooltip": "ببورە، ھەرئێستا ئەمە تەنیا دەتوانێ لە ڕێگەی سەرچاوەوە دەستکاری بکرێ.",
+	"visualeditor-annotationbutton-bold-tooltip": "تۆخ",
+	"visualeditor-annotationbutton-italic-tooltip": "لار",
+	"visualeditor-annotationbutton-link-tooltip": "بەستەر",
+	"visualeditor-dialog-action-apply": "گۆڕانکارییەکان بەکاربەرە",
+	"visualeditor-dialog-action-cancel": "ھەڵیوەشێنەوە",
+	"visualeditor-formatdropdown-format-heading1": "سەردێڕ ١",
+	"visualeditor-formatdropdown-format-heading2": "سەردێڕ ٢",
+	"visualeditor-formatdropdown-format-heading3": "سەردێڕ ٣",
+	"visualeditor-formatdropdown-format-heading4": "سەردێڕ ٤",
+	"visualeditor-formatdropdown-format-heading5": "سەردێڕ ٥",
+	"visualeditor-formatdropdown-format-heading6": "سەردێڕ ٦",
+	"visualeditor-formatdropdown-format-paragraph": "بەند",
+	"visualeditor-inspector-close-tooltip": "دایخە",
+	"visualeditor-inspector-remove-tooltip": "لابەرە",
+	"visualeditor-listbutton-bullet-tooltip": "پێرستی خاڵبەندکراو",
+	"visualeditor-listbutton-number-tooltip": "پێرستی ژمارەکراو"
+}

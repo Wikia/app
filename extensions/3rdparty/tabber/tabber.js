@@ -405,6 +405,14 @@ tabberObj.prototype.tabShow = function(tabberIndex)
 	/* Mark this tab navigation link as "active" */
 	this.navSetActive(tabberIndex);
 
+	/* Wikia change begin: @author Scott Rabin */
+	// Notify other listeners that the effective scroll position
+	// of some elements on the page may have changed as a result
+	// of switching tabs; e.g. lazy loaded images may now be visible
+	// and should load
+	$(window).trigger('scroll');
+	/* Wikia change end */
+
 	/* If the user specified an onTabDisplay function, call it now. */
 	if (typeof this.onTabDisplay == 'function') {
 		this.onTabDisplay({'tabber':this, 'index':tabberIndex});

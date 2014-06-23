@@ -149,6 +149,20 @@ $messages['it'] = array(
 	'centralhelpsearch-placeholder' => 'Cerca aiuto&hellip;',
 );
 
+/** Kannada (ಕನ್ನಡ)
+ * @author VASANTH S.N.
+ */
+$messages['kn'] = array(
+	'centralhelpsearch-placeholder' => 'ಸಹಾಯವನ್ನು ಹುಡುಕಿ...',
+);
+
+/** Korean (한국어)
+ * @author 관인생략
+ */
+$messages['ko'] = array(
+	'centralhelpsearch-placeholder' => '검색 도움말...',
+);
+
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */

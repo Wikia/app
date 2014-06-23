@@ -3,14 +3,12 @@ define('videosmodule.models.videos', [
 ], function (nirvana) {
 	'use strict';
 
-	var VideosData = function (options) {
-		this.verticalOnly = options ? options.verticalOnly : null;
+	var VideosData = function () {
 		this.data = null;
 		this.articleId = window.wgArticleId || null;
 	};
 
-	// TODO: accept verticalOnly arg for AB test
-	VideosData.prototype.fetch = function (verticalOnly) {
+	VideosData.prototype.fetch = function () {
 		var ret,
 			self = this;
 
@@ -18,9 +16,7 @@ define('videosmodule.models.videos', [
 			ret = this.data;
 		} else {
 			ret = nirvana.getJson('VideosModuleController', 'index', {
-				articleId: this.articleId,
-				// TODO: check for argument for AB testing purposes, not needed in final
-				verticalOnly: typeof verticalOnly !== 'undefined' ? verticalOnly : this.verticalOnly
+				articleId: this.articleId
 			}).done(function (data) {
 				self.data = data;
 			});

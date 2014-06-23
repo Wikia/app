@@ -9,12 +9,11 @@
  * @extends ve.ui.MWReferenceDialog
  *
  * @constructor
- * @param {ve.ui.WindowSet} windowSet Window set this dialog is part of
  * @param {Object} [config] Configuration options
  */
-ve.ui.WikiaReferenceDialog = function VeUiWikiaReferenceDialog( windowSet, config ) {
+ve.ui.WikiaReferenceDialog = function VeUiWikiaReferenceDialog( config ) {
 	// Parent constructor
-	ve.ui.MWReferenceDialog.call( this, windowSet, config );
+	ve.ui.MWReferenceDialog.call( this, config );
 };
 
 /* Inheritance */
@@ -24,21 +23,25 @@ OO.inheritClass( ve.ui.WikiaReferenceDialog, ve.ui.MWReferenceDialog );
 /* Static Properties */
 
 ve.ui.WikiaReferenceDialog.static.toolbarGroups = [
-	{ 'include': [ 'undo', 'redo' ] },
-	{ 'include': [ 'bold', 'italic', 'link', 'clear' ] },
-	{ 'include': [ 'number', 'bullet', 'outdent', 'indent' ] },
+	// History
+	{ 'include': [ 'undo' ] },
+	// Style
+	{ 'include': [ 'bold', 'italic', 'link' ] },
 	{
-		'include': '*',
-		'exclude': [
-			'code',
-			{ 'group': 'format' },
-			'mediaInsert',
-			'reference',
-			'referenceList',
-			'wikiaMediaInsert'
-		]
+		'type': 'list',
+		'icon': 'text-style',
+		'indicator': 'down',
+		'title': OO.ui.deferMsg( 'visualeditor-toolbar-style-tooltip' ),
+		'include': [ 'subscript', 'superscript', 'strikethrough', 'underline', 'clear' ]
 	}
 ];
+
+/* Methods */
+
+ve.ui.WikiaReferenceDialog.prototype.setup = function ( data ) {
+	ve.ui.MWReferenceDialog.prototype.setup.call( this, data );
+	this.referenceSurface.$element.addClass( 'WikiaArticle' );
+};
 
 /* Registration */
 

@@ -1,12 +1,12 @@
-/*global setTimeout*/
+/*global setTimeout, define, require*/
 /*jshint camelcase:false, maxparams:5*/
-/*global define*/
 
 define('ext.wikia.adEngine.slotTracker', [
 	'wikia.log',
 	'wikia.window',
-	'wikia.tracker'
-], function (log, window, tracker) {
+	'wikia.tracker',
+	require.optional('wikia.abTest')
+], function (log, window, tracker, abTest) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.slotTracker',
@@ -43,7 +43,8 @@ define('ext.wikia.adEngine.slotTracker', [
 			TOP_LEADERBOARD:        'leaderboard',
 			TOP_RIGHT_BOXAD:        'medrec',
 			WIKIA_BAR_BOXAD_1:      'wikiabar'
-		};
+		},
+		adsinhead = window.wgLoadAdsInHead && abTest && abTest.getGroup('ADS_IN_HEAD');
 
 	// The filtering function
 	function isInteresting(eventName, data) {
@@ -150,9 +151,15 @@ define('ext.wikia.adEngine.slotTracker', [
 			len;
 
 		function trackState(timeCheckPoint) {
+			var eventName = 'state/' + timeCheckPoint + 's';
+
+			if (adsinhead) {
+				eventName = 'state/' + 'adsinhead=' + adsinhead + '/' + timeCheckPoint + 's';
+			}
+
 			setTimeout(function () {
 				trackEvent(
-					'state/' + timeCheckPoint + 's',
+					eventName,
 					{
 						provider: provider,
 						slotname: slotname,
@@ -203,6 +210,7 @@ define('ext.wikia.adEngine.slotTracker', [
 	}
 
 	slotTracker.getStats = getStats;
+	slotTracker.getTimeBucket = getTimeBucket; // for AdEngine_trackPageInteractive
 
 	return slotTracker;
 });

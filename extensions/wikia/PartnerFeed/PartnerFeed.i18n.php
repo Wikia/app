@@ -371,6 +371,20 @@ $messages['it'] = array(
 	'partner-feed-achievements-leaderboard' => 'Classifica dei successi nella wiki',
 );
 
+/** Kannada (ಕನ್ನಡ)
+ * @author VASANTH S.N.
+ */
+$messages['kn'] = array(
+	'partner-feed-recent-changes' => 'ಇತ್ತೀಚಿನ ಬದಲಾವಣೆಗಳು',
+);
+
+/** Korean (한국어)
+ * @author 아라
+ */
+$messages['ko'] = array(
+	'feed-title-blogposts' => '최근 블로그 게시물',
+);
+
 /** Kurdish (Latin script) (Kurdî (latînî)‎)
  * @author George Animal
  */
@@ -776,6 +790,13 @@ $messages['tl'] = array(
 	'feed-title-recentchanges' => 'Kamakailang mga pagbabago',
 );
 
+/** Turkish (Türkçe)
+ * @author Sucsuzz
+ */
+$messages['tr'] = array(
+	'feed-title-recentchanges' => 'Son değişiklikler',
+);
+
 /** Ukrainian (українська)
  * @author A1
  * @author Andriykopanytsia
@@ -841,6 +862,7 @@ $messages['zh-hans'] = array(
 	'partner-feed-achievements-leaderboard' => 'Wiki成就排行榜',
 	'partner-feed-earned-badges' => '最近在特定wiki获得的徽章',
 	'partner-feed-recent-changes' => '最新更改',
+	'partnerfeed' => '合作伙伴订阅',
 	'feed-title-blogposts' => '最新博客帖子',
 	'feed-title-recent-badges' => '最新徽章',
 	'feed-title-recent-images' => '最近的图片',

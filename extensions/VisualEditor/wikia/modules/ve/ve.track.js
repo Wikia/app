@@ -193,7 +193,7 @@ require( ['wikia.tracker'], function ( tracker ) {
 	// Track time to init when accessing directly from the URI via ?veaction=edit
 	if ( mw.libs.ve.activateOnPageLoad ) {
 		mw.hook( 've.activationComplete' ).add( function () {
-			ve.track( 'wikia' , {
+			ve.track( 'wikia', {
 				'action': actions.IMPRESSION,
 				'label': 'edit-page-ready-from-page-load',
 				'value': normalizeDuration( ve.now() - window.wgNow )

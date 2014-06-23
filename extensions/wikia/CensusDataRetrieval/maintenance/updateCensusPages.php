@@ -1,12 +1,4 @@
 <?php
-function my_error_handler( $errno, $errstr, $errfile = null, $errline = null, $errcontext = null ) {
-        printf( "Error: %d: %s\n", $errno, $errstr );
-}
-
-set_error_handler( 'my_error_handler', E_ALL | E_STRICT );
-error_reporting(E_ALL | E_STRICT );
-
-
 /**
  * Updates infoboxes of Pages with Census data enabled
  *

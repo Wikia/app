@@ -941,6 +941,23 @@ $messages['ja'] = array(
 	'lookupcontribscontent' => 'コンテンツ',
 );
 
+/** Kannada (ಕನ್ನಡ)
+ * @author VASANTH S.N.
+ */
+$messages['kn'] = array(
+	'lookupcontribswiki' => 'ವಿಕಿ',
+	'lookupcontribswikititle' => 'ಶೀರ್ಷಿಕೆ',
+	'lookupcontribswikioptions' => 'ಆಯ್ಕೆಗಳು',
+	'lookupcontribslastedited' => 'ಕೊನೆಯ ಸಂಪಾದನೆ',
+	'lookupcontribsnext' => 'ಮುಂದಿನದು',
+	'lookupcontribsrestore' => 'ಹಿಂದೆ ಇದ್ದಂತೆ ಮಾಡು',
+	'lookupcontribslog' => 'ದಾಖಲೆ',
+	'lookupcontribscontribs' => 'ಕಾಣಿಕೆಗಳು',
+	'lookupcontribsdiff' => 'ವ್ಯತ್ಯಾಸ',
+	'lookupcontribscontent' => 'ಮಾಹಿತಿ',
+	'lookupcontribsall' => 'ಎಲ್ಲಾ',
+);
+
 /** Korean (한국어)
  * @author Cafeinlove
  */
@@ -1526,20 +1543,20 @@ $messages['pt-br'] = array(
 	'lookupcontribstitle' => 'Procurar Contribuições',
 	'lookupcontribsrecentcontributions' => 'Contribuições recentes de $1',
 	'lookupcontribsfinalcontributions' => 'Contribuições finais de $1',
-	'lookupcontribshelp' => 'Esta página especial pode ser usada para apresentar as contribuições de um utilizador em várias Wikias.
-Para apresentar a lista, forneça abaixo o nome do utilizador.',
+	'lookupcontribshelp' => 'Esta página especial pode ser usada para apresentar as contribuições de um usuário em várias Wikias.
+Para apresentar a lista, forneça abaixo o nome do usuário.',
 	'lookupcontribusernotspecify' => 'Você ainda não especificou um usuário',
 	'lookupcontribsselectuser' => 'Selecionar usuário:',
 	'lookupcontribsselectfor' => 'Selecionar:',
 	'lookupcontribsdisplaymode' => 'Modo de visionamento:',
-	'lookupcontribsselectmodenormal' => 'contribuições recentes do utilizador',
-	'lookupcontribsselectmodefinal' => 'contribuições finais do utilizador',
+	'lookupcontribsselectmodenormal' => 'contribuições recentes do usuário',
+	'lookupcontribsselectmodefinal' => 'contribuições finais do usuário',
 	'lookupcontribsselectmodeall' => 'todas as contribuições do usuário',
 	'lookupcontribsfullurls' => 'URLs completas',
 	'lookupcontribslinks' => 'links para as contribuições',
 	'lookupcontribsgo' => 'Mostrar',
-	'lookupcontribsinvaliduser' => '<p class="error">O utilizador "<b>$1</b>" não existe.
-Verifique se se enganou com o nome do utilizador.</p>',
+	'lookupcontribsinvaliduser' => '<p class="error">O usuário "<b>$1</b>" não existe.
+Verifique se se enganou com o nome do usuário.</p>',
 	'lookupcontribsinvalidviewmode' => '<p class="error">"<b>$1</b>" não é um modo de visionamento válido.</p>',
 	'lookupcontribsinvalidmode' => '<p class="error">"<b>$1</b>" não é um modo válido.</p>',
 	'lookupcontribsselectwikis' => 'Selecionar wikis:',
@@ -1887,6 +1904,7 @@ $messages['tly'] = array(
 
 /** Turkish (Türkçe)
  * @author Incelemeelemani
+ * @author Sucsuzz
  */
 $messages['tr'] = array(
 	'lookupcontribsselectuser' => 'Kullanıcı seç:',
@@ -1904,6 +1922,9 @@ $messages['tr'] = array(
 	'lookupcontribscontribslink' => 'Katkılara bağlantı',
 	'lookupcontribsdetails' => 'Detayları gösterilen:',
 	'lookupcontribslastedited' => 'Son düzenleme',
+	'lookupcontribsnext' => 'sonraki',
+	'lookupcontribsprevious' => 'önceki',
+	'lookupcontribsdiff' => 'fark',
 );
 
 /** Tatar (Cyrillic script) (татарча)
@@ -1986,6 +2007,7 @@ $messages['yi'] = array(
  * @author Dimension
  * @author Hydra
  * @author Liuxinyu970226
+ * @author Mywood
  * @author Yfdyh000
  * @author 乌拉跨氪
  */
@@ -1993,6 +2015,7 @@ $messages['zh-hans'] = array(
 	'lookupcontribs' => '查阅维基贡献',
 	'lookupcontribstitle' => '查阅维基贡献',
 	'lookupcontribsrecentcontributions' => '最近$1的贡献',
+	'lookupcontribsfinalcontributions' => '对$1的最近贡献',
 	'lookupcontribusernotspecify' => '您还没有指定一个用户',
 	'lookupcontribsselectuser' => '选择用户：',
 	'lookupcontribsselectfor' => '搜索：',
@@ -2000,7 +2023,7 @@ $messages['zh-hans'] = array(
 	'lookupcontribsselectmodenormal' => '该用户最近的贡献',
 	'lookupcontribsfullurls' => '完整URL',
 	'lookupcontribslinks' => '贡献链接',
-	'lookupcontribsgo' => '去',
+	'lookupcontribsgo' => '提交',
 	'lookupcontribsinvaliduser' => '<p class="error">用户“<b>$1</b>”不存在。
 请检查您提供的用户名。</p>',
 	'lookupcontribsinvalidviewmode' => '<p class="error">“<b>$1</b>”不是有效的视图模式。</p>',
@@ -2029,6 +2052,7 @@ $messages['zh-hans'] = array(
 	'right-lookupcontribs' => '查看用户的全局编辑',
 	'lookupcontribsshowpages' => '所有页面（$1命名空间）',
 	'lookupcontribscontent' => '内容',
+	'lookupcontribscontribtitleforuser' => '对用户的贡献：',
 	'lookupcontribsnormal' => '最近',
 	'lookupcontribsfinal' => '最后',
 	'lookupcontribsall' => '全部',

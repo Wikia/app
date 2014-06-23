@@ -68,7 +68,7 @@ class VideoEmbedTool {
 	}
 
 	function insertVideo() {
-		global $wgRequest, $wgUser, $wgContLang;
+		global $wgRequest, $wgUser;
 
 		wfProfileIn( __METHOD__ );
 
@@ -117,22 +117,11 @@ class VideoEmbedTool {
 			$embed_code = $file->getEmbedCode( VIDEO_PREVIEW, false, false, true );
 			$props['code'] = json_encode( $embed_code );
 		} else { // if not a supported 3rd party ( non-premium ) video, try to parse link for File:
-			$file = null;
-			// get the video name
-			$nsFileTranslated = $wgContLang->getNsText( NS_FILE );
-			// added $nsFileTransladed to fix bugId:#48874
-			$pattern = '/(File:|Video:|'.$nsFileTranslated.':)(.+)$/';
-			if ( preg_match( $pattern, $url, $matches ) ) {
-				$file = wfFindFile( $matches[2] );
-				if ( !$file ) { // bugID: 26721
-					$file = wfFindFile( urldecode( $matches[2] ) );
-				}
-			} elseif ( preg_match( $pattern, urldecode( $url ), $matches ) ) {
-				$file = wfFindFile( $matches[2] );
-				if ( !$file ) { // bugID: 26721
-					$file = wfFindFile( $matches[2] );
-				}
-			} else {
+			// get the video file
+			$videoService = new VideoService();
+			$file = $videoService->getVideoFileByUrl( $url );
+
+			if ( !$file ) {
 				header( 'X-screen-type: error' );
 				if ( $nonPremiumException ) {
 					if ( empty( F::app()->wg->allowNonPremiumVideos ) ) {
@@ -148,12 +137,6 @@ class VideoEmbedTool {
 
 				wfProfileOut( __METHOD__ );
 				return wfMessage( 'vet-bad-url' )->plain();
-			}
-
-			if ( !$file ) {
-				header( 'X-screen-type: error' );
-				wfProfileOut( __METHOD__ );
-				return wfMessage( 'vet-non-existing' )->plain();
 			}
 
 			// Loading this to deal with video descriptions
@@ -255,16 +238,16 @@ class VideoEmbedTool {
 		$ns_file = $wgContLang->getFormattedNsText( $title->getNamespace() );
 		$caption = $wgRequest->getVal( 'caption' );
 
-		$size = $wgRequest->getVal( 'size' );
 		$width = $wgRequest->getVal( 'width' );
 		$width = empty( $width ) ? 335 : $width;
 		$layout = $wgRequest->getVal( 'layout' );
 
 		header( 'X-screen-type: summary' );
 		$tag = $ns_file . ":" . $oTitle->getText();
-		if ( !empty( $size ) ) {
-			$tag .= "|$size";
-		}
+
+		// all videos added via VET will be shown as thumbnails / "framed"
+		$tag .= "|thumb";
+
 		if ( !empty( $layout ) ) {
 			$tag .= "|$layout";
 		}
@@ -278,8 +261,8 @@ class VideoEmbedTool {
 		$button_message = wfMessage( 'vet-return' )->plain();
 
 		// Adding a video from article view page
-		$editingFromArticle = $wgRequest->getVal( 'placeholder' );
-		if ( $editingFromArticle ) {
+		$editFromViewMode = $wgRequest->getVal( 'placeholder' );
+		if ( $editFromViewMode ) {
 			Wikia::setVar( 'EditFromViewMode', true );
 
 			$article_title = $wgRequest->getVal( 'article' );
@@ -298,19 +281,19 @@ class VideoEmbedTool {
 				$placeholder_tag = $placeholder[0];
 				$file = wfFindFile( $title );
 				$embed_code = $file->transform( array( 'width'=>$width ) )->toHtml();
-				$html_params = array(
-					'imageHTML' => $embed_code,
+
+				$params = array(
+					'alt' => $title->getText(),
+					'title' => $title->getText(),
+					'img-class' => 'thumbimage',
 					'align' => $layout,
-					'width' => $width,
-					'showCaption' => !empty( $caption ),
-					'caption' => $caption,
-					'showPictureAttribution' => true,
+					'outerWidth' => $width,
+					'file' => $file,
+					'url' => $file->getUrl(),
+					'html' => $embed_code,
 				);
 
-				// Get all html to insert into article view page
-				$image_service = F::app()->sendRequest( 'ImageTweaksService', 'getTag', $html_params );
-				$image_data = $image_service->getData();
-				$embed_code = $image_data['tag'];
+				$embed_code = F::app()->renderView( 'ThumbnailController', 'articleThumbnail', $params );
 
 				// Make output match what's in a saved article
 				if ( $layout == 'center' ) {

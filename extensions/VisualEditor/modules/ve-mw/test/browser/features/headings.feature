@@ -1,4 +1,4 @@
-@ie6-bug  @ie7-bug  @ie8-bug  @ie9-bug @ie10-bug @en.wikipedia.beta.wmflabs.org @test2.wikipedia.org @login
+@ie6-bug  @ie7-bug  @ie8-bug  @ie9-bug @ie10-bug @login
 Feature: VisualEditor Headings
 
   @edit_user_page
@@ -10,12 +10,12 @@ Feature: VisualEditor Headings
     Then <headings_string> should appear in the diff view
       And I can click the X on the save box
   Examples:
-    | headings_interface_name | headings_string  |
-    | Paragraph               | '^Editing'       |
-    | Heading                 | '^==Editing'     |
-    | Subheading1             | '^===Editing'    |
-    | Subheading2             | '^====Editing'   |
-    | Subheading3             | '^=====Editing'  |
-    | Subheading4             | '^======Editing' |
-    | Preformatted            | ' Editing'       |
-    | Page title              | '^=Editing'      |
+    | headings_interface_name | headings_string   |
+    | Paragraph               | "^Editing"        |
+    | Heading                 | "^== Editing"     |
+    | Subheading1             | "^=== Editing"    |
+    | Subheading2             | "^==== Editing"   |
+    | Subheading3             | "^===== Editing"  |
+    | Subheading4             | "^====== Editing" |
+    | Preformatted            | " Editing"        |
+    | Page title              | "^= Editing"      |

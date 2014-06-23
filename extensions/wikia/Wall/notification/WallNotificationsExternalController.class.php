@@ -2,7 +2,6 @@
 
 class WallNotificationsExternalController extends WikiaController {
 	const WALL_WIKI_NAME_MAX_LEN = 32;
-	const CACHE_DURATION = 900;
 
 	var $helper;
 	public function __construct() {
@@ -55,36 +54,27 @@ class WallNotificationsExternalController extends WikiaController {
 		wfProfileIn(__METHOD__);
 
 		$app = F::app();
+		$all = $wn->getCounts( $this->wg->User->getId() );
+
 		$sum = 0;
+		foreach($all as $k => $wiki) {
+			$sum += $wiki['unread'];
+			$wikiSitename = $wiki['sitename'];
 
-		// CONN-464: Skip data collection if user is not logged in
-		if ( $this->wg->User->isLoggedIn() ) {
-
-			$all = $wn->getCounts( $this->wg->User->getId() );
-
-			foreach($all as $k => $wiki) {
-				$sum += $wiki['unread'];
-				$wikiSitename = $wiki['sitename'];
-
-				if( mb_strlen($wikiSitename) > self::WALL_WIKI_NAME_MAX_LEN ) {
-					$all[$k]['sitename'] = $app->wg->Lang->truncate($wikiSitename, (self::WALL_WIKI_NAME_MAX_LEN - 3) );
-				}
+			if( mb_strlen($wikiSitename) > self::WALL_WIKI_NAME_MAX_LEN ) {
+				$all[$k]['sitename'] = $app->wg->Lang->truncate($wikiSitename, (self::WALL_WIKI_NAME_MAX_LEN - 3) );
 			}
-
-			//solution for problem with cross wiki notification and no wikia domain.
-			$notificationKey = uniqid();
-
-			$app->wg->Memc->set($notificationKey,  $this->wg->User->getId() );
 		}
+
+		//solution for problem with cross wiki notification and no wikia domain.
+		$notificationKey = uniqid();
+
+		$app->wg->Memc->set($notificationKey,  $this->wg->User->getId() );
 
 		$this->response->setVal('html', $this->app->renderView( 'WallNotifications', 'Update', array('notificationCounts' => $all, 'count' => $sum, 'notificationKey' => $notificationKey) ));
 		$this->response->setVal('count', $sum);
 		$this->response->setVal('reminder', wfMessage('wall-notifications-reminder', $sum)->text() );
 		$this->response->setVal('status', true);
-
-		// CONN-464: Add CACHE_DURATION seconds browser cache for the response
-		$this->response->setCachePolicy( WikiaResponse::CACHE_PRIVATE );
-		$this->response->setCacheValidity( self::CACHE_DURATION );
 
 		wfProfileOut(__METHOD__);
 	}

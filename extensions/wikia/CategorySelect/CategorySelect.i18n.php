@@ -594,26 +594,28 @@ $messages['ia'] = array(
  * @author Aldnonymous
  * @author C5st4wr6ch
  * @author Irwangatot
+ * @author Riemogerz
  */
 $messages['id'] = array(
 	'categoryselect-desc' => 'Menyediakan sebuah antarmuka untuk mengelola kategori dalam artikel tanpa mengedit seluruh artikel.',
 	'categoryselect-button-add' => 'Menambah kategori',
 	'categoryselect-button-cancel' => 'Batalkan',
 	'categoryselect-button-save' => 'Simpan',
-	'categoryselect-category-add' => 'Menambahkan kategori', # Fuzzy
+	'categoryselect-category-add' => 'Tambah kategori...',
 	'categoryselect-category-edit' => 'Sunting kategori',
 	'categoryselect-category-remove' => 'Menghapus kategori',
 	'categoryselect-edit-summary' => 'Menambahkan kategori',
 	'categoryselect-error-article-doesnt-exist' => 'Halaman [id=$1] tidak ada.',
 	'categoryselect-error-db-locked' => 'Basis data dikunci.',
 	'categoryselect-error-duplicate-category-name' => 'Kategori "$1" sudah ada.',
-	'categoryselect-error-edit-abort' => 'Perubahan yang coba Anda lakukan dibatalkan oleh suatu ekstensi kaitan.', # Fuzzy
+	'categoryselect-error-edit-abort' => 'Perubahan yang Anda coba dibatalkan oleh suatu kaitan ekstensi.',
 	'categoryselect-error-empty-category-name' => 'Silakan berikan nama kategori.',
 	'categoryselect-error-user-rights' => 'Pengguna tidak memiliki izin untuk melakukan aksi ini.',
 	'categoryselect-modal-category-name' => 'Menyediakan nama kategori:',
-	'categoryselect-modal-category-sortkey' => 'Penyusunan artikel ini menurut abjad pada kategori "$1" dengan nama:', # Fuzzy
+	'categoryselect-modal-category-sortkey' => 'Opsional, Anda dapat menyusun sesuai abjad pada kategori "$1" dengan nama:',
 	'categoryselect-tooltip-add' => 'Tekan tombol Masuk atau Kembali ketika sudah selesai.',
 	'tog-disablecategoryselect' => 'Nonaktifkan Kategori Tagging( hanya berlaku jika modus visual telah dinonaktifkan)',
+	'tog-disablecategoryselect-v2' => "Menonaktifkan modul kategori (hanya berlaku jika ''visual mode editing'' dinonaktifkan)",
 );
 
 /** Igbo (Igbo)
@@ -686,19 +688,30 @@ $messages['ja'] = array(
 /** Georgian (ქართული)
  * @author DevaMK
  * @author GeorgeBarnick
+ * @author Otogi
  */
 $messages['ka'] = array(
 	'categoryselect-button-add' => 'დაამატე კატეგორია',
 	'categoryselect-button-cancel' => 'გაუქმება',
 	'categoryselect-button-save' => 'შენახვა',
+	'categoryselect-category-remove' => 'კატეგორიის წაშლა',
 );
 
 /** Kannada (ಕನ್ನಡ)
  * @author Nayvik
+ * @author VASANTH S.N.
  */
 $messages['kn'] = array(
+	'categoryselect-button-add' => 'ವರ್ಗ ಸೇರಿಸಿ',
 	'categoryselect-button-cancel' => 'ರದ್ದು ಮಾಡು',
 	'categoryselect-button-save' => 'ಉಳಿಸಿ',
+	'categoryselect-category-add' => 'ವರ್ಗ ಸೇರಿಸಿ...',
+	'categoryselect-category-edit' => 'ವರ್ಗ ಸಂಪಾದಿಸಿ',
+	'categoryselect-category-remove' => 'ವರ್ಗ ತೆಗೆದುಹಾಕಿ',
+	'categoryselect-edit-summary' => 'ವರ್ಗಗಳನ್ನು ಸೇರಿಸಲಾಗುತ್ತಿದೆ',
+	'categoryselect-error-db-locked' => 'ದತ್ತಸಂಚಯವನ್ನು ಮುಚ್ಚಲಾಗಿದೆ.',
+	'categoryselect-error-duplicate-category-name' => 'ವರ್ಗ "$1" ಈಗಾಗಲೇ ಅಸ್ತಿತ್ವದಲ್ಲಿದೆ.',
+	'categoryselect-error-empty-category-name' => 'ದಯವಿಟ್ಟು ಒಂದು ವರ್ಗನಾಮ ನೀಡಿ.',
 );
 
 /** Korean (한국어)
@@ -897,6 +910,7 @@ $messages['ne'] = array(
  * @author McDutchie
  * @author SPQRobin
  * @author Siebrand
+ * @author Sjoerddebruin
  */
 $messages['nl'] = array(
 	'categoryselect-desc' => 'Biedt een interface voor het beheren van categorieën in een pagina zonder de hele pagina te bewerken',
@@ -918,7 +932,7 @@ $messages['nl'] = array(
 	'categoryselect-modal-category-sortkey' => 'U kunt deze pagina ook in de categoriepagina "$1" ordenen onder de naam:',
 	'categoryselect-tooltip-add' => 'Druk "Enter" of "Return" als u klaar bent.',
 	'tog-disablecategoryselect' => 'Categoriemodule uitschakelen (alleen van toepassing als bewerken in visuele modus is uitgeschakeld)',
-	'tog-disablecategoryselect-v2' => 'Categoriemodule uitschakelen (alleen van toepassing als de visuele tekstbewerker is uitgeschakeld)',
+	'tog-disablecategoryselect-v2' => 'Categoriemodule uitschakelen (alleen van toepassing als de visuele tekstverwerker is uitgeschakeld)',
 );
 
 /** Nederlands (informeel)‎ (Nederlands (informeel)‎)
@@ -1265,12 +1279,16 @@ $messages['tly'] = array(
 
 /** Turkish (Türkçe)
  * @author Gizemb
+ * @author Sucsuzz
  * @author Suelnur
  */
 $messages['tr'] = array(
 	'categoryselect-button-add' => 'Kategori ekle',
 	'categoryselect-button-cancel' => 'İptal',
 	'categoryselect-button-save' => 'Kaydet',
+	'categoryselect-category-add' => 'Kategori ekle...',
+	'categoryselect-category-edit' => 'Kategori düzenle',
+	'categoryselect-category-remove' => 'Kategori kaldır',
 );
 
 /** Tatar (Cyrillic script) (татарча)

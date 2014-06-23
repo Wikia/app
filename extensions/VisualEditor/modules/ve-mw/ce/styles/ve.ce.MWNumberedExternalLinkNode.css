@@ -1,0 +1,16 @@
+/*!
+ * VisualEditor ContentEditable MediaWiki MWNumberedExternalLinkNode styles.
+ *
+ * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
+ * @license The MIT License (MIT); see LICENSE.txt
+ */
+/*csslint regex-selectors:false */
+
+.ve-ce-surface {
+	counter-reset: ve-ce-mwNumberedExternalLinkNode;
+}
+
+a[rel~="mw:ExtLink"]:empty:after {
+	content: "[" counter(ve-ce-mwNumberedExternalLinkNode) "]";
+	counter-increment: ve-ce-mwNumberedExternalLinkNode;
+}

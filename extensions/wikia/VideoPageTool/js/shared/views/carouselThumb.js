@@ -13,7 +13,7 @@ define('shared.views.carouselThumb', [
 			if (this.model.get('type') === 'redirect') {
 				this.template = Mustache.compile(vptTemplates.carouselLastThumb);
 			} else {
-				this.template = Mustache.compile(thumbnailsTemplates.titleThumbnail);
+				this.template = Mustache.compile(thumbnailsTemplates.Thumbnail_title); // jshint ignore:line
 			}
 			this.render();
 		},

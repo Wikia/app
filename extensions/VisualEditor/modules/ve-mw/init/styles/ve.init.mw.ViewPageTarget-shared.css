@@ -1,0 +1,53 @@
+/*!
+ * VisualEditor MediaWiki Initialization ViewPageTarget shared styles.
+ * These are styles that are common to the vector, monobook, and apex skins, but may not
+ * be applied to other skins (for example, minerva).
+ *
+ * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
+ * @license The MIT License (MIT); see LICENSE.txt
+ */
+
+/* ve.ce.MWBlockImageNode */
+
+figure[typeof*='mw:Image'] {
+	margin: 0;
+}
+
+figure[typeof*='mw:Image'] a {
+	border: 0;
+}
+
+/* TODO: Merge with div.tright styles */
+/* Due to a weird cssjanus bug, noflip rules
+   are set as single-rules rather than for the
+   whole class */
+figure[typeof*='mw:Image'].mw-halign-right {
+	/* @noflip */
+	margin: .5em 0 1.3em 1.4em;
+}
+
+/* TODO: Merge with div.tleft styles */
+/* Due to a weird cssjanus bug, noflip rules
+   are set as single-rules rather than for the
+   whole class */
+figure[typeof*='mw:Image'].mw-halign-left {
+	/* @noflip */
+	margin: .5em 1.4em 1.3em 0;
+}
+
+/* TODO: Merge with div.thumbinner styles */
+figure[typeof='mw:Image/Thumb'], figure[typeof='mw:Image/Frame'] {
+	background-color: #f9f9f9;
+	border: 1px solid #cccccc;
+	padding: 3px !important;
+	font-size: 94%;
+}
+
+/* TODO: Merge with .thumbimage styles */
+figure[typeof*='mw:Image'] .ve-ce-mwBlockImageNode-thumbimage {
+	border: 1px solid #cccccc;
+}
+
+figure[typeof*='mw:Image'].mw-image-border img {
+	border: 1px solid #cccccc;
+}

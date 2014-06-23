@@ -136,6 +136,8 @@ class VideoFileUploader {
 		}
 
 		$class = !empty( $this->bUndercover ) ? 'WikiaNoArticleLocalFile' : 'WikiaLocalFile';
+
+		/** @var WikiaLocalFile $file */
 		$file = new $class(
 				$oTitle,
 				RepoGroup::singleton()->getLocalRepo()
@@ -179,6 +181,7 @@ class VideoFileUploader {
 		try {
 			$upload = $this->uploadBestThumbnail( $thumbnailUrl );
 		} catch ( Exception $e ) {
+			wfProfileOut(__METHOD__);
 			return Status::newFatal($e->getMessage());
 		}
 

@@ -420,10 +420,32 @@ $messages['ja'] = array(
 	'cloakcheck-process-edits-no' => '編集回数が不足しています。',
 );
 
+/** Kannada (ಕನ್ನಡ)
+ * @author VASANTH S.N.
+ */
+$messages['kn'] = array(
+	'cloakcheck-form-username' => 'ಬಳಕೆದಾರ ಹೆಸರು:',
+	'cloakcheck-form-check' => 'ಬಳಕೆದಾರ ಹೆಸರನ್ನು ಪರೀಕ್ಷಿಸಿ',
+	'cloakcheck-process-empty' => 'ಬಳಕೆದಾರಪದ ಖಾಲಿಯಾಗಿರಲು ಸಾದ್ಯವಿಲ್ಲ.',
+	'cloakcheck-process-notexist' => 'ಬಳಕೆದಾರಪದ ಅಸ್ತಿತ್ವದಲ್ಲಿಲ್ಲ.',
+	'cloakcheck-process-username' => 'ಬಳಕೆದಾರ ಹೆಸರು:$1',
+	'cloakcheck-process-accountage-yes' => 'ಖಾತೆ ಸಾಕಷ್ಟು ಹಳೆಯದಿದೆ.',
+	'cloakcheck-process-accountage-no' => 'ಖಾತೆ ತುಂಬಾ ಹೊಸದು.',
+	'cloakcheck-process-emailconf-yes' => 'ಮಿಂಚಂಚೆ ವಿಳಾಸ ದೃಢೀಕರಿಸಲ್ಪಟ್ಟಿದೆ.',
+	'cloakcheck-process-emailconf-no' => 'ಮಿಂಚಂಚೆ ವಿಳಾದ ದೃಢೀಕರಿಸಲ್ಪಟ್ಟಿಲ್ಲ.',
+	'cloakcheck-process-edits-yes' => 'ಬಳಕೆದಾರರು ಸಾಕಷ್ಟು ಸಂಪಾದನೆ ಮಾಡಿದ್ದಾರೆ.',
+	'cloakcheck-process-edits-no' => 'ಬಳಕೆದಾರರು ಸಾಕಷ್ಟು ಸಂಪಾದನೆ ಮಾಡಿಲ್ಲ.',
+);
+
 /** Korean (한국어)
  * @author Cafeinlove
+ * @author Hym411
+ * @author 관인생략
  */
 $messages['ko'] = array(
+	'cloakcheck' => 'IRC cloak 자격 확인',
+	'cloakcheck-desc' => 'IRC cloak을 위한 올인원 자격 증명을 제공합니다.',
+	'cloakcheck-form-username' => '사용자 이름:',
 	'cloakcheck-process-emailconf-yes' => '이메일 주소가 인증되었습니다.',
 	'cloakcheck-process-emailconf-no' => '이메일 주소가 인증되지 않았습니다.',
 );
@@ -634,6 +656,8 @@ $messages['ps'] = array(
 
 /** Portuguese (português)
  * @author Hamilton Abreu
+ * @author Luckas
+ * @author Polyethylen
  * @author Waldir
  */
 $messages['pt'] = array(
@@ -656,6 +680,7 @@ $messages['pt'] = array(
 
 /** Brazilian Portuguese (português do Brasil)
  * @author Aristóbulo
+ * @author Luckas
  * @author TheGabrielZaum
  */
 $messages['pt-br'] = array(
@@ -672,7 +697,7 @@ $messages['pt-br'] = array(
 	'cloakcheck-process-accountage-no' => 'A conta é recente.',
 	'cloakcheck-process-emailconf-yes' => 'Endereço de e-mail confirmado.',
 	'cloakcheck-process-emailconf-no' => 'Endereço de e-mail não confirmado.',
-	'cloakcheck-process-edits-yes' => 'O utilizador tem edições suficientes.',
+	'cloakcheck-process-edits-yes' => 'O usuário tem edições suficientes.',
 	'cloakcheck-process-edits-no' => 'O utilizador não tem edições suficientes.',
 );
 

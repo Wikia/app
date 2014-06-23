@@ -6,6 +6,7 @@ var CreatePage = {
 	context: null,
 	wgArticlePath: mw.config.get( 'wgArticlePath' ),
 	canUseVisualEditor: ( mw.libs && mw.libs.ve ? mw.libs.ve.canCreatePageUsingVE() : false ),
+	redlinkParam: '',
 
 	checkTitle: function( title ) {
 		'use strict';
@@ -19,10 +20,11 @@ var CreatePage = {
 			if ( response.result === 'ok' ) {
 				if ( CreatePage.canUseVisualEditor && mw.libs.ve.isInValidNamespace( title ) ) {
 					articlePath = CreatePage.wgArticlePath.replace( '$1', encodeURIComponent( title ) );
-					location.href = articlePath + '?veaction=edit';
+					location.href = articlePath + '?veaction=edit' + CreatePage.redlinkParam;
 				} else {
 					location.href = CreatePage.options[ CreatePage.canUseVisualEditor ? 'blank' :
-						CreatePage.pageLayout ].submitUrl.replace( '$1', encodeURIComponent( title ) );
+						CreatePage.pageLayout ].submitUrl.replace( '$1', encodeURIComponent( title ) ) +
+						CreatePage.redlinkParam;
 				}
 			}
 			else {
@@ -52,10 +54,16 @@ var CreatePage = {
 			e.preventDefault();
 		}
 
+		// VE and <createbox>
+		if ( CreatePage.canUseVisualEditor && $( e.target ).hasClass( 'createboxButton' ) ) {
+			CreatePage.checkTitle( titleText );
+			return;
+		}
+
 		if ( false === CreatePage.loading ) {
 			CreatePage.loading = true;
 
-			if ( CreatePage.canUseVisualEditor ) {
+			if ( CreatePage.canUseVisualEditor && titleText ) {
 				rs = 'wfCreatePageAjaxGetVEDialog';
 				dialogCallback = CreatePage.openVEDialog;
 			} else {
@@ -252,6 +260,7 @@ var CreatePage = {
 
 	redLinkClick: function( e, titleText ) {
 		'use strict';
+		CreatePage.redlinkParam = '&redlink=1';
 
 		if ( CreatePage.canUseVisualEditor ) {
 			CreatePage.track( { action: 'click', label: 've-redlink-click' } );

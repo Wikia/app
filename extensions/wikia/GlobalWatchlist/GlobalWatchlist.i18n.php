@@ -819,6 +819,8 @@ $messages['ps'] = array(
 
 /** Portuguese (português)
  * @author Hamilton Abreu
+ * @author Luckas
+ * @author Polyethylen
  */
 $messages['pt'] = array(
 	'globalwatchlist-desc' => 'Envia mensagens mensais de resumo das páginas vigiadas em todas as wikis',

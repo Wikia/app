@@ -2,16 +2,8 @@
 
 class HubRssFeedSpecialController extends WikiaSpecialPageController {
 	const SPECIAL_NAME = 'HubRssFeed';
-	const CACHE_KEY = 'HubRssFeed';
 	const CACHE_TIME = 3600;
-	/** Use it after release to generate new memcache keys. */
-	const CACHE_BUST = 9;
-
-	protected $hubs = [
-		'gaming' => WikiFactoryHub::CATEGORY_ID_GAMING,
-		'entertainment' => WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT,
-		'lifestyle' => WikiFactoryHub::CATEGORY_ID_LIFESTYLE
-	];
+	const RSS_CONTENT_TYPE = 'text/xml; charset=utf-8';
 
 	/**
 	 * @var HubRssFeedModel
@@ -45,11 +37,12 @@ class HubRssFeedSpecialController extends WikiaSpecialPageController {
 
 
 	public function notfound() {
+		global $wgHubRssFeeds;
 		$url = $this->currentTitle->getFullUrl();
-		$links = [];
+		$links = [ ];
 
-		foreach ( $this->hubs as $k => $v ) {
-			$links[ ] = $url . '/' . ucfirst( $k );
+		foreach ( $wgHubRssFeeds as  $feedName ) {
+			$links[ ] = $url . '/'. $feedName;
 		}
 
 		$this->setVal( 'links', $links );
@@ -59,34 +52,24 @@ class HubRssFeedSpecialController extends WikiaSpecialPageController {
 
 
 	public function index() {
-		global $wgHubRssFeedCityIds;
 
-		$params = $this->request->getParams();
-
-		$hubName = strtolower( (string)$params[ 'par' ] );
-
-		if ( !isset($this->hubs[ $hubName ]) ) {
+		$hubName = (string)$this->request->getVal( 'par' );
+		$model = BaseRssModel::newFromName( $hubName );
+		if(!$model instanceof BaseRssModel){
 			return $this->forward( 'HubRssFeedSpecial', 'notfound' );
 		}
+		$this->response->setCacheValidity( self::CACHE_TIME );
 
-		$langCode = $this->app->wg->ContLang->getCode();
-		$this->model = new HubRssFeedModel($langCode);
+		$service = new RssFeedService();
 
-		$memcKey = wfMemcKey( self::CACHE_KEY, $hubName, self::CACHE_BUST, $langCode );
-
-		$xml = $this->wg->memc->get( $memcKey );
-		if ( $xml === false ) {
-			$service = new HubRssFeedService($langCode, $this->currentTitle->getFullUrl() . '/' . ucfirst( $hubName ));
-			$verticalId = $this->hubs[ $hubName ];
-			$cityId = isset( $wgHubRssFeedCityIds[ $hubName ] ) ? $wgHubRssFeedCityIds[ $hubName ] : 0;
-			$data = array_merge( $this->model->getRealDataV3( $cityId ), $this->model->getRealDataV2( $verticalId ) );
-			$xml = $service->dataToXml( $data, $verticalId );
-			$this->wg->memc->set( $memcKey, $xml, self::CACHE_TIME );
-		}
-
+		$service->setFeedLang( $model->getFeedLanguage() );
+		$service->setFeedTitle( $model->getFeedTitle() );
+		$service->setFeedDescription( $model->getFeedDescription() );
+		$service->setFeedUrl( RequestContext::getMain()->getRequest()->getFullRequestURL() );
+		$service->setData( $model->getFeedData() );
 		$this->response->setFormat( WikiaResponse::FORMAT_RAW );
-		$this->response->setBody( $xml );
-		$this->response->setContentType( 'text/xml' );
+		$this->response->setBody( $service->toXml() );
+		$this->response->setContentType( self::RSS_CONTENT_TYPE );
 	}
 
 }

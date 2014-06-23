@@ -36,13 +36,14 @@ class UserApiController extends WikiaApiController {
 		$users = (new UserService())->getUsers( $ids );
 		$items = array();
 		foreach ( $users as $user ) {
+			$userName = $user->getName();
 
 			$item = array(
 				'user_id' => $user->getId(),
 				'title' => $user->getTitleKey(),
-				'name' => $user->getName(),
-				'url' => AvatarService::getUrl( $user->getName() ),
-				'numberofedits' => $user->getEditCountLocal()
+				'name' => $userName,
+				'url' => AvatarService::getUrl( $userName ),
+				'numberofedits' => (int) $user->getEditCountLocal()
 			);
 			//add avatar url if size !== 0
 			if ( $size > 0 ) {
@@ -58,5 +59,4 @@ class UserApiController extends WikiaApiController {
 		}
 		wfProfileOut( __METHOD__ );
 	}
-
 }

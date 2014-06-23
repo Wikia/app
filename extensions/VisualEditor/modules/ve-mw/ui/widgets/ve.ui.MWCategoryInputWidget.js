@@ -1,7 +1,7 @@
 /*!
  * VisualEditor UserInterface MWCategoryInputWidget class.
  *
- * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
@@ -55,16 +55,28 @@ OO.mixinClass( ve.ui.MWCategoryInputWidget, OO.ui.LookupInputWidget );
  * @returns {jqXHR} AJAX object without success or fail handlers attached
  */
 ve.ui.MWCategoryInputWidget.prototype.getLookupRequest = function () {
-	return $.ajax( {
-		'url': mw.util.wikiScript( 'api' ),
-		'data': {
-			'format': 'json',
+	var propsJqXhr,
+		searchJqXhr = ve.init.mw.Target.static.apiRequest( {
 			'action': 'opensearch',
 			'search': this.categoryPrefix + this.value,
 			'suggest': ''
-		},
-		'dataType': 'json'
-	} );
+		} );
+
+	return searchJqXhr.then( function ( data ) {
+		propsJqXhr = ve.init.mw.Target.static.apiRequest( {
+			'action': 'query',
+			'prop': 'pageprops',
+			'titles': ( data[1] || [] ).join( '|' ),
+			'ppprop': 'hiddencat'
+		} );
+		return propsJqXhr;
+	} ).promise( { abort: function () {
+		searchJqXhr.abort();
+
+		if ( propsJqXhr ) {
+			propsJqXhr.abort();
+		}
+	} } );
 };
 
 /**
@@ -74,15 +86,17 @@ ve.ui.MWCategoryInputWidget.prototype.getLookupRequest = function () {
  * @param {Mixed} data Response from server
  */
 ve.ui.MWCategoryInputWidget.prototype.getLookupCacheItemFromData = function ( data ) {
-	var i, len, title, result = [];
-	if ( ve.isArray( data ) && data.length ) {
-		for ( i = 0, len = data[1].length; i < len; i++ ) {
-			title = mw.Title.newFromText( data[1][i] );
+	var categoryWidget = this.categoryWidget, result = {};
+	if ( data.query && data.query.pages ) {
+		$.each( data.query.pages, function ( pageId, pageInfo ) {
+			var title = mw.Title.newFromText( pageInfo.title );
 			if ( title ) {
-				result.push( title.getMainText() );
+				result[title.getMainText()] = !!( pageInfo.pageprops && pageInfo.pageprops.hiddencat !== undefined );
+				categoryWidget.categoryHiddenStatus[pageInfo.title] = result[title.getMainText()];
+			} else {
+				mw.log.warning( '"' + pageInfo.title + '" is an invalid title!' );
 			}
-			// If the received title isn't valid, just ignore it
-		}
+		} );
 	}
 	return result;
 };
@@ -99,11 +113,21 @@ ve.ui.MWCategoryInputWidget.prototype.getLookupMenuItemsFromData = function ( da
 		newCategoryItems = [],
 		existingCategoryItems = [],
 		matchingCategoryItems = [],
+		hiddenCategoryItems = [],
 		items = [],
 		menu$ = this.lookupMenu.$,
 		category = this.getCategoryItemFromValue( this.value ),
 		existingCategories = this.categoryWidget.getCategories(),
-		matchingCategories = data || [];
+		matchingCategories = [],
+		hiddenCategories = [];
+
+	$.each( data, function ( title, hiddenStatus ) {
+		if ( hiddenStatus ) {
+			hiddenCategories.push( title );
+		} else {
+			matchingCategories.push( title );
+		}
+	} );
 
 	// Existing categories
 	for ( i = 0, len = existingCategories.length - 1; i < len; i++ ) {
@@ -127,6 +151,19 @@ ve.ui.MWCategoryInputWidget.prototype.getLookupMenuItemsFromData = function ( da
 				exactMatch = true;
 			}
 			matchingCategoryItems.push( item );
+		}
+	}
+	// Hidden categories
+	for ( i = 0, len = hiddenCategories.length; i < len; i++ ) {
+		item = hiddenCategories[i];
+		if (
+			ve.indexOf( item, existingCategories ) === -1 &&
+			item.lastIndexOf( category.value, 0 ) === 0
+		) {
+			if ( item === category.value ) {
+				exactMatch = true;
+			}
+			hiddenCategoryItems.push( item );
 		}
 	}
 	// New category
@@ -159,6 +196,15 @@ ve.ui.MWCategoryInputWidget.prototype.getLookupMenuItemsFromData = function ( da
 		) );
 		for ( i = 0, len = matchingCategoryItems.length; i < len; i++ ) {
 			item = matchingCategoryItems[i];
+			items.push( new OO.ui.MenuItemWidget( item, { '$': menu$, 'label': item } ) );
+		}
+	}
+	if ( hiddenCategoryItems.length ) {
+		items.push( new OO.ui.MenuSectionItemWidget(
+			'hiddenCategories', { '$': menu$, 'label': ve.msg( 'visualeditor-dialog-meta-categories-input-hiddencategorieslabel' ) }
+		) );
+		for ( i = 0, len = hiddenCategoryItems.length; i < len; i++ ) {
+			item = hiddenCategoryItems[i];
 			items.push( new OO.ui.MenuItemWidget( item, { '$': menu$, 'label': item } ) );
 		}
 	}

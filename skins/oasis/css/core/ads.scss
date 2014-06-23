@@ -4,7 +4,7 @@
 @import "../mixins/gradient";
 
 /** Hide invisible slots and 1x1 iframes **/
-.wikia-ad[id^="INVISIBLE_"], .wikia-ad iframe[width="1"][height="1"] {
+.wikia-ad[id^="INVISIBLE_"], .wikia-ad iframe[width="1"][height="1"], .wikia-ad > .hidden {
 	display: none;
 }
 
@@ -243,4 +243,16 @@ body >a >img[src$="noad.gif"] {
 			margin-right: 15px;
 		}
 	}
+}
+
+#WIKIA_BAR_BOXAD_2 {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  z-index: 1;
+  text-align: center;
+
+  & > div {
+    display: inline-block;
+  }
 }

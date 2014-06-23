@@ -51,7 +51,7 @@ class JsonFormatSimplifier {
 				elseif ( $type == 'listItem' ) {
 					$listItem = true;
 					$arr = $this->processList( $children[ $i ] );
-					$out[ ] = array_shift( $arr );
+					$out[ ] = array_shift( $arr );				
 				}
 				$i++;
 			}
@@ -64,22 +64,17 @@ class JsonFormatSimplifier {
 		return $out;
 	}
 
-
 	protected function readText( \JsonFormatContainerNode $parentNode ) {
-		$text = "";
+		$texts = [];
 		foreach ( $parentNode->getChildren() as $childNode ) {
-			if ( $childNode->getType() == 'text' ) {
-				/** @var \JsonFormatTextNode $childNode */
-				$text .= " " . $childNode->getText();
-			} else if ( $childNode->getType() == 'link' ) {
-				/** @var \JsonFormatLinkNode $childNode */
-				$text .= " " . $childNode->getText();
-			} else if ( $childNode->getType() == 'paragraph' ) {
-				/** @var \JsonFormatParagraphNode $childNode */
-				$text .= " " . $this->readText( $childNode );
+			$type = $childNode->getType();
+			if ( $type == 'text' || $type == "link" ) {
+				$texts[] = $childNode->getText();
+			} else if ( $type == 'paragraph' ) {
+				$texts[] = $this->readText( $childNode );
 			}
 		}
-		return trim($text);
+		return trim(implode("", $texts));
 	}
 
 	private function getImages( \JsonFormatContainerNode $containerNode, &$images ) {
@@ -123,12 +118,12 @@ class JsonFormatSimplifier {
 	 * @param String $inlineText
 	 */
 	private function appendInline( &$sectionElements, $inlineText ) {
-		if ( trim($inlineText) != "" ) {
-			if( count( $sectionElements ) == 0 || $sectionElements[count($sectionElements) - 1 ]["type"] != "paragraph") {
+		if( count( $sectionElements ) == 0 || $sectionElements[count($sectionElements) - 1 ]["type"] != "paragraph") {
+			if ( trim($inlineText) != "" ) {
 				$sectionElements[] = [ "type" => "paragraph", "text" => $inlineText ];
-			} else {
-				$sectionElements[ count($sectionElements) - 1 ]["text"] .= $inlineText;
 			}
+		} else {
+			$sectionElements[ count($sectionElements) - 1 ]["text"] .= $inlineText;
 		}
 	}
 
@@ -141,7 +136,6 @@ class JsonFormatSimplifier {
 				$this->findSections( $childNode, $sections );
 			}
 		}
-
 	}
 
 
@@ -193,7 +187,7 @@ class JsonFormatSimplifier {
 			$content = [];
 			$containList = false;
 			$this->getParagraphs( $section, $content );
-			$this->clearEmptyParagraphs( $content );
+			$this->clearParagraphs( $content );
 			foreach( $content as $node ) {
 				if( $node['type'] == 'paragraph' ) {
 					$sectionResult[] = $node['text'];
@@ -203,7 +197,7 @@ class JsonFormatSimplifier {
 					$containList = true;
 				}
 			}
-			$value = implode('', $sectionResult);
+			$value = implode(' ', $sectionResult);
 			if( $containList ) {
 				$listsSections[] = $value;
 			} else {
@@ -212,7 +206,7 @@ class JsonFormatSimplifier {
 		}
 
 		$output = array_merge( array_reverse($result), array_reverse( $listsSections ) );
-		$res = implode( '', $output);
+		$res = implode( ' ', $output);
 		$timer->stop();
 		return $res;
 	}
@@ -220,7 +214,8 @@ class JsonFormatSimplifier {
 	protected function getElements( $node ) {
 		$result = [];
 		foreach( $node['elements'] as $element ) {
-			$text = [ $element['text'] ];
+			//unicode trim
+			$text = [ preg_replace( '/^[\pZ\pC]+|[\pZ\pC]+$/u', '', $element['text'] ) ];
 			if( !empty($element['elements']) ) {
 				$text[] = '(' . $this->getElements( $element ) . ')';
 			}

@@ -62,12 +62,13 @@ $messages['af'] = array(
  * @author Achraf94
  * @author Alexknight12
  * @author Claw eg
+ * @author Kuwaity26
  */
 $messages['ar'] = array(
 	'comboajaxlogin-desc' => 'صندوق ديناميكي يسمح للمستخدمين بتسجيل الدخول كما يذكرهم بكلمة السر و المستخدمين المسجلين.',
 	'comboajaxlogin-createlog' => 'تسجيل الدخول أو إنشاء حساب',
 	'comboajaxlogin-actionmsg' => 'لكي تقوم بهذه العملية يجب عليك أولا تسجيل الدخول أو إنشاء حساب',
-	'comboajaxlogin-actionmsg-protected' => 'لكي تقوم بهذه العملية يجب عليك أولا تسجيل الدخول أو إنشاء حساب',
+	'comboajaxlogin-actionmsg-protected' => 'لتنفيذ هذه العملية عليك أولًا أن تسجل دخولك أو تنشئ حسابًا.',
 	'comboajaxlogin-connectmarketing' => '<h1>اربط حساباتك</h1>
 <ul>
 <li>حافظ على اسم المستخدم الحالي, تاريخ المساهمات, التعديلات... لا شيء يتغير إلا كيفية تسجيل الدخول</li>
@@ -81,7 +82,7 @@ $messages['ar'] = array(
 <li>شارك نشاطك في ويكيا مع أصدقائك في الفيسبوك، مع تحكم كامل في كل ما ينشر على فيسبوكك</li>
 </ul>',
 	'comboajaxlogin-connectmarketing-back' => '&laquo; العودة',
-	'comboajaxlogin-connectmarketing-forward' => 'إبدأ »',
+	'comboajaxlogin-connectmarketing-forward' => 'ابدأ »',
 	'comboajaxlogin-connectdirections' => 'قم بإدخال اسم متخدمك وكلمة مرورك في ويكيا - سوف نقوم بربط حسابك في ويكيا مع الحساب في الفيسبوك سحريا.
 
 عندما تنتهي، يمكنك الدخول بسهولة عبر زر "اتصال عبر الفيسبوك".',
@@ -476,6 +477,7 @@ $messages['eo'] = array(
  * @author Absay
  * @author Benfutbol10
  * @author Crazymadlover
+ * @author Fitoschido
  * @author VegaDark
  */
 $messages['es'] = array(
@@ -498,9 +500,9 @@ $messages['es'] = array(
 </ul>',
 	'comboajaxlogin-connectmarketing-back' => '&laquo; Regresar',
 	'comboajaxlogin-connectmarketing-forward' => 'Comenzar &raquo;',
-	'comboajaxlogin-connectdirections' => 'Ingresar tu nombre de usuario Wikia y contraseña aquí - conectaremos mágicamente tus cuentas de Wikia y Facebook.
+	'comboajaxlogin-connectdirections' => 'Ingresa tu nombre de usuario de Wikia y tu contraseña aquí; así conectaremos mágicamente tus cuentas de Wikia y Facebook.
 
-Una vez que lo hagas, puedes iniciar sesión fácilmente usando cualquier botón de conexión de Facebook.',
+Una vez que lo hagas, podrás acceder fácilmente mediante cualquier botón de Facebook Connect.',
 	'comboajaxlogin-post-not-understood' => 'Hubo un error en la forma en que este formulario fue construído.
 Por favor intenta de nuevo o [[Special:Contact|reporta esto]].',
 	'comboajaxlogin-readonlytext' => '<h2>¡Lo sentimos!</h2>
@@ -1309,14 +1311,15 @@ Als je al een gebruiker hebt, kan je <a href="#">aanmelden</a> zoals altijd, maa
 
 /** Occitan (occitan)
  * @author Cedric31
+ * @author Hulothe
  */
 $messages['oc'] = array(
-	'comboajaxlogin-desc' => "Bóstia de dinamica que permeton als utilizaires de se connectar, se rapelar de lor senhal e d'enregistrar d'utilizaires",
+	'comboajaxlogin-desc' => "Bóstia dinamica que permet als utilizaires de se connectar, se rapelar de lor senhal e d'enregistrar d'utilizaires",
 	'comboajaxlogin-createlog' => 'Se connectar o crear un compte',
-	'comboajaxlogin-actionmsg' => "D'en primièr, vos cal vos connectar o crear un compte abans d'efectuar aquesta accion",
-	'comboajaxlogin-actionmsg-protected' => "Per modificar aquesta pagina protegida, d'en primièr, vos cal vos connectar o crear un compte.",
+	'comboajaxlogin-actionmsg' => "Vos cal vos connectar o crear un compte abans d'efectuar aquesta accion",
+	'comboajaxlogin-actionmsg-protected' => "Vos cal vos connectar o crear un compte abans d'efectuar aquesta accion",
 	'comboajaxlogin-log-in-with-facebook-oasis' => '<h1>Se connectar amb Facebook Connect</h1>',
-	'comboajaxlogin-connectmarketing-back' => '&laquo; Retorn',
+	'comboajaxlogin-connectmarketing-back' => '← Retorn',
 	'comboajaxlogin-connectmarketing-forward' => 'Abans de començar &raquo;',
 	'comboajaxlogin-ajaxerror' => 'Wikia respond pas. Verificatz vòstra connexion ret.',
 );
@@ -1568,34 +1571,34 @@ $messages['ru'] = array(
  */
 $messages['sco'] = array(
 	'comboajaxlogin-desc' => 'Dynameec kist that lats uisers log-in, remynd passwaird n register uisers',
-	'comboajaxlogin-createlog' => 'Log in or cræft aen accoont',
-	'comboajaxlogin-actionmsg' => 'Tae perform this action ye first need tae log in or mak aen accoont',
-	'comboajaxlogin-actionmsg-protected' => 'Tae perform this action ye first need tae log in or mak aen accoont.',
+	'comboajaxlogin-createlog' => 'Log in or creaut aen accoont',
+	'comboajaxlogin-actionmsg' => 'Tae perform this action ye first need tae log in or creaut aen accoont',
+	'comboajaxlogin-actionmsg-protected' => 'Tae perform this action ye first need tae log in or creaut aen accoont.',
 	'comboajaxlogin-connectmarketing' => "<h1>Connect yer accoonts</h1>
 <ul>
-<li>Keep yer current uisername, histerie, eidits... nathing chynges cept hou ye log in</li>
-<li>Shair yer acteevity oan Wikia wi yer freends oan Facebook</li>
+<li>Keep yer current uisername, histerie, eedits... nathing chynges cept hou ye log in</li>
+<li>Shair yer acteevitie oan Wikia wi yer freends oan Facebook</li>
 <li>Compleate control o whit's published</li>
 </ul>",
 	'comboajaxlogin-log-in-with-facebook-oasis' => '<h1>Log in wi Facebook Connect</h1>',
-	'comboajaxlogin-connectmarketing-oasis' => "<h1>Connect yer Wikia accoont til Facebook</h1>
+	'comboajaxlogin-connectmarketing-oasis' => "<h1>Connect yer Wikia accoont tae Facebook</h1>
 <ul>
 <li>Keep yer Nou uisername, histerie, eedits... nathing chynges except hou ye log in</li>
 <li>Shair yer acteevitie oan Wikia wi yer freends oan Facebook, wi compleate control o whit's publeeshed</li>
 </ul>",
 	'comboajaxlogin-connectmarketing-back' => '« laist',
-	'comboajaxlogin-connectmarketing-forward' => 'Get sterted »',
-	'comboajaxlogin-connectdirections' => "Enter yer Wikia uisername an passwaird here - we will magiclie connect yer Wikia n Facebook accoonts in the backgroond.
+	'comboajaxlogin-connectmarketing-forward' => 'Get stertit »',
+	'comboajaxlogin-connectdirections' => "Enter yer Wikia uisername n passwaird here - we will magiclie connect yer Wikia n Facebook accoonts in the backgroond.
 
-yince ye'r dun, ye can log in easilie uisin oni Facebook Connect button.",
+Yince ye'r dun, ye can log in easilie uisin onie Facebook Connect button.",
 	'comboajaxlogin-post-not-understood' => 'Thaur wis ae mistake in hou this form wis constructed.
-Please try again or [[Special:Contact|report this]].',
+Please gie it anither shot or [[Special:Contact|report this]].',
 	'comboajaxlogin-readonlytext' => '<h2>Sarrie!</h2>
-<p>Ye canna cræft aen accoont the nou - we shid be up n rinnin again shortlie. Here\'s whit\'s happenin:<br /><em>$1</em></p>
+<p>Ye canna creaut aen accoont the nou - we shid be up n rinnin again shortlie. Here\'s whit\'s happenin:<br /><em>$1</em></p>
 <p>Please check <a href="http://twitter.com/wikia">Twitter</a> or <a href="http://facebook.com/wikia">Facebook</a> fer mair information.
 <br />
-(Gif ye awreadie hae aen accoont, ye can <a href="#">log in</a> aes normal, but ye\'ll naw be able tae eedit.)</p>',
-	'comboajaxlogin-ajaxerror' => 'Wikia is naw respondin. Please check yer netwark connection.',
+(Gif ye awreadie hae aen accoont, ye can <a href="#">log in</a> aes normal, but ye\'ll no be able tae eedit.)</p>',
+	'comboajaxlogin-ajaxerror' => 'Wikia is no respondin. Please check yer netwairk connection.',
 );
 
 /** Somali (Soomaaliga)
@@ -1893,6 +1896,7 @@ $messages['war'] = array(
 /** Simplified Chinese (中文（简体）‎)
  * @author Dimension
  * @author Hzy980512
+ * @author Liuxinyu970226
  * @author Sam Wang
  * @author User670839245
  * @author Wilsonmess
@@ -1915,7 +1919,7 @@ $messages['zh-hans'] = array(
 <li>保留您当前的用户名、历史、编辑记录，一切都不会变化，除了登录方式</li>
 <li>和Facebook上的朋友分享您的活动，并且完全控制发布的内容</li>
 </ul>',
-	'comboajaxlogin-connectmarketing-back' => '$laquo; 返回',
+	'comboajaxlogin-connectmarketing-back' => '« 返回',
 	'comboajaxlogin-connectmarketing-forward' => '开始 »',
 	'comboajaxlogin-connectdirections' => '在此输入您的Wikia用户名和密码，我们将在后台把您的Wikia账户和Facebook帐户设置关联。 
 设置完成后，您可以轻松使用任何Facebook关联按钮进行登录。',

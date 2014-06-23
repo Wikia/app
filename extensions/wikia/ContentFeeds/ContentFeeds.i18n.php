@@ -278,9 +278,12 @@ $messages['id'] = array(
 );
 
 /** Italian (italiano)
+ * @author PeppeAeco
  * @author Rippitippi
  */
 $messages['it'] = array(
+	'contentfeeds-desc' => 'Fornisce informazioni ricche e aggiornate attraverso vari tag o "feed"',
+	'contentfeeds-firstfewarticles-tag-header' => 'Creare il tuo primo paio di pagine!',
 	'contentfeeds-firstfewarticles-tag-title' => 'Titolo',
 	'contentfeeds-firstfewarticles-tag-next' => 'Successivo',
 	'contentfeeds-firstfewarticles-tag-empty-title-error' => 'Errore: Il titolo della pagina è necessario',
@@ -296,6 +299,17 @@ $messages['ja'] = array(
 	'contentfeeds-firstfewarticles-tag-next' => '次',
 	'contentfeeds-firstfewarticles-tag-empty-title-error' => 'エラー: ページのタイトルが必要です',
 	'contentfeeds-firstfewarticles-tag-empty-body-error' => 'エラー: ページ本体が必要です',
+);
+
+/** Kannada (ಕನ್ನಡ)
+ * @author VASANTH S.N.
+ */
+$messages['kn'] = array(
+	'contentfeeds-firstfewarticles-tag-header' => 'ನಿಮ್ಮ ಪ್ರಥಮ ಕೆಲವು ಪುಟಗಳನ್ನು ಸೃಜಿಸಿ!',
+	'contentfeeds-firstfewarticles-tag-title' => 'ಶೀರ್ಷಿಕೆ',
+	'contentfeeds-firstfewarticles-tag-next' => 'ನಂತರ',
+	'contentfeeds-firstfewarticles-tag-empty-title-error' => 'ದೋಷ:ಪುಟ ಶೀರ್ಷಿಕೆ ಅಗತ್ಯವಿದೆ',
+	'contentfeeds-firstfewarticles-tag-empty-body-error' => 'ದೋಷ:ಪಠ್ಯದ ವಿಷಯ ಅಗತ್ಯವಿದೆ',
 );
 
 /** Colognian (Ripoarisch)

@@ -1,0 +1,16 @@
+{
+    "@metadata": {
+        "authors": [
+            "Gloria sah",
+            "Lévi"
+        ]
+    },
+    "tag-visualeditor": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|EditōrVisuèl]]",
+    "tag-visualeditor-description": "Cambiamèint fât cun l' [[{{MediaWiki:visualeditor-descriptionpagelink}}|EditōrVisuèl]]",
+    "tag-visualeditor-needcheck": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|EditōrVisuè: Da controlêr]]",
+    "tag-visualeditor-needcheck-description": "Mudéfichi fâti cun l' [[{{MediaWiki:visualeditor-descriptionpagelink}}|EditōrVisuèl]], in dóv' al sistēma l'à vést dal mudéfichi, fōrsi mía vrudi, fâti 'nd al 'wikitex'.",
+    "visualeditor-feedback-link": "Project:VisualEditor/I cumèint",
+    "visualeditor-feedback-tool": "Cumèinta al nōv sistēma",
+    "visualeditor-help-label": "Léś la guìda 'd l' utèint",
+    "visualeditor-help-title": "Guìda 'd l' utèint per druvêr 'l editōr"
+}

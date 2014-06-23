@@ -1,0 +1,69 @@
+/*!
+ * VisualEditor standalone demo
+ *
+ * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
+ * @license The MIT License (MIT); see LICENSE.txt
+ */
+
+body {
+	margin: 0;
+	padding: 0;
+	overflow-y: scroll;
+	background: #fff;
+	font: normal 1em/1.5 sans-serif;
+}
+
+/* Demo */
+
+.ve-demo-menu {
+	list-style: none;
+	margin: 0 0 1em 0;
+	display: inline-block;
+}
+
+.ve-demo-menu li {
+	list-style: none;
+	margin: 0 0.75em 0 0;
+	padding: 0;
+	display: inline-block;
+}
+
+.ve-demo-debugBar {
+	margin: 0 2em 1em 2em;
+	border: 1px solid #ccc;
+	border-top: 0;
+	border-radius: 0 0 0.5em 0.5em;
+	padding: 2em;
+	box-shadow: 0 0.25em 1.5em 0 #ddd;
+}
+
+/* Editor */
+
+.ve-ui-surface {
+	margin: 2em 2em 0 2em;
+	margin-top: 0;
+	box-shadow: 0 0.25em 1.5em 0 #ddd;
+	border-radius: 0.5em;
+}
+
+.ve-ce-documentNode {
+	border: 1px solid #ccc;
+	border-top: none;
+	padding: 0.75em 1.5em;
+}
+
+.ve-init-sa-target-toolbar {
+	margin: 0 2em;
+}
+
+.ve-init-sa-target-toolbar .oo-ui-toolbar-bar {
+	border: 1px solid #ccc;
+	border-radius: 0;
+	border-top-right-radius: 0.25em;
+	border-top-left-radius: 0.25em;
+}
+
+.ve-init-sa-target-toolbar.ve-ui-toolbar-floating .oo-ui-toolbar-bar {
+	border-top: none;
+	border-radius: 0;
+}
