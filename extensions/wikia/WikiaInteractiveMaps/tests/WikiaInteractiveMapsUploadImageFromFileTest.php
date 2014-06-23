@@ -74,6 +74,29 @@ class WikiaInteractiveMapsUploadImageFromFileTest extends WikiaBaseTest {
 		);
 	}
 
+	public function testVerifyUpload_failed_file_extension() {
+		$expected = [ 'status' => UploadBase::FILETYPE_BADTYPE ];
+		$uploadImageFromFileMock = $this->getUploadImageFromFileMock(
+			[ 'status' => 'success' ],
+			true,
+			false,
+			false
+		);
+
+		$uploadImageFromFileMock
+			->expects( $this->never() )
+			->method( 'getUploadedImageSize' );
+
+		/**
+		 * @var WikiaInteractiveMapsUploadImageFromFile $uploadImageFromFileMock
+		 */
+		$this->assertEquals(
+			$expected,
+			$uploadImageFromFileMock->verifyUpload( 'mocked type' ),
+			'Failed update due wrong file extension'
+		);
+	}
+
 	private function getUploadImageFromFileMock(
 		$uploadDetailsMock,
 		$isUploadSuccessfulMock,
