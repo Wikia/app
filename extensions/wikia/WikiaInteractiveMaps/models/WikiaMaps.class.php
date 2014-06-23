@@ -302,6 +302,7 @@ class WikiaMaps {
 	}
 
 	public function getParentPoiCategories() {
+		//TODO make it so there is just "parents" parameter, without =1 (needs changes in service)
 		$params = [
 			'parents' => 1
 		];
@@ -310,11 +311,7 @@ class WikiaMaps {
 
 		//TODO: consider caching the response
 		$response = $this->processServiceResponse(
-			Http::get( $url, 'default', [
-				'returnInstance' => true,
-				//TODO this is temporary workaround, remove it before production!
-				'noProxy' => true
-			] )
+			Http::get( $url, 'default', $this->getHttpRequestOptions() )
 		);
 
 		return $response;
@@ -489,7 +486,7 @@ class WikiaMaps {
 			'noProxy' => true
 		];
 
-		if( !empty( $postData ) ) {
+		if ( !empty( $postData ) ) {
 			$options[ 'postData' ] = json_encode( $postData );
 		}
 
