@@ -302,9 +302,8 @@ class WikiaMaps {
 	}
 
 	public function getParentPoiCategories() {
-		//TODO make it so there is just "parents" parameter, without =1 (needs changes in service)
 		$params = [
-			'parents' => 1
+			'parentsOnly' => 1 // it has to be like that: http://jonathonhill.net/2011-09-30/http_build_query-surprise/
 		];
 
 		$url = $this->buildUrl( [ self::ENTRY_POINT_POI_CATEGORY ], $params );
