@@ -16,9 +16,10 @@ require([ 'jquery', 'wikia.ui.factory', 'wikia.nirvana' ], function ($, uiFactor
 				$globalNavigationNav = $('.GlobalNavigationContainer nav');
 			},
 			buildMenu = function(verticalData) {
-				var $hubsMenu = $globalNavigationNav.find('.hubs');
+				var $hubsMenu = $globalNavigationNav.find('.hubs' ),
+					active = verticalData.active || 'comics';
 				//
-				$globalNavigationNav.addClass('count-' + verticalData.menu.length).data('active', verticalData.active);
+				$globalNavigationNav.addClass('count-' + verticalData.menu.length).data('active', active);
 				//
 				$.each(verticalData.menu, function() {
 					var $elem = $('<nav class="' + this.specialAttr + ' hub"><span class="icon" />' +

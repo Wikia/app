@@ -118,6 +118,8 @@ class GlobalHeaderController extends WikiaController {
 	}
 
 	public function getGlobalMenuItems() {
+		global $wgCityId;
+
 		$menuData = [];
 
 		// convert menuNodes to better json menu
@@ -125,8 +127,19 @@ class GlobalHeaderController extends WikiaController {
 			$menuData[] = $this->recursiveConvertMenuNodeToArray( $id );
 		}
 
+		$catArr = WikiFactory::getCategory( $wgCityId );
+		$catId = $catArr->cat_id;
+
+		$categoryMap = [
+			WikiFactoryHub::CATEGORY_ID_GAMING => 'games',
+			WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT => 'tv',
+			WikiFactoryHub::CATEGORY_ID_LIFESTYLE => 'lifestyle',
+			WikiFactoryHub::CATEGORY_ID_CORPORATE => 'comics',
+			WikiFactoryHub::CATEGORY_ID_MUSIC => 'music'
+		];
+
 		$menuData = [
-			'active' => 'comics',
+			'active' => $categoryMap[ $catId ],
 			'menu' => $menuData
 		];
 
