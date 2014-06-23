@@ -3582,6 +3582,7 @@ $messages['nb'] = array(
  * @author McDutchie
  * @author SPQRobin
  * @author Siebrand
+ * @author Southparkfan
  * @author Tjcool007
  */
 $messages['nl'] = array(
@@ -3692,7 +3693,8 @@ paginagrootte',
 	'closed-wiki' => 'Gesloten wiki',
 	'closed-wiki-info' => 'Deze wiki is gesloten',
 	'disabled-wiki-info' => 'Deze wiki is uitgeschakeld',
-	'closed-wiki-dump-exists' => 'U kunt uw inhoud ophalen als u wilt.<br />Als uw wiki recent gesloten is, kan het een tijdje duren voordat de bestanden aangemaakt zijn.', # Fuzzy
+	'closed-wiki-dump-exists' => 'U kunt uw inhoud ophalen als u wilt.<br />Als uw wiki recent gesloten is, kan het een tijdje duren voordat de bestanden aangemaakt zijn.',
+	'closed-wiki-dump-links' => "[$1 Huidige pagina's] (deze versie is in het algemeen het beste voor botgebruik)<br />[$2 Huidige pagina's en geschiedenis] (waarschuwing: dit bestand kan zeer groot zijn)",
 	'closed-wiki-dump-noexists' => 'Deze wiki is gesloten.
 Een dump van de inhoud wordt binnen 24 uur beschikbaar gemaakt.
 Kom hier dan terug.',

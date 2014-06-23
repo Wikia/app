@@ -2217,6 +2217,7 @@ keutamaan e-mel anda di sini: http://community.wikia.com/Special:Preferences',
  * @author AvatarTeam
  * @author Flightmare
  * @author Siebrand
+ * @author Southparkfan
  */
 $messages['nl'] = array(
 	'forum-forum-title' => 'Forum',
@@ -2306,6 +2307,7 @@ e-mailvoorkeuren wijzingen: http://community.wikia.com/Special:Preferences',
 	'forum-recentchanges-edit' => '(bericht bewerkt)',
 	'forum-recentchanges-deleted-reply-title' => 'Een bericht',
 	'forum-recentchanges-namespace-selector-message-wall' => 'Forumprikbord',
+	'forum-recentchanges-thread-history-link' => 'draadgeschiedenis',
 	'forum-admin-delete-and-merge-button-label' => 'Verwijderen en samenvoegen',
 	'forum-autoboard-title-1' => 'Algemene discussie',
 	'forum-autoboard-title-2' => 'Nieuws en Aankondigingen',
@@ -2319,7 +2321,6 @@ e-mailvoorkeuren wijzingen: http://community.wikia.com/Special:Preferences',
 	'forum-related-discussion-new-post-button' => 'Een discussie starten',
 	'forum-related-discussion-new-post-tooltip' => 'Start een nieuwe discussie over $1',
 	'forum-related-discussion-total-replies' => '{{PLURAL:$1|Eén bericht|$1 berichten}}',
-
 	'forum-related-discussion-see-more' => 'Meer discussies bekijken',
 	'forum-confirmation-board-deleted' => '"$1" is verwijderd.',
 );

@@ -170,6 +170,13 @@ $messages['az'] = array(
 	'wikia-visualeditor-dialogbutton-transclusion-tooltip' => 'Şablon',
 );
 
+/** Bambara (bamanankan)
+ * @author Amadouyoro.thiam
+ */
+$messages['bm'] = array(
+	'wikia-visualeditor-dialog-orientation-headline' => 'Bisimila',
+);
+
 /** Bengali (বাংলা)
  * @author Aftab1995
  */
@@ -244,6 +251,7 @@ $messages['ce'] = array(
 	'wikia-visualeditor-dialog-wikiamediainsert-upload-button' => 'Чуяккха',
 	'wikia-visualeditor-dialog-wikiamediainsert-read-more' => 'Ма-дарра',
 	'wikia-visualeditor-loading' => 'Визуальни тадар еллар…',
+	'wikia-visualeditor-dialog-orientation-headline' => 'Марша догӀийла',
 );
 
 /** Czech (čeština)
@@ -451,7 +459,7 @@ $messages['fa'] = array(
  */
 $messages['fi'] = array(
 	'wikia-visualeditor-preference-enable' => 'Ota käyttöön Visuaalinen muokkain',
-	'wikia-visualeditor-dialogbutton-wikiamediainsert-tooltip' => 'Lisää media',
+	'wikia-visualeditor-dialogbutton-wikiamediainsert-tooltip' => 'Lisää media', # Fuzzy
 	'wikia-visualeditor-dialog-wikiamediainsert-insert-button' => 'Lisää media',
 	'wikia-visualeditor-dialog-wikiamediainsert-item-title-label' => 'Otsikko',
 	'wikia-visualeditor-dialog-wikiamediainsert-item-license-label' => 'Lisenssi',
@@ -547,7 +555,10 @@ $messages['fr'] = array(
 	'wikia-visualeditor-notification-media-permission-denied' => 'Permission refusée',
 	'wikia-visualeditor-notification-video-preview-not-available' => "Désolé, l'aperçu de cette vidéo n'est pas disponible.",
 	'wikia-visualeditor-loading' => 'Chargement de VisualEditor',
-	'wikia-visualeditor-dialog-meta-languages-readonlynote' => 'Ceci est la liste des pages dans d\'autres langues liées à celle-ci. Pour l\'instant, elle ne peut être modifiée qu\'en mode source.',
+	'wikia-visualeditor-dialog-orientation-headline' => 'Bienvenue',
+	'wikia-visualeditor-dialog-orientation-text' => 'Cette page est créée, modifiée et maintenue par des gens comme vous. Apportez votre première contribution dès aujourd’hui.',
+	'wikia-visualeditor-dialog-orientation-start-button' => 'Commencer à modifier',
+	'wikia-visualeditor-dialog-meta-languages-readonlynote' => "Ceci est la liste des pages dans d'autres langues liées à celle-ci. Pour l'instant, elle ne peut être modifiée qu'en mode source.",
 	'wikia-visualeditor-dialog-transclusion-no-template-description' => 'Vous modifiez le modèle «$1».',
 );
 
@@ -695,11 +706,34 @@ $messages['it'] = array(
 );
 
 /** Japanese (日本語)
+ * @author Barrel0116
  */
 $messages['ja'] = array(
+	'wikia-visualeditor-dialogbutton-wikiamediainsert-tooltip' => 'メディア',
+	'wikia-visualeditor-dialog-wikiamediainsert-insert-button' => 'メディアを追加',
+	'wikia-visualeditor-dialog-wikiamediainsert-item-title-label' => 'タイトル',
+	'wikia-visualeditor-dialog-wikiamediainsert-item-license-label' => 'ライセンス',
+	'wikia-visualeditor-dialog-wikiamediainsert-item-remove-button' => 'この項目を削除します。',
+	'wikia-visualeditor-dialog-wikiamediainsert-upload-label' => 'アップロードする画像をドロップしてください。',
+	'wikia-visualeditor-dialog-wikiamediainsert-upload-button' => 'アップロード',
+	'wikia-visualeditor-dialog-drop-target-callout' => 'ここにファイルをドロップします。',
+	'wikia-visualeditor-help-label' => '既知の問題',
+	'wikia-visualeditor-help-link' => 'ヘルプ:VisualEditor', # Fuzzy
+	'wikia-visualeditor-aliennode-tooltip' => '申し訳ありませんが、現時点ではソースモードのみでしか編集できません。',
+	'wikia-visualeditor-dialog-transclusion-title' => 'テンプレート',
+	'wikia-visualeditor-dialogbutton-transclusion-tooltip' => 'テンプレート',
+	'wikia-visualeditor-savedialog-label-save' => '保存',
+	'wikia-visualeditor-dialogbutton-wikiasourcemode-tooltip' => 'ソースエディター',
+	'wikia-visualeditor-dialog-wikiasourcemode-title' => 'ソースエディター',
+	'wikia-visualeditor-dialog-wikiasourcemode-apply-button' => '変更内容を適用',
+	'wikia-visualeditor-dialog-wikiasourcemode-help-link' => 'ヘルプ:Wikitext', # Fuzzy
+	'wikia-visualeditor-notification-media-must-be-logged-in' => '画像や動画を追加するにはログインが必要です。',
+	'wikia-visualeditor-loading' => 'ビジュアルエディターを読み込んでいます。',
 	'wikia-visualeditor-dialog-orientation-headline' => 'ようこそ',
 	'wikia-visualeditor-dialog-orientation-text' => 'このページはあなたのような編集者によって作られ、編集され、メンテナンスされています。初めての投稿してみて下さい。',
 	'wikia-visualeditor-dialog-orientation-start-button' => '編集を始める',
+	'wikia-visualeditor-dialog-meta-languages-readonlynote' => 'これはここにリンクされている他の言語がリストされているページです。今後はソースモードでのみ編集することができます。',
+	'wikia-visualeditor-dialog-transclusion-no-template-description' => '「$1」テンプレートを編集中です。',
 );
 
 /** Khmer (ភាសាខ្មែរ)
@@ -738,14 +772,6 @@ $messages['km'] = array(
 	'wikia-visualeditor-notification-media-permission-denied' => 'ពុំ​មាន​សិទ្ធិ​ឡើយ',
 );
 
-$messages['ja'] = array(
-	'wikia-visualeditor-dialog-orientation-headline' => 'ようこそ',
-	'wikia-visualeditor-dialog-orientation-text' => 'このページはあなたのような編集者によって作られ、編集され、メンテナンスされています。初めての投稿してみて下さい。',
-	'wikia-visualeditor-dialog-orientation-start-button' => '編集を始める',
-	'wikia-visualeditor-dialog-meta-languages-readonlynote' => 'これはここにリンクされている他の言語がリストされているページです。今後はソースモードでのみ編集することができます。',
-	'wikia-visualeditor-dialog-transclusion-no-template-description' => '「$1」テンプレートを編集中です。',
-);
-
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */
@@ -771,6 +797,7 @@ $messages['lb'] = array(
 	'wikia-visualeditor-notification-media-query-failed' => 'Pardon, mir konnten keen ënnerstëtzt Bild oder Video op där URL fonnt.',
 	'wikia-visualeditor-notification-media-permission-denied' => 'Erlaabnes refuséiert',
 	'wikia-visualeditor-loading' => 'VisualEditor gëtt gelueden...',
+	'wikia-visualeditor-dialog-orientation-headline' => 'Wëllkomm',
 );
 
 /** لوری (لوری)
@@ -970,6 +997,7 @@ $messages['ne'] = array(
  * @author Mar(c)
  * @author Siebrand
  * @author Sjoerddebruin
+ * @author Southparkfan
  */
 $messages['nl'] = array(
 	'wikia-visualeditor-preference-enable' => 'Beta van visuele tekstverwerker inschakelen',
@@ -985,6 +1013,8 @@ $messages['nl'] = array(
 	'wikia-visualeditor-dialog-wikiamediainsert-upload-error' => 'Fout tijdens het uploaden van bestand',
 	'wikia-visualeditor-dialog-wikiamediainsert-search-input-placeholder' => 'Zoek naar iets of geef een URL op',
 	'wikia-visualeditor-dialog-wikiamediainsert-preview-alert' => 'Voorvertoning is binnenkort beschikbaar!',
+	'wikia-visualeditor-dialog-wikiamediainsert-read-more' => 'Meer lezen',
+	'wikia-visualeditor-dialog-drop-target-callout' => 'Sleep uw bestand naar hier',
 	'wikia-visualeditor-help-label' => 'Bekende problemen',
 	'wikia-visualeditor-help-link' => 'Help:Visuele tekstverwerker',
 	'wikia-visualeditor-beta-warning' => "Dit is Wikia's betaintegratie van de visuele tekstverwerker.  Er zijn enkele ruwe kantjes, maar we hopen dat u het een enorme verbetering vindt!",
@@ -1004,7 +1034,10 @@ $messages['nl'] = array(
 	'wikia-visualeditor-notification-media-only-premium-videos-allowed' => 'Deze wiki staat alleen gelicenseerde inhoud toe die van <a href="http://video.wikia.com" target="_blank">Wikia Video Library</a> wordt toegevoegd. Ga naar <a href="http://video.wikia.com" target="_blank">video.wikia.com</a> om te zoeken voor video\'s.',
 	'wikia-visualeditor-notification-media-query-failed' => 'We konden helaas geen ondersteunde afbeelding of video vinden op die URL.',
 	'wikia-visualeditor-notification-media-permission-denied' => 'Geen toegang',
-	'wikia-visualeditor-dialog-meta-languages-readonlynote' => 'Dit is een lijst van pagina\'s in andere talen die hieraan gelinkt zijn. Voorlopig kan dit enkel bewerkt worden in bronmodus.',
+	'wikia-visualeditor-loading' => 'Visuele tekstbewerker aan het laden...',
+	'wikia-visualeditor-dialog-orientation-headline' => 'Welkom',
+	'wikia-visualeditor-dialog-orientation-start-button' => 'Begin met bewerken',
+	'wikia-visualeditor-dialog-meta-languages-readonlynote' => "Dit is een lijst van pagina's in andere talen die hieraan gelinkt zijn. Voorlopig kan dit enkel bewerkt worden in bronmodus.",
 	'wikia-visualeditor-dialog-transclusion-no-template-description' => 'Je bent het "$1"-sjabloon aan het bewerken.',
 );
 
@@ -1556,7 +1589,7 @@ $messages['zh-hans'] = array(
 	'wikia-visualeditor-dialog-orientation-text' => '这个页面是由像您一样的用户创建、编辑和维护的。您也可以立刻作出贡献。',
 	'wikia-visualeditor-dialog-orientation-start-button' => '开始编辑',
 	'wikia-visualeditor-dialog-meta-languages-readonlynote' => '这是拥有其它语言链接的页面列表。当下只能使用源代码进行编辑。',
-	'wikia-visualeditor-dialog-transclusion-no-template-description' => '您正在编辑\"$1\"个模版。',
+	'wikia-visualeditor-dialog-transclusion-no-template-description' => '您正在编辑\\"$1\\"个模版。',
 );
 
 /** Traditional Chinese (中文（繁體）‎)

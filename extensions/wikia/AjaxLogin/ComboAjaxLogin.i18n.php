@@ -221,6 +221,7 @@ $messages['bn'] = array(
 	'comboajaxlogin-actionmsg' => 'এই কাজটি সফল করার জন্য আপনাকে প্রথমে প্রবেশ করতে হবে অথবা নতুন অ্যাকাউন্ট তৈরি করতে হবে।',
 	'comboajaxlogin-connectmarketing-back' => '« পিছনে',
 	'comboajaxlogin-connectmarketing-forward' => 'শুরু করুন »',
+	'comboajaxlogin-ajaxerror' => 'উইকিয়ার সংযোগ পাওয়া যাচ্ছে না। দয়া করে আপনার নেটওয়ার্ক সংযোগ দেখুন।',
 );
 
 /** Tibetan (བོད་ཡིག)
@@ -980,6 +981,7 @@ $messages['kn'] = array(
 
 /** Korean (한국어)
  * @author Cafeinlove
+ * @author Miri-Nae
  * @author 아라
  */
 $messages['ko'] = array(
@@ -987,11 +989,23 @@ $messages['ko'] = array(
 	'comboajaxlogin-actionmsg' => '이 행동을 수행하려면 먼저 로그인하거나 계정을 만들어야 합니다',
 	'comboajaxlogin-actionmsg-protected' => '이 행동을 수행하려면 먼저 로그인하거나 계정을 만들어야 합니다.',
 	'comboajaxlogin-log-in-with-facebook-oasis' => '<h1>페이스북에 연결해 로그인</h1>',
+	'comboajaxlogin-connectmarketing-oasis' => '<h1>당신의 위키아 계정을 페이스북과 연결하세요</h1>
+<ul>
+<li>유저명, 역사, 편집... 아무것도 변할 게 없습니다. 로그인 방식만 빼고요</li>
+<li>위키아 활동을 친구들과 공유하세요. 게시 권한을 조정할 수 있습니다</li>
+</ul>',
 	'comboajaxlogin-connectmarketing-back' => '« 뒤로',
 	'comboajaxlogin-connectmarketing-forward' => '시작하기 »',
 	'comboajaxlogin-connectdirections' => '여기에 위키아 사용자 이름과 비밀번호를 입력하세요 - 위키아 계정과 페이스북 계정을 연결 처리해드립니다.
 
 한 번 설정해두면, 페이스북 연결 버튼으로에서 쉽게 로그인할 수 있습니다.',
+	'comboajaxlogin-post-not-understood' => '서식 작성에 오류가 있었습니다.
+다시 시도 후에도 오류가 해결되지 않으면 오류를 [[Special:Contact|보고]]해주십시오.',
+	'comboajaxlogin-readonlytext' => '<h2>이런!</h2>
+<p>현재는 계정을 생성할 수 없습니다 - 잠시 후에 다시 시도해주시기 바랍니다. 현재 상황:<br /><em>$1</em></p>
+<p>자세한 내용은 <a href="http://twitter.com/wikia">트위터</a>, 혹은 <a href="http://facebook.com/wikia">페이스북</a>을 참고하시기 바랍니다.
+<br />
+(이미 계정이 있다면 정상적으로 <a href="#">로그인</a>할 수 있습니다. 단, 편집은 불가능합니다.)</p>',
 	'comboajaxlogin-ajaxerror' => '위키아가 응답하지 않습니다. 네트워크 연결을 확인하세요.',
 );
 

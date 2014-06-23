@@ -4367,6 +4367,7 @@ Puoi sempre visualizzare la wiki activity per conoscere tutte le modifiche effet
 );
 
 /** Japanese (日本語)
+ * @author Barrel0116
  * @author Tommy6
  */
 $messages['ja'] = array(
@@ -4396,6 +4397,10 @@ $EDITORNAME がウィキにアカウントを登録しました。<br /><br />
 -- ウィキアチーム',
 	'founderemails-email-page-edited-reg-user-first-edit-subject' => '$WIKINAME で新しい編集が行われました',
 	'founderemails-email-page-edited-reg-user-subject' => '$WIKINAME で新しい編集が行われました',
+	'founderemails-email-general-edit-signature' => 'Wikia チーム',
+	'founderemails-answers-email-page-edited-anon-subject' => '誰かがあなたのサイトを変更しました！',
+	'founderemails-email-0-day-addphotos-button' => '画像を追加',
+	'founderemails-email-0-day-customizetheme-heading' => 'ウィキのテーマをカスタマイズ',
 );
 
 /** Kannada (ಕನ್ನಡ)

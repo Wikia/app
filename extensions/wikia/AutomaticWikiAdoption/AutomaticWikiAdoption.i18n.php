@@ -1558,6 +1558,7 @@ $messages['kn'] = array(
 /** Korean (한국어)
  * @author Hym411
  * @author Leehoy
+ * @author Miri-Nae
  * @author 아라
  */
 $messages['ko'] = array(
@@ -1575,8 +1576,60 @@ $messages['ko'] = array(
 	'wikiadoption-adopted-recently' => '이런! 최근에 다른 위키를 합친 적이 있습니다. 새 위키를 합치기 전에 기다려야 합니다.',
 	'wikiadoption-log-reason' => '자동 위키 합치기',
 	'wikiadoption-mail-first-subject' => '오랜만이군요',
+	'wikiadoption-mail-first-content' => '안녕하세요$1,
+
+#WIKINAME의 관리자가 접속하지 않은 지 몇 주가 지났습니다. 관리자는 #WIKINAME에 있어서 매우 중요한 부분입니다. 관리자가 오랫동안 접속하지 않을 시, 다른 사용자로 관리자가 교체될 수 있습니다.
+
+필요하다면 $2에서 다른 커뮤니티 회원을 관리자로 임명할 수 있습니다. 다음에 또 봐요!
+
+The Wikia Team
+
+이곳에서 리스트를 변경하면 주시를 해제할 수 있습니다: $3',
+	'wikiadoption-mail-first-content-HTML' => '안녕하세요$1,<br /><br />
+
+#WIKINAME의 관리자가 접속하지 않은 지 몇 주가 지났습니다. 관리자는 #WIKINAME에 있어서 매우 중요한 부분입니다. 관리자가 오랫동안 접속하지 않을 시, 다른 유저로 관리자가 교체될 수 있습니다.<br /><br />
+
+필요하다면 <a href="$2">사용자 권한 조정</a>에서 다른 커뮤니티 회원을 관리자로 임명할 수 있습니다. 다음에 또 봐요!
+
+The Wikia Team<br /><br />
+
+<a href="$3">이곳</a>에서 리스트를 변경하면 주시를 해제할 수 있습니다.',
 	'wikiadoption-mail-second-subject' => '#WIKINAME 이 합쳐질 대상이 될 수 있습니다',
+	'wikiadoption-mail-second-content' => '안녕하세요$1,
+세상에! #WIKINAME의 관리자가 활동하지 않은 지 거의 60일이 지났습니다. 정상적인 위키 지속에 있어서 관리자의 위키 접속 및 기여는 매우 주요한 부분입니다.
+
+관리자가 너무 오랫동안 접속하지 않을 시, #WIKINAME의 관리자가 교체될 수도 있습니다.
+
+위키아 팀
+
+이곳에서 리스트를 변경하면 주시를 해제할 수 있습니다: $3',
+	'wikiadoption-mail-second-content-HTML' => '안녕하세요$1,<br /><br />
+세상에! #WIKINAME의 관리자가 활동하지 않은 지 거의 60일이 지났습니다. 정상적인 위키 지속에 있어서 관리자의 위키 접속 및 기여는 매우 주요한 부분입니다.<br /><br />
+
+관리자가 너무 오랫동안 접속하지 않을 시, #WIKINAME의 관리자가 교체될 수도 있습니다.<br /><br />
+
+위키아 팀<br /><br />
+
+<a href="$3">이곳</a>에서 리스트를 변경하면 주시를 해제할 수 있습니다.',
 	'wikiadoption-mail-adoption-subject' => '#WIKINAME 이 합쳐졌습니다',
+	'wikiadoption-mail-adoption-content' => '안녕하세요$1,
+
+#WIKINAME의 관리자가 변경되었습니다. 관리자 중 아무도 60일 동안 접속하지 않으면 위키의 관리자가 변경될 수 있습니다.
+
+#WIKINAME의 새로운 관리자는 이제 관리자 권한을 얻게 됩니다. 걱정 마세요, 언제든지 다시 돌아와 관리자 권한을 되찾고, 위키에 기여할 수 수 있으니까요.
+
+The Wikia Team
+
+이곳에서 리스트를 변경하면 주시를 해제할 수 있습니다: $3',
+	'wikiadoption-mail-adoption-content-HTML' => '안녕하세요$1,<br /><br />
+
+#WIKINAME의 관리자가 변경되었습니다. 관리자 중 아무도 60일 동안 접속하지 않으면 위키의 관리자가 변경될 수 있습니다.<br /><br />
+
+#WIKINAME의 새로운 관리자는 이제 관리자 권한을 얻게 됩니다. 걱정 마세요, 언제든지 다시 돌아와 관리자 권한을 되찾고, 위키에 기여할 수 수 있으니까요.<br /><br />
+
+The Wikia Team<br /><br />
+
+<a href="$3">이곳</a>에서 리스트를 변경하면 주시를 해제할 수 있습니다.',
 	'wikiadoption-welcome-header' => '축하합니다! {{SITENAME}} 프로젝트를 합쳤습니다!',
 );
 

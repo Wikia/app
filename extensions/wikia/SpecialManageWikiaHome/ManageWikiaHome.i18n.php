@@ -538,6 +538,7 @@ $messages['de'] = array(
 	'manage-wikia-home-visualization-wikis' => 'Unternehmenswikis mit Visualisierung:',
 	'manage-wikia-home-hubs-slot-heading' => 'Einrichtung von Hubslots',
 	'manage-wikia-home-hubs-slot-success' => 'Die Hubslots wurden gespeichert.',
+	'manage-wikia-home-hubs-slot-error' => 'Beim Speichern gab es einen Fehler. Bitte erneut versuchen.',
 	'manage-wikia-home-hubs-slot' => 'Slot $1',
 	'manage-wikia-home-hubs-slot-name' => 'Name des Hubs',
 	'manage-wikia-home-hubs-slot-description' => 'Beschreibung des Hubs',
@@ -653,6 +654,7 @@ $messages['es'] = array(
 	'manage-wikia-home-visualization-wikis' => 'Wikis corporativos con visualización:',
 	'manage-wikia-home-hubs-slot-heading' => 'Configuración de espacios de hubs',
 	'manage-wikia-home-hubs-slot-success' => 'Los espacios de hubs han sido guardados.',
+	'manage-wikia-home-hubs-slot-error' => 'Hubo un error al guardar. Inténtalo nuevamente.',
 	'manage-wikia-home-hubs-slot' => 'Espacio $1',
 	'manage-wikia-home-hubs-slot-name' => 'Nombre del hub',
 	'manage-wikia-home-hubs-slot-description' => 'Descripción del hub',
@@ -825,6 +827,7 @@ $messages['fr'] = array(
 	'manage-wikia-home-visualization-wikis' => "Wikis ''corporate'' avec visualisation :",
 	'manage-wikia-home-hubs-slot-heading' => 'Paramétrage des emplacements centraux',
 	'manage-wikia-home-hubs-slot-success' => 'Les emplacements centraux ont été enregistrés.',
+	'manage-wikia-home-hubs-slot-error' => 'Une erreur s’est produite lors de l’enregistrement. Veuillez réessayer.',
 	'manage-wikia-home-hubs-slot' => 'Emplacement $1',
 	'manage-wikia-home-hubs-slot-name' => 'Nom du centre',
 	'manage-wikia-home-hubs-slot-description' => 'Description du centre',
@@ -1017,9 +1020,11 @@ $messages['it'] = array(
 );
 
 /** Japanese (日本語)
+ * @author Barrel0116
  * @author Dude1717
  */
 $messages['ja'] = array(
+	'manage-wikia-home-collection-add-file-button' => '画像を追加',
 	'manage-wikia-home-stats-failure' => 'データは保存されませんでした。フォームのエラーを修正して、やり直してください。',
 );
 
@@ -1061,6 +1066,7 @@ $messages['ko'] = array(
  * @author Robby
  */
 $messages['lb'] = array(
+	'manage-wikia-home-hubs-slot-error' => 'Et gouf e Feeler beim Späicheren. Probéiert w.e.g. nach eng Kéier.',
 	'manage-wikia-home-hubs-slot' => 'Slot $1',
 	'manage-wikia-home-hubs-slot-more-links' => '"Méi op..." Linken',
 	'manage-wikia-home-hubs-slot-empty-option' => '-- Eidele Slot --',
@@ -1369,6 +1375,7 @@ $messages['pl'] = array(
 	'manage-wikia-home-wikis-in-slots-heading' => 'Ustawienie slotów',
 	'manage-wikia-home-wikis-in-slots-total' => 'Ilość slotów: $1',
 	'manage-wikia-home-visualization-wikis' => 'Wiki z włączonymi wizualizacjami:',
+	'manage-wikia-home-hubs-slot-error' => 'Wystąpił błąd podczas zapisywania. Proszę spróbować ponownie.',
 	'manage-wikia-home-hubs-slot' => 'Slot $1',
 	'manage-wikia-home-hubs-slot-name' => 'Nazwa Huba',
 	'manage-wikia-home-hubs-slot-description' => 'Opis Huba',
@@ -1591,6 +1598,7 @@ $messages['ru'] = array(
 	'manage-wikia-home-visualization-wikis' => 'Общие вики с визуализацией:',
 	'manage-wikia-home-hubs-slot-heading' => 'Установка слотов в хабах',
 	'manage-wikia-home-hubs-slot-success' => 'Слоты в хабах были сохранены.',
+	'manage-wikia-home-hubs-slot-error' => 'При сохранении произошла ошибка. Пожалуйста, попробуйте еще раз.',
 	'manage-wikia-home-hubs-slot' => 'Слот $1',
 	'manage-wikia-home-hubs-slot-name' => 'Название хаба',
 	'manage-wikia-home-hubs-slot-description' => 'Описание хаба',
