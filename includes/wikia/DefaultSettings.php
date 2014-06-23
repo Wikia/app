@@ -256,6 +256,7 @@ $wgAutoloadClasses[ 'WikiaSQLCache'                   ] = "$IP/includes/wikia/Wi
 $wgAutoloadClasses[ 'WikiaSanitizer'                  ] = "$IP/includes/wikia/WikiaSanitizer.class.php";
 $wgAutoloadClasses[ 'ScribePurge'                     ] = "$IP/includes/cache/wikia/ScribePurge.class.php";
 $wgHooks          [ 'RestInPeace'                     ][] = 'ScribePurge::onRestInPeace';
+$wgAutoloadClasses[ 'Wikia\\Blogs\\BlogTask'          ] = "$IP/extensions/wikia/Blogs/BlogTask.class.php";
 
 /**
  * Resource Loader enhancements
@@ -475,7 +476,6 @@ $wgAutoloadClasses[ "WikiaValidatorDependent"       ] = "$IP/includes/wikia/vali
 $wgAutoloadClasses[ 'WikiaValidatorRestrictiveUrl'  ] = "$IP/includes/wikia/validators/WikiaValidatorRestrictiveUrl.class.php";
 $wgAutoloadClasses[ 'WikiaValidatorUsersUrl'        ] = "$IP/includes/wikia/validators/WikiaValidatorUsersUrl.class.php";
 include_once("$IP/includes/wikia/validators/WikiaValidatorsExceptions.php");
-
 
 /**
  * registered API methods

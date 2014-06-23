@@ -542,10 +542,12 @@
 	}
 }
 
-.WikiaArticle .infobox, .WikiaArticle .wikia-infobox {
-	.article-thumb, .article-thumb.tright {
-		margin: 0 auto;
-		float: none;
+.WikiaArticle {
+	.infobox, .wikia-infobox, .infobox-table {
+		.article-thumb, .article-thumb.tright, .article-thumb.tleft {
+			margin: 0 auto;
+			float: none;
+		}
 	}
 }
 

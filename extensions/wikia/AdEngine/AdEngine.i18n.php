@@ -87,6 +87,8 @@ $messages['bn'] = array(
 	'adengine-exitstitial-redirecting' => 'আপনার ব্রাউজার আপনার অনুরোধ করা পাতার মধ্যে কিছুক্ষণের মধ্যে পুনঃনির্দেশ করবে।',
 	'adengine-exitstitial-go-back' => 'ফিরে যেতে চান?',
 	'adengine-exitstitial-button' => 'এই বিজ্ঞাপনটি বাদ দিন',
+	'adengine-ebay-buy-it-now' => 'এখনই কিনুন',
+	'adengine-ebay-place-a-bid' => 'একটি দর কষুন',
 );
 
 /** Breton (brezhoneg)
@@ -110,6 +112,13 @@ $messages['ca'] = array(
 	'adengine-exitstitial-button' => 'Saltar aquest anunci',
 );
 
+/** Chechen (нохчийн)
+ * @author Умар
+ */
+$messages['ce'] = array(
+	'adengine-ebay-deals' => 'Бертадахар',
+);
+
 /** Czech (čeština)
  * @author Chmee2
  */
@@ -126,7 +135,10 @@ $messages['de'] = array(
 	'adengine-exitstitial-redirecting' => 'Dein Browser leitet dich in wenigen Sekunden auf die angeforderte Seite weiter.',
 	'adengine-exitstitial-go-back' => 'Zurück gehen?',
 	'adengine-exitstitial-button' => 'Diese Anzeige überspringen',
+	'adengine-ebay-deals' => 'Angebote',
 	'adengine-ebay-empty' => 'Keine passenden Produkte',
+	'adengine-ebay-buy-it-now' => 'Jetzt kaufen',
+	'adengine-ebay-place-a-bid' => 'Ein Gebot abgeben',
 );
 
 /** Greek (Ελληνικά)
@@ -203,9 +215,12 @@ $messages['fo'] = array(
 $messages['fr'] = array(
 	'adengine-exitstitial-title-template' => 'Vous êtes en train de quitter $1…',
 	'adengine-exitstitial-redirecting' => 'Votre navigateur vous redirigera vers la page demandée dans quelques secondes.',
-	'adengine-exitstitial-go-back' => 'Vous voulez revenir en arrière ?',
+	'adengine-exitstitial-go-back' => 'Revenir en arrière ?',
 	'adengine-exitstitial-button' => 'Passer cette publicité',
+	'adengine-ebay-deals' => 'Accords',
 	'adengine-ebay-empty' => 'Aucun produit correspondant',
+	'adengine-ebay-buy-it-now' => 'L’acheter maintenant',
+	'adengine-ebay-place-a-bid' => 'Placer une enchère',
 );
 
 /** Galician (galego)
@@ -284,7 +299,8 @@ $messages['it'] = array(
  * @author Barrel0116
  */
 $messages['ja'] = array(
-	'adengine-ebay-bid' => '買う',
+	'adengine-exitstitial-button' => '広告をスキップ',
+	'adengine-ebay-buy-it-now' => '今すぐ購入',
 );
 
 /** Georgian (ქართული)
@@ -309,6 +325,7 @@ $messages['kn'] = array(
 );
 
 /** Korean (한국어)
+ * @author Miri-Nae
  * @author 관인생략
  * @author 아라
  * @author 한글화담당
@@ -318,6 +335,8 @@ $messages['ko'] = array(
 	'adengine-exitstitial-redirecting' => '브라우저가 몇 초 뒤에 요청한 페이지로 넘어갑니다.',
 	'adengine-exitstitial-go-back' => '돌아가시겠습니까?',
 	'adengine-exitstitial-button' => '광고 건너뛰기',
+	'adengine-ebay-empty' => '일치하는 상품 없음',
+	'adengine-ebay-buy-it-now' => '지금 바로 구매',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
@@ -352,11 +371,12 @@ $messages['lrc'] = array(
 
 /** Lithuanian (lietuvių)
  * @author Eitvys200
+ * @author Robotukas11
  */
 $messages['lt'] = array(
 	'adengine-exitstitial-title-template' => 'Jūs paliekate $1...',
 	'adengine-exitstitial-go-back' => 'Norite grįžti atgal?',
-	'adengine-exitstitial-button' => 'Praleisti šį Skelbimą',
+	'adengine-exitstitial-button' => 'Praleisti šį skelbimą',
 );
 
 /** Latvian (latviešu)
@@ -388,7 +408,10 @@ $messages['mk'] = array(
 	'adengine-exitstitial-redirecting' => 'Прелистувачот за некоја секунда ќе ве одведе на страницата што ја побаравте.',
 	'adengine-exitstitial-go-back' => 'Сакате да се вратите назад?',
 	'adengine-exitstitial-button' => 'Прескокни ја рекламава',
+	'adengine-ebay-deals' => 'Понуди',
 	'adengine-ebay-empty' => 'Нема такви производи',
+	'adengine-ebay-buy-it-now' => 'Купете сега',
+	'adengine-ebay-place-a-bid' => 'Дајте понуда',
 );
 
 /** Malayalam (മലയാളം)
@@ -492,6 +515,8 @@ $messages['pl'] = array(
 	'adengine-exitstitial-go-back' => 'Chcesz wrócić na wiki?',
 	'adengine-exitstitial-button' => 'Zamknij reklamę',
 	'adengine-ebay-empty' => 'Brak pasujących produktów',
+	'adengine-ebay-buy-it-now' => 'Kup teraz',
+	'adengine-ebay-place-a-bid' => 'Licytuj',
 );
 
 /** Pashto (پښتو)
@@ -543,7 +568,10 @@ $messages['ru'] = array(
 	'adengine-exitstitial-redirecting' => 'Ваш браузер перенаправит вас на запрошенную страницу через несколько секунд.',
 	'adengine-exitstitial-go-back' => 'Хотите вернуться?',
 	'adengine-exitstitial-button' => 'Пропустить это объявление',
+	'adengine-ebay-deals' => 'Сделки',
 	'adengine-ebay-empty' => 'Нет подходящих товаров',
+	'adengine-ebay-buy-it-now' => 'Купить сейчас',
+	'adengine-ebay-place-a-bid' => 'Сделать ставку',
 );
 
 /** Scots (Scots)
@@ -610,14 +638,25 @@ $messages['te'] = array(
 	'adengine-exitstitial-button' => 'ఈ యాడ్‍ను దాటవెయ్యి',
 );
 
+/** Tagalog (Tagalog)
+ * @author Jewel457
+ */
+$messages['tl'] = array(
+	'adengine-ebay-place-a-bid' => 'Pumusta',
+);
+
 /** Turkish (Türkçe)
  * @author Sabri Vatansever
+ * @author Sayginer
  */
 $messages['tr'] = array(
 	'adengine-exitstitial-title-template' => '$1 bırakıyorsun ...',
 	'adengine-exitstitial-redirecting' => 'Tarayıcınız için birkaç saniye içinde istediğiniz sayfa yönlendirme yapar.',
 	'adengine-exitstitial-go-back' => 'Geri dönmek ister misin?',
 	'adengine-exitstitial-button' => 'Reklamı geç',
+	'adengine-ebay-empty' => 'Eşleşen ürün yok',
+	'adengine-ebay-buy-it-now' => 'Şimdi Satın Al',
+	'adengine-ebay-place-a-bid' => 'Teklif Ver',
 );
 
 /** Ukrainian (українська)
