@@ -8,6 +8,8 @@ class WikiaInteractiveMapsUploadImageFromFile extends UploadFromFile {
 	const UPLOAD_TYPE_MAP = 'map';
 	const UPLOAD_TYPE_PIN_TYPE_MARKER = 'marker';
 
+	private $allowedFileExtensions = [ 'png', 'gif', 'jpg', 'jpeg' ];
+
 	/**
 	 * Validates uploaded file. Currently it checks pin type marker dimensions.
 	 * @param String $uploadType
@@ -15,6 +17,11 @@ class WikiaInteractiveMapsUploadImageFromFile extends UploadFromFile {
 	 */
 	public function verifyUpload( $uploadType ) {
 		$details = $this->getUploadDetails();
+
+		// MOB-1886: check file type (just by extension)
+		if ( !$this->isValidFileExtension() ) {
+			$details[ 'status' ] = self::FILETYPE_BADTYPE;
+		}
 
 		if ( $this->isUploadSuccessful( $details[ 'status' ] ) ) {
 			// check minimal dimensions for pin type marker
@@ -66,6 +73,15 @@ class WikiaInteractiveMapsUploadImageFromFile extends UploadFromFile {
 	 */
 	public function isUploadPoiCategory( $uploadType ) {
 		return $uploadType === self::UPLOAD_TYPE_PIN_TYPE_MARKER;
+	}
+
+	/**
+	 * Returns true if the file extension is valid
+	 *
+	 * @return bool
+	 */
+	public function isValidFileExtension() {
+		return $this->checkFileExtension( $this->mFinalExtension, $this->allowedFileExtensions );
 	}
 
 	/**
