@@ -1,12 +1,12 @@
 <?php
 /**
  * Class WikiaInteractiveMapsMapController
- * AJAX entry points for creating maps
+ * AJAX entry points for actions connected to map creation
  */
 class WikiaInteractiveMapsMapController extends WikiaInteractiveMapsBaseController {
 
 	/**
-	 * get list of tile sets
+	 * Gets list of tile sets
 	 *
 	 * @return Array
 	 */

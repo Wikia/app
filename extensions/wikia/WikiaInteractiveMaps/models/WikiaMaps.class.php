@@ -301,6 +301,9 @@ class WikiaMaps {
 		);
 	}
 
+	/**
+	 * Sends a request to IntMap Service API to get all parent POI categories
+	 */
 	public function getParentPoiCategories() {
 		$params = [
 			'parentsOnly' => 1 // it has to be like that: http://jonathonhill.net/2011-09-30/http_build_query-surprise/
