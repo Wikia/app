@@ -93,7 +93,7 @@ class WikiaInteractiveMapsUploadImageFromFileTest extends WikiaBaseTest {
 		$this->assertEquals(
 			$expected,
 			$uploadImageFromFileMock->verifyUpload( 'mocked type' ),
-			'Failed update due wrong file extension'
+			'Failed update due to wrong file extension'
 		);
 	}
 
