@@ -15,12 +15,6 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 	private $mapsModel;
 
 	/**
-	 * Keeps data needed while creating map/tile set process
-	 * @var Array
-	 */
-	private $creationData;
-
-	/**
 	 * @desc Special page constructor
 	 *
 	 * @param null $name
@@ -176,189 +170,12 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 	}
 
 	/**
-	 * get list of tile sets
-	 *
-	 * @return Array
-	 */
-
-	public function getTileSets() {
-		$params = [];
-		$searchTerm = $this->request->getVal( 'searchTerm', null );
-
-		if ( !is_null( $searchTerm ) ) {
-			$params[ 'searchTerm' ] = $searchTerm;
-		}
-
-		$this->response->setVal( 'results', $this->mapsModel->getTileSets( $params ) );
-	}
-
-	/**
-	 * Entry point to create a map from either existing tiles or new image
-	 *
-	 * @requestParam Integer $tileSetId an unique id of existing tiles
-	 * @requestParam String $image an URL to image which the tiles will be created from
-	 * @requestParam String $title map title
-	 *
-	 * @throws PermissionsException
-	 * @throws BadRequestApiException
-	 * @throws InvalidParameterApiException
-	 */
-	public function createMap() {
-		$type = trim( $this->request->getVal( 'type', WikiaMaps::MAP_TYPE_GEO ) );
-
-		$this->setCreationData( 'tileSetId', $this->request->getInt( 'tileSetId', 0 ) );
-		$this->setCreationData( 'title', trim( $this->request->getVal( 'title', '' ) ) );
-		$this->setCreationData( 'image', trim( $this->request->getVal( 'fileUrl', '' ) ) );
-
-		$this->validateMapCreation();
-
-		$this->setCreationData( 'creatorName', $this->wg->User->getName() );
-		$this->setCreationData( 'cityId', (int) $this->wg->CityId );
-
-		if ( $type === WikiaMaps::MAP_TYPE_CUSTOM ) {
-			$results = $this->createCustomMap();
-		} else {
-			$results = $this->createGeoMap();
-		}
-
-		$this->setVal( 'results', $results );
-	}
-
-	/**
-	 * Creates a custom map for given tileset or creating a tileset and then map out of it
-	 *
-	 * @return Array
-	 */
-	private function createCustomMap() {
-		$tileSetId = $this->getCreationData( 'tileSetId' );
-
-		if ( $tileSetId > 0 ) {
-			$results = $this->createMapFromTilesetId();
-		} else {
-			$results = $this->createTileset();
-
-			if ( true === $results[ 'success' ] ) {
-				$this->setCreationData( 'tileSetId', $results[ 'content' ]->id );
-				$results = $this->createMapFromTilesetId();
-			}
-		}
-
-		return $results;
-	}
-
-	/**
-	 * Creates a map from Geo tileset
-	 *
-	 * @return Array
-	 */
-	private function createGeoMap() {
-		$this->setCreationData( 'tileSetId', $this->mapsModel->getGeoMapTilesetId() );
-		return $this->createMapFromTilesetId();
-	}
-
-	/**
-	 * Helper method to validate creation data
-	 *
-	 * @throws PermissionsException
-	 * @throws BadRequestApiException
-	 * @throws InvalidParameterApiException
-	 */
-	private function validateMapCreation() {
-		$tileSetId = $this->getCreationData( 'tileSetId' );
-		$imageUrl = $this->getCreationData( 'image' );
-		$mapTitle = $this->getCreationData( 'title' );
-
-		if ( $tileSetId === 0 && empty( $imageUrl ) && empty( $mapTitle ) ) {
-			throw new BadRequestApiException( wfMessage( 'wikia-interactive-maps-create-map-bad-request-error' )->plain() );
-		}
-
-		if ( empty( $mapTitle ) ) {
-			throw new InvalidParameterApiException( 'title' );
-		}
-
-		if ( !$this->wg->User->isLoggedIn() ) {
-			throw new PermissionsException( 'interactive maps' );
-		}
-	}
-
-	/**
-	 * Helper method which sends request to maps service to create tiles' set
-	 * and then processes the response providing results array
-	 */
-	private function createTileset() {
-		return $this->mapsModel->saveTileset( [
-			'name' => $this->getCreationData( 'title' ),
-			'url' => $this->getCreationData( 'image' ),
-			'created_by' => $this->getCreationData( 'creatorName' ),
-		] );
-	}
-
-	/**
-	 * Helper method which sends request to maps service to create a map from existing tiles' set
-	 * and processes the response providing results array
-	 *
-	 * @return Array
-	 */
-	private function createMapFromTilesetId() {
-		$response = $this->mapsModel->saveMap( [
-			'title' => $this->getCreationData( 'title' ),
-			'tile_set_id' => $this->getCreationData( 'tileSetId' ),
-			'city_id' => $this->getCreationData( 'cityId' ),
-			'created_by' => $this->getCreationData( 'creatorName' ),
-		] );
-
-		if ( true === $response[ 'success' ] ) {
-			$mapId = $response['content']->id;
-
-			$response[ 'content' ]->mapUrl = Title::newFromText(
-				self::PAGE_NAME . '/' . $mapId,
-				NS_SPECIAL
-			)->getFullUrl();
-
-			// Log new map created
-			WikiaMapsLogger::addLogEntry(
-				WikiaMapsLogger::ACTION_CREATE_MAP,
-				$mapId,
-				$this->getCreationData( 'title' )
-			);
-		}
-
-		return $response;
-	}
-
-	/**
 	 * @desc Obtains a url to a special page with a given path
 	 * @param string $name - name of the special page
 	 * @return string
 	 */
 	function getSpecialUrl( $name ) {
 		return Title::newFromText( $name, NS_SPECIAL )->getFullUrl();
-	}
-
-	/**
-	 * Getter for creation data
-	 *
-	 * @param String $name name of the data key
-	 * @param Bool $default
-	 *
-	 * @return Mixed
-	 */
-	private function getCreationData( $name, $default = false ) {
-		if ( isset( $this->creationData[ $name ] ) ) {
-			return $this->creationData[ $name ];
-		}
-
-		return $default;
-	}
-
-	/**
-	 * Setter of creation data
-	 *
-	 * @param String $name
-	 * @param Mixed $value
-	 */
-	public function setCreationData( $name, $value ) {
-		$this->creationData[ $name ] = $value;
 	}
 
 	/**
@@ -400,5 +217,4 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 	private function getPaginationOffset( $currentPage, $itemsPerPage ) {
 		return ($currentPage - 1) * $itemsPerPage;
 	}
-
 }

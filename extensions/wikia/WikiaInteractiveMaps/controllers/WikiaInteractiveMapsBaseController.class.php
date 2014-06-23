@@ -49,6 +49,10 @@ class WikiaInteractiveMapsBaseController extends WikiaController {
 		$this->data[ $name ] = $value;
 	}
 
+	/**
+	 * Returns all data
+	 * @return Array
+	 */
 	protected function getAllData() {
 		return $this->data;
 	}

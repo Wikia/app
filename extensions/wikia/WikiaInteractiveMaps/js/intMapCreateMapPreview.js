@@ -96,7 +96,7 @@ define(
 
 		function createMap() {
 			$.nirvana.sendRequest({
-				controller: 'WikiaInteractiveMaps',
+				controller: 'WikiaInteractiveMapsMap',
 				method: 'createMap',
 				format: 'json',
 				data: tileSetData,

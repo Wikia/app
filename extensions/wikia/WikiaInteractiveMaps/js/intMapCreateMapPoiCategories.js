@@ -39,6 +39,15 @@ define('wikia.intMap.createMap.poiCategories',
 				deletePoiCategory: [
 					deletePoiCategory
 				],
+				uploadMarkerImage: [
+					uploadMarkerImage
+				],
+				saveMarkerImage: [
+					saveMarkerImage
+				],
+				previewMarkerImage: [
+					previewMarkerImage
+				],
 				savePoiCategories: [
 					savePoiCategories
 				],
@@ -66,6 +75,11 @@ define('wikia.intMap.createMap.poiCategories',
 			parentPoiCategoryTemplate = _parentPoiCategoryTemplate;
 
 			utils.bindEvents(modal, events);
+
+			// TODO: figure out where is better place to place it and move it there
+			modal.$element.on('change', '.poi-category-marker-image-upload', function (event) {
+				modal.trigger('uploadMarkerImage', event.target);
+			});
 		}
 
 		/**
@@ -111,6 +125,10 @@ define('wikia.intMap.createMap.poiCategories',
 			return extendedPoiCategories;
 		}
 
+		/**
+		 * @desc gets parent POI categories list from backend and puts it in template data
+		 * @returns {object} - promise
+		 */
 		function setUpParentPoiCategories() {
 			var dfd = new $.Deferred(),
 				parentPoiCategories;
@@ -165,10 +183,46 @@ define('wikia.intMap.createMap.poiCategories',
 		}
 
 		/**
-		 * @desc handler method triggered by savePoiCategories event
+		 * @desc uploads marker image to backend
+		 * @param {Element} inputElement - file input element
 		 */
-		function savePoiCategories() {
-			sendPoiCategories(validate(utils.serializeForm($form)));
+		function uploadMarkerImage(inputElement) {
+			var file = inputElement.files[0],
+				formData = new FormData(),
+				$inputElement = $(inputElement),
+				$inputElementWrapper = $inputElement.closest('.poi-category-marker');
+
+			formData.append('wpUploadFile', file);
+
+			utils.upload(modal, formData, 'marker', function (data) {
+				modal.trigger('saveMarkerImage', data, $inputElementWrapper);
+				modal.trigger('previewMarkerImage', data, $inputElement, $inputElementWrapper);
+			});
+		}
+
+		/**
+		 * @desc hides file input and shows marker image instead
+		 * @param {object} data - data returned from backend
+		 * @param {$} $inputElementWrapper - file input element wrapper
+		 */
+		function saveMarkerImage(data, $inputElementWrapper) {
+			$inputElementWrapper
+				.find('.poi-category-marker-image-url')
+				.val(data['fileThumbUrl']);
+		}
+
+		/**
+		 * @desc hides file input and shows marker image instead
+		 * @param {object} data - data returned from backend
+		 * @param {$} $inputElement - file input element
+		 * @param {$} $inputElementWrapper - file input element wrapper
+		 */
+		function previewMarkerImage(data, $inputElement, $inputElementWrapper) {
+			$inputElement.addClass('hidden');
+			$inputElementWrapper
+				.find('.poi-category-marker-image')
+				.attr('src', data['fileThumbUrl'])
+				.removeClass('hidden');
 		}
 
 		/**
@@ -197,6 +251,10 @@ define('wikia.intMap.createMap.poiCategories',
 			}
 		}
 
+		/**
+		 * @desc gets parent POI categories list from backend
+		 * @returns {object} - promise
+		 */
 		function getParentPoiCategories() {
 			return $.nirvana.sendRequest({
 				controller: 'WikiaInteractiveMapsPoi',
@@ -236,6 +294,13 @@ define('wikia.intMap.createMap.poiCategories',
 					modal.trigger('error', response.results.content.message);
 				}
 			});
+		}
+
+		/**
+		 * @desc handler method triggered by savePoiCategories event
+		 */
+		function savePoiCategories() {
+			sendPoiCategories(validate(utils.serializeForm($form)));
 		}
 
 		/**
