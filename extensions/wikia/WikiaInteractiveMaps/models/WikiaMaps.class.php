@@ -301,6 +301,9 @@ class WikiaMaps {
 		);
 	}
 
+	/**
+	 * Sends a request to IntMap Service API to get all parent POI categories
+	 */
 	public function getParentPoiCategories() {
 		//TODO make it so there is just "parents" parameter, without =1 (needs changes in service)
 		$params = [
