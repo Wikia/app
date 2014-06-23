@@ -8,6 +8,8 @@ $(function(){
 		avatarSize = 36,
 		$loginDropdown = $accountNavigation.find( '#UserLoginDropdown'),
 		$accountNavsubnav = $accountNavigation.find('.subnav'),
+		$bubblesNotifications,
+		$bubblesNavigation,
 		$wallNotifications,
 		$notifications;
 
@@ -33,9 +35,12 @@ $(function(){
 
 		$accountNavigation.on('mouseover', function(){
 			if( !window.removedFromHoverMenu ) {
+				$bubblesNotifications = $('.notificationsEntry #bubbles_count');
+				$bubblesNavigation = $('.bubbles #bubbles_count');
 				removeWallNotificationsFromHoverMenu();
 				window.removedFromHoverMenu = true;
 			}
+			$bubblesNotifications.text($bubblesNavigation.text());
 			$('>li >.subnav', $accountNavigation).addClass('show');
 		});
 
@@ -47,7 +52,7 @@ $(function(){
 			$('>li >.subnav', $accountNavigation).removeClass('show');
 		});
 
-		$('.bubbles #bubbles_count').remove();
+		$( '#AccountNavigation > li:first > a' ).append($('.bubbles'));
 		$notifications.append($wallNotifications);
 		$accountNavsubnav.prepend($notifications);
 	}

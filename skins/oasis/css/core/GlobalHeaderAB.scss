@@ -25,7 +25,7 @@ $facebook-background-color: #3c5b9b;
 
 	.page-width-container {
 		margin: 0 auto;
-		padding-right: 112px;
+		padding-right: 114px;
 		width: 1156px;
 	}
 
@@ -121,18 +121,44 @@ $facebook-background-color: #3c5b9b;
 			&:hover {
 				background: none;
 				background-color: $menu-hover-bg-color;
+				.bubbles.reddot {
+					background-color: $menu-hover-bg-color;
+				}
 			}
 
 			> a {
 				border: 0;
 				display: block;
 				padding: 15px 23px 15px 39px;
+
+				.bubbles.reddot {
+					background-color: #fff;
+					border-radius: 9px;
+					height: 18px;
+					width: 19px;
+					left: 32px;
+					position: absolute;
+					top: 16px;
+					#bubbles_count {
+						background: red;
+						border-radius: 8px;
+						float: none;
+						font-size: 12px;
+						line-height: 14px;
+						left: 2px;
+						padding: 0px 4px 0px 4px;
+						position: relative;
+						text-align: center;
+						top: -3px;
+					}
+				}
 			}
 
 			.chevron {
-				position: static;
+				border-width: 5px;
 				border-top-color: $new-border-color;
 				margin-top: 14px;
+				position: static;
 			}
 
 			&:hover .chevron {
@@ -342,8 +368,8 @@ $facebook-background-color: #3c5b9b;
 				top: 0px;
 			}
 			background-color: #fff;
-			li:first-child,
-			li:nth-child(2) {
+			> li:first-child,
+			> li:nth-child(2) {
 				border: none;
 			}
 			li {
@@ -358,7 +384,7 @@ $facebook-background-color: #3c5b9b;
 			}
 			.notifications-header {
 				background-color: #092140;
-				padding: 23px 20xp 17px;
+				padding: 23px 20px 18px;
 				&:hover {
 					background-color: #092140 !important;
 				}
@@ -370,6 +396,7 @@ $facebook-background-color: #3c5b9b;
 					padding: 0;
 				}
 				#wall-notifications-markasread {
+					right: 14px;
 					top: 23px;
 				}
 				#wall-notifications-markasread-sub {
@@ -405,7 +432,7 @@ $facebook-background-color: #3c5b9b;
 				background-color: #f4f6f7;
 				display: block;
 				&:hover {
-					background-color: #f4f6f7 !important;
+					background-color: #fff !important;
 				}
 
 				.msg-title {
