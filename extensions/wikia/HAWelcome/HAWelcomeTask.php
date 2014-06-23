@@ -42,6 +42,9 @@ class HAWelcomeTask extends BaseTask {
 	/** @type boolean */
 	private $bMessageWallExt  = null;
 
+	/** @type string */
+	private $welcomeMessage = null;
+
 	public function getRecipientId() {
 		return $this->recipientId;
 	}
@@ -120,9 +123,6 @@ class HAWelcomeTask extends BaseTask {
 			$this->recipientObject->setName( $this->recipientName );
 		}
 
-		// A TalkPage object.
-		$this->recipientTalkPage = new Article( $this->recipientObject->getUserPage()->getTalkPage() );
-
 		$sSwitches = wfMessage( 'welcome-enabled' )->inContentLanguage()->text();
 
 		// Override the default switches with user's values.
@@ -147,7 +147,7 @@ class HAWelcomeTask extends BaseTask {
 				// The Message Wall extension is enabled and user's wall is empty or ...
 				( $this->getMessageWallExtensionEnabled() && ! WallHelper::haveMsg( $this->recipientObject ) )
 				// ... or the Message Wall extension is disabled and recipient's Talk Page does not exist
-				|| ( !$this->getMessageWallExtensionEnabled() && !$this->recipientTalkPage->exists() )
+				|| ( !$this->getMessageWallExtensionEnabled() && !$this->getRecipientTalkPage()->exists() )
 			) {
 				$this->info( "sending HAWelcome message for an anonymous contributor" );
 				$this->setMessage();
@@ -158,14 +158,14 @@ class HAWelcomeTask extends BaseTask {
 		} else if ( $this->recipientId ) {
 			// If configured so, send a welcome message.
 			if ( $this->aSwitches['message-user'] ) {
+				$this->info( "sending HAWelcome message for registered contributor" );
 				$this->setMessage();
 				$this->sendMessage();
 			}
 
 			// If configured so, create a user profile page, if not exists.
 			if ( $this->aSwitches['page-user'] ) {
-
-				/** @type Object Article Recipient's profile page. */
+				$this->info( "attempting to create welcome user page" );
 				$recipientProfile = new Article( $this->recipientObject->getUserPage() );
 				if ( ! $recipientProfile->exists() ) {
 					$recipientProfile->doEdit( wfMessage( 'welcome-user-page', $this->recipientName )->inContentLanguage()->plain(), false, $this->integerFlags );
@@ -305,6 +305,17 @@ class HAWelcomeTask extends BaseTask {
 		return;
 	}
 
+
+	protected function getRecipientTalkPage() {
+		if ( !isset( $this->recipientTalkPage ) ) {
+			$this->recipientTalkPage = new Article( $this->recipientObject->getUserPage()->getTalkPage() );
+		}
+
+		return $this->recipientTalkPage;
+	}
+
+
+
 	/**
 	 * Sends the message to the recipient.
 	 *
@@ -312,21 +323,10 @@ class HAWelcomeTask extends BaseTask {
 	 * @internal
 	 */
 	public function sendMessage() {
-
-		// Post a message onto a message wall if enabled.
 		if ( $this->getMessageWallExtensionEnabled() ) {
 			$this->postWallMessageToRecipient();
 		} else {
-			// Post a message onto a regular talk page.
-			// Prepend the message with the existing content of the talk page.
-			$this->info( "posting a message to the talk page" );
-
-			$welcomeMessage = ( $this->recipientTalkPage->exists() )
-				? $this->recipientTalkPage->getContent() . PHP_EOL . $this->welcomeMessage
-				: $this->welcomeMessage;
-
-			// Do the edit.
-			$this->recipientTalkPage->doEdit( $welcomeMessage, wfMessage( 'welcome-message-log' )->inContentLanguage()->text(), $this->integerFlags );
+			$this->postTalkPageMessageToRecipient();
 		}
 	}
 
@@ -343,6 +343,17 @@ class HAWelcomeTask extends BaseTask {
 			$mWallMessage->setPostedAsBot( $this->senderObject );
 			$mWallMessage->sendNotificationAboutLastRev();
 		}
+	}
+
+	public function postTalkPageMessageToRecipient() {
+		$this->info( "posting a message to the talk page" );
+		if ( $this->getRecipientTalkPage()->exists() ) {
+			$welcomeMessage = $this->getRecipientTalkPage()->getContent() . PHP_EOL . $this->welcomeMessage;
+		} else {
+			$welcomeMessage = $this->welcomeMessage;
+		}
+
+		$this->getRecipientTalkPage()->doEdit( $welcomeMessage, wfMessage( 'welcome-message-log' )->inContentLanguage()->text(), $this->integerFlags );
 	}
 
 	protected function getMessageWallSender() {
