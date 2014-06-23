@@ -108,8 +108,8 @@ class HAWelcomeTask extends BaseTask {
 			$this->integerFlags = EDIT_FORCE_BOT;
 		}
 
-		$anonymousUserEdit = !$this->recipientId && $this->isFeatureFlagEnabled( 'message-anon' );
-		// anonymous users block
+		$anonymousUserEdit  = !$this->recipientId && $this->isFeatureFlagEnabled( 'message-anon' );
+		$registeredUserEdit = $this->recipientId;
 		if ( $anonymousUserEdit ) {
 
 			$wallExtensionEnableAndEmptyUserWall = $this->getMessageWallExtensionEnabled() && ! WallHelper::haveMsg( $this->recipientObject );
@@ -120,21 +120,15 @@ class HAWelcomeTask extends BaseTask {
 				$this->sendMessage();
 			}
 
-		// registered users block
-		} else if ( $this->recipientId ) {
+		} else if ( $registeredUserEdit ) {
 
 			if ( $this->isFeatureFlagEnabled( 'message-user' ) ) {
 				$this->info( "sending HAWelcome message for registered contributor" );
 				$this->sendMessage();
 			}
 
-			// If configured so, create a user profile page, if not exists.
 			if ( $this->isFeatureFlagEnabled( 'page-user' ) ) {
-				$this->info( "attempting to create welcome user page" );
-				$recipientProfile = new Article( $this->recipientObject->getUserPage() );
-				if ( ! $recipientProfile->exists() ) {
-					$recipientProfile->doEdit( wfMessage( 'welcome-user-page', $this->recipientName )->inContentLanguage()->plain(), false, $this->integerFlags );
-				}
+				$this->createUserProfilePage();
 			}
 
 		}
@@ -195,6 +189,14 @@ class HAWelcomeTask extends BaseTask {
 		return $this->bMessageWallExt;
 	}
 
+	protected function createUserProfilePage() {
+		$this->info( "attempting to create welcome user page" );
+		$recipientProfile = new Article( $this->recipientObject->getUserPage() );
+		if ( ! $recipientProfile->exists() ) {
+			$recipientProfile->doEdit( wfMessage( 'welcome-user-page', $this->recipientName )->inContentLanguage()->plain(), false, $this->integerFlags );
+		}
+
+	}
 
 	/**
 	 * Determines the sender of the welcome message.
