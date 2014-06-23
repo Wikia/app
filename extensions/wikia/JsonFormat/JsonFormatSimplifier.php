@@ -8,6 +8,12 @@ use Wikia\Measurements\Time;
 
 class JsonFormatSimplifier {
 
+	protected $profile;
+
+	public function __construct($profile = true) {
+		$this->profile = $profile;
+	}
+
 	protected function getParagraphs( \JsonFormatContainerNode $containerNode, &$contentElements ) {
 		foreach( $containerNode->getChildren() as $childNode ) {
 			if ( $childNode->getType() == 'section' ) {
@@ -140,7 +146,9 @@ class JsonFormatSimplifier {
 
 
 	public function simplify( \JsonFormatRootNode $rootNode, $articleTitle ) {
-		$timer = Time::start([__CLASS__, __METHOD__]);
+		if( $this->profile ) {
+			$timer = Time::start([__CLASS__, __METHOD__]);
+		}
 		/** @var \JsonFormatSectionNode[]|\JsonFormatRootNode[] $sections */
 		$sections = [];
 		$this->findSections( $rootNode, $sections );
@@ -168,14 +176,18 @@ class JsonFormatSimplifier {
 			];
 		}
 		$returnSections = array_reverse($returnSections);
-		$timer->stop();
+		if( $this->profile ) {
+			$timer->stop();
+		}
 		return [
 			"sections" => $returnSections
 		];
 	}
 
 	public function simplifyToText( \JsonFormatRootNode $rootNode ) {
-		$timer = Time::start([__CLASS__, __METHOD__]);
+		if( $this->profile ) {
+			$timer = Time::start([__CLASS__, __METHOD__]);
+		}
 		$result = [];
 		$listsSections = [];
 		$sections = [];
@@ -207,7 +219,9 @@ class JsonFormatSimplifier {
 
 		$output = array_merge( array_reverse($result), array_reverse( $listsSections ) );
 		$res = implode( ' ', $output);
-		$timer->stop();
+		if( $this->profile ) {
+			$timer->stop();
+		}
 		return $res;
 	}
 
