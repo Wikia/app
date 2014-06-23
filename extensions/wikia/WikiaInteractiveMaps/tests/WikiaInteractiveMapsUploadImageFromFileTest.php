@@ -1,19 +1,77 @@
 <?php
-require_once( $IP . '/extensions/wikia/WikiaInteractiveMaps/WikiaInteractiveMapsUploadImageFromFile.class.php' );
+require_once( dirname(__FILE__) . '/../WikiaInteractiveMapsUploadImageFromFile.class.php' );
 
 class WikiaInteractiveMapsUploadImageFromFileTest extends WikiaBaseTest {
 
-	/**
-	 * @dataProvider verifyUploadDataProvider
-	 */
-	public function testVerifyUpload(
-		$testDescription,
-		$uploadDetailsMock,
-		$isUploadSuccessfulMock,
-		$isUploadPoiCategoryMock,
-		$uploadImageSizeMock,
-		$expected
-	) {
+	public function testVerifyUpload_success_not_for_POI() {
+		$expected = [ 'status' => 'success' ];
+		$uploadImageFromFileMock = $this->getUploadImageFromFileMock(
+			$expected,
+			true,
+			false
+		);
+
+		$uploadImageFromFileMock
+			->expects( $this->never() )
+			->method( 'getUploadedImageSize' );
+
+		/**
+		 * @var WikiaInteractiveMapsUploadImageFromFile $uploadImageFromFileMock
+		 */
+		$this->assertEquals(
+			$expected,
+			$uploadImageFromFileMock->verifyUpload( 'mocked type' ),
+			'Successful update which IS NOT POI category image upload'
+		);
+	}
+
+	public function testVerifyUpload_success_for_POI() {
+		$expected = [ 'status' => 'success' ];
+		$uploadImageFromFileMock = $this->getUploadImageFromFileMock(
+			$expected,
+			true,
+			true
+		);
+
+		$uploadImageFromFileMock
+			->expects( $this->once() )
+			->method( 'getUploadedImageSize' )
+			->will( $this->returnValue( [ 64, 64 ] ) );
+
+		/**
+		 * @var WikiaInteractiveMapsUploadImageFromFile $uploadImageFromFileMock
+		 */
+		$this->assertEquals(
+			$expected,
+			$uploadImageFromFileMock->verifyUpload( 'mocked type' ),
+			'Successful update which IS POI category image upload'
+		);
+	}
+
+	public function testVerifyUpload_failed_for_POI() {
+		$expected = [ 'status' => WikiaInteractiveMapsUploadImageFromFile::PIN_TYPE_MARKER_IMAGE_TOO_SMALL_ERROR ];
+		$uploadImageFromFileMock = $this->getUploadImageFromFileMock(
+			[ 'status' => 'success' ],
+			true,
+			true
+		);
+
+		$uploadImageFromFileMock
+			->expects( $this->once() )
+			->method( 'getUploadedImageSize' )
+			->will( $this->returnValue( [ 1, 2 ] ) );
+
+		/**
+		 * @var WikiaInteractiveMapsUploadImageFromFile $uploadImageFromFileMock
+		 */
+		$this->assertEquals(
+			$expected,
+			$uploadImageFromFileMock->verifyUpload( 'mocked type' ),
+			'Failed update which IS POI category image upload'
+		);
+	}
+
+	private function getUploadImageFromFileMock( $uploadDetailsMock, $isUploadSuccessfulMock, $isUploadPoiCategoryMock ) {
 		$uploadImageFromFileMock = $this->getMock( 'WikiaInteractiveMapsUploadImageFromFile', [
 			'getUploadDetails',
 			'isUploadSuccessful',
@@ -36,44 +94,7 @@ class WikiaInteractiveMapsUploadImageFromFileTest extends WikiaBaseTest {
 			->method( 'isUploadPoiCategory' )
 			->will( $this->returnValue( $isUploadPoiCategoryMock ) );
 
-		$uploadImageFromFileMock
-			->expects( $this->any() )
-			->method( 'getUploadedImageSize' )
-			->will( $this->returnValue( $uploadImageSizeMock ) );
-
-		/**
-		 * @var WikiaInteractiveMapsUploadImageFromFile $uploadImageFromFileMock
-		 */
-		$this->assertEquals( $expected, $uploadImageFromFileMock->verifyUpload( 'mocked type' ), $testDescription );
-	}
-
-	public function verifyUploadDataProvider() {
-		return [
-			[
-				'Successful update which IS NOT POI category image upload',
-				'uploadDetailsMock' => [ 'status' => 'success' ],
-				'isUploadSuccessfulMock' => true,
-				'isUploadPoiCategory' => false,
-				'uploadImageSizeMock' => [ 1, 2 ],
-				'expected' => [ 'status' => 'success' ],
-			],
-			[
-				'Successful update which IS POI category image upload',
-				'uploadDetailsMock' => [ 'status' => 'success' ],
-				'isUploadSuccessfulMock' => true,
-				'isUploadPoiCategory' => true,
-				'uploadImageSizeMock' => [ 64, 64 ],
-				'expected' => [ 'status' => 'success' ],
-			],
-			[
-				'Failed update which IS POI category image upload',
-				'uploadDetailsMock' => [ 'status' => 'success' ],
-				'isUploadSuccessfulMock' => true,
-				'isUploadPoiCategory' => true,
-				'uploadImageSizeMock' => [ 1, 2 ],
-				'expected' => [ 'status' => WikiaInteractiveMapsUploadImageFromFile::PIN_TYPE_MARKER_IMAGE_TOO_SMALL_ERROR ],
-			],
-		];
+		return $uploadImageFromFileMock;
 	}
 
 }
