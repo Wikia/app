@@ -3,6 +3,31 @@
 class HAWelcomeHooks {
 
 	/**
+	 * Queue the HAWelcome communication using the new task system. This function
+	 * will toggle between the old and the new based on the configuration in TaskRunner.
+	 *
+	 * This will be removed once the system is fully migrated.
+	 *
+	 * @param int   $wgCityId the city id
+	 * @param Title $oTitle
+	 * @param array $aParams
+	 * @return void
+	 */
+	public static function queueHAWelcomeTask( $wgCityId, $oTitle, $aParams ) {
+			if ( TaskRunner::isModern( 'HAWelcomeJob' ) ) {
+				$task = new HAWelcomeTask();
+				$task->call( 'sendWelcomeMessage', $aParams );
+				$task->wikiId( $wgCityId );
+				$task->title( $oTitle ); // use $this->title in the job
+				$task->queue();
+				\Wikia\Logger\WikiaLogger::instance()->error(__METHOD__ . ' HAWelcome modern sumbitted!!');
+			} else {
+				$oJob = new HAWelcomeJob( $oTitle, $aParams );
+				$oJob->insert();
+			}
+	}
+
+	/**
 	 * Enqueues a job based on a few simple preliminary checks.
 	 *
 	 * Called once an article has been saved.
@@ -167,7 +192,7 @@ class HAWelcomeHooks {
 				trigger_error( sprintf( '%s Scheduling a job.', __METHOD__ ) , E_USER_NOTICE );
 			}
 
-			HAWelcomeTask::queueHAWelcomeTask( $wgCityId, $oTitle, $aParams );
+			self::queueHAWelcomeTask( $wgCityId, $oTitle, $aParams );
 			\Wikia\Logger\WikiaLogger::instance()->error(__METHOD__ . ' HAWelcome sumbitted!!');
 		}
 
