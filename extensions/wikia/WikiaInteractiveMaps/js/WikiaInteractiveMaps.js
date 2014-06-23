@@ -59,7 +59,7 @@ require(
 				triggerAction('deleteMap');
 			});
 
-        setPontoIframeTarget(targetIframe);
+		setPontoIframeTarget(targetIframe);
 
 		/**
 		 * @desc sets iFrame target for ponto if iFrame exists
