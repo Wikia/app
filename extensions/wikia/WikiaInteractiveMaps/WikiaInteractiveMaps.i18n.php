@@ -73,6 +73,7 @@ $messages[ 'en' ] = [
 	'wikia-interactive-maps-image-uploads-error-file-too-large' => 'The file you tried to upload is too big. Maximum image size is $1 MB',
 	'wikia-interactive-maps-image-uploads-error-empty-file' => 'The file you tried to upload is empty',
 	'wikia-interactive-maps-image-uploads-error-bad-type' => 'The file you tried to upload is not an image',
+	'wikia-interactive-maps-image-uploads-error-pin-type-marker-too-small' => 'Error: The image you uploaded was too small. Please use an image that is at least $1 x $1 pixels.',
 
 	'wikia-interactive-maps-create-map-error-invalid-map-title' => 'Error: You must title the map before proceeding.',
 
@@ -86,6 +87,18 @@ $messages[ 'en' ] = [
 	'wikia-interactive-maps-delete-map-success' => 'Map was succesfuly deleted!',
 
 	'wikia-interactive-maps-create-pin-types-error' => 'Unfortunately, we could not create all pin types. Some of them might have been created, though. Check which are missing and try adding them again, please.',
+
+	'wikia-interactive-maps-log-name' => 'Maps',
+	'wikia-interactive-maps-log-description' => 'This is a log of maps actions',
+	'wikia-interactive-maps-create-map-log-entry' => 'created new map [[$1]]',
+	'wikia-interactive-maps-update-map-log-entry' => 'updated map [[$1]]',
+	'wikia-interactive-maps-delete-map-log-entry' => 'deleted map [[$1]]',
+	'wikia-interactive-maps-create-pin-type-log-entry' => 'created new pin type for [[$1]]',
+	'wikia-interactive-maps-update-pin-type-log-entry' => 'updated pin type for [[$1]]',
+	'wikia-interactive-maps-delete-pin-type-log-entry' => 'deleted pin type for [[$1]]',
+	'wikia-interactive-maps-create-pin-log-entry' => 'created new pin for [[$1]]',
+	'wikia-interactive-maps-update-pin-log-entry' => 'updated pin for [[$1]]',
+	'wikia-interactive-maps-delete-pin-log-entry' => 'deleted pin for [[$1]]',
 ];
 
 $messages[ 'qqq' ] = [
@@ -160,6 +173,7 @@ $messages[ 'qqq' ] = [
 	'wikia-interactive-maps-image-uploads-error-file-too-large' => 'An error displayed to a user when a file upload fails because of incorrect file size; the only parameter is maximum size of file in MB',
 	'wikia-interactive-maps-image-uploads-error-empty-file' => 'An error displayed to a user when file is empty',
 	'wikia-interactive-maps-image-uploads-error-bad-type' => 'An error displayed to a user when file has wrong format (not image)',
+	'wikia-interactive-maps-image-uploads-error-pin-type-marker-too-small' => 'An error displayed to a user when uploaded image for custom pin type marker is too small',
 
 	'wikia-interactive-maps-create-map-error-invalid-map-title' => 'An error message displayed above map title form field when the map title is invalid.',
 
@@ -172,5 +186,17 @@ $messages[ 'qqq' ] = [
 	'wikia-interactive-maps-delete-map-client-error' => 'Text (in modal) about error during deletion of the map',
 	'wikia-interactive-maps-delete-map-success' => 'Notification text about succesful deletion of the map',
 
-	'wikia-interactive-maps-create-pin-types-error' => 'An error message displayed when creating pin types failed'
+	'wikia-interactive-maps-create-pin-types-error' => 'An error message displayed when creating pin types failed',
+
+	'wikia-interactive-maps-log-name' => 'Name for Special:Log filter',
+	'wikia-interactive-maps-log-description' => 'Description for Special:Log filter',
+	'wikia-interactive-maps-create-map-log-entry' => 'Message to be displayed in the log when a map is created',
+	'wikia-interactive-maps-update-map-log-entry' => 'Message to be displayed in the log when a map is updated',
+	'wikia-interactive-maps-delete-map-log-entry' => 'Message to be displayed in the log when a map is deleted',
+	'wikia-interactive-maps-create-pin-type-log-entry' => 'Message to be displayed in the log when a pin type is created',
+	'wikia-interactive-maps-update-pin-type-log-entry' => 'Message to be displayed in the log when a pin type is updated',
+	'wikia-interactive-maps-delete-pin-type-log-entry' => 'Message to be displayed in the log when a pin type is deleted',
+	'wikia-interactive-maps-create-pin-log-entry' => 'Message to be displayed in the log when a pin is created',
+	'wikia-interactive-maps-update-pin-log-entry' => 'Message to be displayed in the log when a pin is updated',
+	'wikia-interactive-maps-delete-pin-log-entry' => 'Message to be displayed in the log when a pin is deleted',
 ];

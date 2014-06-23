@@ -58,12 +58,13 @@ define('wikia.intMap.editPOI', ['jquery', 'wikia.intMap.utils'], function($, uti
 				value: $.msg('wikia-interactive-maps-edit-poi-delete'),
 				data: {
 					key: 'event',
-					value: 'del'
+					value: 'deletePOI'
 				}
 			}
 		},
 		trigger,
-		params;
+		params,
+		mapId;
 
 	/**
 	 * @desc Entry point for  modal
@@ -75,6 +76,7 @@ define('wikia.intMap.editPOI', ['jquery', 'wikia.intMap.utils'], function($, uti
 		// set reference to params and trigger callback
 		trigger = _trigger;
 		params = _params;
+		mapId = $('iframe[name=wikia-interactive-map]').data('mapid');
 
 		setModalMode(params.hasOwnProperty('id'));
 
@@ -103,7 +105,7 @@ define('wikia.intMap.editPOI', ['jquery', 'wikia.intMap.utils'], function($, uti
 
 		if (isEditMode) {
 			title = editPOITitle;
-			buttons.push(deletePOIButton)
+			buttons.push(deletePOIButton);
 		}
 
 		modalConfig.vars.title = title;
@@ -155,7 +157,8 @@ define('wikia.intMap.editPOI', ['jquery', 'wikia.intMap.utils'], function($, uti
 			method: 'deletePoi',
 			type: 'POST',
 			data: {
-				id: params.id
+				id: params.id,
+				mapId: mapId
 			},
 			callback: function(response) {
 				var data = response.results;

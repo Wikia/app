@@ -88,15 +88,7 @@ class WikiaMaps {
 	 */
 	private function postRequest( $url, $data ) {
 		return $this->processServiceResponse(
-			Http::post( $url, [
-				'postData' => json_encode( $data ),
-				'headers' => [
-					'Authorization' => $this->config[ 'token' ]
-				],
-				'returnInstance' => true,
-				//TODO: this is temporary workaround, remove it before production!
-				'noProxy' => true
-			] )
+			Http::post( $url, $this->getHttpRequestOptions( $data ) )
 		);
 	}
 
@@ -110,15 +102,7 @@ class WikiaMaps {
 	 */
 	private function putRequest( $url, $data ) {
 		return $this->processServiceResponse(
-			Http::request( 'PUT', $url, [
-				'postData' => json_encode( $data ),
-				'headers' => [
-					'Authorization' => $this->config['token']
-				],
-				'returnInstance' => true,
-				//TODO this is temporary workaround, remove it before production!
-				'noProxy' => true
-			] )
+			Http::request( 'PUT', $url, $this->getHttpRequestOptions( $data ) )
 		);
 	}
 
@@ -131,14 +115,7 @@ class WikiaMaps {
 	 */
 	private function deleteRequest( $url ) {
 		return $this->processServiceResponse(
-			Http::request( 'DELETE', $url, [
-				'headers' => [
-					'Authorization' => $this->config['token']
-				],
-				'returnInstance' => true,
-				//TODO this is temporary workaround, remove it before production!
-				'noProxy' => true
-			] )
+			Http::request( 'DELETE', $url, $this->getHttpRequestOptions() )
 		);
 	}
 
@@ -153,11 +130,7 @@ class WikiaMaps {
 		$mapsData = new stdClass();
 		$url = $this->buildUrl( [ self::ENTRY_POINT_MAP ], $params );
 		$response = $this->processServiceResponse(
-			Http::get( $url, 'default', [
-				'returnInstance' => true,
-				//TODO: this is temporary workaround, remove it before production!
-				'noProxy' => true
-			] )
+			Http::get( $url, 'default', $this->getHttpRequestOptions() )
 		);
 
 		if( $response[ 'success' ] ) {
@@ -196,21 +169,13 @@ class WikiaMaps {
 		$mapId = array_shift( $params );
 		$url = $this->buildUrl( [ self::ENTRY_POINT_MAP, $mapId ], $params );
 		$response = $this->processServiceResponse(
-			Http::get( $url, 'default', [
-				'returnInstance' => true,
-				//TODO: this is temporary workaround, remove it before production!
-				'noProxy' => true
-			] )
+			Http::get( $url, 'default', $this->getHttpRequestOptions() )
 		);
 
 		$map = $response[ 'content' ];
 		if( !empty( $map->tile_set_url ) ) {
 			$response = $this->processServiceResponse(
-				Http::get( $map->tile_set_url, 'default', [
-					'returnInstance' => true,
-					//TODO: this is temporary workaround, remove it before production!
-					'noProxy' => true
-				] )
+				Http::get( $map->tile_set_url, 'default', $this->getHttpRequestOptions() )
 			);
 
 			$tilesData = $response[ 'content' ];
@@ -287,11 +252,7 @@ class WikiaMaps {
 
 		//TODO: consider caching the response
 		$response = $this->processServiceResponse(
-			Http::get( $url, 'default', [
-				'returnInstance' => true,
-				//TODO this is temporary workaround, remove it before production!
-				'noProxy' => true
-			] )
+			Http::get( $url, 'default', $this->getHttpRequestOptions() )
 		);
 
 		return $response;
@@ -300,7 +261,7 @@ class WikiaMaps {
 	/**
 	 * Sends a request to delete a map instance
 	 *
-	 * @param array $data
+	 * @param integer $mapId
 	 *
 	 * @return bool
 	 */
@@ -478,5 +439,28 @@ class WikiaMaps {
 
 		return false;
 	}
-}
 
+	/**
+	 * Returns default options for Http::request() method
+	 *
+	 * @param array $postData
+	 *
+	 * @return array
+	 */
+	private function getHttpRequestOptions( Array $postData = [] ) {
+		$options = [
+			'headers' => [
+				'Authorization' => $this->config[ 'token' ]
+			],
+			'returnInstance' => true,
+			//TODO: this is temporary workaround, remove it before production!
+			'noProxy' => true
+		];
+
+		if( !empty( $postData ) ) {
+			$options[ 'postData' ] = json_encode( $postData );
+		}
+
+		return $options;
+	}
+}

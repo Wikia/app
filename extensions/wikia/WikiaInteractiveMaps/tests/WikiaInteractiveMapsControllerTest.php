@@ -1,5 +1,5 @@
 <?php
-require_once( $IP . '/extensions/wikia/WikiaInteractiveMaps/WikiaInteractiveMapsController.class.php' );
+require_once( $IP . '/extensions/wikia/WikiaInteractiveMaps/controllers/WikiaInteractiveMapsController.class.php' );
 require_once( $IP . '/extensions/wikia/WikiaInteractiveMaps/models/WikiaMaps.class.php' );
 
 class WikiaInteractiveMapsControllerTest extends WikiaBaseTest {
