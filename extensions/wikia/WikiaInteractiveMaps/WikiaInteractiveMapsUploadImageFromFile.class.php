@@ -16,9 +16,9 @@ class WikiaInteractiveMapsUploadImageFromFile extends UploadFromFile {
 	public function verifyUpload( $uploadType ) {
 		$details = $this->getUploadDetails();
 
-		if ( $details[ 'status' ] === self::OK ) {
+		if ( $this->isUploadSuccessful( $details[ 'status' ] ) ) {
 			// check minimal dimensions for pin type marker
-			if ( $uploadType === self::UPLOAD_TYPE_PIN_TYPE_MARKER ) {
+			if ( $this->isUploadPoiCategory( $uploadType ) ) {
 				$imageSize = $this->getUploadedImageSize();
 				if ( $imageSize[ 0 ] < self::PIN_TYPE_MARKER_IMAGE_MIN_SIZE || $imageSize[ 1 ] < self::PIN_TYPE_MARKER_IMAGE_MIN_SIZE ) {
 					$details[ 'status' ] = self::PIN_TYPE_MARKER_IMAGE_TOO_SMALL_ERROR;
@@ -46,6 +46,26 @@ class WikiaInteractiveMapsUploadImageFromFile extends UploadFromFile {
 	public function getUploadedImageSize() {
 		$imageSize = getimagesize( $this->getTempPath() );
 		return [ $imageSize[ 0 ], $imageSize[ 1 ] ];
+	}
+
+	/**
+	 * Returns true if the upload was successful
+	 *
+	 * @param $status
+	 * @return bool
+	 */
+	private function isUploadSuccessful( $status ) {
+		return $status === self::OK;
+	}
+
+	/**
+	 * Returns true if the upload type is POI category
+	 *
+	 * @param String $uploadType
+	 * @return bool
+	 */
+	private function isUploadPoiCategory( $uploadType ) {
+		return $uploadType === self::UPLOAD_TYPE_PIN_TYPE_MARKER;
 	}
 
 	/**
