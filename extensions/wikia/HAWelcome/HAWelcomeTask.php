@@ -39,6 +39,9 @@ class HAWelcomeTask extends BaseTask {
 	/** @type Integer Flags for WikiPage::doEdit(). */
 	private $integerFlags = 0;
 
+	/** @type boolean */
+	private $bMessageWallExt  = null;
+
 	public function getRecipientId() {
 		return $this->recipientId;
 	}
@@ -103,6 +106,7 @@ class HAWelcomeTask extends BaseTask {
 
 		// Complete the job if the feature has been disabled by the admin of the wiki.
 		if ( $this->welcomeMessageDisabled() ) {
+			$this->debug( "The HAWelcome extension is disabled." );
 			return true;
 		}
 
@@ -118,8 +122,6 @@ class HAWelcomeTask extends BaseTask {
 
 		// A TalkPage object.
 		$this->recipientTalkPage = new Article( $this->recipientObject->getUserPage()->getTalkPage() );
-
-		$this->setWallMessageExtensionEnabled();
 
 		$sSwitches = wfMessage( 'welcome-enabled' )->inContentLanguage()->text();
 
@@ -143,10 +145,11 @@ class HAWelcomeTask extends BaseTask {
 
 			if (
 				// The Message Wall extension is enabled and user's wall is empty or ...
-				( $this->bMessageWallExt && ! WallHelper::haveMsg( $this->recipientObject ) )
+				( $this->getMessageWallExtensionEnabled() && ! WallHelper::haveMsg( $this->recipientObject ) )
 				// ... or the Message Wall extension is disabled and recipient's Talk Page does not exist
-				|| ( !$this->bMessageWallExt && !$this->recipientTalkPage->exists() )
+				|| ( !$this->getMessageWallExtensionEnabled() && !$this->recipientTalkPage->exists() )
 			) {
+				$this->info( "sending HAWelcome message for an anonymous contributor" );
 				$this->setMessage();
 				$this->sendMessage();
 			}
@@ -190,12 +193,16 @@ class HAWelcomeTask extends BaseTask {
 		$wgUser = $this->temporaryWgUser;
 	}
 
-	private function setWallMessageExtensionEnabled() {
-		/**
-		 * @global Boolean Indicated whether the Message Wall extension is enabled.
-		 */
-		global $wgEnableWallExt;
-		$this->bMessageWallExt = ! empty( $wgEnableWallExt );
+	protected function getMessageWallExtensionEnabled() {
+		if ( is_null($this->bMessageWallExt) ) {
+			/**
+			 * @global Boolean Indicated whether the Message Wall extension is enabled.
+			 */
+			global $wgEnableWallExt;
+			$this->bMessageWallExt = ! empty( $wgEnableWallExt );
+		}
+
+		return $this->bMessageWallExt;
 	}
 
 
@@ -305,24 +312,10 @@ class HAWelcomeTask extends BaseTask {
 	 * @internal
 	 */
 	public function sendMessage() {
-		global $wgUser;
 
 		// Post a message onto a message wall if enabled.
-		if ( $this->bMessageWallExt ) {
-			$this->info( sprintf( "creating a welcome wall message from %s", $wgUse->getName() ) );
-
-			$mWallMessage = WallMessage::buildNewMessageAndPost(
-                $this->welcomeMessage, $this->recipientName, $wgUser,
-                wfMessage( 'welcome-message-log' )->inContentLanguage()->text(), false, array(), false, false
-			);
-
-			// Sets the sender of the message when the actual message
-			// was posted by the welcome bot
-			if ( $mWallMessage ) {
-				$mWallMessage->setPostedAsBot( $this->senderObject );
-				$mWallMessage->sendNotificationAboutLastRev();
-			}
-
+		if ( $this->getMessageWallExtensionEnabled() ) {
+			$this->postWallMessageToRecipient();
 		} else {
 			// Post a message onto a regular talk page.
 			// Prepend the message with the existing content of the talk page.
@@ -337,6 +330,33 @@ class HAWelcomeTask extends BaseTask {
 		}
 	}
 
+	protected function postWallMessageToRecipient() {
+		$this->info( "creating a welcome wall message" );
+		$mWallMessage = WallMessage::buildNewMessageAndPost(
+			$this->welcomeMessage, $this->recipientName, $this->getMessageWallSender(),
+			wfMessage( 'welcome-message-log' )->inContentLanguage()->text(), false, array(), false, false
+		);
+
+		// Sets the sender of the message when the actual message
+		// was posted by the welcome bot
+		if ( $mWallMessage ) {
+			$mWallMessage->setPostedAsBot( $this->senderObject );
+			$mWallMessage->sendNotificationAboutLastRev();
+		}
+	}
+
+	protected function getMessageWallSender() {
+		/*
+		 * FIXME: can this be replaced with
+		 *	$wgUser = User::newFromName( self::DEFAULT_WELCOMER );
+		 *
+		 * If so, then we can remove the captureAndReplaceGlobalWgUserWithWelcomeUser/restore methods.
+		 *
+		 */
+		global $wgUser;
+		return $wgUser;
+	}
+
 	/**
 	 * Determines the contents of the welcome message.
 	 *
@@ -349,8 +369,7 @@ class HAWelcomeTask extends BaseTask {
 		//Determine the proper key
 		//
 		// Is Message Wall enabled?
-		$welcomeMessageKey  .= $this->bMessageWallExt
-			? 'wall-'  : '';
+		$welcomeMessageKey  .= $this->getMessageWallExtensionEnabled() ? 'wall-'  : '';
 
 		// Is recipient a registered user?
 		$welcomeMessageKey .= $this->recipientId

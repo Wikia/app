@@ -16,18 +16,34 @@ class HAWelcomeTaskTest extends WikiaBaseTest {
 		);
 
 		$task->normalizeInstanceParameters( $params );
-		$this->assertEquals($userId, $task->getRecipientId());
-		$this->assertEquals($username, $task->getRecipientUserName());
-		$this->assertEquals($timestamp, $task->getTimestamp());
+		$this->assertEquals( $userId, $task->getRecipientId() );
+		$this->assertEquals( $username, $task->getRecipientUserName() );
+		$this->assertEquals( $timestamp, $task->getTimestamp() );
 	}
 
 	public function testSendWelcomeMessageWhenDisabled() {
-		$task = $this->getMock('\HAWelcomeTask', ['welcomeMessageDisabled'], [], '', false);
-		$task->expects($this->atLeastOnce())
-			->method('welcomeMessageDisabled')
-			->will($this->returnValue(true));
+		$task = $this->getMock( '\HAWelcomeTask', ['welcomeMessageDisabled'], [], '', false );
+		$task->expects( $this->atLeastOnce() )
+			->method( 'welcomeMessageDisabled' )
+			->will( $this->returnValue( true ) );
 
-		$this->assertTrue($task->sendWelcomeMessage( array() ));
+		$this->assertTrue( $task->sendWelcomeMessage( array() ) );
+	}
+
+
+	public function testSendMessageWithWall() {
+		$task = $this->getMock( '\HAWelcomeTask', ['getMessageWallExtensionEnabled', 'postWallMessageToRecipient'], [], '', false );
+
+		$task->expects( $this->atLeastOnce() )
+			->method( 'getMessageWallExtensionEnabled' )
+			->will( $this->returnValue( true ) );
+
+		$task->expects( $this->atLeastOnce() )
+			->method( 'postWallMessageToRecipient' )
+			->will( $this->returnValue(null) );
+
+		$task->sendMessage();
+
 	}
 
 }
