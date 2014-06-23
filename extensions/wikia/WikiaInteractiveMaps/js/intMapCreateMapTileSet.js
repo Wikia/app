@@ -38,24 +38,13 @@ define(
 					}
 				],
 				intMapCustom: [
-					function() {
-						showStep('uploadImage');
-					}
-				],
-				intMapBrowse: [
-					function() {
-						showStep('browseTileSets');
-						getTileSetThumbs();
-					}
+					chooseCustomTileSet
 				],
 				previousStep: [
 					previousStep
 				],
 				chooseTileSet: [
 					chooseTileSet
-				],
-				receivedTileSets: [
-					showTileSetThumbs
 				],
 				selectTileSet: [
 					function(event) {
@@ -72,18 +61,11 @@ define(
 					id: '#intMapChooseType',
 					buttons: {}
 				},
-				uploadImage: {
-					id: '#intMapImageUpload',
-					buttons: {
-						'#intMapBack': 'previousStep'
-					}
-				},
-				browseTileSets: {
+				chooseTileSet: {
 					id: '#intMapBrowse',
 					buttons: {
 						'#intMapBack': 'previousStep'
-					},
-					helper: getTileSetThumbs
+					}
 				}
 			},
 			// image upload entry point
@@ -92,17 +74,16 @@ define(
 			stepsStack = [],
 			// cached selectors
 			$sections,
-			$browse;
+			$tileSetsContainer;
 
 		/**
 		 * @desc initializes and configures UI
-		 * @param {object} modalRef - modal component
+		 * @param {object} _modal - modal component
 		 * @param {string} _uiTemplate - mustache template for this step UI
 		 * @param {string} _tileSetThumbTemplate - mustache template for tile set thumb
 		 */
-
-		function init(modalRef, _uiTemplate, _tileSetThumbTemplate) {
-			modal = modalRef;
+		function init(_modal, _uiTemplate, _tileSetThumbTemplate) {
+			modal = _modal;
 			uiTemplate = _uiTemplate;
 			tileSetThumbTemplate = _tileSetThumbTemplate;
 
@@ -120,13 +101,12 @@ define(
 		/**
 		 * @desc entry point for choose tile set steps
 		 */
-
 		function chooseTileSet() {
 			modal.$innerContent.html(utils.render(uiTemplate, templateData));
 
 			// cache selectors
 			$sections = modal.$innerContent.children();
-			$browse = $sections.filter('#intMapBrowse');
+			$tileSetsContainer = modal.$innerContent.find('#intMapBrowse');
 
 			showStep(stepsStack.pop());
 		}
@@ -135,7 +115,6 @@ define(
 		 * @desc adds step to steps stack
 		 * @param {string} step - key of the step
 		 */
-
 		function addToStack(step) {
 			stepsStack.push(step);
 		}
@@ -144,7 +123,6 @@ define(
 		 * @desc shows step content
 		 * @param {string} id - step is
 		 */
-
 		function showStepContent(id) {
 			$sections.addClass('hidden');
 			$sections.filter(id).removeClass('hidden');
@@ -154,17 +132,12 @@ define(
 		 * @desc shows the given step in choose tile set flow
 		 * @param {string} stepName - name of the step
 		 */
-
 		function showStep(stepName) {
 			var step = steps[stepName];
 
 			addToStack(stepName);
 			showStepContent(step.id);
 			utils.setButtons(modal, step.buttons);
-
-			if (typeof step.helper === 'function') {
-				step.helper();
-			}
 
 			modal.trigger('cleanUpError');
 
@@ -173,7 +146,6 @@ define(
 		/**
 		 * @desc switches to the previous step in create map flow
 		 */
-
 		function previousStep() {
 			// removes current step from stack
 			stepsStack.pop();
@@ -182,11 +154,22 @@ define(
 		}
 
 		/**
+		 * @desc sets up choose tile set step
+		 */
+		function chooseCustomTileSet() {
+			getTileSetThumbs().done(function(tileSetData) {
+				updateTileSetList(renderTileSetThumbs(tileSetThumbTemplate, tileSetData));
+				showStep('chooseTileSet');
+			})
+		}
+
+		/**
 		 * @desc loads tile sets thumbs
 		 * @param {string=} searchTerm - search term, if specified loads tile set which name match this term
 		 */
-
 		function getTileSetThumbs(searchTerm) {
+			var dfd = new $.Deferred();
+
 			$.nirvana.sendRequest({
 				controller: 'WikiaInteractiveMaps',
 				method: 'getTileSets',
@@ -196,32 +179,50 @@ define(
 					var data = response.results;
 
 					if (data && data.success) {
-						modal.trigger('receivedTileSets', data.content);
+						dfd.resolve(data.content);
 					} else {
+						dfd.reject();
 						modal.trigger('error', data.content.message);
 					}
 				},
 				onErrorCallback: function(response) {
+					dfd.reject();
 					modal.trigger('error', response.results.content.message);
 				}
 			});
+
+			return dfd.promise();
 		}
 
-		function showTileSetThumbs(tileSets) {
+		/**
+		 * @desc renders tile set thumbs markup
+		 * @param {string} template - mustache template
+		 * @param {array} tileSets - array of tile set objects
+		 * @returns {string} - HTML markup
+		 */
+		function renderTileSetThumbs(template, tileSets) {
 			var html = '';
 
 			tileSets.forEach(function(tileSet) {
-				html += utils.render(tileSetThumbTemplate, tileSet);
+				html += utils.render(template, tileSet);
 			});
 
-			$browse.html(html);
+			return html;
+		}
+
+		/**
+		 * @desc removes old tile sets from list and adds new one
+		 * @param {string} markup - HTML markup
+		 */
+		function updateTileSetList(markup) {
+			$tileSetsContainer.children('.tile-set-thumb').remove();
+			$tileSetsContainer.append(markup);
 		}
 
 		/**
 		 * @desc uploads image to backend
 		 * @param {object} form - html form node element
 		 */
-
 		function uploadMapImage(form) {
 			$.ajax({
 				contentType: false,

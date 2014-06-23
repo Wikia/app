@@ -1,14 +1,14 @@
-<div id="intMapChooseType" class="intMapChooseType">
+<div id="intMapChooseType" class="int-map-choose-tile-set-type">
 	{{#mapType}}
-		<h3><a href="" title="{{name}}" id="intMap{{type}}" class="intMap{{type}} modalEvent" data-event="intMap{{type}}">{{name}}</a></h3>
+		<h3><a href="" title="{{name}}" id="intMap{{type}}" class="int-map-{{type}} modalEvent" data-event="intMap{{type}}">{{name}}</a></h3>
 	{{/mapType}}
 </div>
 
-<div id="intMapImageUpload" class="intMapsImageUpload">
-	<form enctype="multipart/form-data">
-		<input type="file" id="intMapUpload" name="wpUploadFile">
-	</form>
-	<a href="" class="modalEvent" data-event="intMapBrowse" title="{{browse}}">{{browse}}</a>
-</div>
-
-<ul id="intMapBrowse" class="intMapBrowse"></ul>
+<ul id="intMapBrowse" class="int-map-browse-tile-set">
+	<li>
+		<form enctype="multipart/form-data">
+			<input type="file" id="intMapUpload" name="wpUploadFile">
+			<a href="" title="{{upload-link}}" id="intMapUploadLink">{{upload-link}}</a>
+		</form>
+	</li>
+</ul>
