@@ -310,11 +310,11 @@ class MultiTask extends BaseTask {
 	
 		if ( $result ) {
 			$res = false;
-			$this->log( 'Multi task (' . $this->action . ') error! (' . $row->city_server . '). Error code returned: ' .  $result . ' Error was: ' . $response );
+			$this->error( 'Multi task (' . $this->action . ') error! (' . $row->city_server . '). Error code returned: ' .  $result . ' Error was: ' . $response );
 		}
 		else {
 			$res = true;
-			$this->log( $this->action . ' done: <a href="' . $row->city_server . $row->city_script . '?title=' . wfEscapeWikiText( $response ) . '">' .$row->city_server . $row->city_script . '?title=' . $response . '</a>');
+			$this->info( $this->action . ' done: <a href="' . $row->city_server . $row->city_script . '?title=' . wfEscapeWikiText( $response ) . '">' .$row->city_server . $row->city_script . '?title=' . $response . '</a>');
 			$count++;
 		}
 		

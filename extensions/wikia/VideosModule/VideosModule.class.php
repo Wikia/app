@@ -82,7 +82,9 @@ class VideosModule extends WikiaModel {
 
 		wfProfileOut( __METHOD__ );
 
-		return $videos;
+		// Trimming isn't really necessary, however trimVideoList adds the videos to our
+		// existingVideos array which will be checked by subsequent methods.
+		return $this->trimVideoList( $videos, self::MAX_STAFF_PICKS );
 	}
 
 	/**

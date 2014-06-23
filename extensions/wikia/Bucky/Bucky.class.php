@@ -36,8 +36,12 @@ class Bucky {
 				'host' => $url,
 				'sample' => $sample,
 				'aggregationInterval' => 1000,
+				'protocol' => 2,
+				'context' => array(
+					'env' => $environment
+				)
 			));
-			$script = "<script>$(function(){Bucky.setOptions({$config});$(window).load(function(){Bucky.sendPagePerformance('{$environment}');});});</script>";
+			$script = "<script>$(function(){Bucky.setOptions({$config});$(window).load(function(){setTimeout(function(){Bucky.sendPagePerformance(false);},0);});});</script>";
 			$bottomScripts .= $script;
 		}
 

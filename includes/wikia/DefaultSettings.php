@@ -256,6 +256,7 @@ $wgAutoloadClasses[ 'WikiaSQLCache'                   ] = "$IP/includes/wikia/Wi
 $wgAutoloadClasses[ 'WikiaSanitizer'                  ] = "$IP/includes/wikia/WikiaSanitizer.class.php";
 $wgAutoloadClasses[ 'ScribePurge'                     ] = "$IP/includes/cache/wikia/ScribePurge.class.php";
 $wgHooks          [ 'RestInPeace'                     ][] = 'ScribePurge::onRestInPeace';
+$wgAutoloadClasses[ 'Wikia\\Blogs\\BlogTask'          ] = "$IP/extensions/wikia/Blogs/BlogTask.class.php";
 
 /**
  * Resource Loader enhancements
@@ -392,6 +393,7 @@ $wgHooks['WikiaSkinTopScripts'][] = 'Wikia\\Logger\\Hooks::onWikiaSkinTopScripts
 
 // Set the WikiaLogger mode early in the setup process
 $wgHooks['WikiFactory::execute'][] = 'Wikia\\Logger\\Hooks::onWikiFactoryExecute';
+$wgHooks['WikiFactory::onExecuteComplete'][] = 'Wikia\\Logger\\Hooks::onWikiFactoryExecuteComplete';
 
 // Register \Wikia\Sass namespace
 spl_autoload_register( function( $class ) {
@@ -474,7 +476,6 @@ $wgAutoloadClasses[ "WikiaValidatorDependent"       ] = "$IP/includes/wikia/vali
 $wgAutoloadClasses[ 'WikiaValidatorRestrictiveUrl'  ] = "$IP/includes/wikia/validators/WikiaValidatorRestrictiveUrl.class.php";
 $wgAutoloadClasses[ 'WikiaValidatorUsersUrl'        ] = "$IP/includes/wikia/validators/WikiaValidatorUsersUrl.class.php";
 include_once("$IP/includes/wikia/validators/WikiaValidatorsExceptions.php");
-
 
 /**
  * registered API methods
@@ -1209,9 +1210,15 @@ $wgAdDriverUseEbay = false;
 
 /**
  * @name $wgAdDriverUseWikiaBarBoxad2
- * Whether to enable new fancy footer WikiaBar BOXAD 2 (true) or not (false)
+ * Whether to enable new fancy footer ad WIKIA_BAR_BOXAD_2
  */
 $wgAdDriverUseWikiaBarBoxad2 = false;
+
+/**
+ * @name $wgAdDriverWikiaBarBoxad2ImpressionCapping
+ * Impression capping for WIKIA_BAR_BOXAD_2. Array with the numbers of the potential ad calls.
+ */
+$wgAdDriverWikiaBarBoxad2ImpressionCapping = [2, 4, 6];
 
 /**
  * @name $wgAdDriverUseSevenOneMedia
@@ -1220,6 +1227,14 @@ $wgAdDriverUseWikiaBarBoxad2 = false;
  */
 $wgAdDriverUseSevenOneMedia = null;
 $wgAdDriverUseSevenOneMediaInLanguages = ['de'];
+
+/**
+ * @name $wgAdDriverUseDartForSlotsBelowTheFold
+ * Whether to call DART for additional slots below the fold. Also known as "Coffee cup".
+ * Set to null for to restrict only to Entertainment vertical
+ * TODO: add an internal page for the reasons
+ */
+$wgAdDriverUseDartForSlotsBelowTheFold = null;
 
 /**
  * @name $wgAdDriverTrackState

@@ -324,9 +324,8 @@
 .oo-ui-icon-unchecked {
 	@include ve-icon(unchecked, wikia);
 }
-// Always black.
 .oo-ui-icon-upload-small {
-	@include ve-icon(upload-small, wikia, white);
+	@include ve-icon(upload-small, wikia, $color-buttons);
 }
 .oo-ui-icon-upload {
 	@include ve-icon(upload, wikia);
