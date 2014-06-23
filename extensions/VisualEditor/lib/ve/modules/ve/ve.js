@@ -771,6 +771,10 @@
 			// Suppress in-browser errors
 			return true;
 		};
+		// Wikia change: Remove all script tags to fix Safari bug that removes all HTML after them.
+		// Scripts should not be executed in the editor anyway. This uses regex because removing with
+		// DOM manipulation on the newDocument results in the same bug.
+		html = html.replace( /<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '' );
 		// Write the HTML to it
 		newDocument.write( html ); // Party like it's 1995!
 		newDocument.close();
