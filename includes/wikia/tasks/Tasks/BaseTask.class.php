@@ -137,7 +137,7 @@ abstract class BaseTask {
 	}
 
 	public function createdByUser() {
-		if ( empty( $this->createdBy )) {
+		if ( empty( $this->createdByUser )) {
 			$this->createdByUser = \User::newFromId( $this->createdBy );
 		}
 
