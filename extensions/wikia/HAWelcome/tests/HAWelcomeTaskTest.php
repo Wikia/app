@@ -39,7 +39,7 @@ class HAWelcomeTaskTest extends WikiaBaseTest {
 
 		$task->expects( $this->atLeastOnce() )
 			->method( 'postWallMessageToRecipient' )
-			->will( $this->returnValue(null) );
+			->will( $this->returnValue( null ) );
 
 		$task->sendMessage();
 	}
@@ -53,7 +53,7 @@ class HAWelcomeTaskTest extends WikiaBaseTest {
 
 		$task->expects( $this->atLeastOnce() )
 			->method( 'postTalkPageMessageToRecipient' )
-			->will( $this->returnValue(null) );
+			->will( $this->returnValue( null ) );
 
 		$task->sendMessage();
 	}
@@ -63,22 +63,22 @@ class HAWelcomeTaskTest extends WikiaBaseTest {
 
 		$talkPage->expects( $this->atLeastOnce() )
 			->method( 'exists' )
-			->will( $this->returnValue( true ));
+			->will( $this->returnValue( true ) );
 
 		$talkPageContent = 'foo';
 		$talkPage->expects( $this->atLeastOnce() )
 			->method( 'getContent' )
-			->will( $this->returnValue( $talkPageContent ));
+			->will( $this->returnValue( $talkPageContent ) );
 
 		$talkPage->expects( $this->atLeastOnce() )
 			->method( 'doEdit' )
-			->will( $this->returnValue( $talkPageContent ));
+			->will( $this->returnValue( $talkPageContent ) );
 
 		$task = $this->getMock( '\HAWelcomeTask', ['getRecipientTalkPage'], [], '', false );
 
-		$task->expects( $this->exactly(3) )
+		$task->expects( $this->exactly( 3 ) )
 			->method( 'getRecipientTalkPage' )
-			->will( $this->returnValue( $talkPage ));
+			->will( $this->returnValue( $talkPage ) );
 
 		$task->postTalkPageMessageToRecipient();
 	}
@@ -88,25 +88,51 @@ class HAWelcomeTaskTest extends WikiaBaseTest {
 
 		$talkPage->expects( $this->atLeastOnce() )
 			->method( 'exists' )
-			->will( $this->returnValue( false ));
+			->will( $this->returnValue( false ) );
 
 		$talkPageContent = 'foo';
 		$talkPage->expects( $this->exactly( 0 ) )
 			->method( 'getContent' )
-			->will( $this->returnValue( $talkPageContent ));
+			->will( $this->returnValue( $talkPageContent ) );
 
 		$talkPage->expects( $this->atLeastOnce() )
 			->method( 'doEdit' )
-			->will( $this->returnValue( $talkPageContent ));
+			->will( $this->returnValue( $talkPageContent ) );
 
 		$task = $this->getMock( '\HAWelcomeTask', ['getRecipientTalkPage'], [], '', false );
 
-		$task->expects( $this->exactly(2) )
+		$task->expects( $this->exactly( 2 ) )
 			->method( 'getRecipientTalkPage' )
-			->will( $this->returnValue( $talkPage ));
+			->will( $this->returnValue( $talkPage ) );
 
 		$task->postTalkPageMessageToRecipient();
 	}
 
 
+	public function testMergeFeatureFlagsFromUserMessageAnon() {
+		$task = $this->getMock( '\HAWelcomeTask', ['getUserFeatureFlags'], [], '', false );
+
+		$task->expects( $this->any() )
+			->method( 'getUserFeatureFlags' )
+			->will( $this->returnValue( 'message-anon' ) );
+
+		$task->mergeFeatureFlagsFromUserSettings();
+		$this->assertTrue( $task->isFeatureFlagEnabled( 'message-anon' ) );
+		$this->assertFalse( $task->isFeatureFlagEnabled( 'page-user' ) );
+
+		$this->assertFalse( $task->isFeatureFlagEnabled( 'key-does-not-exist' ) );
+	}
+
+	public function testMergeFeatureFlagsFromUserUser() {
+		$task = $this->getMock( '\HAWelcomeTask', ['getUserFeatureFlags'], [], '', false );
+
+		$task->expects( $this->any() )
+			->method( 'getUserFeatureFlags' )
+			->will( $this->returnValue( 'page-user message-user' ) );
+
+		$task->mergeFeatureFlagsFromUserSettings();
+		$this->assertFalse( $task->isFeatureFlagEnabled( 'message-anon' ) );
+		$this->assertTrue( $task->isFeatureFlagEnabled( 'page-user' ) );
+		$this->assertTrue( $task->isFeatureFlagEnabled( 'message-user' ) );
+	}
 }

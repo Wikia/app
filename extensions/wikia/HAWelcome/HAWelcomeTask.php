@@ -19,7 +19,7 @@ class HAWelcomeTask extends BaseTask {
 	 *
 	 * @type Array
 	 */
-	private $aSwitches = array( 'message-anon' => false, 'message-user' => false, 'page-user' => false );
+	private $featureFlags = array( 'message-anon' => false, 'message-user' => false, 'page-user' => false );
 
 	/** @type Integer The id of the recipient. */
 	private $recipientId;
@@ -57,9 +57,12 @@ class HAWelcomeTask extends BaseTask {
 		return $this->timestamp;
 	}
 
-
 	protected function getLoggerContext() {
 		return ['task' => __CLASS__];
+	}
+
+	function __construct() {
+		$this->mergeFeatureFlagsFromUserSettings();
 	}
 
 	/**
@@ -97,15 +100,6 @@ class HAWelcomeTask extends BaseTask {
 			$this->recipientObject->setName( $this->recipientName );
 		}
 
-		$sSwitches = wfMessage( 'welcome-enabled' )->inContentLanguage()->text();
-
-		// Override the default switches with user's values.
-		foreach ( $this->aSwitches as $sSwitch => $bValue ) {
-			if ( false !== strpos( $sSwitches, $sSwitch ) ) {
-				$this->aSwitches[$sSwitch] = true;
-			}
-		}
-
 		// Refresh the sender data.
 		$this->setSender();
 
@@ -115,7 +109,7 @@ class HAWelcomeTask extends BaseTask {
 		}
 
 		// anonymous users block
-		if ( ! $this->recipientId && $this->aSwitches['message-anon'] ) {
+		if ( ! $this->recipientId && $this->isFeatureFlagEnabled( 'message-anon' ) ) {
 
 			if (
 				// The Message Wall extension is enabled and user's wall is empty or ...
@@ -131,14 +125,14 @@ class HAWelcomeTask extends BaseTask {
 		// registered users block
 		} else if ( $this->recipientId ) {
 			// If configured so, send a welcome message.
-			if ( $this->aSwitches['message-user'] ) {
+			if ( $this->isFeatureFlagEnabled( 'message-user' ) ) {
 				$this->info( "sending HAWelcome message for registered contributor" );
 				$this->setMessage();
 				$this->sendMessage();
 			}
 
 			// If configured so, create a user profile page, if not exists.
-			if ( $this->aSwitches['page-user'] ) {
+			if ( $this->isFeatureFlagEnabled( 'page-user' ) ) {
 				$this->info( "attempting to create welcome user page" );
 				$recipientProfile = new Article( $this->recipientObject->getUserPage() );
 				if ( ! $recipientProfile->exists() ) {
@@ -165,6 +159,31 @@ class HAWelcomeTask extends BaseTask {
 	private function restoreGlobalWgUser() {
 		global $wgUser;
 		$wgUser = $this->temporaryWgUser;
+	}
+
+	public function getUserFeatureFlags() {
+		return wfMessage( 'welcome-enabled' )->inContentLanguage()->text();
+	}
+
+	public function mergeFeatureFlagsFromUserSettings() {
+		$sSwitches = $this->getUserFeatureFlags();
+
+		// Override the default switches with user's values.
+		foreach ( $this->featureFlags as $sSwitch => $bValue ) {
+			if ( false !== strpos( $sSwitches, $sSwitch ) ) {
+				$this->featureFlags[$sSwitch] = true;
+			}
+		}
+	}
+
+	/**
+	 * Determine if a feature flag is enabled.
+	 *
+	 * @param string $flag the feature flag
+	 * @return bool
+	 */
+	public function isFeatureFlagEnabled( $flag ) {
+		return array_key_exists( $flag, $this->featureFlags ) && $this->featureFlags[$flag];
 	}
 
 	protected function getMessageWallExtensionEnabled() {
