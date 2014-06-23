@@ -108,26 +108,23 @@ class HAWelcomeTask extends BaseTask {
 			$this->integerFlags = EDIT_FORCE_BOT;
 		}
 
+		$anonymousUserEdit = !$this->recipientId && $this->isFeatureFlagEnabled( 'message-anon' );
 		// anonymous users block
-		if ( ! $this->recipientId && $this->isFeatureFlagEnabled( 'message-anon' ) ) {
+		if ( $anonymousUserEdit ) {
 
-			if (
-				// The Message Wall extension is enabled and user's wall is empty or ...
-				( $this->getMessageWallExtensionEnabled() && ! WallHelper::haveMsg( $this->recipientObject ) )
-				// ... or the Message Wall extension is disabled and recipient's Talk Page does not exist
-				|| ( !$this->getMessageWallExtensionEnabled() && !$this->getRecipientTalkPage()->exists() )
-			) {
+			$wallExtensionEnableAndEmptyUserWall = $this->getMessageWallExtensionEnabled() && ! WallHelper::haveMsg( $this->recipientObject );
+			$wallExtensionDisabledAndNoTalkPage  = !$this->getMessageWallExtensionEnabled() && !$this->getRecipientTalkPage()->exists();
+
+			if ( $wallExtensionEnableAndEmptyUserWall || $wallExtensionDisabledAndNoTalkPage ) {
 				$this->info( "sending HAWelcome message for an anonymous contributor" );
-				$this->setMessage();
 				$this->sendMessage();
 			}
 
 		// registered users block
 		} else if ( $this->recipientId ) {
-			// If configured so, send a welcome message.
+
 			if ( $this->isFeatureFlagEnabled( 'message-user' ) ) {
 				$this->info( "sending HAWelcome message for registered contributor" );
-				$this->setMessage();
 				$this->sendMessage();
 			}
 
@@ -316,6 +313,7 @@ class HAWelcomeTask extends BaseTask {
 	 * @internal
 	 */
 	public function sendMessage() {
+		$this->setMessage();
 		if ( $this->getMessageWallExtensionEnabled() ) {
 			$this->postWallMessageToRecipient();
 		} else {

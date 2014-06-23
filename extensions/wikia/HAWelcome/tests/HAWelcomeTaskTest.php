@@ -31,7 +31,7 @@ class HAWelcomeTaskTest extends WikiaBaseTest {
 	}
 
 	public function testSendMessageWithWall() {
-		$task = $this->getMock( '\HAWelcomeTask', ['getMessageWallExtensionEnabled', 'postWallMessageToRecipient'], [], '', false );
+		$task = $this->getMock( '\HAWelcomeTask', ['getMessageWallExtensionEnabled', 'postWallMessageToRecipient', 'setMessage'], [], '', false );
 
 		$task->expects( $this->atLeastOnce() )
 			->method( 'getMessageWallExtensionEnabled' )
@@ -39,13 +39,17 @@ class HAWelcomeTaskTest extends WikiaBaseTest {
 
 		$task->expects( $this->atLeastOnce() )
 			->method( 'postWallMessageToRecipient' )
-			->will( $this->returnValue( null ) );
+			->will( $this->returnValue(null) );
+
+		$task->expects( $this->atLeastOnce() )
+			->method( 'setMessage' )
+			->will( $this->returnValue(null) );
 
 		$task->sendMessage();
 	}
 
 	public function testSendMessageWithTalkPage() {
-		$task = $this->getMock( '\HAWelcomeTask', ['getMessageWallExtensionEnabled', 'postTalkPageMessageToRecipient'], [], '', false );
+		$task = $this->getMock( '\HAWelcomeTask', ['getMessageWallExtensionEnabled', 'postTalkPageMessageToRecipient', 'setMessage'], [], '', false );
 
 		$task->expects( $this->atLeastOnce() )
 			->method( 'getMessageWallExtensionEnabled' )
@@ -53,7 +57,11 @@ class HAWelcomeTaskTest extends WikiaBaseTest {
 
 		$task->expects( $this->atLeastOnce() )
 			->method( 'postTalkPageMessageToRecipient' )
-			->will( $this->returnValue( null ) );
+			->will( $this->returnValue(null) );
+
+		$task->expects( $this->atLeastOnce() )
+			->method( 'setMessage' )
+			->will( $this->returnValue(null) );
 
 		$task->sendMessage();
 	}
