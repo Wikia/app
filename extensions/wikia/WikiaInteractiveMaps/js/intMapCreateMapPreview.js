@@ -100,7 +100,7 @@ define(
 			modal.deactivate();
 
 			$.nirvana.sendRequest({
-				controller: 'WikiaInteractiveMaps',
+				controller: 'WikiaInteractiveMapsMap',
 				method: 'createMap',
 				format: 'json',
 				data: tileSetData,

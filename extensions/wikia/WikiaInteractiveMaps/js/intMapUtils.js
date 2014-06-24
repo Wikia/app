@@ -186,6 +186,47 @@ define(
 		}
 
 		/**
+		 * @desc
+		 * @param {object} modal - modal component
+		 * @param {FormData} formData - FormData object with file input named wpUploadFile
+		 * @param {string} uploadType - upload type, like "map" or "marker"
+		 * @param {function=} successCallback - optional callback to call after successful request
+		 */
+		function upload(modal, formData, uploadType, successCallback) {
+			var uploadEntryPoint = '/wikia.php?controller=WikiaInteractiveMapsBase&method=upload&uploadType=' +
+				uploadType + '&format=json';
+
+			modal.deactivate();
+
+			$.ajax({
+				contentType: false,
+				data: formData,
+				processData: false,
+				type: 'POST',
+				url: w.wgScriptPath + uploadEntryPoint,
+				success: function(response) {
+					var data = response.results;
+
+					if (data && data.success) {
+						modal.trigger('cleanUpError');
+
+						if (typeof successCallback === 'function') {
+							successCallback(data);
+						}
+					} else {
+						modal.trigger('error', data.errors.pop());
+					}
+
+					modal.activate();
+				},
+				error: function(response) {
+					modal.trigger('error', response.results.error);
+					modal.activate();
+				}
+			});
+		}
+
+		/**
 		 * @desc checks if user is logged in
 		 * @returns {boolean}
 		 */
@@ -224,6 +265,7 @@ define(
 			setButtons: setButtons,
 			isEmpty: isEmpty,
 			serializeForm: serializeForm,
+			upload: upload,
 			isUserLoggedIn: isUserLoggedIn,
 			showForceLoginModal: showForceLoginModal,
 			refreshIfAfterForceLogin: refreshIfAfterForceLogin

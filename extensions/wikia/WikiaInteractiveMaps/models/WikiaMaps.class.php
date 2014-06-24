@@ -6,7 +6,7 @@ class WikiaMaps {
 	const ENTRY_POINT_MAP = 'map';
 	const ENTRY_POINT_RENDER = 'render';
 	const ENTRY_POINT_TILE_SET = 'tile_set';
-	const ENTRY_POINT_PIN_TYPE = 'poi_category';
+	const ENTRY_POINT_POI_CATEGORY = 'poi_category';
 	const ENTRY_POINT_POI = 'poi';
 
 	const STATUS_DONE = 0;
@@ -261,7 +261,7 @@ class WikiaMaps {
 	/**
 	 * Sends a request to delete a map instance
 	 *
-	 * @param array $data
+	 * @param integer $mapId
 	 *
 	 * @return bool
 	 */
@@ -302,16 +302,34 @@ class WikiaMaps {
 	}
 
 	/**
-	 * Sends a request to IntMap Service API to create a pin type with given parameters
+	 * Sends a request to IntMap Service API to get all parent POI categories
+	 */
+	public function getParentPoiCategories() {
+		$params = [
+			'parentsOnly' => 1 // it has to be like that: http://jonathonhill.net/2011-09-30/http_build_query-surprise/
+		];
+
+		$url = $this->buildUrl( [ self::ENTRY_POINT_POI_CATEGORY ], $params );
+
+		//TODO: consider caching the response
+		$response = $this->processServiceResponse(
+			Http::get( $url, 'default', $this->getHttpRequestOptions() )
+		);
+
+		return $response;
+	}
+
+	/**
+	 * Sends a request to IntMap Service API to create a POI category with given parameters
 	 *
-	 * @param Array $pinTypeData array with required parameters to service API
+	 * @param Array $poiCategoryData array with required parameters to service API
 	 *
 	 * @return Array
 	 */
-	public function savePinType( $pinTypeData ) {
+	public function savePoiCategory( $poiCategoryData ) {
 		return $this->postRequest(
-			$this->buildUrl( [ self::ENTRY_POINT_PIN_TYPE ] ),
-			$pinTypeData
+			$this->buildUrl( [ self::ENTRY_POINT_POI_CATEGORY ] ),
+			$poiCategoryData
 		);
 	}
 
@@ -384,8 +402,21 @@ class WikiaMaps {
 	 * @return integer
 	 */
 	public function getGeoMapTilesetId() {
-		if( isset( $this->config[ 'geo-tileset-id' ] ) ) {
+		if ( isset( $this->config[ 'geo-tileset-id' ] ) ) {
 			return $this->config[ 'geo-tileset-id' ];
+		}
+
+		return 0;
+	}
+
+	/**
+	 * Returns default parent_poi_category_id from config or 0
+	 *
+	 * @return integer
+	 */
+	public function getDefaultParentPoiCategory() {
+		if ( isset( $this->config[ 'default-parent-poi-category-id' ] ) ) {
+			return $this->config[ 'default-parent-poi-category-id' ];
 		}
 
 		return 0;
@@ -457,11 +488,10 @@ class WikiaMaps {
 			'noProxy' => true
 		];
 
-		if( !empty( $postData ) ) {
+		if ( !empty( $postData ) ) {
 			$options[ 'postData' ] = json_encode( $postData );
 		}
 
 		return $options;
 	}
 }
-

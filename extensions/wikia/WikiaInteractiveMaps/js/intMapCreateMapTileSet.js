@@ -74,8 +74,6 @@ define(
 				}
 			},
 			noTileSetMsg = $.msg('wikia-interactive-maps-create-map-no-tile-set-found'),
-			// image upload entry point
-			uploadEntryPoint = '/wikia.php?controller=WikiaInteractiveMaps&method=uploadMap&format=json',
 			// stack for holding choose tile set steps
 			stepsStack = [],
 			// cached selectors
@@ -226,7 +224,7 @@ define(
 			var dfd = new $.Deferred();
 
 			$.nirvana.sendRequest({
-				controller: 'WikiaInteractiveMaps',
+				controller: 'WikiaInteractiveMapsMap',
 				method: 'getTileSets',
 				format: 'json',
 				data: searchTerm ? {searchTerm: searchTerm} : null,
@@ -281,35 +279,15 @@ define(
 		}
 
 		/**
-		 * @desc uploads image to backend
+		 * @desc uploads tile set image to backend
 		 * @param {object} form - html form node element
 		 */
 		function uploadNewTileSetImage(form) {
-			modal.deactivate();
+			var formData = new FormData(form);
 
-			$.ajax({
-				contentType: false,
-				data: new FormData(form),
-				processData: false,
-				type: 'POST',
-				url: w.wgScriptPath + uploadEntryPoint,
-				success: function(response) {
-					var data = response.results;
-
-					if (data && data.success) {
-						modal.trigger('cleanUpError');
-						data.type = 'custom';
-						modal.trigger('previewTileSet', data);
-					} else {
-						modal.trigger('error', data.errors.pop());
-					}
-
-					modal.activate();
-				},
-				error: function(response) {
-					modal.trigger('error', response.results.error);
-					modal.activate();
-				}
+			utils.upload(modal, formData, 'map', function (data) {
+				data.type = 'custom';
+				modal.trigger('previewTileSet', data);
 			});
 		}
 
