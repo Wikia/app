@@ -193,7 +193,7 @@ define(
 		 * @param {function=} successCallback - optional callback to call after successful request
 		 */
 		function upload(modal, formData, uploadType, successCallback) {
-			var uploadEntryPoint = '/wikia.php?controller=WikiaInteractiveMaps&method=upload&uploadType=' +
+			var uploadEntryPoint = '/wikia.php?controller=WikiaInteractiveMapsBase&method=upload&uploadType=' +
 				uploadType + '&format=json';
 
 			$.ajax({

@@ -186,7 +186,7 @@ define(
 
 		function getTileSetThumbs(searchTerm) {
 			$.nirvana.sendRequest({
-				controller: 'WikiaInteractiveMaps',
+				controller: 'WikiaInteractiveMapsMap',
 				method: 'getTileSets',
 				format: 'json',
 				data: searchTerm ? {searchTerm: searchTerm} : null,

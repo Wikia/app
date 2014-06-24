@@ -1,17 +1,17 @@
 <?php
 
 class WikiaInteractiveMapsUploadImageFromFile extends UploadFromFile {
-	const PIN_TYPE_MARKER_IMAGE_MIN_SIZE = 60;
+	const POI_CATEGORY_MARKER_IMAGE_MIN_SIZE = 60;
 
-	const PIN_TYPE_MARKER_IMAGE_TOO_SMALL_ERROR = 30;
+	const POI_CATEGORY_MARKER_IMAGE_TOO_SMALL_ERROR = 30;
 
 	const UPLOAD_TYPE_MAP = 'map';
-	const UPLOAD_TYPE_PIN_TYPE_MARKER = 'marker';
+	const UPLOAD_TYPE_POI_CATEGORY_MARKER = 'marker';
 
 	private $allowedFileExtensions = [ 'png', 'gif', 'jpg', 'jpeg' ];
 
 	/**
-	 * Validates uploaded file. Currently it checks pin type marker dimensions.
+	 * Validates uploaded file. Currently it checks POI category marker dimensions.
 	 * @param String $uploadType
 	 * @return array
 	 */
@@ -27,8 +27,8 @@ class WikiaInteractiveMapsUploadImageFromFile extends UploadFromFile {
 			// check minimal dimensions for pin type marker
 			if ( $this->isUploadPoiCategory( $uploadType ) ) {
 				$imageSize = $this->getUploadedImageSize();
-				if ( $imageSize[ 0 ] < self::PIN_TYPE_MARKER_IMAGE_MIN_SIZE || $imageSize[ 1 ] < self::PIN_TYPE_MARKER_IMAGE_MIN_SIZE ) {
-					$details[ 'status' ] = self::PIN_TYPE_MARKER_IMAGE_TOO_SMALL_ERROR;
+				if ( $imageSize[ 0 ] < self::POI_CATEGORY_MARKER_IMAGE_MIN_SIZE || $imageSize[ 1 ] < self::POI_CATEGORY_MARKER_IMAGE_MIN_SIZE ) {
+					$details[ 'status' ] = self::POI_CATEGORY_MARKER_IMAGE_TOO_SMALL_ERROR;
 				}
 			}
 		}
@@ -72,7 +72,7 @@ class WikiaInteractiveMapsUploadImageFromFile extends UploadFromFile {
 	 * @return bool
 	 */
 	public function isUploadPoiCategory( $uploadType ) {
-		return $uploadType === self::UPLOAD_TYPE_PIN_TYPE_MARKER;
+		return $uploadType === self::UPLOAD_TYPE_POI_CATEGORY_MARKER;
 	}
 
 	/**
