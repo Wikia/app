@@ -27,7 +27,7 @@ class WikiaInteractiveMapsUploadImageFromFile extends UploadFromFile {
 			// check minimal dimensions for pin type marker
 			if ( $this->isUploadPoiCategory( $uploadType ) ) {
 				$imageSize = $this->getUploadedImageSize();
-				if ( $imageSize[ 0 ] < self::POI_CATEGORY_MARKER_IMAGE_MIN_SIZE || $imageSize[ 1 ] < self::PIN_TYPE_MARKER_IMAGE_MIN_SIZE ) {
+				if ( $imageSize[ 0 ] < self::POI_CATEGORY_MARKER_IMAGE_MIN_SIZE || $imageSize[ 1 ] < self::POI_CATEGORY_MARKER_IMAGE_MIN_SIZE ) {
 					$details[ 'status' ] = self::POI_CATEGORY_MARKER_IMAGE_TOO_SMALL_ERROR;
 				}
 			}
