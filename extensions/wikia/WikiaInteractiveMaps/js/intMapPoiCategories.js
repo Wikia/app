@@ -19,7 +19,26 @@ define('wikia.intMap.poiCategories',
 					size: 'medium',
 					content: '',
 					title: '',
-					buttons: []
+					buttons: [
+						{
+							vars: {
+								value: $.msg('wikia-interactive-maps-poi-categories-save'),
+								classes: ['normal', 'primary'],
+								data: {
+									key: 'event',
+									value: 'save'
+								}
+							}
+						}, {
+							vars: {
+								value: $.msg('wikia-interactive-maps-poi-categories-cancel'),
+								data: {
+									key: 'event',
+									value: 'close'
+								}
+							}
+						}
+					]
 				}
 			},
 
@@ -60,59 +79,17 @@ define('wikia.intMap.poiCategories',
 				previewMarkerImage: [
 					previewMarkerImage
 				],
-				savePoiCategories: [
+				save: [
 					savePoiCategories
 				],
 				poiCategoriesCreated: [
 					poiCategoriesCreated
 				]
 			},
-			modalButtons = [
-				{
-					vars: {
-						value: $.msg('wikia-interactive-maps-poi-categories-save'),
-						classes: ['normal', 'primary'],
-						data: {
-							key: 'event',
-							value: 'save'
-						}
-					}
-				}, {
-					vars: {
-						value: $.msg('wikia-interactive-maps-poi-categories-cancel'),
-						data: {
-							key: 'event',
-							value: 'close'
-						}
-					}
-				}
-			],
 			trigger,
 			params,
 			mapId,
-			mapUrl,
-			$form;
-
-		/**
-		 * @desc initializes POI categories step
-		 * @param {object} _modal
-		 * @param {string} _poiCategoriesTemplate
-		 * @param {string} _poiCategoryTemplate
-		 * @param {string} _parentPoiCategoryTemplate
-		 */
-		/*function init(_modal, _poiCategoriesTemplate, _poiCategoryTemplate, _parentPoiCategoryTemplate) {
-			modal = _modal;
-			poiCategoriesTemplate = _poiCategoriesTemplate;
-			poiCategoryTemplate = _poiCategoryTemplate;
-			parentPoiCategoryTemplate = _parentPoiCategoryTemplate;
-
-			utils.bindEvents(modal, events);
-
-			// TODO: figure out where is better place to place it and move it there
-			modal.$element.on('change', '.poi-category-marker-image-upload', function (event) {
-				modal.trigger('uploadMarkerImage', event.target);
-			});
-		}*/
+			mapUrl;
 
 		function init(templates, _params, _trigger) {
 			// set reference to params and trigger callback
@@ -128,19 +105,18 @@ define('wikia.intMap.poiCategories',
 
 			setUpParentPoiCategories()
 				//.then(retrievePoiCategoriesFromService)?
-				.then(function (data) {
-					data = data || {}; //TODO
-					setUpTemplateData(data);
-					mapUrl = data.mapUrl;
+				.then(setUpModal);
+		}
 
-					modalConfig.vars.content = utils.render(poiCategoriesTemplate, poiCategoriesTemplateData, {
-						poiCategory: poiCategoryTemplate,
-						parentPoiCategory: parentPoiCategoryTemplate
-					});
-					console.log(modalConfig.vars.content);
-				});
+		function setUpModal(data) {
+			data = data || {}; //TODO existing data from service
+			setUpTemplateData(data);
+			mapUrl = data.mapUrl;
 
-			//modalConfig.vars.content = utils.render(templates[0], extendTemplateData(templateData, params));
+			modalConfig.vars.content = utils.render(poiCategoriesTemplate, poiCategoriesTemplateData, {
+				poiCategory: poiCategoryTemplate,
+				parentPoiCategory: parentPoiCategoryTemplate
+			});
 
 			utils.createModal(modalConfig, function (_modal) {
 				// set reference to modal component
@@ -148,9 +124,15 @@ define('wikia.intMap.poiCategories',
 
 				// cache selectors
 				modal.$errorContainer = modal.$content.children('.error');
-				modal.$form = $('#intMapPoiCategories');
+				modal.$form = $('#intMapPoiCategoriesForm');
 
 				utils.bindEvents(modal, events);
+
+				// TODO: figure out where is better place to place it and move it there
+				modal.$element.on('change', '.poi-category-marker-image-upload', function (event) {
+					modal.trigger('uploadMarkerImage', event.target);
+				});
+
 				modal.show();
 			});
 		}
@@ -160,15 +142,13 @@ define('wikia.intMap.poiCategories',
 		 * @param {bool} isEditMode
 		 */
 		function setModalMode(isEditMode) {
-			var title = createPoiCategoriesTitle,
-				buttons = [].concat(modalButtons);
+			var title = createPoiCategoriesTitle;
 
 			if (isEditMode) {
 				title = editPoiCategoriesTitle;
 			}
 
 			modalConfig.vars.title = title;
-			modalConfig.vars.buttons = buttons;
 		}
 
 		/**
@@ -237,7 +217,7 @@ define('wikia.intMap.poiCategories',
 		 * @desc adds blank POI category input field
 		 */
 		function addPoiCategory() {
-			$form.append(utils.render(poiCategoryTemplate, extendPoiCategoryData({}), {
+			modal.$form.append(utils.render(poiCategoryTemplate, extendPoiCategoryData({}), {
 				parentPoiCategory: parentPoiCategoryTemplate
 			}));
 		}
@@ -330,8 +310,8 @@ define('wikia.intMap.poiCategories',
 				controller: 'WikiaInteractiveMapsPoi',
 				method: 'getParentPoiCategories',
 				format: 'json',
-				onErrorCallback: function(response) {
-					modal.trigger('error', response.results.content.message);
+				onErrorCallback: function (response) {
+					utils.handleNirvanaException(modal, response);
 				}
 			});
 		}
@@ -361,7 +341,7 @@ define('wikia.intMap.poiCategories',
 					}
 				},
 				onErrorCallback: function(response) {
-					modal.trigger('error', response.results.content.message);
+					utils.handleNirvanaException(modal, response);
 				}
 			});
 		}
@@ -370,7 +350,7 @@ define('wikia.intMap.poiCategories',
 		 * @desc handler method triggered by savePoiCategories event
 		 */
 		function savePoiCategories() {
-			sendPoiCategories(validate(utils.serializeForm($form)));
+			sendPoiCategories(validate(utils.serializeForm(modal.$form)));
 		}
 
 		/**

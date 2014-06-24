@@ -36,11 +36,13 @@ define(
 			events = {
 				error: [
 					function (message) {
-						showError(message);
+						utils.showError(modal, message);
 					}
 				],
 				cleanUpError: [
-					cleanUpError
+					function () {
+						utils.cleanUpError(modal);
+					}
 				],
 				beforeClose: [
 					utils.refreshIfAfterForceLogin
@@ -73,27 +75,6 @@ define(
 				modal.trigger('chooseTileSet');
 				modal.show();
 			});
-		}
-
-		/**
-		 * @desc displays error message
-		 * @param {string} message - error message
-		 */
-
-		function showError(message) {
-			modal.$errorContainer
-				.html(message)
-				.removeClass('hidden');
-		}
-
-		/**
-		 * @desc cleans up error message and hides error container
-		 */
-
-		function cleanUpError() {
-			modal.$errorContainer
-				.html('')
-				.addClass('hidden');
 		}
 
 		return {

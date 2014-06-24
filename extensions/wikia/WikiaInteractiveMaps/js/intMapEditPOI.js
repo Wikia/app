@@ -130,17 +130,6 @@ define('wikia.intMap.editPOI', ['jquery', 'wikia.intMap.utils'], function($, uti
 	}
 
 	/**
-	 * @desc shows error message
-	 * @param {string} error - error message
-	 * @todo this could be abstracted in future
-	 */
-	function showError(error) {
-		modal.$errorContainer
-			.html(error)
-			.removeClass('hidden');
-	}
-
-	/**
 	 * @desc calls function chain used to save POI
 	 */
 	function save() {
@@ -167,11 +156,11 @@ define('wikia.intMap.editPOI', ['jquery', 'wikia.intMap.utils'], function($, uti
 					trigger(false);
 					modal.trigger('close');
 				} else {
-					showError(data.content.message);
+					utils.showError(modal, data.content.message);
 				}
 			},
-			onErrorCallback: function(errResponse) {
-				showError(errResponse.results.content.message);
+			onErrorCallback: function(response) {
+				utils.handleNirvanaException(modal, response);
 			}
 		});
 	}
@@ -184,7 +173,7 @@ define('wikia.intMap.editPOI', ['jquery', 'wikia.intMap.utils'], function($, uti
 		var required = ['name', 'poi_category_id'],
 			valid = required.every(function(value) {
 				if (utils.isEmpty(data[value])) {
-					showError($.msg('wikia-interactive-maps-edit-poi-error-' + value.replace(/_/g, '-')));
+					utils.showError(modal, $.msg('wikia-interactive-maps-edit-poi-error-' + value.replace(/_/g, '-')));
 					return false;
 				}
 				return true;
@@ -215,11 +204,11 @@ define('wikia.intMap.editPOI', ['jquery', 'wikia.intMap.utils'], function($, uti
 					trigger(poiData);
 					modal.trigger('close');
 				} else {
-					showError(data.content.message);
+					utils.showError(modal, data.content.message);
 				}
 			},
-			onErrorCallback: function(errResponse) {
-				showError(errResponse.results.content.message);
+			onErrorCallback: function(response) {
+				utils.handleNirvanaException(modal, response);
 			}
 		});
 	}

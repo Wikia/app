@@ -133,13 +133,15 @@ define(
 					}
 				},
 				onErrorCallback: function(response) {
-					modal.trigger('error', response.results.content.message);
+					utils.handleNirvanaException(modal, response);
 				}
 			});
 		}
 
 		function showPoiCategoriesModal() {
+			modal.trigger('close');
 			triggerAction('poiCategories');
+			//TODO utils.loadModal() with idMap in params
 		}
 
 		/**
