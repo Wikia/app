@@ -8,25 +8,80 @@ class WikiaInteractiveMapsUploadImageFromFile extends UploadFromFile {
 	const UPLOAD_TYPE_MAP = 'map';
 	const UPLOAD_TYPE_POI_CATEGORY_MARKER = 'marker';
 
+	private $allowedFileExtensions = [ 'png', 'gif', 'jpg', 'jpeg' ];
+
 	/**
 	 * Validates uploaded file. Currently it checks POI category marker dimensions.
 	 * @param String $uploadType
 	 * @return array
 	 */
 	public function verifyUpload( $uploadType ) {
-		$details = parent::verifyUpload();
+		$details = $this->getUploadDetails();
 
-		if ( $details[ 'status' ] === self::OK ) {
-			// check minimal dimensions for POI category marker
-			if ( $uploadType === self::UPLOAD_TYPE_POI_CATEGORY_MARKER ) {
-				$imageSize = getimagesize( $this->getTempPath() );
-				if ( $imageSize[ 0 ] < self::POI_CATEGORY_MARKER_IMAGE_MIN_SIZE || $imageSize[ 1 ] < self::POI_CATEGORY_MARKER_IMAGE_MIN_SIZE ) {
+		// MOB-1886: check file type (just by extension)
+		if ( !$this->isValidFileExtension() ) {
+			$details[ 'status' ] = self::FILETYPE_BADTYPE;
+		}
+
+		if ( $this->isUploadSuccessful( $details[ 'status' ] ) ) {
+			// check minimal dimensions for pin type marker
+			if ( $this->isUploadPoiCategory( $uploadType ) ) {
+				$imageSize = $this->getUploadedImageSize();
+				if ( $imageSize[ 0 ] < self::POI_CATEGORY_MARKER_IMAGE_MIN_SIZE || $imageSize[ 1 ] < self::PIN_TYPE_MARKER_IMAGE_MIN_SIZE ) {
 					$details[ 'status' ] = self::POI_CATEGORY_MARKER_IMAGE_TOO_SMALL_ERROR;
 				}
 			}
 		}
 
 		return $details;
+	}
+
+	/**
+	 * Returns upload details
+	 *
+	 * @return array
+	 */
+	public function getUploadDetails() {
+		return parent::verifyUpload();
+	}
+
+	/**
+	 * Returns width and height of uploaded image
+	 *
+	 * @return array
+	 */
+	public function getUploadedImageSize() {
+		$imageSize = getimagesize( $this->getTempPath() );
+		return [ $imageSize[ 0 ], $imageSize[ 1 ] ];
+	}
+
+	/**
+	 * Returns true if the upload was successful
+	 *
+	 * @param $status
+	 * @return bool
+	 */
+	public function isUploadSuccessful( $status ) {
+		return $status === self::OK;
+	}
+
+	/**
+	 * Returns true if the upload type is POI category
+	 *
+	 * @param String $uploadType
+	 * @return bool
+	 */
+	public function isUploadPoiCategory( $uploadType ) {
+		return $uploadType === self::UPLOAD_TYPE_POI_CATEGORY_MARKER;
+	}
+
+	/**
+	 * Returns true if the file extension is valid
+	 *
+	 * @return bool
+	 */
+	public function isValidFileExtension() {
+		return $this->checkFileExtension( $this->mFinalExtension, $this->allowedFileExtensions );
 	}
 
 	/**
