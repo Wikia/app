@@ -39,7 +39,7 @@ require(['wikia.tracker'], function (Tracker) {
 				'.prod-thumb',
 				'.prod-name',
 				'.vendor-logo',
-				'.vendor-see',
+				'.vendor-button',
 				'.vendor-price'
 			];
 
@@ -56,8 +56,8 @@ require(['wikia.tracker'], function (Tracker) {
 				trackValue = $products.index();
 				productUrl = $(this).attr('href');
 
-				if ($(this).hasClass('vendor-see')) {
-					trackLabel = 'vendor-see';
+				if ($(this).hasClass('vendor-button')) {
+					trackLabel = 'vendor-button';
 				} else {
 					trackLabel = $(this).attr('class');
 				}
@@ -73,7 +73,7 @@ require(['wikia.tracker'], function (Tracker) {
 					label: trackLabel,
 					value: trackValue,
 					title: productName,
-					productUrl: productUrl
+					url: productUrl
 				});
 			});
 		}

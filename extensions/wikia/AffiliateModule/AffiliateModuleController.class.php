@@ -43,7 +43,7 @@ class AffiliateModuleController extends WikiaController {
 			],
 		];
 
-		$this->title = wfMessage( 'affiliate-module-title' )->escaped();
+		$this->moduleTitle = wfMessage( 'affiliate-module-title' )->escaped();
 		$this->products = $products;
 		$this->buttonLabel = wfMessage( 'affiliate-module-button-label' )->plain();
 		$this->className = ( $option == 'rail' ) ? 'module' : '';
