@@ -1,26 +1,26 @@
-<section id="affiliateModule" class="affiliate-module {{className}}">
+<section id="affiliate-module-{{option}}" class="affiliate-module {{className}}">
 	<h1>{{title}}</h1>
 	{{#products}}
 	<div class="affiliate">
-		<div class="prodimg">
-			<a target="_blank" href="{{url}}">
-				<img class="prodimg" alt="" src="{{thumbUrl}}">
+		<div>
+			<a class="prod-thumb" target="_blank" href="{{url}}">
+				<img alt="" src="{{thumbUrl}}">
 			</a>
 		</div>
 		<div class="placard">
-			<a target="_blank" href="{{url}}" title="{{name}}">{{name}}</a>
+			<a class="prod-name" target="_blank" href="{{url}}" title="{{name}}">{{name}}</a>
 		</div>
-		<div class="vendor">
-			<div class="vendorlogo">
-				<a class="amznlogo" target="_blank" href="{{url}}"></a>
-			</div>
-			<div class="vendorsee">
-				<a class="wikia-button vendorsee" target="_blank" href="{{url}}">{{buttonLabel}}</a>
-			</div>
-			<div class="vendorprice">
-				<a target="_blank" href="{{url}}">{{price}}</a>
-			</div>
-		</div>
+		<ul class="vendor">
+			<li>
+				<a class="vendor-logo" target="_blank" href="{{url}}"></a>
+			</li>
+			<li>
+				<a class="wikia-button vendor-see" target="_blank" href="{{url}}">{{buttonLabel}}</a>
+			</li>
+			<li>
+				<a class="vendor-price" target="_blank" href="{{url}}">{{price}}</a>
+			</li>
+		</ul>
 	</div>
 	{{/products}}
 </section>

@@ -12,7 +12,7 @@
 	}
 
 	.affiliate {
-		img.prodimg {
+		.prod-thumb img {
 			width: 70px;
 			height: 70px;
 			border: 1px solid #CCC;
@@ -37,7 +37,7 @@
 			padding: 0px 6px 0px 0px;
 			margin-bottom: 35px;
 		}
-		.vendorlogo {
+		.vendor-logo {
 			float: left;
 			background-image: url(/extensions/wikia/AffiliateModule/images/logo_amazon.png);
 			width: 88px;
@@ -45,11 +45,11 @@
 			padding-top: 7px;
 			padding-bottom: 3px;
 		}
-		.vendorsee {
+		.vendor-see {
 			float: right;
 			margin: 2px 0px 0px 10px;
 		}
-		.vendorprice {
+		.vendor-price {
 			float: right;
 			font-weight: bold;
 			font-size: 14px;
@@ -58,7 +58,7 @@
 	}
 }
 
-.WikiaMainContent .affiliate-module .affiliate {
+.WikiaMainContent .affiliate {
 	width: 32%;
 	padding: 8px 0px 4px 6px;
 	float: left;

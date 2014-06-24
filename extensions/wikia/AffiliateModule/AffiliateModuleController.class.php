@@ -14,8 +14,12 @@ class AffiliateModuleController extends WikiaController {
 	public function index() {
 		wfProfileIn( __METHOD__ );
 
-		$this->response->addAsset( 'affiliate_module_css' );
-		$this->response->addAsset( 'affiliate_module_js' );
+		$option = $this->request->getVal( 'option', 'bottom' );
+
+		if ( AffiliateModuleHelper::canLoadAssets( $option ) ) {
+			$this->response->addAsset( 'affiliate_module_css' );
+			$this->response->addAsset( 'affiliate_module_js' );
+		}
 
 		$products = [
 			[
@@ -42,7 +46,8 @@ class AffiliateModuleController extends WikiaController {
 		$this->title = wfMessage( 'affiliate-module-title' )->escaped();
 		$this->products = $products;
 		$this->buttonLabel = wfMessage( 'affiliate-module-button-label' )->plain();
-		$this->className = ( $this->request->getVal( 'option' ) == 'rail' ) ? 'module' : '';
+		$this->className = ( $option == 'rail' ) ? 'module' : '';
+		$this->option = $option;
 
 		wfProfileOut( __METHOD__ );
 	}
@@ -51,8 +56,10 @@ class AffiliateModuleController extends WikiaController {
 	 * Show affiliate module at the bottom of the page
 	 */
 	public function showModule() {
+		$option = 'bottom';
 		if ( AffiliateModuleHelper::canShowModule( 'bottomAds' ) ) {
 			$this->wg->HideBottomAds = true;
+			$option = 'bottomAds';
 		}
 
 		if ( !AffiliateModuleHelper::canShowModule() && empty( $this->wg->HideBottomAds ) ) {
@@ -60,6 +67,7 @@ class AffiliateModuleController extends WikiaController {
 			return true;
 		}
 
+		$this->request->setVal( 'option', $option );
 		$this->forward( 'AffiliateModule', 'index' );
 	}
 

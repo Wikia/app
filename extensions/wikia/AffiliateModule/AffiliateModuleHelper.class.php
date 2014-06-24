@@ -6,6 +6,19 @@
 class AffiliateModuleHelper extends WikiaModel {
 
 	/**
+	 * Load assets only once
+	 * @param string $option [rail/bottom/bottomAds]
+	 * @return boolean
+	 */
+	public static function canLoadAssets( $option = 'bottom' ) {
+		if ( array_search( true, F::app()->wg->AffiliateModuleOptions ) == $option ) {
+			return true;
+		}
+
+		return false;
+	}
+
+	/**
 	 * Show the Module only on File pages, Article pages, and Main pages
 	 * @param string $option [rail/bottom/bottomAds]
 	 * @return boolean
