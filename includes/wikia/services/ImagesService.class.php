@@ -154,7 +154,6 @@ class ImagesService extends Service {
 				$imageUrl = $imageUrl;
 			}
 
-
 			/**
 			 * url is virtual base for thumbnail, so
 			 *
@@ -293,6 +292,26 @@ class ImagesService extends Service {
 	public static function getCut( $imgWidth, $proportionWidth, $proportionHeight, $srcWidth, $srcHeight, $align = "center", $issvg = false, $deltaY=null ) {
 		$d = self::getCropDimensions($proportionWidth, $proportionHeight, $srcWidth, $srcHeight, $align, $issvg, $deltaY);
 		return "${imgWidth}px-" . implode(",", [$d["left"],$d['right'],$d['top'],$d['bottom']]);
+	}
+
+	public static function getCroppedThumbnailUrl($imageUrl, $desiredWidth, $desiredHeight, $srcWidth, $srcHeight, $newExtension = null){
+		if (!empty($imageUrl)) {
+			if ( !self::IsExternalThumbnailUrl($imageUrl) ) {
+				$imageUrl = str_replace('/images/', '/images/thumb/', $imageUrl);
+			}
+
+			$parts = explode( "/", $imageUrl );
+			$file = array_pop( $parts );
+
+			$cropPart = self::getCut($desiredWidth, $desiredWidth, $desiredHeight, $srcWidth, $srcHeight);
+
+			$imageUrl = sprintf( "%s/%s-%s", $imageUrl, $cropPart, $file );
+
+			if ( !empty($newExtension) ) {
+				$imageUrl = self::overrideThumbnailFormat($imageUrl, $newExtension);
+			}
+		}
+		return $imageUrl;
 	}
 
 	public static function getCropDimensions($baseWidth, $baseHeight, $srcWidth, $srcHeight, $align = "center", $issvg = false, $deltaY ) {

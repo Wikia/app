@@ -59,8 +59,28 @@ class BaseXWikiImageTest extends WikiaBaseTest {
 
 		$srcFile = GlobalFile::newFromText( "Wiki-wordmark.png", 831 );
 		$this->assertEquals( $t->uploadByUrl($srcFile->getUrl()), UPLOAD_ERR_OK );
+
 		// check uploaded file
 		$this->assertEquals( $t->uploadByUrl($t->getUrl()), UPLOAD_ERR_OK);
+	}
+
+	public function testUploadByUrl_uploadedImageCroppedUrl() {
+		$t = new TmpImageClass("name");
+
+		$targetWidth = 10;
+		$targetHeight = 10;
+
+		$srcFile = GlobalFile::newFromText( "Wiki-wordmark.png", 831 );
+		$this->assertEquals( $t->uploadByUrl($srcFile->getUrl()), UPLOAD_ERR_OK );
+		$url =$t->getCroppedThumbnailUrl($targetWidth, $targetHeight, ImagesService::EXT_JPEG);
+
+		$this->assertEquals( $t->uploadByUrl($url), UPLOAD_ERR_OK);
+
+		$this->assertEquals( $t->getImageDimensions()['width'], $targetWidth);
+		$this->assertEquals( $t->getImageDimensions()['height'], $targetHeight);
+
+
+		//test image dimensions
 	}
 
 	public function testUploadByUrl_checksThumbnailAccessibility() {

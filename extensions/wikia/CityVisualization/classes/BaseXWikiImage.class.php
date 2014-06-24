@@ -5,7 +5,7 @@ abstract class BaseXWikiImage {
 	const IMAGE_HOST = "http://images.wikia.com/";
 	const IMAGE_TYPE = "png"; //currently only storing images as PNG's is supported
 
-	protected $name, $fileNameSuffix;
+	protected $name, $fileNameSuffix, $height, $width;
 
 	abstract protected function getContainerDirectory();
 
@@ -20,8 +20,10 @@ abstract class BaseXWikiImage {
 		return [ 'image/jpeg', 'image/pjpeg', 'image/gif', 'image/png', 'image/x-png', 'image/jpg' ];
 	}
 
-	public function __construct( $name ) {
+	public function __construct( $name, $width=null, $height=null ) {
 		$this->name = $name;
+		$this->height = $height;
+		$this->width = $width;
 		$this->fileNameSuffix = "." . self::IMAGE_TYPE;
 	}
 
@@ -34,6 +36,14 @@ abstract class BaseXWikiImage {
 		return wfReplaceImageServer( $url );
 	}
 
+	public function getCroppedThumbnailUrl($desiredWidth, $desiredHeight, $newExtension=null) {
+		if (empty($this->width) or empty($this->height)){
+			$this->getImageDimensions();
+		}
+		$url = ImagesService::getCroppedThumbnailUrl($this->getThumbnailPurgeUrl(), $desiredWidth, $desiredHeight, $this->width, $this->height, $newExtension);
+		return wfReplaceImageServer( $url );
+	}
+
 	// urls used for purging cache
 	public function getPurgeUrl() {
 		return $this->getBaseUrl() . "/" . $this->getLocalPath();
@@ -41,6 +51,24 @@ abstract class BaseXWikiImage {
 
 	public function getThumbnailPurgeUrl() {
 		return $this->getBaseUrl() . "/" . $this->getLocalThumbnailPath();
+	}
+
+	public function getImageDimensions() {
+		if (empty($this->width) && empty($this->height)){
+			$this->provideImageDimensions();
+		}
+
+		return ["width" => $this->width, "height" => $this->height];
+	}
+
+	protected function provideImageDimensions($img = null) {
+		if (empty($img)){
+			$file = $this->getSwiftStorage()->read($this->getLocalPath());
+			$img = imagecreatefromstring($file);
+		}
+
+		$this->width = imagesx($img);
+		$this->height= imagesy($img);
 	}
 
 	protected function getBaseUrl() {
@@ -191,6 +219,8 @@ abstract class BaseXWikiImage {
 		if ( !imagepng( $imgObject, $targetFilePath ) ) {
 			$errorNo = UPLOAD_ERR_CANT_WRITE;
 		} else {
+			$this->provideImageDimensions($imgObject);
+
 			$errorNo = UPLOAD_ERR_OK;
 
 			/* remove tmp image */
