@@ -97,6 +97,8 @@ define(
 		 */
 
 		function createMap() {
+			modal.deactivate();
+
 			$.nirvana.sendRequest({
 				controller: 'WikiaInteractiveMaps',
 				method: 'createMap',
@@ -111,9 +113,12 @@ define(
 					} else {
 						modal.trigger('error', data.content.message);
 					}
+
+					modal.activate();
 				},
 				onErrorCallback: function(response) {
 					modal.trigger('error', response.results.content.message);
+					modal.activate();
 				}
 			});
 		}

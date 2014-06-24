@@ -44,7 +44,7 @@ define(
 					}
 				],
 				clearSearch: [
-					clearSearch
+					clearSearchFilter
 				],
 				selectTileSet: [
 					selectTileSet
@@ -73,7 +73,7 @@ define(
 					helper: loadTileSets
 				}
 			},
-			noTileSetMsg = $('wikia-interactive-maps-create-map-no-tile-set-found'),
+			noTileSetMsg = $.msg('wikia-interactive-maps-create-map-no-tile-set-found'),
 			// image upload entry point
 			uploadEntryPoint = '/wikia.php?controller=WikiaInteractiveMaps&method=uploadMap&format=json',
 			// stack for holding choose tile set steps
@@ -104,11 +104,9 @@ define(
 			// TODO: figure out where is better place to place it and move it there
 			modal.$element
 				.on('change', '#intMapUpload', function(event) {
-				uploadMapImage(event.target.parentNode);
+				uploadNewTileSetImage(event.target.parentNode);
 				})
-				.on('keypress', '#intMapTileSetSearch', function(event) {
-					searchTileSet(event.target.value);
-				});
+				.on('keyup', '#intMapTileSetSearch', $.debounce(250, searchForTileSets));
 
 		}
 
@@ -189,10 +187,10 @@ define(
 
 		/**
 		 * @desc handler function for search tile set input field
-		 * @param {string} keyword - search term
+		 * @param {Event} event - search term
 		 */
-		function searchTileSet(keyword) {
-			var trimmedKeyword = keyword.trim();
+		function searchForTileSets(event) {
+			var trimmedKeyword = event.target.value.trim();
 
 			if (trimmedKeyword.length >= 2) {
 				loadTileSets(trimmedKeyword);
@@ -203,27 +201,28 @@ define(
 		/**
 		 * @desc handler for clearing search filter - reverts to initial tile set list
 		 */
-		function clearSearch() {
-			loadTileSets();
-
-			$searchInput.val('');
+		function clearSearchFilter() {
 			$clearSearchBtn.addClass('hidden');
+			$searchInput.val('');
+
+			// load initial set of tile sets without keyword filter
+			loadTileSets();
 		}
 		/**
 		 * @desc sets up choose tile set step
 		 * @param {string=} keyword - search term
 		 */
 		function loadTileSets(keyword) {
-			getTileSetThumbs(keyword).done(function(tileSetData) {
-				updateTileSetList(renderTileSetThumbs(tileSetThumbTemplate, tileSetData));
+			getTileSets(keyword).done(function(tileSetData) {
+				updateTileSetList(renderTileSetsListMarkup(tileSetThumbTemplate, tileSetData));
 			});
 		}
 
 		/**
-		 * @desc loads tile sets thumbs
+		 * @desc sends request to backend for tile sets
 		 * @param {string=} searchTerm - search term, if specified loads tile set which name match this term
 		 */
-		function getTileSetThumbs(searchTerm) {
+		function getTileSets(searchTerm) {
 			var dfd = new $.Deferred();
 
 			$.nirvana.sendRequest({
@@ -256,7 +255,7 @@ define(
 		 * @param {array} tileSets - array of tile set objects
 		 * @returns {string} - HTML markup
 		 */
-		function renderTileSetThumbs(template, tileSets) {
+		function renderTileSetsListMarkup(template, tileSets) {
 			var html = '';
 
 			tileSets.forEach(function(tileSet) {
@@ -285,7 +284,9 @@ define(
 		 * @desc uploads image to backend
 		 * @param {object} form - html form node element
 		 */
-		function uploadMapImage(form) {
+		function uploadNewTileSetImage(form) {
+			modal.deactivate();
+
 			$.ajax({
 				contentType: false,
 				data: new FormData(form),
@@ -302,9 +303,12 @@ define(
 					} else {
 						modal.trigger('error', data.errors.pop());
 					}
+
+					modal.activate();
 				},
 				error: function(response) {
 					modal.trigger('error', response.results.error);
+					modal.activate();
 				}
 			});
 		}
