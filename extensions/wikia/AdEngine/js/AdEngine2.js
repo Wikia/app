@@ -36,7 +36,7 @@ define('ext.wikia.adEngine.adEngine', [
 
 			function success(extra) {
 				log(['success', slotname, extra], 'debug', logGroup);
-				aSlotTracker.track('success');
+				aSlotTracker.track('success', extra);
 			}
 
 			function hop(extra, hopTo) {
