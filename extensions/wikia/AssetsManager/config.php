@@ -1788,8 +1788,16 @@ $config['int_map_create_map_js'] = [
 		'//extensions/wikia/WikiaInteractiveMaps/js/intMapUtils.js',
 		'//extensions/wikia/WikiaInteractiveMaps/js/intMapCreateMapTileSet.js',
 		'//extensions/wikia/WikiaInteractiveMaps/js/intMapCreateMapPreview.js',
-		'//extensions/wikia/WikiaInteractiveMaps/js/intMapCreateMapPoiCategories.js',
 		'//extensions/wikia/WikiaInteractiveMaps/js/intMapCreateMapModal.js',
+	]
+];
+
+$config['int_map_poi_categories_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => ['oasis'],
+	'assets' => [
+		'//extensions/wikia/WikiaInteractiveMaps/js/intMapUtils.js',
+		'//extensions/wikia/WikiaInteractiveMaps/js/intMapPoiCategories.js',
 	]
 ];
 
