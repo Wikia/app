@@ -205,6 +205,7 @@ define(
 			// load initial set of tile sets without keyword filter
 			loadTileSets();
 		}
+		
 		/**
 		 * @desc sets up choose tile set step
 		 * @param {string=} keyword - search term
