@@ -49,6 +49,10 @@ $messages[ 'en' ] = [
 	'wikia-interactive-maps-create-map-delete-pin-type' => 'Delete',
 	'wikia-interactive-maps-create-map-pin-type-name-placeholder' => 'Pin Type Title',
 	'wikia-interactive-maps-create-map-pin-type-form-error' => 'Please fill all fields',
+	'wikia-interactive-maps-create-map-search-tile-set-placeholder' => 'Search',
+	'wikia-interactive-maps-create-map-upload-file' => 'Click to upload the custom template',
+	'wikia-interactive-maps-create-map-choose-tile-set-tip' => 'Select an existing map template or upload your own to get started.',
+	'wikia-interactive-maps-create-map-no-tile-set-found' => 'Sorry, no templates found.',
 
 	'wikia-interactive-maps-edit-poi-header-add-poi' => 'Add Pin Point',
 	'wikia-interactive-maps-edit-poi-header-edit-poi' => 'Edit Pin Point',
@@ -144,6 +148,10 @@ $messages[ 'qqq' ] = [
 	'wikia-interactive-maps-create-map-delete-pin-type' => 'Link title for deleting Pin Type in edit/create Pin types UI',
 	'wikia-interactive-maps-create-map-pin-type-name-placeholder' => 'Input placeholder for pin types title',
 	'wikia-interactive-maps-create-map-pin-type-form-error' => 'An error displayed to a user when pin type form is not valid',
+	'wikia-interactive-maps-create-map-search-tile-set-placeholder' => 'Input placeholder for search field for tile sets',
+	'wikia-interactive-maps-create-map-upload-file' => 'Link to trigger file upload for tile set',
+	'wikia-interactive-maps-create-map-choose-tile-set-tip' => 'Tip for the user with information to select an existing map template or upload his own to get started creating a new map',
+	'wikia-interactive-maps-create-map-no-tile-set-found' => 'Error message - no map templates found',
 
 	'wikia-interactive-maps-edit-poi-header-add-poi' => 'Modal header for add pin to map',
 	'wikia-interactive-maps-edit-poi-header-edit-poi' => 'Modal header for edit pin to map',
