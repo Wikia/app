@@ -105,6 +105,18 @@
 <?php } ?>
 <?= $bottomScripts ?>
 <?= $cssPrintLinks ?>
+<script type="text/javascript">
+	(function() {
+		function async_load(script_url){
+			var protocol = ('https:' == document.location.protocol ? 'https://' : 'http://');
+			var s = document.createElement('script'); s.src = protocol + script_url;
+			var x = document.getElementsByTagName('script')[0]; x.parentNode.insertBefore(s, x);
+		}
+		bm_website_code = '8F15E1A27FFC4DFA';
+		jQuery(document).ready(function(){async_load('asset.pagefair.com/measure.min.js')});
+		jQuery(document).ready(function(){async_load('asset.pagefair.net/ads.min.js')});
+	})();
+</script>
 
 </body>
 
