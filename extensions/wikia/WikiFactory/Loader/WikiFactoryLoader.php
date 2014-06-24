@@ -43,11 +43,10 @@ class WikiFactoryLoader {
 	public $mServerName, $mWikiID, $mCityHost, $mCityID, $mOldServerName;
 	public $mAlternativeDomainUsed, $mCityDB, $mDebug;
 	public $mDomain, $mVariables, $mIsWikiaActive, $mAlwaysFromDB;
-	public $mNoRedirect, $mTimestamp, $mAdCategory, $mCommandLine;
+	public $mTimestamp, $mCommandLine;
 	public $mExpireDomainCacheTimeout = 86400; #--- 24 hours
 	public $mExpireValuesCacheTimeout = 86400; #--- 24 hours
 	public $mSaveDefaults = false;
-	public $mBeta = false;
 	public $mCacheAnyway = array( "wgArticlePath" );
 	public $mCheckUpgrade = false;
 
@@ -127,8 +126,6 @@ class WikiFactoryLoader {
 		$this->mIsWikiaActive = 0;
 		$this->mAlwaysFromDB = 0;
 		$this->mWikiID = 0;
-		$this->mSkipFileCache = 1;
-		$this->mNoRedirect = false;
 		$this->mDBhandler  = null;
 		$this->mCityDB     = false;
 
@@ -163,15 +160,6 @@ class WikiFactoryLoader {
 					break;
 				}
 			}
-		}
-
-		/**
-		 * @author Krzysztof Krzyżaniak (eloy)
-		 *
-		 * handle beta.* domains
-		 */
-		if( getenv( "X-Beta") == 1 ) {
-			$this->mBeta = true;
 		}
 
 		WikiFactory::isUsed( true );
@@ -238,7 +226,7 @@ class WikiFactoryLoader {
 	public function execute() {
 
 		wfProfileIn(__METHOD__);
-		global $wgCityId, $wgDevelEnvironment, $wgWikiaAdvertiserCategory,
+		global $wgCityId, $wgDevelEnvironment,
 			$wgDBservers, $wgLBFactoryConf, $wgDBserver, $wgContLang;
 
 		/**
@@ -299,8 +287,7 @@ class WikiFactoryLoader {
 							"city_public",
 							"city_factory_timestamp",
 							"city_url",
-							"city_dbname",
-							"ad_cat"
+							"city_dbname"
 						),
 						($this->mCityID) ? array( "city_list.city_id" => $this->mCityID ) : array( "city_list.city_dbname" => $this->mCityDB ),
 						__METHOD__
@@ -316,13 +303,11 @@ class WikiFactoryLoader {
 					$this->mCityHost = $host;
 					$this->mCityDB   = $oRow->city_dbname;
 					$this->mTimestamp = $oRow->city_factory_timestamp;
-					$this->mAdCategory = empty( $oRow->ad_cat  ) ?  $oRow->ad_cat : "NONE";
 					$this->mDomain = array(
 						"id" => $oRow->city_id,
 						"host" => $host,
 						"active" => $oRow->city_public,
 						"time" =>  $oRow->city_factory_timestamp,
-						"ad" => $oRow->ad_cat,
 						"db" => $this->mCityDB
 					);
 				}
@@ -343,8 +328,7 @@ class WikiFactoryLoader {
 						"city_factory_timestamp",
 						"city_domain",
 						"city_url",
-						"city_dbname",
-						"ad_cat"
+						"city_dbname"
 					),
 					array(
 						"city_domains.city_id = city_list.city_id",
@@ -363,13 +347,11 @@ class WikiFactoryLoader {
 						$this->mCityHost = $host;
 						$this->mCityDB   = $oRow->city_dbname;
 						$this->mTimestamp = $oRow->city_factory_timestamp;
-						$this->mAdCategory = empty( $oRow->ad_cat  ) ?  $oRow->ad_cat : "NONE";
 						$this->mDomain = array(
 							"id"     => $oRow->city_id,
 							"host"   => $host,
 							"active" => $oRow->city_public,
 							"time"   => $oRow->city_factory_timestamp,
-							"ad"     => $oRow->ad_cat,
 							"db"     => $oRow->city_dbname
 						);
 					}
@@ -396,7 +378,6 @@ class WikiFactoryLoader {
 			$this->mCityHost = $this->mDomain["host"];
 			$this->mIsWikiaActive = $this->mDomain["active"];
 			$this->mTimestamp = isset( $this->mDomain["time"] ) ? $this->mDomain["time"] : null;
-			$this->mAdCategory = empty( $this->mDomain["ad"] ) ? "NONE" : $this->mDomain["ad"];
 			$this->mCityDB = isset( $this->mDomain[ "db" ] ) ? $this->mDomain[ "db" ] : false;
 		}
 
@@ -407,13 +388,6 @@ class WikiFactoryLoader {
 		 */
 		if ( $this->mWikiID == 177 ) {
 			$this->mSaveDefaults = true;
-		}
-
-		/**
-		 * @todo check if owikis.wikia.com should not be regex
-		 */
-		if( $this->mServerName == "owikis.wikia.com" || $this->mBeta == true ) {
-			$this->mNoRedirect = true;
 		}
 
 		/**
@@ -446,7 +420,7 @@ class WikiFactoryLoader {
 		 */
 		$cond2 = !empty( $host ) && $this->mAlternativeDomainUsed && ( $host != $this->mOldServerName );
 
-		if( ( $cond1 || $cond2 ) && empty( $wgDevelEnvironment ) && $this->mNoRedirect === false ) {
+		if( ( $cond1 || $cond2 ) && empty( $wgDevelEnvironment ) ) {
 			$url = wfGetCurrentUrl();
 			/**
 			 * now recombine url from parts
@@ -611,28 +585,12 @@ class WikiFactoryLoader {
 				$tUnserVal = unserialize( $oRow->cv_value );
 				restore_error_handler();
 
-				if( (!empty( $wgDevelEnvironment ) || $this->mNoRedirect ) && $oRow->cv_name === "wgServer" ) {
-					if( $this->mBeta == true ) {
-						/**
-						 * add beta to hostname (if not exists already)
-						 */
-						$url = parse_url( $tUnserVal );
-						if( $url && isset( $url[ "host" ] ) ) {
-							if( !preg_match( "/^beta\./", $url[ "host" ] ) ) {
-								$url[ "host" ] = "beta." . $url[ "host" ];
-								$tUnserVal = http_build_url( $tUnserVal, $url );
-								$this->mVariables[ $oRow->cv_name ] = $tUnserVal;
-								$this->debug( "Set value of wgServer to {$tUnserVal} for beta wikis" );
-							}
-						}
-					}
-					else {
-						/**
-						 * skip this variable
-						 */
-						unset($this->mVariables[ $oRow->cv_name ]);
-						$this->debug( "{$oRow->cv_name} with value {$tUnserVal} skipped" );
-					}
+				if( !empty( $wgDevelEnvironment ) && $oRow->cv_name === "wgServer" ) {
+					/**
+					 * skip this variable
+					 */
+					unset($this->mVariables[ $oRow->cv_name ]);
+					$this->debug( "{$oRow->cv_name} with value {$tUnserVal} skipped" );
 				}
 				else {
 					$this->mVariables[ $oRow->cv_name ] = $tUnserVal;
@@ -785,11 +743,6 @@ class WikiFactoryLoader {
 			}
 		}
 		$wgCityId = $this->mWikiID;
-
-		/**
-		 * set advertising category
-		 */
-		$wgWikiaAdvertiserCategory = $this->mAdCategory;
 
 		/**
 		 * set/replace $wgDBname in $wgDBservers
