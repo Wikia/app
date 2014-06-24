@@ -20,7 +20,6 @@ class HAWelcomeHooks {
 				$task->wikiId( $wgCityId );
 				$task->title( $oTitle ); // use $this->title in the job
 				$task->queue();
-				\Wikia\Logger\WikiaLogger::instance()->error(__METHOD__ . ' HAWelcome modern sumbitted!!');
 			} else {
 				$oJob = new HAWelcomeJob( $oTitle, $aParams );
 				$oJob->insert();
@@ -117,7 +116,7 @@ class HAWelcomeHooks {
 				$founderId = isset( $wiki->city_founding_user ) ? intval( $wiki->city_founding_user ) : false;
 				// Abort if the contributor is a member of a group that should not be welcomed or the default welcomer
 				// Also, don't welcome founders as they are welcomed separately
-				if ($wgUser->isAllowed( 'welcomeexempt' ) ||
+				if ( $wgUser->isAllowed( 'welcomeexempt' ) ||
 					$wgUser->getName() == HAWelcomeTask::DEFAULT_WELCOMER ||
 					$founderId === intval( $oRevision->getRawUser() )
 				) {
@@ -188,7 +187,6 @@ class HAWelcomeHooks {
 			}
 
 			self::queueHAWelcomeTask( $wgCityId, $oTitle, $aParams );
-			\Wikia\Logger\WikiaLogger::instance()->error(__METHOD__ . ' HAWelcome sumbitted!!');
 		}
 
 		if ( !empty( $wgHAWelcomeNotices ) ) {
