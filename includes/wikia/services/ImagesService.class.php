@@ -290,7 +290,12 @@ class ImagesService extends Service {
 		return $result;
 	}
 
-	public static function getCut( $dis, $proportionWidth, $proportionHeight, $srcWidth, $srcHeight, $align = "center", $deltaY=null, $issvg = false  ) {
+	public static function getCut( $imgWidth, $proportionWidth, $proportionHeight, $srcWidth, $srcHeight, $align = "center", $issvg = false, $deltaY=null ) {
+		$d = self::getCropDimensions($proportionWidth, $proportionHeight, $srcWidth, $srcHeight, $align, $issvg, $deltaY);
+		return "${imgWidth}px-" . implode(",", [$d["left"],$d['right'],$d['top'],$d['bottom']]);
+	}
+
+	public static function getCropDimensions($baseWidth, $baseHeight, $srcWidth, $srcHeight, $align = "center", $issvg = false, $deltaY ) {
 		//rescale of png always use width 512;
 		if( $issvg ) {
 			$srcHeight = round( ( 512 * $srcHeight) / $srcWidth );
@@ -301,20 +306,20 @@ class ImagesService extends Service {
 		$srcWidth = max(1, intval($srcWidth));
 		$srcHeight = max(1, intval($srcHeight));
 		// in case we're missing some proportions, maintain the original aspect ratio
-		if (empty($proportionHeight) && !empty($proportionWidth)) {
-			$proportionHeight = (float)$srcHeight * $proportionWidth / $srcWidth;
+		if (empty($baseHeight) && !empty($baseWidth)) {
+			$baseHeight = (float)$srcHeight * $baseWidth / $srcWidth;
 		}
-		if (empty($proportionWidth) && !empty($proportionHeight)) {
-			$proportionWidth = (float)$srcWidth * $proportionHeight / $srcHeight;
+		if (empty($baseWidth) && !empty($baseHeight)) {
+			$baseWidth = (float)$srcWidth * $baseHeight / $srcHeight;
 		}
 
-		$pHeight = round( ( $srcWidth ) * ( $proportionHeight / $proportionWidth ) );
+		$pHeight = round( ( $srcWidth ) * ( $baseHeight / $baseWidth ) );
 
 		$top = 0;
 		$bottom = 0;
 		$left = 0;
 		if( $pHeight >= $srcHeight ) {
-			$pWidth =  round( $srcHeight * ( $proportionWidth / $proportionHeight ) );
+			$pWidth =  round( $srcHeight * ( $baseWidth / $baseHeight ) );
 
 			if ( $align == "center" ) {
 				$left = round( $srcWidth / 2 - $pWidth / 2 );
@@ -327,7 +332,7 @@ class ImagesService extends Service {
 		} else {
 			if ( $align == "center" ) {
 				if (empty($deltaY)){
-					$deltaY = ( $proportionWidth / $proportionHeight - 1 ) * 0.1;
+					$deltaY = ( $baseWidth / $baseHeight - 1 ) * 0.1;
 				}
 				$deltaYpx = round( $srcHeight * $deltaY );
 				$bottom = $pHeight + $deltaYpx;
@@ -345,7 +350,8 @@ class ImagesService extends Service {
 			$left = 0;
 			$right = $srcWidth;
 		}
-		return "{$dis->width}px-$left,$right,$top,$bottom";
+
+		return ["left" => $left, "right" => $right, "top" => $top, "bottom" => $bottom];
 	}
 
 	/**
