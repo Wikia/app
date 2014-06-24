@@ -72,7 +72,6 @@ class HAWelcomeHooks {
 			// Restore the original error reporting level.
 			error_reporting( $iErrorReporting );
 			wfProfileOut( __METHOD__ );
-			die('disabled 1');
 			return true;
 		}
 		/**
@@ -90,14 +89,13 @@ class HAWelcomeHooks {
 			 */
 			global $wgMemc;
 			// Abort if the contributor has been welcomed recently.
-			if ( false && $wgMemc->get( wfMemcKey( 'HAWelcome-isPosted', $oRevision->getRawUserText() ) ) ) {
+			if ( $wgMemc->get( wfMemcKey( 'HAWelcome-isPosted', $oRevision->getRawUserText() ) ) ) {
 				if ( !empty( $wgHAWelcomeNotices ) ) {
 					trigger_error( sprintf( '%s Done. The contributor has been welcomed recently.', __METHOD__ ) , E_USER_NOTICE );
 				}
 				// Restore the original error reporting level.
 				error_reporting( $iErrorReporting );
 				wfProfileOut( __METHOD__ );
-			die('disabled 2');
 				return true;
 			}
 			// Handle an edit made by an anonymous contributor.
@@ -119,11 +117,9 @@ class HAWelcomeHooks {
 				$founderId = isset( $wiki->city_founding_user ) ? intval( $wiki->city_founding_user ) : false;
 				// Abort if the contributor is a member of a group that should not be welcomed or the default welcomer
 				// Also, don't welcome founders as they are welcomed separately
-				if (
-					false
-					 //$wgUser->isAllowed( 'welcomeexempt' ) ||
-					//$wgUser->getName() == HAWelcomeTask::DEFAULT_WELCOMER ||
-					//$founderId === intval( $oRevision->getRawUser() )
+				if ($wgUser->isAllowed( 'welcomeexempt' ) ||
+					$wgUser->getName() == HAWelcomeTask::DEFAULT_WELCOMER ||
+					$founderId === intval( $oRevision->getRawUser() )
 				) {
 					if ( !empty( $wgHAWelcomeNotices ) ) {
 						trigger_error( sprintf( '%s Done. The registered contributor is a bot, a staff member, the wiki founder or the default welcomer.', __METHOD__ ) , E_USER_NOTICE );
@@ -134,7 +130,7 @@ class HAWelcomeHooks {
 					return true;
 				}
 				// Abort if the registered contributor has made edits before this one.
-				if ( false && 1 < $wgUser->getEditCountLocal() ) {
+				if ( 1 < $wgUser->getEditCountLocal() ) {
 					// Check the extension settings...
 					/** @type String The user to become the welcomer. */
 					$sSender = trim( wfMessage( 'welcome-user' )->inContentLanguage()->text() );
@@ -158,7 +154,6 @@ class HAWelcomeHooks {
 					// Restore the original error reporting level.
 					error_reporting( $iErrorReporting );
 					wfProfileOut( __METHOD__ );
-			die('disabled 4');
 					return true;
 				}
 			}
