@@ -152,11 +152,11 @@ $messages[ 'qqq' ] = [
 	'wikia-interactive-maps-create-map-poi-category-name-placeholder' => 'Input placeholder for pin types title',
 	'wikia-interactive-maps-create-map-poi-category-select-category' => 'Label for no category selected',
 	'wikia-interactive-maps-create-map-poi-category-form-error' => 'An error displayed to a user when pin type form is not valid',
-	'wikia-interactive-maps-create-map-search-tile-set-placeholder' => 'Input placeholder for search field for tile sets',
+	'wikia-interactive-maps-create-map-search-tile-set-placeholder' => 'Input placeholder for search field for map templates',
 	'wikia-interactive-maps-create-map-upload-file' => 'Link to trigger file upload for tile set',
 	'wikia-interactive-maps-create-map-choose-tile-set-tip' => 'Tip for the user with information to select an existing map template or upload his own to get started creating a new map',
 	'wikia-interactive-maps-create-map-no-tile-set-found' => 'Error message - no map templates found',
-	'wikia-interactive-maps-create-map-clear-tile-set-search' => 'Button to clear search filter for tile set and revert to initial tile set list',
+	'wikia-interactive-maps-create-map-clear-tile-set-search' => "Button to clear search filter for map templates and revert to initial map templates' list",
 
 	'wikia-interactive-maps-edit-poi-header-add-poi' => 'Modal header for add pin to map',
 	'wikia-interactive-maps-edit-poi-header-edit-poi' => 'Modal header for edit pin to map',
