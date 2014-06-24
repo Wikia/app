@@ -1,7 +1,12 @@
+@import "skins/oasis/css/core/color";
 
 .intMapModal {
 	.hidden {
 		display: none !important;
+	}
+
+	.map-modal-error {
+		margin-bottom: 20px;
 	}
 
 	.WikiaForm .input-group {
@@ -20,6 +25,54 @@
 		textarea {
 			height: 50px;
 			resize: none;
+		}
+
+		.tile-set-search {
+			float: right;
+			width: 252px;
+		}
+	}
+
+	.int-map-browse-tile-set {
+		ul {
+			clear: both;
+			font-weight: bold;
+			margin-left: -10px;
+			margin-right: -10px;
+			padding-top: 10px;
+			text-align: center;
+		}
+		li {
+			box-sizing: border-box;
+			float: left;
+			padding: 10px;
+			width: 20%;
+		}
+	}
+
+	.upload-link {
+		border: 1px dashed $color-page-border-subtle;
+		box-sizing: border-box;
+		display: block;
+		height: 116px;
+		padding: 60px 10px 10px;
+	}
+
+	.tip {
+		margin-bottom: 20px;
+	}
+
+	.tile-set-thumb {
+
+		span {
+			color: $color-text;
+			display: block;
+			overflow: hidden;
+			padding-top: 10px;
+			text-decoration: none;
+			text-overflow: ellipsis;
+			width: 100%;
+			white-space: nowrap;
 		}
 	}
 }
