@@ -3,12 +3,18 @@
 		<h3><a href="" title="{{name}}" id="intMap{{type}}" class="int-map-{{type}} modalEvent" data-event="intMap{{type}}">{{name}}</a></h3>
 	{{/mapType}}
 </div>
+<div id="intMapBrowse" class="int-map-browse-tile-set WikiaForm">
+	<p class="tip">{{chooseTileSetTip}}</p>
+	<div class="input-group">
+		<input type="text" id="intMapTileSetSearch" class="tile-set-search" placeholder="{{searchPlaceholder}}">
+	</div>
+	<ul>
+		<li>
+			<form enctype="multipart/form-data">
+				<input type="file" id="intMapUpload" class="hidden" name="wpUploadFile">
+				<a href="" title="{{uploadLink}}" id="intMapUploadLink" class="upload-link modalEvent" data-event="uploadTileSetImage">{{uploadLink}}</a>
+			</form>
+		</li>
+	</ul>
+</div>
 
-<ul id="intMapBrowse" class="int-map-browse-tile-set">
-	<li>
-		<form enctype="multipart/form-data">
-			<input type="file" id="intMapUpload" name="wpUploadFile">
-			<a href="" title="{{upload-link}}" id="intMapUploadLink">{{upload-link}}</a>
-		</form>
-	</li>
-</ul>
