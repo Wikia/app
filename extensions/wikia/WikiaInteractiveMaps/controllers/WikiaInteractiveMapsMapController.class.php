@@ -15,7 +15,7 @@ class WikiaInteractiveMapsMapController extends WikiaInteractiveMapsBaseControll
 		$searchTerm = $this->request->getVal( 'searchTerm', null );
 
 		if ( !is_null( $searchTerm ) ) {
-			$params[ 'searchTerm' ] = $searchTerm;
+			$params[ 'search' ] = $searchTerm;
 		}
 
 		$this->response->setVal( 'results', $this->mapsModel->getTileSets( $params ) );

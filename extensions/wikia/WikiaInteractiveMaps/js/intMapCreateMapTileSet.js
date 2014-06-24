@@ -227,6 +227,7 @@ define(
 				controller: 'WikiaInteractiveMapsMap',
 				method: 'getTileSets',
 				format: 'json',
+				type: 'GET',
 				data: searchTerm ? {searchTerm: searchTerm} : null,
 				callback: function(response) {
 					var data = response.results;
