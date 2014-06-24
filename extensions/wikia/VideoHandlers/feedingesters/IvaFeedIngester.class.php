@@ -685,7 +685,7 @@ class IvaFeedIngester extends VideoFeedIngester {
 		}
 
 		// skip videos released before our minimum release date
-		if ( $program['FirstReleasedYear'] < self::MIN_RELEASE_YEAR ) {
+		if ( !empty( $program['FirstReleasedYear'] ) && $program['FirstReleasedYear'] < self::MIN_RELEASE_YEAR ) {
 			$msg = "Skip: {$clipData['series']} (Publishedid:{$program['Publishedid']}) release date ";
 			$msg .= "{$program['FirstReleasedYear']} before ".self::MIN_RELEASE_YEAR."\n";
 			$this->videoSkipped( $msg );
