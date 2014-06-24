@@ -1,14 +1,17 @@
 <div id="intMapChooseType" class="int-map-choose-tile-set-type">
 	{{#mapType}}
-		<h3><a href="" title="{{name}}" id="intMap{{type}}" class="int-map-{{type}} modalEvent" data-event="intMap{{type}}">{{name}}</a></h3>
+		<h3><a href="" title="{{name}}" class="int-map-{{type}} modalEvent" data-event="{{event}}"
+			data-type="{{type}}">{{name}}</a></h3>
 	{{/mapType}}
 </div>
 <div id="intMapBrowse" class="int-map-browse-tile-set WikiaForm">
 	<p class="tip">{{chooseTileSetTip}}</p>
 	<div class="input-group">
 		<input type="text" id="intMapTileSetSearch" class="tile-set-search" placeholder="{{searchPlaceholder}}">
+        <button class="clear-search secondary hidden" id="intMapClearSearch" data-event="clearSearch">{{clearSearch}}</button>
+
 	</div>
-	<ul>
+	<ul id="intMapTileSetsList">
 		<li>
 			<form enctype="multipart/form-data">
 				<input type="file" id="intMapUpload" class="hidden" name="wpUploadFile">

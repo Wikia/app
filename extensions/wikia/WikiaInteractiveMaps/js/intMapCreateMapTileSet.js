@@ -17,53 +17,46 @@ define(
 			templateData = {
 				mapType: [
 					{
-						type: 'Geo',
-						name: $.msg('wikia-interactive-maps-create-map-choose-type-geo')
+						type: 'geo',
+						name: $.msg('wikia-interactive-maps-create-map-choose-type-geo'),
+						event: 'selectTileSet'
 					},
 					{
-						type: 'Custom',
-						name: $.msg('wikia-interactive-maps-create-map-choose-type-custom')
+						type: 'custom',
+						name: $.msg('wikia-interactive-maps-create-map-choose-type-custom'),
+						event: 'browseTileSets'
 					}
 				],
 				chooseTileSetTip: $.msg('wikia-interactive-maps-create-map-choose-tile-set-tip'),
 				browse: $.msg('wikia-interactive-maps-create-map-browse-tile-set'),
 				uploadLink: $.msg('wikia-interactive-maps-create-map-upload-file'),
-				searchPlaceholder: $.msg('wikia-interactive-maps-create-map-search-tile-set-placeholder')
+				searchPlaceholder: $.msg('wikia-interactive-maps-create-map-search-tile-set-placeholder'),
+				clearSearch: $.msg('wikia-interactive-maps-create-map-clear-tile-set-search')
 			},
 			//modal events
 			events = {
-				intMapGeo: [
+				chooseTileSet: [
+					chooseTileSet
+				],
+				browseTileSets: [
 					function() {
-						modal.trigger('previewTileSet', {
-							type: 'geo'
-						});
+						showStep('browseTileSet');
 					}
 				],
-				intMapCustom: [
+				clearSearch: [
+					clearSearch
+				],
+				selectTileSet: [
+					selectTileSet
+				],
+				uploadTileSetImage: [
 					function() {
-						showStep('chooseTileSet');
+						$uploadInput
+							.click()
 					}
 				],
 				previousStep: [
 					previousStep
-				],
-				chooseTileSet: [
-					chooseTileSet
-				],
-				selectTileSet: [
-					function(event) {
-						modal.trigger('previewTileSet', {
-							type: 'custom',
-							tileSetId: $(event.currentTarget).data('id')
-						});
-					}
-				],
-				uploadTileSetImage: [
-					function() {
-						console.log($uploadInput);
-						$uploadInput
-							.click()
-					}
 				]
 			},
 			// steps for choose tile set
@@ -72,12 +65,12 @@ define(
 					id: '#intMapChooseType',
 					buttons: {}
 				},
-				chooseTileSet: {
+				browseTileSet: {
 					id: '#intMapBrowse',
 					buttons: {
 						'#intMapBack': 'previousStep'
 					},
-					helper: chooseCustomTileSet
+					helper: loadTileSets
 				}
 			},
 			noTileSetMsg = $('wikia-interactive-maps-create-map-no-tile-set-found'),
@@ -88,7 +81,9 @@ define(
 			// cached selectors
 			$sections,
 			$tileSetsContainer,
-			$uploadInput;
+			$uploadInput,
+			$clearSearchBtn,
+			$searchInput;
 
 		/**
 		 * @desc initializes and configures UI
@@ -125,8 +120,10 @@ define(
 
 			// cache selectors
 			$sections = modal.$innerContent.children();
-			$tileSetsContainer = modal.$innerContent.find('#intMapBrowse ul');
-			$uploadInput =  modal.$innerContent.find('#intMapUpload');
+			$tileSetsContainer = $('#intMapTileSetsList');
+			$uploadInput =  $('#intMapUpload');
+			$clearSearchBtn = $('#intMapClearSearch');
+			$searchInput = $('#intMapTileSetSearch');
 
 			showStep(stepsStack.pop());
 		}
@@ -178,6 +175,19 @@ define(
 		}
 
 		/**
+		 * @desc handler function for selecting tile set
+		 * @param {Event} event
+		 */
+		function selectTileSet(event) {
+			var $target = $(event.currentTarget);
+
+			modal.trigger('previewTileSet', {
+				type: $target.data('type'),
+				tileSetId: $target.data('id')
+			});
+		}
+
+		/**
 		 * @desc handler function for search tile set input field
 		 * @param {string} keyword - search term
 		 */
@@ -185,15 +195,25 @@ define(
 			var trimmedKeyword = keyword.trim();
 
 			if (trimmedKeyword.length >= 2) {
-				chooseCustomTileSet(trimmedKeyword);
+				loadTileSets(trimmedKeyword);
+				$clearSearchBtn.removeClass('hidden');
 			}
 		}
 
 		/**
+		 * @desc handler for clearing search filter - reverts to initial tile set list
+		 */
+		function clearSearch() {
+			loadTileSets();
+
+			$searchInput.val('');
+			$clearSearchBtn.addClass('hidden');
+		}
+		/**
 		 * @desc sets up choose tile set step
 		 * @param {string=} keyword - search term
 		 */
-		function chooseCustomTileSet(keyword) {
+		function loadTileSets(keyword) {
 			getTileSetThumbs(keyword).done(function(tileSetData) {
 				updateTileSetList(renderTileSetThumbs(tileSetThumbTemplate, tileSetData));
 			});

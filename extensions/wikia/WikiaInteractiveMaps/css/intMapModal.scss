@@ -62,17 +62,31 @@
 		margin-bottom: 20px;
 	}
 
-	.tile-set-thumb {
+	.clear-search {
+		float: right;
+		margin-right: 10px;
+		margin-top: 7px;
+	}
 
-		span {
-			color: $color-text;
+	.tile-set-thumb {
+		span,
+		strong {
 			display: block;
+		}
+
+		strong {
+			color: $color-text;
 			overflow: hidden;
 			padding-top: 10px;
-			text-decoration: none;
 			text-overflow: ellipsis;
 			width: 100%;
 			white-space: nowrap;
+		}
+
+		span {
+			color: $color-alternate-text;
+			font-weight: normal;
+			padding-top: 5px;
 		}
 	}
 }

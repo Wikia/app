@@ -53,6 +53,7 @@ $messages[ 'en' ] = [
 	'wikia-interactive-maps-create-map-upload-file' => 'Click to upload the custom template',
 	'wikia-interactive-maps-create-map-choose-tile-set-tip' => 'Select an existing map template or upload your own to get started.',
 	'wikia-interactive-maps-create-map-no-tile-set-found' => 'Sorry, no templates found.',
+	'wikia-interactive-maps-create-map-clear-tile-set-search' => 'Clear search filter',
 
 	'wikia-interactive-maps-edit-poi-header-add-poi' => 'Add Pin Point',
 	'wikia-interactive-maps-edit-poi-header-edit-poi' => 'Edit Pin Point',
@@ -152,6 +153,7 @@ $messages[ 'qqq' ] = [
 	'wikia-interactive-maps-create-map-upload-file' => 'Link to trigger file upload for tile set',
 	'wikia-interactive-maps-create-map-choose-tile-set-tip' => 'Tip for the user with information to select an existing map template or upload his own to get started creating a new map',
 	'wikia-interactive-maps-create-map-no-tile-set-found' => 'Error message - no map templates found',
+	'wikia-interactive-maps-create-map-clear-tile-set-search' => 'Button to clear search filter for tile set and revert to initial tile set list',
 
 	'wikia-interactive-maps-edit-poi-header-add-poi' => 'Modal header for add pin to map',
 	'wikia-interactive-maps-edit-poi-header-edit-poi' => 'Modal header for edit pin to map',
