@@ -73,9 +73,8 @@ class HAWelcomeTask extends BaseTask {
 	 */
 
 	/**
-	 * The main method called by the job executor.
+	 * Send the welcome message
 	 *
-	 * The heavy code goes here.
 	 *
 	 * @param array params
 	 * @return Boolean Indicated whether the job has been completed successfully.
@@ -92,36 +91,25 @@ class HAWelcomeTask extends BaseTask {
 
 		$this->captureAndReplaceGlobalWgUserWithWelcomeUser();
 
-		// Create objects related to the recipient of the welcome message.
-		$this->recipientObject = User::newFromId( $this->recipientId );
+		$this->setRecipient();
 
-		// User objects for anonymous contributors don't have the name set.
-		if ( ! $this->recipientId ) {
-			$this->recipientObject->setName( $this->recipientName );
-		}
-
-		// Refresh the sender data.
 		$this->setSender();
 
-		// If possible, mark edits as if they were made by a bot.
-		if ( $this->senderObject->isAllowed( 'bot' ) || '@bot' == trim( wfMessage( 'welcome-bot' )->inContentLanguage()->text() ) ) {
+		if ( $this->senderIsBotAllowed() ) {
 			$this->integerFlags = EDIT_FORCE_BOT;
 		}
 
 		$anonymousUserEdit  = !$this->recipientId && $this->isFeatureFlagEnabled( 'message-anon' );
 		$registeredUserEdit = $this->recipientId;
 		if ( $anonymousUserEdit ) {
-
-			$wallExtensionEnableAndEmptyUserWall = $this->getMessageWallExtensionEnabled() && ! WallHelper::haveMsg( $this->recipientObject );
+			$wallExtensionEnableAndEmptyUserWall = $this->getMessageWallExtensionEnabled() && $this->recipientWallIsEmpty();
 			$wallExtensionDisabledAndNoTalkPage  = !$this->getMessageWallExtensionEnabled() && !$this->getRecipientTalkPage()->exists();
 
 			if ( $wallExtensionEnableAndEmptyUserWall || $wallExtensionDisabledAndNoTalkPage ) {
 				$this->info( "sending HAWelcome message for an anonymous contributor" );
 				$this->sendMessage();
 			}
-
 		} else if ( $registeredUserEdit ) {
-
 			if ( $this->isFeatureFlagEnabled( 'message-user' ) ) {
 				$this->info( "sending HAWelcome message for registered contributor" );
 				$this->sendMessage();
@@ -130,7 +118,6 @@ class HAWelcomeTask extends BaseTask {
 			if ( $this->isFeatureFlagEnabled( 'page-user' ) ) {
 				$this->createUserProfilePage();
 			}
-
 		}
 
 		$this->restoreGlobalWgUser();
@@ -298,6 +285,31 @@ class HAWelcomeTask extends BaseTask {
 	}
 
 
+	public function setRecipient() {
+		// Create objects related to the recipient of the welcome message.
+		$this->recipientObject = User::newFromId( $this->recipientId );
+
+		// User objects for anonymous contributors don't have the name set.
+		if ( ! $this->recipientId ) {
+			$this->recipientObject->setName( $this->recipientName );
+		}
+	}
+
+	protected function senderIsBotAllowed() {
+		if ( $this->senderObject->isAllowed( 'bot' ) || '@bot' == trim( wfMessage( 'welcome-bot' )->inContentLanguage()->text() ) ) {
+			return true;
+		}
+	}
+
+	protected function recipientWallIsEmpty() {
+		return !WallHelper::haveMsg( $this->recipientObject );
+	}
+
+
+	/**
+	 * Get the recipients talk page.
+	 * @return \Article
+	 */
 	protected function getRecipientTalkPage() {
 		if ( !isset( $this->recipientTalkPage ) ) {
 			$this->recipientTalkPage = new Article( $this->recipientObject->getUserPage()->getTalkPage() );
