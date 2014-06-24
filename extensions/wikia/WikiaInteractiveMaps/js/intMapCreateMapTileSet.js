@@ -101,7 +101,7 @@ define(
 			// TODO: figure out where is better place to place it and move it there
 			modal.$element
 				.on('change', '#intMapUpload', function(event) {
-				uploadNewTileSetImage(event.target.parentNode);
+					uploadNewTileSetImage(event.target.parentNode);
 				})
 				.on('keyup', '#intMapTileSetSearch', $.debounce(250, searchForTileSets));
 
