@@ -290,9 +290,7 @@ class ImagesService extends Service {
 		return $result;
 	}
 
-	public static function getCut( $dis, $proportionWidth, $proportionHeight, $srcWidth, $srcHeight, $align = "center", $issvg = false  ) {
-		wfProfileIn( __METHOD__ );
-
+	public static function getCut( $dis, $proportionWidth, $proportionHeight, $srcWidth, $srcHeight, $align = "center", $deltaY=null, $issvg = false  ) {
 		//rescale of png always use width 512;
 		if( $issvg ) {
 			$srcHeight = round( ( 512 * $srcHeight) / $srcWidth );
@@ -311,24 +309,26 @@ class ImagesService extends Service {
 		}
 
 		$pHeight = round( ( $srcWidth ) * ( $proportionHeight / $proportionWidth ) );
-//		$top=0;
+
+		$top = 0;
+		$bottom = 0;
+		$left = 0;
 		if( $pHeight >= $srcHeight ) {
 			$pWidth =  round( $srcHeight * ( $proportionWidth / $proportionHeight ) );
-			$top = 0;
+
 			if ( $align == "center" ) {
 				$left = round( $srcWidth / 2 - $pWidth / 2 );
 				if ( $pHeight != $srcHeight ) {
 					$left++;
 				}
-			} else if ( $align == "origin" ) {
-				$left = 0;
 			}
 			$right = $left + $pWidth + 1;
 			$bottom = $srcHeight;
 		} else {
 			if ( $align == "center" ) {
-				$deltaY = isset( $dis->tmpDeltaY ) ? $dis->tmpDeltaY : self::getDeltaY($dis, $proportionWidth, $proportionHeight);
-				unset( $dis->tmpDeltaY );
+				if (empty($deltaY)){
+					$deltaY = ( $proportionWidth / $proportionHeight - 1 ) * 0.1;
+				}
 				$deltaYpx = round( $srcHeight * $deltaY );
 				$bottom = $pHeight + $deltaYpx;
 				$top = $deltaYpx;
@@ -345,16 +345,7 @@ class ImagesService extends Service {
 			$left = 0;
 			$right = $srcWidth;
 		}
-
-		wfProfileOut( __METHOD__ );
 		return "{$dis->width}px-$left,$right,$top,$bottom";
-	}
-
-	public static function getDeltaY($dis, $proportionWidth, $proportionHeight) {
-		if (is_null($dis->deltaY)) {
-			$dis->deltaY = ( $proportionWidth / $proportionHeight - 1 ) * 0.1;
-		}
-		return $dis->deltaY;
 	}
 
 	/**
