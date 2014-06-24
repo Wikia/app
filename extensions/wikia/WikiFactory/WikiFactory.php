@@ -2321,7 +2321,6 @@ class WikiFactory {
 					"city_lastdump_timestamp"=> $timestamp,
 					"city_factory_timestamp" => $timestamp,
 					"city_useshared"         => $wiki->city_useshared,
-					"ad_cat"                 => $wiki->ad_cat,
 					"city_flags"			 => $wiki->city_flags,
 					"city_cluster"			 => $wiki->city_cluster
 				),

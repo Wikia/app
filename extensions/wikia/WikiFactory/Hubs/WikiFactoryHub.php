@@ -89,49 +89,6 @@ class WikiFactoryHub {
 	}
 
 	/**
-	 * getBreadCrumb
-	 *
-	 * get category structure using global function
-	 *
-	 * @access public
-	 * @author Krzysztof Krzyżaniak <eloy@wikia.com>
-	 * @author Emil Podlaszewski <emil@wikia.com>
-	 *
-	 * @param $city_id
-	 * @return array An array with categories
-	 */
-	public function getBreadCrumb( $city_id ) {
-		global $wgExternalSharedDB;
-
-		wfProfileIn( __METHOD__ );
-
-		$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
-		$cat_id = $dbr->selectField(
-			"city_cat_mapping",
-			"cat_id",
-			array( "city_id" => $city_id )
-		);
-
-		$cats = array();
-		while( !empty( $cat_id ) ) {
-			$res = $dbr->select(
-				array( "city_cat_structure", "city_cats" ),
-				array( "cat_name", "cat_url", "cat_parent_id" ),
-				array( "city_cat_structure.cat_id=city_cats.cat_id", "city_cat_structure.cat_id={$cat_id}" )
-			);
-			if( $row = $dbr->fetchObject( $res ) ) {
-				$cats[] = array( "name" => $row->cat_name, "url" => $row->cat_url, "id" => intval( $cat_id ), "parentId" => intval( $row->cat_parent_id ) );
-				$cat_id = $row->cat_parent_id;
-			}
-		}
-		wfProfileOut( __METHOD__ );
-
-		$cats = array_reverse( $cats );
-
-		return $cats;
-	}
-
-	/**
 	 * return HTML select for category choosing
 	 */
 	public function getForm( $city_id, &$title = null ) {
