@@ -290,7 +290,7 @@ class ImagesService extends Service {
 		return $result;
 	}
 
-	public static function getCut( $dis, $srcWidth, $srcHeight, $align = "center", $issvg = false  ) {
+	public static function getCut( $dis, $proportionWidth, $proportionHeight, $srcWidth, $srcHeight, $align = "center", $issvg = false  ) {
 		wfProfileIn( __METHOD__ );
 
 		//rescale of png always use width 512;
@@ -303,17 +303,17 @@ class ImagesService extends Service {
 		$srcWidth = max(1, intval($srcWidth));
 		$srcHeight = max(1, intval($srcHeight));
 		// in case we're missing some proportions, maintain the original aspect ratio
-		if (empty($dis->proportion['h']) && !empty($dis->proportion['w'])) {
-			$dis->proportion['h'] = (float)$srcHeight * $dis->proportion['w'] / $srcWidth;
+		if (empty($proportionHeight) && !empty($proportionWidth)) {
+			$proportionHeight = (float)$srcHeight * $proportionWidth / $srcWidth;
 		}
-		if (empty($dis->proportion['w']) && !empty($dis->proportion['h'])) {
-			$dis->proportion['w'] = (float)$srcWidth * $dis->proportion['h'] / $srcHeight;
+		if (empty($proportionWidth) && !empty($proportionHeight)) {
+			$proportionWidth = (float)$srcWidth * $proportionHeight / $srcHeight;
 		}
 
-		$pHeight = round( ( $srcWidth ) * ( $dis->proportion['h'] / $dis->proportion['w'] ) );
+		$pHeight = round( ( $srcWidth ) * ( $proportionHeight / $proportionWidth ) );
 //		$top=0;
 		if( $pHeight >= $srcHeight ) {
-			$pWidth =  round( $srcHeight * ( $dis->proportion['w'] / $dis->proportion['h'] ) );
+			$pWidth =  round( $srcHeight * ( $proportionWidth / $proportionHeight ) );
 			$top = 0;
 			if ( $align == "center" ) {
 				$left = round( $srcWidth / 2 - $pWidth / 2 );
@@ -327,7 +327,7 @@ class ImagesService extends Service {
 			$bottom = $srcHeight;
 		} else {
 			if ( $align == "center" ) {
-				$deltaY = isset( $dis->tmpDeltaY ) ? $dis->tmpDeltaY : self::getDeltaY($dis);
+				$deltaY = isset( $dis->tmpDeltaY ) ? $dis->tmpDeltaY : self::getDeltaY($dis, $proportionWidth, $proportionHeight);
 				unset( $dis->tmpDeltaY );
 				$deltaYpx = round( $srcHeight * $deltaY );
 				$bottom = $pHeight + $deltaYpx;
@@ -350,14 +350,12 @@ class ImagesService extends Service {
 		return "{$dis->width}px-$left,$right,$top,$bottom";
 	}
 
-	public static function getDeltaY($dis) {
+	public static function getDeltaY($dis, $proportionWidth, $proportionHeight) {
 		if (is_null($dis->deltaY)) {
-			$dis->deltaY = ( $dis->proportion['w'] / $dis->proportion['h'] - 1 ) * 0.1;
+			$dis->deltaY = ( $proportionWidth / $proportionHeight - 1 ) * 0.1;
 		}
 		return $dis->deltaY;
 	}
-
-
 
 	/**
 	 * get image page url

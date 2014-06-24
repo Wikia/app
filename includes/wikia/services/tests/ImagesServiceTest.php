@@ -208,17 +208,8 @@ class ImagesServiceTest extends WikiaBaseTest {
 			$x->deltaY = null;
 //			echo ImagesService::getCut($x, $data[2], $data[3] );
 //			var_dump($x);
-			foreach ( [ null, 2, 0.5 ] as $tmpDelta ) {
-				$x->tmpDeltaY = $tmpDelta;
-				if ( empty($tmpDelta) ) {
-					$tmpDelta = "null";
-					$this->assertEquals( ImagesService::getCut( $x, $data[2], $data[3] ), $data[4] );
-				}
-//				echo '[' . implode( ",", [ $tmpDelta, $data[0], $data[1], $data[2], $data[3] ] ) . ','
-//					. '\'' . ImagesService::getCut( $x, $data[2], $data[3] ) . '\'' . ']' . ",\n";
-
-
-			}
+			$x->tmpDeltaY = null;
+			$this->assertEquals( ImagesService::getCut( $x, $data[0], $data[1], $data[2], $data[3] ), $data[4] );
 		}
 	}
 
@@ -231,8 +222,7 @@ class ImagesServiceTest extends WikiaBaseTest {
 			$x->width = $data[0];
 			$x->proportion = [ 'w' => $data[0], 'h' => $data[1] ];
 			$x->deltaY = null;
-			$this->assertEquals( ImagesService::getCut( $x, $data[2], $data[3] ), $data[4] );
-
+			$this->assertEquals( ImagesService::getCut( $x, $data[0], $data[1], $data[2], $data[3] ), $data[4] );
 		}
 	}
 
