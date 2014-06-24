@@ -76,7 +76,8 @@ class IndexerWorkerBase extends Maintenance {
 		$queue = $this->get_queue_name( $routing_key );
 		$connection = $this->get_connection();
 		$channel = $connection->channel();
-		$channel->queue_declare( $queue, false, true, false, false, false, [ 'x-dead-letter-exchange' => static::DEADS ] );
+		$channel->queue_declare( $queue, false, true, false, false, false,
+			[ 'x-dead-letter-exchange' => [ 'S', static::DEADS ] ] );
 		$channel->queue_bind( $queue, $exchange, $routing_key );
 		$channel->basic_qos( null, static::PREFETCH_SIZE, null );
 		$channel->basic_consume( $queue, "", false, false, false, false, array( $this, 'route' ) );
