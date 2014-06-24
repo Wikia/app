@@ -740,9 +740,10 @@ $color-wikiahome-border-primary-brand-color: #c7d1d8;
 	.wikiahomepage-hubs {
 		@include clearfix;
 		clear: both;
-		margin-top: 60px;
+		margin-top: 30px;
 		.wikiahomepage-hubs-section {
 			border-bottom: 1px dotted $color-page-border;
+			margin-top: 15px;
 			.wikiahomepage-hubs-hero-image {
 				height: 210px;
 				width: 330px;
