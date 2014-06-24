@@ -27,6 +27,17 @@ class PopularArticlesModel {
 		return array_slice( $results, 0, self::DEFAULT_RESULTS_NUMBER );
 	}
 
+	/**
+	 * Fetches up to 200 most recently edited articles from a given wiki
+	 *
+	 * @param $wiki_id
+	 * @return ResultWrapper
+	 */
+	protected function getRecentlyEditedPageResult( $wiki_id ) {
+		$sdb = wfGetDB( DB_SLAVE, [ ], WikiFactory::IDtoDB( $wiki_id ) );
+		return $sdb->query( 'select page_id,page_title from page where page_namespace = 0 order by page_latest desc limit ' . self::DEFAULT_RESULTS_NUMBER );
+	}
+
 
 	/**
 	 * Fetches up to 200 most recently edited articles from a given wiki (without Mainpages)
@@ -34,17 +45,14 @@ class PopularArticlesModel {
 	 * @param $wiki_id
 	 * @return array
 	 */
-	private function getRecentlyEditedPageIds( $wiki_id ) {
-		$sdb = wfGetDB( DB_SLAVE, [], WikiFactory::IDtoDB( $wiki_id ) );
-
-		$result = $sdb->query( 'select page_id,page_title from page where page_namespace = 0 order by page_latest desc limit ' . self::DEFAULT_RESULTS_NUMBER );
-
-		$page_ids = [];
-		while ($row = $result->fetchObject()) {
+	protected function getRecentlyEditedPageIds( $wiki_id ) {
+		$result = $this->getRecentlyEditedPageResult( $wiki_id );
+		$page_ids = [ ];
+		while ( $row = $result->fetchObject() ) {
 			$title = Title::newFromText( $row->page_title, $row->page_namespace );
 
-			if ($title instanceof Title && !$title->isMainPage()) {
-				$page_ids [] = intval( $row->page_id );
+			if ( $title instanceof Title && !$title->isMainPage() ) {
+				$page_ids [ ] = intval( $row->page_id );
 			}
 		}
 
@@ -73,9 +81,9 @@ class PopularArticlesModel {
 	private function getPageViewsMap( $wiki_id, $page_ids ) {
 		global $wgDatamartDB;
 
-		$pageviews_map = [];
+		$pageviews_map = [ ];
 
-		$ddb = wfGetDB( DB_SLAVE, [], $wgDatamartDB );
+		$ddb = wfGetDB( DB_SLAVE, [ ], $wgDatamartDB );
 
 		$sql = 'select * from rollup_wiki_article_pageviews where '
 			. 'wiki_id = ' . (int)$wiki_id
@@ -85,10 +93,11 @@ class PopularArticlesModel {
 
 		$stats = $ddb->query( $sql );
 
-		while ($object = $stats->fetchObject()) {
-			$pageviews_map[$object->article_id] = $object->pageviews;
+		while ( $object = $stats->fetchObject() ) {
+			$pageviews_map[ $object->article_id ] = $object->pageviews;
 		}
 
+		return $pageviews_map;
 	}
 
 	/**
@@ -98,16 +107,16 @@ class PopularArticlesModel {
 	 * @return array
 	 */
 	private function sortByWeeklyPageviews( $articlefeed, $wiki_id, $page_ids ) {
-		$results = [];
+		$results = [ ];
 
 		$pageviews_map = $this->getPageViewsMap( $wiki_id, $page_ids );
 
-		foreach ($articlefeed as $feed_item) {
-			$pageviews [] = intval( $pageviews_map[$feed_item['pageid']] );
-			$results[] = [
-				'url' => $feed_item['url'],
+		foreach ( $articlefeed as $feed_item ) {
+			$pageviews [ ] = intval( $pageviews_map[ $feed_item[ 'pageid' ] ] );
+			$results[ ] = [
+				'url' => $feed_item[ 'url' ],
 				'wikia_id' => $wiki_id,
-				'page_id' => $feed_item['pageid'],
+				'page_id' => $feed_item[ 'pageid' ],
 			];
 		}
 

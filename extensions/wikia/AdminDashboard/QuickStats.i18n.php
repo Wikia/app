@@ -678,6 +678,7 @@ $messages['ia'] = array(
 /** Indonesian (Bahasa Indonesia)
  * @author Aldnonymous
  * @author C5st4wr6ch
+ * @author Riemogerz
  */
 $messages['id'] = array(
 	'quickstats-header-label' => 'Statistik Cepat',
@@ -689,6 +690,8 @@ $messages['id'] = array(
 	'quickstats-totals-label' => 'Total',
 	'quickstats-see-more-stats-link' => '[[Special:WikiStats|Lihat lebih banyak statistik]]',
 	'quickstats-number-shortening' => '$1K',
+	'quickstats-number-shortening-millions' => '$1M',
+	'quickstats-number-shortening-billions' => '$1B',
 );
 
 /** Italian (italiano)
@@ -1213,7 +1216,7 @@ $messages['sco'] = array(
 	'quickstats-header-label' => 'Queeck Stats',
 	'quickstats-header-date' => 'Date,',
 	'quickstats-header-views' => 'Views,',
-	'quickstats-header-edits' => 'Eidits',
+	'quickstats-header-edits' => 'Eedits',
 	'quickstats-header-photos' => 'Photæs',
 	'quickstats-header-likes' => 'Likes,',
 	'quickstats-totals-label' => 'Tôtals',

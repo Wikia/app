@@ -153,6 +153,8 @@ $wgResourceModules += array(
 			'wikia-visualeditor-dialog-orientation-headline',
 			'wikia-visualeditor-dialog-orientation-text',
 			'wikia-visualeditor-dialog-orientation-start-button',
+			'wikia-visualeditor-dialog-meta-languages-readonlynote',
+			'wikia-visualeditor-dialog-transclusion-no-template-description',
 		),
 		'dependencies' => array(
 			'ext.visualEditor.core.desktop',
@@ -187,3 +189,7 @@ if ( !empty( $wgEnableBlogArticles ) ) {
 	}
 	$wgVisualEditorNamespaces = $tempArray;
 }
+
+// Add additional valid namespaces for Wikia
+$wgVisualEditorNamespaces[] = NS_CATEGORY;
+$wgVisualEditorNamespaces[] = NS_PROJECT;

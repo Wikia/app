@@ -182,7 +182,7 @@ class TvRssModel extends BaseRssModel {
 
 				break;
 			case self::SOURCE_GENERATOR:
-				$titles = [ 'Read more about %s from %s', 'More info about %s from %s', 'Recommended page: %s  from %s' ];
+				$titles = [ 'Read more about %s from %s', 'More info about %s from %s', 'Recommended page: %s from %s' ];
 				$titleNum = rand( 0, count( $titles ) - 1 );
 
 				if ( !array_key_exists( 'wikititle', $item ) || !$item[ 'wikititle' ] ) {

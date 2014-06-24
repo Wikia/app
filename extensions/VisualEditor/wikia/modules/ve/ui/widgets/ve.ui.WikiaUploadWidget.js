@@ -188,7 +188,6 @@ ve.ui.WikiaUploadWidget.prototype.onUploadError = function () {
 	window.alert( ve.msg( 'wikia-visualeditor-dialog-wikiamediainsert-upload-error' ) );
 };
 
-
 /*
  * Shows upload animation
  *

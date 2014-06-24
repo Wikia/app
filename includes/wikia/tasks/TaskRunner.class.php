@@ -23,6 +23,7 @@ class TaskRunner {
 		foreach ($taskList as $taskData) {
 			/** @var \Wikia\Tasks\Tasks\BaseTask $task */
 			$task = new $taskData['class']();
+			$task->taskId($taskId);
 			$task->createdBy($createdBy);
 			$task->unserialize($taskData['context'], $taskData['calls']);
 
@@ -97,9 +98,11 @@ class TaskRunner {
 		return in_array($taskName, [
 			'CreatePdfThumbnailsJob',
 //		'CreateWikiLocalJob',
-			'PromoteImageReviewTask',
+			'ImageReviewTask',
+//			'PromoteImageReviewTask',
 			'UserRollback',
-//			'UserRename',
+			'UserRename',
+			'HTMLCacheUpdate',
 		]);
 	}
 }

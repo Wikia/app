@@ -56,7 +56,8 @@ module.exports = function ( grunt ) {
 			all: [
 				'*.js',
 				'{.docs,build}/**/*.js',
-				'modules/**/*.js'
+				'modules/**/*.js',
+				'wikia/**/*.js'
 			]
 		},
 		jscs: {
@@ -69,7 +70,8 @@ module.exports = function ( grunt ) {
 				csslintrc: '.csslintrc'
 			},
 			all: [
-				'modules/*/**/*.css'
+				'modules/*/**/*.css',
+				'wikia/**/*.css'
 			],
 		},
 		banana: {

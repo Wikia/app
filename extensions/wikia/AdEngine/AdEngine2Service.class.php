@@ -231,7 +231,7 @@ class AdEngine2Service
 			'wgAdDriverUseCatParam' => array_search($wgLanguageCode, $wgAdPageLevelCategoryLangs),
 			'wgAdPageType' => $wgAdPageType,
 			'wgAdDriverUseEbay' => $wgAdDriverUseEbay,
-			'wgAdDriverUseDartForSlotsBelowTheFold' => $wgAdDriverUseDartForSlotsBelowTheFold,
+			'wgAdDriverUseDartForSlotsBelowTheFold' => $wgAdDriverUseDartForSlotsBelowTheFold === null ? 'hub' : $wgAdDriverUseDartForSlotsBelowTheFold,
 			'wgAdDriverUseSevenOneMedia' => $wgAdDriverUseSevenOneMedia,
 			'wgUserShowAds' => $wgUser->getOption('showAds'),
 			'wgOutboundScreenRedirectDelay' => $wgOutboundScreenRedirectDelay,
@@ -311,6 +311,8 @@ class AdEngine2Service
 			'adDriver2ForcedStatus',         // DART creatives
 			'adDriverLastDARTCallNoAds',     // TODO: remove var
 			'adslots2',                      // AdEngine2_Ad.php
+			'cityShort',                     // AdLogicPageParams.js
+			'cscoreCat',                     // analytics_prod.js
 			'wgAdsShowableOnPage',           // TODO: remove var
 			'wgEnableKruxTargeting',         // Krux.js
 			'wgKruxCategoryId',              // Krux.run.js
@@ -318,11 +320,9 @@ class AdEngine2Service
 			'wgUserShowAds',                 // JWPlayer.class.php
 			'wikiaPageIsCorporate',          // analytics_prod.js
 			'wikiaPageType',                 // analytics_prod.js
-			'cscoreCat',                     // analytics_prod.js
 		];
 		if (self::areAdsInHead()) {
 			$topVars = array_merge($topVars, [
-				'cityShort',                     // AdLogicPageParams.js
 				'wgAdEngineDisableLateQueue',    // AdConfig2.js
 				'wgAdDriverUseSevenOneMedia',    // AdConfig2.js
 				'wgAdDriverForceDirectGptAd',    // AdConfig2.js
