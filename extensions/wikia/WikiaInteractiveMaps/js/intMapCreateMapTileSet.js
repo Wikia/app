@@ -25,8 +25,10 @@ define(
 						name: $.msg('wikia-interactive-maps-create-map-choose-type-custom')
 					}
 				],
+				chooseTileSetTip: $.msg('wikia-interactive-maps-create-map-choose-tile-set-tip'),
 				browse: $.msg('wikia-interactive-maps-create-map-browse-tile-set'),
-				uploadFileBtn: $.msg('wikia-interactive-maps-create-map-upload-file')
+				uploadLink: $.msg('wikia-interactive-maps-create-map-upload-file'),
+				searchPlaceholder: $.msg('wikia-interactive-maps-create-map-search-tile-set-placeholder')
 			},
 			//modal events
 			events = {
@@ -38,7 +40,9 @@ define(
 					}
 				],
 				intMapCustom: [
-					chooseCustomTileSet
+					function() {
+						showStep('chooseTileSet');
+					}
 				],
 				previousStep: [
 					previousStep
@@ -53,6 +57,13 @@ define(
 							tileSetId: $(event.currentTarget).data('id')
 						});
 					}
+				],
+				uploadTileSetImage: [
+					function() {
+						console.log($uploadInput);
+						$uploadInput
+							.click()
+					}
 				]
 			},
 			// steps for choose tile set
@@ -65,16 +76,19 @@ define(
 					id: '#intMapBrowse',
 					buttons: {
 						'#intMapBack': 'previousStep'
-					}
+					},
+					helper: chooseCustomTileSet
 				}
 			},
+			noTileSetMsg = $('wikia-interactive-maps-create-map-no-tile-set-found'),
 			// image upload entry point
 			uploadEntryPoint = '/wikia.php?controller=WikiaInteractiveMaps&method=uploadMap&format=json',
 			// stack for holding choose tile set steps
 			stepsStack = [],
 			// cached selectors
 			$sections,
-			$tileSetsContainer;
+			$tileSetsContainer,
+			$uploadInput;
 
 		/**
 		 * @desc initializes and configures UI
@@ -93,9 +107,14 @@ define(
 			addToStack('selectType');
 
 			// TODO: figure out where is better place to place it and move it there
-			modal.$element.on('change', '#intMapUpload', function(event) {
+			modal.$element
+				.on('change', '#intMapUpload', function(event) {
 				uploadMapImage(event.target.parentNode);
-			});
+				})
+				.on('keypress', '#intMapTileSetSearch', function(event) {
+					searchTileSet(event.target.value);
+				});
+
 		}
 
 		/**
@@ -106,7 +125,8 @@ define(
 
 			// cache selectors
 			$sections = modal.$innerContent.children();
-			$tileSetsContainer = modal.$innerContent.find('#intMapBrowse');
+			$tileSetsContainer = modal.$innerContent.find('#intMapBrowse ul');
+			$uploadInput =  modal.$innerContent.find('#intMapUpload');
 
 			showStep(stepsStack.pop());
 		}
@@ -139,6 +159,10 @@ define(
 			showStepContent(step.id);
 			utils.setButtons(modal, step.buttons);
 
+			if (typeof step.helper === 'function') {
+				step.helper();
+			}
+
 			modal.trigger('cleanUpError');
 
 		}
@@ -154,13 +178,25 @@ define(
 		}
 
 		/**
-		 * @desc sets up choose tile set step
+		 * @desc handler function for search tile set input field
+		 * @param {string} keyword - search term
 		 */
-		function chooseCustomTileSet() {
-			getTileSetThumbs().done(function(tileSetData) {
+		function searchTileSet(keyword) {
+			var trimmedKeyword = keyword.trim();
+
+			if (trimmedKeyword.length >= 2) {
+				chooseCustomTileSet(trimmedKeyword);
+			}
+		}
+
+		/**
+		 * @desc sets up choose tile set step
+		 * @param {string=} keyword - search term
+		 */
+		function chooseCustomTileSet(keyword) {
+			getTileSetThumbs(keyword).done(function(tileSetData) {
 				updateTileSetList(renderTileSetThumbs(tileSetThumbTemplate, tileSetData));
-				showStep('chooseTileSet');
-			})
+			});
 		}
 
 		/**
@@ -216,7 +252,13 @@ define(
 		 */
 		function updateTileSetList(markup) {
 			$tileSetsContainer.children('.tile-set-thumb').remove();
-			$tileSetsContainer.append(markup);
+			modal.trigger('cleanUpError');
+
+			if (markup) {
+				$tileSetsContainer.append(markup);
+			} else {
+				modal.trigger('error', noTileSetMsg);
+			}
 		}
 
 		/**
