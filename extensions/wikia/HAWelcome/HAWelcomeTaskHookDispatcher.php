@@ -27,7 +27,7 @@ class HAWelcomeTaskHookDispatcher {
 
 	public function dispatch() {
 		if ( $this->hasContributorBeenWelcomedRecently() ) {
-			// abort if they have contributed recenty
+			// abort if they have contributed recently
 			return true;
 		}
 

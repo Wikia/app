@@ -61,6 +61,7 @@ $wgAutoloadClasses['HAWelcomeTaskHookDispatcher'] =  $dir . 'HAWelcomeTaskHookDi
  * @see http://www.mediawiki.org/wiki/Manual:$wgHooks
  * @see http://www.mediawiki.org/wiki/Manual:Hooks/ArticleSaveComplete
  */
+// FIXME: replace with HAWelcomeTaskHooks::onArticleSaveComplete
 $wgHooks['ArticleSaveComplete'][] = 'HAWelcomeHooks::onArticleSaveComplete';
 $wgHooks['UserRights'][] = 'HAWelcomeHooks::onUserRightsChange';
 
