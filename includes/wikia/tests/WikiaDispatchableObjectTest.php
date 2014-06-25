@@ -21,9 +21,9 @@ class WikiaDispatchableObjectTest extends WikiaBaseTest {
 			['test', null, null, null],
 			['testParamsOrdered', ['a' => 1, 'b' => 2], null, '&a=1&b=2'],
 			['testParamsUnordered', ['c' => 1, 'a' => 2, 'b' => 3], null, '&a=2&b=3&c=1'],
-			['testParamsUnordered', ['c' => 1, 'a' => 2, 'b' => 3], WikiaResponse::FORMAT_JSON, '&a=2&b=3&c=1'],
-			['testParamsUnordered', ['c' => 1, 'a' => 2, 'b' => 3], WikiaResponse::FORMAT_JSONP, '&a=2&b=3&c=1'],
-			['testParamsUnordered', ['c' => 1, 'a' => 2, 'b' => 3], WikiaResponse::FORMAT_RAW, '&a=2&b=3&c=1'],
+			['testParamsUnordered', ['c' => 1, 'a' => 2, 'b' => 3], WikiaResponse::FORMAT_JSON, '&a=2&b=3&c=1&format=json'],
+			['testParamsUnordered', ['c' => 1, 'a' => 2, 'b' => 3], WikiaResponse::FORMAT_JSONP, '&a=2&b=3&c=1&format=jsonp'],
+			['testParamsUnordered', ['c' => 1, 'a' => 2, 'b' => 3], WikiaResponse::FORMAT_RAW, '&a=2&b=3&c=1&format=raw'],
 		];
 	}
 
@@ -35,9 +35,6 @@ class WikiaDispatchableObjectTest extends WikiaBaseTest {
 		$serverName = "test-server";
 		$scriptPath = "/test-path";
 		$requestURI = "{$serverName}{$scriptPath}/wikia.php?controller={$className}&method={$methodName}{$encodedParams}";
-		if ( !empty( $format ) ) {
-			$requestURI .= '&format=' . $format;
-		}
 
 		$this->mockGlobalVariable( 'wgServer', $serverName );
 		$this->mockGlobalVariable( 'wgScriptPath', $scriptPath );
@@ -51,9 +48,6 @@ class WikiaDispatchableObjectTest extends WikiaBaseTest {
 	public function testGetLocalUrl( $methodName, $params, $format, $encodedParams ) {
 		$className = get_class( $this->dispatchableMock );
 		$requestURI = "/wikia.php?controller={$className}&method={$methodName}{$encodedParams}";
-		if ( !empty( $format ) ) {
-			$requestURI .= '&format=' . $format;
-		}
 
 		$this->assertEquals( $requestURI, $className::getLocalUrl( $methodName, $params, $format ) );
 	}
@@ -66,9 +60,6 @@ class WikiaDispatchableObjectTest extends WikiaBaseTest {
 		$mockCdnApiUrl = "api.nocookie.test-server";
 		$scriptPath = "/test-path";
 		$requestURI = "{$mockCdnApiUrl}{$scriptPath}/wikia.php?controller={$className}&method={$methodName}{$encodedParams}";
-		if ( !empty( $format ) ) {
-			$requestURI .= '&format=' . $format;
-		}
 
 		$this->mockGlobalVariable( 'wgCdnApiUrl', $mockCdnApiUrl );
 		$this->mockGlobalVariable( 'wgScriptPath', $scriptPath );
