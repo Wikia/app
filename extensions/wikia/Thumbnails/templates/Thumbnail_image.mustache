@@ -1,8 +1,9 @@
 {{#linkHref}}
-<a href="{{linkHref}}" class="image image-thumbnail {{#linkClasses}}{{.}} {{/linkClasses}}"
+<a
+	href="{{linkHref}}"
+	class="image image-thumbnail{{#linkClasses}} {{.}}{{/linkClasses}}"
+	{{#linkAttrs}} {{{.}}}{{/linkAttrs}}>
 {{/linkHref}}
-
-	{{#linkAttrs}}{{{.}}} {{/linkAttrs}}>
 
 	{{>Thumbnail_imgTag}}
 	{{#noscript}}<noscript>{{{noscript}}}</noscript>{{/noscript}}

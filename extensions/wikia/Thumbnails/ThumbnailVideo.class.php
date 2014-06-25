@@ -5,6 +5,8 @@
  * @ingroup Media
  */
 
+use \Wikia\Logger\WikiaLogger;
+
 class ThumbnailVideo extends ThumbnailImage {
 
 //	function ThumbnailVideo( $file, $url, $width, $height, $path = false, $page = false ) {
@@ -103,6 +105,16 @@ class ThumbnailVideo extends ThumbnailImage {
 		return $thumb->toHtml( array( 'img-class' => $options['img-class'] ) );
 	}
 
+	function renderView( $options = array() ) {
+		WikiaLogger::instance()->debug('Media method '.__METHOD__.' called',
+			array_merge( $options, [ 'url' => $this->url ] ) );
+
+		return F::app()->renderView( 'ThumbnailController', 'video', [
+			'thumb'   => $this,
+			'options' => $options,
+		] );
+	}
+
 	/**
 	 * @param array $options
 	 * @return mixed|string
@@ -125,21 +137,18 @@ class ThumbnailVideo extends ThumbnailImage {
 		}
 
 		wfProfileIn( __METHOD__ );
-// HERE
+
 		// Migrate to new system which uses a template instead of this toHtml method
 		if ( !empty( $options['useTemplate'] ) ) {
-			$html = $app->renderView( 'ThumbnailController', 'video',  [
-				'file' => $this->file,
-				'url' => $this->url,
-				'width' => $this->width,
-				'height' => $this->height,
-				'options' => $options,
-			] );
+			$html = $this->renderView( $options );
 
 			wfProfileOut( __METHOD__ );
 
 			return $html;
 		}
+
+		WikiaLogger::instance()->debug('Media method '.__METHOD__.' called',
+			array_merge( $options, [ 'url' => $this->url ] ) );
 
 		$alt = empty( $options['alt'] ) ? '' : $options['alt'];
 

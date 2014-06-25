@@ -668,7 +668,12 @@ class Linker {
 			 * Wikia change start
 			 * @author Federico
 			 */
-			$origHTML = $s = $thumb->toHtml( $params );
+			if ( F::app()->checkSkin( 'wikiamobile' ) ) {
+				$origHTML = $s = $thumb->toHtml( $params );
+			} else {
+				$origHTML = $s = $thumb->renderView( $params );
+			}
+
 			/**
 			 * Wikia change end
 			 */
@@ -678,8 +683,10 @@ class Linker {
 		}
 
 		/* Wikia change begin - @author: Federico "Lox" Lucignano */
-		/* Give extensions the ability to add HTML to full size unframed images */
-		wfRunHooks( 'ImageAfterProduceHTML', array( $frameParams, $thumb, $origHTML, &$s ) );
+		if ( F::app()->checkSkin( 'wikiamobile' ) ) {
+			/* Give extensions the ability to add HTML to full size unframed images */
+			wfRunHooks( 'ImageAfterProduceHTML', array( $frameParams, $thumb, $origHTML, &$s ) );
+		}
 		/* Wikia change end */
 
 		return str_replace( "\n", ' ', $prefix . $s . $postfix );
@@ -688,8 +695,9 @@ class Linker {
 	/**
 	 * Get the link parameters for MediaTransformOutput::toHtml() from given
 	 * frame parameters supplied by the Parser.
-	 * @param $frameParams The frame parameters
-	 * @param $query An optional query string to add to description page links
+	 * @param array $frameParams The frame parameters
+	 * @param string $query An optional query string to add to description page links
+	 * @return array
 	 */
 	private static function getImageLinkMTOParams( $frameParams, $query = '' ) {
 		$mtoParams = array();
@@ -729,6 +737,7 @@ class Linker {
 	 * @param $params Array
 	 * @param $framed Boolean
 	 * @param $manualthumb String
+	 * @return mixed
 	 */
 	public static function makeThumbLinkObj( Title $title, $file, $label = '', $alt,
 		$align = 'right', $params = array(), $framed = false , $manualthumb = "" )
@@ -851,10 +860,7 @@ class Linker {
 			if ( F::app()->checkSkin( 'wikiamobile' ) ) {
 				$origHTML = $thumb->toHtml( $params );
 			} else {
-				$origHTML = F::app()->renderView( 'ThumbnailController', 'makeThumb', [
-					'thumb'   => $thumb,
-					'options' => $params,
-				] );
+				$origHTML = $thumb->renderView( $params );
 			}
 		}
 
@@ -879,8 +885,8 @@ class Linker {
 	 * @param $title Title object
 	 * @param $label String: link label (plain text)
 	 * @param $query String: query string
-	 * @param $unused1 Unused parameter kept for b/c
-	 * @param $unused2 Unused parameter kept for b/c
+	 * @param string $unused1 Unused parameter kept for b/c
+	 * @param string $unused2 Unused parameter kept for b/c
 	 * @param $time Boolean: a file of a certain timestamp was requested
 	 * @return String
 	 */
@@ -956,10 +962,10 @@ class Linker {
 	/**
 	 * Create a direct link to a given uploaded file.
 	 *
-	 * @param $title Title object.
-	 * @param $html String: pre-sanitized HTML
-	 * @param $time string: MW timestamp of file creation time
-	 * @return String: HTML
+	 * @param Title $title Title object.
+	 * @param string $html pre-sanitized HTML
+	 * @param bool|string $time MW timestamp of file creation time
+	 * @return string HTML
 	 */
 	public static function makeMediaLinkObj( $title, $html = '', $time = false ) {
 		$img = wfFindFile( $title, array( 'time' => $time ) );
@@ -1005,6 +1011,8 @@ class Linker {
 	 * a message key from the link text.
 	 * Usage example: Linker::specialLink( 'Recentchanges' )
 	 *
+	 * @param string $name
+	 * @param string $key
 	 * @return string
 	 */
 	public static function specialLink( $name, $key = '' ) {
@@ -1022,6 +1030,7 @@ class Linker {
 	 * @param $escape Boolean: do we escape the link text?
 	 * @param $linktype String: type of external link. Gets added to the classes
 	 * @param $attribs Array of extra attributes to <a>
+	 * @return string
 	 */
 	public static function makeExternalLink( $url, $text, $escape = true, $linktype = '', $attribs = array() ) {
 		$class = "external";

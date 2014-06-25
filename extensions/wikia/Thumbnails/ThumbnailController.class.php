@@ -17,22 +17,18 @@ class ThumbnailController extends WikiaController {
 
 	/**
 	 * Thumbnail Template
-	 * @requestParam File file
-	 * @requestParam string url - img src
-	 * @requestParam string width
-	 * @requestParam string height
+	 * @requestParam MediaTransformOutput thumb
 	 * @requestParam array options
 	 *	Keys:
-	 *		id - id for link,
-	 *		linkAttribs - link attributes [ array( 'class' => 'video' ) ]
-	 *		noLightbox - not show image or video in lightbox,
-	 *		hidePlayButton - hide play button
-	 *		src - source for image
-	 *		imgClass - string of space separated classes for image
-	 *		alt - alt for image
-	 *		valign - valign for image
-	 *		fluid - image will take the width of it's container
-	 *		forceSize - 'xsmall' | 'small' | 'medium' | 'large' | 'xlarge'
+	 *      alt - alt for image
+	 *      fluid - image will take the width of it's container
+	 *      forceSize - 'xsmall' | 'small' | 'medium' | 'large' | 'xlarge'
+	 *      hidePlayButton - hide play buttonforceSize - 'xsmall' | 'small' | 'medium' | 'large' | 'xlarge'
+	 *      id - id for link
+	 *      imgClass - string of space separated classes for image
+	 *      ???used??? linkAttribs - link attributes [ array( 'class' => 'video' ) ]
+	 *      noLightbox - not show image or video in lightbox,
+	 *      ???used??? src - source for image
 	 *
 	 * @responseParam string width
 	 * @responseParam string height
@@ -48,8 +44,8 @@ class ThumbnailController extends WikiaController {
 	 *		itemtype - for RDF metadata
 	 * @responseParam string size [ xsmall, small, medium, large, xlarge ]
 	 * @responseParam string imgSrc
-	 * @responseParam string videoKey
-	 * @responseParam string videoName
+	 * @responseParam string mediaKey
+	 * @responseParam string mediaName
 	 * @responseParam array imgClass
 	 * @responseParam array imgAttrs
 	 *	Keys:
@@ -68,14 +64,23 @@ class ThumbnailController extends WikiaController {
 
 		$this->mediaType = 'video';
 
-		$file = $this->getVal( 'file' );
-		$imgSrc = $this->getVal( 'url', '' );
-		$width = $this->getVal( 'width', 0 );
-		$height = $this->getVal( 'height', 0 );
+		$thumb   = $this->getVal( 'thumb' );
 		$options = $this->getVal( 'options', array() );
+
+		$file = $thumb->file;
+		$imgSrc = $thumb->url;
+		$width = $thumb->width;
+		$height = $thumb->height;
 
 		/** @var Title $title */
 		$title = $file->getTitle();
+
+		// Prefer the src given in options over what's passed in directly.
+		// @TODO there is no reason to pass two versions of image source.  See if both are actually used and pick one
+		$options['src'] = empty( $options['src'] ) ? $imgSrc : $options['src'];
+
+		// Set a positive flag for whether we need to lazy load
+		$options['lazyLoad'] = empty( $options['noLazyLoad'] ) && ImageLazyLoad::isValidLazyLoadedImage( $options['src'] );
 
 		$linkClasses = $this->getVideoLinkClasses( $options );
 		$linkAttribs = $this->getVideoLinkAttribs( $file, $options );
@@ -92,22 +97,13 @@ class ThumbnailController extends WikiaController {
 			}
 		}
 
-		// get class for img tag
-		$imgClass = empty( $options['imgClass'] ) ? '' : $options['imgClass'];
-
-		// update src for img tag
-		$imgSrc = empty( $options['src'] ) ? $imgSrc : $options['src'];
-
-		$lazyLoadImg = empty( $options['noLazyLoad'] ) && ImageLazyLoad::isValidLazyLoadedImage( $imgSrc );
-
 		// set duration
 		$duration = $file->getMetadataDuration();
 		$durationAttribs = [];
-
 		$metaAttribs = [];
 
 		// disable RDF metadata in video thumbnails
-		if ( !$lazyLoadImg ) {
+		if ( !$options['lazyLoad'] ) {
 			// link
 			$linkAttribs['itemprop'] = 'video';
 			$linkAttribs['itemscope'] = '';
@@ -144,19 +140,18 @@ class ThumbnailController extends WikiaController {
 		}
 
 		// set image attributes
-		$this->imgSrc = $imgSrc;
-		$this->videoKey = htmlspecialchars( $title->getDBKey() );
-		$this->videoName = htmlspecialchars( $title->getText() );
-		$this->imgClass = $imgClass;
+		$this->imgSrc = $options['src'];
+		$this->mediaKey = htmlspecialchars( $title->getDBKey() );
+		$this->mediaName = htmlspecialchars( $title->getText() );
+		$this->imgClass = empty( $options['imgClass'] ) ? '' : $options['imgClass'];;
 		$this->imgAttrs = ThumbnailHelper::getAttribs( $imgAttribs );
-
-
+		$this->alt = $options['alt'];
 
 		// data-src attribute in case of lazy loading
 		$this->noscript = '';
 		$this->dataSrc = '';
 
-		if ( $lazyLoadImg ) {
+		if ( $options['lazyLoad'] ) {
 			$this->noscript = $this->app->renderView(
 				'ThumbnailController',
 				'imgTag',
@@ -182,9 +177,9 @@ class ThumbnailController extends WikiaController {
 	 *
 	 * @param array $options The thumbnail options passed to toHTML.  This method cares about:
 	 *
-	 * - $options['noLightbox']
-	 * - $options['linkAttribs']['class']
-	 * - $options['hidePlayButton']
+	 * - $options[ 'noLightbox' ]
+	 * - $options[ 'linkAttribs' ][ 'class' ]
+	 * - $options[ 'hidePlayButton' ]
 	 * - $options[ 'fluid' ]
 	 *
 	 * @return array
@@ -261,26 +256,65 @@ class ThumbnailController extends WikiaController {
 
 	/**
 	 * Image controller
+	 * @requestParam MediaTransformOutput thumb
+	 * @requestParam array options
+	 *	Keys:
+	 * 		alt
+	 * 		custom-target-link
+	 * 		custom-title-link
+	 * 		custom-url-link
+	 * 		desc-query
+	 * 		desc-link
+	 * 		file-link
+	 *	 	img-class
+	 * 		title
+	 * 		valign
 	 */
 	public function image() {
-		/** @var File $file */
+		$this->mediaType = 'image';
+
+		/** @var MediaTransformOutput $thumb */
 		$thumb   = $this->getVal( 'thumb' );
 		$options = $this->getVal( 'options', array() );
 
-		$this->mediaType = 'image';
-
-		$linkAttribs = $this->getImageLinkAttribs( $thumb, $options );
+		$linkAttrs   = $this->getImageLinkAttribs( $thumb, $options );
 		$attribs     = $this->getImageAttribs( $thumb, $options );
 
-		$this->linkAttribs = $linkAttribs;
-		$this->imgAttribs  = $attribs;
+		$this->imgSrc = $thumb->url;
+
+		// Merge in imgClass as well
+		if ( !empty( $options['img-class'] ) ) {
+			$this->imgClass = $options['img-class'];
+		}
+
+		# Move the href out of the attrs and into its own value
+		$this->linkHref = empty( $linkAttrs['href'] ) ? null : $linkAttrs['href'];
+		unset( $linkAttrs['href'] );
+
+		$this->linkAttrs = ThumbnailHelper::getAttribs( $linkAttrs );
+		$this->imgAttribs  = ThumbnailHelper::getAttribs( $attribs );
+
+		$file = $thumb->file;
+		$title = $file->getTitle();
+		$this->mediaKey = htmlspecialchars( $title->getDBKey() );
+		$this->mediaName = htmlspecialchars( $title->getText() );
+		$this->alt = $options['alt'];
+
+		// Check fluid
+		if ( empty( $options[ 'fluid' ] ) ) {
+			$this->imgWidth = $thumb->width;
+			$this->imgHeight = $thumb->height;
+		}
 	}
 
+	/**
+	 * Get anchor tag attributes for an image
+	 *
+	 * @param MediaTransformOutput $thumb
+	 * @param array $options
+	 * @return array|bool
+	 */
 	protected function getImageLinkAttribs( MediaTransformOutput $thumb, array $options ) {
-
-		// Comes from hooks BeforeParserFetchFileAndTitle and only LinkedRevs subscribes
-		// to this and it doesn't seem to be loaded ... ask if used and add logging to see if used
-		$query = empty( $options['desc-query'] )  ? '' : $options['desc-query'];
 
 		if ( !empty( $options['custom-url-link'] ) ) {
 			$linkAttribs = array( 'href' => $options['custom-url-link'] );
@@ -298,7 +332,11 @@ class ThumbnailController extends WikiaController {
 				'title' => empty( $options['title'] ) ? $title->getFullText() : $options['title']
 			);
 		} elseif ( !empty( $options['desc-link'] ) ) {
-			$linkAttribs = $this->getDescLinkAttribs( empty( $options['title'] ) ? null : $options['title'], $query );
+			// Comes from hooks BeforeParserFetchFileAndTitle and only LinkedRevs subscribes
+			// to this and it doesn't seem to be loaded ... ask if used and add logging to see if used
+			$query = empty( $options['desc-query'] )  ? '' : $options['desc-query'];
+
+			$linkAttribs = $this->getDescLinkAttribs( $thumb, empty( $options['title'] ) ? null : $options['title'], $query );
 		} elseif ( !empty( $options['file-link'] ) ) {
 			$linkAttribs = array( 'href' => $thumb->file->getURL() );
 		} else {
@@ -308,6 +346,12 @@ class ThumbnailController extends WikiaController {
 		return $linkAttribs;
 	}
 
+	/**
+	 * Collect the img tag attributes from $options
+	 * @param MediaTransformOutput $thumb
+	 * @param array $options
+	 * @return array
+	 */
 	protected function getImageAttribs( MediaTransformOutput $thumb, array $options ) {
 		/** @var Title $title */
 		$title = $thumb->file->getTitle();
@@ -324,10 +368,6 @@ class ThumbnailController extends WikiaController {
 			$attribs['style'] = "vertical-align: {$options['valign']}";
 		}
 
-		if ( !empty( $options['img-class'] ) ) {
-			$attribs['class'] = $options['img-class'];
-		}
-
 		$title = $thumb->file->getTitle();
 		if ( $title instanceof Title ) {
 			$attribs['data-image-name'] = htmlspecialchars( $title->getText() );
@@ -338,20 +378,19 @@ class ThumbnailController extends WikiaController {
 	}
 
 	/**
-	 * @param MediaTransformOutput $thumb
-	 * @param $title string
-	 * @param array|string $params array
+	 * Used in getImageLinkAttribs when getting the linkAttribs
+	 *
+	 * @param MediaTransformOutput $thumb The thumbnail object
+	 * @param string $title A title object
+	 * @param array $params
 	 * @return array
 	 */
-	public function getDescLinkAttribs( MediaTransformOutput $thumb, $title = null, $params = '' ) {
+	public function getDescLinkAttribs( MediaTransformOutput $thumb, $title = null, $params = null ) {
 		$query = $thumb->page ? ( 'page=' . urlencode( $thumb->page ) ) : '';
-		if( $params ) {
+		if ( $params ) {
 			$query .= $query ? '&'.$params : $params;
 		}
-		$attribs = array(
-			'href' => $thumb->file->getTitle()->getLocalURL( $query ),
-			'class' => 'image',
-		);
+		$attribs = [ 'href' => $thumb->file->getTitle()->getLocalURL( $query ) ];
 		if ( $title ) {
 			$attribs['title'] = $title;
 		}
