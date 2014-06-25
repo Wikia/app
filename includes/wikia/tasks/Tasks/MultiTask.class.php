@@ -190,7 +190,7 @@ class MultiTask extends BaseTask {
 		}
 		
 		// Get a count of articles in a category.  Give at least a very small cache TTL
-		$query = (new \WikiaSQL())->cache( 60 )
+		$query = (new \WikiaSQL())->cacheGlobal( 60 )
 			->SELECT( 'city_list.city_id', 'city_list.city_dbname', 'city_list.city_url' )
 			->FROM( 'city_list' )
 			->WHERE( 'city_public' )->EQUAL_TO( 1 );
