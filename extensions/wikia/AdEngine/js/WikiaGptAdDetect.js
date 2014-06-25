@@ -78,13 +78,13 @@ define('ext.wikia.adEngine.wikiaGptAdDetect', [
 		}
 	}
 
-	function getAdDetectMethod(slotname, gptEvent, iframe) {
+	function getAdType(slotname, gptEvent, iframe) {
 		var status, height, gptEmpty, iframeOk = false;
 
-		log(['getAdDetectMethod', slotname], 'info', logGroup);
+		log(['getAdType', slotname], 'info', logGroup);
 
 		if (iframe && iframe.contentWindow && iframe.contentWindow.AdEngine_adType) {
-			log(['getAdDetectMethod', slotname, 'iframe AdEngine_adType = ', iframe.contentWindow.AdEngine_adType], 'info', logGroup);
+			log(['getAdType', slotname, 'iframe AdEngine_adType = ', iframe.contentWindow.AdEngine_adType], 'info', logGroup);
 
 			return iframe.contentWindow.AdEngine_adType;
 		}
@@ -112,7 +112,7 @@ define('ext.wikia.adEngine.wikiaGptAdDetect', [
 
 		if (!iframeOk) {
 			log(
-				['getAdDetectMethod', slotname, 'running ad callback (no ad iframe found)'],
+				['getAdType', slotname, 'running ad callback (no ad iframe found)'],
 				'error',
 				logGroup
 			);
@@ -121,7 +121,7 @@ define('ext.wikia.adEngine.wikiaGptAdDetect', [
 
 		// Check specifically for some ads
 		if (iframe.contentWindow.document.querySelector(specialAdSelector)) {
-			log(['getAdDetectMethod', slotname, 'special ad'], 'info', logGroup);
+			log(['getAdType', slotname, 'special ad'], 'info', logGroup);
 			return 'always_success';
 		}
 
@@ -130,32 +130,40 @@ define('ext.wikia.adEngine.wikiaGptAdDetect', [
 
 	function onAdLoad(slotname, gptEvent, iframe, adCallback, noAdCallback) {
 
-		var hopMethod = getAdDetectMethod(slotname, gptEvent, iframe);
+		var adType = getAdType(slotname, gptEvent, iframe);
 
-		log(['onAdLoad', slotname, 'hopStrategy' , hopMethod], 'info', logGroup);
-
-		if (hopMethod === 'forced_success' || hopMethod === 'always_success') {
-			return adCallback();
+		function callAdCallback() {
+			adCallback({adType: adType});
 		}
 
-		if (hopMethod === 'empty') {
-			return noAdCallback();
+		function callNoAdCallback() {
+			noAdCallback({adType: adType});
 		}
 
-		if (hopMethod === 'async') {
+		log(['onAdLoad', slotname, 'adType' , adType], 'info', logGroup);
+
+		if (adType === 'forced_success' || adType === 'always_success') {
+			return callAdCallback();
+		}
+
+		if (adType === 'empty') {
+			return callNoAdCallback();
+		}
+
+		if (adType === 'async') {
 			return messageListener.register({source: iframe.contentWindow, dataKey: 'status'}, function (data) {
 
 				log(['onAdLoad', slotname, 'caught message' , data.status], 'info', logGroup);
 
 				if (data.status === 'success') {
-					return adCallback();
+					return callAdCallback();
 				}
 
-				return noAdCallback();
+				return callNoAdCallback();
 			});
 		}
 
-		if (hopMethod === 'openx') {
+		if (adType === 'openx') {
 
 			var openxSuccess, successTrigger, waitForSuccess = function () {
 
@@ -170,7 +178,7 @@ define('ext.wikia.adEngine.wikiaGptAdDetect', [
 					}
 					inspectIframe(slotname, iframe, function () {
 						openxSuccess = true;
-						adCallback();
+						callAdCallback();
 					}, waitForSuccess);
 				}, 500);
 			};
@@ -184,16 +192,16 @@ define('ext.wikia.adEngine.wikiaGptAdDetect', [
 				openxSuccess = true;
 				clearTimeout(successTrigger);
 
-				return noAdCallback();
+				return callNoAdCallback();
 			});
 		}
 
 		// On mobile skin we investigate the iframe contents
-		if (hopMethod === 'inspect_iframe') {
-			return inspectIframe(slotname, iframe, adCallback, noAdCallback);
+		if (adType === 'inspect_iframe') {
+			return inspectIframe(slotname, iframe, callAdCallback, callNoAdCallback);
 		}
 
-		throw 'Incorrect hop method. Cannot detect ad state.';
+		throw 'Incorrect ad type. Cannot detect ad state.';
 	}
 
 	return {
