@@ -14,16 +14,16 @@ class HAWelcomeHooks {
 	 * @return void
 	 */
 	public static function queueHAWelcomeTask( $wgCityId, $oTitle, $aParams ) {
-			if ( TaskRunner::isModern( 'HAWelcomeJob' ) ) {
-				$task = new HAWelcomeTask();
-				$task->call( 'sendWelcomeMessage', $aParams );
-				$task->wikiId( $wgCityId );
-				$task->title( $oTitle ); // use $this->title in the job
-				$task->queue();
-			} else {
-				$oJob = new HAWelcomeJob( $oTitle, $aParams );
-				$oJob->insert();
-			}
+		if ( TaskRunner::isModern( 'HAWelcomeJob' ) ) {
+			$task = new HAWelcomeTask();
+			$task->call( 'sendWelcomeMessage', $aParams );
+			$task->wikiId( $wgCityId );
+			$task->title( $oTitle ); // use $this->title in the job
+			$task->queue();
+		} else {
+			$oJob = new HAWelcomeJob( $oTitle, $aParams );
+			$oJob->insert();
+		}
 	}
 
 	/**
@@ -49,6 +49,14 @@ class HAWelcomeHooks {
 	 * @internal
 	 */
 	public static function onArticleSaveComplete( &$oArticle, &$oUser, $sText, $sSummary, $iMinorEdit, $nWatchThis, $nSectionAnchor, &$iFlags, $oRevision, $oStatus, $iBaseRevId ) {
+
+		/**
+		 *
+		 * Deprecated: Use HAWelcomeTaskHooks::onArticleSaveComplete.
+		 * Remove once this HAWelcomeTask has been tested in production.
+		 *
+		 */
+
 		wfProfileIn( __METHOD__ );
 
 		if ( is_null( $oRevision ) ) {
