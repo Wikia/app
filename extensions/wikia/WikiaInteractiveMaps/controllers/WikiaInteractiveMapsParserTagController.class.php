@@ -86,8 +86,7 @@ class WikiaInteractiveMapsParserTagController extends WikiaController {
 		$params = $this->getMapPlaceholderParams();
 		$mapsModel = new WikiaMaps( $this->wg->IntMapConfig );
 
-		$params->map->url = $mapsModel->buildUrl([
-			WikiaMaps::ENTRY_POINT_RENDER,
+		$params->map->url = $mapsModel->getMapRenderUrl([
 			$params->map->id,
 			$params->zoom,
 			$params->lat,

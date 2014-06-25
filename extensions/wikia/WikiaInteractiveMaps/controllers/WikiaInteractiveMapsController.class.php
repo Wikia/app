@@ -8,6 +8,7 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 	const MAP_HEIGHT = 600;
 	const MAPS_PER_PAGE = 10;
 	const PAGE_NAME = 'InteractiveMaps';
+	const TRANSLATION_FILENAME = 'translations.json';
 
 	/**
 	 * @var WikiaMaps
@@ -126,13 +127,12 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 		if ( isset( $map->title ) ) {
 			$this->wg->out->setHTMLTitle( $map->title );
 
-			$url = $this->mapsModel->buildUrl( [
-				WikiaMaps::ENTRY_POINT_RENDER,
+			$url = $this->mapsModel->getMapRenderUrl([
 				$mapId,
 				$zoom,
 				$lat,
 				$lon
-			] );
+			]);
 
 			$this->setVal( 'title', $map->title );
 			$this->setVal( 'mapFound', true );
@@ -222,5 +222,15 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 	 */
 	private function getPaginationOffset( $currentPage, $itemsPerPage ) {
 		return ($currentPage - 1) * $itemsPerPage;
+	}
+
+	/**
+	 * Generate extension translations file
+	 */
+	public function translation() {
+		$messages = [];
+		require_once( dirname( __FILE__ ) . '/../WikiaInteractiveMapsService.i18n.php' );
+		$this->response->setVal( 'messages', $messages );
+		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 	}
 }
