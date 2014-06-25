@@ -329,7 +329,7 @@ class WikiaMaps {
 	public function savePoiCategories( $poiCategoriesData ) {
 		return $this->postRequest(
 			$this->buildUrl( [ self::ENTRY_POINT_POI_CATEGORY ] ),
-			$poiCategoryData
+			$poiCategoriesData
 		);
 	}
 
