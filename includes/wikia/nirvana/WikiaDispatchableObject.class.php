@@ -253,15 +253,15 @@ abstract class WikiaDispatchableObject extends WikiaObject {
 
 		$baseParams = array( 'controller' => preg_replace( "/Controller$/", '', get_called_class() ), 'method' => $method );
 
+		if ( !empty( $format ) ) {
+			$params['format'] = $format;
+		}
+
 		if ( ! empty( $params ) ) {
 			//WikiaAPI requests accept only sorted params
 			//to cut down caching variants
 			ksort( $params );
 			$baseParams = array_merge( $baseParams, $params );
-		}
-
-		if ( !empty( $format ) ) {
-			$baseParams['format'] = $format;
 		}
 
 		return wfAppendQuery( $basePath, $baseParams );
