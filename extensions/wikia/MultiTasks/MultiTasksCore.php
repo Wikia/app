@@ -389,8 +389,24 @@ class MultiTask extends SpecialPage {
 					$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 					$this->mTaskParams['page'] = $sTitle;
 
-					$thisTask = new $this->mTaskClass( $this->mTaskParams );
-					$submit_id = $thisTask->submitForm();
+					if (TaskRunner::isModern($this->mTaskClass)) {
+						$task = new \Wikia\Tasks\Tasks\MultiTask();
+
+						switch ($this->mTaskClass) {
+							case 'MultiDeleteTask':
+								$taskAction = 'delete';
+								break;
+							default:
+								$taskAction = 'delete';
+								break;
+						}
+
+						$task->call($taskAction, $this->mTaskParams);
+						$submit_id = $task->queue();
+					} else {
+						$thisTask = new $this->mTaskClass( $this->mTaskParams );
+						$submit_id = $thisTask->submitForm();
+					}
 
 					$oTmpl->set_vars( array(
 						"modeText" 		=> $modeText,
