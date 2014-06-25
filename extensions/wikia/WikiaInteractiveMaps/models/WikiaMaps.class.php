@@ -24,6 +24,14 @@ class WikiaMaps {
 	const HTTP_UPDATED = 303;
 	const HTTP_NO_CONTENT = 204;
 
+
+	/**
+	 * Controls the request caching
+	 *
+	 * @todo Enable caching if needed and when proper cache purging is implemented
+	 */
+	const ENABLE_REQUEST_CACHING = false;
+
 	/**
 	 * @var array API connection config
 	 */
@@ -72,10 +80,13 @@ class WikiaMaps {
 	 * @return Mixed|null
 	 */
 	public function cachedRequest( $method, Array $params, $expireTime = self::DEFAULT_MEMCACHE_EXPIRE_TIME ) {
-		$memCacheKey = wfMemcKey( __CLASS__, __METHOD__, json_encode( $params ) );
-		return WikiaDataAccess::cache( $memCacheKey, $expireTime, function () use ( $method, $params ) {
-			return $this->{ $method }( $params );
-		} );
+		if ( self::ENABLE_REQUEST_CACHING ) {
+			$memCacheKey = wfMemcKey( __CLASS__, __METHOD__, json_encode( $params ) );
+			return WikiaDataAccess::cache( $memCacheKey, $expireTime, function () use ( $method, $params ) {
+				return $this->{ $method }( $params );
+			} );
+		}
+		return $this->{ $method }( $params );
 	}
 
 	/**
