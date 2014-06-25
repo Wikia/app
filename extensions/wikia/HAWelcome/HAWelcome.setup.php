@@ -50,8 +50,10 @@ $wgGroupPermissions['bot']['welcomeexempt'] = true;
 $wgExtensionMessagesFiles[ 'HAWelcome' ] = $dir . '/HAWelcome.i18n.php';
 
 $wgAutoloadClasses['HAWelcomeJob'] =  $dir . 'HAWelcomeJob.php' ;
-$wgAutoloadClasses['HAWelcomeTask'] =  $dir . 'HAWelcomeTask.php' ;
 $wgAutoloadClasses['HAWelcomeHooks'] =  $dir . 'HAWelcomeHooks.php' ;
+$wgAutoloadClasses['HAWelcomeTask'] =  $dir . 'HAWelcomeTask.php' ;
+$wgAutoloadClasses['HAWelcomeTaskHooks'] =  $dir . 'HAWelcomeTaskHooks.php' ;
+$wgAutoloadClasses['HAWelcomeTaskHookDispatcher'] =  $dir . 'HAWelcomeTaskHookDispatcher.php' ;
 
 
 /**

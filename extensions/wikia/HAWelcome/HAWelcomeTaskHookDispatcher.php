@@ -31,7 +31,6 @@ class HAWelcomeTaskHookDispatcher {
 			return true;
 		}
 
-
 		if ( $this->revisionObject->getRawUser() ) {
 			// we are working with an edit from a registered contributor
 
@@ -39,14 +38,12 @@ class HAWelcomeTaskHookDispatcher {
 				return true;
 			}
 
-
 			if ( $this->currentUserHasLocalEdits() ) {
 				// TODO: update admin activity depending on welcome user settings lines 138-152
 				return true;
 			}
 
 			$this->markHAWelcomePosted();
-
 			$this->queueWelcomeTask( $this->getTitleObjectFromRevision() );
 		}
 
