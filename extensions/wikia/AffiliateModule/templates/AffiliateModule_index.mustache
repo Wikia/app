@@ -4,18 +4,18 @@
 	<div class="affiliate">
 		<div>
 			<a class="prod-thumb" target="_blank" href="{{url}}">
-				<img alt="" src="{{thumbUrl}}">
+				<img alt="" src="{{thumbUrl}}" data-prod-id="{{id}}" data-prod-name="{{name}}">
 			</a>
 		</div>
 		<div class="placard">
 			<a class="prod-name" target="_blank" href="{{url}}" title="{{name}}">{{name}}</a>
 		</div>
-		<ul class="vendor">
+		<ul class="{{vendor}} vendor">
 			<li>
 				<a class="vendor-logo" target="_blank" href="{{url}}"></a>
 			</li>
 			<li>
-				<a class="wikia-button vendor-button" target="_blank" href="{{url}}">{{buttonLabel}}</a>
+				<a class="vendor-button wikia-button" target="_blank" href="{{url}}">{{buttonLabel}}</a>
 			</li>
 			<li>
 				<a class="vendor-price" target="_blank" href="{{url}}">{{price}}</a>

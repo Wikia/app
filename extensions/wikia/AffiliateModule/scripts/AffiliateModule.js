@@ -45,34 +45,32 @@ require(['wikia.tracker'], function (Tracker) {
 
 			$('.affiliate-module').on('click', elements.join(', '), function () {
 				var $products,
+					$product,
 					trackCategory,
 					trackLabel,
 					trackValue,
+					vendor,
 					productName,
+					productId,
 					productUrl;
 
 				$products = $(this).closest('.affiliate');
+				$product = $products.find('.prod-thumb img');
 				trackCategory = $(this).closest('.affiliate-module').attr('id');
+				trackLabel = $(this).attr('class').split(' ')[0];
 				trackValue = $products.index();
+				vendor = $products.find('.vendor').attr('class').split(' ')[0];
+				productName = $product.attr('data-prod-name');
+				productId = $product.attr('data-prod-id');
 				productUrl = $(this).attr('href');
-
-				if ($(this).hasClass('vendor-button')) {
-					trackLabel = 'vendor-button';
-				} else {
-					trackLabel = $(this).attr('class');
-				}
-
-				if (trackLabel === 'prod-name') {
-					productName = $(this).attr('title');
-				} else {
-					productName = $products.find('.prod-name').attr('title');
-				}
 
 				track({
 					category: trackCategory,
 					label: trackLabel,
 					value: trackValue,
 					title: productName,
+					pid: productId,
+					vendor: vendor,
 					url: productUrl
 				});
 			});
