@@ -121,7 +121,7 @@ class HAWelcomeTask extends BaseTask {
 		return true;
 	}
 
-	private function getDefauletWelcomerUser() {
+	private function getDefaultWelcomerUser() {
 		return User::newFromName( self::DEFAULT_WELCOMER );
 	}
 
@@ -324,7 +324,7 @@ class HAWelcomeTask extends BaseTask {
 	protected function postWallMessageToRecipient() {
 		$this->info( "creating a welcome wall message" );
 		$mWallMessage = WallMessage::buildNewMessageAndPost(
-			$this->welcomeMessage, $this->recipientName, $this->getDefauletWelcomerUser(),
+			$this->welcomeMessage, $this->recipientName, $this->getDefaultWelcomerUser(),
 			wfMessage( 'welcome-message-log' )->inContentLanguage()->text(), false, array(), false, false
 		);
 
