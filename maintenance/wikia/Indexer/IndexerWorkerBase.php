@@ -1,11 +1,11 @@
 <?php
 
+require_once __DIR__.'/../../../lib/composer/autoload.php';
+
 use PhpAmqpLib\Connection\AMQPConnection;
 use PhpAmqpLib\Message\AMQPMessage;
 
-require_once( dirname( __FILE__ ) . '/../../Maintenance.php' );
-
-class IndexerWorkerBase extends Maintenance {
+class IndexerWorkerBase {
 
 	const DEFAULT_EXCHANGE = 'test_ex';
 	const PREFETCH_SIZE = 5;

@@ -34,5 +34,8 @@ class SnippetWorker extends IndexerWorkerBase {
 	}
 }
 
+
 $maintClass = 'SnippetWorker';
-require( RUN_MAINTENANCE_IF_MAIN );
+
+$instance = new $maintClass;
+$instance->execute();
