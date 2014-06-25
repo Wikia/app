@@ -582,36 +582,36 @@ class MediaWiki {
 		return true;
 	}
 
-    /**
-     * Added by Wikia
-     *
-     * Sets metric parameters for the current request
-     *
-     * @param $t Title object
-     * @param $action String name of the action
-     */
-    private function setMetricParameters($title, $action) {
-        global $wgUser, $wgVersion;
+	/**
+	 * Added by Wikia
+	 *
+	 * Sets metric parameters for the current request
+	 *
+	 * @param $t Title object
+	 * @param $action String name of the action
+	 */
+	private function setMetricParameters($title, $action) {
+		global $wgUser, $wgVersion;
 
-        if ($title->isSpecialPage())
-        {
-            MetricManager::setTransactionType(MetricManager::TYPE_PAGE_SPECIAL);
-        } elseif ($title->getNamespace() == NS_MAIN) {
-            MetricManager::setTransactionType(MetricManager::TYPE_PAGE_MAIN);
-        } elseif ($title->getNamespace() == NS_FILE) {
-            MetricManager::setTransactionType(MetricManager::TYPE_PAGE_FILE);
-        } elseif  ($title->getNamespace() == NS_CATEGORY) {
-            MetricManager::setTransactionType(MetricManager::TYPE_PAGE_CATEGORY);
-        } elseif (defined('NS_USER_WALL') && ($title->getNamespace() == NS_USER_WALL)) {
-            MetricManager::setTransactionType(MetricManager::TYPE_PAGE_MESSAGE_WALL);
-        } else {
-            MetricManager::setTransactionType(MetricManager::TYPE_PAGE_OTHER);
-        }
+		if ($title->isSpecialPage())
+		{
+			MetricManager::setTransactionType(MetricManager::TYPE_PAGE_SPECIAL);
+		} elseif ($title->getNamespace() == NS_MAIN) {
+			MetricManager::setTransactionType(MetricManager::TYPE_PAGE_MAIN);
+		} elseif ($title->getNamespace() == NS_FILE) {
+			MetricManager::setTransactionType(MetricManager::TYPE_PAGE_FILE);
+		} elseif  ($title->getNamespace() == NS_CATEGORY) {
+			MetricManager::setTransactionType(MetricManager::TYPE_PAGE_CATEGORY);
+		} elseif (defined('NS_USER_WALL') && ($title->getNamespace() == NS_USER_WALL)) {
+			MetricManager::setTransactionType(MetricManager::TYPE_PAGE_MESSAGE_WALL);
+		} else {
+			MetricManager::setTransactionType(MetricManager::TYPE_PAGE_OTHER);
+		}
 
-        MetricManager::setTransactionParameter(MetricManager::PARAM_LOGGED_IN, $wgUser->isLoggedIn());
-        MetricManager::setTransactionParameter(MetricManager::PARAM_VERSION, $wgVersion);
-        MetricManager::setTransactionParameter(MetricManager::PARAM_ACTION, $action);
-    }
+		MetricManager::setTransactionParameter(MetricManager::PARAM_LOGGED_IN, $wgUser->isLoggedIn());
+		MetricManager::setTransactionParameter(MetricManager::PARAM_VERSION, $wgVersion);
+		MetricManager::setTransactionParameter(MetricManager::PARAM_ACTION, $action);
+	}
 
 	private function main() {
 		global $wgUseFileCache, $wgTitle, $wgUseAjax;
@@ -644,9 +644,9 @@ class MediaWiki {
 		$action = $this->getAction();
 		$wgTitle = $title;
 
-        //Wikia Change
-        $this->setMetricParameters($title, $action);
-        //Wikia Change End
+		//Wikia Change
+		$this->setMetricParameters($title, $action);
+		//Wikia Change End
 
 		if ( $wgUseFileCache && $title->getNamespace() >= 0 ) {
 			wfProfileIn( 'main-try-filecache' );

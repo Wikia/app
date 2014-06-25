@@ -119,12 +119,12 @@ class WallBaseController extends WikiaController{
 		$this->response->setVal('showPager', ($this->countComments > $wallMessagesPerPage) );
 		$this->response->setVal('currentPage', $page );
 
-        if ($this->countComments == 0)
-            MetricManager::setTransactionParameter(MetricManager::PARAM_SIZE_CATEGORY, MetricManager::PARAM_SIZE_CATEGORY_SIMPLE);
-        elseif ($this->countComments <= 10)
-            MetricManager::setTransactionParameter(MetricManager::PARAM_SIZE_CATEGORY, MetricManager::PARAM_SIZE_CATEGORY_AVERAGE);
-        else
-            MetricManager::setTransactionParameter(MetricManager::PARAM_SIZE_CATEGORY, MetricManager::PARAM_SIZE_CATEGORY_COMPLEX);
+		if ($this->countComments == 0)
+			MetricManager::setTransactionParameter(MetricManager::PARAM_SIZE_CATEGORY, MetricManager::PARAM_SIZE_CATEGORY_SIMPLE);
+		elseif ($this->countComments <= 10)
+			MetricManager::setTransactionParameter(MetricManager::PARAM_SIZE_CATEGORY, MetricManager::PARAM_SIZE_CATEGORY_AVERAGE);
+		else
+			MetricManager::setTransactionParameter(MetricManager::PARAM_SIZE_CATEGORY, MetricManager::PARAM_SIZE_CATEGORY_COMPLEX);
 
 		//TODO: keep the varnish cache and do purging on post
 		$this->response->setCacheValidity(WikiaResponse::CACHE_DISABLED);
