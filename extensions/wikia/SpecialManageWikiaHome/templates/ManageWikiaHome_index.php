@@ -46,6 +46,24 @@
 				</div>
 			<? endfor ?>
 			<br />
+			<h3>Marketing slots</h3>
+			<? for( $i=0; $i < 2; $i++ ): ?>
+				<div class="hub-slot marketing-slot">
+					<div class="image-input">
+						<?= $hubsForm->renderField('marketing_slot_image', $i); ?>
+						<div class="image-placeholder">
+						<? if(isset($marketingImages[$i])): ?>
+							<img src="<?= $marketingImages['marketing_slot_image_url'][$i] ?>"/>
+						<? endif ?>
+						</div>
+						<input type="button" class="wmu-show" value="<?= wfMessage('wikia-hubs-add-file-button')->text() ?>" />
+					</div>
+					<?= $hubsForm->renderField('marketing_slot_title', $i); ?>
+					<?= $hubsForm->renderField('marketing_slot_link', $i); ?>
+					<input type="button" class="clear-marketing-slot" value="Clear" />
+				</div>
+			<? endfor ?>
+			<br/>
 			<input type="submit" name="hubs-slots" class="hubs-slots-submit" />
 		</form>
 	</div>

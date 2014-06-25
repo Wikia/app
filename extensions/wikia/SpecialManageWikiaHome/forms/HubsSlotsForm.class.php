@@ -10,7 +10,33 @@ class HubsSlotsForm extends FormBuilderService {
 					'label' => wfMessage('manage-wikia-home-hubs-slot-name')->plain(),
 					'type' => 'select',
 					'isArray' => true
-				]
+				],
+
+			];
+			$fields['marketing_slot_title'] = [
+				'label' => 'Title',
+				'type' => 'text',
+				'isArray' => true
+			];
+			$fields['marketing_slot_image'] = [
+				'type' => 'hidden',
+				'validator' => new WikiaValidatorFileTitle(
+						array(
+							'required' => true
+						),
+						array('wrong-file' => 'wikia-hubs-validator-wrong-file')
+					),
+				'attributes' => array(
+					'class' => 'required wmu-file-name-input'
+				),
+				'class' => 'hidden',
+				'label' => 'Image',
+				'isArray' => true
+			];
+			$fields['marketing_slot_link'] = [
+				'label' => 'Link',
+				'type' => 'text',
+				'isArray' => true
 			];
 		}
 

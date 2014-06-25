@@ -84,7 +84,8 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 		$this->form = new CollectionsForm();
 		$this->statsForm = new StatsForm();
 		$this->hubsForm = new HubsSlotsForm();
-		$hubSlotsValues = $this->prepareArrayFieldsToShow($this->helper->getHubSlotsFromWF($this->corpWikiId));
+		$savedSlotsValues = $this->helper->getHubSlotsFromWF($this->corpWikiId);
+		$homePageSlotsValues = $this->prepareSlots($savedSlotsValues);
 		$collectionsModel = $this->getWikiaCollectionsModel();
 		$this->collectionsList = $collectionsModel->getList($this->visualizationLang);
 		$collectionValues = $this->prepareArrayFieldsToShow($this->collectionsList);
@@ -139,10 +140,16 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 					$this->errorMsg = wfMessage('manage-wikia-home-stats-failure')->text();
 				}
 			} elseif ( $this->request->getVal('hubs-slots', false)) {
-				$hubSlotsValues = $this->request->getParams();
-				$hubSlotsValues = $this->hubsForm->filterData($hubSlotsValues);
-				$hubSavedSlotsValues = $this->prepareArrayFieldsForSave($hubSlotsValues);
-				$status = $this->helper->saveHubSlotsToWF($hubSavedSlotsValues, $this->corpWikiId, $this->visualizationLang);
+				$homePageSlotsValues = $this->request->getParams();
+				$homePageSlotsValues = $this->hubsForm->filterData($homePageSlotsValues);
+				$hubSavedSlotsValues = $homePageSlotsValues['hub_slot'];
+				$marketingSlotsValues = $this->getMarketingSlotsValues($homePageSlotsValues);
+				$marketingSavedSlotsValues = $this->prepareArrayFieldsForSave($marketingSlotsValues);
+				$savedSlotsValues = [
+					'hub_slot' => $hubSavedSlotsValues,
+					'marketing_slot' => $marketingSavedSlotsValues
+				];
+				$status = $this->helper->saveHubSlotsToWF($savedSlotsValues, $this->corpWikiId, $this->visualizationLang);
 				if ( $status ) {
 					$this->infoMsg = wfMessage('manage-wikia-home-hubs-slot-success')->text();
 				} else {
@@ -154,8 +161,8 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 		$this->form->setFieldsValues($collectionValues);
 		$this->statsForm->setFieldsValues($statsValues);
 		$this->verticals = $this->helper->getWikiVerticals();
-		$this->hubSlotsValues = $hubSlotsValues;
-		$this->prepareHubsForm($hubSlotsValues);
+		$this->marketingImages = $this->prepareMarketingSlotImages($savedSlotsValues['marketing_slot']);
+		$this->prepareHubsForm($homePageSlotsValues);
 
 		$this->setVal('videoGamesAmount', $videoGamesAmount);
 		$this->setVal('entertainmentAmount', $entertainmentAmount);
@@ -235,6 +242,28 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 
 	public function onWrongRights() {
 		//we use only its template here...
+	}
+
+	/**
+	 * @desc Used by WMU to get the image url
+	 */
+	public function getImageDetails() {
+		if (!$this->checkAccess()) {
+			return false;
+		}
+
+		wfProfileIn(__METHOD__);
+
+		$fileName = $this->getVal('fileHandler', false);
+		if ($fileName) {
+			$imageData = ImagesService::getLocalFileThumbUrlAndSizes($fileName, 149, ImagesService::EXT_JPG);
+			$this->fileUrl = $imageData->url;
+			$this->imageWidth = $imageData->width;
+			$this->imageHeight = $imageData->height;
+			$this->fileTitle = $imageData->title;
+		}
+
+		wfProfileOut(__METHOD__);
 	}
 
 	/**
@@ -447,6 +476,11 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 		$this->message = $status['message'];
 	}
 
+	private function getMarketingSlotsValues($homePageSlotsValues) {
+		unset($homePageSlotsValues['hub_slot']);
+		return $homePageSlotsValues;
+	}
+
 	/**
 	 * Preparing data received from form to array, which could be easily use to insert data
 	 * to database or update already existing data.
@@ -573,6 +607,28 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 		}
 
 		return $url;
+	}
+
+	private function prepareSlots( $savedSlotsValues ) {
+		$marketingSavedSlotsValues = $this->getMarketingSlotsValues($savedSlotsValues);
+		$marketingSavedSlotsValues = $marketingSavedSlotsValues['marketing_slot'];
+		$marketingSavedSlotsValues = $this->prepareArrayFieldsToShow($marketingSavedSlotsValues);
+
+		$homePageSlotsValues = [
+			'hub_slot' => $savedSlotsValues['hub_slot']
+		];
+		return array_merge($homePageSlotsValues, $marketingSavedSlotsValues);
+	}
+
+	private function prepareMarketingSlotImages( $marketingSlots ) {
+		$marketingImages = [];
+		foreach ($marketingSlots as $key => $slot) {
+			if (!empty($slot['marketing_slot_image'])) {
+				$photo = ImagesService::getLocalFileThumbUrlAndSizes($slot['marketing_slot_image'], 149, ImagesService::EXT_JPG);
+				$marketingImages[$key] = $photo->url;
+			}
+		}
+		return $marketingImages;
 	}
 
 	/**
