@@ -78,7 +78,7 @@ class IndexerWorkerBase extends Maintenance {
 	}
 
 	private function get_from_env( $param ) {
-		return isset( $_ENV[ $param ] ) ? $_ENV[ $param ] : false;
+		return getenv($param);
 	}
 
 	private function connect( $routing_key, $exchange = null ) {
