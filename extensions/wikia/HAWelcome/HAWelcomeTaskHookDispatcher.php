@@ -27,6 +27,7 @@ class HAWelcomeTaskHookDispatcher {
 
 	public function dispatch() {
 		if ( $this->hasContributorBeenWelcomedRecently() ) {
+			$this->info( "aborting the welcome hook: user has been welcomed recently" );
 			// abort if they have contributed recently
 			return true;
 		}
@@ -35,16 +36,21 @@ class HAWelcomeTaskHookDispatcher {
 			// we are working with an edit from a registered contributor
 
 			if ( $this->currentUserIsWelcomeExempt() || $this->currentUserIsDefaultWelcomer() || $this->currentUserIsFounder() ) {
+				$this->info( "aborting the welcome hook for an exempt user, default welcomer, or founder" );
 				return true;
 			}
 
 			if ( $this->currentUserHasLocalEdits() ) {
-				// TODO: update admin activity depending on welcome user settings lines 138-152
+				$this->info( "aborting the welcome hook for a user that has local edits" );
+				$this->updateAdminActivity();
 				return true;
 			}
 
 			$this->markHAWelcomePosted();
 			$this->queueWelcomeTask( $this->getTitleObjectFromRevision() );
+			$this->info( "queued welcome task" );
+		} else {
+			$this->info( "aborting the welcome hook for an anonymous user" );
 		}
 
 		return true;
@@ -70,6 +76,26 @@ class HAWelcomeTaskHookDispatcher {
 
 	protected function currentUserHasLocalEdits() {
 		return $this->currentUser->getEditCountLocal() > 1;
+	}
+
+	public function updateAdminActivity() {
+		// FIXME: @michalroszka (from 368101b9) the intent here is not very clear. Can we
+		// use better names or comments?
+		$sender = $this->getWelcomeUserFromMessages();
+		if ( in_array( $sender, array( '@latest', '@sysop' ) ) ) {
+			// ... and take the opportunity to update admin activity variable.
+			$groupsArray =  $this->currentUser->getEffectiveGroups();
+
+			$currentUserIsInSysop  = in_array( 'sysop', $groupsArray );
+			$currentUserIsNotInBot = !in_array( 'bot' , $groupsArray );
+			if ( $currentUserIsInSysop && $currentUserIsNotInBot ) {
+				$this->memcacheClient->set( wfMemcKey( 'last-sysop-id' ),  $this->currentUser->getId() );
+			}
+		}
+	}
+
+	public function getWelcomeUserFromMessages() {
+		return trim( wfMessage( 'welcome-user' )->inContentLanguage()->text() );
 	}
 
 	protected function markHAWelcomePosted() {
