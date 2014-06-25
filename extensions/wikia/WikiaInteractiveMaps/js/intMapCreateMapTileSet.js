@@ -15,6 +15,8 @@ define(
 			tileSetThumbTemplate,
 			// template data
 			templateData = {
+				chooseTypeTip: $.msg('wikia-interactive-maps-create-map-choose-type-tip'),
+				chooseTypeTipLink: $.msg('wikia-interactive-maps-create-map-choose-type-tip-link'),
 				mapType: [
 					{
 						type: 'geo',
@@ -70,12 +72,13 @@ define(
 					buttons: {
 						'#intMapBack': 'previousStep'
 					},
-					helper: loadTileSets
+					helper: loadTileSetsList
 				}
 			},
 			noTileSetMsg = $.msg('wikia-interactive-maps-create-map-no-tile-set-found'),
 			// stack for holding choose tile set steps
 			stepsStack = [],
+			cachedTileSets = {},
 			// cached selectors
 			$sections,
 			$tileSetsContainer,
@@ -179,7 +182,8 @@ define(
 
 			modal.trigger('previewTileSet', {
 				type: $target.data('type'),
-				tileSetId: $target.data('id')
+				tileSetId: $target.data('id'),
+				originalImageURL: $target.data('image')
 			});
 		}
 
@@ -191,7 +195,7 @@ define(
 			var trimmedKeyword = event.target.value.trim();
 
 			if (trimmedKeyword.length >= 2) {
-				loadTileSets(trimmedKeyword);
+				loadTileSetsList(trimmedKeyword);
 				$clearSearchBtn.removeClass('hidden');
 			}
 		}
@@ -204,25 +208,55 @@ define(
 			$searchInput.val('');
 
 			// load initial set of tile sets without keyword filter
-			loadTileSets();
+			loadTileSetsList();
 		}
 		/**
-		 * @desc sets up choose tile set step
-		 * @param {string=} keyword - search term
+		 * @desc loads tile sets thumbs
+		 * @param {string=} keyWord - search term
 		 */
-		function loadTileSets(keyword) {
-			getTileSets(keyword).done(function(tileSetData) {
+		function loadTileSetsList(keyWord) {
+
+			getTileSets(keyWord).done(function(tileSetData) {
 				updateTileSetList(renderTileSetsListMarkup(tileSetThumbTemplate, tileSetData));
 			});
 		}
 
 		/**
-		 * @desc sends request to backend for tile sets
-		 * @param {string=} searchTerm - search term, if specified loads tile set which name match this term
+		 * @desc get tile sets from cache of send requests to backend and ache the response
+		 * @param {string=} keyWord - cache key
 		 */
-		function getTileSets(searchTerm) {
-			var dfd = new $.Deferred();
+		function getTileSets(keyWord) {
+			var deferred = new $.Deferred(),
+				key = keyWord || 'default',
+				tileSets = cachedTileSets[key];
 
+			if (typeof tileSets !== 'undefined') {
+				deferred.resolve(tileSets);
+			} else {
+				requestTileSets(keyWord, function(tileSets) {
+					cacheTileSets(key, tileSets);
+					deferred.resolve(tileSets);
+				});
+			}
+
+			return deferred.promise();
+		}
+
+		/**
+		 * @desc add tile sets to cache object
+		 * @param {string} key - key in cache object
+		 * @param {array} tileSets - tile sets array
+		 */
+		function cacheTileSets(key, tileSets) {
+			cachedTileSets[key] = tileSets;
+		}
+
+		/**
+		 * @desc sends request to backend for tile sets
+		 * @param {string} searchTerm - search keyword
+		 * @param {function} cb - callback function
+		 */
+		function requestTileSets(searchTerm, cb) {
 			$.nirvana.sendRequest({
 				controller: 'WikiaInteractiveMapsMap',
 				method: 'getTileSets',
@@ -233,19 +267,15 @@ define(
 					var data = response.results;
 
 					if (data && data.success) {
-						dfd.resolve(data.content);
+						cb(data.content);
 					} else {
-						dfd.reject();
 						modal.trigger('error', data.content.message);
 					}
 				},
 				onErrorCallback: function(response) {
-					dfd.reject();
 					modal.trigger('error', response.results.content.message);
 				}
 			});
-
-			return dfd.promise();
 		}
 
 		/**

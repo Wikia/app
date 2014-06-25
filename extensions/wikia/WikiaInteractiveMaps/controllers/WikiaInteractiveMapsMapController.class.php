@@ -36,7 +36,8 @@ class WikiaInteractiveMapsMapController extends WikiaInteractiveMapsBaseControll
 		$type = trim( $this->request->getVal( 'type', WikiaMaps::MAP_TYPE_GEO ) );
 
 		$this->setData( 'tileSetId', $this->request->getInt( 'tileSetId', 0 ) );
-		$this->setData( 'title', trim( $this->request->getVal( 'title', '' ) ) );
+		$this->setData( 'title', trim( $this->request->getVal( 'map-title', '' ) ) );
+		$this->setData( 'tileSetTitle', trim( $this->request->getVal( 'tile-set-title', '' ) ) );
 		$this->setData( 'image', trim( $this->request->getVal( 'fileUrl', '' ) ) );
 
 		$this->validateMapCreation();
@@ -116,7 +117,7 @@ class WikiaInteractiveMapsMapController extends WikiaInteractiveMapsBaseControll
 	 */
 	private function createTileset() {
 		return $this->mapsModel->saveTileset( [
-			'name' => $this->getData( 'title' ),
+			'name' => $this->getData( 'tileSetTitle' ),
 			'url' => $this->getData( 'image' ),
 			'created_by' => $this->getData( 'creatorName' ),
 		] );

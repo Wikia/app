@@ -1,6 +1,7 @@
-<div id="intMapChooseType" class="int-map-choose-tile-set-type">
+<div id="intMapChooseType">
+	<p class="tip">{{chooseTypeTip}} <a href="http://maps.wikia.com" title="{{chooseTypeTipLink}}" target="_blank">{{chooseTypeTipLink}}</a></p>
 	{{#mapType}}
-		<h3><a href="" title="{{name}}" class="int-map-{{type}} modalEvent" data-event="{{event}}"
+		<h3 class="tile-set-type"><a href="" title="{{name}}" class="int-map-{{type}} modalEvent" data-event="{{event}}"
 			data-type="{{type}}">{{name}}</a></h3>
 	{{/mapType}}
 </div>
@@ -8,7 +9,7 @@
 	<p class="tip">{{chooseTileSetTip}}</p>
 	<div class="input-group">
 		<input type="text" id="intMapTileSetSearch" class="tile-set-search" placeholder="{{searchPlaceholder}}">
-        <button class="clear-search secondary hidden" id="intMapClearSearch" data-event="clearSearch">{{clearSearch}}</button>
+		<button class="clear-search secondary hidden" id="intMapClearSearch" data-event="clearSearch">{{clearSearch}}</button>
 
 	</div>
 	<ul id="intMapTileSetsList">

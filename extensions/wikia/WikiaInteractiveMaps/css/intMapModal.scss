@@ -1,5 +1,6 @@
 @import "skins/oasis/css/core/color";
 @import "skins/oasis/css/core/responsive-variables";
+@import "extensions/wikia/WikiaInteractiveMaps/css/intMapIcons.scss";
 
 .intMapModal {
 	.hidden {
@@ -15,6 +16,10 @@
 		padding-left: 0;
 		padding-right: 0;
 		width: 100%;
+
+		label {
+			font-weight: bold;
+		}
 
 		input,
 		select,
@@ -34,6 +39,36 @@
 		}
 	}
 
+	.tile-set-type {
+		box-sizing: border-box;
+		float: left;
+		font-weight: bold;
+		padding-bottom: 10px;
+		text-align: center;
+		width: 50%;
+
+		&:first-of-type {
+			border-right: 1px solid $color-page-border-subtle;
+		}
+
+		a {
+			display: inline-block;
+			background-repeat: no-repeat;
+			background-size: 150px;
+			min-width: 130px;
+			padding-top: 160px;
+			background-position: 50% top;
+		}
+	}
+
+	.int-map-geo {
+		@include int-map-icon-geo-tile-set-blue();
+	}
+
+	.int-map-custom {
+		@include int-map-icon-custom-tile-set-blue();
+	}
+
 	.int-map-browse-tile-set {
 		ul {
 			clear: both;
@@ -49,16 +84,15 @@
 			float: left;
 			padding: 10px;
 			width: 20%;
-
-			@media screen and (max-width: $breakpoint-min) {
-				width: 25%;
-			}
 		}
-
-
 	}
 
 	.upload-link {
+		@include int-map-icon-add-poi-blue();
+
+		background-position: 50% 10px;
+		background-repeat: no-repeat;
+		background-size: 40px;
 		border: 1px dashed $color-page-border-subtle;
 		box-sizing: border-box;
 		display: block;
