@@ -1,5 +1,9 @@
 <?php
-
+/**
+ * Hook dispatching logic for the HAWelcome task. The dispatching for the
+ * task in the hook is not trivial and I think deserves it's own class that
+ * encapsulates the logic for sending the welcome message.
+ */
 
 use Wikia\Logger\Loggable;
 
@@ -137,6 +141,7 @@ class HAWelcomeTaskHookDispatcher {
 
 	public function setRevisionObject( \Revision $revisionObject ) {
 		$this->revisionObject = $revisionObject;
+		return $this;
 	}
 
 	public function setCityId( $cityId ) {
