@@ -288,7 +288,9 @@ define(
 			isUserLoggedIn: isUserLoggedIn,
 			showForceLoginModal: showForceLoginModal,
 			refreshIfAfterForceLogin: refreshIfAfterForceLogin,
-			handleNirvanaException: handleNirvanaException
+			handleNirvanaException: handleNirvanaException,
+			showError: showError,
+			cleanUpError: cleanUpError
 		}
 	}
 );
