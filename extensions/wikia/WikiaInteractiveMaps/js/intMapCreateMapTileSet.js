@@ -75,6 +75,8 @@ define(
 			noTileSetMsg = $.msg('wikia-interactive-maps-create-map-no-tile-set-found'),
 			// stack for holding choose tile set steps
 			stepsStack = [],
+			// dalay time for jQuery debounde
+			dabounceDelay = 250,
 			// cached selectors
 			$sections,
 			$tileSetsContainer,
@@ -103,7 +105,7 @@ define(
 				.on('change', '#intMapUpload', function(event) {
 					uploadNewTileSetImage(event.target.parentNode);
 				})
-				.on('keyup', '#intMapTileSetSearch', $.debounce(250, searchForTileSets));
+				.on('keyup', '#intMapTileSetSearch', $.debounce(dabounceDelay, searchForTileSets));
 
 		}
 
