@@ -94,7 +94,7 @@ define('wikia.intMap.poiCategories',
 		function init(templates, _params, _trigger) {
 			// set reference to params and trigger callback
 			trigger = _trigger;
-			params = _params;
+			params = _params || {};
 			mapId = $('iframe[name=wikia-interactive-map]').data('mapid');
 
 			poiCategoriesTemplate = templates[0];
@@ -104,12 +104,12 @@ define('wikia.intMap.poiCategories',
 			setModalMode(typeof params !== 'undefined' && params.hasOwnProperty('id'));
 
 			setUpParentPoiCategories()
-				//.then(retrievePoiCategoriesFromService)?
-				.then(setUpModal);
+				.then(function () {
+					setUpModal(params);
+				});
 		}
 
 		function setUpModal(data) {
-			data = data || {}; //TODO existing data from service
 			setUpTemplateData(data);
 			mapUrl = data.mapUrl;
 
