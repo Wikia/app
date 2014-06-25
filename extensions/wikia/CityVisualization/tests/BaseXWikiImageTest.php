@@ -83,6 +83,17 @@ class BaseXWikiImageTest extends WikiaBaseTest {
 		//test image dimensions
 	}
 
+	public function testUploadByUrl_nonExistingImageThumbnailUrlHandling() {
+		$t = new TmpImageClass("non-existing-image-name");
+
+		$targetWidth = 10;
+		$targetHeight = 10;
+
+		$url =$t->getCroppedThumbnailUrl($targetWidth, $targetHeight, ImagesService::EXT_JPEG);
+
+		$this->assertEquals( $url, null);
+	}
+
 	public function testUploadByUrl_checksThumbnailAccessibility() {
 		$t = new TmpImageClass("name");
 		$srcFile = GlobalFile::newFromText( "Wiki-wordmark.png", 831 );

@@ -38,10 +38,15 @@ abstract class BaseXWikiImage {
 
 	public function getCroppedThumbnailUrl($desiredWidth, $desiredHeight, $newExtension=null) {
 		if (empty($this->width) or empty($this->height)){
-			$this->getImageDimensions();
+			$this->provideImageDimensions();
 		}
-		$url = ImagesService::getCroppedThumbnailUrl($this->getThumbnailPurgeUrl(), $desiredWidth, $desiredHeight, $this->width, $this->height, $newExtension);
-		return wfReplaceImageServer( $url );
+
+		if (empty($this->width) or empty($this->height)){
+			return null;
+		} else {
+			$url = ImagesService::getCroppedThumbnailUrl($this->getThumbnailPurgeUrl(), $desiredWidth, $desiredHeight, $this->width, $this->height, $newExtension);
+			return wfReplaceImageServer( $url );
+		}
 	}
 
 	// urls used for purging cache
@@ -63,12 +68,16 @@ abstract class BaseXWikiImage {
 
 	protected function provideImageDimensions($img = null) {
 		if (empty($img)){
-			$file = $this->getSwiftStorage()->read($this->getLocalPath());
-			$img = imagecreatefromstring($file);
+			if ($this->getSwiftStorage()->exists($this->getLocalPath())){
+				$file = $this->getSwiftStorage()->read($this->getLocalPath());
+				$img = imagecreatefromstring($file);
+			}
 		}
 
-		$this->width = imagesx($img);
-		$this->height= imagesy($img);
+		if (!empty($img)){
+			$this->width = imagesx($img);
+			$this->height= imagesy($img);
+		}
 	}
 
 	protected function getBaseUrl() {
