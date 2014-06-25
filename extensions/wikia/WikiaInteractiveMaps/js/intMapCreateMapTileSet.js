@@ -215,7 +215,6 @@ define(
 		 * @param {string=} keyWord - search term
 		 */
 		function loadTileSetsList(keyWord) {
-
 			getTileSets(keyWord).done(function(tileSetData) {
 				updateTileSetList(renderTileSetsListMarkup(tileSetThumbTemplate, tileSetData));
 			});
