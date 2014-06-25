@@ -27,10 +27,11 @@ class SnippetWorker extends IndexerWorkerBase {
 	}
 
 	protected function get_worker() {
-		if ( !isset( $this->worker ) ) {
-			$this->worker = new JsonFormatWorker();
-		}
-		return $this->worker;
+		return new JsonFormatWorker();
+//		if ( !isset( $this->worker ) ) {
+//			$this->worker = new JsonFormatWorker();
+//		}
+//		return $this->worker;
 	}
 }
 
