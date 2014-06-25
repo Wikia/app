@@ -11,16 +11,58 @@ namespace Wikia\Tasks\Tasks;
 
 class MultiTask extends BaseTask {
 	/**
-	 * @param $uid
-	 * @param string $article
-	 * @param string $text
-	 * @param string $summary
-	 * @param string $wikis
-	 * @param string $lang
-	 * @param string $cat
-	 * @param string $params
+	 * @param $params
+	 * @return bool
 	 */
-	public function edit( $uid, $article = '', $text = '', $summary = '', $wikis = '', $lang = '', $cat = '', $params = '' ) {
+	public function move( $params ) {
+		/** @var \Title $oldTitle */
+		list($_, $_, $_, $impersonatedUsername, $oldTitle) = $this->parseCommon($params);
+		$newTitle = isset($params['newpage']) ? \Title::newFromText($params['newpage']) : null;
+
+		if (!is_object($oldTitle) || !is_object($newTitle)) {
+			$this->error('move page request invalid, terminating', [
+				'old_page' => $params['page'],
+				'new_page' => $params['newpage'],
+			]);
+
+			return false;
+		}
+
+		$oldNamespace = $oldTitle->getNamespace();
+		$oldTitleText = str_replace(' ', '_', $oldTitle->getText());
+		$newNamespace = $newTitle->getNamespace();
+		$newTitleText = str_replace(' ', '_', $newTitle->getText());
+
+		$commandParams = [ // each param has an extra "-" because the script reads it this way
+			'-u' => $impersonatedUsername,
+			'-ot' => $oldTitleText,
+			'-on' => $oldNamespace,
+			'-nt' => $newTitleText,
+			'-nn' => $newNamespace,
+		];
+
+		if (isset($params['reason'])) {
+			$commandParams['-r'] = $params['reason'];
+		}
+
+		if (isset($params['redirect'])) {
+			$commandParams['-redirect'] = 1;
+		}
+
+		if (isset($params['watch'])) {
+			$commandParams['-watch'] = 1;
+		}
+
+		$result = $this->runOnWikis(
+			$params['wikis'],
+			$params['lang'],
+			$params['cat'],
+			$params['selwikia'],
+			'move',
+			$commandParams
+		);
+
+		return array_sum($result);
 	}
 
 	/**
@@ -28,11 +70,9 @@ class MultiTask extends BaseTask {
 	 * @return bool
 	 */
 	public function delete( $params ) {
-		$escapedImpersonatedName = escapeshellarg($params['user']);
-		$createdBy = \User::newFromId($this->createdBy());
-		$impersonatedUser = \User::newFromName($escapedImpersonatedName);
-		$impersonatedUsername = is_object($impersonatedUser) ? $escapedImpersonatedName : '';
-		$page = \Title::newFromText($params['page']);
+		/** @var \Title $page */
+		/** @var \User $createdBy */
+		list($createdBy, $_, $_, $impersonatedUsername, $page) = $this->parseCommon($params);
 
 		$this->info('deleting page', [
 			'user' => $createdBy->getName(),
@@ -61,24 +101,32 @@ class MultiTask extends BaseTask {
 			$commandParams['r'] = $params['reason'];
 		}
 
-		$this->runOnWikis($params['wikis'], $params['lang'], $params['cat'], $params['selwikia'], 'delete', $commandParams);
+		$result = $this->runOnWikis(
+			$params['wikis'],
+			$params['lang'],
+			$params['cat'],
+			$params['selwikia'],
+			'delete',
+			$commandParams
+		);
 
-		return true;
+		return array_sum($result);
 	}
 
 	/**
-	 * @param $uid
-	 * @param string $article
-	 * @param string $newarticle
-	 * @param string $reason
-	 * @param string $wikis
-	 * @param string $lang
-	 * @param string $cat
-	 * @param string $params
-	 * @return bool|mixed|string
-	 * @throws \Exception
+	 * @param $params
 	 */
-	public function move( $uid, $article = '', $newarticle = '', $reason = '', $wikis = '', $lang = '', $cat = '', $params = '' ) {
+	public function edit( $params ) {
+	}
+
+	private function parseCommon($params) {
+		$escapedImpersonatedName = isset($params['user']) ? escapeshellarg($params['user']) : 'Maintenance script';
+		$createdBy = \User::newFromId($this->createdBy());
+		$impersonatedUser = \User::newFromName($escapedImpersonatedName);
+		$impersonatedUsername = is_object($impersonatedUser) ? $escapedImpersonatedName : '';
+		$oldTitle = isset($params['page']) ? \Title::newFromText($params['page']) : null;
+
+		return [$createdBy, $escapedImpersonatedName, $impersonatedUser, $impersonatedUsername, $oldTitle];
 	}
 	
 	private function runOnWikis($wikiInputRaw, $lang, $cat, $wikiId, $action, $commandParams) {
@@ -110,6 +158,7 @@ class MultiTask extends BaseTask {
 		}
 
 		if (!empty($cat)) {
+			$cat = intval($cat);
 			$query->AND_( 'city_cat_mapping.cat_id' )->EQUAL_TO( $cat )
 				->JOIN('city_cat_mapping')->ON('city_cat_mapping.city_id', 'city_list.city_id');
 		}
@@ -165,5 +214,5 @@ class MultiTask extends BaseTask {
 		}
 		
 		return $res;
-	} 
+	}
 }

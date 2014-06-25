@@ -100,6 +100,7 @@ class TaskRunner {
 //		'CreateWikiLocalJob',
 			'ImageReviewTask',
 			'MultiDeleteTask',
+			'MultiMoveTask',
 //			'PromoteImageReviewTask',
 			'UserRollback',
 			'UserRename',
