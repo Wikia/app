@@ -16,7 +16,7 @@ class MultiTask extends BaseTask {
 	 */
 	public function move( $params ) {
 		/** @var \Title $oldTitle */
-		list($_, $_, $_, $impersonatedUsername, $oldTitle) = $this->parseCommon($params);
+		list($_, $impersonatedUsername, $oldTitle) = $this->parseCommon($params);
 		$newTitle = isset($params['newpage']) ? \Title::newFromText($params['newpage']) : null;
 
 		if (!is_object($oldTitle) || !is_object($newTitle)) {
@@ -72,7 +72,7 @@ class MultiTask extends BaseTask {
 	public function delete( $params ) {
 		/** @var \Title $page */
 		/** @var \User $createdBy */
-		list($createdBy, $_, $_, $impersonatedUsername, $page) = $this->parseCommon($params);
+		list($createdBy, $impersonatedUsername, $page) = $this->parseCommon($params);
 
 		$this->info('deleting page', [
 			'user' => $createdBy->getName(),
@@ -115,8 +115,51 @@ class MultiTask extends BaseTask {
 
 	/**
 	 * @param $params
+	 * @return bool|int
 	 */
 	public function edit( $params ) {
+		/** @var \Title $page */
+		list($_, $impersonatedUsername, $page) = $this->parseCommon($params);
+
+		if (!is_object($page)) {
+			$this->error('page is invalid, terminating task', [
+				'title' => $params['page'],
+			]);
+
+			return false;
+		}
+
+		$commandParams = [
+			't' => str_replace(' ', '_', $page->getText()),
+			'n' => $page->getNamespace(),
+			'x' => $params['text'],
+		];
+
+		if (!empty($impersonatedUsername)) {
+			$commandParams['u'] = $impersonatedUsername;
+		}
+
+		if (!empty($params['summary'])) {
+			$commandParams['s'] = $params['summary'];
+		}
+
+		$optionsSwitches = ['m','b','a','-no-rc', '-newonly'];
+		for ($i = 0; $i < count($params['flags']); ++$i) {
+			if ($params['flags'][$i]) {
+				$commandParams[$optionsSwitches[$i]] = null;
+			}
+		}
+
+		$result = $this->runOnWikis(
+			$params['wikis'],
+			$params['lang'],
+			$params['cat'],
+			$params['selwikia'],
+			'edit',
+			$commandParams
+		);
+
+		return array_sum($result);
 	}
 
 	private function parseCommon($params) {
@@ -124,9 +167,9 @@ class MultiTask extends BaseTask {
 		$createdBy = \User::newFromId($this->createdBy());
 		$impersonatedUser = \User::newFromName($escapedImpersonatedName);
 		$impersonatedUsername = is_object($impersonatedUser) ? $escapedImpersonatedName : '';
-		$oldTitle = isset($params['page']) ? \Title::newFromText($params['page']) : null;
+		$page = isset($params['page']) ? \Title::newFromText($params['page']) : null;
 
-		return [$createdBy, $escapedImpersonatedName, $impersonatedUser, $impersonatedUsername, $oldTitle];
+		return [$createdBy, $impersonatedUsername, $page];
 	}
 	
 	private function runOnWikis($wikiInputRaw, $lang, $cat, $wikiId, $action, $commandParams) {
