@@ -3,18 +3,6 @@
 class ThumbnailController extends WikiaController {
 	const DEFAULT_TEMPLATE_ENGINE = WikiaResponse::TEMPLATE_ENGINE_MUSTACHE;
 
-	public function makeThumb() {
-		$thumb = $this->getVal( 'thumb' );
-		if ( $thumb instanceof ThumbnailVideo ) {
-			$handler = 'video';
-		} else {
-			$handler = 'image';
-		}
-
-		// Dispatch to the appropriate handler
-		$this->forward( __CLASS__, $handler );
-	}
-
 	/**
 	 * Thumbnail Template
 	 * @requestParam MediaTransformOutput thumb
