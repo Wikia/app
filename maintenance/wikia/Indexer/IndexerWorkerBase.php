@@ -10,7 +10,6 @@ class IndexerWorkerBase extends Maintenance {
 	const DEFAULT_EXCHANGE = 'test_ex';
 	const PREFETCH_SIZE = 5;
 	const DEADS = 'dead_bodies';
-	const TTL = 60000; //1 minute ttl
 	protected $city_id;
 	private $host;
 	private $port;
@@ -87,7 +86,7 @@ class IndexerWorkerBase extends Maintenance {
 		$connection = $this->get_connection();
 		$channel = $connection->channel();
 		$channel->queue_declare( $queue, false, true, false, false, false,
-			[ 'x-dead-letter-exchange' => [ 'S', static::DEADS ], 'x-message-ttl' => [ 'I', static::TTL ] ] );
+			[ 'x-dead-letter-exchange' => [ 'S', static::DEADS ] ] );
 		$channel->queue_bind( $queue, $exchange, $routing_key );
 		$channel->basic_qos( null, static::PREFETCH_SIZE, null );
 		$channel->basic_consume( $queue, "", false, false, false, false, array( $this, 'route' ) );
