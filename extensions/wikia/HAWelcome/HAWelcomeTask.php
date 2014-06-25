@@ -89,8 +89,6 @@ class HAWelcomeTask extends BaseTask {
 			return true;
 		}
 
-		$this->captureAndReplaceGlobalWgUserWithWelcomeUser();
-
 		$this->setRecipient();
 
 		$this->setSender();
@@ -120,23 +118,11 @@ class HAWelcomeTask extends BaseTask {
 			}
 		}
 
-		$this->restoreGlobalWgUser();
-
 		return true;
 	}
 
-	private function captureAndReplaceGlobalWgUserWithWelcomeUser() {
-		/**
-		 * FIXME: why are we doing this? Is it for the references in this->sendMessage or somewhere else?
-		 */
-		global $wgUser;
-		$this->temporaryWgUser = $wgUser;
-		$wgUser = User::newFromName( self::DEFAULT_WELCOMER );
-	}
-
-	private function restoreGlobalWgUser() {
-		global $wgUser;
-		$wgUser = $this->temporaryWgUser;
+	private function getDefauletWelcomerUser() {
+		return User::newFromName( self::DEFAULT_WELCOMER );
 	}
 
 	public function getUserFeatureFlags() {
@@ -338,7 +324,7 @@ class HAWelcomeTask extends BaseTask {
 	protected function postWallMessageToRecipient() {
 		$this->info( "creating a welcome wall message" );
 		$mWallMessage = WallMessage::buildNewMessageAndPost(
-			$this->welcomeMessage, $this->recipientName, $this->getMessageWallSender(),
+			$this->welcomeMessage, $this->recipientName, $this->getDefauletWelcomerUser(),
 			wfMessage( 'welcome-message-log' )->inContentLanguage()->text(), false, array(), false, false
 		);
 
@@ -359,18 +345,6 @@ class HAWelcomeTask extends BaseTask {
 		}
 
 		$this->getRecipientTalkPage()->doEdit( $welcomeMessage, wfMessage( 'welcome-message-log' )->inContentLanguage()->text(), $this->integerFlags );
-	}
-
-	protected function getMessageWallSender() {
-		/*
-		 * FIXME: can this be replaced with
-		 *	$wgUser = User::newFromName( self::DEFAULT_WELCOMER );
-		 *
-		 * If so, then we can remove the captureAndReplaceGlobalWgUserWithWelcomeUser/restore methods.
-		 *
-		 */
-		global $wgUser;
-		return $wgUser;
 	}
 
 	/**
