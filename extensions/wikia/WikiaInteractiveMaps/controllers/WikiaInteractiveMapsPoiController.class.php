@@ -198,6 +198,8 @@ class WikiaInteractiveMapsPoiController extends WikiaInteractiveMapsBaseControll
 		$numberOfPoiCategoriesCreated = 0;
 
 		$logEntries = [];
+		$requestBody = [];
+		$poiCategoryData = [];
 		for ( $i = 0; $i < $numberOfPoiCategories; $i++ ) {
 			$poiCategoryData = [
 				'map_id' => $mapId,
@@ -214,9 +216,14 @@ class WikiaInteractiveMapsPoiController extends WikiaInteractiveMapsBaseControll
 				$poiCategoryData[ 'marker' ] = $poiCategoryMarkers[ $i ];
 			}
 
-			$response = $this->mapsModel->savePoiCategory( $poiCategoryData );
+			array_push( $requestBody, $poiCategoryData );
+		}
 
-			if ( true === $response[ 'success' ]  ) {
+		$response = $this->mapsModel->savePoiCategories( $requestBody );
+
+		if ( true === $response[ 'success' ]  ) {
+			$items = $response[ 'items' ];
+			for ( $i = 0; i < count( $items ); i++ ) {
 				$logEntries[] = WikiaMapsLogger::newLogEntry(
 					WikiaMapsLogger::ACTION_CREATE_PIN_TYPE,
 					$mapId,
@@ -225,9 +232,9 @@ class WikiaInteractiveMapsPoiController extends WikiaInteractiveMapsBaseControll
 				);
 				$numberOfPoiCategoriesCreated++;
 			}
-		}
-		if ( !empty( $logEntries ) ) {
-			WikiaMapsLogger::addLogEntries( $logEntries );
+			if ( !empty( $logEntries ) ) {
+				WikiaMapsLogger::addLogEntries( $logEntries );
+			}
 		}
 
 		$this->setData( 'createdPoiCategories', $numberOfPoiCategoriesCreated );
