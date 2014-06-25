@@ -59,8 +59,6 @@ define(
 		 */
 
 		function preview(tileSet) {
-
-			console.log(tileSet);
 			modal.trigger('cleanUpError');
 
 			tileSetData = tileSet;
