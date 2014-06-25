@@ -214,7 +214,7 @@ class ThumbnailImage extends MediaTransformOutput {
 
 	function renderView( $options = array() ) {
 		WikiaLogger::instance()->debug( 'Media method '.__METHOD__.' called',
-			array_merge( $options, [ 'url' => $this->url ] ) );
+			array_merge( $options, [ 'url' => $this->url, 'method' => __METHOD__ ] ) );
 
 		return F::app()->renderView( 'ThumbnailController', 'image', [
 			'thumb'   => $this,
@@ -253,7 +253,7 @@ class ThumbnailImage extends MediaTransformOutput {
 		}
 
 		WikiaLogger::instance()->debug('Media method '.__METHOD__.' called',
-			array_merge( $options, [ 'url' => $this->url ] ) );
+			array_merge( $options, [ 'url' => $this->url, 'method' => __METHOD__ ] ) );
 
 		$alt = empty( $options['alt'] ) ? '' : $options['alt'];
 
