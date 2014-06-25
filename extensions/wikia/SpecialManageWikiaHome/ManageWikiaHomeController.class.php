@@ -142,18 +142,21 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 			} elseif ( $this->request->getVal('hubs-slots', false)) {
 				$homePageSlotsValues = $this->request->getParams();
 				$homePageSlotsValues = $this->hubsForm->filterData($homePageSlotsValues);
-				$hubSavedSlotsValues = $homePageSlotsValues['hub_slot'];
-				$marketingSlotsValues = $this->getMarketingSlotsValues($homePageSlotsValues);
-				$marketingSavedSlotsValues = $this->prepareArrayFieldsForSave($marketingSlotsValues);
-				$savedSlotsValues = [
-					'hub_slot' => $hubSavedSlotsValues,
-					'marketing_slot' => $marketingSavedSlotsValues
-				];
-				$status = $this->helper->saveHubSlotsToWF($savedSlotsValues, $this->corpWikiId, $this->visualizationLang);
-				if ( $status ) {
-					$this->infoMsg = wfMessage('manage-wikia-home-hubs-slot-success')->text();
-				} else {
-					$this->errorMsg = wfMessage('manage-wikia-home-hubs-slot-error')->text();
+				$isValid = $this->hubsForm->validate($homePageSlotsValues);
+				if ( $isValid ) {
+					$hubSavedSlotsValues = $homePageSlotsValues['hub_slot'];
+					$marketingSlotsValues = $this->getMarketingSlotsValues($homePageSlotsValues);
+					$marketingSavedSlotsValues = $this->prepareArrayFieldsForSave($marketingSlotsValues);
+					$savedSlotsValues = [
+						'hub_slot' => $hubSavedSlotsValues,
+						'marketing_slot' => $marketingSavedSlotsValues
+					];
+					$status = $this->helper->saveHubSlotsToWF($savedSlotsValues, $this->corpWikiId, $this->visualizationLang);
+					if ( $status ) {
+						$this->infoMsg = wfMessage('manage-wikia-home-hubs-slot-success')->text();
+					} else {
+						$this->errorMsg = wfMessage('manage-wikia-home-hubs-slot-error')->text();
+					}
 				}
 			}
 		}

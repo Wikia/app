@@ -20,11 +20,18 @@ class HubsSlotsForm extends FormBuilderService {
 			];
 			$fields['marketing_slot_image'] = [
 				'type' => 'hidden',
-				'validator' => new WikiaValidatorFileTitle(
+				'validator' => new WikiaValidatorListValue(
 						array(
-							'required' => true
-						),
-						array('wrong-file' => 'wikia-hubs-validator-wrong-file')
+							'validator' => new WikiaValidatorImageSize(
+								array(
+									'minWidth' => 330,
+									'minHeight' => 210,
+									'maxWidth' => 330,
+									'maxHeight' => 210,
+								),
+								array('wrong-size' => 'Image should have 330px x 210px')
+							),
+						)
 					),
 				'attributes' => array(
 					'class' => 'required wmu-file-name-input'
