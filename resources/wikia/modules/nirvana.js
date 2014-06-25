@@ -7,10 +7,11 @@
 	'use strict';
 
 	function nirvana($) {
+		var allowedFormats = ['json', 'html', 'jsonp'];
 
 		/**
 		 * Get Nirvana API url
-		 * 
+		 *
 		 * @param Object options
 		 *  controller - controller name
 		 *  method - method name
@@ -68,7 +69,7 @@
 				url;
 
 
-			if( !(format === 'json' || format === 'html' || format === 'jsonp' ) ) {
+			if ( allowedFormats.indexOf( format ) === -1 ) {
 				throw 'Only Json,Jsonp and Html format are allowed';
 			}
 
