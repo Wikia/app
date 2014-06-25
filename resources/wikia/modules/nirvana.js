@@ -7,6 +7,18 @@
 	'use strict';
 
 	function nirvana($) {
+
+		/**
+		 * Get Nirvana API url
+		 * 
+		 * @param Object options
+		 *  controller - controller name
+		 *  method - method name
+		 *  format - (optional) responce format
+		 *  scriptPath - (optional) url protocol and location
+		 *  data - (optional) additional query string params
+		 * @returns {string}
+		 */
 		function getUrl( options ) {
 			var dataParams = options.data || {},
 				format = (options.format || 'json').toLowerCase(),
