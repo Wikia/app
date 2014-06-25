@@ -163,13 +163,16 @@ class MultiTask extends BaseTask {
 	}
 
 	private function parseCommon($params) {
-		$escapedImpersonatedName = isset($params['user']) ? escapeshellarg($params['user']) : 'Maintenance script';
+		$impersonatedName = isset($params['user']) ? $params['user'] : 'Maintenance script';
 		$createdBy = \User::newFromId($this->createdBy());
-		$impersonatedUser = \User::newFromName($escapedImpersonatedName);
-		$impersonatedUsername = is_object($impersonatedUser) ? $escapedImpersonatedName : '';
+		$impersonatedUser = \User::newFromName($impersonatedName);
 		$page = isset($params['page']) ? \Title::newFromText($params['page']) : null;
 
-		return [$createdBy, $impersonatedUsername, $page];
+		if (!is_object($impersonatedUser)) {
+			$impersonatedName = '';
+		}
+
+		return [$createdBy, $impersonatedName, $page];
 	}
 	
 	private function runOnWikis($wikiInputRaw, $lang, $cat, $wikiId, $action, $commandParams) {
