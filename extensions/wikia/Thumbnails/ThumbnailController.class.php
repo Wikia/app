@@ -67,9 +67,6 @@ class ThumbnailController extends WikiaController {
 		// @TODO there is no reason to pass two versions of image source.  See if both are actually used and pick one
 		$options['src'] = empty( $options['src'] ) ? $imgSrc : $options['src'];
 
-		// Set a positive flag for whether we need to lazy load
-		$options['lazyLoad'] = empty( $options['noLazyLoad'] ) && ImageLazyLoad::isValidLazyLoadedImage( $options['src'] );
-
 		$linkClasses = $this->getVideoLinkClasses( $options );
 		$linkAttribs = $this->getVideoLinkAttribs( $file, $options );
 		$imgAttribs  = $this->getVideoImgAttribs( $file, $options );
@@ -90,7 +87,10 @@ class ThumbnailController extends WikiaController {
 		$durationAttribs = [];
 		$metaAttribs = [];
 
-		// disable RDF metadata in video thumbnails
+		// Set a positive flag for whether we need to lazy load
+		$options['lazyLoad'] = empty( $options['noLazyLoad'] ) && ImageLazyLoad::isValidLazyLoadedImage( $options['src'] );
+
+		// Disable RDF metadata if we are lazy loading the thumb
 		if ( !$options['lazyLoad'] ) {
 			// link
 			$linkAttribs['itemprop'] = 'video';
