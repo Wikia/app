@@ -9,10 +9,9 @@ class SnippetWorker extends IndexerWorkerBase {
 
 	const PREFETCH_SIZE = 5;
 	private $worker;
-	private $max = 209715200 ; //200MiB
+	private $max = 1000000000 ; //~1GiB
 
 	protected function process( $data ) {
-
 		if( !$data->is_redirect ) {
 			$jw = $this->get_worker();
 			$jw->setHtml( $data->html );
