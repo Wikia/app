@@ -90,7 +90,7 @@ class ThumbnailController extends WikiaController {
 		// Set a positive flag for whether we need to lazy load
 		$options['lazyLoad'] = empty( $options['noLazyLoad'] ) && ImageLazyLoad::isValidLazyLoadedImage( $options['src'] );
 
-		// Disable RDF metadata if we are lazy loading the thumb
+		// Only add RDF metadata when the thumb is not lazy loaded
 		if ( !$options['lazyLoad'] ) {
 			// link
 			$linkAttribs['itemprop'] = 'video';
