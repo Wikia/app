@@ -53,8 +53,7 @@ define(
 				],
 				uploadTileSetImage: [
 					function() {
-						$uploadInput
-							.click()
+						$uploadInput.click()
 					}
 				],
 				previousStep: [
