@@ -42,9 +42,15 @@ class IndexerWorkerBase extends Maintenance {
 
 	public function route( $req ) {
 		$data = json_decode( $req->body );
-		$res = $this->process( $data );
-		if ( !isset( $res ) || $res ) {
-			$req->delivery_info['channel']->basic_ack($req->delivery_info['delivery_tag']);
+		try {
+			$res = $this->process( $data );
+			if ( !isset( $res ) || $res ) {
+				$req->delivery_info['channel']->basic_ack($req->delivery_info['delivery_tag']);
+			} else {
+				$req->delivery_info['channel']->basic_nack($req->delivery_info['delivery_tag']);
+			}
+		} catch (Exception $e) {
+			$req->delivery_info['channel']->basic_nack($req->delivery_info['delivery_tag']);
 		}
 	}
 
