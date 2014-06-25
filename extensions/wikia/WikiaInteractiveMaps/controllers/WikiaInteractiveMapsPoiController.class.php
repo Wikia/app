@@ -16,7 +16,7 @@ class WikiaInteractiveMapsPoiController extends WikiaInteractiveMapsBaseControll
 	 *
 	 * @requestParam Integer $id an unique POI id if not set then we're creating a new POI
 	 * @requestParam Integer $mapId an unique map id
-	 * @requestParam String $name an array of pin types names
+	 * @requestParam String $name an array of POI categories names
 	 * @requestParam String $poi_category_id an unique poi category id
 	 * @requestParam String $link a link to wikia article
 	 * @requestParam Float $lat
@@ -115,6 +115,164 @@ class WikiaInteractiveMapsPoiController extends WikiaInteractiveMapsBaseControll
 			$this->getData( 'poiId' ),
 			$this->getSanitizedData()
 		);
+	}
+
+	/**
+	 * Returns parent/default POI categories recieved from the service
+	 */
+	public function getParentPoiCategories() {
+		$parentPoiCategoriesResponse = $this->mapsModel->cachedRequest( 'getParentPoiCategories', [] );
+		$this->setVal( 'results', $parentPoiCategoriesResponse );
+	}
+
+	/**
+	 * Entry point to create POI categories
+	 *
+	 * @requestParam Integer $mapId an unique map id
+	 * @requestParam Array $poiCategoryNames an array of POI categories names
+	 *
+	 * @throws PermissionsException
+	 * @throws BadRequestApiException
+	 */
+	public function createPoiCategories() {
+		$this->setData( 'mapId', $this->request->getInt( 'mapId' ) );
+		$this->setData( 'poiCategoryNames', $this->request->getArray( 'poiCategoryNames' ) );
+		$this->setData( 'poiCategoryParents', $this->request->getArray( 'poiCategoryParents' ) );
+		$this->setData( 'poiCategoryMarkers', $this->request->getArray( 'poiCategoryMarkers' ) );
+
+		$this->validatePoiCategoriesCreation();
+
+		$this->setData( 'createdBy', $this->wg->User->getName() );
+
+		$this->createPoiCategoriesFromArray();
+		$createdPoiCategories = $this->getData( 'createdPoiCategories' );
+
+		$this->setVal( 'results', $this->getPoiCategoriesCreationResults(
+			count( $this->getData( 'poiCategoryNames' ) ),
+			$createdPoiCategories
+		) );
+	}
+
+	/**
+	 * Validates process of creating POI categories
+	 *
+	 * @throws PermissionsException
+	 * @throws BadRequestApiException
+	 * @throws InvalidParameterApiException
+	 */
+	private function validatePoiCategoriesCreation() {
+		$mapId = $this->getData( 'mapId' );
+		$poiCategoryNames = $this->getData( 'poiCategoryNames' );
+
+		if( $mapId === 0 && empty( $poiCategoryNames ) ) {
+			throw new BadRequestApiException( wfMessage( 'wikia-interactive-maps-create-map-bad-request-error' )->plain() );
+		}
+
+		if( $mapId === 0 ) {
+			throw new InvalidParameterApiException( 'mapId' );
+		}
+
+		if( empty( $poiCategoryNames ) ) {
+			throw new InvalidParameterApiException( 'poiCategoryNames' );
+		}
+
+		if( !$this->hasNamesForAllPoiCategories() ) {
+			throw new InvalidParameterApiException( 'poiCategoryNames' );
+		}
+
+		if( !$this->wg->User->isLoggedIn() ) {
+			throw new PermissionsException( 'interactive maps' );
+		}
+	}
+
+	/**
+	 * Sends requests to the service to create a POI category. Counts how many requests were successful.
+	 */
+	private function createPoiCategoriesFromArray() {
+		$mapId = $this->getData( 'mapId' );
+		$poiCategoryNames = $this->getData( 'poiCategoryNames' );
+		$poiCategoryParents = $this->getData( 'poiCategoryParents' );
+		$poiCategoryMarkers = $this->getData( 'poiCategoryMarkers' );
+
+		$numberOfPoiCategories = count( $poiCategoryNames );
+		$numberOfPoiCategoriesCreated = 0;
+
+		$logEntries = [];
+		for ( $i = 0; $i < $numberOfPoiCategories; $i++ ) {
+			$poiCategoryData = [
+				'map_id' => $mapId,
+				'name' => $poiCategoryNames[ $i ],
+				'created_by' => $this->getData( 'createdBy' ),
+			];
+
+			$poiCategoryData[ 'parent_poi_category_id' ] = ( !empty( $poiCategoryParents[ $i ] ) ) ?
+				(int) $poiCategoryParents[ $i ] :
+				$this->mapsModel->getDefaultParentPoiCategory();
+
+			// if user didn't upload marker then this is empty string. we don't want to send it to api.
+			if ( !empty( $pinTypesMarkers[ $i ] ) ) {
+				$poiCategoryData[ 'marker' ] = $poiCategoryMarkers[ $i ];
+			}
+
+			$response = $this->mapsModel->savePoiCategory( $poiCategoryData );
+
+			if ( true === $response[ 'success' ]  ) {
+				$logEntries[] = WikiaMapsLogger::newLogEntry(
+					WikiaMapsLogger::ACTION_CREATE_PIN_TYPE,
+					$mapId,
+					$poiCategoryNames[ $i ],
+					[ $response->id ]
+				);
+				$numberOfPoiCategoriesCreated++;
+			}
+		}
+		if ( !empty( $logEntries ) ) {
+			WikiaMapsLogger::addLogEntries( $logEntries );
+		}
+
+		$this->setData( 'createdPoiCategories', $numberOfPoiCategoriesCreated );
+	}
+
+	/**
+	 * Returns result of creating POI categories
+	 *
+	 * @param integer $requestedCreations how many POI categories were supposed to be created
+	 * @param integer $createdPoiCategories how many POI categories were created
+	 *
+	 * @return Array
+	 */
+	private function getPoiCategoriesCreationResults( $requestedCreations, $createdPoiCategories ) {
+		$response[ 'success' ] = true;
+
+		if( $createdPoiCategories !== $requestedCreations ) {
+			$response[ 'success' ] = false;
+			$response[ 'content' ] = new stdClass();
+			$response[ 'content' ]->message = wfMessage(
+				'wikia-interactive-maps-create-poi-categories-error',
+				$createdPoiCategories,
+				$requestedCreations
+			)->plain();
+		}
+
+		return $response;
+	}
+
+	/**
+	 * Iterates through all POI categories and returns true if all of them have name, false otherwise
+	 *
+	 * @return bool
+	 */
+	public function hasNamesForAllPoiCategories() {
+		$poiCategoryNames = $this->getData( 'poiCategoryNames' );
+
+		foreach ( $poiCategoryNames as $name ) {
+			$name = trim( $name );
+			if ( empty( $name ) ) {
+				return false;
+			}
+		}
+
+		return true;
 	}
 
 	/**
