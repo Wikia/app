@@ -644,6 +644,14 @@ class Article extends Page {
 						$this->mParserOutput->setPerformanceStats('wikitextSize',strlen($this->getContent()));
 						$this->mParserOutput->setPerformanceStats('htmlSize',strlen($this->mParserOutput->getText()));
 						wfRunHooks('ArticleViewAfterParser',array( $this, $this->mParserOutput ) );
+                        $nodeCount = $this->mParserOutput->getPerformanceStats('nodeCount');
+                        if ($nodeCount < 1000)
+                            MetricManager::setTransactionParameter(MetricManager::PARAM_SIZE_CATEGORY, MetricManager::PARAM_SIZE_CATEGORY_SIMPLE);
+                        elseif ($nodeCount < 10000)
+                            MetricManager::setTransactionParameter(MetricManager::PARAM_SIZE_CATEGORY, MetricManager::PARAM_SIZE_CATEGORY_AVERAGE);
+                        else
+                            MetricManager::setTransactionParameter(MetricManager::PARAM_SIZE_CATEGORY, MetricManager::PARAM_SIZE_CATEGORY_COMPLEX);
+
 					}
 					# </Wikia>
 
@@ -654,6 +662,10 @@ class Article extends Page {
 					break 2;
 			}
 		}
+
+        //Wikia Change
+        MetricManager::setTransactionParameter(MetricManager::PARAM_IS_FROM_PARSER_CACHE, $useParserCache);
+        //Wikia Change End
 
 		# Get the ParserOutput actually *displayed* here.
 		# Note that $this->mParserOutput is the *current* version output.
