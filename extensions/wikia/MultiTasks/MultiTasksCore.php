@@ -396,9 +396,11 @@ class MultiTask extends SpecialPage {
 							case 'MultiDeleteTask':
 								$taskAction = 'delete';
 								break;
-							default:
-								$taskAction = 'delete';
+							case 'MultiWikiEditTask':
+								$taskAction = 'edit';
 								break;
+							default:
+								throw new InvalidArgumentException("unsupported modern class: {$this->mTaskClass}");
 						}
 
 						$task->call($taskAction, $this->mTaskParams);

@@ -101,6 +101,7 @@ class TaskRunner {
 			'ImageReviewTask',
 			'MultiDeleteTask',
 			'MultiMoveTask',
+			'MultiWikiEditTask',
 //			'PromoteImageReviewTask',
 			'UserRollback',
 			'UserRename',

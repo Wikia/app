@@ -42,8 +42,7 @@ if ( $add ) {
 
 	if (TaskRunner::isModern('MultiMoveTask')) {
 		$task = new \Wikia\Tasks\Tasks\MultiTask();
-		$task->call('move', unserialize($oTask->task_arguments));
-		$task->queue();
+		$task->move(unserialize($oTask->task_arguments));
 	} else {
 		$Maintenance = new MultiMoveTask();
 		$Maintenance->execute($oTask);
