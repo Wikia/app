@@ -77,6 +77,8 @@ define(
 			stepsStack = [],
 			// dalay time for jQuery debounde
 			dabounceDelay = 250,
+			// minimum number of characters to trigger search request
+			searchCharLength = 2,
 			// cached selectors
 			$sections,
 			$tileSetsContainer,
@@ -191,7 +193,7 @@ define(
 		function searchForTileSets(event) {
 			var trimmedKeyword = event.target.value.trim();
 
-			if (trimmedKeyword.length >= 2) {
+			if (trimmedKeyword.length >= searchCharLength) {
 				loadTileSets(trimmedKeyword);
 				$clearSearchBtn.removeClass('hidden');
 			}
@@ -213,18 +215,17 @@ define(
 		 * @param {string=} keyword - search term
 		 */
 		function loadTileSets(keyword) {
-			getTileSets(keyword).done(function(tileSetData) {
+			getTileSets(keyword || null, function(tileSetData) {
 				updateTileSetList(renderTileSetsListMarkup(tileSetThumbTemplate, tileSetData));
 			});
 		}
 
 		/**
 		 * @desc sends request to backend for tile sets
-		 * @param {string=} searchTerm - search term, if specified loads tile set which name match this term
+		 * @param {string || null} searchTerm - search term, if specified loads tile set which name match this term
+		 * @param {function} cb - callback function
 		 */
-		function getTileSets(searchTerm) {
-			var dfd = new $.Deferred();
-
+		function getTileSets(searchTerm, cb) {
 			$.nirvana.sendRequest({
 				controller: 'WikiaInteractiveMapsMap',
 				method: 'getTileSets',
@@ -235,19 +236,15 @@ define(
 					var data = response.results;
 
 					if (data && data.success) {
-						dfd.resolve(data.content);
+						cb(data.content);
 					} else {
-						dfd.reject();
 						modal.trigger('error', data.content.message);
 					}
 				},
 				onErrorCallback: function(response) {
-					dfd.reject();
 					modal.trigger('error', response.results.content.message);
 				}
 			});
-
-			return dfd.promise();
 		}
 
 		/**
