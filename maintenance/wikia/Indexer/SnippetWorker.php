@@ -9,8 +9,10 @@ class SnippetWorker extends IndexerWorkerBase {
 
 	const PREFETCH_SIZE = 5;
 	private $worker;
+	private $max = 209715200 ; //200MiB
 
 	protected function process( $data ) {
+
 		if( !$data->is_redirect ) {
 			$jw = $this->get_worker();
 			$jw->setHtml( $data->html );
@@ -20,6 +22,7 @@ class SnippetWorker extends IndexerWorkerBase {
 			$msg->id = $data->id;
 			$this->publish('snippet.ready', $msg );
 		}
+		if (memory_get_usage(true) >= $this->max) die("OUT OF MEMORY!");
 	}
 
 	protected function getRoutingKey() {
