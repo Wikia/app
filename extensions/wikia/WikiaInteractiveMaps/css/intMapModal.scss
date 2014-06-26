@@ -2,6 +2,19 @@
 @import "skins/oasis/css/core/responsive-variables";
 
 .intMapModal {
+	svg {
+		display: block;
+		margin: 0 auto;
+	}
+
+	path {
+		fill: $color-links;
+	}
+
+	line {
+		stroke: $color-links;
+	}
+
 	.hidden {
 		display: none !important;
 	}
@@ -79,14 +92,16 @@
 	}
 
 	.upload-link {
-		background-position: 50% 10px;
-		background-repeat: no-repeat;
-		background-size: 40px;
 		border: 1px dashed $color-page-border-subtle;
 		box-sizing: border-box;
 		display: block;
 		height: 116px;
-		padding: 60px 10px 10px;
+		padding: 10px;
+
+		span {
+			display: inline-block;
+			padding-top: 5px;
+		}
 	}
 
 	.tip {
