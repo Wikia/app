@@ -130,7 +130,7 @@ abstract class BaseTask {
 			$this->createdBy = $createdBy;
 		}
 
-		return $this->createdBy;
+		return $this;
 	}
 
 	/**
@@ -174,6 +174,10 @@ abstract class BaseTask {
 
 			if ($this->delay) {
 				$taskList->delay($this->delay);
+			}
+
+			if ($this->createdBy) {
+				$taskList->createdBy($this->createdBy);
 			}
 
 			$taskLists[] = $taskList;
