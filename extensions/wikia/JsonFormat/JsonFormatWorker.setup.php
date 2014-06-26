@@ -55,3 +55,5 @@ require_once($dir . "/visitors/TruebloodScrollWrapperVisitor.php");
 require_once($dir . "/visitors/AmericandadWrapperVisitor.php");
 
 require_once($dir . "/util/DomHelper.php");
+
+require_once($dir . "/JsonFormatExceptions.php");
