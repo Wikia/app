@@ -21,15 +21,6 @@ class HAWelcomeTaskTest extends WikiaBaseTest {
 		$this->assertEquals( $timestamp, $task->getTimestamp() );
 	}
 
-	public function testSendWelcomeMessageWhenDisabled() {
-		$task = $this->getMock( '\HAWelcomeTask', ['welcomeMessageDisabled'], [], '', false );
-		$task->expects( $this->atLeastOnce() )
-			->method( 'welcomeMessageDisabled' )
-			->will( $this->returnValue( true ) );
-
-		$this->assertTrue( $task->sendWelcomeMessage( array() ) );
-	}
-
 	public function testSendMessageWithWall() {
 		$task = $this->getMock( '\HAWelcomeTask', ['getMessageWallExtensionEnabled', 'postWallMessageToRecipient', 'setMessage'], [], '', false );
 
@@ -157,16 +148,11 @@ class HAWelcomeTaskTest extends WikiaBaseTest {
 
 		$task = $this->getMock( '\HAWelcomeTask',
 			[
-			'welcomeMessageDisabled',
 			'isFeatureFlagEnabled',
 			'getMessageWallExtensionEnabled',
 			'recipientWallIsEmpty',
 			'sendMessage'
 			], [], '', false );
-
-		$task->expects( $this->atLeastOnce() )
-			->method( 'welcomeMessageDisabled' )
-			->will( $this->returnValue( false ) );
 
 		$task->expects( $this->once() )
 			->method( 'isFeatureFlagEnabled' )
@@ -201,7 +187,6 @@ class HAWelcomeTaskTest extends WikiaBaseTest {
 
 		$task = $this->getMock( '\HAWelcomeTask',
 			[
-			'welcomeMessageDisabled',
 			'isFeatureFlagEnabled',
 			'getMessageWallExtensionEnabled',
 			'sendMessage',
@@ -217,10 +202,6 @@ class HAWelcomeTaskTest extends WikiaBaseTest {
 		$task->expects( $this->once() )
 			->method( 'getRecipientTalkPage' )
 			->will( $this->returnValue( $talkPage ) );
-
-		$task->expects( $this->atLeastOnce() )
-			->method( 'welcomeMessageDisabled' )
-			->will( $this->returnValue( false ) );
 
 		$task->expects( $this->once() )
 			->method( 'isFeatureFlagEnabled' )

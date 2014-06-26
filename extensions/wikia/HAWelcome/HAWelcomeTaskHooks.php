@@ -36,12 +36,6 @@ class HAWelcomeTaskHooks {
 			return true;
 		}
 
-		// Abort if the feature has been disabled by the admin of the wiki.
-		if ( in_array( trim( wfMessage( 'welcome-user' )->inContentLanguage()->text() ), array( '@disabled', '-' ) ) ) {
-			WikiaLogger::instance()->debug( "HAWelcome disabled via 'welcome-user' message" );
-			return true;
-		}
-
 		// Ignore revisions created in the command-line mode. Otherwise this job could
 		// invoke HAWelcome::onRevisionInsertComplete(), too which may cause an infinite loop
 		// and serious performance problems.

@@ -82,11 +82,6 @@ class HAWelcomeTask extends BaseTask {
 		$this->info( "HAWelcome sendWelcomeMessage" );
 		$this->normalizeInstanceParameters( $params );
 
-		// Complete the job if the feature has been disabled by the admin of the wiki.
-		if ( $this->welcomeMessageDisabled() ) {
-			return true;
-		}
-
 		$this->setRecipient();
 
 		$this->setSender();
@@ -410,13 +405,6 @@ class HAWelcomeTask extends BaseTask {
 		$this->recipientId   = isset( $params['iUserId'] ) ? $params['iUserId'] : null;
 		$this->recipientName = isset( $params['sUserName'] ) ? $params['sUserName'] : null;
 		$this->timestamp     = ( isset( $params['iTimestamp'] ) ) ? $params['iTimestamp'] : 0;
-	}
-
-	public function welcomeMessageDisabled() {
-		if ( in_array( trim( wfMessage( 'welcome-user' )->inContentLanguage()->text() ), array( '@disabled', '-' ) ) ) {
-			$this->debug( "The HAWelcome extension is disabled via the 'welcome-user' message." );
-			return true;
-		}
 	}
 
 }

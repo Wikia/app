@@ -30,6 +30,12 @@ class HAWelcomeTaskHookDispatcher {
 	}
 
 	public function dispatch() {
+		// abort if the feature has been disabled by the admin of the wiki.
+		if ( $this->welcomeMessageDisabled() ) {
+			$this->info( "aborting the hook: HAWelcome extension is disabled via the 'welcome-user' message." );
+			return true;
+		}
+
 		if ( $this->hasContributorBeenWelcomedRecently() ) {
 			$this->info( "aborting the welcome hook: user has been welcomed recently" );
 			// abort if they have contributed recently
@@ -162,4 +168,12 @@ class HAWelcomeTaskHookDispatcher {
 		$this->currentUser = $user;
 		return $this;
 	}
+
+	public function welcomeMessageDisabled() {
+		if ( in_array( trim( wfMessage( 'welcome-user' )->inContentLanguage()->text() ), array( '@disabled', '-' ) ) ) {
+			return true;
+		}
+	}
+
+
 }

@@ -2,8 +2,21 @@
 
 class HAWelcomeTaskHookDispatcherTest extends WikiaBaseTest {
 
+	public function testDispatchWhenDisabled() {
+		$dispatcher = $this->getMock( '\HAWelcomeTaskHookDispatcher', ['welcomeMessageDisabled'], [], '', false );
+		$dispatcher->expects( $this->once() )
+			->method( 'welcomeMessageDisabled' )
+			->will( $this->returnValue( true ) );
+
+		$this->assertTrue( $dispatcher->dispatch() );
+	}
+
 	public function testDispatchBeenWelcomed() {
-		$dispatcher = $this->getMock( '\HAWelcomeTaskHookDispatcher', ['hasContributorBeenWelcomedRecently'] );
+		$dispatcher = $this->getMock( '\HAWelcomeTaskHookDispatcher', ['hasContributorBeenWelcomedRecently', 'welcomeMessageDisabled'] );
+
+		$dispatcher->expects( $this->once() )
+			->method( 'welcomeMessageDisabled' )
+			->will( $this->returnValue( false ) );
 
 		$dispatcher->expects( $this->once() )
 			->method( 'hasContributorBeenWelcomedRecently' )
@@ -13,7 +26,11 @@ class HAWelcomeTaskHookDispatcherTest extends WikiaBaseTest {
 	}
 
 	public function testDispatchAnonymousUser() {
-		$dispatcher = $this->getMock( '\HAWelcomeTaskHookDispatcher', ['hasContributorBeenWelcomedRecently'] );
+		$dispatcher = $this->getMock( '\HAWelcomeTaskHookDispatcher', ['welcomeMessageDisabled', 'hasContributorBeenWelcomedRecently'] );
+
+		$dispatcher->expects( $this->once() )
+			->method( 'welcomeMessageDisabled' )
+			->will( $this->returnValue( false ) );
 
 		$dispatcher->expects( $this->once() )
 			->method( 'hasContributorBeenWelcomedRecently' )
@@ -32,9 +49,14 @@ class HAWelcomeTaskHookDispatcherTest extends WikiaBaseTest {
 
 	public function testDispatchRegisteredUserShortCircuit() {
 		$dispatcher = $this->getMock( '\HAWelcomeTaskHookDispatcher', [
+			'welcomeMessageDisabled',
 			'hasContributorBeenWelcomedRecently',
 			'currentUserIsWelcomeExempt',
 			] );
+
+		$dispatcher->expects( $this->once() )
+			->method( 'welcomeMessageDisabled' )
+			->will( $this->returnValue( false ) );
 
 		$dispatcher->expects( $this->once() )
 			->method( 'hasContributorBeenWelcomedRecently' )
@@ -56,6 +78,7 @@ class HAWelcomeTaskHookDispatcherTest extends WikiaBaseTest {
 
 	public function testDispatchRegisteredUserHasLocalEdits() {
 		$dispatcher = $this->getMock( '\HAWelcomeTaskHookDispatcher', [
+			'welcomeMessageDisabled',
 			'hasContributorBeenWelcomedRecently',
 			'currentUserIsWelcomeExempt',
 			'currentUserIsDefaultWelcomer',
@@ -63,6 +86,10 @@ class HAWelcomeTaskHookDispatcherTest extends WikiaBaseTest {
 			'currentUserHasLocalEdits',
 			'updateAdminActivity'
 			] );
+
+		$dispatcher->expects( $this->once() )
+			->method( 'welcomeMessageDisabled' )
+			->will( $this->returnValue( false ) );
 
 		$dispatcher->expects( $this->once() )
 			->method( 'hasContributorBeenWelcomedRecently' )
@@ -100,6 +127,7 @@ class HAWelcomeTaskHookDispatcherTest extends WikiaBaseTest {
 
 	public function testDispatchRegisteredUserQueueTask() {
 		$dispatcher = $this->getMock( '\HAWelcomeTaskHookDispatcher', [
+			'welcomeMessageDisabled',
 			'hasContributorBeenWelcomedRecently',
 			'currentUserIsWelcomeExempt',
 			'currentUserIsDefaultWelcomer',
@@ -109,6 +137,10 @@ class HAWelcomeTaskHookDispatcherTest extends WikiaBaseTest {
 			'getTitleObjectFromRevision',
 			'queueWelcomeTask',
 			] );
+
+		$dispatcher->expects( $this->once() )
+			->method( 'welcomeMessageDisabled' )
+			->will( $this->returnValue( false ) );
 
 		$dispatcher->expects( $this->once() )
 			->method( 'hasContributorBeenWelcomedRecently' )
@@ -157,6 +189,7 @@ class HAWelcomeTaskHookDispatcherTest extends WikiaBaseTest {
 
 	public function testDispatchRegisteredUserMarkHAWelcomePosted() {
 		$dispatcher = $this->getMock( '\HAWelcomeTaskHookDispatcher', [
+			'welcomeMessageDisabled',
 			'hasContributorBeenWelcomedRecently',
 			'currentUserIsWelcomeExempt',
 			'currentUserIsDefaultWelcomer',
@@ -165,6 +198,10 @@ class HAWelcomeTaskHookDispatcherTest extends WikiaBaseTest {
 			'getTitleObjectFromRevision',
 			'queueWelcomeTask',
 			] );
+
+		$dispatcher->expects( $this->once() )
+			->method( 'welcomeMessageDisabled' )
+			->will( $this->returnValue( false ) );
 
 		$dispatcher->expects( $this->once() )
 			->method( 'hasContributorBeenWelcomedRecently' )
