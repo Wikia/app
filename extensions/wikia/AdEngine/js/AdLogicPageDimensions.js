@@ -187,6 +187,7 @@ define('ext.wikia.adEngine.adLogicPageDimensions', [
 		log('init', 'debug', logGroup);
 		if (window.addEventListener) {
 			onResize();
+			window.addEventListener('orientationchange', adHelper.throttle(onResize, 100));
 			window.addEventListener('resize', adHelper.throttle(onResize, 100));
 		} else {
 			log('No support for addEventListener. No dimension-dependent ads will be shown', 'error', logGroup);

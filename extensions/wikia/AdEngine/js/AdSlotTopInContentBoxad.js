@@ -1,9 +1,10 @@
 /*global define*/
 define('ext.wikia.adEngine.slot.topInContentBoxad', [
 	'wikia.log',
+	'wikia.window',
 	'wikia.document',
 	'ext.wikia.adEngine.eventDispatcher'
-], function (log, document, eventDispatcher) {
+], function (log, window, document, eventDispatcher) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.slot.topInContentBoxad',
@@ -11,14 +12,24 @@ define('ext.wikia.adEngine.slot.topInContentBoxad', [
 		articleHeightMaxDelta = 125,
 		result = null;
 
+	function getComputedStylePropertyValue(el, cssProperty){
+		if(!window.getComputedStyle){
+			if(document.defaultView && document.defaultView.getComputedStyle){
+				return document.defaultView.getComputedStyle.getPropertyValue(cssProperty);
+			}
+		}
+		else{
+			return window.getComputedStyle(el).getPropertyValue(cssProperty);
+		}
+	}
 
 	function doesNotBreakContent(slot) {
 
 		var wikiaArticleDiv,
 			wikiaArticleCloneDiv,
 			fragment,
-			adPlace;
-
+			adPlace,
+			contentFirstContentElement;
 
 		if (slotName !== slot[0]) {
 			return true;
@@ -33,6 +44,16 @@ define('ext.wikia.adEngine.slot.topInContentBoxad', [
 		result = false;
 		fragment = document.createDocumentFragment();
 		wikiaArticleDiv = document.getElementById('WikiaArticle');
+
+		contentFirstContentElement = document.getElementById('mw-content-text').querySelector(':first-child');
+		if ('right' === getComputedStylePropertyValue(contentFirstContentElement, 'float')) {
+			contentFirstContentElement.style.clear = 'right';
+		}
+		if ('TABLE' === contentFirstContentElement.tagName && contentFirstContentElement.offsetWidth > 438 ) {
+			log(['doesNotBreakContent', 'no ad place found'], 'debug', logGroup);
+			result = false;
+			return result;
+		}
 
 		wikiaArticleCloneDiv = document.createElement('DIV');
 		wikiaArticleCloneDiv.innerHTML = wikiaArticleDiv.innerHTML;
