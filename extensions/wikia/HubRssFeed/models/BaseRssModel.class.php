@@ -289,7 +289,10 @@ abstract class BaseRssModel extends WikiaService {
 
 			$out[ $item[ 'url' ] ] = $item;
 		}
-		return $out;
+
+        $this->fixDuplicatedTimestamps( $out );
+
+        return $out;
 	}
 
 	abstract protected function formatTitle( $item );
@@ -422,5 +425,55 @@ abstract class BaseRssModel extends WikiaService {
 		}
 		return '';
 	}
+
+    /**
+     * @param $itemsMap
+     */
+    protected function fixDuplicatedTimestamps( &$itemsMap ) {
+        // Calculate occurrence of each unique timestamp
+        $timestampsCount = [ ];
+
+        foreach ( $itemsMap as $key => $value ) {
+            $timestamp = $value[ 'timestamp' ];
+
+            if ( empty( $timestampsCount[ $timestamp ] ) ) {
+                $timestampsCount[ $timestamp ] = 1;
+            } else {
+                $timestampsCount[ $timestamp ]++;
+            }
+        }
+
+        $itemsCount = count( $itemsMap );
+        $uniqueTimestampsCount = count( $timestampsCount );
+        if ( $itemsCount == $uniqueTimestampsCount ) {
+            // No timestamps conflicts detected
+            return;
+        }
+
+        foreach ( $itemsMap as $key => $value ) {
+            $timestamp = $value[ 'timestamp' ];
+
+            if ( $timestampsCount[ $timestamp ] == 1 ) {
+                // This timestamp occurrenced only once
+                // it's ok - nothing to do
+                continue;
+            }
+
+            // Finding available timestamp (by increasing current timestamp)
+            $newTimestamp = $timestamp + 1;
+            while ( !empty( $timestampsCount[ $newTimestamp ] ) ) {
+                $newTimestamp++;
+            }
+
+            // Updating timestamp
+            $itemsMap[ $key ][ 'timestamp' ] = $newTimestamp;
+
+            // Mark new timestamp as unavailable for future searching
+            $timestampsCount[ $newTimestamp ] = 1;
+
+            // decrease number of occurrences of previous timestamp
+            $timestampsCount[ $timestamp ]--;
+        }
+    }
 
 }
