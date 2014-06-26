@@ -92,6 +92,12 @@ define('wikia.intMap.poiCategories',
 			mapUrl,
 			mode;
 
+		/**
+		 * @desc Entry point for modal
+		 * @param {array} templates - mustache templates
+		 * @param {object} _params - params from iframe (ponto) or map creation modal
+		 * @param {function} _trigger - callback function to send result back to iframe (ponto)
+		 */
 		function init(templates, _params, _trigger) {
 			// set reference to params and trigger callback
 			trigger = _trigger;
@@ -111,6 +117,10 @@ define('wikia.intMap.poiCategories',
 				});
 		}
 
+		/**
+		 * @desc Sets up modal config and creates it
+		 * @param {object} data - params passed to modal
+		 */
 		function setUpModal(data) {
 			setUpTemplateData(data);
 			mapUrl = data.mapUrl;
@@ -253,6 +263,10 @@ define('wikia.intMap.poiCategories',
 			poiCategoryContainer.remove();
 		}
 
+		/**
+		 * @desc adds POI category id to hidden field
+		 * @param poiCategoryId
+		 */
 		function markPoiCategoryAsDeleted(poiCategoryId) {
 			// add POI category id to hidden field
 			var poiCategoriesDeletedElement = $('input[name="poiCategoriesDeleted"]'),

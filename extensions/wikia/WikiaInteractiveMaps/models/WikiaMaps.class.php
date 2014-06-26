@@ -345,6 +345,14 @@ class WikiaMaps extends WikiaObject {
 		);
 	}
 
+	/**
+	 * Sends a request to IntMap Service API to update a POI category with given parameters
+	 *
+	 * @param Integer $poiCategoryId
+	 * @param Array $poiCategoryData array with required parameters to service API
+	 *
+	 * @return Array
+	 */
 	public function updatePoiCategory( $poiCategoryId, $poiCategoryData ) {
 		return $this->putRequest(
 			$this->buildUrl( [ self::ENTRY_POINT_POI_CATEGORY, $poiCategoryId ] ),
@@ -352,6 +360,13 @@ class WikiaMaps extends WikiaObject {
 		);
 	}
 
+	/**
+	 * Sends a request to IntMap Service API to delete a POI category
+	 *
+	 * @param Integer $poiCategoryId
+	 *
+	 * @return Array
+	 */
 	public function deletePoiCategory( $poiCategoryId ) {
 		$this->deleteRequest(
 			$this->buildUrl( [ self::ENTRY_POINT_POI_CATEGORY, $poiCategoryId ] )

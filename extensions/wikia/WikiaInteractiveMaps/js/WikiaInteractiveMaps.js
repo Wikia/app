@@ -17,7 +17,10 @@ require(
 					module: 'wikia.intMaps.createMap.modal',
 					source: {
 						messages: ['WikiaInteractiveMapsCreateMap'],
-						scripts: ['int_map_create_map_js', 'int_map_poi_categories_js'],
+						scripts: [
+							'int_map_create_map_js',
+							'int_map_poi_categories_js'
+						],
 						styles: ['extensions/wikia/WikiaInteractiveMaps/css/intMapModal.scss'],
 						mustache: [
 							'extensions/wikia/WikiaInteractiveMaps/templates/intMapModal.mustache',
