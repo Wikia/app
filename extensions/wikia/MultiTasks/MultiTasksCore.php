@@ -405,9 +405,11 @@ class MultiTask extends SpecialPage {
 
 						$task->call($taskAction, $this->mTaskParams);
 						$submit_id = $task->queue();
+						$submitLink = wfMsg ("multi_task_added_{$taskAction}", $submit_id);
 					} else {
 						$thisTask = new $this->mTaskClass( $this->mTaskParams );
 						$submit_id = $thisTask->submitForm();
+						$submitLink = null;
 					}
 
 					$oTmpl->set_vars( array(
@@ -420,6 +422,7 @@ class MultiTask extends SpecialPage {
 						"cat"			=> $cat,
 						"obj"			=> $this,
 						"submit_id"		=> $submit_id,
+						'submitLink' => $submitLink,
 						"error"			=> ($submit_id === false),
 					) );
 					$wgOut->addHTML( $oTmpl->render($this->mFinishForm) );
