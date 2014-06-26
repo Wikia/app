@@ -332,7 +332,6 @@ $(function () {
 						]),
 						$.loadJQueryAIM()
 					).then($.proxy(function () {
-						console.log('WMU deffered');
 						window.WMU_skipDetails = true;
 						window.WMU_show();
 						window.WMU_openedInEditor = false;
