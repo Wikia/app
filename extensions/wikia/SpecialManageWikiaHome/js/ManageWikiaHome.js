@@ -39,7 +39,7 @@ $(function () {
 			this.visualizationLang = $('#visualizationLang').val();
 
 			$('.hubs-slots')
-				.find('.wmu-show').click($.proxy(this.wmuInit, this))
+				.on('click', '.wmu-show', $.proxy(this.wmuInit, this))
 				.on( 'click', '.clear-marketing-slot', $.proxy(function(e){
 					e.preventDefault();
 					this.clearMarketingSlot(e);
