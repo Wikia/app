@@ -58,4 +58,4 @@ $wgAutoloadClasses[ 'AmericandadWrapperVisitor' ] =             $dir . "/visitor
 
 $wgAutoloadClasses[ 'DomHelper' ] =                             $dir . "/util/DomHelper.php";
 
-$wgAutoloadClasses[ 'InvalidInfoboxException' ] =               $dir . "/JsonFormatExceptions.php";
+class InvalidInfoboxException extends WikiaException {}
