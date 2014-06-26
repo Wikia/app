@@ -138,24 +138,27 @@ define(
 			});
 		}
 
-		function showPoiCategoriesModal() {
+		function showPoiCategoriesModal(data) {
 			modal.trigger('close');
-			triggerAction('poiCategories');
-			//TODO utils.loadModal() with idMap in params
+			triggerAction('poiCategories', {
+				mapId: data.id,
+				mapUrl: data.mapUrl
+			});
 		}
 
 		/**
 		 * @desc opens modal associated with chosen action preceded by forced login modal for anons
 		 * @param {string} action - name of action
+		 * @param {object} params
 		 */
-		function triggerAction(action) {
+		function triggerAction(action, params) {
 			var actionConfig = actions[action];
 
 			if (utils.isUserLoggedIn()) {
-				utils.loadModal(actionConfig);
+				utils.loadModal(actionConfig, params);
 			} else {
 				utils.showForceLoginModal(actionConfig.origin, function() {
-					utils.loadModal(actionConfig);
+					utils.loadModal(actionConfig, params);
 				});
 			}
 		}

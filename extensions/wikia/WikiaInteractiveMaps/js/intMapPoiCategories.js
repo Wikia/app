@@ -50,13 +50,13 @@ define('wikia.intMap.poiCategories',
 		// template data
 			poiCategoriesTemplateData = {
 				poiCategories: [],
-				addPoiCategory: $.msg('wikia-interactive-maps-create-map-add-poi-category'),
+				addPoiCategory: $.msg('wikia-interactive-maps-poi-categories-add'),
 				mapId: null
 			},
 			poiCategoryTemplateData = {
-				delete: $.msg('wikia-interactive-maps-create-map-delete-poi-category'),
-				placeholder: $.msg('wikia-interactive-maps-create-map-poi-category-name-placeholder'),
-				emptyOption: $.msg('wikia-interactive-maps-create-map-poi-category-select-category'),
+				delete: $.msg('wikia-interactive-maps-poi-categories-delete'),
+				placeholder: $.msg('wikia-interactive-maps-poi-categories-name-placeholder'),
+				emptyOption: $.msg('wikia-interactive-maps-poi-categories-select-category'),
 				parentPoiCategories: []
 			},
 
@@ -95,7 +95,7 @@ define('wikia.intMap.poiCategories',
 			// set reference to params and trigger callback
 			trigger = _trigger;
 			params = _params || {};
-			mapId = $('iframe[name=wikia-interactive-map]').data('mapid');
+			mapId = params.mapId;
 
 			poiCategoriesTemplate = templates[0];
 			poiCategoryTemplate = templates[1];
@@ -157,7 +157,22 @@ define('wikia.intMap.poiCategories',
 		 * @returns {object} - POI category data with default template variables
 		 */
 		function extendPoiCategoryData(poiCategory) {
-			return $.extend(poiCategoryTemplateData, poiCategory);
+			// clone this object so we don't overwrite default template data
+			var extendedPoiCategoryTemplateData = $.extend(true, {}, poiCategoryTemplateData);
+
+			extendedPoiCategoryTemplateData.id = poiCategory.id;
+			extendedPoiCategoryTemplateData.name = poiCategory.name;
+			extendedPoiCategoryTemplateData.marker = poiCategory.no_marker ? w.wgBlankImgUrl : poiCategory.marker;
+
+			extendedPoiCategoryTemplateData.parentPoiCategories.forEach(function (parentPoiCategory, i) {
+				if (parentPoiCategory.id === poiCategory.parent_poi_category_id) {
+					extendedPoiCategoryTemplateData.parentPoiCategories[i].selected = ' selected';
+				} else {
+					extendedPoiCategoryTemplateData.parentPoiCategories[i].selected = null;
+				}
+			});
+
+			return extendedPoiCategoryTemplateData;
 		}
 
 		/**
@@ -209,7 +224,7 @@ define('wikia.intMap.poiCategories',
 			// if no POI categories display blank POI category input
 			var poiCategories = existingData.poiCategories ? existingData.poiCategories : [{}];
 
-			poiCategoriesTemplateData.mapId = existingData.id;
+			poiCategoriesTemplateData.mapId = existingData.id || mapId;
 			poiCategoriesTemplateData.poiCategories = extendPoiCategoriesData(poiCategories);
 		}
 
@@ -227,9 +242,23 @@ define('wikia.intMap.poiCategories',
 		 * @param {Event} event
 		 */
 		function deletePoiCategory(event) {
-			$(event.target)
-				.parent()
-				.remove();
+			var poiCategoryContainer = $(event.target).closest('.poi-category'),
+				poiCategoryId = poiCategoryContainer.data('id');
+
+			if (poiCategoryId) {
+				markPoiCategoryAsDeleted(poiCategoryId);
+			}
+
+			poiCategoryContainer.remove();
+		}
+
+		function markPoiCategoryAsDeleted(poiCategoryId) {
+			// add POI category id to hidden field
+			var poiCategoriesDeletedElement = $('input[name="poiCategoriesDeleted"]'),
+				poiCategoriesDeleted = JSON.parse('[' + poiCategoriesDeletedElement.val() + ']');
+
+			poiCategoriesDeleted.push(poiCategoryId);
+			poiCategoriesDeletedElement.val(poiCategoriesDeleted.join(','));
 		}
 
 		/**
@@ -268,11 +297,10 @@ define('wikia.intMap.poiCategories',
 		 * @param {$} $inputElementWrapper - file input element wrapper
 		 */
 		function previewMarkerImage(data, $inputElement, $inputElementWrapper) {
-			$inputElement.addClass('hidden');
+			$inputElement.val('');
 			$inputElementWrapper
 				.find('.poi-category-marker-image')
-				.attr('src', data['fileThumbUrl'])
-				.removeClass('hidden');
+				.attr('src', data['fileThumbUrl']);
 		}
 
 		/**
@@ -296,7 +324,7 @@ define('wikia.intMap.poiCategories',
 				modal.trigger('cleanUpError');
 				return serializedForm;
 			} else {
-				modal.trigger('error', $.msg('wikia-interactive-maps-create-map-poi-category-form-error'));
+				modal.trigger('error', $.msg('wikia-interactive-maps-poi-categories-form-error'));
 				return false;
 			}
 		}
