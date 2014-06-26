@@ -112,4 +112,4 @@ ve.ui.WikiaOrientationDialog.prototype.close = function ( data ) {
 
 /* Registration */
 
-ve.ui.dialogFactory.register( ve.ui.WikiaOrientationDialog );
+ve.ui.windowFactory.register( ve.ui.WikiaOrientationDialog );

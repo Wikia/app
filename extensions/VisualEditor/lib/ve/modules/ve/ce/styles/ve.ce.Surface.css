@@ -7,7 +7,10 @@
 
 .ve-ce-surface {
 	overflow: hidden;
-	font-size: 1em; /* to look more like MediaWiki use: 0.8em */;
+	/*
+	Remember, don't set font-size here.
+	Should be inherited from the VE target container.
+	*/
 }
 
 .ve-ce-surface-textarea {
@@ -34,18 +37,8 @@
 }
 
 /* @noflip */
-.ve-ce-surface-phantoms {
-	left: 0;
-	opacity: 0.75;
-	position: absolute;
-	top: 0;
-}
-
-/* @noflip */
 .ve-ce-surface-highlights {
 	left: 0;
-	opacity: 0.5;
-	pointer-events: none;
 	position: absolute;
 	top: 0;
 }

@@ -235,8 +235,7 @@ ve.init.mw.ViewPageTarget.prototype.replacePageContent = function ( html, catego
 		$mwContentText = $( '#mw-content-text' ),
 		$content = $( $.parseHTML( html ) );
 
-	if ( mw.config.get( 'wgNamespaceNumber' ) === 14 ) {
-		//Category
+	if ( mw.config.get( 'wgNamespaceNumber' ) === 14 /* NS_CATEOGRY */ ) {
 		$mwContentText.children().filter( function () {
 			var $this = $( this );
 			return !(

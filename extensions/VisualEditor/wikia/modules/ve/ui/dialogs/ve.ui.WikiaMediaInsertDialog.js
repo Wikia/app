@@ -758,4 +758,4 @@ ve.ui.WikiaMediaInsertDialog.prototype.onFrameDocumentKeyDown = function ( e ) {
 
 /* Registration */
 
-ve.ui.dialogFactory.register( ve.ui.WikiaMediaInsertDialog );
+ve.ui.windowFactory.register( ve.ui.WikiaMediaInsertDialog );

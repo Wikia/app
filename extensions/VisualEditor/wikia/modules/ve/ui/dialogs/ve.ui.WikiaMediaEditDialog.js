@@ -52,4 +52,4 @@ ve.ui.WikiaMediaEditDialog.prototype.setup = function ( data ) {
 
 /* Registration */
 
-ve.ui.dialogFactory.register( ve.ui.WikiaMediaEditDialog );
+ve.ui.windowFactory.register( ve.ui.WikiaMediaEditDialog );

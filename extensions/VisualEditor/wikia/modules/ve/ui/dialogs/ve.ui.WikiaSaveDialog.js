@@ -29,4 +29,4 @@ ve.ui.WikiaSaveDialog.prototype.initialize = function () {
 
 /* Registration */
 
-ve.ui.dialogFactory.register( ve.ui.WikiaSaveDialog );
+ve.ui.windowFactory.register( ve.ui.WikiaSaveDialog );

@@ -17,6 +17,9 @@ ve.ce.GeneratedContentNode = function VeCeGeneratedContentNode() {
 	// Properties
 	this.generatingPromise = null;
 
+	// DOM changes
+	this.$element.addClass( 've-ce-generatedContentNode ve-ce-noHighlight' );
+
 	// Events
 	this.model.connect( this, { 'update': 'onGeneratedContentNodeUpdate' } );
 	this.connect( this, {

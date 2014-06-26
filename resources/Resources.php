@@ -731,10 +731,17 @@ return array(
 		),
 	),
 
+	'mediawiki.language.init' => array(
+		'scripts' => 'resources/mediawiki.language/mediawiki.language.init.js',
+		'targets' => array( 'desktop', 'mobile' ),
+	),
+
 	'mediawiki.jqueryMsg' => array(
 		'dependencies' => array( 'mediawiki.language', 'mediawiki.util' ),
 		'scripts' => 'resources/mediawiki/mediawiki.jqueryMsg.js'
 	),
+
+	'mediawiki.language.names' => array( 'class' => 'ResourceLoaderLanguageNamesModule' ),
 
 	/* MediaWiki Libs */
 
@@ -835,19 +842,19 @@ return array(
 
 	/* MediaWiki Tests */
 
-        'test.sinonjs' => array(
-                'scripts' => array(
-                        'resources/sinonjs/sinon-1.9.0.js',
-                        // We want tests to work in IE, but can't include this as it
-                        // will break the placeholders in Sinon because the hack it uses
-                        // to hijack IE globals relies on running in the global scope
-                        // and in ResourceLoader this won't be running in the global scope.
-                        // Including it results (among other things) in sandboxed timers
-                        // being broken due to Date inheritance being undefined.
-                        // 'resources/sinonjs/sinon-ie-1.9.0.js',
-                ),
-                'targets' => array( 'desktop', 'mobile' ),
-        ),
+	'test.sinonjs' => array(
+		'scripts' => array(
+			'resources/sinonjs/sinon-1.9.0.js',
+			// We want tests to work in IE, but can't include this as it
+			// will break the placeholders in Sinon because the hack it uses
+			// to hijack IE globals relies on running in the global scope
+			// and in ResourceLoader this won't be running in the global scope.
+			// Including it results (among other things) in sandboxed timers
+			// being broken due to Date inheritance being undefined.
+			// 'resources/sinonjs/sinon-ie-1.9.0.js',
+		),
+		'targets' => array( 'desktop', 'mobile' ),
+	),
 
 	'mediawiki.tests.qunit.testrunner' => array(
 		'scripts' => 'tests/qunit/data/testrunner.js',
