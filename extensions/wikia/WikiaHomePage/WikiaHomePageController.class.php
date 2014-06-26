@@ -37,6 +37,8 @@ class WikiaHomePageController extends WikiaController {
 
 	const CORP_CITY_ID = 717284;
 	const SLOTS_IN_ROW = 3;
+	const SLOT_IMG_WIDTH = 330;
+	const SLOT_IMG_HEIGHT = 210;
 
 	// values for oasis skin width change to 1030px
 	const REMIX_GRID_IMG_SMALL_WIDTH = 160;

@@ -60,7 +60,7 @@
 					</div>
 					<?= $hubsForm->renderField('marketing_slot_title', $i); ?>
 					<?= $hubsForm->renderField('marketing_slot_link', $i); ?>
-					<input type="button" class="clear-marketing-slot" value="Clear" />
+					<input type="button" class="clear-marketing-slot" value="<?= wfMessage('manage-wikia-home-wiki-filter-reset')->text() ?>" />
 				</div>
 			<? endfor ?>
 			<br/>
