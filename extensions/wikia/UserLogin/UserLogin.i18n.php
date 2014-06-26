@@ -1631,6 +1631,7 @@ Vil du kontrollere hva slags e-post du mottar? Gå til: <a href="{{fullurl:Speci
 /** Dutch (Nederlands)
  * @author HanV
  * @author Siebrand
+ * @author Southparkfan
  */
 $messages['nl'] = array(
 	'userlogin-login-heading' => 'Aanmelden',
@@ -1702,6 +1703,7 @@ Om in te stellen welke e-mails u wilt ontvangen, gaat u naar {{fullurl:{{ns:spec
 	'userlogin-changepassword-needlogin' => 'U moet $1 om uw wachtwoord te kunnen wijzigen.',
 	'wikiamobile-sendpassword-label' => 'Nieuw wachtwoord sturen',
 	'wikiamobile-facebook-connect-fail' => 'Uw Facebookgebruiker is op het moment niet gekoppeld met uw Wikiagebruiker.',
+	'wikiamobile-go-to-login' => 'Heeft u een account? [[Special:UserLogin|Log nu in >]]',
 );
 
 /** Occitan (occitan)
@@ -1713,6 +1715,7 @@ $messages['oc'] = array(
 
 /** Polish (polski)
  * @author Nandy
+ * @author Pio387
  * @author Sovq
  * @author Vengir
  */
@@ -1788,7 +1791,7 @@ Chcesz zmienić ustawienia otrzymywanych powiadomień? Zajrzyj tutaj: {{fullurl:
 	'userlogin-changepassword-needlogin' => '$1, aby zmienić swoje hasło.',
 	'wikiamobile-sendpassword-label' => 'Wyślij nowe hasło',
 	'wikiamobile-facebook-connect-fail' => 'Przepraszamy, Twoje konto na Facebooku nie jest obecnie połączone z kontem na Wikii.',
-	'wikiamobile-go-to-login' => 'Masz konto? [[Specjalna:Zaloguj|Zaloguj się >]]', # Fuzzy
+	'wikiamobile-go-to-login' => 'Masz konto? [[Specjalna: UserLogin|Zaloguj się]]', # Fuzzy
 );
 
 /** Piedmontese (Piemontèis)

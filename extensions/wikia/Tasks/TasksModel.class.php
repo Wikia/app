@@ -27,10 +27,13 @@ class TasksModel {
 			$fullClassName = $baseClassName.$className;
 			$className = self::formatTaskClassName($fullClassName);
 
-			$taskClasses[] = [
-				'name' => $fullClassName,
-				'value' => $className,
-			];
+			// ignore classes with no manually executable methods
+			if ( count($this->getClassMethods($fullClassName)) > 0 ) {
+				$taskClasses[] = [
+					'name' => $fullClassName,
+					'value' => $className,
+				];
+			}
 		}
 
 		wfRunHooks(self::EXTERNAL_TASK_HOOK_NAME, [&$taskClasses]);
@@ -48,9 +51,10 @@ class TasksModel {
 			$methodClass = $methodMirror->getDeclaringClass();
 			$methodName = $methodMirror->getName();
 
-			if ($methodName == 'getAdminNonExecuteables' ||
-				in_array($methodName, $instance->getAdminNonExecuteables()) ||
+			if (in_array($methodName, $instance->getAdminNonExecuteables()) ||
 				$methodClass->getName() != $mirrorClass) {
+					// if the method is blacklisted or is not declared directly
+					// on the task class, don't list it
 					continue;
 			}
 

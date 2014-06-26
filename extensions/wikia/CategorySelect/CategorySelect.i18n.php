@@ -1279,6 +1279,7 @@ $messages['tly'] = array(
 
 /** Turkish (Türkçe)
  * @author Gizemb
+ * @author Sayginer
  * @author Sucsuzz
  * @author Suelnur
  */
@@ -1289,6 +1290,9 @@ $messages['tr'] = array(
 	'categoryselect-category-add' => 'Kategori ekle...',
 	'categoryselect-category-edit' => 'Kategori düzenle',
 	'categoryselect-category-remove' => 'Kategori kaldır',
+	'categoryselect-error-empty-category-name' => 'Lütfen bir kategori adı girin.',
+	'categoryselect-error-user-rights' => 'Kullanıcının bu eylemi gerçekleştirmek için izni yok.',
+	'categoryselect-modal-category-name' => 'Kategorinin adını girin:',
 );
 
 /** Tatar (Cyrillic script) (татарча)

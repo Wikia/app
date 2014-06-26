@@ -373,6 +373,7 @@ $messages['pl'] = array(
 	'sharedhelp-searchprofile' => 'Strony pomocy',
 	'sharedhelp-searchprofile-tooltip' => 'Przeszukaj strony pomocy',
 	'shared_help_info' => 'Pytania? Zadaj je na [[w:c:spolecznosc:Specjalna:Forum|Forum Społeczności]].', # Fuzzy
+	'shared_help_search_info' => 'Jeżeli szukasz pomocy z edytowaniem, odwiedź [http://pl.c.wikia.com/wiki/Special:Search?search=$1 Centrum Społeczności]',
 	'shared_help_was_redirect' => 'Ta strona jest przekierowaniem do $1',
 );
 

@@ -704,10 +704,15 @@ $messages['tl'] = array(
 );
 
 /** Turkish (Türkçe)
+ * @author Sayginer
  * @author Suelnur
  */
 $messages['tr'] = array(
+	'category-exhibition-alphabetical' => 'Alfabetik',
+	'category-exhibition-page-header' => '"$1" kategorisindeki sayfalar',
 	'category-exhibition-subcategories-header' => 'Alt kategoriler',
+	'category-exhibition-media-header' => '"$1" kategorisindeki dosyalar',
+	'category-exhibition-blogs-header' => 'Blog yazıları',
 );
 
 /** Ukrainian (українська)

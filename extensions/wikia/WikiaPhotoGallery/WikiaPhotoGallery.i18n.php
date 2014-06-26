@@ -3376,6 +3376,7 @@ $messages['kn'] = array(
 $messages['ko'] = array(
 	'wikiaPhotoGallery-upload-findtitle' => '찾기',
 	'wikiaPhotoGallery-upload-findbutton' => '찾기',
+	'wikiaPhotoGallery-quit-quitonly' => '바뀐 내용을 버리고 끝내기',
 );
 
 /** Kurdish (Latin script) (Kurdî (latînî)‎)

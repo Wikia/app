@@ -468,6 +468,7 @@ class IvaFeedIngester extends VideoFeedIngester {
 	];
 
 	const API_PAGE_SIZE = 100;
+	const MIN_RELEASE_YEAR = 2013;
 
 	/**
 	 * Import IVA content
@@ -679,6 +680,15 @@ class IvaFeedIngester extends VideoFeedIngester {
 
 		if ( isset( $program['OkToEncodeAndServe'] ) && $program['OkToEncodeAndServe'] == false ) {
 			$this->videoSkipped( "Skip: {$clipData['series']} (Publishedid:{$program['Publishedid']}) has OkToEncodeAndServe set to false.\n" );
+			wfProfileOut( __METHOD__ );
+			return false;
+		}
+
+		// skip videos released before our minimum release date
+		if ( !empty( $program['FirstReleasedYear'] ) && $program['FirstReleasedYear'] < self::MIN_RELEASE_YEAR ) {
+			$msg = "Skip: {$clipData['series']} (Publishedid:{$program['Publishedid']}) release date ";
+			$msg .= "{$program['FirstReleasedYear']} before ".self::MIN_RELEASE_YEAR."\n";
+			$this->videoSkipped( $msg );
 			wfProfileOut( __METHOD__ );
 			return false;
 		}

@@ -6408,6 +6408,13 @@ Vennligst [[Special:UserLogin|logg inn eller opprett en konto]] dersom du ikke a
 	'wikistats_error_malformed_date' => 'Feil: Den angitte datoen er ugyldig',
 );
 
+/** Low Saxon (Netherlands) (Nedersaksies)
+ * @author Servien
+ */
+$messages['nds-nl'] = array(
+	'wikistats_days_ago' => 'dagen elejen',
+);
+
 /** Dutch (Nederlands)
  * @author McDutchie
  * @author Siebrand
@@ -9807,6 +9814,7 @@ $messages['zh-hans'] = array(
 	'wikistats_blog_comment' => '博客评论',
 	'wikistats_photo_new' => '新照片',
 	'wikistats_article_daily' => '编辑/日',
+	'wikistats_userns' => '用户',
 	'wikistats_nbr_kilo' => 'K = x 1000',
 	'wikistats_nbr_mega' => 'M = K x 1000',
 	'wikistats_nbr_giga' => 'G = M x 1000',

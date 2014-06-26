@@ -122,7 +122,7 @@ abstract class BaseTask {
 	 * @return array black list of method names to hide on Special:Tasks
 	 */
 	public function getAdminNonExecuteables() {
-		return ['__construct', 'init'];
+		return ['__construct', 'init', 'getAdminNonExecuteables'];
 	}
 
 	public function createdBy($createdBy=null) {
@@ -246,11 +246,11 @@ abstract class BaseTask {
 		return $this;
 	}
 
-	/** @see Loggable::getLoggerContext */
-	protected function getLoggerContext() {
-		return [
-			'task_id' => $this->taskId,
-		];
+	/**
+	 * @return string
+	 */
+	public function getTaskId() {
+		return $this->taskId;
 	}
 
 	// following are wrappers that will eventually call the same functions in AsyncTaskList

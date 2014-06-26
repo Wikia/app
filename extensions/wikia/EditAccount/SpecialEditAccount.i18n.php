@@ -1364,7 +1364,7 @@ $messages['lb'] = array(
 	'editaccount-log' => 'Logbuch vun de Benotzerkonten',
 	'editaccount-log-entry-realname' => 'huet de richtegen Numm vum Benotzer $2 geännert',
 	'edit-account-closed-flag' => '<div class="errorbox" style="padding: 1em;">Dëse Benotzerkont gouf global desaktivéiert.</div>',
-	'right-editaccount' => 'Aner Benotzerastellungen änneren',
+	'right-editaccount' => 'Anere Benotzer hir Informatiounen änneren',
 	'action-editaccount' => 'anere Benotzer hir Informatiounen änneren',
 );
 
@@ -1638,6 +1638,7 @@ $messages['ne'] = array(
 /** Dutch (Nederlands)
  * @author SPQRobin
  * @author Siebrand
+ * @author Southparkfan
  * @author Tjcool007
  */
 $messages['nl'] = array(
@@ -1661,6 +1662,7 @@ Laat de gebruiker bij deze wiki aanmelden met een nieuw wachtwoord om problemen 
 	'editaccount-label-toggleadopt-prevent' => 'Automatische adoptie voorkomen',
 	'editaccount-label-toggleadopt-allow' => 'Automatische adoptie toestaan',
 	'editaccount-label-reason' => 'Reden:',
+	'editaccount-label-clearemail' => 'Verwijder e-mailadres',
 	'editaccount-submit-email' => 'E-mailadres opslaan',
 	'editaccount-submit-pass' => 'Wachtwoord opslaan',
 	'editaccount-submit-realname' => 'Echte naam opslaan',
@@ -2628,10 +2630,12 @@ $messages['tl'] = array(
 
 /** Turkish (Türkçe)
  * @author Incelemeelemani
+ * @author Sayginer
  * @author Suelnur
  */
 $messages['tr'] = array(
 	'editaccount-frame-usage' => 'Not',
+	'editaccount-submit-account' => 'Hesabı yönet',
 	'editaccount-label-reason' => 'Gerekçe:',
 	'editaccount-submit-pass' => 'Parolayı kaydet',
 	'editaccount-submit-close' => 'Hesabı kapat',

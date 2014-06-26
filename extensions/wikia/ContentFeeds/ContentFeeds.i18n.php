@@ -312,6 +312,14 @@ $messages['kn'] = array(
 	'contentfeeds-firstfewarticles-tag-empty-body-error' => 'ದೋಷ:ಪಠ್ಯದ ವಿಷಯ ಅಗತ್ಯವಿದೆ',
 );
 
+/** Korean (한국어)
+ * @author Miri-Nae
+ */
+$messages['ko'] = array(
+	'contentfeeds-firstfewarticles-tag-empty-title-error' => '오류: 문서 제목 필요',
+	'contentfeeds-firstfewarticles-tag-empty-body-error' => '오류: 문서 내용 필요',
+);
+
 /** Colognian (Ripoarisch)
  * @author Purodha
  */

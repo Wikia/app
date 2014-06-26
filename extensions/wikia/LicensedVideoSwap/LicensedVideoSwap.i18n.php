@@ -360,7 +360,7 @@ $messages['de'] = array(
 	'lvs-button-swap' => 'Austauschen',
 	'lvs-button-yes' => 'Ja',
 	'lvs-button-no' => 'Nein',
-	'lvs-more-suggestions' => 'weitere Vorschläge',
+	'lvs-more-suggestions' => 'Weitere Vorschläge',
 	'lvs-best-match-label' => 'Bester Treffer aus Wikias Video-Bibliothek',
 	'lvs-undo-swap' => 'Rückgängig machen',
 	'lvs-undo-keep' => 'Rückgängig machen',
@@ -448,7 +448,7 @@ $messages['es'] = array(
 	'lvs-button-swap' => 'Cambiar',
 	'lvs-button-yes' => 'Sí',
 	'lvs-button-no' => 'No',
-	'lvs-more-suggestions' => 'más sugerencias', # Fuzzy
+	'lvs-more-suggestions' => 'Más sugerencias',
 	'lvs-best-match-label' => 'Mejor resultado desde Wikia Video',
 	'lvs-undo-swap' => 'Deshacer',
 	'lvs-undo-keep' => 'Deshacer',
@@ -611,7 +611,7 @@ $messages['fr'] = array(
 	'lvs-button-swap' => 'Basculer',
 	'lvs-button-yes' => 'Oui',
 	'lvs-button-no' => 'Non',
-	'lvs-more-suggestions' => 'plus de suggestions',
+	'lvs-more-suggestions' => 'Plus de suggestions',
 	'lvs-best-match-label' => 'Meilleure correspondance sous licence pour Wikia Vidéo',
 	'lvs-undo-swap' => 'Annuler',
 	'lvs-undo-keep' => 'Annuler',
@@ -710,6 +710,7 @@ $messages['gl'] = array(
 );
 
 /** Japanese (日本語)
+ * @author Barrel0116
  * @author Tommy6
  */
 $messages['ja'] = array(
@@ -726,6 +727,8 @@ $messages['ja'] = array(
 	'lvs-instructions' => 'せっかくページに動画を埋め込んでも、著作権侵害により動画が削除されてしまい、利用できなくなることがあります。この問題に対する解決策としてウィキアでは、[[w:c:video|提携先から得た数多くの許諾済み動画を提供し]]、各ウィキで利用できるようにしました。このページは、このウィキアに既に埋め込まれている各動画を、同じもしくは似た内容の許諾済み動画に差し替えられないか簡単に検索するためのものです。なお、完全に同じ動画であるにもかかわらず動画サムネイルが違ってしまうことがあることに注意してください。差し替え動画を決める際には、動画自体を再生して確認することをおすすめいたします。',
 	'lvs-button-keep' => 'このまま',
 	'lvs-button-swap' => '差し替え',
+	'lvs-button-yes' => 'はい',
+	'lvs-button-no' => 'いいえ',
 );
 
 /** Kannada (ಕನ್ನಡ)
@@ -756,7 +759,7 @@ $messages['lb'] = array(
 	'lvs-button-swap' => 'Austauschen',
 	'lvs-button-yes' => 'Jo',
 	'lvs-button-no' => 'Neen',
-	'lvs-more-suggestions' => 'méi Virschléi',
+	'lvs-more-suggestions' => 'Méi Virschléi',
 	'lvs-undo-swap' => 'Réckgängeg maachen',
 	'lvs-undo-keep' => 'Réckgängeg maachen',
 	'lvs-error-permission' => 'Dir kënnt dëse Video net wiesselen.',
@@ -869,6 +872,7 @@ $messages['ne'] = array(
  * @author Jochempluim
  * @author Siebrand
  * @author Sjoerddebruin
+ * @author Southparkfan
  */
 $messages['nl'] = array(
 	'licensedvideoswap' => 'Gelicenseerde video wisselen',
@@ -893,7 +897,7 @@ $messages['nl'] = array(
 	'lvs-button-swap' => 'Wisselen',
 	'lvs-button-yes' => 'Ja',
 	'lvs-button-no' => 'Nee',
-	'lvs-more-suggestions' => 'meer suggesties',
+	'lvs-more-suggestions' => 'Meer suggesties',
 	'lvs-best-match-label' => 'Best passende gelicenseerde Wikia Video',
 	'lvs-undo-swap' => 'Ongedaan maken',
 	'lvs-undo-keep' => 'Ongedaan maken',
@@ -929,6 +933,7 @@ $messages['nl'] = array(
 );
 
 /** Polish (polski)
+ * @author Pio387
  * @author Sovq
  */
 $messages['pl'] = array(
@@ -954,7 +959,7 @@ $messages['pl'] = array(
 	'lvs-button-swap' => 'Wymień',
 	'lvs-button-yes' => 'Tak',
 	'lvs-button-no' => 'Nie',
-	'lvs-more-suggestions' => 'więcej podpowiedzi',
+	'lvs-more-suggestions' => 'Więcej sugestii',
 	'lvs-best-match-label' => 'Najbliższy film z Filmotekii',
 	'lvs-undo-swap' => 'Cofnij',
 	'lvs-undo-keep' => 'Cofnij',
@@ -1055,7 +1060,7 @@ $messages['ru'] = array(
 	'lvs-button-swap' => 'Заменить',
 	'lvs-button-yes' => 'Да',
 	'lvs-button-no' => 'Нет',
-	'lvs-more-suggestions' => 'больше предложений',
+	'lvs-more-suggestions' => 'Больше предложений',
 	'lvs-best-match-label' => 'Лучшее лицензированное совпадение из Wikia Video',
 	'lvs-undo-swap' => 'Отменить',
 	'lvs-undo-keep' => 'Отменить',
@@ -1264,6 +1269,13 @@ $messages['te'] = array(
 	'lvs-new-flag' => 'కొత్తవి',
 );
 
+/** Tagalog (Tagalog)
+ * @author Jewel457
+ */
+$messages['tl'] = array(
+	'lvs-more-suggestions' => 'Iba pang mga mungkahi',
+);
+
 /** Turkish (Türkçe)
  * @author Incelemeelemani
  * @author Rapsar
@@ -1402,7 +1414,7 @@ $messages['zh-hans'] = array(
 	'lvs-button-swap' => '交换',
 	'lvs-button-yes' => '是',
 	'lvs-button-no' => '否',
-	'lvs-more-suggestions' => '更多建议', # Fuzzy
+	'lvs-more-suggestions' => '更多建议',
 	'lvs-best-match-label' => '来自Wikia视频的最好许可协议匹配',
 	'lvs-undo-swap' => '撤销',
 	'lvs-undo-keep' => '撤销',
@@ -1416,6 +1428,7 @@ $messages['zh-hans'] = array(
 	'lvs-confirm-keep-title' => '保持视频',
 	'lvs-confirm-undo-swap-title' => '确认撤销',
 	'lvs-confirm-undo-keep-title' => '确认撤消',
+	'lvs-log-swap' => '已将视频由[[{{ns:File}}:$1]]转换为[[{{ns:File}}:$2]]',
 	'lvs-log-restore' => '恢复已交换的视频（[[{{ns:File}}:$1]]）',
 	'lvs-log-removed-redirected-link' => '被删除的重定向链接',
 	'lvs-history-swapped' => '已将“$1”和“$2”交换',
