@@ -716,8 +716,7 @@ class WikiaHomePageController extends WikiaController {
 
 		$hubsSlots = $helper->getHubSlotsFromWF( $wgCityId, $wgContLang->getCode() );
 
-		foreach( $hubsSlots as $slot => $hub ) {
-			$hubId = $hub['hub_slot'];
+		foreach( $hubsSlots['hub_slot'] as $slot => $hubId ) {
 			if( is_numeric( $hubId ) && isset( $hubsV3List[ $hubId ] ) ) {
 				$hubSettings = WikiFactory::getVarValueByName('wgOasisThemeSettings', $hubId);
 				$settings['hub-color-slot-' . ($slot+1)] = isset( $hubSettings['color-buttons'] )
