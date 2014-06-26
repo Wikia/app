@@ -361,7 +361,7 @@ ve.ui.MWMediaEditDialog.prototype.onImageModelAlignmentChange = function ( align
  * @param {string} alignment Image alignment
  */
 ve.ui.MWMediaEditDialog.prototype.onImageModelTypeChange = function ( type ) {
-	/*var item = type ? this.typeInput.getItemFromData( type ) : null;
+	var item = type ? this.typeInput.getItemFromData( type ) : null;
 
 	this.typeInput.selectItem( item );
 
@@ -371,7 +371,7 @@ ve.ui.MWMediaEditDialog.prototype.onImageModelTypeChange = function ( type ) {
 
 	this.borderCheckbox.setValue(
 		this.imageModel.isBorderable() && this.imageModel.hasBorder()
-	);*/
+	);
 };
 
 /**
@@ -463,8 +463,8 @@ ve.ui.MWMediaEditDialog.prototype.getSetupProcess = function ( data ) {
 			this.imageModel = ve.dm.MWImageModel.static.newFromImageNode( this.mediaNode );
 			// Events
 			this.imageModel.connect( this, {
-				'alignmentChange': 'onImageModelAlignmentChange',
-				'typeChange': 'onImageModelTypeChange'
+				'alignmentChange': 'onImageModelAlignmentChange'
+				//'typeChange': 'onImageModelTypeChange'
 			} );
 
 			this.store = doc.getStore();
