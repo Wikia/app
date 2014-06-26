@@ -28,6 +28,8 @@ $messages[ 'en' ] = [
 	'wikia-interactive-maps-parser-tag-error-min-height' => 'Wikia Interactive Maps error occurred: invalid height. Minimum supported height is $min.',
 	'wikia-interactive-maps-parser-tag-error-max-height' => 'Wikia Interactive Maps error occurred: invalid height. Maximum supported height is $max.',
 	'wikia-interactive-maps-parser-tag-error-no-map-found' => 'Wikia Interactive Maps error occurred: Map not found.',
+	'wikia-interactive-maps-parser-tag-created-by' => 'Created by $1',
+	'wikia-interactive-maps-parser-tag-view' => 'View',
 
 	'wikia-interactive-maps-map-placeholder-error' => 'Unexpected error has occurred. Please contact us if it happens again.',
 	'wikia-interactive-maps-service-error' => 'Oops, we have issues with our maps service. If it repeats [[Special:Contact|contact us]], please.',
@@ -125,6 +127,8 @@ $messages[ 'qqq' ] = [
 	'wikia-interactive-maps-parser-tag-error-min-height' => 'Interactive maps error after try of parsing wikitext tag; value below minimum height has been passed',
 	'wikia-interactive-maps-parser-tag-error-max-height' => 'Interactive maps error after try of parsing wikitext tag; value above maximum height has been passed',
 	'wikia-interactive-maps-parser-tag-error-no-map-found' => 'Interactive maps error when map of given id doesn\'t exist',
+	'wikia-interactive-maps-parser-tag-created-by' => 'Created by message $1 - user name',
+	'wikia-interactive-maps-parser-tag-view' => 'View map button',
 
 	'wikia-interactive-maps-map-placeholder-error' => 'Interactive maps unexpected error which could happen during some rare situations such as file system dead',
 	'wikia-interactive-maps-service-error' => 'An error message which appears in the creation map modal when our map service fails to create a map',

@@ -48,7 +48,7 @@ require(['jquery', 'wikia.mustache'], function ($, mustache) {
 		var mapId = $target.data('map-id'),
 			mapUrl = $target.data('map-url'),
 			templatePath = 'extensions/wikia/WikiaInteractiveMaps/templates/' +
-				'WikiaInteractiveMapsController_mapIframe.mustache',
+				'intMapParserTagMapIframe.mustache',
 			cacheKey = 'wikia_interactive_maps_map_iframe';
 
 		loadTemplate(templatePath, cacheKey)
@@ -102,7 +102,7 @@ require(['jquery', 'wikia.mustache'], function ($, mustache) {
 	}
 
 	/** Attach events */
-	$('body').on('click', '.wikia-interactive-map-thumbnail', function (event) {
+	$('body').on('click', '.wikia-interactive-map-thumbnail a', function (event) {
 		event.preventDefault();
 		showMap($(event.currentTarget));
 	});
