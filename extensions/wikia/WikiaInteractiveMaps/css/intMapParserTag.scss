@@ -1,0 +1,29 @@
+$content-color: white;
+
+.wikia-interactive-map-thumbnail {
+	figure {
+		position: relative;
+	}
+
+	figcaption {
+		bottom: 0;
+		color: $content-color;
+		padding: 20px;
+		position: absolute;
+	}
+
+	strong {
+		display: block;
+		font-size: 16px;
+		font-weight: bold;
+	}
+
+	a {
+		border: 1px solid $content-color;
+		border-radius: 3px;
+		bottom: 60px;
+		display: block;
+		position: absolute;
+		right: 20px;
+	}
+}
