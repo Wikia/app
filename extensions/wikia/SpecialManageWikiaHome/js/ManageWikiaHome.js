@@ -44,8 +44,6 @@ $(function () {
 					e.preventDefault();
 					this.clearMarketingSlot(e);
 				}, this));
-
-			$().log('ManageWikiaHome.init');
 		},
 		changeVisualizationLang: function (e) {
 			window.Wikia.Querystring().clearVals().setVal('vl', e.target.value).goTo();

@@ -479,6 +479,12 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 		$this->message = $status['message'];
 	}
 
+	/**
+	 * Get data about marketing slots
+	 *
+	 * @param $homePageSlotsValues
+	 * @return mixed
+	 */
 	private function getMarketingSlotsValues($homePageSlotsValues) {
 		unset($homePageSlotsValues['hub_slot']);
 		return $homePageSlotsValues;
@@ -612,6 +618,12 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 		return $url;
 	}
 
+	/**
+	 * Prepare hub and marketing slots to display in slots setup form
+	 *
+	 * @param $savedSlotsValues
+	 * @return array
+	 */
 	private function prepareSlots( $savedSlotsValues ) {
 		$marketingSavedSlotsValues = $this->getMarketingSlotsValues($savedSlotsValues);
 		$marketingSavedSlotsValues = $marketingSavedSlotsValues['marketing_slot'];
@@ -623,6 +635,12 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 		return array_merge($homePageSlotsValues, $marketingSavedSlotsValues);
 	}
 
+	/**
+	 * Get saved images for marketing slots
+	 *
+	 * @param $marketingSlots
+	 * @return array
+	 */
 	private function prepareMarketingSlotImages( $marketingSlots ) {
 		$marketingImages = [];
 		foreach ($marketingSlots as $key => $slot) {

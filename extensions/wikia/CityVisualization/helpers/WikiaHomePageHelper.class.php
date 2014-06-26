@@ -323,6 +323,12 @@ class WikiaHomePageHelper extends WikiaModel {
 		return $status;
 	}
 
+	/**
+	 * Update old slots structure to new structure
+	 *
+	 * @param $hubSlots
+	 * @return array
+	 */
 	public function updateHubSlotsToV2($hubSlots) {
 		$hubSlotsV2 = [];
 		foreach( $hubSlots as $slot ) {

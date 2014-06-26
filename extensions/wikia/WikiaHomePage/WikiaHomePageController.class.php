@@ -148,7 +148,7 @@ class WikiaHomePageController extends WikiaController {
 	/**
 	 * If hub slots are not set, they are filled with hubs v2 data
 	 *
-	 * @param $hubsSlots
+	 * @param Array $hubsSlots data about hub slot
 	 * @return mixed
 	 */
 	private function fillEmptyHubSlots( $hubsSlots ) {
@@ -168,8 +168,8 @@ class WikiaHomePageController extends WikiaController {
 	/**
 	 * Prepare data to display hub v3 slot in hubs section on Wikia homepage
 	 *
-	 * @param $hub
-	 * @param $slot
+	 * @param Array $hub data about hub slot
+	 * @param int $slot slot number
 	 * @return array
 	 */
 	private function prepareHubV3Slot( $hub, $slot ) {
@@ -180,8 +180,8 @@ class WikiaHomePageController extends WikiaController {
 	/**
 	 * Prepare data to display marketing promo slot in hubs section on Wikia homepage
 	 *
-	 * @param $hub
-	 * @param $slot
+	 * @param Array $slots data about marketing slots
+	 * @param int $index next free slot number
 	 * @return array
 	 */
 	private function prepareMarketingSlots( $slots, $index ) {
@@ -189,9 +189,9 @@ class WikiaHomePageController extends WikiaController {
 		$maxSlots = self::SLOTS_IN_ROW - ( $index % self::SLOTS_IN_ROW );
 
 		foreach( $slots as $slot ) {
-			if(!empty($slot['marketing_slot_image'])) {
+			if( !empty( $slot['marketing_slot_image'] ) ) {
 				$imgUrl = $this->getMarketingImage($slot['marketing_slot_image']);
-				if (!empty($imgUrl)) {
+				if ( !empty( $imgUrl ) ) {
 					if ( $maxSlots ) {
 						$marketingSlots[$index] = [
 							'classname' =>		'hub-slot-' . ($index + 1),
@@ -214,7 +214,7 @@ class WikiaHomePageController extends WikiaController {
 	/**
 	 * Prepare data to display hub v2 slot in hubs section on Wikia homepage
 	 *
-	 * @param $hub
+	 * @param string $hub
 	 * @return array|null
 	 */
 	private function prepareHubV2Slot( $hub ) {
