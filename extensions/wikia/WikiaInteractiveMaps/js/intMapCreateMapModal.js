@@ -15,7 +15,7 @@ define(
 			modalConfig = {
 				vars: {
 					id: 'intMapCreateMapModal',
-					classes: ['intMapCreateMapModal', 'intMapModal'],
+					classes: ['int-map-modal'],
 					size: 'medium',
 					content: '',
 					title: $.msg('wikia-interactive-maps-create-map-header'),

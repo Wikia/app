@@ -7,7 +7,7 @@ define('wikia.intMap.editPOI', ['jquery', 'wikia.intMap.utils'], function($, uti
 		modalConfig = {
 			vars: {
 				id: 'intMapEditPOI',
-				classes: ['intMapEditPOI', 'intMapModal'],
+				classes: ['int-map-modal'],
 				size: 'medium',
 				content: '',
 				title: '',
