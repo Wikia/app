@@ -31,8 +31,8 @@ $wgAutoloadClasses[ 'WikiaMaps' ] = $dir . '/models/WikiaMaps.class.php';
 $wgAutoloadClasses[ 'WikiaMapsLogger' ] = $dir . '/models/WikiaMapsLogger.class.php';
 
 // special pages
-$wgSpecialPages[ 'InteractiveMaps' ] = 'WikiaInteractiveMapsController';
-$wgSpecialPageGroups[ 'InteractiveMaps' ] = 'wikia';
+$wgSpecialPages[ 'Maps' ] = 'WikiaInteractiveMapsController';
+$wgSpecialPageGroups[ 'Maps' ] = 'wikia';
 
 // hooks
 $wgHooks[ 'ParserFirstCallInit' ][] = 'WikiaInteractiveMapsParserTagController::parserTagInit';
