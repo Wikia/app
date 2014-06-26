@@ -118,13 +118,6 @@ abstract class BaseTask {
 		return $this->calls[$index];
 	}
 
-	/**
-	 * @return array black list of method names to hide on Special:Tasks
-	 */
-	public function getAdminNonExecuteables() {
-		return ['__construct', 'init', 'getAdminNonExecuteables'];
-	}
-
 	public function createdBy($createdBy=null) {
 		if ($createdBy !== null) {
 			$this->createdBy = $createdBy;
@@ -266,6 +259,36 @@ abstract class BaseTask {
 	 */
 	public function getTaskId() {
 		return $this->taskId;
+	}
+
+	/**
+	 * get a list of all task methods this class can execute via Special:Tasks
+	 *
+	 * @return array
+	 */
+	public function getAdminExecuteableMethods() {
+		$ignoredMethods = [
+			'__construct',
+			'getAdminExecuteableMethods',
+			'init',
+		];
+
+		$mirror = new \ReflectionClass($this);
+		$mirrorClass = $mirror->getName();
+		$methods = [];
+
+		foreach ($mirror->getMethods(\ReflectionMethod::IS_PUBLIC) as $methodMirror) {
+			$methodClass = $methodMirror->getDeclaringClass();
+			$methodName = $methodMirror->getName();
+
+			if (in_array($methodName, $ignoredMethods) || $methodClass->getName() != $mirrorClass) {
+				continue;
+			}
+
+			$methods[] = $methodName;
+		}
+
+		return $methods;
 	}
 
 	// following are wrappers that will eventually call the same functions in AsyncTaskList
