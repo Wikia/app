@@ -691,8 +691,8 @@ class WikiaHomePageController extends WikiaController {
 	}
 
 	private function getHubsSectionSlots() {
-		global $wgCityId;
-		return $this->helper->getHubSlotsFromWF( $wgCityId );
+		global $wgCityId, $wgContLang;
+		return $this->helper->getHubSlotsFromWF( $wgCityId, $wgContLang->getCode() );
 	}
 
 	/**
@@ -714,7 +714,7 @@ class WikiaHomePageController extends WikiaController {
 		);
 		$hubsV3List = $response->getVal('list', []);
 
-		$hubsSlots = $helper->getHubSlotsFromWF( $wgCityId );
+		$hubsSlots = $helper->getHubSlotsFromWF( $wgCityId, $wgContLang->getCode() );
 
 		foreach( $hubsSlots as $slot => $hub ) {
 			$hubId = $hub['hub_slot'];

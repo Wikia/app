@@ -46,7 +46,7 @@ class WikiaHomePageHelper extends WikiaModel {
 	const WAM_SCORE_ROUND_PRECISION = 2;
 
 	const SLIDER_IMAGES_KEY = 'SliderImagesKey';
-	const WIKIA_HOME_PAGE_HELPER_MEMC_VERSION = 'v0.8';
+	const WIKIA_HOME_PAGE_HELPER_MEMC_VERSION = 'v0.9';
 
 	protected $visualizationModel = null;
 	protected $collectionsModel;
@@ -295,8 +295,13 @@ class WikiaHomePageHelper extends WikiaModel {
 	 * @param $corporateId corporate wiki id
 	 * @return mixed
 	 */
-	public function getHubSlotsFromWF($corporateId) {
-		$hubSlots = WikiFactory::getVarValueByName('wgWikiaHomePageHubsSlots', $corporateId);
+	public function getHubSlotsFromWF($corporateId, $lang) {
+		$hubSlots = WikiFactory::getVarValueByName('wgWikiaHomePageHubsSlotsV2', $corporateId);
+		if ( empty( $hubSlots ) ) {
+			$hubSlots = WikiFactory::getVarValueByName('wgWikiaHomePageHubsSlots', $corporateId);
+			$hubSlots = $this->updateHubSlotsToV2($hubSlots);
+			$this->saveHubSlotsToWF($hubSlots, $corporateId, $lang, 'wgWikiaHomePageHubsSlotsV2');
+		}
 		return is_array( $hubSlots ) ? $hubSlots : [];
 	}
 
@@ -308,14 +313,22 @@ class WikiaHomePageHelper extends WikiaModel {
 	 * @param $corporateId corporate wiki id
 	 * @param $lang language code
 	 */
-	public function saveHubSlotsToWF($hubSlotsValues, $corporateId, $lang) {
-		$status = WikiFactory::setVarByName('wgWikiaHomePageHubsSlots', $corporateId, $hubSlotsValues);
+	public function saveHubSlotsToWF($hubSlotsValues, $corporateId, $lang, $varName = 'wgWikiaHomePageHubsSlots') {
+		$status = WikiFactory::setVarByName($varName, $corporateId, $hubSlotsValues);
 
 		if ( $status ) {
 			WikiaDataAccess::cachePurge( $this->getHubSlotsMemcacheKey( $lang ) );
 		}
 
 		return $status;
+	}
+
+	public function updateHubSlotsToV2($hubSlots) {
+		$hubSlotsV2 = [];
+		foreach( $hubSlots as $slot ) {
+			$hubSlotsV2['hub_slot'][] = $slot['hub_slot'];
+		}
+		return $hubSlotsV2;
 	}
 
 	/**

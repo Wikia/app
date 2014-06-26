@@ -84,7 +84,7 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 		$this->form = new CollectionsForm();
 		$this->statsForm = new StatsForm();
 		$this->hubsForm = new HubsSlotsForm();
-		$savedSlotsValues = $this->helper->getHubSlotsFromWF($this->corpWikiId);
+		$savedSlotsValues = $this->helper->getHubSlotsFromWF($this->corpWikiId, $visualizationLang);
 		$homePageSlotsValues = $this->prepareSlots($savedSlotsValues);
 		$collectionsModel = $this->getWikiaCollectionsModel();
 		$this->collectionsList = $collectionsModel->getList($this->visualizationLang);
