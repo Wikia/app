@@ -210,7 +210,7 @@ class WikiaInteractiveMapsPoiController extends WikiaInteractiveMapsBaseControll
 				$this->mapsModel->getDefaultParentPoiCategory();
 
 			// if user didn't upload marker then this is empty string. we don't want to send it to api.
-			if ( !empty( $pinTypesMarkers[ $i ] ) ) {
+			if ( !empty( $poiCategoryMarkers[ $i ] ) ) {
 				$poiCategoryData[ 'marker' ] = $poiCategoryMarkers[ $i ];
 			}
 
