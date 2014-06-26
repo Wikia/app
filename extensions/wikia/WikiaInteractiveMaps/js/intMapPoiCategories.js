@@ -89,19 +89,21 @@ define('wikia.intMap.poiCategories',
 			trigger,
 			params,
 			mapId,
-			mapUrl;
+			mapUrl,
+			mode;
 
 		function init(templates, _params, _trigger) {
 			// set reference to params and trigger callback
 			trigger = _trigger;
-			params = _params || {};
+			params = _params;
 			mapId = params.mapId;
 
 			poiCategoriesTemplate = templates[0];
 			poiCategoryTemplate = templates[1];
 			parentPoiCategoryTemplate = templates[2];
 
-			setModalMode(typeof params !== 'undefined' && params.hasOwnProperty('id'));
+			mode = params.mode || 'create';
+			setModalMode();
 
 			setUpParentPoiCategories()
 				.then(function () {
@@ -139,12 +141,11 @@ define('wikia.intMap.poiCategories',
 
 		/**
 		 * @desc sets modal mode (create POI categories / edit existing POI categories)
-		 * @param {bool} isEditMode
 		 */
-		function setModalMode(isEditMode) {
+		function setModalMode() {
 			var title = createPoiCategoriesTitle;
 
-			if (isEditMode) {
+			if (mode === 'edit') {
 				title = editPoiCategoriesTitle;
 			}
 
@@ -205,7 +206,7 @@ define('wikia.intMap.poiCategories',
 					if (data && data.success) {
 						parentPoiCategories = data.content;
 					} else {
-						modal.trigger('error', data.content.message);
+						utils.showError(modal, data.content.message);
 						parentPoiCategories = data.content;
 					}
 
@@ -321,10 +322,10 @@ define('wikia.intMap.poiCategories',
 			}
 
 			if (valid) {
-				modal.trigger('cleanUpError');
+				utils.cleanUpError(modal);
 				return serializedForm;
 			} else {
-				modal.trigger('error', $.msg('wikia-interactive-maps-poi-categories-form-error'));
+				utils.showError(modal, $.msg('wikia-interactive-maps-poi-categories-form-error'));
 				return false;
 			}
 		}
@@ -353,23 +354,26 @@ define('wikia.intMap.poiCategories',
 				return;
 			}
 
+			modal.deactivate();
 			$.nirvana.sendRequest({
 				controller: 'WikiaInteractiveMapsPoi',
-				method: 'createPoiCategories',
+				method: 'editPoiCategories',
 				format: 'json',
 				data: data,
 				callback: function(response) {
 					var data = response.results;
 
 					if (data && data.success) {
-						modal.trigger('cleanUpError');
+						utils.cleanUpError(modal);
 						modal.trigger('poiCategoriesCreated', data.content);
 					} else {
-						modal.trigger('error', data.content.message);
+						utils.showError(modal, data.content.message);
+						modal.activate();
 					}
 				},
 				onErrorCallback: function(response) {
 					utils.handleNirvanaException(modal, response);
+					modal.activate();
 				}
 			});
 		}
@@ -382,11 +386,11 @@ define('wikia.intMap.poiCategories',
 		}
 
 		/**
-		 * TODO figure out where we should put this function
-		 * @desc redirects to the map page
+		 * @desc send callback to ponto and close modal
 		 */
 		function poiCategoriesCreated() {
-			qs(mapUrl).goTo();
+			trigger();
+			modal.trigger('close');
 		}
 
 		return {

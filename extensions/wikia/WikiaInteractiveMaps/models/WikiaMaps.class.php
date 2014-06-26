@@ -333,6 +333,19 @@ class WikiaMaps {
 		);
 	}
 
+	public function updatePoiCategory( $poiCategoryId, $poiCategoryData ) {
+		return $this->putRequest(
+			$this->buildUrl( [ self::ENTRY_POINT_POI_CATEGORY, $poiCategoryId ] ),
+			$poiCategoryData
+		);
+	}
+
+	public function deletePoiCategory( $poiCategoryId ) {
+		$this->deleteRequest(
+			$this->buildUrl( [ self::ENTRY_POINT_POI_CATEGORY, $poiCategoryId ] )
+		);
+	}
+
 	/**
 	 * Sends a request to IntMap Service API to create a point of interest (POI) with given parameters
 	 *
