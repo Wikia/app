@@ -201,18 +201,7 @@ $color-wikiahome-border-primary-brand-color: #c7d1d8;
 				position: relative;
 				text-align: center;
 				width: 160px;
-				&:before,
-				&:after,
-				h2:before,
-				h2:after {
-					width: 40px;
-				}
-				&:after {
-					left: 40px;
-				}
-				h2:before {
-					right: 40px;
-				}
+				
 				a.wikia-button.secondary {
 					@include box-shadow(0, 0, 2px, #aaa, false, 0);
 					@include linear-gradient(white, top, white, 35%, #e5e5e5, 100%);
@@ -242,14 +231,18 @@ $color-wikiahome-border-primary-brand-color: #c7d1d8;
 					&:active {
 						@include box-shadow(0, 0, 5px, #aaa, false, 0);
 						@include linear-gradient(#ddd, top, #ddd, 20%, white, 100%);
+						.arrow {
+							background-position: -46px -195px;
+						}
 					}
 				}
 				a.wikia-button.chevron-not-visible {
 					padding: 9px 26px 15px 24px;
 				}
 				h2 {
+					border-top: 4px solid $color-wikiahome-community;
 					border-bottom: none;
-					padding: 15px 17px 0;
+					padding: 11px 17px 0;
 					position: inherit;
 					text-align: left;
 				}
@@ -262,34 +255,6 @@ $color-wikiahome-border-primary-brand-color: #c7d1d8;
 					text-align: left;
 				}
 
-				/* stripes at the top of remix panel */
-				&:before,
-				&:after,
-				h2:before,
-				h2:after {
-					content: "";
-					display: block;
-					height: 4px;
-					position: absolute;
-					top: 0;
-					width: 40px;
-				}
-				&:before {
-					background-color: $color-wikiahome-community;
-					left: 0;
-				}
-				&:after {
-					background-color: $color-wikiahome-videogames;
-					left: 40px;
-				}
-				h2:before {
-					background-color: $color-wikiahome-entertainment;
-					right: 40px;
-				}
-				h2:after {
-					background-color: $color-wikiahome-lifestyle;
-					right: 0;
-				}
 				.collections-button {
 					border: 0;
 					border-bottom-right-radius: 3px;
