@@ -14,6 +14,17 @@ define('wikia.intMap.pontoBridge', ['wikia.window', 'ponto', 'wikia.intMap.utils
 				cacheKey: 'wikia_interactive_maps_edit_poi',
 				module: 'wikia.intMap.editPOI',
 				origin: 'wikia-interactive-maps-edit-poi'
+			},
+			embedMapCode: {
+				noLoginRequired: true,
+				source: {
+					messages: ['WikiaInteractiveMapsEmbedMapCode'],
+					scripts: ['int_map_embed_map_code'],
+					styles: ['extensions/wikia/WikiaInteractiveMaps/css/intMapModal.scss'],
+					mustache: ['extensions/wikia/WikiaInteractiveMaps/templates/intMapEmbedMapCode.mustache']
+				},
+				cacheKey: 'wikia_interactive_embed_map_code',
+				module: 'wikia-interactive-embed-map-code'
 			}
 		};
 
@@ -31,7 +42,7 @@ define('wikia.intMap.pontoBridge', ['wikia.window', 'ponto', 'wikia.intMap.utils
 			var actionConfig = actions[params.action],
 				data = params.data;
 
-			if (utils.isUserLoggedIn()) {
+			if (actionConfig.hasOwnProperty('noLoginRequired') || utils.isUserLoggedIn()) {
 				utils.loadModal(actionConfig, data, function(response) {
 					Ponto.respond(response, callbackId);
 				});

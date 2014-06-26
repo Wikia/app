@@ -57,6 +57,10 @@ JSMessages::registerPackage( 'WikiaInteractiveMapsDeleteMap', [
 	'wikia-interactive-maps-delete-map-client-*'
 ] );
 
+JSMessages::registerPackage( 'WikiaInteractiveMapsEmbedMapCode', [
+	'wikia-interactive-maps-embed-map-code-*'
+] );
+
 // Logs
 $wgLogTypes[] = 'maps';
 $wgLogNames['maps'] = 'wikia-interactive-maps-log-name';
