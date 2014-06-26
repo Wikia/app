@@ -5,9 +5,15 @@ class SQLBuilderSelectTest extends FluentSqlTestBase {
 	/**
 	 * @param $expected
 	 * @param $actual
+	 * @param $fill
 	 * @dataProvider selectProvider
 	 */
-	public function testSelect($expected, $actual) {
+	public function testSelect($expected, $actual, $fill=false) {
+		if ($fill) {
+			/** @var SQL $actual */
+			$actual = $actual->injectParams(null, $actual->build());
+		}
+
 		$this->assertEquals($expected, $actual);
 	}
 
@@ -100,6 +106,65 @@ class SQLBuilderSelectTest extends FluentSqlTestBase {
 					->WHERE('price')->GREATER_THAN(20)
 					->LIMIT(10)
 					->OFFSET(1)
+			],
+			[
+				"
+				SELECT name, count(*) as c
+				FROM products
+				GROUP BY name
+				HAVING c BETWEEN ? AND ?
+				",
+				(new SQL)
+					->SELECT('name', 'count(*) as c')
+					->FROM('products')
+					->GROUP_BY('name')
+					->HAVING('c')->BETWEEN(1, 2)
+			],
+			[
+				"
+				SELECT name, count(*) as c
+				FROM products
+				GROUP BY name
+				HAVING c > ?
+				",
+				(new SQL)
+					->SELECT('name', 'count(*) as c')
+					->FROM('products')
+					->GROUP_BY('name')
+					->HAVING('c')->GREATER_THAN(1)
+			],
+			[
+				"
+				SELECT name, address
+				FROM people
+				WHERE name LIKE '%nelson%'
+				",
+				(new SQL)
+					->SELECT('name', 'address')
+					->FROM('people')
+					->WHERE('name')->LIKE('%nelson%'),
+				true
+			],
+			[
+				"
+				SELECT name, address, birthday
+				FROM people
+				WHERE name LIKE '%nelson%'
+					AND (
+						address IS NULL OR
+						birthday = '19851212'
+					)
+					AND some_col > '5'
+				",
+				(new SQL)
+					->SELECT('name', 'address', 'birthday')
+					->FROM('people')
+					->WHERE('name')->LIKE('%nelson%')
+						->AND_(StaticSQL::RAW(
+							'( address is null or birthday = ? )', ['19851212']
+						))
+						->AND_('some_col')->GREATER_THAN(5),
+				true
 			]
 		];
 	}
