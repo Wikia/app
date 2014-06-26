@@ -6,26 +6,36 @@
 
 class MetricManager {
 	//Transaction names
-	const TYPE_PAGE_MAIN = '/mw/Page/Main';
-	const TYPE_PAGE_SPECIAL = '/mw/Page/Special';
-	const TYPE_PAGE_FILE = '/mw/Page/File';
-	const TYPE_PAGE_MESSAGE_WALL = '/mw/Page/MessageWall';
-	const TYPE_PAGE_CATEGORY = '/mw/Page/Category';
-	const TYPE_PAGE_OTHER = '/mw/Page/Other';
+	const TRANSACTION_PAGE_MAIN = 'page/main';
+	const TRANSACTION_PAGE_FILE = 'page/file';
+	const TRANSACTION_PAGE_MESSAGE_WALL = 'page/message_wall';
+	const TRANSACTION_PAGE_CATEGORY = 'page/category';
+	const TRANSACTION_PAGE_OTHER = 'page/other';
+	const TRANSACTION_SPECIAL_PAGE = 'special_page';
+	const TRANSACTION_RESOURCE_LOADER = 'assets/resource_loader';
+	const TRANSACTION_ASSETS_MANAGER = 'assets/assets_manager';
+	const TRANSACTION_NIRVANA = 'api/nirvana';
+	const TRANSACTION_AJAX = 'api/ajax';
 
 	//Parameters
-	const PARAM_LOGGED_IN = 'LoggedIn';
-	const PARAM_IS_FROM_PARSER_CACHE = 'IsFromParserCache';
-	const PARAM_SIZE_CATEGORY = 'SizeCategory';
-	const PARAM_ACTION = 'Action';
-	const PARAM_SKIN = 'Skin';
-	const PARAM_VERSION = 'Version';
-	const PARAM_VIEW_TYPE = 'ViewType'; //For Category only
+	const PARAM_LOGGED_IN = 'logged_in';
+	const PARAM_PARSER_CACHE_USED = 'parser_cache_used';
+	const PARAM_SIZE_CATEGORY = 'size_category';
+	const PARAM_ACTION = 'action';
+	const PARAM_SKIN = 'skin';
+	const PARAM_VERSION = 'version';
+	const PARAM_VIEW_TYPE = 'view_type'; //For Category only
+	const PARAM_CONTROLLER = 'controller';
+	const PARAM_METHOD = 'method';
+	const PARAM_FUNCTION = 'function';
 
 	//Definition of different size categories
-	const PARAM_SIZE_CATEGORY_SIMPLE = 'Simple';
-	const PARAM_SIZE_CATEGORY_AVERAGE = 'Average';
-	const PARAM_SIZE_CATEGORY_COMPLEX = 'Complex';
+	const PARAM_SIZE_CATEGORY_SIMPLE = 'simple';
+	const PARAM_SIZE_CATEGORY_AVERAGE = 'average';
+	const PARAM_SIZE_CATEGORY_COMPLEX = 'complex';
+
+	protected static $transactionType = null;
+	protected static $transactionParameters = array();
 
 	/**
 	 * Sets the name of the transaction currently processed, so the measured times can be categorized
@@ -33,8 +43,8 @@ class MetricManager {
 	 * @param $transactionType String: Name of the current transaction - should be one of the defines TYPE_XXX
 	 */
 	public static function setTransactionType($transactionType) {
-
 		wfDebug("MetricManager: transaction type set - ".$transactionType."\n");
+		self::$transactionType = $transactionType;
 
 		if ( function_exists( 'newrelic_name_transaction' ) ) {
 			newrelic_name_transaction( $transactionType );
@@ -49,14 +59,23 @@ class MetricManager {
 	 */
 	public static function setTransactionParameter($parameterKey, $parameterValue) {
 		if ( is_bool( $parameterValue ) ) {
-			$parameterValue = $parameterValue ? "Yes" : "No";
+			$parameterValue = $parameterValue ? "yes" : "no";
 		}
 
 		wfDebug("MetricManager: parameter set - key: ".$parameterKey.", value: ".$parameterValue."\n");
+		self::$transactionParameters[$parameterKey] = $parameterValue;
 
-		if ( function_exists( 'newrelic_name_transaction' ) ) {
+		if ( function_exists( 'newrelic_add_custom_parameter' ) ) {
 			newrelic_add_custom_parameter( $parameterKey, $parameterValue );
 		}
+	}
+
+	public static function getTransactionType() {
+		return self::$transactionType;
+	}
+
+	public static function getTransactionParameters() {
+		return self::$transactionParameters;
 	}
 
 	public static function onArticleViewAfterParser( Article $article, ParserOutput $parserOutput ) {
@@ -76,4 +95,4 @@ class MetricManager {
 
 		return true;
 	}
-} 
+}

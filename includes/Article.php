@@ -531,7 +531,7 @@ class Article extends Page {
 						$this->mParserOutput = $parserCache->get( $this, $parserOptions );
 
 						//Wikia Change
-						MetricManager::setTransactionParameter( MetricManager::PARAM_IS_FROM_PARSER_CACHE, $this->mParserOutput !== false );
+						MetricManager::setTransactionParameter( MetricManager::PARAM_PARSER_CACHE_USED, $this->mParserOutput !== false );
 						//Wikia Change End
 
 						if ( $this->mParserOutput !== false ) {
