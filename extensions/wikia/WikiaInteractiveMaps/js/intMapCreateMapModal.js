@@ -4,10 +4,9 @@ define(
 		'wikia.window',
 		'wikia.intMap.utils',
 		'wikia.intMap.createMap.tileSet',
-		'wikia.intMap.createMap.preview',
-		'wikia.intMap.createMap.poiCategories'
+		'wikia.intMap.createMap.preview'
 	],
-	function($, w, utils, tileSet, preview, poiCategories) {
+	function($, w, utils, tileSet, preview) {
 		'use strict';
 
 		// placeholder for holding reference to modal instance
@@ -37,11 +36,13 @@ define(
 			events = {
 				error: [
 					function (message) {
-						showError(message);
+						utils.showError(modal, message);
 					}
 				],
 				cleanUpError: [
-					cleanUpError
+					function () {
+						utils.cleanUpError(modal);
+					}
 				],
 				beforeClose: [
 					utils.refreshIfAfterForceLogin
@@ -70,42 +71,10 @@ define(
 				// TODO: figure out the way to automatically register and init different step of the UI
 				tileSet.init(modal, templates[1],  templates[2]);
 				preview.init(modal, templates[3]);
-				poiCategories.init(modal, templates[4], templates[5], templates[6]);
 
 				modal.trigger('chooseTileSet');
 				modal.show();
 			});
-		}
-
-		/**
-		 * @desc displays error message
-		 * @param {string} message - error message
-		 */
-
-		function showError(message) {
-			modal.$errorContainer
-				.html(message)
-				.removeClass('hidden');
-		}
-
-		/**
-		 * @desc cleans up error message and hides error container
-		 */
-
-		function cleanUpError() {
-			modal.$errorContainer
-				.html('')
-				.addClass('hidden');
-		}
-
-		/**
-		 * @desc redirects to the map page
-		 * @param {object} data - map data
-		 */
-
-		//TODO: to be changed when pin types step will be added
-		function showCreatedMap(data) {
-			qs(data.content.mapUrl).goTo();
 		}
 
 		return {

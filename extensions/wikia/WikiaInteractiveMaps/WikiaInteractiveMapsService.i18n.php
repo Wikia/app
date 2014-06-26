@@ -7,6 +7,7 @@ $messages = [];
 
 $messages[ 'en' ] = [
 	'wikia-interactive-maps-filters' => 'Filters',
+	'wikia-interactive-maps-edit-pin-types' => 'Edit',
 	'wikia-interactive-maps-all-pin-types' => 'All Pin Types',
 
 	'wikia-interactive-maps-error-map-processed' => 'Map is still being processed.',
@@ -22,6 +23,7 @@ $messages[ 'en' ] = [
 
 $messages[ 'qqq' ] = [
 	'wikia-interactive-maps-filters' => 'Header text for the legend',
+	'wikia-interactive-maps-edit-pin-types' => 'Link for editing pin types',
 	'wikia-interactive-maps-all-pin-types' => 'Text for all pin types selector',
 
 	'wikia-interactive-maps-error-map-processed' => 'Message shown when the map is still being processed',

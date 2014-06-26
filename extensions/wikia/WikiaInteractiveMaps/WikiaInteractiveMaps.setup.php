@@ -49,6 +49,10 @@ JSMessages::registerPackage( 'WikiaInteractiveMapsCreateMap', [
 	'wikia-interactive-maps-create-map-*'
 ] );
 
+JSMessages::registerPackage( 'WikiaInteractiveMapsPoiCategories', [
+	'wikia-interactive-maps-poi-categories-*'
+] );
+
 JSMessages::registerPackage( 'WikiaInteractiveMapsEditPOI', [
 	'wikia-interactive-maps-edit-poi-*'
 ] );

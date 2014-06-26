@@ -28,6 +28,9 @@ define(
 				createMap: [
 					validateTitle,
 					createMap
+				],
+				mapCreated: [
+					showPoiCategoriesModal
 				]
 			},
 			// modal buttons and events for them in this step
@@ -38,7 +41,26 @@ define(
 			// tile set data for map creation
 			tileSetData,
 			// selector for title input
-			$title;
+			$title,
+
+			//TODO we should move all of them to single file
+			actions = {
+				poiCategories: {
+					module: 'wikia.intMap.poiCategories',
+					source: {
+						messages: ['WikiaInteractiveMapsPoiCategories'],
+						scripts: ['int_map_poi_categories_js'],
+						styles: ['extensions/wikia/WikiaInteractiveMaps/css/intMapModal.scss'],
+						mustache: [
+							'extensions/wikia/WikiaInteractiveMaps/templates/intMapPoiCategories.mustache',
+							'extensions/wikia/WikiaInteractiveMaps/templates/intMapPoiCategory.mustache',
+							'extensions/wikia/WikiaInteractiveMaps/templates/intMapParentPoiCategory.mustache'
+						]
+					},
+					origin: 'wikia-int-map-poi-categories',
+					cacheKey: 'wikia_interactive_maps_poi_categories'
+				}
+			};
 
 		/**
 		 * @desc initializes and configures UI
@@ -111,9 +133,34 @@ define(
 					}
 				},
 				onErrorCallback: function(response) {
-					modal.trigger('error', response.results.content.message);
+					utils.handleNirvanaException(modal, response);
 				}
 			});
+		}
+
+		function showPoiCategoriesModal(data) {
+			modal.trigger('close');
+			triggerAction('poiCategories', {
+				mapId: data.id,
+				mapUrl: data.mapUrl
+			});
+		}
+
+		/**
+		 * @desc opens modal associated with chosen action preceded by forced login modal for anons
+		 * @param {string} action - name of action
+		 * @param {object} params
+		 */
+		function triggerAction(action, params) {
+			var actionConfig = actions[action];
+
+			if (utils.isUserLoggedIn()) {
+				utils.loadModal(actionConfig, params);
+			} else {
+				utils.showForceLoginModal(actionConfig.origin, function() {
+					utils.loadModal(actionConfig, params);
+				});
+			}
 		}
 
 		return {
