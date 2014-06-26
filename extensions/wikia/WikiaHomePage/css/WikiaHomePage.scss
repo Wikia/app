@@ -225,7 +225,7 @@ $color-wikiahome-border-primary-brand-color: #c7d1d8;
 					padding: 9px 40px 15px 13px;
 					position: absolute;
 					.arrow {
-						background-position: 0 -155px;
+						background-position: 0 -195px;
 						height: 23px;
 						margin-right: 1px;
 						position: relative;
@@ -236,7 +236,7 @@ $color-wikiahome-border-primary-brand-color: #c7d1d8;
 						@include box-shadow(0, 0, 5px, #aaa, false, 0);
 						@include linear-gradient(white, top, white, 35%, #ddd, 100%);
 						.arrow {
-							background-position: -23px -155px;
+							background-position: -23px -195px;
 						}
 					}
 					&:active {
@@ -482,10 +482,10 @@ $color-wikiahome-border-primary-brand-color: #c7d1d8;
 						cursor: pointer;
 						text-decoration: none;
 						.previcon {
-							background-position: -202px -152px;
+							background-position: -202px -193px;
 						}
 						.visicon {
-							background-position: -139px -151px;
+							background-position: -139px -192px;
 						}
 					}
 					img {
@@ -497,10 +497,10 @@ $color-wikiahome-border-primary-brand-color: #c7d1d8;
 						top: -2px;
 					}
 					.previcon {
-						background-position: -171px -152px;
+						background-position: -171px -193px;
 					}
 					.visicon {
-						background-position: -108px -151px;
+						background-position: -108px -192px;
 					}
 				}
 			}
@@ -669,7 +669,7 @@ $color-wikiahome-border-primary-brand-color: #c7d1d8;
 				position: relative;
 				vertical-align: middle;
 				.preview-grey {
-					background-position: -239px -155px;
+					background-position: -239px -196px;
 					width: 20px;
 					height: 19px;
 					position: absolute;
@@ -828,17 +828,14 @@ $color-wikiahome-border-primary-brand-color: #c7d1d8;
 							margin-right: 12px;
 							width: 32px;
 						}
-						.wikiahomepage-community-social-wikia-blog {
-							background-position: -312px -32px;
-						}
 						.wikiahomepage-community-social-twitter {
-							background-position: -312px 0px;
+							background-position: -313px -96px;
 						}
 						.wikiahomepage-community-social-facebook {
-							background-position: -312px -64px;
+							background-position: -313px -129px;
 						}
 						.wikiahomepage-community-social-googleplus {
-							background-position: -312px -96px;
+							background-position: -313px -162px;
 						}
 					}
 				}
@@ -847,13 +844,11 @@ $color-wikiahome-border-primary-brand-color: #c7d1d8;
 
 					&.wikiahomepage-community-image {
 						background-position: 0px 0px;
-						height: 54px;
-						left: 40px;
-						top: 26px;
-						width: 253px;
+						height: 95px;
+						width: 330px;
 					}
 					&.wikiahomepage-highlight-image {
-						background-position: 0px -54px;
+						background-position: 0px -96px;
 						bottom: 0;
 						height: 95px;
 						left: 17px;
@@ -962,22 +957,22 @@ $color-wikiahome-border-primary-brand-color: #c7d1d8;
 			width: 24px;
 		}
 		&.de .sprite.edit-pencil {
-			background-position: -24px -179px;
+			background-position: -25px -220px;
 		}
 		&.en .sprite.edit-pencil {
-			background-position: 0 -179px;
+			background-position: 0 -220px;
 		}
 		&.es .sprite.edit-pencil {
-			background-position: -48px -179px;
+			background-position: -49px -220px;
 		}
 		&.fr .sprite.edit-pencil {
-			background-position: -72px -179px;
+			background-position: -73px -220px;
 		}
 		&.pl .sprite.edit-pencil {
-			background-position: -96px -179px;
+			background-position: -97px -220px;
 		}
 		&.ja .sprite.edit-pencil {
-			background-position: -120px -179px;
+			background-position: -121px -220px;
 		}
 		&.pt-br .sprite.edit-pencil {
 			background-position: -144px -179px;
@@ -988,22 +983,22 @@ $color-wikiahome-border-primary-brand-color: #c7d1d8;
 			padding: 0;
 			width: 24px;
 			&.de {
-				background-position: -24px -179px;
+				background-position: -25px -220px;
 			}
 			&.en {
-				background-position: 0 -179px;
+				background-position: 0 -220px;
 			}
 			&.es {
-				background-position: -48px -179px;
+				background-position: -49px -220px;
 			}
 			&.fr {
-				background-position: -72px -179px;
+				background-position: -73px -220px;
 			}
 			&.pl {
-				background-position: -96px -179px;
+				background-position: -97px -220px;
 			}
 			&.ja {
-				background-position: -120px -179px;
+				background-position: -121px -220px;
 			}
 			&.pt-br {
 				background-position: -144px -179px;
