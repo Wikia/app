@@ -104,6 +104,59 @@ class BaseRssModelTest extends WikiaBaseTest
 		parent::setUp();
 	}
 
+    /**
+     * @covers BaseRssModel::fixDuplicatedTimestamps
+     */
+    public function testFixDuplicatedTimestamps()
+    {
+        $dummy = new DummyModel();
+        $fixDuplicatedTimestamps = self::getFn($dummy, 'fixDuplicatedTimestamps');
+
+        // Check with empty items map
+        $empty = [ ];
+        $fixDuplicatedTimestamps( $empty );
+        $this->assertEquals(
+            count( $empty ),
+            $this->countUniqueTimestamps( $empty ) );
+
+        // Check with items map, without timestamps duplicates
+        $noDuplicatedTimestamps = [
+            '1' => [ 'timestamp' => 1 ],
+            '2' => [ 'timestamp' => 2 ],
+            '3' => [ 'timestamp' => 3 ],
+            '4' => [ 'timestamp' => 4 ]
+        ];
+        $fixDuplicatedTimestamps( $noDuplicatedTimestamps );
+        $this->assertEquals(
+            count( $noDuplicatedTimestamps ),
+            $this->countUniqueTimestamps( $noDuplicatedTimestamps ) );
+
+        // Check with items map, with timestamps duplicates
+        $duplicatedTimestamps = [
+            '1' => [ 'timestamp' => 1 ],
+            '2' => [ 'timestamp' => 1 ],
+            '3' => [ 'timestamp' => 2 ],
+            '4' => [ 'timestamp' => 4 ],
+            '5' => [ 'timestamp' => 4 ],
+            '6' => [ 'timestamp' => 4 ],
+            '7' => [ 'timestamp' => 5 ],
+            '8' => [ 'timestamp' => 8 ]
+        ];
+        $fixDuplicatedTimestamps( $duplicatedTimestamps );
+        $this->assertEquals(
+            count( $duplicatedTimestamps ),
+            $this->countUniqueTimestamps( $duplicatedTimestamps ) );
+    }
+
+    private function countUniqueTimestamps( &$itemsMap ) {
+        $timestampsCount = [ ];
+        foreach ( $itemsMap as $key => $value ) {
+            $timestamp = $value[ 'timestamp' ];
+            $timestampsCount[ $timestamp ] = 1;
+        }
+        return count( $timestampsCount );
+    }
+
 	/**
 	 * @covers BaseRssModel::makeBlogTitle
 	 */

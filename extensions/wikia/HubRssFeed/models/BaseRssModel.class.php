@@ -430,6 +430,10 @@ abstract class BaseRssModel extends WikiaService {
      * @param $itemsMap
      */
     protected function fixDuplicatedTimestamps( &$itemsMap ) {
+        if( empty( $itemsMap ) ) {
+            return;
+        }
+
         // Calculate occurrence of each unique timestamp
         $timestampsCount = [ ];
 
