@@ -1,10 +1,8 @@
 <?php
 
 use Wikia\Tasks\Tasks\BaseTask;
-use Wikia\Logger\Loggable;
 
 class HAWelcomeTask extends BaseTask {
-	use Loggable;
 
 	/** @type String The default user to send welcome messages. */
 	const DEFAULT_WELCOMER = 'Wikia';
