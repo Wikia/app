@@ -403,10 +403,14 @@ define('wikia.intMap.poiCategories',
 		 * @desc send callback to ponto and close modal
 		 */
 		function poiCategoriesCreated() {
-			if (typeof trigger === 'function') {
-				trigger();
+			if (mode === 'edit') {
+				if (typeof trigger === 'function') {
+					trigger();
+				}
+				modal.trigger('close');
+			} else {
+				qs(mapUrl).goTo();
 			}
-			modal.trigger('close');
 		}
 
 		return {
