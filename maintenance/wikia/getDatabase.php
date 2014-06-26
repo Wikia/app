@@ -9,6 +9,8 @@
  * It also imports WikiFactory variables from the production database
  */
 
+putenv ("SERVER_ID=177");
+require_once( dirname(__FILE__)."/../commandLine.inc" );
 
 $wgDBdevboxUser = 'devbox';
 $wgDBdevboxPass = 'devbox';
