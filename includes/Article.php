@@ -641,19 +641,24 @@ class Article extends Page {
 
 					# <Wikia>
 					if ( !$poolArticleView->getIsDirty() ) {
-						$this->mParserOutput->setPerformanceStats('wikitextSize',strlen($this->getContent()));
-						$this->mParserOutput->setPerformanceStats('htmlSize',strlen($this->mParserOutput->getText()));
-						wfRunHooks('ArticleViewAfterParser',array( $this, $this->mParserOutput ) );
+						$wikitextSize = strlen( $this->getContent() );
+						$htmlSize = strlen( $this->mParserOutput->getText() );
+						$this->mParserOutput->setPerformanceStats( 'wikitextSize', $wikitextSize );
+						$this->mParserOutput->setPerformanceStats( 'htmlSize', $htmlSize );
+						wfRunHooks( 'ArticleViewAfterParser', array( $this, $this->mParserOutput ) );
 
-					//Wikia Change
-					$nodeCount = $this->mParserOutput->getPerformanceStats('nodeCount');
-					if ($nodeCount < 1000)
-						MetricManager::setTransactionParameter(MetricManager::PARAM_SIZE_CATEGORY, MetricManager::PARAM_SIZE_CATEGORY_SIMPLE);
-					elseif ($nodeCount < 10000)
-						MetricManager::setTransactionParameter(MetricManager::PARAM_SIZE_CATEGORY, MetricManager::PARAM_SIZE_CATEGORY_AVERAGE);
-					else
-						MetricManager::setTransactionParameter(MetricManager::PARAM_SIZE_CATEGORY, MetricManager::PARAM_SIZE_CATEGORY_COMPLEX);
-					//Wikia Change End
+						//Wikia Change
+						$nodeCount = $this->mParserOutput->getPerformanceStats( 'nodeCount' );
+						$expFuncCount = $this->mParserOutput->getPerformanceStats( 'expFuncCount' );
+
+						if ( $wikitextSize < 3000 && $htmlSize < 4000 && $expFuncCount == 0 && $nodeCount < 100) {
+							MetricManager::setTransactionParameter( MetricManager::PARAM_SIZE_CATEGORY, MetricManager::PARAM_SIZE_CATEGORY_SIMPLE );
+						} elseif ( $wikitextSize < 30000 && $htmlSize < 40000 && $expFuncCount <= 4 && $nodeCount < 3000) {
+							MetricManager::setTransactionParameter( MetricManager::PARAM_SIZE_CATEGORY, MetricManager::PARAM_SIZE_CATEGORY_AVERAGE );
+						} else {
+							MetricManager::setTransactionParameter( MetricManager::PARAM_SIZE_CATEGORY, MetricManager::PARAM_SIZE_CATEGORY_COMPLEX );
+						}
+						//Wikia Change End
 					}
 					# </Wikia>
 
@@ -666,7 +671,7 @@ class Article extends Page {
 		}
 
 		//Wikia Change
-		MetricManager::setTransactionParameter(MetricManager::PARAM_IS_FROM_PARSER_CACHE, $useParserCache);
+		MetricManager::setTransactionParameter( MetricManager::PARAM_IS_FROM_PARSER_CACHE, $useParserCache );
 		//Wikia Change End
 
 		# Get the ParserOutput actually *displayed* here.

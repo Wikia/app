@@ -2047,7 +2047,7 @@ class OutputPage extends ContextSource {
 
 			$sk = $this->getSkin();
 			//Wikia Change
-			MetricManager::setTransactionParameter(MetricManager::PARAM_SKIN, $sk->getSkinName());
+			MetricManager::setTransactionParameter( MetricManager::PARAM_SKIN, $sk->getSkinName() );
 			//Wikia Change End
 
 			// Hook that allows last minute changes to the output page, e.g.

@@ -593,24 +593,23 @@ class MediaWiki {
 	private function setMetricParameters($title, $action) {
 		global $wgUser, $wgVersion;
 
-		if ($title->isSpecialPage())
-		{
-			MetricManager::setTransactionType(MetricManager::TYPE_PAGE_SPECIAL);
-		} elseif ($title->getNamespace() == NS_MAIN) {
-			MetricManager::setTransactionType(MetricManager::TYPE_PAGE_MAIN);
-		} elseif ($title->getNamespace() == NS_FILE) {
-			MetricManager::setTransactionType(MetricManager::TYPE_PAGE_FILE);
-		} elseif  ($title->getNamespace() == NS_CATEGORY) {
-			MetricManager::setTransactionType(MetricManager::TYPE_PAGE_CATEGORY);
-		} elseif (defined('NS_USER_WALL') && ($title->getNamespace() == NS_USER_WALL)) {
-			MetricManager::setTransactionType(MetricManager::TYPE_PAGE_MESSAGE_WALL);
+		if ($title->isSpecialPage()) {
+			MetricManager::setTransactionType( MetricManager::TYPE_PAGE_SPECIAL );
+		} elseif ( $title->getNamespace() == NS_MAIN ) {
+			MetricManager::setTransactionType( MetricManager::TYPE_PAGE_MAIN );
+		} elseif ( $title->getNamespace() == NS_FILE ) {
+			MetricManager::setTransactionType( MetricManager::TYPE_PAGE_FILE );
+		} elseif ( $title->getNamespace() == NS_CATEGORY ) {
+			MetricManager::setTransactionType( MetricManager::TYPE_PAGE_CATEGORY );
+		} elseif ( defined( 'NS_USER_WALL' ) && $title->getNamespace() == NS_USER_WALL ) {
+			MetricManager::setTransactionType( MetricManager::TYPE_PAGE_MESSAGE_WALL );
 		} else {
 			MetricManager::setTransactionType(MetricManager::TYPE_PAGE_OTHER);
 		}
 
-		MetricManager::setTransactionParameter(MetricManager::PARAM_LOGGED_IN, $wgUser->isLoggedIn());
-		MetricManager::setTransactionParameter(MetricManager::PARAM_VERSION, $wgVersion);
-		MetricManager::setTransactionParameter(MetricManager::PARAM_ACTION, $action);
+		MetricManager::setTransactionParameter( MetricManager::PARAM_LOGGED_IN, $wgUser->isLoggedIn() );
+		MetricManager::setTransactionParameter( MetricManager::PARAM_VERSION, $wgVersion );
+		MetricManager::setTransactionParameter( MetricManager::PARAM_ACTION, $action );
 	}
 
 	private function main() {

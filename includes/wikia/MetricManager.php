@@ -36,8 +36,8 @@ class MetricManager {
 
 		wfDebug("MetricManager: transaction type set - ".$transactionType."\n");
 
-		if( function_exists( 'newrelic_name_transaction' ) ) {
-			newrelic_name_transaction($transactionType);
+		if ( function_exists( 'newrelic_name_transaction' ) ) {
+			newrelic_name_transaction( $transactionType );
 		}
 	}
 
@@ -48,13 +48,14 @@ class MetricManager {
 	 * @param $parameterValue String: Value of the parameter
 	 */
 	public static function setTransactionParameter($parameterKey, $parameterValue) {
-		if (is_bool($parameterValue))
+		if ( is_bool( $parameterValue ) ) {
 			$parameterValue = $parameterValue ? "Yes" : "No";
+		}
 
 		wfDebug("MetricManager: parameter set - key: ".$parameterKey.", value: ".$parameterValue."\n");
 
-		if( function_exists( 'newrelic_name_transaction' ) ) {
-			newrelic_add_custom_parameter($parameterKey, $parameterValue);
+		if ( function_exists( 'newrelic_name_transaction' ) ) {
+			newrelic_add_custom_parameter( $parameterKey, $parameterValue );
 		}
 	}
 } 
