@@ -41,6 +41,12 @@ define('ext.wikia.adEngine.slot.topInContentBoxad', [
 			return result;
 		}
 
+		if (!window.wgIsArticle) {
+			log(['doesNotBreakContent result', false, 'Page is not an article'], 'debug', logGroup);
+
+			return false;
+		}
+
 		result = false;
 		fragment = document.createDocumentFragment();
 		wikiaArticleDiv = document.getElementById('WikiaArticle');
