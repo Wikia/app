@@ -58,4 +58,22 @@ class MetricManager {
 			newrelic_add_custom_parameter( $parameterKey, $parameterValue );
 		}
 	}
+
+	public static function onArticleViewAfterParser( Article $article, ParserOutput $parserOutput ) {
+
+		$wikitextSize = $parserOutput->getPerformanceStats( 'wikitextSize' );
+		$htmlSize = $parserOutput->getPerformanceStats( 'htmlSize' );
+		$expFuncCount = $parserOutput->getPerformanceStats( 'expFuncCount' );
+		$nodeCount = $parserOutput->getPerformanceStats( 'nodeCount' );
+
+		if ( $wikitextSize < 3000 && $htmlSize < 5000 && $expFuncCount == 0 && $nodeCount < 100) {
+			MetricManager::setTransactionParameter( MetricManager::PARAM_SIZE_CATEGORY, MetricManager::PARAM_SIZE_CATEGORY_SIMPLE );
+		} elseif ( $wikitextSize < 30000 && $htmlSize < 50000 && $expFuncCount <= 4 && $nodeCount < 3000) {
+			MetricManager::setTransactionParameter( MetricManager::PARAM_SIZE_CATEGORY, MetricManager::PARAM_SIZE_CATEGORY_AVERAGE );
+		} else {
+			MetricManager::setTransactionParameter( MetricManager::PARAM_SIZE_CATEGORY, MetricManager::PARAM_SIZE_CATEGORY_COMPLEX );
+		}
+
+		return true;
+	}
 } 
