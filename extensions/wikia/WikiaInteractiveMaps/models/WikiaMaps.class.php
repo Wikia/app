@@ -334,14 +334,14 @@ class WikiaMaps extends WikiaObject {
 	/**
 	 * Sends a request to IntMap Service API to create a POI category with given parameters
 	 *
-	 * @param Array $poiCategoryData array with required parameters to service API
+	 * @param Array $poiCategoriesData array with required parameters to service API
 	 *
 	 * @return Array
 	 */
-	public function savePoiCategory( $poiCategoryData ) {
+	public function savePoiCategories( $poiCategoriesData ) {
 		return $this->postRequest(
 			$this->buildUrl( [ self::ENTRY_POINT_POI_CATEGORY ] ),
-			$poiCategoryData
+			$poiCategoriesData
 		);
 	}
 
