@@ -1,9 +1,11 @@
+@import "skins/oasis/css/core/color";
 
-.intMapModal {
-	.hidden {
-		display: none !important;
-	}
+$color-code-bg: mix($color-page, #000000, 95%);
+@if $is-dark-wiki {
+	$color-code-bg: mix($color-page, #ffffff, 95%);
+}
 
+.int-map-modal {
 	.WikiaForm .input-group {
 		float: none;
 		padding-left: 0;
@@ -21,5 +23,33 @@
 			height: 50px;
 			resize: none;
 		}
+	}
+
+	code {
+		background-color: $color-code-bg;
+		border: 1px solid $color-page-border;
+		display: block;
+		margin-bottom: 20px;
+		padding: 20px;
+	}
+
+	strong {
+		font-weight: bold;
+	}
+
+	button {
+		outline: none;
+	}
+
+	.hidden {
+		display: none !important;
+	}
+
+	.size-button {
+		margin-left: 10px;
+	}
+
+	.user-guideline {
+		margin-bottom: 20px;
 	}
 }
