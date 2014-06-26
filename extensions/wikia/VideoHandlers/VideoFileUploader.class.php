@@ -210,14 +210,12 @@ class VideoFileUploader {
 		if ( empty($upload) ) {
 			$upload = $this->uploadThumbnailFromUrl( LegacyVideoApiWrapper::$THUMBNAIL_URL );
 			// Schedule a job to try and reupload the thumbnail
-			if ( $delayIndex < $this->oApiWrapper->getDelayCount() && $delayIndex > UpdateThumbnailTask::DONT_RUN_INDEX ) {
+			if ( $delayIndex < $this->oApiWrapper->getDelayCount() && $delayIndex != UpdateThumbnailTask::DONT_RUN ) {
 				$delay = $this->oApiWrapper->getDelay( $delayIndex );
-				$updateThumbnailTask = new UpdateThumbnailTask();
-				( new \Wikia\Tasks\AsyncTaskList() )
-					->wikiId( F::app()->wg->CityId )
-					->delay( $delay )
-					->add( $updateThumbnailTask->call( 'retryThumbUpload', $this->getDestinationTitle(), $delayIndex ) )
-					->queue();
+				$task = ( new UpdateThumbnailTask() )->wikiId( F::app()->wg->CityId );
+				$task->delay( $delay );
+				$task->call( 'retryThumbUpload', $this->getDestinationTitle(), $delayIndex );
+				$task->queue();
 			}
 		}
 

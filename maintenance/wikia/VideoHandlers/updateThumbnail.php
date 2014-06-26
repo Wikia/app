@@ -108,7 +108,7 @@ class UpdateThumbnail extends Maintenance {
 					$thumbUrl = null;
 				}
 
-				$status = $helper->resetVideoThumb( $file, $thumbUrl, UpdateThumbnailTask::DONT_RUN_INDEX );
+				$status = $helper->resetVideoThumb( $file, $thumbUrl );
 			} else if ( $this->opt == 'data' ) {
 				if ( file_exists( $file->getLocalRefPath() ) ) {
 					$status = $helper->updateThumbnailData( $file );

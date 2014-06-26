@@ -412,7 +412,7 @@ class VideoHandlerHelper extends WikiaModel {
 	 * @param string|null $thumbnailUrl
 	 * @return FileRepoStatus The status of the publish operation
 	 */
-	public function resetVideoThumb( File $file, $thumbnailUrl = null, $delayIndex = 0 ) {
+	public function resetVideoThumb( File $file, $thumbnailUrl = null, $delayIndex = UpdateThumbnailTask::DONT_RUN ) {
 		$mime = $file->getMimeType();
 		list(, $provider) = explode('/', $mime);
 		$videoId = $file->getVideoId();
@@ -482,6 +482,7 @@ class VideoHandlerHelper extends WikiaModel {
 		$status = Status::newGood( $affected );
 		if ( $affected > 0 ) {
 			$file->purgeEverything();
+			$file->purgeThumbnails();
 		}
 
 		wfProfileOut( __METHOD__ );

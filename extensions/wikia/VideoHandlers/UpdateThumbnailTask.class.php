@@ -3,7 +3,7 @@ use Wikia\Tasks\Tasks\BaseTask;
 
 class UpdateThumbnailTask extends BaseTask {
 
-	const DONT_RUN_INDEX = -1;
+	const DONT_RUN = -1;
 
 	public function retryThumbUpload( $title, $delayIndex ) {
 		$file = WikiaFileHelper::getVideoFileFromTitle( $title );
