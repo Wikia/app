@@ -15,7 +15,7 @@ define('wikia.intMap.poiCategories',
 			modalConfig = {
 				vars: {
 					id: 'intMapPoiCategories',
-					classes: ['intMapPoiCategories', 'intMapModal'],
+					classes: ['int-map-modal'],
 					size: 'medium',
 					content: '',
 					title: '',
