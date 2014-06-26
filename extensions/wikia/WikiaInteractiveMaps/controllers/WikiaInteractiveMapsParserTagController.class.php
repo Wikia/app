@@ -42,8 +42,8 @@ class WikiaInteractiveMapsParserTagController extends WikiaController {
 		$params = $this->sanitizeParserTagArguments( $args );
 		$isValid = $this->validateParseTagParams( $params, $errorMessage );
 
-		if( $isValid ) {
-			$params[ 'map' ] = $this->getMapObj( $params[ 'id' ] );;
+		if ( $isValid ) {
+			$params[ 'map' ] = $this->getMapObj( $params[ 'id' ] );
 
 			if ( !empty( $params [ 'map' ] ) ) {
 				return $this->sendRequest(
