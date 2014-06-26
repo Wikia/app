@@ -48,8 +48,6 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 	 * Main Special:InteractiveMaps page
 	 */
 	public function main() {
-
-
 		$selectedSort = $this->getVal( 'sort', null );
 		$this->setVal( 'selectedSort', $selectedSort );
 		$currentPage = $this->request->getInt( 'page', 1 );
