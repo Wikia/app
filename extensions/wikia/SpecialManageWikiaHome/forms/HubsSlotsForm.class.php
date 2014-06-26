@@ -1,17 +1,20 @@
 <?php
 
 class HubsSlotsForm extends FormBuilderService {
+	const SLOT_IMG_WIDTH = 330;
+	const SLOT_IMG_HEIGHT = 210;
+
 	public function __construct($prefix = '', $fields = []) {
 		parent::__construct($prefix, $fields);
 
 		$errorWidth = wfMessage(
 			'manage-wikia-home-marketing-invalid-width',
-			WikiaHomePageController::SLOT_IMG_WIDTH
+			self::SLOT_IMG_WIDTH
 		)->plain();
 
 		$errorHeight =  wfMessage(
 			'manage-wikia-home-marketing-invalid-height',
-			WikiaHomePageController::SLOT_IMG_HEIGHT
+			self::SLOT_IMG_HEIGHT
 		)->plain();
 
 		if(empty($fields)) {
@@ -34,10 +37,10 @@ class HubsSlotsForm extends FormBuilderService {
 						array(
 							'validator' => new WikiaValidatorImageSize(
 								array(
-									'minWidth' => WikiaHomePageController::SLOT_IMG_WIDTH,
-									'minHeight' => WikiaHomePageController::SLOT_IMG_HEIGHT,
-									'maxWidth' => WikiaHomePageController::SLOT_IMG_WIDTH,
-									'maxHeight' => WikiaHomePageController::SLOT_IMG_HEIGHT,
+									'minWidth' => self::SLOT_IMG_WIDTH,
+									'minHeight' => self::SLOT_IMG_HEIGHT,
+									'maxWidth' => self::SLOT_IMG_WIDTH,
+									'maxHeight' => self::SLOT_IMG_HEIGHT,
 								),
 								array(
 									'min-width' => $errorWidth,
@@ -46,8 +49,8 @@ class HubsSlotsForm extends FormBuilderService {
 									'max-height' => $errorHeight,
 									'wrong-size' => $errorHeight =  wfMessage(
 											'manage-wikia-home-marketing-invalid-size',
-											WikiaHomePageController::SLOT_IMG_WIDTH,
-											WikiaHomePageController::SLOT_IMG_HEIGHT
+											self::SLOT_IMG_WIDTH,
+											self::SLOT_IMG_HEIGHT
 										)->plain()
 								)
 							),
