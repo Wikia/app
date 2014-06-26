@@ -103,6 +103,7 @@ class TaskRunner {
 			'UserRollback',
 			'UserRename',
 			'HTMLCacheUpdate',
+			'ReplaceTextJob',
 		]);
 	}
 }
