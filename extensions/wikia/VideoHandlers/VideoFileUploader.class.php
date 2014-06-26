@@ -171,6 +171,7 @@ class VideoFileUploader {
 	 * Reset the thumbnail for this video to its original from the provider
 	 * @param File $file
 	 * @param string $thumbnailUrl
+	 * @param int $delayIndex See VideoHandlerHelper->resetVideoThumb for more info
 	 * @return FileRepoStatus
 	 */
 	public function resetThumbnail( File &$file, $thumbnailUrl, $delayIndex = 0 ) {
@@ -196,6 +197,7 @@ class VideoFileUploader {
 	 * Try to upload the best thumbnail for this file, starting with the one the provider
 	 * gives and falling back to the default thumb
 	 * @param string $thumbnailUrl
+	 * @param int $delayIndex See VideoHandlerHelper->resetVideoThumb for more info
 	 * @return UploadFromUrl
 	 */
 	protected function uploadBestThumbnail( $thumbnailUrl, $delayIndex = 0 ) {
