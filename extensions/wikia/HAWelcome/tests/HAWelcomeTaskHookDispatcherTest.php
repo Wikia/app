@@ -134,7 +134,6 @@ class HAWelcomeTaskHookDispatcherTest extends WikiaBaseTest {
 			->method( 'markHAWelcomePosted' )
 			->will( $this->returnValue( null ) );
 
-
 		$revision = $this->getMock( '\Revision', ['getRawUser'], [], '', false );
 
 		$revision->expects( $this->once() )
@@ -155,6 +154,71 @@ class HAWelcomeTaskHookDispatcherTest extends WikiaBaseTest {
 		$dispatcher->setRevisionObject( $revision );
 		$this->assertTrue( $dispatcher->dispatch() );
 	}
+
+	public function testDispatchRegisteredUserMarkHAWelcomePosted() {
+		$dispatcher = $this->getMock( '\HAWelcomeTaskHookDispatcher', [
+			'hasContributorBeenWelcomedRecently',
+			'currentUserIsWelcomeExempt',
+			'currentUserIsDefaultWelcomer',
+			'currentUserIsFounder',
+			'currentUserHasLocalEdits',
+			'getTitleObjectFromRevision',
+			'queueWelcomeTask',
+			] );
+
+		$dispatcher->expects( $this->once() )
+			->method( 'hasContributorBeenWelcomedRecently' )
+			->will( $this->returnValue( false ) );
+
+		$dispatcher->expects( $this->once() )
+			->method( 'currentUserIsWelcomeExempt' )
+			->will( $this->returnValue( false ) );
+
+		$dispatcher->expects( $this->once() )
+			->method( 'currentUserIsDefaultWelcomer' )
+			->will( $this->returnValue( false ) );
+
+		$dispatcher->expects( $this->once() )
+			->method( 'currentUserIsFounder' )
+			->will( $this->returnValue( false ) );
+
+		$dispatcher->expects( $this->once() )
+			->method( 'currentUserHasLocalEdits' )
+			->will( $this->returnValue( false ) );
+
+		$memcacheClient = $this->getMock( '\MemcachedPhpBagOStuff', ['set'] );
+
+		$memcacheClient->expects( $this->once() )
+			->method( 'set' )
+			->with( $this->stringContains( 'HAWelcome-isPosted' ) )
+			->will( $this->returnValue( null ) );
+
+		$revision = $this->getMock( '\Revision', ['getRawUser', 'getRawUserText'], [], '', false );
+
+		$revision->expects( $this->once() )
+			->method( 'getRawUser' )
+			->will( $this->returnValue( 1 ) );
+
+		$revision->expects( $this->once() )
+			->method( 'getRawUserText' )
+			->will( $this->returnValue( 'someone' ) );
+
+		$title = $this->getMock( '\Title', [] );
+
+		$dispatcher->expects( $this->once() )
+			->method( 'getTitleObjectFromRevision' )
+			->will( $this->returnValue( $title ) );
+
+		$dispatcher->expects( $this->once() )
+			->method( 'queueWelcomeTask' )
+			->with( $title )
+			->will( $this->returnValue( null ) );
+
+		$dispatcher->setRevisionObject( $revision );
+		$dispatcher->setMemcacheClient( $memcacheClient );
+		$this->assertTrue( $dispatcher->dispatch() );
+	}
+
 
 	public function testUpdateAdminActivityNotBot() {
 		$dispatcher = $this->getMock( '\HAWelcomeTaskHookDispatcher', ['getWelcomeUserFromMessages'] );

@@ -1,5 +1,7 @@
 <?php
 
+use Wikia\Logger\WikiaLogger;
+
 class HAWelcomeTaskHooks {
 
 	/**
@@ -30,11 +32,13 @@ class HAWelcomeTaskHooks {
 
 		// means we're dealing with a null edit (no content change) and therefore we don't have to welcome anybody
 		if ( is_null( $revisionObject ) ) {
+			WikiaLogger::instance()->error( "error, null \$revisionObject passed to " . __METHOD__ );
 			return true;
 		}
 
 		// Abort if the feature has been disabled by the admin of the wiki.
 		if ( in_array( trim( wfMessage( 'welcome-user' )->inContentLanguage()->text() ), array( '@disabled', '-' ) ) ) {
+			WikiaLogger::instance()->debug( "HAWelcome disabled via 'welcome-user' message" );
 			return true;
 		}
 

@@ -103,7 +103,7 @@ class HAWelcomeTaskHookDispatcher {
 	}
 
 	protected function markHAWelcomePosted() {
-		$this->memcacheClient->set( wfMemcKey( 'HAWelcome-isPosted', $oRevision->getRawUserText() ), true );
+		$this->memcacheClient->set( wfMemcKey( 'HAWelcome-isPosted', $this->revisionObject->getRawUserText() ), true );
 	}
 
 
