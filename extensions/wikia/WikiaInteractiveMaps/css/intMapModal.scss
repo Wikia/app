@@ -1,6 +1,5 @@
 @import "skins/oasis/css/core/color";
 @import "skins/oasis/css/core/responsive-variables";
-@import "extensions/wikia/WikiaInteractiveMaps/css/intMapIcons.scss";
 
 .intMapModal {
 	.hidden {
@@ -52,21 +51,13 @@
 		}
 
 		a {
-			display: inline-block;
+			background-position: 50% top;
 			background-repeat: no-repeat;
 			background-size: 150px;
+			display: inline-block;
 			min-width: 130px;
 			padding-top: 160px;
-			background-position: 50% top;
 		}
-	}
-
-	.int-map-geo {
-		@include int-map-icon-geo-tile-set-blue();
-	}
-
-	.int-map-custom {
-		@include int-map-icon-custom-tile-set-blue();
 	}
 
 	.int-map-browse-tile-set {
@@ -88,8 +79,6 @@
 	}
 
 	.upload-link {
-		@include int-map-icon-add-poi-blue();
-
 		background-position: 50% 10px;
 		background-repeat: no-repeat;
 		background-size: 40px;
@@ -106,8 +95,7 @@
 
 	.clear-search {
 		float: right;
-		margin-right: 10px;
-		margin-top: 7px;
+		margin: 7px 10px 0 0;
 	}
 
 	.tile-set-thumb {

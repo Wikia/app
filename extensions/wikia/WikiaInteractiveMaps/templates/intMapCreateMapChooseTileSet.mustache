@@ -1,7 +1,7 @@
 <div id="intMapChooseType">
 	<p class="tip">{{chooseTypeTip}} <a href="http://maps.wikia.com" title="{{chooseTypeTipLink}}" target="_blank">{{chooseTypeTipLink}}</a></p>
 	{{#mapType}}
-		<h3 class="tile-set-type"><a href="" title="{{name}}" class="int-map-{{type}} modalEvent" data-event="{{event}}"
+		<h3 class="tile-set-type"><a href="" title="{{name}}" class="int-map-icon-{{type}}-tile-set-blue modalEvent" data-event="{{event}}"
 			data-type="{{type}}">{{name}}</a></h3>
 	{{/mapType}}
 </div>
@@ -16,7 +16,7 @@
 		<li>
 			<form enctype="multipart/form-data">
 				<input type="file" id="intMapUpload" class="hidden" name="wpUploadFile">
-				<a title="{{uploadLink}}" id="intMapUploadLink" class="upload-link modalEvent" data-event="uploadTileSetImage">{{uploadLink}}</a>
+				<a title="{{uploadLink}}" id="intMapUploadLink" class="int-map-icon-add-poi-blue upload-link modalEvent" data-event="uploadTileSetImage">{{uploadLink}}</a>
 			</form>
 		</li>
 	</ul>

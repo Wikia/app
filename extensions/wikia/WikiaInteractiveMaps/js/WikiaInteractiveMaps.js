@@ -18,7 +18,10 @@ require(
 					source: {
 						messages: ['WikiaInteractiveMapsCreateMap'],
 						scripts: ['int_map_create_map_js'],
-						styles: ['extensions/wikia/WikiaInteractiveMaps/css/intMapModal.scss'],
+						styles: [
+							'extensions/wikia/WikiaInteractiveMaps/css/intMapModal.scss',
+							'extensions/wikia/WikiaInteractiveMaps/css/intMapIcons.scss'
+						],
 						mustache: [
 							'extensions/wikia/WikiaInteractiveMaps/templates/intMapModal.mustache',
 							'extensions/wikia/WikiaInteractiveMaps/templates/intMapCreateMapChooseTileSet.mustache',
