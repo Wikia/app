@@ -13,7 +13,7 @@ class SnippetWorker extends IndexerWorkerBase {
 
 	protected function process( $data ) {
 		if( !$data->is_redirect ) {
-			$jw = $this->get_worker();
+			$jw = $this->getWorker();
 			$jw->setHtml( $data->html );
 			$msg = new stdClass();
 			$msg->snippet = $jw->process();
@@ -21,14 +21,16 @@ class SnippetWorker extends IndexerWorkerBase {
 			$msg->id = $data->id;
 			$this->publish('snippet.ready', $msg );
 		}
-		if (memory_get_usage(true) >= $this->max) die("OUT OF MEMORY!");
+		if (memory_get_usage(true) >= $this->max) {
+			$this->close();
+		}
 	}
 
 	protected function getRoutingKey() {
 		return 'article.ready';
 	}
 
-	protected function get_worker() {
+	protected function getWorker() {
 		if ( !isset( $this->worker ) ) {
 			$this->worker = new JsonFormatWorker();
 		}
