@@ -64,7 +64,12 @@ define('wikia.intMap.editPOI', ['jquery', 'wikia.intMap.utils'], function($, uti
 		},
 		trigger,
 		params,
-		mapId;
+		mapId,
+		poiModalModes = {
+			CREATE: 'create',
+			EDIT: 'edit'
+		},
+		poiModalMode;
 
 	/**
 	 * @desc Entry point for  modal
@@ -103,9 +108,11 @@ define('wikia.intMap.editPOI', ['jquery', 'wikia.intMap.utils'], function($, uti
 		var title = addPOITitle,
 			buttons = [].concat(modalButtons);
 
+		poiModalMode = poiModalModes.CREATE;
 		if (isEditMode) {
 			title = editPOITitle;
 			buttons.push(deletePOIButton);
+			poiModalMode = poiModalModes.EDIT;
 		}
 
 		modalConfig.vars.title = title;
@@ -203,6 +210,7 @@ define('wikia.intMap.editPOI', ['jquery', 'wikia.intMap.utils'], function($, uti
 					poiData.id = data.content.id;
 					trigger(poiData);
 					modal.trigger('close');
+					trackPoiAction(poiData);
 				} else {
 					utils.showError(modal, data.content.message);
 				}
@@ -211,6 +219,28 @@ define('wikia.intMap.editPOI', ['jquery', 'wikia.intMap.utils'], function($, uti
 				utils.handleNirvanaException(modal, response);
 			}
 		});
+	}
+
+	/**
+	 * @desc Sends to GA information about adding/editing a POI
+	 *
+	 * @param {object} poiData
+	 */
+	function trackPoiAction(poiData) {
+		var gaLabel, gaValue;
+
+		switch(poiModalMode) {
+			case poiModalModes.CREATE:
+				gaLabel = 'poi-created';
+				gaValue = mapId;
+				break;
+			case poiModalModes.EDIT:
+				gaLabel = 'poi-edited';
+				gaValue = poiData.id;
+				break;
+		}
+
+		utils.track(utils.trackerActions.IMPRESSION, gaLabel, gaValue);
 	}
 
 	return {
