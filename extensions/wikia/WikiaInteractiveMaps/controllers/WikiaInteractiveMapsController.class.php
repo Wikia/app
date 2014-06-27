@@ -9,7 +9,7 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 	const MAPS_PER_PAGE = 10;
 	const MAP_THUMB_WIDTH = 1110;
 	const MAP_THUMB_HEIGHT = 300;
-	const PAGE_NAME = 'InteractiveMaps';
+	const PAGE_NAME = 'Maps';
 	const TRANSLATION_FILENAME = 'translations.json';
 	const MAPS_WIKIA_URL = 'http://maps.wikia.com';
 
@@ -48,7 +48,7 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 	}
 
 	/**
-	 * Main Special:InteractiveMaps page
+	 * Main Special:Maps page
 	 */
 	public function main() {
 		$selectedSort = $this->getVal( 'sort', null );
@@ -213,7 +213,7 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 			NotificationsController::addConfirmation( wfMessage( 'wikia-interactive-maps-delete-map-success' ) );
 			$this->response->setVal(
 				'redirectUrl',
-				$this->getSpecialUrl( 'InteractiveMaps' )
+				$this->getSpecialUrl( self::PAGE_NAME )
 			);
 		}
 	}

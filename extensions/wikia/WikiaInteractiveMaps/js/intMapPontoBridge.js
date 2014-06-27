@@ -15,6 +15,21 @@ define('wikia.intMap.pontoBridge', ['wikia.window', 'ponto', 'wikia.intMap.utils
 				module: 'wikia.intMap.editPOI',
 				origin: 'wikia-interactive-maps-edit-poi'
 			},
+			poiCategories: {
+				source: {
+					messages: ['WikiaInteractiveMapsPoiCategories'],
+					scripts: ['int_map_poi_categories_js'],
+					styles: ['extensions/wikia/WikiaInteractiveMaps/css/intMapModal.scss'],
+					mustache: [
+						'extensions/wikia/WikiaInteractiveMaps/templates/intMapPoiCategories.mustache',
+						'extensions/wikia/WikiaInteractiveMaps/templates/intMapPoiCategory.mustache',
+						'extensions/wikia/WikiaInteractiveMaps/templates/intMapParentPoiCategory.mustache'
+					]
+				},
+				origin: 'wikia-int-map-poi-categories',
+				module: 'wikia.intMap.poiCategories',
+				cacheKey: 'wikia_interactive_maps_poi_categories'
+			},
 			embedMapCode: {
 				noLoginRequired: true,
 				source: {

@@ -31,12 +31,13 @@ $wgAutoloadClasses[ 'WikiaMaps' ] = $dir . '/models/WikiaMaps.class.php';
 $wgAutoloadClasses[ 'WikiaMapsLogger' ] = $dir . '/models/WikiaMapsLogger.class.php';
 
 // special pages
-$wgSpecialPages[ 'InteractiveMaps' ] = 'WikiaInteractiveMapsController';
-$wgSpecialPageGroups[ 'InteractiveMaps' ] = 'wikia';
+$wgSpecialPages[ 'Maps' ] = 'WikiaInteractiveMapsController';
+$wgSpecialPageGroups[ 'Maps' ] = 'wikia';
 
 // hooks
 $wgHooks[ 'ParserFirstCallInit' ][] = 'WikiaInteractiveMapsParserTagController::parserTagInit';
 $wgHooks[ 'SkinAfterBottomScripts' ][] = 'WikiaInteractiveMapsHooks::onSkinAfterBottomScripts';
+$wgHooks[ 'OutputPageBeforeHTML' ][] = 'WikiaInteractiveMapsHooks::onOutputPageBeforeHTML';
 
 // i18n mapping
 $wgExtensionMessagesFiles[ 'WikiaInteractiveMaps' ] = $dir . 'WikiaInteractiveMaps.i18n.php';
@@ -47,6 +48,10 @@ JSMessages::registerPackage( 'WikiaInteractiveMaps', [
 
 JSMessages::registerPackage( 'WikiaInteractiveMapsCreateMap', [
 	'wikia-interactive-maps-create-map-*'
+] );
+
+JSMessages::registerPackage( 'WikiaInteractiveMapsPoiCategories', [
+	'wikia-interactive-maps-poi-categories-*'
 ] );
 
 JSMessages::registerPackage( 'WikiaInteractiveMapsEditPOI', [

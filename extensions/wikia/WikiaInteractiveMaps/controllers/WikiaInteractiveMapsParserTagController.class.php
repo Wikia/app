@@ -5,12 +5,8 @@ class WikiaInteractiveMapsParserTagController extends WikiaController {
 	const DEFAULT_ZOOM = 7;
 	const MIN_ZOOM = 0;
 	const MAX_ZOOM = 16;
-	const DEFAULT_WIDTH = 700;
-	const MAX_WIDTH = 1270;
-	const MIN_WIDTH = 100;
-	const DEFAULT_HEIGHT = 200;
-	const MAX_HEIGHT = 500;
-	const MIN_HEIGHT = 50;
+	const DEFAULT_WIDTH = 680;
+	const DEFAULT_HEIGHT = 300;
 	const DEFAULT_LATITUDE = 0;
 	const MIN_LATITUDE = -90;
 	const MAX_LATITUDE = 90;
@@ -46,7 +42,7 @@ class WikiaInteractiveMapsParserTagController extends WikiaController {
 		$params = $this->sanitizeParserTagArguments( $args );
 		$isValid = $this->validateParseTagParams( $params, $errorMessage );
 
-		if( $isValid ) {
+		if ( $isValid ) {
 			$params[ 'map' ] = $this->getMapObj( $params[ 'id' ] );
 
 			if ( !empty( $params [ 'map' ] ) ) {
@@ -85,6 +81,7 @@ class WikiaInteractiveMapsParserTagController extends WikiaController {
 	public function mapThumbnail() {
 		$params = $this->getMapPlaceholderParams();
 		$mapsModel = new WikiaMaps( $this->wg->IntMapConfig );
+		$userName = $params->map->created_by;
 
 		$params->map->image = $mapsModel->createCroppedThumb( $params->map->image, self::DEFAULT_WIDTH, self::DEFAULT_HEIGHT );
 
@@ -97,6 +94,10 @@ class WikiaInteractiveMapsParserTagController extends WikiaController {
 
 		$this->setVal( 'map', (object) $params->map );
 		$this->setVal( 'params', $params );
+		$this->setVal( 'created_by', wfMessage( 'wikia-interactive-maps-parser-tag-created-by' )->params( $userName )->plain() );
+		$this->setVal( 'avatarUrl', AvatarService::getAvatarUrl( $userName, AvatarService::AVATAR_SIZE_SMALL ) );
+		$this->setVal( 'view', wfMessage( 'wikia-interactive-maps-parser-tag-view' )->plain() );
+
 
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
 	}
@@ -128,9 +129,12 @@ class WikiaInteractiveMapsParserTagController extends WikiaController {
 		$params[ 'lat' ] = $this->request->getVal( 'lat', self::DEFAULT_LATITUDE );
 		$params[ 'lon' ] = $this->request->getVal( 'lon', self::DEFAULT_LONGITUDE );
 		$params[ 'zoom' ] = $this->request->getInt( 'zoom', self::DEFAULT_ZOOM );
-		$params[ 'width' ] = $this->request->getInt( 'width', self::DEFAULT_WIDTH );
-		$params[ 'height' ] = $this->request->getInt( 'height', self::DEFAULT_HEIGHT );
+		$params[ 'width' ] = self::DEFAULT_WIDTH;
+		$params[ 'height' ] = self::DEFAULT_HEIGHT;
 		$params[ 'map' ] = $this->request->getVal( 'map' );
+		$params[ 'created_by' ] = $this->request->getVal( 'created_by' );
+		$params[ 'avatarUrl' ] = $this->request->getVal( 'avatarUrl' );
+
 
 		$params[ 'width' ] .= 'px';
 		$params[ 'height' ] .= 'px';
@@ -152,8 +156,6 @@ class WikiaInteractiveMapsParserTagController extends WikiaController {
 			'lat' => 'lat',
 			'lon' => 'lon',
 			'zoom' => 'zoom',
-			'width' => 'width',
-			'height' => 'height',
 		];
 
 		foreach( $validParams as $key => $mapTo ) {
@@ -271,32 +273,6 @@ class WikiaInteractiveMapsParserTagController extends WikiaController {
 						'not_int' => 'wikia-interactive-maps-parser-tag-error-invalid-zoom',
 						'too_small' => 'wikia-interactive-maps-parser-tag-error-min-zoom',
 						'too_big' => 'wikia-interactive-maps-parser-tag-error-max-zoom'
-					]
-				);
-				break;
-			case 'width':
-				$validator = new WikiaValidatorInteger(
-					[
-						'min' => self::MIN_WIDTH,
-						'max' => self::MAX_WIDTH
-					],
-					[
-						'not_int' => 'wikia-interactive-maps-parser-tag-error-invalid-width',
-						'too_small' => 'wikia-interactive-maps-parser-tag-error-min-width',
-						'too_big' => 'wikia-interactive-maps-parser-tag-error-max-width'
-					]
-				);
-				break;
-			case 'height':
-				$validator = new WikiaValidatorInteger(
-					[
-						'min' => self::MIN_HEIGHT,
-						'max' => self::MAX_HEIGHT
-					],
-					[
-						'not_int' => 'wikia-interactive-maps-parser-tag-error-invalid-height',
-						'too_small' => 'wikia-interactive-maps-parser-tag-error-min-height',
-						'too_big' => 'wikia-interactive-maps-parser-tag-error-max-height'
 					]
 				);
 				break;
