@@ -25,7 +25,7 @@ class JsonFormatWorker {
 		$text = '';
 		if ( isset( $this->html ) ) {
 			$jsonSimple = $this->htmlParser->parse( $this->html );
-			$text = $this->htmlSimplifier->simplifyToText( $jsonSimple );
+			$text = $this->htmlSimplifier->simplifyToSnippet( $jsonSimple );
 		}
 		return $text;
 	}
