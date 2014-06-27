@@ -3,6 +3,15 @@ include_once dirname(__FILE__) . '/../../' . "models/BaseRssModel.class.php";
 
 class DummyModel extends BaseRssModel
 {
+    /**
+     * Ability to switch on/off function for fixing duplicated timestamps
+     */
+    protected $testFixDuplicatedTimestamps = false;
+
+    public function setTestFixDuplicatedTimestamps( $testFixDuplicatedTimestamps ) {
+        $this->testFixDuplicatedTimestamps = $testFixDuplicatedTimestamps;
+    }
+
 	public function getFeedTitle()
 	{
 	}
@@ -57,6 +66,16 @@ class DummyModel extends BaseRssModel
 
 		return $descriptions[ $wid ][ $aid ];
 	}
+
+    /**
+     * Mocked version of fixDuplicatedTimestamps. Used to test processItems - separately from testing fixDuplicatedTimestamps
+     */
+    protected function fixDuplicatedTimestamps( $itemsMap ) {
+        if($this->testFixDuplicatedTimestamps) {
+            return parent::fixDuplicatedTimestamps( $itemsMap );
+        }
+        return $itemsMap;
+    }
 }
 
 class DummyNotMockedModel extends BaseRssModel {
@@ -110,6 +129,7 @@ class BaseRssModelTest extends WikiaBaseTest
     public function testFixDuplicatedTimestamps()
     {
         $dummy = new DummyModel();
+        $dummy->setTestFixDuplicatedTimestamps( true );
         $fixDuplicatedTimestamps = self::getFn( $dummy, 'fixDuplicatedTimestamps' );
 
         // Check with empty items map
