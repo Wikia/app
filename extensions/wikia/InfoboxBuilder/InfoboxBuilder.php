@@ -26,7 +26,7 @@ $wgExtensionCredits['other'][] = array(
 );
 
 /**
- * Class registering Lua libraries
+ * Register Lua libraries
  */
 $wgAutoloadClasses['InfoboxBuilder\LuaLibrary'] = __DIR__ . '/includes/LuaLibrary.php';
 

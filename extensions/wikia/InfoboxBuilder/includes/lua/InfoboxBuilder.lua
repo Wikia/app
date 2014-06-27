@@ -1,5 +1,4 @@
 local InfoboxBuilder = {}
-local php
 
 InfoboxBuilder.test = function()
 	return "Hello world!"
@@ -10,9 +9,8 @@ mw_interface = nil
 
 -- Register module as "mw.InfoboxBuilder" global
 mw = mw or {}
-mw.ext = mw.ext or {}
-mw.ext.InfoboxBuilder = InfoboxBuilder
+mw.InfoboxBuilder = InfoboxBuilder
 
-package.loaded['mw.ext.InfoboxBuilder'] = InfoboxBuilder
+package.loaded['mw.InfoboxBuilder'] = InfoboxBuilder
 
 return InfoboxBuilder
