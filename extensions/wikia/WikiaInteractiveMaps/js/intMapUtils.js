@@ -285,7 +285,8 @@ define(
 		 * @param {integer} value
 		 */
 		function track(action, label, value) {
-			var trackingParams = {trackingMethod: 'ga',
+			var trackingParams = {
+				trackingMethod: 'ga',
 				category: 'map',
 				action: action,
 				label: label
