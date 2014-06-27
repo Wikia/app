@@ -24,7 +24,7 @@ class JsonSimplifierTest extends WikiaBaseTest {
 </p>
 EOD;
 		$jsonSimple = $htmlParser->parse( $html );
-		$output = $simplifier->simplifyToText( $jsonSimple );
+		$output = $simplifier->simplifyToSnippet( $jsonSimple );
 		$this->assertEquals(
 			'Withstand (Genesis, #46) is an Uncommon Martial Attack card with 0 Attack and 3 Shield.'.
 			' For the next 3 turns, if you would gain shield, gain +1 shield. "I see they haven\'t started'.
@@ -45,7 +45,7 @@ EOD;
 <p><br />
 EOD;
 		$jsonSimple = $htmlParser->parse( $html );
-		$output = $simplifier->simplifyToText( $jsonSimple );
+		$output = $simplifier->simplifyToSnippet( $jsonSimple );
 		$this->assertEquals(
 			' Official Star Wars Soundboards - Luke Skywalker on StarWars.com, Luke Skywalker on Wikipedia,'.
 			' Luke Skywalker on the Official Star Wars Soundboards
