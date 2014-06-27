@@ -2,12 +2,16 @@
 
 class GlobalHeaderController extends WikiaController {
 	private $menuNodes;
+	const MAX_COUNT_OF_LEVEL1_NODES = 3;
+	const MAX_COUNT_OF_LEVEL2_NODES = 4;
+	const MAX_COUNT_OF_LEVEL3_NODES = 5;
 	private $menuNodesAB;
+	const MAX_COUNT_OF_LEVEL1_NODES_AB = 7;
 
 	public function init() {
 		wfProfileIn( __METHOD__ );
 
-		$this->menuNodes = $this->prepareMenuData( 'shared-Globalnavigation', 3 );
+		$this->menuNodes = $this->prepareMenuData( 'shared-Globalnavigation', self::MAX_COUNT_OF_LEVEL1_NODES );
 
 		wfProfileOut( __METHOD__ );
 	}
@@ -30,7 +34,7 @@ class GlobalHeaderController extends WikiaController {
 		$menuNodes = $navigation->parse(
 			NavigationModel::TYPE_MESSAGE,
 			$messageName,
-			[ $hubsCount, 4, 5 ],
+			[ $hubsCount, self::MAX_COUNT_OF_LEVEL2_NODES, self::MAX_COUNT_OF_LEVEL3_NODES ],
 			1800 /* 3 hours */
 		);
 
@@ -96,7 +100,7 @@ class GlobalHeaderController extends WikiaController {
 	 * @return array tree of menu nodes for given index
 	 */
 	private function recursiveConvertMenuNodeToArray( $index ) {
-		$this->menuNodesAB = $this->prepareMenuData( 'shared-global-navigation-abtest', 7 );
+		$this->menuNodesAB = $this->prepareMenuData( 'shared-global-navigation-abtest', self::MAX_COUNT_OF_LEVEL1_NODES_AB );
 
 		$node = $this->menuNodesAB[ $index ];
 		$returnValue = [
