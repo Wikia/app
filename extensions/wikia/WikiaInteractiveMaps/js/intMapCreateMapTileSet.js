@@ -271,7 +271,7 @@ define(
 					}
 				},
 				onErrorCallback: function(response) {
-					modal.trigger('error', response.results.content.message);
+					utils.handleNirvanaException(modal, response);
 				}
 			});
 		}

@@ -89,8 +89,8 @@ define('wikia.intMaps.deleteMap',
 					showError();
 				}
 			},
-			onErrorCallback: function() {
-				showError();
+			onErrorCallback: function(response) {
+				utils.handleNirvanaException(modal, response);
 			}
 		});
 	}

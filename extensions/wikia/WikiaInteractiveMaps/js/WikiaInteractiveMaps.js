@@ -17,19 +17,19 @@ require(
 					module: 'wikia.intMaps.createMap.modal',
 					source: {
 						messages: ['WikiaInteractiveMapsCreateMap'],
-						scripts: ['int_map_create_map_js'],
 						styles: [
 							'extensions/wikia/WikiaInteractiveMaps/css/intMapModal.scss',
 							'extensions/wikia/WikiaInteractiveMaps/css/intMapIcons.scss'
+						],
+						scripts: [
+							'int_map_create_map_js',
+							'int_map_poi_categories_js'
 						],
 						mustache: [
 							'extensions/wikia/WikiaInteractiveMaps/templates/intMapModal.mustache',
 							'extensions/wikia/WikiaInteractiveMaps/templates/intMapCreateMapChooseTileSet.mustache',
 							'extensions/wikia/WikiaInteractiveMaps/templates/intMapCreateMapTileSetThumb.mustache',
-							'extensions/wikia/WikiaInteractiveMaps/templates/intMapCreateMapPreview.mustache',
-							'extensions/wikia/WikiaInteractiveMaps/templates/intMapCreateMapPoiCategories.mustache',
-							'extensions/wikia/WikiaInteractiveMaps/templates/intMapCreateMapPoiCategory.mustache',
-							'extensions/wikia/WikiaInteractiveMaps/templates/intMapCreateMapParentPoiCategory.mustache'
+							'extensions/wikia/WikiaInteractiveMaps/templates/intMapCreateMapPreview.mustache'
 						]
 					},
 					origin: 'wikia-int-map-create-map',
