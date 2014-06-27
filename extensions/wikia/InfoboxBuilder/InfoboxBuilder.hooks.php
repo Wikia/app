@@ -21,8 +21,9 @@ final class InfoboxBuilderHooks {
 			return true;
 		}
 
-		$extraLibraries['mw.InfoboxBuilder']     = '\InfoboxBuilder\LuaLibrary';
-		$extraLibraries['mw.InfoboxBuilderView'] = '\InfoboxBuilder\LuaLibrary';
+		$extraLibraries['mw.InfoboxBuilder']      = '\InfoboxBuilder\LuaLibrary';
+		$extraLibraries['mw.InfoboxBuilder.View'] = '\InfoboxBuilder\LuaLibrary';
+		$extraLibraries['mw.InfoboxBuilder.HF']   = '\InfoboxBuilder\LuaLibrary';
 
 		return true;
 	}
