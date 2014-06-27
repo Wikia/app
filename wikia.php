@@ -17,10 +17,10 @@ if ($wgProfiler instanceof Profiler) {
 }
 
 // Construct a tag for newrelic -- wgRequest is global in this scope
-MetricManager::setTransactionType(MetricManager::TRANSACTION_NIRVANA);
+TransactionTracer::setType(TransactionTracer::TRANSACTION_NIRVANA);
 if ( is_object($wgRequest) ) {
-	MetricManager::setTransactionParameter(MetricManager::PARAM_CONTROLLER, $wgRequest->getVal( 'controller' ));
-	MetricManager::setTransactionParameter(MetricManager::PARAM_METHOD, $wgRequest->getVal( 'method' ));
+	TransactionTracer::setAttribute(TransactionTracer::PARAM_CONTROLLER, $wgRequest->getVal( 'controller' ));
+	TransactionTracer::setAttribute(TransactionTracer::PARAM_METHOD, $wgRequest->getVal( 'method' ));
 }
 
 if ( function_exists( 'newrelic_disable_autorum') ) {

@@ -587,29 +587,33 @@ class MediaWiki {
 	 *
 	 * Sets metric parameters for the current request
 	 *
-	 * @param $t Title object
+	 * @param $title Title object
 	 * @param $action String name of the action
 	 */
 	private function setMetricParameters($title, $action) {
-		global $wgUser, $wgVersion;
+		global $wgUser;
 
 		if ($title->isSpecialPage()) {
-			MetricManager::setTransactionType( MetricManager::TRANSACTION_SPECIAL_PAGE );
+			TransactionTracer::setType( TransactionTracer::TRANSACTION_SPECIAL_PAGE );
 		} elseif ( $title->getNamespace() == NS_MAIN ) {
-			MetricManager::setTransactionType( MetricManager::TRANSACTION_PAGE_MAIN );
+			TransactionTracer::setType( TransactionTracer::TRANSACTION_PAGE_MAIN );
 		} elseif ( $title->getNamespace() == NS_FILE ) {
-			MetricManager::setTransactionType( MetricManager::TRANSACTION_PAGE_FILE );
+			TransactionTracer::setType( TransactionTracer::TRANSACTION_PAGE_FILE );
 		} elseif ( $title->getNamespace() == NS_CATEGORY ) {
-			MetricManager::setTransactionType( MetricManager::TRANSACTION_PAGE_CATEGORY );
+			TransactionTracer::setType( TransactionTracer::TRANSACTION_PAGE_CATEGORY );
 		} elseif ( defined( 'NS_USER_WALL' ) && $title->getNamespace() == NS_USER_WALL ) {
-			MetricManager::setTransactionType( MetricManager::TRANSACTION_PAGE_MESSAGE_WALL );
+			TransactionTracer::setType( TransactionTracer::TRANSACTION_PAGE_MESSAGE_WALL );
 		} else {
-			MetricManager::setTransactionType(MetricManager::TRANSACTION_PAGE_OTHER);
+			TransactionTracer::setType(TransactionTracer::TRANSACTION_PAGE_OTHER);
 		}
 
-		MetricManager::setTransactionParameter( MetricManager::PARAM_LOGGED_IN, $wgUser->isLoggedIn() );
-		MetricManager::setTransactionParameter( MetricManager::PARAM_VERSION, $wgVersion );
-		MetricManager::setTransactionParameter( MetricManager::PARAM_ACTION, $action );
+		TransactionTracer::setAttribute( TransactionTracer::PARAM_LOGGED_IN, $wgUser->isLoggedIn() );
+
+		if ( in_array($action, array( 'view', 'edit', 'submit' )) ) {
+			TransactionTracer::setAttribute( TransactionTracer::PARAM_ACTION, $action );
+		} else {
+			TransactionTracer::setAttribute( TransactionTracer::PARAM_ACTION, TransactionTracer::ACTION_OTHER );
+		}
 	}
 
 	private function main() {

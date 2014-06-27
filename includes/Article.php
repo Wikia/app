@@ -531,7 +531,7 @@ class Article extends Page {
 						$this->mParserOutput = $parserCache->get( $this, $parserOptions );
 
 						//Wikia Change
-						MetricManager::setTransactionParameter( MetricManager::PARAM_PARSER_CACHE_USED, $this->mParserOutput !== false );
+						TransactionTracer::setAttribute( TransactionTracer::PARAM_PARSER_CACHE_USED, $this->mParserOutput !== false );
 						//Wikia Change End
 
 						if ( $this->mParserOutput !== false ) {
@@ -542,6 +542,7 @@ class Article extends Page {
 								wfDebug( __METHOD__ . ": showing parser cache contents\n" );
 							}
 							$wgOut->addParserOutput( $this->mParserOutput );
+							wfRunHooks('ArticleViewAddParserOutput',array( $this, $this->mParserOutput ) );
 							# Ensure that UI elements requiring revision ID have
 							# the correct version information.
 							$wgOut->setRevisionId( $this->mPage->getLatest() );
@@ -553,6 +554,10 @@ class Article extends Page {
 							}
 							$outputDone = true;
 						}
+					// Wikia Change
+					} else {
+						TransactionTracer::setAttribute( TransactionTracer::PARAM_PARSER_CACHE_USED, false );
+					// Wikia Change End					}
 					}
 					break;
 				case 3:
@@ -648,6 +653,7 @@ class Article extends Page {
 						$this->mParserOutput->setPerformanceStats('wikitextSize',strlen($this->getContent()));
 						$this->mParserOutput->setPerformanceStats('htmlSize',strlen($this->mParserOutput->getText()));
 						wfRunHooks('ArticleViewAfterParser',array( $this, $this->mParserOutput ) );
+						wfRunHooks('ArticleViewAddParserOutput',array( $this, $this->mParserOutput ) );
 					}
 					# </Wikia>
 

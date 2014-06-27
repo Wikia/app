@@ -77,8 +77,8 @@ class AjaxDispatcher {
 		/*
 		 * Wikia Change - begin
 		 */
-		MetricManager::setTransactionType(MetricManager::TRANSACTION_AJAX);
-		MetricManager::setTransactionParameter(MetricManager::PARAM_FUNCTION,$this->func_name);
+		TransactionTracer::setType(TransactionTracer::TRANSACTION_AJAX);
+		TransactionTracer::setAttribute(TransactionTracer::PARAM_FUNCTION,$this->func_name);
 
 		if ( function_exists( 'newrelic_disable_autorum') ) {
 			newrelic_disable_autorum();
