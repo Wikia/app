@@ -8,7 +8,6 @@ class GlobalHeaderController extends WikiaController {
 		wfProfileIn( __METHOD__ );
 
 		$this->menuNodes = $this->prepareMenuData( 'shared-Globalnavigation', 3 );
-		$this->menuNodesAB = $this->prepareMenuData( 'shared-global-navigation-abtest', 7 );
 
 		wfProfileOut( __METHOD__ );
 	}
@@ -91,10 +90,14 @@ class GlobalHeaderController extends WikiaController {
 	 * IMPORTANT: This function will be called 60 times as on 2014-04-04 - three hubs,
 	 * four submenus for each hub, five links in each submenu.
 	 *
+	 * Number of calls changed to 140 (7 hubs, not 3) as on 2014-06-27.
+	 *
 	 * @param $index integer of menuitem index to generate data from
 	 * @return array tree of menu nodes for given index
 	 */
 	private function recursiveConvertMenuNodeToArray( $index ) {
+		$this->menuNodesAB = $this->prepareMenuData( 'shared-global-navigation-abtest', 7 );
+
 		$node = $this->menuNodesAB[ $index ];
 		$returnValue = [
 			'text' => $node[ 'text' ],
