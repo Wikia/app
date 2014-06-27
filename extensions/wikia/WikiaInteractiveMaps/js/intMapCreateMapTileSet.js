@@ -15,55 +15,49 @@ define(
 			tileSetThumbTemplate,
 			// template data
 			templateData = {
+				chooseTypeTip: $.msg('wikia-interactive-maps-create-map-choose-type-tip'),
+				chooseTypeTipLink: $.msg('wikia-interactive-maps-create-map-choose-type-tip-link'),
 				mapType: [
 					{
-						type: 'Geo',
-						name: $.msg('wikia-interactive-maps-create-map-choose-type-geo')
+						type: 'geo',
+						name: $.msg('wikia-interactive-maps-create-map-choose-type-geo'),
+						event: 'selectTileSet'
 					},
 					{
-						type: 'Custom',
-						name: $.msg('wikia-interactive-maps-create-map-choose-type-custom')
+						type: 'custom',
+						name: $.msg('wikia-interactive-maps-create-map-choose-type-custom'),
+						event: 'browseTileSets'
 					}
 				],
+				chooseTileSetTip: $.msg('wikia-interactive-maps-create-map-choose-tile-set-tip'),
 				browse: $.msg('wikia-interactive-maps-create-map-browse-tile-set'),
-				uploadFileBtn: $.msg('wikia-interactive-maps-create-map-upload-file')
+				uploadLink: $.msg('wikia-interactive-maps-create-map-upload-file'),
+				searchPlaceholder: $.msg('wikia-interactive-maps-create-map-search-tile-set-placeholder'),
+				clearSearch: $.msg('wikia-interactive-maps-create-map-clear-tile-set-search')
 			},
 			//modal events
 			events = {
-				intMapGeo: [
+				chooseTileSet: [
+					chooseTileSet
+				],
+				browseTileSets: [
 					function() {
-						modal.trigger('previewTileSet', {
-							type: 'geo'
-						});
+						showStep('browseTileSet');
 					}
 				],
-				intMapCustom: [
-					function() {
-						showStep('uploadImage');
-					}
+				clearSearch: [
+					clearSearchFilter
 				],
-				intMapBrowse: [
+				selectTileSet: [
+					selectTileSet
+				],
+				uploadTileSetImage: [
 					function() {
-						showStep('browseTileSets');
-						getTileSetThumbs();
+						$uploadInput.click()
 					}
 				],
 				previousStep: [
 					previousStep
-				],
-				chooseTileSet: [
-					chooseTileSet
-				],
-				receivedTileSets: [
-					showTileSetThumbs
-				],
-				selectTileSet: [
-					function(event) {
-						modal.trigger('previewTileSet', {
-							type: 'custom',
-							tileSetId: $(event.currentTarget).data('id')
-						});
-					}
 				]
 			},
 			// steps for choose tile set
@@ -72,35 +66,38 @@ define(
 					id: '#intMapChooseType',
 					buttons: {}
 				},
-				uploadImage: {
-					id: '#intMapImageUpload',
-					buttons: {
-						'#intMapBack': 'previousStep'
-					}
-				},
-				browseTileSets: {
+				browseTileSet: {
 					id: '#intMapBrowse',
 					buttons: {
 						'#intMapBack': 'previousStep'
 					},
-					helper: getTileSetThumbs
+					helper: loadTileSets
 				}
 			},
+			noTileSetMsg = $.msg('wikia-interactive-maps-create-map-no-tile-set-found'),
 			// stack for holding choose tile set steps
 			stepsStack = [],
+			cachedTileSets = {},
+			// dalay time for jQuery debounde
+			dabounceDelay = 250,
+			// minimum number of characters to trigger search request
+			searchCharLength = 2,
+			thumbSize = 116,
 			// cached selectors
 			$sections,
-			$browse;
+			$tileSetsContainer,
+			$uploadInput,
+			$clearSearchBtn,
+			$searchInput;
 
 		/**
 		 * @desc initializes and configures UI
-		 * @param {object} modalRef - modal component
+		 * @param {object} _modal - modal component
 		 * @param {string} _uiTemplate - mustache template for this step UI
 		 * @param {string} _tileSetThumbTemplate - mustache template for tile set thumb
 		 */
-
-		function init(modalRef, _uiTemplate, _tileSetThumbTemplate) {
-			modal = modalRef;
+		function init(_modal, _uiTemplate, _tileSetThumbTemplate) {
+			modal = _modal;
 			uiTemplate = _uiTemplate;
 			tileSetThumbTemplate = _tileSetThumbTemplate;
 
@@ -110,21 +107,26 @@ define(
 			addToStack('selectType');
 
 			// TODO: figure out where is better place to place it and move it there
-			modal.$element.on('change', '#intMapUpload', function(event) {
-				uploadMapImage(event.target.parentNode);
-			});
+			modal.$element
+				.on('change', '#intMapUpload', function(event) {
+					uploadNewTileSetImage(event.target.parentNode);
+				})
+				.on('keyup', '#intMapTileSetSearch', $.debounce(dabounceDelay, searchForTileSets));
+
 		}
 
 		/**
 		 * @desc entry point for choose tile set steps
 		 */
-
 		function chooseTileSet() {
 			modal.$innerContent.html(utils.render(uiTemplate, templateData));
 
 			// cache selectors
 			$sections = modal.$innerContent.children();
-			$browse = $sections.filter('#intMapBrowse');
+			$tileSetsContainer = $('#intMapTileSetsList');
+			$uploadInput =  $('#intMapUpload');
+			$clearSearchBtn = $('#intMapClearSearch');
+			$searchInput = $('#intMapTileSetSearch');
 
 			showStep(stepsStack.pop());
 		}
@@ -133,7 +135,6 @@ define(
 		 * @desc adds step to steps stack
 		 * @param {string} step - key of the step
 		 */
-
 		function addToStack(step) {
 			stepsStack.push(step);
 		}
@@ -142,7 +143,6 @@ define(
 		 * @desc shows step content
 		 * @param {string} id - step is
 		 */
-
 		function showStepContent(id) {
 			$sections.addClass('hidden');
 			$sections.filter(id).removeClass('hidden');
@@ -152,7 +152,6 @@ define(
 		 * @desc shows the given step in choose tile set flow
 		 * @param {string} stepName - name of the step
 		 */
-
 		function showStep(stepName) {
 			var step = steps[stepName];
 
@@ -171,7 +170,6 @@ define(
 		/**
 		 * @desc switches to the previous step in create map flow
 		 */
-
 		function previousStep() {
 			// removes current step from stack
 			stepsStack.pop();
@@ -180,52 +178,156 @@ define(
 		}
 
 		/**
-		 * @desc loads tile sets thumbs
-		 * @param {string=} searchTerm - search term, if specified loads tile set which name match this term
+		 * @desc handler function for selecting tile set
+		 * @param {Event} event
 		 */
+		function selectTileSet(event) {
+			var $target = $(event.currentTarget);
 
-		function getTileSetThumbs(searchTerm) {
+			modal.trigger('previewTileSet', {
+				type: $target.data('type'),
+				tileSetId: $target.data('id'),
+				originalImageURL: $target.data('image')
+			});
+		}
+
+		/**
+		 * @desc handler function for search tile set input field
+		 * @param {Event} event - search term
+		 */
+		function searchForTileSets(event) {
+			var trimmedKeyword = event.target.value.trim();
+
+			if (trimmedKeyword.length >= searchCharLength) {
+				loadTileSets(trimmedKeyword);
+				$clearSearchBtn.removeClass('hidden');
+			}
+		}
+
+		/**
+		 * @desc handler for clearing search filter - reverts to initial tile set list
+		 */
+		function clearSearchFilter() {
+			$clearSearchBtn.addClass('hidden');
+			$searchInput.val('');
+
+			// load initial set of tile sets without keyword filter
+			loadTileSets();
+		}
+		/**
+		 * @desc loads tile sets thumbs
+		 * @param {string=} keyWord - search term
+		 */
+		function loadTileSets(keyWord) {
+			getTileSets(keyWord || null, function(tileSetData) {
+				updateTileSetList(renderTileSetsListMarkup(tileSetThumbTemplate, createThumbsUrls(tileSetData)));
+			});
+		}
+
+		/**
+		 * @desc get tile sets from cache of send requests to backend and ache the response
+		 * @param {string} keyWord - cache key
+		 * @param {function} cb - callback function
+		 */
+		function getTileSets(keyWord, cb) {
+			var key = keyWord || 'default',
+				tileSets = cachedTileSets[key];
+
+			if (typeof tileSets !== 'undefined') {
+				cb(tileSets);
+			} else {
+				requestTileSets(keyWord, function(tileSets) {
+					cacheTileSets(key, tileSets);
+					cb(tileSets);
+				});
+			}
+		}
+
+		/**
+		 * @desc add tile sets to cache object
+		 * @param {string} key - key in cache object
+		 * @param {array} tileSets - tile sets array
+		 */
+		function cacheTileSets(key, tileSets) {
+			cachedTileSets[key] = tileSets;
+		}
+
+		/**
+		 * @desc sends request to backend for tile sets
+		 * @param {string} searchTerm - search keyword
+		 * @param {function} cb - callback function
+		 */
+		function requestTileSets(searchTerm, cb) {
 			$.nirvana.sendRequest({
 				controller: 'WikiaInteractiveMapsMap',
 				method: 'getTileSets',
 				format: 'json',
+				type: 'GET',
 				data: searchTerm ? {searchTerm: searchTerm} : null,
 				callback: function(response) {
 					var data = response.results;
 
 					if (data && data.success) {
-						modal.trigger('receivedTileSets', data.content);
+						cb(data.content);
 					} else {
 						modal.trigger('error', data.content.message);
 					}
 				},
 				onErrorCallback: function(response) {
-					modal.trigger('error', response.results.content.message);
+					utils.handleNirvanaException(modal, response);
 				}
 			});
 		}
 
 		/**
-		 * @desc shows tile set thumbnails
-		 * @param tileSets
+		 * @desc change image urls for each tile set to thumb url
+		 * @param {array} tileSets
+		 * @returns {array} - tileSets
 		 */
+		function createThumbsUrls(tileSets) {
+			tileSets.forEach(function(element) {
+				element.tileSetThumb = utils.createThumbURL(element.image, thumbSize, thumbSize);
+			});
 
-		function showTileSetThumbs(tileSets) {
+			return tileSets;
+		}
+
+		/**
+		 * @desc renders tile set thumbs markup
+		 * @param {string} template - mustache template
+		 * @param {array} tileSets - array of tile set objects
+		 * @returns {string} - HTML markup
+		 */
+		function renderTileSetsListMarkup(template, tileSets) {
 			var html = '';
 
 			tileSets.forEach(function(tileSet) {
-				html += utils.render(tileSetThumbTemplate, tileSet);
+				html += utils.render(template, tileSet);
 			});
 
-			$browse.html(html);
+			return html;
+		}
+
+		/**
+		 * @desc removes old tile sets from list and adds new one
+		 * @param {string} markup - HTML markup
+		 */
+		function updateTileSetList(markup) {
+			$tileSetsContainer.children('.tile-set-thumb').remove();
+			modal.trigger('cleanUpError');
+
+			if (markup) {
+				$tileSetsContainer.append(markup);
+			} else {
+				modal.trigger('error', noTileSetMsg);
+			}
 		}
 
 		/**
 		 * @desc uploads tile set image to backend
 		 * @param {object} form - html form node element
 		 */
-
-		function uploadMapImage(form) {
+		function uploadNewTileSetImage(form) {
 			var formData = new FormData(form);
 
 			utils.upload(modal, formData, 'map', function (data) {

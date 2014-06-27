@@ -196,6 +196,8 @@ define(
 			var uploadEntryPoint = '/wikia.php?controller=WikiaInteractiveMapsBase&method=upload&uploadType=' +
 				uploadType + '&format=json';
 
+			modal.deactivate();
+
 			$.ajax({
 				contentType: false,
 				data: formData,
@@ -206,17 +208,20 @@ define(
 					var data = response.results;
 
 					if (data && data.success) {
-						modal.trigger('cleanUpError');
+						cleanUpError(modal);
 
 						if (typeof successCallback === 'function') {
 							successCallback(data);
 						}
 					} else {
-						modal.trigger('error', data.errors.pop());
+						showError(modal, data.errors.pop());
 					}
+
+					modal.activate();
 				},
 				error: function(response) {
-					modal.trigger('error', response.results.error);
+					showError(modal, response.results.error);
+					modal.activate();
 				}
 			});
 		}
@@ -252,6 +257,46 @@ define(
 			w.UserLogin.refreshIfAfterForceLogin();
 		}
 
+		function handleNirvanaException(modal, response) {
+			showError(modal, response.statusText);
+		}
+
+		/**
+		 * @desc displays error message
+		 * @param {object} modal - modal object
+ 		 * @param {string} message - error message
+		 */
+		function showError(modal, message) {
+			modal.$errorContainer
+				.html(message)
+				.removeClass('hidden');
+		}
+
+		/**
+		 * @desc cleans up error message and hides error container
+		 */
+		function cleanUpError(modal) {
+			modal.$errorContainer
+				.html('')
+				.addClass('hidden');
+		}
+
+		/**
+		 * @desc creates image url for thumbnailer
+		 * @param {string} url - image url
+		 * @param {number} width
+		 * @param {number=} height
+		 * @returns {string} - thumb url
+		 */
+		function createThumbURL(url, width, height) {
+			var breakPoint = url.lastIndexOf('/'),
+				baseUrl = url.slice(0, breakPoint),
+				fileName = url.slice(breakPoint + 1),
+				crop = (height ? width + 'x' + height : width + 'px') + '-';
+
+			return baseUrl + '/thumb/' + fileName + '/' + crop + fileName;
+		}
+
 		return {
 			loadModal: loadModal,
 			createModal: createModal,
@@ -263,7 +308,11 @@ define(
 			upload: upload,
 			isUserLoggedIn: isUserLoggedIn,
 			showForceLoginModal: showForceLoginModal,
-			refreshIfAfterForceLogin: refreshIfAfterForceLogin
+			refreshIfAfterForceLogin: refreshIfAfterForceLogin,
+			handleNirvanaException: handleNirvanaException,
+			showError: showError,
+			cleanUpError: cleanUpError,
+			createThumbURL: createThumbURL
 		}
 	}
 );

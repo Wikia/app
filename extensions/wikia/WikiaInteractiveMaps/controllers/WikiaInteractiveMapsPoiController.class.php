@@ -10,6 +10,7 @@ class WikiaInteractiveMapsPoiController extends WikiaInteractiveMapsBaseControll
 	const ACTION_DELETE = 'delete';
 
 	private $currentAction;
+	private $logEntries = [];
 
 	/**
 	 * Entry point to create/edit point of interest
@@ -126,31 +127,87 @@ class WikiaInteractiveMapsPoiController extends WikiaInteractiveMapsBaseControll
 	}
 
 	/**
-	 * Entry point to create POI categories
+	 * Entry point to save POI categories
 	 *
 	 * @requestParam Integer $mapId an unique map id
+	 * @requestParam String $poiCategoriesDeleted string with comma joined ids of POI categories to delete
+	 * @requestParam Array $poiCategoryIds an array of POI categories ids
 	 * @requestParam Array $poiCategoryNames an array of POI categories names
+	 * @requestParam Array $poiCategoryParents an array of POI categories parents ids
+	 * @requestParam Array $poiCategoryMarkers an array of POI categories markers URLs
 	 *
 	 * @throws PermissionsException
 	 * @throws BadRequestApiException
 	 */
-	public function createPoiCategories() {
-		$this->setData( 'mapId', $this->request->getInt( 'mapId' ) );
-		$this->setData( 'poiCategoryNames', $this->request->getArray( 'poiCategoryNames' ) );
-		$this->setData( 'poiCategoryParents', $this->request->getArray( 'poiCategoryParents' ) );
-		$this->setData( 'poiCategoryMarkers', $this->request->getArray( 'poiCategoryMarkers' ) );
+	public function editPoiCategories() {
+		$this->setData( 'userName', $this->wg->User->getName() );
 
-		$this->validatePoiCategoriesCreation();
+		$poiCategoriesDeleted = explode(',', $this->request->getVal( 'poiCategoriesDeleted' ));
+		$this->setData( 'poiCategoriesDeleted', $poiCategoriesDeleted );
 
-		$this->setData( 'createdBy', $this->wg->User->getName() );
+		$this->organizePoiCategoriesData();
+		$this->validatePoiCategories();
+		$this->savePoiCategories();
+		$this->deletePoiCategories();
 
-		$this->createPoiCategoriesFromArray();
-		$createdPoiCategories = $this->getData( 'createdPoiCategories' );
+		WikiaMapsLogger::addLogEntries($this->logEntries);
+		$this->logEntries = [];
 
-		$this->setVal( 'results', $this->getPoiCategoriesCreationResults(
-			count( $this->getData( 'poiCategoryNames' ) ),
-			$createdPoiCategories
-		) );
+		//TODO after merging with MOB-1778 (batch methods for categories) it has to be changed anyway
+		$this->setVal( 'results', [
+			'success' => true
+		] );
+	}
+
+	/**
+	 * Prepare data from request for processing
+	 */
+	private function organizePoiCategoriesData() {
+		$mapId = $this->request->getInt( 'mapId' );
+		$this->setData( 'mapId', $mapId );
+
+		$poiCategoriesDeleted = preg_split('@,@', $this->request->getVal( 'poiCategoriesDeleted' ), null, PREG_SPLIT_NO_EMPTY);
+		$this->setData( 'poiCategoriesDeleted', $poiCategoriesDeleted );
+
+		$poiCategoryIds = $this->request->getArray( 'poiCategoryIds' );
+		$poiCategoryNames = $this->request->getArray( 'poiCategoryNames' );
+		$poiCategoryParents = $this->request->getArray( 'poiCategoryParents' );
+		$poiCategoryMarkers = $this->request->getArray( 'poiCategoryMarkers' );
+
+		$numberOfPoiCategories = count( $poiCategoryNames ); // names are required, so we can rely on them
+
+		$createPoiCategories = [];
+		$updatePoiCategories = [];
+		for ( $i = 0; $i < $numberOfPoiCategories; $i++ ) {
+			$poiCategoryData = [
+				'name' => $poiCategoryNames[ $i ]
+			];
+
+			// parent category
+			$poiCategoryData[ 'parent_poi_category_id' ] = ( !empty( $poiCategoryParents[ $i ] ) ) ?
+				(int) $poiCategoryParents[ $i ] :
+				$this->mapsModel->getDefaultParentPoiCategory();
+
+			// if user didn't upload marker then this is empty string. we don't want to send it to api.
+			if ( !empty( $poiCategoryMarkers[ $i ] ) ) {
+				$poiCategoryData[ 'marker' ] = $poiCategoryMarkers[ $i ];
+			}
+
+			// update or create
+			if ( $poiCategoryIds[ $i ] > 0 ) {
+				$poiCategoryData[ 'id' ] = $poiCategoryIds[ $i ];
+
+				$updatePoiCategories []= $poiCategoryData;
+			} else {
+				$poiCategoryData[ 'map_id' ] = $mapId;
+				$poiCategoryData[ 'created_by' ] = $this->getData( 'userName' );
+
+				$createPoiCategories []= $poiCategoryData;
+			}
+		}
+
+		$this->setData( 'createPoiCategories', $createPoiCategories );
+		$this->setData( 'updatePoiCategories', $updatePoiCategories );
 	}
 
 	/**
@@ -160,119 +217,144 @@ class WikiaInteractiveMapsPoiController extends WikiaInteractiveMapsBaseControll
 	 * @throws BadRequestApiException
 	 * @throws InvalidParameterApiException
 	 */
-	private function validatePoiCategoriesCreation() {
+	private function validatePoiCategories() {
 		$mapId = $this->getData( 'mapId' );
-		$poiCategoryNames = $this->getData( 'poiCategoryNames' );
+		$createPoiCategories = $this->getData( 'createPoiCategories' );
+		$updatePoiCategories = $this->getData( 'updatePoiCategories' );
 
-		if( $mapId === 0 && empty( $poiCategoryNames ) ) {
+		if ( !$this->wg->User->isLoggedIn() ) {
+			throw new PermissionsException( 'interactive maps' );
+		}
+
+		if ( $mapId === 0 && empty( $poiCategoryNames ) ) {
 			throw new BadRequestApiException( wfMessage( 'wikia-interactive-maps-create-map-bad-request-error' )->plain() );
 		}
 
-		if( $mapId === 0 ) {
+		if ( $mapId === 0 ) {
 			throw new InvalidParameterApiException( 'mapId' );
 		}
 
-		if( empty( $poiCategoryNames ) ) {
+		foreach ( $createPoiCategories as $poiCategory ) {
+			$this->validatePoiCategory( $poiCategory );
+		}
+
+		foreach ( $updatePoiCategories as $poiCategory ) {
+			$this->validatePoiCategory( $poiCategory );
+		}
+
+		if ( !$this->validatePoiCategoriesDeleted() ) {
+			throw new InvalidParameterApiException( 'poiCategoriesDeleted' );
+		}
+	}
+
+	/**
+	 * Validates POI category data
+	 *
+	 * @param array $poiCategory
+	 * @throws InvalidParameterApiException
+	 */
+	private function validatePoiCategory( $poiCategory ) {
+		$poiCategoryName = trim( $poiCategory[ 'name' ] );
+
+		if ( empty( $poiCategoryName ) ) {
 			throw new InvalidParameterApiException( 'poiCategoryNames' );
 		}
-
-		if( !$this->hasNamesForAllPoiCategories() ) {
-			throw new InvalidParameterApiException( 'poiCategoryNames' );
-		}
-
-		if( !$this->wg->User->isLoggedIn() ) {
-			throw new PermissionsException( 'interactive maps' );
-		}
 	}
 
 	/**
-	 * Sends requests to the service to create a POI category. Counts how many requests were successful.
-	 */
-	private function createPoiCategoriesFromArray() {
-		$mapId = $this->getData( 'mapId' );
-		$poiCategoryNames = $this->getData( 'poiCategoryNames' );
-		$poiCategoryParents = $this->getData( 'poiCategoryParents' );
-		$poiCategoryMarkers = $this->getData( 'poiCategoryMarkers' );
-
-		$numberOfPoiCategories = count( $poiCategoryNames );
-		$numberOfPoiCategoriesCreated = 0;
-
-		$logEntries = [];
-		for ( $i = 0; $i < $numberOfPoiCategories; $i++ ) {
-			$poiCategoryData = [
-				'map_id' => $mapId,
-				'name' => $poiCategoryNames[ $i ],
-				'created_by' => $this->getData( 'createdBy' ),
-			];
-
-			$poiCategoryData[ 'parent_poi_category_id' ] = ( !empty( $poiCategoryParents[ $i ] ) ) ?
-				(int) $poiCategoryParents[ $i ] :
-				$this->mapsModel->getDefaultParentPoiCategory();
-
-			// if user didn't upload marker then this is empty string. we don't want to send it to api.
-			if ( !empty( $pinTypesMarkers[ $i ] ) ) {
-				$poiCategoryData[ 'marker' ] = $poiCategoryMarkers[ $i ];
-			}
-
-			$response = $this->mapsModel->savePoiCategory( $poiCategoryData );
-
-			if ( true === $response[ 'success' ]  ) {
-				$logEntries[] = WikiaMapsLogger::newLogEntry(
-					WikiaMapsLogger::ACTION_CREATE_PIN_TYPE,
-					$mapId,
-					$poiCategoryNames[ $i ],
-					[ $response->id ]
-				);
-				$numberOfPoiCategoriesCreated++;
-			}
-		}
-		if ( !empty( $logEntries ) ) {
-			WikiaMapsLogger::addLogEntries( $logEntries );
-		}
-
-		$this->setData( 'createdPoiCategories', $numberOfPoiCategoriesCreated );
-	}
-
-	/**
-	 * Returns result of creating POI categories
-	 *
-	 * @param integer $requestedCreations how many POI categories were supposed to be created
-	 * @param integer $createdPoiCategories how many POI categories were created
-	 *
-	 * @return Array
-	 */
-	private function getPoiCategoriesCreationResults( $requestedCreations, $createdPoiCategories ) {
-		$response[ 'success' ] = true;
-
-		if( $createdPoiCategories !== $requestedCreations ) {
-			$response[ 'success' ] = false;
-			$response[ 'content' ] = new stdClass();
-			$response[ 'content' ]->message = wfMessage(
-				'wikia-interactive-maps-create-poi-categories-error',
-				$createdPoiCategories,
-				$requestedCreations
-			)->plain();
-		}
-
-		return $response;
-	}
-
-	/**
-	 * Iterates through all POI categories and returns true if all of them have name, false otherwise
+	 * Validates list of POI categories ids to delete
 	 *
 	 * @return bool
 	 */
-	public function hasNamesForAllPoiCategories() {
-		$poiCategoryNames = $this->getData( 'poiCategoryNames' );
+	private function validatePoiCategoriesDeleted() {
+		$poiCategoriesDeleted = $this->getData( 'poiCategoriesDeleted' );
 
-		foreach ( $poiCategoryNames as $name ) {
-			$name = trim( $name );
-			if ( empty( $name ) ) {
+		if ( !is_array( $poiCategoriesDeleted ) ) {
+			$this->setData( 'poiCategoriesDeleted', [] );
+			return true;
+		}
+
+		foreach ($poiCategoriesDeleted as $poiCategoryId) {
+			if ( !$poiCategoryId > 0 ) {
 				return false;
 			}
 		}
 
 		return true;
+	}
+
+	/**
+	 * Goes through the list of create/update POI categories and calls responsible methods to save them
+	 */
+	private function savePoiCategories() {
+		$createPoiCategories = $this->getData( 'createPoiCategories' );
+		$updatePoiCategories = $this->getData( 'updatePoiCategories' );
+
+		foreach ( $createPoiCategories as $poiCategory ) {
+			$this->createPoiCategory( $poiCategory );
+		}
+
+		foreach ( $updatePoiCategories as $poiCategory ) {
+			$this->updatePoiCategory( $poiCategory );
+		}
+	}
+
+	/**
+	 * Sends create POI category request to service
+	 *
+	 * @param array $poiCategory
+	 */
+	private function createPoiCategory( $poiCategory ) {
+		$response = $this->mapsModel->savePoiCategory( $poiCategory );
+
+		if ( true === $response[ 'success' ] ) {
+			$this->addLogEntry( WikiaMapsLogger::newLogEntry(
+				WikiaMapsLogger::ACTION_CREATE_PIN_TYPE,
+				$this->getData( 'mapId' ),
+				$poiCategory[ 'name' ],
+				[ $response->id ]
+			) );
+		}
+	}
+
+	/**
+	 * Sends update POI category request to service
+	 *
+	 * @param array $poiCategory
+	 */
+	private function updatePoiCategory( $poiCategory ) {
+		$poiCategoryId = $poiCategory[ 'id' ];
+		unset( $poiCategory[ 'id' ] );
+		$response = $this->mapsModel->updatePoiCategory( $poiCategoryId, $poiCategory );
+
+		if ( true === $response[ 'success' ] ) {
+			$this->addLogEntry( WikiaMapsLogger::newLogEntry(
+				WikiaMapsLogger::ACTION_UPDATE_PIN_TYPE,
+				$this->getData( 'mapId' ),
+				$poiCategory[ 'name' ],
+				[ $poiCategoryId ]
+			) );
+		}
+	}
+
+	/**
+	 * Adds log entry to class property
+	 *
+	 * @param $logEntry
+	 */
+	private function addLogEntry( $logEntry ) {
+		$this->logEntries []= $logEntry;
+	}
+
+	/**
+	 * Sends delete POI category requests to service
+	 */
+	private function deletePoiCategories() {
+		$poiCategoriesDeleted = $this->getData( 'poiCategoriesDeleted' );
+
+		foreach ( $poiCategoriesDeleted as $poiCategoryId ) {
+			$this->mapsModel->deletePoiCategory( $poiCategoryId );
+		}
 	}
 
 	/**

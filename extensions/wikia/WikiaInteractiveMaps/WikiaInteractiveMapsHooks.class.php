@@ -17,8 +17,8 @@ class WikiaInteractiveMapsHooks {
 			$text .= Html::linkedScript( $wgExtensionsPath . '/wikia/WikiaInteractiveMaps/js/WikiaInteractiveMapsParserTag.js' );
 		}
 
-		// add the asset only on Special:InteractiveMaps page
-		if( self::isSpecialInteractiveMapsPage() ) {
+		// add the asset only on Special:Maps page
+		if( self::isSpecialMapsPage() ) {
 			$scripts = AssetsManager::getInstance()->getURL( 'int_map_special_page_js' );
 
 			foreach( $scripts as $script ) {
@@ -48,14 +48,16 @@ class WikiaInteractiveMapsHooks {
 	}
 
 	/**
-	 * @brief Returns true if interactive maps are enabled and the current page is Special:InteractiveMaps
+	 * @brief Returns true if interactive maps are enabled and the current page is Special:Maps
 	 *
 	 * @return bool
 	 */
-	private static function isSpecialInteractiveMapsPage() {
+	private static function isSpecialMapsPage() {
 		global $wgEnableWikiaInteractiveMaps, $wgTitle;
 
-		return !empty( $wgEnableWikiaInteractiveMaps ) && $wgTitle->isSpecial( 'InteractiveMaps' );
+		return !empty( $wgEnableWikiaInteractiveMaps )
+			&& $wgTitle->isSpecial( WikiaInteractiveMapsController::PAGE_NAME );
 	}
 
 }
+
