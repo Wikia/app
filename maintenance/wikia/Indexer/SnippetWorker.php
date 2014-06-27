@@ -16,6 +16,7 @@ class SnippetWorker extends IndexerWorkerBase {
 			$jw = $this->getWorker();
 			$jw->setHtml( $data->html );
 			$msg = new stdClass();
+			$msg->html = $data->html;
 			$msg->snippet = $jw->process();
 			$msg->lang = $data->wiki_lang;
 			$msg->id = $data->id;
