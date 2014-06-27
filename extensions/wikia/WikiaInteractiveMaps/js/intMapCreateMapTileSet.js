@@ -69,7 +69,7 @@ define(
 					buttons: {
 						'#intMapBack': 'previousStep'
 					},
-					helper: loadTileSets
+					helper: loadDefaultTileSets
 				}
 			},
 			noTileSetMsg = $.msg('wikia-interactive-maps-create-map-no-tile-set-found'),
@@ -200,18 +200,23 @@ define(
 		}
 
 		/**
-		 * @desc handler for clearing search filter - reverts to initial tile set list
+		 * @desc loads defaults tile set list
+		 */
+		function loadDefaultTileSets() {
+			clearSearchFilter();
+			loadTileSets();
+		}
+
+		/**
+		 * @desc handler for clearing search filter
 		 */
 		function clearSearchFilter() {
 			$clearSearchBtn.addClass('hidden');
 			$searchInput.val('');
-
-			// load initial set of tile sets without keyword filter
-			loadTileSets();
 		}
 		
 		/**
-		 * @desc sets up choose tile set step
+		 * @desc loads tile set list
 		 * @param {string=} keyword - search term
 		 */
 		function loadTileSets(keyword) {
@@ -226,6 +231,8 @@ define(
 		 * @param {function} cb - callback function
 		 */
 		function getTileSets(searchTerm, cb) {
+			modal.deactivate();
+
 			$.nirvana.sendRequest({
 				controller: 'WikiaInteractiveMapsMap',
 				method: 'getTileSets',
@@ -240,9 +247,12 @@ define(
 					} else {
 						modal.trigger('error', data.content.message);
 					}
+
+					modal.activate();
 				},
 				onErrorCallback: function(response) {
 					modal.trigger('error', response.results.content.message);
+					modal.activate();
 				}
 			});
 		}
