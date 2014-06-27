@@ -2,19 +2,28 @@
 namespace InfoboxBuilder;
 
 /**
- * Hook adding InfoboxBuilder as an external library
- * 
- * @param  string $engine
- * @param  array  $extraLibraries
- * @return bool
+ * Hook handlers for the InfoboxBuilder extension
+ *
+ * @license GNU GPL v2+
+ *
+ * @author Adam Karmiński < adamk@wikia-inc.com > 
  */
-public static function registerScribuntoLibraries( $engine, array &$extraLibraries ) {
-	if ( $engine !== 'luacommon' ) {
+final class InfoboxBuilderHooks {
+	/**
+	 * Hook adding InfoboxBuilder as an external library
+	 * 
+	 * @param  string $engine
+	 * @param  array  $extraLibraries
+	 * @return bool
+	 */
+	public static function registerScribuntoLibraries( $engine, array &$extraLibraries ) {
+		if ( $engine !== 'luasandbox' ) {
+			return true;
+		}
+
+		$extraLibraries['mw.InfoboxBuilder']     = '\InfoboxBuilder\LuaLibrary';
+		// $extraLibraries['mw.InfoboxBuilderView'] = '\InfoboxBuilder\LuaLibrary';
+
 		return true;
 	}
-
-	$extraLibraries['mw.InfoboxBuilder']     = '\InfoboxBuilder\LuaLibrary';
-	$extraLibraries['mw.InfoboxBuilderView'] = '\InfoboxBuilder\LuaLibrary';
-
-	return true;
 }
