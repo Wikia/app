@@ -46,7 +46,7 @@ class HubRssFeedModel extends WikiaModel {
 
 
 	/*
-	 * Get data from MarketingToolboxModelV3, sorted by timestamp DESC
+	 * Get data from MarketingToolboxModelV3 (don't care about timestamps consistency)
 	 *
 	 * @param $cityId
 	 * @return array
@@ -109,25 +109,9 @@ class HubRssFeedModel extends WikiaModel {
 		}
 
 		array_multisort($timestamps, SORT_DESC, $currentData);
-		$currentData = $this->fakeOrderItems($currentData);
 
 		return $currentData;
 	}
-
-	protected function fakeOrderItems( $currentData ){
-		$prevTimestamp = 0;
-		foreach($currentData as &$item){
-			if($prevTimestamp === $item['timestamp']){
-				$item['timestamp'] --;
-			}elseif($prevTimestamp > 0 && $item['timestamp'] > $prevTimestamp){
-				$item['timestamp'] = $prevTimestamp - 1;
-			}
-			$prevTimestamp = $item['timestamp'];
-		}
-		return $currentData;
-	}
-
-
 
 	/**
 	 * Get normalized partial data from MarketingToolboxModelV3 from given timestamp

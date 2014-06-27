@@ -226,9 +226,6 @@ class HubRssModelTest extends WikiaBaseTest {
 		$item1 = array_shift( $res );
 		$item2 = array_shift( $res );
 		$item3 = array_shift( $res );
-
-		$this->assertTrue( $item1[ 'timestamp' ] >= $item2[ 'timestamp' ] && $item2[ 'timestamp' ] >= $item3[ 'timestamp' ] );
-
 	}
 
 	public static function mock_getDataFromModulesV3( $cityId, $timestamp = null ) {
