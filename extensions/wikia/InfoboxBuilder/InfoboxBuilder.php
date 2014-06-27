@@ -33,7 +33,7 @@ $wgAutoloadClasses['InfoboxBuilder\LuaLibrary'] = __DIR__ . '/includes/LuaLibrar
 /**
  * Load InfoboxBuilder's hooks
  */
-$wgAutoloadClasses['InfoboxBuilder\InfoboxBuilderHooks'] = __DIR__ . '/InfoboxBuilder.hooks.php';
+// $wgAutoloadClasses['InfoboxBuilder\InfoboxBuilderHooks'] = __DIR__ . '/InfoboxBuilder.hooks.php';
 
 /**
  * I18n file

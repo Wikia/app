@@ -1,16 +1,18 @@
-local Builder = {}
+local InfoboxBuilder = {}
+local php
 
-Builder.test = function()
+InfoboxBuilder.test = function()
 	return "Hello world!"
 end
 
+php = mw_interface
 mw_interface = nil
 
 -- Register module as "mw.InfoboxBuilder" global
 mw = mw or {}
-mw.Infobox = mw.Infobox or {}
-mw.Infobox.Builder = Builder
+mw.ext = mw.ext or {}
+mw.ext.InfoboxBuilder = InfoboxBuilder
 
-package.loaded['mw.Infobox.Builder'] = Builder
+package.loaded['mw.ext.InfoboxBuilder'] = InfoboxBuilder
 
-return Builder
+return InfoboxBuilder
