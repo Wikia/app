@@ -91,6 +91,8 @@ define(
 			$uploadInput,
 			$clearSearchBtn,
 			$searchInput;
+			$browse,
+			mapTypeHasBeenChosenAlready;
 
 		/**
 		 * @desc initializes and configures UI
@@ -102,6 +104,7 @@ define(
 			modal = _modal;
 			uiTemplate = _uiTemplate;
 			tileSetThumbTemplate = _tileSetThumbTemplate;
+			mapTypeHasBeenChosenAlready = false;
 
 			utils.bindEvents(modal, events);
 
@@ -190,7 +193,6 @@ define(
 		function previousStep() {
 			// removes current step from stack
 			stepsStack.pop();
-
 			showStep(stepsStack.pop());
 		}
 
@@ -360,6 +362,29 @@ define(
 				data.type = 'custom';
 				modal.trigger('previewTileSet', data);
 			});
+		}
+
+		/**
+		 * @desc Sends to GA what map type was chosen only if the back button wasn't clicked
+		 *
+		 * @param {string} type
+		 */
+		function trackChosenMap(type) {
+			var label = '';
+
+			switch(type) {
+				case 'geo':
+					label = 'real-map-chosen';
+					break;
+				case 'custom':
+					label = 'custom-map-chosen';
+					break;
+			}
+
+			if( !mapTypeHasBeenChosenAlready ) {
+				mapTypeHasBeenChosenAlready = true;
+				utils.track(utils.trackerActions.CLICK_LINK_IMAGE, label);
+			}
 		}
 
 		return {
