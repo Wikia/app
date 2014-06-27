@@ -108,8 +108,6 @@ class GlobalHeaderController extends WikiaController {
 	 * @return array tree of menu nodes for given index
 	 */
 	private function recursiveConvertMenuNodeToArray( $index ) {
-		$this->menuNodesAB = $this->prepareMenuData( 'shared-global-navigation-abtest', self::MAX_COUNT_OF_LEVEL1_NODES_AB );
-
 		$node = $this->menuNodesAB[ $index ];
 		$returnValue = [
 			'text' => $node[ 'text' ],
@@ -134,6 +132,8 @@ class GlobalHeaderController extends WikiaController {
 
 	public function getGlobalMenuItems() {
 		global $wgCityId;
+
+		$this->menuNodesAB = $this->prepareMenuData( 'shared-global-navigation-abtest', self::MAX_COUNT_OF_LEVEL1_NODES_AB );
 
 		$menuData = [];
 
