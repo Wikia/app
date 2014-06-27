@@ -93,8 +93,7 @@ define(
 			stepsStack = [],
 			// cached selectors
 			$sections,
-			$browse,
-			mapTypeHasBeenChosenAlready;
+			$browse;
 
 		/**
 		 * @desc initializes and configures UI
@@ -107,7 +106,6 @@ define(
 			modal = modalRef;
 			uiTemplate = _uiTemplate;
 			tileSetThumbTemplate = _tileSetThumbTemplate;
-			mapTypeHasBeenChosenAlready = false;
 
 			utils.bindEvents(modal, events);
 
@@ -255,10 +253,7 @@ define(
 					break;
 			}
 
-			if( !mapTypeHasBeenChosenAlready ) {
-				mapTypeHasBeenChosenAlready = true;
-				utils.track(utils.trackerActions.CLICK_LINK_IMAGE, label);
-			}
+			utils.track(utils.trackerActions.CLICK_LINK_IMAGE, label);
 		}
 
 		return {
