@@ -9,6 +9,7 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 	const MAPS_PER_PAGE = 10;
 	const PAGE_NAME = 'InteractiveMaps';
 	const TRANSLATION_FILENAME = 'translations.json';
+	const MAPS_WIKIA_URL = 'http://maps.wikia.com';
 
 	/**
 	 * @var WikiaMaps
@@ -75,12 +76,16 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 		$this->setVal( 'baseUrl', $url );
 
 		$messages = [
-			'wikia-interactive-maps-title' => wfMessage( 'wikia-interactive-maps-title' ),
-			'wikia-interactive-maps-create-a-map' => wfMessage( 'wikia-interactive-maps-create-a-map' ),
-			'wikia-interactive-maps-no-maps' => wfMessage( 'wikia-interactive-maps-no-maps' )
+			'title' => wfMessage( 'wikia-interactive-maps-title' ),
+			'create-a-map' => wfMessage( 'wikia-interactive-maps-create-a-map' ),
+			'no-maps-header' => wfMessage( 'wikia-interactive-maps-no-maps-header' ),
+			'no-maps-text' => wfMessage( 'wikia-interactive-maps-no-maps-text' ),
+			'no-maps-learn-more' => wfMessage( 'wikia-interactive-maps-no-maps-learn-more' ),
 		];
 		$this->setVal( 'messages', $messages );
 		$this->setVal( 'sortingOptions', $this->mapsModel->getSortingOptions( $selectedSort ) );
+		$this->setVal( 'searchInput', F::app()->renderView( 'Search', 'Index' ) );
+		$this->setVal( 'learnMoreUrl', self::MAPS_WIKIA_URL );
 
 		$urlParams = [];
 		if ( !is_null( $selectedSort ) ) {
@@ -147,6 +152,8 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 				'wikia-interactive-maps-map-not-found-error' => wfMessage( 'wikia-interactive-maps-map-not-found-error' )
 			] );
 		}
+
+		$this->response->addAsset( 'extensions/wikia/WikiaInteractiveMaps/css/WikiaInteractiveMaps.scss' );
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
 	}
 

@@ -116,6 +116,7 @@ class AdminDashboardLogic {
 				"WikiFactory",
 				"WikiFactoryReporter",
 				"WikiStats",
+				'InteractiveMaps'
 			);
 			return (!in_array($alias, $exclusionList));
 		}
