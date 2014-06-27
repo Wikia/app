@@ -42,7 +42,6 @@ $wgActionPaths = array( "$wgUploadPath/" );
 wfImageAuthMain();
 wfProfileOut( 'img_auth.php' );
 wfLogProfilingData();
-$wgProfilingDataLogged = true;
 
 function wfImageAuthMain() {
 	global $wgImgAuthPublicTest, $wgRequest, $wgUploadDirectory;

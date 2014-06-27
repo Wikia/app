@@ -647,8 +647,6 @@ class MWExceptionHandler {
 		if ( $wgFullyInitialised ) {
 			try {
 				wfLogProfilingData(); // uses $wgRequest, hence the $wgFullyInitialised condition
-				global $wgProfilingDataLogged;
-				$wgProfilingDataLogged = true;
 			} catch ( Exception $e ) {}
 		}
 
