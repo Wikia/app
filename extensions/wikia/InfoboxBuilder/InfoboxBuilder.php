@@ -36,6 +36,11 @@ $wgAutoloadClasses['InfoboxBuilder\LuaLibrary'] = __DIR__ . '/includes/LuaLibrar
 $wgAutoloadClasses['InfoboxBuilder\InfoboxBuilderHooks'] = __DIR__ . '/InfoboxBuilder.hooks.php';
 
 /**
+ * Add hooks
+ */
+$wgHooks['ScribuntoExternalLibraries'][] = '\InfoboxBuilder\InfoboxBuilderHooks::registerScribuntoLibraries';
+
+/**
  * I18n file
  */
 $wgExtensionMessagesFiles['InfoboxBuilder'] = __DIR__ . '/InfoboxBuilder.i18n.php';
