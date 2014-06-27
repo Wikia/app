@@ -1,11 +1,14 @@
 <?php
 
 /**
- * Maintenance script to cache video views (run every hour).  This script is normally run
- * via wikia-maintenance which will call WikiaTask::work for every wiki in city_list.
+ * Maintenance script to cache video views (run every hour).  This script can be run
+ * one of three different ways:
  *
- * This script can also be run for an individual wiki by calling it in the usual way
- * a maintenance script is called.
+ * - Via wikia-maintenance : This will call WikiaTask::work for every wiki in city_list.
+ * - Via runOnCluster : This will call WikiTask::run for every wiki in the cluster currently set on runOnCluster
+ * - For individual wikis by calling it in the usual way a maintenance script is called.
+ *
+ * The preferred method is to use runOnCluster when updating all wikis
  *
  * @author Garth Webb, Hyun Lim, Liz Lee, Saipetch Kongkatong
  */
@@ -44,8 +47,55 @@ if ( $script == $file ) {
  */
 class WikiaTask {
 
+	// Keep data for 2 hours
+	const VIDEO_VIEW_TTL = 7200;
+
+	/**
+	 * This method is expected by the runOnCluster.php script
+	 *
+	 * @param DatabaseMysql $db Database connection for the current wiki
+	 * @param bool $test Whether we are in test mode currently
+	 * @param bool $verbose Whether to show verbose output
+	 * @param array $params Additional parameters for this method
+	 *
+	 * @throws Exception
+	 */
+	public static function run( DatabaseMysql $db, $test = false, $verbose = false, $params ) {
+		$dbname = $params['dbname'];
+
+		// Make sure the calls to wfMemcKey() get the right prefix since runOnCluster does not initialize all
+		// the wiki specific variables
+		global $wgCachePrefix;
+		$wgCachePrefix = $dbname;
+
+		// Load the app context
+		$app = F::app();
+		if ( wfReadOnly() ) {
+			throw new Exception( "Error: In read only mode." );
+		}
+
+		if ( $verbose ) {
+			echo "Caching video views for wiki $dbname ... ";
+		}
+
+		$memKeyBase = MediaQueryService::getMemKeyTotalVideoViews();
+		$videoListTotal = VideoInfoHelper::getTotalViewsFromDB( $db );
+		foreach( $videoListTotal as $memKeyBucket => $list ) {
+			if ( $test ) {
+				echo "SET $memKeyBase.'-'.$memKeyBucket (".count($list).")\n";
+			} else {
+				$app->wg->Memc->set( $memKeyBase.'-'.$memKeyBucket, $list, self::VIDEO_VIEW_TTL );
+			}
+		}
+
+		if ( $verbose ) {
+			echo "DONE\n";
+		}
+	}
+
 	/**
 	 * This method is expected by the wikia-maintenance script
+	 * @deprecated
 	 *
 	 * @param int $wiki_id
 	 * @param bool $dryRun
@@ -68,7 +118,7 @@ class WikiaTask {
 			if ( $dryRun ) {
 				echo "SET $memKeyBase.'-'.$memKeyBucket (".count($list).")\n";
 			} else {
-				$app->wg->Memc->set( $memKeyBase.'-'.$memKeyBucket, $list, 60*60*2 );
+				$app->wg->Memc->set( $memKeyBase.'-'.$memKeyBucket, $list, self::VIDEO_VIEW_TTL );
 			}
 		}
 

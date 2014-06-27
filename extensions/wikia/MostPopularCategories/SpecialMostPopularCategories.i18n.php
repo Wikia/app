@@ -252,7 +252,7 @@ $messages['lad'] = array(
  * @author Robby
  */
 $messages['lb'] = array(
-	'mostpopularcategories' => 'Beléiwste Kategorien',
+	'mostpopularcategories' => 'Beléifst Kategorien',
 );
 
 /** Latvian (latviešu)

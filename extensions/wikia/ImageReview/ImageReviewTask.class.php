@@ -72,9 +72,12 @@ class ImageReviewTask extends BaseTask {
 			++$articlesDeleted;
 		}
 
-		if ( $articlesDeleted != count( $pageList ) ) {
+		$success = $articlesDeleted == count( $pageList );
+		if ( !$success ) {
 			$this->sendNotification();
 		}
+
+		return $success;
 	}
 
 	private function sendNotification() {
