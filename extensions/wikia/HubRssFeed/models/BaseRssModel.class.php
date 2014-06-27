@@ -2,7 +2,7 @@
 
 abstract class BaseRssModel extends WikiaService {
 
-    const FIELD_TIMESTAMP = 'timestamp';
+	const FIELD_TIMESTAMP = 'timestamp';
 	const SOURCE_HUB = 'hub';
 	const SOURCE_GENERATOR = 'generator';
 	const ENDPOINT_ASSIMPLEJSON = 'api/v1/Articles/AsSimpleJson';
@@ -31,11 +31,11 @@ abstract class BaseRssModel extends WikiaService {
 
 	public abstract function getFeedDescription();
 
-	public function getFeedData(){
+	public function getFeedData() {
 		return $this->getLastRecordsFromDb( static::FEED_NAME, static::MAX_NUM_ITEMS_IN_FEED );
 	}
 
-	public function generateFeedData(){
+	public function generateFeedData() {
 		$duplicates = $this->getLastDuplicatesFromDb( static::FEED_NAME );
 		$timestamp = $this->getLastFeedTimestamp( static::FEED_NAME ) + 1;
 		return $this->loadData( $timestamp, $duplicates );
@@ -94,7 +94,7 @@ abstract class BaseRssModel extends WikiaService {
 				->SET( 'wrf_page_id', $item[ 'page_id' ] )
 				->SET( 'wrf_url', $url )
 				->SET( 'wrf_feed', $feed )
-				->SET( 'wrf_pub_date', date( self::DATETIME_FORMAT , $item[ 'timestamp' ] ) )
+				->SET( 'wrf_pub_date', date( self::DATETIME_FORMAT, $item[ 'timestamp' ] ) )
 				->SET( 'wrf_title', $item[ 'title' ] )
 				->SET( 'wrf_description', $item[ 'description' ] )
 				->SET( 'wrf_img_url', $item[ 'img' ][ 'url' ] )
@@ -220,12 +220,12 @@ abstract class BaseRssModel extends WikiaService {
 		return $wikisData;
 	}
 
-	protected function getWikiService(){
+	protected function getWikiService() {
 		return new WikiService();
 	}
 
 	protected function getArticleDetail( $wikiId, $articleId ) {
-		$res = ApiService::foreignCall( WikiFactory::IDtoDB( $wikiId ),[ 'ids' => $articleId ],  self::ENDPOINT_DETAILS );
+		$res = ApiService::foreignCall( WikiFactory::IDtoDB( $wikiId ), [ 'ids' => $articleId ], self::ENDPOINT_DETAILS );
 		if ( !$res ) {
 			return [ ];
 		}
@@ -278,7 +278,7 @@ abstract class BaseRssModel extends WikiaService {
 				}
 			}
 
-			if ( empty($item[ 'timestamp' ] )) {
+			if ( empty( $item[ 'timestamp' ] ) ) {
 				$item[ 'timestamp' ] = $time--;
 			}
 
@@ -291,9 +291,9 @@ abstract class BaseRssModel extends WikiaService {
 			$out[ $item[ 'url' ] ] = $item;
 		}
 
-        $out = $this->fixDuplicatedTimestamps( $out );
+		$out = $this->fixDuplicatedTimestamps( $out );
 
-        return $out;
+		return $out;
 	}
 
 	abstract protected function formatTitle( $item );
@@ -377,12 +377,12 @@ abstract class BaseRssModel extends WikiaService {
 			$res = $f2->query( '' );
 			foreach ( $res as $item ) {
 				$key = $item[ 'url' ];
-				if(array_key_exists($key , $urls)){
-					$newItem = $urls[$key];
+				if ( array_key_exists( $key, $urls ) ) {
+					$newItem = $urls[ $key ];
 					$newItem[ 'wikia_id' ] = $item[ 'wid' ];
 					$newItem[ 'page_id' ] = $item[ 'pageid' ];
 					$newItem[ 'source' ] = $source;
-					$data[] = $newItem;
+					$data[ ] = $newItem;
 				}
 			}
 		}
@@ -414,10 +414,10 @@ abstract class BaseRssModel extends WikiaService {
 		return $item;
 	}
 
-	public static function getStagingPrefix(){
+	public static function getStagingPrefix() {
 		global $wgDevelEnvironment, $wgStagingEnvironment;
 
-		if( $wgDevelEnvironment ||  $wgStagingEnvironment ){
+		if ( $wgDevelEnvironment || $wgStagingEnvironment ) {
 			return 'stag_';
 		}
 
@@ -427,60 +427,60 @@ abstract class BaseRssModel extends WikiaService {
 		return '';
 	}
 
-    /**
-     * @param $itemsMap
-     */
-    protected function fixDuplicatedTimestamps( $itemsMap ) {
-        if( empty( $itemsMap ) ) {
-            return $itemsMap;
-        }
+	/**
+	 * @param $itemsMap
+	 */
+	protected function fixDuplicatedTimestamps( $itemsMap ) {
+		if ( empty( $itemsMap ) ) {
+			return $itemsMap;
+		}
 
-        // Calculate occurrence of each unique timestamp
-        $timestampsCount = [ ];
-        foreach ( $itemsMap as $key => $value ) {
-            $timestamp = $value[ self::FIELD_TIMESTAMP ];
+		// Calculate occurrence of each unique timestamp
+		$timestampsCount = [ ];
+		foreach ( $itemsMap as $key => $value ) {
+			$timestamp = $value[ self::FIELD_TIMESTAMP ];
 
-            if ( empty( $timestampsCount[ $timestamp ] ) ) {
-                $timestampsCount[ $timestamp ] = 1;
-            } else {
-                $timestampsCount[ $timestamp ]++;
-            }
-        }
+			if ( empty( $timestampsCount[ $timestamp ] ) ) {
+				$timestampsCount[ $timestamp ] = 1;
+			} else {
+				$timestampsCount[ $timestamp ]++;
+			}
+		}
 
-        $itemsCount = count( $itemsMap );
-        $uniqueTimestampsCount = count( $timestampsCount );
-        if ( $itemsCount == $uniqueTimestampsCount ) {
-            // No timestamps conflicts detected
-            return $itemsMap;
-        }
+		$itemsCount = count( $itemsMap );
+		$uniqueTimestampsCount = count( $timestampsCount );
+		if ( $itemsCount == $uniqueTimestampsCount ) {
+			// No timestamps conflicts detected
+			return $itemsMap;
+		}
 
-        foreach ( $itemsMap as $key => $value ) {
-            $timestamp = $value[ self::FIELD_TIMESTAMP ];
+		foreach ( $itemsMap as $key => $value ) {
+			$timestamp = $value[ self::FIELD_TIMESTAMP ];
 
-            if ( $timestampsCount[ $timestamp ] == 1 ) {
-                // This timestamp occurrenced only once
-                // it's ok - nothing to do
-                continue;
-            }
+			if ( $timestampsCount[ $timestamp ] == 1 ) {
+				// This timestamp occurrenced only once
+				// it's ok - nothing to do
+				continue;
+			}
 
-            // Finding available timestamp (by increasing current timestamp)
-            $newTimestamp = $timestamp + 1;
-            while ( !empty( $timestampsCount[ $newTimestamp ] ) ) {
-                $newTimestamp++;
-            }
+			// Finding available timestamp (by increasing current timestamp)
+			$newTimestamp = $timestamp + 1;
+			while ( !empty( $timestampsCount[ $newTimestamp ] ) ) {
+				$newTimestamp++;
+			}
 
-            // Updating timestamp
-            $itemsMap[ $key ][ self::FIELD_TIMESTAMP ] = $newTimestamp;
+			// Updating timestamp
+			$itemsMap[ $key ][ self::FIELD_TIMESTAMP ] = $newTimestamp;
 
-            // Mark new timestamp as unavailable for future searching
-            $timestampsCount[ $newTimestamp ] = 1;
+			// Mark new timestamp as unavailable for future searching
+			$timestampsCount[ $newTimestamp ] = 1;
 
-            // decrease number of occurrences of previous timestamp
-            $timestampsCount[ $timestamp ]--;
-        }
+			// decrease number of occurrences of previous timestamp
+			$timestampsCount[ $timestamp ]--;
+		}
 
-        // Returning items without duplicating timestamps
-        return $itemsMap;
-    }
+		// Returning items without duplicating timestamps
+		return $itemsMap;
+	}
 
 }

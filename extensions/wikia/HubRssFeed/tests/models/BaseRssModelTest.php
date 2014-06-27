@@ -1,35 +1,29 @@
 <?php
-include_once dirname(__FILE__) . '/../../' . "models/BaseRssModel.class.php";
+include_once dirname( __FILE__ ) . '/../../' . "models/BaseRssModel.class.php";
 
-class DummyModel extends BaseRssModel
-{
-    /**
-     * Ability to switch on/off function for fixing duplicated timestamps
-     */
-    protected $testFixDuplicatedTimestamps = false;
+class DummyModel extends BaseRssModel {
+	/**
+	 * Ability to switch on/off function for fixing duplicated timestamps
+	 */
+	protected $testFixDuplicatedTimestamps = false;
 
-    public function setTestFixDuplicatedTimestamps( $testFixDuplicatedTimestamps ) {
-        $this->testFixDuplicatedTimestamps = $testFixDuplicatedTimestamps;
-    }
-
-	public function getFeedTitle()
-	{
+	public function setTestFixDuplicatedTimestamps( $testFixDuplicatedTimestamps ) {
+		$this->testFixDuplicatedTimestamps = $testFixDuplicatedTimestamps;
 	}
 
-	public function getFeedLanguage()
-	{
+	public function getFeedTitle() {
 	}
 
-	public function getFeedDescription()
-	{
+	public function getFeedLanguage() {
 	}
 
-	protected function loadData($lastTimestamp, $duplicates)
-	{
+	public function getFeedDescription() {
 	}
 
-	protected function formatTitle($item)
-	{
+	protected function loadData( $lastTimestamp, $duplicates ) {
+	}
+
+	protected function formatTitle( $item ) {
 		return $item;
 	}
 
@@ -56,7 +50,7 @@ class DummyModel extends BaseRssModel
 	 * @param $aid
 	 * @return string
 	 */
-	protected function getArticleDescription( $wid, $aid ){
+	protected function getArticleDescription( $wid, $aid ) {
 		$descriptions = [
 			831 => [
 				49 => 'd49',
@@ -67,123 +61,113 @@ class DummyModel extends BaseRssModel
 		return $descriptions[ $wid ][ $aid ];
 	}
 
-    /**
-     * Mocked version of fixDuplicatedTimestamps. Used to test processItems - separately from testing fixDuplicatedTimestamps
-     */
-    protected function fixDuplicatedTimestamps( $itemsMap ) {
-        if($this->testFixDuplicatedTimestamps) {
-            return parent::fixDuplicatedTimestamps( $itemsMap );
-        }
-        return $itemsMap;
-    }
+	/**
+	 * Mocked version of fixDuplicatedTimestamps. Used to test processItems - separately from testing fixDuplicatedTimestamps
+	 */
+	protected function fixDuplicatedTimestamps( $itemsMap ) {
+		if ( $this->testFixDuplicatedTimestamps ) {
+			return parent::fixDuplicatedTimestamps( $itemsMap );
+		}
+		return $itemsMap;
+	}
 }
 
 class DummyNotMockedModel extends BaseRssModel {
-	public function getFeedTitle()
-	{
+	public function getFeedTitle() {
 	}
 
-	public function getFeedLanguage()
-	{
+	public function getFeedLanguage() {
 	}
 
-	public function getFeedDescription()
-	{
+	public function getFeedDescription() {
 	}
 
-	protected function loadData($lastTimestamp, $duplicates)
-	{
+	protected function loadData( $lastTimestamp, $duplicates ) {
 	}
 
-	protected function formatTitle($item)
-	{
+	protected function formatTitle( $item ) {
 		return $item;
 	}
 }
 
-class BaseRssModelTest extends WikiaBaseTest
-{
-	protected static function getFn( $obj, $name )
-	{
-		$class = new ReflectionClass(get_class($obj));
-		$method = $class->getMethod($name);
-		$method->setAccessible(true);
+class BaseRssModelTest extends WikiaBaseTest {
+	protected static function getFn( $obj, $name ) {
+		$class = new ReflectionClass( get_class( $obj ) );
+		$method = $class->getMethod( $name );
+		$method->setAccessible( true );
 
-        return function () use ( $obj, $method ) {
-            $args = func_get_args();
-            return $method->invokeArgs($obj, $args);
-        };
+		return function () use ( $obj, $method ) {
+			$args = func_get_args();
+			return $method->invokeArgs( $obj, $args );
+		};
 	}
 
-	public function setUp()
-	{
-		$dir = dirname(__FILE__) . '/../../';
+	public function setUp() {
+		$dir = dirname( __FILE__ ) . '/../../';
 		$this->setupFile = $dir . 'HubRssFeed.setup.php';
 
 		parent::setUp();
 	}
 
-    /**
-     * @covers BaseRssModel::fixDuplicatedTimestamps
-     */
-    public function testFixDuplicatedTimestamps()
-    {
-        $dummy = new DummyModel();
-        $dummy->setTestFixDuplicatedTimestamps( true );
-        $fixDuplicatedTimestamps = self::getFn( $dummy, 'fixDuplicatedTimestamps' );
+	/**
+	 * @covers BaseRssModel::fixDuplicatedTimestamps
+	 */
+	public function testFixDuplicatedTimestamps() {
+		$dummy = new DummyModel();
+		$dummy->setTestFixDuplicatedTimestamps( true );
+		$fixDuplicatedTimestamps = self::getFn( $dummy, 'fixDuplicatedTimestamps' );
 
-        // Check with empty items map
-        $itemsEmpty = [ ];
-        $fixed = $fixDuplicatedTimestamps( $itemsEmpty );
-        $this->assertEquals(
-            count( $itemsEmpty ),
-            $this->countUniqueTimestamps( $fixed ) );
+		// Check with empty items map
+		$itemsEmpty = [ ];
+		$fixed = $fixDuplicatedTimestamps( $itemsEmpty );
+		$this->assertEquals(
+			count( $itemsEmpty ),
+			$this->countUniqueTimestamps( $fixed ) );
 
-        // Check with items map, without timestamps duplicates
-        $itemsWithoutDuplicatedTimestamps = [
-            '1' => [ 'timestamp' => 1 ],
-            '2' => [ 'timestamp' => 2 ],
-            '3' => [ 'timestamp' => 3 ],
-            '4' => [ 'timestamp' => 4 ]
-        ];
-        $fixed = $fixDuplicatedTimestamps( $itemsWithoutDuplicatedTimestamps );
-        $this->assertEquals(
-            count( $itemsWithoutDuplicatedTimestamps ),
-            $this->countUniqueTimestamps( $fixed ) );
+		// Check with items map, without timestamps duplicates
+		$itemsWithoutDuplicatedTimestamps = [
+			'1' => [ 'timestamp' => 1 ],
+			'2' => [ 'timestamp' => 2 ],
+			'3' => [ 'timestamp' => 3 ],
+			'4' => [ 'timestamp' => 4 ]
+		];
+		$fixed = $fixDuplicatedTimestamps( $itemsWithoutDuplicatedTimestamps );
+		$this->assertEquals(
+			count( $itemsWithoutDuplicatedTimestamps ),
+			$this->countUniqueTimestamps( $fixed ) );
 
-        // Check with items map, with timestamps duplicates
-        $itemsWithDuplicatedTimestamps = [
-            '1' => [ 'timestamp' => 1 ],
-            '2' => [ 'timestamp' => 1 ],
-            '3' => [ 'timestamp' => 2 ],
-            '4' => [ 'timestamp' => 4 ],
-            '5' => [ 'timestamp' => 4 ],
-            '6' => [ 'timestamp' => 4 ],
-            '7' => [ 'timestamp' => 5 ],
-            '8' => [ 'timestamp' => 8 ]
-        ];
-        $fixed = $fixDuplicatedTimestamps( $itemsWithDuplicatedTimestamps );
-        $this->assertEquals(
-            count( $itemsWithDuplicatedTimestamps ),
-            $this->countUniqueTimestamps( $fixed ) );
-    }
+		// Check with items map, with timestamps duplicates
+		$itemsWithDuplicatedTimestamps = [
+			'1' => [ 'timestamp' => 1 ],
+			'2' => [ 'timestamp' => 1 ],
+			'3' => [ 'timestamp' => 2 ],
+			'4' => [ 'timestamp' => 4 ],
+			'5' => [ 'timestamp' => 4 ],
+			'6' => [ 'timestamp' => 4 ],
+			'7' => [ 'timestamp' => 5 ],
+			'8' => [ 'timestamp' => 8 ]
+		];
+		$fixed = $fixDuplicatedTimestamps( $itemsWithDuplicatedTimestamps );
+		$this->assertEquals(
+			count( $itemsWithDuplicatedTimestamps ),
+			$this->countUniqueTimestamps( $fixed ) );
+	}
 
-    private function countUniqueTimestamps( &$itemsMap ) {
-        $timestampsCount = [ ];
-        foreach ( $itemsMap as $key => $value ) {
-            $timestamp = $value[ BaseRssModel::FIELD_TIMESTAMP ];
-            $timestampsCount[ $timestamp ] = 1;
-        }
-        return count( $timestampsCount );
-    }
+	private function countUniqueTimestamps( &$itemsMap ) {
+		$timestampsCount = [ ];
+		foreach ( $itemsMap as $key => $value ) {
+			$timestamp = $value[ BaseRssModel::FIELD_TIMESTAMP ];
+			$timestampsCount[ $timestamp ] = 1;
+		}
+		return count( $timestampsCount );
+	}
 
 	/**
 	 * @covers BaseRssModel::makeBlogTitle
 	 */
-	public function testMakeBlogTitle()
-	{
+	public function testMakeBlogTitle() {
 		$dummy = new DummyModel();
-		$makeBlogTitle = self::getFn($dummy, 'makeBlogTitle');
+		$makeBlogTitle = self::getFn( $dummy, 'makeBlogTitle' );
 		$item = [
 			"ns" => NS_BLOG_ARTICLE,
 			"wikititle" => "dummy",
@@ -191,57 +175,55 @@ class BaseRssModelTest extends WikiaBaseTest
 			"wikia_id" => 831,
 		];
 
-		$this->assertEquals($makeBlogTitle($item)['title'], "Muppet Wiki from dummy");
+		$this->assertEquals( $makeBlogTitle( $item )[ 'title' ], "Muppet Wiki from dummy" );
 
 		$item = [
 			"ns" => NS_BLOG_ARTICLE,
 			"page_id" => 4,
 			"wikia_id" => 831,
 		];
-		$this->assertEquals($makeBlogTitle($item)['title'], "Muppet Wiki from Muppet Wiki");
+		$this->assertEquals( $makeBlogTitle( $item )[ 'title' ], "Muppet Wiki from Muppet Wiki" );
 	}
 
 	/**
 	 * @covers BaseRssModel::removeDuplicates
 	 */
-	public function testRemoveDuplicates()
-	{
+	public function testRemoveDuplicates() {
 		$dummy = new DummyModel();
-		$removeDuplicates = self::getFn($dummy, 'removeDuplicates');
+		$removeDuplicates = self::getFn( $dummy, 'removeDuplicates' );
 
-		$this->assertEquals($removeDuplicates(null, null), []);
+		$this->assertEquals( $removeDuplicates( null, null ), [ ] );
 
 		$duplicatedRawData = [
-			["url" => "a"],
-			["url" => "a"],
-			["url" => "b"],
-			["url" => "c"],
+			[ "url" => "a" ],
+			[ "url" => "a" ],
+			[ "url" => "b" ],
+			[ "url" => "c" ],
 		];
-		$this->assertEquals($removeDuplicates($duplicatedRawData, null), [
-			["url" => "a"],
-			["url" => "a"],
-			["url" => "b"],
-			["url" => "c"]]);
+		$this->assertEquals( $removeDuplicates( $duplicatedRawData, null ), [
+			[ "url" => "a" ],
+			[ "url" => "a" ],
+			[ "url" => "b" ],
+			[ "url" => "c" ] ] );
 
-		$this->assertEquals(array_values($removeDuplicates($duplicatedRawData, ["a" => true, "c" => true])), [
-			["url" => "b"],
-		]);
+		$this->assertEquals( array_values( $removeDuplicates( $duplicatedRawData, [ "a" => true, "c" => true ] ) ), [
+			[ "url" => "b" ],
+		] );
 
-		$this->assertEquals($removeDuplicates($duplicatedRawData, ["x" => true]), [
-			["url" => "a"],
-			["url" => "a"],
-			["url" => "b"],
-			["url" => "c"]]);
+		$this->assertEquals( $removeDuplicates( $duplicatedRawData, [ "x" => true ] ), [
+			[ "url" => "a" ],
+			[ "url" => "a" ],
+			[ "url" => "b" ],
+			[ "url" => "c" ] ] );
 	}
 
 	/**
 	 * @group UsingDB
 	 * @covers BaseRssModel::processItems
 	 */
-	public function testProcessItems()
-	{
+	public function testProcessItems() {
 		$dummy = new DummyModel();
-		$processItems = self::getFn($dummy, 'processItems');
+		$processItems = self::getFn( $dummy, 'processItems' );
 
 		$sampleItems = [
 			[
@@ -258,9 +240,9 @@ class BaseRssModelTest extends WikiaBaseTest
 			],
 		];
 
-		$processedData = $processItems($sampleItems);
-		$this->assertArrayHasKey('timestamp', $processedData['dummy_url']);
-		$this->assertLessThan($processedData['dummy_url']['timestamp'], $processedData['dummy_url2']['timestamp']);
+		$processedData = $processItems( $sampleItems );
+		$this->assertArrayHasKey( 'timestamp', $processedData[ 'dummy_url' ] );
+		$this->assertLessThan( $processedData[ 'dummy_url' ][ 'timestamp' ], $processedData[ 'dummy_url2' ][ 'timestamp' ] );
 
 		$this->assertEquals( 'd49', $processedData[ 'dummy_url' ][ 'description' ] );
 		$this->assertEquals( 'uaa', $processedData[ 'dummy_url' ][ 'img' ][ 'url' ] );
@@ -306,7 +288,7 @@ class BaseRssModelTest extends WikiaBaseTest
 				'items' => [
 					222 => [
 						'thumbnail' => null,
-						'original_dimensions' => [ 'width' => null, 'height' => null  ],
+						'original_dimensions' => [ 'width' => null, 'height' => null ],
 						'title' => 'xxx'
 					]
 				]
@@ -327,7 +309,7 @@ class BaseRssModelTest extends WikiaBaseTest
 			->disableOriginalConstructor()
 			->setMethods( [
 				'__construct', 'getFeedTitle', 'getFeedLanguage',
-				'getFeedDescription', 'loadData', 'formatTitle','getWikiService'
+				'getFeedDescription', 'loadData', 'formatTitle', 'getWikiService'
 			] )
 			->getMock();
 
