@@ -6,9 +6,10 @@ define(
 		'wikia.cache',
 		'wikia.loader',
 		'wikia.ui.factory',
-		'wikia.mustache'
+		'wikia.mustache',
+		'wikia.tracker'
 	],
-	function($, w, cache, loader, uiFactory, mustache) {
+	function($, w, cache, loader, uiFactory, mustache, tracker) {
 		'use strict';
 
 		/**
@@ -276,6 +277,23 @@ define(
 				.addClass('hidden');
 		}
 
+		/**
+		 * @desc Wrapper for our Wikia.Tracker.track method - sends to GA tracking info
+		 *
+		 * @param {string} action one of Wikia.Tracker.ACTIONS
+		 * @param {string} label
+		 * @param {integer} value
+		 */
+		function track(action, label, value) {
+			tracker.track({
+				trackingMethod: 'ga',
+				category: 'map',
+				action: action,
+				label: label,
+				value: value
+			});
+		}
+
 		return {
 			loadModal: loadModal,
 			createModal: createModal,
@@ -290,7 +308,9 @@ define(
 			refreshIfAfterForceLogin: refreshIfAfterForceLogin,
 			handleNirvanaException: handleNirvanaException,
 			showError: showError,
-			cleanUpError: cleanUpError
-		}
+			cleanUpError: cleanUpError,
+			track: track,
+			trackerActions: tracker.ACTIONS
+		};
 	}
 );
