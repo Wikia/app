@@ -56,7 +56,7 @@ define('ext.wikia.adEngine.slot.topInContentBoxad', [
 			contentFirstContentElement.style.clear = 'right';
 		}
 		if ('TABLE' === contentFirstContentElement.tagName && contentFirstContentElement.offsetWidth > 438 ) {
-			log(['doesNotBreakContent', 'no ad place found'], 'debug', logGroup);
+			log(['doesNotBreakContent', 'First element is full width table'], 'debug', logGroup);
 			result = false;
 			return result;
 		}
