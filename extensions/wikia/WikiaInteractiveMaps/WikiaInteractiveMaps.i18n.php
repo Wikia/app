@@ -3,7 +3,7 @@
 $messages = [];
 
 $messages[ 'en' ] = [
-	'wikia-interactive-maps-title' => 'Interactive Maps',
+	'wikia-interactive-maps-title' => 'Maps',
 	'wikia-interactive-maps-create-a-map' => 'Create a Map',
 	'wikia-interactive-maps-no-maps' => 'No maps found. Create new map now.',
 
@@ -28,6 +28,8 @@ $messages[ 'en' ] = [
 	'wikia-interactive-maps-parser-tag-error-min-height' => 'Wikia Interactive Maps error occurred: invalid height. Minimum supported height is $min.',
 	'wikia-interactive-maps-parser-tag-error-max-height' => 'Wikia Interactive Maps error occurred: invalid height. Maximum supported height is $max.',
 	'wikia-interactive-maps-parser-tag-error-no-map-found' => 'Wikia Interactive Maps error occurred: Map not found.',
+	'wikia-interactive-maps-parser-tag-created-by' => 'Created by $1',
+	'wikia-interactive-maps-parser-tag-view' => 'View',
 
 	'wikia-interactive-maps-map-placeholder-error' => 'Unexpected error has occurred. Please contact us if it happens again.',
 	'wikia-interactive-maps-service-error' => 'Oops, we have issues with our maps service. If it repeats [[Special:Contact|contact us]], please.',
@@ -43,18 +45,32 @@ $messages[ 'en' ] = [
 	'wikia-interactive-maps-create-map-back-btn' => 'Back',
 	'wikia-interactive-maps-create-map-choose-type-geo' => 'Real Map',
 	'wikia-interactive-maps-create-map-choose-type-custom' => 'Custom Map',
-	'wikia-interactive-maps-create-map-title-placeholder' => 'Title',
+	'wikia-interactive-maps-create-map-title-placeholder' => 'ex. Weapon Location in Skyrim',
 	'wikia-interactive-maps-create-map-browse-tile-set' => 'Browse existing tile sets',
-	'wikia-interactive-maps-create-map-add-poi-category' => 'Add Another Pin Type',
-	'wikia-interactive-maps-create-map-delete-poi-category' => 'Delete',
-	'wikia-interactive-maps-create-map-poi-category-name-placeholder' => 'Pin Type Title',
-	'wikia-interactive-maps-create-map-poi-category-select-category' => 'Parent Category',
-	'wikia-interactive-maps-create-map-poi-category-form-error' => 'Please fill all fields',
 	'wikia-interactive-maps-create-map-search-tile-set-placeholder' => 'Search',
-	'wikia-interactive-maps-create-map-upload-file' => 'Click to upload the custom template',
+	'wikia-interactive-maps-create-map-upload-file' => 'Click to upload custom template',
 	'wikia-interactive-maps-create-map-choose-tile-set-tip' => 'Select an existing map template or upload your own to get started.',
 	'wikia-interactive-maps-create-map-no-tile-set-found' => 'Sorry, no templates found.',
 	'wikia-interactive-maps-create-map-clear-tile-set-search' => 'Clear search filter',
+	'wikia-interactive-maps-create-map-choose-type-tip' => 'Get started choosing a real map (ex. NYC) or custom (ex. Westeros).',
+	'wikia-interactive-maps-create-map-choose-type-tip-link' => 'Learn more',
+	'wikia-interactive-maps-create-map-title-label' => 'Name the map',
+	'wikia-interactive-maps-create-map-tile-set-title-label' => 'Name the template',
+	'wikia-interactive-maps-create-map-tile-set-title-placeholder' => 'Name the image so others can re-use it for their Maps (ex. Westeros)',
+	'wikia-interactive-maps-create-map-tile-set-image-preview-alt' => 'Template image preview',
+	'wikia-interactive-maps-create-map-validation-error-map-title' => 'Error: Name of the map must be set',
+	'wikia-interactive-maps-create-map-validation-error-tile-set-title' => 'Error: Name of the template must be set',
+
+	'wikia-interactive-maps-poi-categories-header-create' => 'Create Pin Types',
+	'wikia-interactive-maps-poi-categories-header-edit' => 'Edit Pin Types',
+	'wikia-interactive-maps-poi-categories-add' => 'Add Another Pin Type',
+	'wikia-interactive-maps-poi-categories-delete' => 'Delete',
+	'wikia-interactive-maps-poi-categories-name-placeholder' => 'Pin Type Title',
+	'wikia-interactive-maps-poi-categories-select-category' => 'Parent Category',
+	'wikia-interactive-maps-poi-categories-form-error' => 'Please fill all fields',
+	'wikia-interactive-maps-poi-categories-creation-error' => 'Unfortunately, we could not create all pin types. Some of them might have been created, though. Check which are missing and try adding them again, please.',
+	'wikia-interactive-maps-poi-categories-save' => 'Save',
+	'wikia-interactive-maps-poi-categories-cancel' => 'Cancel',
 
 	'wikia-interactive-maps-edit-poi-header-add-poi' => 'Add Pin Point',
 	'wikia-interactive-maps-edit-poi-header-edit-poi' => 'Edit Pin Point',
@@ -67,6 +83,9 @@ $messages[ 'en' ] = [
 	'wikia-interactive-maps-edit-poi-description-placeholder' => 'Add a Description',
 	'wikia-interactive-maps-edit-poi-error-name' => 'Name must be set',
 	'wikia-interactive-maps-edit-poi-error-poi-category-id' => 'Pin type must be set',
+	'wikia-interactive-maps-embed-map-code-header' => 'Embed Map',
+	'wikia-interactive-maps-embed-map-code-info' => 'Use the embed code below to include the map on your personal site.',
+	'wikia-interactive-maps-embed-map-code-size-label' => 'Map Size',
 
 	'wikia-interactive-maps-create-map-bad-request-error' => 'Neither of required parameters was provided',
 
@@ -89,8 +108,6 @@ $messages[ 'en' ] = [
 	'wikia-interactive-maps-delete-map-client-error' => 'There was an error while deleting a map.',
 	'wikia-interactive-maps-delete-map-success' => 'Map was succesfuly deleted!',
 
-	'wikia-interactive-maps-create-poi-categories-error' => 'Unfortunately, we could not create all pin types. Some of them might have been created, though. Check which are missing and try adding them again, please.',
-
 	'wikia-interactive-maps-log-name' => 'Maps',
 	'wikia-interactive-maps-log-description' => 'This is a log of maps actions',
 	'wikia-interactive-maps-create-map-log-entry' => 'created new map [[$1]]',
@@ -105,7 +122,7 @@ $messages[ 'en' ] = [
 ];
 
 $messages[ 'qqq' ] = [
-	'wikia-interactive-maps-title' => 'Interactive maps special page title',
+	'wikia-interactive-maps-title' => 'Maps special page title',
 	'wikia-interactive-maps-create-a-map' => 'Label for create new map button',
 	'wikia-interactive-maps-no-maps' => 'Shown when there are no maps created for this wiki',
 
@@ -130,8 +147,11 @@ $messages[ 'qqq' ] = [
 	'wikia-interactive-maps-parser-tag-error-min-height' => 'Interactive maps error after try of parsing wikitext tag; value below minimum height has been passed',
 	'wikia-interactive-maps-parser-tag-error-max-height' => 'Interactive maps error after try of parsing wikitext tag; value above maximum height has been passed',
 	'wikia-interactive-maps-parser-tag-error-no-map-found' => 'Interactive maps error when map of given id doesn\'t exist',
+	'wikia-interactive-maps-parser-tag-created-by' => 'Created by message $1 - user name',
+	'wikia-interactive-maps-parser-tag-view' => 'View map button',
 
 	'wikia-interactive-maps-map-placeholder-error' => 'Interactive maps unexpected error which could happen during some rare situations such as file system dead',
+	
 	'wikia-interactive-maps-service-error' => 'An error message which appears in the creation map modal when our map service fails to create a map',
 
 	'wikia-interactive-maps-sort-newest-to-oldest' => 'Ordering option shown in drop-down menu above map lists; when chosen orders map list from newest map to oldest',
@@ -147,16 +167,30 @@ $messages[ 'qqq' ] = [
 	'wikia-interactive-maps-create-map-choose-type-custom' => 'Button for choosing custom map type',
 	'wikia-interactive-maps-create-map-title-placeholder' => 'Input placeholder for map title',
 	'wikia-interactive-maps-create-map-browse-tile-set' => 'Link to browse tile set step in create map modal',
-	'wikia-interactive-maps-create-map-add-poi-category' => 'Link for adding new blank input for Pin Type in edit/create Pin types UI',
-	'wikia-interactive-maps-create-map-delete-poi-category' => 'Link title for deleting Pin Type in edit/create Pin types UI',
-	'wikia-interactive-maps-create-map-poi-category-name-placeholder' => 'Input placeholder for pin types title',
-	'wikia-interactive-maps-create-map-poi-category-select-category' => 'Label for no category selected',
-	'wikia-interactive-maps-create-map-poi-category-form-error' => 'An error displayed to a user when pin type form is not valid',
 	'wikia-interactive-maps-create-map-search-tile-set-placeholder' => 'Input placeholder for search field for map templates',
 	'wikia-interactive-maps-create-map-upload-file' => 'Link to trigger file upload for tile set',
 	'wikia-interactive-maps-create-map-choose-tile-set-tip' => 'Tip for the user with information to select an existing map template or upload his own to get started creating a new map',
 	'wikia-interactive-maps-create-map-no-tile-set-found' => 'Error message - no map templates found',
 	'wikia-interactive-maps-create-map-clear-tile-set-search' => "Button to clear search filter for map templates and revert to initial map templates' list",
+	'wikia-interactive-maps-create-map-choose-type-tip' => 'Tool tip about choose type screen',
+	'wikia-interactive-maps-create-map-choose-type-tip-link' => 'Learn more link about choosing map type',
+	'wikia-interactive-maps-create-map-title-label' => 'Label for map title input',
+	'wikia-interactive-maps-create-map-tile-set-title-label' => 'Label for tile set title input',
+	'wikia-interactive-maps-create-map-tile-set-title-placeholder' => 'Placeholder for tile set title input',
+	'wikia-interactive-maps-create-map-tile-set-image-preview-alt' => 'Alt attribute fot template image preview',
+	'wikia-interactive-maps-create-map-validation-error-map-title' => 'Error for empty map title',
+	'wikia-interactive-maps-create-map-validation-error-tile-set-title' => 'Error for empty tile set title',
+
+	'wikia-interactive-maps-poi-categories-header-create' => 'Header for create pin types modal',
+	'wikia-interactive-maps-poi-categories-header-edit' => 'Header for edit pin types modal',
+	'wikia-interactive-maps-poi-categories-add' => 'Link for adding new blank input for Pin Type',
+	'wikia-interactive-maps-poi-categories-delete' => 'Link for deleting Pin Type',
+	'wikia-interactive-maps-poi-categories-name-placeholder' => 'Input placeholder for pin types title',
+	'wikia-interactive-maps-poi-categories-select-category' => 'Label for no category selected',
+	'wikia-interactive-maps-poi-categories-form-error' => 'An error displayed to a user when pin type form is not valid',
+	'wikia-interactive-maps-poi-categories-creation-error' => 'An error message displayed when creating pin types failed',
+	'wikia-interactive-maps-poi-categories-save' => 'Button for saving pin types',
+	'wikia-interactive-maps-poi-categories-cancel' => 'Button for closing pin types modal',
 
 	'wikia-interactive-maps-edit-poi-header-add-poi' => 'Modal header for add pin to map',
 	'wikia-interactive-maps-edit-poi-header-edit-poi' => 'Modal header for edit pin to map',
@@ -169,6 +203,10 @@ $messages[ 'qqq' ] = [
 	'wikia-interactive-maps-edit-poi-description-placeholder' => 'Textarea placeholder for pin description in edit pin modal',
 	'wikia-interactive-maps-edit-poi-error-name' => 'Error message - missing pin name in add pin UI',
 	'wikia-interactive-maps-edit-poi-error-poi-category-id' => 'Error message - pin type not set in add pin UI',
+	'wikia-interactive-maps-embed-map-code-header' => 'Embed Map modal header - the title of "window" with embed map code',
+	'wikia-interactive-maps-embed-map-code-info' => 'Information for the user to copy code below in order to embed map to personal site',
+	'wikia-interactive-maps-embed-map-code-size-label' => 'Label for embed map size buttons',
+
 
 	'wikia-interactive-maps-create-map-bad-request-error' => 'An API error message not visible for the user',
 
@@ -190,8 +228,6 @@ $messages[ 'qqq' ] = [
 	'wikia-interactive-maps-delete-map-client-cancel-button' => 'Text on a button (in modal) to cancel deleting the map',
 	'wikia-interactive-maps-delete-map-client-error' => 'Text (in modal) about error during deletion of the map',
 	'wikia-interactive-maps-delete-map-success' => 'Notification text about succesful deletion of the map',
-
-	'wikia-interactive-maps-create-poi-categories-error' => 'An error message displayed when creating pin types failed',
 
 	'wikia-interactive-maps-log-name' => 'Name for Special:Log filter',
 	'wikia-interactive-maps-log-description' => 'Description for Special:Log filter',

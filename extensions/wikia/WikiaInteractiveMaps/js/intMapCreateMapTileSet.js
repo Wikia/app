@@ -15,6 +15,8 @@ define(
 			tileSetThumbTemplate,
 			// template data
 			templateData = {
+				chooseTypeTip: $.msg('wikia-interactive-maps-create-map-choose-type-tip'),
+				chooseTypeTipLink: $.msg('wikia-interactive-maps-create-map-choose-type-tip-link'),
 				mapType: [
 					{
 						type: 'geo',
@@ -44,7 +46,7 @@ define(
 					}
 				],
 				clearSearch: [
-					clearSearchFilter
+					loadDefaultTileSets
 				],
 				selectTileSet: [
 					selectTileSet
@@ -75,10 +77,12 @@ define(
 			noTileSetMsg = $.msg('wikia-interactive-maps-create-map-no-tile-set-found'),
 			// stack for holding choose tile set steps
 			stepsStack = [],
+			cachedTileSets = {},
 			// dalay time for jQuery debounde
 			dabounceDelay = 250,
 			// minimum number of characters to trigger search request
 			searchCharLength = 2,
+			thumbSize = 116,
 			// cached selectors
 			$sections,
 			$tileSetsContainer,
@@ -182,7 +186,8 @@ define(
 
 			modal.trigger('previewTileSet', {
 				type: $target.data('type'),
-				tileSetId: $target.data('id')
+				tileSetId: $target.data('id'),
+				originalImageURL: $target.data('image')
 			});
 		}
 
@@ -216,23 +221,49 @@ define(
 		}
 		
 		/**
-		 * @desc loads tile set list
-		 * @param {string=} keyword - search term
+		 * @desc loads tile sets thumbs
+		 * @param {string=} keyWord - search term
 		 */
-		function loadTileSets(keyword) {
-			getTileSets(keyword || null, function(tileSetData) {
-				updateTileSetList(renderTileSetsListMarkup(tileSetThumbTemplate, tileSetData));
+		function loadTileSets(keyWord) {
+			getTileSets(keyWord || null, function(tileSetData) {
+				updateTileSetList(renderTileSetsListMarkup(tileSetThumbTemplate, createThumbsUrls(tileSetData)));
 			});
 		}
 
 		/**
-		 * @desc sends request to backend for tile sets
-		 * @param {string || null} searchTerm - search term, if specified loads tile set which name match this term
+		 * @desc get tile sets from cache of send requests to backend and ache the response
+		 * @param {string} keyWord - cache key
 		 * @param {function} cb - callback function
 		 */
-		function getTileSets(searchTerm, cb) {
-			modal.deactivate();
+		function getTileSets(keyWord, cb) {
+			var key = keyWord || 'default',
+				tileSets = cachedTileSets[key];
 
+			if (typeof tileSets !== 'undefined') {
+				cb(tileSets);
+			} else {
+				requestTileSets(keyWord, function(tileSets) {
+					cacheTileSets(key, tileSets);
+					cb(tileSets);
+				});
+			}
+		}
+
+		/**
+		 * @desc add tile sets to cache object
+		 * @param {string} key - key in cache object
+		 * @param {array} tileSets - tile sets array
+		 */
+		function cacheTileSets(key, tileSets) {
+			cachedTileSets[key] = tileSets;
+		}
+
+		/**
+		 * @desc sends request to backend for tile sets
+		 * @param {string} searchTerm - search keyword
+		 * @param {function} cb - callback function
+		 */
+		function requestTileSets(searchTerm, cb) {
 			$.nirvana.sendRequest({
 				controller: 'WikiaInteractiveMapsMap',
 				method: 'getTileSets',
@@ -251,10 +282,23 @@ define(
 					modal.activate();
 				},
 				onErrorCallback: function(response) {
-					modal.trigger('error', response.results.content.message);
 					modal.activate();
+					utils.handleNirvanaException(modal, response);
 				}
 			});
+		}
+
+		/**
+		 * @desc change image urls for each tile set to thumb url
+		 * @param {array} tileSets
+		 * @returns {array} - tileSets
+		 */
+		function createThumbsUrls(tileSets) {
+			tileSets.forEach(function(element) {
+				element.tileSetThumb = utils.createThumbURL(element.image, thumbSize, thumbSize);
+			});
+
+			return tileSets;
 		}
 
 		/**
@@ -306,3 +350,4 @@ define(
 		};
 	}
 );
+

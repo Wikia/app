@@ -1,6 +1,6 @@
 <?php
 
-class WikiaMaps {
+class WikiaMaps extends WikiaObject {
 
 	const DEFAULT_MEMCACHE_EXPIRE_TIME = 3600;
 	const ENTRY_POINT_MAP = 'map';
@@ -24,6 +24,14 @@ class WikiaMaps {
 	const HTTP_UPDATED = 303;
 	const HTTP_NO_CONTENT = 204;
 
+
+	/**
+	 * Controls the request caching
+	 *
+	 * @todo Enable caching if needed and when proper cache purging is implemented
+	 */
+	const ENABLE_REQUEST_CACHING = false;
+
 	/**
 	 * @var array API connection config
 	 */
@@ -39,6 +47,7 @@ class WikiaMaps {
 	];
 
 	public function __construct( $config ) {
+		parent::__construct();
 		$this->config = $config;
 	}
 
@@ -72,10 +81,13 @@ class WikiaMaps {
 	 * @return Mixed|null
 	 */
 	public function cachedRequest( $method, Array $params, $expireTime = self::DEFAULT_MEMCACHE_EXPIRE_TIME ) {
-		$memCacheKey = wfMemcKey( __CLASS__, __METHOD__, json_encode( $params ) );
-		return WikiaDataAccess::cache( $memCacheKey, $expireTime, function () use ( $method, $params ) {
-			return $this->{ $method }( $params );
-		} );
+		if ( self::ENABLE_REQUEST_CACHING ) {
+			$memCacheKey = wfMemcKey( __CLASS__, __METHOD__, json_encode( $params ) );
+			return WikiaDataAccess::cache( $memCacheKey, $expireTime, function () use ( $method, $params ) {
+				return $this->{ $method }( $params );
+			} );
+		}
+		return $this->{ $method }( $params );
 	}
 
 	/**
@@ -189,16 +201,16 @@ class WikiaMaps {
 	}
 
 	/**
-	 * Returns render empty point for map
+	 * Returns render empty point for map (adds the language for each request)
 	 *
-	 * @param Array $params the first element is required and it should be concatenated {mapId}/{zoom}/{lat}/{lon}
-	 *                      rest of the array elements will get added as URI parameters after ? sign
-	 *
-	 * @return string
+	 * @param array $segments URL segments
+	 * @param array $params Additional get params
+	 * @return string URL
 	 */
-	public function getMapRenderUrl( Array $params ) {
-		$entryPointParams = array_shift( $params );
-		return $this->buildUrl( self::ENTRY_POINT_RENDER . '/' . $entryPointParams, $params );
+	public function getMapRenderUrl( Array $segments, Array $params = []) {
+		array_unshift( $segments, self::ENTRY_POINT_RENDER );
+		$params[ 'uselang' ] = $this->wg->lang->getCode();
+		return $this->buildUrl( $segments, $params );
 	}
 
 	/**
@@ -330,6 +342,34 @@ class WikiaMaps {
 		return $this->postRequest(
 			$this->buildUrl( [ self::ENTRY_POINT_POI_CATEGORY ] ),
 			$poiCategoryData
+		);
+	}
+
+	/**
+	 * Sends a request to IntMap Service API to update a POI category with given parameters
+	 *
+	 * @param Integer $poiCategoryId
+	 * @param Array $poiCategoryData array with required parameters to service API
+	 *
+	 * @return Array
+	 */
+	public function updatePoiCategory( $poiCategoryId, $poiCategoryData ) {
+		return $this->putRequest(
+			$this->buildUrl( [ self::ENTRY_POINT_POI_CATEGORY, $poiCategoryId ] ),
+			$poiCategoryData
+		);
+	}
+
+	/**
+	 * Sends a request to IntMap Service API to delete a POI category
+	 *
+	 * @param Integer $poiCategoryId
+	 *
+	 * @return Array
+	 */
+	public function deletePoiCategory( $poiCategoryId ) {
+		$this->deleteRequest(
+			$this->buildUrl( [ self::ENTRY_POINT_POI_CATEGORY, $poiCategoryId ] )
 		);
 	}
 

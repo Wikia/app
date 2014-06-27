@@ -1,20 +1,21 @@
 @import "skins/oasis/css/core/color";
 @import "skins/oasis/css/core/responsive-variables";
 
-.intMapModal {
-	.hidden {
-		display: none !important;
-	}
+$color-code-bg: mix($color-page, #000000, 95%);
+@if $is-dark-wiki {
+	$color-code-bg: mix($color-page, #ffffff, 95%);
+}
 
-	.map-modal-error {
-		margin-bottom: 20px;
-	}
-
+.int-map-modal {
 	.WikiaForm .input-group {
 		float: none;
 		padding-left: 0;
 		padding-right: 0;
 		width: 100%;
+
+		label {
+			font-weight: bold;
+		}
 
 		input,
 		select,
@@ -34,6 +35,28 @@
 		}
 	}
 
+	.tile-set-type {
+		box-sizing: border-box;
+		float: left;
+		font-weight: bold;
+		padding-bottom: 10px;
+		text-align: center;
+		width: 50%;
+
+		&:first-of-type {
+			border-right: 1px solid $color-page-border-subtle;
+		}
+
+		a {
+			background-position: 50% top;
+			background-repeat: no-repeat;
+			background-size: 150px;
+			display: inline-block;
+			min-width: 130px;
+			padding-top: 160px;
+		}
+	}
+
 	.int-map-browse-tile-set {
 		ul {
 			clear: both;
@@ -49,13 +72,7 @@
 			float: left;
 			padding: 10px;
 			width: 20%;
-
-			@media screen and (max-width: $breakpoint-min) {
-				width: 25%;
-			}
 		}
-
-
 	}
 
 	.upload-link {
@@ -63,7 +80,12 @@
 		box-sizing: border-box;
 		display: block;
 		height: 116px;
-		padding: 60px 10px 10px;
+		padding: 10px;
+
+		span {
+			display: inline-block;
+			padding-top: 5px;
+		}
 	}
 
 	.tip {
@@ -72,8 +94,7 @@
 
 	.clear-search {
 		float: right;
-		margin-right: 10px;
-		margin-top: 7px;
+		margin: 7px 10px 0 0;
 	}
 
 	.tile-set-thumb {
@@ -96,5 +117,50 @@
 			font-weight: normal;
 			padding-top: 5px;
 		}
+	}
+
+	code {
+		background-color: $color-code-bg;
+		border: 1px solid $color-page-border;
+		display: block;
+		margin-bottom: 20px;
+		padding: 20px;
+	}
+
+	strong {
+		font-weight: bold;
+	}
+
+	button {
+		outline: none;
+	}
+
+	svg {
+		display: block;
+		margin: 0 auto;
+	}
+
+	path {
+		fill: $color-links;
+	}
+
+	line {
+		stroke: $color-links;
+	}
+
+	.hidden {
+		display: none !important;
+	}
+
+	.map-modal-error {
+		margin-bottom: 20px;
+	}
+
+	.size-button {
+		margin-left: 10px;
+	}
+
+	.user-guideline {
+		margin-bottom: 20px;
 	}
 }
