@@ -91,8 +91,7 @@ define(
 			$uploadInput,
 			$clearSearchBtn,
 			$searchInput;
-			$browse,
-			mapTypeHasBeenChosenAlready;
+			$browse;
 
 		/**
 		 * @desc initializes and configures UI
@@ -104,7 +103,6 @@ define(
 			modal = _modal;
 			uiTemplate = _uiTemplate;
 			tileSetThumbTemplate = _tileSetThumbTemplate;
-			mapTypeHasBeenChosenAlready = false;
 
 			utils.bindEvents(modal, events);
 
@@ -381,10 +379,7 @@ define(
 					break;
 			}
 
-			if( !mapTypeHasBeenChosenAlready ) {
-				mapTypeHasBeenChosenAlready = true;
-				utils.track(utils.trackerActions.CLICK_LINK_IMAGE, label);
-			}
+			utils.track(utils.trackerActions.CLICK_LINK_IMAGE, label);
 		}
 
 		return {
