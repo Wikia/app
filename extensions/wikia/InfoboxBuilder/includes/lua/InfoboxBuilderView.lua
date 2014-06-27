@@ -1,7 +1,7 @@
 local InfoboxBuilderView = {}
 
 -- Define dependencies
-local HF = mw.InfoboxBuilder.HF
+local HF = mw.InfoboxBuilderHF
 
 InfoboxBuilderView.vars = {}
 
@@ -220,8 +220,8 @@ mw_interface = nil
 
 -- Register module as "mw.InfoboxBuilder.View" global
 mw = mw or {}
-mw.InfoboxBuilder.View = InfoboxBuilderView
+mw.InfoboxBuilderView = InfoboxBuilderView
 
-package.loaded['mw.InfoboxBuilder.View'] = InfoboxBuilderView
+package.loaded['mw.InfoboxBuilderView'] = InfoboxBuilderView
 
 return InfoboxBuilderView

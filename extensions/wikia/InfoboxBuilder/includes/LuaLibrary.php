@@ -19,8 +19,8 @@ class LuaLibrary extends Scribunto_LuaLibraryBase {
 	
 	public function register()
 	{
-		$this->getEngine()->registerInterface( __DIR__ . '/lua/InfoboxBuilder.lua', array(), array() );
-		$this->getEngine()->registerInterface( __DIR__ . '/lua/InfoboxBuilderView.lua', array(), array() );
 		$this->getEngine()->registerInterface( __DIR__ . '/lua/InfoboxBuilderHF.lua', array(), array() );
+		$this->getEngine()->registerInterface( __DIR__ . '/lua/InfoboxBuilderView.lua', array(), array() );
+		$this->getEngine()->registerInterface( __DIR__ . '/lua/InfoboxBuilder.lua', array(), array() );
 	}
 }

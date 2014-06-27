@@ -1,8 +1,8 @@
 local InfoboxBuilder = {}
 
 -- Define dependecies
-local View = mw.InfoboxBuilder.View
-local HF   = mw.InfoboxBuilder.HF
+local View = mw.InfoboxBuilderView
+local HF   = mw.InfoboxBuilderHF
 
 -- Define var for custom user's module
 local CM = {}

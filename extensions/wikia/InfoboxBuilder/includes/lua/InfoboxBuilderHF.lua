@@ -122,8 +122,8 @@ mw_interface = nil
 
 -- Register module as "mw.InfoboxBuilder.HF" global
 mw = mw or {}
-mw.InfoboxBuilder.HF = InfoboxBuilderView
+mw.InfoboxBuilderHF = HF
 
-package.loaded['mw.InfoboxBuilder.HF'] = InfoboxBuilderView
+package.loaded['mw.InfoboxBuilderHF'] = HF
 
 return HF
