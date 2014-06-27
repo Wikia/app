@@ -1,0 +1,103 @@
+Capiunto provides flexible Infobox functionality for Scribunto.
+
+With Capiunto Lua code to create a basic Infobox might look like this:
+<source lang="lua">
+mw.capiunto.Infobox.create( {
+	title = 'Title of the Infobox'
+} )
+:addRow( 'A label', 'some data' )
+:addHeader( 'A header between the data rows' )
+:addRow( 'Another label', 'more data' )
+</source>
+
+After creating an Infobox using the [[#mw.capiunto.Infobox.create|create]] method, content can be added in the order it will appear on the page using the various add* functions explained below. Calls
+
+To convert the Infobox metatable to html either call [[#mw.capiunto.Infobox:getHtml|infobox:getHtml]] (which will return a mw.html instance with the infobox) or Lua's tostring() can be used. Also just returning the Infobox metatable is ok as Scribunto will automatically convert it to a string in order to display it on the wiki page.
+
+Functions documented as <code>mw.capiunto.Infobox.name</code> are available on the global <code>mw.capiunto.Infobox</code> table; functions documented as <code>mw.capiunto.Infobox:name</code> are methods of an mw.capiunto.Infobox object (see [[#mw.capiunto.Infobox.create|<code>mw.capiunto.Infobox.create</code>]]).
+
+== mw.capiunto.Infobox.create ==
+<code>mw.capiunto.Infobox.create( options )</code>
+
+Creates a new Infobox object, with the given <code>options</code>. Supported <code>options</code> are:
+
+*<code>options.isChild</code>: If set the Infobox will be made embeddable into another Infobox (it eg. wont have an own border).
+*<code>options.isSubbox</code>: If set the Infobox will also be made embeddable into another Infobox, but preserve an own border.
+
+=== Options for an Infobox title ===
+*<code>options.title</code>: Text to put in the caption above the table (or as as section header before the whole content of this table, if this is a child Infobox marked with <code>options.isChild</code>).
+*<code>options.titleClass</code>: This parameter is inserted into the class attribute for the Infobox's <code>options.title</code> caption.
+*<code>options.titleStyle</code>: Applies only to the <code>options.title</code> caption. Adding a background color is usually inadvisable since the text is rendered "outside" the Infobox.
+
+=== Options regarding text above the Infobox ===
+*<code>options.top</code>: Text to put within the topmost cell of the table (default font size is 125%).
+*<code>options.topClass</code>: This parameter is inserted into the class attribute for the Infobox's <code>options.top</code> cell.
+*<code>options.topStyle</code>: Applies only to the <code>options.top</code> cell at the top of the Infobox. The default style has font-size:125%; since this cell is usually used for a title.
+
+=== Options specific to images ===
+*<code>options.captionStyle</code>: Style which applies to the text of image captions.
+*<code>options.imageStyle</code>: Applies to the cells the images are in. This includes the text of the image caption, but for captions, you should set properties instead with <code>options.captionStyle</code> instead
+*<code>options.imageClass</code>: This parameter is inserted into the class attribute of all cells wrapping images.
+
+=== Options regarding text below the Infobox ===
+*<code>options.bottom</code>: Text to placed in the bottom cell, this could be used for footnotes, see-also, and other such information.
+*<code>options.bottomClass</code>: This parameter is inserted into the class attribute for the Infobox's <code>options.bottom</code> cell.
+*<code>options.bottomStyle</code>: Applies only to the <code>options.bottom</code> cell at the bottom of the Infobox.
+
+=== Options regarding data styling ===
+*<code>options.bodyClass</code>: This parameter is inserted into the class attribute for the Infobox as a whole.
+*<code>options.bodyStyle</code>: Applies to the Infobox table as a whole.
+*<code>options.headerStyle</code>: Applies to all header cells.
+*<code>options.labelStyle</code>: Applies to all label cells.
+*<code>options.dataStyle</code>: Applies to all data cells.
+
+== mw.capiunto.Infobox:getHtml ==
+<code>infobox:getHtml()</code><br>
+
+Returns a mw.html object holding the html the Infobox consists of. This can easily be converted into a string using tostring().
+
+Example:
+<source lang="lua">
+local infobx = mw.capiunto.Infobox.create( {
+	-- ...
+} )
+local html = tostring( infobox:getHtml() )
+</source>
+
+== mw.capiunto.Infobox:addSubHeader ==
+<code>infobox:addSubHeader( text )</code><br>
+<code>infobox:addSubHeader( text, class )</code><br>
+<code>infobox:addSubHeader( text, class, style )</code><br>
+
+Adds a subheader, which will show at the top of the infobox, below the title and top text, with the given <code>text</code> to the Infobox. Optionally it's possible to pass raw CSS in the <code>style</code> parameter and a CSS class in the <code>class</code> one.
+
+== mw.capiunto.Infobox:addImage ==
+<code>infobox:addImage( image )</code><br>
+<code>infobox:addImage( image, caption )</code><br>
+<code>infobox:addImage( image, caption, class )</code><br>
+
+Adds an <code>image</code> (passed as wikitext like <nowiki>[[File:Foo.png]]</nowiki>) to the Infobox. Optionally a <code>caption</code> can be added after the image. Also a CSS <code>class</code> can be passed which will be added to the table row wrapping the image.
+
+== mw.capiunto.Infobox:addRow ==
+<code>infobox:addRow( label, data )</code><br>
+<code>infobox:addRow( label, data, class )</code><br>
+<code>infobox:addRow( label, data, class, rowClass )</code><br>
+
+Adds a data row to the Infobox with the given <code>label</code> (can also be left empty) and <code>data</code>. Optionally a <code>rowClass</code> which will apply to the whole table row and a <code>class</code> which will only apply to data can be added.
+
+Please note that the rows added with this function, [[#mw.capiunto.Infobox:addWikitext|<code>mw.capiunto.Infobox:addWikitext</code>]] and [[#mw.capiunto.Infobox:addHeader|<code>mw.capiunto.Infobox:addHeader</code>]] will be rendered in the order they have been added to the Infobox.
+
+== mw.capiunto.Infobox:addHeader ==
+<code>infobox:addHeader( header )</code><br>
+<code>infobox:addHeader( header, class )</code><br>
+
+Adds a header row to the Infobox with the given text (<code>header</code>). Optionally a <code>class</code> which will apply to header can be added.
+
+Please note that the rows added with this function, [[#mw.capiunto.Infobox:addWikitext|<code>mw.capiunto.Infobox:addWikitext</code>]] and [[#mw.capiunto.Infobox:addRow|<code>mw.capiunto.Infobox:addRow</code>]] will be rendered in the order they have been added to the Infobox.
+
+== mw.capiunto.Infobox:addWikitext ==
+<code>infobox:addWikitext( text )</code><br>
+
+Adds arbitrary wikitext to the Infobox. This can eg. be a child <code>mw.capiunto.Infobox</code> instance which has been casted to string by using Lua's <code>tostring()</code>.
+
+Please note that the rows added with this function, [[#mw.capiunto.Infobox:addHeader|<code>mw.capiunto.Infobox:addHeader</code>]] and [[#mw.capiunto.Infobox:addRow|<code>mw.capiunto.Infobox:addRow</code>]] will be rendered in the order they have been added to the Infobox.

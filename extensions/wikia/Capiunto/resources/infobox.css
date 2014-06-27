@@ -1,0 +1,38 @@
+/**
+ * Infobox main CSS 
+ */
+.mw-capiunto-infobox {
+    border: 1px solid #aaa;
+    background-color: #f9f9f9;
+    color: black;
+    /* @noflip */
+    margin: 0.5em 0 0.5em 1em;
+    padding: 0.2em;
+    /* @noflip */
+    float: right;
+    /* @noflip */
+    clear: right;
+    /* @noflip */
+    text-align: left;
+    font-size: 88%;
+    line-height: 1.5em;
+}
+.mw-capiunto-infobox-subbox {
+	padding: 0;
+	border:none;
+	margin: -3px;
+	width: auto;
+	min-width: 100%;
+	font-size: 100%;
+	clear: none;
+	float: none;
+	background-color: transparent;
+}
+.mw-capiunto-infobox caption {
+    font-size: 125%;
+    font-weight: bold;
+}
+.mw-capiunto-infobox td,
+.mw-capiunto-infobox th {
+    vertical-align: top;
+}
