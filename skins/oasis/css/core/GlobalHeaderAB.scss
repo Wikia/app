@@ -26,7 +26,7 @@ $facebook-background-color: #3c5b9b;
 
 	.page-width-container {
 		margin: 0 auto;
-		padding-right: 112px;
+		padding-right: 114px;
 		width: 1156px;
 	}
 
@@ -210,18 +210,43 @@ $facebook-background-color: #3c5b9b;
 			&:hover {
 				background: none;
 				background-color: $menu-hover-bg-color;
+				.bubbles.reddot {
+					background-color: $menu-hover-bg-color;
+				}
 			}
 
 			> a {
 				border: 0;
 				display: block;
 				padding: 15px 23px 15px 39px;
+				.bubbles.reddot {
+					background-color: #fff;
+					border-radius: 9px;
+					height: 18px;
+					width: 19px;
+					left: 32px;
+					position: absolute;
+					top: 16px;
+					#bubbles_count {
+						background: red;
+						border-radius: 8px;
+						float: none;
+						font-size: 12px;
+						line-height: 14px;
+						left: 2px;
+						padding: 0px 4px 0px 4px;
+						position: relative;
+						text-align: center;
+						top: -3px;
+					}
+				}
 			}
 
 			.chevron {
-				position: static;
+				border-width: 5px;
 				border-top-color: $new-border-color;
 				margin-top: 14px;
+				position: static;
 			}
 
 			&:hover .chevron {
@@ -430,9 +455,9 @@ $facebook-background-color: #3c5b9b;
 				left: -329px;
 				top: 0px;
 			}
-			background-color: #fff;
-			li:first-child,
-			li:nth-child(2) {
+			background-color: $nav-background-color;
+			> li:first-child,
+			> li:nth-child(2) {
 				border: none;
 			}
 			li {
@@ -446,39 +471,40 @@ $facebook-background-color: #3c5b9b;
 				display: none;
 			}
 			.notifications-header {
-				background-color: #092140;
-				padding: 23px 20xp 17px;
+				background-color: $nav-font-color;
+				padding: 23px 20px 17px;
 				&:hover {
-					background-color: #092140 !important;
+					background-color: $nav-font-color !important;
 				}
 				span {
 					background-color: inherit;
-					color: #fff;
+					color: $nav-background-color;
 					font-size: 15px;
 					line-height: 1;
 					padding: 0;
 				}
 				#wall-notifications-markasread {
+					right: 14px;
 					top: 23px;
 				}
 				#wall-notifications-markasread-sub {
-					color: #fff;
+					color: $nav-background-color;
 				}
 				#wall-notifications-markasread-this-wiki {
-					color: #c7d1d8;
+					color: $new-border-color;
 					font-size: 15px;
 				}
 			}
 
 			.notifications-for-wiki.show {
 				.notifications-wiki-header {
-					background-image: url(/skins/oasis/images/GlobalNavigation/chevron_up.png);
+					background-image: url(/skins/oasis/images/GlobalNavigation/chevron_up.png); /* $wgCdnStylePath */
 				}
 			}
 
 			.notifications-wiki-header {
-				background: #e2e6e9 no-repeat url(/skins/oasis/images/GlobalNavigation/chevron_down.png) 394px 50%;
-				color: #0a5fa3;
+				background: #e2e6e9 no-repeat url(/skins/oasis/images/GlobalNavigation/chevron_down.png) 394px 50%; /* $wgCdnStylePath */
+				color: $dropdown-font-color;
 				font-weight: bold;
 				padding: 20px;
 				.chevron {
@@ -494,21 +520,21 @@ $facebook-background-color: #3c5b9b;
 				background-color: #f4f6f7;
 				display: block;
 				&:hover {
-					background-color: #f4f6f7 !important;
+					background-color: $nav-background-color !important;
 				}
 
 				.msg-title {
-					color: #092140;
+					color: $nav-font-color;
 					font-size: 15px;
 					width: auto;
 				}
 				.msg-body {
-					color: #092140;
+					color: $nav-font-color;
 					font-size: 15px;
 					width: auto;
 				}
 				.timeago {
-					color: #c7d1d8;
+					color: $new-border-color;
 					font-size: 12px;
 					width: auto;
 				}
