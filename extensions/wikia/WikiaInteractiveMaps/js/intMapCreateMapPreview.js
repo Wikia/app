@@ -216,11 +216,11 @@ define(
 		 * @param {object} tileSetData
 		 */
 		function trackMapCreation(tileSetData) {
-			if (tileSetData.type === 'geo') {
+			if (tileSetData.type === utils.tilesetTypes.REAL) {
 				utils.track(utils.trackerActions.IMPRESSION, 'real-map-created');
 			}
 
-			if (tileSetData.type === 'custom' && tileSetData.tileSetId) {
+			if (tileSetData.type === utils.tilesetsTypes.CUSTOM && tileSetData.tileSetId) {
 				utils.track(utils.trackerActions.IMPRESSION, 'custom-map-created', tileSetData.tileSetId);
 			} else if (tileSetData.type === 'custom' && !tileSetData.tileSetId) {
 				utils.track(utils.trackerActions.IMPRESSION, 'custom-map-created-with-new-tileset');

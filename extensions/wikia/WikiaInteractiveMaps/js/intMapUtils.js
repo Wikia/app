@@ -338,7 +338,11 @@ define(
 			cleanUpError: cleanUpError,
 			createThumbURL: createThumbURL
 			track: track,
-			trackerActions: tracker.ACTIONS
+			trackerActions: tracker.ACTIONS,
+			tilesetTypes: {
+				REAL: 'geo',
+				CUSTOM: 'custom'
+			}
 		};
 	}
 );

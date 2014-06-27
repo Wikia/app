@@ -373,10 +373,10 @@ define(
 			var label = '';
 
 			switch(type) {
-				case 'geo':
+				case utils.tilesetTypes.REAL:
 					label = 'real-map-chosen';
 					break;
-				case 'custom':
+				case utils.tilesetTypes.CUSTOM:
 					label = 'custom-map-chosen';
 					break;
 			}
