@@ -40,6 +40,8 @@ define(
 			},
 			// tile set data for map creation
 			tileSetData,
+			// preview Thumb width
+			thumbWidth = 660,
 			// selector for title inputs
 			$textFields,
 
@@ -81,11 +83,18 @@ define(
 		 */
 
 		function preview(tileSet) {
+			var originalImageURL = tileSet.originalImageURL;
+
 			modal.trigger('cleanUpError');
 
 			tileSetData = tileSet;
 			// set type param for mustache template
 			tileSetData[tileSet.type] = true;
+
+			if(originalImageURL) {
+				tileSetData.originalImageURL = utils.createThumbURL(originalImageURL, thumbWidth);
+			}
+
 			templateData.tileSetData = tileSetData;
 			modal.$innerContent.html(utils.render(template, templateData));
 			utils.setButtons(modal, buttons);

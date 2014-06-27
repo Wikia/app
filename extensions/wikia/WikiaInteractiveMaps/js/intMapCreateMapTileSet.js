@@ -71,13 +71,18 @@ define(
 					buttons: {
 						'#intMapBack': 'previousStep'
 					},
-					helper: loadTileSetsList
+					helper: loadTileSets
 				}
 			},
 			noTileSetMsg = $.msg('wikia-interactive-maps-create-map-no-tile-set-found'),
 			// stack for holding choose tile set steps
 			stepsStack = [],
 			cachedTileSets = {},
+			// dalay time for jQuery debounde
+			dabounceDelay = 250,
+			// minimum number of characters to trigger search request
+			searchCharLength = 2,
+			thumbSize = 116,
 			// cached selectors
 			$sections,
 			$tileSetsContainer,
@@ -106,7 +111,7 @@ define(
 				.on('change', '#intMapUpload', function(event) {
 					uploadNewTileSetImage(event.target.parentNode);
 				})
-				.on('keyup', '#intMapTileSetSearch', $.debounce(250, searchForTileSets));
+				.on('keyup', '#intMapTileSetSearch', $.debounce(dabounceDelay, searchForTileSets));
 
 		}
 
@@ -193,8 +198,8 @@ define(
 		function searchForTileSets(event) {
 			var trimmedKeyword = event.target.value.trim();
 
-			if (trimmedKeyword.length >= 2) {
-				loadTileSetsList(trimmedKeyword);
+			if (trimmedKeyword.length >= searchCharLength) {
+				loadTileSets(trimmedKeyword);
 				$clearSearchBtn.removeClass('hidden');
 			}
 		}
@@ -207,37 +212,35 @@ define(
 			$searchInput.val('');
 
 			// load initial set of tile sets without keyword filter
-			loadTileSetsList();
+			loadTileSets();
 		}
 		/**
 		 * @desc loads tile sets thumbs
 		 * @param {string=} keyWord - search term
 		 */
-		function loadTileSetsList(keyWord) {
-			getTileSets(keyWord).done(function(tileSetData) {
-				updateTileSetList(renderTileSetsListMarkup(tileSetThumbTemplate, tileSetData));
+		function loadTileSets(keyWord) {
+			getTileSets(keyWord || null, function(tileSetData) {
+				updateTileSetList(renderTileSetsListMarkup(tileSetThumbTemplate, createThumbsUrls(tileSetData)));
 			});
 		}
 
 		/**
 		 * @desc get tile sets from cache of send requests to backend and ache the response
-		 * @param {string=} keyWord - cache key
+		 * @param {string} keyWord - cache key
+		 * @param {function} cb - callback function
 		 */
-		function getTileSets(keyWord) {
-			var deferred = new $.Deferred(),
-				key = keyWord || 'default',
+		function getTileSets(keyWord, cb) {
+			var key = keyWord || 'default',
 				tileSets = cachedTileSets[key];
 
 			if (typeof tileSets !== 'undefined') {
-				deferred.resolve(tileSets);
+				cb(tileSets);
 			} else {
 				requestTileSets(keyWord, function(tileSets) {
 					cacheTileSets(key, tileSets);
-					deferred.resolve(tileSets);
+					cb(tileSets);
 				});
 			}
-
-			return deferred.promise();
 		}
 
 		/**
@@ -274,6 +277,19 @@ define(
 					utils.handleNirvanaException(modal, response);
 				}
 			});
+		}
+
+		/**
+		 * @desc change image urls for each tile set to thumb url
+		 * @param {array} tileSets
+		 * @returns {array} - tileSets
+		 */
+		function createThumbsUrls(tileSets) {
+			tileSets.forEach(function(element) {
+				element.tileSetThumb = utils.createThumbURL(element.image, thumbSize, thumbSize);
+			});
+
+			return tileSets;
 		}
 
 		/**
