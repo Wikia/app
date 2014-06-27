@@ -89,38 +89,8 @@ class WikiaInteractiveMapsParserTagControllerTest extends WikiaBaseTest {
 				false
 			],
 			[
-				'Valid width parameter',
-				[ 'id' => 1, 'zoom' => 100 ],
-				true
-			],
-			[
-				'Valid width parameter',
-				[ 'id' => 1, 'zoom' => '100' ],
-				true
-			],
-			[
-				'Invalid width parameter',
-				[ 'id' => 1, 'width' => 0 ],
-				false
-			],
-			[
-				'Invalid width parameter',
-				[ 'id' => 1, 'width' => '100px' ],
-				false
-			],
-			[
-				'Invalid width parameter',
-				[ 'id' => 1, 'width' => '-200' ],
-				false
-			],
-			[
-				'Invalid width parameter',
-				[ 'id' => 1, 'width' => 'abc' ],
-				false
-			],
-			[
 				'Invalid first parameter but valid second one',
-				[ 'id' => 'abc', 'width' => '100' ],
+				[ 'id' => 'abc', 'lat' => '100' ],
 				false
 			],
 		];
