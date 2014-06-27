@@ -650,9 +650,9 @@ class WikiaHomePageController extends WikiaController {
 	public function getMarketingImage( $imgName ) {
 		$imageUrl = '';
 
-		$title = GlobalTitle::newFromText( $imgName, NS_FILE, self::CORP_CITY_ID );
+		$title = Title::newFromText( $imgName, NS_FILE );
 		if ( $title !== null ) {
-			$file = new GlobalFile( $title );
+			$file = wfFindFile( $title );
 			if ( $file !== null ) {
 				$imageUrl = $file->getUrl();
 			}

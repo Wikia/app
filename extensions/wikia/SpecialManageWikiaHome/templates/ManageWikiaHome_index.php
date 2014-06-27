@@ -53,7 +53,7 @@
 						<?= $hubsForm->renderField('marketing_slot_image', $i); ?>
 						<div class="image-placeholder">
 						<? if(isset($marketingImages[$i])): ?>
-							<img src="<?= $marketingImages['marketing_slot_image_url'][$i] ?>"/>
+							<img src="<?= $marketingImages[$i] ?>"/>
 						<? endif ?>
 						</div>
 						<input type="button" class="wmu-show" value="<?= wfMessage('wikia-hubs-add-file-button')->text() ?>" />

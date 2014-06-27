@@ -364,6 +364,7 @@ $(function () {
 						imagePlaceholder = box.find('.image-placeholder');
 						imagePlaceholder.find('img').remove();
 						imagePlaceholder.append(tempImg);
+						$('.error-msg', box).html('');
 						box.find('.wmu-file-name-input:first').val(fileName);
 					}, this)
 				});

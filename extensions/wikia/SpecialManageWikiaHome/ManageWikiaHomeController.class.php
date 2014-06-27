@@ -151,7 +151,12 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 						'hub_slot' => $hubSavedSlotsValues,
 						'marketing_slot' => $marketingSavedSlotsValues
 					];
-					$status = $this->helper->saveHubSlotsToWF($savedSlotsValues, $this->corpWikiId, $this->visualizationLang);
+					$status = $this->helper->saveHubSlotsToWF(
+						$savedSlotsValues,
+						$this->corpWikiId,
+						$this->visualizationLang,
+						'wgWikiaHomePageHubsSlotsV2'
+					);
 					if ( $status ) {
 						$this->infoMsg = wfMessage('manage-wikia-home-hubs-slot-success')->text();
 					} else {
