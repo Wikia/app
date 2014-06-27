@@ -3,15 +3,134 @@ window.removedFromHoverMenu = false;
 $(function(){
 	'use strict';
 
-	var $accountNavigation = $( '#AccountNavigation' ),
+	var $ = jQuery,
+		$accountNavigation = $( '#AccountNavigation' ),
 		$avatar = $accountNavigation.find( 'li:first .avatar' ),
 		avatarSize = 36,
 		$loginDropdown = $accountNavigation.find( '#UserLoginDropdown'),
 		$accountNavsubnav = $accountNavigation.find('.subnav'),
-		$bubblesNotifications,
-		$bubblesNavigation,
 		$wallNotifications,
-		$notifications;
+		$notifications,
+		searchLocalText = 'This wikia',
+		searchGlobalText = 'All of Wikia',
+
+		// building search
+
+		$globalSearch = $( '<li>' ).addClass( 'global-search' ),
+		localSearchUrl = $( '.WikiaSearch:first' ).attr( 'action' ),
+		$form = $( '<form>' )
+			.addClass( 'search-form' )
+			.attr( 'method', 'get' )
+			.attr( 'action', localSearchUrl )
+			.submit( function() {
+				var formAction = {
+						'local': localSearchUrl,
+						'global': window.wgGlobalSearchUrl
+					};
+				$( this ).attr( 'action', formAction[ $( this ).find( 'select' ).val() ] );
+				// Optimizely event tracking
+				if ( $(this).attr('action').indexOf('www.wikia.com') !== -1 ) {
+					window.optimizely.push(['trackEvent', 'global_search_submits']);
+				} else {
+					window.optimizely.push(['trackEvent', 'local_search_submits']);
+				}
+			} ),
+		$selectWrapper = $( '<div>' )
+			.addClass( 'search-select-wrapper' ),
+		$selectChevron = $( '<svg width="10" height="5" class="light search-chevron" xmlns="http://www.w3.org/2000/svg"><polygon points="10,0 5,5 0,0" /></svg>' )
+			.appendTo( $selectWrapper ),
+		$select = $( '<select>' )
+			.attr( 'id', 'search-select' )
+			.addClass( 'cursor-pointer' );
+
+	$( '<option>' )
+		.val( 'local' )
+		.text( searchLocalText )
+		.attr( 'selected', 'selected' )
+		.appendTo( $select );
+
+	$( '<option>' )
+		.val( 'global' )
+		.text( searchGlobalText )
+		.appendTo( $select );
+
+	$select.appendTo( $selectWrapper );
+
+	$( '<svg width="18" height="18" class="dark" xmlns="http://www.w3.org/2000/svg"><path transform="scale(1.2)" stroke-linejoin="null" stroke-linecap="null" d="m14.8613,12.88892l-3.984008,-3.983988c0.536782,-0.885019 0.851497,-1.920426 0.852106,-3.030754c0,-3.238203 -2.622357,-5.861736 -5.860845,-5.862835c-3.237258,0.0011 -5.860767,2.624632 -5.860767,5.8625c0,3.236496 2.623743,5.859635 5.861367,5.859635c1.110886,0 2.146293,-0.314714 3.031312,-0.851395l3.985085,3.984516l1.97575,-1.97768l0,0zm-12.617637,-7.015077c0.003362,-2.00262 1.623002,-3.621701 3.625063,-3.626171c2.000933,0.00447 3.621701,1.623551 3.625053,3.626171c-0.003911,2.001492 -1.62412,3.620584 -3.625053,3.625053c-2.002386,-0.004735 -3.622219,-1.623337 -3.625063,-3.625053z" /></svg>' )
+		.appendTo( $selectWrapper );
+
+	var $selectSpan = $( '<span>' )
+		.text( searchLocalText )
+		.appendTo( $selectWrapper );
+
+	$selectWrapper.appendTo( $form );
+
+	var $searchInput = $( '<input>' )
+		.addClass( 'search-box' )
+		.attr( 'type', 'text' )
+		.attr( 'accesskey', 'f' )
+		.attr( 'autocomplete', 'off' )
+		.attr( 'name', 'search' )
+		//TODO i18n
+		.attr( 'placeholder', 'Characters, history, quests...' )
+		.appendTo( $form );
+
+	$( '<input>' )
+		.attr( 'type', 'hidden' )
+		.attr( 'name', 'resultsLang')
+		.val( window.wgUserLanguage )
+		.appendTo( $form );
+
+	$( '<input>' )
+		.attr( 'type', 'hidden' )
+		.attr( 'name', 'fulltext')
+		.val( 'Search' )
+		.appendTo( $form );
+
+	var $arrow = $( '<svg width="20" height="16" class="light" xmlns="http://www.w3.org/2000/svg"><polygon points="0,5.66 9.0,5.66 9,0 20.5,8.5 9,17 9,11.33 0,11.33" /></svg>' );
+
+	// adding behaviour
+
+	$( '<a href="#">' )
+		.focus( function() {
+			$arrow.attr( 'class', 'dark' );
+		} )
+		.blur( function() {
+			if ( $searchInput.val() === '' ) {
+				$arrow.attr( 'class', 'light' );
+			}
+		} )
+		.click( function() { $form.submit() } )
+		.append( $arrow )
+		.appendTo( $form );
+
+	$select
+		.change( function() {
+			$selectSpan.text( $( '#search-select option:selected' ).text() );
+		} )
+		.keyup( function() {
+			$selectSpan.text( $( '#search-select option:selected' ).text() );
+		} )
+		.focus( function() {
+			$selectChevron.attr( 'class', 'dark search-chevron' );
+		} )
+		.blur( function() {
+			$selectChevron.attr( 'class', 'light search-chevron' );
+		} );
+
+	$searchInput
+		.focus( function() {
+			$arrow.attr( 'class', 'dark' );
+		} )
+		.blur( function() {
+			if ( $searchInput.val() === '' ) {
+				$arrow.attr( 'class', 'light' );
+			}
+		} );
+
+	$globalSearch.append( $form );
+
+	$( '#WikiaHeader' ).find( '.WikiaLogo' ).after( $globalSearch );
 
 	$('.WikiaHeader').addClass('v3');
 	$( '#AccountNavigation > li:first > a' ).contents().filter(function() { return this.nodeType === 3; }).wrap( '<span class="login-text">' );
@@ -23,8 +142,6 @@ $(function(){
 			.attr( 'width', avatarSize );
 	}
 
-
-
 	if (window.wgUserName !== null) {
 		$wallNotifications = $( '#WallNotifications');
 		$notifications = $('<li class="notificationsEntry"><a href="#"><span id="bubbles_count"></span>Notifications</a></li>');
@@ -35,12 +152,9 @@ $(function(){
 
 		$accountNavigation.on('mouseover', function(){
 			if( !window.removedFromHoverMenu ) {
-				$bubblesNotifications = $('.notificationsEntry #bubbles_count');
-				$bubblesNavigation = $('.bubbles #bubbles_count');
 				removeWallNotificationsFromHoverMenu();
 				window.removedFromHoverMenu = true;
 			}
-			$bubblesNotifications.text($bubblesNavigation.text());
 			$('>li >.subnav', $accountNavigation).addClass('show');
 		});
 
@@ -52,7 +166,7 @@ $(function(){
 			$('>li >.subnav', $accountNavigation).removeClass('show');
 		});
 
-		$( '#AccountNavigation > li:first > a' ).append($('.bubbles'));
+		$('.bubbles #bubbles_count').remove();
 		$notifications.append($wallNotifications);
 		$accountNavsubnav.prepend($notifications);
 	}

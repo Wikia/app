@@ -3,11 +3,12 @@
 
 $hubsmenu-background-color: #f7f7f7;
 $hubsmenu-font-color: #092140;
+$menu-hover-bg-color: #edf1f4;
+$new-border-color: #c7d1d8;
 $shadow-width: 1px;
 
 #GlobalNavigationMenuButton {
-	background: $hubsmenu-background-color;
-	border-right: 1px solid #c7d1d8;
+	border-right: 1px solid $new-border-color;
 	cursor: pointer;
 	height: 66px;
 	margin-top: 0;
@@ -15,10 +16,12 @@ $shadow-width: 1px;
 	fill: $hubsmenu-font-color;
 
 	#svg-chevron {
-		fill: #c7d1d8;
+		fill: $new-border-color;
 	}
 
 	&.active {
+		background: $menu-hover-bg-color;
+
 		#svg-chevron {
 			fill: $hubsmenu-font-color;
 		}
@@ -43,7 +46,7 @@ $shadow-width: 1px;
 		position: relative;
 		width: 866px;
 		z-index: 1000;
-		border: 1px solid #c7d1d8;;
+		border: 1px solid $new-border-color;
 		border-top: 0;
 
 		.hubs {

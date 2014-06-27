@@ -6,6 +6,7 @@
 $new-nav-height: 66px;
 $new-breakpoint-small: 1024px;
 $new-breakpoint-big: 1280px;
+$search-select-width: 125px;
 
 $nav-background-color: #fff;
 $nav-font-color: #092140;
@@ -25,10 +26,9 @@ $facebook-background-color: #3c5b9b;
 
 	.page-width-container {
 		margin: 0 auto;
-		padding-right: 114px;
+		padding-right: 112px;
 		width: 1156px;
 	}
-
 
 	.wikia-header-mask {
 		background: none;
@@ -38,19 +38,108 @@ $facebook-background-color: #3c5b9b;
 		box-sizing: border-box;
 		display: table;
 		margin-left: 36px;
-		margin-right: 82px;
+		margin-right: 70px;
 		padding: 0;
-		width: 112px;
 
 		a {
 			display: table-cell;
-			height: 66px;
 			position: static;
-			top: 0;
 			vertical-align: middle;
 
-			path {
-				fill: $nav-font-color;
+			svg {
+				width: 99px;
+
+				path {
+					fill: $nav-font-color;
+				}
+			}
+		}
+	}
+
+	.global-search {
+		box-sizing: border-box;
+
+		.cursor-pointer {
+			cursor: pointer;
+		}
+
+		.search-form {
+			border: 0;
+			border-bottom: 1px solid $new-border-color;
+			padding: 20px 0 0;
+			position: static;
+			width: 100%;
+
+			div.search-select-wrapper {
+				display: inline-block;
+				padding: 0 5px 0 0;
+				width: $search-select-width;
+			}
+
+			a, input[type=text], select {
+				&:focus, &:active {
+					outline: none;
+				}
+			}
+
+			input[type=text] {
+				@include box-sizing;
+				@include clear-box-shadow;
+				@include placeholder {
+					color: $new-border-color;
+					font-style: italic;
+					font-weight: normal;
+				}
+				background-color: initial;
+				border: 0;
+				color: $nav-font-color;
+				font-size: 18px;
+				font-weight: bold;
+				padding: 3px;
+				width: 380px;
+			}
+
+			select {
+				@include box-sizing;
+				@include clear-box-shadow;
+				border: 0;
+				font-size: 15px;
+				opacity: 0;
+				padding: 0 0 7px;
+				position: absolute;
+				width: ( $search-select-width + 5px );
+
+				option {
+					color: $dropdown-font-color;
+				}
+			}
+
+			span {
+				color: $nav-font-color;
+				font-size: 15px;
+				padding: 0 6px 7px 16px;
+			}
+
+			svg {
+				vertical-align: middle;
+
+				&.search-chevron {
+					float: right;
+					position: relative;
+					top: 10px;
+				}
+
+				&.dark {
+					path, polygon {
+						fill: $nav-font-color;
+					}
+				}
+
+				&.light {
+					path, polygon {
+						fill: $new-border-color;
+					}
+				}
 			}
 		}
 	}
@@ -121,44 +210,18 @@ $facebook-background-color: #3c5b9b;
 			&:hover {
 				background: none;
 				background-color: $menu-hover-bg-color;
-				.bubbles.reddot {
-					background-color: $menu-hover-bg-color;
-				}
 			}
 
 			> a {
 				border: 0;
 				display: block;
 				padding: 15px 23px 15px 39px;
-
-				.bubbles.reddot {
-					background-color: #fff;
-					border-radius: 9px;
-					height: 18px;
-					width: 19px;
-					left: 32px;
-					position: absolute;
-					top: 16px;
-					#bubbles_count {
-						background: red;
-						border-radius: 8px;
-						float: none;
-						font-size: 12px;
-						line-height: 14px;
-						left: 2px;
-						padding: 0px 4px 0px 4px;
-						position: relative;
-						text-align: center;
-						top: -3px;
-					}
-				}
 			}
 
 			.chevron {
-				border-width: 5px;
+				position: static;
 				border-top-color: $new-border-color;
 				margin-top: 14px;
-				position: static;
 			}
 
 			&:hover .chevron {
@@ -368,8 +431,8 @@ $facebook-background-color: #3c5b9b;
 				top: 0px;
 			}
 			background-color: #fff;
-			> li:first-child,
-			> li:nth-child(2) {
+			li:first-child,
+			li:nth-child(2) {
 				border: none;
 			}
 			li {
@@ -384,7 +447,7 @@ $facebook-background-color: #3c5b9b;
 			}
 			.notifications-header {
 				background-color: #092140;
-				padding: 23px 20px 18px;
+				padding: 23px 20xp 17px;
 				&:hover {
 					background-color: #092140 !important;
 				}
@@ -396,7 +459,6 @@ $facebook-background-color: #3c5b9b;
 					padding: 0;
 				}
 				#wall-notifications-markasread {
-					right: 14px;
 					top: 23px;
 				}
 				#wall-notifications-markasread-sub {
@@ -432,7 +494,7 @@ $facebook-background-color: #3c5b9b;
 				background-color: #f4f6f7;
 				display: block;
 				&:hover {
-					background-color: #fff !important;
+					background-color: #f4f6f7 !important;
 				}
 
 				.msg-title {
@@ -469,7 +531,16 @@ $facebook-background-color: #3c5b9b;
 
 			.WikiaLogo {
 				margin-left: 16px;
-				margin-right: 24px;
+				margin-right: 8px;
+			}
+
+			.global-search {
+				.search-form {
+					input[type=text] {
+						font-size: 15px;
+						width: 205px;
+					}
+				}
 			}
 
 			.start-a-wiki {
@@ -504,8 +575,16 @@ $facebook-background-color: #3c5b9b;
 				margin-right: 53px;
 			}
 
+			.global-search {
+				.search-form {
+					input[type=text] {
+						width: 320px;
+					}
+				}
+			}
+
 			.start-a-wiki {
-				width: 166px;
+				width: 156px;
 			}
 
 			.ajaxRegisterContainer, .UserLoginDropdown .sso-login {
