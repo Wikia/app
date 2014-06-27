@@ -428,7 +428,7 @@ abstract class BaseRssModel extends WikiaService {
 	}
 
 	/**
-	 * @param $itemsMap
+	 * Fixing array of items in such way - that items will not contain duplicated timestamps
 	 */
 	protected function fixDuplicatedTimestamps( $itemsMap ) {
 		if ( empty( $itemsMap ) ) {
