@@ -84,16 +84,16 @@ class DummyNotMockedModel extends BaseRssModel {
 
 class BaseRssModelTest extends WikiaBaseTest
 {
-	protected static function getFn($obj, $name)
+	protected static function getFn( $obj, $name )
 	{
 		$class = new ReflectionClass(get_class($obj));
 		$method = $class->getMethod($name);
 		$method->setAccessible(true);
 
-		return function () use ($obj, $method) {
-			$args = func_get_args();
-			return $method->invokeArgs($obj, $args);
-		};
+        return function () use ( $obj, $method ) {
+            $args = func_get_args();
+            return $method->invokeArgs($obj, $args);
+        };
 	}
 
 	public function setUp()
@@ -110,14 +110,14 @@ class BaseRssModelTest extends WikiaBaseTest
     public function testFixDuplicatedTimestamps()
     {
         $dummy = new DummyModel();
-        $fixDuplicatedTimestamps = self::getFn($dummy, 'fixDuplicatedTimestamps');
+        $fixDuplicatedTimestamps = self::getFn( $dummy, 'fixDuplicatedTimestamps' );
 
         // Check with empty items map
         $empty = [ ];
-        $fixDuplicatedTimestamps( $empty );
+        $fixed = $fixDuplicatedTimestamps( $empty );
         $this->assertEquals(
             count( $empty ),
-            $this->countUniqueTimestamps( $empty ) );
+            $this->countUniqueTimestamps( $fixed ) );
 
         // Check with items map, without timestamps duplicates
         $noDuplicatedTimestamps = [
@@ -126,10 +126,10 @@ class BaseRssModelTest extends WikiaBaseTest
             '3' => [ 'timestamp' => 3 ],
             '4' => [ 'timestamp' => 4 ]
         ];
-        $fixDuplicatedTimestamps( $noDuplicatedTimestamps );
+        $fixed = $fixDuplicatedTimestamps( $noDuplicatedTimestamps );
         $this->assertEquals(
             count( $noDuplicatedTimestamps ),
-            $this->countUniqueTimestamps( $noDuplicatedTimestamps ) );
+            $this->countUniqueTimestamps( $fixed ) );
 
         // Check with items map, with timestamps duplicates
         $duplicatedTimestamps = [
@@ -142,16 +142,16 @@ class BaseRssModelTest extends WikiaBaseTest
             '7' => [ 'timestamp' => 5 ],
             '8' => [ 'timestamp' => 8 ]
         ];
-        $fixDuplicatedTimestamps( $duplicatedTimestamps );
+        $fixed = $fixDuplicatedTimestamps( $duplicatedTimestamps );
         $this->assertEquals(
             count( $duplicatedTimestamps ),
-            $this->countUniqueTimestamps( $duplicatedTimestamps ) );
+            $this->countUniqueTimestamps( $fixed ) );
     }
 
     private function countUniqueTimestamps( &$itemsMap ) {
         $timestampsCount = [ ];
         foreach ( $itemsMap as $key => $value ) {
-            $timestamp = $value[ 'timestamp' ];
+            $timestamp = $value[ BaseRssModel::FIELD_TIMESTAMP ];
             $timestampsCount[ $timestamp ] = 1;
         }
         return count( $timestampsCount );

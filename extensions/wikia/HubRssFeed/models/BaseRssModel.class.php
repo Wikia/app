@@ -2,6 +2,7 @@
 
 abstract class BaseRssModel extends WikiaService {
 
+    const FIELD_TIMESTAMP = 'timestamp';
 	const SOURCE_HUB = 'hub';
 	const SOURCE_GENERATOR = 'generator';
 	const ENDPOINT_ASSIMPLEJSON = 'api/v1/Articles/AsSimpleJson';
@@ -290,7 +291,7 @@ abstract class BaseRssModel extends WikiaService {
 			$out[ $item[ 'url' ] ] = $item;
 		}
 
-        $this->fixDuplicatedTimestamps( $out );
+        $out = $this->fixDuplicatedTimestamps( $out );
 
         return $out;
 	}
@@ -429,16 +430,15 @@ abstract class BaseRssModel extends WikiaService {
     /**
      * @param $itemsMap
      */
-    protected function fixDuplicatedTimestamps( &$itemsMap ) {
+    protected function fixDuplicatedTimestamps( $itemsMap ) {
         if( empty( $itemsMap ) ) {
-            return;
+            return $itemsMap;
         }
 
         // Calculate occurrence of each unique timestamp
         $timestampsCount = [ ];
-
         foreach ( $itemsMap as $key => $value ) {
-            $timestamp = $value[ 'timestamp' ];
+            $timestamp = $value[ self::FIELD_TIMESTAMP ];
 
             if ( empty( $timestampsCount[ $timestamp ] ) ) {
                 $timestampsCount[ $timestamp ] = 1;
@@ -451,11 +451,11 @@ abstract class BaseRssModel extends WikiaService {
         $uniqueTimestampsCount = count( $timestampsCount );
         if ( $itemsCount == $uniqueTimestampsCount ) {
             // No timestamps conflicts detected
-            return;
+            return $itemsMap;
         }
 
         foreach ( $itemsMap as $key => $value ) {
-            $timestamp = $value[ 'timestamp' ];
+            $timestamp = $value[ self::FIELD_TIMESTAMP ];
 
             if ( $timestampsCount[ $timestamp ] == 1 ) {
                 // This timestamp occurrenced only once
@@ -470,7 +470,7 @@ abstract class BaseRssModel extends WikiaService {
             }
 
             // Updating timestamp
-            $itemsMap[ $key ][ 'timestamp' ] = $newTimestamp;
+            $itemsMap[ $key ][ self::FIELD_TIMESTAMP ] = $newTimestamp;
 
             // Mark new timestamp as unavailable for future searching
             $timestampsCount[ $newTimestamp ] = 1;
@@ -478,6 +478,9 @@ abstract class BaseRssModel extends WikiaService {
             // decrease number of occurrences of previous timestamp
             $timestampsCount[ $timestamp ]--;
         }
+
+        // Returning items without duplicating timestamps
+        return $itemsMap;
     }
 
 }
