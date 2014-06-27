@@ -256,10 +256,8 @@ class WikiaHomePageController extends WikiaController {
 	}
 
 	public function wikiaMobileIndex() {
-		//$this->response->addAsset('extensions/wikia/WikiaHomePage/css/WikiaHomePageMobile.scss');
-		$response = $this->app->sendRequest('WikiaHomePageController', 'getHubImages');
 		$this->lang = $this->wg->contLang->getCode();
-		$this->hubImages = $response->getVal('hubImages', '');
+		$this->hubsSlots = $this->prepareHubsSectionSlots();
 	}
 
 	public function footer() {
@@ -726,9 +724,6 @@ class WikiaHomePageController extends WikiaController {
 		$this->heading = $this->request->getVal('heading');
 		$this->heroimageurl = $heroImageUrl;
 		$this->herourl = $heroUrl;
-		$this->creative = $this->request->getVal('creative');
-		$this->moreheading = $this->request->getVal('moreheading');
-		$this->morelist = $this->request->getVal('morelist');
 	}
 
 	/**

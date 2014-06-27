@@ -13,6 +13,11 @@ define('ext.wikia.adEngine.adConfigMobile', [
 	function getProvider(slot) {
 		var slotName = slot[0];
 
+		// If wgShowAds set to false, hide slots
+		if (!window.wgShowAds) {
+			return adProviderNull;
+		}
+
 		if (slot[2] === 'Null') {
 			return adProviderNull;
 		}

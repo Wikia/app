@@ -9,10 +9,13 @@
 
 namespace Wikia\Tasks\Tasks;
 
+use Wikia\Logger\Loggable;
 use Wikia\Tasks\AsyncTaskList;
 use Wikia\Tasks\Queues\PriorityQueue;
 
 abstract class BaseTask {
+	use Loggable;
+
 	/** @var array calls this task will make */
 	protected $calls = [];
 
@@ -24,6 +27,9 @@ abstract class BaseTask {
 
 	/** @var array params needed to instantiate $this->title. */
 	protected $titleParams = [];
+
+	/** @var string when running, this task's id, or id of the task that this task is a subtask of */
+	protected $taskId;
 
 	/** @var string wrapper for AsyncTaskList->queue() */
 	private $queueName = null;
@@ -112,27 +118,12 @@ abstract class BaseTask {
 		return $this->calls[$index];
 	}
 
-	/**
-	 * @return array black list of method names to hide on Special:Tasks
-	 */
-	public function getAdminNonExecuteables() {
-		return ['__construct', 'init'];
-	}
-
 	public function createdBy($createdBy=null) {
 		if ($createdBy !== null) {
 			$this->createdBy = $createdBy;
 		}
 
 		return $this->createdBy;
-	}
-
-	/**
-	 * TODO: link this to the task runner that is currently running, and append to it's log. then return that as part
-	 * of retval
-	 */
-	public function log($line) {
-
 	}
 
 	/**
@@ -225,6 +216,11 @@ abstract class BaseTask {
 		}
 	}
 
+	/**
+	 * set this task to run against a specific article/page/etc
+	 * @param \Title $title
+	 * @return $this
+	 */
 	public function title(\Title $title) {
 		$this->titleParams = [
 			'namespace' => $title->getNamespace(),
@@ -232,6 +228,52 @@ abstract class BaseTask {
 		];
 
 		return $this;
+	}
+
+	/**
+	 * @param $taskId
+	 * @return $this
+	 */
+	public function taskId($taskId) {
+		$this->taskId = $taskId;
+		return $this;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getTaskId() {
+		return $this->taskId;
+	}
+
+	/**
+	 * get a list of all task methods this class can execute via Special:Tasks
+	 *
+	 * @return array
+	 */
+	public function getAdminExecuteableMethods() {
+		$ignoredMethods = [
+			'__construct',
+			'getAdminExecuteableMethods',
+			'init',
+		];
+
+		$mirror = new \ReflectionClass($this);
+		$mirrorClass = $mirror->getName();
+		$methods = [];
+
+		foreach ($mirror->getMethods(\ReflectionMethod::IS_PUBLIC) as $methodMirror) {
+			$methodClass = $methodMirror->getDeclaringClass();
+			$methodName = $methodMirror->getName();
+
+			if (in_array($methodName, $ignoredMethods) || $methodClass->getName() != $mirrorClass) {
+				continue;
+			}
+
+			$methods[] = $methodName;
+		}
+
+		return $methods;
 	}
 
 	// following are wrappers that will eventually call the same functions in AsyncTaskList

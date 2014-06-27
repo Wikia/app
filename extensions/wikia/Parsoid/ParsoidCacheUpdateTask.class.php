@@ -135,6 +135,6 @@ class ParsoidCacheUpdateTask extends BaseTask {
 	}
 
 	private function wikiaLog( $data ) {
-		WikiaLogger::instance()->debug( "ParsoidCacheUpdateJob", $data );
+		WikiaLogger::instance()->debug( "ParsoidCacheUpdateTask", $data );
 	}
 }

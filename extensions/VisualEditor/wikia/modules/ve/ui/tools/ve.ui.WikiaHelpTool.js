@@ -1,3 +1,5 @@
+/*global mw */
+
 /**
  * UserInterface WikiaHelp tool.
  *

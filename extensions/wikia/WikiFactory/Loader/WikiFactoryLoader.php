@@ -823,6 +823,8 @@ class WikiFactoryLoader {
 			}
 		}
 
+		wfRunHooks( 'WikiFactory::onExecuteComplete', array( &$this ) );
+
 		wfProfileOut( __METHOD__ );
 
 		/**

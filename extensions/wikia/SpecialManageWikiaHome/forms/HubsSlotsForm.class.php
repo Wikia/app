@@ -10,16 +10,6 @@ class HubsSlotsForm extends FormBuilderService {
 					'label' => wfMessage('manage-wikia-home-hubs-slot-name')->plain(),
 					'type' => 'select',
 					'isArray' => true
-				],
-				'hub_slot_desc' => [
-					'label' => wfMessage('manage-wikia-home-hubs-slot-description')->plain(),
-					'type' => 'textarea',
-					'isArray' => true
-				],
-				'hub_slot_more_links' => [
-					'label' => wfMessage('manage-wikia-home-hubs-slot-more-links')->plain(),
-					'type' => 'textarea',
-					'isArray' => true
 				]
 			];
 		}

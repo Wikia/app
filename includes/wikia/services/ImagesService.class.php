@@ -179,6 +179,21 @@ class ImagesService extends Service {
 	}
 
 	/**
+	 * @desc Returns normal image URL made from thumbnail
+	 *
+	 * @param String $thumbUrl thumbnail image's URL
+	 * @return String new URL
+	 */
+	public static function getFileUrlFromThumbUrl( $thumbUrl ) {
+		if ( self::IsExternalThumbnailUrl( $thumbUrl ) ) {
+			$imageUrl = str_replace( '/images/thumb/', '/images/', $thumbUrl );
+			return preg_replace( '~/[^/]+$~', '', $imageUrl );
+		} else {
+			return $thumbUrl;
+		}
+	}
+
+	/**
 	 * @desc Checks if given URL is pointing to our external thumbnail service.
 	 *
 	 * @param String $url url to test

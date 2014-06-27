@@ -199,10 +199,25 @@ class FilePageController extends WikiaController {
 			$expireDate = wfMessage( 'video-page-expires', $date )->text();
 		}
 
+		// Get restricted country list
+		$regionalRestrictions = $this->getVal( 'regionalRestrictions', '' );
+		if ( !empty( $regionalRestrictions ) ) {
+			$countryNames = Wikia::getCountryNames( explode( ',', str_replace( ', ', ',', $regionalRestrictions ) ) );
+
+			if ( !empty( $countryNames ) ) {
+				$countries = implode( ', ', array_values( $countryNames ) );
+			} else {
+				$countries = $regionalRestrictions;
+			}
+
+			$regionalRestrictions = wfMessage( 'video-page-regional-restrictions', $countries )->text();
+		}
+
 		$this->provider = ucwords( $provider );
 		$this->detailUrl = $this->getVal( 'detailUrl' );
 		$this->providerUrl = $this->getVal( 'providerUrl' );
 		$this->expireDate = $expireDate;
+		$this->regionalRestrictions = $regionalRestrictions;
 		$this->viewCount = $this->getVal( 'views' );
 
 		wfProfileOut( __METHOD__ );

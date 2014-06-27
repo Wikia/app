@@ -75,57 +75,33 @@ class ChatHelper {
 	}
 
 	/**
-	 * Return the name of the current configuration. This should return a config name
-	 * that exists in ChatConfig.json file.
-	 * @return string
-	 */
-	static function getEnvironmentName() {
-		global $wgDevelEnvironment;
-		if ( !empty( $wgDevelEnvironment ) ) {
-			return self::CHAT_DEVBOX_ENV;
-		}
-
-		if ( Wikia::isPreviewServer() ) {
-			return self::CHAT_PREVIEW_ENV;
-		}
-		if ( Wikia::isVerifyServer() ) {
-			return self::CHAT_VERIFY_ENV;
-		}
-
-		return self::CHAT_PRODUCTION_ENV;
-	}
-
-	/**
 	 *
 	 * laod Config of chat from json file (we need to use jsone file becasue w)
 	 * @param string $name
 	 */
 	static function getChatConfig($name) {
-		global $wgWikiaConfigDirectory;
-		wfProfileIn(__METHOD__);
+		global $wgWikiaEnvironment;
+
+		$configDir = getenv('WIKIA_CONFIG_ROOT');
 
 		if(empty(self::$configFile)) {
-			$configFilePath = $wgWikiaConfigDirectory . '/ChatConfig.json';
+			$configFilePath = $configDir . '/ChatConfig.json';
 			$string = file_get_contents( $configFilePath );
 			self::$configFile = json_decode($string, true);
 		}
 
 		if ( empty( self::$configFile ) ) {
-			wfProfileOut(__METHOD__);
 			return false;
 		}
-		$env = self::getEnvironmentName();
+		$env = $wgWikiaEnvironment;
 		if(isset(self::$configFile[$env][$name])) {
-			wfProfileOut(__METHOD__);
 			return self::$configFile[$env][$name];
 		}
 
 		if(isset(self::$configFile[$name])) {
-			wfProfileOut(__METHOD__);
 			return self::$configFile[$name];
 		}
 
-		wfProfileOut(__METHOD__);
 		return false;
 	}
 

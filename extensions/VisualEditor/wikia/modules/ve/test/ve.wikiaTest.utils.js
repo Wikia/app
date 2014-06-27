@@ -21,11 +21,11 @@ ve.wikiaTest = ( function () {
 	utils.disableDebugModeForTests = function () {
 		var debug;
 		return {
-			setup: function() {
+			setup: function () {
 				debug = ve.debug;
 				ve.debug = false;
 			},
-			teardown: function() {
+			teardown: function () {
 				ve.debug = debug;
 			}
 		};
@@ -136,9 +136,9 @@ ve.wikiaTest = ( function () {
 	 * @param {Document} doc Document object
 	 * @returns {void}
 	 */
-	utils.appendBase = function( doc ) {
-		baseElement = document.createElement( 'base' );
-		baseElement.setAttribute( 'href', /.*\//.exec( window.location.href ) )
+	utils.appendBase = function ( doc ) {
+		var baseElement = document.createElement( 'base' );
+		baseElement.setAttribute( 'href', /.*\//.exec( window.location.href ) );
 		doc.getElementsByTagName( 'head' )[0].appendChild( baseElement );
 	};
 
@@ -169,8 +169,7 @@ ve.wikiaTest = ( function () {
 			nodeView,
 			previous = {},
 			surface,
-			testCases = utils.getTestCases( media.data.testCases[ displayType ][ rdfaType ] ),
-			baseElement;
+			testCases = utils.getTestCases( media.data.testCases[ displayType ][ rdfaType ] );
 
 		getHtml = media[ displayType ][ rdfaType ].getHtml;
 
