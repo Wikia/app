@@ -143,6 +143,7 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 			} elseif ( $this->request->getVal('hubs-slots', false)) {
 				$homePageSlotsValues = $this->request->getParams();
 				$homePageSlotsValues = $this->hubsForm->filterData($homePageSlotsValues);
+				$homePageSlotsValues = $this->filterUrls($homePageSlotsValues);
 				$hubSavedSlotsValues = $homePageSlotsValues['hub_slot'];
 				$marketingSlotsValues = $this->getMarketingSlotsValues($homePageSlotsValues);
 				$marketingSavedSlotsValues = $this->prepareArrayFieldsForSave($marketingSlotsValues);
@@ -660,6 +661,22 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 			}
 		}
 		return $marketingImages;
+	}
+
+	/**
+	 * Filter urls and add protocol if it is missed
+	 *
+	 * @param $homePageSlotsValues
+	 * @return mixed
+	 */
+	private function filterUrls(  $homePageSlotsValues ) {
+		foreach( $homePageSlotsValues['marketing_slot_link'] as &$url ) {
+			if (!empty($url) && strpos($url, 'http://') === false && strpos($url, 'https://') === false) {
+				$url = 'http://' . $url;
+			}
+		}
+
+		return $homePageSlotsValues;
 	}
 
 	/**
