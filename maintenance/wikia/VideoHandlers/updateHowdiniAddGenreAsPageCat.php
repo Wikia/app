@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * Applies genre to page categories for Howdini ingested videos
+ */
+
 ini_set( "include_path", dirname( __FILE__ ) . "/../../" );
 ini_set( 'display_errors', 1 );
 set_time_limit( 0 );
@@ -25,39 +29,10 @@ class UpdateHowdiniAddGenreAsPageCat extends BaseMaintVideoScript {
 		$this->update1787 = false;
 	}
 
-	protected function addGenreToPageCategories( $video, $title ) {
-		if ( $video['metadata']['provider'] != "ooyala/howdini" ) {
-			return;
-		}
-
-		if ( empty( $video['metadata']['genres'] ) ) {
-			$this->outputMessage( "\tSKIP: $title - no genres found in Metadata." );
-			$this->incSkipped();
-			return;
-		}
-
-		$key = 'pagecategories';
-		$metadata = [];
-		if ( !empty( $video['metadata'][$key] ) ) {
-			$metadata[$key] = $video['metadata'][$key] . ',' . $video['metadata']['genres'];
-		} else {
-			$metadata[$key] = $video['metadata']['genres'];
-		}
-
-		if ( !$this->isDryRun() ) {
-			$resp = OoyalaAsset::updateMetadata( $video['embed_code'], $metadata );
-			if ( !$resp ) {
-				$this->incFailed();
-			}
-		}
-
-		return;
-	}
-
 	/**
 	 * Update Metadata (VID-1787)
 	 * @param array $video
-	 * @return array|false $newValues
+	 * @return array $newValues
 	 */
 	function updateMetadata1787( $video ) {
 		$newValues = [];
@@ -68,17 +43,10 @@ class UpdateHowdiniAddGenreAsPageCat extends BaseMaintVideoScript {
 
 		$videoIdString = "{$video['name']} (Id: {$video['embed_code']})";
 
-		if ( !empty( $video['metadata']['update1787'] ) ) {
-			$this->outputMessage( "\tSKIP: $videoIdString - Already updated." );
-			$this->incSkipped();
-
-			return $newValues;
-		}
-
 		$newMetadata = $video['metadata'];
 
 		if ( !empty( $video['metadata']['pagecategories'] ) && !empty( $video['metadata']['genres'] ) ) {
-			$newMetadata['pagecategories'] = $video['metadata']['pagecategories'] . ',' . $video['metadata']['genres'];
+			$newMetadata['pagecategories'] = $video['metadata']['pagecategories'] . ', ' . $video['metadata']['genres'];
 			$newValues['pagecategories'] = $newMetadata['pagecategories'];
 
 			$resp = true;
@@ -147,8 +115,6 @@ class UpdateHowdiniAddGenreAsPageCat extends BaseMaintVideoScript {
 				foreach ( explode( "\n", var_export( $video['metadata'], true ) ) as $line ) {
 					$this->outputMessage( "\t\t:: $line" );
 				}
-
-				$this->addGenreToPageCategories( $video, $title );
 
 				if ( !empty( $this->update1787 ) ) {
 					$newValues = $this->updateMetadata1787( $video );
@@ -327,9 +293,10 @@ if ( isset( $options['help'] ) ) {
 }
 
 $instance = new UpdateHowdiniAddGenreAsPageCat();
-$instance->run();
 
 $instance->dryRun = isset( $options['dry-run'] );
 $instance->extra = isset( $options['extra'] ) ? explode( ' AND ', $options['extra'] ) : [];
 $instance->limit = empty( $options['limit'] ) ? $instance::BATCH_LIMIT_DEFAULT : $options['limit'];
 $instance->update1787 = isset( $options['update1787'] );
+
+$instance->run();
