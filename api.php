@@ -132,6 +132,8 @@ DeferredUpdates::doUpdates();
 $endtime = microtime( true );
 wfProfileOut( 'api.php' );
 wfLogProfilingData();
+$wgProfilingDataLogged = true;
+
 
 // Log the request
 if ( $wgAPIRequestLog ) {

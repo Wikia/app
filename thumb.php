@@ -24,6 +24,7 @@ if ( defined( 'THUMB_HANDLER' ) ) {
 	wfThumbHandleRequest();
 }
 wfLogProfilingData();
+$wgProfilingDataLogged = true;
 
 //--------------------------------------------------------------------------
 

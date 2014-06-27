@@ -69,6 +69,8 @@ if ( !empty( $wgEnableNirvanaAPI ) ){
 	$response->render();
 
 	wfLogProfilingData();
+	global $wgProfilingDataLogged;
+	$wgProfilingDataLogged = true;
 
 	wfRunHooks( 'RestInPeace' );
 
