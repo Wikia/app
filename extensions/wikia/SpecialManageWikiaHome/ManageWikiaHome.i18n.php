@@ -32,9 +32,9 @@ $messages['en'] = array(
 	'manage-wikia-home-collections-remove-success' => 'Wiki removed successfully from the collection.',
 	'manage-wikia-home-collections-invalid-action' => 'That action does not exist.',
 
-	'manage-wikia-home-marketing-invalid-width' => 'Image width should be $1 px.',
-	'manage-wikia-home-marketing-invalid-height' => 'Image height should be $1 px.',
-	'manage-wikia-home-marketing-invalid-size' => 'Image size should be $1 px x $2 px.',
+	'manage-wikia-home-marketing-invalid-width' => 'Image width should be $maxWidth px.',
+	'manage-wikia-home-marketing-invalid-height' => 'Image height should be $maxHeight px.',
+	'manage-wikia-home-marketing-invalid-size' => 'Image size should be $maxWidth px x $maxHeight px.',
 	'manage-wikia-home-marketing-not-complete' => 'To use marketing slot, all fields need to be filled.',
 
 	'manage-wikia-home-verticals-proportions' => 'Number of wikis per vertical',

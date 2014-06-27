@@ -7,16 +7,6 @@ class HubsSlotsForm extends FormBuilderService {
 	public function __construct($prefix = '', $fields = []) {
 		parent::__construct($prefix, $fields);
 
-		$errorWidth = wfMessage(
-			'manage-wikia-home-marketing-invalid-width',
-			self::SLOT_IMG_WIDTH
-		)->plain();
-
-		$errorHeight =  wfMessage(
-			'manage-wikia-home-marketing-invalid-height',
-			self::SLOT_IMG_HEIGHT
-		)->plain();
-
 		if(empty($fields)) {
 			$fields = [
 				'hub_slot' => [
@@ -43,15 +33,11 @@ class HubsSlotsForm extends FormBuilderService {
 									'maxHeight' => self::SLOT_IMG_HEIGHT,
 								),
 								array(
-									'min-width' => $errorWidth,
-									'max-width' => $errorWidth,
-									'min-height' => $errorHeight,
-									'max-height' => $errorHeight,
-									'wrong-size' => $errorHeight =  wfMessage(
-											'manage-wikia-home-marketing-invalid-size',
-											self::SLOT_IMG_WIDTH,
-											self::SLOT_IMG_HEIGHT
-										)->plain()
+									'min-width' => 'manage-wikia-home-marketing-invalid-width',
+									'max-width' => 'manage-wikia-home-marketing-invalid-width',
+									'min-height' => 'manage-wikia-home-marketing-invalid-height',
+									'max-height' => 'manage-wikia-home-marketing-invalid-height',
+									'wrong-size' => 'manage-wikia-home-marketing-invalid-size'
 								)
 							),
 						)
