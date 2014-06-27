@@ -315,7 +315,11 @@ define(
 			showError: showError,
 			cleanUpError: cleanUpError,
 			track: track,
-			trackerActions: tracker.ACTIONS
+			trackerActions: tracker.ACTIONS,
+			tilesetTypes: {
+				REAL: 'geo',
+				CUSTOM: 'custom'
+			}
 		};
 	}
 );

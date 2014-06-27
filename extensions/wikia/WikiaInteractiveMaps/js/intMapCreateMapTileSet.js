@@ -32,16 +32,17 @@ define(
 			events = {
 				intMapGeo: [
 					function() {
+						var type = utils.tilesetTypes.REAL;
 						modal.trigger('previewTileSet', {
-							type: 'geo'
+							type: type
 						});
-						trackChosenMap('geo');
+						trackChosenMap(type);
 					}
 				],
 				intMapCustom: [
 					function() {
 						showStep('uploadImage');
-						trackChosenMap('custom');
+						trackChosenMap(utils.tilesetTypes.CUSTOM);
 					}
 				],
 				intMapBrowse: [
@@ -246,10 +247,10 @@ define(
 			var label = '';
 
 			switch(type) {
-				case 'geo':
+				case utils.tilesetTypes.REAL:
 					label = 'real-map-chosen';
 					break;
-				case 'custom':
+				case utils.tilesetTypes.CUSTOM:
 					label = 'custom-map-chosen';
 					break;
 			}
