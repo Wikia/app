@@ -353,8 +353,9 @@ class VideoFileUploader {
 	 * are from another provider (eg, iva), are being returned as an OoyalaApiWrapper
 	 * due to the way the those videos are being stored in the image table. Specifically,
 	 * they are being saved with an img_minor_mime of ooyala, and storing their actual
-	 * provider information in the img_metadata blob. This method does one last check when
-	 * we're instantiating an API wrapper to make sure we're using the correct one.
+	 * provider information (in the form of ooyala/iva) in the img_metadata blob.
+	 * This method does one last check when we're instantiating an API wrapper
+	 * to make sure we're using the correct one.
 	 */
 	protected function checkApiWrapper() {
 		$actualProvider = $this->oApiWrapper->getProvider();

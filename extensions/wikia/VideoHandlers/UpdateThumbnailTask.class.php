@@ -7,7 +7,7 @@ class UpdateThumbnailTask extends BaseTask {
 
 	/**
 	 * This task is run when a video is uploaded but the provider does not have a
-	 * thumbnail for us to use. This get's triggered the first time a thumbnail
+	 * thumbnail for us to use. This gets triggered the first time a thumbnail
 	 * cannot be found, and is queued up again at longer intervals until we either
 	 * get a thumbnail from the provider, or exhaust all of our attempts.
 	 * @param $title
@@ -17,8 +17,7 @@ class UpdateThumbnailTask extends BaseTask {
 	public function retryThumbUpload( $title, $delayIndex ) {
 		$file = WikiaFileHelper::getVideoFileFromTitle( $title );
 		$helper = new VideoHandlerHelper();
-		$delayIndex++;
-		$status = $helper->resetVideoThumb( $file, null, $delayIndex );
+		$status = $helper->resetVideoThumb( $file, null, $delayIndex+1 );
 		return $status;
 	}
 
