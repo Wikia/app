@@ -146,13 +146,13 @@ $facebook-background-color: #3c5b9b;
 
 	.start-a-wiki {
 		border-left: 1px solid $new-border-color;
-		border-right: 1px solid $new-border-color;
 		box-sizing: border-box;
 		display: table;
 		float: right;
 		font-size: 15px;
 		font-weight: bold;
 		padding: 0;
+		position: relative;
 		width: 176px;
 
 		svg {
@@ -571,6 +571,11 @@ $facebook-background-color: #3c5b9b;
 
 			.start-a-wiki {
 				width: 84px;
+
+				svg {
+					left: -webkit-calc(50% - 7px);
+					left: calc(50% - 7px);
+				}
 
 				span {
 					display: none;

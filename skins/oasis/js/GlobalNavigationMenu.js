@@ -25,10 +25,10 @@ require([ 'jquery', 'wikia.ui.factory', 'wikia.nirvana' ], function ($, uiFactor
 			},
 			buildMenu = function(verticalData) {
 				var $hubsMenu = $globalNavigationNav.find('.hubs' ),
-					active = verticalData.active || 'comics';
-				//
+					active = verticalData.active || verticalData.menu[0].specialAttr;
+
 				$globalNavigationNav.addClass('count-' + verticalData.menu.length).data('active', active);
-				//
+
 				$.each(verticalData.menu, function() {
 					var $elem = $('<nav class="' + this.specialAttr + ' hub"><span class="icon" />' +
 						'<span class="label" /></nav>');
@@ -38,7 +38,7 @@ require([ 'jquery', 'wikia.ui.factory', 'wikia.nirvana' ], function ($, uiFactor
 						.find('.icon').html(hubsIconsHover[this.specialAttr]).end()
 						.appendTo($hubsMenu);
 				});
-				//
+
 				$globalNavigationNav
 					.append('<section data-submenu="0" />')
 					.append('<section data-submenu="1" />');
