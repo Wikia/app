@@ -95,7 +95,11 @@ define('wikia.intMap.poiCategories',
 			params,
 			mapId,
 			mapUrl,
-			mode;
+			mode,
+			modalModes = {
+				CREATE: 'create',
+				EDIT: 'edit'
+			};
 
 		/**
 		 * @desc Entry point for modal
@@ -113,7 +117,7 @@ define('wikia.intMap.poiCategories',
 			poiCategoryTemplate = templates[1];
 			parentPoiCategoryTemplate = templates[2];
 
-			mode = params.mode || 'create';
+			mode = params.mode || modalModes.CREATE;
 			setModalMode();
 
 			setUpParentPoiCategories()
@@ -160,7 +164,7 @@ define('wikia.intMap.poiCategories',
 		function setModalMode() {
 			var title = createPoiCategoriesTitle;
 
-			if (mode === 'edit') {
+			if (mode === modalModes.EDIT) {
 				title = editPoiCategoriesTitle;
 			}
 
@@ -415,7 +419,7 @@ define('wikia.intMap.poiCategories',
 		 * @desc send callback to ponto and close modal
 		 */
 		function poiCategoriesCreated() {
-			if (mode === 'edit') {
+			if (mode === modalModes.EDIT) {
 				if (typeof trigger === 'function') {
 					trigger();
 				}
@@ -439,11 +443,11 @@ define('wikia.intMap.poiCategories',
 		 * @param {object} data
 		 */
 		function trackPoiCategoryActions(data) {
-			if( mode === 'edit' ) {
+			if( mode === modalModes.EDIT ) {
 				utils.track(utils.trackerActions.IMPRESSION, 'poi-category-edited', data.mapId);
 			}
 
-			if( mode === 'create' ) {
+			if( mode === modalModes.CREATE ) {
 				utils.track(utils.trackerActions.IMPRESSION, 'poi-category-added', data.mapId);
 			}
 		}
