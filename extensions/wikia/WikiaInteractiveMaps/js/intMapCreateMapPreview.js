@@ -84,7 +84,6 @@ define(
 
 		function preview(tileSet) {
 			var originalImageURL = tileSet.originalImageURL;
-
 			modal.trigger('cleanUpError');
 
 			tileSetData = tileSet;
