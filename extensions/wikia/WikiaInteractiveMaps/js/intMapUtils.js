@@ -6,9 +6,10 @@ define(
 		'wikia.cache',
 		'wikia.loader',
 		'wikia.ui.factory',
-		'wikia.mustache'
+		'wikia.mustache',
+		'wikia.tracker'
 	],
-	function($, w, cache, loader, uiFactory, mustache) {
+	function($, w, cache, loader, uiFactory, mustache, tracker) {
 		'use strict';
 
 		/**
@@ -282,6 +283,7 @@ define(
 		}
 
 		/**
+<<<<<<< HEAD
 		 * @desc creates image url for thumbnailer
 		 * @param {string} url - image url
 		 * @param {number} width
@@ -295,6 +297,23 @@ define(
 				crop = (height ? width + 'x' + height : width + 'px') + '-';
 
 			return baseUrl + '/thumb/' + fileName + '/' + crop + fileName;
+		}
+
+		/**
+		 * @desc Wrapper for our Wikia.Tracker.track method - sends to GA tracking info
+		 *
+		 * @param {string} action one of Wikia.Tracker.ACTIONS
+		 * @param {string} label
+		 * @param {integer} value
+		 */
+		function track(action, label, value) {
+			tracker.track({
+				trackingMethod: 'ga',
+				category: 'map',
+				action: action,
+				label: label,
+				value: value
+			});
 		}
 
 		return {
@@ -313,6 +332,9 @@ define(
 			showError: showError,
 			cleanUpError: cleanUpError,
 			createThumbURL: createThumbURL
-		}
+			track: track,
+			trackerActions: tracker.ACTIONS
+		};
 	}
 );
+
