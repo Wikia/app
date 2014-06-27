@@ -217,7 +217,7 @@ define(
 		 */
 		function trackMapCreation(tileSetData) {
 			if (tileSetData.type === utils.tilesetTypes.REAL) {
-				utils.track(utils.trackerActions.IMPRESSION, 'real-map-created');
+				utils.track(utils.trackerActions.IMPRESSION, 'geo-map-created');
 			}
 
 			if (tileSetData.type === utils.tilesetTypes.CUSTOM && tileSetData.tileSetId) {

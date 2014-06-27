@@ -368,17 +368,7 @@ define(
 		 * @param {string} type
 		 */
 		function trackChosenMap(type) {
-			var label = '';
-
-			switch(type) {
-				case utils.tilesetTypes.REAL:
-					label = 'real-map-chosen';
-					break;
-				case utils.tilesetTypes.CUSTOM:
-					label = 'custom-map-chosen';
-					break;
-			}
-
+			var label = type + '-map-chosen';
 			utils.track(utils.trackerActions.CLICK_LINK_IMAGE, label);
 		}
 
