@@ -5,7 +5,9 @@ $messages = [];
 $messages[ 'en' ] = [
 	'wikia-interactive-maps-title' => 'Maps',
 	'wikia-interactive-maps-create-a-map' => 'Create a Map',
-	'wikia-interactive-maps-no-maps' => 'No maps found. Create new map now.',
+	'wikia-interactive-maps-no-maps-header' => 'There are no maps created yet.',
+	'wikia-interactive-maps-no-maps-text' => 'Collaborate with the community by visually pinning locations of interest on maps.',
+	'wikia-interactive-maps-no-maps-learn-more' => 'Learn more',
 
 	'wikia-interactive-maps-map-status-done' => 'Ready to use',
 	'wikia-interactive-maps-map-status-processing' => 'Processing...',
@@ -124,7 +126,9 @@ $messages[ 'en' ] = [
 $messages[ 'qqq' ] = [
 	'wikia-interactive-maps-title' => 'Maps special page title',
 	'wikia-interactive-maps-create-a-map' => 'Label for create new map button',
-	'wikia-interactive-maps-no-maps' => 'Shown when there are no maps created for this wiki',
+	'wikia-interactive-maps-no-maps-header' => 'No maps created yet for this wikia header.',
+	'wikia-interactive-maps-no-maps-text' => 'No maps created yet for this wikia explanation ',
+	'wikia-interactive-maps-no-maps-learn-more' => 'Learn more about maps',
 
 	'wikia-interactive-maps-map-status-done' => 'Message which informs about map tiles processing status; not visible for a user',
 	'wikia-interactive-maps-map-status-processing' => 'Message which informs about map tiles processing status; not visible for a user',

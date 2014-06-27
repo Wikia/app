@@ -1,20 +1,57 @@
 @import "skins/oasis/css/mixins/background-opacity";
 @import "skins/oasis/css/core/color";
+@import "skins/oasis/css/mixins/gradient";
+
+// TODO used also for parser tag - could be abstracted
+$content-color: #fff;
+$gradient-color-start: rgba(0, 0, 0, 0.7);
+
+.wikia-interactive-maps {
+	position: relative;
+
+	.wikia-menu-button {
+		padding-left: 10px;
+	}
+}
 
 .maps-controls {
 	position: absolute;
 	right: 0;
+	top: -6px;
+
+	> form,
+	> select,
+	> button {
+		display: block;
+		float: right;
+		margin-left: 10px;
+	}
 }
 
 .WikiaArticle .map-list {
 	list-style: none;
-	margin: 0;
+	margin: 0 0 10px;
 }
 
 .map-list {
 	li {
 		overflow-x: hidden;
 		position: relative;
+		margin: 0px 0px 1px;
+	}
+
+	h3 {
+		@include linear-gradient(transparent, top, transparent, 0%, $gradient-color-start, 100%);
+
+		border: 0;
+		bottom: 0;
+		box-sizing: border-box;
+		color: $content-color;
+		left: 0;
+		margin: 0;
+		padding: 50px 20px 20px;
+		position: absolute;
+		width: 100%;
 	}
 
 	.map-status {
@@ -23,17 +60,13 @@
 		position: absolute;
 		right: 0;
 	}
+}
 
-	h3, 
-	p {
-		border: 0;
-		bottom: 1rem;
-		color: $color-text-light;
-		left: 2rem;
-		position: absolute;
-	}
+.no-maps {
+	text-align: center;
 
-	h3 {
-	  bottom: 2.8rem;
+	h2 {
+		margin-bottom: 40px;
+		text-align: left;
 	}
 }
