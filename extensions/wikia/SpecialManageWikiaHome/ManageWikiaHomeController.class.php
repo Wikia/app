@@ -4,6 +4,7 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 	const WHST_WIKIS_PER_PAGE = 25;
 
 	const HUB_SLOTS_COUNT = 7;
+	const MARKETING_SLOTS_COUNT = 3;
 
 	const CHANGE_FLAG_ADD = 'add';
 	const CHANGE_FLAG_REMOVE = 'remove';

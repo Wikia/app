@@ -47,7 +47,7 @@
 			<? endfor ?>
 			<br />
 			<h3>Marketing slots</h3>
-			<? for( $i=0; $i < 2; $i++ ): ?>
+			<? for( $i=0; $i < ManageWikiaHomeController::MARKETING_SLOTS_COUNT; $i++ ): ?>
 				<div class="hub-slot marketing-slot">
 					<div class="image-input">
 						<?= $hubsForm->renderField('marketing_slot_image', $i); ?>
