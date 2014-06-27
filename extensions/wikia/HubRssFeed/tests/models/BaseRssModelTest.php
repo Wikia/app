@@ -133,26 +133,26 @@ class BaseRssModelTest extends WikiaBaseTest
         $fixDuplicatedTimestamps = self::getFn( $dummy, 'fixDuplicatedTimestamps' );
 
         // Check with empty items map
-        $empty = [ ];
-        $fixed = $fixDuplicatedTimestamps( $empty );
+        $itemsEmpty = [ ];
+        $fixed = $fixDuplicatedTimestamps( $itemsEmpty );
         $this->assertEquals(
-            count( $empty ),
+            count( $itemsEmpty ),
             $this->countUniqueTimestamps( $fixed ) );
 
         // Check with items map, without timestamps duplicates
-        $noDuplicatedTimestamps = [
+        $itemsWithoutDuplicatedTimestamps = [
             '1' => [ 'timestamp' => 1 ],
             '2' => [ 'timestamp' => 2 ],
             '3' => [ 'timestamp' => 3 ],
             '4' => [ 'timestamp' => 4 ]
         ];
-        $fixed = $fixDuplicatedTimestamps( $noDuplicatedTimestamps );
+        $fixed = $fixDuplicatedTimestamps( $itemsWithoutDuplicatedTimestamps );
         $this->assertEquals(
-            count( $noDuplicatedTimestamps ),
+            count( $itemsWithoutDuplicatedTimestamps ),
             $this->countUniqueTimestamps( $fixed ) );
 
         // Check with items map, with timestamps duplicates
-        $duplicatedTimestamps = [
+        $itemsWithDuplicatedTimestamps = [
             '1' => [ 'timestamp' => 1 ],
             '2' => [ 'timestamp' => 1 ],
             '3' => [ 'timestamp' => 2 ],
@@ -162,9 +162,9 @@ class BaseRssModelTest extends WikiaBaseTest
             '7' => [ 'timestamp' => 5 ],
             '8' => [ 'timestamp' => 8 ]
         ];
-        $fixed = $fixDuplicatedTimestamps( $duplicatedTimestamps );
+        $fixed = $fixDuplicatedTimestamps( $itemsWithDuplicatedTimestamps );
         $this->assertEquals(
-            count( $duplicatedTimestamps ),
+            count( $itemsWithDuplicatedTimestamps ),
             $this->countUniqueTimestamps( $fixed ) );
     }
 
