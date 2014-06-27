@@ -230,7 +230,6 @@ ve.ce.WikiaBlockMediaNode.prototype.rebuild = function () {
 	// Update references for mixins
 	this.$focusable = this.$element;
 	this.$phantomable = this.$element;
-	this.$relocatable = this.$element;
 	this.$image = $image;
 	this.$resizable = $image;
 	this.$thumb = $thumb;
