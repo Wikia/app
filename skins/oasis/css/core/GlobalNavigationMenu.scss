@@ -1,5 +1,7 @@
 @import "skins/oasis/css/core/color.scss";
 @import "skins/oasis/css/mixins/transition.scss";
+@import "skins/oasis/css/mixins/calc.scss";
+@import "skins/oasis/css/mixins/box-sizing-border-box.scss";
 
 $hubsmenu-background-color: #f7f7f7;
 $hubsmenu-font-color: #092140;
@@ -29,25 +31,25 @@ $shadow-width: 1px;
 }
 
  .GlobalNavigationContainer {
+	@include width-calc('100% - 290px');
+
 	display: none;
 	position: absolute;
 	top: 66px;
-	width: -webkit-calc(100% - 290px);
-	width: calc(100% - 290px);
 
 	* {
-		box-sizing: border-box;
+		@include box-sizing-border-box;
 	}
 
 	> nav {
 		background-color: $hubsmenu-background-color;
+		border: 1px solid $new-border-color;
+		border-top: 0;
 		color: $hubsmenu-font-color;
 		margin: 0 auto;
 		position: relative;
 		width: 866px;
 		z-index: 1000;
-		border: 1px solid $new-border-color;
-		border-top: 0;
 
 		.hubs {
 			position: absolute;
@@ -77,6 +79,20 @@ $shadow-width: 1px;
 				position: absolute;
 				top: 0;
 				width: 90px;
+
+				svg {
+					height: 52px;
+					left: 50%;
+					margin-left: -25px;
+					margin-top: -25px;
+					position: absolute;
+					top: 50%;
+					width: 52px;
+
+					circle {
+						fill-opacity: 0;
+					}
+				}
 			}
 			.label {
 				display: table-cell;
@@ -84,19 +100,21 @@ $shadow-width: 1px;
 				vertical-align: middle;
 				width: 100%;
 			}
-			.border {
+			&::before {
 				background: #e9edef;
+				content: '';
+				display: inline-block;
 				height: 1px;
 				left: 112px;
 				position: absolute;
 				top: 0;
 				width: 166px;
 			}
-			&:first-child .border {
+			&:first-child::before {
 				display: none;
 			}
 
-			&.active .border, &.active + &:not(.active) .border
+			&.active::before, &.active + &:not(.active)::before
 			{
 				background: none;
 			}
@@ -106,94 +124,76 @@ $shadow-width: 1px;
 				color: #fff;
 				background-image: url(/skins/oasis/images/GlobalNavigation/chevron-level-1_hover.png); /* base64 */
 
-				&.books {
-					background-color: #ff7f26;
-				}
-				&.comics {
-					background-color: #ff5400;
-				}
-				&.games {
-					background-color: #94d11f;
-				}
-				&.lifestyle {
-					background-color: #ffd000;
-				}
-				&.movies {
-					background-color: #09d3bf;
-				}
-				&.music {
-					background-color: #c819ad;
-				}
-				&.tv {
-					background-color: #00b7e0;
+				.icon circle {
+					fill-opacity: 1;
 				}
 			}
 
-			&.books .icon {
+			&.books .icon,  &.books.active {
 				background-color: #ff7f26;
 			}
-			&.comics .icon {
+			&.comics .icon,  &.comics.active  {
 				background-color: #ff5400;
 			}
-			&.games .icon {
+			&.games .icon,  &.games.active  {
 				background-color: #94d11f;
 			}
-			&.lifestyle .icon {
+			&.lifestyle .icon,  &.lifestyle.active  {
 				background-color: #ffd000;
 			}
-			&.movies .icon {
+			&.movies .icon,  &.movies.active  {
 				background-color: #09d3bf;
 			}
-			&.music .icon {
+			&.music .icon,  &.music.active  {
 				background-color: #c819ad;
 			}
-			&.tv .icon {
+			&.tv .icon,  &.tv.active  {
 				background-color: #00b7e0;
 			}
 		}
 
-		.books:not(.active) .icon {
-			background-image: url(/skins/oasis/images/GlobalNavigation/books.svg); /* base64 */
-		}
-		.books.active .icon {
-			background-image: url(/skins/oasis/images/GlobalNavigation/books_hover.svg); /* base64 */
-		}
-		.comics:not(.active) .icon {
-			background-image: url(/skins/oasis/images/GlobalNavigation/comics.svg); /* base64 */
-		}
-		.comics.active .icon {
-			background-image: url(/skins/oasis/images/GlobalNavigation/comics_hover.svg); /* base64 */
-		}
-		.games:not(.active) .icon {
-			background-image: url(/skins/oasis/images/GlobalNavigation/games.svg); /* base64 */
-		}
-		.games.active .icon {
-			background-image: url(/skins/oasis/images/GlobalNavigation/games_hover.svg); /* base64 */
-		}
-		.lifestyle:not(.active) .icon {
-			background-image: url(/skins/oasis/images/GlobalNavigation/lifestyle.svg); /* base64 */
-		}
-		.lifestyle.active .icon {
-			background-image: url(/skins/oasis/images/GlobalNavigation/lifestyle_hover.svg); /* base64 */
-		}
-		.movies:not(.active) .icon {
-			background-image: url(/skins/oasis/images/GlobalNavigation/movies.svg); /* base64 */
-		}
-		.movies.active .icon {
-			background-image: url(/skins/oasis/images/GlobalNavigation/movies_hover.svg); /* base64 */
-		}
-		.music:not(.active) .icon {
-			background-image: url(/skins/oasis/images/GlobalNavigation/music.svg); /* base64 */
-		}
-		.music.active .icon {
-			background-image: url(/skins/oasis/images/GlobalNavigation/music_hover.svg); /* base64 */
-		}
-		.tv:not(.active) .icon {
-			background-image: url(/skins/oasis/images/GlobalNavigation/tv.svg); /* base64 */
-		}
-		.tv.active .icon {
-			background-image: url(/skins/oasis/images/GlobalNavigation/tv_hover.svg); /* base64 */
-		}
+//		.books:not(.active) .icon {
+//			background-image: url(/skins/oasis/images/GlobalNavigation/books.svg); /* base64 */
+//		}
+//		.books.active .icon {
+//			background-image: url(/skins/oasis/images/GlobalNavigation/books_hover.svg); /* base64 */
+//		}
+//		.comics:not(.active) .icon {
+//			background-image: url(/skins/oasis/images/GlobalNavigation/comics.svg); /* base64 */
+//		}
+//		.comics.active .icon {
+//			background-image: url(/skins/oasis/images/GlobalNavigation/comics_hover.svg); /* base64 */
+//		}
+//		.games:not(.active) .icon {
+//			background-image: url(/skins/oasis/images/GlobalNavigation/games.svg); /* base64 */
+//		}
+//		.games.active .icon {
+//			background-image: url(/skins/oasis/images/GlobalNavigation/games_hover.svg); /* base64 */
+//		}
+//		.lifestyle:not(.active) .icon {
+//			background-image: url(/skins/oasis/images/GlobalNavigation/lifestyle.svg); /* base64 */
+//		}
+//		.lifestyle.active .icon {
+//			background-image: url(/skins/oasis/images/GlobalNavigation/lifestyle_hover.svg); /* base64 */
+//		}
+//		.movies:not(.active) .icon {
+//			background-image: url(/skins/oasis/images/GlobalNavigation/movies.svg); /* base64 */
+//		}
+//		.movies.active .icon {
+//			background-image: url(/skins/oasis/images/GlobalNavigation/movies_hover.svg); /* base64 */
+//		}
+//		.music:not(.active) .icon {
+//			background-image: url(/skins/oasis/images/GlobalNavigation/music.svg); /* base64 */
+//		}
+//		.music.active .icon {
+//			background-image: url(/skins/oasis/images/GlobalNavigation/music_hover.svg); /* base64 */
+//		}
+//		.tv:not(.active) .icon {
+//			background-image: url(/skins/oasis/images/GlobalNavigation/tv.svg); /* base64 */
+//		}
+//		.tv.active .icon {
+//			background-image: url(/skins/oasis/images/GlobalNavigation/tv_hover.svg); /* base64 */
+//		}
 
 		@for $i from 1 through 7 {
 			&.count-#{$i} section,
@@ -213,15 +213,14 @@ $shadow-width: 1px;
 			a, h2 {
 				color: inherit;
 				font: inherit;
-				padding-bottom: 19px;
+				padding-bottom: 12px;
 			}
 
 			h2 {
 				font-weight: bold;
-				padding-bottom: 19px;
 
 				&:not(:first-child) {
-					padding-top: 30px;
+					padding-top: 20px;
 				}
 			}
 
@@ -231,12 +230,12 @@ $shadow-width: 1px;
 
 			&[data-submenu='0'] {
 				left: 302px;
-				padding: 26px 18px 26px 12px;
+				padding: 26px 18px 12px;
 				width: 258px;
 			}
 			&[data-submenu='1'] {
 				left: 560px;
-				padding: 26px 24px 26px 24px;
+				padding: 26px 24px;
 				width: 294px;
 			}
 		}
@@ -292,8 +291,7 @@ $shadow-width: 1px;
 		width: 52px;
 	}
 	.GlobalNavigationContainer {
-		width: -webkit-calc(100% - 258px);
-		width: calc(100% - 258px);
+		@include width-calc('100% - 258px');
 
 		> nav {
 			width: 766px;
