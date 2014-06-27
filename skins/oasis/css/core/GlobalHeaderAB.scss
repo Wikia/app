@@ -316,7 +316,7 @@ $facebook-background-color: #3c5b9b;
 					color: $new-border-color;
 					font-style: italic;
 				}
-				background-color: initial;
+				background-color: $nav-background-color;
 				border: 0;
 				border-bottom: 1px solid $new-border-color;
 				color: $nav-font-color;
