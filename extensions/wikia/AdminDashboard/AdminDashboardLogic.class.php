@@ -66,6 +66,7 @@ class AdminDashboardLogic {
 				"Following",
 				"Forum",
 				"ImageReview",
+				"InteractiveMaps",
 				"Invalidateemail",
 				"LandingPageSmurfs",
 				"LayoutBuilder",
@@ -115,8 +116,7 @@ class AdminDashboardLogic {
 				"WikiaStyleGuide",
 				"WikiFactory",
 				"WikiFactoryReporter",
-				"WikiStats",
-				'InteractiveMaps'
+				"WikiStats"
 			);
 			return (!in_array($alias, $exclusionList));
 		}
