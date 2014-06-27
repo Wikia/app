@@ -86,6 +86,8 @@ class WikiaInteractiveMapsParserTagController extends WikiaController {
 		$params = $this->getMapPlaceholderParams();
 		$mapsModel = new WikiaMaps( $this->wg->IntMapConfig );
 
+		$params->map->image = $mapsModel->createCroppedThumb( $params->map->image, self::DEFAULT_WIDTH, self::DEFAULT_HEIGHT );
+
 		$params->map->url = $mapsModel->getMapRenderUrl([
 			$params->map->id,
 			$params->zoom,

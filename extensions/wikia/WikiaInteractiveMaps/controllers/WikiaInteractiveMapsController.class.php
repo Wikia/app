@@ -7,6 +7,8 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 
 	const MAP_HEIGHT = 600;
 	const MAPS_PER_PAGE = 10;
+	const MAP_THUMB_WIDTH = 1110;
+	const MAP_THUMB_HEIGHT = 300;
 	const PAGE_NAME = 'InteractiveMaps';
 	const TRANSLATION_FILENAME = 'translations.json';
 	const MAPS_WIKIA_URL = 'http://maps.wikia.com';
@@ -69,8 +71,15 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 			return;
 		}
 
+		// convert images to thumbs
+		foreach ( $mapsResponse->items as $item ) {
+			$item->image = $this->mapsModel->createCroppedThumb( $item->image, self::MAP_THUMB_WIDTH, self::MAP_THUMB_HEIGHT, 'origin' );
+		}
+
 		$this->setVal( 'maps', $mapsResponse->items );
 		$this->setVal( 'hasMaps', !empty( $mapsResponse->total ) );
+		$this->setVal( 'mapThumbWidth', self::MAP_THUMB_WIDTH );
+		$this->setVal( 'mapThumbHeight', self::MAP_THUMB_HEIGHT );
 
 		$url = $this->getContext()->getTitle()->getFullURL();
 		$this->setVal( 'baseUrl', $url );

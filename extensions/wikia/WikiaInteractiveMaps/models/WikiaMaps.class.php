@@ -24,6 +24,8 @@ class WikiaMaps extends WikiaObject {
 	const HTTP_UPDATED = 303;
 	const HTTP_NO_CONTENT = 204;
 
+	const MAP_THUMB_PREFIX = '/thumb/';
+
 
 	/**
 	 * Controls the request caching
@@ -505,5 +507,25 @@ class WikiaMaps extends WikiaObject {
 		}
 
 		return $options;
+	}
+
+	/**
+	 * @desc returns URL to the cropped thumb of an image
+	 *
+	 * @param String $url - image url
+	 * @param Integer $width
+	 * @param Integer $height
+	 * @param String $align - crop align (origin || center)
+ 	 *
+	 * @return String - thumbnail URL
+	 */
+	public function createCroppedThumb( $url, $width, $height, $align = 'center' ) {
+		$imageServing = new ImageServing( null, $width, $height );
+		$breakPoint = strrpos( $url, '/' );
+		$baseURL = substr( $url, 0, $breakPoint );
+		$fileName = substr( $url , $breakPoint + 1 );
+		$crop = urlencode( $imageServing->getCut( $width, $height, $align ) );
+
+		return $baseURL . self::MAP_THUMB_PREFIX . $fileName . '/' . $crop . '-' . $fileName;
 	}
 }
