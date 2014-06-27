@@ -84,7 +84,7 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 		];
 		$this->setVal( 'messages', $messages );
 		$this->setVal( 'sortingOptions', $this->mapsModel->getSortingOptions( $selectedSort ) );
-		$this->setVal( 'searchInput', F::app()->renderView( 'Search', 'Index' ) );
+		$this->setVal( 'searchInput', $this->app->renderView( 'Search', 'Index' ) );
 		$this->setVal( 'learnMoreUrl', self::MAPS_WIKIA_URL );
 
 		$urlParams = [];
