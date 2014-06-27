@@ -285,13 +285,17 @@ define(
 		 * @param {integer} value
 		 */
 		function track(action, label, value) {
-			tracker.track({
-				trackingMethod: 'ga',
+			var trackingParams = {trackingMethod: 'ga',
 				category: 'map',
 				action: action,
-				label: label,
-				value: value
-			});
+				label: label
+			};
+
+			if( value ) {
+				trackingParams.value = value;
+			}
+
+			tracker.track(trackingParams);
 		}
 
 		return {

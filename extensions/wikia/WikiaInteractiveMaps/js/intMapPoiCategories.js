@@ -375,13 +375,14 @@ define('wikia.intMap.poiCategories',
 				format: 'json',
 				data: data,
 				callback: function(response) {
-					var data = response.results;
+					var results = response.results;
 
-					if (data && data.success) {
+					if (results && results.success) {
 						utils.cleanUpError(modal);
-						modal.trigger('poiCategoriesCreated', data.content);
+						modal.trigger('poiCategoriesCreated', results.content);
+						trackPoiCategoryActions(data);
 					} else {
-						utils.showError(modal, data.content.message);
+						utils.showError(modal, results.content.message);
 						modal.activate();
 					}
 				},
@@ -410,6 +411,21 @@ define('wikia.intMap.poiCategories',
 				modal.trigger('close');
 			} else {
 				qs(mapUrl).goTo();
+			}
+		}
+
+		/**
+		 * @desc Sends to GA tracking once a POI category data has been sent to the service
+		 *
+		 * @param {object} data
+		 */
+		function trackPoiCategoryActions(data) {
+			if( mode === 'edit' ) {
+				utils.track(utils.trackerActions.IMPRESSION, 'poi-category-edited', data.mapId);
+			}
+
+			if( mode === 'create' ) {
+				utils.track(utils.trackerActions.IMPRESSION, 'poi-category-added', data.mapId);
 			}
 		}
 

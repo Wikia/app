@@ -64,10 +64,10 @@ define(
 
 		/**
 		 * @desc initializes and configures UI
+		 *
 		 * @param {object} modalRef - modal component
 		 * @param {string} mustacheTemplate - mustache template
 		 */
-
 		function init(modalRef, mustacheTemplate) {
 			modal = modalRef;
 			template = mustacheTemplate;
@@ -77,9 +77,9 @@ define(
 
 		/**
 		 * @desc shows preview step before creating a map
+		 *
 		 * @param {object} tileSet - chosen tile set data
 		 */
-
 		function preview(tileSet) {
 			modal.trigger('cleanUpError');
 
@@ -95,7 +95,6 @@ define(
 		/**
 		 * @desc validates title
 		 */
-
 		function validateTitle() {
 			var dfd = new $.Deferred(),
 				title = $title.val();
@@ -115,7 +114,6 @@ define(
 		/**
 		 * @desc sends create map request to backend
 		 */
-
 		function createMap() {
 			$.nirvana.sendRequest({
 				controller: 'WikiaInteractiveMapsMap',
@@ -128,6 +126,7 @@ define(
 					if (data && data.success) {
 						modal.trigger('cleanUpError');
 						modal.trigger('mapCreated', data.content);
+						trackMapCreation(tileSetData);
 					} else {
 						modal.trigger('error', data.content.message);
 					}
@@ -144,10 +143,12 @@ define(
 				mapId: data.id,
 				mapUrl: data.mapUrl
 			});
+			utils.track(utils.trackerActions.IMPRESSION, 'poi-category-modal-shown');
 		}
 
 		/**
 		 * @desc opens modal associated with chosen action preceded by forced login modal for anons
+		 *
 		 * @param {string} action - name of action
 		 * @param {object} params
 		 */
@@ -163,7 +164,24 @@ define(
 			}
 		}
 
+		/**
+		 * @desc Sends tracking data to GA depending on tileSetData
+		 *
+		 * @param {object} tileSetData
+		 */
+		function trackMapCreation(tileSetData) {
+			if (tileSetData.type === 'geo') {
+				utils.track(utils.trackerActions.IMPRESSION, 'real-map-created');
+			}
+
+			if (tileSetData.type === 'custom' && tileSetData.tileSetId) {
+				utils.track(utils.trackerActions.IMPRESSION, 'custom-map-created', tileSetData.tileSetId);
+			} else if (tileSetData.type === 'custom' && !tileSetData.tileSetId) {
+				utils.track(utils.trackerActions.IMPRESSION, 'custom-map-created-with-new-tileset');
+			}
+		}
+
 		return {
 			init: init
-		}
+		};
 });
