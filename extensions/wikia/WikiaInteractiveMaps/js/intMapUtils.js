@@ -197,6 +197,8 @@ define(
 			var uploadEntryPoint = '/wikia.php?controller=WikiaInteractiveMapsBase&method=upload&uploadType=' +
 				uploadType + '&format=json';
 
+			modal.deactivate();
+
 			$.ajax({
 				contentType: false,
 				data: formData,
@@ -215,9 +217,12 @@ define(
 					} else {
 						showError(modal, data.errors.pop());
 					}
+
+					modal.activate();
 				},
 				error: function(response) {
 					showError(modal, response.results.error);
+					modal.activate();
 				}
 			});
 		}
@@ -299,6 +304,22 @@ define(
 			tracker.track(trackingParams);
 		}
 
+		/*
+		 * @desc creates image url for thumbnailer
+		 * @param {string} url - image url
+		 * @param {number} width
+		 * @param {number=} height
+		 * @returns {string} - thumb url
+		 */
+		function createThumbURL(url, width, height) {
+			var breakPoint = url.lastIndexOf('/'),
+				baseUrl = url.slice(0, breakPoint),
+				fileName = url.slice(breakPoint + 1),
+				crop = (height ? width + 'x' + height : width + 'px') + '-';
+
+			return baseUrl + '/thumb/' + fileName + '/' + crop + fileName;
+		}
+
 		return {
 			loadModal: loadModal,
 			createModal: createModal,
@@ -314,6 +335,7 @@ define(
 			handleNirvanaException: handleNirvanaException,
 			showError: showError,
 			cleanUpError: cleanUpError,
+			createThumbURL: createThumbURL,
 			track: track,
 			trackerActions: tracker.ACTIONS,
 			tilesetTypes: {
@@ -323,3 +345,4 @@ define(
 		};
 	}
 );
+

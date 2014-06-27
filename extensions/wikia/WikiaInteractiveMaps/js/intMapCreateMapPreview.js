@@ -14,19 +14,19 @@ define(
 			template,
 			// template data
 			templateData = {
+				titleLabel: $.msg('wikia-interactive-maps-create-map-title-label'),
 				titlePlaceholder: $.msg('wikia-interactive-maps-create-map-title-placeholder'),
-				tileSetData:  null,
-				userName: w.wgUserName
+				tileSetTitleLabel: $.msg('wikia-interactive-maps-create-map-tile-set-title-label'),
+				tileSetTitlePlaceholder: $.msg('wikia-interactive-maps-create-map-tile-set-title-placeholder'),
+				previewImgAlt: $.msg('wikia-interactive-maps-create-map-tile-set-image-preview-alt'),
+				tileSetData:  null
 			},
 			//modal events
 			events = {
 				previewTileSet: [
-					function(data) {
-						preview(data);
-					}
+					preview
 				],
 				createMap: [
-					validateTitle,
 					createMap
 				],
 				mapCreated: [
@@ -40,8 +40,10 @@ define(
 			},
 			// tile set data for map creation
 			tileSetData,
-			// selector for title input
-			$title,
+			// preview Thumb width
+			thumbWidth = 660,
+			// selector for title inputs
+			$textFields,
 
 			//TODO we should move all of them to single file
 			actions = {
@@ -81,44 +83,84 @@ define(
 		 * @param {object} tileSet - chosen tile set data
 		 */
 		function preview(tileSet) {
+			var originalImageURL = tileSet.originalImageURL;
 			modal.trigger('cleanUpError');
 
 			tileSetData = tileSet;
+			// set type param for mustache template
+			tileSetData[tileSet.type] = true;
+
+			if(originalImageURL) {
+				tileSetData.originalImageURL = utils.createThumbURL(originalImageURL, thumbWidth);
+			}
+
 			templateData.tileSetData = tileSetData;
 			modal.$innerContent.html(utils.render(template, templateData));
 			utils.setButtons(modal, buttons);
 
 			// cache input title selector
-			$title = $('#intMapTitle');
+			$textFields = modal.$innerContent.find('input[type="text"]');
 		}
 
 		/**
-		 * @desc validates title
+		 * @desc handler for create map event
 		 */
-		function validateTitle() {
-			var dfd = new $.Deferred(),
-				title = $title.val();
+		function createMap() {
+			if (validateData()) {
+				createMapRequest();
+			}
+		}
 
-			if (!utils.isEmpty(title)) {
-				// add valid title to tile set data
-				tileSetData.title = title;
-				dfd.resolve();
-			} else {
-				modal.trigger('error', 'Title must be set');
-				dfd.reject();
+		/**
+		 * @desc validates map creation form data and extends tile set data if valid
+		 * @returns {boolean}
+		 */
+		function validateData() {
+			var isValid = true;
+
+			$textFields.each(function() {
+				var value = validateInput($(this));
+
+				if (value) {
+					tileSetData[$(this).attr('name')] = value;
+					return true
+				} else {
+					isValid = false;
+					return false;
+				}
+			});
+
+			return isValid;
+		}
+
+		/**
+		 * @desc validates input field
+		 * @param {object} $element - jQuery selector object
+		 * @returns {string|boolean} - input value or false if not valid
+		 */
+		function validateInput($element) {
+			var errorMsg = 'wikia-interactive-maps-create-map-validation-error-',
+				value = $element.val();
+
+			if (utils.isEmpty(value)) {
+				value = false;
+				modal.trigger('error', $.msg(errorMsg + $element.attr('name')));
 			}
 
-			return dfd.promise();
+			return value;
 		}
 
 		/**
 		 * @desc sends create map request to backend
 		 */
-		function createMap() {
+		function createMapRequest() {
+			modal.deactivate();
+
 			$.nirvana.sendRequest({
 				controller: 'WikiaInteractiveMapsMap',
 				method: 'createMap',
 				format: 'json',
+				type: 'POST',
 				data: tileSetData,
 				callback: function(response) {
 					var data = response.results;
@@ -130,9 +172,13 @@ define(
 					} else {
 						modal.trigger('error', data.content.message);
 					}
+
+					modal.activate();
 				},
 				onErrorCallback: function(response) {
 					utils.handleNirvanaException(modal, response);
+					modal.activate();
+
 				}
 			});
 		}

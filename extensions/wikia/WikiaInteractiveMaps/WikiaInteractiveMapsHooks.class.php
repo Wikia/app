@@ -30,6 +30,24 @@ class WikiaInteractiveMapsHooks {
 	}
 
 	/**
+	 * @brief Adds the CSS asset
+	 *
+	 * @param OutputPage $out
+	 * @param string $text article HTML
+	 *
+	 * @return bool: true because it is a hook
+	 */
+	static public function onOutputPageBeforeHTML( OutputPage $out, &$text ) {
+		global $wgEnableWikiaInteractiveMaps;
+
+		if( !empty( $wgEnableWikiaInteractiveMaps ) && $out->isArticle() ) {
+			F::app()->wg->Out->addStyle( AssetsManager::getInstance()->getSassCommonURL( 'extensions/wikia/WikiaInteractiveMaps/css/intMapParserTag.scss' ) );
+		}
+
+		return true;
+	}
+
+	/**
 	 * @brief Returns true if interactive maps are enabled and the current page is Special:Maps
 	 *
 	 * @return bool
@@ -42,3 +60,4 @@ class WikiaInteractiveMapsHooks {
 	}
 
 }
+
