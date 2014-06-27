@@ -143,11 +143,12 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 			} elseif ( $this->request->getVal('hubs-slots', false)) {
 				$homePageSlotsValues = $this->request->getParams();
 				$homePageSlotsValues = $this->hubsForm->filterData($homePageSlotsValues);
+				$hubSavedSlotsValues = $homePageSlotsValues['hub_slot'];
+				$marketingSlotsValues = $this->getMarketingSlotsValues($homePageSlotsValues);
+				$marketingSavedSlotsValues = $this->prepareArrayFieldsForSave($marketingSlotsValues);
 				$isValid = $this->hubsForm->validate($homePageSlotsValues);
+				$isValid &= $this->validateMarketingSlots($marketingSavedSlotsValues);
 				if ( $isValid ) {
-					$hubSavedSlotsValues = $homePageSlotsValues['hub_slot'];
-					$marketingSlotsValues = $this->getMarketingSlotsValues($homePageSlotsValues);
-					$marketingSavedSlotsValues = $this->prepareArrayFieldsForSave($marketingSlotsValues);
 					$savedSlotsValues = [
 						'hub_slot' => $hubSavedSlotsValues,
 						'marketing_slot' => $marketingSavedSlotsValues
@@ -632,9 +633,12 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 	 */
 	private function prepareSlots( $savedSlotsValues ) {
 		$marketingSavedSlotsValues = $this->getMarketingSlotsValues($savedSlotsValues);
-		$marketingSavedSlotsValues = $marketingSavedSlotsValues['marketing_slot'];
-		$marketingSavedSlotsValues = $this->prepareArrayFieldsToShow($marketingSavedSlotsValues);
-
+		if( isset( $marketingSavedSlotsValues['marketing_slot'] ) ) {
+			$marketingSavedSlotsValues = $marketingSavedSlotsValues['marketing_slot'];
+			$marketingSavedSlotsValues = $this->prepareArrayFieldsToShow($marketingSavedSlotsValues);
+		} else {
+			$marketingSavedSlotsValues = [];
+		}
 		$homePageSlotsValues = [
 			'hub_slot' => $savedSlotsValues['hub_slot']
 		];
@@ -656,6 +660,33 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 			}
 		}
 		return $marketingImages;
+	}
+
+	/**
+	 * To use marketing slot, all fields should be filled
+	 *
+	 * @param $slots
+	 * @return bool
+	 */
+	private function validateMarketingSlots( $slots ) {
+		$isValid = true;
+
+		foreach( $slots as $slot ) {
+			if( !empty( $slot['marketing_slot_image'] )
+				|| !empty( $slot['marketing_slot_title'] )
+				|| !empty( $slot['marketing_slot_link'] )
+			) {
+				$isValid &=	!empty( $slot['marketing_slot_image'] )
+					&& !empty( $slot['marketing_slot_title'] )
+					&& !empty( $slot['marketing_slot_link'] );
+			}
+		}
+
+		if( !$isValid ) {
+			$this->errorMsg = wfMessage('manage-wikia-home-marketing-not-complete')->text();
+		}
+
+		return $isValid;
 	}
 
 	/**

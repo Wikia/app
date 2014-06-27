@@ -35,9 +35,6 @@ class WikiaHomePageController extends WikiaController {
 	const hubsImgWidth = 320;
 	const hubsImgHeight = 160;
 
-	const CORP_CITY_ID = 717284;
-	const SLOTS_IN_ROW = 3;
-
 	// values for oasis skin width change to 1030px
 	const REMIX_GRID_IMG_SMALL_WIDTH = 160;
 	const REMIX_GRID_IMG_SMALL_HEIGHT = 100;
@@ -125,11 +122,13 @@ class WikiaHomePageController extends WikiaController {
 
 				$hubsSlots = $this->fillEmptyHubSlots( $slots['hub_slot'] );
 
-				foreach( $hubsSlots as $slot => &$hubId ) {
-					if( is_numeric( $hubId ) && isset( $hubsV3List[ $hubId ] ) ) {
-						$hubSlot[ $slot ] = $this->prepareHubV3Slot( $hubsV3List[$hubId], $slot );
-					} else {
-						$hubSlot[ $slot ] = $this->prepareHubV2Slot( $hubId );
+				foreach( $hubsSlots as $slot => $hubId ) {
+					if( !empty( $hubId ) ) {
+						if( is_numeric( $hubId ) && isset( $hubsV3List[ $hubId ] ) ) {
+							$hubSlot[ $slot ] = $this->prepareHubV3Slot( $hubsV3List[$hubId], $slot );
+						} else {
+							$hubSlot[ $slot ] = $this->prepareHubV2Slot( $hubId );
+						}
 					}
 				}
 
@@ -186,24 +185,18 @@ class WikiaHomePageController extends WikiaController {
 	 */
 	private function prepareMarketingSlots( $slots, $index ) {
 		$marketingSlots = [];
-		$maxSlots = self::SLOTS_IN_ROW - ( $index % self::SLOTS_IN_ROW );
 
 		foreach( $slots as $slot ) {
 			if( !empty( $slot['marketing_slot_image'] ) ) {
 				$imgUrl = $this->getMarketingImage($slot['marketing_slot_image']);
 				if ( !empty( $imgUrl ) ) {
-					if ( $maxSlots ) {
-						$marketingSlots[$index] = [
-							'classname' =>		'hub-slot-' . ($index + 1),
-							'heading' => 		isset($slot['marketing_slot_title']) ? $slot['marketing_slot_title'] : '',
-							'heroimageurl' => 	$imgUrl,
-							'herourl' => 		isset($slot['marketing_slot_link']) ? $slot['marketing_slot_link'] : ''
-						];
-						$index++;
-						$maxSlots--;
-					} else {
-						break;
-					}
+					$marketingSlots[$index] = [
+						'classname' =>		'hub-slot-' . ($index + 1),
+						'heading' => 		isset($slot['marketing_slot_title']) ? $slot['marketing_slot_title'] : '',
+						'heroimageurl' => 	$imgUrl,
+						'herourl' => 		isset($slot['marketing_slot_link']) ? $slot['marketing_slot_link'] : ''
+					];
+					$index++;
 				}
 			}
 		}
