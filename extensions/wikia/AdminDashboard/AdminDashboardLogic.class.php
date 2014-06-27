@@ -116,7 +116,7 @@ class AdminDashboardLogic {
 				"WikiaStyleGuide",
 				"WikiFactory",
 				"WikiFactoryReporter",
-				"WikiStats"
+				"WikiStats",
 			);
 			return (!in_array($alias, $exclusionList));
 		}
