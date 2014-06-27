@@ -17,10 +17,6 @@ final class InfoboxBuilderHooks {
 	 * @return bool
 	 */
 	public static function registerScribuntoLibraries( $engine, array &$extraLibraries ) {
-		// if ( $engine !== 'luasandbox' ) {
-		// 	return true;
-		// }
-
 		$extraLibraries['mw.InfoboxBuilderHF']   = '\InfoboxBuilder\LuaLibrary';
 		$extraLibraries['mw.InfoboxBuilderView'] = '\InfoboxBuilder\LuaLibrary';
 		$extraLibraries['mw.InfoboxBuilder']     = '\InfoboxBuilder\LuaLibrary';
