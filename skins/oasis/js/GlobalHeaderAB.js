@@ -102,17 +102,13 @@ $(function(){
 				$arrow.attr( 'class', 'light' );
 			}
 		} )
-		.click( function() { $form.submit() } )
+		.click( function() { $form.submit(); } )
 		.append( $arrow )
 		.appendTo( $form );
 
-	$select
-		.change( function() {
-			$selectSpan.text( $( '#search-select option:selected' ).text() );
-		} )
-		.keyup( function() {
-			$selectSpan.text( $( '#search-select option:selected' ).text() );
-		} )
+	$select.on('change keyup', function() {
+			$selectSpan.text( $( '#search-select' ).find( 'option:selected' ).text() );
+		})
 		.focus( function() {
 			$selectChevron.attr( 'class', 'dark search-chevron' );
 		} )

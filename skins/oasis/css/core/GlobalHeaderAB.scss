@@ -156,13 +156,11 @@ $facebook-background-color: #3c5b9b;
 		font-size: 15px;
 		font-weight: bold;
 		padding: 0;
-		position: relative;
 		width: 176px;
 
 		svg {
 			height: 14px;
 			width: 14px;
-			position: absolute;
 			top: 27px;
 
 			path {
@@ -575,9 +573,11 @@ $facebook-background-color: #3c5b9b;
 
 			.start-a-wiki {
 				width: 84px;
+				position: relative;
 
 				svg {
-					@include calc(left, '100% - 65px');
+					@include calc(left, '100% - 48px');
+					position: absolute;
 				}
 
 				span {
