@@ -1,7 +1,7 @@
-@import "skins/oasis/css/core/color.scss";
-@import "skins/oasis/css/mixins/transition.scss";
-@import "skins/oasis/css/mixins/calc.scss";
-@import "skins/oasis/css/mixins/box-sizing-border-box.scss";
+@import "skins/oasis/css/core/color";
+@import "skins/oasis/css/mixins/box-sizing";
+@import "skins/oasis/css/mixins/calc";
+@import "skins/oasis/css/mixins/transition";
 
 $hubsmenu-background-color: #f7f7f7;
 $hubsmenu-font-color: #092140;
@@ -38,7 +38,7 @@ $shadow-width: 1px;
 	top: 66px;
 
 	* {
-		@include box-sizing-border-box;
+		@include box-sizing;
 	}
 
 	> nav {
