@@ -3,7 +3,7 @@ LOCAL NAVIGATION
 */
 
 .WikiHeaderV2 {
-	height: 60px;
+	height: 80px;
 	position: relative;
 	z-index: 3900000;
 }
@@ -12,10 +12,11 @@ LOCAL NAVIGATION
 	margin: 0 auto;
 }
 .WikiHeaderV2 .wordmark {
+	color: mix(red, green);
 	float: left;
 	height: 40px;
 	margin: 0;
-	padding: 10px 20px 10px 0;
+	padding: 20px 20px 20px 0;
 	font-size: 30px;
 	font-weight: bold;
 }
@@ -45,9 +46,9 @@ LOCAL NAVIGATION
 }
 .WikiNavV2 .nav .nav-item > a {
 	display: table-cell;
-	font-size: 18px;
+	font-size: 15px;
 	font-weight: bold;
-	height: 60px;
+	height: 80px;
 	padding: 0 20px;
 	text-decoration: none;
 	vertical-align: middle;
@@ -66,7 +67,7 @@ LOCAL NAVIGATION
 }
 .WikiNavV2 .nav .nav-item .submenu {
 	display: none;
-	padding: 30px 20px 40px;
+	padding: 30px 20px 80px;
 	position: absolute;
 }
 .WikiNavV2 .nav .nav-item .submenu.submenu-width-2 {
@@ -102,20 +103,19 @@ LOCAL NAVIGATION
 .WikiNavV2 .nav .nav-item .submenu .subnav-2a {
 	box-sizing: border-box;
 	display: inline-block;
-	font-size: 18px;
+	font-size: 15px;
 	font-weight: bold;
-	line-height: 20px;
-	padding-bottom: 10px;
-	padding-right: 10px;
+	line-height: 16px;
+	//padding-bottom: 10px;
+	padding-right: 15px;
 	position: relative;
 	text-transform: uppercase;
-	width: 100%;
 }
 .WikiNavV2 .nav .nav-item .submenu .subnav-2a svg {
 	position: absolute;
 	right: 0;
-	top: -webkit-calc(50% - 9px);
-	top: calc(50% - 9px);
+	top: -webkit-calc(50% - 5px);
+	top: calc(50% - 5px);
 }
 .WikiNavV2 .nav .nav-item .submenu li.subnav-2-item {
 	float: left;
@@ -126,9 +126,9 @@ LOCAL NAVIGATION
 	clear: left;
 }
 .WikiNavV2 .nav .nav-item .submenu .subnav-3a {
-	font-size: 18px;
+	font-size: 15px;
 	font-weight: normal;
-	line-height: 20px;
+	//line-height: 20px;
 }
 .WikiNavV2 .nav .nav-item .submenu ul.subnav-3 {
 	margin-top: 15px;
@@ -139,11 +139,11 @@ LOCAL NAVIGATION
 .WikiNavV2 .nav .nav-item .submenu .see-all {
 	bottom: 0;
 	display: table-cell;
-	font-size: 18px;
+	font-size: 15px;
 	font-weight: bold;
-	height: 40px;
+	height: 75px;
 	left: 0;
-	line-height: 40px;
+	line-height: 75px;
 	padding-right: 40px;
 	position: absolute;
 	right: 0;

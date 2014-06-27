@@ -20,6 +20,13 @@ jQuery(function () {
 			headerBackgroundColor = jQuery('.WikiaPage .WikiaPageBackground').css('background-color') || '#000',
 			linkColor = jQuery('.WikiHeader > nav li.marked > a').css('color') || '#fff',
 			backgroundColor = jQuery('.WikiHeader > nav li.marked').css('background-color') || '#000',
+			replaceAlpha = function(color, alpha) {
+				if (color.indexOf('rgba') === 0){
+					return color.replace(/[^,]+(?=\))/, alpha);
+				} else {
+					return color.replace('rgb','rgba').replace(')', ',' + alpha + ')');
+				}
+			},
 			css = '.WikiHeaderV2 { \
 		background: $header-color-global; \
 	} \
@@ -43,20 +50,20 @@ jQuery(function () {
 		background: $header-color-background; \
 		color: $header-color-link; \
 	} \
-	.WikiNavV2 .nav-item .submenu .subnav-2a { \
-		border-bottom: 1px solid $header-color-link; \
-	} \
 	.WikiNavV2 .nav-item .submenu .subnav-2a svg polygon { \
 		fill: $header-color-link; \
+		opacity: .5; \
 	} \
 	.WikiNavV2 .nav-item .submenu .see-all { \
-		border-top: 1px solid $header-color-link; \
+		border-top: 1px solid $header-color-link-with-alpha; \
 	} \
 	.WikiNavV2 .nav-item .submenu .see-all svg polygon { \
 		fill: $header-color-link; \
+		opacity: .5; \
 	} \
 	'.replace(/\$header-color-global/g, headerBackgroundColor)
 				.replace(/\$header-color-link-primary/g, headerLinkColor)
+				.replace(/\$header-color-link-with-alpha/g, replaceAlpha( linkColor, '.2' ) )
 				.replace(/\$header-color-link/g, linkColor)
 				.replace(/\$header-color-background/g, backgroundColor),
 			head = document.head || document.getElementsByTagName('head')[0],
