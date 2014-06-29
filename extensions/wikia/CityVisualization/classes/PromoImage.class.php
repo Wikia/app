@@ -32,6 +32,31 @@ class PromoImage extends WikiaObject {
 		return new PromoImage($type, $dbName);
 	}
 
+	/**
+	 * @deprecated
+	 */
+	static public function oldVersionFixup($fileName, $cityId = null) {
+		if (!empty($fileName)){
+			$type = self::inferType($fileName);
+			if ($type != self::INVALID) {
+				$promo = new PromoImage($type);
+				if (!empty($cityId)){
+					$promo->ensureCityIdIsSet($cityId);
+				}
+				return $promo->getReviewedImageName();
+			}
+		}
+		return $fileName;
+	}
+
+	static public function getImage( $fileName ) {
+		if ( empty($fileName) ) {
+			return null;
+		} else {
+			return new PromoXWikiImage( $fileName );
+		}
+	}
+
 	static public function forWikiId($type, $cityId){
 		$promo = new PromoImage($type);
 		$promo->setCityId($cityId);
@@ -155,7 +180,6 @@ class PromoImage extends WikiaObject {
 				->AND_( "image_review_status" )->EQUAL_TO( ImageReviewStatuses::STATE_APPROVED )
 				->ORDER_BY( 'last_edited' )->DESC()->LIMIT( 1 )
 				->run( $db, function ( $result ) {
-					var_dump("asfasdfasdfasdfasd");
 					$row = $result->fetchObject( $result );
 					if ( $row && isset($row->image_name) )
 					{
@@ -311,7 +335,7 @@ class PromoImage extends WikiaObject {
 	/*
 	 * @deprecated
 	 */
-	protected function inferType($fileName, &$dbName = null){
+	protected static function inferType($fileName, &$dbName = null){
 		$pattern = "/^(".self::__MAIN_IMAGE_BASE_NAME.")?(".self::__ADDITIONAL_IMAGES_BASE_NAME."-(\d)?)?,?([^.]{1,})?\.?(.*)$/i";
 		$type = self::INVALID;
 
