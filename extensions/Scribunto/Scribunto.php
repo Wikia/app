@@ -69,7 +69,7 @@ $sbtpl = array(
 
 $wgResourceModules['ext.scribunto'] = $sbtpl + array(
 	'scripts' => 'ext.scribunto.js',
-	'dependencies' => array( 'jquery.ui.dialog' ),
+	// 'dependencies' => array( 'jquery.ui.dialog' ),
 	'messages' => array(
 		'scribunto-parser-dialog-title'
 	),
