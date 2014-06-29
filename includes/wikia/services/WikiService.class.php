@@ -388,13 +388,8 @@ class WikiService extends WikiaModel {
 			foreach ( $main_images as $wiki_id => $wiki_main_images ) {
 				// Pick the most recently uploaded image
 				$main_image = array_shift($wiki_main_images);
-				$file_handler = new PromoXWikiImage( $main_image);
-				$images[$wiki_id] = ImagesService::overrideThumbnailFormat(
-					$file_handler->getThumbnailUrl(
-						empty($imageHeight)?$imageWidth:implode('x', [$imageWidth, $imageHeight])
-					),
-					ImagesService::EXT_JPG
-				);
+				$xwikiImage = new PromoXWikiImage( $main_image);
+				$images[$wiki_id] = $xwikiImage->getCroppedThumbnailUrl($imageHeight, $imageHeight, ImagesService::EXT_JPG);
 			}
 		} catch ( Exception $e ) {
 			Wikia::log( __METHOD__, false, $e->getMessage() );
