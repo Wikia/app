@@ -31,6 +31,10 @@ abstract class BaseXWikiImage {
 		return wfReplaceImageServer( $this->getPurgeUrl() );
 	}
 
+	public function getName(){
+		return $this->name;
+	}
+
 	public function getThumbnailUrl( $width ) {
 		$url = ImagesService::getThumbUrlFromFileUrl( $this->getThumbnailPurgeUrl(), $width );
 		return wfReplaceImageServer( $url );
