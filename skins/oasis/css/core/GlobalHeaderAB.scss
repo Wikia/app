@@ -276,7 +276,7 @@ $facebook-background-color: #3c5b9b;
 			background-color: $nav-background-color;
 			border: 1px solid $new-border-color;
 			border-top: 0;
-			top: $new-nav-height;
+			top: $new-nav-height + 1px;
 
 			> li {
 				border-top: 1px solid $new-border-color;
@@ -353,6 +353,7 @@ $facebook-background-color: #3c5b9b;
 				padding: 0 20px;
 				text-transform: uppercase;
 				width: 100%;
+				-webkit-appearance: none;
 			}
 
 			.forgot-password {
