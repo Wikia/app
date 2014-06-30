@@ -105,14 +105,8 @@ class ThumbnailVideo extends ThumbnailImage {
 		return $thumb->toHtml( array( 'img-class' => $options['img-class'] ) );
 	}
 
-	function renderView( $options = array() ) {
-		WikiaLogger::instance()->debug('Media method '.__METHOD__.' called',
-			array_merge( $options, [ 'url' => $this->url, 'method' => __METHOD__ ] ) );
-
-		return F::app()->renderView( 'ThumbnailController', 'video', [
-			'thumb'   => $this,
-			'options' => $options,
-		] );
+	function mediaType() {
+		return 'video';
 	}
 
 	/**

@@ -59,7 +59,19 @@ abstract class MediaTransformOutput {
 		$this->storagePath = $storagePath;
 	}
 
-	abstract public function renderView( $options = array() );
+	function mediaType() {
+		return 'image';
+	}
+
+	function renderView( array $options = array() ) {
+		WikiaLogger::instance()->debug( 'Media method '.__METHOD__.' called',
+			array_merge( $options, [ 'url' => $this->url, 'method' => __METHOD__ ] ) );
+
+		return F::app()->renderView( 'ThumbnailController', $this->mediaType(), [
+			'thumb'   => $this,
+			'options' => $options,
+		] );
+	}
 
 	/**
 	 * Fetch HTML for this transform output
@@ -212,16 +224,6 @@ class ThumbnailImage extends MediaTransformOutput {
 		$this->page = $page;
 	}
 
-	function renderView( $options = array() ) {
-		WikiaLogger::instance()->debug( 'Media method '.__METHOD__.' called',
-			array_merge( $options, [ 'url' => $this->url, 'method' => __METHOD__ ] ) );
-
-		return F::app()->renderView( 'ThumbnailController', 'image', [
-			'thumb'   => $this,
-			'options' => $options,
-		] );
-	}
-
 	/**
 	 * Return HTML <img ... /> tag for the thumbnail, will include
 	 * width and height attributes and a blank alt text (as required).
@@ -339,8 +341,9 @@ class MediaTransformError extends MediaTransformOutput {
 		$this->path = false;
 	}
 
+	// Keep the same error functionality as before
 	function renderView ( $options = array() ) {
-		return '';
+		return $this->toHtml( $options );
 	}
 
 	function toHtml( $options = array() ) {
