@@ -356,7 +356,7 @@ define(
 		}
 
 		/**
-		 * @desc Sends to GA what map type was chosen only if the back button wasn't clicked
+		 * @desc Sends to GA what map type was chosen
 		 *
 		 * @param {string} type
 		 */
