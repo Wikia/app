@@ -144,34 +144,46 @@ $(function(){
 
 	if (window.wgUserName !== null) {
 		$wallNotifications = $( '#WallNotifications');
-		$notifications = $('<li class="notificationsEntry"><a href="#"><span id="bubbles_count"></span>Notifications</a></li>');
+		if(!$wallNotifications.hasClass('prehide')) {
+			$notifications = $('<li class="notificationsEntry"><a href="#"><span id="bubbles_count"></span>Notifications</a></li>');
 
-		$accountNavigation.on('mouseover', '.notificationsEntry', function(){
-			$('.subnav', $wallNotifications).addClass('show');
-		});
+			$accountNavigation.on('mouseover', '.notificationsEntry', function(){
+				$('.subnav', $wallNotifications).addClass('show');
+			});
 
-		$accountNavigation.on('mouseover', function(){
-			if( !window.removedFromHoverMenu ) {
-				$bubblesNotifications = $('.notificationsEntry #bubbles_count');
-				$bubblesNavigation = $('.bubbles #bubbles_count');
-				removeWallNotificationsFromHoverMenu();
-				window.removedFromHoverMenu = true;
-			}
-			$bubblesNotifications.text($bubblesNavigation.text());
-			$('>li >.subnav', $accountNavigation).addClass('show');
-		});
+			$accountNavigation.on('mouseover', function(){
+				if( !window.removedFromHoverMenu ) {
+					$bubblesNotifications = $('.notificationsEntry #bubbles_count');
+					$bubblesNavigation = $('.bubbles #bubbles_count');
+					removeWallNotificationsFromHoverMenu();
+					window.removedFromHoverMenu = true;
+				}
+				$bubblesNotifications.text($bubblesNavigation.text());
+				$('>li >.subnav', $accountNavigation).addClass('show');
+			});
 
-		$accountNavigation.on('mouseleave', '.notificationsEntry', function(){
-			$('.subnav', $wallNotifications).removeClass('show');
-		});
+			$accountNavigation.on('mouseleave', '.notificationsEntry', function(){
+				$('.subnav', $wallNotifications).removeClass('show');
+			});
+
+
+
+			$( '#AccountNavigation > li:first > a' ).append($('.bubbles'));
+			$notifications.append($wallNotifications);
+			$accountNavsubnav.prepend($notifications);
+		} else {
+			$accountNavigation.on('mouseover', function(){
+				if( !window.removedFromHoverMenu ) {
+					removeWallNotificationsFromHoverMenu();
+					window.removedFromHoverMenu = true;
+				}
+				$('>li >.subnav', $accountNavigation).addClass('show');
+			});
+		}
 
 		$accountNavigation.on('mouseleave', function(){
 			$('>li >.subnav', $accountNavigation).removeClass('show');
 		});
-
-		$( '#AccountNavigation > li:first > a' ).append($('.bubbles'));
-		$notifications.append($wallNotifications);
-		$accountNavsubnav.prepend($notifications);
 	}
 
 	$accountNavsubnav.find( '.new' ).removeClass( 'new' );
