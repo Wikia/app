@@ -22,6 +22,9 @@ abstract class BaseTask {
 	/** @var int when running, the user id of the user who is running this task. */
 	protected $createdBy;
 
+	/** @var \User the loaded createdBy user */
+	protected $createdByUser;
+
 	/** @var \Title title this task is operating on */
 	protected $title = null;
 
@@ -124,6 +127,14 @@ abstract class BaseTask {
 		}
 
 		return $this->createdBy;
+	}
+
+	public function createdByUser() {
+		if ( empty( $this->createdByUser )) {
+			$this->createdByUser = \User::newFromId( $this->createdBy );
+		}
+
+		return $this->createdByUser;
 	}
 
 	/**
