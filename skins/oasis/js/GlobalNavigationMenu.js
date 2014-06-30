@@ -46,7 +46,27 @@ require([ 'jquery', 'wikia.ui.factory', 'wikia.nirvana' ], function ($, uiFactor
 			attachEvents = function() {
 				var $hub = $globalNavigationNav.find('.hub'),
 					submenu0 = $globalNavigationNav.find('[data-submenu=0]')[0],
-					submenu1 = $globalNavigationNav.find('[data-submenu=1]')[0];
+					submenu1 = $globalNavigationNav.find('[data-submenu=1]')[0],
+					isOpen = false,
+					openHub = function() {
+						$globalNavigationNav.find('.hub.' + $globalNavigationNav.data('active')).mouseenter();
+
+						$('#GlobalNavigationMenuButton').addClass('active');
+						$('.GlobalNavigationContainer').show();
+
+						isOpen = true;
+					}, closeHub = function() {
+						$('#GlobalNavigationMenuButton').removeClass('active');
+						$('.GlobalNavigationContainer').hide();
+
+						isOpen = false;
+					}, toggleHub = function() {
+						if (isOpen) {
+							closeHub();
+						} else {
+							openHub();
+						}
+					};
 
 				$globalNavigationNav.on('mouseenter', '.hub', function(e) {
 					e.preventDefault();
@@ -71,17 +91,15 @@ require([ 'jquery', 'wikia.ui.factory', 'wikia.nirvana' ], function ($, uiFactor
 					submenu1.innerHTML = html[1];
 
 				}).on('mouseleave', function(){
-					$('#GlobalNavigationMenuButton').removeClass('active');
-					$('.GlobalNavigationContainer').hide();
+					closeHub();
 				});
 
-				$('#WikiaHeader').on('mouseover click', '#GlobalNavigationMenuButton', function(e) {
+				$('#WikiaHeader').on('mouseenter click', '#GlobalNavigationMenuButton', function(e) {
 					e.preventDefault();
-					//
-					$globalNavigationNav.find('.hub.' + $globalNavigationNav.data('active')).mouseenter();
-
-					$('#GlobalNavigationMenuButton').addClass('active');
-					$('.GlobalNavigationContainer').show();
+					toggleHub();
+				}).on('click', '.GlobalNavigationContainer', function(e) {
+					e.preventDefault();
+					closeHub();
 				});
 			};
 
