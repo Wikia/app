@@ -215,7 +215,7 @@ class BaseRssModelTest extends WikiaBaseTest {
 			count( $itemsEmpty ),
 			$this->countUniqueTimestamps( $fixed ) );
 
-		// Check with items map, without timestamps duplicates
+		// Check with items map, without timestamp duplicates
 		$itemsWithoutDuplicatedTimestamps = [
 			'1' => [ 'timestamp' => 1 ],
 			'2' => [ 'timestamp' => 2 ],
@@ -228,7 +228,7 @@ class BaseRssModelTest extends WikiaBaseTest {
 			count( $itemsWithoutDuplicatedTimestamps ),
 			$this->countUniqueTimestamps( $fixed ) );
 
-		// Check with items map, with timestamps duplicates
+		// Check with items map, where timestamps duplicating
 		$itemsWithDuplicatedTimestamps = [
 			'1' => [ 'timestamp' => 1 ],
 			'2' => [ 'timestamp' => 1 ],
@@ -253,6 +253,77 @@ class BaseRssModelTest extends WikiaBaseTest {
 			$timestampsCount[ $timestamp ] = 1;
 		}
 		return count( $timestampsCount );
+	}
+
+	/**
+	 * @covers BaseRssModel::countUniqueTimestampsOccurrence
+	 */
+	public function testCountUniqueTimestampsOccurrence() {
+		$dummy = new DummyModel();
+		$countUniqueTimestampsOccurrence = self::getFn( $dummy, 'countUniqueTimestampsOccurrence' );
+
+		// Check with empty items map
+		$itemsEmpty = [ ];
+		$actual = $countUniqueTimestampsOccurrence( $itemsEmpty );
+		$expected = [ ];
+		$this->assertEquals( $expected, $actual );
+
+		// Check with items map, without timestamp duplicates
+		$itemsWithoutDuplicatedTimestamps = [
+			'1' => [ 'timestamp' => 1 ],
+			'2' => [ 'timestamp' => 2 ],
+			'3' => [ 'timestamp' => 3 ],
+			'4' => [ 'timestamp' => 4 ]
+		];
+		$actual = $countUniqueTimestampsOccurrence( $itemsWithoutDuplicatedTimestamps );
+		$expected = [
+			1 => 1,
+			2 => 1,
+			3 => 1,
+			4 => 1
+		];
+		$this->assertEquals( $expected, $actual );
+
+		// Check with items map, where timestamps duplicating
+		$itemsWithDuplicatedTimestamps = [
+			'1' => [ 'timestamp' => 1 ],
+			'2' => [ 'timestamp' => 1 ],
+			'3' => [ 'timestamp' => 2 ],
+			'4' => [ 'timestamp' => 4 ],
+			'5' => [ 'timestamp' => 4 ],
+			'6' => [ 'timestamp' => 4 ],
+			'7' => [ 'timestamp' => 5 ],
+			'8' => [ 'timestamp' => 8 ]
+		];
+		$actual = $countUniqueTimestampsOccurrence( $itemsWithDuplicatedTimestamps );
+		$expected = [
+			1 => 2,
+			2 => 1,
+			4 => 3,
+			5 => 1,
+			8 => 1
+		];
+		$this->assertEquals( $expected, $actual );
+	}
+
+	/**
+	 * @covers BaseRssModel::findAvailableTimestamp
+	 */
+	public function testFindAvailableTimestamp() {
+		$dummy = new DummyModel();
+		$findAvailableTimestamp = self::getFn( $dummy, 'findAvailableTimestamp' );
+
+		$existingTimestamps = [
+			1 => 1,
+			2 => 1,
+			3 => 1
+		];
+
+		for ( $i = 0; $i <= 10; $i++ ) {
+			$timestamp = $findAvailableTimestamp( $i, $existingTimestamps );
+			// Asserts that found timestamp is not exists in $existingTimestamps
+			$this->assertTrue( empty( $existingTimestamps[ $timestamp ] ) );
+		}
 	}
 
 	/**

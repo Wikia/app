@@ -475,7 +475,7 @@ abstract class BaseRssModel extends WikiaService {
 	/**
 	 * Count occurrence of each unique timestamp
 	 */
-	private function countUniqueTimestampsOccurrence( &$itemsMap ) {
+	protected function countUniqueTimestampsOccurrence( $itemsMap ) {
 		$timestampsCount = [ ];
 		foreach ( $itemsMap as $key => $value ) {
 			$timestamp = $value[ self::FIELD_TIMESTAMP ];
@@ -492,7 +492,7 @@ abstract class BaseRssModel extends WikiaService {
 	/**
 	 * Finding available timestamp (by increasing current timestamp)
 	 */
-	private function findAvailableTimestamp( $timestamp, &$uniqueTimestampsCount ) {
+	protected function findAvailableTimestamp( $timestamp, $uniqueTimestampsCount ) {
 		$newTimestamp = $timestamp + 1;
 		while ( !empty( $uniqueTimestampsCount[ $newTimestamp ] ) ) {
 			$newTimestamp++;
