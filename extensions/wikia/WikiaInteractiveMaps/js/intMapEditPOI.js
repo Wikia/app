@@ -227,7 +227,8 @@ define('wikia.intMap.editPOI', ['jquery', 'wikia.intMap.utils'], function($, uti
 	 * @param {object} poiData
 	 */
 	function trackPoiAction(poiData) {
-		var gaLabel, gaValue;
+		var gaLabel,
+			gaValue;
 
 		switch(poiModalMode) {
 			case poiModalModes.CREATE:
