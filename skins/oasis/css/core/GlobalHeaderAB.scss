@@ -336,7 +336,8 @@ $facebook-background-color: #3c5b9b;
 			}
 
 			input.login-button[type="submit"] {
-				@include clear-linear-gradient();
+				@include clear-linear-gradient;
+				-webkit-appearance: none;
 				border: none;
 				border-radius: 0;
 				background-color: $nav-font-color;
@@ -349,7 +350,6 @@ $facebook-background-color: #3c5b9b;
 				padding: 0 20px;
 				text-transform: uppercase;
 				width: 100%;
-				-webkit-appearance: none;
 			}
 
 			.forgot-password {
@@ -380,7 +380,7 @@ $facebook-background-color: #3c5b9b;
 			padding: 20px;
 
 			.wikia-button-facebook {
-				@include clear-linear-gradient();
+				@include clear-linear-gradient;
 				background-color: $facebook-background-color;
 				border: 0;
 				border-radius: 0;
@@ -457,19 +457,22 @@ $facebook-background-color: #3c5b9b;
 			display: none;
 		}
 		.subnav {
+			background-color: $nav-background-color;
 			border: none;
 			border-bottom: 1px solid $new-border-color;
 			border-left: 1px solid $new-border-color;
 			width: 328px;
+
 			&.show {
 				left: -330px;
 				top: 0px;
 			}
-			background-color: $nav-background-color;
+
 			> li:first-child,
 			> li:nth-child(2) {
 				border: none;
 			}
+
 			li {
 				border-top: 1px solid $new-border-color;
 				width: auto;
@@ -477,15 +480,19 @@ $facebook-background-color: #3c5b9b;
 					@include clear-box-shadow;
 				}
 			}
+
 			.empty-notifications {
 				display: none;
 			}
+
 			.notifications-header {
 				background-color: $nav-font-color;
 				padding: 23px 20px 17px;
+
 				&:hover {
 					background-color: $nav-font-color !important;
 				}
+
 				span {
 					background-color: inherit;
 					color: $nav-background-color;
@@ -493,13 +500,16 @@ $facebook-background-color: #3c5b9b;
 					line-height: 1;
 					padding: 0;
 				}
+
 				#wall-notifications-markasread {
 					right: 14px;
 					top: 23px;
 				}
+
 				#wall-notifications-markasread-sub {
 					color: $nav-background-color;
 				}
+
 				#wall-notifications-markasread-this-wiki {
 					color: $new-border-color;
 					font-size: 15px;
