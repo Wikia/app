@@ -709,12 +709,14 @@ class WikiaHomePageController extends WikiaController {
 
 		$hubsSlots = $helper->getHubSlotsFromWF( $wgCityId, $wgContLang->getCode() );
 
-		foreach( $hubsSlots['hub_slot'] as $slot => $hubId ) {
-			if( is_numeric( $hubId ) && isset( $hubsV3List[ $hubId ] ) ) {
-				$hubSettings = WikiFactory::getVarValueByName('wgOasisThemeSettings', $hubId);
-				$settings['hub-color-slot-' . ($slot+1)] = isset( $hubSettings['color-buttons'] )
-					? $hubSettings['color-buttons']
-					: null;
+		if( isset( $hubsSlots['hub_slot'] ) ) {
+			foreach( $hubsSlots['hub_slot'] as $slot => $hubId ) {
+				if( is_numeric( $hubId ) && isset( $hubsV3List[ $hubId ] ) ) {
+					$hubSettings = WikiFactory::getVarValueByName('wgOasisThemeSettings', $hubId);
+					$settings['hub-color-slot-' . ($slot+1)] = isset( $hubSettings['color-buttons'] )
+						? $hubSettings['color-buttons']
+						: null;
+				}
 			}
 		}
 
