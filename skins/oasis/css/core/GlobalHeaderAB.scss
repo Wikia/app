@@ -281,10 +281,6 @@ $facebook-background-color: #3c5b9b;
 			> li {
 				border-top: 1px solid $new-border-color;
 
-				&:first-child {
-					border-top: 0;
-				}
-
 				> a {
 					color: $dropdown-font-color;
 					font-size: 15px;
