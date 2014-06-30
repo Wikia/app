@@ -452,9 +452,11 @@ $facebook-background-color: #3c5b9b;
 		}
 		.subnav {
 			border: none;
+			border-bottom: 1px solid $new-border-color;
+			border-left: 1px solid $new-border-color;
 			width: 328px;
 			&.show {
-				left: -329px;
+				left: -330px;
 				top: 0px;
 			}
 			background-color: $nav-background-color;
@@ -600,7 +602,7 @@ $facebook-background-color: #3c5b9b;
 			#WallNotifications .subnav {
 				width: 324px;
 				&.show {
-					left: -325px;
+					left: -326px;
 				}
 			}
 		}
@@ -643,7 +645,7 @@ $facebook-background-color: #3c5b9b;
 			#WallNotifications .subnav {
 				width: 292px;
 				&.show {
-					left: -293px;
+					left: -294px;
 				}
 			}
 		}
