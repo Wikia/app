@@ -18,6 +18,7 @@ function InfoboxBuilderView.render( input, vars )
 	    local table = Infobox:tag('table')
 	          table:attr('cellspacing', '0')
 	               :attr('cellpadding', '0')
+	               :addClass('InfoboxTable')
 	               -- :addClass('infobox')
 	 
 	    for index, field in ipairs( fields ) do
