@@ -458,9 +458,8 @@ $facebook-background-color: #3c5b9b;
 		}
 		.subnav {
 			background-color: $nav-background-color;
-			border: none;
-			border-bottom: 1px solid $new-border-color;
-			border-left: 1px solid $new-border-color;
+			border: 1px solid $new-border-color;
+			border-top: none;
 			width: 328px;
 
 			&.show {
