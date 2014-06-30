@@ -94,6 +94,9 @@ end
 function InfoboxBuilderView.addRowHeader( field )
  
     local row = mw.html.create('tr')
+    if not HF.isempty( field.CssClass ) then
+		row:addClass( field.CssClass )
+	end
       row:tag('td')
          :addClass( InfoboxBuilderView.vars.Theme .. 'InfoboxHeader' )
          :attr('colspan', '2') 
@@ -113,7 +116,7 @@ end
 
 function InfoboxBuilderView.addRowMainImage( field )
   local node = mw.html.create('')
-  
+
   local row1 = node:tag('tr')
     row1:tag('td')
         :addClass( InfoboxBuilderView.vars.Theme .. 'InfoboxMainImage' )
@@ -205,6 +208,9 @@ function InfoboxBuilderView.addRowCustom( field )
   local node = mw.html.create( field.Label )
         node:addClass( InfoboxBuilderView.vars.Theme .. 'InfoboxCustom' )
             :wikitext( field.Value )
+        if not HF.isempty( field.CssClass ) then
+        	node:addClass( field.CssClass )
+      	end
   return node
 end
 
