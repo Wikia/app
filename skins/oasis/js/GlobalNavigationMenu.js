@@ -96,15 +96,19 @@ require([ 'jquery', 'wikia.ui.factory', 'wikia.nirvana' ], function ($, uiFactor
 					closeHub();
 				});
 
-				$('#WikiaHeader').on('mouseenter click', '#GlobalNavigationMenuButton', function(e) {
+				$('#WikiaHeader').on('mouseenter', '#GlobalNavigationMenuButton', function(e) {
+					e.preventDefault();
+					openHub();
+				}).on('click', '#GlobalNavigationMenuButton', function(e) {
 					e.preventDefault();
 					toggleHub();
 				});
 
 				$('body').on('click', function(e) {
-					if (isOpen && !$(e.target).closest('#GlobalNavigationContainer').length &&
-						!$(e.target).closest('#GlobalNavigationMenuButton').length ) {
+					if (isOpen && !$(e.target).parents('.GlobalNavigationContainer').length) {
 						e.preventDefault();
+						e.stopImmediatePropagation();
+
 						closeHub();
 					}
 				});
