@@ -5,7 +5,7 @@ $(function(){
 
 	var $ = jQuery,
 		$accountNavigation = $( '#AccountNavigation' ),
-		$arrow = $( '<svg width="21" height="17" class="light" xmlns="http://www.w3.org/2000/svg"><polygon points="0,5.66 9.0,5.66 9,0 20.5,8.5 9,17 9,11.33 0,11.33" /></svg>' ),
+		$arrow = $( '<svg width="21" height="17" class="light search-arrow" xmlns="http://www.w3.org/2000/svg"><polygon points="0,5.66 9.0,5.66 9,0 20.5,8.5 9,17 9,11.33 0,11.33" /></svg>' ),
 		$avatar = $accountNavigation.find( 'li:first .avatar' ),
 		$avatarLink = $( '#AccountNavigation > li:first > a' ),
 		avatarSize = 36,
@@ -75,7 +75,7 @@ $(function(){
 	$( '<svg width="19" height="19" class="dark" xmlns="http://www.w3.org/2000/svg"><path transform="scale(1.2) translate(0.5,0.5)" stroke-linejoin="null" stroke-linecap="null" d="m14.8613,12.88892l-3.984008,-3.983988c0.536782,-0.885019 0.851497,-1.920426 0.852106,-3.030754c0,-3.238203 -2.622357,-5.861736 -5.860845,-5.862835c-3.237258,0.0011 -5.860767,2.624632 -5.860767,5.8625c0,3.236496 2.623743,5.859635 5.861367,5.859635c1.110886,0 2.146293,-0.314714 3.031312,-0.851395l3.985085,3.984516l1.97575,-1.97768l0,0zm-12.617637,-7.015077c0.003362,-2.00262 1.623002,-3.621701 3.625063,-3.626171c2.000933,0.00447 3.621701,1.623551 3.625053,3.626171c-0.003911,2.001492 -1.62412,3.620584 -3.625053,3.625053c-2.002386,-0.004735 -3.622219,-1.623337 -3.625063,-3.625053z" /></svg>' )
 		.appendTo( $selectWrapper );
 
-	$selectSpan.appendTo( $selectWrapper )
+	$selectSpan.appendTo( $selectWrapper );
 
 	$selectWrapper.appendTo( $form );
 
@@ -95,16 +95,15 @@ $(function(){
 
 	// adding behaviour
 
-	$( '<a href="#">' )
+	$( '<button type="submit">' )
 		.focus( function() {
-			$arrow.attr( 'class', 'dark' );
+			$arrow.attr( 'class', 'dark search-arrow' );
 		} )
 		.blur( function() {
 			if ( $searchInput.val() === '' ) {
-				$arrow.attr( 'class', 'light' );
+				$arrow.attr( 'class', 'light search-arrow' );
 			}
 		} )
-		.click( function() { $form.submit(); } )
 		.append( $arrow )
 		.appendTo( $form );
 
@@ -123,11 +122,11 @@ $(function(){
 
 	$searchInput
 		.focus( function() {
-			$arrow.attr( 'class', 'dark' );
+			$arrow.attr( 'class', 'dark search-arrow' );
 		} )
 		.blur( function() {
 			if ( $searchInput.val() === '' ) {
-				$arrow.attr( 'class', 'light' );
+				$arrow.attr( 'class', 'light search-arrow' );
 			}
 		} );
 

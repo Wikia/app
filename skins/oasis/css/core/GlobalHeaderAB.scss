@@ -79,10 +79,21 @@ $facebook-background-color: #3c5b9b;
 				width: $search-select-width;
 			}
 
-			a, input[type=text], select {
+			a,
+			button,
+			input[type=text],
+			select {
 				&:focus, &:active {
 					outline: none;
 				}
+			}
+
+			button {
+				background: none;
+				border: 0;
+				height: 19px;
+				padding: 0;
+				vertical-align: middle;
 			}
 
 			input[type=text] {
@@ -125,6 +136,10 @@ $facebook-background-color: #3c5b9b;
 
 			svg {
 				vertical-align: middle;
+
+				&.search-arrow {
+					vertical-align: baseline;
+				}
 
 				&.search-chevron {
 					float: right;
