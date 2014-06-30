@@ -28,13 +28,15 @@ $(function(){
 				var formAction = {
 						'local': localSearchUrl,
 						'global': window.wgGlobalSearchUrl
-					};
-				$( this ).attr( 'action', formAction[ $( this ).find( 'select' ).val() ] );
+					},
+				searchType = $( this ).find( 'select' ).val();
+				$( this ).attr( 'action', formAction[ searchType ] );
+
 				// Optimizely event tracking
-				if ( $(this).attr('action').indexOf('www.wikia.com') !== -1 ) {
-					window.optimizely.push(['trackEvent', 'global_search_submits']);
+				if ( searchType === 'global' ) {
+					window.optimizely.push( [ 'trackEvent', 'global_search_submits' ] );
 				} else {
-					window.optimizely.push(['trackEvent', 'local_search_submits']);
+					window.optimizely.push( [ 'trackEvent', 'local_search_submits' ] );
 				}
 			} ),
 		$selectWrapper = $( '<div>' )
