@@ -215,6 +215,6 @@ mw_interface = nil
 mw = mw or {}
 mw.InfoboxBuilderView = InfoboxBuilderView
 
-package.loaded['mw.InfoboxBuilderView'] = InfoboxBuilderViewf
+package.loaded['mw.InfoboxBuilderView'] = InfoboxBuilderView
 
 return InfoboxBuilderView
