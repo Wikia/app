@@ -436,8 +436,7 @@ ve.ui.DesktopContext.prototype.updateDimensions = function ( transition ) {
  * @chainable
  */
 ve.ui.DesktopContext.prototype.show = function ( transition ) {
-	var focusedDimensions,
-		inspector = this.inspectors.getCurrentWindow(),
+	var inspector = this.inspectors.getCurrentWindow(),
 		focusedNode = this.surface.getView().getFocusedNode();
 
 	if ( !this.showing && !this.hiding ) {

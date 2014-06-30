@@ -14,8 +14,7 @@
  * @cfg {Object} surface Instance of parent dialog surface
  * @cfg {Object} frame Instance of parent dialog frame
  */
-ve.ui.WikiaDropTargetWidget = function VeUiWikiaDropTargetWidget ( config ) {
-
+ve.ui.WikiaDropTargetWidget = function VeUiWikiaDropTargetWidget( config ) {
 	// Configuration initialization
 	OO.ui.Widget.call( this, config );
 

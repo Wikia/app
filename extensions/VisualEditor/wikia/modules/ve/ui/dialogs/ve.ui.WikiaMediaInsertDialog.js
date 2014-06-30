@@ -41,7 +41,7 @@ ve.ui.WikiaMediaInsertDialog.static.pages = [ 'main', 'search' ];
  * @returns {jQuery}
  */
 ve.ui.WikiaMediaInsertDialog.static.formatPolicy = function ( html ) {
-	 return $( '<div>' )
+	return $( '<div>' )
 		.html( html )
 		.find( '*' )
 			.each( function () {

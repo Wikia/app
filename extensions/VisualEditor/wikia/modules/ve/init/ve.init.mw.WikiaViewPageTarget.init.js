@@ -299,7 +299,7 @@
 		$( document ).on(
 			'mouseover click',
 			'a[href*="action=edit"][href*="&redlink"]:not([href*="veaction=edit"])',
-			function() {
+			function () {
 				var $element = $( this ),
 					href = $element.attr( 'href' ),
 					articlePath = mw.config.get( 'wgArticlePath' ).replace( '$1', '' ),

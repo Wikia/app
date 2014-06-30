@@ -263,7 +263,7 @@ ve.ce.wikiaExample = ( function ( utils ) {
 	 * @param {Object} attributes The node attributes from which to build the mock.
 	 * @returns {String} The mocked HTML.
 	 */
-	 media.block[ 'mw:Image' ].getHtml = media.block.getHtml;
+	media.block[ 'mw:Image' ].getHtml = media.block.getHtml;
 
 	/**
 	 * Get the mocked HTML output for a block video node.

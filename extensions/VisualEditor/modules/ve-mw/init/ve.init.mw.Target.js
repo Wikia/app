@@ -1196,7 +1196,7 @@ ve.init.mw.Target.prototype.showChanges = function ( doc ) {
 	data = {
 		'action': 'visualeditor',
 		'paction': 'diff',
-		'page': this.pageName,
+		'page': this.pageName
 	};
 	if ( this.wikitext !== null ) {
 		data.oldwt = this.wikitext;
