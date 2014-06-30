@@ -22,6 +22,9 @@ abstract class BaseTask {
 	/** @var int when running, the user id of the user who is running this task. */
 	protected $createdBy;
 
+	/** @var \User the loaded createdBy user */
+	protected $createdByUser;
+
 	/** @var \Title title this task is operating on */
 	protected $title = null;
 
@@ -52,7 +55,7 @@ abstract class BaseTask {
 			return;
 		}
 
-		$this->title = \Title::makeTitleSafe($this->titleParams['namespace'], $this->titleParams['dbKey']);
+		$this->title = \Title::makeTitleSafe($this->titleParams['namespace'], urldecode($this->titleParams['dbKey']));
 		if ( $this->title == null ) {
 			throw new \Exception( "unable to instantiate title with id {$this->titleParams['dbKey']}" );
 		}
@@ -124,6 +127,14 @@ abstract class BaseTask {
 		}
 
 		return $this->createdBy;
+	}
+
+	public function createdByUser() {
+		if ( empty( $this->createdByUser )) {
+			$this->createdByUser = \User::newFromId( $this->createdBy );
+		}
+
+		return $this->createdByUser;
 	}
 
 	/**
@@ -224,7 +235,7 @@ abstract class BaseTask {
 	public function title(\Title $title) {
 		$this->titleParams = [
 			'namespace' => $title->getNamespace(),
-			'dbKey' => $title->getDBkey()
+			'dbKey' => urlencode($title->getDBkey())
 		];
 
 		return $this;
