@@ -407,12 +407,15 @@ class VideoHandlerHelper extends WikiaModel {
 	}
 
 	/**
-	 * Reset the video thumbnail to its original image as defined by the video provider
+	 * Reset the video thumbnail to its original image as defined by the video provider.
 	 * @param File $file The video file to reset
 	 * @param string|null $thumbnailUrl
+	 * @param int $delayIndex Corresponds to a delay for a job to be queued up if we aren't
+	 * able to reset the thumbnail. This index corresponds to a class constant kept in the
+	 * ApiWrapper classes.
 	 * @return FileRepoStatus The status of the publish operation
 	 */
-	public function resetVideoThumb( File $file, $thumbnailUrl = null ) {
+	public function resetVideoThumb( File $file, $thumbnailUrl = null, $delayIndex = UpdateThumbnailTask::DONT_RUN ) {
 		$mime = $file->getMimeType();
 		list(, $provider) = explode('/', $mime);
 		$videoId = $file->getVideoId();
@@ -426,7 +429,7 @@ class VideoHandlerHelper extends WikiaModel {
 			$thumbnailUrl = $oUploader->getApiWrapper()->getThumbnailUrl();
 		}
 
-		$result = $oUploader->resetThumbnail( $file, $thumbnailUrl );
+		$result = $oUploader->resetThumbnail( $file, $thumbnailUrl, $delayIndex );
 
 		if ( $result->isGood() ) {
 			// update data and clear cache
