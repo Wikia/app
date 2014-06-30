@@ -160,10 +160,9 @@ class CoppaToolController extends WikiaController {
 		];
 		if ( TaskRunner::isModern('UserRename') ) {
 			$task = ( new UserRenameTask() )
-				->wikiId( $wikiIDs )
 				->setPriority( \Wikia\Tasks\Queues\PriorityQueue::NAME );
 
-			$task->call('renameUser', $taskParams);
+			$task->call('renameUser', $wikiIDs, $taskParams);
 			$taskID = $task->queue();
 		} else {
 			$taskParams['city_ids'] = $wikiIDs;
