@@ -25,6 +25,7 @@ class MovieEntitySearchService extends EntitySearchService {
 		$select->setQuery( $preparedQuery );
 		$select->setRows( static::ARTICLES_LIMIT );
 		$select->createFilterQuery( 'ns' )->setQuery( '+(ns:' . static::ALLOWED_NAMESPACE . ')' );
+		$select->createFilterQuery( 'lang' )->setQuery( '+(lang:' . $slang . ')' );
 		if ( in_array( strtolower( $slang ), static::$ARTICLE_TYPES_SUPPORTED_LANGS ) ) {
 			$select->createFilterQuery( 'type' )->setQuery( '+(article_type_s:' . static::MOVIE_TYPE . ')' );
 		}
