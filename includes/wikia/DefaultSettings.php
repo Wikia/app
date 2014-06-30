@@ -256,7 +256,7 @@ $wgAutoloadClasses[ 'WikiaSQLCache'                   ] = "$IP/includes/wikia/Wi
 $wgAutoloadClasses[ 'WikiaSanitizer'                  ] = "$IP/includes/wikia/WikiaSanitizer.class.php";
 $wgAutoloadClasses[ 'ScribePurge'                     ] = "$IP/includes/cache/wikia/ScribePurge.class.php";
 $wgAutoloadClasses[ 'TransactionTracer'               ] = "$IP/includes/wikia/transactiontracer/TransactionTracer.php";
-$wgHooks          [ 'ArticleViewAddParserOutput'      ][] = 'MetricManager::onArticleViewAddParserOutput';
+$wgHooks          [ 'ArticleViewAddParserOutput'      ][] = 'TransactionTracer::onArticleViewAddParserOutput';
 $wgHooks          [ 'RestInPeace'                     ][] = 'ScribePurge::onRestInPeace';
 
 /**

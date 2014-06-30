@@ -542,7 +542,9 @@ class Article extends Page {
 								wfDebug( __METHOD__ . ": showing parser cache contents\n" );
 							}
 							$wgOut->addParserOutput( $this->mParserOutput );
+							// Wikia change - begin - @author: wladek
 							wfRunHooks('ArticleViewAddParserOutput',array( $this, $this->mParserOutput ) );
+							// Wikia change - end
 							# Ensure that UI elements requiring revision ID have
 							# the correct version information.
 							$wgOut->setRevisionId( $this->mPage->getLatest() );
@@ -554,10 +556,10 @@ class Article extends Page {
 							}
 							$outputDone = true;
 						}
-					// Wikia Change
+					// Wikia change - begin - @author: wladek
 					} else {
 						TransactionTracer::setAttribute( TransactionTracer::PARAM_PARSER_CACHE_USED, false );
-					// Wikia Change End					}
+					// Wikia change - end
 					}
 					break;
 				case 3:
@@ -642,6 +644,12 @@ class Article extends Page {
 					$this->mParserOutput = $poolArticleView->getParserOutput();
 					$wgOut->addParserOutput( $this->mParserOutput );
 
+					// Wikia change - begin - @author: wladek
+					TransactionTracer::setAttribute( TransactionTracer::PARAM_PARSER_CACHE_USED, $poolArticleView->getIsDirty() );
+
+					wfRunHooks('ArticleViewAddParserOutput',array( $this, $this->mParserOutput ) );
+					// Wikia change - end
+
 					# Don't cache a dirty ParserOutput object
 					if ( $poolArticleView->getIsDirty() ) {
 						$wgOut->setSquidMaxage( 0 );
@@ -651,7 +659,6 @@ class Article extends Page {
 					# <Wikia>
 					if ( !$poolArticleView->getIsDirty() ) {
 						wfRunHooks('ArticleViewAfterParser',array( $this, $this->mParserOutput ) );
-						wfRunHooks('ArticleViewAddParserOutput',array( $this, $this->mParserOutput ) );
 					}
 					# </Wikia>
 

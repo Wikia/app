@@ -16,6 +16,7 @@ class TransactionTracer {
 	const TRANSACTION_ASSETS_MANAGER = 'assets/assets_manager';
 	const TRANSACTION_NIRVANA = 'api/nirvana';
 	const TRANSACTION_AJAX = 'api/ajax';
+	const TRANSACTION_API = 'api/api';
 
 	//Parameters
 	const PARAM_LOGGED_IN = 'logged_in';
@@ -28,6 +29,8 @@ class TransactionTracer {
 	const PARAM_CONTROLLER = 'controller';
 	const PARAM_METHOD = 'method';
 	const PARAM_FUNCTION = 'function';
+	const PARAM_SPECIAL_PAGE_NAME = 'special_page';
+	const PARAM_API_ACTION = 'api_action';
 
 	const PSEUDO_PARAM_TYPE = 'transaction';
 
@@ -41,10 +44,49 @@ class TransactionTracer {
 	const ACTION_SUBMIT = 'submit';
 	const ACTION_OTHER = 'other';
 
+	protected static $IMPORTANT_SPECIAL_PAGES = array(
+		'Search',
+		'HealthCheck',
+		'WikiActivity',
+		'Our404Handler',
+		'Recentchanges',
+		'UserLogin',
+		'UserSignup',
+		'Chat',
+		'Newimages',
+	);
+	protected static $IMPORTANT_CONTROLLERS = array(
+		'Rail',
+		'RelatedPagesApi',
+		'VideosModule',
+		'ArticleComments',
+		'WallNotificationsController',
+		'JSMessages',
+		'WikiaSearchIndexer',
+		'LatestActivity',
+	);
+
+	protected static $IMPORTANT_AJAX_FUNCTIONS = array(
+		'getLinkSuggest',
+		'CategoryExhibitionAjax',
+		'ChatAjax',
+		'ActivityFeedAjax',
+		'RTEAjax',
+		'EditPageLayoutAjax',
+		'WMU',
+		'WikiaPhotoGalleryAjax',
+	);
+
+	protected static $IMPORTANT_API_CALLS = array(
+		'query',
+		'opensearch',
+		'parse',
+		'lyrics',
+	);
+
+	protected static $name = null;
 	protected static $type = null;
 	protected static $attributes = array();
-
-	protected static $lastNewRelicTransactionName = null;
 
 	/**
 	 * Sets the name of the transaction currently processed, so the measured times can be categorized
@@ -55,7 +97,7 @@ class TransactionTracer {
 		wfDebug(__CLASS__.": transaction type set - ".$transactionType."\n");
 		self::$type = $transactionType;
 
-		self::updateNewrelicTransactionName();
+		self::updateName();
 	}
 
 	/**
@@ -65,6 +107,10 @@ class TransactionTracer {
 	 * @param $parameterValue String: Value of the parameter
 	 */
 	public static function setAttribute($parameterKey, $parameterValue) {
+		if ( $parameterValue === null ) {
+			return;
+		}
+
 		wfDebug(__CLASS__.": parameter set - key: ".$parameterKey.", value: ".$parameterValue."\n");
 		self::$attributes[$parameterKey] = $parameterValue;
 
@@ -74,34 +120,95 @@ class TransactionTracer {
 			}
 			newrelic_add_custom_parameter( $parameterKey, $parameterValue );
 		}
+
+		self::updateName();
 	}
 
-	protected static function updateNewrelicTransactionName() {
-		if ( function_exists( 'newrelic_name_transaction' ) ) {
-			if ( self::$type !== null ) {
-				$transactionName = self::$type;
-				$attributes = self::$attributes;
+	protected static function updateName() {
+		if ( self::$type !== null ) {
+			$transactionName = self::$type;
+			$attributes = self::$attributes;
 
+			switch ( self::$type ) {
 				// article in main namespace
-				if ( self::$type === self::TRANSACTION_PAGE_MAIN ) {
-					// action: view
-					if ( !empty($attributes[self::PARAM_ACTION]) && $attributes[self::PARAM_ACTION] === self::ACTION_VIEW ) {
-						// skin and parser_cached_used flag
-						if ( !empty($attributes[self::PARAM_SKIN]) && !empty($attributes[self::PARAM_PARSER_CACHE_USED]) ) {
-							$transactionName .= sprintf("/%s/%s",
-								self::PARAM_SKIN,
-								self::PARAM_PARSER_CACHE_USED ? 'parser' : 'no_parser' );
-							// page size
-							if ( $attributes[self::PARAM_PARSER_CACHE_USED] === false && !empty($attributes[self::PARAM_SIZE_CATEGORY]) ) {
-								$transactionName .= sprintf("/%s", $attributes[self::PARAM_SIZE_CATEGORY]);
+				case self::TRANSACTION_PAGE_MAIN:
+					// action is set
+					if ( isset($attributes[self::PARAM_ACTION]) ) {
+						$transactionName .= sprintf("/%s", $attributes[self::PARAM_ACTION]);
+						// action: view
+						if ( $attributes[self::PARAM_ACTION] === self::ACTION_VIEW ) {
+							// skin and parser_cached_used flag
+							if ( isset($attributes[self::PARAM_SKIN]) && isset($attributes[self::PARAM_PARSER_CACHE_USED]) ) {
+								$transactionName .= sprintf("/%s/%s",
+									$attributes[self::PARAM_SKIN],
+									$attributes[self::PARAM_PARSER_CACHE_USED] ? 'no_parser' : 'parser' );
+								// page size
+								if ( $attributes[self::PARAM_PARSER_CACHE_USED] === false && isset($attributes[self::PARAM_SIZE_CATEGORY]) ) {
+									$transactionName .= sprintf("/%s",
+										$attributes[self::PARAM_SIZE_CATEGORY]);
+								}
 							}
 						}
 					}
-				}
+					break;
+				// special page
+				case self::TRANSACTION_SPECIAL_PAGE:
+					// special page name was reported
+					if ( isset($attributes[self::PARAM_SPECIAL_PAGE_NAME]) ) {
+						$specialPage = $attributes[self::PARAM_SPECIAL_PAGE_NAME];
+						// it is an important special page
+						if ( in_array($specialPage, self::$IMPORTANT_SPECIAL_PAGES) ) {
+							$transactionName .= sprintf("/%s", $specialPage );
+						} else {
+							$transactionName .= "/other";
+						}
+					}
+					break;
+				// nirvana call
+				case self::TRANSACTION_NIRVANA:
+					// controller was reported
+					if ( isset($attributes[self::PARAM_CONTROLLER]) ) {
+						$controller = $attributes[self::PARAM_CONTROLLER];
+						// it is an important controller
+						if ( in_array($controller, self::$IMPORTANT_CONTROLLERS) ) {
+							$transactionName .= sprintf("/%s", $controller );
+						} else {
+							$transactionName .= "/other";
+						}
+					}
+					break;
+				// ajax call
+				case self::TRANSACTION_AJAX:
+					// controller was reported
+					if ( isset($attributes[self::PARAM_FUNCTION]) ) {
+						$function = $attributes[self::PARAM_FUNCTION];
+						// it is an important controller
+						if ( in_array($function, self::$IMPORTANT_AJAX_FUNCTIONS) ) {
+							$transactionName .= sprintf("/%s", $function );
+						} else {
+							$transactionName .= "/other";
+						}
+					}
+					break;
+				// api.php call
+				case self::TRANSACTION_API:
+					// controller was reported
+					if ( isset($attributes[self::PARAM_API_ACTION]) ) {
+						$action = $attributes[self::PARAM_API_ACTION];
+						// it is an important controller
+						if ( in_array($action, self::$IMPORTANT_API_CALLS) ) {
+							$transactionName .= sprintf("/%s", $action );
+						} else {
+							$transactionName .= "/other";
+						}
+					}
+					break;
+			}
 
-				if ( $transactionName !== self::$lastNewRelicTransactionName ) {
-					wfDebug(__CLASS__.": NewRelic transaction name updated to: \"".$transactionName."\"\n");
-					self::$lastNewRelicTransactionName = $transactionName;
+			if ( $transactionName !== self::$name ) {
+				wfDebug(__CLASS__.": transaction name updated to: \"".$transactionName."\"\n");
+				self::$name = $transactionName;
+				if ( function_exists( 'newrelic_name_transaction' ) ) {
 					newrelic_name_transaction( $transactionName );
 				}
 			}
