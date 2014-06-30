@@ -7,7 +7,7 @@
  */
 
 class PromoImage extends WikiaObject {
-	const __REVIEWED_XWIKI_CACHE_KEY = "promoimage.reviewed.%s.%s";
+	const __LATEST_IMAGES_WITH_STATUS_XWIKI_CACHE_KEY = "promoimage.%s.%s.state.%s";
 	const __REVIEWED_XWIKI_TTL = 3600;
 	const __MAIN_IMAGE_BASE_NAME = 'Wikia-Visualization-Main';
 	const __ADDITIONAL_IMAGES_BASE_NAME = 'Wikia-Visualization-Add';
@@ -160,29 +160,44 @@ class PromoImage extends WikiaObject {
 	public function getPathname(){
 		return $this->pathnameHelper(true, true);
 	}
-	protected function materializeCacheKey($keyTemplate){
-		return sprintf(self::__REVIEWED_XWIKI_CACHE_KEY, $this->cityId, $this->type);
+	protected function materializeCacheKey($keyTemplate, $additional=null){
+		return sprintf($keyTemplate, $this->cityId, $this->type, $additional);
 	}
 
-	public function getReviewedImageName() {
+	/*
+	 * @deprecated
+	 */
+	public function getReviewedImageName($skipCache = false) {
+		return $this->getLatestImageNameWithStatus(ImageReviewStatuses::STATE_APPROVED, $skipCache);
+	}
+
+	public function getLatestImageNameWithStatus($desiredStatus, $skipCache = false) {
 		$cityId = $this->getCityId();
 		$db = wfGetDB( DB_SLAVE, array(), F::app()->wg->ExternalSharedDB );
 
 		$result = null; // name when nothing is found
 		if ( !empty($cityId) ) {
+			$cacheKey = $this->materializeCacheKey( self::__LATEST_IMAGES_WITH_STATUS_XWIKI_CACHE_KEY, $desiredStatus );
+			if ( $skipCache ) {
+				global $wgMemc;
+				$wgMemc->delete( $cacheKey );
+			}
 			$sql = new WikiaSQL();
-
-			$sql->cache(self::__REVIEWED_XWIKI_TTL, $this->materializeCacheKey(self::__REVIEWED_XWIKI_CACHE_KEY), true);
-			$result = $sql->SELECT( "image_name" )
+			$sql->cache( self::__REVIEWED_XWIKI_TTL, $cacheKey, true );
+			$sql->SELECT( "image_name" )
 				->FROM( self::TABLE_CITY_VISUALIZATION_IMAGES_XWIKI )
 				->WHERE( "city_id" )->EQUAL_TO( $cityId )
 				->AND_( "image_type" )->EQUAL_TO( $this->type )
-				->AND_( "image_review_status" )->EQUAL_TO( ImageReviewStatuses::STATE_APPROVED )
-				->ORDER_BY( 'last_edited' )->DESC()->LIMIT( 1 )
+				->AND_( "image_review_status" )->EQUAL_TO( $desiredStatus );
+
+			if ( $this->isAdditional() ) {
+				$sql->AND_( "image_index" )->EQUAL_TO( $this->getIndex() );
+			}
+
+			$result = $sql->ORDER_BY( 'last_edited' )->DESC()->LIMIT( 1 )
 				->run( $db, function ( $result ) {
 					$row = $result->fetchObject( $result );
-					if ( $row && isset($row->image_name) )
-					{
+					if ( $row && isset($row->image_name) ) {
 						return $row->image_name;
 					} else {
 						return null;
@@ -192,8 +207,8 @@ class PromoImage extends WikiaObject {
 		return $result;
 	}
 
-	public function getApprovedImage() {
-		$name = $this->getReviewedImageName();
+	public function getApprovedImage($skipCache = false) {
+		$name = $this->getLatestImageNameWithStatus(ImageReviewStatuses::STATE_APPROVED, $skipCache);
 		if (!empty($name)){
 			return new PromoXWikiImage($name);
 		} else {
@@ -201,25 +216,17 @@ class PromoImage extends WikiaObject {
 		}
 	}
 
-	public function purgeCache() {
-		global $wgMemc;
-		$wgMemc->delete($this->materializeCacheKey(self::__REVIEWED_XWIKI_CACHE_KEY));
-	}
-
 	public function createNewImage() {
 		$img = PromoXWikiImage::createNewImage($this->getCityId());
 		return $img;
 	}
 
-	public function insertImageIntoDB( PromoXWikiImage $img, $status ) {
-		$img->getName();
-		$cityId = $this->getCityId();
-
+	public function insertImageIntoDB( PromoXWikiImage $img, $status = ImageReviewStatuses::STATE_UNREVIEWED) {
 		$db = wfGetDB( DB_MASTER, array(), F::app()->wg->ExternalSharedDB );
 
 		$sql = new WikiaSQL();
 		$sql->INSERT( self::TABLE_CITY_VISUALIZATION_IMAGES_XWIKI )
-			->SET( 'city_id', $cityId )
+			->SET( 'city_id', $this->getCityId() )
 			->SET( 'city_lang_code', $this->getLangCode() )
 			->SET( 'image_type', $this->getType() )
 			->SET( 'image_index', $this->getIndex() )
@@ -228,6 +235,25 @@ class PromoImage extends WikiaObject {
 			->SET( 'image_review_status', $status );
 
 		return $sql->run( $db );
+	}
+
+	public function demoteOldImages( $oldStatus, $newStatus = ImageReviewStatuses::STATE_READY_FOR_CULLING ) {
+		$db = wfGetDB( DB_MASTER, array(), F::app()->wg->ExternalSharedDB );
+		$exceptImageName = $this->getLatestImageNameWithStatus( $oldStatus, true );
+		if ( !empty($exceptImageName) ) { //no sense demoting if nothing is found
+			$sql = new WikiaSQL();
+			$sql->UPDATE( self::TABLE_CITY_VISUALIZATION_IMAGES_XWIKI )
+				->SET( 'image_review_status', $newStatus )
+				->WHERE( 'city_id' )->EQUAL_TO( $this->getCityId() )
+				->AND_( 'image_type' )->EQUAL_TO( $this->getType() )
+				->AND_( 'image_index' )->EQUAL_TO( $this->getIndex() )
+				->AND_( 'image_review_status' )->EQUAL_TO( $oldStatus )
+				->AND_( "image_name" )->NOT_EQUAL_TO( $exceptImageName );  // do not demote this one file, some one needs to be left alive
+
+			$sql->run( $db );
+			// FIXME: possible race condition that deletes all images
+		}
+
 	}
 
 	/*

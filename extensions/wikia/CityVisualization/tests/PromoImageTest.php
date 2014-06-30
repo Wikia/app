@@ -33,12 +33,13 @@ class PromoImageTest extends WikiaBaseTest {
 		$srcFile = GlobalFile::newFromText( "Wiki-wordmark.png", 831 ); // get wordmark from muppets
 
 		$this->assertEquals( $img->uploadByUrl( $srcFile->getUrl() ), UPLOAD_ERR_OK ); // upload muppets wordmark
+		$promoHelper->insertImageIntoDB( $img, ImageReviewStatuses::STATE_APPROVED );
 
-		PromoImage::forWikiId( PromoImage::MAIN, $WIKI_ID )->insertImageIntoDB( $img, ImageReviewStatuses::STATE_APPROVED );
-
-		$promoHelper->purgeCache();
-		$reviewed = $promoHelper->getApprovedImage();
+		$beforeCulling = $promoHelper->getApprovedImage(true);
+		$promoHelper->demoteOldImages(ImageReviewStatuses::STATE_APPROVED);
+		$reviewed = $promoHelper->getApprovedImage(true);
 
 		$this->assertEquals( $img->getUrl(), $reviewed->getUrl() );
+		$this->assertEquals( $beforeCulling->getUrl(), $reviewed->getUrl() );
 	}
 }
