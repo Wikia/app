@@ -20,6 +20,7 @@
 
 			// some genius decided that there had to be a callback supplied in the case of success
 			// despite this returning a promise, so just pass $.noop to it to shut it up for now
+			// @todo change this on completion of MAIN-2490 (backporting updates to mediawiki.api.watch)
 			api.unwatch( title, $.noop ).done( function() {
 				li.remove();
 			} );
