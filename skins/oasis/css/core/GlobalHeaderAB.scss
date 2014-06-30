@@ -260,6 +260,15 @@ $facebook-background-color: #3c5b9b;
 				border-radius: 50%;
 				margin-right: 6px;
 			}
+
+			.avatarContainer {
+				border-radius: 50%;
+				float: left;
+				height: 36px;
+				margin-right: 5px;
+				overflow:hidden;
+				width: 36px;
+			}
 		}
 
 		.subnav.show {
