@@ -650,8 +650,6 @@ class Article extends Page {
 
 					# <Wikia>
 					if ( !$poolArticleView->getIsDirty() ) {
-						$this->mParserOutput->setPerformanceStats('wikitextSize',strlen($this->getContent()));
-						$this->mParserOutput->setPerformanceStats('htmlSize',strlen($this->mParserOutput->getText()));
 						wfRunHooks('ArticleViewAfterParser',array( $this, $this->mParserOutput ) );
 						wfRunHooks('ArticleViewAddParserOutput',array( $this, $this->mParserOutput ) );
 					}

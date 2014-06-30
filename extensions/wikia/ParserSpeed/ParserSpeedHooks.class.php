@@ -5,14 +5,6 @@ class ParserSpeedHooks {
 
 	const SCRIBE_KEY = 'parser_speed_article';
 
-	static public function onParserAfterTidy( Parser &$parser, &$text ) {
-		$parser->mOutput->setPerformanceStats('expFuncCount',   $parser->mExpensiveFunctionCount);
-		$parser->mOutput->setPerformanceStats('nodeCount',      $parser->mPPNodeCount);
-		$parser->mOutput->setPerformanceStats('postExpandSize', $parser->mIncludeSizes['post-expand']);
-		$parser->mOutput->setPerformanceStats('tempArgSize',    $parser->mIncludeSizes['arg']);
-		return true;
-	}
-
 	static public function onArticleViewAfterParser( Article $article, ParserOutput $parserOutput ) {
 		global $wgCityId, $wgDBname;
 		// we collect production data from Oasis only
