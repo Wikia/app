@@ -199,7 +199,7 @@ ve.ui.Inspector.prototype.getReadyProcess = function ( data ) {
  */
 ve.ui.Inspector.prototype.getTeardownProcess = function ( data ) {
 	return ve.ui.Inspector.super.prototype.getTeardownProcess.call( this, data )
-		.next( function() {
+		.next( function () {
 			ve.track( 'wikia', {
 				'action': ve.track.actions.CLOSE,
 				'label': 'inspector-' + ve.track.nameToLabel( this.constructor.static.name )
