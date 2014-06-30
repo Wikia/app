@@ -65,7 +65,7 @@ abstract class MediaTransformOutput {
 
 	function renderView( array $options = array() ) {
 		WikiaLogger::instance()->debug( 'Media method '.__METHOD__.' called',
-			array_merge( $options, [ 'url' => $this->url, 'method' => __METHOD__ ] ) );
+			array_merge( $options, [ 'url' => $this->url, 'mediaType' => $this->mediaType() ] ) );
 
 		return F::app()->renderView( 'ThumbnailController', $this->mediaType(), [
 			'thumb'   => $this,
