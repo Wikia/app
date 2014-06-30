@@ -110,7 +110,7 @@ $facebook-background-color: #3c5b9b;
 				opacity: 0;
 				padding: 0 0 7px;
 				position: absolute;
-				width: ( $search-select-width + 5px );
+				width: $search-select-width + 5px;
 
 				option {
 					color: $dropdown-font-color;
