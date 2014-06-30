@@ -606,6 +606,9 @@ $facebook-background-color: #3c5b9b;
 
 			.AccountNavigation > li > a {
 				padding: 15px 16px 15px 26px;
+				.bubbles.reddot {
+					left: 19px;
+				}
 			}
 
 			#WallNotifications .subnav {
@@ -649,6 +652,9 @@ $facebook-background-color: #3c5b9b;
 
 			.AccountNavigation > li > a {
 				padding: 15px 19px 15px 31px;
+				.bubbles.reddot {
+					left: 24px;
+				}
 			}
 
 			#WallNotifications .subnav {
