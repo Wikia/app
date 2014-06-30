@@ -227,19 +227,9 @@ define('wikia.intMap.editPOI', ['jquery', 'wikia.intMap.utils'], function($, uti
 	 * @param {object} poiData
 	 */
 	function trackPoiAction(poiData) {
-		var gaLabel,
-			gaValue;
-
-		switch(poiModalMode) {
-			case poiModalModes.CREATE:
-				gaLabel = 'poi-created';
-				gaValue = mapId;
-				break;
-			case poiModalModes.EDIT:
-				gaLabel = 'poi-edited';
-				gaValue = poiData.id;
-				break;
-		}
+		var poiId = poiData.id,
+			gaLabel = 'poi-' + (poiId ? 'edited' : 'created'),
+			gaValue = poiId || mapId;
 
 		utils.track(utils.trackerActions.IMPRESSION, gaLabel, gaValue);
 	}
