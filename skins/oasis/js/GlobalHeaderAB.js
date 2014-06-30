@@ -189,17 +189,19 @@ $(function(){
 
 
 	function removeWallNotificationsFromHoverMenu() {
-		for(var menu in window.HoverMenuGlobal.menus) {
-			if (window.HoverMenuGlobal.menus.hasOwnProperty(menu)) {
-				if(window.HoverMenuGlobal.menus[menu].selector === '#AccountNavigation') {
-					window.HoverMenuGlobal.menus[menu].menu.off('focus', '.subnav a');
-					window.HoverMenuGlobal.menus.splice(menu,1);
+		var hoverMenus = window.HoverMenuGlobal.menus,
+			menu;
+		for(menu in hoverMenus) {
+			if (hoverMenus.hasOwnProperty(menu)) {
+				if(hoverMenus[menu].selector === '#AccountNavigation') {
+					hoverMenus[menu].menu.off('focus', '.subnav a');
+					hoverMenus.splice(menu,1);
 				}
-				if(window.HoverMenuGlobal.menus[menu].selector === '#WallNotifications') {
-					window.HoverMenuGlobal.menus[menu].menu.off('focus', '.subnav a');
-					window.HoverMenuGlobal.menus[menu].menu.off('mouseenter','> li', window.HoverMenuGlobal.menus[menu].mouseover);
-					window.HoverMenuGlobal.menus[menu].menu.off('mouseleave','> li', window.HoverMenuGlobal.menus[menu].mouseout);
-					window.HoverMenuGlobal.menus.splice(menu,1);
+				if(hoverMenus[menu].selector === '#WallNotifications') {
+					hoverMenus[menu].menu.off('focus', '.subnav a');
+					hoverMenus[menu].menu.off('mouseenter','> li', hoverMenus[menu].mouseover);
+					hoverMenus[menu].menu.off('mouseleave','> li', hoverMenus[menu].mouseout);
+					hoverMenus.splice(menu,1);
 				}
 			}
 		}
