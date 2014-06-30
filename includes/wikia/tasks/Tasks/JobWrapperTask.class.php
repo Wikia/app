@@ -12,7 +12,6 @@ namespace Wikia\Tasks\Tasks;
 
 
 class JobWrapperTask extends BaseTask {
-	protected $command;
 	protected $params;
 
 	public function call() {
