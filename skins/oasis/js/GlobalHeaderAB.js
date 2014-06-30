@@ -17,6 +17,7 @@ $(function(){
 		$notifications,
 		searchLocalText = 'This wikia',
 		searchGlobalText = 'All of Wikia',
+		$searchPageInput = $( '#search-v2-input' ),
 
 		// building search
 
@@ -95,6 +96,12 @@ $(function(){
 
 	// adding behaviour
 
+	// setting the searched phrase as the global header search input value
+	if ( $searchPageInput && $searchPageInput.val() !== '' ) {
+		$searchInput.val( $searchPageInput.val() );
+		$arrow.attr( 'class', 'dark search-arrow' );
+	}
+
 	$( '<button type="submit">' )
 		.focus( function() {
 			$arrow.attr( 'class', 'dark search-arrow' );
@@ -107,7 +114,8 @@ $(function(){
 		.append( $arrow )
 		.appendTo( $form );
 
-	$select.on('change keyup', function() {
+	$select
+		.on('change keyup', function() {
 			$selectSpan.text( $( '#search-select' ).find( 'option:selected' ).text() );
 		})
 		.focus( function() {
