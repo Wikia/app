@@ -424,13 +424,7 @@ define('wikia.intMap.poiCategories',
 		 * @param {object} data
 		 */
 		function trackPoiCategoryActions(data) {
-			if( mode === modalModes.EDIT ) {
-				utils.track(utils.trackerActions.IMPRESSION, 'poi-category-edited', data.mapId);
-			}
-
-			if( mode === modalModes.CREATE ) {
-				utils.track(utils.trackerActions.IMPRESSION, 'poi-category-added', data.mapId);
-			}
+			utils.track(utils.trackerActions.IMPRESSION, 'poi-category-' + mode, data.mapId);
 		}
 
 		return {
