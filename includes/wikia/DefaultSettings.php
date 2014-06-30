@@ -1191,6 +1191,12 @@ $wgEnableJavaScriptErrorLogging = false;
 $wgEnableRHonDesktop = false;
 
 /**
+ * @name $wgLoadLateAdsAfterPageLoad
+ * Enables postpones start for ads in late queue until page "load" event.
+ */
+$wgLoadLateAdsAfterPageLoad = false;
+
+/**
  * @name $wgAdDriverEnableRemnantGptMobile
  * Enables Remnant Gpti on Mobile experiment
  */

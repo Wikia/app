@@ -161,8 +161,8 @@ class AdEngine2Service
 
 	public static function areAdsAfterPageLoad()
 	{
-		global $wgLoadAdsAfterPageLoad;
-		return $wgLoadAdsAfterPageLoad;
+		global $wgLoadLateAdsAfterPageLoad;
+		return $wgLoadLateAdsAfterPageLoad;
 	}
 
 	public static function getCachedCategory()
@@ -251,7 +251,7 @@ class AdEngine2Service
 
 			// AdEngine2.js
 			'wgLoadAdsInHead' => AdEngine2Service::areAdsInHead(),
-			'wgLoadAdsAfterPageLoad' => AdEngine2Service::areAdsAfterPageLoad(),
+			'wgLoadLateAdsAfterPageLoad' => AdEngine2Service::areAdsAfterPageLoad(),
 			'wgShowAds' => AdEngine2Service::areAdsShowableOnPage(),
 			'wgAdsShowableOnPage' => AdEngine2Service::areAdsShowableOnPage(), // not used
 			'wgAdDriverStartLiftiumOnLoad' => $wgLiftiumOnLoad,
@@ -340,7 +340,7 @@ class AdEngine2Service
 				'wgEnableRHonDesktop',           // AdEngine2.run.js
 				'wgHighValueCountries',          // AdLogicHighValueCountry.js
 				'wgLoadAdsInHead',               // AdEngine2.run.js
-				'wgLoadAdsAfterPageLoad',        // AdEngine2.run.js
+				'wgLoadLateAdsAfterPageLoad',        // AdEngine2.run.js
 				'wgUsePostScribe',               // AdEngine2.run.js, scriptwriter.js
 				'wgWikiDirectedAtChildren',      // AdLogicPageParams.js
 				'wikiaPageIsHub',                // AdLogicPageParams.js

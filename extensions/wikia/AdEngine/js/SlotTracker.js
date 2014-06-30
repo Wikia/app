@@ -45,7 +45,7 @@ define('ext.wikia.adEngine.slotTracker', [
 			WIKIA_BAR_BOXAD_1:      'wikiabar'
 		},
 		adsInHead = window.wgLoadAdsInHead && abTest && abTest.getGroup('ADS_IN_HEAD'),
-		adsAfterPageLoad = window.wgLoadAdsAfterPageLoad && abTest && abTest.getGroup('ADS_AFTER_PAGE_LOAD');
+		adsAfterPageLoad = window.wgLoadLateAdsAfterPageLoad && abTest && abTest.getGroup('ADS_AFTER_PAGE_LOAD');
 
 	// The filtering function
 	function isInteresting(eventName, data) {

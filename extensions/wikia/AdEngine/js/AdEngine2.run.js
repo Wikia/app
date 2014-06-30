@@ -152,7 +152,7 @@ window.AdEngine_loadLateAds = function () {
 	}
 
 	require([ require.optional('wikia.abTest') ], function (abTest) {
-		var adsAfterPageLoad = window.wgLoadAdsAfterPageLoad && abTest && abTest.inGroup('ADS_AFTER_PAGE_LOAD', 'YES');
+		var adsAfterPageLoad = window.wgLoadLateAdsAfterPageLoad && abTest && abTest.inGroup('ADS_AFTER_PAGE_LOAD', 'YES');
 
 		if (adsAfterPageLoad) {
 			if (document.readyState === 'complete') {
@@ -175,7 +175,7 @@ window.AdEngine_loadLateAds = function () {
 	function trackTime(timeTo) {
 		var wgNowBased, performanceBased;
 
-		if (!window.wgLoadAdsInHead && !window.wgLoadAdsAfterPageLoad) {
+		if (!window.wgLoadAdsInHead && !window.wgLoadLateAdsAfterPageLoad) {
 			return;
 		}
 
