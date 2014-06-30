@@ -220,7 +220,7 @@ $shadow-width: 1px;
 				.icon {
 					width: 70px
 				}
-				.border {
+				&::before {
 					left: 82px;
 					width: 166px;
 				}
@@ -263,7 +263,7 @@ $shadow-width: 1px;
 				.icon {
 					width: 82px
 				}
-				.border {
+				&::before {
 					left: 102px;
 					width: 142px;
 				}
