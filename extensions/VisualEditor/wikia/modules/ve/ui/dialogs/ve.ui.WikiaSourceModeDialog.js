@@ -71,12 +71,12 @@ ve.ui.WikiaSourceModeDialog.prototype.initialize = function () {
  */
 ve.ui.WikiaSourceModeDialog.prototype.getSetupProcess = function ( data ) {
 	return ve.ui.WikiaSourceModeDialog.super.prototype.getSetupProcess.call( this, data )
-		.first( function() {
+		.first( function () {
 			this.target = data.target;
 			this.openCount++;
 			this.timings.serializeStart = ve.now();
 		}, this )
-		.next( function() {
+		.next( function () {
 			var doc = this.getFragment().getDocument();
 			this.$frame.startThrobbing();
 			// Use the WikiaViewPageTarget object as the target here
@@ -203,4 +203,3 @@ ve.ui.WikiaSourceModeDialog.prototype.onParseError = function ( ) {
 };
 
 ve.ui.windowFactory.register( ve.ui.WikiaSourceModeDialog );
-

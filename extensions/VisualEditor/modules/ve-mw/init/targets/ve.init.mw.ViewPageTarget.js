@@ -5,7 +5,7 @@
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
-/* global mw, confirm, alert, _kiq, veTrack */
+/* global mw, confirm, alert, veTrack */
 
 /**
  * Initialization MediaWiki view page target.
@@ -1531,11 +1531,11 @@ ve.init.mw.ViewPageTarget.prototype.onWindowPopState = function ( e ) {
 		this.actFromPopState = true;
 		this.deactivate();
 		// Trigger Qualaroo survey for anonymous users abandoning edit
-		/*jslint nomen: true*/
+		/*
 		if ( mw.user.anonymous() && window._kiq ) {
 			_kiq.push( ['set', { 'event': 'abandon_ve_back' } ] );
 		}
-		/*jslint nomen: false*/
+		*/
 	}
 };
 
