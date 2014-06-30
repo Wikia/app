@@ -1,9 +1,6 @@
 <?php
 /**
- * Resource loader module for providing language names.
- *
- * By default these names will be autonyms however other extensions may
- * provided language names in the context language (e.g. cldr extension)
+ * Resource loader module for populating language specific data.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,43 +18,43 @@
  * http://www.gnu.org/copyleft/gpl.html
  *
  * @file
- * @author Ed Sanders
- * @author Trevor Parscal
+ * @author Santhosh Thottingal
+ * @author Timo Tijhof
  */
 
 /**
  * ResourceLoader module for populating language specific data.
  */
-class ResourceLoaderLanguageNamesModule extends ResourceLoaderModule {
+class ResourceLoaderLanguageDataModule extends ResourceLoaderModule {
 
 	protected $targets = array( 'desktop', 'mobile' );
 
-
 	/**
-	 * @param $context ResourceLoaderContext
+	 * Get all the dynamic data for the content language to an array.
+	 *
+	 * @param ResourceLoaderContext $context
 	 * @return array
 	 */
 	protected function getData( ResourceLoaderContext $context ) {
-		return Language::fetchLanguageNames(
-			$context->getLanguage(),
-			'all'
+		$language = Language::factory( $context->getLanguage() );
+		return array(
+			'digitTransformTable' => $language->digitTransformTable(),
+			'separatorTransformTable' => $language->separatorTransformTable(),
+			'grammarForms' => $language->getGrammarForms(),
+			'pluralRules' => $language->getPluralRules(),
+			'digitGroupingPattern' => $language->digitGroupingPattern(),
 		);
 	}
 
 	/**
-	 * @param $context ResourceLoaderContext
+	 * @param ResourceLoaderContext $context
 	 * @return string JavaScript code
 	 */
 	public function getScript( ResourceLoaderContext $context ) {
 		return Xml::encodeJsCall( 'mw.language.setData', array(
 			$context->getLanguage(),
-			'languageNames',
 			$this->getData( $context )
 		) );
-	}
-
-	public function getDependencies() {
-		return array( 'mediawiki.language.init' );
 	}
 
 	/**
@@ -76,4 +73,10 @@ class ResourceLoaderLanguageNamesModule extends ResourceLoaderModule {
 		return md5( serialize( $this->getData( $context ) ) );
 	}
 
+	/**
+	 * @return array
+	 */
+	public function getDependencies() {
+		return array( 'mediawiki.language.init' );
+	}
 }
