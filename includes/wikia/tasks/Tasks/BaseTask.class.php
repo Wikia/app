@@ -55,7 +55,7 @@ abstract class BaseTask {
 			return;
 		}
 
-		$this->title = \Title::makeTitleSafe($this->titleParams['namespace'], $this->titleParams['dbKey']);
+		$this->title = \Title::makeTitleSafe($this->titleParams['namespace'], urldecode($this->titleParams['dbKey']));
 		if ( $this->title == null ) {
 			throw new \Exception( "unable to instantiate title with id {$this->titleParams['dbKey']}" );
 		}
@@ -235,7 +235,7 @@ abstract class BaseTask {
 	public function title(\Title $title) {
 		$this->titleParams = [
 			'namespace' => $title->getNamespace(),
-			'dbKey' => $title->getDBkey()
+			'dbKey' => urlencode($title->getDBkey())
 		];
 
 		return $this;
