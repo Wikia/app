@@ -420,7 +420,6 @@ class VideosModule extends WikiaModel {
 	 * @return bool
 	 */
 	private function isRegionallyRestricted( $video ) {
-		print_tmp("videotitle: {$video['title']} videorestrictions: {$video['regionalRestrictions']} ");
 		if ( !empty( $video['regionalRestrictions'] ) && !empty( $this->userRegion ) ) {
 			if ( !preg_match( "/$this->userRegion/", $video['regionalRestrictions'] ) ) {
 				return true;
