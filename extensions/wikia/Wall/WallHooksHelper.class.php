@@ -1650,7 +1650,7 @@ class WallHooksHelper {
 			if(empty($summary)) {
 				$msg = wfMsgForContent( static::getMessagePrefix($row->page_namespace).'-edit' );
 			} else {
-				$msg = wfMsgForContent( 'wall-recentchanges-summary', $summary );
+				$msg = Linker::revComment( $rev, false, true );
 			}
 
 			$ret .= ' ' . Xml::openElement('span', array('class' => 'comment')) . $msg . Xml::closeElement('span');
