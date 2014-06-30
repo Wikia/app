@@ -216,15 +216,10 @@ define(
 		 * @param {object} tileSetData
 		 */
 		function trackMapCreation(tileSetData) {
-			if (tileSetData.type === utils.tilesetTypes.REAL) {
-				utils.track(utils.trackerActions.IMPRESSION, 'geo-map-created');
-			}
+			var tileSetId = tileSetData.tileSetId,
+				label = tileSetData.type + '-map-created' + (!tileSetId ? '-with-new-tileset' : '');
 
-			if (tileSetData.type === utils.tilesetTypes.CUSTOM && tileSetData.tileSetId) {
-				utils.track(utils.trackerActions.IMPRESSION, 'custom-map-created', tileSetData.tileSetId);
-			} else if (tileSetData.type === 'custom' && !tileSetData.tileSetId) {
-				utils.track(utils.trackerActions.IMPRESSION, 'custom-map-created-with-new-tileset');
-			}
+			utils.track(utils.trackerActions.IMPRESSION, label, tileSetId);
 		}
 
 		return {
