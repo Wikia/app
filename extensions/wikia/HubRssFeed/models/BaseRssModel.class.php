@@ -430,12 +430,52 @@ abstract class BaseRssModel extends WikiaService {
 	/**
 	 * Fixing array of items in such way - that items will not contain duplicated timestamps
 	 */
-	protected function fixDuplicatedTimestamps( $itemsMap ) {
-		if ( empty( $itemsMap ) ) {
-			return $itemsMap;
+	protected function fixDuplicatedTimestamps( $items ) {
+
+		if ( empty( $items ) ) {
+			$emptyArray = [ ];
+			return $emptyArray;
 		}
 
-		// Calculate occurrence of each unique timestamp
+		$uniqueTimestamps =
+			$this->countUniqueTimestampsOccurrence( $items );
+
+		if ( count( $items ) == count( $uniqueTimestamps ) ) {
+			// Number of unique timestamps == number of items
+			// This means that there is no timestamps conflicts
+			return $items;
+		}
+
+		foreach ( $items as $key => $value ) {
+			$timestamp = $value[ self::FIELD_TIMESTAMP ];
+
+			$timestampIsNotUnique =
+				$uniqueTimestamps[ $timestamp ] > 1;
+
+			if ( $timestampIsNotUnique ) {
+
+				$newTimestamp =
+					$this->findAvailableTimestamp( $timestamp, $uniqueTimestamps );
+
+				// Updating timestamp
+				$items[ $key ][ self::FIELD_TIMESTAMP ] = $newTimestamp;
+
+				// Mark new timestamp as unavailable for future searching
+				$uniqueTimestamps[ $newTimestamp ] = 1;
+
+				// decrease number of occurrences of conflicted timestamp
+				$uniqueTimestamps[ $timestamp ]--;
+			}
+		}
+
+		// Returning items without duplicating timestamps
+		return $items;
+	}
+
+	/**
+	 * Count occurrence of each unique timestamp
+	 */
+	private function countUniqueTimestampsOccurrence( &$itemsMap ) {
 		$timestampsCount = [ ];
 		foreach ( $itemsMap as $key => $value ) {
 			$timestamp = $value[ self::FIELD_TIMESTAMP ];
@@ -446,41 +486,18 @@ abstract class BaseRssModel extends WikiaService {
 				$timestampsCount[ $timestamp ]++;
 			}
 		}
+		return $timestampsCount;
+	}
 
-		$itemsCount = count( $itemsMap );
-		$uniqueTimestampsCount = count( $timestampsCount );
-		if ( $itemsCount == $uniqueTimestampsCount ) {
-			// No timestamps conflicts detected
-			return $itemsMap;
+	/**
+	 * Finding available timestamp (by increasing current timestamp)
+	 */
+	private function findAvailableTimestamp( $timestamp, &$uniqueTimestampsCount ) {
+		$newTimestamp = $timestamp + 1;
+		while ( !empty( $uniqueTimestampsCount[ $newTimestamp ] ) ) {
+			$newTimestamp++;
 		}
-
-		foreach ( $itemsMap as $key => $value ) {
-			$timestamp = $value[ self::FIELD_TIMESTAMP ];
-
-			if ( $timestampsCount[ $timestamp ] == 1 ) {
-				// This timestamp occurrenced only once
-				// it's ok - nothing to do
-				continue;
-			}
-
-			// Finding available timestamp (by increasing current timestamp)
-			$newTimestamp = $timestamp + 1;
-			while ( !empty( $timestampsCount[ $newTimestamp ] ) ) {
-				$newTimestamp++;
-			}
-
-			// Updating timestamp
-			$itemsMap[ $key ][ self::FIELD_TIMESTAMP ] = $newTimestamp;
-
-			// Mark new timestamp as unavailable for future searching
-			$timestampsCount[ $newTimestamp ] = 1;
-
-			// decrease number of occurrences of previous timestamp
-			$timestampsCount[ $timestamp ]--;
-		}
-
-		// Returning items without duplicating timestamps
-		return $itemsMap;
+		return $newTimestamp;
 	}
 
 }

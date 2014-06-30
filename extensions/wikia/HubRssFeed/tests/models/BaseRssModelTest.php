@@ -154,11 +154,11 @@ class DummyModel extends BaseRssModel {
 	/**
 	 * Mocked version of fixDuplicatedTimestamps. Used to test processItems - separately from testing fixDuplicatedTimestamps
 	 */
-	protected function fixDuplicatedTimestamps( $itemsMap ) {
+	protected function fixDuplicatedTimestamps( $items ) {
 		if ( $this->testFixDuplicatedTimestamps ) {
-			return parent::fixDuplicatedTimestamps( $itemsMap );
+			return parent::fixDuplicatedTimestamps( $items );
 		}
-		return $itemsMap;
+		return $items;
 	}
 }
 
