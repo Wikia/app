@@ -3024,6 +3024,7 @@ $messages['kn'] = array(
  * @author Daisy2002
  * @author Hym411
  * @author Leehoy
+ * @author Miri-Nae
  * @author Priviet
  * @author 관인생략
  * @author 아라
@@ -3036,8 +3037,10 @@ $messages['ko'] = array(
 	'create-blog-cant-edit' => '편집을 수행할 수 없습니다',
 	'create-blog-post-category' => '블로그 게시물',
 	'create-blog-post-category-body' => '자동으로 생성된 블로그 게시물 목록입니다',
+	'create-blog-post-category-log' => '블로그 글을 위해 생성된 분류 문서',
 	'create-blog-post-recent-listing' => '최근 게시물',
 	'create-blog-post-recent-listing-title' => '최근 게시물',
+	'create-blog-post-recent-listing-log' => '최근 블로그 글을 위해 생성된 분류 문서',
 	'create-blog-post-title' => '새 블로그 게시물 만들기',
 	'create-blog-post-title-edit' => '블로그 게시물 편집',
 	'create-blog-form-title' => '블로그 게시물이 무엇입니까?',
@@ -3110,6 +3113,8 @@ $messages['ko'] = array(
 	'blog-fromsitename' => '$1로부터',
 	'blogs-reportproblem' => '문제 보고',
 	'blogs-comment-hidden' => '숨겨진 댓글',
+	'right-blog-comments-toggle' => '블로그 댓글 표시',
+	'right-blog-comments-delete' => '블로그 댓글 삭제',
 	'right-blog-articles-edit' => '블로그 문서 편집',
 	'right-blog-articles-move' => '블로그 문서 옮기기',
 	'blogs-recent-url-text' => '최근 블로그 게시물',
@@ -5595,15 +5600,29 @@ $messages['tly'] = array(
 
 /** Turkish (Türkçe)
  * @author Incelemeelemani
+ * @author Sayginer
  * @author Sucsuzz
  * @author Suelnur
  */
 $messages['tr'] = array(
 	'createblogpage' => 'Blog oluştur',
+	'create-blog-empty-title-error' => 'Başlık gerekli',
+	'create-blog-invalid-title-error' => 'Geçersiz başlık',
+	'create-listing-confirm-info' => 'Aşağıdaki kodu kopyala ve yapıştır:',
+	'create-blog-no-login' => 'Oturum açık değil',
 	'create-blog-categories-textinput' => 'Yeni kategori ekle',
+	'create-blog-categories-submit' => 'Gönder',
+	'create-blog-save' => 'Sayfayı kaydet',
+	'create-blog-preview' => 'Önizlemeyi göster',
+	'create-blog-updated' => 'Blog yazısı oluşturuldu veya güncellendi.',
+	'create-blog-permission-denied' => 'Blog sayfası kaydedilirken hata: İzin verilmedi',
+	'create-blog-article-already-exists' => 'Aynı isimde bir blog yazısı mevcut, lütfen farklı bir isim seçin',
+	'create-blog-listing-title' => 'Yeni bir blog listeleme sayfası oluştur',
+	'create-blog-listing-form-title' => 'Blog listesi sayfası nedir?',
 	'create-blog-listing-preview' => 'Önizleme',
 	'create-blog-listing-sortby-author' => 'Yazar',
 	'create-blog-listing-sortby-comments' => 'Yorum Sayısı',
+	'blog-emptyparam' => 'Parametre adı boş olamaz',
 	'blog-defaulttitle' => 'Bloglar',
 	'blog-readfullpost' => 'Devamı',
 	'blog-olderposts' => 'Eski mesajlar',
@@ -5618,11 +5637,18 @@ $messages['tr'] = array(
 	'blog-comments' => 'Yorumlar',
 	'blog-rc-comments' => 'Blog yorumları',
 	'blog-comments-new' => 'Yeni blog yorumu',
+	'blog-voting-label' => 'Oylama',
 	'blog-comments-anonymous' => 'Anonim kullanıcı',
 	'blog-comment-delete' => 'sil',
 	'blog-comment-hide' => 'gizle',
 	'blog-comment-history' => 'geçmiş',
+	'blog-comment-error' => 'Yorum kaydedilemedi',
+	'blog-page-rate' => 'Bu maddeyi değerlendir:',
+	'blog-create-post-label' => 'Blog yazısı oluştur',
 	'blog-refresh-label' => 'Yenile',
+	'blogs-reportproblem' => 'Sorun bildir',
+	'blogs-comment-hidden' => 'Yorum gizlendi.',
+	'blog-comment-sending' => 'Gönderiliyor…',
 );
 
 /** Tatar (Cyrillic script) (татарча)

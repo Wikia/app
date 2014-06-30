@@ -18,23 +18,16 @@ class TaskRunner {
 	function __construct($taskId, $taskList, $callOrder, $createdBy) {
 		$this->taskId = $taskId;
 		$this->callOrder = json_decode($callOrder, true);
-
 		$taskList = json_decode($taskList, true);
-		foreach ($taskList as $taskData) {
-			try {
-				if (!class_exists($taskData['class'])) {
-					\Wikia\Logger\WikiaLogger::instance()->error('Error running task: Class does not exist', [
-						'class' => $taskData['class'],
-						'task_id' => $taskId,
-					]);
-					throw new InvalidArgumentException("Class {$taskData['class']} not found");
-				}
 
-				/** @var \Wikia\Tasks\Tasks\BaseTask $task */
-				$task = new $taskData['class']();
-				$task->taskId($taskId);
-				$task->createdBy($createdBy);
-				$task->unserialize($taskData['context'], $taskData['calls']);
+		foreach ($taskList as $taskData) {
+			/** @var \Wikia\Tasks\Tasks\BaseTask $task */
+			$task = new $taskData['class']();
+			$task->taskId($taskId);
+			$task->createdBy($createdBy);
+			$task->unserialize($taskData['context'], $taskData['calls']);
+
+			try {
 				$task->init();
 			} catch (Exception $e) {
 				$this->exception = $e;
@@ -106,10 +99,15 @@ class TaskRunner {
 			'CreatePdfThumbnailsJob',
 //		'CreateWikiLocalJob',
 			'HAWelcomeJob',
+			'HTMLCacheUpdate',
 			'ImageReviewTask',
+			'MultiDeleteTask',
+			'MultiMoveTask',
+			'MultiWikiEditTask',
 //			'PromoteImageReviewTask',
 			'UserRollback',
-//			'UserRename',
+			'UserRename',
+			'SWMSendToGroupTask',
 		]);
 	}
 }

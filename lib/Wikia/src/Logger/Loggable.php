@@ -14,7 +14,9 @@ trait Loggable {
 	 * context key/val pairs that all log messages coming from this class must have
 	 * @return array
 	 */
-	abstract protected function getLoggerContext();
+	protected function getLoggerContext() {
+		return [];
+	}
 
 	private function mergeLoggerContext(array $context) {
 		return array_merge($this->getLoggerContext(), $context);

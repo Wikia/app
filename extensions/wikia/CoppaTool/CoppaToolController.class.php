@@ -112,8 +112,14 @@ class CoppaToolController extends WikiaController {
 			'suppress' => true,
 		];
 
-		$batchDeleteTask = new MultiDeleteTask( $taskParams );
-		$batchDeleteTaskId = $batchDeleteTask->submitForm();
+		if (TaskRunner::isModern('MultiDeleteTask')) {
+			$task = new \Wikia\Tasks\Tasks\MultiTask();
+			$task->call('delete', $taskParams);
+			$batchDeleteTaskId = $task->queue();
+		} else {
+			$batchDeleteTask = new MultiDeleteTask( $taskParams );
+			$batchDeleteTaskId = $batchDeleteTask->submitForm();
+		}
 
 		$this->response->setVal( 'success', true );
 		$this->response->setVal( 'resultMsg', wfMessage( 'coppatool-delete-user-pages-success', $batchDeleteTaskId )->plain() );

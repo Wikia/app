@@ -1129,7 +1129,9 @@ function wfErrorLog( $text, $file ) {
  */
 function wfLogProfilingData() {
 	global $wgRequestTime, $wgDebugLogFile, $wgDebugRawPage, $wgRequest;
-	global $wgProfileLimit, $wgUser;
+	global $wgProfileLimit, $wgUser, $wgProfilingDataLogged;
+
+	$wgProfilingDataLogged = true;
 
 	$profiler = Profiler::instance();
 
