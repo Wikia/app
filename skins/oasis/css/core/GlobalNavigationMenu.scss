@@ -152,49 +152,6 @@ $shadow-width: 1px;
 			}
 		}
 
-//		.books:not(.active) .icon {
-//			background-image: url(/skins/oasis/images/GlobalNavigation/books.svg); /* base64 */
-//		}
-//		.books.active .icon {
-//			background-image: url(/skins/oasis/images/GlobalNavigation/books_hover.svg); /* base64 */
-//		}
-//		.comics:not(.active) .icon {
-//			background-image: url(/skins/oasis/images/GlobalNavigation/comics.svg); /* base64 */
-//		}
-//		.comics.active .icon {
-//			background-image: url(/skins/oasis/images/GlobalNavigation/comics_hover.svg); /* base64 */
-//		}
-//		.games:not(.active) .icon {
-//			background-image: url(/skins/oasis/images/GlobalNavigation/games.svg); /* base64 */
-//		}
-//		.games.active .icon {
-//			background-image: url(/skins/oasis/images/GlobalNavigation/games_hover.svg); /* base64 */
-//		}
-//		.lifestyle:not(.active) .icon {
-//			background-image: url(/skins/oasis/images/GlobalNavigation/lifestyle.svg); /* base64 */
-//		}
-//		.lifestyle.active .icon {
-//			background-image: url(/skins/oasis/images/GlobalNavigation/lifestyle_hover.svg); /* base64 */
-//		}
-//		.movies:not(.active) .icon {
-//			background-image: url(/skins/oasis/images/GlobalNavigation/movies.svg); /* base64 */
-//		}
-//		.movies.active .icon {
-//			background-image: url(/skins/oasis/images/GlobalNavigation/movies_hover.svg); /* base64 */
-//		}
-//		.music:not(.active) .icon {
-//			background-image: url(/skins/oasis/images/GlobalNavigation/music.svg); /* base64 */
-//		}
-//		.music.active .icon {
-//			background-image: url(/skins/oasis/images/GlobalNavigation/music_hover.svg); /* base64 */
-//		}
-//		.tv:not(.active) .icon {
-//			background-image: url(/skins/oasis/images/GlobalNavigation/tv.svg); /* base64 */
-//		}
-//		.tv.active .icon {
-//			background-image: url(/skins/oasis/images/GlobalNavigation/tv_hover.svg); /* base64 */
-//		}
-
 		@for $i from 1 through 7 {
 			&.count-#{$i} section,
 			&.count-#{$i} .hubs,
@@ -205,6 +162,7 @@ $shadow-width: 1px;
 
 		section {
 			background-color: $hubsmenu-background-color;
+			bottom: 1px;
 			color: $hubsmenu-font-color;
 			font-size: 15px;
 			overflow: auto;
