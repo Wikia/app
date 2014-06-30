@@ -1,8 +1,7 @@
 local InfoboxBuilder = {}
 
 -- Define dependecies
-local View = mw.InfoboxBuilderView
-local HF   = mw.InfoboxBuilderHF
+local HF = mw.InfoboxBuilderHF
 
 -- Define var for custom user's module
 local CM = {}
@@ -18,7 +17,7 @@ InfoboxBuilder.vars = {
 function InfoboxBuilder.builder( frame )
 
   local input = InfoboxBuilder.parse( frame.args )
-  local Infobox = View.render( input, InfoboxBuilder.vars )
+  local Infobox = mw.InfoboxBuilderView.render( input, InfoboxBuilder.vars )
   return Infobox
  
 end
@@ -40,9 +39,9 @@ function InfoboxBuilder.parse( args )
  
     local keySplit = HF.explode( ":", tostring(k) )
  
-    local index  = tonumber( HF.trim( keySplit[1] ) )
-    local key    = tostring( HF.trim( keySplit[2] ) )
-    local value  = tostring( HF.trim( v )           )
+    local index  = tonumber( mw.text.trim( keySplit[1] ) )
+    local key    = tostring( mw.text.trim( keySplit[2] ) )
+    local value  = tostring( mw.text.trim( v ) )
  
     if index > 0 then
  
@@ -54,7 +53,7 @@ function InfoboxBuilder.parse( args )
       fields[index][key] = value
  
     else
-      if not HF.isempty( HF.trim( value ) ) then
+      if not HF.isempty( mw.text.trim( value ) ) then
         InfoboxBuilder.vars[key] = value
       end
     end
@@ -99,9 +98,9 @@ end
 function InfoboxBuilder.execute( input )
 
   -- Require user's custom module
-  if not HF.isempty( HF.trim( InfoboxBuilder.vars["CustomModule"] ) ) then
+  if not HF.isempty( mw.text.trim( InfoboxBuilder.vars["CustomModule"] ) ) then
     
-    CM = require( HF.trim( InfoboxBuilder.vars["CustomModule"] ) )
+    CM = require( mw.text.trim( InfoboxBuilder.vars["CustomModule"] ) )
 
       -- Execute custom methods
       for index, field in ipairs( input.fields ) do
@@ -110,7 +109,7 @@ function InfoboxBuilder.execute( input )
           if InfoboxBuilder.methodExists( field.LabelMethod ) then
             input.fields[index].Label = CM[ field.LabelMethod ]( field, InfoboxBuilder.vars )
           end
-        elseif not HF.isempty( HF.trim( field.Label ) ) and InfoboxBuilder.methodExists( field.LabelMethod ) then
+        elseif not HF.isempty( mw.text.trim( field.Label ) ) and InfoboxBuilder.methodExists( field.LabelMethod ) then
           input.fields[index].Label = CM[ field.LabelMethod ]( field, InfoboxBuilder.vars )
         end
         
@@ -118,7 +117,7 @@ function InfoboxBuilder.execute( input )
           if InfoboxBuilder.methodExists( field.ValueMethod ) then
             input.fields[index].Value = CM[ field.ValueMethod ]( field, InfoboxBuilder.vars )
           end
-        elseif not HF.isempty( HF.trim( field.Value ) ) and InfoboxBuilder.methodExists( field.ValueMethod ) then
+        elseif not HF.isempty( mw.text.trim( field.Value ) ) and InfoboxBuilder.methodExists( field.ValueMethod ) then
           input.fields[index].Value = CM[ field.ValueMethod ]( field, InfoboxBuilder.vars )
         end
       end
