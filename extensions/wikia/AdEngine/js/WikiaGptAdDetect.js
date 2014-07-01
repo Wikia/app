@@ -220,7 +220,9 @@ define('ext.wikia.adEngine.wikiaGptAdDetect', [
 			return;
 		}
 
-		throw 'Incorrect ad type. Cannot detect ad state.';
+		log(['onAdLoad', 'Unknown ad type (launching starting ad callback)', adType], 'error', logGroup);
+		adType = 'unknown';
+		return callAdCallback();
 	}
 
 	return {
