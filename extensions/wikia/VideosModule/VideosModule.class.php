@@ -419,13 +419,10 @@ class VideosModule extends WikiaModel {
 	 * @param LocalFile $video
 	 * @return bool
 	 */
-	private function isRegionallyRestricted( $video ) {
-		if ( !empty( $video['regionalRestrictions'] ) && !empty( $this->userRegion ) ) {
-			if ( !preg_match( "/$this->userRegion/", $video['regionalRestrictions'] ) ) {
-				return true;
-			}
-		}
-		return false;
+	public function isRegionallyRestricted( $video ) {
+		return !empty( $video['regionalRestrictions'] )
+			&& !empty( $this->userRegion )
+			&& !preg_match( "/$this->userRegion/", $video['regionalRestrictions'] );
 	}
 
 	/**
@@ -433,7 +430,7 @@ class VideosModule extends WikiaModel {
 	 * @param $video
 	 * @return bool
 	 */
-	private function isBlackListed( $video ) {
+	public function isBlackListed( $video ) {
 		return in_array( $video['title'], $this->blacklist );
 	}
 
