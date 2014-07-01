@@ -107,8 +107,10 @@ class TaskRunner {
 //			'PromoteImageReviewTask',
 			'ReplaceTextJob',
 			'SFCreatePageJob',
+			'SMW_NMSendMailJob',
 			'SMWRefreshJob',
 			'SWMSendToGroupTask',
+			'SMWUpdateJob',
 			'UserRollback',
 			'UserRename',
 		]);
