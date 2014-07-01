@@ -424,6 +424,10 @@ define('wikia.intMap.poiCategories',
 			}
 		}
 
+		/**
+		 * @desc handler for triggering upload form for marker image
+		 * @param {Event} event
+		 */
 		function triggerMarkerUpload(event) {
 			$(event.currentTarget).siblings('.poi-category-marker-image-upload').click();
 		}
