@@ -72,7 +72,7 @@ class SQLBuilderSelectTest extends FluentSqlTestBase {
 				SELECT name
 				FROM products
 					LEFT JOIN items
-						USING item_id, name
+						USING (item_id, name)
 				WHERE price > ?
 				LIMIT 10
 				OFFSET 1
@@ -164,6 +164,21 @@ class SQLBuilderSelectTest extends FluentSqlTestBase {
 							'( address is null or birthday = ? )', ['19851212']
 						))
 						->AND_('some_col')->GREATER_THAN(5),
+				true
+			],
+			[
+				"
+				SELECT *
+				FROM a
+					LEFT JOIN b
+						USING (c1, c2, c3)
+				",
+				(new SQL)
+					->SELECT('*')
+					->FROM('a')
+						->LEFT_JOIN('b')
+						->USING('c1', 'c2')
+						->USING('c3'),
 				true
 			]
 		];
