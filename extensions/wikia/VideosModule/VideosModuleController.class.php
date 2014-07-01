@@ -24,7 +24,7 @@ class VideosModuleController extends WikiaController {
 		$numRequired = $this->request->getVal( 'limit', VideosModule::LIMIT_VIDEOS );
 		$localContent = ( $this->request->getVal( 'local' ) == 'true' );
 		$sort = $this->request->getVal( 'sort', 'trend' );
-		$userRegion = $this->request->getVal( 'userRegion' );
+		$userRegion = $this->request->getVal( 'userRegion', VideosModule::DEFAULT_REGION );
 
 		$module = new VideosModule( $userRegion );
 		$staffVideos = $module->getStaffPicks();

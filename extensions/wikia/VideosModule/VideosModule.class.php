@@ -27,6 +27,8 @@ class VideosModule extends WikiaModel {
 	const SOURCE_STAFF = 'staff-picks';
 	const SOURCE_WIKI_VERTICAL = 'wiki-vertical';
 
+	const DEFAULT_REGION = "US";
+
 	protected $blacklist;               // black listed videos we never want to show in videos module
 	protected $blacklistCount = null;   // number of blacklist videos
 	protected $existingVideos = [];     // list of titles of existing videos (those which have been added already)
@@ -117,9 +119,7 @@ class VideosModule extends WikiaModel {
 				if ( count( $videos ) >= self::LIMIT_VIDEOS ) {
 					break;
 				}
-				if ( $this->canAddToList( $video ) ) {
-					$this->addToList( $videos, $video, self::SOURCE_LOCAL );
-				}
+				$this->addToList( $videos, $video, self::SOURCE_LOCAL );
 			}
 
 			$this->wg->Memc->set( $memcKey, $videos, self::CACHE_TTL );
@@ -165,9 +165,7 @@ class VideosModule extends WikiaModel {
 				if ( count( $videos ) >= self::LIMIT_VIDEOS ) {
 					break;
 				}
-				if ( $this->canAddToList( $video ) ) {
-					$this->addToList( $videos, $video, self::SOURCE_WIKI_TOPICS );
-				}
+				$this->addToList( $videos, $video, self::SOURCE_WIKI_TOPICS );
 			}
 
 			$this->wg->Memc->set( $memcKey, $videos, self::CACHE_TTL );
@@ -250,9 +248,7 @@ class VideosModule extends WikiaModel {
 				if ( count( $videos ) >= $limit ) {
 					break;
 				}
-				if ( $this->canAddToList( $video ) ) {
-					$this->addToList( $videos, $video, $source );
-				}
+				$this->addToList( $videos, $video, $source );
 			}
 
 			$this->wg->Memc->set( $memcKey, $videos, self::CACHE_TTL );
@@ -403,6 +399,27 @@ class VideosModule extends WikiaModel {
 	}
 
 	/**
+	 * Checks if a video is able to be added to the current list being collected (eg, staffPicks, videosByCategory,
+	 * wikiRelated), and adds it to that list. Adding the source of that video to it's detail, as well as appending
+	 * it to the list of existingVideos which includes all videos added from all lists. We use this existingVideos
+	 * list to filter as we're adding videos to ensure we don't include duplicates.
+	 * @param $videos
+	 * @param $video
+	 * @param $source
+	 * @return bool
+	 */
+	private function addToList( &$videos, $video, $source ) {
+		$added = false;
+		if ( $this->canAddToList( $video ) ) {
+			$video['source'] = $source;
+			$this->existingVideos[$video['title']] = true;
+			$videos[] = $this->filterVideoDetail( $video );
+			$added = true;
+		}
+		return $added;
+	}
+
+	/**
 	 * Return whether the video can be added to the current list of videos being
 	 * collected (eg, staffPicks, videosByCategory, wikiRelated).
 	 * @param $video
@@ -442,22 +459,7 @@ class VideosModule extends WikiaModel {
 	 * @return bool
 	 */
 	private function isAlreadyAdded( $video ) {
-		return in_array( $video['title'], $this->existingVideos );
-	}
-
-	/**
-	 * Adds a video to the current list being collected (eg, staffPicks, videosByCategory, wikiRelated),
-	 * adding the source of that video to it's detail, as well as appending it to the list of existingVideos
-	 * which includes all videos added from all lists. We use this existingVideos list to filter as we're adding
-	 * videos to ensure we don't include duplicates.
-	 * @param $videos
-	 * @param $video
-	 * @param $source
-	 */
-	private function addToList( &$videos, $video, $source ) {
-		$video['source'] = $source;
-		$this->existingVideos[]	= $video['title'];
-		$videos[] = $this->filterVideoDetail( $video );
+		return array_key_exists( $video['title'], $this->existingVideos );
 	}
 
 	/**
