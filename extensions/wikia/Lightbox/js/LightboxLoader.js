@@ -25,7 +25,7 @@
 			// start with default modal options
 			id: 'LightboxModal',
 			className: 'LightboxModal',
-			width: 970, // modal adds 30px of padding to width
+			width: 970, // modal adds 40px of padding to width
 			noHeadline: true,
 			topOffset: 25,
 			height: 628,
@@ -345,14 +345,17 @@
 		},
 		/**
 		 *
-		 * @param $link Anchor that was clicked
-		 * @param [$thumb] Optional thumbnail image inside clicked anchor
+		 * @param {jQuery} $link Anchor that was clicked
+		 * @param {jQuery} [$thumb] Optional thumbnail image inside clicked anchor
 		 * @param {jQuery} event jQuery click event
 		 * @returns {boolean}
 		 */
 		hasLightbox: function ($link, $thumb, event) {
+			var modalPadding = 40; // amount of padding that modal adds to the width specified
+
 			// if any of the following conditions are true, don't open the lightbox
 			return !(
+				$(window).width() < LightboxLoader.defaults.width + modalPadding || // browser is too small, like tablet
 				$link.hasClass('link-internal') ||
 				$link.hasClass('link-external') ||
 				$thumb && $thumb.attr('data-shared-help') ||

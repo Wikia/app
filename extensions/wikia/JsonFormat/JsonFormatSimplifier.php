@@ -118,12 +118,12 @@ class JsonFormatSimplifier {
 	 * @param String $inlineText
 	 */
 	private function appendInline( &$sectionElements, $inlineText ) {
-		if ( trim($inlineText) != "" ) {
-			if( count( $sectionElements ) == 0 || $sectionElements[count($sectionElements) - 1 ]["type"] != "paragraph") {
+		if( count( $sectionElements ) == 0 || $sectionElements[count($sectionElements) - 1 ]["type"] != "paragraph") {
+			if ( trim($inlineText) != "" ) {
 				$sectionElements[] = [ "type" => "paragraph", "text" => $inlineText ];
-			} else {
-				$sectionElements[ count($sectionElements) - 1 ]["text"] .= $inlineText;
 			}
+		} else {
+			$sectionElements[ count($sectionElements) - 1 ]["text"] .= $inlineText;
 		}
 	}
 
@@ -197,7 +197,7 @@ class JsonFormatSimplifier {
 					$containList = true;
 				}
 			}
-			$value = implode('', $sectionResult);
+			$value = implode(' ', $sectionResult);
 			if( $containList ) {
 				$listsSections[] = $value;
 			} else {
@@ -206,7 +206,7 @@ class JsonFormatSimplifier {
 		}
 
 		$output = array_merge( array_reverse($result), array_reverse( $listsSections ) );
-		$res = implode( '', $output);
+		$res = implode( ' ', $output);
 		$timer->stop();
 		return $res;
 	}
@@ -214,7 +214,8 @@ class JsonFormatSimplifier {
 	protected function getElements( $node ) {
 		$result = [];
 		foreach( $node['elements'] as $element ) {
-			$text = [ $element['text'] ];
+			//unicode trim
+			$text = [ preg_replace( '/^[\pZ\pC]+|[\pZ\pC]+$/u', '', $element['text'] ) ];
 			if( !empty($element['elements']) ) {
 				$text[] = '(' . $this->getElements( $element ) . ')';
 			}

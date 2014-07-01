@@ -21,6 +21,18 @@ function libraryUtil.checkTypeForIndex( index, value, expectType )
 	end
 end
 
+function libraryUtil.checkTypeForNamedArg( name, argName, arg, expectType, nilOk )
+	if arg == nil and nilOk then
+		return
+	end
+	if type( arg ) ~= expectType then
+		local msg = string.format( "bad named argument %s to '%s' (%s expected, got %s)",
+			argName, name, expectType, type( arg )
+		)
+		error( msg, 3 )
+	end
+end
+
 function libraryUtil.makeCheckSelfFunction( libraryName, varName, selfObj, selfObjDesc )
 	return function ( self, method )
 		if self ~= selfObj then

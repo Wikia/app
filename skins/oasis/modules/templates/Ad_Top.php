@@ -4,7 +4,7 @@
 <?php
 
 echo $app->renderView('Ad', 'Index', ['slotName' => $leaderboardName, 'pageTypes' => ['homepage_logged', 'corporate', 'all_ads']]);
-echo $app->renderView('Ad', 'Index', ['slotName' => 'TOP_BUTTON_WIDE']);
+echo $app->renderView('Ad', 'Index', ['slotName' => 'TOP_BUTTON_WIDE', 'pageTypes' => ['homepage_logged', 'all_ads']]);
 
 ?>
 

@@ -266,7 +266,8 @@ class WallBaseController extends WikiaController{
 			$summary = $wallMessage->getLastEditSummery();
 
 			if(!empty($summary)) {
-				$this->response->setVal( 'summary',  $summary );
+				$summary = Linker::formatComment( $summary );
+				$this->response->setVal( 'summary', $summary );
 				$this->response->setVal( 'showSummary',  true );
 			} else {
 				$this->response->setVal( 'showSummary',  false );

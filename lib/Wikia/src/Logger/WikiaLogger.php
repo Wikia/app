@@ -19,6 +19,7 @@ class WikiaLogger {
 	/** @var WebProcessor */
 	private $webProcessor;
 
+	/** private to enforce singleton */
 	private function __construct() {
 	}
 
@@ -35,9 +36,9 @@ class WikiaLogger {
 		return $instance;
 	}
 
-	public function onError($code, $message, $file, $line, $context) {
+	public function onError($code, $message, $file, $line, $context, $force=false) {
 		// is this necessary? I thought the code is being passed in
-		if (!($code & $this->getErrorReporting())) {
+		if (!($code & $this->getErrorReporting()) && !$force) {
 			return true;
 		}
 
@@ -80,6 +81,25 @@ class WikiaLogger {
 		}
 
 		return true;
+	}
+
+	/**
+	 * Super-hacky, but set_error_handler() does not catch the fatal-family of errors. Unfortunately, this results
+	 * in double-logging these types of errors, but having the context is probably worth it.
+	 */
+	public function onShutdown() {
+		$error = error_get_last();
+
+		if ($error) {
+			switch($error['type']) {
+				case E_ERROR:
+				case E_CORE_ERROR:
+				case E_COMPILE_ERROR:
+				case E_USER_ERROR:
+					$this->onError($error['type'], $error['message'], $error['file'], $error['line'], null, true);
+					break;
+			}
+		}
 	}
 
 	public function debug($message, $context=[]) {
@@ -127,7 +147,7 @@ class WikiaLogger {
 	}
 
 	/**
-	 * @return \SyslogHandler
+	 * @return SyslogHandler
 	 */
 	public function getSyslogHandler() {
 		if ($this->syslogHandler == null) {
@@ -141,17 +161,18 @@ class WikiaLogger {
 	 * Set the SyslogHandler. Throws an exception of the logger has already been initialized.
 	 *
 	 * @param SyslogHandler $handler
+	 * @throws \InvalidArgumentException
 	 */
 	public function setSyslogHandler(SyslogHandler $handler) {
 		if (isset($this->logger)) {
-			throw new InvalidArgumentException("Error, \$this->logger has been initialized.");
+			throw new \InvalidArgumentException("Error, \$this->logger has been initialized.");
 		}
 
 		$this->syslogHandler = $handler;
 	}
 
 	/**
-	 * @return \WebProcessor.
+	 * @return WebProcessor.
 	 */
 	public function getWebProcessor() {
 		if ($this->webProcessor == null) {
@@ -165,10 +186,11 @@ class WikiaLogger {
 	 * Sets the WebProcessor. Throws an exception of the logger has already been initialized.
 	 *
 	 * @param WebProcessor $processor
+	 * @throws \InvalidArgumentException
 	 */
 	public function setWebProcessor(WebProcessor $processor) {
 		if (isset($this->logger)) {
-			throw new InvalidArgumentException("Error, \$this->logger has been initialized.");
+			throw new \InvalidArgumentException("Error, \$this->logger has been initialized.");
 		}
 
 		$this->webProcessor = $processor;
@@ -224,5 +246,15 @@ class WikiaLogger {
 
 	public function getErrorReporting() {
 		return error_reporting();
+	}
+
+	/** @see \Wikia\Logger\WebProcessor::pushContext */
+	public function pushContext(array $context, $type=WebProcessor::RECORD_TYPE_CONTEXT) {
+		$this->getWebProcessor()->pushContext($context, $type);
+	}
+
+	/** @see \Wikia\Logger\WebProcessor::popContext */
+	public function popContext($type=WebProcessor::RECORD_TYPE_CONTEXT) {
+		$this->getWebProcessor()->popContext($type);
 	}
 }

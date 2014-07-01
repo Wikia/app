@@ -2,10 +2,14 @@
 require(
 	[
 		'jquery', 'JSMessages', 'wikia.window', 'wikia.log',
-		'ext.wikia.adEngine.adEngine', 'ext.wikia.adEngine.adConfigMobile'
+		'ext.wikia.adEngine.adEngine', 'ext.wikia.adEngine.adConfigMobile',
+		'ext.wikia.adEngine.messageListener'
 	],
-	function ( $, msg, window, log, adEngine, adConfigMobile ) {
+	function ( $, msg, window, log, adEngine, adConfigMobile, messageListener ) {
 		'use strict';
+
+		// Don't show ads for Sony
+		window.wgShowAds = window.wgShowAds && !window.document.referrer.match(/info.tvsideview.sony.net/);
 
 		var minZerothSectionLength = 700,
 			minPageLength = 2000,
@@ -29,6 +33,8 @@ require(
 					'</label></div></div>';
 			},
 			adSlots = [];
+
+		messageListener.init();
 
 		// Slots
 		log( 'Loading slot: ' + mobileTopLeaderBoard, logLevel, logGroup );

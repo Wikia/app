@@ -30,7 +30,6 @@ $wgHooks['ArticleDeleteComplete']    [] = "Wikia::onArticleDeleteComplete";
 $wgHooks['ContributionsToolLinks']   [] = 'Wikia::onContributionsToolLinks';
 $wgHooks['AjaxAddScript']            [] = 'Wikia::onAjaxAddScript';
 $wgHooks['TitleGetSquidURLs']        [] = 'Wikia::onTitleGetSquidURLs';
-$wgHooks['OutputPageFavicon']        [] = 'Wikia::onOutputPageFavicon';
 
 # changes in recentchanges (MultiLookup)
 $wgHooks['RecentChange_save']        [] = "Wikia::recentChangesSave";
@@ -70,54 +69,14 @@ $wgHooks['LocalFilePurgeThumbnailsUrls'][] = 'Wikia::onLocalFilePurgeThumbnailsU
 
 class Wikia {
 
-	const VARNISH_STAGING_HEADER = 'X-Staging';
-	const VARNISH_STAGING_PREVIEW = 'preview';
-	const VARNISH_STAGING_VERIFY = 'verify';
 	const REQUIRED_CHARS = '0123456789abcdefG';
 	const COMMUNITY_WIKI_ID = 177;
+	const FAVICON_URL_CACHE_KEY = 'favicon-v1';
 
 	private static $vars = array();
 	private static $cachedLinker;
 
 	private static $apacheHeaders = null;
-
-	/**
-	 * Return the name of staging server (or empty string for production/dev envs)
-	 * @return string
-	 */
-	public static function getStagingServerName() {
-		if ( is_null( self::$apacheHeaders ) ) {
-			self::$apacheHeaders = function_exists('apache_request_headers') ? apache_request_headers() : array();
-		}
-		if ( isset( self::$apacheHeaders[ self::VARNISH_STAGING_HEADER ] ) ) {
-			return self::$apacheHeaders[ self::VARNISH_STAGING_HEADER ];
-		}
-		return '';
-	}
-
-	/**
-	 * Check if we're running on preview server
-	 * @return bool
-	 */
-	public static function isPreviewServer() {
-		return self::getStagingServerName() === self::VARNISH_STAGING_PREVIEW;
-	}
-
-	/**
-	 * Check if we're running on verify server
-	 * @return bool
-	 */
-	public static function isVerifyServer() {
-		return self::getStagingServerName() === self::VARNISH_STAGING_VERIFY;
-	}
-
-	/**
-	 * Check if we're running in preview or verify env
-	 * @return bool
-	 */
-	public static function isStagingServer() {
-		return self::isPreviewServer() || self::isVerifyServer();
-	}
 
 	public static function setVar($key, $value) {
 		Wikia::$vars[$key] = $value;
@@ -133,6 +92,36 @@ class Wikia {
 
 	public static function unsetVar($key) {
 		unset(Wikia::$vars[$key]);
+	}
+
+	public static function getFaviconFullUrl() {
+		global $wgMemc;
+
+		$mMemcacheKey = wfMemcKey(self::FAVICON_URL_CACHE_KEY);
+		$mData = $wgMemc->get($mMemcacheKey);
+		$faviconFilename = 'Favicon.ico';
+
+		if ( empty($mData) ) {
+			$localFaviconTitle = Title::newFromText( $faviconFilename, NS_FILE );
+			#FIXME: Checking existance of Title in order to use File. #VID-1744
+			if ( $localFaviconTitle->exists() ) {
+				$localFavicon = wfFindFile( $faviconFilename );
+			}
+			if ( $localFavicon ) {
+				$favicon = $localFavicon->getURL();
+			} else {
+				$favicon = GlobalFile::newFromText( $faviconFilename, self::COMMUNITY_WIKI_ID )->getURL();
+			}
+			$wgMemc->set($mMemcacheKey, $favicon, 86400);
+		}
+
+		return $mData;
+	}
+
+	public static function invalidateFavicon() {
+		global $wgMemc;
+
+		$wgMemc->delete( wfMemcKey(self::FAVICON_URL_CACHE_KEY) );
 	}
 
 	/**
@@ -2151,27 +2140,6 @@ class Wikia {
 	}
 
 	/**
-	 * Rewrties favicon URL to point to CDN domain with a proper cache buster
-	 *
-	 * Uses ThemeDesigner's "revision" ID instead of wgStyleVersion
-	 * to properly update the favicon after the upload
-	 *
-	 * @param $favicon string favicon URL to modify
-	 * @return bool true
-	 *
-	 * @authro hyun
-	 * @authro macbre
-	 *
-	 * @see BAC-1131
-	 */
-	static function onOutputPageFavicon(&$favicon) {
-		$cb = SassUtil::getCacheBuster();
-		$favicon = wfReplaceImageServer($favicon, $cb);
-
-		return true;
-	}
-
-	/**
 	 * Filter-out "Tenp_file_" images from list of URLs to purge
 	 *
 	 * @param File $file image to purge
@@ -2314,5 +2282,39 @@ class Wikia {
 		$urls = array_slice($urls, 0, 1);
 
 		return true;
+	}
+
+	/**
+	 * Get an array of country codes and return the country names array indexed by corresponding codes
+	 * @param array $countryCodes
+	 * @return array Country names indexed by code
+	 */
+	public static function getCountryNames( array $countryCodes ) {
+		if ( empty( $countryCodes ) ) {
+			return [];
+		}
+
+		// This is hacky and I'm not proud of this :(
+		// Load only files required for country names to avoid loading the whole CLDR
+		// The files are included on the fly as needed instead of loading it every single time
+		global $IP;
+		require_once( "$IP/extensions/cldr/CldrNames.php" );
+		require_once( "$IP/extensions/cldr/CountryNames.body.php" );
+
+		$userLanguageCode = F::app()->wg->Lang->getCode();
+
+		// Retrieve the list of countries in user's language (via CLDR)
+		$countries = CountryNames::getNames( $userLanguageCode );
+		if ( empty( $countries ) ) {
+			return [];
+		}
+
+		foreach ( $countryCodes as $countryCode ) {
+			if ( isset( $countries[$countryCode] ) ) {
+				$countryNames[$countryCode] = $countries[$countryCode];
+			}
+		}
+
+		return $countryNames;
 	}
 }

@@ -1,0 +1,16 @@
+<div class="input-group poi-category" data-id="{{id}}">
+    <div class="poi-category-marker">
+        <img src="{{marker}}" class="poi-category-marker-image">
+        <input type="file" name="wpUploadFile" class="poi-category-marker-image-upload">
+        <input type="hidden" name="poiCategoryMarkers[]" class="poi-category-marker-image-url">
+    </div>
+    <select name="poiCategoryParents[]">
+        <option value="">{{emptyOption}}</option>
+        {{#parentPoiCategories}}
+            {{> parentPoiCategory}}
+        {{/parentPoiCategories}}
+    </select>
+	<input type="text" name="poiCategoryNames[]" placeholder="{{placeholder}}" value="{{name}}">
+    <input type="hidden" name="poiCategoryIds[]" value="{{id}}">
+	<a href="" title="{{delete}}" class="deleteIcon modalEvent" data-event="deletePoiCategory">{{delete}}</a>
+</div>
