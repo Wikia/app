@@ -526,8 +526,6 @@ class WikiaMaps extends WikiaObject {
 				'Authorization' => $this->config[ 'token' ]
 			],
 			'returnInstance' => true,
-			//TODO: this is temporary workaround, remove it before production!
-			'noProxy' => true
 		];
 
 		if ( !empty( $postData ) ) {
