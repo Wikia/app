@@ -7,6 +7,7 @@
 
 class WallBaseController extends WikiaController{
 	const WALL_MESSAGE_RELATIVE_TIMESTAMP = 604800; // relative message timestampt for 7 days (improvement 20178)
+	const DEFAULT_MESSAGES_PER_PAGE = 10; // how many messages should appear per page if not specified otherwise
 	protected $helper;
 	//use for controlling if we are not adding the some css/js head two time
 	static $uniqueHead = array();
@@ -77,7 +78,7 @@ class WallBaseController extends WikiaController{
 		wfProfileOut( __METHOD__ );
 	}
 
-	public function index($wallMessagesPerPage = 10) {
+	public function index($wallMessagesPerPage = null) {
 		wfProfileIn( __METHOD__ );
 
 		$this->addAsset();
@@ -87,7 +88,7 @@ class WallBaseController extends WikiaController{
 
 		/* for some reason nirvana passes null to this function we need to force default value */
 		if(empty($wallMessagesPerPage)) {
-			$wallMessagesPerPage = 10;
+			$wallMessagesPerPage = self::DEFAULT_MESSAGES_PER_PAGE;
 		}
 
 		$this->getThreads($title, $page, $wallMessagesPerPage);
@@ -118,6 +119,15 @@ class WallBaseController extends WikiaController{
 		$this->response->setVal('itemsPerPage', $wallMessagesPerPage);
 		$this->response->setVal('showPager', ($this->countComments > $wallMessagesPerPage) );
 		$this->response->setVal('currentPage', $page );
+
+		TransactionTracer::setAttribute( TransactionTracer::PARAM_SIZE_CATEGORY,
+			( $this->countComments == 0 ) ?
+				TransactionTracer::SIZE_CATEGORY_SIMPLE : (
+			( $this->countComments <= self::DEFAULT_MESSAGES_PER_PAGE ) ?
+				TransactionTracer::SIZE_CATEGORY_AVERAGE :
+			// else
+				TransactionTracer::SIZE_CATEGORY_COMPLEX
+			));
 
 		//TODO: keep the varnish cache and do purging on post
 		$this->response->setCacheValidity(WikiaResponse::CACHE_DISABLED);

@@ -582,6 +582,40 @@ class MediaWiki {
 		return true;
 	}
 
+	/**
+	 * Added by Wikia
+	 *
+	 * Sets metric parameters for the current request
+	 *
+	 * @param $title Title object
+	 * @param $action String name of the action
+	 */
+	private function setMetricParameters($title, $action) {
+		global $wgUser;
+
+		if ($title->isSpecialPage()) {
+			TransactionTracer::setType( TransactionTracer::TRANSACTION_SPECIAL_PAGE );
+		} elseif ( $title->getNamespace() == NS_MAIN ) {
+			TransactionTracer::setType( TransactionTracer::TRANSACTION_PAGE_MAIN );
+		} elseif ( $title->getNamespace() == NS_FILE ) {
+			TransactionTracer::setType( TransactionTracer::TRANSACTION_PAGE_FILE );
+		} elseif ( $title->getNamespace() == NS_CATEGORY ) {
+			TransactionTracer::setType( TransactionTracer::TRANSACTION_PAGE_CATEGORY );
+		} elseif ( defined( 'NS_USER_WALL' ) && $title->getNamespace() == NS_USER_WALL ) {
+			TransactionTracer::setType( TransactionTracer::TRANSACTION_PAGE_MESSAGE_WALL );
+		} else {
+			TransactionTracer::setType(TransactionTracer::TRANSACTION_PAGE_OTHER);
+		}
+
+		TransactionTracer::setAttribute( TransactionTracer::PARAM_LOGGED_IN, $wgUser->isLoggedIn() );
+
+		if ( in_array($action, array( 'view', 'edit', 'submit' )) ) {
+			TransactionTracer::setAttribute( TransactionTracer::PARAM_ACTION, $action );
+		} else {
+			TransactionTracer::setAttribute( TransactionTracer::PARAM_ACTION, TransactionTracer::ACTION_OTHER );
+		}
+	}
+
 	private function main() {
 		global $wgUseFileCache, $wgTitle, $wgUseAjax;
 
@@ -613,49 +647,9 @@ class MediaWiki {
 		$action = $this->getAction();
 		$wgTitle = $title;
 
-		/*
-		 * Wikia Change - begin
-		 */
-		if( function_exists( 'newrelic_name_transaction' ) ) {
-			global $wgUser, $wgVersion;
-			global $wgContLang;
-			global $wgExtraNamespaces;
-
-			$loggedIn = $wgUser->isLoggedIn() ? 'user' : 'anon';
-			$ns = $title->getNamespace();
-			if( $wgExtraNamespaces[$ns] ) {
-				$nsKey = 'custom';
-			} else {
-				$nsKey = MWNamespace::getCanonicalName( $ns );
-				if ( $nsKey === false ) {
-					$nsKey = $ns;
-				} else {
-					$nsKey = $wgContLang->lc( $nsKey );
-				}
-				if ( $nsKey == '' ) {
-					$nsKey = 'main';
-				}
-			}
-
-			if( $title->isSpecialPage() ) {
-				list( $thisName, /* $subpage */ ) = SpecialPageFactory::resolveAlias( $title->getDBkey() );
-				if(is_string($thisName)) {
-					newrelic_name_transaction('mw/'.$loggedIn.'/'.$nsKey.'/'.$thisName);
-				} else {
-					newrelic_name_transaction('mw/'.$loggedIn.'/Namespace/'.$nsKey);
-				}
-			} else {
-				newrelic_name_transaction('mw/'.$loggedIn.'/Namespace/'.$nsKey);
-			}
-			if ( function_exists( 'newrelic_add_custom_parameter' ) ) {
-				newrelic_add_custom_parameter( 'loggedIn', $loggedIn );
-				newrelic_add_custom_parameter( 'action', $action );
-				newrelic_add_custom_parameter( 'version', $wgVersion );
-			}
-		}
-		/*
-		 * Wikia Change - end
-		 */
+		//Wikia Change
+		$this->setMetricParameters($title, $action);
+		//Wikia Change End
 
 		if ( $wgUseFileCache && $title->getNamespace() >= 0 ) {
 			wfProfileIn( 'main-try-filecache' );
