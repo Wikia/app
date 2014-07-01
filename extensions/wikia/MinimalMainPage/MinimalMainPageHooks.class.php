@@ -8,7 +8,7 @@ class MinimalMainPageHooks {
 	 * @return boolean
 	 */
 	public static function onArticleFromTitle( &$title, &$article ) {
-		wfProfileIn(__METHOD__);
+		wfProfileIn( __METHOD__ );
 		$app = F::app();
 
 		if ( $title->isMainPage() && $app->checkSkin( 'oasis' ) ) {
@@ -19,13 +19,13 @@ class MinimalMainPageHooks {
 			$app->wg->SuppressArticleCategories = true;
 			
 			// If configured, also hide the ads.
-			if(!empty($app->wg->MinimalMain_hideAds)){
+			if( !empty( $app->wg->MinimalMainPageHideAds ) ){
 				$app->wg->SuppressAds = true;
 				$app->wg->ShowAds = false;
 			}
 		}
 
-		wfProfileOut(__METHOD__);
+		wfProfileOut( __METHOD__ );
 		return true;
 	}
 }
