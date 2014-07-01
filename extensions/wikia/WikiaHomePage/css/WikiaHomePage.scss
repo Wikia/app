@@ -7,8 +7,6 @@
 @import "../../../../skins/oasis/css/mixins/transform";
 @import "../../UserLogin/mixins/tooltip-icon";
 
-$default-border-color: #d8e3e9;
-
 @mixin interstitial-toggle-animation {
 	-webkit-animation: InterstitialToggle 900ms;
 	-moz-animation: InterstitialToggle 900ms;
@@ -789,10 +787,10 @@ $color-wikiahome-border-primary-brand-color: #c7d1d8;
 				}
 			}
 
-			@for $i from 1 through 7 {
+			@for $i from 1 through 10 {
 				&.hub-slot-#{$i} {
 					h2 {
-						border-bottom-color: get_command_line_param("hub-color-slot-#{$i}", $default-border-color);
+						border-bottom-color: get_command_line_param("hub-color-slot-#{$i}", $color-wikiahome-community);
 					}
 				}
 			}

@@ -98,6 +98,7 @@ class TaskRunner {
 		return in_array($taskName, [
 			'CreatePdfThumbnailsJob',
 //		'CreateWikiLocalJob',
+			'HAWelcomeJob',
 			'HTMLCacheUpdate',
 			'ImageReviewTask',
 			'MultiDeleteTask',
