@@ -14,6 +14,10 @@ namespace Wikia\Tasks\Tasks;
 class JobWrapperTask extends BaseTask {
 	protected $params;
 
+	public function getAdminExecuteableMethods() {
+		return [];
+	}
+
 	public function call() {
 		list($command, $title, $this->params) = func_get_args();
 		$this->title($title);
