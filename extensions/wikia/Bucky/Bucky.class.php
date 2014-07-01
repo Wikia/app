@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * Hook handlers for loading the required scripts and bootstrapping Bucky RUM reporting.
+ * Currently works only on Oasis.
+ */
 class Bucky {
 
 	const DEFAULT_SAMPLING = 1; // percentage
@@ -28,9 +32,7 @@ class Bucky {
 	}
 
 	static public function onOasisSkinAssetGroups( &$assetGroups ) {
-		if ( self::getEnvironment() ) {
-			$assetGroups[] = 'bucky_js';
-		}
+		$assetGroups[] = 'bucky_js';
 
 		return true;
 	}
