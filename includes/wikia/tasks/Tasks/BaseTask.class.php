@@ -256,6 +256,10 @@ abstract class BaseTask {
 		return $this;
 	}
 
+	public function getTitle() {
+		return $this->title;
+	}
+
 	/**
 	 * @param $taskId
 	 * @return $this

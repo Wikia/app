@@ -256,7 +256,15 @@ class SMWParseData {
 				foreach ( $subjects as $subject ) {
 					$subjectTitle = $subject->getTitle();
 					if ( !is_null( $subjectTitle ) ) {
-						$jobs[] = new SMWUpdateJob( $subjectTitle );
+						// wikia change start - jobqueue migration
+						if ( TaskRunner::isModern( 'SMWUpdateJob' ) ) {
+							$task = new \Wikia\Tasks\Tasks\JobWrapperTask();
+							$task->call( 'SMWUpdateJob', $subjectTitle );
+							$jobs[] = $task;
+						} else {
+							$jobs[] = new SMWUpdateJob( $subjectTitle );
+						}
+						// wikia change end
 					}
 				}
 				wfRunHooks( 'smwUpdatePropertySubjects', array( &$jobs ) );
@@ -267,7 +275,15 @@ class SMWParseData {
 					$subjectTitle = $subject->getTitle();
 					
 					if ( !is_null( $subjectTitle ) ) {
-						$jobs[] = new SMWUpdateJob( $subjectTitle );
+						// wikia change start - jobqueue migration
+						if ( TaskRunner::isModern( 'SMWUpdateJob' ) ) {
+							$task = new \Wikia\Tasks\Tasks\JobWrapperTask();
+							$task->call( 'SMWUpdateJob', $subjectTitle );
+							$jobs[] = $task;
+						} else {
+							$jobs[] = new SMWUpdateJob( $subjectTitle );
+						}
+						// wikia change end
 					}
 				}
 			}
@@ -291,7 +307,15 @@ class SMWParseData {
 					$propertyTitle = $proppage->getTitle();
 					
 					if ( !is_null( $propertyTitle ) ) {
-						$jobs[] = new SMWUpdateJob( $propertyTitle );
+						// wikia change start - jobqueue migration
+						if ( TaskRunner::isModern( 'SMWUpdateJob' ) ) {
+							$task = new \Wikia\Tasks\Tasks\JobWrapperTask();
+							$task->call( 'SMWUpdateJob', $propertyTitle );
+							$jobs[] = $task;
+						} else {
+							$jobs[] = new SMWUpdateJob( $propertyTitle );
+						}
+						// wikia change end
 					}
 					
 					$prop = new SMWDIProperty( $proppage->getDBkey() );
@@ -301,7 +325,15 @@ class SMWParseData {
 						$subjectTitle = $subject->getTitle();
 						
 						if ( !is_null( $subjectTitle ) ) {
-							$jobs[] = new SMWUpdateJob( $subjectTitle );
+							// wikia change start - jobqueue migration
+							if ( TaskRunner::isModern( 'SMWUpdateJob' ) ) {
+								$task = new \Wikia\Tasks\Tasks\JobWrapperTask();
+								$task->call( 'SMWUpdateJob', $subjectTitle );
+								$jobs[] = $task;
+							} else {
+								$jobs[] = new SMWUpdateJob( $subjectTitle );
+							}
+							// wikia change end
 						}
 					}
 
@@ -314,7 +346,15 @@ class SMWParseData {
 						$subjectTitle = $subject->getTitle();
 						
 						if ( !is_null( $subjectTitle ) ) {
-							$jobs[] = new SMWUpdateJob( $subject->getTitle() );
+							// wikia change start - jobqueue migration
+							if ( TaskRunner::isModern( 'SMWUpdateJob' ) ) {
+								$task = new \Wikia\Tasks\Tasks\JobWrapperTask();
+								$task->call( 'SMWUpdateJob', $subjectTitle );
+								$jobs[] = $task;
+							} else {
+								$jobs[] = new SMWUpdateJob( $subjectTitle );
+							}
+							// wikia change end
 						}
 					}
 				}
@@ -330,7 +370,13 @@ class SMWParseData {
 
 		// Finally trigger relevant Updatejobs if necessary
 		if ( $updatejobflag ) {
-			Job::batchInsert( $jobs ); ///NOTE: this only happens if $smwgEnableUpdateJobs was true above
+			// wikia change start - jobqueue migration
+			if ( TaskRunner::isModern( 'SMWUpdateJob' ) ) {
+				\Wikia\Tasks\Tasks\BaseTask::batch($jobs);
+			} else {
+				Job::batchInsert($jobs);
+			}
+			// wikia change end
 		}
 
 		return true;

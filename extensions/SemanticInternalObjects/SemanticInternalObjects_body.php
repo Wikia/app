@@ -461,7 +461,9 @@ class SIOHandler {
 		$uniqueTitles = array();
 		
 		foreach ( $jobs as $i => $job ) {
-			$title = Title::makeTitleSafe( $job->title->getNamespace(), $job->title->getText() );
+			// wikia change start - jobqueue migration
+			$jobTitle = TaskRunner::isModern( 'SMWUpdateJob' ) ? $job->getTitle() : $job->title;
+			$title = Title::makeTitleSafe( $jobTitle->getNamespace(), $jobTitle->getText() );
 			$id = $title->getArticleID();
 			$uniqueTitles[$id] = $title;
 		}
@@ -469,7 +471,15 @@ class SIOHandler {
 		$jobs = array();
 		
 		foreach ( $uniqueTitles as $id => $title ) {
-			$jobs[] = new SMWUpdateJob( $title );
+			// wikia change start - jobqueue migration
+			if ( TaskRunner::isModern( 'SMWUpdateJob' ) ) {
+				$task = new \Wikia\Tasks\Tasks\JobWrapperTask();
+				$task->call( 'SMWUpdateJob', $title );
+				$jobs[] = $task;
+			} else {
+				$jobs[] = new SMWUpdateJob( $title );
+			}
+			// wikia change end
 		}
 		
 		return true;
@@ -487,7 +497,9 @@ class SIOHandler {
 	 	$jobs = array();
 	 	
 	 	foreach ( $allJobs as $job ) {
-	 		if ( strpos( $job->title->getText(), '#' ) === false ) {
+		  // wikia change start - jobqueue migration
+		  $titleText = TaskRunner::isModern( 'SMWUpdateJob' ) ? $job->getTitle()->getText() : $job->title->getText();
+	 		if ( strpos( $titleText, '#' ) === false ) { // wikia change end
 	 			$jobs[] = $job;
 	 		}
 	 	}

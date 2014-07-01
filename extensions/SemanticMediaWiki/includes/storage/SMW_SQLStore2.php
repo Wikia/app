@@ -1540,7 +1540,16 @@ class SMWSQLStore2 extends SMWStore {
 
 		foreach ( $titles as $title ) {
 			if ( ( $namespaces == false ) || ( in_array( $title->getNamespace(), $namespaces ) ) ) {
-				$updatejobs[] = new SMWUpdateJob( $title );
+				// wikia change start - jobqueue migration
+				if ( TaskRunner::isModern( 'SMWUpdateJob' ) ) {
+					$task = new \Wikia\Tasks\Tasks\JobWrapperTask();
+					$task->call( 'SMWUpdateJob', $title );
+					$updatejobs[] = $task;
+				} else {
+					$updatejobs[] = new SMWUpdateJob( $title );
+				}
+				// wikia change end
+
 				$emptyrange = false;
 			}
 		}
@@ -1563,7 +1572,15 @@ class SMWSQLStore2 extends SMWStore {
 				$title = Title::makeTitleSafe( $row->smw_namespace, $row->smw_title );
 
 				if ( $title !== null && !$title->exists() ) {
-					$updatejobs[] = new SMWUpdateJob( $title );
+					// wikia change start - jobqueue migration
+					if ( TaskRunner::isModern( 'SMWUpdateJob' ) ) {
+						$task = new \Wikia\Tasks\Tasks\JobWrapperTask();
+						$task->call( 'SMWUpdateJob', $title );
+						$updatejobs[] = $task;
+					} else {
+						$updatejobs[] = new SMWUpdateJob( $title );
+					}
+					// wikia change end
 				}
 			} elseif ( $row->smw_iw == SMW_SQL2_SMWIW_OUTDATED ) { // remove outdated internal object references
 				foreach ( self::getPropertyTables() as $proptable ) {
@@ -1582,10 +1599,30 @@ class SMWSQLStore2 extends SMWStore {
 		wfRunHooks('smwRefreshDataJobs', array(&$updatejobs));
 
 		if ( $usejobs ) {
-			Job::batchInsert( $updatejobs );
+			// wikia change start - jobqueue migration
+			if ( TaskRunner::isModern( 'SMWUpdateJob' ) ) {
+				\Wikia\Tasks\Tasks\BaseTask::batch($updatejobs);
+			} else {
+				Job::batchInsert( $updatejobs );
+			}
+			// wikia change end
 		} else {
 			foreach ( $updatejobs as $job ) {
-				$job->run();
+				// wikia change start - jobqueue migration
+				if ( TaskRunner::isModern( 'SMWUpdateJob' ) ) {
+					/** @var \Wikia\Tasks\Tasks\JobWrapperTask $job */
+					try {
+						$job->init();
+					} catch (Exception $e) {
+						continue;
+					}
+
+					$job->wrap('SMWUpdateJob');
+					\Wikia\Tasks\Tasks\BaseTask::batch($updatejobs);
+				} else {
+					$job->run();
+				}
+				// wikia change end
 			}
 		}
 
@@ -2411,7 +2448,15 @@ class SMWSQLStore2 extends SMWStore {
 						foreach ( $res as $row ) {
 							$title = Title::makeTitleSafe( $row->ns, $row->t );
 							if ( !is_null( $title ) ) {
-								$jobs[] = new SMWUpdateJob( $title );
+								// wikia change start - jobqueue migration
+								if ( TaskRunner::isModern( 'SMWUpdateJob' ) ) {
+									$task = new \Wikia\Tasks\Tasks\JobWrapperTask();
+									$task->call( 'SMWUpdateJob', $title );
+									$jobs[] = $task;
+								} else {
+									$jobs[] = new SMWUpdateJob( $title );
+								}
+								// wikia change end
 							}
 						}
 						$db->freeResult( $res );
@@ -2424,7 +2469,15 @@ class SMWSQLStore2 extends SMWStore {
 							foreach ( $res as $row ) {
 								$title = Title::makeTitleSafe( $row->ns, $row->t );
 								if ( !is_null( $title ) ) {
-									$jobs[] = new SMWUpdateJob( $title );
+									// wikia change start - jobqueue migration
+									if ( TaskRunner::isModern( 'SMWUpdateJob' ) ) {
+										$task = new \Wikia\Tasks\Tasks\JobWrapperTask();
+										$task->call( 'SMWUpdateJob', $title );
+										$jobs[] = $task;
+									} else {
+										$jobs[] = new SMWUpdateJob( $title );
+									}
+									// wikia change end
 								}
 							}
 							$db->freeResult( $res );
@@ -2435,7 +2488,11 @@ class SMWSQLStore2 extends SMWStore {
 				/// NOTE: we do not update the concept cache here; this remains an offline task
 
 				/// NOTE: this only happens if $smwgEnableUpdateJobs was true above:
-				Job::batchInsert( $jobs );
+				if (TaskRunner::isModern('SMWUpdateJob')) {
+					\Wikia\Tasks\Tasks\BaseTask::batch( $jobs );
+				} else {
+					Job::batchInsert( $jobs );
+				}
 			}
 		}
 

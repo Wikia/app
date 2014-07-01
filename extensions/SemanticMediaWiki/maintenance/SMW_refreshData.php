@@ -167,6 +167,7 @@ if ( $pages == false ) {
 		$title = Title::newFromText( $page );
 		
 		if ( !is_null( $title ) ) {
+			// wikia note - not migrating call to new jobqueue, since this is run directly
 			$updatejob = new SMWUpdateJob( $title );
 			$updatejob->run();
 		}

@@ -48,6 +48,7 @@ class SMWSparqlStore extends SMWSQLStore2 {
 		}
 		// Note that we cannot change oldUri to newUri in triple subjects,
 		// since some triples change due to the move. Use SMWUpdateJob.
+		// wikia note - not migrating call to new jobqueue, since this is run directly
 		$newUpdate = new SMWUpdateJob( $newtitle );
 		$newUpdate->run();
 		if ( $redirid != 0 ) { // update/create redirect page data
