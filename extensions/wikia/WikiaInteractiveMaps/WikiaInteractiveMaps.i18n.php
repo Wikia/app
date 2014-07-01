@@ -73,6 +73,7 @@ $messages[ 'en' ] = [
 	'wikia-interactive-maps-poi-categories-creation-error' => 'Unfortunately, we could not create all pin types. Some of them might have been created, though. Check which are missing and try adding them again, please.',
 	'wikia-interactive-maps-poi-categories-save' => 'Save',
 	'wikia-interactive-maps-poi-categories-cancel' => 'Cancel',
+	'wikia-interactive-maps-poi-categories-upload-image-link' => 'Upload',
 
 	'wikia-interactive-maps-edit-poi-header-add-poi' => 'Add Pin Point',
 	'wikia-interactive-maps-edit-poi-header-edit-poi' => 'Edit Pin Point',
@@ -195,6 +196,7 @@ $messages[ 'qqq' ] = [
 	'wikia-interactive-maps-poi-categories-creation-error' => 'An error message displayed when creating pin types failed',
 	'wikia-interactive-maps-poi-categories-save' => 'Button for saving pin types',
 	'wikia-interactive-maps-poi-categories-cancel' => 'Button for closing pin types modal',
+	'wikia-interactive-maps-poi-categories-upload-image-link' => 'Link to upload the marker image',
 
 	'wikia-interactive-maps-edit-poi-header-add-poi' => 'Modal header for add pin to map',
 	'wikia-interactive-maps-edit-poi-header-edit-poi' => 'Modal header for edit pin to map',
