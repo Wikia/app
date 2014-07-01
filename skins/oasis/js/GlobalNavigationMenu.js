@@ -56,8 +56,6 @@ require([ 'jquery', 'wikia.ui.factory', 'wikia.nirvana' ], function ($, uiFactor
 
 						isOpen = true;
 					}, closeHub = function() {
-
-
 						$('#GlobalNavigationMenuButton').removeClass('active');
 						$('.GlobalNavigationContainer').hide();
 
@@ -105,10 +103,10 @@ require([ 'jquery', 'wikia.ui.factory', 'wikia.nirvana' ], function ($, uiFactor
 				});
 
 				$('body').on('click', function(e) {
-					if (isOpen && !$(e.target).parents('.GlobalNavigationContainer').length) {
-						e.preventDefault();
-						e.stopImmediatePropagation();
-
+					if (isOpen && !$(e.target).parents('.GlobalNavigationContainer').length
+						&& !$(e.target).parents('#GlobalNavigationMenuButton').length) {
+						//e.preventDefault();
+						//e.stopImmediatePropagation();
 						closeHub();
 					}
 				});
