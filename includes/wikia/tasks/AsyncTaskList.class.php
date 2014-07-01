@@ -223,34 +223,26 @@ class AsyncTaskList {
 	 * @return array
 	 */
 	protected function getExecutor() {
-		global $wgDevelEnvironment, $IP, $wgPreviewHostname, $wgVerifyHostname, $wgWikiaDatacenter;
+		global $IP, $wgWikiaEnvironment;
 		$executor = null;
-		$hostname = gethostname();
-		if (!empty($wgDevelEnvironment)) {
-			if (isset($_SERVER['SERVER_NAME'])) {
+
+		if ($wgWikiaEnvironment != WIKIA_ENV_PROD) {
+			if ($wgWikiaEnvironment == WIKIA_ENV_DEV && isset($_SERVER['SERVER_NAME'])) { // in dev, use apache if available
 				$executionMethod = 'http';
-				$executionRunner = preg_replace('/(.*?)\.(.*)/', 'http://tasks.$2/proxy.php', $_SERVER['SERVER_NAME']);
-			} else {
+				$executionRunner = [preg_replace('/(.*?)\.(.*)/', 'http://tasks.$2/proxy.php', $_SERVER['SERVER_NAME'])];
+			} else { // in other environments or when apache isn't available, ssh into this exact node to execute
 				$executionMethod = 'remote_shell';
 				$executionRunner = [
-					$hostname,
+					gethostname(),
 					realpath( $IP . '/maintenance/wikia/task_runner.php'),
 				];
 			}
-
 			$executor = [
 				'method' => $executionMethod,
-				'runner' => is_array($executionRunner) ? $executionRunner : [$executionRunner],
-			];
-		} elseif (in_array($hostname, [$wgPreviewHostname, $wgVerifyHostname]) || $wgWikiaDatacenter == 'sjc-internal') { // force internal/preview/verify to run on preview/verify server
-			$executor = [
-				'method' => 'remote_shell',
-				'runner' => [
-					$hostname,
-					realpath( $IP . '/maintenance/wikia/task_runner.php'),
-				],
+				'runner' => $executionRunner
 			];
 		}
+
 		return $executor;
 	}
 
