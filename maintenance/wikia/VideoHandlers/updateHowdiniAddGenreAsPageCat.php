@@ -60,10 +60,10 @@ class UpdateHowdiniAddGenreAsPageCat extends BaseMaintVideoScript {
 
 			if ( $resp ) {
 				$this->outputMessage( "\tUPDATED: $videoIdString ...DONE - genre added to page categories." );
-				$this->incSkipped();
 			}
 		} else {
 			$this->outputMessage( "\tSKIP: $videoIdString - No changes." );
+			$this->incSkipped();
 		}
 
 		return $newValues;
@@ -73,8 +73,9 @@ class UpdateHowdiniAddGenreAsPageCat extends BaseMaintVideoScript {
 	 * Entry point for the script
 	 */
 	public function run() {
+		$startTimestamp = time();
 		$startTime = $this->getCurrentTimestamp();
-		$this->outputMessage("Started ($startTime) ...");
+		$this->outputMessage( "Started ($startTime) ..." );
 
 		$nextPage = '';
 		$page = 1;
@@ -92,7 +93,7 @@ class UpdateHowdiniAddGenreAsPageCat extends BaseMaintVideoScript {
 
 			$response = OoyalaAsset::getApiContent( $url );
 			if ( $response === false ) {
-				$this->outputError("No Api response!");
+				$this->outputError( "No Api response!" );
 				exit();
 			}
 
@@ -134,7 +135,8 @@ class UpdateHowdiniAddGenreAsPageCat extends BaseMaintVideoScript {
 
 		$this->report( $total );
 		$finishTime = $this->getCurrentTimestamp();
-		$this->outputMessage("Done! ($finishTime)");
+		$elapsedTime = time() - $startTimestamp;
+		$this->outputMessage( "Done at $finishTime. (time elapsed: {$elapsedTime}s)" );
 	}
 
 	/**
@@ -161,7 +163,7 @@ class UpdateHowdiniAddGenreAsPageCat extends BaseMaintVideoScript {
 		if ( count( $duplicates ) > 0 ) {
 			$resp = $this->updateMetadataWiki( $duplicates[0], $newValues );
 		} else {
-			$this->outputError("VideoId: $videoId - FILE not found.", "\t");
+			$this->outputError( "VideoId: $videoId - FILE not found.", "\t" );
 			++$this->failedWiki;
 		}
 
@@ -233,7 +235,7 @@ class UpdateHowdiniAddGenreAsPageCat extends BaseMaintVideoScript {
 			$serializedMeta = serialize( $newMetadata );
 
 			if ( wfReadOnly() ) {
-				$this->outputMessage("Read only mode.");
+				$this->outputMessage( "Read only mode." );
 				exit(0);
 			}
 
@@ -255,7 +257,7 @@ class UpdateHowdiniAddGenreAsPageCat extends BaseMaintVideoScript {
 			$file->purgeEverything();
 		}
 
-		$this->outputMessage("...DONE!");
+		$this->outputMessage( "...DONE!" );
 
 		return true;
 	}
