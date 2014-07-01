@@ -6,11 +6,7 @@
 
 class TransactionTracer {
 	// Transaction names
-	const TRANSACTION_PAGE_MAIN = 'page/main';
-	const TRANSACTION_PAGE_FILE = 'page/file';
-	const TRANSACTION_PAGE_MESSAGE_WALL = 'page/message_wall';
-	const TRANSACTION_PAGE_CATEGORY = 'page/category';
-	const TRANSACTION_PAGE_OTHER = 'page/other';
+	const TRANSACTION_PAGE = 'page';
 	const TRANSACTION_SPECIAL_PAGE = 'special_page';
 	const TRANSACTION_RESOURCE_LOADER = 'assets/resource_loader';
 	const TRANSACTION_ASSETS_MANAGER = 'assets/assets_manager';
@@ -22,6 +18,7 @@ class TransactionTracer {
 	const PARAM_LOGGED_IN = 'logged_in';
 	const PARAM_PARSER_CACHE_USED = 'parser_cache_used';
 	const PARAM_SIZE_CATEGORY = 'size_category';
+	const PARAM_NAMESPACE = 'namespace';
 	const PARAM_ACTION = 'action';
 	const PARAM_SKIN = 'skin';
 	const PARAM_VERSION = 'version';
@@ -43,6 +40,17 @@ class TransactionTracer {
 	const ACTION_EDIT = 'edit';
 	const ACTION_SUBMIT = 'submit';
 	const ACTION_OTHER = 'other';
+
+	// copied from WallNamespaces.php to have a single constant
+	// while not being dependant on Wall
+	const NS_USER_WALL = 1200;
+
+	protected static $IMPORTANT_ARTICLE_NAMESPACES = array(
+		NS_MAIN => 'main',
+		NS_FILE => 'file',
+		NS_CATEGORY => 'category',
+		self::NS_USER_WALL => 'message_wall',
+	);
 
 	protected static $IMPORTANT_SPECIAL_PAGES = array(
 		'Search',
@@ -130,10 +138,22 @@ class TransactionTracer {
 			$attributes = self::$attributes;
 
 			switch ( self::$type ) {
-				// article in main namespace
-				case self::TRANSACTION_PAGE_MAIN:
-					// action is set
-					if ( isset( $attributes[self::PARAM_ACTION] ) ) {
+				// article
+				case self::TRANSACTION_PAGE:
+					$namespace = null;
+					// namespace is set
+					if ( isset( $attributes[self::PARAM_NAMESPACE] ) ) {
+						$namespace = $attributes[self::PARAM_NAMESPACE];
+						// it is an important namespace
+						if ( isset( self::$IMPORTANT_ARTICLE_NAMESPACES[$namespace] ) ) {
+							$transactionName .= sprintf( "/%s", self::$IMPORTANT_ARTICLE_NAMESPACES[$namespace] );
+						} else {
+							$transactionName .= "/other";
+						}
+					}
+
+					// main namespace and action is set
+					if ( $namespace === NS_MAIN && isset( $attributes[self::PARAM_ACTION] ) ) {
 						$transactionName .= sprintf( "/%s", $attributes[self::PARAM_ACTION] );
 						// action: view
 						if ( $attributes[self::PARAM_ACTION] === self::ACTION_VIEW ) {

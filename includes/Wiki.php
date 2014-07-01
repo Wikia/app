@@ -595,16 +595,9 @@ class MediaWiki {
 
 		if ($title->isSpecialPage()) {
 			TransactionTracer::setType( TransactionTracer::TRANSACTION_SPECIAL_PAGE );
-		} elseif ( $title->getNamespace() == NS_MAIN ) {
-			TransactionTracer::setType( TransactionTracer::TRANSACTION_PAGE_MAIN );
-		} elseif ( $title->getNamespace() == NS_FILE ) {
-			TransactionTracer::setType( TransactionTracer::TRANSACTION_PAGE_FILE );
-		} elseif ( $title->getNamespace() == NS_CATEGORY ) {
-			TransactionTracer::setType( TransactionTracer::TRANSACTION_PAGE_CATEGORY );
-		} elseif ( defined( 'NS_USER_WALL' ) && $title->getNamespace() == NS_USER_WALL ) {
-			TransactionTracer::setType( TransactionTracer::TRANSACTION_PAGE_MESSAGE_WALL );
 		} else {
-			TransactionTracer::setType(TransactionTracer::TRANSACTION_PAGE_OTHER);
+			TransactionTracer::setType( TransactionTracer::TRANSACTION_PAGE );
+			TransactionTracer::setAttribute( TransactionTracer::PARAM_NAMESPACE, $title->getNamespace() );
 		}
 
 		TransactionTracer::setAttribute( TransactionTracer::PARAM_LOGGED_IN, $wgUser->isLoggedIn() );
