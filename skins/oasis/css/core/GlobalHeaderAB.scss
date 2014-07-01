@@ -537,7 +537,7 @@ $facebook-background-color: #3c5b9b;
 			}
 
 			.notifications-wiki-header {
-				background: #e2e6e9 no-repeat url(/skins/oasis/images/GlobalNavigation/chevron_down.png) 394px 50%; /* $wgCdnStylePath */
+				background: #e2e6e9 no-repeat url(/skins/oasis/images/GlobalNavigation/chevron_down.png) 298px 50%; /* $wgCdnStylePath */
 				color: $dropdown-font-color;
 				font-weight: bold;
 				padding: 20px;
@@ -637,6 +637,9 @@ $facebook-background-color: #3c5b9b;
 				&.show {
 					left: -326px;
 				}
+				.notifications-wiki-header {
+					background-position: 294px 50%;
+				}
 			}
 		}
 	}
@@ -682,6 +685,9 @@ $facebook-background-color: #3c5b9b;
 				width: 292px;
 				&.show {
 					left: -294px;
+				}
+				.notifications-wiki-header {
+					background-position: 262px 50%;
 				}
 			}
 		}
