@@ -1,5 +1,6 @@
 @import "color";
 @import "layout";
+@import "responsive-variables";
 @import "../mixins/clearfix";
 @import "../mixins/gradient";
 
@@ -82,6 +83,17 @@
 .home-top-right-ads {
 	float: right;
 }
+
+.home-top-right-ads.top-right-ads-in-content {
+  display: none;
+  margin-left: 10px;
+  margin-bottom: 10px;
+}
+
+.home-top-right-ads.hidden {
+  display: none;
+}
+
 #HOME_TOP_RIGHT_BOXAD {
 	margin-bottom: 10px;
 	position: relative;
@@ -254,5 +266,11 @@ body >a >img[src$="noad.gif"] {
 
   & > div {
     display: inline-block;
+  }
+}
+
+@media screen and (max-width: $breakpoint-small) {
+  .home-top-right-ads.top-right-ads-in-content {
+    display: block;
   }
 }
