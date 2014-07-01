@@ -225,7 +225,7 @@ class TransactionTracer {
 
 	public static function getContext() {
 		return array_merge(
-			( self::$type !== null ) ? array( self::PSEUDO_PARAM_TYPE => self::$type ) : array(),
+			( self::$name !== null ) ? array( self::PSEUDO_PARAM_TYPE => self::$name ) : array(),
 			self::$attributes
 		);
 	}
