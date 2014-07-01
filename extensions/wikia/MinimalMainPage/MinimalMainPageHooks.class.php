@@ -21,6 +21,7 @@ class MinimalMainPageHooks {
 			// If configured, also hide the ads.
 			if(!empty($app->wg->MinimalMain_hideAds)){
 				$app->wg->SuppressAds = true;
+				$app->wg->ShowAds = false;
 			}
 		}
 
