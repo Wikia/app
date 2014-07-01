@@ -54,13 +54,23 @@ class SMWRefreshJob extends Job {
 		$namespaces = ( ( $this->params['rc'] > 1 ) && ( $run == 1 ) ) ? array( SMW_NS_PROPERTY, SMW_NS_TYPE ):false;
 		$progress = smwfGetStore()->refreshData( $spos, 20, $namespaces );
 
+		$jobParams = null;
 		if ( $spos > 0 ) {
-			$nextjob = new SMWRefreshJob( $this->title, array( 'spos' => $spos, 'prog' => $progress, 'rc' => $this->params['rc'], 'run' => $run ) );
-			$nextjob->insert();
+			$jobParams = array( 'spos' => $spos, 'prog' => $progress, 'rc' => $this->params[ 'rc' ], 'run' => $run );
 		} elseif ( $this->params['rc'] > $run ) { // do another run from the beginning
-			$nextjob = new SMWRefreshJob( $this->title, array( 'spos' => 1, 'prog' => 0, 'rc' => $this->params['rc'], 'run' => $run + 1 ) );
-			$nextjob->insert();
+			$jobParams = array( 'spos' => 1, 'prog' => 0, 'rc' => $this->params['rc'], 'run' => $run + 1 );
 		}
+
+		if ( !empty( $jobParams ) ) {
+			if ( TaskRunner::isModern( 'SMWRefreshJob' ) ) {
+				$task = new \Wikia\Tasks\Tasks\JobWrapperTask();
+				$task->call('SMWRefreshJob', $this->title, $jobParams );
+			} else {
+				$nextjob = new SMWRefreshJob( $this->title, $jobParams );
+				$nextjob->insert();
+			}
+		}
+
 
 		wfProfileOut( 'SMWRefreshJob::run (SMW)' );
 

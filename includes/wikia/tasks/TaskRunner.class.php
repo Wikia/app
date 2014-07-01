@@ -107,6 +107,7 @@ class TaskRunner {
 //			'PromoteImageReviewTask',
 			'ReplaceTextJob',
 			'SFCreatePageJob',
+			'SMWRefreshJob',
 			'SWMSendToGroupTask',
 			'UserRollback',
 			'UserRename',

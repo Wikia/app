@@ -78,8 +78,16 @@ class SMWAdmin extends SpecialPage {
 			if ( $sure == 'yes' ) {
 				if ( is_null( $refreshjob ) ) { // careful, there might be race conditions here
 					$title = SpecialPage::getTitleFor( 'SMWAdmin' );
-					$newjob = new SMWRefreshJob( $title, array( 'spos' => 1, 'prog' => 0, 'rc' => 2 ) );
-					$newjob->insert();
+					$jobParams = array( 'spos' => 1, 'prog' => 0, 'rc' => 2 );
+
+					if ( TaskRunner::isModern( 'SMWRefreshJob' ) ) {
+						$task = new \Wikia\Tasks\Tasks\JobWrapperTask();
+						$task->call( 'SMWRefreshJob', $title, $jobParams );
+					} else {
+						$newjob = new SMWRefreshJob( $title,  $jobParams );
+						$newjob->insert();
+					}
+
 					$wgOut->addHTML( '<p>' . wfMsg( 'smw_smwadmin_updatestarted' ) . '</p>' );
 				} else {
 					$wgOut->addHTML( '<p>' . wfMsg( 'smw_smwadmin_updatenotstarted' ) . '</p>' );
