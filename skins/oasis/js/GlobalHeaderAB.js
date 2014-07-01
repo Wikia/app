@@ -97,7 +97,7 @@ $(function(){
 	// adding behaviour
 
 	// setting the searched phrase as the global header search input value
-	if ( $searchPageInput && $searchPageInput.val() !== '' ) {
+	if ( $searchPageInput.length > 0 && $searchPageInput.val() !== '' ) {
 		$searchInput.val( $searchPageInput.val() );
 		$arrow.attr( 'class', 'dark search-arrow' );
 	}
