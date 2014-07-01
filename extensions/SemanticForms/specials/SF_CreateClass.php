@@ -99,7 +99,15 @@ END;
 				$params = array();
 				$params['user_id'] = $wgUser->getId();
 				$params['page_text'] = $full_text;
-				$jobs[] = new SFCreatePageJob( $property_title, $params );
+
+				if (TaskRunner::isModern('SFCreatePageJob')) {
+					$job = new \Wikia\Tasks\Tasks\JobWrapperTask();
+					$job->call('createPage', $property_title, $params);
+					$jobs[] = $job;
+				} else {
+					$jobs[] = new SFCreatePageJob( $property_title, $params );
+				}
+
 			}
 
 			// create the template, and save it
@@ -118,7 +126,14 @@ END;
 			$params = array();
 			$params['user_id'] = $wgUser->getId();
 			$params['page_text'] = $full_text;
-			$jobs[] = new SFCreatePageJob( $form_title, $params );
+
+			if (TaskRunner::isModern('SFCreatePageJob')) {
+				$job = new \Wikia\Tasks\Tasks\JobWrapperTask();
+				$job->call('createPage', $form_title, $params);
+				$jobs[] = $job;
+			} else {
+				$jobs[] = new SFCreatePageJob( $form_title, $params );
+			}
 
 			// create the category, and make a job for it
 			$full_text = SFCreateCategory::createCategoryText( $form_name, $category_name, '' );
@@ -126,8 +141,16 @@ END;
 			$params = array();
 			$params['user_id'] = $wgUser->getId();
 			$params['page_text'] = $full_text;
-			$jobs[] = new SFCreatePageJob( $category_title, $params );
-			Job::batchInsert( $jobs );
+
+			if (TaskRunner::isModern('SFCreatePageJob')) {
+				$job = new \Wikia\Tasks\Tasks\JobWrapperTask();
+				$job->call('createPage', $category_title, $params);
+				$jobs[] = $job;
+				\Wikia\Tasks\Tasks\BaseTask::batch($jobs);
+			} else {
+				$jobs[] = new SFCreatePageJob( $category_title, $params );
+				Job::batchInsert( $jobs );
+			}
 
 			$wgOut->addWikiMsg( 'sf_createclass_success' );
 			return;

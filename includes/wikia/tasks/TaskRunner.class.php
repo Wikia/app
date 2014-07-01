@@ -106,6 +106,7 @@ class TaskRunner {
 			'MultiWikiEditTask',
 //			'PromoteImageReviewTask',
 			'ReplaceTextJob',
+			'SFCreatePageJob',
 			'SWMSendToGroupTask',
 			'UserRollback',
 			'UserRename',
