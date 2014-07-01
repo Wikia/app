@@ -67,7 +67,7 @@ abstract class BaseMaintVideoScript {
 	}
 
 	protected function getCurrentTimestamp() {
-		$timeFormat = 'm.d.Y g:i:s a e';
+		$timeFormat = 'Y-m-d g:i:s a e';
 		return date($timeFormat);
 	}
 }
