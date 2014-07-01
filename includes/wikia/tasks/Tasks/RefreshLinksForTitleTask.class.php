@@ -27,7 +27,7 @@ class RefreshLinksForTitleTask extends BaseTask {
 	}
 
 
-	public function setTitle(\Title $title) {
+	public function setTitle( \Title $title ) {
 		$this->title = $title;
 		return $this;
 	}

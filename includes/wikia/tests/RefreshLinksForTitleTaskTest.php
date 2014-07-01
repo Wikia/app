@@ -53,9 +53,9 @@ class RefreshLinksForTitleTaskTest extends PHPUnit_Framework_TestCase {
 		$revision->expects( $this->once() )
 			->method( 'getText' )
 			->will( $this->returnValue( $revisionText ) );
-		$revision->expects($this->once())
-			->method('getId')
-			->will($this->returnValue($revisionId));
+		$revision->expects( $this->once() )
+			->method( 'getId' )
+			->will( $this->returnValue( $revisionId ) );
 
 		$parserOutput = 'foobar';
 		$parser->expects( $this->once() )
@@ -67,13 +67,13 @@ class RefreshLinksForTitleTaskTest extends PHPUnit_Framework_TestCase {
 			->method( 'getParser' )
 			->will( $this->returnValue( $parser ) );
 
-		$task->expects($this->once())
-			->method('getParserOptions')
-			->will($this->returnValue($parserOptions));
+		$task->expects( $this->once() )
+			->method( 'getParserOptions' )
+			->will( $this->returnValue( $parserOptions ) );
 
-		$task->expects($this->once())
-			->method('updateLinks')
-			->with($parserOutput);
+		$task->expects( $this->once() )
+			->method( 'updateLinks' )
+			->with( $parserOutput );
 
 		$task->setTitle( $title );
 
