@@ -194,7 +194,7 @@ class PromoteImageReviewTask extends BaseTask {
 
 		$command = "SERVER_ID={$targetWikiId} php ${IP}/maintenance/wikia/ImageReview/PromoteImage/remove.php" .
 			' --imagename=' . escapeshellarg( $imageName ) .
-			' --userid=' . escapeshellarg( $this->createdBy() );
+			' --userid=' . escapeshellarg( $this->createdBy );
 
 		$output = wfShellExec( $command, $exitStatus );
 		$cityUrl = \WikiFactory::getVarValueByName( 'wgServer', $targetWikiId );
