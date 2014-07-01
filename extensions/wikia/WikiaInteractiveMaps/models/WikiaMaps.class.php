@@ -1,6 +1,6 @@
 <?php
 
-class WikiaMaps {
+class WikiaMaps extends WikiaObject {
 
 	const DEFAULT_MEMCACHE_EXPIRE_TIME = 3600;
 	const ENTRY_POINT_MAP = 'map';
@@ -24,6 +24,8 @@ class WikiaMaps {
 	const HTTP_UPDATED = 303;
 	const HTTP_NO_CONTENT = 204;
 
+	const MAP_THUMB_PREFIX = '/thumb/';
+
 	/**
 	 * @var array API connection config
 	 */
@@ -39,6 +41,7 @@ class WikiaMaps {
 	];
 
 	public function __construct( $config ) {
+		parent::__construct();
 		$this->config = $config;
 	}
 
@@ -173,16 +176,16 @@ class WikiaMaps {
 	}
 
 	/**
-	 * Returns render empty point for map
+	 * Returns render empty point for map (adds the language for each request)
 	 *
-	 * @param Array $params the first element is required and it should be concatenated {mapId}/{zoom}/{lat}/{lon}
-	 *                      rest of the array elements will get added as URI parameters after ? sign
-	 *
-	 * @return string
+	 * @param array $segments URL segments
+	 * @param array $params Additional get params
+	 * @return string URL
 	 */
-	public function getMapRenderUrl( Array $params ) {
-		$entryPointParams = array_shift( $params );
-		return $this->buildUrl( self::ENTRY_POINT_RENDER . '/' . $entryPointParams, $params );
+	public function getMapRenderUrl( Array $segments, Array $params = []) {
+		array_unshift( $segments, self::ENTRY_POINT_RENDER );
+		$params[ 'uselang' ] = $this->wg->lang->getCode();
+		return $this->buildUrl( $segments, $params );
 	}
 
 	/**
@@ -314,6 +317,34 @@ class WikiaMaps {
 		return $this->postRequest(
 			$this->buildUrl( [ self::ENTRY_POINT_POI_CATEGORY ] ),
 			$poiCategoryData
+		);
+	}
+
+	/**
+	 * Sends a request to IntMap Service API to update a POI category with given parameters
+	 *
+	 * @param Integer $poiCategoryId
+	 * @param Array $poiCategoryData array with required parameters to service API
+	 *
+	 * @return Array
+	 */
+	public function updatePoiCategory( $poiCategoryId, $poiCategoryData ) {
+		return $this->putRequest(
+			$this->buildUrl( [ self::ENTRY_POINT_POI_CATEGORY, $poiCategoryId ] ),
+			$poiCategoryData
+		);
+	}
+
+	/**
+	 * Sends a request to IntMap Service API to delete a POI category
+	 *
+	 * @param Integer $poiCategoryId
+	 *
+	 * @return Array
+	 */
+	public function deletePoiCategory( $poiCategoryId ) {
+		$this->deleteRequest(
+			$this->buildUrl( [ self::ENTRY_POINT_POI_CATEGORY, $poiCategoryId ] )
 		);
 	}
 
@@ -467,9 +498,7 @@ class WikiaMaps {
 			'headers' => [
 				'Authorization' => $this->config[ 'token' ]
 			],
-			'returnInstance' => true,
-			//TODO: this is temporary workaround, remove it before production!
-			'noProxy' => true
+			'returnInstance' => true
 		];
 
 		if ( !empty( $postData ) ) {
@@ -478,4 +507,25 @@ class WikiaMaps {
 
 		return $options;
 	}
+
+	/**
+	 * @desc returns URL to the cropped thumb of an image
+	 *
+	 * @param String $url - image url
+	 * @param Integer $width
+	 * @param Integer $height
+	 * @param String $align - crop align (origin || center)
+ 	 *
+	 * @return String - thumbnail URL
+	 */
+	public function createCroppedThumb( $url, $width, $height, $align = 'center' ) {
+		$imageServing = new ImageServing( null, $width, $height );
+		$breakPoint = strrpos( $url, '/' );
+		$baseURL = substr( $url, 0, $breakPoint );
+		$fileName = substr( $url , $breakPoint + 1 );
+		$crop = urlencode( $imageServing->getCut( $width, $height, $align ) );
+
+		return $baseURL . self::MAP_THUMB_PREFIX . $fileName . '/' . $crop . '-' . $fileName;
+	}
 }
+

@@ -7,7 +7,11 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 
 	const MAP_HEIGHT = 600;
 	const MAPS_PER_PAGE = 10;
-	const PAGE_NAME = 'InteractiveMaps';
+	const MAP_THUMB_WIDTH = 1110;
+	const MAP_THUMB_HEIGHT = 300;
+	const PAGE_NAME = 'Maps';
+	const TRANSLATION_FILENAME = 'translations.json';
+	const MAPS_WIKIA_URL = 'http://maps.wikia.com';
 
 	/**
 	 * @var WikiaMaps
@@ -44,7 +48,7 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 	}
 
 	/**
-	 * Main Special:InteractiveMaps page
+	 * Main Special:Maps page
 	 */
 	public function main() {
 		$selectedSort = $this->getVal( 'sort', null );
@@ -67,19 +71,30 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 			return;
 		}
 
+		// convert images to thumbs
+		foreach ( $mapsResponse->items as $item ) {
+			$item->image = $this->mapsModel->createCroppedThumb( $item->image, self::MAP_THUMB_WIDTH, self::MAP_THUMB_HEIGHT, 'origin' );
+		}
+
 		$this->setVal( 'maps', $mapsResponse->items );
 		$this->setVal( 'hasMaps', !empty( $mapsResponse->total ) );
+		$this->setVal( 'mapThumbWidth', self::MAP_THUMB_WIDTH );
+		$this->setVal( 'mapThumbHeight', self::MAP_THUMB_HEIGHT );
 
 		$url = $this->getContext()->getTitle()->getFullURL();
 		$this->setVal( 'baseUrl', $url );
 
 		$messages = [
-			'wikia-interactive-maps-title' => wfMessage( 'wikia-interactive-maps-title' ),
-			'wikia-interactive-maps-create-a-map' => wfMessage( 'wikia-interactive-maps-create-a-map' ),
-			'wikia-interactive-maps-no-maps' => wfMessage( 'wikia-interactive-maps-no-maps' )
+			'title' => wfMessage( 'wikia-interactive-maps-title' ),
+			'create-a-map' => wfMessage( 'wikia-interactive-maps-create-a-map' ),
+			'no-maps-header' => wfMessage( 'wikia-interactive-maps-no-maps-header' ),
+			'no-maps-text' => wfMessage( 'wikia-interactive-maps-no-maps-text' ),
+			'no-maps-learn-more' => wfMessage( 'wikia-interactive-maps-no-maps-learn-more' ),
 		];
 		$this->setVal( 'messages', $messages );
 		$this->setVal( 'sortingOptions', $this->mapsModel->getSortingOptions( $selectedSort ) );
+		$this->setVal( 'searchInput', $this->app->renderView( 'Search', 'Index' ) );
+		$this->setVal( 'learnMoreUrl', self::MAPS_WIKIA_URL );
 
 		$urlParams = [];
 		if ( !is_null( $selectedSort ) ) {
@@ -123,13 +138,12 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 		if ( isset( $map->title ) ) {
 			$this->wg->out->setHTMLTitle( $map->title );
 
-			$url = $this->mapsModel->buildUrl( [
-				WikiaMaps::ENTRY_POINT_RENDER,
+			$url = $this->mapsModel->getMapRenderUrl([
 				$mapId,
 				$zoom,
 				$lat,
 				$lon
-			] );
+			]);
 
 			$this->setVal( 'title', $map->title );
 			$this->setVal( 'mapFound', true );
@@ -144,6 +158,8 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 				'wikia-interactive-maps-map-not-found-error' => wfMessage( 'wikia-interactive-maps-map-not-found-error' )
 			] );
 		}
+
+		$this->response->addAsset( 'extensions/wikia/WikiaInteractiveMaps/css/WikiaInteractiveMaps.scss' );
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
 	}
 
@@ -194,7 +210,7 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 			NotificationsController::addConfirmation( wfMessage( 'wikia-interactive-maps-delete-map-success' ) );
 			$this->response->setVal(
 				'redirectUrl',
-				$this->getSpecialUrl( 'InteractiveMaps' )
+				$this->getSpecialUrl( self::PAGE_NAME )
 			);
 		}
 	}
@@ -219,5 +235,15 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 	 */
 	private function getPaginationOffset( $currentPage, $itemsPerPage ) {
 		return ($currentPage - 1) * $itemsPerPage;
+	}
+
+	/**
+	 * Generate extension translations file
+	 */
+	public function translation() {
+		$messages = [];
+		require_once( dirname( __FILE__ ) . '/../WikiaInteractiveMapsService.i18n.php' );
+		$this->response->setVal( 'messages', $messages );
+		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 	}
 }

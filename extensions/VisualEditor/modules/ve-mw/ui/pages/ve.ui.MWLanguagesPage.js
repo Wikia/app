@@ -31,7 +31,7 @@ ve.ui.MWLanguagesPage = function VeUiMWLanguagesPage( name, config ) {
 	// Initialization
 	this.languagesFieldset.$element.append(
 		this.$( '<span>' )
-			.text( ve.msg( 'visualeditor-dialog-meta-languages-readonlynote' ) )
+			.text( ve.msg( 'wikia-visualeditor-dialog-meta-languages-readonlynote' ) )
 	);
 	this.$element.append( this.languagesFieldset.$element );
 
