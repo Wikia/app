@@ -80,6 +80,7 @@ class SMWAdmin extends SpecialPage {
 					$title = SpecialPage::getTitleFor( 'SMWAdmin' );
 					$jobParams = array( 'spos' => 1, 'prog' => 0, 'rc' => 2 );
 
+					// wikia change start - jobqueue migration
 					if ( TaskRunner::isModern( 'SMWRefreshJob' ) ) {
 						$task = new \Wikia\Tasks\Tasks\JobWrapperTask();
 						$task->call( 'SMWRefreshJob', $title, $jobParams );
@@ -87,6 +88,7 @@ class SMWAdmin extends SpecialPage {
 						$newjob = new SMWRefreshJob( $title,  $jobParams );
 						$newjob->insert();
 					}
+					// wikia change end
 
 					$wgOut->addHTML( '<p>' . wfMsg( 'smw_smwadmin_updatestarted' ) . '</p>' );
 				} else {

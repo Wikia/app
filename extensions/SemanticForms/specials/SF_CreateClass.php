@@ -100,6 +100,7 @@ END;
 				$params['user_id'] = $wgUser->getId();
 				$params['page_text'] = $full_text;
 
+				// wikia change start - jobqueue migration
 				if (TaskRunner::isModern('SFCreatePageJob')) {
 					$job = new \Wikia\Tasks\Tasks\JobWrapperTask();
 					$job->call('createPage', $property_title, $params);
@@ -107,7 +108,7 @@ END;
 				} else {
 					$jobs[] = new SFCreatePageJob( $property_title, $params );
 				}
-
+				// wikia change end
 			}
 
 			// create the template, and save it
@@ -127,6 +128,7 @@ END;
 			$params['user_id'] = $wgUser->getId();
 			$params['page_text'] = $full_text;
 
+			// wikia change start - jobqueue migration
 			if (TaskRunner::isModern('SFCreatePageJob')) {
 				$job = new \Wikia\Tasks\Tasks\JobWrapperTask();
 				$job->call('createPage', $form_title, $params);
@@ -134,6 +136,7 @@ END;
 			} else {
 				$jobs[] = new SFCreatePageJob( $form_title, $params );
 			}
+			// wikia change end
 
 			// create the category, and make a job for it
 			$full_text = SFCreateCategory::createCategoryText( $form_name, $category_name, '' );
@@ -142,6 +145,7 @@ END;
 			$params['user_id'] = $wgUser->getId();
 			$params['page_text'] = $full_text;
 
+			// wikia change start - jobqueue migration
 			if (TaskRunner::isModern('SFCreatePageJob')) {
 				$job = new \Wikia\Tasks\Tasks\JobWrapperTask();
 				$job->call('createPage', $category_title, $params);
@@ -151,6 +155,7 @@ END;
 				$jobs[] = new SFCreatePageJob( $category_title, $params );
 				Job::batchInsert( $jobs );
 			}
+			// wikia change end
 
 			$wgOut->addWikiMsg( 'sf_createclass_success' );
 			return;
