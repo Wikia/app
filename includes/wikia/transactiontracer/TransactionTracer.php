@@ -37,9 +37,6 @@ class TransactionTracer {
 	const SIZE_CATEGORY_COMPLEX = 'complex';
 
 	const ACTION_VIEW = 'view';
-	const ACTION_EDIT = 'edit';
-	const ACTION_SUBMIT = 'submit';
-	const ACTION_OTHER = 'other';
 
 	// copied from WallNamespaces.php to have a single constant
 	// while not being dependant on Wall
@@ -50,6 +47,12 @@ class TransactionTracer {
 		NS_FILE => 'file',
 		NS_CATEGORY => 'category',
 		self::NS_USER_WALL => 'message_wall',
+	);
+
+	protected static $IMPORTANT_ARTICLE_ACTIONS = array(
+		'view',
+		'edit',
+		'submit',
 	);
 
 	protected static $IMPORTANT_SPECIAL_PAGES = array(
@@ -154,7 +157,14 @@ class TransactionTracer {
 
 					// main namespace and action is set
 					if ( $namespace === NS_MAIN && isset( $attributes[self::PARAM_ACTION] ) ) {
-						$transactionName .= sprintf( "/%s", $attributes[self::PARAM_ACTION] );
+						$action = $attributes[self::PARAM_ACTION];
+						// it is an important action
+						if ( in_array( $action, self::$IMPORTANT_ARTICLE_ACTIONS ) ) {
+							$transactionName .= sprintf( "/%s", $action );
+						} else {
+							$transactionName .= "/other";
+						}
+
 						// action: view
 						if ( $attributes[self::PARAM_ACTION] === self::ACTION_VIEW ) {
 							// skin and parser_cached_used flag

@@ -601,12 +601,7 @@ class MediaWiki {
 		}
 
 		TransactionTracer::setAttribute( TransactionTracer::PARAM_LOGGED_IN, $wgUser->isLoggedIn() );
-
-		if ( in_array($action, array( 'view', 'edit', 'submit' )) ) {
-			TransactionTracer::setAttribute( TransactionTracer::PARAM_ACTION, $action );
-		} else {
-			TransactionTracer::setAttribute( TransactionTracer::PARAM_ACTION, TransactionTracer::ACTION_OTHER );
-		}
+		TransactionTracer::setAttribute( TransactionTracer::PARAM_ACTION, $action );
 	}
 
 	private function main() {
