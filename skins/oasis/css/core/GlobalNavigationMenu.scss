@@ -202,7 +202,7 @@ $shadow-width: 1px;
 
 @media screen and (max-width: 1023px) {
 	#GlobalNavigationMenuButton {
-		width: 40px;
+		padding: 0 5px;
 	}
 	.GlobalNavigationContainer {
 		width: 100%;
@@ -246,7 +246,7 @@ $shadow-width: 1px;
 
 @media screen and (min-width: 1024px) and (max-width: 1280px) {
 	#GlobalNavigationMenuButton {
-		width: 52px;
+		padding: 0 11px;
 	}
 	.GlobalNavigationContainer {
 		@include width-calc('100% - 258px');
