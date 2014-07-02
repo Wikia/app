@@ -163,6 +163,7 @@ $messages['af'] = array(
 /** Arabic (العربية)
  * @author Achraf94
  * @author Claw eg
+ * @author Kuwaity26
  * @author Meno25
  * @author OsamaK
  */
@@ -195,7 +196,7 @@ $messages['ar'] = array(
 	'themedesigner-tab-wordmark' => 'الشعار',
 	'themedesigner-preview-mode' => 'وضع المعاينة...',
 	'themedesigner-previous-versions' => 'النسخ السابقة',
-	'themedesigner-button-save-im-done' => 'إحفظ، لقد إنتهيت',
+	'themedesigner-button-save-im-done' => 'حفظ',
 	'themedesigner-button-cancel' => 'إلغاء',
 	'themedesigner-pick-a-color' => 'اختيار لون',
 	'themedesigner-enter-your-own' => 'أدخل الخاصة بك',
@@ -1210,7 +1211,7 @@ $messages['ko'] = array(
 	'themedesigner-graphic' => '그림',
 	'themedesigner-buttons' => '버튼',
 	'themedesigner-links' => '링크',
-	'themedesigner-header' => '머리말',
+	'themedesigner-header' => '머리글',
 	'themedesigner-text-wordmark' => '글자 로고',
 	'themedesigner-graphic-wordmark' => '그림 로고',
 	'themedesigner-small' => '작게',

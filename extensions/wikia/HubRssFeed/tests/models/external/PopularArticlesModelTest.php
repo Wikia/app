@@ -1,5 +1,33 @@
 <?php
 
+
+class fakeResultGenerator {
+	protected $dataId = 0;
+	protected $limit = -1;
+
+	public function __construct( $limit ) {
+		$this->limit = $limit;
+	}
+
+	public function fetchObject() {
+		if ( !$this->limit ) {
+			return null;
+		}
+
+		if ( $this->limit > 0 ) {
+			$this->limit--;
+		}
+
+		$row = new stdClass();
+		$row->page_namespace = $this->dataId & 1;
+		$row->page_title = "title_" . $this->dataId;
+		$row->page_id = $this->dataId;
+		$this->dataId++;
+
+		return $row;
+	}
+}
+
 class PopularArticlesModelTest extends WikiaBaseTest {
 	protected static function getFn( $obj, $name ) {
 		$class = new ReflectionClass(get_class( $obj ));
@@ -20,7 +48,7 @@ class PopularArticlesModelTest extends WikiaBaseTest {
 		parent::setUp();
 	}
 
-	private function mockDbQuery() {
+	private function mockDbQuery( &$mockDb = null ) {
 		$mockQueryResults = $this->getMock( "ResultWrapper", array( 'fetchObject' ), array(), '', false );
 
 		$mockDb = $this->getMock( 'DatabaseMysql', array( 'query' ) );
@@ -31,25 +59,29 @@ class PopularArticlesModelTest extends WikiaBaseTest {
 		return $mockQueryResults;
 	}
 
-	private function fakeRecentlyEditedQueryRow( Title $title ) {
-		$row = new stdClass();
-		$row->page_namespace = $title->getNamespace();
-		$row->page_title = $title->getBaseText();
-		$row->page_id = $title->getArticleId();
-		return $row;
-	}
-
 	/*
 	 * @covers PopularArticlesModel::getRecentlyEditedPageIds
 	 */
 	public function testRecentlyEditedPageIds_SkipMainPage() {
-		$mainPage = Title::newMainPage();
+		$mock = $this->getMockBuilder( 'PopularArticlesModel' )
+			->disableOriginalConstructor()
+			->setMethods( [ '__construct', 'getRecentlyEditedPageResult' ] )
+			->getMock();
+		$mock->expects( $this->any() )
+			->method( 'getRecentlyEditedPageResult' )
+			->will( $this->returnValue( new fakeResultGenerator( 2 ) ) );
 
-		$mockResults = $this->mockDbQuery();
-		$mockResults->expects( $this->at( 0 ) )->method( "fetchObject" )
-			->will( $this->returnValue( $this->fakeRecentlyEditedQueryRow( $mainPage ) ) );
+		$mockTitleMain = $this->getMockBuilder( 'Title' )
+			->disableOriginalConstructor()
+			->setMethods( [ '__construct', 'isMainPage' ] )
+			->getMock();
+		$mockTitleMain->expects( $this->any() )
+			->method( 'isMainPage' )
+			->will( $this->returnValue( true ) );
 
-		$fn = self::getFn( new PopularArticlesModel(), 'getRecentlyEditedPageIds' );
+		$this->mockStaticMethod( 'Title', 'newFromText', $mockTitleMain );
+
+		$fn = self::getFn( $mock, 'getRecentlyEditedPageIds' );
 		$result = $fn( 0 );
 
 		$this->assertEmpty( $result );
@@ -59,23 +91,28 @@ class PopularArticlesModelTest extends WikiaBaseTest {
 	 * @covers PopularArticlesModel::getRecentlyEditedPageIds
 	 */
 	public function testRecentlyEditedPageIds_ReturnPageIds() {
-		$someTitle = Title::newFromText( "some title" );
-		$row0 = $this->fakeRecentlyEditedQueryRow( $someTitle );
-		$row1 = clone $row0;
-		$row0->page_id = 0;
-		$row1->page_id = 1;
+		$mock = $this->getMockBuilder( 'PopularArticlesModel' )
+			->disableOriginalConstructor()
+			->setMethods( [ '__construct', 'getRecentlyEditedPageResult' ] )
+			->getMock();
+		$mock->expects( $this->any() )
+			->method( 'getRecentlyEditedPageResult' )
+			->will( $this->returnValue( new fakeResultGenerator( 2 ) ) );
 
-		$mockResults = $this->mockDbQuery();
-		$mockResults->expects( $this->at( 0 ) )->method( "fetchObject" )
-			->will( $this->returnValue( $row0 ) );
-		$mockResults->expects( $this->at( 1 ) )->method( "fetchObject" )
-			->will( $this->returnValue( $row1 ) );
+		$mockTitleMain = $this->getMockBuilder( 'Title' )
+			->disableOriginalConstructor()
+			->setMethods( [ '__construct', 'isMainPage' ] )
+			->getMock();
+		$mockTitleMain->expects( $this->any() )
+			->method( 'isMainPage' )
+			->will( $this->returnValue( false ) );
 
-		$fn = self::getFn( new PopularArticlesModel(), 'getRecentlyEditedPageIds' );
+		$this->mockStaticMethod( 'Title', 'newFromText', $mockTitleMain );
+
+		$fn = self::getFn( $mock, 'getRecentlyEditedPageIds' );
 		$result = $fn( 0 );
 
-		$this->assertEquals( $result[0], 0 );
-		$this->assertEquals( $result[1], 1 );
+		$this->assertEquals( $result, [ 0, 1 ] );
 	}
 
 	/*

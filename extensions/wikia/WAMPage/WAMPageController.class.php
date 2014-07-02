@@ -54,7 +54,6 @@ class WAMPageController extends WikiaController
 	}
 
 	protected function collectRequestParameters() {
-		$this->filterLanguages = $this->model->getCorporateWikisLanguages();
 		$this->filterVerticals = $this->model->getVerticals();
 
 		$this->searchPhrase = htmlspecialchars($this->getVal('searchPhrase', null));
@@ -68,10 +67,6 @@ class WAMPageController extends WikiaController
 
 		$this->page = $this->getVal('page', $this->model->getFirstPage());
 
-		$langValidator = new WikiaValidatorSelect(array('allowed' => $this->filterLanguages));
-		if (!$langValidator->isValid($this->selectedLangCode)) {
-			$this->selectedLangCode = null;
-		}
 		$verticalValidator = new WikiaValidatorSelect(array('allowed' => array_keys($this->filterVerticals)));
 		if (!$verticalValidator->isValid($this->selectedVerticalId)) {
 			$this->selectedVerticalId = null;
@@ -84,6 +79,7 @@ class WAMPageController extends WikiaController
 				'wamFilterDateFormat' => $this->getJsDateFormat()
 			]
 		);
+
 		if (!empty($this->selectedDate)) {
 			$timestamp = $this->selectedDate;
 
@@ -100,6 +96,13 @@ class WAMPageController extends WikiaController
 					$this->selectedDate = null;
 				}
 			}
+		}
+
+		$this->filterLanguages = $this->model->getWAMLanguages( $this->selectedDate );
+
+		$langValidator = new WikiaValidatorSelect(array('allowed' => $this->filterLanguages));
+		if (!$langValidator->isValid($this->selectedLangCode)) {
+			$this->selectedLangCode = null;
 		}
 
 		// combine all filter params to array

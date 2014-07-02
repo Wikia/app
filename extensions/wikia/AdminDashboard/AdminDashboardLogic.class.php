@@ -66,6 +66,7 @@ class AdminDashboardLogic {
 				"Following",
 				"Forum",
 				"ImageReview",
+				"InteractiveMaps",
 				"Invalidateemail",
 				"LandingPageSmurfs",
 				"LayoutBuilder",

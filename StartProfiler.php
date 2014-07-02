@@ -1,4 +1,16 @@
 <?php
+// Wikia change - begin - @author Mix
+$wgProfilingDataLogged = false;
+
+register_shutdown_function( function() {
+	global $wgProfilingDataLogged;
+	if ( ! $wgProfilingDataLogged && function_exists( 'wfLogProfilingData' ) ) {
+		wfLogProfilingData();
+		$wgProfilingDataLogged = true;
+	}
+} );
+// Wikia change - end
+
 # defined here since this is loaded before settings -gp
 $wgProfilerSamplePercent = 1;
 $wgXhprofSamplePercent = 1;

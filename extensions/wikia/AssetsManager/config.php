@@ -111,6 +111,13 @@ $config['adengine2_wikiabar_boxad_js'] = array(
 	),
 );
 
+$config['adengine2_top_in_content_boxad_js'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => array(
+		'//extensions/wikia/AdEngine/js/AdSlotTopInContentBoxad.js',
+	),
+);
+
 $config['adengine2_ebay_scss'] = array(
 	'type' => AssetsManager::TYPE_SCSS,
 	'skin' => array( 'oasis' ),
@@ -484,6 +491,7 @@ $config['wikiamobile_js_body_minimal'] = array(
 		//depends on querystring.js and cookies.js
 		'//resources/wikia/modules/log.js',
 		'//resources/wikia/modules/abTest.js',
+		'//resources/wikia/modules/geo.js',
 
 		//feature detection
 		'//extensions/wikia/WikiaMobile/js/features.js',
@@ -613,7 +621,6 @@ $config['wikiamobile_ads_js'] = array(
 	'skin' => 'wikiamobile',
 	'assets' => array(
 		// Modules
-		'//resources/wikia/modules/geo.js',
 		'//resources/wikia/modules/lazyqueue.js',
 		'//extensions/wikia/AdEngine/js/MessageListener.js',
 
@@ -1791,3 +1798,62 @@ $config['affiliate_module_js'] = array(
 		'//extensions/wikia/AffiliateModule/scripts/AffiliateModule.js',
 	)
 );
+
+/* extension/wikia/WikiaInteractiveMaps */
+
+$config['int_map_special_page_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => ['oasis'],
+	'assets' => [
+		'//resources/wikia/libraries/Ponto/ponto.js',
+		'//extensions/wikia/WikiaInteractiveMaps/js/intMapUtils.js',
+		'//extensions/wikia/WikiaInteractiveMaps/js/intMapPontoBridge.js',
+		'//extensions/wikia/WikiaInteractiveMaps/js/WikiaInteractiveMaps.js'
+	]
+];
+
+$config['int_map_create_map_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => ['oasis'],
+	'assets' => [
+		'//extensions/wikia/WikiaInteractiveMaps/js/intMapUtils.js',
+		'//extensions/wikia/WikiaInteractiveMaps/js/intMapCreateMapTileSet.js',
+		'//extensions/wikia/WikiaInteractiveMaps/js/intMapCreateMapPreview.js',
+		'//extensions/wikia/WikiaInteractiveMaps/js/intMapCreateMapModal.js',
+	]
+];
+
+$config['int_map_poi_categories_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => ['oasis'],
+	'assets' => [
+		'//extensions/wikia/WikiaInteractiveMaps/js/intMapUtils.js',
+		'//extensions/wikia/WikiaInteractiveMaps/js/intMapPoiCategories.js',
+	]
+];
+
+$config['int_map_edit_poi_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => ['oasis'],
+	'assets' => [
+		'//extensions/wikia/WikiaInteractiveMaps/js/intMapEditPOI.js'
+	]
+];
+
+$config['int_map_delete_map_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => ['oasis'],
+	'assets' => [
+		'//extensions/wikia/WikiaInteractiveMaps/js/intMapUtils.js',
+		'//extensions/wikia/WikiaInteractiveMaps/js/intMapDeleteMap.js',
+	]
+];
+
+$config['int_map_embed_map_code'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => ['oasis'],
+	'assets' => [
+		'//extensions/wikia/WikiaInteractiveMaps/js/intMapUtils.js',
+		'//extensions/wikia/WikiaInteractiveMaps/js/intMapEmbedMapCode.js',
+	]
+];

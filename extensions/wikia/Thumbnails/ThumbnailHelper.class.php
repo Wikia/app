@@ -54,7 +54,7 @@ class ThumbnailHelper extends WikiaModel {
 	 * Get data-params attribute (for video on mobile)
 	 * @param File $file
 	 * @param string $imgSrc
-	 * @param array $thumbOptions
+	 * @param array $options
 	 * @return string
 	 */
 	public static function getDataParams( $file, $imgSrc, $options ) {

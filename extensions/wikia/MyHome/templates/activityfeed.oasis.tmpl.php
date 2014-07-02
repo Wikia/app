@@ -8,14 +8,14 @@
 			<?php print FeedRenderer::getSprite($row, $wgBlankImgUrl); ?>
 			<?php if( isset( $row['url'] ) ): ?>
 				<strong><a class="title" href="<?php print htmlspecialchars($row['url']) ?>"><?php print htmlspecialchars($row['title'])  ?></a></strong>
-				<?php if( !empty($row['wall-url']) ): ?>
+				<?php if( !empty($row['wall-title']) ): ?>
 					<span class="wall-owner">
 						<?php echo $row['wall-msg']; ?>
 					</span>
 				<?php endif; ?>
 				<br />
 				<?php if( !empty($row['comments-count']) ): ?>
-					<?= wfMsgExt('wiki-activity-message-wall-messages-count', array('parseinline'), $row['comments-count']); ?>
+					<?= wfMessage( 'wiki-activity-message-wall-messages-count', $row['comments-count'] )->parse(); ?>
 					<br />
 				<?php endif;?>
 			<?php else: ?>
@@ -42,7 +42,7 @@
 		<?php endforeach; ?>
 		</ul>
 		<?php if( $showMore ): ?>
-			<div class="activity-feed-more"><a href="#" data-since="<?= $query_continue ?>"><?= wfMsg('myhome-activity-more') ?></a></div>
+			<div class="activity-feed-more"><a href="#" data-since="<?= $query_continue ?>"><?= wfMessage( 'myhome-activity-more' )->escaped() ?></a></div>
 		<?php endif; ?>
 	<?php endif; ?>
 </div>

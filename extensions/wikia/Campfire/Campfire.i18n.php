@@ -173,9 +173,11 @@ $messages['ia'] = array(
 
 /** Indonesian (Bahasa Indonesia)
  * @author C5st4wr6ch
+ * @author Riemogerz
  */
 $messages['id'] = array(
 	'campfire-page-header' => '$1 dari $2',
+	'campfire-licensed-under' => 'Lisensi di bawah $1',
 );
 
 /** Italian (italiano)
