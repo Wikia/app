@@ -436,7 +436,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.onPageSet = function () {
  * @method
  * @param {string} action Which action is being performed on close.
  */
-ve.ui.WikiaMediaInsertDialog.prototype.getTeardownProcess = function( data ) {
+ve.ui.WikiaMediaInsertDialog.prototype.getTeardownProcess = function ( data ) {
 	return ve.ui.WikiaMediaInsertDialog.super.prototype.getTeardownProcess.call( this, data )
 		.first( function () {
 			if ( data.action === 'insert' ) {
