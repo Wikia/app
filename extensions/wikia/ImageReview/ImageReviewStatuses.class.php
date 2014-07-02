@@ -14,6 +14,7 @@ class ImageReviewStatuses {
 	const STATE_AUTO_APPROVED = 8;
 
 	const STATE_APPROVED_AND_TRANSFERRING = 21;
+	const STATE_READY_FOR_CULLING = 22; // image to be deleted once grace period expires
 
 	const STATE_WIKI_DISABLED = 97;
 	const STATE_INVALID_IMAGE = 98;

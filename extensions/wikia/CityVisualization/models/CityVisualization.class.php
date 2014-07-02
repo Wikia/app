@@ -5,12 +5,11 @@
  * @todo refactor, the queries should be part of /includes/wikia/models/WikisModel.class.php
  */
 class CityVisualization extends WikiaModel {
-	const CITY_VISUALIZATION_MEMC_VERSION = 'v0.80';
-	const CITY_VISUALIZATION_CORPORATE_PAGE_LIST_MEMC_VERSION = 'v1.09';
+	const CITY_VISUALIZATION_MEMC_VERSION = 'v1.00';
 	const WIKI_STANDARD_BATCH_SIZE_MULTIPLIER = 100;
 
-	const CITY_VISUALIZATION_TABLE_NAME = 'city_visualization';
-	const CITY_VISUALIZATION_IMAGES_TABLE_NAME = 'city_visualization_images';
+	const CITY_VISUALIZATION_TABLE_NAME = 'city_visualization_xwiki';
+	const CITY_VISUALIZATION_IMAGES_TABLE_NAME = 'city_visualization_images_xwiki';
 
 	const MEMC_IMAGE_NAMES_EXPIRATION_TIME = 86400; // 60 * 60 * 24
 
@@ -422,9 +421,7 @@ class CityVisualization extends WikiaModel {
 		$cityImages = (!empty($data['city_images'])) ? (array)json_decode($data['city_images']) : array();
 		$wikiData = array(
 			'headline' => $data['city_headline'],
-			'description' => $data['city_description'],
-			'main_image' => $data['city_main_image'],
-			'images' => $cityImages
+			'description' => $data['city_description']
 		);
 
 		$this->wg->Memc->set($memcKey, $wikiData);
@@ -507,9 +504,7 @@ class CityVisualization extends WikiaModel {
 					'city_title',
 					self::CITY_VISUALIZATION_TABLE_NAME . '.city_headline',
 					self::CITY_VISUALIZATION_TABLE_NAME . '.city_description',
-					self::CITY_VISUALIZATION_TABLE_NAME . '.city_main_image',
-					self::CITY_VISUALIZATION_TABLE_NAME . '.city_flags',
-					self::CITY_VISUALIZATION_TABLE_NAME . '.city_images',
+					self::CITY_VISUALIZATION_TABLE_NAME . '.city_flags'
 				),
 				array(
 					self::CITY_VISUALIZATION_TABLE_NAME . '.city_id' => $wikiId,
@@ -530,8 +525,8 @@ class CityVisualization extends WikiaModel {
 				$wikiData['headline'] = $row->city_headline;
 				$wikiData['description'] = $row->city_description;
 				$wikiData['flags'] = $row->city_flags;
-				$wikiData['images'] = $dataHelper->getImages($wikiId, $langCode, $row);
-				$wikiData['main_image'] = $dataHelper->getMainImage($wikiId, $langCode, $row, $wikiData);
+				$wikiData['images'] = $dataHelper->getImages($wikiId, $langCode);
+				$wikiData['main_image'] = $dataHelper->getMainImage($wikiId, $langCode);
 			}
 
 			$this->wg->Memc->set($memcKey, $wikiData, 60 * 60 * 24);
@@ -572,7 +567,7 @@ class CityVisualization extends WikiaModel {
 			array(self::CITY_VISUALIZATION_IMAGES_TABLE_NAME),
 			array(
 				'image_name',
-				'image_index'
+				'image_index',
 			),
 			$conditions,
 			__METHOD__
@@ -580,11 +575,9 @@ class CityVisualization extends WikiaModel {
 
 		while ($row = $result->fetchObject()) {
 			$parsed = WikiImageRowHelper::parseWikiImageRow($row);
-			$promoImage = PromoImage::fromPathname($parsed->name);
-			//skip invalid promo image names
-			if ($promoImage->isValid()) {
-				$wikiImageNames[$parsed->index] = $promoImage->getPathname();
-			}
+
+			$promoImage = new PromoXWikiImage($parsed->name);
+			$wikiImageNames[$parsed->index] = $promoImage;
 		}
 
 		wfProfileOut(__METHOD__);
@@ -607,90 +600,43 @@ class CityVisualization extends WikiaModel {
 	}
 
 	public function saveImagesForReview($cityId, $langCode, $images, $imageReviewStatus = ImageReviewStatuses::STATE_UNREVIEWED) {
-		$currentImages = $this->getImagesFromReviewTable($cityId, $langCode);
+		$currentImages = $this->getImagesFromReviewTable( $cityId, $langCode );
+		$cutoffIndex = count( $images );
+		$imageIndex = 0;
+		$imagesToAdd = [];
+		$modifiedImages = [];
 
-		$reversedImages = array_flip($images);
-		$imagesToModify = array();
+		foreach ( $images as $image ) {
+			$imageData =  [
+				'city_id' => $cityId,
+				'city_lang_code' =>  $langCode,
+				'image_type' =>  ( $imageIndex == 0 ) ? PromoImage::MAIN : PromoImage::ADDITIONAL,
+				'image_index' =>  $imageIndex,
+				'image_name' =>  $image,
+				'image_review_status' =>  $imageReviewStatus,
+				'last_edited' =>  date( 'Y-m-d H:i:s' ),
+				'review_start' =>  null,
+				'review_end' =>  null,
+				'reviewer_id' =>  null
+			];
 
-		foreach ($currentImages as $image) {
-			if (isset($reversedImages[$image->image_name])) {
-				$image->last_edited = date('Y-m-d H:i:s');
-				$image->image_review_status = $imageReviewStatus;
-				$imagesToModify[] = $image;
-				unset($reversedImages[$image->image_name]);
+			$imagesToAdd [$image] = $imageData;
+			$imageIndex ++;
+		}
+
+		$addedImages = array_diff_key( $imagesToAdd , $currentImages );
+
+		foreach($images as $index => $image) {
+			if ( !empty( $currentImages[$image] ) && intval($currentImages[$image]->image_index) != intval($index) ) {
+				$modifiedImage = $imagesToAdd[$image];
+				$modifiedImage['image_index'] = $index;
+				$modifiedImages [] = $modifiedImage;
 			}
 		}
 
-		$newImages = array_flip($reversedImages);
-
-		$imagesToAdd = array();
-		foreach ($newImages as $image) {
-			$imageData = new stdClass();
-
-			$imageIndex = PromoImage::fromPathname($image)->ensureCityIdIsSet($cityId)->getType();
-
-			$title = Title::newFromText($image, NS_FILE);
-
-			$imageData->city_id = $cityId;
-			$imageData->page_id = $title->getArticleId();
-			$imageData->city_lang_code = $langCode;
-			$imageData->image_index = $imageIndex;
-			$imageData->image_name = $image;
-			$imageData->image_review_status = $imageReviewStatus;
-			$imageData->last_edited = date('Y-m-d H:i:s');
-			$imageData->review_start = null;
-			$imageData->review_end = null;
-			$imageData->reviewer_id = null;
-
-			$imagesToAdd [] = $imageData;
-		}
-
-		if (!empty($imagesToAdd) || !empty($imagesToModify)) {
-			$dbm = wfGetDB(DB_MASTER, array(), $this->wg->ExternalSharedDB);
-			$dbm->begin(__METHOD__);
-			foreach ($imagesToAdd as $image) {
-				$insertArray = array();
-
-				foreach ($image as $field => $value) {
-					$insertArray[$field] = $value;
-				}
-
-				$dbm->insert(
-					self::CITY_VISUALIZATION_IMAGES_TABLE_NAME,
-					$insertArray
-				);
-			}
-
-			foreach ($imagesToModify as $image) {
-				$updateArray = array();
-
-				$image->reviewer_id = null;
-				$image->review_start = null;
-				$image->review_end = null;
-
-				$oldPageId = $image->page_id;
-
-				$title = Title::newFromText($image->image_name, NS_FILE);
-				if($title instanceof Title) {
-					$image->page_id = $title->getArticleId();
-				}
-
-				foreach ($image as $field => $value) {
-					$updateArray[$field] = $value;
-				}
-
-				$dbm->update(
-					self::CITY_VISUALIZATION_IMAGES_TABLE_NAME,
-					$updateArray,
-					array(
-						'city_id' => $image->city_id,
-						'page_id' => $oldPageId,
-						'city_lang_code' => $image->city_lang_code,
-					)
-				);
-			}
-			$dbm->commit(__METHOD__);
-		}
+		$this->modifyImageIndexes( $modifiedImages );
+		$this->addImagesForReview( $addedImages );
+		$this->markImagesForCulling( $cityId, $langCode, $cutoffIndex );
 	}
 
 	public function deleteImagesFromReview($cityId, $langCode, $corporateWikis) {
@@ -772,7 +718,7 @@ class CityVisualization extends WikiaModel {
 		);
 
 		while ($row = $result->fetchObject()) {
-			$wikiImages [] = $row;
+			$wikiImages [$row->image_name] = $row;
 		}
 
 		wfProfileOut(__METHOD__);
@@ -1009,7 +955,7 @@ class CityVisualization extends WikiaModel {
 
 		if( is_int(self::$wikiFactoryVarId) ) {
 			$wikiFactoryList = WikiaDataAccess::cache(
-				wfMemcKey('corporate_pages_list', self::CITY_VISUALIZATION_CORPORATE_PAGE_LIST_MEMC_VERSION, __METHOD__),
+				wfMemcKey('corporate_pages_list', self::CITY_VISUALIZATION_MEMC_VERSION, __METHOD__),
 				24 * 60 * 60,
 				array($this, 'loadCorporateSitesList')
 			);
@@ -1080,5 +1026,49 @@ class CityVisualization extends WikiaModel {
 		}
 
 		return $slots;
+	}
+
+	/**
+	 * @param $cityId
+	 * @param $langCode
+	 * @param $cutoffIndex
+	 */
+	private function markImagesForCulling( $cityId, $langCode, $cutoffIndex ) {
+		$dbm = wfGetDB( DB_MASTER, array(), $this->wg->ExternalSharedDB );
+		$cullingUpdate = ( new \WikiaSQL() )->UPDATE( self::CITY_VISUALIZATION_IMAGES_TABLE_NAME )->SET( 'image_review_status', ImageReviewStatuses::STATE_READY_FOR_CULLING )->WHERE( 'city_id' )->EQUAL_TO( $cityId )->AND_( 'city_lang_code' )->EQUAL_TO( $langCode )->AND_( 'image_index' )->GREATER_THAN_OR_EQUAL( $cutoffIndex );
+
+		$cullingUpdate->run( $dbm );
+	}
+
+	/**
+	 * @param $addedImages
+	 */
+	private function addImagesForReview( $addedImages ) {
+		if ( ! empty( $addedImages ) ) {
+			$dbm = wfGetDB( DB_MASTER, array(), $this->wg->ExternalSharedDB );
+
+			foreach ( $addedImages as $image ) {
+				$dbm->insert( self::CITY_VISUALIZATION_IMAGES_TABLE_NAME, $image );
+			}
+		}
+	}
+
+	private function modifyImageIndexes( $modifiedImages ) {
+		if ( ! empty( $addedImages ) ) {
+			$dbm = wfGetDB( DB_MASTER, array(), $this->wg->ExternalSharedDB );
+
+			foreach ( $modifiedImages as $image ) {
+				$fields = [
+					'image_index' => $image['image_index']
+				];
+
+				$conditions = [
+					'image_name' => $image['image_name']
+				];
+
+
+				$dbm->update( self::CITY_VISUALIZATION_IMAGES_TABLE_NAME, $fields, $conditions );
+			}
+		}
 	}
 }

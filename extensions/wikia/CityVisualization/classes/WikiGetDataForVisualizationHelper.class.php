@@ -8,7 +8,7 @@ class WikiGetDataForVisualizationHelper implements WikiGetDataHelper {
 		return $visualization->getWikiDataCacheKey($visualization->getTargetWikiId($langCode), $wikiId, $langCode);
 	}
 
-	public function getImages($wikiId, $langCode, $wikiRow) {
+	public function getImages($wikiId, $langCode, $wikiRow = null) {
 		return json_decode($wikiRow->city_images);
 	}
 
@@ -19,7 +19,7 @@ class WikiGetDataForVisualizationHelper implements WikiGetDataHelper {
 	 * @param $currentData array
 	 * @return bool
 	 */
-	public function getMainImage($wikiId, $langCode, $imageSource, &$currentData) {
+	public function getMainImage($wikiId, $langCode, $imageSource = null, &$currentData = null) {
  		return $imageSource->city_main_image;
  	}
 }

@@ -27,6 +27,10 @@ abstract class BaseXWikiImage {
 		$this->fileNameSuffix = "." . self::IMAGE_TYPE;
 	}
 
+	public function getName() {
+		return $this->name;
+	}
+
 	public function getUrl() {
 		return wfReplaceImageServer( $this->getPurgeUrl() );
 	}
@@ -142,6 +146,7 @@ abstract class BaseXWikiImage {
 		$sTmpFile = $this->getTempFile();
 
 		$imgContent = Http::get( $url, 'default', [ 'noProxy' => true ] );
+
 		if ( !file_put_contents( $sTmpFile, $imgContent ) ) {
 			return UPLOAD_ERR_CANT_WRITE;
 		}
@@ -219,6 +224,7 @@ abstract class BaseXWikiImage {
 		/**
 		 * save to new file ... but create folder for it first
 		 */
+
 		if ( !is_dir( dirname( $targetFilePath ) ) && !wfMkdirParents( dirname( $targetFilePath ) ) ) {
 			return UPLOAD_ERR_CANT_WRITE;
 		}

@@ -17,6 +17,70 @@ class CityVisualizationTest extends WikiaBaseTest {
 	}
 
 	/**
+	 * @dataProvider imagesForSaveDataProvider
+	 */
+	public function testSaveImageForReview($cityId, $langCode, $images, $imageReviewStatus, $currentImages) {
+		$this->assertEquals(true,true);
+	}
+
+	public function imagesForSaveDataProvider() {
+		$image1 = new StdClass();
+		$image1->city_id = 4541;
+		$image1->city_lang_code = 'en';
+		$image1->image_type = 0;
+		$image1->image_index = 0;
+		$image1->image_name = '4541.1404310656.53b414804f061';
+		$image1->image_review_status = 2;
+		$image1->last_edited = '2014-07-02 14:36:06';
+		$image1->review_start = '2014-07-02 14:37:08';
+		$image1->review_end = '2014-07-02 14:37:20';
+		$image1->reviewer_id = 4807210;
+
+		$image2 = new StdClass();
+		$image2->city_id = 4541;
+		$image2->city_lang_code = 'en';
+		$image2->image_type = 1;
+		$image2->image_index = 1;
+		$image2->image_name = '4541.1404310665.53b414892c9f2';
+		$image2->image_review_status = 2;
+		$image2->last_edited = '2014-07-02 14:36:06';
+		$image2->review_start = '2014-07-02 14:37:08';
+		$image2->review_end = '2014-07-02 14:37:20';
+		$image2->reviewer_id = 4807210;
+
+		$image3 = new StdClass();
+		$image3->city_id = 4541;
+		$image3->city_lang_code = 'en';
+		$image3->image_type = 1;
+		$image3->image_index = 2;
+		$image3->image_name = '4541.1404310693.53b414a5454ae';
+		$image3->image_review_status = 22;
+		$image3->last_edited = '2014-07-02 14:36:06';
+		$image3->review_start = '2014-07-02 14:37:08';
+		$image3->review_end = '2014-07-02 14:37:20';
+		$image3->reviewer_id = 4807210;
+
+		return [
+			[
+				4541,
+				'en',
+				[
+					'4541.1404310656.53b414804f061',
+					'4541.1404310665.53b414892c9f2',
+					'4541.1404330975.53b463dfb52ce'
+				],
+				ImageReviewStatuses::STATE_UNREVIEWED,
+				[
+					'4541.1404310656.53b414804f061' => $image1,
+					'4541.1404310665.53b414892c9f2' => $image2,
+					'4541.1404310693.53b414a5454ae' => $image3
+				]
+			]
+		];
+	}
+
+
+	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.13578 ms
 	 * @dataProvider generateBatchedDataProvider

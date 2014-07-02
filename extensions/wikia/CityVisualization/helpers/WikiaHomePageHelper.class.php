@@ -589,23 +589,29 @@ class WikiaHomePageHelper extends WikiaModel {
 		}
 	}
 
-	public function getImageData($imageName, $width = null, $height = null, $thumbWidth = null, $thumbHeight = null) {
+	/**
+	 * @param $image PromoXWikiImage
+	 * @param null $width
+	 * @param null $height
+	 * @param null $thumbWidth
+	 * @param null $thumbHeight
+	 * @return array
+	 */
+	public function getImageData(PromoXWikiImage $image, $width = null, $height = null, $thumbWidth = null, $thumbHeight = null) {
 		$requestedWidth = !empty($width) ? $width : self::INTERSTITIAL_LARGE_IMAGE_WIDTH;
 		$requestedHeight = !empty($height) ? $height : self::INTERSTITIAL_LARGE_IMAGE_HEIGHT;
 		$requestedThumbWidth = !empty($thumbWidth) ? $thumbWidth : self::INTERSTITIAL_SMALL_IMAGE_WIDTH;
 		$requestedThumbHeight = !empty($thumbHeight) ? $thumbHeight : self::INTERSTITIAL_SMALL_IMAGE_HEIGHT;
 
-		$imageUrl = $this->getImageUrl($imageName, $requestedWidth, $requestedHeight);
-		$thumbImageUrl = $this->getImageUrl($imageName, $requestedThumbWidth, $requestedThumbHeight);
-
-		$imageId = $this->getImagesArticleId($imageName);
-		$reviewStatus = $this->getImageReviewStatus($imageId);
+		$imageUrl = $image->getCroppedThumbnailUrl($requestedWidth, $requestedHeight);
+		$thumbImageUrl = $image->getCroppedThumbnailUrl($requestedThumbWidth, $requestedThumbHeight);
+		$reviewStatus = $image->getReviewStatus();
 
 		return array(
 			'href' => '',
 			'image_url' => $imageUrl,
 			'thumb_url' => $thumbImageUrl,
-			'image_filename' => $imageName,
+			'image_filename' => $image->getName(),
 			'review_status' => $reviewStatus,
 			'user_href' => '',
 			'links' => array(),
