@@ -36,7 +36,7 @@ class WikiaMaps extends WikiaObject {
 	 */
 	private $sortingOptions = [
 		'wikia-interactive-maps-sort-newest-to-oldest' => 'created_on_desc',
-		'wikia-interactive-maps-sort-alphabetical' => 'name_asc',
+		'wikia-interactive-maps-sort-alphabetical' => 'title_asc',
 		'wikia-interactive-maps-sort-recently-updated' => 'updated_on_desc',
 	];
 
@@ -498,7 +498,7 @@ class WikiaMaps extends WikiaObject {
 			'headers' => [
 				'Authorization' => $this->config[ 'token' ]
 			],
-			'returnInstance' => true
+			'returnInstance' => true,
 		];
 
 		if ( !empty( $postData ) ) {
