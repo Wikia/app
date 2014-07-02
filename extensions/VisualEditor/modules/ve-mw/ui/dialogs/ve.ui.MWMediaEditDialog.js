@@ -321,7 +321,7 @@ ve.ui.MWMediaEditDialog.prototype.initialize = function () {
 
 	// Events
 	this.positionCheckbox.connect( this, { 'change': 'onPositionCheckboxChange' } );
-	this.borderCheckbox.connect( this, { 'change': 'onBorderCheckboxChange' } );
+	//this.borderCheckbox.connect( this, { 'change': 'onBorderCheckboxChange' } );
 	this.positionInput.connect( this, { 'choose': 'onPositionInputChoose' } );
 	//this.typeInput.connect( this, { 'choose': 'onTypeInputChoose' } );
 
