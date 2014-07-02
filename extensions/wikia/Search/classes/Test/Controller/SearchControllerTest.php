@@ -1198,30 +1198,48 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 	 */
 	public function testIsCorporateWiki() {
 
+
 		$method = new ReflectionMethod( 'WikiaSearchController', 'isCorporateWiki' );
 		$method->setAccessible( true );
 
 		$this->mockGlobalVariable( 'wgEnableWikiaHomePageExt', false );
+		$this->mockGlobalVariable( 'wgEnableWikiaHubsV3Ext', false );
 
 		$this->assertFalse(
 				$method->invoke( $this->searchController->getMock() ),
-				'WikiaSearchController::isCorporateWiki should return false if wgEnableWikiaHomePageExt is empty.'
+				'WikiaSearchController::isCorporateWiki should return false if wgEnableWikiaHomePageExt and wgEnableWikiaHubsV3Ext is empty.'
 		);
 
 		$this->mockGlobalVariable( 'wgEnableWikiaHomePageExt', null );
+		$this->mockGlobalVariable( 'wgEnableWikiaHubsV3Ext', null );
 
 		$this->assertFalse(
 		        $method->invoke( $this->searchController->getMock() ),
-		        'WikiaSearchController::isCorporateWiki should return false if wgEnableWikiaHomePageExt is empty.'
+		        'WikiaSearchController::isCorporateWiki should return false if wgEnableWikiaHomePageExt and wgEnableWikiaHubsV3Ext is empty.'
 		);
 
 		$this->mockGlobalVariable( 'wgEnableWikiaHomePageExt', true );
+		$this->mockGlobalVariable( 'wgEnableWikiaHubsV3Ext', false );
 
-		$this->searchController->getMock()->setApp( F::app() );
+		$this->assertTrue(
+			$method->invoke( $this->searchController->getMock() ),
+			'WikiaSearchController::isCorporateWiki should return true if wgEnableWikiaHomePageExt is not empty.'
+		);
 
-		$this->assertFalse(
-		        $method->invoke( $this->searchController->getMock() ),
-		        'WikiaSearchController::isCorporateWiki should return false if wgEnableWikiaHomePageExt is not empty.'
+		$this->mockGlobalVariable( 'wgEnableWikiaHomePageExt', false );
+		$this->mockGlobalVariable( 'wgEnableWikiaHubsV3Ext', true );
+
+		$this->assertTrue(
+			$method->invoke( $this->searchController->getMock() ),
+			'WikiaSearchController::isCorporateWiki should return true if wgEnableWikiaHubsV3Ext is not empty.'
+		);
+
+		$this->mockGlobalVariable( 'wgEnableWikiaHomePageExt', false );
+		$this->mockGlobalVariable( 'wgEnableWikiaHubsV3Ext', true );
+
+		$this->assertTrue(
+			$method->invoke( $this->searchController->getMock() ),
+			'WikiaSearchController::isCorporateWiki should return true if wgEnableWikiaHomePageExt and wgEnableWikiaHubsV3Ext is not empty.'
 		);
 
 	}
