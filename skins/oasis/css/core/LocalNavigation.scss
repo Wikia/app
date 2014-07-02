@@ -109,7 +109,7 @@ LOCAL NAVIGATION
 	position: relative;
 	text-transform: uppercase;
 }
-.WikiNavV2 .nav .nav-item .submenu .subnav-2a svg {
+.subnav-2a svg {
 	margin-top: -5px;
 	padding-left: 10px;
 	position: absolute;
@@ -141,7 +141,6 @@ LOCAL NAVIGATION
 	padding-right: 20px;
 	text-align: right;
 	text-transform: uppercase;
-	vertical-align: middle;
 }
 .WikiNavV2 .nav .nav-item .submenu .see-all:before {
 	clear: both;
@@ -176,7 +175,7 @@ LOCAL NAVIGATION
 		padding: 0 18px;
 	}
 	.WikiNavV2 .nav .nav-item .submenu {
-		padding: 30px 0 0 0;
+		padding-top: 30px;
 	}
 	.WikiNavV2 .nav .nav-item .submenu.submenu-width-2 {
 		width: 368px;
@@ -225,7 +224,7 @@ LOCAL NAVIGATION
 	.WikiNavV2 .nav .nav-item .submenu .see-all svg {
 		margin-left: 10px;
 	}
-	.WikiNavV2 .nav .nav-item .submenu .subnav-2a svg {
+	.subnav-2a svg {
 		margin-top: -10px;
 	}
 }
@@ -243,6 +242,7 @@ LOCAL NAVIGATION
 	}
 	.WikiNavV2 .nav .nav-item .submenu.submenu-full,
 	.WikiNavV2 .nav .nav-item .submenu.submenu-wide {
+		box-sizing: -webkit-border-box;
 		box-sizing: border-box;
 		left: 50%;
 		margin-left: -384px;
