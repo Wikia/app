@@ -24,8 +24,10 @@ $facebook-background-color: #3c5b9b;
 	border: 0;
 	border-bottom: 1px solid $new-border-color;
 	color: $nav-font-color;
+	min-width: 0;
 
 	.page-width-container {
+		@include box-sizing;
 		margin: 0 auto;
 		padding-right: 114px;
 		width: 1156px;
