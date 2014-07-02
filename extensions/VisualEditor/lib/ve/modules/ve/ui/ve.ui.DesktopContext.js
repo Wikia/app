@@ -65,10 +65,6 @@ ve.ui.DesktopContext = function VeUiDesktopContext( surface, config ) {
 	} );
 	this.context.connect( this, { 'choose': 'onContextItemChoose' } );
 
-	this.$window.on( {
-		//'resize.ve-ui-desktopContext': $.throttle( 500, ve.bind( this.onWindowResize, this ) ),
-		//'scroll.ve-ui-desktopContext': $.throttle( 100, ve.bind( this.onWindowScroll, this ) )
-	} );
 	this.$element.add( this.$menu )
 		.on( 'mousedown', false );
 
@@ -442,6 +438,11 @@ ve.ui.DesktopContext.prototype.show = function ( transition ) {
 	if ( !this.showing && !this.hiding ) {
 		this.showing = true;
 
+		this.$window.on( {
+			'resize.ve-ui-desktopContext': $.throttle( 250, ve.bind( this.onWindowResize, this ) ),
+			'scroll.ve-ui-desktopContext': $.throttle( 100, ve.bind( this.onWindowScroll, this ) )
+		} );
+
 		// HACK: make the context and popup visibility: hidden; instead of display: none; because
 		// they contain inspector iframes, and applying display: none; to those causes them to
 		// not load in Firefox
@@ -490,6 +491,9 @@ ve.ui.DesktopContext.prototype.hide = function () {
 
 	if ( !this.hiding && !this.showing ) {
 		this.hiding = true;
+
+		this.$window.off( 'resize.ve-ui-desktopContext scroll.ve-ui-desktopContext' );
+
 		if ( inspector ) {
 			inspector.close( { 'action': 'back', 'noSelect': true } );
 		}
