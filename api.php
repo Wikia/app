@@ -50,7 +50,7 @@ if ( isset( $_SERVER['MW_COMPILED'] ) ) {
 	require ( dirname( __FILE__ ) . '/includes/WebStart.php' );
 }
 
-TransactionTracer::setType(TransactionTracer::TRANSACTION_API);
+TransactionTracer::setEntryPoint(TransactionTracer::ENTRY_POINT_API);
 TransactionTracer::setAttribute(TransactionTracer::PARAM_API_ACTION, $wgRequest->getVal('action',null));
 
 wfProfileIn( 'api.php' );

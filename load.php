@@ -41,7 +41,7 @@ if ( isset( $_SERVER['MW_COMPILED'] ) ) {
 }
 
 // Construct a tag for newrelic
-TransactionTracer::setType(TransactionTracer::TRANSACTION_RESOURCE_LOADER);
+TransactionTracer::setEntryPoint(TransactionTracer::ENTRY_POINT_RESOURCE_LOADER);
 
 if ( function_exists( 'newrelic_disable_autorum') ) {
 	newrelic_disable_autorum();

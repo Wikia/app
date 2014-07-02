@@ -17,7 +17,7 @@ if ($wgProfiler instanceof Profiler) {
 }
 
 // Construct a tag for newrelic -- wgRequest is global in this scope
-TransactionTracer::setType(TransactionTracer::TRANSACTION_NIRVANA);
+TransactionTracer::setEntryPoint(TransactionTracer::ENTRY_POINT_NIRVANA);
 if ( is_object($wgRequest) ) {
 	TransactionTracer::setAttribute(TransactionTracer::PARAM_CONTROLLER, $wgRequest->getVal( 'controller' ));
 	TransactionTracer::setAttribute(TransactionTracer::PARAM_METHOD, $wgRequest->getVal( 'method' ));

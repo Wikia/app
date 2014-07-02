@@ -594,9 +594,9 @@ class MediaWiki {
 		global $wgUser;
 
 		if ($title->isSpecialPage()) {
-			TransactionTracer::setType( TransactionTracer::TRANSACTION_SPECIAL_PAGE );
+			TransactionTracer::setEntryPoint( TransactionTracer::ENTRY_POINT_SPECIAL_PAGE );
 		} else {
-			TransactionTracer::setType( TransactionTracer::TRANSACTION_PAGE );
+			TransactionTracer::setEntryPoint( TransactionTracer::ENTRY_POINT_PAGE );
 			TransactionTracer::setAttribute( TransactionTracer::PARAM_NAMESPACE, $title->getNamespace() );
 		}
 

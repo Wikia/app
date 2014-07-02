@@ -120,14 +120,7 @@ class WallBaseController extends WikiaController{
 		$this->response->setVal('showPager', ($this->countComments > $wallMessagesPerPage) );
 		$this->response->setVal('currentPage', $page );
 
-		TransactionTracer::setAttribute( TransactionTracer::PARAM_SIZE_CATEGORY,
-			( $this->countComments == 0 ) ?
-				TransactionTracer::SIZE_CATEGORY_SIMPLE : (
-			( $this->countComments <= self::DEFAULT_MESSAGES_PER_PAGE ) ?
-				TransactionTracer::SIZE_CATEGORY_AVERAGE :
-			// else
-				TransactionTracer::SIZE_CATEGORY_COMPLEX
-			));
+		TransactionTracer::setSizeCategoryByDistributionOffset( $this->countComments, 0, self::DEFAULT_MESSAGES_PER_PAGE );
 
 		//TODO: keep the varnish cache and do purging on post
 		$this->response->setCacheValidity(WikiaResponse::CACHE_DISABLED);

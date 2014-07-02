@@ -6,15 +6,16 @@
 
 class TransactionTracer {
 	// Transaction names
-	const TRANSACTION_PAGE = 'page';
-	const TRANSACTION_SPECIAL_PAGE = 'special_page';
-	const TRANSACTION_RESOURCE_LOADER = 'assets/resource_loader';
-	const TRANSACTION_ASSETS_MANAGER = 'assets/assets_manager';
-	const TRANSACTION_NIRVANA = 'api/nirvana';
-	const TRANSACTION_AJAX = 'api/ajax';
-	const TRANSACTION_API = 'api/api';
+	const ENTRY_POINT_PAGE = 'page';
+	const ENTRY_POINT_SPECIAL_PAGE = 'special_page';
+	const ENTRY_POINT_RESOURCE_LOADER = 'assets/resource_loader';
+	const ENTRY_POINT_ASSETS_MANAGER = 'assets/assets_manager';
+	const ENTRY_POINT_NIRVANA = 'api/nirvana';
+	const ENTRY_POINT_AJAX = 'api/ajax';
+	const ENTRY_POINT_API = 'api/api';
 
 	// Parameters
+	const PARAM_ENTRY_POINT = 'entry_point';
 	const PARAM_LOGGED_IN = 'logged_in';
 	const PARAM_PARSER_CACHE_USED = 'parser_cache_used';
 	const PARAM_SIZE_CATEGORY = 'size_category';
@@ -38,8 +39,8 @@ class TransactionTracer {
 
 	const ACTION_VIEW = 'view';
 
-	// copied from WallNamespaces.php to have a single constant
-	// while not being dependant on Wall
+	// copied from extensions/wikia/Wall/WallNamespaces.php to use a constant below
+	// while not being dependant on Wall extension inclusion
 	const NS_USER_WALL = 1200;
 
 	protected static $IMPORTANT_ARTICLE_NAMESPACES = array(
@@ -102,13 +103,10 @@ class TransactionTracer {
 	/**
 	 * Sets the name of the transaction currently processed, so the measured times can be categorized
 	 *
-	 * @param $transactionType String: Name of the current transaction - should be one of the defines TYPE_XXX
+	 * @param $entryPoint string  Name of the current transaction - should be one of the defines TYPE_XXX
 	 */
-	public static function setType( $transactionType ) {
-		wfDebug( __CLASS__ . ": transaction type set - " . $transactionType . "\n" );
-		self::$type = $transactionType;
-
-		self::updateName();
+	public static function setEntryPoint( $entryPoint ) {
+		self::setAttribute(self::PARAM_ENTRY_POINT, $entryPoint );
 	}
 
 	/**
@@ -135,6 +133,15 @@ class TransactionTracer {
 		self::updateName();
 	}
 
+	public static function setSizeCategoryByDistributionOffset( $observationCounter, $lowerBound, $middleBound ) {
+		if ( $observationCounter <= $lowerBound ) {
+			TransactionTracer::setAttribute( TransactionTracer::PARAM_SIZE_CATEGORY, TransactionTracer::SIZE_CATEGORY_SIMPLE );
+		} elseif ( $observationCounter <= $middleBound ) {
+			TransactionTracer::setAttribute( TransactionTracer::PARAM_SIZE_CATEGORY, TransactionTracer::SIZE_CATEGORY_AVERAGE );
+		} else {
+			TransactionTracer::setAttribute( TransactionTracer::PARAM_SIZE_CATEGORY, TransactionTracer::SIZE_CATEGORY_COMPLEX );
+		}
+	}
 	protected static function updateName() {
 		if ( self::$type !== null ) {
 			$transactionName = self::$type;
@@ -142,7 +149,7 @@ class TransactionTracer {
 
 			switch ( self::$type ) {
 				// article
-				case self::TRANSACTION_PAGE:
+				case self::ENTRY_POINT_PAGE:
 					$namespace = null;
 					// namespace is set
 					if ( isset( $attributes[self::PARAM_NAMESPACE] ) ) {
@@ -182,7 +189,7 @@ class TransactionTracer {
 					}
 					break;
 				// special page
-				case self::TRANSACTION_SPECIAL_PAGE:
+				case self::ENTRY_POINT_SPECIAL_PAGE:
 					// special page name was reported
 					if ( isset( $attributes[self::PARAM_SPECIAL_PAGE_NAME] ) ) {
 						$specialPage = $attributes[self::PARAM_SPECIAL_PAGE_NAME];
@@ -195,7 +202,7 @@ class TransactionTracer {
 					}
 					break;
 				// nirvana call
-				case self::TRANSACTION_NIRVANA:
+				case self::ENTRY_POINT_NIRVANA:
 					// controller was reported
 					if ( isset( $attributes[self::PARAM_CONTROLLER] ) ) {
 						$controller = $attributes[self::PARAM_CONTROLLER];
@@ -208,7 +215,7 @@ class TransactionTracer {
 					}
 					break;
 				// ajax call
-				case self::TRANSACTION_AJAX:
+				case self::ENTRY_POINT_AJAX:
 					// controller was reported
 					if ( isset( $attributes[self::PARAM_FUNCTION] ) ) {
 						$function = $attributes[self::PARAM_FUNCTION];
@@ -221,7 +228,7 @@ class TransactionTracer {
 					}
 					break;
 				// api.php call
-				case self::TRANSACTION_API:
+				case self::ENTRY_POINT_API:
 					// controller was reported
 					if ( isset( $attributes[self::PARAM_API_ACTION] ) ) {
 						$action = $attributes[self::PARAM_API_ACTION];
@@ -270,14 +277,15 @@ class TransactionTracer {
 			return true;
 		}
 
-		TransactionTracer::setAttribute( TransactionTracer::PARAM_SIZE_CATEGORY,
-			( $wikitextSize < 3000 && $htmlSize < 5000 && $expFuncCount == 0 && $nodeCount < 100 ) ?
-				TransactionTracer::SIZE_CATEGORY_SIMPLE : (
-			( $wikitextSize < 30000 && $htmlSize < 50000 && $expFuncCount <= 4 && $nodeCount < 3000 ) ?
-				TransactionTracer::SIZE_CATEGORY_AVERAGE :
-			// else
-				TransactionTracer::SIZE_CATEGORY_COMPLEX
-			) );
+		if ( $wikitextSize < 3000 && $htmlSize < 5000 && $expFuncCount == 0 && $nodeCount < 100 ) {
+			$sizeCategory = self::SIZE_CATEGORY_SIMPLE;
+		} elseif ( $wikitextSize < 30000 && $htmlSize < 50000 && $expFuncCount <= 4 && $nodeCount < 3000 ) {
+			$sizeCategory = self::SIZE_CATEGORY_AVERAGE;
+		} else {
+			$sizeCategory = self::SIZE_CATEGORY_COMPLEX;
+		}
+
+		TransactionTracer::setAttribute( TransactionTracer::PARAM_SIZE_CATEGORY, $sizeCategory );
 
 		return true;
 	}
