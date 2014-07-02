@@ -514,8 +514,9 @@ ve.ui.DesktopContext.prototype.hide = function () {
  * @return {boolean} Should the context menu be embedded
  */
 ve.ui.DesktopContext.prototype.shouldBeEmbedded = function ( focusedNode ) {
+	// FIXME: This calculation should be reconsidered.
 	var targetHeight = this.$menu.outerHeight() * 2,
-		targetWidth = this.$menu.outerWidth() * 2,
+		targetWidth = this.$menu.outerWidth() * 1.25,
 		// Name of this method (getDimensions) is pretty unfortunate - it actually returns
 		// dimensions of highlights and not node itself.
 		dimensions = focusedNode.getDimensions();
