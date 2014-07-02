@@ -211,7 +211,7 @@ ve.dm.mwExample.MWInternalSectionLink.absoluteData = {
 
 ve.dm.mwExample.MWBlockImage = {
 	'html':
-		'<figure typeof="mw:Image/Thumb" class="mw-halign-right foobar">' +
+		'<figure data-mw=\'{"user":"Foo"}\' typeof="mw:Image/Thumb" class="mw-halign-right foobar">' +
 			'<a href="Foo"><img src="Bar" width="1" height="2" resource="FooBar"></a>' +
 			'<figcaption>abc</figcaption>' +
 		'</figure>',
@@ -228,7 +228,10 @@ ve.dm.mwExample.MWBlockImage = {
 				'resource': 'FooBar',
 				'originalClasses': 'mw-halign-right foobar',
 				'unrecognizedClasses': ['foobar']
-			}
+			},
+			'htmlAttributes': [
+				{ 'values': { 'data-mw' : "{\"user\":\"Foo\"}" } }
+			]
 		},
 		{ 'type': 'mwImageCaption' },
 		{ 'type': 'paragraph', 'internal': { 'generated': 'wrapper' } },
