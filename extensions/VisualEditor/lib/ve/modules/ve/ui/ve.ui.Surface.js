@@ -49,7 +49,7 @@ ve.ui.Surface = function VeUiSurface( dataOrDoc, config, target ) {
 	this.pasteRules = {};
 	this.enabled = true;
 	this.target = target || null;
-	if ( this.target ) {
+	if ( config && config.focusMode ) {
 		this.focus = new ve.ui.WikiaFocusWidget( this );
 	}
 
