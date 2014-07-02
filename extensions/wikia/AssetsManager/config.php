@@ -159,7 +159,6 @@ $config['oasis_noads_extensions_js'] = array(
 		'//extensions/wikia/EditorSurvey/js/EditorSurvey.js',
 		// Image and video thumbnail mustache templates
 		'//extensions/wikia/Thumbnails/scripts/templates.mustache.js',
-		'//skins/oasis/js/GlobalNavigationMenu.js',
 	)
 );
 
@@ -233,6 +232,7 @@ $config['oasis_jquery'] = array(
 
 		// Global Header tracking
 		'//skins/oasis/js/GlobalHeader.js',
+		'//skins/oasis/js/GlobalNavigationMenu.js',
 		'//skins/oasis/js/GlobalHeaderAB.js',
 
 		// Lazy rail

@@ -1,7 +1,10 @@
-require([ 'jquery', 'wikia.ui.factory', 'wikia.nirvana' ], function ($, uiFactory, nirvana) {
-	'use strict';
+jQuery(function(){
+	require([ 'jquery', 'wikia.ui.factory', 'wikia.nirvana' ], function ($, uiFactory, nirvana) {
+		'use strict';
 
-	var menuPromise = nirvana.sendRequest({
+		/* jshint maxlen: false */
+
+		var menuPromise = nirvana.sendRequest({
 				controller: 'GlobalHeaderController',
 				method: 'getGlobalMenuItems',
 				format: 'json',
@@ -14,7 +17,7 @@ require([ 'jquery', 'wikia.ui.factory', 'wikia.nirvana' ], function ($, uiFactor
 				games: '<svg xmlns="http://www.w3.org/2000/svg" version="1.1" id="Layer_1" x="0px" y="0px" viewBox="0 0 52 52" enable-background="new 0 0 52 52" xml:space="preserve" width="100%" height="100%"><circle cx="26" cy="26" r="25" id="circle3038" style="fill:#76bf06" /><path fill="#FFFFFF" d="M41.474,26.988c-0.408-3.1-1.413-5.988-3.323-8.519c-1.296-1.717-2.998-2.756-5.253-2.674   c-1.593,0.058-3.021,0.63-4.316,1.514c-0.653,0.445-1.343,0.697-2.141,0.669c-0.333-0.012-0.667-0.005-1,0.015   c-0.755,0.046-1.428-0.158-2.05-0.573c-0.685-0.457-1.431-0.794-2.218-1.045c-2.78-0.884-5.212-0.174-7.046,2.055   c-0.433,0.526-0.798,1.095-1.126,1.687c-1.989,3.599-2.607,7.458-2.248,11.494c0.087,0.975,0.211,1.953,0.581,2.875   c0.506,1.261,1.515,1.863,2.808,1.695c0.61-0.079,1.091-0.42,1.556-0.772c1.469-1.112,2.699-2.459,3.88-3.85   c0.515-0.606,1.144-0.898,1.942-0.904c1.549-0.012,3.098-0.044,4.647-0.068c1.098-0.017,2.196-0.029,3.294-0.051   c2.702-0.055,2.422-0.113,4.155,1.713c1.148,1.21,2.324,2.407,3.81,3.233c1.344,0.747,2.837,0.269,3.525-1.088   c0.193-0.382,0.311-0.787,0.389-1.205C41.723,31.13,41.746,29.06,41.474,26.988z M21.878,25.09h-2.389v2.389h-2.314V25.09h-2.389   v-2.314h2.389v-2.389h2.314v2.389h2.389V25.09z M32.304,23.052c-0.896-0.003-1.652-0.729-1.671-1.603   c-0.019-0.904,0.73-1.657,1.659-1.669c0.927-0.012,1.7,0.728,1.701,1.626C33.995,22.304,33.225,23.054,32.304,23.052z M36.185,26.6   c-0.927,0.019-1.692-0.707-1.703-1.616c-0.01-0.895,0.694-1.619,1.604-1.65c0.944-0.032,1.704,0.663,1.73,1.581   C37.842,25.826,37.112,26.581,36.185,26.6z" id="path3042" /></svg>',
 				lifestyle: '<svg xmlns="http://www.w3.org/2000/svg" version="1.1" id="Layer_1" x="0px" y="0px" viewBox="0 0 52 52" enable-background="new 0 0 52 52" xml:space="preserve" width="100%" height="100%"><circle cx="26" cy="26" r="25" id="circle3064" style="fill:#ffad00" /><circle style="fill:#FFFFFF;fill-opacity:1;" cx="25.97" cy="26.786" r="7.784" id="circle3068" /><polygon fill="#FFFFFF" points="16.265,28.724 16.265,24.764 10.853,26.81  " id="polygon3070" /><polygon fill="#FFFFFF" points="35.735,24.764 35.735,28.724 41.147,26.678  " id="polygon3072" /><polygon fill="#FFFFFF" points="27.95,36.479 23.99,36.479 26.036,41.891  " id="polygon3074" /><polygon fill="#FFFFFF" points="23.99,17.009 27.95,17.009 25.904,11.597  " id="polygon3076" /><polygon fill="#FFFFFF" points="20.516,35.028 17.716,32.228 15.336,37.501  " id="polygon3078" /><polygon fill="#FFFFFF" points="31.484,18.461 34.284,21.261 36.664,15.987  " id="polygon3080" /><polygon fill="#FFFFFF" points="34.284,32.228 31.484,35.028 36.757,37.408  " id="polygon3082" /><polygon fill="#FFFFFF" points="17.716,21.261 20.516,18.461 15.243,16.08  " id="polygon3084" /></svg>', movies: '<svg xmlns="http://www.w3.org/2000/svg" version="1.1" id="Layer_1" x="0px" y="0px" viewBox="0 0 52 52" enable-background="new 0 0 52 52" xml:space="preserve" width="100%" height="100%"><circle cx="26" cy="26" r="25" id="circle3122" style="fill:#09b3a6" /><rect x="15.474" y="24.419" fill="#FFFFFF" width="22.041" height="14.13" id="rect3126" /><polygon fill="none" points="18.544,16.552 18.672,16.309 18.665,16.31   " id="polygon3130" /><polygon fill="#FFFFFF" points="36.116,12.597 33.18,18.774 37.15,17.929   " id="polygon3132" /><polygon fill="#FFFFFF" points="18.544,16.552 18.665,16.31 18.672,16.309 18.672,16.309 14.516,17.193 15.549,22.525     18.543,16.552 18.543,16.552   " id="polygon3134" /><polygon fill="#FFFFFF" points="21.8,15.643 21.816,15.64 18.879,21.816 22.699,21.004 25.815,14.789 21.8,15.643   " id="polygon3136" /><polygon fill="#FFFFFF" points="26.029,20.295 29.849,19.482 32.965,13.268 28.966,14.119   " id="polygon3138" /><polygon fill="#27AAE1" points="18.543,16.552 18.543,16.552 18.544,16.552   " id="polygon3140" /></svg>',
 				music: '<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"><circle cx="26" cy="26" r="25" id="circle3176" style="fill:#981093" /><path fill="#FFFFFF" d="M37.995,20.518c-2.802-8.22-11.882-8.499-12.016-8.501c-0.092,0.002-9.173,0.281-11.974,8.501   c-2.57,7.541,0.533,11.894,1.108,12.613c-0.037,0.406-0.041,0.847,0.008,1.342c0.443,4.419,4.424,4.544,4.424,4.544l-1.456-9.67   c0,0-1.186,0.253-2.068,1.364c-0.776-1.592-1.688-4.789-0.072-9.53c2.332-6.841,9.759-7.102,10.03-7.109   c0.077,0.002,7.729,0.236,10.072,7.109c1.542,4.526,0.782,7.636,0.035,9.294c-0.851-0.912-1.868-1.128-1.868-1.128l-1.456,9.67   c0,0,3.981-0.125,4.424-4.544c0.065-0.646,0.04-1.203-0.037-1.7C38.061,31.443,40.291,27.257,37.995,20.518z" id="path3180" /><rect x="16.849" y="32.677" transform="matrix(-0.1503 -0.9886 0.9886 -0.1503 -8.2444 60.258)" fill="#FFFFFF" width="9.85" height="1.99" id="rect3182" /><rect x="29.537" y="28.747" transform="matrix(-0.9886 -0.1503 0.1503 -0.9886 55.6589 71.5493)" fill="#FFFFFF" width="1.99" height="9.85" id="rect3184" /></svg>',
-				tv: '<svg xmlns="http://www.w3.org/2000/svg" version="1.1" id="Layer_1" x="0px" y="0px" viewBox="0 0 52 52" enable-background="new 0 0 52 52" xml:space="preserve" width="100%" height="100%"><circle cx="26" cy="26" r="25" id="circle3210" style="fill:#008cce;" /><path fill="#FFFFFF" d="M13.5,15.977v18.463h25V15.977H13.5z M36.334,30.6H15.665V18.087h20.669V30.6z" id="path3216" /><rect x="22.232" y="36.619" fill="#FFFFFF" width="7.536" height="4.358" id="rect3218" /></svg>',
+				tv: '<svg xmlns="http://www.w3.org/2000/svg" version="1.1" id="Layer_1" x="0px" y="0px" viewBox="0 0 52 52" enable-background="new 0 0 52 52" xml:space="preserve" width="100%" height="100%"><circle cx="26" cy="26" r="25" id="circle3210" style="fill:#008cce;" /><path fill="#FFFFFF" d="M13.5,15.977v18.463h25V15.977H13.5z M36.334,30.6H15.665V18.087h20.669V30.6z" id="path3216" /><rect x="22.232" y="36.619" fill="#FFFFFF" width="7.536" height="4.358" id="rect3218" /></svg>'
 			},
 			$globalNavigationNav,
 			initialize = function() {
@@ -103,18 +106,16 @@ require([ 'jquery', 'wikia.ui.factory', 'wikia.nirvana' ], function ($, uiFactor
 				});
 
 				$('body').on('click', function(e) {
-					if (isOpen && !$(e.target).parents('.GlobalNavigationContainer').length
-						&& !$(e.target).parents('#GlobalNavigationMenuButton').length) {
-						//e.preventDefault();
-						//e.stopImmediatePropagation();
+					if (isOpen && !$(e.target).parents('.GlobalNavigationContainer').length && !$(e.target).parents('#GlobalNavigationMenuButton').length) {
 						closeHub();
 					}
 				});
 			};
 
-	$.when(menuPromise).done(function(verticalMenuData) {
+		$.when(menuPromise).done(function(verticalMenuData) {
 			initialize();
 			buildMenu(verticalMenuData);
 			attachEvents();
+		});
 	});
 });
