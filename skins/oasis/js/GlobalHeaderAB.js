@@ -20,7 +20,6 @@ $(function(){
 		$searchPageInput = $( '#search-v2-input' ),
 
 		// building search
-
 		$globalSearch = $( '<li>' ).addClass( 'global-search' ),
 		localSearchUrl = $( '.WikiaSearch:first' ).attr( 'action' ),
 		$form = $( '<form>' )
@@ -94,14 +93,17 @@ $(function(){
 		.val( 'Search' )
 		.appendTo( $form );
 
-	// adding behaviour
-
 	// setting the searched phrase as the global header search input value
 	if ( $searchPageInput.length > 0 && $searchPageInput.val() !== '' ) {
 		$searchInput.val( $searchPageInput.val() );
 		$arrow.attr( 'class', 'dark search-arrow' );
 	}
 
+	// removing in-page search boxes
+	$( '#HeaderWikiaSearch' ).remove();
+	$( '#WikiaSearch' ).remove();
+
+	// adding behaviour
 	$( '<button type="submit">' )
 		.focus( function() {
 			$arrow.attr( 'class', 'dark search-arrow' );
