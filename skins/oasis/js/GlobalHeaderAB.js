@@ -242,4 +242,8 @@ $(function(){
 			'<span>' + $startAWiki.text() + '</span>'
 		);
 	})();
+	// Special:Search cleanup for wwww.wikia.com
+	if (window.location.host.indexOf('www.') === 0) {
+		$('.SearchInput').remove();
+	}
 });
