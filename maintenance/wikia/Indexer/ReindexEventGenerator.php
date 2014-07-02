@@ -1,8 +1,10 @@
 <?php
 
+require_once( dirname( __FILE__ ) . '/../../Maintenance.php' );
 require_once( dirname( __FILE__ ) . '/IndexerWorkerBase.php' );
 
-class ReindexEventGenerator extends IndexerWorkerBase {
+class ReindexEventGenerator extends Maintenance {
+	use IndexerWorkerBase;
 
 	const WG_CONTENT_NAMESPACES_KEY = 'wgContentNamespaces';
 	const WG_ENABLE_SMW_KEY = 'wgEnableSemanticMediaWikiExt';
@@ -33,5 +35,4 @@ class ReindexEventGenerator extends IndexerWorkerBase {
 }
 
 $maintClass = 'ReindexEventGenerator';
-
 require_once( RUN_MAINTENANCE_IF_MAIN );

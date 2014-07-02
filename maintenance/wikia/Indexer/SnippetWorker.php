@@ -5,7 +5,8 @@ use Wikia\JsonFormat\JsonFormatWorker;
 require_once( dirname( __FILE__ ) . '/../../../extensions/wikia/JsonFormat/JsonFormatWorker.class.php' );
 require_once( dirname( __FILE__ ) . '/IndexerWorkerBase.php' );
 
-class SnippetWorker extends IndexerWorkerBase {
+class SnippetWorker {
+	use IndexerWorkerBase;
 
 	const PREFETCH_SIZE = 5;
 	private $worker;
@@ -39,8 +40,6 @@ class SnippetWorker extends IndexerWorkerBase {
 	}
 }
 
-
 $maintClass = 'SnippetWorker';
-
 $instance = new $maintClass;
 $instance->execute();

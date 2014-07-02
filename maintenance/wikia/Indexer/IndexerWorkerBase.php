@@ -5,11 +5,8 @@ require_once __DIR__.'/../../../lib/composer/autoload.php';
 use PhpAmqpLib\Connection\AMQPConnection;
 use PhpAmqpLib\Message\AMQPMessage;
 
-class IndexerWorkerBase {
+trait IndexerWorkerBase {
 
-	const DEFAULT_EXCHANGE = 'test_ex';
-	const PREFETCH_SIZE = 5;
-	const DEADS = 'dead_bodies';
 	protected $city_id;
 	private $host;
 	private $port;
@@ -18,6 +15,9 @@ class IndexerWorkerBase {
 	private $vhost;
 	private $connection;
 	private $anon_channel;
+	private $exchange = 'test_ex';
+	private $prefetch = 5;
+	private $deadLetterExchange = 'dead_bodies';
 
 	public function execute() {
 		if (function_exists('xdebug_disable')) {
@@ -54,7 +54,7 @@ class IndexerWorkerBase {
 	}
 
 	protected function publish( $routing, $data, $exchange = null ) {
-		$exchange = ($exchange !== null) ? $exchange : static::DEFAULT_EXCHANGE;
+		$exchange = ($exchange !== null) ? $exchange : $this->exchange;
 		$channel = $this->getAnonChannel();
 		$channel->basic_publish( new AMQPMessage( json_encode( $data ) ), $exchange, $routing );
 	}
@@ -91,14 +91,14 @@ class IndexerWorkerBase {
 	}
 
 	private function connect( $routing_key, $exchange = null ) {
-		$exchange = $exchange !== null ? $exchange : static::DEFAULT_EXCHANGE;
+		$exchange = $exchange !== null ? $exchange : $this->exchange;
 		$queue = $this->getQueueName( $routing_key );
 		$connection = $this->getConnection();
 		$channel = $connection->channel();
 		$channel->queue_declare( $queue, false, true, false, false, false,
-			[ 'x-dead-letter-exchange' => [ 'S', static::DEADS ] ] );
+			[ 'x-dead-letter-exchange' => [ 'S', $this->deadLetterExchange ] ] );
 		$channel->queue_bind( $queue, $exchange, $routing_key );
-		$channel->basic_qos( null, static::PREFETCH_SIZE, null );
+		$channel->basic_qos( null, $this->prefetch, null );
 		$channel->basic_consume( $queue, "", false, false, false, false, array( $this, 'route' ) );
 		return $channel;
 	}
