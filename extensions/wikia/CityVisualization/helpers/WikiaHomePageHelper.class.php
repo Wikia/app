@@ -602,15 +602,11 @@ class WikiaHomePageHelper extends WikiaModel {
 		$imageUrl = $this->getImageUrl($imageName, $requestedWidth, $requestedHeight);
 		$thumbImageUrl = $this->getImageUrl($imageName, $requestedThumbWidth, $requestedThumbHeight);
 
-		$imageId = $this->getImagesArticleId($imageName);
-		$reviewStatus = $this->getImageReviewStatus($imageId);
-
 		return array(
 			'href' => '',
 			'image_url' => $imageUrl,
 			'thumb_url' => $thumbImageUrl,
 			'image_filename' => $imageName,
-			'review_status' => $reviewStatus,
 			'user_href' => '',
 			'links' => array(),
 			'isVideoThumb' => false,
@@ -619,7 +615,6 @@ class WikiaHomePageHelper extends WikiaModel {
 	}
 
 	public function getImageUrl($imageName, $requestedWidth, $requestedHeight) {
-		wfProfileIn(__METHOD__);
 		$imageUrl = '';
 
 		if (!empty($imageName)) {
@@ -627,39 +622,17 @@ class WikiaHomePageHelper extends WikiaModel {
 				$imageName = urldecode($imageName);
 			}
 
-			$title = Title::newFromText($imageName, NS_IMAGE);
-			$file = wfFindFile($title);
-
-			$imageUrl = ImagesService::overrideThumbnailFormat(
-				$this->getImageUrlFromFile($file, $requestedWidth, $requestedHeight),
-				ImagesService::EXT_JPG
-			);
+		$imageUrl = PromoImage::getImage($imageName)->getCroppedThumbnailUrl($requestedWidth, $requestedHeight);
 		}
-
-		wfProfileOut(__METHOD__);
 		return $imageUrl;
 	}
 
-	public function getImageUrlFromFile($file, $requestedWidth, $requestedHeight) {
-		wfProfileIn(__METHOD__);
-		if ($file instanceof File && $file->exists()) {
-			$originalWidth = $file->getWidth();
-			$originalHeight = $file->getHeight();
-		}
-
-		if (!empty($originalHeight) && !empty($originalWidth)) {
-			$imageServing = $this->getImageServingForResize($requestedWidth, $requestedHeight, $originalWidth, $originalHeight);
-			$imageUrl = $imageServing->getUrl($file, $originalWidth, $originalHeight);
-		} else {
-			$imageUrl = $this->wg->blankImgUrl;
-		}
-		wfProfileOut(__METHOD__);
-		return $imageUrl;
-	}
 	/**
 	 * @deprecated
+	 * FIXME: remove after sebastian changes are merged, so that there is no more usages
 	 */
-	protected function getImageReviewStatus($imageId) {
+	public function getImageUrlFromFile($file, $requestedWidth, $requestedHeight) {
+		return null;
 	}
 
 	/**
