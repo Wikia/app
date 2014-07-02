@@ -34,6 +34,4 @@ class ReindexEventGenerator extends IndexerWorkerBase {
 
 $maintClass = 'ReindexEventGenerator';
 
-$instance = new $maintClass;
-$instance->execute();
-
+require_once( RUN_MAINTENANCE_IF_MAIN );
