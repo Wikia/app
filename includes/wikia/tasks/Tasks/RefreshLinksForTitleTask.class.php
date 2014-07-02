@@ -7,7 +7,7 @@ namespace Wikia\Tasks\Tasks;
 
 class RefreshLinksForTitleTask extends BaseTask {
 
-	public function refresh( ) {
+	public function refresh() {
 		if ( is_null( $this->title ) ) {
 			return false;
 		}
@@ -21,11 +21,9 @@ class RefreshLinksForTitleTask extends BaseTask {
 		return true;
 	}
 
-
 	protected function getRevisionFromTitle() {
 		return Revision::newFromTitle( $this->title );
 	}
-
 
 	public function setTitle( \Title $title ) {
 		$this->title = $title;
