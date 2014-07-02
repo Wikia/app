@@ -600,13 +600,11 @@ class SQL {
 			throw new \Exception('unable to find JOIN');
 		}
 
-		/** @var Clause\Join $join */
+		/** @var Clause\Using $using */
+		$using = new Clause\Using(func_get_args());
 
-		foreach (func_get_args() as $column) {
-			$using = new Clause\Using($column);
-			$join->addUsing($using);
-			$this->called($using);
-		}
+		$join->addUsing($using);
+		$this->called($using);
 
 		return $this;
 	}
