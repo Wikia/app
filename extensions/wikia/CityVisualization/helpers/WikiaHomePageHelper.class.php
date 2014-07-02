@@ -589,6 +589,10 @@ class WikiaHomePageHelper extends WikiaModel {
 		}
 	}
 
+	/**
+	 * @deprecated
+	 * but not really, just need to refactor usage
+	 */
 	public function getImageData($imageName, $width = null, $height = null, $thumbWidth = null, $thumbHeight = null) {
 		$requestedWidth = !empty($width) ? $width : self::INTERSTITIAL_LARGE_IMAGE_WIDTH;
 		$requestedHeight = !empty($height) ? $height : self::INTERSTITIAL_LARGE_IMAGE_HEIGHT;
@@ -652,17 +656,10 @@ class WikiaHomePageHelper extends WikiaModel {
 		wfProfileOut(__METHOD__);
 		return $imageUrl;
 	}
-
+	/**
+	 * @deprecated
+	 */
 	protected function getImageReviewStatus($imageId) {
-		wfProfileIn(__METHOD__);
-		$reviewStatus = false;
-
-		if ($imageId > 0) {
-			$reviewStatus = $this->getVisualization()->getImageReviewStatus($this->wg->CityId, $imageId);
-		}
-
-		wfProfileOut(__METHOD__);
-		return $reviewStatus;
 	}
 
 	/**
