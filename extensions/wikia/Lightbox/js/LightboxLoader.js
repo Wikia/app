@@ -81,6 +81,11 @@
 						clickSource;
 
 					if (!LightboxLoader.hasLightbox($this, $thumb, e)) {
+						// Redirect to raw image for article thumbnails - VID-1788
+						if ($this.parent('div').hasClass('article-thumb-wrapper')) {
+							e.preventDefault();
+							window.open($thumb.attr('src'));
+						}
 						return;
 					}
 

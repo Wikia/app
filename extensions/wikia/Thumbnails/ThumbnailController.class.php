@@ -157,6 +157,11 @@ class ThumbnailController extends WikiaController {
 		// set meta
 		$this->metaAttrs = $metaAttribs;
 
+		// This can be removed once we fully rollout the article thumbnails with the
+		// details icon. This just allows us to do it in stages. (Don't forget to update
+		// the mustached checks as well). See VID-1788
+		$this->showInfoIcon =  !empty( $this->wg->ShowArticleThumbDetailsIcon );
+
 		wfProfileOut( __METHOD__ );
 	}
 
@@ -287,6 +292,11 @@ class ThumbnailController extends WikiaController {
 		$this->mediaKey = htmlspecialchars( $title->getDBKey() );
 		$this->mediaName = htmlspecialchars( $title->getText() );
 		$this->alt = $options['alt'];
+
+		// This can be removed once we fully rollout the article thumbnails with the
+		// details icon. This just allows us to do it in stages. (Don't forget to update
+		// the mustached checks as well). See VID-1788
+		$this->showInfoIcon =  !empty( $this->wg->ShowArticleThumbDetailsIcon );
 
 		// Check fluid
 		if ( empty( $options[ 'fluid' ] ) ) {
