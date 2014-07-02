@@ -208,7 +208,6 @@ class SkinChooser {
 			if ( isset( $headers[ "X-Skin" ] ) && in_array( $headers[ "X-Skin" ], array( "monobook", "oasis", "wikia", "wikiamobile", "uncyclopedia" ) ) ) {
 				$skin = Skin::newFromKey( $headers[ "X-Skin" ] );
 				wfProfileOut( __METHOD__ );
-
 				return false;
 			}
 		}
@@ -216,7 +215,6 @@ class SkinChooser {
 		if ( !( $title instanceof Title ) || in_array( self::getUserOption( 'skin' ), $wgSkipSkins ) ) {
 			$skin = Skin::newFromKey( isset( $wgDefaultSkin ) ? $wgDefaultSkin : 'monobook' );
 			wfProfileOut( __METHOD__ );
-
 			return false;
 		}
 
@@ -245,8 +243,13 @@ class SkinChooser {
 
 		if(!$user->isLoggedIn()) { # If user is not logged in
 			if($wgDefaultSkin == 'oasis') {
-				$userSkin = $wgDefaultSkin;
-				$userTheme = null;
+				if(WikiaPageType::isArticlePage()) {
+					$userSkin = 'pirates';
+					$userTheme = null;
+				} else {
+					$userSkin = $wgDefaultSkin;
+					$userTheme = null;
+				}
 			} else if(!empty($wgAdminSkin) && !$isOasisPublicBeta) {
 				$adminSkinArray = explode('-', $wgAdminSkin);
 				$userSkin = isset($adminSkinArray[0]) ? $adminSkinArray[0] : null;
@@ -270,15 +273,21 @@ class SkinChooser {
 					$userSkin = isset($adminSkinArray[0]) ? $adminSkinArray[0] : null;
 					$userTheme = isset($adminSkinArray[1]) ? $adminSkinArray[1] : null;
 				} else {
-					$userSkin = 'oasis';
+					if(WikiaPageType::isArticlePage()) {
+						$userSkin = 'pirates';
+					} else {
+						$userSkin = 'oasis';
+					}
 				}
+			} else if ($userSkin == 'oasis' && WikiaPageType::isArticlePage()) {
+				$userSkin = 'pirates';
 			} else if(!empty($wgAdminSkin) && $userSkin != 'oasis' && $userSkin != 'monobook' && $userSkin != 'wowwiki' && $userSkin != 'lostbook') {
 				$adminSkinArray = explode('-', $wgAdminSkin);
 				$userSkin = isset($adminSkinArray[0]) ? $adminSkinArray[0] : null;
 				$userTheme = isset($adminSkinArray[1]) ? $adminSkinArray[1] : null;
 			}
-
 		}
+
 		wfProfileOut(__METHOD__.'::GetSkinLogic');
 
 		if ( !$useskin ) {
@@ -290,7 +299,7 @@ class SkinChooser {
 		$userTheme = ( array_key_exists( 1, $elems ) ) ? $elems[ 1 ] : $userTheme;
 		$userTheme = $request->getVal( 'usetheme', $userTheme );
 
-		$skin = &Skin::newFromKey( $userSkin );
+		$skin = Skin::newFromKey( $userSkin );
 
 		$normalizedSkinName = substr(strtolower(get_class($skin)),4);
 
