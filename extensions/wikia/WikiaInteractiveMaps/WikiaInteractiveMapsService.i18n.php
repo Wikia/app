@@ -18,6 +18,7 @@ $messages[ 'en' ] = [
 	'wikia-interactive-maps-create-marker-handler' => 'Click map to place marker.',
 	'wikia-interactive-maps-create-marker-tooltip' => 'Draw a marker',
 	'wikia-interactive-maps-create-marker-cancel' => 'Cancel',
+	'wikia-interactive-maps-default-poi-category' => 'Other',
 ];
 
 
@@ -34,4 +35,5 @@ $messages[ 'qqq' ] = [
 	'wikia-interactive-maps-create-marker-handler' => 'Message shown when the create POI is clicked.',
 	'wikia-interactive-maps-create-marker-tooltip' => 'Create POI hint',
 	'wikia-interactive-maps-create-marker-cancel' => 'Cancel shown when user clicks on create POI',
+	'wikia-interactive-maps-default-poi-category' => 'Name of the default category for POI',
 ];
