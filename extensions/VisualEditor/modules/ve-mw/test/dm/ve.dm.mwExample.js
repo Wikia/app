@@ -230,7 +230,7 @@ ve.dm.mwExample.MWBlockImage = {
 				'unrecognizedClasses': ['foobar']
 			},
 			'htmlAttributes': [
-				{ 'values': { 'data-mw' : "{\"user\":\"Foo\"}" } }
+				{ 'values': { 'data-mw': '{"user":"Foo"}' } }
 			]
 		},
 		{ 'type': 'mwImageCaption' },
