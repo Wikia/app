@@ -408,13 +408,17 @@ ve.ui.MWSaveDialog.prototype.initialize = function () {
 	} );
 	this.resolveConflictButton.connect( this, { 'click': [ 'emit', 'resolve' ] } );
 
+	// Wikia change: keep old loading indicator style
+	this.$loadingIcon = this.$( '<div>' ).addClass( 've-ui-mwSaveDialog-working' );
+
 	// Initialization
 	this.$body.append( this.panel.$element );
 	this.$foot.append(
 		this.reviewButton.$element,
 		this.applyButton.$element,
 		this.reviewGoodButton.$element,
-		this.resolveConflictButton.$element
+		this.resolveConflictButton.$element,
+		this.$loadingIcon
 	);
 
 	this.setupDeferred.resolve();
@@ -463,6 +467,7 @@ ve.ui.MWSaveDialog.prototype.getApplyButtonLabel = function () {
  * @inheritdoc
  */
 ve.ui.MWSaveDialog.prototype.pushPending = function () {
+	this.$loadingIcon.show();
 	// Parent method
 	ve.ui.MWSaveDialog.super.prototype.pushPending.call( this );
 
@@ -473,6 +478,7 @@ ve.ui.MWSaveDialog.prototype.pushPending = function () {
  * @inheritdoc
  */
 ve.ui.MWSaveDialog.prototype.popPending = function () {
+	this.$loadingIcon.hide();
 	// Parent method
 	ve.ui.MWSaveDialog.super.prototype.popPending.call( this );
 
