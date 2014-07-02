@@ -171,7 +171,6 @@ $(function(){
 					window.removedFromHoverMenu = true;
 				}
 				$bubblesNotifications.text($bubblesNavigation.text());
-				$('>li >.subnav', $accountNavigation).addClass('show');
 			});
 
 			$accountNavigation.on('mouseleave', '.notificationsEntry', function(){
@@ -190,7 +189,6 @@ $(function(){
 					removeWallNotificationsFromHoverMenu();
 					window.removedFromHoverMenu = true;
 				}
-				$('>li >.subnav', $accountNavigation).addClass('show');
 			});
 		}
 
