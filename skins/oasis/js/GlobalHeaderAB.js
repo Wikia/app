@@ -182,6 +182,7 @@ $(function(){
 			$notifications.append($wallNotifications);
 			$accountNavsubnav.prepend($notifications);
 		} else {
+			$wallNotifications.hide();
 			$accountNavigation.on('mouseover', function(){
 				if( !window.removedFromHoverMenu ) {
 					removeWallNotificationsFromHoverMenu();
