@@ -19,7 +19,10 @@ class JobWrapperTask extends BaseTask {
 	}
 
 	public function call() {
+		global $wgCityId;
+
 		list($command, $title, $this->params) = func_get_args();
+		$this->wikiId($wgCityId); // jobs always run in the context of the wiki in which they're called
 		$this->title($title);
 
 		return parent::call('wrap', $command);
