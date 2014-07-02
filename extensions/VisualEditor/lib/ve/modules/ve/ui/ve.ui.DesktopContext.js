@@ -492,7 +492,7 @@ ve.ui.DesktopContext.prototype.hide = function () {
 	if ( !this.hiding && !this.showing ) {
 		this.hiding = true;
 
-		this.$window.off( 'resize.ve-ui-desktopContext scroll.ve-ui-desktopContext' );
+		this.$window.off( '.ve-ui-desktopContext' );
 
 		if ( inspector ) {
 			inspector.close( { 'action': 'back', 'noSelect': true } );
