@@ -515,12 +515,11 @@ ve.ui.DesktopContext.prototype.hide = function () {
  */
 ve.ui.DesktopContext.prototype.shouldBeEmbedded = function ( focusedNode ) {
 	var targetHeight = this.$menu.outerHeight() * 2,
-		targetWidth = this.$menu.outerWidth() * 2;
-
-	return (
-		targetHeight < Math.max( focusedNode.$focusable.outerHeight(), focusedNode.$shields.height() ) &&
-		targetWidth < Math.max( focusedNode.$focusable.outerWidth(),  focusedNode.$shields.width() )
-	);
+		targetWidth = this.$menu.outerWidth() * 2,
+		// Name of this method (getDimensions) is pretty unfortunate - it actually returns
+		// dimensions of highlights and not node itself.
+		dimensions = focusedNode.getDimensions();
+	return ( targetHeight < dimensions.height  && targetWidth < dimensions.width );
 };
 
 /**
