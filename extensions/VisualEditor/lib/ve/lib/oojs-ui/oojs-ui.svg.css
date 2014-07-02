@@ -11,10 +11,9 @@
 
 /* Textures */
 
-/* Loading texture not used on Wikia */
-/*.oo-ui-texture-pending {
-  background-image: /* @embed * url(images/textures/pending.gif);
-}*/
+.oo-ui-texture-pending {
+  background-image: /* @embed */ url(images/textures/pending.gif);
+}
 
 .oo-ui-texture-transparency {
   background-image: /* @embed */ url(images/textures/transparency.png);
