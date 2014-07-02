@@ -79,7 +79,7 @@ jQuery(function () {
 		head.appendChild(style);
 	})();
 
-	// NAVIGATIOn
+	// NAVIGATION
 
 	jQuery('.WikiaPageHeader').addClass('WikiaPageHeaderV2');
 	$navigation.detach();

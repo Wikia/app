@@ -8,7 +8,7 @@ LOCAL NAVIGATION
 	z-index: 3900000;
 }
 .WikiHeaderV2 .local-navigation-container {
-	width: 1040px;
+	width: 1140px;
 	margin: 0 auto;
 }
 .WikiHeaderV2 .wordmark {
@@ -41,6 +41,9 @@ LOCAL NAVIGATION
 .WikiNavV2 .nav {
 	display: inline-block;
 }
+.WikiNavV2 .subnav-2 {
+	overflow: hidden;
+}
 .WikiNavV2 .nav .nav-item {
 	display: inline-block;
 }
@@ -67,7 +70,7 @@ LOCAL NAVIGATION
 }
 .WikiNavV2 .nav .nav-item .submenu {
 	display: none;
-	padding: 30px 20px 80px;
+	padding: 30px 20px 0 0;
 	position: absolute;
 }
 .WikiNavV2 .nav .nav-item .submenu.submenu-width-2 {
@@ -76,16 +79,13 @@ LOCAL NAVIGATION
 .WikiNavV2 .nav .nav-item .submenu.submenu-full {
 	box-sizing: border-box;
 	left: 50%;
-	margin-left: -520px;
-	width: 1040px;
+	margin-left: -570px;
+	width: 1140px;
 }
 .WikiNavV2 .nav .nav-item .subnav-2-column-wrapper {
 	float: left;
 	display: block;
-	width: 250px;
-}
-.WikiNavV2 .nav .nav-item .subnav-2-column .subnav-2-item {
-	float: none;
+	margin-right: 30px;
 }
 .WikiNavV2 .nav .nav-item .submenu.submenu-wide {
 	box-sizing: border-box;
@@ -106,21 +106,18 @@ LOCAL NAVIGATION
 	font-size: 15px;
 	font-weight: bold;
 	line-height: 16px;
-	//padding-bottom: 10px;
-	padding-right: 15px;
 	position: relative;
 	text-transform: uppercase;
 }
 .WikiNavV2 .nav .nav-item .submenu .subnav-2a svg {
+	margin-top: -5px;
+	padding-left: 10px;
 	position: absolute;
-	right: 0;
-	top: -webkit-calc(50% - 5px);
-	top: calc(50% - 5px);
+	right: -20px;
+	top: 50%;
 }
 .WikiNavV2 .nav .nav-item .submenu li.subnav-2-item {
-	float: left;
-	margin: 0 20px 30px;
-	width: 210px;
+	margin: 0 20px 35px;
 }
 .WikiNavV2 .nav .nav-item .submenu li.subnav-2-item:nth-child(5) {
 	clear: left;
@@ -128,7 +125,6 @@ LOCAL NAVIGATION
 .WikiNavV2 .nav .nav-item .submenu .subnav-3a {
 	font-size: 15px;
 	font-weight: normal;
-	//line-height: 20px;
 }
 .WikiNavV2 .nav .nav-item .submenu ul.subnav-3 {
 	margin-top: 15px;
@@ -138,15 +134,11 @@ LOCAL NAVIGATION
 }
 .WikiNavV2 .nav .nav-item .submenu .see-all {
 	bottom: 0;
-	display: table-cell;
 	font-size: 15px;
 	font-weight: bold;
 	height: 75px;
-	left: 0;
 	line-height: 75px;
-	padding-right: 40px;
-	position: absolute;
-	right: 0;
+	padding-right: 20px;
 	text-align: right;
 	text-transform: uppercase;
 	vertical-align: middle;
@@ -157,17 +149,26 @@ LOCAL NAVIGATION
 .WikiNavV2 .nav .nav-item .submenu .see-all svg {
 	margin-left: 10px;
 }
+#WikiaPageHeader.WikiaPageHeader.WikiaPageHeaderV2 {
+	margin: 10px 0;
+}
+.WikiNavV2 > h1, .WikiNavV2 > .navbackground {
+	display: none;
+}
+.WikiHeaderV2 .hiddenLinks {
+	position: absolute;
+	top: -1000px;
+}
 
-@media screen and (max-width: 1365px) {
+@media screen and (max-width: 1365px) and (min-width: 1024px) {
 	.WikiHeaderV2 .local-navigation-container {
-		width: 768px;
+		width: 830px;
 	}
 	.WikiHeaderV2 .local-navigation-container .wordmark {
 		padding-right: 18px;
 	}
-
 	.WikiNavV2 {
-		max-width: 596px;
+		max-width: 613px;
 	}
 	.WikiNavV2 .nav .nav-item > a {
 		font-size: 15px;
@@ -175,39 +176,36 @@ LOCAL NAVIGATION
 		padding: 0 18px;
 	}
 	.WikiNavV2 .nav .nav-item .submenu {
-		padding: 30px 12px 40px;
+		padding: 30px 0 0 0;
 	}
 	.WikiNavV2 .nav .nav-item .submenu.submenu-width-2 {
 		width: 368px;
 	}
 	.WikiNavV2 .nav .nav-item .submenu.submenu-full {
-		margin-left: -384px;
-		width: 768px;
+		margin-left: -415px;
+		width: 830px;
 	}
 	.WikiNavV2 .nav .nav-item .subnav-2-column-wrapper {
-		float: left;
-		display: block;
-		width: 184px;
+		width: 139px;
 	}
 	.WikiNavV2 .nav .nav-item .subnav-2-column .subnav-2-item {
 		float: none;
 	}
 	.WikiNavV2 .nav .nav-item .subnav-2-column {
-		width: 184px;
+		width: 139px;
 	}
 	.WikiNavV2 .nav .nav-item .submenu.submenu-wide {
-		margin-left: -292px;
-		width: 584px;
+		margin-left: -204px;
+		width: 613px;
 	}
 	.WikiNavV2 .nav .nav-item .submenu .subnav-2a {
-		font-size: 15px;
 		line-height: 20px;
 		padding-bottom: 10px;
-		padding-right: 10px;
+		max-width: 110px;
 	}
 	.WikiNavV2 .nav .nav-item .submenu li.subnav-2-item {
 		margin: 0 12px 30px;
-		width: 160px;
+		width: 139px;
 	}
 	.WikiNavV2 .nav .nav-item .submenu .subnav-3a {
 		font-size: 15px;
@@ -223,29 +221,37 @@ LOCAL NAVIGATION
 	}
 	.WikiNavV2 .nav .nav-item .submenu .see-all {
 		font-size: 15px;
-		padding-right: 24px;
 	}
 	.WikiNavV2 .nav .nav-item .submenu .see-all svg {
 		margin-left: 10px;
 	}
-}
-#WikiaPageHeader.WikiaPageHeader.WikiaPageHeaderV2 {
-	margin: 10px 0;
-}
-
-.WikiNavV2 > h1, .WikiNavV2 > .navbackground {
-	display: none;
-}
-
-.WikiHeaderV2 .hiddenLinks {
-	position: absolute;
-	top: -1000px;
+	.WikiNavV2 .nav .nav-item .submenu .subnav-2a svg {
+		margin-top: -10px;
+	}
 }
 
 @media screen and (max-width: 1023px) {
+	.WikiHeaderV2 .local-navigation-container {
+		width: 768px;
+		margin: 0 auto;
+	}
+	.WikiNavV2 {
+		max-width: 596px;
+	}
+	.WikiNavV2 .nav .nav-item .subnav-2-column-wrapper {
+		width: 159px;
+	}
+	.WikiNavV2 .nav .nav-item .submenu.submenu-full,
+	.WikiNavV2 .nav .nav-item .submenu.submenu-wide {
+		box-sizing: border-box;
+		left: 50%;
+		margin-left: -384px;
+		width: 768px;
+	}
+	.WikiNavV2 .nav .nav-item .submenu .subnav-2a {
+		max-width: 130px;
+	}
 	.WikiNavV2 .nav .nav-item > a {
-		font-size: 15px;
-		font-weight: bold;
 		padding: 0 15px;
 	}
 }
