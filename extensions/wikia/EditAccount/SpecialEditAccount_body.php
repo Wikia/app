@@ -18,6 +18,9 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 	exit( 1 );
 }
 
+use \Wikia\Tasks\Tasks\RemoveUserRightsTask;
+use \Wikia\Tasks\AsyncTaskList;
+
 class EditAccount extends SpecialPage {
 	var $mUser = null;
 	var $mStatus = null;
@@ -391,6 +394,19 @@ class EditAccount extends SpecialPage {
 				}
 			}
 		}
+
+		// remove global user rights
+		$globalGroups = UserRights::getGlobalGroups($user);
+		foreach($globalGroups as $globalGroup) {
+			UserRights::removeGlobalGroup($user, $globalGroup);
+		}
+
+		// asynchronous task for removing all user's rights from all Wikias
+		$task = new RemoveUserRightsTask();
+		(new AsyncTaskList())
+			->add($task->call('removeRightsFromAllWikias', $user->getId()))
+			->queue();
+
 
 		# close account and invalidate cache + cluster data
 		Wikia::invalidateUser( $user, true, $keepEmail, true );
