@@ -102,7 +102,7 @@ class UpdateHowdiniAddGenreAsPageCat extends BaseMaintVideoScript {
 					$this->outputError( "No Api response!" );
 					exit();
 				}
-				$videos = empty( $response['items'] ) ? [] : $response['items'];
+				$videos = [$response];
 				$total = 1;
 			} else {
 				// connect to provider API
