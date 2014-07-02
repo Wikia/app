@@ -300,22 +300,23 @@ class VideoHandlerHelper extends WikiaModel {
 
 			// video details
 			$videoDetail = array(
-				'title' => $title->getDBKey(),
-				'fileTitle'     => $title->getText(),
-				'description'   => $this->getVideoDescription( $file ), // The description from the File page
-				'fileUrl'       => $title->getFullURL(),
-				'thumbUrl'      => $thumbUrl,
-				'userName'      => $userName,
-				'userUrl'       => $userUrl,
-				'truncatedList' => $truncatedList,
-				'isTruncated'   => $isTruncated,
-				'timestamp'     => empty( $videoInfo['addedAt'] ) ? '' : $videoInfo['addedAt'],
-				'duration'      => $file->getMetadataDuration(),
-				'viewsTotal'    => empty( $videoInfo['viewsTotal'] ) ? 0 : $videoInfo['viewsTotal'],
-				'provider'      => $file->getProviderName(),
-				'embedUrl'      => $file->getHandler()->getEmbedUrl(),
-				'videoId'       => $file->getVideoId(),
-				'thumbnail'     => $thumbnail,
+				'title'                => $title->getDBKey(),
+				'fileTitle'            => $title->getText(),
+				'description'          => $this->getVideoDescription( $file ), // The description from the File page
+				'fileUrl'              => $title->getFullURL(),
+				'thumbUrl'             => $thumbUrl,
+				'userName'             => $userName,
+				'userUrl'              => $userUrl,
+				'truncatedList'        => $truncatedList,
+				'isTruncated'          => $isTruncated,
+				'timestamp'            => empty( $videoInfo['addedAt'] ) ? '' : $videoInfo['addedAt'],
+				'duration'             => $file->getMetadataDuration(),
+				'viewsTotal'           => empty( $videoInfo['viewsTotal'] ) ? 0 : $videoInfo['viewsTotal'],
+				'provider'             => $file->getProviderName(),
+				'embedUrl'             => $file->getHandler()->getEmbedUrl(),
+				'videoId'              => $file->getVideoId(),
+				'thumbnail'            => $thumbnail,
+				'regionalRestrictions' => $file->getRegionalRestrictions()
 			);
 		} else {
 			Wikia::Log( __METHOD__, false, "No file found for '".$videoInfo['title']."'" );
