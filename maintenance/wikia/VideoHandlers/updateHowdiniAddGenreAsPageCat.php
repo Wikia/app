@@ -18,6 +18,7 @@ class UpdateHowdiniAddGenreAsPageCat extends BaseMaintVideoScript {
 	public $extra;
 	public $limit;
 	public $update1787;
+	public $singleFile;
 
 	function __construct() {
 		parent::__construct();
@@ -87,20 +88,37 @@ class UpdateHowdiniAddGenreAsPageCat extends BaseMaintVideoScript {
 		}
 
 		do {
-			// connect to provider API
-			$url = OoyalaAsset::getApiUrlAssets( $apiPageSize, $nextPage, $this->extra );
-			$this->outputMessage( "\nConnecting to $url..." );
+			// single-file option: discard all other videos
+			if ( $this->singleFile ) {
+				$video = $this->getVideoByTitle( $this->singleFile );
 
-			$response = OoyalaAsset::getApiContent( $url );
-			if ( $response === false ) {
-				$this->outputError( "No Api response!" );
-				exit();
+				if ( !$video ) {
+					$this->outputError( "Provided single-file '$this->singleFile' not found!" );
+					exit();
+				}
+
+				$response = OoyalaAsset::getAssetById( $video['metadata']['videoId'] );
+				if ( $response === false ) {
+					$this->outputError( "No Api response!" );
+					exit();
+				}
+				$videos = empty( $response['items'] ) ? [] : $response['items'];
+				$total = 1;
+			} else {
+				// connect to provider API
+				$url = OoyalaAsset::getApiUrlAssets( $apiPageSize, $nextPage, $this->extra );
+				$this->outputMessage( "\nConnecting to $url..." );
+
+				$response = OoyalaAsset::getApiContent( $url );
+				if ( $response === false ) {
+					$this->outputError( "No Api response!" );
+					exit();
+				}
+
+				$videos = empty( $response['items'] ) ? [ ] : $response['items'];
+				$nextPage = empty( $response['next_page'] ) ? '' : $response['next_page'];
+				$total += count( $videos );
 			}
-
-			$videos = empty( $response['items'] ) ? [] : $response['items'] ;
-			$nextPage = empty( $response['next_page'] ) ? '' : $response['next_page'] ;
-
-			$total += count( $videos );
 
 			$cnt = 0;
 			foreach ( $videos as $video ) {
@@ -152,14 +170,12 @@ class UpdateHowdiniAddGenreAsPageCat extends BaseMaintVideoScript {
 		$asset = OoyalaAsset::getAssetById( $videoId );
 
 		if ( $asset['asset_type'] == 'remote_asset' ) {
-			$isRemoteAsset = true;
 			$provider = $asset['metadata']['source'];
 		} else {
-			$isRemoteAsset = false;
 			$provider = 'ooyala';
 		}
 
-		$duplicates = WikiaFileHelper::findVideoDuplicates( $provider, $asset['embed_code'], $isRemoteAsset );
+		$duplicates = $this->findVideoDuplicates( $provider, $asset['embed_code'] );
 		if ( count( $duplicates ) > 0 ) {
 			$resp = $this->updateMetadataWiki( $duplicates[0], $newValues );
 		} else {
@@ -231,18 +247,16 @@ class UpdateHowdiniAddGenreAsPageCat extends BaseMaintVideoScript {
 		echo "\n";
 		*/
 
+		$serializedMeta = serialize( $newMetadata );
+
+		if ( wfReadOnly() ) {
+			$this->outputMessage( "Read only mode." );
+			exit(0);
+		}
+
+		$dbw = wfGetDB( DB_MASTER );
+
 		if ( !$this->isDryRun() ) {
-			$serializedMeta = serialize( $newMetadata );
-
-			if ( wfReadOnly() ) {
-				$this->outputMessage( "Read only mode." );
-				exit(0);
-			}
-
-			$dbw = wfGetDB( DB_MASTER );
-
-			$dbw->begin();
-
 			// update database
 			$dbw->update(
 				'image',
@@ -250,8 +264,6 @@ class UpdateHowdiniAddGenreAsPageCat extends BaseMaintVideoScript {
 				['img_name' => $name],
 				__METHOD__
 			);
-
-			$dbw->commit();
 
 			// clear cache
 			$file->purgeEverything();
@@ -291,6 +303,7 @@ if ( isset( $options['help'] ) ) {
 	--update1787       add genre to pageCategories
 	--limit            limit
 	--dry-run          dry run
+	--single-file      only modify a single file
 	--help             you are reading it right now\n\n" );
 }
 
@@ -300,5 +313,6 @@ $instance->dryRun = isset( $options['dry-run'] );
 $instance->extra = isset( $options['extra'] ) ? explode( ' AND ', $options['extra'] ) : [];
 $instance->limit = empty( $options['limit'] ) ? $instance::BATCH_LIMIT_DEFAULT : $options['limit'];
 $instance->update1787 = isset( $options['update1787'] );
+$instance->singleFile = isset( $options['single-file'] ) ? $options['single-file'] : false;
 
 $instance->run();

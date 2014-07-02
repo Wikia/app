@@ -30,6 +30,60 @@ abstract class BaseMaintVideoScript {
 	}
 
 	/**
+	 * Find Video by provider and videoId
+	 * @param $provider
+	 * @param $videoId
+	 * @return array
+	 */
+	public function findVideoDuplicates( $provider, $videoId ) {
+		$db = wfGetDB( DB_MASTER ); // has to be master otherwise there's a chance of getting duplicates
+
+		if ( strstr( $provider, '/' ) ) {
+			$providers = explode( '/', $provider );
+			$provider = $providers[0];
+		}
+
+		$videos = ( new WikiaSQL() )->SELECT( "image.*" )
+			->FROM( "video_info" )
+			->JOIN( "image" )
+			->ON( "video_title", "img_name" )
+			->WHERE( "provider" )->EQUAL_TO( $provider )
+			->AND_( "video_id" )->EQUAL_TO( ( string ) $videoId )
+			->run( $db, function ( $result ) {
+			    while ( $row = $result->fetchObject( $result ) ) {
+			        $rows[] = ( array ) $row;
+			    }
+			    return $rows;
+			} );
+
+		return $videos;
+	}
+
+	/**
+	 * Get a video row by title
+	 * @param string $title
+	 * @return null|array
+	 */
+	public function getVideoByTitle( $title ) {
+		$db = wfGetDB( DB_SLAVE );
+		$video = ( new WikiaSQL() )->SELECT( "image.*" )
+			->FROM( "video_info" )
+			->JOIN( "image" )
+			->ON( "video_title", "img_name" )
+			->WHERE( "video_title" )->EQUAL_TO( $title )
+			->LIMIT( 1 )
+			->run( $db, function ( $result ) {
+				return $result->fetchObject( $result );
+			} );
+
+		if ( !$video ) {
+			return null;
+		}
+
+		return (array) $video;
+	}
+
+	/**
 	 * @todo Implement fancier output, such as using Ncurses functions
 	 * @param string $message
 	 */
