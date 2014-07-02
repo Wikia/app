@@ -1785,18 +1785,18 @@ $config['bucky_js'] = array(
 /* Affiliate Module */
 $config['affiliate_module_css'] = array(
 	'type' => AssetsManager::TYPE_SCSS,
-	'skin' => array( 'oasis', 'monobook' ),
-	'assets' => array(
+	'skin' => [ 'oasis' ],
+	'assets' => [
 		'//extensions/wikia/AffiliateModule/styles/AffiliateModule.scss',
-	)
+	]
 );
 
 $config['affiliate_module_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
-	'skin' => array( 'oasis', 'monobook' ),
-	'assets' => array(
+	'skin' => [ 'oasis' ],
+	'assets' => [
 		'//extensions/wikia/AffiliateModule/scripts/AffiliateModule.js',
-	)
+	]
 );
 
 /* extension/wikia/WikiaInteractiveMaps */

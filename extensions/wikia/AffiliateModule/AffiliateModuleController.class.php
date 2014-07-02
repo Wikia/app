@@ -14,6 +14,11 @@ class AffiliateModuleController extends WikiaController {
 	public function index() {
 		wfProfileIn( __METHOD__ );
 
+		if ( !$this->app->checkSkin( 'oasis' ) ) {
+			$this->skipRendering();
+			return true;
+		}
+
 		$option = $this->request->getVal( 'option', 'bottom' );
 
 		if ( AffiliateModuleHelper::canLoadAssets( $option ) ) {
