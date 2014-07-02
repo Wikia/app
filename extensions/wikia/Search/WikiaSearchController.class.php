@@ -789,7 +789,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	 * @see WikiaSearchControllerTest::testIsCorporateWiki
 	 */
 	protected function  isCorporateWiki() {
-	    return !empty($this->wg->EnableWikiaHomePageExt);
+	    return !empty($this->wg->EnableWikiaHomePageExt) || !empty($this->wg->EnableWikiaHubsV3Ext);
 	}
 
 	/**
