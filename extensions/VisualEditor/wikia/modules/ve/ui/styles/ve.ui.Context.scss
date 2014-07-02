@@ -7,3 +7,7 @@
 .ve-ui-inspector-content .oo-ui-window-icon {
 	border-color: $color-page-border;
 }
+
+.ve-ui-contextItemWidget .oo-ui-labeledElement-label {
+	max-width: 9em;
+}
