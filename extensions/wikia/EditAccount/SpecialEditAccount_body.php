@@ -401,7 +401,7 @@ class EditAccount extends SpecialPage {
 			UserRights::removeGlobalGroup($user, $globalGroup);
 		}
 
-		// asynchronous task for removing all user's rights from all Wikias
+		// submit asynchronous task for removing all user's rights from all Wikias
 		$task = new RemoveUserRightsTask();
 		(new AsyncTaskList())
 			->add($task->call('removeRightsFromAllWikias', $user->getId()))

@@ -9,7 +9,7 @@
 namespace Wikia\Tasks\Tasks;
 
 /**
- * Task which removes user from all groups, which he belongs to - in all Wikias
+ * Task which removes all user's rights from all Wikias
  *
  * ADDED BY WIKIA
  *
@@ -18,55 +18,61 @@ namespace Wikia\Tasks\Tasks;
 class RemoveUserRightsTask extends BaseTask {
 
 	public function removeRightsFromAllWikias( $userId ) {
-		$dbw = wfGetDB( DB_MASTER );
+		$db = wfGetDB( DB_MASTER );
 
 		// Select database names of all active Wikias
-		$res = $dbw->select( 'city_list',
+		$cursor = $db->select( 'city_list',
 			/*FROM*/ 'city_dbname',
 			/*WHERE*/ [ 'city_public' => 1 ],
 			__METHOD__
 		);
 
-		while ( $row = $dbw->fetchObject( $res ) ) {
+		while ( $row = $db->fetchObject( $cursor ) ) {
 			$wikiaDbName = $row[ 'city_dbname' ];
 
-			$this->removeFromAllGroups( $userId, $wikiaDbName );
+			$this->removeAndRememberUserGroups( $userId, $wikiaDbName );
 		}
 	}
 
 	/**
+	 * In fact - each group represent some rights of user.
+	 * So, by removing user groups - we remove user rights.
+	 * Also, we remember user groups, because this information can be needed by some logic of application.
+	 *
 	 * @param $userId
 	 * @param $wikiaDbName
 	 */
-	protected function removeFromAllGroups( $userId, $wikiaDbName ) {
-		$dbw = wfGetDB( DB_MASTER, [ ], $wikiaDbName );
+	protected function removeAndRememberUserGroups( $userId, $wikiaDbName ) {
+		$db = wfGetDB( DB_MASTER, [ ], $wikiaDbName );
 
-		$groups = $this->fetchUserGroups( $userId, $dbw );
-		if( empty( $groups ) ) {
-			return;
+		$groups = $this->fetchUserGroups( $userId, $db );
+
+		if( !empty( $groups ) ) {
+
+			$this->removeUserGroups( $userId, $db );
+
+			$this->rememberUserGroups( $userId, $groups, $db );
 		}
-
-		$this->removeUserFromAllGroups( $userId, $dbw );
-
-		$this->rememberUserGroups( $userId, $groups, $dbw );
 	}
 
 	/**
+	 * Find all groups, which user belongs to
+	 *
 	 * @param $userId
-	 * @param $dbw
+	 * @param $db
 	 * @return array of groups, which user belongs to
 	 */
-	protected function fetchUserGroups( $userId, &$dbw ) {
+	protected function fetchUserGroups( $userId, &$db ) {
 		$groups = [ ];
 
 		// Fetch user groups
-		$res = $dbw->select( 'user_groups',
+		$cursor = $db->select( 'user_groups',
 			/*FROM*/ 'ug_group',
 			/*WHERE*/ [ 'ug_user' => $userId ],
 			__METHOD__
 		);
 
-		while ( $row = $dbw->fetchObject( $res ) ) {
+		while ( $row = $db->fetchObject( $cursor ) ) {
 			$groups[ ] = $row[ 'ug_group' ];
 		}
 
@@ -75,11 +81,12 @@ class RemoveUserRightsTask extends BaseTask {
 
 	/**
 	 * Remove user from all groups, which he belongs to
+	 *
 	 * @param $userId
-	 * @param $dbw
+	 * @param $db
 	 */
-	protected function removeUserFromAllGroups( $userId, &$dbw ) {
-		$dbw->delete(
+	protected function removeUserGroups( $userId, &$db ) {
+		$db->delete(
 			'user_groups',
 			[ 'ug_user' => $userId ],
 			__METHOD__
@@ -88,11 +95,13 @@ class RemoveUserRightsTask extends BaseTask {
 
 	/**
 	 * Remember that the user was in these groups
+	 * (this information can be needed by some logic of application)
+	 *
 	 * @param $userId
 	 * @param $groups
-	 * @param $dbw
+	 * @param $db
 	 */
-	protected function rememberUserGroups( $userId, &$groups, &$dbw ) {
+	protected function rememberUserGroups( $userId, &$groups, &$db ) {
 		// Prepare rows for batch insert
 		$rowsToInsert = [ ];
 		foreach ( $groups as $group ) {
@@ -103,7 +112,7 @@ class RemoveUserRightsTask extends BaseTask {
 		}
 
 		// Batch insert to database
-		$dbw->insert(
+		$db->insert(
 			'user_former_groups',
 			$rowsToInsert,
 			__METHOD__,
