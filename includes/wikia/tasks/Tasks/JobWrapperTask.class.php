@@ -21,7 +21,17 @@ class JobWrapperTask extends BaseTask {
 	public function call() {
 		global $wgCityId;
 
-		list($command, $title, $this->params) = func_get_args();
+		switch (func_num_args()) {
+			case 2: // command, title, no params
+				list($command, $title) = func_get_args();
+				break;
+			case 3: // command, title, params
+				list($command, $title, $this->params) = func_get_args();
+				break;
+			default:
+				throw new \InvalidArgumentException;
+		}
+
 		$this->wikiId($wgCityId); // jobs always run in the context of the wiki in which they're called
 		$this->title($title);
 
