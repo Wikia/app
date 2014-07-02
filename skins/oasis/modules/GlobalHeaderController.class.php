@@ -12,7 +12,7 @@ class GlobalHeaderController extends WikiaController {
 		WikiFactoryHub::CATEGORY_ID_GAMING => 'games',
 		WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT => 'tv',
 		WikiFactoryHub::CATEGORY_ID_LIFESTYLE => 'lifestyle',
-		WikiFactoryHub::CATEGORY_ID_CORPORATE => 'comics',
+		WikiFactoryHub::CATEGORY_ID_CORPORATE => null,
 		WikiFactoryHub::CATEGORY_ID_MUSIC => 'music'
 	];
 
