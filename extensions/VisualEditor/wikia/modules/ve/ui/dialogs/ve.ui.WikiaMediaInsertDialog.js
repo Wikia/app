@@ -122,7 +122,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.initialize = function () {
 		'remove': 'onCartModelRemove'
 	} );
 	this.cart.on( 'select', ve.bind( this.onCartSelect, this ) );
-	this.insertButton.connect( this, { 'click': [ 'close', 'insert' ] } );
+	this.insertButton.connect( this, { 'click': [ 'close', { 'action': 'insert' } ] } );
 	this.pages.on( 'set', ve.bind( this.onPageSet, this ) );
 	this.query.connect( this, {
 		'requestSearchDone': 'onQueryRequestSearchDone',
@@ -436,16 +436,16 @@ ve.ui.WikiaMediaInsertDialog.prototype.onPageSet = function () {
  * @method
  * @param {string} action Which action is being performed on close.
  */
-ve.ui.WikiaMediaInsertDialog.prototype.teardown = function ( action ) {
-	if ( action === 'insert' ) {
-		this.insertMedia( ve.copy( this.cartModel.getItems() ), this.fragment );
-	}
-	this.cartModel.clearItems();
-	this.queryInput.setValue( '' );
-	this.dropTarget.teardown();
-
-	// Parent method
-	ve.ui.Dialog.prototype.teardown.call( this, action );
+ve.ui.WikiaMediaInsertDialog.prototype.getTeardownProcess = function( data ) {
+	return ve.ui.WikiaMediaInsertDialog.super.prototype.getTeardownProcess.call( this, data )
+		.first( function () {
+			if ( data.action === 'insert' ) {
+				this.insertMedia( ve.copy( this.cartModel.getItems() ), this.fragment );
+			}
+			this.cartModel.clearItems();
+			this.queryInput.setValue( '' );
+			this.dropTarget.teardown();
+		}, this );
 };
 
 /**
