@@ -267,19 +267,35 @@ class LinksUpdate {
 			wfProfileOut( __METHOD__ );
 			return;
 		}
-		$jobs = array();
-		foreach ( $batches as $batch ) {
-			list( $start, $end ) = $batch;
-			$params = array(
-				'table' => 'templatelinks',
-				'start' => $start,
-				'end' => $end,
-			);
-			$jobs[] = new RefreshLinksJob2( $this->mTitle, $params );
-		}
-		Job::batchInsert( $jobs );
+
+		$this->queueRefreshTasks( $batches );
 
 		wfProfileOut( __METHOD__ );
+	}
+
+	private function queueRefreshTasks( $batches ) {
+		$legacyJobs = array();
+
+		foreach ( $batches as $batch ) {
+			list( $start, $end ) = $batch;
+			if ( TaskRunner::isModern( 'RefreshLinksJob' ) ) {
+				$task = new BatchRefreshLinksForTemplate( $start, $end );
+				$task->title( $this->mTitle );
+				$task->call( 'refreshTemplateLinks' );
+				$task->queue();
+			} else {
+				$params = array(
+					'start' => $start,
+					'end' => $end,
+				);
+				$jobs[] = new RefreshLinksJob2( $this->mTitle, $params );
+			}
+		}
+
+		if ( !empty( $legacyJobs ) ) {
+			Job::batchInsert( $jobs );
+		}
+
 	}
 
 
