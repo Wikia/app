@@ -93,13 +93,15 @@ jQuery(function(){
 					submenu0.innerHTML = html[0];
 					submenu1.innerHTML = html[1];
 
-				}).on('mouseleave', function(){
+				}).on('mouseleave', function() {
 					closeHub();
 				});
 
 				$('#WikiaHeader').on('mouseenter', '#GlobalNavigationMenuButton', function(e) {
-					e.preventDefault();
-					openHub();
+					if (navigator.userAgent.toLowerCase().indexOf('android') === -1) {
+						e.preventDefault();
+						openHub();
+					}
 				}).on('click', '#GlobalNavigationMenuButton', function(e) {
 					e.preventDefault();
 					toggleHub();
