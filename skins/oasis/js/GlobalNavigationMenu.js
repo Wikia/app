@@ -51,6 +51,7 @@ jQuery(function(){
 					submenu0 = $globalNavigationNav.find('[data-submenu=0]')[0],
 					submenu1 = $globalNavigationNav.find('[data-submenu=1]')[0],
 					isOpen = false,
+					$WikiaHeader = $('#WikiaHeader'),
 					openHub = function() {
 						$globalNavigationNav.find('.hub.' + $globalNavigationNav.data('active')).mouseenter();
 
@@ -97,12 +98,14 @@ jQuery(function(){
 					closeHub();
 				});
 
-				$('#WikiaHeader').on('mouseenter', '#GlobalNavigationMenuButton', function(e) {
-					if (navigator.userAgent.toLowerCase().indexOf('android') === -1) {
-						e.preventDefault();
-						openHub();
-					}
-				}).on('click', '#GlobalNavigationMenuButton', function(e) {
+				if (navigator.userAgent.toLowerCase().indexOf('android') === -1) {
+					$WikiaHeader.on('mouseenter', '#GlobalNavigationMenuButton', function(e) {
+							e.preventDefault();
+							openHub();
+					});
+				}
+
+				$WikiaHeader.on('click', '#GlobalNavigationMenuButton', function(e) {
 					e.preventDefault();
 					toggleHub();
 				});
