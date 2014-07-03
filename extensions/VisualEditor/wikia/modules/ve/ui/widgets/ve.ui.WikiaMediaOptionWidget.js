@@ -43,12 +43,9 @@ ve.ui.WikiaMediaOptionWidget = function VeUiWikiaMediaOptionWidget( model, confi
 	this.$image
 		.load( ve.bind( this.onThumbnailLoad, this ) )
 		.error( ve.bind( this.onThumbnailError, this ) );
-	this.check.on( 'click',
-		ve.bind(
-			function () { this.emit( 'check', this ); },
-			this
-		)
-	);
+	this.check.on( 'click', ve.bind( function () {
+		this.emit( 'check', this );
+	}, this ) );
 
 	// Initialization
 	this.loadThumbnail();
