@@ -243,7 +243,7 @@ class SkinChooser {
 
 		if(!$user->isLoggedIn()) { # If user is not logged in
 			if($wgDefaultSkin == 'oasis') {
-				if(WikiaPageType::isArticlePage()) {
+				if( self::showPiratesSkin() ) {
 					$userSkin = 'pirates';
 					$userTheme = null;
 				} else {
@@ -273,13 +273,13 @@ class SkinChooser {
 					$userSkin = isset($adminSkinArray[0]) ? $adminSkinArray[0] : null;
 					$userTheme = isset($adminSkinArray[1]) ? $adminSkinArray[1] : null;
 				} else {
-					if(WikiaPageType::isArticlePage()) {
+					if(self::showPiratesSkin()) {
 						$userSkin = 'pirates';
 					} else {
 						$userSkin = 'oasis';
 					}
 				}
-			} else if ($userSkin == 'oasis' && WikiaPageType::isArticlePage()) {
+			} else if ($userSkin == 'oasis' && self::showPiratesSkin()) {
 				$userSkin = 'pirates';
 			} else if(!empty($wgAdminSkin) && $userSkin != 'oasis' && $userSkin != 'monobook' && $userSkin != 'wowwiki' && $userSkin != 'lostbook') {
 				$adminSkinArray = explode('-', $wgAdminSkin);
@@ -334,6 +334,10 @@ class SkinChooser {
 
 		wfProfileOut(__METHOD__);
 		return false;
+	}
+
+	private static function showPiratesSkin() {
+		return WikiaPageType::isArticlePage() || WikiaPageType::isSearch();
 	}
 
 	/**
