@@ -111,13 +111,6 @@ $config['adengine2_wikiabar_boxad_js'] = array(
 	),
 );
 
-$config['adengine2_top_in_content_boxad_js'] = array(
-	'type' => AssetsManager::TYPE_JS,
-	'assets' => array(
-		'//extensions/wikia/AdEngine/js/AdSlotTopInContentBoxad.js',
-	),
-);
-
 $config['adengine2_ebay_scss'] = array(
 	'type' => AssetsManager::TYPE_SCSS,
 	'skin' => array( 'oasis' ),
@@ -1841,4 +1834,10 @@ $config['int_map_embed_map_code'] = [
 	]
 ];
 
-
+$config['int_map_special_page_scss_wikiamobile'] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => ['wikiamobile'],
+	'assets' => [
+		'//extensions/wikia/WikiaInteractiveMaps/css/WikiaMaps.wikiamobile.scss',
+	]
+];
