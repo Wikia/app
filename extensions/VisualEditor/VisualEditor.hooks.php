@@ -275,7 +275,9 @@ class VisualEditorHooks {
 
 	public static function onGetPreferences( $user, &$preferences ) {
 		global $wgLang, $wgVisualEditorNamespaces;
-		if ( !array_key_exists( 'visualeditor-enable', $preferences ) ) {
+		// Wikia does not use the visualeditor-enable preference. Additionally, this block of code now
+		// calls a function (Language::convertNamespace) that Wikia does not currently have.
+		/*if ( !array_key_exists( 'visualeditor-enable', $preferences ) ) {
 			$preferences['visualeditor-enable'] = array(
 				'type' => 'toggle',
 				'label-message' => array(
@@ -287,7 +289,7 @@ class VisualEditorHooks {
 				),
 				'section' => 'editing/editor'
 			);
-		}
+		}*/
 		$preferences['visualeditor-betatempdisable'] = array(
 			'type' => 'toggle',
 			'label-message' => 'visualeditor-preference-betatempdisable',
