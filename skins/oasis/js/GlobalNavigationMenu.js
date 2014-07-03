@@ -3,8 +3,6 @@ jQuery(function(){
 
 	require([ 'jquery', 'wikia.ui.factory', 'wikia.nirvana' ], function ($, uiFactory, nirvana) {
 
-		/* jshint maxlen: false */
-
 		var menuPromise = nirvana.sendRequest({
 				controller: 'GlobalHeaderController',
 				method: 'getGlobalMenuItems',

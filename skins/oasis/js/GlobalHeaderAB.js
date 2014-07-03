@@ -102,6 +102,7 @@ $(function(){
 	// removing in-page search boxes
 	$( '#HeaderWikiaSearch' ).remove();
 	$( '#WikiaSearch' ).remove();
+	$('.wikinav2.oasis-one-column .WikiaMainContentContainer .WikiaPageHeader .tally').css('right', 0);
 
 	// adding behaviour
 	$( '<button type="submit">' )
@@ -232,7 +233,8 @@ $(function(){
 		}
 	}
 
-	// global nav cleanup/replace
+
+ // global nav cleanup/replace
 	(function(){
 		var $startAWiki = $('.start-a-wiki a');
 
