@@ -1107,7 +1107,7 @@
 						origin: 'image-lightbox',
 						callback: function () {
 							doShareEmail(addresses);
-							// see VID-743 - Reload page on lightbox close
+							// see VID-473 - Reload page on lightbox close
 							LightboxLoader.reloadOnClose = true;
 						}
 					});
