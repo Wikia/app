@@ -145,9 +145,9 @@ ve.dm.MWImageModel.prototype.getImageNodeType = function ( imageType, align ) {
 		( this.getType() === 'frameless' || this.getType() === 'none' ) &&
 		( !this.isAligned( align ) || this.isDefaultAligned( imageType, align ) )
 	) {
-		return 'mwInlineImage';
+		return 'wikiaInlineImage';
 	} else {
-		return 'mwBlockImage';
+		return 'wikiaBlockImage';
 	}
 };
 
@@ -162,14 +162,14 @@ ve.dm.MWImageModel.prototype.updateImageNode = function ( surfaceModel ) {
 		node = this.getMediaNode();
 
 	// Update the caption
-	if ( node.getType() === 'mwBlockImage' ) {
+	if ( node.getType() === 'wikiaBlockImage' ) {
 		captionNode = node.getCaptionNode();
 		if ( !captionNode ) {
 			// There was no caption before, so insert one now
 			surfaceModel.getFragment()
 				.adjustRange( 1 )
 				.collapseRangeToStart()
-				.insertContent( [ { 'type': 'mwImageCaption' }, { 'type': '/mwImageCaption' } ] );
+				.insertContent( [ { 'type': 'wikiaImageCaption' }, { 'type': '/wikiaImageCaption' } ] );
 			// Update the caption node
 			captionNode = this.getMediaNode().getCaptionNode();
 		}
@@ -237,7 +237,7 @@ ve.dm.MWImageModel.prototype.insertImageNode = function ( fragment ) {
 	];
 
 	switch ( nodeType ) {
-		case 'mwInlineImage':
+		case 'wikiaInlineImage':
 			// Try to put the image inside the nearest content node
 			offset = fragment.getDocument().data.getNearestContentOffset( fragment.getRange().start );
 			if ( offset > -1 ) {
@@ -246,7 +246,7 @@ ve.dm.MWImageModel.prototype.insertImageNode = function ( fragment ) {
 			fragment.insertContent( contentToInsert );
 			return fragment;
 
-		case 'mwBlockImage':
+		case 'wikiaBlockImage':
 			contentToInsert.splice( 1, 0, { 'type': 'mwImageCaption' }, { 'type': '/mwImageCaption' } );
 			// Try to put the image in front of the structural node
 			offset = fragment.getDocument().data.getNearestStructuralOffset( fragment.getRange().start, -1 );
@@ -309,7 +309,7 @@ ve.dm.MWImageModel.prototype.getUpdatedAttributes = function () {
 	}
 
 	// If converting from block to inline, set isLinked=true to avoid |link=
-	if ( origAttrs.isLinked === undefined && this.getImageNodeType() === 'mwInlineImage' ) {
+	if ( origAttrs.isLinked === undefined && this.getImageNodeType() === 'wikiaInlineImage' ) {
 		attrs.isLinked = true;
 	}
 
@@ -724,10 +724,10 @@ ve.dm.MWImageModel.prototype.getDefaultDir = function ( imageNodeType ) {
 
 	if ( this.getDir() === 'rtl' ) {
 		// Assume position is 'left'
-		return ( imageNodeType === 'mwBlockImage' ) ? 'left' : 'none';
+		return ( imageNodeType === 'wikiaBlockImage' ) ? 'left' : 'none';
 	} else {
 		// Assume position is 'right'
-		return ( imageNodeType === 'mwBlockImage' ) ? 'right' : 'none';
+		return ( imageNodeType === 'wikiaBlockImage' ) ? 'right' : 'none';
 	}
 };
 
