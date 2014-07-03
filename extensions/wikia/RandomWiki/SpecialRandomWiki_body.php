@@ -48,7 +48,7 @@ class RandomWiki extends SpecialPage {
 			$this->mCookie->history = array( );
 
 			if ( !empty( $wikiID ) ) {
-				$hub = WikiFactory::getCategory( $wikiID );
+				$hub = WikiFactory::getCategoryId( $wikiID );
 
 				if ( is_object( $hub ) ) {
 					$this->mCookie->origHub = $hub->cat_id;
@@ -128,7 +128,7 @@ class RandomWiki extends SpecialPage {
 		$wgRequest->response()->setcookie( self::COOKIE_NAME_TOKEN, $cookieValue, time() + ( 3600 * self::COOKIE_EXPIRY ) );
 
 		$url = WikiFactory::getVarValueByName( 'wgServer', $destinationID );
-		
+
 		//FB#1033: avoid being sent to Special:WikiActivity when logged-in, see MyHomw::getInitialMainPage
 		if ( $wgUser->isLoggedIn() ) {
 			$url .= '?redirect=no';

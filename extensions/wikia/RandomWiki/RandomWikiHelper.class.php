@@ -76,7 +76,7 @@ class RandomWikiHelper {
 
 				foreach ( $wikis as $wikiID => $pvCount ) {
 					if ( $pvCount >= $minPageViews ) {
-						$hub = WikiFactory::getCategory( $wikiID );
+						$hub = WikiFactory::getCategoryId( $wikiID );
 
 						if ( !$hub ) {
 							continue;

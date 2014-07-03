@@ -68,6 +68,7 @@ function wfJSVariablesTopScripts(Array &$vars, &$scripts) {
 }
 
 /**
+ * MW1.19 - ResourceLoaderStartUpModule class adds more variables
  * @param array $vars JS variables to be added at the bottom of the page
  * @param OutputPage $out
  * @return bool return true - it's a hook
@@ -75,21 +76,18 @@ function wfJSVariablesTopScripts(Array &$vars, &$scripts) {
 function wfMakeGlobalVariablesScript(Array &$vars, OutputPage $out) {
 	wfProfileIn(__METHOD__);
 	global $wgMemc, $wgEnableAjaxLogin, $wgPrivateTracker, $wgExtensionsPath,
-		$wgArticle, $wgSitename, $wgDisableAnonymousEditing,
+		$wgArticle, $wgSitename, $wgDisableAnonymousEditing, $wgCityId,
 		$wgGroupPermissions, $wgBlankImgUrl, $wgCookieDomain, $wgCookiePath, $wgResourceBasePath;
 
 	$skin = $out->getSkin();
 	$title = $out->getTitle();
 
-	// MW1.19 - ResourceLoaderStartUpModule class adds more variables
-	$cats = wfGetBreadCrumb();
-	$idx = count($cats)-2;
-	if(isset($cats[$idx])) {
-	    $vars['wgCatId'] = $cats[$idx]['id'];
-	    $vars['wgParentCatId'] = $cats[$idx]['parentId'];
+	$hubService = WikiFactoryHub::getInstance();
+	$verticalId = $hubService->getVerticalId( $wgCityId );
+	if( isset( $verticalId ) ) {
+		$vars['wgVerticalId'] = $verticalId;
 	} else	{
-	    $vars['wgCatId'] = 0;
-	    $vars['wgParentCatId'] = 0;
+		$vars['wgVerticalId'] = 0;
 	}
 
 	$skinName = get_class($skin);
