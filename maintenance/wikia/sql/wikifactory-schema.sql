@@ -10,29 +10,24 @@ CREATE TABLE `city_cat_mapping` (
   CONSTRAINT `city_cat_mapping_ibfk_1` FOREIGN KEY (`city_id`) REFERENCES `city_list` (`city_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-CREATE TABLE `city_cat_structure` (
-  `cat_id` int(11) default NULL,
-  `cat_parent_id` int(11) default NULL,
-  KEY `cat_id_idx` (`cat_id`),
-  KEY `cat_parent_id_idx` (`cat_parent_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
 CREATE TABLE `city_cats` (
   `cat_id` int(9) NOT NULL auto_increment,
   `cat_name` varchar(255) default NULL,
   `cat_url` text,
   `cat_short` varchar(255) DEFAULT NULL,
+  `cat_deprecated` boolean DEFAULT 0,
+  `cat_active` boolean DEFAULT 0,
   PRIMARY KEY  (`cat_id`),
   KEY `cat_name_idx` (`cat_name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-CREATE TABLE `city_hubs` (
-  `hub_id` int(9) NOT NULL auto_increment,
-  `hub_name` varchar(255) default NULL,
-  `hub_url` text,
-  `hub_short` varchar(255) DEFAULT NULL,
-  PRIMARY KEY  (`hub_id`),
-  KEY `hub_name_idx` (`hub_name`)
+CREATE TABLE `city_verticals` (
+  `vertical_id` int(9) NOT NULL auto_increment,
+  `vertical_name` varchar(255) default NULL,
+  `vertical_url` text,
+  `vertical_short` varchar(255) DEFAULT NULL,
+  PRIMARY KEY  (`vertical_id`),
+  KEY `vertical_name_idx` (`vertical_name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 CREATE TABLE `city_domains` (
