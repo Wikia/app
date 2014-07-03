@@ -1,16 +1,14 @@
 <div class="WikiaTopAds" id="WikiaTopAds">
 	<div class="WikiaTopAdsInner">
 
-		<div id="10db0330b9" class="pagefair-acceptable">
 
-			<?php echo $app->renderView('Ad', 'Index', ['slotName' => $leaderboardName, 'pageTypes' => ['homepage_logged', 'corporate', 'all_ads']]); ?>
+		<?= $app->renderView('Ad', 'Index', [
+			'slotName' => $leaderboardName,
+			'pageFairId' => isset($wg->AnalyticsProviderPageFairSlotIds['LEADERBOARD']) ? $wg->AnalyticsProviderPageFairSlotIds['LEADERBOARD'] : null,
+			'pageTypes' => ['homepage_logged', 'corporate', 'all_ads']
+		]); ?>
 
-		</div>
-		<?php
-
-		echo $app->renderView('Ad', 'Index', ['slotName' => 'TOP_BUTTON_WIDE', 'pageTypes' => ['homepage_logged', 'all_ads']]);
-
-		?>
+		<?= $app->renderView('Ad', 'Index', ['slotName' => 'TOP_BUTTON_WIDE', 'pageTypes' => ['homepage_logged', 'all_ads']]); ?>
 
 	</div>
 
