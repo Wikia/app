@@ -15,7 +15,7 @@
  */
 ve.ui.WikiaMediaInsertDialog = function VeUiMWMediaInsertDialog( config ) {
 	// Parent constructor
-	ve.ui.Dialog.call( this, config );
+	ve.ui.WikiaMediaInsertDialog.super.call( this, config );
 };
 
 /* Inheritance */
@@ -407,7 +407,6 @@ ve.ui.WikiaMediaInsertDialog.prototype.getSetupProcess = function ( data ) {
 	return ve.ui.WikiaMediaInsertDialog.super.prototype.getSetupProcess.call( this, data )
 		.next( function () {
 			this.pages.setPage( 'main' );
-
 			// If the policy height (which has a max-height property set) is the same as the first child of the policy
 			// then there is no more of the policy to show and the read more link can be hidden.
 			if ( this.$policy.height() === this.$policy.children().first().height() ) {
@@ -437,6 +436,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.onPageSet = function () {
  * @method
  * @param {string} action Which action is being performed on close.
  */
+<<<<<<< HEAD
 ve.ui.WikiaMediaInsertDialog.prototype.getTeardownProcess = function ( data ) {
 	return ve.ui.WikiaMediaInsertDialog.super.prototype.getTeardownProcess.call( this, data )
 		.first( function () {
@@ -447,6 +447,18 @@ ve.ui.WikiaMediaInsertDialog.prototype.getTeardownProcess = function ( data ) {
 			this.queryInput.setValue( '' );
 			this.dropTarget.teardown();
 		}, this );
+=======
+ve.ui.WikiaMediaInsertDialog.prototype.teardown = function ( action ) {
+	if ( action === 'insert' ) {
+		this.insertMedia( ve.copy( this.cartModel.getItems() ), this.fragment );
+	}
+	this.cartModel.clearItems();
+	this.queryInput.setValue( '' );
+	this.dropTarget.teardown();
+
+	// Parent method
+	ve.ui.WikiaMediaInsertDialog.super.prototype.teardown.call( this, action );
+>>>>>>> VE-1261 Using super
 };
 
 /**

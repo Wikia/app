@@ -17,7 +17,7 @@
  */
 ve.init.mw.WikiaViewPageTarget = function VeInitMwWikiaViewPageTarget() {
 	// Parent constructor
-	ve.init.mw.ViewPageTarget.call( this );
+	ve.init.mw.WikiaViewPageTarget.super.call( this );
 
 	this.toolbarSaveButtonEnableTracked = false;
 };

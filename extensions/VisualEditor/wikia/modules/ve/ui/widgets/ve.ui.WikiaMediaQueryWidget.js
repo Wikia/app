@@ -18,7 +18,7 @@ ve.ui.WikiaMediaQueryWidget = function VeUiWikiaMediaQueryWidget( config ) {
 	config = config || {};
 
 	// Parent constructor
-	OO.ui.Widget.call( this, config );
+	ve.ui.WikiaMediaQueryWidget.super.call( this, config );
 
 	// Properties
 	this.batch = 1;

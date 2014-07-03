@@ -22,7 +22,7 @@ ve.ce.WikiaVideoCaptionNode = function VeCeWikiaVideoCaptionNode( model, config 
 	this.$title = null;
 
 	// Parent constructor
-	ve.ce.WikiaMediaCaptionNode.call( this, model, config );
+	ve.ce.WikiaVideoCaptionNode.super.call( this, model, config );
 };
 
 /* Inheritance */

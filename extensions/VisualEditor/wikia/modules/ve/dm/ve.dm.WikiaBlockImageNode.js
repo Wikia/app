@@ -13,7 +13,7 @@
  * @param {Object} [element] Reference to element in linear model
  */
 ve.dm.WikiaBlockImageNode = function VeDmWikiaBlockImageNode( element ) {
-	ve.dm.WikiaBlockMediaNode.call( this, element );
+	ve.dm.WikiaBlockImageNode.super.call( this, element );
 };
 
 /* Inheritance */
