@@ -58,9 +58,16 @@
 	}
 }
 
-.WikiaMainContent .affiliate {
-	width: 32%;
-	padding: 8px 0px 4px 6px;
-	float: left;
-	min-width: 200px;
+
+.WikiaMainContent {
+	.affiliate {
+		width: 32%;
+		padding: 8px 0px 4px 6px;
+		float: left;
+		min-width: 200px;
+	}
+	.ad-unit {
+		margin-top: 10px;
+		margin-bottom: 10px;
+	}
 }

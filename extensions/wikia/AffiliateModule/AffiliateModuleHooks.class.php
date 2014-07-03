@@ -13,11 +13,11 @@ class AffiliateModuleHooks {
 	public static function onGetRailModuleList( &$modules ) {
 		wfProfileIn(__METHOD__);
 
-		$option = 'rail';
-		if ( AffiliateModuleHelper::canShowModule( $option ) ) {
+		$location = AffiliateModuleHelper::LOCATION_RAIL;
+		if ( AffiliateModuleHelper::canShowModule( $location ) ) {
 			// Use a different position depending on whether the user is logged in
 			$pos = F::App()->wg->User->isAnon() ? 1300 : 1275;
-			$modules[$pos] = [ 'AffiliateModule', 'index', [ 'option' => $option ] ];
+			$modules[$pos] = [ 'AffiliateModule', 'index', [ 'location' => $location ] ];
 		}
 
 		wfProfileOut(__METHOD__);

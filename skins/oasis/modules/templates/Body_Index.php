@@ -128,7 +128,7 @@
 
 				<?php
 					if ( !empty( $wg->EnableAffiliateModuleExt ) ) {
-						echo $app->renderView( 'AffiliateModule', 'showModule' );
+						echo $app->renderView( 'AffiliateModule', 'index' );
 					}
 				?>
 

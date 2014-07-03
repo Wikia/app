@@ -17,7 +17,7 @@
 	// "Add a video" button
 	if (!empty($isSpecialVideos) && !empty($wg->EnableUploads) && $showAddVideoBtn): ?>
         <a class="button addVideo" href="#" rel="tooltip" title="<?=wfMsg('related-videos-tooltip-add');?>"><img src="<?=wfBlankImgUrl();?>" class="sprite addRelatedVideo" /> <?=wfMsg('videos-add-video')?></a>
-		<? endif; 
+		<? endif;
 
 	// comments & like button
 	if( !$isWallEnabled ) {
@@ -52,6 +52,11 @@
 	}
 	?>
 </header>
+<?php
+	if ( !empty( $wg->EnableAffiliateModuleExt ) ) {
+		echo $app->renderView( 'AffiliateModule', 'index', [ 'location' => AffiliateModuleHelper::LOCATION_ARTICLE_TITLE ] );
+	}
+?>
 <?php
 // render search box
 if ($showSearchBox) {

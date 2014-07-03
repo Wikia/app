@@ -5,9 +5,8 @@ class AffiliateModuleController extends WikiaController {
 	const DEFAULT_TEMPLATE_ENGINE = WikiaResponse::TEMPLATE_ENGINE_MUSTACHE;
 
 	/**
-	 * AffiliateModule
-	 * Returns products to populate the affiliate module.
-	 * @requestParam string option [rail/bottom/bottomAds]
+	 * Affiliate Module
+	 * @requestParam string location [rail/bottom/bottom-ads/article-title]
 	 * @responseParam string title
 	 * @responseParam array products - list of products
 	 */
@@ -16,15 +15,49 @@ class AffiliateModuleController extends WikiaController {
 
 		if ( !$this->app->checkSkin( 'oasis' ) ) {
 			$this->skipRendering();
+			wfProfileOut( __METHOD__ );
 			return true;
 		}
 
-		$option = $this->request->getVal( 'option', 'bottom' );
+		$location = $this->request->getVal( 'location', AffiliateModuleHelper::LOCATION_BOTTOM );
 
-		if ( AffiliateModuleHelper::canLoadAssets( $option ) ) {
+		AffiliateModuleHelper::replaceBottomAds( $location, $this->request );
+
+		if ( !AffiliateModuleHelper::canShowModule( $location ) ) {
+			$this->skipRendering();
+			wfProfileOut( __METHOD__ );
+			return true;
+		}
+
+		if ( AffiliateModuleHelper::canLoadAssets( $location ) ) {
 			$this->response->addAsset( 'affiliate_module_css' );
 			$this->response->addAsset( 'affiliate_module_js' );
 		}
+
+		$type = $this->wg->AffiliateModuleOptions[$location];
+		if ( !method_exists( $this, $type ) ) {
+			$this->skipRendering();
+			wfProfileOut( __METHOD__ );
+			return true;
+		}
+
+		$this->forward( __CLASS__, $type );
+
+		wfProfileOut( __METHOD__ );
+	}
+
+	/**
+	 * Affiliate Unit
+	 * @requestParam string location [rail/bottom/bottom-ads/article-title]
+	 * @responseParam string moduleTitle
+	 * @responseParam string buttonLabel
+	 * @responseParam string className
+	 * @responseParam array products - list of products
+	 */
+	public function affiliateUnit() {
+		wfProfileIn( __METHOD__ );
+
+		$location = $this->request->getVal( 'location', AffiliateModuleHelper::LOCATION_BOTTOM );
 
 		$products = [
 			[
@@ -56,29 +89,27 @@ class AffiliateModuleController extends WikiaController {
 		$this->moduleTitle = wfMessage( 'affiliate-module-title' )->escaped();
 		$this->products = $products;
 		$this->buttonLabel = wfMessage( 'affiliate-module-button-label' )->plain();
-		$this->className = ( $option == 'rail' ) ? 'module' : '';
-		$this->option = $option;
+		$this->className = ( $location == AffiliateModuleHelper::LOCATION_RAIL ) ? 'module' : '';
+		$this->location = $location;
 
 		wfProfileOut( __METHOD__ );
 	}
 
 	/**
-	 * Show affiliate module at the bottom of the page
+	 * Ad Unit
+	 * @requestParam string location [rail/bottom/bottom-ads/article-title]
+	 * @responseParam string location [rail/bottom/bottom-ads/article-title]
+	 * @responseParam string adClient
+	 * @responseParam string adSlot
 	 */
-	public function showModule() {
-		$option = 'bottom';
-		if ( AffiliateModuleHelper::canShowModule( 'bottomAds' ) ) {
-			$this->wg->HideBottomAds = true;
-			$option = 'bottomAds';
-		}
+	public function adUnit() {
+		wfProfileIn( __METHOD__ );
 
-		if ( !AffiliateModuleHelper::canShowModule() && empty( $this->wg->HideBottomAds ) ) {
-			$this->skipRendering();
-			return true;
-		}
+		$this->location = $this->request->getVal( 'location', AffiliateModuleHelper::LOCATION_ARTICLE_TITLE );
+		$this->adClient = $this->wg->GoogleAdClient;
+		$this->adSlot = '6789179427';
 
-		$this->request->setVal( 'option', $option );
-		$this->forward( 'AffiliateModule', 'index' );
+		wfProfileOut( __METHOD__ );
 	}
 
 }
