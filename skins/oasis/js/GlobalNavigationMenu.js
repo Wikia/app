@@ -1,6 +1,7 @@
 jQuery(function(){
+	'use strict';
+
 	require([ 'jquery', 'wikia.ui.factory', 'wikia.nirvana' ], function ($, uiFactory, nirvana) {
-		'use strict';
 
 		/* jshint maxlen: false */
 
@@ -93,15 +94,16 @@ jQuery(function(){
 					});
 					submenu0.innerHTML = html[0];
 					submenu1.innerHTML = html[1];
-
-				}).on('mouseleave', function() {
-					closeHub();
 				});
 
 				if (navigator.userAgent.toLowerCase().indexOf('android') === -1) {
+					$globalNavigationNav.on('mouseleave', function() {
+						closeHub();
+					});
+
 					$WikiaHeader.on('mouseenter', '#GlobalNavigationMenuButton', function(e) {
-							e.preventDefault();
-							openHub();
+						e.preventDefault();
+						openHub();
 					});
 				}
 
