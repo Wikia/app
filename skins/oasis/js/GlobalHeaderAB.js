@@ -21,7 +21,7 @@ $(function(){
 
 		// building search
 		$globalSearch = $( '<li>' ).addClass( 'global-search' ),
-		localSearchUrl = window.location.origin + "/Special:Search",
+		localSearchUrl = window.location.origin + "/wiki/Special:Search",
 		$form = $( '<form>' )
 			.addClass( 'search-form' )
 			.attr( 'method', 'get' )
