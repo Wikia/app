@@ -380,10 +380,10 @@
 		updateAnchor: function (event) {
 			var $img, $anchor;
 			$img = $(event.target);
-			$anchor = $(event.target).parent('a');
+			$anchor = $img.parent('a');
 
 			// Don't redirect to raw thumbnail image for videos
-			if ($(event.target).parent().hasClass(('video-thumbnail'))) {
+			if ($anchor.hasClass(('video-thumbnail'))) {
 				return;
 			}
 			// If right-click, control key, or meta key were used
