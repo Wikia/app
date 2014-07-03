@@ -206,8 +206,7 @@ window.AdEngine_loadLateAds = function () {
 
 			log([
 				'time to: ' + timeTo,
-				'adsinhead: ' + adsInHead,
-				'lateadsafterload: ' + adsAfterPageLoad,
+				experimentName.join(';'),
 				'wgNowBased: ' + wgNowBased,
 				'performanceBased: ' + performanceBased
 			], 'info', 'AdEngine_track');
