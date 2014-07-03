@@ -70,7 +70,6 @@ var WikiaPhotoGalleryView = {
 				linkType = 'link-external';
 			}
 
-			console.log("Tracking gallery click " + linkType);
 			Wikia.Tracker.track({
 				action: 'click',
 				category: 'article',

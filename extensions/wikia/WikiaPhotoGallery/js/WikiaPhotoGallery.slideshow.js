@@ -63,7 +63,6 @@ var WikiaPhotoGallerySlideshow = {
 				linkType = 'link-external';
 			}
 
-			console.log("Tracking slideshow click " + linkType);
 			Wikia.Tracker.track({
 				action: 'click',
 				category: 'article',
