@@ -62,11 +62,11 @@ var WikiaPhotoGalleryView = {
 			var linkClass = this.className;
 			var linkType = 'unknown';
 
-			if ( linkClass.indexOf( 'lightbox' ) != -1 ) {
+			if (linkClass.indexOf('lightbox') !== -1) {
 				linkType = 'lightbox';
-			} else if ( linkClass.indexOf( 'link-internal' ) != -1 ) {
+			} else if (linkClass.indexOf('link-internal') !== -1) {
 				linkType = 'link-internal';
-			} else if ( linkClass.indexOf( 'link-external' ) != -1 ) {
+			} else if (linkClass.indexOf('link-external') !== -1) {
 				linkType = 'link-external';
 			}
 

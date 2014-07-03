@@ -57,9 +57,9 @@ var WikiaPhotoGallerySlideshow = {
 		slideshow.find('a.wikia-slideshow-image').click(function(ev) {
 			var linkType = 'lightbox';
 
-			if ( this.className.indexOf( 'link-internal' ) != -1 ) {
+			if (this.className.indexOf('link-internal') !== -1) {
 				linkType = 'link-internal';
-			} else if ( this.className.indexOf( 'link-external' ) != -1 ) {
+			} else if (this.className.indexOf('link-external') !== -1) {
 				linkType = 'link-external';
 			}
 
