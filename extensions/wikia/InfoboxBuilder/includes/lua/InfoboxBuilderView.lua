@@ -13,7 +13,7 @@ function InfoboxBuilderView.render( input, vars )
 	InfoboxBuilderView.vars = vars
 
 	local Infobox = mw.html.create('div')
-    Infobox:addClass( InfoboxBuilderView.vars.Theme .. 'InfoboxContainer')
+    Infobox:addClass( InfoboxBuilderView.vars.Theme .. 'infobox-container')
  
 	    local table = Infobox:tag('table')
 	          table:attr('cellspacing', '0')
@@ -64,26 +64,26 @@ end
 function InfoboxBuilderView.addRowLine( field )
     
     local row = mw.html.create('tr')
-      row:addClass( InfoboxBuilderView.vars.Theme .. 'InfoboxLine' )
+      row:addClass( InfoboxBuilderView.vars.Theme .. '-infobox-line' )
       if not HF.isempty( field.CssClass ) then
         row:addClass( field.CssClass )
       end
       row:tag('td')
-         :addClass( InfoboxBuilderView.vars.Theme .. 'InfoboxLineLeft' )
+         :addClass( InfoboxBuilderView.vars.Theme .. '-infobox-line-left' )
          :wikitext( field.Label )
          :done()
 
     if string.len( field.Value ) > tonumber( InfoboxBuilderView.vars.ToggleContentLongerThan ) then
       local cell = row:tag('td')
-      cell:addClass( InfoboxBuilderView.vars.Theme .. 'InfoboxLineRight' )
+      cell:addClass( InfoboxBuilderView.vars.Theme .. '-infobox-line-right' )
         cell:tag('div')
-            :addClass('mw-collapsible mw-collapsed ' .. InfoboxBuilderView.vars.Theme .. 'InfoboxToggleContent')
+            :addClass('mw-collapsible mw-collapsed ' .. InfoboxBuilderView.vars.Theme .. '-infobox-toggle-content')
             :wikitext( field.Value )
             :done()
       row:done()
     else
       row:tag('td')
-         :addClass( InfoboxBuilderView.vars.Theme .. 'InfoboxLineRight' )
+         :addClass( InfoboxBuilderView.vars.Theme .. '-infobox-line-right' )
          :wikitext( field.Value )
          :done()
     end
@@ -99,7 +99,7 @@ function InfoboxBuilderView.addRowHeader( field )
 		row:addClass( field.CssClass )
 	end
       row:tag('td')
-         :addClass( InfoboxBuilderView.vars.Theme .. 'InfoboxHeader' )
+         :addClass( InfoboxBuilderView.vars.Theme .. '-infobox-header' )
          :attr('colspan', '2') 
          :wikitext( field.Value )
     return row
@@ -109,7 +109,7 @@ end
 function InfoboxBuilderView.addRowTitle( field )
   local row = mw.html.create('tr')
     row:tag('td')
-       :addClass( InfoboxBuilderView.vars.Theme .. 'InfoboxTitle' )
+       :addClass( InfoboxBuilderView.vars.Theme .. '-infobox-title' )
        :attr('colspan', '2')
        :wikitext( field.Value )
   return row
@@ -120,14 +120,14 @@ function InfoboxBuilderView.addRowMainImage( field )
 
   local row1 = node:tag('tr')
     row1:tag('td')
-        :addClass( InfoboxBuilderView.vars.Theme .. 'InfoboxMainImage' )
+        :addClass( InfoboxBuilderView.vars.Theme .. '-infobox-main-image' )
         :attr('colspan', '2')
         :wikitext( field.Value ) 
 
   if InfoboxBuilderView.vars.MainImageCaption == "On" then
     local row2 = node:tag('tr')
       row2:tag('td')
-          :addClass( InfoboxBuilderView.vars.Theme .. 'InfoboxMainImageCaption' )
+          :addClass( InfoboxBuilderView.vars.Theme .. '-infobox-main-image-caption' )
           :attr('colspan', '2')
           :wikitext( field.Label )
   end
@@ -140,13 +140,13 @@ function InfoboxBuilderView.addRowImage( field )
   
   local row1 = node:tag('tr')
     row1:tag('td')
-        :addClass( InfoboxBuilderView.vars.Theme .. 'InfoboxImage' )
+        :addClass( InfoboxBuilderView.vars.Theme .. '-infobox-main-image' )
         :attr('colspan', '2')
         :wikitext( field.Value ) 
 
   local row2 = node:tag('tr')
     row2:tag('td')
-        :addClass( InfoboxBuilderView.vars.Theme .. 'InfoboxImageCaption' )
+        :addClass( InfoboxBuilderView.vars.Theme .. '-infobox-image-caption' )
         :attr('colspan', '2')
         :wikitext( field.Label )
 
@@ -156,7 +156,7 @@ end
 function InfoboxBuilderView.addRowFooter( field )
   local row = mw.html.create('tr')
     row:tag('td')
-       :addClass( InfoboxBuilderView.vars.Theme .. 'InfoboxFooter' )
+       :addClass( InfoboxBuilderView.vars.Theme .. '-infobox-footer' )
        :attr('colspan', '2')
        :wikitext( field.Value )
   return row
@@ -167,14 +167,14 @@ function InfoboxBuilderView.addRowSplit( field )
   local node = mw.html.create('')
   
   local labelLeft = mw.html.create('td')
-    labelLeft:addClass( InfoboxBuilderView.vars.Theme .. 'InfoboxSplitLabelLeft' )
+    labelLeft:addClass( InfoboxBuilderView.vars.Theme .. '-infobox-split-label-left' )
   local valueLeft = mw.html.create('td')
-    valueLeft:addClass( InfoboxBuilderView.vars.Theme .. 'InfoboxSplitValueLeft' )
+    valueLeft:addClass( InfoboxBuilderView.vars.Theme .. '-infobox-split-value-left' )
 
   local labelRight = mw.html.create('td')
-    labelRight:addClass( InfoboxBuilderView.vars.Theme .. 'InfoboxSplitLabelRight' )
+    labelRight:addClass( InfoboxBuilderView.vars.Theme .. '-infobox-split-label-right' )
   local valueRight = mw.html.create('td')
-    valueRight:addClass( InfoboxBuilderView.vars.Theme .. 'InfoboxSplitValueRight' )
+    valueRight:addClass( InfoboxBuilderView.vars.Theme .. '-infobox-split-value-right' )
 
   if type( field.Label ) == "string" then
     labelLeft:wikitext( field.Label )
@@ -207,7 +207,7 @@ end
 
 function InfoboxBuilderView.addRowCustom( field )
   local node = mw.html.create( field.Label )
-        node:addClass( InfoboxBuilderView.vars.Theme .. 'InfoboxCustom' )
+        node:addClass( InfoboxBuilderView.vars.Theme .. '-infobox-custom' )
             :wikitext( field.Value )
         if not HF.isempty( field.CssClass ) then
         	node:addClass( field.CssClass )
