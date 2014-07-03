@@ -631,12 +631,15 @@ ve.ce.Surface.prototype.onDocumentDragOver = function ( e ) {
  * @param {jQuery.Event} e Drag drop event
  */
 ve.ce.Surface.prototype.onDocumentDrop = function ( e ) {
+	// Properties may be nullified by other events, so cache before setTimeout
 	var focusedNode = this.relocating,
+		$dropTarget = this.$lastDropTarget,
+		dropPosition = this.lastDropPosition,
 		rangeJSON = e.originalEvent.dataTransfer.getData( 'application-x/VisualEditor' );
 
 	// Process drop operation after native drop has been prevented below
 	setTimeout( ve.bind( function () {
-		var dragRange, dropPosition, originFragment, originData, targetRange, targetOffset, targetFragment;
+		var dragRange, dropNodePosition, originFragment, originData, targetRange, targetOffset, targetFragment;
 
 		if ( focusedNode ) {
 			dragRange = focusedNode.getModel().getOuterRange();
@@ -647,9 +650,9 @@ ve.ce.Surface.prototype.onDocumentDrop = function ( e ) {
 		if ( dragRange && !dragRange.isCollapsed() ) {
 			if ( focusedNode && !focusedNode.getModel().isContent() ) {
 				// Block level drag and drop: use the lastDropTarget to get the targetOffset
-				if ( this.$lastDropTarget ) {
-					targetRange = this.$lastDropTarget.data( 'view' ).getModel().getOuterRange();
-					if ( this.lastDropPosition === 'top' ) {
+				if ( $dropTarget ) {
+					targetRange = $dropTarget.data( 'view' ).getModel().getOuterRange();
+					if ( dropPosition === 'top' ) {
 						targetOffset = targetRange.start;
 					} else {
 						targetOffset = targetRange.end;
@@ -659,14 +662,14 @@ ve.ce.Surface.prototype.onDocumentDrop = function ( e ) {
 				}
 			} else {
 				// Calculate the drop point
-				dropPosition = rangy.positionFromPoint(
+				dropNodePosition = rangy.positionFromPoint(
 					e.originalEvent.pageX - this.$document.scrollLeft(),
 					e.originalEvent.pageY - this.$document.scrollTop()
 				);
-				if ( !dropPosition ) {
+				if ( !dropNodePosition ) {
 					return;
 				}
-				targetOffset = ve.ce.getOffset( dropPosition.node, dropPosition.offset );
+				targetOffset = ve.ce.getOffset( dropNodePosition.node, dropNodePosition.offset );
 			}
 			targetFragment = this.getModel().getFragment( new ve.Range( targetOffset ), false );
 
