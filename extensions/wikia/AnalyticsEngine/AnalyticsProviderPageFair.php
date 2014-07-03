@@ -15,9 +15,9 @@ class AnalyticsProviderPageFair implements iAnalyticsProvider
 
 	function trackEvent( $event, $eventDetails = array() )
 	{
-		global $wgAnalyticsProviderPageFair, $wgShowAds;
+		global $wgEnableAdEngineExt, $wgAnalyticsProviderPageFair, $wgShowAds;
 
-		if (!$wgAnalyticsProviderPageFair || !$wgShowAds || !AdEngine2Service::areAdsShowableOnPage()) {
+		if (!$wgEnableAdEngineExt || !$wgAnalyticsProviderPageFair || !$wgShowAds || !AdEngine2Service::areAdsShowableOnPage()) {
 			return '';
 		}
 

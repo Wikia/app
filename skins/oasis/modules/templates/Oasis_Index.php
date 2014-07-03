@@ -105,6 +105,7 @@
 <?php } ?>
 <?= $bottomScripts ?>
 <?= $cssPrintLinks ?>
+
 </body>
 
 <?= wfReportTime() . "\n" ?>
