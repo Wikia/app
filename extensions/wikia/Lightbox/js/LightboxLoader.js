@@ -65,7 +65,8 @@
 				$comments = $('#WikiaArticleComments'), // event handled with $footer
 				$footer = $('#WikiaArticleFooter'), // bottom videos module
 				$videosModule = $('.videos-module-rail'), // right rail videos module
-				$videoHomePage = $('#latest-videos-wrapper');
+				$videoHomePage = $('#latest-videos-wrapper'),
+				$articleThumbs = $('.article-thumb-wrapper');
 
 			// Bind click event to initiate lightbox
 			$article.add($photos).add($footer).add($videosModule)
@@ -81,11 +82,6 @@
 						clickSource;
 
 					if (!LightboxLoader.hasLightbox($this, $thumb, e)) {
-						// Redirect to raw image for article thumbnails - VID-1788
-						if ($this.parent('div').hasClass('article-thumb-wrapper')) {
-							e.preventDefault();
-							window.open($thumb.attr('src'));
-						}
 						return;
 					}
 
@@ -165,6 +161,13 @@
 					}
 				);
 
+			$articleThumbs
+				.on(
+					'mousedown',
+					function(event) {
+						LightboxLoader.updateAnchor(event);
+					}
+				);
 		},
 
 		/**
@@ -368,6 +371,25 @@
 				event.metaKey ||
 				event.ctrlKey
 			);
+		},
+
+		/**
+		 *
+		 * @param event
+		 */
+		updateAnchor: function (event) {
+			var $img, $anchor;
+			$img = $(event.target);
+			$anchor = $(event.target).parent('a');
+
+			// If right-click, control key, or meta key were used
+			if(event.which === 3 || event.crtlKey || event.metaKey) {
+				// Change to anchor to point to the raw image file
+				$anchor.attr('old-href', $anchor.attr('href'));
+				$anchor.attr('href', $img.attr('src'));
+			} else if ($anchor.attr('old-href') !== 'undefined') {
+				$anchor.attr('href', $anchor.attr('old-href'));
+			}
 		}
 	};
 
