@@ -14,12 +14,12 @@ class RemoveUserRightsTask extends BaseTask {
 	public function removeRightsFromAllWikias( $userId ) {
 		$db = wfGetDB( DB_MASTER );
 
-		(new \WikiaSQL())
-			->SELECT('city_list')
-			->FROM('city_dbname')
-			->WHERE('city_public')->EQUAL_TO(1)
-			->runLoop($db,
-				function( &$dataCollector, $row ) use ( $userId ) {
+		( new \WikiaSQL() )
+			->SELECT( 'city_list' )
+			->FROM( 'city_dbname' )
+			->WHERE( 'city_public' )->EQUAL_TO( 1 )
+			->runLoop( $db,
+				function ( &$dataCollector, $row ) use ( $userId ) {
 					$wikiaDbName = $row[ 'city_dbname' ];
 					$this->removeAndRememberUserGroups( $userId, $wikiaDbName );
 				}
@@ -39,7 +39,7 @@ class RemoveUserRightsTask extends BaseTask {
 
 		$groups = $this->fetchUserGroups( $userId, $db );
 
-		if( !empty( $groups ) ) {
+		if ( !empty( $groups ) ) {
 
 			$this->removeUserGroups( $userId, $db );
 
@@ -57,13 +57,13 @@ class RemoveUserRightsTask extends BaseTask {
 	protected function fetchUserGroups( $userId, &$db ) {
 
 		$groups =
-			(new \WikiaSQL())
-				->SELECT('user_groups')
-				->FROM('ug_group')
-				->WHERE('ug_user')->EQUAL_TO($userId)
-				->runLoop($db,
-					function (&$dataCollector, $row) {
-						$dataCollector[] = $row[ 'ug_group' ];
+			( new \WikiaSQL() )
+				->SELECT( 'user_groups' )
+				->FROM( 'ug_group' )
+				->WHERE( 'ug_user' )->EQUAL_TO( $userId )
+				->runLoop( $db,
+					function ( &$dataCollector, $row ) {
+						$dataCollector[ ] = $row[ 'ug_group' ];
 					}
 				);
 
@@ -77,10 +77,10 @@ class RemoveUserRightsTask extends BaseTask {
 	 * @param $db
 	 */
 	protected function removeUserGroups( $userId, &$db ) {
-		(new \WikiaSQL())
-			->DELETE('user_groups')
-			->WHERE('ug_user')->EQUAL_TO($userId)
-			->run($db);
+		( new \WikiaSQL() )
+			->DELETE( 'user_groups' )
+			->WHERE( 'ug_user' )->EQUAL_TO( $userId )
+			->run( $db );
 	}
 
 	/**
@@ -102,8 +102,8 @@ class RemoveUserRightsTask extends BaseTask {
 		}
 
 		// Batch insert to database
-		(new \WikiaSQL())
-			->INSERT('user_former_groups',
+		( new \WikiaSQL() )
+			->INSERT( 'user_former_groups',
 				$rowsToInsert
 			);
 	}
@@ -112,6 +112,6 @@ class RemoveUserRightsTask extends BaseTask {
 	 * Disabling execution via Special:Tasks
 	 */
 	public function getAdminExecuteableMethods() {
-		return [];
+		return [ ];
 	}
 }
