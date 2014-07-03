@@ -88,7 +88,7 @@
 						if ( !WikiaPageType::isCorporatePage() && !$wg->EnableVideoPageToolExt && WikiaPageType::isMainPage() ) {
 							echo $app->renderView('Ad', 'Index', [
 								'slotName' => 'HOME_TOP_RIGHT_BOXAD',
-								'pageFairId' => isset($wgAnalyticsProviderPageFairSlotIds['MEDREC']) ? $wgAnalyticsProviderPageFairSlotIds['MEDREC'] : null,
+								'pageFairId' => isset($wg->AnalyticsProviderPageFairSlotIds['MEDREC']) ? $wg->AnalyticsProviderPageFairSlotIds['MEDREC'] : null,
 								'pageTypes' => ['homepage_logged', 'corporate', 'all_ads']
 							]);
 						}
