@@ -16,8 +16,6 @@ class PiratesController extends WikiaController {
 	}
 
 	public function init() {
-		global $wgResourceModules;
-
 		$this->assetsManager = AssetsManager::getInstance();
 
 		$skinVars = $this->app->getSkinTemplateObj()->data;
@@ -218,6 +216,7 @@ class PiratesController extends WikiaController {
 		$jsReferences = array();
 
 		$jsAssetGroups = array( 'oasis_blocking' );
+
 		wfRunHooks('OasisSkinAssetGroupsBlocking', array(&$jsAssetGroups));
 		$blockingScripts = $this->assetsManager->getURL($jsAssetGroups);
 
@@ -228,7 +227,6 @@ class PiratesController extends WikiaController {
 
 			$this->globalBlockingScripts .= "<script type=\"$wgJsMimeType\" src=\"$blockingFile\"></script>";
 		}
-
 		// move JS files added to OutputPage to list of files to be loaded
 
 		$scripts = RequestContext::getMain()->getSkin()->getScripts();
@@ -310,7 +308,6 @@ class PiratesController extends WikiaController {
 			$this->bottomScripts = $bottomScripts;
 			$this->jsFiles = $jsFiles;
 		}
-
 
 		if (!$wgEnableRHonDesktop) {
 			$this->jsFiles = AdEngine2Controller::getLiftiumOptionsScript() . $this->jsFiles;

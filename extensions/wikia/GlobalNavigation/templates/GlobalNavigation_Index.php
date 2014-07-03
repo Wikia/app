@@ -5,25 +5,35 @@
 		</div>
 	</div>
 <? endif; ?>
-<header class="WikiaHeader v2 hide-new-wiki" id="WikiaHeader">
+<header id="WikiaHeader" class="WikiaHeader<?= (empty($wg->WikiaSeasonsGlobalHeader) ? '' : ' WikiaSeasonsGlobalHeader') ?>">
 	<div class="wikia-header-mask">
 		<div class="page-width-container">
+			<? if ( !empty($isGameStarLogoEnabled )) echo $app->renderView('GameStarLogo', 'Index'); ?>
 			<nav>
+				<? if ( $displayHeader ): ?>
+					<h1><?= wfMsgHtml('oasis-global-nav-header'); ?></h1>
+				<? endif; ?>
 				<ul>
-					<li id="GlobalNavigationMenuButton">Menu</li><li class="WikiaLogo">
-						<a rel="nofollow" href="http://www.wikia.com/Wikia"><img width="91" height="23" alt="Wikia" class="sprite logo" src="data:image/gif;base64,R0lGODlhAQABAIABAAAAAP///yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D"></a>
+					<li class="WikiaLogo">
+						<a href="<?= htmlspecialchars($centralUrl) ?>" rel="nofollow"><img src="<?= $wg->BlankImgUrl ?>" class="sprite logo" height="23" width="91" alt="Wikia"></a>
 					</li>
 					<li class="start-a-wiki">
-						<a class="wikia-button" href="http://www.lukaszk.wikia-dev.com/Special:CreateNewWiki">Create a wiki</a>
+						<a href="<?= htmlspecialchars($createWikiUrl) ?>" class="wikia-button"><?= wfMsgHtml('oasis-global-nav-create-wiki'.$altMessage); ?></a>
 					</li>
-					<li class="global-search no-verticals">
-						<form class="search-form" method="get" action="http://www.lukaszk.wikia-dev.com/Special:Search">
-							<input type="text" class="search-box" accesskey="f" autocomplete="off" name="search" placeholder="Search...">
-							<input type="hidden" name="resultsLang" value="en"><input type="hidden" name="fulltext" value="Search">
-							<input type="submit" class="search-button" value="Search this Wikia">
-							<input type="submit" class="search-button alternative" value="Search all Wikia">
-						</form>
+					<li>
+						<ul id="GlobalNavigation" class="GlobalNavigation<?= $wg->GlobalHeaderVerticalColors ? ' vertical-colors' : '' ?>" data-hash="<?= $menuNodesHash ?>">
+							<? if(is_array($topNavMenuItems)): ?>
+								<? foreach($topNavMenuItems as $topNavIndex): ?>
+									<? $topNavItem = $menuNodes[$topNavIndex] ?>
+									<li class="topNav <?= str_replace(' ', '_', $topNavItem['text']) ?> <?php if( isset($topNavItem['specialAttr']) ) { echo str_replace(' ', '_', $topNavItem['specialAttr']); } ?>" data-index="<?= $topNavIndex?>">
+										<a href="<?= $topNavItem['href'] ?>"><?= $topNavItem['text'] ?><img src="<?= $wg->BlankImgUrl; ?>" class="chevron" height="0" width="0"></a>
+										<ul class="subnav"></ul>
+									</li>
+								<? endforeach ?>
+							<? endif ?>
+						</ul>
 					</li>
+					<?= (empty($wg->WikiaSeasonsGlobalHeader) ? '' : $app->renderView('WikiaSeasons', 'globalHeaderLights', array())); ?>
 				</ul>
 			</nav>
 			<?= $app->renderView('AccountNavigation', 'Index') ?>
