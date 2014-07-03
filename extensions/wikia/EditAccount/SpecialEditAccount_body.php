@@ -403,10 +403,8 @@ class EditAccount extends SpecialPage {
 
 		// submit asynchronous task for removing all user's rights from all Wikias
 		$task = new RemoveUserRightsTask();
-		(new AsyncTaskList())
-			->add($task->call('removeRightsFromAllWikias', $user->getId()))
-			->queue();
-
+		$task->call('removeRightsFromAllWikias', $user->getId());
+		$task->queue();
 
 		# close account and invalidate cache + cluster data
 		Wikia::invalidateUser( $user, true, $keepEmail, true );
