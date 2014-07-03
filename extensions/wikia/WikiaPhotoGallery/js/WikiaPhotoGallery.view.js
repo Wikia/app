@@ -9,7 +9,7 @@ var WikiaPhotoGalleryView = {
 	},
 
 	getArticle: function() {
-		return (window.skin == 'oasis') ? $('#WikiaArticle') : $('#bodyContent');
+		return (window.skin == 'oasis' || window.skin == 'pirates') ? $('#WikiaArticle') : $('#bodyContent');
 	},
 
 	// check are we on view page
@@ -59,7 +59,7 @@ var WikiaPhotoGalleryView = {
 		}
 
 		// BugID: 93490 - Only show the add button in oasis
-		if (window.skin == 'oasis') {
+		if (window.skin == 'oasis' || window.skin == 'pirates') {
 			var addButtonSelector = '.wikia-photogallery-add'
 
 			galleries.addClass("inited").
@@ -111,7 +111,7 @@ var WikiaPhotoGalleryView = {
 						hover(
 							// onmousein - highlight the gallery
 							function(ev) {
-								if (window.skin == 'oasis') { return; }
+								if (window.skin == 'oasis' || window.skin == 'pirates') { return; }
 
 								var gallery = $(this).closest('.wikia-gallery');
 
@@ -126,7 +126,7 @@ var WikiaPhotoGalleryView = {
 
 							// onmouseout
 							function (ev) {
-								if (window.skin == 'oasis') { return; }
+								if (window.skin == 'oasis' || window.skin == 'pirates') { return; }
 
 								var gallery = $(this).closest('.wikia-gallery');
 
