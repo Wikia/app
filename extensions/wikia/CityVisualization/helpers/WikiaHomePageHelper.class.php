@@ -546,9 +546,11 @@ class WikiaHomePageHelper extends WikiaModel {
 				$wikiInfo['blocked'] = intval(CityVisualization::isBlockedWiki($wikiData['flags']));
 
 				$wikiInfo['images'] = array();
+				$wikiData['main_image'] = PromoImage::forWikiId(PromoImage::MAIN, $wikiId)->getReviewedImageName();
 				if (!empty($wikiData['main_image'])) {
 					$wikiInfo['images'][] = $wikiData['main_image'];
 				}
+
 
 				$wikiData['images'] = (!empty($wikiData['images'])) ? ((array)$wikiData['images']) : array();
 
@@ -589,10 +591,6 @@ class WikiaHomePageHelper extends WikiaModel {
 		}
 	}
 
-	/**
-	 * @deprecated
-	 * but not really, just need to refactor usage
-	 */
 	public function getImageData($imageName, $width = null, $height = null, $thumbWidth = null, $thumbHeight = null) {
 		$requestedWidth = !empty($width) ? $width : self::INTERSTITIAL_LARGE_IMAGE_WIDTH;
 		$requestedHeight = !empty($height) ? $height : self::INTERSTITIAL_LARGE_IMAGE_HEIGHT;

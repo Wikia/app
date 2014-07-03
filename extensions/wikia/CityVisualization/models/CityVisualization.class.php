@@ -502,7 +502,6 @@ class CityVisualization extends WikiaModel {
 					'city_title',
 					self::CITY_VISUALIZATION_TABLE_NAME . '.city_headline',
 					self::CITY_VISUALIZATION_TABLE_NAME . '.city_description',
-					self::CITY_VISUALIZATION_TABLE_NAME . '.city_main_image',
 					self::CITY_VISUALIZATION_TABLE_NAME . '.city_flags',
 					self::CITY_VISUALIZATION_TABLE_NAME . '.city_images',
 				),
