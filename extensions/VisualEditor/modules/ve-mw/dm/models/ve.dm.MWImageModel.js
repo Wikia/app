@@ -117,7 +117,7 @@ ve.dm.MWImageModel.static.newFromImageNode = function ( node ) {
 	node.syncScalableToType();
 
 	// If this is a block image, get the caption
-	if ( node.getType() === 'mwBlockImage' ) {
+	if ( node instanceof ve.dm.MWBlockImageNode ) {
 		captionNode = node.getCaptionNode();
 		if ( captionNode && captionNode.getLength() > 0 ) {
 			imgModel.setCaptionDocument( doc.cloneFromRange( captionNode.getRange() ) );
