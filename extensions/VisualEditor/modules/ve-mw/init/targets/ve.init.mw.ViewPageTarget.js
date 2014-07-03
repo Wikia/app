@@ -568,7 +568,6 @@ ve.init.mw.ViewPageTarget.prototype.onSaveErrorNewUser = function ( isAnon ) {
  * @param {Object} editApi
  */
 ve.init.mw.ViewPageTarget.prototype.onSaveErrorCaptcha = function ( editApi ) {
-	this.saveDialog.popPending();
 	// Wikia change: Only support reCAPTCHA
 	this.captcha = {};
 	this.saveDialog.frame.$element[0].contentWindow.Recaptcha.create(
@@ -577,6 +576,7 @@ ve.init.mw.ViewPageTarget.prototype.onSaveErrorCaptcha = function ( editApi ) {
 		{ theme: 'white' }
 	);
 	this.saveDialog.$frame.addClass( 'oo-ui-window-frame-captcha' );
+	this.saveDialog.popPending();
 
 	this.events.trackSaveError( 'captcha' );
 };
