@@ -96,7 +96,8 @@ jQuery(function(){
 					submenu1.innerHTML = html[1];
 				});
 
-				if (navigator.userAgent.toLowerCase().indexOf('android') === -1) {
+				if (navigator.userAgent.toLowerCase().indexOf('android') === -1 &&
+					navigator.userAgent.toLowerCase().indexOf('ipad') === -1) {
 					$globalNavigationNav.on('mouseleave', function() {
 						closeHub();
 					});
