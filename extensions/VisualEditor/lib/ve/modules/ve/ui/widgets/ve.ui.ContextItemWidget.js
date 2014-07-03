@@ -25,7 +25,7 @@ ve.ui.ContextItemWidget = function VeUiContextItemWidget( data, tool, model, con
 
 	// Initialization
 	this.$element.addClass( 've-ui-contextItemWidget' );
-	this.setIcon( this.tool.static.icon );
+	this.setIcon( this.tool.static.contextIcon || this.tool.static.icon );
 	this.setLabel( this.getDescription() );
 };
 
