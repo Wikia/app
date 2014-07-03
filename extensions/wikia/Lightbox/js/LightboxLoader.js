@@ -382,6 +382,10 @@
 			$img = $(event.target);
 			$anchor = $(event.target).parent('a');
 
+			// Don't redirect to raw thumbnail image for videos
+			if ($(event.target).parent().hasClass(('video-thumbnail'))) {
+				return;
+			}
 			// If right-click, control key, or meta key were used
 			if(event.which === 3 || event.crtlKey || event.metaKey) {
 				// Change to anchor to point to the raw image file
