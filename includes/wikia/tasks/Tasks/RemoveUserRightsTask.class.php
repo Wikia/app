@@ -25,8 +25,6 @@ class RemoveUserRightsTask extends BaseTask {
 					$this->removeAndRememberUserGroups( $userId, $wikiaDbName );
 				}
 			);
-
-		return 'OK';
 	}
 
 	/**
