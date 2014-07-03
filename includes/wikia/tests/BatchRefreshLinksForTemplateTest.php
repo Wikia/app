@@ -4,30 +4,21 @@ use Wikia\Tasks\Tasks\BatchRefreshLinksForTemplate;
 
 class BatchRefreshLinksForTemplateTest extends PHPUnit_Framework_TestCase {
 
-	public function testBatchRefreshLinksForTemplateSerialize() {
-		$start = 1;
-		$end   = 10;
-
-		$task = new BatchRefreshLinksForTemplate( $start, $end );
-		$serializedTask = serialize( $task );
-
-		$unserializedTask = unserialize( $serializedTask );
-		$this->assertEquals( $start, $unserializedTask->getStart() );
-		$this->assertEquals( $end, $unserializedTask->getEnd() );
-	}
-
 	public function testIsValidTask() {
 		$title = $this->getMock( '\Title' );
 		$start = 1;
 		$end   = 2;
 
-		$task = new BatchRefreshLinksForTemplate( null, null );
+		$task = new BatchRefreshLinksForTemplate();
+		$task->setStartAndEndBoundaries( null, null );
 		$this->assertFalse( $task->isValidTask() );
 
-		$task = new BatchRefreshLinksForTemplate( $start, $end );
+		$task = new BatchRefreshLinksForTemplate();
+		$task->setStartAndEndBoundaries( $start, $start );
 		$this->assertFalse( $task->isValidTask() );
 
-		$task = new BatchRefreshLinksForTemplate( $start, $end );
+		$task = new BatchRefreshLinksForTemplate();
+		$task->setStartAndEndBoundaries( $start, $start );
 		$task->setTitle( $title );
 		$this->assertTrue( $task->isValidTask() );
 	}
@@ -37,7 +28,8 @@ class BatchRefreshLinksForTemplateTest extends PHPUnit_Framework_TestCase {
 		$end   = 10;
 		$result = array( 'foo' );
 
-		$task = new BatchRefreshLinksForTemplate( $start, $end );
+		$task = new BatchRefreshLinksForTemplate();
+		$task->setStartAndEndBoundaries( $start, $end );
 
 		$title = $this->getMock( '\Title', ['getLinksFromBacklinkCache'] );
 		$title->expects( $this->once() )
@@ -53,7 +45,9 @@ class BatchRefreshLinksForTemplateTest extends PHPUnit_Framework_TestCase {
 	public function testEnqueueRefreshLinksForTitles() {
 		$start = 1;
 		$end   = 2;
-		$task = $this->getMock( 'Wikia\Tasks\Tasks\BatchRefreshLinksForTemplate', ['enqueueRefreshLinksForTitleTask'], [$start, $end], '', true );
+		$task = $this->getMock( 'Wikia\Tasks\Tasks\BatchRefreshLinksForTemplate', ['enqueueRefreshLinksForTitleTask'], [], '', false );
+		$task->setStartAndEndBoundaries( $start, $end );
+
 		$times = 3;
 		$titles = array();
 		for ( $i = 0; $i < 3; $i++ ) {
@@ -70,32 +64,31 @@ class BatchRefreshLinksForTemplateTest extends PHPUnit_Framework_TestCase {
 	public function testRefreshTemplateLinks() {
 		$start = 1;
 		$end   = 2;
-		$titles = [$this->getMock( '\Title' )];
+		$title = $this->getMock( '\Title', ['getLinksFromBacklinkCache'] );
+		$titles = [$title];
 		$task = $this->getMock( 'Wikia\Tasks\Tasks\BatchRefreshLinksForTemplate', [
-			'isValidTask',
 			'clearLinkCache',
-			'getTitlesWithBackLinks',
+			//'getTitlesWithBackLinks',
 			'enqueueRefreshLinksTasksForTitles'
-			], [$start, $end], '', true );
+			], [], '', false );
 
-		$task->expects($this->once())
-			->method('isValidTask')
-			->will($this->returnValue(true));
+		$title->expects($this->once())
+			->method('getLinksFromBacklinkCache')
+			->with(BatchRefreshLinksForTemplate::BACKLINK_CACHE_TABLE, $start, $end)
+			->will($this->returnValue($titles));
 
 		$task->expects($this->once())
 			->method('clearLinkCache')
 			->will($this->returnValue(true));
 
 		$task->expects($this->once())
-			->method('getTitlesWithBackLinks')
-			->will($this->returnValue($titles));
-
-		$task->expects($this->once())
 			->method('enqueueRefreshLinksTasksForTitles')
 			->with($titles)
 			->will($this->returnValue(true));
 
-		$task->refreshTemplateLinks();
+		$task->setTitle($title);
+
+		$this->assertTrue( $task->refreshTemplateLinks( $start, $end ) );
 
 	}
 }

@@ -16,7 +16,7 @@ class RefreshLinksForTitleTask extends BaseTask {
 
 		$revision = $this->getRevisionFromTitle();
 		if ( !$revision ) {
-			$this->error( "invalid RefreshLinksJob; no revision" );
+			$this->error( "invalid RefreshLinksJob; no article/revision" );
 			return false;
 		}
 

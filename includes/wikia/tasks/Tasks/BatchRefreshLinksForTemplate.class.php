@@ -9,27 +9,15 @@ class BatchRefreshLinksForTemplate extends BaseTask {
 
 	const BACKLINK_CACHE_TABLE = 'templatelinks';
 
-	// Note: these instance variables need to remain protected to ensure that they
-	// will be serialized when the job is queued. @nmonterroso is planning on changing
-	// this behavior.
-
 	/** @var integer $start */
-	protected $start = null;
+	private $start = null;
 
 	/** @var integer $end */
-	protected $end   = null;
+	private $end   = null;
 
-	function __construct( $start=null, $end=null ) {
-		if (isset($start)) {
-			$this->start = $start;
-		}
+	public function refreshTemplateLinks( $start, $end ) {
+		$this->setStartAndEndBoundaries( $start, $end );
 
-		if (isset($end)) {
-			$this->end = $end;
-		}
-	}
-
-	public function refreshTemplateLinks() {
 		if ( !$this->isValidTask() ) {
 			return false;
 		}
@@ -40,6 +28,17 @@ class BatchRefreshLinksForTemplate extends BaseTask {
 		$this->enqueueRefreshLinksTasksForTitles( $titles );
 
 		return true;
+	}
+
+	/**
+	 * Set the start and end boundaries for the batch processing.
+	 *
+	 * @param int $start
+	 * @param int $end
+	 */
+	public function setStartAndEndBoundaries( $start, $end ) {
+		$this->start = $start;
+		$this->end   = $end;
 	}
 
 	/**
@@ -70,9 +69,9 @@ class BatchRefreshLinksForTemplate extends BaseTask {
 	}
 
 	public function enqueueRefreshLinksTasksForTitles( $titles ) {
-		$this->info( sprintf( "queueing %d RefreshLinksForTitleTasks", count($titles) ) );
+		$this->info( sprintf( "queueing %d RefreshLinksForTitleTasks", count( $titles ) ) );
 		foreach ( $titles as $title ) {
-			if ( is_null( $title) ) {
+			if ( is_null( $title ) ) {
 				$this->error( "empty BackLink title" );
 				continue;
 			}
