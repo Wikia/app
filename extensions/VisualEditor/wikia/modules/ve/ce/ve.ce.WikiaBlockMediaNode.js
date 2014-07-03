@@ -21,7 +21,7 @@
 ve.ce.WikiaBlockMediaNode = function VeCeWikiaBlockMediaNode( model, config ) {
 
 	// Parent constructor
-	ve.ce.BranchNode.call( this, model, config );
+	ve.ce.WikiaBlockMediaNode.super.call( this, model, config );
 
 	// Initialize
 	this.rebuild();

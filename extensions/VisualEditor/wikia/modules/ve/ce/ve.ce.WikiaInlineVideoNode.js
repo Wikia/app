@@ -16,7 +16,7 @@
  */
 ve.ce.WikiaInlineVideoNode = function VeCeWikiaInlineVideoNode( model, config ) {
 	// Parent constructor
-	ve.ce.MWInlineImageNode.call( this, model, config );
+	ve.ce.WikiaInlineVideoNode.super.call( this, model, config );
 
 	// Mixin constructors
 	ve.ce.WikiaVideoNode.call( this );
