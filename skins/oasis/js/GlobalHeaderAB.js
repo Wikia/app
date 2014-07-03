@@ -21,7 +21,7 @@ $(function(){
 
 		// building search
 		$globalSearch = $( '<li>' ).addClass( 'global-search' ),
-		localSearchUrl = $( '.WikiaSearch:first' ).attr( 'action' ),
+		localSearchUrl = window.location.origin + "/Special:Search",
 		$form = $( '<form>' )
 			.addClass( 'search-form' )
 			.attr( 'method', 'get' )
