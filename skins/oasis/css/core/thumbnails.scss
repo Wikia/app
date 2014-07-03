@@ -63,6 +63,9 @@ $color-subtle-text: mix($color-page, $color-alternate-text, 50%);
 		position: relative;
 
 		.info-icon {
+			background-image: url('/skins/oasis/images/info_icon.png');
+			height: 17px;
+			width: 17px;
 			position: absolute;
 			bottom: 10px;
 			right: 5px;
