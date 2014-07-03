@@ -53,7 +53,7 @@ class RefreshLinksForTitleTaskTest extends PHPUnit_Framework_TestCase {
 		$revision->expects( $this->once() )
 			->method( 'getText' )
 			->will( $this->returnValue( $revisionText ) );
-		$revision->expects( $this->once() )
+		$revision->expects( $this->exactly( 2 ) )
 			->method( 'getId' )
 			->will( $this->returnValue( $revisionId ) );
 

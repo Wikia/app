@@ -8,12 +8,15 @@ namespace Wikia\Tasks\Tasks;
 class RefreshLinksForTitleTask extends BaseTask {
 
 	public function refresh() {
+		$this->info( "refreshing links" );
 		if ( is_null( $this->title ) ) {
+			$this->error( "invalid RefreshLinksJob; no title" );
 			return false;
 		}
 
 		$revision = $this->getRevisionFromTitle();
 		if ( !$revision ) {
+			$this->error( "invalid RefreshLinksJob; no revision" );
 			return false;
 		}
 
@@ -22,7 +25,7 @@ class RefreshLinksForTitleTask extends BaseTask {
 	}
 
 	protected function getRevisionFromTitle() {
-		return Revision::newFromTitle( $this->title );
+		return \Revision::newFromTitle( $this->title );
 	}
 
 	public function setTitle( \Title $title ) {
@@ -47,7 +50,7 @@ class RefreshLinksForTitleTask extends BaseTask {
 	}
 
 	protected function getParserOptions() {
-		return ParserOptions::newFromUserAndLang( new \User, $this->getLanguage() );
+		return \ParserOptions::newFromUserAndLang( new \User, $this->getLanguage() );
 	}
 
 	protected function getParser() {

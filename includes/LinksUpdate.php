@@ -282,8 +282,10 @@ class LinksUpdate {
 		foreach ( $batches as $batch ) {
 			list( $start, $end ) = $batch;
 			if ( TaskRunner::isModern( 'RefreshLinksJob' ) ) {
+				global $wgCityId;
 				$task = new BatchRefreshLinksForTemplate( $start, $end );
 				$task->title( $this->mTitle );
+				$task->wikiId( $wgCityId );
 				$task->call( 'refreshTemplateLinks' );
 				$task->queue();
 			} else {

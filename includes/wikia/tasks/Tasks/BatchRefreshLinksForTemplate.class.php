@@ -72,6 +72,11 @@ class BatchRefreshLinksForTemplate extends BaseTask {
 	public function enqueueRefreshLinksTasksForTitles( $titles ) {
 		$this->info( sprintf( "queueing %d RefreshLinksForTitleTasks", count($titles) ) );
 		foreach ( $titles as $title ) {
+			if ( is_null( $title) ) {
+				$this->error( "empty BackLink title" );
+				continue;
+			}
+
 			$this->enqueueRefreshLinksForTitleTask( $title );
 		}
 	}
@@ -80,9 +85,10 @@ class BatchRefreshLinksForTemplate extends BaseTask {
 		$task = new RefreshLinksForTitleTask();
 		$task->title( $title );
 		$task->call( 'refresh' );
-		$task->queue();
+		$task->wikiId( $this->getWikiId() );
+		$taskId = $task->queue();
+		$this->info( sprintf( "queued taskid %s for title '%s'", $taskId, $title->getText() ) );
 	}
-
 
 	public function getStart() {
 		return $this->start;

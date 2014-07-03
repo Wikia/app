@@ -284,6 +284,13 @@ abstract class BaseTask {
 	}
 
 	/**
+	 * @return int
+	 */
+	public function getWikiId() {
+		return $this->wikiId;
+	}
+
+	/**
 	 * get a list of all task methods this class can execute via Special:Tasks
 	 *
 	 * @return array
