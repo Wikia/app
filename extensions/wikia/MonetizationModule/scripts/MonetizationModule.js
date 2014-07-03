@@ -1,5 +1,5 @@
 /**
- * JS file for Affiliate Module.
+ * JS file for Monetization Module.
  */
 
 require(['wikia.tracker'], function (Tracker) {
@@ -8,12 +8,12 @@ require(['wikia.tracker'], function (Tracker) {
 	var track;
 
 	track = Tracker.buildTrackingFunction({
-		category: 'affiliate-module',
+		category: 'monetization-module',
 		trackingMethod: 'both',
 		action: Tracker.ACTIONS.CLICK
 	});
 
-	var AffiliateModule = {
+	var MonetizationModule = {
 		init: function () {
 			// track impression
 			track({
@@ -27,12 +27,12 @@ require(['wikia.tracker'], function (Tracker) {
 		},
 		initEllipses: function() {
 			$(window)
-				.on('resize.affiliatemodule', function () {
-					$('.affiliate-module').find('.placard a').ellipses({
+				.on('resize.monetizationmodule', function () {
+					$('.monetization-module').find('.placard a').ellipses({
 						maxLines: 3
 					});
 				})
-				.trigger('resize.affiliatemodule');
+				.trigger('resize.monetizationmodule');
 		},
 		initClickTracking: function() {
 			var elements = [
@@ -43,7 +43,7 @@ require(['wikia.tracker'], function (Tracker) {
 				'.vendor-price'
 			];
 
-			$('.affiliate-module').on('click', elements.join(', '), function () {
+			$('.monetization-module').on('click', elements.join(', '), function () {
 				var $products,
 					$product,
 					trackCategory,
@@ -56,7 +56,7 @@ require(['wikia.tracker'], function (Tracker) {
 
 				$products = $(this).closest('.affiliate');
 				$product = $products.find('.prod-thumb img');
-				trackCategory = $(this).closest('.affiliate-module').attr('id');
+				trackCategory = $(this).closest('.monetization-module').attr('id');
 				trackLabel = $(this).attr('class').split(' ')[0];
 				trackValue = $products.index();
 				vendor = $products.find('.vendor').attr('class').split(' ')[0];
@@ -77,5 +77,5 @@ require(['wikia.tracker'], function (Tracker) {
 		}
 	};
 
-	AffiliateModule.init();
+	MonetizationModule.init();
 });

@@ -1,9 +1,9 @@
 <?php
 
 /**
- * Class AffiliateModuleHelper
+ * Class MonetizationModuleHelper
  */
-class AffiliateModuleHelper extends WikiaModel {
+class MonetizationModuleHelper extends WikiaModel {
 
 	const LOCATION_RAIL = 'rail';
 	const LOCATION_BOTTOM = 'bottom';
@@ -16,7 +16,7 @@ class AffiliateModuleHelper extends WikiaModel {
 	 * @return boolean
 	 */
 	public static function canLoadAssets( $location ) {
-		$options = F::app()->wg->AffiliateModuleOptions;
+		$options = F::app()->wg->MonetizationModuleOptions;
 		reset( $options );
 		if ( key( $options ) == $location ) {
 			return true;
@@ -34,9 +34,9 @@ class AffiliateModuleHelper extends WikiaModel {
 	public static function replaceBottomAds( &$location, &$request ) {
 		$wg = F::app()->wg;
 		if ( $location == self::LOCATION_BOTTOM
-			&& !empty( F::app()->wg->AffiliateModuleOptions[self::LOCATION_BOTTOM_ADS] )
+			&& !empty( F::app()->wg->MonetizationModuleOptions[self::LOCATION_BOTTOM_ADS] )
 		) {
-			$location = AffiliateModuleHelper::LOCATION_BOTTOM_ADS;
+			$location = MonetizationModuleHelper::LOCATION_BOTTOM_ADS;
 			$request->setVal( 'location', $location );
 			$wg->HideBottomAds = true;
 
@@ -59,7 +59,7 @@ class AffiliateModuleHelper extends WikiaModel {
 			&& in_array( $wg->Title->getNamespace(), $showableNameSpaces )
 			&& in_array( $wg->request->getVal( 'action' ), [ 'view', null ] )
 			&& $wg->request->getVal( 'diff' ) === null
-			&& !empty( $wg->AffiliateModuleOptions[$location] )
+			&& !empty( $wg->MonetizationModuleOptions[$location] )
 		) {
 			return true;
 		}

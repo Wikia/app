@@ -1,11 +1,11 @@
 <?php
 
-class AffiliateModuleController extends WikiaController {
+class MonetizationModuleController extends WikiaController {
 
 	const DEFAULT_TEMPLATE_ENGINE = WikiaResponse::TEMPLATE_ENGINE_MUSTACHE;
 
 	/**
-	 * Affiliate Module
+	 * Monetization Module
 	 * @requestParam string location [rail/bottom/bottom-ads/article-title]
 	 * @responseParam string title
 	 * @responseParam array products - list of products
@@ -19,22 +19,22 @@ class AffiliateModuleController extends WikiaController {
 			return true;
 		}
 
-		$location = $this->request->getVal( 'location', AffiliateModuleHelper::LOCATION_BOTTOM );
+		$location = $this->request->getVal( 'location', MonetizationModuleHelper::LOCATION_BOTTOM );
 
-		AffiliateModuleHelper::replaceBottomAds( $location, $this->request );
+		MonetizationModuleHelper::replaceBottomAds( $location, $this->request );
 
-		if ( !AffiliateModuleHelper::canShowModule( $location ) ) {
+		if ( !MonetizationModuleHelper::canShowModule( $location ) ) {
 			$this->skipRendering();
 			wfProfileOut( __METHOD__ );
 			return true;
 		}
 
-		if ( AffiliateModuleHelper::canLoadAssets( $location ) ) {
-			$this->response->addAsset( 'affiliate_module_css' );
-			$this->response->addAsset( 'affiliate_module_js' );
+		if ( MonetizationModuleHelper::canLoadAssets( $location ) ) {
+			$this->response->addAsset( 'monetization_module_css' );
+			$this->response->addAsset( 'monetization_module_js' );
 		}
 
-		$type = $this->wg->AffiliateModuleOptions[$location];
+		$type = $this->wg->MonetizationModuleOptions[$location];
 		if ( !method_exists( $this, $type ) ) {
 			$this->skipRendering();
 			wfProfileOut( __METHOD__ );
@@ -47,17 +47,17 @@ class AffiliateModuleController extends WikiaController {
 	}
 
 	/**
-	 * Affiliate Unit
+	 * Ecommerce Unit
 	 * @requestParam string location [rail/bottom/bottom-ads/article-title]
 	 * @responseParam string moduleTitle
 	 * @responseParam string buttonLabel
 	 * @responseParam string className
 	 * @responseParam array products - list of products
 	 */
-	public function affiliateUnit() {
+	public function ecommerce() {
 		wfProfileIn( __METHOD__ );
 
-		$location = $this->request->getVal( 'location', AffiliateModuleHelper::LOCATION_BOTTOM );
+		$location = $this->request->getVal( 'location', MonetizationModuleHelper::LOCATION_BOTTOM );
 
 		$products = [
 			[
@@ -86,10 +86,10 @@ class AffiliateModuleController extends WikiaController {
 			],
 		];
 
-		$this->moduleTitle = wfMessage( 'affiliate-module-title' )->escaped();
+		$this->moduleTitle = wfMessage( 'monetization-module-title' )->escaped();
 		$this->products = $products;
-		$this->buttonLabel = wfMessage( 'affiliate-module-button-label' )->plain();
-		$this->className = ( $location == AffiliateModuleHelper::LOCATION_RAIL ) ? 'module' : '';
+		$this->buttonLabel = wfMessage( 'monetization-module-button-label' )->plain();
+		$this->className = ( $location == MonetizationModuleHelper::LOCATION_RAIL ) ? 'module' : '';
 		$this->location = $location;
 
 		wfProfileOut( __METHOD__ );
@@ -102,10 +102,10 @@ class AffiliateModuleController extends WikiaController {
 	 * @responseParam string adClient
 	 * @responseParam string adSlot
 	 */
-	public function adUnit() {
+	public function ad() {
 		wfProfileIn( __METHOD__ );
 
-		$this->location = $this->request->getVal( 'location', AffiliateModuleHelper::LOCATION_ARTICLE_TITLE );
+		$this->location = $this->request->getVal( 'location', MonetizationModuleHelper::LOCATION_ARTICLE_TITLE );
 		$this->adClient = $this->wg->GoogleAdClient;
 		$this->adSlot = '6789179427';
 

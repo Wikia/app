@@ -127,8 +127,8 @@
 				<?php } ?>
 
 				<?php
-					if ( !empty( $wg->EnableAffiliateModuleExt ) ) {
-						echo $app->renderView( 'AffiliateModule', 'index' );
+					if ( !empty( $wg->EnableMonetizationModuleExt ) ) {
+						echo $app->renderView( 'MonetizationModule', 'index' );
 					}
 				?>
 

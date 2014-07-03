@@ -53,8 +53,8 @@
 	?>
 </header>
 <?php
-	if ( !empty( $wg->EnableAffiliateModuleExt ) ) {
-		echo $app->renderView( 'AffiliateModule', 'index', [ 'location' => AffiliateModuleHelper::LOCATION_ARTICLE_TITLE ] );
+	if ( !empty( $wg->EnableMonetizationModuleExt ) ) {
+		echo $app->renderView( 'MonetizationModule', 'index', [ 'location' => MonetizationModuleHelper::LOCATION_ARTICLE_TITLE ] );
 	}
 ?>
 <?php

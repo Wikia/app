@@ -1782,20 +1782,20 @@ $config['bucky_js'] = array(
 	)
 );
 
-/* Affiliate Module */
-$config['affiliate_module_css'] = array(
+/* Monetization Module */
+$config['monetization_module_css'] = array(
 	'type' => AssetsManager::TYPE_SCSS,
 	'skin' => [ 'oasis' ],
 	'assets' => [
-		'//extensions/wikia/AffiliateModule/styles/AffiliateModule.scss',
+		'//extensions/wikia/MonetizationModule/styles/MonetizationModule.scss',
 	]
 );
 
-$config['affiliate_module_js'] = array(
+$config['monetization_module_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => [ 'oasis' ],
 	'assets' => [
-		'//extensions/wikia/AffiliateModule/scripts/AffiliateModule.js',
+		'//extensions/wikia/MonetizationModule/scripts/MonetizationModule.js',
 	]
 );
 
