@@ -14,6 +14,7 @@ trait IndexerWorkerBase {
 	private $password;
 	private $vhost;
 	private $connection;
+	private $main_channel;
 	private $anon_channel;
 	private $exchange = 'test_ex';
 	private $prefetch = 5;
@@ -30,11 +31,11 @@ trait IndexerWorkerBase {
 		$this->preprocess();
 		$routing = $this->getRoutingKey();
 		if ( $routing ) {
-			$connection = $this->connect( $this->getRoutingKey() );
-			while( count( $connection->callbacks ) ) {
-				$connection->wait();
+			$this->main_channel = $this->connect( $this->getRoutingKey() );
+			while( count( $this->main_channel->callbacks ) ) {
+				$this->main_channel->wait();
 			}
-			$connection->close();
+			$this->main_channel->close();
 		}
 		$this->postprocess();
 	}
@@ -61,6 +62,8 @@ trait IndexerWorkerBase {
 
 	protected function close() {
 		$connection = $this->getConnection();
+		$this->getAnonChannel()->close();
+		$this->main_channel->close();
 		$connection->close();
 		die();
 	}
