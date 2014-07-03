@@ -69,25 +69,30 @@ ve.ui.MWLinkTargetInputWidget.prototype.onLookupMenuItemChoose = function ( item
  * @returns {jqXHR} AJAX object without success or fail handlers attached
  */
 ve.ui.MWLinkTargetInputWidget.prototype.getLookupRequest = function () {
-	if ( mw.Title.newFromText( this.value ) ) {
-		return ve.init.target.constructor.static.apiRequest( {
-			'action': 'query',
-			'generator': 'prefixsearch',
-			'gpssearch': this.value,
-			'gpsnamespace': 0,
-			'prop': 'info|pageprops',
-			'ppprop': 'disambiguation',
-			'redirect': ''
+	var propsJqXhr,
+		searchJqXhr = ve.init.mw.Target.static.apiRequest( {
+			'action': 'opensearch',
+			'search': this.value,
+			'namespace': 0,
+			'suggest': ''
 		} );
-	} else {
-		// Don't send invalid titles to the API.
-		// Just pretend it returned nothing so we can show the 'invalid title' section
-		return $.Deferred().resolve( [] ).promise( { abort: function () {
-			// Do nothing. This is just so OOUI doesn't break due to abort being undefined.
-		} } );
-	}
-};
 
+	return searchJqXhr.then( function ( data ) {
+		propsJqXhr = ve.init.mw.Target.static.apiRequest( {
+			'action': 'query',
+			'prop': 'info|pageprops',
+			'titles': ( data[1] || [] ).join( '|' ),
+			'ppprop': 'disambiguation'
+		} );
+		return propsJqXhr;
+	} ).promise( { abort: function () {
+		searchJqXhr.abort();
+
+		if ( propsJqXhr ) {
+			propsJqXhr.abort();
+		}
+	} } );
+};
 /**
  * Get lookup cache item from server response data.
  *
