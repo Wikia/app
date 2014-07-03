@@ -77,10 +77,8 @@ ve.ui.WikiaMediaResultsWidget.prototype.addItems = function ( items ) {
 		results = [];
 
 	for ( i = 0; i < items.length; i++ ) {
-		optionWidget = new ve.ui.WikiaMediaOptionWidget( items[i], { '$': this.$, 'size': this.size } )
-		optionWidget.connect( this,
-			{ 'check': 'onResultsCheck' }
-		);
+		optionWidget = new ve.ui.WikiaMediaOptionWidget( items[i], { '$': this.$, 'size': this.size } );
+		optionWidget.on( 'check', this.onResultsCheck, [ optionWidget ], this );
 		results.push(
 			optionWidget
 		);
@@ -121,3 +119,15 @@ ve.ui.WikiaMediaResultsWidget.prototype.onResultsScroll = function () {
  */
 ve.ui.WikiaMediaResultsWidget.prototype.onResultsHighlight =
 	OO.ui.SearchWidget.prototype.onResultsHighlight;
+
+/**
+ * @inheritdoc
+ */
+ve.ui.WikiaMediaResultsWidget.prototype.clearItems = function () {
+	var i;
+	// Clear event listeners just in case to prevent excess memory usage
+	for ( i = 0; i < this.items.length; i++ ) {
+		this.items[i].off( 'check', this.onResultsCheck );
+	}
+	return ve.ui.WikiaMediaResultsWidget.super.prototype.clearItems();
+}
