@@ -299,32 +299,11 @@ class WikiaHomePageController extends WikiaController {
 		return $results;
 	}
 
-	/**
-	 * get stats
-	 * @responseParam integer visitors
-	 * @responseParam integer edits
-	 * @responseParam integer communities
-	 * @responseParam integer totalPages
-	 */
 	public function getStats() {
-		wfProfileIn(__METHOD__);
-
-		$memKey = $this->helper->getStatsMemcacheKey();
-		$stats = $this->wg->Memc->get($memKey);
-		if (empty($stats)) {
-			$stats = $this->helper->getStatsIncludingFallbacks();
-			$this->wg->Memc->set($memKey, $stats, 60 * 60 * 1);
+		$data = $this->app->sendRequest('WikiaStatsController', 'getWikiaStats')->getData();
+		foreach ($data as $key => $value) {
+			$this->$key = $value;
 		}
-
-		foreach ($stats as $key => $value) {
-			$this->$key = $this->wg->Lang->formatNum($value);
-		}
-
-		if (empty($stats['edits']) && in_array('editsDefault', $stats)) {
-			$this->edits = $this->editsDefault . '+';
-		}
-
-		wfProfileOut(__METHOD__);
 	}
 
 	/**

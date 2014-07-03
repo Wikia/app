@@ -11,26 +11,26 @@
 					]
 				);
 			?></h4>
-		<strong><?= $visitors; ?></strong>
+		<strong><?= $wg->Lang->formatNum($visitors); ?></strong>
 	</div>
     <div class="datasection">
         <h4><?= wfMessage('wikiahome-stats-mobile-percentage')->plain(); ?></h4>
-        <strong><?= wfMessage('wikiahome-stats-mobile-percentage-value', $mobilePercentage)->plain(); ?></strong>
+        <strong><?= wfMessage('wikiahome-stats-mobile-percentage-value', $wg->Lang->formatNum($mobilePercentage))->plain(); ?></strong>
     </div>
     <div class="datasection firstrowcell">
         <h4><?= wfMessage('wikiahome-stats-totalpages')->plain(); ?></h4>
-        <strong><?= $totalPages; ?></strong>
+        <strong><?= $wg->Lang->formatNum($totalPages); ?></strong>
     </div>
 	<div class="datasection">
 		<h4><?= wfMessage('wikiahome-stats-edits')->plain(); ?></h4>
-		<strong><?= $edits; ?></strong>
+		<strong><?= $wg->Lang->formatNum($edits); ?></strong>
 	</div>
 	<div class="datasection firstrowcell">
 		<h4><?= wfMessage('wikiahome-stats-communities')->plain(); ?></h4>
-		<strong><?= $communities; ?></strong>
+		<strong><?= $wg->Lang->formatNum($communities); ?></strong>
 	</div>
     <div class="datasection">
         <h4><?= wfMessage('wikiahome-stats-new-communities')->plain(); ?></h4>
-        <strong><?= $newCommunities; ?></strong>
+        <strong><?= $wg->Lang->formatNum($newCommunities); ?></strong>
     </div>
 </div>
