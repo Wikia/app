@@ -12,11 +12,12 @@ namespace Wikia\Tasks\Tasks;
 class RemoveUserRightsTask extends BaseTask {
 
 	public function removeRightsFromAllWikias( $userId ) {
-		$db = wfGetDB( DB_MASTER );
+		global $wgExternalSharedDB;
+		$db = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
 
 		( new \WikiaSQL() )
-			->SELECT( 'city_list' )
-			->FROM( 'city_dbname' )
+			->SELECT( 'city_dbname' )
+			->FROM( 'city_list' )
 			->WHERE( 'city_public' )->EQUAL_TO( 1 )
 			->runLoop( $db,
 				function ( &$dataCollector, $row ) use ( $userId ) {
@@ -24,6 +25,8 @@ class RemoveUserRightsTask extends BaseTask {
 					$this->removeAndRememberUserGroups( $userId, $wikiaDbName );
 				}
 			);
+
+		return 'OK';
 	}
 
 	/**
@@ -58,8 +61,8 @@ class RemoveUserRightsTask extends BaseTask {
 
 		$groups =
 			( new \WikiaSQL() )
-				->SELECT( 'user_groups' )
-				->FROM( 'ug_group' )
+				->SELECT( 'ug_group' )
+				->FROM( 'user_groups' )
 				->WHERE( 'ug_user' )->EQUAL_TO( $userId )
 				->runLoop( $db,
 					function ( &$dataCollector, $row ) {
