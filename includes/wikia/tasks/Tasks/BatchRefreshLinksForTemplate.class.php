@@ -19,9 +19,14 @@ class BatchRefreshLinksForTemplate extends BaseTask {
 	/** @var integer $end */
 	protected $end   = null;
 
-	function __construct( $start, $end ) {
-		$this->start = $start;
-		$this->end   = $end;
+	function __construct( $start=null, $end=null ) {
+		if (isset($start)) {
+			$this->start = $start;
+		}
+
+		if (isset($end)) {
+			$this->end = $end;
+		}
 	}
 
 	public function refreshTemplateLinks() {
@@ -31,7 +36,7 @@ class BatchRefreshLinksForTemplate extends BaseTask {
 
 		$this->clearLinkCache();
 
-		$titles = $this->getTitlesWithBackLinks( $start, $end );
+		$titles = $this->getTitlesWithBackLinks();
 		$this->enqueueRefreshLinksTasksForTitles( $titles );
 
 		return true;
@@ -57,24 +62,25 @@ class BatchRefreshLinksForTemplate extends BaseTask {
 	}
 
 	protected function clearLinkCache() {
-		LinkCache::singleton()->clear();
+		\LinkCache::singleton()->clear();
 	}
 
 	public function getTitlesWithBackLinks() {
 		return $this->title->getLinksFromBacklinkCache( self::BACKLINK_CACHE_TABLE, $this->start, $this->end );
 	}
 
-	public function enqueueRefreshLinksTasksForTitles( array $titles ) {
+	public function enqueueRefreshLinksTasksForTitles( $titles ) {
+		$this->info( sprintf( "queueing %d RefreshLinksForTitleTasks", count($titles) ) );
 		foreach ( $titles as $title ) {
 			$this->enqueueRefreshLinksForTitleTask( $title );
 		}
 	}
 
 	public function enqueueRefreshLinksForTitleTask( \Title $title ) {
-			$task = new RefreshLinksForTitleTask();
-			$task->title( $title );
-			$task->call( 'refresh' );
-			$task->queue();
+		$task = new RefreshLinksForTitleTask();
+		$task->title( $title );
+		$task->call( 'refresh' );
+		$task->queue();
 	}
 
 
@@ -84,6 +90,11 @@ class BatchRefreshLinksForTemplate extends BaseTask {
 
 	public function getEnd() {
 		return $this->end;
+	}
+
+
+	protected function getLoggerContext() {
+		return ['task' => __CLASS__];
 	}
 
 }

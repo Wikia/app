@@ -67,4 +67,35 @@ class BatchRefreshLinksForTemplateTest extends PHPUnit_Framework_TestCase {
 		$task->enqueueRefreshLinksTasksForTitles( $titles );
 	}
 
+	public function testRefreshTemplateLinks() {
+		$start = 1;
+		$end   = 2;
+		$titles = [$this->getMock( '\Title' )];
+		$task = $this->getMock( 'Wikia\Tasks\Tasks\BatchRefreshLinksForTemplate', [
+			'isValidTask',
+			'clearLinkCache',
+			'getTitlesWithBackLinks',
+			'enqueueRefreshLinksTasksForTitles'
+			], [$start, $end], '', true );
+
+		$task->expects($this->once())
+			->method('isValidTask')
+			->will($this->returnValue(true));
+
+		$task->expects($this->once())
+			->method('clearLinkCache')
+			->will($this->returnValue(true));
+
+		$task->expects($this->once())
+			->method('getTitlesWithBackLinks')
+			->will($this->returnValue($titles));
+
+		$task->expects($this->once())
+			->method('enqueueRefreshLinksTasksForTitles')
+			->with($titles)
+			->will($this->returnValue(true));
+
+		$task->refreshTemplateLinks();
+
+	}
 }

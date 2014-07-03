@@ -19,6 +19,9 @@
  *
  * @todo document (e.g. one-sentence top-level class description).
  */
+
+use Wikia\Tasks\Tasks\BatchRefreshLinksForTemplate;
+
 class LinksUpdate {
 
 	/**@{{

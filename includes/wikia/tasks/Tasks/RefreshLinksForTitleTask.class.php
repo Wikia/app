@@ -31,6 +31,7 @@ class RefreshLinksForTitleTask extends BaseTask {
 	}
 
 	public function parseRevisionAndUpdateLinks( \Revision $revision ) {
+		$this->info( sprintf( "parsing revision and updating links for revision %d", $revision->getId() ) );
 		$parserOutput = $this->parseRevisionText( $revision );
 		$this->updateLinks( $parserOutput );
 	}
@@ -57,5 +58,9 @@ class RefreshLinksForTitleTask extends BaseTask {
 	protected function getLanguage() {
 		global $wgContLang;
 		return $wgContLang;
+	}
+
+	protected function getLoggerContext() {
+		return ['task' => __CLASS__];
 	}
 }
