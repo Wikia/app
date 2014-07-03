@@ -12,7 +12,7 @@
  */
 ve.ui.WikiaMediaResultsWidget = function VeUiWikiaMediaResultsWidget( config ) {
 	// Parent constructor
-	OO.ui.Widget.call( this, config );
+	ve.ui.WikiaMediaResultsWidget.super.call( this, config );
 
 	// Properties
 	this.results = new ve.ui.WikiaMediaSelectWidget( { '$': this.$ } );

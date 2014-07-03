@@ -16,7 +16,7 @@
  */
 ve.ui.WikiaSourceModeDialog = function VeUiWikiaSourceModeDialog( config ) {
 	// Parent constructor
-	ve.ui.Dialog.call( this, config );
+	ve.ui.WikiaSourceModeDialog.super.call( this, config );
 };
 
 /* Inheritance */
@@ -35,7 +35,7 @@ ve.ui.WikiaSourceModeDialog.static.icon = 'source';
 
 ve.ui.WikiaSourceModeDialog.prototype.initialize = function () {
 	// Parent method
-	ve.ui.Dialog.prototype.initialize.call( this );
+	ve.ui.WikiaSourceModeDialog.super.prototype.initialize.call( this );
 
 	// Properties
 	this.openCount = 0;

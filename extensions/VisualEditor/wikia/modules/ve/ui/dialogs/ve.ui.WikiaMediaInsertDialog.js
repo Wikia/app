@@ -15,7 +15,7 @@
  */
 ve.ui.WikiaMediaInsertDialog = function VeUiMWMediaInsertDialog( config ) {
 	// Parent constructor
-	ve.ui.Dialog.call( this, config );
+	ve.ui.WikiaMediaInsertDialog.super.call( this, config );
 };
 
 /* Inheritance */
@@ -405,7 +405,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.onMediaPageRemove = function ( item ) {
  */
 ve.ui.WikiaMediaInsertDialog.prototype.setup = function () {
 	// Parent method
-	ve.ui.Dialog.prototype.setup.call( this );
+	ve.ui.WikiaMediaInsertDialog.super.prototype.setup.call( this );
 	this.pages.setPage( 'main' );
 
 	// If the policy height (which has a max-height property set) is the same as the first child of the policy
@@ -445,7 +445,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.teardown = function ( action ) {
 	this.dropTarget.teardown();
 
 	// Parent method
-	ve.ui.Dialog.prototype.teardown.call( this, action );
+	ve.ui.WikiaMediaInsertDialog.super.prototype.teardown.call( this, action );
 };
 
 /**

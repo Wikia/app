@@ -18,7 +18,7 @@
  */
 ve.ce.WikiaBlockVideoNode = function VeCeWikiaBlockVideoNode( model, config ) {
 	// Parent constructor
-	ve.ce.WikiaBlockMediaNode.call( this, model, config );
+	ve.ce.WikiaBlockVideoNode.super.call( this, model, config );
 
 	// Mixin constructors
 	ve.ce.WikiaVideoNode.call( this );

@@ -13,7 +13,7 @@
  */
 ve.ui.WikiaMediaEditDialog = function VeUiWikiaMediaEditDialog( config ) {
 	// Parent constructor
-	ve.ui.MWMediaEditDialog.call( this, config );
+	ve.ui.WikiaMediaEditDialog.super.call( this, config );
 };
 
 /* Inheritance */
