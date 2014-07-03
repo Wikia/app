@@ -8,39 +8,24 @@ class WikiaStatsModel extends WikiaModel {
 	const MOBILE_PERCENTAGE_FALLBACK = 25;
 	const VISITORS_FALLBACK = 100000000;
 
-	public function __construct() {
-		parent::__construct();
 
-		$statsFromWF = $this->getStatsFromWF();
+	private $editsDefaultFallback;
+	private $totalCommunitiesFallback;
+	private $totalPagesFallback;
+	private $lastDaysCommunitiesFallback;
+	private $mobilePercentage;
+	private $visitors;
 
-		$this->editsDefaultFallback = self::EDITS_DEFAULT_FALLBACK < $statsFromWF['editsDefault'] ?
-			$statsFromWF['editsDefault'] : self::EDITS_DEFAULT_FALLBACK;
-
-		$this->totalCommunitiesFallback = self::TOTAL_COMMUNITIES_FALLBACK < $statsFromWF['totalCommunities'] ?
-			$statsFromWF['totalCommunities'] : self::TOTAL_COMMUNITIES_FALLBACK;
-
-		$this->totalPagesFallback = self::TOTAL_PAGES_FALLBACK < $statsFromWF['totalPages'] ?
-			$statsFromWF['totalPages'] : self::TOTAL_PAGES_FALLBACK;
-
-		$this->lastDaysCommunitiesFallback = self::LAST_DAYS_NEW_COMMUNITIES_FALLBACK < $statsFromWF['lastDaysCommunities'] ?
-			$statsFromWF['lastDaysCommunities'] : self::LAST_DAYS_NEW_COMMUNITIES_FALLBACK;
-
-		//Mobile percentage value is set via WF so WF value is not a fallback
-		$this->mobilePercentage = self::MOBILE_PERCENTAGE_FALLBACK < $statsFromWF['mobilePercentage'] ?
-			$statsFromWF['mobilePercentage'] : self::MOBILE_PERCENTAGE_FALLBACK;
-
-		//Visitors value is set via WF so WF value is not a fallback
-		$this->visitors = self::VISITORS_FALLBACK < $statsFromWF['visitors'] ?
-			$statsFromWF['visitors'] : self::VISITORS_FALLBACK;
-	}
-
-	public function getWikiaStatsIncludingFallbacks() {
+	public function getWikiaStatsIncludingFallbacks($statsFromWF) {
+		$this->setFallbacks($statsFromWF);
 		$stats['edits'] = $this->getEdits();
-		$stats['totalCommunities'] = $this->getTotalCommunities();
+		$stats['communities'] = $this->getTotalCommunities();
 		$stats['newCommunities'] = $this->getLastDaysNewCommunities();
 		$stats['totalPages'] = $this->getTotalPages();
 		$stats['mobilePercentage'] = $this->getMobilePercentage();
 		$stats['visitors'] = $this->getVisitors();
+
+		return $stats;
 	}
 
 	private function getEdits() {
@@ -78,10 +63,6 @@ class WikiaStatsModel extends WikiaModel {
 
 	private function getVisitors() {
 		return $this->visitors;
-	}
-
-	private function getStatsFromWF() {
-		return WikiFactory::getVarValueByName('wgCorpMainPageStats', Wikia::COMMUNITY_WIKI_ID);
 	}
 
 	private function getEditsFromDB() {
@@ -167,5 +148,27 @@ class WikiaStatsModel extends WikiaModel {
 		foreach ($corpWikisLangs as $lang) {
 			$wikiaHubsHelper->purgeHomePageVarnish($lang);
 		}
+	}
+
+	private function setFallbacks($statsFromWF) {
+		$this->editsDefaultFallback = self::EDITS_DEFAULT_FALLBACK < $statsFromWF['editsDefault'] ?
+			$statsFromWF['editsDefault'] : self::EDITS_DEFAULT_FALLBACK;
+
+		$this->totalCommunitiesFallback = self::TOTAL_COMMUNITIES_FALLBACK < $statsFromWF['totalCommunities'] ?
+			$statsFromWF['totalCommunities'] : self::TOTAL_COMMUNITIES_FALLBACK;
+
+		$this->totalPagesFallback = self::TOTAL_PAGES_FALLBACK < $statsFromWF['totalPages'] ?
+			$statsFromWF['totalPages'] : self::TOTAL_PAGES_FALLBACK;
+
+		$this->lastDaysCommunitiesFallback = self::LAST_DAYS_NEW_COMMUNITIES_FALLBACK < $statsFromWF['lastDaysCommunities'] ?
+			$statsFromWF['lastDaysCommunities'] : self::LAST_DAYS_NEW_COMMUNITIES_FALLBACK;
+
+		//Mobile percentage value is set via WF so WF value is not a fallback
+		$this->mobilePercentage = self::MOBILE_PERCENTAGE_FALLBACK < $statsFromWF['mobilePercentage'] ?
+			$statsFromWF['mobilePercentage'] : self::MOBILE_PERCENTAGE_FALLBACK;
+
+		//Visitors value is set via WF so WF value is not a fallback
+		$this->visitors = self::VISITORS_FALLBACK < $statsFromWF['visitors'] ?
+			$statsFromWF['visitors'] : self::VISITORS_FALLBACK;
 	}
 }

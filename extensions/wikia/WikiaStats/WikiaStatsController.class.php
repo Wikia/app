@@ -8,27 +8,33 @@ class WikiaStatsController extends WikiaController {
 	 * get stats
 	 * @responseParam integer visitors
 	 * @responseParam integer mobilePercentage
-	 * @responseParam integer editsDefault
 	 * @responseParam integer totalPages
 	 * @responseParam integer edits
 	 * @responseParam integer communities
 	 * @responseParam integer newCommunities
 	 */
-
 	public function getWikiaStats() {
 		wfProfileIn(__METHOD__);
 
+		$statsFromWF = $this->getWikiaStatsFromWF();
 		$stats = WikiaDataAccess::cache(
 			$this->getStatsMemcacheKey(),
 			self::WIKIA_STATS_CACHE_VALIDITY,
-			array(new WikiaStatsModel(), 'getWikiaStatsIncludingFallbacks')
+			function() use ($statsFromWF) {
+				$wikiaStatsModel = new WikiaStatsModel();
+				return $wikiaStatsModel->getWikiaStatsIncludingFallbacks($statsFromWF);
+			}
 		);
 
 		foreach ($stats as $key => $value) {
 			$this->$key = $value;
 		}
-		var_dump($this->wg->User->isAllowed('wikifactory'));
+
 		wfProfileOut(__METHOD__);
+	}
+
+	public function getWikiaStatsFromWF() {
+		return WikiFactory::getVarValueByName('wgCorpMainPageStats', Wikia::COMMUNITY_WIKI_ID);
 	}
 
 	public function saveWikiaStatsToWF($statsValues) {
