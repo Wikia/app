@@ -1,5 +1,6 @@
 @import "skins/oasis/css/core/color";
 @import "skins/oasis/css/core/responsive-variables";
+@import "skins/oasis/css/mixins/flexbox";
 
 $color-code-bg: mix($color-page, #000000, 95%);
 @if $is-dark-wiki {
@@ -7,31 +8,156 @@ $color-code-bg: mix($color-page, #000000, 95%);
 }
 
 .int-map-modal {
-	.WikiaForm .input-group {
-		float: none;
-		padding-left: 0;
-		padding-right: 0;
-		width: 100%;
+	button {
+		outline: none;
+	}
 
-		label {
-			font-weight: bold;
-		}
+	code {
+		background-color: $color-code-bg;
+		border: 1px solid $color-page-border;
+		display: block;
+		margin-bottom: 20px;
+		padding: 20px;
+	}
 
-		input,
-		select,
-		textarea {
+	line {
+		stroke: $color-links;
+	}
+
+	path {
+		fill: $color-links;
+	}
+
+	strong {
+		font-weight: bold;
+	}
+
+	svg {
+		display: block;
+		margin: 0 auto;
+	}
+
+	.clear-search {
+		float: right;
+		margin: 7px 10px 0 0;
+	}
+
+	.int-map-browse-tile-set {
+		li {
 			box-sizing: border-box;
+			float: left;
+			padding: 10px;
+			width: 20%;
+		}
+
+		ul {
+			clear: both;
+			font-weight: bold;
+			margin-left: -10px;
+			margin-right: -10px;
+			padding-top: 10px;
+			text-align: center;
+		}
+	}
+
+	.dashed-border {
+		border: 1px dashed $color-page-border-subtle;
+	}
+
+
+	.hidden {
+		display: none !important;
+	}
+
+	.map-modal-error {
+		margin-bottom: 20px;
+	}
+
+	.poi-category {
+		@include flexbox();
+		@include flex-direction();
+		@include justify-content('space-between');
+
+		input[type="text"] {
+			@include flex-grow(1);
+		}
+
+		.delete-icon,
+		.poi-category-dropdown,
+		.poi-category-marker {
+			@include flex-grow(0);
+			@include flex-shrink(0);
+		}
+
+		.delete-icon,
+		.image-upload-button {
+			display: block;
+			background-repeat: no-repeat;
+		}
+
+		.delete-icon {
+			background-position: center;
+			background-size: 20px;
+			height: 20px;
+			margin: 8px 0 8px 10px;
+			overflow: hidden;
+			text-indent: 100%;
+			white-space: nowrap;
+			width: 20px;
+		}
+
+		.image-upload-button {
+			color: $color-text-light;
+			cursor: pointer;
+			box-sizing: border-box;
+			background-position: center -2px;
+			background-repeat: no-repeat;
+			background-size: 22px;
+			font-size: 9px;
+			height: 36px;
+			text-align: center;
+			width: 36px;
+
+			&:hover {
+				text-decoration: none;
+			}
+		}
+
+		.poi-category-dropdown {
+			margin: 0 10px;
+			padding: 8px 0px;
+			-webkit-appearance: menulist-button;
+		}
+	}
+
+	.poi-category-marker span {
+		display: block;
+		padding-top: 21px;
+	}
+
+	.size-button {
+		margin-left: 10px;
+	}
+
+	.tile-set-thumb {
+		span,
+		strong {
+			display: block;
+		}
+
+		span {
+			color: $color-alternate-text;
+			font-weight: normal;
+			padding-top: 5px;
+		}
+
+		strong {
+			color: $color-text;
+			overflow: hidden;
+			padding-top: 10px;
+			text-overflow: ellipsis;
 			width: 100%;
-		}
-
-		textarea {
-			height: 50px;
-			resize: none;
-		}
-
-		.tile-set-search {
-			float: right;
-			width: 252px;
+			white-space: nowrap;
 		}
 	}
 
@@ -57,26 +183,11 @@ $color-code-bg: mix($color-page, #000000, 95%);
 		}
 	}
 
-	.int-map-browse-tile-set {
-		ul {
-			clear: both;
-			font-weight: bold;
-			margin-left: -10px;
-			margin-right: -10px;
-			padding-top: 10px;
-			text-align: center;
-		}
-
-		li {
-			box-sizing: border-box;
-			float: left;
-			padding: 10px;
-			width: 20%;
-		}
+	.tip {
+		margin-bottom: 20px;
 	}
 
 	.upload-link {
-		border: 1px dashed $color-page-border-subtle;
 		box-sizing: border-box;
 		display: block;
 		height: 116px;
@@ -88,79 +199,38 @@ $color-code-bg: mix($color-page, #000000, 95%);
 		}
 	}
 
-	.tip {
-		margin-bottom: 20px;
-	}
-
-	.clear-search {
-		float: right;
-		margin: 7px 10px 0 0;
-	}
-
-	.tile-set-thumb {
-		span,
-		strong {
-			display: block;
-		}
-
-		strong {
-			color: $color-text;
-			overflow: hidden;
-			padding-top: 10px;
-			text-overflow: ellipsis;
-			width: 100%;
-			white-space: nowrap;
-		}
-
-		span {
-			color: $color-alternate-text;
-			font-weight: normal;
-			padding-top: 5px;
-		}
-	}
-
-	code {
-		background-color: $color-code-bg;
-		border: 1px solid $color-page-border;
-		display: block;
-		margin-bottom: 20px;
-		padding: 20px;
-	}
-
-	strong {
-		font-weight: bold;
-	}
-
-	button {
-		outline: none;
-	}
-
-	svg {
-		display: block;
-		margin: 0 auto;
-	}
-
-	path {
-		fill: $color-links;
-	}
-
-	line {
-		stroke: $color-links;
-	}
-
-	.hidden {
-		display: none !important;
-	}
-
-	.map-modal-error {
-		margin-bottom: 20px;
-	}
-
-	.size-button {
-		margin-left: 10px;
-	}
-
 	.user-guideline {
 		margin-bottom: 20px;
+	}
+
+	.WikiaForm .input-group {
+		float: none;
+		padding-left: 0;
+		padding-right: 0;
+		width: 100%;
+
+		input,
+		select,
+		textarea {
+			box-sizing: border-box;
+		}
+
+		label {
+			font-weight: bold;
+		}
+
+		textarea {
+			height: 50px;
+			resize: none;
+		}
+
+		.tile-set-search {
+			float: right;
+			width: 252px;
+		}
+
+		.wide {
+			width: 100%;
+		}
 	}
 }
