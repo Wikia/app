@@ -73,12 +73,16 @@ ve.ui.WikiaMediaResultsWidget.prototype.onResultsSelect = function ( item ) {
  * @param {Array} items An array of items to add.
  */
 ve.ui.WikiaMediaResultsWidget.prototype.addItems = function ( items ) {
-	var i,
+	var i, optionWidget,
 		results = [];
 
 	for ( i = 0; i < items.length; i++ ) {
+		optionWidget = new ve.ui.WikiaMediaOptionWidget( items[i], { '$': this.$, 'size': this.size } )
+		optionWidget.connect( this,
+			{ 'check': 'onResultsCheck' }
+		);
 		results.push(
-			new ve.ui.WikiaMediaOptionWidget( items[i], { '$': this.$, 'size': this.size } )
+			optionWidget
 		);
 	}
 
