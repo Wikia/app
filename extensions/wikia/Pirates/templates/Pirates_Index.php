@@ -51,13 +51,6 @@
 				<header>
 					<h1><?= $title ?></h1>
 				</header>
-				<div class="home-top-right-ads">
-					<?php
-					echo $app->renderView('Ad', 'Index', ['slotName' => 'TOP_RIGHT_BOXAD']);
-					echo $app->renderView('Ad', 'Index', ['slotName' => 'MIDDLE_RIGHT_BOXAD']);
-					echo $app->renderView('Ad', 'Index', ['slotName' => 'LEFT_SKYSCRAPER_2']);
-					?>
-				</div>
 				<?= $bodytext ?>
 			</article>
 			<?= $footer ?>
