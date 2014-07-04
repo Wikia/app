@@ -625,7 +625,7 @@ class CityVisualization extends WikiaModel {
 
 		foreach($images as $index => $image) {
 			if ( !empty( $currentImages[$image] ) && intval($currentImages[$image]->image_index) != intval($index) ) {
-				$modifiedImage = $imagesToAdd[$image];
+				$modifiedImage = (array)$currentImages[$image];
 				$modifiedImage['image_index'] = $index;
 				$modifiedImages [] = $modifiedImage;
 			}
@@ -710,8 +710,16 @@ class CityVisualization extends WikiaModel {
 			array('*'),
 			array(
 				'city_id' => $cityId,
-				'city_lang_code' => $langCode
+				'city_lang_code' => $langCode,
+				'image_review_status' => [
+					ImageReviewStatuses::STATE_APPROVED,
+					ImageReviewStatuses::STATE_APPROVED_AND_TRANSFERRING,
+					ImageReviewStatuses::STATE_AUTO_APPROVED,
+					ImageReviewStatuses::STATE_IN_REVIEW,
+					ImageReviewStatuses::STATE_UNREVIEWED
+				]
 			),
+
 			__METHOD__
 		);
 
@@ -1027,10 +1035,22 @@ class CityVisualization extends WikiaModel {
 	}
 
 	private function modifyImageIndexes( $modifiedImages ) {
-		if ( ! empty( $addedImages ) ) {
+		if ( ! empty( $modifiedImages ) ) {
 			$dbm = wfGetDB( DB_MASTER, array(), $this->wg->ExternalSharedDB );
 
 			foreach ( $modifiedImages as $image ) {
+				// mark existing images in this slot for culling
+				$fields = [
+					'image_review_status' => ImageReviewStatuses::STATE_READY_FOR_CULLING,
+					'last_edited' => date( 'Y-m-d H:i:s' )
+				];
+
+				$conditions = [
+					'image_index' => $image['image_index']
+				];
+				$dbm->update( self::CITY_VISUALIZATION_IMAGES_TABLE_NAME, $fields, $conditions );
+
+				// move image to this slot
 				$fields = [
 					'image_index' => $image['image_index']
 				];
@@ -1038,8 +1058,6 @@ class CityVisualization extends WikiaModel {
 				$conditions = [
 					'image_name' => $image['image_name']
 				];
-
-
 				$dbm->update( self::CITY_VISUALIZATION_IMAGES_TABLE_NAME, $fields, $conditions );
 			}
 		}

@@ -70,6 +70,10 @@ abstract class BaseXWikiImage {
 		return ["width" => $this->width, "height" => $this->height];
 	}
 
+	public function exists() {
+		return $this->getSwiftStorage()->exists($this->getLocalPath());
+	}
+
 	protected function provideImageDimensions($img = null) {
 		if (empty($img)){
 			if ($this->getSwiftStorage()->exists($this->getLocalPath())){
@@ -118,10 +122,10 @@ abstract class BaseXWikiImage {
 		$result = $status->isOk();
 
 		if ( $result ) {
-			Wikia::log( __METHOD__, false, 'cannot remove xwiki image - ' . $path );
-		} else {
 			// remove thumbnails
 			$this->purgeThumbnails();
+		} else {
+			Wikia::log( __METHOD__, false, 'cannot remove xwiki image - ' . $path );
 		}
 
 		return $result;

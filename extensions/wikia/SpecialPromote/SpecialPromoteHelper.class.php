@@ -164,50 +164,6 @@ class SpecialPromoteHelper extends WikiaObject {
 		wfProfileOut(__METHOD__);
 	}
 
-	protected function saveAdditionalFiles($additionalImagesNames) {
-		$unchangedTypes = array();
-		$imagesToProcess = array();
-		$allFiles = array();
-
-		foreach($additionalImagesNames as $singleFileName) {
-			$promoImage= PromoImage::fromPathname($singleFileName);
-
-			if (!$promoImage->isType(PromoImage::INVALID)){
-				// check if file exists, if not do not add it to processed files, effectively removing it
-				$file = GlobalFile::newFromText($promoImage->getPathname(), $this->wg->cityId);
-				if ($file->exists()){
-					array_push($promoImages, $promoImage);
-				}
-
-				if (in_array($unchangedTypes, $promoImage->getType())){
-					WikiaLogger::instance()->info("SpecialPromote additional files duplicated type", ['method' => __METHOD__, 'type_duplicated' => $promoImage->getType()]);
-
-				} else {
-					array_push($unchangedTypes, $promoImage->getType());
-				}
-				array_push($allFiles, $promoImage);
-			} else {
-				array_push($imagesToProcess, $singleFileName);
-			}
-		}
-
-		$freeImageTypeSlots = array_diff(PromoImage::listAllAdditionalTypes(), $unchangedTypes);
-		foreach($imagesToProcess as $uploadedImageFileName) {
-			$imageType = array_shift($freeImageTypeSlots);
-
-			if (!empty($imageType)) {
-				$promoImage = new PromoImage($imageType, $this->wg->DBname);
-				$promoImage->processUploadedFile($uploadedImageFileName);
-				array_push($allFiles, $promoImage);
-			} else {
-				WikiaLogger::instance()->info("SpecialPromote too many uploaded files", ['method' => __METHOD__]);
-				break;
-			}
-		}
-
-		return $allFiles;
-	}
-
 	public function getImageUrl($imageFile, $requestedWidth, $requestedHeight) {
 		return $this->homePageHelper->getImageUrlFromFile($imageFile, $requestedWidth, $requestedHeight);
 	}

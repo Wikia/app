@@ -35,7 +35,7 @@ class WikiGetDataForPromoteHelper implements WikiGetDataHelper {
 				ImageReviewStatuses::STATE_AUTO_APPROVED,
 				ImageReviewStatuses::STATE_IN_REVIEW,
 				ImageReviewStatuses::STATE_UNREVIEWED
-			);
+			)->ORDER_BY('last_edited');
 
 		$wikiImages = $query->run($db, function ($result) {
 			$wikiImages = [];
@@ -76,7 +76,7 @@ class WikiGetDataForPromoteHelper implements WikiGetDataHelper {
 				ImageReviewStatuses::STATE_AUTO_APPROVED,
 				ImageReviewStatuses::STATE_IN_REVIEW,
 				ImageReviewStatuses::STATE_UNREVIEWED
-			);
+			)->ORDER_BY('last_edited');
 
 		$promoImage = $query->run($db, function ($result) {
 			while ($row = $result->fetchObject($result)) {
