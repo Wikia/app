@@ -12,3 +12,5 @@ $wgExtensionCredits['specialpage'][] = array(
 
 $wgAutoloadClasses['WikiaStatsController'] =  $dir . 'WikiaStatsController.class.php';
 $wgAutoloadClasses['WikiaStatsModel'] =  $dir . 'WikiaStatsModel.class.php';
+
+$wgExtensionMessagesFiles['WikiaStats'] = $dir . 'WikiaStats.i18n.php';
