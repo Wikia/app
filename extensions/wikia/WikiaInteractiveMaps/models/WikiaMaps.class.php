@@ -552,7 +552,7 @@ class WikiaMaps extends WikiaObject {
 	 */
 	private function fetchRealMapImageUrl() {
 		$imageUrl = self::DEFAULT_REAL_MAP_URL;
-		$tileSetData = $this->getTileSet($this->getGeoMapTilesetId());
+		$tileSetData = $this->getTileSet( $this->getGeoMapTilesetId() );
 		if ( $tileSetData[ 'success' ] && isset( $tileSetData[ 'content' ]->image ) ) {
 			$imageUrl = $tileSetData[ 'content' ]->image;
 		}
