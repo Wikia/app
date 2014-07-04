@@ -38,9 +38,11 @@ $wgAutoloadClasses['InfoboxBuilder\InfoboxBuilderHooks'] = __DIR__ . '/InfoboxBu
 /**
  * Add hooks
  */
+$wgHooks['ParserFirstCallInit'][]        = '\InfoboxBuilder\InfoboxBuilderHooks::setupParserHook';
 $wgHooks['ScribuntoExternalLibraries'][] = '\InfoboxBuilder\InfoboxBuilderHooks::registerScribuntoLibraries';
 
 /**
  * I18n file
  */
-$wgExtensionMessagesFiles['InfoboxBuilder'] = __DIR__ . '/InfoboxBuilder.i18n.php';
+$wgExtensionMessagesFiles['InfoboxBuilder']      = __DIR__ . '/InfoboxBuilder.i18n.php';
+$wgExtensionMessagesFiles['InfoboxBuilderMagic'] = __DIR__ . '/InfoboxBuilder.magic.i18n.php';
