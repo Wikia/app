@@ -140,6 +140,7 @@ ve.dm.MWImageModel.static.newFromImageNode = function ( node ) {
  */
 ve.dm.MWImageModel.prototype.getImageNodeType = function ( imageType, align ) {
 	imageType = imageType || this.getType();
+
 	if (
 		( this.getType() === 'frameless' || this.getType() === 'none' ) &&
 		( !this.isAligned( align ) || this.isDefaultAligned( imageType, align ) )
