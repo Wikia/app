@@ -49,6 +49,8 @@ trait IndexerWorkerBase {
 			}
 		} catch (Exception $e) {
 			$req->delivery_info['channel']->basic_nack($req->delivery_info['delivery_tag']);
+			print_r($e->getMessage());
+			print_r($e->getTrace());
 		}
 	}
 
