@@ -46,7 +46,7 @@ class AssetsManagerServer {
 
 		// do not log illegal request type (one/group/groups/sass supported only) - not to pollute
 		// logs
-		TransactionTracer::setEntryPoint(TransactionTracer::ENTRY_POINT_ASSETS_MANAGER);
+		Transaction::setEntryPoint(Transaction::ENTRY_POINT_ASSETS_MANAGER);
 		if ( function_exists( 'newrelic_disable_autorum') ) {
 			newrelic_disable_autorum();
 		}

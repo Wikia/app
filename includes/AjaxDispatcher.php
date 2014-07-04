@@ -77,8 +77,8 @@ class AjaxDispatcher {
 		/*
 		 * Wikia Change - begin
 		 */
-		TransactionTracer::setEntryPoint(TransactionTracer::ENTRY_POINT_AJAX);
-		TransactionTracer::setAttribute(TransactionTracer::PARAM_FUNCTION,$this->func_name);
+		Transaction::setEntryPoint(Transaction::ENTRY_POINT_AJAX);
+		Transaction::setAttribute(Transaction::PARAM_FUNCTION,$this->func_name);
 
 		if ( function_exists( 'newrelic_disable_autorum') ) {
 			newrelic_disable_autorum();

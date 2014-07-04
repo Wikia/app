@@ -120,7 +120,7 @@ class WallBaseController extends WikiaController{
 		$this->response->setVal('showPager', ($this->countComments > $wallMessagesPerPage) );
 		$this->response->setVal('currentPage', $page );
 
-		TransactionTracer::setSizeCategoryByDistributionOffset( $this->countComments, 0, self::DEFAULT_MESSAGES_PER_PAGE );
+		Transaction::setSizeCategoryByDistributionOffset( $this->countComments, 0, self::DEFAULT_MESSAGES_PER_PAGE );
 
 		//TODO: keep the varnish cache and do purging on post
 		$this->response->setCacheValidity(WikiaResponse::CACHE_DISABLED);

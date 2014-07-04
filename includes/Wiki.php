@@ -594,14 +594,14 @@ class MediaWiki {
 		global $wgUser;
 
 		if ($title->isSpecialPage()) {
-			TransactionTracer::setEntryPoint( TransactionTracer::ENTRY_POINT_SPECIAL_PAGE );
+			Transaction::setEntryPoint( Transaction::ENTRY_POINT_SPECIAL_PAGE );
 		} else {
-			TransactionTracer::setEntryPoint( TransactionTracer::ENTRY_POINT_PAGE );
-			TransactionTracer::setAttribute( TransactionTracer::PARAM_NAMESPACE, $title->getNamespace() );
+			Transaction::setEntryPoint( Transaction::ENTRY_POINT_PAGE );
+			Transaction::setAttribute( Transaction::PARAM_NAMESPACE, $title->getNamespace() );
 		}
 
-		TransactionTracer::setAttribute( TransactionTracer::PARAM_LOGGED_IN, $wgUser->isLoggedIn() );
-		TransactionTracer::setAttribute( TransactionTracer::PARAM_ACTION, $action );
+		Transaction::setAttribute( Transaction::PARAM_LOGGED_IN, $wgUser->isLoggedIn() );
+		Transaction::setAttribute( Transaction::PARAM_ACTION, $action );
 	}
 
 	private function main() {

@@ -2047,7 +2047,7 @@ class OutputPage extends ContextSource {
 
 			$sk = $this->getSkin();
 			//Wikia Change
-			TransactionTracer::setAttribute( TransactionTracer::PARAM_SKIN, $sk->getSkinName() );
+			Transaction::setAttribute( Transaction::PARAM_SKIN, $sk->getSkinName() );
 			//Wikia Change End
 
 			// Hook that allows last minute changes to the output page, e.g.
