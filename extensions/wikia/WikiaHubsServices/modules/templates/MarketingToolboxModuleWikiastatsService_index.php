@@ -19,7 +19,7 @@
 							'tooltipIconTitle' => wfMessage( 'wikiastats-visitors-tooltip' )->plain()
 						]
 					);
-					?></h4>
+				?></h4>
 				<strong><?= $wg->Lang->formatNum($visitors); ?></strong>
 			</div>
 			<div class="datasection">

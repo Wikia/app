@@ -18,12 +18,14 @@ class WikiaStatsModel extends WikiaModel {
 
 	public function getWikiaStatsIncludingFallbacks($statsFromWF) {
 		$this->setFallbacks($statsFromWF);
-		$stats['edits'] = $this->getEdits();
-		$stats['communities'] = $this->getTotalCommunities();
-		$stats['newCommunities'] = $this->getLastDaysNewCommunities();
-		$stats['totalPages'] = $this->getTotalPages();
-		$stats['mobilePercentage'] = $this->getMobilePercentage();
-		$stats['visitors'] = $this->getVisitors();
+		$stats = [
+			'edits' => $this->getEdits(),
+			'communities' => $this->getTotalCommunities(),
+			'newCommunities' => $this->getLastDaysNewCommunities(),
+			'totalPages' => $this->getTotalPages(),
+			'mobilePercentage' => $this->getMobilePercentage(),
+			'visitors' => $this->getVisitors()
+		];
 
 		return $stats;
 	}
@@ -36,15 +38,15 @@ class WikiaStatsModel extends WikiaModel {
 	}
 
 	private function getTotalCommunities() {
-		$totalCommunitiesFromDB = $this->getTotalCommunitiesFromDB();
-		$totalCommunities = $totalCommunitiesFromDB ? $totalCommunitiesFromDB : $this->totalCommunitiesFallback;
+		$totalCommunities = $this->getTotalCommunitiesFromDB();
+		$totalCommunities = $totalCommunities ? $totalCommunities : $this->totalCommunitiesFallback;
 
 		return $totalCommunities;
 	}
 
 	private function getLastDaysNewCommunities() {
-		$lastDaysNewCommunitiesFromDB = $this->getLastDaysNewCommunitiesFromDB();
-		$lastDaysNewCommunities = $lastDaysNewCommunitiesFromDB ? $lastDaysNewCommunitiesFromDB : $this->lastDaysCommunitiesFallback;
+		$lastDaysNewCommunities = $this->getLastDaysNewCommunitiesFromDB();
+		$lastDaysNewCommunities = $lastDaysNewCommunities ? $lastDaysNewCommunities : $this->lastDaysCommunitiesFallback;
 
 		return $lastDaysNewCommunities;
 	}
@@ -69,13 +71,15 @@ class WikiaStatsModel extends WikiaModel {
 		wfProfileIn(__METHOD__);
 
 		$edits = 0;
-		if (!empty($this->wg->StatsDBEnabled)) {
-			$db = wfGetDB(DB_SLAVE, array(), $this->wg->StatsDB);
+		global $wgStatsDBEnabled;
+		global $wgStatsDB;
+		if (!empty($wgStatsDBEnabled)) {
+			$db = wfGetDB(DB_SLAVE, [], $wgStatsDB);
 
 			$row = $db->selectRow(
-				array('events'),
-				array('count(*) cnt'),
-				array('event_date between curdate() - interval 2 day and curdate() - interval 1 day'),
+				['events'],
+				['count(*) cnt'],
+				['event_date between curdate() - interval 2 day and curdate() - interval 1 day'],
 				__METHOD__
 			);
 
@@ -93,11 +97,12 @@ class WikiaStatsModel extends WikiaModel {
 		wfProfileIn(__METHOD__);
 
 		$communities = 0;
-		$db = wfGetDB(DB_SLAVE, array(), $this->wg->externalSharedDB);
+		global $wgExternalSharedDB;
+		$db = wfGetDB(DB_SLAVE, [], $wgExternalSharedDB);
 		$row = $db->selectRow(
-			array('city_list'),
-			array('count(1) cnt'),
-			array('city_public = 1 AND city_created < DATE(NOW())'),
+			['city_list'],
+			['count(1) cnt'],
+			['city_public = 1 AND city_created < DATE(NOW())'],
 			__METHOD__
 		);
 
@@ -119,15 +124,16 @@ class WikiaStatsModel extends WikiaModel {
 	private function getNewCommunitiesInRangeFromDB($starttimestamp, $endtimestamp) {
 		wfProfileIn(__METHOD__);
 
-		$db = wfGetDB(DB_SLAVE, array(), $this->wg->externalSharedDB);
+		global $wgExternalSharedDB;
+		$db = wfGetDB(DB_SLAVE, [], $wgExternalSharedDB);
 		$row = $db->selectRow(
-			array('city_list'),
-			array('count(1) cnt'),
-			array(
+			['city_list'],
+			['count(1) cnt'],
+			[
 				'city_public' => 1,
 				'city_created >= FROM_UNIXTIME(' . $starttimestamp . ')',
 				'city_created < FROM_UNIXTIME(' . $endtimestamp . ')'
-			),
+			],
 			__METHOD__
 		);
 		$newCommunities = 0;

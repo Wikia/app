@@ -1,7 +1,7 @@
 <?php
 class WikiaStatsController extends WikiaController {
 
-	const WIKIA_STATS_MEMC_VERSION = "0.1v";
+	const WIKIA_STATS_MEMC_VERSION = "1";
 	const WIKIA_STATS_CACHE_VALIDITY = 86400;
 
 	/**
