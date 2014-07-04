@@ -24,11 +24,13 @@ class StagingHooks {
 	 * @return bool
 	 */
 	static public function onBeforePageRedirect( $out, &$redirect, &$code ) {
-		$stagingEnvName = explode( '.', $_SERVER['HTTP_HOST'])[0];
-		$stagingUrlPart = '://' . $stagingEnvName . '.';
+		if ( !empty( $_SERVER['HTTP_X_STAGING'] ) ) {
+			$stagingEnvName = $_SERVER['HTTP_X_STAGING'];
+			$stagingUrlPart = '://' . $stagingEnvName . '.';
 
-		if ( strpos( $redirect, 'wikia.com' ) !== false && strpos( $redirect, $stagingUrlPart ) === false ) {
-			$redirect = str_replace( '://', $stagingUrlPart, $redirect );
+			if ( strpos( $redirect, 'wikia.com' ) !== false && strpos( $redirect, $stagingUrlPart ) === false ) {
+				$redirect = str_replace( '://', $stagingUrlPart, $redirect );
+			}
 		}
 
 		return true;
