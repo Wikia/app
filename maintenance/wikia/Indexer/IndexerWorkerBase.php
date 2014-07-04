@@ -46,8 +46,6 @@ trait IndexerWorkerBase {
 			$res = $this->process( $data );
 			if ( !isset( $res ) || $res ) {
 				$req->delivery_info['channel']->basic_ack($req->delivery_info['delivery_tag']);
-			} else {
-				$req->delivery_info['channel']->basic_nack($req->delivery_info['delivery_tag']);
 			}
 		} catch (Exception $e) {
 			$req->delivery_info['channel']->basic_nack($req->delivery_info['delivery_tag']);
