@@ -416,7 +416,6 @@ class MWMemcached {
 	 * @return Mixed
 	 */
 	public function get( $key ) {
-		return false;
 		wfProfileIn( __METHOD__ );
 		wfProfileIn( __METHOD__ . "::$key" );
 
