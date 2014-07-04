@@ -76,31 +76,43 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 			$item->image = $this->mapsModel->createCroppedThumb( $item->image, self::MAP_THUMB_WIDTH, self::MAP_THUMB_HEIGHT, 'origin' );
 		}
 
+		if ( $this->app->checkSkin( 'wikiamobile' ) ) {
+			$this->setVal( 'mapThumbWidth', self::MAP_THUMB_WIDTH );
+			$this->setVal( 'mapThumbHeight', self::MAP_THUMB_HEIGHT );
+			$this->setVal( 'renderControls', false );
+			$this->setVal( 'renderTitle', false );
+
+			WikiaMobilePageHeaderService::setSkipRendering( true );
+		} else {
+			$this->setVal( 'mapThumbWidth', self::MAP_THUMB_WIDTH );
+			$this->setVal( 'mapThumbHeight', self::MAP_THUMB_HEIGHT );
+			$this->setVal( 'renderControls', true );
+			$this->setVal( 'renderTitle', true );
+
+			$messages = [
+				'title' => wfMessage( 'wikia-interactive-maps-title' ),
+				'create-a-map' => wfMessage( 'wikia-interactive-maps-create-a-map' ),
+				'no-maps-header' => wfMessage( 'wikia-interactive-maps-no-maps-header' ),
+				'no-maps-text' => wfMessage( 'wikia-interactive-maps-no-maps-text' ),
+				'no-maps-learn-more' => wfMessage( 'wikia-interactive-maps-no-maps-learn-more' ),
+			];
+			$this->setVal( 'messages', $messages );
+			$this->setVal( 'sortingOptions', $this->mapsModel->getSortingOptions( $selectedSort ) );
+			$this->setVal( 'searchInput', $this->app->renderView( 'Search', 'Index' ) );
+		}
+
+		// template variables shared between skins
 		$this->setVal( 'maps', $mapsResponse->items );
 		$this->setVal( 'hasMaps', !empty( $mapsResponse->total ) );
-		$this->setVal( 'mapThumbWidth', self::MAP_THUMB_WIDTH );
-		$this->setVal( 'mapThumbHeight', self::MAP_THUMB_HEIGHT );
-
-		$url = $this->getContext()->getTitle()->getFullURL();
-		$this->setVal( 'baseUrl', $url );
-
-		$messages = [
-			'title' => wfMessage( 'wikia-interactive-maps-title' ),
-			'create-a-map' => wfMessage( 'wikia-interactive-maps-create-a-map' ),
-			'no-maps-header' => wfMessage( 'wikia-interactive-maps-no-maps-header' ),
-			'no-maps-text' => wfMessage( 'wikia-interactive-maps-no-maps-text' ),
-			'no-maps-learn-more' => wfMessage( 'wikia-interactive-maps-no-maps-learn-more' ),
-		];
-		$this->setVal( 'messages', $messages );
-		$this->setVal( 'sortingOptions', $this->mapsModel->getSortingOptions( $selectedSort ) );
-		$this->setVal( 'searchInput', $this->app->renderView( 'Search', 'Index' ) );
 		$this->setVal( 'learnMoreUrl', self::MAPS_WIKIA_URL );
+
+		$baseUrl = $this->getContext()->getTitle()->getFullURL();
+		$this->setVal( 'baseUrl', $baseUrl );
 
 		$urlParams = [];
 		if ( !is_null( $selectedSort ) ) {
 			$urlParams[ 'sort' ] = $selectedSort;
 		}
-
 		$url = $this->getContext()->getTitle()->getFullURL( $urlParams );
 
 		$pagination = false;
@@ -122,10 +134,6 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 
 		$this->response->addAsset( 'extensions/wikia/WikiaInteractiveMaps/css/WikiaInteractiveMaps.scss' );
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
-
-		if ( $this->app->checkSkin( 'wikiamobile' ) ) {
-			$this->overrideTemplate( 'WikiaMobileMain' );
-		}
 	}
 
 	/**
