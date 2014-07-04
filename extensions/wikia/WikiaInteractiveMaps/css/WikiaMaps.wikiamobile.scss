@@ -1,5 +1,5 @@
-.maps-controls {
-	display: none;
+#wkPage {
+	padding: 0;
 }
 
 .map-list {
@@ -26,4 +26,8 @@
 		overflow: hidden;
 		position: relative;
  	}
+}
+
+.error {
+	padding: 0 15px;
 }
