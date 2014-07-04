@@ -132,7 +132,7 @@ ve.ui.WikiaUploadWidget.prototype.onFileChange = function ( event, file ) {
 			// show filetype message first if multiple errors exist
 			ve.msg(
 				'wikia-visualeditor-dialog-wikiamediainsert-upload-error-' + fileErrors[ fileErrors.length - 1 ][ 0 ],
-				 fileErrors[ fileErrors.length - 1 ][ 1 ]
+				fileErrors[ fileErrors.length - 1 ][ 1 ]
 			),
 			'error',
 			$( '.ve-ui-frame' ).contents().find( '.ve-ui-window-body' )

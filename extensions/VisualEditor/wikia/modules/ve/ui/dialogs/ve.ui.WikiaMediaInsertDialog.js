@@ -41,7 +41,7 @@ ve.ui.WikiaMediaInsertDialog.static.pages = [ 'main', 'search' ];
  * @returns {jQuery}
  */
 ve.ui.WikiaMediaInsertDialog.static.formatPolicy = function ( html ) {
-	 return $( '<div>' )
+	return $( '<div>' )
 		.html( html )
 		.find( '*' )
 			.each( function () {
@@ -122,7 +122,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.initialize = function () {
 		'remove': 'onCartModelRemove'
 	} );
 	this.cart.on( 'select', ve.bind( this.onCartSelect, this ) );
-	this.insertButton.connect( this, { 'click': [ 'close', 'insert' ] } );
+	this.insertButton.connect( this, { 'click': [ 'close', { 'action': 'insert' } ] } );
 	this.pages.on( 'set', ve.bind( this.onPageSet, this ) );
 	this.query.connect( this, {
 		'requestSearchDone': 'onQueryRequestSearchDone',
@@ -403,17 +403,18 @@ ve.ui.WikiaMediaInsertDialog.prototype.onMediaPageRemove = function ( item ) {
  *
  * @method
  */
-ve.ui.WikiaMediaInsertDialog.prototype.setup = function () {
-	// Parent method
-	ve.ui.Dialog.prototype.setup.call( this );
-	this.pages.setPage( 'main' );
+ve.ui.WikiaMediaInsertDialog.prototype.getSetupProcess = function ( data ) {
+	return ve.ui.WikiaMediaInsertDialog.super.prototype.getSetupProcess.call( this, data )
+		.next( function () {
+			this.pages.setPage( 'main' );
 
-	// If the policy height (which has a max-height property set) is the same as the first child of the policy
-	// then there is no more of the policy to show and the read more link can be hidden.
-	if ( this.$policy.height() === this.$policy.children().first().height() ) {
-		this.$policyReadMore.hide();
-	}
-	this.dropTarget.setup();
+			// If the policy height (which has a max-height property set) is the same as the first child of the policy
+			// then there is no more of the policy to show and the read more link can be hidden.
+			if ( this.$policy.height() === this.$policy.children().first().height() ) {
+				this.$policyReadMore.hide();
+			}
+			this.dropTarget.setup();
+		}, this );
 };
 
 /**
@@ -436,16 +437,16 @@ ve.ui.WikiaMediaInsertDialog.prototype.onPageSet = function () {
  * @method
  * @param {string} action Which action is being performed on close.
  */
-ve.ui.WikiaMediaInsertDialog.prototype.teardown = function ( action ) {
-	if ( action === 'insert' ) {
-		this.insertMedia( ve.copy( this.cartModel.getItems() ), this.fragment );
-	}
-	this.cartModel.clearItems();
-	this.queryInput.setValue( '' );
-	this.dropTarget.teardown();
-
-	// Parent method
-	ve.ui.Dialog.prototype.teardown.call( this, action );
+ve.ui.WikiaMediaInsertDialog.prototype.getTeardownProcess = function ( data ) {
+	return ve.ui.WikiaMediaInsertDialog.super.prototype.getTeardownProcess.call( this, data )
+		.first( function () {
+			if ( data.action === 'insert' ) {
+				this.insertMedia( ve.copy( this.cartModel.getItems() ), this.fragment );
+			}
+			this.cartModel.clearItems();
+			this.queryInput.setValue( '' );
+			this.dropTarget.teardown();
+		}, this );
 };
 
 /**
@@ -758,4 +759,4 @@ ve.ui.WikiaMediaInsertDialog.prototype.onFrameDocumentKeyDown = function ( e ) {
 
 /* Registration */
 
-ve.ui.dialogFactory.register( ve.ui.WikiaMediaInsertDialog );
+ve.ui.windowFactory.register( ve.ui.WikiaMediaInsertDialog );
