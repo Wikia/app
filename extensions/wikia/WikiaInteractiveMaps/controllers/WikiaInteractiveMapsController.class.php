@@ -14,6 +14,7 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 	const PAGE_NAME = 'Maps';
 	const TRANSLATION_FILENAME = 'translations.json';
 	const MAPS_WIKIA_URL = 'http://maps.wikia.com';
+	const WIKIA_MOBILE_SKIN_NAME = 'wikiamobile';
 
 	/**
 	 * @var WikiaMaps
@@ -79,24 +80,7 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 		if ( !is_null( $selectedSort ) ) {
 			$urlParams[ 'sort' ] = $selectedSort;
 		}
-		$url = $this->getContext()->getTitle()->getFullURL( $urlParams );
-
-		$pagination = false;
-		$totalMaps = (int)$mapsResponse->total;
-
-		if ( $totalMaps > self::MAPS_PER_PAGE ) {
-			$pagination = $this->app->renderView(
-				'PaginationController',
-				'index',
-				array(
-					'totalItems' => $totalMaps,
-					'itemsPerPage' => self::MAPS_PER_PAGE,
-					'currentPage' => $currentPage,
-					'url' => $url
-				)
-			);
-		}
-		$this->setVal( 'pagination', $pagination );
+		$this->addPagination( (int)$mapsResponse->total, $currentPage, $urlParams );
 
 		$this->response->addAsset( 'extensions/wikia/WikiaInteractiveMaps/css/WikiaInteractiveMaps.scss' );
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
@@ -245,7 +229,7 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 	 * @param String $selectedSort a sorting option passed in $_GET
 	 */
 	private function prepareTemplateData( $mapsResponse, $selectedSort ) {
-		$isWikiaMobileSkin = $this->app->checkSkin( 'wikiamobile' );
+		$isWikiaMobileSkin = $this->app->checkSkin( self::WIKIA_MOBILE_SKIN_NAME );
 
 		$thumbWidth = ( $isWikiaMobileSkin ? self::MAP_MOBILE_THUMB_WIDTH : self::MAP_THUMB_WIDTH );
 		$thumbHeight = ( $isWikiaMobileSkin ? self::MAP_MOBILE_THUMB_HEIGHT : self::MAP_THUMB_HEIGHT );
@@ -281,6 +265,33 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 
 		$baseUrl = $this->getContext()->getTitle()->getFullURL();
 		$this->setVal( 'baseUrl', $baseUrl );
+	}
+
+	/**
+	 * Renders pagination and adds it to template variables for Oasis skin
+	 *
+	 * @param Integer $totalMaps
+	 * @param Integer $currentPage
+	 * @param Array $urlParams
+	 */
+	private function addPagination( $totalMaps, $currentPage, $urlParams ) {
+		$url = $this->getContext()->getTitle()->getFullURL( $urlParams );
+		$pagination = false;
+
+		if ( $totalMaps > self::MAPS_PER_PAGE ) {
+			$pagination = $this->app->renderView(
+				'PaginationController',
+				'index',
+				array(
+					'totalItems' => $totalMaps,
+					'itemsPerPage' => self::MAPS_PER_PAGE,
+					'currentPage' => $currentPage,
+					'url' => $url
+				)
+			);
+		}
+
+		$this->setVal( 'pagination', $pagination );
 	}
 
 }

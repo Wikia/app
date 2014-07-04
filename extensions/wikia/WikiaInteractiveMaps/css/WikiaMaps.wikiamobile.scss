@@ -1,4 +1,5 @@
 @import "WikiaMapsShared";
+@import "includes/wikia/services/css/pagination.scss";
 
 .map-list {
 	list-style: none;
@@ -22,6 +23,23 @@
 		overflow: hidden;
 		position: relative;
  	}
+}
+
+.Pagination {
+	margin: 6.5% 0 0 0;
+
+	li {
+		border: 0;
+
+		a {
+			display: block-inline;
+			text-align: center;
+			vertical-align: middle;
+			line-height: 1.2em;
+			border-radius: 5px;
+			font-size: 1.2em;
+		}
+	}
 }
 
 .error {
