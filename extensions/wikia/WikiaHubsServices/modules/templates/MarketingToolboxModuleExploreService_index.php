@@ -1,37 +1,40 @@
-<h2><?= $headline ?></h2>
+<section class="grid-1 plainlinks wikiahubs-explore wikiahubs-module">
 
-<div class="explore-content">
-	<? if( !empty($imageUrl) ): ?>
-	<figure>
-		<? if (!empty($imageLink)): ?>
-			<a href="<?=$imageLink?>">
-		<? endif ?>
+	<h2><?= $headline ?></h2>
 
-			<img src="<?= $imageUrl; ?>" alt="<?= $imageAlt; ?>" class="image" />
+	<div class="explore-content">
+		<? if( !empty($imageUrl) ): ?>
+		<figure>
+			<? if (!empty($imageLink)): ?>
+				<a href="<?=$imageLink?>">
+			<? endif ?>
 
-		<? if (!empty($imageLink)): ?>
-			</a>
-		<? endif ?>
-	</figure>
-	<? endif; ?>
+				<img src="<?= $imageUrl; ?>" alt="<?= $imageAlt; ?>" class="image" />
 
-	<? if( !empty($linkgroups) ): ?>
-	<? foreach( $linkgroups as $linkgroup ): ?>
-		<h4><?= $linkgroup['headline']; ?></h4>
+			<? if (!empty($imageLink)): ?>
+				</a>
+			<? endif ?>
+		</figure>
+		<? endif; ?>
 
-		<? if( !empty($linkgroup['links']) ): ?>
-			<ul>
-				<? foreach ($linkgroup['links'] as $singlelink): ?>
-				<li>
-					<?php if( !empty($singlelink['href']) ): ?>
-					<a href="<?= $singlelink['href']; ?>"><?= $singlelink['anchor']; ?></a>
-					<?php else: ?>
-					<?= $singlelink['anchor']; ?>
-					<?php endif; ?>
-				</li>
-				<? endforeach; ?>
-			</ul>
-			<? endif; ?>
-		<? endforeach; ?>
-	<? endif; ?>
-</div>
+		<? if( !empty($linkgroups) ): ?>
+		<? foreach( $linkgroups as $linkgroup ): ?>
+			<h4><?= $linkgroup['headline']; ?></h4>
+
+			<? if( !empty($linkgroup['links']) ): ?>
+				<ul>
+					<? foreach ($linkgroup['links'] as $singlelink): ?>
+					<li>
+						<?php if( !empty($singlelink['href']) ): ?>
+						<a href="<?= $singlelink['href']; ?>"><?= $singlelink['anchor']; ?></a>
+						<?php else: ?>
+						<?= $singlelink['anchor']; ?>
+						<?php endif; ?>
+					</li>
+					<? endforeach; ?>
+				</ul>
+				<? endif; ?>
+			<? endforeach; ?>
+		<? endif; ?>
+	</div>
+</section>

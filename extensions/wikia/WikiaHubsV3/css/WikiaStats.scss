@@ -1,0 +1,44 @@
+.WikiaGrid .wikiahubs-wikiastats {
+	height: 330px;
+	margin-top: 10px;
+	.wikiastats-content {
+		clear: both;
+		.title {
+			border-bottom: 4px solid $color-wikiahome-hubcolor;
+			height: 30px;
+			a {
+				float: right;
+				margin-top: 8px;
+			}
+		}
+		h2 {
+			border: none;
+			float: left;
+		}
+		h3 {
+			clear: both;
+			font-weight: bold;
+			margin: 12px 0;
+		}
+		.statisticdata {
+			overflow: hidden;
+			height: 244px;
+			.datasection {
+				width: 250px;
+				float: left;
+				height: 46px;
+				padding: 17px 0;
+				text-align: center;
+			}
+		}
+		.tooltip-icon {
+			background-color: $color-wikiahome-hubcolor;
+			border-radius: 12px;
+			color: white;
+			cursor: pointer;
+			display: inline-block;
+			height: 16px;
+			width: 16px;
+		}
+	}
+}
