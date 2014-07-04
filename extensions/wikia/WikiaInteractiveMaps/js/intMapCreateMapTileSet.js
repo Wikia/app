@@ -119,6 +119,7 @@ define(
 
 		function renderChooseTileSet() {
 			modal.$innerContent.html(utils.render(uiTemplate, templateData));
+
 			// cache selectors
 			$sections = modal.$innerContent.children();
 			$tileSetsContainer = $('#intMapTileSetsList');
