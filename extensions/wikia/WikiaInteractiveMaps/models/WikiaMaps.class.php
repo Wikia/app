@@ -253,7 +253,7 @@ class WikiaMaps extends WikiaObject {
 	 * @return mixed
 	 */
 	public function getTileSet( $tileSetId ) {
-		$url = $this->buildUrl( [ self::ENTRY_POINT_TILE_SET,  $tileSetId ] );
+		$url = $this->buildUrl( [ self::ENTRY_POINT_TILE_SET, $tileSetId ] );
 
 		$response = $this->processServiceResponse(
 			Http::get( $url, 'default', $this->getHttpRequestOptions() )
