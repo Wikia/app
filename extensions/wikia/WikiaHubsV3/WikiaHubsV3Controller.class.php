@@ -19,7 +19,7 @@ class WikiaHubsV3Controller extends WikiaController {
 	 * @var WikiaHubsModel
 	 */
 	protected $model;
-	
+
 	/**
 	 * @var MarketingToolboxModel
 	 */
@@ -56,12 +56,11 @@ class WikiaHubsV3Controller extends WikiaController {
 				$toolboxModel->getNotTranslatedModuleName($moduleId)
 			);
 		}
-
 		$this->response->addAsset('wikiahubs_v3');
 		$this->response->addAsset('wikiahubs_v3_modal');
 		$this->response->addAsset('wikiahubs_v3_scss');
 		$this->response->addAsset('wikiahubs_v3_scss_mobile');
-		
+
 		$this->wg->Out->addJsConfigVars([
 			'wgWikiaHubsVerticalId' => $this->verticalId
 		]);
@@ -120,7 +119,6 @@ class WikiaHubsV3Controller extends WikiaController {
 			$this->cityId,
 			self::HUBS_VERSION
 		);
-
 		$moduleData = $module->loadData( $toolboxModel, $params );
 
 		if (!empty($moduleData)) {
@@ -174,7 +172,7 @@ class WikiaHubsV3Controller extends WikiaController {
 		if( !$this->marketingToolboxModel ) {
 			$this->marketingToolboxModel = new MarketingToolboxV3Model($this->app);
 		}
-		
+
 		return $this->marketingToolboxModel;
 	}
 

@@ -22,6 +22,7 @@ $wgAutoloadClasses['MarketingToolboxSliderModel'] =  $dir . 'models/MarketingToo
 $wgAutoloadClasses['MarketingToolboxFromthecommunityModel'] =  $dir . 'models/MarketingToolboxFromthecommunityModel.class.php';
 $wgAutoloadClasses['MarketingToolboxImageModel'] =  $dir . 'models/MarketingToolboxImageModel.class.php';
 $wgAutoloadClasses['MarketingToolboxWAMModel'] =  $dir . 'models/MarketingToolboxWAMModel.class.php';
+//$wgAutoloadClasses['MarketingToolboxStatsModel'] =  $dir . 'models/MarketingToolboxStatsModel.class.php';
 $wgAutoloadClasses['WikiaHubsModel'] =  $dir . 'models/WikiaHubsModel.class.php';
 
 $wgAutoloadClasses['MarketingToolboxModuleService'] =  $dir . 'modules/MarketingToolboxModuleService.class.php';
@@ -35,6 +36,7 @@ $wgAutoloadClasses['MarketingToolboxModuleFeaturedvideoService'] =  $dir . 'modu
 $wgAutoloadClasses['MarketingToolboxModuleFromthecommunityService'] =  $dir . 'modules/MarketingToolboxModuleFromthecommunityService.class.php';
 $wgAutoloadClasses['MarketingToolboxModulePollsService'] =  $dir . 'modules/MarketingToolboxModulePollsService.class.php';
 $wgAutoloadClasses['MarketingToolboxModuleWAMService'] =  $dir . 'modules/MarketingToolboxModuleWAMService.class.php';
+$wgAutoloadClasses['MarketingToolboxModuleWikiastatsService'] =  $dir . 'modules/MarketingToolboxModuleWikiastatsService.class.php';
 
 $wgAutoloadClasses['WikiaHubsServicesHelper'] =  $dir . 'WikiaHubsServicesHelper.class.php';
 $wgAutoloadClasses['WikiaHubsApiController'] = "{$IP}/extensions/wikia/WikiaHubsServices/api/WikiaHubsApiController.class.php";

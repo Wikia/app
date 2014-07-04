@@ -47,7 +47,8 @@ abstract class AbstractMarketingToolboxModel extends WikiaModel {
 		);
 
 		$this->nonEditableModules = array(
-			MarketingToolboxModuleWAMService::MODULE_ID => 'wam'
+			MarketingToolboxModuleWAMService::MODULE_ID => 'wam',
+			MarketingToolboxModuleWikiastatsService::MODULE_ID => 'wikia-stats'
 		);
 
 		$this->modules = $this->editableModules + $this->nonEditableModules;
