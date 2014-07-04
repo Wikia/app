@@ -436,7 +436,6 @@ ve.ui.WikiaMediaInsertDialog.prototype.onPageSet = function () {
  * @method
  * @param {string} action Which action is being performed on close.
  */
-<<<<<<< HEAD
 ve.ui.WikiaMediaInsertDialog.prototype.getTeardownProcess = function ( data ) {
 	return ve.ui.WikiaMediaInsertDialog.super.prototype.getTeardownProcess.call( this, data )
 		.first( function () {
@@ -447,18 +446,6 @@ ve.ui.WikiaMediaInsertDialog.prototype.getTeardownProcess = function ( data ) {
 			this.queryInput.setValue( '' );
 			this.dropTarget.teardown();
 		}, this );
-=======
-ve.ui.WikiaMediaInsertDialog.prototype.teardown = function ( action ) {
-	if ( action === 'insert' ) {
-		this.insertMedia( ve.copy( this.cartModel.getItems() ), this.fragment );
-	}
-	this.cartModel.clearItems();
-	this.queryInput.setValue( '' );
-	this.dropTarget.teardown();
-
-	// Parent method
-	ve.ui.WikiaMediaInsertDialog.super.prototype.teardown.call( this, action );
->>>>>>> VE-1261 Using super
 };
 
 /**
