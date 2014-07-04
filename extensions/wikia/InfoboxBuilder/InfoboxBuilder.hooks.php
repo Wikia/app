@@ -23,4 +23,16 @@ final class InfoboxBuilderHooks {
 
 		return true;
 	}
+
+	public static function setupParserHook( &$parser ) {
+		$parser->setFunctionHook( 'infoboxbuilder', '\InfoboxBuilder\InfoboxBuilderHooks::parserFunctionHook', SFH_OBJECT_ARGS );
+		return true;
+	}
+
+	public static function parserFunctionHook( &$parser, $frame, $args ) {
+		// wfProfileIn( __METHOD__ );
+
+		// wfProfileOut( __METHOD__ );
+		return "success! {$param1}";
+	}
 }
