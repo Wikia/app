@@ -1241,6 +1241,12 @@ $wgAdDriverUseSevenOneMedia = null;
 $wgAdDriverUseSevenOneMediaInLanguages = ['de'];
 
 /**
+ * @name $wgAdDriverSevenOneMediaSub4Site
+ * Global variable SOI_SUB4SITE value for SevenOne Media ads
+ */
+$wgAdDriverSevenOneMediaSub4Site = null;
+
+/**
  * @name $wgAdDriverUseDartForSlotsBelowTheFold
  * Whether to call DART for additional slots below the fold. Also known as "Coffee cup".
  * Set to null for to restrict only to Entertainment vertical
