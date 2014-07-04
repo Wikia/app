@@ -18,6 +18,7 @@ abstract class ApiWrapper {
 	protected static $CACHE_KEY_VERSION = 0.1;
 	protected static $CACHE_EXPIRY = 86400;
 	protected static $RESPONSE_FORMAT = self::RESPONSE_FORMAT_JSON;
+	protected static $DELAYS = [ "5 minutes", "1 hour", "1 day" ];
 
 	/**
 	 * Get appropriate ApiWrapper for the given URL
@@ -590,6 +591,14 @@ abstract class ApiWrapper {
 		wfProfileOut( __METHOD__ );
 
 		return $result;
+	}
+
+	public function getDelay( $delayIndex ) {
+		return static::$DELAYS[$delayIndex];
+	}
+
+	public function getDelayCount() {
+		return count( static::$DELAYS );
 	}
 
 }
