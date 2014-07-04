@@ -18,3 +18,4 @@ $wgExtensionCredits['other'][] = array(
 $wgAutoloadClasses['StagingHooks'] =  $dir . 'StagingHooks.class.php';
 
 $wgHooks['MakeGlobalVariablesScript'][] = 'StagingHooks::onMakeGlobalVariablesScript';
+$wgHooks['BeforePageRedirect'][] = 'StagingHooks::onBeforePageRedirect';
