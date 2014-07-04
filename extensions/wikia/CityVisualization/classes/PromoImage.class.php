@@ -257,55 +257,6 @@ class PromoImage extends WikiaObject {
 
 	}
 
-	/*
-	 * @deprecated
-	 */
-	public function getDestinationPathname() {
-		return $this->fileName;
-	}
-
-	public function getOriginFile($cityId = null){
-		if (empty($cityId)){
-			$cityId =  $this->getCityId();
-		}
-
-		$f = GlobalFile::newFromText($this->getPathname(), $cityId);
-		return $f;
-	}
-	/*
-	 * @deprecated
-	 */
-	public function corporateFileByLang($lang){
-		$wiki_id = (new WikiaCorporateModel())->getCorporateWikiIdByLang($lang);
-		return GlobalFile::newFromText($this->getPathname(), $wiki_id);
-	}
-
-	public function isFileChanged(){
-		return !empty($this->fileChanged);
-	}
-
-	/*
-	 * @deprecated
-	 */
-	public function processUploadedFile($srcFileName) {
-		global $wgServer;
-
-		if ($this->isValid()){ // do not upload invalid filenames
-			$this->fileChanged = true;
-			$imageName = implode( '.', [$this->wg->cityId, time(), uniqid()] );
-
-			$uploader = new PromoXWikiImage($imageName);
-			$temp_file = RepoGroup::singleton()->getLocalRepo()->getUploadStash()->getFile($srcFileName);
-
-			$status = $uploader->uploadByUrl($wgServer . $temp_file->getUrl());
-
-			$this->fileName = $imageName;
-
-			$temp_file->remove();
-		}
-		return $this;
-	}
-
 	protected function deleteImageHelper($imageName) {
 		$title = Title::newFromText($imageName, NS_FILE);
 		$file = new LocalFile($title, RepoGroup::singleton()->getLocalRepo());

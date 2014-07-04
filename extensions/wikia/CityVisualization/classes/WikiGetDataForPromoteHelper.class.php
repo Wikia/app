@@ -18,9 +18,11 @@ class WikiGetDataForPromoteHelper implements WikiGetDataHelper {
 		return $visualization->getWikiPromoteDataCacheKey($wikiId, $langCode);
 	}
 
-	public function getImagesMemcKey($wikiId, $langCode) {
-		$visualization = $this->getVisualization();
-		return $visualization->getWikiImageNamesCacheKey($wikiId, $langCode, ImageReviewStatuses::STATE_ANY);
+	/*
+	* @deprecated
+	*/
+	public function getImagesMemcKey( $wikiId, $langCode ) {
+
 	}
 
 	public function getImages($wikiId, $langCode, $wikiRow = null) {

@@ -546,9 +546,11 @@ class WikiaHomePageHelper extends WikiaModel {
 				$wikiInfo['blocked'] = intval(CityVisualization::isBlockedWiki($wikiData['flags']));
 
 				$wikiInfo['images'] = array();
+				$wikiData['main_image'] = PromoImage::forWikiId(PromoImage::MAIN, $wikiId)->getReviewedImageName();
 				if (!empty($wikiData['main_image'])) {
 					$wikiInfo['images'][] = $wikiData['main_image'];
 				}
+
 
 				$wikiData['images'] = (!empty($wikiData['images'])) ? ((array)$wikiData['images']) : array();
 
@@ -621,7 +623,6 @@ class WikiaHomePageHelper extends WikiaModel {
 	}
 
 	public function getImageUrl($imageName, $requestedWidth, $requestedHeight) {
-		wfProfileIn(__METHOD__);
 		$imageUrl = '';
 
 		if (!empty($imageName)) {
@@ -629,46 +630,17 @@ class WikiaHomePageHelper extends WikiaModel {
 				$imageName = urldecode($imageName);
 			}
 
-			$title = Title::newFromText($imageName, NS_IMAGE);
-			$file = wfFindFile($title);
-
-			$imageUrl = ImagesService::overrideThumbnailFormat(
-				$this->getImageUrlFromFile($file, $requestedWidth, $requestedHeight),
-				ImagesService::EXT_JPG
-			);
+		$imageUrl = PromoImage::getImage($imageName)->getCroppedThumbnailUrl($requestedWidth, $requestedHeight);
 		}
-
-		wfProfileOut(__METHOD__);
 		return $imageUrl;
 	}
 
+	/**
+	 * @deprecated
+	 * FIXME: remove after sebastian changes are merged, so that there is no more usages
+	 */
 	public function getImageUrlFromFile($file, $requestedWidth, $requestedHeight) {
-		wfProfileIn(__METHOD__);
-		if ($file instanceof File && $file->exists()) {
-			$originalWidth = $file->getWidth();
-			$originalHeight = $file->getHeight();
-		}
-
-		if (!empty($originalHeight) && !empty($originalWidth)) {
-			$imageServing = $this->getImageServingForResize($requestedWidth, $requestedHeight, $originalWidth, $originalHeight);
-			$imageUrl = $imageServing->getUrl($file, $originalWidth, $originalHeight);
-		} else {
-			$imageUrl = $this->wg->blankImgUrl;
-		}
-		wfProfileOut(__METHOD__);
-		return $imageUrl;
-	}
-
-	protected function getImageReviewStatus($imageId) {
-		wfProfileIn(__METHOD__);
-		$reviewStatus = false;
-
-		if ($imageId > 0) {
-			$reviewStatus = $this->getVisualization()->getImageReviewStatus($this->wg->CityId, $imageId);
-		}
-
-		wfProfileOut(__METHOD__);
-		return $reviewStatus;
+		return null;
 	}
 
 	/**

@@ -300,7 +300,7 @@ class CityVisualization extends WikiaModel {
 			'wikiid' => $row->city_id,
 			'wikiname' => $row->city_title,
 			'wikiurl' => $row->city_url,
-			'main_image' => PromoImage::fromPathname($row->city_main_image)->ensureCityIdIsSet($row->city_id)->getPathname(),
+			'main_image' => PromoImage::forWikiId(PromoImage::MAIN, $row->city_id)->getReviewedImageName(),
 			'wikiofficial' => $this->isOfficialWiki($row->city_flags),
 			'wikipromoted' => $this->isPromotedWiki($row->city_flags),
 		];
@@ -449,10 +449,6 @@ class CityVisualization extends WikiaModel {
 
 	public function getWikiDataCacheKey($corporateWikiId, $wikiId, $langCode) {
 		return wfSharedMemcKey('single_wiki_data_visualization', self::CITY_VISUALIZATION_MEMC_VERSION, $corporateWikiId, $wikiId, $langCode, __METHOD__);
-	}
-
-	public function getWikiImageNamesCacheKey($wikiId, $langCode, $filter) {
-		return $this->getVisualizationElementMemcKey("wiki_data_visualization_image_names:filter{$filter}", $wikiId, $langCode);
 	}
 
 	public function getVisualizationElementMemcKey($prefix, $wikiId, $langCode) {
@@ -637,118 +633,6 @@ class CityVisualization extends WikiaModel {
 		$this->modifyImageIndexes( $modifiedImages );
 		$this->addImagesForReview( $addedImages );
 		$this->markImagesForCulling( $cityId, $langCode, $cutoffIndex );
-	}
-
-	public function deleteImagesFromReview($cityId, $langCode, $corporateWikis) {
-		$imagesToRemove = array();
-
-		foreach ($corporateWikis as $corporateWikiWikis) {
-			foreach ($corporateWikiWikis as $wiki) {
-				foreach ($wiki as $image) {
-					$title = Title::newFromText($image['name'], NS_FILE);
-
-					$imageData = new stdClass();
-					$imageData->city_id = $cityId;
-					$imageData->page_id = $title->getArticleId();
-					$imageData->city_lang_code = $langCode;
-					$imagesToRemove[] = $imageData;
-				}
-			}
-		}
-
-		if (!empty($imagesToRemove)) {
-			$dbm = wfGetDB(DB_MASTER, array(), $this->wg->ExternalSharedDB);
-			$dbm->begin(__METHOD__);
-
-			foreach ($imagesToRemove as $image) {
-				$removeConds = array();
-
-				foreach ($image as $field => $value) {
-					$removeConds[$field] = $value;
-				}
-
-				$dbm->delete(
-					self::CITY_VISUALIZATION_IMAGES_TABLE_NAME,
-					$removeConds
-				);
-			}
-
-			$dbm->commit(__METHOD__);
-		}
-	}
-
-	public function removeImageFromReview($cityId, $pageId, $langCode) {
-		$dbm = wfGetDB(DB_MASTER, array(), $this->wg->ExternalSharedDB);
-		$dbm->delete(
-			self::CITY_VISUALIZATION_IMAGES_TABLE_NAME,
-			array(
-				'city_id' => $cityId,
-				'page_id' => $pageId,
-				'city_lang_code' => $langCode
-			)
-		);
-	}
-
-	public function removeImageFromReviewByName($cityId, $imageName, $langCode) {
-		$dbm = wfGetDB(DB_MASTER, array(), $this->wg->ExternalSharedDB);
-		$dbm->delete(
-			self::CITY_VISUALIZATION_IMAGES_TABLE_NAME,
-			array(
-				'city_id' => $cityId,
-				'image_name' => $imageName,
-				'city_lang_code' => $langCode
-			)
-		);
-	}
-
-	protected function getImagesFromReviewTable($cityId, $langCode) {
-		wfProfileIn(__METHOD__);
-
-		$wikiImages = array();
-		$db = wfGetDB(DB_SLAVE, array(), $this->wg->ExternalSharedDB);
-
-		$result = $db->select(
-			array(self::CITY_VISUALIZATION_IMAGES_TABLE_NAME),
-			array('*'),
-			array(
-				'city_id' => $cityId,
-				'city_lang_code' => $langCode
-			),
-			__METHOD__
-		);
-
-		while ($row = $result->fetchObject()) {
-			$wikiImages [$row->image_name] = $row;
-		}
-
-		wfProfileOut(__METHOD__);
-
-		return $wikiImages;
-	}
-
-	public function getImageReviewStatus($wikiId, $pageId) {
-		wfProfileIn(__METHOD__);
-		$reviewStatus = ImageReviewStatuses::STATE_UNREVIEWED;
-
-		$db = wfGetDB(DB_SLAVE, array(), $this->wg->ExternalSharedDB);
-		$conditions['city_id'] = $wikiId;
-		$conditions['page_id'] = $pageId;
-
-		$result = $db->select(
-			array(self::CITY_VISUALIZATION_IMAGES_TABLE_NAME),
-			array(
-				'image_review_status',
-			),
-			$conditions,
-			__METHOD__
-		);
-
-		while ($row = $result->fetchObject()) {
-			$reviewStatus = WikiImageRowHelper::parseWikiImageRow($row)->review_status;
-		}
-
-		wfProfileOut(__METHOD__);
-		return $reviewStatus;
 	}
 
 	public static function isOfficialWiki($wikiFlags) {

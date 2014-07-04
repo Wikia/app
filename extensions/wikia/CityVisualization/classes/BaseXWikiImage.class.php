@@ -27,12 +27,12 @@ abstract class BaseXWikiImage {
 		$this->fileNameSuffix = "." . self::IMAGE_TYPE;
 	}
 
-	public function getName() {
-		return $this->name;
-	}
-
 	public function getUrl() {
 		return wfReplaceImageServer( $this->getPurgeUrl() );
+	}
+
+	public function getName(){
+		return $this->name;
 	}
 
 	public function getThumbnailUrl( $width ) {
