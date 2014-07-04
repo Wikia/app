@@ -57,41 +57,6 @@ class WikiaHubsV3Controller extends WikiaController {
 			);
 		}
 
-		// 1 - MarketingToolboxModuleSlider
-		// 3 - MarketingToolboxModuleWikiaspicks
-		$this->modulesOnGrid3 = [
-			$this->modules[1],
-			$this->modules[3]
-		];
-
-		global $wgDisableWAMOnHubs;
-		$this->modulesOutsideGrid = [];
-
-		// 11 - MarketingToolboxModuleWikiastats
-		// 10 - MarketingToolboxModuleWAM
-		if ($wgDisableWAMOnHubs) {
-			$this->modulesOutsideGrid[] = $this->modules[11];
-		} else {
-			$this->modulesOutsideGrid[] = $this->modules[10];
-		}
-
-		// 5 - MarketingToolboxModuleExplore
-		$this->modulesOutsideGrid[] = $this->modules[5];
-
-		// 4 - MarketingToolboxModuleFeaturedvideo
-		// 7 - MarketingToolboxModulePolls
-		$this->modulesOnGrid2 = [
-			$this->modules[4],
-			$this->modules[7]
-		];
-
-		// 9 - MarketingToolboxModulePopularvideos
-		// 6 - MarketingToolboxModuleFromthecommunity
-		$this->modulesOnGrid4 = [
-			$this->modules[9],
-			$this->modules[6]
-		];
-
 		$this->response->addAsset('wikiahubs_v3');
 		$this->response->addAsset('wikiahubs_v3_modal');
 		$this->response->addAsset('wikiahubs_v3_scss');

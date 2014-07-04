@@ -107,10 +107,6 @@ abstract class MarketingToolboxModuleService extends WikiaService {
 			$structuredData = $this->getStructuredData($moduleData);
 		}
 
-		if (empty($moduleData)) {
-			$structuredData = $this->getStructuredData($moduleData);
-		}
-
 		return $structuredData;
 	}
 

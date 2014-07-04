@@ -1,22 +1,20 @@
-<section class="grid-3 alpha wikiahubs-newstabs wikiahubs-module">
-	<h2>
-		<?php if( !empty($sponsoredImageMarkup) ): ?>
-			<span class="sponsorbox"><ins><?= wfMessage('wikiahubs-sponsored-by')->rawParams($sponsoredImageMarkup)->escaped(); ?></ins></span>
-		<?php endif; ?>
-		<?= $title ?>
-	</h2>
-	<p class="wikias-picks-content">
-		<?php if( !is_null($imageLink) ): ?>
-			<a class="wikias-picks-image" href="<?= $imageLink ?>">
-		<?php endif; ?>
+<h2>
+	<?php if( !empty($sponsoredImageMarkup) ): ?>
+		<span class="sponsorbox"><ins><?= wfMessage('wikiahubs-sponsored-by')->rawParams($sponsoredImageMarkup)->escaped(); ?></ins></span>
+	<?php endif; ?>
+	<?= $title ?>
+</h2>
+<p class="wikias-picks-content">
+	<?php if( !is_null($imageLink) ): ?>
+		<a class="wikias-picks-image" href="<?= $imageLink ?>">
+	<?php endif; ?>
 
-		<img class="floatright" src="<?= $imageUrl ?>" alt="<?= $imageAlt ?>" />
+	<img class="floatright" src="<?= $imageUrl ?>" alt="<?= $imageAlt ?>" />
 
-		<?php if( !is_null($imageLink) ): ?>
-			</a>
-		<?php endif; ?>
+	<?php if( !is_null($imageLink) ): ?>
+		</a>
+	<?php endif; ?>
 
-		<?= $text ?>
-	</p>
-</section>
+	<?= $text ?>
+</p>
 

@@ -1,23 +1,20 @@
-<section class="grid-1 plainlinks wikiahubs-explore wikiahubs-module">
-
-	<h2><?= $headline ?></h2>
-
-	<div class="explore-content">
-		<? if( !empty($imageUrl) ): ?>
+<h2><?= $headline ?></h2>
+<div class="explore-content">
+	<? if( !empty($imageUrl) ): ?>
 		<figure>
-			<? if (!empty($imageLink)): ?>
-				<a href="<?=$imageLink?>">
-			<? endif ?>
+		<? if (!empty($imageLink)): ?>
+			<a href="<?=$imageLink?>">
+		<? endif ?>
 
-				<img src="<?= $imageUrl; ?>" alt="<?= $imageAlt; ?>" class="image" />
+		<img src="<?= $imageUrl; ?>" alt="<?= $imageAlt; ?>" class="image" />
 
 			<? if (!empty($imageLink)): ?>
 				</a>
 			<? endif ?>
 		</figure>
-		<? endif; ?>
+	<? endif; ?>
 
-		<? if( !empty($linkgroups) ): ?>
+	<? if( !empty($linkgroups) ): ?>
 		<? foreach( $linkgroups as $linkgroup ): ?>
 			<h4><?= $linkgroup['headline']; ?></h4>
 
@@ -33,8 +30,8 @@
 					</li>
 					<? endforeach; ?>
 				</ul>
-				<? endif; ?>
-			<? endforeach; ?>
-		<? endif; ?>
-	</div>
-</section>
+			<? endif; ?>
+		<? endforeach; ?>
+	<? endif; ?>
+</div>
+

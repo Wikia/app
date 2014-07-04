@@ -3,11 +3,12 @@ class MarketingToolboxModuleWikiastatsService extends MarketingToolboxModuleNonE
 
 	const MODULE_ID = 11;
 
+	protected function loadStructuredData($model, $params) {
+		return $this->getStructuredData($params);
+	}
+
 	public function getStructuredData($data) {
-		$structuredData = $this->app->sendRequest('WikiaStatsController', 'getWikiaStats')->getData();
-		foreach ($data as $key => $value) {
-			$this->$key = $value;
-		}
-		return $structuredData;
+		return $this->app->sendRequest('WikiaStatsController', 'getWikiaStats')->getData();
 	}
 }
+
