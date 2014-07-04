@@ -531,7 +531,7 @@ class Article extends Page {
 						$this->mParserOutput = $parserCache->get( $this, $parserOptions );
 
 						//Wikia Change
-						TransactionTracer::setAttribute( TransactionTracer::PARAM_PARSER_CACHE_USED, $this->mParserOutput !== false );
+						Transaction::setAttribute( Transaction::PARAM_PARSER_CACHE_USED, $this->mParserOutput !== false );
 						//Wikia Change End
 
 						if ( $this->mParserOutput !== false ) {
@@ -558,7 +558,7 @@ class Article extends Page {
 						}
 					// Wikia change - begin - @author: wladek
 					} else {
-						TransactionTracer::setAttribute( TransactionTracer::PARAM_PARSER_CACHE_USED, false );
+						Transaction::setAttribute( Transaction::PARAM_PARSER_CACHE_USED, false );
 					// Wikia change - end
 					}
 					break;
@@ -645,7 +645,7 @@ class Article extends Page {
 					$wgOut->addParserOutput( $this->mParserOutput );
 
 					// Wikia change - begin - @author: wladek
-					TransactionTracer::setAttribute( TransactionTracer::PARAM_PARSER_CACHE_USED, $poolArticleView->getIsDirty() );
+					Transaction::setAttribute( Transaction::PARAM_PARSER_CACHE_USED, $poolArticleView->getIsDirty() );
 
 					wfRunHooks('ArticleViewAddParserOutput',array( $this, $this->mParserOutput ) );
 					// Wikia change - end

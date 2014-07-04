@@ -54,57 +54,57 @@ QUnit.test( 'getAnnotatedHtml', function ( assert ) {
 		},
 		{
 			// [ ]
-			'data': [{ 'type': 'paragraph' },' ',{ 'type': '/paragraph' }],
+			'data': [{ 'type': 'paragraph' }, ' ', { 'type': '/paragraph' }],
 			'html': [ '\u00a0' ]
 		},
 		{
 			// [ ][ ]
-			'data': [{ 'type': 'paragraph' },' ', ' ',{ 'type': '/paragraph' }],
+			'data': [{ 'type': 'paragraph' }, ' ', ' ', { 'type': '/paragraph' }],
 			'html': [ '\u00a0', '\u00a0' ]
 		},
 		{
 			// [ ][ ][ ]
-			'data': [{ 'type': 'paragraph' },' ', ' ', ' ',{ 'type': '/paragraph' }],
+			'data': [{ 'type': 'paragraph' }, ' ', ' ', ' ', { 'type': '/paragraph' }],
 			'html': [ '\u00a0', ' ', '\u00a0' ]
 		},
 		{
 			// [ ][ ][ ][ ]
-			'data': [{ 'type': 'paragraph' },' ', ' ', ' ', ' ',{ 'type': '/paragraph' }],
+			'data': [{ 'type': 'paragraph' }, ' ', ' ', ' ', ' ', { 'type': '/paragraph' }],
 			'html': [ '\u00a0', ' ', '\u00a0', '\u00a0' ]
 		},
 		{
 			// [ ][ ][ ][ ][ ]
-			'data': [{ 'type': 'paragraph' },' ', ' ', ' ', ' ', ' ',{ 'type': '/paragraph' }],
+			'data': [{ 'type': 'paragraph' }, ' ', ' ', ' ', ' ', ' ', { 'type': '/paragraph' }],
 			'html': [ '\u00a0', ' ', '\u00a0', ' ', '\u00a0' ]
 		},
 		{
 			// [ ][ ][ ][ ][ ][ ]
-			'data': [{ 'type': 'paragraph' },' ', ' ', ' ', ' ', ' ', ' ',{ 'type': '/paragraph' }],
+			'data': [{ 'type': 'paragraph' }, ' ', ' ', ' ', ' ', ' ', ' ', { 'type': '/paragraph' }],
 			'html': [ '\u00a0', ' ', '\u00a0', ' ', '\u00a0', '\u00a0' ]
 		},
 		{
 			// [ ][A][ ][ ][ ][ ]
-			'data': [{ 'type': 'paragraph' },' ', 'A', ' ', ' ', ' ', ' ',{ 'type': '/paragraph' }],
+			'data': [{ 'type': 'paragraph' }, ' ', 'A', ' ', ' ', ' ', ' ', { 'type': '/paragraph' }],
 			'html': [ '\u00a0', 'A', ' ', '\u00a0', ' ', '\u00a0' ]
 		},
 		{
 			// [ ][ ][A][ ][ ][ ]
-			'data': [{ 'type': 'paragraph' },' ', ' ', 'A', ' ', ' ', ' ',{ 'type': '/paragraph' }],
+			'data': [{ 'type': 'paragraph' }, ' ', ' ', 'A', ' ', ' ', ' ', { 'type': '/paragraph' }],
 			'html': [ '\u00a0', ' ', 'A', ' ', '\u00a0', '\u00a0' ]
 		},
 		{
 			// [ ][ ][ ][A][ ][ ]
-			'data': [{ 'type': 'paragraph' },' ', ' ', ' ', 'A', ' ', ' ',{ 'type': '/paragraph' }],
+			'data': [{ 'type': 'paragraph' }, ' ', ' ', ' ', 'A', ' ', ' ', { 'type': '/paragraph' }],
 			'html': [ '\u00a0', ' ', '\u00a0', 'A', ' ', '\u00a0' ]
 		},
 		{
 			// [ ][ ][ ][ ][A][ ]
-			'data': [{ 'type': 'paragraph' },' ', ' ', ' ', ' ', 'A', ' ',{ 'type': '/paragraph' }],
+			'data': [{ 'type': 'paragraph' }, ' ', ' ', ' ', ' ', 'A', ' ', { 'type': '/paragraph' }],
 			'html': [ '\u00a0', ' ', '\u00a0', ' ', 'A', '\u00a0' ]
 		},
 		{
 			// [ ][ ][ ][ ][ ][A]
-			'data': [{ 'type': 'paragraph' },' ', ' ', ' ', ' ', ' ', 'A',{ 'type': '/paragraph' }],
+			'data': [{ 'type': 'paragraph' }, ' ', ' ', ' ', ' ', ' ', 'A', { 'type': '/paragraph' }],
 			'html': [ '\u00a0', ' ', '\u00a0', ' ', '\u00a0', 'A' ]
 		},
 		{
@@ -125,7 +125,7 @@ QUnit.test( 'getAnnotatedHtml', function ( assert ) {
 		},
 		{
 			// [ ][ ][ ][A][ ][ ]
-			'data': [{ 'type': 'preformatted' },' ', ' ', ' ', 'A', ' ', ' ',{ 'type': '/preformatted' }],
+			'data': [{ 'type': 'preformatted' }, ' ', ' ', ' ', 'A', ' ', ' ', { 'type': '/preformatted' }],
 			'html': [ ' ', ' ', ' ', 'A', ' ', ' ' ]
 		},
 		{

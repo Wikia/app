@@ -58,6 +58,27 @@ var WikiaPhotoGalleryView = {
 			this.log('found ' + galleries.length + ' galleries');
 		}
 
+		galleries.find('a.image').click(function(ev) {
+			var linkClass = this.className;
+			var linkType = 'unknown';
+
+			if (linkClass.indexOf('lightbox') !== -1) {
+				linkType = 'lightbox';
+			} else if (linkClass.indexOf('link-internal') !== -1) {
+				linkType = 'link-internal';
+			} else if (linkClass.indexOf('link-external') !== -1) {
+				linkType = 'link-external';
+			}
+
+			Wikia.Tracker.track({
+				action: 'click',
+				category: 'article',
+				label: 'show-gallery-' + linkType,
+				trackingMethod: 'both',
+				value: 0
+			}, {});
+		});
+
 		// BugID: 93490 - Only show the add button in oasis
 		if (window.skin == 'oasis') {
 			var addButtonSelector = '.wikia-photogallery-add'

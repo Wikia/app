@@ -126,7 +126,7 @@ abstract class BaseTask {
 			$this->createdBy = $createdBy;
 		}
 
-		return $this->createdBy;
+		return $this;
 	}
 
 	public function createdByUser() {
@@ -143,10 +143,22 @@ abstract class BaseTask {
 	 * @return string|array the task's id or array of such IDs if the given wikiID is an array
 	 */
 	public function queue() {
-		$isArray = is_array($this->wikiId);
-		$wikiIds = (array)$this->wikiId;
+		$taskLists = $this->convertToTaskLists();
+		$taskIds = AsyncTaskList::batch($taskLists);
 
+		return count($taskIds) == 1 ? $taskIds[0] : $taskIds;
+	}
+
+	/**
+	 * convert this task to its AsyncTaskList(s) representation. A BaseTask will convert to multiple AsyncTaskList
+	 * objects if $this->wikiId is an array
+	 *
+	 * @return array AsyncTaskList objects
+	 */
+	private function convertToTaskLists() {
+		$wikiIds = (array) $this->wikiId;
 		$taskLists = [];
+
 		foreach ($wikiIds as $wikiId) {
 			$taskList = new AsyncTaskList();
 
@@ -168,11 +180,14 @@ abstract class BaseTask {
 				$taskList->delay($this->delay);
 			}
 
+			if ($this->createdBy) {
+				$taskList->createdBy($this->createdBy);
+			}
+
 			$taskLists[] = $taskList;
 		}
 
-		$tasks = AsyncTaskList::batch($taskLists);
-		return ($isArray ? $tasks : $tasks[0]);
+		return $taskLists;
 	}
 
 	/**
@@ -334,5 +349,24 @@ abstract class BaseTask {
 	public function delay($time) {
 		$this->delay = $time;
 		return $this;
+	}
+
+	// end AsyncTaskList wrappers
+
+	/**
+	 * queue a set of BaseTask objects
+	 *
+	 * @param array $tasks
+	 * @return array task ids
+	 */
+	public static function batch(array $tasks) {
+		$taskLists = [];
+
+		foreach ($tasks as $task) {
+			/** @var BaseTask $task $taskLists */
+			$taskLists = array_merge($taskLists, $task->convertToTaskLists());
+		}
+
+		return AsyncTaskList::batch($taskLists);
 	}
 }

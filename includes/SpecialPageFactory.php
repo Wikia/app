@@ -472,7 +472,7 @@ class SpecialPageFactory {
 
 		// Wikia change - begin - @author: wladek
 		if ( !$including ) {
-			TransactionTracer::setAttribute(TransactionTracer::PARAM_SPECIAL_PAGE_NAME, $page->getName());
+			Transaction::setAttribute(Transaction::PARAM_SPECIAL_PAGE_NAME, $page->getName());
 		}
 		// Wikia change - end
 

@@ -177,6 +177,8 @@ class MediaWiki {
 				wfProfileOut( __METHOD__ );
 				return;
 		}
+
+		Transaction::setAttribute( Transaction::PARAM_SKIN, $user->getSkin()->getSkinName() );
 		// Wikia end
 
 		$unused = null; // To pass it by reference
@@ -594,26 +596,14 @@ class MediaWiki {
 		global $wgUser;
 
 		if ($title->isSpecialPage()) {
-			TransactionTracer::setType( TransactionTracer::TRANSACTION_SPECIAL_PAGE );
-		} elseif ( $title->getNamespace() == NS_MAIN ) {
-			TransactionTracer::setType( TransactionTracer::TRANSACTION_PAGE_MAIN );
-		} elseif ( $title->getNamespace() == NS_FILE ) {
-			TransactionTracer::setType( TransactionTracer::TRANSACTION_PAGE_FILE );
-		} elseif ( $title->getNamespace() == NS_CATEGORY ) {
-			TransactionTracer::setType( TransactionTracer::TRANSACTION_PAGE_CATEGORY );
-		} elseif ( defined( 'NS_USER_WALL' ) && $title->getNamespace() == NS_USER_WALL ) {
-			TransactionTracer::setType( TransactionTracer::TRANSACTION_PAGE_MESSAGE_WALL );
+			Transaction::setEntryPoint( Transaction::ENTRY_POINT_SPECIAL_PAGE );
 		} else {
-			TransactionTracer::setType(TransactionTracer::TRANSACTION_PAGE_OTHER);
+			Transaction::setEntryPoint( Transaction::ENTRY_POINT_PAGE );
+			Transaction::setAttribute( Transaction::PARAM_NAMESPACE, $title->getNamespace() );
 		}
 
-		TransactionTracer::setAttribute( TransactionTracer::PARAM_LOGGED_IN, $wgUser->isLoggedIn() );
-
-		if ( in_array($action, array( 'view', 'edit', 'submit' )) ) {
-			TransactionTracer::setAttribute( TransactionTracer::PARAM_ACTION, $action );
-		} else {
-			TransactionTracer::setAttribute( TransactionTracer::PARAM_ACTION, TransactionTracer::ACTION_OTHER );
-		}
+		Transaction::setAttribute( Transaction::PARAM_LOGGED_IN, $wgUser->isLoggedIn() );
+		Transaction::setAttribute( Transaction::PARAM_ACTION, $action );
 	}
 
 	private function main() {
