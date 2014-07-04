@@ -277,19 +277,25 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 	private function addPagination( $totalMaps, $currentPage, $urlParams ) {
 		$url = $this->getContext()->getTitle()->getFullURL( $urlParams );
 		$pagination = false;
+		$paginationOptions = [
+			'totalItems' => $totalMaps,
+			'itemsPerPage' => self::MAPS_PER_PAGE,
+			'currentPage' => $currentPage,
+			'url' => $url,
+		];
+
+		if( $this->app->checkSkin( self::WIKIA_MOBILE_SKIN_NAME ) ) {
+			$paginationOptions = array_merge( $paginationOptions, [
+				'prevMsg' => '&lt;',
+				'nextMsg' => '&gt;',
+			] );
+		}
 
 		if ( $totalMaps > self::MAPS_PER_PAGE ) {
 			$pagination = $this->app->renderView(
 				'PaginationController',
 				'index',
-				[
-					'totalItems' => $totalMaps,
-					'itemsPerPage' => self::MAPS_PER_PAGE,
-					'currentPage' => $currentPage,
-					'url' => $url,
-					'prevMsg' => '&lt;',
-					'nextMsg' => '&gt;',
-				]
+				$paginationOptions
 			);
 		}
 
