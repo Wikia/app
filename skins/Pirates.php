@@ -6,7 +6,7 @@ if (!defined('MEDIAWIKI')) die();
  * @package MediaWiki
  * @subpackage Skins
  *
- * @author Inez Korczy�ski <korczynski@gmail.com>
+ * @author Consumer Team
  * @copyright Copyright (C) Wikia Inc. 2007
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
  */
@@ -23,13 +23,6 @@ class SkinPirates extends WikiaSkin {
 		//non-strict checks of css/js/scss assets/packages
 		$this->strictAssetUrlCheck = false;
 	}
-/*
-	public function bottomScripts() {
-		$bottomScripts = parent::bottomScripts();
-		$bottomScripts = str_replace( $this->wg->out->getScriptsOnly(), '', $bottomScripts );
-		return $bottomScripts;
-	}
-*/
 }
 
 
