@@ -5,7 +5,7 @@ $wgExtensionCredits[ 'specialpage' ][] = [
 	'name' => 'Wikia Interactive Maps',
 	'author' => [
 		'Andrzej "nAndy" Łukaszewski',
-		'Bart(łomey) K.',
+		'Bartłomiej "Bart" Kowalczyk',
 		'Evgeniy "aquilax" Vasilev',
 		'Jakub "Student" Olek',
 		'Rafał Leszczyński',
