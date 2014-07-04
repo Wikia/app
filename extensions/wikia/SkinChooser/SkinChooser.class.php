@@ -337,7 +337,8 @@ class SkinChooser {
 	}
 
 	private static function showPiratesSkin() {
-		return WikiaPageType::isArticlePage() || WikiaPageType::isSearch();
+		// Add WikiaPageType::isArticlePage() to enable new skin on article pages
+		return  WikiaPageType::isSearch();
 	}
 
 	/**

@@ -4,16 +4,11 @@ class PiratesController extends WikiaController {
 
 	const MAIN_SASS_FILE = '/extensions/wikia/Pirates/css/pirates.scss';
 
-	private static $extraBodyClasses = array();
 	private static $bodyParametersArray = [];
 	private static $skinAssetGroups = [];
 
 	private $assetsManager;
 	private $skin;
-
-	public static function addBodyClass($className) {
-		self::$extraBodyClasses[] = $className;
-	}
 
 	public function init() {
 		$this->assetsManager = AssetsManager::getInstance();
@@ -33,8 +28,6 @@ class PiratesController extends WikiaController {
 		// initialize variables
 		$this->comScore = null;
 		$this->quantServe = null;
-
-		$this->isArticlePage = ($this->wg->Title->getNamespace() == 0 && !WikiaPageType::isMainPage());
 	}
 
 	public function executeIndex() {
@@ -60,6 +53,7 @@ class PiratesController extends WikiaController {
 		$this->topAds = $this->getTopAds();
 		$this->wikiHeader = $this->getWikiHeader();
 		$this->footer = $this->getFooter();
+		$this->corporateFooter = $this->getCorporateFootet();
 	}
 
 	public function prepareAssets() {
@@ -72,7 +66,6 @@ class PiratesController extends WikiaController {
 	private function setBodyClasses() {
 		// generate list of CSS classes for <body> tag
 		$bodyClasses = array('mediawiki', $this->dir, $this->pageclass);
-		$bodyClasses = array_merge($bodyClasses, self::$extraBodyClasses);
 		$bodyClasses[] = $this->skinnameclass;
 
 		// add skin theme name
@@ -100,7 +93,7 @@ class PiratesController extends WikiaController {
 	}
 
 	private function setStyles() {
-		global $wgOut, $wgAllInOne;
+		global $wgAllInOne;
 
 		$this->cssPrintLinks = '';
 
@@ -398,7 +391,7 @@ class PiratesController extends WikiaController {
 	}
 
 	public function getWikiHeader() {
-		return $this->app->renderView( 'PiratesWikiHeader', 'Index' );
+		return $this->app->renderView( 'LocalHeader', 'Index' );
 	}
 
 	public function getTopAds() {
@@ -407,6 +400,10 @@ class PiratesController extends WikiaController {
 
 	public function getFooter() {
 		return $this->app->renderView('Footer', 'Index');
+	}
+
+	public function getCorporateFootet() {
+		return $this->app->renderView('CorporateFooter', 'Index');
 	}
 
 	public static function addBodyParameter($parameter) {

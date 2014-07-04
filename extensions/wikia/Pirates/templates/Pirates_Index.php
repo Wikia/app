@@ -54,6 +54,7 @@
 				<?= $bodytext ?>
 			</article>
 			<?= $footer ?>
+			<?= $corporateFooter ?>
 		</div>
 	</section><!--WikiaPage-->
 </div>

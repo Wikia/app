@@ -44,9 +44,9 @@ $wgExtensionCredits['other'][] =
  * controllers
  */
 $wgAutoloadClasses['PiratesController'] = $dir . '/PiratesController.class.php';
-$wgAutoloadClasses['PiratesGlobalHeaderController'] = $dir . '/PiratesGlobalHeaderController.class.php';
-$wgAutoloadClasses['PiratesWikiHeaderController'] = $dir . '/PiratesWikiHeaderController.class.php';
-$wgAutoloadClasses['PiratesWikiNavigationController'] = $dir . '/PiratesWikiNavigationController.class.php';
+$wgAutoloadClasses['GlobalNavigationController'] = $dir . '/../GlobalNavigation/GlobalNavigationController.class.php';
+$wgAutoloadClasses['LocalNavigationController'] = $dir . '/../LocalNavigation/LocalNavigationController.class.php';
+$wgAutoloadClasses['LocalHeaderController'] = $dir . '/../LocalNavigation/LocalHeaderController.class.php';
 
 /**
  * special pages
@@ -56,9 +56,6 @@ $wgAutoloadClasses['PiratesWikiNavigationController'] = $dir . '/PiratesWikiNavi
  * message files
  */
 //$wgExtensionMessagesFiles['Pirates'] = "{$dir}/Pirates.i18n.php";
-
-//JSMessages::registerPackage( 'WkMbl', array( ));
-
 
 /**
  * hooks

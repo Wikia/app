@@ -1,6 +1,10 @@
 <?php
 
-class PiratesWikiHeaderController extends WikiaController {
+class LocalHeaderController extends WikiaController {
+
+	public function init() {
+		$this->response->addAsset('local_navigation_scss');
+	}
 
 	public function executeIndex() {
 		$themeSettings = new ThemeSettings();

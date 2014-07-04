@@ -26,6 +26,8 @@ class GlobalNavigationController extends WikiaController {
 			1800 /* 3 hours */
 		);
 
+		$this->response->addAsset('global_navigation_scss');
+
 		wfRunHooks('AfterGlobalHeader', array(&$menuNodes, $category, $messageName));
 
 		$this->menuNodes = $menuNodes;
