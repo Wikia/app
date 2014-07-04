@@ -1,3 +1,4 @@
+/*
 window.removedFromHoverMenu = false;
 
 $(function(){
@@ -249,3 +250,4 @@ $(function(){
 		$('.SearchInput').remove();
 	}
 });
+*/
