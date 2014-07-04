@@ -177,6 +177,8 @@ class MediaWiki {
 				wfProfileOut( __METHOD__ );
 				return;
 		}
+
+		Transaction::setAttribute( Transaction::PARAM_SKIN, $user->getSkin()->getSkinName() );
 		// Wikia end
 
 		$unused = null; // To pass it by reference
