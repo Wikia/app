@@ -16,13 +16,16 @@ class PromoteImageReviewHelper extends ImageReviewHelperBase {
 	const MEMC_VERSION = '2';
 
 	public function updateImageState($images, $action = '') {
+		global $wgMemc;
+
 		wfProfileIn(__METHOD__);
 
-		$approvalList = array();
-		$rejectionList = array();
-		$deletionList = array();
-		$statsInsert = array();
-		$taskAdditionList = array();
+		$approvalList = [];
+		$rejectionList = [];
+		$deletionList = [];
+		$statsInsert = [];
+		$taskAdditionList = [];
+		$wikisToPurge = [];
 
 		$sqlWhere = array(
 			ImageReviewStatuses::STATE_APPROVED => array(),
@@ -43,6 +46,8 @@ class PromoteImageReviewHelper extends ImageReviewHelperBase {
 			} elseif ($image['state'] == ImageReviewStatuses::STATE_QUESTIONABLE) {
 				$sqlWhere[ImageReviewStatuses::STATE_QUESTIONABLE][] = "( city_id = $image[wikiId] AND image_name = '$image[name]') ";
 			}
+			$wikisToPurge[$image['wikiId']] =
+				unserialize(WikiFactory::getVarByName( 'wgLanguageCode', $image['wikiId'])->cv_value);
 		}
 
 		$statsInsert[] = array(
@@ -70,7 +75,20 @@ class PromoteImageReviewHelper extends ImageReviewHelperBase {
 			}
 		}
 
+		// Purge promote pages
+		$promoteHelper = new WikiGetDataForPromoteHelper();
+		$visualizationHelper = new WikiGetDataForVisualizationHelper();
+		foreach($wikisToPurge as $wikiId => $lang) {
+			$wgMemc->delete($promoteHelper->getMemcKey($wikiId, $lang));
+			$wgMemc->delete($visualizationHelper->getMemcKey($wikiId, $lang));
+		}
+
+		/**
+		 * @deprecated - no need to do this anymore
+		 */
 		$this->createUploadTask($taskAdditionList);
+
+
 		$this->saveStats($statsInsert, $sqlWhere, $action);
 		wfProfileOut(__METHOD__);
 	}

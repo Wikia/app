@@ -18,13 +18,6 @@ class WikiGetDataForPromoteHelper implements WikiGetDataHelper {
 		return $visualization->getWikiPromoteDataCacheKey($wikiId, $langCode);
 	}
 
-	/*
-	* @deprecated
-	*/
-	public function getImagesMemcKey( $wikiId, $langCode ) {
-
-	}
-
 	public function getImages($wikiId, $langCode, $wikiRow = null) {
 		global $wgExternalSharedDB;
 

@@ -452,7 +452,7 @@ class CityVisualization extends WikiaModel {
 	}
 
 	public function getVisualizationElementMemcKey($prefix, $wikiId, $langCode) {
-		return wfMemcKey($prefix, self::CITY_VISUALIZATION_MEMC_VERSION, $wikiId, $langCode);
+		return wfSharedMemcKey($prefix, self::CITY_VISUALIZATION_MEMC_VERSION, $wikiId, $langCode);
 	}
 
 	public function getCollectionCacheKey($collectionId) {
@@ -552,7 +552,7 @@ class CityVisualization extends WikiaModel {
 		return $conditions;
 	}
 
-	public function notCachedGetWikiImageNames($wikiId, $langCode, $filter = ImageReviewStatuses::STATE_APPROVED) {
+	public function notCachedGetWikiPromoImages($wikiId, $langCode, $filter = ImageReviewStatuses::STATE_APPROVED) {
 		wfProfileIn(__METHOD__);
 
 		$wikiImageNames = array();
@@ -560,11 +560,12 @@ class CityVisualization extends WikiaModel {
 		$conditions = $this->getWikiImagesConditions($wikiId, $langCode, $filter);
 
 		$result = $db->select(
-			array(self::CITY_VISUALIZATION_IMAGES_TABLE_NAME),
-			array(
+			[ self::CITY_VISUALIZATION_IMAGES_TABLE_NAME ],
+			[
 				'image_name',
 				'image_index',
-			),
+				'image_review_status'
+			],
 			$conditions,
 			__METHOD__
 		);
@@ -587,7 +588,7 @@ class CityVisualization extends WikiaModel {
 		$wikiImageNames = $this->wg->Memc->get($memKey);
 
 		if (empty($wikiImageNames)) {
-			$wikiImageNames = $this->notCachedGetWikiImageNames($wikiId, $langCode, $filter);
+			$wikiImageNames = $this->notCachedGetWikiPromoImages($wikiId, $langCode, $filter);
 			$this->wg->Memc->set($memKey, $wikiImageNames, self::MEMC_IMAGE_NAMES_EXPIRATION_TIME);
 		}
 		wfProfileOut(__METHOD__);
@@ -633,6 +634,94 @@ class CityVisualization extends WikiaModel {
 		$this->modifyImageIndexes( $modifiedImages );
 		$this->addImagesForReview( $addedImages );
 		$this->markImagesForCulling( $cityId, $langCode, $cutoffIndex );
+	}
+
+
+	public function deleteImagesFromReview($cityId, $langCode, $corporateWikis) {
+		$imagesToRemove = array();
+
+		foreach ($corporateWikis as $corporateWikiWikis) {
+			foreach ($corporateWikiWikis as $wiki) {
+				foreach ($wiki as $image) {
+					$title = Title::newFromText($image['name'], NS_FILE);
+
+					$imageData = new stdClass();
+					$imageData->city_id = $cityId;
+					$imageData->page_id = $title->getArticleId();
+					$imageData->city_lang_code = $langCode;
+					$imagesToRemove[] = $imageData;
+				}
+			}
+		}
+
+		if (!empty($imagesToRemove)) {
+			$dbm = wfGetDB(DB_MASTER, array(), $this->wg->ExternalSharedDB);
+			$dbm->begin(__METHOD__);
+
+			foreach ($imagesToRemove as $image) {
+				$removeConds = array();
+
+				foreach ($image as $field => $value) {
+					$removeConds[$field] = $value;
+				}
+
+				$dbm->delete(
+					self::CITY_VISUALIZATION_IMAGES_TABLE_NAME,
+					$removeConds
+				);
+			}
+
+			$dbm->commit(__METHOD__);
+		}
+	}
+
+	public function removeImageFromReview($cityId, $pageId, $langCode) {
+		$dbm = wfGetDB(DB_MASTER, array(), $this->wg->ExternalSharedDB);
+		$dbm->delete(
+			self::CITY_VISUALIZATION_IMAGES_TABLE_NAME,
+			array(
+				'city_id' => $cityId,
+				'page_id' => $pageId,
+				'city_lang_code' => $langCode
+			)
+		);
+	}
+
+	public function removeImageFromReviewByName($cityId, $imageName, $langCode) {
+		$dbm = wfGetDB(DB_MASTER, array(), $this->wg->ExternalSharedDB);
+		$dbm->delete(
+			self::CITY_VISUALIZATION_IMAGES_TABLE_NAME,
+			array(
+				'city_id' => $cityId,
+				'image_name' => $imageName,
+				'city_lang_code' => $langCode
+			)
+		);
+	}
+
+	protected function getImagesFromReviewTable($cityId, $langCode) {
+		wfProfileIn(__METHOD__);
+
+		$wikiImages = array();
+		$db = wfGetDB(DB_SLAVE, array(), $this->wg->ExternalSharedDB);
+
+		$result = $db->select(
+			array(self::CITY_VISUALIZATION_IMAGES_TABLE_NAME),
+			array('*'),
+			array(
+				'city_id' => $cityId,
+				'city_lang_code' => $langCode
+			),
+			__METHOD__
+		);
+
+		while ($row = $result->fetchObject()) {
+			$wikiImages [$row->image_name] = $row;
+		}
+
+		wfProfileOut(__METHOD__);
+
+		return $wikiImages;
 	}
 
 	public static function isOfficialWiki($wikiFlags) {
