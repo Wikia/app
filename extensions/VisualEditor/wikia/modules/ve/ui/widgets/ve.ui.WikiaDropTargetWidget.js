@@ -16,7 +16,7 @@
  */
 ve.ui.WikiaDropTargetWidget = function VeUiWikiaDropTargetWidget( config ) {
 	// Configuration initialization
-	OO.ui.Widget.call( this, config );
+	ve.ui.WikiaDropTargetWidget.super.call( this, config );
 
 	// Properties
 	this.$overlay = config.$overlay.find( '.oo-ui-window' );

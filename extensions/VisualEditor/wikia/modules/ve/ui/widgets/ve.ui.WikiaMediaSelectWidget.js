@@ -11,7 +11,7 @@
  */
 ve.ui.WikiaMediaSelectWidget = function VeUiWikiaMediaSelectWidget( config ) {
 	// Parent constructor
-	OO.ui.SelectWidget.call( this, config );
+	ve.ui.WikiaMediaSelectWidget.super.call( this, config );
 };
 
 /* Inheritance */

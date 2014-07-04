@@ -15,7 +15,7 @@ ve.ui.WikiaUploadWidget = function VeUiWikiaUploadWidget( config ) {
 	var uploadButtonConfig;
 
 	// Parent constructor
-	OO.ui.Widget.call( this, config );
+	ve.ui.WikiaUploadWidget.super.call( this, config );
 
 	uploadButtonConfig = {
 		'$': this.$,

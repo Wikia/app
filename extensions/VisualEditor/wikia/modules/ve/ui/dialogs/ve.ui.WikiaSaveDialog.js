@@ -13,7 +13,7 @@
  */
 ve.ui.WikiaSaveDialog = function VeUiWikiaSaveDialog( config ) {
 	// Parent constructor
-	ve.ui.MWSaveDialog.call( this, config );
+	ve.ui.WikiaSaveDialog.super.call( this, config );
 };
 
 /* Inheritance */
@@ -23,7 +23,7 @@ OO.inheritClass( ve.ui.WikiaSaveDialog, ve.ui.MWSaveDialog );
 /* Methods */
 
 ve.ui.WikiaSaveDialog.prototype.initialize = function () {
-	ve.ui.MWSaveDialog.prototype.initialize.call( this );
+	ve.ui.WikiaSaveDialog.super.prototype.initialize.call( this );
 	this.$reviewViewer.addClass( 'WikiaArticle' );
 };
 
