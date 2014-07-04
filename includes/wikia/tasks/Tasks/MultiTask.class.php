@@ -164,7 +164,7 @@ class MultiTask extends BaseTask {
 
 	private function parseCommon($params) {
 		$impersonatedName = isset($params['user']) ? $params['user'] : 'Maintenance script';
-		$createdBy = \User::newFromId($this->createdBy());
+		$createdBy = \User::newFromId($this->createdBy);
 		$impersonatedUser = \User::newFromName($impersonatedName);
 		$page = isset($params['page']) ? \Title::newFromText($params['page']) : null;
 

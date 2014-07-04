@@ -46,6 +46,7 @@ require(['jquery', 'wikia.mustache'], function ($, mustache) {
 	 */
 	function showMap($target) {
 		var mapId = $target.data('map-id'),
+			mapTitle = $target.data('map-title'),
 			mapUrl = $target.data('map-url'),
 			templatePath = 'extensions/wikia/WikiaInteractiveMaps/templates/' +
 				'intMapParserTagMapIframe.mustache',
@@ -63,6 +64,7 @@ require(['jquery', 'wikia.mustache'], function ($, mustache) {
 							vars: {
 								id: 'interactiveMap-' + mapId,
 								size: 'large',
+								title: mapTitle,
 								content: iframe
 							}
 						};

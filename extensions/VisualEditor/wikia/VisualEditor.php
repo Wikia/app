@@ -95,7 +95,7 @@ $wgResourceModules += array(
 			've/ui/tools/ve.ui.WikiaDialogTool.js',
 			've/ui/tools/ve.ui.WikiaHelpTool.js',
 			've/ui/tools/ve.ui.WikiaMWGalleryInspectorTool.js',
-			've/ui/tools/ve.ui.WikiaMWLinkInspectorTool.js',
+			've/ui/tools/ve.ui.WikiaMWLinkNodeInspectorTool.js',
 			've/ui/widgets/ve.ui.WikiaCartWidget.js',
 			've/ui/widgets/ve.ui.WikiaCartItemWidget.js',
 			've/ui/widgets/ve.ui.WikiaDimensionsWidget.js',

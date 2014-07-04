@@ -30,10 +30,9 @@ define('ext.wikia.adEngine.wikiaGptAdDetect', [
 		return false;
 	}
 
-	function findAdInIframe(iframe, adCallback, noAdCallback) {
+	function findAdInIframe(slotname, iframe, adCallback, noAdCallback) {
 		var iframeHeight, iframeContentHeight, iframeId, iframeDoc;
 
-		iframeId = iframe.id;
 		iframeDoc = iframe.contentWindow.document;
 
 		// Because Chrome reports document.body.offsetHeight as the outer
@@ -44,10 +43,10 @@ define('ext.wikia.adEngine.wikiaGptAdDetect', [
 		iframeContentHeight = iframeDoc.body.offsetHeight;
 		iframe.height = iframeHeight;
 
-		log(['findAdInIframe', iframe.name, 'height (iframe content)', iframeContentHeight], 'info', logGroup);
+		log(['findAdInIframe', slotname, 'height (iframe content)', iframeContentHeight], 'info', logGroup);
 
 		if (iframeContentHeight > 1) {
-			log(['findAdInIframe', iframeId, 'height > 1, launching adCallback'], 'info', logGroup);
+			log(['findAdInIframe', slotname, 'height > 1, launching adCallback'], 'info', logGroup);
 			return adCallback();
 		}
 
@@ -55,12 +54,12 @@ define('ext.wikia.adEngine.wikiaGptAdDetect', [
 		// This is needed because DART returns a position:absolute div for very simple ads
 		// and thus the body's offsetHeight is 0 :-(
 		if (isImagePresent(iframeDoc)) {
-			log(['findAdInIframe', iframeId, 'image, launching adCallback'], 'info', logGroup);
+			log(['findAdInIframe', slotname, 'image, launching adCallback'], 'info', logGroup);
 			return adCallback();
 		}
 
 		// No ad found
-		log(['findAdInIframe', iframeId, 'launching noAdCallback'], 'info', logGroup);
+		log(['findAdInIframe', slotname, 'launching noAdCallback'], 'info', logGroup);
 		noAdCallback();
 	}
 
@@ -68,12 +67,12 @@ define('ext.wikia.adEngine.wikiaGptAdDetect', [
 		if (iframe.contentWindow.document.readyState === 'complete') {
 			log(['onAdLoad', slotname, 'iframe state complete'], 'info', logGroup);
 			setTimeout(function () {
-				findAdInIframe(iframe, adCallback, noAdCallback);
+				findAdInIframe(slotname, iframe, adCallback, noAdCallback);
 			}, 0);
 		} else {
 			log(['onAdLoad', slotname, 'binding to iframe onload'], 'info', logGroup);
 			iframe.contentWindow.addEventListener('load', function () {
-				findAdInIframe(iframe, adCallback, noAdCallback);
+				findAdInIframe(slotname, iframe, adCallback, noAdCallback);
 			});
 		}
 	}
@@ -130,14 +129,68 @@ define('ext.wikia.adEngine.wikiaGptAdDetect', [
 
 	function onAdLoad(slotname, gptEvent, iframe, adCallback, noAdCallback) {
 
-		var adType = getAdType(slotname, gptEvent, iframe);
+		var adType = getAdType(slotname, gptEvent, iframe),
+			shouldPollForSuccess = false,
+			expectAsyncHop = false,
+			expectAsyncSuccess = false,
+			successTimer;
+
+		function noop() {}
 
 		function callAdCallback() {
+			clearTimeout(successTimer);
 			adCallback({adType: adType});
 		}
 
 		function callNoAdCallback() {
+			clearTimeout(successTimer);
 			noAdCallback({adType: adType});
+		}
+
+		function pollForSuccess() {
+			successTimer = setTimeout(function () {
+				log(['pollForSuccess', slotname], 'info', logGroup);
+				pollForSuccess();
+				findAdInIframe(slotname + ' (poll)', iframe, callAdCallback, noop);
+			}, 500);
+		}
+
+		function msgCallback(data) {
+			log(['msgCallback', slotname, 'caught message' , data.status], 'info', logGroup);
+
+			if (data.status === 'success') {
+				if (expectAsyncSuccess) {
+					callAdCallback();
+				} else {
+					log(
+						['msgCallback', slotname, 'Got asynchronous success message, while not expecting it'],
+						'error',
+						logGroup
+					);
+				}
+			}
+
+			if (data.status === 'hop') {
+				if (expectAsyncHop) {
+					callNoAdCallback();
+				} else {
+					log(
+						['msgCallback', slotname, 'Got asynchronous hop message, while not expecting it'],
+						'error',
+						logGroup
+					);
+				}
+			}
+		}
+
+		if (adType === 'openx' || adType === 'rubicon') {
+			shouldPollForSuccess = true;
+			expectAsyncHop = true;
+		}
+
+		if (adType === 'async') {
+			expectAsyncHop = true;
+			expectAsyncSuccess = true;
 		}
 
 		log(['onAdLoad', slotname, 'adType' , adType], 'info', logGroup);
@@ -150,58 +203,26 @@ define('ext.wikia.adEngine.wikiaGptAdDetect', [
 			return callNoAdCallback();
 		}
 
-		if (adType === 'async') {
-			return messageListener.register({source: iframe.contentWindow, dataKey: 'status'}, function (data) {
-
-				log(['onAdLoad', slotname, 'caught message' , data.status], 'info', logGroup);
-
-				if (data.status === 'success') {
-					return callAdCallback();
-				}
-
-				return callNoAdCallback();
-			});
-		}
-
-		if (adType === 'openx') {
-
-			var openxSuccess, successTrigger, waitForSuccess = function () {
-
-				if (openxSuccess) {
-					return;
-				}
-				successTrigger = setTimeout(function () {
-					log(['onAdLoad', slotname, 'verify openX ad' ], 'info', logGroup);
-
-					if (openxSuccess) {
-						return;
-					}
-					inspectIframe(slotname, iframe, function () {
-						openxSuccess = true;
-						callAdCallback();
-					}, waitForSuccess);
-				}, 500);
-			};
-
-			waitForSuccess();
-
-			return messageListener.register({source: iframe.contentWindow, dataKey: 'status'}, function (data) {
-
-				log(['onAdLoad', slotname, 'caught message' , data.status], 'info', logGroup);
-
-				openxSuccess = true;
-				clearTimeout(successTrigger);
-
-				return callNoAdCallback();
-			});
-		}
-
-		// On mobile skin we investigate the iframe contents
 		if (adType === 'inspect_iframe') {
 			return inspectIframe(slotname, iframe, callAdCallback, callNoAdCallback);
 		}
 
-		throw 'Incorrect ad type. Cannot detect ad state.';
+		if (shouldPollForSuccess) {
+			pollForSuccess();
+		}
+
+		if (expectAsyncHop || expectAsyncSuccess) {
+			messageListener.register({source: iframe.contentWindow, dataKey: 'status'}, msgCallback);
+		}
+
+		if (expectAsyncHop && (shouldPollForSuccess || expectAsyncSuccess)) {
+			// Hops and successes handled. We can safely return now
+			return;
+		}
+
+		log(['onAdLoad', 'Unknown ad type (launching starting ad callback)', adType], 'error', logGroup);
+		adType = 'unknown';
+		return callAdCallback();
 	}
 
 	return {

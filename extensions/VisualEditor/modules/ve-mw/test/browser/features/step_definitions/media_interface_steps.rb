@@ -19,7 +19,7 @@ Then(/^(.+) should appear in the media diff view$/) do |headings_string|
     # In this case we want unescaped regexes (and in one case a leading space)
     # So we put single quotes around the entries in the .feature file and strip them here to get unescaped regexes.
     headings_string = headings_string.gsub(/'/, '')
-    page.wait_until(10) do
+    page.wait_until(15) do
       page.media_diff_view.include? "Your text"
     end
     page.media_diff_view.should match Regexp.new(headings_string)

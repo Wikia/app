@@ -159,6 +159,12 @@ class AdEngine2Service
 		return $wgLoadAdsInHead;
 	}
 
+	public static function areAdsAfterPageLoad()
+	{
+		global $wgLoadLateAdsAfterPageLoad;
+		return $wgLoadLateAdsAfterPageLoad;
+	}
+
 	public static function getCachedCategory()
 	{
 		wfProfileIn(__METHOD__);
@@ -215,7 +221,7 @@ class AdEngine2Service
 			$wgOasisResponsive, $wgOasisResponsiveLimited,
 			$wgEnableRHonDesktop, $wgAdPageType, $wgOut,
 			$wgRequest, $wgEnableKruxTargeting,
-			$wgAdVideoTargeting, $wgLiftiumOnLoad,
+			$wgAdVideoTargeting, $wgLiftiumOnLoad, $wgAdDriverSevenOneMediaSub4Site,
 			$wgDartCustomKeyValues, $wgWikiDirectedAtChildrenByStaff, $wgAdEngineDisableLateQueue,
 			$wgAdDriverUseWikiaBarBoxad2, $wgAdDriverWikiaBarBoxad2ImpressionCapping;
 
@@ -233,6 +239,7 @@ class AdEngine2Service
 			'wgAdDriverUseEbay' => $wgAdDriverUseEbay,
 			'wgAdDriverUseDartForSlotsBelowTheFold' => $wgAdDriverUseDartForSlotsBelowTheFold === null ? 'hub' : $wgAdDriverUseDartForSlotsBelowTheFold,
 			'wgAdDriverUseSevenOneMedia' => $wgAdDriverUseSevenOneMedia,
+			'wgAdDriverSevenOneMediaSub4Site' => $wgAdDriverSevenOneMediaSub4Site,
 			'wgUserShowAds' => $wgUser->getOption('showAds'),
 			'wgOutboundScreenRedirectDelay' => $wgOutboundScreenRedirectDelay,
 			'wgEnableOutboundScreenExt' => $wgEnableOutboundScreenExt,
@@ -245,6 +252,7 @@ class AdEngine2Service
 
 			// AdEngine2.js
 			'wgLoadAdsInHead' => AdEngine2Service::areAdsInHead(),
+			'wgLoadLateAdsAfterPageLoad' => AdEngine2Service::areAdsAfterPageLoad(),
 			'wgShowAds' => AdEngine2Service::areAdsShowableOnPage(),
 			'wgAdsShowableOnPage' => AdEngine2Service::areAdsShowableOnPage(), // not used
 			'wgAdDriverStartLiftiumOnLoad' => $wgLiftiumOnLoad,
@@ -333,6 +341,7 @@ class AdEngine2Service
 				'wgEnableRHonDesktop',           // AdEngine2.run.js
 				'wgHighValueCountries',          // AdLogicHighValueCountry.js
 				'wgLoadAdsInHead',               // AdEngine2.run.js
+				'wgLoadLateAdsAfterPageLoad',        // AdEngine2.run.js
 				'wgUsePostScribe',               // AdEngine2.run.js, scriptwriter.js
 				'wgWikiDirectedAtChildren',      // AdLogicPageParams.js
 				'wikiaPageIsHub',                // AdLogicPageParams.js

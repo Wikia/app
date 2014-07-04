@@ -95,7 +95,7 @@ class ComplexQueryTest extends FluentSqlTestBase {
 		$expected = "
 			SELECT name, address
 			FROM people
-				INNER JOIN places USING some_column
+				INNER JOIN places USING (some_column)
 			WHERE name = ?
 		";
 

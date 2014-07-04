@@ -96,19 +96,7 @@
 				loadTargetDeferred,
 				$.getResources( $.getSassCommonURL( '/extensions/VisualEditor/wikia/VisualEditor.scss' ) )
 			).done( function () {
-				var debugBar, target = new ve.init.mw.WikiaViewPageTarget();
-				ve.init.mw.targets.push( target );
-
-				if ( ve.debug ) {
-					debugBar = new ve.init.DebugBar();
-					target.on( 'surfaceReady', function () {
-						$( '#content' ).append( debugBar.$element.show() );
-						debugBar.attachToSurface( target.surface );
-						target.surface.on( 'destroy', function () {
-							debugBar.$element.hide();
-						} );
-					} );
-				}
+				var target = new ve.init.mw.WikiaViewPageTarget();
 
 				// Transfer methods
 				ve.init.mw.WikiaViewPageTarget.prototype.setupSectionEditLinks = init.setupSectionLinks;
@@ -127,8 +115,8 @@
 	conf = mw.config.get( 'wgVisualEditorConfig' );
 	tabMessages = conf.tabMessages;
 	uri = new mw.Uri( location.href );
-	// For special pages, no information about page existence is exposed to
-	// mw.config, so we assume it exists TODO: fix this in core.
+	// BUG 49000: For special pages, no information about page existence is
+	// exposed to mw.config (see BUG 53774), so we assume it exists.
 	pageExists = !!mw.config.get( 'wgArticleId' ) || mw.config.get( 'wgNamespaceNumber' ) < 0;
 	viewUri = new mw.Uri( mw.util.getUrl( mw.config.get( 'wgRelevantPageName' ) ) );
 	veEditUri = viewUri.clone().extend( { 'veaction': 'edit' } );
@@ -149,7 +137,6 @@
 			Array.prototype.map &&
 			Date.now &&
 			Date.prototype.toJSON &&
-			Function.prototype.bind &&
 			Object.create &&
 			Object.keys &&
 			String.prototype.trim &&
@@ -157,7 +144,11 @@
 			JSON.parse &&
 			JSON.stringify
 		),
-		contentEditable: 'contentEditable' in document.createElement( 'div' )
+		contentEditable: 'contentEditable' in document.createElement( 'div' ),
+		svg: !!(
+			document.createElementNS &&
+			document.createElementNS( 'http://www.w3.org/2000/svg', 'svg' ).createSVGRect
+		)
 	};
 
 	init = {
@@ -308,7 +299,7 @@
 		$( document ).on(
 			'mouseover click',
 			'a[href*="action=edit"][href*="&redlink"]:not([href*="veaction=edit"])',
-			function() {
+			function () {
 				var $element = $( this ),
 					href = $element.attr( 'href' ),
 					articlePath = mw.config.get( 'wgArticlePath' ).replace( '$1', '' ),

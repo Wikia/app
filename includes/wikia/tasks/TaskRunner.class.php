@@ -105,9 +105,10 @@ class TaskRunner {
 			'MultiMoveTask',
 			'MultiWikiEditTask',
 //			'PromoteImageReviewTask',
+			'ReplaceTextJob',
+			'SWMSendToGroupTask',
 			'UserRollback',
 			'UserRename',
-			'SWMSendToGroupTask',
 		]);
 	}
 }

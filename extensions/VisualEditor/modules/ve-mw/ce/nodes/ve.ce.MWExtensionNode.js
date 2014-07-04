@@ -16,26 +16,15 @@
  *
  * @class
  * @abstract
- * @extends ve.ce.LeafNode
  * @mixins ve.ce.FocusableNode
- * @mixins ve.ce.ProtectedNode
- * @mixins ve.ce.RelocatableNode
  * @mixins ve.ce.GeneratedContentNode
  *
  * @constructor
- * @param {ve.dm.MWExtensionNode} model Model to observe
- * @param {Object} [config] Configuration options
  */
-ve.ce.MWExtensionNode = function VeCeMWExtensionNode( model, config ) {
-	// Parent constructor
-	ve.ce.LeafNode.call( this, model, config );
-
+ve.ce.MWExtensionNode = function VeCeMWExtensionNode() {
 	// Mixin constructors
 	ve.ce.FocusableNode.call( this );
-	ve.ce.ProtectedNode.call( this );
-	ve.ce.RelocatableNode.call( this );
 	ve.ce.GeneratedContentNode.call( this );
-	ve.ce.ClickableNode.call( this );
 
 	// DOM changes
 	this.$element.addClass( 've-ce-mwExtensionNode' );
@@ -46,10 +35,7 @@ ve.ce.MWExtensionNode = function VeCeMWExtensionNode( model, config ) {
 OO.inheritClass( ve.ce.MWExtensionNode, ve.ce.LeafNode );
 
 OO.mixinClass( ve.ce.MWExtensionNode, ve.ce.FocusableNode );
-OO.mixinClass( ve.ce.MWExtensionNode, ve.ce.ProtectedNode );
-OO.mixinClass( ve.ce.MWExtensionNode, ve.ce.RelocatableNode );
 OO.mixinClass( ve.ce.MWExtensionNode, ve.ce.GeneratedContentNode );
-OO.mixinClass( ve.ce.MWExtensionNode, ve.ce.ClickableNode );
 
 /* Methods */
 
@@ -65,11 +51,11 @@ ve.ce.MWExtensionNode.prototype.generateContents = function ( config ) {
 			$( xmlDoc.documentElement ).attr( attrs ).text( extsrc )[0]
 		);
 
-	xhr = ve.init.mw.Target.static.apiRequest( {
+	xhr = ve.init.target.constructor.static.apiRequest( {
 		'action': 'visualeditor',
 		'paction': 'parsefragment',
 		'page': mw.config.get( 'wgRelevantPageName' ),
-		'wikitext': wikitext,
+		'wikitext': wikitext
 	}, { 'type': 'POST' } )
 		.done( ve.bind( this.onParseSuccess, this, deferred ) )
 		.fail( ve.bind( this.onParseError, this, deferred ) );
@@ -106,3 +92,61 @@ ve.ce.MWExtensionNode.prototype.afterRender = function () {
 ve.ce.MWExtensionNode.prototype.onParseError = function ( deferred ) {
 	deferred.reject();
 };
+
+/**
+ * ContentEditable MediaWiki inline extension node.
+ *
+ * @class
+ * @abstract
+ * @extends ve.ce.LeafNode
+ * @mixins ve.ce.MWExtensionNode
+ *
+ * @constructor
+ * @param {ve.dm.MWInlineExtensionNode} model Model to observe
+ * @param {Object} [config] Configuration options
+ */
+ve.ce.MWInlineExtensionNode = function VeCeMWInlineExtensionNode( model, config ) {
+	// Parent constructor
+	ve.ce.LeafNode.call( this, model, config );
+
+	// Mixin constructors
+	ve.ce.MWExtensionNode.call( this );
+
+	// DOM changes
+	this.$element.addClass( 've-ce-mwInlineExtensionNode' );
+};
+
+/* Inheritance */
+
+OO.inheritClass( ve.ce.MWInlineExtensionNode, ve.ce.LeafNode );
+
+OO.mixinClass( ve.ce.MWInlineExtensionNode, ve.ce.MWExtensionNode );
+
+/**
+ * ContentEditable MediaWiki block extension node.
+ *
+ * @class
+ * @abstract
+ * @extends ve.ce.BranchNode
+ * @mixins ve.ce.MWExtensionNode
+ *
+ * @constructor
+ * @param {ve.dm.MWBlockExtensionNode} model Model to observe
+ * @param {Object} [config] Configuration options
+ */
+ve.ce.MWBlockExtensionNode = function VeCeMWBlockExtensionNode( model, config ) {
+	// Parent constructor
+	ve.ce.BranchNode.call( this, model, config );
+
+	// Mixin constructors
+	ve.ce.MWExtensionNode.call( this );
+
+	// DOM changes
+	this.$element.addClass( 've-ce-mwBlockExtensionNode' );
+};
+
+/* Inheritance */
+
+OO.inheritClass( ve.ce.MWBlockExtensionNode, ve.ce.BranchNode );
+
+OO.mixinClass( ve.ce.MWBlockExtensionNode, ve.ce.MWExtensionNode );
