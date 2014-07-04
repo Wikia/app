@@ -1,3 +1,5 @@
+@import "WikiaMapsShared";
+
 #wkPage {
 	padding: 0;
 }
@@ -15,10 +17,8 @@
 	}
 
 	h3 {
-		display: inline;
-		left: 20px;
-		position: relative;
-		top: -50px;
+		@include map-thumb-title($content-color, $gradient-color-start, $map-item-mobile-max-width);
+		line-height: 20px;
 	}
 
 	li {
