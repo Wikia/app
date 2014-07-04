@@ -17,7 +17,7 @@ class Bucky {
 			$sample = (isset($wgBuckySampling) ? $wgBuckySampling : self::DEFAULT_SAMPLING) / 100;
 			$context = array_merge(array(
 				'env' => $app->wg->WikiaEnvironment,
-			),TransactionTracer::getContext());
+			),Transaction::getAll());
 			$config = json_encode(array(
 				'host' => $url,
 				'sample' => $sample,
