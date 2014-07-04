@@ -46,7 +46,9 @@ abstract class BaseXWikiImage {
 		}
 
 		if (empty($this->width) or empty($this->height)){
-			return null;
+			\Wikia\Logger\WikiaLogger::instance()
+				->warning("Cannot get image dimensions, not cropping thumbnail for img: ".$this->name);
+			return $this->getThumbnailUrl($desiredWidth);
 		} else {
 			$url = ImagesService::getCroppedThumbnailUrl($this->getThumbnailPurgeUrl(), $desiredWidth, $desiredHeight, $this->width, $this->height, $newExtension);
 			return wfReplaceImageServer( $url );
@@ -107,6 +109,7 @@ abstract class BaseXWikiImage {
 	}
 
 	public function getSwiftStorage() {
+//		var_dump($this->wg->FSSwiftDC);
 		return \Wikia\SwiftStorage::newFromContainer( $this->getSwiftContainer(), $this->getSwiftPathPrefix() );
 	}
 
