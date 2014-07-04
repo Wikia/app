@@ -10,10 +10,13 @@
 include( 'commandLine.inc' );
 
 $usersWithoutEmails = fetchUsersWithoutEmails();
-$fbIdToUser = getFBIdToUser( $usersWithoutEmails );
-$fbIdToEmail = getFBIdToEmail( getFBIds( $fbIdToUser ) );
+$fbIdToUser = getFBIdToUserMapping( $usersWithoutEmails );
+$fbIdToEmail = getEmailsForFBIds( getFBIds( $fbIdToUser ) );
 updateEmails( $fbIdToUser, $fbIdToEmail );
 
+/**
+ * @return array of users, which don't have emails, but connected to Facebook
+ */
 function fetchUsersWithoutEmails() {
 	$usersWithoutEmails = [ ];
 
@@ -40,7 +43,11 @@ function fetchUsersWithoutEmails() {
 	return $usersWithoutEmails;
 }
 
-function getFBIdToUser( &$users ) {
+/**
+ * @param $users - array of users
+ * @return array - dictionary, where keys are ids of Facebook accounts, and values are users
+ */
+function getFBIdToUserMapping( &$users ) {
 	$fbIdToUser = [ ];
 
 	foreach ( $users as $user ) {
@@ -53,6 +60,10 @@ function getFBIdToUser( &$users ) {
 	return $fbIdToUser;
 }
 
+/**
+ * @param $fbIdToUser - dictionary, where keys are ids of Facebook accounts, and values are users
+ * @return array - array of ids of Facebook accounts
+ */
 function getFBIds( &$fbIdToUser ) {
 	$fbIds = [ ];
 
@@ -63,7 +74,11 @@ function getFBIds( &$fbIdToUser ) {
 	return $fbIds;
 }
 
-function getFBIdToEmail( &$fbIds ) {
+/**
+ * @param $fbIds - array of ids of Facebook accounts
+ * @return array - dictionary, where keys are ids of Facebook accounts, and values are emails
+ */
+function getEmailsForFBIds( &$fbIds ) {
 	$fbIdToEmail = [ ];
 
 	$fb = new FBConnectAPI();
@@ -80,6 +95,12 @@ function getFBIdToEmail( &$fbIds ) {
 	return $fbIdToEmail;
 }
 
+/**
+ * Fill users with fetched emails.
+ *
+ * @param $fbIdToUser - dictionary, where keys are ids of Facebook accounts, and values are users
+ * @param $fbIdToEmail - dictionary, where keys are ids of Facebook accounts, and values are emails
+ */
 function updateEmails( &$fbIdToUser, &$fbIdToEmail ) {
 	$updatedUsersIds = [ ];
 
