@@ -403,17 +403,18 @@ ve.ui.WikiaMediaInsertDialog.prototype.onMediaPageRemove = function ( item ) {
  *
  * @method
  */
-ve.ui.WikiaMediaInsertDialog.prototype.setup = function () {
-	// Parent method
-	ve.ui.Dialog.prototype.setup.call( this );
-	this.pages.setPage( 'main' );
+ve.ui.WikiaMediaInsertDialog.prototype.getSetupProcess = function ( data ) {
+	return ve.ui.WikiaMediaInsertDialog.super.prototype.getSetupProcess.call( this, data )
+		.next( function () {
+			this.pages.setPage( 'main' );
 
-	// If the policy height (which has a max-height property set) is the same as the first child of the policy
-	// then there is no more of the policy to show and the read more link can be hidden.
-	if ( this.$policy.height() === this.$policy.children().first().height() ) {
-		this.$policyReadMore.hide();
-	}
-	this.dropTarget.setup();
+			// If the policy height (which has a max-height property set) is the same as the first child of the policy
+			// then there is no more of the policy to show and the read more link can be hidden.
+			if ( this.$policy.height() === this.$policy.children().first().height() ) {
+				this.$policyReadMore.hide();
+			}
+			this.dropTarget.setup();
+		}, this );
 };
 
 /**
