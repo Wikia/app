@@ -41,9 +41,14 @@ class WikiaInteractiveMapsHooks {
 		global $wgEnableWikiaInteractiveMaps;
 
 		if( !empty( $wgEnableWikiaInteractiveMaps ) && $out->isArticle() ) {
-			F::app()->wg->Out->addStyle( AssetsManager::getInstance()->getSassCommonURL( 'extensions/wikia/WikiaInteractiveMaps/css/intMapParserTag.scss' ) );
+			$app = F::app();
+			$app->wg->Out->addStyle( AssetsManager::getInstance()
+				->getSassCommonURL( 'extensions/wikia/WikiaInteractiveMaps/css/intMapParserTag.scss' ) );
+//			if ( $app->checkskin( 'wikiamobile' ) ) {
+//				$app->wg->Out->addStyle( AssetsManager::getInstance()
+//					->getSassCommonURL( 'extensions/wikia/WikiaInteractiveMaps/css/intMapParserTag.wikiamobile.scss' ) );
+//			}
 		}
-
 		return true;
 	}
 
@@ -71,8 +76,9 @@ class WikiaInteractiveMapsHooks {
 	public static function onWikiaMobileAssetsPackages( &$jsStaticPackages, &$jsExtensionPackages, &$scssPackages ){
 		if( self::isSpecialMapsPage() ) {
 			$scssPackages[] = 'int_map_special_page_scss_wikiamobile';
+		} else {
+			$scssPackages[] = 'int_map_parser_tag_scss_wikiamobile';
 		}
-
 		return true;
 	}
 
