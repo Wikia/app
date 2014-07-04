@@ -256,22 +256,25 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 		$this->setVal( 'renderControls', ( $isWikiaMobileSkin ? false : true ) );
 		$this->setVal( 'renderTitle', ( $isWikiaMobileSkin ? false : true ) );
 
+		$messages = [
+			'no-maps-header' => wfMessage( 'wikia-interactive-maps-no-maps-header' ),
+			'no-maps-text' => wfMessage( 'wikia-interactive-maps-no-maps-text' ),
+			'no-maps-learn-more' => wfMessage( 'wikia-interactive-maps-no-maps-learn-more' ),
+		];
+
 		if ( $isWikiaMobileSkin ) {
 			WikiaMobilePageHeaderService::setSkipRendering( true );
 		} else {
-			$messages = [
+			$messages = array_merge( $messages, [
 				'title' => wfMessage( 'wikia-interactive-maps-title' ),
 				'create-a-map' => wfMessage( 'wikia-interactive-maps-create-a-map' ),
-				'no-maps-header' => wfMessage( 'wikia-interactive-maps-no-maps-header' ),
-				'no-maps-text' => wfMessage( 'wikia-interactive-maps-no-maps-text' ),
-				'no-maps-learn-more' => wfMessage( 'wikia-interactive-maps-no-maps-learn-more' ),
-			];
-			$this->setVal( 'messages', $messages );
+			] );
 			$this->setVal( 'sortingOptions', $this->mapsModel->getSortingOptions( $selectedSort ) );
 			$this->setVal( 'searchInput', $this->app->renderView( 'Search', 'Index' ) );
 		}
 
 		// template variables shared between skins
+		$this->setVal( 'messages', $messages );
 		$this->setVal( 'maps', $mapsResponse->items );
 		$this->setVal( 'hasMaps', !empty( $mapsResponse->total ) );
 		$this->setVal( 'learnMoreUrl', self::MAPS_WIKIA_URL );
