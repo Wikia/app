@@ -98,7 +98,7 @@ describe('AdProviderDirectGpt', function(){
 				init: function () {},
 				pushAd: function (slotname, success, hop) {
 					dartCalled = true;
-					hop();
+					hop({});
 				}
 			},
 			successMock = function () {},
