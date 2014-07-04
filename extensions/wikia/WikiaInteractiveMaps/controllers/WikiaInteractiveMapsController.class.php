@@ -122,6 +122,10 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 
 		$this->response->addAsset( 'extensions/wikia/WikiaInteractiveMaps/css/WikiaInteractiveMaps.scss' );
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
+
+		if ( $this->app->checkSkin( 'wikiamobile' ) ) {
+			$this->overrideTemplate( 'WikiaMobileMain' );
+		}
 	}
 
 	/**
