@@ -11,12 +11,12 @@
  * @class
  * @extends ve.dm.LeafNode
  * @constructor
- * @param {number} [length] Length of content data in document
+ *
  * @param {Object} [element] Reference to element in linear model
  */
-ve.dm.MWEntityNode = function VeDmMWEntityNode( length, element ) {
+ve.dm.MWEntityNode = function VeDmMWEntityNode() {
 	// Parent constructor
-	ve.dm.LeafNode.call( this, 0, element );
+	ve.dm.LeafNode.apply( this, arguments );
 };
 
 /* Inheritance */

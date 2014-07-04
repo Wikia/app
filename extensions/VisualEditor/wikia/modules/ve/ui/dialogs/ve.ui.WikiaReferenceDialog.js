@@ -45,4 +45,4 @@ ve.ui.WikiaReferenceDialog.prototype.setup = function ( data ) {
 
 /* Registration */
 
-ve.ui.dialogFactory.register( ve.ui.WikiaReferenceDialog );
+ve.ui.windowFactory.register( ve.ui.WikiaReferenceDialog );

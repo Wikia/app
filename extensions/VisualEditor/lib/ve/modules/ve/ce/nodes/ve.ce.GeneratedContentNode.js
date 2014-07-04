@@ -89,14 +89,14 @@ ve.ce.GeneratedContentNode.prototype.onGeneratedContentNodeUpdate = function () 
  * Handler for the setup event
  */
 ve.ce.GeneratedContentNode.prototype.onGeneratedContentSetup = function () {
-	this.$element.addClass( 've-ce-generatedContentNode' );
+	this.$element.addClass( 've-ce-generatedContentNode ve-ce-noHighlight' );
 };
 
 /**
  * Handler for the teardown event
  */
 ve.ce.GeneratedContentNode.prototype.onGeneratedContentTeardown = function () {
-	this.$element.removeClass( 've-ce-generatedContentNode' );
+	this.$element.removeClass( 've-ce-generatedContentNode ve-ce-noHighlight' );
 	this.abortGenerating();
 };
 
