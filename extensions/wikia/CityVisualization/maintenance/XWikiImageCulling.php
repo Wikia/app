@@ -15,7 +15,7 @@ class XWikiImageCulling extends Maintenance {
 	 */
 	public function __construct() {
 		parent::__construct();
-		$this->mDescription = 'Migrate promote data';
+		$this->mDescription = 'Clear unused promote data';
 	}
 
 	public function execute() {
