@@ -240,6 +240,8 @@ $config['oasis_jquery'] = array(
 		// Global Header tracking
 		'//skins/oasis/js/GlobalHeader.js',
 		'//skins/oasis/js/LocalNavigation.js',
+		'//skins/oasis/js/GlobalNavigationMenu.js',
+		'//skins/oasis/js/GlobalHeaderAB.js',
 
 		// Lazy rail
 		'#group_lazy_rail_js',
