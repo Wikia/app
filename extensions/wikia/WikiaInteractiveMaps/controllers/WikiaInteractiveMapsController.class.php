@@ -282,12 +282,14 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 			$pagination = $this->app->renderView(
 				'PaginationController',
 				'index',
-				array(
+				[
 					'totalItems' => $totalMaps,
 					'itemsPerPage' => self::MAPS_PER_PAGE,
 					'currentPage' => $currentPage,
-					'url' => $url
-				)
+					'url' => $url,
+					'prevMsg' => '&lt;',
+					'nextMsg' => '&gt;',
+				]
 			);
 		}
 
