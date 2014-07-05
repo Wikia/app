@@ -796,7 +796,7 @@ class DPL {
 				foreach($hidden as $hide) {
 					$form.=	"<input type=hidden ".$hide." />";
 				}
-				$form.=	"<input type=hidden name=\"token\" value=\"".$wgUser->editToken()."\" />";
+				$form.=	"<input type=hidden name=\"token\" value=\"".$wgUser->getEditToken()."\" />";
 				foreach($preview as $prev) {
 					$form.=	"<input type=submit ".$prev." /> ";
 				}
