@@ -234,6 +234,26 @@ var MiniEditor = {
 				startupFocus: !preloading
 			}, options.config), event);
 
+			// VOLDEV-25: Provide LinkSuggest support if necessary
+			if (window.wgEnableMiniEditorLinkSuggest) {
+				if (this.config.editorSuite === 'ckeditor') {
+					// RTE
+					wikiaEditor.on('ck-mode', function () {
+						if (wikiaEditor.ck.mode !== 'wysiwyg') {
+							// load the module only if the user actually switches to source
+							mw.loader.using('ext.wikia.LinkSuggest', function() {
+								$wrapper.find( 'textarea.cke_source' ).linksuggest();
+							});
+						}
+					});
+				} else {
+					// mweditor
+					mw.loader.using('ext.wikia.LinkSuggest', function() {
+						$wrapper.find('#' + wikiaEditor.instanceId).linksuggest();
+					});
+				}
+			}
+
 			$element.addClass('wikiaEditor').triggerHandler('editorInit', [wikiaEditor, event]);
 		}
 	},
