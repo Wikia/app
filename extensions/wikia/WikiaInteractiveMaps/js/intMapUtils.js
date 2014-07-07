@@ -313,7 +313,7 @@ define(
 				label: label
 			};
 
-			if (value) {
+			if (typeof(value) !== 'undefined') {
 				trackingParams.value = value;
 			}
 
