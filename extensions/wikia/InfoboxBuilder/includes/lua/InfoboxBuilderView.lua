@@ -3,147 +3,116 @@ local InfoboxBuilderView = {}
 -- Define dependencies
 local HF = mw.InfoboxBuilderHF
 
+-- Define a table to store global variables
 InfoboxBuilderView.vars = {}
 
-function InfoboxBuilderView.render( input, vars )
 
-	local fields   = input.fields
-	local sections = input.sections
+--[[ Private methods ]]--
 
-	InfoboxBuilderView.vars = vars
 
-	local Infobox = mw.html.create('div')
-    Infobox:addClass( InfoboxBuilderView.vars.Theme .. '-infobox-container')
- 
-	    local table = Infobox:tag('table')
-	          table:attr('cellspacing', '0')
-	               :attr('cellpadding', '0')
-	               :addClass('InfoboxTable')
-	               -- :addClass('infobox')
-	 
-	    for index, field in ipairs( fields ) do
-	 
-	  	if field.Type == "Line" then
-	    	if not HF.isempty( field.Value ) then
-	      		table:node( InfoboxBuilderView.addRowLine( field ) )
-	    	end
-	    
-		elseif field.Type == "Header" then
-		    if input.sections[index] == "On" then
-		    	table:node( InfoboxBuilderView.addRowHeader( field ) )
-		    end
-		    
-	    elseif field.Type == "Title" then
-	      table:node( InfoboxBuilderView.addRowTitle( field ) )
-	    
-	    elseif field.Type == "MainImage" then
-	      table:node( InfoboxBuilderView.addRowMainImage( field ) )
-
-	    elseif field.Type == "Image" then
-	      table:node( InfoboxBuilderView.addRowImage( field ) )
-
-	    elseif field.Type == "Footer" then
-	      table:node( InfoboxBuilderView.addRowFooter( field ) )
-
-        elseif field.Type == "Split" then
-          table:node( InfoboxBuilderView.addRowSplit( field ) )
-        
-        elseif field.Type == "Custom" then
-          table:node( InfoboxBuilderView.addRowCustom( field ) )
-
-	      end
-	 
-	    end
-  
-	output = tostring( Infobox )
-  
-	return output
-
-end
-
-function InfoboxBuilderView.addRowLine( field )
-    
-    local row = mw.html.create('tr')
-      row:addClass( InfoboxBuilderView.vars.Theme .. '-infobox-line' )
-         :addClass( InfoboxBuilderView.vars.Theme .. '-infobox-field-' .. field.Index )
-      if not HF.isempty( field.CssClass ) then
+--[[
+---- Function that renders a Line block
+---- @param   table field  A table with all field's arguments
+---- @return  object       Returns an mw.html object that can be merged with a container
+]]--
+local addRowLine = function( field )
+  local row = mw.html.create('tr')
+        row:addClass( InfoboxBuilderView.vars.Theme .. '-infobox-line' )
+           :addClass( InfoboxBuilderView.vars.Theme .. '-infobox-field-' .. field.Index )
+  if not HF.isempty( field.CssClass ) then
         row:addClass( field.CssClass )
-      end
-
-      row:tag('td')
-         :addClass( InfoboxBuilderView.vars.Theme .. '-infobox-line-left' )
-         :wikitext( field.Label )
-         :done()
-
-    if string.len( field.Value ) > tonumber( InfoboxBuilderView.vars.ToggleContentLongerThan ) then
-      local cell = row:tag('td')
-      cell:addClass( InfoboxBuilderView.vars.Theme .. '-infobox-line-right' )
-        cell:tag('div')
-            :addClass('mw-collapsible mw-collapsed ' .. InfoboxBuilderView.vars.Theme .. '-infobox-toggle-content')
-            :wikitext( field.Value )
-            :done()
-      row:done()
-    else
-      row:tag('td')
-         :addClass( InfoboxBuilderView.vars.Theme .. '-infobox-line-right' )
-         :wikitext( field.Value )
-         :done()
-    end
-
-    return row
- 
+  end
+  
+  row:tag('td')
+     :addClass( InfoboxBuilderView.vars.Theme .. '-infobox-line-left' )
+     :wikitext( field.Label )
+     :done()
+  if string.len( field.Value ) > tonumber( InfoboxBuilderView.vars.ToggleContentLongerThan ) then
+    local cell = row:tag('td')
+    cell:addClass( InfoboxBuilderView.vars.Theme .. '-infobox-line-right' )
+      cell:tag('div')
+          :addClass('mw-collapsible mw-collapsed ' .. InfoboxBuilderView.vars.Theme .. '-infobox-toggle-content')
+          :wikitext( field.Value )
+          :done()
+    row:done()
+  else
+    row:tag('td')
+       :addClass( InfoboxBuilderView.vars.Theme .. '-infobox-line-right' )
+       :wikitext( field.Value )
+       :done()
+  end
+  return row 
 end
- 
-function InfoboxBuilderView.addRowHeader( field )
- 
-    local row = mw.html.create('tr')
-    if not HF.isempty( field.CssClass ) then
-		row:addClass( field.CssClass )
-       :addClass( InfoboxBuilderView.vars.Theme .. '-infobox-field-' .. field.Index )
-	end
-      row:tag('td')
-         :addClass( InfoboxBuilderView.vars.Theme .. '-infobox-header' )
-         :attr('colspan', '2') 
-         :wikitext( field.Value )
-    return row
- 
-end
- 
-function InfoboxBuilderView.addRowTitle( field )
+
+--[[
+---- Function that renders a Header block
+---- @param   table field  A table with all field's arguments
+---- @return  object       Returns an mw.html object that can be merged with a container
+]]--
+local addRowHeader = function( field )
   local row = mw.html.create('tr')
         row:addClass( InfoboxBuilderView.vars.Theme .. '-infobox-field-' .. field.Index )
-    row:tag('td')
-       :addClass( InfoboxBuilderView.vars.Theme .. '-infobox-title' )
-       :attr('colspan', '2')
-       :wikitext( field.Value )
+  if not HF.isempty( field.CssClass ) then
+        row:addClass( field.CssClass )
+  end
+  
+  row:tag('td')
+     :addClass( InfoboxBuilderView.vars.Theme .. '-infobox-header' )
+     :attr('colspan', '2') 
+     :wikitext( field.Value )
+  return row
+end
+ 
+--[[
+---- Function that renders a Title block
+---- @param   table field  A table with all field's arguments
+---- @return  object       Returns an mw.html object that can be merged with a container
+]]--
+local addRowTitle = function( field )
+  local row = mw.html.create('tr')
+        row:addClass( InfoboxBuilderView.vars.Theme .. '-infobox-field-' .. field.Index )
+  row:tag('td')
+     :addClass( InfoboxBuilderView.vars.Theme .. '-infobox-title' )
+     :attr('colspan', '2')
+     :wikitext( field.Value )
   return row
 end
 
-function InfoboxBuilderView.addRowMainImage( field )
+--[[
+---- Function that renders a MainImage block
+---- @param   table field  A table with all field's arguments
+---- @return  object       Returns an mw.html object that can be merged with a container
+]]--
+local addRowMainImage = function( field )
   local node = mw.html.create('')
 
   local row1 = node:tag('tr')
         row1:addClass( InfoboxBuilderView.vars.Theme .. '-infobox-field-' .. field.Index )
 
-    row1:tag('td')
-        :addClass( InfoboxBuilderView.vars.Theme .. '-infobox-main-image' )
-        :attr('colspan', '2')
-        :wikitext( field.Value ) 
+  row1:tag('td')
+      :addClass( InfoboxBuilderView.vars.Theme .. '-infobox-main-image' )
+      :attr('colspan', '2')
+      :wikitext( field.Value ) 
 
   if InfoboxBuilderView.vars.MainImageCaption == "On" then
     local row2 = node:tag('tr')
           row2:addClass( InfoboxBuilderView.vars.Theme .. '-infobox-field-' .. field.Index )
 
-      row2:tag('td')
-          :addClass( InfoboxBuilderView.vars.Theme .. '-infobox-main-image-caption' )
-          :attr('colspan', '2')
-          :wikitext( field.Label )
+    row2:tag('td')
+        :addClass( InfoboxBuilderView.vars.Theme .. '-infobox-main-image-caption' )
+        :attr('colspan', '2')
+        :wikitext( field.Label )
   end
 
   return node
 end
 
-function InfoboxBuilderView.addRowImage( field )
+--[[
+---- Function that renders an Image block
+---- @param   table field  A table with all field's arguments
+---- @return  object       Returns an mw.html object that can be merged with a container
+]]--
+local addRowImage = function( field )
   local node = mw.html.create('')
   
   local row1 = node:tag('tr')
@@ -165,7 +134,12 @@ function InfoboxBuilderView.addRowImage( field )
   return node
 end
 
-function InfoboxBuilderView.addRowFooter( field )
+--[[
+---- Function that renders a Footer block
+---- @param   table field  A table with all field's arguments
+---- @return  object       Returns an mw.html object that can be merged with a container
+]]--
+local addRowFooter = function( field )
   local row = mw.html.create('tr')
         row:addClass( InfoboxBuilderView.vars.Theme .. '-infobox-field-' .. field.Index )
 
@@ -176,7 +150,12 @@ function InfoboxBuilderView.addRowFooter( field )
   return row
 end
 
-function InfoboxBuilderView.addRowSplit( field )
+--[[
+---- Function that renders a Split block
+---- @param   table field  A table with all field's arguments
+---- @return  object       Returns an mw.html object that can be merged with a container
+]]--
+local addRowSplit = function( field )
 
   local node = mw.html.create('')
   
@@ -223,15 +202,85 @@ function InfoboxBuilderView.addRowSplit( field )
 
 end
 
-function InfoboxBuilderView.addRowCustom( field )
+--[[
+---- Function that renders a Custom block
+---- @param   table field  A table with all field's arguments
+---- @return  object       Returns an mw.html object that can be merged with a container
+]]--
+local addRowCustom = function( field )
   local node = mw.html.create( field.Label )
         node:addClass( InfoboxBuilderView.vars.Theme .. '-infobox-custom' )
             :addClass( InfoboxBuilderView.vars.Theme .. '-infobox-field-' .. field.Index )
             :wikitext( field.Value )
         if not HF.isempty( field.CssClass ) then
-        	node:addClass( field.CssClass )
-      	end
+          node:addClass( field.CssClass )
+        end
   return node
+end
+
+
+--[[ Public methods ]]--
+
+
+--[[
+---- Main function that controls the rendering of prepared fields
+---- @param   table input  A sorted table with modified arguments - check InfoboxBuilder.lua@execute()
+---- @param   table vars   A table containing global variables
+---- @return  string       Returns a wikitext-compliant string with a rendered infobox
+]]--
+function InfoboxBuilderView.render( input, vars )
+	local fields   = input.fields
+	local sections = input.sections
+
+	InfoboxBuilderView.vars = vars
+
+  -- Let's go! Create a container
+	local Infobox = mw.html.create('div')
+        Infobox:addClass( InfoboxBuilderView.vars.Theme .. '-infobox-container')
+    
+    local table = Infobox:tag('table')
+	        table:attr('cellspacing', '0')
+	             :attr('cellpadding', '0')
+	             :addClass('InfoboxTable')
+	 
+    -- Iterate over each field and render a row
+    for index, field in ipairs( fields ) do
+  	  if field.Type == "Line" then
+  	    if not HF.isempty( field.Value ) then
+  	      table:node( addRowLine( field ) )
+  	    end
+  	    
+  		elseif field.Type == "Header" then
+  		  if input.sections[index] == "On" then
+  		    table:node( addRowHeader( field ) )
+  		  end
+  		    
+  	  elseif field.Type == "Title" then
+  	    table:node( addRowTitle( field ) )
+  	   
+  	  elseif field.Type == "MainImage" then
+  	    table:node( addRowMainImage( field ) )
+  
+  	  elseif field.Type == "Image" then
+  	    table:node( addRowImage( field ) )
+  
+  	  elseif field.Type == "Footer" then
+  	    table:node( addRowFooter( field ) )
+  
+      elseif field.Type == "Split" then
+        table:node( addRowSplit( field ) )
+          
+      elseif field.Type == "Custom" then
+        table:node( addRowCustom( field ) )
+
+      end
+	  end
+  
+  -- Convert whole string
+	output = tostring( Infobox )
+  
+	return output
+
 end
 
 php = mw_interface

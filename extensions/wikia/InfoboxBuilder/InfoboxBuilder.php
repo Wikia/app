@@ -31,7 +31,7 @@ $wgExtensionCredits['other'][] = array(
 $wgAutoloadClasses['InfoboxBuilder\LuaLibrary'] = __DIR__ . '/includes/LuaLibrary.php';
 
 /**
- * Load InfoboxBuilder's hooks
+ * Load InfoboxBuilder's hooking functions
  */
 $wgAutoloadClasses['InfoboxBuilder\InfoboxBuilderHooks'] = __DIR__ . '/InfoboxBuilder.hooks.php';
 
@@ -42,7 +42,7 @@ $wgHooks['ParserFirstCallInit'][]        = '\InfoboxBuilder\InfoboxBuilderHooks:
 $wgHooks['ScribuntoExternalLibraries'][] = '\InfoboxBuilder\InfoboxBuilderHooks::registerScribuntoLibraries';
 
 /**
- * I18n file
+ * I18n files
  */
 $wgExtensionMessagesFiles['InfoboxBuilder']      = __DIR__ . '/InfoboxBuilder.i18n.php';
 $wgExtensionMessagesFiles['InfoboxBuilderMagic'] = __DIR__ . '/InfoboxBuilder.magic.i18n.php';
