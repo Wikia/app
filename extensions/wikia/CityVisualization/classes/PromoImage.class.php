@@ -28,11 +28,6 @@ class PromoImage extends WikiaObject {
 		return range(self::ADDITIONAL_START, self::ADDITIONAL_END);
 	}
 
-	static public function fromPathname($pathString){
-		$type = self::inferType($pathString, $dbName);
-		return new PromoImage($type, $dbName);
-	}
-
 	/**
 	 * @deprecated
 	 */
@@ -154,31 +149,6 @@ class PromoImage extends WikiaObject {
 		return $this;
 	}
 
-	protected function pathnameHelper($withDbName = true, $withExtension = true){
-		if ($this->isType(self::INVALID)){
-			$path = null;
-		} else {
-			if ($this->isType(self::MAIN)){
-				$path = self::__MAIN_IMAGE_BASE_NAME;
-			} else {
-				$path = self::__ADDITIONAL_IMAGES_BASE_NAME . "-" . $this->type;
-			}
-			if ($withDbName and $this->isCityIdSet()) {
-				$path .= ',' . $this->getDBName();
-			}
-			if ($withExtension) {
-				$path .= self::__IMAGES_EXT;
-			}
-		}
-		return $path;
-	}
-
-	/**
-	 * @deprecated
-	 */
-	public function getPathname(){
-		return $this->pathnameHelper(true, true);
-	}
 	protected function materializeCacheKey($keyTemplate, $additional=null){
 		return sprintf($keyTemplate, $this->cityId, $this->type, $additional);
 	}
@@ -272,52 +242,6 @@ class PromoImage extends WikiaObject {
 			$sql->run( $db );
 			// FIXME: possible race condition that deletes all images
 		}
-	}
-
-	protected function deleteImageHelper($imageName) {
-		$title = Title::newFromText($imageName, NS_FILE);
-		$file = new LocalFile($title, RepoGroup::singleton()->getLocalRepo());
-
-		$visualization = new CityVisualization();
-		$visualization->removeImageFromReview($this->wg->cityId, $title->getArticleId(), $this->wg->contLang->getCode());
-
-		if ($file->exists()) {
-			$file->delete('no longer needed');
-		}
-	}
-
-	protected function removalTaskHelper($imageName) {
-		$visualization = new CityVisualization();
-
-		$content_lang = $this->wg->contLang->getCode();
-
-		//create task only for languages which have corporate wiki
-		if ($visualization->isCorporateLang($content_lang)) {
-			$deletion_list = array(
-				$content_lang => array(
-					$this->wg->cityId => array($imageName)
-				)
-			);
-			wfRunHooks('CreatePromoImageReviewTask', ['delete', $deletion_list]);
-		}
-	}
-
-	public function purgeImage() {
-		$this->deleteImage();
-		$this->deleteImageFromCorporate();
-		return $this;
-	}
-
-	public function deleteImageFromCorporate(){
-		if ($this->isCityIdSet()){
-			$this->removalTaskHelper($this->getPathname());
-		}
-	}
-
-	public function deleteImage() {
-		$this->deleteImageHelper($this->getPathname());
-		$this->removed = true;
-		return $this;
 	}
 
 	public function setIndex($index) {
