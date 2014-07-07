@@ -52,3 +52,8 @@
     text-align: left;
     width: 70%;
 }
+
+#task_log .log-context {
+	white-space: pre-wrap;
+	font-family: monospace;
+}

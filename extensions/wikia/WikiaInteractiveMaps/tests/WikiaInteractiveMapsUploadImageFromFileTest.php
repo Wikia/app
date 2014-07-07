@@ -51,7 +51,7 @@ class WikiaInteractiveMapsUploadImageFromFileTest extends WikiaBaseTest {
 	}
 
 	public function testVerifyUpload_failed_for_POI() {
-		$expected = [ 'status' => WikiaInteractiveMapsUploadImageFromFile::PIN_TYPE_MARKER_IMAGE_TOO_SMALL_ERROR ];
+		$expected = [ 'status' => WikiaInteractiveMapsUploadImageFromFile::POI_CATEGORY_MARKER_IMAGE_TOO_SMALL_ERROR ];
 		$uploadImageFromFileMock = $this->getUploadImageFromFileMock(
 			[ 'status' => 'success' ],
 			true,

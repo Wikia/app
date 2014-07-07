@@ -24,12 +24,14 @@ class VideosModuleController extends WikiaController {
 		$numRequired = $this->request->getVal( 'limit', VideosModule::LIMIT_VIDEOS );
 		$localContent = ( $this->request->getVal( 'local' ) == 'true' );
 		$sort = $this->request->getVal( 'sort', 'trend' );
+		$userRegion = $this->request->getVal( 'userRegion', VideosModule::DEFAULT_REGION );
 
-		$module = new VideosModule();
+		$module = new VideosModule( $userRegion );
+		$staffVideos = $module->getStaffPicks();
 		if ( $localContent ) {
 			$videos = $module->getLocalVideos( $numRequired, $sort );
 		} else {
-			$videos = $module->getVideosByCategory( $numRequired );
+			$videos = $module->getVideosByCategory();
 			if ( empty( $videos ) ) {
 				$videos = $module->getWikiRelatedVideosTopics( $numRequired );
 			}
@@ -38,7 +40,7 @@ class VideosModuleController extends WikiaController {
 		$this->result = "ok";
 		$this->msg = '';
 		$this->videos = $videos;
-		$this->staffVideos = $module->getStaffPicks();
+		$this->staffVideos = $staffVideos;
 
 		// set cache
 		$this->response->setCacheValidity( 600 );

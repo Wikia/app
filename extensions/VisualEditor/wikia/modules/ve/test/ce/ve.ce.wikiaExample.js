@@ -29,14 +29,14 @@ ve.ce.wikiaExample = ( function ( utils ) {
 			'frame': {
 				'left': 'tleft',
 				'right': 'tright',
-				'center' : 'tnone',
-				'none' : 'tnone'
+				'center': 'tnone',
+				'none': 'tnone'
 			},
 			'none': {
 				'left': 'floatleft',
 				'right': 'floatright',
-				'center' : 'floatnone',
-				'none' : 'floatnone'
+				'center': 'floatnone',
+				'none': 'floatnone'
 			}
 		},
 		'htmlDomAlign': {
@@ -73,16 +73,12 @@ ve.ce.wikiaExample = ( function ( utils ) {
 
 	/* Mock HTML */
 
-	media.html = {
-		'shield':
-			'<img class="ve-ce-protectedNode-shield" ' +
-				'src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7">'
-	};
+	media.html = { };
 
 	media.html.block = {
 		'caption':
 			'<figcaption class="ve-ce-branchNode">' +
-				'<p class="ve-ce-generated-wrapper caption ve-ce-branchNode">abc</p>' +
+				'<p class="ve-ce-paragraphNode ve-ce-generated-wrapper caption ve-ce-branchNode">abc</p>' +
 			'</figcaption>',
 		'frame':
 			'<figure class="article-thumb" style="">' +
@@ -99,9 +95,8 @@ ve.ce.wikiaExample = ( function ( utils ) {
 
 	media.html.inline = {
 		'frameless':
-			'<a class="image ve-ce-mwInlineImageNode ve-ce-leafNode ve-ce-generatedContentNode ve-ce-protectedNode" contenteditable="false">' +
+			'<a class="image mw-default-size ve-ce-mwInlineImageNode ve-ce-leafNode ve-ce-generatedContentNode ve-ce-noHighlight ve-ce-focusableNode" contenteditable="false">' +
 				'<img src="' + fakeImageUrlResolved + '" width="" height="">' +
-				media.html.shield +
 			'</a>'
 	};
 
@@ -165,7 +160,7 @@ ve.ce.wikiaExample = ( function ( utils ) {
 	 * @param {Object} attributes The node attributes from which to build the mock.
 	 * @returns {String} The mocked HTMLDOM.
 	 */
-	media.getHtmlDom = function( displayType, rdfaType, attributes ) {
+	media.getHtmlDom = function ( displayType, rdfaType, attributes ) {
 		var $mock = $( media.htmlDom[ displayType ] ),
 			typeOf = rdfaType;
 
@@ -197,7 +192,6 @@ ve.ce.wikiaExample = ( function ( utils ) {
 	/* Block Media */
 
 	media.block = { 'mw:Image': {}, 'mw:Video': {} };
-
 
 	/**
 	 * Get the mocked HTML output for a block media node.
@@ -245,15 +239,13 @@ ve.ce.wikiaExample = ( function ( utils ) {
 		}
 
 		$mock
-			.addClass( 've-ce-branchNode ve-ce-generatedContentNode ve-ce-protectedNode' )
-			.attr( 'contenteditable', false )
-			.append( media.html.shield );
+			.addClass( 've-ce-branchNode ve-ce-generatedContentNode ve-ce-noHighlight ve-ce-focusableNode' )
+			.attr( 'contenteditable', false );
 
 		$mock.find( 'img[src="' + fakeImageUrlResolved + '"]' ).attr( {
 			height: attributes.height,
 			width: width
 		} );
-
 
 		return $mock[ 0 ].outerHTML;
 	};
@@ -265,7 +257,7 @@ ve.ce.wikiaExample = ( function ( utils ) {
 	 * @param {Object} attributes The node attributes from which to build the mock.
 	 * @returns {String} The mocked HTML.
 	 */
-	 media.block[ 'mw:Image' ].getHtml = media.block.getHtml;
+	media.block[ 'mw:Image' ].getHtml = media.block.getHtml;
 
 	/**
 	 * Get the mocked HTML output for a block video node.

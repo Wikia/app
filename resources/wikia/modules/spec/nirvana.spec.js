@@ -15,7 +15,20 @@ describe("Nirvana", function () {
 		controllerName = 'foo',
 		methodName = 'bar',
 		origwgScriptPath,
-		origwgServer;
+		origwgServer,
+		jQueryParamMock = function(data){
+			var ret = '';
+
+			for(var key in data){
+				ret += key + '=' + data[key] + '&';
+			}
+
+			if (ret) {
+				ret = ret.slice(0, - 1);
+			}
+
+			return ret;
+		};
 
 	beforeEach(function(){
 		origwgScriptPath = window.wgScriptPath;
@@ -36,6 +49,7 @@ describe("Nirvana", function () {
 		expect(typeof nirvana.sendRequest).toBe('function');
 		expect(typeof nirvana.getJson).toBe('function');
 		expect(typeof nirvana.postJson).toBe('function');
+		expect(typeof nirvana.getUrl).toBe('function');
 	});
 
 	it('has jQuery API', function() {
@@ -43,6 +57,7 @@ describe("Nirvana", function () {
 		expect(typeof $.nirvana.sendRequest).toBe('function' ,'sendRequest');
 		expect(typeof $.nirvana.getJson).toBe('function', 'getJson');
 		expect(typeof $.nirvana.postJson).toBe('function', 'postJson');
+		expect(typeof $.nirvana.getUrl).toBe('function', 'getUrl');
 	});
 
 	it('controller name is required', function() {
@@ -72,7 +87,7 @@ describe("Nirvana", function () {
 	async.it('sendRequest uses POST and JSON by default', function(done) {
 		var jQuery = {
 				ajax: function(params) {
-					expect(params.url).toBe('/wikia.php?controller=foo&method=bar&format=json&');
+					expect(params.url).toBe('/wikia.php?controller=foo&method=bar&format=json');
 					expect(params.dataType).toBe('json'); // default format
 					expect(params.type).toBe('POST'); // default request method
 					expect(typeof params.data).toBe('object');
@@ -81,15 +96,7 @@ describe("Nirvana", function () {
 					// fire callback
 					params.success({res: true});
 				},
-				param: function(data){
-					var ret = '';
-
-					for(var key in data){
-						ret += key + '=' + data[key] + '&';
-					}
-
-					return ret;
-				}
+				param: jQueryParamMock
 			},
 			nirvana = modules['wikia.nirvana'](jQuery);
 
@@ -116,15 +123,7 @@ describe("Nirvana", function () {
 					// fire error callback
 					params.error();
 				},
-				param: function(data){
-					var ret = '';
-
-					for(var key in data){
-						ret += key + '=' + data[key] + '&';
-					}
-
-					return ret;
-				}
+				param: jQueryParamMock
 			},
 			nirvana = modules['wikia.nirvana'](jQuery);
 
@@ -140,24 +139,14 @@ describe("Nirvana", function () {
 	async.it('getJson uses GET and JSON', function(done) {
 		var jQuery = {
 				ajax: function(params) {
-					expect(params.url).toBe('/wikia.php?controller=foo&method=bar&');
+					expect(params.url).toBe('/wikia.php?controller=foo&method=bar&format=json&userName=Wikia');
 					expect(params.dataType).toBe('json');
 					expect(params.type).toBe('GET');
-					expect(typeof params.data).toBe('object');
-					expect(params.data.userName).toBe('Wikia');
 
 					// fire callback
 					params.success({res: true});
 				},
-				param: function(data){
-					var ret = '';
-
-					for(var key in data){
-						ret += key + '=' + data[key] + '&';
-					}
-
-					return ret;
-				}
+				param: jQueryParamMock
 			},
 			nirvana = modules['wikia.nirvana'](jQuery);
 
@@ -179,7 +168,7 @@ describe("Nirvana", function () {
 	async.it('postJson uses POST and JSON', function(done) {
 		var jQuery = {
 				ajax:  function(params) {
-					expect(params.url).toBe('/wikia.php?controller=foo&method=bar&format=json&');
+					expect(params.url).toBe('/wikia.php?controller=foo&method=bar&format=json');
 					expect(params.dataType).toBe('json');
 					expect(params.type).toBe('POST');
 					expect(typeof params.data).toBe('object');
@@ -188,15 +177,7 @@ describe("Nirvana", function () {
 					// fire callback
 					params.success({res: true});
 				},
-				param: function(data){
-					var ret = '';
-
-					for(var key in data){
-						ret += key + '=' + data[key] + '&';
-					}
-
-					return ret;
-				}
+				param: jQueryParamMock
 			},
 			nirvana = modules['wikia.nirvana'](jQuery);
 
@@ -219,20 +200,14 @@ describe("Nirvana", function () {
 		// mock the request
 		var jQuery = {
 				ajax: function(params) {
-					expect(JSON.stringify(params.data)).toBe('{"abc":"xyz","format":"json","userName":"Wikia","value":"1"}');
+					expect(params.url)
+						.toBe('/wikia.php?controller=foo&method=bar&abc=xyz&format=json&userName=Wikia&value=1');
+					expect(typeof params.data).toBe('object');
 
 					// fire callback
 					params.success();
 				},
-				param: function(data){
-					var ret = '';
-
-					for(var key in data){
-						ret += key + '=' + data[key] + '&';
-					}
-
-					return ret;
-				}
+				param: jQueryParamMock
 			},
 			nirvana = modules['wikia.nirvana'](jQuery);
 
@@ -255,20 +230,12 @@ describe("Nirvana", function () {
 		var urlParams = 'value=1&abc=xyz',
 			jQuery = {
 				ajax: function(params) {
-					expect(params.data).toBe(urlParams + '&format=json');
+					expect(params.url).toBe( '/wikia.php?controller=foo&method=bar&' + urlParams + '&format=json');
 
 					// fire callback
 					params.success();
 				},
-				param: function(data){
-					var ret = '';
-
-					for(var key in data){
-						ret += key + '=' + data[key] + '&';
-					}
-
-					return ret;
-				}
+				param: jQueryParamMock
 			},
 			nirvana = modules['wikia.nirvana'](jQuery);
 

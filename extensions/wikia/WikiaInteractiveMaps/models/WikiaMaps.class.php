@@ -26,14 +26,6 @@ class WikiaMaps extends WikiaObject {
 
 	const MAP_THUMB_PREFIX = '/thumb/';
 
-
-	/**
-	 * Controls the request caching
-	 *
-	 * @todo Enable caching if needed and when proper cache purging is implemented
-	 */
-	const ENABLE_REQUEST_CACHING = false;
-
 	/**
 	 * @var array API connection config
 	 */
@@ -44,7 +36,7 @@ class WikiaMaps extends WikiaObject {
 	 */
 	private $sortingOptions = [
 		'wikia-interactive-maps-sort-newest-to-oldest' => 'created_on_desc',
-		'wikia-interactive-maps-sort-alphabetical' => 'name_asc',
+		'wikia-interactive-maps-sort-alphabetical' => 'title_asc',
 		'wikia-interactive-maps-sort-recently-updated' => 'updated_on_desc',
 	];
 
@@ -71,25 +63,6 @@ class WikiaMaps extends WikiaObject {
 			implode( '/',  $segments ),
 			!empty( $params ) ? '?' . http_build_query( $params ) : ''
 		);
-	}
-
-	/**
-	 * Call method and store the result in cache for $expireTime
-	 *
-	 * @param $method
-	 * @param array $params
-	 * @param int $expireTime
-	 *
-	 * @return Mixed|null
-	 */
-	public function cachedRequest( $method, Array $params, $expireTime = self::DEFAULT_MEMCACHE_EXPIRE_TIME ) {
-		if ( self::ENABLE_REQUEST_CACHING ) {
-			$memCacheKey = wfMemcKey( __CLASS__, __METHOD__, json_encode( $params ) );
-			return WikiaDataAccess::cache( $memCacheKey, $expireTime, function () use ( $method, $params ) {
-				return $this->{ $method }( $params );
-			} );
-		}
-		return $this->{ $method }( $params );
 	}
 
 	/**
@@ -140,7 +113,7 @@ class WikiaMaps extends WikiaObject {
 	 *
 	 * @return mixed
 	 */
-	private function getMapsFromApi( Array $params ) {
+	public function getMapsFromApi( Array $params ) {
 		$mapsData = new stdClass();
 		$url = $this->buildUrl( [ self::ENTRY_POINT_MAP ], $params );
 		$response = $this->processServiceResponse(
@@ -173,14 +146,14 @@ class WikiaMaps extends WikiaObject {
 	/**
 	 * Sends requests to IntMap service to get data about a map and tiles it's connected with
 	 *
-	 * @param Array $params the first element is required and it should be map id passed rest of the array elements
-	 *                      will get added as URI parameters after ? sign
+	 * @param $mapId Map id
+	 * @param array $params additional parameters
+	 *
 	 * @return mixed
 	 *
 	 * @todo: change the service API in the way that we don't have to send two requests
 	 */
-	private function getMapByIdFromApi( Array $params ) {
-		$mapId = array_shift( $params );
+	public function getMapByIdFromApi( $mapId,  $params = []) {
 		$url = $this->buildUrl( [ self::ENTRY_POINT_MAP, $mapId ], $params );
 		$response = $this->processServiceResponse(
 			Http::get( $url, 'default', $this->getHttpRequestOptions() )
@@ -526,8 +499,6 @@ class WikiaMaps extends WikiaObject {
 				'Authorization' => $this->config[ 'token' ]
 			],
 			'returnInstance' => true,
-			//TODO: this is temporary workaround, remove it before production!
-			'noProxy' => true
 		];
 
 		if ( !empty( $postData ) ) {
@@ -557,3 +528,4 @@ class WikiaMaps extends WikiaObject {
 		return $baseURL . self::MAP_THUMB_PREFIX . $fileName . '/' . $crop . '-' . $fileName;
 	}
 }
+

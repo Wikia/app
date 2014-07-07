@@ -1,4 +1,7 @@
 <?php
+
+use \Wikia\Logger\WikiaLogger;
+
 /**
  * Base class for the output of file transformation methods.
  *
@@ -54,6 +57,20 @@ abstract class MediaTransformOutput {
 	 */
 	public function setStoragePath( $storagePath ) {
 		$this->storagePath = $storagePath;
+	}
+
+	function mediaType() {
+		return 'image';
+	}
+
+	function renderView( array $options = array() ) {
+		WikiaLogger::instance()->debug( 'Media method '.__METHOD__.' called',
+			array_merge( $options, [ 'url' => $this->url, 'mediaType' => $this->mediaType() ] ) );
+
+		return F::app()->renderView( 'ThumbnailController', $this->mediaType(), [
+			'thumb'   => $this,
+			'options' => $options,
+		] );
 	}
 
 	/**
@@ -153,12 +170,12 @@ abstract class MediaTransformOutput {
 
 	/**
 	 * @param $title string
-	 * @param $params array
+	 * @param string $params
 	 * @return array
 	 */
 	public function getDescLinkAttribs( $title = null, $params = '' ) {
 		$query = $this->page ? ( 'page=' . urlencode( $this->page ) ) : '';
-		if( $params ) {
+		if ( $params ) {
 			$query .= $query ? '&'.$params : $params;
 		}
 		$attribs = array(
@@ -183,13 +200,12 @@ class ThumbnailImage extends MediaTransformOutput {
 	 * If $path is set to null, the output file is treated as a source copy.
 	 * If $path is set to false, no output file will be created.
 	 *
-	 * @param $file File object
-	 * @param $url String: URL path to the thumb
-	 * @param $width Integer: file's width
-	 * @param $height Integer: file's height
-	 * @param $path String|false|null: filesystem path to the thumb
-	 * @param $page Integer: page number, for multipage files
-	 * @private
+	 * @param File $file File object
+	 * @param string $url URL path to the thumb
+	 * @param int $width File's width
+	 * @param int $height File's height
+	 * @param string|bool|null $path Filesystem path to the thumb
+	 * @param int|bool $page Page number, for multi-page files
 	 */
 	function __construct( $file, $url, $width, $height, $path = false, $page = false ) {
 		$this->file = $file;
@@ -230,12 +246,16 @@ class ThumbnailImage extends MediaTransformOutput {
 	 * For images, desc-link and file-link are implemented as a click-through. For
 	 * sounds and videos, they may be displayed in other ways.
 	 *
+	 * @throws MWException
 	 * @return string
 	 */
 	function toHtml( $options = array() ) {
 		if ( count( func_get_args() ) == 2 ) {
 			throw new MWException( __METHOD__ .' called in the old style' );
 		}
+
+		WikiaLogger::instance()->debug('Media method '.__METHOD__.' called',
+			array_merge( $options, [ 'url' => $this->url, 'method' => __METHOD__ ] ) );
 
 		$alt = empty( $options['alt'] ) ? '' : $options['alt'];
 
@@ -319,6 +339,11 @@ class MediaTransformError extends MediaTransformOutput {
 		$this->height = intval( $height );
 		$this->url = false;
 		$this->path = false;
+	}
+
+	// Keep the same error functionality as before
+	function renderView ( $options = array() ) {
+		return $this->toHtml( $options );
 	}
 
 	function toHtml( $options = array() ) {

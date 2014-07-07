@@ -15,7 +15,7 @@
  */
 ve.ui.WikiaMediaInsertDialog = function VeUiMWMediaInsertDialog( config ) {
 	// Parent constructor
-	ve.ui.Dialog.call( this, config );
+	ve.ui.WikiaMediaInsertDialog.super.call( this, config );
 };
 
 /* Inheritance */
@@ -41,10 +41,10 @@ ve.ui.WikiaMediaInsertDialog.static.pages = [ 'main', 'search' ];
  * @returns {jQuery}
  */
 ve.ui.WikiaMediaInsertDialog.static.formatPolicy = function ( html ) {
-	 return $( '<div>' )
+	return $( '<div>' )
 		.html( html )
 		.find( '*' )
-			.each( function() {
+			.each( function () {
 				if ( this.tagName.toLowerCase() === 'a' ) {
 					$( this ).attr( 'target', '_blank' );
 				} else {
@@ -122,7 +122,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.initialize = function () {
 		'remove': 'onCartModelRemove'
 	} );
 	this.cart.on( 'select', ve.bind( this.onCartSelect, this ) );
-	this.insertButton.connect( this, { 'click': [ 'close', 'insert' ] } );
+	this.insertButton.connect( this, { 'click': [ 'close', { 'action': 'insert' } ] } );
 	this.pages.on( 'set', ve.bind( this.onPageSet, this ) );
 	this.query.connect( this, {
 		'requestSearchDone': 'onQueryRequestSearchDone',
@@ -164,7 +164,6 @@ ve.ui.WikiaMediaInsertDialog.prototype.initialize = function () {
 	this.$globalOverlay.append( this.mediaPreview.$element );
 };
 
-
 /**
  * Handle clicking the media policy read more link.
  *
@@ -186,7 +185,6 @@ ve.ui.WikiaMediaInsertDialog.prototype.onReadMoreLinkClick = function ( e ) {
 ve.ui.WikiaMediaInsertDialog.prototype.onFileDropped = function ( file ) {
 	this.upload.$file.trigger( 'change', file );
 };
-
 
 /**
  * Handle query input changes.
@@ -223,7 +221,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.onQueryInputKeydown =
  * @param {Object} items An object containing items to add to the search results
  */
 ve.ui.WikiaMediaInsertDialog.prototype.onQueryRequestSearchDone = function ( items ) {
-	items.forEach( function( item ) {
+	items.forEach( function ( item ) {
 		if ( item.type === 'video' ) {
 			item.provider = 'wikia';
 		}
@@ -405,17 +403,17 @@ ve.ui.WikiaMediaInsertDialog.prototype.onMediaPageRemove = function ( item ) {
  *
  * @method
  */
-ve.ui.WikiaMediaInsertDialog.prototype.setup = function () {
-	// Parent method
-	ve.ui.Dialog.prototype.setup.call( this );
-	this.pages.setPage( 'main' );
-
-	// If the policy height (which has a max-height property set) is the same as the first child of the policy
-	// then there is no more of the policy to show and the read more link can be hidden.
-	if ( this.$policy.height() === this.$policy.children().first().height() ) {
-		this.$policyReadMore.hide();
-	}
-	this.dropTarget.setup();
+ve.ui.WikiaMediaInsertDialog.prototype.getSetupProcess = function ( data ) {
+	return ve.ui.WikiaMediaInsertDialog.super.prototype.getSetupProcess.call( this, data )
+		.next( function () {
+			this.pages.setPage( 'main' );
+			// If the policy height (which has a max-height property set) is the same as the first child of the policy
+			// then there is no more of the policy to show and the read more link can be hidden.
+			if ( this.$policy.height() === this.$policy.children().first().height() ) {
+				this.$policyReadMore.hide();
+			}
+			this.dropTarget.setup();
+		}, this );
 };
 
 /**
@@ -438,16 +436,16 @@ ve.ui.WikiaMediaInsertDialog.prototype.onPageSet = function () {
  * @method
  * @param {string} action Which action is being performed on close.
  */
-ve.ui.WikiaMediaInsertDialog.prototype.teardown = function ( action ) {
-	if ( action === 'insert' ) {
-		this.insertMedia( ve.copy( this.cartModel.getItems() ), this.fragment );
-	}
-	this.cartModel.clearItems();
-	this.queryInput.setValue( '' );
-	this.dropTarget.teardown();
-
-	// Parent method
-	ve.ui.Dialog.prototype.teardown.call( this, action );
+ve.ui.WikiaMediaInsertDialog.prototype.getTeardownProcess = function ( data ) {
+	return ve.ui.WikiaMediaInsertDialog.super.prototype.getTeardownProcess.call( this, data )
+		.first( function () {
+			if ( data.action === 'insert' ) {
+				this.insertMedia( ve.copy( this.cartModel.getItems() ), this.fragment );
+			}
+			this.cartModel.clearItems();
+			this.queryInput.setValue( '' );
+			this.dropTarget.teardown();
+		}, this );
 };
 
 /**
@@ -508,7 +506,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.insertMedia = function ( cartItems, fragm
 		}
 	}
 
-	$.when.apply( $, promises ).done( ve.bind( function() {
+	$.when.apply( $, promises ).done( ve.bind( function () {
 		this.insertPermanentMedia( cartItems, fragment );
 	}, this ) );
 };
@@ -526,8 +524,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.insertPermanentMedia = function ( cartIte
 			'video': []
 		},
 		cartItem,
-		i,
-		title;
+		i;
 
 	// Populates attributes, items.video and items.photo
 	for ( i = 0; i < cartItems.length; i++ ) {
@@ -759,7 +756,6 @@ ve.ui.WikiaMediaInsertDialog.prototype.onFrameDocumentKeyDown = function ( e ) {
 	ve.ui.Dialog.prototype.onFrameDocumentKeyDown.call( this, e );
 };
 
-
 /* Registration */
 
-ve.ui.dialogFactory.register( ve.ui.WikiaMediaInsertDialog );
+ve.ui.windowFactory.register( ve.ui.WikiaMediaInsertDialog );

@@ -40,16 +40,18 @@ ve.ui.MediaSizeWidget = function VeUiMediaSizeWidget( scalable, config ) {
 	this.sizeTypeSelectWidget.addItems( [
 		new OO.ui.ButtonOptionWidget( 'default', {
 			'$': this.$,
-			'label': ve.msg( 'visualeditor-mediasizewidget-sizeoptions-default' )
+			'label': ve.msg( 'visualeditor-mediasizewidget-sizeoptions-default' ),
+			'flags': ['secondary']
 		} ),
 		// TODO: when upright is supported by Parsoid
 		// new OO.ui.ButtonOptionWidget( 'scale', {
-		// 	'$': this.$,
-		// 	'label': ve.msg( 'visualeditor-mediasizewidget-sizeoptions-scale' )
+		// '$': this.$,
+		// 'label': ve.msg( 'visualeditor-mediasizewidget-sizeoptions-scale' )
 		// } ),
 		new OO.ui.ButtonOptionWidget( 'custom', {
 			'$': this.$,
-			'label': ve.msg( 'visualeditor-mediasizewidget-sizeoptions-custom' )
+			'label': ve.msg( 'visualeditor-mediasizewidget-sizeoptions-custom' ),
+			'flags': ['secondary']
 		} )
 	] );
 
@@ -145,6 +147,22 @@ OO.inheritClass( ve.ui.MediaSizeWidget, OO.ui.Widget );
 
 /* Methods */
 
+/**
+ * Respond to change in original dimensions in the scalable object.
+ * Specifically, enable or disable to 'set full size' button and the 'default' option.
+ *
+ * @param {Object} dimensions Original dimensions
+ */
+ve.ui.MediaSizeWidget.prototype.onScalableOriginalSizeChange = function ( dimensions ) {
+	var disabled = !dimensions || $.isEmptyObject( dimensions );
+	this.fullSizeButton.setDisabled( disabled );
+	this.sizeTypeSelectWidget.getItemFromData( 'default' ).setDisabled( disabled );
+};
+
+/**
+ * Respond to default size or status change in the scalable object.
+ * @param {Boolean} isDefault Current default state
+ */
 ve.ui.MediaSizeWidget.prototype.onScalableDefaultSizeChange = function ( isDefault ) {
 	// Update the default size into the dimensions widget
 	this.updateDefaultDimensions();
@@ -275,15 +293,32 @@ ve.ui.MediaSizeWidget.prototype.setScalable = function ( scalable ) {
 	}
 	this.scalable = scalable;
 	// Events
-	this.scalable.connect( this, { 'defaultSizeChange': 'onScalableDefaultSizeChange' } );
-	// Reset current dimensions to new scalable object
-	this.setCurrentDimensions( this.scalable.getCurrentDimensions() );
+	this.scalable.connect( this, {
+		'defaultSizeChange': 'onScalableDefaultSizeChange',
+		'originalSizeChange': 'onScalableOriginalSizeChange'
+	} );
+
+	this.updateDefaultDimensions();
+
+	if ( !this.scalable.isDefault() ) {
+		// Reset current dimensions to new scalable object
+		this.setCurrentDimensions( this.scalable.getCurrentDimensions() );
+	}
 
 	// If we don't have original dimensions, disable the full size button
 	/* if ( !this.scalable.getOriginalDimensions() ) {
 		this.fullSizeButton.setDisabled( true );
+		this.sizeTypeSelectWidget.getItemFromData( 'default' ).setDisabled( true );
 	} else {
 		this.fullSizeButton.setDisabled( false );
+		this.sizeTypeSelectWidget.getItemFromData( 'default' ).setDisabled( false );
+
+		// Call for the set size type according to default or custom settings of the scalable
+		this.setSizeType(
+			this.scalable.isDefault() ?
+			'default' :
+			'custom'
+		);
 	}*/
 };
 
@@ -349,6 +384,36 @@ ve.ui.MediaSizeWidget.prototype.getMaxDimensions = function () {
  */
 ve.ui.MediaSizeWidget.prototype.getCurrentDimensions = function () {
 	return this.currentDimensions;
+};
+
+/**
+ * Disable or enable the entire widget
+ * @param {Boolean} isDisabled Disable the widget
+ */
+ve.ui.MediaSizeWidget.prototype.setDisabled = function ( isDisabled ) {
+	// The 'setDisabled' method seems to be called before the widgets
+	// are fully defined. So, before disabling/enabling anything,
+	// make sure the objects exist
+	if ( this.sizeTypeSelectWidget &&
+		this.dimensionsWidget &&
+		this.scalable &&
+		this.fullSizeButton
+	) {
+		// Disable the type select
+		this.sizeTypeSelectWidget.setDisabled( isDisabled );
+
+		// Disable the dimensions widget
+		this.dimensionsWidget.setDisabled( isDisabled );
+
+		// Double negatives aren't never fun!
+		this.fullSizeButton.setDisabled(
+			// Disable if asked to disable
+			isDisabled ||
+			// Only enable if the scalable has
+			// the original dimensions available
+			!this.scalable.getOriginalDimensions()
+		);
+	}
 };
 
 /**

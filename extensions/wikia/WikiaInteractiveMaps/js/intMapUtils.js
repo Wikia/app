@@ -265,7 +265,7 @@ define(
 		/**
 		 * @desc displays error message
 		 * @param {object} modal - modal object
- 		 * @param {string} message - error message
+		 * @param {string} message - error message
 		 */
 		function showError(modal, message) {
 			modal.$errorContainer

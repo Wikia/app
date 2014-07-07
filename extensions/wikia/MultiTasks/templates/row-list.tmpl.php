@@ -21,6 +21,8 @@ foreach($mTaskParams['flags'] as $id => $flag ) {
 	</div>
 <? if ( $error ) { ?> 
 	<div style="color:#BF0000"><strong><?=wfMsg ('multiwikiedit_task_error' )?></strong></div>
+<? } elseif (!empty($submitLink)) { ?>
+	<div style="color:#2AAF00"><strong><?= $submitLink ?></strong></div>
 <? } else { ?>
 	<div style="color:#2AAF00"><strong><?=wfMsg ('multiwikiedit_task_added', $submit_id )?></strong></div>
 <? } ?>
