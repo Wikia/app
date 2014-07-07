@@ -6,7 +6,7 @@ class WikiGetDataHelper {
 
 	protected $queryMutator;
 
-	public function __construct(callable $queryMutator = false){
+	public function __construct(callable $queryMutator = null){
 		$this->queryMutator = $queryMutator;
 	}
 
@@ -38,7 +38,7 @@ class WikiGetDataHelper {
 			->AND_('image_type')->EQUAL_TO(PromoImage::ADDITIONAL)
 			->AND_('city_lang_code')->EQUAL_TO($langCode);
 		if (!empty($this->queryMutator)) {
-			$query = call_user_func($this->queryMutator, $query);
+			call_user_func($this->queryMutator, $query);
 		}
 		$query->ORDER_BY('last_edited');
 
@@ -76,7 +76,7 @@ class WikiGetDataHelper {
 			->AND_('city_lang_code')->EQUAL_TO($langCode)
 			->AND_('image_type')->EQUAL_TO(PromoImage::MAIN);
 		if ($this->queryMutator){
-			$query = call_user_func($this, $query);
+			call_user_func($this, $query);
 		}
 		$query->ORDER_BY('last_edited');
 

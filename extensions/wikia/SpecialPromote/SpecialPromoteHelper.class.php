@@ -147,11 +147,12 @@ class SpecialPromoteHelper extends WikiaObject {
 		$visualizationModel->updateWikiPromoteDataCache($cityId, $langCode, $updateData);
 
 		// clear memcache so it's visible on site after edit
-		$helper = new WikiGetDataForVisualizationHelper();
+
 		$corpWikiId = $visualizationModel->getTargetWikiId($langCode);
+
 		// wiki info cache
-		$this->wg->memc->delete($helper->getMemcKey($cityId, $langCode));
-		$this->wg->memc->delete((new WikiGetDataForPromoteHelper())->getMemcKey($cityId, $langCode));
+		$visualizationModel->purgePromotionImageCacheEverywhere($cityId, $langCode);
+
 		// wiki list cache
 		$this->wg->memc->delete(
 			$visualizationModel->getVisualizationWikisListDataCacheKey($corpWikiId, $langCode)

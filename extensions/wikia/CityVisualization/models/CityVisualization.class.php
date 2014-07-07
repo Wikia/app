@@ -497,6 +497,14 @@ class CityVisualization extends WikiaModel {
 		return $this->getWikiData($wikiId, $langCode, $memcKey, WikiGetDataHelper::DISPLAY_APPROVED_ONLY);
 	}
 
+	public function purgePromotionImageCacheEverywhere($wikiId, $langCode) {
+		$promoteMemcKey = $this->getWikiPromoteDataCacheKey($wikiId, $langCode);
+		$visualizationMemcKey = $this->getWikiDataCacheKey($this->getTargetWikiId($langCode), $wikiId, $langCode);
+
+		$this->wg->memc->delete($promoteMemcKey);
+		$this->wg->memc->delete($visualizationMemcKey);
+	}
+
 	/**
 	 * Get wiki data for Wikia Visualization
 	 * @param integer $wikiId

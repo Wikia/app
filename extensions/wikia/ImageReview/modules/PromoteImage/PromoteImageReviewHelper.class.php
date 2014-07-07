@@ -76,11 +76,9 @@ class PromoteImageReviewHelper extends ImageReviewHelperBase {
 		}
 
 		// Purge promote pages
-		$promoteHelper = new WikiGetDataForPromoteHelper();
-		$visualizationHelper = new WikiGetDataForVisualizationHelper();
+		$cv = new CityVisualization();
 		foreach($wikisToPurge as $wikiId => $lang) {
-			$wgMemc->delete($promoteHelper->getMemcKey($wikiId, $lang));
-			$wgMemc->delete($visualizationHelper->getMemcKey($wikiId, $lang));
+			$cv->purgeWikiPromoteDataCache($wikiId, $lang);
 		}
 
 		/**

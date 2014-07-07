@@ -556,12 +556,9 @@ class WikiaHomePageHelper extends WikiaModel {
 				$wikiInfo['blocked'] = intval(CityVisualization::isBlockedWiki($wikiData['flags']));
 
 				$wikiInfo['images'] = array();
-				$wikiData['main_image'] = PromoImage::forWikiId(PromoImage::MAIN, $wikiId)->getReviewedImageName();
 				if (!empty($wikiData['main_image'])) {
 					$wikiInfo['images'][] = $wikiData['main_image'];
 				}
-
-
 				$wikiData['images'] = (!empty($wikiData['images'])) ? ((array)$wikiData['images']) : array();
 
 				// wiki images
