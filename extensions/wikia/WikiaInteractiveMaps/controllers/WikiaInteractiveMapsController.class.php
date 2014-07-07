@@ -149,8 +149,8 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 	 * @param string $name - name of the special page
 	 * @return string
 	 */
-	function getSpecialUrl( $name ) {
-		return Title::newFromText( $name, NS_SPECIAL )->getFullUrl();
+	static function getSpecialMapsUrl( ) {
+		return Title::newFromText( self::PAGE_NAME, NS_SPECIAL )->getFullUrl();
 	}
 
 	/**
@@ -172,7 +172,7 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 			NotificationsController::addConfirmation( wfMessage( 'wikia-interactive-maps-delete-map-success' ) );
 			$this->response->setVal(
 				'redirectUrl',
-				$this->getSpecialUrl( self::PAGE_NAME )
+				self::getSpecialMapsUrl()
 			);
 		}
 	}

@@ -8,7 +8,9 @@ $max-view-button-width: 230px;
 
 .wikia-interactive-map-thumbnail {
 	height: $default-height;
+	line-height:22px;
 	position: relative;
+	text-align: left;
 	width: $default-width;
 
 	figcaption {

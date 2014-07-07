@@ -43,7 +43,6 @@ class WikiaInteractiveMapsHooks {
 		if ( !empty( $wgEnableWikiaInteractiveMaps ) && $out->isArticle() ) {
 			F::app()->wg->Out->addStyle( AssetsManager::getInstance()->getSassCommonURL( 'extensions/wikia/WikiaInteractiveMaps/css/intMapParserTag.scss' ) );
 		}
-
 		return true;
 	}
 
@@ -71,8 +70,10 @@ class WikiaInteractiveMapsHooks {
 	public static function onWikiaMobileAssetsPackages( &$jsStaticPackages, &$jsExtensionPackages, &$scssPackages ) {
 		if ( self::isSpecialMapsPage() ) {
 			$scssPackages[] = 'int_map_special_page_scss_wikiamobile';
+		} else {
+			$scssPackages[] = 'int_map_parser_tag_scss_wikiamobile';
+			$jsExtensionPackages[] = 'int_map_parser_tag_js_wikiamobile';
 		}
-
 		return true;
 	}
 
