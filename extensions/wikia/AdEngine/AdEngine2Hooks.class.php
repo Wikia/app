@@ -120,7 +120,7 @@ class AdEngine2Hooks {
 		}
 
 		if ($wgAdDriverUseBottomLeaderboard === true) {
-			$jsAssets[] = 'adengine2_wikiabar_boxad_js';
+			$jsAssets[] = 'adengine2_bottom_leaderboard_js';
 		}
 		return true;
 	}
