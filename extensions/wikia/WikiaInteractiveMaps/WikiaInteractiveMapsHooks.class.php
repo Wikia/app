@@ -12,16 +12,16 @@ class WikiaInteractiveMapsHooks {
 	public static function onSkinAfterBottomScripts( $skin, &$text ) {
 		global $wgEnableWikiaInteractiveMaps, $wgExtensionsPath;
 
-		if( !empty( $wgEnableWikiaInteractiveMaps ) ) {
+		if ( !empty( $wgEnableWikiaInteractiveMaps ) ) {
 			// add the asset to every page
 			$text .= Html::linkedScript( $wgExtensionsPath . '/wikia/WikiaInteractiveMaps/js/WikiaInteractiveMapsParserTag.js' );
 		}
 
 		// add the asset only on Special:Maps page
-		if( self::isSpecialMapsPage() ) {
+		if ( self::isSpecialMapsPage() ) {
 			$scripts = AssetsManager::getInstance()->getURL( 'int_map_special_page_js' );
 
-			foreach( $scripts as $script ) {
+			foreach ( $scripts as $script ) {
 				$text .= Html::linkedScript( $script );
 			}
 		}
@@ -40,7 +40,7 @@ class WikiaInteractiveMapsHooks {
 	public static function onOutputPageBeforeHTML( OutputPage $out, &$text ) {
 		global $wgEnableWikiaInteractiveMaps;
 
-		if( !empty( $wgEnableWikiaInteractiveMaps ) && $out->isArticle() ) {
+		if ( !empty( $wgEnableWikiaInteractiveMaps ) && $out->isArticle() ) {
 			F::app()->wg->Out->addStyle( AssetsManager::getInstance()->getSassCommonURL( 'extensions/wikia/WikiaInteractiveMaps/css/intMapParserTag.scss' ) );
 		}
 
@@ -68,8 +68,8 @@ class WikiaInteractiveMapsHooks {
 	 *
 	 * @return Boolean
 	 */
-	public static function onWikiaMobileAssetsPackages( &$jsStaticPackages, &$jsExtensionPackages, &$scssPackages ){
-		if( self::isSpecialMapsPage() ) {
+	public static function onWikiaMobileAssetsPackages( &$jsStaticPackages, &$jsExtensionPackages, &$scssPackages ) {
+		if ( self::isSpecialMapsPage() ) {
 			$scssPackages[] = 'int_map_special_page_scss_wikiamobile';
 		}
 
