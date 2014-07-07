@@ -217,7 +217,9 @@ define(
 		 */
 		function trackMapCreation(tileSetData) {
 			var tileSetId = tileSetData.tileSetId,
-				label = tileSetData.type + '-map-created' + (!tileSetId ? '-with-new-tileset' : '');
+				mapTypeChosen = tileSetData.type,
+				label = mapTypeChosen + '-map-created' +
+					((!tileSetId && mapTypeChosen !== utils.tilesetTypes.REAL) ? '-with-new-tileset' : '');
 
 			utils.track(utils.trackerActions.IMPRESSION, label, tileSetId);
 		}
