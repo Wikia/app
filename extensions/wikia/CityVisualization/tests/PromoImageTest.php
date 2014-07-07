@@ -25,6 +25,7 @@ class PromoImageTest extends WikiaBaseTest {
 	}
 
 	public function test() {
+		//FIXME: mark this test as a integration
 		$WIKI_ID = 203236; // mediawiki119
 		self::ensureSampleData( $WIKI_ID );
 
