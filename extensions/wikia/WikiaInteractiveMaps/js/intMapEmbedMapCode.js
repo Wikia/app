@@ -55,11 +55,10 @@ define('wikia-interactive-embed-map-code', ['jquery', 'wikia.intMap.utils'], fun
 
 			$codeSamples = $modalContent.children('.code-sample');
 			$sizeButtons = $modalContent.children('.size-button');
-			mapId = $modalContent.children('.user-guideline').data('map-id');
 
 			utils.bindEvents(modal, events);
 			modal.show();
-			utils.track(utils.trackerActions.IMPRESSION, 'embed-map-modal-shown', mapId);
+			utils.track(utils.trackerActions.IMPRESSION, 'embed-map-modal-shown', params.mapId);
 		});
 	}
 
