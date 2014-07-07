@@ -741,10 +741,6 @@ class WikiFactoryLoader {
 				 * merge local values with global
 				 */
 				switch( $key ) {
-					case "wgGroupPermissionsLocal":
-						$this->LocalToGlobalPermissions( $tValue );
-						break;
-
 					case "wgNamespacesWithSubpagesLocal":
 						$this->LocalToGlobalArray( $tValue, $GLOBALS["wgNamespacesWithSubpages"] );
 						break;
