@@ -1,4 +1,4 @@
-require(['jquery', 'wikia.mustache'], function ($, mustache) {
+require(['jquery', 'wikia.mustache', 'sloth'], function ($, mustache, sloth) {
 	'use strict';
 
 	/**
@@ -103,9 +103,27 @@ require(['jquery', 'wikia.mustache'], function ($, mustache) {
 		});
 	}
 
+	function getThumbnail(element) {
+		debugger;
+		$.nirvana.sendRequest({
+			controller: 'WikiaInteractiveMapsParserTag',
+			method: getMobileThumbnail,
+			data: {
+				mapId: element.getElementsByTagName('a')[0].getAttribute('data-map-id')
+			}
+		}).done(function(data){
+			element.getElementsByTagName('img')[0].src = data.src;
+		});
+	}
+
 	/** Attach events */
 	$('body').on('click', '.wikia-interactive-map-thumbnail a', function (event) {
 		event.preventDefault();
 		showMap($(event.currentTarget));
+	});
+
+	sloth({
+		on: document.getElementsByClassName('wikia-interactive-map-thumbnail'),
+		callback: getThumbnail
 	});
 });

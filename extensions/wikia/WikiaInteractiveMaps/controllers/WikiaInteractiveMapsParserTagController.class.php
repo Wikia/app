@@ -83,6 +83,9 @@ class WikiaInteractiveMapsParserTagController extends WikiaController {
 		$mapsModel = new WikiaMaps( $this->wg->IntMapConfig );
 		$userName = $params->map->created_by;
 
+		if ( $this->app->checkskin( 'wikiamobile' ) ) {
+			$params->map->width;
+		}
 		$params->map->image = $mapsModel->createCroppedThumb( $params->map->image, self::DEFAULT_WIDTH, self::DEFAULT_HEIGHT );
 
 		$params->map->url = $mapsModel->getMapRenderUrl([
@@ -130,8 +133,8 @@ class WikiaInteractiveMapsParserTagController extends WikiaController {
 		$params[ 'lat' ] = $this->request->getVal( 'lat', self::DEFAULT_LATITUDE );
 		$params[ 'lon' ] = $this->request->getVal( 'lon', self::DEFAULT_LONGITUDE );
 		$params[ 'zoom' ] = $this->request->getInt( 'zoom', self::DEFAULT_ZOOM );
-		$params[ 'width' ] = self::DEFAULT_WIDTH;
-		$params[ 'height' ] = self::DEFAULT_HEIGHT;
+		$params[ 'width' ] = $this->request->getInt( 'width', self::DEFAULT_WIDTH);
+		$params[ 'height' ] = $this->request->getInt( 'height', self::DEFAULT_HEIGHT);
 		$params[ 'map' ] = $this->request->getVal( 'map' );
 		$params[ 'created_by' ] = $this->request->getVal( 'created_by' );
 		$params[ 'avatarUrl' ] = $this->request->getVal( 'avatarUrl' );
@@ -280,6 +283,14 @@ class WikiaInteractiveMapsParserTagController extends WikiaController {
 		}
 
 		return $validator;
+	}
+
+	function getMobileThumbnail() {
+		$mapsModel = new WikiaMaps( $this->wg->IntMapConfig );
+		$width = $this->getVal( 'width' );
+		$height = $this->getVal( 'height' );
+		$image = $this->getVal( 'height' );
+		$this->setVal('src', $mapsModel->createCroppedThumb( $image, $width, $height ) );
 	}
 
 }
