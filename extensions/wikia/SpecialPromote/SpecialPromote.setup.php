@@ -29,7 +29,6 @@ $wgAutoloadClasses['UploadVisualizationImageFromFile'] =  $dir . 'UploadVisualiz
 $wgAutoloadClasses['PromoteImageReviewTask'] = $promoteImageReviewExtDir  . 'PromoteImageReviewTask.php';
 
 // hooks
-$wgHooks['UploadVerification'][] = 'UploadVisualizationImageFromFile::UploadVerification';
 $wgHooks['CityVisualization::wikiDataInserted'][] = 'CityVisualization::onWikiDataUpdated';
 $wgHooks['FileDeleteComplete'][] = 'SpecialPromoteHooks::onFileDeleteComplete';
 
