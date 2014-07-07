@@ -1,21 +1,29 @@
 <?php
 
-class WikiGetDataForPromoteHelper implements WikiGetDataHelper {
-	protected $visualization;
+class WikiGetDataHelper {
+	const DISPLAY_APPROVED_ONLY = "WikiGetDataHelper::displayApprovedOnly";
+	const DISPLAY_ALL = "WikiGetDataHelper::displayAll";
 
-	/**
-	 * @return CityVisualization
-	 */
-	protected function getVisualization() {
-		if(empty($this->visualization)) {
-			$this->visualization = new CityVisualization();
-		}
-		return $this->visualization;
+	protected $queryMutator;
+
+	public function __construct(callable $queryMutator = false){
+		$this->queryMutator = $queryMutator;
 	}
 
-	public function getMemcKey($wikiId, $langCode) {
-		$visualization = $this->getVisualization();
-		return $visualization->getWikiPromoteDataCacheKey($wikiId, $langCode);
+	public static function displayApprovedOnly( WikiaSQL &$sql ) {
+		$sql->AND_('image_review_status')->EQUAL_TO( ImageReviewStatuses::STATE_APPROVED );
+		return $sql;
+	}
+
+	public static function displayAll( WikiaSQL &$sql ) {
+		$sql->AND_('image_review_status')->IN(
+			ImageReviewStatuses::STATE_APPROVED,
+			ImageReviewStatuses::STATE_APPROVED_AND_TRANSFERRING,
+			ImageReviewStatuses::STATE_AUTO_APPROVED,
+			ImageReviewStatuses::STATE_IN_REVIEW,
+			ImageReviewStatuses::STATE_UNREVIEWED
+		);
+		return $sql;
 	}
 
 	public function getImages($wikiId, $langCode, $wikiRow = null) {
@@ -28,14 +36,11 @@ class WikiGetDataForPromoteHelper implements WikiGetDataHelper {
 			->FROM(CityVisualization::CITY_VISUALIZATION_IMAGES_TABLE_NAME)
 			->WHERE('city_id')->EQUAL_TO($wikiId)
 			->AND_('image_type')->EQUAL_TO(PromoImage::ADDITIONAL)
-			->AND_('city_lang_code')->EQUAL_TO($langCode)
-			->AND_('image_review_status')->IN(
-				ImageReviewStatuses::STATE_APPROVED,
-				ImageReviewStatuses::STATE_APPROVED_AND_TRANSFERRING,
-				ImageReviewStatuses::STATE_AUTO_APPROVED,
-				ImageReviewStatuses::STATE_IN_REVIEW,
-				ImageReviewStatuses::STATE_UNREVIEWED
-			)->ORDER_BY('last_edited');
+			->AND_('city_lang_code')->EQUAL_TO($langCode);
+		if (!empty($this->queryMutator)) {
+			$query = call_user_func($this->queryMutator, $query);
+		}
+		$query->ORDER_BY('last_edited');
 
 		$wikiImages = $query->run($db, function ($result) {
 			$wikiImages = [];
@@ -69,14 +74,11 @@ class WikiGetDataForPromoteHelper implements WikiGetDataHelper {
 			->FROM(CityVisualization::CITY_VISUALIZATION_IMAGES_TABLE_NAME)
 			->WHERE('city_id')->EQUAL_TO($wikiId)
 			->AND_('city_lang_code')->EQUAL_TO($langCode)
-			->AND_('image_type')->EQUAL_TO(PromoImage::MAIN)
-			->AND_('image_review_status')->IN(
-				ImageReviewStatuses::STATE_APPROVED,
-				ImageReviewStatuses::STATE_APPROVED_AND_TRANSFERRING,
-				ImageReviewStatuses::STATE_AUTO_APPROVED,
-				ImageReviewStatuses::STATE_IN_REVIEW,
-				ImageReviewStatuses::STATE_UNREVIEWED
-			)->ORDER_BY('last_edited');
+			->AND_('image_type')->EQUAL_TO(PromoImage::MAIN);
+		if ($this->queryMutator){
+			$query = call_user_func($this, $query);
+		}
+		$query->ORDER_BY('last_edited');
 
 		$promoImage = $query->run($db, function ($result) {
 			while ($row = $result->fetchObject($result)) {

@@ -483,8 +483,8 @@ class CityVisualization extends WikiaModel {
 	 * @return array $wikiData
 	 */
 	public function getWikiDataForPromote($wikiId, $langCode) {
-		$helper = new WikiGetDataForPromoteHelper();
-		return $this->getWikiData($wikiId, $langCode, $helper);
+		$memcKey = $this->getWikiPromoteDataCacheKey($wikiId, $langCode);
+		return $this->getWikiData($wikiId, $langCode, $memcKey, WikiGetDataHelper::DISPLAY_ALL);
 	}
 
 	/**
@@ -493,8 +493,8 @@ class CityVisualization extends WikiaModel {
 	 * @return array $wikiData
 	 */
 	public function getWikiDataForVisualization($wikiId, $langCode) {
-		$helper = new WikiGetDataForVisualizationHelper();
-		return $this->getWikiData($wikiId, $langCode, $helper);
+		$memcKey = $this->getWikiDataCacheKey($this->getTargetWikiId($langCode), $wikiId, $langCode);
+		return $this->getWikiData($wikiId, $langCode, $memcKey, WikiGetDataHelper::DISPLAY_APPROVED_ONLY);
 	}
 
 	/**
@@ -503,11 +503,10 @@ class CityVisualization extends WikiaModel {
 	 * @param integer $wikiId
 	 * @return array $wikiData
 	 */
-	public function getWikiData($wikiId, $langCode, WikiGetDataHelper $dataHelper) {
+	public function getWikiData($wikiId, $langCode, $memcKey, callable $queryFilter) {
 		wfProfileIn(__METHOD__);
-
-		$memcKey = $dataHelper->getMemcKey($wikiId, $langCode);
 		$wikiData = $this->wg->Memc->get($memcKey);
+		$dataHelper = new WikiGetDataHelper($queryFilter);
 
 		if (empty($wikiData)) {
 			$wikiData = array();
@@ -547,7 +546,6 @@ class CityVisualization extends WikiaModel {
 		}
 
 		wfProfileOut(__METHOD__);
-
 		return $wikiData;
 	}
 

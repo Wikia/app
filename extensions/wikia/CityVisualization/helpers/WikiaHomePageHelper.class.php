@@ -486,25 +486,35 @@ class WikiaHomePageHelper extends WikiaModel {
 
 	public function getWikiInfoForSpecialPromote($wikiId, $langCode) {
 		wfProfileIn(__METHOD__);
+		$dataProvider = function($wikiId, $langCode) {
+			$cv = new CityVisualization();
+			return $cv->getWikiDataForPromote($wikiId, $langCode);
+		};
 
-		$dataGetter = new WikiDataGetterForSpecialPromote();
-		$wikiInfo = $this->getWikiInfo($wikiId, $langCode, $dataGetter);
-
+		$wikiInfo = $this->getWikiInfo($wikiId, $langCode, $dataProvider);
 		wfProfileOut(__METHOD__);
 		return $wikiInfo;
 	}
 
 	public function getWikiInfoForVisualization($wikiId, $langCode) {
 		wfProfileIn(__METHOD__);
-
-		$dataGetter = new WikiDataGetterForVisualization();
-		$wikiInfo = $this->getWikiInfo($wikiId, $langCode, $dataGetter);
-
+		$dataProvider = function($wikiId, $langCode) {
+			$cv = new CityVisualization();
+			return $cv->getWikiDataForVisualization($wikiId, $langCode);
+		};
+		$wikiInfo = $this->getWikiInfo($wikiId, $langCode, $dataProvider);
 		wfProfileOut(__METHOD__);
-
 		return $wikiInfo;
 	}
 
+	protected function sanitizeWikiData($wikiData) {
+		foreach (array('name', 'headline', 'description', 'flags') as $key) {
+			if (empty($wikiData[$key])) {
+				$wikiData[$key] = null;
+			}
+		}
+		return $wikiData;
+	}
 
 	/**
 	 * get wiki info ( wikiname, description, url, status, images )
@@ -513,7 +523,7 @@ class WikiaHomePageHelper extends WikiaModel {
 	 * @param WikiDataGetter $dataGetter
 	 * @return array wikiInfo
 	 */
-	public function getWikiInfo($wikiId, $langCode, WikiDataGetter $dataGetter) {
+	public function getWikiInfo($wikiId, $langCode, callable $provideWikiData) {
 		wfProfileIn(__METHOD__);
 
 		$wikiInfo = array(
@@ -533,7 +543,7 @@ class WikiaHomePageHelper extends WikiaModel {
 				$wikiInfo['url'] = $wiki->city_url . '?redirect=no';
 			}
 
-			$wikiData = $dataGetter->getWikiData($wikiId, $langCode);
+			$wikiData = $this->sanitizeWikiData($provideWikiData($wikiId, $langCode));
 
 			if (!empty($wikiData)) {
 				$wikiInfo['name'] = $wikiData['name'];
@@ -562,7 +572,6 @@ class WikiaHomePageHelper extends WikiaModel {
 		}
 
 		wfProfileOut(__METHOD__);
-
 		return $wikiInfo;
 	}
 
