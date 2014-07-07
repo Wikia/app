@@ -767,7 +767,8 @@ $config['global_navigation_scss'] = array(
 	'skin' => 'pirates',
 	'assets' => array(
 		'//extensions/wikia/GlobalNavigation/css/GlobalNavigation.scss',
-		'//extensions/wikia/GlobalNavigation/css/GlobalNavigationMenu.scss'
+		'//extensions/wikia/GlobalNavigation/css/GlobalNavigationMenu.scss',
+		'//extensions/wikia/GlobalNavigation/css/AccountNavigation.scss'
 	)
 );
 

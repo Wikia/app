@@ -1,5 +1,4 @@
 @import "skins/oasis/css/core/color";
-@import "skins/oasis/css/core/layout";
 @import "extensions/wikia/Pirates/css/layout";
 
 .WikiaPageHeader {
@@ -117,54 +116,5 @@
 			}
 		}
 	}
-	&.oasis-one-column {
-		.WikiaPageHeader {
-			padding-right: 505px;
-			&.WikiaPageHeaderDiffHistory {
-				margin-right: 10px;
-				padding-right: 320px;
-			}
-			.tally {
-				right: 330px;
-			}
-		}
-		.WikiaSearchHeader {
-			position: absolute;
-			right: 10px;
-			top: 0;
-			width: $wikia-search-base-width + 100px;
-			z-index: 3;
-			form {
-				margin-bottom: 0;
-				padding-bottom: 0;
-				border-bottom: 0;
-			}
-		}
-		// temp grid transition code - integrate into main, then remove after grid is fully rolled out
-		.WikiaGrid {
-			.WikiaPageHeader .tally {
-				right: 340px;
-			}
-			.WikiaSearchHeader {
-				right: 0;
-			}
-		}
-		// temp grid transition code
-	}
 }
 // WikiaNav - end
-
-// main page
-.oasis-one-column .WikiaPageHeader {
-	padding-right: 320px;
-	position: relative;
-	.WikiaSearch {
-		position: absolute;
-		right: 0;
-		top: 1px;
-		width: $wikia-search-base-width + 100px;
-	}
-	details {
-		width: 980px;
-	}
-}
