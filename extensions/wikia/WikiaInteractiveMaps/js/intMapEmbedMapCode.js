@@ -39,8 +39,7 @@ define('wikia-interactive-embed-map-code', ['jquery', 'wikia.intMap.utils'], fun
 			]
 		},
 		$codeSamples,
-		$sizeButtons,
-		mapId;
+		$sizeButtons;
 
 	/**
 	 * @desc Entry point for  modal
