@@ -55,7 +55,7 @@ define(
 				],
 				uploadTileSetImage: [
 					function() {
-						$uploadInput.click()
+						$uploadInput.click();
 					}
 				],
 				previousStep: [
@@ -119,7 +119,7 @@ define(
 
 		/**
 		 * @desc Render Choose tile set modal
-		 */ 
+		 */
 		function renderChooseTileSet() {
 			modal.$innerContent.html(utils.render(uiTemplate, templateData));
 
@@ -198,10 +198,13 @@ define(
 		 * @param {Event} event
 		 */
 		function selectTileSet(event) {
-			var $target = $(event.currentTarget);
+			var $target = $(event.currentTarget),
+				mapTypeChosen = $target.data('type');
+
+			trackChosenMap(mapTypeChosen);
 
 			modal.trigger('previewTileSet', {
-				type: $target.data('type'),
+				type: mapTypeChosen,
 				tileSetId: $target.data('id'),
 				originalImageURL: $target.data('image')
 			});
