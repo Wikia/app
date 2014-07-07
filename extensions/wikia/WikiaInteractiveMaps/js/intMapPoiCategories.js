@@ -435,7 +435,7 @@ define('wikia.intMap.poiCategories',
 		 */
 		function triggerMarkerUpload(event) {
 			$(event.currentTarget).siblings('.poi-category-marker-image-upload').click();
-		} 
+		}
 		
 		/**
 		 * @desc Sends to GA tracking once a POI category data has been sent to the service
@@ -443,11 +443,11 @@ define('wikia.intMap.poiCategories',
 		 * @param {object} data
 		 */
 		function trackPoiCategoryActions(data) {
-			utils.track(utils.trackerActions.IMPRESSION, 'poi-category-' + mode, data.mapId);
+			utils.track(utils.trackerActions.IMPRESSION, 'poi-category-' + mode, parseInt(data.mapId, 10));
 		}
 
 		return {
 			init: init
-		}
+		};
 	}
 );
