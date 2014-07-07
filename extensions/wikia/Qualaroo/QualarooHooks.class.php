@@ -8,9 +8,9 @@ class QualarooHooks {
 	* @return bool
 	*/
 	static public function onOasisSkinAssetGroups( &$assetsArray ) {
-		global $wgNoExternals;
+		global $wgNoExternals, $wgOut;
 
-		if ( empty( $wgNoExternals ) ) {
+		if ( empty( $wgNoExternals ) && $wgOut->getSkin()->getSkinName() == 'oasis' ) {
 			$assetsArray[] = 'qualaroo_js';
 		}
 
