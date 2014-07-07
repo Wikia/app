@@ -7,7 +7,7 @@
  */
 
 class PromoImage extends WikiaObject {
-	const __LATEST_IMAGES_WITH_STATUS_XWIKI_CACHE_KEY = "promoimage.%s.%s.state.%s";
+	const __LATEST_IMAGE_WITH_STATUS_XWIKI_CACHE_KEY = "promoimage.%s.%s.state.%s";
 	const __REVIEWED_XWIKI_TTL = 3600;
 	const __MAIN_IMAGE_BASE_NAME = 'Wikia-Visualization-Main';
 	const __ADDITIONAL_IMAGES_BASE_NAME = 'Wikia-Visualization-Add';
@@ -178,7 +178,7 @@ class PromoImage extends WikiaObject {
 
 		$result = null; // name when nothing is found
 		if ( !empty($cityId) ) {
-			$cacheKey = $this->materializeCacheKey( self::__LATEST_IMAGES_WITH_STATUS_XWIKI_CACHE_KEY, $desiredStatus );
+			$cacheKey = $this->materializeCacheKey( self::__LATEST_IMAGE_WITH_STATUS_XWIKI_CACHE_KEY, $desiredStatus );
 			if ( $skipCache ) {
 				global $wgMemc;
 				$wgMemc->delete( $cacheKey );
