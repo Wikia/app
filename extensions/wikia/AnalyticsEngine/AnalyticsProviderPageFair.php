@@ -17,7 +17,8 @@ class AnalyticsProviderPageFair implements iAnalyticsProvider
 	{
 		global $wgEnableAdEngineExt, $wgAnalyticsProviderPageFair, $wgShowAds;
 
-		if (!$wgEnableAdEngineExt || !$wgAnalyticsProviderPageFair || !$wgShowAds || !AdEngine2Service::areAdsShowableOnPage()) {
+		if (!$wgEnableAdEngineExt || !$wgAnalyticsProviderPageFair || !$wgShowAds ||
+			!(AdEngine2Service::areAdsShowableOnPage() || (new WikiaMobileAdService())->shouldShowAds())) {
 			return '';
 		}
 
