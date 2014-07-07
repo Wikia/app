@@ -82,12 +82,9 @@ class WikiaInteractiveMapsParserTagController extends WikiaController {
 		$params = $this->getMapPlaceholderParams();
 		$mapsModel = new WikiaMaps( $this->wg->IntMapConfig );
 		$userName = $params->map->created_by;
-
-		if ( $this->app->checkskin( 'wikiamobile' ) ) {
-			$params->map->width;
-		}
-
-		if ( $this->app->checkskin( 'wikiamobile' ) ) {
+		$isMobile = $this->app->checkskin( 'wikiamobile' );
+		if ( $isMobile ) {
+			$params->map->imagePlaceholder = $this->wg->BlankImgUrl;
 			$params->map->mobile = true;
 			$params->map->href =
 				Title::newFromText( 'Maps', NS_SPECIAL )->getFullUrl() . '/' . $params->map->id;
@@ -108,8 +105,10 @@ class WikiaInteractiveMapsParserTagController extends WikiaController {
 		$this->setVal( 'avatarUrl', AvatarService::getAvatarUrl( $userName, AvatarService::AVATAR_SIZE_SMALL ) );
 		$this->setVal( 'view', wfMessage( 'wikia-interactive-maps-parser-tag-view' )->plain() );
 
-
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
+		if ( $isMobile ) {
+			$this->overrideTemplate( 'mapThumbnail_mobile' );
+		}
 	}
 
 	/**
@@ -135,8 +134,8 @@ class WikiaInteractiveMapsParserTagController extends WikiaController {
 		$params[ 'lat' ] = $this->request->getVal( 'lat', self::DEFAULT_LATITUDE );
 		$params[ 'lon' ] = $this->request->getVal( 'lon', self::DEFAULT_LONGITUDE );
 		$params[ 'zoom' ] = $this->request->getInt( 'zoom', self::DEFAULT_ZOOM );
-		$params[ 'width' ] = $this->request->getInt( 'width', self::DEFAULT_WIDTH);
-		$params[ 'height' ] = $this->request->getInt( 'height', self::DEFAULT_HEIGHT);
+		$params[ 'width' ] = self::DEFAULT_WIDTH;
+		$params[ 'height' ] = self::DEFAULT_HEIGHT;
 		$params[ 'map' ] = $this->request->getVal( 'map' );
 		$params[ 'created_by' ] = $this->request->getVal( 'created_by' );
 		$params[ 'avatarUrl' ] = $this->request->getVal( 'avatarUrl' );
