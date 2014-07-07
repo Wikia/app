@@ -15,7 +15,7 @@ require([
 
 		if (slot[0].indexOf('LEADERBOARD') !== -1 && (slot[2] === 'Liftium' || provider.name === 'Later')) {
 
-			log(['Found call to liftium for leaderboard, launching', 'WIKIA_BAR_BOXAD_2'], 'debug', 'ext.wikia.adEngine.slot.wikiaBarBoxad2');
+			log(['Found call to liftium for leaderboard, launching', 'BOTTOM_LEADERBOARD'], 'debug', 'ext.wikia.adEngine.slot.wikiaBarBoxad2');
 
 			wikiaBarBoxad2.init();
 		}

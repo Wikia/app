@@ -1221,7 +1221,7 @@ $wgAdDriverUseEbay = false;
 
 /**
  * @name $wgAdDriverUseWikiaBarBoxad2
- * Whether to enable new fancy footer ad WIKIA_BAR_BOXAD_2
+ * Whether to enable new fancy footer ad BOTTOM_LEADERBOARD
  */
 $wgAdDriverUseWikiaBarBoxad2 = false;
 
@@ -1233,7 +1233,7 @@ $wgAdDriverUseTopInContentBoxad = false;
 
 /**
  * @name $wgAdDriverWikiaBarBoxad2ImpressionCapping
- * Impression capping for WIKIA_BAR_BOXAD_2. Array with the numbers of the potential ad calls.
+ * Impression capping for BOTTOM_LEADERBOARD. Array with the numbers of the potential ad calls.
  */
 $wgAdDriverWikiaBarBoxad2ImpressionCapping = [2, 4, 6];
 

@@ -12,7 +12,7 @@ define('ext.wikia.adEngine.slot.wikiaBarBoxad2', [
 
 	var logGroup = 'ext.wikia.adEngine.slot.wikiaBarBoxad2',
 
-		slotName = 'WIKIA_BAR_BOXAD_2',
+		slotName = 'BOTTOM_LEADERBOARD',
 		visibleOffsetTop = 500,
 		visibleOffsetBottom = 1200,
 		loadOffsetBottom = 1400,
