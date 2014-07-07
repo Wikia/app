@@ -48,6 +48,7 @@ function InfoboxBuilder.parse( args )
       if fields[index] == nil then
         table.insert( indexes, index )
         fields[index] = {}
+        fields[index].Index = index
       end
  
       fields[index][key] = value
