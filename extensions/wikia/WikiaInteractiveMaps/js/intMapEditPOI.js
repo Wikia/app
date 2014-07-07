@@ -228,7 +228,7 @@ define('wikia.intMap.editPOI', ['jquery', 'wikia.intMap.utils'], function($, uti
 	 */
 	function trackPoiAction(poiData) {
 		var poiId = poiData.id,
-			gaLabel = 'poi-' + (poiId ? 'edited' : 'created'),
+			gaLabel = 'poi-' + poiModalMode,
 			gaValue = poiId || mapId;
 
 		utils.track(utils.trackerActions.IMPRESSION, gaLabel, gaValue);
