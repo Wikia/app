@@ -72,6 +72,14 @@ abstract class BaseXWikiImage {
 		return ["width" => $this->width, "height" => $this->height];
 	}
 
+	public function getWidth() {
+		return $this->width;
+	}
+
+	public function getHeight() {
+		return $this->height;
+	}
+
 	public function exists() {
 		return $this->getSwiftStorage()->exists($this->getLocalPath());
 	}
