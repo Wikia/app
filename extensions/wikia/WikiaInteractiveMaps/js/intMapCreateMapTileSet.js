@@ -117,6 +117,9 @@ define(
 
 		}
 
+		/**
+		 * @desc Render Choose tile set modal
+		 */ 
 		function renderChooseTileSet() {
 			modal.$innerContent.html(utils.render(uiTemplate, templateData));
 
