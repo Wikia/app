@@ -104,15 +104,17 @@ require(['jquery', 'wikia.mustache', 'sloth'], function ($, mustache, sloth) {
 	}
 
 	function getThumbnail(element) {
-		debugger;
+		var img = element.getElementsByTagName('img')[0];
 		$.nirvana.sendRequest({
 			controller: 'WikiaInteractiveMapsParserTag',
-			method: getMobileThumbnail,
+			method: 'getMobileThumbnail',
 			data: {
-				mapId: element.getElementsByTagName('a')[0].getAttribute('data-map-id')
+				image: img.getAttribute('data-src'),
+				width: img.offsetWidth,
+				height: img.offsetHeight
 			}
-		}).done(function(data){
-			element.getElementsByTagName('img')[0].src = data.src;
+		}).done(function(data) {
+			img.src = data.src;
 		});
 	}
 

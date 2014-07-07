@@ -86,7 +86,14 @@ class WikiaInteractiveMapsParserTagController extends WikiaController {
 		if ( $this->app->checkskin( 'wikiamobile' ) ) {
 			$params->map->width;
 		}
-		$params->map->image = $mapsModel->createCroppedThumb( $params->map->image, self::DEFAULT_WIDTH, self::DEFAULT_HEIGHT );
+
+		if ( $this->app->checkskin( 'wikiamobile' ) ) {
+			$params->map->mobile = true;
+			$params->map->href =
+				Title::newFromText( 'Maps', NS_SPECIAL )->getFullUrl() . '/' . $params->map->id;
+		} else {
+			$params->map->image = $mapsModel->createCroppedThumb( $params->map->image, self::DEFAULT_WIDTH, self::DEFAULT_HEIGHT );
+		}
 
 		$params->map->url = $mapsModel->getMapRenderUrl([
 			$params->map->id,
@@ -94,11 +101,6 @@ class WikiaInteractiveMapsParserTagController extends WikiaController {
 			$params->lat,
 			$params->lon,
 		]);
-		if ( $this->app->checkskin( 'wikiamobile' ) ) {
-			$params->map->mobile = true;
-			$params->map->href =
-				Title::newFromText( 'Maps', NS_SPECIAL )->getFullUrl() . '/' . $params->map->id;
-		}
 
 		$this->setVal( 'map', (object) $params->map );
 		$this->setVal( 'params', $params );
@@ -288,8 +290,9 @@ class WikiaInteractiveMapsParserTagController extends WikiaController {
 	function getMobileThumbnail() {
 		$mapsModel = new WikiaMaps( $this->wg->IntMapConfig );
 		$width = $this->getVal( 'width' );
-		$height = $this->getVal( 'height' );
-		$image = $this->getVal( 'height' );
+		//To keep the original aspect ratio
+		$height = $width * self::DEFAULT_HEIGHT / self::DEFAULT_WIDTH;
+		$image = $this->getVal( 'image' );
 		$this->setVal('src', $mapsModel->createCroppedThumb( $image, $width, $height ) );
 	}
 

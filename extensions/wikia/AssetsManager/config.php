@@ -1850,3 +1850,11 @@ $config['int_map_parser_tag_scss_wikiamobile'] = [
 		'//extensions/wikia/WikiaInteractiveMaps/css/intMapParserTag.wikiamobile.scss',
 	]
 ];
+
+$config['int_map_parser_tag_js_wikiamobile'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => ['wikiamobile'],
+	'assets' => [
+		'//extensions/wikia/WikiaInteractiveMaps/js/WikiaInteractiveMapsParserTag.js'
+	]
+];

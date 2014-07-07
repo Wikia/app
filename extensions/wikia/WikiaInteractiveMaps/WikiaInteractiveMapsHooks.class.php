@@ -78,6 +78,7 @@ class WikiaInteractiveMapsHooks {
 			$scssPackages[] = 'int_map_special_page_scss_wikiamobile';
 		} else {
 			$scssPackages[] = 'int_map_parser_tag_scss_wikiamobile';
+			$jsExtensionPackages[] = 'int_map_parser_tag_js_wikiamobile';
 		}
 		return true;
 	}
