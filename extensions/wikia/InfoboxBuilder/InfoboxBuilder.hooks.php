@@ -30,9 +30,19 @@ final class InfoboxBuilderHooks {
 	}
 
 	public static function parserFunctionHook( &$parser, $frame, $args ) {
-		// wfProfileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
-		// wfProfileOut( __METHOD__ );
-		return "success! {$param1}";
+		$engine = \Scribunto::getParserEngine( $parser );
+
+		unset( $args[0] );
+		$childFrame = $frame->newChild( $args, $parser->getTitle(), 1 );
+
+		$moduleText = file_get_contents( __DIR__ . '/includes/lua/InfoboxBuilder.lua' );
+		$module = new \Scribunto_LuaModule( $engine, $moduleText, 'InfoboxBuilder' );
+		$result = $module->invoke( 'builder', $childFrame );
+		$result = \UtfNormal::cleanUp( strval( $result ) );
+
+		wfProfileOut( __METHOD__ );
+		return $result;
 	}
 }
