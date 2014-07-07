@@ -15,6 +15,16 @@ $messages['en'] = array(
 	'wikiastats-totalpages' => 'Total Pages',
 );
 
+$messages['qqq'] = array(
+	'wikiastats-heading' => 'The title in "stats container" it\'s above different statistic numbers connected to Wikia community',
+	'wikiastats-visitors' => 'The text above number telling about our monthly visitors',
+	'wikiastats-mobile-visitors' => 'The text above number telling about our monthly mobile visitors',
+	'wikiastats-edits' => 'The text above number telling about all edits on all our wikis',
+	'wikiastats-communities' => 'The text above number telling about our communities in total',
+	'wikiastats-new-communities' => 'The text above number telling about our new communities',
+	'wikiastats-totalpages' => 'The text above number telling about total pages on all our wikis',
+);
+
 $messages['de'] = array(
 	'wikiastats-heading' => 'Interaktive Zusammenarbeit',
 	'wikiastats-visitors' => 'Monatliche Besucher',
@@ -78,14 +88,4 @@ $messages['ja'] = array(
 	'wikiastats-communities' => 'コミュニティーの合計数',
 	'wikiastats-new-communities' => '本日のコミュニティー',
 	'wikiastats-totalpages' => 'ページ合計数',
-);
-
-$messages['qqq'] = array(
-	'wikiastats-heading' => 'The title in "stats container" it\'s above different statistic numbers connected to Wikia community',
-	'wikiastats-visitors' => 'The text above number telling about our monthly visitors',
-	'wikiastats-mobile-visitors' => 'The text above number telling about our monthly mobile visitors',
-	'wikiastats-edits' => 'The text above number telling about all edits on all our wikis',
-	'wikiastats-communities' => 'The text above number telling about our communities in total',
-	'wikiastats-new-communities' => 'The text above number telling about our new communities',
-	'wikiastats-totalpages' => 'The text above number telling about total pages on all our wikis',
 );

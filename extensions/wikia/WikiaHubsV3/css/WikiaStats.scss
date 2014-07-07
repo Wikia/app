@@ -1,6 +1,5 @@
 .WikiaGrid .wikiahubs-wikiastats {
-	height: 330px;
-	margin-top: 10px;
+	margin: 10px 0 15px;
 	.wikiastats-content {
 		clear: both;
 		.title {
@@ -29,6 +28,12 @@
 				height: 46px;
 				padding: 17px 0;
 				text-align: center;
+
+				strong {
+					display: block;
+					font-size: 21px;
+					margin-top: 10px;
+				}
 			}
 		}
 		.tooltip-icon {

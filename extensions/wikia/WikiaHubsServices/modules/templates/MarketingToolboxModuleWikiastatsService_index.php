@@ -4,9 +4,6 @@
 			<?= wfMessage('wikiastats-heading')->text(); ?>
 		</h2>
 	</div>
-	<h3>
-		<?= wfMessage('wikiastats-headline', $verticalName)->text(); ?>
-	</h3>
 	<div class="statisticdata">
 		<div class="datasection">
 			<h4><?=

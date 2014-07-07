@@ -70,9 +70,10 @@ class WikiaStatsModel extends WikiaModel {
 	private function getEditsFromDB() {
 		wfProfileIn(__METHOD__);
 
-		$edits = 0;
 		global $wgStatsDBEnabled;
 		global $wgStatsDB;
+
+		$edits = 0;
 		if (!empty($wgStatsDBEnabled)) {
 			$db = wfGetDB(DB_SLAVE, [], $wgStatsDB);
 
@@ -96,8 +97,9 @@ class WikiaStatsModel extends WikiaModel {
 	private function getTotalCommunitiesFromDB() {
 		wfProfileIn(__METHOD__);
 
-		$communities = 0;
 		global $wgExternalSharedDB;
+
+		$communities = 0;
 		$db = wfGetDB(DB_SLAVE, [], $wgExternalSharedDB);
 		$row = $db->selectRow(
 			['city_list'],
@@ -121,18 +123,19 @@ class WikiaStatsModel extends WikiaModel {
 		return $this->getNewCommunitiesInRangeFromDB($yesterday, $today);
 	}
 
-	private function getNewCommunitiesInRangeFromDB($starttimestamp, $endtimestamp) {
+	private function getNewCommunitiesInRangeFromDB($startTimestamp, $endTimestamp) {
 		wfProfileIn(__METHOD__);
 
 		global $wgExternalSharedDB;
+
 		$db = wfGetDB(DB_SLAVE, [], $wgExternalSharedDB);
 		$row = $db->selectRow(
 			['city_list'],
 			['count(1) cnt'],
 			[
 				'city_public' => 1,
-				'city_created >= FROM_UNIXTIME(' . $starttimestamp . ')',
-				'city_created < FROM_UNIXTIME(' . $endtimestamp . ')'
+				'city_created >= FROM_UNIXTIME(' . $startTimestamp . ')',
+				'city_created < FROM_UNIXTIME(' . $endTimestamp . ')'
 			],
 			__METHOD__
 		);
@@ -146,9 +149,12 @@ class WikiaStatsModel extends WikiaModel {
 		return $newCommunities;
 	}
 
-	public function setWikiaStatsInWF($statsMemcacheKey, $statsValues) {
+	public static function getWikiaStatsFromWF() {
+		return WikiFactory::getVarValueByName('wgCorpMainPageStats', Wikia::COMMUNITY_WIKI_ID);
+	}
+
+	public static function setWikiaStatsInWF($statsValues) {
 		WikiFactory::setVarByName('wgCorpMainPageStats', Wikia::COMMUNITY_WIKI_ID, $statsValues);
-		WikiaDataAccess::cachePurge($statsMemcacheKey);
 		$corpWikisLangs = array_keys( ( new CityVisualization() )->getVisualizationWikisData() );
 		$wikiaHubsHelper = new WikiaHubsServicesHelper();
 		foreach ($corpWikisLangs as $lang) {

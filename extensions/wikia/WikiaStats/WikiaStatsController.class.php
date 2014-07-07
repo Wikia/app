@@ -16,7 +16,7 @@ class WikiaStatsController extends WikiaController {
 	public function getWikiaStats() {
 		wfProfileIn(__METHOD__);
 
-		$statsFromWF = $this->getWikiaStatsFromWF();
+		$statsFromWF = WikiaStatsModel::getWikiaStatsFromWF();
 		$stats = WikiaDataAccess::cache(
 			$this->getStatsMemcacheKey(),
 			self::WIKIA_STATS_CACHE_VALIDITY,
@@ -33,19 +33,14 @@ class WikiaStatsController extends WikiaController {
 		wfProfileOut(__METHOD__);
 	}
 
-	public function getWikiaStatsFromWF() {
-		return WikiFactory::getVarValueByName('wgCorpMainPageStats', Wikia::COMMUNITY_WIKI_ID);
-	}
-
-	public function saveWikiaStatsToWF($statsValues) {
-		if ($this->wg->User->isAllowed('wikifactory')) {
-			$wikiaStatsModel = new WikiaStatsModel();
-			$wikiaStatsModel->setWikiaStatsInWF($this->getStatsMemcacheKey(), $statsValues);
+	public function saveWikiaStats( $statsValues ) {
+		if ( $this->wg->User->isAllowed( 'wikifactory' ) ) {
+			WikiaDataAccess::cachePurge( $this->getStatsMemcacheKey() );
+			WikiaStatsModel::setWikiaStatsInWF( $statsValues );
 		}
 	}
 
 	private function getStatsMemcacheKey() {
-		$memKey = wfSharedMemcKey( 'wikiacorp', 'wikiastats', self::WIKIA_STATS_MEMC_VERSION);
-		return $memKey;
+		return wfSharedMemcKey( 'wikiacorp', 'wikiastats', self::WIKIA_STATS_MEMC_VERSION);
 	}
 }

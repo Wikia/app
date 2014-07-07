@@ -26,7 +26,7 @@
 			<?= $modules[MarketingToolboxModuleExploreService::MODULE_ID] ?>
 		</section>
 		<div class="grid-2 alpha wikiahubs-rail">
-			<<section class="grid-2 alpha wikiahubs-featured-video wikiahubs-module">
+			<section class="grid-2 alpha wikiahubs-featured-video wikiahubs-module">
 				<?= $modules[MarketingToolboxModuleFeaturedvideoService::MODULE_ID] ?>
 			</section>
 			<section class="grid-2 alpha wikiahubs-wikitext-module wikiahubs-module">
