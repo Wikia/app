@@ -44,9 +44,9 @@ class Transaction {
 	public static function getInstance() {
 		static $instance;
 		if ( $instance === null ) {
-			$instance = new TransactionTrace(array(
+			$instance = new TransactionTrace( array(
 				new TransactionTraceNewrelic(),
-			));
+			) );
 		}
 		return $instance;
 	}
@@ -150,8 +150,8 @@ class Transaction {
 	 * @param array $headers key - value list of HTTP response headers
 	 * @return bool|null will return null for maintenance / CLI scripts
 	 */
-	public static function isCacheable($headers) {
-		if (empty($headers['Cache-Control'])) {
+	public static function isCacheable( $headers ) {
+		if ( empty( $headers['Cache-Control'] ) ) {
 			return null;
 		}
 
@@ -159,16 +159,16 @@ class Transaction {
 		$sMaxAge = 0;
 
 		// has "private" entry?
-		if (strpos($cacheControl, 'private') !== false) {
+		if ( strpos( $cacheControl, 'private' ) !== false ) {
 			$sMaxAge = 0;
 		}
 		// has "s-maxage" entry?
-		else if (preg_match('#s-maxage=(\d+)#', $cacheControl, $matches)) {
-			$sMaxAge = intval($matches[1]);
+		else if ( preg_match( '#s-maxage=(\d+)#', $cacheControl, $matches ) ) {
+			$sMaxAge = intval( $matches[1] );
 		}
 		// has "max-age" entry?
-		else if (preg_match('#max-age=(\d+)#', $cacheControl, $matches)) {
-			$sMaxAge = intval($matches[1]);
+		else if ( preg_match( '#max-age=(\d+)#', $cacheControl, $matches ) ) {
+			$sMaxAge = intval( $matches[1] );
 		}
 
 		// TODO: report $sMaxAge value?
@@ -181,10 +181,10 @@ class Transaction {
 	 * @return bool true (hook handler
 	 */
 	public static function onRestInPeace() {
-		if (function_exists('apache_response_headers')) {
-			$isCacheable = self::isCacheable(apache_response_headers());
+		if ( function_exists( 'apache_response_headers' ) ) {
+			$isCacheable = self::isCacheable( apache_response_headers() );
 
-			if (is_bool($isCacheable)) {
+			if ( is_bool( $isCacheable ) ) {
 				self::setAttribute( 'cacheable', $isCacheable );
 			}
 		}

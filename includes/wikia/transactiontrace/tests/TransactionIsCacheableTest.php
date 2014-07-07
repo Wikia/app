@@ -5,8 +5,8 @@ class TransactionIsCacheableTest extends WikiaBaseTest {
 	/**
 	 * @dataProvider isCacheableDataProvider
 	 */
-	public function testIsCacheable($header, $expected) {
-		$this->assertEquals( $expected, Transaction::isCacheable(['Cache-Control' => $header]) );
+	public function testIsCacheable( $header, $expected ) {
+		$this->assertEquals( $expected, Transaction::isCacheable( ['Cache-Control' => $header] ) );
 	}
 
 	public function isCacheableDataProvider() {

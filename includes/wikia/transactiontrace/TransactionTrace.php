@@ -68,13 +68,13 @@ class TransactionTrace {
 	 * @param mixed $arg1, $argN Arguments to all handlers with
 	 */
 	protected function notify( $methodName, $arg1 = null, $argN = null ) {
-		wfDebug( __CLASS__ . ": notification: " . json_encode(func_get_args()) . "\n");
+		wfDebug( __CLASS__ . ": notification: " . json_encode( func_get_args() ) . "\n" );
 		$args = func_get_args();
-		array_shift($args);
+		array_shift( $args );
 		foreach ( $this->plugins as $plugin ) {
 			$callback = array( $plugin, $methodName );
 			if ( is_callable( $callback ) ) {
-				call_user_func_array($callback,$args);
+				call_user_func_array( $callback, $args );
 			}
 		}
 	}
