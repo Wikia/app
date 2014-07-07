@@ -299,7 +299,6 @@ class WikiaInteractiveMapsParserTagController extends WikiaController {
 	 * @desc Ajax method for lazy-loading map thumbnails
 	 */
 	public function getMobileThumbnail() {
-		$mapsModel = new WikiaMaps( $this->wg->IntMapConfig );
 		$width = $this->getVal( 'width' );
 		//To keep the original aspect ratio
 		$height = $width * self::DEFAULT_HEIGHT / self::DEFAULT_WIDTH;
