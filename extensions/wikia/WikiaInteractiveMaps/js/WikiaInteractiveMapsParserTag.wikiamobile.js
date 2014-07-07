@@ -1,6 +1,10 @@
 require(['jquery', 'sloth'], function ($, sloth) {
 	'use strict';
 
+	/**
+	 * @desc Obtains a thumbnail for the map, with right dimensions
+	 * @param {HTMLElement} element - map figure that was lazy-loaded
+	 */
 	function getThumbnail(element) {
 		var img = element.getElementsByTagName('img')[0];
 		$.nirvana.sendRequest({

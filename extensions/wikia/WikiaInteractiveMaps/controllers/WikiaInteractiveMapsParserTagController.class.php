@@ -83,7 +83,9 @@ class WikiaInteractiveMapsParserTagController extends WikiaController {
 		$mapsModel = new WikiaMaps( $this->wg->IntMapConfig );
 		$userName = $params->map->created_by;
 		$isMobile = $this->app->checkskin( 'wikiamobile' );
+
 		if ( $isMobile ) {
+			//proper image is lazy loaded from the thumbnailer
 			$params->map->imagePlaceholder = $this->wg->BlankImgUrl;
 			$params->map->mobile = true;
 			$params->map->href =
@@ -106,6 +108,7 @@ class WikiaInteractiveMapsParserTagController extends WikiaController {
 		$this->setVal( 'view', wfMessage( 'wikia-interactive-maps-parser-tag-view' )->plain() );
 
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
+
 		if ( $isMobile ) {
 			$this->overrideTemplate( 'mapThumbnail_mobile' );
 		}
@@ -286,13 +289,16 @@ class WikiaInteractiveMapsParserTagController extends WikiaController {
 		return $validator;
 	}
 
+	/**
+	 * @desc Ajax method for lazy-loading map thumbnails
+	 */
 	function getMobileThumbnail() {
 		$mapsModel = new WikiaMaps( $this->wg->IntMapConfig );
 		$width = $this->getVal( 'width' );
 		//To keep the original aspect ratio
 		$height = $width * self::DEFAULT_HEIGHT / self::DEFAULT_WIDTH;
 		$image = $this->getVal( 'image' );
-		$this->setVal('src', $mapsModel->createCroppedThumb( $image, $width, $height ) );
+		$this->setVal( 'src', $mapsModel->createCroppedThumb( $image, $width, $height ) );
 	}
 
 }
