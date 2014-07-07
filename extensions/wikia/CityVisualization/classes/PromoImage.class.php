@@ -272,7 +272,6 @@ class PromoImage extends WikiaObject {
 			$sql->run( $db );
 			// FIXME: possible race condition that deletes all images
 		}
-
 	}
 
 	protected function deleteImageHelper($imageName) {

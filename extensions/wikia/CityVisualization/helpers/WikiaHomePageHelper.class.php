@@ -520,7 +520,7 @@ class WikiaHomePageHelper extends WikiaModel {
 	 * get wiki info ( wikiname, description, url, status, images )
 	 * @param integer $wikiId
 	 * @param string $langCode
-	 * @param WikiDataGetter $dataGetter
+	 * @param callable $provideWikiData
 	 * @return array wikiInfo
 	 */
 	public function getWikiInfo($wikiId, $langCode, callable $provideWikiData) {
