@@ -219,7 +219,7 @@ define(
 			var tileSetId = tileSetData.tileSetId,
 				mapTypeChosen = tileSetData.type,
 				label = mapTypeChosen + '-map-created' +
-					((!tileSetId && mapTypeChosen !== utils.tilesetTypes.REAL) ? '-with-new-tileset' : '');
+					((!tileSetId && mapTypeChosen !== 'geo') ? '-with-new-tileset' : '');
 
 			utils.track(utils.trackerActions.IMPRESSION, label, tileSetId);
 		}

@@ -12,11 +12,6 @@ define(
 	function($, w, cache, loader, uiFactory, mustache, tracker) {
 		'use strict';
 
-		var tilesetTypes = {
-			REAL: 'geo',
-			CUSTOM: 'custom'
-		};
-
 		/**
 		 * @desc loads all assets for create map modal and initialize it
 		 * @param {object} action - object with paths to different assets
@@ -342,8 +337,7 @@ define(
 			cleanUpError: cleanUpError,
 			createThumbURL: createThumbURL,
 			track: track,
-			trackerActions: tracker.ACTIONS,
-			tilesetTypes: tilesetTypes
+			trackerActions: tracker.ACTIONS
 		};
 	}
 );
