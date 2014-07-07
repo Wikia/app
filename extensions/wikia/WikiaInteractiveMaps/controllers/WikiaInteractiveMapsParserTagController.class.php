@@ -16,6 +16,13 @@ class WikiaInteractiveMapsParserTagController extends WikiaController {
 	const PARSER_TAG_NAME = 'imap';
 	const RENDER_ENTRY_POINT = 'render';
 
+	private $mapsModel;
+
+	public function __construct() {
+		parent::__construct();
+		$this->mapsModel = new WikiaMaps( $this->wg->IntMapConfig );
+	}
+
 	/**
 	 * @desc Parser hook: used to register parser tag in MW
 	 *
@@ -80,7 +87,6 @@ class WikiaInteractiveMapsParserTagController extends WikiaController {
 	 */
 	public function mapThumbnail() {
 		$params = $this->getMapPlaceholderParams();
-		$mapsModel = new WikiaMaps( $this->wg->IntMapConfig );
 		$userName = $params->map->created_by;
 		$isMobile = $this->app->checkskin( 'wikiamobile' );
 
@@ -89,12 +95,13 @@ class WikiaInteractiveMapsParserTagController extends WikiaController {
 			$params->map->imagePlaceholder = $this->wg->BlankImgUrl;
 			$params->map->mobile = true;
 			$params->map->href =
-				Title::newFromText( 'Maps', NS_SPECIAL )->getFullUrl() . '/' . $params->map->id;
+				WikiaInteractiveMapsController::getSpecialUrl('InteractiveMaps') .
+				'/' . $params->map->id;
 		} else {
-			$params->map->image = $mapsModel->createCroppedThumb( $params->map->image, self::DEFAULT_WIDTH, self::DEFAULT_HEIGHT );
+			$params->map->image = $this->mapsModel->createCroppedThumb( $params->map->image, self::DEFAULT_WIDTH, self::DEFAULT_HEIGHT );
 		}
 
-		$params->map->url = $mapsModel->getMapRenderUrl([
+		$params->map->url = $this->mapsModel->getMapRenderUrl([
 			$params->map->id,
 			$params->zoom,
 			$params->lat,
@@ -122,8 +129,7 @@ class WikiaInteractiveMapsParserTagController extends WikiaController {
 	 * @return object - map object
 	 */
 	private function getMapObj( $mapId ) {
-		$mapsModel = new WikiaMaps( $this->wg->IntMapConfig );
-		return $mapsModel->getMapByIdFromApi( $mapId );
+		return $this->mapsModel->getMapByIdFromApi( $mapId );
 	}
 
 	/**
@@ -298,7 +304,7 @@ class WikiaInteractiveMapsParserTagController extends WikiaController {
 		//To keep the original aspect ratio
 		$height = $width * self::DEFAULT_HEIGHT / self::DEFAULT_WIDTH;
 		$image = $this->getVal( 'image' );
-		$this->setVal( 'src', $mapsModel->createCroppedThumb( $image, $width, $height ) );
+		$this->setVal( 'src', $this->mapsModel->createCroppedThumb( $image, $width, $height ) );
 	}
 
 }
