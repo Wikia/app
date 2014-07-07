@@ -288,7 +288,6 @@ define(
 		}
 
 		/**
-<<<<<<< HEAD
 		 * @desc creates image url for thumbnailer
 		 * @param {string} url - image url
 		 * @param {number} width
@@ -341,7 +340,7 @@ define(
 			handleNirvanaException: handleNirvanaException,
 			showError: showError,
 			cleanUpError: cleanUpError,
-			createThumbURL: createThumbURL
+			createThumbURL: createThumbURL,
 			track: track,
 			trackerActions: tracker.ACTIONS,
 			tilesetTypes: tilesetTypes
