@@ -91,6 +91,11 @@ class WikiaInteractiveMapsParserTagController extends WikiaController {
 			$params->lat,
 			$params->lon,
 		]);
+		if ( $this->app->checkskin( 'wikiamobile' ) ) {
+			$params->map->mobile = true;
+			$params->map->href =
+				Title::newFromText( 'Maps', NS_SPECIAL )->getFullUrl() . '/' . $params->map->id;
+		}
 
 		$this->setVal( 'map', (object) $params->map );
 		$this->setVal( 'params', $params );

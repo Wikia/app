@@ -2,7 +2,19 @@
 	a {
 		bottom: auto;
 		left: 45%;
+		margin-top: -17px;
 		right: auto;
-		top: -20px;
+		top: 50%;
+	}
+
+	p {
+		bottom: 10px;
+		font-weight: bold;
+		left: 10px;
+		position: absolute;
+	}
+
+	figcaption {
+		height: 100%;
 	}
 }
