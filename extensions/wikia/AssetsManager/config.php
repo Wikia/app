@@ -772,12 +772,29 @@ $config['global_navigation_scss'] = array(
 	)
 );
 
+$config['global_navigation_js'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => 'pirates',
+	'assets' => array(
+		'//extensions/wikia/GlobalNavigation/js/GlobalNavigation.js'
+	)
+);
+
 $config['local_navigation_scss'] = array(
 	'type' => AssetsManager::TYPE_SCSS,
 	'skin' => 'pirates',
 	'assets' => array(
 		'//extensions/wikia/LocalNavigation/css/PageHeader.scss',
 		'//extensions/wikia/LocalNavigation/css/WikiHeader.scss'
+	)
+);
+
+$config['local_navigation_js'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => 'pirates',
+	'assets' => array(
+		'//extensions/wikia/LocalNavigation/css/PageHeader.js',
+		'//extensions/wikia/LocalNavigation/css/WikiHeader.js'
 	)
 );
 
