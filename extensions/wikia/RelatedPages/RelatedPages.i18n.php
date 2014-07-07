@@ -217,15 +217,11 @@ $messages['id'] = array(
 );
 
 /** Italian (italiano)
- * @author Beta16
- * @author PeppeAeco
  * @author Pietrodn
  */
 $messages['it'] = array(
 	'wikiarelatedpages-desc' => 'Aggiunge alle pagine un elenco con le pagine correlate',
 	'wikiarelatedpages-heading' => 'Per saperne di più',
-	'wikiamobile-related-article' => 'Voce correlata',
-	'wikiamobile-people-also-read' => 'Le persone leggono anche',
 );
 
 /** Japanese (日本語)
@@ -325,13 +321,10 @@ $messages['nb'] = array(
 
 /** Dutch (Nederlands)
  * @author Siebrand
- * @author Southparkfan
  */
 $messages['nl'] = array(
 	'wikiarelatedpages-desc' => "Voegt een lijst met gerelateerde pagina's to aan pagina's",
 	'wikiarelatedpages-heading' => 'Meer lezen',
-	'wikiamobile-related-article' => 'Uitgelichte pagina',
-	'wikiamobile-people-also-read' => 'Mensen lezen ook',
 );
 
 /** Occitan (occitan)
@@ -418,19 +411,16 @@ $messages['ru'] = array(
  */
 $messages['sco'] = array(
 	'wikiamobile-related-article' => 'Relatit Airticle',
-	'wikiamobile-people-also-read' => 'Fawk read aes weel',
+	'wikiamobile-people-also-read' => 'Fawk read ava',
 );
 
 /** Slovenian (slovenščina)
- * @author Dbc334
  * @author Eleassar
  * @author Lesko987
  */
 $messages['sl'] = array(
 	'wikiarelatedpages-desc' => 'Na strani doda seznam sorodnih strani',
 	'wikiarelatedpages-heading' => 'Preberite si več o tem',
-	'wikiamobile-related-article' => 'Sorodni članek',
-	'wikiamobile-people-also-read' => 'Ljudje so prebrali tudi',
 );
 
 /** Serbian (Cyrillic script) (српски (ћирилица)‎)
@@ -499,13 +489,10 @@ $messages['vi'] = array(
 /** Simplified Chinese (中文（简体）‎)
  * @author Dimension
  * @author Hydra
- * @author Liuxinyu970226
  */
 $messages['zh-hans'] = array(
 	'wikiarelatedpages-desc' => '向页面添加相关页列表',
-	'wikiarelatedpages-heading' => '了解更多',
-	'wikiamobile-related-article' => '特色条目',
-	'wikiamobile-people-also-read' => '这些人也阅读了',
+	'wikiarelatedpages-heading' => '读更多',
 );
 
 /** Traditional Chinese (中文（繁體）‎)

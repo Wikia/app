@@ -7,7 +7,9 @@
  *
  * @class
  * @extends ve.ce.MWInlineImageNode
+ * @mixins ve.ce.ProtectedNode
  * @mixins ve.ce.FocusableNode
+ * @mixins ve.ce.RelocatableNode
  * @mixins ve.ce.WikiaVideoNode
  *
  * @constructor
@@ -16,7 +18,7 @@
  */
 ve.ce.WikiaInlineVideoNode = function VeCeWikiaInlineVideoNode( model, config ) {
 	// Parent constructor
-	ve.ce.WikiaInlineVideoNode.super.call( this, model, config );
+	ve.ce.MWInlineImageNode.call( this, model, config );
 
 	// Mixin constructors
 	ve.ce.WikiaVideoNode.call( this );

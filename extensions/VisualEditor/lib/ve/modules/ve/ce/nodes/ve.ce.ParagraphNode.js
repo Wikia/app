@@ -19,7 +19,6 @@ ve.ce.ParagraphNode = function VeCeParagraphNode( model, config ) {
 	ve.ce.ContentBranchNode.call( this, model, config );
 
 	// DOM changes
-	this.$element.addClass( 've-ce-paragraphNode' );
 	if (
 		this.model.getElement().internal &&
 		this.model.getElement().internal.generated === 'wrapper'

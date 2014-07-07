@@ -41,17 +41,6 @@ ve.ui.MWExtensionInspector.static.removable = false;
  */
 ve.ui.MWExtensionInspector.static.allowedEmpty = false;
 
-/**
- * Inspector's directionality, 'ltr' or 'rtl'
- *
- * Leave as null to use the directionality of the current fragment.
- *
- * @static
- * @property {string|null}
- * @inheritable
- */
-ve.ui.MWExtensionInspector.static.dir = null;
-
 /* Methods */
 
 /**
@@ -61,15 +50,13 @@ ve.ui.MWExtensionInspector.static.dir = null;
  */
 ve.ui.MWExtensionInspector.prototype.initialize = function () {
 	// Parent method
-	ve.ui.MWExtensionInspector.super.prototype.initialize.call( this );
+	ve.ui.Inspector.prototype.initialize.call( this );
 
 	this.input = new OO.ui.TextInputWidget( {
 		'$': this.$,
 		'multiline': true
 	} );
 	this.input.$element.addClass( 've-ui-mwExtensionInspector-input' );
-
-	this.isBlock = !this.constructor.static.nodeModel.static.isContent;
 
 	// Initialization
 	this.$form.append( this.input.$element );
@@ -87,104 +74,71 @@ ve.ui.MWExtensionInspector.prototype.getInputPlaceholder = function () {
 /**
  * @inheritdoc
  */
-ve.ui.MWExtensionInspector.prototype.getSetupProcess = function ( data ) {
-	return ve.ui.MWExtensionInspector.super.prototype.getSetupProcess.call( this, data )
-		.next( function () {
-			var value, dir;
+ve.ui.MWExtensionInspector.prototype.setup = function ( data ) {
+	// Parent method
+	ve.ui.Inspector.prototype.setup.call( this, data );
 
-			// Initialization
-			this.node = this.getFragment().getSelectedNode();
-			this.whitespace = [ '', '' ];
+	// Initialization
+	this.node = this.getFragment().getSelectedNode();
+	// Make sure we're inspecting the right type of node
+	if ( !( this.node instanceof this.constructor.static.nodeModel ) ) {
+		this.node = null;
+	}
+	this.input.setValue( this.node ? this.node.getAttribute( 'mw' ).body.extsrc : '' );
 
-			// Make sure we're inspecting the right type of node
-			if ( !( this.node instanceof this.constructor.static.nodeModel ) ) {
-				this.node = null;
-			}
-			if ( this.node ) {
-				value = this.node.getAttribute( 'mw' ).body.extsrc;
-				if ( this.isBlock ) {
-					// Trim leading/trailing linebreaks but remember them
-					if ( value.slice( 0, 1 ) === '\n' ) {
-						this.whitespace[0] = '\n';
-						value = value.slice( 1 );
-					}
-					if ( value.slice( -1 ) === '\n' ) {
-						this.whitespace[1] = '\n';
-						value = value.slice( 0, -1 );
-					}
-				}
-				this.input.setValue( value );
-			} else {
-				if ( this.isBlock ) {
-					// New nodes should use linebreaks for blocks
-					this.whitespace = [ '\n', '\n' ];
-				}
-				this.input.setValue( '' );
-			}
+	this.input.$input.attr( 'placeholder', this.getInputPlaceholder() );
 
-			this.input.$input.attr( 'placeholder', this.getInputPlaceholder() );
-
-			dir = this.constructor.static.dir || data.dir;
-			this.input.setRTL( dir === 'rtl' );
-		}, this );
+	this.input.setRTL( data.dir === 'rtl' );
 };
 
 /**
  * @inheritdoc
  */
-ve.ui.MWExtensionInspector.prototype.getReadyProcess = function ( data ) {
-	return ve.ui.MWExtensionInspector.super.prototype.getReadyProcess.call( this, data )
-		.next( function () {
-			// Focus the input
-			this.input.focus();
-		}, this );
+ve.ui.MWExtensionInspector.prototype.ready = function () {
+	// Parent method
+	ve.ui.Inspector.prototype.ready.call( this );
+
+	// Focus the input
+	this.input.$input.focus().select();
 };
 
 /**
  * @inheritdoc
  */
-ve.ui.MWExtensionInspector.prototype.getTeardownProcess = function ( data ) {
-	return ve.ui.MWExtensionInspector.super.prototype.getTeardownProcess.call( this, data )
-		.first( function () {
-			var mwData,
-				surfaceModel = this.getFragment().getSurface();
+ve.ui.MWExtensionInspector.prototype.teardown = function ( data ) {
+	var mwData,
+		surfaceModel = this.getFragment().getSurface();
 
-			if ( this.constructor.static.allowedEmpty || this.input.getValue() !== '' ) {
-				if ( this.node ) {
-					mwData = ve.copy( this.node.getAttribute( 'mw' ) );
-					this.updateMwData( mwData );
-					surfaceModel.change(
-						ve.dm.Transaction.newFromAttributeChanges(
-							surfaceModel.getDocument(),
-							this.node.getOuterRange().start,
-							{ 'mw': mwData }
-						)
-					);
-				} else {
-					mwData = {
-						'name': this.constructor.static.nodeModel.static.extensionName,
-						'attrs': {},
-						'body': {}
-					};
-					this.updateMwData( mwData );
-					// Collapse returns a new fragment, so update this.fragment
-					this.fragment = this.getFragment().collapseRangeToEnd();
-					this.getFragment().insertContent( [
-						{
-							'type': this.constructor.static.nodeModel.static.name,
-							'attributes': {
-								'mw': mwData
-							}
-						},
-						{ 'type': '/' + this.constructor.static.nodeModel.static.name }
-					] );
-				}
-			} else if ( this.node && !this.constructor.static.allowedEmpty ) {
-				// Content has been emptied on a node which isn't allowed to
-				// be empty, so delete it.
-				this.getFragment().removeContent();
-			}
-		}, this );
+	if ( this.constructor.static.allowedEmpty || this.input.getValue() !== '' ) {
+		if ( this.node instanceof this.constructor.static.nodeModel ) {
+			mwData = ve.copy( this.node.getAttribute( 'mw' ) );
+			this.updateMwData( mwData );
+			surfaceModel.change(
+				ve.dm.Transaction.newFromAttributeChanges(
+					surfaceModel.getDocument(), this.node.getOuterRange().start, { 'mw': mwData }
+				)
+			);
+		} else {
+			mwData = {
+				'name': this.constructor.static.nodeModel.static.extensionName,
+				'attrs': {},
+				'body': {}
+			};
+			this.updateMwData( mwData );
+			surfaceModel.getFragment().collapseRangeToEnd().insertContent( [
+				{
+					'type': this.constructor.static.nodeModel.static.name,
+					'attributes': {
+						'mw': mwData
+					}
+				},
+				{ 'type': '/' + this.constructor.static.nodeModel.static.name }
+			] );
+		}
+	}
+
+	// Parent method
+	ve.ui.Inspector.prototype.teardown.call( this, data );
 };
 
 /**
@@ -193,5 +147,5 @@ ve.ui.MWExtensionInspector.prototype.getTeardownProcess = function ( data ) {
  * @param {Object} mwData MediaWiki data object
  */
 ve.ui.MWExtensionInspector.prototype.updateMwData = function ( mwData ) {
-	mwData.body.extsrc = this.whitespace[0] + this.input.getValue() + this.whitespace[1];
+	mwData.body.extsrc = this.input.getValue();
 };

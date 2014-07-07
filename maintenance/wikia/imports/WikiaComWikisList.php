@@ -472,7 +472,13 @@ class WikiaComWikisListImport {
 				$taskAdditionList[$targetWikiId][$wgCityId][] = $image;
 			}
 
-			wfRunHooks('CreatePromoImageReviewTask', ['upload', $taskAdditionList]);
+			$task = new PromoteImageReviewTask();
+			$task->createTask(
+				array(
+					'upload_list' => $taskAdditionList,
+				),
+				TASK_QUEUED
+			);
 		}
 
 		wfProfileOut(__METHOD__);

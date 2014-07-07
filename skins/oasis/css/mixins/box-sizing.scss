@@ -1,4 +1,4 @@
-$value: border-box !default;
+$value: border-box;
 
 @mixin box-sizing ($value: $value){
 	-moz-box-sizing: $value;

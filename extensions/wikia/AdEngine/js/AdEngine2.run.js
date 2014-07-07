@@ -3,7 +3,7 @@
  * Once AMD is available, this file will be almost no longer needed.
  */
 
-/*global window, document, require, setTimeout*/
+/*global window, require, setTimeout*/
 /*jslint newcap:true */
 /*jshint camelcase:false */
 /*jshint maxlen:200*/
@@ -20,19 +20,18 @@ require([
 	'ext.wikia.adEngine.lateAdsQueue',
 	'ext.wikia.adEngine.adLogicHighValueCountry',
 	'ext.wikia.adEngine.slotTweaker',
-	'ext.wikia.adEngine.messageListener',
 	require.optional('wikia.abTest')
-], function (log, window, tracker, adEngine, adConfig, evolveSlotConfig, adLogicPageParams, wikiaDart, slotTracker, lateAdsQueue, adLogicHighValueCountry, slotTweaker, messageListener, abTest) {
+], function (log, window, tracker, adEngine, adConfig, evolveSlotConfig, adLogicPageParams, wikiaDart, slotTracker, lateAdsQueue, adLogicHighValueCountry, slotTweaker, abTest) {
 	'use strict';
 
 	var module = 'AdEngine2.run',
 		params,
 		param,
 		value,
-		adsInHead = abTest && abTest.inGroup('ADS_IN_HEAD', 'YES');
+		adsinhead = abTest && abTest.inGroup('ADS_IN_HEAD', 'YES');
 
 	// Don't show ads when Sony requests the page
-	window.wgShowAds = window.wgShowAds && !window.document.referrer.match(/info.tvsideview.sony.net/);
+	window.wgShowAds = window.wgShowAds && !window.navigator.userAgent.match(/sony_tvs/);
 
 	// Use PostScribe for ScriptWriter implementation when SevenOne Media ads are enabled
 	window.wgUsePostScribe = window.wgUsePostScribe || window.wgAdDriverUseSevenOneMedia;
@@ -53,8 +52,6 @@ require([
 			});
 		}
 	};
-
-	messageListener.init();
 
 	// Register Evolve hop
 	window.evolve_hop = function (slotname) {
@@ -113,7 +110,7 @@ require([
 		adEngine.run(adConfig, window.adslots2, 'queue.early');
 	}
 
-	if (adsInHead) {
+	if (adsinhead) {
 		setTimeout(startEarlyQueue, 0);
 	} else {
 		window.wgAfterContentAndJS.push(startEarlyQueue);
@@ -132,7 +129,7 @@ require([
 window.AdEngine_loadLateAds = function () {
 	'use strict';
 
-	function loadLateFn() {
+	window.wgAfterContentAndJS.push(function () {
 		require([
 			'ext.wikia.adEngine.adConfigLate', 'ext.wikia.adEngine.adEngine', 'ext.wikia.adEngine.lateAdsQueue', 'wikia.tracker', 'wikia.log'
 		], function (adConfigLate, adEngine, lateAdsQueue, tracker, log) {
@@ -149,23 +146,7 @@ window.AdEngine_loadLateAds = function () {
 			});
 			adEngine.run(adConfigLate, lateAdsQueue, 'queue.late');
 		});
-	}
-
-	require([ require.optional('wikia.abTest') ], function (abTest) {
-		var adsAfterPageLoad = window.wgLoadLateAdsAfterPageLoad && abTest && abTest.inGroup('ADS_AFTER_PAGE_LOAD', 'YES');
-
-		if (adsAfterPageLoad) {
-			if (document.readyState === 'complete') {
-				setTimeout(loadLateFn, 4);
-			} else {
-				window.addEventListener('load', loadLateFn, false);
-			}
-		} else {
-			window.wgAfterContentAndJS.push(loadLateFn);
-		}
 	});
-
-
 };
 
 // Tracking functions for ads in head metrics
@@ -175,12 +156,12 @@ window.AdEngine_loadLateAds = function () {
 	function trackTime(timeTo) {
 		var wgNowBased, performanceBased;
 
-		if (!window.wgLoadAdsInHead && !window.wgLoadLateAdsAfterPageLoad) {
+		if (!window.wgLoadAdsInHead) {
 			return;
 		}
 
 		wgNowBased = Math.round(new Date().getTime() - window.wgNow.getTime());
-		performanceBased = window.performance && window.performance.now && Math.round(window.performance.now());
+		performanceBased = window.performance && Math.round(window.performance.now());
 
 		require([
 			'wikia.log',
@@ -188,32 +169,22 @@ window.AdEngine_loadLateAds = function () {
 			'ext.wikia.adEngine.slotTracker',
 			require.optional('wikia.abTest')
 		], function (log, tracker, slotTracker, abTest) {
-			var adsInHead = abTest && abTest.getGroup('ADS_IN_HEAD'),
-				adsAfterPageLoad = abTest && abTest.getGroup('ADS_AFTER_PAGE_LOAD'),
-				experimentName = [];
+			var adsinhead = abTest && abTest.getGroup('ADS_IN_HEAD');
 
-			if (!adsInHead && !adsAfterPageLoad) {
+			if (!adsinhead) {
 				return;
-			}
-
-			if (adsInHead) {
-				experimentName.push('adsinhead=' + adsInHead);
-			}
-
-			if (adsAfterPageLoad) {
-				experimentName.push('lateadsafterload=' + adsAfterPageLoad);
 			}
 
 			log([
 				'time to: ' + timeTo,
-				experimentName.join(';'),
+				'adsinhead: ' + adsinhead,
 				'wgNowBased: ' + wgNowBased,
 				'performanceBased: ' + performanceBased
 			], 'info', 'AdEngine_track');
 
 			tracker.track({
 				ga_category: 'ad/performance/' + timeTo + '/wgNow',
-				ga_action: experimentName.join(';'),
+				ga_action: 'adsinhead=' + adsinhead,
 				ga_label: slotTracker.getTimeBucket(wgNowBased / 1000),
 				ga_value: wgNowBased,
 				trackingMethod: 'ad'
@@ -222,7 +193,7 @@ window.AdEngine_loadLateAds = function () {
 			if (performanceBased) {
 				tracker.track({
 					ga_category: 'ad/performance/' + timeTo + '/performance',
-					ga_action: experimentName.join(';'),
+					ga_action: 'adsinhead=' + adsinhead,
 					ga_label: slotTracker.getTimeBucket(performanceBased / 1000),
 					ga_value: performanceBased,
 					trackingMethod: 'ad'

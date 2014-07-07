@@ -2,9 +2,8 @@
 define('ext.wikia.adEngine.adEngine', [
 	'wikia.log',
 	'wikia.lazyqueue',
-	'ext.wikia.adEngine.slotTracker',
-	'ext.wikia.adEngine.eventDispatcher'
-], function (log, LazyQueue, slotTracker, eventDispatcher) {
+	'ext.wikia.adEngine.slotTracker'
+], function (log, LazyQueue, slotTracker) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.adEngine',
@@ -36,7 +35,7 @@ define('ext.wikia.adEngine.adEngine', [
 
 			function success(extra) {
 				log(['success', slotname, extra], 'debug', logGroup);
-				aSlotTracker.track('success', extra);
+				aSlotTracker.track('success');
 			}
 
 			function hop(extra, hopTo) {
@@ -47,11 +46,9 @@ define('ext.wikia.adEngine.adEngine', [
 				}
 			}
 
-			if (eventDispatcher.trigger('ext.wikia.adEngine fillInSlot', slot, provider)) {
-				log('calling ' + provider.name + '.fillInSlot for ' + slotname, 'debug', logGroup);
+			log('calling ' + provider.name + '.fillInSlot for ' + slotname, 'debug', logGroup);
 
-				provider.fillInSlot(slotname, success, hop);
-			}
+			provider.fillInSlot(slotname, success, hop);
 		}
 
 		log('run', 'debug', logGroup);

@@ -32,6 +32,8 @@ ve.ui.LanguageInspector.static.icon = 'language';
 ve.ui.LanguageInspector.static.title =
 	OO.ui.deferMsg( 'visualeditor-languageinspector-title' );
 
+ve.ui.LanguageInspector.static.languageInputWidget = ve.ui.LanguageInputWidget;
+
 ve.ui.LanguageInspector.static.modelClasses = [ ve.dm.LanguageAnnotation ];
 
 /* Methods */
@@ -61,10 +63,10 @@ ve.ui.LanguageInspector.prototype.getAnnotationFromFragment = function ( fragmen
  */
 ve.ui.LanguageInspector.prototype.initialize = function () {
 	// Parent method
-	ve.ui.LanguageInspector.super.prototype.initialize.call( this );
+	ve.ui.AnnotationInspector.prototype.initialize.call( this );
 
 	// Properties
-	this.languageInput = new ve.ui.LanguageInputWidget( { '$': this.$ } );
+	this.languageInput = new this.constructor.static.languageInputWidget( { '$': this.$ } );
 
 	// Initialization
 	this.$form.append( this.languageInput.$element );
@@ -73,13 +75,13 @@ ve.ui.LanguageInspector.prototype.initialize = function () {
 /**
  * @inheritdoc
  */
-ve.ui.LanguageInspector.prototype.getSetupProcess = function ( data ) {
-	return ve.ui.LanguageInspector.super.prototype.getSetupProcess.call( this, data )
-		.next( function () {
-			this.languageInput.setAnnotation( this.initialAnnotation );
-		}, this );
+ve.ui.LanguageInspector.prototype.setup = function ( data ) {
+	// Parent method
+	ve.ui.AnnotationInspector.prototype.setup.call( this, data );
+
+	this.languageInput.setAnnotation( this.initialAnnotation );
 };
 
 /* Registration */
 
-ve.ui.windowFactory.register( ve.ui.LanguageInspector );
+ve.ui.inspectorFactory.register( ve.ui.LanguageInspector );

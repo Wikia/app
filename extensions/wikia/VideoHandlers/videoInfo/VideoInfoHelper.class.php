@@ -107,13 +107,12 @@ class VideoInfoHelper extends WikiaModel {
 
 	/**
 	 * get total view from database
-	 * @param DatabaseMysql $db
 	 * @return array $videoList
 	 */
-	public static function getTotalViewsFromDB( DatabaseMysql $db = null ) {
+	public static function getTotalViewsFromDB() {
 		wfProfileIn( __METHOD__ );
 
-		$db = empty( $db ) ? wfGetDB( DB_SLAVE ) : $db;
+		$db = wfGetDB( DB_SLAVE );
 
 		$result = $db->select(
 			array( 'video_info' ),
@@ -136,7 +135,6 @@ class VideoInfoHelper extends WikiaModel {
 
 	/**
 	 * get total views of a video from database using title
-	 * @param $title
 	 * @return int $viewCount
 	 */
 	public static function getTotalViewsFromTitle( $title ) {

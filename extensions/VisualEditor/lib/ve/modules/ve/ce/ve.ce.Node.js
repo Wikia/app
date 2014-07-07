@@ -62,27 +62,14 @@ ve.ce.Node.static.splitOnEnter = false;
 ve.ce.Node.static.isFocusable = false;
 
 /**
- * Command to execute when Enter is pressed while this node is selected, or when the node is double-clicked.
+ * Command to execute when Enter is pressed while this node is selected. If ve.ce.ClickableNode
+ * is mixed in, this is also the command that will be executed when the node is double-clicked.
  *
  * @static
  * @property {string|null}
  * @inheritable
  */
 ve.ce.Node.static.primaryCommandName = null;
-
-/* Static Methods */
-
-/**
- * Get a plain text description.
- *
- * @static
- * @inheritable
- * @param {ve.dm.Node} node Node model
- * @returns {string} Description of node
- */
-ve.ce.Node.static.getDescription = function () {
-	return '';
-};
 
 /* Methods */
 
@@ -274,7 +261,7 @@ ve.ce.Node.prototype.getModelHtmlDocument = function () {
  * @returns {number} Height of node contents
  */
 ve.ce.Node.prototype.getContentsHeight = function () {
-	var clearedHeight,
+	var clearedHeight
 		height = this.$element.height(),
 		clear = this.$element.css( 'clear' ),
 		clearfix = this.$element.hasClass( 'clearfix' );

@@ -13,7 +13,7 @@ CollectionsSetup.prototype = {
 		}, this));
 
 		this.nav = new CollectionsNavigation('.collection-module');
-		$('#collectionsSetupForm').find('.wmu-show').click($.proxy(this.handleAddPhoto, this));
+		$('.wmu-show').click($.proxy(this.handleAddPhoto, this));
 	},
 
 	handleToggleEnabled: function(event) {
@@ -30,6 +30,7 @@ CollectionsSetup.prototype = {
 		event.preventDefault();
 		this.lastActiveWmuButton = $(event.target);
 		if (!this.wmuReady) {
+			var $input = $(this).prev();
 			this.wmuDeffered = $.when(
 					$.loadYUI(),
 					$.loadJQueryAIM(),

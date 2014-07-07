@@ -9,6 +9,7 @@
 	@include calc(width, #{$expression});
 }
 
-@mixin height-calc($expression) {
-	@include calc(height, #{$expression});
+@mixin height-calc($formula) {
+	height: -webkit-calc(#{$formula});
+	height: calc(#{$formula});
 }

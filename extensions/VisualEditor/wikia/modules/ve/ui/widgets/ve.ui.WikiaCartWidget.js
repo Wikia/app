@@ -10,7 +10,7 @@
  * @param {ve.dm.WikiaCart} model Cart item
  */
 ve.ui.WikiaCartWidget = function VeUiWikiaCartWidget( model ) {
-	ve.ui.WikiaCartWidget.super.call( this );
+	OO.ui.SelectWidget.call( this );
 	this.model = model;
 	this.model.connect( this, { 'add': 'onAdd', 'remove': 'onRemove' } );
 	this.$element.addClass( 've-ui-wikiaCartWidget' );

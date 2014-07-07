@@ -1,10 +1,6 @@
-@chrome @en.wikipedia.beta.wmflabs.org @firefox @login @test2.wikipedia.org
+@ie6-bug  @ie7-bug  @ie8-bug  @ie9-bug @ie10-bug @en.wikipedia.beta.wmflabs.org @test2.wikipedia.org @login
 Feature: VisualEditor Bullets, Numbering
-
-  Background:
-    Given I go to the "Bullets VisualEditor Test" page with content "Bullets VisualEditor Test"
-      And I make the text "Bullets VisualEditor Test" be selected
-
+@make_selectable_line
   Scenario Outline: check strings for bullets and numbering
     When I click <control>
       And I click Save page
@@ -16,6 +12,7 @@ Feature: VisualEditor Bullets, Numbering
     | Numbering | #         |
     | Bullets   | *         |
 
+@make_selectable_line
   Scenario Outline: check increase indent for bullets and numbering
     When I click <control>
       And I click Increase indentation
@@ -29,6 +26,7 @@ Feature: VisualEditor Bullets, Numbering
     | Numbering | ##        |
     | Bullets   | **        |
 
+@make_selectable_line
   Scenario Outline: check decrease indent for bullets and numbering
     When I click <control>
       And I click Decrease indentation

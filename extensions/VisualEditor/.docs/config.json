@@ -2,10 +2,8 @@
 	"--title": "VisualEditor Code Documentation",
 	"--categories": "../.docs/categories.json",
 	"--eg-iframe": "../.docs/eg-iframe.html",
-	"--tags": "./CustomTags.rb",
-	"--warnings": ["-nodoc(class,public)"],
+	"--warnings": ["-no_doc"],
 	"--builtin-classes": true,
-	"--warnings-exit-nonzero": true,
 	"--external": "HTMLDocument,Window,Node",
 	"--output": "../docs",
 	"--": [

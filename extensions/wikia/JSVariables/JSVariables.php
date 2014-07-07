@@ -24,7 +24,6 @@ function wfJSVariablesTopScripts(Array &$vars, &$scripts) {
 		$vars['wgWikiFactoryTagNames'] = array_values( $wg->WikiFactoryTags );
 	}
 	$vars['wgCdnRootUrl'] = $wg->CdnRootUrl;
-	$vars['wgCdnApiUrl'] = $wg->CdnApiUrl;
 
 	// analytics needs it (from here till the end of the function)
 	$vars['wgDBname'] = $wg->DBname;

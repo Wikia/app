@@ -21,72 +21,46 @@ ve.ui.LanguageInputWidget = function VeUiLanguageInputWidget( config ) {
 	// Parent constructor
 	OO.ui.Widget.call( this, config );
 
-	var findLanguageField, languageCodeField, directionField, surface, searchDialog;
+	var languageField, directionField;
 
 	// Properties
 	this.annotation = null;
 
-	this.findLanguageButton = new OO.ui.ButtonWidget( {
+	this.languageTextInput = new OO.ui.TextInputWidget( {
 		'$': this.$,
-		'classes': [ 've-ui-languageInputWidget-findLanguageButton' ],
-		'label': ve.msg( 'visualeditor-languageinspector-widget-changelang' ),
-		'indicator': 'next'
-	} );
-
-	this.languageCodeTextInput = new OO.ui.TextInputWidget( {
-		'$': this.$,
-		'classes': [ 've-ui-languageInputWidget-languageCodeTextInput' ]
+		'classes': [ 've-ui-languageInputWidget-languageTextInput' ]
 	} );
 
 	this.directionSelect = new OO.ui.ButtonSelectWidget( {
 		'$': this.$,
-		'classes': [ 've-ui-languageInputWidget-directionSelect' ]
+		'classes': [ 've-ui-languageInputWidget-directionSelect' ],
 	} ).addItems( [
 		new OO.ui.ButtonOptionWidget( 'rtl', { '$': this.$, 'icon': 'text-dir-rtl' } ),
-		new OO.ui.ButtonOptionWidget( null, { '$': this.$, 'label': ve.msg( 'visualeditor-dialog-language-auto-direction' ) } ),
+		new OO.ui.ButtonOptionWidget( null, { '$': this.$, 'label': 'Auto' } ),
 		new OO.ui.ButtonOptionWidget( 'ltr', { '$': this.$, 'icon': 'text-dir-ltr' } )
 	] );
 
 	// Initialization
-	findLanguageField = new OO.ui.FieldLayout( this.findLanguageButton, {
-		'$': this.$,
-		'align': 'left',
-		'label': ve.msg( 'visualeditor-languageinspector-widget-label-language' )
-	} );
-	languageCodeField = new OO.ui.FieldLayout( this.languageCodeTextInput, {
-		'$': this.$,
-		'align': 'left',
-		'label': ve.msg( 'visualeditor-languageinspector-widget-label-langcode' )
-	} );
+	languageField = new OO.ui.FieldLayout( this.languageTextInput, {
+			'$': this.$,
+			'align': 'left',
+			'label': ve.msg( 'visualeditor-languageinspector-widget-label-langcode' )
+		}
+	);
 	directionField = new OO.ui.FieldLayout( this.directionSelect, {
-		'$': this.$,
-		'align': 'left',
-		'label': ve.msg( 'visualeditor-languageinspector-widget-label-direction' )
-	} );
+			'$': this.$,
+			'align': 'left',
+			'label': ve.msg( 'visualeditor-languageinspector-widget-label-direction' )
+		}
+	);
 
-	// HACK: Create a new surface so we can create a new global
-	// overlay and open windows.
-	surface = new ve.ui.DesktopSurface( [], { '$': this.$ } );
-	searchDialog = surface.getDialogs().getWindow( 'languageSearch' );
-
-	// Skip full Surface initialize and just attach the global overlay
-	$( 'body' ).append( surface.$globalOverlay );
-
-	// TODO: Rethink the layout, maybe integrate the change button into the language field
-	// TODO: Consider using getAutonym to display a nicer language name label somewhere
 	this.$element
 		.addClass( 've-ui-langInputWidget' )
-		.append( findLanguageField.$element, languageCodeField.$element, directionField.$element );
+		.append( languageField.$element, directionField.$element );
 
 	// Events
-	this.findLanguageButton.connect( searchDialog, { 'click': 'open' } );
-	this.languageCodeTextInput.connect( this, { 'change': 'onChange' } );
+	this.languageTextInput.connect( this, { 'change': 'onChange' } );
 	this.directionSelect.connect( this, { 'select': 'onChange' } );
-	searchDialog.on( 'teardown', ve.bind( function ( data ) {
-		if ( data.action === 'apply' ) {
-			this.setAnnotationFromValues( data.lang, data.dir );
-		}
-	}, this ) );
 };
 
 /* Inheritance */
@@ -111,7 +85,7 @@ ve.ui.LanguageInputWidget.prototype.onChange = function () {
 	}
 
 	var selectedItem = this.directionSelect.getSelectedItem();
-	this.setAnnotationFromValues( this.languageCodeTextInput.getValue(), selectedItem ? selectedItem.getData() : null );
+	this.setAnnotationFromValues( this.languageTextInput.getValue(), selectedItem ? selectedItem.getData() : null );
 };
 
 /**
@@ -131,17 +105,12 @@ ve.ui.LanguageInputWidget.prototype.setAnnotation = function ( annotation ) {
 	// Set state flag while programmatically changing input widget values
 	this.updating = true;
 	if ( annotation ) {
-		this.languageCodeTextInput.setValue( annotation.getAttribute( 'lang' ) );
-		this.findLanguageButton.setLabel(
-			ve.init.platform.getLanguageName( annotation.getAttribute( 'lang' ).toLowerCase() ) ||
-			ve.msg( 'visualeditor-languageinspector-widget-changelang' )
-		);
+		this.languageTextInput.setValue( annotation.getAttribute( 'lang' ) );
 		this.directionSelect.selectItem(
 			this.directionSelect.getItemFromData( annotation.getAttribute( 'dir' ) || null )
 		);
 	} else {
-		this.languageCodeTextInput.setValue( '' );
-		this.findLanguageButton.setLabel( ve.msg( 'visualeditor-languageinspector-widget-changelang' ) );
+		this.languageTextInput.setValue( '' );
 		this.directionSelect.selectItem( this.directionSelect.getItemFromData( null ) );
 	}
 	this.updating = false;

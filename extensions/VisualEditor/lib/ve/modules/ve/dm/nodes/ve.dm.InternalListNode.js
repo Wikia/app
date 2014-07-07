@@ -10,14 +10,13 @@
  *
  * @class
  * @extends ve.dm.BranchNode
- *
  * @constructor
+ * @param {ve.dm.BranchNode[]} [children] Child nodes to attach
  * @param {Object} [element] Reference to element in linear model
- * @param {ve.dm.Node[]} [children]
  */
-ve.dm.InternalListNode = function VeDmInternalListNode() {
+ve.dm.InternalListNode = function VeDmInternalListNode( children, element ) {
 	// Parent constructor
-	ve.dm.BranchNode.apply( this, arguments );
+	ve.dm.BranchNode.call( this, children, element );
 };
 
 /* Inheritance */

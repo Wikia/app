@@ -95,7 +95,15 @@ class PromoteImageReviewHelper extends ImageReviewHelperBase {
 	}
 
 	protected function createUploadTask($taskAdditionList) {
-		wfRunHooks('CreatePromoImageReviewTask', ['upload', $taskAdditionList]);
+		if (!empty($taskAdditionList)) {
+			$task = new PromoteImageReviewTask();
+			$task->createTask(
+				array(
+					'upload_list' => $taskAdditionList,
+				),
+				TASK_QUEUED
+			);
+		}
 	}
 
 	protected function saveStats($statsInsert, $sqlWhere, $action) {
@@ -500,37 +508,5 @@ class PromoteImageReviewHelper extends ImageReviewHelperBase {
 				$ret = 'last_edited desc';
 		}
 		return $ret;
-	}
-
-	public static function onCreatePromoteImageReviewTask($type, $list) {
-		if (empty($list)) {
-			return true;
-		}
-
-		if (TaskRunner::isModern('PromoteImageReviewTask')) {
-			$batch = [];
-
-			foreach ($list as $targetWikiId => $wikis) {
-				$taskList = new \Wikia\Tasks\AsyncTaskList();
-				$task = new \Wikia\Tasks\Tasks\PromoteImageReviewTask();
-
-				$call = $task->call($type, $targetWikiId, $wikis);
-				$taskList->add($call);
-
-				$batch []= $taskList;
-			}
-
-			\Wikia\Tasks\AsyncTaskList::batch($batch);
-		} else {
-			$task = new PromoteImageReviewTask();
-			$key = $type == 'delete' ? 'deletion_list' : 'upload_list';
-			$params = [
-				$key => $list,
-			];
-
-			$task->createTask($params, TASK_QUEUED);
-		}
-
-		return true;
 	}
 }

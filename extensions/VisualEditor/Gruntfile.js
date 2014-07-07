@@ -8,8 +8,8 @@
 module.exports = function ( grunt ) {
 	var modules = grunt.file.readJSON( 'lib/ve/build/modules.json' );
 
-	grunt.loadNpmTasks( 'grunt-contrib-csslint' );
 	grunt.loadNpmTasks( 'grunt-contrib-jshint' );
+	grunt.loadNpmTasks( 'grunt-contrib-csslint' );
 	grunt.loadNpmTasks( 'grunt-contrib-watch' );
 	grunt.loadNpmTasks( 'grunt-banana-checker' );
 	grunt.loadNpmTasks( 'grunt-jscs-checker' );
@@ -35,59 +35,58 @@ module.exports = function ( grunt ) {
 								'Tests'
 							]
 						},
-						include: [ 'UnicodeJS', 'OOJS UI', 'Upstream' ]
+						include: ['UnicodeJS', 'OOJS UI', 'Upstream']
 					}
 				]
 			}
 		},
 		buildloader: {
 			egiframe: {
-				targetFile: '.docs/eg-iframe.html',
+				target: '.docs/eg-iframe.html',
 				template: '.docs/eg-iframe.html.template',
 				modules: modules,
-				load: [ 'visualEditor.desktop.standalone' ],
 				pathPrefix: 'lib/ve/',
 				indent: '\t\t'
 			}
 		},
 		jshint: {
 			options: {
-				jshintrc: true
+				jshintrc: '.jshintrc'
 			},
 			all: [
 				'*.js',
 				'{.docs,build}/**/*.js',
-				'modules/**/*.js',
-				'wikia/**/*.js'
+				'modules/**/*.js'
 			]
 		},
 		jscs: {
-			src: '<%= jshint.all %>'
+			src: [
+				'<%= jshint.all %>'
+			]
 		},
 		csslint: {
 			options: {
 				csslintrc: '.csslintrc'
 			},
 			all: [
-				'modules/*/**/*.css',
-				'wikia/**/*.css'
-			]
+				'modules/*/**/*.css'
+			],
 		},
 		banana: {
 			all: 'modules/ve-{mw,wmf}/i18n/'
 		},
 		watch: {
 			files: [
-				'.{csslintrc,jscsrc,jshintignore,jshintrc}',
+				'.{jshintrc,jscs.json,jshintignore,csslintrc}',
 				'<%= jshint.all %>',
 				'<%= csslint.all %>'
 			],
-			tasks: 'test'
+			tasks: ['test']
 		}
 	} );
 
-	grunt.registerTask( 'build', [ 'jsduckcatconfig', 'buildloader' ] );
-	grunt.registerTask( 'lint', [ 'jshint', 'jscs', 'csslint', 'banana' ] );
-	grunt.registerTask( 'test', [ 'build', 'lint' ] );
-	grunt.registerTask( 'default', 'test' );
+	grunt.registerTask( 'build', ['jsduckcatconfig', 'buildloader'] );
+	grunt.registerTask( 'lint', ['jshint', 'jscs', 'csslint', 'banana' ] );
+	grunt.registerTask( 'test', ['build', 'lint'] );
+	grunt.registerTask( 'default', ['test'] );
 };

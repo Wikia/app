@@ -50,9 +50,6 @@ if ( isset( $_SERVER['MW_COMPILED'] ) ) {
 	require ( dirname( __FILE__ ) . '/includes/WebStart.php' );
 }
 
-Transaction::setEntryPoint(Transaction::ENTRY_POINT_API);
-Transaction::setAttribute(Transaction::PARAM_API_ACTION, $wgRequest->getVal('action',null));
-
 wfProfileIn( 'api.php' );
 $starttime = microtime( true );
 

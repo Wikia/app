@@ -607,7 +607,7 @@ ve.dm.example.withMetaMetaData = [
 			}
 		},
 		{
-			'type': 'alienMeta',
+		'type': 'alienMeta',
 			'attributes': {
 				'domElements': $( '<link rel="foofoo" href="barbar" />' ).toArray()
 			}
@@ -851,63 +851,64 @@ ve.dm.example.emptyBranch = [
  */
 ve.dm.example.tree = new ve.dm.DocumentNode( [
 	// Heading with "abc"
-	new ve.dm.HeadingNode( ve.dm.example.data[0], [new ve.dm.TextNode( 3 )] ),
-	new ve.dm.TableNode( ve.dm.example.data[5], [
-		new ve.dm.TableSectionNode( ve.dm.example.data[6], [
-			new ve.dm.TableRowNode( ve.dm.example.data[7], [
-				new ve.dm.TableCellNode( ve.dm.example.data[8], [
+	new ve.dm.HeadingNode( [new ve.dm.TextNode( 3 )], ve.dm.example.data[0] ),
+	new ve.dm.TableNode( [
+		new ve.dm.TableSectionNode( [
+			new ve.dm.TableRowNode( [
+				new ve.dm.TableCellNode( [
 					// Paragraph with "d"
-					new ve.dm.ParagraphNode( ve.dm.example.data[9], [new ve.dm.TextNode( 1 )] ),
-					new ve.dm.ListNode( ve.dm.example.data[12], [
+					new ve.dm.ParagraphNode( [new ve.dm.TextNode( 1 )],
+						ve.dm.example.data[9] ),
+					new ve.dm.ListNode( [
 						// 1st level bullet list item with "e"
-						new ve.dm.ListItemNode( ve.dm.example.data[13], [
+						new ve.dm.ListItemNode( [
 							new ve.dm.ParagraphNode(
-								ve.dm.example.data[14],
-								[new ve.dm.TextNode( 1 )]
+								[new ve.dm.TextNode( 1 )],
+								ve.dm.example.data[14]
 							),
-							new ve.dm.ListNode( ve.dm.example.data[17], [
+							new ve.dm.ListNode( [
 								// 2nd level bullet list item with "f"
-								new ve.dm.ListItemNode( ve.dm.example.data[18], [
+								new ve.dm.ListItemNode( [
 									new ve.dm.ParagraphNode(
-										ve.dm.example.data[19],
-										[new ve.dm.TextNode( 1 )]
+										[new ve.dm.TextNode( 1 )],
+										ve.dm.example.data[19]
 									)
-								] )
-							] )
-						] )
-					] ),
-					new ve.dm.ListNode( ve.dm.example.data[26], [
+								], ve.dm.example.data[18] )
+							], ve.dm.example.data[17] )
+						], ve.dm.example.data[13] )
+					], ve.dm.example.data[12] ),
+					new ve.dm.ListNode( [
 						// Numbered list item with "g"
-						new ve.dm.ListItemNode( ve.dm.example.data[27], [
+						new ve.dm.ListItemNode( [
 							new ve.dm.ParagraphNode(
-								ve.dm.example.data[28],
-								[new ve.dm.TextNode( 1 )]
+								[new ve.dm.TextNode( 1 )],
+								ve.dm.example.data[28]
 							)
-						] )
-					] )
-				] )
-			] )
-		] )
-	] ),
+						], ve.dm.example.data[27] )
+					], ve.dm.example.data[26] )
+				], ve.dm.example.data[8] )
+			], ve.dm.example.data[7] )
+		], ve.dm.example.data[6] )
+	], ve.dm.example.data[5] ),
 	// Preformatted with "h[example.png]i"
-	new ve.dm.PreformattedNode( ve.dm.example.data[37], [
+	new ve.dm.PreformattedNode( [
 		new ve.dm.TextNode( 1 ),
-		new ve.dm.ImageNode( ve.dm.example.data[39] ),
+		new ve.dm.ImageNode( [], ve.dm.example.data[39] ),
 		new ve.dm.TextNode( 1 )
-	] ),
-	new ve.dm.DefinitionListNode( ve.dm.example.data[43], [
+	], ve.dm.example.data[37] ),
+	new ve.dm.DefinitionListNode( [
 		// Definition list term item with "j"
-		new ve.dm.DefinitionListItemNode( ve.dm.example.data[44], [
-			new ve.dm.ParagraphNode( ve.dm.example.data[45], [new ve.dm.TextNode( 1 )] )
-		] ),
+		new ve.dm.DefinitionListItemNode( [
+			new ve.dm.ParagraphNode( [new ve.dm.TextNode( 1 )], ve.dm.example.data[45] )
+		], ve.dm.example.data[44] ),
 		// Definition list definition item with "k"
-		new ve.dm.DefinitionListItemNode( ve.dm.example.data[49], [
-			new ve.dm.ParagraphNode( ve.dm.example.data[50], [new ve.dm.TextNode( 1 )] )
-		] )
-	] ),
-	new ve.dm.ParagraphNode( ve.dm.example.data[55], [new ve.dm.TextNode( 1 )] ),
-	new ve.dm.ParagraphNode( ve.dm.example.data[58], [new ve.dm.TextNode( 1 )] ),
-	new ve.dm.InternalListNode( ve.dm.example.data[61] )
+		new ve.dm.DefinitionListItemNode( [
+			new ve.dm.ParagraphNode( [new ve.dm.TextNode( 1 )], ve.dm.example.data[50] )
+		], ve.dm.example.data[49] )
+	], ve.dm.example.data[43] ),
+	new ve.dm.ParagraphNode( [new ve.dm.TextNode( 1 )], ve.dm.example.data[55] ),
+	new ve.dm.ParagraphNode( [new ve.dm.TextNode( 1 )], ve.dm.example.data[58] ),
+	new ve.dm.InternalListNode( [], ve.dm.example.data[61] )
 ] );
 
 ve.dm.example.conversions = {
@@ -2907,9 +2908,9 @@ ve.dm.example.RDFa = [
 	{ 'type': '/internalList' }
 ];
 
-ve.dm.example.UnboldableNode = function () {
+ve.dm.example.UnboldableNode = function ( lenght, element ) {
 	// Parent constructor
-	ve.dm.LeafNode.apply( this, arguments );
+	ve.dm.LeafNode.call( this, 0, element );
 };
 OO.inheritClass( ve.dm.example.UnboldableNode, ve.dm.LeafNode );
 ve.dm.example.UnboldableNode.static.name = 'exampleUnboldable';
@@ -2917,16 +2918,6 @@ ve.dm.example.UnboldableNode.static.isContent = true;
 ve.dm.example.UnboldableNode.static.blacklistedAnnotationTypes = [ 'textStyle/bold' ];
 ve.dm.example.UnboldableNode.static.matchTagNames = [];
 ve.dm.modelRegistry.register( ve.dm.example.UnboldableNode );
-
-ve.dm.example.HandlesOwnChildrenNode = function ( children, element ) {
-	// Parent constructor
-	ve.dm.BranchNode.call( this, children, element );
-};
-OO.inheritClass( ve.dm.example.HandlesOwnChildrenNode, ve.dm.BranchNode );
-ve.dm.example.HandlesOwnChildrenNode.static.name = 'exampleHandlesOwnChildren';
-ve.dm.example.HandlesOwnChildrenNode.static.handlesOwnChildren = true;
-ve.dm.example.HandlesOwnChildrenNode.static.matchTagNames = [];
-ve.dm.modelRegistry.register( ve.dm.example.HandlesOwnChildrenNode );
 
 ve.dm.example.annotationData = [
 	{ 'type': 'paragraph' },
@@ -2938,22 +2929,6 @@ ve.dm.example.annotationData = [
 	'B',
 	'a',
 	'r',
-	{ 'type': '/paragraph' },
-	{ 'type': 'exampleHandlesOwnChildren' },
-	{ 'type': 'paragraph' },
-	'B',
-	{ 'type': '/paragraph' },
-	{ 'type': 'exampleHandlesOwnChildren' },
-	{ 'type': 'paragraph' },
-	'a',
-	{ 'type': '/paragraph' },
-	{ 'type': '/exampleHandlesOwnChildren' },
-	{ 'type': 'paragraph' },
-	'r',
-	{ 'type': '/paragraph' },
-	{ 'type': '/exampleHandlesOwnChildren' },
-	{ 'type': 'paragraph' },
-	'B', 'a', 'z',
 	{ 'type': '/paragraph' },
 	{ 'type': 'internalList' },
 	{ 'type': '/internalList' }
@@ -3470,5 +3445,5 @@ ve.dm.example.selectNodesCases = [
 			}
 		],
 		'msg': 'range covering handlesOwnChildren node doesn\'t descend'
-	}
+	},
 ];

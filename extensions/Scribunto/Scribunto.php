@@ -69,7 +69,7 @@ $sbtpl = array(
 
 $wgResourceModules['ext.scribunto'] = $sbtpl + array(
 	'scripts' => 'ext.scribunto.js',
-	// 'dependencies' => array( 'jquery.ui.dialog' ),
+	'dependencies' => array( 'jquery.ui.dialog' ),
 	'messages' => array(
 		'scribunto-parser-dialog-title'
 	),
@@ -106,8 +106,6 @@ $wgAutoloadClasses['Scribunto_LuaUriLibrary'] = $dir.'engines/LuaCommon/UriLibra
 $wgAutoloadClasses['Scribunto_LuaUstringLibrary'] = $dir.'engines/LuaCommon/UstringLibrary.php';
 $wgAutoloadClasses['Scribunto_LuaLanguageLibrary'] = $dir.'engines/LuaCommon/LanguageLibrary.php';
 $wgAutoloadClasses['Scribunto_LuaHtmlLibrary'] = $dir.'engines/LuaCommon/HtmlLibrary.php';
-$wgAutoloadClasses['Scribunto_LuaTextLibrary'] = $dir.'engines/LuaCommon/TextLibrary.php';
-$wgAutoloadClasses['Scribunto_LuaTitleLibrary'] = $dir.'engines/LuaCommon/TitleLibrary.php';
 
 /***** Configuration *****/
 

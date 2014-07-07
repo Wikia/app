@@ -55,6 +55,7 @@ OO.mixinClass( ve.dm.MWTransclusionModel, OO.EventEmitter );
  */
 ve.dm.MWTransclusionModel.prototype.insertTransclusionNode = function ( surfaceFragment ) {
 	surfaceFragment
+		.collapseRangeToEnd()
 		.insertContent( [
 			{
 				'type': 'mwTransclusionInline',
@@ -227,37 +228,29 @@ ve.dm.MWTransclusionModel.prototype.fetch = function () {
 	}
 
 	// Request template specs from server
-	request = ve.init.target.constructor.static.apiRequest( {
+	request = ve.init.mw.Target.static.apiRequest( {
 		'action': 'templatedata',
 		'titles': titles.join( '|' ),
-		'lang': mw.config.get( 'wgUserLanguage' ),
-		'redirects': '1'
+		'lang': mw.config.get( 'wgUserLanguage' )
 	} )
 		.done( function ( data ) {
-			var i, len, id, aliasMap = [];
+			var i, len, id;
 
 			if ( data && data.pages ) {
 				// Keep spec data on hand for future use
 				for ( id in data.pages ) {
 					specs[data.pages[id].title] = data.pages[id];
 				}
-				// Follow redirects
-				if ( data.redirects ) {
-					aliasMap = data.redirects;
-				}
-				// Follow MW's normalisation
+				// Cross-reference under normalized titles
 				if ( data.normalized ) {
-					aliasMap.push.apply( aliasMap, data.normalized );
-				}
-				// Cross-reference aliased titles.
-				for ( i = 0, len = aliasMap.length; i < len; i++ ) {
-					// Only define the alias if the target exists, otherwise
-					// we create a new property with an invalid "undefined" value.
-					if ( hasOwn.call( specs, aliasMap[i].to ) ) {
-						specs[aliasMap[i].from] = specs[aliasMap[i].to];
+					for ( i = 0, len = data.normalized.length; i < len; i++ ) {
+						// Only define the alias if the target exists, otherwise
+						// we create a new property with an invalid "undefined" value.
+						if ( hasOwn.call( specs, data.normalized[i].to ) ) {
+							specs[data.normalized[i].from] = specs[data.normalized[i].to];
+						}
 					}
 				}
-
 				// Prevent asking again for templates that have no specs
 				for ( i = 0, len = titles.length; i < len; i++ ) {
 					title = titles[i];

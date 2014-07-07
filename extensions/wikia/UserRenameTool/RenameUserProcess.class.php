@@ -684,9 +684,10 @@ class RenameUserProcess {
 		);
 		if ( TaskRunner::isModern('UserRename') ) {
 			$task = ( new UserRenameTask() )
+				->wikiId( $wikiIDs )
 				->setPriority( \Wikia\Tasks\Queues\PriorityQueue::NAME );
 
-			$task->call( 'renameUser', $wikiIDs, $callParams );
+			$task->call( 'renameUser', $callParams );
 			$task->queue();
 		} else {
 			// create a new task for the Task Manager to handle all the global tables

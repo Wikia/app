@@ -156,7 +156,7 @@ define('wikia.ui.drawer', ['jquery', 'wikia.window'], function ($, w) {
 	};
 
 	/**
-	 * Hide subdrawer, set subdrawer content and show subdrawer
+	 * Hide subdrawer, ser subdrawer content and show subdrawer
 	 *
 	 * @param subcontent  HTML Content
 	 */

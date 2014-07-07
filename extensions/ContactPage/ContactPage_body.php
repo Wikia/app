@@ -340,7 +340,7 @@ class EmailContactForm {
 
 	function doSubmit() {
 		global $wgOut, $wgUser;
-		global $wgPasswordSender;
+		global $wgUserEmailUseReplyTo, $wgPasswordSender;
 		global $wgContactSender, $wgContactSenderName, $wgContactIncludeIP;
 
 		$csender = $wgContactSender ? $wgContactSender : $wgPasswordSender;
@@ -357,6 +357,9 @@ class EmailContactForm {
 			$submitterAddress = $contactSender;
 		} else {
 			$submitterAddress = new MailAddress( $this->fromaddress, $this->fromname );
+			if ( $wgUserEmailUseReplyTo ) {
+				$replyto = $submitterAddress;
+			}
 		}
 
 		$subject = trim( $this->subject );

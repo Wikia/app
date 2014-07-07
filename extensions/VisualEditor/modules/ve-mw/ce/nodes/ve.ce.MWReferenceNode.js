@@ -11,6 +11,8 @@
  * @class
  * @extends ve.ce.LeafNode
  * @mixins ve.ce.FocusableNode
+ * @mixins ve.ce.ProtectedNode
+ * @mixins ve.ce.RelocatableNode
  *
  * @constructor
  * @param {ve.dm.MWReferenceNode} model Model to observe
@@ -22,6 +24,9 @@ ve.ce.MWReferenceNode = function VeCeMWReferenceNode( model, config ) {
 
 	// Mixin constructors
 	ve.ce.FocusableNode.call( this );
+	ve.ce.ProtectedNode.call( this );
+	ve.ce.RelocatableNode.call( this );
+	ve.ce.ClickableNode.call( this );
 
 	// DOM changes
 	this.$link = this.$( '<a>' ).attr( 'href', '#' );
@@ -42,6 +47,9 @@ ve.ce.MWReferenceNode = function VeCeMWReferenceNode( model, config ) {
 OO.inheritClass( ve.ce.MWReferenceNode, ve.ce.LeafNode );
 
 OO.mixinClass( ve.ce.MWReferenceNode, ve.ce.FocusableNode );
+OO.mixinClass( ve.ce.MWReferenceNode, ve.ce.ProtectedNode );
+OO.mixinClass( ve.ce.MWReferenceNode, ve.ce.RelocatableNode );
+OO.mixinClass( ve.ce.MWReferenceNode, ve.ce.ClickableNode );
 
 /* Static Properties */
 
@@ -92,16 +100,16 @@ ve.ce.MWReferenceNode.prototype.update = function () {
 };
 
 /** */
-ve.ce.MWReferenceNode.prototype.createHighlights = function () {
-	// Mixin method
-	ve.ce.FocusableNode.prototype.createHighlights.call( this );
+ve.ce.MWReferenceNode.prototype.createPhantoms = function () {
+	// Parent method
+	ve.ce.ProtectedNode.prototype.createPhantoms.call( this );
 
 	if ( !this.getModel().isInspectable() ) {
 		// TODO: Move this into one of the classes mixin or inherit from
 		// as any focusable node that isn't inspectable should have this
 		// as it would be bad UX to have a focusable nodes where one of the
 		// same type doesn't show an inspector.
-		this.$highlights
+		this.$phantoms
 			.addClass( 've-ce-mwReferenceNode-missingref' )
 			.attr( 'title', ve.msg( 'visualeditor-referencelist-missingref' ) );
 	}

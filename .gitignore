@@ -16,6 +16,7 @@ sftp-config.json
 psy.cfg
 *.iml
 /build
+/LocalSettings.php
 /robots.txt
 /atlassian-ide-plugin.xml
 _misc

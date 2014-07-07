@@ -21,7 +21,7 @@ ve.ui.WikiaDimensionsWidget = function VeUiWikiaDimensionsWidget( config ) {
 	config = config || {};
 
 	// Parent constructor
-	ve.ui.WikiaDimensionsWidget.super.call( this, config );
+	OO.ui.Widget.call( this, config );
 
 	this.widthInput = new OO.ui.TextInputWidget( {
 		'$': this.$

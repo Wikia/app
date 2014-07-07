@@ -211,7 +211,7 @@ ve.dm.mwExample.MWInternalSectionLink.absoluteData = {
 
 ve.dm.mwExample.MWBlockImage = {
 	'html':
-		'<figure data-mw=\'{"user":"Foo"}\' typeof="mw:Image/Thumb" class="mw-halign-right foobar">' +
+		'<figure typeof="mw:Image/Thumb" class="mw-halign-right foobar">' +
 			'<a href="Foo"><img src="Bar" width="1" height="2" resource="FooBar"></a>' +
 			'<figcaption>abc</figcaption>' +
 		'</figure>',
@@ -228,10 +228,7 @@ ve.dm.mwExample.MWBlockImage = {
 				'resource': 'FooBar',
 				'originalClasses': 'mw-halign-right foobar',
 				'unrecognizedClasses': ['foobar']
-			},
-			'htmlAttributes': [
-				{ 'values': { 'data-mw': '{"user":"Foo"}' } }
-			]
+			}
 		},
 		{ 'type': 'mwImageCaption' },
 		{ 'type': 'paragraph', 'internal': { 'generated': 'wrapper' } },
@@ -265,10 +262,10 @@ ve.dm.mwExample.MWInlineImage = {
 			'isLinked': true,
 			'valign': 'text-top',
 			'resource': './File:Wiki.png',
-			'type': 'none',
+			'type': 'inline',
 			'originalClasses': 'foo mw-valign-text-top',
 			'unrecognizedClasses': ['foo']
-		}
+		},
 	},
 	'storeItems': [
 		{
@@ -545,7 +542,7 @@ ve.dm.mwExample.references = [
 	{ 'type': 'paragraph' },
 	{
 		'type': 'mwReference',
-		'attributes': {
+		 'attributes': {
 			'contentsUsed': true,
 			'listGroup': 'mwReference/',
 			'listIndex': 0,
@@ -574,7 +571,7 @@ ve.dm.mwExample.references = [
 	'F', 'o', 'o',
 	{
 		'type': 'mwReference',
-		'attributes': {
+		 'attributes': {
 			'contentsUsed': true,
 			'listGroup': 'mwReference/',
 			'listIndex': 1,
@@ -601,7 +598,7 @@ ve.dm.mwExample.references = [
 	' ', 'B', 'a', 'z',
 	{
 		'type': 'mwReference',
-		'attributes': {
+		 'attributes': {
 			'contentsUsed': true,
 			'listGroup': 'mwReference/',
 			'listIndex': 2,
@@ -656,7 +653,7 @@ ve.dm.mwExample.references = [
 	{ 'type': 'paragraph' },
 	{
 		'type': 'mwReference',
-		'attributes': {
+		 'attributes': {
 			'contentsUsed': true,
 			'listGroup': 'mwReference/',
 			'listIndex': 3,
@@ -682,7 +679,7 @@ ve.dm.mwExample.references = [
 	{ 'type': '/mwReference' },
 	{
 		'type': 'mwReference',
-		'attributes': {
+		 'attributes': {
 			'contentsUsed': true,
 			'listGroup': 'mwReference/foo',
 			'listIndex': 4,
@@ -902,7 +899,7 @@ ve.dm.mwExample.domToDataCases = {
 			{ 'type': 'internalList' },
 			{ 'type': '/internalList' }
 		],
-		'normalizedBody': '<b>abcd</b> <b>ab</b> <b data-parsoid="3">ab</b><b data-parsoid="4">c</b>'
+		'normalizedBody': '<b>abcd</b> <b>ab</b> <b data-parsoid="3">ab</b><b data-parsoid="4">c</b>',
 	},
 	'mw:Image': {
 		'body': '<p>' + ve.dm.mwExample.MWInlineImage.html + '</p>',
@@ -1731,7 +1728,7 @@ ve.dm.mwExample.domToDataCases = {
 				'type': 'mwLanguage',
 				'attributes': {
 					'href': 'http://fr.wikipedia.org/wiki/Foo'
-				},
+				 },
 				'htmlAttributes': [
 					{
 						'values': {
@@ -1938,7 +1935,7 @@ ve.dm.mwExample.domToDataCases = {
 								{ 'values': { 'data-parsoid': '{}' } }
 							]
 						}
-					]
+					 ]
 				} ]
 			},
 			{ 'type': 'mwImageCaption', 'internal': { 'whitespace': [ undefined, ' ' ] } },

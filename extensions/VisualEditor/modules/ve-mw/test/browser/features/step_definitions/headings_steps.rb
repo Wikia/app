@@ -19,6 +19,10 @@ Then(/^(.+) should appear in the diff view$/) do |headings_string|
   end
 end
 
+Then(/^I can click the X on the save box$/) do
+  on(VisualEditorPage).ex_element.when_present.click
+end
+
 When(/^I click Heading$/) do
   on(VisualEditorPage).heading_element.when_present.click
 end

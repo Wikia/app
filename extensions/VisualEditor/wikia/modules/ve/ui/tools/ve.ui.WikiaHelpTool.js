@@ -1,5 +1,3 @@
-/*global mw */
-
 /**
  * UserInterface WikiaHelp tool.
  *
@@ -10,7 +8,7 @@
  * @param {Object} [config] Configuration options
  */
 ve.ui.WikiaHelpTool = function VeUiWikiaHelpTool( toolGroup, config ) {
-	ve.ui.WikiaHelpTool.super.call( this, toolGroup, config );
+	ve.ui.Tool.call( this, toolGroup, config );
 };
 
 /* Inheritance */

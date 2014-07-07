@@ -11,13 +11,13 @@
  * @class
  * @extends ve.dm.LeafNode
  * @mixins ve.dm.MWImageNode
- *
  * @constructor
+ * @param {number} [length] Length of content data in document
  * @param {Object} [element] Reference to element in linear model
  */
-ve.dm.MWInlineImageNode = function VeDmMWInlineImageNode() {
+ve.dm.MWInlineImageNode = function VeDmMWInlineImageNode( length, element ) {
 	// Parent constructor
-	ve.dm.LeafNode.apply( this, arguments );
+	ve.dm.LeafNode.call( this, 0, element );
 
 	// Mixin constructors
 	ve.dm.MWImageNode.call( this );
@@ -35,7 +35,7 @@ OO.mixinClass( ve.dm.MWInlineImageNode, ve.dm.MWImageNode );
 /* Static Properties */
 
 ve.dm.MWInlineImageNode.static.rdfaToType = {
-	'mw:Image': 'none',
+	'mw:Image': 'inline',
 	'mw:Image/Frameless': 'frameless'
 };
 
@@ -83,11 +83,6 @@ ve.dm.MWInlineImageNode.static.toDataElement = function ( domElements, converter
 	// Extract individual classes
 	classes = typeof classes === 'string' ? classes.trim().split( /\s+/ ) : [];
 
-	// Deal with border flag
-	if ( classes.indexOf( 'mw-image-border' ) !== -1 ) {
-		attributes.borderImage = true;
-		recognizedClasses.push( 'mw-image-border' );
-	}
 	// Vertical alignment
 	if ( classes.indexOf( 'mw-valign-middle' ) !== -1 ) {
 		attributes.valign = 'middle';
@@ -119,7 +114,7 @@ ve.dm.MWInlineImageNode.static.toDataElement = function ( domElements, converter
 
 	// Border
 	if ( classes.indexOf( 'mw-image-border' ) !== -1 ) {
-		attributes.borderImage = true;
+		attributes.border = true;
 		recognizedClasses.push( 'mw-image-border' );
 	}
 
@@ -162,7 +157,7 @@ ve.dm.MWInlineImageNode.static.toDomElements = function ( data, doc ) {
 		classes.push( 'mw-default-size' );
 	}
 
-	if ( data.attributes.borderImage ) {
+	if ( data.attributes.border ) {
 		classes.push( 'mw-image-border' );
 	}
 

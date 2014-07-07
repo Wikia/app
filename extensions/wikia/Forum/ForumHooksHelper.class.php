@@ -72,6 +72,7 @@ class ForumHooksHelper {
 	}
 
 	static protected function getIndexPath() {
+		$app = F::App();
 		$indexPage = Title::newFromText( 'Forum', NS_SPECIAL );
 		return array( 'title' => wfMessage( 'forum-forum-title' )->escaped(), 'url' => $indexPage->getFullUrl() );
 	}
@@ -161,6 +162,36 @@ class ForumHooksHelper {
 		}
 
 		return true;
+	}
+
+	static public function onWallContributionsLine($pageNamespace, $wallMessage, $wfMsgOptsBase, &$ret) {
+		if ( $pageNamespace != NS_WIKIA_FORUM_BOARD ) {
+			return true;
+		}
+
+		if ( empty( $wfMsgOptsBase['articleTitleVal'] ) ) {
+			$wfMsgOptsBase['articleTitleTxt'] = wfMessage( 'forum-recentchanges-deleted-reply-title' )->text();
+		}
+
+		$wfMsgOpts = array(
+			$wfMsgOptsBase['articleFullUrl'],
+			$wfMsgOptsBase['articleTitleTxt'],
+			$wfMsgOptsBase['wallPageFullUrl'],
+			$wfMsgOptsBase['wallPageName'],
+			$wfMsgOptsBase['createdAt'],
+			$wfMsgOptsBase['DiffLink'],
+			$wfMsgOptsBase['historyLink']
+		);
+
+		if ( $wfMsgOptsBase['isThread'] && $wfMsgOptsBase['isNew'] ) {
+			$wfMsgOpts[] = Xml::element( 'strong', array(), wfMessage( 'newpageletter' )->plain() . ' ' );
+		} else {
+			$wfMsgOpts[] = '';
+		}
+
+		$ret .= wfMessage( 'forum-contributions-line', $wfMsgOpts )->text();
+
+		return false;
 	}
 
 	static public function onWallRecentchangesMessagePrefix($namespace, &$prefix) {

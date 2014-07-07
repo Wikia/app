@@ -42,7 +42,7 @@ ve.test.utils.runSurfaceHandleSpecialKeyTest = function ( assert, html, range, o
 	expectedData( data );
 
 	assert.deepEqualWithDomElements( model.getDocument().getFullData(), data, msg + ': data' );
-	assert.equalRange( selection, expectedRange, msg + ': range' );
+	assert.deepEqual( selection, expectedRange, msg + ': range' );
 	surface.destroy();
 };
 
@@ -134,18 +134,6 @@ QUnit.test( 'handleDelete', function ( assert ) {
 				},
 				'expectedRange': new ve.Range( 39 ),
 				'msg': 'Focusable node deleted if selected first'
-			},
-			{
-				'range': new ve.Range( 0, 63 ),
-				'operations': ['backspace'],
-				'expectedData': function ( data ) {
-					data.splice( 0, 61,
-							{ 'type': 'paragraph' },
-							{ 'type': '/paragraph' }
-						);
-				},
-				'expectedRange': new ve.Range( 1 ),
-				'msg': 'Backspace after select all spanning entire document creates empty paragraph'
 			}
 		];
 
@@ -365,9 +353,7 @@ QUnit.test( 'onContentChange', function ( assert ) {
 						{
 							'type': 'replace',
 							'insert': [ 'A' ],
-							'remove': [],
-							'insertedDataOffset': 0,
-							'insertedDataLength': 1
+							'remove': []
 						},
 						{ 'type': 'retain', 'length': 3 }
 					]
@@ -438,7 +424,7 @@ QUnit.test( 'onContentChange', function ( assert ) {
 			ops.push( txs[i].getOperations() );
 		}
 		assert.deepEqual( ops, expectedOps, msg + ': operations' );
-		assert.equalRange( surface.getModel().getSelection(), expectedRange, msg + ': range' );
+		assert.deepEqual( surface.getModel().getSelection(), expectedRange, msg + ': range' );
 
 		surface.destroy();
 	}
@@ -535,8 +521,8 @@ QUnit.test( 'onCopy', function ( assert ) {
 		slice = view.clipboard[clipboardIndex].slice;
 
 		assert.deepEqual( slice.data.data, expectedData, msg + ': data' );
-		assert.equalRange( slice.originalRange, expectedOriginalRange, msg + ': originalRange' );
-		assert.equalRange( slice.balancedRange, expectedBalancedRange, msg + ': balancedRange' );
+		assert.deepEqual( slice.originalRange, expectedOriginalRange, msg + ': originalRange' );
+		assert.deepEqual( slice.balancedRange, expectedBalancedRange, msg + ': balancedRange' );
 		assert.deepEqual( view.$pasteTarget.html(), expectedHtml, msg + ': html' );
 
 		surface.destroy();
@@ -575,7 +561,7 @@ QUnit.test( 'beforePaste/afterPaste', function ( assert ) {
 						{
 							'type': 'replace',
 							'insert': [
-								'F', 'o', 'o'
+								'F', 'o', 'o',
 							],
 							'remove': []
 						},
@@ -603,7 +589,7 @@ QUnit.test( 'beforePaste/afterPaste', function ( assert ) {
 			},
 			{
 				'range': new ve.Range( 4 ),
-				'pasteHtml': '<span rel="ve:Alien">Foo</span><b>B</b>a<!-- comment --><b>r</b>',
+				'pasteHtml': '<cite>Foo</cite><b>B</b>a<!-- comment --><b>r</b>',
 				'expectedRange': new ve.Range( 7 ),
 				'expectedOps': [
 					[
@@ -620,7 +606,7 @@ QUnit.test( 'beforePaste/afterPaste', function ( assert ) {
 			},
 			{
 				'range': new ve.Range( 4 ),
-				'pasteHtml': '<span rel="ve:Alien">Foo</span><b>B</b>a<!-- comment --><b>r</b>',
+				'pasteHtml': '<cite>Foo</cite><b>B</b>a<!-- comment --><b>r</b>',
 				'pasteSpecial': true,
 				'expectedRange': new ve.Range( 7 ),
 				'expectedOps': [
@@ -756,7 +742,7 @@ QUnit.test( 'beforePaste/afterPaste', function ( assert ) {
 								{ 'type': '/tableRow' },
 								{ 'type': '/tableSection' },
 								{ 'type': '/table' },
-								{ 'type': 'paragraph' }
+								{ 'type': 'paragraph' },
 							],
 							'remove': []
 						},
@@ -817,7 +803,7 @@ QUnit.test( 'beforePaste/afterPaste', function ( assert ) {
 			ops.push( txs[i].getOperations() );
 		}
 		assert.deepEqual( ops, expectedOps, msg + ': operations' );
-		assert.equalRange( model.getSelection(), expectedRange, msg +  ': range' );
+		assert.deepEqual( model.getSelection(), expectedRange, msg +  ': range' );
 
 		surface.destroy();
 	}
@@ -831,53 +817,19 @@ QUnit.test( 'beforePaste/afterPaste', function ( assert ) {
 
 } );
 
-QUnit.test( 'getNearestCorrectOffset', function ( assert ) {
-	var i, dir,
-		surface = ve.test.utils.createSurfaceFromHtml( ve.dm.example.html ),
-		view = surface.getView(),
-		data = surface.getModel().getDocument().data,
-		expected = {
-			// 10 offsets per row
-			'-1': [
-				1, 1, 2, 3, 4, 4, 4, 4, 4, 4,
-				10, 11, 11, 11, 11, 15, 16, 16, 16, 16,
-				20, 21, 21, 21, 21, 21, 21, 21, 21, 29,
-				30, 30, 30, 30, 30, 30, 30, 30, 38, 39,
-				39, 41, 42, 42, 42, 42, 46, 47, 47, 47,
-				47, 51, 52, 52, 52, 52, 56, 57, 57, 59,
-				60, 60, 60
-			],
-			'1': [
-				1, 1, 2, 3, 4, 10, 10, 10, 10, 10,
-				10, 11, 15, 15, 15, 15, 16, 20, 20, 20,
-				20, 21, 29, 29, 29, 29, 29, 29, 29, 29,
-				30, 38, 38, 38, 38, 38, 38, 38, 38, 39,
-				41, 41, 42, 46, 46, 46, 46, 47, 51, 51,
-				51, 51, 52, 56, 56, 56, 56, 57, 59, 59,
-				60, 60, 60
-			]
-		};
-
-	QUnit.expect( data.getLength() * 2 );
-
-	for ( dir = -1; dir <= 1; dir += 2 ) {
-		for ( i = 0; i < data.getLength(); i++ ) {
-			assert.equal( view.getNearestCorrectOffset( i, dir ), expected[dir][i], 'Direction: ' + dir + ' Offset: ' + i );
-		}
-	}
-} );
-
 /* Methods with return values */
 // TODO: ve.ce.Surface#hasSlugAtOffset
+// TODO: ve.ce.Surface#getClickCount
 // TODO: ve.ce.Surface#needsPawn
 // TODO: ve.ce.Surface#getSurface
 // TODO: ve.ce.Surface#getModel
 // TODO: ve.ce.Surface#getDocument
 // TODO: ve.ce.Surface#getFocusedNode
 // TODO: ve.ce.Surface#isRenderingLocked
-// TODO: ve.ce.Surface#getSelectionRect
+// TODO: ve.ce.Surface#getDir
 
 /* Methods without return values */
+// TODO: ve.ce.Surface#getSelectionRect
 // TODO: ve.ce.Surface#initialize
 // TODO: ve.ce.Surface#enable
 // TODO: ve.ce.Surface#disable
@@ -895,6 +847,7 @@ QUnit.test( 'getNearestCorrectOffset', function ( assert ) {
 // TODO: ve.ce.Surface#afterDocumentKeyPress
 // TODO: ve.ce.Surface#onDocumentKeyUp
 // TODO: ve.ce.Surface#onCut
+// TODO: ve.ce.Surface#onCopy
 // TODO: ve.ce.Surface#onPaste
 // TODO: ve.ce.Surface#onDocumentCompositionEnd
 // TODO: ve.ce.Surface#onChange
@@ -907,6 +860,8 @@ QUnit.test( 'getNearestCorrectOffset', function ( assert ) {
 // TODO: ve.ce.Surface#handleUpOrDownArrowKey
 // TODO: ve.ce.Surface#handleInsertion
 // TODO: ve.ce.Surface#showSelection
-// TODO: ve.ce.Surface#appendHighlights
+// TODO: ve.ce.Surface#replacePhantoms
+// TODO: ve.ce.Surface#replaceHighlight
+// TODO: ve.ce.Surface#getNearestCorrectOffset
 // TODO: ve.ce.Surface#incRenderLock
 // TODO: ve.ce.Surface#decRenderLock

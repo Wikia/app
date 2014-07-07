@@ -2,8 +2,8 @@
 	echo $intro;
 
 	if ( $isLoggedIn ) {
-		echo wfMessage( 'specialcontact-logged-in-as', $encName )->parseAsBlock();
-		echo wfMessage( 'specialcontact-mail-on-file', $encEmail )->parseAsBlock();
+		echo wfMsgExt( 'specialcontact-logged-in-as', array( 'parse' ), $encName );
+		echo wfMsgExt( 'specialcontact-mail-on-file', array( 'parse' ), $encEmail );
 	}
 ?>
 <? if(!empty($errMessages)) : ?>
@@ -24,44 +24,44 @@
 	<input name=wpUserName type=hidden value="<?= $encName; ?>"/>
 	<input name=wpEmail type=hidden value="<?= $encEmail; ?>"/>
 <? else : ?>
-	<label for=wpUserName><?= wfMessage( 'specialcontact-username' )->escaped() ?></label>
+	<label for=wpUserName><?= wfMsg( 'specialcontact-username' ) ?></label>
 	<input id=wpUserName name=wpUserName requireds value="<?= $userName ?>"/>
 
-	<label for=wpEmail><?= wfMessage( 'specialcontact-yourmail' )->escaped() ?></label>
+	<label for=wpEmail><?= wfMsg( 'specialcontact-yourmail' ) ?></label>
 	<input id=wpEmail name=wpEmail type=email requireds value="<?= $email ?>"<?= !empty($errors['wpEmail']) ? " class=inpErr " : "" ?>/>
 <? endif; ?>
-	<label for=wpSubject><?= wfMessage( 'specialcontact-problem' )->escaped(); ?></label>
+	<label for=wpSubject><?= wfMsg( 'specialcontact-problem' ); ?></label>
 	<input id=wpSubject name=wpContactSubject requireds value="<?= $subject ?>"/>
 
-	<label for=wpConctactDesc><?= wfMessage( 'specialcontact-problemdesc' )->escaped(); ?></label>
-	<textarea id=wpConctactDesc name=wpContactDesc requireds <?= !empty($errors['wpContactDesc']) ? " class=inpErr " : "" ?> style="font: inherit"><?= $content ?></textarea>
+	<label for=wpConctactDesc><?= wfMsg( 'specialcontact-problemdesc' ); ?></label>
+	<textarea id=wpConctactDesc name=wpContactDesc requireds <?= !empty($errors['wpContactDesc']) ? " class=inpErr " : "" ?>><?= $content ?></textarea>
 
 	<div class=filesUpload>
-		<label for=wpScreenshot1><?= wfMessage( 'specialcontact-label-screenshot' )->escaped() ?></label>
+		<label for=wpScreenshot1><?= wfMsg( 'specialcontact-label-screenshot' ) ?></label>
 		<input id=wpScreenshot1 name=wpScreenshot[] type=file accept="image/*" />
 
-		<label for=wpScreenshot2><?= wfMessage( 'specialcontact-label-additionalscreenshot' )->escaped() ?></label>
+		<label for=wpScreenshot2><?= wfMsg( 'specialcontact-label-additionalscreenshot' ) ?></label>
 		<input id=wpScreenshot2 name=wpScreenshot[] type=file accept="image/*" />
 
-		<label for=wpScreenshot3><?= wfMessage( 'specialcontact-label-additionalscreenshot' )->escaped() ?></label>
+		<label for=wpScreenshot3><?= wfMsg( 'specialcontact-label-additionalscreenshot' ) ?></label>
 		<input id=wpScreenshot3 name=wpScreenshot[] type=file accept="image/*" />
 	</div>
 <? if( !empty( $captchaForm ) ) : ?>
 	<div class=captcha>
 <?=
-		wfMessage( 'specialcontact-captchatitle' )->escaped() .
+		wfMsg( 'specialcontact-captchatitle' ) .
 		$captchaForm
 ?>
 	</div>
 <? endif; ?>
-	<input type=submit class="wkBtn main round" id=contactSub value="<?= wfMessage( 'specialcontact-mail' )->escaped() ?>" />
+	<input type=submit class="wkBtn main round" id=contactSub value="<?= wfMsg( 'specialcontact-mail' ) ?>" />
 <?
 	if( $isLoggedIn && $encEmail ) {
 		if( $hasEmailConf ) {
-			echo "<input type=checkbox name=wgCC value=1 id=wgCC " . ( !empty($cc) ? 'checked ' : '' ) . "/><label for=wgCC>" . wfMessage( 'specialcontact-ccme' )->escaped() . '</label>';
+			echo "<input type=checkbox name=wgCC value=1 id=wgCC " . ( !empty($cc) ? 'checked ' : '' ) . "/><label for=wgCC>" . wfMsg('specialcontact-ccme') . '</label>';
 		}
 		else {
-			echo "<span class=notValidEmail>" . wfMessage( 'specialcontact-ccme' )->escaped() . "</span>". wfMessage( 'specialcontact-ccdisabled' )->parse();
+			echo "<span class=notValidEmail>" . wfMsg('specialcontact-ccme') . "</span>". wfMsgExt('specialcontact-ccdisabled', array('parse') );
 		}
 	}
 ?>

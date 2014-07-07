@@ -36,15 +36,6 @@ ve.ce.LinkAnnotation.static.tagName = 'a';
 
 ve.ce.LinkAnnotation.static.forceContinuation = true;
 
-/* Static Methods */
-
-/**
- * @inheritdoc
- */
-ve.ce.LinkAnnotation.static.getDescription = function ( model ) {
-	return model.getHref();
-};
-
 /* Registration */
 
 ve.ce.annotationFactory.register( ve.ce.LinkAnnotation );

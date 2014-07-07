@@ -193,11 +193,6 @@ ve.ce.SurfaceObserver.prototype.pollOnceInternal = function ( emitChanges ) {
 				$slugWrapper = $nodeOrSlug.closest( '.ve-ce-branchNode-blockSlugWrapper' );
 			} else {
 				node = $nodeOrSlug.data( 'view' );
-				// Check this node belongs to our document
-				if ( node && node.root !== this.documentView.getDocumentNode() ) {
-					node = null;
-					range = null;
-				}
 			}
 		}
 
@@ -206,10 +201,11 @@ ve.ce.SurfaceObserver.prototype.pollOnceInternal = function ( emitChanges ) {
 				.addClass( 've-ce-branchNode-blockSlugWrapper-unfocused' )
 				.removeClass( 've-ce-branchNode-blockSlugWrapper-focused' );
 			this.$slugWrapper = null;
-			// Emit 'position' on the surface view after the animation completes
+			// If the surface focuses a node, emit a rerender after the animation completes
 			setTimeout( function () {
-				if ( observer.documentView ) {
-					observer.documentView.documentNode.surface.emit( 'position' );
+				var focusedNode = ve.getProp( observer.documentView, 'documentNode', 'surface', 'focusedNode' );
+				if ( focusedNode ) {
+					focusedNode.emit( 'rerender' );
 				}
 			}, 200 );
 		}
@@ -240,11 +236,8 @@ ve.ce.SurfaceObserver.prototype.pollOnceInternal = function ( emitChanges ) {
 				this.emit(
 					'contentChange',
 					node,
-					{
-						'text': this.text,
-						'hash': this.hash,
-						'range': this.range
-					},
+					{ 'text': this.text, 'hash': this.hash,
+						'range': this.range },
 					{ 'text': text, 'hash': hash, 'range': range }
 				);
 			}

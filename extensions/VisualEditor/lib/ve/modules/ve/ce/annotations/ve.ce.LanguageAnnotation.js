@@ -28,7 +28,10 @@ ve.ce.LanguageAnnotation = function VeCeLanguageAnnotation( model, parentNode, c
 		.attr( {
 			'lang': lang,
 			'dir': dir,
-			'title': ve.msg( 'visualeditor-languageinspector-block-tooltip' )
+			'title': ve.msg(
+				'visualeditor-languageinspector-block-tooltip',
+				$.uls ? $.uls.data.getAutonym( lang ) : lang
+			)
 		} );
 };
 
@@ -41,23 +44,6 @@ OO.inheritClass( ve.ce.LanguageAnnotation, ve.ce.Annotation );
 ve.ce.LanguageAnnotation.static.name = 'meta/language';
 
 ve.ce.LanguageAnnotation.static.tagName = 'span';
-
-/* Static Methods */
-
-/**
- * @inheritdoc
- */
-ve.ce.LanguageAnnotation.static.getDescription = function ( model ) {
-	var lang = model.getAttribute( 'lang' ).toLowerCase(),
-		name = ve.init.platform.getLanguageName( lang ),
-		dir = ( model.getAttribute( 'dir' ) || '' ).toUpperCase();
-
-	if ( !dir || dir === ve.init.platform.getLanguageDirection( lang ).toUpperCase() ) {
-		return ve.msg( 'visualeditor-languageannotation-description', name );
-	} else {
-		return ve.msg( 'visualeditor-languageannotation-description-with-dir', name, dir );
-	}
-};
 
 /* Registration */
 

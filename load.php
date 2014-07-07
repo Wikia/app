@@ -41,11 +41,13 @@ if ( isset( $_SERVER['MW_COMPILED'] ) ) {
 }
 
 // Construct a tag for newrelic
-Transaction::setEntryPoint(Transaction::ENTRY_POINT_RESOURCE_LOADER);
-
-if ( function_exists( 'newrelic_disable_autorum') ) {
-	newrelic_disable_autorum();
+if( function_exists( 'newrelic_name_transaction' ) ) {
+	if ( function_exists( 'newrelic_disable_autorum') ) {
+		newrelic_disable_autorum();
+	}
+	newrelic_name_transaction( "ResourceLoader" );
 }
+
 
 wfProfileIn( 'load.php' );
 

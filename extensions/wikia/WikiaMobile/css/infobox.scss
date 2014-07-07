@@ -1,10 +1,9 @@
 @import "variables.scss";
 
-table[class*="infobox"],
-table[class="infobox-table"] {
+table[class*="infobox"] {
 	border: 1px solid $border-color;
-	border-collapse: collapse;
 	border-spacing: 0;
+	border-collapse: collapse;
 	font-size: 0.9rem;
 	margin: 20px auto;
 	max-width: 100%;

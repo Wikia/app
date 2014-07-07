@@ -66,21 +66,17 @@ ve.ui.InspectorTool.prototype.onSelect = function () {
 /**
  * @inheritdoc
  */
-ve.ui.InspectorTool.prototype.onUpdateState = function ( fragment ) {
-	var i, len, models,
-		active = false;
-
+ve.ui.InspectorTool.prototype.onUpdateState = function ( nodes, full ) {
 	// Parent method
 	ve.ui.Tool.prototype.onUpdateState.apply( this, arguments );
 
-	models = fragment.getSelectedModels();
-	for ( i = 0, len = models.length; i < len; i++ ) {
-		if ( this.constructor.static.isCompatibleWith( models[i] ) ) {
-			active = true;
-			break;
-		}
-	}
-	this.setActive( active );
+	var toolFactory = this.toolbar.getToolFactory(),
+		tools = toolFactory.getToolsForAnnotations( full );
+
+	this.setActive(
+		// This tool is compatible with one of the annotations
+		tools.indexOf( this.constructor.static.name ) !== -1
+	);
 };
 
 /**

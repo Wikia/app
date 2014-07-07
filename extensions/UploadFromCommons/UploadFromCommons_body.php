@@ -39,7 +39,11 @@ class UploadFromCommons extends UploadFromUrl {
 		
 		
 			
-		return $this->initialize( $desiredDestName, $url );
+		return $this->initialize(
+			$desiredDestName,
+	 		$url,
+			false
+		);
 	}
 	
 	/**

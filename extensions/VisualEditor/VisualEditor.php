@@ -60,16 +60,18 @@ $wgHooks['GetBetaFeaturePreferences'][] = 'VisualEditorHooks::onGetBetaPreferenc
 $wgHooks['GetPreferences'][] = 'VisualEditorHooks::onGetPreferences';
 $wgHooks['ListDefinedTags'][] = 'VisualEditorHooks::onListDefinedTags';
 $wgHooks['MakeGlobalVariablesScript'][] = 'VisualEditorHooks::onMakeGlobalVariablesScript';
-$wgHooks['RedirectSpecialArticleRedirectParams'][] =
-	'VisualEditorHooks::onRedirectSpecialArticleRedirectParams';
 $wgHooks['ResourceLoaderGetConfigVars'][] = 'VisualEditorHooks::onResourceLoaderGetConfigVars';
 $wgHooks['ResourceLoaderRegisterModules'][] = 'VisualEditorHooks::onResourceLoaderRegisterModules';
 $wgHooks['ResourceLoaderTestModules'][] = 'VisualEditorHooks::onResourceLoaderTestModules';
 $wgHooks['ParserTestGlobals'][] = 'VisualEditorHooks::onParserTestGlobals';
 $wgHooks['EditPage::showEditForm:fields'][] = 'VisualEditorHooks::onEditPageShowEditFormFields';
 $wgHooks['PageContentSaveComplete'][] = 'VisualEditorHooks::onPageContentSaveComplete';
-$wgHooks['BeforeInitialize'][] = 'VisualEditorHooks::onBeforeInitialize';
 $wgExtensionFunctions[] = 'VisualEditorHooks::onSetup';
+
+// Set default values for new preferences
+$wgDefaultUserOptions['visualeditor-enable'] = 0;
+$wgDefaultUserOptions['visualeditor-enable-experimental'] = 0;
+$wgDefaultUserOptions['visualeditor-betatempdisable'] = 0;
 
 // Register resource modules
 
@@ -114,9 +116,16 @@ $wgResourceModules += array(
 		)
 	),
 
-	'ext.visualEditor.viewPageTarget.icons' => $wgVisualEditorResourceTemplate + array(
+	'ext.visualEditor.viewPageTarget.icons-raster' => $wgVisualEditorResourceTemplate + array(
 		'styles' => array(
-			'modules/ve-mw/init/styles/ve.init.mw.ViewPageTarget.Icons.css',
+			'modules/ve-mw/init/styles/ve.init.mw.ViewPageTarget.Icons-raster.css',
+		),
+		'targets' => array( 'desktop', 'mobile' ),
+	),
+
+	'ext.visualEditor.viewPageTarget.icons-vector' => $wgVisualEditorResourceTemplate + array(
+		'styles' => array(
+			'modules/ve-mw/init/styles/ve.init.mw.ViewPageTarget.Icons-vector.css',
 		),
 		'targets' => array( 'desktop', 'mobile' ),
 	),
@@ -190,15 +199,14 @@ $wgResourceModules += array(
 			'spamprotectiontext',
 			'summary-preview',
 			'parentheses',
-			'redirectpagesub',
 
 			// Messages needed by VE in init phase only (rest go below)
 			'visualeditor-loadwarning',
 			'visualeditor-loadwarning-token',
 			'visualeditor-timeout',
-			'postedit-confirmation-created',
-			'postedit-confirmation-restored',
-			'postedit-confirmation-saved',
+			'visualeditor-notification-created',
+			'visualeditor-notification-restored',
+			'visualeditor-notification-saved',
 			'visualeditor-savedialog-identify-anon',
 			'visualeditor-savedialog-identify-user',
 		),
@@ -214,7 +222,6 @@ $wgResourceModules += array(
 			'ext.visualEditor.base',
 			'ext.visualEditor.mediawiki',
 			'ext.visualEditor.core.mobile',
-			'ext.visualEditor.mwimage.core',
 		),
 		'targets' => array( 'mobile' ),
 	),
@@ -372,8 +379,11 @@ $wgResourceModules += array(
 			'lib/ve/modules/ve/ce/ve.ce.BranchNode.js',
 			'lib/ve/modules/ve/ce/ve.ce.ContentBranchNode.js',
 			'lib/ve/modules/ve/ce/ve.ce.LeafNode.js',
+			'lib/ve/modules/ve/ce/ve.ce.ProtectedNode.js',
 			'lib/ve/modules/ve/ce/ve.ce.FocusableNode.js',
+			'lib/ve/modules/ve/ce/ve.ce.RelocatableNode.js',
 			'lib/ve/modules/ve/ce/ve.ce.ResizableNode.js',
+			'lib/ve/modules/ve/ce/ve.ce.ClickableNode.js',
 			'lib/ve/modules/ve/ce/ve.ce.Surface.js',
 			'lib/ve/modules/ve/ce/ve.ce.SurfaceObserver.js',
 
@@ -407,6 +417,7 @@ $wgResourceModules += array(
 			'lib/ve/modules/ve/ui/ve.ui.js',
 
 			'lib/ve/modules/ve/ui/ve.ui.Surface.js',
+			'lib/ve/modules/ve/ui/ve.ui.DesktopSurface.js',
 			'lib/ve/modules/ve/ui/ve.ui.Context.js',
 			'lib/ve/modules/ve/ui/ve.ui.Dialog.js',
 			'lib/ve/modules/ve/ui/ve.ui.Inspector.js',
@@ -424,20 +435,17 @@ $wgResourceModules += array(
 
 			'lib/ve/modules/ve/ui/actions/ve.ui.AnnotationAction.js',
 			'lib/ve/modules/ve/ui/actions/ve.ui.ContentAction.js',
+			'lib/ve/modules/ve/ui/actions/ve.ui.DialogAction.js',
 			'lib/ve/modules/ve/ui/actions/ve.ui.FormatAction.js',
 			'lib/ve/modules/ve/ui/actions/ve.ui.HistoryAction.js',
 			'lib/ve/modules/ve/ui/actions/ve.ui.IndentationAction.js',
+			'lib/ve/modules/ve/ui/actions/ve.ui.InspectorAction.js',
 			'lib/ve/modules/ve/ui/actions/ve.ui.ListAction.js',
-			'lib/ve/modules/ve/ui/actions/ve.ui.WindowAction.js',
 
-			'lib/ve/modules/ve/ui/dialogs/ve.ui.ActionDialog.js',
-			'lib/ve/modules/ve/ui/dialogs/ve.ui.NodeDialog.js',
 			'lib/ve/modules/ve/ui/dialogs/ve.ui.CommandHelpDialog.js',
 
 			'lib/ve/modules/ve/ui/widgets/ve.ui.SurfaceWidget.js',
 			'lib/ve/modules/ve/ui/widgets/ve.ui.LinkTargetInputWidget.js',
-			'lib/ve/modules/ve/ui/widgets/ve.ui.ContextWidget.js',
-			'lib/ve/modules/ve/ui/widgets/ve.ui.ContextItemWidget.js',
 			'lib/ve/modules/ve/ui/widgets/ve.ui.DimensionsWidget.js',
 			'lib/ve/modules/ve/ui/widgets/ve.ui.MediaSizeWidget.js',
 
@@ -456,48 +464,46 @@ $wgResourceModules += array(
 			'lib/ve/modules/ve/ui/inspectors/ve.ui.SpecialCharacterInspector.js',
 		),
 		'debugScripts' => array(
-			'lib/ve/modules/ve/ui/ve.ui.DebugBar.js',
+			'lib/ve/modules/ve/init/ve.init.DebugBar.js',
 		),
 		'styles' => array(
 			// ce
-			'lib/ve/modules/ve/ce/styles/nodes/ve.ce.FocusableNode.css',
-			'lib/ve/modules/ve/ce/styles/nodes/ve.ce.AlienNode.css',
-			'lib/ve/modules/ve/ce/styles/nodes/ve.ce.BranchNode.css',
-			'lib/ve/modules/ve/ce/styles/nodes/ve.ce.DocumentNode.css',
-			'lib/ve/modules/ve/ce/styles/nodes/ve.ce.GeneratedContentNode.css',
-			'lib/ve/modules/ve/ce/styles/nodes/ve.ce.ImageNode.css',
-			'lib/ve/modules/ve/ce/styles/annotations/ve.ce.LanguageAnnotation.css',
-			'lib/ve/modules/ve/ce/styles/nodes/ve.ce.ResizableNode.css',
+			'lib/ve/modules/ve/ce/styles/ve.ce.AlienNode.css',
+			'lib/ve/modules/ve/ce/styles/ve.ce.BranchNode.css',
+			'lib/ve/modules/ve/ce/styles/ve.ce.DocumentNode.css',
+			'lib/ve/modules/ve/ce/styles/ve.ce.FocusableNode.css',
+			'lib/ve/modules/ve/ce/styles/ve.ce.GeneratedContentNode.css',
+			'lib/ve/modules/ve/ce/styles/ve.ce.ImageNode.css',
+			'lib/ve/modules/ve/ce/styles/ve.ce.LanguageAnnotation.css',
+			'lib/ve/modules/ve/ce/styles/ve.ce.ProtectedNode.css',
+			'lib/ve/modules/ve/ce/styles/ve.ce.RelocatableNode.css',
+			'lib/ve/modules/ve/ce/styles/ve.ce.ResizableNode.css',
 			'lib/ve/modules/ve/ce/styles/ve.ce.Surface.css',
 
 			// ui
-			'lib/ve/modules/ve/ui/styles/dialogs/ve.ui.ActionDialog.css',
-			'lib/ve/modules/ve/ui/styles/dialogs/ve.ui.CommandHelpDialog.css',
-			'lib/ve/modules/ve/ui/styles/tools/ve.ui.FormatTool.css',
+			'lib/ve/modules/ve/ui/styles/ve.ui.CommandHelpDialog.css',
+			'lib/ve/modules/ve/ui/styles/ve.ui.DesktopContext.css',
+			'lib/ve/modules/ve/ui/styles/ve.ui.FormatTool.css',
 			'lib/ve/modules/ve/ui/styles/ve.ui.Inspector.css',
-			'lib/ve/modules/ve/ui/styles/widgets/ve.ui.ContextItemWidget.css',
-			'lib/ve/modules/ve/ui/styles/widgets/ve.ui.ContextWidget.css',
-			'lib/ve/modules/ve/ui/styles/widgets/ve.ui.DimensionsWidget.css',
-			'lib/ve/modules/ve/ui/styles/widgets/ve.ui.MediaSizeWidget.css',
-			'lib/ve/modules/ve/ui/styles/inspectors/ve.ui.SpecialCharacterInspector.css',
-			'lib/ve/modules/ve/ui/styles/widgets/ve.ui.SurfaceWidget.css',
+			'lib/ve/modules/ve/ui/styles/ve.ui.LanguageInputWidget.css',
+			'lib/ve/modules/ve/ui/styles/ve.ui.MediaSizeWidget.css',
+			'lib/ve/modules/ve/ui/styles/ve.ui.SpecialCharacterInspector.css',
+			'lib/ve/modules/ve/ui/styles/ve.ui.SurfaceWidget.css',
 			'lib/ve/modules/ve/ui/styles/ve.ui.Surface.css',
 			'lib/ve/modules/ve/ui/styles/ve.ui.Toolbar.css',
 
 			// TODO: add debugStyles to ResourceLoader
-			'lib/ve/modules/ve/ui/styles/ve.ui.DebugBar.css',
+			'lib/ve/modules/ve/init/styles/ve.init.DebugBar.css',
 		),
 		'skinStyles' => array(
 			'default' => array(
 				'lib/ve/modules/ve/ui/themes/apex/ve.ui.Inspector.css',
-				'lib/ve/modules/ve/ui/themes/apex/dialogs/ve.ui.ActionDialog.css',
 			),
 			'minerva' => array(),
 		),
 		'dependencies' => array(
 			'rangy',
 			'unicodejs.wordbreak',
-			'jquery.uls.data',
 			'ext.visualEditor.mediawiki',
 			'ext.visualEditor.base',
 		),
@@ -521,8 +527,6 @@ $wgResourceModules += array(
 			'visualeditor-dialog-action-cancel',
 			'visualeditor-dialog-action-goback',
 			'visualeditor-dialog-command-help-title',
-			'visualeditor-dialog-error',
-			'visualeditor-dialog-error-dismiss',
 			'visualeditor-dialog-media-size-originalsize-error',
 			'visualeditor-dimensionswidget-px',
 			'visualeditor-dimensionswidget-times',
@@ -587,7 +591,6 @@ $wgResourceModules += array(
 			'lib/ve/modules/ve/ui/ve.ui.MobileContext.js',
 		),
 		'styles' => array(
-			'lib/ve/modules/ve/ui/styles/ve.ui.MobileSurface.css',
 			'lib/ve/modules/ve/ui/styles/ve.ui.MobileContext.css',
 		),
 		'dependencies' => array(
@@ -626,18 +629,18 @@ $wgResourceModules += array(
 			'modules/ve-mw/ui/dialogs/ve.ui.MWCommandHelpDialog.js',
 
 			'modules/ve-mw/ui/tools/ve.ui.MWEditModeTool.js',
+			'modules/ve-mw/ui/tools/ve.ui.MWCommandHelpDialogTool.js',
 			'modules/ve-mw/ui/tools/ve.ui.MWPopupTool.js',
 
 			'modules/ve-mw/ui/inspectors/ve.ui.MWExtensionInspector.js',
-			'modules/ve-mw/ui/inspectors/ve.ui.MWLiveExtensionInspector.js',
 		),
 		'styles' => array(
 			// ui
-			'modules/ve-mw/ui/styles/dialogs/ve.ui.MWBetaWelcomeDialog.css',
-			'modules/ve-mw/ui/styles/inspectors/ve.ui.MWExtensionInspector.css',
-			'modules/ve-mw/ui/styles/dialogs/ve.ui.MWSaveDialog.css',
-			'modules/ve-mw/ui/styles/widgets/ve.ui.MWTitleInputWidget.css',
-			'modules/ve-mw/ui/styles/widgets/ve.ui.MWTocWidget.css',
+			'modules/ve-mw/ui/styles/ve.ui.MWBetaWelcomeDialog.css',
+			'modules/ve-mw/ui/styles/ve.ui.MWExtensionInspector.css',
+			'modules/ve-mw/ui/styles/ve.ui.MWSaveDialog.css',
+			'modules/ve-mw/ui/styles/ve.ui.MWTitleInputWidget.css',
+			'modules/ve-mw/ui/styles/ve.ui.MWTocWidget.css',
 		),
 		'dependencies' => array(
 			'ext.visualEditor.core',
@@ -645,10 +648,8 @@ $wgResourceModules += array(
 			'mediawiki.action.history.diff',
 			'mediawiki.user',
 			'mediawiki.util',
-			'mediawiki.jqueryMsg',
 			'jquery.autoEllipsis',
 			'jquery.byteLimit',
-			//'mediawiki.skinning.content.parsoid',
 		),
 		'messages' => array(
 			'visualeditor-beta-label',
@@ -670,8 +671,6 @@ $wgResourceModules += array(
 			'visualeditor-help-title',
 			'visualeditor-mweditmodesource-title',
 			'visualeditor-mweditmodesource-warning',
-			'visualeditor-mweditmodesource-warning-switch',
-			'visualeditor-mweditmodesource-warning-cancel',
 			'visualeditor-pagemenu-tooltip',
 			'visualeditor-pagetranslationwarning',
 			'visualeditor-savedialog-error-badtoken',
@@ -696,23 +695,14 @@ $wgResourceModules += array(
 			'visualeditor-toolbar-insert',
 			'visualeditor-toolbar-savedialog',
 			'visualeditor-toolbar-style-tooltip',
-			'visualeditor-toolbar-cite-label',
 			'visualeditor-viewpage-savewarning',
-			'visualeditor-viewpage-savewarning-discard',
-			'visualeditor-viewpage-savewarning-keep',
 			'visualeditor-wikitext-warning-title',
 			'visualeditor-window-title',
 			'toc',
-			'showtoc',
-			'hidetoc',
-
-			'captcha-edit',
-			'captcha-label',
-			'colon-separator',
 			// Only used if FancyCaptcha is installed and triggered on save
+			'captcha-label',
 			'fancycaptcha-edit',
-			// Only used if QuestyCaptcha is installed and triggered on save
-			'questycaptcha-edit'
+			'colon-separator',
 		),
 		'targets' => array( 'desktop', 'mobile' ),
 	),
@@ -726,11 +716,6 @@ $wgResourceModules += array(
 			'modules/ve-mw/ce/nodes/ve.ce.MWPreformattedNode.js',
 
 			'modules/ve-mw/ui/tools/ve.ui.MWFormatTool.js',
-		),
-		'skinStyles' => array(
-			'vector' => array(
-				'modules/ve-mw/ui/themes/vector/ve.ui.MWFormatTool.css',
-			),
 		),
 		'dependencies' => array(
 			'ext.visualEditor.mwcore',
@@ -746,7 +731,7 @@ $wgResourceModules += array(
 		'targets' => array( 'desktop', 'mobile' ),
 	),
 
-	'ext.visualEditor.mwimage.core' => $wgVisualEditorResourceTemplate + array(
+	'ext.visualEditor.mwimage' => $wgVisualEditorResourceTemplate + array(
 		'scripts' => array(
 			'modules/ve-mw/dm/nodes/ve.dm.MWImageNode.js',
 			'modules/ve-mw/dm/nodes/ve.dm.MWInlineImageNode.js',
@@ -759,20 +744,6 @@ $wgResourceModules += array(
 			'modules/ve-mw/ce/nodes/ve.ce.MWInlineImageNode.js',
 			'modules/ve-mw/ce/nodes/ve.ce.MWBlockImageNode.js',
 			'modules/ve-mw/ce/nodes/ve.ce.MWImageCaptionNode.js',
-		),
-		'styles' => array(
-			'modules/ve-mw/ce/styles/nodes/ve.ce.MWBlockImageNode.css',
-			'modules/ve-mw/ce/styles/nodes/ve.ce.MWInlineImageNode.css',
-		),
-		'dependencies' => array(
-			'ext.visualEditor.mwcore',
-		),
-		'targets' => array( 'desktop', 'mobile' ),
-	),
-
-	'ext.visualEditor.mwimage' => $wgVisualEditorResourceTemplate + array(
-		'scripts' => array(
-			'modules/ve-mw/dm/models/ve.dm.MWImageModel.js',
 
 			'modules/ve-mw/ui/widgets/ve.ui.MWMediaSearchWidget.js',
 			'modules/ve-mw/ui/widgets/ve.ui.MWMediaResultWidget.js',
@@ -783,19 +754,20 @@ $wgResourceModules += array(
 			'modules/ve-mw/ui/tools/ve.ui.MWMediaDialogTool.js',
 		),
 		'styles' => array(
-			'modules/ve-mw/ui/styles/dialogs/ve.ui.MWMediaDialog.css',
-			'modules/ve-mw/ui/styles/dialogs/ve.ui.MWMediaInsertDialog.css',
-			'modules/ve-mw/ui/styles/widgets/ve.ui.MWMediaResultWidget.css',
+			'modules/ve-mw/ce/styles/ve.ce.MWBlockImageNode.css',
+			'modules/ve-mw/ce/styles/ve.ce.MWInlineImageNode.css',
+			'modules/ve-mw/ui/styles/ve.ui.MWMediaDialog.css',
+			'modules/ve-mw/ui/styles/ve.ui.MWMediaInsertDialog.css',
+			'modules/ve-mw/ui/styles/ve.ui.MWMediaResultWidget.css',
 		),
 		'dependencies' => array(
-			'ext.visualEditor.mwimage.core',
+			'ext.visualEditor.mwcore',
 		),
 		'messages' => array(
 			'visualeditor-dialog-media-alttext-section',
 			'visualeditor-dialog-media-content-section',
 			'visualeditor-dialog-media-insert-button',
 			'visualeditor-dialog-media-insert-title',
-			'visualeditor-dialog-media-noresults',
 			'visualeditor-dialog-media-page-advanced',
 			'visualeditor-dialog-media-page-general',
 			'visualeditor-dialog-media-position-center',
@@ -832,10 +804,12 @@ $wgResourceModules += array(
 
 			'modules/ve-mw/ui/widgets/ve.ui.MWLinkTargetInputWidget.js',
 
-			'modules/ve-mw/ui/inspectors/ve.ui.MWLinkAnnotationInspector.js',
-			'modules/ve-mw/ui/inspectors/ve.ui.MWLinkNodeInspector.js',
+			'modules/ve-mw/ui/inspectors/ve.ui.MWLinkInspector.js',
 
-			'modules/ve-mw/ui/tools/ve.ui.MWLinkNodeInspectorTool.js',
+			'modules/ve-mw/ui/tools/ve.ui.MWLinkInspectorTool.js',
+		),
+		'styles' => array(
+			'modules/ve-mw/ce/styles/ve.ce.MWNumberedExternalLinkNode.css',
 		),
 		'skinStyles' => array(
 			'default' => array(
@@ -847,15 +821,12 @@ $wgResourceModules += array(
 			'ext.visualEditor.mwcore',
 		),
 		'messages' => array(
-			'visualeditor-annotationbutton-linknode-tooltip',
 			'visualeditor-linkinspector-illegal-title',
 			'visualeditor-linkinspector-suggest-external-link',
 			'visualeditor-linkinspector-suggest-matching-page',
 			'visualeditor-linkinspector-suggest-disambig-page',
 			'visualeditor-linkinspector-suggest-redirect-page',
 			'visualeditor-linkinspector-suggest-new-page',
-			'visualeditor-linknodeinspector-title',
-			'visualeditor-linknodeinspector-add-label',
 		),
 		'targets' => array( 'desktop', 'mobile' ),
 	),
@@ -864,7 +835,6 @@ $wgResourceModules += array(
 		'scripts' => array(
 			'modules/ve-mw/dm/metaitems/ve.dm.MWCategoryMetaItem.js',
 			'modules/ve-mw/dm/metaitems/ve.dm.MWDefaultSortMetaItem.js',
-			'modules/ve-mw/dm/metaitems/ve.dm.MWDisplayTitleMetaItem.js',
 			'modules/ve-mw/dm/metaitems/ve.dm.MWHiddenCategoryMetaItem.js',
 			'modules/ve-mw/dm/metaitems/ve.dm.MWIndexDisableMetaItem.js',
 			'modules/ve-mw/dm/metaitems/ve.dm.MWIndexForceMetaItem.js',
@@ -895,12 +865,12 @@ $wgResourceModules += array(
 			'modules/ve-mw/ui/tools/ve.ui.MWMetaDialogTool.js',
 		),
 		'styles' => array(
-			'modules/ve-mw/ui/styles/pages/ve.ui.MWCategoriesPage.css',
-			'modules/ve-mw/ui/styles/widgets/ve.ui.MWCategoryInputWidget.css',
-			'modules/ve-mw/ui/styles/widgets/ve.ui.MWCategoryItemWidget.css',
-			'modules/ve-mw/ui/styles/widgets/ve.ui.MWCategoryPopupWidget.css',
-			'modules/ve-mw/ui/styles/widgets/ve.ui.MWCategoryWidget.css',
-			'modules/ve-mw/ui/styles/dialogs/ve.ui.MWMetaDialog.css',
+			'modules/ve-mw/ui/styles/ve.ui.MWCategoriesPage.css',
+			'modules/ve-mw/ui/styles/ve.ui.MWCategoryInputWidget.css',
+			'modules/ve-mw/ui/styles/ve.ui.MWCategoryItemWidget.css',
+			'modules/ve-mw/ui/styles/ve.ui.MWCategoryPopupWidget.css',
+			'modules/ve-mw/ui/styles/ve.ui.MWCategoryWidget.css',
+			'modules/ve-mw/ui/styles/ve.ui.MWMetaDialog.css',
 		),
 		'dependencies' => array(
 			'ext.visualEditor.mwcore',
@@ -929,9 +899,6 @@ $wgResourceModules += array(
 			'visualeditor-dialog-meta-languages-name-label',
 			'visualeditor-dialog-meta-languages-readonlynote',
 			'visualeditor-dialog-meta-languages-section',
-			'visualeditor-dialog-meta-settings-displaytitle',
-			'visualeditor-dialog-meta-settings-displaytitle-enable',
-			'visualeditor-dialog-meta-settings-hiddencat-label',
 			'visualeditor-dialog-meta-settings-index-default',
 			'visualeditor-dialog-meta-settings-index-disable',
 			'visualeditor-dialog-meta-settings-index-force',
@@ -941,10 +908,7 @@ $wgResourceModules += array(
 			'visualeditor-dialog-meta-settings-newsectioneditlink-disable',
 			'visualeditor-dialog-meta-settings-newsectioneditlink-force',
 			'visualeditor-dialog-meta-settings-newsectioneditlink-label',
-			'visualeditor-dialog-meta-settings-nocontentconvert-label',
-			'visualeditor-dialog-meta-settings-nogallery-label',
 			'visualeditor-dialog-meta-settings-noeditsection-label',
-			'visualeditor-dialog-meta-settings-notitleconvert-label',
 			'visualeditor-dialog-meta-settings-redirect-label',
 			'visualeditor-dialog-meta-settings-redirect-placeholder',
 			'visualeditor-dialog-meta-settings-redirect-staticlabel',
@@ -984,10 +948,10 @@ $wgResourceModules += array(
 			'modules/ve-mw/ui/tools/ve.ui.MWCitationDialogTool.js',
 		),
 		'styles' => array(
-			'modules/ve-mw/ce/styles/nodes/ve.ce.MWReferenceListNode.css',
-			'modules/ve-mw/ce/styles/nodes/ve.ce.MWReferenceNode.css',
-			'modules/ve-mw/ui/styles/widgets/ve.ui.MWReferenceResultWidget.css',
-			'modules/ve-mw/ui/styles/widgets/ve.ui.MWReferenceSearchWidget.css',
+			'modules/ve-mw/ce/styles/ve.ce.MWReferenceListNode.css',
+			'modules/ve-mw/ce/styles/ve.ce.MWReferenceNode.css',
+			'modules/ve-mw/ui/styles/ve.ui.MWReferenceResultWidget.css',
+			'modules/ve-mw/ui/styles/ve.ui.MWReferenceSearchWidget.css',
 		),
 		'dependencies' => array(
 			'ext.visualEditor.mwcore',
@@ -1042,33 +1006,23 @@ $wgResourceModules += array(
 			'modules/ve-mw/ui/pages/ve.ui.MWTemplatePlaceholderPage.js',
 			'modules/ve-mw/ui/pages/ve.ui.MWTransclusionContentPage.js',
 
-			'modules/ve-mw/ui/dialogs/ve.ui.MWTemplateDialog.js',
 			'modules/ve-mw/ui/dialogs/ve.ui.MWTransclusionDialog.js',
 
 			'modules/ve-mw/ui/tools/ve.ui.MWTransclusionDialogTool.js',
 		),
 		'styles' => array(
-			'modules/ve-mw/ce/styles/nodes/ve.ce.MWTransclusionNode.css',
-			'modules/ve-mw/ui/styles/widgets/ve.ui.MWParameterResultWidget.css',
-			'modules/ve-mw/ui/styles/widgets/ve.ui.MWMoreParametersResultWidget.css',
-			'modules/ve-mw/ui/styles/widgets/ve.ui.MWNoParametersResultWidget.css',
-			'modules/ve-mw/ui/styles/widgets/ve.ui.MWParameterSearchWidget.css',
-			'modules/ve-mw/ui/styles/pages/ve.ui.MWTransclusionContentPage.css',
-			'modules/ve-mw/ui/styles/dialogs/ve.ui.MWTransclusionDialog.css',
-		),
-		'skinStyles' => array(
-			'default' => array(
-				'modules/ve-mw/ui/themes/apex/pages/ve.ui.MWParameterPage.css',
-				'modules/ve-mw/ui/themes/apex/pages/ve.ui.MWTemplatePage.css',
-			),
-			'minerva' => array(
-				'modules/ve-mw/ui/themes/agora/pages/ve.ui.MWParameterPage.css',
-				'modules/ve-mw/ui/themes/agora/pages/ve.ui.MWTemplatePage.css',
-			),
+			'modules/ve-mw/ce/styles/ve.ce.MWTransclusionNode.css',
+			'modules/ve-mw/ui/styles/ve.ui.MWParameterPage.css',
+			'modules/ve-mw/ui/styles/ve.ui.MWParameterResultWidget.css',
+			'modules/ve-mw/ui/styles/ve.ui.MWMoreParametersResultWidget.css',
+			'modules/ve-mw/ui/styles/ve.ui.MWNoParametersResultWidget.css',
+			'modules/ve-mw/ui/styles/ve.ui.MWParameterSearchWidget.css',
+			'modules/ve-mw/ui/styles/ve.ui.MWTransclusionContentPage.css',
+			'modules/ve-mw/ui/styles/ve.ui.MWTransclusionDialog.css',
+			'modules/ve-mw/ui/styles/ve.ui.MWTemplatePage.css',
 		),
 		'dependencies' => array(
 			'ext.visualEditor.mwcore',
-			'mediawiki.jqueryMsg',
 		),
 		'messages' => array(
 			'visualeditor-dialog-template-title',
@@ -1076,22 +1030,17 @@ $wgResourceModules += array(
 			'visualeditor-dialog-transclusion-add-param',
 			'visualeditor-dialog-transclusion-add-template',
 			'visualeditor-dialog-transclusion-content',
-			'visualeditor-dialog-transclusion-deprecated-parameter',
-			'visualeditor-dialog-transclusion-deprecated-parameter-description',
 			'visualeditor-dialog-transclusion-insert-template',
 			'visualeditor-dialog-transclusion-insert-transclusion',
 			'visualeditor-dialog-transclusion-loading',
 			'visualeditor-dialog-transclusion-multiple-mode',
 			'visualeditor-dialog-transclusion-no-template-description',
 			'visualeditor-dialog-transclusion-options',
-			'visualeditor-dialog-transclusion-param-info',
-			'visualeditor-dialog-transclusion-param-info-missing',
 			'visualeditor-dialog-transclusion-placeholder',
 			'visualeditor-dialog-transclusion-remove-content',
 			'visualeditor-dialog-transclusion-remove-param',
 			'visualeditor-dialog-transclusion-remove-template',
 			'visualeditor-dialog-transclusion-required-parameter',
-			'visualeditor-dialog-transclusion-required-parameter-description',
 			'visualeditor-dialog-transclusion-single-mode',
 			'visualeditor-dialog-transclusion-title',
 			'visualeditor-dialog-transclusion-wikitext-label',
@@ -1109,27 +1058,18 @@ $wgResourceModules += array(
 		'scripts' => array(
 			'lib/ve/modules/ve/dm/annotations/ve.dm.LanguageAnnotation.js',
 			'lib/ve/modules/ve/ce/annotations/ve.ce.LanguageAnnotation.js',
-			'lib/ve/modules/ve/ui/widgets/ve.ui.LanguageResultWidget.js',
-			'lib/ve/modules/ve/ui/widgets/ve.ui.LanguageSearchWidget.js',
-			'lib/ve/modules/ve/ui/dialogs/ve.ui.LanguageSearchDialog.js',
 			'lib/ve/modules/ve/ui/inspectors/ve.ui.LanguageInspector.js',
 			'lib/ve/modules/ve/ui/tools/ve.ui.LanguageInspectorTool.js',
 			'lib/ve/modules/ve/ui/widgets/ve.ui.LanguageInputWidget.js',
 		),
 		'styles' => array(
-			'lib/ve/modules/ve/ui/styles/widgets/ve.ui.LanguageInputWidget.css',
-			'lib/ve/modules/ve/ui/styles/widgets/ve.ui.LanguageSearchWidget.css',
+			'modules/ve-mw/ui/styles/ve.ui.MWLanguageInputWidget.css',
 		),
 		'dependencies' => array(
 			'ext.visualEditor.core',
-			'mediawiki.language.names',
+			'jquery.uls',
 		),
 		'messages' => array(
-			'visualeditor-annotationbutton-language-tooltip',
-			'visualeditor-dialog-language-auto-direction',
-			'visualeditor-dialog-language-search-title',
-			"visualeditor-languageannotation-description",
-			"visualeditor-languageannotation-description-with-dir",
 			'visualeditor-languageinspector-title',
 			'visualeditor-languageinspector-block-tooltip',
 			'visualeditor-languageinspector-block-tooltip-rtldirection',
@@ -1137,9 +1077,20 @@ $wgResourceModules += array(
 			'visualeditor-languageinspector-widget-label-language',
 			'visualeditor-languageinspector-widget-label-langcode',
 			'visualeditor-languageinspector-widget-label-direction',
-			'visualeditor-language-search-input-placeholder',
+			'visualeditor-annotationbutton-language-tooltip',
 		),
 		'targets' => array( 'desktop', 'mobile' ),
+	),
+
+	'ext.visualEditor.mwlanguage' => $wgVisualEditorResourceTemplate + array(
+		'scripts' => array(
+			'modules/ve-mw/ui/widgets/ve.ui.MWLanguageInputWidget.js',
+			'modules/ve-mw/ui/inspectors/ve.ui.MWLanguageInspector.js',
+		),
+		'dependencies' => array(
+			'ext.visualEditor.language',
+			'jquery.uls',
+		),
 	),
 
 	'ext.visualEditor.mwalienextension' => $wgVisualEditorResourceTemplate + array(
@@ -1150,8 +1101,8 @@ $wgResourceModules += array(
 			'modules/ve-mw/ui/tools/ve.ui.MWAlienExtensionInspectorTool.js',
 		),
 		'styles' => array(
-			'modules/ve-mw/ce/styles/nodes/ve.ce.MWAlienExtensionNode.css',
-			'modules/ve-mw/ui/styles/inspectors/ve.ui.MWAlienExtensionInspector.css',
+			'modules/ve-mw/ce/styles/ve.ce.MWAlienExtensionNode.css',
+			'modules/ve-mw/ui/styles/ve.ui.MWAlienExtensionInspector.css',
 		),
 		'dependencies' => array(
 			'ext.visualEditor.mwcore',
@@ -1169,9 +1120,6 @@ $wgResourceModules += array(
 			'modules/ve-mw/ui/inspectors/ve.ui.MWGalleryInspector.js',
 			'modules/ve-mw/ui/tools/ve.ui.MWGalleryInspectorTool.js',
 		),
-		'styles' => array(
-			'modules/ve-mw/ui/styles/inspectors/ve.ui.MWGalleryInspector.css',
-		),
 		'dependencies' => array(
 			'ext.visualEditor.mwcore',
 		),
@@ -1182,31 +1130,51 @@ $wgResourceModules += array(
 		'targets' => array( 'desktop', 'mobile' ),
 	),
 
+	'ext.visualEditor.mwhiero' => $wgVisualEditorResourceTemplate + array(
+		'scripts' => array(
+			'modules/ve-mw/dm/nodes/ve.dm.MWHieroNode.js',
+			'modules/ve-mw/ce/nodes/ve.ce.MWHieroNode.js',
+			'modules/ve-mw/ui/inspectors/ve.ui.MWHieroInspector.js',
+			'modules/ve-mw/ui/tools/ve.ui.MWHieroInspectorTool.js',
+		),
+		'styles' => array(
+			'modules/ve-mw/ce/styles/ve.ce.MWHieroNode.css',
+		),
+		'dependencies' => array(
+			'ext.visualEditor.mwcore',
+		),
+		'messages' => array(
+			'visualeditor-mwhieroinspector-title',
+		),
+		'targets' => array( 'desktop', 'mobile' ),
+	),
+
 	'ext.visualEditor.experimental' => array(
 		'dependencies' => array(
+			'ext.visualEditor.mwhiero',
 			'ext.visualEditor.language',
+			'ext.visualEditor.mwlanguage',
 			'ext.visualEditor.mwalienextension',
 		),
 		'targets' => array( 'desktop', 'mobile' ),
 	),
 
-	'ext.visualEditor.icons' => $wgVisualEditorResourceTemplate + array(
+	'ext.visualEditor.icons-raster' => $wgVisualEditorResourceTemplate + array(
 		'styles' => array(
-			'lib/ve/modules/ve/ui/styles/ve.ui.Icons.css',
-			'modules/ve-mw/ui/styles/ve.ui.Icons.css',
+			'lib/ve/modules/ve/ui/styles/ve.ui.Icons-raster.css',
+			'modules/ve-mw/ui/styles/ve.ui.Icons-raster.css',
+		),
+		'targets' => array( 'desktop', 'mobile' ),
+	),
+	'ext.visualEditor.icons-vector' => $wgVisualEditorResourceTemplate + array(
+		'styles' => array(
+			'lib/ve/modules/ve/ui/styles/ve.ui.Icons-vector.css',
+			'modules/ve-mw/ui/styles/ve.ui.Icons-vector.css',
 		),
 		'targets' => array( 'desktop', 'mobile' ),
 	),
 );
 
-/* Extend MediaWiki configuration */
-
-// Set default values for new preferences
-$wgDefaultUserOptions['visualeditor-enable'] = 0;
-$wgDefaultUserOptions['visualeditor-betatempdisable'] = 0;
-$wgDefaultUserOptions['visualeditor-enable-experimental'] = 0;
-$wgDefaultUserOptions['visualeditor-enable-language'] = 0;
-$wgDefaultUserOptions['visualeditor-hidebetawelcome'] = 0;
 
 /* Configuration */
 
@@ -1216,11 +1184,11 @@ $wgVisualEditorPluginModules = array();
 
 // Array of modules to load based on a preference. Keys are preference names, values are
 // ResourceLoader module names.
-// Remember to also set defaults in $wgDefaultUserOptions!
 $wgVisualEditorPreferenceModules = array(
 	'visualeditor-enable-experimental' => 'ext.visualEditor.experimental',
-	'visualeditor-enable-language' => 'ext.visualEditor.language',
+	//'visualeditor-enable-language' => 'ext.visualEditor.language',
 	//'visualeditor-enable-mwalienextension' => 'ext.visualEditor.mwalienextension',
+	//'visualeditor-enable-mwhiero' => 'ext.visualEditor.mwhiero'
 );
 
 // URL to the Parsoid instance

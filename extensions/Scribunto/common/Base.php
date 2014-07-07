@@ -55,7 +55,7 @@ abstract class ScribuntoEngineBase {
 
 	/**
 	 * Constructor.
-	 *
+	 * 
 	 * @param $options array Associative array of options:
 	 *    - parser:            A Parser object
 	 */
@@ -109,7 +109,7 @@ abstract class ScribuntoEngineBase {
 	}
 
 	/**
-	 * Load a module from some parser-defined template loading mechanism and
+	 * Load a module from some parser-defined template loading mechanism and 
 	 * register a parser output dependency.
 	 *
 	 * Does not initialize the module, i.e. do not expect it to complain if the module
@@ -119,28 +119,22 @@ abstract class ScribuntoEngineBase {
 	 * @return ScribuntoEngineModule
 	 */
 	function fetchModuleFromParser( Title $title ) {
-		$key = $title->getPrefixedDBkey();
-		if ( !array_key_exists( $key, $this->modules ) ) {
-			list( $text, $finalTitle ) = $this->parser->fetchTemplateAndTitle( $title );
-			if ( $text === false ) {
-				$this->modules[$key] = null;
-				return null;
-			}
+		list( $text, $finalTitle ) = $this->parser->fetchTemplateAndTitle( $title );
+		if ( $text === false ) {
+			return null;
+		}
 
-			$finalKey = $finalTitle->getPrefixedDBkey();
-			if ( !isset( $this->modules[$finalKey] ) ) {
-				$this->modules[$finalKey] = $this->newModule( $text, $finalKey );
-			}
-			// Almost certainly $key === $finalKey, but just in case...
-			$this->modules[$key] = $this->modules[$finalKey];
+		$key = $finalTitle->getPrefixedDBkey();
+		if ( !isset( $this->modules[$key] ) ) {
+			$this->modules[$key] = $this->newModule( $text, $key );
 		}
 		return $this->modules[$key];
 	}
 
 	/**
-	 * Validates the script and returns a Status object containing the syntax
+	 * Validates the script and returns a Status object containing the syntax 
 	 * errors for the given code.
-	 *
+	 * 
 	 * @param $text string
 	 * @param $chunkName
 	 * @return Status
@@ -165,7 +159,7 @@ abstract class ScribuntoEngineBase {
 	function getGeSHiLanguage() {
 		return false;
 	}
-
+	
 	/**
 	 * Get the language for Ace code editor.
 	 */
@@ -223,16 +217,16 @@ abstract class ScribuntoModuleBase {
 	public function getChunkName()  { return $this->chunkName; }
 
 	/**
-	 * Validates the script and returns a Status object containing the syntax
+	 * Validates the script and returns a Status object containing the syntax 
 	 * errors for the given code.
 	 *
 	 * @return Status
 	 */
 	abstract public function validate();
-
+	
 	/**
 	 * Invoke the function with the specified name.
-	 *
+	 * 
 	 * @return string
 	 */
 	abstract public function invoke( $name, $frame );

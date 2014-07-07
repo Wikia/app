@@ -13,7 +13,9 @@
  * @class
  * @abstract
  * @extends ve.ce.LeafNode
+ * @mixins ve.ce.ProtectedNode
  * @mixins ve.ce.FocusableNode
+ * @mixins ve.ce.RelocatableNode
  * @mixins ve.ce.GeneratedContentNode
  *
  * @constructor
@@ -25,8 +27,11 @@ ve.ce.MWTransclusionNode = function VeCeMWTransclusionNode( model, config ) {
 	ve.ce.LeafNode.call( this, model, config );
 
 	// Mixin constructors
+	ve.ce.ProtectedNode.call( this );
 	ve.ce.FocusableNode.call( this );
+	ve.ce.RelocatableNode.call( this );
 	ve.ce.GeneratedContentNode.call( this );
+	ve.ce.ClickableNode.call( this );
 
 	// DOM changes
 	this.$element.addClass( 've-ce-mwTransclusionNode' );
@@ -36,8 +41,11 @@ ve.ce.MWTransclusionNode = function VeCeMWTransclusionNode( model, config ) {
 
 OO.inheritClass( ve.ce.MWTransclusionNode, ve.ce.LeafNode );
 
+OO.mixinClass( ve.ce.MWTransclusionNode, ve.ce.ProtectedNode );
 OO.mixinClass( ve.ce.MWTransclusionNode, ve.ce.FocusableNode );
+OO.mixinClass( ve.ce.MWTransclusionNode, ve.ce.RelocatableNode );
 OO.mixinClass( ve.ce.MWTransclusionNode, ve.ce.GeneratedContentNode );
+OO.mixinClass( ve.ce.MWTransclusionNode, ve.ce.ClickableNode );
 
 /* Static Properties */
 
@@ -47,32 +55,12 @@ ve.ce.MWTransclusionNode.static.renderHtmlAttributes = false;
 
 ve.ce.MWTransclusionNode.static.primaryCommandName = 'transclusion';
 
-/* Static Methods */
-
-/**
- * @inheritdoc
- */
-ve.ce.MWTransclusionNode.static.getDescription = function ( model ) {
-	var i, len, part,
-		parts = model.getPartsList(),
-		words = [];
-
-	for ( i = 0, len = parts.length; i < len; i++ ) {
-		part = parts[i];
-		if ( part.template ) {
-			words.push( part.template );
-		}
-	}
-
-	return words.join( ', ' );
-};
-
 /* Methods */
 
 /** */
 ve.ce.MWTransclusionNode.prototype.generateContents = function ( config ) {
 	var xhr, deferred = $.Deferred();
-	xhr = ve.init.target.constructor.static.apiRequest( {
+	xhr = ve.init.mw.Target.static.apiRequest( {
 		'action': 'visualeditor',
 		'paction': 'parsefragment',
 		'page': mw.config.get( 'wgRelevantPageName' ),

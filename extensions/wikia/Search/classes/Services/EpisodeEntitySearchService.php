@@ -10,8 +10,6 @@ class EpisodeEntitySearchService extends EntitySearchService {
 	const API_URL = 'api/v1/Articles/AsSimpleJson?id=';
 	const EPISODE_TYPE = 'tv_episode';
 	const DEFAULT_SLOP = 1;
-	
-	private static $ARTICLE_TYPES_SUPPORTED_LANGS = ['en'];
 
 	protected function prepareQuery( $query ) {
 		$select = $this->getSelect();
@@ -29,9 +27,7 @@ class EpisodeEntitySearchService extends EntitySearchService {
 		$namespaces = $this->getNamespace() ? $this->getNamespace() : static::DEFAULT_NAMESPACE;
 		$namespaces = is_array( $namespaces ) ? $namespaces : [ $namespaces ];
 		$select->createFilterQuery( 'ns' )->setQuery( '+(ns:(' . implode( ' ', $namespaces ) . '))' );
-		if ( in_array( strtolower( $slang ), static::$ARTICLE_TYPES_SUPPORTED_LANGS ) ) {
-			$select->createFilterQuery( 'type' )->setQuery( '+(article_type_s:' . static::EPISODE_TYPE . ')' );
-		}
+		$select->createFilterQuery( 'type' )->setQuery( '+(article_type_s:' . static::EPISODE_TYPE . ')' );
 
 		$dismax->setQueryFields( implode( ' ', [
 			'title_em^8',

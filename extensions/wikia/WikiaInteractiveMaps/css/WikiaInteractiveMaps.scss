@@ -5,7 +5,6 @@
 // TODO used also for parser tag - could be abstracted
 $content-color: #fff;
 $gradient-color-start: rgba(0, 0, 0, 0.7);
-$map-item-max-width: 1110px;
 
 .wikia-interactive-maps {
 	position: relative;
@@ -50,7 +49,6 @@ $map-item-max-width: 1110px;
 		color: $content-color;
 		left: 0;
 		margin: 0;
-		max-width: $map-item-max-width;
 		padding: 50px 20px 20px;
 		position: absolute;
 		width: 100%;

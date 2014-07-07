@@ -45,6 +45,19 @@ if ( !function_exists( 'version_compare' ) || version_compare( phpversion(), '5.
 	wfPHPVersionError( 'index.php' );
 }
 
+/*
+ * Wikia Change - begin
+ *
+ * General entry point name for Newrelic - will be overwritten later
+ */
+if( function_exists( 'newrelic_name_transaction' ) ) {
+	newrelic_name_transaction('Index');
+}
+/*
+ * Wikia Change - end
+ */
+
+
 # Initialise common code.  This gives us access to GlobalFunctions, the
 # AutoLoader, and the globals $wgRequest, $wgOut, $wgUser, $wgLang and
 # $wgContLang, amongst others; it does *not* load $wgTitle

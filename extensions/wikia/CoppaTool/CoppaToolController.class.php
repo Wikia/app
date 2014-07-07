@@ -112,14 +112,8 @@ class CoppaToolController extends WikiaController {
 			'suppress' => true,
 		];
 
-		if (TaskRunner::isModern('MultiDeleteTask')) {
-			$task = new \Wikia\Tasks\Tasks\MultiTask();
-			$task->call('delete', $taskParams);
-			$batchDeleteTaskId = $task->queue();
-		} else {
-			$batchDeleteTask = new MultiDeleteTask( $taskParams );
-			$batchDeleteTaskId = $batchDeleteTask->submitForm();
-		}
+		$batchDeleteTask = new MultiDeleteTask( $taskParams );
+		$batchDeleteTaskId = $batchDeleteTask->submitForm();
 
 		$this->response->setVal( 'success', true );
 		$this->response->setVal( 'resultMsg', wfMessage( 'coppatool-delete-user-pages-success', $batchDeleteTaskId )->plain() );
@@ -160,9 +154,10 @@ class CoppaToolController extends WikiaController {
 		];
 		if ( TaskRunner::isModern('UserRename') ) {
 			$task = ( new UserRenameTask() )
+				->wikiId( $wikiIDs )
 				->setPriority( \Wikia\Tasks\Queues\PriorityQueue::NAME );
 
-			$task->call('renameUser', $wikiIDs, $taskParams);
+			$task->call('renameUser', $taskParams);
 			$taskID = $task->queue();
 		} else {
 			$taskParams['city_ids'] = $wikiIDs;

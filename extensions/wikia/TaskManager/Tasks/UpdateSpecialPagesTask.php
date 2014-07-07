@@ -4,7 +4,6 @@ if( !defined( 'MEDIAWIKI' ) ) {
     exit( 1 ) ;
 }
 
-// TODO jobqueue: On removing this legacy job, clean up app/maintenance/updateSpecialPages.php
 class UpdateSpecialPagesTask extends BatchTask {
 	public $mType;
 	public $mVisible;

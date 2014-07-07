@@ -56,15 +56,6 @@ OO.inheritClass( ve.ce.MWInternalLinkAnnotation, ve.ce.LinkAnnotation );
 
 ve.ce.MWInternalLinkAnnotation.static.name = 'link/mwInternal';
 
-/* Static Methods */
-
-/**
- * @inheritdoc
- */
-ve.ce.MWInternalLinkAnnotation.static.getDescription = function ( model ) {
-	return model.getAttribute( 'title' );
-};
-
 /* Registration */
 
 ve.ce.annotationFactory.register( ve.ce.MWInternalLinkAnnotation );

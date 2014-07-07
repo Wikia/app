@@ -27,13 +27,10 @@ class TasksModel {
 			$fullClassName = $baseClassName.$className;
 			$className = self::formatTaskClassName($fullClassName);
 
-			// ignore classes with no manually executable methods
-			if ( count($this->getClassMethods($fullClassName)) > 0 ) {
-				$taskClasses[] = [
-					'name' => $fullClassName,
-					'value' => $className,
-				];
-			}
+			$taskClasses[] = [
+				'name' => $fullClassName,
+				'value' => $className,
+			];
 		}
 
 		wfRunHooks(self::EXTERNAL_TASK_HOOK_NAME, [&$taskClasses]);
@@ -44,10 +41,19 @@ class TasksModel {
 		/** @var \Wikia\Tasks\Tasks\BaseTask $instance */
 		$instance = new $class();
 		$mirror = new ReflectionClass($class);
+		$mirrorClass = $mirror->getName();
 
 		$methods = [];
-		foreach ($instance->getAdminExecuteableMethods() as $methodName) {
-			$methodMirror = $mirror->getMethod($methodName);
+		foreach ($mirror->getMethods(ReflectionMethod::IS_PUBLIC) as $methodMirror) {
+			$methodClass = $methodMirror->getDeclaringClass();
+			$methodName = $methodMirror->getName();
+
+			if ($methodName == 'getAdminNonExecuteables' ||
+				in_array($methodName, $instance->getAdminNonExecuteables()) ||
+				$methodClass->getName() != $mirrorClass) {
+					continue;
+			}
+
 			$methodDocsRaw = $methodMirror->getDocComment();
 			$paramDocs = [];
 			$methodDoc = "";

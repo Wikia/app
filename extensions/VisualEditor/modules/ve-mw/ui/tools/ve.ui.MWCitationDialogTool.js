@@ -16,30 +16,22 @@
  * @param {Object} [config] Configuration options
  */
 ve.ui.MWCitationDialogTool = function VeUiMWCitationDialogTool( toolbar, config ) {
-	// Parent method
-	ve.ui.MWCitationDialogTool.super.call( this, toolbar, config );
+	ve.ui.DialogTool.call( this, toolbar, config );
 };
 
 /* Inheritance */
 
-OO.inheritClass( ve.ui.MWCitationDialogTool, ve.ui.MWReferenceDialogTool );
+OO.inheritClass( ve.ui.MWCitationDialogTool, ve.ui.DialogTool );
 
 /* Static Properties */
 
 ve.ui.MWCitationDialogTool.static.group = 'cite';
 
+ve.ui.MWCitationDialogTool.static.template = null;
+
 ve.ui.MWCitationDialogTool.static.modelClasses = [ ve.dm.MWReferenceNode ];
 
 ve.ui.MWCitationDialogTool.static.requiresRange = true;
-
-/**
- * Only display tool for single-template transclusions of these templates.
- *
- * @property {string|string[]|null}
- * @static
- * @inheritable
- */
-ve.ui.MWCitationDialogTool.static.template = null;
 
 /* Methods */
 
@@ -47,8 +39,8 @@ ve.ui.MWCitationDialogTool.static.template = null;
  * @inheritdoc
  */
 ve.ui.MWCitationDialogTool.static.isCompatibleWith = function ( model ) {
-	var internalItem, branches, leaves,
-		compatible = ve.ui.MWCitationDialogTool.super.static.isCompatibleWith.call( this, model );
+	var internalItem, branches, leaves, partsList,
+		compatible = ve.ui.DialogTool.static.isCompatibleWith.call( this, model );
 
 	if ( compatible && this.template ) {
 		// Check if content of the reference node contains only a template with the same name as
@@ -58,7 +50,9 @@ ve.ui.MWCitationDialogTool.static.isCompatibleWith = function ( model ) {
 		if ( branches.length === 1 && branches[0].canContainContent() ) {
 			leaves = branches[0].getChildren();
 			if ( leaves.length === 1 && leaves[0] instanceof ve.dm.MWTransclusionNode ) {
-				return leaves[0].isSingleTemplate( this.template );
+				partsList = leaves[0].getPartsList();
+				return partsList.length === 1 &&
+					partsList[0].template === this.template;
 			}
 		}
 		return false;

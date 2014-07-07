@@ -1,11 +1,11 @@
 define('videosmodule.models.videos', [
-	'wikia.nirvana',
-	'wikia.geo'
-], function (nirvana, geo) {
+	'wikia.nirvana'
+], function (nirvana) {
 	'use strict';
 
 	var VideosData = function () {
 		this.data = null;
+		this.articleId = window.wgArticleId || null;
 	};
 
 	VideosData.prototype.fetch = function () {
@@ -16,7 +16,7 @@ define('videosmodule.models.videos', [
 			ret = this.data;
 		} else {
 			ret = nirvana.getJson('VideosModuleController', 'index', {
-				userRegion: geo.getCountryCode()
+				articleId: this.articleId
 			}).done(function (data) {
 				self.data = data;
 			});

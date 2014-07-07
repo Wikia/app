@@ -19,17 +19,6 @@ ve.ui.Dialog = function VeUiDialog( config ) {
 	// Parent constructor
 	OO.ui.Dialog.call( this, config );
 
-	// FIXME: In the worst case scope is traversed three times to access same object (parent).
-	if ( config.disableAnimation ) {
-		this.frame.$element.parent().addClass( 've-ui-noAnimation' );
-	}
-	if ( config.width ) {
-		this.frame.$element.parent().css( 'width', config.width );
-	}
-	if ( config.height ) {
-		this.frame.$element.parent().css( 'height', config.height );
-	}
-
 	// Properties
 	this.fragment = null;
 };
@@ -39,41 +28,37 @@ ve.ui.Dialog = function VeUiDialog( config ) {
 OO.inheritClass( ve.ui.Dialog, OO.ui.Dialog );
 
 /**
- * @inheritdoc
+ * @param {ve.dm.SurfaceFragment} fragment Surface fragment
+ * @param {Object} data Dialog opening data
+ * @param {string} data.dir Directionality of fragment
  */
 ve.ui.Dialog.prototype.open = function ( fragment, data ) {
 	this.fragment = fragment;
 
 	// Parent method
-	return ve.ui.Dialog.super.prototype.open.call( this, data );
+	OO.ui.Dialog.prototype.open.call( this, data );
 };
 
 /**
  * @inheritdoc
  */
-ve.ui.Dialog.prototype.close = function ( data ) {
+ve.ui.Dialog.prototype.teardown = function () {
 	// Parent method
-	return ve.ui.Dialog.super.prototype.close.call( this, data )
-		.then( ve.bind( function () {
-			this.fragment = null;
-		}, this ) );
-};
+	OO.ui.Dialog.prototype.teardown.apply( this, arguments );
 
-/**
- * @inheritdoc
- */
-ve.ui.Dialog.prototype.getTeardownProcess = function ( data ) {
-	return ve.ui.Dialog.super.prototype.getTeardownProcess.apply( this, data )
-		.next( function () {
-			// Restore selection
-			// HACK: Integration is a mess, and to prevent teardown being called multiple times we
-			// need to rethink a whole lot of it, and spend a fair amount of time rewriting it - but
-			// instead of doing all of that, we can just put this band aid (checking if there is a
-			// fragment before calling select on it) and closed bug 63954 for now.
-			if ( this.fragment ) {
-				this.fragment.select();
-			}
-		}, this );
+	// Restore selection
+	// HACK: Integration is a mess, and to prevent teardown being called multiple times we need to
+	// rethink a whole lot of it, and spend a fair amount of time rewriting it - but instead of
+	// doing all of that, we can just put this band aid (checking if there is a fragment before
+	// calling select on it) and closed bug 63954 for now.
+	if ( this.fragment ) {
+		this.fragment.select();
+	}
+
+	this.fragment = null;
+
+	var label = ve.track.nameToLabel( this.constructor.static.name );
+	ve.track( 'wikia', { 'action': ve.track.actions.CLOSE, 'label': 'dialog-' + label } );
 };
 
 /**

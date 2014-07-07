@@ -60,18 +60,15 @@ class Join implements ClauseInterface {
 			/** @var Using $using */
 			if ($doUsingClause) {
 				$bk->line($tabs + 2);
-				$bk->append(" USING (");
+				$bk->append(" USING");
 				$doUsingClause = false;
 			}
 			if ($doCommaUsing) {
-				$bk->append(", ");
+				$bk->append(",");
 			} else {
 				$doCommaUsing = true;
 			}
 			$using->build($bk, $tabs);
-		}
-		if ($doUsingClause == false) {
-			$bk->append (")");
 		}
 	}
 

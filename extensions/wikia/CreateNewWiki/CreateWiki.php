@@ -41,6 +41,7 @@ class CreateWiki {
 	const IMGROOT              = "/images/";
 	const IMAGEURL             = "http://images.wikia.com/";
 	const CREATEWIKI_LOGO      = "http://images.wikia.com/central/images/2/22/Wiki_Logo_Template.png";
+	const CREATEWIKI_ICON      = "http://images.wikia.com/central/images/6/64/Favicon.ico";
 	const DEFAULT_STAFF        = "Angela";
 	const DEFAULT_USER         = 'Default';
 	const DEFAULT_DOMAIN       = "wikia.com";
@@ -49,6 +50,7 @@ class CreateWiki {
 	const DEFAULT_NAME         = "Wiki";
 	const DEFAULT_WIKI_TYPE    = "";
 	const DEFAULT_WIKI_LOGO    = '$wgUploadPath/b/bc/Wiki.png';
+	const DEFAULT_WIKI_FAVICON = '$wgUploadPath/6/64/Favicon.ico';
 
 
 	/**
@@ -93,7 +95,6 @@ class CreateWiki {
 				"pl" => "plstarter",
 				"ru" => "rustarter",
 				"it" => "italianstarter",
-				'fi' => 'fistarter',
 			)
 		);
 
@@ -323,7 +324,7 @@ class CreateWiki {
 		$this->mNewWiki->dbw->insert( "site_stats", array( "ss_row_id" => "1"), __METHOD__ );
 
 		/**
-		 * copy default logo
+		 * copy default logo & favicon
 		 */
 
 
@@ -332,6 +333,13 @@ class CreateWiki {
 			wfDebugLog( "createwiki", __METHOD__ . ": Default logo has been uploaded\n", true );
 		} else {
 			wfDebugLog( "createwiki", __METHOD__ . ": Default logo has not been uploaded - " . print_r($res['errors'], true) . "\n", true );
+		}
+
+		$res = ImagesService::uploadImageFromUrl( self::CREATEWIKI_ICON, (object) ['name' => 'Favicon.ico'], $uploader );
+		if (  $res['status'] == true  ) {
+			wfDebugLog( "createwiki", __METHOD__ . ": Default favicon has been uploaded\n", true );
+		} else {
+			wfDebugLog( "createwiki", __METHOD__ . ": Default favicon has not been uploaded - " . print_r($res['errors'], true) . "\n", true );
 		}
 
 		/**
@@ -910,6 +918,7 @@ class CreateWiki {
 		$this->mWFSettingVars['wgLocalInterwiki']         = $this->mNewWiki->sitename;
 		$this->mWFSettingVars['wgLanguageCode']           = $this->mNewWiki->language;
 		$this->mWFSettingVars['wgServer']                 = rtrim( $this->mNewWiki->url, "/" );
+		$this->mWFSettingVars['wgFavicon']                = self::DEFAULT_WIKI_FAVICON;
 		$this->mWFSettingVars['wgEnableSectionEdit']      = true;
 		$this->mWFSettingVars['wgEnableSwiftFileBackend'] = true;
 		$this->mWFSettingVars['wgOasisLoadCommonCSS']     = true;

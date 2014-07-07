@@ -33,22 +33,10 @@ class WikiaView {
 	 * @param string $format
 	 */
 	public static function newFromControllerAndMethodName( $controllerName, $methodName, Array $data = array(), $format = WikiaResponse::FORMAT_HTML ) {
-		$app = F::app();
-		// Service classes must be dispatched by full name otherwise we default to a controller.
-		$controllerBaseName = $app->getBaseName( $controllerName );
-		if ($app->isService($controllerName)) {
-			$controllerClassName = $app->getServiceClassName( $controllerBaseName );
-		} else {
-			$controllerClassName = $app->getControllerClassName( $controllerBaseName );
-		}
-
 		$response = new WikiaResponse( $format );
 		$response->setControllerName( $controllerName );
 		$response->setMethodName( $methodName );
 		$response->setData( $data );
-
-		/* @var $controllerClassName WikiaController */
-		$response->setTemplateEngine( $controllerClassName::DEFAULT_TEMPLATE_ENGINE );
 
 		return $response->getView();
 	}

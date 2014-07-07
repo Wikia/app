@@ -40,19 +40,8 @@ OO.inheritClass( ve.init.mw.MobileViewTarget, ve.init.mw.Target );
 
 /* Static Properties */
 ve.init.mw.MobileViewTarget.static.toolbarGroups = [
-	// Style
 	{ 'include': [ 'bold', 'italic' ] },
-	// Link
-	{ 'include': [ 'link' ] },
-	// Cite
-	{
-		'header': OO.ui.deferMsg( 'visualeditor-toolbar-cite-label' ),
-		'indicator': 'down',
-		'type': 'list',
-		'icon': 'reference',
-		'title': OO.ui.deferMsg( 'visualeditor-toolbar-cite-label' ),
-		'include': [ { 'group': 'cite' }, 'reference/existing' ]
-	}
+	{ 'include': [ 'link' ] }
 ];
 
 ve.init.mw.MobileViewTarget.static.surfaceCommands = [
@@ -69,7 +58,7 @@ ve.init.mw.MobileViewTarget.static.name = 'mobile';
  * Once surface is ready ready, init UI.
  */
 ve.init.mw.MobileViewTarget.prototype.onSurfaceReady = function () {
-	this.surface.getView().focus();
+	this.$document[0].focus();
 	this.restoreEditSection();
 };
 
@@ -78,19 +67,18 @@ ve.init.mw.MobileViewTarget.prototype.onSurfaceReady = function () {
  *
  * @method
  * @param {ve.dm.Document} dmDoc Document model
- * @param {Object} [config] Configuration options
  * @returns {ve.ui.MobileSurface}
  */
-ve.init.mw.MobileViewTarget.prototype.createSurface = function ( dmDoc, config ) {
-	return new ve.ui.MobileSurface( dmDoc, config );
+ve.init.mw.Target.prototype.createSurface = function ( dmDoc ) {
+	return new ve.ui.MobileSurface( dmDoc );
 };
 
 /**
  * @inheritdoc
  */
-ve.init.mw.MobileViewTarget.prototype.setupToolbar = function () {
+ve.init.mw.MobileViewTarget.prototype.setUpToolbar = function () {
 	// Parent method
-	ve.init.mw.Target.prototype.setupToolbar.call( this );
+	ve.init.mw.Target.prototype.setUpToolbar.call( this );
 
 	this.toolbar.$element
 		// FIXME shouldn't be using viewPageTarget styles

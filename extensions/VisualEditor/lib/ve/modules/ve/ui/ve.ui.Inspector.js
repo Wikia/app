@@ -56,24 +56,25 @@ ve.ui.Inspector.static.removable = true;
 /* Methods */
 
 /**
- * @inheritdoc
+ * @param {ve.dm.SurfaceFragment} fragment Surface fragment
+ * @param {Object} data Inspector opening data
+ * @param {string} data.dir Directionality of fragment
  */
 ve.ui.Inspector.prototype.open = function ( fragment, data ) {
 	this.fragment = fragment;
 
 	// Parent method
-	return ve.ui.Inspector.super.prototype.open.call( this, data );
+	OO.ui.Window.prototype.open.call( this, data );
 };
 
 /**
  * @inheritdoc
  */
-ve.ui.Inspector.prototype.close = function ( data ) {
+ve.ui.Inspector.prototype.close = function () {
 	// Parent method
-	return ve.ui.Inspector.super.prototype.close.call( this, data )
-		.then( ve.bind( function () {
-			this.fragment = null;
-		}, this ) );
+	OO.ui.Window.prototype.close.apply( this, arguments );
+
+	this.fragment = null;
 };
 
 /**
@@ -143,7 +144,7 @@ ve.ui.Inspector.prototype.onFormKeyDown = function ( e ) {
  */
 ve.ui.Inspector.prototype.initialize = function () {
 	// Parent method
-	ve.ui.Inspector.super.prototype.initialize.call( this );
+	OO.ui.Window.prototype.initialize.call( this );
 
 	// Initialization
 	this.frame.$content.addClass( 've-ui-inspector-content' );
@@ -186,23 +187,37 @@ ve.ui.Inspector.prototype.initialize = function () {
 /**
  * @inheritdoc
  */
-ve.ui.Inspector.prototype.getReadyProcess = function ( data ) {
-	return ve.ui.Inspector.super.prototype.getReadyProcess.call( this, data )
-		.next( function () {
-			// Wait for animation to complete
-			return OO.ui.Process.static.delay( 260 );
-		}, this );
+ve.ui.Inspector.prototype.setup = function ( data ) {
+	// Parent method
+	OO.ui.Window.prototype.setup.call( this, data );
+
+	ve.track( 'wikia', {
+		'action': ve.track.actions.OPEN,
+		'label': 'inspector-' + ve.track.nameToLabel( this.constructor.static.name )
+	} );
+
+	// Wait for animation to complete
+	setTimeout( ve.bind( function () {
+		this.ready();
+	}, this ), 200 );
+};
+
+/**
+ * Inspector is done animating and ready to be interacted with.
+ */
+ve.ui.Inspector.prototype.ready = function () {
+	//
 };
 
 /**
  * @inheritdoc
  */
-ve.ui.Inspector.prototype.getTeardownProcess = function ( data ) {
-	return ve.ui.Inspector.super.prototype.getTeardownProcess.call( this, data )
-		.next( function () {
-			ve.track( 'wikia', {
-				'action': ve.track.actions.CLOSE,
-				'label': 'inspector-' + ve.track.nameToLabel( this.constructor.static.name )
-			} );
-		}, this );
+ve.ui.Inspector.prototype.teardown = function ( data ) {
+	// Parent method
+	OO.ui.Window.prototype.teardown.call( this, data );
+
+	ve.track( 'wikia', {
+		'action': ve.track.actions.CLOSE,
+		'label': 'inspector-' + ve.track.nameToLabel( this.constructor.static.name )
+	} );
 };

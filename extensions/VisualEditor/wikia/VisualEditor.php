@@ -91,11 +91,10 @@ $wgResourceModules += array(
 			've/ui/dialogs/ve.ui.WikiaReferenceDialog.js',
 			've/ui/dialogs/ve.ui.WikiaSaveDialog.js',
 			've/ui/dialogs/ve.ui.WikiaSourceModeDialog.js',
-			've/ui/dialogs/ve.ui.WikiaOrientationDialog.js',
 			've/ui/tools/ve.ui.WikiaDialogTool.js',
 			've/ui/tools/ve.ui.WikiaHelpTool.js',
 			've/ui/tools/ve.ui.WikiaMWGalleryInspectorTool.js',
-			've/ui/tools/ve.ui.WikiaMWLinkNodeInspectorTool.js',
+			've/ui/tools/ve.ui.WikiaMWLinkInspectorTool.js',
 			've/ui/widgets/ve.ui.WikiaCartWidget.js',
 			've/ui/widgets/ve.ui.WikiaCartItemWidget.js',
 			've/ui/widgets/ve.ui.WikiaDimensionsWidget.js',
@@ -150,11 +149,6 @@ $wgResourceModules += array(
 			'wikia-visualeditor-notification-media-permission-denied',
 			'wikia-visualeditor-notification-video-preview-not-available',
 			'accesskey-save',
-			'wikia-visualeditor-dialog-orientation-headline',
-			'wikia-visualeditor-dialog-orientation-text',
-			'wikia-visualeditor-dialog-orientation-start-button',
-			'wikia-visualeditor-dialog-meta-languages-readonlynote',
-			'wikia-visualeditor-dialog-transclusion-no-template-description',
 		),
 		'dependencies' => array(
 			'ext.visualEditor.core.desktop',
@@ -179,17 +173,6 @@ $wgHooks['MakeGlobalVariablesScript'][] = 'VisualEditorWikiaHooks::onMakeGlobalV
 /* Configuration */
 
 // Disable VE for blog namespaces
-if ( !empty( $wgEnableBlogArticles ) ) {
-	$tempArray = array();
-	foreach ( $wgVisualEditorNamespaces as $key => &$value ) {
-		if ( $value === NS_BLOG_ARTICLE || $value === NS_BLOG_ARTICLE_TALK ) {
-			continue;
-		}
-		$tempArray[] = $value;
-	}
-	$wgVisualEditorNamespaces = $tempArray;
+if ( defined( 'NS_BLOG_ARTICLE' ) && defined( 'NS_BLOG_ARTICLE_TALK' ) ) {
+	$wgVisualEditorNamespaces = array_diff( $wgVisualEditorNamespaces, array( NS_BLOG_ARTICLE, NS_BLOG_ARTICLE_TALK ) );
 }
-
-// Add additional valid namespaces for Wikia
-$wgVisualEditorNamespaces[] = NS_CATEGORY;
-$wgVisualEditorNamespaces[] = NS_PROJECT;

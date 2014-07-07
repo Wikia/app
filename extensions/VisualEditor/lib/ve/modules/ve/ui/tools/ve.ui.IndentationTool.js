@@ -41,13 +41,12 @@ ve.ui.IndentationTool.prototype.onSelect = function () {
 /**
  * @inheritdoc
  */
-ve.ui.IndentationTool.prototype.onUpdateState = function ( fragment ) {
+ve.ui.IndentationTool.prototype.onUpdateState = function ( nodes ) {
 	// Parent method
 	ve.ui.Tool.prototype.onUpdateState.apply( this, arguments );
 
 	if ( !this.isDisabled() ) {
 		var i, len,
-			nodes = fragment.getSelectedLeafNodes(),
 			any = false;
 		for ( i = 0, len = nodes.length; i < len; i++ ) {
 			if ( nodes[i].hasMatchingAncestor( 'listItem' ) ) {

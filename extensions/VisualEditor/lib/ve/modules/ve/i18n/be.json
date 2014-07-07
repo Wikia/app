@@ -1,8 +1,7 @@
 {
 	"@metadata": {
 		"authors": [
-			"Чаховіч Уладзіслаў",
-			"Artificial123"
+			"Чаховіч Уладзіслаў"
 		]
 	},
 	"visualeditor": "VisualEditor",
@@ -28,7 +27,7 @@
 	"visualeditor-indentationbutton-outdent-tooltip": "Паменшыць водступ",
 	"visualeditor-inspector-close-tooltip": "Закрыць",
 	"visualeditor-inspector-remove-tooltip": "Выдаліць",
-	"visualeditor-linkinspector-title": "Спасылка",
+	"visualeditor-linkinspector-title": "Гіперспасылка",
 	"visualeditor-listbutton-bullet-tooltip": "Маркіраваны спіс",
 	"visualeditor-listbutton-number-tooltip": "Нумараваны спіс"
 }

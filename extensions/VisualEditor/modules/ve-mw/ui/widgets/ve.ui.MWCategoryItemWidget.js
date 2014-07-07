@@ -17,7 +17,6 @@
  * @param {Object} [config] Configuration options
  * @cfg {Object} [item] Category item
  * @cfg {boolean} [hidden] Whether the category is hidden or not
- * @cfg {string} [redirectTo] The name of the category this category's page redirects to.
  */
 ve.ui.MWCategoryItemWidget = function VeUiMWCategoryItemWidget( config ) {
 	// Config intialization
@@ -48,7 +47,7 @@ ve.ui.MWCategoryItemWidget = function VeUiMWCategoryItemWidget( config ) {
 	// Initialization
 	this.$label
 		.addClass( 've-ui-mwCategoryItemWidget-label' )
-		.text( config.redirectTo || this.value );
+		.text( this.value );
 	this.$categoryItem
 		.addClass( 've-ui-mwCategoryItemWidget-button' )
 		.append( this.$label, this.$indicator );

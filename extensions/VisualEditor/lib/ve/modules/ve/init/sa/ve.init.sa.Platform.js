@@ -99,34 +99,10 @@ ve.init.sa.Platform.prototype.getSystemPlatform = function () {
 };
 
 /** @inheritdoc */
-ve.init.sa.Platform.prototype.getLanguageCodes = function () {
-	return Object.keys( $.uls.data.getAutonyms() );
-};
-
-/**
- * @method
- * @inheritdoc
- */
-ve.init.sa.Platform.prototype.getLanguageName = $.uls.data.getAutonym;
-
-/**
- * @method
- * @inheritdoc
- */
-ve.init.sa.Platform.prototype.getLanguageAutonym = $.uls.data.getAutonym;
-
-/**
- * @method
- * @inheritdoc
- */
-ve.init.sa.Platform.prototype.getLanguageDirection = $.uls.data.getDir;
-
-/** @inheritdoc */
 ve.init.sa.Platform.prototype.getUserLanguages = function () {
 	return this.userLanguages;
 };
 
-/** @inheritdoc */
 ve.init.sa.Platform.prototype.initialize = function () {
 	var i, len, partialLocale, localeParts, filename, deferred,
 		path = this.getModulesUrl(),

@@ -1904,7 +1904,6 @@ $messages['tly'] = array(
 
 /** Turkish (Türkçe)
  * @author Incelemeelemani
- * @author Sucsuzz
  */
 $messages['tr'] = array(
 	'lookupcontribsselectuser' => 'Kullanıcı seç:',
@@ -1922,9 +1921,6 @@ $messages['tr'] = array(
 	'lookupcontribscontribslink' => 'Katkılara bağlantı',
 	'lookupcontribsdetails' => 'Detayları gösterilen:',
 	'lookupcontribslastedited' => 'Son düzenleme',
-	'lookupcontribsnext' => 'sonraki',
-	'lookupcontribsprevious' => 'önceki',
-	'lookupcontribsdiff' => 'fark',
 );
 
 /** Tatar (Cyrillic script) (татарча)
@@ -2007,7 +2003,6 @@ $messages['yi'] = array(
  * @author Dimension
  * @author Hydra
  * @author Liuxinyu970226
- * @author Mywood
  * @author Yfdyh000
  * @author 乌拉跨氪
  */
@@ -2015,7 +2010,6 @@ $messages['zh-hans'] = array(
 	'lookupcontribs' => '查阅维基贡献',
 	'lookupcontribstitle' => '查阅维基贡献',
 	'lookupcontribsrecentcontributions' => '最近$1的贡献',
-	'lookupcontribsfinalcontributions' => '对$1的最近贡献',
 	'lookupcontribusernotspecify' => '您还没有指定一个用户',
 	'lookupcontribsselectuser' => '选择用户：',
 	'lookupcontribsselectfor' => '搜索：',
@@ -2023,7 +2017,7 @@ $messages['zh-hans'] = array(
 	'lookupcontribsselectmodenormal' => '该用户最近的贡献',
 	'lookupcontribsfullurls' => '完整URL',
 	'lookupcontribslinks' => '贡献链接',
-	'lookupcontribsgo' => '提交',
+	'lookupcontribsgo' => '去',
 	'lookupcontribsinvaliduser' => '<p class="error">用户“<b>$1</b>”不存在。
 请检查您提供的用户名。</p>',
 	'lookupcontribsinvalidviewmode' => '<p class="error">“<b>$1</b>”不是有效的视图模式。</p>',
@@ -2052,7 +2046,6 @@ $messages['zh-hans'] = array(
 	'right-lookupcontribs' => '查看用户的全局编辑',
 	'lookupcontribsshowpages' => '所有页面（$1命名空间）',
 	'lookupcontribscontent' => '内容',
-	'lookupcontribscontribtitleforuser' => '对用户的贡献：',
 	'lookupcontribsnormal' => '最近',
 	'lookupcontribsfinal' => '最后',
 	'lookupcontribsall' => '全部',

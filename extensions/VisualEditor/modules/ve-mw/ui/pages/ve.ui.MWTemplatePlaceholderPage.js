@@ -17,11 +17,6 @@
  * @param {Object} [config] Configuration options
  */
 ve.ui.MWTemplatePlaceholderPage = function VeUiMWTemplatePlaceholderPage( placeholder, name, config ) {
-	// Configuration initialization
-	config = ve.extendObject( {
-		'scrollable': false
-	}, config );
-
 	// Parent constructor
 	OO.ui.PageLayout.call( this, name, config );
 
@@ -88,14 +83,9 @@ ve.ui.MWTemplatePlaceholderPage.prototype.setOutlineItem = function ( outlineIte
 };
 
 ve.ui.MWTemplatePlaceholderPage.prototype.onAddTemplate = function () {
-	var part,
-		transclusion = this.placeholder.getTransclusion(),
-		menu = this.addTemplateInput.getLookupMenu();
+	var transclusion = this.placeholder.getTransclusion(),
+		part = ve.dm.MWTemplateModel.newFromName( transclusion, this.addTemplateInput.getValue() );
 
-	if ( menu.isVisible() ) {
-		menu.chooseItem( menu.getSelectedItem() );
-	}
-	part = ve.dm.MWTemplateModel.newFromName( transclusion, this.addTemplateInput.getValue() );
 	transclusion.replacePart( this.placeholder, part );
 	this.addTemplateInput.pushPending();
 	this.addTemplateButton.setDisabled( true );

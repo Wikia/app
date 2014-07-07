@@ -44,8 +44,7 @@ define('ext.wikia.adEngine.slotTracker', [
 			TOP_RIGHT_BOXAD:        'medrec',
 			WIKIA_BAR_BOXAD_1:      'wikiabar'
 		},
-		adsInHead = window.wgLoadAdsInHead && abTest && abTest.getGroup('ADS_IN_HEAD'),
-		adsAfterPageLoad = window.wgLoadLateAdsAfterPageLoad && abTest && abTest.getGroup('ADS_AFTER_PAGE_LOAD');
+		adsinhead = window.wgLoadAdsInHead && abTest && abTest.getGroup('ADS_IN_HEAD');
 
 	// The filtering function
 	function isInteresting(eventName, data) {
@@ -152,20 +151,10 @@ define('ext.wikia.adEngine.slotTracker', [
 			len;
 
 		function trackState(timeCheckPoint) {
-			var eventName = 'state/' + timeCheckPoint + 's',
-				experimentName = [];
+			var eventName = 'state/' + timeCheckPoint + 's';
 
-			if (adsInHead || adsAfterPageLoad) {
-
-				if (adsInHead) {
-					experimentName.push('adsinhead=' + adsInHead);
-				}
-
-				if (adsAfterPageLoad) {
-					experimentName.push('lateadsafterload=' + adsAfterPageLoad);
-				}
-
-				eventName = 'state/' + experimentName.join(';') + '/' + timeCheckPoint + 's';
+			if (adsinhead) {
+				eventName = 'state/' + 'adsinhead=' + adsinhead + '/' + timeCheckPoint + 's';
 			}
 
 			setTimeout(function () {

@@ -156,13 +156,6 @@ $messages['ia'] = array(
 	'categorygalleries-desc' => 'Monstra un galeria de paginas in paginas de categoria',
 );
 
-/** Indonesian (Bahasa Indonesia)
- * @author Riemogerz
- */
-$messages['id'] = array(
-	'categorygalleries-desc' => 'Tampilkan galeri gambar mini pada halaman kategori',
-);
-
 /** Italian (italiano)
  * @author Pietrodn
  */

@@ -7,7 +7,7 @@
  * @author Michael Dale
  */
 class UploadFromUrl extends UploadBase {
-	protected $mUrl;
+	protected $mAsync, $mUrl;
 	protected $mIgnoreWarnings = true;
 
 	protected $mTempPath, $mTmpHandle;
@@ -41,12 +41,22 @@ class UploadFromUrl extends UploadBase {
 	 *
 	 * @param $name string
 	 * @param $url string
+	 * @param $async mixed Whether the download should be performed
+	 * asynchronous. False for synchronous, async or async-leavemessage for
+	 * asynchronous download.
 	 */
-	public function initialize( $name, $url ) {
-		$this->mUrl = $url;
+	public function initialize( $name, $url, $async = false ) {
+		global $wgAllowAsyncCopyUploads;
 
+		$this->mUrl = $url;
+		$this->mAsync = $wgAllowAsyncCopyUploads ? $async : false;
+		if ( $async ) {
+			throw new MWException( 'Asynchronous copy uploads are no longer possible as of r81612.' );
+		}
+
+		$tempPath = $this->mAsync ? null : $this->makeTemporaryFile();
 		# File size and removeTempFile will be filled in later
-		$this->initializePathInfo( $name, $this->makeTemporaryFile(), 0, false );
+		$this->initializePathInfo( $name, $tempPath, 0, false );
 	}
 
 	/**
@@ -60,7 +70,8 @@ class UploadFromUrl extends UploadBase {
 		}
 		return $this->initialize(
 			$desiredDestName,
-			trim( $request->getVal( 'wpUploadFileURL' ) )
+			trim( $request->getVal( 'wpUploadFileURL' ) ),
+			false
 		);
 	}
 
@@ -90,7 +101,10 @@ class UploadFromUrl extends UploadBase {
 			return Status::newFatal( 'http-invalid-url' );
 		}
 
-		return $this->reallyFetchFile();
+		if ( !$this->mAsync ) {
+			return $this->reallyFetchFile();
+		}
+		return Status::newGood();
 	}
 	/**
 	 * Create a new temporary file in the URL subdirectory of wfTempDir().
@@ -171,6 +185,9 @@ class UploadFromUrl extends UploadBase {
 	 * upload until the file really has been fetched.
 	 */
 	public function verifyUpload() {
+		if ( $this->mAsync ) {
+			return array( 'status' => UploadBase::OK );
+		}
 		return parent::verifyUpload();
 	}
 
@@ -179,6 +196,10 @@ class UploadFromUrl extends UploadBase {
 	 * until the file really has been fetched.
 	 */
 	public function checkWarnings() {
+		if ( $this->mAsync ) {
+			$this->mIgnoreWarnings = false;
+			return array();
+		}
 		return parent::checkWarnings();
 	}
 
@@ -187,7 +208,49 @@ class UploadFromUrl extends UploadBase {
 	 * until we are sure that the file can actually be uploaded
 	 */
 	public function verifyTitlePermissions( $user ) {
+		if ( $this->mAsync ) {
+			return true;
+		}
 		return parent::verifyTitlePermissions( $user );
+	}
+
+	/**
+	 * Wrapper around the parent function in order to defer uploading to the
+	 * job queue for asynchronous uploads
+	 */
+	public function performUpload( $comment, $pageText, $watch, $user ) {
+		if ( $this->mAsync ) {
+			$sessionKey = $this->insertJob( $comment, $pageText, $watch, $user );
+
+			return Status::newFatal( 'async', $sessionKey );
+		}
+
+		return parent::performUpload( $comment, $pageText, $watch, $user );
+	}
+
+	/**
+	 * @param  $comment
+	 * @param  $pageText
+	 * @param  $watch
+	 * @param  $user User
+	 * @return
+	 */
+	protected function insertJob( $comment, $pageText, $watch, $user ) {
+		$sessionKey = $this->stashSession();
+		$job = new UploadFromUrlJob( $this->getTitle(), array(
+			'url' => $this->mUrl,
+			'comment' => $comment,
+			'pageText' => $pageText,
+			'watch' => $watch,
+			'userName' => $user->getName(),
+			'leaveMessage' => $this->mAsync == 'async-leavemessage',
+			'ignoreWarnings' => $this->mIgnoreWarnings,
+			'sessionId' => session_id(),
+			'sessionKey' => $sessionKey,
+		) );
+		$job->initializeSessionData();
+		$job->insert();
+		return $sessionKey;
 	}
 
 }

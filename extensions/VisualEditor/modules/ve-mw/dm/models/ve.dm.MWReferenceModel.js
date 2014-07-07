@@ -160,6 +160,7 @@ ve.dm.MWReferenceModel.prototype.updateInternalItem = function ( surfaceModel ) 
  */
 ve.dm.MWReferenceModel.prototype.insertReferenceNode = function ( surfaceFragment ) {
 	surfaceFragment
+		.collapseRangeToEnd()
 		.insertContent( [
 			{
 				'type': 'mwReference',

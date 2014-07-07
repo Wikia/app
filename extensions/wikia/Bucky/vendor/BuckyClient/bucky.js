@@ -59,9 +59,7 @@
       decimalPrecision: 3,
       sendLatency: false,
       sample: 1,
-      active: true,
-      protocol: 1,
-      context: {}
+      active: true
     };
     tagOptions = {};
     if (!isServer) {
@@ -147,7 +145,7 @@
       }
     };
     makeRequest = function(data) {
-      var all_data, body, corsSupport, match, name, origin, req, sameOrigin, sendStart, val, _ref3;
+      var body, corsSupport, match, name, origin, req, sameOrigin, sendStart, val, _ref3;
       corsSupport = isServer || (window.XMLHttpRequest && (window.XMLHttpRequest.defake || 'withCredentials' in new window.XMLHttpRequest()));
       if (isServer) {
         sameOrigin = true;
@@ -178,25 +176,12 @@
       req.bucky = {
         track: false
       };
-      if (options.protocol !== 2) {
-        req.open('POST', "" + options.host + "/v1/send", true);
-        req.setRequestHeader('Content-Type', 'text/plain');
-        req.addEventListener('load', function() {
-          return updateLatency(now() - sendStart);
-        }, false);
-        req.send(body);
-      } else {
-        all_data = extend({}, options.context, data);
-        all_data = typeof JSON !== "undefined" && JSON !== null ? typeof JSON.stringify === "function" ? JSON.stringify(all_data) : void 0 : void 0;
-        if ((all_data != null) && (typeof all_data !== 'undefined')) {
-          req.open('POST', "" + options.host + "/v2/send?p=" + all_data, true);
-          req.setRequestHeader('Content-Type', 'text/plain');
-          req.addEventListener('load', function() {
-            return updateLatency(now() - sendStart);
-          }, false);
-          req.send();
-        }
-      }
+      req.open('POST', "" + options.host + "/v1/send", true);
+      req.setRequestHeader('Content-Type', 'text/plain');
+      req.addEventListener('load', function() {
+        return updateLatency(now() - sendStart);
+      }, false);
+      req.send(body);
       return req;
     };
     sendQueue = function() {
@@ -222,13 +207,9 @@
         if ((_ref3 = point.type) === 'gauge' || _ref3 === 'timer') {
           value = round(value);
         }
-        if (options.protocol !== 2) {
-          out[key] = "" + value + "|" + TYPE_MAP[point.type];
-          if (point.count !== 1) {
-            out[key] += "@" + (round(1 / point.count, 5));
-          }
-        } else {
-          out[key] = value;
+        out[key] = "" + value + "|" + TYPE_MAP[point.type];
+        if (point.count !== 1) {
+          out[key] += "@" + (round(1 / point.count, 5));
         }
       }
       makeRequest(out);
@@ -412,11 +393,7 @@
         for (key in _ref5) {
           time = _ref5[key];
           if (time && typeof time === 'number') {
-            if (options.protocol !== 2) {
-              timer.send("" + path + "." + key, time - start);
-            } else {
-              timer.send(key, time - start);
-            }
+            timer.send("" + path + "." + key, time - start);
           }
         }
         return true;

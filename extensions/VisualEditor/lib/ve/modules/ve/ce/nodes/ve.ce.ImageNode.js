@@ -11,6 +11,7 @@
  * @class
  * @extends ve.ce.LeafNode
  * @mixins ve.ce.FocusableNode
+ * @mixins ve.ce.RelocatableNode
  * @mixins ve.ce.ResizableNode
  *
  * @constructor
@@ -25,12 +26,13 @@ ve.ce.ImageNode = function VeCeImageNode( model, config ) {
 	// Parent constructor
 	ve.ce.LeafNode.call( this, model, config );
 
-	// Properties
-	this.$image = this.$( '<img>' ).appendTo( this.$element );
-
 	// Mixin constructors
 	ve.ce.FocusableNode.call( this );
-	ve.ce.ResizableNode.call( this, this.$image, config );
+	ve.ce.RelocatableNode.call( this );
+	ve.ce.ResizableNode.call( this, null, config );
+
+	// Properties
+	this.$image = this.$element;
 
 	// Events
 	this.$element.on( 'click', ve.bind( this.onClick, this ) );
@@ -38,8 +40,8 @@ ve.ce.ImageNode = function VeCeImageNode( model, config ) {
 	this.model.connect( this, { 'attributeChange': 'onAttributeChange' } );
 
 	// Initialization
-	this.$element.addClass( 've-ce-imageNode' );
 	this.$image
+		.addClass( 've-ce-imageNode' )
 		.attr( {
 			'alt': this.model.getAttribute( 'alt' ),
 			'src': this.getResolvedAttribute( 'src' )
@@ -55,13 +57,14 @@ ve.ce.ImageNode = function VeCeImageNode( model, config ) {
 OO.inheritClass( ve.ce.ImageNode, ve.ce.LeafNode );
 
 OO.mixinClass( ve.ce.ImageNode, ve.ce.FocusableNode );
+OO.mixinClass( ve.ce.ImageNode, ve.ce.RelocatableNode );
 OO.mixinClass( ve.ce.ImageNode, ve.ce.ResizableNode );
 
 /* Static Properties */
 
 ve.ce.ImageNode.static.name = 'image';
 
-ve.ce.ImageNode.static.tagName = 'span';
+ve.ce.ImageNode.static.tagName = 'img';
 
 /* Methods */
 

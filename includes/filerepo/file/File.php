@@ -695,7 +695,7 @@ abstract class File {
 	 *
 	 * @param $handlerParams array
 	 *
-	 * @return MediaTransformOutput
+	 * @return string
 	 */
 	function getUnscaledThumb( $handlerParams = array() ) {
 		$hp =& $handlerParams;
@@ -1000,20 +1000,8 @@ abstract class File {
 		// Purge cache of all pages using this file
 		$title = $this->getTitle();
 		if ( $title ) {
-			// Wikia change begin @author Scott Rabin (srabin@wikia-inc.com)
-			if ( TaskRunner::isModern('HTMLCacheUpdate') ) {
-				global $wgCityId;
-
-				$task = ( new \Wikia\Tasks\Tasks\HTMLCacheUpdateTask() )
-					->wikiId( $wgCityId )
-					->title( $title );
-				$task->call( 'purge', 'imagelinks' );
-				$task->queue();
-			} else {
-				$update = new HTMLCacheUpdate( $title, 'imagelinks' );
-				$update->doUpdate();
-			}
-			// Wikia change end
+			$update = new HTMLCacheUpdate( $title, 'imagelinks' );
+			$update->doUpdate();
 		}
 	}
 

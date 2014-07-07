@@ -122,7 +122,7 @@ class WikiaInteractiveMapsPoiController extends WikiaInteractiveMapsBaseControll
 	 * Returns parent/default POI categories recieved from the service
 	 */
 	public function getParentPoiCategories() {
-		$parentPoiCategoriesResponse = $this->mapsModel->getParentPoiCategories();
+		$parentPoiCategoriesResponse = $this->mapsModel->cachedRequest( 'getParentPoiCategories', [] );
 		$this->setVal( 'results', $parentPoiCategoriesResponse );
 	}
 

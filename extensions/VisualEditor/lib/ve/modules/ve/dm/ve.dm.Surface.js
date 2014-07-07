@@ -22,7 +22,6 @@ ve.dm.Surface = function VeDmSurface( doc ) {
 	this.documentModel = doc;
 	this.metaList = new ve.dm.MetaList( this );
 	this.selection = null;
-	this.selectionBefore = null;
 	this.selectedNodes = {};
 	this.newTransactions = [];
 	this.stagingStack = [];
@@ -152,27 +151,6 @@ ve.dm.Surface.prototype.isStaging = function () {
 };
 
 /**
- * Get the staging state at the current staging stack depth
- *
- * @returns {Object|undefined} staging Staging state object, or undefined if not staging
- * @returns {ve.dm.Transaction[]} staging.transactions Staging transactions
- * @returns {boolean} staging.allowUndo Allow undo while staging
- */
-ve.dm.Surface.prototype.getStaging = function () {
-	return this.stagingStack[this.stagingStack.length - 1];
-};
-
-/**
- * Undo is allowed at the current staging stack depth
- *
- * @returns {boolean|undefined} Undo is allowed, or undefined if not staging
- */
-ve.dm.Surface.prototype.doesStagingAllowUndo = function () {
-	var staging = this.getStaging();
-	return staging && staging.allowUndo;
-};
-
-/**
  * Get the staging transactions at the current staging stack depth
  *
  * The array is returned by reference so it can be pushed to.
@@ -180,17 +158,15 @@ ve.dm.Surface.prototype.doesStagingAllowUndo = function () {
  * @returns {ve.dm.Transaction[]|undefined} Staging transactions, or undefined if not staging
  */
 ve.dm.Surface.prototype.getStagingTransactions = function () {
-	var staging = this.getStaging();
-	return staging && staging.transactions;
+	return this.stagingStack[this.stagingStack.length - 1];
 };
 
 /**
  * Push another level of staging to the staging stack
  *
- * @param {boolean} [allowUndo=false] Allow undo while staging
  * @fires history
  */
-ve.dm.Surface.prototype.pushStaging = function ( allowUndo ) {
+ve.dm.Surface.prototype.pushStaging = function () {
 	// If we're starting staging stop history tracking
 	if ( !this.isStaging() ) {
 		// Set a breakpoint to make sure newTransactions is clear
@@ -198,7 +174,7 @@ ve.dm.Surface.prototype.pushStaging = function ( allowUndo ) {
 		this.stopHistoryTracking();
 		this.emit( 'history' );
 	}
-	this.stagingStack.push( { 'transactions': [], 'allowUndo': !!allowUndo } );
+	this.stagingStack.push( [] );
 };
 
 /**
@@ -214,8 +190,7 @@ ve.dm.Surface.prototype.popStaging = function () {
 
 	var i, transaction,
 		reverseTransactions = [],
-		staging = this.stagingStack.pop(),
-		transactions = staging.transactions;
+		transactions = this.stagingStack.pop();
 
 	// Not applying, so rollback transactions
 	for ( i = transactions.length - 1; i >= 0; i-- ) {
@@ -242,14 +217,12 @@ ve.dm.Surface.prototype.applyStaging = function () {
 		return;
 	}
 
-	var staging = this.stagingStack.pop(),
-		transactions = staging.transactions;
+	var transactions = this.stagingStack.pop();
 
 	if ( this.isStaging() ) {
 		// Move transactions to the next item down in the staging stack
 		Array.prototype.push.apply( this.getStagingTransactions(), transactions );
 	} else {
-		this.truncateUndoStack();
 		// Move transactions to the undo stack
 		this.newTransactions = transactions;
 		this.breakpoint();
@@ -372,7 +345,7 @@ ve.dm.Surface.prototype.removeInsertionAnnotations = function ( annotations ) {
  * @returns {boolean} Redo is allowed
  */
 ve.dm.Surface.prototype.canRedo = function () {
-	return this.undoIndex > 0 && this.enabled;
+	return this.undoIndex > 0 && this.enabled && !this.isStaging();
 };
 
 /**
@@ -382,7 +355,7 @@ ve.dm.Surface.prototype.canRedo = function () {
  * @returns {boolean} Undo is allowed
  */
 ve.dm.Surface.prototype.canUndo = function () {
-	return this.hasBeenModified() && this.enabled && ( !this.isStaging() || this.doesStagingAllowUndo() );
+	return this.hasBeenModified() && this.enabled && !this.isStaging();
 };
 
 /**
@@ -600,16 +573,6 @@ ve.dm.Surface.prototype.setSelection = function ( selection ) {
 };
 
 /**
- * Place the selection at the first content offset in the document.
- */
-ve.dm.Surface.prototype.selectFirstContentOffset = function () {
-	var firstOffset = this.getDocument().data.getNearestContentOffset( 0, 1 );
-	this.setSelection(
-		new ve.Range( firstOffset !== -1 ? firstOffset : 1 )
-	);
-};
-
-/**
  * Apply a transactions and selection changes to the document.
  *
  * @method
@@ -717,8 +680,6 @@ ve.dm.Surface.prototype.breakpoint = function () {
 		this.newTransactions = [];
 		this.emit( 'history' );
 		return true;
-	} else if ( !this.selectionBefore && this.selection ) {
-		this.selectionBefore = this.selection.clone();
 	}
 	return false;
 };
@@ -733,10 +694,6 @@ ve.dm.Surface.prototype.undo = function () {
 	var i, item, transaction, transactions = [];
 	if ( !this.canUndo() ) {
 		return;
-	}
-
-	if ( this.isStaging() ) {
-		this.popAllStaging();
 	}
 
 	this.breakpoint();

@@ -13,18 +13,18 @@
  * @mixins ve.Node
  *
  * @constructor
+ * @param {number} [length] Length of content data in document
  * @param {Object} [element] Reference to element in linear model
  */
-ve.dm.Node = function VeDmNode( element ) {
+ve.dm.Node = function VeDmNode( length, element ) {
 	// Parent constructor
 	ve.dm.Model.call( this, element );
-
-	// Mixin constructors
+	// Mixin constructor
 	ve.Node.call( this );
 	OO.EventEmitter.call( this );
 
 	// Properties
-	this.length = 0;
+	this.length = length || 0;
 	this.element = element;
 	this.doc = undefined;
 };

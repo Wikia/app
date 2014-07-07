@@ -1,15 +1,4 @@
-<?
-/**
- * @var $wgUser
- * @var $pagination
- * @var $app
- * @var $videoList
- * @var $totalVideos
- * @var $thumbWidth
- * @var $thumbHeight
- */
-
-?>
+<? global $wgStylePath ?>
 
 <? if ( !empty( $videoList ) ): ?>
 	<?= $app->renderPartial( 'LicensedVideoSwapSpecialController', 'callout' ) ?>

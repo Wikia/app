@@ -16,7 +16,7 @@ require_once( dirname( __FILE__ ) . '/../Maintenance.php' );
 class RemoveQAWikis extends Maintenance {
 
 	const REASON = 'Marked for removal by RemoveQAWikis maintenance script';
-	const WIKI_PREFIX = 'qatest';
+	const WIKI_PREFIX = 'qatestwiki';
 	const LANG_PREFIXES = 'de es fr it ja nl no pl pt ptbr ru zh';
 
 	/**
@@ -87,8 +87,6 @@ class RemoveQAWikis extends Maintenance {
 				else {
 					$this->output("skipping, dry run\n");
 				}
-
-				sleep(0.1);
 			}
 		}
 

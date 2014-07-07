@@ -53,13 +53,11 @@ ve.ui.AnnotationTool.prototype.onSelect = function () {
 /**
  * @inheritdoc
  */
-ve.ui.AnnotationTool.prototype.onUpdateState = function ( fragment ) {
+ve.ui.AnnotationTool.prototype.onUpdateState = function ( nodes, full ) {
 	// Parent method
 	ve.ui.Tool.prototype.onUpdateState.apply( this, arguments );
 
-	this.setActive(
-		fragment.getAnnotations().hasAnnotationWithName( this.constructor.static.annotation.name )
-	);
+	this.setActive( full.hasAnnotationWithName( this.constructor.static.annotation.name ) );
 };
 
 /**

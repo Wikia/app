@@ -249,17 +249,6 @@ $messages['uk'] = array(
 	'wikianewfiles-more' => 'більше...',
 );
 
-/** Simplified Chinese (中文（简体）‎)
- * @author Liuxinyu970226
- */
-$messages['zh-hans'] = array(
-	'wikianewfiles-title' => '此wiki的新文件',
-	'wikianewfiles-desc' => '扩充[[Special:NewFiles|特殊页面]]以重写一些页顶格式',
-	'wikianewfiles-uploadby' => '由{{GENDER:$2|$1}}',
-	'wikianewfiles-postedin' => '发布于',
-	'wikianewfiles-more' => '更多…',
-);
-
 /** Traditional Chinese (中文（繁體）‎)
  * @author Ffaarr
  */

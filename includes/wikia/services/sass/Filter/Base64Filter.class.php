@@ -37,7 +37,7 @@ class Base64Filter extends Filter {
 			return "url({$encoded});";
 		}
 		else {
-			throw new \Wikia\Sass\Exception("/* Base64 encoding failed: {$fileName} not found or not supported! */");
+			throw new \Wikia\Sass\Exception("/* Base64 encoding failed: {$fileName} not found! */");
 		}
 	}
 
@@ -59,9 +59,6 @@ class Base64Filter extends Filter {
 				break;
 			case 'jpg':
 				$type = 'jpeg';
-				break;
-			case 'svg':
-				$type = 'svg+xml;charset=utf-8'; // include charset
 				break;
 			// not supported image type provided
 			default:

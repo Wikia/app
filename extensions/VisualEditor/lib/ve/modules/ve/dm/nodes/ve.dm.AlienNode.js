@@ -14,11 +14,12 @@
  * @mixins ve.dm.GeneratedContentNode
  *
  * @constructor
+ * @param {number} [length] Length of content data in document; ignored and overridden to 0
  * @param {Object} [element] Reference to element in linear model
  */
-ve.dm.AlienNode = function VeDmAlienNode() {
+ve.dm.AlienNode = function VeDmAlienNode( length, element ) {
 	// Parent constructor
-	ve.dm.LeafNode.apply( this, arguments );
+	ve.dm.LeafNode.call( this, 0, element );
 
 	// Mixin constructors
 	ve.dm.GeneratedContentNode.call( this );
@@ -37,8 +38,6 @@ ve.dm.AlienNode.static.name = 'alien';
 ve.dm.AlienNode.static.storeHtmlAttributes = false;
 
 ve.dm.AlienNode.static.enableAboutGrouping = true;
-
-ve.dm.AlienNode.static.matchRdfaTypes = [ 've:Alien' ];
 
 ve.dm.AlienNode.static.toDataElement = function ( domElements, converter ) {
 	var isInline = this.isHybridInline( domElements, converter ),
@@ -75,13 +74,13 @@ ve.dm.AlienNode.static.getHashObject = function ( dataElement ) {
  *
  * @class
  * @extends ve.dm.AlienNode
- *
  * @constructor
+ * @param {number} [length] Length of content data in document; ignored and overridden to 0
  * @param {Object} [element] Reference to element in linear model
  */
-ve.dm.AlienBlockNode = function VeDmAlienBlockNode() {
+ve.dm.AlienBlockNode = function VeDmAlienBlockNode( length, element ) {
 	// Parent constructor
-	ve.dm.AlienNode.apply( this, arguments );
+	ve.dm.AlienNode.call( this, length, element );
 };
 
 OO.inheritClass( ve.dm.AlienBlockNode, ve.dm.AlienNode );
@@ -93,13 +92,13 @@ ve.dm.AlienBlockNode.static.name = 'alienBlock';
  *
  * @class
  * @extends ve.dm.AlienNode
- *
  * @constructor
+ * @param {number} [length] Length of content data in document; ignored and overridden to 0
  * @param {Object} [element] Reference to element in linear model
  */
-ve.dm.AlienInlineNode = function VeDmAlienInlineNode() {
+ve.dm.AlienInlineNode = function VeDmAlienInlineNode( length, element ) {
 	// Parent constructor
-	ve.dm.AlienNode.apply( this, arguments );
+	ve.dm.AlienNode.call( this, length, element );
 };
 
 OO.inheritClass( ve.dm.AlienInlineNode, ve.dm.AlienNode );

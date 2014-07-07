@@ -33,20 +33,13 @@ ve.ui.MWTransclusionDialogTool.static.icon = 'template';
 ve.ui.MWTransclusionDialogTool.static.title =
 	OO.ui.deferMsg( 'visualeditor-dialogbutton-template-tooltip' );
 
+ve.ui.MWTransclusionDialogTool.static.template = null;
+
 ve.ui.MWTransclusionDialogTool.static.modelClasses = [ ve.dm.MWTransclusionNode ];
 
 ve.ui.MWTransclusionDialogTool.static.requiresRange = true;
 
 ve.ui.MWTransclusionDialogTool.static.commandName = 'transclusion';
-
-/**
- * Only display tool for single-template transclusions of these templates.
- *
- * @property {string|string[]|null}
- * @static
- * @inheritable
- */
-ve.ui.MWTransclusionDialogTool.static.template = null;
 
 /* Methods */
 
@@ -54,13 +47,14 @@ ve.ui.MWTransclusionDialogTool.static.template = null;
  * @inheritdoc
  */
 ve.ui.MWTransclusionDialogTool.static.isCompatibleWith = function ( model ) {
-	var compatible;
+	var partsList, compatible;
 
 	// Parent method
 	compatible = ve.ui.DialogTool.static.isCompatibleWith.call( this, model );
 
 	if ( compatible && this.template ) {
-		return model.isSingleTemplate( this.template );
+		partsList = model.getPartsList();
+		return partsList.length === 1 && partsList[0].template === this.template;
 	}
 
 	return compatible;

@@ -594,7 +594,6 @@ $messages['ia'] = array(
  * @author Aldnonymous
  * @author C5st4wr6ch
  * @author Irwangatot
- * @author Riemogerz
  */
 $messages['id'] = array(
 	'categoryselect-desc' => 'Menyediakan sebuah antarmuka untuk mengelola kategori dalam artikel tanpa mengedit seluruh artikel.',
@@ -608,14 +607,13 @@ $messages['id'] = array(
 	'categoryselect-error-article-doesnt-exist' => 'Halaman [id=$1] tidak ada.',
 	'categoryselect-error-db-locked' => 'Basis data dikunci.',
 	'categoryselect-error-duplicate-category-name' => 'Kategori "$1" sudah ada.',
-	'categoryselect-error-edit-abort' => 'Perubahan yang Anda coba dibatalkan oleh suatu kaitan ekstensi.',
+	'categoryselect-error-edit-abort' => 'Perubahan yang coba Anda lakukan dibatalkan oleh suatu ekstensi kaitan.', # Fuzzy
 	'categoryselect-error-empty-category-name' => 'Silakan berikan nama kategori.',
 	'categoryselect-error-user-rights' => 'Pengguna tidak memiliki izin untuk melakukan aksi ini.',
 	'categoryselect-modal-category-name' => 'Menyediakan nama kategori:',
-	'categoryselect-modal-category-sortkey' => 'Opsional, Anda dapat menyusun sesuai abjad pada kategori "$1" dengan nama:',
+	'categoryselect-modal-category-sortkey' => 'Penyusunan artikel ini menurut abjad pada kategori "$1" dengan nama:', # Fuzzy
 	'categoryselect-tooltip-add' => 'Tekan tombol Masuk atau Kembali ketika sudah selesai.',
 	'tog-disablecategoryselect' => 'Nonaktifkan Kategori Tagging( hanya berlaku jika modus visual telah dinonaktifkan)',
-	'tog-disablecategoryselect-v2' => "Menonaktifkan modul kategori (hanya berlaku jika ''visual mode editing'' dinonaktifkan)",
 );
 
 /** Igbo (Igbo)
@@ -688,13 +686,11 @@ $messages['ja'] = array(
 /** Georgian (ქართული)
  * @author DevaMK
  * @author GeorgeBarnick
- * @author Otogi
  */
 $messages['ka'] = array(
 	'categoryselect-button-add' => 'დაამატე კატეგორია',
 	'categoryselect-button-cancel' => 'გაუქმება',
 	'categoryselect-button-save' => 'შენახვა',
-	'categoryselect-category-remove' => 'კატეგორიის წაშლა',
 );
 
 /** Kannada (ಕನ್ನಡ)
@@ -1279,20 +1275,12 @@ $messages['tly'] = array(
 
 /** Turkish (Türkçe)
  * @author Gizemb
- * @author Sayginer
- * @author Sucsuzz
  * @author Suelnur
  */
 $messages['tr'] = array(
 	'categoryselect-button-add' => 'Kategori ekle',
 	'categoryselect-button-cancel' => 'İptal',
 	'categoryselect-button-save' => 'Kaydet',
-	'categoryselect-category-add' => 'Kategori ekle...',
-	'categoryselect-category-edit' => 'Kategori düzenle',
-	'categoryselect-category-remove' => 'Kategori kaldır',
-	'categoryselect-error-empty-category-name' => 'Lütfen bir kategori adı girin.',
-	'categoryselect-error-user-rights' => 'Kullanıcının bu eylemi gerçekleştirmek için izni yok.',
-	'categoryselect-modal-category-name' => 'Kategorinin adını girin:',
 );
 
 /** Tatar (Cyrillic script) (татарча)

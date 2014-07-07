@@ -1,4 +1,3 @@
-
 Given(/^I close the VE information window$/) do
   pending # express the regexp above with the code you wish you had
 end
@@ -19,107 +18,88 @@ When(/^select the string$/) do
 end
 
 When(/^I click Numbering$/) do
-  on(VisualEditorPage) do |page|
-    page.bullet_number_selector_element.when_present(15).click
-    page.ve_numbering_element.when_present.click
-  end
+ on(VisualEditorPage).ve_numbering_element.when_present(15).click
 end
 
 Then(/^a \# is added in front of input string in the diff view$/) do
   on(VisualEditorPage) do |page|
     page.wait_until(10) do
-      page.diff_view.include? "# #{@wikitext}"
+      page.diff_view.include? "# This "
     end
-    page.diff_view.should match Regexp.new(/^\# #{@wikitext}/)
+    page.diff_view.should match Regexp.new(/^\# This is a new line/)
   end
 end
 
 When(/^I click Bullets$/) do
-  on(VisualEditorPage) do |page|
-    page.bullet_number_selector_element.when_present(15).click
-    page.ve_bullets_element.when_present.click
-  end
+  on(VisualEditorPage).ve_bullets_element.when_present(15).click
 end
 
 Then(/^a \* is added in front of input string in the diff view$/) do
   on(VisualEditorPage) do |page|
     page.wait_until(10) do
-      page.diff_view.include? "* #{@wikitext}"
+      page.diff_view.include? "* This "
     end
-    page.diff_view.should match Regexp.new(/^\* #{@wikitext}/)
+    page.diff_view.should match Regexp.new(/^\* This is a new line/)
   end
 end
 
 When(/^I click Increase indentation$/) do
-  on(VisualEditorPage) do |page|
-    page.bullet_number_selector_element.when_present(15).click
-    page.increase_indentation_element.when_present.click
-  end
+  on(VisualEditorPage).increase_indentation_on_element.when_present(15).click
 end
 
 Then(/^a \#\# is added in front of input string in the diff view$/) do
   on(VisualEditorPage) do |page|
     page.wait_until(10) do
-      page.diff_view.include? "## #{@wikitext}"
+      page.diff_view.include? "## This "
     end
-    page.diff_view.should match Regexp.new(/^\#\# #{@wikitext}/)
+    page.diff_view.should match Regexp.new(/^\#\# This is a new line/)
   end
 end
 
 Then(/^a \*\* is added in front of input string in the diff view$/) do
   on(VisualEditorPage) do |page|
     page.wait_until(10) do
-      page.diff_view.include? "** #{@wikitext}"
+      page.diff_view.include? "** This "
     end
-    page.diff_view.should match Regexp.new(/^\*\* #{@wikitext}/)
+    page.diff_view.should match Regexp.new(/^\*\* This is a new line/)
   end
 end
 
 
 When(/^I click Decrease indentation$/) do
-  on(VisualEditorPage) do |page|
-    sleep 2 #this is waiting for the Review Your Changes iframe to disappear
-    page.bullet_number_selector_element.when_present(15).click
-    page.decrease_indentation_element.when_present.click
-  end
+  on(VisualEditorPage).decrease_indentation_on_element.when_present(15).click
 end
 
 Then(/^nothing is added in front of input string in the diff view$/) do
   on(VisualEditorPage) do |page|
     page.wait_until(10) do
-      page.review_failed_element.when_present.text.include? "No changes to review"
+      page.diff_view.include? "This "
     end
-    page.review_failed_element.when_present.text.should match "No changes to review"
+    page.diff_view.should match Regexp.new(/^This is a new line/)
   end
 end
 
 Then(/^Decrease indentation should be disabled$/) do
-  on(VisualEditorPage).decrease_indentation_element.should_not be_visible
+  on(VisualEditorPage).decrease_indentation_element.should be_visible
 end
 
 Then(/^Increase indentation should be disabled$/) do
-  on(VisualEditorPage).increase_indentation_element.should_not be_visible
+  on(VisualEditorPage).increase_indentation_element.should be_visible
 end
 
 
 Then(/^Decrease indentation should be enabled$/) do
-  on(VisualEditorPage).decrease_indentation_element.class_name.should_not match /disabled/
+  on(VisualEditorPage).decrease_indentation_on_element.class_name.should_not match /disabled/
 end
 
 Then(/^Increase indentation should be enabled$/) do
-  on(VisualEditorPage).increase_indentation_element.class_name.should_not match /disabled/
+  on(VisualEditorPage).increase_indentation_on_element.class_name.should_not match /disabled/
 end
 
 When(/^I undo Bullets$/) do
-  on(VisualEditorPage) do |page|
-    page.bullet_number_selector_element.when_present(15).click
-    page.ve_bullets_element.when_present.click
-  end
+   on(VisualEditorPage).ve_bullets_element.when_present(15).click
 end
 
 When(/^I undo Numbering$/) do
-  on(VisualEditorPage) do |page|
-    page.bullet_number_selector_element.when_present(15).click
-    page.ve_numbering_element.when_present.click
-  end
+  on(VisualEditorPage).ve_numbering_element.when_present(15).click
 end

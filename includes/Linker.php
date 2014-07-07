@@ -530,7 +530,8 @@ class Linker {
 	 * @param $widthOption: Used by the parser to remember the user preference thumbnailsize
 	 * @return String: HTML for an image, with links, wrappers, etc.
 	 */
-	public static function makeImageLink2( Title $title, $file, $frameParams = array(), $handlerParams = array(), $time = false, $query = "", $widthOption = null )
+	public static function makeImageLink2( Title $title, $file, $frameParams = array(),
+		$handlerParams = array(), $time = false, $query = "", $widthOption = null )
 	{
 		$res = null;
 		$dummy = new DummyLinker;
@@ -668,12 +669,7 @@ class Linker {
 			 * Wikia change start
 			 * @author Federico
 			 */
-			if ( F::app()->checkSkin( 'wikiamobile' ) ) {
-				$origHTML = $s = $thumb->toHtml( $params );
-			} else {
-				$origHTML = $s = $thumb->renderView( $params );
-			}
-
+			$origHTML = $s = $thumb->toHtml( $params );
 			/**
 			 * Wikia change end
 			 */
@@ -683,10 +679,8 @@ class Linker {
 		}
 
 		/* Wikia change begin - @author: Federico "Lox" Lucignano */
-		if ( F::app()->checkSkin( 'wikiamobile' ) ) {
-			/* Give extensions the ability to add HTML to full size unframed images */
-			wfRunHooks( 'ImageAfterProduceHTML', array( $frameParams, $thumb, $origHTML, &$s ) );
-		}
+		/* Give extensions the ability to add HTML to full size unframed images */
+		wfRunHooks( 'ImageAfterProduceHTML', array( $frameParams, $thumb, $origHTML, &$s ) );
 		/* Wikia change end */
 
 		return str_replace( "\n", ' ', $prefix . $s . $postfix );
@@ -695,9 +689,8 @@ class Linker {
 	/**
 	 * Get the link parameters for MediaTransformOutput::toHtml() from given
 	 * frame parameters supplied by the Parser.
-	 * @param array $frameParams The frame parameters
-	 * @param string $query An optional query string to add to description page links
-	 * @return array
+	 * @param $frameParams The frame parameters
+	 * @param $query An optional query string to add to description page links
 	 */
 	private static function getImageLinkMTOParams( $frameParams, $query = '' ) {
 		$mtoParams = array();
@@ -737,7 +730,6 @@ class Linker {
 	 * @param $params Array
 	 * @param $framed Boolean
 	 * @param $manualthumb String
-	 * @return mixed
 	 */
 	public static function makeThumbLinkObj( Title $title, $file, $label = '', $alt,
 		$align = 'right', $params = array(), $framed = false , $manualthumb = "" )
@@ -765,7 +757,8 @@ class Linker {
 	 * @param string $query
 	 * @return mixed
 	 */
-	public static function makeThumbLink2( Title $title, $file, $frameParams = array(), $handlerParams = array(), $time = false, $query = "" )
+	public static function makeThumbLink2( Title $title, $file, $frameParams = array(),
+		$handlerParams = array(), $time = false, $query = "" )
 	{
 		global $wgStylePath, $wgContLang;
 		$exists = $file && $file->exists();
@@ -837,6 +830,7 @@ class Linker {
 		$origHTML = null;
 
 		/* Wikia change/refactor start - @author Liz */
+
 		// TODO: Look into making this a separate function
 		if ( !$exists ) {
 			$origHTML = self::makeBrokenImageLinkObj( $title, $fp['title'], '', '', '', $time == true );
@@ -844,24 +838,17 @@ class Linker {
 			$origHTML = htmlspecialchars( wfMsg( 'thumbnail_error', '' ) );
 		} else {
 			$params = array(
-				'alt'        => $fp['alt'],
-				'title'      => $fp['title'],
-				'img-class'  => 'thumbimage',
-				'align'      => $fp['align'],
+				'alt' => $fp['alt'],
+				'title' => $fp['title'],
+				'img-class' => 'thumbimage',
+				'align' => $fp['align'],
 				'outerWidth' => $width,
-				'file'       => $file,
-				'url'        => $url,
+				'file' => $file,
+				'url' => $url,
 			);
 
 			$params = self::getImageLinkMTOParams( $fp, $query ) + $params;
-
-			// Split rendering between 'wikiamobile' which uses the old non-templated path
-			// vs everything else which should use the new templated controller
-			if ( F::app()->checkSkin( 'wikiamobile' ) ) {
-				$origHTML = $thumb->toHtml( $params );
-			} else {
-				$origHTML = $thumb->renderView( $params );
-			}
+			$origHTML = $thumb->toHtml( $params );
 		}
 
 		$isMobile = F::app()->checkSkin( 'wikiamobile' );
@@ -885,8 +872,8 @@ class Linker {
 	 * @param $title Title object
 	 * @param $label String: link label (plain text)
 	 * @param $query String: query string
-	 * @param string $unused1 Unused parameter kept for b/c
-	 * @param string $unused2 Unused parameter kept for b/c
+	 * @param $unused1 Unused parameter kept for b/c
+	 * @param $unused2 Unused parameter kept for b/c
 	 * @param $time Boolean: a file of a certain timestamp was requested
 	 * @return String
 	 */
@@ -962,10 +949,10 @@ class Linker {
 	/**
 	 * Create a direct link to a given uploaded file.
 	 *
-	 * @param Title $title Title object.
-	 * @param string $html pre-sanitized HTML
-	 * @param bool|string $time MW timestamp of file creation time
-	 * @return string HTML
+	 * @param $title Title object.
+	 * @param $html String: pre-sanitized HTML
+	 * @param $time string: MW timestamp of file creation time
+	 * @return String: HTML
 	 */
 	public static function makeMediaLinkObj( $title, $html = '', $time = false ) {
 		$img = wfFindFile( $title, array( 'time' => $time ) );
@@ -1011,8 +998,6 @@ class Linker {
 	 * a message key from the link text.
 	 * Usage example: Linker::specialLink( 'Recentchanges' )
 	 *
-	 * @param string $name
-	 * @param string $key
 	 * @return string
 	 */
 	public static function specialLink( $name, $key = '' ) {
@@ -1030,7 +1015,6 @@ class Linker {
 	 * @param $escape Boolean: do we escape the link text?
 	 * @param $linktype String: type of external link. Gets added to the classes
 	 * @param $attribs Array of extra attributes to <a>
-	 * @return string
 	 */
 	public static function makeExternalLink( $url, $text, $escape = true, $linktype = '', $attribs = array() ) {
 		$class = "external";

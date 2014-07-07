@@ -12,14 +12,13 @@
  * @class
  * @extends ve.dm.BranchNode
  * @mixins ve.dm.MWImageNode
- *
  * @constructor
+ * @param {number} [length] Length of content data in document
  * @param {Object} [element] Reference to element in linear model
- * @param {ve.dm.Node[]} [children]
  */
-ve.dm.MWBlockImageNode = function VeDmMWBlockImageNode() {
+ve.dm.MWBlockImageNode = function VeDmMWBlockImageNode( length, element ) {
 	// Parent constructor
-	ve.dm.BranchNode.apply( this, arguments );
+	ve.dm.BranchNode.call( this, 0, element );
 
 	// Mixin constructors
 	ve.dm.MWImageNode.call( this );

@@ -207,17 +207,4 @@ class AssetsManagerController extends WikiaController {
 		wfProfileOut(__METHOD__);
 		return $ret;
 	}
-
-	/**
-	 * Returns the current style version (cache buster) in a Nirvana's response.
-	 *
-	 * @author Michał ‘Mix’ Roszka <mix@wikia-inc.com>
-	 */
-	public function getStyleVersion() {
-		wfProfileIn( __METHOD__ );
-		$this->response->setVal( 'styleVersion', $this->app->wg->StyleVersion );
-		$this->response->setCacheValidity( WikiaResponse::CACHE_SHORT );
-		$this->response->setFormat( 'json' );
-		wfProfileOut( __METHOD__ );
-	}
 }

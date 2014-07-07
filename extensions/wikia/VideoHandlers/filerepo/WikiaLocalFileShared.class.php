@@ -147,19 +147,6 @@ class WikiaLocalFileShared  {
 	}
 
 	/**
-	 * Get regional restrictions of Video file or false
-	 * @return string|false
-	 */
-	public function getRegionalRestrictions() {
-		$handler = $this->oFile->getHandler();
-		if ( $this->isVideo() && !empty( $handler ) ) {
-			return $handler->getRegionalRestrictions();
-		}
-
-		return false;
-	}
-
-	/**
 	 * Force file to use some specyfic mimetype
 	 *
 	 * MediaWiki is getting mime type directly from a file.

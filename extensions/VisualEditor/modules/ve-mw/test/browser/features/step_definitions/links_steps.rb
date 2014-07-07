@@ -6,7 +6,7 @@ end
 Given(/^I can see the Link User Inteface$/) do
   on(VisualEditorPage) do |page|
     page.ve_link_ui_element.when_present
-    page.ve_link_ui.should match Regexp.escape("Link")
+    page.ve_link_ui.should match Regexp.escape("Hyperlink")
   end
 end
 
@@ -23,7 +23,7 @@ Then(/^an external link appears in the diff view$/) do
     page.wait_until(10) do
       page.links_diff_view.include? "example.com"
     end
-    page.links_diff_view.should match Regexp.escape("[http://www.example.com Links]")
+    page.links_diff_view.should match Regexp.escape("[http://www.example.com Editing] ")
   end
 end
 
@@ -36,7 +36,7 @@ Then(/^an internal link appears in the diff view$/) do
     page.wait_until(10) do
       page.links_diff_view.include? "Main Page"
     end
-    page.links_diff_view.should match Regexp.escape("[[Main Page|Links]]")
+    page.links_diff_view.should match Regexp.escape("[[Main Page|Editing]]")
   end
 end
 
@@ -49,7 +49,7 @@ Then(/^a non\-existing link appears in the diff view$/) do
     page.wait_until(10) do
       page.links_diff_view.include? "DoesNotExist"
     end
-    page.links_diff_view.should match Regexp.escape("[[DoesNotExist|Links]]")
+    page.links_diff_view.should match Regexp.escape("[[DoesNotExist|Editing]]")
   end
 end
 

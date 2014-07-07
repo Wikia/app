@@ -44,7 +44,6 @@ $wgSpecialPages['ReplaceText'] = 'ReplaceText';
 $wgSpecialPageGroups['ReplaceText'] = 'wiki';
 $wgAutoloadClasses['ReplaceText'] = $rtgIP . 'SpecialReplaceText.php';
 $wgAutoloadClasses['ReplaceTextJob'] = $rtgIP . 'ReplaceTextJob.php';
-$wgAutoloadClasses['ReplaceTextTask'] = $rtgIP . 'ReplaceTextTask.php';
 
 // This function should really go into a "ReplaceText_body.php" file.
 function rtAddToAdminLinks( &$admin_links_tree ) {

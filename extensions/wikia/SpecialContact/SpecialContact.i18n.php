@@ -1204,15 +1204,11 @@ Nếu bạn thích sử dụng thư điện tử thường xuyên hoặc có t�
 /** Simplified Chinese (中文（简体）‎)
  * @author Dimension
  * @author Hydra
- * @author Liuxinyu970226
  */
 $messages['zh-hans'] = array(
 	'contact' => '联络 Wikia',
 	'specialcontact-wikia' => '联络 Wikia',
 	'specialcontact-pagetitle' => '联络 Wikia',
-	'specialcontact-intro' => '您可通过此表单联络[[w:project:Staff|Wikia职员]]。此wiki的管理员可[[Special:ListAdmins|在此找到]]。
-        关于如何报告问题至Wikia的其他信息可[[w:project:Report_a_problem|在此找到]]，或者您可以前往[[w:Forum:Index|Wikia社群论坛]]报告。
-如果您希望使用一般电子邮件联络，您可以联络[mailto:community@wikia.com community@wikia.com]。',
 	'specialcontact-username' => '您的用户名',
 	'specialcontact-wikiname' => '哪个维基',
 	'specialcontact-realname' => '您的名字',

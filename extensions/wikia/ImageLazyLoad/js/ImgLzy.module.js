@@ -181,7 +181,7 @@ define('wikia.ImgLzy', ['jquery', 'wikia.log', 'wikia.window'], function ($, log
 				inViewport = (scrollTop < cacheItem.top && scrollBottom > cacheItem.top) ||
 					(scrollTop < cacheItem.bottom && scrollBottom > cacheItem.bottom);
 
-				if (inViewport && this.parentVisible(cacheItem)) {
+				if (inViewport && this.parentVisible(cacheItem) && cacheItem.jq.is(':visible')) {
 					cacheItem.jq.addClass('lzyTrns');
 					cacheItem.el.onload = onload;
 					imgSrc = this.rewriteURLForWebP( cacheItem.jq.data( 'src' ) );

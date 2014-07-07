@@ -112,95 +112,44 @@ var mw = ( function ( $, undefined ) {
 	};
 
 	/**
-	 * Object constructor for messages.
+	 * Message
 	 *
-	 * Similar to the Message class in MediaWiki PHP.
+	 * Object constructor for messages,
+	 * similar to the Message class in MediaWiki PHP.
 	 *
-	 * Format defaults to 'text'.
-	 *
-	 *     @example
-	 *
-	 *     var obj, str;
-	 *     mw.messages.set( {
-	 *         'hello': 'Hello world',
-	 *         'hello-user': 'Hello, $1!',
-	 *         'welcome-user': 'Welcome back to $2, $1! Last visit by $1: $3'
-	 *     } );
-	 *
-	 *     obj = new mw.Message( mw.messages, 'hello' );
-	 *     mw.log( obj.text() );
-	 *     // Hello world
-	 *
-	 *     obj = new mw.Message( mw.messages, 'hello-user', [ 'John Doe' ] );
-	 *     mw.log( obj.text() );
-	 *     // Hello, John Doe!
-	 *
-	 *     obj = new mw.Message( mw.messages, 'welcome-user', [ 'John Doe', 'Wikipedia', '2 hours ago' ] );
-	 *     mw.log( obj.text() );
-	 *     // Welcome back to Wikipedia, John Doe! Last visit by John Doe: 2 hours ago
-	 *
-	 *     // Using mw.message shortcut
-	 *     obj = mw.message( 'hello-user', 'John Doe' );
-	 *     mw.log( obj.text() );
-	 *     // Hello, John Doe!
-	 *
-	 *     // Using mw.msg shortcut
-	 *     str = mw.msg( 'hello-user', 'John Doe' );
-	 *     mw.log( str );
-	 *     // Hello, John Doe!
-	 *
-	 *     // Different formats
-	 *     obj = new mw.Message( mw.messages, 'hello-user', [ 'John "Wiki" <3 Doe' ] );
-	 *
-	 *     obj.format = 'text';
-	 *     str = obj.toString();
-	 *     // Same as:
-	 *     str = obj.text();
-	 *
-	 *     mw.log( str );
-	 *     // Hello, John "Wiki" <3 Doe!
-	 *
-	 *     mw.log( obj.escaped() );
-	 *     // Hello, John &quot;Wiki&quot; &lt;3 Doe!
-	 *
-	 * @class mw.Message
-	 *
-	 * @constructor
-	 * @param {mw.Map} map Message storage
-	 * @param {string} key
-	 * @param {Array} [parameters]
+	 * @param map Map Instance of mw.Map
+	 * @param key String
+	 * @param parameters Array
+	 * @return Message
 	 */
 	function Message( map, key, parameters ) {
-		this.format = 'text';
+		this.format = 'plain';
 		this.map = map;
 		this.key = key;
-		this.parameters = parameters === undefined ? [] : slice.call( parameters );
+		this.parameters = parameters === undefined ? [] : $.makeArray( parameters );
 		return this;
 	}
 
 	Message.prototype = {
 		/**
 		 * Simple message parser, does $N replacement and nothing else.
-		 *
 		 * This may be overridden to provide a more complex message parser.
-		 *
-		 * The primary override is in mediawiki.jqueryMsg.
-		 *
+		 * 
 		 * This function will not be called for nonexistent messages.
 		 */
-		parser: function () {
+		parser: function() {
 			var parameters = this.parameters;
 			return this.map.get( this.key ).replace( /\$(\d+)/g, function ( str, match ) {
 				var index = parseInt( match, 10 ) - 1;
 				return parameters[index] !== undefined ? parameters[index] : '$' + match;
 			} );
 		},
-
+		
 		/**
 		 * Appends (does not replace) parameters for replacement to the .parameters property.
 		 *
-		 * @param {Array} parameters
-		 * @chainable
+		 * @param parameters Array
+		 * @return Message
 		 */
 		params: function ( parameters ) {
 			var i;
@@ -211,23 +160,27 @@ var mw = ( function ( $, undefined ) {
 		},
 
 		/**
-		 * Converts message object to its string form based on the state of format.
+		 * Converts message object to it's string form based on the state of format.
 		 *
-		 * @return {string} Message as a string in the current form or `<key>` if key does not exist.
+		 * @return string Message as a string in the current form or <key> if key does not exist.
 		 */
-		toString: function () {
+		toString: function() {
 			var text;
 
 			if ( !this.exists() ) {
 				// Use <key> as text if key does not exist
-				if ( this.format === 'escaped' || this.format === 'parse' ) {
-					// format 'escaped' and 'parse' need to have the brackets and key html escaped
+				if ( this.format !== 'plain' ) {
+					// format 'escape' and 'parse' need to have the brackets and key html escaped
 					return mw.html.escape( '<' + this.key + '>' );
 				}
 				return '<' + this.key + '>';
 			}
 
-			if ( this.format === 'plain' || this.format === 'text' || this.format === 'parse' ) {
+			if ( this.format === 'plain' ) {
+				// @todo FIXME: Although not applicable to core Message,
+				// Plugins like jQueryMsg should be able to distinguish
+				// between 'plain' (only variable replacement and plural/gender)
+				// and actually parsing wikitext to HTML.
 				text = this.parser();
 			}
 
@@ -235,60 +188,40 @@ var mw = ( function ( $, undefined ) {
 				text = this.parser();
 				text = mw.html.escape( text );
 			}
+			
+			if ( this.format === 'parse' ) {
+				text = this.parser();
+			}
 
 			return text;
 		},
 
 		/**
-		 * Changes format to 'parse' and converts message to string
-		 *
-		 * If jqueryMsg is loaded, this parses the message text from wikitext
-		 * (where supported) to HTML
-		 *
-		 * Otherwise, it is equivalent to plain.
+		 * Changes format to parse and converts message to string
 		 *
 		 * @return {string} String form of parsed message
 		 */
-		parse: function () {
+		parse: function() {
 			this.format = 'parse';
 			return this.toString();
 		},
 
 		/**
-		 * Changes format to 'plain' and converts message to string
-		 *
-		 * This substitutes parameters, but otherwise does not change the
-		 * message text.
+		 * Changes format to plain and converts message to string
 		 *
 		 * @return {string} String form of plain message
 		 */
-		plain: function () {
+		plain: function() {
 			this.format = 'plain';
 			return this.toString();
 		},
 
 		/**
-		 * Changes format to 'text' and converts message to string
-		 *
-		 * If jqueryMsg is loaded, {{-transformation is done where supported
-		 * (such as {{plural:}}, {{gender:}}, {{int:}}).
-		 *
-		 * Otherwise, it is equivalent to plain.
-		 */
-		text: function () {
-			this.format = 'text';
-			return this.toString();
-		},
-
-		/**
-		 * Changes the format to 'escaped' and converts message to string
-		 *
-		 * This is equivalent to using the 'text' format (see text method), then
-		 * HTML-escaping the output.
+		 * Changes the format to html escaped and converts message to string
 		 *
 		 * @return {string} String form of html escaped message
 		 */
-		escaped: function () {
+		escaped: function() {
 			this.format = 'escaped';
 			return this.toString();
 		},
@@ -296,10 +229,9 @@ var mw = ( function ( $, undefined ) {
 		/**
 		 * Checks if message exists
 		 *
-		 * @see mw.Map#exists
-		 * @return {boolean}
+		 * @return {string} String form of parsed message
 		 */
-		exists: function () {
+		exists: function() {
 			return this.map.exists( this.key );
 		}
 	};
@@ -351,35 +283,37 @@ var mw = ( function ( $, undefined ) {
 		/* Public Methods */
 	
 		/**
-		 * Get a message object.
+		 * Gets a message object, similar to wfMessage()
 		 *
-		 * Shorcut for `new mw.Message( mw.messages, key, parameters )`.
-		 *
-		 * @see mw.Message
-		 * @param {string} key Key of message to get
-		 * @param {Mixed...} parameters Parameters for the $N replacements in messages.
-		 * @return {mw.Message}
+		 * @param key string Key of message to get
+		 * @param parameter_1 mixed First argument in a list of variadic arguments,
+		 *  each a parameter for $N replacement in messages.
+		 * @return Message
 		 */
-		message: function ( key ) {
-			// Variadic arguments
-			var parameters = slice.call( arguments, 1 );
+		message: function ( key, parameter_1 /* [, parameter_2] */ ) {
+			var parameters;
+			// Support variadic arguments
+			if ( parameter_1 !== undefined ) {
+				parameters = $.makeArray( arguments );
+				parameters.shift();
+			} else {
+				parameters = [];
+			}
 			return new Message( mw.messages, key, parameters );
 		},
-
+	
 		/**
-		 * Get a message string using the (default) 'text' format.
+		 * Gets a message string, similar to wfMsg()
 		 *
-		 * Shortcut for `mw.message( key, parameters... ).text()`.
-		 *
-		 * @see mw.Message
-		 * @param {string} key Key of message to get
-		 * @param {Mixed...} parameters Parameters for the $N replacements in messages.
-		 * @return {string}
+		 * @param key string Key of message to get
+		 * @param parameters mixed First argument in a list of variadic arguments,
+		 *  each a parameter for $N replacement in messages.
+		 * @return String.
 		 */
-		msg: function () {
+		msg: function ( key, parameters ) {
 			return mw.message.apply( mw.message, arguments ).toString();
 		},
-
+	
 		/**
 		 * Client-side module loader which integrates with the MediaWiki ResourceLoader
 		 */

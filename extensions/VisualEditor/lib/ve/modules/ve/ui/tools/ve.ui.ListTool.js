@@ -56,12 +56,11 @@ ve.ui.ListTool.prototype.onSelect = function () {
 /**
  * @inheritdoc
  */
-ve.ui.ListTool.prototype.onUpdateState = function ( fragment ) {
+ve.ui.ListTool.prototype.onUpdateState = function ( nodes ) {
 	// Parent method
 	ve.ui.Tool.prototype.onUpdateState.apply( this, arguments );
 
 	var i, len,
-		nodes = fragment.getSelectedLeafNodes(),
 		style = this.constructor.static.style,
 		all = !!nodes.length;
 

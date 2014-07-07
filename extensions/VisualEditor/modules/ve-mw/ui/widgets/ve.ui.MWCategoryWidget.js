@@ -29,7 +29,6 @@ ve.ui.MWCategoryWidget = function VeUiMWCategoryWidget( config ) {
 	// Properties
 	this.categories = {};
 	this.categoryHiddenStatus = {};
-	this.categoryRedirects = {}; // Source -> target
 	this.popupState = false;
 	this.savedPopupState = false;
 	this.popup = new ve.ui.MWCategoryPopupWidget( {
@@ -220,18 +219,12 @@ ve.ui.MWCategoryWidget.prototype.queryCategoryHiddenStatus = function ( category
 		action: 'query',
 		prop: 'pageprops',
 		titles: categoryNamesToQuery.join( '|' ),
-		ppprop: 'hiddencat',
-		redirects: ''
+		ppprop: 'hiddencat'
 	} ).then( function ( result ) {
 		if ( result && result.query && result.query.pages ) {
 			$.each( result.query.pages, function ( index, pageInfo ) {
 				var hiddenStatus = !!( pageInfo.pageprops && pageInfo.pageprops.hiddencat !== undefined );
 				categoryWidget.categoryHiddenStatus[pageInfo.title] = hiddenStatus;
-			} );
-		}
-		if ( result && result.query && result.query.redirects ) {
-			$.each( result.query.redirects, function ( index, redirectInfo ) {
-				categoryWidget.categoryRedirects[redirectInfo.from] = redirectInfo.to;
 			} );
 		}
 	} );
@@ -255,25 +248,15 @@ ve.ui.MWCategoryWidget.prototype.addItems = function ( items, index ) {
 		categoryWidget = this;
 
 	return this.queryCategoryHiddenStatus( categoryNames ).then( function () {
-		var itemTitle, config;
 		for ( i = 0, len = items.length; i < len; i++ ) {
 			item = items[i];
 
-			itemTitle = new mw.Title( item.name, mw.config.get( 'wgNamespaceIds' ).category ).getPrefixedText();
 			// Create a widget using the item data
-			config = {
+			categoryItem = new ve.ui.MWCategoryItemWidget( {
 				'$': categoryWidget.$,
 				'item': item,
 				'hidden': categoryWidget.categoryHiddenStatus[item.name]
-			};
-			if ( Object.prototype.hasOwnProperty.call( categoryWidget.categoryRedirects, itemTitle ) ) {
-				config.redirectTo = new mw.Title(
-					categoryWidget.categoryRedirects[itemTitle],
-					mw.config.get( 'wgNamespaceIds' ).category
-				).getMainText();
-				config.hidden = categoryWidget.categoryHiddenStatus[categoryWidget.categoryRedirects[itemTitle]];
-			}
-			categoryItem = new ve.ui.MWCategoryItemWidget( config );
+			} );
 			categoryItem.connect( categoryWidget, {
 				'savePopupState': 'onSavePopupState',
 				'togglePopupMenu': 'onTogglePopupMenu'

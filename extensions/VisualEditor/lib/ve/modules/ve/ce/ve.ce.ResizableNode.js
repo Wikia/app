@@ -252,15 +252,12 @@ ve.ce.ResizableNode.prototype.onResizableBlur = function () {
  * @method
  */
 ve.ce.ResizableNode.prototype.onResizableLive = function () {
-	var surface = this.getRoot().getSurface(),
-		documentModel = surface.getModel().getDocument();
+	var surfaceModel = this.getRoot().getSurface().getModel();
 
 	if ( this.live ) {
-		documentModel.connect( this, { 'transact': 'setResizableHandlesSizeAndPosition' } );
-		surface.connect( this, { 'position': 'setResizableHandlesSizeAndPosition' } );
+		surfaceModel.getDocument().connect( this, { 'transact': 'setResizableHandlesSizeAndPosition' } );
 	} else {
-		documentModel.disconnect( this, { 'transact': 'setResizableHandlesSizeAndPosition' } );
-		surface.disconnect( this, { 'position': 'setResizableHandlesSizeAndPosition' } );
+		surfaceModel.getDocument().disconnect( this, { 'transact': 'setResizableHandlesSizeAndPosition' } );
 		this.onResizableBlur();
 	}
 };

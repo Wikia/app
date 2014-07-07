@@ -1,7 +1,3 @@
-When(/^I clear the confirm dialog$/) do
-  on(VisualEditorPage).confirm_switch_element.when_present.click
-end
-
 When(/^I enter the wikitext editor$/) do
   on(VisualEditorPage) do |page|
     page.edit_wikitext_element.when_present.click
@@ -33,26 +29,26 @@ end
 Then(/^I should be in wikitext editing mode$/) do
   on(VisualEditorPage) do |page|
     page.wait_until(15) do
-      page.text.include? "Editing Edit page for"
+      page.text.include? "Editing User:"
     end
   end
-  @browser.url.should eql(ENV['MEDIAWIKI_URL'] + "Edit page for " + ENV['BROWSER'] + "?action=submit")
+  @browser.url.should eql(ENV['MEDIAWIKI_URL'] + "User:" + ENV['MEDIAWIKI_USER'] + "?action=submit")
 end
 
 Then(/^I should be in Visual Editor editing mode$/) do
   on(VisualEditorPage) do |page|
     page.wait_until(15) do
-      page.text.include? "Edit page for"
+      page.text.include? "User:"
     end
   end
-  expected_url = /w\/index\.php\?title=Edit_page_for_#{ENV['BROWSER']}&veaction=edit/
+  expected_url = /w\/index\.php\?title=User:(.+)&veaction=edit/
   @browser.url.should match Regexp.new(expected_url)
 end
 
 Then(/^I should be in Visual Editor editing alternate mode$/) do
   on(VisualEditorPage) do |page|
     page.wait_until(15) do
-      page.text.include? "Edit page for"
+      page.text.include? "User:"
     end
     page.content_element.when_present.should be_visible
   end

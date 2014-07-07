@@ -1,7 +1,7 @@
 <form class="WikiaForm create-map-form">
 	<div class="input-group">
 		<label for="intMapTitle">{{titleLabel}}</label>
-		<input type="text" class="wide" name="map-title" placeholder="{{titlePlaceholder}}" value="">
+		<input type="text" name="map-title" placeholder="{{titlePlaceholder}}" value="">
 	</div>
 
 	{{#tileSetData}}
@@ -10,7 +10,7 @@
 	{{^tileSetId}}
 	<div class="input-group">
 		<label for="intMapTileSetTitle">{{tileSetTitleLabel}}</label>
-		<input type="text" class="wide" name="tile-set-title" placeholder="{{tileSetTitlePlaceholder}}" value="">
+		<input type="text" name="tile-set-title" placeholder="{{tileSetTitlePlaceholder}}" value="">
 	</div>
 	{{/tileSetId}}
 	{{/geo}}

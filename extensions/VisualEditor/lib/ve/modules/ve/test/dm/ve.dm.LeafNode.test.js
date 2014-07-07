@@ -9,9 +9,9 @@ QUnit.module( 've.dm.LeafNode' );
 
 /* Stubs */
 
-ve.dm.LeafNodeStub = function VeDmLeafNodeStub() {
+ve.dm.LeafNodeStub = function VeDmLeafNodeStub( length, element ) {
 	// Parent constructor
-	ve.dm.LeafNode.apply( this, arguments );
+	ve.dm.LeafNode.call( this, length, element );
 };
 
 OO.inheritClass( ve.dm.LeafNodeStub, ve.dm.LeafNode );
@@ -36,7 +36,7 @@ QUnit.test( 'canHaveChildrenNotContent', 1, function ( assert ) {
 
 QUnit.test( 'getAnnotations', 3, function ( assert ) {
 	var element = { 'type': 'leaf-stub' },
-		node = new ve.dm.LeafNodeStub( element );
+		node = new ve.dm.LeafNodeStub( 0, element );
 	assert.deepEqual( node.getAnnotations(), [], 'undefined .annotations returns empty set' );
 	assert.equal( element.annotations, undefined, 'no .annotations property added' );
 	element.annotations = [0];

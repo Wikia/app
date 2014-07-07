@@ -121,7 +121,8 @@
 
 /* Images */
 
-.ve-init-mw-viewPageTarget-loading {
+.ve-init-mw-viewPageTarget-loading,
+.ve-ui-mwSaveDialog-working {
 	/* @embed */
 	background-image: url(images/loading-ltr.gif);
 }

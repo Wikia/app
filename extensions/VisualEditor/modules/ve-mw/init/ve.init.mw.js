@@ -11,4 +11,7 @@
  * @class
  * @singleton
  */
-ve.init.mw = {};
+ve.init.mw = {
+	// List of target instances
+	'targets': []
+};

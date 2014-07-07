@@ -11,7 +11,7 @@
  */
 ve.ui.WikiaMediaSelectWidget = function VeUiWikiaMediaSelectWidget( config ) {
 	// Parent constructor
-	ve.ui.WikiaMediaSelectWidget.super.call( this, config );
+	OO.ui.SelectWidget.call( this, config );
 };
 
 /* Inheritance */
@@ -38,7 +38,12 @@ ve.ui.WikiaMediaSelectWidget.prototype.onMouseUp = function ( e ) {
 		this.selecting = this.getTargetItem( e );
 	}
 	if ( !this.disabled && e.which === 1 && this.selecting ) {
-		this.selectItem( this.selecting );
+		// What was clicked on?
+		if ( $( e.target ).closest( '.ve-ui-wikiaMediaOptionWidget-check' ).length ) {
+			this.emit( 'check', this.selecting );
+		} else {
+			this.selectItem( this.selecting );
+		}
 		this.selecting = null;
 	}
 	return false;

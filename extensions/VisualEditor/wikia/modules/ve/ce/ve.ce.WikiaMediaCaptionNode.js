@@ -5,6 +5,8 @@
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
+/* global mw: false */
+
 /**
  * VisualEditor ContentEditable Wikia media caption item node.
  *
@@ -17,7 +19,7 @@
 ve.ce.WikiaMediaCaptionNode = function VeCeWikiaMediaCaptionNode( model, config ) {
 
 	// Parent constructor
-	ve.ce.WikiaMediaCaptionNode.super.call( this, model, config );
+	ve.ce.BranchNode.call( this, model, config );
 };
 
 /* Inheritance */

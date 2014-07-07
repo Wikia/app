@@ -158,20 +158,8 @@ class WikiFilePage extends WikiPage {
 		$this->loadFile();
 		if ( $this->mFile->exists() ) {
 			wfDebug( 'ImagePage::doPurge purging ' . $this->mFile->getName() . "\n" );
-			// Wikia Change Start @author Scott Rabin (srabin@wikia-inc.com)
-			if ( TaskRunner::isModern('HTMLCacheUpdate') ) {
-				global $wgCityId;
-
-				$task = ( new \Wikia\Tasks\Tasks\HTMLCacheUpdateTask() )
-					->wikiId( $wgCityId )
-					->title( $this->mTitle );
-				$task->call( 'purge', 'imagelinks' );
-				$task->queue();
-			} else {
-				$update = new HTMLCacheUpdate( $this->mTitle, 'imagelinks' );
-				$update->doUpdate();
-			}
-			// Wikia Change End
+			$update = new HTMLCacheUpdate( $this->mTitle, 'imagelinks' );
+			$update->doUpdate();
 			$this->mFile->upgradeRow();
 			$this->mFile->purgeCache( array( 'forThumbRefresh' => true ) );
 		} else {

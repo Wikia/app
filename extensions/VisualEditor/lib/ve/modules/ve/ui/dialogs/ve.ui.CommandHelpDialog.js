@@ -42,7 +42,7 @@ ve.ui.CommandHelpDialog.static.icon = 'help';
  */
 ve.ui.CommandHelpDialog.prototype.initialize = function () {
 	// Parent method
-	ve.ui.CommandHelpDialog.super.prototype.initialize.call( this );
+	ve.ui.Dialog.prototype.initialize.call( this );
 
 	var i, j, jLen, k, kLen, triggerList, commands, shortcut,
 		platform = ve.init.platform.getSystemPlatform(),
@@ -125,7 +125,13 @@ ve.ui.CommandHelpDialog.static.getCommandGroups = function () {
 			'title': 'visualeditor-shortcuts-formatting',
 			'commands': [
 				{ 'trigger': 'paragraph', 'msg': 'visualeditor-formatdropdown-format-paragraph' },
-				{ 'shortcuts': ['ctrl+(1-6)'], 'msg': 'visualeditor-formatdropdown-format-heading-label' },
+				{
+					'shortcuts': [ {
+						'mac': 'cmd+(1-6)',
+						'pc': 'ctrl+(1-6)'
+					} ],
+					'msg': 'visualeditor-formatdropdown-format-heading-label'
+				},
 				{ 'trigger': 'preformatted', 'msg': 'visualeditor-formatdropdown-format-preformatted' },
 				{ 'trigger': 'indent', 'msg': 'visualeditor-indentationbutton-indent-tooltip' },
 				{ 'trigger': 'outdent', 'msg': 'visualeditor-indentationbutton-outdent-tooltip' }
@@ -176,4 +182,4 @@ ve.ui.CommandHelpDialog.static.getCommandGroups = function () {
 
 /* Registration */
 
-ve.ui.windowFactory.register( ve.ui.CommandHelpDialog );
+ve.ui.dialogFactory.register( ve.ui.CommandHelpDialog );

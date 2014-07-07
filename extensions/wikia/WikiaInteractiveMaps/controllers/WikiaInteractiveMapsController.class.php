@@ -64,7 +64,7 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 			'limit' => self::MAPS_PER_PAGE,
 		];
 
-		$mapsResponse = $this->mapsModel->getMapsFromApi( $params );
+		$mapsResponse = $this->mapsModel->cachedRequest( 'getMapsFromApi', $params );
 
 		if ( !$mapsResponse ) {
 			$this->forward( 'WikiaInteractiveMaps', 'error' );
@@ -133,7 +133,10 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 		$lat = $this->request->getInt( 'lat', WikiaInteractiveMapsParserTagController::DEFAULT_LATITUDE );
 		$lon = $this->request->getInt( 'lon', WikiaInteractiveMapsParserTagController::DEFAULT_LONGITUDE );
 
-		$map = $this->mapsModel->getMapByIdFromApi( $mapId );
+		$map = $this->mapsModel->cachedRequest(
+			'getMapByIdFromApi',
+			[ 'id' => $mapId ]
+		);
 
 		if ( isset( $map->title ) ) {
 			$this->wg->out->setHTMLTitle( $map->title );

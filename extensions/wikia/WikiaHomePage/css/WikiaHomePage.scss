@@ -7,6 +7,10 @@
 @import "../../../../skins/oasis/css/mixins/transform";
 @import "../../UserLogin/mixins/tooltip-icon";
 
+$hub-color-slot-1 : get_command_line_param("hub-color-slot-1", $color-wikiahome-videogames);
+$hub-color-slot-2 : get_command_line_param("hub-color-slot-2", $color-wikiahome-entertainment);
+$hub-color-slot-3 : get_command_line_param("hub-color-slot-3", $color-wikiahome-lifestyle);
+
 @mixin interstitial-toggle-animation {
 	-webkit-animation: InterstitialToggle 900ms;
 	-moz-animation: InterstitialToggle 900ms;
@@ -738,10 +742,9 @@ $color-wikiahome-border-primary-brand-color: #c7d1d8;
 	.wikiahomepage-hubs {
 		@include clearfix;
 		clear: both;
-		margin-top: 30px;
+		margin-top: 60px;
 		.wikiahomepage-hubs-section {
 			border-bottom: 1px dotted $color-page-border;
-			margin-top: 15px;
 			.wikiahomepage-hubs-hero-image {
 				height: 210px;
 				width: 330px;
@@ -768,30 +771,55 @@ $color-wikiahome-border-primary-brand-color: #c7d1d8;
 					text-decoration: none;
 				}
 			}
-			&:nth-child( 3n + 1 ) {
+			&:first-child {
 				margin-left: 0;
 			}
 			&.videogames {
 				h2 {
 					border-bottom-color: $color-wikiahome-videogames;
 				}
+				ul li a {
+					color: $color-wikiahome-videogames;
+				}
 			}
 			&.entertainment {
 				h2 {
 					border-bottom-color: $color-wikiahome-entertainment;
+				}
+				ul li a {
+					color: $color-wikiahome-entertainment;
 				}
 			}
 			&.lifestyle {
 				h2 {
 					border-bottom-color: $color-wikiahome-lifestyle;
 				}
+				ul li a {
+					color: $color-wikiahome-lifestyle;
+				}
 			}
-
-			@for $i from 1 through 10 {
-				&.hub-slot-#{$i} {
-					h2 {
-						border-bottom-color: get_command_line_param("hub-color-slot-#{$i}", $color-wikiahome-community);
-					}
+			&.hub-slot-1 {
+				h2 {
+					border-bottom-color: $hub-color-slot-1;
+				}
+				ul li a {
+					color: $hub-color-slot-1;
+				}
+			}
+			&.hub-slot-2 {
+				h2 {
+					border-bottom-color: $hub-color-slot-2;
+				}
+				ul li a {
+					color: $hub-color-slot-2;
+				}
+			}
+			&.hub-slot-3 {
+				h2 {
+					border-bottom-color: $hub-color-slot-3;
+				}
+				ul li a {
+					color: $hub-color-slot-3;
 				}
 			}
 		}

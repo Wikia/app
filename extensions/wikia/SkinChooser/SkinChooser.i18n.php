@@ -301,13 +301,6 @@ $messages['tl'] = array(
 	'site-layout' => 'Mga Latag ng Pook',
 );
 
-/** Turkish (Türkçe)
- * @author Sucsuzz
- */
-$messages['tr'] = array(
-	'new-look' => 'Wikia',
-);
-
 /** Ukrainian (українська)
  * @author Ua2004
  */

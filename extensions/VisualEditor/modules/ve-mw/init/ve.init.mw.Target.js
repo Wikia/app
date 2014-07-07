@@ -28,10 +28,6 @@ ve.init.mw.Target = function VeInitMwTarget( $container, pageName, revisionId ) 
 	// Properties
 	this.pageName = pageName;
 	this.pageExists = mw.config.get( 'wgArticleId', 0 ) !== 0;
-
-	// Sometimes we actually don't want to send a useful oldid
-	// if we do, PostEdit will give us a 'page restored' message
-	this.requestedRevId = revisionId;
 	this.revid = revisionId || mw.config.get( 'wgCurRevisionId' );
 	this.wikitext = null;
 	this.restoring = !!revisionId;
@@ -43,10 +39,13 @@ ve.init.mw.Target = function VeInitMwTarget( $container, pageName, revisionId ) 
 	this.modules = [
 			'ext.visualEditor.mwcore',
 			'ext.visualEditor.mwlink',
-			'ext.visualEditor.data',
-			'ext.visualEditor.mwreference'
+			'ext.visualEditor.data'
 		]
-		.concat( this.constructor.static.iconModuleStyles )
+		.concat(
+			document.createElementNS && document.createElementNS( 'http://www.w3.org/2000/svg', 'svg' ).createSVGRect ?
+				this.constructor.static.iconModuleStyles.vector :
+				this.constructor.static.iconModuleStyles.raster
+		)
 		.concat( conf.pluginModules || [] );
 
 	this.pluginCallbacks = [];
@@ -74,7 +73,6 @@ OO.inheritClass( ve.init.mw.Target, ve.init.Target );
  * @param {string} html Rendered page HTML from server
  * @param {string} categoriesHtml Rendered categories HTML from server
  * @param {number} [newid] New revision id, undefined if unchanged
- * @param {boolean} isRedirect Whether this page is now a redirect or not.
  */
 
 /**
@@ -207,17 +205,14 @@ ve.init.mw.Target.static.toolbarGroups = [
 	// Cite
 	{
 		'type': 'list',
-		'label': OO.ui.deferMsg( 'visualeditor-toolbar-cite-label' ),
+		'label': 'Cite',
 		'indicator': 'down',
 		'include': [ { 'group': 'cite' } ]
 	},
 	// Structure
 	{
-		'type': 'list',
-		'icon': 'bullet-list',
-		'indicator': 'down',
-		'include': [ { 'group': 'structure' } ],
-		'demote': [ 'outdent', 'indent' ]
+		'type': 'bar',
+		'include': [ 'number', 'bullet', 'outdent', 'indent' ]
 	},
 	// Insert
 	{
@@ -247,12 +242,14 @@ ve.init.mw.Target.static.pasteRules = {
  *
  * @static
  * @inheritable
- * @property {string[]} iconModuleStyles Modules that should be loaded to provide the icons
+ * @property {Object} iconModuleStyles
+ * @property {string[]} iconModuleStyles.vector Modules that should be loaded when SVG supported
+ * @property {string[]} iconModuleStyles.raster Modules that should be loaded when SVG is not supported
  */
-ve.init.mw.Target.static.iconModuleStyles = [
-	'ext.visualEditor.viewPageTarget.icons',
-	'ext.visualEditor.icons'
-];
+ve.init.mw.Target.static.iconModuleStyles = {
+	'vector': ['ext.visualEditor.viewPageTarget.icons-vector', 'ext.visualEditor.icons-vector'],
+	'raster': ['ext.visualEditor.viewPageTarget.icons-raster', 'ext.visualEditor.icons-raster']
+};
 
 /**
  * Name of target class. Used by TargetEvents to identify which target we are tracking.
@@ -278,16 +275,13 @@ ve.init.mw.Target.static.name = 'mwTarget';
  */
 ve.init.mw.Target.static.apiRequest = function ( data, settings ) {
 	var key, formData;
-	data = ve.extendObject( {
-		'format': 'json',
-		'uselang': mw.config.get( 'wgUserLanguage' )
-	}, data );
+	data = ve.extendObject( { 'format': 'json' }, data );
 	settings = ve.extendObject( {
 		'url': mw.util.wikiScript( 'api' ),
 		'dataType': 'json',
 		'type': 'GET',
 		// Wait up to 100 seconds
-		'timeout': 100000
+		'timeout': 100000,
 	}, settings );
 
 	// If multipart/form-data has been requested and emulation is possible, emulate it
@@ -394,9 +388,6 @@ ve.init.mw.Target.onLoad = function ( response ) {
 			this, null, 'No HTML content in response from server', null
 		);
 	} else {
-		// Wikia tracking if the anoneditwarning was shown
-		window.anoneditwarning = response.visualeditor.anoneditwarning;
-
 		this.originalHtml = data.content;
 		this.doc = ve.createDocumentFromHtml( this.originalHtml );
 
@@ -404,7 +395,6 @@ ve.init.mw.Target.onLoad = function ( response ) {
 		this.constructor.static.fixBase( this.doc, document );
 
 		this.remoteNotices = ve.getObjectValues( data.notices );
-		this.protectedClasses = data.protectedClasses;
 		this.$checkboxes = $( ve.getObjectValues( data.checkboxes ).join( '' ) );
 		// Populate checkboxes with default values for minor and watch
 		this.$checkboxes
@@ -492,7 +482,7 @@ ve.init.mw.Target.prototype.onReady = function () {
 	this.onNoticesReady();
 	this.loading = false;
 	this.edited = false;
-	this.setupSurface( this.doc, ve.bind( function () {
+	this.setUpSurface( this.doc, ve.bind( function () {
 		this.startSanityCheck();
 		this.emit( 'surfaceReady' );
 	}, this ) );
@@ -522,31 +512,29 @@ ve.init.mw.Target.onLoadError = function ( jqXHR, status, error ) {
  *
  * @static
  * @method
- * @param {HTMLDocument} doc HTML document we tried to save
- * @param {Object} saveData Options that were used
  * @param {Object} response Response data
  * @param {string} status Text status message
  * @fires editConflict
  * @fires save
  */
-ve.init.mw.Target.onSave = function ( doc, saveData, response ) {
+ve.init.mw.Target.onSave = function ( response ) {
 	this.saving = false;
 	var data = response.visualeditoredit;
 	if ( !data && !response.error ) {
-		this.onSaveError( doc, saveData, null, 'Invalid response from server', response );
+		this.onSaveError( null, 'Invalid response from server', response );
 	} else if ( response.error ) {
 		if ( response.error.code === 'editconflict' ) {
 			this.emit( 'editConflict' );
 		} else {
-			this.onSaveError( doc, saveData, null, 'Save failure', response );
+			this.onSaveError( null, 'Save failure', response );
 		}
 	} else if ( data.result !== 'success' ) {
 		// Note, this could be any of db failure, hookabort, badtoken or even a captcha
-		this.onSaveError( doc, saveData, null, 'Save failure', response );
+		this.onSaveError( null, 'Save failure', response );
 	} else if ( typeof data.content !== 'string' ) {
-		this.onSaveError( doc, saveData, null, 'Invalid HTML content in response from server', response );
+		this.onSaveError( null, 'Invalid HTML content in response from server', response );
 	} else {
-		this.emit( 'save', data.content, data.categorieshtml, data.newrevid, data.isRedirect );
+		this.emit( 'save', data.content, data.categorieshtml, data.newrevid );
 	}
 };
 
@@ -554,11 +542,11 @@ ve.init.mw.Target.onSave = function ( doc, saveData, response ) {
  * Handle an unsuccessful save request.
  *
  * @method
- * @param {HTMLDocument} doc HTML document we tried to save
- * @param {Object} saveData Options that were used
  * @param {Object} jqXHR
  * @param {string} status Text status message
  * @param {Object|null} data API response data
+ * @fires saveAsyncBegin
+ * @fires saveAsyncComplete
  * @fires saveErrorEmpty
  * @fires saveErrorSpamBlacklist
  * @fires saveErrorAbuseFilter
@@ -567,10 +555,11 @@ ve.init.mw.Target.onSave = function ( doc, saveData, response ) {
  * @fires saveErrorCaptcha
  * @fires saveErrorUnknown
  */
-ve.init.mw.Target.prototype.onSaveError = function ( doc, saveData, jqXHR, status, data ) {
+ve.init.mw.Target.prototype.onSaveError = function ( jqXHR, status, data ) {
 	var api, editApi,
 		viewPage = this;
 	this.saving = false;
+	this.emit( 'saveAsyncComplete' );
 
 	// Handle empty response
 	if ( !data ) {
@@ -595,6 +584,7 @@ ve.init.mw.Target.prototype.onSaveError = function ( doc, saveData, jqXHR, statu
 	// Handle token errors
 	if ( data.error && data.error.code === 'badtoken' ) {
 		api = new mw.Api();
+		this.emit( 'saveAsyncBegin' );
 		api.get( {
 			// action=query&meta=userinfo and action=tokens&type=edit can't be combined
 			// but action=query&meta=userinfo and action=query&prop=info can, however
@@ -610,6 +600,7 @@ ve.init.mw.Target.prototype.onSaveError = function ( doc, saveData, jqXHR, statu
 		} )
 			.always( function () {
 				viewPage.emit( 'saveErrorBadToken' );
+				viewPage.emit( 'saveAsyncComplete' );
 			} )
 			.done( function ( data ) {
 				var userMsg,
@@ -629,7 +620,7 @@ ve.init.mw.Target.prototype.onSaveError = function ( doc, saveData, jqXHR, statu
 							mw.config.get( 'wgUserId' ) === userInfo.id
 					) {
 						// New session is the same user still
-						viewPage.save( doc, saveData );
+						viewPage.saveDocument();
 					} else {
 						// The now current session is a different user
 						if ( isAnon ) {
@@ -831,7 +822,7 @@ ve.init.mw.Target.prototype.generateCitationFeatures = function () {
 			tool.static.autoAddToGroup = true;
 			ve.ui.toolFactory.register( tool );
 			ve.ui.commandRegistry.register(
-				new ve.ui.Command( name, 'window', 'open', 'transclusion', data )
+				new ve.ui.Command( name, 'dialog', 'open', 'transclusion', data )
 			);
 			// Generate citation tool
 			name = 'cite-' + item.name;
@@ -849,7 +840,7 @@ ve.init.mw.Target.prototype.generateCitationFeatures = function () {
 			tool.static.autoAddToGroup = true;
 			ve.ui.toolFactory.register( tool );
 			ve.ui.commandRegistry.register(
-				new ve.ui.Command( name, 'window', 'open', name, data )
+				new ve.ui.Command( name, 'dialog', 'open', name, data )
 			);
 			// Generate dialog
 			dialog = function GeneratedMWCitationDialog( config ) {
@@ -859,7 +850,7 @@ ve.init.mw.Target.prototype.generateCitationFeatures = function () {
 			dialog.static.name = name;
 			dialog.static.icon = item.icon;
 			dialog.static.title = item.title;
-			ve.ui.windowFactory.register( dialog );
+			ve.ui.dialogFactory.register( dialog );
 		}
 	}
 };
@@ -1174,8 +1165,8 @@ ve.init.mw.Target.prototype.save = function ( doc, options ) {
 		data.oldid = this.revid;
 	}
 	this.saving = this.tryWithPreparedCacheKey( doc, data, 'save' )
-		.done( ve.bind( ve.init.mw.Target.onSave, this, doc, data ) )
-		.fail( ve.bind( this.onSaveError, this, doc, data ) );
+		.done( ve.bind( ve.init.mw.Target.onSave, this ) )
+		.fail( ve.bind( this.onSaveError, this ) );
 
 	return true;
 };
@@ -1196,7 +1187,7 @@ ve.init.mw.Target.prototype.showChanges = function ( doc ) {
 	data = {
 		'action': 'visualeditor',
 		'paction': 'diff',
-		'page': this.pageName
+		'page': this.pageName,
 	};
 	if ( this.wikitext !== null ) {
 		data.oldwt = this.wikitext;
@@ -1235,7 +1226,7 @@ ve.init.mw.Target.prototype.submit = function ( wikitext, fields ) {
 		params = ve.extendObject( {
 			'format': 'text/x-wiki',
 			'model': 'wikitext',
-			'oldid': this.requestedRevId,
+			'oldid': this.revid,
 			'wpStarttime': this.startTimeStamp,
 			'wpEdittime': this.baseTimeStamp,
 			'wpTextbox1': wikitext,
@@ -1312,55 +1303,51 @@ ve.init.mw.Target.prototype.getEditNotices = function () {
 // FIXME: split out view specific functionality, emit to subclass
 
 /**
+ * Create a surface.
+ *
+ * @method
+ * @param {ve.dm.Document} dmDoc Document model
+ * @returns {ve.ui.Surface}
+ */
+ve.init.mw.Target.prototype.createSurface = function ( dmDoc ) {
+	return new ve.ui.DesktopSurface( dmDoc, {}, this );
+};
+
+/**
  * Switch to editing mode.
  *
  * @method
  * @param {HTMLDocument} doc HTML DOM to edit
  * @param {Function} [callback] Callback to call when done
  */
-ve.init.mw.Target.prototype.setupSurface = function ( doc, callback ) {
+ve.init.mw.Target.prototype.setUpSurface = function ( doc, callback ) {
 	var target = this;
 	setTimeout( function () {
 		// Build model
 		var dmDoc = ve.dm.converter.getModelFromDom(
-			doc,
-			null,
+			doc, null,
 			mw.config.get( 'wgVisualEditor' ).pageLanguageCode,
 			mw.config.get( 'wgVisualEditor' ).pageLanguageDir
 		);
 		setTimeout( function () {
 			// Create ui.Surface (also creates ce.Surface and dm.Surface and builds CE tree)
-			var surface = target.createSurface( dmDoc, { focusMode: true } );
-			target.surface = surface;
-			surface.$element.addClass( 've-init-mw-viewPageTarget-surface' )
-				.addClass( target.protectedClasses );
-			surface.addCommands( target.constructor.static.surfaceCommands );
+			target.surface = target.createSurface( dmDoc );
+			target.surface.$element.addClass( 've-init-mw-viewPageTarget-surface' );
 			setTimeout( function () {
-				var surfaceView = surface.getView(),
-					$documentNode = surfaceView.getDocument().getDocumentNode().$element;
-
 				// Initialize surface
-				surface.getContext().hide();
-				// Wikia change to prepend the surface to the target.
-				target.$element.prepend( target.surface.$element );
-				target.setupToolbar();
-				if ( ve.debug ) {
-					target.setupDebugBar();
-				}
+				target.surface.getContext().hide();
+				target.$document = target.surface.$element.find( '.ve-ce-documentNode' );
+				target.$element.append( target.surface.$element );
+				target.setUpToolbar();
 
-				// Apply mw-body-content to the view (ve-ce-surface).
-				// Not to surface (ve-ui-surface), since that contains both the view
-				// and the overlay container, and we don't want inspectors to
-				// inherit skin typography styles for wikipage content.
-				surfaceView.$element.addClass( 'mw-body-content' );
-				$documentNode.addClass(
-					// Add appropriately mw-content-ltr or mw-content-rtl class
+				// Add appropriately mw-content-ltr or mw-content-rtl class
+				target.surface.view.$element.addClass(
 					'mw-content-' + mw.config.get( 'wgVisualEditor' ).pageLanguageDir
 				);
 				target.active = true;
 				// Now that the surface is attached to the document and ready,
 				// let it initialize itself
-				surface.initialize();
+				target.surface.initialize();
 				setTimeout( callback );
 			} );
 		} );
@@ -1368,11 +1355,15 @@ ve.init.mw.Target.prototype.setupSurface = function ( doc, callback ) {
 };
 
 /**
- * @inheritdoc
+ * Set up the toolbar and insert it into the DOM.
+ *
+ * The default implementation inserts it before the surface, but subclasses can override this.
  */
-ve.init.mw.Target.prototype.setupToolbar = function () {
-	// Parent method
-	ve.init.Target.prototype.setupToolbar.call( this, { 'shadow': true, 'actions': true } );
+ve.init.mw.Target.prototype.setUpToolbar = function () {
+	this.toolbar = new ve.ui.TargetToolbar( this, this.surface, { 'shadow': true, 'actions': true } );
+	this.toolbar.setup( this.constructor.static.toolbarGroups );
+	this.surface.addCommands( this.constructor.static.surfaceCommands );
+	this.toolbar.$element.insertBefore( this.surface.$element );
 };
 
 /**
@@ -1446,8 +1437,7 @@ ve.init.mw.Target.prototype.restoreEditSection = function () {
 			target = this,
 			surfaceView = this.surface.getView(),
 			surfaceModel = surfaceView.getModel(),
-			$documentNode = surfaceView.getDocument().getDocumentNode().$element,
-			$section = $documentNode.find( 'h1, h2, h3, h4, h5, h6' ).eq( this.section - 1 ),
+			$section = this.$document.find( 'h1, h2, h3, h4, h5, h6' ).eq( this.section - 1 ),
 			headingNode = $section.data( 'view' ),
 			lastHeadingLevel = -1;
 
@@ -1471,11 +1461,7 @@ ve.init.mw.Target.prototype.restoreEditSection = function () {
 			offset = surfaceModel.getDocument().data.getNearestContentOffset(
 				offsetNode.getModel().getOffset(), 1
 			);
-			// onDocumentFocus is debounced, so wait for that to happen before setting
-			// the model selection, otherwise it will get reset
-			this.surface.getView().once( 'focus', function () {
-				surfaceModel.setSelection( new ve.Range( offset ) );
-			} );
+			surfaceModel.setSelection( new ve.Range( offset ) );
 			// Scroll to heading:
 			// Wait for toolbar to animate in so we can account for its height
 			setTimeout( function () {

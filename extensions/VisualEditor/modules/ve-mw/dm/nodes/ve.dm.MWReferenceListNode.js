@@ -10,14 +10,13 @@
  *
  * @class
  * @extends ve.dm.BranchNode
- *
  * @constructor
+ * @param {number} [length] Length of content data in document; ignored and overridden to 0
  * @param {Object} [element] Reference to element in linear model
- * @param {ve.dm.Node[]} [children]
  */
-ve.dm.MWReferenceListNode = function VeDmMWReferenceListNode() {
+ve.dm.MWReferenceListNode = function VeDmMWReferenceListNode( length, element ) {
 	// Parent constructor
-	ve.dm.BranchNode.apply( this, arguments );
+	ve.dm.BranchNode.call( this, 0, element );
 };
 
 /* Inheritance */

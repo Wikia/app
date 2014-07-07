@@ -11,13 +11,13 @@ namespace FluentSql\Clause;
 use FluentSql\Breakdown;
 
 class Using implements ClauseInterface {
-	protected $columns;
+	protected $column;
 
-	public function __construct(array $columns) {
-		$this->columns = $columns;
+	public function __construct($column) {
+		$this->column = $column;
 	}
 
 	public function build(Breakdown $bk, $tabs) {
-		$bk->append(join(", ", $this->columns));
+		$bk->append(" ".$this->column);
 	}
 }

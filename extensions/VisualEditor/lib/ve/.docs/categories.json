@@ -17,7 +17,7 @@
 		"groups": [
 			{
 				"name": "General",
-				"classes": ["ve.init", "ve.init.Platform", "ve.init.Target"]
+				"classes": ["ve.init", "ve.init.Platform", "ve.init.Target", "ve.init.DebugBar"]
 			},
 			{
 				"name": "Stand-alone",
@@ -115,7 +115,6 @@
 					"ve.ui.MobileContext",
 					"ve.ui.Toolbar",
 					"ve.ui.TargetToolbar",
-					"ve.ui.DebugBar",
 					"ve.ui.WindowSet",
 					"ve.ui.Action",
 					"ve.ui.Trigger",
@@ -190,13 +189,11 @@
 				"classes": [
 					"OO.ui",
 					"OO.ui.Element",
-					"OO.ui.Process",
 					"OO.ui.Frame",
 					"OO.ui.Toolbar",
 					"OO.ui.Window",
 					"OO.ui.WindowSet",
-					"OO.ui.Dialog",
-					"OO.ui.ConfirmationDialog"
+					"OO.ui.Dialog"
 				]
 			},
 			{

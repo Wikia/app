@@ -104,8 +104,7 @@
 					);
 					if ( lastProperty !== 'ALetter' &&
 						lastProperty !== 'Numeric' &&
-						lastProperty !== 'Katakana' &&
-						lastProperty !== 'HebrewLetter' ) {
+						lastProperty !== 'Katakana' ) {
 						continue;
 					}
 				}

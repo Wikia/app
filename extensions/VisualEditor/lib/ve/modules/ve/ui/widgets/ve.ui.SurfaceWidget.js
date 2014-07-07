@@ -27,7 +27,7 @@ ve.ui.SurfaceWidget = function VeUiSurfaceWidget( doc, config ) {
 	OO.ui.Widget.call( this, config );
 
 	// Properties
-	this.surface = ve.init.target.createSurface( doc, { '$': this.$ } );
+	this.surface = new ve.ui.DesktopSurface( doc, { '$': this.$ } );
 	this.toolbar = new ve.ui.Toolbar( this.surface, { '$': this.$ } );
 
 	// Initialization
@@ -44,11 +44,6 @@ ve.ui.SurfaceWidget = function VeUiSurfaceWidget( doc, config ) {
 	}
 	if ( config.pasteRules ) {
 		this.surface.setPasteRules( config.pasteRules );
-	}
-
-	if ( ve.debug ) {
-		var debugBar = new ve.ui.DebugBar( this.surface, { '$': this.$ } );
-		this.$element.append( debugBar.$element );
 	}
 };
 
@@ -98,6 +93,7 @@ ve.ui.SurfaceWidget.prototype.getContent = function () {
 ve.ui.SurfaceWidget.prototype.initialize = function () {
 	this.toolbar.initialize();
 	this.surface.initialize();
+	this.surface.view.documentView.getDocumentNode().$element.focus();
 };
 
 /**
@@ -113,13 +109,6 @@ ve.ui.SurfaceWidget.prototype.destroy = function () {
 		this.toolbar.destroy();
 	}
 	this.$element.remove();
-};
-
-/**
- * Focus the surface.
- */
-ve.ui.SurfaceWidget.prototype.focus = function () {
-	this.surface.getView().focus();
 };
 
 /**

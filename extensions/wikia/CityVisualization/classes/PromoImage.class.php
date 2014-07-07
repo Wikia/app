@@ -165,12 +165,21 @@ class PromoImage extends WikiaObject {
 
 		//create task only for languages which have corporate wiki
 		if ($visualization->isCorporateLang($content_lang)) {
-			$deletion_list = array(
-				$content_lang => array(
-					$this->wg->cityId => array($imageName)
-				)
-			);
-			wfRunHooks('CreatePromoImageReviewTask', ['delete', $deletion_list]);
+			if (class_exists('PromoteImageReviewTask')) {
+				$task = new PromoteImageReviewTask();
+				$deletion_list = array(
+					$content_lang => array(
+						$this->wg->cityId => array($imageName)
+					)
+				);
+
+				$task->createTask(
+					array(
+						'deletion_list' => $deletion_list
+					),
+					TASK_QUEUED
+				);
+			}
 		}
 	}
 
@@ -192,7 +201,7 @@ class PromoImage extends WikiaObject {
 		return $this;
 	}
 
-	static protected function inferType( $fileName, &$dbName = null ) {
+	protected function inferType($fileName, &$dbName = null){
 		$pattern = "/^(".self::__MAIN_IMAGE_BASE_NAME.")?(".self::__ADDITIONAL_IMAGES_BASE_NAME."-(\d)?)?,?([^.]{1,})?\.?(.*)$/i";
 		$type = self::INVALID;
 

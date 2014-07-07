@@ -1,20 +1,12 @@
 #!/usr/bin/env bash
 
-# This script generates a commit that updates our distribution copy of OOjs UI
+# FIXME this script is duplicated from update-oojs.sh - factor this out
 
-if [ -z "$1" ]
-then
-	# Missing required parameter
-	echo >&2 "Usage: $0 path/to/repo/for/oojs-ui"
-	exit 1
-fi
-
-TARGET_REPO=$(cd $(dirname $0)/..; pwd)
-TARGET_DIR=lib/oojs-ui
-UI_REPO=$1
+# This script generates a commit that updates the oojs-ui distribution
+# ./bin/update-oojs-ui.sh path/to/repo/for/oojs-ui
 
 function oojsuihash() {
-	grep "OOjs UI v" $TARGET_REPO/$TARGET_DIR/oojs-ui.js \
+	grep "OOjs UI v" lib/oojs-ui/oojs-ui.js \
 		| head -n 1 \
 		| grep -Eo '\([a-z0-9]+\)' \
 		| sed 's/^(//' \
@@ -22,33 +14,47 @@ function oojsuihash() {
 }
 
 function oojsuitag() {
-	grep "OOjs UI v" $TARGET_REPO/$TARGET_DIR/oojs-ui.js \
+	grep "OOjs UI v" lib/oojs-ui/oojs-ui.js \
 		| head -n 1 \
 		| grep -Eo '\bv[0-9a-z.-]+\b'
 }
 
 function oojsuiversion() {
-	grep "OOjs UI v" $TARGET_REPO/$TARGET_DIR/oojs-ui.js \
+	grep "OOjs UI v" lib/oojs-ui/oojs-ui.js \
 		| head -n 1 \
 		| grep -Eo '\bv[0-9a-z.-]+\b.*$'
 }
 
-# Prepare working tree
-cd $TARGET_REPO &&
-git reset $TARGET_DIR && git checkout $TARGET_DIR && git fetch origin &&
-git checkout -B upstream-oojsui origin/master || exit 1
+# cd to the VisualEditor directory
+cd $(cd $(dirname $0)/..; pwd)
 
-cd $UI_REPO || exit 1
-
-# Read the old version and check for changes
-OLDHASH=$(oojsuihash)
-if [ -z "$OLDHASH" ]
+if [ "x$1" == "x" ]
 then
-	OLDTAG=$(oojsuitag)
+	echo >&2 "Usage: update-oojs-ui.sh path/to/repo/for/oojs-ui"
+	exit 1
 fi
-if [ "$OLDHASH" == "" ]
+
+# Undo any changes in the oojs-ui directory
+git reset lib/oojs-ui/
+git checkout lib/oojs-ui/
+
+git fetch origin
+# Create branch if needed and reset it to master
+git checkout -B update-oojsui origin/master
+
+# Get the old oojs-ui version
+OLDVERSION=$(oojsuihash)
+if [ "x$OLDVERSION" == "x" ]
 then
-	OLDHASH=$(git rev-parse $OLDTAG)
+	TAG=$(oojsuitag)
+fi
+
+# cd to the oojs-ui directory
+cd $1 || exit 1
+if [ "x$OLDVERSION" == "x" ]
+then
+	# Try the tag
+	OLDVERSION=$(git rev-parse $TAG)
 	if [ $? != 0 ]
 	then
 		echo Could not find OOjs UI version
@@ -56,31 +62,26 @@ then
 		exit 1
 	fi
 fi
-if [ "$(git rev-parse $OLDHASH)" == "$(git rev-parse HEAD)" ]
+if [ "$(git rev-parse $OLDVERSION)" == "$(git rev-parse HEAD)" ]
 then
-	echo "No changes (already at $OLDHASH)"
+	echo "No changes (already at $OLDVERSION)"
 	cd -
 	exit 0
 fi
-
-# Build the distribution (using grunt-test instead of grunt-build, because we
-# want to run unit tests first, and because grunt-build is for a release build
-# and wouldn't put a git hash in the file headers)
-npm install && grunt test || exit 1
-
+# Build the distribution
+npm install || exit 1
+grunt || exit 1
 # Get the list of changes
-NEWCHANGES=$(git log $OLDHASH.. --oneline --no-merges --reverse --color=never)
-NEWCHANGESDISPLAY=$(git log $OLDHASH.. --oneline --no-merges --reverse --color=always)
+NEWCHANGES=$(git log $OLDVERSION.. --oneline --no-merges --reverse --color=never)
+NEWCHANGESDISPLAY=$(git log $OLDVERSION.. --oneline --no-merges --reverse --color=always)
+# cd back to the VisualEditor directory
+cd -
 
-# Copy files
-# - Exclude the default non-svg stylesheet and non-SVG files
-rsync --recursive --delete --force --exclude 'oojs-ui.css' --exclude 'images/*/*.png' ./dist/ $TARGET_REPO/$TARGET_DIR || exit 1
-
-# Read the new version
+# Copy files from dist/ to lib/oojs-ui
+cp -a $1/dist/{oojs-ui.js,oojs-ui.svg.css,oojs-ui-apex.css,oojs-ui-agora.css,images,i18n} lib/oojs-ui/
+# Figure out what the new version is
 NEWVERSION=$(oojsuiversion)
-
-# Generate commit
-cd $TARGET_REPO
+# Generate commit summary
 COMMITMSG=$(cat <<END
 Update OOjs UI to $NEWVERSION
 
@@ -88,7 +89,8 @@ New changes:
 $NEWCHANGES
 END
 )
-git add -u $TARGET_DIR && git add $TARGET_DIR && git commit -m "$COMMITMSG"
+# Commit
+git commit lib/oojs-ui/ -m "$COMMITMSG"
 cat >&2 <<END
 
 

@@ -591,19 +591,13 @@ Hãy kiểm tra lại hoặc bạn có thể đăng ký tài khoản này.',
 /** Simplified Chinese (中文（简体）‎)
  * @author Hydra
  * @author Hzy980512
- * @author Liuxinyu970226
  */
 $messages['zh-hans'] = array(
-	'piggybac-desc' => '允许作为其他用户登录',
 	'piggyback' => '转接',
 	'piggyback-otherusername' => '其他用户名：',
 	'piggyback-nosuchuser' => '没有名为“$1”的用户。用户名区分大小写，请再检查一遍。',
 	'piggyback-wronguser' => '$1 不是您的用户名',
 	'piggyback-loginprompt' => '请再输入一次您的用户名和密码。',
-	'piggyback-firstlogout' => '请先注销您当前的账户。',
 	'piggyback-itisyou' => '您不能转接自己。',
-	'piggyback-issysopto' => '您不能搭载已经搭载权限的用户。',
 	'action-piggyback' => '用其他账户登录',
-	'log-name-piggyback' => 'Piggyback日志',
-	'log-description-piggyback' => '此日志记录账户搭载。',
 );

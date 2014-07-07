@@ -12,7 +12,6 @@
  * @extends OO.ui.SearchWidget
  *
  * @constructor
- * @param {ve.dm.MWTemplateModel} template Template model
  * @param {Object} [config] Configuration options
  * @cfg {number|null} [limit=3] Limit on the number of initial options to show, null to show all
  */
@@ -174,7 +173,7 @@ ve.ui.MWParameterSearchWidget.prototype.addResults = function () {
 	}
 
 	this.results.addItems( items );
-	if ( hasQuery ) {
+	if ( query.length ) {
 		this.results.highlightItem( this.results.getFirstSelectableItem() );
 	}
 };

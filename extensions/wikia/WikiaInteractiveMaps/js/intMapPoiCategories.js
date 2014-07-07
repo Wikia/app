@@ -57,8 +57,6 @@ define('wikia.intMap.poiCategories',
 				delete: $.msg('wikia-interactive-maps-poi-categories-delete'),
 				placeholder: $.msg('wikia-interactive-maps-poi-categories-name-placeholder'),
 				emptyOption: $.msg('wikia-interactive-maps-poi-categories-select-category'),
-				uploadImgLink: $.msg('wikia-interactive-maps-poi-categories-upload-image-link'),
-				iconSize: 34,
 				parentPoiCategories: []
 			},
 
@@ -86,9 +84,6 @@ define('wikia.intMap.poiCategories',
 				],
 				poiCategoriesCreated: [
 					poiCategoriesCreated
-				],
-				triggerMarkerUpload: [
-					triggerMarkerUpload
 				]
 			},
 			trigger,
@@ -182,10 +177,7 @@ define('wikia.intMap.poiCategories',
 
 			extendedPoiCategoryTemplateData.id = poiCategory.id;
 			extendedPoiCategoryTemplateData.name = poiCategory.name;
-
-			if (!poiCategory.no_marker) {
-				extendedPoiCategoryTemplateData.marker = poiCategory.marker;
-			}
+			extendedPoiCategoryTemplateData.marker = poiCategory.no_marker ? w.wgBlankImgUrl : poiCategory.marker;
 
 			extendedPoiCategoryTemplateData.parentPoiCategories.forEach(function (parentPoiCategory, i) {
 				if (parentPoiCategory.id === poiCategory.parent_poi_category_id) {
@@ -327,10 +319,7 @@ define('wikia.intMap.poiCategories',
 			$inputElement.val('');
 			$inputElementWrapper
 				.find('.poi-category-marker-image')
-				.attr('src', data['fileThumbUrl'])
-				.removeClass('hidden')
-				.siblings('span')
-				.addClass('hidden');
+				.attr('src', data['fileThumbUrl']);
 		}
 
 		/**
@@ -436,15 +425,6 @@ define('wikia.intMap.poiCategories',
 		 */
 		function trackPoiCategoryActions(data) {
 			utils.track(utils.trackerActions.IMPRESSION, 'poi-category-' + mode, data.mapId);
-		} 
-		
-		/**
-		 * @desc handler for triggering upload form for marker image
-		 *
-		 * @param {Event} event
-		 */
-		function triggerMarkerUpload(event) {
-			$(event.currentTarget).siblings('.poi-category-marker-image-upload').click();
 		}
 
 		return {

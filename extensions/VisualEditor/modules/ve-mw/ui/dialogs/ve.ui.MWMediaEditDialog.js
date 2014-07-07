@@ -4,29 +4,31 @@
  * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
+/*global mw */
 
 /**
  * Dialog for editing MediaWiki media objects.
  *
  * @class
- * @extends ve.ui.NodeDialog
+ * @extends ve.ui.Dialog
  *
  * @constructor
  * @param {Object} [config] Configuration options
  */
 ve.ui.MWMediaEditDialog = function VeUiMWMediaEditDialog( config ) {
 	// Parent constructor
-	ve.ui.MWMediaEditDialog.super.call( this, config );
+	ve.ui.Dialog.call( this, config );
 
 	// Properties
 	this.mediaNode = null;
-	this.imageModel = null;
+	this.captionNode = null;
 	this.store = null;
+	this.scalable = null;
 };
 
 /* Inheritance */
 
-OO.inheritClass( ve.ui.MWMediaEditDialog, ve.ui.NodeDialog );
+OO.inheritClass( ve.ui.MWMediaEditDialog, ve.ui.Dialog );
 
 /* Static Properties */
 
@@ -36,10 +38,6 @@ ve.ui.MWMediaEditDialog.static.title =
 	OO.ui.deferMsg( 'visualeditor-dialog-media-title' );
 
 ve.ui.MWMediaEditDialog.static.icon = 'picture';
-
-ve.ui.MWMediaEditDialog.static.defaultSize = 'large';
-
-ve.ui.MWMediaEditDialog.static.modelClasses = [ ve.dm.MWBlockImageNode ];
 
 ve.ui.MWMediaEditDialog.static.toolbarGroups = [
 	// History
@@ -68,17 +66,14 @@ ve.ui.MWMediaEditDialog.static.toolbarGroups = [
 	// Cite
 	{
 		'type': 'list',
-		'label': OO.ui.deferMsg( 'visualeditor-toolbar-cite-label' ),
+		'label': 'Cite',
 		'indicator': 'down',
 		'include': [ { 'group': 'cite' } ]
 	},
 	// No structure
 	/* {
-		'type': 'list',
-		'icon': 'bullet-list',
-		'indicator': 'down',
-		'include': [ { 'group': 'structure' } ],
-		'demote': [ 'outdent', 'indent' ]
+		'type': 'bar',
+		'include': [ 'number', 'bullet', 'outdent', 'indent' ]
 	},*/
 	// Insert
 	{
@@ -113,34 +108,26 @@ ve.ui.MWMediaEditDialog.static.surfaceCommands = [
 	'pasteSpecial'
 ];
 
-/**
- * Get the paste rules for the surface widget in the dialog
- *
- * @see ve.dm.ElementLinearData#sanitize
- * @return {Object} Paste rules
- */
-ve.ui.MWMediaEditDialog.static.getPasteRules = function () {
-	return ve.extendObject(
-		ve.copy( ve.init.target.constructor.static.pasteRules ),
-		{
-			'all': {
-				'blacklist': OO.simpleArrayUnion(
-					ve.getProp( ve.init.target.constructor.static.pasteRules, 'all', 'blacklist' ) || [],
-					[
-						// Tables (but not lists) are possible in wikitext with a leading
-						// line break but we prevent creating these with the UI
-						'list', 'listItem', 'definitionList', 'definitionListItem',
-						'table', 'tableCaption', 'tableSection', 'tableRow', 'tableCell'
-					]
-				),
-				// Headings are also possible, but discouraged
-				'conversions': {
-					'mwHeading': 'paragraph'
-				}
+ve.ui.MWMediaEditDialog.static.pasteRules = ve.extendObject(
+	ve.copy( ve.init.mw.Target.static.pasteRules ),
+	{
+		'all': {
+			'blacklist': OO.simpleArrayUnion(
+				ve.getProp( ve.init.mw.Target.static.pasteRules, 'all', 'blacklist' ) || [],
+				[
+					// Tables (but not lists) are possible in wikitext with a leading
+					// line break but we prevent creating these with the UI
+					'list', 'listItem', 'definitionList', 'definitionListItem',
+					'table', 'tableCaption', 'tableSection', 'tableRow', 'tableCell'
+				]
+			),
+			// Headings are also possible, but discouraged
+			'conversions': {
+				'mwHeading': 'paragraph'
 			}
 		}
-	);
-};
+	}
+);
 
 /* Methods */
 
@@ -150,9 +137,8 @@ ve.ui.MWMediaEditDialog.static.getPasteRules = function () {
 ve.ui.MWMediaEditDialog.prototype.initialize = function () {
 	//var altTextFieldset, positionFieldset, borderField, positionField;
 	var positionFieldset, positionField;
-
 	// Parent method
-	ve.ui.MWMediaEditDialog.super.prototype.initialize.call( this );
+	ve.ui.Dialog.prototype.initialize.call( this );
 
 	this.$spinner = this.$( '<div>' ).addClass( 've-specialchar-spinner' );
 
@@ -208,21 +194,18 @@ ve.ui.MWMediaEditDialog.prototype.initialize = function () {
 		new OO.ui.ButtonOptionWidget( 'left', {
 			'$': this.$,
 			'icon': 'align-float-left',
-			'label': ve.msg( 'visualeditor-dialog-media-position-left' ),
-			'flags': ['secondary']
+			'label': ve.msg( 'visualeditor-dialog-media-position-left' )
 		} ),
 		new OO.ui.ButtonOptionWidget( 'center', {
 			'$': this.$,
 			'icon': 'align-center',
-			'label': ve.msg( 'visualeditor-dialog-media-position-center' ),
-			'flags': ['secondary']
+			'label': ve.msg( 'visualeditor-dialog-media-position-center' )
 		} ),
 		new OO.ui.ButtonOptionWidget( 'right', {
 			'$': this.$,
 			'icon': 'align-float-right',
-			'label': ve.msg( 'visualeditor-dialog-media-position-right' ),
-			'flags': ['secondary']
-		} )
+			'label': ve.msg( 'visualeditor-dialog-media-position-right' )
+		} ),
 	], 0 );
 
 	this.positionCheckbox = new OO.ui.CheckboxInputWidget( {
@@ -260,22 +243,18 @@ ve.ui.MWMediaEditDialog.prototype.initialize = function () {
 		// TODO: Inline images require a bit of further work, will be coming soon
 		new OO.ui.ButtonOptionWidget( 'thumb', {
 			'$': this.$,
-			'icon': 'image-thumbnail',
 			'label': ve.msg( 'visualeditor-dialog-media-type-thumb' )
 		} ),
 		new OO.ui.ButtonOptionWidget( 'frameless', {
 			'$': this.$,
-			'icon': 'image-frameless',
 			'label': ve.msg( 'visualeditor-dialog-media-type-frameless' )
 		} ),
 		new OO.ui.ButtonOptionWidget( 'frame', {
 			'$': this.$,
-			'icon': 'image-frame',
 			'label': ve.msg( 'visualeditor-dialog-media-type-frame' )
 		} ),
 		new OO.ui.ButtonOptionWidget( 'none', {
 			'$': this.$,
-			'icon': 'image-none',
 			'label': ve.msg( 'visualeditor-dialog-media-type-none' )
 		} )
 	] );
@@ -319,11 +298,20 @@ ve.ui.MWMediaEditDialog.prototype.initialize = function () {
 		this.$sizeWidgetElements
 	] );
 
+	// Get wiki default thumbnail size
+	this.defaultThumbSize = mw.config.get( 'wgVisualEditorConfig' ).defaultUserOptions.defaultthumbsize;
+
+	this.applyButton = new OO.ui.ButtonWidget( {
+		'$': this.$,
+		'label': ve.msg( 'visualeditor-dialog-action-apply' ),
+		'flags': ['primary']
+	} );
+
 	// Events
+	this.applyButton.connect( this, { 'click': [ 'close', { 'action': 'apply' } ] } );
 	this.positionCheckbox.connect( this, { 'change': 'onPositionCheckboxChange' } );
-	//this.borderCheckbox.connect( this, { 'change': 'onBorderCheckboxChange' } );
-	this.positionInput.connect( this, { 'choose': 'onPositionInputChoose' } );
-	//this.typeInput.connect( this, { 'choose': 'onTypeInputChoose' } );
+	this.sizeWidget.connect( this, { 'change': 'onSizeWidgetChange' } );
+	//this.typeInput.connect( this, { 'select': 'onTypeChange' } );
 
 	// Initialization
 	this.generalSettingsPage.$element.append( [
@@ -337,275 +325,377 @@ ve.ui.MWMediaEditDialog.prototype.initialize = function () {
 		this.sizeFieldset.$element
 	] );
 
-	this.panels.addItems( [ this.bookletLayout ] );
+	this.$body.append( this.bookletLayout.$element );
+	this.$foot.append( this.applyButton.$element );
 };
 
 /**
- * Handle image model alignment change
- * @param {string} alignment Image alignment
+ * Handle change event on the sizeWidget. Switch the size select
+ * from default to custom and vise versa based on the values in
+ * the widget.
  */
-ve.ui.MWMediaEditDialog.prototype.onImageModelAlignmentChange = function ( alignment ) {
-	var item;
-	alignment = alignment || 'none';
-
-	item = alignment !== 'none' ? this.positionInput.getItemFromData( alignment ) : null;
-
-	// Select the item without triggering the 'choose' event
-	this.positionInput.selectItem( item );
-
-	this.positionCheckbox.setValue( alignment !== 'none' );
+ve.ui.MWMediaEditDialog.prototype.onSizeWidgetChange = function () {
+	// Switch to 'default' or 'custom' size
+	if ( this.sizeWidget.isEmpty() ) {
+		this.sizeWidget.setSizeType( 'default' );
+	} else {
+		this.sizeWidget.setSizeType( 'custom' );
+	}
 };
 
 /**
- * Handle image model type change
- * @param {string} alignment Image alignment
+ * Handle type change, particularly to and from 'thumb' to make
+ * sure size is limited.
+ * @param {OO.ui.ButtonOptionWidget} item Selected item
  */
-ve.ui.MWMediaEditDialog.prototype.onImageModelTypeChange = function ( type ) {
-	var item = type ? this.typeInput.getItemFromData( type ) : null;
+ve.ui.MWMediaEditDialog.prototype.onTypeChange = function ( item ) {
+	var selectedType = item ? item.getData() : '',
+		thumbOrFrameless = selectedType === 'thumb' || selectedType === 'frameless',
+		originalDimensions = this.scalable.getOriginalDimensions();
 
-	this.typeInput.selectItem( item );
-
-	this.borderCheckbox.setDisabled(
-		!this.imageModel.isBorderable()
-	);
-
-	this.borderCheckbox.setValue(
-		this.imageModel.isBorderable() && this.imageModel.hasBorder()
-	);
-};
-
-/**
- * Handle change event on the positionCheckbox element.
- *
- * @param {boolean} checked Checkbox status
- */
-ve.ui.MWMediaEditDialog.prototype.onPositionCheckboxChange = function ( checked ) {
-	var newPositionValue,
-		currentModelAlignment = this.imageModel.getAlignment();
-
-	this.positionInput.setDisabled( !checked );
-	// Only update the model if the current value is different than that
-	// of the image model
-	if (
-		( currentModelAlignment === 'none' && checked ) ||
-		( currentModelAlignment !== 'none' && !checked )
-	) {
-		if ( checked ) {
-			// Picking a floating alignment value will create a block image
-			// no matter what the type is, so in here we want to calculate
-			// the default alignment of a block to set as our initial alignment
-			// in case the checkbox is clicked but there was no alignment set
-			// previously.
-			newPositionValue = this.imageModel.getDefaultDir( 'mwBlockImage' );
-			this.imageModel.setAlignment( newPositionValue );
+	// As per wikitext docs, both 'thumb' and 'frameless' images are
+	// limited in max size to their original size
+	if ( thumbOrFrameless ) {
+		if ( originalDimensions ) {
+			// Set original dimensions as the max. In the future we may
+			// want to switch between original dimensions (in frameless
+			// and thumb) and perhaps some preset maximum dimensions for
+			// basic and frameless.
+			this.scalable.setMaxDimensions( originalDimensions );
+			this.scalable.setEnforcedMax( true );
 		} else {
-			// If we're unchecking the box, always set alignment to none and unselect the position widget
-			this.imageModel.setAlignment( 'none' );
+			// We don't have maximum dimensions available, so we can't
+			// enforce any max size
+			this.scalable.setEnforcedMax( false );
+		}
+		// Disable border option
+		//this.borderCheckbox.setDisabled( true );
+		//this.borderCheckbox.setValue( false );
+	} else {
+		// Don't limit maximum dimensions on basic and frameless images
+		this.scalable.setEnforcedMax( false );
+		// Enable border option
+		//this.borderCheckbox.setDisabled( false );
+	}
+
+	// Re-validate the existing dimensions
+	this.sizeWidget.validateDimensions();
+};
+
+/**
+ * Handle change event on the positionCheckbox element. If an option
+ * is selected, mark the checkbox
+ */
+ve.ui.MWMediaEditDialog.prototype.onPositionCheckboxChange = function () {
+	var checked = this.positionCheckbox.getValue();
+
+	if ( !checked ) {
+		// If unchecked, remove selection
+		this.positionInput.selectItem( null );
+	} else {
+		// If checked, choose default position
+		if ( this.getFragment().getDocument().getDir() === 'ltr' ) {
+			// Assume default is 'right'
+			this.positionInput.selectItem(
+				this.positionInput.getItemFromData( 'right' )
+			);
+		} else {
+			// Assume default is 'left'
+			this.positionInput.selectItem(
+				this.positionInput.getItemFromData( 'left' )
+			);
 		}
 	}
-};
 
-/**
- * Handle change event on the positionCheckbox element.
- *
- * @param {boolean} checked Checkbox status
- */
-ve.ui.MWMediaEditDialog.prototype.onBorderCheckboxChange = function ( checked ) {
-	// Only update if the value is different than the model
-	if ( this.imageModel.hasBorder() !== checked ) {
-		// Update the image model
-		this.imageModel.toggleBorder( checked );
-	}
-};
-
-/**
- * Handle change event on the positionInput element.
- *
- * @param {OO.ui.ButtonOptionWidget} item Selected item
- */
-ve.ui.MWMediaEditDialog.prototype.onPositionInputChoose = function ( item ) {
-	var position = item ? item.getData() : 'default';
-
-	// Only update if the value is different than the model
-	if ( this.imageModel.getAlignment() !== position ) {
-		this.imageModel.setAlignment( position );
-	}
-};
-
-/**
- * Handle change event on the typeInput element.
- *
- * @param {OO.ui.ButtonOptionWidget} item Selected item
- */
-ve.ui.MWMediaEditDialog.prototype.onTypeInputChoose = function ( item ) {
-	var type = item ? item.getData() : 'default';
-
-	// Only update if the value is different than the model
-	if ( this.imageModel.getType() !== type ) {
-		this.imageModel.setType( type );
-	}
-
-	// If type is 'frame', disable the size input widget completely
-	this.sizeWidget.setDisabled( type === 'frame' );
+	this.positionInput.setDisabled( !checked );
 };
 
 /**
  * @inheritdoc
  */
-ve.ui.MWMediaEditDialog.prototype.getSetupProcess = function ( data ) {
-	return ve.ui.MWMediaEditDialog.super.prototype.getSetupProcess.call( this, data )
-		.next( function () {
-			var doc = this.getFragment().getSurface().getDocument();
-
-			// Properties
-			this.mediaNode = this.getFragment().getSelectedNode();
-			// Image model
-			this.imageModel = ve.dm.MWImageModel.static.newFromImageNode( this.mediaNode );
-			// Events
-			this.imageModel.connect( this, {
-				'alignmentChange': 'onImageModelAlignmentChange'
-				//'typeChange': 'onImageModelTypeChange'
-			} );
-
-			this.store = doc.getStore();
-			// Set up the caption surface
-			this.captionSurface = new ve.ui.SurfaceWidget(
-				this.imageModel.getCaptionDocument(),
-				{
-					'$': this.$,
-					'tools': this.constructor.static.toolbarGroups,
-					'commands': this.constructor.static.surfaceCommands,
-					'pasteRules': this.constructor.static.getPasteRules()
-				}
-			);
-			this.captionSurface.getSurface().getModel().connect( this, {
-				'documentUpdate': function () {
-					this.wikitextWarning = ve.init.mw.ViewPageTarget.static.checkForWikitextWarning(
-						this.captionSurface.getSurface(),
-						this.wikitextWarning
-					);
-				}
-			} );
-
-			// Size widget
-			this.$spinner.hide();
-			this.sizeErrorLabel.$element.hide();
-			this.sizeWidget.setScalable( this.imageModel.getScalable() );
-
-			// Initialize size
-			this.sizeWidget.setSizeType(
-				this.imageModel.isDefaultSize() ?
-				'default' :
-				'custom'
-			);
-
-			this.sizeWidget.setDisabled( this.imageModel.getType() === 'frame' );
-
-			// Set initial alt text
-			/*this.altTextInput.setValue(
-				this.imageModel.getAltText()
-			);*/
-
-			// Set initial alignment
-			this.positionInput.setDisabled(
-				!this.imageModel.isAligned()
-			);
-			this.positionInput.selectItem(
-				this.imageModel.isAligned() ?
-				this.positionInput.getItemFromData(
-					this.imageModel.getAlignment()
-				) :
-				null
-			);
-			this.positionCheckbox.setValue(
-				this.imageModel.isAligned()
-			);
-
-			// Border flag
-			/*this.borderCheckbox.setDisabled(
-				!this.imageModel.isBorderable()
-			);
-			this.borderCheckbox.setValue(
-				this.imageModel.isBorderable() && this.imageModel.hasBorder()
-			);*/
-
-			// Type select
-			/*this.typeInput.selectItem(
-				this.typeInput.getItemFromData(
-					this.imageModel.getType() || 'none'
-				)
-			);*/
-
-			// Initialization
-			this.captionSurface.$element.addClass( 'WikiaArticle' );
-			this.captionFieldset.$element.append( this.captionSurface.$element );
-			this.captionSurface.initialize();
-		}, this );
-};
-
-/**
- * @inheritdoc
- */
-ve.ui.MWMediaEditDialog.prototype.getReadyProcess = function ( data ) {
-	return ve.ui.MWMediaEditDialog.super.prototype.getReadyProcess.call( this, data )
-		.next( function () {
-			// Focus the caption surface
-			this.captionSurface.focus();
-		}, this );
-};
-
-/**
- * @inheritdoc
- */
-ve.ui.MWMediaEditDialog.prototype.getTeardownProcess = function ( data ) {
-	return ve.ui.MWMediaEditDialog.super.prototype.getTeardownProcess.call( this, data )
-		.first( function () {
-			// Cleanup
-			this.imageModel.disconnect( this );
-			if ( this.wikitextWarning ) {
-				this.wikitextWarning.close();
-			}
-			this.captionSurface.destroy();
-			this.captionSurface = null;
-			this.captionNode = null;
-			// Reset the considerations for the scalable
-			// in the image node
-			this.mediaNode.syncScalableToType();
-		}, this );
-};
-
-/**
- * @inheritdoc
- */
-ve.ui.MWMediaEditDialog.prototype.applyChanges = function () {
-	var surfaceModel = this.getFragment().getSurface();
-
-	// Update from the form
-	/*this.imageModel.setAltText(
-		this.altTextInput.getValue()
-	);*/
-
-	this.imageModel.setCaptionDocument(
-		this.captionSurface.getSurface().getModel().getDocument()
-	);
-
-	// Check if the image node changed from inline to block or
-	// vise versa
-	if ( this.mediaNode.type !== this.imageModel.getImageNodeType() ) {
-		// Remove the old image
-		this.fragment = this.getFragment().clone( this.mediaNode.getOuterRange() );
-		this.fragment.removeContent();
-		// Insert the new image
-		this.fragment = this.imageModel.insertImageNode( this.getFragment() );
-	} else {
-		// Update current node
-		this.imageModel.updateImageNode( surfaceModel );
-	}
+ve.ui.MWMediaEditDialog.prototype.setup = function ( data ) {
+	var newDoc,
+		dialog = this,
+		doc = this.getFragment().getSurface().getDocument();
 
 	// Parent method
-	return ve.ui.MWMediaEditDialog.super.prototype.applyChanges.call( this );
+	ve.ui.Dialog.prototype.setup.call( this, data );
+
+	// Properties
+	this.mediaNode = this.getFragment().getSelectedNode();
+	this.captionNode = this.mediaNode.getCaptionNode();
+	this.store = doc.getStore();
+
+	if ( this.captionNode && this.captionNode.getLength() > 0 ) {
+		newDoc = doc.cloneFromRange( this.captionNode.getRange() );
+	} else {
+		newDoc = new ve.dm.Document( [
+			{ 'type': 'paragraph', 'internal': { 'generated': 'wrapper' } },
+			{ 'type': '/paragraph' },
+			{ 'type': 'internalList' },
+			{ 'type': '/internalList' }
+		] );
+	}
+
+	this.captionSurface = new ve.ui.SurfaceWidget(
+		newDoc,
+		{
+			'$': this.$,
+			'tools': this.constructor.static.toolbarGroups,
+			'commands': this.constructor.static.surfaceCommands,
+			'pasteRules': this.constructor.static.pasteRules
+		}
+	);
+
+	this.$spinner.show();
+	this.$sizeWidgetElements.hide();
+	this.sizeErrorLabel.$element.hide();
+	// Ask for the asynchronous call to get a full scalable object
+	// with original dimensions and imageinfo from the API
+	this.mediaNode.getScalablePromise()
+		.done( ve.bind( function () {
+			this.scalable = this.mediaNode.getScalable();
+			this.$spinner.hide();
+			this.$sizeWidgetElements.show();
+
+			if (
+				this.mediaNode.getAttribute( 'type' ) === 'thumb' &&
+				this.scalable.getOriginalDimensions()
+			) {
+				// Set the max dimensions to the image's original dimensions
+				this.scalable.setMaxDimensions(
+					this.scalable.getOriginalDimensions()
+				);
+				// Tell the size widget to limit maxDimensions to image's original dimensions
+				this.scalable.setEnforcedMax( true );
+			} else {
+				this.scalable.setEnforcedMax( false );
+			}
+
+			// Send the scalable object to the size widget
+			this.sizeWidget.setScalable( this.scalable );
+			this.scalable.setDefaultDimensions(
+				this.scalable.getDimensionsFromValue( { 'width': this.defaultThumbSize } )
+			);
+		}, this ) )
+		.fail( ve.bind( function () {
+			dialog.sizeErrorLabel.$element.show();
+		}, this ) );
+
+	// Initialize size
+	this.sizeWidget.setSizeType(
+		this.mediaNode.getAttribute( 'defaultSize' ) ?
+		'default' :
+		'custom'
+	);
+
+	// Set initial alt text
+	//this.altTextInput.setValue( this.mediaNode.getAttribute( 'alt' ) || '' );
+
+	// Set initial position
+	if (
+		!this.mediaNode.getAttribute( 'align' ) ||
+		this.mediaNode.getAttribute( 'align' ) === 'none'
+	) {
+		this.positionCheckbox.setValue( false );
+		this.positionInput.setDisabled( true );
+		this.positionInput.selectItem( null );
+	} else {
+		this.positionCheckbox.setValue( true );
+		this.positionInput.setDisabled( false );
+		if ( this.mediaNode.getAttribute( 'align' ) === 'default' ) {
+			// Assume wiki default according to wiki dir
+			if ( this.getFragment().getDocument().getDir() === 'ltr' ) {
+				// Assume default is 'right'
+				this.positionInput.selectItem(
+					this.positionInput.getItemFromData( 'right' )
+				);
+			} else {
+				// Assume default is 'left'
+				this.positionInput.selectItem(
+					this.positionInput.getItemFromData( 'left' )
+				);
+			}
+		} else {
+			this.positionInput.selectItem(
+				this.positionInput.getItemFromData( this.mediaNode.getAttribute( 'align' ) )
+			);
+		}
+	}
+
+	// Border flag
+	//this.borderCheckbox.setValue( !!this.mediaNode.getAttribute( 'borderImage' ) );
+
+	// Set image type
+	/* this.typeInput.selectItem( null );
+	if ( this.mediaNode.getAttribute( 'type' ) !== undefined ) {
+		this.typeInput.selectItem(
+			this.typeInput.getItemFromData( this.mediaNode.getAttribute( 'type' ) )
+		);
+	} else {
+		// Explicitly show 'none' if no type was specified
+		this.typeInput.selectItem(
+			this.typeInput.getItemFromData( 'none' )
+		);
+	}*/
+
+	// Initialization
+	this.captionSurface.$element.addClass( 'WikiaArticle' );
+	this.captionFieldset.$element.append( this.captionSurface.$element );
+	this.captionSurface.initialize();
+};
+
+/**
+ * @inheritdoc
+ */
+ve.ui.MWMediaEditDialog.prototype.teardown = function ( data ) {
+	var newDoc, doc, /* originalAlt, */ attr, transactionAttributes = {},
+		imageSizeType, /* imageType, */ imageAlignmentCheckbox,
+		imageAlignmentValue, originalDimensions,
+		surfaceModel = this.getFragment().getSurface();
+
+	// Data initialization
+	data = data || {};
+
+	if ( data.action === 'apply' ) {
+		newDoc = this.captionSurface.getSurface().getModel().getDocument();
+		doc = surfaceModel.getDocument();
+		if ( !this.captionNode ) {
+			// Insert a new caption at the beginning of the image node
+			surfaceModel.getFragment()
+				.adjustRange( 1 )
+				.collapseRangeToStart()
+				.insertContent( [ { 'type': 'mwImageCaption' }, { 'type': '/mwImageCaption' } ] );
+			this.captionNode = this.mediaNode.getCaptionNode();
+		}
+		// Replace the contents of the caption
+		surfaceModel.change(
+			ve.dm.Transaction.newFromRemoval( doc, this.captionNode.getRange(), true )
+		);
+		surfaceModel.change(
+			ve.dm.Transaction.newFromDocumentInsertion( doc, this.captionNode.getRange().start, newDoc )
+		);
+
+		// Get all the details and their fallbacks
+		imageSizeType = this.sizeWidget.getSizeType() || 'default';
+		//imageType = this.typeInput.getSelectedItem() ? this.typeInput.getSelectedItem().getData() : '';
+		imageAlignmentCheckbox = this.positionCheckbox.getValue();
+		if ( imageAlignmentCheckbox && this.positionInput.getSelectedItem() ) {
+			imageAlignmentValue = this.positionInput.getSelectedItem().getData();
+		}
+
+		// Size and scalabletravaganza
+		attr = null;
+		if ( imageSizeType === 'default' ) {
+			transactionAttributes.defaultSize = true;
+			originalDimensions = this.scalable.getOriginalDimensions();
+			// Figure out the default size
+			// if ( imageType === 'thumb' || imageType === 'frame' ) {
+				// Default is thumb-default unless the image is originally smaller
+				if ( originalDimensions.width > this.defaultThumbSize ) {
+					attr = this.scalable.getDimensionsFromValue( { 'width': this.defaultThumbSize } );
+				} else {
+					attr = originalDimensions;
+				}
+			/* } else {
+				// Default is full size
+				if ( originalDimensions ) {
+					attr = originalDimensions;
+				}
+			}*/
+
+			// Apply
+			if ( attr ) {
+				transactionAttributes.width = attr.width;
+				transactionAttributes.height = attr.height;
+			}
+		// Upright is not yet implemented in Parsoid. When it is,
+		// the scale properties should be implemented here
+		//} else if ( imageSizeType === 'scale' ) {
+		} else if ( imageSizeType === 'custom' && this.sizeWidget.isValid() ) {
+			attr = this.sizeWidget.getCurrentDimensions();
+			transactionAttributes.width = attr.width;
+			transactionAttributes.height = attr.height;
+			transactionAttributes.defaultSize = false;
+		}
+
+		// Set alternate text
+		/* attr = $.trim( this.altTextInput.getValue() );
+		originalAlt = this.mediaNode.getAttribute( 'alt' );
+		// Allow the user to submit an empty alternate text but
+		// not if there was no alternate text originally to avoid
+		// dirty diffing images with empty |alt=
+		if (
+			// If there was no original alternate text but there
+			// is a value now, update
+			( originalAlt === undefined && attr ) ||
+			// If original alternate text was defined, always
+			// update, even if the input is empty to allow the
+			// user to unset it
+			originalAlt !== undefined
+		) {
+			transactionAttributes.alt = attr;
+		}*/
+
+		if ( !imageAlignmentCheckbox ) {
+			// Only change to 'none' if alignment was originally
+			// set to anything else
+			if (
+				this.mediaNode.getAttribute( 'align' ) &&
+				this.mediaNode.getAttribute( 'align' ) !== 'none'
+			) {
+				transactionAttributes.align = 'none';
+			}
+		} else {
+			// If alignment was originally default and is still
+			// set to the default position according to the wiki
+			// content direction, do not change it
+			if (
+				(
+					this.mediaNode.getAttribute( 'align' ) === 'default' &&
+					(
+						this.getFragment().getDocument().getDir() === 'ltr' &&
+						imageAlignmentValue !== 'right'
+					) ||
+					(
+						this.getFragment().getDocument().getDir() === 'rtl' &&
+						imageAlignmentValue !== 'left'
+					)
+				) ||
+				this.mediaNode.getAttribute( 'align' ) !== 'default'
+			) {
+				transactionAttributes.align = imageAlignmentValue;
+			}
+		}
+
+		// Border
+		/* if (
+			!this.borderCheckbox.isDisabled() &&
+			this.borderCheckbox.getValue() === true
+		) {
+			transactionAttributes.borderImage = true;
+		} else {
+			transactionAttributes.borderImage = false;
+		}*/
+
+		// Image type
+		/* if ( imageType ) {
+			transactionAttributes.type = imageType;
+		}*/
+		surfaceModel.change(
+			ve.dm.Transaction.newFromAttributeChanges( doc, this.mediaNode.getOffset(), transactionAttributes )
+		);
+	}
+
+	// Cleanup
+	this.captionSurface.destroy();
+	this.captionSurface = null;
+	this.captionNode = null;
+
+	// Parent method
+	ve.ui.Dialog.prototype.teardown.call( this, data );
 };
 
 /* Registration */
 
-ve.ui.windowFactory.register( ve.ui.MWMediaEditDialog );
+ve.ui.dialogFactory.register( ve.ui.MWMediaEditDialog );

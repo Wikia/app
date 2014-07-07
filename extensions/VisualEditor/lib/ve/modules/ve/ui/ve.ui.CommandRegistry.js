@@ -85,10 +85,10 @@ ve.ui.commandRegistry.register(
 	new ve.ui.Command( 'superscript', 'annotation', 'toggle', 'textStyle/superscript' )
 );
 ve.ui.commandRegistry.register(
-	new ve.ui.Command( 'link', 'window', 'open', 'link' )
+	new ve.ui.Command( 'link', 'inspector', 'open', 'link' )
 );
 ve.ui.commandRegistry.register(
-	new ve.ui.Command( 'specialcharacter', 'window', 'open', 'specialcharacter' )
+	new ve.ui.Command( 'specialcharacter', 'inspector', 'open', 'specialcharacter' )
 );
 ve.ui.commandRegistry.register(
 	new ve.ui.Command( 'clear', 'annotation', 'clearAll' )
@@ -106,7 +106,7 @@ ve.ui.commandRegistry.register(
 	new ve.ui.Command( 'bullet', 'list', 'toggle', 'bullet' )
 );
 ve.ui.commandRegistry.register(
-	new ve.ui.Command( 'commandHelp', 'window', 'open', 'commandHelp' )
+	new ve.ui.Command( 'commandHelp', 'dialog', 'open', 'commandHelp' )
 );
 ve.ui.commandRegistry.register(
 	new ve.ui.Command( 'code', 'annotation', 'toggle', 'textStyle/code' )
@@ -115,7 +115,7 @@ ve.ui.commandRegistry.register(
 	new ve.ui.Command( 'strikethrough', 'annotation', 'toggle', 'textStyle/strike' )
 );
 ve.ui.commandRegistry.register(
-	new ve.ui.Command( 'language', 'window', 'open', 'language' )
+	new ve.ui.Command( 'language', 'inspector', 'open', 'language' )
 );
 ve.ui.commandRegistry.register(
 	new ve.ui.Command( 'paragraph', 'format', 'convert', 'paragraph' )

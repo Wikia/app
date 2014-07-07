@@ -196,14 +196,13 @@ $messages['de-formal'] = array(
 
 /** Zazaki (Zazaki)
  * @author Erdemaslancan
- * @author Mirzali
  */
 $messages['diq'] = array(
 	'wva-success' => 'Vidyo pelaya $1  vıraziyaya', # Fuzzy
 	'wva-success-replaced' => 'Vidyo pelaya $1  re ca deya.', # Fuzzy
-	'wva-name' => 'Nameyê videoy:',
-	'wva-url' => 'URL-adresa videoy:',
-	'wva-add' => 'Cı ke',
+	'wva-name' => 'Name deke:', # Fuzzy
+	'wva-url' => 'URL deke:', # Fuzzy
+	'wva-add' => 'Deke',
 	'wva-protected' => 'Na vidyoya stare deya.',
 );
 
@@ -937,11 +936,11 @@ $messages['zh-hans'] = array(
  * @author Ffaarr
  */
 $messages['zh-hant'] = array(
-	'wva-success' => '成功增加影片[[:$1]]',
-	'wva-success-replaced' => '成功替換影片 [[:$1]]',
+	'wva-success' => '成功增加影片 [[:$1]]', # Fuzzy
+	'wva-success-replaced' => '成功替換影片 [[:$1]]', # Fuzzy
 	'wva-failure' => '請提供有效的參數。',
-	'wva-name' => '影片名稱：',
-	'wva-url' => '影片連結：',
+	'wva-name' => '影片名稱', # Fuzzy
+	'wva-url' => '影片連結：', # Fuzzy
 	'wva-add' => '新增',
 	'wva-title' => '從網路快速新增影片',
 	'wva-notlogged' => '您需要登錄或註冊來插入影片。',

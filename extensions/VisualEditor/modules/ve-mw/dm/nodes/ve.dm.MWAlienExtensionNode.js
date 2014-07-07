@@ -9,18 +9,18 @@
  * DataModel MediaWiki alien extension node.
  *
  * @class
- * @extends ve.dm.MWBlockExtensionNode
+ * @extends ve.dm.MWExtensionNode
  *
  * @constructor
  */
-ve.dm.MWAlienExtensionNode = function VeDmMWAlienExtensionNode() {
+ve.dm.MWAlienExtensionNode = function VeDmMWAlienExtensionNode( length, element ) {
 	// Parent constructor
-	ve.dm.MWBlockExtensionNode.apply( this, arguments );
+	ve.dm.MWExtensionNode.call( this, 0, element );
 };
 
 /* Inheritance */
 
-OO.inheritClass( ve.dm.MWAlienExtensionNode, ve.dm.MWBlockExtensionNode );
+OO.inheritClass( ve.dm.MWAlienExtensionNode, ve.dm.MWExtensionNode );
 
 /* Static members */
 

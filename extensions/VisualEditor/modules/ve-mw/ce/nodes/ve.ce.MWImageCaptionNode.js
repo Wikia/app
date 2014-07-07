@@ -19,6 +19,9 @@
 ve.ce.MWImageCaptionNode = function VeCeMWImageCaptionNode( model, config ) {
 	// Parent constructor
 	ve.ce.BranchNode.call( this, model, config );
+
+	// DOM changes
+	this.$element.addClass( 'thumbcaption' );
 };
 
 /* Inheritance */

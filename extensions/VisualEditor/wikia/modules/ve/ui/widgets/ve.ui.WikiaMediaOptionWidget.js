@@ -23,7 +23,7 @@ ve.ui.WikiaMediaOptionWidget = function VeUiWikiaMediaOptionWidget( model, confi
 	this.model = model;
 
 	// Parent constructor
-	ve.ui.WikiaMediaOptionWidget.super.call( this, this.model.title, config );
+	OO.ui.OptionWidget.call( this, this.model.title, config );
 
 	// Properties
 	this.size = config.size || 160;
@@ -43,9 +43,6 @@ ve.ui.WikiaMediaOptionWidget = function VeUiWikiaMediaOptionWidget( model, confi
 	this.$image
 		.load( ve.bind( this.onThumbnailLoad, this ) )
 		.error( ve.bind( this.onThumbnailError, this ) );
-	this.check.on( 'click', ve.bind( function () {
-		this.emit( 'check', this );
-	}, this ) );
 
 	// Initialization
 	this.loadThumbnail();

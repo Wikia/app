@@ -83,6 +83,7 @@ $messages['en'] = array(
 	'videohomepage-partner-name-ign' => 'IGN',
 	'videohomepage-partner-name-iva' => 'IVA',
 	'videohomepage-partner-name-ooyala' => 'Ooyala',
+	'videohomepage-partner-name-realgravity' => 'Real Gravity',
 	'videohomepage-partner-name-screenplay' => 'Screenplay',
 );
 
@@ -158,5 +159,6 @@ $messages['qqq'] = array(
 	'videohomepage-partner-name-ign' => 'This text is the name of a partner: IGN',
 	'videohomepage-partner-name-iva' => 'This text is the name of a partner: IVA',
 	'videohomepage-partner-name-ooyala' => 'This text is the name of a partner: Ooyala',
+	'videohomepage-partner-name-realgravity' => 'This text is the name of a partner: Realgravity',
 	'videohomepage-partner-name-screenplay' => 'This text is the name of a partner: Screenplay',
 );
