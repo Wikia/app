@@ -22,7 +22,12 @@
 		margin: 0px 0px 1px;
 		overflow: hidden;
 		position: relative;
- 	}
+
+		img {
+			width: 100%;
+			height: auto;
+		}
+	}
 }
 
 .Pagination {
