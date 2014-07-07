@@ -297,6 +297,27 @@ define(
 			return baseUrl + '/thumb/' + fileName + '/' + crop + fileName;
 		}
 
+		/**
+		 * @desc escapes HTML entities
+		 * @param string
+		 * @returns {string}
+		 */
+		function escapeHtml(string) {
+			var htmlEscapes = {
+					'&': '&amp;',
+					'<': '&lt;',
+					'>': '&gt;',
+					'"': '&quot;',
+					'\'': '&#39;',
+					'/': '&#x2F;'
+				},
+				htmlEscaper = /[&<>"'\/]/g;
+
+			return ('' + string).replace(htmlEscaper, function (match) {
+				return htmlEscapes[match];
+			});
+		}
+
 		return {
 			loadModal: loadModal,
 			createModal: createModal,
@@ -312,7 +333,8 @@ define(
 			handleNirvanaException: handleNirvanaException,
 			showError: showError,
 			cleanUpError: cleanUpError,
-			createThumbURL: createThumbURL
+			createThumbURL: createThumbURL,
+			escapeHtml: escapeHtml
 		}
 	}
 );
