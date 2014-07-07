@@ -65,9 +65,11 @@ function InfoboxBuilderView.addRowLine( field )
     
     local row = mw.html.create('tr')
       row:addClass( InfoboxBuilderView.vars.Theme .. '-infobox-line' )
+         :addClass( InfoboxBuilderView.vars.Theme .. '-infobox-field-' .. field.Index )
       if not HF.isempty( field.CssClass ) then
         row:addClass( field.CssClass )
       end
+
       row:tag('td')
          :addClass( InfoboxBuilderView.vars.Theme .. '-infobox-line-left' )
          :wikitext( field.Label )
@@ -97,6 +99,7 @@ function InfoboxBuilderView.addRowHeader( field )
     local row = mw.html.create('tr')
     if not HF.isempty( field.CssClass ) then
 		row:addClass( field.CssClass )
+       :addClass( InfoboxBuilderView.vars.Theme .. '-infobox-field-' .. field.Index )
 	end
       row:tag('td')
          :addClass( InfoboxBuilderView.vars.Theme .. '-infobox-header' )
@@ -108,6 +111,7 @@ end
  
 function InfoboxBuilderView.addRowTitle( field )
   local row = mw.html.create('tr')
+        row:addClass( InfoboxBuilderView.vars.Theme .. '-infobox-field-' .. field.Index )
     row:tag('td')
        :addClass( InfoboxBuilderView.vars.Theme .. '-infobox-title' )
        :attr('colspan', '2')
@@ -119,6 +123,8 @@ function InfoboxBuilderView.addRowMainImage( field )
   local node = mw.html.create('')
 
   local row1 = node:tag('tr')
+        row1:addClass( InfoboxBuilderView.vars.Theme .. '-infobox-field-' .. field.Index )
+
     row1:tag('td')
         :addClass( InfoboxBuilderView.vars.Theme .. '-infobox-main-image' )
         :attr('colspan', '2')
@@ -126,6 +132,8 @@ function InfoboxBuilderView.addRowMainImage( field )
 
   if InfoboxBuilderView.vars.MainImageCaption == "On" then
     local row2 = node:tag('tr')
+          row2:addClass( InfoboxBuilderView.vars.Theme .. '-infobox-field-' .. field.Index )
+
       row2:tag('td')
           :addClass( InfoboxBuilderView.vars.Theme .. '-infobox-main-image-caption' )
           :attr('colspan', '2')
@@ -139,12 +147,16 @@ function InfoboxBuilderView.addRowImage( field )
   local node = mw.html.create('')
   
   local row1 = node:tag('tr')
+        row1:addClass( InfoboxBuilderView.vars.Theme .. '-infobox-field-' .. field.Index )
+
     row1:tag('td')
         :addClass( InfoboxBuilderView.vars.Theme .. '-infobox-main-image' )
         :attr('colspan', '2')
         :wikitext( field.Value ) 
 
   local row2 = node:tag('tr')
+        row2:addClass( InfoboxBuilderView.vars.Theme .. '-infobox-field-' .. field.Index )
+
     row2:tag('td')
         :addClass( InfoboxBuilderView.vars.Theme .. '-infobox-image-caption' )
         :attr('colspan', '2')
@@ -155,6 +167,8 @@ end
 
 function InfoboxBuilderView.addRowFooter( field )
   local row = mw.html.create('tr')
+        row:addClass( InfoboxBuilderView.vars.Theme .. '-infobox-field-' .. field.Index )
+
     row:tag('td')
        :addClass( InfoboxBuilderView.vars.Theme .. '-infobox-footer' )
        :attr('colspan', '2')
@@ -194,10 +208,14 @@ function InfoboxBuilderView.addRowSplit( field )
   end
 
   local row1 = node:tag('tr')
+        row1:addClass( InfoboxBuilderView.vars.Theme .. '-infobox-field-' .. field.Index )
+
     row1:node( labelLeft )
     row1:node( labelRight )
 
   local row2 = node:tag('tr')
+        row2:addClass( InfoboxBuilderView.vars.Theme .. '-infobox-field-' .. field.Index )
+
     row2:node( valueLeft )
     row2:node( valueRight )
 
@@ -208,6 +226,7 @@ end
 function InfoboxBuilderView.addRowCustom( field )
   local node = mw.html.create( field.Label )
         node:addClass( InfoboxBuilderView.vars.Theme .. '-infobox-custom' )
+            :addClass( InfoboxBuilderView.vars.Theme .. '-infobox-field-' .. field.Index )
             :wikitext( field.Value )
         if not HF.isempty( field.CssClass ) then
         	node:addClass( field.CssClass )
