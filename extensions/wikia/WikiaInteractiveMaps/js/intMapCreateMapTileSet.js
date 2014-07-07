@@ -91,7 +91,6 @@ define(
 			$uploadInput,
 			$clearSearchBtn,
 			$searchInput;
-			$browse;
 
 		/**
 		 * @desc initializes and configures UI
