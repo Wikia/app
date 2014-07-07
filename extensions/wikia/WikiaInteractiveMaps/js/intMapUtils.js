@@ -313,7 +313,7 @@ define(
 				label: label
 			};
 
-			if( value ) {
+			if (value) {
 				trackingParams.value = value;
 			}
 
