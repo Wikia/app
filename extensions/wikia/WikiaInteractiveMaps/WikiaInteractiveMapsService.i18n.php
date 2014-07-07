@@ -8,7 +8,7 @@ $messages = [];
 $messages[ 'en' ] = [
 	'wikia-interactive-maps-filters' => 'Filters',
 	'wikia-interactive-maps-edit-pin-types' => 'Edit',
-	'wikia-interactive-maps-all-pin-types' => 'All Pin Types',
+	'wikia-interactive-maps-all-pin-types' => 'All Pin Categories',
 
 	'wikia-interactive-maps-error-map-processed' => 'Map is still being processed.',
 	'wikia-interactive-maps-error-map-not-found' => 'Map not found. An unicorn is weeping.',
@@ -24,8 +24,8 @@ $messages[ 'en' ] = [
 
 $messages[ 'qqq' ] = [
 	'wikia-interactive-maps-filters' => 'Header text for the legend',
-	'wikia-interactive-maps-edit-pin-types' => 'Link for editing pin types',
-	'wikia-interactive-maps-all-pin-types' => 'Text for all pin types selector',
+	'wikia-interactive-maps-edit-pin-types' => 'Link for editing pin categories',
+	'wikia-interactive-maps-all-pin-types' => 'Text for all pin categories selector',
 
 	'wikia-interactive-maps-error-map-processed' => 'Message shown when the map is still being processed',
 	'wikia-interactive-maps-error-map-not-found' => 'Error message shown then the map is not found',

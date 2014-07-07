@@ -12,12 +12,17 @@
 			"Shirayuki",
 			"Simon Shek",
 			"Spring Roll Conan",
-			"Waihorace"
+			"Waihorace",
+			"Cwlin0416"
 		]
 	},
 	"ooui-dialog-action-close": "關閉",
-	"ooui-outline-control-move-down": "向下移項",
-	"ooui-outline-control-move-up": "向上移項",
-	"ooui-outline-control-remove": "移除項",
-	"ooui-toolbar-more": "更多"
+	"ooui-outline-control-move-down": "項目下移",
+	"ooui-outline-control-move-up": "項目上移",
+	"ooui-outline-control-remove": "移除項目",
+	"ooui-toolbar-more": "更多",
+	"ooui-dialog-confirm-title": "確認",
+	"ooui-dialog-confirm-default-prompt": "您確定嗎？",
+	"ooui-dialog-confirm-default-ok": "確定",
+	"ooui-dialog-confirm-default-cancel": "取消"
 }

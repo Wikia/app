@@ -21,6 +21,11 @@
 ve.ui.MWTemplatePage = function VeUiMWTemplatePage( template, name, config ) {
 	var title;
 
+	// Configuration initialization
+	config = ve.extendObject( {
+		'scrollable': false
+	}, config );
+
 	// Parent constructor
 	OO.ui.PageLayout.call( this, name, config );
 
@@ -62,8 +67,9 @@ ve.ui.MWTemplatePage = function VeUiMWTemplatePage( template, name, config ) {
 			.addClass( 've-ui-mwTemplatePage-description-missing' )
 			.append( ve.msg(
 				'wikia-visualeditor-dialog-transclusion-no-template-description',
-				title.getName(),
-				ve.getHtmlAttributes( { 'target': '_blank', 'href': title.getUrl() } )
+				title.getNameText(),
+				ve.getHtmlAttributes( { 'target': '_blank', 'href': title.getUrl() } ),
+				mw.user
 			) );
 	}
 	this.infoFieldset.$element.append( this.$description );

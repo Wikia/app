@@ -81,13 +81,13 @@
  * Selectors copied from lib/ve/lib/oojs-ui/oojs-ui.svg.css
  */
 .oo-ui-indicator-down {
-	@include ve-icon(down, oo-indicators);
+	@include ve-icon(arrow-down, oo-indicators);
 }
 .oo-ui-indicator-required {
 	@include ve-icon(required, oo-indicators);
 }
 .oo-ui-indicator-up {
-	@include ve-icon(up, oo-indicators);
+	@include ve-icon(arrow-up, oo-indicators);
 }
 
 /*
