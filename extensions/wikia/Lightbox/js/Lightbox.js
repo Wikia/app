@@ -66,7 +66,7 @@
 
 			// Check screen height for future interactions
 			Lightbox.shortScreen = ($(window).height() <
-				LightboxLoader.defaults.height + LightboxLoader.defaults.topOffset + 20); // buffer by 20px
+				LightboxLoader.defaults.height + LightboxLoader.defaults.topOffset);
 
 			// Add template to modal
 			Lightbox.openModal.find('.modalContent').html(LightboxLoader.templateHtml);
@@ -87,7 +87,6 @@
 			LightboxLoader.cache.details[Lightbox.current.title] = Lightbox.initialFileDetail;
 			Lightbox.updateMedia();
 			Lightbox.showOverlay();
-
 			Lightbox.hideOverlay(3000);
 
 			LightboxLoader.lightboxLoading = false;
@@ -106,11 +105,6 @@
 			// attach event handlers
 			Lightbox.bindEvents();
 
-			if (Wikia.isTouchScreen()) {
-				Lightbox.openModal.pin
-					.click()
-					.hide();
-			}
 		},
 		cacheDOM: function () {
 			// Template cache
@@ -119,7 +113,6 @@
 			Lightbox.openModal.progressTemplate = $('#LightboxCarouselProgressTemplate');
 			Lightbox.openModal.headerTemplate = $('#LightboxHeaderTemplate');
 			Lightbox.openModal.headerAdTemplate = $('#LightboxHeaderAdTemplate');
-			Lightbox.openModal.pin = $('.LightboxCarousel .toolbar .pin');
 
 			// Cache error message
 			Lightbox.openModal.errorMessage = $('#LightboxErrorMessage').html();
@@ -151,9 +144,7 @@
 			}).on('mouseleave.Lightbox', function () {
 				// Hide Lightbox header and footer on mouse leave.
 				Lightbox.hideOverlay(10);
-			}).on('click.Lightbox', '.LightboxHeader .share-button', function (e) {
-				e.preventDefault();
-
+			}).on('click.Lightbox', '.LightboxHeader .share-button', function () {
 				// Show share screen on button click
 				if (Lightbox.current.type === 'video') {
 					Lightbox.video.destroyVideo();
@@ -206,7 +197,7 @@
 				Lightbox.openModal.removeClass('share-mode').removeClass('more-info-mode');
 				Lightbox.openModal.share.html('');
 				Lightbox.openModal.moreInfo.html('');
-			}).on('click.Lightbox', Lightbox.openModal.pin, function (evt) {
+			}).on('click.Lightbox', '.LightboxCarousel .toolbar .pin', function (evt) {
 				// Pin the toolbar on icon click
 				var target = $(evt.target),
 					overlayActive = Lightbox.openModal.data('overlayactive'),
@@ -313,9 +304,6 @@
 			updateLightbox: function (data) {
 				Lightbox.image.getDimensions(data.imageUrl, function (dimensions) {
 
-					// render media
-					data.imageHeight = dimensions.imageHeight;
-
 					var css = {
 							height: dimensions.modalHeight
 						},
@@ -331,6 +319,9 @@
 					}
 
 					Lightbox.openModal.css(css);
+
+					// render media
+					data.imageHeight = dimensions.imageHeight;
 
 					// Hack to vertically align the image in the lightbox
 					Lightbox.openModal.media
@@ -728,11 +719,6 @@
 		hideOverlay: function (delay) {
 			var overlay = Lightbox.openModal;
 
-			// Don't enable hover show/hide for touch screens
-			if (Wikia.isTouchScreen()) {
-				return;
-			}
-
 			// If an interstitial ad is being shown, do not hideOverlay
 			if (Lightbox.ads.adIsShowing) {
 				return;
@@ -746,6 +732,17 @@
 					}, (delay || 1200)
 				);
 			}
+		},
+		getModalOptions: function (modalHeight, topOffset) {
+			var modalOptions = {
+				id: 'LightboxModal',
+				className: 'LightboxModal',
+				height: modalHeight,
+				width: 970, // modal adds 30px of padding to width
+				noHeadline: true,
+				topOffset: topOffset
+			};
+			return modalOptions;
 		},
 		updateMedia: function () {
 			var key = Lightbox.current.key,
@@ -1065,7 +1062,7 @@
 
 						if (data.errors.length) {
 							$(data.errors).each(function () {
-								errorMsg += this.toString();
+								errorMsg += this;
 							});
 						}
 						if (data.sent.length) {
@@ -1200,7 +1197,7 @@
 								key: key,
 								type: type,
 								playButtonSpan: playButtonSpan,
-								thumbWrapperClass: (type === 'video') ? Lightbox.videoWrapperClass : ''
+								thumbLiClass: (type === 'video') ? Lightbox.videoWrapperClass : ''
 							});
 						}
 					});
@@ -1350,7 +1347,7 @@
 								key: key,
 								type: type,
 								playButtonSpan: playButtonSpan,
-								thumbWrapperClass: Lightbox.videoWrapperClass
+								thumbLiClass: Lightbox.videoWrapperClass
 							});
 						}
 					});
@@ -1428,7 +1425,7 @@
 					break;
 
 				case 'videosModule':
-					if (!clickSource) {
+					if ( !clickSource ) {
 						clickSource = parent.hasClass('videos-module-rail') ?
 							VPS.VIDEOS_MODULE_RAIL :
 							VPS.VIDEOS_MODULE_BOTTOM;
@@ -1489,6 +1486,7 @@
 					carouselType = 'articleMedia';
 					trackingCarouselType = 'article';
 			}
+
 
 			return {
 				clickSource: clickSource,

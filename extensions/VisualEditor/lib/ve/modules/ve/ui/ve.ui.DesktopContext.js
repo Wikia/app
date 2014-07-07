@@ -42,7 +42,6 @@ ve.ui.DesktopContext = function VeUiDesktopContext( surface, config ) {
 		'$': this.$,
 		'$container': this.surface.getView().$element
 	} );
-	this.target = this.surface.getTarget() || null;
 
 	// Events
 	this.surface.getModel().connect( this, {
@@ -68,8 +67,8 @@ ve.ui.DesktopContext = function VeUiDesktopContext( surface, config ) {
 	} );
 
 	this.$window.on( {
-		//'resize.ve-ui-desktopContext': $.throttle( 500, ve.bind( this.onWindowResize, this ) ),
-		//'scroll.ve-ui-desktopContext': $.throttle( 100, ve.bind( this.onWindowScroll, this ) )
+		'resize.ve-ui-desktopContext': $.throttle( 500, ve.bind( this.onWindowResize, this ) ),
+		'scroll.ve-ui-desktopContext': $.throttle( 100, ve.bind( this.onWindowScroll, this ) )
 	} );
 	this.$element.add( this.$menu )
 		.on( 'mousedown', false );
@@ -417,7 +416,7 @@ ve.ui.DesktopContext.prototype.updateDimensions = function ( transition ) {
 	if ( position ) {
 		if ( this.floating ) {
 			position.x += surfaceOffset.left;
-			position.y = this.target.getToolbar().$element.height() + this.floatThreshold;
+			position.y = this.surface.getTarget().getToolbar().$element.height() + this.floatThreshold;
 		}
 		this.$element.css( { 'left': position.x, 'top': position.y } );
 	}
@@ -532,14 +531,12 @@ ve.ui.DesktopContext.prototype.shouldBeEmbedded = function ( focusedNode ) {
  * Handle floating or unfloating the context menu.
  */
 ve.ui.DesktopContext.prototype.handleFloat = function () {
-	if ( this.target ) {
-		if ( this.shouldFloat() ) {
-			if ( !this.floating ) {
-				this.float();
-			}
-		} else if ( this.floating ) {
-			this.unfloat();
+	if ( this.shouldFloat() ) {
+		if ( !this.floating ) {
+			this.float();
 		}
+	} else if ( this.floating ) {
+		this.unfloat();
 	}
 };
 

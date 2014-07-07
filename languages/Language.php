@@ -2675,7 +2675,7 @@ class Language {
 				array( &$this->mExtendedSpecialPageAliases, $this->getCode() ) );
 		}
 
-		return !empty($this->mExtendedSpecialPageAliases) ? $this->mExtendedSpecialPageAliases : [];
+		return $this->mExtendedSpecialPageAliases;
 	}
 
 	/**

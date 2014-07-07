@@ -39,7 +39,6 @@
     "visualeditor-ca-ve-create": "Link text of the dedicated VisualEditor \"Create\" tab.\n{{Identical|VisualEditor}}",
     "visualeditor-ca-ve-edit": "Link text of the dedicated VisualEditor {{msg-mw|Edit}} tab.\n{{Identical|VisualEditor}}",
     "visualeditor-ca-ve-edit-section": "{{Identical|VisualEditor}}",
-    "visualeditor-ca-classiceditor": "Link text of the classic editor",
     "visualeditor-categories-tool": "Tool for opening the categories section of the meta dialog.\n{{Identical|Category}}",
     "visualeditor-cite-tool-name-web": "Title of tool that inserts a citation for a website.\n{{Identical|Website}}",
     "visualeditor-cite-tool-name-book": "Title of tool that inserts a citation for a book.\n{{Identical|Book}}",

@@ -5,10 +5,9 @@
 define('lvs.commonajax', [
 	'lvs.suggestions',
 	'lvs.ellipses',
-	'lvs.videocontrols',
 	'wikia.window',
 	'lvs.tracker'
-], function (suggestions, ellipses, controls, window, tracker) {
+], function (suggestions, ellipses, window, tracker) {
 	'use strict';
 
 	var $body,
@@ -42,7 +41,6 @@ define('lvs.commonajax', [
 			$container.html(data.html).trigger('contentReset');
 			suggestions.init($container);
 			ellipses.init($container);
-			controls.init($container);
 
 			$('.lvs-match-stats').find('.count').text(data.totalVideos || 0);
 

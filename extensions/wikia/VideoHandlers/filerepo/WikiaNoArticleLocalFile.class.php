@@ -129,19 +129,8 @@ class WikiaNoArticleLocalFile extends WikiaLocalFile {
 		$dbw->commit();
 
 		# Invalidate cache for all pages using this file
-		if ( TaskRunner::isModern('HTMLCacheUpdate') ) {
-			global $wgCityId;
-
-			$task = ( new \Wikia\Tasks\Tasks\HTMLCacheUpdateTask() )
-				->wikiId( $wgCityId )
-				->title( $this->getTitle() );
-			$task->call( 'purge', 'imagelinks' );
-			$task->queue();
-		} else {
-			$update = new HTMLCacheUpdate( $this->getTitle(), 'imagelinks' );
-			$update->doUpdate();
-		}
-
+		$update = new HTMLCacheUpdate( $this->getTitle(), 'imagelinks' );
+		$update->doUpdate();
 		return true;
 	}
 }

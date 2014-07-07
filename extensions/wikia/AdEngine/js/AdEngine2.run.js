@@ -20,9 +20,8 @@ require([
 	'ext.wikia.adEngine.lateAdsQueue',
 	'ext.wikia.adEngine.adLogicHighValueCountry',
 	'ext.wikia.adEngine.slotTweaker',
-	'ext.wikia.adEngine.messageListener',
 	require.optional('wikia.abTest')
-], function (log, window, tracker, adEngine, adConfig, evolveSlotConfig, adLogicPageParams, wikiaDart, slotTracker, lateAdsQueue, adLogicHighValueCountry, slotTweaker, messageListener, abTest) {
+], function (log, window, tracker, adEngine, adConfig, evolveSlotConfig, adLogicPageParams, wikiaDart, slotTracker, lateAdsQueue, adLogicHighValueCountry, slotTweaker, abTest) {
 	'use strict';
 
 	var module = 'AdEngine2.run',
@@ -32,7 +31,7 @@ require([
 		adsinhead = abTest && abTest.inGroup('ADS_IN_HEAD', 'YES');
 
 	// Don't show ads when Sony requests the page
-	window.wgShowAds = window.wgShowAds && !window.document.referrer.match(/info.tvsideview.sony.net/);
+	window.wgShowAds = window.wgShowAds && !window.navigator.userAgent.match(/sony_tvs/);
 
 	// Use PostScribe for ScriptWriter implementation when SevenOne Media ads are enabled
 	window.wgUsePostScribe = window.wgUsePostScribe || window.wgAdDriverUseSevenOneMedia;
@@ -53,8 +52,6 @@ require([
 			});
 		}
 	};
-
-	messageListener.init();
 
 	// Register Evolve hop
 	window.evolve_hop = function (slotname) {
@@ -164,7 +161,7 @@ window.AdEngine_loadLateAds = function () {
 		}
 
 		wgNowBased = Math.round(new Date().getTime() - window.wgNow.getTime());
-		performanceBased = window.performance && window.performance.now && Math.round(window.performance.now());
+		performanceBased = window.performance && Math.round(window.performance.now());
 
 		require([
 			'wikia.log',

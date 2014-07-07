@@ -26,7 +26,6 @@ $dir = dirname(__FILE__) . '/';
 $app = F::app();
 
 // classes
-$wgAutoloadClasses['Wikia\\Tasks\\Tasks\\ImageReviewTask'] = "{$dir}ImageReviewTask.class.php";
 $wgAutoloadClasses['ImageReviewTask'] =  $dir . 'ImageReviewTask.php';
 if ( function_exists( 'extAddBatchTask' ) ) {
 	extAddBatchTask( $dir . "../ImageReview/ImageReviewTask.php", "imagereview", "ImageReviewTask" );

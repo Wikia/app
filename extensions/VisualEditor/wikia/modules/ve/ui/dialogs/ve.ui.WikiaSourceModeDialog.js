@@ -116,14 +116,14 @@ ve.ui.WikiaSourceModeDialog.prototype.onApply = function () {
 /**
  * @method
  */
-ve.ui.WikiaSourceModeDialog.prototype.getWikitext = function () {
+ve.ui.WikiaSourceModeDialog.prototype.getWikitext = function() {
 	return this.sourceModeTextarea.getValue();
 };
 
 /**
  * @method
  */
-ve.ui.WikiaSourceModeDialog.prototype.parse = function ( ) {
+ve.ui.WikiaSourceModeDialog.prototype.parse = function( ) {
 	$.ajax( {
 		'url': mw.util.wikiScript( 'api' ),
 		'data': {
@@ -141,16 +141,16 @@ ve.ui.WikiaSourceModeDialog.prototype.parse = function ( ) {
 		'cache': 'false',
 		'success': ve.bind( this.onParseSuccess, this ),
 		'error': ve.bind( this.onParseError, this ),
-		'complete': ve.bind( function () {
+		'complete': ve.bind( function() {
 			this.$frame.stopThrobbing();
-		}, this )
+		} , this )
 	} );
 };
 
 /**
  * @method
  */
-ve.ui.WikiaSourceModeDialog.prototype.onParseSuccess = function ( response ) {
+ve.ui.WikiaSourceModeDialog.prototype.onParseSuccess = function( response ) {
 	var target, parseStart;
 	if ( !response || response.error || !response.visualeditor || response.visualeditor.result !== 'success' ) {
 		return this.onParseError.call( this );
@@ -179,7 +179,7 @@ ve.ui.WikiaSourceModeDialog.prototype.onParseSuccess = function ( response ) {
 	target.edited = true;
 	target.doc = ve.createDocumentFromHtml( response.visualeditor.content );
 	parseStart = this.timings.parseStart;
-	target.setUpSurface( target.doc, ve.bind( function () {
+	target.setUpSurface( target.doc, ve.bind( function() {
 		this.editNotices = {};
 		this.setupToolbarButtons();
 		this.attachToolbarButtons();

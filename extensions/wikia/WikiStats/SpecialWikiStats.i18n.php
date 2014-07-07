@@ -286,7 +286,6 @@ $messages['qqq'] = array(
 	'wikistats_size' => '{{Identical|Size}}',
 	'wikistats_words' => '{{Identical|Word}}',
 	'wikistats_image' => '{{Identical|Image}}',
-	'wikistats_external' => '{{Identical|External}}',
 	'wikistats_namespaces' => '{{Identical|Namespace}}',
 	'wikistats_main_namespace' => 'Name of the main namespace (ns:0).
 {{Identical|Main}}',
@@ -299,7 +298,6 @@ $messages['qqq'] = array(
 	'wikistats_register' => 'Abbreviation for "Registered users"',
 	'wikistats_unregister' => 'Abbreviation for "Unregistered users" (anonymous)',
 	'wikistats_more_txt' => '{{Identical|More}}',
-	'wikistats_now' => '{{Identical|Now}}',
 	'wikistats_prev_rank' => '{{Optional}}',
 	'wikistats_prev_rank_xls' => '{{Optional}}',
 	'wikistats_days_ago' => '',
@@ -2147,7 +2145,7 @@ $messages['diq'] = array(
 	'wikistats_distrib_wikians' => 'Vurnayışkari',
 	'wikistats_distrib_edits_total' => 'Vurnayışi pêro',
 	'wikistats_date' => 'Deme',
-	'wikistats_namespace' => 'Heruna namey',
+	'wikistats_namespace' => 'Caynami',
 	'wikistats_show' => 'Bımocne',
 	'wikistats_stats' => 'Bımocne %i defiyê',
 	'wikistats_hide' => 'Bınımne',
@@ -2166,7 +2164,7 @@ $messages['diq'] = array(
 	'wikistats_interwiki' => 'interwiki',
 	'wikistats_image' => 'resım',
 	'wikistats_external' => 'teber',
-	'wikistats_namespaces' => 'heruna nameyan',
+	'wikistats_namespaces' => 'cayê namey',
 	'wikistats_redirects' => 'serçarnayışi',
 	'wikistats_main_namespace' => 'ser',
 	'wikistats_image_namespace' => 'resım',
@@ -2217,7 +2215,7 @@ $messages['diq'] = array(
 	'wikistats_generate_stats_msg' => 'Şıma ra reca pıpawê ... vırazêno ...',
 	'wikistats_language_stats' => 'İstatistike zıwani',
 	'wikistats_main_statistics_legend' => 'İstatistikê serêni',
-	'wikistats_ns_statistics_legend' => 'Heruna nameyan',
+	'wikistats_ns_statistics_legend' => 'Caynaman',
 	'wikistats_other_statistics_legend' => 'Îstatistiksê binî',
 	'wikistats_date_of_generate' => '$1 vıraziya',
 	'wikistats_search_text' => 'Cı geyre',
@@ -6408,13 +6406,6 @@ Vennligst [[Special:UserLogin|logg inn eller opprett en konto]] dersom du ikke a
 	'wikistats_error_malformed_date' => 'Feil: Den angitte datoen er ugyldig',
 );
 
-/** Low Saxon (Netherlands) (Nedersaksies)
- * @author Servien
- */
-$messages['nds-nl'] = array(
-	'wikistats_days_ago' => 'dagen elejen',
-);
-
 /** Dutch (Nederlands)
  * @author McDutchie
  * @author Siebrand
@@ -9227,7 +9218,6 @@ $messages['tyv'] = array(
 	'wikistats_invalid_date' => 'Таарышпас үе аразын шилээн',
 	'wikistats_namespace' => 'Ат делгеми',
 	'wikistats_show' => 'Көргүзер',
-	'wikistats_search_text' => 'Дилээшкин',
 );
 
 /** Central Atlas Tamazight (ⵜⴰⵎⴰⵣⵉⵖⵜ)
@@ -9800,8 +9790,6 @@ $messages['zh-hans'] = array(
 	'wikistats_visits' => '访问',
 	'wikistats_official' => '官方',
 	'wikistats_total' => '总共',
-	'wikistats_new' => '新',
-	'wikistats_more_txt' => '更多',
 	'wikistats_now' => '现在',
 	'wikistats_wikilang' => '语言：',
 	'wikistats_current_dump_stats' => '当前',
@@ -9814,7 +9802,6 @@ $messages['zh-hans'] = array(
 	'wikistats_blog_comment' => '博客评论',
 	'wikistats_photo_new' => '新照片',
 	'wikistats_article_daily' => '编辑/日',
-	'wikistats_userns' => '用户',
 	'wikistats_nbr_kilo' => 'K = x 1000',
 	'wikistats_nbr_mega' => 'M = K x 1000',
 	'wikistats_nbr_giga' => 'G = M x 1000',

@@ -169,14 +169,6 @@ $messages['ja'] = array(
 	'signup' => 'Signup',
 );
 
-/** Korean (한국어)
- * @author 아라
- */
-$messages['ko'] = array(
-	'signup-desc' => '[[{{#Special:UserLogin}}/signup]]을 위한 [[{{#Special:Signup}}]] 별칭을 추가합니다',
-	'signup' => '가입하기',
-);
-
 /** Colognian (Ripoarisch)
  * @author Purodha
  */

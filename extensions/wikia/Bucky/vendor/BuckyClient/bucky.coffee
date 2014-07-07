@@ -64,16 +64,6 @@ exportDef = ->
     # Set to false to disable sends (in dev mode for example)
     active: true
 
-    # Protocol version to use:
-    # 1 - POST .../v1/send
-    #    with metrics in POST data (one metric per line, graphite/statsd format)
-    # 2 - POST .../v2/send?p=...
-    #    with metrics encoded in JSON in the "p" parameter
-    protocol: 1
-
-    # Request context (will be send along all data reports in v2 API)
-    context: {}
-
   tagOptions = {}
   if not isServer
     $tag = document.querySelector?('[data-bucky-host],[data-bucky-page],[data-bucky-requests]')
@@ -201,30 +191,15 @@ exportDef = ->
     # by updateLatency.
     req.bucky = {track: false}
 
-    if options.protocol isnt 2
-      req.open 'POST', "#{ options.host }/v1/send", true
+    req.open 'POST', "#{ options.host }/v1/send", true
 
-      req.setRequestHeader 'Content-Type', 'text/plain'
+    req.setRequestHeader 'Content-Type', 'text/plain'
 
-      req.addEventListener 'load', ->
-        updateLatency(now() - sendStart)
-      , false
+    req.addEventListener 'load', ->
+      updateLatency(now() - sendStart)
+    , false
 
-      req.send body
-    else
-      all_data = extend {}, options.context, data
-      all_data = JSON?.stringify?(all_data)
-
-      if all_data? and (typeof all_data != 'undefined')
-        req.open 'POST', "#{ options.host }/v2/send?p=#{ all_data }", true
-
-        req.setRequestHeader 'Content-Type', 'text/plain'
-
-        req.addEventListener 'load', ->
-          updateLatency(now() - sendStart)
-        , false
-
-        req.send()
+    req.send body
 
     req
 
@@ -249,13 +224,10 @@ exportDef = ->
       if point.type in ['gauge', 'timer']
         value = round(value)
 
-      if options.protocol isnt 2
-        out[key] = "#{ value }|#{ TYPE_MAP[point.type] }"
+      out[key] = "#{ value }|#{ TYPE_MAP[point.type] }"
 
-        if point.count isnt 1
-          out[key] += "@#{ round(1 / point.count, 5) }"
-      else
-        out[key] = value
+      if point.count isnt 1
+        out[key] += "@#{ round(1 / point.count, 5) }"
 
     makeRequest out
 
@@ -411,10 +383,7 @@ exportDef = ->
 
       start = window.performance.timing.navigationStart
       for key, time of window.performance.timing when time and typeof time is 'number'
-        if options.protocol isnt 2
-          timer.send "#{ path }.#{ key }", (time - start)
-        else
-          timer.send key, (time - start)
+        timer.send "#{ path }.#{ key }", (time - start)
 
       return true
 

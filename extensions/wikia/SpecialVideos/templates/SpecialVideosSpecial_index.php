@@ -52,6 +52,7 @@
 					<span class="views"><?= $video['viewTotal'] ?></span>
 				</p>
 				<div class="posted-in">
+					<a class="ellipses" href="<?= $video['seeMoreLink'] ?>"><?= wfMessage('lvs-posted-in-more')->plain() ?></a>
 					<? if ( count($video['truncatedList']) ): ?>
 						<?= wfMessage('specialvideos-posted-in-label')->plain() ?>
 						<ul>

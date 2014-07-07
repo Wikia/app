@@ -10,8 +10,6 @@
 		<script src="../../../lib/jsdifflib/diffview.js"></script>
 		<script src="../../../lib/jsdifflib/difflib.js"></script>
 		<script src="../../../lib/qunit/qunit.js"></script>
-		<script src="../../../../../../../resources/wikia/libraries/jquery/throttle-debounce/jquery.throttle-debounce.js"></script>
-
 
 		<!-- No need for VisualEditor styles here -->
 	</head>

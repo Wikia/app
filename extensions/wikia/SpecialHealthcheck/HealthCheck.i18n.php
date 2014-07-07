@@ -322,15 +322,7 @@ $messages['vi'] = array(
 
 /** Simplified Chinese (中文（简体）‎)
  * @author Hydra
- * @author Liuxinyu970226
  */
 $messages['zh-hans'] = array(
-	'healthcheck-desc' => '用于服务器状态检查的[[Special:HealthCheck|特殊页面]]',
-);
-
-/** Traditional Chinese (中文（繁體）‎)
- * @author Cwlin0416
- */
-$messages['zh-hant'] = array(
-	'healthcheck-desc' => '用來檢查伺服器狀態的 [[Special:HealthCheck|特殊頁面]]',
+	'healthcheck-desc' => '[[Special:HealthCheck|特页]]服务器状态检查',
 );

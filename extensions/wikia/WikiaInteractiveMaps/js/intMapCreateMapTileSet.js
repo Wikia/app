@@ -13,18 +13,20 @@ define(
 			// mustache template
 			uiTemplate,
 			tileSetThumbTemplate,
+			// chosen map
+			mapTypeChosen,
 			// template data
 			templateData = {
 				chooseTypeTip: $.msg('wikia-interactive-maps-create-map-choose-type-tip'),
 				chooseTypeTipLink: $.msg('wikia-interactive-maps-create-map-choose-type-tip-link'),
 				mapType: [
 					{
-						type: 'geo',
+						type: utils.tilesetTypes.REAL,
 						name: $.msg('wikia-interactive-maps-create-map-choose-type-geo'),
 						event: 'selectTileSet'
 					},
 					{
-						type: 'custom',
+						type: utils.tilesetTypes.CUSTOM,
 						name: $.msg('wikia-interactive-maps-create-map-choose-type-custom'),
 						event: 'browseTileSets'
 					}
@@ -38,22 +40,31 @@ define(
 			//modal events
 			events = {
 				chooseTileSet: [
-					chooseTileSet
+					chooseTileSet,
+					function() {
+						mapTypeChosen = utils.tilesetTypes.REAL;
+					}
 				],
 				browseTileSets: [
 					function() {
 						showStep('browseTileSet');
+					},
+					function() {
+						mapTypeChosen = utils.tilesetTypes.CUSTOM;
 					}
 				],
 				clearSearch: [
 					loadDefaultTileSets
 				],
 				selectTileSet: [
-					selectTileSet
+					selectTileSet,
+					function() {
+						trackChosenMap(mapTypeChosen);
+					}
 				],
 				uploadTileSetImage: [
 					function() {
-						$uploadInput.click()
+						$uploadInput.click();
 					}
 				],
 				previousStep: [
@@ -173,7 +184,6 @@ define(
 		function previousStep() {
 			// removes current step from stack
 			stepsStack.pop();
-
 			showStep(stepsStack.pop());
 		}
 
@@ -343,6 +353,16 @@ define(
 				data.type = 'custom';
 				modal.trigger('previewTileSet', data);
 			});
+		}
+
+		/**
+		 * @desc Sends to GA what map type was chosen
+		 *
+		 * @param {string} type
+		 */
+		function trackChosenMap(type) {
+			var label = type + '-map-chosen';
+			utils.track(utils.trackerActions.CLICK_LINK_IMAGE, label);
 		}
 
 		return {

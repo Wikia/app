@@ -7,28 +7,25 @@ define('lvs.suggestions', [], function () {
 	'use strict';
 
 	function init($container) {
-		var $suggestions = $container.find('.more-videos');
-		$suggestions.find('.title a').ellipses();
-		updateSizeClass($suggestions);
-		setActiveLi($suggestions, 0);
-	}
+		$container.find('.suggestion-title').ellipses();
 
-	/**
-	 * @param {jQuery} $elem container for list elements to be set active
-	 * @param {number} idx index of LI in list
-	 */
-	function setActiveLi($elem, idx) {
-		$elem.find('li').eq(idx).addClass('selected');
-	}
+		$container
+			.off('click.lvsSuggestions')
+			.on('click.lvsSuggestions', '.more-link', function (e) {
+				e.preventDefault();
+				var $this = $(this),
+					$toggleDiv = $this.parent().next('.more-videos');
 
-	/**
-	 * Suggested thumbnails come back from LVS script as large - set them to small
-	 * @param {jQuery} $elem
-	 */
-	function updateSizeClass($elem) {
-		$elem.find('.large').each(function () {
-			$(this).removeClass('large').addClass('small');
-		});
+				if ($this.hasClass('collapsed')) {
+					// Show suggestions
+					$this.removeClass('collapsed');
+					$toggleDiv.slideDown();
+				} else {
+					// Hide suggestions
+					$this.addClass('collapsed');
+					$toggleDiv.slideUp();
+				}
+			});
 	}
 
 	return {

@@ -937,26 +937,14 @@ class LinksUpdate {
 
 		foreach ( $changed as $name => $value ) {
 			if ( isset( $wgPagePropLinkInvalidations[$name] ) ) {
-				// Wikia change begin @author Scott Rabin (srabin@wikia-inc.com)
-				if ( TaskRunner::isModern('HTMLCacheUpdate') ) {
-					global $wgCityId;
-
-					$task = ( new \Wikia\Tasks\Tasks\HTMLCacheUpdateTask() )
-						->wikiId( $wgCityId )
-						->title( $this->mTitle );
-					$task->call( 'purge', $wgPagePropLinkInvalidations[$name] );
-					$task->queue();
-				} else {
-					$inv = $wgPagePropLinkInvalidations[$name];
-					if ( !is_array( $inv ) ) {
-						$inv = array( $inv );
-					}
-					foreach ( $inv as $table ) {
-						$update = new HTMLCacheUpdate( $this->mTitle, $table );
-						$update->doUpdate();
-					}
+				$inv = $wgPagePropLinkInvalidations[$name];
+				if ( !is_array( $inv ) ) {
+					$inv = array( $inv );
 				}
-				// Wikia change end
+				foreach ( $inv as $table ) {
+					$update = new HTMLCacheUpdate( $this->mTitle, $table );
+					$update->doUpdate();
+				}
 			}
 		}
 	}

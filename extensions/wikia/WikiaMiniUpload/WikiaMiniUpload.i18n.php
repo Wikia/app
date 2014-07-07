@@ -994,14 +994,14 @@ $messages['diq'] = array(
 	'wmu-next' => "8'ê peyêni",
 	'wmu-success-placeholder' => '<h1>Muaffaq</h1>',
 	'wmu-back' => 'Peyser',
-	'wmu-imagebutton' => 'Resım cı ke',
+	'wmu-imagebutton' => 'Resım deke',
 	'wmu-hide-license-msg' => 'nuşteya lisansi bınımne',
 	'wmu-show-license-msg' => 'nuşteyê lisansi bımocne',
 	'wmu-placeholder' => 'Cayê tepıstışi',
 	'wmu-gallery' => 'Galeriye',
 	'wmu-columns' => '$1 {{PLURAL:$1|Estûn|Estûni}}',
 	'wmu-column' => 'Estûni',
-	'wmu-gallery-btn1' => 'Zewbina resım cı ke',
+	'wmu-gallery-btn1' => 'Ju na dosya deke',
 	'wmu-alignment' => 'Hiza fi',
 );
 
@@ -3117,13 +3117,6 @@ $messages['tt-cyrl'] = array(
 	'wmu-filetype-incorrect' => 'Бу йөкләмәнең файл киңәйтелмәсе дөрес түгел.',
 	'wmu-hide-license-msg' => 'лицензия текстын күрсәтергә',
 	'wmu-show-license-msg' => 'лицензия текстын яшерергә',
-);
-
-/** Tuvinian (тыва дыл)
- * @author Agilight
- */
-$messages['tyv'] = array(
-	'wmu-find' => 'Диле',
 );
 
 /** Ukrainian (українська)

@@ -31,7 +31,7 @@ ve.ui.WikiaMediaPageWidget = function VeUiWikiaMediaPageWidget( model, config ) 
 	this.model = model;
 	this.removeButton = new OO.ui.ButtonWidget( {
 		'$': this.$,
-		'flags': ['destructive', 'secondary'],
+		'flags': ['destructive'],
 		'label': ve.msg( 'wikia-visualeditor-dialog-wikiamediainsert-item-remove-button' )
 	} );
 	this.title = new OO.ui.TextInputWidget( {

@@ -5,7 +5,7 @@
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
-/* global mw, confirm, alert, _kiq, veTrack */
+/* global mw, confirm, alert */
 
 /**
  * Initialization MediaWiki view page target.
@@ -1047,10 +1047,7 @@ ve.init.mw.ViewPageTarget.prototype.setupSectionEditLinks = null;
  * @method
  */
 ve.init.mw.ViewPageTarget.prototype.setupToolbarButtons = function () {
-	this.toolbarCancelButton = new OO.ui.ButtonWidget( {
-		'label': ve.msg( 'visualeditor-toolbar-cancel' ),
-		'flags': ['secondary']
-	} );
+	this.toolbarCancelButton = new OO.ui.ButtonWidget( { 'label': ve.msg( 'visualeditor-toolbar-cancel' ) } );
 	this.toolbarCancelButton.$element.addClass( 've-ui-toolbar-cancelButton' );
 	this.toolbarSaveButton = new OO.ui.ButtonWidget( {
 		'label': ve.msg( 'wikia-visualeditor-toolbar-savedialog' ),
@@ -1458,11 +1455,9 @@ ve.init.mw.ViewPageTarget.prototype.onWindowPopState = function ( e ) {
 		this.actFromPopState = true;
 		this.deactivate();
 		// Trigger Qualaroo survey for anonymous users abandoning edit
-		/*jslint nomen: true*/
 		if ( mw.user.anonymous() && window._kiq ) {
 			_kiq.push( ['set', { 'event': 'abandon_ve_back' } ] );
 		}
-		/*jslint nomen: false*/
 	}
 };
 

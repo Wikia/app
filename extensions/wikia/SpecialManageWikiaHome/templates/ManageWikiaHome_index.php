@@ -43,6 +43,8 @@
 				<div class="hub-slot">
 					<h3><?= wfMessage('manage-wikia-home-hubs-slot', ($i + 1))->plain() ?></h3>
 					<?= $hubsForm->renderField('hub_slot', $i); ?>
+					<?= $hubsForm->renderField('hub_slot_desc', $i); ?>
+					<?= $hubsForm->renderField('hub_slot_more_links', $i); ?>
 				</div>
 			<? endfor ?>
 			<br />

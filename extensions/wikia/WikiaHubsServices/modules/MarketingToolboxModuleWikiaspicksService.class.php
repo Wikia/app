@@ -139,7 +139,7 @@ class MarketingToolboxModuleWikiaspicksService extends MarketingToolboxModuleEdi
 		
 		$structuredData['title'] = $data['moduleTitle'];
 		$structuredData['text'] = $data['text'];
-		$structuredData['photoName'] = isset($data['fileName']) ? $data['fileName'] : '';
+		$structuredData['photoName'] = $data['fileName'];
 		
 		return $structuredData;
 	}

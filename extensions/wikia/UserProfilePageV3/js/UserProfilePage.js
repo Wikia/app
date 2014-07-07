@@ -44,7 +44,7 @@ var UserProfilePage = {
 
 		// for touch devices (without hover state) make sure that Edit is always
 		// visible
-		if ( Wikia.isTouchScreen() ) {
+		if ( $().isTouchscreen() ) {
 			$userIdentityBoxEdit.show();
 		}
 	},

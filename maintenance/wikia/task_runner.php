@@ -1,6 +1,5 @@
 <?php
 set_time_limit(0);
-$wgCommandLineSilentMode = true; // suppress output from Wikia::log calls
 $options = ['help'];
 $optionsWithArgs = [
 	'task_id',
@@ -9,10 +8,6 @@ $optionsWithArgs = [
 	'created_by',
 ];
 require_once(__DIR__."/../commandLine.inc");
-
-\Wikia\Logger\WikiaLogger::instance()->pushContext([
-	'task_id' => $options['task_id']
-]);
 
 $runner = new TaskRunner($options['task_id'], $options['task_list'], $options['call_order'], $options['created_by']);
 

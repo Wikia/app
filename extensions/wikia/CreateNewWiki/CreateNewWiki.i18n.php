@@ -737,7 +737,7 @@ $messages['de-formal'] = array(
  */
 $messages['diq'] = array(
 	'createnewwiki-desc' => 'Wikiyo newe vırazdar', # Fuzzy
-	'cnw-next' => 'Bahdoyên',
+	'cnw-next' => 'Ver şo',
 	'cnw-back' => 'Peyser',
 	'cnw-or' => 'ya na',
 	'cnw-title' => 'Wikiyo newe vıraze',
@@ -1110,7 +1110,7 @@ $messages['gl'] = array(
 	'cnw-auth-facebook-signup' => 'Rexístrese co Facebook',
 	'cnw-auth-facebook-login' => 'Acceda co Facebook',
 	'cnw-userauth-headline' => 'Ten unha conta?',
-	'cnw-userauth-creative' => 'Acceder ao sistema',
+	'cnw-userauth-creative' => 'Acceda ao sistema',
 	'cnw-userauth-marketing-heading' => 'Non está rexistrado?',
 	'cnw-userauth-marketing-body' => 'Necesita unha conta para crear un wiki en Wikia. Leva un minuto rexistrarse!',
 	'cnw-userauth-signup-button' => 'Rexístrese',
@@ -1641,11 +1641,9 @@ $messages['ko'] = array(
 	'cnw-or' => '또는',
 	'cnw-title' => '새 위키 만들기',
 	'cnw-name-wiki-headline' => '위키 시작하기',
-	'cnw-name-wiki-creative' => '위키아는 당신이 사랑하는 것의 웹사이트를 세우고 공동체를 자라게 하는 데 최적의 장소입니다.',
 	'cnw-name-wiki-label' => '위키 이름을 입력하세요',
 	'cnw-name-wiki-wiki' => '위키',
 	'cnw-name-wiki-domain-label' => '위키 주소를 입력하세요',
-	'cnw-name-wiki-submit-error' => '이런! 계속하려면 위 상자를 모두 채워야 합니다.',
 	'cnw-login' => '로그인',
 	'cnw-signup' => '계정 만들기',
 	'cnw-signup-prompt' => '계정이 필요합니까?',
@@ -1654,50 +1652,28 @@ $messages['ko'] = array(
 	'cnw-call-to-login' => '여기서 로그인하세요',
 	'cnw-auth-headline' => '로그인',
 	'cnw-auth-headline2' => '가입하기',
-	'cnw-auth-creative' => '위키를 세우기를 계속하려면 당신의 계정으로 로그인하세요.',
-	'cnw-auth-signup-creative' => '위키를 세우기를 계속하려면 계정이 필요합니다.<br />가입하는 데에는 1분 정도만 걸립니다!',
 	'cnw-auth-facebook-signup' => '페이스북으로 가입',
 	'cnw-auth-facebook-login' => '페이스북으로 로그인',
 	'cnw-userauth-headline' => '계정이 있나요?',
 	'cnw-userauth-creative' => '로그인',
 	'cnw-userauth-marketing-heading' => '계정이 없나요?',
-	'cnw-userauth-marketing-body' => '위키아에 위키를 만드려면 계정이 필요합니다. 가입하는 데에는 1분 정도만 걸립니다!',
 	'cnw-userauth-signup-button' => '가입하기',
 	'cnw-desc-headline' => '어떤 위키를 만들겠습니까?',
 	'cnw-desc-creative' => '주제에 대한 설명',
-	'cnw-desc-placeholder' => '이것은 위키의 대문에 나타납니다.',
 	'cnw-desc-tip1' => '힌트',
-	'cnw-desc-tip1-creative' => '위키에 대해 한 두 문장 정도로 사람들에게 말하려면 이 공간을 사용하세요',
 	'cnw-desc-tip2' => '잠깐',
-	'cnw-desc-tip2-creative' => '방문자에게 주제에 대해 몇 가지 구체적인 내용을 주세요',
 	'cnw-desc-tip3' => '전문 팁',
-	'cnw-desc-tip3-creative' => '사람들이 위키에 문서를 편집하고 추가하여 자라는 것을 도울 수 있도록 알게 해주세요',
 	'cnw-desc-choose' => '분류를 선택하세요',
 	'cnw-desc-select-one' => '하나 선택',
-	'cnw-desc-all-ages' => '모든 연령',
 	'cnw-desc-default-lang' => '위키 언어는 $1입니다',
 	'cnw-desc-change-lang' => '바꾸기',
 	'cnw-desc-lang' => '언어',
 	'cnw-desc-wiki-submit-error' => '분류를 선택하세요',
 	'cnw-theme-headline' => '테마 선택',
-	'cnw-theme-creative' => '아래 테마를 선택하면, 선택한 각 테마의 미리 보기를 볼 수 있습니다.',
-	'cnw-theme-instruction' => '"내 도구"로 하고 나서 자신의 테마를 디자인할 수도 있습니다.',
 	'cnw-welcome-headline' => '축하합니다! $1(을)를 만들었습니다',
-	'cnw-welcome-instruction1' => '위키에 문서를 추가하기 시작하려면 아래 버튼을 클릭하세요.',
 	'cnw-error-general-heading' => '사과드립니다',
-	'cnw-badword-header' => '우와',
-	'cnw-badword-msg' => '안녕하세요, 위키 설명에 잘못된 낱말이나 금지된 낱말을 사용하지 말아주세요: $1',
 	'cnw-error-wiki-limit-header' => '위키 제한에 도달함',
-	'cnw-error-wiki-limit' => '안녕하세요, 하루에 {{PLURAL:$1|위키 $1개 만들기}}가 제한됩니다. 다른 위키를 만들기 전에 24시간을 기다리세요.',
 	'cnw-error-blocked-header' => '계정이 차단됨',
-	'cnw-error-blocked' => '당신은 $1님에 의해 차단되었습니다. 주어진 이유는: $2입니다. (참고를 위한 차단 ID: $3)',
-	'cnw-error-anon-user-header' => '로그인하세요',
-	'cnw-error-anon-user' => '익명이 위키를 만드는 것은 비활성화되어 있습니다. [[Special:UserLogin|로그인]]하고 나서 다시 시도하세요.',
-	'cnw-error-torblock' => '토르 네트워크를 통해 위키를 만드는 것은 허용되지 않습니다.',
-	'cnw-error-bot' => '우리는 당신이 로봇일 수 있는 것을 감지했습니다. 만약 우리가 실수했다면, 당신이 봇으로 틀리게 감지했음을 우리에게 문의하면, 우리는 위키를 만드는 것을 도울 것입니다: [http://www.wikia.com/Special:Contact/general 문의하기]',
-	'cnw-error-bot-header' => '당신은 봇으로 감지되었습니다',
-	'cnw-error-unconfirmed-email-header' => '이메일이 확인되지 않았습니다',
-	'cnw-error-unconfirmed-email' => '위키를 만들려면 이메일을 확인해야 합니다.',
 );
 
 /** Karachay-Balkar (къарачай-малкъар)
@@ -2773,22 +2749,15 @@ $messages['ru'] = array(
 	'cnw-error-unconfirmed-email' => 'Ваш адрес электронной почты должен быть подтверждён для создания Вики.',
 );
 
-/** Sicilian (sicilianu)
- * @author Gmelfi
- */
-$messages['scn'] = array(
-	'cnw-userauth-creative' => 'Trasi',
-);
-
 /** Scots (Scots)
  * @author John Reid
  */
 $messages['sco'] = array(
-	'createnewwiki-desc' => 'Wiki creaution worlock',
+	'createnewwiki-desc' => 'Wiki cræftin worlock',
 	'cnw-next' => 'Nex',
 	'cnw-back' => 'Back',
 	'cnw-or' => 'or',
-	'cnw-title' => 'Creaut New Wiki',
+	'cnw-title' => 'Cræft New Wiki',
 	'cnw-name-wiki-headline' => 'Stairt ae Wiki',
 	'cnw-name-wiki-creative' => 'Wikia is the best steid tae big a wabsteid n graw ae communitie aroond whit ye luve.',
 	'cnw-name-wiki-label' => 'Name yer wiki',
@@ -2796,7 +2765,7 @@ $messages['sco'] = array(
 	'cnw-name-wiki-domain-label' => 'Gie yer wiki aen address',
 	'cnw-name-wiki-submit-error' => 'Oops! Ye need tae fill in baith o the kists abuin tae keep gaun.',
 	'cnw-login' => 'Log In',
-	'cnw-signup' => 'Creaut Accoont',
+	'cnw-signup' => 'Cræft Accoont',
 	'cnw-signup-prompt' => 'Need aen accoont?',
 	'cnw-call-to-signup' => 'Sign up here',
 	'cnw-login-prompt' => 'Awreadie hae aen accoont?',
@@ -2810,7 +2779,7 @@ $messages['sco'] = array(
 	'cnw-userauth-headline' => 'Hae aen accoont?',
 	'cnw-userauth-creative' => 'Log in',
 	'cnw-userauth-marketing-heading' => 'Dinna hae aen accoont?',
-	'cnw-userauth-marketing-body' => 'Ye need aen accoont tae creaut ae wiki oan Wikia. It yinlie taks ae minute tae sign up!',
+	'cnw-userauth-marketing-body' => 'Ye need aen accoont tae cræft ae wiki oan Wikia. It yinlie taks ae minute tae sign up!',
 	'cnw-userauth-signup-button' => 'Sign up',
 	'cnw-desc-headline' => "Whit's yer wiki aneat?",
 	'cnw-desc-creative' => 'Describe yer tapíc',
@@ -2820,20 +2789,20 @@ $messages['sco'] = array(
 	'cnw-desc-tip2' => 'Psst',
 	'cnw-desc-tip2-creative' => 'Gie yer veesiters some speceefic details aneat yer subject',
 	'cnw-desc-tip3' => 'Pro Tip',
-	'cnw-desc-tip3-creative' => 'Lat fawk ken that thay can heelp yer wiki graw bi eeditin n eikin pages',
+	'cnw-desc-tip3-creative' => 'Lat fawk ken that thay can heelp yer wiki graw bi eeditin n addin pages',
 	'cnw-desc-choose' => 'Chuise ae categerie',
 	'cnw-desc-select-one' => 'Select yin',
 	'cnw-desc-all-ages' => 'Aw ages',
-	'cnw-desc-tip-all-ages' => 'Is this wiki aneat ae tapíc that bairns ar interested in? In order tae heelp us complie wi US law we keep track o wikis aneat tapícs that directlie appeal tae bairns 12 year auld n unner.',
+	'cnw-desc-tip-all-ages' => 'Is this wiki aneat ae tapíc that bairns ar interested in? In order tae heelp us complie wi US law we keep track o wikis aneat tapícs that directlie appeal til bairns 12 n unner.',
 	'cnw-desc-default-lang' => 'Yer wiki will be in $1',
 	'cnw-desc-change-lang' => 'chynge',
 	'cnw-desc-lang' => 'Leid',
 	'cnw-desc-wiki-submit-error' => 'Please chuise ae categerie',
 	'cnw-theme-headline' => 'Chuise ae theme',
 	'cnw-theme-creative' => "Chuise ae theme ablo, ye'll be able tae see ae luikower o ilka theme aes ye select it.",
-	'cnw-theme-instruction' => 'Forby, ye can design yer ain theme later bi gaun tae "Ma Tuils".',
-	'cnw-welcome-headline' => 'Weel Dun! $1 haes been creautit',
-	'cnw-welcome-instruction1' => 'Clap the button ablo tae stairt eikin pages tae yer wiki.',
+	'cnw-theme-instruction' => 'Ye can forby design yer ain theme later bi gaun til "Ma Tuils".',
+	'cnw-welcome-headline' => 'Weel Dun! $1 haes been cræftit',
+	'cnw-welcome-instruction1' => 'Clap the button ablo tae stairt addin pages til yer wiki.',
 	'cnw-welcome-instruction2' => "Ye'll see this button throoghoot yer wiki, uise it onie time that ye want tae eik ae new page.",
 	'cnw-welcome-help' => 'Fynd answers, advice, n mair oan <a href="http://community.wikia.com">Communitie Central</a>.',
 	'cnw-error-general' => 'Oops, sommit went wrang oan oor side!  Please gie it anither gae, or [[Special:Contact|contact us]] fer heelp.',
@@ -2841,16 +2810,16 @@ $messages['sco'] = array(
 	'cnw-badword-header' => 'Haud oan ae minute',
 	'cnw-badword-msg' => 'Hallo, please dinna uise thir bad wairds or banned wairds in yer Wiki Descreeption: $1',
 	'cnw-error-wiki-limit-header' => 'Wiki leemit reached',
-	'cnw-error-wiki-limit' => "Hallo, ye'r leemitit tae {{PLURAL:$1|$1 wiki creaution|$1 wiki creautions}} ae day. Wait 24 hoors afore creautin anither wiki.",
+	'cnw-error-wiki-limit' => "Hallo, ye'r leemitit til {{PLURAL:$1|$1 wiki cræftin|$1 wiki cræftins}} ae day. Wait 24 hoors afore cræftin anither wiki.",
 	'cnw-error-blocked-header' => 'Accoont blockit',
 	'cnw-error-blocked' => "Ye'v been blockit bi $1. The raison gien wis: $2. (Block ID fer referance: $3)",
 	'cnw-error-anon-user-header' => 'Please log in',
-	'cnw-error-anon-user' => 'Creautin wikis fer anons is disabled. Please [[Special:UserLogin|log in]] n gie it anither gae.',
-	'cnw-error-torblock' => 'Creautin wikis bi wa o the Tor Network is no alloued.',
-	'cnw-error-bot' => "We'v detectit that ye micht be ae bot. Gif we'v makit ae mistak, please contact us descreebin that ye'v been wranglie detectit aes ae bot, n we will heelp ye tae creaut yer wiki: [http://www.wikia.com/Special:Contact/general Contact Us]",
+	'cnw-error-anon-user' => 'Cræftin wikis fer anons is disabled. Please [[Special:UserLogin|log in]] n gie it anither gae.',
+	'cnw-error-torblock' => 'Cræftin wikis bi wa o the Tor Network isna permitit.',
+	'cnw-error-bot' => "We'v detectit that ye micht be ae bot. Gif we makit ae mistak, please contact us descreebin that ye'v been wranglie detectit aes ae bot, n we will heelp ye tae cræft yer wiki: [http://www.wikia.com/Special:Contact/general Contact Us]",
 	'cnw-error-bot-header' => "Ye'v been detectit aes ae bot",
-	'cnw-error-unconfirmed-email-header' => 'Yer e-mail haes no been confirmed',
-	'cnw-error-unconfirmed-email' => 'Yer e-mail shid be confirmed tae creaut ae Wiki.',
+	'cnw-error-unconfirmed-email-header' => 'Yer Wab-mail haesna been confirmed',
+	'cnw-error-unconfirmed-email' => 'Yer wab-mail shid be confirmed tae cræft ae Wiki.',
 );
 
 /** Slovenian (slovenščina)
@@ -3083,7 +3052,6 @@ $messages['te'] = array(
 
 /** Tagalog (Tagalog)
  * @author AnakngAraw
- * @author Jojit fb
  */
 $messages['tl'] = array(
 	'createnewwiki-desc' => 'Madyikerong panlikha ng Wiki',
@@ -3110,7 +3078,7 @@ $messages['tl'] = array(
 	'cnw-auth-facebook-signup' => 'Magpatalang may Facebook',
 	'cnw-auth-facebook-login' => 'Lumagdang may Facebook',
 	'cnw-userauth-headline' => 'Mayroon nang akawnt?',
-	'cnw-userauth-creative' => 'Mag-login',
+	'cnw-userauth-creative' => 'Lumagda',
 	'cnw-userauth-marketing-heading' => 'Wala pang akawnt?',
 	'cnw-userauth-marketing-body' => 'Kailangan mo ang isang akawnt upang makalikha ng isang wiki sa Wikia. Gugugol lamang ito ng isang minuto upang makapagpatala!',
 	'cnw-userauth-signup-button' => 'Magpatala',

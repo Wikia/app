@@ -90,7 +90,11 @@ define('wikia.intMap.poiCategories',
 			params,
 			mapId,
 			mapUrl,
-			mode;
+			mode,
+			modalModes = {
+				CREATE: 'create',
+				EDIT: 'edit'
+			};
 
 		/**
 		 * @desc Entry point for modal
@@ -108,7 +112,7 @@ define('wikia.intMap.poiCategories',
 			poiCategoryTemplate = templates[1];
 			parentPoiCategoryTemplate = templates[2];
 
-			mode = params.mode || 'create';
+			mode = params.mode || modalModes.CREATE;
 			setModalMode();
 
 			setUpParentPoiCategories()
@@ -155,7 +159,7 @@ define('wikia.intMap.poiCategories',
 		function setModalMode() {
 			var title = createPoiCategoriesTitle;
 
-			if (mode === 'edit') {
+			if (mode === modalModes.EDIT) {
 				title = editPoiCategoriesTitle;
 			}
 
@@ -375,13 +379,14 @@ define('wikia.intMap.poiCategories',
 				format: 'json',
 				data: data,
 				callback: function(response) {
-					var data = response.results;
+					var results = response.results;
 
-					if (data && data.success) {
+					if (results && results.success) {
 						utils.cleanUpError(modal);
-						modal.trigger('poiCategoriesCreated', data.content);
+						modal.trigger('poiCategoriesCreated', results.content);
+						trackPoiCategoryActions(data);
 					} else {
-						utils.showError(modal, data.content.message);
+						utils.showError(modal, results.content.message);
 						modal.activate();
 					}
 				},
@@ -403,7 +408,7 @@ define('wikia.intMap.poiCategories',
 		 * @desc send callback to ponto and close modal
 		 */
 		function poiCategoriesCreated() {
-			if (mode === 'edit') {
+			if (mode === modalModes.EDIT) {
 				if (typeof trigger === 'function') {
 					trigger();
 				}
@@ -411,6 +416,15 @@ define('wikia.intMap.poiCategories',
 			} else {
 				qs(mapUrl).goTo();
 			}
+		}
+
+		/**
+		 * @desc Sends to GA tracking once a POI category data has been sent to the service
+		 *
+		 * @param {object} data
+		 */
+		function trackPoiCategoryActions(data) {
+			utils.track(utils.trackerActions.IMPRESSION, 'poi-category-' + mode, data.mapId);
 		}
 
 		return {

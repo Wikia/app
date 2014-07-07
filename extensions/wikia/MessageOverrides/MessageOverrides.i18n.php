@@ -34721,8 +34721,6 @@ Forum:Help_desk|User Support Forums',
 	'multidelete-task-added' => 'Multi delete task #$1 was added.<br>
 View tasks at [[Special:TaskManager]]<br>
 Return to [[Special:MultiDelete]]',
-	'multi_task_added_delete' => 'Multi delete task #<a href="/wiki/Special:Tasks/log?id=$1">$1</a> was added.',
-	'multi_task_added_edit' => 'Multi edit task #<a href="/wiki/Special:Tasks/log?id=$1">$1</a> was added.',
 	'multidelete_task_added' => 'Multi delete task #<a href="http://central.wikia.com/index.php?title=Special:TaskManager&action=log&offset=0&id=$1">$1</a> was added.',
 	'multipleupload' => 'Upload multiple photos',
 	'multipleupload-text' => '<div style="" class="emptymwmsg mediawiki_multipleupload-text"></div>',

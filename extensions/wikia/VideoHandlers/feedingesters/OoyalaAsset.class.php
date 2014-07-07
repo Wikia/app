@@ -61,7 +61,7 @@ class OoyalaAsset extends WikiaModel {
 	 * @param string $videoId
 	 * @return array|false $result
 	 */
-	public static function getAssetById( $videoId ) {
+	public function getAssetById( $videoId ) {
 		wfProfileIn( __METHOD__ );
 
 		$method = 'GET';
@@ -86,7 +86,7 @@ class OoyalaAsset extends WikiaModel {
 	 * @param int $max
 	 * @return array $assets
 	 */
-	public static function getAssetsBySourceId( $sourceId, $source, $assetType = 'remote_asset', $max = 3 ) {
+	public function getAssetsBySourceId( $sourceId, $source, $assetType = 'remote_asset', $max = 3 ) {
 		wfProfileIn( __METHOD__ );
 
 		$cond = [
@@ -119,7 +119,7 @@ class OoyalaAsset extends WikiaModel {
 	 * Get labels for all providers
 	 * @return array|false $providers
 	 */
-	public static function getApiLabelsProviders() {
+	public function getApiLabelsProviders() {
 		wfProfileIn( __METHOD__ );
 
 		$method = 'GET';
@@ -152,12 +152,12 @@ class OoyalaAsset extends WikiaModel {
 	 * @param string $labelName - name of the label
 	 * @return string|false $labelId
 	 */
-	public static function getLabelId( $labelName ) {
+	public function getLabelId( $labelName ) {
 		wfProfileIn( __METHOD__ );
 
 		$labelId = false;
 
-		$labels = self::getApiLabelsProviders();
+		$labels = $this->getApiLabelsProviders();
 		if ( $labels == false ) {
 			wfProfileOut( __METHOD__ );
 			return $labelId;
@@ -301,7 +301,7 @@ class OoyalaAsset extends WikiaModel {
 			$meta = json_decode( $req->getContent(), true );
 			$resp = true;
 
-			print( "Ooyala: Added Metadata for $videoId: \n" );
+			print( "Ooyala: Updated Metadata for $videoId: \n" );
 			foreach( explode( "\n", var_export( $meta, true ) ) as $line ) {
 				print ":: $line\n";
 			}
@@ -322,22 +322,13 @@ class OoyalaAsset extends WikiaModel {
 	 * @return boolean $resp
 	 */
 	public static function updateMetadata( $videoId, $metadata ) {
-		$reqPath = '/v2/assets/'.$videoId.'/metadata';
-		return self::updateAsset( $videoId, $metadata, $reqPath );
-	}
-
-	/**
-	 * Send request to Ooyala to update asset
-	 * @param string $videoId
-	 * @param array $params
-	 * @return boolean $resp
-	 */
-	public static function updateAsset( $videoId, $params, $reqPath ) {
 		$method = 'PATCH';
-		$reqBody = json_encode( $params );
+		$reqPath = '/v2/assets/'.$videoId.'/metadata';
+
+		$reqBody = json_encode( $metadata );
 
 		$url = OoyalaApiWrapper::getApi( $method, $reqPath, array(), $reqBody );
-		echo "\tRequest to update asset: $url\n";
+		echo "\tRequest to update metadata: $url\n";
 
 		$options = [
 			'method'   => $method,
@@ -351,28 +342,16 @@ class OoyalaAsset extends WikiaModel {
 			$meta = json_decode( $req->getContent(), true );
 			$resp = true;
 
-			echo "\tUpdated Asset for $videoId: \n";
+			echo "\tUpdated Metadata for $videoId: \n";
 			foreach( explode( "\n", var_export( $meta, true ) ) as $line ) {
 				echo "\t\t:: $line\n";
 			}
 		} else {
 			$resp = false;
-			echo "\tERROR: problem updating asset (".$status->getMessage().").\n";
+			echo "\tERROR: problem updating metadata (".$status->getMessage().").\n";
 		}
 
 		return $resp;
-	}
-
-	/**
-	 * Send request to Ooyala to update urls for remote asset
-	 * @param string $videoId
-	 * @param array $urls
-	 * @return boolean $resp
-	 */
-	public static function updateRemoteAssetUrls( $videoId, $urls ) {
-		$reqPath = '/v2/assets/'.$videoId;
-		$params['stream_urls'] = $urls;
-		return self::updateAsset( $videoId, $params, $reqPath );
 	}
 
 	/**
@@ -420,9 +399,6 @@ class OoyalaAsset extends WikiaModel {
 		}
 		if ( !empty( $data['expirationDate'] ) ) {
 			$metadata['expirationdate'] = $data['expirationDate'];
-		}
-		if ( !empty( $data['regionalRestrictions'] ) ) {
-			$metadata['regional_restrictions'] = $data['regionalRestrictions'];
 		}
 		if ( !empty( $data['keywords'] ) ) {
 			$metadata['keywords'] = $data['keywords'];
@@ -649,26 +625,6 @@ class OoyalaAsset extends WikiaModel {
 		if ( !empty( $data['ageRequired'] ) ) {
 			$resp = $this->setPlayer( $videoId, OoyalaVideoHandler::OOYALA_PLAYER_ID_AGEGATE );
 		}
-
-		wfProfileOut( __METHOD__ );
-
-		return $resp;
-	}
-
-	/**
-	 * Set ad set
-	 * @param string $videoId
-	 * @param string $adSet
-	 * @return boolean $resp
-	 */
-	public function setAdSet( $videoId, $adSet ) {
-		wfProfileIn( __METHOD__ );
-
-		$method = 'PUT';
-		$reqPath = '/v2/assets/'.$videoId.'/ad_set/'.$adSet;
-		$params = array();
-
-		$resp = $this->sendRequest( $method, $reqPath, $params );
 
 		wfProfileOut( __METHOD__ );
 

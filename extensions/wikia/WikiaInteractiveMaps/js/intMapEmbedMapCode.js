@@ -39,7 +39,8 @@ define('wikia-interactive-embed-map-code', ['jquery', 'wikia.intMap.utils'], fun
 			]
 		},
 		$codeSamples,
-		$sizeButtons;
+		$sizeButtons,
+		mapId;
 
 	/**
 	 * @desc Entry point for  modal
@@ -57,6 +58,7 @@ define('wikia-interactive-embed-map-code', ['jquery', 'wikia.intMap.utils'], fun
 
 			utils.bindEvents(modal, events);
 			modal.show();
+			utils.track(utils.trackerActions.IMPRESSION, 'embed-map-modal-shown', params.mapId);
 		});
 	}
 
@@ -77,5 +79,5 @@ define('wikia-interactive-embed-map-code', ['jquery', 'wikia.intMap.utils'], fun
 
 	return {
 		init: init
-	}
+	};
 });

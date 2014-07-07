@@ -380,6 +380,7 @@ while ( $row = $dbw->fetchObject($result) ) {
 		continue;
 	}
 
+	// check for title
 	if ( !isset( $metadata['canEmbed'] ) ) {
 		$skip++;
 		echo "...SKIPPED. (canEmbed field NOT found in metadata).\n";
@@ -420,8 +421,7 @@ while ( $row = $dbw->fetchObject($result) ) {
 		$dbw->begin();
 
 		// update database
-		$dbw->update(
-			'image',
+		$dbw->update( 'image',
 			array( 'img_metadata' => $serializedMeta ),
 			array( 'img_name' => $name ),
 			__METHOD__

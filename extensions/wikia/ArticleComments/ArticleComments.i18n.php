@@ -167,7 +167,6 @@ $messages['ang'] = array(
  * @author Claw eg
  * @author DRIHEM
  * @author Gagnabil
- * @author Kuwaity26
  * @author Meno25
  * @author OsamaK
  * @author ترجمان05
@@ -193,11 +192,11 @@ $messages['ar'] = array(
 	'article-comments-login' => 'الرجاء <a href="$1">تسجيل الدخول</a> لإضافة تعليق على هذا الويكي.',
 	'article-comments-toc-item' => 'تعليقات',
 	'article-comments-comment-cannot-add' => 'لا يمكنك إضافة تعليق إلى هذا المقال.',
-	'article-comments-vote' => 'التصويت بالإيجاب',
-	'article-comments-reply' => 'رد',
+	'article-comments-vote' => 'التصويت حتى',
+	'article-comments-reply' => 'الرد',
 	'article-comments-show-all' => 'إظهار كافة التعليقات',
-	'article-comments-prev-page' => 'السابق',
-	'article-comments-next-page' => 'التالي',
+	'article-comments-prev-page' => 'سابق',
+	'article-comments-next-page' => 'تالي',
 	'article-comments-page-spacer' => '&#160...&#160',
 	'article-comments-delete-reason' => 'تم حذف المقالة الأصلية / التعليق الأصلي.',
 	'article-comments-empty-comment' => "لا يمكنك إضافة تعليق فارغ. <a href='$1'>هل تريد حذفه بدلا من ذلك؟</a>",
@@ -483,9 +482,6 @@ $messages['bg'] = array(
  * @author Tauhid16
  */
 $messages['bn'] = array(
-	'article-comments-anonymous' => 'নামহীন ব্যবহারকারী',
-	'article-comments-comments' => 'মন্তব্যসমূহ ($1)',
-	'article-comments-post' => 'মন্তব্য প্রকাশ করুন',
 	'article-comments-cancel' => 'বাতিল',
 	'article-comments-delete' => 'অপসারণ',
 	'article-comments-edit' => 'সম্পাদনা',
@@ -942,7 +938,7 @@ Wikia', # Fuzzy
 $messages['diq'] = array(
 	'article-comments-anonymous' => 'Karbero bêname',
 	'article-comments-comments' => 'Vatışi ($1)',
-	'article-comments-post' => 'Mışewrey bıvurne',
+	'article-comments-post' => 'Mışewri bıvurne',
 	'article-comments-cancel' => 'Bıtexelne',
 	'article-comments-delete' => 'bestere',
 	'article-comments-edit' => 'bıvurne',
@@ -966,7 +962,7 @@ $messages['diq'] = array(
 	'wikiamobile-article-comments-replies' => 'cewabi',
 	'wikiamobile-article-comments-post-reply' => 'Yew cewab bırışe',
 	'wikiamobile-article-comments-post' => 'Bırışe',
-	'wikiamobile-article-comments-placeholder' => 'Mışewre bırışe',
+	'wikiamobile-article-comments-placeholder' => 'Mışewre bırşe',
 	'wikiamobile-article-comments-login-post' => 'Mışewre rıştışi rê şıma ra recay ma qeyd bê',
 	'enotif_body_article_comment-HTML' => '<p>Bırayo  $WATCHINGUSERNAME,
 <br /><br />
@@ -1734,11 +1730,9 @@ Wikia
 /** Indonesian (Bahasa Indonesia)
  * @author Aldnonymous
  * @author C5st4wr6ch
- * @author Riemogerz
  */
 $messages['id'] = array(
 	'article-comments-file-page' => "<a href='$1'>Komentar dari $2</a> pada <a href='$3'>$4</a>",
-	'article-blog-comments-file-page' => "<a href='$1'>Komentar dari $2</a> di <a href='$3'>$4</a> posting di <a href='$5'>$6</a> blog",
 	'article-comments-anonymous' => 'Pengguna anonim',
 	'article-comments-comments' => 'Komentar ($1)',
 	'article-comments-post' => 'Kirim komentar',
@@ -1748,13 +1742,11 @@ $messages['id'] = array(
 	'article-comments-history' => 'versi',
 	'article-comments-error' => 'Komentar tidak dapat disimpan',
 	'article-comments-undeleted-comment' => 'Batalkan hapus komentar untuk halaman blog $1',
-	'article-comments-rc-comment' => 'Komentar blog (<span class="plainlinks">[$1 $2]</span>)',
 	'article-comments-rc-comments' => 'Komentar artikel ([[$1]])',
 	'article-comments-fblogin' => 'Silakan <a href="$1" rel="nofollow">masuk log dan terhubung dengan Facebook</a> untuk mengirim komentar pada wiki ini!',
 	'article-comments-fbconnect' => 'Silakan <a href="$1">hubungkan akun ini dengan Facebook</a> untuk berkomentar!',
 	'article-comments-rc-blog-comment' => 'Komentar blog (<span class="plainlinks">[$1 $2]</span>)',
 	'article-comments-rc-blog-comments' => 'Komentar blog ([[$1]])',
-	'article-comments-login' => 'Silakan <a href="$1">masuk</a> untuk mengirim komentar pada wiki ini.',
 	'article-comments-toc-item' => 'Komentar',
 	'article-comments-comment-cannot-add' => 'Anda tidak dapat menambahkan komentar ke artikel',
 	'article-comments-vote' => 'Memberikan suara',
@@ -1765,8 +1757,6 @@ $messages['id'] = array(
 	'article-comments-page-spacer' => '&#160...&#160',
 	'article-comments-delete-reason' => 'Artikel induk / komentar induk telah dihapus.',
 	'article-comments-empty-comment' => "Anda tidak dapat mengirim komentar kosong. <a href='$1'>Hapus saja?</a>",
-	'wikiamobile-article-comments-counter' => '$1 {{PLURAL:$1|komentar|komentar}}',
-	'wikiamobile-article-comments-header' => 'Komentar',
 	'wikiamobile-article-comments-more' => 'Baca lebih lanjut',
 	'wikiamobile-article-comments-none' => 'Tidak ada komentar',
 	'wikiamobile-article-comments-view' => 'Lihat balasan',
@@ -1814,15 +1804,11 @@ $messages['inh'] = array(
  * @author Beta16
  * @author Geitost
  * @author Leviathan 89
- * @author Lucas2
  * @author Minerva Titani
- * @author PeppeAeco
  * @author Viscontino
  * @author Ximo17
  */
 $messages['it'] = array(
-	'article-comments-file-page' => "<a href='$1'>Commento da $2</a> su <a href='$3'>$4</a>",
-	'article-blog-comments-file-page' => "<a href='$1'>Commento di $2</a> su <a href='$3'>$4</a> nel blog di <a href='$5'>$6</a>",
 	'article-comments-anonymous' => 'Utente anonimo',
 	'article-comments-comments' => 'Commenti ($1)',
 	'article-comments-post' => 'Lascia un commento',
@@ -1849,7 +1835,6 @@ $messages['it'] = array(
 	'article-comments-page-spacer' => '&#160...&#160',
 	'article-comments-delete-reason' => "L'articolo / commento padre è stato cancellato.",
 	'article-comments-empty-comment' => "Non puoi inserire un commento vuoto. <a href='$1'>Vuoi cancellarlo invece?</a>",
-	'wikiamobile-article-comments-counter' => '$1 {{PLURAL:$1|commento|commenti}}',
 	'wikiamobile-article-comments-header' => 'Commenti',
 	'wikiamobile-article-comments-more' => 'Caricane altri',
 	'wikiamobile-article-comments-prev' => 'Carica precedenti',
@@ -1860,7 +1845,6 @@ $messages['it'] = array(
 	'wikiamobile-article-comments-post' => 'Posta',
 	'wikiamobile-article-comments-placeholder' => 'Commenta',
 	'wikiamobile-article-comments-login-post' => 'Effettua il login per lasciare un commento.',
-	'wikiamobile-article-comments-post-fail' => 'Fallito nel salvataggio del commento, si prega di riprovare più tardi',
 	'enotif_subject_article_comment' => '$PAGEEDITOR ha commentato su "$PAGETITLE" su {{SITENAME}}',
 	'enotif_body_article_comment' => 'Caro $WATCHINGUSERNAME,
 
@@ -2281,7 +2265,6 @@ $messages['lrc'] = array(
 /** Lithuanian (lietuvių)
  * @author Eitvys200
  * @author Mantak111
- * @author Robotukas11
  * @author Vilius
  */
 $messages['lt'] = array(
@@ -2303,7 +2286,7 @@ $messages['lt'] = array(
 	'article-comments-reply' => 'Atsakyti',
 	'article-comments-show-all' => 'Rodyti visus komentarus',
 	'article-comments-prev-page' => 'Ankstesnis',
-	'article-comments-next-page' => 'Kitas',
+	'article-comments-next-page' => 'Sekantis',
 	'article-comments-page-spacer' => '&#160...&#160',
 	'wikiamobile-article-comments-header' => 'Komentarai',
 	'wikiamobile-article-comments-more' => 'Įkelti daugiau',
@@ -2705,7 +2688,7 @@ $messages['nan'] = array(
 	'article-comments-page-spacer' => '&#160...&#160',
 	'article-comments-delete-reason' => '原條目/原評論已經予儂刣掉。',
 	'article-comments-empty-comment' => "你袂當發佈空的評論。<a href='$1'>敢欲刣掉？</a>",
-	'wikiamobile-article-comments-counter' => '$1 {{PLURAL:$1|評論}}',
+	'wikiamobile-article-comments-counter' => '$1 {{PLURAL:$1|評論|評論}}', # Fuzzy
 	'wikiamobile-article-comments-header' => '評論',
 	'wikiamobile-article-comments-more' => '載較濟咧',
 	'wikiamobile-article-comments-prev' => '載頭前的',
@@ -4065,7 +4048,6 @@ Wikia
  * @author Anakmalaysia
  * @author Dimension
  * @author Hydra
- * @author Liuxinyu970226
  * @author User670839245
  * @author Yfdyh000
  */
@@ -4098,7 +4080,6 @@ $messages['zh-hans'] = array(
 	'article-comments-page-spacer' => '&#160...&#160',
 	'article-comments-delete-reason' => '源条目/源评论已被删除。',
 	'article-comments-empty-comment' => "您不能发布空白评论。<a href='$1'>是否删除它？</a>",
-	'wikiamobile-article-comments-counter' => '$1条评论',
 	'wikiamobile-article-comments-header' => '条评论',
 	'wikiamobile-article-comments-more' => '加载更多',
 	'wikiamobile-article-comments-prev' => '加载前项',

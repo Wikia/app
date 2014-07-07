@@ -374,13 +374,6 @@ $messages['it'] = array(
 	'places-geolocation-modal-error-title' => 'Errore',
 );
 
-/** Japanese (日本語)
- * @author Barrel0116
- */
-$messages['ja'] = array(
-	'places-editor-search' => '検索',
-);
-
 /** Kannada (ಕನ್ನಡ)
  * @author VASANTH S.N.
  */

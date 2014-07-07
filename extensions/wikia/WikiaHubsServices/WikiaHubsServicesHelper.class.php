@@ -2,7 +2,7 @@
 
 class WikiaHubsServicesHelper
 {
-	const HUBSV2_IMAGES_MEMC_KEY_VER = '1.04';
+	const HUBSV2_IMAGES_MEMC_KEY_VER = '1.03';
 	const HUBSV2_IMAGES_MEMC_KEY_PREFIX = 'hubv2images';
 
 	private $corporateModel = null;

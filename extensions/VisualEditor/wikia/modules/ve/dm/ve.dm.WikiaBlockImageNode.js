@@ -28,6 +28,7 @@ ve.dm.WikiaBlockImageNode.static.childNodeTypes = [ 'wikiaImageCaption' ];
 
 ve.dm.WikiaBlockImageNode.static.captionNodeType = 'wikiaImageCaption';
 
+
 /* Registration */
 
 ve.dm.modelRegistry.register( ve.dm.WikiaBlockImageNode );

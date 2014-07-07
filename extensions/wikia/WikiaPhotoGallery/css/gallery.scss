@@ -15,9 +15,6 @@
 
 	.lightbox-caption {
 		@extend %p;
+		color: $color-alternate-text;
 	}
-}
-
-.wikia-gallery-caption-below .lightbox-caption {
-	color: $color-alternate-text;
 }

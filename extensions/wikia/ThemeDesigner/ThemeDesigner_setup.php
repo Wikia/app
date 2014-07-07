@@ -38,4 +38,3 @@ JSMessages::registerPackage('ThemeDesigner', array(
 
 $wgHooks['RevisionInsertComplete'][] = 'ThemeDesignerHooks::onRevisionInsertComplete';
 $wgHooks['ArticleDeleteComplete'][] = 'ThemeDesignerHooks::onArticleDeleteComplete';
-$wgHooks['UploadComplete'][] = 'ThemeDesignerHooks::onUploadComplete';

@@ -3443,15 +3443,6 @@ $messages['tly'] = array(
 	'swm-no' => 'Не',
 );
 
-/** Turkish (Türkçe)
- * @author Sucsuzz
- */
-$messages['tr'] = array(
-	'swm-button-preview' => '[ Önizleme ]',
-	'swm-button-save' => '[ Kaydet ]',
-	'swm-button-new' => '[ Yeni ]',
-);
-
 /** Tatar (Cyrillic script) (татарча)
  * @author Ильнар
  */

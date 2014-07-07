@@ -109,21 +109,14 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 		}
 
 		if ( !empty( $deletionList ) ) {
-			if (TaskRunner::isModern('ImageReviewTask')) {
-				$task = new \Wikia\Tasks\Tasks\ImageReviewTask();
-				$task->call('delete', $deletionList);
-				$task->prioritize();
-				$task->queue();
-			} else {
-				$task = new ImageReviewTask();
-				$task->createTask(
-					[
-						'page_list' => $deletionList,
-					],
-					TASK_QUEUED,
-					BatchTask::PRIORITY_HIGH
-				);
-			}
+			$task = new ImageReviewTask();
+			$task->createTask(
+				array(
+					'page_list' => $deletionList,
+				),
+				TASK_QUEUED,
+				BatchTask::PRIORITY_HIGH
+			);
 		}
 
 		wfProfileOut( __METHOD__ );

@@ -155,20 +155,19 @@ define('ext.wikia.adEngine.provider.directGpt', [
 
 		wikiaGpt.pushAd(
 			slotname,
-			function (adInfo) { // Success
+			function () { // Success
 				slotTweaker.removeDefaultHeight(slotname);
 				slotTweaker.removeTopButtonIfNeeded(slotname);
 				slotTweaker.adjustLeaderboardSize(slotname);
 
-				success(adInfo);
+				success();
 			},
-			function (adInfo) { // Hop
+			function () { // Hop
 				log(slotname + ' was not filled by DART', 'info', logGroup);
 				cacheStorage.set(noAdStorageKey, true, forgetAdsShownAfterTime, now);
 
 				// hop to Liftium
-				adInfo.method = 'hop';
-				hop(adInfo, 'Liftium');
+				hop({method: 'hop'}, 'Liftium');
 			},
 			srcName
 		);

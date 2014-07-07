@@ -4451,30 +4451,13 @@ class Title {
 	 * on the number of links. Typically called on create and delete.
 	 */
 	public function touchLinks() {
-		// Wikia Change Start @author Scott Rabin (srabin@wikia-inc.com)
-		if ( TaskRunner::isModern('HTMLCacheUpdate') ) {
-			global $wgCityId;
+		$u = new HTMLCacheUpdate( $this, 'pagelinks' );
+		$u->doUpdate();
 
-			$affectedTables = [ 'pagelinks' ];
-			if ( $this->getNamespace() == NS_CATEGORY ) {
-				$affectedTables[] = 'categorylinks';
-			}
-
-			$task = ( new \Wikia\Tasks\Tasks\HTMLCacheUpdateTask() )
-				->wikiId( $wgCityId )
-				->title( $this );
-			$task->call( 'purge', $affectedTables );
-			$task->queue();
-		} else {
-			$u = new HTMLCacheUpdate( $this, 'pagelinks' );
+		if ( $this->getNamespace() == NS_CATEGORY ) {
+			$u = new HTMLCacheUpdate( $this, 'categorylinks' );
 			$u->doUpdate();
-
-			if ( $this->getNamespace() == NS_CATEGORY ) {
-				$u = new HTMLCacheUpdate( $this, 'categorylinks' );
-				$u->doUpdate();
-			}
 		}
-		// Wikia Change End
 	}
 
 	/**

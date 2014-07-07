@@ -29,14 +29,14 @@ ve.ce.wikiaExample = ( function ( utils ) {
 			'frame': {
 				'left': 'tleft',
 				'right': 'tright',
-				'center': 'tnone',
-				'none': 'tnone'
+				'center' : 'tnone',
+				'none' : 'tnone'
 			},
 			'none': {
 				'left': 'floatleft',
 				'right': 'floatright',
-				'center': 'floatnone',
-				'none': 'floatnone'
+				'center' : 'floatnone',
+				'none' : 'floatnone'
 			}
 		},
 		'htmlDomAlign': {
@@ -165,7 +165,7 @@ ve.ce.wikiaExample = ( function ( utils ) {
 	 * @param {Object} attributes The node attributes from which to build the mock.
 	 * @returns {String} The mocked HTMLDOM.
 	 */
-	media.getHtmlDom = function ( displayType, rdfaType, attributes ) {
+	media.getHtmlDom = function( displayType, rdfaType, attributes ) {
 		var $mock = $( media.htmlDom[ displayType ] ),
 			typeOf = rdfaType;
 
@@ -197,6 +197,7 @@ ve.ce.wikiaExample = ( function ( utils ) {
 	/* Block Media */
 
 	media.block = { 'mw:Image': {}, 'mw:Video': {} };
+
 
 	/**
 	 * Get the mocked HTML output for a block media node.
@@ -252,6 +253,7 @@ ve.ce.wikiaExample = ( function ( utils ) {
 			height: attributes.height,
 			width: width
 		} );
+
 
 		return $mock[ 0 ].outerHTML;
 	};

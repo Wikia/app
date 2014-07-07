@@ -88,7 +88,7 @@ class SwiftStorage {
 		}
 		$this->connect( $this->swiftConfig );
 
-		$this->container = $this->getContainerObject( $containerName );
+		$this->container = $this->getContainer( $containerName );
 		$this->containerName = $containerName;
 		$this->pathPrefix = rtrim( $pathPrefix, '/' );
 	}
@@ -120,7 +120,7 @@ class SwiftStorage {
 	 * @return \CF_Container object
 	 * @throws \Exception
 	 */
-	private function getContainerObject( $containerName ) {
+	private function getContainer( $containerName ) {
 		try {
 			$container = $this->connection->get_container( $containerName );
 		}
@@ -329,13 +329,6 @@ class SwiftStorage {
 
 	public function getContainerName() {
 		return $this->containerName;
-	}
-
-	/**
-	 * @return \CF_Container
-	 */
-	public function getContainer() {
-		return $this->container;
 	}
 
 	public function getPathPrefix() {

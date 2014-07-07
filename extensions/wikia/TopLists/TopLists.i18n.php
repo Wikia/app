@@ -579,7 +579,7 @@ $messages['diq'] = array(
 	'edittoplist' => 'listey Tewr 10a bıvurnê',
 	'toplists-category' => 'listey Tewr 10a',
 	'toplists-editor-title-label' => 'Nameyê liste',
-	'toplists-editor-image-browser-tooltip' => 'Yew resım cı ke',
+	'toplists-editor-image-browser-tooltip' => 'Resim deke',
 	'toplists-create-button' => 'Liste vırazê',
 	'toplists-update-button' => 'Listi qeyd ke',
 	'toplists-cancel-button' => 'Bıtexelne',
@@ -1293,7 +1293,7 @@ $messages['mk'] = array(
 	'toplists-error-invalid-picture' => 'Одбраната слика не е важечка',
 	'toplists-error-title-exists' => 'Статијава веќе постои. Можете да појдете на <a href="$2" target="_blank">$1</a> или да дадете друго име',
 	'toplists-error-title-spam' => 'Дадениот текст содржи извесни зборови што се сметаат за спам',
-	'toplists-error-article-blocked' => 'За жал, не ви е дозволено да создадете статија со ова име',
+	'toplists-error-article-blocked' => 'Нажалост, не ви е дозволено да создадете статија со ова име',
 	'toplists-error-article-not-exists' => '„$1“ не постои., Дали сакате да ја <a href="$2" target="_blank">создадете</a>?',
 	'toplists-error-picture-not-exists' => '„$1“ не постои. Дали сакате да ја <a href="$2" target="_blank">подигнете</a>?',
 	'toplists-error-duplicated-entry' => 'Истото име не може да се користи повеќе од еднаш',
@@ -2198,7 +2198,6 @@ $messages['sr-ec'] = array(
 );
 
 /** Swedish (svenska)
- * @author Lokal Profil
  * @author Tobulos1
  * @author WikiPhoenix
  */
@@ -2242,8 +2241,8 @@ $messages['sv'] = array(
 	'toplists-update-button' => 'Spara listan',
 	'toplists-cancel-button' => 'Avbryt',
 	'toplists-items-removed' => '$1 {{PLURAL:$1|objekt|objekt}} borttagna',
-	'toplists-items-created' => '$1 objekt {{PLURAL:$1|skapat|skapade}}',
-	'toplists-items-updated' => '$1 objekt {{PLURAL:$1|uppdaterat|uppdaterade}}',
+	'toplists-items-created' => '$1 {{PLURAL:$1|objekt|objekt}} skapade',
+	'toplists-items-updated' => '$1 {{PLURAL:$1|objekt|objekt}} uppdaterade',
 	'toplists-items-nochange' => 'Inga objekt ändrades',
 	'toplits-image-browser-no-picture-selected' => 'Ingen bild markerad',
 	'toplits-image-browser-clear-picture' => 'Rensa bild',

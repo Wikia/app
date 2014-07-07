@@ -356,24 +356,6 @@ $messages['kk-cyrl'] = array(
 	'timeago-second-from-now' => 'минут бұрын',
 );
 
-/** Karachay-Balkar (къарачай-малкъар)
- * @author Iltever
- */
-$messages['krc'] = array(
-	'timeagomessaging-desc' => 'jquery.timeago.js плагиннге i18n береди',
-	'timeago-year' => '{{PLURAL:$1|бир джыл|$1 джыл}} алгъа',
-	'timeago-month' => '{{PLURAL:$1|бир ай|$1 ай}} алгъа',
-	'timeago-day' => '{{PLURAL:$1|бир кюн|$1 кюн}} алгъа',
-	'timeago-hour' => '{{PLURAL:$1|бир сагъат|$1 сагъат}} алгъа',
-	'timeago-minute' => '{{PLURAL:$1|бир минут|$1 минут}} алгъа',
-	'timeago-second' => 'бир минут алгъа',
-	'timeago-day-from-now' => 'бусагъатдан {{PLURAL:$1|бир кюн|$1 кюн}} алгъа',
-	'timeago-hour-from-now' => 'бусагъатдан {{PLURAL:$1|бир сагъат|$1 сагъат}} алгъа',
-	'timeago-minute-from-now' => 'бусагъатдан {{PLURAL:$1|бир минут|$1 минут}} алгъа',
-	'timeago-month-from-now' => 'бусагъатдан {{PLURAL:$1|бир ай|$1 ай}} алгъа',
-	'timeago-second-from-now' => 'бусагъатдан минут алгъа',
-);
-
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */
@@ -605,18 +587,6 @@ $messages['ru'] = array(
 	'timeago-minute-from-now' => '{{PLURAL:$1|$1 минута|$1 минуты|$1 минут}} назад',
 	'timeago-month-from-now' => '{{PLURAL:$1|месяц|$1 месяца|$1 месяцев}} назад',
 	'timeago-second-from-now' => 'минуту назад',
-);
-
-/** Somali (Soomaaliga)
- * @author Abshirdheere
- */
-$messages['so'] = array(
-	'timeago-year' => '$1 {{PLURAL:$1|sanad|sanadood}} ka hor',
-	'timeago-month' => '$1 {{PLURAL:$1|bil|bilood}} ka hor',
-	'timeago-day' => '{{PLURAL:$1|hal maalin|$1 maalin}} ka hor',
-	'timeago-hour' => '{{PLURAL:$1|saacad|$1 saacadood}} ka hor',
-	'timeago-second' => 'daqiiqad ka hor',
-	'timeago-month-from-now' => '$1 {{PLURAL:$1|bil|bilood}} muddo laga joogo',
 );
 
 /** Serbian (Cyrillic script) (српски (ћирилица)‎)

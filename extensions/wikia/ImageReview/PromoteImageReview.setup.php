@@ -30,7 +30,6 @@ $wgAutoloadClasses['PromoteImageReviewTask'] =  $dir . 'PromoteImageReviewTask.p
 if( function_exists('extAddBatchTask') ) {
 	extAddBatchTask($dir . "PromoteImageReviewTask.php", "promoteimagereview", "PromoteImageReviewTask");
 }
-$wgAutoloadClasses['Wikia\\Tasks\\Tasks\\PromoteImageReviewTask'] = "{$dir}/PromoteImageReviewTask.class.php";
 
 $wgAutoloadClasses['PromoteImageReviewSpecialController'] =  $dir . 'PromoteImageReviewSpecialController.class.php';
 $wgAutoloadClasses['PromoteImageReviewHelper'] =  $dir . 'PromoteImageReviewHelper.class.php';
@@ -38,7 +37,6 @@ $wgSpecialPages[ 'PromoteImageReview'] = 'PromoteImageReviewSpecialController';
 
 // hooks
 $wgHooks['WikiFactory::onPostChangesApplied'][] = 'CityVisualization::onWikiDataUpdated';
-$wgHooks['CreatePromoImageReviewTask'][] = 'PromoteImageReviewHelper::onCreatePromoteImageReviewTask';
 
 // rights
 $wgAvailableRights[] = 'promoteimagereview';

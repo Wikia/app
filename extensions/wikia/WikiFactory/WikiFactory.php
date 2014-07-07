@@ -1075,10 +1075,6 @@ class WikiFactory {
 			$host = gethostname();
 		}
 
-		if ( preg_match( '/^(demo-[a-z0-9]+)-[s|r][0-9]+$/i', $host, $m ) ) {
-			return $m[ 1 ] . '.' . ( $dbName ? $dbName : 'www' ) . '.wikia.com';
-		}
-
 		if ( in_array( $host, $wgStagingList ) ) {
 			return $host . '.' . ( $dbName ? $dbName : 'www' ) . '.wikia.com';
 		}

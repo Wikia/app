@@ -12,6 +12,7 @@ class testWallNotifications extends WallNotifications {
 class WallNotificationsTest extends WikiaBaseTest {
 
 	public function setUp() {
+		$this->setupFile = dirname(__FILE__) . '/../Wall.setup.php';
 		parent::setUp();
 	}
 

@@ -201,10 +201,7 @@ class SkinTemplate extends Skin {
 			$tpl->setRef( 'xhtmldefaultnamespace', $wgXhtmlDefaultNamespace );
 			$tpl->set( 'xhtmlnamespaces', $wgXhtmlNamespaces );
 			$tpl->set( 'html5version', $wgHtml5Version );
-			// For Oasis getHeadlinks is called in OasisController.class.php
-			if ( !F::app()->checkSkin( 'oasis' ) ) {
-				$tpl->set( 'headlinks', $out->getHeadLinks() );
-			}
+			$tpl->set( 'headlinks', $out->getHeadLinks() );
 			$tpl->set( 'csslinks', $out->buildCssLinks() );
 			$tpl->set( 'pageclass', $this->getPageClasses( $title ) );
 			$tpl->set( 'skinnameclass', ( 'skin-' . Sanitizer::escapeClass( $this->getSkinName() ) ) );

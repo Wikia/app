@@ -3,21 +3,21 @@ if ( !empty($err) ) {
         print $err;
 }
 
-echo wfMessage( 'specialcontact-intro-rename-account' )->parseAsBlock();
+echo wfMsgExt( 'specialcontact-intro-rename-account', array( 'parse' ) );
 ?>
 
-<h2><?= wfMessage( 'specialcontact-form-header' )->escaped() ?></h2>
+<h2><?= wfMsg( 'specialcontact-form-header' ) ?></h2>
 
 <form id="contactform" method="post" action="">
 <input name="wpEmail" type="hidden" value="<?= $encEmail ?>" />
 <input name="wpUserName" type="hidden" value="<?= $encName ?>" />
 
-<?= wfMessage( 'specialcontact-logged-in-as', $encName )->parseAsBlock() ?>
+<?= wfMsgExt( 'specialcontact-logged-in-as', array( 'parse' ), $encName, 'link' ) ?>
         
-<?= wfMessage( 'specialcontact-mail-on-file', $encEmail )->parseAsBlock() ?>
+<?= wfMsgExt( 'specialcontact-mail-on-file', array( 'parse' ), $encEmail, 'link' ) ?>
 
 <p>
-<label for="wpUserNameNew"><?= wfMessage( 'specialcontact-label-rename-newusername' )->escaped() ?></label>
+<label for="wpUserNameNew"><?= wfMsg( 'specialcontact-label-rename-newusername' ) ?></label>
 <input name="wpUserNameNew" required />
 <img id="error-img" src="<?= wfBlankImgUrl(); ?>" alt="availability" />
 <span id="error-container" class="error"></span>
@@ -25,15 +25,15 @@ echo wfMessage( 'specialcontact-intro-rename-account' )->parseAsBlock();
 
 <p>
 <input type="checkbox" name="wpConfirm" required />
-<label for="wpConfirm"><?= wfMessage( 'specialcontact-label-rename-account-confirm' )->escaped() ?></label>
+<label for="wpConfirm"><?= wfMsg( 'specialcontact-label-rename-account-confirm' ) ?></label>
 </p>
 
 <p>
 <input type="checkbox" name="wpReadHelp" required />
-<label for="wpReadHelp"><?= wfMessage( 'specialcontact-label-rename-account-read-help' )->parse() ?></label>
+<label for="wpReadHelp"><?= wfMsgExt( 'specialcontact-label-rename-account-read-help', array( 'parseinline' ) ) ?></label>
 </p>
 
-<input type="submit" value="<?= wfMessage( 'specialcontact-mail' )->escaped() ?>" />
+<input type="submit" value="<?= wfMsg( 'specialcontact-mail' ) ?>" />
 
 <input type="hidden" id="wpBrowser" name="wpBrowser" value="<?php echo $_SERVER['HTTP_USER_AGENT']; ?>" />
 <input type="hidden" id="wpAbTesting" name="wpAbTesting" value="[unknown]" />
@@ -53,8 +53,8 @@ echo wfMessage( 'specialcontact-intro-rename-account' )->parseAsBlock();
 						controller: 'UserSignupSpecial',
 						method: 'formValidation',
 						format: 'json',
-						field: 'userloginext01',
-						userloginext01: newUsername
+						field: 'username',
+						username: newUsername
 					};
 				$resultContainer.text( '' );
 				$resultImage.removeClass().addClass( 'sprite progress' );

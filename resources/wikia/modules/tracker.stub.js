@@ -183,7 +183,7 @@ function veTrack( data ) {
 		// isRedlink
 		try {
 			uri = new mw.Uri( location.href );
-			defaultData.isRedlink = !!uri.query.redlink ? 'yes' : 'no';
+			defaultData.isRedlink = !!uri.query.redlink ? 'yes' : 'no'
 		} catch ( e ) {
 			defaultData.isRedlink = 'unknown';
 		}
@@ -203,21 +203,7 @@ function veTrack( data ) {
 		} catch ( e ) {
 			defaultData.userLanguage = 'unknown';
 		}
-
-		// Orientation dialog
-		if ( window.veOrientationEnabled === undefined ) {
-			defaultData.orientationEnabled = 'unknown';
-		} else {
-			defaultData.orientationEnabled = !!window.veOrientationEnabled ? 'yes' : 'no';
-		}
-
-		// anon edit warning
-		if ( window.anoneditwarning === undefined ) {
-			defaultData.anonEditWarning = 'unknown';
-		} else {
-			defaultData.anonEditWarning = !!window.anoneditwarning ? 'yes' : 'no';
-		}
-
+		
 		finalData = $.extend( {}, defaultData, data );
 	} catch( e ) {
 		finalData = { failed: true };

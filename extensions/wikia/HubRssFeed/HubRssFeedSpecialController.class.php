@@ -5,6 +5,13 @@ class HubRssFeedSpecialController extends WikiaSpecialPageController {
 	const CACHE_TIME = 3600;
 	const RSS_CONTENT_TYPE = 'text/xml; charset=utf-8';
 
+	protected $customFeeds = [
+		TvRssModel::FEED_NAME => TvRssModel::URL_ENDPOINT,
+		GamesRssModel::FEED_NAME => GamesRssModel::URL_ENDPOINT,
+		LifestyleHubOnlyRssModel::FEED_NAME => LifestyleHubOnlyRssModel::URL_ENDPOINT,
+		EntertainmentHubOnlyRssModel::FEED_NAME => EntertainmentHubOnlyRssModel::URL_ENDPOINT
+	];
+
 	/**
 	 * @var HubRssFeedModel
 	 */
@@ -37,12 +44,11 @@ class HubRssFeedSpecialController extends WikiaSpecialPageController {
 
 
 	public function notfound() {
-		global $wgHubRssFeeds;
 		$url = $this->currentTitle->getFullUrl();
 		$links = [ ];
 
-		foreach ( $wgHubRssFeeds as  $feedName ) {
-			$links[ ] = $url . '/'. $feedName;
+		foreach ( $this->customFeeds as $k => $v ) {
+			$links[ ] = $url . $v;
 		}
 
 		$this->setVal( 'links', $links );
@@ -52,16 +58,15 @@ class HubRssFeedSpecialController extends WikiaSpecialPageController {
 
 
 	public function index() {
-
-		$hubName = (string)$this->request->getVal( 'par' );
-		$model = BaseRssModel::newFromName( $hubName );
-		if(!$model instanceof BaseRssModel){
+		$params = $this->request->getParams();
+		$hubName = strtolower( (string)$params[ 'par' ] );
+		if ( !isset( $this->customFeeds[ $hubName ] ) ) {
 			return $this->forward( 'HubRssFeedSpecial', 'notfound' );
 		}
 		$this->response->setCacheValidity( self::CACHE_TIME );
 
 		$service = new RssFeedService();
-
+		$model = BaseRssModel::newFromName( $hubName );
 		$service->setFeedLang( $model->getFeedLanguage() );
 		$service->setFeedTitle( $model->getFeedTitle() );
 		$service->setFeedDescription( $model->getFeedDescription() );

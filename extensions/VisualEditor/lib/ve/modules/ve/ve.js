@@ -16,6 +16,11 @@
 		'instances': []
 	};
 
+	/* Static Properties */
+
+	rSpecialChars = /[^\w\d\s]/g;
+	rWhiteSpace = /\s/g;
+
 	/* Static Methods */
 
 	/**
@@ -760,12 +765,12 @@
 		newDocument.open();
 		// Handle JavaScript errors inside the iframe. Note that the placement of this function
 		// here is intentional, it MUST be defined after the call to .open()!
-		newWindow.onerror = function ( message ) {
+		newWindow.onerror = function( message ) {
 			ve.track( 'error.createdocumentfromhtml', {
 				message: message
 					.toLowerCase()
-					.replace( /[^\w\d\s]/g, '' )
-					.replace( /\s/g, '-' )
+					.replace( rSpecialChars, '' )
+					.replace( rWhiteSpace, '-' )
 			} );
 
 			// Suppress in-browser errors

@@ -303,25 +303,13 @@ Le resto del pagina essera executate solmente a fin que tu pote vider facilement
 
 /** Indonesian (Bahasa Indonesia)
  * @author C5st4wr6ch
- * @author Riemogerz
  */
 $messages['id'] = array(
-	'batchuserrights' => 'Hak-hak pengguna',
 	'batchuserrights-desc' => 'Memperbolehkan menambahkan satu atau beberapa pengguna ke grup dalam satu tindakan',
-	'batchuserrights-names' => 'Nama pengguna untuk menambahkan dalam grup ini (satu per baris):',
 	'batchuserrights-intro' => 'Halaman ini mengizinkan Anda menambahkan sebuah grup ke banyak pengguna sekaligus.
 Untuk alasan keamanan, daftar grup yang dapat ditambahkan diatur dalam pengaturan ekstensi dan tidak dapat diubah dari dalam wiki.
 Silakan minta ke seorang pengurus sistem jika Anda butuh mengizinkan penambahan-massal dari grup-grup lain.',
-	'batchuserrights-single-progress-update' => 'Ditambahkan  {{PLURAL:$1|grup|grup}} untuk <strong> $2 </strong>.',
 	'batchuserrights-add-groups' => 'Menambahkan {{PLURAL:$1|satu pengguna|$1 pengguna}} ke {{PLURAL:$2|kelompok|kelompok-kelompok}} berikut: <strong>$3</strong>.',
-	'batchuserrights-userload-error' => "Tidak bisa memuat pengguna \"'''\$1'''\".",
-);
-
-/** Italian (italiano)
- * @author PeppeAeco
- */
-$messages['it'] = array(
-	'batchuserrights-userload-error' => "mpossibile caricare l'utente \"'''\$1'''\".",
 );
 
 /** Japanese (日本語)
@@ -335,7 +323,7 @@ $messages['ja'] = array(
  * @author Robby
  */
 $messages['lb'] = array(
-	'batchuserrights' => 'Masse-Benotzerrechter',
+	'batchuserrights' => 'Benotzerrechter automatiséieren',
 	'batchuserrights-desc' => 'Erlaabt et een oder méi Benotzer an enger Aktioun an e Grupp derbäizesetzen',
 	'batchuserrights-names' => 'Benotzernimm fir an dëse Grupp derbäizesetzen (e pro Linn):',
 	'batchuserrights-userload-error' => "De Benotzer \"'''\$1'''\" konnt net geluede ginn.",

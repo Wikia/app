@@ -272,14 +272,14 @@ class MarketingToolboxModuleFromthecommunityService extends MarketingToolboxModu
 					'userUrl' => str_replace(' ', '_', $data['usersUrl' . $i]),
 					'wikiUrl' => $data['wikiUrl' . $i],
 					'quote' => $data['quote' . $i],
-					'photoName' => isset($data['photo'.$i]) ? $data['photo'.$i] : ''
+					'photoName' => $data['photo'.$i]
 				);
 			}
 		}
 		
 		return array(
-			'headline' => isset($data[self::FIELD_NAME_MODULE_TITLE]) ? $data[self::FIELD_NAME_MODULE_TITLE] : '',
-			'button' => isset($data[self::FIELD_NAME_SUGGEST_ARTICLE]) ? $data[self::FIELD_NAME_SUGGEST_ARTICLE] : '',
+			'headline' => $data[self::FIELD_NAME_MODULE_TITLE],
+			'button' => $data[self::FIELD_NAME_SUGGEST_ARTICLE],
 			'entries' => $entries
 		);
 	}

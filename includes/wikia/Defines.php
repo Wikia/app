@@ -24,6 +24,11 @@ define('DB_SLAVE_BEFORE_MASTER',-100);
 define('NS_FORUM', 110);
 define('NS_FORUM_TALK', 111);
 
+
+/**
+ * Defines for Wall namespace
+ */
+
 /*
  * wikia page props type
  *

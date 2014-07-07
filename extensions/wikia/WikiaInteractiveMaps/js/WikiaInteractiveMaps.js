@@ -91,6 +91,7 @@ require(
 
 			if (utils.isUserLoggedIn()) {
 				utils.loadModal(actionConfig);
+				utils.track(utils.trackerActions.CLICK_LINK_BUTTON, 'create-map-clicked');
 			} else {
 				utils.showForceLoginModal(actionConfig.origin, function() {
 					utils.loadModal(actionConfig);

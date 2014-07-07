@@ -287,18 +287,8 @@ class WikiaPoll {
 			$article->doPurge();
 
 			// purge articles embedding this poll
-			if ( TaskRunner::isModern('HTMLCacheUpdate') ) {
-				global $wgCityId;
-
-				$task = ( new \Wikia\Tasks\Tasks\HTMLCacheUpdateTask() )
-					->wikiId( $wgCityId )
-					->title( $article->getTitle() );
-				$task->call( 'purge', 'templatelinks' );
-				$task->queue();
-			} else {
-				$updateJob = new HTMLCacheUpdate($article->getTitle(), 'templatelinks');
-				$updateJob->doUpdate();
-			}
+			$updateJob = new HTMLCacheUpdate($article->getTitle(), 'templatelinks');
+			$updateJob->doUpdate();
 
 			// apply changes to page_touched fields
 			$dbw = wfGetDB(DB_MASTER);

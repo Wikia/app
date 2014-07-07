@@ -40,14 +40,28 @@ class MoodBarHTMLEmailNotification {
 	 * @param $responseId int response id
 	 */
 	public function notifyOnRespond( $editor, $title, $timestamp, $feedback, $response, $type, $responseId ) {
-		global $wgEnotifUserTalk;
+		global $wgEnotifUseJobQ, $wgEnotifUserTalk;
 
 		if ( $title->getNamespace() != NS_USER_TALK || !$wgEnotifUserTalk || 
 			!$this->canSendUserTalkEmail( $editor, $title ) ) {
 			return;
 		}
 
-		$this->actuallyNotifyOnRespond( $editor, $title, $timestamp, $feedback, $response, $type, $responseId );
+		if ( $wgEnotifUseJobQ ) {
+			$params = array(
+				'editor' => $editor->getName(),
+				'editorID' => $editor->getID(),
+				'timestamp' => $timestamp,
+				'response' => $response,
+				'feedback' => $feedback,
+				'type' => $type,
+				'responseId' => $responseId
+			);
+			$job = new MoodBarHTMLMailerJob( $title, $params );
+			$job->insert();
+		} else {
+			$this->actuallyNotifyOnRespond( $editor, $title, $timestamp, $feedback, $response, $type, $responseId );
+		}
 	}
 
 	/**

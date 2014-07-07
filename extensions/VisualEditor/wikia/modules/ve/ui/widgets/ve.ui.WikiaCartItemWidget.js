@@ -25,7 +25,7 @@ ve.ui.WikiaCartItemWidget = function VeUiWikiaCartItemWidget( model ) {
 			'width': size
 		} )
 		.addClass( 've-ui-wikiaCartImage' )
-		.load( ve.bind( function () {
+		.load( ve.bind( function() {
 			this.$element
 				.prepend( $image )
 				.removeClass( 've-ui-texture-pending' );
@@ -38,6 +38,6 @@ ve.ui.WikiaCartItemWidget = function VeUiWikiaCartItemWidget( model ) {
 
 OO.inheritClass( ve.ui.WikiaCartItemWidget, OO.ui.OptionWidget );
 
-ve.ui.WikiaCartItemWidget.prototype.getModel = function () {
+ve.ui.WikiaCartItemWidget.prototype.getModel = function() {
 	return this.model;
 };

@@ -129,7 +129,6 @@ $messages['en'] = array(
 $messages['qqq'] = array(
 	'multiwikiedit_button' => '{{Identical|Edit}}',
 	'multiwikiedit_on' => 'Label for dropdown menu where user can select type of wikis to run script on',
-	'multiwikiedit_minoredit_caption' => '{{Identical|Minor edit}}',
 	'multiwikiedit_all_wikis' => '{{Identical|All wikis}}',
 	'multiwikiedit_success_subtitle' => '{{Identical|For $1}}',
 	'multiwikiedit_max_display_size' => 'Parameters:
@@ -989,7 +988,6 @@ $messages['eo'] = array(
  * @author Armando-Martin
  * @author Bola
  * @author Crazymadlover
- * @author Fitoschido
  * @author Ihojose
  * @author Locos epraix
  * @author Mor
@@ -1061,7 +1059,7 @@ $messages['es'] = array(
 	'multidelete_info_empty_list' => 'No se encontraron títulos provistos en los wikis seleccionados.',
 	'multidelete_task_added' => 'Tarea de borrado múltiple #$1 fue agregada',
 	'multidelete_task_error' => 'Hubo un error en la adición de una tarea de borrado múltiple.',
-	'multidelete_task_none_selected' => 'No seleccionaste ningún artículo. No se añadió la tarea.',
+	'multidelete_task_none_selected' => 'No seleccionas te ningún artículo. La tarea no fue agregada.',
 	'multidelete_select_all' => 'Seleccionar todo',
 	'multidelete_page' => 'Páginas a ser borradas',
 	'multidelete_reason' => 'Motivo de borrado',
@@ -3554,7 +3552,6 @@ $messages['tl'] = array(
 
 /** Turkish (Türkçe)
  * @author Incelemeelemani
- * @author Sucsuzz
  * @author Suelnur
  */
 $messages['tr'] = array(
@@ -3562,7 +3559,6 @@ $messages['tr'] = array(
 	'multiwikiedit_confirm' => 'ONAYLA',
 	'multiwikiedit_caption' => 'Sayfa listesi',
 	'multiwikiedit_title' => 'Çoklu Wiki Düzenle',
-	'multiwikiedit_minoredit_caption' => 'Küçük değişiklik',
 	'multiwikiedit_this_wiki' => 'bu wiki',
 	'multiwikiedit_inbox_caption' => 'virgülle ayrılmış',
 	'multiwikiedit_all_wikis' => 'tüm vikiler',
@@ -3571,7 +3567,6 @@ $messages['tr'] = array(
 	'multidelete_button' => 'SİL',
 	'multidelete_caption' => 'Sayfa listesi',
 	'multidelete_title' => 'Çoklu Sil',
-	'multiwikifinder-redirect' => 'yönlendirme',
 );
 
 /** Tatar (Cyrillic script) (татарча)
@@ -3724,7 +3719,6 @@ $messages['zh-hans'] = array(
 	'multiwikiedit_caption' => '页面列表',
 	'multiwikiedit_title' => '跨维基编辑',
 	'multiwikiedit_or' => '<b>或</b>',
-	'multiwikiedit_task_added' => '多wiki编辑任务#$1已加入。',
 	'multiwikiedit_on' => '运行该脚本于',
 	'multiwikiedit_page' => '待撰页面',
 	'multiwikiedit_page_text' => '要保存的文本',
@@ -3788,7 +3782,6 @@ $messages['zh-hans'] = array(
 	'multiwikifindpagenames' => '查找页面名称',
 	'multiwikienterpagename' => '输入页面名称：',
 	'multiwikirecords' => '找到了$1个维基',
-	'multiwikifinder-redirect' => '重定向',
 	'action-multiwikifinder' => '在Wikia搜寻一个特定的标题',
 );
 

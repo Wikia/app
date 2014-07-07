@@ -48,66 +48,6 @@ class WikiFactoryTest extends WikiaBaseTest {
 		$_SERVER['SERVER_NAME'] = null;
 	}
 
-
-	/**
-	 * @dataProvider testGetCurrentStagingHostDataProvider
-	 */
-	public function testGetCurrentStagingHost($host, $dbName, $expHost) {
-		$default = 'defaulthost';
-		$this->mockGlobalVariable('wgStagingList', ['preview',
-			'verify',
-			'sandbox-s1',
-			'sandbox-s2',
-			'sandbox-s3',
-			'sandbox-s4',
-			'sandbox-s5',
-			'sandbox-sony',
-			'externaltest',
-			'sandbox-qa01',
-			'sandbox-qa02',
-			'sandbox-qa03',
-			'sandbox-qa04',
-			'demo-sony',
-		] );
-
-		$this->assertEquals($expHost, WikiFactory::getCurrentStagingHost($dbName, $default, $host));
-	}
-
-	public function testGetCurrentStagingHostDataProvider() {
-		return [
-			[
-				'demo-sony-s1',
-				'muppet',
-				'demo-sony.muppet.wikia.com'
-			],
-			[
-				'demo-sony-s2',
-				'muppet',
-				'demo-sony.muppet.wikia.com'
-			],
-			[
-				'preview',
-				'muppet',
-				'preview.muppet.wikia.com'
-			],
-			[
-				'verify',
-				'muppet',
-				'verify.muppet.wikia.com'
-			],
-			[
-				'dev-test',
-				'muppet',
-				'muppet.test.wikia-dev.com'
-			],
-			[
-				'sandbox-s3',
-				'muppet',
-				'sandbox-s3.muppet.wikia.com'
-			]
-		];
-	}
-
 	public function testGetLocalEnvURLDataProvider() {
 		return [
 			[

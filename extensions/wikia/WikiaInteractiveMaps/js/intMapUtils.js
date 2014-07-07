@@ -6,10 +6,16 @@ define(
 		'wikia.cache',
 		'wikia.loader',
 		'wikia.ui.factory',
-		'wikia.mustache'
+		'wikia.mustache',
+		'wikia.tracker'
 	],
-	function($, w, cache, loader, uiFactory, mustache) {
+	function($, w, cache, loader, uiFactory, mustache, tracker) {
 		'use strict';
+
+		var tilesetTypes = {
+			REAL: 'geo',
+			CUSTOM: 'custom'
+		};
 
 		/**
 		 * @desc loads all assets for create map modal and initialize it
@@ -282,6 +288,28 @@ define(
 		}
 
 		/**
+		 * @desc Wrapper for our Wikia.Tracker.track method - sends to GA tracking info
+		 *
+		 * @param {string} action one of Wikia.Tracker.ACTIONS
+		 * @param {string} label
+		 * @param {integer} value
+		 */
+		function track(action, label, value) {
+			var trackingParams = {
+				trackingMethod: 'ga',
+				category: 'map',
+				action: action,
+				label: label
+			};
+
+			if( value ) {
+				trackingParams.value = value;
+			}
+
+			tracker.track(trackingParams);
+		}
+
+		/*
 		 * @desc creates image url for thumbnailer
 		 * @param {string} url - image url
 		 * @param {number} width
@@ -312,7 +340,11 @@ define(
 			handleNirvanaException: handleNirvanaException,
 			showError: showError,
 			cleanUpError: cleanUpError,
-			createThumbURL: createThumbURL
-		}
+			createThumbURL: createThumbURL,
+			track: track,
+			trackerActions: tracker.ACTIONS,
+			tilesetTypes: tilesetTypes
+		};
 	}
 );
+

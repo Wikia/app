@@ -261,7 +261,7 @@ ve.ce.Node.prototype.getModelHtmlDocument = function () {
  * @returns {number} Height of node contents
  */
 ve.ce.Node.prototype.getContentsHeight = function () {
-	var clearedHeight,
+	var clearedHeight
 		height = this.$element.height(),
 		clear = this.$element.css( 'clear' ),
 		clearfix = this.$element.hasClass( 'clearfix' );

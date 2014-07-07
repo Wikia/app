@@ -40,8 +40,7 @@ ve.ui.MediaSizeWidget = function VeUiMediaSizeWidget( scalable, config ) {
 	this.sizeTypeSelectWidget.addItems( [
 		new OO.ui.ButtonOptionWidget( 'default', {
 			'$': this.$,
-			'label': ve.msg( 'visualeditor-mediasizewidget-sizeoptions-default' ),
-			'flags': ['secondary']
+			'label': ve.msg( 'visualeditor-mediasizewidget-sizeoptions-default' )
 		} ),
 		// TODO: when upright is supported by Parsoid
 		// new OO.ui.ButtonOptionWidget( 'scale', {
@@ -50,8 +49,7 @@ ve.ui.MediaSizeWidget = function VeUiMediaSizeWidget( scalable, config ) {
 		// } ),
 		new OO.ui.ButtonOptionWidget( 'custom', {
 			'$': this.$,
-			'label': ve.msg( 'visualeditor-mediasizewidget-sizeoptions-custom' ),
-			'flags': ['secondary']
+			'label': ve.msg( 'visualeditor-mediasizewidget-sizeoptions-custom' )
 		} )
 	] );
 

@@ -20,6 +20,10 @@ class ParsoidSetup {
 		// modern task
 		$wgAutoloadClasses['ParsoidCacheUpdateTask'] = "$dir/ParsoidCacheUpdateTask.class.php";
 
+		// legacy job
+		$wgAutoloadClasses['ParsoidCacheUpdateJob'] = "$dir/ParsoidCacheUpdateJob.php";
+		$wgJobClasses['ParsoidCacheUpdateJob'] = 'ParsoidCacheUpdateJob';
+
 		self::registerHooks();
 
 		$wgParsoidCacheServers = array( 'http://parsoid-cache' );

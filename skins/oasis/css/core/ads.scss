@@ -4,7 +4,7 @@
 @import "../mixins/gradient";
 
 /** Hide invisible slots and 1x1 iframes **/
-.wikia-ad[id^="INVISIBLE_"], .wikia-ad iframe[width="1"][height="1"], .wikia-ad > .hidden {
+.wikia-ad[id^="INVISIBLE_"], .wikia-ad iframe[width="1"][height="1"] {
 	display: none;
 }
 

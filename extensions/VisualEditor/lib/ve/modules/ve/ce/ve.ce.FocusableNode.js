@@ -81,7 +81,7 @@ ve.ce.FocusableNode.prototype.onFocusableLive = function () {
 
 	if ( this.live ) {
 		this.$window = this.$( this.getElementWindow() );
-		//this.$window.on( 'resize.ve-ce-focusableNode', $.throttle( 500, ve.bind( this.onWindowResize, this ) ) );
+		this.$window.on( 'resize.ve-ce-focusableNode', $.throttle( 500, ve.bind( this.onWindowResize, this ) ) );
 		surfaceModel.connect( this, { 'history': 'onFocusableHistory' } );
 	} else {
 		this.$window.off( 'resize.ve-ce-focusableNode' );

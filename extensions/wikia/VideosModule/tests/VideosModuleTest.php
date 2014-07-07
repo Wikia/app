@@ -36,7 +36,6 @@
 		 * Test that both duplicate videos and videos found in the wgVideosModuleBlackList are filtered out when
 		 * creating the list of videos to be shown in the videos module
 		 * @dataProvider testAddToListDataProvider
-		 * @group UsingDB
 		 */
 		public function testAddToList( $videoData ) {
 			$this->setUpMock();

@@ -9,8 +9,6 @@
 namespace FluentSql;
 
 use FluentSql\Cache\ProcessCache;
-use FluentSql\Clause\Condition;
-use FluentSql\Clause\Where;
 use FluentSql\Functions\SqlFunction;
 
 class SQL {
@@ -580,14 +578,12 @@ class SQL {
 		if ($column2 !== null) {
 			return $this->ON($column1, $column2);
 		} else {
-			/** @var Where $where */
-			$where = $this->getLast('Where');
-			if ($where == null) {
+			if ($this->where == null) {
 				return $this->WHERE($column1);
 			}
 
 			$condition = new Clause\Condition($column1);
-			$where->and_($condition);
+			$this->where->and_($condition);
 
 			return $this->called($condition);
 		}
@@ -708,7 +704,6 @@ class SQL {
 		$condition = new Clause\Condition($column);
 		$this->where->add($condition);
 
-		$this->called($this->where);
 		return $this->called($condition);
 	}
 
@@ -761,10 +756,6 @@ class SQL {
 
 	public function IS_NULL() {
 		return $this->whereOp(null, Clause\Condition::IS_NULL);
-	}
-
-	public function LIKE($value) {
-		return $this->whereOp($value, Clause\Condition::LIKE);
 	}
 
 	public function BETWEEN($value1, $value2) {
@@ -843,14 +834,11 @@ class SQL {
 	}
 
 	public function HAVING($column) {
-		if ($this->having == null) {
-			$this->having = new Clause\Having();
-		}
-
 		$condition = new Clause\Condition($column);
-		$this->having->add($condition);
+		$having = new Clause\Having($condition);
+		$this->having = $having;
 
-		return $this->called($this->having);
+		return $this->called($having);
 	}
 
 	/**
@@ -941,7 +929,7 @@ class SQL {
 		}
 
 		if ($this->rawSql != null) {
-			$bk->append(" {$this->rawSql} ");
+			$bk->append($this->rawSql);
 			foreach ($this->rawParameters as $param) {
 				$bk->addParameter($param);
 			}
@@ -1321,9 +1309,6 @@ class SQL {
 		return $size > 0 ? $this->callOrder[$size - 1] : null;
 	}
 
-	/**
-	 * @return null|Condition
-	 */
 	private function getLastCondition() {
 		// give priority to having clause
 		if ($this->having != null && count($this->having->conditions()) > 0) {

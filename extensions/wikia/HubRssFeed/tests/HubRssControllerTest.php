@@ -38,7 +38,14 @@ class HubRssControllerTest extends WikiaBaseTest {
 	 * @covers  HubRssFeedSpecialController::notfound
 	 */
 	public function testNotFound() {
-		$this->mockGlobalVariable('wgHubRssFeeds', ['Hub1', 'Hub2']);
+		$mock = $this->getMockBuilder( 'HubRssFeedSpecialController' )
+			->disableOriginalConstructor()
+			->setMethods( ['__construct', 'setVal'] )
+			->getMock();
+
+		$mock->expects( $this->once() )
+			->method( 'setVal' )
+			->with( 'links', ['abc...'] );
 
 		$mockTitle = $this->getMockBuilder( 'Title' )
 			->disableOriginalConstructor()
@@ -49,19 +56,9 @@ class HubRssControllerTest extends WikiaBaseTest {
 			->method( 'getFullUrl' )
 			->will( $this->returnValue( 'abc' ) );
 
-		$mock = $this->getMockBuilder( 'HubRssFeedSpecialController' )
-			->disableOriginalConstructor()
-			->setMethods( ['__construct', 'setVal'] )
-			->getMock();
-
-		$mock->expects( $this->once() )
-			->method( 'setVal' )
-			->with( 'links', [
-				'abc/Hub1',
-				'abc/Hub2'
-			] );
-
 		$mock->currentTitle = $mockTitle;
+
+		$mock->customFeeds = ['abc' => '...'];
 
 		$mock->wg = new StdClass();
 
@@ -85,7 +82,7 @@ class HubRssControllerTest extends WikiaBaseTest {
 			->getMock();
 
 		$mockRequest->expects( $this->any() )
-			->method( 'getVal' )
+			->method( 'getParams' )
 			->will( $this->returnValue( ['par' => 'XyZ'] ) );
 
 		$mockTitle = $this->getMockBuilder( 'Title' )
@@ -98,7 +95,7 @@ class HubRssControllerTest extends WikiaBaseTest {
 			->with( 'HubRssFeedSpecial', 'notfound' );
 
 		$mock->currentTitle = $mockTitle;
-
+		$mock->customFeeds = ['abc' => 'desc_abc'];
 		$mock->request = $mockRequest;
 		$mock->index();
 	}

@@ -16,7 +16,7 @@ define('ext.wikia.adEngine.adLogicPageDimensions', [
 		/**
 		 * Slots based on page length
 		 */
-		preFootersThreshold = 1500,
+		preFootersThreshold = 2400,
 		slotsOnlyOnLongPages = {
 			LEFT_SKYSCRAPER_2: 2400,
 			LEFT_SKYSCRAPER_3: 4000,

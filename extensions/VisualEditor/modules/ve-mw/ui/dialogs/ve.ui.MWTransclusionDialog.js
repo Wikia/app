@@ -422,10 +422,7 @@ ve.ui.MWTransclusionDialog.prototype.initialize = function () {
 		'$': this.$,
 		'flags': ['primary']
 	} );
-	this.modeButton = new OO.ui.ButtonWidget( {
-		'$': this.$,
-		'flags': ['secondary']
-	} );
+	this.modeButton = new OO.ui.ButtonWidget( { '$': this.$ } );
 	this.bookletLayout = new OO.ui.BookletLayout( {
 		'$': this.$,
 		'continuous': true,

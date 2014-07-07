@@ -169,7 +169,7 @@ define('lvs.swapkeep', [
 			$suggestions;
 
 		arr = [];
-		$suggestions = $row.find('.more-videos [data-video-key]');
+		$suggestions = $row.find('.more-videos .thumbimage');
 
 		if ($suggestions.length) {
 			$suggestions.each(function (idx, elem) {
@@ -178,7 +178,7 @@ define('lvs.swapkeep', [
 		} else {
 			arr.push(
 				$row
-				.find('.premium [data-video-key]')
+				.find('.premium .video-wrapper .thumbimage')
 				.data().videoKey
 			);
 		}
