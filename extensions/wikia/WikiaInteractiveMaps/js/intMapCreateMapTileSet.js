@@ -201,7 +201,7 @@ define(
 			var $target = $(event.currentTarget),
 				mapTypeChosen = $target.data('type');
 
-			trackChosenMap(mapTypeChosen);
+			utils.track(utils.trackerActions.CLICK_LINK_IMAGE, mapTypeChosen + '-map-chosen');
 
 			modal.trigger('previewTileSet', {
 				type: mapTypeChosen,
@@ -362,16 +362,6 @@ define(
 				data.type = 'custom';
 				modal.trigger('previewTileSet', data);
 			});
-		}
-
-		/**
-		 * @desc Sends to GA what map type was chosen
-		 *
-		 * @param {string} type
-		 */
-		function trackChosenMap(type) {
-			var label = type + '-map-chosen';
-			utils.track(utils.trackerActions.CLICK_LINK_IMAGE, label);
 		}
 
 		return {
