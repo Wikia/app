@@ -5,7 +5,7 @@ require([
 ], function (window, log, scriptWriter, Krux, $) {
 	'use strict';
 	if (window.wgEnableKruxTargeting) {
-		$(window).load(function () {
+		$(window).on("load", function () {
 			scriptWriter.callLater(function () {
 				log('Loading Krux code', 8, 'Krux.run.js');
 				Krux.load(window.wgKruxCategoryId);

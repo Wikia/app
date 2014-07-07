@@ -622,9 +622,11 @@ $config['wikiamobile_ads_js'] = array(
 	'assets' => array(
 		// Modules
 		'//resources/wikia/modules/lazyqueue.js',
+		'//resources/wikia/modules/scriptwriter.js',
 		'//extensions/wikia/AdEngine/js/MessageListener.js',
 
 		// Advertisement libs
+		'//extensions/wikia/AdEngine/js/Krux.js',
 		'//extensions/wikia/AdEngine/js/EventDispatcher.js',
 		'//extensions/wikia/AdEngine/js/AdLogicPageParams.js',
 		'//extensions/wikia/AdEngine/js/AdConfigMobile.js',
@@ -643,6 +645,7 @@ $config['wikiamobile_ads_js'] = array(
 		'//extensions/wikia/AdEngine/js/WikiaDartVideoHelper.js',
 
 		// Run!
+		'//extensions/wikia/AdEngine/js/Krux.run.js',
 		'//extensions/wikia/WikiaMobile/js/ads_run.js',
 	)
 );
