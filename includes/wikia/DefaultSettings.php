@@ -260,6 +260,7 @@ $wgAutoloadClasses[ 'TransactionTrace'                ] = "$IP/includes/wikia/tr
 $wgAutoloadClasses[ 'TransactionClassifier'           ] = "$IP/includes/wikia/transactiontrace/TransactionClassifier.php";
 $wgAutoloadClasses[ 'TransactionTraceNewrelic'        ] = "$IP/includes/wikia/transactiontrace/TransactionTraceNewrelic.php";
 $wgHooks          [ 'ArticleViewAddParserOutput'      ][] = 'Transaction::onArticleViewAddParserOutput';
+$wgHooks          [ 'RestInPeace'                     ][] = 'Transaction::onRestInPeace';
 $wgHooks          [ 'RestInPeace'                     ][] = 'ScribePurge::onRestInPeace';
 $wgAutoloadClasses[ 'Wikia\\Blogs\\BlogTask'          ] = "$IP/extensions/wikia/Blogs/BlogTask.class.php";
 
