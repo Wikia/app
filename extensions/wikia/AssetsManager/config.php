@@ -472,26 +472,34 @@ $config['wikiamobile_404_js'] = array(
 	)
 );
 
+$config['wikiamobile_js_blocking'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => 'wikiamobile',
+	'assets' => array(
+		//core modules
+		'//resources/wikia/libraries/modil/modil.js',
+		'//resources/wikia/modules/window.js',
+		'//resources/wikia/modules/document.js',
+		'//resources/wikia/modules/log.js',
+		'//resources/wikia/modules/querystring.js',
+		'//resources/wikia/modules/location.js',
+		'//resources/wikia/modules/geo.js',
+		'//resources/wikia/modules/cookies.js',
+
+	)
+);
+
 //loaded at the bottom of the page in the body section
 $config['wikiamobile_js_body_minimal'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => 'wikiamobile',
 	'assets' => array(
 		//libraries/frameworks
-		'//resources/wikia/libraries/modil/modil.js',
 		'//resources/jquery/jquery-2.0.3.js',
 
 		//core modules
-		'//resources/wikia/modules/window.js',
-		'//resources/wikia/modules/document.js',
-		'//resources/wikia/modules/location.js',
 		'//resources/wikia/modules/localStorage.js',
-		'//resources/wikia/modules/querystring.js',
-		'//resources/wikia/modules/cookies.js',
-		//depends on querystring.js and cookies.js
-		'//resources/wikia/modules/log.js',
 		'//resources/wikia/modules/abTest.js',
-		'//resources/wikia/modules/geo.js',
 
 		//feature detection
 		'//extensions/wikia/WikiaMobile/js/features.js',
@@ -622,11 +630,9 @@ $config['wikiamobile_ads_js'] = array(
 	'assets' => array(
 		// Modules
 		'//resources/wikia/modules/lazyqueue.js',
-		'//resources/wikia/modules/scriptwriter.js',
 		'//extensions/wikia/AdEngine/js/MessageListener.js',
 
 		// Advertisement libs
-		'//extensions/wikia/AdEngine/js/Krux.js',
 		'//extensions/wikia/AdEngine/js/EventDispatcher.js',
 		'//extensions/wikia/AdEngine/js/AdLogicPageParams.js',
 		'//extensions/wikia/AdEngine/js/AdConfigMobile.js',
@@ -645,10 +651,20 @@ $config['wikiamobile_ads_js'] = array(
 		'//extensions/wikia/AdEngine/js/WikiaDartVideoHelper.js',
 
 		// Run!
-		'//extensions/wikia/AdEngine/js/Krux.run.js',
 		'//extensions/wikia/WikiaMobile/js/ads_run.js',
 	)
 );
+
+$config['wikiamobile_krux_js'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => 'wikiamobile',
+	'assets' => array(
+		'//extensions/wikia/AdEngine/js/AdLogicPageParams.js',
+		'//extensions/wikia/AdEngine/js/Krux.js',
+		'//extensions/wikia/AdEngine/js/Krux.run.js',
+	)
+);
+
 
 $config['wikiamobile_mediagallery_js'] = array(
 	'type' => AssetsManager::TYPE_JS,

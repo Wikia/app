@@ -387,4 +387,20 @@ class WikiaMobileHooks {
 		wfProfileOut( __METHOD__ );
 		return self::$mediaNsString;
 	}
+
+	/**
+	 * WikiaMobile blocking js
+	 *
+	 * @param array $vars
+	 * @param array $scripts
+	 *
+	 * @return bool
+	 */
+	static public function onWikiaSkinTopScripts(&$vars, &$scripts) {
+		if (F::app()->checkSkin(array('wikiamobile'))) {
+			$scriptUrl = AssetsManager::getInstance()->getURL(['wikiamobile_js_blocking']);
+			$scripts .= Html::linkedScript($scriptUrl[0]);
+		}
+		return true;
+	}
 }

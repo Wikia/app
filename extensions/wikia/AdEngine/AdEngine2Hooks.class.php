@@ -80,6 +80,12 @@ class AdEngine2Hooks {
 		foreach (AdEngine2Service::getTopJsVariables() as $varName => $varValue) {
 			$vars[$varName] = $varValue;
 		}
+
+		if (F::app()->checkSkin(array('wikiamobile'))) {
+			$scriptUrl = AssetsManager::getInstance()->getURL(['wikiamobile_krux_js']);
+			$scripts .= Html::linkedScript($scriptUrl[0]);
+		}
+
 		return true;
 	}
 
