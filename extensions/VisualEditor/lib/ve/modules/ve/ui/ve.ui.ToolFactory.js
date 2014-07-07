@@ -25,67 +25,32 @@ OO.inheritClass( ve.ui.ToolFactory, OO.ui.ToolFactory );
 /* Methods */
 
 /**
- * Get a list of tools from a set of annotations.
+ * Get a list of tools for a fragment.
  *
  * The lowest compatible item in each inheritance chain will be used.
  *
  * @method
- * @param {ve.dm.AnnotationSet} annotations Annotations to be inspected
- * @returns {string[]} Symbolic names of tools that can be used to inspect annotations
+ * @param {ve.dm.SurfaceFragment} fragment Fragment to find compatible tools for
+ * @returns {Object[]} List of objects containing `tool` and `model` properties, representing each
+ *   compatible tool and the node or annotation it is compatible with
  */
-ve.ui.ToolFactory.prototype.getToolsForAnnotations = function ( annotations ) {
-	if ( annotations.isEmpty() ) {
-		return [];
-	}
+ve.ui.ToolFactory.prototype.getToolsForFragment = function ( fragment ) {
+	var i, iLen, j, jLen, name, tools, model,
+		models = fragment.getSelectedModels(),
+		names = {},
+		matches = [];
 
-	var i, len, name,
-		arr = annotations.get(),
-		tools = [],
-		matches = [],
-		names = {};
-
-	for ( i = 0, len = arr.length; i < len; i++ ) {
-		tools = tools.concat( this.collectCompatibleTools( arr[i] ) );
-	}
-	for ( i = 0, len = tools.length; i < len; i++ ) {
-		name = tools[i].static.name;
-		if ( !names[name] ) {
-			matches.push( name);
+	// Collect tool/model pairs, unique by tool name
+	for ( i = 0, iLen = models.length; i < iLen; i++ ) {
+		model = models[i];
+		tools = this.collectCompatibleTools( model );
+		for ( j = 0, jLen = tools.length; j < jLen; j++ ) {
+			name = tools[j].static.name;
+			if ( !names[name] ) {
+				matches.push( { 'tool': tools[j], 'model': model } );
+			}
+			names[name] = true;
 		}
-		names[name] = true;
-	}
-
-	return matches;
-};
-
-/**
- * Get a tool for a node.
- *
- * The lowest compatible item in each inheritance chain will be used.
- *
- * @method
- * @param {ve.dm.Node} node Node to be edited
- * @returns {string[]} Symbolic name of tool that can be used to edit node
- */
-ve.ui.ToolFactory.prototype.getToolsForNode = function ( node ) {
-	if ( !node.isInspectable() ) {
-		return [];
-	}
-
-	var i, len, tools, primary,
-		matches = [],
-		primaryCommandName = ve.ce.nodeFactory.getNodePrimaryCommandName( node.getType() );
-
-	tools = this.collectCompatibleTools( node );
-	for ( i = 0, len = tools.length; i < len; i++ ) {
-		if ( tools[i].static.getCommandName() === primaryCommandName ) {
-			primary = tools[i].static.name;
-		} else {
-			matches.push( tools[i].static.name );
-		}
-	}
-	if ( primary ) {
-		matches.unshift( primary );
 	}
 
 	return matches;
@@ -94,16 +59,16 @@ ve.ui.ToolFactory.prototype.getToolsForNode = function ( node ) {
 /**
  * Collect the most specific compatible tools for an annotation or node.
  *
- * @param {ve.dm.Annotation|ve.dm.Node} subject Annotation or node
+ * @param {ve.dm.Annotation|ve.dm.Node} model Annotation or node
  * @returns {Function[]} List of compatible tools
  */
-ve.ui.ToolFactory.prototype.collectCompatibleTools = function ( subject ) {
+ve.ui.ToolFactory.prototype.collectCompatibleTools = function ( model ) {
 	var i, len, name, candidate, add,
 		candidates = [];
 
 	for ( name in this.registry ) {
 		candidate = this.registry[name];
-		if ( candidate.static.isCompatibleWith( subject ) ) {
+		if ( candidate.static.isCompatibleWith( model ) ) {
 			add = true;
 			for ( i = 0, len = candidates.length; i < len; i++ ) {
 				if ( candidate.prototype instanceof candidates[i] ) {

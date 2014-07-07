@@ -2,7 +2,7 @@
 
 class WikiaMaps extends WikiaObject {
 
-	const DEFAULT_MEMCACHE_EXPIRE_TIME = 3600;
+	const REAL_MAP_THUMB_EXPIRE_TIME = 86400; // 1 day
 	const ENTRY_POINT_MAP = 'map';
 	const ENTRY_POINT_RENDER = 'render';
 	const ENTRY_POINT_TILE_SET = 'tile_set';
@@ -25,6 +25,7 @@ class WikiaMaps extends WikiaObject {
 	const HTTP_NO_CONTENT = 204;
 
 	const MAP_THUMB_PREFIX = '/thumb/';
+	const DEFAULT_REAL_MAP_URL = 'http://img.wikia.nocookie.net/intmap_Geo_Map/default-geo.jpg';
 
 	/**
 	 * @var array API connection config
@@ -238,6 +239,22 @@ class WikiaMaps extends WikiaObject {
 		$url = $this->buildUrl( [ self::ENTRY_POINT_TILE_SET ], $params );
 
 		//TODO: consider caching the response
+		$response = $this->processServiceResponse(
+			Http::get( $url, 'default', $this->getHttpRequestOptions() )
+		);
+
+		return $response;
+	}
+
+	/**
+	 * Sends request to interactive maps service and returns tile set data
+	 *
+	 * @param Integer $tileSetId
+	 * @return mixed
+	 */
+	public function getTileSet( $tileSetId ) {
+		$url = $this->buildUrl( [ self::ENTRY_POINT_TILE_SET, $tileSetId ] );
+
 		$response = $this->processServiceResponse(
 			Http::get( $url, 'default', $this->getHttpRequestOptions() )
 		);
@@ -526,6 +543,32 @@ class WikiaMaps extends WikiaObject {
 		$crop = urlencode( $imageServing->getCut( $width, $height, $align ) );
 
 		return $baseURL . self::MAP_THUMB_PREFIX . $fileName . '/' . $crop . '-' . $fileName;
+	}
+
+	/**
+	 * Fetches the Real map image from the service and returns preview thumbnail for it
+	 *
+	 * @return bool|String
+	 */
+	private function fetchRealMapImageUrl() {
+		$imageUrl = self::DEFAULT_REAL_MAP_URL;
+		$tileSetData = $this->getTileSet( $this->getGeoMapTilesetId() );
+		if ( $tileSetData[ 'success' ] && isset( $tileSetData[ 'content' ]->image ) ) {
+			$imageUrl = $tileSetData[ 'content' ]->image;
+		}
+		return $imageUrl;
+	}
+
+	/**
+	 * Fetches and caches the RealMap thumbnail image
+	 *
+	 * @return string
+	 */
+	public function getRealMapImageUrl() {
+		$memCacheKey = wfSharedMemcKey( __CLASS__, __METHOD__ );
+		return WikiaDataAccess::cache( $memCacheKey, self::REAL_MAP_THUMB_EXPIRE_TIME, function () {
+			return $this->fetchRealMapImageUrl();
+		} );
 	}
 }
 

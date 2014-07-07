@@ -26,38 +26,31 @@ ve.init.Target = function VeInitTarget( $container ) {
 
 	// Properties
 	this.$element = $container;
-
-	/**
-	 * @property {ve.ui.Surface}
-	 */
 	this.surface = null;
-
-	/**
-	 * The ve-ce-documentNode of #surface
-	 * @property {jQuery}
-	 */
-	this.$document = null;
-
-	/**
-	 * @property {ve.ui.TargetToolbar}
-	 */
 	this.toolbar = null;
+	this.debugBar = null;
+
+	// Register
+	ve.init.target = this;
 };
 
 /**
  * Destroy the target
  */
 ve.init.Target.prototype.destroy = function () {
-	this.$document = null;
 	if ( this.surface ) {
 		this.surface.destroy();
+		this.surface = null;
 	}
 	if ( this.toolbar ) {
 		this.toolbar.destroy();
+		this.toolbar = null;
 	}
 	if ( this.$element ) {
 		this.$element.remove();
+		this.$element = null;
 	}
+	ve.init.target = null;
 };
 
 /* Events */
@@ -65,9 +58,9 @@ ve.init.Target.prototype.destroy = function () {
 /**
  * Fired when the #surface is ready.
  *
- * By default the surface document is not focused. If the target wants
+ * By default the surface's document is not focused. If the target wants
  * the browsers' focus to be in the surface (ready for typing and cursoring)
- * call `this.$document[0].focus();` in a handler for this event.
+ * call `this.surface.getView().focus()` in a handler for this event.
  *
  * @event surfaceReady
  */
@@ -102,8 +95,11 @@ ve.init.Target.static.toolbarGroups = [
 	{ 'include': [ 'link' ] },
 	// Structure
 	{
-		'type': 'bar',
-		'include': [ 'number', 'bullet', 'outdent', 'indent' ]
+		'type': 'list',
+		'icon': 'bullet-list',
+		'indicator': 'down',
+		'include': [ { 'group': 'structure' } ],
+		'demote': [ 'outdent', 'indent' ]
 	},
 	// Insert
 	{
@@ -158,4 +154,75 @@ ve.init.Target.static.pasteRules = {
 		]
 	},
 	'all': null
+};
+
+/* Methods */
+
+/**
+ * Create a surface.
+ *
+ * @method
+ * @param {ve.dm.Document} dmDoc Document model
+ * @param {Object} [config] Configuration options
+ * @returns {ve.ui.Surface}
+ */
+ve.init.Target.prototype.createSurface = function ( dmDoc, config ) {
+	return new ve.ui.DesktopSurface( dmDoc, config, this );
+};
+
+/**
+ * Get the target's surface
+ *
+ * @return {ve.ui.Surface} Surface
+ */
+ve.init.Target.prototype.getSurface = function () {
+	return this.surface;
+};
+
+/**
+ * Get the target's toolbar
+ *
+ * @return {ve.ui.TargetToolbar} Toolbar
+ */
+ve.init.Target.prototype.getToolbar = function () {
+	return this.toolbar;
+};
+
+/**
+ * Get the target's debug bar
+ *
+ * @return {ve.ui.DebugBar} Toolbar
+ */
+ve.init.Target.prototype.getDebugBar = function () {
+	return this.debugBar;
+};
+
+/**
+ * Set up the toolbar and insert it into the DOM.
+ *
+ * The default implementation inserts it before the surface, but subclasses can override this.
+ *
+ * @param {Object} [config] Configuration options
+ */
+ve.init.Target.prototype.setupToolbar = function ( config ) {
+	if ( !this.surface ) {
+		throw new Error( 'Surface must be setup before Toolbar' );
+	}
+	this.toolbar = new ve.ui.TargetToolbar( this, this.surface, config );
+	this.toolbar.setup( this.constructor.static.toolbarGroups );
+	this.surface.addCommands( this.constructor.static.surfaceCommands );
+	this.toolbar.$element.insertBefore( this.surface.$element );
+};
+
+/**
+ * Set up the debug bar and insert it into the DOM.
+ *
+ * The default implementation inserts it after the surface, but subclasses can override this.
+ */
+ve.init.Target.prototype.setupDebugBar = function () {
+	if ( !this.surface ) {
+		throw new Error( 'Surface must be setup before DebugBar' );
+	}
+	this.debugBar = new ve.ui.DebugBar( this.surface );
+	this.debugBar.$element.insertAfter( this.surface.$element );
 };

@@ -255,6 +255,11 @@ $wgAutoloadClasses[ 'WikiaSQL'                        ] = "$IP/includes/wikia/Wi
 $wgAutoloadClasses[ 'WikiaSQLCache'                   ] = "$IP/includes/wikia/WikiaSQLCache.class.php";
 $wgAutoloadClasses[ 'WikiaSanitizer'                  ] = "$IP/includes/wikia/WikiaSanitizer.class.php";
 $wgAutoloadClasses[ 'ScribePurge'                     ] = "$IP/includes/cache/wikia/ScribePurge.class.php";
+$wgAutoloadClasses[ 'Transaction'                     ] = "$IP/includes/wikia/transactiontrace/Transaction.php";
+$wgAutoloadClasses[ 'TransactionTrace'                ] = "$IP/includes/wikia/transactiontrace/TransactionTrace.php";
+$wgAutoloadClasses[ 'TransactionClassifier'           ] = "$IP/includes/wikia/transactiontrace/TransactionClassifier.php";
+$wgAutoloadClasses[ 'TransactionTraceNewrelic'        ] = "$IP/includes/wikia/transactiontrace/TransactionTraceNewrelic.php";
+$wgHooks          [ 'ArticleViewAddParserOutput'      ][] = 'Transaction::onArticleViewAddParserOutput';
 $wgHooks          [ 'RestInPeace'                     ][] = 'ScribePurge::onRestInPeace';
 $wgAutoloadClasses[ 'Wikia\\Blogs\\BlogTask'          ] = "$IP/extensions/wikia/Blogs/BlogTask.class.php";
 
@@ -1239,6 +1244,12 @@ $wgAdDriverWikiaBarBoxad2ImpressionCapping = [2, 4, 6];
  */
 $wgAdDriverUseSevenOneMedia = null;
 $wgAdDriverUseSevenOneMediaInLanguages = ['de'];
+
+/**
+ * @name $wgAdDriverSevenOneMediaSub4Site
+ * Global variable SOI_SUB4SITE value for SevenOne Media ads
+ */
+$wgAdDriverSevenOneMediaSub4Site = null;
 
 /**
  * @name $wgAdDriverUseDartForSlotsBelowTheFold

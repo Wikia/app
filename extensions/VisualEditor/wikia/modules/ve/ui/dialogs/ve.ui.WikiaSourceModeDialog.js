@@ -16,7 +16,7 @@
  */
 ve.ui.WikiaSourceModeDialog = function VeUiWikiaSourceModeDialog( config ) {
 	// Parent constructor
-	ve.ui.Dialog.call( this, config );
+	ve.ui.WikiaSourceModeDialog.super.call( this, config );
 };
 
 /* Inheritance */
@@ -35,7 +35,7 @@ ve.ui.WikiaSourceModeDialog.static.icon = 'source';
 
 ve.ui.WikiaSourceModeDialog.prototype.initialize = function () {
 	// Parent method
-	ve.ui.Dialog.prototype.initialize.call( this );
+	ve.ui.WikiaSourceModeDialog.super.prototype.initialize.call( this );
 
 	// Properties
 	this.openCount = 0;
@@ -69,22 +69,22 @@ ve.ui.WikiaSourceModeDialog.prototype.initialize = function () {
 /**
  * @inheritdoc
  */
-ve.ui.WikiaSourceModeDialog.prototype.setup = function ( data ) {
-	var doc = this.getFragment().getDocument();
-
-	this.target = data.target;
-	this.openCount++;
-	this.timings.serializeStart = ve.now();
-
-	// Parent method
-	ve.ui.Dialog.prototype.setup.call( this );
-
-	this.$frame.startThrobbing();
-	// Use the WikiaViewPageTarget object as the target here
-	this.target.serialize(
-		ve.dm.converter.getDomFromModel( doc, false ),
-		ve.bind( this.onSerialize, this )
-	);
+ve.ui.WikiaSourceModeDialog.prototype.getSetupProcess = function ( data ) {
+	return ve.ui.WikiaSourceModeDialog.super.prototype.getSetupProcess.call( this, data )
+		.first( function () {
+			this.target = data.target;
+			this.openCount++;
+			this.timings.serializeStart = ve.now();
+		}, this )
+		.next( function () {
+			var doc = this.getFragment().getDocument();
+			this.$frame.startThrobbing();
+			// Use the WikiaViewPageTarget object as the target here
+			this.target.serialize(
+				ve.dm.converter.getDomFromModel( doc, false ),
+				ve.bind( this.onSerialize, this )
+			);
+		}, this );
 };
 
 /**
@@ -179,13 +179,9 @@ ve.ui.WikiaSourceModeDialog.prototype.onParseSuccess = function ( response ) {
 	target.edited = true;
 	target.doc = ve.createDocumentFromHtml( response.visualeditor.content );
 	parseStart = this.timings.parseStart;
-	target.setUpSurface( target.doc, ve.bind( function () {
-		this.editNotices = {};
-		this.setupToolbarButtons();
-		this.attachToolbarButtons();
-		this.$document[0].focus();
-		this.activating = false;
-
+	target.setupSurface( target.doc, ve.bind( function () {
+		this.startSanityCheck();
+		this.emit( 'surfaceReady' );
 		ve.track( 'wikia', {
 			'action': ve.track.actions.SUCCESS,
 			'label': 'dialog-source-parse',
@@ -206,4 +202,4 @@ ve.ui.WikiaSourceModeDialog.prototype.onParseError = function ( ) {
 	// TODO: error handling?
 };
 
-ve.ui.dialogFactory.register( ve.ui.WikiaSourceModeDialog );
+ve.ui.windowFactory.register( ve.ui.WikiaSourceModeDialog );

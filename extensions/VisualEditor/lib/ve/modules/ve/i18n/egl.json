@@ -1,7 +1,8 @@
 {
 	"@metadata": {
 		"authors": [
-			"Lévi"
+			"Lévi",
+			"Gloria sah"
 		]
 	},
 	"visualeditor": "VisualEditor",
@@ -23,7 +24,11 @@
 	"visualeditor-dialog-action-apply": "Drōva al mudéfichi",
 	"visualeditor-dialog-action-cancel": "Scanşèla",
 	"visualeditor-dialog-action-goback": "Indrē",
+	"visualeditor-dialog-error": "A gh'è 'n quèl ch' a nn'à mìa funsionê...",
+	"visualeditor-dialog-error-dismiss": "Torna indrē",
 	"visualeditor-dialog-command-help-title": "Scurtòun da tastēra",
+	"visualeditor-dialog-language-auto-direction": "Automàtic",
+	"visualeditor-dialog-language-search-title": "Selesionèr la lengva",
 	"visualeditor-formatdropdown-format-heading-label": "Intestasiòun (1-6)",
 	"visualeditor-formatdropdown-format-heading1": "Intestasiòun 1",
 	"visualeditor-formatdropdown-format-heading2": "Intestasiòun 2",
@@ -43,9 +48,11 @@
 	"visualeditor-inspector-remove-tooltip": "Armōv",
 	"visualeditor-languageinspector-block-tooltip": "Blôch ed léngua",
 	"visualeditor-languageinspector-title": "Léngua",
+	"visualeditor-languageinspector-widget-changelang": "Catèr la lengva",
 	"visualeditor-languageinspector-widget-label-direction": "Diresiòun",
 	"visualeditor-languageinspector-widget-label-langcode": "Côdis léngua",
 	"visualeditor-languageinspector-widget-label-language": "Léngua",
+	"visualeditor-language-search-input-placeholder": "Serchèr per nom o per còdes dla lèngva",
 	"visualeditor-linkinspector-title": "Colegamèint ipertestuêl",
 	"visualeditor-listbutton-bullet-tooltip": "Elèinch cun i pûnt",
 	"visualeditor-listbutton-number-tooltip": "Elèinch cun i nómer",

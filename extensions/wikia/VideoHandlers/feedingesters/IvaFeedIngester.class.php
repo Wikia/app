@@ -970,6 +970,12 @@ class IvaFeedIngester extends VideoFeedIngester {
 		$categories[] = $data['series'];
 		$categories[] = $data['category'];
 
+		// VID-1736 Remove video title from categories
+		$titleKey = array_search( $data['titleName'], $categories );
+		if ( $titleKey !== false ) {
+			unset( $categories[$titleKey] );
+		}
+
 		$categories = array_merge( $categories, $this->getAdditionalPageCategories( $categories ) );
 
 		// add language

@@ -302,4 +302,13 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 		$this->setVal( 'pagination', $pagination );
 	}
 
+	/**
+	 * Return Real Map image URL
+	 */
+	public function getRealMapImageUrl() {
+		$this->response->setVal( 'url', $this->mapsModel->getRealMapImageUrl() );
+		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
+		$this->response->setCacheValidity( WikiaResponse::CACHE_SHORT, WikiaResponse::CACHE_SHORT );
+	}
 }
+
