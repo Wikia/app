@@ -776,10 +776,10 @@ class WikiaHomePageHelper extends WikiaModel {
 				if (!empty($wiki['image'])) {
 					$wiki['main_image'] = $wiki['image'];
 				}
-				$wiki['image'] = ImagesService::overrideThumbnailFormat(
-					$this->getImageUrl($wiki['main_image'], $size->width, $size->height),
-					ImagesService::EXT_JPG
-				);
+				$xwikiImage= PromoImage::getImage($wiki['main_image']);
+				if (!empty($xwikiImage)){
+					$wiki['image'] = $xwikiImage->getCroppedThumbnailUrl($size->width, $size->height, ImagesService::EXT_JPG);
+				}
 				unset($wiki['main_image']);
 			}
 		}

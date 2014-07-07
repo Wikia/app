@@ -8,6 +8,7 @@
 
 class PromoImage extends WikiaObject {
 	const __LATEST_IMAGE_WITH_STATUS_XWIKI_CACHE_KEY = "promoimage.%s.%s.state.%s";
+	const __BULK_IMAGES_WITH_TYPE_TTL = 60;
 	const __REVIEWED_XWIKI_TTL = 3600;
 	const __MAIN_IMAGE_BASE_NAME = 'Wikia-Visualization-Main';
 	const __ADDITIONAL_IMAGES_BASE_NAME = 'Wikia-Visualization-Add';
@@ -61,6 +62,23 @@ class PromoImage extends WikiaObject {
 		$promo = new PromoImage($type);
 		$promo->setCityId($cityId);
 		return $promo;
+	}
+
+	static public function getApprovedImageNamesForWikiIds($wikiIds){
+		$db = wfGetDB( DB_SLAVE, array(), F::app()->wg->ExternalSharedDB );
+
+		$sql = new WikiaSQL();
+		$sql->cache(PromoImage::__BULK_IMAGES_WITH_TYPE_TTL)
+			->SELECT('city_id', 'image_name')
+			->FROM(PromoImage::TABLE_CITY_VISUALIZATION_IMAGES_XWIKI)
+			->WHERE('image_review_status')->EQUAL_TO(ImageReviewStatuses::STATE_APPROVED)
+			->AND_('image_type')->EQUAL_TO(PromoImage::MAIN)
+			->AND_('city_id')->IN($wikiIds);
+		$resultMap = [];
+		$sql->runLoop($db, function($unused, $row) use (&$resultMap) {
+			$resultMap[$row->city_id] = $row->image_name;
+		});
+		return $resultMap;
 	}
 
 	public function __construct($type, $dbName = null) {

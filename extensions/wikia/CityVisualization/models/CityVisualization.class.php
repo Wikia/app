@@ -265,7 +265,6 @@ class CityVisualization extends WikiaModel {
 		$tables = [self::CITY_VISUALIZATION_TABLE_NAME, 'city_list'];
 		$fields = [
 			self::CITY_VISUALIZATION_TABLE_NAME . '.city_id',
-			self::CITY_VISUALIZATION_TABLE_NAME . '.city_main_image',
 			'city_list.city_title',
 			'city_list.city_url',
 			self::CITY_VISUALIZATION_TABLE_NAME . '.city_flags',
@@ -274,14 +273,20 @@ class CityVisualization extends WikiaModel {
 			'city_list' => [
 				'join',
 				self::CITY_VISUALIZATION_TABLE_NAME . '.city_id = city_list.city_id'
-			],
+
+			]
 		];
 		$conds = $conditioner->getCondition();
 
 		$results = $db->select($tables, $fields, $conds, __METHOD__, array(), $joinConds);
-
+		$wikiDataMap = [];
 		while( $row = $db->fetchObject($results) ) {
 			$wikiData = $this->makeVisualizationWikiData($row);
+			$wikiDataMap[$row->city_id] = $wikiData;
+		}
+		$wikiDataMapWithImages = $this->makeWikiDataWithImages($wikiDataMap);
+
+		foreach($wikiDataMapWithImages as $wikiData ){
 			$isPromoted = $wikiData['wikipromoted'];
 
 			if ( $conditioner->getPromotionCondition( $isPromoted ) ) {
@@ -294,13 +299,26 @@ class CityVisualization extends WikiaModel {
 		wfProfileOut(__METHOD__);
 		return $verticalWikis;
 	}
+	private function makeWikiDataWithImages( $wikiDataMap ) {
+		$wikiIds = array_keys( $wikiDataMap );
+		$approvedImages = PromoImage::getApprovedImageNamesForWikiIds( $wikiIds );
+		$result = [];
+
+		foreach ( $wikiDataMap as $wikiId => $wikiData ) {
+			$imgName = $approvedImages[$wikiId];
+			if ( !empty($imgName) ) {
+				$wikiData['main_image'] = $imgName;
+			}
+			$result[$wikiId] = $wikiData;
+		}
+		return $result;
+	}
 	
 	private function makeVisualizationWikiData($row) {
 		return [
 			'wikiid' => $row->city_id,
 			'wikiname' => $row->city_title,
 			'wikiurl' => $row->city_url,
-			'main_image' => PromoImage::forWikiId(PromoImage::MAIN, $row->city_id)->getReviewedImageName(),
 			'wikiofficial' => $this->isOfficialWiki($row->city_flags),
 			'wikipromoted' => $this->isPromotedWiki($row->city_flags),
 		];
