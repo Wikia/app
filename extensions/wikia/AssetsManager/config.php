@@ -242,6 +242,7 @@ $config['oasis_jquery'] = array(
 
 		// Lazy rail
 		'#group_lazy_rail_js',
+		'//skins/oasis/js/TopModuleAB.js',
 	)
 );
 
