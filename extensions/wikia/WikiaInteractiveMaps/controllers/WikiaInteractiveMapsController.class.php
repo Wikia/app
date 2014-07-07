@@ -284,7 +284,7 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 			'url' => $url,
 		];
 
-		if( $this->app->checkSkin( self::WIKIA_MOBILE_SKIN_NAME ) ) {
+		if ( $this->app->checkSkin( self::WIKIA_MOBILE_SKIN_NAME ) ) {
 			$paginationOptions = array_merge( $paginationOptions, [
 				'prevMsg' => '&lt;',
 				'nextMsg' => '&gt;',
