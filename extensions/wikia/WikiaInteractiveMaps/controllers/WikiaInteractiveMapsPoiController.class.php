@@ -42,7 +42,7 @@ class WikiaInteractiveMapsPoiController extends WikiaInteractiveMapsBaseControll
 		$this->setData( 'description', $this->request->getVal( 'description' ) );
 		$this->setData( 'imageUrl', $this->request->getVal( 'photo' ) );
 
-		if( $poiId > 0 ) {
+		if ( $poiId > 0 ) {
 			$this->setAction( self::ACTION_UPDATE );
 			$this->validatePoiData();
 			$results = $this->updatePoi();
@@ -466,7 +466,6 @@ class WikiaInteractiveMapsPoiController extends WikiaInteractiveMapsBaseControll
 	 *
 	 * @return bool
 	 */
-
 	private function isValidArticleTitle() {
 		$articleTitle = $this->getData( 'articleTitle' );
 		$valid = false;
@@ -529,12 +528,11 @@ class WikiaInteractiveMapsPoiController extends WikiaInteractiveMapsBaseControll
 	 *
 	 * @requestParam string $query - search keyword
 	 */
-
 	public function getSuggestedArticles() {
 		$results = [];
 		$query = $this->request->getVal( 'query' );
 
-		if( empty( $query ) ) {
+		if ( empty( $query ) ) {
 			$results[ 'responseText' ] = wfMessage( 'wikia-interactive-maps-edit-poi-article-suggest-no-search-term' )->plain();
 		} else {
 			$results = $this->getSuggestions( $query );
@@ -550,7 +548,6 @@ class WikiaInteractiveMapsPoiController extends WikiaInteractiveMapsBaseControll
 	 *
 	 * @return array - list of suggestions
 	 */
-
 	private function getSuggestions( $query ) {
 		$params = [
 			'query' => $query
