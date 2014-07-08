@@ -165,10 +165,6 @@ class SpecialPromoteHelper extends WikiaObject {
 		wfProfileOut(__METHOD__);
 	}
 
-	public function getImageUrl($imageFile, $requestedWidth, $requestedHeight) {
-		return $this->homePageHelper->getImageUrlFromFile($imageFile, $requestedWidth, $requestedHeight);
-	}
-
 	protected function checkWikiStatus($wikiId, $langCode) {
 		$wikiStatus = [
 			'hasImagesRejected' => false,

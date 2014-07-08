@@ -642,14 +642,6 @@ class WikiaHomePageHelper extends WikiaModel {
 	}
 
 	/**
-	 * @deprecated
-	 * FIXME: remove after sebastian changes are merged, so that there is no more usages
-	 */
-	public function getImageUrlFromFile($file, $requestedWidth, $requestedHeight) {
-		return null;
-	}
-
-	/**
 	 * @param string $imageName image name
 	 *
 	 * @return int page_id or 0 if fails
