@@ -1663,7 +1663,7 @@ class SMWNotifyUpdate {
 			if ( count( $nm_send_jobs ) ) {
 				// wikia change start - jobqueue migration
 				if ( TaskRunner::isModern( 'SMW_NMSendMailJob' ) ) {
-					\Wikia\Tasks\Tasks\BaseTask::batch($nm_send_jobs);
+					\Wikia\Tasks\Tasks\BaseTask::batch( $nm_send_jobs );
 				} else {
 					Job :: batchInsert( $nm_send_jobs );
 				}

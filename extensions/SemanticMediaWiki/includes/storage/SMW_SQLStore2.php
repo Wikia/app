@@ -93,7 +93,7 @@ class SMWSQLStore2 extends SMWStore {
 		'_CONC' => 'smw_conc2',
 		'_SF_DF' => 'smw_spec2', // Semantic Form's default form property
 		'_SF_AF' => 'smw_spec2',  // Semantic Form's alternate form property
-		//'_ERRP', '_MDAT', '_CDAT', '_SKEY' // no special table
+		// '_ERRP', '_MDAT', '_CDAT', '_SKEY' // no special table
 		'_LIST' => 'smw_spec2',
 	);
 
@@ -371,7 +371,7 @@ class SMWSQLStore2 extends SMWStore {
 
 			// Filter out any accidentally retrieved internal things (interwiki starts with ":"):
 			if ( $proptable->getFieldSignature() != 'p' || count( $valuekeys ) < 3 ||
-			     $valuekeys[2] === '' ||  $valuekeys[2]{0} != ':' ) {
+			     $valuekeys[2] === '' ||  $valuekeys[2] { 0 } != ':' ) {
 				$result[] = $issubject ? array( $propertyname, $valuekeys ) : $valuekeys;
 			}
 		}
@@ -439,7 +439,7 @@ class SMWSQLStore2 extends SMWStore {
 
 		foreach ( $res as $row ) {
 			try {
-				if ( $row->smw_iw === '' || $row->smw_iw{0} != ':' ) { // filter special objects
+				if ( $row->smw_iw === '' || $row->smw_iw { 0 } != ':' ) { // filter special objects
 					$result[] = new SMWDIWikiPage( $row->smw_title, $row->smw_namespace, $row->smw_iw, $row->smw_subobject );
 				}
 			} catch ( SMWDataItemException $e ) {
@@ -653,7 +653,7 @@ class SMWSQLStore2 extends SMWStore {
 				foreach ( $res as $row ) {
 					try {
 						$result[] = new SMWDIProperty( $row->smw_title );
-					} catch (SMWDataItemException $e) {
+					} catch ( SMWDataItemException $e ) {
 						// has been observed to happen (empty property title); cause unclear; ignore this data
 					}
 				}
@@ -696,10 +696,10 @@ class SMWSQLStore2 extends SMWStore {
 			$db->delete( 'smw_conccache', array( 'o_id' => $id ), 'SMW::deleteSubject::Conccache' );
 		}
 
-		///FIXME: if a property page is deleted, more pages may need to be updated by jobs!
-		///TODO: who is responsible for these updates? Some update jobs are currently created in SMW_Hooks, some internally in the store
-		///TODO: Possibly delete ID here (at least for non-properties/categories, if not used in any place in rels2)
-		///FIXME: clean internal caches here
+		/// FIXME: if a property page is deleted, more pages may need to be updated by jobs!
+		/// TODO: who is responsible for these updates? Some update jobs are currently created in SMW_Hooks, some internally in the store
+		/// TODO: Possibly delete ID here (at least for non-properties/categories, if not used in any place in rels2)
+		/// FIXME: clean internal caches here
 		wfRunHooks( 'SMWSQLStore2::deleteSubjectAfter', array( $this, $subject ) );
 		wfProfileOut( 'SMWSQLStore2::deleteSubject (SMW)' );
 	}
@@ -828,7 +828,7 @@ class SMWSQLStore2 extends SMWStore {
 				}
 				// redirects were treated above
 
-				///TODO check needed if subject is null (would happen if a user defined proptable with !idsubject was used on an internal object -- currently this is not possible
+				/// TODO check needed if subject is null (would happen if a user defined proptable with !idsubject was used on an internal object -- currently this is not possible
 				$uvals = $proptable->idsubject ? array( 's_id' => $sid ) :
 				         array( 's_title' => $subject->getDBkey(), 's_namespace' => $subject->getNamespace() );
 				if ( $proptable->fixedproperty == false ) {
@@ -1091,12 +1091,12 @@ class SMWSQLStore2 extends SMWStore {
 			$fname
 		);
 		$titles = array();
-		while( $row = $dbl->fetchObject( $sth ) ) {
+		while ( $row = $dbl->fetchObject( $sth ) ) {
 			$titles[] = array( "title" => $row->page_title );
 		}
 		# multi insert is faster
 		$chunks = array_chunk( $titles, 300 );
-		foreach( $chunks as $chunk ) {
+		foreach ( $chunks as $chunk ) {
 			$db->insert( $smw_tmp_unusedprops, $chunk, $fname );
 		}
 		# end of hack
@@ -1211,11 +1211,11 @@ class SMWSQLStore2 extends SMWStore {
 				__METHOD__
 			);
 			$titles = array();
-			while( $row = $dbl->fetchObject( $res ) ) {
+			while ( $row = $dbl->fetchObject( $res ) ) {
 				$titles[] = $row->page_title;
 			}
 			$condition = !empty( $titles )
-				? " AND smw_title NOT IN (" . $dbl->makeList( $titles ). ")"
+				? " AND smw_title NOT IN (" . $dbl->makeList( $titles ) . ")"
 				: "";
 
 			$options = $this->getSQLOptions( $requestoptions, 'title' );
@@ -1596,12 +1596,12 @@ class SMWSQLStore2 extends SMWStore {
 		}
 		$db->freeResult( $res );
 
-		wfRunHooks('smwRefreshDataJobs', array(&$updatejobs));
+		wfRunHooks( 'smwRefreshDataJobs', array( &$updatejobs ) );
 
 		if ( $usejobs ) {
 			// wikia change start - jobqueue migration
 			if ( TaskRunner::isModern( 'SMWUpdateJob' ) ) {
-				\Wikia\Tasks\Tasks\BaseTask::batch($updatejobs);
+				\Wikia\Tasks\Tasks\BaseTask::batch( $updatejobs );
 			} else {
 				Job::batchInsert( $updatejobs );
 			}
@@ -1613,12 +1613,12 @@ class SMWSQLStore2 extends SMWStore {
 					/** @var \Wikia\Tasks\Tasks\JobWrapperTask $job */
 					try {
 						$job->init();
-					} catch (Exception $e) {
+					} catch ( Exception $e ) {
 						continue;
 					}
 
-					$job->wrap('SMWUpdateJob');
-					\Wikia\Tasks\Tasks\BaseTask::batch($updatejobs);
+					$job->wrap( 'SMWUpdateJob' );
+					\Wikia\Tasks\Tasks\BaseTask::batch( $updatejobs );
 				} else {
 					$job->run();
 				}
@@ -2366,7 +2366,7 @@ class SMWSQLStore2 extends SMWStore {
 		// free all affected subobjects in one call:
 		if ( count( $subobjects ) > 0 ) {
 			$db->delete( 'smw_ids',
-				array( 'smw_id' => $subobjects),
+				array( 'smw_id' => $subobjects ),
 				__METHOD__ );
 		}
 
@@ -2488,7 +2488,7 @@ class SMWSQLStore2 extends SMWStore {
 				/// NOTE: we do not update the concept cache here; this remains an offline task
 
 				/// NOTE: this only happens if $smwgEnableUpdateJobs was true above:
-				if (TaskRunner::isModern('SMWUpdateJob')) {
+				if ( TaskRunner::isModern( 'SMWUpdateJob' ) ) {
 					\Wikia\Tasks\Tasks\BaseTask::batch( $jobs );
 				} else {
 					Job::batchInsert( $jobs );
@@ -2617,7 +2617,7 @@ class SMWSQLStore2 extends SMWStore {
 
 		self::$prop_tables['smw_conc2'] = new SMWSQLStore2Table(
 			'smw_conc2',
-			array( 'concept_txt' => 'l', 'concept_docu' => 'l', 'concept_features' => 'n', 'concept_size' => 'n', 'concept_depth' => 'n','cache_date' => 'j', 'cache_count' => 'j' ),
+			array( 'concept_txt' => 'l', 'concept_docu' => 'l', 'concept_features' => 'n', 'concept_size' => 'n', 'concept_depth' => 'n', 'cache_date' => 'j', 'cache_count' => 'j' ),
 			array( ),
 			'_CONC'
 		);

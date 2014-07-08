@@ -26,7 +26,7 @@ class SFCreateClass extends SpecialPage {
 
 		SFUtils::addJavascriptAndCSS();
 
-		$jsText =<<<END
+		$jsText = <<<END
 <script>
 var rowNum = $numStartingRows;
 function createClassAddRow() {
@@ -101,9 +101,9 @@ END;
 				$params['page_text'] = $full_text;
 
 				// wikia change start - jobqueue migration
-				if (TaskRunner::isModern('SFCreatePageJob')) {
+				if ( TaskRunner::isModern( 'SFCreatePageJob' ) ) {
 					$job = new \Wikia\Tasks\Tasks\JobWrapperTask();
-					$job->call('createPage', $property_title, $params);
+					$job->call( 'createPage', $property_title, $params );
 					$jobs[] = $job;
 				} else {
 					$jobs[] = new SFCreatePageJob( $property_title, $params );
@@ -129,9 +129,9 @@ END;
 			$params['page_text'] = $full_text;
 
 			// wikia change start - jobqueue migration
-			if (TaskRunner::isModern('SFCreatePageJob')) {
+			if ( TaskRunner::isModern( 'SFCreatePageJob' ) ) {
 				$job = new \Wikia\Tasks\Tasks\JobWrapperTask();
-				$job->call('createPage', $form_title, $params);
+				$job->call( 'createPage', $form_title, $params );
 				$jobs[] = $job;
 			} else {
 				$jobs[] = new SFCreatePageJob( $form_title, $params );
@@ -146,11 +146,11 @@ END;
 			$params['page_text'] = $full_text;
 
 			// wikia change start - jobqueue migration
-			if (TaskRunner::isModern('SFCreatePageJob')) {
+			if ( TaskRunner::isModern( 'SFCreatePageJob' ) ) {
 				$job = new \Wikia\Tasks\Tasks\JobWrapperTask();
-				$job->call('createPage', $category_title, $params);
+				$job->call( 'createPage', $category_title, $params );
 				$jobs[] = $job;
-				\Wikia\Tasks\Tasks\BaseTask::batch($jobs);
+				\Wikia\Tasks\Tasks\BaseTask::batch( $jobs );
 			} else {
 				$jobs[] = new SFCreatePageJob( $category_title, $params );
 				Job::batchInsert( $jobs );
@@ -220,7 +220,7 @@ END;
 			<select name="property_type_$n">
 
 END;
-			$optionsStr ="";
+			$optionsStr = "";
 			foreach ( $datatype_labels as $label ) {
 				$text .= "				<option>$label</option>\n";
 				$optionsStr .= $label . ",";
