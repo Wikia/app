@@ -9,8 +9,12 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 	const MAPS_PER_PAGE = 10;
 	const MAP_THUMB_WIDTH = 1110;
 	const MAP_THUMB_HEIGHT = 300;
+
 	const PAGE_NAME = 'Maps';
+	const PAGE_RESTRICTION = 'editinterface';
+
 	const TRANSLATION_FILENAME = 'translations.json';
+
 	const MAPS_WIKIA_URL = 'http://maps.wikia.com';
 
 	/**
@@ -28,8 +32,8 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 	 * @param string $file
 	 * @param bool $includable
 	 */
-	public function __construct( $name = null, $restriction = 'editinterface', $listed = true, $function = false, $file = 'default', $includable = false ) {
-		parent::__construct( self::PAGE_NAME, $restriction, $listed, $function, $file, $includable );
+	public function __construct( $name = null, $restriction = '', $listed = true, $function = false, $file = 'default', $includable = false ) {
+		parent::__construct( self::PAGE_NAME, self::PAGE_RESTRICTION, $listed, $function, $file, $includable );
 		$this->mapsModel = new WikiaMaps( $this->wg->IntMapConfig );
 	}
 

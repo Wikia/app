@@ -226,7 +226,7 @@ class WikiaInteractiveMapsPoiController extends WikiaInteractiveMapsBaseControll
 		$updatePoiCategories = $this->getData( 'updatePoiCategories' );
 
 		if ( !$this->wg->User->isLoggedIn() ) {
-			throw new PermissionsException( 'interactive maps' );
+			throw new PermissionsException( WikiaInteractiveMapsController::PAGE_RESTRICTION );
 		}
 
 		if ( $mapId === 0 && empty( $poiCategoryNames ) ) {
@@ -433,7 +433,7 @@ class WikiaInteractiveMapsPoiController extends WikiaInteractiveMapsBaseControll
 		}
 
 		if ( !$this->wg->User->isLoggedIn() ) {
-			throw new PermissionsException( 'interactive maps' );
+			throw new PermissionsException( WikiaInteractiveMapsController::PAGE_RESTRICTION );
 		}
 	}
 
@@ -466,7 +466,6 @@ class WikiaInteractiveMapsPoiController extends WikiaInteractiveMapsBaseControll
 	 *
 	 * @return bool
 	 */
-
 	private function isValidArticleTitle() {
 		$articleTitle = $this->getData( 'articleTitle' );
 		$valid = false;
@@ -529,7 +528,6 @@ class WikiaInteractiveMapsPoiController extends WikiaInteractiveMapsBaseControll
 	 *
 	 * @requestParam string $query - search keyword
 	 */
-
 	public function getSuggestedArticles() {
 		$results = [];
 		$query = $this->request->getVal( 'query' );
@@ -550,7 +548,6 @@ class WikiaInteractiveMapsPoiController extends WikiaInteractiveMapsBaseControll
 	 *
 	 * @return array - list of suggestions
 	 */
-
 	private function getSuggestions( $query ) {
 		$params = [
 			'query' => $query
@@ -573,6 +570,7 @@ class WikiaInteractiveMapsPoiController extends WikiaInteractiveMapsBaseControll
 		if ( !is_null( $article ) ) {
 			$link = $article->getFullURL();
 		}
+
 		return $link;
 	}
 }
