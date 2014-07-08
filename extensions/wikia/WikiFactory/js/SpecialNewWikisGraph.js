@@ -87,7 +87,8 @@ var SponsorshipDashboard = function(){
 		//bindings
 		self.choiceContainer.find('input').add('#sponsorshipDashboardShowTrends').click(self.plotAccordingToChoices);
 
-		$('#sponsorshipDashboardDownloadChart').click(self.downloadChart);
+		$('#sponsorshipDashboardDownloadChartPNG').click(self.downloadChartPNG);
+        $('#sponsorshipDashboardDownloadChartCSV').click(self.downloadChartCSV);
 		
 		$('#placeholder' + self.chartId)
 			.bind('plothover', self.onPlotHover)
@@ -189,14 +190,60 @@ var SponsorshipDashboard = function(){
 		self.plotAccordingToChoices(true, borderTicks);
 	};
 
-	this.downloadChart = function(e) {
+	this.downloadChartPNG = function(e) {
 		e.preventDefault();
 		var canvas = self.plot.getCanvas();
 		var imageData = canvas.toDataURL();
-		$.showModal('SponsorshipDashboard', '<div style="text-align: center"><img src="' + imageData + '" width="' + canvas.width + '" height="' + canvas.height + '"></div>');
-//		imageData = imageData.replace('image/png', 'image/octet-stream');
+//		$.showModal('SponsorshipDashboard', '<div style="text-align: center"><img src="' + imageData + '" width="' + canvas.width + '" height="' + canvas.height + '"></div>');
+		imageData = imageData.replace('image/png', 'image/octet-stream');
 //		document.location.href = imageData;
+
+        // see: http://stackoverflow.com/questions/17836273/export-javascript-data-to-csv-file-without-server-interaction/17836529#17836529
+        var a = document.createElement('a');
+        a.href     = imageData;
+        a.target   = '_blank';
+        a.download = 'metrics.png';
+        document.body.appendChild(a);
+        a.click();
 	};
+
+    this.downloadChartCSV = function(e) {
+        var fromData = $('#sd-year-from').val() + '-' + $('#sd-month-from').val();
+        var toData = $('#sd-year-to').val() + '-' + $('#sd-month-to').val();
+        if (!self.monthly) {
+            fromData = fromData + '-' + $('#sd-day-from').val();
+            toData = toData + '-' + $('#sd-day-to').val();
+        }
+
+        // see: http://stackoverflow.com/questions/17836273/export-javascript-data-to-csv-file-without-server-interaction/17836529#17836529
+        var A = [['date','Wikias created']];
+
+        for ( var i in self.fullTicks) {
+            var fulltickAsInt = self.fullTicks[i][0].replace( /-/gi, '' );
+
+            if ( ( parseInt( fromData.replace( /-/gi, '' ) ) > fulltickAsInt )
+                || ( parseInt( toData.replace( /-/gi, '' ) ) < fulltickAsInt ) ) {
+                continue;
+            }
+
+            A.push([self.fullTicks[i][0], + self.data[0]['data'][self.fullTicks[i][1]][1]]);
+        }
+
+        var csvRows = [];
+
+        for(var i=0, l=A.length; i<l; ++i){
+            csvRows.push(A[i].join(','));
+        }
+
+        var csvString = csvRows.join("%0A");
+        var a         = document.createElement('a');
+        a.href        = 'data:attachment/csv,' + csvString;
+        a.target      = '_blank';
+        a.download    = 'myFile.csv';
+
+        document.body.appendChild(a);
+        a.click();
+    }
 
 	this.plotAccordingToChoices = function(stopRedrawOverview, borderTicks) {
 		self.log('plotAccordingToChoices');
