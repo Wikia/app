@@ -10,13 +10,14 @@
  *
  * @class
  * @extends ve.dm.HeadingNode
+ *
  * @constructor
- * @param {ve.dm.LeafNode[]} [children] Child nodes to attach
  * @param {Object} [element] Reference to element in linear model
+ * @param {ve.dm.Node[]} [children]
  */
-ve.dm.MWHeadingNode = function VeDmMWHeadingNode( children, element ) {
+ve.dm.MWHeadingNode = function VeDmMWHeadingNode() {
 	// Parent constructor
-	ve.dm.HeadingNode.call( this, children, element );
+	ve.dm.HeadingNode.apply( this, arguments );
 };
 
 /* Inheritance */

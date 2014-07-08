@@ -93,6 +93,7 @@ class CreateWiki {
 				"pl" => "plstarter",
 				"ru" => "rustarter",
 				"it" => "italianstarter",
+				'fi' => 'fistarter',
 			)
 		);
 

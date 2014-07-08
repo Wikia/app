@@ -89,14 +89,34 @@ class ReplaceText extends SpecialPage {
 					if ( strpos( $key, 'move-' ) !== false ) {
 						$title = Title::newFromID( substr( $key, 5 ) );
 						$replacement_params['move_page'] = true;
+						$taskAction = 'move';
 					} else {
 						$title = Title::newFromID( $key );
+						$taskAction = 'replace';
 					}
-					if ( $title !== null )
-						$jobs[] = new ReplaceTextJob( $title, $replacement_params );
+
+					if ( $title !== null ) {
+						if (TaskRunner::isModern('ReplaceTextJob')) {
+							global $wgCityId;
+
+							$task = (new ReplaceTextTask())
+								->title($title)
+								->createdBy($this->user->getId())
+								->wikiId($wgCityId);
+							$task->call($taskAction, $replacement_params);
+							$jobs[] = $task;
+						} else {
+							$jobs[] = new ReplaceTextJob( $title, $replacement_params );
+						}
+					}
 				}
 			}
-			Job::batchInsert( $jobs );
+
+			if (TaskRunner::isModern('ReplaceTextJob')) {
+				\Wikia\Tasks\Tasks\BaseTask::batch($jobs);
+			} else {
+				Job::batchInsert( $jobs );
+			}
 
 			$count = $wgLang->formatNum( count( $jobs ) );
 			$wgOut->addWikiMsg( 'replacetext_success', "<tt><nowiki>{$this->target}</nowiki></tt>", "<tt><nowiki>{$this->replacement}</nowiki></tt>", $count );

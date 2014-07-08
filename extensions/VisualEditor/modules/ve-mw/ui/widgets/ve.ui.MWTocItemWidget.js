@@ -21,7 +21,7 @@
  * @cfg {number} tocIndex Running count of TOC items
  *
  */
-ve.ui.MWTocItemWidget = function VeCeMWTocItemWidget ( config ) {
+ve.ui.MWTocItemWidget = function VeCeMWTocItemWidget( config ) {
 	// Parent constructor
 	OO.ui.Widget.call( this, config );
 

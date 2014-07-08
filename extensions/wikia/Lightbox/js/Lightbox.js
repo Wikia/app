@@ -313,6 +313,9 @@
 			updateLightbox: function (data) {
 				Lightbox.image.getDimensions(data.imageUrl, function (dimensions) {
 
+					// render media
+					data.imageHeight = dimensions.imageHeight;
+
 					var css = {
 							height: dimensions.modalHeight
 						},
@@ -328,9 +331,6 @@
 					}
 
 					Lightbox.openModal.css(css);
-
-					// render media
-					data.imageHeight = dimensions.imageHeight;
 
 					// Hack to vertically align the image in the lightbox
 					Lightbox.openModal.media
@@ -1107,6 +1107,8 @@
 						origin: 'image-lightbox',
 						callback: function () {
 							doShareEmail(addresses);
+							// see VID-473 - Reload page on lightbox close
+							LightboxLoader.reloadOnClose = true;
 						}
 					});
 				}

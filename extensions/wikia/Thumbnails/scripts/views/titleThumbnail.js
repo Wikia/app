@@ -4,8 +4,8 @@ define('thumbnails.views.titleThumbnail', [
 ], function (templates, Mustache) {
 	'use strict';
 
-	// TODO: Alias this template to a property that follows jscs's settings (camelCase)
-	var THUMBNAIL_TEMPLATE_NAME = 'Thumbnail_title';
+	// TODO: Alias this template name to a property that follows jscs's settings (camelCase)
+	var thumbnailTemplateName = 'Thumbnail_title';
 
 	function TitleView(options) {
 		this.model = options.model;
@@ -16,7 +16,7 @@ define('thumbnails.views.titleThumbnail', [
 
 	TitleView.prototype.render = function () {
 		this.el.className += ' title-thumbnail';
-		this.el.innerHTML = Mustache.render(templates[THUMBNAIL_TEMPLATE_NAME], this.model); /* jshint ignore:line */
+		this.el.innerHTML = Mustache.render(templates[thumbnailTemplateName], this.model);
 		this.$el = $(this.el);
 		return this;
 	};

@@ -18,8 +18,8 @@ class TaskRunner {
 	function __construct($taskId, $taskList, $callOrder, $createdBy) {
 		$this->taskId = $taskId;
 		$this->callOrder = json_decode($callOrder, true);
-
 		$taskList = json_decode($taskList, true);
+
 		foreach ($taskList as $taskData) {
 			/** @var \Wikia\Tasks\Tasks\BaseTask $task */
 			$task = new $taskData['class']();
@@ -98,10 +98,17 @@ class TaskRunner {
 		return in_array($taskName, [
 			'CreatePdfThumbnailsJob',
 //		'CreateWikiLocalJob',
+			'HAWelcomeJob',
+			'HTMLCacheUpdate',
 			'ImageReviewTask',
-			'PromoteImageReviewTask',
+			'MultiDeleteTask',
+			'MultiMoveTask',
+			'MultiWikiEditTask',
+//			'PromoteImageReviewTask',
+			'ReplaceTextJob',
+			'SWMSendToGroupTask',
 			'UserRollback',
-//			'UserRename',
+			'UserRename',
 		]);
 	}
 }

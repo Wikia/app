@@ -95,7 +95,7 @@ $wgResourceModules += array(
 			've/ui/tools/ve.ui.WikiaDialogTool.js',
 			've/ui/tools/ve.ui.WikiaHelpTool.js',
 			've/ui/tools/ve.ui.WikiaMWGalleryInspectorTool.js',
-			've/ui/tools/ve.ui.WikiaMWLinkInspectorTool.js',
+			've/ui/tools/ve.ui.WikiaMWLinkNodeInspectorTool.js',
 			've/ui/widgets/ve.ui.WikiaCartWidget.js',
 			've/ui/widgets/ve.ui.WikiaCartItemWidget.js',
 			've/ui/widgets/ve.ui.WikiaDimensionsWidget.js',
@@ -153,6 +153,8 @@ $wgResourceModules += array(
 			'wikia-visualeditor-dialog-orientation-headline',
 			'wikia-visualeditor-dialog-orientation-text',
 			'wikia-visualeditor-dialog-orientation-start-button',
+			'wikia-visualeditor-dialog-meta-languages-readonlynote',
+			'wikia-visualeditor-dialog-transclusion-no-template-description',
 		),
 		'dependencies' => array(
 			'ext.visualEditor.core.desktop',

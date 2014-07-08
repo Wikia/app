@@ -63,6 +63,7 @@ module.exports = function(config) {
 			//Advertisement
 			'extensions/wikia/AdEngine/js/AdConfig2.js',
 			'extensions/wikia/AdEngine/js/AdConfig2Late.js',
+			'extensions/wikia/AdEngine/js/AdConfigMobile.js',
 			'extensions/wikia/AdEngine/js/AdDecoratorPageDimensions.js',
 			'extensions/wikia/AdEngine/js/AdEngine2.js',
 			'extensions/wikia/AdEngine/js/EventDispatcher.js',

@@ -5,6 +5,8 @@
  * @ingroup Media
  */
 
+use \Wikia\Logger\WikiaLogger;
+
 class ThumbnailVideo extends ThumbnailImage {
 
 //	function ThumbnailVideo( $file, $url, $width, $height, $path = false, $page = false ) {
@@ -33,7 +35,7 @@ class ThumbnailVideo extends ThumbnailImage {
 		global $wgWikiaVideoImageHost;
 		parent::__construct( $file, $url, $width, $height, $path, $page );
 
-		// handle videos comming from shared repo (video.wikia.com)
+		// handle videos coming from shared repo (video.wikia.com)
 		if ( !empty( $wgWikiaVideoImageHost ) && ( $file instanceof WikiaForeignDBFile ) ) {
 			// replace with a proper video domain for production
 			$domain = parse_url( $this->url, PHP_URL_HOST );
@@ -103,6 +105,10 @@ class ThumbnailVideo extends ThumbnailImage {
 		return $thumb->toHtml( array( 'img-class' => $options['img-class'] ) );
 	}
 
+	function mediaType() {
+		return 'video';
+	}
+
 	/**
 	 * @param array $options
 	 * @return mixed|string
@@ -128,18 +134,15 @@ class ThumbnailVideo extends ThumbnailImage {
 
 		// Migrate to new system which uses a template instead of this toHtml method
 		if ( !empty( $options['useTemplate'] ) ) {
-			$html = $app->renderView( 'ThumbnailController', 'video',  [
-				'file' => $this->file,
-				'url' => $this->url,
-				'width' => $this->width,
-				'height' => $this->height,
-				'options' => $options,
-			] );
+			$html = $this->renderView( $options );
 
 			wfProfileOut( __METHOD__ );
 
 			return $html;
 		}
+
+		WikiaLogger::instance()->debug('Media method '.__METHOD__.' called',
+			array_merge( $options, [ 'url' => $this->url, 'method' => __METHOD__ ] ) );
 
 		$alt = empty( $options['alt'] ) ? '' : $options['alt'];
 
