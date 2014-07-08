@@ -535,7 +535,12 @@ class WikiaInteractiveMapsPoiController extends WikiaInteractiveMapsBaseControll
 		if( empty( $query ) ) {
 			$results[ 'responseText' ] = wfMessage( 'wikia-interactive-maps-edit-poi-article-suggest-no-search-term' )->plain();
 		} else {
-			$results = $this->getSuggestions( $query );
+			$results = array_map( function( $item ) {
+					$item[0][ 'imageUrl' ] = 'http://placekitten.com/85/85/';
+					return $item;
+				},
+				$this->getSuggestions( $query )
+			);
 		}
 
 		$this->response->setVal( 'results', $results );
