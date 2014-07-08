@@ -86,6 +86,7 @@ class DefaultContent extends AbstractService
 				];
 		return array_merge(
 				$this->getPageContentFromParseResponse( $response ),
+				$this->getArticleSnippet( $response ),
 				$this->getCategoriesFromParseResponse( $response ),
 				$this->getHeadingsFromParseResponse( $response ),
 				$this->getOutboundLinks(),
@@ -133,6 +134,15 @@ class DefaultContent extends AbstractService
 		return $this->getService()->getGlobal( 'AppStripsHtml' ) ? (new Utilities)->field( $field ) : $field;
 	}
 
+	protected function getArticleSnippet( array $response ) {
+		$html = empty( $response['parse']['text']['*'] ) ? '' : $response['parse']['text']['*'];
+		$jsonFormatService = new JsonFormatService();
+		$text = $jsonFormatService->getArticleSnippet( $html );
+		return [
+			'snippet_s' => $text
+		];
+	}
+
 	/**
 	 * Wraps logic for creating the initial result array, based on which implementation we're using.
 	 * The old version strips HTML from the backend; the new version strips HTML within the IndexService.
@@ -145,9 +155,9 @@ class DefaultContent extends AbstractService
 
 		if( $wgSimpleHtmlSearchIndexer ) {
 			$jsonFormatService = new JsonFormatService();
-			$jsonSimple = $jsonFormatService->getSimpleFormatForHtml( $html );
+			$jsonSimple = $jsonFormatService->getArticleSnippet( $html );
 			$simplifier = new JsonFormatSimplifier();
-			$text = $simplifier->simplifyToText( $jsonSimple );
+			$text = $simplifier->simplifyToSnippet( $jsonSimple );
 
 			$words = explode( ' ', $text );
 			$wordCount = count( $words );
