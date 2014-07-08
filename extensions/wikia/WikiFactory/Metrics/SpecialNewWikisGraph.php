@@ -2,11 +2,13 @@
 
 class NewWikisGraphSpecialPageController extends WikiaSpecialPageController {
 
+	const NEW_WIKIS_GRAPH_SPECIAL_PAGE = 'NewWikisGraph';
+
 	private $aAvailableLanguages = array( 'en', 'de', 'es', 'fr', 'it', 'ja', 'nl', 'no', 'pl', 'pt', 'pt-br', 'ru', 'zh' );
 	private $aAvailableOtherOptions = array( 'other', 'all' );
 
 	public function __construct() {
-            parent::__construct( 'NewWikisGraph', 'wikifactorymetrics' /* restriction */ );
+            parent::__construct( self::NEW_WIKIS_GRAPH_SPECIAL_PAGE, 'wikifactorymetrics' /* restriction */ );
 	}
 
 	public function execute( $param ) {
@@ -35,7 +37,7 @@ class NewWikisGraphSpecialPageController extends WikiaSpecialPageController {
                         "tabs"		=> $this->aAvailableLanguages,
                         "other"		=> $this->aAvailableOtherOptions,
                         "active"	=> $param,
-                        "path"		=> SpecialPageFactory::getPage("NewWikisGraph")->getTitle()->getFullURL()
+                        "path"		=> SpecialPageFactory::getPage( self::NEW_WIKIS_GRAPH_SPECIAL_PAGE )->getTitle()->getFullURL()
                     )
             );
 
