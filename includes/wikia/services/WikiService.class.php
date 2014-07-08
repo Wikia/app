@@ -845,7 +845,7 @@ class WikiService extends WikiaModel {
 					'desc' => $row->city_description,
 					//this is stored in a pretty peculiar format,
 					//see extensions/wikia/CityVisualization/models/CityVisualization.class.php
-					'image' => PromoImage::forWikiId( PromoImage::MAIN, $row->city_id)->getReviewedImageName(),
+					'image' => PromoImage::forWikiId( PromoImage::MAIN, $row->city_id)->getApprovedImageName(),
 					'flags' => array(
 						'official' => ( ( $row->city_flags & self::FLAG_OFFICIAL ) == self::FLAG_OFFICIAL ),
 						'promoted' => ( ( $row->city_flags & self::FLAG_PROMOTED ) == self::FLAG_PROMOTED )
