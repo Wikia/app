@@ -47,7 +47,7 @@
 		<div id="WikiaPageBackground" class="WikiaPageBackground"></div>
 		<div class="WikiaPageContentWrapper">
 			<?= $wikiHeader ?>
-			<article class="pirates-article">
+			<article class="article">
 				<header>
 					<h1><?= $title ?></h1>
 				</header>

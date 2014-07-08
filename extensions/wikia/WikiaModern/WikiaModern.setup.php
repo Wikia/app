@@ -1,6 +1,6 @@
 <?php
 /**
- * Pirates
+ * WikiaModern Skin
  *
  * @author Consumer Team
  */
@@ -15,13 +15,13 @@ $dir = dirname( __FILE__ );
  * info
  */
 $wgExtensionCredits['other'][] =
-	array(
-		"name" => "Pirates",
-		"description" => "Pirates Skin for Wikia",
-		"author" => array(
+	[
+		"name" => "WikiaModern",
+		"description" => "WikiaModern Skin for Wikia",
+		"author" => [
 			'Consumer Team',
-		)
-	);
+		]
+	];
 
 /**
  * settings
@@ -43,7 +43,7 @@ $wgExtensionCredits['other'][] =
 /**
  * controllers
  */
-$wgAutoloadClasses['PiratesController'] = $dir . '/PiratesController.class.php';
+$wgAutoloadClasses['WikiaModernController'] = $dir . '/WikiaModernController.class.php';
 $wgAutoloadClasses['GlobalNavigationController'] = $dir . '/../GlobalNavigation/GlobalNavigationController.class.php';
 $wgAutoloadClasses['LocalNavigationController'] = $dir . '/../LocalNavigation/LocalNavigationController.class.php';
 $wgAutoloadClasses['LocalHeaderController'] = $dir . '/../LocalNavigation/LocalHeaderController.class.php';
@@ -55,7 +55,7 @@ $wgAutoloadClasses['LocalHeaderController'] = $dir . '/../LocalNavigation/LocalH
 /**
  * message files
  */
-//$wgExtensionMessagesFiles['Pirates'] = "{$dir}/Pirates.i18n.php";
+//$wgExtensionMessagesFiles['WikiaModern'] = "{$dir}/WikiaModern.i18n.php";
 
 /**
  * hooks

@@ -1,8 +1,8 @@
 <?php
 
-class PiratesController extends WikiaController {
+class WikiaModernController extends WikiaController {
 
-	const MAIN_SASS_FILE = '/extensions/wikia/Pirates/css/pirates.scss';
+	const MAIN_SASS_FILE = '/extensions/wikia/WikiaModern/css/WikiaModern.scss';
 
 	private static $bodyParametersArray = [];
 	private static $skinAssetGroups = [];
@@ -70,12 +70,12 @@ class PiratesController extends WikiaController {
 
 		// add skin theme name
 		if(!empty($this->getSkin()->themename)) {
-			$bodyClasses[] = "pirates-{$this->getSkin()->themename}";
+			$bodyClasses[] = "wikiamodern-{$this->getSkin()->themename}";
 		}
 
 		// mark dark themes
 		if (SassUtil::isThemeDark()) {
-			$bodyClasses[] = 'pirates-dark-theme';
+			$bodyClasses[] = 'wikiamodern-dark-theme';
 		}
 
 		$this->bodyClasses = $bodyClasses;

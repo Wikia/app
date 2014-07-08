@@ -94,7 +94,7 @@ class WikiaPhotoGalleryHelper {
 
 		wfProfileIn( __METHOD__ );
 
-		if ( F::app()->checkSkin( ['oasis', 'pirates'] ) ) {
+		if ( F::app()->checkSkin( ['oasis', 'wikiamodern'] ) ) {
 			$app->wg->Out->addScript("<script type=\"{$app->wg->JsMimeType}\" src=\"{$app->wg->ExtensionsPath}/wikia/WikiaPhotoGallery/js/WikiaPhotoGallery.js\"></script>\n");
 
 			// load message for MW toolbar button tooltip

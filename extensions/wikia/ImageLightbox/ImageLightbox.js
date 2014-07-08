@@ -21,7 +21,7 @@ var ImageLightbox = {
 			return;
 		}
 
-		if (window.skin == 'oasis' || window.skin == 'pirates') {
+		if (window.skin == 'oasis' || window.skin == 'wikiamodern') {
 			article = $('#WikiaArticle, .LatestPhotosModule, #article-comments');
 		}
 		else {
@@ -252,7 +252,7 @@ var ImageLightbox = {
 
 	setTopPosition: function() {
 		var lightbox = $('#lightbox');
-		if (window.skin == 'oasis' || window.skin == 'pirates') {
+		if (window.skin == 'oasis' || window.skin == 'wikiamodern') {
 			lightbox.css('top', lightbox.getModalTopOffset());
 		}
 	},
@@ -276,7 +276,7 @@ var ImageLightbox = {
 		var maxWidth = $(window).width();
 		var maxHeight = $(window).height();
 
-		if (window.skin == 'oasis' || window.skin == 'pirates') {
+		if (window.skin == 'oasis' || window.skin == 'wikiamodern') {
 			maxHeight -= 75;
 			maxWidth = 850;
 		}
