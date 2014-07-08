@@ -1,3 +1,8 @@
+<?php
+	if ( !empty( $wg->EnableMonetizationModuleExt ) ) {
+		echo $app->renderView( 'MonetizationModule', 'index', [ 'location' => MonetizationModuleHelper::LOCATION_LOCAL_NAV ] );
+	}
+?>
 <header id="WikiaPageHeader" class="WikiaPageHeader">
     <h1><?= !empty($displaytitle) ? $title : htmlspecialchars($title) ?></h1>
 

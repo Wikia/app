@@ -9,6 +9,8 @@ class MonetizationModuleHelper extends WikiaModel {
 	const LOCATION_BOTTOM = 'bottom';
 	const LOCATION_BOTTOM_ADS = 'bottom-ads';
 	const LOCATION_ARTICLE_TITLE = 'article-title';
+	const LOCATION_LOCAL_NAV = 'local-nav';
+	const LOCATION_CATEGORIES = 'categories';
 
 	/**
 	 * Load assets only once
@@ -56,6 +58,7 @@ class MonetizationModuleHelper extends WikiaModel {
 		$showableNameSpaces = array_merge( $wg->ContentNamespaces, [ NS_FILE ] );
 
 		if ( $wg->Title->exists()
+			&& !$wg->Title->isMainPage()
 			&& in_array( $wg->Title->getNamespace(), $showableNameSpaces )
 			&& in_array( $wg->request->getVal( 'action' ), [ 'view', null ] )
 			&& $wg->request->getVal( 'diff' ) === null

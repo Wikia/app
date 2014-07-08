@@ -120,6 +120,12 @@
 				}
 				?>
 
+				<?php
+					if ( !empty( $wg->EnableMonetizationModuleExt ) ) {
+						echo $app->renderView( 'MonetizationModule', 'index', [ 'location' => MonetizationModuleHelper::LOCATION_CATEGORIES ] );
+					}
+				?>
+
 				<?php if (!empty($afterContentHookText)) { ?>
 					<div id="WikiaArticleFooter" class="WikiaArticleFooter">
 						<?= $afterContentHookText ?>
