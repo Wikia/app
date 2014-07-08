@@ -192,7 +192,7 @@ define(
 		 * @param {Event} event - search term
 		 */
 		function searchForTileSets(event) {
-			utils.onWriteInInput(event.target, function(inputValue) {
+			utils.onWriteInInput(event.target, function (inputValue) {
 				loadTileSets(inputValue);
 				$clearSearchBtn.removeClass('hidden');
 			});
