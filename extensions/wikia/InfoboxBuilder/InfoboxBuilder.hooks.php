@@ -45,6 +45,11 @@ final class InfoboxBuilderHooks {
 	public static function parserFunctionHook( &$parser, $frame, $args ) {
 		wfProfileIn( __METHOD__ );
 
+		/**
+		 * Add the registered SCSS with the default theme
+		 */
+		$parser->getOutput()->addModuleStyles('ext.wikia.InfoboxBuilder');
+
 		$engine = \Scribunto::getParserEngine( $parser );
 
 		unset( $args[0] );
