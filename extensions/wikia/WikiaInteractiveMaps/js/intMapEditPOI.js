@@ -21,6 +21,9 @@ define('wikia.intMap.editPOI', ['jquery', 'wikia.intMap.utils'], function($, uti
 			deletePOI: [
 				deletePOI
 			],
+			selectArticle: [
+				selectArticle
+			],
 			beforeClose: [
 				utils.refreshIfAfterForceLogin
 			]
@@ -64,7 +67,9 @@ define('wikia.intMap.editPOI', ['jquery', 'wikia.intMap.utils'], function($, uti
 		},
 		trigger,
 		params,
-		mapId;
+		mapId,
+		articleSuggestionTemplate,
+		articleInputId = '#intMapArticleTitle';
 
 	/**
 	 * @desc Entry point for  modal
@@ -76,6 +81,10 @@ define('wikia.intMap.editPOI', ['jquery', 'wikia.intMap.utils'], function($, uti
 		// set reference to params and trigger callback
 		trigger = _trigger;
 		params = _params;
+
+		// cache article suggestion template
+		articleSuggestionTemplate = templates[1];
+
 		mapId = $('iframe[name=wikia-interactive-map]').data('mapid');
 
 		setModalMode(params.hasOwnProperty('id'));
@@ -89,8 +98,16 @@ define('wikia.intMap.editPOI', ['jquery', 'wikia.intMap.utils'], function($, uti
 			// cache selectors
 			modal.$errorContainer = modal.$content.children('.error');
 			modal.$form = $('#intMapEditPOIForm');
+			modal.$suggestions = $('#intMapArticleSuggestions');
+			modal.$articleTitle =  $(articleInputId);
 
 			utils.bindEvents(modal, events);
+
+			// TODO: figure out if there is better place for article suggestions event bindings
+			modal.$element
+				.on('keyup', articleInputId, $.debounce(utils.constants.debounceDelay, suggestArticles))
+				.on('click', onClickOutsideSuggestions);
+
 			modal.show();
 		});
 	}
@@ -183,6 +200,85 @@ define('wikia.intMap.editPOI', ['jquery', 'wikia.intMap.utils'], function($, uti
 	}
 
 	/**
+	 * @desc handler for article suggestions
+	 * @param {Event} event
+	 */
+	function suggestArticles(event) {
+		utils.onWriteInInput(event.target, function(inputValue) {
+			getSuggestions(inputValue, function(suggestions) {
+				showSuggestions(suggestions);
+			});
+		});
+	}
+
+	/**
+	 * @desc gets article suggestions from backend
+	 * @param {string} keyword - search term
+	 * @param {function} cb - callback function
+	 */
+	function getSuggestions(keyword, cb) {
+		$.nirvana.sendRequest({
+			controller: 'WikiaInteractiveMapsPoi',
+			method: 'getSuggestedArticles',
+			type: 'GET',
+			data: {
+				query: keyword
+			},
+			callback: function(response) {
+				cb(response.results);
+			},
+			onErrorCallback: function() {
+				hideSuggestions();
+			}
+		});
+	}
+
+	/**
+	 * @desc renders suggestions list and show it
+	 * @param {object} suggestions - object with suggestions items {items: [] }
+	 */
+	function showSuggestions(suggestions) {
+		modal.$suggestions
+			.html(utils.render(articleSuggestionTemplate, suggestions))
+			.removeClass('hidden');
+	}
+
+	/**
+	 * @desc hide suggestions list
+	 */
+	function hideSuggestions() {
+		modal.$suggestions
+			.html('')
+			.addClass('hidden');
+	}
+
+	/**
+	 * @desc handler for selecting article
+	 * @param {Event} event
+	 */
+	function selectArticle(event) {
+		var dataSet = event.target.dataset;
+
+		modal.$articleTitle
+			.val(dataSet.title)
+			.blur();
+
+		hideSuggestions();
+	}
+
+	/**
+	 * @desc special handler for closing article suggestion
+	 * @param {Event} event
+	 */
+	function onClickOutsideSuggestions(event) {
+		var $target = $(event.target);
+
+		if (!$target.hasClass('article-suggestion') && !$target.is(articleInputId) ) {
+			hideSuggestions();
+		}
+	}
+
+	/**
 	 * @desc sends request to backend with POI data
 	 * @param {object} poiData - POI data
 	 */
@@ -190,6 +286,8 @@ define('wikia.intMap.editPOI', ['jquery', 'wikia.intMap.utils'], function($, uti
 		if (!poiData) {
 			return;
 		}
+
+		modal.deactivate();
 
 		$.nirvana.sendRequest({
 			controller: 'WikiaInteractiveMapsPoi',
@@ -201,14 +299,20 @@ define('wikia.intMap.editPOI', ['jquery', 'wikia.intMap.utils'], function($, uti
 
 				if (data && data.success) {
 					poiData.id = data.content.id;
+					poiData.link = data.content.link;
+
 					trigger(poiData);
+
+					modal.activate();
 					modal.trigger('close');
 				} else {
 					utils.showError(modal, data.content.message);
+					modal.activate();
 				}
 			},
 			onErrorCallback: function(response) {
 				utils.handleNirvanaException(modal, response);
+				modal.activate();
 			}
 		});
 	}

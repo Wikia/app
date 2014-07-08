@@ -9,7 +9,10 @@ define('wikia.intMap.pontoBridge', ['wikia.window', 'ponto', 'wikia.intMap.utils
 					messages: ['WikiaInteractiveMapsEditPOI'],
 					scripts: ['int_map_edit_poi_js'],
 					styles: ['extensions/wikia/WikiaInteractiveMaps/css/intMapModal.scss'],
-					mustache: ['extensions/wikia/WikiaInteractiveMaps/templates/intMapEditPOI.mustache']
+					mustache: [
+						'extensions/wikia/WikiaInteractiveMaps/templates/intMapEditPOI.mustache',
+						'extensions/wikia/WikiaInteractiveMaps/templates/intMapArticleSuggestion.mustache'
+					]
 				},
 				cacheKey: 'wikia_interactive_maps_edit_poi',
 				module: 'wikia.intMap.editPOI',
