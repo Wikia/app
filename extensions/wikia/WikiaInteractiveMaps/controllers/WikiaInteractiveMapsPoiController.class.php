@@ -40,7 +40,7 @@ class WikiaInteractiveMapsPoiController extends WikiaInteractiveMapsBaseControll
 		$this->setData( 'lat', (float) $this->request->getVal( 'lat' ) );
 		$this->setData( 'lon', (float) $this->request->getVal( 'lon' ) );
 		$this->setData( 'description', $this->request->getVal( 'description' ) );
-		$this->setData( 'imageUrl', $this->request->getVal( 'photo' ) );
+		$this->setData( 'imageUrl', $this->request->getVal( 'imageUrl' ), '' );
 
 		if( $poiId > 0 ) {
 			$this->setAction( self::ACTION_UPDATE );
