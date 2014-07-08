@@ -2,6 +2,7 @@
 	margin: 10px 0 15px;
 	.wikiastats-content {
 		clear: both;
+		padding: 0 10px;
 		.title {
 			border-bottom: 4px solid $color-wikiahome-hubcolor;
 			height: 30px;
@@ -23,7 +24,7 @@
 			overflow: hidden;
 			height: 244px;
 			.datasection {
-				width: 250px;
+				width: 240px;
 				float: left;
 				height: 46px;
 				padding: 17px 0;
