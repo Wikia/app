@@ -1468,4 +1468,4 @@ $wgProfilerMinimumTime = 0.001;
  * @name wgProfilerSendViaScribe
  * Enables sending profiler reports via Scribe
  */
-$wgProfilerSendViaScribe = true;
+$wgProfilerSendViaScribe = false;
