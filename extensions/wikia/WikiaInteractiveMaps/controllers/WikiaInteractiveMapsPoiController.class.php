@@ -447,6 +447,7 @@ class WikiaInteractiveMapsPoiController extends WikiaInteractiveMapsBaseControll
 		$poiCategoryId = $this->getData( 'poiCategoryId' );
 		$mapId = $this->getData( 'mapId' );
 		$lat = $this->getData( 'lat' );
+		$lon = $this->getData( 'lon' );
 
 		return ( empty( $name ) || empty( $poiCategoryId ) || empty( $mapId ) || empty( $lat ) || empty( $lon ) );
 	}
