@@ -223,7 +223,8 @@ class AdEngine2Service
 			$wgRequest, $wgEnableKruxTargeting,
 			$wgAdVideoTargeting, $wgLiftiumOnLoad, $wgAdDriverSevenOneMediaSub4Site,
 			$wgDartCustomKeyValues, $wgWikiDirectedAtChildrenByStaff, $wgAdEngineDisableLateQueue,
-			$wgAdDriverUseWikiaBarBoxad2, $wgAdDriverWikiaBarBoxad2ImpressionCapping;
+			$wgAdDriverUseWikiaBarBoxad2, $wgAdDriverWikiaBarBoxad2ImpressionCapping,
+			$wgAdDriverEnableAdsInMaps;
 
 		$vars = [];
 
@@ -273,6 +274,9 @@ class AdEngine2Service
 
 			// AdLogicPageParams.js, SevenOneMediaHelper.js, AnalyticsProviderQuantServe.php
 			'cityShort' => AdEngine2Service::getCachedCategory()['short'],
+
+			// intMapPontoBridge.js
+			'wgAdDriverEnableAdsInMaps' => $wgAdDriverEnableAdsInMaps,
 		];
 
 		if (!empty($wgEnableKruxTargeting)) {
