@@ -104,6 +104,8 @@ $messages[ 'en' ] = [
 
 	'wikia-interactive-maps-actions' => 'Actions',
 	'wikia-interactive-maps-delete-map' => 'Delete map',
+	'wikia-interactive-maps-undelete-map' => 'Undelete map',
+	'wikia-interactive-maps-map-is-deleted' => 'This map is deleted',
 	'wikia-interactive-maps-delete-map-client-title' => 'Delete map',
 	'wikia-interactive-maps-delete-map-client-prompt' => 'Are you sure to delete the map?',
 	'wikia-interactive-maps-delete-map-client-confirm-button' => 'Delete Map',
@@ -228,6 +230,8 @@ $messages[ 'qqq' ] = [
 
 	'wikia-interactive-maps-actions' => 'Text on a button near the map title that triggers dropdown with possible actions',
 	'wikia-interactive-maps-delete-map' => 'Text on a button for deleting an existing map',
+	'wikia-interactive-maps-undelete-map' => 'Text on a button for undeleting an existing map',
+	'wikia-interactive-maps-map-is-deleted' => 'Message shown when deleted map is opened',
 	'wikia-interactive-maps-delete-map-client-title' => 'Title of the "delete map" modal',
 	'wikia-interactive-maps-delete-map-client-prompt' => 'Prompt (in modal) asking if user is sure to delete a map',
 	'wikia-interactive-maps-delete-map-client-confirm-button' => 'Text on a button(in modal) to confirm deleting the map',
