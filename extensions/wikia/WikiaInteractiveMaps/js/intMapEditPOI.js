@@ -204,8 +204,8 @@ define('wikia.intMap.editPOI', ['jquery', 'wikia.intMap.utils'], function($, uti
 	 * @param {Event} event
 	 */
 	function suggestArticles(event) {
-		utils.onWriteInInput(event.target, function(inputValue) {
-			getSuggestions(inputValue, function(suggestions) {
+		utils.onWriteInInput(event.target, function (inputValue) {
+			getSuggestions(inputValue, function (suggestions) {
 				showSuggestions(suggestions);
 			});
 		});
@@ -224,10 +224,10 @@ define('wikia.intMap.editPOI', ['jquery', 'wikia.intMap.utils'], function($, uti
 			data: {
 				query: keyword
 			},
-			callback: function(response) {
+			callback: function (response) {
 				cb(response.results);
 			},
-			onErrorCallback: function() {
+			onErrorCallback: function () {
 				hideSuggestions();
 			}
 		});
