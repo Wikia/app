@@ -35,7 +35,7 @@ class NewWikisGraphSpecialPageController extends WikiaSpecialPageController {
                         "tabs"		=> $this->aAvailableLanguages,
                         "other"		=> $this->aAvailableOtherOptions,
                         "active"	=> $param,
-                        "path"		=> F::app()->wg->title->getFullURL()
+                        "path"		=> SpecialPageFactory::getPage("NewWikisGraph")->getTitle()->getFullURL()
                     )
             );
 
