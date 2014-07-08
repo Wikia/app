@@ -7,6 +7,8 @@ abstract class BaseXWikiImage {
 
 	protected $name, $fileNameSuffix, $height, $width;
 
+	const MWSTORE_SWIFT_BACKEND_TEMPLATE = 'mwstore://swift-backend/%s%s%s';
+
 	abstract protected function getContainerDirectory();
 
 	abstract protected function getSwiftContainer();
@@ -259,7 +261,7 @@ abstract class BaseXWikiImage {
 
 			// synchronize between DC
 			if ( $res->isOK() ) {
-				$mwStorePath = sprintf( 'mwstore://swift-backend/%s%s%s',
+				$mwStorePath = sprintf( self::MWSTORE_SWIFT_BACKEND_TEMPLATE,
 					$this->getSwiftContainer(), $this->getSwiftPathPrefix(), $this->getLocalPath() );
 				Wikia\SwiftSync\Queue::newFromParams( [
 					'city_id' => 0,
@@ -284,7 +286,7 @@ abstract class BaseXWikiImage {
 		$swift = $this->getSwiftStorage();
 
 		$backend = FileBackendGroup::singleton()->get( 'swift-backend' );
-		$thumbnailDir = sprintf( 'mwstore://swift-backend/%s%s%s', $this->getSwiftContainer(), $this->getSwiftPathPrefix(), $this->getLocalThumbnailPath() );
+		$thumbnailDir = sprintf( self::MWSTORE_SWIFT_BACKEND_TEMPLATE, $this->getSwiftContainer(), $this->getSwiftPathPrefix(), $this->getLocalThumbnailPath() );
 
 		$urls = [ ];
 		$files = [ ];
