@@ -16,7 +16,7 @@
  */
 ve.ce.WikiaImageCaptionNode = function VeCeWikiaImageCaptionNode( model, config ) {
 	// Parent constructor
-	ve.ce.WikiaMediaCaptionNode.call( this, model, config );
+	ve.ce.WikiaImageCaptionNode.super.call( this, model, config );
 };
 
 /* Inheritance */

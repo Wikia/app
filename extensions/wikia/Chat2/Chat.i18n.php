@@ -1901,6 +1901,7 @@ $messages['kn'] = array(
  * @author Cafeinlove
  * @author Infinity
  * @author Leehoy
+ * @author Miri-Nae
  * @author 관인생략
  * @author 아라
  * @author 한글화담당
@@ -1941,6 +1942,19 @@ $messages['ko'] = array(
 	'chat-user-menu-message-wall' => '메시지 담벼락',
 	'chat-user-menu-contribs' => '기여',
 	'chat-user-menu-private' => '개인 메시지',
+	'chat-user-menu-private-block' => '1:1 메시지 차단',
+	'chat-user-menu-private-allow' => '1:1 메시지 허용',
+	'chat-user-menu-private-close' => '1:1 채팅방을 닫습니다',
+	'chat-private-headline' => '$1와 1:1 채팅',
+	'right-chatmoderator' => '[[Help:Chat|채팅]]에서 사용자를 강제 퇴장/차단할 수 있습니다',
+	'group-chatmoderator' => '채팅 관리자',
+	'group-chatmoderator-member' => '채팅 관리자',
+	'group-bannedfromchat' => '채팅방 차단',
+	'group-bannedfromchat-member' => '채팅방 차단',
+	'chat-chatconnect-log' => '채팅 접속 기록',
+	'chat-chatban-log' => '채팅 차단 기록',
+	'chat-chatbanremove-log-entry' => '채팅방 차단 해제', # Fuzzy
+	'chat-checkuser-join-action' => '참여한 채팅방',
 );
 
 /** Kyrgyz (Кыргызча)
@@ -3508,9 +3522,11 @@ Mangyaring makipag-ugnayan sa kanila para sa mas maraming kabatiran.',
 
 /** Turkish (Türkçe)
  * @author Incelemeelemani
+ * @author Sayginer
  */
 $messages['tr'] = array(
 	'chat' => 'Sohbet',
+	'chat-private-messages' => 'Özel Mesajlar',
 	'chat-log-reason-undo' => 'geri al',
 	'chat-ban-undolink' => 'geri al',
 	'chat-start-a-chat' => 'Sohbeti Başlat',

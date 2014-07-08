@@ -94,7 +94,7 @@ QUnit.test( 'compatibility', function ( assert ) {
 			{
 				'msg': 'Safari 5',
 				'userAgent': 'Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_3; en-us) AppleWebKit/534.1+ (KHTML, like Gecko) Version/5.0 Safari/533.16',
-				'matches': [ 'whitelist' ]
+				'matches': []
 			},
 			{
 				'msg': 'Safari 6',

@@ -15,9 +15,9 @@ class AnalyticsProviderDatonics implements iAnalyticsProvider
 			case AnalyticsEngine::EVENT_PAGEVIEW:
 				$script = <<<SCRIPT
 <!-- Begin Datonics Tag -->
-<script type="text/javascript">
+<script>
 require(['wikia.geo'], function (geo) {
-	if (geo.getCountryCode() == 'US') {
+	if (geo.getCountryCode() === 'US') {
 
 // --- Datonics pixel code start ---
 

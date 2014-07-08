@@ -148,23 +148,3 @@ $separators: mix($color-page-border, $color-page, 50%);
 		margin: 15px 0 0 110px;
 	}
 }
-
-body.skin-monobook {
-	.Wall .SortingBar, .WallHistory .SortingBar {
-		background: white;
-	}
-	#WallHistory  {
-		.summaryBubble, #WallThreadHistory .summaryBubbl {
-			background: white;
-		}
-		
-		.summaryBubble:after, #WallThreadHistory .summaryBubble:after  {
-			background: white;
-		}
-		
-			
-		.summaryBubble:after, #WallThreadHistory .summaryBubble:before  {
-			background: white;
-		}
-	}
-}

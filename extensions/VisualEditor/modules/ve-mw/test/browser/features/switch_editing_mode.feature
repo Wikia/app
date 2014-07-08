@@ -1,11 +1,11 @@
-@ie6-bug  @ie7-bug  @ie8-bug  @ie9-bug @ie10-bug @en.wikipedia.beta.wmflabs.org @test2.wikipedia.org @login
+@chrome @en.wikipedia.beta.wmflabs.org @firefox @login @test2.wikipedia.org
 Feature: Switching between wikitext and Visual Editor modes
 
   Test for both pathways that allow switching between Visual Editor and wikitext editing modes.
 
   Background:
     Given I am logged in
-      And I am at my user page
+      And I go to the browser specific edit page page
     When I click Edit for VisualEditor
 
   Scenario: Switch editing modes via toolbar
@@ -15,6 +15,7 @@ Feature: Switching between wikitext and Visual Editor modes
 
   Scenario: Switch editing modes via Page Settings drop-down menu
     When I click the Switch to source editing menu option
+      And I clear the confirm dialog
       And I see the wikitext editor
       And I click Edit for VisualEditor from this page
     Then I should be in Visual Editor editing alternate mode

@@ -335,6 +335,10 @@ class Parser {
 		wfProfileIn( __METHOD__ );
 		wfProfileIn( $fname );
 
+		// Wikia change begin - @author: wladek
+		$wikitextSize = strlen($text);
+		// Wikia change end
+
 		$this->startParse( $title, $options, self::OT_HTML, $clearState );
 
 		$oldRevisionId = $this->mRevisionId;
@@ -464,6 +468,9 @@ class Parser {
 		}
 
 		wfRunHooks( 'ParserAfterTidy', array( &$this, &$text ) );
+		// Wikia change begin - @author: wladek
+		$this->recordPerformanceStats( $wikitextSize, strlen($text) );
+		// Wikia change end
 
 		# Information on include size limits, for the benefit of users who try to skirt them
 		if ( $this->mOptions->getEnableLimitReport() ) {
@@ -6153,5 +6160,23 @@ class Parser {
 	 */
 	function isValidHalfParsedText( $data ) {
 		return isset( $data['version'] ) && $data['version'] == self::HALF_PARSED_VERSION;
+	}
+
+	/**
+	 * Records parser performance stats in ParserOutput object
+	 *
+	 * @author wladek
+	 *
+	 * @param $wikitextSize int Wikitext size
+	 * @param $htmlSize int HTML size
+	 */
+	function recordPerformanceStats( $wikitextSize, $htmlSize ) {
+		$parserOutput = $this->mOutput;
+		$parserOutput->setPerformanceStats('expFuncCount',   $this->mExpensiveFunctionCount);
+		$parserOutput->setPerformanceStats('nodeCount',      $this->mPPNodeCount);
+		$parserOutput->setPerformanceStats('postExpandSize', $this->mIncludeSizes['post-expand']);
+		$parserOutput->setPerformanceStats('tempArgSize',    $this->mIncludeSizes['arg']);
+		$parserOutput->setPerformanceStats('wikitextSize',   $wikitextSize);
+		$parserOutput->setPerformanceStats('htmlSize',       $htmlSize);
 	}
 }

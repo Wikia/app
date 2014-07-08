@@ -325,10 +325,13 @@ $messages['nb'] = array(
 
 /** Dutch (Nederlands)
  * @author Siebrand
+ * @author Southparkfan
  */
 $messages['nl'] = array(
 	'wikiarelatedpages-desc' => "Voegt een lijst met gerelateerde pagina's to aan pagina's",
 	'wikiarelatedpages-heading' => 'Meer lezen',
+	'wikiamobile-related-article' => 'Uitgelichte pagina',
+	'wikiamobile-people-also-read' => 'Mensen lezen ook',
 );
 
 /** Occitan (occitan)

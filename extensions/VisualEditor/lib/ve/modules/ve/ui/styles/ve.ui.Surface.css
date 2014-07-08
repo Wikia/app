@@ -28,6 +28,7 @@
 	left: 0;
 }
 
-.ve-ui-surface-overlay-local {
+.ve-ui-surface-overlay-local,
+.ve-ui-surface-overlay-global {
 	z-index: 1;
 }

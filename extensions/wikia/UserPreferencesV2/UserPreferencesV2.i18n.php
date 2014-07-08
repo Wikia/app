@@ -496,6 +496,7 @@ $messages['fi'] = array(
  * @author Gomoko
  * @author Jean-Frédéric
  * @author Linedwell
+ * @author Wyz
  */
 $messages['fr'] = array(
 	'prefs-personal' => 'Mes infos',
@@ -514,11 +515,11 @@ $messages['fr'] = array(
 	'prefs-emailv2' => 'Courriel',
 	'prefs-email-me-v2' => 'M’envoyer un courriel quand…',
 	'tog-enotifwatchlistpages-v2' => '…une page que je suis est modifiée',
-	'tog-enotifusertalkpages-v2' => '…ma page de discussion d’utilisateur est modifiée',
-	'tog-enotifminoredits-v2' => '…une page que je suis subit une modification mineure',
-	'tog-marketingallowed-v2' => '…Wikia a des nouvelles et des événements',
+	'tog-enotifusertalkpages-v2' => '…ma page de discussion est modifiée',
+	'tog-enotifminoredits-v2' => '…une page que je suis a reçu des modifications mineures',
+	'tog-marketingallowed-v2' => '…Wikia a de nouvelles informations et des événements',
 	'prefs-email-advanced-v2' => 'Options avancées',
-	'tog-htmlemails-v2' => 'M’envoyer des courriels en HTML',
+	'tog-htmlemails-v2' => 'M’envoyer des courriels au format HTML',
 	'prefs-wikiemail' => 'Options de {{SITENAME}}. M’envoyer un courriel quand…',
 	'prefs-email-unsubscribe' => 'Désactiver tous les courriels',
 	'unsubscribe-preferences-toggle-v2' => 'Désactiver tous les courriels de Wikia (écrase toutes les autres options)',
@@ -539,7 +540,7 @@ $messages['fr'] = array(
 	'prefs-addressv2' => 'Adresse',
 	'prefs-followed-pages-iv2' => 'Suivre les pages que je…',
 	'preferences-v2-watchdefault' => 'Modifie',
-	'preferences-v2-watchmoves' => 'Déplace',
+	'preferences-v2-watchmoves' => 'Renomme',
 	'preferences-v2-watchdeletion' => 'Supprime',
 	'preferences-v2-watchcreations' => 'Crée',
 	'preferences-v2-showads-enable' => 'Afficher toutes les publicités',

@@ -10,13 +10,14 @@
  *
  * @class
  * @extends ve.dm.BranchNode
+ *
  * @constructor
- * @param {ve.dm.BranchNode[]} [children] Child nodes to attach
  * @param {Object} [element] Reference to element in linear model
+ * @param {ve.dm.Node[]} [children]
  */
-ve.dm.MWImageCaptionNode = function VeDmMWImageCaptionNode( children, element ) {
+ve.dm.MWImageCaptionNode = function VeDmMWImageCaptionNode() {
 	// Parent constructor
-	ve.dm.BranchNode.call( this, children, element );
+	ve.dm.BranchNode.apply( this, arguments );
 };
 
 OO.inheritClass( ve.dm.MWImageCaptionNode, ve.dm.BranchNode );

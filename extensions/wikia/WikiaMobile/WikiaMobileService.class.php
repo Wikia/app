@@ -170,6 +170,10 @@ class WikiaMobileService extends WikiaService {
 				AnalyticsEngine::track(
 					'ClarityRay',
 					AnalyticsEngine::EVENT_PAGEVIEW
+				) .
+				AnalyticsEngine::track(
+					'PageFair',
+					AnalyticsEngine::EVENT_PAGEVIEW
 				);
 		}
 

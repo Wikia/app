@@ -9,6 +9,8 @@
  * It also imports WikiFactory variables from the production database
  */
 
+putenv ("SERVER_ID=177");
+require_once( dirname(__FILE__)."/../commandLine.inc" );
 
 $wgDBdevboxUser = 'devbox';
 $wgDBdevboxPass = 'devbox';
@@ -32,12 +34,12 @@ if (array_key_exists('p', $opts)) {
 	$wgWikiaDatacenter = getenv('WIKIA_DATACENTER');
 }
 switch($wgWikiaDatacenter) {
-	case 'poz':
+	case WIKIA_DC_POZ:
 		$wgDBdevboxServer1 = 'dev-db-a1-p1';
 		$wgDBdevboxServer2 = 'dev-db-a1-p1';
 		$wgDBdevboxCentral = 'dev-db-central-p1';
 		break;
-	case 'sjc':
+	case WIKIA_DC_SJC:
 		$wgDBdevboxServer1 = 'dev-db-a1';
 		$wgDBdevboxServer2 = 'dev-db-b1';
 		$wgDBdevboxCentral = 'dev-db-central';

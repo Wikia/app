@@ -483,6 +483,9 @@ $messages['bg'] = array(
  * @author Tauhid16
  */
 $messages['bn'] = array(
+	'article-comments-anonymous' => 'নামহীন ব্যবহারকারী',
+	'article-comments-comments' => 'মন্তব্যসমূহ ($1)',
+	'article-comments-post' => 'মন্তব্য প্রকাশ করুন',
 	'article-comments-cancel' => 'বাতিল',
 	'article-comments-delete' => 'অপসারণ',
 	'article-comments-edit' => 'সম্পাদনা',
@@ -2278,6 +2281,7 @@ $messages['lrc'] = array(
 /** Lithuanian (lietuvių)
  * @author Eitvys200
  * @author Mantak111
+ * @author Robotukas11
  * @author Vilius
  */
 $messages['lt'] = array(
@@ -2299,7 +2303,7 @@ $messages['lt'] = array(
 	'article-comments-reply' => 'Atsakyti',
 	'article-comments-show-all' => 'Rodyti visus komentarus',
 	'article-comments-prev-page' => 'Ankstesnis',
-	'article-comments-next-page' => 'Sekantis',
+	'article-comments-next-page' => 'Kitas',
 	'article-comments-page-spacer' => '&#160...&#160',
 	'wikiamobile-article-comments-header' => 'Komentarai',
 	'wikiamobile-article-comments-more' => 'Įkelti daugiau',
