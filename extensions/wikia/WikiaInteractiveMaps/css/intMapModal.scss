@@ -37,6 +37,31 @@ $color-code-bg: mix($color-page, #000000, 95%);
 		margin: 0 auto;
 	}
 
+	.article-suggestion {
+		cursor: pointer;
+		display: block;
+		padding: 10px;
+		text-decoration: none;
+
+		&:hover {
+			background-color: $color-code-bg;
+		}
+	}
+
+	.article-suggestions {
+		background-color: $color-page;
+		box-sizing: border-box;
+		border: 1px solid $color-page-border-subtle;
+		max-height: 134px;
+		overflow-y: auto;
+		position: absolute;
+		width: 100%;
+	}
+
+	.article-suggestions-wrapper {
+		position: relative;
+	}
+
 	.clear-search {
 		float: right;
 		margin: 7px 10px 0 0;
@@ -220,7 +245,7 @@ $color-code-bg: mix($color-page, #000000, 95%);
 		}
 
 		textarea {
-			height: 50px;
+			height: 70px;
 			resize: none;
 		}
 
