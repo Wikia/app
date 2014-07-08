@@ -8,6 +8,11 @@
  */
 class ProfilerXhprof extends ProfilerStub {
 
+	const SCRIBE = 'scribe';
+	const UDP = 'udp';
+
+	const SCRIBE_KEY = 'xhprof_data';
+
 	const UDP_PACKET_MAX_SIZE = 1000;
 
 	/**
@@ -41,10 +46,15 @@ class ProfilerXhprof extends ProfilerStub {
 		if ( !function_exists('xhprof_disable') ) {
 			return;
 		}
+		$config = $this->config();
 		$data = xhprof_disable();
 		$data = $this->parse($data);
 		$data = $this->filter($data);
-		$this->send($data);
+		if ($config['target'] !== self::SCRIBE) {
+			$this->sendUdp($data);
+		} else {
+			$this->sendScribe($data);
+		}
 	}
 
 	/**
@@ -113,7 +123,7 @@ class ProfilerXhprof extends ProfilerStub {
 	 *
 	 * @param $data array Data ready to be sent
 	 */
-	protected function send($data) {
+	protected function sendUdp($data) {
 		$config = $this->config();
 		$udpHost = $config['host'];
 		$udpPort = $config['port'];
@@ -141,6 +151,44 @@ class ProfilerXhprof extends ProfilerStub {
 		socket_sendto( $sock, $packet, $plength, 0x100, $udpHost, $udpPort );
 	}
 
+	protected function sendScribe($data) {
+		if ( !is_callable( array( 'WScribeClient', 'singleton' ) ) ) {
+			if ( function_exists( 'wfIncrStats' ) ) {
+				wfIncrStats('xhprof-scribe-not-available');
+			}
+			return false;
+		}
+
+		$config = $this->config();
+		$dbName = $config['db_name'];
+		$profilerId = function_exists('wfWikiID') ? wfWikiID() : $dbName;
+
+		$entries = array();
+		foreach ( $data as $entry => $pfdata ) {
+			$entries[$entry] = array( $pfdata['ct'], 0, 0, $pfdata['wt'], 0 );
+		}
+
+		$data = array(
+			'engine' => 'xhprof',
+			'profile' => $profilerId,
+			'entries' => $entries,
+		);
+		if ( is_callable( array( 'Transaction', 'getAll' ) ) ) {
+			$data['context'] = Transaction::getAll();
+		}
+
+		$data = json_encode( $data );
+
+		try {
+			WScribeClient::singleton( self::SCRIBE_KEY )->send( $data );
+		} catch ( TException $e ) {
+			Wikia::log( __METHOD__, 'scribeClient exception', $e->getMessage() );
+			return false;
+		}
+
+		return true;
+	}
+
 	/**
 	 * Get configuration from global variables
 	 * Reads global variables each time in order to reflect changes in global variables
@@ -149,12 +197,13 @@ class ProfilerXhprof extends ProfilerStub {
 	 * @return array Configuration
 	 */
 	protected function config() {
-		global $wgUDPProfilerHost, $wgXhprofUDPHost, $wgXhprofUDPPort, $wgXhprofMinimumTime, $wgDBname;
+		global $wgUDPProfilerHost, $wgXhprofUDPHost, $wgXhprofUDPPort, $wgProfilerMinimumTime, $wgDBname, $wgProfilerSendViaScribe;
 		$config = array(
 			'host' => isset($wgXhprofUDPHost) ? $wgXhprofUDPHost : $wgUDPProfilerHost,
 			'port' => $wgXhprofUDPPort,
-			'minimum_time' => $wgXhprofMinimumTime,
+			'minimum_time' => $wgProfilerMinimumTime,
 			'db_name' => $wgDBname,
+			'target' => !empty($wgProfilerSendViaScribe) ? self::SCRIBE : self::UDP,
 		);
 		return $config;
 	}

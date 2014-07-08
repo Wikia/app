@@ -1459,7 +1459,13 @@ $wgXhprofUDPHost = null;
 $wgXhprofUDPPort = '3911';
 
 /*
- * @name wgXhprofMinimumTime
+ * @name wgProfilerMinimumTime
  * Threshold for total time spent in function to be reported (set to 0 to report all entries)
  */
-$wgXhprofMinimumTime = 0.001;
+$wgProfilerMinimumTime = 0.001;
+
+/*
+ * @name wgProfilerSendViaScribe
+ * Enables sending profiler reports via Scribe
+ */
+$wgProfilerSendViaScribe = true;
