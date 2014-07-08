@@ -13,7 +13,8 @@ define(
 
 		// const variables used across int map UI
 		var constants = {
-			debounceDelay: 250
+			debounceDelay: 250,
+			minCharLength = 2
 		};
 
 		/**
@@ -316,10 +317,9 @@ define(
 		 * @param {function} cb - callback function
 		 */
 		function onWriteInInput(input, cb) {
-			var minCharLength = 2,
-				trimmedKeyword = input.value.trim();
+			var trimmedKeyword = input.value.trim();
 
-			if (trimmedKeyword.length >= minCharLength) {
+			if (trimmedKeyword.length >= constants.minCharLength) {
 				cb(trimmedKeyword);
 			}
 		}
