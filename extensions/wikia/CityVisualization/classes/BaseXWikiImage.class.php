@@ -223,12 +223,7 @@ abstract class BaseXWikiImage {
 		$imgInfo = getimagesize( $sourceTempFilePath );
 
 		if ( !in_array( $imgInfo['mime'], $this->getAllowedMime() ) ) {
-			// This seems to be the most appropriate error message to describe that the image type is invalid.
-			// Available error codes; http://php.net/manual/en/features.file-upload.errors.php
 			$errorNo = UPLOAD_ERR_EXTENSION;
-			//TODO: add localized generic error message
-//			global $wgLang;
-//			$errorMsg = wfMsg('blog-avatar-error-type', $imgInfo['mime'], $wgLang->listToText( $this->getAllowedMime() ) );
 			return $errorNo;
 		}
 
