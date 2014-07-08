@@ -484,7 +484,7 @@ class CityVisualization extends WikiaModel {
 	 */
 	public function getWikiDataForPromote($wikiId, $langCode) {
 		$memcKey = $this->getWikiPromoteDataCacheKey($wikiId, $langCode);
-		return $this->getWikiData($wikiId, $langCode, $memcKey, WikiGetDataHelper::DISPLAY_ALL);
+		return $this->getWikiData( $wikiId, $langCode, $memcKey, WikiGetDataHelper::DISPLAY_ALL );
 	}
 
 	/**
