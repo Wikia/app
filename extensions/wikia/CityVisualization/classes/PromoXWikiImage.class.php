@@ -3,7 +3,7 @@
 class PromoXWikiImage extends BaseXWikiImage {
 	protected $reviewStatus;
 	const __DIMENSION_CACHE_KEY = "promo.image.dimensions.001.%s"; // %s name
-	const __DIMENSION_CACHE_TTL = 72000; // 20 * 60 * 60
+	const __DIMENSION_CACHE_TTL = 2592000; // 30*24*60*60
 
 	protected function getContainerDirectory() {
 		return "/images/p/promote/images";
