@@ -14,7 +14,7 @@ define(
 		// const variables used across int map UI
 		var constants = {
 			debounceDelay: 250,
-			minCharLength = 2
+			minCharLength: 2
 		};
 
 		/**
