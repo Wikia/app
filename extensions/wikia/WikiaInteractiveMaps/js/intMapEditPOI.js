@@ -183,8 +183,8 @@ define('wikia.intMap.editPOI', ['jquery', 'wikia.intMap.utils'], function($, uti
 	}
 
 	/**
-	 * encodes HTML entities in POI data
-	 * @param poiData
+	 * @desc encodes HTML entities in POI data
+	 * @param {object} poiData
 	 */
 	function encodePOIData(poiData) {
 		poiData.name = utils.escapeHtml(poiData.name);
