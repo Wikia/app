@@ -227,9 +227,7 @@ define('wikia.intMap.editPOI', ['jquery', 'wikia.intMap.utils'], function($, uti
 			callback: function (response) {
 				cb(response.results);
 			},
-			onErrorCallback: function () {
-				hideSuggestions();
-			}
+			onErrorCallback: hideSuggestions
 		});
 	}
 
