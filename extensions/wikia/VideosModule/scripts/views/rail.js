@@ -112,7 +112,10 @@ define('videosmodule.views.rail', [
 				self.$el.stopThrobbing();
 			});
 
-		track();
+		// Remove tracking for Special Wikis Sampled at 100% -- VID-1800
+		if (wgIsGASpecialWiki !== true) {
+			track();
+		}
 	};
 
 	/**
