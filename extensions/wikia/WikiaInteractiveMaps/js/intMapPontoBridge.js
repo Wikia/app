@@ -74,10 +74,13 @@ define('wikia.intMap.pontoBridge', ['wikia.window', 'ponto', 'wikia.intMap.utils
 		};
 
 		/**
-		 * @desc tells iframe that it's opened on Wikia page
+		 * @desc returns Wikia settings to the map in iframe
 		 */
-		this.isWikia = function() {
-			return true;
+		this.getWikiaSettings = function() {
+			return {
+				enableEdit: true,
+				skin: w.skin
+			};
 		};
 	}
 
