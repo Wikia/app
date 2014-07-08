@@ -78,10 +78,6 @@ define(
 			// stack for holding choose tile set steps
 			stepsStack = [],
 			cachedTileSets = {},
-			// dalay time for jQuery debounde
-			dabounceDelay = 250,
-			// minimum number of characters to trigger search request
-			searchCharLength = 2,
 			thumbSize = 116,
 			// cached selectors
 			$sections,
@@ -111,7 +107,7 @@ define(
 				.on('change', '#intMapUpload', function(event) {
 					uploadNewTileSetImage(event.target.parentNode);
 				})
-				.on('keyup', '#intMapTileSetSearch', $.debounce(dabounceDelay, searchForTileSets));
+				.on('keyup', '#intMapTileSetSearch', $.debounce(utils.constants.debounceDelay, searchForTileSets));
 
 		}
 
@@ -196,12 +192,10 @@ define(
 		 * @param {Event} event - search term
 		 */
 		function searchForTileSets(event) {
-			var trimmedKeyword = event.target.value.trim();
-
-			if (trimmedKeyword.length >= searchCharLength) {
-				loadTileSets(trimmedKeyword);
+			utils.onWriteInInput(event.target, function(inputValue) {
+				loadTileSets(inputValue);
 				$clearSearchBtn.removeClass('hidden');
-			}
+			});
 		}
 
 		/**
