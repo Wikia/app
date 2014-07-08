@@ -267,6 +267,9 @@ define('wikia.intMap.editPOI', ['jquery', 'wikia.intMap.utils'], function($, uti
 		if( dataSet.imageUrl !== '' ) {
 			modal.$articleImageUrl.attr('src', dataSet.imageUrl);
 			modal.$form.find('input[name=imageUrl]').val(dataSet.imageUrl);
+		} else {
+			modal.$articleImageUrl.attr('src', '');
+			modal.$form.find('input[name=imageUrl]').val('');
 		}
 
 		hideSuggestions();

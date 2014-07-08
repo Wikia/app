@@ -530,5 +530,31 @@ class WikiaMaps extends WikiaObject {
 
 		return $baseURL . self::MAP_THUMB_PREFIX . $fileName . '/' . $crop . '-' . $fileName;
 	}
+
+	/**
+	 * Returns an URL for an image from article with given title
+	 *
+	 * @param String $titleText
+	 * @param Integer $width
+	 * @param Integer $height
+	 *
+	 * @return string
+	 */
+	public function getArticleImage( $titleText, $width, $height ) {
+		$title = Title::newFromText( $titleText );
+
+		if( !is_null( $title ) ) {
+			$articleId = $title->getArticleId();
+			$is = new ImageServing( [ $articleId ], $width, $height );
+			$images = $is->getImages( 1 );
+
+			if( !empty( $images[$articleId] ) ) {
+				$image = array_pop( $images[$articleId] );
+				return $image['url'];
+			}
+		}
+
+		return '';
+	}
 }
 

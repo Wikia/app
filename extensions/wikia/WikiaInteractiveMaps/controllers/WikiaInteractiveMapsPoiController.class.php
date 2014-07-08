@@ -9,6 +9,8 @@ class WikiaInteractiveMapsPoiController extends WikiaInteractiveMapsBaseControll
 	const ACTION_UPDATE = 'update';
 	const ACTION_DELETE = 'delete';
 
+	const POI_ARTICLE_IMAGE_THUMB_SIZE = 85;
+
 	private $currentAction;
 	private $logEntries = [];
 
@@ -531,7 +533,16 @@ class WikiaInteractiveMapsPoiController extends WikiaInteractiveMapsBaseControll
 			$results[ 'responseText' ] = wfMessage( 'wikia-interactive-maps-edit-poi-article-suggest-no-search-term' )->plain();
 		} else {
 			$results = array_map( function( $item ) {
-					$item[0][ 'imageUrl' ] = 'http://placekitten.com/85/85/';
+					$imageUrl = $this->mapsModel->getArticleImage(
+						$item[0][ 'title' ],
+						self::POI_ARTICLE_IMAGE_THUMB_SIZE,
+						self::POI_ARTICLE_IMAGE_THUMB_SIZE
+					);
+
+					if( !empty( $imageUrl ) ) {
+						$item[0][ 'imageUrl' ] = $imageUrl;
+					}
+
 					return $item;
 				},
 				$this->getSuggestions( $query )
