@@ -11,7 +11,9 @@ QUnit.module( 've.dm.TextNode' );
 
 QUnit.test( 'getOuterLength', 2, function ( assert ) {
 	var node1 = new ve.dm.TextNode(),
-		node2 = new ve.dm.TextNode( 1234 );
+		node2 = new ve.dm.TextNode();
+
+	node2.setLength( 1234 );
 
 	assert.strictEqual( node1.getOuterLength(), 0 );
 	assert.strictEqual( node2.getOuterLength(), 1234 );

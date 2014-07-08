@@ -111,11 +111,7 @@ class WikiaInteractiveMapsParserTagController extends WikiaController {
 	 */
 	private function getMapObj( $mapId ) {
 		$mapsModel = new WikiaMaps( $this->wg->IntMapConfig );
-
-		return $mapsModel->cachedRequest(
-			'getMapByIdFromApi',
-			[ 'id' => $mapId ]
-		);
+		return $mapsModel->getMapByIdFromApi( $mapId );
 	}
 
 	/**

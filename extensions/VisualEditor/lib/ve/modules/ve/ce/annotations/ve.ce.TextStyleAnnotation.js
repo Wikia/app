@@ -177,44 +177,6 @@ ve.ce.TextStyleSpanAnnotation.static.tagName = 'span';
 ve.ce.annotationFactory.register( ve.ce.TextStyleSpanAnnotation );
 
 /**
- * ContentEditable strong annotation.
- *
- * @class
- * @extends ve.ce.TextStyleAnnotation
- * @constructor
- * @param {ve.dm.TextStyleStrongAnnotation} model Model to observe
- * @param {ve.ce.ContentBranchNode} [parentNode] Node rendering this annotation
- * @param {Object} [config] Configuration options
- */
-ve.ce.TextStyleStrongAnnotation = function VeCeTextStyleStrongAnnotation( model, parentNode, config ) {
-	ve.ce.TextStyleAnnotation.call( this, model, parentNode, config );
-	this.$element.addClass( 've-ce-TextStyleStrongAnnotation' );
-};
-OO.inheritClass( ve.ce.TextStyleStrongAnnotation, ve.ce.TextStyleAnnotation );
-ve.ce.TextStyleStrongAnnotation.static.name = 'textStyle/strong';
-ve.ce.TextStyleStrongAnnotation.static.tagName = 'strong';
-ve.ce.annotationFactory.register( ve.ce.TextStyleStrongAnnotation );
-
-/**
- * ContentEditable emphasize annotation.
- *
- * @class
- * @extends ve.ce.TextStyleAnnotation
- * @constructor
- * @param {ve.dm.TextStyleEmphasizeAnnotation} model Model to observe
- * @param {ve.ce.ContentBranchNode} [parentNode] Node rendering this annotation
- * @param {Object} [config] Configuration options
- */
-ve.ce.TextStyleEmphasizeAnnotation = function VeCeTextStyleEmphasizeAnnotation( model, parentNode, config ) {
-	ve.ce.TextStyleAnnotation.call( this, model, parentNode, config );
-	this.$element.addClass( 've-ce-TextStyleEmphasizeAnnotation' );
-};
-OO.inheritClass( ve.ce.TextStyleEmphasizeAnnotation, ve.ce.TextStyleAnnotation );
-ve.ce.TextStyleEmphasizeAnnotation.static.name = 'textStyle/emphasize';
-ve.ce.TextStyleEmphasizeAnnotation.static.tagName = 'em';
-ve.ce.annotationFactory.register( ve.ce.TextStyleEmphasizeAnnotation );
-
-/**
  * ContentEditable superscript annotation.
  *
  * @class

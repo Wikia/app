@@ -12,8 +12,8 @@
  * @param {number} [length] Length of content data in document
  * @param {Object} [element] Reference to element in linear model
  */
-ve.dm.WikiaBlockImageNode = function VeDmWikiaBlockImageNode( length, element ) {
-	ve.dm.WikiaBlockMediaNode.call( this, 0, element );
+ve.dm.WikiaBlockImageNode = function VeDmWikiaBlockImageNode( element ) {
+	ve.dm.WikiaBlockImageNode.super.call( this, element );
 };
 
 /* Inheritance */

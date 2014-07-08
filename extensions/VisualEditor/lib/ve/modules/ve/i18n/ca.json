@@ -7,7 +7,8 @@
 			"Pginer",
 			"QuimGil",
 			"SMP",
-			"Vriullop"
+			"Vriullop",
+			"Fitoschido"
 		]
 	},
 	"visualeditor": "Editor visual",
@@ -45,10 +46,11 @@
 	"visualeditor-inspector-remove-tooltip": "Elimina",
 	"visualeditor-languageinspector-block-tooltip": "Bloc d'idioma",
 	"visualeditor-languageinspector-title": "Idioma",
+	"visualeditor-languageinspector-widget-changelang": "Canvieu l'idioma",
 	"visualeditor-languageinspector-widget-label-direction": "Direcció",
 	"visualeditor-languageinspector-widget-label-langcode": "Codi d'idioma",
 	"visualeditor-languageinspector-widget-label-language": "Idioma",
-	"visualeditor-linkinspector-title": "Hiperenllaç",
+	"visualeditor-linkinspector-title": "Enllaç",
 	"visualeditor-listbutton-bullet-tooltip": "Llista puntejada",
 	"visualeditor-listbutton-number-tooltip": "Llista numerada",
 	"visualeditor-shortcuts-other": "Altres",

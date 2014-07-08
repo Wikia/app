@@ -21,6 +21,7 @@
 		inlineVideoLoading: [],
 		videoInstance: null,
 		pageAds: $('#TOP_RIGHT_BOXAD'), // if more ads start showing up over lightbox, add them here
+		reloadOnClose: false, // Means to reload the page on closing the lightbox - see VID-473
 		defaults: {
 			// start with default modal options
 			id: 'LightboxModal',
@@ -55,6 +56,9 @@
 				if (LightboxLoader.videoInstance) {
 					LightboxLoader.videoInstance.clearTimeoutTrack();
 				}
+				if ( LightboxLoader.reloadOnClose ) {
+					window.location.reload();
+				}
 			}
 		},
 		videoThumbWidthThreshold: 400,
@@ -65,7 +69,8 @@
 				$comments = $('#WikiaArticleComments'), // event handled with $footer
 				$footer = $('#WikiaArticleFooter'), // bottom videos module
 				$videosModule = $('.videos-module-rail'), // right rail videos module
-				$videoHomePage = $('#latest-videos-wrapper');
+				$videoHomePage = $('#latest-videos-wrapper'),
+				$articleThumbs = $('.article-thumb-wrapper');
 
 			// Bind click event to initiate lightbox
 			$article.add($photos).add($footer).add($videosModule)
@@ -160,6 +165,13 @@
 					}
 				);
 
+			$articleThumbs
+				.on(
+					'mousedown',
+					function(event) {
+						LightboxLoader.updateAnchor(event);
+					}
+				);
 		},
 
 		/**
@@ -363,6 +375,29 @@
 				event.metaKey ||
 				event.ctrlKey
 			);
+		},
+
+		/**
+		 *
+		 * @param event
+		 */
+		updateAnchor: function (event) {
+			var $img, $anchor;
+			$img = $(event.target);
+			$anchor = $img.parent('a');
+
+			// Don't redirect to raw thumbnail image for videos
+			if ($anchor.hasClass(('video-thumbnail'))) {
+				return;
+			}
+			// If right-click, control key, or meta key were used
+			if (event.which === 3 || event.crtlKey || event.metaKey) {
+				// Change to anchor to point to the raw image file
+				$anchor.attr('old-href', $anchor.attr('href'));
+				$anchor.attr('href', $img.attr('src'));
+			} else if ($anchor.attr('old-href') !== 'undefined') {
+				$anchor.attr('href', $anchor.attr('old-href'));
+			}
 		}
 	};
 

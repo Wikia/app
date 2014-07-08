@@ -13,7 +13,7 @@
  * @param {Object} [element] Reference to element in linear model
  */
 ve.dm.WikiaMediaCaptionNode = function VeDmWikiaMediaCaptionNode( length, element ) {
-	ve.dm.MWImageCaptionNode.call( this, length, element );
+	ve.dm.WikiaMediaCaptionNode.super.call( this, length, element );
 };
 
 /* Inheritance */

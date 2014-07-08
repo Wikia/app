@@ -3,7 +3,8 @@
 		"authors": [
 			"EugeneZelenko",
 			"Wizardist",
-			"Чаховіч Уладзіслаў"
+			"Чаховіч Уладзіслаў",
+			"Red Winged Duck"
 		]
 	},
 	"visualeditor": "VisualEditor",
@@ -30,7 +31,7 @@
 	"visualeditor-formatdropdown-format-paragraph": "Параграф",
 	"visualeditor-formatdropdown-format-preformatted": "Аформлены",
 	"visualeditor-formatdropdown-title": "Зьмяніць фарматаваньне",
-	"visualeditor-historybutton-redo-tooltip": "Узнавіць",
+	"visualeditor-historybutton-redo-tooltip": "Аднавіць",
 	"visualeditor-historybutton-undo-tooltip": "Скасаваць",
 	"visualeditor-indentationbutton-indent-tooltip": "Павялічыць водступ",
 	"visualeditor-indentationbutton-outdent-tooltip": "Паменшыць водступ",
@@ -38,6 +39,7 @@
 	"visualeditor-inspector-remove-tooltip": "Выдаліць",
 	"visualeditor-languageinspector-block-tooltip": "Моўны блёк",
 	"visualeditor-languageinspector-title": "Мова",
+	"visualeditor-languageinspector-widget-changelang": "Зьмяніць мову",
 	"visualeditor-languageinspector-widget-label-direction": "Накірунак",
 	"visualeditor-languageinspector-widget-label-langcode": "Код мовы",
 	"visualeditor-languageinspector-widget-label-language": "Мова",
