@@ -306,6 +306,7 @@ define('wikia.intMap.editPOI', ['jquery', 'wikia.intMap.utils'], function($, uti
 				if (data && data.success) {
 					poiData.id = data.content.id;
 					poiData.link = data.content.link;
+					poiData.photo = data.content.photo;
 
 					trigger(poiData);
 

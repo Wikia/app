@@ -46,28 +46,20 @@ class WikiaInteractiveMapsPoiController extends WikiaInteractiveMapsBaseControll
 			$this->setAction( self::ACTION_UPDATE );
 			$this->validatePoiData();
 			$results = $this->updatePoi();
-			if ( true === $results[ 'success' ] ) {
-				WikiaMapsLogger::addLogEntry(
-					WikiaMapsLogger::ACTION_UPDATE_PIN,
-					$mapId,
-					$name
-				);
-
-				$results[ 'content' ]->link = $this->getArticleUrl( $this->getData( 'articleTitle' ) );
-			}
 		} else {
 			$this->setAction( self::ACTION_CREATE );
 			$this->validatePoiData();
 			$results = $this->createPoi();
-			if ( true === $results[ 'success' ] ) {
-				WikiaMapsLogger::addLogEntry(
-					WikiaMapsLogger::ACTION_CREATE_PIN,
-					$mapId,
-					$name
-				);
+		}
 
-				$results[ 'content' ]->link = $this->getArticleUrl( $this->getData( 'articleTitle' ) );
-			}
+		if ( true === $results[ 'success' ] ) {
+			$results = $this->decorateResults( $results, [ 'link', 'photo' ] );
+
+			WikiaMapsLogger::addLogEntry(
+				( $this->isUpdate() ? WikiaMapsLogger::ACTION_UPDATE_PIN : WikiaMapsLogger::ACTION_CREATE_PIN ),
+				$mapId,
+				$name
+			);
 		}
 
 		$this->setVal( 'results', $results );
@@ -507,18 +499,21 @@ class WikiaInteractiveMapsPoiController extends WikiaInteractiveMapsBaseControll
 		}
 
 		$linkTitle = $this->getData( 'articleTitle', '' );
+		$photo = $this->getData( 'imageUrl' );
 		$link = '';
 		if ( !empty( $linkTitle ) ) {
 			$link = $this->getArticleUrl( $linkTitle );
+
+			if( !empty( $photo ) ) {
+			// save photo only when article is chosen
+				$poiData['photo'] = $photo;
+			}
+		} else {
+			$poiData['photo'] = '';
 		}
 
 		$poiData[ 'link_title' ] = $linkTitle;
 		$poiData[ 'link' ] = $link;
-
-		$photo = $this->getData( 'imageUrl' );
-		if( !empty( $photo ) ) {
-			$poiData['photo'] = $photo;
-		}
 
 		return $poiData;
 	}
@@ -568,7 +563,7 @@ class WikiaInteractiveMapsPoiController extends WikiaInteractiveMapsBaseControll
 	 *
 	 * @return string - full article URL or empty string if article doesn't exist
 	 */
-	private function getArticleUrl($title) {
+	private function getArticleUrl( $title ) {
 		$article = Title::newFromText( $title );
 		$link = '';
 
@@ -577,5 +572,25 @@ class WikiaInteractiveMapsPoiController extends WikiaInteractiveMapsBaseControll
 		}
 
 		return $link;
+	}
+
+	/**
+	 * Helper method which adds additional data to API results
+	 *
+	 * @param Array $results
+	 * @param Array $fieldsList
+	 *
+	 * @return Array results array
+	 */
+	private function decorateResults( $results, $fieldsList ) {
+		$response = $this->mapsModel->sendGetRequest( $results['content']->url );
+
+		foreach( $fieldsList as $field ) {
+			if( !empty( $response['content']->$field ) ) {
+				$results['content']->$field = $response['content']->$field;
+			}
+		}
+
+		return $results;
 	}
 }
