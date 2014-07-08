@@ -20,7 +20,7 @@ abstract class BaseXWikiImage {
 		return [ 'image/jpeg', 'image/pjpeg', 'image/gif', 'image/png', 'image/x-png', 'image/jpg' ];
 	}
 
-	public function __construct( $name, $width=null, $height=null ) {
+	public function __construct( $name, $width = null, $height = null ) {
 		$this->name = $name;
 		$this->height = $height;
 		$this->width = $width;
@@ -31,7 +31,7 @@ abstract class BaseXWikiImage {
 		return wfReplaceImageServer( $this->getPurgeUrl() );
 	}
 
-	public function getName(){
+	public function getName() {
 		return $this->name;
 	}
 
@@ -40,17 +40,17 @@ abstract class BaseXWikiImage {
 		return wfReplaceImageServer( $url );
 	}
 
-	public function getCroppedThumbnailUrl($desiredWidth, $desiredHeight, $newExtension=null) {
-		if (empty($this->width) or empty($this->height)){
+	public function getCroppedThumbnailUrl( $desiredWidth, $desiredHeight, $newExtension = null ) {
+		if ( empty($this->width) or empty($this->height) ) {
 			$this->provideImageDimensions();
 		}
 
-		if (empty($this->width) or empty($this->height)){
+		if ( empty($this->width) or empty($this->height) ) {
 			\Wikia\Logger\WikiaLogger::instance()
-				->warning("Cannot get image dimensions, not cropping thumbnail for img: ".$this->name);
-			return $this->getThumbnailUrl($desiredWidth);
+				->warning( "Cannot get image dimensions, not cropping thumbnail for img: " . $this->name );
+			return $this->getThumbnailUrl( $desiredWidth );
 		} else {
-			$url = ImagesService::getCroppedThumbnailUrl($this->getThumbnailPurgeUrl(), $desiredWidth, $desiredHeight, $this->width, $this->height, $newExtension);
+			$url = ImagesService::getCroppedThumbnailUrl( $this->getThumbnailPurgeUrl(), $desiredWidth, $desiredHeight, $this->width, $this->height, $newExtension );
 			return wfReplaceImageServer( $url );
 		}
 	}
@@ -65,11 +65,11 @@ abstract class BaseXWikiImage {
 	}
 
 	public function getImageDimensions() {
-		if (empty($this->width) && empty($this->height)){
+		if ( empty($this->width) && empty($this->height) ) {
 			$this->provideImageDimensions();
 		}
 
-		return ["width" => $this->width, "height" => $this->height];
+		return [ "width" => $this->width, "height" => $this->height ];
 	}
 
 	public function getWidth() {
@@ -81,20 +81,20 @@ abstract class BaseXWikiImage {
 	}
 
 	public function exists() {
-		return $this->getSwiftStorage()->exists($this->getLocalPath());
+		return $this->getSwiftStorage()->exists( $this->getLocalPath() );
 	}
 
-	protected function provideImageDimensions($img = null) {
-		if (empty($img)){
-			if ($this->getSwiftStorage()->exists($this->getLocalPath())){
-				$file = $this->getSwiftStorage()->read($this->getLocalPath());
-				$img = imagecreatefromstring($file);
+	protected function provideImageDimensions( $img = null ) {
+		if ( empty($img) ) {
+			if ( $this->getSwiftStorage()->exists( $this->getLocalPath() ) ) {
+				$file = $this->getSwiftStorage()->read( $this->getLocalPath() );
+				$img = imagecreatefromstring( $file );
 			}
 		}
 
-		if (!empty($img)){
-			$this->width = imagesx($img);
-			$this->height= imagesy($img);
+		if ( !empty($img) ) {
+			$this->width = imagesx( $img );
+			$this->height = imagesy( $img );
 		}
 	}
 
@@ -117,7 +117,6 @@ abstract class BaseXWikiImage {
 	}
 
 	public function getSwiftStorage() {
-//		var_dump($this->wg->FSSwiftDC);
 		return \Wikia\SwiftStorage::newFromContainer( $this->getSwiftContainer(), $this->getSwiftPathPrefix() );
 	}
 
@@ -249,7 +248,7 @@ abstract class BaseXWikiImage {
 		if ( !imagepng( $imgObject, $targetFilePath ) ) {
 			$errorNo = UPLOAD_ERR_CANT_WRITE;
 		} else {
-			$this->provideImageDimensions($imgObject);
+			$this->provideImageDimensions( $imgObject );
 
 			$errorNo = UPLOAD_ERR_OK;
 
