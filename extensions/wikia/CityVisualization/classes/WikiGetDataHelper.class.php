@@ -28,7 +28,6 @@ class WikiGetDataHelper {
 
 	public function getImages( $wikiId, $langCode, $wikiRow = null ) {
 		global $wgExternalSharedDB;
-
 		$db = wfGetDB( DB_SLAVE, [ ], $wgExternalSharedDB );
 
 		$query = (new \WikiaSQL())
