@@ -71,10 +71,11 @@ end
 local addRowTitle = function( field )
   local row = mw.html.create('tr')
         row:addClass( InfoboxBuilderView.vars.Theme .. '-infobox-field-' .. field.Index )
-  row:tag('td')
-     :addClass( InfoboxBuilderView.vars.Theme .. '-infobox-title' )
-     :attr('colspan', '2')
-     :wikitext( field.Value )
+  local cell = row:tag('td')
+                  :addClass( InfoboxBuilderView.vars.Theme .. '-infobox-title' )
+                  :attr('colspan', '2')                  
+        cell:tag('h2')
+            :wikitext( field.Value )
   return row
 end
 
@@ -242,7 +243,7 @@ function InfoboxBuilderView.render( input, vars )
 	        table:attr('cellspacing', '0')
 	             :attr('cellpadding', '0')
 	             :addClass('InfoboxTable')
-	 
+
     -- Iterate over each field and render a row
     for index, field in ipairs( fields ) do
   	  if field.Type == "Line" then
