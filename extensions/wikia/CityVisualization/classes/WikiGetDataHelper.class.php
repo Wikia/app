@@ -30,13 +30,13 @@ class WikiGetDataHelper {
 		global $wgExternalSharedDB;
 		$db = wfGetDB( DB_SLAVE, [ ], $wgExternalSharedDB );
 
-		$query = (new \WikiaSQL())
+		$query = ( new \WikiaSQL() )
 			->SELECT( 'image_name', 'image_index', 'image_review_status' )
 			->FROM( CityVisualization::CITY_VISUALIZATION_IMAGES_TABLE_NAME )
 			->WHERE( 'city_id' )->EQUAL_TO( $wikiId )
 			->AND_( 'image_type' )->EQUAL_TO( PromoImage::ADDITIONAL )
 			->AND_( 'city_lang_code' )->EQUAL_TO( $langCode );
-		if ( !empty($this->queryFilter) ) {
+		if ( !empty( $this->queryFilter ) ) {
 			call_user_func_array( $this->queryFilter, [ $query ] );
 		}
 		$query->ORDER_BY( 'last_edited' );
@@ -45,7 +45,7 @@ class WikiGetDataHelper {
 			$wikiImages = [ ];
 			while ( $row = $result->fetchObject( $result ) ) {
 				$parsed = WikiImageRowHelper::parseWikiImageRow( $row );
-				$promoImage = new PromoXWikiImage($parsed->name);
+				$promoImage = new PromoXWikiImage( $parsed->name );
 				$promoImage->setReviewStatus( $parsed->review_status );
 				$wikiImages[$parsed->index] = $promoImage;
 			}
@@ -67,13 +67,13 @@ class WikiGetDataHelper {
 
 		$db = wfGetDB( DB_SLAVE, [ ], $wgExternalSharedDB );
 
-		$query = (new \WikiaSQL())
+		$query = ( new \WikiaSQL() )
 			->SELECT( 'image_name', 'image_index', 'image_review_status' )
 			->FROM( CityVisualization::CITY_VISUALIZATION_IMAGES_TABLE_NAME )
 			->WHERE( 'city_id' )->EQUAL_TO( $wikiId )
 			->AND_( 'city_lang_code' )->EQUAL_TO( $langCode )
 			->AND_( 'image_type' )->EQUAL_TO( PromoImage::MAIN );
-		if ( !empty($this->queryFilter) ) {
+		if ( !empty( $this->queryFilter ) ) {
 			call_user_func_array( $this->queryFilter, [ $query ] );
 		}
 
@@ -82,7 +82,7 @@ class WikiGetDataHelper {
 			while ( $row = $result->fetchObject( $result ) ) {
 				$parsed = WikiImageRowHelper::parseWikiImageRow( $row );
 
-				$promoImage = new PromoXWikiImage($parsed->name);
+				$promoImage = new PromoXWikiImage( $parsed->name );
 				$promoImage->setReviewStatus( $parsed->review_status );
 				return $promoImage;
 			}

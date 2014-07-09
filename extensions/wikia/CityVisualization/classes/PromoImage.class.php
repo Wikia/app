@@ -31,11 +31,11 @@ class PromoImage extends WikiaObject {
 	 * @deprecated
 	 */
 	static public function oldVersionFixup( $fileName, $cityId = null ) {
-		if ( !empty($fileName) ) {
+		if ( !empty( $fileName ) ) {
 			$type = self::inferType( $fileName );
 			if ( $type != self::INVALID ) {
-				$promo = new PromoImage($type);
-				if ( !empty($cityId) ) {
+				$promo = new PromoImage( $type );
+				if ( !empty( $cityId ) ) {
 					$promo->ensureCityIdIsSet( $cityId );
 				}
 				return $promo->getApprovedImageName();
@@ -45,15 +45,15 @@ class PromoImage extends WikiaObject {
 	}
 
 	static public function getImage( $fileName ) {
-		if ( empty($fileName) ) {
+		if ( empty( $fileName ) ) {
 			return null;
 		} else {
-			return new PromoXWikiImage($fileName);
+			return new PromoXWikiImage( $fileName );
 		}
 	}
 
 	static public function forWikiId( $type, $cityId ) {
-		$promo = new PromoImage($type);
+		$promo = new PromoImage( $type );
 		$promo->setCityId( $cityId );
 		return $promo;
 	}
@@ -110,14 +110,14 @@ class PromoImage extends WikiaObject {
 	}
 
 	public function getDBName() {
-		if ( empty($this->dbName) and !empty($this->cityId) ) {
+		if ( empty( $this->dbName ) and !empty( $this->cityId ) ) {
 			$this->dbName = WikiFactory::IDtoDB( $this->cityId );
 		}
 		return $this->dbName;
 	}
 
 	public function isCityIdSet() {
-		return (!empty($this->dbName) or !empty($this->cityId));
+		return ( !empty( $this->dbName ) or !empty( $this->cityId ) );
 	}
 
 	public function setCityId( $cityId ) {
@@ -127,7 +127,7 @@ class PromoImage extends WikiaObject {
 	}
 
 	public function getCityId() {
-		if ( empty($this->cityId) and !empty($this->dbName) ) {
+		if ( empty( $this->cityId ) and !empty( $this->dbName ) ) {
 			$this->cityId = WikiFactory::DBtoID( $this->dbName );
 		}
 		return $this->cityId;
@@ -154,7 +154,7 @@ class PromoImage extends WikiaObject {
 		$db = wfGetDB( DB_SLAVE, array(), F::app()->wg->ExternalSharedDB );
 
 		$result = null; // name when nothing is found
-		if ( !empty($cityId) ) {
+		if ( !empty( $cityId ) ) {
 			$cacheKey = $this->materializeCacheKey( self::__LATEST_IMAGE_WITH_STATUS_XWIKI_CACHE_KEY, $desiredStatus );
 			if ( $skipCache ) {
 				global $wgMemc;
@@ -175,7 +175,7 @@ class PromoImage extends WikiaObject {
 			$result = $sql->ORDER_BY( 'last_edited' )->DESC()->LIMIT( 1 )
 				->run( $db, function ( $result ) {
 					$row = $result->fetchObject( $result );
-					if ( $row && isset($row->image_name) ) {
+					if ( $row && isset( $row->image_name ) ) {
 						return $row->image_name;
 					} else {
 						return null;
@@ -187,8 +187,8 @@ class PromoImage extends WikiaObject {
 
 	public function getApprovedImage( $skipCache = false ) {
 		$name = $this->getLatestImageNameWithStatus( ImageReviewStatuses::STATE_APPROVED, $skipCache );
-		if ( !empty($name) ) {
-			return new PromoXWikiImage($name);
+		if ( !empty( $name ) ) {
+			return new PromoXWikiImage( $name );
 		} else {
 			return null;
 		}
@@ -218,7 +218,7 @@ class PromoImage extends WikiaObject {
 	public function demoteOldImages( $oldStatus, $newStatus = ImageReviewStatuses::STATE_READY_FOR_CULLING ) {
 		$db = wfGetDB( DB_MASTER, array(), F::app()->wg->ExternalSharedDB );
 		$exceptImageName = $this->getLatestImageNameWithStatus( $oldStatus, true );
-		if ( !empty($exceptImageName) ) { //no sense demoting if nothing is found
+		if ( !empty( $exceptImageName ) ) { //no sense demoting if nothing is found
 			$sql = new WikiaSQL();
 			$sql->UPDATE( self::TABLE_CITY_VISUALIZATION_IMAGES_XWIKI )
 				->SET( 'image_review_status', $newStatus )
@@ -257,9 +257,9 @@ class PromoImage extends WikiaObject {
 		$type = self::INVALID;
 
 		if ( preg_match( $pattern, $fileName, $matches ) ) {
-			if ( !empty($matches[1]) ) {
+			if ( !empty( $matches[1] ) ) {
 				$type = self::MAIN;
-			} elseif ( !empty($matches[2]) and !empty($matches[3]) ) { // matches additional images and has a number designation
+			} elseif ( !empty( $matches[2] ) and !empty( $matches[3] ) ) { // matches additional images and has a number designation
 				$val = intval( $matches[3] );
 				if ( $val >= self::ADDITIONAL_START and $val <= self::ADDITIONAL_END ) {
 					$type = $val;

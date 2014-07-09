@@ -227,10 +227,9 @@ class ImagesServiceTest extends WikiaBaseTest {
 		$destWidth = 480;
 		$destHeight = 320;
 
-		$expected = 'http://images4.wikia.nocookie.net/__cb62277/wikiaglobal/images/thumb/f/f3/Wikia-Visualization-Main%2Cenanimanga.png/100px-0,101,0,100-Wikia-Visualization-Main%2Cenanimanga.png';
-		$expected = urldecode('http://img3.wikia.nocookie.net/__cb20131128123957/wikiaglobal/images/thumb/0/03/Wikia-Visualization-Main%2Carkhamcity.png/480px-45%2C537%2C0%2C327-Wikia-Visualization-Main%2Carkhamcity.png.jpg');
+		$expected = urldecode( 'http://img3.wikia.nocookie.net/__cb20131128123957/wikiaglobal/images/thumb/0/03/Wikia-Visualization-Main%2Carkhamcity.png/480px-45%2C537%2C0%2C327-Wikia-Visualization-Main%2Carkhamcity.png.jpg' );
 
-		$this->assertEquals( $expected, urldecode(ImagesService::getCroppedThumbnailUrl( $img, $destWidth, $destHeight, $srcWidth, $srcHeight, ImagesService::EXT_JPG)));
+		$this->assertEquals( $expected, urldecode( ImagesService::getCroppedThumbnailUrl( $img, $destWidth, $destHeight, $srcWidth, $srcHeight, ImagesService::EXT_JPG ) ) );
 	}
 
 	/**

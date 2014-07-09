@@ -17,18 +17,18 @@ class PromoXWikiImage extends BaseXWikiImage {
 		return "/images";
 	}
 
-	protected function provideImageDimensions($img=null) {
-		$cacheKey = sprintf(self::__DIMENSION_CACHE_KEY, $this->getName());
+	protected function provideImageDimensions( $img = null ) {
+		$cacheKey = sprintf( self::__DIMENSION_CACHE_KEY, $this->getName() );
 		$cachedSize = F::app()->wg->memc
-			->get($cacheKey);
-		if (!empty($cachedSize)) {
+			->get( $cacheKey );
+		if ( !empty( $cachedSize ) ) {
 			$this->width = $cachedSize['w'];
 			$this->height = $cachedSize['h'];
 		} else {
-			parent::provideImageDimensions($img);
-			$cachedSize = ["w"=> $this->width, "h"=>$this->height];
+			parent::provideImageDimensions( $img );
+			$cachedSize = [ "w" => $this->width, "h" => $this->height ];
 			F::app()->wg->memc
-				->set($cacheKey, $cachedSize, self::__DIMENSION_CACHE_TTL);
+				->set( $cacheKey, $cachedSize, self::__DIMENSION_CACHE_TTL );
 		}
 	}
 

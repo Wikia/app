@@ -43,11 +43,11 @@ abstract class BaseXWikiImage {
 	}
 
 	public function getCroppedThumbnailUrl( $desiredWidth, $desiredHeight, $newExtension = null ) {
-		if ( empty($this->width) or empty($this->height) ) {
+		if ( empty( $this->width ) or empty( $this->height ) ) {
 			$this->provideImageDimensions();
 		}
 
-		if ( empty($this->width) or empty($this->height) ) {
+		if ( empty( $this->width ) or empty( $this->height ) ) {
 			\Wikia\Logger\WikiaLogger::instance()
 				->warning( "Cannot get image dimensions, not cropping thumbnail for img: " . $this->name );
 			return $this->getThumbnailUrl( $desiredWidth );
@@ -67,7 +67,7 @@ abstract class BaseXWikiImage {
 	}
 
 	public function getImageDimensions() {
-		if ( empty($this->width) && empty($this->height) ) {
+		if ( empty( $this->width ) && empty( $this->height ) ) {
 			$this->provideImageDimensions();
 		}
 
@@ -87,14 +87,14 @@ abstract class BaseXWikiImage {
 	}
 
 	protected function provideImageDimensions( $img = null ) {
-		if ( empty($img) ) {
+		if ( empty( $img ) ) {
 			if ( $this->getSwiftStorage()->exists( $this->getLocalPath() ) ) {
 				$file = $this->getSwiftStorage()->read( $this->getLocalPath() );
 				$img = imagecreatefromstring( $file );
 			}
 		}
 
-		if ( !empty($img) ) {
+		if ( !empty( $img ) ) {
 			$this->width = imagesx( $img );
 			$this->height = imagesy( $img );
 		}
@@ -176,10 +176,10 @@ abstract class BaseXWikiImage {
 			return $errorNo;
 		}
 
-		$file = new WebRequestUpload($request, $input);
+		$file = new WebRequestUpload( $request, $input );
 		$iFileSize = $file->getSize();
 
-		if ( empty($iFileSize) ) {
+		if ( empty( $iFileSize ) ) {
 			/**
 			 * file size = 0
 			 */
@@ -296,7 +296,7 @@ abstract class BaseXWikiImage {
 		}
 
 		// deleting files on file system and creating an array of URLs to purge
-		if ( !empty($files) ) {
+		if ( !empty( $files ) ) {
 			foreach ( $files as $file ) {
 				$status = $swift->remove( $file );
 				if ( !$status->isOk() ) {
