@@ -3,8 +3,8 @@ require([
 	'wikia.log',
 	'wikia.window',
 	'ext.wikia.adEngine.eventDispatcher',
-	'ext.wikia.adEngine.slot.wikiaBarBoxad2'
-], function (log, window, eventDispatcher, wikiaBarBoxad2) {
+	'ext.wikia.adEngine.slot.bottomLeaderboard'
+], function (log, window, eventDispatcher, bottomLeaderboard) {
 	'use strict';
 
 	if (!window.wgShowAds) {
@@ -15,9 +15,9 @@ require([
 
 		if (slot[0].indexOf('LEADERBOARD') !== -1 && (slot[2] === 'Liftium' || provider.name === 'Later')) {
 
-			log(['Found call to liftium for leaderboard, launching', 'WIKIA_BAR_BOXAD_2'], 'debug', 'ext.wikia.adEngine.slot.wikiaBarBoxad2');
+			log(['Found call to liftium for leaderboard, launching', 'BOTTOM_LEADERBOARD'], 'debug', 'ext.wikia.adEngine.slot.bottomLeaderboard');
 
-			wikiaBarBoxad2.init();
+			bottomLeaderboard.init();
 		}
 	}, true);
 
