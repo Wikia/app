@@ -119,10 +119,12 @@ class WikiaInteractiveMapsBaseController extends WikiaController {
 	 * @param WikiaUploadStashFile $file
 	 * @param int $type Image type to return IMAGE_ORIGINAL or IMAGE_THUMBNAIL
 	 * @param int $width optional width of the thumbnail
+	 *
 	 * @return String image url
-	 * @throws Exception
+	 *
+	 * @throws MWException
 	 */
-	private function getStashedImage( WikiaUploadStashFile $file, $type = self::IMAGE_ORIGINAL, $width = 200 ) {
+	public function getStashedImage( WikiaUploadStashFile $file, $type = self::IMAGE_ORIGINAL, $width = 200 ) {
 		if( $type === self::IMAGE_ORIGINAL ) {
 			$url = $file->getOriginalFileUrl();
 		} else if( $type === self::IMAGE_THUMBNAIL ) {
@@ -130,6 +132,7 @@ class WikiaInteractiveMapsBaseController extends WikiaController {
 		} else {
 			throw new MWException( 'Invalid $type parameter' );
 		}
+
 		return wfReplaceImageServer( $url );
 	}
 
