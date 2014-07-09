@@ -386,9 +386,9 @@ class ThumbnailController extends WikiaController {
 
 		$classes = [];
 		if ( !empty( $options["custom-title-link"] ) ) {
-			$classes[] = "internal-link";
+			$classes[] = "link-internal";
 		} elseif ( !empty( $options["custom-url-link"] ) ) {
-			$classes[] = "external-link";
+			$classes[] = "link-external";
 		}
 
 		return $classes;
