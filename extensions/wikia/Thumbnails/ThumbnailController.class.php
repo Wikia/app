@@ -382,7 +382,7 @@ class ThumbnailController extends WikiaController {
 	 * @param array $options The thumbnail options passed to toHTML.
 	 * @return array
 	 */
-	public function getImageLinkClasses ( $options ) {
+	public function getImageLinkClasses ( array $options ) {
 
 		$classes = [];
 		if ( !empty( $options["custom-title-link"] ) ) {
