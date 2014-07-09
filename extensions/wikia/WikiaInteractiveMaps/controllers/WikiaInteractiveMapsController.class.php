@@ -90,7 +90,7 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 	 * Single map page
 	 */
 	public function map() {
-		$mobileSkin = F::app()->checkSkin('wikiamobile');
+		$mobileSkin = F::app()->checkSkin( 'wikiamobile' );
 		$mapId = (int)$this->getPar();
 		$zoom = $this->request->getInt( 'zoom', WikiaInteractiveMapsParserTagController::DEFAULT_ZOOM );
 		$lat = $this->request->getInt( 'lat', WikiaInteractiveMapsParserTagController::DEFAULT_LATITUDE );
@@ -108,7 +108,7 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 				$lon
 			]);
 
-			if ($mobileSkin) {
+			if ( $mobileSkin ) {
 				$this->mapOnMobile();
 			} else {
 				$this->setVal( 'title', $map->title );
@@ -144,8 +144,8 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 		};
 
 		// skip rendering parts of Wikia page
-		WikiaMobileFooterService::setSkipRendering(true);
-		WikiaMobilePageHeaderService::setSkipRendering(true);
+		WikiaMobileFooterService::setSkipRendering( true );
+		WikiaMobilePageHeaderService::setSkipRendering( true );
 	}
 
 	/**
