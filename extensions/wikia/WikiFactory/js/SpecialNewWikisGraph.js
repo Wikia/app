@@ -194,54 +194,89 @@ var SponsorshipDashboard = function(){
 		e.preventDefault();
 		var canvas = self.plot.getCanvas();
 		var imageData = canvas.toDataURL();
-//		$.showModal('SponsorshipDashboard', '<div style="text-align: center"><img src="' + imageData + '" width="' + canvas.width + '" height="' + canvas.height + '"></div>');
-		imageData = imageData.replace('image/png', 'image/octet-stream');
-//		document.location.href = imageData;
+		imageData = imageData.replace( 'image/png', 'image/octet-stream' );
 
-        // see: http://stackoverflow.com/questions/17836273/export-javascript-data-to-csv-file-without-server-interaction/17836529#17836529
-        var a = document.createElement('a');
-        a.href     = imageData;
-        a.target   = '_blank';
-        a.download = 'metrics.png';
-        document.body.appendChild(a);
-        a.click();
+        self.downloadGeneratedContent( imageData, 'metrics.png' );
 	};
 
     this.downloadChartCSV = function(e) {
-        var fromData = $('#sd-year-from').val() + '-' + $('#sd-month-from').val();
-        var toData = $('#sd-year-to').val() + '-' + $('#sd-month-to').val();
-        if (!self.monthly) {
-            fromData = fromData + '-' + $('#sd-day-from').val();
-            toData = toData + '-' + $('#sd-day-to').val();
-        }
 
-        // see: http://stackoverflow.com/questions/17836273/export-javascript-data-to-csv-file-without-server-interaction/17836529#17836529
-        var A = [['date','Wikias created']];
+        var datesInterval = self.getDatesInterval();
+
+        var table = [ ];
+
+        var header = [ 'date','created' ];
+        table.push( header );
 
         for ( var i in self.fullTicks) {
-            var fulltickAsInt = self.fullTicks[i][0].replace( /-/gi, '' );
 
-            if ( ( parseInt( fromData.replace( /-/gi, '' ) ) > fulltickAsInt )
-                || ( parseInt( toData.replace( /-/gi, '' ) ) < fulltickAsInt ) ) {
-                continue;
+            var date = self.fullTicks[ i ][ 0 ];
+
+            if ( self.intervalContainsDate( datesInterval, date ) ) {
+
+                var createdWikias = self.data[ 0 ][ 'data' ][ self.fullTicks[ i ][ 1 ] ][ 1 ];
+                var row = [ date, createdWikias ];
+                table.push( row );
             }
-
-            A.push([self.fullTicks[i][0], + self.data[0]['data'][self.fullTicks[i][1]][1]]);
         }
 
+        var csvString = self.tableToCSVString( table );
+
+        self.downloadGeneratedContent( 'data:attachment/csv,' + csvString, 'metrics.csv' );
+    }
+
+    this.getDatesInterval = function() {
+        var startDate = $('#sd-year-from').val() + '-' + $('#sd-month-from').val();
+        var endDate = $('#sd-year-to').val() + '-' + $('#sd-month-to').val();
+        if (!self.monthly) {
+            startDate = startDate + '-' + $('#sd-day-from').val();
+            endDate = endDate + '-' + $('#sd-day-to').val();
+        }
+
+        var startDateAsInt = startDate.replace( /-/gi, '' );
+        var endDateAsInt = endDate.replace( /-/gi, '' );
+
+        return {
+            startDate : startDate,
+            endDate : endDate,
+            startDateAsInt : startDateAsInt,
+            endDateAsInt : endDateAsInt
+        };
+    }
+
+    this.intervalContainsDate = function( datesInterval, date ) {
+        var startDateAsInt = datesInterval[ 'startDateAsInt' ];
+        var endDateAsInt = datesInterval[ 'endDateAsInt' ];
+        var dateAsInt = date.replace( /-/gi, '' );
+
+        return ( dateAsInt >= startDateAsInt ) && ( dateAsInt <= endDateAsInt );
+    }
+
+    this.tableToCSVString = function( table ) {
         var csvRows = [];
 
-        for(var i=0, l=A.length; i<l; ++i){
-            csvRows.push(A[i].join(','));
+        for( var i = 0, l = table.length; i < l; ++i ){
+            var row = table[ i ];
+            csvRows.push( row.join( ',' ) );
         }
 
-        var csvString = csvRows.join("%0A");
-        var a         = document.createElement('a');
-        a.href        = 'data:attachment/csv,' + csvString;
-        a.target      = '_blank';
-        a.download    = 'myFile.csv';
+        var csvString = csvRows.join( "%0A" );
 
-        document.body.appendChild(a);
+        return csvString;
+    }
+
+    this.downloadGeneratedContent = function( content, name ) {
+
+        // Using HTML5 download attribute, which allows to define name of downloaded content
+        // see: http://stackoverflow.com/questions/17836273/export-javascript-data-to-csv-file-without-server-interaction/17836529#17836529
+
+        var a         = document.createElement( 'a' );
+        a.href        = content;
+        a.target      = '_blank';
+        a.download    = name;
+
+        document.body.appendChild( a );
+
         a.click();
     }
 
