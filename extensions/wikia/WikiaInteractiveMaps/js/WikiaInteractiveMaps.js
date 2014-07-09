@@ -60,6 +60,10 @@ require(
 			.on('click', 'a#deleteMap', function(event) {
 				event.preventDefault();
 				triggerAction('deleteMap');
+			})
+			.on('click', 'a#unDeleteMap', function(event) {
+				event.preventDefault();
+				triggerAction('unDeleteMap');
 			});
 
 		setPontoIframeTarget(targetIframe);

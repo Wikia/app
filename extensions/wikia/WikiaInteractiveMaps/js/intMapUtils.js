@@ -312,7 +312,11 @@ define(
 			handleNirvanaException: handleNirvanaException,
 			showError: showError,
 			cleanUpError: cleanUpError,
-			createThumbURL: createThumbURL
+			createThumbURL: createThumbURL,
+			mapDeleted: {
+				MAP_NOT_DELETED: 0,
+				MAP_DELETED: 1
+			}
 		}
 	}
 );
