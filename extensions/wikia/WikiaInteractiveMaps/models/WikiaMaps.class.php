@@ -2,7 +2,7 @@
 
 class WikiaMaps extends WikiaObject {
 
-	const DEFAULT_MEMCACHE_EXPIRE_TIME = 3600;
+	const REAL_MAP_THUMB_EXPIRE_TIME = 86400; // 1 day
 	const ENTRY_POINT_MAP = 'map';
 	const ENTRY_POINT_RENDER = 'render';
 	const ENTRY_POINT_TILE_SET = 'tile_set';
@@ -25,14 +25,7 @@ class WikiaMaps extends WikiaObject {
 	const HTTP_NO_CONTENT = 204;
 
 	const MAP_THUMB_PREFIX = '/thumb/';
-
-
-	/**
-	 * Controls the request caching
-	 *
-	 * @todo Enable caching if needed and when proper cache purging is implemented
-	 */
-	const ENABLE_REQUEST_CACHING = false;
+	const DEFAULT_REAL_MAP_URL = 'http://img.wikia.nocookie.net/intmap_Geo_Map/default-geo.jpg';
 
 	/**
 	 * @var array API connection config
@@ -44,7 +37,7 @@ class WikiaMaps extends WikiaObject {
 	 */
 	private $sortingOptions = [
 		'wikia-interactive-maps-sort-newest-to-oldest' => 'created_on_desc',
-		'wikia-interactive-maps-sort-alphabetical' => 'name_asc',
+		'wikia-interactive-maps-sort-alphabetical' => 'title_asc',
 		'wikia-interactive-maps-sort-recently-updated' => 'updated_on_desc',
 	];
 
@@ -71,25 +64,6 @@ class WikiaMaps extends WikiaObject {
 			implode( '/',  $segments ),
 			!empty( $params ) ? '?' . http_build_query( $params ) : ''
 		);
-	}
-
-	/**
-	 * Call method and store the result in cache for $expireTime
-	 *
-	 * @param $method
-	 * @param array $params
-	 * @param int $expireTime
-	 *
-	 * @return Mixed|null
-	 */
-	public function cachedRequest( $method, Array $params, $expireTime = self::DEFAULT_MEMCACHE_EXPIRE_TIME ) {
-		if ( self::ENABLE_REQUEST_CACHING ) {
-			$memCacheKey = wfMemcKey( __CLASS__, __METHOD__, json_encode( $params ) );
-			return WikiaDataAccess::cache( $memCacheKey, $expireTime, function () use ( $method, $params ) {
-				return $this->{ $method }( $params );
-			} );
-		}
-		return $this->{ $method }( $params );
 	}
 
 	/**
@@ -140,7 +114,7 @@ class WikiaMaps extends WikiaObject {
 	 *
 	 * @return mixed
 	 */
-	private function getMapsFromApi( Array $params ) {
+	public function getMapsFromApi( Array $params ) {
 		$mapsData = new stdClass();
 		$url = $this->buildUrl( [ self::ENTRY_POINT_MAP ], $params );
 		$response = $this->processServiceResponse(
@@ -173,14 +147,14 @@ class WikiaMaps extends WikiaObject {
 	/**
 	 * Sends requests to IntMap service to get data about a map and tiles it's connected with
 	 *
-	 * @param Array $params the first element is required and it should be map id passed rest of the array elements
-	 *                      will get added as URI parameters after ? sign
+	 * @param $mapId Map id
+	 * @param array $params additional parameters
+	 *
 	 * @return mixed
 	 *
 	 * @todo: change the service API in the way that we don't have to send two requests
 	 */
-	private function getMapByIdFromApi( Array $params ) {
-		$mapId = array_shift( $params );
+	public function getMapByIdFromApi( $mapId,  $params = []) {
 		$url = $this->buildUrl( [ self::ENTRY_POINT_MAP, $mapId ], $params );
 		$response = $this->processServiceResponse(
 			Http::get( $url, 'default', $this->getHttpRequestOptions() )
@@ -265,6 +239,22 @@ class WikiaMaps extends WikiaObject {
 		$url = $this->buildUrl( [ self::ENTRY_POINT_TILE_SET ], $params );
 
 		//TODO: consider caching the response
+		$response = $this->processServiceResponse(
+			Http::get( $url, 'default', $this->getHttpRequestOptions() )
+		);
+
+		return $response;
+	}
+
+	/**
+	 * Sends request to interactive maps service and returns tile set data
+	 *
+	 * @param Integer $tileSetId
+	 * @return mixed
+	 */
+	public function getTileSet( $tileSetId ) {
+		$url = $this->buildUrl( [ self::ENTRY_POINT_TILE_SET, $tileSetId ] );
+
 		$response = $this->processServiceResponse(
 			Http::get( $url, 'default', $this->getHttpRequestOptions() )
 		);
@@ -526,8 +516,6 @@ class WikiaMaps extends WikiaObject {
 				'Authorization' => $this->config[ 'token' ]
 			],
 			'returnInstance' => true,
-			//TODO: this is temporary workaround, remove it before production!
-			'noProxy' => true
 		];
 
 		if ( !empty( $postData ) ) {
@@ -556,4 +544,31 @@ class WikiaMaps extends WikiaObject {
 
 		return $baseURL . self::MAP_THUMB_PREFIX . $fileName . '/' . $crop . '-' . $fileName;
 	}
+
+	/**
+	 * Fetches the Real map image from the service and returns preview thumbnail for it
+	 *
+	 * @return bool|String
+	 */
+	private function fetchRealMapImageUrl() {
+		$imageUrl = self::DEFAULT_REAL_MAP_URL;
+		$tileSetData = $this->getTileSet( $this->getGeoMapTilesetId() );
+		if ( $tileSetData[ 'success' ] && isset( $tileSetData[ 'content' ]->image ) ) {
+			$imageUrl = $tileSetData[ 'content' ]->image;
+		}
+		return $imageUrl;
+	}
+
+	/**
+	 * Fetches and caches the RealMap thumbnail image
+	 *
+	 * @return string
+	 */
+	public function getRealMapImageUrl() {
+		$memCacheKey = wfSharedMemcKey( __CLASS__, __METHOD__ );
+		return WikiaDataAccess::cache( $memCacheKey, self::REAL_MAP_THUMB_EXPIRE_TIME, function () {
+			return $this->fetchRealMapImageUrl();
+		} );
+	}
 }
+

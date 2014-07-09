@@ -29,12 +29,10 @@ ve.ui.DesktopContext = function VeUiDesktopContext( surface, config ) {
 	this.showing = false;
 	this.hiding = false;
 	this.selecting = false;
-	this.inspectorOpening = false;
-	this.inspectorClosing = false;
 	this.relocating = false;
 	this.embedded = false;
 	this.selection = null;
-	this.toolbar = null;
+	this.context = new ve.ui.ContextWidget( { '$': this.$ } );
 	this.afterModelChangeTimeout = null;
 	this.afterModelChangeRange = null;
 	this.$menu = this.$( '<div>' );
@@ -55,27 +53,24 @@ ve.ui.DesktopContext = function VeUiDesktopContext( surface, config ) {
 		'relocationStart': 'onRelocationStart',
 		'relocationEnd': 'onRelocationEnd',
 		'focus': 'onSurfaceFocus',
-		'blur': 'onSurfaceBlur'
+		'blur': 'onSurfaceBlur',
+		'position': 'onSurfacePosition'
 	} );
 	this.inspectors.connect( this, {
-		'opening': 'onInspectorOpening',
-		'open': 'onInspectorOpen',
-		'closing': 'onInspectorClosing',
-		'close': 'onInspectorClose'
+		'setup': 'onInspectorSetup',
+		'teardown': 'onInspectorTeardown'
 	} );
 	this.surface.getView().getDocument().getDocumentNode().connect( this, {
 		'teardown': 'onDocumentTeardown'
 	} );
+	this.context.connect( this, { 'choose': 'onContextItemChoose' } );
 
-	this.$window.on( {
-		//'resize.ve-ui-desktopContext': $.throttle( 500, ve.bind( this.onWindowResize, this ) ),
-		//'scroll.ve-ui-desktopContext': $.throttle( 100, ve.bind( this.onWindowScroll, this ) )
-	} );
 	this.$element.add( this.$menu )
 		.on( 'mousedown', false );
 
 	// Initialization
 	this.$element.addClass( 've-ui-desktopContext' ).append( this.popup.$element );
+	this.$menu.append( this.context.$element );
 	this.popup.$body.append(
 		this.$menu.addClass( 've-ui-desktopContext-menu' ),
 		this.inspectors.$element.addClass( 've-ui-desktopContext-inspectors' )
@@ -96,11 +91,38 @@ ve.ui.DesktopContext.prototype.onDocumentTeardown = function () {
 };
 
 /**
+ * Handle context item choose events.
+ *
+ * @param {ve.ui.ContextItemWidget} item Chosen item
+ */
+ve.ui.DesktopContext.prototype.onContextItemChoose = function ( item ) {
+	if ( item ) {
+		item.getCommand().execute( this.surface );
+	}
+};
+
+/**
+ * @inheritdoc
+ */
+ve.ui.DesktopContext.prototype.destroy = function () {
+	// Disconnect events
+	this.surface.getModel().disconnect( this );
+	this.surface.getView().disconnect( this );
+	this.inspectors.disconnect( this );
+
+	// Stop timers
+	clearTimeout( this.afterModelChangeTimeout );
+
+	// Parent method
+	return ve.ui.Context.prototype.destroy.call( this );
+};
+
+/**
  * Handle window resize events.
  */
 ve.ui.DesktopContext.prototype.onWindowResize = function () {
-	// Update, no transition, reposition only
-	this.update( false, true );
+	// Update, no transition
+	this.update( false );
 };
 
 /**
@@ -130,13 +152,18 @@ ve.ui.DesktopContext.prototype.onWindowScroll = function () {
  * @see #afterModelChange
  */
 ve.ui.DesktopContext.prototype.onModelChange = function ( range ) {
-	if ( this.showing || this.hiding || this.inspectorOpening || this.inspectorClosing ) {
+	var win = this.inspectors.getCurrentWindow();
+
+	if ( this.showing || this.hiding || ( win && ( win.isOpening() || win.isClosing() ) ) ) {
 		clearTimeout( this.afterModelChangeTimeout );
 		this.afterModelChangeTimeout = null;
 		this.afterModelChangeRange = null;
 	} else {
 		if ( this.afterModelChangeTimeout === null ) {
 			this.afterModelChangeTimeout = setTimeout( ve.bind( this.afterModelChange, this ) );
+		}
+		if ( range instanceof ve.Range ) {
+			this.afterModelChangeRange = range;
 		}
 		if ( range instanceof ve.Range ) {
 			this.afterModelChangeRange = range;
@@ -151,11 +178,14 @@ ve.ui.DesktopContext.prototype.onModelChange = function ( range ) {
  * content. If the popup is open, close it, even while selecting or relocating.
  */
 ve.ui.DesktopContext.prototype.afterModelChange = function () {
-	var selectionChange = !!this.afterModelChangeRange;
+	var win = this.inspectors.getCurrentWindow(),
+		selectionChange = !!this.afterModelChangeRange,
+		moving = selectionChange && !( win && ( win.isOpening() || win.isClosing() ) );
+
 	this.afterModelChangeTimeout = null;
 	this.afterModelChangeRange = null;
 
-	if ( this.popup.isVisible() && selectionChange ) {
+	if ( this.popup.isVisible() && moving ) {
 		this.hide();
 	}
 
@@ -163,7 +193,8 @@ ve.ui.DesktopContext.prototype.afterModelChange = function () {
 	if ( this.selecting || this.relocating ) {
 		return;
 	}
-	this.update( false, !selectionChange );
+
+	this.update( !moving  );
 };
 
 /**
@@ -197,6 +228,13 @@ ve.ui.DesktopContext.prototype.onSurfaceBlur = function () {
 	if ( !this.surface.getModel().getSelection() ) {
 		this.hide();
 	}
+};
+
+/**
+ * Response to position events on the surface.
+ */
+ve.ui.DesktopContext.prototype.onSurfacePosition = function () {
+	this.update( false );
 };
 
 /**
@@ -242,51 +280,29 @@ ve.ui.DesktopContext.prototype.onRelocationEnd = function () {
 };
 
 /**
- * Handle an inspector that's being opened.
+ * Handle an inspector setup event.
  *
  * @method
- * @param {ve.ui.Inspector} inspector Inspector that's being opened
+ * @param {ve.ui.Inspector} inspector Inspector that's been setup
  * @param {Object} [config] Inspector opening information
  */
-ve.ui.DesktopContext.prototype.onInspectorOpening = function () {
+ve.ui.DesktopContext.prototype.onInspectorSetup = function () {
 	this.selection = this.surface.getModel().getSelection();
-	this.inspectorOpening = true;
-};
-
-/**
- * Handle an inspector that's been opened.
- *
- * @method
- * @param {ve.ui.Inspector} inspector Inspector that's been opened
- * @param {Object} [config] Inspector opening information
- */
-ve.ui.DesktopContext.prototype.onInspectorOpen = function () {
-	this.inspectorOpening = false;
 	this.show( true );
 };
 
 /**
- * Handle an inspector that's being closed.
+ * Handle an inspector teardown event.
  *
  * @method
- * @param {ve.ui.Inspector} inspector Inspector that's being closed
+ * @param {ve.ui.Inspector} inspector Inspector that's been torn down
  * @param {Object} [config] Inspector closing information
  */
-ve.ui.DesktopContext.prototype.onInspectorClosing = function () {
-	this.inspectorClosing = true;
-};
-
-/**
- * Handle an inspector that's been closed.
- *
- * @method
- * @param {ve.ui.Inspector} inspector Inspector that's been closed
- * @param {Object} [config] Inspector closing information
- */
-ve.ui.DesktopContext.prototype.onInspectorClose = function () {
-	this.inspectorClosing = false;
+ve.ui.DesktopContext.prototype.onInspectorTeardown = function () {
 	this.update();
-	this.getSurface().getView().focus();
+	if ( this.getSurface().getModel().getSelection() ) {
+		this.getSurface().getView().focus();
+	}
 };
 
 /**
@@ -294,42 +310,32 @@ ve.ui.DesktopContext.prototype.onInspectorClose = function () {
  *
  * @method
  * @param {boolean} [transition=false] Use a smooth transition
- * @param {boolean} [repositionOnly=false] The context is only being moved so don't fade in
  * @chainable
  */
-ve.ui.DesktopContext.prototype.update = function ( transition, repositionOnly ) {
-	var i, nodes, tools,
+ve.ui.DesktopContext.prototype.update = function ( transition ) {
+	var i, len, match, matches,
+		items = [],
 		fragment = this.surface.getModel().getFragment( null, false ),
 		selection = fragment.getRange(),
 		inspector = this.inspectors.getCurrentWindow();
 
 	if ( inspector && selection && selection.equals( this.selection ) ) {
 		// There's an inspector, and the selection hasn't changed, update the position
-		this.show( transition, repositionOnly );
+		this.show( transition );
 	} else {
 		// No inspector is open, or the selection has changed, show a menu of available inspectors
-		tools = ve.ui.toolFactory.getToolsForAnnotations( fragment.getAnnotations() );
-		nodes = fragment.getCoveredNodes();
-		for ( i = 0; i < nodes.length; i++ ) {
-			if ( nodes[i].range && nodes[i].range.isCollapsed() ) {
-				nodes.splice( i, 1 );
-				i--;
-			}
-		}
-		if ( nodes.length === 1 ) {
-			tools = tools.concat( ve.ui.toolFactory.getToolsForNode( nodes[0].node ) );
-		}
-		if ( tools.length ) {
+		matches = ve.ui.toolFactory.getToolsForFragment( fragment );
+		if ( matches.length ) {
 			// There's at least one inspectable annotation, build a menu and show it
-			this.$menu.empty();
-			if ( this.toolbar ) {
-				this.toolbar.destroy();
+			this.context.clearItems();
+			for ( i = 0, len = matches.length; i < len; i++ ) {
+				match = matches[i];
+				items.push( new ve.ui.ContextItemWidget(
+					match.tool.static.name, match.tool, match.model, { '$': this.$ }
+				) );
 			}
-			this.toolbar = new ve.ui.Toolbar( this.surface, { 'inContextMenu': true } );
-			this.toolbar.setup( [ { 'include': tools } ] );
-			this.$menu.append( this.toolbar.$element );
-			this.show( transition, repositionOnly );
-			this.toolbar.initialize();
+			this.context.addItems( items );
+			this.show( transition );
 		} else if ( this.visible ) {
 			// Nothing to inspect
 			this.hide();
@@ -350,8 +356,7 @@ ve.ui.DesktopContext.prototype.update = function ( transition, repositionOnly ) 
  * @chainable
  */
 ve.ui.DesktopContext.prototype.updateDimensions = function ( transition ) {
-	var $node, $container, focusableOffset, focusableWidth, nodePosition, cursorPosition, position,
-		documentOffset, nodeOffset,
+	var  $container, focusedOffset, focusedDimensions, cursorPosition, position,
 		surface = this.surface.getView(),
 		inspector = this.inspectors.getCurrentWindow(),
 		focusedNode = surface.getFocusedNode(),
@@ -360,38 +365,26 @@ ve.ui.DesktopContext.prototype.updateDimensions = function ( transition ) {
 
 	$container = inspector ? this.inspectors.$element : this.$menu;
 	if ( focusedNode ) {
-		// We're on top of a node
-		$node = focusedNode.$focusable || focusedNode.$element;
+		// Get the position relative to the surface it is embedded in
+		focusedOffset = focusedNode.getRelativeOffset();
+		focusedDimensions = focusedNode.getDimensions();
 		if ( this.embedded ) {
-			// Get the position relative to the surface it is embedded in
-			focusableOffset = OO.ui.Element.getRelativePosition(
-				$node, this.surface.$element
-			);
-			position = { 'y': focusableOffset.top };
+			position = { 'y': focusedOffset.top };
 			// When context is embedded in RTL, it requires adjustments to the relative
 			// positioning (pop up on the other side):
 			if ( rtl ) {
-				position.x = focusableOffset.left;
+				position.x = focusedOffset.left;
 				this.popup.align = 'left';
 			} else {
-				focusableWidth = $node.outerWidth();
-				position.x = focusableOffset.left + focusableWidth;
+				position.x = focusedOffset.left + focusedDimensions.width;
 				this.popup.align = 'right';
 			}
 		} else {
-			// The focused node may be in a wrapper, so calculate the offset relative to the document
-			documentOffset = surface.getDocument().getDocumentNode().$element.offset();
-			nodeOffset = $node.offset();
-			nodePosition = {
-				top: nodeOffset.top - documentOffset.top,
-				left: nodeOffset.left - documentOffset.left
-			};
 			// Get the position of the focusedNode:
-			position = { 'x': nodePosition.left, 'y': nodePosition.top + $node.outerHeight() };
-			// When the context is displayed in LTR, it should be on the right of the node
-			if ( !rtl ) {
-				position.x += $node.outerWidth();
-			}
+			position = {
+				'x': focusedOffset.left + focusedDimensions.width / 2,
+				'y': focusedOffset.top + focusedDimensions.height
+			};
 			this.popup.align = 'center';
 		}
 	} else {
@@ -436,15 +429,19 @@ ve.ui.DesktopContext.prototype.updateDimensions = function ( transition ) {
  *
  * @method
  * @param {boolean} [transition=false] Use a smooth transition
- * @param {boolean} [repositionOnly=false] The context is only being moved so don't fade in
  * @chainable
  */
-ve.ui.DesktopContext.prototype.show = function ( transition, repositionOnly ) {
+ve.ui.DesktopContext.prototype.show = function ( transition ) {
 	var inspector = this.inspectors.getCurrentWindow(),
 		focusedNode = this.surface.getView().getFocusedNode();
 
 	if ( !this.showing && !this.hiding ) {
 		this.showing = true;
+
+		this.$window.on( {
+			'resize.ve-ui-desktopContext': $.throttle( 250, ve.bind( this.onWindowResize, this ) ),
+			'scroll.ve-ui-desktopContext': $.throttle( 100, ve.bind( this.onWindowScroll, this ) )
+		} );
 
 		// HACK: make the context and popup visibility: hidden; instead of display: none; because
 		// they contain inspector iframes, and applying display: none; to those causes them to
@@ -456,19 +453,18 @@ ve.ui.DesktopContext.prototype.show = function ( transition, repositionOnly ) {
 		// Show either inspector or menu
 		if ( inspector ) {
 			this.$menu.hide();
-			if ( !repositionOnly ) {
-				inspector.$element.css( 'opacity', 0 );
-			}
 			// Update size and fade the inspector in after animation is complete
 			setTimeout( ve.bind( function () {
 				inspector.fitHeightToContents();
 				this.updateDimensions( transition );
-				inspector.$element.css( 'opacity', 1 );
 			}, this ), 200 );
 		} else {
 			if ( focusedNode ) {
 				this.embedded = this.shouldBeEmbedded( focusedNode );
+			} else {
+				this.embedded = false;
 			}
+
 			this.popup.useTail( !this.embedded );
 			this.$menu.show();
 		}
@@ -495,8 +491,11 @@ ve.ui.DesktopContext.prototype.hide = function () {
 
 	if ( !this.hiding && !this.showing ) {
 		this.hiding = true;
+
+		this.$window.off( '.ve-ui-desktopContext' );
+
 		if ( inspector ) {
-			inspector.close( { 'action': 'back' } );
+			inspector.close( { 'action': 'back', 'noSelect': true } );
 		}
 		// HACK: make the context and popup visibility: hidden; instead of display: none; because
 		// they contain inspector iframes, and applying display: none; to those causes them to
@@ -519,13 +518,13 @@ ve.ui.DesktopContext.prototype.hide = function () {
  * @return {boolean} Should the context menu be embedded
  */
 ve.ui.DesktopContext.prototype.shouldBeEmbedded = function ( focusedNode ) {
-	var targetHeight = this.$menu.outerHeight() * 2,
-		targetWidth = this.$menu.outerWidth() * 2;
-
-	return (
-		targetHeight < Math.max( focusedNode.$focusable.outerHeight(), focusedNode.$shields.height() ) &&
-		targetWidth < Math.max( focusedNode.$focusable.outerWidth(),  focusedNode.$shields.width() )
-	);
+	// FIXME: This calculation should be reconsidered.
+	var targetHeight = this.$menu.outerHeight() + 30,
+		targetWidth = this.$menu.outerWidth() + 30,
+		// Name of this method (getDimensions) is pretty unfortunate - it actually returns
+		// dimensions of highlights and not node itself.
+		dimensions = focusedNode.getDimensions();
+	return ( targetHeight < dimensions.height  && targetWidth < dimensions.width );
 };
 
 /**

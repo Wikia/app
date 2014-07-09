@@ -15,73 +15,78 @@ $color-subtle-text: mix($color-page, $color-alternate-text, 50%);
 }
 
 // Article thumbnails
-.WikiaArticle .article-thumb {
-	margin-bottom: 15px;
-	margin-top: 6px;
-
-	a {
-		display: inline-block;
-	}
-
-	img {
-		display: block;
-	}
-
-	p, p + p {
-		font-size: 12px;
-		margin: 5px 0;
-		line-height: 16px;
-	}
-
-	&.tright {
-		clear: right;
-		float: right;
-		margin-left: 20px;
-	}
-
-	&.tleft {
-		clear: left;
-		float: left;
-		margin-right: 20px;
-	}
-
-	.title {
-		font-weight: bold;
-	}
-
-	// TODO: this should be safe to remove after 6/18/2014 - liz
-	.attribution {
-		color: $color-subtle-text;
+.WikiaArticle {
+		.article-thumb {
+		margin-bottom: 15px;
+		margin-top: 6px;
 
 		a {
-			color: $color-subtle-text;
+			display: inline-block;
+		}
 
-			&:hover {
-				color: $color-links;
-				text-decoration: none;
+		img {
+			display: block;
+		}
+
+		p, p + p {
+			font-size: 12px;
+			margin: 5px 0;
+			line-height: 16px;
+		}
+
+		&.tright {
+			clear: right;
+			float: right;
+			margin-left: 20px;
+		}
+
+		&.tleft {
+			clear: left;
+			float: left;
+			margin-right: 20px;
+		}
+
+		.title {
+			font-weight: bold;
+		}
+
+		figcaption {
+			text-align: left;
+		}
+
+		.caption {
+			color: $color-alternate-text;
+		}
+	}
+
+	.article-thumb-wrapper {
+		position: relative;
+
+		.info-icon {
+			background-image: url('/skins/oasis/images/info_icon.png');
+			height: 17px;
+			width: 17px;
+			position: absolute;
+			bottom: 11px;
+			right: 5px;
+			display: none;
+		}
+
+		&:hover {
+			a.info-icon {
+				display: block;
+			}
+			.duration {
+				display: none;
 			}
 		}
 	}
 
-	figcaption {
-		text-align: left;
-	}
-
-	.caption {
-		color: $color-alternate-text;
-	}
-
-	// TODO: this should be safe to remove after 6/18/2014 - liz
-	.details {
-		float: right;
-		margin: 0 0 0 5px;
-		visibility: hidden;
-	}
-
-	// TODO: this should be safe to remove after 6/18/2014 - liz
-	&:hover {
-		.details {
-			visibility: visible;
+	// For images inside of infoboxes
+	td .article-thumb-wrapper {
+		.info-icon {
+			bottom: 5px;
+			right: 7px;
 		}
 	}
 }

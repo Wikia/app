@@ -78,10 +78,22 @@ QUnit.test( 'nextBreakOffset/prevBreakOffset', function ( assert ) {
 
 QUnit.test( 'nextBreakOffset/prevBreakOffset (ignore whitespace)', function ( assert ) {
 	var i, offset = 0,
-		text = '   The quick  brown ..fox jumps... 3.14159 すどくスドク   ',
+		text =
+			// 0
+			'   The qui' +
+			// 10
+			'ck  brown ' +
+			// 20
+			'..fox jump' +
+			// 30
+			's... 3.141' +
+			// 40
+			'59 すどくスドク ' +
+			// 50
+			'עברית  ',
 		textString = new unicodeJS.TextString( text ),
-		nextBreaks = [ 6, 12, 19, 25, 31, 42, 49, 52 ],
-		prevBreaks = [ 46, 35, 26, 22, 14, 7, 3, 0 ];
+		nextBreaks = [ 6, 12, 19, 25, 31, 42, 49, 55, 57 ],
+		prevBreaks = [ 50, 46, 35, 26, 22, 14, 7, 3, 0 ];
 
 	QUnit.expect( nextBreaks.length + prevBreaks.length + 6 );
 
