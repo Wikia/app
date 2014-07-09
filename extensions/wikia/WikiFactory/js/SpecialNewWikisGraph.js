@@ -190,32 +190,42 @@ var SponsorshipDashboard = function(){
 		self.plotAccordingToChoices(true, borderTicks);
 	};
 
-	this.downloadChartPNG = function(e) {
-		e.preventDefault();
-		var canvas = self.plot.getCanvas();
-		var imageData = canvas.toDataURL();
+	this.downloadChartPNG = function( e ) {
+
+        e.preventDefault();
+
+        var canvas = self.plot.getCanvas();
+
+        var imageData = canvas.toDataURL();
 		imageData = imageData.replace( 'image/png', 'image/octet-stream' );
 
         self.downloadGeneratedContent( imageData, 'metrics.png' );
 	};
 
-    this.downloadChartCSV = function(e) {
+    this.downloadChartCSV = function( e ) {
+
+        e.preventDefault();
 
         var datesInterval = self.getDatesInterval();
 
         var table = [ ];
 
-        var header = [ 'date','created' ];
+        var header = [ 'date', 'created' ];
         table.push( header );
 
-        for ( var i in self.fullTicks) {
+        for ( var i in self.fullTicks ) {
 
             var date = self.fullTicks[ i ][ 0 ];
 
             if ( self.intervalContainsDate( datesInterval, date ) ) {
 
-                var createdWikias = self.data[ 0 ][ 'data' ][ self.fullTicks[ i ][ 1 ] ][ 1 ];
+                // Looks like not very nice way of getting number of created Wikias
+                // but I am just reusing existing data structures
+                var index = self.fullTicks[ i ][ 1 ];
+                var createdWikias = self.data[ 0 ][ 'data' ][ index ][ 1 ];
+
                 var row = [ date, createdWikias ];
+
                 table.push( row );
             }
         }
@@ -226,15 +236,15 @@ var SponsorshipDashboard = function(){
     }
 
     this.getDatesInterval = function() {
-        var startDate = $('#sd-year-from').val() + '-' + $('#sd-month-from').val();
-        var endDate = $('#sd-year-to').val() + '-' + $('#sd-month-to').val();
-        if (!self.monthly) {
-            startDate = startDate + '-' + $('#sd-day-from').val();
-            endDate = endDate + '-' + $('#sd-day-to').val();
+        var startDate = $( '#sd-year-from' ).val() + '-' + $( '#sd-month-from' ).val();
+        var endDate = $( '#sd-year-to' ).val() + '-' + $( '#sd-month-to' ).val();
+        if ( !self.monthly ) {
+            startDate = startDate + '-' + $( '#sd-day-from' ).val();
+            endDate = endDate + '-' + $( '#sd-day-to' ).val();
         }
 
-        var startDateAsInt = startDate.replace( /-/gi, '' );
-        var endDateAsInt = endDate.replace( /-/gi, '' );
+        var startDateAsInt = self.dateStringAsInt( startDate );
+        var endDateAsInt = self.dateStringAsInt( endDate );
 
         return {
             startDate : startDate,
@@ -247,20 +257,32 @@ var SponsorshipDashboard = function(){
     this.intervalContainsDate = function( datesInterval, date ) {
         var startDateAsInt = datesInterval[ 'startDateAsInt' ];
         var endDateAsInt = datesInterval[ 'endDateAsInt' ];
-        var dateAsInt = date.replace( /-/gi, '' );
+        var dateAsInt = self.dateStringAsInt( date );
 
         return ( dateAsInt >= startDateAsInt ) && ( dateAsInt <= endDateAsInt );
     }
 
+    this.dateStringAsInt = function( dateString ) {
+        // Here described alternative ways of transforming date to number:
+        // http://stackoverflow.com/questions/221294/how-do-you-get-a-timestamp-in-javascript
+        // But, for consistency with existing code - the following solution is used:
+        return dateString.replace( /-/gi, '' );
+    }
+
     this.tableToCSVString = function( table ) {
-        var csvRows = [];
+        var csvRows = [ ];
+
+        var comma = ',';
 
         for( var i = 0, l = table.length; i < l; ++i ){
             var row = table[ i ];
-            csvRows.push( row.join( ',' ) );
+            var csvRow = row.join( comma );
+            csvRows.push( csvRow );
         }
 
-        var csvString = csvRows.join( "%0A" );
+        var rowsSeparator = "%0A";
+
+        var csvString = csvRows.join( rowsSeparator );
 
         return csvString;
     }
