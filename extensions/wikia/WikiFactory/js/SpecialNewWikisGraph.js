@@ -206,17 +206,21 @@ var SponsorshipDashboard = function(){
 
         e.preventDefault();
 
-        var datesInterval = self.getDatesInterval();
-
         var table = [ ];
 
         var header = [ 'date', 'created' ];
         table.push( header );
 
+        // Pick date bounds from UI
+        var datesInterval = self.getDatesInterval();
+
+        // Iterate over all existing data
         for ( var i in self.fullTicks ) {
 
+            // Using existing data structure to get the date
             var date = self.fullTicks[ i ][ 0 ];
 
+            // But pick only that points, which fits into specified dates interval
             if ( self.intervalContainsDate( datesInterval, date ) ) {
 
                 // Looks like not very nice way of getting number of created Wikias
@@ -235,7 +239,13 @@ var SponsorshipDashboard = function(){
         self.downloadGeneratedContent( 'data:attachment/csv,' + csvString, 'metrics.csv' );
     }
 
+    /**
+     * Returns object, which contains date bounds
+     * @returns object with fields: startDate, endDate, startDateAsInt, endDateAsInt. All values are strings
+     */
     this.getDatesInterval = function() {
+
+        // Generating starting and ending date from existing UI controls
         var startDate = $( '#sd-year-from' ).val() + '-' + $( '#sd-month-from' ).val();
         var endDate = $( '#sd-year-to' ).val() + '-' + $( '#sd-month-to' ).val();
         if ( !self.monthly ) {
@@ -254,6 +264,12 @@ var SponsorshipDashboard = function(){
         };
     }
 
+    /**
+     * Check, if given date fits into the given interval of dates
+     * @param datesInterval - must be produced by function self::getDatesInterval()
+     * @param date - string in format Y-m-d
+     * @returns {boolean}
+     */
     this.intervalContainsDate = function( datesInterval, date ) {
         var startDateAsInt = datesInterval[ 'startDateAsInt' ];
         var endDateAsInt = datesInterval[ 'endDateAsInt' ];
@@ -262,6 +278,11 @@ var SponsorshipDashboard = function(){
         return ( dateAsInt >= startDateAsInt ) && ( dateAsInt <= endDateAsInt );
     }
 
+    /**
+     * "2014-07-14" -> "20140714"
+     * @param dateString in format Y-m-d
+     * @returns string without dashes
+     */
     this.dateStringAsInt = function( dateString ) {
         // Here described alternative ways of transforming date to number:
         // http://stackoverflow.com/questions/221294/how-do-you-get-a-timestamp-in-javascript
@@ -269,6 +290,11 @@ var SponsorshipDashboard = function(){
         return dateString.replace( /-/gi, '' );
     }
 
+    /**
+     * Transforms given table to CSV string
+     * @param table - 2 dimensional array, where all rows have the same length
+     * @returns string in CSV format
+     */
     this.tableToCSVString = function( table ) {
         var csvRows = [ ];
 
@@ -287,15 +313,20 @@ var SponsorshipDashboard = function(){
         return csvString;
     }
 
+    /**
+     * Ability to download content, which serialized to string.
+     * Using HTML5 download attribute, which allows to define name of downloaded content.
+     * see: http://stackoverflow.com/questions/17836273/export-javascript-data-to-csv-file-without-server-interaction/17836529#17836529
+     *
+     * @param content - string of serialized data
+     * @param name - name of downloaded file
+     */
     this.downloadGeneratedContent = function( content, name ) {
 
-        // Using HTML5 download attribute, which allows to define name of downloaded content
-        // see: http://stackoverflow.com/questions/17836273/export-javascript-data-to-csv-file-without-server-interaction/17836529#17836529
-
-        var a         = document.createElement( 'a' );
-        a.href        = content;
-        a.target      = '_blank';
-        a.download    = name;
+        var a = document.createElement( 'a' );
+        a.href = content;
+        a.target = '_blank';
+        a.download = name;
 
         document.body.appendChild( a );
 
