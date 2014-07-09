@@ -2,7 +2,7 @@
 
 class WikiaModernController extends WikiaController {
 
-	const MAIN_SASS_FILE = '/extensions/wikia/WikiaModern/css/WikiaModern.scss';
+	const MAIN_SASS_FILE = '/extensions/wikia/WikiaModern/styles/WikiaModern.scss';
 
 	private static $bodyParametersArray = [];
 	private static $skinAssetGroups = [];
@@ -101,7 +101,7 @@ class WikiaModernController extends WikiaController {
 			if ( !empty($s['url']) ) {
 				$tag = $s['tag'];
 				if ( !empty( $wgAllInOne ) ) {
-					$url = $this->minifySingleAsset($s['url']);
+					$url = $this->assetsManager->minifySingleAsset($s['url']);
 					if ($url !== $s['url']) {
 						$tag = str_replace($s['url'],$url,$tag);
 					}
@@ -135,8 +135,6 @@ class WikiaModernController extends WikiaController {
 	private function setScripts() {
 		global $wgOut;
 
-
-
 		$this->topScripts = $wgOut->topScripts;
 		// this is bad but some extensions could have added some scripts to bottom queue
 		// todo: make it not run twice during each request
@@ -144,57 +142,6 @@ class WikiaModernController extends WikiaController {
 
 		// setup loading of JS/CSS
 		$this->loadJs();
-	}
-
-	/**
-	 * Gets the URL and converts it to minified one if it points to single static file (JS or CSS)
-	 * If it's not recognized as static asset the original URL is returned
-	 *
-	 * @param $url string URL to be inspected
-	 * @return string
-	 */
-	private function minifySingleAsset( $url ) {
-		global $wgAllInOne;
-		if ( !empty( $wgAllInOne ) ) {
-			static $map;
-			if (empty($map)) {
-				$map = array(
-					array( $this->app->wg->ExtensionsPath, 'extensions/' ),
-					array( $this->app->wg->StylePath, 'skins/' ),
-					// $wgResourceBasePath = $wgCdnStylePath (there's no /resources in it)
-					array( $this->app->wg->ResourceBasePath . '/resources', 'resources/' ),
-				);
-			}
-
-			// BugId:38195 - don't minify already minified assets
-			if (strpos($url, '/__am/') !== false) {
-				return $url;
-			}
-
-			// don't minify already minified JS files
-			if (strpos($url, '.min.js') !== false) {
-				return $url;
-			}
-
-			foreach ($map as $item) {
-				list( $prefix, $replacement ) = $item;
-
-				// BugId: 38195 - wgExtensionPath / stylePath / ResourceBasePath do not end with a slash
-				// add one to remove double slashes in resulting URL
-				$prefix .= '/';
-
-				if (startsWith($url, $prefix)) {
-					$nurl = substr($url,strlen($prefix));
-					$matches = array();
-					if (preg_match("/^([^?]+)/",$nurl,$matches)) {
-						if (preg_match("/\\.(css|js)\$/i",$matches[1])) {
-							return $this->assetsManager->getOneCommonURL($replacement . $matches[1],true);
-						}
-					}
-				}
-			}
-		}
-		return $url;
 	}
 
 	// TODO: implement as a separate module?
@@ -215,7 +162,7 @@ class WikiaModernController extends WikiaController {
 
 		foreach($blockingScripts as $blockingFile) {
 			if( $wgSpeedBox && $wgDevelEnvironment ) {
-				$blockingFile = $this->rewriteJSlinks( $blockingFile );
+				$blockingFile = $this->assetsManager->rewriteJSlinks( $blockingFile );
 			}
 
 			$this->globalBlockingScripts .= "<script type=\"$wgJsMimeType\" src=\"$blockingFile\"></script>";
@@ -235,10 +182,10 @@ class WikiaModernController extends WikiaController {
 				else {
 					$url = $s['url'];
 					if ( $wgAllInOne ) {
-						$url = $this->minifySingleAsset( $url );
+						$url = $this->assetsManager->minifySingleAsset( $url );
 					}
 					if ( !empty( $wgSpeedBox ) && !empty( $wgDevelEnvironment ) ) {
-						$url = $this->rewriteJSlinks( $url );
+						$url = $this->assetsManager->rewriteJSlinks( $url );
 					}
 					$jsReferences[] = $url;
 				}
@@ -268,7 +215,7 @@ class WikiaModernController extends WikiaController {
 		// get urls
 		if (!empty($wgSpeedBox) && !empty($wgDevelEnvironment)) {
 			foreach ($assets as $index => $url) {
-				$assets[$index] = $this->rewriteJSlinks( $url );
+				$assets[$index] = $this->assetsManager->rewriteJSlinks( $url );
 			}
 		}
 

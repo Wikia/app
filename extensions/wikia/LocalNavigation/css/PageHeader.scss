@@ -1,5 +1,6 @@
+@import "skins/oasis/css/core/reset";
 @import "skins/oasis/css/core/color";
-@import "extensions/wikia/WikiaModern/css/layout";
+@import "extensions/wikia/WikiaModern/styles/oasis-compatibility";
 
 .WikiaPageHeader {
 	clear: both;
