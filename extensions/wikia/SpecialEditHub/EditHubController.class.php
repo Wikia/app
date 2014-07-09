@@ -186,7 +186,7 @@ class EditHubController extends WikiaSpecialPageController {
 	}
 
 	public function publishHub() {
-		global $wgCityId;
+		global $wgCityId, $wgDisableWAMOnHubs;
 
 		if (!$this->checkAccess()) {
 			return false;
@@ -206,7 +206,8 @@ class EditHubController extends WikiaSpecialPageController {
 
 				$this->hubUrl = Title::newMainPage()->getFullURL() . '/' . $date->format('Y-m-d');
 				$this->successText = wfMessage('edit-hub-module-publish-success', $this->wg->lang->date($this->date))->escaped();
-				if ( $this->date == $this->toolboxModel->getLastPublishedTimestamp( $wgCityId, null, true)) {
+				if ( $this->date == $this->toolboxModel->getLastPublishedTimestamp( $wgCityId, null, true)
+					&& !$wgDisableWAMOnHubs ) { // disable for Corporate/WAM Hybrids
 					$this->purgeWikiaHomepageHubs();
 				}
 			} else {
@@ -397,13 +398,14 @@ class EditHubController extends WikiaSpecialPageController {
 	}
 
 	private function purgeCache($module) {
-		global $wgCityId;
+		global $wgCityId, $wgDisableWAMOnHubs;
 
 		$module->purgeMemcache($this->date);
 		$this->getHubsServicesHelper()->purgeHubV3Varnish($wgCityId);
 
 		if( $this->selectedModuleId == MarketingToolboxModuleSliderService::MODULE_ID
-			&& $this->date == $this->toolboxModel->getLastPublishedTimestamp( $wgCityId, null )) {
+			&& $this->date == $this->toolboxModel->getLastPublishedTimestamp( $wgCityId, null )
+			&& !$wgDisableWAMOnHubs ) { // disable for Corporate/WAM Hybrids
 				$this->purgeWikiaHomepageHubs();
 		}
 	}
