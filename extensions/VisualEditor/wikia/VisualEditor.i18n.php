@@ -7,6 +7,7 @@ $messages = array();
 $messages['en'] = array(
 	'wikia-visualeditor-preference-enable' => 'Enable beta VisualEditor',
 	'wikia-visualeditor-dialogbutton-wikiamediainsert-tooltip' => 'Media',
+	'wikia-visualeditor-dialogbutton-wikiamapinsert-tooltip' => 'Map',
 	'wikia-visualeditor-dialog-wikiamediainsert-insert-button' => 'Add Media',
 	'wikia-visualeditor-dialog-wikiamediainsert-item-title-label' => 'Title',
 	'wikia-visualeditor-dialog-wikiamediainsert-item-license-label' => 'License',
@@ -56,6 +57,8 @@ $messages['qqq'] = array(
 	'wikia-visualeditor-preference-enable' => 'The description next to the checkbox to enable or disable VisualEditor in Preferences',
 	'wikia-visualeditor-dialogbutton-wikiamediainsert-tooltip' => 'Call-to-action text rendered in the toolbar button for opening the dialog to add media items to the article.
 {{Identical|Media}}',
+	'wikia-visualeditor-dialogbutton-wikiamapinsert-tooltip' => 'Call-to-action text rendered in the toolbar button for opening the dialog to add map item to the article.
+{{Identical|Map}}',
 	'wikia-visualeditor-dialog-wikiamediainsert-insert-button' => 'Call-to-action text rendered in the dialog to insert the selected media items into the article.
 {{Identical|Add media}}',
 	'wikia-visualeditor-dialog-wikiamediainsert-item-title-label' => 'Label text for the media item title.

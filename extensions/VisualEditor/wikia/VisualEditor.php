@@ -114,6 +114,7 @@ $wgResourceModules += array(
 			'videohandler-video-views',
 			'wikia-visualeditor-preference-enable',
 			'wikia-visualeditor-dialogbutton-wikiamediainsert-tooltip',
+			'wikia-visualeditor-dialogbutton-wikiamapinsert-tooltip',
 			'wikia-visualeditor-dialog-wikiamediainsert-insert-button',
 			'wikia-visualeditor-dialog-wikiamediainsert-item-license-label',
 			'wikia-visualeditor-dialog-wikiamediainsert-item-title-label',
