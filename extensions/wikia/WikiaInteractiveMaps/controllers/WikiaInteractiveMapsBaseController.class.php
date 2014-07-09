@@ -91,7 +91,7 @@ class WikiaInteractiveMapsBaseController extends WikiaController {
 				// and write in a cleaner way
 				// TODO: Talk to Platform Team about adding possibility to add stashed files via ImageService
 
-				$uploadStatus[ 'fileUrl' ] = $this->getStashedImageThumb( $file, $originalWidth );
+				$uploadStatus[ 'fileUrl' ] = $this->getStashedImage( $file );
 
 				switch ( $uploadType ) {
 					case WikiaInteractiveMapsUploadImageFromFile::UPLOAD_TYPE_MAP:
@@ -122,6 +122,16 @@ class WikiaInteractiveMapsBaseController extends WikiaController {
 	 */
 	private function getStashedImageThumb( $file, $width ) {
 		return wfReplaceImageServer( $file->getThumbUrl( $width . "px-" . $file->getName() ) );
+	}
+
+	/**
+	 * Creates image's original url and returns it
+	 *
+	 * @param WikiaUploadStashFile $file Stashed file
+	 * @return String Url
+	 */
+	private function getStashedImage( $file ) {
+		return wfReplaceImageServer( $file->getOriginalFileUrl() );
 	}
 
 	/**
