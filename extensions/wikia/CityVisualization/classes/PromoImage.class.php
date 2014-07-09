@@ -75,6 +75,23 @@ class PromoImage extends WikiaObject {
 		return $resultMap;
 	}
 
+	public function filterOnlyNewImageNames( $imageNames ) {
+		$db = wfGetDB( DB_SLAVE, array(), F::app()->wg->ExternalSharedDB );
+
+		$sql = new WikiaSQL();
+		$sql->SELECT( 'image_name' )
+			->FROM( PromoImage::TABLE_CITY_VISUALIZATION_IMAGES_XWIKI )
+			->WHERE( 'city_id' )->EQUAL_TO( $this->getCityId() )
+			->AND_( 'image_name' )->IN( $imageNames );
+
+		$foundImages = [ ];
+		$sql->runLoop( $db, function ( $unused, $row ) use ( &$foundImages ) {
+			$foundImages[] = $row->image_name;
+		} );
+
+		return array_values( array_diff( $imageNames, $foundImages ) );
+	}
+
 	public function __construct( $type, $dbName = null ) {
 		parent::__construct();
 		$this->dbName = $dbName;
