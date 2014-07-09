@@ -64,7 +64,7 @@
 
 		/* Optimizely */
 		if ( window.veFocusMode === 'opaque' ) {
-			$spinner.addClass( 'optimizely-opaque' )
+			$spinner.addClass( 'optimizely-opaque' );
 		}
 
 		$message.hide();
