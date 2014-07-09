@@ -78,81 +78,66 @@ class UpdateHowdiniAddGenreAsPageCat extends BaseMaintVideoScript {
 	 */
 	protected function addGenreToPageCategories( $video ) {
 		$name = $video['img_name'];
-		$this->outputMessage( "\tUpdated (Wiki): $name" );
 
+		$this->outputMessage( "Title: $name" );
 		$title = Title::newFromText( $name, NS_FILE );
-		if ( !$title instanceof Title ) {
-			++$this->failedWiki;
-			$this->outputError( "Title NOT found.", '...FAILED! ' );
+		if ( $title instanceof Title && $title->exists() ) {
+			$article = Article::newFromID( $title->getArticleID() );
+			$content = $article->getContent();
+
+			// set default value
+			$status = Status::newGood();
+
+			// add category
+			$metadata = $this->extractMetadata( $video );
+			if ( empty( $metadata['genres'] ) ) {
+				$this->incSkipped();
+				$this->outputMessage( "File remained indifferent. no category changes." );
+				return false;
+			}
+
+			$categories = explode( ', ', $metadata['genres'] );
+			$content = $this->addCategories( $content, $categories );
+			$msg = 'Added: '.implode( ', ', $categories );
+
+			if ( !$this->isDryRun() ) {
+				$botUser = User::newFromName( 'WikiaBot' );
+				$status = $article->doEdit( $content, 'Changing categories', EDIT_UPDATE | EDIT_SUPPRESS_RC | EDIT_FORCE_BOT, false, $botUser );
+			}
+
+			if ( $status instanceof Status ) {
+				if ( $status->isOK() ) {
+					$this->outputMessage( "...DONE (".  $msg .")" );
+				} else {
+					++$this->failedWiki;
+					echo "...FAILED (".$status->getMessage().").\n";
+					return false;
+				}
+			}
+
+			$this->outputMessage( "\tUpdated (Wiki): $name" );
+		} else {
+			$this->outputError( "(Title '$name' not found).", "...FAILED " );
 			return false;
 		}
-
-		$file = wfFindFile( $title );
-		if ( empty( $file ) ) {
-			++$this->failedWiki;
-			$this->outputError( "File NOT found.", '...FAILED! ' );
-			return false;
-		}
-
-		$metadata = unserialize( $video['img_metadata'] );
-		if ( !$metadata ) {
-			++$this->failedWiki;
-			$this->outputError( "Cannot unserialized metadata.", '...FAILED! ' );
-			return false;
-		}
-
-		// check for videoId
-		if ( empty( $metadata['videoId'] ) ) {
-			++$this->skippedWiki;
-			$this->outputMessage( '...SKIPPED. (empty videoId in metadata)' );
-			return false;
-		}
-
-		// check for title
-		if ( empty( $metadata['title'] ) ) {
-			++$this->skippedWiki;
-			$this->outputMessage( '...SKIPPED. (empty title in metadata)' );
-			return false;
-		}
-
-		if ( !isset( $metadata['canEmbed'] ) ) {
-			++$this->skippedWiki;
-			$this->outputMessage( '...SKIPPED. (canEmbed field not found in metadata)' );
-			return false;
-		}
-
-		// update metadata
-		if ( isset( $metadata['pageCategories'] ) && !empty( $metadata['genres'] ) ) {
-			$pageCategories = explode( ', ', $metadata['pageCategories'] );
-			$pageCategories = array_merge( $pageCategories, explode( ', ', $metadata['genres'] ) );
-			$metadata['pageCategories'] = implode( ', ', array_unique( $pageCategories ) );
-		}
-
-		$serializedMeta = serialize( $metadata );
-
-		if ( wfReadOnly() ) {
-			$this->outputMessage( "Read only mode." );
-			exit(0);
-		}
-
-		$dbw = wfGetDB( DB_MASTER );
-
-		if ( !$this->isDryRun() ) {
-			// update database
-			$dbw->update(
-				'image',
-				['img_metadata' => $serializedMeta],
-				['img_name' => $name],
-				__METHOD__
-			);
-
-			// clear cache
-			$file->purgeEverything();
-		}
-
-		$this->outputMessage( "...DONE!" );
 
 		return true;
+	}
+
+	function getCategoryTag( $catgory ) {
+		$cat = F::app()->wg->ContLang->getFormattedNsText( NS_CATEGORY );
+		return '[['.ucfirst($cat).':'.$catgory.']]';
+	}
+
+	function addCategories( $content, $categories ) {
+		foreach ( $categories as $category ) {
+			$categoryTag = $this->getCategoryTag( $category );
+			if ( stristr( $content, $categoryTag ) === false ) {
+				$content .= $categoryTag;
+			}
+		}
+
+		return $content;
 	}
 
 	protected function report( $total ) {
