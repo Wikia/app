@@ -21,7 +21,7 @@ ve.ui.WikiaOrientationDialog = function VeUiWikiaOrientationDialog( config ) {
 	} );
 
 	// Parent constructor
-	ve.ui.Dialog.call( this, config );
+	ve.ui.WikiaOrientationDialog.super.call( this, config );
 };
 
 /* Inheritance */
@@ -45,7 +45,7 @@ ve.ui.WikiaOrientationDialog.static.icon = '';
  */
 ve.ui.WikiaOrientationDialog.prototype.initialize = function () {
 	// Parent method
-	ve.ui.Dialog.prototype.initialize.call( this );
+	ve.ui.WikiaOrientationDialog.super.prototype.initialize.call( this );
 
 	// Properties
 	this.$image = this.$( '<div>' )
@@ -85,7 +85,7 @@ ve.ui.WikiaOrientationDialog.prototype.initialize = function () {
  */
 ve.ui.WikiaOrientationDialog.prototype.setup = function () {
 	// Parent method
-	ve.ui.Dialog.prototype.setup.call( this );
+	ve.ui.WikiaOrientationDialog.super.prototype.setup.call( this );
 	this.$( '.ve-ui-wikiaFocusWidget' ).hide();
 	if ( window.veTrack ) {
 		veTrack( { action: 've-orientation-view' } );
@@ -107,9 +107,9 @@ ve.ui.WikiaOrientationDialog.prototype.close = function ( data ) {
 	}
 	this.$( '.ve-ui-wikiaFocusWidget' ).show();
 	// Parent method
-	ve.ui.Dialog.prototype.close.call( this, data );
+	ve.ui.WikiaOrientationDialog.super.prototype.close.call( this, data );
 };
 
 /* Registration */
 
-ve.ui.dialogFactory.register( ve.ui.WikiaOrientationDialog );
+ve.ui.windowFactory.register( ve.ui.WikiaOrientationDialog );

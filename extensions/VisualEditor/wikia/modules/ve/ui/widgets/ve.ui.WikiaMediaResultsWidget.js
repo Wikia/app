@@ -12,7 +12,7 @@
  */
 ve.ui.WikiaMediaResultsWidget = function VeUiWikiaMediaResultsWidget( config ) {
 	// Parent constructor
-	OO.ui.Widget.call( this, config );
+	ve.ui.WikiaMediaResultsWidget.super.call( this, config );
 
 	// Properties
 	this.results = new ve.ui.WikiaMediaSelectWidget( { '$': this.$ } );
@@ -73,12 +73,14 @@ ve.ui.WikiaMediaResultsWidget.prototype.onResultsSelect = function ( item ) {
  * @param {Array} items An array of items to add.
  */
 ve.ui.WikiaMediaResultsWidget.prototype.addItems = function ( items ) {
-	var i,
+	var i, optionWidget,
 		results = [];
 
 	for ( i = 0; i < items.length; i++ ) {
+		optionWidget = new ve.ui.WikiaMediaOptionWidget( items[i], { '$': this.$, 'size': this.size } );
+		optionWidget.on( 'check', this.onResultsCheck, [ optionWidget ], this );
 		results.push(
-			new ve.ui.WikiaMediaOptionWidget( items[i], { '$': this.$, 'size': this.size } )
+			optionWidget
 		);
 	}
 

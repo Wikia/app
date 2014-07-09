@@ -14,7 +14,7 @@
 ve.ui.WikiaFocusWidget = function VeUiWikiaFocusWidget( surface ) {
 
 	// Parent constructor
-	OO.ui.Widget.call( this );
+	ve.ui.WikiaFocusWidget.super.call( this );
 
 	// Properties
 	this.surface = surface;

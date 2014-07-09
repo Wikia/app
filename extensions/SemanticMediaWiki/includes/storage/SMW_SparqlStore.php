@@ -48,6 +48,7 @@ class SMWSparqlStore extends SMWSQLStore2 {
 		}
 		// Note that we cannot change oldUri to newUri in triple subjects,
 		// since some triples change due to the move. Use SMWUpdateJob.
+		// wikia note - not migrating call to new jobqueue, since this is run directly
 		$newUpdate = new SMWUpdateJob( $newtitle );
 		$newUpdate->run();
 		if ( $redirid != 0 ) { // update/create redirect page data
@@ -283,13 +284,13 @@ class SMWSparqlStore extends SMWSQLStore2 {
 			return new SMWQueryResult( $query->getDescription()->getPrintrequests(), $query, array(), $this, true );
 		} elseif ( $query->querymode == SMWQuery::MODE_DEBUG ) {
 			$queryEngine = new SMWSparqlStoreQueryEngine( $this );
-			return $queryEngine->getDebugQueryResult( $query ); 
+			return $queryEngine->getDebugQueryResult( $query );
 		} elseif ( $query->querymode == SMWQuery::MODE_COUNT ) {
 			$queryEngine = new SMWSparqlStoreQueryEngine( $this );
-			return $queryEngine->getCountQueryResult( $query ); 
+			return $queryEngine->getCountQueryResult( $query );
 		} else {
 			$queryEngine = new SMWSparqlStoreQueryEngine( $this );
-			return $queryEngine->getInstanceQueryResult( $query ); 
+			return $queryEngine->getInstanceQueryResult( $query );
 		}
 	}
 

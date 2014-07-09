@@ -69,11 +69,8 @@ OO.inheritClass( ve.ui.Toolbar, OO.ui.Toolbar );
 
 /**
  * @event updateState
- * @see ve.dm.SurfaceFragment#getAnnotations
- * @param {ve.dm.Node[]} nodes List of nodes covered by the current selection
- * @param {ve.dm.AnnotationSet} full Annotations that cover all of the current selection
- * @param {ve.dm.AnnotationSet} partial Annotations that cover some or all of the current selection
- * @param {ve.Range|null} range The surface range
+ * @param {ve.dm.SurfaceFragment} fragment Surface fragment
+ * @param {Object} direction Context direction with 'inline' & 'block' properties
  */
 
 /**
@@ -162,18 +159,17 @@ ve.ui.Toolbar.prototype.onSurfaceViewKeyUp = function () {
  * @fires updateState
  */
 ve.ui.Toolbar.prototype.onContextChange = function () {
-	var i, len, leafNodes, dirInline, dirBlock, fragmentAnnotation,
-		fragment = this.surface.getModel().getFragment( null, false ),
-		nodes = [];
+	this.updateToolState();
+};
 
-	leafNodes = fragment.getLeafNodes();
-	for ( i = 0, len = leafNodes.length; i < len; i++ ) {
-		if ( len === 1 || !leafNodes[i].range || leafNodes[i].range.getLength() ) {
-			nodes.push( leafNodes[i].node );
-		}
-	}
+/**
+ * Update the state of the tools
+ */
+ve.ui.Toolbar.prototype.updateToolState = function () {
+	var dirInline, dirBlock, fragmentAnnotation,
+		fragment = this.surface.getModel().getFragment( null, false );
+
 	// Update context direction for button icons UI
-
 	// by default, inline and block directions are the same
 	if ( !fragment.isNull() ) {
 		dirInline = dirBlock = this.surface.getView().documentView.getDirectionFromRange( fragment.getRange() );
@@ -196,7 +192,7 @@ ve.ui.Toolbar.prototype.onContextChange = function () {
 			this.contextDirection.block = dirBlock;
 		}
 	}
-	this.emit( 'updateState', nodes, fragment.getAnnotations(), fragment.getAnnotations( true ), fragment.getRange() );
+	this.emit( 'updateState', fragment, this.contextDirection );
 };
 
 /**
@@ -261,6 +257,8 @@ ve.ui.Toolbar.prototype.initialize = function () {
 		'floating': false,
 		'offset': this.elementOffset
 	} );
+	// Initial state
+	this.updateToolState();
 
 	if ( this.floatable ) {
 		this.$window.on( this.windowEvents );

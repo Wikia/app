@@ -1,0 +1,50 @@
+// Monobook skin specific styling
+@import "../../../../../skins/wikia/css/color";
+
+.Forum {
+	.DiscussionBox {
+		.heading {
+			color: $color-text;
+		}
+
+		.message {
+			background-color: transparent;
+			border: 1px solid $color-page-border;
+
+			&:before {
+				border-color: $color-page-border $color-page-border transparent transparent;
+			}
+		}
+
+		input[type="text"],
+		textarea {
+			background-color: transparent;
+			border: 1px solid $color-page-border;
+			color: $color-text;
+		}
+
+		input[type="text"]:focus,
+		textarea:focus {
+			background-color: transparent;
+			border: 1px solid $color-page-border;
+			color: $color-text;
+			box-shadow: 0 0 4px $color-text;
+		}
+	}
+
+	.ThreadList {
+		.activity {
+			li {
+				&.following {
+					color: $color-text;
+				}
+			}
+		}
+
+		.thread {
+			&:hover {
+				background-color: $color-page-border;
+			}
+		}
+	}
+}
