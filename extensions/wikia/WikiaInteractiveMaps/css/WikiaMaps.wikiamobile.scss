@@ -1,8 +1,46 @@
 @import "WikiaMapsShared";
 @import "includes/wikia/services/css/pagination.scss";
+@import "skins/oasis/css/mixins/calc";
 
-#wkPage {
-	padding: 0;
+$nav-height: 40px;
+$smart-banner-height: 80px;
+
+.error {
+	padding: 0 15px;
+}
+
+.int-map-mobile-map-page {
+	bottom: 0;
+	position: absolute;
+	top: 0;
+
+	.sb-shown & {
+		#wkPage {
+			@include height-calc('100% - #{$nav-height + $smart-banner-height}');
+			// required for smooth animation with smart banner
+			-webkit-transition: height 0.01s;
+		}
+	}
+
+	.WikiaPageHeader {
+		display: none;
+	}
+
+	#mw-content-text {
+		height: 100%;
+
+		iframe {
+			border: none;
+			width: 100% !important;
+			height: 100% !important;
+		}
+	}
+
+	#wkPage {
+		@include height-calc('100% - #{$nav-height}');
+		// required for smooth animation with smart banner
+		-webkit-transition: height 1s;
+	}
 }
 
 .map-list {
@@ -52,6 +90,6 @@
 	}
 }
 
-.error {
-	padding: 0 15px;
+#wkPage {
+	padding: 0;
 }
