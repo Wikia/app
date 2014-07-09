@@ -380,7 +380,6 @@ class ThumbnailController extends WikiaController {
 	 * Create an array of needed classes for image thumbs anchors.
 	 *
 	 * @param array $options The thumbnail options passed to toHTML.
-	 * @param $options
 	 * @return array
 	 */
 	public function getImageLinkClasses ( $options ) {
