@@ -264,7 +264,7 @@ define('wikia.intMap.editPOI', ['jquery', 'wikia.intMap.utils'], function($, uti
 			.val(dataSet.title)
 			.blur();
 
-		if( dataSet.imageUrl !== '' ) {
+		if( dataSet.imageUrl ) {
 			modal.$articleImageUrl.attr('src', dataSet.imageUrl);
 			modal.$form.find('input[name=imageUrl]').val(dataSet.imageUrl);
 		} else {
