@@ -242,18 +242,18 @@ function InfoboxBuilderView.render( input, vars )
     local table = Infobox:tag('table')
 	        table:attr('cellspacing', '0')
 	             :attr('cellpadding', '0')
-	             :addClass('InfoboxTable')
-
+	             :addClass('infobox-table')
+               
     -- Iterate over each field and render a row
     for index, field in ipairs( fields ) do
   	  if field.Type == "Line" then
   	    if not HF.isempty( field.Value ) then
-  	      table:node( addRowLine( field ) )
+          table:node( addRowLine( field ) )
   	    end
   	    
   		elseif field.Type == "Header" then
   		  if input.sections[index] == "On" then
-  		    table:node( addRowHeader( field ) )
+          table:node( addRowHeader( field ) )
   		  end
   		    
   	  elseif field.Type == "Title" then
@@ -263,7 +263,7 @@ function InfoboxBuilderView.render( input, vars )
   	    table:node( addRowMainImage( field ) )
   
   	  elseif field.Type == "Image" then
-  	    table:node( addRowImage( field ) )
+        table:node( addRowImage( field ) )
   
   	  elseif field.Type == "Footer" then
   	    table:node( addRowFooter( field ) )
@@ -277,7 +277,7 @@ function InfoboxBuilderView.render( input, vars )
       end
 	  end
   
-  -- Convert whole string
+  -- Convert the whole infobox to a wikitext-compliant string
 	output = tostring( Infobox )
   
 	return output

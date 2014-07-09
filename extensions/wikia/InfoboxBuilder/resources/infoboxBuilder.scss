@@ -1,10 +1,10 @@
 // Variables
-$InfoboxBuilder-color-header : #092140;
-// $InfoboxBuilder-color-header : #3c3c3c;
-$InfoboxBuilder-color-label  : #3c3c3c;
-$InfoboxBuilder-color-lines  : #cccccc;
-$InfoboxBuilder-color-link   : #0a6eb4;
-$InfoboxBuilder-color-text   : #64696c;
+$InfoboxBuilder-background-color : rgba(255,255,255,0.75);
+$InfoboxBuilder-color-header     : #092140;
+$InfoboxBuilder-color-label      : #3c3c3c;
+$InfoboxBuilder-color-lines      : #cccccc;
+$InfoboxBuilder-color-link       : #0a6eb4;
+$InfoboxBuilder-color-text       : #64696c;
 
 // Dimensions
 $InfoboxBuilder-font-size-title  : 1.25rem;
@@ -18,16 +18,17 @@ $InfoboxBuilder-padding-h        : 1rem;
 $InfoboxBuilder-padding-v        : 0.5rem;
 
 $InfoboxBuilder-width-container  : 300px;
-$InfoboxBuilder-width-left       : 40%;
-$InfoboxBuilder-width-right      : 60%;
+$InfoboxBuilder-width-left       : 100px;
+$InfoboxBuilder-width-right      : 200px;
 
 // Styles
 .default-infobox-container {
-	color   : $InfoboxBuilder-color-text;
-	float   : right;
-	margin  : 0 0 $InfoboxBuilder-margin-out $InfoboxBuilder-margin-out;
-	padding : $InfoboxBuilder-padding;
-	width   : $InfoboxBuilder-width-container;
+	background-color : $InfoboxBuilder-background-color;
+	color            : $InfoboxBuilder-color-text;
+	float            : right;
+	margin           : 0 0 $InfoboxBuilder-margin-out $InfoboxBuilder-margin-out;
+	padding          : $InfoboxBuilder-padding;
+	width            : $InfoboxBuilder-width-container;
 
 	table {
 		table-layout : fixed;
@@ -35,7 +36,7 @@ $InfoboxBuilder-width-right      : 60%;
 
 		tr:last-child {
 			td {
-				border-bottom: 0;
+				border-bottom : 0;
 			}
 		}
 	}
@@ -44,11 +45,12 @@ $InfoboxBuilder-width-right      : 60%;
 		color : $InfoboxBuilder-color-link;
 
 		&:hover {
-			color : $InfoboxBuilder-color-header;
+			color           : $InfoboxBuilder-color-header;
+			text-decoration : none;
 		}
 
 		&:active {
-			color : $InfoboxBuilder-color-lines;
+			color : $InfoboxBuilder-color-link;
 		}
 	}
 
@@ -83,7 +85,7 @@ $InfoboxBuilder-width-right      : 60%;
 	.default-infobox-line-left {
 		border-bottom  : 1px solid $InfoboxBuilder-color-lines;
 		color          : $InfoboxBuilder-color-label;
-		font-weight    : bold;
+		font-weight    : 500;
 		padding        : $InfoboxBuilder-padding-v 0;
 		vertical-align : top;
 		width          : $InfoboxBuilder-width-left;
