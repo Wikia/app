@@ -103,11 +103,11 @@ class WikiDetailsService extends WikiService {
 				}
 			}
 		}
-		if (empty($imgUrl)){
-			$f = PromoImage::getImage($imageName);
-				if ($f->exists()){
-				if (!empty($width)) {
-					$imgUrl = $f->getCroppedThumbnailUrl($width, $height);
+		if ( empty( $imgUrl ) && !empty( $imageName ) ) {
+			$f = PromoImage::getImage( $imageName );
+			if ( $f->exists() ) {
+				if ( !empty( $width ) ) {
+					$imgUrl = $f->getCroppedThumbnailUrl( $width, $height );
 				} else {
 					$imgUrl = $f->getUrl();
 				}
