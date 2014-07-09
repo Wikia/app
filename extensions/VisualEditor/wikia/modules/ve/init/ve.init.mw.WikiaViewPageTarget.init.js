@@ -89,7 +89,7 @@
 
 		/* Optimizely */
 		window.optimizely = window.optimizely || [];
-		window.optimizely.push( ["activate", 1459280459] );
+		window.optimizely.push( ['activate', 1459280459] );
 
 		showSpinner();
 
