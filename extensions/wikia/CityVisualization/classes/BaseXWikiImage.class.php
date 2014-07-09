@@ -88,7 +88,7 @@ abstract class BaseXWikiImage {
 
 	protected function provideImageDimensions( $img = null ) {
 		if ( empty( $img ) ) {
-			if ( $this->getSwiftStorage()->exists( $this->getLocalPath() ) ) {
+			if ( $this->exists() ) {
 				$file = $this->getSwiftStorage()->read( $this->getLocalPath() );
 				$img = imagecreatefromstring( $file );
 			}
