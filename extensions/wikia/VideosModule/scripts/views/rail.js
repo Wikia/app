@@ -113,7 +113,7 @@ define('videosmodule.views.rail', [
 			});
 
 		// Remove tracking for Special Wikis Sampled at 100% -- VID-1800
-		if (wgIsGASpecialWiki !== true) {
+		if (window.wgIsGASpecialWiki !== true) {
 			track();
 		}
 	};
