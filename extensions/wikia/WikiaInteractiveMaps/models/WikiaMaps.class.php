@@ -452,16 +452,16 @@ class WikiaMaps extends WikiaObject {
 
 		$success = $this->isSuccess( $status, $content );
 		if( !$success && is_null( $content ) ) {
-			$results['success'] = false;
+			$results[ 'success' ] = false;
 			$content = new stdClass();
 			$content->message = wfMessage( 'wikia-interactive-maps-service-error' )->parse();
 		} else if( !$success && !is_null( $content ) ) {
-			$results['success'] = false;
+			$results[ 'success' ] = false;
 		} else {
-			$results['success'] = true;
+			$results[ 'success' ] = true;
 		}
 
-		$results['content'] = $content;
+		$results[ 'content' ] = $content;
 		return $results;
 	}
 
@@ -548,13 +548,12 @@ class WikiaMaps extends WikiaObject {
 			$is = new ImageServing( [ $articleId ], $width, $height );
 			$images = $is->getImages( 1 );
 
-			if( !empty( $images[$articleId] ) ) {
-				$image = array_pop( $images[$articleId] );
-				return $image['url'];
+			if( !empty( $images[ $articleId ] ) ) {
+				$image = array_pop( $images[ $articleId ] );
+				return $image[ 'url' ];
 			}
 		}
 
 		return '';
 	}
 }
-
