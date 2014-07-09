@@ -59,19 +59,21 @@ class PromoImage extends WikiaObject {
 	}
 
 	static public function getApprovedImageNamesForWikiIds( $wikiIds ) {
-		$db = wfGetDB( DB_SLAVE, array(), F::app()->wg->ExternalSharedDB );
-
-		$sql = new WikiaSQL();
-		$sql->cache( PromoImage::__BULK_IMAGES_WITH_TYPE_TTL )
-			->SELECT( 'city_id', 'image_name' )
-			->FROM( PromoImage::TABLE_CITY_VISUALIZATION_IMAGES_XWIKI )
-			->WHERE( 'image_review_status' )->EQUAL_TO( ImageReviewStatuses::STATE_APPROVED )
-			->AND_( 'image_type' )->EQUAL_TO( PromoImage::MAIN )
-			->AND_( 'city_id' )->IN( $wikiIds );
 		$resultMap = [ ];
-		$sql->runLoop( $db, function ( $unused, $row ) use ( &$resultMap ) {
-			$resultMap[$row->city_id] = $row->image_name;
-		} );
+		if ( count( $wikiIds ) > 0 ) {
+			$db = wfGetDB( DB_SLAVE, array(), F::app()->wg->ExternalSharedDB );
+
+			$sql = new WikiaSQL();
+			$sql->cache( PromoImage::__BULK_IMAGES_WITH_TYPE_TTL )
+				->SELECT( 'city_id', 'image_name' )
+				->FROM( PromoImage::TABLE_CITY_VISUALIZATION_IMAGES_XWIKI )
+				->WHERE( 'image_review_status' )->EQUAL_TO( ImageReviewStatuses::STATE_APPROVED )
+				->AND_( 'image_type' )->EQUAL_TO( PromoImage::MAIN )
+				->AND_( 'city_id' )->IN( $wikiIds );
+			$sql->runLoop( $db, function ( $unused, $row ) use ( &$resultMap ) {
+				$resultMap[$row->city_id] = $row->image_name;
+			} );
+		}
 		return $resultMap;
 	}
 
