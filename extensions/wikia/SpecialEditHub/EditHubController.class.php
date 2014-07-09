@@ -206,8 +206,8 @@ class EditHubController extends WikiaSpecialPageController {
 
 				$this->hubUrl = Title::newMainPage()->getFullURL() . '/' . $date->format('Y-m-d');
 				$this->successText = wfMessage('edit-hub-module-publish-success', $this->wg->lang->date($this->date))->escaped();
-				if ( $this->date == $this->toolboxModel->getLastPublishedTimestamp( $wgCityId, null, true)
-					&& !$wgDisableWAMOnHubs ) { // disable for Corporate/WAM Hybrids
+				if ( !$wgDisableWAMOnHubs // disable for Corporate/WAM Hybrids
+					&& ($this->date == $this->toolboxModel->getLastPublishedTimestamp( $wgCityId, null, true ) ) ) {
 					$this->purgeWikiaHomepageHubs();
 				}
 			} else {
@@ -403,9 +403,9 @@ class EditHubController extends WikiaSpecialPageController {
 		$module->purgeMemcache($this->date);
 		$this->getHubsServicesHelper()->purgeHubV3Varnish($wgCityId);
 
-		if( $this->selectedModuleId == MarketingToolboxModuleSliderService::MODULE_ID
-			&& $this->date == $this->toolboxModel->getLastPublishedTimestamp( $wgCityId, null )
-			&& !$wgDisableWAMOnHubs ) { // disable for Corporate/WAM Hybrids
+		if( !$wgDisableWAMOnHubs // disable for Corporate/WAM Hybrids
+			&& $this->selectedModuleId == MarketingToolboxModuleSliderService::MODULE_ID
+			&& ( $this->date == $this->toolboxModel->getLastPublishedTimestamp( $wgCityId, null ) ) ) {
 				$this->purgeWikiaHomepageHubs();
 		}
 	}
