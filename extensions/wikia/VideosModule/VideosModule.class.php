@@ -216,7 +216,7 @@ class VideosModule extends WikiaModel {
 	public function getVideoListFromVideoWiki( $category, $limit = self::LIMIT_VIDEOS, $sort = 'recent', $source = '' ) {
 		wfProfileIn( __METHOD__ );
 		$log = WikiaLogger::instance();
-gbug("CATEGORIES: ", $category);
+
 		sort( $category );
 		$hashCategory = md5( json_encode( $category ) );
 		$memcKey = wfSharedMemcKey( 'videomodule', 'videolist', self::CACHE_VERSION, $hashCategory, $sort );
