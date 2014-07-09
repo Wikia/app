@@ -487,31 +487,30 @@ class WikiaInteractiveMapsPoiController extends WikiaInteractiveMapsBaseControll
 		$userName = $this->wg->User->getName();
 
 		if( $this->isCreate() ) {
-			$poiData['map_id'] = $this->getData( 'mapId' );
-			$poiData['created_by'] = $userName;
+			$poiData[ 'map_id' ] = $this->getData( 'mapId' );
+			$poiData[ 'created_by' ] = $userName;
 		}
 
 		if( $this->isUpdate() ) {
-			$poiData['updated_by'] = $userName;
+			$poiData[ 'updated_by' ] = $userName;
 		}
 
 		$description = $this->getData( 'description' );
 		if( !empty( $description ) ) {
-			$poiData['description'] = $description;
+			$poiData[ 'description' ] = $description;
 		}
 
 		$linkTitle = $this->getData( 'articleTitle', '' );
 		$photo = $this->getData( 'imageUrl' );
 		$link = '';
+		$poiData[ 'photo' ] = '';
 		if ( !empty( $linkTitle ) ) {
 			$link = $this->getArticleUrl( $linkTitle );
 
 			if( !empty( $photo ) ) {
-			// save photo only when article is chosen
-				$poiData['photo'] = $photo;
+				// save photo only when article is chosen
+				$poiData[ 'photo' ] = $photo;
 			}
-		} else {
-			$poiData['photo'] = '';
 		}
 
 		$poiData[ 'link_title' ] = $linkTitle;
@@ -534,13 +533,13 @@ class WikiaInteractiveMapsPoiController extends WikiaInteractiveMapsBaseControll
 		} else {
 			$results = array_map( function( $item ) {
 					$imageUrl = $this->mapsModel->getArticleImage(
-						$item[0][ 'title' ],
+						$item[ 0 ][ 'title' ],
 						self::POI_ARTICLE_IMAGE_THUMB_SIZE,
 						self::POI_ARTICLE_IMAGE_THUMB_SIZE
 					);
 
 					if( !empty( $imageUrl ) ) {
-						$item[0][ 'imageUrl' ] = $imageUrl;
+						$item[ 0 ][ 'imageUrl' ] = $imageUrl;
 					}
 
 					return $item;
@@ -594,11 +593,11 @@ class WikiaInteractiveMapsPoiController extends WikiaInteractiveMapsBaseControll
 	 * @return Array results array
 	 */
 	private function decorateResults( $results, $fieldsList ) {
-		$response = $this->mapsModel->sendGetRequest( $results['content']->url );
+		$response = $this->mapsModel->sendGetRequest( $results[ 'content' ]->url );
 
 		foreach( $fieldsList as $field ) {
-			if( !empty( $response['content']->$field ) ) {
-				$results['content']->$field = $response['content']->$field;
+			if( !empty( $response[ 'content' ]->$field ) ) {
+				$results[ 'content' ]->$field = $response[ 'content' ]->$field;
 			}
 		}
 
