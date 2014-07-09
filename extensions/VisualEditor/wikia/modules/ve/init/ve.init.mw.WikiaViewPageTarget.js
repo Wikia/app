@@ -146,7 +146,7 @@ ve.init.mw.WikiaViewPageTarget.prototype.onToolbarSaveButtonClick = function () 
 		veTrack( { action: 've-save-button-click' } );
 	}
 
-	if ( window.veOrientationEnabled !== undefined ) {
+	if ( window.veOrientationEnabled !== undefined || window.veFocusMode !== undefined ) {
 		window.optimizely = window.optimizely || [];
 		window.optimizely.push( ['trackEvent', 've-save-button-click'] );
 	}
