@@ -90,6 +90,7 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 	 * Single map page
 	 */
 	public function map() {
+		$mobileSkin = F::app()->checkSkin('wikiamobile');
 		$mapId = (int)$this->getPar();
 		$zoom = $this->request->getInt( 'zoom', WikiaInteractiveMapsParserTagController::DEFAULT_ZOOM );
 		$lat = $this->request->getInt( 'lat', WikiaInteractiveMapsParserTagController::DEFAULT_LATITUDE );
@@ -107,11 +108,16 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 				$lon
 			]);
 
-			$this->setVal( 'title', $map->title );
+			if ($mobileSkin) {
+				$this->mapOnMobile();
+			} else {
+				$this->setVal( 'title', $map->title );
+				$this->setVal( 'menu', $this->getMenuMarkup() );
+			}
+
 			$this->setVal( 'mapFound', true );
 			$this->setVal( 'url', $url );
 			$this->setVal( 'height', self::MAP_HEIGHT );
-			$this->setVal( 'menu', $this->getMenuMarkup() );
 			$this->setVal( 'mapId', $mapId );
 		} else {
 			$this->setVal( 'mapFound', false );
@@ -123,6 +129,23 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 
 		$this->response->addAsset( 'extensions/wikia/WikiaInteractiveMaps/css/WikiaInteractiveMaps.scss' );
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
+	}
+
+	/**
+	 * Makes all required adjustments for rendering single map page on mobile
+	 */
+	private function mapOnMobile() {
+		global $wgHooks;
+
+		// adds class to body
+		$wgHooks[ 'SkinGetPageClasses' ][] = function( &$classes ) {
+			$classes .= ' int-map-mobile-map-page';
+			return true;
+		};
+
+		// skip rendering parts of Wikia page
+		WikiaMobileFooterService::setSkipRendering(true);
+		WikiaMobilePageHeaderService::setSkipRendering(true);
 	}
 
 	/**
