@@ -1,7 +1,103 @@
+// Variables
+$InfoboxBuilder-color-header : #092140;
+// $InfoboxBuilder-color-header : #3c3c3c;
+$InfoboxBuilder-color-label  : #3c3c3c;
+$InfoboxBuilder-color-lines  : #cccccc;
+$InfoboxBuilder-color-link   : #0a6eb4;
+$InfoboxBuilder-color-text   : #64696c;
+
+// Dimensions
+$InfoboxBuilder-font-size-title  : 1.25rem;
+$InfoboxBuilder-font-size-header : 1rem;
+
+$InfoboxBuilder-margin-in        : 1rem;
+$InfoboxBuilder-margin-out       : 1.5rem;
+
+$InfoboxBuilder-padding          : 0.75rem;
+$InfoboxBuilder-padding-h        : 1rem;
+$InfoboxBuilder-padding-v        : 0.5rem;
+
+$InfoboxBuilder-width-container  : 300px;
+$InfoboxBuilder-width-left       : 40%;
+$InfoboxBuilder-width-right      : 60%;
+
+// Styles
 .default-infobox-container {
+	color   : $InfoboxBuilder-color-text;
+	float   : right;
+	margin  : 0 0 $InfoboxBuilder-margin-out $InfoboxBuilder-margin-out;
+	padding : $InfoboxBuilder-padding;
+	width   : $InfoboxBuilder-width-container;
+
+	table {
+		table-layout : fixed;
+		width        : 100%;
+
+		tr:last-child {
+			td {
+				border-bottom: 0;
+			}
+		}
+	}
+
+	a {
+		color : $InfoboxBuilder-color-link;
+
+		&:hover {
+			color : $InfoboxBuilder-color-header;
+		}
+
+		&:active {
+			color : $InfoboxBuilder-color-lines;
+		}
+	}
+
+	.default-infobox-title {
+		padding: $InfoboxBuilder-padding-v 0;
+
+		h2 {
+			border    : 0px;
+			color     : $InfoboxBuilder-color-header;
+			font-size : $InfoboxBuilder-font-size-title;
+			margin    : 0;
+		}
+	}
+
+	.default-infobox-main-image {
+		padding : $InfoboxBuilder-padding-v 0;
+
+		img {
+			display   : block;
+			height    : auto;
+			max-width : 100% !important;
+		}
+	}
+
+	.default-infobox-header {
+		color      : $InfoboxBuilder-color-header;
+		font-size  : $InfoboxBuilder-font-size-header;
+		padding    : $InfoboxBuilder-padding-h 0 0 0;
+		text-align : center;
+	}
+
+	.default-infobox-line-left {
+		border-bottom  : 1px solid $InfoboxBuilder-color-lines;
+		color          : $InfoboxBuilder-color-label;
+		font-weight    : bold;
+		padding        : $InfoboxBuilder-padding-v 0;
+		vertical-align : top;
+		width          : $InfoboxBuilder-width-left;
+	}
+
+	.default-infobox-line-right {
+		border-bottom  : 1px solid $InfoboxBuilder-color-lines;
+		padding        : $InfoboxBuilder-padding-v 0 $InfoboxBuilder-padding-v $InfoboxBuilder-padding-h;
+		vertical-align : top;
+		width          : $InfoboxBuilder-width-right;
+	}
 
 	span.mw-collapsible-toggle {
-		float: none;
-		display: block;
+		display : block;
+		float   : none;
 	}
 }
