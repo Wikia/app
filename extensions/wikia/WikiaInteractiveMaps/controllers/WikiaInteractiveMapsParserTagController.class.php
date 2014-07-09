@@ -6,7 +6,7 @@ class WikiaInteractiveMapsParserTagController extends WikiaController {
 	const MIN_ZOOM = 0;
 	const MAX_ZOOM = 16;
 	const DEFAULT_WIDTH = 680;
-	const DEFAULT_HEIGHT = 300;
+	const DEFAULT_HEIGHT = 382;
 	const DEFAULT_LATITUDE = 0;
 	const MIN_LATITUDE = -90;
 	const MAX_LATITUDE = 90;
