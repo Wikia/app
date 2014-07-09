@@ -191,16 +191,16 @@ define('ext.wikia.adEngine.wikiaGptHelper', [
 		var slotnameGpt = slotname + '_' + slotMapSrc,
 			slotDiv = document.createElement('div');
 
-		function callSuccess() {
+		function callSuccess(adInfo) {
 			if (typeof success === 'function') {
-				success();
+				success(adInfo);
 			}
 		}
 
-		function callError() {
+		function callError(adInfo) {
 			slotDiv.className += ' hidden';
 			if (typeof error === 'function') {
-				error();
+				error(adInfo);
 			}
 		}
 

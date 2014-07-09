@@ -14,8 +14,8 @@ class AdEngine2Hooks {
 		// TODO: review top and bottom vars (important for adsinhead)
 
 		global $wgAdDriverForceDirectGptAd, $wgAdDriverForceLiftiumAd, $wgEnableRHonDesktop, $wgEnableRHonMobile,
-			   $wgLiftiumOnLoad, $wgNoExternals, $wgAdVideoTargeting, $wgAdPageType, $wgLoadAdsInHead,
-			   $wgEnableKruxTargeting, $wgAdEngineDisableLateQueue;
+			   $wgLiftiumOnLoad, $wgNoExternals, $wgAdVideoTargeting, $wgAdPageType, $wgEnableKruxTargeting,
+			   $wgAdEngineDisableLateQueue, $wgLoadAdsInHead, $wgLoadLateAdsAfterPageLoad;
 
 		$wgNoExternals = $request->getBool( 'noexternals', $wgNoExternals );
 		$wgLiftiumOnLoad = $request->getBool( 'liftiumonload', (bool)$wgLiftiumOnLoad );
@@ -31,6 +31,7 @@ class AdEngine2Hooks {
 		$wgAdPageType = AdEngine2Service::getPageType();
 
 		$wgLoadAdsInHead = $request->getBool( 'adsinhead', $wgLoadAdsInHead );
+		$wgLoadLateAdsAfterPageLoad = $request->getBool( 'lateadsafterload', $wgLoadLateAdsAfterPageLoad );
 
 		$wgEnableKruxTargeting = !$wgAdEngineDisableLateQueue && !$wgNoExternals && $wgEnableKruxTargeting;
 
@@ -91,7 +92,7 @@ class AdEngine2Hooks {
 	 */
 	static public function onOasisSkinAssetGroups(&$jsAssets) {
 
-		global $wgAdDriverUseWikiaBarBoxad2;
+		global $wgAdDriverUseBottomLeaderboard, $wgAdDriverUseTopInContentBoxad;
 
 		$coreGroupIndex = array_search(AdEngine2Service::ASSET_GROUP_CORE, $jsAssets);
 		if ($coreGroupIndex === false) {
@@ -103,6 +104,10 @@ class AdEngine2Hooks {
 			// Add ad asset to JavaScripts loaded on bottom (with regular JavaScripts)
 			array_splice($jsAssets, $coreGroupIndex + 1, 0, AdEngine2Service::ASSET_GROUP_ADENGINE);
 			$coreGroupIndex = $coreGroupIndex + 1;
+
+			if ($wgAdDriverUseTopInContentBoxad === true) {
+				array_unshift($jsAssets, 'adengine2_top_in_content_boxad_js');
+			}
 		}
 
 		if (AdEngine2Service::shouldLoadLateQueue()) {
@@ -114,8 +119,8 @@ class AdEngine2Hooks {
 			$jsAssets[] = AdEngine2Service::ASSET_GROUP_LIFTIUM;
 		}
 
-		if ($wgAdDriverUseWikiaBarBoxad2 === true) {
-			$jsAssets[] = 'adengine2_wikiabar_boxad_js';
+		if ($wgAdDriverUseBottomLeaderboard === true) {
+			$jsAssets[] = 'adengine2_bottom_leaderboard_js';
 		}
 		return true;
 	}
@@ -128,9 +133,16 @@ class AdEngine2Hooks {
 	 * @return bool
 	 */
 	static public function onOasisSkinAssetGroupsBlocking(&$jsAssets) {
+
+		global $wgAdDriverUseTopInContentBoxad;
+
 		if (AdEngine2Service::areAdsInHead()) {
 			// Add ad asset to JavaScripts loaded on top (in <head>)
 			$jsAssets[] = AdEngine2Service::ASSET_GROUP_ADENGINE;
+
+			if ($wgAdDriverUseTopInContentBoxad === true) {
+				array_unshift($jsAssets, 'adengine2_top_in_content_boxad_js');
+			}
 		}
 		return true;
 	}

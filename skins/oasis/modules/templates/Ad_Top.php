@@ -1,15 +1,18 @@
 <div class="WikiaTopAds" id="WikiaTopAds">
-<div class="WikiaTopAdsInner">
 
-<?php
+	<div class="WikiaTopAdsInner">
 
-echo $app->renderView('Ad', 'Index', ['slotName' => $leaderboardName, 'pageTypes' => ['homepage_logged', 'corporate', 'all_ads']]);
-echo $app->renderView('Ad', 'Index', ['slotName' => 'TOP_BUTTON_WIDE', 'pageTypes' => ['homepage_logged', 'all_ads']]);
 
-?>
+		<?= $app->renderView('Ad', 'Index', [
+			'slotName' => $leaderboardName,
+			'pageFairId' => isset($wg->AnalyticsProviderPageFairSlotIds['LEADERBOARD']) ? $wg->AnalyticsProviderPageFairSlotIds['LEADERBOARD'] : null,
+			'pageTypes' => ['homepage_logged', 'corporate', 'all_ads']
+		]); ?>
 
-</div>
+		<?= $app->renderView('Ad', 'Index', ['slotName' => 'TOP_BUTTON_WIDE', 'pageTypes' => ['homepage_logged', 'all_ads']]); ?>
 
-<?= $app->renderView('Ad', 'Index', ['slotName' => 'INVISIBLE_SKIN', 'pageTypes' => ['homepage_logged', 'corporate', 'all_ads']]); ?>
+	</div>
+
+	<?= $app->renderView('Ad', 'Index', ['slotName' => 'INVISIBLE_SKIN', 'pageTypes' => ['homepage_logged', 'corporate', 'all_ads']]); ?>
 
 </div>

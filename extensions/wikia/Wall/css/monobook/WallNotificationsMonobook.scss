@@ -1,0 +1,274 @@
+// Monobook skin specific styling
+@import "../../../../../skins/wikia/css/color";
+
+#content { z-index: 0 }
+
+#pt-wall-notifications {
+	position: relative;
+
+	.prehide {
+		visibility: hidden;
+	}
+
+	.wall-notifications-monobook .count {
+		padding-left: 5px;
+	}
+}
+
+#wall-notifications-markasread {
+	text-align: center;
+}
+
+#wall-notifications-dropdown {
+	border: 1px solid $color-page-border;
+	display: none;
+	position: absolute;
+	right: 0;
+	width: 250px;
+	z-index: 3;
+
+	&:before {
+		content: '';
+		height: 20px;
+		position: absolute;
+		width: 100%;
+		top: 100%;
+		left: 0;
+		background: none;
+	}
+
+	* {
+	text-transform: none !important;
+	}
+
+	#wall-notifications-inner {
+		padding: 0;
+		width: 250px;
+
+		.notifications-wiki-header {
+			background: #000000;
+			color: #FFFFFF;
+			font-size: 14px;
+			line-height: 20px;
+			text-align: left;
+			z-index: 1;
+		}
+
+		.notifications-wiki-count-container {
+			position: absolute;
+			right: 20px;
+		}
+
+		.notifications-wiki-count-container .notifications-wiki-count {
+			border-radius: 15px;
+			-moz-border-radius: 15px;
+			-webkit-border-radius: 15px;
+			background: #FF0000;
+			font-size: 12px;
+			text-align: center;
+			display: inline-block;
+			padding: 0 4px 0 4px;
+			line-height: 14px;
+			margin-top: 2px;
+			margin-right: 5px;
+		}
+
+		a {
+			display: block;
+			padding: 0;
+		}
+
+		ul {
+			padding: 0;
+			margin: 0;
+		}
+
+		li {
+			padding: 0;
+			margin: 0;
+			display: list-item;
+			position: relative;
+		}
+
+		.avatars {
+			display: inline-block;
+			position: relative;
+			margin: 0;
+			padding: 0;
+			width: 45px;
+			height: 45px;
+			top: 5px;
+			left: 5px;
+			text-align: left;
+			vertical-align: top;
+		}
+
+		.avatars_2_1 .avatar {
+			left: -2px;
+			top: -2px;
+		}
+
+		.avatars_2_2 .avatar {
+			left: 2px;
+			top: 2px;
+		}
+
+		.avatars_3_1 .avatar {
+			left: -3px;
+			top: -3px;
+		}
+
+		.avatars_3_2 .avatar {
+			left: 0;
+			top: 0;
+		}
+
+		.avatars_3_3 .avatar {
+			left: 3px;
+			top: 3px;
+		}
+
+		.avatar {
+			position: absolute;
+		}
+
+		.notification {
+			display: inline-block;
+			font-size: 11px;
+			font-weight: normal;
+			line-height: 1.5em;
+			padding-top: 5px;
+			text-align: left;
+			white-space: normal;
+			width: 190px;
+
+			.msg-title {
+				font-size: 14px;
+				font-weight: bold;
+			}
+
+
+			&:hover {
+				text-decoration: underline;
+			}
+
+			.timeago {
+				display: block;
+				font-size: 9px;
+				font-style: italic;
+			}
+		}
+
+		.unread_notification { font-weight: bold; }
+
+		.read_notification {
+			.notification .msg-title {
+				font-weight: normal;
+			}
+
+			.notification  {
+				opacity: 0.3;
+				filter: alpha(opacity = 50);
+				-moz-opacity:.50;
+			}
+
+			.avatars img {
+				opacity: 0.3;
+				-moz-opacity:.50;
+				filter: alpha(opacity = 50);
+			}
+		}
+
+		&> li { width: 100%; }
+
+		li,
+		a {
+			cursor: pointer;
+		}
+
+		li:not(:first-child) {
+			border-top: 1px solid $color-page-border !important;
+		}
+
+		.notifications-for-wiki {
+			.chevron {
+				border-color: transparent transparent transparent #FFFFFF;
+				border-style: solid;
+				border-width: 4px;
+				margin: 6px 7px 0 8px;
+				position: absolute;
+				right: 0;
+				width: 0;
+				vertical-align: middle;
+			}
+
+			.notifications-for-wiki-list {
+				display: none;
+			}
+		}
+
+		.notifications-for-wiki.show {
+			.chevron {
+				border-color: #FFFFFF transparent transparent transparent;
+				margin: 8px 10px 0 5px;
+			}
+
+			.notifications-for-wiki-list {
+				display: block;
+			}
+		}
+
+		.notifications-header {
+			font-size: 13px;
+			font-weight: bold;
+			padding-left: 10px;
+			padding-top: 1px;
+			cursor: default;
+			text-align: left;
+		}
+
+		#wall-notifications-markasread {
+			cursor: pointer;
+			font-size: 11px;
+			font-weight: normal;
+			position: absolute;
+			right: 0;
+			top: 0;
+			padding-right: 10px;
+			text-align: right;
+
+			* {
+				cursor: pointer;
+				padding-left: 5px;
+				padding-right: 5px;
+			}
+
+			span:hover {
+				cursor: pointer;
+				text-decoration: underline;
+			}
+		}
+	}
+}
+
+#wall-notifications-markasread-sub-opts {
+	display: none;
+}
+
+#wall-notifications-markasread-sub.disabled {
+	cursor: default;
+	opacity: 0.5;
+
+	&:hover {
+		background: none !important;
+		text-decoration: none;
+	}
+}
+
+.SpeechBubble.message .buttons{
+	text-align: right;
+}
+
+.replies .message-removed .deleteorremove-infobox::before, .replies .message-removed .deleteorremove-infobox::after {
+	width: 99%;
+}

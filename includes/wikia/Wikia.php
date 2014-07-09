@@ -34,7 +34,6 @@ $wgHooks['TitleGetSquidURLs']        [] = 'Wikia::onTitleGetSquidURLs';
 # changes in recentchanges (MultiLookup)
 $wgHooks['RecentChange_save']        [] = "Wikia::recentChangesSave";
 $wgHooks['BeforeInitialize']         [] = "Wikia::onBeforeInitializeMemcachePurge";
-//$wgHooks['MediaWikiPerformAction']   [] = "Wikia::onPerformActionNewrelicNameTransaction"; disable to gather different newrelic statistics
 $wgHooks['SkinTemplateOutputPageBeforeExec'][] = "Wikia::onSkinTemplateOutputPageBeforeExec";
 $wgHooks['UploadVerifyFile']         [] = 'Wikia::onUploadVerifyFile';
 
@@ -70,9 +69,6 @@ $wgHooks['LocalFilePurgeThumbnailsUrls'][] = 'Wikia::onLocalFilePurgeThumbnailsU
 
 class Wikia {
 
-	const VARNISH_STAGING_HEADER = 'X-Staging';
-	const VARNISH_STAGING_PREVIEW = 'preview';
-	const VARNISH_STAGING_VERIFY = 'verify';
 	const REQUIRED_CHARS = '0123456789abcdefG';
 	const COMMUNITY_WIKI_ID = 177;
 	const FAVICON_URL_CACHE_KEY = 'favicon-v1';
@@ -81,44 +77,6 @@ class Wikia {
 	private static $cachedLinker;
 
 	private static $apacheHeaders = null;
-
-	/**
-	 * Return the name of staging server (or empty string for production/dev envs)
-	 * @return string
-	 */
-	public static function getStagingServerName() {
-		if ( is_null( self::$apacheHeaders ) ) {
-			self::$apacheHeaders = function_exists('apache_request_headers') ? apache_request_headers() : array();
-		}
-		if ( isset( self::$apacheHeaders[ self::VARNISH_STAGING_HEADER ] ) ) {
-			return self::$apacheHeaders[ self::VARNISH_STAGING_HEADER ];
-		}
-		return '';
-	}
-
-	/**
-	 * Check if we're running on preview server
-	 * @return bool
-	 */
-	public static function isPreviewServer() {
-		return self::getStagingServerName() === self::VARNISH_STAGING_PREVIEW;
-	}
-
-	/**
-	 * Check if we're running on verify server
-	 * @return bool
-	 */
-	public static function isVerifyServer() {
-		return self::getStagingServerName() === self::VARNISH_STAGING_VERIFY;
-	}
-
-	/**
-	 * Check if we're running in preview or verify env
-	 * @return bool
-	 */
-	public static function isStagingServer() {
-		return self::isPreviewServer() || self::isVerifyServer();
-	}
 
 	public static function setVar($key, $value) {
 		Wikia::$vars[$key] = $value;
@@ -1878,18 +1836,7 @@ class Wikia {
 					break;
 			}
 		}
-	}
 
-	// Hook to Construct a tag for newrelic
-	// TEMPORARLY DISABLED
-	// @deprecated
-	static public function onPerformActionNewrelicNameTransaction($output, $article, $title, User $user, $request, $wiki ) {
-		global $wgVersion;
-		if( function_exists( 'newrelic_name_transaction' ) ) {
-			$loggedin = $user->isLoggedIn() ? 'user' : 'anon';
-			$action = $wiki->getAction();
-			newrelic_name_transaction( "/action/$action/$loggedin/$wgVersion" );
-		}
 		return true;
 	}
 

@@ -259,3 +259,11 @@ ve.init.mw.ViewPageTarget.prototype.replacePageContent = function ( html, catego
 	mw.hook( 'wikipage.content' ).fire( $mwContentText );
 	$( '#catlinks' ).replaceWith( categoriesHtml );
 };
+
+/**
+  * Getter for isMobileDevice
+ * @returns {boolean} isMobileDevice
+  */
+ve.init.mw.ViewPageTarget.prototype.getIsMobileDevice = function () {
+	return !!this.isMobileDevice;
+};
