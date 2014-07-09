@@ -31,8 +31,8 @@ $smart-banner-height: 80px;
 
 		iframe {
 			border: none;
+			height: 100% !important;			
 			width: 100% !important;
-			height: 100% !important;
 		}
 	}
 
@@ -66,8 +66,8 @@ $smart-banner-height: 80px;
 		position: relative;
 
 		img {
+			height: auto;			
 			width: 100%;
-			height: auto;
 		}
 	}
 }
