@@ -1430,11 +1430,7 @@
 					break;
 
 				case 'videosModule':
-					if (!clickSource) {
-						clickSource = parent.hasClass('videos-module-rail') ?
-							VPS.VIDEOS_MODULE_RAIL :
-							VPS.VIDEOS_MODULE_BOTTOM;
-					}
+					clickSource = clickSource || VPS.VIDEOS_MODULE_RAIL;
 
 					carouselType = 'videosModule';
 					trackingCarouselType = 'videos-module';
