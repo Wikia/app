@@ -101,7 +101,7 @@ abstract class BaseMaintVideoScript {
 			->LIMIT( $limit )
 			->OFFSET( $offset )
 			->runLoop( $db, function ( &$result, $row ) {
-				$result[] = $row;
+				$result[] = (array) $row;
 			} );
 
 		if ( !$videos ) {
