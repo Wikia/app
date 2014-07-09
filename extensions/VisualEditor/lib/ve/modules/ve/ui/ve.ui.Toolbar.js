@@ -32,7 +32,11 @@ ve.ui.Toolbar = function VeUiToolbar( surface, options ) {
 	this.$window = null;
 	this.$surfaceView = null;
 	this.elementOffset = null;
-	this.isMobileDevice = null;
+	// isMobileDevice logic copied from ve.init.mw.Target.js:
+	this.isMobileDevice = (
+		'ontouchstart' in window ||
+			( window.DocumentTouch && document instanceof window.DocumentTouch )
+	);
 	this.windowEvents = {
 		// jQuery puts a guid on our prototype function when we use ve.bind,
 		// we don't want that because that means calling $window.off( toolbarB.windowEvents )
@@ -248,7 +252,6 @@ ve.ui.Toolbar.prototype.initialize = function () {
 	this.$surfaceView = this.surface.getView().$element;
 	this.elementOffset = this.$element.offset();
 	this.elementOffset.right = this.$window.width() - this.$element.outerWidth() - this.elementOffset.left;
-	this.isMobileDevice = this.target.getIsMobileDevice();
 
 	// Initial position. Could be invalidated by the first
 	// call to onWindowScroll, but users of this event (e.g toolbarTracking)
