@@ -150,28 +150,9 @@ class DefaultContent extends AbstractService
 	 * @return array
 	 */
 	protected function getPageContentFromParseResponse( array $response ) {
-		global $wgSimpleHtmlSearchIndexer;
 		$html = empty( $response['parse']['text']['*'] ) ? '' : $response['parse']['text']['*'];
-
-		if( $wgSimpleHtmlSearchIndexer ) {
-			$jsonFormatService = new JsonFormatService();
-			$jsonSimple = $jsonFormatService->getArticleSnippet( $html );
-			$simplifier = new JsonFormatSimplifier();
-			$text = $simplifier->simplifyToSnippet( $jsonSimple );
-
-			$words = explode( ' ', $text );
-			$wordCount = count( $words );
-			$upTo100Words = implode( ' ', array_slice( $words, 0, min( array( $wordCount, 100 ) ) ) );
-			$this->pushNolangTxt( $upTo100Words );
-			return [
-					'nolang_txt'           => $upTo100Words,
-					'words'                => $wordCount,
-					$this->field( 'html' ) => $text
-				];
-		} else {
-			if ( $this->getService()->getGlobal( 'AppStripsHtml' ) ) {
-				return $this->prepValuesFromHtml( $html );
-			}
+		if ( $this->getService()->getGlobal( 'AppStripsHtml' ) ) {
+			return $this->prepValuesFromHtml( $html );
 		}
 		return [ 'html' => html_entity_decode($html, ENT_COMPAT, 'UTF-8') ];
 	}
