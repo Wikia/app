@@ -1063,20 +1063,10 @@ class CityVisualization extends WikiaModel {
 			$dbm = wfGetDB( DB_MASTER, array(), $this->wg->ExternalSharedDB );
 
 			foreach ( $modifiedImages as $image ) {
-				// mark existing images in this slot for culling
-				$fields = [
-					'image_review_status' => ImageReviewStatuses::STATE_READY_FOR_CULLING,
-					'last_edited' => date( 'Y-m-d H:i:s' )
-				];
-
-				$conditions = [
-					'image_index' => $image['image_index']
-				];
-				$dbm->update( self::CITY_VISUALIZATION_IMAGES_TABLE_NAME, $fields, $conditions );
-
 				// move image to this slot
 				$fields = [
-					'image_index' => $image['image_index']
+					'image_index' => $image['image_index'],
+					'last_edited' => date("Y-m-d H:i:s")
 				];
 
 				$conditions = [

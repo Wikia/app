@@ -62,14 +62,48 @@ class PromoteImageReviewHelper extends ImageReviewHelperBase {
 
 				$db->update(
 					'city_visualization_images_xwiki',
-					array(
+					[
 						'reviewer_id' => $this->wg->user->getId(),
 						'image_review_status' => $state,
 						'review_end = now()',
-					),
+					],
 					array(implode(' OR ', $where)),
 					__METHOD__
 				);
+
+				// culling
+				foreach($where as $singleImageCondition) {
+					$result = $db->select(
+						'city_visualization_images_xwiki',
+						[
+							'city_id',
+							'city_lang_code',
+							'image_type',
+							'image_index',
+							'image_name',
+							'last_edited'
+						],
+						$singleImageCondition,
+						__METHOD__
+					);
+
+					$row = $result->fetchObject();
+
+					$updateStament = (new \WikiaSQL())
+						->UPDATE('city_visualization_images_xwiki')
+						->SET('reviewer_id', $this->wg->user->getId())
+						->SET('image_review_status', ImageReviewStatuses::STATE_READY_FOR_CULLING)
+						->SET('review_end', date("Y-m-d H:i:s"))
+						->WHERE('city_id')->EQUAL_TO($row->city_id)
+						->AND_('city_lang_code')->EQUAL_TO($row->city_lang_code)
+						->AND_('image_type')->EQUAL_TO($row->image_type)
+						->AND_('image_index')->EQUAL_TO($row->image_index)
+						->AND_('image_name')->NOT_EQUAL_TO($row->image_name)
+						->AND_('last_edited')->LESS_THAN_OR_EQUAL($row->last_edited);
+
+					$updateStament->run($db);
+				}
+
 
 				$db->commit();
 			}

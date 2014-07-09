@@ -39,7 +39,7 @@ class WikiGetDataHelper {
 		if ( !empty( $this->queryFilter ) ) {
 			call_user_func_array( $this->queryFilter, [ $query ] );
 		}
-		$query->ORDER_BY( 'last_edited' );
+		$query->ORDER_BY( 'last_edited DESC' );
 
 		$wikiImages = $query->run( $db, function ( $result ) {
 			$wikiImages = [ ];
@@ -77,7 +77,7 @@ class WikiGetDataHelper {
 			call_user_func_array( $this->queryFilter, [ $query ] );
 		}
 
-		$query->ORDER_BY( 'last_edited' );
+		$query->ORDER_BY( 'last_edited DESC' );
 		$promoImage = $query->run( $db, function ( $result ) {
 			while ( $row = $result->fetchObject( $result ) ) {
 				$parsed = WikiImageRowHelper::parseWikiImageRow( $row );
