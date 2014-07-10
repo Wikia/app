@@ -14,6 +14,8 @@ InfoboxBuilder.vars = {
   ToggleContentLongerThan = 1000       -- Makes fields with long Values collapsible
 }
 
+-- Define table to hold errors
+InfoboxBuilder.errors = {}
 
 --[[ Private methods ]]--
 
@@ -46,8 +48,14 @@ local execute = function( input )
   if not HF.isempty( mw.text.trim( InfoboxBuilder.vars["CustomModule"] ) ) then
     
     -- Require user's custom module
-    CM = require( mw.text.trim( InfoboxBuilder.vars["CustomModule"] ) )
-
+    local status, result = pcall( require( mw.text.trim( InfoboxBuilder.vars["CustomModule"] ) ) )
+    
+    if not status then
+      table.insert( InfoboxBuilder.errors, "Your custom module does not seem to exist. Check the given name for typos and make sure it contains a <em>Module:</em> prefix." )
+      return input
+    else
+      CM = result
+      
       -- Execute custom methods
       for index, field in ipairs( input.fields ) do
         
@@ -69,11 +77,11 @@ local execute = function( input )
           input.fields[index].Value = CM[ field.ValueMethod ]( field, InfoboxBuilder.vars )
         end
       end
+    end
 
   end
 
   return input
-
 end
 
 
@@ -183,6 +191,13 @@ function InfoboxBuilder.builder( frame )
 
   local input   = parse( frame.args )
   local Infobox = mw.InfoboxBuilderView.render( input, InfoboxBuilder.vars )
+
+  if type( InfoboxBuilder.errors ) == 'table' and next( InfoboxBuilder.errors ) ~= nil then
+    for i, e in pairs( InfoboxBuilderView.errors ) do
+      Infobox = e .. "<br/>" .. Infobox
+    end
+  end
+
   return Infobox
  
 end
