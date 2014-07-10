@@ -9,9 +9,9 @@ QUnit.module( 've.dm.BranchNode' );
 
 /* Stubs */
 
-ve.dm.BranchNodeStub = function VeDmBranchNodeStub( children, element ) {
+ve.dm.BranchNodeStub = function VeDmBranchNodeStub() {
 	// Parent constructor
-	ve.dm.BranchNode.call( this, children, element );
+	ve.dm.BranchNode.apply( this, arguments );
 };
 
 OO.inheritClass( ve.dm.BranchNodeStub, ve.dm.BranchNode );
@@ -36,8 +36,8 @@ QUnit.test( 'canHaveChildrenNotContent', 1, function ( assert ) {
 
 QUnit.test( 'setRoot', 3, function ( assert ) {
 	var node1 = new ve.dm.BranchNodeStub(),
-		node2 = new ve.dm.BranchNodeStub( [node1] ),
-		node3 = new ve.dm.BranchNodeStub( [node2] ),
+		node2 = new ve.dm.BranchNodeStub( {}, [node1] ),
+		node3 = new ve.dm.BranchNodeStub( {}, [node2] ),
 		node4 = new ve.dm.BranchNodeStub();
 	node3.setRoot( node4 );
 	assert.strictEqual( node3.getRoot(), node4 );
@@ -47,8 +47,8 @@ QUnit.test( 'setRoot', 3, function ( assert ) {
 
 QUnit.test( 'setDocument', 3, function ( assert ) {
 	var node1 = new ve.dm.BranchNodeStub(),
-		node2 = new ve.dm.BranchNodeStub( [node1] ),
-		node3 = new ve.dm.BranchNodeStub( [node2] ),
+		node2 = new ve.dm.BranchNodeStub( {}, [node1] ),
+		node3 = new ve.dm.BranchNodeStub( {}, [node2] ),
 		node4 = new ve.dm.BranchNodeStub();
 	node3.setDocument( node4 );
 	assert.strictEqual( node3.getDocument(), node4 );
@@ -59,7 +59,7 @@ QUnit.test( 'setDocument', 3, function ( assert ) {
 QUnit.test( 'push', 3, function ( assert ) {
 	var node1 = new ve.dm.BranchNodeStub(),
 		node2 = new ve.dm.BranchNodeStub(),
-		node3 = new ve.dm.BranchNodeStub( [node1] );
+		node3 = new ve.dm.BranchNodeStub( {}, [node1] );
 	node3.on( 'splice', function () {
 		// Will be called 1 time
 		assert.ok( true, 'splice was emitted' );
@@ -71,7 +71,7 @@ QUnit.test( 'push', 3, function ( assert ) {
 QUnit.test( 'pop', 3, function ( assert ) {
 	var node1 = new ve.dm.BranchNodeStub(),
 		node2 = new ve.dm.BranchNodeStub(),
-		node3 = new ve.dm.BranchNodeStub( [node1, node2] );
+		node3 = new ve.dm.BranchNodeStub( {}, [node1, node2] );
 	node3.on( 'splice', function () {
 		// Will be called 1 time
 		assert.ok( true, 'splice was emitted' );
@@ -83,7 +83,7 @@ QUnit.test( 'pop', 3, function ( assert ) {
 QUnit.test( 'unshift', 3, function ( assert ) {
 	var node1 = new ve.dm.BranchNodeStub(),
 		node2 = new ve.dm.BranchNodeStub(),
-		node3 = new ve.dm.BranchNodeStub( [node1] );
+		node3 = new ve.dm.BranchNodeStub( {}, [node1] );
 	node3.on( 'splice', function () {
 		// Will be called 1 time
 		assert.ok( true, 'splice was emitted' );
@@ -95,7 +95,7 @@ QUnit.test( 'unshift', 3, function ( assert ) {
 QUnit.test( 'shift', 3, function ( assert ) {
 	var node1 = new ve.dm.BranchNodeStub(),
 		node2 = new ve.dm.BranchNodeStub(),
-		node3 = new ve.dm.BranchNodeStub( [node1, node2] );
+		node3 = new ve.dm.BranchNodeStub( {}, [node1, node2] );
 	node3.on( 'splice', function () {
 		// Will be called 1 time
 		assert.ok( true, 'splice was emitted' );
@@ -108,7 +108,7 @@ QUnit.test( 'splice', 9, function ( assert ) {
 	var node1 = new ve.dm.BranchNodeStub(),
 		node2 = new ve.dm.BranchNodeStub(),
 		node3 = new ve.dm.BranchNodeStub(),
-		node4 = new ve.dm.BranchNodeStub( [node1, node2] );
+		node4 = new ve.dm.BranchNodeStub( {}, [node1, node2] );
 	node4.on( 'splice', function () {
 		// Will be called 3 times
 		assert.ok( true, 'splice was emitted' );

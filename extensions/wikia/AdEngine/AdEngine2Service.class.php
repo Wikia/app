@@ -221,9 +221,9 @@ class AdEngine2Service
 			$wgOasisResponsive, $wgOasisResponsiveLimited,
 			$wgEnableRHonDesktop, $wgAdPageType, $wgOut,
 			$wgRequest, $wgEnableKruxTargeting,
-			$wgAdVideoTargeting, $wgLiftiumOnLoad,
+			$wgAdVideoTargeting, $wgLiftiumOnLoad, $wgAdDriverSevenOneMediaSub4Site,
 			$wgDartCustomKeyValues, $wgWikiDirectedAtChildrenByStaff, $wgAdEngineDisableLateQueue,
-			$wgAdDriverUseWikiaBarBoxad2, $wgAdDriverWikiaBarBoxad2ImpressionCapping;
+			$wgAdDriverUseBottomLeaderboard, $wgAdDriverBottomLeaderboardImpressionCapping;
 
 		$vars = [];
 
@@ -239,6 +239,7 @@ class AdEngine2Service
 			'wgAdDriverUseEbay' => $wgAdDriverUseEbay,
 			'wgAdDriverUseDartForSlotsBelowTheFold' => $wgAdDriverUseDartForSlotsBelowTheFold === null ? 'hub' : $wgAdDriverUseDartForSlotsBelowTheFold,
 			'wgAdDriverUseSevenOneMedia' => $wgAdDriverUseSevenOneMedia,
+			'wgAdDriverSevenOneMediaSub4Site' => $wgAdDriverSevenOneMediaSub4Site,
 			'wgUserShowAds' => $wgUser->getOption('showAds'),
 			'wgOutboundScreenRedirectDelay' => $wgOutboundScreenRedirectDelay,
 			'wgEnableOutboundScreenExt' => $wgEnableOutboundScreenExt,
@@ -285,8 +286,8 @@ class AdEngine2Service
 			$variablesToExpose['wgAdDriverSevenOneMediaDisableFirePlaces'] = !empty($wgOasisResponsive) && empty($wgOasisResponsiveLimited);
 		}
 
-		if ($wgAdDriverUseWikiaBarBoxad2) {
-			$variablesToExpose['wgAdDriverWikiaBarBoxad2ImpressionCapping'] = $wgAdDriverWikiaBarBoxad2ImpressionCapping;
+		if ($wgAdDriverUseBottomLeaderboard) {
+			$variablesToExpose['wgAdDriverBottomLeaderboardImpressionCapping'] = $wgAdDriverBottomLeaderboardImpressionCapping;
 		}
 
 		foreach($variablesToExpose as $varName => $varValue) {

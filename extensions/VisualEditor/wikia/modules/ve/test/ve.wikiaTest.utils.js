@@ -158,8 +158,7 @@ ve.wikiaTest = ( function () {
 	 * @param {Function} callback A function that returns the proper node view from a document node
 	 */
 	utils.media.runHtmlDomToNodeViewTests = function ( assert, displayType, rdfaType, callback ) {
-		var $fixture = $( '#qunit-fixture' ),
-			current,
+		var current,
 			doc,
 			documentModel,
 			documentView,
@@ -181,7 +180,7 @@ ve.wikiaTest = ( function () {
 			);
 			utils.appendBase( doc );
 
-			surface = new ve.init.sa.Target( $fixture, doc ).surface;
+			surface = ve.test.utils.createSurfaceFromDocument( doc );
 			documentModel = surface.getModel().getDocument();
 			documentView = surface.getView().getDocument();
 			nodeView = callback( documentView.getDocumentNode() );
@@ -214,8 +213,7 @@ ve.wikiaTest = ( function () {
 	 * @param {Function} callback A function that returns the proper node view from a document node
 	 */
 	utils.media.runNodeViewTransactionTests = function ( assert, displayType, rdfaType, callback ) {
-		var $fixture = $( '#qunit-fixture' ),
-			current,
+		var current,
 			diff,
 			doc,
 			documentModel,
@@ -238,7 +236,7 @@ ve.wikiaTest = ( function () {
 		);
 		utils.appendBase( doc );
 
-		surface = new ve.init.sa.Target( $fixture, doc ).surface;
+		surface = ve.test.utils.createSurfaceFromDocument( doc );
 		surfaceModel = surface.getModel();
 		documentModel = surfaceModel.getDocument();
 		documentView = surface.getView().getDocument();

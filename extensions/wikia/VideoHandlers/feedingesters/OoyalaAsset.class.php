@@ -330,6 +330,7 @@ class OoyalaAsset extends WikiaModel {
 	 * Send request to Ooyala to update asset
 	 * @param string $videoId
 	 * @param array $params
+	 * @param string $reqPath
 	 * @return boolean $resp
 	 */
 	public static function updateAsset( $videoId, $params, $reqPath ) {

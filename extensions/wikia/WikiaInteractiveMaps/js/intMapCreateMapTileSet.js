@@ -21,12 +21,14 @@ define(
 					{
 						type: 'geo',
 						name: $.msg('wikia-interactive-maps-create-map-choose-type-geo'),
-						event: 'selectTileSet'
+						event: 'selectTileSet',
+						image: ''
 					},
 					{
 						type: 'custom',
 						name: $.msg('wikia-interactive-maps-create-map-choose-type-custom'),
-						event: 'browseTileSets'
+						event: 'browseTileSets',
+						image: ''
 					}
 				],
 				chooseTileSetTip: $.msg('wikia-interactive-maps-create-map-choose-tile-set-tip'),
@@ -112,9 +114,9 @@ define(
 		}
 
 		/**
-		 * @desc entry point for choose tile set steps
-		 */
-		function chooseTileSet() {
+		 * @desc Render Choose tile set modal
+		 */ 
+		function renderChooseTileSet() {
 			modal.$innerContent.html(utils.render(uiTemplate, templateData));
 
 			// cache selectors
@@ -125,6 +127,21 @@ define(
 			$searchInput = $('#intMapTileSetSearch');
 
 			showStep(stepsStack.pop());
+		}
+
+		/**
+		 * @desc entry point for choose tile set steps
+		 */
+		function chooseTileSet() {
+			$.nirvana.getJson(
+				'WikiaInteractiveMaps',
+				'getRealMapImageUrl',
+				function (data) {
+					templateData.mapType[0].image = data.url;
+					renderChooseTileSet();
+				},
+				renderChooseTileSet
+			);
 		}
 
 		/**
