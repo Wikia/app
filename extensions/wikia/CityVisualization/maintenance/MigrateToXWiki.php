@@ -63,7 +63,7 @@ class MigrateToXWiki extends Maintenance {
 		global $wgExternalSharedDB;
 
 		$sdb = wfGetDB( DB_SLAVE, [], $wgExternalSharedDB );
-		$query = "select * from city_visualization where city_id=304";
+		$query = "select * from city_visualization";
 		$result = $sdb->query( $query );
 		$wikis = [];
 		while ($row = $result->fetchObject()) {
