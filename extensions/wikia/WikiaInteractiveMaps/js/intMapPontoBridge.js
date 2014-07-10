@@ -1,4 +1,7 @@
-define('wikia.intMap.pontoBridge', ['wikia.window', 'ponto', 'wikia.intMap.utils'], function(w, ponto, utils) {
+/*global define, require*/
+define('wikia.intMap.pontoBridge', [
+	'wikia.window', 'ponto', 'wikia.intMap.utils', require.optional('ext.wikia.adEngine.adLogicPageParams')
+], function(w, ponto, utils, adParams) {
 	'use strict';
 
 	// configuration for interactive map modals triggered by Ponto
@@ -62,22 +65,38 @@ define('wikia.intMap.pontoBridge', ['wikia.window', 'ponto', 'wikia.intMap.utils
 
 			if (actionConfig.hasOwnProperty('noLoginRequired') || utils.isUserLoggedIn()) {
 				utils.loadModal(actionConfig, data, function(response) {
-					Ponto.respond(response, callbackId);
+					ponto.respond(response, callbackId);
 				});
 			} else {
 				utils.showForceLoginModal(actionConfig.origin, function() {
 					utils.loadModal(actionConfig, data, function(response) {
-						Ponto.respond(response, callbackId);
+						ponto.respond(response, callbackId);
 					});
 				});
 			}
 		};
 
 		/**
-		 * @desc tells iframe that it's opened on Wikia page
+		 * @desc returns Wikia settings to the map in iframe
 		 */
-		this.isWikia = function() {
-			return true;
+		this.getWikiaSettings = function() {
+			var settings = {
+				enableEdit: true,
+				skin: w.skin
+			};
+
+			if (w.wgAdDriverEnableAdsInMaps && adParams) {
+				settings.adOpts = {
+					jsUrl: w.wgCdnRootUrl + w.wgAssetsManagerQuery.
+						replace('%1$s', 'groups').
+						replace('%2$s', 'interactivemaps_ads_js').
+						replace('%3$s', '-').
+						replace('%4$d', w.wgStyleVersion),
+					params: adParams.getPageLevelParams()
+				};
+			}
+
+			return settings;
 		};
 	}
 
