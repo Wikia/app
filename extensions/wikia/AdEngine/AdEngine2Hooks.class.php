@@ -172,7 +172,7 @@ class AdEngine2Hooks {
 			$scriptModules[] = 'wikia.location';
 			$scriptModules[] = 'wikia.log';
 			$scriptModules[] = 'wikia.querystring';
-			$scriptModules[] = 'wikia.tracker';
+			$scriptModules[] = 'wikia.tracker.stub';
 		}
 		return true;
 	}
