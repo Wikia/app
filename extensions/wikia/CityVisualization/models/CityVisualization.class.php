@@ -1072,11 +1072,12 @@ class CityVisualization extends WikiaModel {
 		if ( !empty( $modifiedImages ) ) {
 			$dbm = wfGetDB( DB_MASTER, array(), $this->wg->ExternalSharedDB );
 
+			$now = date( "Y-m-d H:i:s" );
 			foreach ( $modifiedImages as $image ) {
 				// move image to this slot
 				$fields = [
 					'image_index' => $image['image_index'],
-					'last_edited' => date( "Y-m-d H:i:s" )
+					'last_edited' => $now
 				];
 
 				$conditions = [
