@@ -25,6 +25,7 @@ class BatchRefreshLinksForTemplate extends BaseTask {
 		$this->clearLinkCache();
 
 		$titles = $this->getTitlesWithBackLinks();
+
 		$this->enqueueRefreshLinksTasksForTitles( $titles );
 
 		return true;
@@ -69,24 +70,32 @@ class BatchRefreshLinksForTemplate extends BaseTask {
 	}
 
 	public function enqueueRefreshLinksTasksForTitles( $titles ) {
-		$this->info( sprintf( "queueing %d RefreshLinksForTitleTasks", count( $titles ) ) );
+		$batchTasks = array();
 		foreach ( $titles as $title ) {
 			if ( is_null( $title ) ) {
 				$this->error( "empty BackLink title" );
 				continue;
 			}
 
-			$this->enqueueRefreshLinksForTitleTask( $title );
+			$batchTasks[] = $this->readyRefreshLinksForTitleTask( $title );
 		}
+
+		$this->batchEnqueue( $batchTasks );
 	}
 
-	public function enqueueRefreshLinksForTitleTask( \Title $title ) {
+	public function readyRefreshLinksForTitleTask( \Title $title ) {
 		$task = new RefreshLinksForTitleTask();
 		$task->title( $title );
 		$task->call( 'refresh' );
 		$task->wikiId( $this->getWikiId() );
-		$taskId = $task->queue();
-		$this->info( sprintf( "queued taskid %s for title '%s'", $taskId, $title->getText() ) );
+		return $task;
+	}
+
+	protected function batchEnqueue( array $tasks ) {
+		if ( !empty( $tasks ) ) {
+			$this->info( sprintf( "batching %d jobs %d from %s between %d and %d", count( $tasks ), $this->getTaskId(), $this->title->getText(), $this->getStart(), $this->getEnd() ) );
+			BaseTask::batch( $tasks );
+		}
 	}
 
 	public function getStart() {

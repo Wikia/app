@@ -45,20 +45,47 @@ class BatchRefreshLinksForTemplateTest extends PHPUnit_Framework_TestCase {
 	public function testEnqueueRefreshLinksForTitles() {
 		$start = 1;
 		$end   = 2;
-		$task = $this->getMock( 'Wikia\Tasks\Tasks\BatchRefreshLinksForTemplate', ['enqueueRefreshLinksForTitleTask'], [], '', false );
+		$task = $this->getMock( 'Wikia\Tasks\Tasks\BatchRefreshLinksForTemplate', [
+			'enqueueRefreshLinksForTitleTask',
+			'readyRefreshLinksForTitleTask',
+			'batchEnqueue'
+			], [], '', false );
 		$task->setStartAndEndBoundaries( $start, $end );
 
 		$times = 3;
 		$titles = array();
-		for ( $i = 0; $i < 3; $i++ ) {
+		$fakeBatchJobs = array();
+		for ( $i = 0; $i < $times; $i++ ) {
+			$fakeBatchJobs[] = $times;
 			$titles[] = $this->getMock( '\Title' );
 		}
 
 		$task->expects( $this->exactly( $times ) )
-			->method( 'enqueueRefreshLinksForTitleTask' )
-			->with( $this->logicalOr( $titles[0], $titles[2], $titles[3] ) );
+			->method( 'readyRefreshLinksForTitleTask' )
+			->with( $this->logicalOr( $titles[0], $titles[2], $titles[3] ) )
+			->will( $this->returnValue( $times ) );
+
+		$task->expects( $this->once() )
+			->method( 'batchEnqueue' )
+			->with( $fakeBatchJobs )
+			->will( $this->returnValue( true ) );
 
 		$task->enqueueRefreshLinksTasksForTitles( $titles );
+	}
+
+	public function testReadyRefreshLinksForTitleTask() {
+		$batch = $this->getMock( 'Wikia\Tasks\Tasks\BatchRefreshLinksForTemplate', ['getWikiId'] );
+		$title = $this->getMock( '\Title', ['getText'] );
+
+		$wikiId = 5;
+
+		$batch->expects( $this->once() )
+			->method( 'getWikiId' )
+			->will( $this->returnValue( $wikiId ) );
+
+		$enqueued = $batch->readyRefreshLinksForTitleTask( $title );
+
+		$this->assertEquals( $wikiId, $enqueued->getWikiId() );
 	}
 
 	public function testRefreshTemplateLinks() {
@@ -88,6 +115,5 @@ class BatchRefreshLinksForTemplateTest extends PHPUnit_Framework_TestCase {
 		$task->setTitle( $title );
 
 		$this->assertTrue( $task->refreshTemplateLinks( $start, $end ) );
-
 	}
 }
