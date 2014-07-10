@@ -508,6 +508,10 @@ class WikiaMaps extends WikiaObject {
 			$options[ 'postData' ] = json_encode( $postData );
 		}
 
+		if ( isset( $this->config[ 'proxy' ] ) && false === $this->config[ 'proxy' ] ) {
+			$options[ 'noProxy' ] = true;
+		}
+
 		return $options;
 	}
 

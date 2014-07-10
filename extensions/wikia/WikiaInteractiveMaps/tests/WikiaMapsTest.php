@@ -52,7 +52,36 @@ class WikiaMapsTest extends WikiaBaseTest {
 					'postData' => '{"param":"value"}',
 					'returnInstance' => true,
 				],
-			]
+			],
+			[
+				'desc' => 'do not use proxy',
+				'config' => [
+					'token' => 'abc123',
+					'proxy' => false,
+				],
+				'postData' => [],
+				'expected' => [
+					'headers' => [
+						'Authorization' => 'abc123'
+					],
+					'returnInstance' => true,
+					'noProxy' => true
+				],
+			],
+			[
+				'desc' => 'proxy set to true - do not add noProxy',
+				'config' => [
+					'token' => 'abc123',
+					'proxy' => true,
+				],
+				'postData' => [],
+				'expected' => [
+					'headers' => [
+						'Authorization' => 'abc123'
+					],
+					'returnInstance' => true
+				],
+			],
 		];
 	}
 
