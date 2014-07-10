@@ -64,12 +64,16 @@ $color-subtle-text: mix($color-page, $color-alternate-text, 50%);
 		position: relative;
 		display: inline-block;
 
+		a {
+			vertical-align: top;
+		}
+
 		.info-icon {
 			background-image: url('/skins/oasis/images/info_icon.png');
 			height: 17px;
 			width: 17px;
 			position: absolute;
-			bottom: 11px;
+			bottom: 5px;
 			right: 5px;
 			display: none;
 		}
@@ -87,8 +91,7 @@ $color-subtle-text: mix($color-page, $color-alternate-text, 50%);
 	#{$infoboxes} {
 		.article-thumb-wrapper {
 			.info-icon {
-				bottom: 5px;
-				right: 7px;
+				right: 6px;
 			}
 		}
 	}
