@@ -1192,41 +1192,6 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 	}
 
 	/**
-	 * @group Slow
-	 * @slowExecutionTime 0.08448 ms
-	 * @covers WikiaSearchController::isCorporateWiki
-	 */
-	public function testIsCorporateWiki() {
-
-		$method = new ReflectionMethod( 'WikiaSearchController', 'isCorporateWiki' );
-		$method->setAccessible( true );
-
-		$this->mockGlobalVariable( 'wgEnableWikiaHomePageExt', false );
-
-		$this->assertFalse(
-				$method->invoke( $this->searchController->getMock() ),
-				'WikiaSearchController::isCorporateWiki should return false if wgEnableWikiaHomePageExt is empty.'
-		);
-
-		$this->mockGlobalVariable( 'wgEnableWikiaHomePageExt', null );
-
-		$this->assertFalse(
-		        $method->invoke( $this->searchController->getMock() ),
-		        'WikiaSearchController::isCorporateWiki should return false if wgEnableWikiaHomePageExt is empty.'
-		);
-
-		$this->mockGlobalVariable( 'wgEnableWikiaHomePageExt', true );
-
-		$this->searchController->getMock()->setApp( F::app() );
-
-		$this->assertFalse(
-		        $method->invoke( $this->searchController->getMock() ),
-		        'WikiaSearchController::isCorporateWiki should return false if wgEnableWikiaHomePageExt is not empty.'
-		);
-
-	}
-
-	/**
 	 * @see WikiaSearch
 	 *
 	public function testSkinSettings() {

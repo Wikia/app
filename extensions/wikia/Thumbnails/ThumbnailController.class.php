@@ -286,6 +286,7 @@ class ThumbnailController extends WikiaController {
 
 		$this->linkAttrs = ThumbnailHelper::getAttribs( $linkAttrs );
 		$this->imgAttribs  = ThumbnailHelper::getAttribs( $attribs );
+		$this->linkClasses = $this->getImageLinkClasses( $options );
 
 		$file = $thumb->file;
 		$title = $file->getTitle();
@@ -374,6 +375,25 @@ class ThumbnailController extends WikiaController {
 
 		return $attribs;
 	}
+
+	/**
+	 * Create an array of needed classes for image thumbs anchors.
+	 *
+	 * @param array $options The thumbnail options passed to toHTML.
+	 * @return array
+	 */
+	public function getImageLinkClasses ( array $options ) {
+
+		$classes = [];
+		if ( !empty( $options["custom-title-link"] ) ) {
+			$classes[] = "link-internal";
+		} elseif ( !empty( $options["custom-url-link"] ) ) {
+			$classes[] = "link-external";
+		}
+
+		return $classes;
+	}
+
 
 	/**
 	 * Used in getImageLinkAttribs when getting the linkAttribs

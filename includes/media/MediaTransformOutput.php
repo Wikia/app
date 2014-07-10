@@ -59,19 +59,25 @@ abstract class MediaTransformOutput {
 		$this->storagePath = $storagePath;
 	}
 
+	/**
+	 * Wikia change start
+	 * @author Garth
+	 */
 	function mediaType() {
-		return 'image';
+		return 'unknown';
 	}
 
-	function renderView( array $options = array() ) {
-		WikiaLogger::instance()->debug( 'Media method '.__METHOD__.' called',
-			array_merge( $options, [ 'url' => $this->url, 'mediaType' => $this->mediaType() ] ) );
-
-		return F::app()->renderView( 'ThumbnailController', $this->mediaType(), [
-			'thumb'   => $this,
-			'options' => $options,
-		] );
+	/**
+	 * For any class that doesn't override renderView, fallback to the old toHtml behavior
+	 * @param array $options
+	 * @return string
+	 */
+	public function renderView( $options = array() ) {
+		return $this->toHtml( $options );
 	}
+	/**
+	 * Wikia change end
+	 */
 
 	/**
 	 * Fetch HTML for this transform output
@@ -225,6 +231,30 @@ class ThumbnailImage extends MediaTransformOutput {
 	}
 
 	/**
+	 * Wikia change start
+	 * @author Garth
+	 */
+	function mediaType() {
+		return 'image';
+	}
+
+	function renderView( array $options = array() ) {
+		WikiaLogger::instance()->debug( 'Media method '.__METHOD__.' called',
+			array_merge( $options, [ 'url' => $this->url, 'mediaType' => $this->mediaType() ] ) );
+
+		// Make sure to trim the output so that there is no leading whitespace.  The output of this method
+		// may be fed back into code that will be parsed for wikitext and leading whitespace will be
+		// wrap this HTML in <pre> tags.  VID-1819
+		return trim( F::app()->renderView( 'ThumbnailController', $this->mediaType(), [
+			'thumb'   => $this,
+			'options' => $options,
+		] ) );
+	}
+	/**
+	 * Wikia change end
+	 */
+
+	/**
 	 * Return HTML <img ... /> tag for the thumbnail, will include
 	 * width and height attributes and a blank alt text (as required).
 	 *
@@ -340,11 +370,17 @@ class MediaTransformError extends MediaTransformOutput {
 		$this->url = false;
 		$this->path = false;
 	}
-
+	/**
+	 * Wikia change start
+	 * @author Garth
+	 */
 	// Keep the same error functionality as before
 	function renderView ( $options = array() ) {
 		return $this->toHtml( $options );
 	}
+	/**
+	 * Wikia change end
+	 */
 
 	function toHtml( $options = array() ) {
 		return "<div class=\"MediaTransformError\" style=\"" .
