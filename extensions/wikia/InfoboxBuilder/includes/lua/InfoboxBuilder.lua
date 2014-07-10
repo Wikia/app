@@ -28,7 +28,7 @@ local methodExists = function( name )
   local exists = false
   if type( name ) ~= nil then
     if not HF.isempty( name ) then
-      if type( CM[ name ] ) == "function" then
+      if type( CM[name] ) == "function" then
         exists = true
       end 
     end
@@ -48,11 +48,10 @@ local execute = function( input )
   if not HF.isempty( mw.text.trim( InfoboxBuilder.vars["CustomModule"] ) ) then
     
     -- Require user's custom module
-    local status, result = pcall( require( mw.text.trim( InfoboxBuilder.vars["CustomModule"] ) ) )
+    local status, result = pcall( require, mw.text.trim( InfoboxBuilder.vars["CustomModule"] ) )
     
     if not status then
       table.insert( InfoboxBuilder.errors, "Your custom module does not seem to exist. Check the given name for typos and make sure it contains a <em>Module:</em> prefix." )
-      return input
     else
       CM = result
       
@@ -62,19 +61,19 @@ local execute = function( input )
         -- Checks for a table type which is handled differently
         if type( field.Label ) == "table" then
           if methodExists( field.LabelMethod ) then
-            input.fields[index].Label = CM[ field.LabelMethod ]( field, InfoboxBuilder.vars )
+            input.fields[index].Label = CM[field.LabelMethod]( field, InfoboxBuilder.vars )
           end
         elseif not HF.isempty( mw.text.trim( field.Label ) ) and methodExists( field.LabelMethod ) then
-          input.fields[index].Label = CM[ field.LabelMethod ]( field, InfoboxBuilder.vars )
+          input.fields[index].Label = CM[field.LabelMethod]( field, InfoboxBuilder.vars )
         end
         
         -- Checks for a table type which is handled differently
         if type( field.Value ) == "table" then
           if methodExists( field.ValueMethod ) then
-            input.fields[index].Value = CM[ field.ValueMethod ]( field, InfoboxBuilder.vars )
+            input.fields[index].Value = CM[field.ValueMethod]( field, InfoboxBuilder.vars )
           end
         elseif not HF.isempty( mw.text.trim( field.Value ) ) and methodExists( field.ValueMethod ) then
-          input.fields[index].Value = CM[ field.ValueMethod ]( field, InfoboxBuilder.vars )
+          input.fields[index].Value = CM[field.ValueMethod]( field, InfoboxBuilder.vars )
         end
       end
     end
@@ -193,7 +192,7 @@ function InfoboxBuilder.builder( frame )
   local Infobox = mw.InfoboxBuilderView.render( input, InfoboxBuilder.vars )
 
   if type( InfoboxBuilder.errors ) == 'table' and next( InfoboxBuilder.errors ) ~= nil then
-    for i, e in pairs( InfoboxBuilderView.errors ) do
+    for i, e in pairs( InfoboxBuilder.errors ) do
       Infobox = e .. "<br/>" .. Infobox
     end
   end
