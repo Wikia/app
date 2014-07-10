@@ -66,6 +66,19 @@ class WikiaMaps extends WikiaObject {
 	}
 
 	/**
+	 * Wrapper for Http::get() with authorization token attached
+	 *
+	 * @param String $url
+	 *
+	 * @return Array
+	 */
+	public function sendGetRequest( $url ) {
+		return $this->processServiceResponse(
+			Http::get( $url, 'default', $this->getHttpRequestOptions() )
+		);
+	}
+
+	/**
 	 * Wrapper for Http::post() with authorization token attached
 	 *
 	 * @param String $url
@@ -116,9 +129,7 @@ class WikiaMaps extends WikiaObject {
 	public function getMapsFromApi( Array $params ) {
 		$mapsData = new stdClass();
 		$url = $this->buildUrl( [ self::ENTRY_POINT_MAP ], $params );
-		$response = $this->processServiceResponse(
-			Http::get( $url, 'default', $this->getHttpRequestOptions() )
-		);
+		$response = $this->sendGetRequest( $url );
 
 		if( $response[ 'success' ] ) {
 			$mapsData = $response[ 'content' ];
@@ -155,15 +166,11 @@ class WikiaMaps extends WikiaObject {
 	 */
 	public function getMapByIdFromApi( $mapId,  $params = []) {
 		$url = $this->buildUrl( [ self::ENTRY_POINT_MAP, $mapId ], $params );
-		$response = $this->processServiceResponse(
-			Http::get( $url, 'default', $this->getHttpRequestOptions() )
-		);
+		$response = $this->sendGetRequest( $url );
 
 		$map = $response[ 'content' ];
 		if( !empty( $map->tile_set_url ) ) {
-			$response = $this->processServiceResponse(
-				Http::get( $map->tile_set_url, 'default', $this->getHttpRequestOptions() )
-			);
+			$response = $this->sendGetRequest( $map->tile_set_url );
 
 			$tilesData = $response[ 'content' ];
 
@@ -238,9 +245,7 @@ class WikiaMaps extends WikiaObject {
 		$url = $this->buildUrl( [ self::ENTRY_POINT_TILE_SET ], $params );
 
 		//TODO: consider caching the response
-		$response = $this->processServiceResponse(
-			Http::get( $url, 'default', $this->getHttpRequestOptions() )
-		);
+		$response = $this->sendGetRequest( $url );
 
 		return $response;
 	}
@@ -299,9 +304,7 @@ class WikiaMaps extends WikiaObject {
 		$url = $this->buildUrl( [ self::ENTRY_POINT_POI_CATEGORY ], $params );
 
 		//TODO: consider caching the response
-		$response = $this->processServiceResponse(
-			Http::get( $url, 'default', $this->getHttpRequestOptions() )
-		);
+		$response = $this->sendGetRequest( $url );
 
 		return $response;
 	}
@@ -449,16 +452,16 @@ class WikiaMaps extends WikiaObject {
 
 		$success = $this->isSuccess( $status, $content );
 		if( !$success && is_null( $content ) ) {
-			$results['success'] = false;
+			$results[ 'success' ] = false;
 			$content = new stdClass();
 			$content->message = wfMessage( 'wikia-interactive-maps-service-error' )->parse();
 		} else if( !$success && !is_null( $content ) ) {
-			$results['success'] = false;
+			$results[ 'success' ] = false;
 		} else {
-			$results['success'] = true;
+			$results[ 'success' ] = true;
 		}
 
-		$results['content'] = $content;
+		$results[ 'content' ] = $content;
 		return $results;
 	}
 
@@ -527,5 +530,30 @@ class WikiaMaps extends WikiaObject {
 
 		return $baseURL . self::MAP_THUMB_PREFIX . $fileName . '/' . $crop . '-' . $fileName;
 	}
-}
 
+	/**
+	 * Returns an URL for an image from article with given title
+	 *
+	 * @param String $titleText
+	 * @param Integer $width
+	 * @param Integer $height
+	 *
+	 * @return string
+	 */
+	public function getArticleImage( $titleText, $width, $height ) {
+		$title = Title::newFromText( $titleText );
+
+		if( !is_null( $title ) ) {
+			$articleId = $title->getArticleId();
+			$is = new ImageServing( [ $articleId ], $width, $height );
+			$images = $is->getImages( 1 );
+
+			if( !empty( $images[ $articleId ] ) ) {
+				$image = array_pop( $images[ $articleId ] );
+				return $image[ 'url' ];
+			}
+		}
+
+		return '';
+	}
+}

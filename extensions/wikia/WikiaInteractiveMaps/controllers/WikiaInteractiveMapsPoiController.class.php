@@ -9,6 +9,8 @@ class WikiaInteractiveMapsPoiController extends WikiaInteractiveMapsBaseControll
 	const ACTION_UPDATE = 'update';
 	const ACTION_DELETE = 'delete';
 
+	const POI_ARTICLE_IMAGE_THUMB_SIZE = 85;
+
 	private $currentAction;
 	private $logEntries = [];
 
@@ -40,34 +42,26 @@ class WikiaInteractiveMapsPoiController extends WikiaInteractiveMapsBaseControll
 		$this->setData( 'lat', (float) $this->request->getVal( 'lat' ) );
 		$this->setData( 'lon', (float) $this->request->getVal( 'lon' ) );
 		$this->setData( 'description', $this->request->getVal( 'description' ) );
-		$this->setData( 'imageUrl', $this->request->getVal( 'photo' ) );
+		$this->setData( 'imageUrl', $this->request->getVal( 'imageUrl' ), '' );
 
 		if ( $poiId > 0 ) {
 			$this->setAction( self::ACTION_UPDATE );
 			$this->validatePoiData();
 			$results = $this->updatePoi();
-			if ( true === $results[ 'success' ] ) {
-				WikiaMapsLogger::addLogEntry(
-					WikiaMapsLogger::ACTION_UPDATE_PIN,
-					$mapId,
-					$name
-				);
-
-				$results[ 'content' ]->link = $this->getArticleUrl( $this->getData( 'articleTitle' ) );
-			}
 		} else {
 			$this->setAction( self::ACTION_CREATE );
 			$this->validatePoiData();
 			$results = $this->createPoi();
-			if ( true === $results[ 'success' ] ) {
-				WikiaMapsLogger::addLogEntry(
-					WikiaMapsLogger::ACTION_CREATE_PIN,
-					$mapId,
-					$name
-				);
+		}
 
-				$results[ 'content' ]->link = $this->getArticleUrl( $this->getData( 'articleTitle' ) );
-			}
+		if ( true === $results[ 'success' ] ) {
+			$results = $this->decorateResults( $results, [ 'link', 'photo' ] );
+
+			WikiaMapsLogger::addLogEntry(
+				( $this->isUpdate() ? WikiaMapsLogger::ACTION_UPDATE_PIN : WikiaMapsLogger::ACTION_CREATE_PIN ),
+				$mapId,
+				$name
+			);
 		}
 
 		$this->setVal( 'results', $results );
@@ -226,7 +220,7 @@ class WikiaInteractiveMapsPoiController extends WikiaInteractiveMapsBaseControll
 		$updatePoiCategories = $this->getData( 'updatePoiCategories' );
 
 		if ( !$this->wg->User->isLoggedIn() ) {
-			throw new PermissionsException( 'interactive maps' );
+			throw new PermissionsException( WikiaInteractiveMapsController::PAGE_RESTRICTION );
 		}
 
 		if ( $mapId === 0 && empty( $poiCategoryNames ) ) {
@@ -433,7 +427,7 @@ class WikiaInteractiveMapsPoiController extends WikiaInteractiveMapsBaseControll
 		}
 
 		if ( !$this->wg->User->isLoggedIn() ) {
-			throw new PermissionsException( 'interactive maps' );
+			throw new PermissionsException( WikiaInteractiveMapsController::PAGE_RESTRICTION );
 		}
 	}
 
@@ -494,32 +488,34 @@ class WikiaInteractiveMapsPoiController extends WikiaInteractiveMapsBaseControll
 		$userName = $this->wg->User->getName();
 
 		if( $this->isCreate() ) {
-			$poiData['map_id'] = $this->getData( 'mapId' );
-			$poiData['created_by'] = $userName;
+			$poiData[ 'map_id' ] = $this->getData( 'mapId' );
+			$poiData[ 'created_by' ] = $userName;
 		}
 
 		if( $this->isUpdate() ) {
-			$poiData['updated_by'] = $userName;
+			$poiData[ 'updated_by' ] = $userName;
 		}
 
 		$description = $this->getData( 'description' );
 		if( !empty( $description ) ) {
-			$poiData['description'] = $description;
+			$poiData[ 'description' ] = $description;
 		}
 
 		$linkTitle = $this->getData( 'articleTitle', '' );
+		$photo = $this->getData( 'imageUrl' );
 		$link = '';
+		$poiData[ 'photo' ] = '';
 		if ( !empty( $linkTitle ) ) {
 			$link = $this->getArticleUrl( $linkTitle );
+
+			if( !empty( $photo ) ) {
+				// save photo only when article is chosen
+				$poiData[ 'photo' ] = $photo;
+			}
 		}
 
 		$poiData[ 'link_title' ] = $linkTitle;
 		$poiData[ 'link' ] = $link;
-
-		$photo = $this->getData( 'imageUrl' );
-		if( !empty( $photo ) ) {
-			$poiData['photo'] = $photo;
-		}
 
 		return $poiData;
 	}
@@ -536,7 +532,21 @@ class WikiaInteractiveMapsPoiController extends WikiaInteractiveMapsBaseControll
 		if ( empty( $query ) ) {
 			$results[ 'responseText' ] = wfMessage( 'wikia-interactive-maps-edit-poi-article-suggest-no-search-term' )->plain();
 		} else {
-			$results = $this->getSuggestions( $query );
+			$results = array_map( function( $item ) {
+					$imageUrl = $this->mapsModel->getArticleImage(
+						$item[ 0 ][ 'title' ],
+						self::POI_ARTICLE_IMAGE_THUMB_SIZE,
+						self::POI_ARTICLE_IMAGE_THUMB_SIZE
+					);
+
+					if( !empty( $imageUrl ) ) {
+						$item[ 0 ][ 'imageUrl' ] = $imageUrl;
+					}
+
+					return $item;
+				},
+				$this->getSuggestions( $query )
+			);
 		}
 
 		$this->response->setVal( 'results', $results );
@@ -564,13 +574,34 @@ class WikiaInteractiveMapsPoiController extends WikiaInteractiveMapsBaseControll
 	 *
 	 * @return string - full article URL or empty string if article doesn't exist
 	 */
-	private function getArticleUrl($title) {
+	private function getArticleUrl( $title ) {
 		$article = Title::newFromText( $title );
 		$link = '';
 
 		if ( !is_null( $article ) ) {
 			$link = $article->getFullURL();
 		}
+
 		return $link;
+	}
+
+	/**
+	 * Helper method which adds additional data to API results
+	 *
+	 * @param Array $results
+	 * @param Array $fieldsList
+	 *
+	 * @return Array results array
+	 */
+	private function decorateResults( $results, $fieldsList ) {
+		$response = $this->mapsModel->sendGetRequest( $results[ 'content' ]->url );
+
+		foreach( $fieldsList as $field ) {
+			if( !empty( $response[ 'content' ]->$field ) ) {
+				$results[ 'content' ]->$field = $response[ 'content' ]->$field;
+			}
+		}
+
+		return $results;
 	}
 }

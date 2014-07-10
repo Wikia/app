@@ -99,7 +99,8 @@ define('wikia.intMap.editPOI', ['jquery', 'wikia.intMap.utils'], function($, uti
 			modal.$errorContainer = modal.$content.children('.error');
 			modal.$form = $('#intMapEditPOIForm');
 			modal.$suggestions = $('#intMapArticleSuggestions');
-			modal.$articleTitle =  $(articleInputId);
+			modal.$articleTitle = $(articleInputId);
+			modal.$articleImageUrl = modal.$form.find('.articleImageUrl');
 
 			utils.bindEvents(modal, events);
 
@@ -261,6 +262,14 @@ define('wikia.intMap.editPOI', ['jquery', 'wikia.intMap.utils'], function($, uti
 			.val(dataSet.title)
 			.blur();
 
+		if( dataSet.imageUrl ) {
+			modal.$articleImageUrl.attr('src', dataSet.imageUrl);
+			modal.$form.find('input[name=imageUrl]').val(dataSet.imageUrl);
+		} else {
+			modal.$articleImageUrl.attr('src', '');
+			modal.$form.find('input[name=imageUrl]').val('');
+		}
+
 		hideSuggestions();
 	}
 
@@ -298,6 +307,7 @@ define('wikia.intMap.editPOI', ['jquery', 'wikia.intMap.utils'], function($, uti
 				if (data && data.success) {
 					poiData.id = data.content.id;
 					poiData.link = data.content.link;
+					poiData.photo = data.content.photo;
 
 					trigger(poiData);
 

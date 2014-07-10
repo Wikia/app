@@ -89,7 +89,6 @@ $color-code-bg: mix($color-page, #000000, 95%);
 		border: 1px dashed $color-page-border-subtle;
 	}
 
-
 	.hidden {
 		display: none !important;
 	}
@@ -228,34 +227,49 @@ $color-code-bg: mix($color-page, #000000, 95%);
 		margin-bottom: 20px;
 	}
 
-	.WikiaForm .input-group {
-		float: none;
-		padding-left: 0;
-		padding-right: 0;
-		width: 100%;
-
-		input,
-		select,
-		textarea {
-			box-sizing: border-box;
+	.WikiaForm {
+		.articleImageUrl {
+			float: left;
 		}
 
-		label {
-			font-weight: bold;
-		}
-
-		textarea {
-			height: 70px;
-			resize: none;
-		}
-
-		.tile-set-search {
-			float: right;
-			width: 252px;
-		}
-
-		.wide {
+		.input-group {
+			float: none;
+			padding-left: 0;
+			padding-right: 0;
 			width: 100%;
+
+			input,
+			select,
+			textarea {
+				box-sizing: border-box;
+			}
+
+			label {
+				font-weight: bold;
+			}
+
+			textarea {
+				height: 70px;
+				resize: none;
+			}
+
+			.tile-set-search {
+				float: right;
+				width: 252px;
+			}
+
+			.wide {
+				width: 100%;
+			}
+
+			&.next-to-thumb {
+				clear: none;
+				display: inline;
+				float: left;
+				width: 84%;
+				margin-left: 3%;
+			}
 		}
 	}
+
 }
