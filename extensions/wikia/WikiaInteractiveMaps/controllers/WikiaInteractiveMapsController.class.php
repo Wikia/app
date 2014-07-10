@@ -109,7 +109,7 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 			]);
 
 			if ( $mobileSkin ) {
-				$this->mapOnMobile();
+				$this->setMapOnMobile();
 			} else {
 				$this->setVal( 'title', $map->title );
 				$this->setVal( 'menu', $this->getMenuMarkup() );
@@ -134,7 +134,7 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 	/**
 	 * Makes all required adjustments for rendering single map page on mobile
 	 */
-	private function mapOnMobile() {
+	private function setMapOnMobile() {
 		global $wgHooks;
 
 		// adds class to body
