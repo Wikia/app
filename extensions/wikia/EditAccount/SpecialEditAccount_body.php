@@ -19,7 +19,6 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 }
 
 use \Wikia\Tasks\Tasks\RemoveUserRightsTask;
-use \Wikia\Tasks\AsyncTaskList;
 
 class EditAccount extends SpecialPage {
 	var $mUser = null;

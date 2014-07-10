@@ -104,9 +104,9 @@ class RemoveUserRightsTask extends BaseTask {
 
 		// Batch insert to database
 		( new \WikiaSQL() )
-			->INSERT( 'user_former_groups',
-				$rowsToInsert
-			);
+			->INSERT( 'user_former_groups', [ 'ufg_user', 'ufg_group' ] )
+			->VALUES( $rowsToInsert )
+			->run( $db );
 	}
 
 	/**
