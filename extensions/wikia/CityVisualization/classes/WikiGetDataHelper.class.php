@@ -21,6 +21,7 @@ class WikiGetDataHelper {
 			ImageReviewStatuses::STATE_APPROVED_AND_TRANSFERRING,
 			ImageReviewStatuses::STATE_AUTO_APPROVED,
 			ImageReviewStatuses::STATE_IN_REVIEW,
+			ImageReviewStatuses::STATE_REJECTED,
 			ImageReviewStatuses::STATE_UNREVIEWED
 		);
 		return $sql;
