@@ -373,10 +373,12 @@ class VideoFileUploader {
 		$currentProvider = strtolower( str_replace( 'ApiWrapper', '', get_class( $this->oApiWrapper ) ) );
 		if ( $actualProvider != $currentProvider ) {
 			$class = ucfirst( $actualProvider ) . "ApiWrapper";
-			$this->oApiWrapper = new $class (
-				$this->sVideoId,
-				$this->aOverrideMetadata
-			);
+			if ( class_exists( $class ) ) {
+				$this->oApiWrapper = new $class (
+					$this->sVideoId,
+					$this->aOverrideMetadata
+				);
+			}
 		}
 	}
 
