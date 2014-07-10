@@ -61,6 +61,7 @@ $color-subtle-text: mix($color-page, $color-alternate-text, 50%);
 
 	.article-thumb-wrapper {
 		position: relative;
+		display: inline-block;
 
 		.info-icon {
 			background-image: url('/skins/oasis/images/info_icon.png');
@@ -82,8 +83,18 @@ $color-subtle-text: mix($color-page, $color-alternate-text, 50%);
 		}
 	}
 
-	// For images inside of infoboxes
-	td .article-thumb-wrapper {
+	table:not(.infobox) .article-thumb-wrapper {
+		&:hover {
+			.info-icon {
+				display: none;
+			}
+			.duration {
+				display: block;
+			}
+		}
+	}
+
+	table.infobox .article-thumb-wrapper {
 		.info-icon {
 			bottom: 5px;
 			right: 7px;

@@ -160,7 +160,7 @@ class ThumbnailController extends WikiaController {
 		// This can be removed once we fully rollout the article thumbnails with the
 		// details icon. This just allows us to do it in stages. (Don't forget to update
 		// the mustached checks as well). See VID-1788
-		$this->showInfoIcon = $this->canShowInfoIcon();
+		$this->showInfoIcon = $this->canShowInfoIcon( $thumb );
 
 		wfProfileOut( __METHOD__ );
 	}
@@ -297,7 +297,7 @@ class ThumbnailController extends WikiaController {
 		// This can be removed once we fully rollout the article thumbnails with the
 		// details icon. This just allows us to do it in stages. (Don't forget to update
 		// the mustached checks as well). See VID-1788
-		$this->showInfoIcon = $this->canShowInfoIcon();
+		$this->showInfoIcon = $this->canShowInfoIcon( $thumb );
 
 		// Check fluid
 		if ( empty( $options[ 'fluid' ] ) ) {
@@ -450,8 +450,10 @@ class ThumbnailController extends WikiaController {
 		wfProfileOut( __METHOD__ );
 	}
 
-	public function canShowInfoIcon() {
-		return !empty( $this->wg->ShowArticleThumbDetailsIcon );
+	public function canShowInfoIcon( $thumb ) {
+		return !empty( $this->wg->ShowArticleThumbDetailsIcon )
+			&& ThumbnailHelper::getThumbnailSize( $thumb->width ) > ThumbnailHelper::MIN_INFO_ICON_SIZE;
+
 	}
 
 }

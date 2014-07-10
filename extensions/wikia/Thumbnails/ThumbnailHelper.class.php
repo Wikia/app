@@ -6,6 +6,8 @@
  */
 class ThumbnailHelper extends WikiaModel {
 
+	const MIN_INFO_ICON_SIZE = 100;
+
 	/**
 	 * Get attributes for mustache template
 	 * Don't use this for values that need to be escaped.
