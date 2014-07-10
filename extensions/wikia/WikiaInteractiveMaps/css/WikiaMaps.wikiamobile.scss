@@ -1,6 +1,7 @@
 @import "WikiaMapsShared";
 @import "includes/wikia/services/css/pagination.scss";
 @import "skins/oasis/css/mixins/box-sizing-border-box";
+@import "extensions/wikia/WikiaMobile/css/variables.scss";
 
 $nav-height: 40px;
 $smart-banner-height: 80px;
@@ -36,7 +37,7 @@ $smart-banner-height: 80px;
 	// tried to set #wkPage using calc() but Android < 4.4 doesn't support it
 	#wkTopNav,
 	.smartbanner {
-		z-index: 1000001;
+		z-index: $highest-z-index + 1;
 	}
 
 	#wkPage {
