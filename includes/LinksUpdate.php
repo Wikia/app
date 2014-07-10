@@ -293,12 +293,12 @@ class LinksUpdate {
 					'start' => $start,
 					'end' => $end,
 				);
-				$jobs[] = new RefreshLinksJob2( $this->mTitle, $params );
+				$legacyJobs[] = new RefreshLinksJob2( $this->mTitle, $params );
 			}
 		}
 
 		if ( !empty( $legacyJobs ) ) {
-			Job::batchInsert( $jobs );
+			Job::batchInsert( $legacyJobs );
 		}
 
 	}
