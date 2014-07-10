@@ -322,7 +322,7 @@ define(
 
 			if (trimmedKeyword.length >= constants.minCharLength) {
 				inputLongEnoughCb(trimmedKeyword);
-			} else if( typeof inputTooShortCb === 'function' ) {
+			} else if (typeof inputTooShortCb === 'function') {
 				inputTooShortCb();
 			}
 		}

@@ -18,9 +18,6 @@ class WikiaMapsTest extends WikiaBaseTest {
 				'config' => [],
 				'postData' => [],
 				'expected' => [
-					'headers' => [
-						'Authorization' => ''
-					],
 					'returnInstance' => true,
 				],
 			],

@@ -515,11 +515,12 @@ class WikiaMaps extends WikiaObject {
 	 */
 	public function getHttpRequestOptions( Array $postData = [] ) {
 		$options = [
-			'headers' => [
-				'Authorization' => ( isset( $this->config[ 'token' ] ) ? $this->config[ 'token' ] : '' )
-			],
 			'returnInstance' => true,
 		];
+
+		if( !empty( $this->config[ 'token' ] ) ) {
+			$options[ 'headers' ][ 'Authorization' ] = $this->config[ 'token' ];
+		}
 
 		if ( !empty( $postData ) ) {
 			$options[ 'postData' ] = json_encode( $postData );
