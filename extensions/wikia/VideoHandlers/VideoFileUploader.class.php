@@ -368,7 +368,7 @@ class VideoFileUploader {
 	protected function checkApiWrapper() {
 		$actualProvider = $this->oApiWrapper->getProvider();
 		if ( strstr( $actualProvider, '/' ) ) {
-			$actualProvider = explode( '/', $actualProvider )[1];
+			$actualProvider = strtolower( explode( '/', $actualProvider )[1] );
 		}
 		$currentProvider = strtolower( str_replace( 'ApiWrapper', '', get_class( $this->oApiWrapper ) ) );
 		if ( $actualProvider != $currentProvider ) {
