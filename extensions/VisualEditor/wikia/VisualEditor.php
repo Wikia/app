@@ -73,6 +73,7 @@ $wgResourceModules += array(
 			've/dm/ve.dm.WikiaInlineVideoNode.js',
 			've/dm/ve.dm.WikiaCart.js',
 			've/dm/ve.dm.WikiaCartItem.js',
+			've/dm/ve.dm.WikiaMapNode.js',
 
 			// ce
 			've/ce/ve.ce.WikiaMediaCaptionNode.js',
@@ -83,6 +84,7 @@ $wgResourceModules += array(
 			've/ce/ve.ce.WikiaVideoNode.js',
 			've/ce/ve.ce.WikiaBlockVideoNode.js',
 			've/ce/ve.ce.WikiaInlineVideoNode.js',
+			've/ce/ve.ce.WikiaMapNode.js',
 
 			// ui
 			've/ui/ve.ui.WikiaCommandRegistry.js',
