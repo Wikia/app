@@ -499,7 +499,7 @@ class WikiaMaps extends WikiaObject {
 	public function getHttpRequestOptions( Array $postData = [] ) {
 		$options = [
 			'headers' => [
-				'Authorization' => $this->config[ 'token' ]
+				'Authorization' => ( isset( $this->config[ 'token' ] ) ? $this->config[ 'token' ] : '' )
 			],
 			'returnInstance' => true,
 		];

@@ -14,7 +14,7 @@ class WikiaMapsTest extends WikiaBaseTest {
 	public function getHttpRequestOptionsDataProvider() {
 		return [
 			[
-				'desc' => 'No config provided (PHP Notice)',
+				'desc' => 'No config provided',
 				'config' => [],
 				'postData' => [],
 				'expected' => [
