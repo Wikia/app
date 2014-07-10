@@ -305,8 +305,8 @@ class CityVisualization extends WikiaModel {
 		$result = [];
 
 		foreach ( $wikiDataMap as $wikiId => $wikiData ) {
-			$imgName = $approvedImages[$wikiId];
-			if ( !empty($imgName) ) {
+			if ( array_key_exists($wikiId, $approvedImages ) ) {
+				$imgName = $approvedImages[$wikiId];
 				$wikiData['main_image'] = $imgName;
 			}
 			$result[$wikiId] = $wikiData;
