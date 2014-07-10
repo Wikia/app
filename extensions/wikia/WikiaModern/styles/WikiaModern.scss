@@ -1,2 +1,11 @@
-@import "normalize";
-@import "layout";
+// reset css
+@import "libs/normalize";
+
+// import foundation elements
+@import "libs/foundation";
+
+// import variables
+// @import "variables";
+
+// import breakpoints
+// @import "breakpoints";
