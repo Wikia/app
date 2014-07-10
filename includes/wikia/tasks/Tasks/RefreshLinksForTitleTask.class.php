@@ -28,11 +28,6 @@ class RefreshLinksForTitleTask extends BaseTask {
 		return \Revision::newFromTitle( $this->title );
 	}
 
-	public function setTitle( \Title $title ) {
-		$this->title = $title;
-		return $this;
-	}
-
 	public function parseRevisionAndUpdateLinks( \Revision $revision ) {
 		$this->info( sprintf( "parsing revision and updating links for revision %d", $revision->getId() ) );
 		$parserOutput = $this->parseRevisionText( $revision );
