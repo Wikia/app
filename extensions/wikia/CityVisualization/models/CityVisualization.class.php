@@ -1040,7 +1040,15 @@ class CityVisualization extends WikiaModel {
 	 */
 	private function markImagesForCulling( $cityId, $langCode, $cutoffIndex ) {
 		$dbm = wfGetDB( DB_MASTER, array(), $this->wg->ExternalSharedDB );
-		$cullingUpdate = ( new \WikiaSQL() )->UPDATE( self::CITY_VISUALIZATION_IMAGES_TABLE_NAME )->SET( 'image_review_status', ImageReviewStatuses::STATE_READY_FOR_CULLING )->WHERE( 'city_id' )->EQUAL_TO( $cityId )->AND_( 'city_lang_code' )->EQUAL_TO( $langCode )->AND_( 'image_index' )->GREATER_THAN_OR_EQUAL( $cutoffIndex );
+		$cullingUpdate = ( new \WikiaSQL() )
+			->UPDATE( self::CITY_VISUALIZATION_IMAGES_TABLE_NAME )
+			->SET( 'image_review_status', ImageReviewStatuses::STATE_READY_FOR_CULLING )
+			->WHERE( 'city_id' )
+			->EQUAL_TO( $cityId )
+			->AND_( 'city_lang_code' )
+			->EQUAL_TO( $langCode )
+			->AND_( 'image_index' )
+			->GREATER_THAN_OR_EQUAL( $cutoffIndex );
 
 		$cullingUpdate->run( $dbm );
 	}
