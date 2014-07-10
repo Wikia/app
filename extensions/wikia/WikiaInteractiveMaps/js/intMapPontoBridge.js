@@ -1,4 +1,4 @@
-define('wikia.intMap.pontoBridge', ['wikia.window', 'ponto', 'wikia.intMap.utils'], function(w, ponto, utils) {
+define('wikia.intMap.pontoBridge', ['wikia.window', 'ponto'], function(w, ponto) {
 	'use strict';
 
 	// configuration for interactive map modals triggered by Ponto
@@ -60,17 +60,19 @@ define('wikia.intMap.pontoBridge', ['wikia.window', 'ponto', 'wikia.intMap.utils
 			var actionConfig = actions[params.action],
 				data = params.data;
 
-			if (actionConfig.hasOwnProperty('noLoginRequired') || utils.isUserLoggedIn()) {
-				utils.loadModal(actionConfig, data, function(response) {
-					Ponto.respond(response, callbackId);
-				});
-			} else {
-				utils.showForceLoginModal(actionConfig.origin, function() {
+			require(['wikia.intMap.utils'], function(utils) {
+				if (actionConfig.hasOwnProperty('noLoginRequired') || utils.isUserLoggedIn()) {
 					utils.loadModal(actionConfig, data, function(response) {
 						Ponto.respond(response, callbackId);
 					});
-				});
-			}
+				} else {
+					utils.showForceLoginModal(actionConfig.origin, function() {
+						utils.loadModal(actionConfig, data, function(response) {
+							Ponto.respond(response, callbackId);
+						});
+					});
+				}
+			});
 		};
 
 		/**
@@ -78,7 +80,7 @@ define('wikia.intMap.pontoBridge', ['wikia.window', 'ponto', 'wikia.intMap.utils
 		 */
 		this.getWikiaSettings = function() {
 			return {
-				enableEdit: true,
+				enableEdit: w.skin !== 'wikiamobile',
 				skin: w.skin
 			};
 		};
