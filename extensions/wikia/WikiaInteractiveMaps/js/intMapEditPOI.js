@@ -205,11 +205,15 @@ define('wikia.intMap.editPOI', ['jquery', 'wikia.intMap.utils'], function($, uti
 	 * @param {Event} event
 	 */
 	function suggestArticles(event) {
-		utils.onWriteInInput(event.target, function (inputValue) {
-			getSuggestions(inputValue, function (suggestions) {
-				showSuggestions(suggestions);
-			});
-		});
+		utils.onWriteInInput(
+			event.target,
+			function (inputValue) {
+				getSuggestions(inputValue, function (suggestions) {
+					showSuggestions(suggestions);
+				});
+			},
+			removeImagePreview
+		);
 	}
 
 	/**
@@ -266,11 +270,18 @@ define('wikia.intMap.editPOI', ['jquery', 'wikia.intMap.utils'], function($, uti
 			modal.$articleImageUrl.attr('src', dataSet.imageUrl);
 			modal.$form.find('input[name=imageUrl]').val(dataSet.imageUrl);
 		} else {
-			modal.$articleImageUrl.attr('src', '');
-			modal.$form.find('input[name=imageUrl]').val('');
+			removeImagePreview();
 		}
 
 		hideSuggestions();
+	}
+
+	/**
+	 * Clears hidden input field value and removes src from preview image
+	 */
+	function removeImagePreview() {
+		modal.$articleImageUrl.attr('src', '');
+		modal.$form.find('input[name=imageUrl]').val('');
 	}
 
 	/**
