@@ -48,11 +48,6 @@ class BatchRefreshLinksForTemplate extends BaseTask {
 	 * @return bool true on success, false on failure
 	 */
 	public function isValidTask() {
-		if ( is_null( $this->title ) ) {
-			$this->error( "invalid task; undefined title" );
-			return false;
-		}
-
 		if ( !isset( $this->start ) || !isset( $this->end ) ) {
 			$this->error( "invalid task; start or end is undefined" );
 			return false;

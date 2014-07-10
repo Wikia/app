@@ -4,11 +4,6 @@ use Wikia\Tasks\Tasks\RefreshLinksForTitleTask;
 
 class RefreshLinksForTitleTaskTest extends PHPUnit_Framework_TestCase {
 
-	public function testRefreshNoTitle() {
-		$task = new RefreshLinksForTitleTask();
-		$this->assertFalse( $task->refresh() );
-	}
-
 	public function testRefreshGetRevisionFromTitle() {
 		$task = $this->getMock( 'Wikia\Tasks\Tasks\RefreshLinksForTitleTask', ['getRevisionFromTitle'], [], '', false );
 		$title = $this->getMock( '\Title' );

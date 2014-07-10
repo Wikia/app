@@ -9,10 +9,6 @@ class RefreshLinksForTitleTask extends BaseTask {
 
 	public function refresh() {
 		$this->info( "refreshing links" );
-		if ( is_null( $this->title ) ) {
-			$this->error( "invalid RefreshLinksJob; no title" );
-			return false;
-		}
 
 		$revision = $this->getRevisionFromTitle();
 		if ( !$revision ) {

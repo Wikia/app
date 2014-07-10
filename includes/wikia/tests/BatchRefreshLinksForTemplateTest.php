@@ -5,7 +5,6 @@ use Wikia\Tasks\Tasks\BatchRefreshLinksForTemplate;
 class BatchRefreshLinksForTemplateTest extends PHPUnit_Framework_TestCase {
 
 	public function testIsValidTask() {
-		$title = $this->getMock( '\Title' );
 		$start = 1;
 		$end   = 2;
 
@@ -15,11 +14,6 @@ class BatchRefreshLinksForTemplateTest extends PHPUnit_Framework_TestCase {
 
 		$task = new BatchRefreshLinksForTemplate();
 		$task->setStartAndEndBoundaries( $start, $start );
-		$this->assertFalse( $task->isValidTask() );
-
-		$task = new BatchRefreshLinksForTemplate();
-		$task->setStartAndEndBoundaries( $start, $start );
-		$task->setTitle( $title );
 		$this->assertTrue( $task->isValidTask() );
 	}
 
