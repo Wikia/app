@@ -1,5 +1,5 @@
 /*global define*/
-define('ext.wikia.adEngine.slot.wikiaBarBoxad2', [
+define('ext.wikia.adEngine.slot.bottomLeaderboard', [
 	'jquery',
 	'wikia.log',
 	'wikia.window',
@@ -10,9 +10,9 @@ define('ext.wikia.adEngine.slot.wikiaBarBoxad2', [
 ], function ($, log, window, document, adHelper, eventDispatcher, cache) {
 	'use strict';
 
-	var logGroup = 'ext.wikia.adEngine.slot.wikiaBarBoxad2',
+	var logGroup = 'ext.wikia.adEngine.slot.bottomLeaderboard',
 
-		slotName = 'WIKIA_BAR_BOXAD_2',
+		slotName = 'BOTTOM_LEADERBOARD',
 		visibleOffsetTop = 500,
 		visibleOffsetBottom = 1200,
 		loadOffsetBottom = 1400,
@@ -20,9 +20,9 @@ define('ext.wikia.adEngine.slot.wikiaBarBoxad2', [
 		minPageHeight = 1600,
 
 		now = window.wgNow || new Date(),
-		impressionCacheKey = 'wikiaBarBoxad2_impressions',
+		impressionCacheKey = 'bottomLeaderboard_impressions',
 		forgetImpressionsAfterTime = 3600, // an hour
-		impressionCapping = window.wgAdDriverWikiaBarBoxad2ImpressionCapping || [],
+		impressionCapping = window.wgAdDriverBottomLeaderboardImpressionCapping || [],
 
 		$slot,
 		pageHeight = window.document.documentElement.scrollHeight,
@@ -68,7 +68,7 @@ define('ext.wikia.adEngine.slot.wikiaBarBoxad2', [
 			} else {
 				log(['Impression capped. Not requesting the ad', slotName], 'debug', logGroup);
 
-				$(window).off('scroll.wikiaBarBoxad2');
+				$(window).off('scroll.bottomLeaderboard');
 				disabled = true;
 			}
 		}
@@ -126,7 +126,7 @@ define('ext.wikia.adEngine.slot.wikiaBarBoxad2', [
 
 			onScroll();
 
-			$(window).on('scroll.wikiaBarBoxad2', adHelper.throttle(onScroll, 250));
+			$(window).on('scroll.bottomLeaderboard', adHelper.throttle(onScroll, 250));
 		}
 	}
 

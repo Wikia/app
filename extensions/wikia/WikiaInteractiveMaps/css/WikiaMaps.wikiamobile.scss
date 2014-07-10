@@ -1,0 +1,57 @@
+@import "WikiaMapsShared";
+@import "includes/wikia/services/css/pagination.scss";
+
+#wkPage {
+	padding: 0;
+}
+
+.map-list {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+
+	a {
+		display: block;
+		line-height: 0;
+		margin: 0;
+		padding: 0;
+	}
+
+	h3 {
+		@include map-thumb-title($content-color, $gradient-color-start, $map-item-mobile-max-width);
+		line-height: 20px;
+	}
+
+	li {
+		margin: 0px 0px 1px;
+		overflow: hidden;
+		position: relative;
+
+		img {
+			width: 100%;
+			height: auto;
+		}
+	}
+}
+
+.Pagination {
+	margin: 6.5% 0;
+
+	li {
+		border: 0;
+
+		a {
+			border-radius: 5px;
+			display: block-inline;
+			font-size: 1.2em;
+			line-height: 1.2em;
+			padding: 1.2em;
+			text-align: center;
+			vertical-align: middle;
+		}
+	}
+}
+
+.no-maps {
+	padding: 0 15px;
+}

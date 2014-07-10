@@ -413,13 +413,10 @@ class Wikia {
 
 		$method = $sub ? $method . "-" . $sub : $method;
 		if( $wgDevelEnvironment || $wgErrorLog || $always ) {
-			if (class_exists('Wikia\\Logger\\WikiaLogger')) {
-				$method = preg_match('/-WIKIA$/', $method) ? str_replace('-WIKIA', '', $method) : $method;
-				\Wikia\Logger\WikiaLogger::instance()->debug($message, ['method' => $method]);
-			} else {
-				error_log( $method . ":{$wgDBname}/{$wgCityId}:" . $message );
-			}
+			$method = preg_match('/-WIKIA$/', $method) ? str_replace('-WIKIA', '', $method) : $method;
+			\Wikia\Logger\WikiaLogger::instance()->debug($message, ['method' => $method]);
 		}
+
 		/**
 		 * commandline = echo
 		 */

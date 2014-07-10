@@ -103,11 +103,11 @@ $config['adengine2_late_js'] = array(
 	),
 );
 
-$config['adengine2_wikiabar_boxad_js'] = array(
+$config['adengine2_bottom_leaderboard_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
-		'//extensions/wikia/AdEngine/js/AdSlotWikiaBarBoxad2.js',
-		'//extensions/wikia/AdEngine/js/AdSlotWikiaBarBoxad2.run.js',
+		'//extensions/wikia/AdEngine/js/AdSlotBottomLeaderboard.js',
+		'//extensions/wikia/AdEngine/js/AdSlotBottomLeaderboard.run.js',
 	),
 );
 
@@ -1860,4 +1860,27 @@ $config['int_map_embed_map_code'] = [
 	]
 ];
 
+$config['int_map_special_page_scss_wikiamobile'] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => ['wikiamobile'],
+	'assets' => [
+		'//extensions/wikia/WikiaInteractiveMaps/css/WikiaMaps.wikiamobile.scss',
+	]
+];
 
+$config['int_map_parser_tag_scss_wikiamobile'] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => ['wikiamobile'],
+	'assets' => [
+		'//extensions/wikia/WikiaInteractiveMaps/css/intMapParserTag.scss',
+		'//extensions/wikia/WikiaInteractiveMaps/css/intMapParserTag.wikiamobile.scss',
+	]
+];
+
+$config['int_map_parser_tag_js_wikiamobile'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => ['wikiamobile'],
+	'assets' => [
+		'//extensions/wikia/WikiaInteractiveMaps/js/WikiaInteractiveMapsParserTag.wikiamobile.js'
+	]
+];
