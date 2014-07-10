@@ -300,6 +300,7 @@ abstract class BaseXWikiImage {
 			foreach ( $files as $file ) {
 				$status = $swift->remove( $file );
 				if ( !$status->isOk() ) {
+					\Wikia\Logger\WikiaLogger::instance()->warning("removal of thumbnail file ${file} failed");
 				} else {
 					$urls[] = wfReplaceImageServer( $baseFileUrl ) . "/$file";
 				}
