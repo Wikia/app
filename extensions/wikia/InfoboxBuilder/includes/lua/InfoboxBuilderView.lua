@@ -238,6 +238,9 @@ function InfoboxBuilderView.render( input, vars )
   -- Let's go! Create a container
 	local Infobox = mw.html.create('div')
         Infobox:addClass( InfoboxBuilderView.vars.Theme .. '-infobox-container')
+
+  local errors = Infobox:tag('div')
+        errors:addClass( 'infobox-builder-errors' )
     
     local table = Infobox:tag('table')
 	        table:attr('cellspacing', '0')
