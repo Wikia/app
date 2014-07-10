@@ -1,6 +1,6 @@
 @import "WikiaMapsShared";
 @import "includes/wikia/services/css/pagination.scss";
-@import "skins/oasis/css/mixins/calc";
+@import "skins/oasis/css/mixins/box-sizing-border-box";
 
 $nav-height: 40px;
 $smart-banner-height: 80px;
@@ -10,15 +10,11 @@ $smart-banner-height: 80px;
 }
 
 .int-map-mobile-map-page {
-	bottom: 0;
-	position: absolute;
-	top: 0;
-
 	.sb-shown & {
 		#wkPage {
-			@include height-calc('100% - #{$nav-height + $smart-banner-height}');
+			padding-top: $nav-height + $smart-banner-height;
 			// required for smooth animation with smart banner
-			-webkit-transition: height 0.01s;
+			-webkit-transition: padding-top 0.01s;
 		}
 	}
 
@@ -31,15 +27,27 @@ $smart-banner-height: 80px;
 
 		iframe {
 			border: none;
-			height: 100% !important;			
+			height: 100% !important;
 			width: 100% !important;
 		}
 	}
 
+	// required to be displayed over #wkPage which needs to occupy entire window - header and smartbanner.
+	// tried to set #wkPage using calc() but Android < 4.4 doesn't support it
+	#wkTopNav,
+	.smartbanner {
+		z-index: 1000001;
+	}
+
 	#wkPage {
-		@include height-calc('100% - #{$nav-height}');
+		@include box-sizing-border-box();
+		height: 100%;
+		padding-top: $nav-height;
+		position: absolute;
+		top: 0;
 		// required for smooth animation with smart banner
-		-webkit-transition: height 1s;
+		-webkit-transition: padding-top 1s;
+		width: 100%;
 	}
 }
 
