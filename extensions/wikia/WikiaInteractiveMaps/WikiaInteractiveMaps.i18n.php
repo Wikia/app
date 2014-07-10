@@ -123,7 +123,6 @@ $messages[ 'en' ] = [
 	'wikia-interactive-maps-update-pin-log-entry' => 'updated pin for [[$1]]',
 	'wikia-interactive-maps-delete-pin-log-entry' => 'deleted pin for [[$1]]',
 	'wikia-interactive-maps-hide-filter' => 'Hide',
-
 ];
 
 $messages[ 'qqq' ] = [
