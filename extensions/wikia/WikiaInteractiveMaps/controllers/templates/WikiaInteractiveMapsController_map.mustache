@@ -3,7 +3,7 @@
 	{{#mapFound}}{{{menu}}}{{/mapFound}}
 </header>
 {{#mapFound}}
-<iframe src="{{url}}" name="wikia-interactive-map" width="100%" height="{{#height}}{{height}}{{/height}}{{^height}}100%{{/height}}" data-mapid={{mapId}}></iframe>
+<iframe src="" name="wikia-interactive-map" width="100%" height="{{#height}}{{height}}{{/height}}{{^height}}100%{{/height}}" data-mapid="{{mapId}}" data-url="{{url}}"></iframe>
 {{/mapFound}}
 {{^mapFound}}
 	<p>{{messages.wikia-interactive-maps-map-not-found-error}}</p>
