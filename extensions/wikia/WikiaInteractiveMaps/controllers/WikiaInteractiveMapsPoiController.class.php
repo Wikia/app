@@ -443,7 +443,7 @@ class WikiaInteractiveMapsPoiController extends WikiaInteractiveMapsBaseControll
 		$lat = $this->getData( 'lat' );
 		$lon = $this->getData( 'lon' );
 
-		return ( empty( $name ) || empty( $poiCategoryId ) || empty( $mapId ) || empty( $lat ) || empty( $lon ) );
+		return ( !empty( $name ) || !empty( $poiCategoryId ) || !empty( $mapId ) || !empty( $lat ) || !empty( $lon ) );
 	}
 
 	/**
