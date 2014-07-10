@@ -103,11 +103,11 @@ $config['adengine2_late_js'] = array(
 	),
 );
 
-$config['adengine2_wikiabar_boxad_js'] = array(
+$config['adengine2_bottom_leaderboard_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
-		'//extensions/wikia/AdEngine/js/AdSlotWikiaBarBoxad2.js',
-		'//extensions/wikia/AdEngine/js/AdSlotWikiaBarBoxad2.run.js',
+		'//extensions/wikia/AdEngine/js/AdSlotBottomLeaderboard.js',
+		'//extensions/wikia/AdEngine/js/AdSlotBottomLeaderboard.run.js',
 	),
 );
 
@@ -644,6 +644,25 @@ $config['wikiamobile_ads_js'] = array(
 
 		// Run!
 		'//extensions/wikia/WikiaMobile/js/ads_run.js',
+	)
+);
+
+$config['interactivemaps_ads_js'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => 'interactivemaps',
+	'assets' => array(
+		'//resources/wikia/libraries/modil/modil.js',
+
+		// Modules
+		'//resources/wikia/modules/document.js',
+		'//resources/wikia/modules/location.js',
+		'//resources/wikia/modules/log.js',
+		'//resources/wikia/modules/querystring.js',
+		'//resources/wikia/modules/window.js',
+
+		// Advertisement libs
+		'//extensions/wikia/AdEngine/js/AdProviderDirectGptMobile.js',
+		'//extensions/wikia/AdEngine/js/WikiaGptHelper.js',
 	)
 );
 

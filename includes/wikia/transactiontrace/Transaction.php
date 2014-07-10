@@ -44,9 +44,9 @@ class Transaction {
 	public static function getInstance() {
 		static $instance;
 		if ( $instance === null ) {
-			$instance = new TransactionTrace(array(
+			$instance = new TransactionTrace( array(
 				new TransactionTraceNewrelic(),
-			));
+			) );
 		}
 		return $instance;
 	}
@@ -132,6 +132,62 @@ class Transaction {
 
 		Transaction::setAttribute( Transaction::PARAM_SIZE_CATEGORY, $sizeCategory );
 
+		return true;
+	}
+
+	/**
+	 * Given the list of respons headers detect whether the response can be cached on CDN
+	 *
+	 * We assume that the response is cacheable if s-maxage entry in Cache-Control header
+	 * is greater than 5 seconds - refer to WikiaResponse::setCacheValidity
+	 *
+	 * Examples:
+	 *
+	 * - Cache-Control: s-maxage=86400, must-revalidate, max-age=0 (an article, cacheable)
+	 * - Cache-Control: public, max-age=2592000 (AssetsManager, cacheable)
+	 * - Cache-Control: private, must-revalidate, max-age=0 (special page, not cacheable)
+	 *
+	 * @param array $headers key - value list of HTTP response headers
+	 * @return bool|null will return null for maintenance / CLI scripts
+	 */
+	public static function isCacheable( $headers ) {
+		if ( empty( $headers['Cache-Control'] ) ) {
+			return null;
+		}
+
+		$cacheControl = $headers['Cache-Control'];
+		$sMaxAge = 0;
+
+		// has "private" entry?
+		if ( strpos( $cacheControl, 'private' ) !== false ) {
+			$sMaxAge = 0;
+		}
+		// has "s-maxage" entry?
+		else if ( preg_match( '#s-maxage=(\d+)#', $cacheControl, $matches ) ) {
+			$sMaxAge = intval( $matches[1] );
+		}
+		// has "max-age" entry?
+		else if ( preg_match( '#max-age=(\d+)#', $cacheControl, $matches ) ) {
+			$sMaxAge = intval( $matches[1] );
+		}
+
+		// TODO: report $sMaxAge value?
+		return $sMaxAge > 5;
+	}
+
+	/**
+	 * Analyze the response header and set "cacheablity" flag
+	 *
+	 * @return bool true (hook handler
+	 */
+	public static function onRestInPeace() {
+		if ( function_exists( 'apache_response_headers' ) ) {
+			$isCacheable = self::isCacheable( apache_response_headers() );
+
+			if ( is_bool( $isCacheable ) ) {
+				self::setAttribute( 'cacheable', $isCacheable );
+			}
+		}
 		return true;
 	}
 }

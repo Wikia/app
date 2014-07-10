@@ -425,7 +425,6 @@
 			SHARE: 'share',
 			HUBS: 'hubs',
 			OTHER: 'other',
-			VIDEOS_MODULE_BOTTOM: 'bottomVideosModule',
 			VIDEOS_MODULE_RAIL: 'railVideosModule',
 			VIDEO_HOME_PAGE: 'videoHomePage'
 		}

@@ -98,7 +98,7 @@ class TransactionClassifier {
 	 */
 	public function update( $key, $value ) {
 		$this->attributes[$key] = $value;
-		if ( in_array($key, $this->dependencies ) ) {
+		if ( in_array( $key, $this->dependencies ) ) {
 			$this->dependencies = array();
 			$this->nameParts = array();
 			$this->build();
@@ -180,7 +180,7 @@ class TransactionClassifier {
 			return null;
 		}
 		$value = $this->attributes[$key];
-		$nameValue = $valueTransform ? $valueTransform($value) : $value;
+		$nameValue = $valueTransform ? $valueTransform( $value ) : $value;
 		$this->nameParts[] = $nameValue;
 		return $value;
 	}
@@ -196,13 +196,13 @@ class TransactionClassifier {
 	 * @return mixed
 	 */
 	protected function addByList( $key, $filter ) {
-		return $this->add( $key, function ($value) use ($filter) {
+		return $this->add( $key, function ( $value ) use ( $filter ) {
 			if ( in_array( $value, $filter ) ) {
 				return $value;
 			} else {
 				return self::OTHER;
 			}
-		});
+		} );
 	}
 
 	/**
@@ -215,13 +215,13 @@ class TransactionClassifier {
 	 * @return mixed
 	 */
 	protected function addByMap( $key, $map ) {
-		return $this->add( $key, function ($value) use ($map) {
+		return $this->add( $key, function ( $value ) use ( $map ) {
 			if ( isset( $map[$value] ) ) {
 				return $map[$value];
 			} else {
 				return self::OTHER;
 			}
-		});
+		} );
 	}
 
 }

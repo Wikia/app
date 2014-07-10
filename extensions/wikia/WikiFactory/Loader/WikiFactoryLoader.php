@@ -741,10 +741,6 @@ class WikiFactoryLoader {
 				 * merge local values with global
 				 */
 				switch( $key ) {
-					case "wgGroupPermissionsLocal":
-						$this->LocalToGlobalPermissions( $tValue );
-						break;
-
 					case "wgNamespacesWithSubpagesLocal":
 						$this->LocalToGlobalArray( $tValue, $GLOBALS["wgNamespacesWithSubpages"] );
 						break;
@@ -885,13 +881,13 @@ class WikiFactoryLoader {
 	 *
 	 * @author Krzysztof Krzyżaniak <eloy@wikia-inc.com>
 	 * @access public
+	 * @static
 	 *
 	 * @param string $local: string with permissions
 	 *
-	 * @return array with permissions
 	 * @see parsePermissionsSettings
 	 */
-	public function LocalToGlobalPermissions( $local ) {
+	static public function LocalToGlobalPermissions( $local ) {
 		global $wgGroupPermissions;
 		$permissions = self::parsePermissionsSettings( $local );
 
@@ -901,8 +897,6 @@ class WikiFactoryLoader {
 				array_merge( $wgGroupPermissions[$group], $rights ) :
 				$rights;
 		}
-
-		return $wgGroupPermissions;
 	}
 
 	/**
