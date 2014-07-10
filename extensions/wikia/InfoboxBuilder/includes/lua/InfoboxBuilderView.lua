@@ -20,7 +20,7 @@ local addRowLine = function( field )
         row:addClass( InfoboxBuilderView.vars.Theme .. '-infobox-line' )
            :addClass( InfoboxBuilderView.vars.Theme .. '-infobox-field-' .. field.Index )
   if not HF.isempty( field.CssClass ) then
-        row:addClass( field.CssClass )
+    row:addClass( field.CssClass )
   end
   
   row:tag('td')
