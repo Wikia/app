@@ -45,22 +45,49 @@ final class InfoboxBuilderHooks {
 	public static function parserFunctionHook( &$parser, $frame, $args ) {
 		wfProfileIn( __METHOD__ );
 
-		/**
-		 * Add the registered SCSS with the default theme
-		 */
-		$parser->getOutput()->addModuleStyles('ext.wikia.InfoboxBuilder');
+		try {
+			/**
+			 * Add the registered SCSS with the default theme
+			 */
+			$parser->getOutput()->addModuleStyles('ext.wikia.InfoboxBuilder');
 
-		$engine = \Scribunto::getParserEngine( $parser );
+			$engine = \Scribunto::getParserEngine( $parser );
 
-		unset( $args[0] );
-		$childFrame = $frame->newChild( $args, $parser->getTitle(), 1 );
+			unset( $args[0] );
+			$childFrame = $frame->newChild( $args, $parser->getTitle(), 1 );
 
-		$moduleText = file_get_contents( __DIR__ . '/includes/lua/InfoboxBuilder.lua' );
-		$module = new \Scribunto_LuaModule( $engine, $moduleText, 'InfoboxBuilder' );
-		$result = $module->invoke( 'builder', $childFrame );
-		$result = \UtfNormal::cleanUp( strval( $result ) );
+			$moduleText = file_get_contents( __DIR__ . '/includes/lua/InfoboxBuilder.lua' );
+			$module = new \Scribunto_LuaModule( $engine, $moduleText, 'InfoboxBuilder' );
+			$result = $module->invoke( 'builder', $childFrame );
+			$result = \UtfNormal::cleanUp( strval( $result ) );
 
-		wfProfileOut( __METHOD__ );
-		return $result;
+			wfProfileOut( __METHOD__ );
+			return $result;
+		} catch( \ScribuntoException $e ) {
+			$trace = $e->getScriptTraceHtml( array( 'msgOptions' => array( 'content' ) ) );
+			$html = \Html::element( 'p', array(), $e->getMessage() );
+			if ( $trace !== false ) {
+				$html .= \Html::element( 'p',
+					array(),
+					wfMessage( 'scribunto-common-backtrace' )->inContentLanguage()->text()
+				) . $trace;
+			}
+			$out = $parser->getOutput();
+			if ( !isset( $out->scribunto_errors ) ) {
+				$out->addOutputHook( 'ScribuntoError' );
+				$out->scribunto_errors = array();
+				$parser->addTrackingCategory( 'scribunto-common-error-category' );
+			}
+
+			$out->scribunto_errors[] = $html;
+			$id = 'mw-scribunto-error-' . ( count( $out->scribunto_errors ) - 1 );
+			$parserError = wfMessage( 'scribunto-parser-error' )->inContentLanguage()->text() .
+				$parser->insertStripItem( '<!--' . htmlspecialchars( $e->getMessage() ) . '-->' );
+			wfProfileOut( __METHOD__ );
+
+			// #iferror-compatible error element
+			return "<strong class=\"error\"><span class=\"scribunto-error\" id=\"$id\">" .
+				$parserError. "</span></strong>";
+		}
 	}
 }
