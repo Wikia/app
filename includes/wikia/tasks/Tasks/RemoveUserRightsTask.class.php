@@ -21,7 +21,7 @@ class RemoveUserRightsTask extends BaseTask {
 			->WHERE( 'city_public' )->EQUAL_TO( 1 )
 			->runLoop( $db,
 				function ( &$dataCollector, $row ) use ( $userId ) {
-					$wikiaDbName = $row[ 'city_dbname' ];
+					$wikiaDbName = $row->city_dbname;
 					$this->removeAndRememberUserGroups( $userId, $wikiaDbName );
 				}
 			);
@@ -64,7 +64,7 @@ class RemoveUserRightsTask extends BaseTask {
 				->WHERE( 'ug_user' )->EQUAL_TO( $userId )
 				->runLoop( $db,
 					function ( &$dataCollector, $row ) {
-						$dataCollector[ ] = $row[ 'ug_group' ];
+						$dataCollector[ ] = $row->ug_group;
 					}
 				);
 
