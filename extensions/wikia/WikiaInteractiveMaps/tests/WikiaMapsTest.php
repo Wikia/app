@@ -57,7 +57,7 @@ class WikiaMapsTest extends WikiaBaseTest {
 				'desc' => 'do not use proxy',
 				'config' => [
 					'token' => 'abc123',
-					'proxy' => false,
+					'httpProxy' => false,
 				],
 				'postData' => [],
 				'expected' => [
@@ -72,7 +72,7 @@ class WikiaMapsTest extends WikiaBaseTest {
 				'desc' => 'proxy set to true - do not add noProxy',
 				'config' => [
 					'token' => 'abc123',
-					'proxy' => true,
+					'httpProxy' => true,
 				],
 				'postData' => [],
 				'expected' => [
