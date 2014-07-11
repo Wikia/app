@@ -450,6 +450,13 @@ class ThumbnailController extends WikiaController {
 		wfProfileOut( __METHOD__ );
 	}
 
+	/**
+	 * Logic for whether to display the link to the file page overlayed on an image.
+	 *
+	 * @todo Make sure this treatment is only applied to article images and videos, and not elsewhere. VID-1832 should fix this.
+	 * @param $thumb
+	 * @return bool
+	 */
 	public function canShowInfoIcon( $thumb ) {
 		return !empty( $this->wg->ShowArticleThumbDetailsIcon )
 			&& $thumb->width >= ThumbnailHelper::MIN_INFO_ICON_SIZE;
