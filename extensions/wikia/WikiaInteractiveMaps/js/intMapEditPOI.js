@@ -190,6 +190,15 @@ define('wikia.intMap.editPOI', ['jquery', 'wikia.intMap.utils'], function($, uti
 	}
 
 	/**
+	 * @desc encodes HTML entities in POI data
+	 * @param {object} poiData
+	 */
+	function encodePOIData(poiData) {
+		poiData.name = utils.escapeHtml(poiData.name);
+		poiData.description = poiData.description ? utils.escapeHtml(poiData.description) : '';
+	}
+
+	/**
 	 * @desc sends request to backend with POI data
 	 * @param {object} poiData - POI data
 	 */
@@ -208,6 +217,8 @@ define('wikia.intMap.editPOI', ['jquery', 'wikia.intMap.utils'], function($, uti
 
 				if (data && data.success) {
 					poiData.id = data.content.id;
+
+					encodePOIData(poiData);
 					trigger(poiData);
 					modal.trigger('close');
 					trackPoiAction(poiData);

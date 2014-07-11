@@ -299,6 +299,27 @@ define(
 		}
 
 		/**
+		 * @desc escapes HTML entities
+		 * @param string
+		 * @returns {string}
+		 */
+		function escapeHtml(string) {
+			var htmlEscapes = {
+					'&': '&amp;',
+					'<': '&lt;',
+					'>': '&gt;',
+					'"': '&quot;',
+					'\'': '&#39;',
+					'/': '&#x2F;'
+				},
+				htmlEscaper = /[&<>"'\/]/g;
+
+			return ('' + string).replace(htmlEscaper, function (match) {
+				return htmlEscapes[match];
+			});
+		}
+
+		/**
 		 * @desc Wrapper for our Wikia.Tracker.track method - sends to GA tracking info
 		 *
 		 * @param {string} action one of Wikia.Tracker.ACTIONS
@@ -336,6 +357,7 @@ define(
 			showError: showError,
 			cleanUpError: cleanUpError,
 			createThumbURL: createThumbURL,
+			escapeHtml: escapeHtml,
 			track: track,
 			trackerActions: tracker.ACTIONS
 		};
