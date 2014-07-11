@@ -100,8 +100,7 @@ define('wikia.intMap.editPOI', ['jquery', 'wikia.intMap.utils'], function($, uti
 			modal.$form = $('#intMapEditPOIForm');
 			modal.$suggestions = $('#intMapArticleSuggestions');
 			modal.$articleTitle = $(articleInputId);
-			modal.$articleImageUrl = modal.$form.find('.article-image-url');
-			modal.$articleImagePlaceholder = modal.$form.find('#intMapArticleImagePlaceholder');
+			modal.$articleImageUrl = modal.$form.find('.articleImageUrl');
 
 			utils.bindEvents(modal, events);
 
@@ -206,15 +205,14 @@ define('wikia.intMap.editPOI', ['jquery', 'wikia.intMap.utils'], function($, uti
 	 * @param {Event} event
 	 */
 	function suggestArticles(event) {
-		removeImagePreview();
-
 		utils.onWriteInInput(
 			event.target,
 			function (inputValue) {
 				getSuggestions(inputValue, function (suggestions) {
 					showSuggestions(suggestions);
 				});
-			}
+			},
+			removeImagePreview
 		);
 	}
 
@@ -268,9 +266,9 @@ define('wikia.intMap.editPOI', ['jquery', 'wikia.intMap.utils'], function($, uti
 			.val(dataSet.title)
 			.blur();
 
-		if(dataSet.imageUrl) {
-			console.log(dataSet.imageUrl);
-			addImagePreview(dataSet.imageUrl)
+		if( dataSet.imageUrl ) {
+			modal.$articleImageUrl.attr('src', dataSet.imageUrl);
+			modal.$form.find('input[name=imageUrl]').val(dataSet.imageUrl);
 		} else {
 			removeImagePreview();
 		}
@@ -279,29 +277,10 @@ define('wikia.intMap.editPOI', ['jquery', 'wikia.intMap.utils'], function($, uti
 	}
 
 	/**
-	 * @desc adds article image preview
-	 * @param {string} imageUrl - url for the image
-	 */
-	function addImagePreview(imageUrl) {
-		modal.$articleImageUrl
-			.attr('src', imageUrl)
-			.removeClass('hidden');
-
-		modal.$articleImagePlaceholder.hide();
-
-		modal.$form.find('input[name=imageUrl]').val(imageUrl);
-	}
-
-	/**
-	 * @desc clears article image preview
+	 * Clears hidden input field value and removes src from preview image
 	 */
 	function removeImagePreview() {
-		modal.$articleImagePlaceholder.show();
-
-		modal.$articleImageUrl
-			.addClass('hidden')
-			.attr('src', '');
-
+		modal.$articleImageUrl.attr('src', '');
 		modal.$form.find('input[name=imageUrl]').val('');
 	}
 

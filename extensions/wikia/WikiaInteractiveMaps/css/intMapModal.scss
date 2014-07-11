@@ -1,13 +1,11 @@
 @import "skins/oasis/css/core/color";
 @import "skins/oasis/css/core/responsive-variables";
 @import "skins/oasis/css/mixins/flexbox";
-@import "skins/oasis/css/mixins/calc";
 
 $color-code-bg: mix($color-page, #000000, 95%);
 @if $is-dark-wiki {
 	$color-code-bg: mix($color-page, #ffffff, 95%);
 }
-$imagePreviewSize: 83px;
 
 .int-map-modal {
 	button {
@@ -37,29 +35,6 @@ $imagePreviewSize: 83px;
 	svg {
 		display: block;
 		margin: 0 auto;
-	}
-
-	.article-image-wrapper {
-		border: 1px solid $color-page-border;
-		box-sizing: border-box;
-		float: left;
-		overflow: hidden;
-		margin: 5px 0;
-		height: $imagePreviewSize;
-		width: $imagePreviewSize;
-
-		svg {
-			width: 50%;
-		}
-
-		polygon,
-		path {
-			fill: $color-alternate-text;
-		}
-
-		rect {
-			stroke: $color-alternate-text;
-		}
 	}
 
 	.article-suggestion {
@@ -288,9 +263,11 @@ $imagePreviewSize: 83px;
 			}
 
 			&.next-to-thumb {
-				@include width-calc('100% - #{$imagePreviewSize + 20px}');
 				clear: none;
-				float: right;
+				display: inline;
+				float: left;
+				width: 84%;
+				margin-left: 3%;
 			}
 		}
 	}

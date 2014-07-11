@@ -314,13 +314,16 @@ define(
 		/**
 		 * @desc handler for writing in input field
 		 * @param {Element} input - HTML <input> element
-		 * @param {function} cb - callback function fired when input text is long enough
+		 * @param {function} inputLongEnoughCb - callback function fired when input text is long enough
+		 * @param {function} inputTooShortCb - callback function fired when input text is too short
 		 */
-		function onWriteInInput(input, cb) {
+		function onWriteInInput(input, inputLongEnoughCb, inputTooShortCb) {
 			var trimmedKeyword = input.value.trim();
 
 			if (trimmedKeyword.length >= constants.minCharLength) {
-				cb(trimmedKeyword);
+				inputLongEnoughCb(trimmedKeyword);
+			} else if (typeof inputTooShortCb === 'function') {
+				inputTooShortCb();
 			}
 		}
 
