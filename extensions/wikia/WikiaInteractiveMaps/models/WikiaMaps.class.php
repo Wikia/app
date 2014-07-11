@@ -28,6 +28,7 @@ class WikiaMaps extends WikiaObject {
 	const DEFAULT_REAL_MAP_URL = 'http://img.wikia.nocookie.net/intmap_Geo_Map/default-geo.jpg';
 	const DELTA_Y_DEFAULT = 1;
 	const DELTA_Y_CENTERED = 5;
+	const THUMB_ALIGNMENT_CENTER = 'center';
 
 	/**
 	 * @var array API connection config
@@ -538,11 +539,11 @@ class WikiaMaps extends WikiaObject {
 	 *
 	 * @return String - thumbnail URL
 	 */
-	public function createCroppedThumb( $url, $width, $height, $align = 'center' ) {
+	public function createCroppedThumb( $url, $width, $height, $align = self::THUMB_ALIGNMENT_CENTER ) {
 		$breakPoint = strrpos( $url, '/' );
 		$baseURL = substr( $url, 0, $breakPoint );
 		$fileName = substr( $url , $breakPoint + 1 );
-		$deltaY = ( $align === 'center' ? self::DELTA_Y_DEFAULT : self::DELTA_Y_CENTERED );
+		$deltaY = $align === self::THUMB_ALIGNMENT_CENTER ? self::DELTA_Y_DEFAULT : self::DELTA_Y_CENTERED;
 
 		return ImagesService::getThumbUrlFromFileUrl(
 			$baseURL . self::MAP_THUMB_PREFIX . $fileName,
