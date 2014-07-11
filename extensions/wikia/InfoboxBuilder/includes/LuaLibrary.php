@@ -16,9 +16,7 @@ class LuaLibrary extends Scribunto_LuaLibraryBase {
 	/**
 	 * Register the libraries
 	 */
-	
-	public function register()
-	{
+	public function register() {
 		$this->getEngine()->registerInterface( __DIR__ . '/lua/InfoboxBuilderHF.lua', array(), array() );
 		$this->getEngine()->registerInterface( __DIR__ . '/lua/InfoboxBuilderView.lua', array(), array() );
 		$this->getEngine()->registerInterface( __DIR__ . '/lua/InfoboxBuilder.lua', array(), array() );
