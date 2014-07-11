@@ -46,6 +46,7 @@ ve.ui.WikiaMediaOptionWidget = function VeUiWikiaMediaOptionWidget( data, config
 	// Initialization
 	this.loadThumbnail();
 	this.setLabel( this.mwTitle );
+	this.$label.attr( 'title', this.mwTitle );
 	this.check.$element.addClass( 've-ui-wikiaMediaOptionWidget-check' );
 	this.$element
 		.addClass( 've-ui-mwMediaResultWidget ve-ui-texture-pending ' + this.data.type )
