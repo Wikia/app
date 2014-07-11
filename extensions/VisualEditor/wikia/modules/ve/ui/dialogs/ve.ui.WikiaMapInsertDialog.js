@@ -38,9 +38,15 @@ ve.ui.WikiaMapInsertDialog.prototype.initialize = function () {
 	ve.ui.WikiaMapInsertDialog.super.prototype.initialize.call( this );
 	this.getMaps().always( ve.bind( function ( data ) {
 		if ( data && data.items ) {
-			this.showMaps( data.items );
+			this.displayMaps( data.items );
 		}
 	}, this ) );
+
+	this.results = new OO.ui.SelectWidget( { '$': this.$ } );
+	this.$results = this.$( '<div>' );
+	this.$results.append( this.results.$element );
+	this.$body.append( this.$results );
+	this.results.on( 'select', ve.bind( this.onSelect, this ) );
 };
 
 ve.ui.WikiaMapInsertDialog.prototype.getMaps = function () {
@@ -51,45 +57,47 @@ ve.ui.WikiaMapInsertDialog.prototype.getMaps = function () {
 	});
 };
 
-ve.ui.WikiaMapInsertDialog.prototype.showMaps = function ( data ) {
-	var i,
-		$ul = this.$( '<ul>' ).appendTo( this.$body ),
-		$li;
-
-	ve.log( 'data', data );
-
+ve.ui.WikiaMapInsertDialog.prototype.displayMaps = function ( data ) {
+	var items = [],
+		i,
+		option;
 	for ( i = 0; i < data.length; i++ ) {
-		var item = data[i];
-		$li = this.$( '<li>' ).html( 'Map: ' + item.title + ' / ' + item.id ).appendTo( $ul );
-		$li.on( 'click', ve.bind( function() {
-			this.insertMap(item.id);
-		}, this ) );
+		option = new OO.ui.OptionWidget( data[i] );
+		option.$element.html( data[i].title );
+		items.push( option );
 	}
+	this.results.addItems( items );
 };
 
-ve.ui.WikiaMapInsertDialog.prototype.insertMap = function ( mapId ) {
-	ve.instances[0].view.model.getFragment().insertContent(
-		[
-			{
-				type:'wikiaMap',
-				attributes: {
-					mw: {
-						name: 'imap',
-						body: {
-							extsrc:''
-						},
-						attrs: {
-							"map-id": mapId.toString()
-						}
+ve.ui.WikiaMapInsertDialog.prototype.onSelect = function ( option ) {
+	var data = option.getData(),
+		offset,
+		structuralOffset,
+		fragment;
+
+	offset = this.getFragment().getRange().start;
+	structuralOffset = this.getFragment().getDocument().data.getNearestStructuralOffset( offset, -1 );
+	fragment = this.getFragment().clone( new ve.Range( structuralOffset ) );
+	fragment.insertContent( [
+		{
+			type:'wikiaMap',
+			attributes: {
+				mw: {
+					name: 'imap',
+					body: {
+						extsrc:''
+					},
+					attrs: {
+						"map-id": data.id.toString()
 					}
 				}
-			},
-			{
-				type: '/wikiaMap'
 			}
-		]
-	);
-
+		},
+		{
+			type: '/wikiaMap'
+		}
+	] );
+	this.close();
 };
 
 /* Registration */
