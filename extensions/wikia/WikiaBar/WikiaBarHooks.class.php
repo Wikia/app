@@ -65,7 +65,7 @@ class WikiaBarHooks {
 		$skin = RequestContext::getMain()->getSkin()->getSkinName();
 		if( $app->wg->user->isAnon() ) {
 			if (
-				($skin == 'oasis' || $skin == 'wikiamodern')
+				($skin == 'oasis' || $skin == 'venus')
 				&& $app->wg->request->getText('action', 'view') == 'view'
 				&& array_search($app->wg->dBname, self::$PROHIBITED_DBNAMES) === FALSE
 			) {

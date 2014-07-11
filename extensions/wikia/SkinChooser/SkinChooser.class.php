@@ -243,8 +243,8 @@ class SkinChooser {
 
 		if(!$user->isLoggedIn()) { # If user is not logged in
 			if($wgDefaultSkin == 'oasis') {
-				if( self::showWikiaModernSkin() ) {
-					$userSkin = 'wikiamodern';
+				if( self::showVenusSkin() ) {
+					$userSkin = 'venus';
 					$userTheme = null;
 				} else {
 					$userSkin = $wgDefaultSkin;
@@ -273,14 +273,14 @@ class SkinChooser {
 					$userSkin = isset($adminSkinArray[0]) ? $adminSkinArray[0] : null;
 					$userTheme = isset($adminSkinArray[1]) ? $adminSkinArray[1] : null;
 				} else {
-					if(self::showWikiaModernSkin()) {
-						$userSkin = 'wikiamodern';
+					if(self::showVenusSkin()) {
+						$userSkin = 'venus';
 					} else {
 						$userSkin = 'oasis';
 					}
 				}
-			} else if ($userSkin == 'oasis' && self::showWikiaModernSkin()) {
-				$userSkin = 'wikiamodern';
+			} else if ($userSkin == 'oasis' && self::showVenusSkin()) {
+				$userSkin = 'venus';
 			} else if(!empty($wgAdminSkin) && $userSkin != 'oasis' && $userSkin != 'monobook' && $userSkin != 'wowwiki' && $userSkin != 'lostbook') {
 				$adminSkinArray = explode('-', $wgAdminSkin);
 				$userSkin = isset($adminSkinArray[0]) ? $adminSkinArray[0] : null;
@@ -336,7 +336,7 @@ class SkinChooser {
 		return false;
 	}
 
-	private static function showWikiaModernSkin() {
+	private static function showVenusSkin() {
 		// Add WikiaPageType::isArticlePage() to enable new skin on article pages
 		return  WikiaPageType::isSearch();
 	}

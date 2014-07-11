@@ -761,10 +761,10 @@ $config['monobook_js'] = array(
 	)
 );
 
-/** WikiaModern Skin **/
+/** Venus Skin **/
 $config['global_navigation_scss'] = array(
 	'type' => AssetsManager::TYPE_SCSS,
-	'skin' => 'wikiamodern',
+	'skin' => 'venus',
 	'assets' => array(
 		'//extensions/wikia/GlobalNavigation/css/GlobalNavigation.scss',
 		'//extensions/wikia/GlobalNavigation/css/GlobalNavigationMenu.scss',
@@ -774,7 +774,7 @@ $config['global_navigation_scss'] = array(
 
 $config['global_navigation_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
-	'skin' => 'wikiamodern',
+	'skin' => 'venus',
 	'assets' => array(
 		'//extensions/wikia/GlobalNavigation/js/GlobalNavigation.js'
 	)
@@ -782,7 +782,7 @@ $config['global_navigation_js'] = array(
 
 $config['local_navigation_scss'] = array(
 	'type' => AssetsManager::TYPE_SCSS,
-	'skin' => 'wikiamodern',
+	'skin' => 'venus',
 	'assets' => array(
 		'//extensions/wikia/LocalNavigation/css/PageHeader.scss',
 		'//extensions/wikia/LocalNavigation/css/WikiHeader.scss'
@@ -791,7 +791,7 @@ $config['local_navigation_scss'] = array(
 
 $config['local_navigation_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
-	'skin' => 'wikiamodern',
+	'skin' => 'venus',
 	'assets' => array(
 		'//extensions/wikia/LocalNavigation/css/PageHeader.js',
 		'//extensions/wikia/LocalNavigation/css/WikiHeader.js'
@@ -1804,7 +1804,7 @@ $config['qualaroo_blocking_js'] = array(
 /** Optimizely Blocking **/
 $config['optimizely_blocking_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
-	'skin' => [ 'oasis', 'wikiamobile', 'wikiamodern' ],
+	'skin' => [ 'oasis', 'wikiamobile', 'venus' ],
 	'assets' => array(
 		'//extensions/wikia/Optimizely/scripts/OptimizelyBlocking.js',
 	)

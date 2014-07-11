@@ -1,8 +1,8 @@
 <?php
 
-class WikiaModernController extends WikiaController {
+class VenusController extends WikiaController {
 
-	const MAIN_SASS_FILE = '/extensions/wikia/WikiaModern/styles/WikiaModern.scss';
+	const MAIN_SASS_FILE = '/extensions/wikia/Venus/styles/Venus.scss';
 
 	private static $bodyParametersArray = [];
 	private static $skinAssetGroups = [];
@@ -70,12 +70,12 @@ class WikiaModernController extends WikiaController {
 
 		// add skin theme name
 		if(!empty($this->getSkin()->themename)) {
-			$bodyClasses[] = "wikiamodern-{$this->getSkin()->themename}";
+			$bodyClasses[] = "venus-{$this->getSkin()->themename}";
 		}
 
 		// mark dark themes
 		if (SassUtil::isThemeDark()) {
-			$bodyClasses[] = 'wikiamodern-dark-theme';
+			$bodyClasses[] = 'venus-dark-theme';
 		}
 
 		$this->bodyClasses = $bodyClasses;

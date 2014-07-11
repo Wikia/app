@@ -1,6 +1,6 @@
 <?php
 /**
- * WikiaModern Skin
+ * Venus Skin
  *
  * @author Consumer Team
  */
@@ -16,8 +16,8 @@ $dir = dirname( __FILE__ );
  */
 $wgExtensionCredits['other'][] =
 	[
-		"name" => "WikiaModern",
-		"description" => "WikiaModern Skin for Wikia",
+		"name" => "Venus",
+		"description" => "Venus Skin for Wikia",
 		"author" => [
 			'Consumer Team',
 		]
@@ -43,7 +43,7 @@ $wgExtensionCredits['other'][] =
 /**
  * controllers
  */
-$wgAutoloadClasses['WikiaModernController'] = $dir . '/WikiaModernController.class.php';
+$wgAutoloadClasses['VenusController'] = $dir . '/VenusController.class.php';
 $wgAutoloadClasses['GlobalNavigationController'] = $dir . '/../GlobalNavigation/GlobalNavigationController.class.php';
 $wgAutoloadClasses['LocalNavigationController'] = $dir . '/../LocalNavigation/LocalNavigationController.class.php';
 $wgAutoloadClasses['LocalHeaderController'] = $dir . '/../LocalNavigation/LocalHeaderController.class.php';
@@ -55,7 +55,7 @@ $wgAutoloadClasses['LocalHeaderController'] = $dir . '/../LocalNavigation/LocalH
 /**
  * message files
  */
-//$wgExtensionMessagesFiles['WikiaModern'] = "{$dir}/WikiaModern.i18n.php";
+//$wgExtensionMessagesFiles['Venus'] = "{$dir}/Venus.i18n.php";
 
 /**
  * hooks

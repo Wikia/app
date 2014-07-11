@@ -1,19 +1,19 @@
 <?php
 if (!defined('MEDIAWIKI')) die();
 /**
- * WikiaModern Skin
+ * Venus Skin
  *
  * @author Consumer Team
  */
 
 require_once('includes/SkinTemplate.php');
 
-class SkinWikiaModern extends WikiaSkin {
+class SkinVenus extends WikiaSkin {
 	function __construct() {
 		global $wgOut;
-		parent::__construct( 'WikiaModernTemplate', 'wikiamodern' );
+		parent::__construct( 'VenusTemplate', 'venus' );
 
-		$wgOut->addModuleStyles( 'skins.wikiamodern' );
+		$wgOut->addModuleStyles( 'skins.venus' );
 
 		//non-strict checks of css/js/scss assets/packages
 		$this->strictAssetUrlCheck = false;
@@ -21,10 +21,10 @@ class SkinWikiaModern extends WikiaSkin {
 }
 
 
-class WikiaModernTemplate extends WikiaSkinTemplate {
+class VenusTemplate extends WikiaSkinTemplate {
 	function execute() {
 		F::app()->setSkinTemplateObj($this);
-		$response = $this->app->sendRequest( 'WikiaModern', 'index' );
+		$response = $this->app->sendRequest( 'Venus', 'index' );
 		$response->sendHeaders();
 		$response->render();
 	}
