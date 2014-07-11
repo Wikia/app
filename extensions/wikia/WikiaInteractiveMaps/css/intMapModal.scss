@@ -43,9 +43,9 @@ $imagePreviewSize: 83px;
 		border: 1px solid $color-page-border;
 		box-sizing: border-box;
 		float: left;
-		overflow: hidden;
-		margin: 5px 0;
 		height: $imagePreviewSize;
+		margin: 5px 0;
+		overflow: hidden;
 		width: $imagePreviewSize;
 
 		svg {
