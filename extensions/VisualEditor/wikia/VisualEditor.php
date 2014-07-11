@@ -94,6 +94,7 @@ $wgResourceModules += array(
 			've/ui/dialogs/ve.ui.WikiaSaveDialog.js',
 			've/ui/dialogs/ve.ui.WikiaSourceModeDialog.js',
 			've/ui/dialogs/ve.ui.WikiaOrientationDialog.js',
+			've/ui/dialogs/ve.ui.WikiaMapInsertDialog.js',
 			've/ui/tools/ve.ui.WikiaDialogTool.js',
 			've/ui/tools/ve.ui.WikiaHelpTool.js',
 			've/ui/tools/ve.ui.WikiaMWGalleryInspectorTool.js',
@@ -158,6 +159,7 @@ $wgResourceModules += array(
 			'wikia-visualeditor-dialog-orientation-start-button',
 			'wikia-visualeditor-dialog-meta-languages-readonlynote',
 			'wikia-visualeditor-dialog-transclusion-no-template-description',
+			'wikia-visualeditor-dialog-map-insert-title'
 		),
 		'dependencies' => array(
 			'ext.visualEditor.core.desktop',
