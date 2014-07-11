@@ -84,8 +84,8 @@ class ApiMediaSearch extends ApiBase {
 	 * @return string
 	 */
 	protected function getDuration( $title ) {
-		$videoInfo = VideoInfo::newFromTitle( $title->getDBKey() );
-		return $videoInfo instanceof VideoInfo ? ltrim( WikiaFileHelper::formatDuration( $videoInfo->getDuration() ), '0' ) : '';
+		$file = WikiaFileHelper::getVideoFileFromTitle( $title );
+		return !empty( $file ) ? WikiaFileHelper::formatDuration( $file->getMetadataDuration() ) : '';
 	}
 
 	public function getResults( $query, $limit, $batch, $video, $photo, $mixed ) {
