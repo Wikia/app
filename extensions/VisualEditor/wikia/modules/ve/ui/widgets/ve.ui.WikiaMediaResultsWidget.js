@@ -16,7 +16,7 @@ ve.ui.WikiaMediaResultsWidget = function VeUiWikiaMediaResultsWidget( config ) {
 
 	// Properties
 	this.results = new ve.ui.WikiaMediaSelectWidget( { '$': this.$ } );
-	this.size = config.size || 160;
+	this.size = config.size || 158;
 
 	// Events
 	this.results.connect( this, {
@@ -77,7 +77,8 @@ ve.ui.WikiaMediaResultsWidget.prototype.addItems = function ( items ) {
 		results = [];
 
 	for ( i = 0; i < items.length; i++ ) {
-		optionWidget = new ve.ui.WikiaMediaOptionWidget( items[i], { '$': this.$, 'size': this.size } );
+		optionWidget = new ve.ui[ this.getClassByOptionType( items[i].type ) ]
+			( items[i], { '$': this.$, 'size': this.size } );
 		optionWidget.on( 'check', this.onResultsCheck, [ optionWidget ], this );
 		results.push(
 			optionWidget
@@ -86,6 +87,20 @@ ve.ui.WikiaMediaResultsWidget.prototype.addItems = function ( items ) {
 
 	this.results.addItems( results );
 };
+
+/**
+ * Gets the option widget class name given a media type
+ *
+ * @method
+ * @param {string} mediaType
+ * @returns {string}
+ */
+ve.ui.WikiaMediaResultsWidget.prototype.getClassByOptionType = function( mediaType ) {
+	if ( typeof mediaType !== 'string' || mediaType === '' ) {
+		return 'WikiaMediaOptionWidget';
+	}
+	return 'Wikia' + mediaType.charAt( 0 ).toUpperCase() + mediaType.slice( 1 ) + 'OptionWidget';
+}
 
 /**
  * Get the results.

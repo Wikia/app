@@ -14,6 +14,10 @@
  * @param {Object} [config] Config options
  */
 ve.ui.WikiaMediaInsertDialog = function VeUiMWMediaInsertDialog( config ) {
+	config =  $.extend( config, {
+		width: '840px'
+	} );
+
 	// Parent constructor
 	ve.ui.WikiaMediaInsertDialog.super.call( this, config );
 };
