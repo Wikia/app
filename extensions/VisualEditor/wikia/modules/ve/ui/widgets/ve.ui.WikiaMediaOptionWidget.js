@@ -17,8 +17,6 @@
  * @cfg {number} [size] Media thumbnail size
  */
 ve.ui.WikiaMediaOptionWidget = function VeUiWikiaMediaOptionWidget( data, config ) {
-	var $label, $labelMetadata;
-
 	// Parent constructor
 	ve.ui.WikiaMediaOptionWidget.super.call( this, data, config );
 
