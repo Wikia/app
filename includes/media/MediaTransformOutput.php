@@ -250,7 +250,7 @@ class ThumbnailImage extends MediaTransformOutput {
 			'options' => $options,
 		] ) );
 		// Strip empty space between tags
-		$html = preg_replace("/>\s+</", "><", $html);
+		$html = preg_replace( "/>\s+</", "><", $html );
 
 		return $html;
 	}
