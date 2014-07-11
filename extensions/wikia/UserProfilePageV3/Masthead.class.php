@@ -722,17 +722,8 @@ class Masthead {
 				if ($res->isOK()) {
 					$mwStorePath = sprintf( 'mwstore://swift-backend/%s%s%s',
 						$wgBlogAvatarSwiftContainer, $wgBlogAvatarSwiftPathPrefix, $this->getLocalPath() );
-e					Wikia\SwiftSync\Queue::newFromParams( [
-						'city_id' => 0,
-						'op' => 'store',
-						'src' => $sFilePath,
-						'dst' => $mwStorePath
-					] )->add();
-				}
-				// sync with NFS
-				global $wgEnableSwiftSyncToLocalFS;
-				if (!empty($wgEnableSwiftSyncToLocalFS)) {
-					copy($sFilePath, $this->getFullPath());
+
+					wfRunHooks("Masthead::AvatarSavedToSwift", array ( $sFilePath, $mwStorePath) );
 				}
 			}
 
