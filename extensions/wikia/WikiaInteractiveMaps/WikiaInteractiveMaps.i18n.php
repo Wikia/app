@@ -1,5 +1,4 @@
 <?php
-
 $messages = [];
 
 $messages[ 'en' ] = [
@@ -8,9 +7,6 @@ $messages[ 'en' ] = [
 	'wikia-interactive-maps-no-maps-header' => 'There are no maps created yet.',
 	'wikia-interactive-maps-no-maps-text' => 'Collaborate with the community by visually pinning locations of interest on maps.',
 	'wikia-interactive-maps-no-maps-learn-more' => 'Learn more',
-
-	'wikia-interactive-maps-map-status-done' => 'Ready to use',
-	'wikia-interactive-maps-map-status-processing' => 'Processing...',
 
 	'wikia-interactive-maps-parser-tag-error-no-require-parameters' => 'Wikia Interactive Maps error occurred: no parameters passed to the tag. The only required parameter is map-id parameter. Make sure it\'s set, please.',
 	'wikia-interactive-maps-parser-tag-error-invalid-map-id' => 'Wikia Interactive Maps error occurred: invalid map id. Please make sure your map-id parameter is an integer number.',
