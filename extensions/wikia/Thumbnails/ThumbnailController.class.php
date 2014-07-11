@@ -459,7 +459,7 @@ class ThumbnailController extends WikiaController {
 	 */
 	public function canShowInfoIcon( $thumb ) {
 		return !empty( $this->wg->ShowArticleThumbDetailsIcon )
-			&& $thumb->width >= ThumbnailHelper::MIN_INFO_ICON_SIZE;
+			&& $thumb->width >= ThumbnailHelper::MIN_INFO_ICON_WIDTH;
 
 	}
 
