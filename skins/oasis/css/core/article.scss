@@ -3,8 +3,7 @@
 @import '../placeholders/bodytext';
 @import '../mixins/clearfix';
 @import '../mixins/gradient';
-
-$infoboxes: ".infobox, .wikia-infobox, .infobox-table";
+@import '../mixins/infobox';
 
 .WikiaArticle {
 	@extend %bodytext;
