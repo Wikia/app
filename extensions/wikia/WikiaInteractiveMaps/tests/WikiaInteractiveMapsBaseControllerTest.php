@@ -1,11 +1,14 @@
 <?php
-require_once( $IP . '/extensions/wikia/WikiaInteractiveMaps/controllers/WikiaInteractiveMapsBaseController.class.php' );
-require_once( $IP . '/extensions/wikia/WikiaInteractiveMaps/models/WikiaMaps.class.php' );
-
 class WikiaInteractiveMapsUploadImageFromFileTest extends WikiaBaseTest {
 
 	const TEST_IMG_NAME = 'Mocked name';
 	const TEST_IMG_URL = 'http://placekitten.com/640/480';
+
+	public function setUp() {
+		global $IP;
+		$this->setupFile = "$IP/extensions/wikia/WikiaInteractiveMaps/WikiaInteractiveMaps.setup.php";
+		parent::setUp();
+	}
 
 	public function testGetStashedImage_default_parameters() {
 		$fileMock = $this->getWikiaUploadStashFileMock();
