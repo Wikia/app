@@ -487,17 +487,17 @@ class WikiaInteractiveMapsPoiController extends WikiaInteractiveMapsBaseControll
 
 		$userName = $this->wg->User->getName();
 
-		if( $this->isCreate() ) {
+		if ( $this->isCreate() ) {
 			$poiData[ 'map_id' ] = $this->getData( 'mapId' );
 			$poiData[ 'created_by' ] = $userName;
 		}
 
-		if( $this->isUpdate() ) {
+		if ( $this->isUpdate() ) {
 			$poiData[ 'updated_by' ] = $userName;
 		}
 
 		$description = $this->getData( 'description' );
-		if( !empty( $description ) ) {
+		if ( !empty( $description ) ) {
 			$poiData[ 'description' ] = $description;
 		}
 
@@ -508,7 +508,7 @@ class WikiaInteractiveMapsPoiController extends WikiaInteractiveMapsBaseControll
 		if ( !empty( $linkTitle ) ) {
 			$link = $this->getArticleUrl( $linkTitle );
 
-			if( !empty( $photo ) ) {
+			if ( !empty( $photo ) ) {
 				// save photo only when article is chosen
 				$poiData[ 'photo' ] = $photo;
 			}
@@ -539,7 +539,7 @@ class WikiaInteractiveMapsPoiController extends WikiaInteractiveMapsBaseControll
 						self::POI_ARTICLE_IMAGE_THUMB_SIZE
 					);
 
-					if( !empty( $imageUrl ) ) {
+					if ( !empty( $imageUrl ) ) {
 						$item[ 0 ][ 'imageUrl' ] = $imageUrl;
 					}
 
@@ -596,8 +596,8 @@ class WikiaInteractiveMapsPoiController extends WikiaInteractiveMapsBaseControll
 	private function decorateResults( $results, $fieldsList ) {
 		$response = $this->mapsModel->sendGetRequest( $results[ 'content' ]->url );
 
-		foreach( $fieldsList as $field ) {
-			if( !empty( $response[ 'content' ]->$field ) ) {
+		foreach ( $fieldsList as $field ) {
+			if ( !empty( $response[ 'content' ]->$field ) ) {
 				$results[ 'content' ]->$field = $response[ 'content' ]->$field;
 			}
 		}
