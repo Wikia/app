@@ -214,7 +214,7 @@ class WikiFactoryHub extends WikiaModel {
 
 		$id = (new WikiaSQL())
 			->SELECT( "vertical_id" )
-			->FROM( "city_verticals" )
+			->FROM( "city_list" )
 			->WHERE ("city_id")->EQUAL_TO( $city_id )
 			->cache( self::$cache_ttl, wfMemcKey( "WFHub", __METHOD__ ) )
 			->runLoop( $this->getSharedDB() );
