@@ -54,8 +54,8 @@ ve.ui.WikiaMapInsertDialog.prototype.initialize = function () {
 ve.ui.WikiaMapInsertDialog.prototype.getMaps = function () {
 	var apiUrl = 'http://dev-interactive-maps.wikia.nocookie.net/api/v1/map?city_id=' + wgCityId + '&cb=' + Math.floor( Math.random() * 1000000 );
 	return $.ajax({
-		dataType: "json",
-		url: 'http://json2jsonp.com/?url=' + encodeURIComponent( apiUrl ) + '&callback=?',
+		dataType: 'json',
+		url: 'http://json2jsonp.com/?url=' + encodeURIComponent( apiUrl ) + '&callback=?'
 	});
 };
 
