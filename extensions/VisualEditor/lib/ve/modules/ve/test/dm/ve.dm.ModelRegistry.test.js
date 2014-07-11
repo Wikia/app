@@ -72,8 +72,8 @@ ve.dm.StubSingleTagAndTypeAndFuncAnnotation.static.matchTagNames = ['a'];
 ve.dm.StubSingleTagAndTypeAndFuncAnnotation.static.matchRdfaTypes = ['ext:foo'];
 ve.dm.StubSingleTagAndTypeAndFuncAnnotation.static.matchFunction = checkForPickMe;
 
-ve.dm.StubBarNode = function VeDmStubBarNode( children, element ) {
-	ve.dm.BranchNode.call( this, children, element );
+ve.dm.StubBarNode = function VeDmStubBarNode() {
+	ve.dm.BranchNode.apply( this, arguments );
 };
 OO.inheritClass( ve.dm.StubBarNode, ve.dm.BranchNode );
 ve.dm.StubBarNode.static.name = 'stub-bar';
@@ -83,16 +83,16 @@ ve.dm.StubBarNode.static.matchRdfaTypes = ['bar'];
 ve.dm.StubBarNode.static.toDataElement = function () {};
 ve.dm.StubBarNode.static.toDomElements = function () {};
 
-ve.dm.StubAbbrNode = function VeDmStubAbbrNode( children, element ) {
-	ve.dm.BranchNode.call( this, children, element );
+ve.dm.StubAbbrNode = function VeDmStubAbbrNode() {
+	ve.dm.BranchNode.apply( this, arguments );
 };
 OO.inheritClass( ve.dm.StubAbbrNode, ve.dm.BranchNode );
 ve.dm.StubAbbrNode.static.name = 'stub-abbr';
 ve.dm.StubAbbrNode.static.matchTagNames = ['abbr'];
 ve.dm.StubAbbrNode.static.matchRdfaTypes = ['ext:abbr'];
 
-ve.dm.StubRegExpNode = function VeDmStubRegExpNode( children, element ) {
-	ve.dm.BranchNode.call( this, children, element );
+ve.dm.StubRegExpNode = function VeDmStubRegExpNode() {
+	ve.dm.BranchNode.apply( this, arguments );
 };
 OO.inheritClass( ve.dm.StubRegExpNode, ve.dm.BranchNode );
 ve.dm.StubRegExpNode.static.name = 'stub-regexp';

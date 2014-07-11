@@ -47,11 +47,19 @@ define('ext.wikia.adEngine.adConfigLate', [
 			US: true
 		},
 		dartBtfSlots = {
+			INCONTENT_BOXAD_1: true,
 			LEFT_SKYSCRAPER_3: true,
 			PREFOOTER_LEFT_BOXAD: true,
 			PREFOOTER_RIGHT_BOXAD: true
 		},
-		dartBtfEnabled = window.wgAdDriverUseDartForSlotsBelowTheFold && dartBtfCountries[country];
+		dartBtfVerticals = {
+			Entertainment: true
+		},
+
+		dartBtfEnabled = dartBtfCountries[country] && (
+				window.wgAdDriverUseDartForSlotsBelowTheFold === true ||
+				(window.wgAdDriverUseDartForSlotsBelowTheFold && dartBtfVerticals.hasOwnProperty(window.cscoreCat))
+			);
 
 	if (window.wgEnableRHonDesktop) {
 		adProviderRemnant = adProviderRemnantGpt;
@@ -79,13 +87,6 @@ define('ext.wikia.adEngine.adConfigLate', [
 			return adProviderNull;
 		}
 
-		if (country === 'AU' || country === 'CA' || country === 'NZ') {
-			if (adProviderEvolve.canHandleSlot(slotname)) {
-				log(['getProvider', slot, 'Evolve'], 'info', logGroup);
-				return adProviderEvolve;
-			}
-		}
-
 		// First ask SevenOne Media
 		if (window.wgAdDriverUseSevenOneMedia) {
 			if (adProviderSevenOneMedia.canHandleSlot(slotname)) {
@@ -104,6 +105,13 @@ define('ext.wikia.adEngine.adConfigLate', [
 
 			if (!liftiumSlotsToShowWithSevenOneMedia[slot[0]]) {
 				return adProviderNull;
+			}
+		}
+
+		if (country === 'AU' || country === 'CA' || country === 'NZ') {
+			if (adProviderEvolve.canHandleSlot(slotname)) {
+				log(['getProvider', slot, 'Evolve'], 'info', logGroup);
+				return adProviderEvolve;
 			}
 		}
 

@@ -1,9 +1,12 @@
+{{#showInfoIcon}}
+<div class="article-thumb-wrapper">
+{{/showInfoIcon}}
 <a
 	href="{{linkHref}}"
 	class="video video-thumbnail {{size}} {{#linkClasses}}{{.}} {{/linkClasses}}"
-	{{#linkAttrs}}{{{.}}} {{/linkAttrs}}>
+	{{#linkAttrs}} {{{.}}}{{/linkAttrs}}>
 
-	{{>Thumbnail_imgThumbnail}}
+	{{{imgTag}}}
 	{{#noscript}}<noscript>{{{noscript}}}</noscript>{{/noscript}}
 
 	<span class="duration" {{#durationAttrs}}{{{.}}} {{/durationAttrs}}>{{duration}}</span>
@@ -11,3 +14,7 @@
 
 	{{#metaAttrs}}<meta itemprop="{{itemprop}}" content="{{content}}">{{/metaAttrs}}
 </a>
+{{#showInfoIcon}}
+<a href="{{linkHref}}" class="sprite info-icon"></a>
+</div>
+{{/showInfoIcon}}

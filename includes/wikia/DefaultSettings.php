@@ -255,7 +255,14 @@ $wgAutoloadClasses[ 'WikiaSQL'                        ] = "$IP/includes/wikia/Wi
 $wgAutoloadClasses[ 'WikiaSQLCache'                   ] = "$IP/includes/wikia/WikiaSQLCache.class.php";
 $wgAutoloadClasses[ 'WikiaSanitizer'                  ] = "$IP/includes/wikia/WikiaSanitizer.class.php";
 $wgAutoloadClasses[ 'ScribePurge'                     ] = "$IP/includes/cache/wikia/ScribePurge.class.php";
+$wgAutoloadClasses[ 'Transaction'                     ] = "$IP/includes/wikia/transactiontrace/Transaction.php";
+$wgAutoloadClasses[ 'TransactionTrace'                ] = "$IP/includes/wikia/transactiontrace/TransactionTrace.php";
+$wgAutoloadClasses[ 'TransactionClassifier'           ] = "$IP/includes/wikia/transactiontrace/TransactionClassifier.php";
+$wgAutoloadClasses[ 'TransactionTraceNewrelic'        ] = "$IP/includes/wikia/transactiontrace/TransactionTraceNewrelic.php";
+$wgHooks          [ 'ArticleViewAddParserOutput'      ][] = 'Transaction::onArticleViewAddParserOutput';
+$wgHooks          [ 'RestInPeace'                     ][] = 'Transaction::onRestInPeace';
 $wgHooks          [ 'RestInPeace'                     ][] = 'ScribePurge::onRestInPeace';
+$wgAutoloadClasses[ 'Wikia\\Blogs\\BlogTask'          ] = "$IP/extensions/wikia/Blogs/BlogTask.class.php";
 
 /**
  * Resource Loader enhancements
@@ -392,6 +399,7 @@ $wgHooks['WikiaSkinTopScripts'][] = 'Wikia\\Logger\\Hooks::onWikiaSkinTopScripts
 
 // Set the WikiaLogger mode early in the setup process
 $wgHooks['WikiFactory::execute'][] = 'Wikia\\Logger\\Hooks::onWikiFactoryExecute';
+$wgHooks['WikiFactory::onExecuteComplete'][] = 'Wikia\\Logger\\Hooks::onWikiFactoryExecuteComplete';
 
 // Register \Wikia\Sass namespace
 spl_autoload_register( function( $class ) {
@@ -474,7 +482,6 @@ $wgAutoloadClasses[ "WikiaValidatorDependent"       ] = "$IP/includes/wikia/vali
 $wgAutoloadClasses[ 'WikiaValidatorRestrictiveUrl'  ] = "$IP/includes/wikia/validators/WikiaValidatorRestrictiveUrl.class.php";
 $wgAutoloadClasses[ 'WikiaValidatorUsersUrl'        ] = "$IP/includes/wikia/validators/WikiaValidatorUsersUrl.class.php";
 include_once("$IP/includes/wikia/validators/WikiaValidatorsExceptions.php");
-
 
 /**
  * registered API methods
@@ -1190,6 +1197,12 @@ $wgEnableJavaScriptErrorLogging = false;
 $wgEnableRHonDesktop = false;
 
 /**
+ * @name $wgLoadLateAdsAfterPageLoad
+ * Enables postpones start for ads in late queue until page "load" event.
+ */
+$wgLoadLateAdsAfterPageLoad = false;
+
+/**
  * @name $wgAdDriverEnableRemnantGptMobile
  * Enables Remnant Gpti on Mobile experiment
  */
@@ -1208,16 +1221,22 @@ $wgEnableAdEngineExt = true;
 $wgAdDriverUseEbay = false;
 
 /**
- * @name $wgAdDriverUseWikiaBarBoxad2
- * Whether to enable new fancy footer ad WIKIA_BAR_BOXAD_2
+ * @name $wgAdDriverUseBottomLeaderboard
+ * Whether to enable new fancy footer ad BOTTOM_LEADERBOARD
  */
-$wgAdDriverUseWikiaBarBoxad2 = false;
+$wgAdDriverUseBottomLeaderboard = false;
 
 /**
- * @name $wgAdDriverWikiaBarBoxad2ImpressionCapping
- * Impression capping for WIKIA_BAR_BOXAD_2. Array with the numbers of the potential ad calls.
+ * @name $wgAdDriverUseTopInContentBoxad
+ * Whether to enable new in-content top ad TOP_IN_CONTENT_BOXAD
  */
-$wgAdDriverWikiaBarBoxad2ImpressionCapping = [2, 4, 6];
+$wgAdDriverUseTopInContentBoxad = false;
+
+/**
+ * @name $wgAdDriverBottomLeaderboardImpressionCapping
+ * Impression capping for BOTTOM_LEADERBOARD. Array with the numbers of the potential ad calls.
+ */
+$wgAdDriverBottomLeaderboardImpressionCapping = [2, 4, 6];
 
 /**
  * @name $wgAdDriverUseSevenOneMedia
@@ -1228,11 +1247,18 @@ $wgAdDriverUseSevenOneMedia = null;
 $wgAdDriverUseSevenOneMediaInLanguages = ['de'];
 
 /**
+ * @name $wgAdDriverSevenOneMediaSub4Site
+ * Global variable SOI_SUB4SITE value for SevenOne Media ads
+ */
+$wgAdDriverSevenOneMediaSub4Site = null;
+
+/**
  * @name $wgAdDriverUseDartForSlotsBelowTheFold
- * Whether to call DART for additional slots below the fold. Also known as "Coffee cup"
+ * Whether to call DART for additional slots below the fold. Also known as "Coffee cup".
+ * Set to null for to restrict only to Entertainment vertical
  * TODO: add an internal page for the reasons
  */
-$wgAdDriverUseDartForSlotsBelowTheFold = false;
+$wgAdDriverUseDartForSlotsBelowTheFold = null;
 
 /**
  * @name $wgAdDriverTrackState
@@ -1253,6 +1279,12 @@ $wgAdDriverForceDirectGptAd = false;
 $wgAdDriverForceLiftiumAd = false;
 
 /**
+ * @name $wgAdDriverEnableAdsInMaps
+ * Whether to display ads within interactive maps
+ */
+$wgAdDriverEnableAdsInMaps = false;
+
+/**
  * @name $wgHighValueCountries
  * List of countries defined as high-value for revenue purposes
  * Value set in WikiFactory for Community acts as global value. Can be overridden per wiki.
@@ -1264,6 +1296,18 @@ $wgHighValueCountries = null;
  * Enables page-level video ad targeting
  */
 $wgAdVideoTargeting = true;
+
+/**
+ * @name $wgAnalyticsProviderPageFair
+ * Site ID for PageFair analytics provider.
+ */
+$wgAnalyticsProviderPageFair = null;
+
+/**
+ * @name $wgAnalyticsProviderPageFairSlotIds
+ * Slot IDs for PageFair analytics provider.
+ */
+$wgAnalyticsProviderPageFairSlotIds = [ 'LEADERBOARD' => null, 'MEDREC' => null, 'SKYSCRAPER' => null ];
 
 /**
  * trusted proxy service registry

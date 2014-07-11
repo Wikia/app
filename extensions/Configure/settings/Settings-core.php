@@ -481,7 +481,6 @@ $settings = array(
 			'wgUploadMaintenance' => 'bool',
 			'wgAjaxLicensePreview' => 'bool',
 			'wgAllowCopyUploads' => 'bool',
-			'wgAllowAsyncCopyUploads' => 'bool',
 			'wgCheckFileExtensions' => 'bool',
 			'wgCopyUploadsDomains' => 'array',
 			'wgDisableUploadScriptChecks' => 'bool',

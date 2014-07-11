@@ -123,146 +123,155 @@ ve.ui.AnnotationInspector.prototype.getMatchingAnnotations = function ( fragment
  * @method
  * @param {Object} [data] Inspector opening data
  */
-ve.ui.AnnotationInspector.prototype.setup = function ( data ) {
-	// Parent method
-	ve.ui.Inspector.prototype.setup.call( this, data );
+ve.ui.AnnotationInspector.prototype.getSetupProcess = function ( data ) {
+	return ve.ui.AnnotationInspector.super.prototype.getSetupProcess.call( this, data )
+		.next( function () {
+			var expandedFragment, trimmedFragment, truncatedFragment, initialCoveringAnnotation,
+				fragment = this.getFragment(),
+				annotation = this.getMatchingAnnotations( fragment, true ).get( 0 );
 
-	var expandedFragment, trimmedFragment, truncatedFragment, initialCoveringAnnotation,
-		fragment = this.getFragment(),
-		annotation = this.getMatchingAnnotations( fragment, true ).get( 0 );
+			this.previousSelection = fragment.getRange();
 
-	this.previousSelection = fragment.getRange();
-
-	// Initialize range
-	if ( !annotation ) {
-		if (
-			fragment.getRange().isCollapsed() && fragment.getDocument().data.isContentOffset( fragment.getRange().start )
-		) {
-			// Expand to nearest word
-			expandedFragment = fragment.expandRange( 'word' );
-			fragment = expandedFragment;
-		} else {
-			// Trim whitespace
-			trimmedFragment = fragment.trimRange();
-			fragment = trimmedFragment;
-		}
-		if ( !fragment.getRange().isCollapsed() ) {
-			// Create annotation from selection
-			truncatedFragment = fragment.truncateRange( 255 );
-			fragment = truncatedFragment;
-			annotation = this.getAnnotationFromFragment( fragment );
-			if ( annotation ) {
-				fragment.annotateContent( 'set', annotation );
+			// Initialize range
+			if ( !annotation ) {
+				if (
+					fragment.getRange().isCollapsed() &&
+					fragment.getDocument().data.isContentOffset( fragment.getRange().start )
+				) {
+					// Expand to nearest word
+					expandedFragment = fragment.expandRange( 'word' );
+					fragment = expandedFragment;
+				} else {
+					// Trim whitespace
+					trimmedFragment = fragment.trimRange();
+					fragment = trimmedFragment;
+				}
+				if ( !fragment.getRange().isCollapsed() ) {
+					// Create annotation from selection
+					truncatedFragment = fragment.truncateRange( 255 );
+					fragment = truncatedFragment;
+					annotation = this.getAnnotationFromFragment( fragment );
+					if ( annotation ) {
+						fragment.annotateContent( 'set', annotation );
+					}
+					this.isNewAnnotation = true;
+				}
+			} else {
+				// Expand range to cover annotation
+				expandedFragment = fragment.expandRange( 'annotation', annotation );
+				fragment = expandedFragment;
 			}
-			this.isNewAnnotation = true;
-		}
-	} else {
-		// Expand range to cover annotation
-		expandedFragment = fragment.expandRange( 'annotation', annotation );
-		fragment = expandedFragment;
-	}
 
-	// Update selection
-	fragment.select();
-	this.initialSelection = fragment.getRange();
+			// Update selection
+			fragment.select();
+			this.initialSelection = fragment.getRange();
 
-	// The initial annotation is the first matching annotation in the fragment
-	this.initialAnnotation = this.getMatchingAnnotations( fragment, true ).get( 0 );
-	initialCoveringAnnotation = this.getMatchingAnnotations( fragment ).get( 0 );
-	// Fallback to a default annotation
-	if ( !this.initialAnnotation ) {
-		this.initialAnnotation = this.getAnnotationFromFragment( fragment );
-	} else if ( initialCoveringAnnotation && initialCoveringAnnotation.compareTo( this.initialAnnotation ) ) {
-		// If the initial annotation doesn't cover the fragment, record this as we'll need to
-		// forcefully apply it to the rest of the fragment later
-		this.initialAnnotationIsCovering = true;
-	}
+			// The initial annotation is the first matching annotation in the fragment
+			this.initialAnnotation = this.getMatchingAnnotations( fragment, true ).get( 0 );
+			initialCoveringAnnotation = this.getMatchingAnnotations( fragment ).get( 0 );
+			// Fallback to a default annotation
+			if ( !this.initialAnnotation ) {
+				this.initialAnnotation = this.getAnnotationFromFragment( fragment );
+			} else if (
+				initialCoveringAnnotation &&
+				initialCoveringAnnotation.compareTo( this.initialAnnotation )
+			) {
+				// If the initial annotation doesn't cover the fragment, record this as we'll need
+				// to forcefully apply it to the rest of the fragment later
+				this.initialAnnotationIsCovering = true;
+			}
+		}, this );
 };
 
 /**
  * @inheritdoc
  */
-ve.ui.AnnotationInspector.prototype.teardown = function ( data ) {
-	// Configuration initialization
-	data = data || {};
+ve.ui.AnnotationInspector.prototype.getTeardownProcess = function ( data ) {
+	return ve.ui.AnnotationInspector.super.prototype.getTeardownProcess.call( this, data )
+		.first( function () {
+			// Configuration initialization
+			data = data || {};
 
-	var i, len, annotations, insertion,
-		add = false,
-		insert = false,
-		undo = false,
-		clear = false,
-		set = false,
-		annotation = this.getAnnotation(),
-		remove = this.shouldRemoveAnnotation() || data.action === 'remove',
-		surfaceModel = this.getFragment().getSurface(),
-		fragment = surfaceModel.getFragment( this.initialSelection, false ),
-		selection = this.getFragment().getRange();
+			var i, len, annotations, insertion,
+				add = false,
+				insert = false,
+				undo = false,
+				clear = false,
+				set = false,
+				annotation = this.getAnnotation(),
+				remove = this.shouldRemoveAnnotation() || data.action === 'remove',
+				surfaceModel = this.getFragment().getSurface(),
+				fragment = surfaceModel.getFragment( this.initialSelection, false ),
+				selection = this.getFragment().getRange();
 
-	if ( remove ) {
-		clear = true;
-	} else if ( annotation ) {
-		if ( this.initialSelection.isCollapsed() ) {
-			insert = true;
-		}
-		// Check if the initial annotation has changed, or didn't cover the whole fragment to begin with
-		if (
-			!this.initialAnnotationIsCovering ||
-			!this.initialAnnotation ||
-			!this.initialAnnotation.compareTo( annotation )
-		) {
-			if ( this.isNewAnnotation ) {
-				undo = true;
-			} else {
+			if ( remove ) {
 				clear = true;
+			} else if ( annotation ) {
+				if ( this.initialSelection.isCollapsed() ) {
+					insert = true;
+				}
+				// Check if the initial annotation has changed, or didn't cover the whole fragment
+				// to begin with
+				if (
+					!this.initialAnnotationIsCovering ||
+					!this.initialAnnotation ||
+					!this.initialAnnotation.compareTo( annotation )
+				) {
+					if ( this.isNewAnnotation ) {
+						undo = true;
+					} else {
+						clear = true;
+					}
+					set = true;
+				}
 			}
-			set = true;
-		}
-	}
-	if ( insert ) {
-		insertion = this.getInsertionText();
-		if ( insertion.length ) {
-			fragment.insertContent( insertion, false );
-			// Move cursor to the end of the inserted content, even if back button is used
-			fragment.adjustRange( -insertion.length, 0 );
-			this.previousSelection = new ve.Range( this.initialSelection.start + insertion.length );
-		}
-	}
-	if ( undo ) {
-		// Go back to before we added an annotation
-		surfaceModel.undo();
-	}
-	if ( clear ) {
-		// Clear all existing annotations
-		annotations = this.getMatchingAnnotations( fragment, true ).get();
-		for ( i = 0, len = annotations.length; i < len; i++ ) {
-			fragment.annotateContent( 'clear', annotations[i] );
-		}
-	}
-	if ( set && annotation ) {
-		// Apply new annotation
-		if ( fragment.getRange().isCollapsed() ) {
-			add = true;
-		} else {
-			fragment.annotateContent( 'set', annotation );
-		}
-	}
-	if ( data.action === 'back' || insert ) {
-		// Restore selection to what it was before we expanded it
-		selection = this.previousSelection;
-	}
-	surfaceModel.setSelection( selection );
+			if ( insert ) {
+				insertion = this.getInsertionText();
+				if ( insertion.length ) {
+					fragment.insertContent( insertion, false );
+					// Move cursor to the end of the inserted content, even if back button is used
+					fragment.adjustRange( -insertion.length, 0 );
+					this.previousSelection = new ve.Range(
+						this.initialSelection.start + insertion.length
+					);
+				}
+			}
+			if ( undo ) {
+				// Go back to before we added an annotation
+				surfaceModel.undo();
+			}
+			if ( clear ) {
+				// Clear all existing annotations
+				annotations = this.getMatchingAnnotations( fragment, true ).get();
+				for ( i = 0, len = annotations.length; i < len; i++ ) {
+					fragment.annotateContent( 'clear', annotations[i] );
+				}
+			}
+			if ( set && annotation ) {
+				// Apply new annotation
+				if ( fragment.getRange().isCollapsed() ) {
+					add = true;
+				} else {
+					fragment.annotateContent( 'set', annotation );
+				}
+			}
+			if ( data.action === 'back' || insert ) {
+				// Restore selection to what it was before we expanded it
+				selection = this.previousSelection;
+			}
+			if ( !data.noSelect ) {
+				surfaceModel.setSelection( selection );
+			}
 
-	if ( add ) {
-		surfaceModel.addInsertionAnnotations( annotation );
-	}
+			if ( add ) {
+				surfaceModel.addInsertionAnnotations( annotation );
+			}
 
-	// Reset state
-	this.previousSelection = null;
-	this.initialSelection = null;
-	this.initialAnnotation = null;
-	this.initialAnnotationIsCovering = false;
-	this.isNewAnnotation = false;
-
-	// Parent method
-	ve.ui.Inspector.prototype.teardown.call( this, data );
+			// Reset state
+			this.previousSelection = null;
+			this.initialSelection = null;
+			this.initialAnnotation = null;
+			this.initialAnnotationIsCovering = false;
+			this.isNewAnnotation = false;
+		}, this );
 };

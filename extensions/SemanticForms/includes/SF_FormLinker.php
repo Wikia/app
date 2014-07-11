@@ -180,8 +180,17 @@ class SFFormLinker {
 				global $wgUser;
 				$params['user_id'] = $wgUser->getId();
 				$params['page_text'] = $data_text;
-				$job = new SFCreatePageJob( $title, $params );
-				Job::batchInsert( array( $job ) );
+
+				// wikia change start - jobqueue migration
+				if ( TaskRunner::isModern( 'SFCreatePageJob' ) ) {
+					$task = new \Wikia\Tasks\Tasks\JobWrapperTask();
+					$task->call( 'createPage', $title, $params );
+					$task->queue();
+				} else {
+					$job = new SFCreatePageJob( $title, $params );
+					Job::batchInsert( array( $job ) );
+				}
+				// wikia change end
 
 				return true;
 			}

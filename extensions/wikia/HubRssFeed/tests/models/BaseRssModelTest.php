@@ -23,6 +23,63 @@ class DummyModel extends BaseRssModel
 	{
 		return $item;
 	}
+
+	/**
+	 * Mocked version of getArticleDetail without database calls. Used to test processItems
+	 * @param $wid
+	 * @param $aid
+	 * @return array
+	 */
+	protected function getArticleDetail( $wid, $aid ) {
+		$articles = [
+			831 => [
+				49 => [ 'img' => [ 'url' => 'uaa', 'width' => 11, 'height' => 22 ], 'title' => 'taa' ],
+				4 => [ 'img' => [ 'url' => 'ubb', 'width' => 33, 'height' => 44 ], 'title' => 'tbb' ]
+			]
+		];
+
+		return $articles[ $wid ][ $aid ];
+	}
+
+	/**
+	 * Mocked version of getArticleDescription without database calls. Used to test processItems
+	 * @param $wid
+	 * @param $aid
+	 * @return string
+	 */
+	protected function getArticleDescription( $wid, $aid ){
+		$descriptions = [
+			831 => [
+				49 => 'd49',
+				4 => 'd4'
+			]
+		];
+
+		return $descriptions[ $wid ][ $aid ];
+	}
+}
+
+class DummyNotMockedModel extends BaseRssModel {
+	public function getFeedTitle()
+	{
+	}
+
+	public function getFeedLanguage()
+	{
+	}
+
+	public function getFeedDescription()
+	{
+	}
+
+	protected function loadData($lastTimestamp, $duplicates)
+	{
+	}
+
+	protected function formatTitle($item)
+	{
+		return $item;
+	}
 }
 
 class BaseRssModelTest extends WikiaBaseTest
@@ -105,6 +162,7 @@ class BaseRssModelTest extends WikiaBaseTest
 	}
 
 	/**
+	 * @group UsingDB
 	 * @covers BaseRssModel::processItems
 	 */
 	public function testProcessItems()
@@ -128,27 +186,113 @@ class BaseRssModelTest extends WikiaBaseTest
 		];
 
 		$processedData = $processItems($sampleItems);
-//		$this->assertArrayHasKey()
 		$this->assertArrayHasKey('timestamp', $processedData['dummy_url']);
 		$this->assertLessThan($processedData['dummy_url']['timestamp'], $processedData['dummy_url2']['timestamp']);
 
-		$this->assertNotNull($processedData['dummy_url']['description']);
-		$this->assertNotNull($processedData['dummy_url']['img']['url']);
+		$this->assertEquals( 'd49', $processedData[ 'dummy_url' ][ 'description' ] );
+		$this->assertEquals( 'uaa', $processedData[ 'dummy_url' ][ 'img' ][ 'url' ] );
 	}
 
 	/**
 	 * @covers BaseRssModel::getArticleDetail
 	 */
-	public function testGetArticleDetail() {
-		$dummy = new DummyModel();
-		$getArticleDetail = self::getFn( $dummy, 'getArticleDetail' );
+	public function testGetArticleDetailThumbExists() {
+		$this->mockStaticMethod( 'ApiService', 'foreignCall',
+			[
+				'items' => [
+					222 => [
+						'thumbnail' => 'tt',
+						'original_dimensions' => [ 'width' => 11, 'height' => 333 ],
+						'title' => 'xxx'
+					]
+				]
+			]
+		);
 
-		$details = $getArticleDetail(831, 49);
+		$this->mockStaticMethod( 'ImagesService', 'getFileUrlFromThumbUrl', 'asdfg' );
 
-		$this->assertEquals("Miss Piggy", $details['title']);
-		foreach (['url', 'width', 'height'] as $key) {
-			$this->assertArrayHasKey($key, $details['img']);
-		}
+		$mock = $this->getMockBuilder( 'BaseRssModel' )
+			->disableOriginalConstructor()
+			->setMethods( [ '__construct', 'getFeedTitle', 'getFeedLanguage', 'getFeedDescription', 'loadData', 'formatTitle' ] )
+			->getMock();
+
+		$function = self::getFn( $mock, 'getArticleDetail' );
+
+		$expected = [ 'img' => [ 'url' => "asdfg", 'width' => 200, 'height' => 333 ], 'title' => "xxx" ];
+
+		$this->assertEquals( $expected, $function( 99, 222 ) );
 
 	}
+
+	/**
+	 * @covers BaseRssModel::getArticleDetail
+	 */
+	public function testGetArticleDetailWordmark() {
+		$this->mockStaticMethod( 'ApiService', 'foreignCall',
+			[
+				'items' => [
+					222 => [
+						'thumbnail' => null,
+						'original_dimensions' => [ 'width' => null, 'height' => null  ],
+						'title' => 'xxx'
+					]
+				]
+			]
+		);
+
+		$mockWs = $this->getMockBuilder( 'WikiService' )
+			->disableOriginalConstructor()
+			->setMethods( [ '__construct', 'getWikiWordmark' ] )
+			->getMock();
+
+		$mockWs->expects( $this->any() )
+			->method( 'getWikiWordmark' )
+			->with( 99 )
+			->will( $this->returnValue( 'wordmark11.png' ) );
+
+		$mock = $this->getMockBuilder( 'BaseRssModel' )
+			->disableOriginalConstructor()
+			->setMethods( [
+				'__construct', 'getFeedTitle', 'getFeedLanguage',
+				'getFeedDescription', 'loadData', 'formatTitle','getWikiService'
+			] )
+			->getMock();
+
+		$mock->expects( $this->any() )
+			->method( 'getWikiService' )
+			->will( $this->returnValue( $mockWs ) );
+
+		$function = self::getFn( $mock, 'getArticleDetail' );
+
+		$expected = [ 'img' => [ 'url' => "wordmark11.png", 'width' => 200, 'height' => 200 ], 'title' => "xxx" ];
+
+		$this->assertEquals( $expected, $function( 99, 222 ) );
+	}
+
+	/**
+	 * @covers BaseRssModel::getArticleDescription
+	 */
+	public function testGetArticleDescription() {
+		$this->mockStaticMethod( 'WikiFactory', 'IDtoDB', null );
+		$this->mockStaticMethod( 'ApiService', 'foreignCall',
+			[
+				'sections' => [
+					[ 'content' => 'section_1' ],
+					[ 'content' => [
+						[ 'type' => 'cc' ],
+						[ 'type' => 'paragraph', 'text' => 'test1' ]
+					]
+					]
+				]
+			]
+		);
+
+		$mock = $this->getMockBuilder( 'BaseRssModel' )
+			->disableOriginalConstructor()
+			->setMethods( [ '__construct', 'getFeedTitle', 'getFeedLanguage', 'getFeedDescription', 'loadData', 'formatTitle' ] )
+			->getMock();
+		$function = self::getFn( $mock, 'getArticleDescription' );
+		$this->assertEquals( 'test1', $function( 11, 22 ) );
+	}
+
 }

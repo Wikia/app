@@ -1593,7 +1593,7 @@ $messages['diq'] = array(
 	'wikiaPhotoGallery-photooptions-done' => 'Qeyd kerd',
 	'wikiaPhotoGallery-preview-hover-modify' => 'bıvurne',
 	'wikiaPhotoGallery-preview-hover-delete' => 'bestere',
-	'wikiaPhotoGallery-preview-add-photo' => 'Fotraf deke',
+	'wikiaPhotoGallery-preview-add-photo' => 'Yew fotraf cı ke',
 	'wikiaPhotoGallery-preview-tab-layout' => 'Ca gınayiş',
 	'wikiaPhotoGallery-preview-px' => 'px',
 	'wikiaPhotoGallery-preview-position-left' => 'Çep',
@@ -1616,22 +1616,22 @@ $messages['diq'] = array(
 	'wikiaPhotoGallery-preview-captions-left' => 'Çep',
 	'wikiaPhotoGallery-preview-captions-center' => 'Merkez',
 	'wikiaPhotoGallery-preview-captions-right' => 'Raşt',
-	'wikiaPhotoGallery-slideshow-view-addphoto' => 'Resim Deke',
+	'wikiaPhotoGallery-slideshow-view-addphoto' => 'Resım cı ke',
 	'wikiaPhotoGallery-slideshow-view-next-tooltip' => 'Resimo peyên',
-	'wikiaPhotoGallery-slideshow-view-title' => 'Slaytşow',
+	'wikiaPhotoGallery-slideshow-view-title' => 'Slaydşow',
 	'wikiaPhotoGallery-slideshow-view-number' => '$1 be $2 ra',
 	'wikiaPhotoGallery-slideshow-view-startslideshow' => 'Slaytşowi kayfiye',
 	'wikiaPhotoGallery-slideshow-view-stopslideshow' => 'Slaytşowi vındarnê',
 	'wikiaPhotoGallery-slideshow-view-details-tooltip' => 'teferruatê resimi bıvin',
 	'wikiaPhotoGallery-slideshow-view-link-overlay' => 'Şo $1',
-	'wikiaPhotoGallery-choice-title' => 'Slaytşow ya zi galeriye vıraze',
-	'wikiaPhotoGallery-choice-slideshow' => 'Slaytşow deke',
+	'wikiaPhotoGallery-choice-title' => 'Slaydşow ya zi galeriye vıraze',
+	'wikiaPhotoGallery-choice-slideshow' => 'Slaydşow vıraze',
 	'wikiaPhotoGallery-choice-gallery' => 'Galeriye vıraze',
-	'wikiaPhotoGallery-slideshowpreview-addphoto' => 'Fotraf deke',
+	'wikiaPhotoGallery-slideshowpreview-addphoto' => 'Yew fotraf cı ke',
 	'wikiaPhotoGallery-slideshowpreview-position-left' => 'Çep',
 	'wikiaPhotoGallery-slideshowpreview-position-center' => 'Merkezi',
 	'wikiaPhotoGallery-slideshowpreview-position-right' => 'Raşt',
-	'wikiaPhotoGallery-sliderpreview-addphoto' => 'Fotraf deke',
+	'wikiaPhotoGallery-sliderpreview-addphoto' => 'Yew fotraf cıke',
 	'wikiaPhotoGallery-upload-uploadtitle' => 'Fotrafê xo bıvêne',
 	'wikiaPhotoGallery-upload-uploadbutton' => 'Resim Barke',
 	'wikiaPhotoGallery-upload-existingtext-onarticle' => 'ena pele',
@@ -3376,6 +3376,7 @@ $messages['kn'] = array(
 $messages['ko'] = array(
 	'wikiaPhotoGallery-upload-findtitle' => '찾기',
 	'wikiaPhotoGallery-upload-findbutton' => '찾기',
+	'wikiaPhotoGallery-quit-quitonly' => '바뀐 내용을 버리고 끝내기',
 );
 
 /** Kurdish (Latin script) (Kurdî (latînî)‎)
@@ -6131,6 +6132,14 @@ $messages['tr'] = array(
 	'wikiaPhotoGallery-feed-caption' => '$1, sera <a href="$2">$3</a>',
 );
 
+/** Tuvinian (тыва дыл)
+ * @author Agilight
+ */
+$messages['tyv'] = array(
+	'wikiaPhotoGallery-upload-findtitle' => 'Диле',
+	'wikiaPhotoGallery-quit-title' => 'Чуруктар эдикчизинден үнер',
+);
+
 /** Ukrainian (українська)
  * @author Andriykopanytsia
  * @author KEL
@@ -6593,6 +6602,7 @@ $messages['zh-hans'] = array(
 	'wikiaPhotoGallery-preview-spacing-large' => '大',
 	'wikiaPhotoGallery-preview-orientation' => '照片方向',
 	'wikiaPhotoGallery-preview-orientation-square-tooltip' => '剪裁照片以放置它们在所有空间',
+	'wikiaPhotoGallery-preview-crop-sub' => '裁剪图像以适应网格',
 	'wikiaPhotoGallery-preview-tab-theme' => '边框和标题',
 	'wikiaPhotoGallery-preview-captionposition' => '标题位置',
 	'wikiaPhotoGallery-preview-captionposition-within' => '内照片',
@@ -6619,11 +6629,14 @@ $messages['zh-hans'] = array(
 	'wikiaPhotoGallery-preview-captions-left' => '左',
 	'wikiaPhotoGallery-preview-captions-center' => '中间',
 	'wikiaPhotoGallery-preview-captions-right' => '右',
+	'wikiaPhotoGallery-conflict-title' => '发生了编辑冲突',
 	'wikiaPhotoGallery-conflict-edit' => '访问编辑模式',
 	'wikiaPhotoGallery-conflict-view' => '查看当前页面',
 	'wikiaPhotoGallery-preview-delete-title' => '删除该图片？',
 	'wikiaPhotoGallery-preview-saving-title' => '正在保存',
 	'wikiaPhotoGallery-preview-saving-intro' => '请等待到图库保存完毕',
+	'wikiaPhotoGallery-quit-title' => '退出图库编辑器',
+	'wikiaPhotoGallery-quit-intro' => '您确信要退出图库编辑器么？',
 	'wikiaPhotoGallery-quit-savequit' => '保存并退出',
 	'wikiaPhotoGallery-quit-quitonly' => '放弃更改并退出',
 	'wikiaPhotoGallery-slideshow-view-popout-tooltip' => '展开幻灯片',
@@ -6650,10 +6663,13 @@ $messages['zh-hans'] = array(
 	'wikiaPhotoGallery-sliderpreview-addphoto' => '添加一个照片',
 	'wikiaPhotoGallery-sliderpreview-title' => '幻灯片创建器',
 	'wikiaPhotoGallery-upload-uploadtitle' => '找到您的图片',
+	'wikiaPhotoGallery-upload-uploadtext' => "'''要么'''从您的电脑上传图像",
 	'wikiaPhotoGallery-upload-uploadbutton' => '上传图片',
+	'wikiaPhotoGallery-upload-existingtext' => "'''要么'''从下面点击图像：",
 	'wikiaPhotoGallery-upload-existingtext-onarticle' => '这个页面',
 	'wikiaPhotoGallery-upload-selectbutton' => '选择',
 	'wikiaPhotoGallery-photooptions-captionsub' => '描述该图片。',
+	'wikiaPhotoGallery-photooptions-linktitle' => '连接您的图像（可选）',
 	'wikiaPhotoGallery-photooptions-description' => '图像的详细信息。',
 	'wikiaPhotoGallery-search-tooltip' => '在该维基搜索图片',
 	'wikiaPhotoGallery-upload-image-size' => '图片尺寸必须为长670px宽360px或更大',

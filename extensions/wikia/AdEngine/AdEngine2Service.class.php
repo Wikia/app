@@ -159,6 +159,12 @@ class AdEngine2Service
 		return $wgLoadAdsInHead;
 	}
 
+	public static function areAdsAfterPageLoad()
+	{
+		global $wgLoadLateAdsAfterPageLoad;
+		return $wgLoadLateAdsAfterPageLoad;
+	}
+
 	public static function getCachedCategory()
 	{
 		wfProfileIn(__METHOD__);
@@ -215,9 +221,9 @@ class AdEngine2Service
 			$wgOasisResponsive, $wgOasisResponsiveLimited,
 			$wgEnableRHonDesktop, $wgAdPageType, $wgOut,
 			$wgRequest, $wgEnableKruxTargeting,
-			$wgAdVideoTargeting, $wgLiftiumOnLoad,
+			$wgAdVideoTargeting, $wgLiftiumOnLoad, $wgAdDriverSevenOneMediaSub4Site,
 			$wgDartCustomKeyValues, $wgWikiDirectedAtChildrenByStaff, $wgAdEngineDisableLateQueue,
-			$wgAdDriverUseWikiaBarBoxad2, $wgAdDriverWikiaBarBoxad2ImpressionCapping;
+			$wgAdDriverUseBottomLeaderboard, $wgAdDriverBottomLeaderboardImpressionCapping, $wgAdDriverEnableAdsInMaps;
 
 		$vars = [];
 
@@ -231,8 +237,9 @@ class AdEngine2Service
 			'wgAdDriverUseCatParam' => array_search($wgLanguageCode, $wgAdPageLevelCategoryLangs),
 			'wgAdPageType' => $wgAdPageType,
 			'wgAdDriverUseEbay' => $wgAdDriverUseEbay,
-			'wgAdDriverUseDartForSlotsBelowTheFold' => $wgAdDriverUseDartForSlotsBelowTheFold,
+			'wgAdDriverUseDartForSlotsBelowTheFold' => $wgAdDriverUseDartForSlotsBelowTheFold === null ? 'hub' : $wgAdDriverUseDartForSlotsBelowTheFold,
 			'wgAdDriverUseSevenOneMedia' => $wgAdDriverUseSevenOneMedia,
+			'wgAdDriverSevenOneMediaSub4Site' => $wgAdDriverSevenOneMediaSub4Site,
 			'wgUserShowAds' => $wgUser->getOption('showAds'),
 			'wgOutboundScreenRedirectDelay' => $wgOutboundScreenRedirectDelay,
 			'wgEnableOutboundScreenExt' => $wgEnableOutboundScreenExt,
@@ -245,6 +252,7 @@ class AdEngine2Service
 
 			// AdEngine2.js
 			'wgLoadAdsInHead' => AdEngine2Service::areAdsInHead(),
+			'wgLoadLateAdsAfterPageLoad' => AdEngine2Service::areAdsAfterPageLoad(),
 			'wgShowAds' => AdEngine2Service::areAdsShowableOnPage(),
 			'wgAdsShowableOnPage' => AdEngine2Service::areAdsShowableOnPage(), // not used
 			'wgAdDriverStartLiftiumOnLoad' => $wgLiftiumOnLoad,
@@ -265,6 +273,9 @@ class AdEngine2Service
 
 			// AdLogicPageParams.js, SevenOneMediaHelper.js, AnalyticsProviderQuantServe.php
 			'cityShort' => AdEngine2Service::getCachedCategory()['short'],
+
+			// intMapPontoBridge.js
+			'wgAdDriverEnableAdsInMaps' => $wgAdDriverEnableAdsInMaps,
 		];
 
 		if (!empty($wgEnableKruxTargeting)) {
@@ -278,8 +289,8 @@ class AdEngine2Service
 			$variablesToExpose['wgAdDriverSevenOneMediaDisableFirePlaces'] = !empty($wgOasisResponsive) && empty($wgOasisResponsiveLimited);
 		}
 
-		if ($wgAdDriverUseWikiaBarBoxad2) {
-			$variablesToExpose['wgAdDriverWikiaBarBoxad2ImpressionCapping'] = $wgAdDriverWikiaBarBoxad2ImpressionCapping;
+		if ($wgAdDriverUseBottomLeaderboard) {
+			$variablesToExpose['wgAdDriverBottomLeaderboardImpressionCapping'] = $wgAdDriverBottomLeaderboardImpressionCapping;
 		}
 
 		foreach($variablesToExpose as $varName => $varValue) {
@@ -311,6 +322,8 @@ class AdEngine2Service
 			'adDriver2ForcedStatus',         // DART creatives
 			'adDriverLastDARTCallNoAds',     // TODO: remove var
 			'adslots2',                      // AdEngine2_Ad.php
+			'cityShort',                     // AdLogicPageParams.js
+			'cscoreCat',                     // analytics_prod.js
 			'wgAdsShowableOnPage',           // TODO: remove var
 			'wgEnableKruxTargeting',         // Krux.js
 			'wgKruxCategoryId',              // Krux.run.js
@@ -318,11 +331,9 @@ class AdEngine2Service
 			'wgUserShowAds',                 // JWPlayer.class.php
 			'wikiaPageIsCorporate',          // analytics_prod.js
 			'wikiaPageType',                 // analytics_prod.js
-			'cscoreCat',                     // analytics_prod.js
 		];
 		if (self::areAdsInHead()) {
 			$topVars = array_merge($topVars, [
-				'cityShort',                     // AdLogicPageParams.js
 				'wgAdEngineDisableLateQueue',    // AdConfig2.js
 				'wgAdDriverUseSevenOneMedia',    // AdConfig2.js
 				'wgAdDriverForceDirectGptAd',    // AdConfig2.js
@@ -333,6 +344,7 @@ class AdEngine2Service
 				'wgEnableRHonDesktop',           // AdEngine2.run.js
 				'wgHighValueCountries',          // AdLogicHighValueCountry.js
 				'wgLoadAdsInHead',               // AdEngine2.run.js
+				'wgLoadLateAdsAfterPageLoad',        // AdEngine2.run.js
 				'wgUsePostScribe',               // AdEngine2.run.js, scriptwriter.js
 				'wgWikiDirectedAtChildren',      // AdLogicPageParams.js
 				'wikiaPageIsHub',                // AdLogicPageParams.js

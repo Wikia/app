@@ -14,10 +14,9 @@
  * @cfg {Object} surface Instance of parent dialog surface
  * @cfg {Object} frame Instance of parent dialog frame
  */
-ve.ui.WikiaDropTargetWidget = function VeUiWikiaDropTargetWidget ( config ) {
-
+ve.ui.WikiaDropTargetWidget = function VeUiWikiaDropTargetWidget( config ) {
 	// Configuration initialization
-	OO.ui.Widget.call( this, config );
+	ve.ui.WikiaDropTargetWidget.super.call( this, config );
 
 	// Properties
 	this.$overlay = config.$overlay.find( '.oo-ui-window' );
