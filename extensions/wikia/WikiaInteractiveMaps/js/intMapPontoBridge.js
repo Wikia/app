@@ -1,4 +1,12 @@
-define('wikia.intMap.pontoBridge', ['wikia.window', 'ponto', 'wikia.intMap.utils'], function(w, ponto, utils) {
+define(
+	'wikia.intMap.pontoBridge',
+	[
+		'wikia.window',
+		'ponto',
+		require.optional('ext.wikia.adEngine.adLogicPageParams')
+	],
+	function(w, ponto, adParams) {
+
 	'use strict';
 
 	// configuration for interactive map modals triggered by Ponto
@@ -19,7 +27,10 @@ define('wikia.intMap.pontoBridge', ['wikia.window', 'ponto', 'wikia.intMap.utils
 				source: {
 					messages: ['WikiaInteractiveMapsPoiCategories'],
 					scripts: ['int_map_poi_categories_js'],
-					styles: ['extensions/wikia/WikiaInteractiveMaps/css/intMapModal.scss'],
+					styles: [
+						'extensions/wikia/WikiaInteractiveMaps/css/intMapIcons.scss',
+						'extensions/wikia/WikiaInteractiveMaps/css/intMapModal.scss'
+					],
 					mustache: [
 						'extensions/wikia/WikiaInteractiveMaps/templates/intMapPoiCategories.mustache',
 						'extensions/wikia/WikiaInteractiveMaps/templates/intMapPoiCategory.mustache',
@@ -57,24 +68,42 @@ define('wikia.intMap.pontoBridge', ['wikia.window', 'ponto', 'wikia.intMap.utils
 			var actionConfig = actions[params.action],
 				data = params.data;
 
-			if (actionConfig.hasOwnProperty('noLoginRequired') || utils.isUserLoggedIn()) {
-				utils.loadModal(actionConfig, data, function(response) {
-					Ponto.respond(response, callbackId);
-				});
-			} else {
-				utils.showForceLoginModal(actionConfig.origin, function() {
+			require(['wikia.intMap.utils'], function(utils) {
+				if (actionConfig.hasOwnProperty('noLoginRequired') || utils.isUserLoggedIn()) {
 					utils.loadModal(actionConfig, data, function(response) {
-						Ponto.respond(response, callbackId);
+						ponto.respond(response, callbackId);
 					});
-				});
-			}
+				} else {
+					utils.showForceLoginModal(actionConfig.origin, function() {
+						utils.loadModal(actionConfig, data, function(response) {
+							Ponto.respond(response, callbackId);
+						});
+					});
+				}
+			});
 		};
 
 		/**
-		 * @desc tells iframe that it's opened on Wikia page
+		 * @desc returns Wikia settings to the map in iframe
 		 */
-		this.isWikia = function() {
-			return true;
+		this.getWikiaSettings = function() {
+			var settings = {
+				enableEdit: w.skin !== 'wikiamobile',
+				skin: w.skin
+			};
+
+			if (w.wgAdDriverEnableAdsInMaps && adParams) {
+				settings.adOpts = {
+					jsUrl: w.wgCdnRootUrl + w.wgAssetsManagerQuery.
+						replace('%1$s', 'groups').
+						replace('%2$s', 'interactivemaps_ads_js').
+						replace('%3$s', '-').
+						replace('%4$d', w.wgStyleVersion),
+					params: adParams.getPageLevelParams()
+				};
+			}
+
+			return settings;
 		};
 	}
 

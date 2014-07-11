@@ -49,6 +49,7 @@ $wgAutoloadClasses[ 'VideoHandlerController' ] = $dir . '/VideoHandlerController
 $wgAutoloadClasses[ 'VideoHandlerHooks' ] = $dir . '/VideoHandlerHooks.class.php';
 $wgAutoloadClasses[ 'VideoFileUploader' ] = $dir . '/VideoFileUploader.class.php';
 $wgAutoloadClasses[ 'VideoHandlerHelper' ] = $dir . '/VideoHandlerHelper.class.php';
+$wgAutoloadClasses[ 'UpdateThumbnailTask' ] = $dir . '/UpdateThumbnailTask.class.php';
 
 // actions
 $wgAutoloadClasses[ 'WikiaRevertVideoAction'] = $dir . '/actions/WikiaRevertVideoAction.php';

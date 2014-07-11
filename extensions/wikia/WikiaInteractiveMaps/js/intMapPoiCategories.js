@@ -57,6 +57,8 @@ define('wikia.intMap.poiCategories',
 				delete: $.msg('wikia-interactive-maps-poi-categories-delete'),
 				placeholder: $.msg('wikia-interactive-maps-poi-categories-name-placeholder'),
 				emptyOption: $.msg('wikia-interactive-maps-poi-categories-select-category'),
+				uploadImgLink: $.msg('wikia-interactive-maps-poi-categories-upload-image-link'),
+				iconSize: 34,
 				parentPoiCategories: []
 			},
 
@@ -84,13 +86,20 @@ define('wikia.intMap.poiCategories',
 				],
 				poiCategoriesCreated: [
 					poiCategoriesCreated
+				],
+				triggerMarkerUpload: [
+					triggerMarkerUpload
 				]
 			},
 			trigger,
 			params,
 			mapId,
 			mapUrl,
-			mode;
+			mode,
+			modalModes = {
+				CREATE: 'create',
+				EDIT: 'edit'
+			};
 
 		/**
 		 * @desc Entry point for modal
@@ -108,7 +117,7 @@ define('wikia.intMap.poiCategories',
 			poiCategoryTemplate = templates[1];
 			parentPoiCategoryTemplate = templates[2];
 
-			mode = params.mode || 'create';
+			mode = params.mode || modalModes.CREATE;
 			setModalMode();
 
 			setUpParentPoiCategories()
@@ -155,7 +164,7 @@ define('wikia.intMap.poiCategories',
 		function setModalMode() {
 			var title = createPoiCategoriesTitle;
 
-			if (mode === 'edit') {
+			if (mode === modalModes.EDIT) {
 				title = editPoiCategoriesTitle;
 			}
 
@@ -173,7 +182,10 @@ define('wikia.intMap.poiCategories',
 
 			extendedPoiCategoryTemplateData.id = poiCategory.id;
 			extendedPoiCategoryTemplateData.name = poiCategory.name;
-			extendedPoiCategoryTemplateData.marker = poiCategory.no_marker ? w.wgBlankImgUrl : poiCategory.marker;
+
+			if (!poiCategory.no_marker) {
+				extendedPoiCategoryTemplateData.marker = poiCategory.marker;
+			}
 
 			extendedPoiCategoryTemplateData.parentPoiCategories.forEach(function (parentPoiCategory, i) {
 				if (parentPoiCategory.id === poiCategory.parent_poi_category_id) {
@@ -315,7 +327,10 @@ define('wikia.intMap.poiCategories',
 			$inputElement.val('');
 			$inputElementWrapper
 				.find('.poi-category-marker-image')
-				.attr('src', data['fileThumbUrl']);
+				.attr('src', data['fileThumbUrl'])
+				.removeClass('hidden')
+				.siblings('span')
+				.addClass('hidden');
 		}
 
 		/**
@@ -375,13 +390,14 @@ define('wikia.intMap.poiCategories',
 				format: 'json',
 				data: data,
 				callback: function(response) {
-					var data = response.results;
+					var results = response.results;
 
-					if (data && data.success) {
+					if (results && results.success) {
 						utils.cleanUpError(modal);
-						modal.trigger('poiCategoriesCreated', data.content);
+						modal.trigger('poiCategoriesCreated', results.content);
+						utils.track(utils.trackerActions.IMPRESSION, 'poi-category-' + mode, parseInt(data.mapId, 10));
 					} else {
-						utils.showError(modal, data.content.message);
+						utils.showError(modal, results.content.message);
 						modal.activate();
 					}
 				},
@@ -403,7 +419,7 @@ define('wikia.intMap.poiCategories',
 		 * @desc send callback to ponto and close modal
 		 */
 		function poiCategoriesCreated() {
-			if (mode === 'edit') {
+			if (mode === modalModes.EDIT) {
 				if (typeof trigger === 'function') {
 					trigger();
 				}
@@ -413,8 +429,16 @@ define('wikia.intMap.poiCategories',
 			}
 		}
 
+		/**
+		 * @desc handler for triggering upload form for marker image
+		 * @param {Event} event
+		 */
+		function triggerMarkerUpload(event) {
+			$(event.currentTarget).siblings('.poi-category-marker-image-upload').click();
+		}
+
 		return {
 			init: init
-		}
+		};
 	}
 );

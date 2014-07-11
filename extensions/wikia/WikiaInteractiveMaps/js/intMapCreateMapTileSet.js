@@ -21,12 +21,14 @@ define(
 					{
 						type: 'geo',
 						name: $.msg('wikia-interactive-maps-create-map-choose-type-geo'),
-						event: 'selectTileSet'
+						event: 'selectTileSet',
+						image: ''
 					},
 					{
 						type: 'custom',
 						name: $.msg('wikia-interactive-maps-create-map-choose-type-custom'),
-						event: 'browseTileSets'
+						event: 'browseTileSets',
+						image: ''
 					}
 				],
 				chooseTileSetTip: $.msg('wikia-interactive-maps-create-map-choose-tile-set-tip'),
@@ -53,7 +55,7 @@ define(
 				],
 				uploadTileSetImage: [
 					function() {
-						$uploadInput.click()
+						$uploadInput.click();
 					}
 				],
 				previousStep: [
@@ -116,9 +118,9 @@ define(
 		}
 
 		/**
-		 * @desc entry point for choose tile set steps
+		 * @desc Render Choose tile set modal
 		 */
-		function chooseTileSet() {
+		function renderChooseTileSet() {
 			modal.$innerContent.html(utils.render(uiTemplate, templateData));
 
 			// cache selectors
@@ -129,6 +131,21 @@ define(
 			$searchInput = $('#intMapTileSetSearch');
 
 			showStep(stepsStack.pop());
+		}
+
+		/**
+		 * @desc entry point for choose tile set steps
+		 */
+		function chooseTileSet() {
+			$.nirvana.getJson(
+				'WikiaInteractiveMaps',
+				'getRealMapImageUrl',
+				function (data) {
+					templateData.mapType[0].image = data.url;
+					renderChooseTileSet();
+				},
+				renderChooseTileSet
+			);
 		}
 
 		/**
@@ -173,7 +190,6 @@ define(
 		function previousStep() {
 			// removes current step from stack
 			stepsStack.pop();
-
 			showStep(stepsStack.pop());
 		}
 
@@ -182,10 +198,13 @@ define(
 		 * @param {Event} event
 		 */
 		function selectTileSet(event) {
-			var $target = $(event.currentTarget);
+			var $target = $(event.currentTarget),
+				mapTypeChosen = $target.data('type');
+
+			utils.track(utils.trackerActions.CLICK_LINK_IMAGE, mapTypeChosen + '-map-chosen');
 
 			modal.trigger('previewTileSet', {
-				type: $target.data('type'),
+				type: mapTypeChosen,
 				tileSetId: $target.data('id'),
 				originalImageURL: $target.data('image')
 			});

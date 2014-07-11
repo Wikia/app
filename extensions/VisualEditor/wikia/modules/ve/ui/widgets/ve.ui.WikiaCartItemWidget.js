@@ -14,7 +14,7 @@
 ve.ui.WikiaCartItemWidget = function VeUiWikiaCartItemWidget( model ) {
 	var size = 60, $image;
 
-	OO.ui.OptionWidget.call( this, model.getId() );
+	ve.ui.WikiaCartItemWidget.super.call( this, model.getId() );
 
 	this.model = model;
 	this.$element.addClass( 've-ui-texture-pending' );

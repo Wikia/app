@@ -9,9 +9,12 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 	const MAPS_PER_PAGE = 10;
 	const MAP_THUMB_WIDTH = 1110;
 	const MAP_THUMB_HEIGHT = 300;
+	const MAP_MOBILE_THUMB_WIDTH = 640;
+	const MAP_MOBILE_THUMB_HEIGHT = 300;
 	const PAGE_NAME = 'Maps';
 	const TRANSLATION_FILENAME = 'translations.json';
 	const MAPS_WIKIA_URL = 'http://maps.wikia.com';
+	const WIKIA_MOBILE_SKIN_NAME = 'wikiamobile';
 
 	/**
 	 * @var WikiaMaps
@@ -64,61 +67,20 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 			'limit' => self::MAPS_PER_PAGE,
 		];
 
-		$mapsResponse = $this->mapsModel->cachedRequest( 'getMapsFromApi', $params );
+		$mapsResponse = $this->mapsModel->getMapsFromApi( $params );
 
 		if ( !$mapsResponse ) {
 			$this->forward( 'WikiaInteractiveMaps', 'error' );
 			return;
 		}
 
-		// convert images to thumbs
-		foreach ( $mapsResponse->items as $item ) {
-			$item->image = $this->mapsModel->createCroppedThumb( $item->image, self::MAP_THUMB_WIDTH, self::MAP_THUMB_HEIGHT, 'origin' );
-		}
-
-		$this->setVal( 'maps', $mapsResponse->items );
-		$this->setVal( 'hasMaps', !empty( $mapsResponse->total ) );
-		$this->setVal( 'mapThumbWidth', self::MAP_THUMB_WIDTH );
-		$this->setVal( 'mapThumbHeight', self::MAP_THUMB_HEIGHT );
-
-		$url = $this->getContext()->getTitle()->getFullURL();
-		$this->setVal( 'baseUrl', $url );
-
-		$messages = [
-			'title' => wfMessage( 'wikia-interactive-maps-title' ),
-			'create-a-map' => wfMessage( 'wikia-interactive-maps-create-a-map' ),
-			'no-maps-header' => wfMessage( 'wikia-interactive-maps-no-maps-header' ),
-			'no-maps-text' => wfMessage( 'wikia-interactive-maps-no-maps-text' ),
-			'no-maps-learn-more' => wfMessage( 'wikia-interactive-maps-no-maps-learn-more' ),
-		];
-		$this->setVal( 'messages', $messages );
-		$this->setVal( 'sortingOptions', $this->mapsModel->getSortingOptions( $selectedSort ) );
-		$this->setVal( 'searchInput', $this->app->renderView( 'Search', 'Index' ) );
-		$this->setVal( 'learnMoreUrl', self::MAPS_WIKIA_URL );
+		$this->prepareTemplateData( $mapsResponse, $selectedSort );
 
 		$urlParams = [];
 		if ( !is_null( $selectedSort ) ) {
 			$urlParams[ 'sort' ] = $selectedSort;
 		}
-
-		$url = $this->getContext()->getTitle()->getFullURL( $urlParams );
-
-		$pagination = false;
-		$totalMaps = (int)$mapsResponse->total;
-
-		if ( $totalMaps > self::MAPS_PER_PAGE ) {
-			$pagination = $this->app->renderView(
-				'PaginationController',
-				'index',
-				array(
-					'totalItems' => $totalMaps,
-					'itemsPerPage' => self::MAPS_PER_PAGE,
-					'currentPage' => $currentPage,
-					'url' => $url
-				)
-			);
-		}
-		$this->setVal( 'pagination', $pagination );
+		$this->addPagination( (int)$mapsResponse->total, $currentPage, $urlParams );
 
 		$this->response->addAsset( 'extensions/wikia/WikiaInteractiveMaps/css/WikiaInteractiveMaps.scss' );
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
@@ -128,15 +90,13 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 	 * Single map page
 	 */
 	public function map() {
+		$mobileSkin = F::app()->checkSkin( 'wikiamobile' );
 		$mapId = (int)$this->getPar();
 		$zoom = $this->request->getInt( 'zoom', WikiaInteractiveMapsParserTagController::DEFAULT_ZOOM );
 		$lat = $this->request->getInt( 'lat', WikiaInteractiveMapsParserTagController::DEFAULT_LATITUDE );
 		$lon = $this->request->getInt( 'lon', WikiaInteractiveMapsParserTagController::DEFAULT_LONGITUDE );
 
-		$map = $this->mapsModel->cachedRequest(
-			'getMapByIdFromApi',
-			[ 'id' => $mapId ]
-		);
+		$map = $this->mapsModel->getMapByIdFromApi( $mapId );
 
 		if ( isset( $map->title ) ) {
 			$this->wg->out->setHTMLTitle( $map->title );
@@ -148,11 +108,16 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 				$lon
 			]);
 
-			$this->setVal( 'title', $map->title );
+			if ( $mobileSkin ) {
+				$this->setMapOnMobile();
+			} else {
+				$this->setVal( 'title', $map->title );
+				$this->setVal( 'menu', $this->getMenuMarkup() );
+			}
+
 			$this->setVal( 'mapFound', true );
 			$this->setVal( 'url', $url );
 			$this->setVal( 'height', self::MAP_HEIGHT );
-			$this->setVal( 'menu', $this->getMenuMarkup() );
 			$this->setVal( 'mapId', $mapId );
 		} else {
 			$this->setVal( 'mapFound', false );
@@ -164,6 +129,23 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 
 		$this->response->addAsset( 'extensions/wikia/WikiaInteractiveMaps/css/WikiaInteractiveMaps.scss' );
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
+	}
+
+	/**
+	 * Makes all required adjustments for rendering single map page on mobile
+	 */
+	private function setMapOnMobile() {
+		global $wgHooks;
+
+		// adds class to body
+		$wgHooks[ 'SkinGetPageClasses' ][] = function( &$classes ) {
+			$classes .= ' int-map-mobile-map-page';
+			return true;
+		};
+
+		// skip rendering parts of Wikia page
+		WikiaMobileFooterService::setSkipRendering( true );
+		WikiaMobilePageHeaderService::setSkipRendering( true );
 	}
 
 	/**
@@ -190,8 +172,8 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 	 * @param string $name - name of the special page
 	 * @return string
 	 */
-	function getSpecialUrl( $name ) {
-		return Title::newFromText( $name, NS_SPECIAL )->getFullUrl();
+	static function getSpecialMapsUrl( ) {
+		return Title::newFromText( self::PAGE_NAME, NS_SPECIAL )->getFullUrl();
 	}
 
 	/**
@@ -213,7 +195,7 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 			NotificationsController::addConfirmation( wfMessage( 'wikia-interactive-maps-delete-map-success' ) );
 			$this->response->setVal(
 				'redirectUrl',
-				$this->getSpecialUrl( self::PAGE_NAME )
+				self::getSpecialMapsUrl()
 			);
 		}
 	}
@@ -249,4 +231,107 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 		$this->response->setVal( 'messages', $messages );
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 	}
+
+	/**
+	 * Iterates through $items and changes image URL to thumbnail
+	 *
+	 * @param Array $items
+	 * @param Integer $width
+	 * @param Integer $height
+	 */
+	private function convertImagesToThumbs( &$items, $width, $height ) {
+		foreach ( $items as $item ) {
+			$item->image = $this->mapsModel->createCroppedThumb( $item->image, $width, $height, 'origin' );
+		}
+	}
+
+	/**
+	 * Sets template variables depending on skin
+	 *
+	 * @param Array $mapsResponse an array taken from API response
+	 * @param String $selectedSort a sorting option passed in $_GET
+	 */
+	private function prepareTemplateData( $mapsResponse, $selectedSort ) {
+		$isWikiaMobileSkin = $this->app->checkSkin( self::WIKIA_MOBILE_SKIN_NAME );
+
+		$thumbWidth = ( $isWikiaMobileSkin ? self::MAP_MOBILE_THUMB_WIDTH : self::MAP_THUMB_WIDTH );
+		$thumbHeight = ( $isWikiaMobileSkin ? self::MAP_MOBILE_THUMB_HEIGHT : self::MAP_THUMB_HEIGHT );
+		$this->convertImagesToThumbs( $mapsResponse->items, $thumbWidth, $thumbHeight );
+		$this->setVal( 'mapThumbWidth', $thumbWidth );
+		$this->setVal( 'mapThumbHeight', $thumbHeight );
+
+		$this->setVal( 'renderControls', ( $isWikiaMobileSkin ? false : true ) );
+		$this->setVal( 'renderTitle', ( $isWikiaMobileSkin ? false : true ) );
+
+		$messages = [
+			'no-maps-header' => wfMessage( 'wikia-interactive-maps-no-maps-header' ),
+			'no-maps-text' => wfMessage( 'wikia-interactive-maps-no-maps-text' ),
+			'no-maps-learn-more' => wfMessage( 'wikia-interactive-maps-no-maps-learn-more' ),
+		];
+
+		if ( $isWikiaMobileSkin ) {
+			WikiaMobilePageHeaderService::setSkipRendering( true );
+		} else {
+			$messages = array_merge( $messages, [
+				'title' => wfMessage( 'wikia-interactive-maps-title' ),
+				'create-a-map' => wfMessage( 'wikia-interactive-maps-create-a-map' ),
+			] );
+			$this->setVal( 'sortingOptions', $this->mapsModel->getSortingOptions( $selectedSort ) );
+			$this->setVal( 'searchInput', $this->app->renderView( 'Search', 'Index' ) );
+		}
+
+		// template variables shared between skins
+		$this->setVal( 'messages', $messages );
+		$this->setVal( 'maps', $mapsResponse->items );
+		$this->setVal( 'hasMaps', !empty( $mapsResponse->total ) );
+		$this->setVal( 'learnMoreUrl', self::MAPS_WIKIA_URL );
+
+		$baseUrl = $this->getContext()->getTitle()->getFullURL();
+		$this->setVal( 'baseUrl', $baseUrl );
+	}
+
+	/**
+	 * Renders pagination and adds it to template variables for Oasis skin
+	 *
+	 * @param Integer $totalMaps
+	 * @param Integer $currentPage
+	 * @param Array $urlParams
+	 */
+	private function addPagination( $totalMaps, $currentPage, $urlParams ) {
+		$url = $this->getContext()->getTitle()->getFullURL( $urlParams );
+		$pagination = false;
+		$paginationOptions = [
+			'totalItems' => $totalMaps,
+			'itemsPerPage' => self::MAPS_PER_PAGE,
+			'currentPage' => $currentPage,
+			'url' => $url,
+		];
+
+		if ( $this->app->checkSkin( self::WIKIA_MOBILE_SKIN_NAME ) ) {
+			$paginationOptions = array_merge( $paginationOptions, [
+				'prevMsg' => '&lt;',
+				'nextMsg' => '&gt;',
+			] );
+		}
+
+		if ( $totalMaps > self::MAPS_PER_PAGE ) {
+			$pagination = $this->app->renderView(
+				'PaginationController',
+				'index',
+				$paginationOptions
+			);
+		}
+
+		$this->setVal( 'pagination', $pagination );
+	}
+
+	/**
+	 * Return Real Map image URL
+	 */
+	public function getRealMapImageUrl() {
+		$this->response->setVal( 'url', $this->mapsModel->getRealMapImageUrl() );
+		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
+		$this->response->setCacheValidity( WikiaResponse::CACHE_SHORT, WikiaResponse::CACHE_SHORT );
+	}
 }
+

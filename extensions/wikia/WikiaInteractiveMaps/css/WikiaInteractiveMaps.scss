@@ -1,10 +1,7 @@
 @import "skins/oasis/css/mixins/background-opacity";
 @import "skins/oasis/css/core/color";
 @import "skins/oasis/css/mixins/gradient";
-
-// TODO used also for parser tag - could be abstracted
-$content-color: #fff;
-$gradient-color-start: rgba(0, 0, 0, 0.7);
+@import "WikiaMapsShared";
 
 .wikia-interactive-maps {
 	position: relative;
@@ -41,17 +38,7 @@ $gradient-color-start: rgba(0, 0, 0, 0.7);
 	}
 
 	h3 {
-		@include linear-gradient(transparent, top, transparent, 0%, $gradient-color-start, 100%);
-
-		border: 0;
-		bottom: 0;
-		box-sizing: border-box;
-		color: $content-color;
-		left: 0;
-		margin: 0;
-		padding: 50px 20px 20px;
-		position: absolute;
-		width: 100%;
+		@include map-thumb-title($content-color, $gradient-color-start, $map-item-max-width);
 	}
 
 	.map-status {

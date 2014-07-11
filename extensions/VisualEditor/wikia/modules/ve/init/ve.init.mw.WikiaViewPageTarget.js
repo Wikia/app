@@ -5,7 +5,7 @@
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
-/*global mw, veTrack, _kiq */
+/*global mw, veTrack */
 
 /**
  * Initialization MediaWiki view page target.
@@ -17,7 +17,7 @@
  */
 ve.init.mw.WikiaViewPageTarget = function VeInitMwWikiaViewPageTarget() {
 	// Parent constructor
-	ve.init.mw.ViewPageTarget.call( this );
+	ve.init.mw.WikiaViewPageTarget.super.call( this );
 
 	this.toolbarSaveButtonEnableTracked = false;
 };
@@ -127,12 +127,12 @@ ve.init.mw.WikiaViewPageTarget.prototype.onToolbarCancelButtonClick = function (
 	}
 	ve.track( 'wikia', { 'action': ve.track.actions.CLICK, 'label': 'button-cancel' } );
 	mw.hook( 've.cancelButton' ).fire();
+	/*
 	// Trigger Qualaroo survey for anonymous users abandoning edit
-	/*jslint nomen: true*/
 	if ( mw.user.anonymous() && window._kiq ) {
 		_kiq.push( ['set', { 'event': 'abandon_ve_cancel' } ] );
 	}
-	/*jslint nomen: false*/
+	*/
 	ve.init.mw.ViewPageTarget.prototype.onToolbarCancelButtonClick.call( this );
 };
 
@@ -235,8 +235,7 @@ ve.init.mw.ViewPageTarget.prototype.replacePageContent = function ( html, catego
 		$mwContentText = $( '#mw-content-text' ),
 		$content = $( $.parseHTML( html ) );
 
-	if ( mw.config.get( 'wgNamespaceNumber' ) === 14 ) {
-		//Category
+	if ( mw.config.get( 'wgNamespaceNumber' ) === 14 /* NS_CATEOGRY */ ) {
 		$mwContentText.children().filter( function () {
 			var $this = $( this );
 			return !(

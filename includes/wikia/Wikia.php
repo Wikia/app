@@ -34,7 +34,6 @@ $wgHooks['TitleGetSquidURLs']        [] = 'Wikia::onTitleGetSquidURLs';
 # changes in recentchanges (MultiLookup)
 $wgHooks['RecentChange_save']        [] = "Wikia::recentChangesSave";
 $wgHooks['BeforeInitialize']         [] = "Wikia::onBeforeInitializeMemcachePurge";
-//$wgHooks['MediaWikiPerformAction']   [] = "Wikia::onPerformActionNewrelicNameTransaction"; disable to gather different newrelic statistics
 $wgHooks['SkinTemplateOutputPageBeforeExec'][] = "Wikia::onSkinTemplateOutputPageBeforeExec";
 $wgHooks['UploadVerifyFile']         [] = 'Wikia::onUploadVerifyFile';
 
@@ -414,13 +413,10 @@ class Wikia {
 
 		$method = $sub ? $method . "-" . $sub : $method;
 		if( $wgDevelEnvironment || $wgErrorLog || $always ) {
-			if (class_exists('Wikia\\Logger\\WikiaLogger')) {
-				$method = preg_match('/-WIKIA$/', $method) ? str_replace('-WIKIA', '', $method) : $method;
-				\Wikia\Logger\WikiaLogger::instance()->debug($message, ['method' => $method]);
-			} else {
-				error_log( $method . ":{$wgDBname}/{$wgCityId}:" . $message );
-			}
+			$method = preg_match('/-WIKIA$/', $method) ? str_replace('-WIKIA', '', $method) : $method;
+			\Wikia\Logger\WikiaLogger::instance()->debug($message, ['method' => $method]);
 		}
+
 		/**
 		 * commandline = echo
 		 */
@@ -1837,18 +1833,7 @@ class Wikia {
 					break;
 			}
 		}
-	}
 
-	// Hook to Construct a tag for newrelic
-	// TEMPORARLY DISABLED
-	// @deprecated
-	static public function onPerformActionNewrelicNameTransaction($output, $article, $title, User $user, $request, $wiki ) {
-		global $wgVersion;
-		if( function_exists( 'newrelic_name_transaction' ) ) {
-			$loggedin = $user->isLoggedIn() ? 'user' : 'anon';
-			$action = $wiki->getAction();
-			newrelic_name_transaction( "/action/$action/$loggedin/$wgVersion" );
-		}
 		return true;
 	}
 

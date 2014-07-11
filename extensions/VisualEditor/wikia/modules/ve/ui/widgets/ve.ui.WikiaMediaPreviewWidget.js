@@ -7,7 +7,7 @@
 ve.ui.WikiaMediaPreviewWidget = function VeUiWikiaMediaPreviewWidget() {
 
 	// Parent constructor
-	OO.ui.Widget.call( this );
+	ve.ui.WikiaMediaPreviewWidget.super.call( this );
 
 	// Properties
 	this.model = null;
