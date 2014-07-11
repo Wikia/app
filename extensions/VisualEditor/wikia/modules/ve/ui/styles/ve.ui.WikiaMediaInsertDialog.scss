@@ -262,16 +262,13 @@ $width-cart: 118px;
 			background: $color-page;
 			bottom: auto;
 			color: $color-text;
+			font-weight: bold;
 			margin-top: 160px;
 			text-shadow: none;
+		}
 
-			.ve-ui-wikiaMediaOptionWidget-label-metadata {
-				color: $color-alternate-text;
-			}
-
-			.ve-ui-wikiaMediaOptionWidget-label-title {
-				font-weight: bold;
-			}
+		.ve-ui-wikiaMediaOptionWidget-sublabel {
+			color: $color-alternate-text;
 		}
 
 		&.oo-ui-optionWidget-highlighted,
