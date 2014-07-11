@@ -99,6 +99,7 @@ class TaskRunner {
 			'CreatePdfThumbnailsJob',
 //		'CreateWikiLocalJob',
 			'HAWelcomeJob',
+			'RefreshLinksJob',
 			'HTMLCacheUpdate',
 			'ImageReviewTask',
 			'MultiDeleteTask',
