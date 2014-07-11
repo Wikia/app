@@ -275,7 +275,7 @@ define('wikia.intMap.editPOI', ['jquery', 'wikia.intMap.utils'], function($, uti
 			.val(dataSet.title)
 			.blur();
 
-		if( dataSet.imageUrl ) {
+		if (dataSet.imageUrl) {
 			addImagePreview(dataSet.imageUrl);
 		} else {
 			removeImagePreview();
@@ -318,7 +318,7 @@ define('wikia.intMap.editPOI', ['jquery', 'wikia.intMap.utils'], function($, uti
 	function onClickOutsideSuggestions(event) {
 		var $target = $(event.target);
 
-		if (!$target.hasClass('article-suggestion') && !$target.is(articleInputId) ) {
+		if (!$target.hasClass('article-suggestion') && !$target.is(articleInputId)) {
 			hideSuggestions();
 		}
 	}
