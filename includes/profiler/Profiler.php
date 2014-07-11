@@ -50,6 +50,9 @@ class Profiler {
 	protected $mProfileID = false, $mCollateDone = false, $mTemplated = false;
 	private static $__instance = null;
 
+	/** @var ProfilerDataSink */
+	protected $sink;
+
 	function __construct( $params ) {
 		if ( isset( $params['timeMetric'] ) ) {
 			$this->mTimeMetric = $params['timeMetric'];
@@ -525,4 +528,26 @@ class Profiler {
 			wfDebug( $s );
 		}
 	}
+
+	public function getSink() {
+		return $this->sink;
+	}
+
+	public function setSink( ProfilerDataSink $sink ) {
+		$this->sink = $sink;
+	}
+
+	function getCpuTime( $ru = null ) {
+		if ( function_exists( 'getrusage' ) ) {
+			if ( $ru == null ) {
+				$ru = getrusage();
+			}
+
+			return ( $ru['ru_utime.tv_sec'] + $ru['ru_stime.tv_sec'] + ( $ru['ru_utime.tv_usec'] +
+					$ru['ru_stime.tv_usec'] ) * 1e-6 );
+		} else {
+			return 0;
+		}
+	}
+
 }

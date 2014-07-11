@@ -145,6 +145,16 @@ if ( $wgEnableSelenium ) {
 	require_once( MWInit::compiledPath( "includes/SeleniumWebSettings.php" ) );
 }
 
+// attach sink to the profiler
+if ( $wgProfiler instanceof Profiler ) {
+	if ( empty($wgProfilerSendViaScribe) ) {
+		$sink = new ProfilerDataUdpSink();
+	} else {
+		$sink = new ProfilerDataScribeSink();
+	}
+	$wgProfiler->setSink($sink);
+}
+
 // Wikia change - begin - @author: wladek
 // Catch all output
 $initialOutput = ob_get_clean();
