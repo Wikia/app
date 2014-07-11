@@ -1,4 +1,5 @@
 <?php
+
 namespace InfoboxBuilder;
 
 /**
@@ -6,12 +7,12 @@ namespace InfoboxBuilder;
  *
  * @license GNU GPL v2+
  *
- * @author Adam Karmiński < adamk@wikia-inc.com > 
+ * @author Adam Karmiński < adamk@wikia-inc.com >
  */
 final class InfoboxBuilderHooks {
 	/**
 	 * Hook adding InfoboxBuilder as an external library
-	 * 
+	 *
 	 * @param  string $engine
 	 * @param  array  $extraLibraries
 	 * @return bool
@@ -38,7 +39,7 @@ final class InfoboxBuilderHooks {
 	 * Function executed by use of {{#infoboxbuilder:}} parser function.
 	 * It gets the code from InfoboxBuilder.lua and creates new module object from it. The module is then invoked and the result is returned.
 	 * @param  obj $parser Parser object
-	 * @param  obj $frame  PPFrame object 
+	 * @param  obj $frame  PPFrame object
 	 * @param  arr $args   Array of arguments passed from $frame object
 	 * @return str         A string returned by InfoboxBuilder.lua
 	 */
@@ -49,7 +50,7 @@ final class InfoboxBuilderHooks {
 			/**
 			 * Add the registered SCSS with the default theme
 			 */
-			$parser->getOutput()->addModuleStyles('ext.wikia.InfoboxBuilder');
+			$parser->getOutput()->addModuleStyles( 'ext.wikia.InfoboxBuilder' );
 
 			$engine = \Scribunto::getParserEngine( $parser );
 
