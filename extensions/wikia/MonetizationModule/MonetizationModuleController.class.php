@@ -90,7 +90,7 @@ class MonetizationModuleController extends WikiaController {
 		$this->products = $products;
 		$this->buttonLabel = wfMessage( 'monetization-module-button-label' )->plain();
 		$this->className = ( $location == MonetizationModuleHelper::LOCATION_RAIL ) ? 'module' : '';
-		$this->type = __METHOD__;
+		$this->type = 'ecommerce';
 		$this->position = $location;
 
 		wfProfileOut( __METHOD__ );
