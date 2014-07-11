@@ -294,11 +294,11 @@ ve.ui.WikiaMediaInsertDialog.prototype.onSearchCheck = function ( item ) {
  * @param {Object|null} item The item to preview or `null` if closing the preview.
  */
 ve.ui.WikiaMediaInsertDialog.prototype.onMediaPreview = function ( item ) {
-	var model = item.getModel();
-	if ( model.type === 'photo' ) {
-		this.mediaPreview.openForImage( model.title, model.url );
-	} else {
-		this.mediaPreview.openForVideo( model.title, model.provider, model.videoId );
+	var data = item.getData();
+	if ( data.type === 'photo' ) {
+		this.mediaPreview.openForImage( data.title, data.url );
+	} else if ( data.type === 'video' ) {
+		this.mediaPreview.openForVideo( data.title, data.provider, data.videoId );
 	}
 };
 

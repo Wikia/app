@@ -51,7 +51,7 @@ OO.inheritClass( ve.ui.WikiaMediaResultsWidget, OO.ui.Widget );
  * @param {ve.ui.WikiaMediaOptionWidget} item Item whose state is changing
  */
 ve.ui.WikiaMediaResultsWidget.prototype.onResultsCheck = function ( item ) {
-	this.emit( 'check', item.getModel() );
+	this.emit( 'check', item.getData() );
 };
 
 /**
@@ -62,6 +62,7 @@ ve.ui.WikiaMediaResultsWidget.prototype.onResultsCheck = function ( item ) {
  */
 ve.ui.WikiaMediaResultsWidget.prototype.onResultsSelect = function ( item ) {
 	if ( item ) {
+		this.results.selectItem( null );
 		this.emit( 'preview', item );
 	}
 };
@@ -75,10 +76,8 @@ ve.ui.WikiaMediaResultsWidget.prototype.onResultsSelect = function ( item ) {
 ve.ui.WikiaMediaResultsWidget.prototype.addItems = function ( items ) {
 	var i, optionWidget,
 		results = [];
-
 	for ( i = 0; i < items.length; i++ ) {
-		optionWidget = new ve.ui[ this.getClassByOptionType( items[i].type ) ]
-			( items[i], { '$': this.$, 'size': this.size } );
+		optionWidget = ve.ui.WikiaMediaOptionWidget.newFromData( items[i], { '$': this.$, 'size': this.size } );
 		optionWidget.on( 'check', this.onResultsCheck, [ optionWidget ], this );
 		results.push(
 			optionWidget
@@ -88,19 +87,6 @@ ve.ui.WikiaMediaResultsWidget.prototype.addItems = function ( items ) {
 	this.results.addItems( results );
 };
 
-/**
- * Gets the option widget class name given a media type
- *
- * @method
- * @param {string} mediaType
- * @returns {string}
- */
-ve.ui.WikiaMediaResultsWidget.prototype.getClassByOptionType = function( mediaType ) {
-	if ( typeof mediaType !== 'string' || mediaType === '' ) {
-		return 'WikiaMediaOptionWidget';
-	}
-	return 'Wikia' + mediaType.charAt( 0 ).toUpperCase() + mediaType.slice( 1 ) + 'OptionWidget';
-}
 
 /**
  * Get the results.

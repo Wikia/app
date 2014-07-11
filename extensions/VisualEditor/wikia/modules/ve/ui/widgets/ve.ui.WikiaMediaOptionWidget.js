@@ -12,29 +12,25 @@
  * @extends OO.ui.OptionWidget
  *
  * @constructor
- * @param {Mixed} model Item data
+ * @param {Mixed} data Item data
  * @param {Object} [config] Configuration options
  * @cfg {number} [size] Media thumbnail size
  */
-ve.ui.WikiaMediaOptionWidget = function VeUiWikiaMediaOptionWidget( model, config ) {
+ve.ui.WikiaMediaOptionWidget = function VeUiWikiaMediaOptionWidget( data, config ) {
 	var $label, $labelMetadata;
 
-	// Configuration intialization
-	config = config || {};
-
-	this.model = model;
-
 	// Parent constructor
-	ve.ui.WikiaMediaOptionWidget.super.call( this, this.model.title, config );
+	ve.ui.WikiaMediaOptionWidget.super.call( this, data, config );
 
 	// Properties
 	this.size = config.size || 158;
-	this.mwTitle = new mw.Title( this.model.title ).getNameText();
+	this.mwTitle = new mw.Title( this.data.title ).getNameText();
 	this.image = new Image();
 	this.$image = this.$( this.image );
 	this.$back = this.$( '<div>' );
 	this.$front = this.$( '<div>' );
 	this.$thumb = this.$back.add( this.$front );
+	// TODO: Presence of checkbox perhaps should depend on the configuration
 	this.check = new OO.ui.ButtonWidget( {
 		'$': this.$,
 		'icon': 'unchecked',
@@ -51,21 +47,10 @@ ve.ui.WikiaMediaOptionWidget = function VeUiWikiaMediaOptionWidget( model, confi
 
 	// Initialization
 	this.loadThumbnail();
-	$label = $( '<span>' )
-		.attr( {
-			'class': 've-ui-wikiaMediaOptionWidget-label-title',
-			'title': this.mwTitle
-			} )
-		.text( this.mwTitle );
-	$labelMetadata = $( '<span>' )
-		.addClass( 've-ui-wikiaMediaOptionWidget-label-metadata' )
-		.text( this.getSecondaryMetadata( this.model.type ) );
-	$label.after( '<br>' );
-	$label.after( $labelMetadata );
-	this.setLabel( $label );
+	this.setLabel( this.mwTitle );
 	this.check.$element.addClass( 've-ui-wikiaMediaOptionWidget-check' );
 	this.$element
-		.addClass( 've-ui-mwMediaResultWidget ve-ui-texture-pending ' + this.model.type )
+		.addClass( 've-ui-mwMediaResultWidget ve-ui-texture-pending ' + this.data.type )
 		.css( { 'width': this.size, 'height': this.size } )
 		.prepend( this.$thumb, this.check.$element );
 };
@@ -73,6 +58,19 @@ ve.ui.WikiaMediaOptionWidget = function VeUiWikiaMediaOptionWidget( model, confi
 /* Inheritance */
 
 OO.inheritClass( ve.ui.WikiaMediaOptionWidget, OO.ui.OptionWidget );
+
+ve.ui.WikiaMediaOptionWidget.newFromData = function ( data, config ) {
+	switch ( data.type ) {
+		case 'photo':
+			return new ve.ui.WikiaPhotoOptionWidget( data, config );
+		case 'video':
+			return new ve.ui.WikiaVideoOptionWidget( data, config );
+		case 'map':
+			return new ve.ui.WikiaMapOptionWidget( data, config );
+		default:
+			throw new Error( 'Uknown type: ' + data.type );
+	}
+};
 
 /* Methods */
 
@@ -83,10 +81,10 @@ OO.inheritClass( ve.ui.WikiaMediaOptionWidget, OO.ui.OptionWidget );
  */
 ve.ui.WikiaMediaOptionWidget.prototype.loadThumbnail = function () {
 	require( ['wikia.thumbnailer'], ve.bind( function ( thumbnailer ) {
-		this.image.src = thumbnailer.getThumbURL( this.model.url, 'image', this.size - 2, this.size - 2 );
-		this.$thumb.addClass(
-			've-ui-mwMediaResultWidget-thumbnail ve-ui-WikiaMediaOptionWidget-thumbnail'
-		);
+		var src = thumbnailer.getThumbURL( this.data.url, 'image', this.size - 2, this.size - 2 );
+		// TODO: Special handling for Map
+		this.image.src = src;
+		this.$thumb.addClass( 've-ui-mwMediaResultWidget-thumbnail ve-ui-WikiaMediaOptionWidget-thumbnail' );
 		this.$thumb.last().css( 'background-image', 'url(' + this.image.src + ')' );
 	}, this ) );
 };
@@ -147,18 +145,3 @@ ve.ui.WikiaMediaOptionWidget.prototype.setChecked = function ( checked ) {
 		this.$element.removeClass( 've-ui-wikiaMediaOptionWidget-selected' );
 	}
 };
-
-ve.ui.WikiaMediaOptionWidget.prototype.getModel = function () {
-	return this.model;
-};
-
-/**
- * Get the secondary metadata from the model. This is meant to be overridden by a child class.
- *
- * @method
- * @return {string}
- */
-ve.ui.WikiaMediaOptionWidget.prototype.getSecondaryMetadata = function () {
-	return '';
-};
-

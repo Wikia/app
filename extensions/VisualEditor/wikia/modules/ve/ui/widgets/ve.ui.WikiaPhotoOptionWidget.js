@@ -10,21 +10,15 @@
  * @extends ve.ui.WikiaMediaOptionWidget
  *
  * @constructor
- * @param {Mixed} model Item data
+ * @param {Mixed} data Item data
  * @param {Object} [config] Configuration options
  * @cfg {number} [size] Media thumbnail size
  */
-ve.ui.WikiaPhotoOptionWidget = function VeUiWikiaPhotoOptionWidget( model, config ) {
-	// Configuration intialization
-	config = config || {};
-
+ve.ui.WikiaPhotoOptionWidget = function VeUiWikiaPhotoOptionWidget( data, config ) {
 	// Parent constructor
-	ve.ui.WikiaPhotoOptionWidget.super.call( this, model, config );
+	ve.ui.WikiaPhotoOptionWidget.super.call( this, data, config );
 };
 
 /* Inheritance */
 
 OO.inheritClass( ve.ui.WikiaPhotoOptionWidget, ve.ui.WikiaMediaOptionWidget );
-
-/* Methods */
-

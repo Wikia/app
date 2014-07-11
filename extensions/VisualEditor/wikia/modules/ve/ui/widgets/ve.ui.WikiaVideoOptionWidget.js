@@ -10,34 +10,27 @@
  * @extends ve.ui.WikiaMediaOptionWidget
  *
  * @constructor
- * @param {Mixed} model Item data
+ * @param {Mixed} data Item data
  * @param {Object} [config] Configuration options
  * @cfg {number} [size] Media thumbnail size
  */
-ve.ui.WikiaVideoOptionWidget = function VeUiWikiaVideoOptionWidget( model, config ) {
+ve.ui.WikiaVideoOptionWidget = function VeUiWikiaVideoOptionWidget( data, config ) {
 	var $icon, $duration;
 
-	// Configuration intialization
-	config = config || {};
-
 	// Parent constructor
-	ve.ui.WikiaVideoOptionWidget.super.call( this, model, config );
+	ve.ui.WikiaVideoOptionWidget.super.call( this, data, config );
 
 	// Initialization
-	$icon = $( '<span>' ).addClass( 've-ui-wikiaVideoOptionWidget-icon' );
-	this.$element.append( $icon );
+	$icon = this.$( '<span>' )
+		.addClass( 've-ui-wikiaVideoOptionWidget-icon' );
+	$duration = this.$( '<span>' )
+		.addClass( 've-ui-wikiaVideoOptionWidget-duration' )
+		.text( this.data.duration );
 
-	if ( typeof model.duration === 'string' && model.duration !== '' ) {
-		$duration = $( '<span>' )
-			.addClass( 've-ui-wikiaVideoOptionWidget-duration' )
-			.text( model.duration );
-		this.$element.append( $duration );
-	}
+	// DOM changes
+	this.$element.append( $icon, $duration );
 };
 
 /* Inheritance */
 
 OO.inheritClass( ve.ui.WikiaVideoOptionWidget, ve.ui.WikiaMediaOptionWidget );
-
-/* Methods */
-

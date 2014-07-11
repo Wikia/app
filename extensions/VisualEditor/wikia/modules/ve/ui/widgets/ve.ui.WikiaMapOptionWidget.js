@@ -10,28 +10,26 @@
  * @extends ve.ui.WikiaMediaOptionWidget
  *
  * @constructor
- * @param {Mixed} model Item data
+ * @param {Mixed} data Item data
  * @param {Object} [config] Configuration options
  * @cfg {number} [size] Media thumbnail size
  */
-ve.ui.WikiaMapOptionWidget = function VeUiWikiaMapOptionWidget( model, config ) {
-	// Configuration intialization
-	config = config || {};
+ve.ui.WikiaMapOptionWidget = function VeUiWikiaMapOptionWidget( data, config ) {
+	var $sublabel;
 
 	// Parent constructor
-	ve.ui.WikiaMapOptionWidget.super.call( this, model, config );
+	ve.ui.WikiaMapOptionWidget.super.call( this, data, config );
+
+	// Properties
+	$sublabel = this.$( '<span>' )
+		.addClass( 've-ui-wikiaMapOptionWidget-sublabel' )
+		// TODO: i18n/messaging for pins
+		.text( this.data.pins );
+
+	// DOM changes
+	$sublabel.insertAfter( this.$label );
 };
 
 /* Inheritance */
 
 OO.inheritClass( ve.ui.WikiaMapOptionWidget, ve.ui.WikiaMediaOptionWidget );
-
-/* Methods */
-
-/**
- * @inheritdoc
- */
-ve.ui.WikiaMapOptionWidget.prototype.getSecondaryMetadata = function () {
-	return this.model.pins + ' pins';
-};
-
