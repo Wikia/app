@@ -6,7 +6,10 @@
  */
 class ThumbnailHelper extends WikiaModel {
 
-	const MIN_INFO_ICON_SIZE = 100;
+	/**
+	 * @const int Minimum width of thumbnail to show icon link to file page on hover
+	 */
+	const MIN_INFO_ICON_WIDTH = 100;
 
 	/**
 	 * Get attributes for mustache template
