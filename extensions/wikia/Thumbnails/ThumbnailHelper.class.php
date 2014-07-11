@@ -7,6 +7,11 @@
 class ThumbnailHelper extends WikiaModel {
 
 	/**
+	 * @const int Minimum width of thumbnail to show icon link to file page on hover
+	 */
+	const MIN_INFO_ICON_WIDTH = 100;
+
+	/**
 	 * Get attributes for mustache template
 	 * Don't use this for values that need to be escaped.
 	 * Wrap attributes in three curly braces so quote marks don't get escaped.
