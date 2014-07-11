@@ -27,9 +27,7 @@ EOD;
 		$output = $simplifier->simplifyToSnippet( $jsonSimple );
 		$this->assertEquals(
 			'Withstand (Genesis, #46) is an Uncommon Martial Attack card with 0 Attack and 3 Shield.'.
-			' For the next 3 turns, if you would gain shield, gain +1 shield. "I see they haven\'t started'.
-			' hiring a better class of Southside \'security\' guards since I worked here. They tried to'.
-			' terminate me too. As you can see, it didn\'t stick." -- The Southside Sentry', $output );
+			' For the next 3 turns, if you would gain shield, gain +1 shield.', $output );
 	}
 
 	public function testSimplifyToTextForLists() {
@@ -47,9 +45,8 @@ EOD;
 		$jsonSimple = $htmlParser->parse( $html );
 		$output = $simplifier->simplifyToSnippet( $jsonSimple );
 		$this->assertEquals(
-			' Official Star Wars Soundboards - Luke Skywalker on StarWars.com, Luke Skywalker on Wikipedia,'.
-			' Luke Skywalker on the Official Star Wars Soundboards
-', $output );
+			'Official Star Wars Soundboards - Luke Skywalker on StarWars.com, Luke Skywalker on Wikipedia,'.
+			' Luke Skywalker on the Official Star Wars Soundboards', $output );
 	}
 
 	public function testImages() {
