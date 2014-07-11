@@ -532,7 +532,8 @@ class WikiaInteractiveMapsPoiController extends WikiaInteractiveMapsBaseControll
 		if ( empty( $query ) ) {
 			$results[ 'responseText' ] = wfMessage( 'wikia-interactive-maps-edit-poi-article-suggest-no-search-term' )->plain();
 		} else {
-			$results = array_map( function( $item ) {
+			$results = array_map( 
+				function( $item ) {
 					$imageUrl = $this->mapsModel->getArticleImage(
 						$item[ 0 ][ 'title' ],
 						self::POI_ARTICLE_IMAGE_THUMB_SIZE,
