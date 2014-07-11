@@ -61,6 +61,7 @@ $color-subtle-text: mix($color-page, $color-alternate-text, 50%);
 
 	.article-thumb-wrapper {
 		position: relative;
+		display: inline-block;
 
 		.info-icon {
 			background-image: url('/skins/oasis/images/info_icon.png');

@@ -245,10 +245,14 @@ class ThumbnailImage extends MediaTransformOutput {
 		// Make sure to trim the output so that there is no leading whitespace.  The output of this method
 		// may be fed back into code that will be parsed for wikitext and leading whitespace will be
 		// wrap this HTML in <pre> tags.  VID-1819
-		return trim( F::app()->renderView( 'ThumbnailController', $this->mediaType(), [
+		$html = trim( F::app()->renderView( 'ThumbnailController', $this->mediaType(), [
 			'thumb'   => $this,
 			'options' => $options,
 		] ) );
+		// Strip empty space between tags
+		$html = preg_replace("/>\s+</", "><", $html);
+
+		return $html;
 	}
 	/**
 	 * Wikia change end
