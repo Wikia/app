@@ -1,5 +1,5 @@
 <?php
-class WikiaInteractiveMapsUploadImageFromFileTest extends WikiaBaseTest {
+class WikiaInteractiveMapsBaseControllerTest extends WikiaBaseTest {
 
 	const TEST_IMG_NAME = 'Mocked name';
 	const TEST_IMG_URL = 'http://placekitten.com/640/480';
