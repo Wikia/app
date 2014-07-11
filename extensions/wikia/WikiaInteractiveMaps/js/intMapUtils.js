@@ -6,9 +6,10 @@ define(
 		'wikia.cache',
 		'wikia.loader',
 		'wikia.ui.factory',
-		'wikia.mustache'
+		'wikia.mustache',
+		'wikia.tracker'
 	],
-	function($, w, cache, loader, uiFactory, mustache) {
+	function($, w, cache, loader, uiFactory, mustache, tracker) {
 		'use strict';
 
 		/**
@@ -318,6 +319,28 @@ define(
 			});
 		}
 
+		/**
+		 * @desc Wrapper for our Wikia.Tracker.track method - sends to GA tracking info
+		 *
+		 * @param {string} action one of Wikia.Tracker.ACTIONS
+		 * @param {string} label
+		 * @param {integer} value
+		 */
+		function track(action, label, value) {
+			var trackingParams = {
+				trackingMethod: 'ga',
+				category: 'map',
+				action: action,
+				label: label
+			};
+
+			if (typeof(value) !== 'undefined') {
+				trackingParams.value = value;
+			}
+
+			tracker.track(trackingParams);
+		}
+
 		return {
 			loadModal: loadModal,
 			createModal: createModal,
@@ -334,7 +357,10 @@ define(
 			showError: showError,
 			cleanUpError: cleanUpError,
 			createThumbURL: createThumbURL,
-			escapeHtml: escapeHtml
-		}
+			escapeHtml: escapeHtml,
+			track: track,
+			trackerActions: tracker.ACTIONS
+		};
 	}
 );
+

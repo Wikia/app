@@ -261,6 +261,17 @@ abstract class BaseTask {
 	}
 
 	/**
+	 * Explicitly set the \Title object on this task. This should not be used pre-enqueue and is primarily
+	 * for testing task objects.
+	 *
+	 * @param \Title $title
+	 */
+	public function setTitle(\Title $title) {
+		$this->title = $title;
+		return $this;
+	}
+
+	/**
 	 * @param $taskId
 	 * @return $this
 	 */
@@ -274,6 +285,13 @@ abstract class BaseTask {
 	 */
 	public function getTaskId() {
 		return $this->taskId;
+	}
+
+	/**
+	 * @return int
+	 */
+	public function getWikiId() {
+		return $this->wikiId;
 	}
 
 	/**
