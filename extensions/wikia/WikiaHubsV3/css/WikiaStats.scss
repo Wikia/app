@@ -20,20 +20,28 @@
 			font-weight: bold;
 			margin: 12px 0;
 		}
+		h4 {
+			font-size: 16px;
+		}
 		.statisticdata {
+			height: 261px;
 			overflow: hidden;
-			height: 244px;
+			padding-top: 20px;
 			.datasection {
-				width: 240px;
 				float: left;
-				height: 46px;
-				padding: 17px 0;
-				text-align: center;
-
+				height: 60px;
+				line-height: 20px;
+				margin: 10px 0 10px 40px;
+				text-align: left;
+				width: 200px;
 				strong {
 					display: block;
-					font-size: 21px;
+					font-size: 26px;
 					margin-top: 10px;
+				}
+				&:nth-child(odd) {
+					border-right: 1px solid #ccc;
+					width: 199px;
 				}
 			}
 		}
@@ -43,7 +51,10 @@
 			color: white;
 			cursor: pointer;
 			display: inline-block;
+			font-size: 14px;
 			height: 16px;
+			line-height: 1;
+			text-align: center;
 			width: 16px;
 		}
 	}
