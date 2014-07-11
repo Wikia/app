@@ -101,4 +101,206 @@ class ThumbnailHelper extends WikiaModel {
 		return WikiaFileHelper::getByUserMsg( $file->getUser(), $addedAt );
 	}
 
+	/**
+	 * Used in getImageLinkAttribs when getting the linkAttribs
+	 *
+	 * @param MediaTransformOutput $thumb The thumbnail object
+	 * @param string $title A title object
+	 * @param array $params
+	 * @return array
+	 */
+	public static function getDescLinkAttribs( MediaTransformOutput $thumb, $title = null, $params = null ) {
+		$query = $thumb->page ? ( 'page=' . urlencode( $thumb->page ) ) : '';
+		if ( $params ) {
+			$query .= $query ? '&'.$params : $params;
+		}
+		$attribs = [ 'href' => $thumb->file->getTitle()->getLocalURL( $query ) ];
+		if ( $title ) {
+			$attribs['title'] = $title;
+		}
+		return $attribs;
+	}
+
+	/**
+	 * Collect the img tag attributes from $options
+	 * @param MediaTransformOutput $thumb
+	 * @param array $options
+	 * @return array
+	 */
+	public static function getImageAttribs( MediaTransformOutput $thumb, array $options ) {
+		/** @var Title $title */
+		$title = $thumb->file->getTitle();
+		$alt = empty( $options['alt'] ) ? $title->getText() : $options['alt'];
+
+		$attribs = array(
+			'alt'    => $alt,
+			'src'    => $thumb->url,
+			'width'  => $thumb->width,
+			'height' => $thumb->height,
+		);
+
+		if ( !empty( $options['valign'] ) ) {
+			$attribs['style'] = "vertical-align: {$options['valign']}";
+		}
+
+		$title = $thumb->file->getTitle();
+		if ( $title instanceof Title ) {
+			$attribs['data-image-name'] = htmlspecialchars( $title->getText() );
+			$attribs['data-image-key']  = htmlspecialchars( urlencode( $title->getDBKey() ) );
+		}
+
+		return $attribs;
+	}
+
+	/**
+	 * Get anchor tag attributes for an image
+	 *
+	 * @param MediaTransformOutput $thumb
+	 * @param array $options
+	 * @return array|bool
+	 */
+	public static function getImageLinkAttribs( MediaTransformOutput $thumb, array $options ) {
+
+		if ( !empty( $options['custom-url-link'] ) ) {
+			$linkAttribs = array( 'href' => $options['custom-url-link'] );
+			if ( !empty( $options['title'] ) ) {
+				$linkAttribs['title'] = $options['title'];
+			}
+			if ( !empty( $options['custom-target-link'] ) ) {
+				$linkAttribs['target'] = $options['custom-target-link'];
+			}
+		} elseif ( !empty( $options['custom-title-link'] ) ) {
+			/** @var Title $title */
+			$title = $options['custom-title-link'];
+			$linkAttribs = array(
+				'href' => $title->getLinkURL(),
+				'title' => empty( $options['title'] ) ? $title->getFullText() : $options['title']
+			);
+		} elseif ( !empty( $options['desc-link'] ) ) {
+			// Comes from hooks BeforeParserFetchFileAndTitle and only LinkedRevs subscribes
+			// to this and it doesn't seem to be loaded ... ask if used and add logging to see if used
+			$query = empty( $options['desc-query'] )  ? '' : $options['desc-query'];
+
+			$linkAttribs = self::getDescLinkAttribs(
+				$thumb,
+				empty( $options['title'] ) ? null : $options['title'],
+				$query
+			);
+		} elseif ( !empty( $options['file-link'] ) ) {
+			$linkAttribs = array( 'href' => $thumb->file->getURL() );
+		} else {
+			$linkAttribs = false;
+		}
+
+		return $linkAttribs;
+	}
+
+	public static function getVideoImgAttribs( File $file, array $options ) {
+		// Get alt for img tag
+		$title = $file->getTitle();
+
+		$alt = empty( $options['alt'] ) ? $title->getText() : $options['alt'];
+		$imgAttribs['alt'] = htmlspecialchars( $alt );
+
+		// set data-params for img tag on mobile
+		if ( !empty( $options['dataParams'] ) ) {
+			$imgSrc = empty( $options['src'] ) ? null : $options['src'];
+
+			$imgAttribs['data-params'] = self::getDataParams( $file, $imgSrc, $options );
+		}
+
+		return $imgAttribs;
+	}
+
+	public static function getVideoLinkAttribs( File $file, array $options ) {
+		$linkAttribs = [];
+
+		// Get the id parameter for a tag
+		if ( !empty( $options['id'] ) ) {
+			$linkAttribs['id'] = $options['id'];
+		}
+
+		// Let extension override any link attributes
+		if ( isset( $options['linkAttribs'] ) && is_array( $options['linkAttribs'] ) ) {
+			$linkAttribs = array_merge( $linkAttribs, $options['linkAttribs'] );
+		}
+
+		return $linkAttribs;
+	}
+
+	/**
+	 * Create an array of needed classes for video thumbs anchors.
+	 *
+	 * @param array $options The thumbnail options passed to toHTML.  This method cares about:
+	 *
+	 * - $options[ 'noLightbox' ]
+	 * - $options[ 'linkAttribs' ][ 'class' ]
+	 * - $options[ 'hidePlayButton' ]
+	 * - $options[ 'fluid' ]
+	 *
+	 * @return array
+	 */
+	public static function getVideoLinkClasses( array &$options ) {
+		$linkClasses = [];
+		if ( empty( $options['noLightbox'] ) ) {
+			$linkClasses[] = 'image';
+			$linkClasses[] = 'lightbox';
+		}
+
+		// Pull out any classes found in the linkAttribs parameter
+		if ( !empty( $options['linkAttribs']['class'] ) ) {
+			$classes = $options['linkAttribs']['class'];
+
+			// If we got a string, treat it like space separated values and turn it into an array
+			if ( !is_array( $classes ) ) {
+				$classes = explode( ' ', $classes );
+			}
+
+			$linkClasses = array_merge( $linkClasses, $classes );
+			unset( $options['linkAttribs']['class'] );
+		}
+
+		// Hide the play button
+		if ( !empty( $options['hidePlayButton'] ) ) {
+			$linkClasses[] = 'hide-play';
+		}
+
+		// Check for fluid
+		if ( ! empty( $options[ 'fluid' ] ) ) {
+			$linkClasses[] = 'fluid';
+		}
+
+		return array_unique( $linkClasses );
+	}
+
+	/**
+	 * Create an array of needed classes for image thumbs anchors.
+	 *
+	 * @param array $options The thumbnail options passed to toHTML.
+	 * @return array
+	 */
+	public static function getImageLinkClasses ( array $options ) {
+
+		$classes = [];
+		if ( !empty( $options["custom-title-link"] ) ) {
+			$classes[] = "link-internal";
+		} elseif ( !empty( $options["custom-url-link"] ) ) {
+			$classes[] = "link-external";
+		}
+
+		return $classes;
+	}
+
+	/**
+	 * Logic for whether to display the link to the file page overlayed on an image.
+	 *
+	 * @todo Make sure this treatment is only applied to article images and videos, and not elsewhere. VID-1832 should fix this.
+	 * @param $thumb
+	 * @return bool
+	 */
+	public static function canShowInfoIcon( $thumb ) {
+		return !empty( F::app()->wg->ShowArticleThumbDetailsIcon )
+			&& $thumb->width >= self::MIN_INFO_ICON_WIDTH;
+
+	}
 }

@@ -67,9 +67,9 @@ class ThumbnailController extends WikiaController {
 		// @TODO there is no reason to pass two versions of image source.  See if both are actually used and pick one
 		$options['src'] = empty( $options['src'] ) ? $imgSrc : $options['src'];
 
-		$linkClasses = $this->getVideoLinkClasses( $options );
-		$linkAttribs = $this->getVideoLinkAttribs( $file, $options );
-		$imgAttribs  = $this->getVideoImgAttribs( $file, $options );
+		$linkClasses = ThumbnailHelper::getVideoLinkClasses( $options );
+		$linkAttribs = ThumbnailHelper::getVideoLinkAttribs( $file, $options );
+		$imgAttribs  = ThumbnailHelper::getVideoImgAttribs( $file, $options );
 
 		// get href for a tag
 		$linkHref = $title->getFullURL();
@@ -160,87 +160,9 @@ class ThumbnailController extends WikiaController {
 		// This can be removed once we fully rollout the article thumbnails with the
 		// details icon. This just allows us to do it in stages. (Don't forget to update
 		// the mustached checks as well). See VID-1788
-		$this->showInfoIcon = $this->canShowInfoIcon( $thumb );
+		$this->showInfoIcon = ThumbnailHelper::canShowInfoIcon( $thumb );
 
 		wfProfileOut( __METHOD__ );
-	}
-
-	/**
-	 * Create an array of needed classes for video thumbs anchors.
-	 *
-	 * @param array $options The thumbnail options passed to toHTML.  This method cares about:
-	 *
-	 * - $options[ 'noLightbox' ]
-	 * - $options[ 'linkAttribs' ][ 'class' ]
-	 * - $options[ 'hidePlayButton' ]
-	 * - $options[ 'fluid' ]
-	 *
-	 * @return array
-	 */
-	protected function getVideoLinkClasses( array &$options ) {
-		$linkClasses = [];
-		if ( empty( $options['noLightbox'] ) ) {
-			$linkClasses[] = 'image';
-			$linkClasses[] = 'lightbox';
-		}
-
-		// Pull out any classes found in the linkAttribs parameter
-		if ( !empty( $options['linkAttribs']['class'] ) ) {
-			$classes = $options['linkAttribs']['class'];
-
-			// If we got a string, treat it like space separated values and turn it into an array
-			if ( !is_array( $classes ) ) {
-				$classes = explode( ' ', $classes );
-			}
-
-			$linkClasses = array_merge( $linkClasses, $classes );
-			unset( $options['linkAttribs']['class'] );
-		}
-
-		// Hide the play button
-		if ( !empty( $options['hidePlayButton'] ) ) {
-			$linkClasses[] = 'hide-play';
-		}
-
-		// Check for fluid
-		if ( ! empty( $options[ 'fluid' ] ) ) {
-			$linkClasses[] = 'fluid';
-		}
-
-		return array_unique( $linkClasses );
-	}
-
-	protected function getVideoLinkAttribs( File $file, array $options ) {
-		$linkAttribs = [];
-
-		// Get the id parameter for a tag
-		if ( !empty( $options['id'] ) ) {
-			$linkAttribs['id'] = $options['id'];
-		}
-
-		// Let extension override any link attributes
-		if ( isset( $options['linkAttribs'] ) && is_array( $options['linkAttribs'] ) ) {
-			$linkAttribs = array_merge( $linkAttribs, $options['linkAttribs'] );
-		}
-
-		return $linkAttribs;
-	}
-
-	protected function getVideoImgAttribs( File $file, array $options ) {
-		// Get alt for img tag
-		$title = $file->getTitle();
-
-		$alt = empty( $options['alt'] ) ? $title->getText() : $options['alt'];
-		$imgAttribs['alt'] = htmlspecialchars( $alt );
-
-		// set data-params for img tag on mobile
-		if ( !empty( $options['dataParams'] ) ) {
-			$imgSrc = empty( $options['src'] ) ? null : $options['src'];
-
-			$imgAttribs['data-params'] = ThumbnailHelper::getDataParams( $file, $imgSrc, $options );
-		}
-
-		return $imgAttribs;
 	}
 
 	public function imgTag() {
@@ -270,8 +192,8 @@ class ThumbnailController extends WikiaController {
 		$thumb   = $this->getVal( 'thumb' );
 		$options = $this->getVal( 'options', array() );
 
-		$linkAttrs   = $this->getImageLinkAttribs( $thumb, $options );
-		$attribs     = $this->getImageAttribs( $thumb, $options );
+		$linkAttrs   = ThumbnailHelper::getImageLinkAttribs( $thumb, $options );
+		$attribs     = ThumbnailHelper::getImageAttribs( $thumb, $options );
 
 		$this->imgSrc = $thumb->url;
 
@@ -286,7 +208,7 @@ class ThumbnailController extends WikiaController {
 
 		$this->linkAttrs = ThumbnailHelper::getAttribs( $linkAttrs );
 		$this->imgAttribs  = ThumbnailHelper::getAttribs( $attribs );
-		$this->linkClasses = $this->getImageLinkClasses( $options );
+		$this->linkClasses = ThumbnailHelper::getImageLinkClasses( $options );
 
 		$file = $thumb->file;
 		$title = $file->getTitle();
@@ -297,7 +219,7 @@ class ThumbnailController extends WikiaController {
 		// This can be removed once we fully rollout the article thumbnails with the
 		// details icon. This just allows us to do it in stages. (Don't forget to update
 		// the mustached checks as well). See VID-1788
-		$this->showInfoIcon = $this->canShowInfoIcon( $thumb );
+		$this->showInfoIcon = ThumbnailHelper::canShowInfoIcon( $thumb );
 
 		// Check fluid
 		if ( empty( $options[ 'fluid' ] ) ) {
@@ -307,118 +229,9 @@ class ThumbnailController extends WikiaController {
 	}
 
 	/**
-	 * Get anchor tag attributes for an image
-	 *
-	 * @param MediaTransformOutput $thumb
-	 * @param array $options
-	 * @return array|bool
+	 * Article figure tags with thumbnails inside. All videos and block images use this.
 	 */
-	protected function getImageLinkAttribs( MediaTransformOutput $thumb, array $options ) {
-
-		if ( !empty( $options['custom-url-link'] ) ) {
-			$linkAttribs = array( 'href' => $options['custom-url-link'] );
-			if ( !empty( $options['title'] ) ) {
-				$linkAttribs['title'] = $options['title'];
-			}
-			if ( !empty( $options['custom-target-link'] ) ) {
-				$linkAttribs['target'] = $options['custom-target-link'];
-			}
-		} elseif ( !empty( $options['custom-title-link'] ) ) {
-			/** @var Title $title */
-			$title = $options['custom-title-link'];
-			$linkAttribs = array(
-				'href' => $title->getLinkURL(),
-				'title' => empty( $options['title'] ) ? $title->getFullText() : $options['title']
-			);
-		} elseif ( !empty( $options['desc-link'] ) ) {
-			// Comes from hooks BeforeParserFetchFileAndTitle and only LinkedRevs subscribes
-			// to this and it doesn't seem to be loaded ... ask if used and add logging to see if used
-			$query = empty( $options['desc-query'] )  ? '' : $options['desc-query'];
-
-			$linkAttribs = $this->getDescLinkAttribs( $thumb, empty( $options['title'] ) ? null : $options['title'], $query );
-		} elseif ( !empty( $options['file-link'] ) ) {
-			$linkAttribs = array( 'href' => $thumb->file->getURL() );
-		} else {
-			$linkAttribs = false;
-		}
-
-		return $linkAttribs;
-	}
-
-	/**
-	 * Collect the img tag attributes from $options
-	 * @param MediaTransformOutput $thumb
-	 * @param array $options
-	 * @return array
-	 */
-	protected function getImageAttribs( MediaTransformOutput $thumb, array $options ) {
-		/** @var Title $title */
-		$title = $thumb->file->getTitle();
-		$alt = empty( $options['alt'] ) ? $title->getText() : $options['alt'];
-
-		$attribs = array(
-			'alt'    => $alt,
-			'src'    => $thumb->url,
-			'width'  => $thumb->width,
-			'height' => $thumb->height,
-		);
-
-		if ( !empty( $options['valign'] ) ) {
-			$attribs['style'] = "vertical-align: {$options['valign']}";
-		}
-
-		$title = $thumb->file->getTitle();
-		if ( $title instanceof Title ) {
-			$attribs['data-image-name'] = htmlspecialchars( $title->getText() );
-			$attribs['data-image-key']  = htmlspecialchars( urlencode( $title->getDBKey() ) );
-		}
-
-		return $attribs;
-	}
-
-	/**
-	 * Create an array of needed classes for image thumbs anchors.
-	 *
-	 * @param array $options The thumbnail options passed to toHTML.
-	 * @return array
-	 */
-	public function getImageLinkClasses ( array $options ) {
-
-		$classes = [];
-		if ( !empty( $options["custom-title-link"] ) ) {
-			$classes[] = "link-internal";
-		} elseif ( !empty( $options["custom-url-link"] ) ) {
-			$classes[] = "link-external";
-		}
-
-		return $classes;
-	}
-
-
-	/**
-	 * Used in getImageLinkAttribs when getting the linkAttribs
-	 *
-	 * @param MediaTransformOutput $thumb The thumbnail object
-	 * @param string $title A title object
-	 * @param array $params
-	 * @return array
-	 */
-	public function getDescLinkAttribs( MediaTransformOutput $thumb, $title = null, $params = null ) {
-		$query = $thumb->page ? ( 'page=' . urlencode( $thumb->page ) ) : '';
-		if ( $params ) {
-			$query .= $query ? '&'.$params : $params;
-		}
-		$attribs = [ 'href' => $thumb->file->getTitle()->getLocalURL( $query ) ];
-		if ( $title ) {
-			$attribs['title'] = $title;
-		}
-		return $attribs;
-	}
-
-	/**
-	 * Article figure tags with thumbnails inside
-	 */
-	public function articleThumbnail() {
+	public function articleBlock() {
 		wfProfileIn( __METHOD__ );
 
 		$file = $this->getVal( 'file' );
@@ -446,21 +259,20 @@ class ThumbnailController extends WikiaController {
 		$this->url = $url;
 		$this->caption = $caption;
 		$this->width = $width;
+		$this->showInfoIcon = ThumbnailHelper::canShowInfoIcon( $width );
 
 		wfProfileOut( __METHOD__ );
 	}
 
 	/**
-	 * Logic for whether to display the link to the file page overlayed on an image.
-	 *
-	 * @todo Make sure this treatment is only applied to article images and videos, and not elsewhere. VID-1832 should fix this.
-	 * @param $thumb
-	 * @return bool
+	 * Display for inline images in articles.
 	 */
-	public function canShowInfoIcon( $thumb ) {
-		return !empty( $this->wg->ShowArticleThumbDetailsIcon )
-			&& $thumb->width >= ThumbnailHelper::MIN_INFO_ICON_WIDTH;
-
-	}
+//	public function articleInline() {
+//		$width = $this->getVal( 'outerWidth' );
+//
+//		$thumbnail = $this->getVal( 'html' );
+//		$this->thumbnail = $thumbnail;
+//		$this->showInfoIcon = ThumbnailHelper::canShowInfoIcon( $width );
+//	}
 
 }
