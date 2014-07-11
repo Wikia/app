@@ -10,7 +10,7 @@
 		<select class="wide" name="poi_category_id">
 			<option value="" {{^poi_category_id}}selected{{/poi_category_id}}>{{categoryPlaceholder}}</option>
 			{{#categories}}
-				<option value="{{id}}" data-value-type="number" {{#selected}}selected{{/selected}}>{{name}}</option>
+				<option value="{{id}}" data-value-type="number" {{#selected}}selected{{/selected}}>{{{name}}}</option>
 			{{/categories}}
 		</select>
 	</div>
