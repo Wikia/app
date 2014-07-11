@@ -2,6 +2,8 @@
  * VisualEditor user interface WikiaMapInsertDialog class.
  */
 
+/*global wgCityId */
+
 /**
  * Dialog for inserting Wikia map objects.
  *
