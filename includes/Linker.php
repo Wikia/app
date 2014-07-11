@@ -686,6 +686,9 @@ class Linker {
 		if ( F::app()->checkSkin( 'wikiamobile' ) ) {
 			/* Give extensions the ability to add HTML to full size unframed images */
 			wfRunHooks( 'ImageAfterProduceHTML', array( $frameParams, $thumb, $origHTML, &$s ) );
+		} else {
+			$frameParams['html'] = $s;
+			$s = F::app()->renderView( 'ThumbnailController', 'articleInline', $frameParams );
 		}
 		/* Wikia change end */
 

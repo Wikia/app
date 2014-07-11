@@ -298,9 +298,9 @@ class ThumbnailHelper extends WikiaModel {
 	 * @param $thumb
 	 * @return bool
 	 */
-	public static function canShowInfoIcon( $thumb ) {
+	public static function canShowInfoIcon( $width ) {
 		return !empty( F::app()->wg->ShowArticleThumbDetailsIcon )
-			&& $thumb->width >= self::MIN_INFO_ICON_WIDTH;
+			&& $width >= self::MIN_INFO_ICON_WIDTH;
 
 	}
 }
