@@ -516,6 +516,7 @@ class WikiaMaps extends WikiaObject {
 	public function getHttpRequestOptions( Array $postData = [] ) {
 		$options = [
 			'returnInstance' => true,
+			//'noProxy' => true,
 		];
 
 		if( !empty( $this->config[ 'token' ] ) ) {

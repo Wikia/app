@@ -69,7 +69,12 @@ define('wikia.intMap.editPOI', ['jquery', 'wikia.intMap.utils'], function($, uti
 		params,
 		mapId,
 		articleSuggestionTemplate,
-		articleInputId = '#intMapArticleTitle';
+		articleInputId = '#intMapArticleTitle',
+		poiModalModes = {
+			CREATE: 'create',
+			EDIT: 'edit'
+		},
+		poiModalMode;
 
 	/**
 	 * @desc Entry point for  modal
@@ -122,9 +127,11 @@ define('wikia.intMap.editPOI', ['jquery', 'wikia.intMap.utils'], function($, uti
 		var title = addPOITitle,
 			buttons = [].concat(modalButtons);
 
+		poiModalMode = poiModalModes.CREATE;
 		if (isEditMode) {
 			title = editPOITitle;
 			buttons.push(deletePOIButton);
+			poiModalMode = poiModalModes.EDIT;
 		}
 
 		modalConfig.vars.title = title;
@@ -317,6 +324,15 @@ define('wikia.intMap.editPOI', ['jquery', 'wikia.intMap.utils'], function($, uti
 	}
 
 	/**
+	 * @desc encodes HTML entities in POI data
+	 * @param {object} poiData
+	 */
+	function encodePOIData(poiData) {
+		poiData.name = utils.escapeHtml(poiData.name);
+		poiData.description = poiData.description ? utils.escapeHtml(poiData.description) : '';
+	}
+
+	/**
 	 * @desc sends request to backend with POI data
 	 * @param {object} poiData - POI data
 	 */
@@ -340,10 +356,12 @@ define('wikia.intMap.editPOI', ['jquery', 'wikia.intMap.utils'], function($, uti
 					poiData.link = data.content.link;
 					poiData.photo = data.content.photo;
 
+					encodePOIData(poiData);
 					trigger(poiData);
 
 					modal.activate();
 					modal.trigger('close');
+					trackPoiAction(poiData);
 				} else {
 					utils.showError(modal, data.content.message);
 					modal.activate();
@@ -354,6 +372,19 @@ define('wikia.intMap.editPOI', ['jquery', 'wikia.intMap.utils'], function($, uti
 				modal.activate();
 			}
 		});
+	}
+
+	/**
+	 * @desc Sends to GA information about adding/editing a POI
+	 *
+	 * @param {object} poiData
+	 */
+	function trackPoiAction(poiData) {
+		var poiId = poiData.id,
+			gaLabel = 'poi-' + poiModalMode,
+			gaValue = poiId || mapId;
+
+		utils.track(utils.trackerActions.IMPRESSION, gaLabel, gaValue);
 	}
 
 	return {

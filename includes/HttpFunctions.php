@@ -66,7 +66,7 @@ class Http {
 
 		// Wikia change - @author: mech - begin
 		// log all the requests we make (except valid Phalanx calls, as we have a lot of them)
-		$caller =  wfGetCallerClassMethod( [ __CLASS__, 'Hooks' ] );
+		$caller =  wfGetCallerClassMethod( [ __CLASS__, 'Hooks', 'ApiService' ] );
 		$isOk = $status->isOK();
 		if ( class_exists( 'Wikia\\Logger\\WikiaLogger' ) && ( !$isOk || false === strpos( $caller, 'Phalanx' ) ) ) {
 

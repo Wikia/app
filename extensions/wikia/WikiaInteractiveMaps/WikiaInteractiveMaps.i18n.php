@@ -123,6 +123,7 @@ $messages[ 'en' ] = [
 	'wikia-interactive-maps-create-pin-log-entry' => 'created new pin for [[$1]]',
 	'wikia-interactive-maps-update-pin-log-entry' => 'updated pin for [[$1]]',
 	'wikia-interactive-maps-delete-pin-log-entry' => 'deleted pin for [[$1]]',
+	'wikia-interactive-maps-hide-filter' => 'Hide',
 ];
 
 $messages[ 'qqq' ] = [
@@ -248,4 +249,5 @@ $messages[ 'qqq' ] = [
 	'wikia-interactive-maps-create-pin-log-entry' => 'Message to be displayed in the log when a pin is created',
 	'wikia-interactive-maps-update-pin-log-entry' => 'Message to be displayed in the log when a pin is updated',
 	'wikia-interactive-maps-delete-pin-log-entry' => 'Message to be displayed in the log when a pin is deleted',
+	'wikia-interactive-maps-hide-filter' => 'Name of the button for hiding filter box',
 ];
