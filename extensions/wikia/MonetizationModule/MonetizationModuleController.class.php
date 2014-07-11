@@ -90,7 +90,8 @@ class MonetizationModuleController extends WikiaController {
 		$this->products = $products;
 		$this->buttonLabel = wfMessage( 'monetization-module-button-label' )->plain();
 		$this->className = ( $location == MonetizationModuleHelper::LOCATION_RAIL ) ? 'module' : '';
-		$this->location = $location;
+		$this->type = __METHOD__;
+		$this->position = $location;
 
 		wfProfileOut( __METHOD__ );
 	}
@@ -98,14 +99,15 @@ class MonetizationModuleController extends WikiaController {
 	/**
 	 * Ad Unit
 	 * @requestParam string location [rail/bottom/bottom-ads/article-title]
-	 * @responseParam string location [rail/bottom/bottom-ads/article-title]
+	 * @responseParam string position [rail/bottom/bottom-ads/article-title]
 	 * @responseParam string adClient
 	 * @responseParam string adSlot
 	 */
 	public function ad() {
 		wfProfileIn( __METHOD__ );
 
-		$this->location = $this->request->getVal( 'location', MonetizationModuleHelper::LOCATION_ARTICLE_TITLE );
+		$this->type = 'ad-unit';
+		$this->position = $this->request->getVal( 'location', MonetizationModuleHelper::LOCATION_ARTICLE_TITLE );
 		$this->adClient = $this->wg->GoogleAdClient;
 		$this->adSlot = '6789179427';
 

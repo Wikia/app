@@ -8,22 +8,30 @@ require(['wikia.tracker'], function (Tracker) {
 	var track;
 
 	track = Tracker.buildTrackingFunction({
-		category: 'monetization-module',
 		trackingMethod: 'both',
 		action: Tracker.ACTIONS.CLICK
 	});
 
 	var MonetizationModule = {
 		init: function () {
-			// track impression
-			track({
-				trackingMethod: 'both',
-				label: 'module-impression',
-				action: Tracker.ACTIONS.IMPRESSION
+			// track impression for each placement
+			$('.monetization-module').each(function() {
+				var trackCategory,
+					type;
+
+				type = $(this).attr('class').split(' ')[1];
+				trackCategory = $(this).attr('id');
+
+				track({
+					category: trackCategory,
+					label: 'module-impression',
+					action: Tracker.ACTIONS.IMPRESSION,
+					type: type
+				});
 			});
 
 			this.initEllipses();
-			this.initClickTracking();
+			this.initClickTrackingEcommerce();
 		},
 		initEllipses: function() {
 			$(window)
@@ -34,7 +42,7 @@ require(['wikia.tracker'], function (Tracker) {
 				})
 				.trigger('resize.monetizationmodule');
 		},
-		initClickTracking: function() {
+		initClickTrackingEcommerce: function() {
 			var elements = [
 				'.prod-thumb',
 				'.prod-name',
@@ -43,25 +51,29 @@ require(['wikia.tracker'], function (Tracker) {
 				'.vendor-price'
 			];
 
-			$('.monetization-module').on('click', elements.join(', '), function () {
+			$('.monetization-module.ecommerce').on('click', elements.join(', '), function () {
 				var $products,
-					$product,
+					$productThumb,
+					$module,
 					trackCategory,
 					trackLabel,
 					trackValue,
+					type,
 					vendor,
 					productName,
 					productId,
 					productUrl;
 
 				$products = $(this).closest('.affiliate');
-				$product = $products.find('.prod-thumb img');
-				trackCategory = $(this).closest('.monetization-module').attr('id');
+				$productThumb = $products.find('.prod-thumb img');
+				$module = $(this).closest('.monetization-module');
+				trackCategory = $module.attr('id');
 				trackLabel = $(this).attr('class').split(' ')[0];
 				trackValue = $products.index();
 				vendor = $products.find('.vendor').attr('class').split(' ')[0];
-				productName = $product.attr('data-prod-name');
-				productId = $product.attr('data-prod-id');
+				type = $module.attr('class').split(' ')[1];
+				productName = $productThumb.attr('data-prod-name');
+				productId = $productThumb.attr('data-prod-id');
 				productUrl = $(this).attr('href');
 
 				track({
@@ -71,6 +83,7 @@ require(['wikia.tracker'], function (Tracker) {
 					title: productName,
 					pid: productId,
 					vendor: vendor,
+					type: type,
 					url: productUrl
 				});
 			});
