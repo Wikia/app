@@ -2,8 +2,6 @@
 ( function() {
 	'use strict';
 
-	console.log( 'Optimizely Top module AB test global JS loaded' );
-
 	window.getElementWrapper = function( elem, wrapper, maxBubbleUp ) {
 		var bubble = maxBubbleUp + 1 || 4;
 
@@ -37,7 +35,7 @@
 			var $wikiaActivityModule = jQuery( '.WikiaActivityModule.module' ),
 				variationModuleNames = [ 'wiki-activity-1', 'wiki-activity-2', 'top-articles-1', 'top-articles-2' ];
 
-			// track inpression
+			// track impression
 			window.optimizely = window.optimizely || [];
 			window.optimizely.push( [ 'trackEvent', variationModuleNames[ variationId ] + '-impression' ] );
 			window.Wikia.Tracker.track( {
