@@ -36,7 +36,6 @@ class JsonFormatTest extends WikiaBaseTest {
 	 * @dataProvider StructureProvider
 	 */
 	public function testStructureMatching( $wikiText, $expectedStructure = null ) {
-		$this->markTestSkipped('VID-1827'); // due to VID-1827
 		$output = $this->getParsedOutput( $wikiText );
 
 		if ( $expectedStructure !== null ) {
@@ -51,7 +50,6 @@ class JsonFormatTest extends WikiaBaseTest {
 	 * @dataProvider StructureProvider
 	 */
 	public function testStructureMatchingWithLazyLoad( $wikiText, $expectedStructure = null ) {
-		$this->markTestSkipped('VID-1827'); // due to VID-1827
 		$this->setThumbnailImageHooks( false );
 		$output = $this->getParsedOutput( $wikiText );
 
@@ -67,7 +65,6 @@ class JsonFormatTest extends WikiaBaseTest {
 	 * @dataProvider ContentProvider
 	 */
 	public function testContentMatching( $wikiText, $expectedContent ) {
-		$this->markTestSkipped('VID-1827'); // due to VID-1827
 		$output = $this->getParsedOutput( $wikiText );
 
 		$children = $output->getChildren();
@@ -80,7 +77,6 @@ class JsonFormatTest extends WikiaBaseTest {
 	 * @dataProvider ContentProvider
 	 */
 	public function testContentMatchingWithLazyLoad( $wikiText, $expectedContent ) {
-		$this->markTestSkipped('VID-1827'); // due to VID-1827
 		$this->setThumbnailImageHooks( false );
 		$output = $this->getParsedOutput( $wikiText );
 
