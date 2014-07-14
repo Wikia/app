@@ -138,9 +138,9 @@ class ProfilerXhprof extends ProfilerStub {
 	 * @return float
 	 */
 	protected function getMinimumTimeThreshold() {
-		global $wgProfilerMinimumTime;
+		global $wgXhprofMinimumTime;
 
-		return $wgProfilerMinimumTime;
+		return $wgXhprofMinimumTime;
 	}
 
 	/**
