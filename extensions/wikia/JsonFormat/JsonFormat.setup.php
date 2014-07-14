@@ -57,3 +57,5 @@ $wgAutoloadClasses[ 'TruebloodScrollWrapperVisitor' ] =         $dir . "/visitor
 $wgAutoloadClasses[ 'AmericandadWrapperVisitor' ] =             $dir . "/visitors/AmericandadWrapperVisitor.php";
 
 $wgAutoloadClasses[ 'DomHelper' ] =                             $dir . "/util/DomHelper.php";
+
+class InvalidInfoboxException extends WikiaException {}
