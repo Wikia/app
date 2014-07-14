@@ -107,6 +107,10 @@ define('wikia.intMap.editPOI', ['jquery', 'wikia.intMap.utils'], function($, uti
 			modal.$articleTitle = $(articleInputId);
 			modal.$articleImageUrl = modal.$form.find('.article-image-url');
 			modal.$articleImagePlaceholder = modal.$form.find('#intMapArticleImagePlaceholder');
+			if (modal.$articleImageUrl.attr('src')) {
+				// Remove placeholder image if article has image
+				modal.$articleImagePlaceholder.hide();
+			}
 
 			utils.bindEvents(modal, events);
 
