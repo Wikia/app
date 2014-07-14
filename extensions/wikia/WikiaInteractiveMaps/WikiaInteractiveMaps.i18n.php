@@ -30,7 +30,7 @@ $messages[ 'en' ] = [
 	'wikia-interactive-maps-parser-tag-view' => 'View',
 
 	'wikia-interactive-maps-map-placeholder-error' => 'Unexpected error has occurred. Please contact us if it happens again.',
-	'wikia-interactive-maps-service-error' => 'Please wait a few minutes and try again. If the error persists, please [[Special:Contact|let us know]].',
+	'wikia-interactive-maps-service-error' => 'Oops, we have issues with our maps service. Please wait a few minutes and try again. If the error persists, please [[Special:Contact|let us know]].',
 
 	'wikia-interactive-maps-sort-newest-to-oldest' => 'Newest to Oldest',
 	'wikia-interactive-maps-sort-alphabetical' => 'Alphabetical',
