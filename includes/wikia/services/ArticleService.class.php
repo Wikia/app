@@ -219,7 +219,6 @@ class ArticleService extends WikiaObject {
 	 * @return string The plain text as stored in solr. Will be empty if we don't have a result.
 	 */
 	public function getTextFromSolr() {
-		global $wgNewSnippetsEnabled;
 		$service = new SolrDocumentService();
 		// note that this will use wgArticleId without an article
 		if ( $this->article ) {
@@ -231,7 +230,7 @@ class ArticleService extends WikiaObject {
 
 		$text = '';
 		if ( $document !== null ) {
-			if ( $wgNewSnippetsEnabled && !empty( $document[ 'snippet_s'] ) ) {
+			if ( !empty( $document[ 'snippet_s'] ) ) {
 				$text = $document[ 'snippet_s' ];
 			} elseif ( isset( $document[$htmlField] ) ) {
 				$text = $document[$htmlField];
