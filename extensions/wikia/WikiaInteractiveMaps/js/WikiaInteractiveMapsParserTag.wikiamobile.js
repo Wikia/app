@@ -6,17 +6,20 @@ require(['jquery', 'sloth'], function ($, sloth) {
 	 * @param {HTMLElement} element - map figure that was lazy-loaded
 	 */
 	function getThumbnail(element) {
-		var img = element.getElementsByTagName('img')[0];
+		var img = element.getElementsByTagName('img')[0],
+			title = document.getElementById('mapTitle'),
+			width = img.offsetWidth - 20;
 		$.nirvana.sendRequest({
 			controller: 'WikiaInteractiveMapsParserTag',
 			method: 'getMobileThumbnail',
 			data: {
 				image: img.getAttribute('data-src'),
-				width: img.offsetWidth,
+				width: width,
 				height: img.offsetHeight
 			}
 		}).done(function(data) {
 			img.src = data.src;
+			title.style.width = width + 'px';
 		});
 	}
 

@@ -20,7 +20,10 @@
 		bottom: 10px;
 		font-weight: bold;
 		left: 10px;
+		overflow: hidden;
 		position: absolute;
+		text-overflow: ellipsis;
+		white-space: nowrap;
 	}
 
 	figcaption {
