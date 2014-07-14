@@ -211,22 +211,7 @@ class VideoFileUploader {
 		// If uploading the actual thumbnail fails, load a default thumbnail
 		if ( empty($upload) ) {
 			$upload = $this->uploadThumbnailFromUrl( LegacyVideoApiWrapper::$THUMBNAIL_URL );
-			// Schedule a job to try and reupload the thumbnail
-			if ( $delayIndex < $this->oApiWrapper->getDelayCount() && $delayIndex != UpdateThumbnailTask::DONT_RUN ) {
-				$delay = $this->oApiWrapper->getDelay( $delayIndex );
-				$task = ( new UpdateThumbnailTask() )->wikiId( F::app()->wg->CityId );
-				$task->delay( $delay );
-				$task->call( 'retryThumbUpload', $this->getDestinationTitle(), $delayIndex );
-				$task->queue();
-				$context = [
-					'videoTitle' => $this->getDestinationTitle(),
-					'provider'   => $this->oApiWrapper->getProvider(),
-					'delay'      => $delay,
-				];
-				\Wikia\Logger\WikiaLogger::instance()->info(
-					"Job Queue job scheduled for missing thumbnail",
-					$context );
-			}
+			$this->scheduleJob( $delayIndex );
 		}
 
 		// If we still don't have anything, give up.
@@ -240,6 +225,28 @@ class VideoFileUploader {
 		wfProfileOut( __METHOD__ );
 
 		return $upload;
+	}
+
+	/**
+	 * @param $delayIndex
+	 */
+	private function scheduleJob( $delayIndex ) {
+		$provider = $this->oApiWrapper->getProvider();
+		if ( $delayIndex < UpdateThumbnailTask::getDelayCount( $provider ) ) {
+			$delay = UpdateThumbnailTask::getDelay( $provider, $delayIndex );
+			$task = ( new UpdateThumbnailTask() )->wikiId( F::app()->wg->CityId );
+			$task->delay( $delay );
+			$task->call( 'retryThumbUpload', $this->getDestinationTitle(), $delayIndex, $provider, $this->sVideoId );
+			$task->queue();
+			$context = [
+				'videoTitle' => $this->getDestinationTitle(),
+				'provider'   => $provider,
+				'delay'      => $delay
+			];
+			\Wikia\Logger\WikiaLogger::instance()->info(
+				"Job Queue job scheduled for missing thumbnail",
+				$context );
+		}
 	}
 
 	/**
