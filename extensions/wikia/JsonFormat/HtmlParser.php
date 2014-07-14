@@ -5,12 +5,20 @@ namespace Wikia\JsonFormat;
 use Wikia\Measurements\Time;
 
 class HtmlParser {
+
+	protected $profile;
+
+	public function __construct($profile = true) {
+		$this->profile = $profile;
+	}
 	/**
 	 * @param string $html
 	 * @return \JsonFormatNode
 	 */
 	public function parse( $html ) {
-		$time = Time::start([__CLASS__, __METHOD__]);
+		if( $this->profile ) {
+			$time = Time::start([__CLASS__, __METHOD__]);
+		}
 		$doc = new \DOMDocument();
 
 		libxml_use_internal_errors(true);
@@ -23,7 +31,9 @@ class HtmlParser {
 		$visitor = $this->createVisitor( $jsonFormatTraversingState );
 		$visitor->visit( $body );
 		$root = $jsonFormatTraversingState->getJsonRoot();
-		$time->stop();
+		if( $this->profile ) {
+			$time->stop();
+		}
 		return $root;
 	}
 

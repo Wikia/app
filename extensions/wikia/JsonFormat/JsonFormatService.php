@@ -7,13 +7,15 @@ class JsonFormatService extends \WikiaService {
 
 	private $htmlParser;
 	private $requestContext;
+	private $profile;
 
-	function __construct( $htmlParser = null ) {
+	function __construct( $htmlParser = null, $profile = true ) {
 		if( $htmlParser == null ) {
-			$htmlParser = new Wikia\JsonFormat\HtmlParser();
+			$htmlParser = new Wikia\JsonFormat\HtmlParser($profile);
 		}
 		$this->requestContext = new RequestContext();
 		$this->htmlParser = $htmlParser;
+		$this->profile = $profile;
 		parent::__construct();
 	}
 
@@ -39,11 +41,15 @@ class JsonFormatService extends \WikiaService {
 	 * @return JsonFormatNode
 	 */
 	public function getJsonFormatForArticle( \Article $article ) {
-		$measurement = \Wikia\Measurements\Time::start([__CLASS__, __METHOD__]);
+		if( $this->profile ) {
+			$measurement = \Wikia\Measurements\Time::start([__CLASS__, __METHOD__]);
+		}
 
 		$html = $article->getPage()->getParserOutput( \ParserOptions::newFromContext( $this->requestContext))->getText();
 
-		$measurement->stop();
+		if( $this->profile ) {
+			$measurement->stop();
+		}
 		return $this->htmlParser->parse( $html );
 	}
 
@@ -51,7 +57,9 @@ class JsonFormatService extends \WikiaService {
 	 *
 	 */
 	public function getSimpleFormatForArticle( \Article $article ) {
-		$measurement = \Wikia\Measurements\Time::start([__CLASS__, __METHOD__]);
+		if( $this->profile ) {
+			$measurement = \Wikia\Measurements\Time::start([__CLASS__, __METHOD__]);
+		}
 
 		$cacheKey = wfMemcKey( "SimpleJson", $article->getPage()->getId(), self::SIMPLE_JSON_SCHEMA_VERSION );
 		$jsonSimple = $this->app->wg->memc->get( $cacheKey );
@@ -64,11 +72,16 @@ class JsonFormatService extends \WikiaService {
 			$this->app->wg->memc->set( $cacheKey, $jsonSimple, self::SIMPLE_JSON_CACHE_EXPIRATION );
 		}
 
-		$measurement->stop();
+		if( $this->profile ) {
+			$measurement->stop();
+		}
 		return $jsonSimple;
 	}
 
-	public function getSimpleFormatForHtml( $html ) {
-		return $this->htmlParser->parse( $html );
+	public function getArticleSnippet( $html ) {
+		$jsonSimple = $this->htmlParser->parse( $html );
+		$simplifier = new Wikia\JsonFormat\JsonFormatSimplifier($this->profile);
+		$text = $simplifier->simplifyToSnippet( $jsonSimple );
+		return $text;
 	}
 }
