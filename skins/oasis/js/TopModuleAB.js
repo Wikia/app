@@ -7,7 +7,7 @@
 			var $wikiaActivityModule = jQuery( '.WikiaActivityModule.module' ),
 				variationModuleNames = [ 'wiki-activity-1', 'wiki-activity-2', 'top-articles-1', 'top-articles-2' ],
 				trackClickABTest = function( element, variationName ) {
-					element.on( 'mousedown', 'A', function() {
+					element.on( 'mousedown', 'a', function() {
 						window.optimizely.push( [ 'trackEvent', variationName + '-click' ] );
 						window.Wikia.Tracker.track( {
 							action: window.Wikia.Tracker.ACTIONS.CLICK,
