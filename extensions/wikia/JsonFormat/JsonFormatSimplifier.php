@@ -8,6 +8,8 @@ use Wikia\Measurements\Time;
 
 class JsonFormatSimplifier {
 
+	const SNIPPET_PARAGRPHS_COUNT = 2;
+
 	protected function getParagraphs( \JsonFormatContainerNode $containerNode, &$contentElements ) {
 		foreach( $containerNode->getChildren() as $childNode ) {
 			if ( $childNode->getType() == 'section' ) {
@@ -51,7 +53,7 @@ class JsonFormatSimplifier {
 				elseif ( $type == 'listItem' ) {
 					$listItem = true;
 					$arr = $this->processList( $children[ $i ] );
-					$out[ ] = array_shift( $arr );				
+					$out[ ] = array_shift( $arr );
 				}
 				$i++;
 			}
@@ -174,7 +176,7 @@ class JsonFormatSimplifier {
 		];
 	}
 
-	public function simplifyToText( \JsonFormatRootNode $rootNode ) {
+	public function simplifyToSnippet( \JsonFormatRootNode $rootNode ) {
 		$timer = Time::start([__CLASS__, __METHOD__]);
 		$result = [];
 		$listsSections = [];
