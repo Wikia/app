@@ -229,8 +229,12 @@ class ArticleService extends WikiaObject {
 		$document = $service->getResult();
 
 		$text = '';
-		if ( ( $document !== null ) && ( isset( $document[$htmlField] ) ) ) {
-			$text = $document[$htmlField];
+		if ( $document !== null ) {
+			if ( !empty( $document[ 'snippet_s'] ) ) {
+				$text = $document[ 'snippet_s' ];
+			} elseif ( isset( $document[$htmlField] ) ) {
+				$text = $document[$htmlField];
+			}
 		}
 		return $text;
 	}
