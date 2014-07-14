@@ -2,7 +2,6 @@
 /**
  * Translations for the Interactive Maps service
  */
-
 $messages = [];
 
 $messages[ 'en' ] = [

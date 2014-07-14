@@ -189,7 +189,10 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 			WikiaMapsLogger::addLogEntry(
 				WikiaMapsLogger::ACTION_DELETE_MAP,
 				$mapId,
-				$mapId
+				$mapId,
+				[
+					$this->wg->User->getName(),
+				]
 			);
 
 			NotificationsController::addConfirmation( wfMessage( 'wikia-interactive-maps-delete-map-success' ) );

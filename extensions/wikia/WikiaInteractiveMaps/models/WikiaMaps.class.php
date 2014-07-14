@@ -131,7 +131,6 @@ class WikiaMaps extends WikiaObject {
 				} else {
 					$map->map_width = static::MAP_WIDTH;
 					$map->map_height = static::MAP_HEIGHT;
-					$map->status_message = $this->getMapStatusText( $map->status );
 					$map->done = (int)$map->status === static::STATUS_DONE;
 				}
 			} );
@@ -187,28 +186,6 @@ class WikiaMaps extends WikiaObject {
 		array_unshift( $segments, self::ENTRY_POINT_RENDER );
 		$params[ 'uselang' ] = $this->wg->lang->getCode();
 		return $this->buildUrl( $segments, $params );
-	}
-
-	/**
-	 * Returns human message based on the tiles processing status in database
-	 *
-	 * @param Integer $status status of tiles processing for the map
-	 *
-	 * @return String
-	 */
-	public function getMapStatusText( $status ) {
-		$message = '';
-
-		switch( $status ) {
-			case static::STATUS_DONE:
-				$message = wfMessage( 'wikia-interactive-maps-map-status-done' )->plain();
-				break;
-			case static::STATUS_PROCESSING:
-				$message = wfMessage( 'wikia-interactive-maps-map-status-processing' )->plain();
-				break;
-		}
-
-		return $message;
 	}
 
 	/**
