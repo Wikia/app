@@ -145,6 +145,7 @@ if ( $wgEnableSelenium ) {
 	require_once( MWInit::compiledPath( "includes/SeleniumWebSettings.php" ) );
 }
 
+// Wikia change - begin - @author: wladek
 // attach sink to the profiler
 if ( $wgProfiler instanceof Profiler ) {
 	if ( empty($wgProfilerSendViaScribe) ) {
@@ -152,8 +153,14 @@ if ( $wgProfiler instanceof Profiler ) {
 	} else {
 		$sink = new ProfilerDataScribeSink();
 	}
-	$wgProfiler->setSink($sink);
+	$wgProfiler->addSink( $sink );
+
+	// keep the legacy stream of Mediawiki profiler data via UDP
+	if ( ( $wgProfiler instanceof ProfilerSimpleDataCollector ) and !( $sink instanceof ProfilerDataUdpSink ) ) {
+		$wgProfiler->addSink( new ProfilerDataUdpSink() );
+	}
 }
+// Wikia change - end
 
 // Wikia change - begin - @author: wladek
 // Catch all output

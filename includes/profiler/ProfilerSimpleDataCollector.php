@@ -20,12 +20,12 @@ class ProfilerSimpleDataCollector extends ProfilerSimple {
 			return;
 		}
 
-		$sink = $this->getSink();
-		if ( !$sink ) {
+		if ( !$this->hasSinks() ) {
 			return;
 		}
 
-		$sink->send( $this->buildProfilerPayload() );
+		$data = $this->buildProfilerPayload();
+		$this->sendToSinks( $data );
 	}
 
 	protected function buildProfilerPayload() {

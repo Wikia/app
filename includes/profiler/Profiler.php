@@ -50,8 +50,8 @@ class Profiler {
 	protected $mProfileID = false, $mCollateDone = false, $mTemplated = false;
 	private static $__instance = null;
 
-	/** @var ProfilerDataSink */
-	protected $sink;
+	/** @var ProfilerDataSink[] */
+	protected $sinks;
 
 	function __construct( $params ) {
 		if ( isset( $params['timeMetric'] ) ) {
@@ -525,12 +525,18 @@ class Profiler {
 		}
 	}
 
-	public function getSink() {
-		return $this->sink;
+	public function hasSinks() {
+		return !empty($this->sinks);
 	}
 
-	public function setSink( ProfilerDataSink $sink ) {
-		$this->sink = $sink;
+	public function addSink( ProfilerDataSink $sink ) {
+		$this->sinks[] = $sink;
+	}
+
+	public function sendToSinks( ProfilerData $data ) {
+		foreach ( $this->sinks as $sink ) {
+			$sink->send( $data );
+		}
 	}
 
 	function getCpuTime( $ru = null ) {

@@ -38,15 +38,12 @@ class ProfilerXhprof extends ProfilerStub {
 	 * @access private
 	 */
 	public function finalize() {
-		$sink = $this->getSink();
-		if ( !$sink ) {
+		if ( !$this->hasSinks() ) {
 			return;
 		}
 
 		$data = $this->buildProfilerPayload();
-		if ( $data ) {
-			$sink->send( $data );
-		}
+		$this->sendToSinks( $data );
 	}
 
 	protected function buildProfilerPayload() {
@@ -171,6 +168,7 @@ class ProfilerXhprof extends ProfilerStub {
 			return null;
 		}
 		$request['cpu'] = $this->getCpuTime() - self::$ruUsageStart;
+
 		return $request;
 	}
 
