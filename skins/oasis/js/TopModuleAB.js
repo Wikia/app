@@ -54,6 +54,7 @@
 					callback: function( response ) {
 						if ( response ) {
 							var $topArticlesModule = jQuery( '<section class="module"></section>' ),
+								$insertPlace = ( variationId === 3 ) ? $( '#videosModule' ) : $wikiaActivityModule,
 								$response = jQuery( response );
 
 							$response.find( '.top-wiki-main.header-test-2, .top-wiki-main.header-test-3' ).remove();
@@ -72,7 +73,7 @@
 							$response.find( '.top-wiki-article.hot-article' ).find ( '.top-wiki-article-text' )
 								.css( { 'margin': '10px 0', 'width': '270px' } );
 
-							$topArticlesModule.append( $response ).insertBefore( $wikiaActivityModule );
+							$topArticlesModule.append( $response ).insertBefore( $insertPlace );
 
 							window.trackClickABTest( $topArticlesModule, variationModuleNames[ variationId ] );
 						}
