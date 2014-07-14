@@ -35,6 +35,46 @@ ve.ui.WikiaMapInsertDialog.static.icon = 'map';
 /**
  * @inheritdoc
  */
+ve.ui.WikiaMapInsertDialog.prototype.getSetupProcess = function ( data ) {
+	return ve.ui.WikiaMapInsertDialog.super.prototype.getSetupProcess.call( this, data )
+		.next( function () {
+			this.loadingPanel = new OO.ui.PanelLayout( { '$': this.$ } );
+			this.zeroPanel = new OO.ui.PanelLayout( { '$': this.$ } );
+			this.mapsPanel = new OO.ui.PanelLayout( { '$': this.$ } );
+
+			this.stackLayout = new OO.ui.StackLayout( { '$': this.$ } );
+			this.stackLayout.addItems( [ this.loadingPanel, this.zeroPanel, this.mapsPanel ] );
+			this.$body.append(this.stackLayout.$element);
+
+			this.loadingPanel.$element.html( 'please wait' );
+
+			this.select = new ve.ui.WikiaMediaSelectWidget( { '$': this.$ } );
+			this.select.$element.appendTo( this.mapsPanel.$element );
+
+			this.getMaps().always( ve.bind( function ( data ) {
+				console.log(data.items);
+				this.stackLayout.setItem( this.mapsPanel );
+				var items = [];
+				for ( var i = 0; i < data.items.length; i++ ) {
+					var item = new ve.ui.WikiaMediaOptionWidget(
+						{
+							title: data.items[i].title,
+							url: data.items[i].image
+						},
+						{ '$': this.$ }
+					);
+					items.push( item );
+				}
+				this.select.addItems( items );
+			}, this ) );
+		}, this );
+};
+
+
+/**
+ * @inheritdoc
+ */
+/*
 ve.ui.WikiaMapInsertDialog.prototype.initialize = function () {
 	// Parent method
 	ve.ui.WikiaMapInsertDialog.super.prototype.initialize.call( this );
@@ -49,7 +89,19 @@ ve.ui.WikiaMapInsertDialog.prototype.initialize = function () {
 	this.$results.append( this.results.$element );
 	this.$body.append( this.$results );
 	this.results.on( 'select', ve.bind( this.onSelect, this ) );
+
+	this.zeroPanel = new OO.ui.PanelLayout( { '$': this.$ } );
+	this.loadingPanel = new OO.ui.PanelLayout( { '$': this.$ } );
+	this.mapsPanel = new OO.ui.PanelLayout( { '$': this.$ } );
+
+	this.stackLayout = new OO.ui.StackLayout( { '$': this.$ } );
+	this.stackLayout.addItems( [ this.zeroPanel, this.loadingPanel, this.mapsPanel ] );
+	this.$body.append(this.stackLayout.$element);
+	this.stackLayout.setItem( this.mapsPanel );
 };
+*/
+
+
 
 ve.ui.WikiaMapInsertDialog.prototype.getMaps = function () {
 	var apiUrl = 'http://dev-interactive-maps.wikia.nocookie.net/api/v1/map?city_id=' + wgCityId + '&cb=' + Math.floor( Math.random() * 1000000 );

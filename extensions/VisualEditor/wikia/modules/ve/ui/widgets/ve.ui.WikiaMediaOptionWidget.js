@@ -70,7 +70,12 @@ OO.inheritClass( ve.ui.WikiaMediaOptionWidget, OO.ui.OptionWidget );
  */
 ve.ui.WikiaMediaOptionWidget.prototype.loadThumbnail = function () {
 	require( ['wikia.thumbnailer'], ve.bind( function ( thumbnailer ) {
-		this.image.src = thumbnailer.getThumbURL( this.model.url, 'image', this.size, this.size );
+		var src = thumbnailer.getThumbURL( this.model.url, 'image', this.size, this.size );
+		src = src.split("/");
+		src.splice( src.length - 2 , 0 , "thumb" );
+		src = src.join("/");
+
+		this.image.src = src;
 		this.$thumb.addClass(
 			've-ui-mwMediaResultWidget-thumbnail ve-ui-WikiaMediaOptionWidget-thumbnail'
 		);
