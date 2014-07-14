@@ -338,9 +338,6 @@ class VideoFileUploader {
 					$this->sVideoId,
 					$this->aOverrideMetadata
 			);
-			// If $this->oApiWrapper isn't correct, it'll be reassigned here
-			// (see checkApiWrapper description for more info)
-			$this->checkApiWrapper();
 		}
 		wfProfileOut( __METHOD__ );
 		return $this->oApiWrapper;
@@ -353,33 +350,6 @@ class VideoFileUploader {
 		}
 
 		return $this->sTargetTitle;
-	}
-
-	/**
-	 * When we don't have the externalURL for the provider, the above getApiWrapper
-	 * method doesn't work perfectly. Some videos which are hosted on Ooyala, but
-	 * are from another provider (eg, iva), are being returned as an OoyalaApiWrapper
-	 * due to the way the those videos are being stored in the image table. Specifically,
-	 * they are being saved with an img_minor_mime of ooyala, and storing their actual
-	 * provider information (in the form of ooyala/iva) in the img_metadata blob.
-	 * This method does one last check when we're instantiating an API wrapper
-	 * to make sure we're using the correct one.
-	 */
-	protected function checkApiWrapper() {
-		$actualProvider = $this->oApiWrapper->getProvider();
-		if ( strstr( $actualProvider, '/' ) ) {
-			$actualProvider = strtolower( explode( '/', $actualProvider )[1] );
-		}
-		$currentProvider = strtolower( str_replace( 'ApiWrapper', '', get_class( $this->oApiWrapper ) ) );
-		if ( $actualProvider != $currentProvider ) {
-			$class = ucfirst( $actualProvider ) . "ApiWrapper";
-			if ( class_exists( $class ) ) {
-				$this->oApiWrapper = new $class (
-					$this->sVideoId,
-					$this->aOverrideMetadata
-				);
-			}
-		}
 	}
 
 	protected function getDescription( ) {
