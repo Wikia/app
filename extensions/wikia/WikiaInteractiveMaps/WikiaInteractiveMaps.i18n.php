@@ -127,6 +127,12 @@ $messages[ 'pl' ] = [
 	'wikia-interactive-maps-create-map-log-entry' => '{{GENDER:$1|stworzył mapę [[$2]]|stworzyła mapę [[$2]]|stworzyło mapę [[$2]]}}',
 	'wikia-interactive-maps-update-map-log-entry' => '{{GENDER:$1|zaktualizował mapę [[$2]]|zaktualizowała mapę [[$2]]|zaktualizowało mapę [[$2]]}}',
 	'wikia-interactive-maps-delete-map-log-entry' => '{{GENDER:$1|usunął mapę [[$2]]|usunęła mapę [[$2]]|usunęło mapę [[$2]]}}deleted map [[$2]]}}',
+	'wikia-interactive-maps-create-pin-type-log-entry' => '{{GENDER:$1|stworzył kategorie punktów [[$2]]|stworzyła kategorie punktów [[$2]]|stworzyło kategorie punktów [[$2]]}}',
+	'wikia-interactive-maps-update-pin-type-log-entry' => '{{GENDER:$1|zaktualizował kategorię punktów [[$2]]|zaktualizowała kategorię punktów [[$2]]|zaktualizowało kategorię punktów [[$2]]}}',
+	'wikia-interactive-maps-delete-pin-type-log-entry' => '{{GENDER:$1|usunął kategorie punktów [[$2]]|usunęła kategorie punktów [[$2]]|usunęło kategorie punktów [[$2]]}}',
+	'wikia-interactive-maps-create-pin-log-entry' => '{{GENDER:$1|stworzył nowy punkt na mapie [[$2]]|stworzyła nowy punkt na mapie [[$2]]|stworzyło nowy punkt na mapie [[$2]]}}',
+	'wikia-interactive-maps-update-pin-log-entry' => '{{GENDER:$1|zaktualizował nowy punkt na mapie [[$2]]|zaktualizowała nowy punkt na mapie [[$2]]|zaktualizowało nowy punkt na mapie [[$2]]}}',
+	'wikia-interactive-maps-delete-pin-log-entry' => '{{GENDER:$1|usunął nowy punkt na mapie [[$2]]|usunęła nowy punkt na mapie [[$2]]|usunęło nowy punkt na mapie [[$2]]}}',
 ];
 
 $messages[ 'qqq' ] = [
