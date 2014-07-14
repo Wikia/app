@@ -14,6 +14,7 @@ class VenusController extends WikiaController {
 		$this->assetsManager = AssetsManager::getInstance();
 
 		$skinVars = $this->app->getSkinTemplateObj()->data;
+		// this should be re-viewed and removed if not nessesary
 		$this->pagetitle = $skinVars['pagetitle'];
 		$this->displaytitle = $skinVars['displaytitle'];
 		$this->mimetype = $skinVars['mimetype'];
