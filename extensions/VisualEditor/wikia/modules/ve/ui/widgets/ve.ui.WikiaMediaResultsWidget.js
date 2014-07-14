@@ -83,7 +83,6 @@ ve.ui.WikiaMediaResultsWidget.prototype.addItems = function ( items ) {
 			optionWidget
 		);
 	}
-
 	this.results.addItems( results );
 };
 

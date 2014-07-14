@@ -37,23 +37,22 @@ OO.inheritClass( ve.ui.WikiaVideoOptionWidget, ve.ui.WikiaMediaOptionWidget );
 
 /* Static Methods */
 
-ve.ui.WikiaVideoOptionWidget.static.formatDuration = function( totalSeconds ) {
+ve.ui.WikiaVideoOptionWidget.static.formatDuration = function ( totalSeconds ) {
 	var hours = Math.floor( totalSeconds / 3600 ),
 		minutes = Math.floor( ( totalSeconds - ( hours * 3600 ) ) / 60 ),
 		seconds = totalSeconds - ( hours * 3600 ) - ( minutes * 60 );
 	if ( hours < 10 ) {
-		hours = "0" + hours;
+		hours = '0' + hours;
 	}
 	if ( minutes < 10 ) {
-		minutes = "0" + minutes;
+		minutes = '0' + minutes;
 	}
 	if ( seconds < 10 ) {
-		seconds = "0" + seconds;
+		seconds = '0' + seconds;
 	}
 	if ( totalSeconds >= 3600 ) {
-		return hours+':'+minutes+':'+seconds;
+		return hours + ':' + minutes + ':' + seconds;
 	} else {
-		return minutes+':'+seconds;
+		return minutes + ':' + seconds;
 	}
 };
-
