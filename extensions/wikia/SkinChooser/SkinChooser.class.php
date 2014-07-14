@@ -243,7 +243,7 @@ class SkinChooser {
 
 		if(!$user->isLoggedIn()) { # If user is not logged in
 			if($wgDefaultSkin == 'oasis') {
-				if( self::showVenusSkin() ) {
+				if( self::showVenusSkin()) {
 					$userSkin = 'venus';
 					$userTheme = null;
 				} else {
@@ -281,7 +281,7 @@ class SkinChooser {
 				}
 			} else if ($userSkin == 'oasis' && self::showVenusSkin()) {
 				$userSkin = 'venus';
-			} else if(!empty($wgAdminSkin) && $userSkin != 'oasis' && $userSkin != 'monobook' && $userSkin != 'wowwiki' && $userSkin != 'lostbook') {
+			} else if(!empty($wgAdminSkin) && $userSkin != 'venus' && $userSkin != 'oasis' && $userSkin != 'monobook' && $userSkin != 'wowwiki' && $userSkin != 'lostbook') {
 				$adminSkinArray = explode('-', $wgAdminSkin);
 				$userSkin = isset($adminSkinArray[0]) ? $adminSkinArray[0] : null;
 				$userTheme = isset($adminSkinArray[1]) ? $adminSkinArray[1] : null;
