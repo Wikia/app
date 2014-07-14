@@ -121,15 +121,11 @@ class Profiler {
 
 	public function getProfileID() {
 		if ( $this->mProfileID === false ) {
-			if ( function_exists( 'wfWikiID' ) ) {
-				return wfWikiID();
-			} else {
-				global $wgDBname;
-				return $wgDBname;
-			}
-		} else {
-			return $this->mProfileID;
+			global $wgDBname;
+
+			$this->mProfileID = function_exists( 'wfWikiID' ) ? wfWikiID() : $wgDBname;
 		}
+		return $this->mProfileID;
 	}
 
 	/**
