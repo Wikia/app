@@ -109,16 +109,24 @@ $messages[ 'en' ] = [
 
 	'wikia-interactive-maps-log-name' => 'Maps',
 	'wikia-interactive-maps-log-description' => 'This is a log of maps actions',
-	'wikia-interactive-maps-create-map-log-entry' => 'created new map [[$1]]',
-	'wikia-interactive-maps-update-map-log-entry' => 'updated map [[$1]]',
-	'wikia-interactive-maps-delete-map-log-entry' => 'deleted map [[$1]]',
-	'wikia-interactive-maps-create-pin-type-log-entry' => 'created new pin category for [[$1]]',
-	'wikia-interactive-maps-update-pin-type-log-entry' => 'updated pin category for [[$1]]',
-	'wikia-interactive-maps-delete-pin-type-log-entry' => 'deleted pin category for [[$1]]',
-	'wikia-interactive-maps-create-pin-log-entry' => 'created new pin for [[$1]]',
-	'wikia-interactive-maps-update-pin-log-entry' => 'updated pin for [[$1]]',
-	'wikia-interactive-maps-delete-pin-log-entry' => 'deleted pin for [[$1]]',
+	'wikia-interactive-maps-create-map-log-entry' => 'created new map [[$2]]',
+	'wikia-interactive-maps-update-map-log-entry' => 'updated map [[$2]]',
+	'wikia-interactive-maps-delete-map-log-entry' => 'deleted map [[$2]]',
+	'wikia-interactive-maps-create-pin-type-log-entry' => 'created new pin category for [[$2]]',
+	'wikia-interactive-maps-update-pin-type-log-entry' => 'updated pin category for [[$2]]',
+	'wikia-interactive-maps-delete-pin-type-log-entry' => 'deleted pin category for [[$2]]',
+	'wikia-interactive-maps-create-pin-log-entry' => 'created new pin for [[$2]]',
+	'wikia-interactive-maps-update-pin-log-entry' => 'updated pin for [[$2]]',
+	'wikia-interactive-maps-delete-pin-log-entry' => 'deleted pin for [[$2]]',
 	'wikia-interactive-maps-hide-filter' => 'Hide',
+];
+
+$messages[ 'pl' ] = [
+	'wikia-interactive-maps-parser-tag-created-by' => '{{GENDER:$1|Stworzył $1|Stworzyła $1|Stworzyło $1}}',
+
+	'wikia-interactive-maps-create-map-log-entry' => '{{GENDER:$1|stworzył mapę [[$2]]|stworzyła mapę [[$2]]|stworzyło mapę [[$2]]}}',
+	'wikia-interactive-maps-update-map-log-entry' => '{{GENDER:$1|zaktualizował mapę [[$2]]|zaktualizowała mapę [[$2]]|zaktualizowało mapę [[$2]]}}',
+	'wikia-interactive-maps-delete-map-log-entry' => '{{GENDER:$1|usunął mapę [[$2]]|usunęła mapę [[$2]]|usunęło mapę [[$2]]}}deleted map [[$2]]}}',
 ];
 
 $messages[ 'qqq' ] = [
@@ -149,7 +157,7 @@ $messages[ 'qqq' ] = [
 	'wikia-interactive-maps-parser-tag-error-min-height' => 'Interactive maps error after try of parsing wikitext tag; value below minimum height has been passed',
 	'wikia-interactive-maps-parser-tag-error-max-height' => 'Interactive maps error after try of parsing wikitext tag; value above maximum height has been passed',
 	'wikia-interactive-maps-parser-tag-error-no-map-found' => 'Interactive maps error when map of given id doesn\'t exist',
-	'wikia-interactive-maps-parser-tag-created-by' => 'Created by message $1 - user name',
+	'wikia-interactive-maps-parser-tag-created-by' => 'Created by message; Parameters: $1 - user name',
 	'wikia-interactive-maps-parser-tag-view' => 'View map button',
 
 	'wikia-interactive-maps-map-placeholder-error' => 'Interactive maps unexpected error which could happen during some rare situations such as file system dead',
@@ -234,14 +242,14 @@ $messages[ 'qqq' ] = [
 
 	'wikia-interactive-maps-log-name' => 'Name for Special:Log filter',
 	'wikia-interactive-maps-log-description' => 'Description for Special:Log filter',
-	'wikia-interactive-maps-create-map-log-entry' => 'Message to be displayed in the log when a map is created',
-	'wikia-interactive-maps-update-map-log-entry' => 'Message to be displayed in the log when a map is updated',
-	'wikia-interactive-maps-delete-map-log-entry' => 'Message to be displayed in the log when a map is deleted',
-	'wikia-interactive-maps-create-pin-type-log-entry' => 'Message to be displayed in the log when a pin category is created',
-	'wikia-interactive-maps-update-pin-type-log-entry' => 'Message to be displayed in the log when a pin category is updated',
-	'wikia-interactive-maps-delete-pin-type-log-entry' => 'Message to be displayed in the log when a pin category is deleted',
-	'wikia-interactive-maps-create-pin-log-entry' => 'Message to be displayed in the log when a pin is created',
-	'wikia-interactive-maps-update-pin-log-entry' => 'Message to be displayed in the log when a pin is updated',
-	'wikia-interactive-maps-delete-pin-log-entry' => 'Message to be displayed in the log when a pin is deleted',
+	'wikia-interactive-maps-create-map-log-entry' => 'Message to be displayed in the log when a map is created; Parameters: $1 - username, $2 - map page title',
+	'wikia-interactive-maps-update-map-log-entry' => 'Message to be displayed in the log when a map is updated; Parameters: $1 - username, $2 - map page title',
+	'wikia-interactive-maps-delete-map-log-entry' => 'Message to be displayed in the log when a map is deleted; Parameters: $1 - username, $2 - map page title',
+	'wikia-interactive-maps-create-pin-type-log-entry' => 'Message to be displayed in the log when a pin category is created; Parameters: $1 - username, $2 - map page title',
+	'wikia-interactive-maps-update-pin-type-log-entry' => 'Message to be displayed in the log when a pin category is updated; Parameters: $1 - username, $2 - map page title',
+	'wikia-interactive-maps-delete-pin-type-log-entry' => 'Message to be displayed in the log when a pin category is deleted; Parameters: $1 - username, $2 - map page title',
+	'wikia-interactive-maps-create-pin-log-entry' => 'Message to be displayed in the log when a pin is created; Parameters: $1 - username, $2 - map page title',
+	'wikia-interactive-maps-update-pin-log-entry' => 'Message to be displayed in the log when a pin is updated; Parameters: $1 - username, $2 - map page title',
+	'wikia-interactive-maps-delete-pin-log-entry' => 'Message to be displayed in the log when a pin is deleted; Parameters: $1 - username, $2 - map page title',
 	'wikia-interactive-maps-hide-filter' => 'Name of the button for hiding filter box',
 ];

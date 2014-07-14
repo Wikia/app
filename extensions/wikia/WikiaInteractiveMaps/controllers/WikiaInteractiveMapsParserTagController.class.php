@@ -109,7 +109,7 @@ class WikiaInteractiveMapsParserTagController extends WikiaController {
 
 		$this->setVal( 'map', (object) $params->map );
 		$this->setVal( 'params', $params );
-		$this->setVal( 'created_by', wfMessage( 'wikia-interactive-maps-parser-tag-created-by' )->params( $userName )->plain() );
+		$this->setVal( 'created_by', wfMessage( 'wikia-interactive-maps-parser-tag-created-by', $userName )->text() );
 		$this->setVal( 'avatarUrl', AvatarService::getAvatarUrl( $userName, AvatarService::AVATAR_SIZE_SMALL ) );
 		$this->setVal( 'view', wfMessage( 'wikia-interactive-maps-parser-tag-view' )->plain() );
 

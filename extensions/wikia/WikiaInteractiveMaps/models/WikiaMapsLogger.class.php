@@ -87,7 +87,8 @@ class WikiaMapsLogger {
 	 * @return string
 	 */
 	public static function formatLogEntry( $type, $action, $title, $skin, Array $params, $filterWikilinks ) {
-		global $wgLang;
+		global $wgLang,
+			$wgUser;
 
 		$mapPageTitle = $wgLang->convertTitle( $title );
 
@@ -109,8 +110,8 @@ class WikiaMapsLogger {
 			$messageKey = $translations[ $action ];
 		}
 		if ( is_null( $skin ) ) {
-			return wfMessage( $messageKey, $mapPageTitle )->plain();
+			return wfMessage( $messageKey, $wgUser->getName(), $mapPageTitle )->text();
 		}
-		return wfMessage( $messageKey, $mapPageTitle )->parse();
+		return wfMessage( $messageKey, $wgUser->getName(), $mapPageTitle )->text();
 	}
 }
