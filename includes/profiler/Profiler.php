@@ -50,6 +50,9 @@ class Profiler {
 	protected $mProfileID = false, $mCollateDone = false, $mTemplated = false;
 	private static $__instance = null;
 
+	/** @var ProfilerDataSink[] */
+	protected $sinks;
+
 	function __construct( $params ) {
 		if ( isset( $params['timeMetric'] ) ) {
 			$this->mTimeMetric = $params['timeMetric'];
@@ -118,10 +121,11 @@ class Profiler {
 
 	public function getProfileID() {
 		if ( $this->mProfileID === false ) {
-			return wfWikiID();
-		} else {
-			return $this->mProfileID;
+			global $wgDBname;
+
+			$this->mProfileID = function_exists( 'wfWikiID' ) ? wfWikiID() : $wgDBname;
 		}
+		return $this->mProfileID;
 	}
 
 	/**
@@ -520,4 +524,28 @@ class Profiler {
 			wfDebug( $s );
 		}
 	}
+
+	public function hasSinks() {
+		return !empty($this->sinks);
+	}
+
+	public function addSink( ProfilerDataSink $sink ) {
+		$this->sinks[] = $sink;
+	}
+
+	public function sendToSinks( ProfilerData $data ) {
+		foreach ( $this->sinks as $sink ) {
+			$sink->send( $data );
+		}
+	}
+
+	function getCpuTime( $ru = null ) {
+		if ( $ru == null ) {
+			$ru = getrusage();
+		}
+
+		return $ru['ru_utime.tv_sec'] + $ru['ru_stime.tv_sec']
+			+ ( $ru['ru_utime.tv_usec'] + $ru['ru_stime.tv_usec'] ) * 1e-6;
+	}
+
 }
