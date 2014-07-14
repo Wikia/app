@@ -59,10 +59,6 @@ class HAWelcomeTask extends BaseTask {
 		return ['task' => __CLASS__];
 	}
 
-	function __construct() {
-		$this->mergeFeatureFlagsFromUserSettings();
-	}
-
 	/**
 	 *
 	 * @param $oTitle Object The Title associated with the Job.
@@ -81,6 +77,7 @@ class HAWelcomeTask extends BaseTask {
 	public function sendWelcomeMessage( $params ) {
 		$this->info( "HAWelcome sendWelcomeMessage" );
 		$this->normalizeInstanceParameters( $params );
+		$this->mergeFeatureFlagsFromUserSettings();
 
 		$this->setRecipient();
 
@@ -119,7 +116,7 @@ class HAWelcomeTask extends BaseTask {
 	}
 
 	public function getUserFeatureFlags() {
-		return wfMessage( 'welcome-enabled' )->inContentLanguage()->text();
+		return $this->getTextVersionOfMessage( 'welcome-enabled' );
 	}
 
 	public function mergeFeatureFlagsFromUserSettings() {
@@ -171,7 +168,7 @@ class HAWelcomeTask extends BaseTask {
 	 * @internal
 	 */
 	public function setSender() {
-		$sSender = trim( wfMessage( 'welcome-user' )->inContentLanguage()->text() );
+		$sSender = trim( $this->getTextVersionOfMessage( 'welcome-user' ) );
 
 		// Check for known values indicating that the most recently active admin has to be the sender.
 		if ( in_array( $sSender, array( '@latest', '@sysop' ) ) ) {
@@ -275,7 +272,7 @@ class HAWelcomeTask extends BaseTask {
 	}
 
 	protected function senderIsBotAllowed() {
-		if ( $this->senderObject->isAllowed( 'bot' ) || '@bot' == trim( wfMessage( 'welcome-bot' )->inContentLanguage()->text() ) ) {
+		if ( $this->senderObject->isAllowed( 'bot' ) || '@bot' == trim( $this->getTextVersionOfMessage( 'welcome-bot' ) ) ) {
 			return true;
 		}
 	}
@@ -318,7 +315,7 @@ class HAWelcomeTask extends BaseTask {
 		$this->info( "creating a welcome wall message" );
 		$mWallMessage = WallMessage::buildNewMessageAndPost(
 			$this->welcomeMessage, $this->recipientName, $this->getDefaultWelcomerUser(),
-			wfMessage( 'welcome-message-log' )->inContentLanguage()->text(), false, array(), false, false
+			$this->getTextVersionOfMessage( 'welcome-message-log' ), false, array(), false, false
 		);
 
 		// Sets the sender of the message when the actual message
@@ -337,7 +334,18 @@ class HAWelcomeTask extends BaseTask {
 			$welcomeMessage = $this->welcomeMessage;
 		}
 
-		$this->getRecipientTalkPage()->doEdit( $welcomeMessage, wfMessage( 'welcome-message-log' )->inContentLanguage()->text(), $this->integerFlags );
+		$this->getRecipientTalkPage()->doEdit( $welcomeMessage, $this->getTextVersionOfMessage( 'welcome-message-log' ), $this->integerFlags );
+	}
+
+	/**
+	 * Get the text version of inContentLanguage message. This is a wrapper so that we can
+	 * limit side effects in unit tests.
+	 *
+	 * @param string $message
+	 * @return string
+	 */
+	protected function getTextVersionOfMessage( $message ) {
+		return wfMessage( $message )->inContentLanguage()->text();
 	}
 
 	/**
@@ -405,6 +413,12 @@ class HAWelcomeTask extends BaseTask {
 		$this->recipientId   = isset( $params['iUserId'] ) ? $params['iUserId'] : null;
 		$this->recipientName = isset( $params['sUserName'] ) ? $params['sUserName'] : null;
 		$this->timestamp     = ( isset( $params['iTimestamp'] ) ) ? $params['iTimestamp'] : 0;
+	}
+
+
+	public function setSenderObject( \User $sender ) {
+		$this->senderObject = $sender;
+		return $this;
 	}
 
 }

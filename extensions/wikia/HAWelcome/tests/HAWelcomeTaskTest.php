@@ -73,11 +73,15 @@ class HAWelcomeTaskTest extends WikiaBaseTest {
 			->method( 'doEdit' )
 			->will( $this->returnValue( $talkPageContent ) );
 
-		$task = $this->getMock( '\HAWelcomeTask', ['getRecipientTalkPage'], [], '', false );
+		$task = $this->getMock( '\HAWelcomeTask', ['getRecipientTalkPage', 'getTextVersionOfMessage'], [], '', false );
 
 		$task->expects( $this->exactly( 3 ) )
 			->method( 'getRecipientTalkPage' )
 			->will( $this->returnValue( $talkPage ) );
+
+		$task->expects( $this->once() )
+			->method( 'getTextVersionOfMessage' )
+			->will( $this->returnValue( 'a-message' ) );
 
 		$task->postTalkPageMessageToRecipient();
 	}
@@ -98,11 +102,15 @@ class HAWelcomeTaskTest extends WikiaBaseTest {
 			->method( 'doEdit' )
 			->will( $this->returnValue( $talkPageContent ) );
 
-		$task = $this->getMock( '\HAWelcomeTask', ['getRecipientTalkPage'], [], '', false );
+		$task = $this->getMock( '\HAWelcomeTask', ['getRecipientTalkPage', 'getTextVersionOfMessage'], [], '', false );
 
 		$task->expects( $this->exactly( 2 ) )
 			->method( 'getRecipientTalkPage' )
 			->will( $this->returnValue( $talkPage ) );
+
+		$task->expects( $this->once() )
+			->method( 'getTextVersionOfMessage' )
+			->will( $this->returnValue( 'a-message' ) );
 
 		$task->postTalkPageMessageToRecipient();
 	}
@@ -151,6 +159,8 @@ class HAWelcomeTaskTest extends WikiaBaseTest {
 			'isFeatureFlagEnabled',
 			'getMessageWallExtensionEnabled',
 			'recipientWallIsEmpty',
+			'getTextVersionOfMessage',
+			'setSender',
 			'sendMessage'
 			], [], '', false );
 
@@ -168,8 +178,24 @@ class HAWelcomeTaskTest extends WikiaBaseTest {
 			->will( $this->returnValue( true ) );
 
 		$task->expects( $this->once() )
+			->method( 'setSender' )
+			->will( $this->returnValue( null ) );
+
+		$senderObject = $this->getMock( '\User' );
+		$senderObject->expects( $this->once() )
+			->method( 'isAllowed' )
+			->with( 'bot' )
+			->will( $this->returnValue( true ) );
+		$task->setSenderObject( $senderObject );
+
+		$task->expects( $this->once() )
 			->method( 'sendMessage' )
 			->will( $this->returnValue( null ) );
+
+		$task->expects( $this->once( ) )
+			->method( 'getTextVersionOfMessage' )
+			->with( 'welcome-enabled' )
+			->will( $this->returnValue( "message-anon message-user page-user" ) );
 
 		$task->sendWelcomeMessage( $params );
 	}
@@ -189,7 +215,9 @@ class HAWelcomeTaskTest extends WikiaBaseTest {
 			[
 			'isFeatureFlagEnabled',
 			'getMessageWallExtensionEnabled',
+			'getTextVersionOfMessage',
 			'sendMessage',
+			'setSender',
 			'getRecipientTalkPage',
 			], [], '', false );
 
@@ -211,6 +239,22 @@ class HAWelcomeTaskTest extends WikiaBaseTest {
 		$task->expects( $this->exactly( 2 ) )
 			->method( 'getMessageWallExtensionEnabled' )
 			->will( $this->returnValue( false ) );
+
+		$task->expects( $this->once( ) )
+			->method( 'getTextVersionOfMessage' )
+			->with( 'welcome-enabled' )
+			->will( $this->returnValue( "message-anon message-user page-user" ) );
+
+		$senderObject = $this->getMock( '\User' );
+		$senderObject->expects( $this->once() )
+			->method( 'isAllowed' )
+			->with( 'bot' )
+			->will( $this->returnValue( true ) );
+		$task->setSenderObject( $senderObject );
+
+		$task->expects( $this->once() )
+			->method( 'setSender' )
+			->will( $this->returnValue( null ) );
 
 		$task->expects( $this->once() )
 			->method( 'sendMessage' )
@@ -235,6 +279,8 @@ class HAWelcomeTaskTest extends WikiaBaseTest {
 			'isFeatureFlagEnabled',
 			'sendMessage',
 			'createUserProfilePage',
+			'getTextVersionOfMessage',
+			'setSender'
 			], [], '', false );
 
 		$task->expects( $this->exactly( 2 ) )
@@ -249,6 +295,22 @@ class HAWelcomeTaskTest extends WikiaBaseTest {
 		$task->expects( $this->once() )
 			->method( 'createUserProfilePage' )
 			->will( $this->returnValue( null ) );
+
+		$task->expects( $this->once( ) )
+			->method( 'getTextVersionOfMessage' )
+			->with( 'welcome-enabled' )
+			->will( $this->returnValue( "message-anon message-user page-user" ) );
+
+		$task->expects( $this->once( ) )
+			->method( 'setSender' )
+			->will( $this->returnValue( null ) );
+
+		$senderObject = $this->getMock( '\User' );
+		$senderObject->expects( $this->once() )
+			->method( 'isAllowed' )
+			->with( 'bot' )
+			->will( $this->returnValue( true ) );
+		$task->setSenderObject( $senderObject );
 
 		$task->sendWelcomeMessage( $params );
 	}
