@@ -1,7 +1,7 @@
 <ul class="Pagination"  <? foreach($data as $key => $val ): ?> data-<?php echo $key ?>="<?php echo htmlentities($val); ?>" <? endforeach; ?> >
 	<? if( $prev ): ?>
 		<li data-page="<?= $currentPage - 1; ?>"  class="prev">
-			<a href="<?= ($url !== '#' ? $url.($currentPage - 1) : $url) ?>"><?php echo wfMsg('wikia-pagination-prev'); ?></a>
+			<a href="<?= ($url !== '#' ? $url.($currentPage - 1) : $url) ?>"><?= $prevMsg ?></a>
 		</li>
 	<? endif; ?>
 	
@@ -20,7 +20,7 @@
 	
 	<? if( $next ): ?>
 		<li data-page="<?= $currentPage + 1; ?>" class="next">
-			<a href="<?= ($url !== '#' ? $url.($currentPage + 1) : $url) ?>"><?php echo wfMsg('wikia-pagination-next'); ?></a>
+			<a href="<?= ($url !== '#' ? $url.($currentPage + 1) : $url) ?>"><?= $nextMsg ?></a>
 		</li>
 	<? endif; ?>
 </ul>

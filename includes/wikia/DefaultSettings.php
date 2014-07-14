@@ -260,6 +260,7 @@ $wgAutoloadClasses[ 'TransactionTrace'                ] = "$IP/includes/wikia/tr
 $wgAutoloadClasses[ 'TransactionClassifier'           ] = "$IP/includes/wikia/transactiontrace/TransactionClassifier.php";
 $wgAutoloadClasses[ 'TransactionTraceNewrelic'        ] = "$IP/includes/wikia/transactiontrace/TransactionTraceNewrelic.php";
 $wgHooks          [ 'ArticleViewAddParserOutput'      ][] = 'Transaction::onArticleViewAddParserOutput';
+$wgHooks          [ 'RestInPeace'                     ][] = 'Transaction::onRestInPeace';
 $wgHooks          [ 'RestInPeace'                     ][] = 'ScribePurge::onRestInPeace';
 $wgAutoloadClasses[ 'Wikia\\Blogs\\BlogTask'          ] = "$IP/extensions/wikia/Blogs/BlogTask.class.php";
 
@@ -1226,10 +1227,10 @@ $wgEnableAdEngineExt = true;
 $wgAdDriverUseEbay = false;
 
 /**
- * @name $wgAdDriverUseWikiaBarBoxad2
- * Whether to enable new fancy footer ad WIKIA_BAR_BOXAD_2
+ * @name $wgAdDriverUseBottomLeaderboard
+ * Whether to enable new fancy footer ad BOTTOM_LEADERBOARD
  */
-$wgAdDriverUseWikiaBarBoxad2 = false;
+$wgAdDriverUseBottomLeaderboard = false;
 
 /**
  * @name $wgAdDriverUseTopInContentBoxad
@@ -1238,10 +1239,10 @@ $wgAdDriverUseWikiaBarBoxad2 = false;
 $wgAdDriverUseTopInContentBoxad = false;
 
 /**
- * @name $wgAdDriverWikiaBarBoxad2ImpressionCapping
- * Impression capping for WIKIA_BAR_BOXAD_2. Array with the numbers of the potential ad calls.
+ * @name $wgAdDriverBottomLeaderboardImpressionCapping
+ * Impression capping for BOTTOM_LEADERBOARD. Array with the numbers of the potential ad calls.
  */
-$wgAdDriverWikiaBarBoxad2ImpressionCapping = [2, 4, 6];
+$wgAdDriverBottomLeaderboardImpressionCapping = [2, 4, 6];
 
 /**
  * @name $wgAdDriverUseSevenOneMedia
@@ -1284,6 +1285,12 @@ $wgAdDriverForceDirectGptAd = false;
 $wgAdDriverForceLiftiumAd = false;
 
 /**
+ * @name $wgAdDriverEnableAdsInMaps
+ * Whether to display ads within interactive maps
+ */
+$wgAdDriverEnableAdsInMaps = false;
+
+/**
  * @name $wgHighValueCountries
  * List of countries defined as high-value for revenue purposes
  * Value set in WikiFactory for Community acts as global value. Can be overridden per wiki.
@@ -1295,6 +1302,18 @@ $wgHighValueCountries = null;
  * Enables page-level video ad targeting
  */
 $wgAdVideoTargeting = true;
+
+/**
+ * @name $wgAnalyticsProviderPageFair
+ * Site ID for PageFair analytics provider.
+ */
+$wgAnalyticsProviderPageFair = null;
+
+/**
+ * @name $wgAnalyticsProviderPageFairSlotIds
+ * Slot IDs for PageFair analytics provider.
+ */
+$wgAnalyticsProviderPageFairSlotIds = [ 'LEADERBOARD' => null, 'MEDREC' => null, 'SKYSCRAPER' => null ];
 
 /**
  * trusted proxy service registry
@@ -1475,3 +1494,9 @@ $wgXhprofMinimumTime = 0.001;
  * Enables sending profiler reports via Scribe
  */
 $wgProfilerSendViaScribe = true;
+
+/* @name wgDisableWAMOnHubs
+ * Disable WAM module on hub pages
+ */
+$wgDisableWAMOnHubs = false;
+

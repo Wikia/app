@@ -223,7 +223,7 @@ class AdEngine2Service
 			$wgRequest, $wgEnableKruxTargeting,
 			$wgAdVideoTargeting, $wgLiftiumOnLoad, $wgAdDriverSevenOneMediaSub4Site,
 			$wgDartCustomKeyValues, $wgWikiDirectedAtChildrenByStaff, $wgAdEngineDisableLateQueue,
-			$wgAdDriverUseWikiaBarBoxad2, $wgAdDriverWikiaBarBoxad2ImpressionCapping;
+			$wgAdDriverUseBottomLeaderboard, $wgAdDriverBottomLeaderboardImpressionCapping, $wgAdDriverEnableAdsInMaps;
 
 		$vars = [];
 
@@ -273,6 +273,9 @@ class AdEngine2Service
 
 			// AdLogicPageParams.js, SevenOneMediaHelper.js, AnalyticsProviderQuantServe.php
 			'cityShort' => AdEngine2Service::getCachedCategory()['short'],
+
+			// intMapPontoBridge.js
+			'wgAdDriverEnableAdsInMaps' => $wgAdDriverEnableAdsInMaps,
 		];
 
 		if (!empty($wgEnableKruxTargeting)) {
@@ -286,8 +289,8 @@ class AdEngine2Service
 			$variablesToExpose['wgAdDriverSevenOneMediaDisableFirePlaces'] = !empty($wgOasisResponsive) && empty($wgOasisResponsiveLimited);
 		}
 
-		if ($wgAdDriverUseWikiaBarBoxad2) {
-			$variablesToExpose['wgAdDriverWikiaBarBoxad2ImpressionCapping'] = $wgAdDriverWikiaBarBoxad2ImpressionCapping;
+		if ($wgAdDriverUseBottomLeaderboard) {
+			$variablesToExpose['wgAdDriverBottomLeaderboardImpressionCapping'] = $wgAdDriverBottomLeaderboardImpressionCapping;
 		}
 
 		foreach($variablesToExpose as $varName => $varValue) {
