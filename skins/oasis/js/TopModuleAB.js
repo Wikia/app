@@ -3,7 +3,7 @@
 	'use strict';
 
 	window.getElementWrapper = function( elem, wrapper, maxBubbleUp ) {
-		var bubble = maxBubbleUp + 1 || 4;
+		var bubble = maxBubbleUp || 4;
 
 		while ( elem && bubble ) {
 			if ( elem.nodeName === wrapper ) {
@@ -17,7 +17,7 @@
 
 	window.trackClickABTest = function( element, variationName ) {
 		element.on( 'mousedown', function( event ) {
-			if ( window.getElementWrapper( event.target, 'A', 1 ) !== null ) {
+			if ( window.getElementWrapper( event.target, 'A', 2 ) !== null ) {
 				window.optimizely = window.optimizely || [];
 				window.optimizely.push( [ 'trackEvent', variationName + '-click' ] );
 				window.Wikia.Tracker.track( {
