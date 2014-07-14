@@ -291,15 +291,16 @@ $width-cart: 118px;
 
 	.ve-ui-wikiaVideoOptionWidget-duration {
 		background-color: #000;
+		bottom: 0;
 		color: #fff;
 		display: block;
 		font-size: 11px;
-		margin-left: 108px;
-		margin-top: 139px;
-		padding: 3px 0;
+		line-height: 17px;
+		opacity: 0.7;
+		padding: 0 6px;
 		position: absolute;
+		right: 0;
 		text-align: center;
-		width: 50px;
 	}
 
 	.ve-ui-wikiaVideoOptionWidget-icon {
