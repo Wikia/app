@@ -79,13 +79,13 @@ class ApiMediaSearch extends ApiBase {
 	}
 
 	/**
-	 * Gets the formatted duration of a video, given the video title
+	 * Gets the duration of a video.
 	 * @param string $title
-	 * @return string
+	 * @return int Number of seconds
 	 */
 	protected function getDuration( $title ) {
 		$file = WikiaFileHelper::getVideoFileFromTitle( $title );
-		return !empty( $file ) ? WikiaFileHelper::formatDuration( $file->getMetadataDuration() ) : '';
+		return $file ? $file->getMetadataDuration() : 0;
 	}
 
 	public function getResults( $query, $limit, $batch, $video, $photo, $mixed ) {
