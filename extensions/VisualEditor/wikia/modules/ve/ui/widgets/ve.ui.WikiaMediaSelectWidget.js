@@ -27,24 +27,6 @@ OO.inheritClass( ve.ui.WikiaMediaSelectWidget, OO.ui.SelectWidget );
 /* Methods */
 
 /**
- * Handle mouseup
- *
- * @method
- * @param {jQuery.Event} e The jQuery event Object.
- */
-ve.ui.WikiaMediaSelectWidget.prototype.onMouseUp = function ( e ) {
-	this.pressed = false;
-	if ( !this.selecting ) {
-		this.selecting = this.getTargetItem( e );
-	}
-	if ( !this.disabled && e.which === 1 && this.selecting ) {
-		this.selectItem( this.selecting );
-		this.selecting = null;
-	}
-	return false;
-};
-
-/**
  * Determines which icon to show for a search result item based on the cart
  *
  * @method
@@ -52,12 +34,14 @@ ve.ui.WikiaMediaSelectWidget.prototype.onMouseUp = function ( e ) {
  * @param {boolean} checked Should the item be checked?
  */
 ve.ui.WikiaMediaSelectWidget.prototype.setChecked = function ( items, checked ) {
-	var i, item;
-
+	var i, j;
 	for ( i = 0; i < items.length ; i++ ) {
-		item = this.getItemFromData( items[i].title );
-		if ( item ) {
-			item.setChecked( checked );
+		// TODO: Consider creating a method to retrieve widget (or its data) based on the title
+		for ( j = 0; j < this.items.length; j++ ) {
+			if ( this.items[j].getData().title === items[i].title ) {
+				this.items[j].setChecked( checked );
+				break;
+			}
 		}
 	}
 };
