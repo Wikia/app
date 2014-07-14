@@ -69,6 +69,9 @@ class JsonFormatService extends \WikiaService {
 	}
 
 	public function getSimpleFormatForHtml( $html ) {
-		return $this->htmlParser->parse( $html );
+		$jsonSimple = $this->htmlParser->parse( $html );
+		$simplifier = new Wikia\JsonFormat\JsonFormatSimplifier();
+		$text = $simplifier->simplifyToText( $jsonSimple );
+		return $text;
 	}
 }
