@@ -241,7 +241,7 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 	 */
 	private function convertImagesToThumbs( &$items, $width, $height ) {
 		foreach ( $items as $item ) {
-			$item->image = $this->mapsModel->createCroppedThumb( $item->image, $width, $height, 'origin' );
+			$item->image = $this->mapsModel->createCroppedThumb( $item->image, $width, $height );
 		}
 	}
 
