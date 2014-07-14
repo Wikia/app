@@ -8,10 +8,6 @@
  */
 class ProfilerXhprof extends ProfilerStub {
 
-	const SCRIBE = 'scribe';
-	const UDP = 'udp';
-	const SCRIBE_KEY = 'xhprof_data';
-	const UDP_PACKET_MAX_SIZE = 1000;
 	/**
 	 * @var bool Is XHProf initialized in this request?
 	 */
@@ -35,7 +31,7 @@ class ProfilerXhprof extends ProfilerStub {
 	}
 
 	/**
-	 * Collect XHProf data and send it to the destination host through UDP.
+	 * Collect XHProf data and send it to the attached sink
 	 *
 	 * DO NOT CALL DIRECTLY! Has to be public as it's called from outside the class.
 	 *
@@ -123,8 +119,7 @@ class ProfilerXhprof extends ProfilerStub {
 	 * @return array
 	 */
 	protected function filter( $data ) {
-		$config = $this->config();
-		$minimumTime = $config['minimum_time'];
+		$minimumTime = $this->getMinimumTimeThreshold();
 		foreach ( $data as $k => $v ) {
 			if ( ( isset( $v['ct'] ) && isset( $v['wt'] ) )
 				&& $v['wt'] >= $minimumTime
@@ -138,23 +133,14 @@ class ProfilerXhprof extends ProfilerStub {
 	}
 
 	/**
-	 * Get configuration from global variables
-	 * Reads global variables each time in order to reflect changes in global variables
-	 * during the request (constructor is called before all the configuration files are read).
+	 * Returns the minimum time threshold for entry to be reported
 	 *
-	 * @return array Configuration
+	 * @return float
 	 */
-	protected function config() {
-		global $wgUDPProfilerHost, $wgXhprofUDPHost, $wgXhprofUDPPort, $wgProfilerMinimumTime, $wgDBname, $wgProfilerSendViaScribe;
-		$config = array(
-			'host' => isset( $wgXhprofUDPHost ) ? $wgXhprofUDPHost : $wgUDPProfilerHost,
-			'port' => $wgXhprofUDPPort,
-			'minimum_time' => $wgProfilerMinimumTime,
-			'db_name' => $wgDBname,
-			'target' => !empty( $wgProfilerSendViaScribe ) ? self::SCRIBE : self::UDP,
-		);
+	protected function getMinimumTimeThreshold() {
+		global $wgProfilerMinimumTime;
 
-		return $config;
+		return $wgProfilerMinimumTime;
 	}
 
 	/**
