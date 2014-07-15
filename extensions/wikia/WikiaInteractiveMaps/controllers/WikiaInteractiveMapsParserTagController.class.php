@@ -300,7 +300,7 @@ class WikiaInteractiveMapsParserTagController extends WikiaController {
 	public function getMobileThumbnail() {
 		$width = $this->getVal( 'width' );
 		//To keep the original aspect ratio
-		$height = $width * self::DEFAULT_HEIGHT / self::DEFAULT_WIDTH;
+		$height = floor( $width * self::DEFAULT_HEIGHT / self::DEFAULT_WIDTH );
 		$image = $this->getVal( 'image' );
 		$this->setVal( 'src', $this->mapsModel->createCroppedThumb( $image, $width, $height ) );
 	}
