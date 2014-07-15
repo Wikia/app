@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * @group UsingDB
+ */
 class HAWelcomeTaskTest extends WikiaBaseTest {
 
 	public function testNormalizeInstanceParameters() {

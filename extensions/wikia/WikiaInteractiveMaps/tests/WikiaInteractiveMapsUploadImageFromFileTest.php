@@ -1,4 +1,8 @@
 <?php
+
+/**
+ * @group UsingDB
+ */
 class WikiaInteractiveMapsUploadImageFromFileTest extends WikiaBaseTest {
 
 	public function setUp() {
