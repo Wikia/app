@@ -190,6 +190,10 @@ class WikiaApiController extends WikiaController {
 		return ( isset( $wgApiDisableImages ) && $wgApiDisableImages === true ) ? false : true;
 	}
 
+	/**
+	 * Returns "ref=xxx" from request url
+	 * @return bool|string
+	 */
 	protected function getRefUrlPart() {
 		$ref = $this->request->getVal( self::REF_URL_ARGUMENT );
 		if ( !$ref ) {
@@ -198,10 +202,11 @@ class WikiaApiController extends WikiaController {
 		return http_build_query( [ self::REF_URL_ARGUMENT => $ref ] );
 	}
 
-	protected function addRefUrlPart($url){
-		return $url;
-	}
-
+	/**
+	 * Prepare input array for replaceArrayValues
+	 * @param $array | string
+	 * @return array
+	 */
 	protected function createFieldsArray( $array ){
 		if ( !is_array( $array ) ) {
 			$array = [ $array ];
@@ -260,7 +265,7 @@ class WikiaApiController extends WikiaController {
 	}
 
 	/**
-	 * recursive search in array and clean values where key is in "$fields"
+	 * recursive search in array and replace values where key is in "$fields"
 	 * @param $input
 	 * @param $fields
 	 */
