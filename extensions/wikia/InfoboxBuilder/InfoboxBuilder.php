@@ -20,7 +20,6 @@ if ( !defined('MEDIAWIKI') ) {
 $wgExtensionCredits['other'][] = array(
 	'path' => __FILE__,
 	'name' => 'InfoboxBuilder',
-	'description' => 'InfoboxBuilder is a tool that allows users to build Lua-based infoboxes without any programming skills and to use custom Lua modules for logical operations on demand.',
 	'descriptionmsg' => 'infoboxbuilder-desc',
 	'author' => 'Adam Karmiński <adamk@wikia-inc.com>',
 );
