@@ -16,11 +16,23 @@
 		height: auto;
 	}
 
+	section {
+		box-sizing: border-box;
+		padding: 20px;
+		position: relative;
+		width: 100%;
+	}
+
 	p {
 		bottom: 10px;
 		font-weight: bold;
 		left: 10px;
 		position: absolute;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		top: 0;
+		white-space: nowrap;
+		width: 100%;
 	}
 
 	figcaption {
