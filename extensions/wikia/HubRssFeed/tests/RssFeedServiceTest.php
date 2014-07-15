@@ -63,4 +63,4 @@ class RssFeedServiceTest extends WikiaBaseTest {
 		};
 	}
 
-} 
+}
