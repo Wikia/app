@@ -55,14 +55,12 @@ $InfoboxBuilder-width-right      : 200px;
 	}
 
 	.default-infobox-title {
+		color     : $InfoboxBuilder-color-header;
+		font-size : $InfoboxBuilder-font-size-title;
+		font-weight: normal;
+		margin    : 0;
 		padding: $InfoboxBuilder-padding-v 0;
-
-		h2 {
-			border    : 0px;
-			color     : $InfoboxBuilder-color-header;
-			font-size : $InfoboxBuilder-font-size-title;
-			margin    : 0;
-		}
+		text-align: left;
 	}
 
 	.default-infobox-main-image {
