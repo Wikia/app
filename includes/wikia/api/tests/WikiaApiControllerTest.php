@@ -37,7 +37,6 @@ class WikiaApiControllerTest extends \WikiaBaseTest {
 			->setMethods( [ 'getVal' ] )
 			->getMock();
 
-
 		if ( $refValue ) {
 			$mockRequest->expects( $this->any() )
 				->method( 'getVal' )
@@ -49,6 +48,7 @@ class WikiaApiControllerTest extends \WikiaBaseTest {
 				->with( WikiaApiController::REF_URL_ARGUMENT )
 				->will( $this->returnValue( null ) );
 		}
+
 		$mockRequest->expects( $this->any() )
 			->method( 'getVal' )
 			->will( $this->returnValue( null ) );
