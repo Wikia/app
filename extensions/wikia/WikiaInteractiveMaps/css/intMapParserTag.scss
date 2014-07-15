@@ -1,4 +1,5 @@
 @import "skins/oasis/css/mixins/gradient";
+@import "skins/oasis/css/mixins/ellipses";
 
 $content-color: #fff;
 $secondary-content-color: #ccc;
@@ -28,6 +29,12 @@ $max-view-button-width: 230px;
 		div {
 			bottom: 20px;
 			position: absolute;
+
+			span {
+				@include ellipses();
+				display: block;
+				width: $default-width - $max-view-button-width;
+			}
 		}
 
 		img {
@@ -42,14 +49,12 @@ $max-view-button-width: 230px;
 	}
 
 	p {
+		@include ellipses();
 		font-size: 30px;
 		font-weight: bold;
 		line-height: 30px;
 		margin-bottom: 10px;
-		overflow: hidden;
-		text-overflow: ellipsis;
 		width: $default-width - $max-view-button-width;
-		white-space: nowrap;
 	}
 
 	span {
