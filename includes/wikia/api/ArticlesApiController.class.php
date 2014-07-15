@@ -209,7 +209,7 @@ class ArticlesApiController extends WikiaApiController {
 
 		$this->setResponseData(
 			[ 'basepath' => $this->wg->Server, 'items' => $collection ],
-			'thumbnail',
+			[ 'imgFields'=> 'thumbnail', 'urlFields' => [ 'thumbnail', 'url' ] ],
 			self::CLIENT_CACHE_VALIDITY
 		);
 
@@ -244,7 +244,7 @@ class ArticlesApiController extends WikiaApiController {
 		}
 		$this->setResponseData(
 			[ 'basepath' => $this->wg->Server, 'items' => $mostLinkedOutput ],
-			'thumbnail',
+			[ 'imgFields'=> 'thumbnail', 'urlFields' => [ 'thumbnail', 'url' ] ],
 			self::CLIENT_CACHE_VALIDITY
 		);
 	}
@@ -417,7 +417,7 @@ class ArticlesApiController extends WikiaApiController {
 		$results = array_slice( $results, 0, $limit );
 		$this->setResponseData(
 			[ 'items' => $results, 'basepath' => $this->wg->Server ],
-			'thumbnail',
+			[ 'imgFields'=> 'thumbnail', 'urlFields' => [ 'thumbnail', 'url' ] ],
 			self::NEW_ARTICLES_VARNISH_CACHE_EXPIRATION
 		);
 		wfProfileOut( __METHOD__ );
@@ -573,7 +573,7 @@ class ArticlesApiController extends WikiaApiController {
 				$responseValues[ 'offset' ] = $articles[ 1 ];
 			}
 
-			$this->setResponseData( $responseValues, 'thumbnail', self::CLIENT_CACHE_VALIDITY );
+			$this->setResponseData( $responseValues, [ 'imgFields'=> 'thumbnail', 'urlFields' => [ 'thumbnail', 'url' ] ], self::CLIENT_CACHE_VALIDITY );
 		} else {
 			wfProfileOut( __METHOD__ );
 			throw new NotFoundApiException( 'No members' );
@@ -623,7 +623,7 @@ class ArticlesApiController extends WikiaApiController {
 		 */
 		$this->setResponseData(
 			[ 'items' => $collection, 'basepath' => $this->wg->Server ],
-			'thumbnail',
+			[ 'imgFields'=> 'thumbnail', 'urlFields' => [ 'thumbnail', 'url' ] ],
 			self::CLIENT_CACHE_VALIDITY
 		);
 
@@ -909,7 +909,7 @@ class ArticlesApiController extends WikiaApiController {
 		$jsonFormatService = new JsonFormatService();
 		$jsonSimple = $jsonFormatService->getSimpleFormatForArticle( $article );
 
-		$this->setResponseData( $jsonSimple, 'images', self::SIMPLE_JSON_VARNISH_CACHE_EXPIRATION );
+		$this->setResponseData( $jsonSimple, [ 'imgFields'=>'images', 'urlFields' => 'src' ], self::SIMPLE_JSON_VARNISH_CACHE_EXPIRATION );
 	}
 
 	public function getPopular() {
@@ -938,7 +938,7 @@ class ArticlesApiController extends WikiaApiController {
 		$result = array_slice( $result, 0, $limit );
 		$this->setResponseData(
 			[ 'items' => $result, 'basepath' => $this->wg->Server ],
-			'thumbnail',
+			[ 'imgFields'=> 'thumbnail', 'urlFields' => [ 'thumbnail', 'url' ] ],
 			self::CLIENT_CACHE_VALIDITY
 		);
 

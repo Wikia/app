@@ -14,7 +14,7 @@ class WAMApiController extends WikiaApiController {
 	const DEFAULT_AVATAR_SIZE = 28;
 	const DEFAULT_WIKI_IMAGE_WIDTH = 150;
 	const DEFAULT_WIKI_ADMINS_LIMIT = 5;
-
+	const RESPONSE_CACHE_VALIDITY = 21600;
 	const MEMCACHE_VER = '1.04';
 
 	/**
@@ -101,14 +101,14 @@ class WAMApiController extends WikiaApiController {
 			}
 		);
 
-		if (!$this->request->isInternal() && empty($wamIndex['wam_index'])) {
-			$wamIndex['wam_index'] = (object)$wamIndex['wam_index'];
-		}
-
-		$this->response->setVal('wam_index', $wamIndex['wam_index']);
-		$this->response->setVal('wam_results_total', $wamIndex['wam_results_total']);
-		$this->response->setVal('wam_index_date', $wamIndex['wam_index_date']);
-		$this->response->setCacheValidity(6 * 60 * 60);
+		$this->setResponseData(
+			[   'wam_index' => $wamIndex['wam_index'],
+				'wam_results_total' => $wamIndex['wam_results_total'],
+				'wam_index_date' => $wamIndex['wam_index_date']
+			],
+			[ 'urlFields' => [ 'avatarUrl', 'userPageUrl', 'userContributionsUrl' ] ],
+			self::RESPONSE_CACHE_VALIDITY
+		);
 	}
 
 	/**

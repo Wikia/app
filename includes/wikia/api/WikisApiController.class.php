@@ -67,11 +67,11 @@ class WikisApiController extends WikiaApiController {
 		if ( $expand ) {
 			$batches = $this->expandBatches( $batches );
 		}
-
-		foreach ( $batches as $name => $value ) {
-			$this->response->setVal( $name, $value );
-		}
-		$this->response->setCacheValidity(static::CACHE_1_WEEK);
+		$this->setResponseData(
+			$batches,
+			[ 'urlFields' => [ 'wordmark', 'url', 'image' ] ],
+			static::CACHE_1_WEEK
+		);
 	}
 
 	/**
@@ -125,9 +125,6 @@ class WikisApiController extends WikiaApiController {
 				$batches = $this->expandBatches( $batches );
 			}
 
-			foreach ( $batches as $name => $value ) {
-				$this->response->setVal( $name, $value );
-			}
 		} else {
 			throw new NotFoundApiException();
 		}
@@ -135,7 +132,11 @@ class WikisApiController extends WikiaApiController {
 		//store only for 24h to allow new wikis
 		//to appear in a reasonable amount of time in the search
 		//results
-		$this->response->setCacheValidity(static::CACHE_1_DAY);
+		$this->setResponseData(
+			$batches,
+			[ 'urlFields' => [ 'image', 'wordmark', 'url' ] ],
+			static::CACHE_1_DAY
+		);
 
 		wfProfileOut( __METHOD__ );
 	}
@@ -174,10 +175,13 @@ class WikisApiController extends WikiaApiController {
 				$items[ (int) $wikiId ] = $details;
 			}
 		}
-		$this->response->setVal( 'items', $items );
 
-		//set varnish caching
-		$this->response->setCacheValidity(static::CACHE_1_DAY);
+		$this->setResponseData(
+			[ 'items' => $items ],
+			[ 'urlFields' => [ 'wordmark', 'url', 'image' ] ],
+			static::CACHE_1_DAY
+		);
+
 		wfProfileOut( __METHOD__ );
 	}
 
