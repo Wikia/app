@@ -24,12 +24,39 @@ InfoboxBuilder.errors = {}
 ---- @param   string name  Name of a method to check
 ---- @return  bool         Returns true if the method exists
 ]]--
+local displayErrors = function( errors )
+  if not HF.isempty( errors ) then
+    local output = [[
+      <div class="infobox-builder-errors">
+        <h3>InfoboxBuilder info</h3>
+        <p>Something may not work as intended. More info:</p>
+        <ul>
+    ]]
+
+    for i, e in ipairs( errors ) do
+      output = output .. "<li>" .. e .. "</li>"
+    end
+
+    output = output .. [[
+        </ul></div>
+    ]]
+    return output
+  else
+    return ""
+  end
+end
+
+--[[
+---- Function that checks if a supplied method exists in a custom module
+---- @param   string name  Name of a method to check
+---- @return  bool         Returns true if the method exists
+]]--
 local methodExists = function( name )
-	local exists = false
-	if not HF.isempty( name ) and type( CM[name] ) == "function" then
-  	exists = true
-	end
-	return exists
+  local exists = false
+  if not HF.isempty( name ) and type( CM[name] ) == "function" then
+    exists = true
+  end
+  return exists
 end
 
 
@@ -179,11 +206,7 @@ function InfoboxBuilder.builder( frame )
 	local input   = parse( frame.args )
 	local Infobox = mw.InfoboxBuilderView.render( input, InfoboxBuilder.vars )
 
-	if type( InfoboxBuilder.errors ) == 'table' and next( InfoboxBuilder.errors ) ~= nil then
-		for i, e in pairs( InfoboxBuilder.errors ) do
-			Infobox = e .. "<br/>" .. Infobox
-		end
-	end
+	Infobox = displayErrors( InfoboxBuilder.errors ) .. Infobox
 
 	return Infobox
 end
