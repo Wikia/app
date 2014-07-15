@@ -11,45 +11,42 @@ class RssFeedServiceTest extends WikiaBaseTest {
 
 	/**
 	 * @covers  RssFeedService::makeUrlWithRef
+	 * @dataProvider makeUrlWithRef_Provider
 	 */
-	public function testConstruct() {
+	public function testMakeUrlWithRef( $url, $ref, $expected ) {
+
 		$service = new RssFeedService();
 		$makeUrlWithRef = self::getFn( $service, 'makeUrlWithRef' );
 
-		// Test case, when $ref is empty
-		// Urls must not be changed
-		$service->setRef( '' );
+		$service->setRef( $ref );
+		$this->assertEquals( $expected, $makeUrlWithRef( $url ) );
 
-		$this->assertEquals( '', $makeUrlWithRef( '' ) );
+	}
 
-		$this->assertEquals(
-			'http://test.wikia.com',
-			$makeUrlWithRef( 'http://test.wikia.com' ) );
+	public function makeUrlWithRef_Provider() {
+		return [
+			// test correctness for empty values of URL
+			// function must always return empty string
+			[ '', '', '' ],
+			[ '', null, '' ],
+			[ null, '', '' ],
+			[ null, null, '' ],
+			[ '', 'someRef', '' ],
+			[ null, 'someRef', '' ],
 
-		$this->assertEquals(
-			'http://test.wikia.com?key=value',
-			$makeUrlWithRef( 'http://test.wikia.com?key=value' ) );
+			// test correctness for empty values of 'ref'
+			// function must not affect url
+			[ 'http://test.wikia.com', '', 'http://test.wikia.com' ],
+			[ 'http://test.wikia.com', null, 'http://test.wikia.com' ],
 
-		// Test case, when $ref is not empty
-		// parameter 'ref' must be appended to url
-		$service->setRef( 'some_ref_value' );
+			// test appending 'ref' to url without parameters
+			[ 'http://test.wikia.com', 'ref_value', 'http://test.wikia.com?ref=ref_value' ],
+			[ 'http://test.wikia.com', '123', 'http://test.wikia.com?ref=123' ],
 
-		// Empty urls must not be affected
-		$this->assertEquals( '', $makeUrlWithRef( '' ) );
-
-		// Appending parameter 'ref' to url without parameters
-		$this->assertEquals(
-			'http://test.wikia.com?ref=some_ref_value',
-			$makeUrlWithRef( 'http://test.wikia.com' ) );
-
-		// Appending parameter 'ref' to url which already contains parameters
-		$this->assertEquals(
-			'http://test.wikia.com?key=value&ref=some_ref_value',
-			$makeUrlWithRef( 'http://test.wikia.com?key=value' ) );
-
-		$this->assertEquals(
-			'http://test.wikia.com?key=value&test=test&ref=some_ref_value',
-			$makeUrlWithRef( 'http://test.wikia.com?key=value&test=test' ) );
+			// test appending 'ref' to url with parameters
+			[ 'http://test.wikia.com?a=b', 'ref_value', 'http://test.wikia.com?a=b&ref=ref_value' ],
+			[ 'http://test.wikia.com?a=b&c=d', '123', 'http://test.wikia.com?a=b&c=d&ref=123' ],
+		];
 	}
 
 	protected static function getFn($obj, $name) {
