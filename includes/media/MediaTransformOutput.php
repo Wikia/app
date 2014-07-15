@@ -65,7 +65,12 @@ abstract class MediaTransformOutput {
 
 	function renderView( array $options = array() ) {
 		WikiaLogger::instance()->debug( 'Media method '.__METHOD__.' called',
-			array_merge( $options, [ 'url' => $this->url, 'mediaType' => $this->mediaType() ] ) );
+			array_merge( $options, [
+				'url'       => $this->url,
+				'method'    => __METHOD__,
+				'page'      => $this->page,
+				'mediaType' => $this->mediaType()
+			] ) );
 
 		return F::app()->renderView( 'ThumbnailController', $this->mediaType(), [
 			'thumb'   => $this,
@@ -255,7 +260,12 @@ class ThumbnailImage extends MediaTransformOutput {
 		}
 
 		WikiaLogger::instance()->debug('Media method '.__METHOD__.' called',
-			array_merge( $options, [ 'url' => $this->url, 'method' => __METHOD__ ] ) );
+			array_merge( $options, [
+				'url'       => $this->url,
+				'method'    => __METHOD__,
+				'page'      => $this->page,
+				'mediaType' => $this->mediaType()
+			] ) );
 
 		$alt = empty( $options['alt'] ) ? '' : $options['alt'];
 

@@ -291,6 +291,7 @@ class ThumbnailController extends WikiaController {
 		$title = $file->getTitle();
 		$this->mediaKey = htmlspecialchars( $title->getDBKey() );
 		$this->mediaName = htmlspecialchars( $title->getText() );
+		$this->fileUrl = $title->getFullURL();
 		$this->alt = $options['alt'];
 
 		// This can be removed once we fully rollout the article thumbnails with the
@@ -330,11 +331,7 @@ class ThumbnailController extends WikiaController {
 				'title' => empty( $options['title'] ) ? $title->getFullText() : $options['title']
 			);
 		} elseif ( !empty( $options['desc-link'] ) ) {
-			// Comes from hooks BeforeParserFetchFileAndTitle and only LinkedRevs subscribes
-			// to this and it doesn't seem to be loaded ... ask if used and add logging to see if used
-			$query = empty( $options['desc-query'] )  ? '' : $options['desc-query'];
-
-			$linkAttribs = $this->getDescLinkAttribs( $thumb, empty( $options['title'] ) ? null : $options['title'], $query );
+			$linkAttribs = $this->getDescLinkAttribs( $thumb, empty( $options['title'] ) ? null : $options['title'] );
 		} elseif ( !empty( $options['file-link'] ) ) {
 			$linkAttribs = array( 'href' => $thumb->file->getURL() );
 		} else {
@@ -380,14 +377,11 @@ class ThumbnailController extends WikiaController {
 	 *
 	 * @param MediaTransformOutput $thumb The thumbnail object
 	 * @param string $title A title object
-	 * @param array $params
 	 * @return array
 	 */
-	public function getDescLinkAttribs( MediaTransformOutput $thumb, $title = null, $params = null ) {
+	public function getDescLinkAttribs( MediaTransformOutput $thumb, $title = null ) {
 		$query = $thumb->page ? ( 'page=' . urlencode( $thumb->page ) ) : '';
-		if ( $params ) {
-			$query .= $query ? '&'.$params : $params;
-		}
+
 		$attribs = [ 'href' => $thumb->file->getTitle()->getLocalURL( $query ) ];
 		if ( $title ) {
 			$attribs['title'] = $title;

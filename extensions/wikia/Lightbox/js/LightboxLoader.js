@@ -391,10 +391,13 @@
 				return;
 			}
 			// If right-click, control key, or meta key were used
-			if (event.which === 3 || event.crtlKey || event.metaKey) {
-				// Change to anchor to point to the raw image file
-				$anchor.attr('old-href', $anchor.attr('href'));
-				$anchor.attr('href', $img.attr('src'));
+			if (event.which === 3 || event.ctrlKey || event.metaKey) {
+				// Only update the href if it isn't already set from a previous click
+				if ($anchor.attr('href') != $img.attr('src')) {
+					// Change to anchor to point to the raw image file
+					$anchor.attr('old-href', $anchor.attr('href'));
+					$anchor.attr('href', $img.attr('src'));
+				}
 			} else if ($anchor.attr('old-href') !== 'undefined') {
 				$anchor.attr('href', $anchor.attr('old-href'));
 			}
