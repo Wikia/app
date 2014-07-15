@@ -47,7 +47,7 @@ class UpdateThumbnailTask extends BaseTask {
 			$helper = new VideoHandlerHelper();
 			$status = $helper->resetVideoThumb( $file, null, $delayIndex );
 		}
-		return $response;
+		return $status;
 	}
 
 	/**
