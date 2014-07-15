@@ -107,7 +107,7 @@ class WikiaInteractiveMapsMapController extends WikiaInteractiveMapsBaseControll
 		}
 
 		if ( !$this->wg->User->isLoggedIn() ) {
-			throw new PermissionsException( 'interactive maps' );
+			throw new PermissionsException( WikiaInteractiveMapsController::PAGE_RESTRICTION );
 		}
 	}
 

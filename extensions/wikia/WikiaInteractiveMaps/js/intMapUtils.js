@@ -12,6 +12,12 @@ define(
 	function($, w, cache, loader, uiFactory, mustache, tracker) {
 		'use strict';
 
+		// const variables used across int map UI
+		var constants = {
+			debounceDelay: 250,
+			minCharLength: 2
+		};
+
 		/**
 		 * @desc loads all assets for create map modal and initialize it
 		 * @param {object} action - object with paths to different assets
@@ -258,8 +264,16 @@ define(
 			w.UserLogin.refreshIfAfterForceLogin();
 		}
 
+		/**
+		 * @desc handle nirvana exception errors
+		 * @param {object} modal - modal instance
+		 * @param {object} response - nirvana response object
+		 */
 		function handleNirvanaException(modal, response) {
-			showError(modal, response.statusText);
+			var responseText = response.responseText,
+				message = JSON.parse(responseText).exception.details;
+
+			showError(modal, message || response.statusText);
 		}
 
 		/**
@@ -296,6 +310,19 @@ define(
 				crop = (height ? width + 'x' + height : width + 'px') + '-';
 
 			return baseUrl + '/thumb/' + fileName + '/' + crop + fileName;
+		}
+
+		/**
+		 * @desc handler for writing in input field
+		 * @param {Element} input - HTML <input> element
+		 * @param {function} cb - callback function fired when input text is long enough
+		 */
+		function onWriteInInput(input, cb) {
+			var trimmedKeyword = input.value.trim();
+
+			if (trimmedKeyword.length >= constants.minCharLength) {
+				cb(trimmedKeyword);
+			}
 		}
 
 		/**
@@ -342,6 +369,7 @@ define(
 		}
 
 		return {
+			constants: constants,
 			loadModal: loadModal,
 			createModal: createModal,
 			bindEvents: bindEvents,
@@ -357,6 +385,7 @@ define(
 			showError: showError,
 			cleanUpError: cleanUpError,
 			createThumbURL: createThumbURL,
+			onWriteInInput: onWriteInInput,
 			escapeHtml: escapeHtml,
 			track: track,
 			trackerActions: tracker.ACTIONS

@@ -9,6 +9,8 @@ class WikiaInteractiveMapsPoiController extends WikiaInteractiveMapsBaseControll
 	const ACTION_UPDATE = 'update';
 	const ACTION_DELETE = 'delete';
 
+	const POI_ARTICLE_IMAGE_THUMB_SIZE = 85;
+
 	private $currentAction;
 	private $logEntries = [];
 
@@ -36,15 +38,15 @@ class WikiaInteractiveMapsPoiController extends WikiaInteractiveMapsBaseControll
 		$this->setData( 'mapId', $mapId );
 		$this->setData( 'name', $name );
 		$this->setData( 'poiCategoryId', $this->request->getInt( 'poi_category_id' ) );
-		$this->setData( 'articleLink', $this->request->getVal( 'link' ) );
+		$this->setData( 'articleTitle', $this->request->getVal( 'link_title' ), '' );
 		$this->setData( 'lat', (float) $this->request->getVal( 'lat' ) );
 		$this->setData( 'lon', (float) $this->request->getVal( 'lon' ) );
 		$this->setData( 'description', $this->request->getVal( 'description' ) );
-		$this->setData( 'imageUrl', $this->request->getVal( 'photo' ) );
+		$this->setData( 'imageUrl', $this->request->getVal( 'imageUrl' ), '' );
 
-		$this->validatePoiData();
-
-		if( $poiId > 0 ) {
+		if ( $poiId > 0 ) {
+			$this->setAction( self::ACTION_UPDATE );
+			$this->validatePoiData();
 			$results = $this->updatePoi();
 			if ( true === $results[ 'success' ] ) {
 				WikiaMapsLogger::addLogEntry(
@@ -57,6 +59,8 @@ class WikiaInteractiveMapsPoiController extends WikiaInteractiveMapsBaseControll
 				);
 			}
 		} else {
+			$this->setAction( self::ACTION_CREATE );
+			$this->validatePoiData();
 			$results = $this->createPoi();
 			if ( true === $results[ 'success' ] ) {
 				WikiaMapsLogger::addLogEntry(
@@ -109,7 +113,6 @@ class WikiaInteractiveMapsPoiController extends WikiaInteractiveMapsBaseControll
 	 * @return Array
 	 */
 	private function createPoi() {
-		$this->setAction( self::ACTION_CREATE );
 		return $this->mapsModel->savePoi( $this->getSanitizedData() );
 	}
 
@@ -119,8 +122,6 @@ class WikiaInteractiveMapsPoiController extends WikiaInteractiveMapsBaseControll
 	 * @return Array
 	 */
 	private function updatePoi() {
-		$this->setAction( self::ACTION_UPDATE );
-
 		return $this->mapsModel->updatePoi(
 			$this->getData( 'poiId' ),
 			$this->getSanitizedData()
@@ -232,7 +233,7 @@ class WikiaInteractiveMapsPoiController extends WikiaInteractiveMapsBaseControll
 		$updatePoiCategories = $this->getData( 'updatePoiCategories' );
 
 		if ( !$this->wg->User->isLoggedIn() ) {
-			throw new PermissionsException( 'interactive maps' );
+			throw new PermissionsException( WikiaInteractiveMapsController::PAGE_RESTRICTION );
 		}
 
 		if ( $mapId === 0 && empty( $poiCategoryNames ) ) {
@@ -435,16 +436,20 @@ class WikiaInteractiveMapsPoiController extends WikiaInteractiveMapsBaseControll
 	 * Validates data needed for creating/updating POI
 	 */
 	private function validatePoiData() {
-		if( ( $this->isCreate() || $this->isUpdate() ) && !$this->isValidEditData() ) {
+		if ( ( $this->isCreate() || $this->isUpdate() ) && !$this->isValidEditData() ) {
 			throw new BadRequestApiException( wfMessage( 'wikia-interactive-maps-create-map-bad-request-error' )->plain() );
 		}
 
-		if( $this->isDelete() && !$this->isValidDeleteData() ) {
+		if ( ( $this->isCreate() || $this->isUpdate() ) && !$this->isValidArticleTitle() ) {
+			throw new BadRequestApiException( wfMessage( 'wikia-interactive-maps-edit-poi-wrong-article-name' )->params( $this->getData( 'articleTitle' ) )->plain() );
+		}
+
+		if ( $this->isDelete() && !$this->isValidDeleteData() ) {
 			throw new BadRequestApiException( wfMessage( 'wikia-interactive-maps-create-map-bad-request-error' )->plain() );
 		}
 
-		if( !$this->wg->User->isLoggedIn() ) {
-			throw new PermissionsException( 'interactive maps' );
+		if ( !$this->wg->User->isLoggedIn() ) {
+			throw new PermissionsException( WikiaInteractiveMapsController::PAGE_RESTRICTION );
 		}
 	}
 
@@ -460,7 +465,7 @@ class WikiaInteractiveMapsPoiController extends WikiaInteractiveMapsBaseControll
 		$lat = $this->getData( 'lat' );
 		$lon = $this->getData( 'lon' );
 
-		return ( empty( $name ) || empty( $poiCategoryId ) || empty( $mapId ) || empty( $lat ) || empty( $lon ) );
+		return !( empty( $name ) || empty( $poiCategoryId ) || empty( $mapId ) || empty( $lat ) || empty( $lon ) );
 	}
 
 	/**
@@ -474,6 +479,22 @@ class WikiaInteractiveMapsPoiController extends WikiaInteractiveMapsBaseControll
 	}
 
 	/**
+	 * Helper method for validation article title - check if article exist
+	 *
+	 * @return bool
+	 */
+	private function isValidArticleTitle() {
+		$articleTitle = $this->getData( 'articleTitle' );
+		$valid = false;
+
+		if ( ( !empty( $articleTitle ) && Title::newFromText( $articleTitle )->exists() ) || empty( $articleTitle ) ) {
+			$valid = true;
+		}
+
+		return $valid;
+	}
+
+	/**
 	 * Depending on a current action prepares proper data for POST requests (create, edit)
 	 *
 	 * @return array
@@ -483,35 +504,127 @@ class WikiaInteractiveMapsPoiController extends WikiaInteractiveMapsBaseControll
 			'name' => $this->getData( 'name' ),
 			'poi_category_id' => $this->getData( 'poiCategoryId' ),
 			'lat' => $this->getData( 'lat' ),
-			'lon' => $this->getData( 'lon' ),
+			'lon' => $this->getData( 'lon' )
 		];
 
 		$userName = $this->wg->User->getName();
 
-		if( $this->isCreate() ) {
-			$poiData['map_id'] = $this->getData( 'mapId' );
-			$poiData['created_by'] = $userName;
+		if ( $this->isCreate() ) {
+			$poiData[ 'map_id' ] = $this->getData( 'mapId' );
+			$poiData[ 'created_by' ] = $userName;
 		}
 
-		if( $this->isUpdate() ) {
-			$poiData['updated_by'] = $userName;
+		if ( $this->isUpdate() ) {
+			$poiData[ 'updated_by' ] = $userName;
 		}
 
 		$description = $this->getData( 'description' );
-		if( !empty( $description ) ) {
-			$poiData['description'] = $description;
+		if ( !empty( $description ) ) {
+			$poiData[ 'description' ] = $description;
 		}
 
-		$link = $this->getData( 'articleLink' );
-		if( !empty( $link ) ) {
-			$poiData['link'] = $link;
-		}
-
+		$linkTitle = $this->getData( 'articleTitle', '' );
 		$photo = $this->getData( 'imageUrl' );
-		if( !empty( $photo ) ) {
-			$poiData['photo'] = $photo;
+		$link = '';
+		$poiData[ 'photo' ] = '';
+		if ( !empty( $linkTitle ) ) {
+			$link = $this->getArticleUrl( $linkTitle );
+
+			if ( !empty( $photo ) ) {
+				// save photo only when article is chosen
+				$poiData[ 'photo' ] = $photo;
+			}
 		}
+
+		$poiData[ 'link_title' ] = $linkTitle;
+		$poiData[ 'link' ] = $link;
 
 		return $poiData;
+	}
+
+	/**
+	 * Returns article suggestions
+	 *
+	 * @requestParam string $query - search keyword
+	 */
+	public function getSuggestedArticles() {
+		$results = [];
+		$query = $this->request->getVal( 'query' );
+
+		if ( empty( $query ) ) {
+			$results[ 'responseText' ] = wfMessage( 'wikia-interactive-maps-edit-poi-article-suggest-no-search-term' )->plain();
+		} else {
+			$results = array_map( 
+				function( $item ) {
+					$imageUrl = $this->mapsModel->getArticleImage(
+						$item[ 0 ][ 'title' ],
+						self::POI_ARTICLE_IMAGE_THUMB_SIZE,
+						self::POI_ARTICLE_IMAGE_THUMB_SIZE
+					);
+
+					if ( !empty( $imageUrl ) ) {
+						$item[ 0 ][ 'imageUrl' ] = $imageUrl;
+					}
+
+					return $item;
+				},
+				$this->getSuggestions( $query )
+			);
+		}
+
+		$this->response->setVal( 'results', $results );
+	}
+
+	/**
+	 * Get article suggestions
+	 *
+	 * @param string $query - search term
+	 *
+	 * @return array - list of suggestions
+	 */
+	private function getSuggestions( $query ) {
+		$params = [
+			'query' => $query
+		];
+
+		return $this->sendRequest( 'SearchSuggestionsApi', 'getList', $params )->getData();
+	}
+
+	/**
+	 * Helper function, returns article URL
+	 *
+	 * @param string $title - article title
+	 *
+	 * @return string - full article URL or empty string if article doesn't exist
+	 */
+	private function getArticleUrl( $title ) {
+		$article = Title::newFromText( $title );
+		$link = '';
+
+		if ( !is_null( $article ) ) {
+			$link = $article->getFullURL();
+		}
+
+		return $link;
+	}
+
+	/**
+	 * Helper method which adds additional data to API results
+	 *
+	 * @param Array $results
+	 * @param Array $fieldsList
+	 *
+	 * @return Array results array
+	 */
+	private function decorateResults( $results, $fieldsList ) {
+		$response = $this->mapsModel->sendGetRequest( $results[ 'content' ]->url );
+
+		foreach ( $fieldsList as $field ) {
+			if ( !empty( $response[ 'content' ]->$field ) ) {
+				$results[ 'content' ]->$field = $response[ 'content' ]->$field;
+			}
+		}
+
+		return $results;
 	}
 }
