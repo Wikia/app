@@ -30,7 +30,7 @@ $color-subtle-text: mix($color-page, $color-alternate-text, 50%);
 			font-size: 12px;
 			line-height: 16px;
 			margin: 0;
-			// use padding to ensure height consistancy for info icon negative margins
+			// use padding instead of margins to ensure height consistancy for info icon negative margins
 			padding-top: 5px;
 
 			&:last-child {
@@ -68,7 +68,7 @@ $color-subtle-text: mix($color-page, $color-alternate-text, 50%);
 			width: 17px;
 			float: right;
 			margin: -22px 5px 0 0;
-			position: relative;
+			position: relative; // makes icon appear above image in z axis
 		}
 
 		&:hover {
