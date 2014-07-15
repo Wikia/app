@@ -9,7 +9,7 @@ local CM = {}
 -- Define default values for global variables
 InfoboxBuilder.vars = {
 	Theme                   = "default", -- Adds prefix to CSS classes
-	CustomModule            = " ",       -- Defines a path to a module with custom functions
+	CustomModule            = "",        -- Defines a path to a module with custom functions
 	MainImageCaption        = "Off",     -- Display a Label as a caption of the Main Image?
 	ToggleContentLongerThan = 1000       -- Makes fields with long Values collapsible
 }
@@ -26,12 +26,8 @@ InfoboxBuilder.errors = {}
 ]]--
 local methodExists = function( name )
 	local exists = false
-	if type( name ) ~= nil then
-		if not HF.isempty( name ) then
-			if type( CM[name] ) == "function" then
-				exists = true
-			end
-		end
+	if not HF.isempty( name ) and type( CM[name] ) == "function" then
+  	exists = true
 	end
 	return exists
 end
@@ -58,19 +54,15 @@ local execute = function( input )
 			for index, field in ipairs( input.fields ) do
 
 				-- Checks for a table type which is handled differently
-				if type( field.Label ) == "table" then
-					if methodExists( field.LabelMethod ) then
-						input.fields[index].Label = CM[field.LabelMethod]( field, InfoboxBuilder.vars )
-					end
+				if type( field.Label ) == "table" and methodExists( field.LabelMethod ) then
+					input.fields[index].Label = CM[field.LabelMethod]( field, InfoboxBuilder.vars )
 				elseif not HF.isempty( mw.text.trim( field.Label ) ) and methodExists( field.LabelMethod ) then
 					input.fields[index].Label = CM[field.LabelMethod]( field, InfoboxBuilder.vars )
 				end
 
 				-- Checks for a table type which is handled differently
-				if type( field.Value ) == "table" then
-					if methodExists( field.ValueMethod ) then
-						input.fields[index].Value = CM[field.ValueMethod]( field, InfoboxBuilder.vars )
-					end
+				if type( field.Value ) == "table" and methodExists( field.ValueMethod ) then
+					input.fields[index].Value = CM[field.ValueMethod]( field, InfoboxBuilder.vars )
 				elseif not HF.isempty( mw.text.trim( field.Value ) ) and methodExists( field.ValueMethod ) then
 					input.fields[index].Value = CM[field.ValueMethod]( field, InfoboxBuilder.vars )
 				end
