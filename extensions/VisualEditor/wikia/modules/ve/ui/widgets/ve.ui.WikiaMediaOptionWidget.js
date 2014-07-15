@@ -80,11 +80,13 @@ ve.ui.WikiaMediaOptionWidget.newFromData = function ( data, config ) {
  */
 ve.ui.WikiaMediaOptionWidget.prototype.loadThumbnail = function () {
 	require( ['wikia.thumbnailer'], ve.bind( function ( thumbnailer ) {
-		var src = thumbnailer.getThumbURL( this.model.url, 'image', this.size - 2, this.size - 2);
-		src = src.split("/");
-		src.splice( src.length - 2 , 0 , "thumb" );
-		src = src.join("/");
-
+		var src = thumbnailer.getThumbURL( this.data.url, 'image', this.size - 2, this.size - 2);
+		// FIXME: Using Thumbnailer should not require this trick of adding "thumb"
+		if ( src.indexOf( '/thumb/') === -1 ) {
+			src = src.split( '/' );
+			src.splice( src.length - 2, 0, 'thumb' );
+			src = src.join( '/' );
+		}
 		this.image.src = src;
 		this.$thumb.addClass(
 			've-ui-mwMediaResultWidget-thumbnail ve-ui-WikiaMediaOptionWidget-thumbnail'
