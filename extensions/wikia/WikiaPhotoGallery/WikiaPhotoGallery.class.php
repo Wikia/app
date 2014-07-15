@@ -1479,7 +1479,8 @@ class WikiaPhotoGallery extends ImageGallery {
 
 	/**
 	 * Return height and width for the image $file, to fit within the bounds given by $dim.  This
-	 * preserves the aspect ratio for $file.
+	 * preserves the aspect ratio for $file.  The original file height and width will be returned for images
+	 * both shorter and narrower than $dim.
 	 *
 	 * @param File $file
 	 * @param array $dim
@@ -1509,7 +1510,8 @@ class WikiaPhotoGallery extends ImageGallery {
 
 	/**
 	 * Return height and width for image $file such that the image is shrunk (keeping aspect ratio) to just the
-	 * height or width of $dim, whichever is closest.  Typically the image will then be cropped to the $dim bounds
+	 * height or width of $dim, whichever is closest.  Typically the image will then be cropped to the $dim bounds.
+	 * The original file height and width will be returned for images both shorter and narrower than $dim.
 	 *
 	 * @param File $file
 	 * @param array $dim
