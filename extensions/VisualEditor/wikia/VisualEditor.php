@@ -121,6 +121,11 @@ $wgResourceModules += array(
 			'wikia-visualeditor-preference-enable',
 			'wikia-visualeditor-dialogbutton-wikiamediainsert-tooltip',
 			'wikia-visualeditor-dialogbutton-wikiamapinsert-tooltip',
+			'wikia-visualeditor-dialog-wikiamapinsert-create-button',
+			'wikia-visualeditor-dialog-wikiamapinsert-headline',
+			'wikia-visualeditor-dialog-wikiamapinsert-empty-headline',
+			'wikia-visualeditor-dialog-wikiamapinsert-empty-text',
+
 			'wikia-visualeditor-dialog-wikiamediainsert-insert-button',
 			'wikia-visualeditor-dialog-wikiamediainsert-item-license-label',
 			'wikia-visualeditor-dialog-wikiamediainsert-item-title-label',

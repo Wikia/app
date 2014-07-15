@@ -34,6 +34,8 @@ ve.ui.WikiaMapInsertDialog.static.title = OO.ui.deferMsg( 'wikia-visualeditor-di
 
 ve.ui.WikiaMapInsertDialog.static.icon = 'map';
 
+ve.ui.WikiaMapInsertDialog.static.learnMoreUrl = 'http://maps.wikia.com/wiki/Maps_Wiki';
+
 /* Methods */
 
 /**
@@ -67,18 +69,20 @@ ve.ui.WikiaMapInsertDialog.prototype.initialize = function () {
 ve.ui.WikiaMapInsertDialog.prototype.setupResultsPanel = function () {
 	var $headline = this.$( '<div>' ),
 		$headlineText = this.$( '<div>' ),
-		headlineButton = new OO.ui.ButtonWidget( { 'label': 'Create map' } );
+		headlineButton = new OO.ui.ButtonWidget( { 'label': ve.msg( 'wikia-visualeditor-dialog-wikiamapinsert-create-button' ) } );
 
 	$headline.addClass( 've-ui-wikiaMapInsertDialog-results-headline' );
 
 	$headlineText
 		.addClass( 've-ui-wikiaMapInsertDialog-results-headline-text' )
-		.html( 'Select an existing map or create a map to insert it. <a href="#">Learn more.</a>' )
+		.html( ve.msg( 'wikia-visualeditor-dialog-wikiamapinsert-headline', this.constructor.static.learnMoreUrl ) )
 		.appendTo( $headline ),
 
 	headlineButton.$element
 		.addClass( 've-ui-wikiaMapInsertDialog-results-headline-button' )
 		.appendTo( $headline );
+	headlineButton.on( 'click', ve.bind( this.onCreateClick, this ) );
+
 
 	this.resultsWidget = new ve.ui.WikiaMediaResultsWidget( { '$': this.$ } );
 	this.resultsWidget.on( 'preview', ve.bind( this.onMapSelect, this ) );
@@ -92,26 +96,26 @@ ve.ui.WikiaMapInsertDialog.prototype.setupEmptyPanel = function () {
 		$text = this.$( '<div>' ),
 		button = new OO.ui.ButtonWidget( {
 			'$': this.$,
-			'label': 'Create a map',
+			'label': ve.msg( 'wikia-visualeditor-dialog-wikiamapinsert-create-button' ),
 			'flags': [ 'primary' ]
 		} );
-
 
 	$content.addClass( 've-ui-wikiaMapInsertDialog-empty-content' );
 
 	$headline
 		.addClass( 've-ui-wikiaMapInsertDialog-empty-headline' )
-		.html( 'There are no maps created yet' )
+		.html( ve.msg( 'wikia-visualeditor-dialog-wikiamapinsert-empty-headline' ) )
 		.appendTo( $content );
 
 	$text
 		.addClass( 've-ui-wikiaMapInsertDialog-empty-text' )
-		.html( 'Collaborate with community by visually pinning locations of interest on maps. <a href="#">Learn more.</a>' )
+		.html( ve.msg( 'wikia-visualeditor-dialog-wikiamapinsert-empty-text', this.constructor.static.learnMoreUrl ) )
 		.appendTo( $content );
 
 	button.$element
 		.addClass( 've-ui-wikiaMapInsertDialog-empty-button' )
 		.appendTo( $content );
+	button.on( 'click', ve.bind( this.onCreateClick, this ) );
 
 	$content.appendTo( this.panels.empty.$element );
 };
@@ -182,6 +186,10 @@ ve.ui.WikiaMapInsertDialog.prototype.onMapSelect = function ( option ) {
 		{ type: '/wikiaMap' }
 	] );
 	this.close();
+};
+
+ve.ui.WikiaMapInsertDialog.prototype.onCreateClick = function () {
+	window.open( new mw.Title( 'Special:Maps' ).getUrl() );
 };
 
 /* Registration */

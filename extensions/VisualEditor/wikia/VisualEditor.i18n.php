@@ -8,6 +8,10 @@ $messages['en'] = array(
 	'wikia-visualeditor-preference-enable' => 'Enable beta VisualEditor',
 	'wikia-visualeditor-dialogbutton-wikiamediainsert-tooltip' => 'Media',
 	'wikia-visualeditor-dialogbutton-wikiamapinsert-tooltip' => 'Map',
+	'wikia-visualeditor-dialog-wikiamapinsert-create-button' => 'Create a map',
+	'wikia-visualeditor-dialog-wikiamapinsert-headline' => 'Select an existing map or create a map to insert it. <a href="$1" target="_blank">Learn more.</a>',
+	'wikia-visualeditor-dialog-wikiamapinsert-empty-headline' => 'There are no maps created yet',
+	'wikia-visualeditor-dialog-wikiamapinsert-empty-text' => 'Collaborate with community by visually pinning locations of interest on maps. <a href="$1" target="_blank">Learn more.</a>',
 	'wikia-visualeditor-dialog-wikiamediainsert-insert-button' => 'Add Media',
 	'wikia-visualeditor-dialog-wikiamediainsert-item-title-label' => 'Title',
 	'wikia-visualeditor-dialog-wikiamediainsert-item-license-label' => 'License',
@@ -60,6 +64,10 @@ $messages['qqq'] = array(
 {{Identical|Media}}',
 	'wikia-visualeditor-dialogbutton-wikiamapinsert-tooltip' => 'Call-to-action text rendered in the toolbar button for opening the dialog to add map item to the article.
 {{Identical|Map}}',
+	'wikia-visualeditor-dialog-wikiamapinsert-create-button' => 'The button text in the Insert Map dialog to open Special:Maps in new window.',
+	'wikia-visualeditor-dialog-wikiamapinsert-headline' => 'Header greeting in Insert Map dialog',
+	'wikia-visualeditor-dialog-wikiamapinsert-empty-headline' => 'Header greeting in Insert Map dialog when there are no maps created yet.',
+	'wikia-visualeditor-dialog-wikiamapinsert-empty-text' => 'Text greeting in Insert Map dialog when there are no maps created yet.',
 	'wikia-visualeditor-dialog-wikiamediainsert-insert-button' => 'Call-to-action text rendered in the dialog to insert the selected media items into the article.
 {{Identical|Add media}}',
 	'wikia-visualeditor-dialog-wikiamediainsert-item-title-label' => 'Label text for the media item title.
