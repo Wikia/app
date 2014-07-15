@@ -70,6 +70,13 @@ class WikiaInteractiveMapsMapController extends WikiaInteractiveMapsBaseControll
 			if ( true === $results[ 'success' ] ) {
 				$this->setData( 'tileSetId', $results[ 'content' ]->id );
 				$results = $this->createMapFromTilesetId();
+			} else {
+				if ( isset( $results['content']->code ) ) {
+					if ( $results['content']->code === WikiaMaps::DB_DUPLICATE_ENTRY ) {
+						$results['content']->message =
+							wfMessage( 'wikia-interactive-maps-tile-set-exists-error' )->text();
+					}
+				}
 			}
 		}
 

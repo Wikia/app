@@ -120,6 +120,7 @@ $messages[ 'en' ] = [
 	'wikia-interactive-maps-update-pin-log-entry' => 'updated pin for [[$2]]',
 	'wikia-interactive-maps-delete-pin-log-entry' => 'deleted pin for [[$2]]',
 	'wikia-interactive-maps-hide-filter' => 'Hide',
+	'wikia-interactive-maps-tile-set-exists-error' => 'Template name needs to be unique',
 ];
 
 $messages[ 'pl' ] = [
@@ -260,4 +261,5 @@ $messages[ 'qqq' ] = [
 	'wikia-interactive-maps-update-pin-log-entry' => 'Message to be displayed in the log when a pin is updated; Parameters: $1 - username, $2 - map page title',
 	'wikia-interactive-maps-delete-pin-log-entry' => 'Message to be displayed in the log when a pin is deleted; Parameters: $1 - username, $2 - map page title',
 	'wikia-interactive-maps-hide-filter' => 'Name of the button for hiding filter box',
+	'wikia-interactive-maps-tile-set-exists-error' => 'Error, shown when tile set with the same name already exists',
 ];
