@@ -17,15 +17,12 @@ $color-subtle-text: mix($color-page, $color-alternate-text, 50%);
 
 // Article thumbnails
 .WikiaArticle {
-		.article-thumb {
+	.article-thumb {
 		margin-bottom: 15px;
 		margin-top: 6px;
 
-		a {
-			display: inline-block;
-		}
-
-		img {
+		// target the thumbnail image itself
+		img[data-image-key], img[data-video-key] {
 			display: block;
 		}
 
@@ -58,24 +55,14 @@ $color-subtle-text: mix($color-page, $color-alternate-text, 50%);
 		.caption {
 			color: $color-alternate-text;
 		}
-	}
-
-	.article-thumb-wrapper {
-		position: relative;
-		display: inline-block;
-
-		a {
-			vertical-align: top;
-		}
-
 		.info-icon {
 			background-image: url('/skins/oasis/images/info_icon.png');
+			//display: none;
 			height: 17px;
 			width: 17px;
-			position: absolute;
-			bottom: 5px;
-			right: 5px;
-			display: none;
+			float: right;
+			margin: -27px 5px 0 0;
+			position: relative;
 		}
 
 		&:hover {
@@ -89,10 +76,8 @@ $color-subtle-text: mix($color-page, $color-alternate-text, 50%);
 	}
 
 	#{$infoboxes} {
-		.article-thumb-wrapper {
-			.info-icon {
-				right: 6px;
-			}
+		.info-icon {
+			right: 6px;
 		}
 	}
 }

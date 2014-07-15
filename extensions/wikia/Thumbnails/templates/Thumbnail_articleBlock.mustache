@@ -1,16 +1,10 @@
 <figure class="article-thumb {{figureClass}}" style="width: {{width}}px">
-	{{#showInfoIcon}}
-	<span class="article-thumb-wrapper">
-	{{/showInfoIcon}}
-
 	{{{thumbnail}}}
 
-	{{#showInfoIcon}}
-		<a href="{{linkHref}}" class="sprite info-icon"></a>
-	</span>
-	{{/showInfoIcon}}
-
 	<figcaption>
+		{{#showInfoIcon}}
+			<a href="{{linkHref}}" class="sprite info-icon"></a>
+		{{/showInfoIcon}}
 		{{#title}}
 			<p class="title">{{title}}</p>
 		{{/title}}

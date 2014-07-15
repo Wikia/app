@@ -261,16 +261,4 @@ class ThumbnailController extends WikiaController {
 
 		wfProfileOut( __METHOD__ );
 	}
-
-	/**
-	 * Display for inline images in articles.
-	 */
-	public function articleInline() {
-		$width = $this->getVal( 'outerWidth' );
-
-		$thumbnail = $this->getVal( 'html' );
-		$this->thumbnail = $thumbnail;
-		$this->showInfoIcon = ThumbnailHelper::canShowInfoIcon( $width );
-	}
-
 }
