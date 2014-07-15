@@ -195,7 +195,7 @@ class WikiaApiController extends WikiaController {
 	 * @return bool|string
 	 */
 	protected function getRefUrlPart() {
-		$ref = $this->request->getVal( self::REF_URL_ARGUMENT );
+		$ref = $this->getRequest()->getVal( self::REF_URL_ARGUMENT );
 		if ( !$ref ) {
 			return false;
 		}
@@ -215,6 +215,44 @@ class WikiaApiController extends WikiaController {
 		return array_flip( $array );
 	}
 
+	protected function processImgFields( &$data, &$processFields ) {
+		$imageFields = array_key_exists( 'imgFields', $processFields ) ? $processFields[ 'imgFields' ] : null;
+		if ( !$this->serveImages() && !empty( $imageFields ) ) {
+
+			self::replaceArrayValues( $data, $this->createFieldsArray( $imageFields ),
+				function ( $inputVal ) {
+					return is_array( $inputVal ) ? [ ] : null;
+				}
+			);
+		}
+	}
+
+	protected function processUrlFields( &$data, &$processFields ) {
+		$urlsFields = array_key_exists( 'urlFields', $processFields ) ? $processFields[ 'urlFields' ] : null;
+		$urlRef = $this->getRefUrlPart();
+
+		if ( $urlRef && !empty( $urlsFields ) ) {
+			self::replaceArrayValues( $data, $this->createFieldsArray( $urlsFields ),
+				function ( $inputVal ) use ( $urlRef ) {
+
+					if ( is_array( $inputVal ) ) {
+						foreach ( $inputVal as $k => $orgValue ) {
+							if ( !empty( $orgValue ) ) {
+								$char = stripos( $orgValue, '?' ) !== false ? '&' : '?';
+								$inputVal[ $k ] = $orgValue . $char . $urlRef;
+							}
+						}
+					} elseif ( !empty( $inputVal ) ) {
+						$char = stripos( $inputVal, '?' ) !== false ? '&' : '?';
+						return $inputVal . $char . $urlRef;
+					}
+					return $inputVal;
+				}
+			);
+		}
+	}
+
+
 	/**
 	 * @param $data data to set as output
 	 * @param string|array $imageFields - fields to remove if we don't serve images
@@ -222,45 +260,14 @@ class WikiaApiController extends WikiaController {
 	 */
 	protected function setResponseData( $data, $processFields, $cacheValidity = 0 ) {
 
-		$imageFields = array_key_exists( 'imgFields', $processFields ) ? $processFields[ 'imgFields' ] : null;
 		if ( is_array( $data ) ) {
-
-			if ( !$this->serveImages() && !empty( $imageFields ) ) {
-
-				self::replaceArrayValues( $data, $this->createFieldsArray( $imageFields ),
-					function ( $inputVal ) {
-						return is_array( $inputVal ) ? [ ] : null;
-					}
-				);
-			}
-
-			$urlsFields = array_key_exists( 'urlFields', $processFields ) ? $processFields[ 'urlFields' ] : null;
-			$urlRef = $this->getRefUrlPart();
-
-			if ( $urlRef && !empty( $urlsFields ) ) {
-				self::replaceArrayValues( $data, $this->createFieldsArray( $urlsFields ),
-					function ( $inputVal ) use ( $urlRef ) {
-						$char = stripos( $inputVal, '?' ) !== false ? '&' : '?';
-
-						if ( is_array( $inputVal ) ) {
-							foreach ( $inputVal as $k => $orgValue ) {
-								if ( !empty( $orgValue ) ) {
-									$inputVal[ $k ] = $orgValue . $char . $urlRef;
-								}
-							}
-						} elseif ( !empty( $inputVal ) ) {
-							return $inputVal . $char . $urlRef;
-						}
-
-						return $inputVal;
-
-					}
-				);
-			}
+			$this->processImgFields( $data, $processFields );
+			$this->processUrlFields( $data, $processFields );
 		}
-		$this->response->setData( $data );
+		$response = $this->getResponse();
+		$response->setData( $data );
 		if ( $cacheValidity > 0 ) {
-			$this->response->setCacheValidity( $cacheValidity );
+			$response->setCacheValidity( $cacheValidity );
 		}
 	}
 
@@ -269,7 +276,7 @@ class WikiaApiController extends WikiaController {
 	 * @param $input
 	 * @param $fields
 	 */
-	protected static function replaceArrayValues( &$input, &$fields, callable $replaceFnc ) {
+	protected static function replaceArrayValues( &$input, $fields, callable $replaceFnc ) {
 		foreach ( $input as $key => &$val ) {
 			if ( array_key_exists( $key, $fields ) ) {
 				$val = $replaceFnc($val);
