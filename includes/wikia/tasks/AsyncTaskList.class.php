@@ -309,8 +309,8 @@ class AsyncTaskList {
 			$connection->close();
 
 			if ( $exception !== null ) {
-				WikiaLogger::instance()->error( "Failed to queue task: {$exception->getMessage()}", $payload->args );
-				throw $exception;
+				WikiaLogger::instance()->error( "Failed to queue task", [ 'error' => $exception->getMessage() ] );
+				return null;
 			}
 		} else {
 			$channel->batch_basic_publish( $message, '', $this->getQueue()->name() );
@@ -358,7 +358,22 @@ class AsyncTaskList {
 	public static function batch( $taskLists ) {
 		global $wgTaskBroker;
 
-		$connection = new AMQPConnection( $wgTaskBroker['host'], $wgTaskBroker['port'], $wgTaskBroker['user'], $wgTaskBroker['pass'] );
+		$error = function( \Exception $e ) {
+			WikiaLogger::instance()->critical( 'Failed to queue task group', [
+				'error' => $e->getMessage(),
+			] );
+
+			return null;
+		};
+
+		try {
+			$connection = new AMQPConnection( $wgTaskBroker['host'], $wgTaskBroker['port'], $wgTaskBroker['user'], $wgTaskBroker['pass'] );
+		} catch ( AMQPRuntimeException $e ) {
+			return $error( $e );
+		} catch ( AMQPTimeoutException $e ) {
+			return $error( $e );
+		}
+
 		$channel = $connection->channel();
 		$exception = null;
 		$ids = [];
@@ -377,8 +392,7 @@ class AsyncTaskList {
 		}
 
 		if ( $exception !== null ) {
-			WikiaLogger::instance()->error( "Failed to queue task group" );
-			throw $exception;
+			return $error( $exception );
 		}
 
 		return $ids;
