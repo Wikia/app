@@ -35,7 +35,7 @@ class UpdateThumbnailTask extends BaseTask {
 		if ( $provider == self::IVA ) {
 			$cmd = sprintf( "SERVER_ID={$wgCityId} php {$IP}/maintenance/wikia/VideoHandlers/updateOoyalaThumbnail.php --videoId={$videoId} --delayIndex={$delayIndex}" );
 			$response = wfShellExec( $cmd, $exitStatus );
-			if ( $exitStatus != 0 ) {
+			if ( $exitStatus == 0 ) {
 				$msg = "Video thumbnail uploaded successfully";
 				$status = Status::newGood( $msg );
 			} else {
