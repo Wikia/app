@@ -81,12 +81,10 @@ local addRowTitle = function( field )
 	local row = mw.html.create('tr')
 	row:addClass( InfoboxBuilderView.vars.Theme .. '-infobox-field-' .. field.Index )
 
-	local cell = row:tag('td')
+	local cell = row:tag('th')
 		:addClass( InfoboxBuilderView.vars.Theme .. '-infobox-title' )
 		:attr( 'colspan', '2' )
-
-	cell:tag( 'h2' )
-		:wikitext( field.Value )
+    :wikitext( field.Value )
 
 	return row
 end
