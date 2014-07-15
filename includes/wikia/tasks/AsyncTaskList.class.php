@@ -309,7 +309,7 @@ class AsyncTaskList {
 			$connection->close();
 
 			if ( $exception !== null ) {
-				WikiaLogger::instance()->error( "Failed to queue task", [ 'error' => $exception->getMessage() ] );
+				WikiaLogger::instance()->critical( "Failed to queue task", [ 'error' => $exception->getMessage() ] );
 				return null;
 			}
 		} else {
