@@ -573,7 +573,11 @@ class ArticlesApiController extends WikiaApiController {
 				$responseValues[ 'offset' ] = $articles[ 1 ];
 			}
 
-			$this->setResponseData( $responseValues, [ 'imgFields'=> 'thumbnail', 'urlFields' => [ 'thumbnail', 'url' ] ], self::CLIENT_CACHE_VALIDITY );
+			$this->setResponseData(
+				$responseValues,
+				[ 'imgFields'=> 'thumbnail', 'urlFields' => [ 'thumbnail', 'url' ] ],
+				self::CLIENT_CACHE_VALIDITY
+			);
 		} else {
 			wfProfileOut( __METHOD__ );
 			throw new NotFoundApiException( 'No members' );
@@ -909,7 +913,11 @@ class ArticlesApiController extends WikiaApiController {
 		$jsonFormatService = new JsonFormatService();
 		$jsonSimple = $jsonFormatService->getSimpleFormatForArticle( $article );
 
-		$this->setResponseData( $jsonSimple, [ 'imgFields'=>'images', 'urlFields' => 'src' ], self::SIMPLE_JSON_VARNISH_CACHE_EXPIRATION );
+		$this->setResponseData(
+			$jsonSimple,
+			[ 'imgFields'=>'images', 'urlFields' => 'src' ],
+			self::SIMPLE_JSON_VARNISH_CACHE_EXPIRATION
+		);
 	}
 
 	public function getPopular() {
