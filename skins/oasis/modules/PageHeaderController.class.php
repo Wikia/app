@@ -55,7 +55,8 @@ class PageHeaderController extends WikiaController {
 		if ( isset( $this->content_actions['viewsource'] ) &&
 			!$wgTitle->isProtected() &&
 			!$wgTitle->isNamespaceProtected($wgUser) &&
-			!$wgUser->isLoggedIn() /* VOLDEV-74: logged in users should see the viewsource button, not edit */ ) {
+			!$wgUser->isLoggedIn() /* VOLDEV-74: logged in users should see the viewsource button, not edit */
+		) {
 			// force login to edit page that is not protected
 			$this->content_actions['edit'] = $this->content_actions['viewsource'];
 			$this->content_actions['edit']['text'] = wfMessage('edit')->text();
