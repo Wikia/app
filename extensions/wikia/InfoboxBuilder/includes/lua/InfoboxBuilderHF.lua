@@ -3,6 +3,7 @@ local HF = {}
 function HF.explode( sep, text )
 	local sep, fields = sep or "::", {}
 	local pattern = string.format("([^%s]+)", sep)
+	
 	text:gsub( pattern, function( c ) fields[#fields+1] = c end )
 
 	return fields

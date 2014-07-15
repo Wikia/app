@@ -9,7 +9,6 @@ InfoboxBuilderView.vars = {}
 
 --[[ Private methods ]]--
 
-
 --[[
 ---- Function that renders a Line block
 ---- @param   table field  A table with all field's arguments
@@ -234,7 +233,6 @@ end
 
 
 --[[ Public methods ]]--
-
 
 --[[
 ---- Main function that controls the rendering of prepared fields

@@ -17,6 +17,7 @@ InfoboxBuilder.vars = {
 -- Define table to hold errors
 InfoboxBuilder.errors = {}
 
+
 --[[ Private methods ]]--
 
 --[[
@@ -59,7 +60,6 @@ local methodExists = function( name )
   return exists
 end
 
-
 --[[
 ---- Function executing methods from CustomModule on Labels and Values
 ---- @param   table  input  A sorted table of parsed arguments
@@ -100,7 +100,6 @@ local execute = function( input )
 
 	return input
 end
-
 
 --[[
 ---- Function parsing each argument following the Index:Key = Value syntax.
@@ -195,7 +194,6 @@ end
 
 
 --[[ Public methods ]]--
-
 
 --[[
 ---- Main controller that initiates arguments' parsing and modifing and returning rendered infobox
