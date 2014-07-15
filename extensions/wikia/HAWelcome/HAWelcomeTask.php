@@ -152,13 +152,28 @@ class HAWelcomeTask extends BaseTask {
 		return $this->bMessageWallExt;
 	}
 
-	protected function createUserProfilePage() {
+	public function createUserProfilePage() {
 		$this->info( "attempting to create welcome user page" );
-		$recipientProfile = new Article( $this->recipientObject->getUserPage() );
+		$recipientProfile = $this->getRecipientProfilePage();
 		if ( ! $recipientProfile->exists() ) {
-			$recipientProfile->doEdit( wfMessage( 'welcome-user-page', $this->recipientName )->inContentLanguage()->plain(), false, $this->integerFlags );
+			$this->info( sprintf( "creating welcome user page for %s from %s",
+				$this->recipientObject->getName(), $this->senderObject->getName() ) );
+			$recipientProfile->doEdit(
+				$this->getWelcomePageTemplateForRecipient(),
+				false,
+				$this->integerFlags,
+				false,
+				$this->senderObject
+			);
 		}
+	}
 
+	protected function getRecipientProfilePage() {
+		return new Article( $this->recipientObject->getUserPage() );
+	}
+
+	protected function getWelcomePageTemplateForRecipient() {
+		return wfMessage( 'welcome-user-page', $this->recipientName )->inContentLanguage()->plain();
 	}
 
 	/**
@@ -334,18 +349,15 @@ class HAWelcomeTask extends BaseTask {
 			$welcomeMessage = $this->welcomeMessage;
 		}
 
-		$this->getRecipientTalkPage()->doEdit( $welcomeMessage, $this->getTextVersionOfMessage( 'welcome-message-log' ), $this->integerFlags );
-	}
-
-	/**
-	 * Get the text version of inContentLanguage message. This is a wrapper so that we can
-	 * limit side effects in unit tests.
-	 *
-	 * @param string $message
-	 * @return string
-	 */
-	protected function getTextVersionOfMessage( $message ) {
-		return wfMessage( $message )->inContentLanguage()->text();
+		$this->info( sprintf( "posting talkpage message to %s from %s",
+			$this->recipientObject->getName(), $this->senderObject->getName() ) );
+		$this->getRecipientTalkPage()->doEdit(
+			$welcomeMessage,
+			$this->getTextVersionOfMessage( 'welcome-message-log' ),
+			$this->integerFlags,
+			false,
+			$this->senderObject
+		);
 	}
 
 	/**
@@ -415,9 +427,13 @@ class HAWelcomeTask extends BaseTask {
 		$this->timestamp     = ( isset( $params['iTimestamp'] ) ) ? $params['iTimestamp'] : 0;
 	}
 
-
 	public function setSenderObject( \User $sender ) {
 		$this->senderObject = $sender;
+		return $this;
+	}
+
+	public function setRecipientObject( \User $recipient ) {
+		$this->recipientObject = $recipient;
 		return $this;
 	}
 

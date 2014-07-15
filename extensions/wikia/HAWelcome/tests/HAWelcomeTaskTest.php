@@ -60,6 +60,16 @@ class HAWelcomeTaskTest extends WikiaBaseTest {
 	public function testPostTalkPageToRecipientWhenExists() {
 		$talkPage = $this->getMock( '\Article', ['exists', 'getContent', 'doEdit'], [], '', false );
 
+		$senderObject = $this->getMock( '\User', ['getName'] );
+		$senderObject->expects( $this->once() )
+			->method( 'getName' )
+			->will( $this->returnValue( 'sender name' ) );
+
+		$recipientObject = $this->getMock( '\User', ['getName'] );
+		$recipientObject->expects( $this->once() )
+			->method( 'getName' )
+			->will( $this->returnValue( 'recipient name' ) );
+
 		$talkPage->expects( $this->atLeastOnce() )
 			->method( 'exists' )
 			->will( $this->returnValue( true ) );
@@ -74,6 +84,8 @@ class HAWelcomeTaskTest extends WikiaBaseTest {
 			->will( $this->returnValue( $talkPageContent ) );
 
 		$task = $this->getMock( '\HAWelcomeTask', ['getRecipientTalkPage', 'getTextVersionOfMessage'], [], '', false );
+		$task->setSenderObject( $senderObject );
+		$task->setRecipientObject( $recipientObject );
 
 		$task->expects( $this->exactly( 3 ) )
 			->method( 'getRecipientTalkPage' )
@@ -81,12 +93,16 @@ class HAWelcomeTaskTest extends WikiaBaseTest {
 
 		$task->expects( $this->once() )
 			->method( 'getTextVersionOfMessage' )
+			->with( 'welcome-message-log' )
 			->will( $this->returnValue( 'a-message' ) );
 
 		$task->postTalkPageMessageToRecipient();
 	}
 
 	public function testPostTalkPageToRecipientWhenNotExists() {
+		$sender = $this->getMock( '\User', ['getName'] );
+		$recipient = $this->getMock( '\User', ['getName'] );
+
 		$talkPage = $this->getMock( '\Article', ['exists', 'getContent', 'doEdit'], [], '', false );
 
 		$talkPage->expects( $this->atLeastOnce() )
@@ -98,21 +114,76 @@ class HAWelcomeTaskTest extends WikiaBaseTest {
 			->method( 'getContent' )
 			->will( $this->returnValue( $talkPageContent ) );
 
-		$talkPage->expects( $this->atLeastOnce() )
-			->method( 'doEdit' )
-			->will( $this->returnValue( $talkPageContent ) );
-
 		$task = $this->getMock( '\HAWelcomeTask', ['getRecipientTalkPage', 'getTextVersionOfMessage'], [], '', false );
 
 		$task->expects( $this->exactly( 2 ) )
 			->method( 'getRecipientTalkPage' )
 			->will( $this->returnValue( $talkPage ) );
 
+		$textMessage = 'a-message';
 		$task->expects( $this->once() )
 			->method( 'getTextVersionOfMessage' )
-			->will( $this->returnValue( 'a-message' ) );
+			->will( $this->returnValue( $textMessage ) );
+
+		$sender->expects( $this->once() )
+			->method( 'getName' )
+			->will( $this->returnValue( 'sender' ) );
+
+		$recipient->expects( $this->once() )
+			->method( 'getName' )
+			->will( $this->returnValue( 'recipient' ) );
+
+		$talkPage->expects( $this->once() )
+			->method( 'doEdit' )
+			->with( null, $textMessage, 0, false, $sender )
+			->will( $this->returnValue( null ) );
+
+		$task->setSenderObject( $sender );
+		$task->setRecipientObject( $recipient );
 
 		$task->postTalkPageMessageToRecipient();
+	}
+
+	public function testCreateUserProfilePage() {
+		$sender = $this->getMock( '\User', ['getName'] );
+		$recipient = $this->getMock( '\User', ['getName'] );
+
+		$profilePage = $this->getMock( '\Article', ['exists', 'doEdit'], [], '', false );
+		$task = $this->getMock( '\HAWelcomeTask', [
+			'getRecipientProfilePage',
+			'getWelcomePageTemplateForRecipient',
+			] );
+
+		$profilePage->expects( $this->once() )
+			->method( 'exists' )
+			->will( $this->returnValue( false ) );
+
+		$welcomePageTemplate = 'any';
+
+		$task->expects( $this->once() )
+			->method( 'getRecipientProfilePage' )
+			->will( $this->returnValue( $profilePage ) );
+
+		$task->expects( $this->once() )
+			->method( 'getWelcomePageTemplateForRecipient' )
+			->will( $this->returnValue( $welcomePageTemplate ) );
+
+		$sender->expects( $this->once() )
+			->method( 'getName' )
+			->will( $this->returnValue( 'sender' ) );
+
+		$recipient->expects( $this->once() )
+			->method( 'getName' )
+			->will( $this->returnValue( 'recipient' ) );
+
+		$profilePage->expects( $this->once() )
+			->method( 'doEdit' )
+			->with( $welcomePageTemplate, false, 0, false, $sender )
+			->will( $this->returnValue( null ) );
+
+		$task->setSenderObject( $sender );
+		$task->setRecipientObject( $recipient );
+		$task->createUserProfilePage();
 	}
 
 

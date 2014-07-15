@@ -38,7 +38,6 @@ class HAWelcomeTaskHookDispatcher {
 
 		if ( $this->hasContributorBeenWelcomedRecently() ) {
 			$this->info( "aborting the welcome hook: user has been welcomed recently" );
-			// abort if they have contributed recently
 			return true;
 		}
 
