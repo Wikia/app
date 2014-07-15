@@ -14,6 +14,10 @@
  * @param {Object} [config] Configuration options
  */
 ve.ui.WikiaMapInsertDialog = function VeUiWikiaMapInsertDialog( config ) {
+	config =  $.extend( config, {
+		width: '717px'
+	} );
+
 	// Parent constructor
 	ve.ui.WikiaMapInsertDialog.super.call( this, config );
 };
@@ -35,121 +39,147 @@ ve.ui.WikiaMapInsertDialog.static.icon = 'map';
 /**
  * @inheritdoc
  */
-ve.ui.WikiaMapInsertDialog.prototype.getSetupProcess = function ( data ) {
-	return ve.ui.WikiaMapInsertDialog.super.prototype.getSetupProcess.call( this, data )
-		.next( function () {
-			this.loadingPanel = new OO.ui.PanelLayout( { '$': this.$ } );
-			this.zeroPanel = new OO.ui.PanelLayout( { '$': this.$ } );
-			this.mapsPanel = new OO.ui.PanelLayout( { '$': this.$ } );
+ve.ui.WikiaMapInsertDialog.prototype.initialize = function () {
+	// Parent method
+	ve.ui.WikiaMapInsertDialog.super.prototype.initialize.call( this );
 
-			this.stackLayout = new OO.ui.StackLayout( { '$': this.$ } );
-			this.stackLayout.addItems( [ this.loadingPanel, this.zeroPanel, this.mapsPanel ] );
-			this.$body.append(this.stackLayout.$element);
+	this.panels = {
+		'loading': new OO.ui.PanelLayout( { '$': this.$ } ),
+		'empty': new OO.ui.PanelLayout( { '$': this.$ } ),
+		'results': new OO.ui.PanelLayout( { '$': this.$ } )
+	};
 
-			this.loadingPanel.$element.html( 'please wait' );
+	//this.setupLoadingPanel();
+	this.setupEmptyPanel();
+	this.setupResultsPanel();
 
-			this.select = new ve.ui.WikiaMediaSelectWidget( { '$': this.$ } );
-			this.select.$element.appendTo( this.mapsPanel.$element );
+	this.stackLayout = new OO.ui.StackLayout( { '$': this.$ } );
+	this.stackLayout.addItems( [
+		this.panels.loading,
+		this.panels.empty,
+		this.panels.results
+	] );
 
-			this.getMaps().always( ve.bind( function ( data ) {
-				console.log(data.items);
-				this.stackLayout.setItem( this.mapsPanel );
-				var items = [];
-				for ( var i = 0; i < data.items.length; i++ ) {
-					var item = new ve.ui.WikiaMediaOptionWidget(
-						{
-							title: data.items[i].title,
-							url: data.items[i].image
-						},
-						{ '$': this.$ }
-					);
-					items.push( item );
-				}
-				this.select.addItems( items );
-			}, this ) );
-		}, this );
+	this.stackLayout.$element.appendTo( this.$body );
+	this.frame.$content.addClass( 've-ui-wikiaMapInsertDialog' );
 };
 
+ve.ui.WikiaMapInsertDialog.prototype.setupResultsPanel = function () {
+	var $headline = this.$( '<div>' ),
+		$headlineText = this.$( '<div>' ),
+		headlineButton = new OO.ui.ButtonWidget( { 'label': 'Create map' } );
+
+	$headline.addClass( 've-ui-wikiaMapInsertDialog-results-headline' );
+
+	$headlineText
+		.addClass( 've-ui-wikiaMapInsertDialog-results-headline-text' )
+		.html( 'Select an existing map or create a map to insert it. <a href="#">Learn more.</a>' )
+		.appendTo( $headline ),
+
+	headlineButton.$element
+		.addClass( 've-ui-wikiaMapInsertDialog-results-headline-button' )
+		.appendTo( $headline );
+
+	this.resultsWidget = new ve.ui.WikiaMediaResultsWidget( { '$': this.$ } );
+	this.resultsWidget.on( 'preview', ve.bind( this.onMapSelect, this ) );
+	this.selectWidget = this.resultsWidget.getResults();
+
+	this.panels.results.$element.append( $headline, this.resultsWidget.$element );
+};
+ve.ui.WikiaMapInsertDialog.prototype.setupEmptyPanel = function () {
+	var $content = this.$( '<div>' ),
+		$headline = this.$( '<div>' ),
+		$text = this.$( '<div>' ),
+		button = new OO.ui.ButtonWidget( {
+			'$': this.$,
+			'label': 'Create a map',
+			'flags': [ 'primary' ]
+		} );
+
+
+	$content.addClass( 've-ui-wikiaMapInsertDialog-empty-content' );
+
+	$headline
+		.addClass( 've-ui-wikiaMapInsertDialog-empty-headline' )
+		.html( 'There are no maps created yet' )
+		.appendTo( $content );
+
+	$text
+		.addClass( 've-ui-wikiaMapInsertDialog-empty-text' )
+		.html( 'Collaborate with community by visually pinning locations of interest on maps. <a href="#">Learn more.</a>' )
+		.appendTo( $content );
+
+	button.$element
+		.addClass( 've-ui-wikiaMapInsertDialog-empty-button' )
+		.appendTo( $content );
+
+	$content.appendTo( this.panels.empty.$element );
+};
 
 /**
  * @inheritdoc
  */
-/*
-ve.ui.WikiaMapInsertDialog.prototype.initialize = function () {
-	// Parent method
-	ve.ui.WikiaMapInsertDialog.super.prototype.initialize.call( this );
-	this.getMaps().always( ve.bind( function ( data ) {
-		if ( data && data.items ) {
-			this.displayMaps( data.items );
-		}
-	}, this ) );
-
-	this.results = new OO.ui.SelectWidget( { '$': this.$ } );
-	this.$results = this.$( '<div>' );
-	this.$results.append( this.results.$element );
-	this.$body.append( this.$results );
-	this.results.on( 'select', ve.bind( this.onSelect, this ) );
-
-	this.zeroPanel = new OO.ui.PanelLayout( { '$': this.$ } );
-	this.loadingPanel = new OO.ui.PanelLayout( { '$': this.$ } );
-	this.mapsPanel = new OO.ui.PanelLayout( { '$': this.$ } );
-
-	this.stackLayout = new OO.ui.StackLayout( { '$': this.$ } );
-	this.stackLayout.addItems( [ this.zeroPanel, this.loadingPanel, this.mapsPanel ] );
-	this.$body.append(this.stackLayout.$element);
-	this.stackLayout.setItem( this.mapsPanel );
-};
-*/
-
-
-
-ve.ui.WikiaMapInsertDialog.prototype.getMaps = function () {
-	var apiUrl = 'http://dev-interactive-maps.wikia.nocookie.net/api/v1/map?city_id=' + wgCityId + '&cb=' + Math.floor( Math.random() * 1000000 );
-	return $.ajax({
-		dataType: 'json',
-		url: 'http://json2jsonp.com/?url=' + encodeURIComponent( apiUrl ) + '&callback=?'
-	});
+ve.ui.WikiaMapInsertDialog.prototype.getSetupProcess = function ( data ) {
+	return ve.ui.WikiaMapInsertDialog.super.prototype.getSetupProcess.call( this, data )
+		.next( function () {
+			this.stackLayout.setItem( this.panels.loading );
+			this.getMaps().done( ve.bind( this.showResults, this ) );
+		}, this );
 };
 
-ve.ui.WikiaMapInsertDialog.prototype.displayMaps = function ( data ) {
-	var items = [],
-		i,
-		option;
-	for ( i = 0; i < data.length; i++ ) {
-		option = new OO.ui.OptionWidget( data[i] );
-		option.$element.html( data[i].title );
-		items.push( option );
+ve.ui.WikiaMapInsertDialog.prototype.getMaps = function() {
+	var deferred;
+	if ( !this.gettingMaps ) {
+		deferred = $.Deferred();
+		$.ajax( {
+			dataType: 'json',
+			url: 'http://dev-interactive-maps.wikia.nocookie.net/api/v1/map?city_id=' + wgCityId
+		} )
+		.done( function ( data ) {
+			deferred.resolve( data.items );
+		} )
+		.fail( function () {
+			// TODO: Add better error handling.
+			deferred.resolve( [] );
+		} );
+		this.gettingMaps = deferred.promise();
 	}
-	this.results.addItems( items );
+	return this.gettingMaps
 };
 
-ve.ui.WikiaMapInsertDialog.prototype.onSelect = function ( option ) {
-	var data = option.getData(),
-		offset,
-		structuralOffset,
-		fragment;
+ve.ui.WikiaMapInsertDialog.prototype.showResults = function( data ) {
+	var items, i;
+	if ( data.length > 0 ) {
+		this.stackLayout.setItem( this.panels.results );
+		items = [];
+		for ( i = 0; i < data.length; i++ ) {
+			items.push( {
+				type: 'map',
+				id: data[i].id,
+				title: data[i].title,
+				url: data[i].image,
+			} );
+		}
+		this.selectWidget.clearItems();
+		this.resultsWidget.addItems( items );
+	} else {
+		this.stackLayout.setItem( this.panels.empty );
+	}
+};
 
-	offset = this.getFragment().getRange().start;
-	structuralOffset = this.getFragment().getDocument().data.getNearestStructuralOffset( offset, -1 );
-	fragment = this.getFragment().clone( new ve.Range( structuralOffset ) );
-	fragment.insertContent( [
+ve.ui.WikiaMapInsertDialog.prototype.onMapSelect = function ( option ) {
+	this.getFragment().collapseRangeToEnd().insertContent( [
 		{
-			type:'wikiaMap',
+			type: 'wikiaMap',
 			attributes: {
 				mw: {
 					name: 'imap',
-					body: {
-						extsrc:''
-					},
-					attrs: {
-						"map-id": data.id.toString()
-					}
+					body: { extsrc:'' },
+					attrs: { 'map-id': option.getData().id.toString() }
 				}
 			}
 		},
-		{
-			type: '/wikiaMap'
-		}
+		{ type: '/wikiaMap' }
 	] );
 	this.close();
 };

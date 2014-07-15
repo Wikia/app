@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-	 width="24px" height="24px" viewBox="0 0 24 24" enable-background="new 0 0 24 24" xml:space="preserve">
-<g id="map" style="opacity:0.75;">
-	<path d="M11.952,1.5c-4.142,0-7.5,3.358-7.5,7.5c0,6.45,7.5,13.5,7.5,13.5s7.5-7.35,7.5-13.5
-		C19.452,4.858,16.095,1.5,11.952,1.5z M11.952,12.993c-2.329,0-4.218-1.888-4.218-4.218s1.888-4.218,4.218-4.218
-		s4.218,1.888,4.218,4.218S14.282,12.993,11.952,12.993z"/>
-</g>
+<svg version="1.0" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 24 24" enable-background="new 0 0 24 24" xml:space="preserve">
+<polygon style="opacity:0.75;" points="12.2,23.9 15,20.7 9.3,20.7 "/>
+<path style="opacity:0.75;" d="M14.3,0.1H10C7.7,0.1,5.8,2,5.8,4.2v11.3c0,0.9,0.3,1.8,1,2.5l1.8,2h7.1l1.8-2c0.6-0.7,1-1.6,1-2.5V4.2
+	C18.5,2,16.6,0.1,14.3,0.1z"/>
 </svg>
