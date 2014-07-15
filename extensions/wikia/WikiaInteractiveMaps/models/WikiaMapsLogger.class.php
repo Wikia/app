@@ -24,7 +24,7 @@ class WikiaMapsLogger {
 	 * @param string $action Action name as defined above
 	 * @param integer $mapId Map id
 	 * @param string $comment Comment
-	 * @param array $params Additional params
+	 * @param array $params Additional params; first parameter must be username
 	 * @return stdClass Log entry
 	 */
 	public static function newLogEntry( $action, $mapId, $comment, $params = [] ) {
@@ -42,7 +42,7 @@ class WikiaMapsLogger {
 	 * @param string $action Action name as defined above
 	 * @param integer $mapId Map id
 	 * @param string $comment Comment
-	 * @param array $params Additional params
+	 * @param array $params Additional params; first parameter must be username
 	 */
 	public static function addLogEntry( $action, $mapId, $comment, $params = [] ) {
 		self::addLogEntries( [ self::newLogEntry( $action, $mapId, $comment, $params ) ] );
@@ -89,6 +89,13 @@ class WikiaMapsLogger {
 	public static function formatLogEntry( $type, $action, $title, $skin, Array $params, $filterWikilinks ) {
 		global $wgLang;
 
+		if( empty( $params[ 0 ] ) ) {
+			Wikia::log( __METHOD__, false, 'Invalid $params for WikiaMapsLogger::formatLogEntry(); username required' );
+			$username = 'Unknown';
+		} else {
+			$username = $params[ 0 ];
+		}
+
 		$mapPageTitle = $wgLang->convertTitle( $title );
 
 		// A little bit verbose but according to http://www.mediawiki.org/wiki/Localisation#Using_messages
@@ -105,12 +112,15 @@ class WikiaMapsLogger {
 			self::ACTION_UPDATE_PIN => 'wikia-interactive-maps-update-pin-log-entry',
 			self::ACTION_DELETE_PIN => 'wikia-interactive-maps-delete-pin-log-entry',
 		];
+
 		if ( isset( $translations[ $action ] ) ) {
 			$messageKey = $translations[ $action ];
 		}
+
 		if ( is_null( $skin ) ) {
-			return wfMessage( $messageKey, $mapPageTitle )->plain();
+			return wfMessage( $messageKey, $username, $mapPageTitle )->text();
 		}
-		return wfMessage( $messageKey, $mapPageTitle )->parse();
+
+		return wfMessage( $messageKey, $username, $mapPageTitle )->text();
 	}
 }

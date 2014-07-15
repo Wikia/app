@@ -16,6 +16,13 @@ class WikiaInteractiveMapsParserTagController extends WikiaController {
 	const PARSER_TAG_NAME = 'imap';
 	const RENDER_ENTRY_POINT = 'render';
 
+	private $mapsModel;
+
+	public function __construct() {
+		parent::__construct();
+		$this->mapsModel = new WikiaMaps( $this->wg->IntMapConfig );
+	}
+
 	/**
 	 * @desc Parser hook: used to register parser tag in MW
 	 *
@@ -80,12 +87,20 @@ class WikiaInteractiveMapsParserTagController extends WikiaController {
 	 */
 	public function mapThumbnail() {
 		$params = $this->getMapPlaceholderParams();
-		$mapsModel = new WikiaMaps( $this->wg->IntMapConfig );
 		$userName = $params->map->created_by;
+		$isMobile = $this->app->checkskin( 'wikiamobile' );
 
-		$params->map->image = $mapsModel->createCroppedThumb( $params->map->image, self::DEFAULT_WIDTH, self::DEFAULT_HEIGHT );
+		if ( $isMobile ) {
+			//proper image is lazy loaded from the thumbnailer
+			$params->map->imagePlaceholder = $this->wg->BlankImgUrl;
+			$params->map->mobile = true;
+			$params->map->href =
+				WikiaInteractiveMapsController::getSpecialMapsUrl() . '/' . $params->map->id;
+		} else {
+			$params->map->image = $this->mapsModel->createCroppedThumb( $params->map->image, self::DEFAULT_WIDTH, self::DEFAULT_HEIGHT );
+		}
 
-		$params->map->url = $mapsModel->getMapRenderUrl([
+		$params->map->url = $this->mapsModel->getMapRenderUrl([
 			$params->map->id,
 			$params->zoom,
 			$params->lat,
@@ -94,12 +109,15 @@ class WikiaInteractiveMapsParserTagController extends WikiaController {
 
 		$this->setVal( 'map', (object) $params->map );
 		$this->setVal( 'params', $params );
-		$this->setVal( 'created_by', wfMessage( 'wikia-interactive-maps-parser-tag-created-by' )->params( $userName )->plain() );
+		$this->setVal( 'created_by', wfMessage( 'wikia-interactive-maps-parser-tag-created-by', $userName )->text() );
 		$this->setVal( 'avatarUrl', AvatarService::getAvatarUrl( $userName, AvatarService::AVATAR_SIZE_SMALL ) );
 		$this->setVal( 'view', wfMessage( 'wikia-interactive-maps-parser-tag-view' )->plain() );
 
-
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
+
+		if ( $isMobile ) {
+			$this->overrideTemplate( 'mapThumbnail_mobile' );
+		}
 	}
 
 	/**
@@ -110,8 +128,7 @@ class WikiaInteractiveMapsParserTagController extends WikiaController {
 	 * @return object - map object
 	 */
 	private function getMapObj( $mapId ) {
-		$mapsModel = new WikiaMaps( $this->wg->IntMapConfig );
-		return $mapsModel->getMapByIdFromApi( $mapId );
+		return $this->mapsModel->getMapByIdFromApi( $mapId );
 	}
 
 	/**
@@ -275,6 +292,17 @@ class WikiaInteractiveMapsParserTagController extends WikiaController {
 		}
 
 		return $validator;
+	}
+
+	/**
+	 * @desc Ajax method for lazy-loading map thumbnails
+	 */
+	public function getMobileThumbnail() {
+		$width = $this->getVal( 'width' );
+		//To keep the original aspect ratio
+		$height = floor( $width * self::DEFAULT_HEIGHT / self::DEFAULT_WIDTH );
+		$image = $this->getVal( 'image' );
+		$this->setVal( 'src', $this->mapsModel->createCroppedThumb( $image, $width, $height ) );
 	}
 
 }

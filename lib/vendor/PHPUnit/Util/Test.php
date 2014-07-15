@@ -122,6 +122,11 @@ class PHPUnit_Util_Test
                 $requires[$matches['name'][$i]] = $matches['value'][$i];
             }
         }
+
+		# Wikia change - https://github.com/sebastianbergmann/phpunit/commit/1d9d8a84fd20011411f685a19ba60a37a88dbf38
+		// https://bugs.php.net/bug.php?id=63055
+		$matches = array();
+
         if ($count = preg_match_all(self::REGEX_REQUIRES, $docComment, $matches)) {
             for ($i = 0; $i < $count; $i++) {
                 $name = $matches['name'][$i] . 's';

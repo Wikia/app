@@ -62,15 +62,16 @@ require(
 				triggerAction('deleteMap');
 			});
 
-		setPontoIframeTarget(targetIframe);
+		initMapIframe(targetIframe);
 
 		/**
-		 * @desc sets iFrame target for ponto if iFrame exists
+		 * @desc sets iFrame target for ponto and loads its content if iFrame exists
 		 * @param {object} targetIframe - iFrame element
 		 */
-		function setPontoIframeTarget(targetIframe) {
+		function initMapIframe(targetIframe) {
 			if (targetIframe) {
 				ponto.setTarget(Ponto.TARGET_IFRAME, '*', targetIframe.contentWindow);
+				targetIframe.src = targetIframe.dataset.url;
 			}
 		}
 
@@ -91,6 +92,7 @@ require(
 
 			if (utils.isUserLoggedIn()) {
 				utils.loadModal(actionConfig);
+				utils.track(utils.trackerActions.CLICK_LINK_BUTTON, 'create-map-clicked');
 			} else {
 				utils.showForceLoginModal(actionConfig.origin, function() {
 					utils.loadModal(actionConfig);

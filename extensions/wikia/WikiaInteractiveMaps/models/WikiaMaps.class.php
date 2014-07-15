@@ -26,6 +26,9 @@ class WikiaMaps extends WikiaObject {
 
 	const MAP_THUMB_PREFIX = '/thumb/';
 	const DEFAULT_REAL_MAP_URL = 'http://img.wikia.nocookie.net/intmap_Geo_Map/default-geo.jpg';
+	const DELTA_Y_DEFAULT = 1;
+	const DELTA_Y_CENTERED = 5;
+	const THUMB_ALIGNMENT_CENTER = 'center';
 
 	/**
 	 * @var array API connection config
@@ -131,7 +134,6 @@ class WikiaMaps extends WikiaObject {
 				} else {
 					$map->map_width = static::MAP_WIDTH;
 					$map->map_height = static::MAP_HEIGHT;
-					$map->status_message = $this->getMapStatusText( $map->status );
 					$map->done = (int)$map->status === static::STATUS_DONE;
 				}
 			} );
@@ -187,28 +189,6 @@ class WikiaMaps extends WikiaObject {
 		array_unshift( $segments, self::ENTRY_POINT_RENDER );
 		$params[ 'uselang' ] = $this->wg->lang->getCode();
 		return $this->buildUrl( $segments, $params );
-	}
-
-	/**
-	 * Returns human message based on the tiles processing status in database
-	 *
-	 * @param Integer $status status of tiles processing for the map
-	 *
-	 * @return String
-	 */
-	public function getMapStatusText( $status ) {
-		$message = '';
-
-		switch( $status ) {
-			case static::STATUS_DONE:
-				$message = wfMessage( 'wikia-interactive-maps-map-status-done' )->plain();
-				break;
-			case static::STATUS_PROCESSING:
-				$message = wfMessage( 'wikia-interactive-maps-map-status-processing' )->plain();
-				break;
-		}
-
-		return $message;
 	}
 
 	/**
@@ -516,6 +496,7 @@ class WikiaMaps extends WikiaObject {
 				'Authorization' => $this->config[ 'token' ]
 			],
 			'returnInstance' => true,
+			//'noProxy' => true,
 		];
 
 		if ( !empty( $postData ) ) {
@@ -529,20 +510,22 @@ class WikiaMaps extends WikiaObject {
 	 * @desc returns URL to the cropped thumb of an image
 	 *
 	 * @param String $url - image url
-	 * @param Integer $width
-	 * @param Integer $height
+	 * @param Integer $width desired width of a thumbnail
+	 * @param Integer $height desired height of a thumbnail
 	 * @param String $align - crop align (origin || center)
- 	 *
+	 *
 	 * @return String - thumbnail URL
 	 */
-	public function createCroppedThumb( $url, $width, $height, $align = 'center' ) {
-		$imageServing = new ImageServing( null, $width, $height );
+	public function createCroppedThumb( $url, $width, $height, $align = self::THUMB_ALIGNMENT_CENTER ) {
 		$breakPoint = strrpos( $url, '/' );
 		$baseURL = substr( $url, 0, $breakPoint );
 		$fileName = substr( $url , $breakPoint + 1 );
-		$crop = urlencode( $imageServing->getCut( $width, $height, $align ) );
+		$deltaY = $align === self::THUMB_ALIGNMENT_CENTER ? self::DELTA_Y_DEFAULT : self::DELTA_Y_CENTERED;
 
-		return $baseURL . self::MAP_THUMB_PREFIX . $fileName . '/' . $crop . '-' . $fileName;
+		return ImagesService::getThumbUrlFromFileUrl(
+			$baseURL . self::MAP_THUMB_PREFIX . $fileName,
+			$width . 'x' . $height . 'x' . $deltaY
+		);
 	}
 
 	/**

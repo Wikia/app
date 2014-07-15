@@ -13,9 +13,15 @@
 				<?= $modules[MarketingToolboxModuleWikiaspicksService::MODULE_ID] ?>
 			</section>
 		</div>
-		<section class="grid-3 wikiahubs-wam wikiahubs-module">
-			<?= $modules[MarketingToolboxModuleWAMService::MODULE_ID] ?>
-		</section>
+		<?php if ($wg->DisableWAMOnHubs): ?>
+			<section class="grid-3 wikiahubs-wikiastats wikiahubs-module">
+				<?= $modules[MarketingToolboxModuleWikiastatsService::MODULE_ID] ?>
+			</section>
+		<?php else: ?>
+			<section class="grid-3 wikiahubs-wam wikiahubs-module">
+				<?= $modules[MarketingToolboxModuleWAMService::MODULE_ID] ?>
+			</section>
+		<?php endif ?>
 		<section class="grid-1 plainlinks wikiahubs-explore wikiahubs-module">
 			<?= $modules[MarketingToolboxModuleExploreService::MODULE_ID] ?>
 		</section>
@@ -35,3 +41,4 @@
 		</div>
 	</div>
 </div>
+

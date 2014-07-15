@@ -1279,6 +1279,12 @@ $wgAdDriverForceDirectGptAd = false;
 $wgAdDriverForceLiftiumAd = false;
 
 /**
+ * @name $wgAdDriverEnableAdsInMaps
+ * Whether to display ads within interactive maps
+ */
+$wgAdDriverEnableAdsInMaps = false;
+
+/**
  * @name $wgHighValueCountries
  * List of countries defined as high-value for revenue purposes
  * Value set in WikiFactory for Community acts as global value. Can be overridden per wiki.
@@ -1476,3 +1482,9 @@ $wgXhprofUDPPort = '3911';
  * Threshold for total time spent in function to be reported (set to 0 to report all entries)
  */
 $wgXhprofMinimumTime = 0.001;
+
+/* @name wgDisableWAMOnHubs
+ * Disable WAM module on hub pages
+ */
+$wgDisableWAMOnHubs = false;
+

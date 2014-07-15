@@ -6,9 +6,10 @@ define(
 		'wikia.cache',
 		'wikia.loader',
 		'wikia.ui.factory',
-		'wikia.mustache'
+		'wikia.mustache',
+		'wikia.tracker'
 	],
-	function($, w, cache, loader, uiFactory, mustache) {
+	function($, w, cache, loader, uiFactory, mustache, tracker) {
 		'use strict';
 
 		/**
@@ -297,6 +298,49 @@ define(
 			return baseUrl + '/thumb/' + fileName + '/' + crop + fileName;
 		}
 
+		/**
+		 * @desc escapes HTML entities
+		 * @param string
+		 * @returns {string}
+		 */
+		function escapeHtml(string) {
+			var htmlEscapes = {
+					'&': '&amp;',
+					'<': '&lt;',
+					'>': '&gt;',
+					'"': '&quot;',
+					'\'': '&#39;',
+					'/': '&#x2F;'
+				},
+				htmlEscaper = /[&<>"'\/]/g;
+
+			return ('' + string).replace(htmlEscaper, function (match) {
+				return htmlEscapes[match];
+			});
+		}
+
+		/**
+		 * @desc Wrapper for our Wikia.Tracker.track method - sends to GA tracking info
+		 *
+		 * @param {string} action one of Wikia.Tracker.ACTIONS
+		 * @param {string} label
+		 * @param {integer} value
+		 */
+		function track(action, label, value) {
+			var trackingParams = {
+				trackingMethod: 'ga',
+				category: 'map',
+				action: action,
+				label: label
+			};
+
+			if (typeof(value) !== 'undefined') {
+				trackingParams.value = value;
+			}
+
+			tracker.track(trackingParams);
+		}
+
 		return {
 			loadModal: loadModal,
 			createModal: createModal,
@@ -312,7 +356,11 @@ define(
 			handleNirvanaException: handleNirvanaException,
 			showError: showError,
 			cleanUpError: cleanUpError,
-			createThumbURL: createThumbURL
-		}
+			createThumbURL: createThumbURL,
+			escapeHtml: escapeHtml,
+			track: track,
+			trackerActions: tracker.ACTIONS
+		};
 	}
 );
+

@@ -1,4 +1,4 @@
-require(['jquery', 'wikia.mustache'], function ($, mustache) {
+require(['jquery', 'wikia.mustache', 'wikia.tracker'], function ($, mustache, tracker) {
 	'use strict';
 
 	/**
@@ -71,6 +71,13 @@ require(['jquery', 'wikia.mustache'], function ($, mustache) {
 
 						uiModal.createComponent(modalConfig, function (mapModal) {
 							mapModal.show();
+							tracker.track({
+								trackingMethod: 'ga',
+								category: 'map',
+								action: tracker.ACTIONS.IMPRESSION,
+								label: 'map-in-modal-shown',
+								value: mapId
+							});
 						});
 					});
 				});
@@ -108,4 +115,5 @@ require(['jquery', 'wikia.mustache'], function ($, mustache) {
 		event.preventDefault();
 		showMap($(event.currentTarget));
 	});
+
 });
