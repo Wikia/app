@@ -40,7 +40,7 @@ class JsonFormatBuilder {
 			array_pop($this->jsonStack);
 			$this->currentContainer = $this->jsonStack[sizeof($this->jsonStack)-1];
 		} else {
-			throw new InvalidInfoboxException();
+			throw new JsonFormatException('Invalid infobox');
 		}
 	}
 
