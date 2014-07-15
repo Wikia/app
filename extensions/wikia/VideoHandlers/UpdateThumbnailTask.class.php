@@ -43,13 +43,30 @@ class UpdateThumbnailTask extends BaseTask {
 		return $response;
 	}
 
+	/**
+	 * Get a delay value determined by 1.) the provider, and 2.)
+	 * the number of times we've tried to reupload the video
+	 * @param $provider
+	 * @param $index
+	 * @return string Length of time to delay the job
+	 */
 	public static function getDelay( $provider, $index ) {
-		$provider = array_key_exists( $provider, self::$delays ) ? $provider : self::DEFAULT_PROVIDER;
+		if ( !isset( self::$delays["provider"] ) ) {
+			$provider = self::DEFAULT_PROVIDER;
+		}
 		return self::$delays[$provider][$index];
 	}
 
+	/**
+	 * Get the number of times we should try and re-upload
+	 * a video's thumbnail, based on provider.
+	 * @param $provider
+	 * @return int Number of times to retry the thumbnail upload
+	 */
 	public static function getDelayCount( $provider ) {
-		$provider = array_key_exists( $provider, self::$delays ) ? $provider : self::DEFAULT_PROVIDER;
+		if ( !isset( self::$delays["provider"] ) ) {
+			$provider = self::DEFAULT_PROVIDER;
+		}
 		return count( self::$delays[$provider] );
 	}
 }
