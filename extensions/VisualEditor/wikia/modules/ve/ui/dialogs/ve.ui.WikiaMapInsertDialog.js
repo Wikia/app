@@ -2,7 +2,7 @@
  * VisualEditor user interface WikiaMapInsertDialog class.
  */
 
-/*global wgCityId */
+/*global wgCityId, mw */
 
 /**
  * Dialog for inserting Wikia map objects.
@@ -90,6 +90,7 @@ ve.ui.WikiaMapInsertDialog.prototype.setupResultsPanel = function () {
 
 	this.panels.results.$element.append( $headline, this.resultsWidget.$element );
 };
+
 ve.ui.WikiaMapInsertDialog.prototype.setupEmptyPanel = function () {
 	var $content = this.$( '<div>' ),
 		$headline = this.$( '<div>' ),
