@@ -10,15 +10,15 @@
 $messages = [];
 
 /**
- * Message documentation.
+ * English.
  */
-$messages['qqq'] = [
+$messages['en'] = [
 	'infoboxbuilder-desc' => 'InfoboxBuilder is a tool that allows users to build Lua-based infoboxes without any programming skills and to use custom Lua modules for logical operations on demand.',
 ];
 
 /**
- * English.
+ * Message documentation.
  */
-$messages['en'] = [
+$messages['qqq'] = [
 	'infoboxbuilder-desc' => 'InfoboxBuilder is a tool that allows users to build Lua-based infoboxes without any programming skills and to use custom Lua modules for logical operations on demand.',
 ];
