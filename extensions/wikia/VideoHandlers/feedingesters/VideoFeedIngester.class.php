@@ -29,6 +29,7 @@ abstract class VideoFeedIngester {
 		self::PROVIDER_IGN,
 		self::PROVIDER_IVA,
 		self::PROVIDER_SCREENPLAY,
+		self::PROVIDER_OOYALA,
 	];
 
 	// These providers are not ingested daily, but can be ingested from if specifically named

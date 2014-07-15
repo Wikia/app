@@ -416,7 +416,7 @@ class VideoHandlerHelper extends WikiaModel {
 	 * ApiWrapper classes.
 	 * @return FileRepoStatus The status of the publish operation
 	 */
-	public function resetVideoThumb( File $file, $thumbnailUrl = null, $delayIndex = UpdateThumbnailTask::DONT_RUN ) {
+	public function resetVideoThumb( File $file, $thumbnailUrl = null, $delayIndex = 0 ) {
 		$mime = $file->getMimeType();
 		list(, $provider) = explode('/', $mime);
 		$videoId = $file->getVideoId();

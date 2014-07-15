@@ -86,6 +86,7 @@ class DefaultContent extends AbstractService
 				];
 		return array_merge(
 				$this->getPageContentFromParseResponse( $response ),
+				$this->getArticleSnippet( $response ),
 				$this->getCategoriesFromParseResponse( $response ),
 				$this->getHeadingsFromParseResponse( $response ),
 				$this->getOutboundLinks(),
@@ -133,6 +134,15 @@ class DefaultContent extends AbstractService
 		return $this->getService()->getGlobal( 'AppStripsHtml' ) ? (new Utilities)->field( $field ) : $field;
 	}
 
+	protected function getArticleSnippet( array $response ) {
+		$html = empty( $response['parse']['text']['*'] ) ? '' : $response['parse']['text']['*'];
+		$jsonFormatService = new JsonFormatService();
+		$text = $jsonFormatService->getArticleSnippet( $html );
+		return [
+			'snippet_s' => $text
+		];
+	}
+
 	/**
 	 * Wraps logic for creating the initial result array, based on which implementation we're using.
 	 * The old version strips HTML from the backend; the new version strips HTML within the IndexService.
@@ -140,28 +150,9 @@ class DefaultContent extends AbstractService
 	 * @return array
 	 */
 	protected function getPageContentFromParseResponse( array $response ) {
-		global $wgSimpleHtmlSearchIndexer;
 		$html = empty( $response['parse']['text']['*'] ) ? '' : $response['parse']['text']['*'];
-
-		if( $wgSimpleHtmlSearchIndexer ) {
-			$jsonFormatService = new JsonFormatService();
-			$jsonSimple = $jsonFormatService->getSimpleFormatForHtml( $html );
-			$simplifier = new JsonFormatSimplifier();
-			$text = $simplifier->simplifyToText( $jsonSimple );
-
-			$words = explode( ' ', $text );
-			$wordCount = count( $words );
-			$upTo100Words = implode( ' ', array_slice( $words, 0, min( array( $wordCount, 100 ) ) ) );
-			$this->pushNolangTxt( $upTo100Words );
-			return [
-					'nolang_txt'           => $upTo100Words,
-					'words'                => $wordCount,
-					$this->field( 'html' ) => $text
-				];
-		} else {
-			if ( $this->getService()->getGlobal( 'AppStripsHtml' ) ) {
-				return $this->prepValuesFromHtml( $html );
-			}
+		if ( $this->getService()->getGlobal( 'AppStripsHtml' ) ) {
+			return $this->prepValuesFromHtml( $html );
 		}
 		return [ 'html' => html_entity_decode($html, ENT_COMPAT, 'UTF-8') ];
 	}
