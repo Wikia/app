@@ -54,19 +54,15 @@ local execute = function( input )
 			for index, field in ipairs( input.fields ) do
 
 				-- Checks for a table type which is handled differently
-				if type( field.Label ) == "table" then
-					if methodExists( field.LabelMethod ) then
-						input.fields[index].Label = CM[field.LabelMethod]( field, InfoboxBuilder.vars )
-					end
+				if type( field.Label ) == "table" and methodExists( field.LabelMethod ) then
+					input.fields[index].Label = CM[field.LabelMethod]( field, InfoboxBuilder.vars )
 				elseif not HF.isempty( mw.text.trim( field.Label ) ) and methodExists( field.LabelMethod ) then
 					input.fields[index].Label = CM[field.LabelMethod]( field, InfoboxBuilder.vars )
 				end
 
 				-- Checks for a table type which is handled differently
-				if type( field.Value ) == "table" then
-					if methodExists( field.ValueMethod ) then
-						input.fields[index].Value = CM[field.ValueMethod]( field, InfoboxBuilder.vars )
-					end
+				if type( field.Value ) == "table" and methodExists( field.ValueMethod ) then
+					input.fields[index].Value = CM[field.ValueMethod]( field, InfoboxBuilder.vars )
 				elseif not HF.isempty( mw.text.trim( field.Value ) ) and methodExists( field.ValueMethod ) then
 					input.fields[index].Value = CM[field.ValueMethod]( field, InfoboxBuilder.vars )
 				end

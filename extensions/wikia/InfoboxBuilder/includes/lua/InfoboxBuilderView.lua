@@ -265,14 +265,10 @@ function InfoboxBuilderView.render( input, vars )
 
 	-- Iterate over each field and render a row
 	for index, field in ipairs( fields ) do
-		if field.Type == "Line" then
-			if not HF.isempty( field.Value ) then
-				table:node( addRowLine( field ) )
-			end
-		elseif field.Type == "Header" then
-			if input.sections[index] == "On" then
-				table:node( addRowHeader( field ) )
-			end
+		if field.Type == "Line" and not HF.isempty( field.Value ) then
+			table:node( addRowLine( field ) )
+		elseif field.Type == "Header" and input.sections[index] == "On" then
+			table:node( addRowHeader( field ) )
 		elseif field.Type == "Title" then
 			table:node( addRowTitle( field ) )
 		elseif field.Type == "MainImage" then
