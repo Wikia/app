@@ -52,7 +52,7 @@ class WikiaInteractiveMapsParserTagController extends WikiaController {
 		if ( $isValid ) {
 			$params[ 'map' ] = $this->getMapObj( $params[ 'id' ] );
 
-			if ( !empty( $params [ 'map' ] ) ) {
+			if ( !empty( $params [ 'map' ]->id ) ) {
 				return $this->sendRequest(
 					'WikiaInteractiveMapsParserTagController',
 					'mapThumbnail',
