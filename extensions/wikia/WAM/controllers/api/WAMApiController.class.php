@@ -14,7 +14,7 @@ class WAMApiController extends WikiaApiController {
 	const DEFAULT_AVATAR_SIZE = 28;
 	const DEFAULT_WIKI_IMAGE_WIDTH = 150;
 	const DEFAULT_WIKI_ADMINS_LIMIT = 5;
-	const RESPONSE_CACHE_VALIDITY = 21600;
+	const WAM_RESPONSE_CACHE_VALIDITY = 21600;
 	const MEMCACHE_VER = '1.04';
 
 	/**
@@ -107,7 +107,7 @@ class WAMApiController extends WikiaApiController {
 				'wam_index_date' => $wamIndex['wam_index_date']
 			],
 			[ 'urlFields' => [ 'avatarUrl', 'userPageUrl', 'userContributionsUrl' ] ],
-			self::RESPONSE_CACHE_VALIDITY
+			self::WAM_RESPONSE_CACHE_VALIDITY
 		);
 	}
 
