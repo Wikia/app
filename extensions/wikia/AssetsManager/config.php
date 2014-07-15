@@ -49,7 +49,6 @@ $config['adengine2_js'] = array(
 	'assets' => array(
 		// core
 		'//resources/wikia/modules/scriptwriter.js',
-		'//extensions/wikia/AdEngine/js/Krux.js',
 		'//extensions/wikia/AdEngine/js/SlotTweaker.js',
 		'//extensions/wikia/AdEngine/js/AdEngine2.js',
 		'//extensions/wikia/AdEngine/js/SlotTracker.js',
@@ -98,9 +97,17 @@ $config['adengine2_late_js'] = array(
 		'//extensions/wikia/AdEngine/js/OoyalaTracking.js',
 		'//extensions/wikia/AdEngine/js/SevenOneMediaHelper.js',
 		'//extensions/wikia/AdEngine/js/WikiaDartVideoHelper.js',
-		// Needs to load after Krux.js, jQuery and AdEngine2.run.js
-		'//extensions/wikia/AdEngine/js/Krux.run.js',
 	),
+);
+
+$config['adengine2_krux_js'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => 'oasis',
+	'assets' => array(
+		'//extensions/wikia/AdEngine/js/Krux.js',
+		'//extensions/wikia/AdEngine/js/AdLogicPageParams.js',
+		'//extensions/wikia/AdEngine/js/Krux.run.js',
+	)
 );
 
 $config['adengine2_bottom_leaderboard_js'] = array(

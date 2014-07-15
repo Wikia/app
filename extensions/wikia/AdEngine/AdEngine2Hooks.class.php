@@ -136,6 +136,8 @@ class AdEngine2Hooks {
 
 		global $wgAdDriverUseTopInContentBoxad;
 
+		$jsAssets[] = 'adengine2_krux_js';
+
 		if (AdEngine2Service::areAdsInHead()) {
 			// Add ad asset to JavaScripts loaded on top (in <head>)
 			$jsAssets[] = AdEngine2Service::ASSET_GROUP_ADENGINE;
@@ -158,20 +160,23 @@ class AdEngine2Hooks {
 	 * @return bool
 	 */
 	static public function onWikiaSkinTopModules(&$scriptModules, $skin) {
+
+		$scriptModules[] = 'wikia.window';
+		$scriptModules[] = 'wikia.log';
+		$scriptModules[] = 'wikia.location';
+		$scriptModules[] = 'wikia.querystring';
+
 		if (AdEngine2Service::areAdsInHead() || AnalyticsProviderAmazonDirectTargetedBuy::isEnabled()) {
 			$scriptModules[] = 'wikia.instantGlobals';
 			$scriptModules[] = 'wikia.cookies';
 			$scriptModules[] = 'wikia.geo';
-			$scriptModules[] = 'wikia.window';
 		}
+
 		if (AdEngine2Service::areAdsInHead()) {
 			$scriptModules[] = 'wikia.document';
 			$scriptModules[] = 'wikia.abTest';
 			$scriptModules[] = 'wikia.cache';
 			$scriptModules[] = 'wikia.localStorage';
-			$scriptModules[] = 'wikia.location';
-			$scriptModules[] = 'wikia.log';
-			$scriptModules[] = 'wikia.querystring';
 			$scriptModules[] = 'wikia.tracker.stub';
 		}
 		return true;
