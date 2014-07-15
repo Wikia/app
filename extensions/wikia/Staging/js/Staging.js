@@ -11,7 +11,11 @@ if ( window.wgStagingEnvironment ) {
 		for ( ; i < links.length; i++ ) {
 			href = links[i].getAttribute('href');
 
-			if ( href.indexOf( '://' ) > -1 && href.indexOf( 'wikia.com' ) > -1 && href.indexOf( stagingURLPart ) === -1 ) {
+			if (
+				href &&
+				href.indexOf( '://' ) > -1 && href.indexOf( 'wikia.com' ) > -1 &&
+				href.indexOf( stagingURLPart ) === -1
+			) {
 				links[i].setAttribute( 'href', href.replace( '://', stagingURLPart ) );
 			}
 
