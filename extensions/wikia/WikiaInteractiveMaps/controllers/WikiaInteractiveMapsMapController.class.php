@@ -149,7 +149,10 @@ class WikiaInteractiveMapsMapController extends WikiaInteractiveMapsBaseControll
 			WikiaMapsLogger::addLogEntry(
 				WikiaMapsLogger::ACTION_CREATE_MAP,
 				$mapId,
-				$this->getData( 'title' )
+				$this->getData( 'title' ),
+				[
+					$this->wg->User->getName(),
+				]
 			);
 		}
 

@@ -190,7 +190,10 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 			WikiaMapsLogger::addLogEntry(
 				WikiaMapsLogger::ACTION_DELETE_MAP,
 				$mapId,
-				$mapId
+				$mapId,
+				[
+					$this->wg->User->getName(),
+				]
 			);
 
 			NotificationsController::addConfirmation( wfMessage( 'wikia-interactive-maps-delete-map-success' ) );
@@ -242,7 +245,7 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 	 */
 	private function convertImagesToThumbs( &$items, $width, $height ) {
 		foreach ( $items as $item ) {
-			$item->image = $this->mapsModel->createCroppedThumb( $item->image, $width, $height, 'origin' );
+			$item->image = $this->mapsModel->createCroppedThumb( $item->image, $width, $height );
 		}
 	}
 

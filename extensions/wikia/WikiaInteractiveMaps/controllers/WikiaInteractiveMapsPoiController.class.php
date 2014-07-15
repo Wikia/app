@@ -48,20 +48,30 @@ class WikiaInteractiveMapsPoiController extends WikiaInteractiveMapsBaseControll
 			$this->setAction( self::ACTION_UPDATE );
 			$this->validatePoiData();
 			$results = $this->updatePoi();
+			if ( true === $results[ 'success' ] ) {
+				WikiaMapsLogger::addLogEntry(
+					WikiaMapsLogger::ACTION_UPDATE_PIN,
+					$mapId,
+					$name,
+					[
+						$this->wg->User->getName(),
+					]
+				);
+			}
 		} else {
 			$this->setAction( self::ACTION_CREATE );
 			$this->validatePoiData();
 			$results = $this->createPoi();
-		}
-
-		if ( true === $results[ 'success' ] ) {
-			$results = $this->decorateResults( $results, [ 'link', 'photo' ] );
-
-			WikiaMapsLogger::addLogEntry(
-				( $this->isUpdate() ? WikiaMapsLogger::ACTION_UPDATE_PIN : WikiaMapsLogger::ACTION_CREATE_PIN ),
-				$mapId,
-				$name
-			);
+			if ( true === $results[ 'success' ] ) {
+				WikiaMapsLogger::addLogEntry(
+					WikiaMapsLogger::ACTION_CREATE_PIN,
+					$mapId,
+					$name,
+					[
+						$this->wg->User->getName(),
+					]
+				);
+			}
 		}
 
 		$this->setVal( 'results', $results );
@@ -88,7 +98,10 @@ class WikiaInteractiveMapsPoiController extends WikiaInteractiveMapsBaseControll
 			WikiaMapsLogger::addLogEntry(
 				WikiaMapsLogger::ACTION_DELETE_PIN,
 				$mapId,
-				$poiId
+				$poiId,
+				[
+					$this->wg->User->getName(),
+				]
 			);
 		}
 		$this->setVal( 'results', $results );
@@ -309,7 +322,7 @@ class WikiaInteractiveMapsPoiController extends WikiaInteractiveMapsBaseControll
 				WikiaMapsLogger::ACTION_CREATE_PIN_TYPE,
 				$this->getData( 'mapId' ),
 				$poiCategory[ 'name' ],
-				[ $response->id ]
+				[ $this->wg->User->getName(), $response->id ]
 			) );
 		}
 	}
@@ -329,7 +342,7 @@ class WikiaInteractiveMapsPoiController extends WikiaInteractiveMapsBaseControll
 				WikiaMapsLogger::ACTION_UPDATE_PIN_TYPE,
 				$this->getData( 'mapId' ),
 				$poiCategory[ 'name' ],
-				[ $poiCategoryId ]
+				[ $this->wg->User->getName(), $poiCategoryId ]
 			) );
 		}
 	}
@@ -340,7 +353,7 @@ class WikiaInteractiveMapsPoiController extends WikiaInteractiveMapsBaseControll
 	 * @param $logEntry
 	 */
 	private function addLogEntry( $logEntry ) {
-		$this->logEntries []= $logEntry;
+		$this->logEntries[] = $logEntry;
 	}
 
 	/**
@@ -350,7 +363,16 @@ class WikiaInteractiveMapsPoiController extends WikiaInteractiveMapsBaseControll
 		$poiCategoriesDeleted = $this->getData( 'poiCategoriesDeleted' );
 
 		foreach ( $poiCategoriesDeleted as $poiCategoryId ) {
-			$this->mapsModel->deletePoiCategory( $poiCategoryId );
+			$response = $this->mapsModel->deletePoiCategory( $poiCategoryId );
+
+			if ( true === $response[ 'success' ] ) {
+				$this->addLogEntry( WikiaMapsLogger::newLogEntry(
+					WikiaMapsLogger::ACTION_DELETE_PIN_TYPE,
+					$this->getData( 'mapId' ),
+					$poiCategoryId,
+					[ $this->wg->User->getName(), $poiCategoryId ]
+				) );
+			}
 		}
 	}
 
