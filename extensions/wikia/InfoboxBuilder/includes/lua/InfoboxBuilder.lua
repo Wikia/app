@@ -9,7 +9,7 @@ local CM = {}
 -- Define default values for global variables
 InfoboxBuilder.vars = {
 	Theme                   = "default", -- Adds prefix to CSS classes
-	CustomModule            = " ",       -- Defines a path to a module with custom functions
+	CustomModule            = "",        -- Defines a path to a module with custom functions
 	MainImageCaption        = "Off",     -- Display a Label as a caption of the Main Image?
 	ToggleContentLongerThan = 1000       -- Makes fields with long Values collapsible
 }
@@ -26,12 +26,8 @@ InfoboxBuilder.errors = {}
 ]]--
 local methodExists = function( name )
 	local exists = false
-	if type( name ) ~= nil then
-		if not HF.isempty( name ) then
-			if type( CM[name] ) == "function" then
-				exists = true
-			end
-		end
+	if not HF.isempty( name ) and type( CM[name] ) == "function" then
+  	exists = true
 	end
 	return exists
 end
