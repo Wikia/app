@@ -76,7 +76,7 @@ ve.ui.WikiaMapInsertDialog.prototype.setupResultsPanel = function () {
 	$headlineText
 		.addClass( 've-ui-wikiaMapInsertDialog-results-headline-text' )
 		.html( ve.msg( 'wikia-visualeditor-dialog-wikiamapinsert-headline', this.constructor.static.learnMoreUrl ) )
-		.appendTo( $headline ),
+		.appendTo( $headline );
 
 	headlineButton.$element
 		.addClass( 've-ui-wikiaMapInsertDialog-results-headline-button' )
@@ -148,7 +148,7 @@ ve.ui.WikiaMapInsertDialog.prototype.getMaps = function() {
 		} );
 		this.gettingMaps = deferred.promise();
 	}
-	return this.gettingMaps
+	return this.gettingMaps;
 };
 
 ve.ui.WikiaMapInsertDialog.prototype.showResults = function( data ) {
