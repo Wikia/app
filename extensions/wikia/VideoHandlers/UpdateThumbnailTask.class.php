@@ -35,10 +35,17 @@ class UpdateThumbnailTask extends BaseTask {
 		if ( $provider == self::IVA ) {
 			$cmd = sprintf( "SERVER_ID={$wgCityId} php {$IP}/maintenance/wikia/VideoHandlers/updateOoyalaThumbnail.php --videoId={$videoId} --delayIndex={$delayIndex}" );
 			$response = wfShellExec( $cmd, $exitStatus );
+			if ( $exitStatus != 0 ) {
+				$msg = "Video thumbnail uploaded successfully";
+				$status = Status::newGood( $msg );
+			} else {
+				$msg = "Error uploading video thumbnail";
+				$status = Status::newFatal( $msg );
+			}
 		} else {
 			$file = WikiaFileHelper::getVideoFileFromTitle( $title );
 			$helper = new VideoHandlerHelper();
-			$response = $helper->resetVideoThumb( $file, null, $delayIndex );
+			$status = $helper->resetVideoThumb( $file, null, $delayIndex );
 		}
 		return $response;
 	}
