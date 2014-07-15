@@ -58,7 +58,7 @@ class UpdateThumbnailTask extends BaseTask {
 	 * @return string Length of time to delay the job
 	 */
 	public static function getDelay( $provider, $index ) {
-		if ( !isset( self::$delays["provider"] ) ) {
+		if ( !isset( self::$delays[$provider] ) ) {
 			$provider = self::DEFAULT_PROVIDER;
 		}
 		return self::$delays[$provider][$index];
@@ -71,7 +71,7 @@ class UpdateThumbnailTask extends BaseTask {
 	 * @return int Number of times to retry the thumbnail upload
 	 */
 	public static function getDelayCount( $provider ) {
-		if ( !isset( self::$delays["provider"] ) ) {
+		if ( !isset( self::$delays[$provider] ) ) {
 			$provider = self::DEFAULT_PROVIDER;
 		}
 		return count( self::$delays[$provider] );
