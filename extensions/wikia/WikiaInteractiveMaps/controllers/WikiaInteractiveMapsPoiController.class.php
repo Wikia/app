@@ -48,30 +48,20 @@ class WikiaInteractiveMapsPoiController extends WikiaInteractiveMapsBaseControll
 			$this->setAction( self::ACTION_UPDATE );
 			$this->validatePoiData();
 			$results = $this->updatePoi();
-			if ( true === $results[ 'success' ] ) {
-				WikiaMapsLogger::addLogEntry(
-					WikiaMapsLogger::ACTION_UPDATE_PIN,
-					$mapId,
-					$name,
-					[
-						$this->wg->User->getName(),
-					]
-				);
-			}
 		} else {
 			$this->setAction( self::ACTION_CREATE );
 			$this->validatePoiData();
 			$results = $this->createPoi();
-			if ( true === $results[ 'success' ] ) {
-				WikiaMapsLogger::addLogEntry(
-					WikiaMapsLogger::ACTION_CREATE_PIN,
-					$mapId,
-					$name,
-					[
-						$this->wg->User->getName(),
-					]
-				);
-			}
+		}
+
+		if ( true === $results[ 'success' ] ) {
+			$results = $this->decorateResults( $results, [ 'link', 'photo' ] );
+
+			WikiaMapsLogger::addLogEntry(
+				( $this->isUpdate() ? WikiaMapsLogger::ACTION_UPDATE_PIN : WikiaMapsLogger::ACTION_CREATE_PIN ),
+				$mapId,
+				$name
+			);
 		}
 
 		$this->setVal( 'results', $results );
