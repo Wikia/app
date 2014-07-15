@@ -83,7 +83,6 @@ ve.ui.WikiaMapInsertDialog.prototype.setupResultsPanel = function () {
 		.appendTo( $headline );
 	headlineButton.on( 'click', ve.bind( this.onCreateClick, this ) );
 
-
 	this.resultsWidget = new ve.ui.WikiaMediaResultsWidget( { '$': this.$ } );
 	this.resultsWidget.on( 'preview', ve.bind( this.onMapSelect, this ) );
 	this.selectWidget = this.resultsWidget.getResults();
@@ -132,7 +131,7 @@ ve.ui.WikiaMapInsertDialog.prototype.getSetupProcess = function ( data ) {
 		}, this );
 };
 
-ve.ui.WikiaMapInsertDialog.prototype.getMaps = function() {
+ve.ui.WikiaMapInsertDialog.prototype.getMaps = function () {
 	var deferred;
 	if ( !this.gettingMaps ) {
 		deferred = $.Deferred();
@@ -152,7 +151,7 @@ ve.ui.WikiaMapInsertDialog.prototype.getMaps = function() {
 	return this.gettingMaps;
 };
 
-ve.ui.WikiaMapInsertDialog.prototype.showResults = function( data ) {
+ve.ui.WikiaMapInsertDialog.prototype.showResults = function ( data ) {
 	var items, i;
 	if ( data.length > 0 ) {
 		this.stackLayout.setItem( this.panels.results );
@@ -162,7 +161,7 @@ ve.ui.WikiaMapInsertDialog.prototype.showResults = function( data ) {
 				type: 'map',
 				id: data[i].id,
 				title: data[i].title,
-				url: data[i].image,
+				url: data[i].image
 			} );
 		}
 		this.selectWidget.clearItems();
