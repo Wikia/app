@@ -358,7 +358,7 @@ class AsyncTaskList {
 	public static function batch( $taskLists ) {
 		global $wgTaskBroker;
 
-		$error = function( \Exception $e ) {
+		$logError = function( \Exception $e ) {
 			WikiaLogger::instance()->critical( 'Failed to queue task group', [
 				'error' => $e->getMessage(),
 			] );
@@ -369,9 +369,9 @@ class AsyncTaskList {
 		try {
 			$connection = new AMQPConnection( $wgTaskBroker['host'], $wgTaskBroker['port'], $wgTaskBroker['user'], $wgTaskBroker['pass'] );
 		} catch ( AMQPRuntimeException $e ) {
-			return $error( $e );
+			return $logError( $e );
 		} catch ( AMQPTimeoutException $e ) {
-			return $error( $e );
+			return $logError( $e );
 		}
 
 		$channel = $connection->channel();
@@ -392,7 +392,7 @@ class AsyncTaskList {
 		}
 
 		if ( $exception !== null ) {
-			return $error( $exception );
+			return $logError( $exception );
 		}
 
 		return $ids;
