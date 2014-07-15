@@ -24,7 +24,7 @@ class WikiaMapsLogger {
 	 * @param string $action Action name as defined above
 	 * @param integer $mapId Map id
 	 * @param string $comment Comment
-	 * @param array $params Additional params; first parameter should be username
+	 * @param array $params Additional params; first parameter must be username
 	 * @return stdClass Log entry
 	 */
 	public static function newLogEntry( $action, $mapId, $comment, $params = [] ) {
@@ -42,7 +42,7 @@ class WikiaMapsLogger {
 	 * @param string $action Action name as defined above
 	 * @param integer $mapId Map id
 	 * @param string $comment Comment
-	 * @param array $params Additional params; first parameter should be username
+	 * @param array $params Additional params; first parameter must be username
 	 */
 	public static function addLogEntry( $action, $mapId, $comment, $params = [] ) {
 		self::addLogEntries( [ self::newLogEntry( $action, $mapId, $comment, $params ) ] );
