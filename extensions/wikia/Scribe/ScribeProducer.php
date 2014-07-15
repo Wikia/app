@@ -75,7 +75,7 @@ class ScribeProducer {
 		}
 
 		if ( !empty( $wgDevelEnvironment ) ) {
-			$result = 'dev-' . $result;
+			$result = implode( '-', [ WIKIA_ENV_DEV, $result ] );
 		}
 
 		return $result;
