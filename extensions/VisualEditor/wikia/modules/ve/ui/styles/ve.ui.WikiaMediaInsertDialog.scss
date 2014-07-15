@@ -9,7 +9,7 @@
 
 $size-cart-item: 80px;
 $width-media-item-max: 365px;
-$width-cart: 118px;
+$width-cart: 120px;
 
 .ve-ui-wikiaMediaInsertDialog {
 	.oo-ui-bookletLayout {
@@ -213,7 +213,8 @@ $width-cart: 118px;
 }
 
 .ve-ui-wikiaMediaQueryWidget-uploadWrapper {
-	padding-left: 20px;
+	padding-left: 40px;
+	padding-right: 17px;
 }
 
 /* Results */
@@ -239,11 +240,11 @@ $width-cart: 118px;
 				} @else {
 					background-color: darken($color-page, 9%);
 				}
-				height: 32px;
+				height: 40px;
 				margin: 0;
 				opacity: 1;
 				position: static;
-				width: 32px;
+				width: 40px;
 
 				&.oo-ui-icon-checked {
 					@include ve-icon(checked, wikia, $color-buttons);
