@@ -62,11 +62,6 @@
 		var $spinner = $( '.ve-spinner[data-type="loading"]' ),
 			$message = $spinner.find( 'p.message' );
 
-		/* Optimizely */
-		if ( window.veFocusMode === 'opaque' ) {
-			$spinner.addClass( 'optimizely-opaque' );
-		}
-
 		$message.hide();
 		$spinner.fadeIn( 400 );
 
@@ -86,10 +81,6 @@
 	 */
 	function getTarget() {
 		var loadTargetDeferred;
-
-		/* Optimizely */
-		window.optimizely = window.optimizely || [];
-		window.optimizely.push( ['activate', 1459280459] );
 
 		showSpinner();
 
