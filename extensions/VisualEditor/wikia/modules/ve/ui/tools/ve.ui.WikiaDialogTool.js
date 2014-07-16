@@ -2,6 +2,8 @@
  * VisualEditor Wikia UserInterface dialog tool classes.
  */
 
+/*global mw */
+
 /**
  * UserInterface WikiaMediaInsertDialog tool.
  *
@@ -52,7 +54,9 @@ ve.ui.WikiaMapInsertDialogTool.static.title =
 	OO.ui.deferMsg( 'wikia-visualeditor-dialogbutton-wikiamapinsert-tooltip' );
 ve.ui.WikiaMapInsertDialogTool.static.commandName = 'wikiaMapInsert';
 
-ve.ui.toolFactory.register( ve.ui.WikiaMapInsertDialogTool );
+if ( mw.config.get( 'wgEnableWikiaInteractiveMaps' ) === true ) {
+	ve.ui.toolFactory.register( ve.ui.WikiaMapInsertDialogTool );
+}
 
 /**
  * UserInterface WikiaSourceModeDialog tool.

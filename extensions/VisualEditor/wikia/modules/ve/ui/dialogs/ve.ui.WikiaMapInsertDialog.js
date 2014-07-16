@@ -137,7 +137,7 @@ ve.ui.WikiaMapInsertDialog.prototype.getMaps = function () {
 		deferred = $.Deferred();
 		$.ajax( {
 			dataType: 'json',
-			url: 'http://dev-interactive-maps.wikia.nocookie.net/api/v1/map?city_id=' + wgCityId
+			url: mw.config.get( 'interactiveMapsApiURL' ) + '/map?city_id=' + wgCityId
 		} )
 		.done( function ( data ) {
 			deferred.resolve( data.items );

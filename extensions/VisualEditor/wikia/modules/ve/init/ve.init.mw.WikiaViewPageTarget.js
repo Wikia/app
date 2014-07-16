@@ -55,8 +55,7 @@ ve.init.mw.WikiaViewPageTarget.static.toolbarGroups = [
 		'type': 'list',
 		'label': OO.ui.deferMsg( 'visualeditor-toolbar-insert' ),
 		'indicator': 'down',
-		// FIXME: Perhaps presence of wikiaMapInsert should depend on configuration variable
-		'include': [ 'wikiaMapInsert', 'wikiaMediaInsert', 'number', 'bullet', 'transclusion', 'reference', 'referenceList' ]
+		'include': [ 'wikiaMediaInsert', 'wikiaMapInsert', 'number', 'bullet', 'transclusion', 'reference', 'referenceList' ]
 	}
 ];
 
