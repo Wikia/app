@@ -133,6 +133,7 @@ ve.ui.WikiaMapInsertDialog.prototype.setupEmptyPanel = function () {
 ve.ui.WikiaMapInsertDialog.prototype.getSetupProcess = function ( data ) {
 	return ve.ui.WikiaMapInsertDialog.super.prototype.getSetupProcess.call( this, data )
 		.next( function () {
+			this.inserting = null;
 			this.stackLayout.setItem( this.panels.loading );
 			this.load();
 		}, this );
@@ -183,20 +184,23 @@ ve.ui.WikiaMapInsertDialog.prototype.showResults = function ( data ) {
 };
 
 ve.ui.WikiaMapInsertDialog.prototype.onMapSelect = function ( option ) {
-	this.getFragment().collapseRangeToEnd().insertContent( [
-		{
-			type: 'wikiaMap',
-			attributes: {
-				mw: {
-					name: 'imap',
-					body: { extsrc:'' },
-					attrs: { 'map-id': option.getData().id.toString() }
+	if ( !this.inserting ) {
+		this.inserting = true;
+		this.getFragment().collapseRangeToEnd().insertContent( [
+			{
+				type: 'wikiaMap',
+				attributes: {
+					mw: {
+						name: 'imap',
+						body: { extsrc:'' },
+						attrs: { 'map-id': option.getData().id.toString() }
+					}
 				}
-			}
-		},
-		{ type: '/wikiaMap' }
-	] );
-	this.close();
+			},
+			{ type: '/wikiaMap' }
+		] );
+		this.close();
+	}
 };
 
 ve.ui.WikiaMapInsertDialog.prototype.onCreateClick = function () {
