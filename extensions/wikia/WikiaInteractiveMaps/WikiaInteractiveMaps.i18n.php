@@ -263,3 +263,4 @@ $messages[ 'qqq' ] = [
 	'wikia-interactive-maps-hide-filter' => 'Name of the button for hiding filter box',
 	'wikia-interactive-maps-tile-set-exists-error' => 'Error, shown when tile set with the same name already exists',
 ];
+

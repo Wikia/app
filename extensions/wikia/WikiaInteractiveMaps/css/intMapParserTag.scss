@@ -52,7 +52,7 @@ $max-view-button-width: 230px;
 		@include ellipses();
 		font-size: 30px;
 		font-weight: bold;
-		line-height: 30px;
+		line-height: normal;
 		margin-bottom: 10px;
 		width: $default-width - $max-view-button-width;
 	}

@@ -18,6 +18,7 @@ $messages[ 'en' ] = [
 	'wikia-interactive-maps-create-marker-tooltip' => 'Draw a marker',
 	'wikia-interactive-maps-create-marker-cancel' => 'Cancel',
 	'wikia-interactive-maps-default-poi-category' => 'Other',
+	'wikia-interactive-maps-hide-filter' => 'Hide',
 ];
 
 
@@ -35,4 +36,5 @@ $messages[ 'qqq' ] = [
 	'wikia-interactive-maps-create-marker-tooltip' => 'Create POI hint',
 	'wikia-interactive-maps-create-marker-cancel' => 'Cancel shown when user clicks on create POI',
 	'wikia-interactive-maps-default-poi-category' => 'Name of the default category for POI',
+	'wikia-interactive-maps-hide-filter' => 'Name of the button for hiding filter box',
 ];
