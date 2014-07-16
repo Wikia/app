@@ -67,7 +67,7 @@ ve.ui.WikiaMapInsertDialog.prototype.initialize = function () {
 
 	if ( localStorage ) {
 		this.$( window ).on( 'storage', ve.bind( function ( e ) {
-			if ( e.originalEvent.key === 'mapCreated' ) {
+			if ( e.originalEvent.key === 'mapCreated' && e.originalEvent.newValue ) {
 				this.gettingMaps = null;
 				this.load();
 			}

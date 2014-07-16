@@ -193,16 +193,15 @@ define(
 			utils.track(utils.trackerActions.IMPRESSION, 'poi-category-modal-shown');
 		}
 
+		/**
+		 * @desc trigger "storage" event (by calling localStorage.setItem) after the map is created
+ 		 */
 		function triggerStorageEvent(data) {
 			if ( localStorage ) {
-				try {
-					localStorage.setItem('mapCreated', data.id);
-				} catch(e) { }
+				localStorage.setItem('mapCreated', data.id);
 				setTimeout(function() {
-					try {
-						localStorage.removeItem('mapCreated');
-					} catch(e) { }
-				}, 1000);
+					localStorage.removeItem('mapCreated');
+				}, 0);
 			}
 		}
 
