@@ -111,6 +111,14 @@ $config['adengine2_bottom_leaderboard_js'] = array(
 	),
 );
 
+$config['adengine2_interactive_maps_js'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => array(
+		'//extensions/wikia/AdEngine/js/AdSlotInteractiveMaps.js',
+		'//extensions/wikia/AdEngine/js/AdSlotInteractiveMaps.run.js',
+	),
+);
+
 $config['adengine2_top_in_content_boxad_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(

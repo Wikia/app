@@ -1,4 +1,4 @@
-require(['jquery', 'wikia.mustache', 'wikia.tracker'], function ($, mustache, tracker) {
+require(['jquery', 'wikia.mustache', 'wikia.tracker', require.optional('ext.wikia.adEngine.eventDispatcher')], function ($, mustache, tracker, eventDispatcher) {
 	'use strict';
 
 	/**
@@ -115,5 +115,9 @@ require(['jquery', 'wikia.mustache', 'wikia.tracker'], function ($, mustache, tr
 		event.preventDefault();
 		showMap($(event.currentTarget));
 	});
+
+	if (eventDispatcher) {
+		eventDispatcher.trigger('InteractiveMaps.ready');
+	}
 
 });

@@ -1,6 +1,5 @@
 /*global define, require, document*/
 /*jshint camelcase:false*/
-
 var ads = (function (document) {
 	'use strict';
 	function noop() {}
