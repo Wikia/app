@@ -121,6 +121,6 @@ class WikiaMapsLogger {
 			return wfMessage( $messageKey, $username, $mapPageTitle )->text();
 		}
 
-		return wfMessage( $messageKey, $username, $mapPageTitle )->text();
+		return wfMessage( $messageKey, $username, $mapPageTitle )->parse();
 	}
 }
