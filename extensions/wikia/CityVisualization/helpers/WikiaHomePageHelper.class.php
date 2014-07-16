@@ -823,9 +823,9 @@ class WikiaHomePageHelper extends WikiaModel {
 		if( !empty($this->app->wg->DevelEnvironment) ) {
 			$wamScore = $this->getMockedScoreForDev();
 		} else {
-			$wamData = $this->app->sendRequest('WAMApi', 'getWAMIndex', ['wiki_id' => $wikiId])->getData();
-			if (!empty($wamData['wam_index'][$wikiId]['wam'])) {
-				$wamScore = round($wamData['wam_index'][$wikiId]['wam'], self::WAM_SCORE_ROUND_PRECISION);
+			$wamData = $this->app->sendRequest( 'WAMApi', 'getWAMIndex', [ 'wiki_id' => $wikiId ] )->getData();
+			if ( is_array( $wamData['wam_index'] ) && ! empty( $wamData['wam_index'][$wikiId]['wam'] ) ) {
+				$wamScore = round( $wamData['wam_index'][$wikiId]['wam'], self::WAM_SCORE_ROUND_PRECISION );
 			}
 		}
 		return $wamScore;
