@@ -82,6 +82,9 @@ class DummyNotMockedModel extends BaseRssModel {
 	}
 }
 
+/**
+ * @group UsingDB
+ */
 class BaseRssModelTest extends WikiaBaseTest
 {
 	protected static function getFn($obj, $name)

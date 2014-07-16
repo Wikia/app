@@ -92,7 +92,7 @@ class AdEngine2Hooks {
 	 */
 	static public function onOasisSkinAssetGroups(&$jsAssets) {
 
-		global $wgAdDriverUseWikiaBarBoxad2, $wgAdDriverUseTopInContentBoxad;
+		global $wgAdDriverUseBottomLeaderboard, $wgAdDriverUseTopInContentBoxad;
 
 		$coreGroupIndex = array_search(AdEngine2Service::ASSET_GROUP_CORE, $jsAssets);
 		if ($coreGroupIndex === false) {
@@ -119,8 +119,8 @@ class AdEngine2Hooks {
 			$jsAssets[] = AdEngine2Service::ASSET_GROUP_LIFTIUM;
 		}
 
-		if ($wgAdDriverUseWikiaBarBoxad2 === true) {
-			$jsAssets[] = 'adengine2_wikiabar_boxad_js';
+		if ($wgAdDriverUseBottomLeaderboard === true) {
+			$jsAssets[] = 'adengine2_bottom_leaderboard_js';
 		}
 		return true;
 	}
@@ -172,7 +172,7 @@ class AdEngine2Hooks {
 			$scriptModules[] = 'wikia.location';
 			$scriptModules[] = 'wikia.log';
 			$scriptModules[] = 'wikia.querystring';
-			$scriptModules[] = 'wikia.tracker';
+			$scriptModules[] = 'wikia.tracker.stub';
 		}
 		return true;
 	}

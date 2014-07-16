@@ -4,6 +4,9 @@
 	 * Videos Module test
 	 *
 	 * @category Wikia
+	 * @group Broken
+	 *
+	 * This unit test should mock VideosModule::$blacklist - see MAIN-2582
 	 */
 	class VideosModuleTest extends WikiaBaseTest {
 

@@ -137,6 +137,8 @@ if ( empty( $wgWikiaMobileIncludeJSGlobals ) ) {
 			'cscoreCat',
 
 			//ads
+			'wgShowAds',
+			'wgUsePostScribe',
 			'wgDartCustomKeyValues',
 			'cityShort',
 			'wikiaPageIsHub',

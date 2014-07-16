@@ -15,6 +15,11 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 	protected $helper;
 
 	/**
+	 * @var WikiaStatsController $wikiaStatsController
+	 */
+	protected $wikiaStatsController;
+
+	/**
 	 * @var WikiaCollectionsModel
 	 */
 	private $wikiaCollectionsModel;
@@ -22,6 +27,7 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 	public function __construct() {
 		parent::__construct('ManageWikiaHome', 'managewikiahome', true);
 		$this->helper = new WikiaHomePageHelper();
+		$this->wikiaStatsController = new WikiaStatsController();
 	}
 
 	public function isRestricted() {
@@ -92,7 +98,7 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 		$collectionValues = $this->prepareArrayFieldsToShow($this->collectionsList);
 		$wikisPerCollection = $this->getWikisPerCollection($this->collectionsList);
 
-		$statsValues = $this->helper->getStatsFromWF();
+		$statsValues = $this->wikiaStatsController->getWikiaStats();
 
 		if( $this->request->wasPosted() ) {
 			if ( $this->request->getVal('wikis-in-slots',false) ) {
@@ -134,7 +140,7 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 				$isValid = $this->statsForm->validate($statsValues);
 
 				if ($isValid) {
-					$this->helper->saveStatsToWF($statsValues);
+					$this->wikiaStatsController->saveWikiaStats($statsValues);
 					FlashMessages::put(wfMessage('manage-wikia-home-stats-success')->text());
 					$this->response->redirect($_SERVER['REQUEST_URI']);
 				} else {
