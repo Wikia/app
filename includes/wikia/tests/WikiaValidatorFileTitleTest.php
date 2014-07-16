@@ -23,15 +23,11 @@ class WikiaValidatorFileTitleTest extends WikiaBaseTest {
 		$validator = $this->getMock('WikiaValidatorFileTitle', array('getApp'));
 
 		$titleMock = $this->getMock('Title', array('newFromText'));
-
-		$titleMock->staticExpects($this->any())
-			->method('newFromText')
-			->with($this->equalTo($fileString), $this->equalTo(NS_FILE))
-			->will($this->returnValue($titleMock));
-
 		$titleMock->expects($this->any())
 			->method('exists')
 			->will($this->returnValue($exists));
+
+		$this->mockStaticMethod('Title', 'newFromText', $titleMock);
 
 		$validator->setTitleClass($titleMock);
 
