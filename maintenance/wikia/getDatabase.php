@@ -181,6 +181,7 @@ if ( array_key_exists('h', $opts) || array_key_exists ('f', $opts) ) {
 		require_once("../../../config/DB.php");
 	}
 	if (isset($wgDBbackenduser) && isset($wgDBbackendpassword) && isset($wgLBFactoryConf['hostsByName']['sharedb-s1'])) {
+		// prepare raw output for consumption as csv. changes " => \"; \t => ","; beginning of line => ", end of line => "
 		$prepareCsv = "sed 's/\"/\\\\\"/g;s/\\t/\",\"/g;s/^/\"/;s/$/\"/;s/\\n//g'";
 
 		$dbhost = $wgLBFactoryConf['hostsByName']['sharedb-s1'];
