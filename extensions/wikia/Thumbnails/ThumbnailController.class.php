@@ -236,11 +236,13 @@ class ThumbnailController extends WikiaController {
 
 		// only show titles for videos
 		$title = '';
+		$filePageLink = false;
 		if ( $file instanceof File ) {
 			$isVideo = WikiaFileHelper::isVideoFile( $file );
 			if ( $isVideo ) {
 				$title = $file->getTitle()->getText();
 			}
+			$filePageLink = $file->getTitle()->getLocalURL();
 		}
 
 		$this->thumbnail = $thumbnail;
@@ -249,7 +251,8 @@ class ThumbnailController extends WikiaController {
 		$this->url = $url;
 		$this->caption = $caption;
 		$this->width = $width;
-		$this->showInfoIcon = ThumbnailHelper::canShowInfoIcon( $width );
+		$this->showInfoIcon = !empty( $filePageLink ) && ThumbnailHelper::canShowInfoIcon( $width );
+		$this->filePageLink = $filePageLink;
 
 		wfProfileOut( __METHOD__ );
 	}

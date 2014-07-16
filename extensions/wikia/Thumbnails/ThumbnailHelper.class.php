@@ -102,26 +102,6 @@ class ThumbnailHelper extends WikiaModel {
 	}
 
 	/**
-	 * Used in getImageLinkAttribs when getting the linkAttribs
-	 *
-	 * @param MediaTransformOutput $thumb The thumbnail object
-	 * @param string $title A title object
-	 * @param array $params
-	 * @return array
-	 */
-	public static function getDescLinkAttribs( MediaTransformOutput $thumb, $title = null, $params = null ) {
-		$query = $thumb->page ? ( 'page=' . urlencode( $thumb->page ) ) : '';
-		if ( $params ) {
-			$query .= $query ? '&'.$params : $params;
-		}
-		$attribs = [ 'href' => $thumb->file->getTitle()->getLocalURL( $query ) ];
-		if ( $title ) {
-			$attribs['title'] = $title;
-		}
-		return $attribs;
-	}
-
-	/**
 	 * Collect the img tag attributes from $options
 	 * @param MediaTransformOutput $thumb
 	 * @param array $options
@@ -172,22 +152,17 @@ class ThumbnailHelper extends WikiaModel {
 		} elseif ( !empty( $options['custom-title-link'] ) ) {
 			/** @var Title $title */
 			$title = $options['custom-title-link'];
-			$linkAttribs = array(
+			$linkAttribs = [
 				'href' => $title->getLinkURL(),
 				'title' => empty( $options['title'] ) ? $title->getFullText() : $options['title']
-			);
+			];
 		} elseif ( !empty( $options['desc-link'] ) ) {
-			// Comes from hooks BeforeParserFetchFileAndTitle and only LinkedRevs subscribes
-			// to this and it doesn't seem to be loaded ... ask if used and add logging to see if used
-			$query = empty( $options['desc-query'] )  ? '' : $options['desc-query'];
-
-			$linkAttribs = self::getDescLinkAttribs(
-				$thumb,
-				empty( $options['title'] ) ? null : $options['title'],
-				$query
-			);
+			$linkAttribs = [ 'href' => $thumb->file->getUrl() ];
+			if ( !empty( $options['title'] ) ) {
+				$linkAttribs['title'] = $options['title'];
+			}
 		} elseif ( !empty( $options['file-link'] ) ) {
-			$linkAttribs = array( 'href' => $thumb->file->getURL() );
+			$linkAttribs = [ 'href' => $thumb->file->getURL() ];
 		} else {
 			$linkAttribs = false;
 		}
