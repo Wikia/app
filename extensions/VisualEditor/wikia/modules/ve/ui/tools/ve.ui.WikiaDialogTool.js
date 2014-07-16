@@ -2,6 +2,8 @@
  * VisualEditor Wikia UserInterface dialog tool classes.
  */
 
+/*global mw */
+
 /**
  * UserInterface WikiaMediaInsertDialog tool.
  *
