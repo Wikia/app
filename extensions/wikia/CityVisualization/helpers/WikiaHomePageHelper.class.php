@@ -41,7 +41,7 @@ class WikiaHomePageHelper extends WikiaModel {
 	const WAM_SCORE_ROUND_PRECISION = 2;
 
 	const SLIDER_IMAGES_KEY = 'SliderImagesKey';
-	const WIKIA_HOME_PAGE_HELPER_MEMC_VERSION = 'v0.91';
+	const WIKIA_HOME_PAGE_HELPER_MEMC_VERSION = 'v0.92';
 
 	protected $visualizationModel = null;
 	protected $collectionsModel;
@@ -823,9 +823,10 @@ class WikiaHomePageHelper extends WikiaModel {
 		if( !empty($this->app->wg->DevelEnvironment) ) {
 			$wamScore = $this->getMockedScoreForDev();
 		} else {
-			$wamData = $this->app->sendRequest('WAMApi', 'getWAMIndex', ['wiki_id' => $wikiId])->getData();
-			if (!empty($wamData->wam_index[$wikiId]['wam'])) {
-				$wamScore = round($wamData->wam_index[$wikiId]['wam'], self::WAM_SCORE_ROUND_PRECISION);
+			$wamData = $this->app->sendRequest( 'WAMApi', 'getWAMIndex', [ 'wiki_id' => $wikiId ] )->getData();
+			$wamIndex = reset( $wamData[ 'wam_index' ] );
+			if ( !empty( $wamIndex[ 'wam' ] ) ) {
+				$wamScore = round( $wamIndex[ 'wam' ], self::WAM_SCORE_ROUND_PRECISION );
 			}
 		}
 		return $wamScore;
