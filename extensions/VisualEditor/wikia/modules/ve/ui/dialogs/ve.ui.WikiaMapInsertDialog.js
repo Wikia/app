@@ -140,7 +140,7 @@ ve.ui.WikiaMapInsertDialog.prototype.getSetupProcess = function ( data ) {
 
 ve.ui.WikiaMapInsertDialog.prototype.load = function() {
 	this.getMaps().done( ve.bind( this.showResults, this ) );
-}
+};
 
 ve.ui.WikiaMapInsertDialog.prototype.getMaps = function () {
 	var deferred;
