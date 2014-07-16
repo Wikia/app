@@ -64,6 +64,13 @@ ve.ui.WikiaMapInsertDialog.prototype.initialize = function () {
 
 	this.stackLayout.$element.appendTo( this.$body );
 	this.frame.$content.addClass( 've-ui-wikiaMapInsertDialog' );
+
+	if ( localStorage ) {
+		this.$( window ).on( 'storage', ve.bind( function() {
+			this.gettingMaps = null;
+			this.load();
+		}, this ) );
+	}
 };
 
 ve.ui.WikiaMapInsertDialog.prototype.setupResultsPanel = function () {
@@ -127,9 +134,13 @@ ve.ui.WikiaMapInsertDialog.prototype.getSetupProcess = function ( data ) {
 	return ve.ui.WikiaMapInsertDialog.super.prototype.getSetupProcess.call( this, data )
 		.next( function () {
 			this.stackLayout.setItem( this.panels.loading );
-			this.getMaps().done( ve.bind( this.showResults, this ) );
+			this.load();
 		}, this );
 };
+
+ve.ui.WikiaMapInsertDialog.prototype.load = function() {
+	this.getMaps().done( ve.bind( this.showResults, this ) );
+}
 
 ve.ui.WikiaMapInsertDialog.prototype.getMaps = function () {
 	var deferred;
