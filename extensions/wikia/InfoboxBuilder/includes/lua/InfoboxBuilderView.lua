@@ -83,7 +83,7 @@ local addRowTitle = function( field )
 	local cell = row:tag('th')
 		:addClass( InfoboxBuilderView.vars.Theme .. '-infobox-title' )
 		:attr( 'colspan', '2' )
-    :wikitext( field.Value )
+		:wikitext( field.Value )
 
 	return row
 end

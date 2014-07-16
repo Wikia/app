@@ -26,25 +26,25 @@ InfoboxBuilder.errors = {}
 ---- @return  bool         Returns true if the method exists
 ]]--
 local displayErrors = function( errors )
-  if not HF.isempty( errors ) then
-    local output = [[
-      <div class="infobox-builder-errors">
-        <h3>InfoboxBuilder info</h3>
-        <p>Something may not work as intended. More info:</p>
-        <ul>
-    ]]
+	if not HF.isempty( errors ) then
+		local output = [[
+			<div class="infobox-builder-errors">
+				<h3>InfoboxBuilder info</h3>
+				<p>Something may not work as intended. More info:</p>
+				<ul>
+		]]
 
-    for i, e in ipairs( errors ) do
-      output = output .. "<li>" .. e .. "</li>"
-    end
+		for i, e in ipairs( errors ) do
+			output = output .. "<li>" .. e .. "</li>"
+		end
 
-    output = output .. [[
-        </ul></div>
-    ]]
-    return output
-  else
-    return ""
-  end
+		output = output .. [[
+			</ul></div>
+		]]
+		return output
+	else
+		return ""
+	end
 end
 
 --[[
@@ -53,11 +53,13 @@ end
 ---- @return  bool         Returns true if the method exists
 ]]--
 local methodExists = function( name )
-  local exists = false
-  if not HF.isempty( name ) and type( CM[name] ) == "function" then
-    exists = true
-  end
-  return exists
+	local exists = false
+
+	if not HF.isempty( name ) and type( CM[name] ) == "function" then
+		exists = true
+	end
+
+	return exists
 end
 
 --[[
