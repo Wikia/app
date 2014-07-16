@@ -101,7 +101,7 @@ class WAMApiController extends WikiaApiController {
 			}
 		);
 
-		$this->response->setVal('wam_index', (object)$wamIndex['wam_index']);
+		$this->response->setVal('wam_index', empty($wamIndex['wam_index'])?(new StdClass()):$wamIndex['wam_index']);
 		$this->response->setVal('wam_results_total', $wamIndex['wam_results_total']);
 		$this->response->setVal('wam_index_date', $wamIndex['wam_index_date']);
 		$this->response->setCacheValidity(6 * 60 * 60);
