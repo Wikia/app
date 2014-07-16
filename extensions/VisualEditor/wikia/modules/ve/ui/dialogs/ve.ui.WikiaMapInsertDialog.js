@@ -1,5 +1,3 @@
-
-
 /*!
  * VisualEditor user interface WikiaMapInsertDialog class.
  */
