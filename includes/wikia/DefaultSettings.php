@@ -381,10 +381,11 @@ $wgAutoloadClasses['Wikia\UI\DataException'] = $IP . '/includes/wikia/ui/excepti
 $wgAutoloadClasses['Wikia\UI\UIFactoryApiController'] = $IP . '/includes/wikia/ui/UIFactoryApiController.class.php';
 
 // Traits
-$wgAutoloadClasses[ 'PreventBlockedUsers' ] = $IP . '/includes/wikia/traits/PreventBlockedUsers.trait.php';
-$wgAutoloadClasses[ 'PreventBlockedUsersThrowsError' ] = $IP . '/includes/wikia/traits/PreventBlockedUsers.trait.php';
-$wgAutoloadClasses[ 'UserAllowedRequirement' ] = $IP . '/includes/wikia/traits/UserAllowedRequirement.trait.php';
-$wgAutoloadClasses[ 'UserAllowedRequirementThrowsError' ] = $IP . '/includes/wikia/traits/UserAllowedRequirement.trait.php';
+$wgAutoloadClasses['PreventBlockedUsers'] = $IP . '/includes/wikia/traits/PreventBlockedUsers.trait.php';
+$wgAutoloadClasses['PreventBlockedUsersThrowsError'] = $IP . '/includes/wikia/traits/PreventBlockedUsers.trait.php';
+$wgAutoloadClasses['UserAllowedRequirement'] = $IP . '/includes/wikia/traits/UserAllowedRequirement.trait.php';
+$wgAutoloadClasses['UserAllowedRequirementThrowsError'] = $IP . '/includes/wikia/traits/UserAllowedRequirement.trait.php';
+$wgAutoloadClasses['IncludeMessagesTrait'] = $IP . '/includes/wikia/traits/IncludeMessagesTrait.php';
 
 // Spotlights AB test
 $wgAutoloadClasses['SpotlightsABTestController'] = $IP.'/skins/oasis/modules/SpotlightsABTestController.class.php';

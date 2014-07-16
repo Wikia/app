@@ -392,16 +392,4 @@ abstract class BaseTask {
 		return AsyncTaskList::batch( $taskLists );
 	}
 
-	/**
-	 * Get the text version of inContentLanguage message. This is a wrapper so that we can
-	 * limit side effects in unit tests.
-	 *
-	 * @param string $message
-	 * @return string
-	 */
-	protected function getTextVersionOfMessage( $message ) {
-		return wfMessage( $message )->inContentLanguage()->text();
-	}
-
-
 }
