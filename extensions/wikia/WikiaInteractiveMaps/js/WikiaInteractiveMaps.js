@@ -99,6 +99,11 @@ require(
 				});
 			}
 		}
+
+		// VE Insert Map dialog passes this hash to initiate map creating process right away
+		if ( w.location.hash === '#createMap' ) {
+			triggerAction('createMap');
+		}
 	}
 );
 

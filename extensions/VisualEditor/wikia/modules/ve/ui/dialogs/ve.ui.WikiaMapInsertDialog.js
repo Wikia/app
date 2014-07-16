@@ -1,4 +1,3 @@
-
 /*!
  * VisualEditor user interface WikiaMapInsertDialog class.
  */
@@ -207,7 +206,7 @@ ve.ui.WikiaMapInsertDialog.prototype.onMapSelect = function ( option ) {
 };
 
 ve.ui.WikiaMapInsertDialog.prototype.onCreateClick = function () {
-	window.open( new mw.Title( 'Special:Maps' ).getUrl() );
+	window.open( new mw.Title( 'Special:Maps' ).getUrl() + '#createMap' );
 };
 
 /* Registration */
