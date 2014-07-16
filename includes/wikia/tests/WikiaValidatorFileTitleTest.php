@@ -4,6 +4,7 @@ class WikiaValidatorFileTitleTest extends WikiaBaseTest {
 
 	/**
 	 * @group Slow
+	 * @group Broken
 	 * @slowExecutionTime 0.03433 ms
 	 * @dataProvider filesDataProvider
 	 */
@@ -26,8 +27,6 @@ class WikiaValidatorFileTitleTest extends WikiaBaseTest {
 		$titleMock->expects($this->any())
 			->method('exists')
 			->will($this->returnValue($exists));
-
-		$this->mockStaticMethod('Title', 'newFromText', $titleMock);
 
 		$validator->setTitleClass($titleMock);
 
