@@ -30,6 +30,8 @@ class WikiaMaps extends WikiaObject {
 	const DELTA_Y_CENTERED = 5;
 	const THUMB_ALIGNMENT_CENTER = 'center';
 
+	const DB_DUPLICATE_ENTRY ='ER_DUP_ENTRY';
+
 	/**
 	 * @var array API connection config
 	 */
