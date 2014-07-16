@@ -14,21 +14,16 @@ require([
 	'ext.wikia.adEngine.adEngine',
 	'ext.wikia.adEngine.adConfig',
 	'ext.wikia.adEngine.evolveSlotConfig',
-	'ext.wikia.adEngine.adLogicPageParams',
 	'ext.wikia.adEngine.dartHelper',
 	'ext.wikia.adEngine.slotTracker',
-	'ext.wikia.adEngine.lateAdsQueue',
 	'ext.wikia.adEngine.adLogicHighValueCountry',
 	'ext.wikia.adEngine.slotTweaker',
 	'ext.wikia.adEngine.messageListener',
 	require.optional('wikia.abTest')
-], function (log, window, tracker, adEngine, adConfig, evolveSlotConfig, adLogicPageParams, wikiaDart, slotTracker, lateAdsQueue, adLogicHighValueCountry, slotTweaker, messageListener, abTest) {
+], function (log, window, tracker, adEngine, adConfig, evolveSlotConfig, wikiaDart, slotTracker, adLogicHighValueCountry, slotTweaker, messageListener, abTest) {
 	'use strict';
 
 	var module = 'AdEngine2.run',
-		params,
-		param,
-		value,
 		adsInHead = abTest && abTest.inGroup('ADS_IN_HEAD', 'YES');
 
 	// Don't show ads when Sony requests the page
@@ -72,17 +67,6 @@ require([
 	// Register adSlotTweaker so DART creatives can use it
 	// https://www.google.com/dfp/5441#delivery/CreateCreativeTemplate/creativeTemplateId=10017012
 	window.adSlotTweaker = slotTweaker;
-
-	// Export page level params, so Krux can read them
-	params = adLogicPageParams.getPageLevelParams();
-	for (param in params) {
-		if (params.hasOwnProperty(param)) {
-			value = params[param];
-			if (value) {
-				window['kruxDartParam_' + param] = value.toString();
-			}
-		}
-	}
 
 	// Custom ads (skins, footer, etc)
 	// TODO: loadable modules
