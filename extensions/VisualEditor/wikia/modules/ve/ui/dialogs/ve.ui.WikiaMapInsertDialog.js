@@ -202,11 +202,19 @@ ve.ui.WikiaMapInsertDialog.prototype.onMapSelect = function ( option ) {
 			{ type: '/wikiaMap' }
 		] );
 		this.close();
+		ve.track( 'wikia', {
+			'action': ve.track.actions.ADD,
+			'label': 'dialog-map-insert'
+		} );
 	}
 };
 
 ve.ui.WikiaMapInsertDialog.prototype.onCreateClick = function () {
 	window.open( new mw.Title( 'Special:Maps' ).getUrl() + '#createMap' );
+	ve.track( 'wikia', {
+		'action': ve.track.actions.ADD,
+		'label': 'dialog-map-create'
+	} );
 };
 
 /* Registration */
