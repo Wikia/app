@@ -1,3 +1,4 @@
+
 /*!
  * VisualEditor user interface WikiaMapInsertDialog class.
  */
@@ -66,9 +67,11 @@ ve.ui.WikiaMapInsertDialog.prototype.initialize = function () {
 	this.frame.$content.addClass( 've-ui-wikiaMapInsertDialog' );
 
 	if ( localStorage ) {
-		this.$( window ).on( 'storage', ve.bind( function () {
-			this.gettingMaps = null;
-			this.load();
+		this.$( window ).on( 'storage', ve.bind( function ( e ) {
+			if ( e.originalEvent.key === 'mapCreated' ) {
+				this.gettingMaps = null;
+				this.load();
+			}
 		}, this ) );
 	}
 };
