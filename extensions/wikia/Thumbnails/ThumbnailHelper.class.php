@@ -294,7 +294,6 @@ class ThumbnailHelper extends WikiaModel {
 	/**
 	 * Logic for whether to display the link to the file page overlayed on an image.
 	 *
-	 * @todo Make sure this treatment is only applied to article images and videos, and not elsewhere. VID-1832 should fix this.
 	 * @param $thumb
 	 * @return bool
 	 */
