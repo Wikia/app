@@ -1,5 +1,6 @@
 @import "skins/oasis/css/mixins/gradient";
 @import "skins/oasis/css/mixins/ellipses";
+@import "skins/oasis/css/core/color";
 
 $content-color: #fff;
 $secondary-content-color: #ccc;
@@ -77,5 +78,10 @@ $max-view-button-width: 230px;
 		padding: 8px 11px 8px 35px;
 		position: absolute;
 		right: 20px;
+
+		&:hover {
+			background-color: #fff;
+			color: $color-buttons;
+		}
 	}
 }
