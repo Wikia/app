@@ -125,6 +125,8 @@ jQuery(function($){
 				label = 'link-external';
 			} else if (el.hasClass('wikia-photogallery-add')) {
 				label = 'add-photo-to-gallery';
+			} else if (el.prop('className') == '') {
+				label = 'link-internal';
 			}
 
 			if (label !== undefined) {
@@ -162,6 +164,45 @@ jQuery(function($){
 			category: category,
 			label: 'category-item'
 		}, trackWithEventData);
+	})();
+
+	/** Alliance Template **/
+	(function() {
+		var alliance = $('.alliance-module', $wikiaArticle),
+			category = 'Alliance',
+			label,
+			suffix;
+		if (alliance.length) {
+			alliance.on('mousedown', 'a', function(e){
+				suffix = '-click';
+				if ($(this).attr('href').indexOf('http://www.wikia.com/Alliance') !== -1) {
+					suffix = '-logo-click';
+				}
+				label = $(e.delegateTarget).attr('data-label');
+
+				if (label !== undefined) {
+					label += suffix;
+					track({
+						category: category,
+						label: label
+					});
+				}
+			});
+
+			alliance.each(function(){
+				suffix = '-impression';
+				label = $(this).attr('data-label');
+
+				if (label !== undefined) {
+					label += suffix;
+					track({
+						action: Wikia.Tracker.ACTIONS.IMPRESSION,
+						category: category,
+						label: label
+					});
+				}
+			});
+		}
 	})();
 
 	/** contribute **/
