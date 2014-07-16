@@ -3,8 +3,18 @@ define('ext.wikia.adEngine.slot.interactiveMaps', ['wikia.document'], function(d
 	'use strict';
 
 	function initSlot(container) {
-		var iframe = document.createElement('IFRAME');
-		iframe.src = 'http://i4.rychu.wikia-dev.com/__cb1402920078/extensions/wikia/AdEngine/InteractiveMaps/ad.html';
+		var data = {}, iframe;
+
+		data.mapId = container.getAttribute('data-map-id');
+
+		if (!data.mapId) {
+			return false;
+		}
+
+		iframe = document.createElement('IFRAME');
+		iframe.id = 'wikia-map-ad-' + data.mapId;
+		iframe.name = 'wikia-map-ad-' + data.mapId;
+		iframe.src = '/__cb1402920078/extensions/wikia/AdEngine/InteractiveMaps/ad.html#' + JSON.stringify(data) ;
 		container.appendChild(iframe);
 	}
 

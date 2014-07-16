@@ -1,19 +1,36 @@
-/*global define, require, document*/
+/*global window, define, require, document*/
 /*jshint camelcase:false*/
-var ads = (function (document) {
+var ads = (function (window, document) {
 	'use strict';
 	function noop() {}
+
+	function extend() {
+		var obj = arguments[0], i, j, k;
+
+		for(i = 1,  j = arguments.length; i < j; i = i + 1) {
+			for (k in arguments[i]) {
+				if (arguments[i].hasOwnProperty(k)) {
+					obj[k] = arguments[i][k];
+				}
+			}
+		}
+
+		return obj;
+	}
+
 
 	function defines() {
 		define('ext.wikia.adEngine.adLogicPageParams', function () {
 
+			var hashParams = JSON.parse(document.location.hash.substr(1));
+
 			return {
 				getPageLevelParams: function() {
-					return {
+					return extend(hashParams, {
 						s0: 'interactivemaps',
 						s1: '_interactivemaps',
 						s2: 'interactivemaps'
-					};
+					});
 				}
 			};
 		});
@@ -44,6 +61,14 @@ var ads = (function (document) {
 			function onAdLoad(slotname, gptEvent, iframe, adCallback, noAdCallback) {
 				if (gptEvent.isEmpty) {
 					if (typeof noAdCallback === 'function') {
+						if (window.name) {
+							var parentIframe = window.parent.document.getElementById(window.name);
+
+							if (parentIframe) {
+								parentIframe.style.display = 'none';
+							}
+						}
+
 						noAdCallback();
 					}
 				} else {
@@ -73,5 +98,5 @@ var ads = (function (document) {
 	return {
 		load: load
 	};
-}(document));
+}(window, document));
 

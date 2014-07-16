@@ -671,6 +671,8 @@ $config['interactivemaps_ads_js'] = array(
 		// Advertisement libs
 		'//extensions/wikia/AdEngine/js/AdProviderDirectGptMobile.js',
 		'//extensions/wikia/AdEngine/js/WikiaGptHelper.js',
+//      TODO: move from ad.html to here
+//		'//extensions/wikia/AdEngine/InteractiveMaps/ads.js'
 	)
 );
 

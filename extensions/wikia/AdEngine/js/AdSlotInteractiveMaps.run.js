@@ -13,7 +13,7 @@ require([
 	if (window.wgIsArticle) {
 
 			eventDispatcher.bind('InteractiveMaps.ready', function() {
-				var i, j, iframe, maps = document.querySelectorAll('.wikia-ad-interactive-map');
+				var i, j, maps = document.querySelectorAll('.wikia-ad-interactive-map');
 
 				for (i = 0, j = maps.length; i < j; i = i + 1) {
 					interactiveMaps.initSlot(maps[i]);
