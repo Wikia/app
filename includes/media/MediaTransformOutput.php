@@ -59,25 +59,21 @@ abstract class MediaTransformOutput {
 		$this->storagePath = $storagePath;
 	}
 
-	function mediaType() {
-		return 'image';
-	}
-
 	/**
 	 * Wikia change start
 	 * @author Garth
 	 */
-	function renderView( array $options = array() ) {
-		WikiaLogger::instance()->debug( 'Media method '.__METHOD__.' called',
-			array_merge( $options, [ 'url' => $this->url, 'mediaType' => $this->mediaType() ] ) );
+	function mediaType() {
+		return 'unknown';
+	}
 
-		// Make sure to trim the output so that there is no leading whitespace.  The output of this method
-		// may be fed back into code that will be parsed for wikitext and leading whitespace will be
-		// wrap this HTML in <pre> tags.  VID-1819
-		return trim( F::app()->renderView( 'ThumbnailController', $this->mediaType(), [
-			'thumb'   => $this,
-			'options' => $options,
-		] ) );
+	/**
+	 * For any class that doesn't override renderView, fallback to the old toHtml behavior
+	 * @param array $options
+	 * @return string
+	 */
+	public function renderView( $options = array() ) {
+		return $this->toHtml( $options );
 	}
 	/**
 	 * Wikia change end
@@ -233,6 +229,34 @@ class ThumbnailImage extends MediaTransformOutput {
 		$this->path = $path;
 		$this->page = $page;
 	}
+
+	/**
+	 * Wikia change start
+	 * @author Garth
+	 */
+	function mediaType() {
+		return 'image';
+	}
+
+	function renderView( array $options = array() ) {
+		WikiaLogger::instance()->debug( 'Media method '.__METHOD__.' called',
+			array_merge( $options, [ 'url' => $this->url, 'mediaType' => $this->mediaType() ] ) );
+
+		// Make sure to trim the output so that there is no leading whitespace.  The output of this method
+		// may be fed back into code that will be parsed for wikitext and leading whitespace will be
+		// wrap this HTML in <pre> tags.  VID-1819
+		$html = trim( F::app()->renderView( 'ThumbnailController', $this->mediaType(), [
+			'thumb'   => $this,
+			'options' => $options,
+		] ) );
+		// Strip empty space between tags
+		$html = preg_replace( "/>\s+</", "><", $html );
+
+		return $html;
+	}
+	/**
+	 * Wikia change end
+	 */
 
 	/**
 	 * Return HTML <img ... /> tag for the thumbnail, will include

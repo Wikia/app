@@ -3,6 +3,7 @@
 @import '../placeholders/bodytext';
 @import '../mixins/clearfix';
 @import '../mixins/gradient';
+@import '../mixins/infobox';
 
 .WikiaArticle {
 	@extend %bodytext;
@@ -543,7 +544,7 @@
 }
 
 .WikiaArticle {
-	.infobox, .wikia-infobox, .infobox-table {
+	#{$infoboxes} {
 		.article-thumb, .article-thumb.tright, .article-thumb.tleft {
 			margin: 0 auto;
 			float: none;

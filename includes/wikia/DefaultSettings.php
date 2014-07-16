@@ -392,6 +392,12 @@ $wgAutoloadClasses['SpotlightsModel'] = "{$IP}/includes/wikia/models/SpotlightsM
 $wgAutoloadClasses['ReadMoreController'] = $IP.'/skins/oasis/modules/ReadMoreController.class.php';
 $wgAutoloadClasses['ReadMoreModel'] = "{$IP}/includes/wikia/models/ReadMoreModel.class.php";
 
+// Profiler classes
+$wgAutoloadClasses['ProfilerData'] = "{$IP}/includes/profiler/ProfilerData.php";
+$wgAutoloadClasses['ProfilerDataSink'] = "{$IP}/includes/profiler/sinks/ProfilerDataSink.php";
+$wgAutoloadClasses['ProfilerDataUdpSink'] = "{$IP}/includes/profiler/sinks/ProfilerDataUdpSink.php";
+$wgAutoloadClasses['ProfilerDataScribeSink'] = "{$IP}/includes/profiler/sinks/ProfilerDataScribeSink.php";
+
 // Skin loading scripts
 $wgHooks['WikiaSkinTopScripts'][] = 'SpotlightsABTestController::onWikiaSkinTopScripts';
 $wgHooks['WikiaSkinTopScripts'][] = 'ReadMoreController::onWikiaSkinTopScripts';
@@ -1279,6 +1285,12 @@ $wgAdDriverForceDirectGptAd = false;
 $wgAdDriverForceLiftiumAd = false;
 
 /**
+ * @name $wgAdDriverEnableAdsInMaps
+ * Whether to display ads within interactive maps
+ */
+$wgAdDriverEnableAdsInMaps = false;
+
+/**
  * @name $wgHighValueCountries
  * List of countries defined as high-value for revenue purposes
  * Value set in WikiFactory for Community acts as global value. Can be overridden per wiki.
@@ -1476,3 +1488,15 @@ $wgXhprofUDPPort = '3911';
  * Threshold for total time spent in function to be reported (set to 0 to report all entries)
  */
 $wgXhprofMinimumTime = 0.001;
+
+/*
+ * @name wgProfilerSendViaScribe
+ * Enables sending profiler reports via Scribe
+ */
+$wgProfilerSendViaScribe = true;
+
+/* @name wgDisableWAMOnHubs
+ * Disable WAM module on hub pages
+ */
+$wgDisableWAMOnHubs = false;
+

@@ -146,6 +146,7 @@ if ( array_key_exists('h', $opts) || array_key_exists ('f', $opts) ) {
 				$response = shell_exec("s3cmd ls s3://".$databaseDirectory."/$dirname/".$dbname."_$date".".sql.gz");
 				$file_list = explode("\n", $response);
 				echo "Found " . count($file_list) . " items...\n";
+				if (count($file_list) == 1) continue;
 				foreach ($file_list as $file) {
 					$regs = array();
 					$file = preg_split('/\s+/' ,$file);
@@ -207,7 +208,7 @@ if ( array_key_exists('h', $opts) || array_key_exists ('f', $opts) ) {
 }
 
 if ( array_key_exists('h', $opts) || array_key_exists ('i', $opts) ) {
-	if (file_exists($opts['i'])) {
+	if (array_key_exists('i', $opts) && file_exists($opts['i'])) {
 		$fullpath = $opts['i'];
 		$filename = basename($opts['i']);
 		preg_match("/^(.*).*.sql.gz/", $filename, $matches);
