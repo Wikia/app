@@ -4,6 +4,7 @@
 	 * Videos Module test
 	 *
 	 * @category Wikia
+	 * @group UsingDB
 	 */
 	class VideosModuleTest extends WikiaBaseTest {
 

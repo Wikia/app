@@ -45,7 +45,7 @@ class AdEngine2Service
 			|| $wg->Request->getBool('noads', false)
 			|| $wg->ShowAds === false
 			|| $wg->EnableAdEngineExt === false
-			|| !F::app()->checkSkin(['oasis'])
+			|| !F::app()->checkSkin(['oasis', 'wikiamobile'])
 		) {
 			$pageLevel = self::PAGE_TYPE_NO_ADS;
 			return $pageLevel;
@@ -223,7 +223,7 @@ class AdEngine2Service
 			$wgRequest, $wgEnableKruxTargeting,
 			$wgAdVideoTargeting, $wgLiftiumOnLoad, $wgAdDriverSevenOneMediaSub4Site,
 			$wgDartCustomKeyValues, $wgWikiDirectedAtChildrenByStaff, $wgAdEngineDisableLateQueue,
-			$wgAdDriverUseBottomLeaderboard, $wgAdDriverBottomLeaderboardImpressionCapping;
+			$wgAdDriverUseBottomLeaderboard, $wgAdDriverBottomLeaderboardImpressionCapping, $wgAdDriverEnableAdsInMaps;
 
 		$vars = [];
 
@@ -273,6 +273,9 @@ class AdEngine2Service
 
 			// AdLogicPageParams.js, SevenOneMediaHelper.js, AnalyticsProviderQuantServe.php
 			'cityShort' => AdEngine2Service::getCachedCategory()['short'],
+
+			// intMapPontoBridge.js
+			'wgAdDriverEnableAdsInMaps' => $wgAdDriverEnableAdsInMaps,
 		];
 
 		if (!empty($wgEnableKruxTargeting)) {

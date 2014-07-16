@@ -8,6 +8,8 @@ use Wikia\Measurements\Time;
 
 class JsonFormatSimplifier {
 
+	const SNIPPET_PARAGRPHS_COUNT = 2;
+
 	protected function getParagraphs( \JsonFormatContainerNode $containerNode, &$contentElements ) {
 		foreach( $containerNode->getChildren() as $childNode ) {
 			if ( $childNode->getType() == 'section' ) {
@@ -51,7 +53,7 @@ class JsonFormatSimplifier {
 				elseif ( $type == 'listItem' ) {
 					$listItem = true;
 					$arr = $this->processList( $children[ $i ] );
-					$out[ ] = array_shift( $arr );				
+					$out[ ] = array_shift( $arr );
 				}
 				$i++;
 			}
@@ -174,15 +176,14 @@ class JsonFormatSimplifier {
 		];
 	}
 
-	public function simplifyToText( \JsonFormatRootNode $rootNode ) {
+	public function simplifyToSnippet( \JsonFormatRootNode $rootNode ) {
 		$timer = Time::start([__CLASS__, __METHOD__]);
 		$result = [];
 		$listsSections = [];
 		$sections = [];
 		$this->findSections( $rootNode, $sections );
 
-		for ( $i = count($sections)-1; $i >= 0; $i-=1 ) {
-			$section = $sections[$i];
+		foreach( $sections as $section ) {
 			$sectionResult = [];
 			$content = [];
 			$containList = false;
@@ -193,19 +194,21 @@ class JsonFormatSimplifier {
 					$sectionResult[] = $node['text'];
 				}
 				if( $node['type'] == 'list' ) {
-					$sectionResult[] = $this->getElements( $node ) . "\n";
+					$sectionResult[] = $this->getElements( $node );
 					$containList = true;
 				}
 			}
-			$value = implode(' ', $sectionResult);
 			if( $containList ) {
-				$listsSections[] = $value;
+				$listsSections = array_merge($listsSections, $sectionResult);
 			} else {
-				$result[] = $value;
+				$result = array_merge($result, $sectionResult);
+				if ( count($result) >= static::SNIPPET_PARAGRPHS_COUNT ) {
+					break;
+				}
 			}
 		}
 
-		$output = array_merge( array_reverse($result), array_reverse( $listsSections ) );
+		$output = array_slice( array_merge( $result, $listsSections ), 0, static::SNIPPET_PARAGRPHS_COUNT );
 		$res = implode( ' ', $output);
 		$timer->stop();
 		return $res;
