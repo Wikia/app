@@ -17,7 +17,11 @@ ve.ce.WikiaMapNode = function VeCeWikiaMapNode( model, config ) {
 	ve.ce.WikiaMapNode.super.call( this, model, config );
 
 	// DOM changes
-	this.$element.addClass( 've-ce-wikiaMapNode' );
+	// Size provided as a fix for https://wikia-inc.atlassian.net/browse/VE-1343
+	this.$element
+		.addClass( 've-ce-wikiaMapNode' )
+		.height( 300 )
+		.width( 680 );
 };
 
 /* Inheritance */
