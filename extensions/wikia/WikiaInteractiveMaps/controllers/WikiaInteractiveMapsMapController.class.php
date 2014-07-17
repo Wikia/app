@@ -70,6 +70,9 @@ class WikiaInteractiveMapsMapController extends WikiaInteractiveMapsBaseControll
 			if ( true === $results[ 'success' ] ) {
 				$this->setData( 'tileSetId', $results[ 'content' ]->id );
 				$results = $this->createMapFromTilesetId();
+			} elseif ( isset( $results['content']->code ) 
+				&&  $results['content']->code === WikiaMaps::DB_DUPLICATE_ENTRY ) {
+				$results['content']->message = wfMessage( 'wikia-interactive-maps-tile-set-exists-error' )->text();
 			}
 		}
 
@@ -107,7 +110,7 @@ class WikiaInteractiveMapsMapController extends WikiaInteractiveMapsBaseControll
 		}
 
 		if ( !$this->wg->User->isLoggedIn() ) {
-			throw new PermissionsException( 'interactive maps' );
+			throw new PermissionsException( WikiaInteractiveMapsController::PAGE_RESTRICTION );
 		}
 	}
 
@@ -153,7 +156,10 @@ class WikiaInteractiveMapsMapController extends WikiaInteractiveMapsBaseControll
 			WikiaMapsLogger::addLogEntry(
 				WikiaMapsLogger::ACTION_CREATE_MAP,
 				$mapId,
-				$this->getData( 'title' )
+				$this->getData( 'title' ),
+				[
+					$this->wg->User->getName(),
+				]
 			);
 		}
 

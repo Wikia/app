@@ -160,7 +160,7 @@ class ThumbnailController extends WikiaController {
 		// This can be removed once we fully rollout the article thumbnails with the
 		// details icon. This just allows us to do it in stages. (Don't forget to update
 		// the mustached checks as well). See VID-1788
-		$this->showInfoIcon = $this->canShowInfoIcon();
+		$this->showInfoIcon = $this->canShowInfoIcon( $thumb );
 
 		wfProfileOut( __METHOD__ );
 	}
@@ -286,6 +286,7 @@ class ThumbnailController extends WikiaController {
 
 		$this->linkAttrs = ThumbnailHelper::getAttribs( $linkAttrs );
 		$this->imgAttribs  = ThumbnailHelper::getAttribs( $attribs );
+		$this->linkClasses = $this->getImageLinkClasses( $options );
 
 		$file = $thumb->file;
 		$title = $file->getTitle();
@@ -296,7 +297,7 @@ class ThumbnailController extends WikiaController {
 		// This can be removed once we fully rollout the article thumbnails with the
 		// details icon. This just allows us to do it in stages. (Don't forget to update
 		// the mustached checks as well). See VID-1788
-		$this->showInfoIcon = $this->canShowInfoIcon();
+		$this->showInfoIcon = $this->canShowInfoIcon( $thumb );
 
 		// Check fluid
 		if ( empty( $options[ 'fluid' ] ) ) {
@@ -376,6 +377,25 @@ class ThumbnailController extends WikiaController {
 	}
 
 	/**
+	 * Create an array of needed classes for image thumbs anchors.
+	 *
+	 * @param array $options The thumbnail options passed to toHTML.
+	 * @return array
+	 */
+	public function getImageLinkClasses ( array $options ) {
+
+		$classes = [];
+		if ( !empty( $options["custom-title-link"] ) ) {
+			$classes[] = "link-internal";
+		} elseif ( !empty( $options["custom-url-link"] ) ) {
+			$classes[] = "link-external";
+		}
+
+		return $classes;
+	}
+
+
+	/**
 	 * Used in getImageLinkAttribs when getting the linkAttribs
 	 *
 	 * @param MediaTransformOutput $thumb The thumbnail object
@@ -430,8 +450,17 @@ class ThumbnailController extends WikiaController {
 		wfProfileOut( __METHOD__ );
 	}
 
-	public function canShowInfoIcon() {
-		return !empty( $this->wg->ShowArticleThumbDetailsIcon );
+	/**
+	 * Logic for whether to display the link to the file page overlayed on an image.
+	 *
+	 * @todo Make sure this treatment is only applied to article images and videos, and not elsewhere. VID-1832 should fix this.
+	 * @param $thumb
+	 * @return bool
+	 */
+	public function canShowInfoIcon( $thumb ) {
+		return !empty( $this->wg->ShowArticleThumbDetailsIcon )
+			&& $thumb->width >= ThumbnailHelper::MIN_INFO_ICON_WIDTH;
+
 	}
 
 }

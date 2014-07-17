@@ -10,9 +10,12 @@
 include( 'commandLine.inc' );
 
 $usersWithoutEmails = fetchUsersWithoutEmails();
-$fbIdToUser = getFBIdToUserMapping( $usersWithoutEmails );
-$fbIdToEmail = getEmailsForFBIds( getFBIds( $fbIdToUser ) );
-updateEmails( $fbIdToUser, $fbIdToEmail );
+$chunkSize = 300;
+foreach( array_chunk( $usersWithoutEmails, $chunkSize ) as $chunk ) {
+	$fbIdToUser = getFBIdToUserMapping( $chunk );
+	$fbIdToEmail = getEmailsForFBIds( getFBIds( $fbIdToUser ) );
+	updateEmails( $fbIdToUser, $fbIdToEmail );
+}
 
 /**
  * @return array of users, which don't have emails, but connected to Facebook
