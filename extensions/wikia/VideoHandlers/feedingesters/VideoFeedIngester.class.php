@@ -61,6 +61,10 @@ abstract class VideoFeedIngester {
 		'International' => [],
 	];
 
+	protected $defaultRequestOptions = [
+		'noProxy'	=> true
+	];
+
 	private static $WIKI_INGESTION_DATA_FIELDS = array( 'keyphrases' );
 	private static $instances = array();
 
@@ -646,10 +650,12 @@ abstract class VideoFeedIngester {
 
 	/**
 	 * @param $url
+	 * @param $options
 	 * @return string
 	 */
-	protected function getUrlContent( $url ) {
-		return Http::request( 'GET', $url, array( 'noProxy' => true ) );
+	protected function getUrlContent( $url, $options = array() ) {
+		$options = array_merge( $options, $this->defaultRequestOptions );
+		return Http::request( 'GET', $url, $options );
 	}
 
 	/**
