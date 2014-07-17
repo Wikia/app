@@ -26,16 +26,37 @@ class VenusTestController extends WikiaSpecialPageController {
 		$this->response->setCacheValidity(WikiaResponse::CACHE_STANDARD);
 
 		$this->wg->Out->clearHTML();
-		$this->wg->Out->addHtml( ( new Wikia\Template\MustacheEngine )
+		$this->wg->Out->addHtml( ( new Wikia\Template\HandlebarsEngine )
 				->setPrefix( dirname( __FILE__ ) . '/templates' )
-				->setData( [] )
-				->render( 'VenusTest_index.mustache' )
+				->setPartialDir ( dirname( __FILE__ ) . '/templates/partials' )
+				->setPartialPrefix ( '_' )
+				->setData( $this->getTestData() )
+				->render( 'VenusTest_index' )
 		);
 
 		// skip rendering
 		$this->skipRendering();
 
 		return true;
+	}
+
+	private function getTestData() {
+		$testData = [
+			'members' => [
+				'qAga',
+				'Bogna',
+				'Damian',
+				'Warkot',
+				'V',
+				'Kalina',
+				'Tower',
+				'Opener',
+				'Chris'
+			],
+			'team' => 'Consumer'
+		];
+
+		return $testData;
 	}
 
 	public static function onGetSkin(RequestContext $context, &$skin) {
