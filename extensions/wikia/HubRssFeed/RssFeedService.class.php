@@ -114,14 +114,14 @@ class RssFeedService {
 			self::appendCDATA( $doc, $itemNode, 'title', $item[ 'title' ] );
 			self::appendCDATA( $doc, $itemNode, 'description', $item[ 'description' ] );
 			self::appendTextNode( $doc, $itemNode, 'link', $this->makeUrlWithRef( $url ) );
-			self::appendTextNode( $doc, $itemNode, 'guid', $url );
+			self::appendTextNode( $doc, $itemNode, 'guid', $this->makeUrlWithRef( $url ) );
 			$itemNode->appendChild( new DOMElement('pubDate', date( self::DATE_FORMAT, $item[ 'timestamp' ] )) );
 			$itemNode->appendChild( new DOMElement('creator', 'Wikia', 'http://purl.org/dc/elements/1.1/') );
 
 			if ( isset($item[ 'img' ]) ) {
 				$img = $doc->createElementNS( 'http://search.yahoo.com/mrss/', 'content' );
 				$img->setAttribute( 'type', 'image/jpeg' );
-				$img->setAttribute( 'url', $item[ 'img' ][ 'url' ] );
+				$img->setAttribute( 'url', $this->makeUrlWithRef( $item[ 'img' ][ 'url' ] ) );
 				$img->setAttribute( 'width', $item[ 'img' ][ 'width' ] );
 				$img->setAttribute( 'height', $item[ 'img' ][ 'height' ] );
 				$itemNode->appendChild( $img );
