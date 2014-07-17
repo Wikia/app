@@ -62,7 +62,7 @@ abstract class VideoFeedIngester {
 	];
 
 	protected $defaultRequestOptions = [
-		'noProxy'	=> true
+		'noProxy' => true
 	];
 
 	private static $WIKI_INGESTION_DATA_FIELDS = array( 'keyphrases' );
