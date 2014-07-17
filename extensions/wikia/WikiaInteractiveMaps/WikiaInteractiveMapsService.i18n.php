@@ -19,6 +19,7 @@ $messages[ 'en' ] = [
 	'wikia-interactive-maps-create-marker-cancel' => 'Cancel',
 	'wikia-interactive-maps-default-poi-category' => 'Other',
 	'wikia-interactive-maps-hide-filter' => 'Hide',
+	'wikia-interactive-maps-edit-map' => 'Edit Map',
 ];
 
 
@@ -37,4 +38,5 @@ $messages[ 'qqq' ] = [
 	'wikia-interactive-maps-create-marker-cancel' => 'Cancel shown when user clicks on create POI',
 	'wikia-interactive-maps-default-poi-category' => 'Name of the default category for POI',
 	'wikia-interactive-maps-hide-filter' => 'Name of the button for hiding filter box',
+	'wikia-interactive-maps-edit-map' => 'Text for the edit link on the attribution footer which is displayed when the map is embedded',
 ];
