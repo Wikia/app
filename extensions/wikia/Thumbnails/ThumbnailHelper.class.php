@@ -140,9 +140,18 @@ class ThumbnailHelper extends WikiaModel {
 	 * @return array|bool
 	 */
 	public static function getImageLinkAttribs( MediaTransformOutput $thumb, array $options ) {
+		// If we have the details icon enabled, have the anchor wrapping the image link to the
+		// raw file.  If not, keep previous behavior and link to the file page
+
+		if ( F::app()->wg->ShowArticleThumbDetailsIcon ) {
+			$defaultHref = $thumb->file->getUrl();
+		} else {
+			$defaultHref = $thumb->file->getTitle()->getLocalURL();
+		}
+
 
 		if ( !empty( $options['custom-url-link'] ) ) {
-			$linkAttribs = array( 'href' => $options['custom-url-link'] );
+			$linkAttribs = [ 'href' => $options['custom-url-link'] ];
 			if ( !empty( $options['title'] ) ) {
 				$linkAttribs['title'] = $options['title'];
 			}
@@ -157,12 +166,12 @@ class ThumbnailHelper extends WikiaModel {
 				'title' => empty( $options['title'] ) ? $title->getFullText() : $options['title']
 			];
 		} elseif ( !empty( $options['desc-link'] ) ) {
-			$linkAttribs = [ 'href' => $thumb->file->getUrl() ];
+			$linkAttribs = [ 'href' => $defaultHref ];
 			if ( !empty( $options['title'] ) ) {
 				$linkAttribs['title'] = $options['title'];
 			}
 		} elseif ( !empty( $options['file-link'] ) ) {
-			$linkAttribs = [ 'href' => $thumb->file->getURL() ];
+			$linkAttribs = [ 'href' => $defaultHref ];
 		} else {
 			$linkAttribs = false;
 		}
@@ -269,7 +278,7 @@ class ThumbnailHelper extends WikiaModel {
 	/**
 	 * Logic for whether to display the link to the file page overlayed on an image.
 	 *
-	 * @param $thumb
+	 * @param $width
 	 * @return bool
 	 */
 	public static function canShowInfoIcon( $width ) {
