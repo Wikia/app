@@ -33,6 +33,7 @@ $smart-banner-height: 80px;
 		}
 	}
 
+	// required to fix Android bug (MOB-2174)
 	#wkMainCnt {
 		height: 100%;
 	}
