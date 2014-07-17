@@ -62,7 +62,7 @@
 			<env key="SERVER_DBNAME" value="${dbname}" />
 			<arg line="run-test.php
 						--configuration ${basedir}/phpunit.xml
-						--coverage-html ${basedir}/build/coverage
+						--coverage-clover ${basedir}/build/coverage.xml
 						--exclude-group Infrastructure,Integration,Broken,Stub,Monitoring,Hack
 						" />
 		</exec>
@@ -73,7 +73,7 @@
 			<env key="SERVER_DBNAME" value="${dbname}" />
 			<arg line="run-test.php
 						--configuration ${basedir}/phpunit.xml
-						--coverage-html ${basedir}/build/coverage
+						--coverage-clover ${basedir}/build/coverage.xml
 						${unittest}
 						" />
 		</exec>
