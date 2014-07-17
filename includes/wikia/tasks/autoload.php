@@ -25,3 +25,7 @@ spl_autoload_register(function($class) {
 
 	return false;
 });
+
+class ParsoidCacheUpdateTask extends \Wikia\Tasks\Tasks\ParsoidCacheUpdateTask {
+
+}
