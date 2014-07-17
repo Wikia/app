@@ -2,7 +2,6 @@
 
 /**
  * A simple parallel CURL client helper class
- * @TODO: name this ParsoidCurlMultiClient or move to core
  */
 class CurlMultiClient {
 
