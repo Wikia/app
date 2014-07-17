@@ -12,6 +12,7 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 	const MAP_MOBILE_THUMB_WIDTH = 640;
 	const MAP_MOBILE_THUMB_HEIGHT = 300;
 	const PAGE_NAME = 'Maps';
+	const PAGE_RESTRICTION = 'editinterface';
 	const TRANSLATION_FILENAME = 'translations.json';
 	const MAPS_WIKIA_URL = 'http://maps.wikia.com';
 	const WIKIA_MOBILE_SKIN_NAME = 'wikiamobile';
@@ -31,8 +32,8 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 	 * @param string $file
 	 * @param bool $includable
 	 */
-	public function __construct( $name = null, $restriction = 'editinterface', $listed = true, $function = false, $file = 'default', $includable = false ) {
-		parent::__construct( self::PAGE_NAME, $restriction, $listed, $function, $file, $includable );
+	public function __construct( $name = null, $restriction = '', $listed = true, $function = false, $file = 'default', $includable = false ) {
+		parent::__construct( self::PAGE_NAME, self::PAGE_RESTRICTION, $listed, $function, $file, $includable );
 		$this->mapsModel = new WikiaMaps( $this->wg->IntMapConfig );
 	}
 
@@ -189,7 +190,10 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 			WikiaMapsLogger::addLogEntry(
 				WikiaMapsLogger::ACTION_DELETE_MAP,
 				$mapId,
-				$mapId
+				$mapId,
+				[
+					$this->wg->User->getName(),
+				]
 			);
 
 			NotificationsController::addConfirmation( wfMessage( 'wikia-interactive-maps-delete-map-success' ) );
