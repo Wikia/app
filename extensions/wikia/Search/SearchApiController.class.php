@@ -103,7 +103,7 @@ class SearchApiController extends WikiaApiController {
 
 		$this->setResponseData(
 			$responseValues,
-			[ 'imgFields' => 'wordmark', 'urlFields' => [ 'url', 'wordmark' ] ]
+			[ 'urlFields' => [ 'url', 'wordmark', 'image' ] ]
 		);
 	}
 
@@ -149,7 +149,7 @@ class SearchApiController extends WikiaApiController {
 
 		$this->setResponseData(
 			$response,
-			[ 'imgFields' => 'image', 'urlFields' =>  [ 'url', 'image' ] ]
+			[ 'urlFields' =>  [ 'url', 'image' ] ]
 		);
 	}
 

@@ -417,7 +417,7 @@ class ArticlesApiController extends WikiaApiController {
 		$results = array_slice( $results, 0, $limit );
 		$this->setResponseData(
 			[ 'items' => $results, 'basepath' => $this->wg->Server ],
-			[ 'imgFields'=> 'thumbnail', 'urlFields' => [ 'thumbnail', 'url' ] ],
+			[ 'imgFields'=> 'thumbnail', 'urlFields' => [ 'thumbnail', 'url', 'avatar' ] ],
 			self::NEW_ARTICLES_VARNISH_CACHE_EXPIRATION
 		);
 		wfProfileOut( __METHOD__ );
