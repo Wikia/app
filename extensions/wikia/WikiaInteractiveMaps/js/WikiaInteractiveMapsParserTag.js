@@ -1,4 +1,4 @@
-require(['jquery', 'wikia.mustache', 'wikia.tracker', require.optional('ext.wikia.adEngine.eventDispatcher')], function ($, mustache, tracker, eventDispatcher) {
+require(['wikia.document', 'jquery', 'wikia.mustache', 'wikia.tracker', require.optional('ext.wikia.adEngine.slot.interactiveMaps')], function (document, $, mustache, tracker, interactiveMaps) {
 	'use strict';
 
 	/**
@@ -116,8 +116,10 @@ require(['jquery', 'wikia.mustache', 'wikia.tracker', require.optional('ext.wiki
 		showMap($(event.currentTarget));
 	});
 
-	if (eventDispatcher) {
-		eventDispatcher.trigger('InteractiveMaps.ready');
-	}
+
+	$('.wikia-ad-interactive-map').each(function(){
+			interactiveMaps.initSlot(this);
+	});
+
 
 });
