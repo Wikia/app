@@ -78,9 +78,12 @@ $default-float: left;
 $column-gutter: rem-calc(30);
 
 // Media Query Ranges
-$small-range: (0em, 40em);
-$medium-range: (40.063em, 64em);
-$large-range: (64.063em, 90em);
+$small-range: (0em, 63.938em); // 0 - 1023px
+$medium-range: (64em, 80em); // 1024 - 1280px
+$large-range: (80.063em, 90em); // 1281px - 1440px
+//$small-range: (0em, 40em); // 0 - 768px
+//$medium-range: (40.063em, 64em); // 769 - 1024px
+//$large-range: (64.063em, 90em); // 1025px+
 // $xlarge-range: (90.063em, 120em);
 // $xxlarge-range: (120.063em, 99999999em);
 

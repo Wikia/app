@@ -1,0 +1,16 @@
+
+.row {
+	@media #{$small-only} {
+		max-width: 768px;
+		// col: 38px, gutter 8px, grid margin 16px, col padding 8px
+	}
+	@media #{$medium-only} {
+		max-width: 1024px;
+		// col: 53px, gutter 10px, grid margin 19px, col padding 10px
+	}
+	@media #{$large-up} {
+		max-width: 1156px;
+		// col: 58px, gutter 20px, grid margin 20px, col padding 12px
+	}
+}
+
