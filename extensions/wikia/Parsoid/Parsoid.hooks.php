@@ -2,7 +2,6 @@
 
 use Wikia\Tasks\Queues\ParsoidPurgeQueue;
 use Wikia\Tasks\Queues\ParsoidPurgePriorityQueue;
-use Wikia\Tasks\Tasks\ParsoidCacheUpdateTask;
 
 /**
  * Hooks for events that should trigger Parsoid cache updates.

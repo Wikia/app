@@ -1,8 +1,7 @@
 <?php
 
-namespace Wikia\Tasks\Tasks;
-
 use Wikia\Logger\WikiaLogger;
+use Wikia\Tasks\Tasks\BaseTask;
 use Wikia\Tasks\AsyncTaskList;
 use Wikia\Tasks\Queues\ParsoidPurgePriorityQueue;
 
@@ -46,7 +45,7 @@ class ParsoidCacheUpdateTask extends BaseTask {
 		return $this->invalidateTitle( $this->title );
 	}
 
-	protected function getParsoidURL( \Title $title, $prev = false ) {
+	protected function getParsoidURL( Title $title, $prev = false ) {
 		global $wgVisualEditorParsoidURL;
 
 		$oldid = $prev ? $title->getPreviousRevisionID( $title->getLatestRevID() ) : $title->getLatestRevID();
@@ -58,7 +57,7 @@ class ParsoidCacheUpdateTask extends BaseTask {
 	protected function checkCurlResults( $results ) {
 		foreach ( $results as $k => $result ) {
 			if ( $results[ $k ][ 'error' ] != null ) {
-				throw new \Exception( $results[ $k ][ 'error' ] );
+				throw new Exception( $results[ $k ][ 'error' ] );
 			}
 		}
 
@@ -75,7 +74,7 @@ class ParsoidCacheUpdateTask extends BaseTask {
 		$requests = array();
 		foreach ( $wgParsoidCacheServers as $server ) {
 			foreach ( $titles as $key => $title ) {
-				/** @var \Title $title */
+				/** @var Title $title */
 				if ( !in_array( $title->getNamespace(), $wgContentNamespaces ) ) {
 					continue;
 				}
@@ -94,10 +93,10 @@ class ParsoidCacheUpdateTask extends BaseTask {
 			}
 		}
 
-		return $this->checkCurlResults( \CurlMultiClient::request( $requests ) );
+		return $this->checkCurlResults( CurlMultiClient::request( $requests ) );
 	}
 
-	protected function invalidateTitle( \Title $title ) {
+	protected function invalidateTitle( Title $title ) {
 		global $wgParsoidCacheServers, $wgContentNamespaces;
 
 		if ( !in_array( $title->getNamespace(), $wgContentNamespaces ) ) {
@@ -117,7 +116,7 @@ class ParsoidCacheUpdateTask extends BaseTask {
 				'Cache-control: no-cache' ) );
 			$this->wikiaLog( array( "action" => "invalidateTitle", "get_url" => $singleUrl ) );
 		}
-		$this->checkCurlResults( \CurlMultiClient::request( $requests ) );
+		$this->checkCurlResults( CurlMultiClient::request( $requests ) );
 
 		# And now purge the previous revision so that we make efficient use of
 		# the Varnish cache space without relying on LRU. Since the URL
@@ -129,10 +128,10 @@ class ParsoidCacheUpdateTask extends BaseTask {
 			$requests[ ] = array( 'url' => $singleUrl );
 			$this->wikiaLog( array( "action" => "invalidateTitle", "purge_url" => $singleUrl ) );
 		}
-		$options = \CurlMultiClient::getDefaultOptions();
+		$options = CurlMultiClient::getDefaultOptions();
 		$options[ CURLOPT_CUSTOMREQUEST ] = "PURGE";
 
-		return $this->checkCurlResults( \CurlMultiClient::request( $requests, $options ) );
+		return $this->checkCurlResults( CurlMultiClient::request( $requests, $options ) );
 	}
 
 	private function wikiaLog( $data ) {
