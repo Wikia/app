@@ -133,7 +133,7 @@ class WikiaApiController extends WikiaController {
 	 */
 	
 	public function hideNonCommercialContent() {
-		return stripos($this->request->getScriptUrl(), "/api/v1")===0;
+		return stripos($this->getRequest()->getScriptUrl(), "/api/v1")===0;
 	}
 		
 	/** Block content if this wiki is does not allow commercial use of it's content outside of Wikia
@@ -155,10 +155,10 @@ class WikiaApiController extends WikiaController {
 	 * - 'test' if caller is using /api/test entrypoint
 	 */
 	public function getApiVersion() {
-		$url = $this->request->getScriptUrl();
-		if (stripos($this->request->getScriptUrl(), "/api/v1")===0) {
+		$url = $this->getRequest()->getScriptUrl();
+		if (stripos($url, "/api/v1")===0) {
 			return 1;
-		} else if (stripos($this->request->getScriptUrl(), "/api/test")===0) {
+		} else if (stripos($url, "/api/test")===0) {
 			return self::API_ENDPOINT_TEST;
 		} else {
 			return self::API_ENDPOINT_INTERNAL;
@@ -184,7 +184,7 @@ class WikiaApiController extends WikiaController {
 	 */
 	protected function serveImages() {
 		global  $wgApiDisableImages;
-		if( $this->request->isInternal() || $this->getApiVersion() == self::API_ENDPOINT_INTERNAL ){
+		if( $this->getRequest()->isInternal() || $this->getApiVersion() == self::API_ENDPOINT_INTERNAL ){
 			return true;
 		}
 		return ( isset( $wgApiDisableImages ) && $wgApiDisableImages === true ) ? false : true;
