@@ -243,7 +243,7 @@ class SkinChooser {
 
 		if(!$user->isLoggedIn()) { # If user is not logged in
 			if($wgDefaultSkin == 'oasis') {
-				if( self::showVenusSkin()) {
+				if( self::showVenusSkin($title)) {
 					$userSkin = 'venus';
 					$userTheme = null;
 				} else {
@@ -273,13 +273,13 @@ class SkinChooser {
 					$userSkin = isset($adminSkinArray[0]) ? $adminSkinArray[0] : null;
 					$userTheme = isset($adminSkinArray[1]) ? $adminSkinArray[1] : null;
 				} else {
-					if(self::showVenusSkin()) {
+					if(self::showVenusSkin($title)) {
 						$userSkin = 'venus';
 					} else {
 						$userSkin = 'oasis';
 					}
 				}
-			} else if ($userSkin == 'oasis' && self::showVenusSkin()) {
+			} else if ($userSkin == 'oasis' && self::showVenusSkin($title)) {
 				$userSkin = 'venus';
 			} else if(!empty($wgAdminSkin) && $userSkin != 'venus' && $userSkin != 'oasis' && $userSkin != 'monobook' && $userSkin != 'wowwiki' && $userSkin != 'lostbook') {
 				$adminSkinArray = explode('-', $wgAdminSkin);
@@ -336,9 +336,10 @@ class SkinChooser {
 		return false;
 	}
 
-	private static function showVenusSkin() {
+	private static function showVenusSkin($title) {
 		// Add WikiaPageType::isArticlePage() to enable new skin on article pages
-		return  WikiaPageType::isSearch();
+		return  WikiaPageType::isSearch()
+				|| ($title->isSpecialPage() && $title->getText() == 'VenusTest');
 	}
 
 	/**
