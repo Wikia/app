@@ -6,7 +6,7 @@ define('ext.wikia.adEngine.slot.interactiveMaps', ['wikia.window', 'wikia.docume
 
 	function initSlot(container) {
 
-		if (!window.wgShowAds) {
+		if (!window.wgShowAds || !container) {
 			return;
 		}
 
