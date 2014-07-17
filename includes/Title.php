@@ -4624,6 +4624,21 @@ class Title {
 	}
 
 	/**
+	 * Get the backlinks for a given table. Cached in process memory only.
+	 *
+	 * This is a local wrapper around the local BacklinkCache instance to prevent
+	 * reaching from other objects, through the title, to the BacklinkCache.
+	 *
+	 * @param $table String
+	 * @param $startId Integer or false
+	 * @param $endId Integer or false
+	 * @return TitleArrayFromResult
+	 */
+	public function getLinksFromBacklinkCache( $table, $start, $end ) {
+		return $this->getBacklinkCache()->getLinks( $table, $start, $end );
+	}
+
+	/**
 	 * Whether the magic words __INDEX__ and __NOINDEX__ function for  this page.
 	 *
 	 * @return Boolean

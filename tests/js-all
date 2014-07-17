@@ -1,3 +1,3 @@
 #!/bin/sh
-karma start karma/js-unit.conf.js --single-run
-karma start karma/js-integration.conf.js --single-run
+ant -f build-wikia.xml jsunit
+ant -f build-wikia.xml jsintegration

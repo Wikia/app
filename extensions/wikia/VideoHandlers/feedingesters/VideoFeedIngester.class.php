@@ -27,9 +27,9 @@ abstract class VideoFeedIngester {
 	// Providers from which we ingest daily video data
 	protected static $ACTIVE_PROVIDERS = [
 		self::PROVIDER_IGN,
-		self::PROVIDER_OOYALA,
 		self::PROVIDER_IVA,
 		self::PROVIDER_SCREENPLAY,
+		self::PROVIDER_OOYALA,
 	];
 
 	// These providers are not ingested daily, but can be ingested from if specifically named
@@ -59,6 +59,10 @@ abstract class VideoFeedIngester {
 		'Entertainment' => [],
 		'Lifestyle'     => [],
 		'International' => [],
+	];
+
+	protected $defaultRequestOptions = [
+		'noProxy' => true
 	];
 
 	private static $WIKI_INGESTION_DATA_FIELDS = array( 'keyphrases' );
@@ -646,10 +650,12 @@ abstract class VideoFeedIngester {
 
 	/**
 	 * @param $url
+	 * @param $options
 	 * @return string
 	 */
-	protected function getUrlContent( $url ) {
-		return Http::request( 'GET', $url, array( 'noProxy' => true ) );
+	protected function getUrlContent( $url, $options = array() ) {
+		$options = array_merge( $options, $this->defaultRequestOptions );
+		return Http::request( 'GET', $url, $options );
 	}
 
 	/**

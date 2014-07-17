@@ -1,7 +1,14 @@
 <?php
-require_once( $IP . '/extensions/wikia/WikiaInteractiveMaps/controllers/WikiaInteractiveMapsParserTagController.class.php' );
-
+/**
+ * @group UsingDB
+ */
 class WikiaInteractiveMapsParserTagControllerTest extends WikiaBaseTest {
+
+	public function setUp() {
+		global $IP;
+		$this->setupFile = "$IP/extensions/wikia/WikiaInteractiveMaps/WikiaInteractiveMaps.setup.php";
+		parent::setUp();
+	}
 
 	/**
 	 * @dataProvider validateParseTagParamsDataProvider

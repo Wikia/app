@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * @group UsingDB
+ */
 class HAWelcomeTaskHookDispatcherTest extends WikiaBaseTest {
 
 	public function testDispatchWhenDisabled() {
