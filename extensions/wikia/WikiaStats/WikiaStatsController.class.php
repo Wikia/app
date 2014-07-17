@@ -33,8 +33,16 @@ class WikiaStatsController extends WikiaController {
 		wfProfileOut(__METHOD__);
 	}
 
-	public function saveWikiaStats( $statsValues ) {
-		if ( $this->wg->User->isAllowed( 'wikifactory' ) ) {
+	public function getWikiaStatsFromWF() {
+		$statsFromWF = WikiaStatsModel::getWikiaStatsFromWF();
+		foreach ($statsFromWF as $key => $value) {
+			$this->$key = $value;
+		}
+	}
+
+	public function saveWikiaStatsInWF() {
+		$statsValues = $this->request->getVal('statsValues');
+		if ( $this->wg->User->isAllowed( 'wikifactory' ) || $this->wg->User->isAllowed( 'managewikiahome' )) {
 			WikiaDataAccess::cachePurge( $this->getStatsMemcacheKey() );
 			WikiaStatsModel::setWikiaStatsInWF( $statsValues );
 		}
