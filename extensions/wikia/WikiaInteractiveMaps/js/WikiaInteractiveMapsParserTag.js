@@ -55,7 +55,8 @@ require(['wikia.document', 'jquery', 'wikia.mustache', 'wikia.tracker', require.
 		loadTemplate(templatePath, cacheKey)
 			.done(function (template) {
 				var iframe = mustache.render(template, {
-					url: mapUrl
+					url: mapUrl,
+					mapId: mapId
 				});
 
 				require(['wikia.ui.factory'], function (uiFactory) {
@@ -71,6 +72,9 @@ require(['wikia.document', 'jquery', 'wikia.mustache', 'wikia.tracker', require.
 
 						uiModal.createComponent(modalConfig, function (mapModal) {
 							mapModal.show();
+
+							interactiveMaps && interactiveMaps.initSlot(mapModal.$element.find('.wikia-ad-interactive-map').get(0));
+
 							tracker.track({
 								trackingMethod: 'ga',
 								category: 'map',
