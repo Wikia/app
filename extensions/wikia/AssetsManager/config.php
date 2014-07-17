@@ -649,6 +649,9 @@ $config['wikiamobile_ads_js'] = array(
 		// Video ads
 		'//extensions/wikia/AdEngine/js/WikiaDartVideoHelper.js',
 
+		// Interactive maps integration
+		'#group_adengine2_interactive_maps_js',
+
 		// Run!
 		'//extensions/wikia/WikiaMobile/js/ads_run.js',
 	)
