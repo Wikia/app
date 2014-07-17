@@ -2,7 +2,11 @@
 	width: 100%;
 	height: auto;
 
-	a {
+	.wikia-interactive-map-link {
+		display: block;
+	}
+
+	.view {
 		bottom: auto;
 		left: 50%;
 		margin-top: -17px;
