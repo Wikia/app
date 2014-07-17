@@ -18,6 +18,8 @@ define('ext.wikia.adEngine.slot.interactiveMaps', ['wikia.window', 'wikia.docume
 		data.s0 = params.s0;
 		data.s1 = params.s1;
 		data.s2 = 'map';
+		data.hostpre = params.hostpre;
+		data.dmn = params.dmn;
 
 		if (!data.mapid) {
 			return false;
