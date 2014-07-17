@@ -2,7 +2,7 @@
 
 class OoyalaAsset extends WikiaModel {
 
-	const TIME_OUT = 60;
+	const REQUEST_TIMEOUT = 60;
 
 	/**
 	 * Constructs a URL to get assets from Ooyala API
@@ -46,7 +46,7 @@ class OoyalaAsset extends WikiaModel {
 
 		$options = [
 			'noProxy' => true,
-			'timeout' => self::TIME_OUT
+			'timeout' => self::REQUEST_TIMEOUT
 		];
 
 		$req = MWHttpRequest::factory( $url, $options );
