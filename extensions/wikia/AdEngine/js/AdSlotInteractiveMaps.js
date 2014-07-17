@@ -2,6 +2,8 @@
 define('ext.wikia.adEngine.slot.interactiveMaps', ['wikia.window', 'wikia.document', 'ext.wikia.adEngine.adLogicPageParams'], function (window, document, adLogicPageParams) {
 	'use strict';
 
+	var iframeCounter = 0;
+
 	function initSlot(container) {
 
 		if (!window.wgShowAds) {
@@ -22,10 +24,12 @@ define('ext.wikia.adEngine.slot.interactiveMaps', ['wikia.window', 'wikia.docume
 		}
 
 		iframe = document.createElement('IFRAME');
-		iframe.id = 'wikia-map-ad-' + data.mapid;
-		iframe.name = 'wikia-map-ad-' + data.mapid;
+		iframe.id = 'wikia-map-ad-' + data.mapid + '-' + iframeCounter;
+		iframe.name = 'wikia-map-ad-' + data.mapid + '-' + iframeCounter;
 		iframe.src = '/__cb' + window.wgStyleVersion + '/extensions/wikia/AdEngine/InteractiveMaps/ad.html#' + JSON.stringify(data);
 		container.appendChild(iframe);
+
+		iframeCounter = iframeCounter + 1;
 	}
 
 	return {
