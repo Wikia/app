@@ -42,7 +42,7 @@ ve.ce.WikiaMapNode.static.tagName = 'figure';
 ve.ce.WikiaMapNode.prototype.onSetup = function () {
 	ve.ce.WikiaMapNode.super.prototype.onSetup.apply( this, arguments );
 	// Remove the "View" link
-	this.$element.find( 'a' ).remove();
+	this.$element.find( '.view' ).remove();
 };
 
 /* Registration */
