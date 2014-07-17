@@ -1,4 +1,4 @@
-require(['wikia.document', 'jquery', 'wikia.mustache', 'wikia.tracker', require.optional('ext.wikia.adEngine.slot.interactiveMaps')], function (document, $, mustache, tracker, mapAds) {
+require(['jquery', 'wikia.mustache', 'wikia.tracker', require.optional('ext.wikia.adEngine.slot.interactiveMaps')], function ($, mustache, tracker, mapAds) {
 	'use strict';
 
 	/**
@@ -73,7 +73,9 @@ require(['wikia.document', 'jquery', 'wikia.mustache', 'wikia.tracker', require.
 						uiModal.createComponent(modalConfig, function (mapModal) {
 							mapModal.show();
 
-							interactiveMaps && interactiveMaps.initSlot(mapModal.$element.find('.wikia-ad-interactive-map').get(0));
+							if (mapAds) {
+								mapAds.initSlot(mapModal.$element.find('.wikia-ad-interactive-map').get(0));
+							}
 
 							tracker.track({
 								trackingMethod: 'ga',
