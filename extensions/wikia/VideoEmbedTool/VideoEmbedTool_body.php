@@ -293,7 +293,7 @@ class VideoEmbedTool {
 					'html' => $embed_code,
 				);
 
-				$embed_code = F::app()->renderView( 'ThumbnailController', 'articleThumbnail', $params );
+				$embed_code = F::app()->renderView( 'ThumbnailController', 'articleBlock', $params );
 
 				// Make output match what's in a saved article
 				if ( $layout == 'center' ) {
