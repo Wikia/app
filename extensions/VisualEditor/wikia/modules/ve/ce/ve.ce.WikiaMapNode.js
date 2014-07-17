@@ -20,7 +20,7 @@ ve.ce.WikiaMapNode = function VeCeWikiaMapNode( model, config ) {
 	// Size provided as a fix for https://wikia-inc.atlassian.net/browse/VE-1343
 	this.$element
 		.addClass( 've-ce-wikiaMapNode' )
-		.height( 300 )
+		.height( 382 )
 		.width( 680 );
 };
 
