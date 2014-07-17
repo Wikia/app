@@ -27,6 +27,8 @@ class WikiaMaps extends WikiaObject {
 	const MAP_THUMB_PREFIX = '/thumb/';
 	const DEFAULT_REAL_MAP_URL = 'http://img.wikia.nocookie.net/intmap_Geo_Map/default-geo.jpg';
 
+	const DB_DUPLICATE_ENTRY ='ER_DUP_ENTRY';
+
 	/**
 	 * @var array API connection config
 	 */
@@ -63,6 +65,19 @@ class WikiaMaps extends WikiaObject {
 			$this->config[ 'version' ],
 			implode( '/',  $segments ),
 			!empty( $params ) ? '?' . http_build_query( $params ) : ''
+		);
+	}
+
+	/**
+	 * Wrapper for Http::get() with authorization token attached
+	 *
+	 * @param String $url
+	 *
+	 * @return Array
+	 */
+	public function sendGetRequest( $url ) {
+		return $this->processServiceResponse(
+			Http::get( $url, 'default', $this->getHttpRequestOptions() )
 		);
 	}
 
@@ -117,9 +132,7 @@ class WikiaMaps extends WikiaObject {
 	public function getMapsFromApi( Array $params ) {
 		$mapsData = new stdClass();
 		$url = $this->buildUrl( [ self::ENTRY_POINT_MAP ], $params );
-		$response = $this->processServiceResponse(
-			Http::get( $url, 'default', $this->getHttpRequestOptions() )
-		);
+		$response = $this->sendGetRequest( $url );
 
 		if( $response[ 'success' ] ) {
 			$mapsData = $response[ 'content' ];
@@ -131,7 +144,6 @@ class WikiaMaps extends WikiaObject {
 				} else {
 					$map->map_width = static::MAP_WIDTH;
 					$map->map_height = static::MAP_HEIGHT;
-					$map->status_message = $this->getMapStatusText( $map->status );
 					$map->done = (int)$map->status === static::STATUS_DONE;
 				}
 			} );
@@ -156,15 +168,11 @@ class WikiaMaps extends WikiaObject {
 	 */
 	public function getMapByIdFromApi( $mapId,  $params = []) {
 		$url = $this->buildUrl( [ self::ENTRY_POINT_MAP, $mapId ], $params );
-		$response = $this->processServiceResponse(
-			Http::get( $url, 'default', $this->getHttpRequestOptions() )
-		);
+		$response = $this->sendGetRequest( $url );
 
 		$map = $response[ 'content' ];
 		if( !empty( $map->tile_set_url ) ) {
-			$response = $this->processServiceResponse(
-				Http::get( $map->tile_set_url, 'default', $this->getHttpRequestOptions() )
-			);
+			$response = $this->sendGetRequest( $map->tile_set_url );
 
 			$tilesData = $response[ 'content' ];
 
@@ -187,28 +195,6 @@ class WikiaMaps extends WikiaObject {
 		array_unshift( $segments, self::ENTRY_POINT_RENDER );
 		$params[ 'uselang' ] = $this->wg->lang->getCode();
 		return $this->buildUrl( $segments, $params );
-	}
-
-	/**
-	 * Returns human message based on the tiles processing status in database
-	 *
-	 * @param Integer $status status of tiles processing for the map
-	 *
-	 * @return String
-	 */
-	public function getMapStatusText( $status ) {
-		$message = '';
-
-		switch( $status ) {
-			case static::STATUS_DONE:
-				$message = wfMessage( 'wikia-interactive-maps-map-status-done' )->plain();
-				break;
-			case static::STATUS_PROCESSING:
-				$message = wfMessage( 'wikia-interactive-maps-map-status-processing' )->plain();
-				break;
-		}
-
-		return $message;
 	}
 
 	/**
@@ -239,9 +225,7 @@ class WikiaMaps extends WikiaObject {
 		$url = $this->buildUrl( [ self::ENTRY_POINT_TILE_SET ], $params );
 
 		//TODO: consider caching the response
-		$response = $this->processServiceResponse(
-			Http::get( $url, 'default', $this->getHttpRequestOptions() )
-		);
+		$response = $this->sendGetRequest( $url );
 
 		return $response;
 	}
@@ -316,9 +300,7 @@ class WikiaMaps extends WikiaObject {
 		$url = $this->buildUrl( [ self::ENTRY_POINT_POI_CATEGORY ], $params );
 
 		//TODO: consider caching the response
-		$response = $this->processServiceResponse(
-			Http::get( $url, 'default', $this->getHttpRequestOptions() )
-		);
+		$response = $this->sendGetRequest( $url );
 
 		return $response;
 	}
@@ -466,16 +448,16 @@ class WikiaMaps extends WikiaObject {
 
 		$success = $this->isSuccess( $status, $content );
 		if( !$success && is_null( $content ) ) {
-			$results['success'] = false;
+			$results[ 'success' ] = false;
 			$content = new stdClass();
 			$content->message = wfMessage( 'wikia-interactive-maps-service-error' )->parse();
 		} else if( !$success && !is_null( $content ) ) {
-			$results['success'] = false;
+			$results[ 'success' ] = false;
 		} else {
-			$results['success'] = true;
+			$results[ 'success' ] = true;
 		}
 
-		$results['content'] = $content;
+		$results[ 'content' ] = $content;
 		return $results;
 	}
 
@@ -510,17 +492,22 @@ class WikiaMaps extends WikiaObject {
 	 *
 	 * @return array
 	 */
-	private function getHttpRequestOptions( Array $postData = [] ) {
+	public function getHttpRequestOptions( Array $postData = [] ) {
 		$options = [
-			'headers' => [
-				'Authorization' => $this->config[ 'token' ]
-			],
 			'returnInstance' => true,
 			//'noProxy' => true,
 		];
 
+		if( !empty( $this->config[ 'token' ] ) ) {
+			$options[ 'headers' ][ 'Authorization' ] = $this->config[ 'token' ];
+		}
+
 		if ( !empty( $postData ) ) {
 			$options[ 'postData' ] = json_encode( $postData );
+		}
+
+		if ( isset( $this->config[ 'httpProxy' ] ) && false === $this->config[ 'httpProxy' ] ) {
+			$options[ 'noProxy' ] = true;
 		}
 
 		return $options;
@@ -571,5 +558,30 @@ class WikiaMaps extends WikiaObject {
 			return $this->fetchRealMapImageUrl();
 		} );
 	}
-}
 
+	/**
+	 * Returns an URL for an image from article with given title
+	 *
+	 * @param String $titleText
+	 * @param Integer $width
+	 * @param Integer $height
+	 *
+	 * @return string
+	 */
+	public function getArticleImage( $titleText, $width, $height ) {
+		$title = Title::newFromText( $titleText );
+
+		if( !is_null( $title ) ) {
+			$articleId = $title->getArticleId();
+			$is = new ImageServing( [ $articleId ], $width, $height );
+			$images = $is->getImages( 1 );
+
+			if( !empty( $images[ $articleId ] ) ) {
+				$image = array_pop( $images[ $articleId ] );
+				return $image[ 'url' ];
+			}
+		}
+
+		return '';
+	}
+}

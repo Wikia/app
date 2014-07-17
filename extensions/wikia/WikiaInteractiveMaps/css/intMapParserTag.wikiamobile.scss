@@ -2,7 +2,11 @@
 	width: 100%;
 	height: auto;
 
-	a {
+	.wikia-interactive-map-link {
+		display: block;
+	}
+
+	.view {
 		bottom: auto;
 		left: 50%;
 		margin-top: -17px;
@@ -17,10 +21,14 @@
 	}
 
 	p {
-		bottom: 10px;
+		bottom: 0;
 		font-weight: bold;
 		left: 10px;
 		position: absolute;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+		width: 95%;
 	}
 
 	figcaption {

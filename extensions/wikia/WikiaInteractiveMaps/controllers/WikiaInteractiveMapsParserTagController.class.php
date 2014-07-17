@@ -6,7 +6,7 @@ class WikiaInteractiveMapsParserTagController extends WikiaController {
 	const MIN_ZOOM = 0;
 	const MAX_ZOOM = 16;
 	const DEFAULT_WIDTH = 680;
-	const DEFAULT_HEIGHT = 300;
+	const DEFAULT_HEIGHT = 382;
 	const DEFAULT_LATITUDE = 0;
 	const MIN_LATITUDE = -90;
 	const MAX_LATITUDE = 90;
@@ -52,7 +52,7 @@ class WikiaInteractiveMapsParserTagController extends WikiaController {
 		if ( $isValid ) {
 			$params[ 'map' ] = $this->getMapObj( $params[ 'id' ] );
 
-			if ( !empty( $params [ 'map' ] ) ) {
+			if ( !empty( $params [ 'map' ]->id ) ) {
 				return $this->sendRequest(
 					'WikiaInteractiveMapsParserTagController',
 					'mapThumbnail',
@@ -109,7 +109,7 @@ class WikiaInteractiveMapsParserTagController extends WikiaController {
 
 		$this->setVal( 'map', (object) $params->map );
 		$this->setVal( 'params', $params );
-		$this->setVal( 'created_by', wfMessage( 'wikia-interactive-maps-parser-tag-created-by' )->params( $userName )->plain() );
+		$this->setVal( 'created_by', wfMessage( 'wikia-interactive-maps-parser-tag-created-by', $userName )->text() );
 		$this->setVal( 'avatarUrl', AvatarService::getAvatarUrl( $userName, AvatarService::AVATAR_SIZE_SMALL ) );
 		$this->setVal( 'view', wfMessage( 'wikia-interactive-maps-parser-tag-view' )->plain() );
 
@@ -300,7 +300,7 @@ class WikiaInteractiveMapsParserTagController extends WikiaController {
 	public function getMobileThumbnail() {
 		$width = $this->getVal( 'width' );
 		//To keep the original aspect ratio
-		$height = $width * self::DEFAULT_HEIGHT / self::DEFAULT_WIDTH;
+		$height = floor( $width * self::DEFAULT_HEIGHT / self::DEFAULT_WIDTH );
 		$image = $this->getVal( 'image' );
 		$this->setVal( 'src', $this->mapsModel->createCroppedThumb( $image, $width, $height ) );
 	}
