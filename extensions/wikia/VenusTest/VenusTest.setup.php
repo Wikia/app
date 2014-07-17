@@ -24,3 +24,6 @@ $wgSpecialPageGroups['VenusTest'] = 'wikia';
 // message files
 $wgExtensionMessagesFiles['VenusTest'] = $dir.'VenusTest.i18n.php';
 JSMessages::registerPackage( 'VenusTest', array( 'special-venustest-*' ) );
+
+// hooks
+$wgHooks['RequestContextCreateSkin'][] = 'VenusTestController::onGetSkin';

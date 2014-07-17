@@ -141,6 +141,9 @@ class VenusController extends WikiaController {
 		// todo: make it not run twice during each request
 		$this->bottomScripts = $this->getSkin()->bottomScripts();
 
+		d($this->topScripts);
+		dd($this->bottomScripts);
+
 		// setup loading of JS/CSS
 		$this->loadJs();
 	}

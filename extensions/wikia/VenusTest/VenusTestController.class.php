@@ -1,7 +1,5 @@
 <?php
 class VenusTestController extends WikiaSpecialPageController {
-	protected  $model;
-
 	public function __construct() {
 		parent::__construct('VenusTest', '', false);
 	}
@@ -17,9 +15,12 @@ class VenusTestController extends WikiaSpecialPageController {
 			return false; // skip rendering
 		}
 
+		$this->request->setVal('useskin', 'venus');
+
 		RenderContentOnlyHelper::setRenderContentVar( true );
 		RenderContentOnlyHelper::setRenderContentLevel( RenderContentOnlyHelper::LEAVE_NAV_ONLY );
 		$this->response->addAsset( 'extensions/wikia/Venus/styles/Venus.scss' );
+		$this->response->addAsset( 'extensions/wikia/VenusTest/styles/VenusTest.scss' );
 
 		$this->wg->Out->setPageTitle( wfMessage( 'special-venustest-title' )->plain() );
 		$this->response->setCacheValidity(WikiaResponse::CACHE_STANDARD);
@@ -35,5 +36,11 @@ class VenusTestController extends WikiaSpecialPageController {
 		$this->skipRendering();
 
 		return true;
+	}
+
+	public static function onGetSkin(RequestContext $context, &$skin) {
+		$skin = new SkinVenus();
+
+		return false;
 	}
 }
