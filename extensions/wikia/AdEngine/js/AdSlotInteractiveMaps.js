@@ -1,5 +1,5 @@
 /*global define*/
-define('ext.wikia.adEngine.slot.interactiveMaps', ['wikia.document'], function(document) {
+define('ext.wikia.adEngine.slot.interactiveMaps', ['wikia.window', 'wikia.document'], function(window, document) {
 	'use strict';
 
 	function initSlot(container) {
@@ -14,7 +14,7 @@ define('ext.wikia.adEngine.slot.interactiveMaps', ['wikia.document'], function(d
 		iframe = document.createElement('IFRAME');
 		iframe.id = 'wikia-map-ad-' + data.mapId;
 		iframe.name = 'wikia-map-ad-' + data.mapId;
-		iframe.src = '/__cb1402920078/extensions/wikia/AdEngine/InteractiveMaps/ad.html#' + JSON.stringify(data) ;
+		iframe.src = '/__cb' + window.wgStyleVersion + '/extensions/wikia/AdEngine/InteractiveMaps/ad.html#' + JSON.stringify(data) ;
 		container.appendChild(iframe);
 	}
 

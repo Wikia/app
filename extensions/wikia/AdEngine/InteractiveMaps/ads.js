@@ -61,18 +61,17 @@ var ads = (function (window, document) {
 			function onAdLoad(slotname, gptEvent, iframe, adCallback, noAdCallback) {
 				if (gptEvent.isEmpty) {
 					if (typeof noAdCallback === 'function') {
-						if (window.name) {
-							var parentIframe = window.parent.document.getElementById(window.name);
-
-							if (parentIframe) {
-								parentIframe.style.display = 'none';
-							}
-						}
-
 						noAdCallback();
 					}
 				} else {
 					if (typeof adCallback === 'function') {
+						if (window.name) {
+							var parentIframe = window.parent.document.getElementById(window.name);
+
+							if (parentIframe) {
+								parentIframe.parentNode.style.display = 'block';
+							}
+						}
 						adCallback();
 					}
 				}
