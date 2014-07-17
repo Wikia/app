@@ -117,9 +117,9 @@ require(['wikia.document', 'jquery', 'wikia.mustache', 'wikia.tracker', require.
 	});
 
 
-	$('.wikia-ad-interactive-map').each(function(){
+	if (interactiveMaps) {
+		$('.wikia-ad-interactive-map').each(function () {
 			interactiveMaps.initSlot(this);
-	});
-
-
+		});
+	}
 });
