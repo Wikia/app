@@ -115,7 +115,6 @@ $config['adengine2_interactive_maps_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
 		'//extensions/wikia/AdEngine/js/AdSlotInteractiveMaps.js',
-		'//extensions/wikia/AdEngine/js/AdSlotInteractiveMaps.run.js',
 	),
 );
 

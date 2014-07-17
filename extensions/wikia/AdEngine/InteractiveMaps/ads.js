@@ -4,21 +4,6 @@ var ads = (function (window, document) {
 	'use strict';
 	function noop() {}
 
-	function extend() {
-		var obj = arguments[0], i, j, k;
-
-		for(i = 1,  j = arguments.length; i < j; i = i + 1) {
-			for (k in arguments[i]) {
-				if (arguments[i].hasOwnProperty(k)) {
-					obj[k] = arguments[i][k];
-				}
-			}
-		}
-
-		return obj;
-	}
-
-
 	function defines() {
 		define('ext.wikia.adEngine.adLogicPageParams', function () {
 
@@ -26,11 +11,7 @@ var ads = (function (window, document) {
 
 			return {
 				getPageLevelParams: function() {
-					return extend(hashParams, {
-						s0: 'interactivemaps',
-						s1: '_interactivemaps',
-						s2: 'interactivemaps'
-					});
+					return hashParams;
 				}
 			};
 		});
@@ -66,10 +47,11 @@ var ads = (function (window, document) {
 				} else {
 					if (typeof adCallback === 'function') {
 						if (window.name) {
-							var parentIframe = window.parent.document.getElementById(window.name);
 
-							if (parentIframe) {
-								parentIframe.parentNode.style.display = 'block';
+							var parentIframeContainer = window.parent.document.getElementById(window.name).parentNode;
+
+							if (parentIframeContainer) {
+								parentIframeContainer.className = parentIframeContainer.className.replace('hidden', '');
 							}
 						}
 						adCallback();
