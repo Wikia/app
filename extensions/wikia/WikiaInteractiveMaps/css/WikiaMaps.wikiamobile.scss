@@ -33,6 +33,10 @@ $smart-banner-height: 80px;
 		}
 	}
 
+    #wkMainCnt {
+        height: 100%;
+    }
+
 	// required to be displayed over #wkPage which needs to occupy entire window - header and smartbanner.
 	// tried to set #wkPage using calc() but Android < 4.4 doesn't support it
 	#wkTopNav,
