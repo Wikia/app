@@ -37,11 +37,6 @@
 			<div class="wikiahomepage-community-hero wikiahomepage-community-social-hero">
 				<ul class="wikiahomepage-community-social">
 					<li>
-						<a href="<?= WfMessage('wikiahome-community-social-wikia-blog-link')->text() ?>">
-							<img class="wikiahomepage-community-social-wikia-blog" src="<?= $wg->BlankImgUrl ?>"><?= wfMsg('wikiahome-community-social-wikia-blog') ?>
-						</a>
-					</li>
-					<li>
 						<a href="<?= WfMessage('oasis-community-social-twitter-link')->text() ?>">
 							<img class="wikiahomepage-community-social-twitter" src="<?= $wg->BlankImgUrl ?>"><?= wfMsg('wikiahome-community-social-twitter') ?>
 						</a>
