@@ -2,6 +2,8 @@
 
 class ScreenplayFeedIngester extends VideoFeedIngester {
 
+	const TIMEOUT = 60;
+
 	protected static $API_WRAPPER = 'ScreenplayApiWrapper';
 	protected static $PROVIDER = 'screenplay';
 	protected static $FEED_URL = 'http://$2:$3@www.totaleclips.com/api/v1/assets?vendorid=$1&group_by_title=1&date_added=$4&date_added_end=$5&bitrateID=$6';
@@ -83,7 +85,7 @@ class ScreenplayFeedIngester extends VideoFeedIngester {
 
 		print( "Connecting to $url...\n" );
 
-		$content = $this->getUrlContent( $url );
+		$content = $this->getUrlContent( $url, [ 'timeout' => self::TIMEOUT ] );
 		if ( $content === false  ) {
 			$this->videoErrors( "ERROR: problem downloading content.\n" );
 			wfProfileOut( __METHOD__ );
