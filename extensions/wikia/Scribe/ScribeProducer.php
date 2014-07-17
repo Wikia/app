@@ -75,7 +75,7 @@ class ScribeProducer {
 		}
 
 		if ( !empty( $wgDevelEnvironment ) ) {
-			$result = implode( '-', [ WIKIA_ENV_DEV, $result ] );
+			$result = $this->prefixCategory( WIKIA_ENV_DEV, self::REINDEX_CATEGORY );
 		}
 
 		return $result;
@@ -475,12 +475,23 @@ class ScribeProducer {
 	public function reindexPage()
 	{
 		wfProfileIn( __METHOD__ );
-		if ( $this->mKey !== self::REINDEX_CATEGORY ) {
+
+		$reindexCategories = [
+			self::REINDEX_CATEGORY,
+			$this->prefixCategory( WIKIA_ENV_DEV, self::REINDEX_CATEGORY )
+		];
+
+		if ( !in_array($this->mKey, $reindexCategories ) ) {
 			$this->send_log();
 		} else {
 			throw new Exception( 'This method should only be called by ScribeProducer instances keyed for reindexing' );
 		}
+
 		wfProfileOut( __METHOD__ );
+	}
+
+	private function prefixCategory($prefix, $category) {
+		return implode( '-', [ $prefix, $category ] );
 	}
 }
 
