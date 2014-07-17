@@ -134,7 +134,7 @@ class WikiaInteractiveMapsMapController extends WikiaInteractiveMapsBaseControll
 	 */
 	private function createMapFromTilesetId() {
 		$cityId = $this->getData( 'cityId' );
-		$wiki =  WikiFactory::getWikiByID( $cityId );
+		$wiki = WikiFactory::getWikiByID( $cityId );
 		$response = $this->mapsModel->saveMap( [
 			'title' => $this->getData( 'title' ),
 			'tile_set_id' => $this->getData( 'tileSetId' ),
