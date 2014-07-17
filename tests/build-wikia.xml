@@ -63,6 +63,7 @@
 			<arg line="run-test.php
 						--configuration ${basedir}/phpunit.xml
 						--coverage-html ${basedir}/build/coverage
+						--coverage-clover ${basedir}/build/coverage.xml
 						--exclude-group Infrastructure,Integration,Broken,Stub,Monitoring,Hack
 						" />
 		</exec>
@@ -74,6 +75,7 @@
 			<arg line="run-test.php
 						--configuration ${basedir}/phpunit.xml
 						--coverage-html ${basedir}/build/coverage
+						--coverage-clover ${basedir}/build/coverage.xml
 						${unittest}
 						" />
 		</exec>

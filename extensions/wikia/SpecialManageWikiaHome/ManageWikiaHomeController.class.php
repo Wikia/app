@@ -98,7 +98,7 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 		$collectionValues = $this->prepareArrayFieldsToShow($this->collectionsList);
 		$wikisPerCollection = $this->getWikisPerCollection($this->collectionsList);
 
-		$statsValues = $this->wikiaStatsController->getWikiaStats();
+		$statsValues = $this->app->sendRequest('WikiaStatsController', 'getWikiaStats')->getData();
 
 		if( $this->request->wasPosted() ) {
 			if ( $this->request->getVal('wikis-in-slots',false) ) {

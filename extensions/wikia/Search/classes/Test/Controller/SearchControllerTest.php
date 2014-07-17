@@ -1146,6 +1146,7 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 
 	/**
 	 * @group Slow
+	 * @group Broken
 	 * @slowExecutionTime 0.08988 ms
 	 * @group UsingDB
 	 * @covers WikiaSearchController::advancedBox
@@ -1286,6 +1287,7 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 
 	/**
 	 * @group Slow
+	 * @group Broken
 	 * @slowExecutionTime 0.08337 ms
 	 * @covers WikiaSearchController::setNamespacesFromRequest
 	 */
@@ -1333,6 +1335,7 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 
 	/**
 	 * @group Slow
+	 * @group Broken
 	 * @slowExecutionTime 0.08119 ms
 	 * @covers WikiaSearchController::setNamespacesFromRequest
 	 */
@@ -1381,6 +1384,7 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 
 	/**
 	 * @group Slow
+	 * @group Broken
 	 * @slowExecutionTime 0.07994 ms
 	 * @covers WikiaSearchController::setNamespacesFromRequest
 	 */

@@ -663,6 +663,7 @@ class ConfigTest extends BaseTest {
 
 	/**
 	 * @group Slow
+	 * @group Broken
 	 * @slowExecutionTime 0.07724 ms
 	 * @covers \Wikia\Search\Config::setFilterQuery
 	 * @covers \Wikia\Search\Config::setFilterQueries

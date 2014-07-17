@@ -3,6 +3,7 @@
 use Wikia\Tasks\Tasks\BaseTask;
 
 class HAWelcomeTask extends BaseTask {
+	use IncludeMessagesTrait;
 
 	/** @type String The default user to send welcome messages. */
 	const DEFAULT_WELCOMER = 'Wikia';
@@ -141,7 +142,7 @@ class HAWelcomeTask extends BaseTask {
 	}
 
 	protected function getMessageWallExtensionEnabled() {
-		if ( is_null($this->bMessageWallExt) ) {
+		if ( is_null( $this->bMessageWallExt ) ) {
 			/**
 			 * @global Boolean Indicated whether the Message Wall extension is enabled.
 			 */
@@ -152,13 +153,28 @@ class HAWelcomeTask extends BaseTask {
 		return $this->bMessageWallExt;
 	}
 
-	protected function createUserProfilePage() {
+	public function createUserProfilePage() {
 		$this->info( "attempting to create welcome user page" );
-		$recipientProfile = new Article( $this->recipientObject->getUserPage() );
+		$recipientProfile = $this->getRecipientProfilePage();
 		if ( ! $recipientProfile->exists() ) {
-			$recipientProfile->doEdit( wfMessage( 'welcome-user-page', $this->recipientName )->inContentLanguage()->plain(), false, $this->integerFlags );
+			$this->info( sprintf( "creating welcome user page for %s from %s",
+				$this->recipientObject->getName(), $this->senderObject->getName() ) );
+			$recipientProfile->doEdit(
+				$this->getWelcomePageTemplateForRecipient(),
+				false,
+				$this->integerFlags,
+				false,
+				$this->senderObject
+			);
 		}
+	}
 
+	protected function getRecipientProfilePage() {
+		return new Article( $this->recipientObject->getUserPage() );
+	}
+
+	protected function getWelcomePageTemplateForRecipient() {
+		return $this->getPlainVersionOfMessage( 'welcome-user-page', [$this->recipientName] );
 	}
 
 	/**
@@ -193,7 +209,7 @@ class HAWelcomeTask extends BaseTask {
 				$aUsers = array( 'bot' => array(), 'sysop' => array() );
 
 				// Classify the users as sysops or bots.
-				while( $oRow = $oDB->fetchObject( $oResult ) ) {
+				while ( $oRow = $oDB->fetchObject( $oResult ) ) {
 					array_push( $aUsers[$oRow->ug_group], $oRow->ug_user );
 				}
 
@@ -234,7 +250,7 @@ class HAWelcomeTask extends BaseTask {
 		}
 
 		// Terminate, if a valid user object has been created.
-		if( $senderObject instanceof User && $senderObject->getId() ) {
+		if ( $senderObject instanceof User && $senderObject->getId() ) {
 			$this->senderObject = $senderObject;
 			return;
 		}
@@ -250,7 +266,7 @@ class HAWelcomeTask extends BaseTask {
 		$senderObject = Wikia::staffForLang( $wgLanguageCode );
 
 		// Terminate, if a valid user object has been created.
-		if( $senderObject instanceof User && $senderObject->getId() ) {
+		if ( $senderObject instanceof User && $senderObject->getId() ) {
 			$this->senderObject = $senderObject;
 			return;
 		}
@@ -334,18 +350,15 @@ class HAWelcomeTask extends BaseTask {
 			$welcomeMessage = $this->welcomeMessage;
 		}
 
-		$this->getRecipientTalkPage()->doEdit( $welcomeMessage, $this->getTextVersionOfMessage( 'welcome-message-log' ), $this->integerFlags );
-	}
-
-	/**
-	 * Get the text version of inContentLanguage message. This is a wrapper so that we can
-	 * limit side effects in unit tests.
-	 *
-	 * @param string $message
-	 * @return string
-	 */
-	protected function getTextVersionOfMessage( $message ) {
-		return wfMessage( $message )->inContentLanguage()->text();
+		$this->info( sprintf( "posting talkpage message to %s from %s",
+			$this->recipientObject->getName(), $this->senderObject->getName() ) );
+		$this->getRecipientTalkPage()->doEdit(
+			$welcomeMessage,
+			$this->getTextVersionOfMessage( 'welcome-message-log' ),
+			$this->integerFlags,
+			false,
+			$this->senderObject
+		);
 	}
 
 	/**
@@ -357,7 +370,7 @@ class HAWelcomeTask extends BaseTask {
 	public function setMessage() {
 		$welcomeMessageKey = 'welcome-message-';
 
-		//Determine the proper key
+		// Determine the proper key
 		//
 		// Is Message Wall enabled?
 		$welcomeMessageKey  .= $this->getMessageWallExtensionEnabled() ? 'wall-'  : '';
@@ -382,11 +395,10 @@ class HAWelcomeTask extends BaseTask {
 			? 'staffsig-text' : 'signature';
 
 		// Determine the full signature.
-		$sFullSignature = wfMessage(
+		$sFullSignature = $this->getTextVersionOfMessage(
 			$sSignatureKey,
-			$this->senderObject->getName(),
-			Parser::cleanSigInSig( $this->senderObject->getName() )
-		)->inContentLanguage()->text();
+			[$this->senderObject->getName(), Parser::cleanSigInSig( $this->senderObject->getName() )]
+		);
 
 		// Append the timestamp to the signature.
 		$sFullSignature .= ' ~~~~~';
@@ -401,12 +413,12 @@ class HAWelcomeTask extends BaseTask {
 		// * welcome-message-wall-user-staff
 		// * welcome-message-wall-anon
 		// * welcome-message-wall-anon-staff
-		$this->welcomeMessage = wfMessage( $welcomeMessageKey,
+		$this->welcomeMessage = $this->getPlainVersionOfMessage( $welcomeMessageKey, [
 			$sPrefixedText,
 			$this->senderObject->getUserPage()->getTalkPage()->getPrefixedText(),
 			$sFullSignature,
 			wfEscapeWikiText( $this->recipientName )
-		)->inContentLanguage()->plain();
+		] );
 	}
 
 	public function normalizeInstanceParameters( $params ) {
@@ -415,9 +427,13 @@ class HAWelcomeTask extends BaseTask {
 		$this->timestamp     = ( isset( $params['iTimestamp'] ) ) ? $params['iTimestamp'] : 0;
 	}
 
-
 	public function setSenderObject( \User $sender ) {
 		$this->senderObject = $sender;
+		return $this;
+	}
+
+	public function setRecipientObject( \User $recipient ) {
+		$this->recipientObject = $recipient;
 		return $this;
 	}
 

@@ -391,4 +391,5 @@ abstract class BaseTask {
 
 		return AsyncTaskList::batch( $taskLists );
 	}
+
 }

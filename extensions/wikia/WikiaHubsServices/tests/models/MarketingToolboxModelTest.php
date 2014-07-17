@@ -73,6 +73,7 @@ class MarketingToolboxModelTest extends WikiaBaseTest {
 
 	/**
 	 * @group Slow
+	 * @group Broken
 	 * @slowExecutionTime 0.05268 ms
 	 */
 	public function testGetSectionName() {
@@ -100,6 +101,9 @@ class MarketingToolboxModelTest extends WikiaBaseTest {
 		$this->assertArrayHasKey(WikiFactoryHub::CATEGORY_ID_LIFESTYLE, $verticals);
 	}
 
+	/**
+	 * @group Broken
+	 */
 	public function testGetModuleUrl() {
 		$params = array(
 			'moduleId' => MarketingToolboxModuleSliderService::MODULE_ID,
@@ -225,6 +229,7 @@ class MarketingToolboxModelTest extends WikiaBaseTest {
 
 	/**
 	 * @group Slow
+	 * @group Broken
 	 * @slowExecutionTime 0.01649 ms
 	 */
 	public function testGetModulesDataWithoutDefaults() {
