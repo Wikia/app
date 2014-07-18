@@ -215,7 +215,14 @@ class WikiaApiController extends WikiaController {
 		return array_flip( $array );
 	}
 
-	protected function processImgFields( &$data, &$processFields ) {
+	/**
+	 * Process all fields containing image url;
+	 * Remove them if serveImages returns false
+	 * @param $data
+	 * @param $processFields
+	 * @return mixed
+	 */
+	protected function processImgFields( $data, $processFields ) {
 		$imageFields = array_key_exists( 'imgFields', $processFields ) ? $processFields[ 'imgFields' ] : null;
 		if ( !$this->serveImages() && !empty( $imageFields ) ) {
 
@@ -225,9 +232,17 @@ class WikiaApiController extends WikiaController {
 				}
 			);
 		}
+		return $data;
 	}
 
-	protected function processUrlFields( &$data, &$processFields ) {
+	/**
+	 * Process all fields containing urls;
+	 * Add "ref=xxx" to them
+	 * @param $data
+	 * @param $processFields
+	 * @return mixed
+	 */
+	protected function processUrlFields( $data, $processFields ) {
 		$urlsFields = array_key_exists( 'urlFields', $processFields ) ? $processFields[ 'urlFields' ] : null;
 		$urlRef = $this->getRefUrlPart();
 
@@ -250,6 +265,7 @@ class WikiaApiController extends WikiaController {
 				}
 			);
 		}
+		return $data;
 	}
 
 
@@ -261,8 +277,8 @@ class WikiaApiController extends WikiaController {
 	protected function setResponseData( $data, $processFields, $cacheValidity = 0 ) {
 
 		if ( is_array( $data ) ) {
-			$this->processImgFields( $data, $processFields );
-			$this->processUrlFields( $data, $processFields );
+			$data = $this->processImgFields( $data, $processFields );
+			$data = $this->processUrlFields( $data, $processFields );
 		}
 		$response = $this->getResponse();
 		$response->setData( $data );
