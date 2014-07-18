@@ -9,7 +9,11 @@
 }
 </style>
 <div id="MAPS_BUTTON"></div>
-<script src="/__am/1404826000/groups/-/interactivemaps_ads_js"></script>
-<script src="ads.js"></script>
-<script>ads.load();</script>
+<script>
+	var cb = parseInt(location.search.replace('?', ''));
+	document.write('<script src="/__am/' + cb + '/groups/-/interactivemaps_ads_js"></scr' + 'ipt>');
+</script>
+<script>
+	ads.load();
+</script>
 </html>
