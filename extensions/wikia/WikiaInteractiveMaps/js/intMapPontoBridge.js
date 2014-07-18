@@ -116,5 +116,14 @@ define(
 		return new PontoBridge();
 	};
 
+	/**
+	 * @desc sets target for ponto and inits iframe
+	 * @param {Element} iframe - target iframe
+	 */
+	PontoBridge.init = function(iframe) {
+		ponto.setTarget(Ponto.TARGET_IFRAME, '*', iframe.contentWindow);
+		iframe.src = iframe.dataset.url;
+	}
+
 	return PontoBridge;
 });
