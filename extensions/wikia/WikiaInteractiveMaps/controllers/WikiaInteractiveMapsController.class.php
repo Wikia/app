@@ -234,7 +234,7 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 
 		$result = false;
 		if ( $mapId && $this->wg->User->isLoggedIn() ) {
-			$result = $this->mapsModel->updateDeletedMapById( $mapId, $deleted )[ 'success' ];
+			$result = $this->mapsModel->updateMapDeletionStatus( $mapId, $deleted )[ 'success' ];
 		}
 		if ( $result ) {
 			$action = $deleted === self::MAP_DELETED

@@ -270,7 +270,7 @@ class WikiaMaps extends WikiaObject {
 	 *
 	 * @return bool
 	 */
-	public function updateDeletedMapById( $mapId, $deleted ) {
+	public function updateMapDeletionStatus( $mapId, $deleted ) {
 		$payload = [
 			'deleted' => $deleted
 		];
