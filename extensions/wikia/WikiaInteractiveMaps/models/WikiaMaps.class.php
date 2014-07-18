@@ -530,7 +530,7 @@ class WikiaMaps extends WikiaObject {
 		$breakPoint = strrpos( $url, '/' );
 		$baseURL = substr( $url, 0, $breakPoint );
 		$fileName = substr( $url , $breakPoint + 1 );
-		$deltaY = $align === self::THUMB_ALIGNMENT_CENTER ? self::DELTA_Y_DEFAULT : self::DELTA_Y_CENTERED;
+		$deltaY = $align === self::THUMB_ALIGNMENT_CENTER ? self::DELTA_Y_CENTERED : self::DELTA_Y_DEFAULT;
 
 		return ImagesService::getThumbUrlFromFileUrl(
 			$baseURL . self::MAP_THUMB_PREFIX . $fileName,
