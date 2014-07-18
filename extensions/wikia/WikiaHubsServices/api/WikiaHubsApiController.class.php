@@ -121,7 +121,10 @@ class WikiaHubsApiController extends WikiaApiController {
 		$this->setResponseData(
 			[ 'data' => $data ],
 			[ 'urlFields' =>
-				[ 'photoUrl', 'url', 'imageLink', 'imageUrl', 'articleUrl', 'href', 'userUrl', 'hubUrl', 'wikiUrl' ]
+				[
+					'articleUrl', 'href', 'hubUrl', 'imageLink',
+					'imageUrl',  'photoUrl', 'url', 'userUrl', 'wikiUrl'
+				]
 			],
 			WikiaResponse::CACHE_STANDARD
 		);

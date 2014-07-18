@@ -101,10 +101,15 @@ class WAMApiController extends WikiaApiController {
 			}
 		);
 
+		if (!$this->request->isInternal() && empty($wamIndex['wam_index'])) {
+			$wamIndex['wam_index'] = (object)$wamIndex['wam_index'];
+		}
+
 		$this->setResponseData(
-			[   'wam_index' => $wamIndex['wam_index'],
-				'wam_results_total' => $wamIndex['wam_results_total'],
-				'wam_index_date' => $wamIndex['wam_index_date']
+			[
+				'wam_index' => $wamIndex[ 'wam_index' ],
+				'wam_results_total' => $wamIndex[ 'wam_results_total' ],
+				'wam_index_date' => $wamIndex[ 'wam_index_date' ]
 			],
 			[ 'urlFields' => [ 'avatarUrl', 'userPageUrl', 'userContributionsUrl' ] ],
 			self::WAM_RESPONSE_CACHE_VALIDITY
