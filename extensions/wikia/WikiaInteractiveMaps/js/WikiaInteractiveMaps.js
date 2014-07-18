@@ -63,7 +63,6 @@ require(
 			});
 
 		if (targetIframe) {
-			console.log(pontoBridge);
 			pontoBridge.init(targetIframe);
 		}
 
