@@ -222,7 +222,7 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 	}
 
 	/**
-	 * @desc Ajax method for deleting a map from IntMaps API
+	 * @desc Ajax method for un/deleting a map from IntMaps API
 	 */
 	public function updateDeleteMap() {
 		$mapId = $this->request->getVal( 'mapId', 0 );
