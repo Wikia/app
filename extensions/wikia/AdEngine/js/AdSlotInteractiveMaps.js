@@ -15,7 +15,7 @@ define('ext.wikia.adEngine.slot.interactiveMaps', ['wikia.log', 'wikia.window', 
 		var params = adLogicPageParams.getPageLevelParams(),
 			adParams = {},
 			iframe,
-			url = '/__cb' + window.wgStyleVersion + '/extensions/wikia/AdEngine/InteractiveMaps/ad.html';
+			url = '/extensions/wikia/AdEngine/InteractiveMaps/ad.html';
 
 		adParams.mapid = container.getAttribute('data-map-id');
 		adParams.s0 = params.s0;
@@ -31,7 +31,7 @@ define('ext.wikia.adEngine.slot.interactiveMaps', ['wikia.log', 'wikia.window', 
 		iframe = document.createElement('iframe');
 		iframe.id = 'wikia-map-ad-' + adParams.mapid + '-' + iframeCounter;
 		iframe.name = 'wikia-map-ad-' + adParams.mapid + '-' + iframeCounter;
-		iframe.src = url + '#' + JSON.stringify({adParams: adParams});
+		iframe.src = url + '?' + window.wgStyleVersion + '#' + JSON.stringify({adParams: adParams});
 		container.appendChild(iframe);
 
 		log(['initSlot', 'iframeCreated', iframe, 'adParams', adParams], 'info', logGroup);
