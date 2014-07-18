@@ -266,7 +266,7 @@ class WikiaMaps extends WikiaObject {
 	 * Sends a request to delete a map instance
 	 *
 	 * @param integer $mapId
-	 * @param integer $deleted Is map deleted or undeleted
+	 * @param integer $deleted Is map being deleted or undeleted
 	 *
 	 * @return bool
 	 */
