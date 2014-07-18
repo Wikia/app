@@ -204,6 +204,7 @@ class WikiaApiController extends WikiaController {
 
 	/**
 	 * Prepare input array for replaceArrayValues
+	 * convert array to [ field_name => N ]
 	 * @param $array | string
 	 * @return array
 	 */
@@ -211,7 +212,6 @@ class WikiaApiController extends WikiaController {
 		if ( !is_array( $array ) ) {
 			$array = [ $array ];
 		}
-		//convert array to [ field_name => N ]
 		return array_flip( $array );
 	}
 
@@ -223,7 +223,7 @@ class WikiaApiController extends WikiaController {
 	 * @return mixed
 	 */
 	protected function processImgFields( $data, $processFields ) {
-		$imageFields = array_key_exists( 'imgFields', $processFields ) ? $processFields[ 'imgFields' ] : null;
+		$imageFields = isset( $processFields['imgFields'] ) ? $processFields[ 'imgFields' ] : null;
 		if ( !$this->serveImages() && !empty( $imageFields ) ) {
 
 			self::replaceArrayValues( $data, $this->createFieldsArray( $imageFields ),
@@ -243,7 +243,7 @@ class WikiaApiController extends WikiaController {
 	 * @return mixed
 	 */
 	protected function processUrlFields( $data, $processFields ) {
-		$urlsFields = array_key_exists( 'urlFields', $processFields ) ? $processFields[ 'urlFields' ] : null;
+		$urlsFields = isset( $processFields['urlFields'] ) ? $processFields[ 'urlFields' ] : null;
 		$urlRef = $this->getRefUrlPart();
 
 		if ( $urlRef && !empty( $urlsFields ) ) {
@@ -294,7 +294,7 @@ class WikiaApiController extends WikiaController {
 	 */
 	protected static function replaceArrayValues( &$input, $fields, callable $replaceFnc ) {
 		foreach ( $input as $key => &$val ) {
-			if ( array_key_exists( $key, $fields ) ) {
+			if ( isset( $fields[ $key ] ) ) {
 				$val = $replaceFnc($val);
 			} elseif ( is_array( $val ) ) {
 				self::replaceArrayValues( $val, $fields, $replaceFnc );
