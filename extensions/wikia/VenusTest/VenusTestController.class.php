@@ -15,29 +15,20 @@ class VenusTestController extends WikiaSpecialPageController {
 			return false; // skip rendering
 		}
 
-		$this->request->setVal('useskin', 'venus');
+		// As we assign to Body, we don't need it now, but it should be implemented
 
-		RenderContentOnlyHelper::setRenderContentVar( true );
-		RenderContentOnlyHelper::setRenderContentLevel( RenderContentOnlyHelper::LEAVE_NAV_ONLY );
-		$this->response->addAsset( 'extensions/wikia/Venus/styles/Venus.scss' );
+		// $this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_HANDLEBARS );
 		$this->response->addAsset( 'extensions/wikia/VenusTest/styles/VenusTest.scss' );
 
-		$this->wg->Out->setPageTitle( wfMessage( 'special-venustest-title' )->plain() );
-		$this->response->setCacheValidity(WikiaResponse::CACHE_STANDARD);
+		$html = ( new Wikia\Template\HandlebarsEngine )
+			->setPrefix( dirname( __FILE__ ) . '/templates' )
+			->setPartialDir( dirname( __FILE__ ) . '/templates/partials' )
+			->setPartialPrefix( '_' )
+			->setData( $this->getTestData() )
+			->render( 'VenusTest_index' );
 
-		$this->wg->Out->clearHTML();
-		$this->wg->Out->addHtml( ( new Wikia\Template\HandlebarsEngine )
-				->setPrefix( dirname( __FILE__ ) . '/templates' )
-				->setPartialDir ( dirname( __FILE__ ) . '/templates/partials' )
-				->setPartialPrefix ( '_' )
-				->setData( $this->getTestData() )
-				->render( 'VenusTest_index' )
-		);
+		$this->response->setBody( $html );
 
-		// skip rendering
-		$this->skipRendering();
-
-		return true;
 	}
 
 	private function getTestData() {
@@ -47,7 +38,7 @@ class VenusTestController extends WikiaSpecialPageController {
 				'Bogna',
 				'Damian',
 				'Warkot',
-				'V',
+				'V.',
 				'Kalina',
 				'Tower',
 				'Opener',

@@ -1,5 +1,27 @@
+@import "../../Venus/styles/Venus";
+
 .columns {
 	border: 1px solid #aaa;
 	padding: 10px;
 	background: #eee;
+}
+
+.row.info > span {
+	display: none;
+
+	@media #{$small-only} {
+		&.small {
+			display: block;
+		}
+	}
+	@media #{$medium-only} {
+		&.medium {
+			display: block;
+		}
+	}
+	@media #{$large-up} {
+		&.large {
+			display: block;
+		}
+	}
 }

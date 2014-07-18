@@ -55,6 +55,7 @@ class HandlebarsEngine extends Engine {
 					]
 				)
 		]);
+
 		$contents = $handlebarsEngine->render( $template, $this->values );
 		wfProfileOut( __METHOD__ . " - template: {$path}" );
 
