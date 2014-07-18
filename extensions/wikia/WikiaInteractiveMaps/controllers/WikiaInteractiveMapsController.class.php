@@ -153,9 +153,8 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 
 			if ( $deleted ) {
 				if ( F::app()->checkSkin( 'oasis' ) ) {
-
 					NotificationsController::addConfirmation(
-						wfMessage('wikia-interactive-maps-map-is-deleted'),
+						wfMessage( 'wikia-interactive-maps-map-is-deleted' ),
 						NotificationsController::CONFIRMATION_WARN
 					);
 				}
@@ -199,12 +198,12 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 			'dropdown' => [],
 		];
 		if ( $deleted ) {
-			$actionButtonArray['dropdown']['unDeleteMap'] = [
+			$actionButtonArray[ 'dropdown' ][ 'unDeleteMap' ] = [
 				'text' => wfMessage( 'wikia-interactive-maps-undelete-map' )->escaped(),
 				'id' => 'unDeleteMap'
 			];
 		} else {
-			$actionButtonArray['dropdown']['deleteMap'] = [
+			$actionButtonArray[ 'dropdown' ][ 'deleteMap' ] = [
 				'text' => wfMessage( 'wikia-interactive-maps-delete-map' )->escaped(),
 				'id' => 'deleteMap'
 			];
