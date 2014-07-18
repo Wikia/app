@@ -3,10 +3,10 @@ require(
 		'jquery',
 		'wikia.querystring',
 		'wikia.window',
-		'ponto',
-		'wikia.intMap.utils'
+		'wikia.intMap.utils',
+		'wikia.intMap.pontoBridge'
 	],
-	function ($, qs, w, ponto, utils) {
+	function ($, qs, w, utils, pontoBridge) {
 		'use strict';
 
 		var body = $('body'),
@@ -62,17 +62,8 @@ require(
 				triggerAction('deleteMap');
 			});
 
-		initMapIframe(targetIframe);
-
-		/**
-		 * @desc sets iFrame target for ponto and loads its content if iFrame exists
-		 * @param {object} targetIframe - iFrame element
-		 */
-		function initMapIframe(targetIframe) {
-			if (targetIframe) {
-				ponto.setTarget(Ponto.TARGET_IFRAME, '*', targetIframe.contentWindow);
-				targetIframe.src = targetIframe.dataset.url;
-			}
+		if (targetIframe) {
+			pontoBridge.init(targetIframe);
 		}
 
 		/**
@@ -98,6 +89,11 @@ require(
 					utils.loadModal(actionConfig);
 				});
 			}
+		}
+
+		// VE Insert Map dialog passes this hash to initiate map creating process right away
+		if (w.location.hash === '#createMap') {
+			triggerAction('createMap');
 		}
 	}
 );
