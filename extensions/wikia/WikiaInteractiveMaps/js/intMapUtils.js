@@ -314,9 +314,9 @@ define(
 			cleanUpError: cleanUpError,
 			createThumbURL: createThumbURL,
 			mapDeleted: {
-				MAP_NOT_DELETED: 0,
-				MAP_DELETED: 1
+				mapNotDeleted: 0,
+				mapDeleted: 1
 			}
-		}
+		};
 	}
 );

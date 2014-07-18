@@ -17,7 +17,7 @@ define('wikia.intMaps.unDeleteMap', ['jquery', 'wikia.querystring', 'wikia.intMa
 			type: 'POST',
 			data: {
 				mapId: mapId,
-				deleted: utils.mapDeleted.MAP_NOT_DELETED
+				deleted: utils.mapDeleted.mapNotDeleted
 			},
 			callback: function(response) {
 				var redirectUrl = response.redirectUrl;
