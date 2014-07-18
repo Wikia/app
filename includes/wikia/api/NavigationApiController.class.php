@@ -26,7 +26,7 @@ class NavigationApiController extends WikiaApiController {
 		}
 
 		$this->setResponseData(
-			[ "navigation" => $ret ],
+			[ 'navigation' => $ret ],
 			[ 'urlFields' => 'href' ],
 			NavigationModel::CACHE_TTL
 		);
