@@ -1,10 +1,11 @@
 ( function ( window ) {
 	'use strict';
-	var _kiq = [];
+	var _kiq = [],
+		createCookie;
 
-	function createCookie(cookieName) {
+	createCookie = function(cookieName) {
 		document.cookie = cookieName + '=true;path=/';
-	}
+	};
 
 	setTimeout(function(){
 		var d = document, f = d.getElementsByTagName('script')[0], s = d.createElement('script'); s.type = 'text/javascript';
