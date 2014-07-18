@@ -10,7 +10,7 @@
  */
 
 (function( window, undefined ) {
-	var possible_domains, i;
+	var possible_domains, i, cookieExists;
 	/**
 	 * Main Tracker
 	 *
@@ -18,9 +18,9 @@
 	 */
 	window._gaq = window._gaq || [];
 
-	function cookieExists(cookieName) {
+	cookieExists= function(cookieName) {
 		return document.cookie.indexOf(cookieName) > -1;
-	}
+	};
 
 	// Main Roll-up Account - UA-32129070-1
 	window._gaq.push( ['_setAccount', 'UA-32129070-1'] ); // PROD
