@@ -13,7 +13,7 @@ define('wikia.intMaps.unDeleteMap', ['jquery', 'wikia.querystring', 'wikia.intMa
 	function init() {
 		$.nirvana.sendRequest({
 			controller: 'WikiaInteractiveMaps',
-			method: 'updateDeleteMap',
+			method: 'updateMapDeletionStatus',
 			type: 'POST',
 			data: {
 				mapId: mapId,
