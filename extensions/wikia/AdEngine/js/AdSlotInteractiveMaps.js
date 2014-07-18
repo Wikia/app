@@ -11,27 +11,28 @@ define('ext.wikia.adEngine.slot.interactiveMaps', ['wikia.window', 'wikia.docume
 		}
 
 		var params = adLogicPageParams.getPageLevelParams(),
-			data = {},
-			iframe;
+			adParams = {},
+			iframe,
+			url = '/__cb' + window.wgStyleVersion + '/extensions/wikia/AdEngine/InteractiveMaps/ad.html';
 
-		data.mapid = container.getAttribute('data-map-id');
-		data.s0 = params.s0;
-		data.s1 = params.s1;
-		data.s2 = 'map';
-		data.hostpre = params.hostpre;
-		data.dmn = params.dmn;
+		adParams.mapid = container.getAttribute('data-map-id');
+		adParams.s0 = params.s0;
+		adParams.s1 = params.s1;
+		adParams.s2 = 'map';
+		adParams.hostpre = params.hostpre;
+		adParams.dmn = params.dmn;
 
-		if (!data.mapid) {
+		if (!adParams.mapid) {
 			return false;
 		}
 
-		iframe = document.createElement('IFRAME');
-		iframe.id = 'wikia-map-ad-' + data.mapid + '-' + iframeCounter;
-		iframe.name = 'wikia-map-ad-' + data.mapid + '-' + iframeCounter;
-		iframe.src = '/__cb' + window.wgStyleVersion + '/extensions/wikia/AdEngine/InteractiveMaps/ad.html#' + JSON.stringify(data);
+		iframe = document.createElement('iframe');
+		iframe.id = 'wikia-map-ad-' + adParams.mapid + '-' + iframeCounter;
+		iframe.name = 'wikia-map-ad-' + adParams.mapid + '-' + iframeCounter;
+		iframe.src = url + '#' + JSON.stringify({adParams: adParams});
 		container.appendChild(iframe);
 
-		iframeCounter = iframeCounter + 1;
+		iframeCounter += 1;
 	}
 
 	return {

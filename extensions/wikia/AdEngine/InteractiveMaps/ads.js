@@ -11,7 +11,7 @@ var ads = (function (window, document) {
 
 			return {
 				getPageLevelParams: function() {
-					return hashParams;
+					return hashParams.adParams;
 				}
 			};
 		});
