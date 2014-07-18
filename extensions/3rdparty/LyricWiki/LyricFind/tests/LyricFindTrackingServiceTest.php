@@ -48,6 +48,7 @@ class LyricFindTrackingServiceTest extends WikiaBaseTest {
 				'gracenoteId' => 0,
 				'title' => 'Paradise_Lost:Forever_Failure',
 				'expected' => ''
+				#'expected' => 'trackname:forever_failure,artistname:paradise_lost'
 			],
 			// strip commas
 			[
