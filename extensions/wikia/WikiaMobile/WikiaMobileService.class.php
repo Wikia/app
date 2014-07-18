@@ -42,7 +42,7 @@ class WikiaMobileService extends WikiaService {
 
 		$mobileAdService = new WikiaMobileAdService();
 
-		if ( $mobileAdService->shouldLoadAssets() ) {
+		if ( $mobileAdService->shouldShowAds() ) {
 			$this->jsBodyPackages[] = 'wikiamobile_ads_js';
 
 			if ( $this->wg->AdDriverTrackState ) {
@@ -53,11 +53,7 @@ class WikiaMobileService extends WikiaService {
 				$this->globalVariables['wgAdDriverEnableRemnantGptMobile'] = $this->wg->AdDriverEnableRemnantGptMobile;
 			}
 
-			if ( $mobileAdService->shouldShowAds() ) {
-				$topLeaderBoardAd = $this->app->renderView( 'WikiaMobileAdService', 'topLeaderBoard' );
-				$this->globalVariables['wgShowAds'] = true;
-				$this->globalVariables['wgUsePostScribe'] = true; /** @see ADEN-666 */
-			}
+			$topLeaderBoardAd = $this->app->renderView( 'WikiaMobileAdService', 'topLeaderBoard' );
 		}
 
 		$this->response->setVal( 'topLeaderBoardAd', $topLeaderBoardAd );
@@ -169,6 +165,10 @@ class WikiaMobileService extends WikiaService {
 				) .
 				AnalyticsEngine::track(
 					'ClarityRay',
+					AnalyticsEngine::EVENT_PAGEVIEW
+				) .
+				AnalyticsEngine::track(
+					'PageFair',
 					AnalyticsEngine::EVENT_PAGEVIEW
 				);
 		}

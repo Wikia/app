@@ -8,13 +8,13 @@
 	<?php if( !is_null($imageLink) ): ?>
 		<a class="wikias-picks-image" href="<?= $imageLink ?>">
 	<?php endif; ?>
-	
+
 	<img class="floatright" src="<?= $imageUrl ?>" alt="<?= $imageAlt ?>" />
-	
+
 	<?php if( !is_null($imageLink) ): ?>
 		</a>
 	<?php endif; ?>
-	
+
 	<?= $text ?>
 </p>
 

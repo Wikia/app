@@ -17,7 +17,7 @@
  */
 ve.ce.WikiaBlockImageNode = function VeCeWikiaBlockImageNode( model, config ) {
 	// Parent constructor
-	ve.ce.WikiaBlockMediaNode.call( this, model, config );
+	ve.ce.WikiaBlockImageNode.super.call( this, model, config );
 };
 
 /* Inheritance */

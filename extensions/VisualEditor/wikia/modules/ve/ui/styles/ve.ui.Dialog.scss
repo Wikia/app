@@ -50,3 +50,8 @@
 	transform: none;
 	transition: none;
 }
+
+.oo-ui-window-head.oo-ui-texture-pending,
+.oo-ui-window-foot.oo-ui-texture-pending {
+	background-image: none;
+}

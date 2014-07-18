@@ -90,7 +90,8 @@ ve.init.mw.TargetEvents.prototype.onSaveComplete = function () {
 		'action': ve.track.actions.CLICK,
 		'label': 'dialog-save-publish',
 		'duration': ve.now() - this.timings.saveInitiated
-	} );};
+	} );
+};
 
 /**
  * Track a save error by type

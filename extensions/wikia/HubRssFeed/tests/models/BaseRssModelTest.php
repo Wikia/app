@@ -180,11 +180,16 @@ class DummyNotMockedModel extends BaseRssModel {
 	}
 }
 
-class BaseRssModelTest extends WikiaBaseTest {
-	protected static function getFn( $obj, $name ) {
-		$class = new ReflectionClass( get_class( $obj ) );
-		$method = $class->getMethod( $name );
-		$method->setAccessible( true );
+/**
+ * @group UsingDB
+ */
+class BaseRssModelTest extends WikiaBaseTest
+{
+	protected static function getFn($obj, $name)
+	{
+		$class = new ReflectionClass(get_class($obj));
+		$method = $class->getMethod($name);
+		$method->setAccessible(true);
 
 		return function () use ( $obj, $method ) {
 			$args = func_get_args();

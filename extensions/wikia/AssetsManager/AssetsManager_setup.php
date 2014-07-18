@@ -46,5 +46,7 @@ function onUserGetRights( $user, &$aRights ) {
 function AssetsManagerEntryPoint() {
 	global $wgRequest;
 	AssetsManagerServer::serve($wgRequest);
+
+	wfRunHooks('RestInPeace');
 	exit();
 }

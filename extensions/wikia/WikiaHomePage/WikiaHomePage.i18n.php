@@ -17,17 +17,6 @@ $messages['en'] = array(
 	'wikiahome-visualisation-remix-mixituptext' => 'Thousands of communities at your fingertips. Remix to explore Wikia.',
 	'wikiahome-visualisation-remix-button' => 'Remix',
 
-	'wikiahome-stats-heading' => 'Collaboration in action',
-	'wikiahome-stats-visitors' => 'Monthly visitors',
-	'wikiahome-stats-visitors-tooltip' => 'Monthly Visitors is based on Quantcast\'s Global "People" metric which is composed of online and mobile web.',
-	'wikiahome-stats-mobile-visitors' => 'Monthly mobile visitors',
-	'wikiahome-stats-mobile-percentage' => '% Mobile Visitors',
-	'wikiahome-stats-mobile-percentage-value' => '$1%',
-	'wikiahome-stats-edits' => 'Changes today',
-	'wikiahome-stats-communities' => 'Total Communities',
-	'wikiahome-stats-new-communities' => 'Communities today',
-	'wikiahome-stats-totalpages' => 'Total Pages',
-
 	'wikiahome-hubs-slot-more-in-heading' => 'More in $1',
 
 	'wikia-home-page-preview' => 'Preview',
@@ -141,19 +130,6 @@ $messages['de'] = array(
 	'wikiahome-visualisation-remix-mixituptext' => 'Tausende von Wikis auf einen Klick. Drücke auf Remix, um noch mehr von Wikia zu erkunden.',
 	'wikiahome-visualisation-remix-button' => 'Remix',
 
-	'wikiahome-stats-heading' => 'Interaktive Zusammenarbeit',
-	'wikiahome-stats-visitors' => 'Monatliche Besucher',
-	'wikiahome-stats-visitors-tooltip' => 'Die Anzahl der monatlichen Besucher basiert auf der "Globalen Besucher" Metrik von Quantcast, bestehend aus Desktop und Mobilem Internet.',
-
-	'wikiahome-stats-edits' => 'Änderungen heute',
-	'wikiahome-stats-communities' => 'Anzahl Communities',
-	'wikiahome-stats-totalpages' => 'Seiten gesamt',
-	'wikiahome-stats-mobile-visitors' => 'Von mobilen Geräten',
-	'wikiahome-stats-new-communities' => 'Neue Wikis heute',
-
-	'wikiahome-stats-mobile-percentage' => '% Besucher von mobilen Geräten',
-	'wikiahome-stats-mobile-percentage-value' => '$1%',
-
 	'wikia-home-page-preview' => 'Vorschau',
 	'wikia-home-page-visit' => 'Aufrufen',
 
@@ -253,18 +229,6 @@ $messages['es'] = array(
 	'wikiahome-visualisation-remix-mixitup' => '¡Mézclalos!',
 	'wikiahome-visualisation-remix-mixituptext' => 'Miles de comunidades están a tu alcance. Mueve la caja de comunidades para explorar Wikia.',
 	'wikiahome-visualisation-remix-button' => 'Mover',
-
-	'wikiahome-stats-heading' => 'La colaboración en acción',
-	'wikiahome-stats-visitors' => 'Visitantes mensuales',
-	'wikiahome-stats-visitors-tooltip' => 'El número de visitantes mensuales se basa en la medición de "Gente" en Quantcast, que se compone por visitas online y desde móviles.',
-	'wikiahome-stats-edits' => 'Cambios hechos hoy',
-	'wikiahome-stats-communities' => 'Comunidades en total',
-	'wikiahome-stats-totalpages' => 'Páginas en total',
-	'wikiahome-stats-mobile-visitors' => 'Desde móviles',
-	'wikiahome-stats-mobile-percentage' => '% desde móviles',
-	'wikiahome-stats-mobile-percentage-value' => '$1%',
-
-	'wikiahome-stats-new-communities' => 'Nuevas comunidades',
 
 	'wikia-home-page-preview' => 'Previsualizar',
 	'wikia-home-page-visit' => 'Visitar',
@@ -375,17 +339,6 @@ $messages['fr'] = array(
 	'wikiahome-visualisation-remix-mixituptext' => 'Des centaines de communautés à votre portée. Mixez pour explorer Wikia.',
 	'wikiahome-visualisation-remix-button' => 'Mixer',
 
-	'wikiahome-stats-heading' => 'La collaboration en action',
-	'wikiahome-stats-visitors' => 'Visiteurs / mois',
-	'wikiahome-stats-visitors-tooltip' => 'Le nombre de visiteurs par mois est basé sur la mesure globale « Personnes » de Quantcast, qui est composée des accès en ligne et depuis les appareils mobiles.',
-	'wikiahome-stats-edits' => 'Modifications / jour',
-	'wikiahome-stats-communities' => 'Communautés totales',
-	'wikiahome-stats-totalpages' => 'Pages totales',
-	'wikiahome-stats-mobile-visitors' => 'Visiteurs mobiles / mois',
-	'wikiahome-stats-mobile-percentage' => '% visiteurs mobiles',
-	'wikiahome-stats-mobile-percentage-value' => '$1%',
-	'wikiahome-stats-new-communities' => 'Communautés / jour',
-
 	'wikia-home-page-preview' => 'Aperçu',
 	'wikia-home-page-visit' => 'Visiter',
 	'wikia-home-parse-source-empty-exception' => 'Le message MediaWiki est vide.',
@@ -474,17 +427,6 @@ $messages['pl'] = array(
 	'wikiahome-visualisation-remix-mixitup' => 'Miksuj!',
 	'wikiahome-visualisation-remix-mixituptext' => 'Tysiące społeczności na wyciągnięcie ręki. Miksuj i odkrywaj Wikię.',
 	'wikiahome-visualisation-remix-button' => 'Miksuj',
-
-	'wikiahome-stats-heading' => 'Współpraca w akcji',
-	'wikiahome-stats-visitors' => 'Miesięcznych odwiedzin',
-	'wikiahome-stats-visitors-tooltip' => 'Miesięczne odwiedziny na podstawie danych Quantcast z sekcji "People", zawierających odwiedziny stacjonarne i mobilne.',
-	'wikiahome-stats-mobile-visitors' => 'Mobilnych odwiedzin',
-	'wikiahome-stats-mobile-percentage' => '% Mobilnych odwiedzin',
-	'wikiahome-stats-mobile-percentage-value' => '$1%',
-	'wikiahome-stats-edits' => 'Zmian dzisiaj',
-	'wikiahome-stats-communities' => 'Społeczności łącznie',
-	'wikiahome-stats-new-communities' => 'Społeczności dzisiaj',
-	'wikiahome-stats-totalpages' => 'Stron łącznie',
 
 	'wikia-home-page-preview' => 'Podgląd',
 	'wikia-home-page-visit' => 'Odwiedź',
@@ -598,17 +540,6 @@ $messages['ja'] = array(
 	'wikiahome-visualisation-remix-mixituptext' => 'ウィキア内の様々な<br/>コミュニティーを<br/>探求しよう!',
 	'wikiahome-visualisation-remix-button' => 'ミックス',
 
-	'wikiahome-stats-heading' => 'コラボ中',
-	'wikiahome-stats-visitors' => '月の訪問者',
-	'wikiahome-stats-visitors-tooltip' => '月の訪問者の数はクオントキャストのグローバル「PEOPLE」スコアで測定しており、その構成はオンラインとモバイルウェブから成り立っています。',
-	'wikiahome-stats-mobile-visitors' => 'ひと月のモバイルからの訪問者',
-	'wikiahome-stats-mobile-percentage' => 'モバイルからの訪問者',
-	'wikiahome-stats-mobile-percentage-value' => '$1%',
-	'wikiahome-stats-edits' => '本日の変更',
-	'wikiahome-stats-communities' => 'コミュニティーの合計数',
-	'wikiahome-stats-new-communities' => '本日のコミュニティー',
-	'wikiahome-stats-totalpages' => 'ページ合計数',
-
 	'wikia-home-page-preview' => 'プレビュー',
 	'wikia-home-page-visit' => '訪問',
 
@@ -709,14 +640,6 @@ $messages['qqq'] = array(
 	'wikiahome-visualisation-remix-mixitup' => 'The title in "remix container"; it\'s just a regural text',
 	'wikiahome-visualisation-remix-mixituptext' => 'The short description of remixing in "remix container" below the title',
 	'wikiahome-visualisation-remix-button' => 'The remix button label; when you click the button images in visualization remix and change',
-
-	'wikiahome-stats-heading' => 'The title in "stats container" it\'s above different statistic numbers connected to Wikia community',
-	'wikiahome-stats-visitors' => 'The text above number telling about our monthly visitors',
-	'wikiahome-stats-mobile-visitors' => 'The text above number telling about our monthly mobile visitors',
-	'wikiahome-stats-edits' => 'The text above number telling about all edits on all our wikis',
-	'wikiahome-stats-communities' => 'The text above number telling about our communities in total',
-	'wikiahome-stats-new-communities' => 'The text above number telling about our new communities',
-	'wikiahome-stats-totalpages' => 'The text above number telling about total pages on all our wikis',
 
 	'wikiahome-hubs-slot-more-in-heading' => 'The headline in hub section before more links connected to Hub vertical',
 

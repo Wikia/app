@@ -343,6 +343,7 @@ $messages['br'] = array(
 	'phalanx-format-exact' => 'rik',
 	'phalanx-tab-main' => 'Merañ ar siloù',
 	'phalanx-tab-secondary' => 'Amprouiñ ar siloù',
+	'phalanx-section-type-page-edition' => 'Page editing'
 	'phalanx-block-success' => "Ouzhpennet eo bet ar bloc'h",
 	'phalanx-block-failure' => "Ur fazi a oa bet pa oad oc'h ouzhpennañ ar bloc'h",
 	'phalanx-modify-success' => "Kemmet eo bet ar bloc'h",

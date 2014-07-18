@@ -23,19 +23,19 @@ ve.ce.nodeFactory.register( ve.ce.NodeStub );
 /* Tests */
 
 QUnit.test( 'getModel', 1, function ( assert ) {
-	var model = new ve.dm.NodeStub( 'stub', 0 ),
+	var model = new ve.dm.NodeStub(),
 		view = new ve.ce.NodeStub( model );
 	assert.strictEqual( view.getModel(), model, 'returns reference to model given to constructor' );
 } );
 
 QUnit.test( 'getParent', 1, function ( assert ) {
-	var a = new ve.ce.NodeStub( new ve.dm.NodeStub( 'stub', 0 ) );
+	var a = new ve.ce.NodeStub( new ve.dm.NodeStub() );
 	assert.strictEqual( a.getParent(), null, 'returns null if not attached' );
 } );
 
 QUnit.test( 'attach', 2, function ( assert ) {
-	var a = new ve.ce.NodeStub( new ve.dm.NodeStub( 'stub', 0 ) ),
-		b = new ve.ce.NodeStub( new ve.dm.NodeStub( 'stub', 0 ) );
+	var a = new ve.ce.NodeStub( new ve.dm.NodeStub() ),
+		b = new ve.ce.NodeStub( new ve.dm.NodeStub() );
 	a.on( 'attach', function ( parent ) {
 		assert.strictEqual( parent, b, 'attach event is called with parent as first argument' );
 	} );
@@ -44,8 +44,8 @@ QUnit.test( 'attach', 2, function ( assert ) {
 } );
 
 QUnit.test( 'detach', 2, function ( assert ) {
-	var a = new ve.ce.NodeStub( new ve.dm.NodeStub( 'stub', 0 ) ),
-		b = new ve.ce.NodeStub( new ve.dm.NodeStub( 'stub', 0 ) );
+	var a = new ve.ce.NodeStub( new ve.dm.NodeStub() ),
+		b = new ve.ce.NodeStub( new ve.dm.NodeStub() );
 	a.attach( b );
 	a.on( 'detach', function ( parent ) {
 		assert.strictEqual( parent, b, 'detach event is called with parent as first argument' );
