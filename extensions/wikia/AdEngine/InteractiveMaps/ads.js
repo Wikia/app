@@ -39,22 +39,14 @@ var ads = (function (window, document) {
 		});
 
 		define('ext.wikia.adEngine.wikiaGptAdDetect', function () {
-			function onAdLoad(slotname, gptEvent, iframe, adCallback, noAdCallback) {
-				if (gptEvent.isEmpty) {
-					if (typeof noAdCallback === 'function') {
-						noAdCallback();
-					}
-				} else {
-					if (typeof adCallback === 'function') {
-						if (window.name) {
+			function onAdLoad(slotname, gptEvent) {
+				if (!gptEvent.isEmpty) {
+					if (window.name) {
+						var parentIframeContainer = window.parent.document.getElementById(window.name).parentNode;
 
-							var parentIframeContainer = window.parent.document.getElementById(window.name).parentNode;
-
-							if (parentIframeContainer) {
-								parentIframeContainer.className = parentIframeContainer.className.replace('hidden', '');
-							}
+						if (parentIframeContainer) {
+							parentIframeContainer.className = parentIframeContainer.className.replace('hidden', '');
 						}
-						adCallback();
 					}
 				}
 			}
