@@ -247,7 +247,11 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 				$mapId
 			);
 
-			NotificationsController::addConfirmation( wfMessage( 'wikia-interactive-maps-delete-map-success' ) );
+			NotificationsController::addConfirmation(
+				$deleted ?
+					wfMessage( 'wikia-interactive-maps-delete-map-success' )->text() :
+					wfMessage( 'wikia-interactive-maps-undelete-map-success' )->text()
+			);
 			$redirectUrl = $this->getSpecialUrl( self::PAGE_NAME );
 			if ( $deleted === self::MAP_NOT_DELETED ) {
 				$redirectUrl = $this->getSpecialUrl( self::PAGE_NAME ) . '/' . $mapId;

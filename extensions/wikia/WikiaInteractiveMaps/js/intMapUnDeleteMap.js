@@ -2,10 +2,18 @@ define('wikia.intMaps.unDeleteMap', ['jquery', 'wikia.querystring', 'wikia.intMa
 	'use strict';
 	var mapId = $('iframe[name=wikia-interactive-map]').data('mapid');
 
+	/**
+	 * @desc Show error message
+	 * @param error error message
+	 */
+	function showError(error) {
+		GlobalNotification.show(error, 'error');
+	}
+
 	function init() {
 		$.nirvana.sendRequest({
 			controller: 'WikiaInteractiveMaps',
-			method: 'deleteMap',
+			method: 'updateDeleteMap',
 			type: 'POST',
 			data: {
 				mapId: mapId,
@@ -16,11 +24,11 @@ define('wikia.intMaps.unDeleteMap', ['jquery', 'wikia.querystring', 'wikia.intMa
 				if (redirectUrl) {
 					qs(redirectUrl).goTo();
 				} else {
-					showError();
+					GlobalNotification.show(response, 'error');
 				}
 			},
-			onErrorCallback: function(response) {
-				utils.handleNirvanaException(modal, response);
+			onErrorCallback: function(error) {
+				GlobalNotification.show(error.statusText, 'error');
 			}
 		});
 	}
