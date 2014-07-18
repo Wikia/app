@@ -13,8 +13,6 @@ class LyricFindController extends WikiaController {
 	const RESPONSE_ERR = 404;
 
 	public function track() {
-		global $wgPhpCli;
-
 		$amgId = intval($this->getVal('amgid'));
 		$gracenoteId = intval($this->getVal('gracenoteid'));
 
@@ -42,7 +40,7 @@ class LyricFindController extends WikiaController {
 
 			// emit raw GIF content when not in CLI mode
 			// i.e. not running unit tests
-			if (empty($wgPhpCli)) {
+			if ( php_sapi_name() != 'cli' ) {
 				echo file_get_contents($this->wg->StyleDirectory . '/common/blank.gif');
 			}
 		}
