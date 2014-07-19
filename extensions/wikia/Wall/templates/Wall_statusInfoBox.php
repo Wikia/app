@@ -10,7 +10,7 @@
 					<? else: ?>
 						<?= wfMessage('wall-message-'.$statusInfo['status'].'-thread-because', array($statusInfo['user_displayname_linked']))->text(); ?><br />
 					<? endif; ?>
-					<div class="reason"><?php echo $statusInfo['reason']; ?></div>
+					<div class="reason"><?php echo Linker::formatComment( $statusInfo['reason'] ); ?></div>
 					<div class="timestamp"><span><?php echo $statusInfo['fmttime']; ?></span></div>
 				</div>
 			</div>
@@ -23,7 +23,7 @@
 			</td></tr></table>
 		</div>
 	<?php endif; ?>
-	
+
 	<? if($showArchiveInfo): ?>
 		<div class="deleteorremove-infobox">
 			<div class="deleteorremove-bubble">
@@ -31,7 +31,7 @@
 				<div class="message">
 					<? if ( isset($statusInfo['reason']) && mb_strlen($statusInfo['reason']) ): ?>
 						<?= wfMessage('wall-message-closed-by-because', array($statusInfo['user_displayname_linked']))->text(); ?><br>
-						<div class="reason"><?php echo $statusInfo['reason']; ?></div>
+						<div class="reason"><?php echo Linker::formatComment( $statusInfo['reason'] ); ?></div>
 					<? else: ?>
 						<?= wfMessage('wall-message-closed-by', array($statusInfo['user']->getName(), $statusInfo['user']->getUserPage()))->parse(); ?><br>
 					<? endif; ?>
@@ -41,4 +41,3 @@
 		</div>
 	<? endif; ?>
 <?php endif; ?>
-

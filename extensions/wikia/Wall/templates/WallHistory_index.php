@@ -2,13 +2,13 @@
 <? if( empty($wallmessageNotFound) ): ?>
 	<?
 		echo F::App()->getView('Wall', 'brickHeader', array(
-			'path' => $path 
+			'path' => $path
 		))->render();
 	?>
 
 	<div class="SortingBar">
 		<div id="pageTitle">
-			<?= $pageTitle; ?> 
+			<?= $pageTitle; ?>
 		</div>
 		<div class="SortingMenu">
 			<span class="SortingSelected"><?= $sortingSelected; ?></span>
@@ -41,26 +41,26 @@
 							<a href="<?php echo $entry['authorurl'] ?>"><?= AvatarService::renderAvatar($entry['username'], 20); ?></a>
 						</td>
 						<td>
-							<?= wfMsgExt($wallHistoryMsg[$entry['prefix'].$entry['type']], array('parsemag'), array(
+							<?= wfMessage( $wallHistoryMsg[$entry['prefix'].$entry['type']], array(
 									'$1' => '',
 									'$2' => $entry['displayname'],
 									'$3' => Xml::element('a', array('href' => $entry['msguserurl']), $entry['msgusername']),
 									'$4' => Xml::element('a', array('href' => $entry['msgurl'], 'class' => 'creation'), $entry['metatitle']),
-									'$5' => '<a href="'.$entry['msgurl'] . '">#'. $entry['msgid']. '</a>' 
-							)); ?>
-							
-							<?php 
+									'$5' => '<a href="'.$entry['msgurl'] . '">#'. $entry['msgid']. '</a>'
+							) )->text(); ?>
+
+							<?php
 								if( !empty($entry['actions']) ):
-									$actions = array(); 
+									$actions = array();
 									foreach($entry['actions'] as $key => $action):
 										$htmldata = $action;
 										unset($htmldata['msg']);
-										$actions[] =  '('.Xml::element('a', $htmldata , $action['msg']).')';
+										$actions[] = wfMessage( 'parentheses' )->rawParams( Xml::element('a', $htmldata , $action['msg']) )->plain();
 									endforeach;
 									echo Xml::openElement('span', array('class' => 'actions'));
 									echo implode(' ',$actions);
 									echo Xml::closeElement('span');
-								endif; 
+								endif;
 							?>
 						</td>
 						<td>
@@ -73,7 +73,7 @@
 						<td class="wrapper" colspan="4">
 							<?php if( !empty($entry['reason']) ): ?>
 								<div class="summaryBubble">
-									<label><?= wfMsg('wall-history-summary-label'); ?></label>&nbsp;<?= strip_tags($entry['reason']); ?>
+									<label><?= wfMessage( 'wall-history-summary-label' )->escaped(); ?></label>&nbsp;<?= Linker::formatComment( $entry['reason'] ); ?>
 								</div>
 							<?php endif; ?>
 						</td>
@@ -85,33 +85,33 @@
 				<?php foreach($wallHistory as $entry): ?>
 					<tr class="info-entry">
 						<td>
-							<?php 
+							<?php
 								if( $entry['type'] === WH_NEW ) {
-									echo wfMsg($wallHistoryMsg[$entry['type']], array(
+									echo wfMessage( $wallHistoryMsg[$entry['type']], array(
 										'$1' => Xml::element('a', array('href' => $entry['msgurl'], 'class' => 'creation'), $entry['metatitle']),
 										'$2' => $entry['displayname'],
-									));
+									) )->text();
 								} else {
-									echo wfMsg($wallHistoryMsg[$entry['type']], array(
+									echo wfMessage( $wallHistoryMsg[$entry['type']], array(
 										'$1' => Xml::element('a', array('href' => $entry['msgurl']), $entry['metatitle']),
 										'$2' => $entry['displayname'],
-									));
+									) )->text();
 								}
 							?>
-							<?php 
+							<?php
 								if( !empty($entry['actions']) ):
-									$actions = array(); 
+									$actions = array();
 									foreach($entry['actions'] as $key => $action):
 										$htmldata = $action;
 										unset($htmldata['msg']);
-										$actions[] =  '('.Xml::element('a', $htmldata , $action['msg']).')';
+										$actions[] = wfMessage( 'parentheses' )->rawParams( Xml::element('a', $htmldata , $action['msg']) )->plain();
 									endforeach;
 									echo Xml::openElement('span', array('class' => 'actions'));
 									echo implode(' ',$actions);
 									echo Xml::closeElement('span');
 								endif;
 							?>
-							<span class="threadHistory">(<?= $entry['historyLink']; ?>)</span>
+							<span class="threadHistory"><?= wfMessage( 'parentheses' )->rawParams( $entry['historyLink'] )->plain(); ?></span>
 						</td>
 						<td>
 							<span class='timestamp'>
@@ -123,7 +123,7 @@
 						<td class="wrapper" colspan="2">
 							<?php if( !empty($entry['reason']) ): ?>
 								<div class="summaryBubble">
-									<label><?= wfMsg('wall-history-summary-label'); ?></label>&nbsp;<?= strip_tags($entry['reason']); ?>
+									<label><?= wfMessage( 'wall-history-summary-label' )->escaped(); ?></label>&nbsp;<?= Linker::formatComment( $entry['reason'] ); ?>
 								</div>
 							<?php endif; ?>
 						</td>
@@ -131,18 +131,18 @@
 				<?php endforeach; ?>
 			</table>
 		<?php endif; ?>
-		
+
 		<?php if($showPager): ?>
 			<?= $app->renderView('PaginationController', 'index', array('totalItems' => $totalItems, 'itemsPerPage' => $itemsPerPage, 'currentPage' => $currentPage, 'url' => $wallHistoryUrl)); ?>
 		<?php endif;?>
 	<?php endif; ?>
 <?php else: ?>
 	<div>
-		<p><?= wfMsg('wall-message-not-found-in-db'); ?></p>
+		<p><?= wfMessage( 'wall-message-not-found-in-db' )->escaped(); ?></p>
 	</div>
 	<div class="SortingBar">
 		<div id="pageTitle">
-			<?= $pageTitle; ?> 
+			<?= $pageTitle; ?>
 		</div>
 		<div class="SortingMenu">
 			<span class="SortingSelected"><?= $sortingSelected; ?></span>
