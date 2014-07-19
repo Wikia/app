@@ -4,6 +4,8 @@
  * @author relwell
  */
 namespace Wikia\Search\IndexService;
+use JsonFormatService;
+use Wikia\JsonFormat\JsonFormatSimplifier;
 use Wikia\Search\Utilities, simple_html_dom;
 /**
  * This is intended to provide core article content
@@ -72,6 +74,7 @@ class DefaultContent extends AbstractService
 				'pageid'                     => $pageId,
 				$this->field( 'title' )      => $titleStr,
 				'titleStrict'                => $titleStr,
+				'title_em'                   => $titleStr,
 				'url'                        => $service->getUrlFromPageId( $pageId ),
 				'ns'                         => $service->getNamespaceFromPageId( $pageId ),
 				'host'                       => $service->getHostName(),
@@ -83,6 +86,7 @@ class DefaultContent extends AbstractService
 				];
 		return array_merge(
 				$this->getPageContentFromParseResponse( $response ),
+				$this->getArticleSnippet( $response ),
 				$this->getCategoriesFromParseResponse( $response ),
 				$this->getHeadingsFromParseResponse( $response ),
 				$this->getOutboundLinks(),
@@ -128,6 +132,15 @@ class DefaultContent extends AbstractService
 	 */
 	protected function field( $field ) {
 		return $this->getService()->getGlobal( 'AppStripsHtml' ) ? (new Utilities)->field( $field ) : $field;
+	}
+
+	protected function getArticleSnippet( array $response ) {
+		$html = empty( $response['parse']['text']['*'] ) ? '' : $response['parse']['text']['*'];
+		$jsonFormatService = new JsonFormatService();
+		$text = $jsonFormatService->getArticleSnippet( $html );
+		return [
+			'snippet_s' => $text
+		];
 	}
 
 	/**

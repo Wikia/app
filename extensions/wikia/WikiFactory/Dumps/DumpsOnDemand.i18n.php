@@ -238,12 +238,13 @@ $messages['de'] = array(
 
 /** Zazaki (Zazaki)
  * @author Erdemaslancan
+ * @author Mirzali
  */
 $messages['diq'] = array(
 	'dump-database' => 'Çımeyê erzêmelumati',
 	'dump-database-curr-pages' => 'Pelê tedeestey',
 	'dump-database-request' => 'Wastışi neweke',
-	'dump-database-request-submit' => 'Wastış bırşê',
+	'dump-database-request-submit' => 'Pers bırışe',
 	'dump-database-info-more' => 'Şıma ra reca, şırê melumati <a href="http://community.wikia.com/wiki/Help:Database_download">bıvinê</a>',
 );
 
@@ -674,6 +675,7 @@ $messages['ps'] = array(
 /** Portuguese (português)
  * @author Crazymadlover
  * @author Hamilton Abreu
+ * @author Imperadeiro98
  * @author Luckas
  */
 $messages['pt'] = array(
@@ -689,6 +691,7 @@ $messages['pt'] = array(
 	'dump-database-request-already-submitted' => 'Foi solicitada recentemente uma cópia para ficheiro (há menos de 7 dias)',
 	'dump-database-request-requested' => 'Foi enviado o pedido de cópia da base de dados para ficheiro',
 	'dump-database-info-more' => 'Consulte <a href="http://community.wikia.com/wiki/Help:Database_download">download da base de dados</a> para mais informação, por favor',
+	'dump-database-last-unknown' => 'Desconhecido',
 );
 
 /** Brazilian Portuguese (português do Brasil)
@@ -919,9 +922,21 @@ $messages['zh-hans'] = array(
 );
 
 /** Traditional Chinese (中文（繁體）‎)
+ * @author Ffaarr
  * @author Wrightbus
  */
 $messages['zh-hant'] = array(
+	'dump-database' => '資料庫轉存',
+	'dump-database-info' => '資料庫轉存可以作為個個人的備份（Wikia會自動產生所有wiki個別的備份），或於維護類機器人。',
+	'dump-database-curr-pages' => '當前頁面',
+	'dump-database-curr-pages-info' => '（此版本通常最適合機器人使用）',
+	'dump-database-full-pages' => '當前頁面和歷史記錄',
+	'dump-database-full-pages-info' => '（警告： 此檔案可能非常大）',
 	'dump-database-request' => '請求更新',
+	'dump-database-request-info' => '（轉存通常每週會產生）',
 	'dump-database-request-submit' => '發送請求',
+	'dump-database-request-already-submitted' => '轉存已在最近申請（7天内）',
+	'dump-database-request-requested' => '資料庫轉存的申請已發送',
+	'dump-database-info-more' => '請至<a href="http://community.wikia.com/wiki/Help:Database_download">查看</a>更多的資訊',
+	'dump-database-last-unknown' => '未知',
 );

@@ -1,0 +1,14 @@
+{
+	"@metadata": {
+		"authors": [
+			"Maxí",
+			"Snævar"
+		]
+	},
+	"tag-visualeditor": "[[{{MediaWiki:Visualeditor-descriptionpagelink}}|VisualEditor]]",
+	"tag-visualeditor-description": "Breyting gerð með hjálp [[{{MediaWiki:Visualeditor-descriptionpagelink}}|VisualEditor]]",
+	"visualeditor-feedback-link": "Project:VisualEditor/Ábendingar",
+	"visualeditor-feedback-tool": "Skilja eftir ábendingu",
+	"visualeditor-help-label": "Lesa notkunarhandbókina",
+	"visualeditor-help-title": "Notkunarhandbók um hvernig á að nota ritilinn"
+}

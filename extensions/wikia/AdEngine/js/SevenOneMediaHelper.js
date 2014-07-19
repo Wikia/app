@@ -1,15 +1,21 @@
-/* exported SevenOneMediaHelper */
 /* jshint camelcase:false, maxparams:false */
-
-var SevenOneMediaHelper = function (adLogicPageLevelParams, scriptWriter, log, window, $, tracker) {
+/*global define*/
+define('ext.wikia.adEngine.sevenOneMediaHelper', [
+	'jquery',
+	'wikia.log',
+	'wikia.window',
+	'wikia.tracker',
+	'wikia.scriptwriter',
+	'ext.wikia.adEngine.adLogicPageParams'
+], function ($, log, window, tracker, scriptWriter, adLogicPageParams) {
 	'use strict';
 
-	var logGroup = 'SevenOneMediaHelper',
+	var logGroup = 'ext.wikia.adEngine.sevenOneMediaHelper',
 		postponedContainerId = 'seven-one-media-ads-postponed',
 		$postponedContainer,
 		myAd,
 		initialized = false,
-		pageLevelParams = adLogicPageLevelParams.getPageLevelParams(),
+		pageLevelParams = adLogicPageParams.getPageLevelParams(),
 		soiKeywordsParams = ['pform', 'media', 'gnre', 'egnre', 's1'],
 
 		slotVars = {
@@ -25,7 +31,7 @@ var SevenOneMediaHelper = function (adLogicPageLevelParams, scriptWriter, log, w
 				SOI_PD: true,    // pushdown
 				SOI_BB: true,    // billboard
 				SOI_WP: true,    // wallpaper
-				SOI_FP: true     // fireplace
+				SOI_FP: false    // fireplace
 			},
 			'rectangle1': {
 				SOI_RT1: true,
@@ -229,7 +235,8 @@ var SevenOneMediaHelper = function (adLogicPageLevelParams, scriptWriter, log, w
 	function initialize(firstSlotname) {
 		var subsite = window.cscoreCat && window.cscoreCat.toLowerCase(),
 			sub2site = pageLevelParams.s1.replace('_', ''),
-			sub3site = subsite === 'lifestyle' ? window.cityShort : '';
+			sub3site = subsite === 'lifestyle' ? window.cityShort : '',
+			sub4site = window.wgAdDriverSevenOneMediaSub4Site || '';
 
 		initialized = true;
 
@@ -240,6 +247,7 @@ var SevenOneMediaHelper = function (adLogicPageLevelParams, scriptWriter, log, w
 			SOI_SUBSITE: subsite,
 			SOI_SUB2SITE: sub2site,
 			SOI_SUB3SITE: sub3site,
+			SOI_SUB4SITE: sub4site,
 			SOI_CONTENT: 'content',
 			SOI_WERBUNG: true
 		});
@@ -318,4 +326,4 @@ var SevenOneMediaHelper = function (adLogicPageLevelParams, scriptWriter, log, w
 		flushAds: flushAds,
 		trackEnd: trackEnd
 	};
-};
+});

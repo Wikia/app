@@ -15,6 +15,7 @@ $messages['en'] = array(
 	// suggest article
 	'wikiahubs-v3-suggest-article-header' => 'Suggest an Article',
 	'wikiahubs-v3-suggest-article-submit-button' => 'Submit',
+	'wikiahubs-v3-suggest-article-close-button' => 'Close',
 	'wikiahubs-v3-suggest-article-what-article' => 'What URL do you want to share? (255 character limit)',
 	'wikiahubs-v3-suggest-article-reason' => 'Why is this cool? (140 characters limit)',
 	'wikiahubs-v3-suggest-article-success' => 'Thanks for suggesting an article, our editors will look over it. Check back often to see if it\'s up!',
@@ -25,7 +26,7 @@ $messages['en'] = array(
 	'wikiahubs-v3-vertical-VideoGames' => 'Video Games',
 	'wikiahubs-v3-vertical-Entertainment' => 'Entertainment',
 	'wikiahubs-v3-vertical-Lifestyle' => 'Lifestyle',
-	
+
 	//WAM
 	'wikiahubs-v3-wam-header' => 'WAM Score',
 	'wikiahubs-v3-wam-see-full-wam-ranking' => 'Read more about WAM',
@@ -33,7 +34,7 @@ $messages['en'] = array(
 	'wikiahubs-v3-wam-rank' => 'Rank',
 	'wikiahubs-v3-wam-score' => 'WAM Score',
 	'wikiahubs-v3-wam-wiki-url' => "Name",
-	
+
 	// from the community
 	'wikiahubs-v3-from-community-promoted' => 'Get Promoted',
 	'wikiahubs-v3-from-community-caption' => 'From [$1 $2] on [$3 $4]',
@@ -313,7 +314,7 @@ $messages['qqq'] = array(
 
 	//WAM
 	'wikiahubs-v3-wam-top-wikis-headline' => 'the parameter is a vertical name i.e. Video Games or Entertainment',
-	
+
 	// from the community
 	'wikiahubs-v3-from-community-promoted' => 'Text on button next to FTC title - suggest new article',
 	'wikiahubs-v3-from-community-caption' => 'From [$1 $2] on [$3 $4] - 1st parameter: Users URL, 2nd - User Name, 3rd - Article Url, 4th - wiki name',

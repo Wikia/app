@@ -81,8 +81,7 @@ class ThemeDesignerController extends WikiaController {
 	}
 
 	public function executeWordmarkTab() {
-		global $wgFavicon;
-		$this->faviconUrl = wfReplaceImageServer($wgFavicon);
+		$this->faviconUrl = Wikia::getFaviconFullUrl();
 	}
 
 	public function executePicker() {
@@ -334,17 +333,17 @@ class ThemeDesignerController extends WikiaController {
 			$this->displayRestrictionError( __METHOD__ );
 		}
 
-
 		$data = $wgRequest->getArray( 'settings' );
 
-		$themeSettings = new ThemeSettings();
-		$themeSettings->saveSettings($data);
-
+		if ( $wgRequest->wasPosted() ) {
+			$themeSettings = new ThemeSettings();
+			$themeSettings->saveSettings($data);
+		}
 		wfProfileOut( __METHOD__ );
 	}
 
 
 	private function displayRestrictionError( $method ) {
-		throw new MethodNotFoundException( $method );
+		throw new PermissionsError( $method );
 	}
 }

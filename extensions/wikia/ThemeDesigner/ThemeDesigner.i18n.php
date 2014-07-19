@@ -80,7 +80,7 @@ $messages['qqq'] = array(
 	'themedesigner-desc' => '{{desc}}',
 	'themedesigner-background' => '{{Identical|Background}}',
 	'themedesigner-page' => '{{Identical|Page}}',
-	'themedesigner-color' => '{{Identical|Main}}',
+	'themedesigner-color' => 'Primary background color. {{Identical|Main}}',
 	'themedesigner-color-middle' => 'Background color between background image (when background image is split to two parts in fluid layout.
 {{Identical|Middle}}',
 	'themedesigner-rules-color-middle' => 'Information about position and purpose of color and that can be different from standard background color',
@@ -163,6 +163,7 @@ $messages['af'] = array(
 /** Arabic (العربية)
  * @author Achraf94
  * @author Claw eg
+ * @author Kuwaity26
  * @author Meno25
  * @author OsamaK
  */
@@ -195,7 +196,7 @@ $messages['ar'] = array(
 	'themedesigner-tab-wordmark' => 'الشعار',
 	'themedesigner-preview-mode' => 'وضع المعاينة...',
 	'themedesigner-previous-versions' => 'النسخ السابقة',
-	'themedesigner-button-save-im-done' => 'إحفظ، لقد إنتهيت',
+	'themedesigner-button-save-im-done' => 'حفظ',
 	'themedesigner-button-cancel' => 'إلغاء',
 	'themedesigner-pick-a-color' => 'اختيار لون',
 	'themedesigner-enter-your-own' => 'أدخل الخاصة بك',
@@ -909,7 +910,7 @@ $messages['gl'] = array(
 	'themedesigner-tile-background' => 'mosaico',
 	'themedesigner-fix-background' => 'fixo',
 	'themedesigner-not-split-background' => 'non dividir',
-	'themedesigner-rules-not-split-background' => "Se o gráfico de fondo é máis largo que $1px, hai unha opción para ''non'' dividir a imaxe.", # Fuzzy
+	'themedesigner-rules-not-split-background' => "Se o gráfico de fondo é máis largo que $1px, hai unha opción para ''non'' dividir a imaxe.",
 	'themedesigner-transparency' => 'transparencia',
 	'themedesigner-tab-theme' => 'Tema visual',
 	'themedesigner-tab-customize' => 'Personalizar',
@@ -925,7 +926,7 @@ $messages['gl'] = array(
 	'themedesigner-pick-an-image' => 'Elixir unha imaxe',
 	'themedesigner-dont-use-a-background' => 'Non usar unha imaxe de fondo',
 	'themedesigner-upload-your-own' => 'Subir o teu',
-	'themedesigner-button-upload' => 'Cargar',
+	'themedesigner-button-upload' => 'Subir',
 	'themedesigner-button-upload-wordmark' => 'Subir',
 	'themedesigner-rules-background' => 'jpg, gif ou png. O máximo {{PLURAL:$1|é $1|son $1}} kB',
 	'themedesigner-default' => 'Por defecto',
@@ -1182,6 +1183,18 @@ $messages['km'] = array(
 	'themedesigner-unknown-error' => 'មានបញ្ហាកើតឡើង ដោយយើងមិនដឹងថាមកពីមូលហេតុអ្វី។ សូមសាកល្បងម្ដងទៀត',
 );
 
+/** Kannada (ಕನ್ನಡ)
+ * @author VASANTH S.N.
+ */
+$messages['kn'] = array(
+	'themedesigner-page' => 'ಪುಟ',
+	'themedesigner-color' => 'ಮುಖ್ಯ',
+	'themedesigner-small' => 'ಸಣ್ಣ',
+	'themedesigner-large' => 'ದೊಡ್ಡದು',
+	'themedesigner-size' => 'ಗಾತ್ರ',
+	'themedesigner-button-save' => 'ಉಳಿಸಿ',
+);
+
 /** Korean (한국어)
  * @author Cafeinlove
  * @author Hym411
@@ -1198,7 +1211,7 @@ $messages['ko'] = array(
 	'themedesigner-graphic' => '그림',
 	'themedesigner-buttons' => '버튼',
 	'themedesigner-links' => '링크',
-	'themedesigner-header' => '머리말',
+	'themedesigner-header' => '머리글',
 	'themedesigner-text-wordmark' => '글자 로고',
 	'themedesigner-graphic-wordmark' => '그림 로고',
 	'themedesigner-small' => '작게',
@@ -1718,7 +1731,7 @@ $messages['ps'] = array(
 	'themedesigner-background' => 'مخينه',
 	'themedesigner-page' => 'مخ',
 	'themedesigner-color' => 'آرنی',
-	'themedesigner-graphic' => 'ګرافيک',
+	'themedesigner-graphic' => 'گرافيک',
 	'themedesigner-buttons' => 'تڼۍ',
 	'themedesigner-links' => 'تړنې',
 	'themedesigner-small' => 'وړوکی',
@@ -2345,6 +2358,7 @@ $messages['wuu'] = array(
  * @author Ffaarr
  * @author Hydra
  * @author Hzy980512
+ * @author Liuxinyu970226
  * @author Sam Wang
  * @author Yfdyh000
  */
@@ -2389,7 +2403,7 @@ $messages['zh-hans'] = array(
 	'themedesigner-button-upload' => '上载',
 	'themedesigner-button-upload-wordmark' => '上传',
 	'themedesigner-rules-background' => 'jpg，gif或png。{{PLURAL:$1|$1 kilobyte|$1 kilobytes}}限制',
-	'themedesigner-default' => '磨人',
+	'themedesigner-default' => '默认',
 	'themedesigner-font' => '字体',
 	'themedesigner-size' => '大小',
 	'themedesigner-button-save' => '保存',

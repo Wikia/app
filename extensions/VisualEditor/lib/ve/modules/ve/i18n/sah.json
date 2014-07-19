@@ -1,0 +1,23 @@
+{
+	"@metadata": {
+		"authors": [
+			"Gazeb",
+			"HalanTul"
+		]
+	},
+	"visualeditor": "VisualEditor",
+	"visualeditor-aliennode-tooltip": "Хомойуох иһин, маны билигин куод эрэдээктэригэр эрэ уларытар кыах баар.",
+	"visualeditor-annotationbutton-bold-tooltip": "Модьу",
+	"visualeditor-annotationbutton-code-tooltip": "Көмпүүтэр куода",
+	"visualeditor-annotationbutton-italic-tooltip": "Иҥнэри",
+	"visualeditor-annotationbutton-language-tooltip": "Тыла",
+	"visualeditor-annotationbutton-link-tooltip": "Сигэ",
+	"visualeditor-annotationbutton-strikethrough-tooltip": "Сотуллубут",
+	"visualeditor-annotationbutton-subscript-tooltip": "Устуруока аннынааҕы",
+	"visualeditor-annotationbutton-superscript-tooltip": "Устуруока үрдүнээҕи",
+	"visualeditor-annotationbutton-underline-tooltip": "Аннынан тардыллыбыт",
+	"visualeditor-clearbutton-tooltip": "Формааттарын сот",
+	"visualeditor-dialog-action-apply": "Уларытыылары ылын",
+	"visualeditor-dialog-action-cancel": "Салҕаама",
+	"visualeditor-dialog-action-goback": "Төнүн"
+}

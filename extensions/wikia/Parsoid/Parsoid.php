@@ -15,10 +15,6 @@ class ParsoidSetup {
 		$dir = __DIR__;
 
 		$wgAutoloadClasses['ParsoidHooks'] = "$dir/Parsoid.hooks.php";
-		$wgAutoloadClasses['ParsoidCacheUpdateJob'] = "$dir/ParsoidCacheUpdateJob.php";
-		$wgAutoloadClasses['CurlMultiClient'] = "$dir/CurlMultiClient.php";
-
-		$wgJobClasses['ParsoidCacheUpdateJob'] = 'ParsoidCacheUpdateJob';
 
 		self::registerHooks();
 

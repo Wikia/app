@@ -353,7 +353,7 @@ $messages['diq'] = array(
 	'prefs-monobookv2' => 'MonoBook',
 	'tog-showAdsv2' => 'Reklami:',
 	'prefs-addressv2' => 'Adres:',
-	'preferences-v2-watchdefault' => 'Timar ke',
+	'preferences-v2-watchdefault' => 'Bıvurne',
 	'preferences-v2-watchmoves' => 'Bere',
 	'preferences-v2-watchdeletion' => 'Bestere',
 	'preferences-v2-watchcreations' => 'Vıraze',
@@ -495,6 +495,8 @@ $messages['fi'] = array(
 /** French (français)
  * @author Gomoko
  * @author Jean-Frédéric
+ * @author Linedwell
+ * @author Wyz
  */
 $messages['fr'] = array(
 	'prefs-personal' => 'Mes infos',
@@ -513,11 +515,11 @@ $messages['fr'] = array(
 	'prefs-emailv2' => 'Courriel',
 	'prefs-email-me-v2' => 'M’envoyer un courriel quand…',
 	'tog-enotifwatchlistpages-v2' => '…une page que je suis est modifiée',
-	'tog-enotifusertalkpages-v2' => '…ma page de discussion d’utilisateur est modifiée',
-	'tog-enotifminoredits-v2' => '…une page que je suit subit une modification mineure',
-	'tog-marketingallowed-v2' => '…Wikia a des nouvelles et des événements',
+	'tog-enotifusertalkpages-v2' => '…ma page de discussion est modifiée',
+	'tog-enotifminoredits-v2' => '…une page que je suis a reçu des modifications mineures',
+	'tog-marketingallowed-v2' => '…Wikia a de nouvelles informations et des événements',
 	'prefs-email-advanced-v2' => 'Options avancées',
-	'tog-htmlemails-v2' => 'M’envoyer des courriels en HTML',
+	'tog-htmlemails-v2' => 'M’envoyer des courriels au format HTML',
 	'prefs-wikiemail' => 'Options de {{SITENAME}}. M’envoyer un courriel quand…',
 	'prefs-email-unsubscribe' => 'Désactiver tous les courriels',
 	'unsubscribe-preferences-toggle-v2' => 'Désactiver tous les courriels de Wikia (écrase toutes les autres options)',
@@ -537,10 +539,10 @@ $messages['fr'] = array(
 	'tog-showAdsv2' => 'Publicités :',
 	'prefs-addressv2' => 'Adresse',
 	'prefs-followed-pages-iv2' => 'Suivre les pages que je…',
-	'preferences-v2-watchdefault' => 'Modifier',
-	'preferences-v2-watchmoves' => 'Déplacer',
-	'preferences-v2-watchdeletion' => 'Supprimer',
-	'preferences-v2-watchcreations' => 'Créer',
+	'preferences-v2-watchdefault' => 'Modifie',
+	'preferences-v2-watchmoves' => 'Renomme',
+	'preferences-v2-watchdeletion' => 'Supprime',
+	'preferences-v2-watchcreations' => 'Crée',
 	'preferences-v2-showads-enable' => 'Afficher toutes les publicités',
 	'preferences-v2-showads-disable' => 'Ne pas afficher toutes les publicités',
 	'preferences-v2-my-email-address' => 'Mon adresse de courriel :',
@@ -699,6 +701,13 @@ $messages['lb'] = array(
 	'tog-hidefollowedpages-v2' => "D'lëscht vun de Säiten déi ech iwwerwaache viru D'lëscht vun de Säiten déi ech iwwerwaache viru jiddwerengem verstoppen",
 );
 
+/** لوری (لوری)
+ * @author Mogoeilor
+ */
+$messages['lrc'] = array(
+	'preferences-v2-redirect-recent-changes' => 'آلشتیا تازه باو',
+);
+
 /** Latvian (latviešu)
  * @author Sg ghost
  */
@@ -718,6 +727,29 @@ $messages['mk'] = array(
 	'preferences-v2-password' => 'Мојата лозинка:',
 	'preferences-v2-oldsig' => 'Постоечки потпис:',
 	'preferences-v2-nickname' => 'Прилагоден потпис:',
+	'preferences-v2-fancysig' => 'Сакам да користам викитекст во потписот<br />[[{{MediaWiki:preferences-v2-fancysig-help-page-name}}|Што се тоа потписи?]]',
+	'preferences-v2-fancysig-help-page-name' => 'Help:Signature',
+	'prefs-appearance' => 'Изглед',
+	'preferences-v2-date' => 'Формат на датумот:',
+	'preferences-v2-time' => 'Часовен појас:',
+	'preferences-v2-skin' => 'Распоред:',
+	'prefs-emailv2' => 'Е-пошта',
+	'prefs-email-me-v2' => 'Извести ме по е-пошта кога...',
+	'tog-enotifwatchlistpages-v2' => '...ќе се измени страница што ја следам',
+	'tog-enotifusertalkpages-v2' => '...ќе се измени мојата страница за разговор',
+	'tog-enotifminoredits-v2' => '...ќе има ситна промена во страница што ја следам',
+	'tog-marketingallowed-v2' => '...Викија има новости и настани',
+	'prefs-email-advanced-v2' => 'Напредни нагодувања',
+	'tog-htmlemails-v2' => 'Испраќај ми е-пошта во HTML',
+	'prefs-wikiemail' => 'Нагодувања на {{SITENAME}}. Извести ме по е-пошта кога...',
+	'prefs-email-unsubscribe' => 'Оневозможи ги сите известувања по е-пошта',
+	'unsubscribe-preferences-toggle-v2' => 'Онвозможи ги сите известувања по е-пошта од Викија (ги поништува сите други нагодувања)',
+	'tog-watchlistdigest-v2' => '...ќе има Неделен преглед на промени во страниците на Викија што ги следам',
+	'tog-justify-v2' => 'Прикажувај порамнети пасуси',
+	'preferences-v2-user-landing-page' => 'Целна страница:',
+	'preferences-v2-redirect-wiki-activity' => 'Активности на викито',
+	'preferences-v2-redirect-main-page' => 'Главна страница',
+	'preferences-v2-redirect-recent-changes' => 'Скорешни промени',
 );
 
 /** Malay (Bahasa Melayu)
@@ -1082,7 +1114,7 @@ $messages['ru'] = array(
 $messages['sco'] = array(
 	'prefs-personal' => 'Ma Info',
 	'preferences-v2-username' => 'Ma uisername:',
-	'preferences-v2-usergroups' => 'Ma uiser groups:',
+	'preferences-v2-usergroups' => 'Ma uiser groops:',
 	'preferences-v2-gender' => 'Ma gender:',
 	'preferences-v2-password' => 'Ma passwaird:',
 	'preferences-v2-oldsig' => 'Exeestin signature:',
@@ -1093,43 +1125,43 @@ $messages['sco'] = array(
 	'preferences-v2-date' => 'Date format:',
 	'preferences-v2-time' => 'Time zone:',
 	'preferences-v2-skin' => 'Layoot:',
-	'prefs-emailv2' => 'Wab-mail',
-	'prefs-email-me-v2' => 'Wab-mail me whan...',
+	'prefs-emailv2' => 'Email',
+	'prefs-email-me-v2' => 'E-mail me whan...',
 	'tog-enotifwatchlistpages-v2' => "...ae page Ah'm follaein haes chynged",
 	'tog-enotifusertalkpages-v2' => '...ma uiser tauk page haes chynged',
 	'tog-enotifminoredits-v2' => "...a page that Ah'm follaein haes chynged ae wee bit",
 	'tog-marketingallowed-v2' => '...Wikia haes news n events',
 	'prefs-email-advanced-v2' => 'Advanced Opties',
-	'tog-htmlemails-v2' => 'Send me HTML wab-mails',
-	'prefs-wikiemail' => '{{SITENAME}} opties. Wab-mail me whan...',
-	'prefs-email-unsubscribe' => 'Disable aw wab-mails',
-	'unsubscribe-preferences-toggle-v2' => 'Disable aw wab-mails fae Wikia (owergangs aw ither opties)',
-	'tog-watchlistdigest-v2' => '...ae Weeklie Rindoon o chynges til ma follaed Wikia pages is readie',
+	'tog-htmlemails-v2' => 'Send me HTML e-mails',
+	'prefs-wikiemail' => '{{SITENAME}} opties. E-mail me whan...',
+	'prefs-email-unsubscribe' => 'Disable aw e-mails',
+	'unsubscribe-preferences-toggle-v2' => 'Disable aw e-mails fae Wikia (owergangs aw ither opties)',
+	'tog-watchlistdigest-v2' => '...ae Weeklie Rindoon o chynges tae ma follaed Wikia pages is readie',
 	'tog-justify-v2' => 'Shaw justified paragraphs',
-	'preferences-v2-user-landing-page' => 'Landin page:',
+	'preferences-v2-user-landing-page' => 'Laundin page:',
 	'preferences-v2-redirect-wiki-activity' => 'Wiki Acteevitie',
 	'preferences-v2-redirect-main-page' => 'Main Page',
-	'preferences-v2-redirect-recent-changes' => 'Recent Chynges',
-	'preferences-v2-redirect-explanation' => 'The Landin page optie permits ye tae chuise whaur ye gang whan ye type $1 intil yer brouser.',
+	'preferences-v2-redirect-recent-changes' => 'Recynt Chynges',
+	'preferences-v2-redirect-explanation' => 'The Laundin page optie allous ye tae chuise whaur ye gang whan ye type $1 intae yer brouser.',
 	'prefs-monobookv2' => 'MonoBuik',
-	'prefs-under-the-hood' => 'Unner the Huid',
+	'prefs-under-the-hood' => 'Unner the Bunnet',
 	'prefs-recent-changesv2' => 'Recent chynges, histeries, logs',
 	'prefs-followed-pagesv2' => 'Follaed pages feed',
 	'prefs-advanced-displayv2' => 'Advanced displey opties',
-	'tog-highlightbrokenv2' => 'Shaw broken links aes reid, naw wi ae speirin maurk.',
+	'tog-highlightbrokenv2' => 'Shaw broken airtins aes reid, no wi ae speirin maurk.',
 	'tog-showAdsv2' => 'Ads:',
 	'prefs-addressv2' => 'Address',
 	'prefs-followed-pages-iv2' => 'Follae pages Ah...',
-	'preferences-v2-watchdefault' => 'Eidit',
+	'preferences-v2-watchdefault' => 'Eedit',
 	'preferences-v2-watchmoves' => 'Muiv',
 	'preferences-v2-watchdeletion' => 'Delyte',
-	'preferences-v2-watchcreations' => 'Cræft',
+	'preferences-v2-watchcreations' => 'Creaut',
 	'preferences-v2-showads-enable' => 'Shaw aw ads',
 	'preferences-v2-showads-disable' => 'Dinna shaw aw ads',
-	'preferences-v2-my-email-address' => 'Ma wab-mail address:',
-	'prefs-patrolled-editsv2' => 'Patrolled eidits',
-	'tog-editsectiononrightclick-v2' => 'Eidit sections bi richt clapin oan section titles',
-	'tog-editondblclick-v2' => 'Eidit pages oan dooble clap',
+	'preferences-v2-my-email-address' => 'Ma e-mail address:',
+	'prefs-patrolled-editsv2' => 'Patrolled eedits',
+	'tog-editsectiononrightclick-v2' => 'Eedit sections bi richt clapin oan section titles',
+	'tog-editondblclick-v2' => 'Eedit pages oan dooble clap',
 	'tog-hidefollowedpages-v2' => 'Skauk ma follaed pages leet fae awbodie',
 );
 
@@ -1469,6 +1501,7 @@ $messages['zh-hans'] = array(
 );
 
 /** Traditional Chinese (中文（繁體）‎)
+ * @author Cwlin0416
  * @author Ffaarr
  */
 $messages['zh-hant'] = array(
@@ -1505,7 +1538,7 @@ $messages['zh-hant'] = array(
 	'preferences-v2-redirect-explanation' => '登錄頁面選項，讓你選擇你在輸入$1的時候會抵達的頁面。',
 	'prefs-monobookv2' => 'MonoBook',
 	'prefs-under-the-hood' => '進階設定',
-	'prefs-recent-changesv2' => '近期變動、歷史和日誌',
+	'prefs-recent-changesv2' => '最近變更、歷史和日誌',
 	'prefs-followed-pagesv2' => '關注頁面的feed',
 	'prefs-advanced-displayv2' => '進階顯示選項',
 	'tog-highlightbrokenv2' => '顯示損壞的連結為紅色，而不帶問號標記。',

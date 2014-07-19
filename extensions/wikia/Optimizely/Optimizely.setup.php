@@ -3,12 +3,22 @@
  * Optimizely setup
  *
  * @author Damian Jóźwiak
+ * @author Bartosz "V." Bentkowski
  *
  */
-$dir = dirname(__FILE__) . '/';
+$dir = dirname( __FILE__ ) . '/';
 
-//classes
-$wgAutoloadClasses['Optimizely'] =  $dir . 'Optimizely.class.php';
+$wgExtensionCredits[ 'other' ][] = array(
+	'name'        => 'Optimizely',
+	'author'      => [ 'Damian Jóźwiak', 'Bartosz "V." Bentkowski' ],
+	'description' => 'Optimizely loader',
+	'version'     => 1
+);
+
+// classes
+$wgAutoloadClasses[ 'Optimizely' ] =  $dir . 'Optimizely.class.php';
+$wgAutoloadClasses[ 'OptimizelyController' ] = $dir . '/OptimizelyController.class.php';
 
 // hooks
-$wgHooks['WikiaSkinTopScripts'][] = 'Optimizely::onWikiaSkinTopScripts';
+$wgHooks[ 'WikiaSkinTopScripts' ][] = 'Optimizely::onWikiaSkinTopScripts';
+$wgHooks[ 'OasisSkinAssetGroupsBlocking' ][] = 'Optimizely::onOasisSkinAssetGroupsBlocking';

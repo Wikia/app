@@ -202,7 +202,7 @@ $messages['diq'] = array(
  */
 $messages['es'] = array(
 	'partner-feed-achievements-leaderboard' => 'Tabla de líderes con más logros',
-	'partner-feed-earned-badges' => 'Logros recientemente ganados para una wiki específica',
+	'partner-feed-earned-badges' => 'Logros recientemente ganados para un wiki específico',
 	'partner-feed-recent-blog-posts' => 'Entradas de blog recientes relacionadas con una promoción',
 	'partner-feed-latest-images' => 'Galería de las últimas imágenes que han sido subidas',
 	'partner-feed-hotcontent' => 'Hub / "Contenido Novedoso" clasificado por el número de editores',
@@ -371,6 +371,27 @@ $messages['it'] = array(
 	'partner-feed-achievements-leaderboard' => 'Classifica dei successi nella wiki',
 );
 
+/** Japanese (日本語)
+ * @author Barrel0116
+ */
+$messages['ja'] = array(
+	'feed-title-recentchanges' => '最近の更新',
+);
+
+/** Kannada (ಕನ್ನಡ)
+ * @author VASANTH S.N.
+ */
+$messages['kn'] = array(
+	'partner-feed-recent-changes' => 'ಇತ್ತೀಚಿನ ಬದಲಾವಣೆಗಳು',
+);
+
+/** Korean (한국어)
+ * @author 아라
+ */
+$messages['ko'] = array(
+	'feed-title-blogposts' => '최근 블로그 게시물',
+);
+
 /** Kurdish (Latin script) (Kurdî (latînî)‎)
  * @author George Animal
  */
@@ -405,6 +426,7 @@ $messages['lb'] = array(
  * @author Mogoeilor
  */
 $messages['lrc'] = array(
+	'partner-feed-recent-changes' => 'آلشتیا تازه باو',
 	'feed-title-recent-images' => 'عسکیا تازه باو',
 	'feed-title-recentchanges' => 'آلشتیا تازه باو',
 );
@@ -775,6 +797,13 @@ $messages['tl'] = array(
 	'feed-title-recentchanges' => 'Kamakailang mga pagbabago',
 );
 
+/** Turkish (Türkçe)
+ * @author Sucsuzz
+ */
+$messages['tr'] = array(
+	'feed-title-recentchanges' => 'Son değişiklikler',
+);
+
 /** Ukrainian (українська)
  * @author A1
  * @author Andriykopanytsia
@@ -840,6 +869,7 @@ $messages['zh-hans'] = array(
 	'partner-feed-achievements-leaderboard' => 'Wiki成就排行榜',
 	'partner-feed-earned-badges' => '最近在特定wiki获得的徽章',
 	'partner-feed-recent-changes' => '最新更改',
+	'partnerfeed' => '合作伙伴订阅',
 	'feed-title-blogposts' => '最新博客帖子',
 	'feed-title-recent-badges' => '最新徽章',
 	'feed-title-recent-images' => '最近的图片',

@@ -594,7 +594,6 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 
 				$user->setPassword( $this->newpassword );
 				wfRunHooks( 'PrefsPasswordAudit', array( $user, $this->newpassword, 'success' ) );
-				$user->setCookies();
 				$user->saveSettings();
 
 				$this->result = 'ok';
@@ -603,7 +602,15 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 				$this->wg->request->setVal( 'password', $this->newpassword );
 				$response = $this->app->sendRequest( 'UserLoginSpecial', 'login' );
 
-				$this->userLoginHelper->doRedirect();
+				$result = $response->getVal( 'result', '' );
+
+				if ( $result === 'closurerequested' ) {
+					$response = $this->app->sendRequest( 'UserLoginSpecial', 'getCloseAccountRedirectUrl' );
+					$redirectUrl = $response->getVal( 'redirectUrl' );
+					$this->wg->Out->redirect( $redirectUrl );
+				} else {
+					$this->userLoginHelper->doRedirect();
+				}
 			}
 		}
 	}

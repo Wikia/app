@@ -267,19 +267,20 @@ $1
 
 /** Zazaki (Zazaki)
  * @author Erdemaslancan
+ * @author Mirzali
  */
 $messages['diq'] = array(
 	'lightbox_details_tooltip' => 'Teferruatê resimi bıvin',
 	'lightbox-forum' => 'Forum',
 	'lightbox-standard-link' => 'Standard link',
 	'lightbox-blog-link' => 'Grey blogi',
-	'lightbox-send' => 'Bırş',
+	'lightbox-send' => 'Bırışe',
 	'lightbox-share-button-email' => 'E-posta',
 	'lightbox-share-button-www' => 'Vıla ke',
 	'lightbox-share-button-embed' => 'Embed',
 	'lightbox-share-email-page-label-address' => 'Adresê e-posta',
 	'lightbox-share-email-ok-caption' => 'Tesdiqiye',
-	'lightbox-share-email-error-caption' => 'Xırab',
+	'lightbox-share-email-error-caption' => 'Xeta',
 );
 
 /** Esperanto (Esperanto)
@@ -606,10 +607,22 @@ $1
 	'lightbox-visit-the-wiki' => 'ウィキに移動:',
 );
 
+/** Kannada (ಕನ್ನಡ)
+ * @author VASANTH S.N.
+ */
+$messages['kn'] = array(
+	'lightbox-share-button-email' => 'ಇ-ಅಂಚೆ',
+	'lightbox-share-button-www' => 'ಹಂಚು',
+	'lightbox-share-email-page-label-address' => 'ಮಿಂಚಂಚೆ ವಿಳಾಸ',
+	'lightbox-share-email-error-caption' => 'ದೋಷ',
+);
+
 /** Korean (한국어)
  * @author Cafeinlove
+ * @author 관인생략
  */
 $messages['ko'] = array(
+	'lightbox-forum' => '포럼',
 	'lightbox-share-button-email' => '이메일',
 	'lightbox-share-email-page-label-address' => '이메일 주소',
 );
@@ -1119,6 +1132,13 @@ $messages['tr'] = array(
 	'lightbox-share-email-error-caption' => 'Hata',
 );
 
+/** Tuvinian (тыва дыл)
+ * @author Agilight
+ */
+$messages['tyv'] = array(
+	'lightbox-forum' => 'Шуулган',
+);
+
 /** Ukrainian (українська)
  * @author Andriykopanytsia
  * @author Steve.rusyn
@@ -1203,6 +1223,12 @@ $messages['zh-hans'] = array(
 	'lightbox-blog-link' => '博客链接',
 	'lightbox-send' => '发送',
 	'lightbox-share-description' => '照片在 $1 上$2',
+	'lightbox-share-email-subject' => '$1在Wikia上向您发送了一张照片',
+	'lightbox-share-email-body' => '嗨，有人想在Wikia向您展示一张照片。看看怎么回事：
+
+$1
+
+——Wikia团队',
 	'lightbox-share-button-email' => '电子邮件',
 	'lightbox-share-button-www' => '分享',
 	'lightbox-share-button-embed' => '嵌入',

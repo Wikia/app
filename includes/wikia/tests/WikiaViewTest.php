@@ -9,15 +9,9 @@ class WikiaViewTest extends PHPUnit_Framework_TestCase {
 	 * @var WikiaView
 	 */
 	protected $object;
-	protected $app = null;
 
 	protected function setUp() {
-		$this->app = F::app();
 		$this->object = (new WikiaView);
-	}
-
-	protected function tearDown() {
-		F::setInstance( 'App', $this->app );
 	}
 
 	public function creatingNewFromControllerAndMethodDataProvider() {

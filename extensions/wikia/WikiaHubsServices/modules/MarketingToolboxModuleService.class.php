@@ -80,7 +80,6 @@ abstract class MarketingToolboxModuleService extends WikiaService {
 				return $this->loadStructuredData( $model, $params );
 			}
 		);
-
 		if ( $this->getShouldFilterCommercialData() ) {
 			$structuredData = $this->filterCommercialData( $structuredData );
 		}
@@ -164,8 +163,12 @@ abstract class MarketingToolboxModuleService extends WikiaService {
 	}
 
 	protected function getMemcacheKey( $timestamp, $skin ) {
+		$toolboxCacheKey = MarketingToolboxModel::CACHE_KEY;
+		if ( $this->getHubsVersion() === 3 ) {
+			$toolboxCacheKey = MarketingToolboxV3Model::CACHE_KEY;
+		}
 		return  wfSharedMemcKey(
-			MarketingToolboxModel::CACHE_KEY,
+			$toolboxCacheKey,
 			$timestamp,
 			$this->verticalId,
 			$this->langCode,

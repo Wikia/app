@@ -1,0 +1,82 @@
+/* Code is supposed to be always LTR. See bug 39364. */
+.ace_editor {
+	/* @noflip */ direction: ltr;
+}
+
+.mw-scribunto-console-fieldset {
+	background: white;
+	color: black;
+}
+
+/* Preserve line breaks, but wrap too if browser supports it */
+#mw-scribunto-output {
+	white-space: pre;
+	white-space: -moz-pre-wrap;
+}
+
+#mw-scribunto-input {
+	width: 100%;
+	border: none;
+	padding: 0;
+	overflow: auto;
+	background: #e0e0e0;
+}
+
+.mw-scribunto-input {
+	color: blue;
+	font: inherit;
+	font-weight: bold;
+	margin-top: .5em;
+}
+
+.mw-scribunto-normalOutput {
+	color: black;
+	background: white;
+}
+
+.mw-scribunto-print {
+	color: #630;
+	background: white;
+}
+
+.mw-scribunto-error {
+	color: red;
+	background: white;
+}
+
+.mw-scribunto-propList {
+	color: green;
+	background: white;
+}
+
+.mw-scribunto-message {
+	color: green;
+	background: white;
+}
+
+.mw-scribunto-tabcomplete {
+	color: purple;
+	background: white;
+}
+
+.mw-scribunto-clear {
+	color: red;
+	text-align: center;
+	margin-top: 1em;
+	border-bottom: 1px solid red;
+}
+
+/** Wikia change - Fixes for Oasis **/
+.wikia-scribunto-console #mw-scribunto-console {
+	background-color: #FFF;
+	margin-top: 5px;
+	padding: 10px 0 10px;
+}
+
+.wikia-scribunto-console .mw-scribunto-console-fieldset {
+	padding: 10px;
+}
+
+.wikia-scribunto-console .mw-scribunto-console-fieldset div {
+	margin-bottom: 10px;
+}

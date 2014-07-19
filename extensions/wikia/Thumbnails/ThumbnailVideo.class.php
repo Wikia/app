@@ -5,6 +5,8 @@
  * @ingroup Media
  */
 
+use \Wikia\Logger\WikiaLogger;
+
 class ThumbnailVideo extends ThumbnailImage {
 
 //	function ThumbnailVideo( $file, $url, $width, $height, $path = false, $page = false ) {
@@ -33,11 +35,11 @@ class ThumbnailVideo extends ThumbnailImage {
 		global $wgWikiaVideoImageHost;
 		parent::__construct( $file, $url, $width, $height, $path, $page );
 
-		// handle videos comming from shared repo (video.wikia.com)
+		// handle videos coming from shared repo (video.wikia.com)
 		if ( !empty( $wgWikiaVideoImageHost ) && ( $file instanceof WikiaForeignDBFile ) ) {
 			// replace with a proper video domain for production
-			$domain = parse_url($this->url, PHP_URL_HOST);
-			$this->url = str_replace("http://{$domain}/", $wgWikiaVideoImageHost, $this->url);
+			$domain = parse_url( $this->url, PHP_URL_HOST );
+			$this->url = str_replace( "http://{$domain}/", $wgWikiaVideoImageHost, $this->url );
 		}
 
 		#var_dump(__METHOD__); var_dump($this->url);
@@ -103,6 +105,10 @@ class ThumbnailVideo extends ThumbnailImage {
 		return $thumb->toHtml( array( 'img-class' => $options['img-class'] ) );
 	}
 
+	function mediaType() {
+		return 'video';
+	}
+
 	/**
 	 * @param array $options
 	 * @return mixed|string
@@ -117,25 +123,26 @@ class ThumbnailVideo extends ThumbnailImage {
 
 		// Check if the editor is requesting, if so, render image thumbnail instead
 		if ( !empty( $app->wg->RTEParserEnabled ) ) {
-			return $this->renderAsThumbnailImage($options);
+			return $this->renderAsThumbnailImage( $options );
+		}
+
+		if ( !F::app()->checkSkin( 'wikiamobile' ) ) {
+			$options['useTemplate'] = true;
 		}
 
 		wfProfileIn( __METHOD__ );
 
 		// Migrate to new system which uses a template instead of this toHtml method
-		if( !empty( $options[ 'useTemplate' ] ) ) {
-			$html = $app->renderView( 'ThumbnailVideoController', 'thumbnail',  [
-				'file' => $this->file,
-				'url' => $this->url,
-				'width' => $this->width,
-				'height' => $this->height,
-				'options' => $options,
-			] );
+		if ( !empty( $options['useTemplate'] ) ) {
+			$html = $this->renderView( $options );
 
 			wfProfileOut( __METHOD__ );
 
 			return $html;
 		}
+
+		WikiaLogger::instance()->debug('Media method '.__METHOD__.' called',
+			array_merge( $options, [ 'url' => $this->url, 'method' => __METHOD__ ] ) );
 
 		$alt = empty( $options['alt'] ) ? '' : $options['alt'];
 
@@ -179,6 +186,10 @@ class ThumbnailVideo extends ThumbnailImage {
 			$extraClasses .= ' image lightbox';
 		}
 		$linkAttribs['class'] = empty( $linkAttribs['class'] ) ? $extraClasses : $linkAttribs['class'] . ' ' . $extraClasses;
+
+		if ( !empty( $options['fixedHeight'] ) ) {
+			$this->height = $options['fixedHeight'];
+		}
 
 		$attribs = array(
 			'alt' => $alt,
@@ -227,7 +238,7 @@ class ThumbnailVideo extends ThumbnailImage {
 		}
 
 		if ( isset( $options['constHeight'] ) ) {
-			$this->appendHtmlCrop($linkAttribs, $options);
+			$this->appendHtmlCrop( $linkAttribs, $options );
 		}
 
 		$html = Xml::openElement( 'a', $linkAttribs );
@@ -239,13 +250,20 @@ class ThumbnailVideo extends ThumbnailImage {
 			}
 			$html .= Xml::element( 'div', $timerProp,  $duration );
 		}
-		$playButtonHeight =  ( isset( $options['constHeight'] ) && $this->height > $options['constHeight'] ) ? $options['constHeight'] : $this->height;
+
+		if ( isset( $options['constHeight'] ) && $this->height > $options['constHeight'] ) {
+			$playButtonHeight = $options['constHeight'];
+		} else {
+			$playButtonHeight = $this->height;
+		}
+
 		$html .= WikiaFileHelper::videoPlayButtonOverlay( $this->width, $playButtonHeight );
 		$html .= Xml::element( 'img', $attribs, '', true );
 
 
 		if ( empty( $options['hideOverlay'] ) ) {
-			$html .= WikiaFileHelper::videoInfoOverlay( $this->width, $videoTitle );
+			$showViews = empty( $options['showViews'] ) ? false : true;
+			$html .= WikiaFileHelper::videoInfoOverlay( $this->width, $videoTitle, $showViews );
 		}
 
 		$html .= ( $linkAttribs && isset( $linkAttribs['href'] ) ) ? Xml::closeElement( 'a' ) : '';

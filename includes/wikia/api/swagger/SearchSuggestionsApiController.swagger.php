@@ -27,7 +27,7 @@ use Swagger\Annotations as SWG;
  * 	)
  * 
  * @SWG\Api(
- * 	path="/api/v1/SearchSuggestions/List",
+ * 	path="/SearchSuggestions/List",
  * 	description="Controller to find suggested phrases for chosen query",
  * 	@SWG\Operations(
  * 		@SWG\Operation(

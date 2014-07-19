@@ -13,7 +13,6 @@ $dir = dirname( __FILE__ ) . '/';
 
 $wgAutoloadClasses['VisualEditorWikiaHooks'] = $dir . 'VisualEditor.hooks.php';
 $wgAutoloadClasses['ApiMediaSearch'] = $dir . 'ApiMediaSearch.php';
-$wgAutoloadClasses['ApiPhotoAttribution'] = $dir . 'ApiPhotoAttribution.php';
 $wgAutoloadClasses['ApiAddMedia'] = $dir . 'ApiAddMedia.php';
 $wgAutoloadClasses['ApiAddMediaTemporary'] = $dir . 'ApiAddMediaTemporary.php';
 $wgAutoloadClasses['ApiAddMediaPermanent'] = $dir . 'ApiAddMediaPermanent.php';
@@ -22,7 +21,6 @@ $wgAutoloadClasses['ApiVideoPreview'] = $dir . 'ApiVideoPreview.php';
 /* API Modules */
 
 $wgAPIModules['apimediasearch'] = 'ApiMediaSearch';
-$wgAPIModules['apiphotoattribution'] = 'ApiPhotoAttribution';
 $wgAPIModules['addmediatemporary'] = 'ApiAddMediaTemporary';
 $wgAPIModules['addmediapermanent'] = 'ApiAddMediaPermanent';
 $wgAPIModules['videopreview'] = 'ApiVideoPreview';
@@ -39,6 +37,7 @@ $wgResourceModules += array(
 		'scripts' => 've/init/ve.init.mw.WikiaViewPageTarget.init.js',
 		'dependencies' => array(
 			'jquery.client',
+			'jquery.byteLength',
 			'mediawiki.Title',
 			'mediawiki.Uri',
 			'mediawiki.util',
@@ -66,31 +65,49 @@ $wgResourceModules += array(
 
 			// dm
 			've/dm/ve.dm.WikiaMediaCaptionNode.js',
+			've/dm/ve.dm.WikiaVideoCaptionNode.js',
+			've/dm/ve.dm.WikiaImageCaptionNode.js',
 			've/dm/ve.dm.WikiaBlockMediaNode.js',
 			've/dm/ve.dm.WikiaBlockImageNode.js',
 			've/dm/ve.dm.WikiaBlockVideoNode.js',
 			've/dm/ve.dm.WikiaInlineVideoNode.js',
 			've/dm/ve.dm.WikiaCart.js',
 			've/dm/ve.dm.WikiaCartItem.js',
+			've/dm/ve.dm.WikiaMapNode.js',
 
 			// ce
 			've/ce/ve.ce.WikiaMediaCaptionNode.js',
+			've/ce/ve.ce.WikiaVideoCaptionNode.js',
+			've/ce/ve.ce.WikiaImageCaptionNode.js',
 			've/ce/ve.ce.WikiaBlockMediaNode.js',
 			've/ce/ve.ce.WikiaBlockImageNode.js',
 			've/ce/ve.ce.WikiaVideoNode.js',
 			've/ce/ve.ce.WikiaBlockVideoNode.js',
 			've/ce/ve.ce.WikiaInlineVideoNode.js',
+			've/ce/ve.ce.WikiaMapNode.js',
 
 			// ui
+			've/ui/ve.ui.WikiaCommandRegistry.js',
+			've/ui/dialogs/ve.ui.WikiaMediaEditDialog.js',
 			've/ui/dialogs/ve.ui.WikiaMediaInsertDialog.js',
 			've/ui/dialogs/ve.ui.WikiaReferenceDialog.js',
+			've/ui/dialogs/ve.ui.WikiaSaveDialog.js',
 			've/ui/dialogs/ve.ui.WikiaSourceModeDialog.js',
+			've/ui/dialogs/ve.ui.WikiaOrientationDialog.js',
+			've/ui/dialogs/ve.ui.WikiaMapInsertDialog.js',
 			've/ui/tools/ve.ui.WikiaDialogTool.js',
+			've/ui/tools/ve.ui.WikiaHelpTool.js',
+			've/ui/tools/ve.ui.WikiaMWGalleryInspectorTool.js',
+			've/ui/tools/ve.ui.WikiaMWLinkNodeInspectorTool.js',
 			've/ui/widgets/ve.ui.WikiaCartWidget.js',
 			've/ui/widgets/ve.ui.WikiaCartItemWidget.js',
+			've/ui/widgets/ve.ui.WikiaDimensionsWidget.js',
 			've/ui/widgets/ve.ui.WikiaMediaPageWidget.js',
 			've/ui/widgets/ve.ui.WikiaMediaSelectWidget.js',
 			've/ui/widgets/ve.ui.WikiaMediaOptionWidget.js',
+			've/ui/widgets/ve.ui.WikiaPhotoOptionWidget.js',
+			've/ui/widgets/ve.ui.WikiaVideoOptionWidget.js',
+			've/ui/widgets/ve.ui.WikiaMapOptionWidget.js',
 			've/ui/widgets/ve.ui.WikiaMediaResultsWidget.js',
 			've/ui/widgets/ve.ui.WikiaMediaQueryWidget.js',
 			've/ui/widgets/ve.ui.WikiaUploadWidget.js',
@@ -103,6 +120,12 @@ $wgResourceModules += array(
 			'videohandler-video-views',
 			'wikia-visualeditor-preference-enable',
 			'wikia-visualeditor-dialogbutton-wikiamediainsert-tooltip',
+			'wikia-visualeditor-dialogbutton-wikiamapinsert-tooltip',
+			'wikia-visualeditor-dialog-wikiamapinsert-create-button',
+			'wikia-visualeditor-dialog-wikiamapinsert-headline',
+			'wikia-visualeditor-dialog-wikiamapinsert-empty-headline',
+			'wikia-visualeditor-dialog-wikiamapinsert-empty-text',
+
 			'wikia-visualeditor-dialog-wikiamediainsert-insert-button',
 			'wikia-visualeditor-dialog-wikiamediainsert-item-license-label',
 			'wikia-visualeditor-dialog-wikiamediainsert-item-title-label',
@@ -138,9 +161,18 @@ $wgResourceModules += array(
 			'wikia-visualeditor-notification-media-query-failed',
 			'wikia-visualeditor-notification-media-permission-denied',
 			'wikia-visualeditor-notification-video-preview-not-available',
+			'accesskey-save',
+			'wikia-visualeditor-dialog-orientation-headline',
+			'wikia-visualeditor-dialog-orientation-text',
+			'wikia-visualeditor-dialog-orientation-start-button',
+			'wikia-visualeditor-dialog-meta-languages-readonlynote',
+			'wikia-visualeditor-dialog-transclusion-no-template-description',
+			'wikia-visualeditor-dialog-map-insert-title'
 		),
 		'dependencies' => array(
-			'ext.visualEditor.core'
+			'ext.visualEditor.core.desktop',
+			'ext.visualEditor.mwimage',
+			'ext.visualEditor.mwmeta',
 		)
 	),
 );
@@ -156,3 +188,21 @@ $wgExtensionMessagesFiles['VisualEditorWikia'] = $dir . 'VisualEditor.i18n.php';
 $wgHooks['GetPreferences'][] = 'VisualEditorWikiaHooks::onGetPreferences';
 $wgHooks['ResourceLoaderTestModules'][] = 'VisualEditorWikiaHooks::onResourceLoaderTestModules';
 $wgHooks['MakeGlobalVariablesScript'][] = 'VisualEditorWikiaHooks::onMakeGlobalVariablesScript';
+
+/* Configuration */
+
+// Disable VE for blog namespaces
+if ( !empty( $wgEnableBlogArticles ) ) {
+	$tempArray = array();
+	foreach ( $wgVisualEditorNamespaces as $key => &$value ) {
+		if ( $value === NS_BLOG_ARTICLE || $value === NS_BLOG_ARTICLE_TALK ) {
+			continue;
+		}
+		$tempArray[] = $value;
+	}
+	$wgVisualEditorNamespaces = $tempArray;
+}
+
+// Add additional valid namespaces for Wikia
+$wgVisualEditorNamespaces[] = NS_CATEGORY;
+$wgVisualEditorNamespaces[] = NS_PROJECT;

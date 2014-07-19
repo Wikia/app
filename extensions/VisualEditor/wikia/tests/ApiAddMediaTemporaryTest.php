@@ -45,7 +45,7 @@ class ApiAddMediaTemporaryTest extends WikiaBaseTest {
 
 	/**
      * @expectedException UsageException
-     * @expectedExceptionMessage You must be logged in to upload.
+     * @expectedExceptionMessage An unknown error occurred
      */
 	public function testImageNewLoggedOut() {
 		$request = new FauxRequest( array(), true );
@@ -67,8 +67,9 @@ class ApiAddMediaTemporaryTest extends WikiaBaseTest {
 			->expects( $this->once() )
 			->method( 'getTitle' )
 			->will( $this->returnValue( Title::newFromText( 'LoremIpsum', 6 ) ) );
-		$uploadFromFile::staticExpects( $this->once() )
-			->method( 'isAllowed' )
+		$uploadFromFile
+			->expects( $this->once() )
+			->method( 'verifyTitlePermissions' )
 			->will( $this->returnValue( true ) );
 		$this->mockClass( 'UploadFromFile', $uploadFromFile );
 

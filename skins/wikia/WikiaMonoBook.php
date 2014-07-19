@@ -133,7 +133,7 @@ abstract class WikiaSkinMonoBook extends WikiaSkin {
 		global $wgCityId;
 
 		return AnalyticsEngine::track('GA_Urchin', AnalyticsEngine::EVENT_PAGEVIEW) .
-			AnalyticsEngine::track('GA_Urchin', 'hub', AdEngine2Controller::getCachedCategory()) .
+			AnalyticsEngine::track('GA_Urchin', 'hub', AdEngine2Service::getCachedCategory()) .
 			AnalyticsEngine::track('GA_Urchin', 'onewiki', array($wgCityId)) .
 			AnalyticsEngine::track('QuantServe', AnalyticsEngine::EVENT_PAGEVIEW);
 	}

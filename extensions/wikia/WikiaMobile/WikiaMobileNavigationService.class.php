@@ -1,7 +1,7 @@
 <?php
 /**
  * WikiaMobile Naviagation
- * 
+ *
  * @author Jakub Olek <bukaj.kelo(at)gmail.com>
  * @authore Federico "Lox" Lucignano <federico(at)wikia-inc.com>
  */
@@ -74,5 +74,12 @@ class  WikiaMobileNavigationService extends WikiaService {
 
 		// report wiki nav parse errors (BugId:15240)
 		$this->response->setVal( 'parseErrors', $this->navModel->getErrors() );
+
+		$showVideoLink = false;
+		if( $this->app->wg->EnableSpecialVideosExt ) {
+			$showVideoLink = true;
+			$this->specialVideosUrl = SpecialPage::getTitleFor("Videos")->escapeLocalUrl();
+		}
+		$this->showVideoLink = $showVideoLink;
 	}
 }

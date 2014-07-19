@@ -201,6 +201,13 @@ $messages['it'] = array(
 	'minieditor-placeholder-reply' => 'Rispondi qui al messaggio',
 );
 
+/** Kannada (ಕನ್ನಡ)
+ * @author VASANTH S.N.
+ */
+$messages['kn'] = array(
+	'minieditor-reply' => 'ಉತ್ತರಿಸಿ',
+);
+
 /** Kurdish (Latin script) (Kurdî (latînî)‎)
  * @author George Animal
  */

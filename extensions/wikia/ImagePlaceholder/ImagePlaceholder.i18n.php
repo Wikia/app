@@ -300,6 +300,14 @@ $messages['ja'] = array(
 	'imgplc-notinhistory' => '履歴表示モードでは画像を追加できません。',
 );
 
+/** Kannada (ಕನ್ನಡ)
+ * @author VASANTH S.N.
+ */
+$messages['kn'] = array(
+	'imgplc-add-image' => 'ಚಿತ್ರಗಳನ್ನು ಸೇರಿಸು',
+	'imgplc-image' => 'ಚಿತ್ರ',
+);
+
 /** Korean (한국어)
  * @author 아라
  * @author 한글화담당
@@ -471,8 +479,8 @@ $messages['pms'] = array(
  * @author Ahmed-Najib-Biabani-Ibrahimkhel
  */
 $messages['ps'] = array(
-	'imgplc-add-image' => 'انځور ورګډول',
-	'imgplc-add-video' => 'ويډيو ورګډول',
+	'imgplc-add-image' => 'انځور ورگډول',
+	'imgplc-add-video' => 'ويډيو ورگډول',
 	'imgplc-image' => 'انځور',
 );
 
@@ -582,6 +590,15 @@ $messages['tly'] = array(
 	'imgplc-image' => 'Шикил',
 );
 
+/** Turkish (Türkçe)
+ * @author Sucsuzz
+ */
+$messages['tr'] = array(
+	'imgplc-add-image' => 'Resim Ekle',
+	'imgplc-add-video' => 'Video Ekle',
+	'imgplc-image' => 'Resim',
+);
+
 /** Tatar (Cyrillic script) (татарча)
  * @author Ajdar
  */
@@ -628,6 +645,14 @@ $messages['zh-hans'] = array(
 	'imgplc-image' => '照片',
 	'imgplc-notinhistory' => '您不能在历史模式中添加图片。',
 	'imgplc-notinhistory-video' => '您不能在历史模式中添加视频。',
+);
+
+/** Traditional Chinese (中文（繁體）‎)
+ * @author Ffaarr
+ */
+$messages['zh-hant'] = array(
+	'imgplc-add-image' => '增加圖片',
+	'imgplc-add-video' => '增加影片',
 );
 
 /** Chinese (Hong Kong) (中文（香港）‎)

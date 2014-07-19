@@ -41,7 +41,6 @@ class CreateWiki {
 	const IMGROOT              = "/images/";
 	const IMAGEURL             = "http://images.wikia.com/";
 	const CREATEWIKI_LOGO      = "http://images.wikia.com/central/images/2/22/Wiki_Logo_Template.png";
-	const CREATEWIKI_ICON      = "http://images.wikia.com/central/images/6/64/Favicon.ico";
 	const DEFAULT_STAFF        = "Angela";
 	const DEFAULT_USER         = 'Default';
 	const DEFAULT_DOMAIN       = "wikia.com";
@@ -50,7 +49,6 @@ class CreateWiki {
 	const DEFAULT_NAME         = "Wiki";
 	const DEFAULT_WIKI_TYPE    = "";
 	const DEFAULT_WIKI_LOGO    = '$wgUploadPath/b/bc/Wiki.png';
-	const DEFAULT_WIKI_FAVICON = '$wgUploadPath/6/64/Favicon.ico';
 
 
 	/**
@@ -95,6 +93,7 @@ class CreateWiki {
 				"pl" => "plstarter",
 				"ru" => "rustarter",
 				"it" => "italianstarter",
+				'fi' => 'fistarter',
 			)
 		);
 
@@ -266,6 +265,12 @@ class CreateWiki {
 			wfDebugLog( "createwiki", __METHOD__ . ": Folder {$this->mNewWiki->images_dir} created\n", true );
 		}
 
+		// Force initialize uploader user from correct shared db
+		$uploader = User::newFromName( 'CreateWiki script' );
+		$uploader->getId();
+		$oldUser = $wgUser;
+		$wgUser = $uploader;
+
 		/**
 		 * wikifactory variables
 		 */
@@ -287,6 +292,13 @@ class CreateWiki {
 			wfDebugLog( "createwiki", __METHOD__ . ": Creating tables not finished\n", true );
 			wfProfileOut( __METHOD__ );
 			return self::ERROR_SQL_FILE_BROKEN;
+		}
+
+		// Hack to slow down the devbox database creation because createTables() returns
+		// before the tables are created on the slave, and the uploadImage function hits the slave
+		global $wgDevelEnvironment;
+		if (isset($wgDevelEnvironment)) {
+			sleep(15);
 		}
 
 		/**
@@ -311,22 +323,15 @@ class CreateWiki {
 		$this->mNewWiki->dbw->insert( "site_stats", array( "ss_row_id" => "1"), __METHOD__ );
 
 		/**
-		 * copy default logo & favicon
+		 * copy default logo
 		 */
-		$uploader = User::newFromName( 'CreateWiki script' );
+
 
 		$res = ImagesService::uploadImageFromUrl( self::CREATEWIKI_LOGO, (object) ['name' => 'Wiki.png'], $uploader );
 		if ( $res['status'] === true ) {
 			wfDebugLog( "createwiki", __METHOD__ . ": Default logo has been uploaded\n", true );
 		} else {
 			wfDebugLog( "createwiki", __METHOD__ . ": Default logo has not been uploaded - " . print_r($res['errors'], true) . "\n", true );
-		}
-
-		$res = ImagesService::uploadImageFromUrl( self::CREATEWIKI_ICON, (object) ['name' => 'Favicon.ico'], $uploader );
-		if (  $res['status'] == true  ) {
-			wfDebugLog( "createwiki", __METHOD__ . ": Default favicon has been uploaded\n", true );
-		} else {
-			wfDebugLog( "createwiki", __METHOD__ . ": Default favicon has not been uploaded - " . print_r($res['errors'], true) . "\n", true );
 		}
 
 		/**
@@ -340,8 +345,12 @@ class CreateWiki {
 		}
 		// BugId:15644 - I need to pass this to CreateWikiLocalJob::changeStarterContributions
 		$job_params->sDbStarter = $this->sDbStarter;
-		$localJob = new CreateWikiLocalJob( Title::newFromText( NS_MAIN, "Main" ), $job_params );
-		$localJob->WFinsert( $this->mNewWiki->city_id, $this->mNewWiki->dbname );
+
+		if (!TaskRunner::isModern('CreateWikiLocalJob')) {
+			$localJob = new CreateWikiLocalJob( Title::newFromText( NS_MAIN, "Main" ), $job_params );
+			$localJob->WFinsert( $this->mNewWiki->city_id, $this->mNewWiki->dbname );
+		}
+
 		wfDebugLog( "createwiki", __METHOD__ . ": New createWiki local job created \n", true );
 
 		/**
@@ -354,13 +363,9 @@ class CreateWiki {
 		/**
 		 * set hub/category
 		 */
-		$oldUser = $wgUser;
-		$wgUser = User::newFromName( 'CreateWiki script' );
 		$oHub = WikiFactoryHub::getInstance();
 		$oHub->setCategory( $this->mNewWiki->city_id, $this->mNewWiki->hub, "CW Setup" );
 		wfDebugLog( "createwiki", __METHOD__ . ": Wiki added to the category hub: {$this->mNewWiki->hub} \n", true );
-		$wgUser = $oldUser;
-		unset($oldUser);
 
 		/**
 		 * define wiki type
@@ -426,21 +431,37 @@ class CreateWiki {
 		 */
 		unset($this->mNewWiki->dbw);
 
-		/**
-		 * inform task manager
-		 */
-		$Task = new LocalMaintenanceTask();
-		$Task->createTask(
-			array(
-				"city_id" => $this->mNewWiki->city_id,
-				"command" => "maintenance/runJobs.php",
-				"type"    => "CWLocal",
-				"data"    => $this->mNewWiki,
-				"server"  => rtrim( $this->mNewWiki->url, "/" )
-			),
-			TASK_QUEUED,
-			BatchTask::PRIORITY_HIGH
-		);
+		// Restore wgUser
+		$wgUser = $oldUser;
+		unset($oldUser);
+
+		if (TaskRunner::isModern('CreateWikiLocalJob')) {
+			$creationTask = new CreateNewWikiTask();
+
+			(new \Wikia\Tasks\AsyncTaskList())
+				->wikiId($this->mNewWiki->city_id)
+				->prioritize()
+				->add($creationTask->call('postCreationSetup', $job_params))
+				->add($creationTask->call('maintenance', rtrim($this->mNewWiki->url, "/")))
+				->queue();
+		} else {
+			/**
+			 * inform task manager
+			 */
+			$Task = new LocalMaintenanceTask();
+			$Task->createTask(
+				array(
+					"city_id" => $this->mNewWiki->city_id,
+					"command" => "maintenance/runJobs.php",
+					"type"    => "CWLocal",
+					"data"    => $this->mNewWiki,
+					"server"  => rtrim( $this->mNewWiki->url, "/" )
+				),
+				TASK_QUEUED,
+				BatchTask::PRIORITY_HIGH
+			);
+		}
+
 		wfDebugLog( "createwiki", __METHOD__ . ": Local maintenance task added\n", true );
 
 		wfProfileOut( __METHOD__ );
@@ -889,10 +910,9 @@ class CreateWiki {
 		$this->mWFSettingVars['wgLocalInterwiki']         = $this->mNewWiki->sitename;
 		$this->mWFSettingVars['wgLanguageCode']           = $this->mNewWiki->language;
 		$this->mWFSettingVars['wgServer']                 = rtrim( $this->mNewWiki->url, "/" );
-		$this->mWFSettingVars['wgFavicon']                = self::DEFAULT_WIKI_FAVICON;
-		$this->mWFSettingVars['wgEnableEditEnhancements'] = true;
 		$this->mWFSettingVars['wgEnableSectionEdit']      = true;
 		$this->mWFSettingVars['wgEnableSwiftFileBackend'] = true;
+		$this->mWFSettingVars['wgOasisLoadCommonCSS']     = true;
 
 		// rt#60223: colon allowed in sitename, breaks project namespace
 		if( mb_strpos( $this->mWFSettingVars['wgSitename'], ':' ) !== false ) {

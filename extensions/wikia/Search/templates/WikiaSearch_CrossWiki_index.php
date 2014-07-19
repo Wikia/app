@@ -7,6 +7,12 @@
 
 			<input type="text" name="search" id="search-v2-input" value="<?=$query;?>" />
 			<input type="hidden" name="fulltext" value="Search" />
+			<? if ( !empty($hub) ): ?>
+				<input type="hidden" name="hub" value="<?=$hub?>" />
+			<? endif ?>
+			<? if ( !empty($resultsLang) ): ?>
+				<input type="hidden" name="resultsLang" value="<?=$resultsLang?>" />
+			<? endif ?>
 			<button type="submit" class="wikia-button" id="search-v2-button" value="<?= wfMsg( 'searchbutton' ); ?>"><img src="<?= $wg->BlankImgUrl ?>" class="sprite search" height="17" width="21"></button>
 		</div>
 
@@ -37,19 +43,20 @@
 					<? endif; ?>
 
 				<ul class="Results inter-wiki">
-					<?php $pos = 0; ?>
-					<?php foreach( $results as $result ): ?>
-					<?php
+					<?
+					$pos = 0;
+					foreach( $results as $result ) {
 						$pos++;
 						echo $app->getView( 'WikiaSearch', 'CrossWiki_result', array(
 							'result' => $result,
 							'pos' => $pos + (($currentPage - 1) * $resultsPerPage),
 							'query' => $query,
 							'hub' => $hub,
+							'corporateWikiId' => $corporateWikiId,
 							'wgExtensionsPath' => $wgExtensionsPath
 						));
+					}
 					?>
-					<?php endforeach; ?>
 				</ul>
 
 				<?= $paginationLinks; ?>

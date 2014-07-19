@@ -21,7 +21,7 @@ $wgExtensionCredits['api'][] = array(
 $wgAutoloadClasses['SolrLyricsApiHandler'] = $dir . '/LyricsHandlers/SolrLyricsApiHandler.class.php';
 $wgAutoloadClasses['LyricsApiSearchParams'] = $dir . '/LyricsApiSearchParams.class.php';
 $wgAutoloadClasses['LyricsApiController'] = $dir . '/LyricsApiController.class.php';
-$wgAutoloadClasses['LyricsApiBase'] = $dir . '/LyricsApiBase.class.php';
+$wgAutoloadClasses['LyricsUtils'] = $dir . '/LyricsUtils.class.php';
 
 // Add new API controller to API controllers list
 $wgWikiaApiControllers['LyricsApiController'] = $dir . '/LyricsApiController.class.php';

@@ -677,7 +677,7 @@ $messages['diq'] = array(
 	'scavengerhunt-button-disable' => 'Aktif niya',
 	'scavengerhunt-button-enable' => 'Aktif ke',
 	'scavengerhunt-button-delete' => 'Bestere',
-	'scavengerhunt-entry-form-name' => 'Namey şıma',
+	'scavengerhunt-entry-form-name' => 'Nameyê şıma:',
 	'scavengerhunt-quit-game-button-quit' => 'Bıvci',
 	'scavengerhunt-quit-game-button-cancel' => 'Bıtexelne',
 	'scavengerhunt-label-entry-form-email' => 'E postay karberi',
@@ -1405,6 +1405,25 @@ $messages['ja'] = array(
 	'scavengerhunt-button-delete' => '削除',
 	'scavengerhunt-entry-form-name' => '名前:',
 	'scavengerhunt-entry-form-email' => 'メール アドレス',
+);
+
+/** Kannada (ಕನ್ನಡ)
+ * @author VASANTH S.N.
+ */
+$messages['kn'] = array(
+	'scavengerhunt-list-header-actions' => 'ಕ್ರಿಯೆಗಳು',
+	'scavengerhunt-list-enabled' => 'ಶಕ್ತಗೊಳಿಸಿದ',
+	'scavengerhunt-list-disabled' => 'ನಿಷ್ಕ್ರಿಯಗೊಳಿಸಿದ',
+	'scavengerhunt-list-edit' => 'ಸಂಪಾದಿಸಿ',
+	'scavengerhunt-label-name' => 'ಹೆಸರು:',
+	'scavengerhunt-button-disable' => 'ನಿಷ್ಕ್ರಿಯಗೊಳಿಸಿ',
+	'scavengerhunt-button-enable' => 'ಸಕ್ರಿಯಗೊಳಿಸಿ',
+	'scavengerhunt-button-delete' => 'ಅಳಿಸು',
+	'scavengerhunt-entry-form-name' => 'ನಿಮ್ಮ ಹೆಸರು:',
+	'scavengerhunt-entry-form-email' => 'ನಿಮ್ಮ ಇ-ಅಂಚೆ ವಿಳಾಸ',
+	'scavengerhunt-quit-game-button-quit' => 'ನಿರ್ಗಮಿಸು',
+	'scavengerhunt-label-entry-form-username' => 'ಬಳಕೆದಾರ ಹೆಸರು',
+	'scavengerhunt-label-clue-size' => 'ಅಕ್ಷರಶೈಲಿಯಗಾತ್ರ',
 );
 
 /** Kurdish (Latin script) (Kurdî (latînî)‎)
@@ -2925,6 +2944,17 @@ $messages['tly'] = array(
 	'scavengerhunt-button-delete' => 'Рәдд кардеј',
 );
 
+/** Turkish (Türkçe)
+ * @author Sucsuzz
+ */
+$messages['tr'] = array(
+	'scavengerhunt-list-header-name' => 'Oyun ismi',
+	'scavengerhunt-button-save' => 'Kaydet',
+	'scavengerhunt-quit-game-button-quit' => 'Çık',
+	'scavengerhunt-quit-game-button-cancel' => 'İptal',
+	'scavengerhunt-label-entry-form-username' => 'Kullanıcı Adı',
+);
+
 /** Ukrainian (українська)
  * @author A1
  * @author Andriykopanytsia
@@ -3098,13 +3128,28 @@ $messages['zh-hans'] = array(
 	'scavengerhunt-label-image-check' => '（显示图像）',
 	'scavengerhunt-label-general' => '简单介绍',
 	'scavengerhunt-label-name' => '名：',
+	'scavengerhunt-label-starting-clue-title' => '弹窗标题：',
+	'scavengerhunt-label-starting-clue-text' => '弹窗文本：',
+	'scavengerhunt-label-starting-clue-image' => '弹窗图片（URL地址）：',
+	'scavengerhunt-label-starting-clue-button-text' => '弹窗按钮文字：',
+	'scavengerhunt-label-starting-clue-button-target' => '弹窗按钮目标（URL地址）：',
+	'scavengerhunt-label-entry-form-title' => '弹窗标题：',
+	'scavengerhunt-label-entry-form-text' => '弹窗文本：',
+	'scavengerhunt-label-entry-form-image' => '弹窗图片（URL地址）：',
+	'scavengerhunt-label-entry-form-question' => '弹窗问题：',
+	'scavengerhunt-label-entry-form-button-text' => '按钮文本：',
 	'scavengerhunt-label-goodbye' => '再见弹出菜单',
+	'scavengerhunt-label-goodbye-title' => '弹窗标题：',
+	'scavengerhunt-label-goodbye-text' => '弹窗消息：',
+	'scavengerhunt-label-goodbye-image' => '弹窗图片（URL地址）：',
 	'scavengerhunt-button-add' => '添加一个游戏',
 	'scavengerhunt-button-save' => '保存',
 	'scavengerhunt-button-disable' => '禁用',
 	'scavengerhunt-button-enable' => '启用',
 	'scavengerhunt-button-delete' => '删除',
 	'scavengerhunt-button-export' => '导出为CSV',
+	'scavengerhunt-button-remove-section' => '移除此步',
+	'scavengerhunt-form-error' => '请更正以下错误：',
 	'scavengerhunt-entry-form-name' => '您的名字：',
 	'scavengerhunt-entry-form-email' => '您的电子邮件地址：',
 	'scavengerhunt-quit-game-button-quit' => '退出',

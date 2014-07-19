@@ -10,12 +10,16 @@
 
 // VE Imports
 @import "modules/ve/ui/styles/color";
+@import "modules/ve/ui/styles/ve.ce.FocusableNode";
 @import "modules/ve/ui/styles/ve.ui.Ads";
+@import "modules/ve/ui/styles/ve.ui.Button";
 @import "modules/ve/ui/styles/ve.ui.Context";
 @import "modules/ve/ui/styles/ve.ui.Dialog";
 @import "modules/ve/ui/styles/ve.ui.Frame";
 @import "modules/ve/ui/styles/ve.ui.Icons-vector";
 @import "modules/ve/ui/styles/ve.ui.Inspector";
+@import "modules/ve/ui/styles/ve.ui.MWSaveDialog";
+@import "modules/ve/ui/styles/ve.ui.ResizableNode";
 @import "modules/ve/ui/styles/ve.ui.Surface";
 @import "modules/ve/ui/styles/ve.ui.Tool";
 @import "modules/ve/ui/styles/ve.ui.Toolbar";
@@ -25,6 +29,8 @@
 @import "modules/ve/ui/styles/ve.ui.WikiaDropTargetWidget";
 @import "modules/ve/ui/styles/ve.ui.WikiaMediaInsertDialog";
 @import "modules/ve/ui/styles/ve.ui.WikiaSourceModeDialog";
+@import "modules/ve/ui/styles/ve.ui.WikiaOrientationDialog";
+@import "modules/ve/ui/styles/ve.ui.WikiaMapInsertDialog";
 
 // OO Imports
 @import "modules/ve/ui/styles/oo.ui.Window";

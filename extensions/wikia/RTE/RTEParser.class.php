@@ -200,6 +200,9 @@ class RTEParser extends Parser {
 			return $ret;
 		}
 
+		$file = wfFindFile( $title );
+		$isVideo = WikiaFileHelper::isFileTypeVideo( $file );
+
 		// get and merge image parameters returned by Parser::makeImage
 		$params = array_merge(self::$imageParams['frame'], self::$imageParams['handler']);
 
@@ -314,7 +317,7 @@ class RTEParser extends Parser {
 		// add extra CSS classes
 		$imgClass = array('image');
 
-		if (isset($data['params']['thumbnail'])) {
+		if (isset($data['params']['thumbnail']) || $isVideo) {
 			$imgClass[] = 'thumb';
 		}
 		if (isset($data['params']['framed'])) {
@@ -351,8 +354,7 @@ class RTEParser extends Parser {
 
 		$mediaType = "image";
 
-		$file = wfFindFile( $title );
-		if ( WikiaFileHelper::isFileTypeVideo( $file ) ) {
+		if ( $isVideo ) {
 			$mediaType = "video";
 		}
 

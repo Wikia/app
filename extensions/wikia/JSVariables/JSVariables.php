@@ -24,13 +24,11 @@ function wfJSVariablesTopScripts(Array &$vars, &$scripts) {
 		$vars['wgWikiFactoryTagNames'] = array_values( $wg->WikiFactoryTags );
 	}
 	$vars['wgCdnRootUrl'] = $wg->CdnRootUrl;
+	$vars['wgCdnApiUrl'] = $wg->CdnApiUrl;
 
 	// analytics needs it (from here till the end of the function)
 	$vars['wgDBname'] = $wg->DBname;
 	$vars['wgCityId'] = $wg->CityId;
-	if (!empty($wg->MedusaSlot)) {
-		$vars['wgMedusaSlot'] = 'slot' . $wg->MedusaSlot;
-	}
 
 	// c&p from OutputPage::getJSVars with an old 1.16 name
 	$vars['wgContentLanguage'] = $title->getPageLanguage()->getCode();

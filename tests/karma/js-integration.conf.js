@@ -41,7 +41,6 @@ module.exports = function(config) {
 			'extensions/wikia/WikiaMobile/js/pager.js',
 			'extensions/wikia/WikiaMobile/js/popover.js',
 			'extensions/wikia/WikiaMobile/js/sections.js',
-			'extensions/wikia/WikiaMobile/js/ads.js',
 			'extensions/wikia/WikiaMobile/js/share.js',
 			'extensions/wikia/WikiaMobile/js/tables.js',
 			'extensions/wikia/WikiaMobile/js/throbber.js',

@@ -489,6 +489,17 @@ class WikiaFileHelper extends Service {
 		return array( $truncatedList, $isTruncated );
 	}
 
+	/**
+	 * Gathers information about a video
+	 *
+	 * @deprecated Use VideoHandlerHelper::getVideoDetailFromWiki or VideoHandlerHelper::getVideoDetail instead
+	 *
+	 * @param $arr
+	 * @param Title $title
+	 * @param int $width
+	 * @param int $height
+	 * @param bool $force16x9Ratio
+	 */
 	public static function inflateArrayWithVideoData( &$arr, Title $title, $width=150, $height=75, $force16x9Ratio=false ) {
 		$arr['ns'] = $title->getNamespace();
 		$arr['nsText'] = $title->getNsText();
@@ -706,6 +717,20 @@ class WikiaFileHelper extends Service {
 		$fullUrl = $globalTitle->getFullURL();
 
 		return $fullUrl;
+	}
+
+	/**
+	 * Get message for by user section
+	 * @param string $userName
+	 * @param string $addedAt
+	 * @return string $addedBy
+	 */
+	public static function getByUserMsg( $userName, $addedAt ) {
+		// get link to user page
+		$link = AvatarService::renderLink( $userName );
+		$addedBy = wfMessage( 'thumbnails-added-by', $link, wfTimeFormatAgo( $addedAt, false ) )->text();
+
+		return $addedBy;
 	}
 
 }

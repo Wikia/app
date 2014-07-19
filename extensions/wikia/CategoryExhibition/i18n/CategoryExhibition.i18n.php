@@ -130,13 +130,14 @@ $messages['ca'] = array(
 
 /** Czech (čeština)
  * @author Dontlietome7
+ * @author Matěj Grabovský
  */
 $messages['cs'] = array(
 	'category-exhibition-sorttype' => 'Typ řazení:',
 	'category-exhibition-alphabetical' => 'Abecední',
 	'category-exhibition-mostvisited' => 'Nejvíce navštěvované',
 	'category-exhibition-recentedits' => 'Nedávno editované',
-	'category-exhibition-page-header' => 'Stránky v kategorii „$1"',
+	'category-exhibition-page-header' => 'Stránky v kategorii „$1“',
 	'category-exhibition-subcategories-header' => 'Podkategorie',
 	'category-exhibition-media-header' => 'Média v kategorii "$1"',
 	'category-exhibition-blogs-header' => 'Příspěvky do blogu',
@@ -178,10 +179,11 @@ $messages['de'] = array(
 
 /** Zazaki (Zazaki)
  * @author Erdemaslancan
+ * @author Marmase
  */
 $messages['diq'] = array(
 	'category-exhibition-alphabetical' => 'Alfabetik',
-	'category-exhibition-page-header' => 'Pelê ke kategoriya "$1" derê',
+	'category-exhibition-page-header' => 'Pelê ke kategoriya "$1" miyan derê',
 	'category-exhibition-subcategories-header' => 'Kategoriyê bınêni',
 );
 
@@ -373,18 +375,30 @@ $messages['ja'] = array(
  * @author VASANTH S.N.
  */
 $messages['kn'] = array(
+	'category-exhibition-alphabetical' => 'ಅಕ್ಷರಾನುಕ್ರಮ',
+	'category-exhibition-mostvisited' => 'ಹೆಚ್ಚು ಸಂದರ್ಶಿಸಲ್ಪಟ್ಟ',
+	'category-exhibition-recentedits' => 'ಇತ್ತೀಚಿಗೆ ಸಂಪಾದಿಸಿದ',
 	'category-exhibition-page-header' => '"$1" ವರ್ಗದಲ್ಲಿರುವ ಲೇಖನಗಳು',
 	'category-exhibition-subcategories-header' => 'ಉಪವರ್ಗಗಳು',
+	'category-exhibition-media-header' => '"$1" ವರ್ಗದಲ್ಲಿರುವ ಚಿತ್ರ/ಶಬ್ದ ಫೈಲುಗಳು',
+	'category-exhibition-blogs-header' => 'ಬ್ಲಾಗ್ ಪೋಸ್ಟ್ ಗಳು',
+	'category-exhibition-display-old' => 'ವರ್ಗ ಪಟ್ಟಿ ನೋಟ',
+	'category-exhibition-display-new' => 'ವರ್ಗ ಪ್ರದರ್ಶನ ನೋಟ',
 );
 
 /** Korean (한국어)
  * @author Leehoy
+ * @author 관인생략
  */
 $messages['ko'] = array(
 	'category-exhibition-sorttype' => '정렬 기준:',
 	'category-exhibition-alphabetical' => '알파벳순',
+	'category-exhibition-mostvisited' => '가장 많이 방문함',
 	'category-exhibition-recentedits' => '최근 수정',
+	'category-exhibition-page-header' => '"$1" 분류에 속하는 문서',
 	'category-exhibition-subcategories-header' => '하위 분류',
+	'category-exhibition-media-header' => '"$1" 분류에 속하는 미디어',
+	'category-exhibition-blogs-header' => '블로그 게시물',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
@@ -547,7 +561,7 @@ $messages['ps'] = array(
 	'category-exhibition-page-header' => 'د "$1" وېشنيزې مخونه',
 	'category-exhibition-subcategories-header' => 'څېرمه وېشنيزې',
 	'category-exhibition-media-header' => 'د "$1" وېشنيزې رسنۍ',
-	'category-exhibition-blogs-header' => 'د بلاګ پوستونه',
+	'category-exhibition-blogs-header' => 'د بلاگ پوستونه',
 	'category-exhibition-display-old' => 'د وېشنيزې لړليک کتل',
 );
 
@@ -690,10 +704,15 @@ $messages['tl'] = array(
 );
 
 /** Turkish (Türkçe)
+ * @author Sayginer
  * @author Suelnur
  */
 $messages['tr'] = array(
+	'category-exhibition-alphabetical' => 'Alfabetik',
+	'category-exhibition-page-header' => '"$1" kategorisindeki sayfalar',
 	'category-exhibition-subcategories-header' => 'Alt kategoriler',
+	'category-exhibition-media-header' => '"$1" kategorisindeki dosyalar',
+	'category-exhibition-blogs-header' => 'Blog yazıları',
 );
 
 /** Ukrainian (українська)

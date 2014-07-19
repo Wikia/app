@@ -69,10 +69,11 @@ $messages['de'] = array(
 
 /** Spanish (español)
  * @author DJ Nietzsche
+ * @author VegaDark
  */
 $messages['es'] = array(
 	'confirmemailprompt-desc' => 'Muestra un mensaje de advertencia si el usuario tiene una dirección de correo electrónico no confirmada',
-	'confirmemailprompt-error' => '¿Es esta su dirección de correo electrónico?: <strong>$1</strong> ? [[$2| Confirmarla]] o [[$3|cambiarla]].',
+	'confirmemailprompt-error' => '¿Esta es tu dirección de correo electrónico: <strong>$1</strong>? [[$2|Confírmala]] o [[$3|cámbiala]].',
 );
 
 /** Finnish (suomi)

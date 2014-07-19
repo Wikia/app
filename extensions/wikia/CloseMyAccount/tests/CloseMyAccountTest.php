@@ -42,43 +42,87 @@ class CloseMyAccountTest extends WikiaBaseTest {
 	/**
 	 * @dataProvider reactivateAccountProvider
 	 */
-	public function testReactivateAccountReturnValues( $expected, $getOptionMap ) {
-		$userMock = $this->getMock( 'User', [ 'getOption' ] );
+	public function testReactivateAccountReturnValues( $expected, $isScheduledForClosure, $isClosed ) {
+		$userMock = $this->getMock( 'User', [ 'setOption', 'saveSettings' ] );
 
 		$userMock->expects( $this->any() )
-			->method( 'getOption' )
-			->will( $this->returnValueMap( $getOptionMap ) );
+			->method( 'setOption' );
 
-		$closeAccountHelper = new CloseMyAccountHelper();
+		$userMock->expects( $this->any() )
+			->method( 'saveSettings' );
 
-		$result = $closeAccountHelper->reactivateAccount( $userMock );
+		$helperMock = $this->getMock( 'CloseMyAccountHelper', [ 'isClosed', 'isScheduledForClosure', 'track' ] );
+
+		$helperMock->expects( $this->any() )
+			->method( 'isClosed' )
+			->will( $this->returnValue( $isClosed ) );
+
+		$helperMock->expects( $this->any() )
+			->method( 'isScheduledForClosure' )
+			->will( $this->returnValue( $isScheduledForClosure ) );
+
+		$helperMock->expects( $this->any() )
+			->method( 'track' );
+
+		$result = $helperMock->reactivateAccount( $userMock );
 
 		$this->assertEquals( $expected, $result );
-
 	}
 
 	public function reactivateAccountProvider() {
 		return [
-			[ false, [
-				[ 'requested-closure', false, false, 1 ],
-				[ 'requested-closure-date', false, false, wfTimestamp( TS_DB ) ],
-				[ 'disabled', false, false, 1 ],
-			] ],
-			[ false, [
-				[ 'requested-closure', false, false, 0 ],
-				[ 'requested-closure-date', false, false, false ],
-				[ 'disabled', false, false, 0 ],
-			] ],
-			[ false, [
-				[ 'requested-closure', false, false, 0 ],
-				[ 'requested-closure-date', false, false, false ],
-				[ 'disabled', false, false, 1 ],
-			] ],
-			[ true, [
-				[ 'requested-closure', false, false, 1 ],
-				[ 'requested-closure-date', false, false, wfTimestamp( TS_DB ) ],
-				[ 'disabled', false, false, 0 ],
-			] ],
+			[ false, true, true ],
+			[ false, false, false ],
+			[ false, false, true ],
+			[ true, true, false ],
+		];
+	}
+
+	/**
+	 * @dataProvider requestReactivationProvider
+	 */
+	public function testRequestReactivation( $expected, $isScheduledForClosure, $isEmailConfirmed, $sendConfirmationMailStatus ) {
+		$userMock = $this->getMock( 'User', [ 'isEmailConfirmed', 'sendConfirmationMail' ] );
+		$statusMock = $this->getMock( 'Status', [ 'isGood' ] );
+
+		$statusMock->expects( $this->any() )
+			->method( 'isGood' )
+			->will( $this->returnValue( $sendConfirmationMailStatus ) );
+
+		$userMock->expects( $this->any() )
+			->method( 'isEmailConfirmed' )
+			->will( $this->returnValue( $isEmailConfirmed ) );
+
+		$userMock->expects( $this->any() )
+			->method( 'sendConfirmationMail' )
+			->will( $this->returnValue( $statusMock ) );
+
+		$helperMock = $this->getMock( 'CloseMyAccountHelper', [ 'isScheduledForClosure', 'track' ] );
+
+		$helperMock->expects( $this->once() )
+			->method( 'isScheduledForClosure' )
+			->will( $this->returnValue( $isScheduledForClosure ) );
+
+		$helperMock->expects( $this->any() )
+			->method( 'track' );
+
+		$appMock = $this->getMock( 'WikiaApp', [ 'renderView' ] );
+		$appMock->expects( $this->any() )
+			->method( 'renderView' )
+			->will( $this->returnValue( '' ) );
+
+		$result = $helperMock->requestReactivation( $userMock, $appMock );
+
+		$this->assertEquals( $expected, $result );
+	}
+
+	public function requestReactivationProvider() {
+		return [
+			[ false, false, true, null ],
+			[ false, true, false, null ],
+			[ false, false, false, null ],
+			[ false, true, true, false ],
+			[ true, true, true, true ],
 		];
 	}
 

@@ -92,8 +92,10 @@ class ImageServingDriverMainNS extends ImageServingDriverBase {
 	}
 
 	protected function getImagesPopularity( $imageNames, $limit ) {
+		global $wgContentNamespaces;
+
 		wfProfileIn(__METHOD__);
-		$result = array();
+		$result = [];
 
 		$sqlCount = $limit + 1;
 		$imageNames = array_values($imageNames);
@@ -103,6 +105,8 @@ class ImageServingDriverMainNS extends ImageServingDriverBase {
 		$imageLinksTable = $this->db->tableName('imagelinks');
 		$pageTable = $this->db->tableName('page');
 		$redirectTable = $this->db->tableName('redirect');
+
+		$contentNamespaces = implode(',', $wgContentNamespaces);
 
 		while ( $i < $count ) {
 			$batch = array_slice( $imageNames, $i, 100 );
@@ -127,13 +131,13 @@ class ImageServingDriverMainNS extends ImageServingDriverBase {
 			// get image usage
 			$sql = [];
 			foreach ( $imageRedirectsMap as $fromImg => $toImg ) {
-				$sql[] = "(SELECT {$this->db->addQuotes($toImg)} AS il_to FROM {$imageLinksTable} WHERE il_to = {$this->db->addQuotes($fromImg)} LIMIT {$sqlCount} )";
+				$sql[] = "(SELECT {$this->db->addQuotes($toImg)} AS il_to FROM {$imageLinksTable} JOIN {$pageTable} on page.page_id = il_from WHERE il_to = {$this->db->addQuotes($fromImg)} AND page_namespace IN ({$contentNamespaces}) LIMIT {$sqlCount} )";
 			}
 			$sql = implode(' UNION ALL ',$sql);
 			$batchResult = $this->db->query($sql, __METHOD__. '::imagelinks');
 
 			// do a "group by" on PHP side
-			$batchResponse = array();
+			$batchResponse = [];
 			foreach ($batchResult as $row) {
 				if ( !isset($batchResponse[$row->il_to]) ) {
 					$batchResponse[$row->il_to] = 1;
@@ -146,8 +150,11 @@ class ImageServingDriverMainNS extends ImageServingDriverBase {
 			// remove rows that exceed usage limit
 			foreach ($batchResponse as $k => $imageCount) {
 				if ( $imageCount > $limit ) {
-					wfDebug(__METHOD__ . ": filtered out {$k} (used {$imageCount} times)\n");
+					wfDebug(__METHOD__ . ": filtered out {$k} - used {$imageCount} time(s)\n");
 					unset($batchResponse[$k]);
+				}
+				else {
+					wfDebug(__METHOD__ . ": {$k} - used {$imageCount} time(s)\n");
 				}
 			}
 

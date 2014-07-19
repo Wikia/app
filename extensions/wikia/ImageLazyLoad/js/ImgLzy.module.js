@@ -9,8 +9,7 @@ define('wikia.ImgLzy', ['jquery', 'wikia.log', 'wikia.window'], function ($, log
 	var ImgLzy,
 		// allow WebP thumbnails for JPG and PNG files only (exclude video thumbnails)
 		// e.g. /muppet/images/thumb/9/98/BBC1_promos_for_Muppets_Tonight/150px-BBC1_promos_for_Muppets_Tonight.jpg
-		//thumbCheckRegExp = /\/images\/thumb\/[0-9a-f]\/[0-9a-f]{2}\/[^/]+\.(jpg|jpeg|jpe|png)(\/)/i;
-		thumbCheckRegExp = /\/images\/thumb\/9\/[0-9a-f]{2}\/[^/]+\.(jpg|jpeg|jpe|png)(\/)/i; // serve WebP for 1/16 of all thumbs only
+		thumbCheckRegExp = /\/images\/thumb\/[0-9a-f]\/[0-9a-f]{2}\/[^/]+\.(jpg|jpeg|jpe|png)(\/)/i;
 
 	function logger(msg) {
 		log(msg, log.levels.info, 'ImgLzy');
@@ -25,11 +24,13 @@ define('wikia.ImgLzy', ['jquery', 'wikia.log', 'wikia.window'], function ($, log
 			var proxy = $.proxy(this.checkAndLoad, this),
 				throttled = $.throttle(250, proxy);
 
+			this.$scroller = $('.scroller');
+
 			this.createCache();
 			this.checkAndLoad();
 
 			$(window).on('scroll', throttled);
-			$('.scroller').on('scroll', throttled);
+			this.$scroller.on('scroll', throttled);
 			$(document).on('tablesorter_sortComplete', proxy);
 
 			logger('initialized');
@@ -73,10 +74,11 @@ define('wikia.ImgLzy', ['jquery', 'wikia.log', 'wikia.window'], function ($, log
 
 		createCache: function () {
 			var self = this;
+
 			self.cache = [];
 			$('img.lzy').each(function (idx) {
 				var $el = $(this),
-					relativeTo = $('.scroller').find(this),
+					relativeTo = self.$scroller.find(this),
 					topCalc, top;
 
 				if (relativeTo.length !== 0) {
@@ -163,8 +165,9 @@ define('wikia.ImgLzy', ['jquery', 'wikia.log', 'wikia.window'], function ($, log
 				lastScrollTop,
 				scrollBottom,
 				idx,
-				visible,
-				cacheItem;
+				inViewport,
+				cacheItem,
+				imgSrc;
 
 			for (idx in this.cache) {
 				cacheItem = this.cache[idx];
@@ -175,14 +178,21 @@ define('wikia.ImgLzy', ['jquery', 'wikia.log', 'wikia.window'], function ($, log
 				scrollTop = scrollTop - scrollSpeed;
 
 				cacheItem.parent.data('lastScrollTop', lastScrollTop);
-				visible = (scrollTop < cacheItem.top && scrollBottom > cacheItem.top) ||
+				inViewport = (scrollTop < cacheItem.top && scrollBottom > cacheItem.top) ||
 					(scrollTop < cacheItem.bottom && scrollBottom > cacheItem.bottom);
 
-				if (visible && this.parentVisible(cacheItem)) {
+				if (inViewport && this.parentVisible(cacheItem)) {
 					cacheItem.jq.addClass('lzyTrns');
 					cacheItem.el.onload = onload;
-					cacheItem.el.src = this.rewriteURLForWebP(cacheItem.jq.data('src'));
-					cacheItem.jq.removeClass('lzy');
+					imgSrc = this.rewriteURLForWebP( cacheItem.jq.data( 'src' ) );
+					if ( imgSrc ) {
+						cacheItem.el.src = imgSrc;
+					}
+					// Hack for IE: cached images aren't firing onload
+					if ( cacheItem.el.complete ) {
+						cacheItem.el.onload();
+					}
+					cacheItem.jq.removeClass( 'lzy' );
 					delete this.cache[idx];
 				}
 			}

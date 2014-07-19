@@ -116,8 +116,7 @@ class GamingMapsController extends WikiaController {
         //file_put_contents($tempFilePath,$img);
 
         $oTitle = Title::newFromText($newImgName, NS_FILE);
-        $file = F::build(
-            'WikiaLocalFile',
+        $file = new WikiaLocalFile(
             array(
                 $oTitle,
                 RepoGroup::singleton()->getLocalRepo()

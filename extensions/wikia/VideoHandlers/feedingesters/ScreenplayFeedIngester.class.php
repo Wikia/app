@@ -2,6 +2,8 @@
 
 class ScreenplayFeedIngester extends VideoFeedIngester {
 
+	const TIMEOUT = 60;
+
 	protected static $API_WRAPPER = 'ScreenplayApiWrapper';
 	protected static $PROVIDER = 'screenplay';
 	protected static $FEED_URL = 'http://$2:$3@www.totaleclips.com/api/v1/assets?vendorid=$1&group_by_title=1&date_added=$4&date_added_end=$5&bitrateID=$6';
@@ -66,6 +68,9 @@ class ScreenplayFeedIngester extends VideoFeedIngester {
 		5  => 'NC-17',
 	];
 
+	// Skip Movie Trailers (trailer type = Home Video, Theatrical, Open-ended )
+	private static $EXCLUDE_TRAILER_TYPE = [ 1, 2, 20 ];
+
 	/**
 	 * Download feed from API
 	 * @param string $startDate
@@ -80,9 +85,9 @@ class ScreenplayFeedIngester extends VideoFeedIngester {
 
 		print( "Connecting to $url...\n" );
 
-		$content = $this->getUrlContent( $url );
+		$content = $this->getUrlContent( $url, [ 'timeout' => self::TIMEOUT ] );
 		if ( $content === false  ) {
-			$this->videoErrors("ERROR: problem downloading content.\n" );
+			$this->videoErrors( "ERROR: problem downloading content.\n" );
 			wfProfileOut( __METHOD__ );
 			return 0;
 		}
@@ -210,8 +215,14 @@ class ScreenplayFeedIngester extends VideoFeedIngester {
 					continue;
 				}
 
+				// Skip Movie Trailers (trailer type = Home Video, Theatrical, Open-ended )
+				if ( in_array( $clip['TrailerTypeId'], self::$EXCLUDE_TRAILER_TYPE ) && $clip['TrailerVersion'] == 1 ) {
+					$this->videoSkipped();
+					continue;
+				}
+
 				$clip['AgeGate'] = $params['ageGate'];
-				if ( array_key_exists( $clip['EClipId'], $videos) ) {
+				if ( array_key_exists( $clip['EClipId'], $videos ) ) {
 					$videos[$clip['EClipId']] = $this->getClipData( $clip, $videos[$clip['EClipId']] );
 				} else {
 					$this->setResultSummary( 'found' );
@@ -434,7 +445,7 @@ class ScreenplayFeedIngester extends VideoFeedIngester {
 
 		wfProfileOut( __METHOD__ );
 
-		return $this->getUniqueArray( $categories );
+		return preg_replace( '/\s*,\s*/', ' ', $this->getUniqueArray( $categories ) );
 	}
 
 	/**

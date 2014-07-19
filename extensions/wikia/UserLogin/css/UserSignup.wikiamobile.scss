@@ -1,0 +1,126 @@
+$color: #8f8f8f;
+$main-color: #054C8B;
+$main-background-color: #E2F3F7;
+$error-border: #BE1E2D;
+$input-color: #333;
+$border-color: #D0D0D0;
+$transparent: rgba(0,0,0,0);
+$font-size: .9rem;
+
+h1 {
+	color: $main-color;
+}
+
+fieldset {
+	border: 0;
+	padding: 0;
+}
+
+.input-group {
+	margin: 0 0 10px 0;
+
+	input {
+		background-color: $transparent;
+		border: {
+			radius: 2px;
+			color: $border-color;
+		}
+		color: $input-color;
+		font-size: $font-size;
+		margin: 0;
+		padding-right: 10px;
+		-webkit-appearance: none;
+
+		&::-webkit-input-placeholder {
+			color: $color;
+		}
+		&::-moz-placeholder {
+			color: $color;
+		}
+	}
+
+	label {
+		width: 100%;
+		font-size: $font-size;
+	}
+
+	&.error {
+		input {
+			border-color: $error-border;
+		}
+	}
+}
+
+.success:not(.birthday-group) {
+	background: {
+		image: url('/extensions/wikia/UserLogin/images/check.png'); /* base64 */
+		position: 95% 50%;
+		size: 14px 10px;
+		repeat: no-repeat;
+	}
+}
+
+.signup-footer {
+	font-size: .8rem;
+	color: #999;
+	margin: 0;
+}
+
+select {
+	background: {
+		color: $transparent;
+		image: url('/extensions/wikia/UserLogin/images/chevronline.png'); /* base64 */
+		size: contain;
+		position: center right;
+		repeat: no-repeat;
+	}
+	border: {
+		radius: 2px;
+		color: $border-color;
+	}
+	height: 30px;
+	margin: 0;
+	width: 32%;
+	padding-left: 5%;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+}
+
+.error-msg {
+	background-color: $main-background-color;
+	color: $main-color;
+	font-size: .8rem;
+	margin: 10px 0;
+	padding-left: 10px;
+	text-align: left;
+	width: 100%;
+	word-wrap: break-word;
+}
+
+input[type=submit] {
+	background-color: $main-color;
+	border-radius: 3px;
+	color: white;
+	margin-bottom: 10px;
+
+	&[disabled=disabled] {
+		background-color: $border-color;
+	}
+}
+
+.submit-pane {
+	margin-top: 25px;
+}
+
+.login a {
+	font-weight: 800;
+}
+
+//ToDo: appropriate styles for confirmation login page
+.UserConfirm {
+	.subheading {
+		font-size: 0.8rem;
+		margin-top: 0;
+	}
+}

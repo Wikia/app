@@ -86,8 +86,17 @@
 					<div class="home-top-right-ads">
 					<?php
 						if ( !WikiaPageType::isCorporatePage() && !$wg->EnableVideoPageToolExt && WikiaPageType::isMainPage() ) {
-							echo $app->renderView('Ad', 'Index', array('slotname' => 'HOME_TOP_RIGHT_BOXAD'));
+							echo $app->renderView('Ad', 'Index', [
+								'slotName' => 'HOME_TOP_RIGHT_BOXAD',
+								'pageFairId' => isset($wg->AnalyticsProviderPageFairSlotIds['MEDREC']) ? $wg->AnalyticsProviderPageFairSlotIds['MEDREC'] : null,
+								'pageTypes' => ['homepage_logged', 'corporate', 'all_ads']
+							]);
 						}
+
+						if (!WikiaPageType::isCorporatePage() && !WikiaPageType::isMainPage() && $wg->AdDriverUseTopInContentBoxad) {
+							echo $app->renderView('Ad', 'Index', ['slotName' => 'TOP_IN_CONTENT_BOXAD']);
+						}
+
 					?>
 					</div>
 
@@ -122,8 +131,8 @@
 				<?php } ?>
 
 				<div id="WikiaArticleBottomAd" class="noprint">
-					<?= $app->renderView('Ad', 'Index', array('slotname' => 'PREFOOTER_LEFT_BOXAD')) ?>
-					<?= $app->renderView('Ad', 'Index', array('slotname' => 'PREFOOTER_RIGHT_BOXAD')) ?>
+					<?= $app->renderView('Ad', 'Index', ['slotName' => 'PREFOOTER_LEFT_BOXAD']) ?>
+					<?= $app->renderView('Ad', 'Index', ['slotName' => 'PREFOOTER_RIGHT_BOXAD']) ?>
 				</div>
 			</div>
 		</article><!-- WikiaMainContent -->

@@ -5,7 +5,7 @@ define('videosmodule.views.titleThumbnail', [
 	'use strict';
 
 	var track = Tracker.buildTrackingFunction({
-		category: 'videos-module-' + window.wgVideosModuleABTest,
+		category: 'videos-module-rail',
 		trackingMethod: 'both',
 		action: Tracker.ACTIONS.CLICK,
 		label: 'thumbnail-click'
@@ -28,8 +28,16 @@ define('videosmodule.views.titleThumbnail', [
 	};
 	VideosModuleThumbnail.prototype.render = function () {
 		this.constructor.prototype.render.call(this);
+		this.addSourceInfo();
 		this.bindEvents();
 		return this;
+	};
+	/**
+	 * Add information about how the video was selected to the DOM for debugging purposes
+	 * Ex: (subject to change) local, article-related, wiki-topics, etc.
+	 */
+	VideosModuleThumbnail.prototype.addSourceInfo = function () {
+		this.$el.attr('data-source', this.model.source);
 	};
 
 	return VideosModuleThumbnail;

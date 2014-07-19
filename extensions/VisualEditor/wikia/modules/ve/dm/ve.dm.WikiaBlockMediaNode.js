@@ -13,8 +13,8 @@
  * @param {number} [length] Length of content data in document
  * @param {Object} [element] Reference to element in linear model
  */
-ve.dm.WikiaBlockMediaNode = function VeDmWikiaBlockMediaNode( length, element ) {
-	ve.dm.MWBlockImageNode.call( this, 0, element );
+ve.dm.WikiaBlockMediaNode = function VeDmWikiaBlockMediaNode( element ) {
+	ve.dm.WikiaBlockMediaNode.super.call( this, element );
 };
 
 /* Inheritance */
@@ -22,10 +22,6 @@ ve.dm.WikiaBlockMediaNode = function VeDmWikiaBlockMediaNode( length, element ) 
 OO.inheritClass( ve.dm.WikiaBlockMediaNode, ve.dm.MWBlockImageNode );
 
 /* Static Properties */
-
-ve.dm.WikiaBlockMediaNode.static.childNodeTypes = [ 'wikiaMediaCaption' ];
-
-ve.dm.WikiaBlockMediaNode.static.captionNodeType = 'wikiaMediaCaption';
 
 ve.dm.WikiaBlockMediaNode.static.typeToRdfa = null;
 
@@ -35,6 +31,6 @@ ve.dm.WikiaBlockMediaNode.static.toDataElement = function ( domElements, convert
 		),
 		mwDataJSON = domElements[0].getAttribute( 'data-mw' ),
 		mwData = JSON.parse( mwDataJSON );
-	dataElement[0].attributes.attribution = mwData.attribution;
+	dataElement[0].attributes.user = mwData.user;
 	return dataElement;
 };

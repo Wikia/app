@@ -27,6 +27,16 @@ class QualarooHooks {
 		return true;
 	}
 
+	static public function onOasisSkinAssetGroupsBlocking( &$jsAssetGroups ) {
+		global $wgNoExternals, $wgOut;
+
+		if ( empty( $wgNoExternals ) && $wgOut->getSkin()->getSkinName() == 'oasis' ) {
+			$jsAssetGroups[] = 'qualaroo_blocking_js';
+		}
+
+		return true;
+	}
+
 	static public function onMakeGlobalVariablesScript ( &$vars, $outputPage ) {
 		global $wgNoExternals, $wgQualarooDevUrl, $wgDevelEnvironment, $wgQualarooUrl;
 

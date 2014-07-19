@@ -21,11 +21,11 @@ ve.wikiaTest = ( function () {
 	utils.disableDebugModeForTests = function () {
 		var debug;
 		return {
-			setup: function() {
+			setup: function () {
 				debug = ve.debug;
 				ve.debug = false;
 			},
-			teardown: function() {
+			teardown: function () {
 				ve.debug = debug;
 			}
 		};
@@ -128,6 +128,20 @@ ve.wikiaTest = ( function () {
 		return str.charAt( 0 ).toUpperCase() + str.slice( 1 );
 	};
 
+	/**
+	 * Use the base URL of window.document as the base URL of another document.
+	 *
+	 * @method
+	 * @static
+	 * @param {Document} doc Document object
+	 * @returns {void}
+	 */
+	utils.appendBase = function ( doc ) {
+		var baseElement = document.createElement( 'base' );
+		baseElement.setAttribute( 'href', /.*\//.exec( window.location.href ) );
+		doc.getElementsByTagName( 'head' )[0].appendChild( baseElement );
+	};
+
 	/* Media Utils */
 
 	utils.media = {};
@@ -144,8 +158,7 @@ ve.wikiaTest = ( function () {
 	 * @param {Function} callback A function that returns the proper node view from a document node
 	 */
 	utils.media.runHtmlDomToNodeViewTests = function ( assert, displayType, rdfaType, callback ) {
-		var $fixture = $( '#qunit-fixture' ),
-			current,
+		var current,
 			doc,
 			documentModel,
 			documentView,
@@ -165,8 +178,9 @@ ve.wikiaTest = ( function () {
 			doc = ve.createDocumentFromHtml(
 				media.getHtmlDom( displayType, rdfaType, current )
 			);
+			utils.appendBase( doc );
 
-			surface = new ve.init.sa.Target( $fixture, doc ).surface;
+			surface = ve.test.utils.createSurfaceFromDocument( doc );
 			documentModel = surface.getModel().getDocument();
 			documentView = surface.getView().getDocument();
 			nodeView = callback( documentView.getDocumentNode() );
@@ -199,8 +213,7 @@ ve.wikiaTest = ( function () {
 	 * @param {Function} callback A function that returns the proper node view from a document node
 	 */
 	utils.media.runNodeViewTransactionTests = function ( assert, displayType, rdfaType, callback ) {
-		var $fixture = $( '#qunit-fixture' ),
-			current,
+		var current,
 			diff,
 			doc,
 			documentModel,
@@ -221,8 +234,9 @@ ve.wikiaTest = ( function () {
 		doc = ve.createDocumentFromHtml(
 			media.getHtmlDom( displayType, rdfaType, previous )
 		);
+		utils.appendBase( doc );
 
-		surface = new ve.init.sa.Target( $fixture, doc ).surface;
+		surface = ve.test.utils.createSurfaceFromDocument( doc );
 		surfaceModel = surface.getModel();
 		documentModel = surfaceModel.getDocument();
 		documentView = surface.getView().getDocument();

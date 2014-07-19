@@ -2,8 +2,6 @@
 
 class UserLoginHooksHelper {
 
-	const WIKIA_EMAIL_DOMAIN = "@wikia-inc.com";
-
 	// set default user options and perform other actions after account creation
 	public static function onAddNewAccount( User $user, $byEmail ) {
 		$user->setOption( 'marketingallowed', 1 );
@@ -141,18 +139,12 @@ class UserLoginHooksHelper {
 	 */
 	public static function onMakeGlobalVariablesScript(Array &$vars) {
 		$vars['wgEnableUserLoginExt'] = true;
-		return true;
-	}
 
-	/**
-	 * Checks if Email belongs to the wikia domain;
-	 *
-	 * @param string $sEmail Email to check
-	 * @static
-	 * @return bool
-	 */
-	public static function isWikiaEmail( $sEmail ) {
-		return substr( $sEmail, strpos( $sEmail, '@' ) ) == self::WIKIA_EMAIL_DOMAIN;
+		if (F::app()->checkSkin('wikiamobile')) {
+			$vars['wgLoginToken'] = UserLoginHelper::getLoginToken();
+		}
+
+		return true;
 	}
 
 	/**
@@ -188,7 +180,7 @@ class UserLoginHooksHelper {
 		$sEmail = $user->getEmail();
 		if ( isset( $wgAccountsPerEmail )
 			&& is_numeric( $wgAccountsPerEmail )
-			&& !self::isWikiaEmail( $sEmail )
+			&& !UserLoginHelper::isWikiaEmail( $sEmail )
 		) {
 			$key = wfSharedMemcKey( "UserLogin", "AccountsPerEmail", $sEmail );
 			$iCount = $wgMemc->get( $key );
@@ -202,6 +194,19 @@ class UserLoginHooksHelper {
 			}
 		}
         return true;
+	}
+
+	static public function onWikiaMobileAssetsPackages( Array &$jsStaticPackages, Array &$jsExtensionPackages, Array &$scssPackages ) {
+		$title = F::app()->wg->Title;
+
+		if ( $title->isSpecial( 'UserSignup' ) ) {
+			$scssPackages[] =  'wikiamobile_usersignup_scss';
+			$jsExtensionPackages[] =  'wikiamobile_usersignup_js';
+		} else if ( $title->isSpecial( 'WikiaConfirmEmail' ) ) {
+			$scssPackages[] = 'wikiamobile_usersignup_scss';
+		}
+
+		return true;
 	}
 }
 

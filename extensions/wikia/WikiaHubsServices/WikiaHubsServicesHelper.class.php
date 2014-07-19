@@ -2,7 +2,7 @@
 
 class WikiaHubsServicesHelper
 {
-	const HUBSV2_IMAGES_MEMC_KEY_VER = '1.03';
+	const HUBSV2_IMAGES_MEMC_KEY_VER = '1.04';
 	const HUBSV2_IMAGES_MEMC_KEY_PREFIX = 'hubv2images';
 
 	private $corporateModel = null;
@@ -127,7 +127,7 @@ class WikiaHubsServicesHelper
 	 * @param array $data
 	 * @return array|false $result
 	 */
-	public static function addVideoToHubsV2Wikis( $module, $data ) {
+	public static function addVideoToHubsV2Wikis( $module, $data, $wikis = [] ) {
 		$result = false;
 
 		// get list of videos
@@ -136,10 +136,8 @@ class WikiaHubsServicesHelper
 		// add video to hub v2 wikis
 		foreach( $videoData as $videoUrl ) {
 			if ( !empty($videoUrl) ) {
-				$hubsV2Wikis = self::getHubsV2Wikis();
-
 				$videoService = new VideoService();
-				$result = $videoService->addVideoAcrossWikis( $videoUrl, $hubsV2Wikis );
+				$result = $videoService->addVideoAcrossWikis( $videoUrl, $wikis );
 			}
 		}
 

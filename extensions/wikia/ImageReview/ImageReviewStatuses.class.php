@@ -13,6 +13,8 @@ class ImageReviewStatuses {
 	const STATE_REJECTED_IN_REVIEW = 7;
 	const STATE_AUTO_APPROVED = 8;
 
+	const STATE_APPROVED_AND_TRANSFERRING = 21;
+
 	const STATE_WIKI_DISABLED = 97;
 	const STATE_INVALID_IMAGE = 98;
 	const STATE_ICO_IMAGE = 99;

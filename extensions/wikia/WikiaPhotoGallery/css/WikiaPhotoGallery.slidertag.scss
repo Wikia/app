@@ -30,6 +30,10 @@
 			display: inline-block;
 			opacity: .8;
 		}
+		.play-circle {
+			// place above absolutely positioned parent
+			z-index: 1;
+		}
 	}
 
 	.selected {
@@ -49,7 +53,7 @@
 	.horizontal {
 		.nav {
 			bottom: 1px !important;
-			padding: 16px 5px 5px;
+			margin: 16px 5px 5px;
 			position: absolute;
 			z-index: 100;
 		}
@@ -130,7 +134,7 @@
 	.vertical {
 		.nav {
 			margin-top: 5px;
-			padding: 0 5px;
+			padding: 0 5px 0 0;
 			position: absolute;
 			right: 5px;
 			z-index: 100;

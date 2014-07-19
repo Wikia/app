@@ -286,6 +286,7 @@ $messages['qqq'] = array(
 	'wikistats_size' => '{{Identical|Size}}',
 	'wikistats_words' => '{{Identical|Word}}',
 	'wikistats_image' => '{{Identical|Image}}',
+	'wikistats_external' => '{{Identical|External}}',
 	'wikistats_namespaces' => '{{Identical|Namespace}}',
 	'wikistats_main_namespace' => 'Name of the main namespace (ns:0).
 {{Identical|Main}}',
@@ -298,6 +299,7 @@ $messages['qqq'] = array(
 	'wikistats_register' => 'Abbreviation for "Registered users"',
 	'wikistats_unregister' => 'Abbreviation for "Unregistered users" (anonymous)',
 	'wikistats_more_txt' => '{{Identical|More}}',
+	'wikistats_now' => '{{Identical|Now}}',
 	'wikistats_prev_rank' => '{{Optional}}',
 	'wikistats_prev_rank_xls' => '{{Optional}}',
 	'wikistats_days_ago' => '',
@@ -1636,11 +1638,13 @@ Si us plau, [[especial: UserLogin|crea un compte]] si no ja en té un.", # Fuzzy
  * @author Умар
  */
 $messages['ce'] = array(
+	'wikistats_showstats_btn' => 'Гайта статистика',
 	'wikiastast_refresh_data' => 'Карлабаха хаамаш',
 	'wikistats_panel_close_btn' => 'ДӀачӀагӀа',
 	'wikistats_active_year' => 'шо',
 	'wikistats_uploaded_images' => 'чуйаьккхина',
 	'wikistats_distrib_edits' => 'Нисдарш >=',
+	'wikistats_stats' => 'Гайта статистика %s',
 	'wikistats_hide' => 'Къайлаяккха',
 	'wikistats_username' => 'Декъашхо',
 	'wikistats_edits' => 'нисдарш',
@@ -2124,7 +2128,7 @@ $messages['diq'] = array(
 	'wikistats_showstats_btn' => 'İstatistikan bımocne',
 	'wikistats_panel_close_btn' => 'Racnê',
 	'wikistats_daterange_from' => 'Rışten:',
-	'wikistats_daterange_to' => 'Geren:',
+	'wikistats_daterange_to' => 'Kami rê:',
 	'wikistats_active_day' => 'roc',
 	'wikistats_active_month' => 'Aşme',
 	'wikistats_active_year' => 'Serre',
@@ -2143,7 +2147,7 @@ $messages['diq'] = array(
 	'wikistats_distrib_wikians' => 'Vurnayışkari',
 	'wikistats_distrib_edits_total' => 'Vurnayışi pêro',
 	'wikistats_date' => 'Deme',
-	'wikistats_namespace' => 'Cayê namey',
+	'wikistats_namespace' => 'Heruna namey',
 	'wikistats_show' => 'Bımocne',
 	'wikistats_stats' => 'Bımocne %i defiyê',
 	'wikistats_hide' => 'Bınımne',
@@ -2162,7 +2166,7 @@ $messages['diq'] = array(
 	'wikistats_interwiki' => 'interwiki',
 	'wikistats_image' => 'resım',
 	'wikistats_external' => 'teber',
-	'wikistats_namespaces' => 'cayê namey',
+	'wikistats_namespaces' => 'heruna nameyan',
 	'wikistats_redirects' => 'serçarnayışi',
 	'wikistats_main_namespace' => 'ser',
 	'wikistats_image_namespace' => 'resım',
@@ -2180,7 +2184,7 @@ $messages['diq'] = array(
 	'wikistats_new' => 'newe',
 	'wikistats_register' => 'Qey.',
 	'wikistats_more_txt' => 'Dehana vêşi',
-	'wikistats_now' => 'newke',
+	'wikistats_now' => 'nıka',
 	'wikistats_days_ago' => 'rocê verêni',
 	'wikistats_month_ago' => 'verdê $1 $2',
 	'wikistats_wikiurl' => 'GIRE:',
@@ -2213,7 +2217,7 @@ $messages['diq'] = array(
 	'wikistats_generate_stats_msg' => 'Şıma ra reca pıpawê ... vırazêno ...',
 	'wikistats_language_stats' => 'İstatistike zıwani',
 	'wikistats_main_statistics_legend' => 'İstatistikê serêni',
-	'wikistats_ns_statistics_legend' => 'Cayê namey',
+	'wikistats_ns_statistics_legend' => 'Heruna nameyan',
 	'wikistats_other_statistics_legend' => 'Îstatistiksê binî',
 	'wikistats_date_of_generate' => '$1 vıraziya',
 	'wikistats_search_text' => 'Cı geyre',
@@ -4744,6 +4748,7 @@ $messages['ko'] = array(
 	'wikistats_namespace' => '이름공간',
 	'wikistats_wikicategory' => '분류:',
 	'wikistats_edits' => '편집',
+	'wikistats_external' => '바깥',
 	'wikistats_unique_users' => '고유 사용자',
 	'wikistats_first_edit' => '첫 편집',
 	'wikistats_last_edit' => '마지막 편집',
@@ -6403,6 +6408,13 @@ Vennligst [[Special:UserLogin|logg inn eller opprett en konto]] dersom du ikke a
 	'wikistats_error_malformed_date' => 'Feil: Den angitte datoen er ugyldig',
 );
 
+/** Low Saxon (Netherlands) (Nedersaksies)
+ * @author Servien
+ */
+$messages['nds-nl'] = array(
+	'wikistats_days_ago' => 'dagen elejen',
+);
+
 /** Dutch (Nederlands)
  * @author McDutchie
  * @author Siebrand
@@ -7324,7 +7336,7 @@ $messages['ps'] = array(
 	'wikistats_active_month' => 'مياشت',
 	'wikistats_active_year' => 'کال',
 	'wikistats_active_months' => 'مياشتې',
-	'wikistats_number_editors' => 'د سمونګرانو شمېر',
+	'wikistats_number_editors' => 'د سمونگرانو شمېر',
 	'wikistats_wikians' => 'ثبت شوي سمونگران',
 	'wikistats_articles_text' => 'ليکنې',
 	'wikistats_archived' => 'خونديځ شوي',
@@ -7375,7 +7387,7 @@ $messages['ps'] = array(
 	'wikistats_wikicreated' => 'جوړ شو:',
 	'wikistats_wikilang' => 'ژبه:',
 	'wikistats_column_I' => 'د پورته شويو انځورونو ټول شمېر',
-	'wikistats_column_K' => 'د پورته شويو ويډيوګانو ټول شمېر',
+	'wikistats_column_K' => 'د پورته شويو ويډيوگانو ټول شمېر',
 	'wikistats_website' => 'وېبځی',
 	'wikistats_tables' => 'لښتيالونه',
 	'wikistats_back_to_prevpage' => 'پر شا',
@@ -7399,8 +7411,8 @@ $messages['ps'] = array(
 	'wikistats_article_edits' => 'د ليکنو د سمونې شمېر',
 	'wikistats_article_created' => 'جوړې شوې ليکنې',
 	'wikistats_article_talk' => 'ليکنه:خبرې اترې',
-	'wikistats_blog_created' => 'جوړ شوي بلاګونه',
-	'wikistats_blog_comment' => 'د بلاګ تبصرې',
+	'wikistats_blog_created' => 'جوړ شوي بلاگونه',
+	'wikistats_blog_comment' => 'د بلاگ تبصرې',
 	'wikistats_photo_new' => 'نوي انځورونه',
 	'wikistats_video_new' => 'نوې ويډيوگانې',
 	'wikistats_user_page_edits' => 'کارن:د مخ سمونونه',
@@ -9215,6 +9227,7 @@ $messages['tyv'] = array(
 	'wikistats_invalid_date' => 'Таарышпас үе аразын шилээн',
 	'wikistats_namespace' => 'Ат делгеми',
 	'wikistats_show' => 'Көргүзер',
+	'wikistats_search_text' => 'Дилээшкин',
 );
 
 /** Central Atlas Tamazight (ⵜⴰⵎⴰⵣⵉⵖⵜ)
@@ -9767,6 +9780,7 @@ $messages['zh-hans'] = array(
 	'wikistats_database' => '数据库',
 	'wikistats_images' => '照片',
 	'wikistats_uploaded_images' => '已上载',
+	'wikistats_distrib_edits' => '编辑>=',
 	'wikistats_distrib_edits_total' => '编辑总计',
 	'wikistats_date' => '日期',
 	'wikistats_namespace' => '名字空间',
@@ -9777,6 +9791,7 @@ $messages['zh-hans'] = array(
 	'wikistats_wikiid' => 'ID:',
 	'wikistats_username' => '用户',
 	'wikistats_usernames' => '用户们',
+	'wikistats_edits' => '编辑',
 	'wikistats_size' => '大小',
 	'wikistats_words' => '文字',
 	'wikistats_redirects' => '重定向',
@@ -9785,22 +9800,27 @@ $messages['zh-hans'] = array(
 	'wikistats_visits' => '访问',
 	'wikistats_official' => '官方',
 	'wikistats_total' => '总共',
+	'wikistats_new' => '新',
+	'wikistats_more_txt' => '更多',
 	'wikistats_now' => '现在',
 	'wikistats_wikilang' => '语言：',
 	'wikistats_current_dump_stats' => '当前',
 	'wikistats_xls_cancel' => '取消',
 	'wikistats_select_btn' => '选择',
 	'wikistats_ns_statistics_legend' => '名字空间',
+	'wikistats_search_text' => '搜索：',
 	'wikistats_article_total' => '所有条目',
 	'wikistats_article_created' => '创建条目',
 	'wikistats_blog_comment' => '博客评论',
 	'wikistats_photo_new' => '新照片',
 	'wikistats_article_daily' => '编辑/日',
+	'wikistats_userns' => '用户',
 	'wikistats_nbr_kilo' => 'K = x 1000',
 	'wikistats_nbr_mega' => 'M = K x 1000',
 	'wikistats_nbr_giga' => 'G = M x 1000',
 	'wikistats_current_month' => '当前月份',
 	'wikistats_see_also' => '另见：',
+	'wikistats_title' => '标题',
 );
 
 /** Traditional Chinese (中文（繁體）‎)

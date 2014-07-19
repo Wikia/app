@@ -1,14 +1,13 @@
-@ie6-bug  @ie7-bug  @ie8-bug  @ie9-bug @ie10-bug @en.wikipedia.beta.wmflabs.org @test2.wikipedia.org @login
+@chrome @en.wikipedia.beta.wmflabs.org @firefox @login @test2.wikipedia.org
 Feature: VisualEditor Links
 
   Background:
-    Given I am logged in
-      And I am at my user page
-    When I click Edit for VisualEditor
+    Given I go to the "Links VisualEditor Test" page with content "Links VisualEditor Test"
+      And I click in the editable part
       And I click the Link button
+      And I can see the Link User Inteface
 
   Scenario: Enter external link
-  Given I can see the Link User Inteface
   When I enter http://www.example.com into link Content box
     And I click the blue text
     And I click < to close Link User Interface
@@ -17,7 +16,6 @@ Feature: VisualEditor Links
   Then an external link appears in the diff view
 
   Scenario: Enter internal link
-  Given I can see the Link User Inteface
   When I enter Main Page into link Content box
     And I click the blue text for Matching Page
     And I click < to close Link User Interface
@@ -26,7 +24,6 @@ Feature: VisualEditor Links
   Then an internal link appears in the diff view
 
   Scenario: Enter non-existing link
-    Given I can see the Link User Inteface
     When I enter DoesNotExist into link Content box
     And I click the blue text for New Page
     And I click < to close Link User Interface

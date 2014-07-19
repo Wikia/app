@@ -1,5 +1,30 @@
-Given(/^I am at my user page$/) do
-  visit(VisualEditorPage)
+Given(/^I go to the browser specific edit page page$/) do
+  page_title = "Edit page for " + ENV['BROWSER']
+  page_content = "Edit page for " + ENV['BROWSER']
+  on(APIPage).create page_title, page_content
+  step "I am on the #{page_title} page"
+end
+
+Given(/^I am on the (.+) page$/) do |article|
+  article = article.gsub(/ /, '_')
+  visit(ZtargetPage, :using_params => {:article_name => article})
+end
+
+Given(/^I go to the "(.+)" page with content "(.+)"$/) do |page_title, page_content|
+  @wikitext = page_content
+  on(APIPage).create page_title, page_content
+  step "I am on the #{page_title} page"
+end
+
+Given(/^I click in the editable part$/) do
+  on(VisualEditorPage).content_element.when_present.send_keys("")
+end
+
+Given(/^I make the text "(.*?)" be selected$/) do |select_text|
+  on(VisualEditorPage).content_element.when_present.click
+  require "watir-webdriver/extensions/select_text"
+  on(VisualEditorPage).content_element.when_present.select_text select_text
+  sleep 1 # turn the sleep on if this test fails with bullet/number in front of string NOT "This is.."
 end
 
 When(/^I click Review and Save$/) do
@@ -17,7 +42,8 @@ When(/^I click Looks good to me$/) do
 end
 
 When(/^I click This is a minor edit$/) do
-  on(VisualEditorPage).minor_edit_element.when_present.click
+  #FIXME TEMPORARILY COMMENT THIS OUT WHILE WE FIGURE OUT WHY USERS GET LOGGED OUT
+  #on(VisualEditorPage).minor_edit_element.when_present(10).click
 end
 
 When(/^I click Save page$/) do
@@ -37,26 +63,20 @@ end
 
 When(/^I edit the page with (.+)$/) do |input_string|
   on(VisualEditorPage) do |page|
-    page.edit_ve_element.when_present.click
-    #This begin/rescue clause dismisses the VE warning message when it exists, and does not fail when it does not exist
-    begin
-      page.beta_warning_element.when_present.click
-    rescue
-    end
-    page.content_element.fire_event('onfocus')
+    page.content_element.when_present(10).fire_event("onfocus")
     page.content_element.when_present.send_keys(input_string + " #{@random_string} ")
   end
 end
 
 When(/^I click Return to save form$/) do
   on(VisualEditorPage) do |page|
-    page.diff_view_element.when_present
-    page.return_to_save_element.when_present.click
+    page.diff_view_element.when_present(10)
+    page.return_to_save_element.when_present(10).click
   end
 end
 
 When(/^I click Review your changes$/) do
-  on(VisualEditorPage).review_changes_element.when_present.click
+  on(VisualEditorPage).review_changes_element.when_present(10).click
 end
 
 When(/^I edit the description of the change$/) do
@@ -69,4 +89,8 @@ end
 
 Then(/^Page text should contain (.+)$/) do |output_string|
   on(VisualEditorPage).page_text_element.when_present.text.should match Regexp.escape(output_string + " #{@random_string}")
+end
+
+Then(/^I can click the X on the save box$/) do
+  on(VisualEditorPage).ex_element.when_present.click
 end

@@ -14,10 +14,9 @@
  * @cfg {Object} surface Instance of parent dialog surface
  * @cfg {Object} frame Instance of parent dialog frame
  */
-ve.ui.WikiaDropTargetWidget = function VeUiWikiaDropTargetWidget ( config ) {
-
+ve.ui.WikiaDropTargetWidget = function VeUiWikiaDropTargetWidget( config ) {
 	// Configuration initialization
-	OO.ui.Widget.call( this, config );
+	ve.ui.WikiaDropTargetWidget.super.call( this, config );
 
 	// Properties
 	this.$overlay = config.$overlay.find( '.oo-ui-window' );
@@ -45,7 +44,7 @@ OO.inheritClass( ve.ui.WikiaDropTargetWidget, OO.ui.Widget );
  * @method
  * @param {Object} jQuery event
  */
-ve.ui.WikiaDropTargetWidget.prototype.onFileDrag = function( e ) {
+ve.ui.WikiaDropTargetWidget.prototype.onFileDrag = function ( e ) {
 	e.preventDefault();
 	if ( this.fadeTimeout ) {
 		clearTimeout( this.fadeTimeout );
@@ -62,12 +61,12 @@ ve.ui.WikiaDropTargetWidget.prototype.onFileDrag = function( e ) {
  * @method
  * @param {Object} jQuery event
  */
-ve.ui.WikiaDropTargetWidget.prototype.onFileDragEnd = function( e ) {
+ve.ui.WikiaDropTargetWidget.prototype.onFileDragEnd = function ( e ) {
 	e.preventDefault();
 	if ( !this.$element.is( ':visible' ) ) {
 		return;
 	}
-	this.fadeTimeout = setTimeout( ve.bind( function() {
+	this.fadeTimeout = setTimeout( ve.bind( function () {
 		this.$element.fadeOut();
 	}, this ), 200 );
 };
@@ -77,7 +76,7 @@ ve.ui.WikiaDropTargetWidget.prototype.onFileDragEnd = function( e ) {
  * @method
  * @param {Object} jQuery event
  */
-ve.ui.WikiaDropTargetWidget.prototype.onFileDrop = function( event ) {
+ve.ui.WikiaDropTargetWidget.prototype.onFileDrop = function ( event ) {
 	var transfer = event.originalEvent.dataTransfer,
 			files = transfer.files;
 
@@ -96,7 +95,7 @@ ve.ui.WikiaDropTargetWidget.prototype.onFileDrop = function( event ) {
  * Binds events
  * @method
  */
-ve.ui.WikiaDropTargetWidget.prototype.setup = function() {
+ve.ui.WikiaDropTargetWidget.prototype.setup = function () {
 	this.$overlay.on( 'dragenter.dropTarget dragover.dropTarget', ve.bind( this.onFileDrag, this ) );
 	this.$overlay.on( 'dragleave.dropTarget dragend.dropTarget drop.dropTarget', ve.bind( this.onFileDragEnd, this ) );
 };
@@ -105,6 +104,6 @@ ve.ui.WikiaDropTargetWidget.prototype.setup = function() {
  * Unbinds events
  * @method
  */
-ve.ui.WikiaDropTargetWidget.prototype.teardown = function() {
+ve.ui.WikiaDropTargetWidget.prototype.teardown = function () {
 	this.$overlay.off( '.dropTarget' );
 };

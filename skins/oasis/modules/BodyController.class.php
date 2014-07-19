@@ -83,17 +83,6 @@ class BodyController extends WikiaController {
 	}
 
 	/**
-	 * Decide on which pages the LIMITED responsive / liquid layout should be turned on.
-	 * ADEN-975 Limited fluid is meant for German wikis
-	 * @return Boolean
-	 */
-	public static function isLimitedResponsiveLayoutEnabled() {
-		global $wgOasisResponsive, $wgOasisResponsiveLimited;
-
-		return !empty( $wgOasisResponsive ) && !empty( $wgOasisResponsiveLimited );
-	}
-
-	/**
 	 * Decide whether to show user pages header on current page
 	 */
 	public static function showUserPagesHeader() {
@@ -143,7 +132,7 @@ class BodyController extends WikiaController {
 			$wgExtraNamespaces, $wgExtraNamespacesLocal,
 			$wgEnableWikiAnswers, $wgEnableHuluVideoPanel,
 			$wgEnableWallEngine, $wgRequest,
-			$wgEnableForumExt;
+			$wgEnableForumExt, $wgAnalyticsProviderPageFairSlotIds;
 
 		$namespace = $wgTitle->getNamespace();
 		$subjectNamespace = MWNamespace::getSubject($namespace);
@@ -160,7 +149,10 @@ class BodyController extends WikiaController {
 				1500 => array('Search', 'Index', null),
 				1202 => array('Forum', 'forumRelatedThreads', null),
 				1201 => array('Forum', 'forumActivityModule', null),
-				1490 => array('Ad', 'Index', array('slotname' => 'TOP_RIGHT_BOXAD')),
+				1490 => array('Ad', 'Index', [
+					'slotName' => 'TOP_RIGHT_BOXAD',
+					'pageFairId' => isset($wgAnalyticsProviderPageFairSlotIds['MEDREC']) ? $wgAnalyticsProviderPageFairSlotIds['MEDREC'] : null
+				]),
 			);
 
 			// Include additional modules from other extensions (like chat)
@@ -298,9 +290,15 @@ class BodyController extends WikiaController {
 			return array();
 		}
 
-		$railModuleList[1440] = array('Ad', 'Index', array('slotname' => 'TOP_RIGHT_BOXAD'));
-		$railModuleList[1291] = array('Ad', 'Index', array('slotname' => 'MIDDLE_RIGHT_BOXAD'));
-		$railModuleList[1100] = array('Ad', 'Index', array('slotname' => 'LEFT_SKYSCRAPER_2'));
+		$railModuleList[1440] = array('Ad', 'Index', [
+			'slotName' => 'TOP_RIGHT_BOXAD',
+			'pageFairId' => isset($wgAnalyticsProviderPageFairSlotIds['MEDREC']) ? $wgAnalyticsProviderPageFairSlotIds['MEDREC'] : null
+		]);
+		$railModuleList[1291] = array('Ad', 'Index', ['slotName' => 'MIDDLE_RIGHT_BOXAD']);
+		$railModuleList[1100] = array('Ad', 'Index', [
+			'slotName' => 'LEFT_SKYSCRAPER_2',
+			'pageFairId' => isset($wgAnalyticsProviderPageFairSlotIds['SKYSCRAPER']) ? $wgAnalyticsProviderPageFairSlotIds['SKYSCRAPER'] : null
+		]);
 
 		unset($railModuleList[1450]);
 

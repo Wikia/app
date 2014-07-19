@@ -43,11 +43,27 @@
 				<div class="hub-slot">
 					<h3><?= wfMessage('manage-wikia-home-hubs-slot', ($i + 1))->plain() ?></h3>
 					<?= $hubsForm->renderField('hub_slot', $i); ?>
-					<?= $hubsForm->renderField('hub_slot_desc', $i); ?>
-					<?= $hubsForm->renderField('hub_slot_more_links', $i); ?>
 				</div>
 			<? endfor ?>
 			<br />
+			<h3>Marketing slots</h3>
+			<? for( $i=0; $i < ManageWikiaHomeController::MARKETING_SLOTS_COUNT; $i++ ): ?>
+				<div class="hub-slot marketing-slot">
+					<div class="image-input">
+						<?= $hubsForm->renderField('marketing_slot_image', $i); ?>
+						<div class="image-placeholder">
+						<? if(isset($marketingImages[$i])): ?>
+							<img src="<?= $marketingImages[$i] ?>"/>
+						<? endif ?>
+						</div>
+						<input type="button" class="wmu-show" value="<?= wfMessage('wikia-hubs-add-file-button')->text() ?>" />
+					</div>
+					<?= $hubsForm->renderField('marketing_slot_title', $i); ?>
+					<?= $hubsForm->renderField('marketing_slot_link', $i); ?>
+					<input type="button" class="clear-marketing-slot" value="<?= wfMessage('manage-wikia-home-wiki-filter-reset')->text() ?>" />
+				</div>
+			<? endfor ?>
+			<br/>
 			<input type="submit" name="hubs-slots" class="hubs-slots-submit" />
 		</form>
 	</div>
@@ -130,7 +146,8 @@
 
 	<div class="wikis-setup">
 		<h2 class="heading">
-			<?= wfMessage('manage-wikia-home-wikis-in-visualization-heading')->text() ?>
+			<?= wfMessage('manage-wikia-home-wikis-in-visualization-heading')->escaped() ?>
+			<a href="<?= $exportListAsCSVUri ?>" title="<?= wfMessage('manage-wikia-home-wiki-list-download-tooltip')->escaped() ?>" target="_blank" class="export-list-button button"><?= wfMessage('manage-wikia-home-wiki-list-download')->escaped() ?></a>
 		</h2>
 
 		<form id="wiki-name-filter" class="wiki-name-filter" name="wiki-name-filter" method="get">

@@ -343,6 +343,7 @@ $messages['br'] = array(
 	'phalanx-format-exact' => 'rik',
 	'phalanx-tab-main' => 'Merañ ar siloù',
 	'phalanx-tab-secondary' => 'Amprouiñ ar siloù',
+	'phalanx-section-type-page-edition' => 'Page editing'
 	'phalanx-block-success' => "Ouzhpennet eo bet ar bloc'h",
 	'phalanx-block-failure' => "Ur fazi a oa bet pa oad oc'h ouzhpennañ ar bloc'h",
 	'phalanx-modify-success' => "Kemmet eo bet ar bloc'h",
@@ -1517,6 +1518,30 @@ $messages['km'] = array(
 	'phalanx-link-stats' => 'ស្ថិតិ',
 );
 
+/** Kannada (ಕನ್ನಡ)
+ * @author VASANTH S.N.
+ */
+$messages['kn'] = array(
+	'phalanx-type-title' => 'ಪುಟದ ಶೀರ್ಷಿಕೆ',
+	'phalanx-type-user' => 'ಬಳಕೆದಾರ',
+	'phalanx-type-user-email' => 'ಇ-ಅಂಚೆ',
+	'phalanx-label-filter' => 'ಶೋಧಕ:',
+	'phalanx-label-reason' => 'ಕಾರಣ:',
+	'phalanx-label-expiry' => 'ಮುಕ್ತಾಯ:',
+	'phalanx-label-type' => 'ನಮೂನೆ:',
+	'phalanx-label-lang' => 'ಭಾಷೆ:',
+	'phalanx-format-text' => 'ಸಾದಾ ಪಠ್ಯ',
+	'phalanx-test-submit' => 'ಪಠ್ಯ',
+	'phalanx-link-unblock' => 'ತಡೆಯನ್ನು ತಗೆ',
+	'phalanx-link-modify' => 'ಪರಿಷ್ಕರಿಸು',
+	'phalanx-stats-table-type' => 'ನಮೂನೆ',
+	'phalanx-stats-table-create' => 'ಸೃಷ್ಟಿಸಲ್ಪಟ್ಟಿದೆ',
+	'phalanx-stats-table-expire' => 'ಮುಕ್ತಾಯ',
+	'phalanx-stats-table-language' => 'ಭಾಷೆ',
+	'phalanx-stats-table-text' => 'ಪಠ್ಯ',
+	'phalanx-stats-table-reason' => 'ಕಾರಣ',
+);
+
 /** Korean (한국어)
  * @author Cafeinlove
  */
@@ -2344,7 +2369,7 @@ $messages['ps'] = array(
 	'phalanx-label-lang' => 'ژبه:',
 	'phalanx-test-submit' => 'آزمېښت',
 	'phalanx-test-results-legend' => 'آزمېښت پايلې',
-	'phalanx-stats-table-user' => 'ورګډونکی',
+	'phalanx-stats-table-user' => 'ورگډونکی',
 	'phalanx-stats-table-type' => 'ډول',
 	'phalanx-stats-table-create' => 'جوړ شو',
 	'phalanx-stats-table-expire' => 'پای نېټه',
@@ -2968,6 +2993,18 @@ Paki [[Special:Contact|makipag-ugnayan sa Wikia]] hinggil sa suliranin.<br />Ang
 	'right-phalanxemailblock' => 'Makapaghaharap, makatitingin at makakapamahala ng mga pagharang na nakabatay sa e-liham',
 );
 
+/** Turkish (Türkçe)
+ * @author Sucsuzz
+ */
+$messages['tr'] = array(
+	'phalanx-type-user' => 'kullanıcı',
+	'phalanx-type-user-email' => 'e-posta',
+	'phalanx-label-filter' => 'Süzgeç:',
+	'phalanx-label-reason' => 'Gerekçe:',
+	'phalanx-label-type' => 'Tür:',
+	'phalanx-label-lang' => 'Dil:',
+);
+
 /** Tatar (Cyrillic script) (татарча)
  * @author Ajdar
  */
@@ -3130,19 +3167,57 @@ $messages['zh-hans'] = array(
 	'phalanx-type-user-email' => '电子邮件',
 	'phalanx-type-answers-question-title' => '问题标题',
 	'phalanx-type-answers-recent-questions' => '最新问题',
+	'phalanx-type-wiki-creation' => 'wiki创建',
+	'phalanx-add-block' => '应用封禁',
+	'phalanx-edit-block' => '保存封禁',
 	'phalanx-label-filter' => '过滤器：',
 	'phalanx-label-reason' => '原因：',
 	'phalanx-label-expiry' => '截止日期：',
 	'phalanx-label-type' => '类型：',
 	'phalanx-label-lang' => '语言：',
+	'phalanx-view-type' => '封禁形式…',
+	'phalanx-view-id' => '通过ID获取过滤器：',
+	'phalanx-view-id-submit' => '获取过滤器',
 	'phalanx-format-text' => '纯文本',
+	'phalanx-format-regex' => '正则表达式',
+	'phalanx-format-exact' => '精确',
+	'phalanx-tab-main' => '管理过滤器',
+	'phalanx-tab-secondary' => '测试过滤器',
+	'phalanx-block-success' => '封禁已成功添加',
+	'phalanx-test-submit' => '测试',
+	'phalanx-test-results-legend' => '测试结果',
+	'phalanx-display-row-blocks' => '封禁：$1',
+	'phalanx-display-row-created' => "由'''$1'''在$2创建",
+	'phalanx-link-unblock' => '解封',
+	'phalanx-link-modify' => '修改',
+	'phalanx-link-stats' => '状态',
+	'phalanx-reset-form' => '重置表单',
+	'phalanx-unblock-message' => '封禁ID#$1已成功移除',
+	'phalanx-stats-block-notfound' => '封禁ID找不到',
+	'phalanx-stats-table-id' => '封禁ID',
+	'phalanx-stats-table-user' => '加入者',
 	'phalanx-stats-table-type' => '类型',
 	'phalanx-stats-table-create' => '以创造',
 	'phalanx-stats-table-expire' => '到期',
+	'phalanx-stats-table-exact' => '精确',
+	'phalanx-stats-table-regex' => '正则表达式',
+	'phalanx-stats-table-case' => '实例',
 	'phalanx-stats-table-language' => '语言',
 	'phalanx-stats-table-text' => '文字',
 	'phalanx-stats-table-reason' => '原因',
+	'phalanx-stats-row' => "在$4于$3的过滤器类型'''$1'''封禁了'''$2'''",
+	'phalanx-stats-row-per-wiki' => "用户'''$2'''已在'''$4'''由过滤器ID'''$3'''封禁（$5）（类型：'''$1'''）",
+	'phalanx-rule-log-name' => 'Phalanx规则日志',
+	'phalanx-rule-log-header' => '这是Phalanx规则的更改日志。',
+	'phalanx-email-rule-log-name' => 'Phalanx电子邮件规则日志',
+	'phalanx-rule-log-add' => '已添加Phalanx规则：$1',
+	'phalanx-rule-log-edit' => '已编辑Phalanx规则：$1',
+	'phalanx-rule-log-delete' => '已删除Phalanx规则：$1',
+	'phalanx-rule-log-details' => '过滤器：“$1”、形式：“$2”和原因：“$3”',
 	'phalanx-stats-table-wiki-id' => '维基 ID',
 	'phalanx-stats-table-wiki-name' => '维基名字',
 	'phalanx-stats-table-wiki-url' => '维基 URL',
+	'phalanx-stats-table-wiki-last-edited' => '最后编辑',
+	'phalanx-email-filter-hidden' => '电子邮件过滤器已隐藏。您并无权限查看文本。',
+	'action-phalanx' => '使用集成的反垃圾邮件机制',
 );

@@ -1,0 +1,23 @@
+{
+	"@metadata": {
+		"authors": [
+			"Farras",
+			"Ilham151096",
+			"Iwan Novirion",
+			"Iyan",
+			"Kenrick95",
+			"McDutchie",
+			"Rv77ax",
+			"William Surya Permana"
+		]
+	},
+	"tag-visualeditor": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor]]",
+	"tag-visualeditor-description": "Disunting dengan [[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor]]",
+	"tag-visualeditor-needcheck": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor: Cek]]",
+	"tag-visualeditor-needcheck-description": "Penyuntingan yang menggunakan [[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor]] pada sistem yang mendeteksi adanya teks wiki mungkin mengalami perubahan yang tidak diinginkan.",
+	"tag-visualeditor-switched-description": "Pengguna mulai menyunting dengan VisualEditor lalu mengubahnya menjadi editor teks wiki.",
+	"visualeditor-feedback-link": "Project:VisualEditor/Umpan balik",
+	"visualeditor-feedback-tool": "Tinggalkan umpan balik",
+	"visualeditor-help-label": "Baca panduan pengguna",
+	"visualeditor-help-title": "Panduan pengguna tentang bagaimana menggunakan VisualEditor"
+}

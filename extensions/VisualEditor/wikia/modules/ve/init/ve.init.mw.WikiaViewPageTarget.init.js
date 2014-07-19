@@ -27,11 +27,11 @@
 			'category': 'editor-ve',
 			'trackingMethod': 'both'
 		},
-		indicatorTimeoutId = null;
+		spinnerTimeoutId = null;
 
-	function initIndicator() {
-		var $indicator = $( '<div>' )
-				.addClass( 've-indicator visible' )
+	function initSpinner() {
+		var $spinner = $( '<div>' )
+				.addClass( 've-spinner visible' )
 				.attr( 'data-type', 'loading' ),
 			$content = $( '<div>' ).addClass( 'content' ),
 			$icon = $( '<div>' ).addClass( 'loading' ),
@@ -43,40 +43,37 @@
 			.append( $icon )
 			.append( $message );
 
-		$indicator
+		$spinner
 			.append( $content )
 			.appendTo( $( 'body' ) )
 			.css( 'opacity', 1 )
 			.hide();
 
-		// Cleanup indicator when hook is fired
+		// Cleanup spinner when hook is fired
 		mw.hook( 've.activationComplete' ).add( function hide() {
-			if ( indicatorTimeoutId ) {
-				clearTimeout( indicatorTimeoutId );
-				indicatorTimeoutId = null;
-			}
-			if ( $indicator.is( ':visible' ) ) {
-				$indicator.fadeOut( 400 );
+			if ( spinnerTimeoutId ) {
+				clearTimeout( spinnerTimeoutId );
+				spinnerTimeoutId = null;
 			}
 		} );
 	}
 
-	function showIndicator() {
-		var $indicator = $( '.ve-indicator[data-type="loading"]' ),
-			$message = $indicator.find( 'p.message' );
+	function showSpinner() {
+		var $spinner = $( '.ve-spinner[data-type="loading"]' ),
+			$message = $spinner.find( 'p.message' );
 
 		$message.hide();
-		$indicator.fadeIn( 400 );
+		$spinner.fadeIn( 400 );
 
 		// Display a message if loading is taking longer than 3 seconds
-		indicatorTimeoutId = setTimeout( function () {
-			if ( $indicator.is( ':visible' ) ) {
+		spinnerTimeoutId = setTimeout( function () {
+			if ( $spinner.is( ':visible' ) ) {
 				$message.slideDown( 400 );
 			}
 		}, 3000 );
 	}
 
-	initIndicator();
+	initSpinner();
 
 	/**
 	 * Use deferreds to avoid loading and instantiating Target multiple times.
@@ -85,13 +82,13 @@
 	function getTarget() {
 		var loadTargetDeferred;
 
-		showIndicator();
+		showSpinner();
 
+		Wikia.Tracker.track( trackerConfig, {
+			'action': Wikia.Tracker.ACTIONS.IMPRESSION,
+			'label': 'edit-page'
+		} );
 		if ( !getTargetDeferred ) {
-			Wikia.Tracker.track( trackerConfig, {
-				'action': Wikia.Tracker.ACTIONS.IMPRESSION,
-				'label': 'edit-page'
-			} );
 			getTargetDeferred = $.Deferred();
 			loadTargetDeferred = $.Deferred();
 
@@ -100,7 +97,6 @@
 				$.getResources( $.getSassCommonURL( '/extensions/VisualEditor/wikia/VisualEditor.scss' ) )
 			).done( function () {
 				var target = new ve.init.mw.WikiaViewPageTarget();
-				ve.init.mw.targets.push( target );
 
 				// Transfer methods
 				ve.init.mw.WikiaViewPageTarget.prototype.setupSectionEditLinks = init.setupSectionLinks;
@@ -119,8 +115,8 @@
 	conf = mw.config.get( 'wgVisualEditorConfig' );
 	tabMessages = conf.tabMessages;
 	uri = new mw.Uri( location.href );
-	// For special pages, no information about page existence is exposed to
-	// mw.config, so we assume it exists TODO: fix this in core.
+	// BUG 49000: For special pages, no information about page existence is
+	// exposed to mw.config (see BUG 53774), so we assume it exists.
 	pageExists = !!mw.config.get( 'wgArticleId' ) || mw.config.get( 'wgNamespaceNumber' ) < 0;
 	viewUri = new mw.Uri( mw.util.getUrl( mw.config.get( 'wgRelevantPageName' ) ) );
 	veEditUri = viewUri.clone().extend( { 'veaction': 'edit' } );
@@ -141,7 +137,6 @@
 			Array.prototype.map &&
 			Date.now &&
 			Date.prototype.toJSON &&
-			Function.prototype.bind &&
 			Object.create &&
 			Object.keys &&
 			String.prototype.trim &&
@@ -149,7 +144,11 @@
 			JSON.parse &&
 			JSON.stringify
 		),
-		contentEditable: 'contentEditable' in document.createElement( 'div' )
+		contentEditable: 'contentEditable' in document.createElement( 'div' ),
+		svg: !!(
+			document.createElementNS &&
+			document.createElementNS( 'http://www.w3.org/2000/svg', 'svg' ).createSVGRect
+		)
 	};
 
 	init = {
@@ -194,7 +193,7 @@
 		 *
 		 * @param {string|Function} plugin Module name or callback that optionally returns a promise
 		 */
-		addPlugin: function( plugin ) {
+		addPlugin: function ( plugin ) {
 			plugins.push( plugin );
 		},
 
@@ -300,13 +299,13 @@
 		$( document ).on(
 			'mouseover click',
 			'a[href*="action=edit"][href*="&redlink"]:not([href*="veaction=edit"])',
-			function() {
+			function () {
 				var $element = $( this ),
 					href = $element.attr( 'href' ),
 					articlePath = mw.config.get( 'wgArticlePath' ).replace( '$1', '' ),
 					redlinkArticle = new mw.Uri( href ).path.replace( articlePath, '' );
 
-				if ( init.isInValidNamespace( redlinkArticle ) ) {
+				if ( init.isInValidNamespace( decodeURIComponent( redlinkArticle ) ) ) {
 					$element.attr( 'href', href.replace( 'action=edit', 'veaction=edit' ) );
 				}
 			}

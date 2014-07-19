@@ -265,3 +265,10 @@ $messages['vi'] = array(
 $messages['zh-hans'] = array(
 	'imageserving-desc' => '从指定的数组的视觉要求基于页面中选择图像',
 );
+
+/** Traditional Chinese (中文（繁體）‎)
+ * @author Cwlin0416
+ */
+$messages['zh-hant'] = array(
+	'imageserving-desc' => '依視需求從指定的一系列頁面中選擇要的圖片。',
+);

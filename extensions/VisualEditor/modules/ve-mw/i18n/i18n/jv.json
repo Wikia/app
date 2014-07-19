@@ -1,0 +1,14 @@
+{
+	"@metadata": {
+		"authors": [
+			"Gleki",
+			"NoiX180",
+			"Pras"
+		]
+	},
+	"visualeditor-ca-editsource": "Sunting sumber",
+	"visualeditor-desc": "Panyunting visual kanggo MediaWiki",
+	"visualeditor-loadwarning": "Kasalahan nalika ngemot data saka sasana: $1. Sampéyan pingin njajal manèh?",
+	"visualeditor-saveerror": "Kasalahan nalika nyimpen data nèng sasana: $1.",
+	"visualeditor-viewpage-savewarning": "Sampéyan yakin arep mbalik nèng mode pandelokan tanpa nyimpen dhisik?"
+}

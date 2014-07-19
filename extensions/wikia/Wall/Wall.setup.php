@@ -40,13 +40,6 @@ $wgAutoloadClasses['WallBaseController'] =  $dir . '/WallBaseController.class.ph
 $wgAutoloadClasses['VoteHelper'] =  $dir . '/VoteHelper.class.php';
 $wgAutoloadClasses['WallRelatedPages'] =  $dir . '/WallRelatedPages.class.php';
 
-
-// register task in task manager
-if (function_exists( "extAddBatchTask" ) ) {
-	extAddBatchTask(dirname(__FILE__)."/WallCopyFollowsTask.class.php", "wallcopyfollows", "WallCopyFollowsTask");
-}
-
-
 include($dir . '/notification/WallNotifications.setup.php');
 
 

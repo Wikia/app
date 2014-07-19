@@ -94,6 +94,7 @@ class FilePageController extends WikiaController {
 		$result = array();
 		if ( empty( $summary ) || empty( $type ) ) {
 			$this->result = $result;
+			wfProfileOut( __METHOD__ );
 			return;
 		}
 
@@ -198,10 +199,25 @@ class FilePageController extends WikiaController {
 			$expireDate = wfMessage( 'video-page-expires', $date )->text();
 		}
 
+		// Get restricted country list
+		$regionalRestrictions = $this->getVal( 'regionalRestrictions', '' );
+		if ( !empty( $regionalRestrictions ) ) {
+			$countryNames = Wikia::getCountryNames( explode( ',', str_replace( ', ', ',', $regionalRestrictions ) ) );
+
+			if ( !empty( $countryNames ) ) {
+				$countries = implode( ', ', array_values( $countryNames ) );
+			} else {
+				$countries = $regionalRestrictions;
+			}
+
+			$regionalRestrictions = wfMessage( 'video-page-regional-restrictions', $countries )->text();
+		}
+
 		$this->provider = ucwords( $provider );
 		$this->detailUrl = $this->getVal( 'detailUrl' );
 		$this->providerUrl = $this->getVal( 'providerUrl' );
 		$this->expireDate = $expireDate;
+		$this->regionalRestrictions = $regionalRestrictions;
 		$this->viewCount = $this->getVal( 'views' );
 
 		wfProfileOut( __METHOD__ );
@@ -406,8 +422,18 @@ SQL;
 			// We need to make sure $globalUsage is an array. If the query below returns no rows, $globalUsage
 			// ends up being null due to it's initial assignment of $globalUsage = $this->wg->Memc->get( $memcKey );
 			$globalUsage = array();
-        
 			while ( $row = $db->fetchObject( $result ) ) {
+
+				// Don't show private wikis in the list of global usage for a video
+				$wikiId = WikiFactory::DBtoID( $row->gil_wiki );
+				$isPrivate = WikiFactory::getVarByName( 'wgIsPrivateWiki', $wikiId )->cv_value;
+				// getVarByName returns a serialized value, eg 'b:1'
+				$isPrivate = unserialize( $isPrivate );
+
+				if ( $isPrivate ) {
+					continue;
+				}
+
 				$globalUsage[$row->gil_wiki][] = [
 					'image' => $row->gil_page_title,
 					'id' => $row->gil_page,

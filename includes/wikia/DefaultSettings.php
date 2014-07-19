@@ -40,12 +40,21 @@ require_once ( $IP."/includes/wikia/Wikia.php" );
 require_once ( $IP."/includes/wikia/WikiaMailer.php" );
 require_once ( $IP."/extensions/Math/Math.php" );
 
-/**
- * wikia library incudes
- */
-require_once ( $IP."/lib/wikia/fluent-sql-php/src/init.php");
 
+/**
+ * Add composer dependencies before proceeding to lib/Wikia. For now, we are committing
+ * dependencies added via composer to lib/composer until external dependencies with composer/packagist
+ * can be eliminated.
+ */
+require_once("$IP/lib/composer/autoload.php");
+// configure FluentSQL to use the extended WikiaSQL class
 FluentSql\StaticSQL::setClass("\\WikiaSQL");
+
+/**
+ * All lib/Wikia assets should conform to PSR-4 autoloader specification. See
+ * ttps://github.com/php-fig/fig-standards/blob/master/accepted/PSR-4-autoloader.md.
+ */
+require_once ( $IP."/lib/Wikia/autoload.php");
 
 global $wgDBname;
 if($wgDBname != 'uncyclo') {
@@ -61,8 +70,7 @@ global $wgAutoloadClasses;
 /**
  * Nirvana framework classes
  */
-$wgAutoloadClasses['F'] = $IP . '/includes/wikia/nirvana/WikiaSuperFactory.class.php';
-$wgAutoloadClasses['WF'] = $IP . '/includes/wikia/nirvana/WikiaSuperFactory.class.php';
+$wgAutoloadClasses['F'] = $IP . '/includes/wikia/nirvana/WikiaApp.class.php';
 $wgAutoloadClasses['WikiaApp'] = $IP . '/includes/wikia/nirvana/WikiaApp.class.php';
 $wgAutoloadClasses['WikiaObject'] = $IP . '/includes/wikia/nirvana/WikiaObject.class.php';
 $wgAutoloadClasses['WikiaHookDispatcher'] = $IP . '/includes/wikia/nirvana/WikiaHookDispatcher.class.php';
@@ -86,7 +94,6 @@ $wgAutoloadClasses['WikiaAccessRules'] = $IP . '/includes/wikia/nirvana/WikiaAcc
 // unit tests related classes
 $wgAutoloadClasses['WikiaBaseTest'] = $IP . '/includes/wikia/tests/core/WikiaBaseTest.class.php';
 $wgAutoloadClasses['WikiaTestSpeedAnnotator'] = $IP . '/includes/wikia/tests/core/WikiaTestSpeedAnnotator.class.php';
-$wgAutoloadClasses['WikiaAppMock'] = $IP . '/includes/wikia/tests/core/WikiaAppMock.class.php';
 $wgAutoloadClasses['WikiaMockProxy'] = $IP . '/includes/wikia/tests/core/WikiaMockProxy.class.php';
 $wgAutoloadClasses['WikiaMockProxyAction'] = $IP . '/includes/wikia/tests/core/WikiaMockProxyAction.class.php';
 $wgAutoloadClasses['WikiaMockProxyInvocation'] = $IP . '/includes/wikia/tests/core/WikiaMockProxyInvocation.class.php';
@@ -150,6 +157,7 @@ $wgAutoloadClasses['RelatedPagesApiController'] = "{$IP}/includes/wikia/api/Rela
 $wgAutoloadClasses['ActivityApiController'] = "{$IP}/includes/wikia/api/ActivityApiController.class.php";
 $wgAutoloadClasses['UserApiController'] = "{$IP}/includes/wikia/api/UserApiController.class.php";
 $wgAutoloadClasses['TvApiController'] = "{$IP}/includes/wikia/api/TvApiController.class.php";
+$wgAutoloadClasses['MoviesApiController'] = "{$IP}/includes/wikia/api/MoviesApiController.class.php";
 
 
 $wgWikiaApiControllers['DiscoverApiController'] = "{$IP}/includes/wikia/api/DiscoverApiController.class.php";
@@ -161,6 +169,7 @@ $wgWikiaApiControllers['RelatedPagesApiController'] = "{$IP}/includes/wikia/api/
 $wgWikiaApiControllers['ActivityApiController'] = "{$IP}/includes/wikia/api/ActivityApiController.class.php";
 $wgWikiaApiControllers['UserApiController'] = "{$IP}/includes/wikia/api/UserApiController.class.php";
 $wgWikiaApiControllers['TvApiController'] = "{$IP}/includes/wikia/api/TvApiController.class.php";
+$wgWikiaApiControllers['MoviesApiController'] = "{$IP}/includes/wikia/api/MoviesApiController.class.php";
 
 //Wikia Api exceptions classes
 $wgAutoloadClasses[ 'ApiAccessService' ] = "{$IP}/includes/wikia/api/services/ApiAccessService.php";
@@ -232,6 +241,7 @@ $wgAutoloadClasses[ 'TitleBatch'                      ] = "$IP/includes/wikia/ca
 $wgAutoloadClasses[ 'WikiaUserPropertiesHandlerBase'  ] = "$IP/includes/wikia/models/WikiaUserPropertiesHandlerBase.class.php";
 $wgAutoloadClasses[ 'ParserPool'                      ] = "$IP/includes/wikia/parser/ParserPool.class.php";
 $wgAutoloadClasses[ 'WikiDataSource'                  ] = "$IP/includes/wikia/WikiDataSource.php";
+$wgAutoloadClasses[ 'CurlMultiClient'                 ] = "$IP/includes/wikia/CurlMultiClient.php";
 $wgAutoloadClasses[ 'DateFormatHelper'                ] = "$IP/includes/wikia/DateFormatHelper.php";
 $wgAutoloadClasses[ 'CategoryHelper'                  ] = "$IP/includes/wikia/helpers/CategoryHelper.class.php";
 $wgAutoloadClasses[ 'Wikia\\Measurements\\Driver'     ] = "$IP/includes/wikia/measurements/Drivers.php";
@@ -246,7 +256,14 @@ $wgAutoloadClasses[ 'WikiaSQL'                        ] = "$IP/includes/wikia/Wi
 $wgAutoloadClasses[ 'WikiaSQLCache'                   ] = "$IP/includes/wikia/WikiaSQLCache.class.php";
 $wgAutoloadClasses[ 'WikiaSanitizer'                  ] = "$IP/includes/wikia/WikiaSanitizer.class.php";
 $wgAutoloadClasses[ 'ScribePurge'                     ] = "$IP/includes/cache/wikia/ScribePurge.class.php";
+$wgAutoloadClasses[ 'Transaction'                     ] = "$IP/includes/wikia/transactiontrace/Transaction.php";
+$wgAutoloadClasses[ 'TransactionTrace'                ] = "$IP/includes/wikia/transactiontrace/TransactionTrace.php";
+$wgAutoloadClasses[ 'TransactionClassifier'           ] = "$IP/includes/wikia/transactiontrace/TransactionClassifier.php";
+$wgAutoloadClasses[ 'TransactionTraceNewrelic'        ] = "$IP/includes/wikia/transactiontrace/TransactionTraceNewrelic.php";
+$wgHooks          [ 'ArticleViewAddParserOutput'      ][] = 'Transaction::onArticleViewAddParserOutput';
+$wgHooks          [ 'RestInPeace'                     ][] = 'Transaction::onRestInPeace';
 $wgHooks          [ 'RestInPeace'                     ][] = 'ScribePurge::onRestInPeace';
+$wgAutoloadClasses[ 'Wikia\\Blogs\\BlogTask'          ] = "$IP/extensions/wikia/Blogs/BlogTask.class.php";
 
 /**
  * Resource Loader enhancements
@@ -307,6 +324,7 @@ $wgAutoloadClasses['WikisModel'] = "{$IP}/includes/wikia/models/WikisModel.class
 $wgAutoloadClasses['NavigationModel'] = "{$IP}/includes/wikia/models/NavigationModel.class.php";
 $wgAutoloadClasses['WikiaCollectionsModel'] = "{$IP}/includes/wikia/models/WikiaCollectionsModel.class.php";
 $wgAutoloadClasses['WikiaCorporateModel'] = "{$IP}/includes/wikia/models/WikiaCorporateModel.class.php";
+$wgAutoloadClasses['MySQLKeyValueModel'] = "{$IP}/includes/wikia/models/MySQLKeyValueModel.class.php";
 
 // modules
 $wgAutoloadClasses['OasisController'] = $IP.'/skins/oasis/modules/OasisController.class.php';
@@ -364,13 +382,32 @@ $wgAutoloadClasses['Wikia\UI\DataException'] = $IP . '/includes/wikia/ui/excepti
 $wgAutoloadClasses['Wikia\UI\UIFactoryApiController'] = $IP . '/includes/wikia/ui/UIFactoryApiController.class.php';
 
 // Traits
-$wgAutoloadClasses[ 'PreventBlockedUsers' ] = $IP . '/includes/wikia/traits/PreventBlockedUsers.trait.php';
-$wgAutoloadClasses[ 'PreventBlockedUsersThrowsError' ] = $IP . '/includes/wikia/traits//PreventBlockedUsers.trait.php';
+$wgAutoloadClasses['PreventBlockedUsers'] = $IP . '/includes/wikia/traits/PreventBlockedUsers.trait.php';
+$wgAutoloadClasses['PreventBlockedUsersThrowsError'] = $IP . '/includes/wikia/traits/PreventBlockedUsers.trait.php';
+$wgAutoloadClasses['UserAllowedRequirement'] = $IP . '/includes/wikia/traits/UserAllowedRequirement.trait.php';
+$wgAutoloadClasses['UserAllowedRequirementThrowsError'] = $IP . '/includes/wikia/traits/UserAllowedRequirement.trait.php';
+$wgAutoloadClasses['IncludeMessagesTrait'] = $IP . '/includes/wikia/traits/IncludeMessagesTrait.php';
 
 // Spotlights AB test
 $wgAutoloadClasses['SpotlightsABTestController'] = $IP.'/skins/oasis/modules/SpotlightsABTestController.class.php';
 $wgAutoloadClasses['SpotlightsModel'] = "{$IP}/includes/wikia/models/SpotlightsModel.class.php";
+$wgAutoloadClasses['ReadMoreController'] = $IP.'/skins/oasis/modules/ReadMoreController.class.php';
+$wgAutoloadClasses['ReadMoreModel'] = "{$IP}/includes/wikia/models/ReadMoreModel.class.php";
+
+// Profiler classes
+$wgAutoloadClasses['ProfilerData'] = "{$IP}/includes/profiler/ProfilerData.php";
+$wgAutoloadClasses['ProfilerDataSink'] = "{$IP}/includes/profiler/sinks/ProfilerDataSink.php";
+$wgAutoloadClasses['ProfilerDataUdpSink'] = "{$IP}/includes/profiler/sinks/ProfilerDataUdpSink.php";
+$wgAutoloadClasses['ProfilerDataScribeSink'] = "{$IP}/includes/profiler/sinks/ProfilerDataScribeSink.php";
+
+// Skin loading scripts
 $wgHooks['WikiaSkinTopScripts'][] = 'SpotlightsABTestController::onWikiaSkinTopScripts';
+$wgHooks['WikiaSkinTopScripts'][] = 'ReadMoreController::onWikiaSkinTopScripts';
+$wgHooks['WikiaSkinTopScripts'][] = 'Wikia\\Logger\\Hooks::onWikiaSkinTopScripts';
+
+// Set the WikiaLogger mode early in the setup process
+$wgHooks['WikiFactory::execute'][] = 'Wikia\\Logger\\Hooks::onWikiFactoryExecute';
+$wgHooks['WikiFactory::onExecuteComplete'][] = 'Wikia\\Logger\\Hooks::onWikiFactoryExecuteComplete';
 
 // Register \Wikia\Sass namespace
 spl_autoload_register( function( $class ) {
@@ -454,7 +491,6 @@ $wgAutoloadClasses[ 'WikiaValidatorRestrictiveUrl'  ] = "$IP/includes/wikia/vali
 $wgAutoloadClasses[ 'WikiaValidatorUsersUrl'        ] = "$IP/includes/wikia/validators/WikiaValidatorUsersUrl.class.php";
 include_once("$IP/includes/wikia/validators/WikiaValidatorsExceptions.php");
 
-
 /**
  * registered API methods
  */
@@ -524,13 +560,13 @@ include_once( "$IP/extensions/wikia/SpecialUnlockdb/SpecialUnlockdb.setup.php" )
 include_once( "$IP/extensions/wikia/WikiaWantedQueryPage/WikiaWantedQueryPage.setup.php" );
 include_once( "$IP/extensions/wikia/ImageServing/imageServing.setup.php" );
 include_once( "$IP/extensions/wikia/ImageServing/Test/ImageServingTest.setup.php" );
-include_once( "$IP/extensions/wikia/AdEngine/AdEngine2.setup.php" );
 include_once( "$IP/extensions/wikia/VideoHandlers/VideoHandlers.setup.php" );
 include_once( "$IP/extensions/wikia/SpecialUnusedVideos/SpecialUnusedVideos.setup.php" );
 include_once( "$IP/extensions/wikia/ArticleSummary/ArticleSummary.setup.php" );
 include_once( "$IP/extensions/wikia/FilePage/FilePage.setup.php" );
 include_once( "$IP/extensions/wikia/CityVisualization/CityVisualization.setup.php" );
 include_once( "$IP/extensions/wikia/Thumbnails/Thumbnails.setup.php" );
+include_once( "$IP/extensions/wikia/InstantGlobals/InstantGlobals.setup.php" );
 
 /**
  * @name $wgSkipSkins
@@ -629,11 +665,13 @@ $wgLangCreationVariables = array();
  */
 $wgJobClasses[ "CWLocal" ] = "CreateWikiLocalJob";
 include_once( "$IP/extensions/wikia/CreateNewWiki/CreateWikiLocalJob.php" );
+$wgAutoloadClasses[ 'CreateNewWikiTask' ] = "$IP/extensions/wikia/CreateNewWiki/CreateNewWikiTask.class.php";
 
 /**
- * Logger
+ * Tasks
  */
-require_once ( $IP."/extensions/wikia/Logger/WikiaLogger.setup.php" );
+require_once( "{$IP}/extensions/wikia/Tasks/Tasks.setup.php");
+require_once( "{$IP}/includes/wikia/tasks/autoload.php");
 
 /*
  * @name wgWikiaStaffLanguages
@@ -727,14 +765,6 @@ $wgMaxThumbnailArea = 0.9e7;
  * @see rt#39263
  */
 $wgWikiaMaxNameChars = 50;
-
-
-/**
- * @name $IPA
- *
- * path for answers repo
- */
-$IPA = "/usr/wikia/source/answers";
 
 /**
  * If this is set to true, then no externals (ads, spotlights, beacons such as google analytics and quantcast)
@@ -1002,13 +1032,6 @@ $wgMaxLevelTwoNavElements = 7;
 $wgMaxLevelThreeNavElements = 10;
 
 /**
- * Extension for running multiple version of Mediawiki
- */
-if( !isset( $wgUseMedusa ) ) {
-	$wgUseMedusa = false;
-}
-
-/**
  * Memcached class name
  */
 $wgMemCachedClass = 'MemcacheMoxiCluster';
@@ -1156,15 +1179,6 @@ $wgWikiaHubsFileRepoDirectory = '/images/c/corp/images';
 $wgEnableAmazonDirectTargetedBuy = true;
 
 /**
- * @name $wgAmazonDirectTargetedBuyCountriesDefault
- * The default value for $wgAmazonDirectTargetedBuyCountriesDefault
- * Main steering var, change this one.
- * Value set for community central overrides this. Value for particular wiki overrides the community
- * US + EU (UK is GB...)
- */
-$wgAmazonDirectTargetedBuyCountriesDefault = ['US', 'AT', 'BE', 'DK', 'FI', 'FR', 'DE', 'IE', 'IT', 'LU', 'NL', 'NO', 'PL', 'PT', 'ES', 'SE', 'CH', 'GB'];
-
-/**
  * @name $wgAmazonDirectTargetedBuyCountries
  * Enables AmazonDirectTargetedBuy integration in theese countries (given AmazonDirectTargetedBuy is also true)
  * "Utility" var, don't change it here.
@@ -1172,20 +1186,11 @@ $wgAmazonDirectTargetedBuyCountriesDefault = ['US', 'AT', 'BE', 'DK', 'FI', 'FR'
 $wgAmazonDirectTargetedBuyCountries = null;
 
 /**
- * @name $wgAdPageLevelCategoryLangsDefault
- * The default value for $wgAdPageLevelCategoryLangs
- * $wgAdPageLevelCategoryLangs overrides this
- * Value set for community central overrides this. Value for particular wiki overrides the community
- * US + EU (UK is GB...)
- */
-$wgAdPageLevelCategoryLangsDefault = [ 'en' => true ];
-
-/**
- * @name $wgAdPageLevelCategoriesLangs
+ * @name $wgAdPageLevelCategoryLangs
  * Enables DART category page param for these content languages
  * "Utility" var, don't change it here.
  */
-$wgAdPageLevelCategoryLangs = null;
+$wgAdPageLevelCategoryLangs = [ 'en' => true ];;
 
 /**
  * @name $wgEnableJavaScriptErrorLogging
@@ -1200,6 +1205,12 @@ $wgEnableJavaScriptErrorLogging = false;
 $wgEnableRHonDesktop = false;
 
 /**
+ * @name $wgLoadLateAdsAfterPageLoad
+ * Enables postpones start for ads in late queue until page "load" event.
+ */
+$wgLoadLateAdsAfterPageLoad = false;
+
+/**
  * @name $wgAdDriverEnableRemnantGptMobile
  * Enables Remnant Gpti on Mobile experiment
  */
@@ -1212,12 +1223,50 @@ $wgAdDriverEnableRemnantGptMobile = false;
 $wgEnableAdEngineExt = true;
 
 /**
+ * @name $wgAdDriverUseEbay
+ * Whether to enable AdProviderEbay (true) or not (false)
+ */
+$wgAdDriverUseEbay = false;
+
+/**
+ * @name $wgAdDriverUseBottomLeaderboard
+ * Whether to enable new fancy footer ad BOTTOM_LEADERBOARD
+ */
+$wgAdDriverUseBottomLeaderboard = false;
+
+/**
+ * @name $wgAdDriverUseTopInContentBoxad
+ * Whether to enable new in-content top ad TOP_IN_CONTENT_BOXAD
+ */
+$wgAdDriverUseTopInContentBoxad = false;
+
+/**
+ * @name $wgAdDriverBottomLeaderboardImpressionCapping
+ * Impression capping for BOTTOM_LEADERBOARD. Array with the numbers of the potential ad calls.
+ */
+$wgAdDriverBottomLeaderboardImpressionCapping = [2, 4, 6];
+
+/**
  * @name $wgAdDriverUseSevenOneMedia
  * Whether to use SevenOne Media ads (true) or the other ads (false)
  * Null means true for languages within $wgAdDriverUseSevenOneMediaInLanguages
  */
 $wgAdDriverUseSevenOneMedia = null;
 $wgAdDriverUseSevenOneMediaInLanguages = ['de'];
+
+/**
+ * @name $wgAdDriverSevenOneMediaSub4Site
+ * Global variable SOI_SUB4SITE value for SevenOne Media ads
+ */
+$wgAdDriverSevenOneMediaSub4Site = null;
+
+/**
+ * @name $wgAdDriverUseDartForSlotsBelowTheFold
+ * Whether to call DART for additional slots below the fold. Also known as "Coffee cup".
+ * Set to null for to restrict only to Entertainment vertical
+ * TODO: add an internal page for the reasons
+ */
+$wgAdDriverUseDartForSlotsBelowTheFold = null;
 
 /**
  * @name $wgAdDriverTrackState
@@ -1238,11 +1287,10 @@ $wgAdDriverForceDirectGptAd = false;
 $wgAdDriverForceLiftiumAd = false;
 
 /**
- * @name $wgHighValueCountriesDefault
- * Default list of countries defined as high-value for revenue purposes
- * $wgHighValueCountries overrides this
+ * @name $wgAdDriverEnableAdsInMaps
+ * Whether to display ads within interactive maps
  */
-$wgHighValueCountriesDefault = array('CA'=>3, 'DE'=>3, 'DK'=>3, 'ES'=>3, 'FI'=>3, 'FR'=>3, 'GB'=>3, 'IT'=>3, 'NL'=>3, 'NO'=>3, 'SE'=>3, 'UK'=>3, 'US'=>3);
+$wgAdDriverEnableAdsInMaps = false;
 
 /**
  * @name $wgHighValueCountries
@@ -1255,13 +1303,19 @@ $wgHighValueCountries = null;
  * @name $wgAdVideoTargeting
  * Enables page-level video ad targeting
  */
-$wgAdVideoTargeting = false;
+$wgAdVideoTargeting = true;
 
 /**
- * @name $wgAdDriverUseGptMobile
- * Enables experimental AdEngine on mobile skin (for GPT)
+ * @name $wgAnalyticsProviderPageFair
+ * Site ID for PageFair analytics provider.
  */
-$wgAdDriverUseGptMobile = false;
+$wgAnalyticsProviderPageFair = null;
+
+/**
+ * @name $wgAnalyticsProviderPageFairSlotIds
+ * Slot IDs for PageFair analytics provider.
+ */
+$wgAnalyticsProviderPageFairSlotIds = [ 'LEADERBOARD' => null, 'MEDREC' => null, 'SKYSCRAPER' => null ];
 
 /**
  * trusted proxy service registry
@@ -1298,25 +1352,6 @@ $wgPagesWithNoAdsForLoggedInUsersOverriden_AD_LEVEL = null;
 $wgOasisResponsive = null;
 
 /**
- * @name $wgOasisResponsiveDisabledInLangs
- * Disables the Oasis responsive layout in those languages
- */
-$wgOasisResponsiveDisabledInLangs = [];
-
-/**
- * @name $wgOasisResponsiveLimited
- * Enables the limited version of Oasis responsive layout
- * Null means disabled on all and enabled for languages defined in $wgOasisResponsiveLimitedInLangs
- */
-$wgOasisResponsiveLimited = null;
-
-/**
- * @name $wgOasisResponsiveLimitedInLangs
- * Enables the limited version of Oasis responsive layout on given languages
- */
-$wgOasisResponsiveLimitedInLangs = ['de'];
-
-/**
  * @name $wgDisableReportTime
  * Turns off <!-- Served by ... in ... ms --> HTML comment
  */
@@ -1334,14 +1369,13 @@ $wgInvalidateCacheOnLocalSettingsChange = false;
 $wgSFlowHost = 'localhost';
 $wgSFlowPort = 36343;
 $wgSFlowSampling = 1;
+$wgAutoloadClasses[ 'Wikia\\SFlow'] = "$IP/lib/vendor/SFlow.class.php";
 
 /**
  * Set to true to enable user-to-user e-mail.
  * This can potentially be abused, as it's hard to track.
  */
 $wgEnableUserEmail = false;
-
-$wgAutoloadClasses[ 'Wikia\\SFlow'] = "$IP/lib/vendor/SFlow.class.php";
 
 /**
  * Enables ETag globally
@@ -1353,15 +1387,20 @@ $wgAutoloadClasses[ 'Wikia\\SFlow'] = "$IP/lib/vendor/SFlow.class.php";
 $wgUseETag = true;
 
 /**
- * whether or not to send logs from dev to elasticsearch
- */
-$wgDevESLog = false;
-
-/**
  * Restrictions for some api methods
  */
 $wgApiAccess = [
-	'SearchApiController' => [ 'getCombined' => ApiAccessService::URL_TEST | ApiAccessService::ENV_SANDBOX ]
+	'SearchApiController' => [
+		'getCombined' =>  ApiAccessService::ENV_SANDBOX,
+		'getCrossWiki' => ApiAccessService::WIKIA_CORPORATE,
+		'getList' => ApiAccessService::WIKIA_NON_CORPORATE,
+	],
+	'SearchSuggestionsApiController' => ApiAccessService::WIKIA_NON_CORPORATE,
+	'TvApiController' => ApiAccessService::WIKIA_CORPORATE,
+	'MoviesApiController' => ApiAccessService::WIKIA_CORPORATE,
+	'WAMApiController' => ApiAccessService::WIKIA_CORPORATE,
+	'WikiaHubsApiController' => ApiAccessService::WIKIA_CORPORATE,
+	'WikisApiController' => ApiAccessService::WIKIA_CORPORATE
 ];
 
 /**
@@ -1408,3 +1447,58 @@ $wgNirvanaAccessRules = [
  * Enables Lyrics API extension (new Lyrics Wikia API)
  */
 $wgEnableLyricsApi = false;
+
+/*
+ * @name $wgLyricsItunesAffiliateToken
+ * iTunes affiliate token needed in new Lyrics API
+ */
+$wgLyricsItunesAffiliateToken = '';
+
+/*
+ * @name wgEnableSpecialSearchCaching
+ * Enables caching of search results on CDN
+ */
+$wgEnableSpecialSearchCaching = true;
+
+/*
+ * @name wgEnableBuckyExt
+ * Enables real user performance reporting via Bucky
+ */
+$wgEnableBuckyExt = false;
+
+/*
+ * @name wgBuckySampling
+ * Sets the sampling rate for Bucky reporting, sampling applied at each page view.
+ * Unit: percent (100 = all, 1 = 1%, 0.1 = 0.1%)
+ */
+$wgBuckySampling = 1;
+
+/*
+ * @name wgXhprofUDPHost
+ * Host that xhprof data should be reported to (if set to null will use $wgUDPProfilerHost)
+ */
+$wgXhprofUDPHost = null;
+
+/*
+ * @name wgXhprofUDPPort
+ * Port that xhprof data should be reported to
+ */
+$wgXhprofUDPPort = '3911';
+
+/*
+ * @name wgXhprofMinimumTime
+ * Threshold for total time spent in function to be reported (set to 0 to report all entries)
+ */
+$wgXhprofMinimumTime = 0.001;
+
+/*
+ * @name wgProfilerSendViaScribe
+ * Enables sending profiler reports via Scribe
+ */
+$wgProfilerSendViaScribe = true;
+
+/* @name wgDisableWAMOnHubs
+ * Disable WAM module on hub pages
+ */
+$wgDisableWAMOnHubs = false;
+
