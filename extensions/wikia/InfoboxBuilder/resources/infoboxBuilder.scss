@@ -9,7 +9,7 @@ $infobox-builder-color-text: #64696c;
 // Dimensions
 $infobox-builder-font-size-title: 1.25rem;
 $infobox-builder-font-size-header: 1rem;
-$infobox-builder-font-size-small: 0.8rem;
+$infobox-builder-font-size-small: .8rem;
 
 $infobox-builder-margin-in: 1rem;
 $infobox-builder-margin-out: 1.5rem;
@@ -23,6 +23,8 @@ $infobox-builder-width-left: 100px;
 $infobox-builder-width-right: 200px;
 
 // Styles
+
+// Errors dialog
 .infobox-builder-errors {
 	background-color: $infobox-builder-background-color;
 	clear: right;
@@ -47,6 +49,18 @@ $infobox-builder-width-right: 200px;
 		}
 	}
 }
+
+// Toggle content link
+
+.infobox-table {
+
+	span.mw-collapsible-toggle {
+		display: block;
+		float: none;
+	}
+}
+
+// Default infobox theme
 
 .default-infobox-container {
 	background-color: $infobox-builder-background-color;
@@ -103,7 +117,7 @@ $infobox-builder-width-right: 200px;
 	.default-infobox-header {
 		color: $infobox-builder-color-header;
 		font-size: $infobox-builder-font-size-header;
-		padding: $infobox-builder-padding-h 0 0 0;
+		padding: $infobox-builder-padding-h 0 0;
 		text-align: center;
 	}
 
@@ -121,10 +135,5 @@ $infobox-builder-width-right: 200px;
 		padding: $infobox-builder-padding-v 0 $infobox-builder-padding-v $infobox-builder-padding-h;
 		vertical-align: top;
 		width: $infobox-builder-width-right;
-	}
-
-	span.mw-collapsible-toggle {
-		display: block;
-		float: none;
 	}
 }
