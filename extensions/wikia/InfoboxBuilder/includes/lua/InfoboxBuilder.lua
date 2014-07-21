@@ -27,15 +27,21 @@ InfoboxBuilder.errors = {}
 ]]--
 local displayErrors = function( errors )
 	if not HF.isempty( errors ) then
+		local lang = mw.language.getContentLanguage():getCode() or 'en'
 		local output = [[
 			<div class="infobox-builder-errors">
-				<h3>InfoboxBuilder info</h3>
-				<p>Something may not work as intended. More info:</p>
+				<h3>]] .. mw.message.new('infoboxbuilder-errors-header'):inLanguage( lang ):plain() .. [[</h3>
+				<p>]] .. mw.message.new('infoboxbuilder-errors-desc'):inLanguage( lang ):plain() .. [[</p>
 				<ul>
 		]]
 
 		for i, e in ipairs( errors ) do
-			output = output .. "<li>" .. e .. "</li>"
+			local key    = e.key or ''
+			local params = e.params or {}
+
+			if not HF.isempty( key ) then
+				output = output .. "<li>" .. mw.message.new( e.key ):inLanguage( lang ):params( e.params ):plain() .. "</li>"
+			end
 		end
 
 		output = output .. [[
@@ -75,7 +81,8 @@ local execute = function( input )
 		local status, result = pcall( require, mw.text.trim( InfoboxBuilder.vars["CustomModule"] ) )
 
 		if not status then
-			table.insert( InfoboxBuilder.errors, "Your custom module does not seem to exist. Check the given name for typos and make sure it contains a <em>Module:</em> prefix." )
+			local e = { key = "infoboxbuilder-errors-no-module", params = {} }
+			table.insert( InfoboxBuilder.errors, e )
 		else
 			CM = result
 
