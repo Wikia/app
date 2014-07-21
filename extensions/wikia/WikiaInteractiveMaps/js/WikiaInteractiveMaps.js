@@ -69,7 +69,7 @@ require(
 				event.preventDefault();
 				triggerAction('deleteMap');
 			})
-			.on('click', 'a#unDeleteMap', function(event) {
+			.on('click', '#unDeleteMap', function(event) {
 				event.preventDefault();
 				triggerAction('unDeleteMap');
 			});
