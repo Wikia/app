@@ -60,7 +60,7 @@ require(['jquery', 'wikia.mustache', 'wikia.tracker', 'wikia.loader', require.op
 			},
 			cacheKey = 'wikia_interactive_maps_map_iframe';
 
-		loadAssets(dependencies, cacheKey)`
+		loadAssets(dependencies, cacheKey)
 			.done(function (loadedAssets) {
 				var iframe = mustache.render(loadedAssets.mustache[0], {
 					url: mapUrl,
