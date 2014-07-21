@@ -22,6 +22,9 @@ abstract class BaseTask {
 	/** @var int when running, the user id of the user who is running this task. */
 	protected $createdBy;
 
+	/** @var \User the loaded createdBy user */
+	protected $createdByUser;
+
 	/** @var \Title title this task is operating on */
 	protected $title = null;
 
@@ -48,11 +51,11 @@ abstract class BaseTask {
 	 * inserting large, serialized classes into rabbitmq
 	 */
 	public function init() {
-		if (empty($this->titleParams)) {
+		if ( empty( $this->titleParams ) ) {
 			return;
 		}
 
-		$this->title = \Title::makeTitleSafe($this->titleParams['namespace'], $this->titleParams['dbKey']);
+		$this->title = \Title::makeTitleSafe( $this->titleParams['namespace'], urldecode( $this->titleParams['dbKey'] ) );
 		if ( $this->title == null ) {
 			throw new \Exception( "unable to instantiate title with id {$this->titleParams['dbKey']}" );
 		}
@@ -66,17 +69,17 @@ abstract class BaseTask {
 	 * @return array [$this, order in which this call should be made]
 	 * @throws \InvalidArgumentException when the first argument doesn't exist as a method in this class
 	 */
-	public function call(/** method, arg1, arg2, ...argN */) {
+	public function call( /** method, arg1, arg2, ...argN */ ) {
 		$args = func_get_args();
-		$method = array_shift($args);
+		$method = array_shift( $args );
 
-		if (!method_exists($this, $method)) {
+		if ( !method_exists( $this, $method ) ) {
 			throw new \InvalidArgumentException;
 		}
 
-		$this->calls []= [$method, $args];
+		$this->calls [] = [$method, $args];
 
-		return [$this, count($this->calls) - 1];
+		return [$this, count( $this->calls ) - 1];
 	}
 
 	/**
@@ -88,15 +91,15 @@ abstract class BaseTask {
 	 * 	thrown when executing that method
 	 * @throws \InvalidArgumentException when the method doesn't exist in this class
 	 */
-	public function execute($method, $args) {
-		if (!method_exists($this, $method)) {
+	public function execute( $method, $args ) {
+		if ( !method_exists( $this, $method ) ) {
 			throw new \InvalidArgumentException;
 		}
 
 
 		try {
-			$result = call_user_func_array([$this, $method], $args);
-		} catch (\Exception $e) {
+			$result = call_user_func_array( [$this, $method], $args );
+		} catch ( \Exception $e ) {
 			$result = $e;
 		}
 
@@ -110,27 +113,28 @@ abstract class BaseTask {
 	 * @return array [method, [args to method]]
 	 * @throws \InvalidArgumentException when trying to get an undefined index
 	 */
-	public function getCall($index) {
-		if (!isset($this->calls[$index])) {
+	public function getCall( $index ) {
+		if ( !isset( $this->calls[$index] ) ) {
 			throw new \InvalidArgumentException;
 		}
 
 		return $this->calls[$index];
 	}
 
-	/**
-	 * @return array black list of method names to hide on Special:Tasks
-	 */
-	public function getAdminNonExecuteables() {
-		return ['__construct', 'init', 'getAdminNonExecuteables'];
-	}
-
-	public function createdBy($createdBy=null) {
-		if ($createdBy !== null) {
+	public function createdBy( $createdBy = null ) {
+		if ( $createdBy !== null ) {
 			$this->createdBy = $createdBy;
 		}
 
-		return $this->createdBy;
+		return $this;
+	}
+
+	public function createdByUser() {
+		if ( empty( $this->createdByUser ) ) {
+			$this->createdByUser = \User::newFromId( $this->createdBy );
+		}
+
+		return $this->createdByUser;
 	}
 
 	/**
@@ -139,36 +143,51 @@ abstract class BaseTask {
 	 * @return string|array the task's id or array of such IDs if the given wikiID is an array
 	 */
 	public function queue() {
-		$isArray = is_array($this->wikiId);
-		$wikiIds = (array)$this->wikiId;
+		$taskLists = $this->convertToTaskLists();
+		$taskIds = AsyncTaskList::batch( $taskLists );
 
+		return count( $taskIds ) == 1 ? $taskIds[0] : $taskIds;
+	}
+
+	/**
+	 * convert this task to its AsyncTaskList(s) representation. A BaseTask will convert to multiple AsyncTaskList
+	 * objects if $this->wikiId is an array
+	 *
+	 * @return array AsyncTaskList objects
+	 */
+	private function convertToTaskLists() {
+		$wikiIds = (array) $this->wikiId;
 		$taskLists = [];
-		foreach ($wikiIds as $wikiId) {
+
+		foreach ( $wikiIds as $wikiId ) {
 			$taskList = new AsyncTaskList();
 
-			foreach ($this->calls as $i => $call) {
-				$taskList->add([$this, $i]);
+			foreach ( $this->calls as $i => $call ) {
+				$taskList->add( [$this, $i] );
 			}
 
 			$taskList->wikiId( $wikiId );
 
-			if ($this->queueName) {
-				$taskList->setPriority($this->queueName);
+			if ( $this->queueName ) {
+				$taskList->setPriority( $this->queueName );
 			}
 
-			if ($this->dupCheck) {
+			if ( $this->dupCheck ) {
 				$taskList->dupCheck();
 			}
 
-			if ($this->delay) {
-				$taskList->delay($this->delay);
+			if ( $this->delay ) {
+				$taskList->delay( $this->delay );
+			}
+
+			if ( $this->createdBy ) {
+				$taskList->createdBy( $this->createdBy );
 			}
 
 			$taskLists[] = $taskList;
 		}
 
-		$tasks = AsyncTaskList::batch($taskLists);
-		return ($isArray ? $tasks : $tasks[0]);
+		return $taskLists;
 	}
 
 	/**
@@ -177,9 +196,9 @@ abstract class BaseTask {
 	 * @return array
 	 */
 	public function serialize() {
-		$mirror = new \ReflectionClass($this);
+		$mirror = new \ReflectionClass( $this );
 		$result = [
-			'class' => get_class($this),
+			'class' => get_class( $this ),
 			'calls' => $this->calls,
 			'context' => [
 				'titleParams' => $this->titleParams,
@@ -187,14 +206,14 @@ abstract class BaseTask {
 		];
 
 		$propertyMask = \ReflectionProperty::IS_PROTECTED | \ReflectionProperty::IS_PUBLIC;
-		foreach ($mirror->getProperties($propertyMask) as $property) {
-			if ($property->class == 'Wikia\\Tasks\\Tasks\\BaseTask') {
+		foreach ( $mirror->getProperties( $propertyMask ) as $property ) {
+			if ( $property->class == 'Wikia\\Tasks\\Tasks\\BaseTask' ) {
 				continue;
 			}
 
-			$property->setAccessible(true);
-			$value = $property->getValue($this);
-			$result['context'][$property->name] = is_object($value) ? serialize($value) : $value;
+			$property->setAccessible( true );
+			$value = $property->getValue( $this );
+			$result['context'][$property->name] = is_object( $value ) ? serialize( $value ) : $value;
 		}
 
 		return $result;
@@ -206,19 +225,19 @@ abstract class BaseTask {
 	 * @param $properties
 	 * @param $calls
 	 */
-	public function unserialize($properties, $calls) {
-		$mirror = new \ReflectionClass($this);
+	public function unserialize( $properties, $calls ) {
+		$mirror = new \ReflectionClass( $this );
 
 		$this->calls = $calls;
 
-		foreach ($properties as $name => $value) {
-			if ($mirror->hasProperty($name)) {
-				$deserialized = @unserialize($value);
+		foreach ( $properties as $name => $value ) {
+			if ( $mirror->hasProperty( $name ) ) {
+				$deserialized = @unserialize( $value );
 				$value = $deserialized === false ? $value : $deserialized;
 
-				$property = $mirror->getProperty($name);
-				$property->setAccessible(true);
-				$property->setValue($this, $value);
+				$property = $mirror->getProperty( $name );
+				$property->setAccessible( true );
+				$property->setValue( $this, $value );
 			}
 		}
 	}
@@ -228,12 +247,27 @@ abstract class BaseTask {
 	 * @param \Title $title
 	 * @return $this
 	 */
-	public function title(\Title $title) {
+	public function title( \Title $title ) {
 		$this->titleParams = [
 			'namespace' => $title->getNamespace(),
-			'dbKey' => $title->getDBkey()
+			'dbKey' => urlencode( $title->getDBkey() )
 		];
 
+		return $this;
+	}
+
+	public function getTitle() {
+		return $this->title;
+	}
+
+	/**
+	 * Explicitly set the \Title object on this task. This should not be used pre-enqueue and is primarily
+	 * for testing task objects.
+	 *
+	 * @param \Title $title
+	 */
+	public function setTitle(\Title $title) {
+		$this->title = $title;
 		return $this;
 	}
 
@@ -241,7 +275,7 @@ abstract class BaseTask {
 	 * @param $taskId
 	 * @return $this
 	 */
-	public function taskId($taskId) {
+	public function taskId( $taskId ) {
 		$this->taskId = $taskId;
 		return $this;
 	}
@@ -253,6 +287,43 @@ abstract class BaseTask {
 		return $this->taskId;
 	}
 
+	/**
+	 * @return int
+	 */
+	public function getWikiId() {
+		return $this->wikiId;
+	}
+
+	/**
+	 * get a list of all task methods this class can execute via Special:Tasks
+	 *
+	 * @return array
+	 */
+	public function getAdminExecuteableMethods() {
+		$ignoredMethods = [
+			'__construct',
+			'getAdminExecuteableMethods',
+			'init',
+		];
+
+		$mirror = new \ReflectionClass( $this );
+		$mirrorClass = $mirror->getName();
+		$methods = [];
+
+		foreach ( $mirror->getMethods( \ReflectionMethod::IS_PUBLIC ) as $methodMirror ) {
+			$methodClass = $methodMirror->getDeclaringClass();
+			$methodName = $methodMirror->getName();
+
+			if ( in_array( $methodName, $ignoredMethods ) || $methodClass->getName() != $mirrorClass ) {
+				continue;
+			}
+
+			$methods[] = $methodName;
+		}
+
+		return $methods;
+	}
+
 	// following are wrappers that will eventually call the same functions in AsyncTaskList
 
 	/**
@@ -260,7 +331,7 @@ abstract class BaseTask {
 	 * @param $wikiId
 	 * @return $this
 	 */
-	public function wikiId($wikiId) {
+	public function wikiId( $wikiId ) {
 		$this->wikiId = $wikiId;
 		return $this;
 	}
@@ -270,7 +341,7 @@ abstract class BaseTask {
 	 * @return $this
 	 */
 	public function prioritize() {
-		return $this->setPriority(PriorityQueue::NAME);
+		return $this->setPriority( PriorityQueue::NAME );
 	}
 
 	/**
@@ -278,7 +349,7 @@ abstract class BaseTask {
 	 * @param $queueName
 	 * @return $this
 	 */
-	public function setPriority($queueName) {
+	public function setPriority( $queueName ) {
 		$this->queueName = $queueName;
 		return $this;
 	}
@@ -297,8 +368,28 @@ abstract class BaseTask {
 	 * @param $time
 	 * @return $this
 	 */
-	public function delay($time) {
+	public function delay( $time ) {
 		$this->delay = $time;
 		return $this;
 	}
+
+	// end AsyncTaskList wrappers
+
+	/**
+	 * queue a set of BaseTask objects
+	 *
+	 * @param array $tasks
+	 * @return array task ids
+	 */
+	public static function batch( array $tasks ) {
+		$taskLists = [];
+
+		foreach ( $tasks as $task ) {
+			/** @var BaseTask $task $taskLists */
+			$taskLists = array_merge( $taskLists, $task->convertToTaskLists() );
+		}
+
+		return AsyncTaskList::batch( $taskLists );
+	}
+
 }

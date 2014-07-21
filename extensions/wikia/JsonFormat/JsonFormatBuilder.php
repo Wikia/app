@@ -40,9 +40,7 @@ class JsonFormatBuilder {
 			array_pop($this->jsonStack);
 			$this->currentContainer = $this->jsonStack[sizeof($this->jsonStack)-1];
 		} else {
-			var_dump($keyValueNode);
-			var_dump($this->jsonStack);
-			die();
+			throw new JsonFormatException('Invalid infobox');
 		}
 	}
 

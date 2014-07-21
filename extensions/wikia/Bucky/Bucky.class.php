@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * Hook handlers for loading the required scripts and bootstrapping Bucky RUM reporting.
+ * Currently works only on Oasis.
+ */
 class Bucky {
 
 	const DEFAULT_SAMPLING = 1; // percentage
@@ -11,14 +15,15 @@ class Bucky {
 			$wgBuckySampling = $app->wg->BuckySampling;
 			$url = self::BASE_URL; // "/v1/send" is automatically appended
 			$sample = (isset($wgBuckySampling) ? $wgBuckySampling : self::DEFAULT_SAMPLING) / 100;
+			$context = array_merge(array(
+				'env' => $app->wg->WikiaEnvironment,
+			),Transaction::getAll());
 			$config = json_encode(array(
 				'host' => $url,
 				'sample' => $sample,
 				'aggregationInterval' => 1000,
 				'protocol' => 2,
-				'context' => array(
-					'env' => $app->wg->WikiaEnvironment
-				)
+				'context' => $context,
 			));
 			$script = "<script>$(function(){Bucky.setOptions({$config});$(window).load(function(){setTimeout(function(){Bucky.sendPagePerformance(false);},0);});});</script>";
 			$bottomScripts .= $script;
@@ -28,9 +33,7 @@ class Bucky {
 	}
 
 	static public function onOasisSkinAssetGroups( &$assetGroups ) {
-		if ( self::getEnvironment() ) {
-			$assetGroups[] = 'bucky_js';
-		}
+		$assetGroups[] = 'bucky_js';
 
 		return true;
 	}

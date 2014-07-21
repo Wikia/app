@@ -1426,7 +1426,7 @@ class WallHooksHelper {
 
 			$wm = new WallMessage( $title );
 
-			if( $user->isAllowed('walledit') || $wm->isWallOwner( $user ) ) {
+			if( $user->isAllowed('walledit') || $wm->isWallOwner( $user ) || $action === 'read' || $action === 'history' ) {
 				$result = null;
 				return true;
 			} else {
@@ -1641,7 +1641,7 @@ class WallHooksHelper {
 			$summary = $rev->getComment();
 
 			if(empty($summary)) {
-				$msg = $contribsPager->msg( $prefix . '-edit' )->inContentLanguage()->text();
+				$msg = Linker::commentBlock( $contribsPager->msg( static::getMessagePrefix( $row->page_namespace ) . '-edit' )->inContentLanguage()->text() );
 			} else {
 				$msg = Linker::revComment( $rev, false, true );
 			}

@@ -35,6 +35,7 @@ $wgAutoloadClasses['MarketingToolboxModuleFeaturedvideoService'] =  $dir . 'modu
 $wgAutoloadClasses['MarketingToolboxModuleFromthecommunityService'] =  $dir . 'modules/MarketingToolboxModuleFromthecommunityService.class.php';
 $wgAutoloadClasses['MarketingToolboxModulePollsService'] =  $dir . 'modules/MarketingToolboxModulePollsService.class.php';
 $wgAutoloadClasses['MarketingToolboxModuleWAMService'] =  $dir . 'modules/MarketingToolboxModuleWAMService.class.php';
+$wgAutoloadClasses['MarketingToolboxModuleWikiastatsService'] =  $dir . 'modules/MarketingToolboxModuleWikiastatsService.class.php';
 
 $wgAutoloadClasses['WikiaHubsServicesHelper'] =  $dir . 'WikiaHubsServicesHelper.class.php';
 $wgAutoloadClasses['WikiaHubsApiController'] = "{$IP}/extensions/wikia/WikiaHubsServices/api/WikiaHubsApiController.class.php";

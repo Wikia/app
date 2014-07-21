@@ -44,20 +44,10 @@ class TasksModel {
 		/** @var \Wikia\Tasks\Tasks\BaseTask $instance */
 		$instance = new $class();
 		$mirror = new ReflectionClass($class);
-		$mirrorClass = $mirror->getName();
 
 		$methods = [];
-		foreach ($mirror->getMethods(ReflectionMethod::IS_PUBLIC) as $methodMirror) {
-			$methodClass = $methodMirror->getDeclaringClass();
-			$methodName = $methodMirror->getName();
-
-			if (in_array($methodName, $instance->getAdminNonExecuteables()) ||
-				$methodClass->getName() != $mirrorClass) {
-					// if the method is blacklisted or is not declared directly
-					// on the task class, don't list it
-					continue;
-			}
-
+		foreach ($instance->getAdminExecuteableMethods() as $methodName) {
+			$methodMirror = $mirror->getMethod($methodName);
 			$methodDocsRaw = $methodMirror->getDocComment();
 			$paramDocs = [];
 			$methodDoc = "";

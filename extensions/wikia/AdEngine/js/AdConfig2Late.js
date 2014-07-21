@@ -87,13 +87,6 @@ define('ext.wikia.adEngine.adConfigLate', [
 			return adProviderNull;
 		}
 
-		if (country === 'AU' || country === 'CA' || country === 'NZ') {
-			if (adProviderEvolve.canHandleSlot(slotname)) {
-				log(['getProvider', slot, 'Evolve'], 'info', logGroup);
-				return adProviderEvolve;
-			}
-		}
-
 		// First ask SevenOne Media
 		if (window.wgAdDriverUseSevenOneMedia) {
 			if (adProviderSevenOneMedia.canHandleSlot(slotname)) {
@@ -112,6 +105,13 @@ define('ext.wikia.adEngine.adConfigLate', [
 
 			if (!liftiumSlotsToShowWithSevenOneMedia[slot[0]]) {
 				return adProviderNull;
+			}
+		}
+
+		if (country === 'AU' || country === 'CA' || country === 'NZ') {
+			if (adProviderEvolve.canHandleSlot(slotname)) {
+				log(['getProvider', slot, 'Evolve'], 'info', logGroup);
+				return adProviderEvolve;
 			}
 		}
 

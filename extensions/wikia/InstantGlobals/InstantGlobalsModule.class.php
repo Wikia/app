@@ -52,6 +52,15 @@ class InstantGlobalsModule extends ResourceLoaderModule {
 	}
 
 	/**
+	 * InstantGlobals module needs to be revalidated every time the CDN cache expires
+	 *
+	 * @return int
+	 */
+	public function getModifiedTime() {
+		return time();
+	}
+
+	/**
 	 * @return bool
 	 */
 	public function supportsURLLoading() {
