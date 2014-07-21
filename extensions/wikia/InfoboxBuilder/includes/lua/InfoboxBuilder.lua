@@ -21,6 +21,23 @@ InfoboxBuilder.errors = {}
 --[[ Private methods ]]--
 
 --[[
+---- Function that adds an error to the global table
+---- @param   string key     Name of a message from i18n file
+---- @param   table  params  (optional) Table of parameters
+---- @return  true           Always returns true
+]]--
+local logError = function( key, params )
+	if type( params ) ~= "table" then
+		params = { params }
+	end
+
+	local e = { key = key, params = params }
+	table.insert( InfoboxBuilder.errors, e )
+	
+	return true
+end
+
+--[[
 ---- Function that checks if a supplied method exists in a custom module
 ---- @param   string name  Name of a method to check
 ---- @return  bool         Returns true if the method exists
@@ -81,8 +98,7 @@ local execute = function( input )
 		local status, result = pcall( require, mw.text.trim( InfoboxBuilder.vars["CustomModule"] ) )
 
 		if not status then
-			local e = { key = "infoboxbuilder-errors-no-module", params = {} }
-			table.insert( InfoboxBuilder.errors, e )
+			logError( "infoboxbuilder-errors-no-module", {} )
 		else
 			CM = result
 
