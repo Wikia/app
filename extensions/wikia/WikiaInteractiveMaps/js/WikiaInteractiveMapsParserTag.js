@@ -1,4 +1,4 @@
-require(['jquery', 'wikia.mustache', 'wikia.tracker'], function ($, mustache, tracker) {
+require(['jquery', 'wikia.mustache', 'wikia.tracker', require.optional('ext.wikia.adEngine.slot.interactiveMaps')], function ($, mustache, tracker, mapAds) {
 	'use strict';
 
 	/**
@@ -55,7 +55,8 @@ require(['jquery', 'wikia.mustache', 'wikia.tracker'], function ($, mustache, tr
 		loadTemplate(templatePath, cacheKey)
 			.done(function (template) {
 				var iframe = mustache.render(template, {
-					url: mapUrl
+					url: mapUrl,
+					mapId: mapId
 				});
 
 				require(['wikia.ui.factory'], function (uiFactory) {
@@ -71,6 +72,11 @@ require(['jquery', 'wikia.mustache', 'wikia.tracker'], function ($, mustache, tr
 
 						uiModal.createComponent(modalConfig, function (mapModal) {
 							mapModal.show();
+
+							if (mapAds) {
+								mapAds.initSlot(mapModal.$element.find('.wikia-ad-interactive-map').get(0));
+							}
+
 							tracker.track({
 								trackingMethod: 'ga',
 								category: 'map',
@@ -116,4 +122,9 @@ require(['jquery', 'wikia.mustache', 'wikia.tracker'], function ($, mustache, tr
 		showMap($(event.currentTarget));
 	});
 
+	if (mapAds) {
+		$('.wikia-ad-interactive-map').each(function () {
+			mapAds.initSlot(this);
+		});
+	}
 });

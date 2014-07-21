@@ -122,6 +122,9 @@ class AdEngine2Hooks {
 		if ($wgAdDriverUseBottomLeaderboard === true) {
 			$jsAssets[] = 'adengine2_bottom_leaderboard_js';
 		}
+
+		$jsAssets[] = 'adengine2_interactive_maps_js';
+
 		return true;
 	}
 
