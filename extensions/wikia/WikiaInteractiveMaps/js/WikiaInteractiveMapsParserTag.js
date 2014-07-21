@@ -1,4 +1,4 @@
-require(['jquery', 'wikia.mustache', 'wikia.tracker', require.optional('ext.wikia.adEngine.slot.interactiveMaps')], function ($, mustache, tracker, mapAds) {
+require(['jquery', 'wikia.mustache', 'wikia.tracker', 'wikia.loader', require.optional('ext.wikia.adEngine.slot.interactiveMaps')], function ($, mustache, tracker, loader, mapAds) {
 	'use strict';
 
 	var assets;
