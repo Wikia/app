@@ -69,7 +69,7 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 		];
 
 		if ( $showDeleted ) {
-			$params['deleted'] = 1;
+			$params[ 'deleted' ] = 1;
 		}
 
 		$mapsResponse = $this->mapsModel->getMapsFromApi( $params );
