@@ -77,10 +77,15 @@ $default-float: left;
 
 $column-gutter: rem-calc(30);
 
+@import "../../breakpoints";
+
 // Media Query Ranges
-$small-range: (0, 1023px);
-$medium-range: (1024px, 1280px);
-$large-range: (1281px, 1440px);
+$small-range: (0, $breakpoint-lower - 1);
+$small-gutter: 8px;
+$medium-range: ($breakpoint-lower, $breakpoint-upper);
+$medium-gutter: 10px;
+$large-range: ($breakpoint-upper + 1, 1440px);
+$large-gutter: 12px;
 // $xlarge-range: (90.063em, 120em);
 // $xxlarge-range: (120.063em, 99999999em);
 

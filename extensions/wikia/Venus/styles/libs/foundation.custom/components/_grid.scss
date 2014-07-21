@@ -38,13 +38,13 @@ $total-columns: 12 !default;
 //
 //
 // $behavior - Any special behavior for this row? Default: false. Options: nest, collapse, nest-collapse, false.
-@mixin grid-row($behavior: false) {
+@mixin grid-row($behavior: false,$gutter: $column-gutter) {
 
   // use @include grid-row(nest); to include a nested row
   @if $behavior == nest {
     width: auto;
-    margin-#{$default-float}: -($column-gutter/2);
-    margin-#{$opposite-direction}: -($column-gutter/2);
+    margin-#{$default-float}: -($gutter/2);
+    margin-#{$opposite-direction}: -($gutter/2);
     margin-top: 0;
     margin-bottom: 0;
     max-width: none;
@@ -97,7 +97,8 @@ $total-columns: 12 !default;
   $pull:false,
   $collapse:false,
   $float:true,
-  $position:false) {
+  $position:false,
+  $gutter:$column-gutter) {
 
   // If positioned for default .column, include relative position
   // push and pull require position set
@@ -114,8 +115,8 @@ $total-columns: 12 !default;
   // Gutter padding whenever a column isn't set to collapse
   // (use $collapse:null to do nothing)
   @else if $collapse == false {
-    padding-left: $column-gutter / 2;
-    padding-right: $column-gutter / 2;
+    padding-left: $gutter / 2;
+    padding-right: $gutter / 2;
   }
 
   // If a column number is given, calculate width
@@ -151,29 +152,29 @@ $total-columns: 12 !default;
 // Create presentational classes for grid
 //
 // $size - Name of class to use, i.e. "large" will generate .large-1, .large-2, etc.
-@mixin grid-html-classes($size) {
+@mixin grid-html-classes($size, $gutter) {
 
   @for $i from 0 through $total-columns - 1 {
     .#{$size}-push-#{$i} {
-      @include grid-column($push:$i, $collapse:null, $float:false);
+      @include grid-column($push:$i, $collapse:null, $float:false, $gutter: $gutter);
     }
     .#{$size}-pull-#{$i} {
-      @include grid-column($pull:$i, $collapse:null, $float:false);
+      @include grid-column($pull:$i, $collapse:null, $float:false, $gutter: $gutter);
     }
   }
 
   .column,
-  .columns { @include grid-column($columns:false, $position:true); }
+  .columns { @include grid-column($columns:false, $position:true, $gutter: $gutter); }
 
 
   @for $i from 1 through $total-columns {
-    .#{$size}-#{$i} { @include grid-column($columns:$i,$collapse:null,$float:false); }
+    .#{$size}-#{$i} { @include grid-column($columns:$i,$collapse:null,$float:false, $gutter: $gutter); }
   }
 
 
 
   @for $i from 0 through $total-columns - 1 {
-    .#{$size}-offset-#{$i} { @include grid-column($offset:$i, $collapse:null,$float:false); }
+    .#{$size}-offset-#{$i} { @include grid-column($offset:$i, $collapse:null,$float:false, $gutter: $gutter); }
   }
   .#{$size}-reset-order {
     margin-#{$default-float}: 0;
@@ -184,7 +185,7 @@ $total-columns: 12 !default;
   }
 
   .column.#{$size}-centered,
-  .columns.#{$size}-centered { @include grid-column($center:true, $collapse:null, $float:false); }
+  .columns.#{$size}-centered { @include grid-column($center:true, $collapse:null, $float:false, $gutter: $gutter); }
 
   .column.#{$size}-uncentered,
   .columns.#{$size}-uncentered {
@@ -217,47 +218,81 @@ $total-columns: 12 !default;
       @include grid-row;
 
       &.collapse {
-         > .column,
-         > .columns { @include grid-column($collapse:true, $float:false); }
-
         .row {margin-left:0; margin-right:0;}
       }
-
-      .row { @include grid-row($behavior:nest);
-        &.collapse { @include grid-row($behavior:nest-collapse); }
-      }
     }
-
-    .column,
-    .columns { @include grid-column($columns:$total-columns); }
 
     [class*="column"] + [class*="column"]:last-child { float: $opposite-direction; }
     [class*="column"] + [class*="column"].end { float: $default-float; }
 
     @media #{$small-up} {
-      @include grid-html-classes($size:small);
+      .row {
+        &.collapse {
+          > .column,
+          > .columns { @include grid-column($collapse:true, $float:false, $gutter:$small-gutter); }
+        }
+
+        .row { @include grid-row($behavior:nest, $gutter:$small-gutter);
+          &.collapse { @include grid-row($behavior:nest-collapse, $gutter:$small-gutter); }
+        }
+      }
+
+      .column,
+      .columns { @include grid-column($columns:$total-columns, $gutter:$small-gutter); }
+
+      @include grid-html-classes($size:small, $gutter:$small-gutter);
     }
 
     @media #{$medium-up} {
-      @include grid-html-classes($size:medium);
+      .row {
+        &.collapse {
+          > .column,
+          > .columns { @include grid-column($collapse:true, $float:false, $gutter:$medium-gutter); }
+        }
+
+        .row { @include grid-row($behavior:nest, $gutter:$medium-gutter);
+          &.collapse { @include grid-row($behavior:nest-collapse, $gutter:$medium-gutter); }
+        }
+      }
+
+      .column,
+      .columns { @include grid-column($columns:$total-columns, $gutter:$medium-gutter); }
+
+      @include grid-html-classes($size:medium, $gutter:$medium-gutter);
+
       // Old push and pull classes
       @for $i from 0 through $total-columns - 1 {
         .push-#{$i} {
-          @include grid-column($push:$i, $collapse:null, $float:false);
+          @include grid-column($push:$i, $collapse:null, $float:false, $gutter:$medium-gutter);
         }
         .pull-#{$i} {
-          @include grid-column($pull:$i, $collapse:null, $float:false);
+          @include grid-column($pull:$i, $collapse:null, $float:false, $gutter:$medium-gutter);
         }
       }
     }
     @media #{$large-up} {
-      @include grid-html-classes($size:large);
+      .row {
+        &.collapse {
+          > .column,
+          > .columns { @include grid-column($collapse:true, $float:false, $gutter:$large-gutter); }
+        }
+
+        .row { @include grid-row($behavior:nest, $gutter:$large-gutter);
+          &.collapse { @include grid-row($behavior:nest-collapse, $gutter:$large-gutter); }
+        }
+      }
+
+      .column,
+      .columns { @include grid-column($columns:$total-columns, $gutter:$large-gutter); }
+
+      @include grid-html-classes($size:large, $gutter:$large-gutter);
+
       @for $i from 0 through $total-columns - 1 {
         .push-#{$i} {
-          @include grid-column($push:$i, $collapse:null, $float:false);
+          @include grid-column($push:$i, $collapse:null, $float:false, $gutter:$large-gutter);
         }
         .pull-#{$i} {
-          @include grid-column($pull:$i, $collapse:null, $float:false);
+          @include grid-column($pull:$i, $collapse:null, $float:false, $gutter:$large-gutter);
         }
       }
     }
