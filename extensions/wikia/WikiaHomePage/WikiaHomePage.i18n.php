@@ -15,7 +15,7 @@ $messages['en'] = array(
 
 	'wikiahome-visualisation-remix-mixitup' => 'Mix it up!',
 	'wikiahome-visualisation-remix-mixituptext' => 'Thousands of communities at your fingertips. Remix to explore Wikia.',
-	'wikiahome-visualisation-remix-button' => 'Remix',
+	'wikiahome-visualisation-remix-button' => 'Refresh',
 
 	'wikiahome-hubs-slot-more-in-heading' => 'More in $1',
 
@@ -62,8 +62,6 @@ $messages['en'] = array(
 	'wikiahome-community-column2-link' => 'http://www.wikia.com/Mobile',
 	'wikiahome-community-column2-creative' => 'Wikia Proudly Introduces its First Official Mobile Apps: My Wikia and Game Guides. Each app is designed to Assemble Over 20 Million Pages of Rich, Dynamic Content Authored by Wikia Communities in a Modern, Streamlined Experience. Download [[Mobile|here]].',
 	'wikiahome-community-column3-heading' => 'Follow Us',
-	'wikiahome-community-social-wikia-blog' => 'Wikia Blog',
-	'wikiahome-community-social-wikia-blog-link' => 'http://community.wikia.com/wiki/Blog:Wikia_Staff_Blog',
 	'wikiahome-community-social-twitter' => 'Twitter',
 	'wikiahome-community-social-facebook' => 'Facebook',
 	'wikiahome-community-social-googleplus' => 'Google+',
@@ -171,8 +169,6 @@ $messages['de'] = array(
 	'wikiahome-community-column2-link' => 'http://de.wikia.com/Mobil',
 	'wikiahome-community-column2-creative' => 'Wikia macht einen gewaltigen Schritt voran im mobilen Umfeld mit der neuen mobilen Website und Apps wie Game Guides und LyricsWiki.',
 	'wikiahome-community-column3-heading' => 'Folge uns',
-	'wikiahome-community-social-wikia-blog' => 'Wikia Blog',
-	'wikiahome-community-social-wikia-blog-link' => 'http://de.community.wikia.com/wiki/Blog%3AWikia_Deutschland_News',
 	'wikiahome-community-social-twitter' => 'Twitter',
 	'wikiahome-community-social-facebook' => 'Facebook',
 	'wikiahome-community-social-googleplus' => '',
@@ -228,7 +224,7 @@ $messages['es'] = array(
 
 	'wikiahome-visualisation-remix-mixitup' => '¡Mézclalos!',
 	'wikiahome-visualisation-remix-mixituptext' => 'Miles de comunidades están a tu alcance. Mueve la caja de comunidades para explorar Wikia.',
-	'wikiahome-visualisation-remix-button' => 'Mover',
+	'wikiahome-visualisation-remix-button' => 'Refrescar',
 
 	'wikia-home-page-preview' => 'Previsualizar',
 	'wikia-home-page-visit' => 'Visitar',
@@ -273,8 +269,6 @@ $messages['es'] = array(
 	'wikiahome-community-column2-link' => 'http://es.wikia.com/M%C3%B3viles',
 	'wikiahome-community-column2-creative' => 'Mira como Wikia se abre hueco en el universo de los teléfonos con su nueva web para móviles y aplicaciones como Guías de videojuegos o Letras de canciones de LyricWiki.',
 	'wikiahome-community-column3-heading' => 'Síguenos',
-	'wikiahome-community-social-wikia-blog' => 'Blog de Wikia',
-	'wikiahome-community-social-wikia-blog-link' => 'http://comunidad.wikia.com/wiki/Blog:Noticias_de_Wikia',
 	'wikiahome-community-social-twitter' => 'Twitter',
 	'wikiahome-community-social-facebook' => 'Facebook',
 	'wikiahome-community-social-googleplus' => '',
@@ -337,7 +331,7 @@ $messages['fr'] = array(
 	'wikiahome-page-header-create-wiki-button-destination' => 'http://www.wikia.com/Special:CreateWiki?uselang=fr',
 	'wikiahome-visualisation-remix-mixitup' => 'Mixez&nbsp;!',
 	'wikiahome-visualisation-remix-mixituptext' => 'Des centaines de communautés à votre portée. Mixez pour explorer Wikia.',
-	'wikiahome-visualisation-remix-button' => 'Mixer',
+	'wikiahome-visualisation-remix-button' => 'Rafraîchir',
 
 	'wikia-home-page-preview' => 'Aperçu',
 	'wikia-home-page-visit' => 'Visiter',
@@ -366,8 +360,6 @@ $messages['fr'] = array(
 	'wikiahome-community-column2-link' => 'http://www.wikia.com/Mobile',
 	'wikiahome-community-column2-creative' => 'Voyez comment Wikia a un impact dans l\'univers de la mobilité avec son nouveau site Web adapté aux appareils mobiles.',
 	'wikiahome-community-column3-heading' => 'Nous suivre',
-	'wikiahome-community-social-wikia-blog' => 'Blog Wikia',
-	'wikiahome-community-social-wikia-blog-link' => 'http://communaute.wikia.com/wiki/Blog:Actualit%C3%A9_Wikia',
 	'wikiahome-community-social-twitter' => 'Twitter',
 	'wikiahome-community-social-facebook' => 'Facebook',
 	'wikiahome-community-social-googleplus' => '',
@@ -426,7 +418,7 @@ $messages['pl'] = array(
 
 	'wikiahome-visualisation-remix-mixitup' => 'Miksuj!',
 	'wikiahome-visualisation-remix-mixituptext' => 'Tysiące społeczności na wyciągnięcie ręki. Miksuj i odkrywaj Wikię.',
-	'wikiahome-visualisation-remix-button' => 'Miksuj',
+	'wikiahome-visualisation-remix-button' => 'Odśwież',
 
 	'wikia-home-page-preview' => 'Podgląd',
 	'wikia-home-page-visit' => 'Odwiedź',
@@ -471,8 +463,6 @@ $messages['pl'] = array(
 	'wikiahome-community-column2-link' => 'http://www.wikia.com/Mobile',
 	'wikiahome-community-column2-creative' => 'Wikia z dumą przedstawia pierwsze mobilne aplikacje - My Wikia i Game Guides. Każda z nich jest kombinacją ponad 20 milionów stron stworzonych przez użytkowników i podanych w prostej i przejrzystej formie.',
 	'wikiahome-community-column3-heading' => 'Obserwuj nas',
-	'wikiahome-community-social-wikia-blog' => 'Blog Wikii',
-	'wikiahome-community-social-wikia-blog-link' => 'http://spolecznosc.wikia.com/wiki/Blog:Wikia_News',
 	'wikiahome-community-social-twitter' => 'Twitter',
 	'wikiahome-community-social-facebook' => 'Facebook',
 	'wikiahome-community-social-googleplus' => 'Google+',
@@ -538,7 +528,7 @@ $messages['ja'] = array(
 
 	'wikiahome-visualisation-remix-mixitup' => 'シャッフル!',
 	'wikiahome-visualisation-remix-mixituptext' => 'ウィキア内の様々な<br/>コミュニティーを<br/>探求しよう!',
-	'wikiahome-visualisation-remix-button' => 'ミックス',
+	'wikiahome-visualisation-remix-button' => 'リフレッシュ',
 
 	'wikia-home-page-preview' => 'プレビュー',
 	'wikia-home-page-visit' => '訪問',
@@ -572,8 +562,6 @@ $messages['ja'] = array(
 	'wikiahome-community-column2-link' => 'http://www.wikia.com/Mobile',
 	'wikiahome-community-column2-creative' => 'ウィキアからマイウィキアとゲームガイドという<br/>公式モバイルアプリをご紹介させていただきます。<br/>それぞれのアプリにはウィキアコミュニティーユーザー<br/>によって創られた上質で生き生きとしたコンテンツを<br/>数多く見ることが出来ます。<br/>ダウンロードはこちらから。',
 	'wikiahome-community-column3-heading' => 'フォローしてね',
-	'wikiahome-community-social-wikia-blog' => 'ウィキアブログ',
-	'wikiahome-community-social-wikia-blog-link' => 'http://ja.community.wikia.com/wiki/カテゴリ:スタッフブログ',
 	'wikiahome-community-social-twitter' => 'ツイッター',
 	'wikiahome-community-social-facebook' => 'フェイスブック',
 	'wikiahome-community-social-googleplus' => 'Google+',
@@ -675,8 +663,6 @@ $messages['qqq'] = array(
 	'wikiahome-community-column2-link' => 'The link to which 2nd column content leads; those columns are placed before footer on corporate pages',
 	'wikiahome-community-column2-creative' => 'Description of 2nd column content; those columns are placed before footer on corporate pages',
 	'wikiahome-community-column3-heading' => 'The 3rd column headline; those columns are placed before footer on corporate pages',
-	'wikiahome-community-social-wikia-blog' => 'Wikia Blog link text',
-	'wikiahome-community-social-wikia-blog-link' => 'Wikia Blog URL address',
 	'wikiahome-community-social-twitter' => 'Wikia at Twitter URL address',
 	'wikiahome-community-social-facebook' => 'Wikia at Facebook URL address',
 	'wikiahome-community-social-googleplus' => 'Wikia at Google+ URL address',
