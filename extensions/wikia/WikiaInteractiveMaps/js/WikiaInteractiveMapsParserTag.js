@@ -60,7 +60,7 @@ require(['jquery', 'wikia.mustache', 'wikia.tracker', 'wikia.loader', require.op
 			},
 			cacheKey = 'wikia_interactive_maps_map_iframe';
 
-		loadAssets(dependencies, cacheKey)`
+		loadAssets(dependencies, cacheKey)
 			.done(function (loadedAssets) {
 				var iframe = mustache.render(loadedAssets.mustache[0], {
 					url: mapUrl,
@@ -90,9 +90,9 @@ require(['jquery', 'wikia.mustache', 'wikia.tracker', 'wikia.loader', require.op
 							if (mapAds) {
 								mapAds.initSlot(mapModal.$element.find('.wikia-ad-interactive-map').get(0));
 							}
-							
+
 							require(['wikia.intMap.pontoBridge'], function (pontoBridge) {
-								pontoBridge.init(mapModal.$content.children('iframe')[0]);
+								pontoBridge.init(mapModal.$content.find('#wikiaInteractiveMapIframe')[0]);
 							});
 
 							tracker.track({
