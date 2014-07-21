@@ -95,7 +95,7 @@ $modal-header-footer-height: 45px;
 	width: 100%;
 }
 
-.modal.large iframe[name="wikia-interactive-map"] {
+.modal.large .wikia-interactive-map-wrapper {
 	@include height-calc('100% - #{$modal-header-footer-height * 2}');
 	left: 0;
 	position: absolute;

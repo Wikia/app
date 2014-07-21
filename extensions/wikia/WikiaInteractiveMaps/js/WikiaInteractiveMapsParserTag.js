@@ -90,9 +90,9 @@ require(['jquery', 'wikia.mustache', 'wikia.tracker', 'wikia.loader', require.op
 							if (mapAds) {
 								mapAds.initSlot(mapModal.$element.find('.wikia-ad-interactive-map').get(0));
 							}
-							
+
 							require(['wikia.intMap.pontoBridge'], function (pontoBridge) {
-								pontoBridge.init(mapModal.$content.children('iframe')[0]);
+								pontoBridge.init(mapModal.$content.find('#wikiaInteractiveMapIframe')[0]);
 							});
 
 							tracker.track({
