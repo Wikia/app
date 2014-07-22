@@ -4,7 +4,13 @@
 		createCookie;
 
 	createCookie = function(cookieName) {
-		document.cookie = cookieName + '=true;path=/';
+		var cookieValue = cookieName + '=true;path=/;domain=';
+		if (window.location.host.indexOf('wikia-dev')) {
+			cookieValue += '.wikia-dev.com';
+		} else {
+			cookieValue += '.wikia.com';
+		}
+		document.cookie = cookieValue;
 	};
 
 	setTimeout(function(){
