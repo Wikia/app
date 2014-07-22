@@ -2,16 +2,20 @@
 // foundation.zurb.com
 // Licensed under MIT Open Source
 
-@import "../settings";
-
 //
 // @variables
 //
+$include-html-classes: true !default;
 $include-html-grid-classes: $include-html-classes !default;
 $include-xl-html-grid-classes: false !default;
 
 $row-width: rem-calc(1000) !default;
 $total-columns: 12 !default;
+
+// We use these to control text direction settings
+$text-direction: ltr;
+$opposite-direction: right;
+$default-float: left;
 
 //
 // Grid Functions
@@ -38,7 +42,7 @@ $total-columns: 12 !default;
 //
 //
 // $behavior - Any special behavior for this row? Default: false. Options: nest, collapse, nest-collapse, false.
-@mixin grid-row($behavior: false,$gutter: $column-gutter) {
+@mixin grid-row($behavior: false, $gutter: 0) {
 
   // use @include grid-row(nest); to include a nested row
   @if $behavior == nest {
@@ -98,7 +102,7 @@ $total-columns: 12 !default;
   $collapse:false,
   $float:true,
   $position:false,
-  $gutter:$column-gutter) {
+  $gutter:0) {
 
   // If positioned for default .column, include relative position
   // push and pull require position set
@@ -229,44 +233,44 @@ $total-columns: 12 !default;
       .row {
         &.collapse {
           > .column,
-          > .columns { @include grid-column($collapse:true, $float:false, $gutter:$small-gutter); }
+          > .columns { @include grid-column($collapse:true, $float:false, $gutter:$small-grid-gutter); }
         }
 
-        .row { @include grid-row($behavior:nest, $gutter:$small-gutter);
-          &.collapse { @include grid-row($behavior:nest-collapse, $gutter:$small-gutter); }
+        .row { @include grid-row($behavior:nest, $gutter:$small-grid-gutter);
+          &.collapse { @include grid-row($behavior:nest-collapse, $gutter:$small-grid-gutter); }
         }
       }
 
       .column,
-      .columns { @include grid-column($columns:$total-columns, $gutter:$small-gutter); }
+      .columns { @include grid-column($columns:$total-columns, $gutter:$small-grid-gutter); }
 
-      @include grid-html-classes($size:small, $gutter:$small-gutter);
+      @include grid-html-classes($size:small, $gutter:$small-grid-gutter);
     }
 
     @media #{$medium-up} {
       .row {
         &.collapse {
           > .column,
-          > .columns { @include grid-column($collapse:true, $float:false, $gutter:$medium-gutter); }
+          > .columns { @include grid-column($collapse:true, $float:false, $gutter:$medium-grid-gutter); }
         }
 
-        .row { @include grid-row($behavior:nest, $gutter:$medium-gutter);
-          &.collapse { @include grid-row($behavior:nest-collapse, $gutter:$medium-gutter); }
+        .row { @include grid-row($behavior:nest, $gutter:$medium-grid-gutter);
+          &.collapse { @include grid-row($behavior:nest-collapse, $gutter:$medium-grid-gutter); }
         }
       }
 
       .column,
-      .columns { @include grid-column($columns:$total-columns, $gutter:$medium-gutter); }
+      .columns { @include grid-column($columns:$total-columns, $gutter:$medium-grid-gutter); }
 
-      @include grid-html-classes($size:medium, $gutter:$medium-gutter);
+      @include grid-html-classes($size:medium, $gutter:$medium-grid-gutter);
 
       // Old push and pull classes
       @for $i from 0 through $total-columns - 1 {
         .push-#{$i} {
-          @include grid-column($push:$i, $collapse:null, $float:false, $gutter:$medium-gutter);
+          @include grid-column($push:$i, $collapse:null, $float:false, $gutter:$medium-grid-gutter);
         }
         .pull-#{$i} {
-          @include grid-column($pull:$i, $collapse:null, $float:false, $gutter:$medium-gutter);
+          @include grid-column($pull:$i, $collapse:null, $float:false, $gutter:$medium-grid-gutter);
         }
       }
     }
@@ -274,25 +278,25 @@ $total-columns: 12 !default;
       .row {
         &.collapse {
           > .column,
-          > .columns { @include grid-column($collapse:true, $float:false, $gutter:$large-gutter); }
+          > .columns { @include grid-column($collapse:true, $float:false, $gutter:$large-grid-gutter); }
         }
 
-        .row { @include grid-row($behavior:nest, $gutter:$large-gutter);
-          &.collapse { @include grid-row($behavior:nest-collapse, $gutter:$large-gutter); }
+        .row { @include grid-row($behavior:nest, $gutter:$large-grid-gutter);
+          &.collapse { @include grid-row($behavior:nest-collapse, $gutter:$large-grid-gutter); }
         }
       }
 
       .column,
-      .columns { @include grid-column($columns:$total-columns, $gutter:$large-gutter); }
+      .columns { @include grid-column($columns:$total-columns, $gutter:$large-grid-gutter); }
 
-      @include grid-html-classes($size:large, $gutter:$large-gutter);
+      @include grid-html-classes($size:large, $gutter:$large-grid-gutter);
 
       @for $i from 0 through $total-columns - 1 {
         .push-#{$i} {
-          @include grid-column($push:$i, $collapse:null, $float:false, $gutter:$large-gutter);
+          @include grid-column($push:$i, $collapse:null, $float:false, $gutter:$large-grid-gutter);
         }
         .pull-#{$i} {
-          @include grid-column($pull:$i, $collapse:null, $float:false, $gutter:$large-gutter);
+          @include grid-column($pull:$i, $collapse:null, $float:false, $gutter:$large-grid-gutter);
         }
       }
     }

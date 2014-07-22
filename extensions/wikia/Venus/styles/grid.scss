@@ -1,12 +1,4 @@
-// col: 38px, gutter 8px, grid margin 16px, col padding 8px
-$small-grid-width: 768px;
-$small-grid-margin: 16px;
-// col: 53px, gutter 10px, grid margin 19px, col padding 10px
-$medium-grid-width: 1024px;
-$medium-grid-margin: 19px;
-// col: 58px, gutter 20px, grid margin 20px, col padding 12px
-$large-grid-width: 1159px;
-$large-grid-margin: 20px;
+@import "libs/foundation.custom/components/grid";
 
 .row:not(.full) {
 	@media #{$small-only} {

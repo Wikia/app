@@ -17,7 +17,7 @@ class VenusTestController extends WikiaSpecialPageController {
 
 		// As we assign to Body, we don't need it now, but it should be implemented
 
-		// $this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_HANDLEBARS );
+		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_HANDLEBARS );
 		$this->response->addAsset( 'extensions/wikia/VenusTest/styles/VenusTest.scss' );
 
 		$html = ( new Wikia\Template\HandlebarsEngine )

@@ -1,0 +1,27 @@
+
+// We use this to do clear floats
+@mixin clearfix {
+	&:before, &:after { content: " "; display: table; }
+	&:after { clear: both; }
+}
+
+// Makes an element visually hidden, but accessible.
+// @see http://snook.ca/archives/html_and_css/hiding-content-for-accessibility
+@mixin element-invisible {
+	position: absolute !important;
+	height: 1px;
+	width: 1px;
+	overflow: hidden;
+	clip: rect(1px, 1px, 1px, 1px);
+}
+
+// @mixins
+//
+// Turns off the element-invisible effect.
+@mixin element-invisible-off {
+	position: static !important;
+	height: auto;
+	width: auto;
+	overflow: visible;
+	clip: auto;
+}

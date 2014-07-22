@@ -1,15 +1,17 @@
 // reset css
 @import "libs/normalize";
 
-// import foundation elements
-@import "libs/foundation";
+// import variables and mixins
+@import "variables";
+@import "mixins";
+
+// import general styles
+@import "general";
+
+// import foundation grid
 @import "grid";
+@import "libs/foundation.custom/components/visibility";
 
-// import variables
-// @import "variables";
-
-// import breakpoints
-// @import "breakpoints";
 
 // hide "Retrived from..." print footer
 .printfooter { display: none; }
