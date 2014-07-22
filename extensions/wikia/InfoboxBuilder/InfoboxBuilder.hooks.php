@@ -44,7 +44,7 @@ final class InfoboxBuilderHooks {
 	 * @param  array   $args   Array of arguments passed from $frame object
 	 * @return string          A string returned by InfoboxBuilder.lua
 	 */
-	public static function parserFunctionHook( Parser $parser, $frame, $args ) {
+	public static function parserFunctionHook( \Parser $parser, $frame, $args ) {
 		wfProfileIn( __METHOD__ );
 
 		try {
