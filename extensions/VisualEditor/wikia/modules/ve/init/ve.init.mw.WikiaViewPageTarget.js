@@ -279,7 +279,7 @@ ve.init.mw.WikiaViewPageTarget.prototype.replacePageContent = function ( html, c
  */
 ve.init.mw.WikiaViewPageTarget.prototype.onBeforeUnload = function () {
 	// Check whether this timing is set to prevent it being called more than once
-	if ( ! this.timings.beforeUnload && window.veTrack ) {
+	if ( !this.timings.beforeUnload && window.veTrack ) {
 		this.timings.beforeUnload = ve.now();
 		veTrack( {
 			action: 've-window-unload',
