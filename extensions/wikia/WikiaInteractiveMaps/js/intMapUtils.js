@@ -23,7 +23,7 @@ define(
 		 * @returns {string} user language
 		 */
 		function getUserLanguage() {
-			return mw.user.options.get('language');
+			return w.mw.user.options.get('language');
 		}
 
 		/**
