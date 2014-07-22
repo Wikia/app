@@ -311,5 +311,5 @@ ve.init.mw.WikiaViewPageTarget.prototype.onSaveError = function ( doc, saveData,
 			status: status
 		} );
 	}
-	ve.init.mw.ViewPageTarget.prototype.onSaveError.call( this, doc, saveData, jqXHR, status, data );
+	ve.init.mw.Target.prototype.onSaveError.call( this, doc, saveData, jqXHR, status, data );
 };
