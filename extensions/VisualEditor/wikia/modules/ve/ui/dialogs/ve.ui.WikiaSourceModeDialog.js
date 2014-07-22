@@ -199,11 +199,6 @@ ve.ui.WikiaSourceModeDialog.prototype.onParseError = function ( ) {
 		'label': 'dialog-source-parse',
 		'value': ve.now() - this.timings.parseStart
 	} );
-	if ( window.veTrack ) {
-		veTrack( {
-			action: 'parsoid-parsewt-error'
-		} );
-	}
 	// TODO: error handling?
 };
 
