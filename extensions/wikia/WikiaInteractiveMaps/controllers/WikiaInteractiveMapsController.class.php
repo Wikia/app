@@ -15,6 +15,10 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 	const PAGE_RESTRICTION = 'editinterface';
 	const TRANSLATION_FILENAME = 'translations.json';
 	const MAPS_WIKIA_URL = 'http://maps.wikia.com';
+
+	const MAP_NOT_DELETED = 0;
+	const MAP_DELETED = 1;
+
 	const WIKIA_MOBILE_SKIN_NAME = 'wikiamobile';
 
 	/**
@@ -58,6 +62,7 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 		$selectedSort = $this->getVal( 'sort', null );
 		$this->setVal( 'selectedSort', $selectedSort );
 		$currentPage = $this->request->getInt( 'page', 1 );
+		$showDeleted = $this->getVal( 'deleted', false );
 
 		$offset = $this->getPaginationOffset( $currentPage, self::MAPS_PER_PAGE );
 
@@ -67,6 +72,10 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 			'offset' => $offset,
 			'limit' => self::MAPS_PER_PAGE,
 		];
+
+		if ( $showDeleted ) {
+			$params[ 'deleted' ] = 1;
+		}
 
 		$mapsResponse = $this->mapsModel->getMapsFromApi( $params );
 
@@ -81,6 +90,10 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 		if ( !is_null( $selectedSort ) ) {
 			$urlParams[ 'sort' ] = $selectedSort;
 		}
+		if ( $showDeleted ) {
+			$urlParams[ 'deleted' ] = $showDeleted;
+		}
+
 		$this->addPagination( (int)$mapsResponse->total, $currentPage, $urlParams );
 
 		$this->response->addAsset( 'extensions/wikia/WikiaInteractiveMaps/css/WikiaInteractiveMaps.scss' );
@@ -102,6 +115,18 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 		if ( isset( $map->title ) ) {
 			$this->wg->out->setHTMLTitle( $map->title );
 
+			$deleted = $map->deleted == self::MAP_DELETED;
+
+			if ( $deleted ) {
+				if ( F::app()->checkSkin( 'oasis' ) ) {
+					NotificationsController::addConfirmation(
+						wfMessage( 'wikia-interactive-maps-map-is-deleted' ),
+						NotificationsController::CONFIRMATION_WARN
+					);
+				}
+			}
+
+			$this->setVal( 'deleted', $deleted );
 			$url = $this->mapsModel->getMapRenderUrl([
 				$mapId,
 				$zoom,
@@ -113,7 +138,7 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 				$this->setMapOnMobile();
 			} else {
 				$this->setVal( 'title', $map->title );
-				$this->setVal( 'menu', $this->getMenuMarkup() );
+				$this->setVal( 'menu', $this->getMenuMarkup( $deleted ) );
 			}
 
 			$this->setVal( 'mapFound', true );
@@ -153,18 +178,25 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 	 * @desc Renders the menu markup for the map page from mustache
 	 * @return string
 	 */
-	function getMenuMarkup() {
+	function getMenuMarkup( $deleted ) {
 		$actionButtonArray = [
 			'action' => [
 				'text' => wfMessage( 'wikia-interactive-maps-actions' )->escaped(),
 			],
-			'dropdown' => [
-				'deleteMap' => [
-					'text' => wfMessage( 'wikia-interactive-maps-delete-map' )->escaped(),
-					'id' => 'deleteMap'
-				]
-			],
+			'dropdown' => [],
 		];
+		if ( $deleted ) {
+			$actionButtonArray[ 'dropdown' ][ 'unDeleteMap' ] = [
+				'text' => wfMessage( 'wikia-interactive-maps-undelete-map' )->escaped(),
+				'id' => 'unDeleteMap'
+			];
+		} else {
+			$actionButtonArray[ 'dropdown' ][ 'deleteMap' ] = [
+				'text' => wfMessage( 'wikia-interactive-maps-delete-map' )->escaped(),
+				'id' => 'deleteMap'
+			];
+		}
+
 		return F::app()->renderView( 'MenuButton', 'index', $actionButtonArray );
 	}
 
@@ -178,17 +210,26 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 	}
 
 	/**
-	 * @desc Ajax method for deleting a map from IntMaps API
+	 * @desc Ajax method for un/deleting a map from IntMaps API
 	 */
-	public function deleteMap() {
+	public function updateMapDeletionStatus() {
 		$mapId = $this->request->getVal( 'mapId', 0 );
+		$deleted = $this->request->getInt( 'deleted' );
+
+		if ( !in_array( $deleted, [ self::MAP_DELETED, self::MAP_NOT_DELETED ] ) ) {
+			$deleted = self::MAP_DELETED;
+		}
+
 		$result = false;
 		if ( $mapId && $this->wg->User->isLoggedIn() ) {
-			$result = $this->mapsModel->deleteMapById( $mapId )[ 'success' ];
+			$result = $this->mapsModel->updateMapDeletionStatus( $mapId, $deleted )[ 'success' ];
 		}
 		if ( $result ) {
+			$action = $deleted === self::MAP_DELETED
+				? WikiaMapsLogger::ACTION_DELETE_MAP
+				: WikiaMapsLogger::ACTION_UNDELETE_MAP;
 			WikiaMapsLogger::addLogEntry(
-				WikiaMapsLogger::ACTION_DELETE_MAP,
+				$action,
 				$mapId,
 				$mapId,
 				[
@@ -196,11 +237,16 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 				]
 			);
 
-			NotificationsController::addConfirmation( wfMessage( 'wikia-interactive-maps-delete-map-success' ) );
-			$this->response->setVal(
-				'redirectUrl',
-				self::getSpecialMapsUrl()
+			NotificationsController::addConfirmation(
+				$deleted ?
+					wfMessage( 'wikia-interactive-maps-delete-map-success' )->text() :
+					wfMessage( 'wikia-interactive-maps-undelete-map-success' )->text()
 			);
+			$redirectUrl = $this->getSpecialUrl( self::PAGE_NAME );
+			if ( $deleted === self::MAP_NOT_DELETED ) {
+				$redirectUrl = $this->getSpecialUrl( self::PAGE_NAME ) . '/' . $mapId;
+			}
+			$this->response->setVal( 'redirectUrl', $redirectUrl );
 		}
 	}
 	
