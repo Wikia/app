@@ -53,6 +53,11 @@ define(
 			var dfd = new $.Deferred(),
 				assets = cache.getVersioned(cacheKey);
 
+			// @fixme: This is a hotfix for MOB-2250 P2 Loader responses are cached in varnish and language is not
+			// passed in the request by default. Adding the language param in the request will save per language
+			// versions of the request
+			source.lang = mw.user.options.get('language');
+
 			if (assets) {
 				dfd.resolve(assets);
 			} else {
