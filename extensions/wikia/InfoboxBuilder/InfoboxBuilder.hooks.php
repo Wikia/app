@@ -27,10 +27,10 @@ final class InfoboxBuilderHooks {
 
 	/**
 	 * Hooks parserFunctionHook() to ParserFirstCallInit
-	 * @param  object $parser Parser object
+	 * @param  Parser $parser Parser object
 	 * @return bool           Always true to continue loading other hooks.
 	 */
-	public static function setupParserHook( &$parser ) {
+	public static function setupParserHook( \Parser $parser ) {
 		$parser->setFunctionHook( 'infoboxbuilder', '\InfoboxBuilder\InfoboxBuilderHooks::parserFunctionHook', SFH_OBJECT_ARGS );
 		return true;
 	}
