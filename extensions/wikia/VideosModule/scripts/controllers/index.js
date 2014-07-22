@@ -22,10 +22,10 @@ require([
 	$(function () {
 		// instantiate rail view
 		if ($rail.hasClass('loaded')) {
-			Wikia.syslog(Wikia.log.levels.debug, 'Rail already loaded', {extension: 'VideosModule'});
+			Wikia.syslog(Wikia.log.levels.debug, 'VideosModule', {railLoaded: true});
 			init();
 		} else {
-			Wikia.syslog(Wikia.log.levels.debug, 'Rail not loaded yet', {extension: 'VideosModule'});
+			Wikia.syslog(Wikia.log.levels.debug, 'VideosModule', {railLoaded: false});
 			$rail.on('afterLoad.rail', init);
 		}
 	});
