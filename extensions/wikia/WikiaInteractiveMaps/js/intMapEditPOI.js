@@ -76,7 +76,12 @@ define('wikia.intMap.editPOI', ['jquery', 'wikia.intMap.utils'], function($, uti
 		},
 		poiModalMode,
 		suggestionsVisible = false,
-		suggestionSelectedClass = 'selected';
+		suggestionSelectedClass = 'selected',
+		arrowHandlers,
+		direction = {
+			up: 1,
+			down: -1
+		};
 
 	/**
 	 * @desc Entry point for  modal
@@ -123,6 +128,19 @@ define('wikia.intMap.editPOI', ['jquery', 'wikia.intMap.utils'], function($, uti
 
 			modal.show();
 		});
+
+		// Setup suggestion key handlers
+		arrowHandlers = {
+			13: handleSuggestionsEnter,
+			27: handleSuggestionsEscape,
+			38: function() {
+				handleSuggestionsArrow(direction.up);
+			},
+			40: function() {
+				handleSuggestionsArrow(direction.down);
+			}
+		};
+
 	}
 
 	/**
@@ -238,38 +256,23 @@ define('wikia.intMap.editPOI', ['jquery', 'wikia.intMap.utils'], function($, uti
 	}
 
 	/**
-	 * @desc Handle Down Arrow key on suggest
+	 * @desc Handle Arrow keys on suggest
 	 */
-	function handleSuggestionsDownArrow() {
+	function handleSuggestionsArrow(arrowDirection) {
 		var $selected = modal.$suggestions.find('.' + suggestionSelectedClass),
+			selector = arrowDirection === direction.down ? ':first' : ':last',
 			$next;
 		if ($selected.length) {
 			// go to next selected
-			$next = $selected.next();
+			$next = (arrowDirection === direction.down) ? $selected.next() : $selected.prev();
+
 			if ($next.length) {
 				$selected.removeClass(suggestionSelectedClass);
 				$next.addClass(suggestionSelectedClass);
 				scrollToElement(modal.$suggestions, $next);
 			}
 		} else {
-			modal.$suggestions.children(':first').addClass(suggestionSelectedClass);
-		}
-	}
-
-	/**
-	 * @desc Handle Up Arrow key on suggest
-	 */
-	function handleSuggestionsUpArrow() {
-		var $selected = modal.$suggestions.find('.' + suggestionSelectedClass),
-			$previous;
-		if ($selected.length) {
-			// go to previous selected
-			$previous = $selected.prev();
-			if ($previous.length) {
-				$selected.removeClass(suggestionSelectedClass);
-				$previous.addClass(suggestionSelectedClass);
-				scrollToElement(modal.$suggestions, $previous);
-			}
+			modal.$suggestions.children(selector).addClass(suggestionSelectedClass);
 		}
 	}
 
@@ -279,14 +282,8 @@ define('wikia.intMap.editPOI', ['jquery', 'wikia.intMap.utils'], function($, uti
 	 * @returns {boolean} true if handled
 	 */
 	function processSuggestKeyEvents(keyCode) {
-		var handlers = {
-			13: handleSuggestionsEnter,
-			27: handleSuggestionsEscape,
-			38: handleSuggestionsUpArrow,
-			40: handleSuggestionsDownArrow
-		};
-		if (suggestionsVisible && handlers.hasOwnProperty(keyCode)) {
-			handlers[keyCode]();
+		if (suggestionsVisible && arrowHandlers.hasOwnProperty(keyCode)) {
+			arrowHandlers[keyCode]();
 			return true;
 		}
 		return false;
