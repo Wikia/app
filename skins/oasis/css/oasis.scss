@@ -30,6 +30,8 @@
 @import "core/background";
 @import "core/globalelements";
 @import "core/GlobalHeader";
+@import "core/GlobalHeaderAB";
+@import "core/GlobalNavigationMenu";
 @import "core/AccountNavigation";
 @import "core/page";
 @import "core/CommentsLikes";
@@ -53,6 +55,7 @@
 @import "core/thumbnails";
 @import "core/MenuElement";
 @import "core/visualeditor";
+@import "core/LocalNavigation";
 
 // Bootstrap
 @import "resources/wikia/libraries/bootstrap/tooltip";
