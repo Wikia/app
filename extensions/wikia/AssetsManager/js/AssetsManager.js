@@ -43,6 +43,7 @@ window.Wikia.getMultiTypePackage = function(options) {
 		messages = options.messages,
 		templates = options.templates,
 		mustache = options.mustache,
+		handlebars = options.handlebars,
 		callback = options.callback,
 		params = options.params,
 		send = false;
@@ -64,6 +65,11 @@ window.Wikia.getMultiTypePackage = function(options) {
 
 	if(typeof mustache === 'string'){
 		request.mustache = mustache;
+		send = true;
+	}
+
+	if(typeof handlebars === 'string'){
+		request.handlebars = handlebars;
 		send = true;
 	}
 

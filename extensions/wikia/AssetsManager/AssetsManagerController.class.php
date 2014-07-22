@@ -41,6 +41,7 @@ class AssetsManagerController extends WikiaController {
 		$scripts = $this->request->getVal( 'scripts', null );
 		$messages = $this->request->getVal( 'messages', null );
 		$mustache = $this->request->getVal( 'mustache', null );
+		$handlebars = $this->request->getVal( 'handlebars', null );
 
 		// handle templates via sendRequest
 		if ( !is_null( $templates ) ) {
@@ -136,7 +137,17 @@ class AssetsManagerController extends WikiaController {
 
 			$mustacheTemplates = explode( ',', $mustache );
 
-			$this->response->setVal( 'mustache', $this->getMustacheTemplates($mustacheTemplates));
+			$this->response->setVal( 'mustache', $this->getTemplates($mustacheTemplates, 'mustache'));
+			wfProfileOut( $profileId );
+		}
+
+		if ( !is_null( $handlebars ) ) {
+			$profileId = __METHOD__ . "::handlebars::{$handlebars}";
+			wfProfileIn( $profileId );
+
+			$handlebarsTemplates = explode( ',', $handlebars );
+
+			$this->response->setVal( 'handlebars', $this->getTemplates($handlebarsTemplates, 'handlebars'));
 			wfProfileOut( $profileId );
 		}
 
@@ -182,23 +193,24 @@ class AssetsManagerController extends WikiaController {
 	 * @return array templates content
 	 * @throws WikiaException
 	 */
-	private function getMustacheTemplates($mustacheTemplates) {
+	private function getTemplates($templates, $templateSystem = 'mustache') {
 		wfProfileIn(__METHOD__);
 
 		$IP = $this->app->getGlobal('IP');
 		$ret = array();
 
-		foreach($mustacheTemplates as $mustachePath) {
-			$path = $IP . '/' . ltrim($mustachePath, '/');
+		foreach($templates as $templatePath) {
+			$path = $IP . '/' . ltrim($templatePath, '/');
+			$extLength = strlen($templateSystem) + 1;
 
 			// check file validity
 			if (!is_readable($path)) {
-				throw new WikiaException("Mustache template not found: '{$mustachePath}'");
+				throw new WikiaException("{$templateSystem} template not found: '{$templatePath}'");
 			}
 
 			// check file extension
-			if (substr($path, -9) != '.mustache') {
-				throw new WikiaException("Mustache template has incorrect extension: '{$mustachePath}'");
+			if (substr($path, -$extLength) != '.' . $templateSystem) {
+				throw new WikiaException("{$templateSystem} template has incorrect extension: '{$templatePath}'");
 			}
 
 			$ret[] = file_get_contents($path);
