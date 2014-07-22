@@ -4,9 +4,6 @@
 	 * Videos Module test
 	 *
 	 * @category Wikia
-	 * @group Broken
-	 *
-	 * This unit test should mock VideosModule::$blacklist - see MAIN-2582
 	 */
 	class VideosModuleTest extends WikiaBaseTest {
 
@@ -42,6 +39,12 @@
 		public function testIsBlackListed() {
 
 			$module = new VideosModule( self::USER_REGION );
+
+			// Mock the blacklist so that it doesn't depend on changes to the wgVideosModuleBlackList global
+			$reflection = new ReflectionClass( $module );
+			$blackListProp = $reflection->getProperty( 'blacklist' );
+			$blackListProp->setAccessible( true );
+			$blackListProp->setValue( $module, [ self::$videoBlacklist[0] ] );
 
 			$blackListedVideo = [ 'title' => self::$videoBlacklist[0] ];
 			$this->assertTrue( $module->isBlackListed( $blackListedVideo ) );

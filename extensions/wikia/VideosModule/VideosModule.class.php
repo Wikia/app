@@ -37,8 +37,14 @@ class VideosModule extends WikiaModel {
 	public function __construct( $userRegion ) {
 		// All black listed videos are stored in WikiFactory in the wgVideosModuleBlackList variable
 		// on Community wiki.
-		$serializedBlackList = WikiFactory::getVarByName( "wgVideosModuleBlackList", WikiFactory::COMMUNITY_CENTRAL )->cv_value;
-		$this->blacklist = unserialize( $serializedBlackList );
+		$communityBlacklist = WikiFactory::getVarByName( "wgVideosModuleBlackList", WikiFactory::COMMUNITY_CENTRAL );
+
+		// Set the blacklist if there is data for it
+		if ( is_object( $communityBlacklist ) ) {
+			$serializedBlackList = $communityBlacklist->cv_value;
+			$this->blacklist = unserialize( $serializedBlackList );
+		}
+
 		$this->userRegion = $userRegion;
 		parent::__construct();
 	}
