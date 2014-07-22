@@ -1426,7 +1426,7 @@ class WallHooksHelper {
 
 			$wm = new WallMessage( $title );
 
-			if( $user->isAllowed('walledit') || $wm->isWallOwner( $user ) ) {
+			if( $user->isAllowed('walledit') || $wm->isWallOwner( $user ) || $action === 'read' || $action === 'history' ) {
 				$result = null;
 				return true;
 			} else {

@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * @group UsingDB
+ */
 class HAWelcomeTaskTest extends WikiaBaseTest {
 
 	public function testNormalizeInstanceParameters() {
@@ -60,6 +63,16 @@ class HAWelcomeTaskTest extends WikiaBaseTest {
 	public function testPostTalkPageToRecipientWhenExists() {
 		$talkPage = $this->getMock( '\Article', ['exists', 'getContent', 'doEdit'], [], '', false );
 
+		$senderObject = $this->getMock( '\User', ['getName'] );
+		$senderObject->expects( $this->once() )
+			->method( 'getName' )
+			->will( $this->returnValue( 'sender name' ) );
+
+		$recipientObject = $this->getMock( '\User', ['getName'] );
+		$recipientObject->expects( $this->once() )
+			->method( 'getName' )
+			->will( $this->returnValue( 'recipient name' ) );
+
 		$talkPage->expects( $this->atLeastOnce() )
 			->method( 'exists' )
 			->will( $this->returnValue( true ) );
@@ -73,16 +86,26 @@ class HAWelcomeTaskTest extends WikiaBaseTest {
 			->method( 'doEdit' )
 			->will( $this->returnValue( $talkPageContent ) );
 
-		$task = $this->getMock( '\HAWelcomeTask', ['getRecipientTalkPage'], [], '', false );
+		$task = $this->getMock( '\HAWelcomeTask', ['getRecipientTalkPage', 'getTextVersionOfMessage'], [], '', false );
+		$task->setSenderObject( $senderObject );
+		$task->setRecipientObject( $recipientObject );
 
 		$task->expects( $this->exactly( 3 ) )
 			->method( 'getRecipientTalkPage' )
 			->will( $this->returnValue( $talkPage ) );
 
+		$task->expects( $this->once() )
+			->method( 'getTextVersionOfMessage' )
+			->with( 'welcome-message-log' )
+			->will( $this->returnValue( 'a-message' ) );
+
 		$task->postTalkPageMessageToRecipient();
 	}
 
 	public function testPostTalkPageToRecipientWhenNotExists() {
+		$sender = $this->getMock( '\User', ['getName'] );
+		$recipient = $this->getMock( '\User', ['getName'] );
+
 		$talkPage = $this->getMock( '\Article', ['exists', 'getContent', 'doEdit'], [], '', false );
 
 		$talkPage->expects( $this->atLeastOnce() )
@@ -94,17 +117,76 @@ class HAWelcomeTaskTest extends WikiaBaseTest {
 			->method( 'getContent' )
 			->will( $this->returnValue( $talkPageContent ) );
 
-		$talkPage->expects( $this->atLeastOnce() )
-			->method( 'doEdit' )
-			->will( $this->returnValue( $talkPageContent ) );
-
-		$task = $this->getMock( '\HAWelcomeTask', ['getRecipientTalkPage'], [], '', false );
+		$task = $this->getMock( '\HAWelcomeTask', ['getRecipientTalkPage', 'getTextVersionOfMessage'], [], '', false );
 
 		$task->expects( $this->exactly( 2 ) )
 			->method( 'getRecipientTalkPage' )
 			->will( $this->returnValue( $talkPage ) );
 
+		$textMessage = 'a-message';
+		$task->expects( $this->once() )
+			->method( 'getTextVersionOfMessage' )
+			->will( $this->returnValue( $textMessage ) );
+
+		$sender->expects( $this->once() )
+			->method( 'getName' )
+			->will( $this->returnValue( 'sender' ) );
+
+		$recipient->expects( $this->once() )
+			->method( 'getName' )
+			->will( $this->returnValue( 'recipient' ) );
+
+		$talkPage->expects( $this->once() )
+			->method( 'doEdit' )
+			->with( null, $textMessage, 0, false, $sender )
+			->will( $this->returnValue( null ) );
+
+		$task->setSenderObject( $sender );
+		$task->setRecipientObject( $recipient );
+
 		$task->postTalkPageMessageToRecipient();
+	}
+
+	public function testCreateUserProfilePage() {
+		$sender = $this->getMock( '\User', ['getName'] );
+		$recipient = $this->getMock( '\User', ['getName'] );
+
+		$profilePage = $this->getMock( '\Article', ['exists', 'doEdit'], [], '', false );
+		$task = $this->getMock( '\HAWelcomeTask', [
+			'getRecipientProfilePage',
+			'getWelcomePageTemplateForRecipient',
+			] );
+
+		$profilePage->expects( $this->once() )
+			->method( 'exists' )
+			->will( $this->returnValue( false ) );
+
+		$welcomePageTemplate = 'any';
+
+		$task->expects( $this->once() )
+			->method( 'getRecipientProfilePage' )
+			->will( $this->returnValue( $profilePage ) );
+
+		$task->expects( $this->once() )
+			->method( 'getWelcomePageTemplateForRecipient' )
+			->will( $this->returnValue( $welcomePageTemplate ) );
+
+		$sender->expects( $this->once() )
+			->method( 'getName' )
+			->will( $this->returnValue( 'sender' ) );
+
+		$recipient->expects( $this->once() )
+			->method( 'getName' )
+			->will( $this->returnValue( 'recipient' ) );
+
+		$profilePage->expects( $this->once() )
+			->method( 'doEdit' )
+			->with( $welcomePageTemplate, false, 0, false, $sender )
+			->will( $this->returnValue( null ) );
+
+		$task->setSenderObject( $sender );
+		$task->setRecipientObject( $recipient );
+		$task->createUserProfilePage();
 	}
 
 
@@ -151,6 +233,8 @@ class HAWelcomeTaskTest extends WikiaBaseTest {
 			'isFeatureFlagEnabled',
 			'getMessageWallExtensionEnabled',
 			'recipientWallIsEmpty',
+			'getTextVersionOfMessage',
+			'setSender',
 			'sendMessage'
 			], [], '', false );
 
@@ -168,8 +252,24 @@ class HAWelcomeTaskTest extends WikiaBaseTest {
 			->will( $this->returnValue( true ) );
 
 		$task->expects( $this->once() )
+			->method( 'setSender' )
+			->will( $this->returnValue( null ) );
+
+		$senderObject = $this->getMock( '\User' );
+		$senderObject->expects( $this->once() )
+			->method( 'isAllowed' )
+			->with( 'bot' )
+			->will( $this->returnValue( true ) );
+		$task->setSenderObject( $senderObject );
+
+		$task->expects( $this->once() )
 			->method( 'sendMessage' )
 			->will( $this->returnValue( null ) );
+
+		$task->expects( $this->once( ) )
+			->method( 'getTextVersionOfMessage' )
+			->with( 'welcome-enabled' )
+			->will( $this->returnValue( "message-anon message-user page-user" ) );
 
 		$task->sendWelcomeMessage( $params );
 	}
@@ -189,7 +289,9 @@ class HAWelcomeTaskTest extends WikiaBaseTest {
 			[
 			'isFeatureFlagEnabled',
 			'getMessageWallExtensionEnabled',
+			'getTextVersionOfMessage',
 			'sendMessage',
+			'setSender',
 			'getRecipientTalkPage',
 			], [], '', false );
 
@@ -211,6 +313,22 @@ class HAWelcomeTaskTest extends WikiaBaseTest {
 		$task->expects( $this->exactly( 2 ) )
 			->method( 'getMessageWallExtensionEnabled' )
 			->will( $this->returnValue( false ) );
+
+		$task->expects( $this->once( ) )
+			->method( 'getTextVersionOfMessage' )
+			->with( 'welcome-enabled' )
+			->will( $this->returnValue( "message-anon message-user page-user" ) );
+
+		$senderObject = $this->getMock( '\User' );
+		$senderObject->expects( $this->once() )
+			->method( 'isAllowed' )
+			->with( 'bot' )
+			->will( $this->returnValue( true ) );
+		$task->setSenderObject( $senderObject );
+
+		$task->expects( $this->once() )
+			->method( 'setSender' )
+			->will( $this->returnValue( null ) );
 
 		$task->expects( $this->once() )
 			->method( 'sendMessage' )
@@ -235,6 +353,8 @@ class HAWelcomeTaskTest extends WikiaBaseTest {
 			'isFeatureFlagEnabled',
 			'sendMessage',
 			'createUserProfilePage',
+			'getTextVersionOfMessage',
+			'setSender'
 			], [], '', false );
 
 		$task->expects( $this->exactly( 2 ) )
@@ -249,6 +369,22 @@ class HAWelcomeTaskTest extends WikiaBaseTest {
 		$task->expects( $this->once() )
 			->method( 'createUserProfilePage' )
 			->will( $this->returnValue( null ) );
+
+		$task->expects( $this->once( ) )
+			->method( 'getTextVersionOfMessage' )
+			->with( 'welcome-enabled' )
+			->will( $this->returnValue( "message-anon message-user page-user" ) );
+
+		$task->expects( $this->once( ) )
+			->method( 'setSender' )
+			->will( $this->returnValue( null ) );
+
+		$senderObject = $this->getMock( '\User' );
+		$senderObject->expects( $this->once() )
+			->method( 'isAllowed' )
+			->with( 'bot' )
+			->will( $this->returnValue( true ) );
+		$task->setSenderObject( $senderObject );
 
 		$task->sendWelcomeMessage( $params );
 	}

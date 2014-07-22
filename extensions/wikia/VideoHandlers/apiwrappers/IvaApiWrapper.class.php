@@ -4,7 +4,6 @@ class IvaApiWrapper extends IngestionApiWrapper {
 
 	protected static $CACHE_KEY = 'ivaapi';
 	protected static $aspectRatio = 1.7777778;
-	protected static $DELAYS = [ "5 minutes", "1 hour", "1 week" ];
 
 	public function getDescription() {
 		$description = $this->getOriginalDescription();

@@ -21,7 +21,7 @@ define('ext.wikia.adEngine.wikiaGptAdDetect', [
 		for (i = 0, len = imgs.length; i < len; i += 1) {
 			w = imgs[i].getAttribute('width');
 			h = imgs[i].getAttribute('height');
-			if (w > 1 && h > 1) {
+			if (w > 1 || h > 1) {
 				log(['findAdImage', 'found non-1x1 img'], 'info', logGroup);
 				return true;
 			}

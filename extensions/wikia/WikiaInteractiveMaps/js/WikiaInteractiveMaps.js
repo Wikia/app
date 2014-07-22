@@ -3,10 +3,10 @@ require(
 		'jquery',
 		'wikia.querystring',
 		'wikia.window',
-		'ponto',
-		'wikia.intMap.utils'
+		'wikia.intMap.utils',
+		'wikia.intMap.pontoBridge'
 	],
-	function ($, qs, w, ponto, utils) {
+	function ($, qs, w, utils, pontoBridge) {
 		'use strict';
 
 		var body = $('body'),
@@ -74,16 +74,8 @@ require(
 				triggerAction('unDeleteMap');
 			});
 
-		setPontoIframeTarget(targetIframe);
-
-		/**
-		 * @desc sets iFrame target for ponto if iFrame exists
-		 * @param {object} targetIframe - iFrame element
-		 */
-		function setPontoIframeTarget(targetIframe) {
-			if (targetIframe) {
-				ponto.setTarget(Ponto.TARGET_IFRAME, '*', targetIframe.contentWindow);
-			}
+		if (targetIframe) {
+			pontoBridge.init(targetIframe);
 		}
 
 		/**
@@ -103,11 +95,17 @@ require(
 
 			if (utils.isUserLoggedIn()) {
 				utils.loadModal(actionConfig);
+				utils.track(utils.trackerActions.CLICK_LINK_BUTTON, 'create-map-clicked');
 			} else {
 				utils.showForceLoginModal(actionConfig.origin, function() {
 					utils.loadModal(actionConfig);
 				});
 			}
+		}
+
+		// VE Insert Map dialog passes this hash to initiate map creating process right away
+		if (w.location.hash === '#createMap') {
+			triggerAction('createMap');
 		}
 	}
 );

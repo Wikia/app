@@ -1,7 +1,15 @@
 <?php
-require_once( dirname(__FILE__) . '/../WikiaInteractiveMapsUploadImageFromFile.class.php' );
 
+/**
+ * @group UsingDB
+ */
 class WikiaInteractiveMapsUploadImageFromFileTest extends WikiaBaseTest {
+
+	public function setUp() {
+		global $IP;
+		$this->setupFile = "$IP/extensions/wikia/WikiaInteractiveMaps/WikiaInteractiveMaps.setup.php";
+		parent::setUp();
+	}
 
 	public function testVerifyUpload_success_not_for_POI() {
 		$expected = [ 'status' => 'success' ];

@@ -17,6 +17,7 @@ $wgAutoloadClasses['AnalyticsProviderDynamicYield'] = __DIR__ . '/AnalyticsProvi
 $wgAutoloadClasses['AnalyticsProviderIVW2'] = __DIR__ . '/AnalyticsProviderIVW2.php';
 $wgAutoloadClasses['AnalyticsProviderBlueKai'] = __DIR__ . '/AnalyticsProviderBlueKai.php';
 $wgAutoloadClasses['AnalyticsProviderDatonics'] = __DIR__ . '/AnalyticsProviderDatonics.php';
+$wgAutoloadClasses['AnalyticsProviderViglink'] = __DIR__ . '/AnalyticsProviderViglink.php';
 $wgAutoloadClasses['AnalyticsProviderClarityRay'] = __DIR__ . '/AnalyticsProviderClarityRay.php';
 $wgAutoloadClasses['AnalyticsProviderPageFair'] = __DIR__ . '/AnalyticsProviderPageFair.php';
 
