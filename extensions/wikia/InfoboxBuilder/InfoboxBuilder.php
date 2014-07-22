@@ -17,7 +17,7 @@ if ( !defined('MEDIAWIKI') ) {
 /**
  * Extension credits
  */
-$wgExtensionCredits['other'][] = array(
+$wgExtensionCredits['parserhook'][] = array(
 	'path' => __FILE__,
 	'name' => 'InfoboxBuilder',
 	'descriptionmsg' => 'infoboxbuilder-desc',
@@ -51,8 +51,7 @@ $wgExtensionMessagesFiles['InfoboxBuilderMagic'] = __DIR__ . '/InfoboxBuilder.ma
  */
 
 $wgResourceModules['ext.wikia.InfoboxBuilder'] = [
-	'styles' => ['resources/infoboxBuilder.scss'],
-
+	'styles' => [ 'resources/infoboxBuilder.scss' ],
 	'localBasePath' => __DIR__,
 	'remoteExtPath' => 'wikia/InfoboxBuilder',
 ];

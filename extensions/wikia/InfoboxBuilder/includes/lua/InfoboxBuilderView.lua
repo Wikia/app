@@ -29,10 +29,11 @@ local addRowLine = function( field )
 			:addClass( InfoboxBuilderView.vars.Theme .. '-infobox-line-left' )
 			:wikitext( field.Label )
 			:done()
+
 	if string.len( field.Value ) > tonumber( InfoboxBuilderView.vars.ToggleContentLongerThan ) then
 		local cell = row:tag( 'td' )
-		cell:addClass( InfoboxBuilderView.vars.Theme .. '-infobox-line-right' )
 		cell
+			:addClass( InfoboxBuilderView.vars.Theme .. '-infobox-line-right' )
 			:tag( 'div' )
 				:addClass( 'mw-collapsible mw-collapsed ' .. InfoboxBuilderView.vars.Theme .. '-infobox-toggle-content' )
 				:wikitext( field.Value )
@@ -81,6 +82,7 @@ local addRowTitle = function( field )
 	row:addClass( InfoboxBuilderView.vars.Theme .. '-infobox-field-' .. field.Index )
 
 	local cell = row:tag('th')
+	cell
 		:addClass( InfoboxBuilderView.vars.Theme .. '-infobox-title' )
 		:attr( 'colspan', '2' )
 		:wikitext( field.Value )

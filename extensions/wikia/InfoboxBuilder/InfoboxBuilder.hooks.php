@@ -37,13 +37,14 @@ final class InfoboxBuilderHooks {
 
 	/**
 	 * Function executed by use of {{#infoboxbuilder:}} parser function.
-	 * It gets the code from InfoboxBuilder.lua and creates new module object from it. The module is then invoked and the result is returned.
-	 * @param  obj $parser Parser object
-	 * @param  obj $frame  PPFrame object
-	 * @param  arr $args   Array of arguments passed from $frame object
-	 * @return str         A string returned by InfoboxBuilder.lua
+	 * It gets the code from InfoboxBuilder.lua and creates new module object
+	 * from it. The module is then invoked and the result is returned.
+	 * @param  Parser  $parser Parser object
+	 * @param  PPFRame $frame  PPFrame object
+	 * @param  array   $args   Array of arguments passed from $frame object
+	 * @return string          A string returned by InfoboxBuilder.lua
 	 */
-	public static function parserFunctionHook( &$parser, $frame, $args ) {
+	public static function parserFunctionHook( Parser $parser, $frame, $args ) {
 		wfProfileIn( __METHOD__ );
 
 		try {
