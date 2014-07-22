@@ -24,11 +24,11 @@ define('wikia.intMaps.unDeleteMap', ['jquery', 'wikia.querystring', 'wikia.intMa
 				if (redirectUrl) {
 					qs(redirectUrl).goTo();
 				} else {
-					GlobalNotification.show(response, 'error');
+					showError(response);
 				}
 			},
 			onErrorCallback: function(error) {
-				GlobalNotification.show(error.statusText, 'error');
+				showError(error.statusText);
 			}
 		});
 	}
