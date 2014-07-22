@@ -127,11 +127,14 @@ ve.init.mw.WikiaViewPageTarget.prototype.onToolbarCancelButtonClick = function (
 	if ( window.veTrack ) {
 		veTrack( {
 			action: 've-cancel-button-click',
-			isDirty: !this.toolbarSaveButton.isDisabled() ? 'yes' : 'no',
-			duration: ve.now() - this.timings.editPageReady
+			isDirty: !this.toolbarSaveButton.isDisabled() ? 'yes' : 'no'
 		} );
 	}
-	ve.track( 'wikia', { 'action': ve.track.actions.CLICK, 'label': 'button-cancel' } );
+	ve.track( 'wikia', {
+		'action': ve.track.actions.CLICK,
+		'label': 'button-cancel',
+		'duration': ve.now() - this.timings.editPageReady
+	} );
 	mw.hook( 've.cancelButton' ).fire();
 	/*
 	// Trigger Qualaroo survey for anonymous users abandoning edit
@@ -281,9 +284,10 @@ ve.init.mw.WikiaViewPageTarget.prototype.onBeforeUnload = function () {
 	// Check whether this timing is set to prevent it being called more than once
 	if ( !this.timings.beforeUnload && window.veTrack ) {
 		this.timings.beforeUnload = ve.now();
-		veTrack( {
-			action: 've-window-unload',
-			duration: this.timings.beforeUnload - this.timings.editPageReady
+		ve.track( 'wikia', {
+			'action': ve.track.actions.CLOSE,
+			'label': 'window',
+			'duration': this.timings.beforeUnload - this.timings.editPageReady
 		} );
 	}
 	ve.init.mw.ViewPageTarget.prototype.onBeforeUnload.call( this );
