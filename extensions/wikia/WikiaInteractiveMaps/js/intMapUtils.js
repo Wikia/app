@@ -19,6 +19,14 @@ define(
 		};
 
 		/**
+		 * @desc Return user language
+		 * @returns {string} user language
+		 */
+		function getUserLanguage() {
+			return mw.user.options.get('language');
+		}
+
+		/**
 		 * @desc loads all assets for create map modal and initialize it
 		 * @param {object} action - object with paths to different assets
 		 * @param {object=} params - local storage key
@@ -32,6 +40,10 @@ define(
 			if (loadedAssets) {
 				initModule(amdModule, loadedAssets.mustache, params, trigger);
 			} else {
+
+				// Make the caching key language dependent
+				action.cacheKey = action.cacheKey + '_' + getUserLanguage();
+
 				getAssets(convertSource(action.source), action.cacheKey).then(function (assets) {
 					addAssetsToDOM(assets);
 
@@ -56,7 +68,7 @@ define(
 			// @fixme: This is a hotfix for MOB-2250 P2 Loader responses are cached in varnish and language is not
 			// passed in the request by default. Adding the language param in the request will save per language
 			// versions of the request
-			source.lang = mw.user.options.get('language');
+			source.lang = getUserLanguage();
 
 			if (assets) {
 				dfd.resolve(assets);
