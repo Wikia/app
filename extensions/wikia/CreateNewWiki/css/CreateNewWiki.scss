@@ -200,7 +200,7 @@ $color-borders: #CECECE;
 		top: 95px;
 	}
 	.fb_button {
-				
+
 	}
 	nav {
 		.signup {
@@ -324,8 +324,13 @@ div#userloginErrorBox3 {
 		@if ( $responsive-layout-enabled ) {
 
 		} @else {
+			/*
+			 * Both left and right are specified for proper ltr and rtl positioning.
+			 * TODO: Fix CSSJanus
+			 */
 			left: 515px;
 			position: absolute;
+			right: 515px;
 			top: 100px;
 			width: 265px;
 		}
@@ -413,7 +418,7 @@ div#userloginErrorBox3 {
 				li {
 					padding-bottom: 0;
 					padding-top: 0;
-					label{ 
+					label{
 						display: none;
 					}
 				}
