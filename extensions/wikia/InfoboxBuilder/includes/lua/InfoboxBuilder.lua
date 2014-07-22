@@ -33,7 +33,7 @@ local logError = function( key, params )
 
 	local e = { key = key, params = params }
 	table.insert( InfoboxBuilder.errors, e )
-	
+
 	return true
 end
 
@@ -187,25 +187,25 @@ local parse = function( args )
 
 	for i, index in ipairs(indexes) do
 
-	f = f + 1
-	input.fields[f] = {}
-	input.fields[f] = fields[index]
+		f = f + 1
+		input.fields[f] = {}
+		input.fields[f] = fields[index]
 
-	-- Add fields to sections
-	if input.fields[f]["Type"] == "Header" then
-		currentHeader = f
-		input.sections[f] = "Off" -- Hide header by default, show it when it has at least 1 line
-	elseif currentHeader > 0 then -- Prevent displaying a header when its section is empty
-		if not HF.isempty( input.fields[f]["Value"] ) then
-			input.sections[currentHeader] = "On" -- Show header if there is at least one line filled in its section
+		-- Add fields to sections
+		if input.fields[f]["Type"] == "Header" then
+			currentHeader = f
+			input.sections[f] = "Off" -- Hide header by default, show it when it has at least 1 line
+		elseif currentHeader > 0 then -- Prevent displaying a header when its section is empty
+			if not HF.isempty( input.fields[f]["Value"] ) then
+				input.sections[currentHeader] = "On" -- Show header if there is at least one line filled in its section
+			end
 		end
-	end
 
-	-- Custom handling of a Split field
-	if input.fields[f]["Type"] == "Split" then
-		input.fields[f]["Label"] = { input.fields[f]["LabelLeft"], input.fields[f]["LabelRight"] }
-		input.fields[f]["Value"] = { input.fields[f]["ValueLeft"], input.fields[f]["ValueRight"] }
-	end
+		-- Custom handling of a Split field
+		if input.fields[f]["Type"] == "Split" then
+			input.fields[f]["Label"] = { input.fields[f]["LabelLeft"], input.fields[f]["LabelRight"] }
+			input.fields[f]["Value"] = { input.fields[f]["ValueLeft"], input.fields[f]["ValueRight"] }
+		end
 
 	end
 
