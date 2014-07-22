@@ -40,7 +40,7 @@ final class InfoboxBuilderHooks {
 	 * It gets the code from InfoboxBuilder.lua and creates new module object
 	 * from it. The module is then invoked and the result is returned.
 	 * @param  Parser  $parser Parser object
-	 * @param  PPFRame $frame  PPFrame object
+	 * @param  PPFrame $frame  PPFrame object
 	 * @param  array   $args   Array of arguments passed from $frame object
 	 * @return string          A string returned by InfoboxBuilder.lua
 	 */
