@@ -15,8 +15,6 @@
 	clip: rect(1px, 1px, 1px, 1px);
 }
 
-// @mixins
-//
 // Turns off the element-invisible effect.
 @mixin element-invisible-off {
 	position: static !important;
