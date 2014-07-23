@@ -799,3 +799,8 @@ p.SliderLink {
 	font-size: 14px;
 	background-color: #F00;
 }
+
+/* Hack to position the play circle in slider preview. */
+#WikiaPhotoGallerySliderEditorPreview .play-circle {
+	top: 80px;
+}

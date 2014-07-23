@@ -1,17 +1,20 @@
 <div class="WikiaPhotoGalleryPreview">
 <?php
-	$extraClass = ' WikiaPhotoGalleryPreviewDraggable';
+	/** @var array $slider */
+	$extraClass = '';
 	// render images
 	foreach ($slider['images'] as $i => $image) {
-			
+		if($image['videoPlayButton']) {
+			$extraClass = 'video-thumbnail';
+		}
 ?>
-	<span class="WikiaPhotoGalleryPreviewItem<?= $extraClass ?>" imageid="<?= $i ?>" style="width: <?= $width?>px; ">
+	<span class="WikiaPhotoGalleryPreviewItem WikiaPhotoGalleryPreviewDraggable <?= $extraClass ?>" imageid="<?= $i ?>" style="width: <?= $width?>px; ">
 
 		<span class="WikiaPhotoGalleryPreviewItemMenu color1">
 			<a href="#"><?= wfMsg('WikiaPhotoGallery-preview-hover-modify') ?></a>
 			<a href="#"><?= wfMsg('WikiaPhotoGallery-preview-hover-delete')?></a>
 		</span>
-		
+
 		<? $notDisplayed = ( $i >= 4 && $slider['params']['orientation'] !== 'mosaic' ); ?>
 		<span class="WikiaPhotoGallerySliderItemNumber<?= $notDisplayed ? 'Warning' : ''; ?>">
 			<div><?php
@@ -27,7 +30,7 @@
 			<?= $image['videoPlayButton'] ?>
 		<? endif; ?>
 		<span style="display:block;<? if ( !empty( $image[ 'thumbnailBg' ] ) ): ?>background-image: url(<?= $image['thumbnailBg'] ?>);<? endif; ?> width: <?= $width?>px; height: <?= $height ?>px">
-			
+
 		 </span>
 <?php
 		if (!empty($image['image'])) {
@@ -66,8 +69,8 @@
 		</span>
 	</span>
 <?php
-			
+
 	}
-	
+
 ?>
 </div>
