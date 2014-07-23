@@ -122,7 +122,7 @@ define(
 	 */
 	PontoBridge.init = function(iframe) {
 		ponto.setTarget(Ponto.TARGET_IFRAME, '*', iframe.contentWindow);
-		iframe.src = iframe.dataset.url;
+		iframe.src = iframe.getAttribute('data-url');
 	}
 
 	return PontoBridge;
