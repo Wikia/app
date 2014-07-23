@@ -8,9 +8,9 @@
 // import general styles
 @import "general";
 
-// import foundation grid
+// import grid & visibility from foundation
 @import "grid";
-@import "libs/foundation.custom/components/visibility";
+@import "visibility";
 
 
 // hide "Retrived from..." print footer
