@@ -336,7 +336,6 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 		$this->setVal( 'hasMaps', !empty( $mapsResponse->total ) );
 		$this->setVal( 'learnMoreUrl', self::MAPS_WIKIA_URL );
 
-		$baseUrl = $this->getContext()->getTitle()->getFullURL();
 		$this->setVal( 'baseUrl', WikiaInteractiveMapsController::getSpecialMapsUrl() );
 	}
 
