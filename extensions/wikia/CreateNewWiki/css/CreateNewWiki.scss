@@ -38,7 +38,7 @@ $color-borders: #CECECE;
 	color: #747474;
 	font-size: 12px;
 	font-weight: normal;
-	margin: 135px auto 0;
+	margin: 50px auto 0;
 	padding: 30px 30px 60px 75px;
 	position: relative;
 	width: 500px;
@@ -396,7 +396,15 @@ div#userloginErrorBox3 {
 
 		label {
 			display: inline-block;
+			position: relative;
 			width: 100%;
+		}
+		input {
+			position: absolute;
+		}
+		span {
+			display: block;
+			margin-left: 1.75em;
 		}
 	}
 }

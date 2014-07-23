@@ -133,10 +133,10 @@ $messages['qqq'] = array(
 	'cnw-desc-tip1' => 'First Tip label.
 {{Identical|Hint}}',
 	'cnw-desc-tip1-creative' => 'The first tip<br />
-Be carefull to keep it short as there are 2 successive balloon tips to display in a small space',
+Be careful to keep it short as there are 2 successive balloon tips to display in a small space',
 	'cnw-desc-tip2' => 'Second Tip label',
 	'cnw-desc-tip2-creative' => 'The second tip<br />
-Be carefull to keep it short as there are 2 successive balloon tips to display in a small space',
+Be careful to keep it short as there are 2 successive balloon tips to display in a small space',
 	'cnw-desc-choose' => 'Label for category',
 	'cnw-desc-select-one' => 'Default empty label for category.
 {{Identical|Select one}}',

@@ -174,21 +174,21 @@
 					<h3><?= wfMessage('cnw-desc-choose-secondary')->escaped() ?></h3>
 					<div class="secondary-categories">
 						<!-- TODO: Replace with real subcategories -->
-						<label><input type="checkbox">Anime</label>
-						<label><input type="checkbox"> Auto</label>
-						<label><input type="checkbox"> Creative</label>
-						<label><input type="checkbox"> Education</label>
-						<label><input type="checkbox"> Finance</label>
-						<label><input type="checkbox"> Food &amp; Drink</label>
-						<label><input type="checkbox"> Home &amp; Gardening</label>
-						<label><input type="checkbox"> Humor</label>
-						<label><input type="checkbox"> Philosophy</label>
-						<label><input type="checkbox"> Politics</label>
-						<label><input type="checkbox"> Science</label>
-						<label><input type="checkbox"> Sports</label>
-						<label><input type="checkbox"> Technology</label>
-						<label><input type="checkbox"> Toys</label>
-						<label><input type="checkbox"> Travel</label>
+						<label><input type="checkbox"><span>Anime</span></label>
+						<label><input type="checkbox"><span>Auto</span></label>
+						<label><input type="checkbox"><span>Creative</span></label>
+						<label><input type="checkbox"><span>Education</span></label>
+						<label><input type="checkbox"><span>Finance</span></label>
+						<label><input type="checkbox"><span>Food &amp; Drink</span></label>
+						<label><input type="checkbox"><span>Home &amp; Gardening</span></label>
+						<label><input type="checkbox"><span>Humor</span></label>
+						<label><input type="checkbox"><span>Philosophy</span></label>
+						<label><input type="checkbox"><span>Politics</span></label>
+						<label><input type="checkbox"><span>Science</span></label>
+						<label><input type="checkbox"><span>Sports</span></label>
+						<label><input type="checkbox"><span>Technology</span></label>
+						<label><input type="checkbox"><span>Toys</span></label>
+						<label><input type="checkbox"><span>Travel</span></label>
 					</div>
 				</div>
 
@@ -224,7 +224,6 @@
 			}
 		?>
 	</ul>
-	<img class="awesome-box" src="<?= $wg->ExtensionsPath ?>/wikia/CreateNewWiki/images/box_art.png">
 </section>
 <script>
 	window.WikiBuilderCfg = <?= json_encode( $wikiBuilderCfg ) ?>;
