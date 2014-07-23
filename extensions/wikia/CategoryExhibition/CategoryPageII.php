@@ -30,10 +30,10 @@ class CategoryPageII extends CategoryPage {
 		$out = $this->getContext()->getOutput();
 		$title = $this->getContext()->getTitle();
 
-		$out->addStyle( AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/CategoryExhibition/css/CategoryExhibition.scss'));
-		$out->addStyle( AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/CategoryExhibition/css/CategoryExhibition.IE.scss'), '', 'lte IE 8' );
+		$out->addStyle( AssetsManager::getInstance()->getSassCommonURL( 'extensions/wikia/CategoryExhibition/css/CategoryExhibition.scss' ) );
+		$out->addStyle( AssetsManager::getInstance()->getSassCommonURL( 'extensions/wikia/CategoryExhibition/css/CategoryExhibition.IE.scss' ), '', 'lte IE 8' );
 
-		$out->addScriptFile( F::app()->wg->ExtensionsPath . '/wikia/CategoryExhibition/js/CategoryExhibition.js' );
+		$out->addScript( Html::linkedScript( AssetsManager::getInstance()->getOneCommonURL( 'extensions/wikia/CategoryExhibition/js/CategoryExhibition.js' ) ) );
 
 		$categoryExhibitionSection = new CategoryExhibitionSection( $title );
 		$categoryExhibitionSection->setSortTypeFromParam();
