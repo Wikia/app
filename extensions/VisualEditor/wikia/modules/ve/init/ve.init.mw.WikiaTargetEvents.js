@@ -36,7 +36,6 @@ ve.init.mw.WikiaTargetEvents.prototype.onSurfaceReady = function () {
 };
 
 ve.init.mw.WikiaTargetEvents.prototype.onBeforeUnload = function () {
-console.log('before unload');
 	// Check whether this timing is set to prevent it being called more than once
 	if ( !this.timings.beforeUnload ) {
 		this.timings.beforeUnload = ve.now();
