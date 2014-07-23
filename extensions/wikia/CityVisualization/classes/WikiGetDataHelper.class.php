@@ -22,6 +22,9 @@ class WikiGetDataHelper {
 			ImageReviewStatuses::STATE_AUTO_APPROVED,
 			ImageReviewStatuses::STATE_IN_REVIEW,
 			ImageReviewStatuses::STATE_REJECTED,
+			ImageReviewStatuses::STATE_REJECTED_IN_REVIEW,
+			ImageReviewStatuses::STATE_QUESTIONABLE,
+			ImageReviewStatuses::STATE_QUESTIONABLE_IN_REVIEW,
 			ImageReviewStatuses::STATE_UNREVIEWED
 		);
 		return $sql;
