@@ -14,6 +14,8 @@ class FixMalformedHTMLTest extends WikiaBaseTest {
 		$this->assertEquals( $html, str_replace( "\n", "", wfFixMalformedHTML( $html ) ), $testCaseName );
 	}
 
+
+	// FIXME: old video markup
 	function validWikiaHTMLDataProvider() {
 		return [
 			[
