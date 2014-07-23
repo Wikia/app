@@ -76,6 +76,7 @@ $color-wikiahome-border-primary-brand-color: #c7d1d8;
 	/* page header */
 	.wikiahomepage-header {
 		@include clearfix;
+		margin-top: 20px;
 		position: relative;
 		.wikiahompage-heading-group {
 			float: left;
@@ -252,7 +253,7 @@ $color-wikiahome-border-primary-brand-color: #c7d1d8;
 					font-size: 13px;
 					font-weight: normal;
 					line-height: 15px;
-					margin-top: 5px;
+					margin-top: 10px;
 					padding: 0 15px 0 17px;
 					text-align: left;
 				}
