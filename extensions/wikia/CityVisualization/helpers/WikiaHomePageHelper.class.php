@@ -11,7 +11,7 @@
  */
 use \Wikia\Logger\WikiaLogger;
 
- 
+
 class WikiaHomePageHelper extends WikiaModel {
 
 	const VIDEO_GAMES_SLOTS_VAR_NAME = 'wgWikiaHomePageVideoGamesSlots';
@@ -340,10 +340,10 @@ class WikiaHomePageHelper extends WikiaModel {
 
 		return (
 			!$user->isIP($userName)
-				&& !in_array($userId, WikiService::$excludedWikiaUsers)
-				&& !in_array('bot', $user->getRights())
-				&& !$user->isBlocked()
-				&& !$user->isBlockedGlobally()
+			&& !in_array($userId, WikiService::$excludedWikiaUsers)
+			&& !in_array('bot', $user->getRights())
+			&& !$user->isBlocked()
+			&& !$user->isBlockedGlobally()
 		);
 	}
 
@@ -543,7 +543,7 @@ class WikiaHomePageHelper extends WikiaModel {
 		}
 		WikiaLogger::instance()->debug( "Special:Promote", ['method' => __METHOD__, 'imageName' => $imageName,
 			'imageTitle' => $imageTitle, 'imageId' => $imageId] );
-		
+
 
 		wfProfileOut(__METHOD__);
 		return $imageId;
@@ -807,15 +807,16 @@ class WikiaHomePageHelper extends WikiaModel {
 
 	public function getCorporateHubWikis() {
 		$wikiFactoryList = [];
-		$varId = WikiFactory::getVarIdByName(self::CORPORATE_ON_HUB_ENABLED);
-		if( is_int($varId) ) {
+		$varId = WikiFactory::getVarIdByName( self::CORPORATE_ON_HUB_ENABLED );
+		if( is_int( $varId ) ) {
 			$wikiFactoryList = WikiaDataAccess::cache(
-				wfMemcKey('corporate_hub_pages_list', self::WIKIA_HOME_PAGE_HELPER_MEMC_VERSION),
+				wfMemcKey( 'corporate_hub_pages_list', self::WIKIA_HOME_PAGE_HELPER_MEMC_VERSION ),
 				24 * 60 * 60,
-				function() use($varId) {
-					$list = WikiFactory::getListOfWikisWithVar($varId, 'bool', '=', true);
-					return $this->cleanWikisDataArray($list);
-				},WikiaDataAccess::REFRESH_CACHE
+				function() use( $varId ) {
+					$list = WikiFactory::getListOfWikisWithVar( $varId, 'bool', '=', true );
+					return $this->cleanWikisDataArray( $list );
+				},
+				WikiaDataAccess::REFRESH_CACHE
 			);
 		}
 
@@ -829,13 +830,13 @@ class WikiaHomePageHelper extends WikiaModel {
 	public function cleanWikisDataArray($sites) {
 		$results = array();
 
-		foreach($sites as $wikiId => $wiki) {
-			$results[$wiki['l']] = array(
+		foreach( $sites as $wikiId => $wiki ) {
+			$results[$wiki['l']] = [
 				'wikiId' => $wikiId,
 				'url' => $wiki['u'],
 				'db' => $wiki['d'],
 				'lang' => $wiki['l']
-			);
+			];
 		}
 
 		return $results;
