@@ -9,9 +9,10 @@ $USAGE =
 	"\t\t--help      show this message\n" .
 	"\t\t-f          i18n file which will get overwritten\n" .
 	"\t\t-v          display messages on the screen instead writing to the file\n" .
+	"\t\t--json      works ONLY with -v parameter returns messages in JSON format" .
 	"\n";
 
-$opts = getopt( 'f:v::' );
+$opts = getopt( 'f:v::', [ 'json' ] );
 if( empty( $opts ) ) die( $USAGE );
 
 $file = $opts['f'];
@@ -98,6 +99,12 @@ if( !$noWrite ) {
 	fclose( $fh );
 } else {
 	echo "\n";
-	print_r( $collected );
+
+	if( array_key_exists( 'json', $opts ) ) {
+		echo json_encode( $collected );
+	} else {
+		print_r( $collected );
+	}
+
 	echo "\nDONE!\n";
 }
