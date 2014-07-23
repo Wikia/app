@@ -9,11 +9,11 @@
 			<h2><?= wfMessage('cnw-name-wiki-headline')->escaped() ?></h2>
 			<p class="creative"><?= wfMessage('cnw-name-wiki-creative')->escaped() ?></p>
 			<form name="label-wiki-form">
-				<label for="wiki-name"><?= wfMessage('cnw-name-wiki-label')->escaped() ?></label>
+				<h3><?= wfMessage('cnw-name-wiki-label')->escaped() ?></h3>
 				<span class="wiki-name-status-icon status-icon"></span>
 				<input type="text" name="wiki-name" value="<?= empty($params['wikiName']) ? '' : $params['wikiName'] ?>"> <?= wfMessage('cnw-name-wiki-wiki')->escaped() ?>
 				<div class="wiki-name-error error-msg"></div>
-				<label for="wiki-domain" dir="ltr"><?= wfMessage('cnw-name-wiki-domain-label')->escaped() ?></label>
+				<h3 dir="ltr"><?= wfMessage('cnw-name-wiki-domain-label')->escaped() ?></h3>
 				<div class="wiki-domain-container">
 					<span class="domain-status-icon status-icon"></span>
 					<span class="domain-country"><?= empty($selectedLang) || $selectedLang === 'en' ? '' : $selectedLang.'.' ?></span>
@@ -25,7 +25,7 @@
 					<?= wfMessage('cnw-desc-default-lang', Language::getLanguageName($selectedLang) )->escaped() ?> - <a href="#" id="ChangeLang"><?= wfMessage('cnw-desc-change-lang')->escaped() ?></a>
 				</div>
 				<div class="language-choice">
-					<label for="wiki-language"><?= wfMessage('cnw-desc-lang')->escaped() ?></label>
+					<h3><?= wfMessage('cnw-desc-lang')->escaped() ?></h3>
 					<select name="wiki-language">
 
 					<?php
@@ -124,7 +124,7 @@
 		<li id="DescWiki" class="step">
 			<h2><?= wfMessage('cnw-desc-headline') ?></h2>
 			<p class="creative"><?= wfMessage('cnw-desc-creative')->escaped() ?></p>
-			<form name="desc-form">
+			<form name="desc-form" class="clearfix">
 				<textarea id="Description" placeholder="<?= wfMessage('cnw-desc-placeholder')->escaped() ?>"></textarea>
 				<ol>
 					<li>
@@ -135,26 +135,7 @@
 						<?= wfMessage('cnw-desc-tip2')->escaped() ?>
 						<div class="tip-creative"><?= wfMessage('cnw-desc-tip2-creative')->escaped() ?></div>
 					</li>
-					<li>
-						<?= wfMessage('cnw-desc-tip3')->escaped() ?>
-						<div class="tip-creative"><?= wfMessage('cnw-desc-tip3-creative')->escaped() ?></div>
-					</li>
 				</ol>
-				<label for="wiki-category"><?= wfMessage('cnw-desc-choose')->escaped() ?></label>
-				<select name="wiki-category">
-					<option value=""><?= wfMessage('cnw-desc-select-one')->escaped() ?></option>
-	<?php
-		foreach ($aCategories as $iCat => $catData) {
-			$sCatName = $catData["name"];
-			if( in_array( $sCatName, array( 'Wikia', 'Wikianswers' ) ) )
-				continue;
-	?>
-					<option value="<?php echo $iCat ?>"><?php echo $sCatName?></option>
-	<?php
-		}
-	?>
-					<option value="3"><?= wfMessage('autocreatewiki-category-other')->escaped() ?></option>
-				</select>
 
 		        <div class="checkbox" id="all-ages-div" <?php echo empty($selectedLang) || $selectedLang === $params['LangAllAgesOpt'] ? '':'style=display:none' ?> >
 					<input type="checkbox" name="all-ages" value="1">
@@ -169,6 +150,47 @@
 					?>
 				</div>
 
+				<!-- Primary Category -->
+				<div class="category-container">
+					<h3 for="wiki-category"><?= wfMessage('cnw-desc-choose')->escaped() ?></h3>
+					<select name="wiki-category">
+						<option value=""><?= wfMessage('cnw-desc-select-one')->escaped() ?></option>
+		<?php
+			foreach ($aCategories as $iCat => $catData) {
+				$sCatName = $catData["name"];
+				if( in_array( $sCatName, array( 'Wikia', 'Wikianswers' ) ) )
+					continue;
+		?>
+						<option value="<?php echo $iCat ?>"><?php echo $sCatName?></option>
+		<?php
+			}
+		?>
+						<option value="3"><?= wfMessage('autocreatewiki-category-other')->escaped() ?></option>
+					</select>
+				</div>
+
+				<!-- Secondary Category -->
+				<div class="category-container">
+					<h3><?= wfMessage('cnw-desc-choose-secondary')->escaped() ?></h3>
+					<div class="secondary-categories">
+						<!-- TODO: Replace with real subcategories -->
+						<label><input type="checkbox">Anime</label>
+						<label><input type="checkbox"> Auto</label>
+						<label><input type="checkbox"> Creative</label>
+						<label><input type="checkbox"> Education</label>
+						<label><input type="checkbox"> Finance</label>
+						<label><input type="checkbox"> Food &amp; Drink</label>
+						<label><input type="checkbox"> Home &amp; Gardening</label>
+						<label><input type="checkbox"> Humor</label>
+						<label><input type="checkbox"> Philosophy</label>
+						<label><input type="checkbox"> Politics</label>
+						<label><input type="checkbox"> Science</label>
+						<label><input type="checkbox"> Sports</label>
+						<label><input type="checkbox"> Technology</label>
+						<label><input type="checkbox"> Toys</label>
+						<label><input type="checkbox"> Travel</label>
+					</div>
+				</div>
 
 				<nav class="back-controls">
 					<input type="button" value="<?= wfMessage('cnw-back')->escaped() ?>" class="secondary back">
