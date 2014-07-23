@@ -51,10 +51,19 @@ class CrunchyrollFeedIngester extends VideoFeedIngester {
 		return array_unique( $ids );
 	}
 
+	/**
+	 * Download content of given feed
+	 * @param $feedUrl
+	 * @return int|string|void
+	 */
 	public function downloadCollectionFeed( $feedUrl ) {
 		return $this->download( $feedUrl );
 	}
 
+	/**
+	 * Download content of class' feed URL
+	 * @return int|string
+	 */
 	public function downloadFeed() {
 		return $this->download( static::$FEED_URL );
 	}
