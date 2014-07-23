@@ -2,6 +2,7 @@ $color-borders: #CECECE;
 
 @import "../../../../skins/oasis/css/mixins/box-shadow";
 @import "../../../../skins/oasis/css/mixins/clearfix";
+@import "../../../../skins/oasis/css/mixins/columns";
 @import "../../../../skins/oasis/css/mixins/gradient";
 @import "../../../../skins/oasis/css/core/color";
 @import "../../../../skins/oasis/css/core/layout";
@@ -37,7 +38,7 @@ $color-borders: #CECECE;
 	color: #747474;
 	font-size: 12px;
 	font-weight: normal;
-	margin: 135px auto 0;
+	margin: 50px auto 0;
 	padding: 30px 30px 60px 75px;
 	position: relative;
 	width: 500px;
@@ -86,7 +87,7 @@ $color-borders: #CECECE;
 			@include box-shadow(0px, 0px, 6px, #2b5e94);
 		}
 	}
-	label {
+	h3 {
 		/* following !important is used because the existing template has inline styles */
 		font-weight: normal !important;
 		font-size: 17px !important;
@@ -156,7 +157,7 @@ $color-borders: #CECECE;
 	}
 	form {
 		font-size: 17px;
-		label {
+		h3 {
 			display: block;
 			margin-top: 15px;
 		}
@@ -200,7 +201,7 @@ $color-borders: #CECECE;
 		top: 95px;
 	}
 	.fb_button {
-				
+
 	}
 	nav {
 		.signup {
@@ -369,7 +370,7 @@ div#userloginErrorBox3 {
 	select {
 		margin-bottom:15px;
 	}
-	label {
+	h3 {
 		margin-top: 10px;
 		display: block;
 	}
@@ -383,6 +384,27 @@ div#userloginErrorBox3 {
 		.tooltip-icon {
 			@include tooltip-icon;
 			right: -16px;
+		}
+	}
+	.category-container {
+		float: left;
+		min-width: 210px;
+		max-width: 490px;
+	}
+	.secondary-categories {
+		@include column-count( 4 );
+
+		label {
+			display: inline-block;
+			position: relative;
+			width: 100%;
+		}
+		input {
+			position: absolute;
+		}
+		span {
+			display: block;
+			margin-left: 1.75em;
 		}
 	}
 }
@@ -413,7 +435,7 @@ div#userloginErrorBox3 {
 				li {
 					padding-bottom: 0;
 					padding-top: 0;
-					label{ 
+					h3{
 						display: none;
 					}
 				}

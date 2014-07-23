@@ -9,11 +9,11 @@
 			<h2><?= wfMessage('cnw-name-wiki-headline')->escaped() ?></h2>
 			<p class="creative"><?= wfMessage('cnw-name-wiki-creative')->escaped() ?></p>
 			<form name="label-wiki-form">
-				<label for="wiki-name"><?= wfMessage('cnw-name-wiki-label')->escaped() ?></label>
+				<h3><?= wfMessage('cnw-name-wiki-label')->escaped() ?></h3>
 				<span class="wiki-name-status-icon status-icon"></span>
 				<input type="text" name="wiki-name" value="<?= empty($params['wikiName']) ? '' : $params['wikiName'] ?>"> <?= wfMessage('cnw-name-wiki-wiki')->escaped() ?>
 				<div class="wiki-name-error error-msg"></div>
-				<label for="wiki-domain" dir="ltr"><?= wfMessage('cnw-name-wiki-domain-label')->escaped() ?></label>
+				<h3 dir="ltr"><?= wfMessage('cnw-name-wiki-domain-label')->escaped() ?></h3>
 				<div class="wiki-domain-container">
 					<span class="domain-status-icon status-icon"></span>
 					<span class="domain-country"><?= empty($selectedLang) || $selectedLang === 'en' ? '' : $selectedLang.'.' ?></span>
@@ -25,7 +25,7 @@
 					<?= wfMessage('cnw-desc-default-lang', Language::getLanguageName($selectedLang) )->escaped() ?> - <a href="#" id="ChangeLang"><?= wfMessage('cnw-desc-change-lang')->escaped() ?></a>
 				</div>
 				<div class="language-choice">
-					<label for="wiki-language"><?= wfMessage('cnw-desc-lang')->escaped() ?></label>
+					<h3><?= wfMessage('cnw-desc-lang')->escaped() ?></h3>
 					<select name="wiki-language">
 
 					<?php
@@ -124,7 +124,7 @@
 		<li id="DescWiki" class="step">
 			<h2><?= wfMessage('cnw-desc-headline') ?></h2>
 			<p class="creative"><?= wfMessage('cnw-desc-creative')->escaped() ?></p>
-			<form name="desc-form">
+			<form name="desc-form" class="clearfix">
 				<textarea id="Description" placeholder="<?= wfMessage('cnw-desc-placeholder')->escaped() ?>"></textarea>
 				<ol>
 					<li>
@@ -135,26 +135,7 @@
 						<?= wfMessage('cnw-desc-tip2')->escaped() ?>
 						<div class="tip-creative"><?= wfMessage('cnw-desc-tip2-creative')->escaped() ?></div>
 					</li>
-					<li>
-						<?= wfMessage('cnw-desc-tip3')->escaped() ?>
-						<div class="tip-creative"><?= wfMessage('cnw-desc-tip3-creative')->escaped() ?></div>
-					</li>
 				</ol>
-				<label for="wiki-category"><?= wfMessage('cnw-desc-choose')->escaped() ?></label>
-				<select name="wiki-category">
-					<option value=""><?= wfMessage('cnw-desc-select-one')->escaped() ?></option>
-	<?php
-		foreach ($aCategories as $iCat => $catData) {
-			$sCatName = $catData["name"];
-			if( in_array( $sCatName, array( 'Wikia', 'Wikianswers' ) ) )
-				continue;
-	?>
-					<option value="<?php echo $iCat ?>"><?php echo $sCatName?></option>
-	<?php
-		}
-	?>
-					<option value="3"><?= wfMessage('autocreatewiki-category-other')->escaped() ?></option>
-				</select>
 
 		        <div class="checkbox" id="all-ages-div" <?php echo empty($selectedLang) || $selectedLang === $params['LangAllAgesOpt'] ? '':'style=display:none' ?> >
 					<input type="checkbox" name="all-ages" value="1">
@@ -169,6 +150,47 @@
 					?>
 				</div>
 
+				<!-- Primary Category -->
+				<div class="category-container">
+					<h3 for="wiki-category"><?= wfMessage('cnw-desc-choose')->escaped() ?></h3>
+					<select name="wiki-category">
+						<option value=""><?= wfMessage('cnw-desc-select-one')->escaped() ?></option>
+		<?php
+			foreach ($aCategories as $iCat => $catData) {
+				$sCatName = $catData["name"];
+				if( in_array( $sCatName, array( 'Wikia', 'Wikianswers' ) ) )
+					continue;
+		?>
+						<option value="<?php echo $iCat ?>"><?php echo $sCatName?></option>
+		<?php
+			}
+		?>
+						<option value="3"><?= wfMessage('autocreatewiki-category-other')->escaped() ?></option>
+					</select>
+				</div>
+
+				<!-- Secondary Category -->
+				<div class="category-container">
+					<h3><?= wfMessage('cnw-desc-choose-secondary')->escaped() ?></h3>
+					<div class="secondary-categories">
+						<!-- TODO: Replace with real subcategories -->
+						<label><input type="checkbox"><span>Anime</span></label>
+						<label><input type="checkbox"><span>Auto</span></label>
+						<label><input type="checkbox"><span>Creative</span></label>
+						<label><input type="checkbox"><span>Education</span></label>
+						<label><input type="checkbox"><span>Finance</span></label>
+						<label><input type="checkbox"><span>Food &amp; Drink</span></label>
+						<label><input type="checkbox"><span>Home &amp; Gardening</span></label>
+						<label><input type="checkbox"><span>Humor</span></label>
+						<label><input type="checkbox"><span>Philosophy</span></label>
+						<label><input type="checkbox"><span>Politics</span></label>
+						<label><input type="checkbox"><span>Science</span></label>
+						<label><input type="checkbox"><span>Sports</span></label>
+						<label><input type="checkbox"><span>Technology</span></label>
+						<label><input type="checkbox"><span>Toys</span></label>
+						<label><input type="checkbox"><span>Travel</span></label>
+					</div>
+				</div>
 
 				<nav class="back-controls">
 					<input type="button" value="<?= wfMessage('cnw-back')->escaped() ?>" class="secondary back">
@@ -202,7 +224,6 @@
 			}
 		?>
 	</ul>
-	<img class="awesome-box" src="<?= $wg->ExtensionsPath ?>/wikia/CreateNewWiki/images/box_art.png">
 </section>
 <script>
 	window.WikiBuilderCfg = <?= json_encode( $wikiBuilderCfg ) ?>;
