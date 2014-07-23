@@ -194,13 +194,12 @@ class WikiaView {
 
 		switch($this->response->getTemplateEngine()) {
 			case WikiaResponse::TEMPLATE_ENGINE_HANDLEBARS:
-// TODO: VENUS IMPLEMENT IT
-//				$m = HandlebarsService::getInstance();
-//				$result = $m->render( $this->getTemplatePath(), $data );
-//				wfProfileOut(__METHOD__);
-//
-//				return $result;
-//				break;
+				$handlebarsService = HandlebarsService::getInstance();
+				$result = $handlebarsService->render( $this->getTemplatePath(), $data );
+				wfProfileOut(__METHOD__);
+
+				return $result;
+				break;
 			case WikiaResponse::TEMPLATE_ENGINE_MUSTACHE:
 				$m = MustacheService::getInstance();
 				$result = $m->render( $this->getTemplatePath(), $data );

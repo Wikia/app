@@ -19,16 +19,7 @@ class VenusTestController extends WikiaSpecialPageController {
 
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_HANDLEBARS );
 		$this->response->addAsset( 'extensions/wikia/VenusTest/styles/VenusTest.scss' );
-
-		$html = ( new Wikia\Template\HandlebarsEngine )
-			->setPrefix( __DIR__ . '/templates' )
-			->setPartialDir( __DIR__ . '/templates/partials' )
-			->setPartialPrefix( '_' )
-			->setData( $this->getTestData() )
-			->render( 'VenusTest_index' );
-
-		$this->response->setBody( $html );
-
+		$this->response->setData($this->getTestData());
 	}
 
 	private function getTestData() {
