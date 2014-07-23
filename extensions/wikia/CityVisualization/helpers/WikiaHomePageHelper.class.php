@@ -832,7 +832,6 @@ class WikiaHomePageHelper extends WikiaModel {
 		foreach($sites as $wikiId => $wiki) {
 			$results[$wiki['l']] = array(
 				'wikiId' => $wikiId,
-				'wikiTitle' => $wiki['t'],
 				'url' => $wiki['u'],
 				'db' => $wiki['d'],
 				'lang' => $wiki['l']
