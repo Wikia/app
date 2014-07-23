@@ -203,34 +203,32 @@ $color-wikiahome-border-primary-brand-color: #c7d1d8;
 				width: 160px;
 				
 				a.wikia-button.secondary {
-					@include box-shadow(0, 0, 2px, #aaa, false, 0);
 					@include linear-gradient(white, top, white, 35%, #e5e5e5, 100%);
-					bottom: 15px;
-					left: 15px;
+					border-radius: 0;
+					bottom: 0;
+					left: 0;
 					font-size: 16px;
 					font-weight: bold;
 					margin: 0 auto;
 					overflow: hidden;
-					padding: 9px 27px 15px 5px;
+					padding: 13px 27px 21px 5px;
 					position: absolute;
-					width: 94px;
+					width: 120px;
 					.arrow {
 						background-position: 0 -195px;
 						height: 23px;
 						margin-right: 3px;
 						position: relative;
-						top: 1px;
+						top: 2px;
 						width: 23px;
 					}
 					&:hover {
-						@include box-shadow(0, 0, 5px, #aaa, false, 0);
 						@include linear-gradient(white, top, white, 35%, #ddd, 100%);
 						.arrow {
 							background-position: -23px -195px;
 						}
 					}
 					&:active {
-						@include box-shadow(0, 0, 5px, #aaa, false, 0);
 						@include linear-gradient(#ddd, top, #ddd, 20%, white, 100%);
 						.arrow {
 							background-position: -46px -195px;
@@ -238,8 +236,8 @@ $color-wikiahome-border-primary-brand-color: #c7d1d8;
 					}
 				}
 				a.wikia-button.chevron-not-visible {
-					padding: 9px 5px 15px;
-					width: 116px;
+					padding: 13px 5px 21px;
+					width: 148px;
 				}
 				h2 {
 					border-top: 17px solid $color-wikiahome-community-bright;
@@ -262,16 +260,16 @@ $color-wikiahome-border-primary-brand-color: #c7d1d8;
 				.collections-button {
 					border: 1px solid $color-page-border;
 					border-left: none;
-					border-radius: 0 3px 3px 0;
-					height: 43px;
+					border-radius: 0;
+					height: 53px;
 					padding: 0;
-					right: 17px;
-					bottom: 15px;
+					right: 0;
+					bottom: 0;
 					position: absolute;
 					width: 22px;
 					.chevron {
 						border-width: 7px;
-						margin-top: 19px;
+						margin-top: 23px;
 					}
 				}
 				.collections-dropdown {
@@ -279,11 +277,11 @@ $color-wikiahome-border-primary-brand-color: #c7d1d8;
 					border-top: none;
 					display: none;
 					font-weight: bold;
-					left: 15px;
+					left: 0;
 					position: absolute;
-					top: 194px;
+					top: 209px;
 					text-align: left;
-					width: 126px;
+					width: 158px;
 					z-index: 2;
 					&.show {
 						display: block;
