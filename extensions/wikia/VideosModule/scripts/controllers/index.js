@@ -22,10 +22,10 @@ require([
 	$(function () {
 		// instantiate rail view
 		if ($rail.hasClass('loaded')) {
+			// Debugging to see if there's a race condition. This fires if there's a bug. (VID-1769)
 			Wikia.syslog(Wikia.log.levels.debug, 'VideosModule', {railLoaded: true});
 			init();
 		} else {
-			Wikia.syslog(Wikia.log.levels.debug, 'VideosModule', {railLoaded: false});
 			$rail.on('afterLoad.rail', init);
 		}
 	});
