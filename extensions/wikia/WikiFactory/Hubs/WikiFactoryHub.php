@@ -14,9 +14,9 @@ class WikiFactoryHub extends WikiaModel {
 
 	#--- static variables
 	private static $mInstance = false;
-	private static $mOldCategories = array();
-	private static $mNewCategories = array();
-	private static $cache_ttl = 86400;  // 1 day
+	private $mOldCategories = array();
+	private $mNewCategories = array();
+	private $cache_ttl = 86400;  // 1 day
 
 	const CATEGORY_ID_HUMOR = 1;
 	const CATEGORY_ID_GAMING = 2;
@@ -111,7 +111,7 @@ class WikiFactoryHub extends WikiaModel {
 		$oTmpl->set_vars( array(
 			"title"			=> null,
 			"cat_id"		=> $cat_id,
-			"categories" 	=> $this->$mOldCategories
+			"categories" 	=> $this->mOldCategories
 		));
 
 		return $oTmpl->render("categories");
@@ -129,15 +129,15 @@ class WikiFactoryHub extends WikiaModel {
 	 */
 	public function getAllCategories( $new = false ) {
 
-		if (empty($this->mNewCategories) || empty($this->$mOldCategories)) {
+		if (empty($this->mNewCategories) || empty($this->mOldCategories)) {
 			$this->loadCategories();
 		}
 
 		if ( $new ) {
-			return $this->$mNewCategories;
+			return $this->mNewCategories;
 		} else {
 			// Deprecated/old categories
-			return $this->$mOldCategories;
+			return $this->mOldCategories;
 		}
 	}
 
@@ -156,7 +156,7 @@ class WikiFactoryHub extends WikiaModel {
 				->FIELD( "vertical_url as url")
 				->FIELD( "vertical_short as short")
 			->FROM( "city_verticals" )
-			->cache ( self::$cache_ttl, wfSharedMemcKey("WFHub", __METHOD__) )
+			->cache ( $this->cache_ttl, wfSharedMemcKey("WFHub", __METHOD__) )
 			->runLoop( $this->getSharedDB(), function ( &$result, $row)  {
 				$result[] = get_object_vars($row);
 			});
@@ -187,7 +187,7 @@ class WikiFactoryHub extends WikiaModel {
 			->JOIN ( "city_cat_mapping" )->USING( "cat_id" )
 			->WHERE( "city_id" )->EQUAL_TO( $city_id )
 			->AND_( "cat_deprecated" )->EQUAL_TO ( 1 )  // always return the "old" category
-			->cache( self::$cache_ttl, wfMemcKey( "WFHub", __METHOD__ ) )
+			->cache( $this->cache_ttl, wfMemcKey( "WFHub", __METHOD__ ) )
 			->runLoop ( $this->getSharedDB(), function ( &$result, $row ) {
 				$result[]= $row->cat_id;
 			});
@@ -216,7 +216,7 @@ class WikiFactoryHub extends WikiaModel {
 			->SELECT( "vertical_id" )
 			->FROM( "city_list" )
 			->WHERE ("city_id")->EQUAL_TO( $city_id )
-			->cache( self::$cache_ttl, wfMemcKey( "WFHub", __METHOD__ ) )
+			->cache( $this->$cache_ttl, wfMemcKey( "WFHub", __METHOD__ ) )
 			->runLoop( $this->getSharedDB() );
 
 		return $id;
@@ -246,7 +246,7 @@ class WikiFactoryHub extends WikiaModel {
 			->JOIN ( "city_cat_mapping" )->USING( "cat_id" )
 			->WHERE( "city_id" )->EQUAL_TO( $city_id )
 			->AND_( "cat_active" )->EQUAL_TO ( $active )
-			->cache( self::$cache_ttl, wfMemcKey( "WFHub", __METHOD__ ) )
+			->cache( $this->cache_ttl, wfMemcKey( "WFHub", __METHOD__ ) )
 			->runLoop ( $this->getSharedDB(), function ( &$result, $row ) {
 				$result[]= $row->cat_id;
 			});
@@ -270,7 +270,7 @@ class WikiFactoryHub extends WikiaModel {
 			->JOIN ( "city_cat_mapping" )->USING( "cat_id" )
 			->WHERE( "city_id ")->EQUAL_TO( $city_id )
 			->AND_( "cat_active" )->EQUAL_TO ( $active )
-			->cache ( self::$cache_ttl, wfMemcKey( "WFHub", __METHOD__ ) )
+			->cache ( $this->cache_ttl, wfMemcKey( "WFHub", __METHOD__ ) )
 			->runLoop( $this->getSharedDB(), function ( &$result, $row)  {
 				$result[] = get_object_vars($row);
 			});
@@ -384,8 +384,8 @@ class WikiFactoryHub extends WikiaModel {
 				}
 			} );
 
-		$this->$mOldCategories = $categories['deprecated'];
-		$this->$mNewCategories = $categories['active'];
+		$this->mOldCategories = $categories['deprecated'];
+		$this->mNewCategories = $categories['active'];
 
 	}
 
