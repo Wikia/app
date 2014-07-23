@@ -77,7 +77,7 @@ $.loadMustache = function(callback) {
 };
 
 $.loadHandlebars = function(callback) {
-	return mw.loader.use('jquery.handlebars').done(callback);
+	return mw.loader.use('wikia.handlebars').done(callback);
 };
 
 $.loadGoogleMaps = function(callback) {
