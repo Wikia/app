@@ -211,12 +211,13 @@ $color-wikiahome-border-primary-brand-color: #c7d1d8;
 					font-weight: bold;
 					margin: 0 auto;
 					overflow: hidden;
-					padding: 9px 40px 15px 13px;
+					padding: 9px 27px 15px 5px;
 					position: absolute;
+					width: 94px;
 					.arrow {
 						background-position: 0 -195px;
 						height: 23px;
-						margin-right: 1px;
+						margin-right: 3px;
 						position: relative;
 						top: 1px;
 						width: 23px;
@@ -237,11 +238,14 @@ $color-wikiahome-border-primary-brand-color: #c7d1d8;
 					}
 				}
 				a.wikia-button.chevron-not-visible {
-					padding: 9px 26px 15px 24px;
+					padding: 9px 5px 15px;
+					width: 116px;
 				}
 				h2 {
-					border-top: 4px solid $color-wikiahome-community;
+					border-top: 17px solid $color-wikiahome-community-bright;
 					border-bottom: none;
+					font-size: 15px;
+					line-height: 18px;
 					padding: 11px 17px 0;
 					position: inherit;
 					text-align: left;
@@ -249,23 +253,22 @@ $color-wikiahome-border-primary-brand-color: #c7d1d8;
 				h3 {
 					font-size: 13px;
 					font-weight: normal;
-					line-height: 18px;
+					line-height: 15px;
 					margin-top: 5px;
 					padding: 0 15px 0 17px;
 					text-align: left;
 				}
 
 				.collections-button {
-					border: 0;
-					border-bottom-right-radius: 3px;
-					border-radius: 0;
-					border-top-right-radius: 3px;
+					border: 1px solid $color-page-border;
+					border-left: none;
+					border-radius: 0 3px 3px 0;
 					height: 43px;
 					padding: 0;
-					right: 15px;
-					bottom: 16px;
+					right: 17px;
+					bottom: 15px;
 					position: absolute;
-					width: 28px;
+					width: 22px;
 					.chevron {
 						border-width: 7px;
 						margin-top: 19px;
@@ -278,9 +281,9 @@ $color-wikiahome-border-primary-brand-color: #c7d1d8;
 					font-weight: bold;
 					left: 15px;
 					position: absolute;
-					top: 193px;
+					top: 194px;
 					text-align: left;
-					width: 129px;
+					width: 126px;
 					z-index: 2;
 					&.show {
 						display: block;
@@ -447,10 +450,10 @@ $color-wikiahome-border-primary-brand-color: #c7d1d8;
 						cursor: pointer;
 						text-decoration: none;
 						.previcon {
-							background-position: -202px -193px;
+							background-position: -166px -193px;
 						}
 						.visicon {
-							background-position: -139px -192px;
+							background-position: -103px -192px;
 						}
 					}
 					img {
@@ -462,10 +465,10 @@ $color-wikiahome-border-primary-brand-color: #c7d1d8;
 						top: -2px;
 					}
 					.previcon {
-						background-position: -171px -193px;
+						background-position: -135px -193px;
 					}
 					.visicon {
-						background-position: -108px -192px;
+						background-position: -72px -192px;
 					}
 				}
 			}
@@ -794,30 +797,26 @@ $color-wikiahome-border-primary-brand-color: #c7d1d8;
 							width: 32px;
 						}
 						.wikiahomepage-community-social-twitter {
-							background-position: -313px -96px;
+							background-position: -233px -190px;
 						}
 						.wikiahomepage-community-social-facebook {
-							background-position: -313px -129px;
+							background-position: -265px -190px;
 						}
 						.wikiahomepage-community-social-googleplus {
-							background-position: -313px -162px;
+							background-position: -298px -190px;
 						}
 					}
 				}
 				.wikiahomepage-community-hero-image {
 					position: absolute;
+					height: 95px;
+					width: 330px;
 
 					&.wikiahomepage-community-image {
 						background-position: 0px 0px;
-						height: 95px;
-						width: 330px;
 					}
 					&.wikiahomepage-highlight-image {
-						background-position: 0px -96px;
-						bottom: 0;
-						height: 95px;
-						left: 17px;
-						width: 312px;
+						background-position: 0px -95px;
 					}
 				}
 			}
@@ -922,22 +921,22 @@ $color-wikiahome-border-primary-brand-color: #c7d1d8;
 			width: 24px;
 		}
 		&.de .sprite.edit-pencil {
-			background-position: -25px -220px;
+			background-position: -24px -220px;
 		}
 		&.en .sprite.edit-pencil {
 			background-position: 0 -220px;
 		}
 		&.es .sprite.edit-pencil {
-			background-position: -49px -220px;
+			background-position: -48px -220px;
 		}
 		&.fr .sprite.edit-pencil {
-			background-position: -73px -220px;
+			background-position: -72px -220px;
 		}
 		&.pl .sprite.edit-pencil {
-			background-position: -97px -220px;
+			background-position: -96px -220px;
 		}
 		&.ja .sprite.edit-pencil {
-			background-position: -121px -220px;
+			background-position: -120px -220px;
 		}
 		&.pt-br .sprite.edit-pencil {
 			background-position: -144px -179px;
@@ -948,22 +947,22 @@ $color-wikiahome-border-primary-brand-color: #c7d1d8;
 			padding: 0;
 			width: 24px;
 			&.de {
-				background-position: -25px -220px;
+				background-position: -24px -220px;
 			}
 			&.en {
 				background-position: 0 -220px;
 			}
 			&.es {
-				background-position: -49px -220px;
+				background-position: -48px -220px;
 			}
 			&.fr {
-				background-position: -73px -220px;
+				background-position: -72px -220px;
 			}
 			&.pl {
-				background-position: -97px -220px;
+				background-position: -96px -220px;
 			}
 			&.ja {
-				background-position: -121px -220px;
+				background-position: -120px -220px;
 			}
 			&.pt-br {
 				background-position: -144px -179px;
@@ -977,23 +976,20 @@ $color-wikiahome-border-primary-brand-color: #c7d1d8;
 	}
 }
 
-@each $lang in en de es fr pl ja {
-	body.wikia-contentlang-#{$lang} {
-		.wikiahomepage-community-social-wikia-blog,
-		.wikiahomepage-community-social-twitter,
-		.wikiahomepage-community-social-facebook,
-		.wikiahomepage-community-social-googleplus,
-		.wikiahomepage-community-hero-image,
-		.remix .arrow,
-		.wikia-slot .previewVisit .previcon,
-		.wikia-slot .previewVisit .visicon,
-		.WikiPreviewInterstitial .preview-grey,
-		.wikiahomepage-footer .wikia-menu-button.secondary .sprite.edit-pencil,
-		.wikiahomepage-footer .wikia-menu-button.secondary a {
-			background-image: url("/extensions/wikia/WikiaHomePage/images/community-sprite-#{$lang}.png"); /* $wgCdnStylePath */
-			background-repeat: no-repeat;
-		}
-	}
+
+.wikiahomepage-community-social-wikia-blog,
+.wikiahomepage-community-social-twitter,
+.wikiahomepage-community-social-facebook,
+.wikiahomepage-community-social-googleplus,
+.wikiahomepage-community-hero-image,
+.remix .arrow,
+.wikia-slot .previewVisit .previcon,
+.wikia-slot .previewVisit .visicon,
+.WikiPreviewInterstitial .preview-grey,
+.wikiahomepage-footer .wikia-menu-button.secondary .sprite.edit-pencil,
+.wikiahomepage-footer .wikia-menu-button.secondary a {
+	background-image: url("/extensions/wikia/WikiaHomePage/images/wikiahome-sprite.png"); /* $wgCdnStylePath */
+	background-repeat: no-repeat;
 }
 
 
