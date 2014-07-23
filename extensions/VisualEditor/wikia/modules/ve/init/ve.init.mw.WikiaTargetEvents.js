@@ -30,19 +30,37 @@ OO.inheritClass( ve.init.mw.WikiaTargetEvents, ve.init.mw.TargetEvents );
 
 /* Methods */
 
+/*
+ * Store timestamp when the surface is ready
+ */
 ve.init.mw.WikiaTargetEvents.prototype.onSurfaceReady = function () {
 	this.timings.surfaceReady = ve.now();
 	ve.init.mw.WikiaTargetEvents.super.prototype.onSurfaceReady.call( this );
 };
 
+/*
+ * Track just before the window is unloaded
+ */
 ve.init.mw.WikiaTargetEvents.prototype.onBeforeUnload = function () {
 	// Check whether this timing is set to prevent it being called more than once
 	if ( !this.timings.beforeUnload ) {
 		this.timings.beforeUnload = ve.now();
-		this.track( 'wikia', {
+		ve.track( 'wikia', {
 			'action': ve.track.actions.CLOSE,
 			'label': 'window',
 			'duration': this.timings.beforeUnload - this.timings.surfaceReady
 		} );
 	}
+};
+
+/**
+ * Track when document save is complete
+ */
+ve.init.mw.TargetEvents.prototype.onSaveComplete = function () {
+	ve.init.mw.WikiaTargetEvents.super.prototype.onSaveComplete.call( this );
+	ve.track( 'wikia', {
+		'action': ve.track.actions.CLICK,
+		'label': 'dialog-save-publish',
+		'duration': ve.now() - this.timings.saveInitiated
+	} );
 };
