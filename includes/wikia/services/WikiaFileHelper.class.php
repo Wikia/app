@@ -183,6 +183,9 @@ class WikiaFileHelper extends Service {
 
 	/**
 	 * get html for video info overlay
+	 *
+	 * @todo completely remove this function and all functions that only it calls
+	 *
 	 * @param integer $width
 	 * @param Title|string $title
 	 * @param Boolean $showViews
@@ -199,10 +202,7 @@ class WikiaFileHelper extends Service {
 					"style" => "width: {$width}px;"
 				];
 
-				// video title
-				$contentWidth = $width - 60;
-				$videoTitle = $title->getText();
-				$content = self::videoOverlayTitle( $videoTitle, $contentWidth );
+				$content = '';
 
 				// video duration
 				$duration = '';
@@ -223,7 +223,6 @@ class WikiaFileHelper extends Service {
 				$videoTitle = $title->getDBKey();
 				if ( $showViews ) {
 					$views = MediaQueryService::getTotalVideoViewsByTitle( $videoTitle );
-					$content .= self::videoOverlayViews( $views );
 					$attribs['class'] .= " info-overlay-with-views";
 					$content .= '<meta itemprop="interactionCount" content="UserPlays:'.$views.'" />';
 				}
@@ -233,22 +232,6 @@ class WikiaFileHelper extends Service {
 		}
 
 		return $html;
-	}
-
-	/**
-	 * get html for title for video overlay
-	 * @param $title
-	 * @param $width
-	 * @return string
-	 */
-	public static function videoOverlayTitle( $title, $width ) {
-		$attribs = array(
-			'class' => 'info-overlay-title',
-			'style' => 'max-width:'.$width.'px;',
-			'itemprop' => 'name',
-		);
-
-		return Xml::element( 'span', $attribs, $title, false );
 	}
 
 	/**
@@ -268,20 +251,6 @@ class WikiaFileHelper extends Service {
 		}
 
 		return $html;
-	}
-
-	/**
-	 * get html for views for video overlay
-	 * @param $views
-	 * @return string
-	 */
-	public static function videoOverlayViews( $views ) {
-		$attribs = array(
-			'class' => 'info-overlay-views',
-		);
-		$views = wfMessage( 'videohandler-video-views', F::app()->wg->Lang->formatNum( $views ) )->text();
-
-		return Xml::element( 'span', $attribs, $views, false );
 	}
 
 	/**

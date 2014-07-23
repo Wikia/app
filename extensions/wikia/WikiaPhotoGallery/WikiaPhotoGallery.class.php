@@ -1357,7 +1357,6 @@ class WikiaPhotoGallery extends ImageGallery {
 					$htmlParams = array(
 						'file-link' => true,
 						'linkAttribs' => array( 'class' => 'wikiaPhotoGallery-slider force-lightbox' ),
-						'hideOverlay' => true,
 						'useTemplate' => true,
 					);
 
