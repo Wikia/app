@@ -19,12 +19,9 @@ ve.init.mw.WikiaViewPageTarget = function VeInitMwWikiaViewPageTarget() {
 	// Parent constructor
 	ve.init.mw.WikiaViewPageTarget.super.call( this );
 
+	// Properties
+	this.events = new ve.init.mw.WikiaTargetEvents( this );
 	this.toolbarSaveButtonEnableTracked = false;
-
-	this.timings = {};
-	mw.hook( 've.activationComplete' ).add( ( function () {
-		this.timings.editPageReady = ve.now();
-	} ).bind( this ) );
 };
 
 /* Inheritance */
@@ -133,7 +130,7 @@ ve.init.mw.WikiaViewPageTarget.prototype.onToolbarCancelButtonClick = function (
 	ve.track( 'wikia', {
 		'action': ve.track.actions.CLICK,
 		'label': 'button-cancel',
-		'duration': ve.now() - this.timings.editPageReady
+		'duration': ve.now() - this.events.timings.surfaceReady
 	} );
 	mw.hook( 've.cancelButton' ).fire();
 	/*
@@ -163,7 +160,7 @@ ve.init.mw.WikiaViewPageTarget.prototype.onToolbarSaveButtonClick = function () 
 	ve.track( 'wikia', {
 		'action': ve.track.actions.CLICK,
 		'label': 'button-publish',
-		'duration': ve.now() - this.timings.editPageReady
+		'duration': ve.now() - this.events.timings.surfaceReady
 	} );
 	ve.init.mw.ViewPageTarget.prototype.onToolbarSaveButtonClick.call( this );
 };
@@ -193,7 +190,7 @@ ve.init.mw.WikiaViewPageTarget.prototype.updateToolbarSaveButtonState = function
 		ve.track( 'wikia', {
 			'action': ve.track.actions.ENABLE,
 			'label': 'button-publish',
-			'duration': ve.now() - this.timings.editPageReady
+			'duration': ve.now() - this.events.timings.surfaceReady
 		} );
 	}
 };
@@ -275,20 +272,4 @@ ve.init.mw.WikiaViewPageTarget.prototype.replacePageContent = function ( html, c
 
 	mw.hook( 'wikipage.content' ).fire( $mwContentText );
 	$( '#catlinks' ).replaceWith( categoriesHtml );
-};
-
-/**
- * @inheritdoc
- */
-ve.init.mw.WikiaViewPageTarget.prototype.onBeforeUnload = function () {
-	// Check whether this timing is set to prevent it being called more than once
-	if ( !this.timings.beforeUnload && window.veTrack ) {
-		this.timings.beforeUnload = ve.now();
-		ve.track( 'wikia', {
-			'action': ve.track.actions.CLOSE,
-			'label': 'window',
-			'duration': this.timings.beforeUnload - this.timings.editPageReady
-		} );
-	}
-	ve.init.mw.ViewPageTarget.prototype.onBeforeUnload.call( this );
 };
