@@ -9,7 +9,6 @@ $config['oasis_shared_core_js'] = array(
 		'#group_oasis_wikia_js',
 		'//resources/wikia/libraries/sloth/sloth.js',
 		'//resources/wikia/libraries/mustache/mustache.js',
-		'//resources/wikia/libraries/handlebars/handlebars.js',
 		'//resources/wikia/modules/browserDetect.js',
 		'//resources/mediawiki/mediawiki.Uri.js',
 		'#group_ui_repo_api_js',
@@ -167,6 +166,8 @@ $config['oasis_noads_extensions_js'] = array(
 		'//extensions/wikia/EditorSurvey/js/EditorSurvey.js',
 		// Image and video thumbnail mustache templates
 		'//extensions/wikia/Thumbnails/scripts/templates.mustache.js',
+		// handlebars
+		'//resources/wikia/libraries/handlebars/handlebars.js',
 	)
 );
 
