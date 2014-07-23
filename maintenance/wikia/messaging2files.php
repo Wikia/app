@@ -1,25 +1,31 @@
 <?php
 putenv( 'SERVER_ID=4036' );
-require_once( '../commandLine.inc' );
+$dir = dirname( __FILE__ );
+require_once( realpath( $dir . '/../commandLine.inc' ) );
 
 $USAGE =
 	"Usage:\tphp messaging2files.php -f messages.i18n.php\n" .
 	"\toptions:\n" .
 	"\t\t--help      show this message\n" .
 	"\t\t-f          i18n file which will get overwritten\n" .
+	"\t\t-v          display messages on the screen instead writing to the file\n" .
 	"\n";
 
-$opts = getopt( 'f:' );
+$opts = getopt( 'f:v::' );
 if( empty( $opts ) ) die( $USAGE );
 
-if( array_key_exists( 'f', $opts ) ) {
-	$file = $opts['f'];
-
+$file = $opts['f'];
+if( array_key_exists( 'v', $opts ) ) {
 	if( !file_exists( $file ) ) {
 		die( 'ERROR: The i18n file does not exist' . "\n" );
 	}
 } else {
-	die( 'ERROR: No i18n file passed' . "\n" );
+	die( 'ERROR: No -f parameter passed' );
+}
+
+$noWrite = false;
+if( array_key_exists( 'v', $opts ) ) {
+	$noWrite = true;
 }
 
 $dbr = wfGetDB( DB_SLAVE );
@@ -60,32 +66,38 @@ foreach ( $messages['en'] as $key => $text ) {
 	}
 }
 
-$fh = fopen( $file, "a" );
+if( !$noWrite ) {
+	$fh = fopen( $file, "a" );
 
-echo "\n*** WRITING TO FILE $file...\n";
+	echo "\n*** WRITING TO FILE $file...\n";
 
-foreach ( $collected as $wLang => $wMessages ) {
-	if ( !empty( $messages[$wLang] ) ) {
-		continue;
+	foreach ( $collected as $wLang => $wMessages ) {
+		if ( !empty( $messages[$wLang] ) ) {
+			continue;
+		}
+
+		echo "\tLang: $wLang\n";
+
+		$langStart = "\n\n\$messages['$wLang'] = array(\n";
+		fwrite( $fh, $langStart );
+
+		foreach ( $wMessages as $msgKey => $msgText ) {
+			# write a line to the file:
+			# 'foo' => 'bar',
+			$msgText = str_replace("'", "\'", $msgText );
+			$msgLine = "\t'" . $msgKey . "' => '" . $msgText . "',\n";
+			fwrite( $fh, $msgLine );
+		}
+
+		$langEnd = ");\n";
+		fwrite( $fh, $langEnd );
 	}
 
-	echo "\tLang: $wLang\n";
+	echo "\nDONE!\n";
 
-	$langStart = "\n\n\$messages['$wLang'] = array(\n";
-	fwrite( $fh, $langStart );
-
-	foreach ( $wMessages as $msgKey => $msgText ) {
-		# write a line to the file:
-		# 'foo' => 'bar',
-		$msgText = str_replace("'", "\'", $msgText );
-		$msgLine = "\t'" . $msgKey . "' => '" . $msgText . "',\n";
-		fwrite( $fh, $msgLine );
-	}
-
-	$langEnd = ");\n";
-	fwrite( $fh, $langEnd );
+	fclose( $fh );
+} else {
+	echo "\n";
+	print_r( $collected );
+	echo "\nDONE!\n";
 }
-
-echo "\nDONE!\n";
-
-fclose( $fh );
