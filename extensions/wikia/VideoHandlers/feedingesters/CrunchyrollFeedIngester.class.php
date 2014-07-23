@@ -251,7 +251,7 @@ class CrunchyrollFeedIngester extends VideoFeedIngester {
 		$categories[] = 'Crunchyroll';
 		$categories[] = $data['series'];
 		$categories[] = 'Entertainment';
-		$categories[] = $data['series'] . ': Season ' . $data['season'];
+		$categories[] = $data['series'] . ': ' . $data['season'];
 
 		wfProfileOut( __METHOD__ );
 
