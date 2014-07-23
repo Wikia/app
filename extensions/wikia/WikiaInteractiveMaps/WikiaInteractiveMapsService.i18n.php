@@ -22,7 +22,6 @@ $messages[ 'en' ] = [
 	'wikia-interactive-maps-edit-map' => 'Edit Map',
 ];
 
-
 $messages[ 'qqq' ] = [
 	'wikia-interactive-maps-filters' => 'Header text for the legend',
 	'wikia-interactive-maps-edit-pin-types' => 'Link for editing pin categories',
