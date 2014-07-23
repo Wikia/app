@@ -214,7 +214,7 @@ $color-wikiahome-border-primary-brand-color: #c7d1d8;
 					overflow: hidden;
 					padding: 13px 27px 21px 5px;
 					position: absolute;
-					width: 120px;
+					width: 126px;
 					.arrow {
 						background-position: 0 -195px;
 						height: 23px;
@@ -259,6 +259,7 @@ $color-wikiahome-border-primary-brand-color: #c7d1d8;
 				}
 
 				.collections-button {
+					@include linear-gradient($color-wikiahome-community, top, #002e54, 35%, $color-wikiahome-community, 100%);
 					border: 1px solid $color-page-border;
 					border-left: none;
 					border-radius: 0;
@@ -271,6 +272,12 @@ $color-wikiahome-border-primary-brand-color: #c7d1d8;
 					.chevron {
 						border-width: 7px;
 						margin-top: 23px;
+					}
+					&:hover {
+						@include linear-gradient($color-wikiahome-community-bright, top, $color-wikiahome-community-fawn, 35%, $color-wikiahome-community-bright, 100%);
+					}
+					&:active {
+						@include linear-gradient($color-wikiahome-community-fawn, top, $color-wikiahome-community-bright, 20%, $color-wikiahome-community-fawn, 100%);
 					}
 				}
 				.collections-dropdown {
