@@ -29,7 +29,7 @@ class VideosModule extends WikiaModel {
 
 	const DEFAULT_REGION = "US";
 
-	protected $blacklist;               // black listed videos we never want to show in videos module
+	protected $blacklist = [];          // black listed videos we never want to show in videos module
 	protected $blacklistCount = null;   // number of blacklist videos
 	protected $existingVideos = [];     // list of titles of existing videos (those which have been added already)
 	protected $userRegion;
@@ -37,8 +37,14 @@ class VideosModule extends WikiaModel {
 	public function __construct( $userRegion ) {
 		// All black listed videos are stored in WikiFactory in the wgVideosModuleBlackList variable
 		// on Community wiki.
-		$serializedBlackList = WikiFactory::getVarByName( "wgVideosModuleBlackList", WikiFactory::COMMUNITY_CENTRAL )->cv_value;
-		$this->blacklist = unserialize( $serializedBlackList );
+		$communityBlacklist = WikiFactory::getVarByName( "wgVideosModuleBlackList", WikiFactory::COMMUNITY_CENTRAL );
+
+		// Set the blacklist if there is data for it
+		if ( is_object( $communityBlacklist ) ) {
+			$serializedBlackList = $communityBlacklist->cv_value;
+			$this->blacklist = unserialize( $serializedBlackList );
+		}
+
 		$this->userRegion = $userRegion;
 		parent::__construct();
 	}
