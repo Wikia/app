@@ -12,7 +12,7 @@
  * @param {ve.dm.WikiaCartItem} model Cart item
  */
 ve.ui.WikiaCartItemWidget = function VeUiWikiaCartItemWidget( model ) {
-	var size = 60, $image;
+	var size = 80, $image;
 
 	ve.ui.WikiaCartItemWidget.super.call( this, model.getId() );
 

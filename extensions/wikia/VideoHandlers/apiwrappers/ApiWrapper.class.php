@@ -591,7 +591,6 @@ abstract class ApiWrapper {
 
 		return $result;
 	}
-
 }
 
 class EmptyResponseException extends Exception {

@@ -55,7 +55,7 @@ ve.init.mw.WikiaViewPageTarget.static.toolbarGroups = [
 		'type': 'list',
 		'label': OO.ui.deferMsg( 'visualeditor-toolbar-insert' ),
 		'indicator': 'down',
-		'include': [ 'wikiaMediaInsert', 'number', 'bullet', 'transclusion', 'reference', 'referenceList' ]
+		'include': [ 'wikiaMediaInsert', 'wikiaMapInsert', 'number', 'bullet', 'transclusion', 'reference', 'referenceList' ]
 	}
 ];
 
@@ -146,7 +146,7 @@ ve.init.mw.WikiaViewPageTarget.prototype.onToolbarSaveButtonClick = function () 
 		veTrack( { action: 've-save-button-click' } );
 	}
 
-	if ( window.veOrientationEnabled !== undefined ) {
+	if ( window.veOrientationEnabled !== undefined || window.veFocusMode !== undefined ) {
 		window.optimizely = window.optimizely || [];
 		window.optimizely.push( ['trackEvent', 've-save-button-click'] );
 	}
@@ -258,4 +258,58 @@ ve.init.mw.ViewPageTarget.prototype.replacePageContent = function ( html, catego
 
 	mw.hook( 'wikipage.content' ).fire( $mwContentText );
 	$( '#catlinks' ).replaceWith( categoriesHtml );
+};
+
+/**
+ * Handle failure from serialization
+ *
+ * @method
+ * @param {object} jqXHR
+ * @param {string} status Text status message
+ */
+ve.init.mw.WikiaViewPageTarget.prototype.onSerializeError = function ( jqXHR, status ) {
+	if ( window.veTrack ) {
+		veTrack( {
+			action: 'parsoid-serialize-error',
+			status: status
+		} );
+	}
+	ve.init.mw.WikiaViewPageTarget.super.prototype.onSerializeError.call( this, jqXHR, status );
+};
+
+/**
+ * Handle failure when retrieving diff
+ *
+ * @method
+ * @param {object} jqXHR
+ * @param {string} status Text status message
+ */
+ve.init.mw.WikiaViewPageTarget.prototype.onShowChangesError = function ( jqXHR, status ) {
+	if ( window.veTrack ) {
+		veTrack( {
+			action: 'parsoid-diff-error',
+			status: status
+		} );
+	}
+	ve.init.mw.WikiaViewPageTarget.super.prototype.onShowChangesError.call( this, jqXHR, status );
+};
+
+/**
+ * Handle failure when saving changes
+ *
+ * @method
+ * @param {HTMLDocument} doc HTML document we tried to save
+ * @param {object} saveData Options that were used
+ * @param {object} jqXHR
+ * @param {string} status Text status message
+ * @param {object|null} data API response data
+ */
+ve.init.mw.WikiaViewPageTarget.prototype.onSaveError = function ( doc, saveData, jqXHR, status, data ) {
+	if ( window.veTrack ) {
+		veTrack( {
+			action: 'parsoid-save-error',
+			status: status
+		} );
+	}
+	ve.init.mw.WikiaViewPageTarget.super.prototype.onSaveError.call( this, doc, saveData, jqXHR, status, data );
 };

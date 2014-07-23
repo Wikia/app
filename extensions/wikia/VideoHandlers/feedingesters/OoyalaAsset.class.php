@@ -2,6 +2,8 @@
 
 class OoyalaAsset extends WikiaModel {
 
+	const TIMEOUT = 60;
+
 	/**
 	 * Constructs a URL to get assets from Ooyala API
 	 * @param integer $apiPageSize
@@ -42,7 +44,12 @@ class OoyalaAsset extends WikiaModel {
 	public static function getApiContent( $url ) {
 		wfProfileIn( __METHOD__ );
 
-		$req = MWHttpRequest::factory( $url, [ 'noProxy' => true ] );
+		$options = [
+			'noProxy' => true,
+			'timeout' => self::TIMEOUT
+		];
+
+		$req = MWHttpRequest::factory( $url, $options );
 		$status = $req->execute();
 		if ( $status->isGood() ) {
 			$result = json_decode( $req->getContent(), true );
@@ -330,6 +337,7 @@ class OoyalaAsset extends WikiaModel {
 	 * Send request to Ooyala to update asset
 	 * @param string $videoId
 	 * @param array $params
+	 * @param string $reqPath
 	 * @return boolean $resp
 	 */
 	public static function updateAsset( $videoId, $params, $reqPath ) {

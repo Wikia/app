@@ -239,12 +239,17 @@ ve.ce.Surface.static.getClipboardHash = function ( $elements ) {
  * @method
  */
 ve.ce.Surface.prototype.destroy = function () {
+	var documentNode = this.documentView.getDocumentNode();
+
 	// Detach observer and event sequencer
 	this.surfaceObserver.detach();
 	this.eventSequencer.detach();
 
 	// Make document node not live
-	this.documentView.getDocumentNode().setLive( false );
+	documentNode.setLive( false );
+
+	// Blur to make selection/cursor disappear
+	documentNode.$element.blur();
 
 	// Disconnect events
 	this.surfaceObserver.disconnect( this );
@@ -395,6 +400,17 @@ ve.ce.Surface.prototype.focus = function () {
 		// If we are calling focus after replacing a node the selection may be gone
 		// but onDocumentFocus won't fire so restore the selection here too.
 		this.onModelSelect( this.surface.getModel().getSelection() );
+		setTimeout( ve.bind( function () {
+			// In some browsers (e.g. Chrome) giving the document node focus doesn't
+			// necessarily give you a selection (e.g. if the first child is a <figure>)
+			// so if the surface isn't 'focused' (has no selection) give it a selection
+			// manually
+			// TODO: rename isFocused and other methods to something which reflects
+			// the fact they actually mean "has a native selection"
+			if ( !this.isFocused() ) {
+				this.getModel().selectFirstContentOffset();
+			}
+		}, this ) );
 	}
 	// onDocumentFocus takes care of the rest
 };
@@ -443,10 +459,7 @@ ve.ce.Surface.prototype.onDocumentFocus = function () {
 		// If the document is being focused by a non-mouse user event, FF may place
 		// the cursor in a non-content offset (i.e. just after the document div), so
 		// find the first content offset instead.
-		var firstOffset = this.getModel().getDocument().data.getNearestContentOffset( 0, 1 );
-		this.getModel().setSelection(
-			new ve.Range( firstOffset !== -1 ? firstOffset : 1 )
-		);
+		this.getModel().selectFirstContentOffset();
 	}
 	this.eventSequencer.attach( this.$element );
 	this.surfaceObserver.startTimerLoop();

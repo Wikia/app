@@ -600,6 +600,16 @@ ve.dm.Surface.prototype.setSelection = function ( selection ) {
 };
 
 /**
+ * Place the selection at the first content offset in the document.
+ */
+ve.dm.Surface.prototype.selectFirstContentOffset = function () {
+	var firstOffset = this.getDocument().data.getNearestContentOffset( 0, 1 );
+	this.setSelection(
+		new ve.Range( firstOffset !== -1 ? firstOffset : 1 )
+	);
+};
+
+/**
  * Apply a transactions and selection changes to the document.
  *
  * @method

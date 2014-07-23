@@ -117,7 +117,7 @@ ve.dm.MWImageModel.static.newFromImageNode = function ( node ) {
 	node.syncScalableToType();
 
 	// If this is a block image, get the caption
-	if ( node.getType() === 'mwBlockImage' ) {
+	if ( node instanceof ve.dm.MWBlockImageNode ) {
 		captionNode = node.getCaptionNode();
 		if ( captionNode && captionNode.getLength() > 0 ) {
 			imgModel.setCaptionDocument( doc.cloneFromRange( captionNode.getRange() ) );
@@ -145,9 +145,9 @@ ve.dm.MWImageModel.prototype.getImageNodeType = function ( imageType, align ) {
 		( this.getType() === 'frameless' || this.getType() === 'none' ) &&
 		( !this.isAligned( align ) || this.isDefaultAligned( imageType, align ) )
 	) {
-		return 'mwInlineImage';
+		return this.mediaNode.mediaType === 'VIDEO' ? 'wikiaInlineVideo' : 'wikiaInlineImage';
 	} else {
-		return 'mwBlockImage';
+		return this.mediaNode.mediaType === 'VIDEO' ? 'wikiaBlockVideo' : 'wikiaBlockImage';
 	}
 };
 
@@ -159,17 +159,24 @@ ve.dm.MWImageModel.prototype.getImageNodeType = function ( imageType, align ) {
 ve.dm.MWImageModel.prototype.updateImageNode = function ( surfaceModel ) {
 	var captionRange, captionNode,
 		doc = surfaceModel.getDocument(),
-		node = this.getMediaNode();
+		node = this.getMediaNode(),
+		captionType;
 
 	// Update the caption
-	if ( node.getType() === 'mwBlockImage' ) {
+	if ( node.getType() === 'wikiaBlockImage' || node.getType() === 'wikiaBlockVideo' ) {
 		captionNode = node.getCaptionNode();
 		if ( !captionNode ) {
+			if ( node.getType() === 'wikiaBlockImage' ) {
+				captionType = 'wikiaImageCaption';
+			} else {
+				captionType = 'wikiaVideoCaption';
+			}
 			// There was no caption before, so insert one now
 			surfaceModel.getFragment()
 				.adjustRange( 1 )
 				.collapseRangeToStart()
-				.insertContent( [ { 'type': 'mwImageCaption' }, { 'type': '/mwImageCaption' } ] );
+				.insertContent( [ { 'type': captionType }, { 'type': '/' + captionType } ] );
+
 			// Update the caption node
 			captionNode = this.getMediaNode().getCaptionNode();
 		}
@@ -237,7 +244,8 @@ ve.dm.MWImageModel.prototype.insertImageNode = function ( fragment ) {
 	];
 
 	switch ( nodeType ) {
-		case 'mwInlineImage':
+		case 'wikiaInlineImage':
+		case 'wikiaInlineVideo':
 			// Try to put the image inside the nearest content node
 			offset = fragment.getDocument().data.getNearestContentOffset( fragment.getRange().start );
 			if ( offset > -1 ) {
@@ -246,8 +254,13 @@ ve.dm.MWImageModel.prototype.insertImageNode = function ( fragment ) {
 			fragment.insertContent( contentToInsert );
 			return fragment;
 
-		case 'mwBlockImage':
-			contentToInsert.splice( 1, 0, { 'type': 'mwImageCaption' }, { 'type': '/mwImageCaption' } );
+		case 'wikiaBlockImage':
+		case 'wikiaBlockVideo':
+			if ( nodeType === 'wikiaBlockImage' ) {
+				contentToInsert.splice( 1, 0, { 'type': 'wikiaImageCaption' }, { 'type': '/wikiaImageCaption' } );
+			} else {
+				contentToInsert.splice( 1, 0, { 'type': 'wikiaVideoCaption' }, { 'type': '/wikiaVideoCaption' } );
+			}
 			// Try to put the image in front of the structural node
 			offset = fragment.getDocument().data.getNearestStructuralOffset( fragment.getRange().start, -1 );
 			if ( offset > -1 ) {
@@ -309,7 +322,7 @@ ve.dm.MWImageModel.prototype.getUpdatedAttributes = function () {
 	}
 
 	// If converting from block to inline, set isLinked=true to avoid |link=
-	if ( origAttrs.isLinked === undefined && this.getImageNodeType() === 'mwInlineImage' ) {
+	if ( origAttrs.isLinked === undefined && this.getImageNodeType() === 'wikiaInlineImage' ) {
 		attrs.isLinked = true;
 	}
 
@@ -724,10 +737,10 @@ ve.dm.MWImageModel.prototype.getDefaultDir = function ( imageNodeType ) {
 
 	if ( this.getDir() === 'rtl' ) {
 		// Assume position is 'left'
-		return ( imageNodeType === 'mwBlockImage' ) ? 'left' : 'none';
+		return ( imageNodeType === 'wikiaBlockImage' || imageNodeType === 'wikiaBlockVideo' ) ? 'left' : 'none';
 	} else {
 		// Assume position is 'right'
-		return ( imageNodeType === 'mwBlockImage' ) ? 'right' : 'none';
+		return ( imageNodeType === 'wikiaBlockImage' || imageNodeType === 'wikiaBlockVideo' ) ? 'right' : 'none';
 	}
 };
 

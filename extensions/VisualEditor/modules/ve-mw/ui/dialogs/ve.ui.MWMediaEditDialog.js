@@ -581,9 +581,9 @@ ve.ui.MWMediaEditDialog.prototype.applyChanges = function () {
 	var surfaceModel = this.getFragment().getSurface();
 
 	// Update from the form
-	this.imageModel.setAltText(
+	/*this.imageModel.setAltText(
 		this.altTextInput.getValue()
-	);
+	);*/
 
 	this.imageModel.setCaptionDocument(
 		this.captionSurface.getSurface().getModel().getDocument()

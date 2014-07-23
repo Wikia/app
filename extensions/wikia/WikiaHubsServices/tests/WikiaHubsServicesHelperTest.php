@@ -50,6 +50,7 @@ class WikiaHubsServicesHelperTest extends WikiaBaseTest {
 
 	/**
 	 * @dataProvider purgeHubVarnish
+	 * @group Broken
 	 */
 	public function testPurgeHubVarnish($lang, $wikiId, $verticalId, $hubName) {
 		$globalTitleMock = $this->getMock('GlobalTitle', array('purgeSquid'));

@@ -45,9 +45,11 @@ ve.ui.WikiaMediaEditDialog.static.toolbarGroups = [
 
 /* Methods */
 
-ve.ui.WikiaMediaEditDialog.prototype.setup = function ( data ) {
-	ve.ui.MWMediaEditDialog.prototype.setup.call( this, data );
-	this.captionSurface.$element.addClass( 'WikiaArticle' );
+ve.ui.WikiaMediaEditDialog.prototype.getSetupProcess = function ( data ) {
+	return ve.ui.WikiaMediaEditDialog.super.prototype.getSetupProcess.call( this, data )
+		.next( function () {
+			this.captionSurface.$element.addClass( 'WikiaArticle' );
+		}, this );
 };
 
 /* Registration */
