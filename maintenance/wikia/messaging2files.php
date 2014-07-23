@@ -100,8 +100,9 @@ if( !$noWrite ) {
 } else {
 	echo "\n";
 
+	$collected = array_merge( $messages, $collected );
 	if( array_key_exists( 'json', $opts ) ) {
-		echo json_encode( $collected );
+		echo json_encode( $collected, JSON_UNESCAPED_UNICODE );
 	} else {
 		print_r( $collected );
 	}
