@@ -82,12 +82,13 @@ function wfMakeGlobalVariablesScript(Array &$vars, OutputPage $out) {
 	$skin = $out->getSkin();
 	$title = $out->getTitle();
 
+	// FIXME: This needs to be converted to getVerticalId when the data is available (PLATFORM-267)
 	$hubService = WikiFactoryHub::getInstance();
-	$verticalId = $hubService->getVerticalId( $wgCityId );
-	if( isset( $verticalId ) ) {
-		$vars['wgVerticalId'] = $verticalId;
+	$catId = $hubService->getCategoryId( $wgCityId );
+	if( isset( $catId ) ) {
+		$vars['wgCatId'] = $catId;
 	} else	{
-		$vars['wgVerticalId'] = 0;
+		$vars['wgCatId'] = 0;
 	}
 
 	$skinName = get_class($skin);
