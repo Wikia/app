@@ -58,7 +58,8 @@ $slotTopHeight: 50px;
 	}
 }
 
-.wikia-ad-interactive-map {
+#mw-content-text div.wikia-ad-interactive-map,
+.int-map-mobile-map-page #mw-content-text > div.wikia-interactive-map-wrapper > div.wikia-ad-interactive-map {
 	height: 50px;
 	margin: 0 auto 15px;
 	width: 250px;
@@ -66,7 +67,17 @@ $slotTopHeight: 50px;
 	& > iframe {
 		border: none;
 		height: 50px;
+		left: auto;
+		padding: 0;
+		position: relative;
+		margin: 0;
+		top: auto;
 		width: 250px;
+		z-index: 10;
 	}
+}
 
+.int-map-mobile-map-page #mw-content-text > div.wikia-interactive-map-wrapper > div.wikia-ad-interactive-map {
+	padding-top: 10px;
+	height: 60px;
 }
