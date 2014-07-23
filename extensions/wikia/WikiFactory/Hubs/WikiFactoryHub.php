@@ -95,7 +95,7 @@ class WikiFactoryHub extends WikiaModel {
 			"title"			=> $title,
 			"cat_id"		=> $cat_id,
 			"city_id"	 	=> $city_id,
-			"categories" 	=> self::$mOldCategories
+			"categories" 	=> $this->mOldCategories
 		));
 
 		return $oTmpl->render("categories");
@@ -111,7 +111,7 @@ class WikiFactoryHub extends WikiaModel {
 		$oTmpl->set_vars( array(
 			"title"			=> null,
 			"cat_id"		=> $cat_id,
-			"categories" 	=> self::$mOldCategories
+			"categories" 	=> $this->$mOldCategories
 		));
 
 		return $oTmpl->render("categories");
@@ -129,15 +129,15 @@ class WikiFactoryHub extends WikiaModel {
 	 */
 	public function getAllCategories( $new = false ) {
 
-		if (empty(self::$mNewCategories) || empty(self::$mOldCategories)) {
+		if (empty($this->mNewCategories) || empty($this->$mOldCategories)) {
 			$this->loadCategories();
 		}
 
 		if ( $new ) {
-			return self::$mNewCategories;
+			return $this->$mNewCategories;
 		} else {
 			// Deprecated/old categories
-			return self::$mOldCategories;
+			return $this->$mOldCategories;
 		}
 	}
 
@@ -372,7 +372,7 @@ class WikiFactoryHub extends WikiaModel {
 				->FIELD( "cat_deprecated as deprecated")
 				->FIELD( "cat_active as active")
 			->FROM( "city_cats" )
-			->cache ( self::$cache_ttl, wfSharedMemcKey( "WFHub", __METHOD__ ))  // global cache
+			->cache ( $this->cache_ttl, wfSharedMemcKey( "WFHub", __METHOD__ ))  // global cache
 			->runLoop( $this->getSharedDB(), function (&$result, $row) {
 				$arr = get_object_vars($row);
 				//$result['all'][] = $arr;
@@ -384,8 +384,8 @@ class WikiFactoryHub extends WikiaModel {
 				}
 			} );
 
-		self::$mOldCategories = $categories['deprecated'];
-		self::$mNewCategories = $categories['active'];
+		$this->$mOldCategories = $categories['deprecated'];
+		$this->$mNewCategories = $categories['active'];
 
 	}
 
@@ -527,8 +527,8 @@ class WikiFactoryHub extends WikiaModel {
 	 * @return string Krux category id
 	 */
 	public function getKruxId($categoryId) {
-		if (isset(self::$mCategoryKruxMap[$categoryId])) {
-			return self::$mCategoryKruxMap[$categoryId];
+		if (isset($this->mCategoryKruxMap[$categoryId])) {
+			return $this->mCategoryKruxMap[$categoryId];
 		}
 
 		return '';
