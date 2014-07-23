@@ -1,6 +1,5 @@
 <?php
 namespace Wikia\Template;
-use Handlebars\Handlebars;
 
 require("lib/vendor/Handlebars/Autoloader.php");
 
@@ -40,67 +39,16 @@ class HandlebarsEngine extends Engine {
 		wfProfileIn( __METHOD__ );
 
 		$dir = $this->prefix == '' ? '' : $this->prefix . DIRECTORY_SEPARATOR;
-		$partialDir = $this->partialDir ? $this->partialDir : $dir;
-		$partialPrefix = $this->partialPrefix;
-
 		$path = $dir . $template;
 
 		wfProfileIn( __METHOD__ . " - template: {$path}" );
-		$handlebarsEngine = new Handlebars([
-			'loader' => new \Handlebars\Loader\FilesystemLoader($dir),
-			'partials_loader' => new \Handlebars\Loader\FilesystemLoader(
-					$partialDir,
-					[
-						'prefix' => $partialPrefix
-					]
-				)
-		]);
-		$contents = $handlebarsEngine->render( $template, $this->values );
+
+		$contents = \HandlebarsService::getInstance()->render($path, $this->values);
+
 		wfProfileOut( __METHOD__ . " - template: {$path}" );
 
 		wfProfileOut( __METHOD__ );
 		return $contents;
 	}
 
-	/**
-	 * Sets the base path for Handlebars partials.
-	 *
-	 * @param string $partialDir base path to Handlebars partials
-	 *
-	 * @return Engine The current instance
-	 */
-	public function setPartialDir ( $dir ) {
-		$this->partialDir = (string) $dir;
-		return $this;
-	}
-
-	/**
-	 * Returns the base path set for Handlebars partials.
-	 *
-	 * @return string|null
-	 */
-	public function getPartialDir() {
-		return $this->partialDir;
-	}
-
-	/**
-	 * Sets the prefix for Handlebars partials files.
-	 *
-	 * @param string $partialPrefix Handlebars partials file prefix
-	 *
-	 * @return Engine The current instance
-	 */
-	public function setPartialPrefix ( $prefix ) {
-		$this->partialPrefix = (string) $prefix;
-		return $this;
-	}
-
-	/**
-	 * Returns the prefix for Handlebars partials files.
-	 *
-	 * @return string|null
-	 */
-	public function getPartialPrefix() {
-		return $this->partialPrefix;
-	}
 };
