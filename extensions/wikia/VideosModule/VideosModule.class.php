@@ -29,7 +29,7 @@ class VideosModule extends WikiaModel {
 
 	const DEFAULT_REGION = "US";
 
-	protected $blacklist;               // black listed videos we never want to show in videos module
+	protected $blacklist = [];          // black listed videos we never want to show in videos module
 	protected $blacklistCount = null;   // number of blacklist videos
 	protected $existingVideos = [];     // list of titles of existing videos (those which have been added already)
 	protected $userRegion;
