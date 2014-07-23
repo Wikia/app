@@ -8,13 +8,13 @@
 $messages = array();
 
 $messages['en'] = array(
-	'wikiahome-page-header-heading' => 'Create. Collaborate. Be Original.',
-	'wikiahome-page-header-subheading' => 'Share what you know and love.',
+	'wikiahome-page-header-heading' => 'Create. Collaborate. Connect.',
+	'wikiahome-page-header-subheading' => '',
 	'wikiahome-page-header-create-wiki-button' => 'Start a Wiki',
 	'wikiahome-page-header-create-wiki-button-destination' => 'http://www.wikia.com/Special:CreateWiki',
 
-	'wikiahome-visualisation-remix-mixitup' => 'Mix it up!',
-	'wikiahome-visualisation-remix-mixituptext' => 'Thousands of communities at your fingertips. Remix to explore Wikia.',
+	'wikiahome-visualisation-remix-mixitup' => 'Welcome to the Social Universe for Fans, by Fans!',
+	'wikiahome-visualisation-remix-mixituptext' => 'There are thousands of communities on Wikia. Find yours.',
 	'wikiahome-visualisation-remix-button' => 'Refresh',
 
 	'wikiahome-hubs-slot-more-in-heading' => 'More in $1',
@@ -58,10 +58,10 @@ $messages['en'] = array(
 	'wikiahome-community-column1-heading' => 'Community Resources',
 	'wikiahome-community-column1-link' => 'http://community.wikia.com',
 	'wikiahome-community-column1-creative' => 'Everything you need to start and grow your community on Wikia from tips and tools to news and access to really helpful people.',
-	'wikiahome-community-column2-heading' => 'Innovation at Wikia',
+	'wikiahome-community-column2-heading' => 'Fan Fueled by Wikia',
 	'wikiahome-community-column2-link' => 'http://www.wikia.com/Mobile',
 	'wikiahome-community-column2-creative' => 'Wikia Proudly Introduces its First Official Mobile Apps: My Wikia and Game Guides. Each app is designed to Assemble Over 20 Million Pages of Rich, Dynamic Content Authored by Wikia Communities in a Modern, Streamlined Experience. Download [[Mobile|here]].',
-	'wikiahome-community-column3-heading' => 'Follow Us',
+	'wikiahome-community-column3-heading' => 'Join the Fans',
 	'wikiahome-community-social-twitter' => 'Twitter',
 	'wikiahome-community-social-facebook' => 'Facebook',
 	'wikiahome-community-social-googleplus' => 'Google+',
