@@ -274,7 +274,7 @@ ve.init.mw.WikiaViewPageTarget.prototype.onSerializeError = function ( jqXHR, st
 			status: status
 		} );
 	}
-	ve.init.mw.ViewPageTarget.prototype.onSerializeError.call( this, jqXHR, status );
+	ve.init.mw.WikiaViewPageTarget.super.prototype.onSerializeError.call( this, jqXHR, status );
 };
 
 /**
@@ -291,7 +291,7 @@ ve.init.mw.WikiaViewPageTarget.prototype.onShowChangesError = function ( jqXHR, 
 			status: status
 		} );
 	}
-	ve.init.mw.ViewPageTarget.prototype.onShowChangesError.call( this, jqXHR, status );
+	ve.init.mw.WikiaViewPageTarget.super.prototype.onShowChangesError.call( this, jqXHR, status );
 };
 
 /**
@@ -311,5 +311,5 @@ ve.init.mw.WikiaViewPageTarget.prototype.onSaveError = function ( doc, saveData,
 			status: status
 		} );
 	}
-	ve.init.mw.Target.prototype.onSaveError.call( this, doc, saveData, jqXHR, status, data );
+	ve.init.mw.WikiaViewPageTarget.super.prototype.onSaveError.call( this, doc, saveData, jqXHR, status, data );
 };
