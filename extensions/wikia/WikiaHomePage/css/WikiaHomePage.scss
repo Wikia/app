@@ -794,7 +794,6 @@ $color-wikiahome-border-primary-brand-color: #c7d1d8;
 						margin-top: 9px;
 						padding: 5px 0 0 18px;
 						width: 142px;
-						.wikiahomepage-community-social-wikia-blog,
 						.wikiahomepage-community-social-twitter,
 						.wikiahomepage-community-social-facebook,
 						.wikiahomepage-community-social-googleplus {
@@ -982,8 +981,6 @@ $color-wikiahome-border-primary-brand-color: #c7d1d8;
 	}
 }
 
-
-.wikiahomepage-community-social-wikia-blog,
 .wikiahomepage-community-social-twitter,
 .wikiahomepage-community-social-facebook,
 .wikiahomepage-community-social-googleplus,
@@ -997,8 +994,6 @@ $color-wikiahome-border-primary-brand-color: #c7d1d8;
 	background-image: url("/extensions/wikia/WikiaHomePage/images/wikiahome-sprite.png"); /* $wgCdnStylePath */
 	background-repeat: no-repeat;
 }
-
-
 
 .page-Wikia .start-a-wiki {
 	display: none;
