@@ -59,8 +59,6 @@
 				if (LightboxLoader.reloadOnClose) {
 					window.location.reload();
 				}
-				// Make sure to remove the file=XXX part of the query string VID-1844
-				Lightbox.updateUrlState(true);
 			}
 		},
 		videoThumbWidthThreshold: 400,

@@ -206,7 +206,7 @@
 				Lightbox.openModal.removeClass('share-mode').removeClass('more-info-mode');
 				Lightbox.openModal.share.html('');
 				Lightbox.openModal.moreInfo.html('');
-			}).on('click.Lightbox', Lightbox.openModal.pin, function (evt) {
+			}).on('click.Lightbox', Lightbox.openModal.pin.selector, function (evt) {
 				// Pin the toolbar on icon click
 				var target = $(evt.target),
 					overlayActive = Lightbox.openModal.data('overlayactive'),
