@@ -45,7 +45,7 @@ class AnalyticsProviderGA_Urchin implements iAnalyticsProvider {
   _gaq.push(['_setAccount', 'UA-30014103-1']);
   _gaq.push(['_setSampleRate', '10']);
 
-  _gaq.push(['_setCustomVar', 1, 'wiki', 'hub=' + (window.wgVerticalId || 'unknown') + ';lang=' + (window.wgContentLanguage || 'unknown') + ';slot=' + (getCustomVarSlot() || 'unknown'), 3]);
+  _gaq.push(['_setCustomVar', 1, 'wiki', 'hub=' + (window.wgCatId || 'unknown') + ';lang=' + (window.wgContentLanguage || 'unknown') + ';slot=' + (getCustomVarSlot() || 'unknown'), 3]);
   _gaq.push(['_setCustomVar', 2, 'page', (getCustomVarPage() || 'unknown'), 3]);
   _gaq.push(['_setCustomVar', 4, 'skin',  window.skin || 'unknown', 3]);
   _gaq.push(['_setCustomVar', 5, 'user', (window.wgUserName == null) ? 'anon' : 'user', 3]);
@@ -57,7 +57,7 @@ class AnalyticsProviderGA_Urchin implements iAnalyticsProvider {
   _gaq.push(['Ads._setAccount', 'UA-17475676-7']);
   _gaq.push(['Ads._setSampleRate', '100']);
 
-  _gaq.push(['Ads._setCustomVar', 1, 'wiki', 'hub=' + (window.wgVerticalId || 'unknown') + ';lang=' + (window.wgContentLanguage || 'unknown') + ';slot=' + (getCustomVarSlot() || 'unknown'), 3]);
+  _gaq.push(['Ads._setCustomVar', 1, 'wiki', 'hub=' + (window.wgCatId || 'unknown') + ';lang=' + (window.wgContentLanguage || 'unknown') + ';slot=' + (getCustomVarSlot() || 'unknown'), 3]);
   _gaq.push(['Ads._setCustomVar', 2, 'page', (getCustomVarPage() || 'unknown'), 3]);
   _gaq.push(['Ads._setCustomVar', 4, 'skin',  window.skin || 'unknown', 3]);
   _gaq.push(['Ads._setCustomVar', 5, 'user', (window.wgUserName == null) ? 'anon' : 'user', 3]);
