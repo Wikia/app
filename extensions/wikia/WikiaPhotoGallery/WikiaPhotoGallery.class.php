@@ -1357,12 +1357,11 @@ class WikiaPhotoGallery extends ImageGallery {
 					$htmlParams = array(
 						'file-link' => true,
 						'linkAttribs' => array( 'class' => 'wikiaPhotoGallery-slider force-lightbox' ),
-						'useTemplate' => true,
 					);
 
 					$videoHtml = $file->transform( array( 'width' => $imagesDimensions['w'] ) )->toHtml( $htmlParams );
 
-					// Get play button overlay for video thumb
+					// Get play button overlay for little video thumb
 					$videoPlayButton = $this->videoPlayButton;
 					$navClass = 'xxsmall video-thumbnail';
 				}
