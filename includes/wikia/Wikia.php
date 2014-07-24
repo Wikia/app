@@ -78,19 +78,19 @@ class Wikia {
 
 	private static $apacheHeaders = null;
 
-	public static function setVar($key, $value) {
+	public static function setVar( $key, $value ) {
 		Wikia::$vars[$key] = $value;
 	}
 
-	public static function getVar($key, $default = null) {
+	public static function getVar( $key, $default = null ) {
 		return isset(Wikia::$vars[$key]) ? Wikia::$vars[$key] : $default;
 	}
 
-	public static function isVarSet($key) {
+	public static function isVarSet( $key ) {
 		return isset(Wikia::$vars[$key]);
 	}
 
-	public static function unsetVar($key) {
+	public static function unsetVar( $key ) {
 		unset(Wikia::$vars[$key]);
 	}
 
@@ -101,7 +101,7 @@ class Wikia {
 		$mData = $wgMemc->get($mMemcacheKey);
 		$faviconFilename = 'Favicon.ico';
 
-		if ( empty($mData) ) {
+		if ( empty( $mData ) ) {
 			$localFaviconTitle = Title::newFromText( $faviconFilename, NS_FILE );
 			#FIXME: Checking existance of Title in order to use File. #VID-1744
 			if ( $localFaviconTitle->exists() ) {
@@ -127,14 +127,14 @@ class Wikia {
 	/**
 	 * @author inez@wikia.com
 	 */
-	function getThemesOfSkin($skinname = 'quartz') {
+	function getThemesOfSkin( $skinname = 'quartz' ) {
 		global $wgSkinTheme;
 
 		$themes = array();
 
-		if(isset($wgSkinTheme) && is_array($wgSkinTheme) && isset($wgSkinTheme[$skinname])) {
-			foreach($wgSkinTheme[$skinname] as $val) {
-				if( $val != 'custom' && ! (isset($wgSkipThemes) && is_array($wgSkipThemes) && isset($wgSkipThemes[$skinname]) && in_array($wgSkipThemes[$skinname],$val))) {
+		if ( isset($wgSkinTheme) && is_array($wgSkinTheme) && isset($wgSkinTheme[$skinname]) ) {
+			foreach ( $wgSkinTheme[$skinname] as $val ) {
+				if ( $val != 'custom' && ! (isset($wgSkipThemes) && is_array($wgSkipThemes) && isset($wgSkipThemes[$skinname]) && in_array($wgSkipThemes[$skinname],$val)) ) {
 					$themes[] = $val;
 				}
 			}
@@ -156,7 +156,7 @@ class Wikia {
      *
      * @return string composed HTML/XML code
      */
-    static public function successbox($what) {
+    static public function successbox( $what ) {
         return Xml::element( "div", array(
 				"class"=> "successbox", "style" => "margin: 0;margin-bottom: 1em;"
 			), $what)
@@ -176,7 +176,7 @@ class Wikia {
      *
      * @return string composed HTML/XML code
      */
-    static public function errorbox($what) {
+    static public function errorbox( $what ) {
         return Xml::element( "div", array(
 				"class"=> "errorbox", "style" => "margin: 0;margin-bottom: 1em;"
 			), $what )
@@ -196,8 +196,7 @@ class Wikia {
      *
      * @return string composed HTML/XML code
      */
-    static public function errormsg($what)
-    {
+    static public function errormsg( $what ) {
         return Xml::element("span", array( "style"=> "color: #fe0000; font-weight: bold;"), $what);
     }
 
@@ -218,8 +217,7 @@ class Wikia {
      *
      * @return string composed HTML/XML code
      */
-    static public function linkTag($url, $title, $attribs = null )
-    {
+    static public function linkTag( $url, $title, $attribs = null ) {
         return Xml::element("a", array( "href"=> $url), $title);
     }
 
@@ -236,30 +234,29 @@ class Wikia {
      *
      * @return string composed HTML/XML code
      */
-    static public function successmsg($what)
-    {
+    static public function successmsg( $what ) {
         return Xml::element("span", array( "style"=> "color: darkgreen; font-weight: bold;"), $what);
     }
 
-    /**
-     * fixDomainName
-     *
-     * It takes domain name as param, then checks if it contains more than one
-     * dot, then depending on that information adds .wikia.com domain or not.
-     * Additionally it lowercase name
-     *
-     * @access public
-     * @static
-     * @author eloy@wikia-inc.com
-     *
-     * @param string $name Domain Name
-     * @param string $language default false - choosen language
-     * @param mixed  $type type of domain, default false = wikia.com
-     *
-     * @return string fixed domain name
-     */
+	/**
+	 * fixDomainName
+	 *
+	 * It takes domain name as param, then checks if it contains more than one
+	 * dot, then depending on that information adds .wikia.com domain or not.
+	 * Additionally it lowercase name
+	 *
+	 * @access public
+	 * @static
+	 * @author eloy@wikia-inc.com
+	 *
+	 * @param string $name Domain Name
+	 * @param bool|string $language default false - choosen language
+	 * @param mixed $type type of domain, default false = wikia.com
+	 *
+	 * @return string fixed domain name
+	 */
 	static public function fixDomainName( $name, $language = false, $type = false ) {
-		if (empty( $name )) {
+		if ( empty( $name ) ) {
 			return $name;
 		}
 
@@ -267,10 +264,10 @@ class Wikia {
 
 		$parts = explode(".", trim($name));
 		Wikia::log( __METHOD__, "info", "$name $language $type" );
-		if( is_array( $parts ) ) {
-			if( count( $parts ) <= 2 ) {
+		if ( is_array( $parts ) ) {
+			if ( count( $parts ) <= 2 ) {
 				$allowLang = true;
-				switch( $type ) {
+				switch ( $type ) {
 					case "answers":
 						$domains = self::getAnswersDomains();
 						if ( $language && isset($domains[$language]) && !empty($domains[$language]) ) {
@@ -307,17 +304,16 @@ class Wikia {
      *
      * @return string: HTML string with credits line
      */
-    static public function addCredits( $row )
-    {
+    static public function addCredits( $row ) {
 		global $wgIwPrefix, $wgExternalSharedDB, $wgAddFromLink;
 
         $text = "";
 
 		if ( $wgAddFromLink && ($row->page_namespace != 8) && ($row->page_namespace != 10) ) {
-			if (isset($wgIwPrefix)){
+			if ( isset($wgIwPrefix) ) {
 				$text .= '<div id="wikia-credits"><br /><br /><small>' . wfMsg('tagline-url-interwiki',$wgIwPrefix) . '</small></div>';
 			}
-            elseif (isset($wgExternalSharedDB)){
+            elseif ( isset($wgExternalSharedDB) ) {
 				global $wgServer,$wgArticlePath,$wgSitename;
 				$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
 				$oRow = $dbr->selectRow(
@@ -326,7 +322,7 @@ class Wikia {
                     array( 'iw_url' => $wgServer.$wgArticlePath ),
                     __METHOD__
                 );
-				if ($oRow) {
+				if ( $oRow ) {
 					$text .= '<div id="wikia-credits"><br /><br /><small>' . wfMsg('tagline-url-interwiki',$oRow->iw_prefix) . '</small></div>';
 				}
 				else {
@@ -354,8 +350,7 @@ class Wikia {
      *
      * @return string: HTML string with progress image
      */
-    static public function ImageProgress( $type = "bar" )
-    {
+    static public function ImageProgress( $type = "bar" ) {
         $sImagesCommonPath = wfGetImagesCommon();
         switch ( $type ) {
             default:
@@ -401,18 +396,17 @@ class Wikia {
 	 * @example Wikia::log( __METHOD__, "1", "checking" );
 	 * @author Krzysztof Krzyżaniak <eloy@wikia-inc.com>
 	 *
-	 * @param String $method     -- use __METHOD__
-	 * @param String $sub        -- sub-section name (if more than one in same method); default false
-	 * @param String $message    -- additional message; default false
-	 * @param Boolean $always    -- skip checking of $wgErrorLog and write log (or not); default false
+	 * @param String $method -- use __METHOD__
+	 * @param bool|String $sub -- sub-section name (if more than one in same method); default false
+	 * @param String $message -- additional message; default false
+	 * @param Boolean $always -- skip checking of $wgErrorLog and write log (or not); default false
 	 * @param Boolean $timestamp -- write timestamp before line; default false
-	 *
 	 */
 	static public function log( $method, $sub = false, $message = '', $always = false, $timestamp = false ) {
 	  global $wgDevelEnvironment, $wgErrorLog, $wgDBname, $wgCityId, $wgCommandLineMode, $wgCommandLineSilentMode;
 
 		$method = $sub ? $method . "-" . $sub : $method;
-		if( $wgDevelEnvironment || $wgErrorLog || $always ) {
+		if ( $wgDevelEnvironment || $wgErrorLog || $always ) {
 			$method = preg_match('/-WIKIA$/', $method) ? str_replace('-WIKIA', '', $method) : $method;
 			\Wikia\Logger\WikiaLogger::instance()->debug($message, ['method' => $method]);
 		}
@@ -420,9 +414,9 @@ class Wikia {
 		/**
 		 * commandline = echo
 		 */
-		if( $wgCommandLineMode && empty( $wgCommandLineSilentMode ) ) {
+		if ( $wgCommandLineMode && empty( $wgCommandLineSilentMode ) ) {
 			$line = sprintf( "%s:%s/%d: %s\n", $method, $wgDBname, $wgCityId, $message );
-			if( $timestamp ) {
+			if ( $timestamp ) {
 				$line = wfTimestamp( TS_DB, time() ) . " " . $line;
 			}
 			echo $line;
@@ -430,7 +424,7 @@ class Wikia {
 		/**
 		 * and use wfDebug as well
 		 */
-		if (function_exists("wfDebug")) {
+		if ( function_exists("wfDebug") ) {
 			wfDebug( $method . ": " . $message . "\n" );
 		} else {
 			error_log( $method . ":{$wgDBname}/{$wgCityId}:" . "wfDebug is not defined");
@@ -445,12 +439,12 @@ class Wikia {
 	 *
 	 * @param String $method - use __METHOD__
 	 */
-	static public function logBacktrace($method) {
+	static public function logBacktrace( $method ) {
 		$backtrace = trim(strip_tags(wfBacktrace()));
 		$message = str_replace("\n", '/', $backtrace);
 
 		// add URL when logging from AJAX requests
-		if (isset($_SERVER['REQUEST_METHOD']) && ($_SERVER['REQUEST_METHOD'] === 'GET') && ($_SERVER['SCRIPT_URL'] === '/wikia.php')) {
+		if ( isset($_SERVER['REQUEST_METHOD']) && ($_SERVER['REQUEST_METHOD'] === 'GET') && ($_SERVER['SCRIPT_URL'] === '/wikia.php') ) {
 			$message .= " URL: {$_SERVER['REQUEST_URI']}";
 		}
 
@@ -465,26 +459,26 @@ class Wikia {
 	 *
 	 * @param String $method - use __METHOD__ as default
 	 */
-	static public function debugBacktrace($method) {
+	static public function debugBacktrace( $method ) {
 		$backtrace = wfDebugBacktrace();
 		$msg = "***** BEGIN *****";
 		Wikia::log($method, false, $msg, true /* $force */);
-		foreach( $backtrace as $call ) {
+		foreach ( $backtrace as $call ) {
 			$msg = "";
-			if( isset( $call['file'] ) ) {
+			if ( isset( $call['file'] ) ) {
 				$f = explode( DIRECTORY_SEPARATOR, $call['file'] );
 				$file = $f[count($f)-1];
 			} else {
 				$file = '-';
 			}
-			if( isset( $call['line'] ) ) {
+			if ( isset( $call['line'] ) ) {
 				$line = $call['line'];
 			} else {
 				$line = '-';
 			}
 			$msg .= "$file line $line calls ";
 
-			if( !empty( $call['class'] ) ) $msg .= $call['class'] . '::';
+			if ( !empty( $call['class'] ) ) $msg .= $call['class'] . '::';
 			$msg .= $call['function'] . '()';
 
 			Wikia::log($method, false, $msg, true /* $force */);
@@ -501,7 +495,7 @@ class Wikia {
 	 * @access public
 	 * @static
 	 *
-	 * @param String $lang  -- language code
+	 * @param string $langCode
 	 *
 	 * @return User -- instance of user object
 	 */
@@ -511,18 +505,18 @@ class Wikia {
 		$staffSigs = wfMsgExt('staffsigs', array('language'=>'en')); // fzy, rt#32053
 
 		$staffUser = false;
-		if( !empty( $staffSigs ) ) {
+		if ( !empty( $staffSigs ) ) {
 			$lines = explode("\n", $staffSigs);
 
 			$data = array();
 			$sectLangCode = '';
 			foreach ( $lines as $line ) {
-				if( strpos( $line, '* ' ) === 0 ) {
+				if ( strpos( $line, '* ' ) === 0 ) {
 					//language line
 					$sectLangCode = trim( $line, '* ' );
 					continue;
 				}
-				if( strpos( $line, '* ' ) == 1 && $sectLangCode ) {
+				if ( strpos( $line, '* ' ) == 1 && $sectLangCode ) {
 					//user line
 					$user = trim( $line, '** ' );
 					$data[$sectLangCode][] = $user;
@@ -530,7 +524,7 @@ class Wikia {
 			}
 
 			//did we get any names for our target language?
-			if( !empty( $data[$langCode] ) ) {
+			if ( !empty( $data[$langCode] ) ) {
 				//pick one
 				$key = array_rand($data[$langCode]);
 
@@ -543,7 +537,7 @@ class Wikia {
 		/**
 		 * fallback to Wikia
 		 */
-		if( ! $staffUser ) {
+		if ( ! $staffUser ) {
 			$staffUser = User::newFromName( 'Wikia' );
 			$staffUser->load();
 		}
@@ -559,16 +553,17 @@ class Wikia {
 	 * or sockets while debugging, but can be used to view any string
 	 * with non-viewable characters.
 	 *
-	 * @version     1.3.2
-	 * @author      Aidan Lister <aidan@php.net>
-	 * @author      Peter Waller <iridum@php.net>
-	 * @link        http://aidanlister.com/repos/v/function.hexdump.php
-	 * @param       string  $data        The string to be dumped
-	 * @param       bool    $htmloutput  Set to false for non-HTML output
-	 * @param       bool    $uppercase   Set to true for uppercase hex
-	 * @param       bool    $return      Set to true to return the dump
+	 * @version 1.3.2
+	 * @author Aidan Lister <aidan@php.net>
+	 * @author Peter Waller <iridum@php.net>
+	 * @link http://aidanlister.com/repos/v/function.hexdump.php
+	 * @param string $data The string to be dumped
+	 * @param bool $htmloutput Set to false for non-HTML output
+	 * @param bool $uppercase Set to true for uppercase hex
+	 * @param bool $return Set to true to return the dump
+	 * @return string
 	 */
-	static public function hex($data, $htmloutput = true, $uppercase = false, $return = false) {
+	static public function hex( $data, $htmloutput = true, $uppercase = false, $return = false ) {
 		// Init
 		$hexi   = '';
 		$ascii  = '';
@@ -580,25 +575,25 @@ class Wikia {
 		$x = ($uppercase === false) ? 'x' : 'X';
 
 		// Iterate string
-		for ($i = $j = 0; $i < $len; $i++) {
+		for ( $i = $j = 0; $i < $len; $i++ ) {
 			// Convert to hexidecimal
 			$hexi .= sprintf("%02$x ", ord($data[$i]));
 
 			// Replace non-viewable bytes with '.'
-			if (ord($data[$i]) >= 32) {
+			if ( ord($data[$i]) >= 32 ) {
 				$ascii .= ($htmloutput === true) ? htmlentities($data[$i]) : $data[$i];
 			} else {
 				$ascii .= '.';
 			}
 
 			// Add extra column spacing
-			if ($j === 7) {
+			if ( $j === 7 ) {
 				$hexi  .= ' ';
 				$ascii .= ' ';
 			}
 
 			// Add row
-			if (++$j === 16 || $i === $len - 1) {
+			if ( ++$j === 16 || $i === $len - 1 ) {
 				// Join the hexi / ascii output
 				$dump .= sprintf("%04$x  %-49s  %s", $offset, $hexi, $ascii);
 
@@ -608,7 +603,7 @@ class Wikia {
 				$j      = 0;
 
 				// Add newline
-				if ($i !== $len - 1) {
+				if ( $i !== $len - 1 ) {
 					$dump .= "\n";
 				}
 			}
@@ -619,7 +614,7 @@ class Wikia {
 		$dump .= "\n";
 
 		// Output method
-		if ($return === false) {
+		if ( $return === false ) {
 			echo $dump;
 		} else {
 			return $dump;
@@ -643,7 +638,7 @@ class Wikia {
 	/**
 	 * Unlock a write lock on the key, based in MessageCache::unlock
 	 */
-	static public function unlock($key) {
+	static public function unlock( $key ) {
 		global $wgMemc;
 		$lockKey = wfMemcKey( $key, "lock" );
 		return $wgMemc->delete( $lockKey );
@@ -653,16 +648,17 @@ class Wikia {
 	/**
 	 * A function for making time periods readable
 	 *
-	 * @author      Aidan Lister <aidan@php.net>
-	 * @version     2.0.0
-	 * @link        http://aidanlister.com/2004/04/making-time-periods-readable/
-	 * @param       int     number of seconds elapsed
-	 * @param       string  which time periods to display
-	 * @param       bool    whether to show zero time periods
+	 * @author Aidan Lister <aidan@php.net>
+	 * @version 2.0.0
+	 * @link http://aidanlister.com/2004/04/making-time-periods-readable/
+	 * @param int $seconds number of seconds elapsed
+	 * @param string $use which time periods to display
+	 * @param bool $zeros whether to show zero time periods
+	 * @return string
 	 */
 	static public function timeDuration( $seconds, $use = null, $zeros = false ) {
 		$seconds = ceil( $seconds );
-		if( $seconds == 0 || $seconds == 1 ) {
+		if ( $seconds == 0 || $seconds == 1 ) {
 			$str = "{$seconds} sec";
 		}
 		else {
@@ -680,12 +676,12 @@ class Wikia {
 
 			// Break into periods
 			$seconds = (float) $seconds;
-			foreach ($periods as $period => $value) {
-				if ($use && strpos($use, $period[0]) === false) {
+			foreach ( $periods as $period => $value ) {
+				if ( $use && strpos($use, $period[0]) === false ) {
 					continue;
 				}
 				$count = floor($seconds / $value);
-				if ($count == 0 && !$zeros) {
+				if ( $count == 0 && !$zeros ) {
 					continue;
 				}
 				$segments[strtolower($period)] = $count;
@@ -693,7 +689,7 @@ class Wikia {
 			}
 
 			// Build the string
-			foreach ($segments as $key => $value) {
+			foreach ( $segments as $key => $value ) {
 				$segment = $value . ' ' . $key;
 				$array[] = $segment;
 			}
@@ -706,10 +702,11 @@ class Wikia {
 	/**
 	 * parse additional option links in RC
 	 *
-	 * @author      Piotr Molski <moli@wikia-inc.com>
-	 * @version     1.0.0
-	 * @param       RC		 RC - RC object
-	 * @param       Array    filters
+	 * @author Piotr Molski <moli@wikia-inc.com>
+	 * @version 1.0.0
+	 * @param RC $RC - RC object
+	 * @param Array $filters
+	 * @return bool
 	 */
 	static public function addRecentChangesFilters( $RC, &$filters ) {
 		$filters['hidelogs'] = array( 'default' => false, 'msg' => 'rcshowhidelogs' );
@@ -720,12 +717,13 @@ class Wikia {
 	/**
 	 * make query with additional options
 	 *
-	 * @author      Piotr Molski <moli@wikia-inc.com>
-	 * @version     1.0.0
-	 * @param       Array    $conds - where conditions in SQL query
-	 * @param       Array    $tables - tables used in SQL query
-	 * @param       Array    $join_conds - joins in SQL query
-	 * @param       FormOptions    $opts - selected options
+	 * @author Piotr Molski <moli@wikia-inc.com>
+	 * @version 1.0.0
+	 * @param Array $conds - where conditions in SQL query
+	 * @param Array $tables - tables used in SQL query
+	 * @param Array $join_conds - joins in SQL query
+	 * @param FormOptions $opts - selected options
+	 * @return bool
 	 */
 	static public function makeRecentChangesQuery ( &$conds, &$tables, &$join_conds, $opts ) {
 		global $wgRequest;
@@ -739,9 +737,10 @@ class Wikia {
 	/**
 	 * disable special pages from the list of specialpages
 	 *
-	 * @author      Piotr Molski <moli@wikia-inc.com>
-	 * @version     1.0.0
-	 * @param       Array    $list - list of specialpages
+	 * @author Piotr Molski <moli@wikia-inc.com>
+	 * @version 1.0.0
+	 * @param Array $list - list of specialpages
+	 * @return bool
 	 */
 	static public function disableSpecialPage ( &$list ) {
 		global $wgDisableSpecialStatistics;
@@ -755,30 +754,31 @@ class Wikia {
 	/**
 	 * notify user on user right change
 	 *
-	 * @author      Piotr Molski <moli@wikia-inc.com>
-	 * @version     1.0.0
-	 * @param       User    $user object
-	 * @param       Array   $addgroup - selected groups for user
-	 * @param       Array   $removegroup - disabled groups for user
+	 * @author Piotr Molski <moli@wikia-inc.com>
+	 * @version 1.0.0
+	 * @param User $user object
+	 * @param Array $addgroup - selected groups for user
+	 * @param Array $removegroup - disabled groups for user
+	 * @return bool
 	 */
 	static public function notifyUserOnRightsChange ( &$user, $addgroup, $removegroup ) {
 		global $wgUsersNotifiedOnAllChanges, $wgUsersNotifiedOfRightsChanges, $wgUser;
 
 		# rt#66961: rights change email sent to !emailconfirmed users
-		if( !$user->isEmailConfirmed() ) {
+		if ( !$user->isEmailConfirmed() ) {
 			#if your not confirmed, no email for you, so dont bother adding to On* lists
 			return true; #i said no, so stop here
 		}
 
 		# FB: 1085 Don't send notif to myself on user rights change
-		if ($user->getID() == $wgUser->getID()) {
+		if ( $user->getID() == $wgUser->getID() ) {
 			return true;
 		}
 
 		// Using wgUsersNotifiedOnAllChanges is a hack to get the UserMailer to notify these users.  The use
 		// of wgUsersNotifiedOfRightsChanges is to prevent the same user from being notified multiple times if
 		// multiple actions occur on the same page.
-		if(!isset($wgUsersNotifiedOfRightsChanges)){
+		if ( !isset($wgUsersNotifiedOfRightsChanges) ) {
 			$wgUsersNotifiedOfRightsChanges = array();
 		}
 		$wgUsersNotifiedOnAllChanges = array_diff($wgUsersNotifiedOnAllChanges, $wgUsersNotifiedOfRightsChanges);
@@ -797,16 +797,17 @@ class Wikia {
 	/**
 	 * find array val for lang key - with variant fallback, eg. zh-tw -> zh
 	 *
-	 * @author      Nef
-	 * @param       Array   $map - lang=>value map
-	 * @param       String  $lang - lang code, eg. zh or zh-tw
-	 * @param       Mixed   $default - if no value found
+	 * @author Nef
+	 * @param Array $map - lang=>value map
+	 * @param String $lang - lang code, eg. zh or zh-tw
+	 * @param Mixed $default - if no value found
+	 * @return Mixed|null
 	 */
-	static public function langToSomethingMap($map, $lang, $default = null) {
+	static public function langToSomethingMap( $map, $lang, $default = null ) {
 
-		if (!empty($map[$lang])) {
+		if ( !empty($map[$lang]) ) {
 			$val = $map[$lang];
-		} elseif (!empty($map[preg_replace("/-.*$/", "", $lang)])) {
+		} elseif ( !empty($map[preg_replace("/-.*$/", "", $lang)]) ) {
 			$val = $map[preg_replace("/-.*$/", "", $lang)];
 		} else {
 			$val = $default;
@@ -902,7 +903,7 @@ class Wikia {
 		global $wgMemc;
 		$key = wfMemcKey("WidgetCategoryCloud", "hidcats");
 		$data = $wgMemc->get($key);
-		if (is_null($data)) {
+		if ( is_null( $data ) ) {
 			$dbr = wfGetDB( DB_SLAVE );
 			$res = $dbr->select(
 					array("page", "page_props"),
@@ -910,7 +911,7 @@ class Wikia {
 					array("page_id = pp_page", "page_namespace" => NS_CATEGORY, "pp_propname" => "hiddencat"),
 					__METHOD__
 					);
-			while ($row = $res->fetchObject()) {
+			while ( $row = $res->fetchObject() ) {
 				$data[] = $row->page_title;
 			}
 			$wgMemc->set($key, $data, 300);
@@ -925,7 +926,7 @@ class Wikia {
 		$data = array();
 
 		$msg = wfMsg($key);
-		if (!wfEmptyMsg($msg, $key)) {
+		if ( !wfEmptyMsg($msg, $key) ) {
 			$data = preg_split("/[*\s,]+/", $msg, null, PREG_SPLIT_NO_EMPTY);
 		}
 		return $data;
@@ -940,12 +941,12 @@ class Wikia {
 		global $wgTitle, $wgArticle;
 		static $result = null;
 
-		if (is_null($result)) {
+		if ( is_null($result) ) {
 			$result = $wgTitle->getArticleId() == Title::newMainPage()->getArticleId() && $wgTitle->getArticleId() != 0;
 
 			// handle redirects
-			if (!$result) {
-				if(!empty($wgArticle->mRedirectedFrom)) {
+			if ( !$result ) {
+				if ( !empty($wgArticle->mRedirectedFrom) ) {
 					$result = wfMsgForContent('mainpage') == $wgArticle->mRedirectedFrom->getPrefixedText();
 				}
 			}
@@ -962,8 +963,8 @@ class Wikia {
 
 		static $result = null;
 
-		if (is_null($result)) {
-			if (in_array($wgTitle->getNamespace(), $wgContentNamespaces)) {
+		if ( is_null($result) ) {
+			if ( in_array($wgTitle->getNamespace(), $wgContentNamespaces) ) {
 				$result = true;
 			} else {
 				$result = false;
@@ -978,7 +979,7 @@ class Wikia {
 	 * Returns true if the currently set skin is Oasis.  Do not call this before the skin
 	 * has been set on wgUser.
 	 */
-	public static function isOasis(){
+	public static function isOasis() {
 		wfProfileIn( __METHOD__ );
 
 		$isOasis = (get_class(RequestContext::getMain()->getSkin()) == 'SkinOasis');
@@ -991,7 +992,7 @@ class Wikia {
 	 * Returns true if the currently set skin is WikiaMobile.  Do not call this before the skin
 	 * has been set on wgUser.
 	 */
-	public static function isWikiaMobile( $skin = null ){
+	public static function isWikiaMobile( $skin = null ) {
 		wfProfileIn( __METHOD__ );
 
 		$isWikiaMobile = ( ( ( !empty( $skin ) ) ? $skin : F::app()->wg->User->getSkin() ) instanceof SkinWikiaMobile );
@@ -1040,16 +1041,16 @@ class Wikia {
 	static public function softwareInfo( &$software ) {
 		global $wgCityId, $wgDBcluster, $wgWikiaDatacenter, $wgLocalFileRepo;
 
-		if( !empty( $wgCityId ) ) {
+		if ( !empty( $wgCityId ) ) {
 			$info = "city_id: {$wgCityId}";
 		}
-		if( empty( $wgDBcluster ) ) {
+		if ( empty( $wgDBcluster ) ) {
 			$info .= ", cluster: c1";
 		}
 		else {
 			$info .= ", cluster: $wgDBcluster";
 		}
-		if( !empty( $wgWikiaDatacenter ) ) {
+		if ( !empty( $wgWikiaDatacenter ) ) {
 			$info .= ", dc: $wgWikiaDatacenter";
 		}
 		$info .= ", file_repo: {$wgLocalFileRepo['backend']}";
@@ -1067,21 +1068,21 @@ class Wikia {
 	 * FIXME: maybe it should be cached?
 	 * @static
 	 * @access public
-	 * @param page_id
-	 * @param oneProp if you just want one property, this will return the value only, not an array
+	 * @param $page_id
+	 * @param string|null $oneProp if you just want one property, this will return the value only, not an array
 	 * @return Array
 	 */
 
 	static public function getProps( $page_id, $oneProp = null ) {
 		wfProfileIn( __METHOD__ );
 		$return = array();
-		if (empty($page_id)) {
+		if ( empty($page_id) ) {
 			wfProfileOut( __METHOD__ );
 			return null;
 		}
 
 		$where = array( "pp_page" => $page_id );
-		if ($oneProp != null) {
+		if ( $oneProp != null ) {
 			$where['pp_propname'] = $oneProp;
 			$return[$oneProp] = '';   // empty default placeholder in case value is not set
 		}
@@ -1092,14 +1093,14 @@ class Wikia {
 			$where,
 			__METHOD__
 		);
-		while( $row = $dbr->fetchObject( $res ) ) {
+		while ( $row = $dbr->fetchObject( $res ) ) {
 			$return[ $row->pp_propname ] = $row->pp_value;
 			Wikia::log( __METHOD__, "get", "id: {$page_id}, key: {$row->pp_propname}, value: {$row->pp_value}" );
 		}
 		$dbr->freeResult( $res );
 		wfProfileOut( __METHOD__ );
 
-		if ($oneProp != null) return $return[$oneProp];
+		if ( $oneProp != null) return $return[$oneProp];
 		return $return;
 	}
 
@@ -1111,15 +1112,16 @@ class Wikia {
 	 *
 	 * @static
 	 * @access public
+	 * @param $page_id
 	 * @param array $props array of properties to save (prop name => prop value)
 	 */
 
 	static public function setProps( $page_id, Array $props ) {
 		wfProfileIn( __METHOD__ );
 
-		if( !wfReadOnly() ){ // Change to wgReadOnlyDbMode if we implement that
+		if ( !wfReadOnly() ) { // Change to wgReadOnlyDbMode if we implement that
 			$dbw = wfGetDB( DB_MASTER );
-			foreach( $props as $sPropName => $sPropValue) {
+			foreach ( $props as $sPropName => $sPropValue ) {
 				$dbw->replace(
 					"page_props",
 					array(
@@ -1156,7 +1158,7 @@ class Wikia {
 		}
 
 		if ( ( $user instanceof User ) && ( 0 === strpos( $user->getName(), 'WikiaTestAccount' ) ) ) {
-			if( !wfReadOnly() ){ // Change to wgReadOnlyDbMode if we implement that
+			if ( !wfReadOnly() ) { // Change to wgReadOnlyDbMode if we implement that
 				$dbw = wfGetDB( DB_MASTER, array(), $wgExternalDatawareDB );
 
 				$dbw->insert( 'ignored_users', array( 'user_id' => $user->getId() ), __METHOD__, "IGNORE" );
@@ -1165,11 +1167,14 @@ class Wikia {
 
 		return true;
 	}
+
 	/**
 	 * build user authentication key
 	 * @static
 	 * @access public
-	 * @param array $params
+	 * @param $username
+	 * @param string $hash_algorithm
+	 * @return bool|string
 	 */
 	static public function buildUserSecretKey( $username, $hash_algorithm = 'sha256' ) {
 		global $wgWikiaAuthTokenKeys;
@@ -1220,15 +1225,15 @@ class Wikia {
 	 *
 	 * @author macbre
 	 */
-	static public function parseMessageToArray($msgName, $forContent = false) {
+	static public function parseMessageToArray( $msgName, $forContent = false ) {
 		wfProfileIn( __METHOD__ );
 		$items = array();
 		$message = $forContent ? wfMsgForContent($msgName) : wfMsg($msgName);
 
-		if (!wfEmptyMsg($msgName, $message)) {
+		if ( !wfEmptyMsg($msgName, $message) ) {
 			$parsed = explode("\n", $message);
 
-			foreach($parsed as $item) {
+			foreach ( $parsed as $item ) {
 				$items[] = trim($item, ' *');
 			}
 		}
@@ -1236,11 +1241,14 @@ class Wikia {
 		wfProfileOut( __METHOD__ );
 		return $items;
 	}
+
 	/**
 	 * check user authentication key
 	 * @static
 	 * @access public
-	 * @param array $params
+	 * @param $url
+	 * @param string $hash_algorithm
+	 * @return array|bool
 	 */
 	static public function verifyUserSecretKey( $url, $hash_algorithm = 'sha256' ) {
 		global $wgWikiaAuthTokenKeys;
@@ -1248,7 +1256,7 @@ class Wikia {
 
 		@list( $user, $signature1, $signature2, $public_key ) = explode("|", base64_decode( strtr($url, '-_,', '+/=') ));
 
-		if ( empty( $user ) || empty( $signature1 ) || empty( $signature2 ) || empty ( $public_key) ) {
+		if ( empty( $user ) || empty( $signature1 ) || empty( $signature2 ) || empty( $public_key) ) {
 			wfProfileOut( __METHOD__ );
 			return false;
 		}
@@ -1298,7 +1306,7 @@ class Wikia {
 	 *
 	 * @static
 	 * @author Piotr Molski (moli) <moli at wikia-inc.com>
-	 * @param int $maxSleep
+	 * @param $WFLoader
 	 * @return null
 	 */
 	static function switchDBToLightMode( $WFLoader ) {
@@ -1324,7 +1332,7 @@ class Wikia {
 		#if this opt is set, fake their conf status to OFF, and stop here.
 		$user = User::newFromName( $to->name );
 
-		if( $user instanceof User && $user->getBoolOption('unsubscribed') ) {
+		if ( $user instanceof User && $user->getBoolOption('unsubscribed') ) {
 			return false;
 		}
 
@@ -1353,7 +1361,7 @@ class Wikia {
 	 * @return Linker
 	 */
 	private static function getLinker() {
-		if (!is_object(self::$cachedLinker)) {
+		if ( !is_object(self::$cachedLinker) ) {
 			self::$cachedLinker = new Linker();
 		}
 
@@ -1367,45 +1375,48 @@ class Wikia {
 	 * View::normalPageLink('Somewhere', 'button-createpage', 'wikia-button');
 	 * View::normalPageLink('Somewhere', 'oasis-button-random-page', 'wikia-button secondary', 'icon_button_random.png') ?>
 	 *
- 	 * @param title Title - the Title of the page to link to
+	 * @param Title $title
+	 * @param string $message
+	 * @param null|String $class
+	 * @param null|String $img
+	 * @param null|String $alt
+	 * @param null|String $imgclass
+	 * @param null|array $query
 	 * @param message String - the name of a message to use as the link text
-	 * @param class String - [optional] the name of a css class for button styling or array of HTML attributes for button
-	 * @param img String - [optional] the name of an image to pre-pend to the text (for secondary buttons)
-	 * @param alt String - [optional] the name of a message to be used as link tooltip
-	 * @param imgclass String - [optional] the name of a css class for the image (for secondary buttons)
-	 * @param query array [optional] query parameters
+	 * @return string
+	 * @internal param \Title $title - the Title of the page to link to
 	 */
-	static function normalPageLink($title, $message = '', $class = null, $img = null, $alt = null, $imgclass = null, $query = null, $rel = null) {
+	static function normalPageLink( $title, $message = '', $class = null, $img = null, $alt = null, $imgclass = null, $query = null, $rel = null ) {
 		global $wgStylePath, $wgBlankImgUrl;
 
 		$classes = array();
-		if (is_string($class)) {
+		if ( is_string($class) ) {
 			$classes['class'] = $class;
 		}
-		else if (is_array($class)) {
+		else if ( is_array($class) ) {
 			$classes = $class;
 		}
 
-		if ($alt != '') {
+		if ( $alt != '' ) {
 			$classes['title'] = wfMsg($alt);
 		}
 
-		if ($alt != '') {
+		if ( $alt != '' ) {
 			$classes['rel'] = $rel;
 		}
 
-		if ($message != '') {
+		if ( $message != '' ) {
 			$message = wfMsg($message);
 		}
 		// Image precedes message text
-		if ($img != null) {
+		if ( $img != null ) {
 			$src = (($img == 'blank.gif') ? $wgBlankImgUrl : "{$wgStylePath}/common/{$img}");
 			$attr = array('src' => $src);
-			if ($img == 'blank.gif') {
+			if ( $img == 'blank.gif' ) {
 				$attr['height'] = '0';
 				$attr['width'] = '0';
 			}
-			if ($imgclass != '') {
+			if ( $imgclass != '' ) {
 				$attr['class'] = $imgclass;
 			}
 			$message = Xml::element('img', $attr) . ' ' . $message;
@@ -1438,16 +1449,17 @@ class Wikia {
 	 * View::specialPageLink('CreatePage', 'button-createpage', 'wikia-button');
 	 * View::specialPageLink('Random', 'oasis-button-random-page', 'wikia-button secondary', 'icon_button_random.png') ?>
 	 *
+	 * @param String $pageName
+	 * @param string $message
+	 * @param null|String $class
+	 * @param null|String $img
+	 * @param null|String $alt
+	 * @param null|String $imgclass
 	 * @param pageName String - the name of the special page to link to
-	 * @param msg String - the name of a message to use as the link text
-	 * @param class String - [optional] the name of a css class for button styling or array of HTML attributes for button
-	 * @param img String - [optional] the name of an image to pre-pend to the text (for secondary buttons)
-	 * @param alt String - [optional] the name of a message to be used as link tooltip
-	 * @param imgclass String - [optional] the name of a css class for the image (for secondary buttons)
-	 * @param rel String - [optional] the link's rel attribute
+	 * @param null|String $rel
+	 * @return string
 	 */
-	static function specialPageLink($pageName, $message = '', $class = null, $img = null, $alt = null, $imgclass = null, $query = null, $rel = null)
-	{
+	static function specialPageLink( $pageName, $message = '', $class = null, $img = null, $alt = null, $imgclass = null, $query = null, $rel = null ) {
 		$title = SpecialPage::getTitleFor( $pageName );
 		return self::normalPageLink($title, $message, $class, $img, $alt, $imgclass, $query, $rel);
 	}
@@ -1455,7 +1467,7 @@ class Wikia {
 	/**
 	 * Call Linker::link method to generate HTML links from Title object
 	 */
-	static function link($target, $text = null, $customAttribs = array(), $query = array(), $options = array()) {
+	static function link( $target, $text = null, $customAttribs = array(), $query = array(), $options = array() ) {
 		$linker = self::getLinker();
 		return $linker->link($target, $text, $customAttribs, $query, $options);
 	}
@@ -1502,7 +1514,7 @@ class Wikia {
 			$data = json_encode( $message );
 			WScribeClient::singleton('trigger')->send($data);
 		}
-		catch( TException $e ) {
+		catch ( TException $e ) {
 			Wikia::log( __METHOD__, 'scribeClient exception', $e->getMessage() );
 		}
 
@@ -1514,7 +1526,7 @@ class Wikia {
 	 *
 	 * @author macbre
 	 */
-	static public function onMediaWikiGetAction(MediaWiki $mediaWiki, RequestContext $context) {
+	static public function onMediaWikiGetAction( MediaWiki $mediaWiki, RequestContext $context ) {
 		global $wgDisabledActionsWithViewFallback;
 		$request = $context->getRequest();
 		$action = $request->getVal('action', 'view');
@@ -1536,33 +1548,33 @@ class Wikia {
 	 * @param Array $urls list of URLs to be purged
 	 * @return mixed true - it's a hook
 	 */
-	static public function onTitleGetSquidURLs(Title $title, Array &$urls) {
+	static public function onTitleGetSquidURLs( Title $title, Array &$urls ) {
 		global $wgUseSiteJs, $wgAllowUserJs, $wgUseSiteCss, $wgAllowUserCss;
 		global $wgOut;
 		wfProfileIn(__METHOD__);
 
 		$link = null;
-		if( $wgUseSiteJs && $title->getNamespace() == NS_MEDIAWIKI ) {
-			if( $title->getText() == 'Common.js' || $title->getText() == 'Wikia.js') {
+		if ( $wgUseSiteJs && $title->getNamespace() == NS_MEDIAWIKI ) {
+			if ( $title->getText() == 'Common.js' || $title->getText() == 'Wikia.js' ) {
 				$wgOut->setAllowedModules( ResourceLoaderModule::TYPE_SCRIPTS, ResourceLoaderModule::ORIGIN_ALL );
 				$link = $wgOut->makeResourceLoaderLink( 'site', ResourceLoaderModule::TYPE_SCRIPTS );
 			}
 		}
-		if ($wgUseSiteCss && $title->getNamespace() == NS_MEDIAWIKI ) {
-			if( $title->getText() == 'Common.css' || $title->getText() == 'Wikia.css' ) {
+		if ( $wgUseSiteCss && $title->getNamespace() == NS_MEDIAWIKI ) {
+			if ( $title->getText() == 'Common.css' || $title->getText() == 'Wikia.css' ) {
 				$wgOut->setAllowedModules( ResourceLoaderModule::TYPE_STYLES, ResourceLoaderModule::ORIGIN_ALL );
 				$link = $wgOut->makeResourceLoaderLink( 'site', ResourceLoaderModule::TYPE_STYLES );
 			}
 		}
-		if( $wgAllowUserJs && $title->isJsSubpage() ) {
+		if ( $wgAllowUserJs && $title->isJsSubpage() ) {
 			$wgOut->setAllowedModules( ResourceLoaderModule::TYPE_SCRIPTS, ResourceLoaderModule::ORIGIN_ALL );
 			$link = $wgOut->makeResourceLoaderLink( 'user', ResourceLoaderModule::TYPE_SCRIPTS );
 		}
-		if( $wgAllowUserCss && $title->isCssSubpage() ) {
+		if ( $wgAllowUserCss && $title->isCssSubpage() ) {
 			$wgOut->setAllowedModules( ResourceLoaderModule::TYPE_STYLES, ResourceLoaderModule::ORIGIN_ALL );
 			$link = $wgOut->makeResourceLoaderLink( 'user', ResourceLoaderModule::TYPE_STYLES );
 		}
-		if ($link != null) {
+		if ( $link != null ) {
 			// extract the url from the link src
 			preg_match("/.*\"(.*)\"/", $link, $matches);
 			if ( isset($matches[1]) ) {
@@ -1577,14 +1589,14 @@ class Wikia {
 	/**
 	 * Add variables to SkinTemplate
 	 */
-	static public function onSkinTemplateOutputPageBeforeExec(SkinTemplate $skinTemplate, QuickTemplate $tpl) {
+	static public function onSkinTemplateOutputPageBeforeExec( SkinTemplate $skinTemplate, QuickTemplate $tpl ) {
 		wfProfileIn(__METHOD__);
 
 		$out = $skinTemplate->getOutput();
 		$title = $skinTemplate->getTitle();
 
 		# quick hack for rt#15730; if you ever feel temptation to add 'elseif' ***CREATE A PROPER HOOK***
-		if (($title instanceof Title) && NS_CATEGORY == $title->getNamespace()) { // FIXME
+		if ( ($title instanceof Title) && NS_CATEGORY == $title->getNamespace() ) { // FIXME
 			$tpl->set( 'pagetitle', preg_replace("/^{$title->getNsText()}:/", '', $out->getHTMLTitle()));
 		}
 
@@ -1603,12 +1615,12 @@ class Wikia {
 	 *
 	 * @author macbre
 	 */
-	static public function onAfterInitialize($title, $article, $output, $user, WebRequest $request, $wiki) {
+	static public function onAfterInitialize( $title, $article, $output, $user, WebRequest $request, $wiki ) {
 		// allinone
 		global $wgResourceLoaderDebug, $wgAllInOne, $wgUseSiteJs, $wgUseSiteCss, $wgAllowUserJs, $wgAllowUserCss;
 
 		$wgAllInOne = $request->getBool('allinone', $wgAllInOne) !== false;
-		if ($wgAllInOne === false) {
+		if ( $wgAllInOne === false ) {
 			$wgResourceLoaderDebug = true;
 			wfDebug("Wikia: using resource loader debug mode\n");
 		}
@@ -1637,7 +1649,7 @@ class Wikia {
 	 */
 	static public function ord( $char, $encoding = 'UTF-8' ) {
 		$char = mb_convert_encoding($char,'UCS-4BE',$encoding);
-		if ($char == '')
+		if ( $char == '')
 			return false;
 
 		return reset(unpack("N",$char));
@@ -1674,21 +1686,21 @@ class Wikia {
 	static public function getFacebookDomainId() {
 		global $wgServer, $fbAccessToken, $fbDomain, $wgMemc;
 
-		if (!$fbAccessToken || !$fbDomain)
+		if ( !$fbAccessToken || !$fbDomain)
 			return false;
 
 		wfProfileIn(__METHOD__);
 		$memckey = wfMemcKey('fbDomainId');
 		$result = $wgMemc->get($memckey);
-		if (is_null($result)) {
-			if (preg_match('/\/\/(\w*)\./',$wgServer,$matches)) {
+		if ( is_null($result) ) {
+			if ( preg_match('/\/\/(\w*)\./',$wgServer,$matches) ) {
 				$domain = $matches[1].$fbDomain;
 			} else {
 				$domain = str_replace('http://', '', $wgServer);
 			}
 			$url = 'https://graph.facebook.com/?domain='.$domain;
 			$response = json_decode(Http::get($url));
-			if (isset($response->id)) {
+			if ( isset($response->id) ) {
 				$result = $response->id;
 			} else {
 				$result = 0;  // If facebook tells us nothing, don't keep trying, just give up until cache expires
@@ -1734,7 +1746,7 @@ class Wikia {
 			$data = json_encode( $message );
 			WScribeClient::singleton('trigger')->send($data);
 		}
-		catch( TException $e ) {
+		catch ( TException $e ) {
 			Wikia::log( __METHOD__, 'scribeClient exception', $e->getMessage() );
 		}
 
@@ -1805,6 +1817,8 @@ class Wikia {
 	 * Control memcache behavior
 	 *
 	 * @param WebRequest $request
+	 * @param $user
+	 * @return bool
 	 */
 	static public function setUpMemcachePurge( WebRequest $request, $user ) {
 		global $wgAllowMemcacheDisable, $wgAllowMemcacheReads, $wgAllowMemcacheWrites, $wgDevelEnvironment;
@@ -1853,17 +1867,21 @@ class Wikia {
 	}
 
 	/**
-	* FIX FOR bugId:42480 File rename is not completed when replacement is required
-	* "When moving a file to a file name that already belongs to an existing file,
-	* it gives you the option to delete the existing file to make way for the move.
-	* After completion, it deletes the existing file as intended, but the file
-	* that you originally wanted to move is not moved, and keeps it's previous file name."
-	*
-	* That is because $nt (NewTitle) -> getArticleId() returns value that is cached
-	* (after delete it should be 0)
+	 * FIX FOR bugId:42480 File rename is not completed when replacement is required
+	 * "When moving a file to a file name that already belongs to an existing file,
+	 * it gives you the option to delete the existing file to make way for the move.
+	 * After completion, it deletes the existing file as intended, but the file
+	 * that you originally wanted to move is not moved, and keeps it's previous file name."
+	 *
+	 * That is because $nt (NewTitle) -> getArticleId() returns value that is cached
+	 * (after delete it should be 0)
 	 *
 	 * @param WikiPage $page
-	*/
+	 * @param $user
+	 * @param $reason
+	 * @param $id
+	 * @return bool
+	 */
 	public static function onArticleDeleteComplete( $page, $user, $reason, $id ) {
 
 		$title = $page->getTitle();
@@ -1886,7 +1904,7 @@ class Wikia {
 			$title = Title::newMainPage();
 		} else {
 			$title = Title::newFromText($request->getVal('title', 'AJAX'), $request->getInt('namespace', NS_MAIN));
-			if (!$title instanceof Title) {
+			if ( !$title instanceof Title ) {
 				$title = Title::makeTitle( NS_MAIN, 'AJAX' );
 			}
 		}
@@ -1895,7 +1913,7 @@ class Wikia {
 
 	public static function renameArrayKeys( $array, $mapping ) {
 		$newArray = array();
-		foreach ($array as $k => $v) {
+		foreach ( $array as $k => $v ) {
 			$k = array_key_exists($k,$mapping) ? $mapping[$k] : $k;
 			$newArray[$k] = $v;
 		}
@@ -1911,8 +1929,8 @@ class Wikia {
 	 * @author grunny
 	 * @param integer $id User identifier
 	 * @param Title $title User page title
-	 * @param Array $tools An array of tool links
-	 * @return bool true
+	 * @param $links
+	 * @return bool
 	 */
 	public static function onContributionsToolLinks( $id, $title, &$links ) {
 		global $wgUser, $wgCityId;
@@ -1933,7 +1951,7 @@ class Wikia {
 	 * @param $out OutputPage
 	 * @return bool
 	 */
-	public static function onAjaxAddScript(OutputPage $out) {
+	public static function onAjaxAddScript( OutputPage $out ) {
 		// because of dependency resolving this module needs to be loaded via JavaScript
 		$out->addModules( 'amd.shared' );
 		return true;
@@ -1949,7 +1967,7 @@ class Wikia {
 	 * @param array $error
 	 * @return bool
 	 */
-	public static function onUploadVerifyFile(UploadBase $upload, $mime, &$error) {
+	public static function onUploadVerifyFile( UploadBase $upload, $mime, &$error ) {
 		// only check supported images
 		$mimeTypes = array(
 			'image/gif',
@@ -1957,7 +1975,7 @@ class Wikia {
 			'image/png',
 		);
 
-		if (!in_array($mime, $mimeTypes)) {
+		if ( !in_array($mime, $mimeTypes) ) {
 			return true;
 		}
 
@@ -1969,7 +1987,7 @@ class Wikia {
 
 		$isValid = ($retVal === 0);
 
-		if (!$isValid) {
+		if ( !$isValid ) {
 			Wikia::log(__METHOD__, 'failed',  rtrim($output), true);
 
 			// pass an error to UploadBase class
@@ -1979,10 +1997,11 @@ class Wikia {
 		return $isValid;
 	}
 
-	/*
-	 * @param $user_name String
-	 * @param $s ResultWrapper
-	 * @param $bUserObject boolean Return instance of User if true; StdClass (row) otherwise.
+	/**
+	 * @param string $user_name
+	 * @param ResultWrapper $s
+	 * @param bool $bUserObject Return instance of User if true; StdClass (row) otherwise.
+	 * @return bool
 	 */
 	public static function onUserNameLoadFromId( $user_name, &$s, $bUserObject = false ) {
 		global $wgExternalAuthType;
@@ -2000,6 +2019,7 @@ class Wikia {
 	/**
 	 * @param $user User
 	 * @param $s ResultWrapper
+	 * @return bool
 	 */
 	public static function onUserLoadFromDatabase( $user, &$s ) {
 		/* wikia change */
@@ -2038,7 +2058,7 @@ class Wikia {
 
 		$sources = AssetsManager::getInstance()->getURL( $assetName, $type, $local );
 
-		foreach($sources as $src){
+		foreach ( $sources as $src ) {
 			switch ( $type ) {
 				case AssetsManager::TYPE_CSS:
 				case AssetsManager::TYPE_SCSS:
@@ -2053,6 +2073,10 @@ class Wikia {
 
 	/**
 	 * @param $user User
+	 * @param bool $disabled
+	 * @param bool $keepEmail
+	 * @param bool $ajax
+	 * @return bool
 	 */
 	public static function invalidateUser( $user, $disabled = false, $keepEmail = true, $ajax = false ) {
 		global $wgExternalAuthType;
@@ -2095,7 +2119,7 @@ class Wikia {
 	 * @param array $repo $wgLocalFileRepo
 	 * @return bool true - it's a hook
 	 */
-	static function onAfterSetupLocalFileRepo(Array &$repo) {
+	static function onAfterSetupLocalFileRepo( Array &$repo ) {
 		// $wgUploadPath: http://images.wikia.com/poznan/pl/images
 		// $wgFSSwiftContainer: poznan/pl
 		global $wgFSSwiftContainer, $wgFSSwiftServer, $wgEnableSwiftFileBackend, $wgUploadPath;
@@ -2125,7 +2149,7 @@ class Wikia {
 	 * @param string $hash file hash
 	 * @return bool true - it's a hook
 	 */
-	static function onBeforeRenderTimeline(&$backend, &$fname, $hash) {
+	static function onBeforeRenderTimeline( &$backend, &$fname, $hash ) {
 		global $wgEnableSwiftFileBackend, $wgFSSwiftContainer;
 
 		if ( !empty( $wgEnableSwiftFileBackend ) ) {
@@ -2141,6 +2165,7 @@ class Wikia {
 	 *
 	 * @param File $file image to purge
 	 * @param array $urls URLs to purge generated by MW core
+	 * @return bool
 	 */
 	static function onLocalFileExecuteUrls( File $file, Array &$urls ) {
 		if ( strpos( $file->getName(), 'Temp_file_' ) === 0  && $file->getExtension() === '' ) {
@@ -2156,17 +2181,18 @@ class Wikia {
 	 *
 	 * See BAC-1227 for details
 	 *
-	 * @param WikiPage $article
+	 * @param \Article|\WikiPage $article
 	 * @param ParserOptions $popts
 	 * @param $eTag
+	 * @return bool
 	 * @author macbre
 	 */
-	static function onParserCacheGetETag(Article $article, ParserOptions $popts, &$eTag) {
+	static function onParserCacheGetETag( Article $article, ParserOptions $popts, &$eTag ) {
 		global $wgStyleVersion, $wgUser, $wgCacheEpoch;
 		$touched = $article->getTouched();
 
 		// don't emit the default touched value set in WikiPage class (see CONN-430)
-		if ($touched === '19700101000000') {
+		if ( $touched === '19700101000000' ) {
 			$eTag = '';
 			return true;
 		}
@@ -2188,7 +2214,7 @@ class Wikia {
 	 * @param WebResponse $response
 	 * @author macbre
 	 */
-	private static function addExtraHeaders(WebResponse $response) {
+	private static function addExtraHeaders( WebResponse $response ) {
 		global $wgRequestTime;
 		$elapsed = microtime( true ) - $wgRequestTime;
 
@@ -2205,11 +2231,10 @@ class Wikia {
 	 * See BAC-550 for details
 	 *
 	 * @param OutputPage $out
-	 * @param Skin $sk
 	 * @return bool
 	 * @author macbre
 	 */
-	static function onBeforeSendCacheControl(OutputPage $out) {
+	static function onBeforeSendCacheControl( OutputPage $out ) {
 		self::addExtraHeaders( $out->getRequest()->response() );
 		return true;
 	}
@@ -2224,7 +2249,7 @@ class Wikia {
 	 * @return bool
 	 * @author macbre
 	 */
-	static function onResourceLoaderAfterRespond(ResourceLoader $rl, ResourceLoaderContext $context) {
+	static function onResourceLoaderAfterRespond( ResourceLoader $rl, ResourceLoaderContext $context ) {
 		self::addExtraHeaders( $context->getRequest()->response() );
 		return true;
 	}
@@ -2237,7 +2262,7 @@ class Wikia {
 	 * @return bool
 	 * @author macbre
 	 */
-	static function onNirvanaAfterRespond(WikiaApp $app, WikiaResponse $response) {
+	static function onNirvanaAfterRespond( WikiaApp $app, WikiaResponse $response ) {
 		self::addExtraHeaders( $app->wg->Request->response() );
 		return true;
 	}
@@ -2252,8 +2277,8 @@ class Wikia {
 	 * @return bool
 	 * @author macbre
 	 */
-	static function onTitleGetLangVariants(Language $contLang, Array &$variants) {
-		switch($contLang->getCode()) {
+	static function onTitleGetLangVariants( Language $contLang, Array &$variants ) {
+		switch ( $contLang->getCode() ) {
 			case 'zh':
 				// skin displays links to these variants only
 				$variants = ['zh-hans', 'zh-hant'];
@@ -2306,6 +2331,7 @@ class Wikia {
 			return [];
 		}
 
+		$countryNames = [];
 		foreach ( $countryCodes as $countryCode ) {
 			if ( isset( $countries[$countryCode] ) ) {
 				$countryNames[$countryCode] = $countries[$countryCode];
