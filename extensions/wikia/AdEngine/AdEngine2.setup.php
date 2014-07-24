@@ -1,7 +1,6 @@
 <?php
 
 // Autoload
-$wgAutoloadClasses['AdServer'] =  __DIR__ . '/AdServer.php';
 $wgAutoloadClasses['AdEngine2Controller'] =  __DIR__ . '/AdEngine2Controller.class.php';
 $wgAutoloadClasses['AdEngine2ExitstitialHooks'] =  __DIR__ . '/AdEngine2ExitstitialHooks.class.php';
 $wgAutoloadClasses['AdEngine2Hooks'] =  __DIR__ . '/AdEngine2Hooks.class.php';
