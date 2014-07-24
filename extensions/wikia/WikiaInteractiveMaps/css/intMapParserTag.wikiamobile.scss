@@ -35,3 +35,9 @@
 		height: 100%;
 	}
 }
+
+// Android 2.3 fix for rendering issues
+.wikia-interactive-map-thumbnail,
+.wikia-interactive-map-thumbnail figcaption {
+	display: block;
+}

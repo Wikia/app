@@ -10,7 +10,7 @@
  */
 
 (function( window, undefined ) {
-	var possible_domains, i;
+	var possible_domains, i, cookieExists;
 	/**
 	 * Main Tracker
 	 *
@@ -18,10 +18,20 @@
 	 */
 	window._gaq = window._gaq || [];
 
+	cookieExists= function(cookieName) {
+		return document.cookie.indexOf(cookieName) > -1;
+	};
+
 	// Main Roll-up Account - UA-32129070-1
 	window._gaq.push( ['_setAccount', 'UA-32129070-1'] ); // PROD
 	//window._gaq.push(['_setAccount', 'UA-32129070-2']); // DEV
-	window._gaq.push( ['_setSampleRate', '10'] ); // 10% Sampling
+
+	if(!cookieExists('qualaroo_survey_submission')) {
+		window._gaq.push(['_setSampleRate', '10']);
+	} else {
+		// 100% sampling for users who participated in Qualaroo survey
+		window._gaq.push(['_setSampleRate', '100']);
+	}
 
 	if ( window.wgIsGASpecialWiki ) {
 		// Special Wikis account - UA-32132943-1

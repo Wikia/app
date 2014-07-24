@@ -253,12 +253,13 @@ class WikiaMaps extends WikiaObject {
 	 * Sends a request to delete a map instance
 	 *
 	 * @param integer $mapId
+	 * @param integer $deleted Is map being deleted or undeleted
 	 *
 	 * @return bool
 	 */
-	public function deleteMapById( $mapId ) {
+	public function updateMapDeletionStatus( $mapId, $deleted ) {
 		$payload = [
-			'deleted' => true
+			'deleted' => $deleted
 		];
 		$url = $this->buildUrl( [ self::ENTRY_POINT_MAP, $mapId ] );
 		return $this->putRequest( $url, $payload );

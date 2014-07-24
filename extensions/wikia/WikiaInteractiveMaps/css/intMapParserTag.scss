@@ -13,6 +13,7 @@ $max-view-button-width: 230px;
 $modal-header-footer-height: 45px;
 
 .wikia-interactive-map-thumbnail {
+	clear: both;
 	cursor: pointer;
 	height: $default-height;
 	line-height:22px;
