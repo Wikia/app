@@ -128,8 +128,8 @@ class ThumbnailVideo extends ThumbnailImage {
 
 		wfProfileIn( __METHOD__ );
 
-		// All non-WikiaMobile skins use Nirvana to render HTML now
-		if ( !F::app()->checkSkin( 'wikiamobile' ) ) {
+		// All non-WikiaMobile skins use Nirvana to render HTML now. WikiaMobile is slowly migrating with 'useTemplate'
+		if ( !F::app()->checkSkin( 'wikiamobile' ) || !empty( $options['useTemplate'] ) ) {
 			$html = $this->renderView( $options );
 
 			wfProfileOut( __METHOD__ );
