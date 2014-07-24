@@ -1700,6 +1700,8 @@ ve.init.mw.ViewPageTarget.prototype.onBeforeUnload = function () {
 	var fallbackResult,
 		message,
 		onBeforeUnloadHandler = this.onBeforeUnloadHandler;
+
+	this.emit( 'beforeUnload' );
 	// Check if someone already set on onbeforeunload hook
 	if ( this.onBeforeUnloadFallback ) {
 		// Get the result of their onbeforeunload hook

@@ -19,6 +19,8 @@ ve.init.mw.WikiaViewPageTarget = function VeInitMwWikiaViewPageTarget() {
 	// Parent constructor
 	ve.init.mw.WikiaViewPageTarget.super.call( this );
 
+	// Properties
+	this.events = new ve.init.mw.WikiaTargetEvents( this );
 	this.toolbarSaveButtonEnableTracked = false;
 };
 
@@ -125,7 +127,11 @@ ve.init.mw.WikiaViewPageTarget.prototype.onToolbarCancelButtonClick = function (
 			isDirty: !this.toolbarSaveButton.isDisabled() ? 'yes' : 'no'
 		} );
 	}
-	ve.track( 'wikia', { 'action': ve.track.actions.CLICK, 'label': 'button-cancel' } );
+	ve.track( 'wikia', {
+		'action': ve.track.actions.CLICK,
+		'label': 'button-cancel',
+		'duration': ve.now() - this.events.timings.surfaceReady
+	} );
 	mw.hook( 've.cancelButton' ).fire();
 	/*
 	// Trigger Qualaroo survey for anonymous users abandoning edit
@@ -151,7 +157,11 @@ ve.init.mw.WikiaViewPageTarget.prototype.onToolbarSaveButtonClick = function () 
 		window.optimizely.push( ['trackEvent', 've-save-button-click'] );
 	}
 
-	ve.track( 'wikia', { 'action': ve.track.actions.CLICK, 'label': 'button-publish' } );
+	ve.track( 'wikia', {
+		'action': ve.track.actions.CLICK,
+		'label': 'button-publish',
+		'duration': ve.now() - this.events.timings.surfaceReady
+	} );
 	ve.init.mw.ViewPageTarget.prototype.onToolbarSaveButtonClick.call( this );
 };
 
@@ -177,7 +187,11 @@ ve.init.mw.WikiaViewPageTarget.prototype.updateToolbarSaveButtonState = function
 			window.optimizely = window.optimizely || [];
 			window.optimizely.push( ['trackEvent', 've-save-button-enable'] );
 		}
-		ve.track( 'wikia', { 'action': ve.track.actions.ENABLE, 'label': 'button-publish' } );
+		ve.track( 'wikia', {
+			'action': ve.track.actions.ENABLE,
+			'label': 'button-publish',
+			'duration': ve.now() - this.events.timings.surfaceReady
+		} );
 	}
 };
 
@@ -230,7 +244,7 @@ ve.init.mw.WikiaViewPageTarget.prototype.maybeShowDialogs = function () {
 /**
  * @inheritdoc
  */
-ve.init.mw.ViewPageTarget.prototype.replacePageContent = function ( html, categoriesHtml ) {
+ve.init.mw.WikiaViewPageTarget.prototype.replacePageContent = function ( html, categoriesHtml ) {
 	var insertTarget,
 		$mwContentText = $( '#mw-content-text' ),
 		$content = $( $.parseHTML( html ) );
