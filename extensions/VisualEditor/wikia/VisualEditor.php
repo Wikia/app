@@ -192,6 +192,8 @@ $wgHooks['MakeGlobalVariablesScript'][] = 'VisualEditorWikiaHooks::onMakeGlobalV
 
 /* Configuration */
 
+$wgDefaultUserOptions['useeditwarning'] = true;
+
 // Disable VE for blog namespaces
 if ( !empty( $wgEnableBlogArticles ) ) {
 	$tempArray = array();
