@@ -139,7 +139,11 @@ class CrunchyrollFeedIngester extends VideoFeedIngester {
 		$numItems = $items->length;
 		$this->videoFound( $numItems );
 
-		$language = $this->convertLanguageCode( $doc->getElementsByTagName( 'language' )->item( 0 )->textContent );
+		$language = null;
+		$elements = $doc->getElementsByTagName( 'language' );
+		if ( $elements->length > 0 ) {
+			$this->convertLanguageCode( $elements->item( 0 )->textContent );
+		}
 
 		for ( $i = 0; $i < $numItems; ++$i ) {
 			$clipData = [];
@@ -157,10 +161,24 @@ class CrunchyrollFeedIngester extends VideoFeedIngester {
 				continue;
 			}
 
+			// Skip the premium videos - free publish date for them is in the future
+			$elements = $item->getElementsByTagName( 'freePubDate' );
+			if ( $elements->length > 0 ) {
+				$freePublishDate = strtotime( $elements->item( 0 )->textContent );
+				if ( $freePublishDate > time() ) {
+					$this->videoSkipped( "\nPremium video (title: {$clipData['titleName']})" );
+					continue;
+				}
+			}
+
 			$clipData['name'] = $clipData['titleName'];
 
 			$elements = $item->getElementsByTagName( 'description' );
-			$clipData['description'] = ( $elements->length > 0 ) ? $elements->item( 0 )->textContent : '';
+			if ( $elements->length > 0 ) {
+				$clipData['description'] = trim( html_entity_decode( $elements->item( 0 )->textContent ) );
+			} else {
+				$clipData['description'] = '';
+			}
 
 			// check for video id
 			$elements = $item->getElementsByTagName( 'mediaId' );
@@ -188,11 +206,9 @@ class CrunchyrollFeedIngester extends VideoFeedIngester {
 
 			$clipData['ageRequired'] = $clipData['ageGate'] ? '13' : '';
 
-			$this->getTitleName( $clipData['titleName'], $clipData['videoId'] );
-
 			$clipData['published'] = strtotime( $item->getElementsByTagName( 'pubDate' )->item( 0 )->textContent );
 			$clipData['publisher'] = $item->getElementsByTagName( 'publisher' )->item( 0 )->textContent;
-			$clipData['expirationDate'] = strtotime( $item->getElementsByTagName( 'endPubDate' )->item( 0 )->textContent );
+			$clipData['expirationDate'] = strtotime( $item->getElementsByTagName( 'freeEndPubDate' )->item( 0 )->textContent );
 			$clipData['videoUrl'] = urldecode( $item->getElementsByTagName( 'link' )->item( 0 )->textContent );
 
 			$clipData['subtitle'] = $this->convertSubtitleLanguageCode(
@@ -219,7 +235,9 @@ class CrunchyrollFeedIngester extends VideoFeedIngester {
 				$clipData['type'] = '';
 			}
 
-			$clipData['language'] = $language;
+			if ( $language ) {
+				$clipData['language'] = $language;
+			}
 			$clipData['duration'] = $item->getElementsByTagName( 'duration' )->item( 0 )->textContent;
 
 			$clipData['genres'] = [ ];
@@ -283,28 +301,6 @@ class CrunchyrollFeedIngester extends VideoFeedIngester {
 		$metadata['uniqueName'] = empty( $data['uniqueName'] ) ? '' : $data['uniqueName'];
 
 		return $metadata;
-	}
-
-	/**
-	 * get title
-	 * @param string $titleName
-	 * @param string $code - video id
-	 */
-	protected function getTitleName( &$titleName, $code ) {
-		wfProfileIn( __METHOD__ );
-
-		$url = CrunchyrollApiWrapper::getApi( $code );
-		$response = Http::request( 'GET', $url, array( 'noProxy' => true ) );
-		if ( $response !== false ) {
-			$content = json_decode( $response, true );
-
-			$title = CrunchyrollApiWrapper::getClipName( $content );
-			if ( !empty( $title ) ) {
-				$titleName = $title;
-			}
-		}
-
-		wfProfileOut( __METHOD__ );
 	}
 
 	/**
