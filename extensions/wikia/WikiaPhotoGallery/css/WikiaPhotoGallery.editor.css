@@ -698,13 +698,6 @@ img.WikiaPhotoGalleryProgress {
 	padding: 0;
 }
 
-#WikiaPhotoGallerySliderEditorPreview .Wikia-video-play-button:hover {
-	cursor: auto;
-	opacity: .65;
-	filter: alpha(opacity = 65);
-}
-
-
 #WikiaPhotoGallerySliderEditorPreview .WikiaPhotoGalleryPreview .WikiaPhotoGalleryPreviewRecentlyUploaded {
 	opacity: 0.5;
 }
