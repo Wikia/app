@@ -343,15 +343,4 @@ class CrunchyrollApiWrapper extends IngestionApiWrapper {
 		return '';
 	}
 
-	/**
-	 * @inheritdoc
-	 */
-	protected function getVideoType() {
-		if ( !empty( $this->metadata['type'] ) ) {
-			return $this->metadata['type'];
-		}
-
-		return 'Clip';
-	}
-
 }
