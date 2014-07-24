@@ -17,13 +17,13 @@ $map-ad-height: 70px;
 
 .int-map-mobile-map-page .ad-shown {
 	iframe {
-		padding-top: $map-ad-height + $nav-height;//$nav-height + $map-ad-height;
+		padding-top: $map-ad-height + $nav-height;
 	}
 }
 
 .int-map-mobile-map-page {
 	iframe {
-		padding-top: $nav-height;//$nav-height + $map-ad-height;
+		padding-top: $nav-height;
 	}
 }
 
