@@ -835,7 +835,8 @@ class WikiaHomePageHelper extends WikiaModel {
 				'wikiId' => $wikiId,
 				'url' => $wiki['u'],
 				'db' => $wiki['d'],
-				'lang' => $wiki['l']
+				'lang' => $wiki['l'],
+				'wikiTitle' => $wiki['t'],
 			];
 		}
 

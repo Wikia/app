@@ -294,7 +294,7 @@ class WikiaHomePageController extends WikiaController {
 					'class' => $lang,
 					'href' => $wiki['url'],
 					'text' => '',
-					'title' => wfMessage('wikiahome-footer-link-title-' . $lang)->text()
+					'title' => $wiki['wikiTitle']
 				);
 			}
 		}

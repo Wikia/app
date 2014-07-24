@@ -119,13 +119,6 @@ __NOEDITSECTION__",
 	'wikiahome-import-script-no-description' => 'No description given',
 
 	'wikiahome-hub-current-day' => '{{CURRENTDAY}} {{CURRENTMONTHNAME}} {{CURRENTYEAR}}',
-
-	'wikiahome-footer-link-title-de' => 'Wikia Deutschland',
-	'wikiahome-footer-link-title-en' => 'Wikia',
-	'wikiahome-footer-link-title-es' => 'Wikia en español',
-	'wikiahome-footer-link-title-fr' => 'Wikia',
-	'wikiahome-footer-link-title-ja' => 'Corporate Wiki',
-	'wikiahome-footer-link-title-pl' => 'Wikia',
 );
 
 $messages['de'] = array(
@@ -718,11 +711,4 @@ $messages['qqq'] = array(
 	'wikiahome-import-script-no-description' => 'This message should be used only when an edge case occurs and there is no wiki description on wikis list used in importing process. This message will be place in wiki description in Interstitial if original description is not provided.',
 	
 	'wikiahome-hub-current-day' => 'Date in format "day monthname year" using templates: {{CURRENTDAY}} {{CURRENTMONTHNAME}} {{CURRENTYEAR}}',
-
-	'wikiahome-footer-link-title-de' => 'Link title in change language dropdown for German language',
-	'wikiahome-footer-link-title-en' => 'Link title in change language dropdown for English language',
-	'wikiahome-footer-link-title-es' => 'Link title in change language dropdown for Spanish language',
-	'wikiahome-footer-link-title-fr' => 'Link title in change language dropdown for French language',
-	'wikiahome-footer-link-title-ja' => 'Link title in change language dropdown for Japanese language',
-	'wikiahome-footer-link-title-pl' => 'Link title in change language dropdown for Polish language',
 );
