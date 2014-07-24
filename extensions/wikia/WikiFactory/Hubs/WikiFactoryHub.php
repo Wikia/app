@@ -213,7 +213,7 @@ class WikiFactoryHub extends WikiaModel {
 	public function getVerticalId( $city_id ) {
 
 		$id = (new WikiaSQL())
-			->SELECT( "vertical_id" )
+			->SELECT( "city_vertical" )
 			->FROM( "city_list" )
 			->WHERE ("city_id")->EQUAL_TO( $city_id )
 			->cache( $this->$cache_ttl, wfMemcKey( "WFHub", __METHOD__ ) )
