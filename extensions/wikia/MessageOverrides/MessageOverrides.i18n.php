@@ -5935,11 +5935,7 @@ de.wikia.com',
 ***w:c:de.community:Hilfe:Übersicht|Hilfeseiten
 ***w:c:de.community:Spezial:Forum|Community-Forum
 ***w:c:de|Mehr...',
-	'shared-Monobook-footer-wikia-links' => '* [http://de.wikia.com/Datenschutz Datenschutz]
-* [http://de.wikia.com/wiki/%C3%9Cber_Wikia Über Wikia]
-* [http://de.wikia.com/Nutzungsbedingungen Nutzungsbedingungen]<span style="color: #ff0000"> (Aktualisiert)</span>
-* [[Special:Contact|Kontakt]]
-* [http://www.wikia.com/wiki/Wikia:Advertising_on_Wikia Auf Wikia werben]',
+	'shared-News_box' => '<!-- &nbsp; -->',
 	'shared-News_box' => '<!-- &nbsp; -->',
 	'shared-globalnavigation' => '#redirect [[Mediawiki:Shared-Globalnavigation/de]]',
 	'shared-problemreport' => 'Problem melden',
@@ -12526,11 +12522,6 @@ ___________________________________________
 ***w:c:micronaciones|Micronaciones
 ***w:c:es.gorillaz|Gorillaz
 ***w:c:arte|Arte',
-	'shared-Monobook-footer-wikia-links' => '* [http://es.wikia.com/Pol%C3%ADtica_de_Privacidad Política de Privacidad]
-* [http://es.wikia.com/Sobre_nosotros Sobre Wikia]
-* [http://es.wikia.com/T%C3%A9rminos_de_Uso Términos de Uso]
-* [[Special:Contact|Contactar]]
-* [http://mediakit.wikia.com/wiki/Contact Publicidad]',
 	'shared-News_box' => 'Visita nuestra [[w:c:comunidad|Comunidad Central]]<br />',
 	'shared-problemreport-url' => 'http://comunidad.wikia.com/wiki/Project:Reportar_un_problema',
 	'shared-problemreport' => 'Reportar un problema',
@@ -16826,11 +16817,6 @@ pouvez ignorer ce message et continuer à utiliser votre ancien mot de passe.<br
 **w:c:fr:Mode de vie|Mode de vie
 ***w:c:routes|Routes de France
 ***w:c:fr.encyclopedie|Encyclopédie',
-	'shared-Monobook-footer-wikia-links' => '* [http://www.wikia.com/wiki/Wikia:Privacy_Policy Confidentialité]
-* [http://fr.wikia.com/À_propos À propos de Wikia]
-* [http://fr.wikia.com/Conditions_d\'utilisation Conditions d\'utilisation]<span style="color: #ff0000"> (Mises à jour)</span>
-* [[Special:Contact|Nous contacter]]
-* [http://www.wikia.com/wiki/Wikia:Advertising_on_Wikia Publicité]',
 	'shared-News_box' => 'Visitez le [[w:c:communaute|Wiki des communautés]] pour de l’aide et les dernières nouvelles',
 	'shared-problemreport' => 'Signaler un problème',
 	'shared-repo-from' => 'de : $1',
@@ -19621,11 +19607,6 @@ Vedi la [[Special:ProtectedPages|lista delle pagine protette]] per l\'elenco del
 ***w:c:it.lego:Lego_Wiki|Lego
 ***w:c:it.encicprotezionecivile:Enciclopedia_della_Protezione_Civile_Wiki|Protezione Civile
 ***w:c:it|Altro...',
-	'shared-Monobook-footer-wikia-links' => '* [http://www.wikia.com/wiki/Wikia:Privacy_Policy Privacy]
-* [http://www.wikia.com/wiki/Wikia:About About Wikia]
-* [http://it.community.wikia.com/wiki/Wiki_della_Community:Termini_di_utilizzo Termini di utilizzo]<span style="color: #ff0000"> (Aggiornati)</span>
-* [[Special:Contact|Contact]]
-* [http://www.wikia.com/wiki/Wikia:Advertising_on_Wikia Advertise]',
 	'shared_help_edit_info' => 'La versione originale di questa pagina si trova in [[w:c:it.community:aiuto:$1|Aiuto:$1]] nella Wiki della Community. Vedi [[Aiuto:Aiuto condiviso]] per maggiori informazioni.
 
 Per applicare qualsiasi modifica a \'\'\'tutte\'\'\' le wiki, si deve modificare la versione originale nella Wiki della Community. [[w:c:it.community:Discussioni_aiuto:$1|Suggerisci le modifiche qui]].
@@ -27169,11 +27150,6 @@ Ostatni wpis z rejestru jest pokazany poniżej.',
 ***w:c:pl.monsterhigh|Monster High
 ***w:c:pl.bionicle|Bionicle
 ***w:c:pl.vocaloid|Vocaloid',
-	'shared-Monobook-footer-wikia-links' => '* [http://pl.wikia.com/Polityka_Prywatności Polityka Prywatności]
-* [http://pl.wikia.com/O_nas O Wikii]
-* [http://pl.wikia.com/Zasady_Użytkowania Zasady Użytkowania]<span style="color: #ff0000"> (Zaktualizowane)</span>
-* [[Special:Contact|Kontakt]]
-* [http://www.wikia.com/Advertising Reklama]',
 	'shared-News_box' => 'Zajrzyj na [[w:c:spolecznosc:Specjalna:Forum|forum]].',
 	'shared_help_edit_info' => 'Zawartość tej strony lub jej część może znajdować się w [[w:c:spolecznosc:Help:$1|Pomoc:$1]] w $2.
 Odwiedź artykuł [[Pomoc:Wspólna pomoc]] aby dowiedzieć się więcej.
@@ -29413,11 +29389,6 @@ ___________________________________________
 ***w:c:ru.community:Список википроектов на русском языке|Список ru-википроектов
 ***w:c:ru.community:Викия: Запросы на статус администратора/бюрократа‎|Запрос статуса администратора
 ***w:c:ru.community|Ещё...',
-	'shared-Monobook-footer-wikia-links' => '* [http://www.wikia.com/wiki/Wikia:Privacy_Policy Privacy]
-* [http://www.wikia.com/wiki/Wikia:About About Wikia]
-* [http://ru.community.wikia.com/wiki/%D0%92%D0%B8%D0%BA%D0%B8%D1%8F:%D0%A3%D1%81%D0%BB%D0%BE%D0%B2%D0%B8%D1%8F_%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F Условия использования]
-* [[Special:Contact|Contact]]
-* [http://www.wikia.com/wiki/Wikia:Advertising_on_Wikia Advertise]',
 	'shared-problemreport' => 'Сообщить о проблеме',
 	'shared_help_edit_info' => 'Текст справки из этого окна находится на [[w:c:help:Help:$1|Help:$1]] на Wikia Help. Подробнее смотрите [[Help:Shared Help]].
 
