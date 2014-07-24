@@ -1,14 +1,13 @@
 <?php
 putenv( 'SERVER_ID=4036' );
-$dir = dirname( __FILE__ );
-require_once( realpath( $dir . '/../commandLine.inc' ) );
+require_once( realpath( __DIR__ . '/../commandLine.inc' ) );
 
 $USAGE =
-	"Usage:\tphp messaging2files.php -f messages.i18n.php\n" .
+	"Usage:\tphp messaging2files.php -f messages.i18n.php [[-v [--json]]\n" .
 	"\toptions:\n" .
 	"\t\t--help      show this message\n" .
-	"\t\t-f          i18n file which will get overwritten\n" .
-	"\t\t-v          display messages on the screen instead writing to the file\n" .
+	"\t\t-f          i18n file to which the messages from messaging will be imported\n" .
+	"\t\t-v          display messages on the screen instead of writing to the file\n" .
 	"\t\t--json      works ONLY with -v parameter returns messages in JSON format" .
 	"\n";
 
@@ -16,7 +15,7 @@ $opts = getopt( 'f:v::', [ 'json' ] );
 if( empty( $opts ) ) die( $USAGE );
 
 $file = $opts['f'];
-if( array_key_exists( 'v', $opts ) ) {
+if( array_key_exists( 'f', $opts ) ) {
 	if( !file_exists( $file ) ) {
 		die( 'ERROR: The i18n file does not exist' . "\n" );
 	}
@@ -102,7 +101,8 @@ if( !$noWrite ) {
 
 	$collected = array_merge( $messages, $collected );
 	if( array_key_exists( 'json', $opts ) ) {
-		echo json_encode( $collected, JSON_UNESCAPED_UNICODE );
+		$jsonOutput[ 'messages' ] = $collected;
+		echo json_encode( $jsonOutput, JSON_UNESCAPED_UNICODE );
 	} else {
 		print_r( $collected );
 	}
