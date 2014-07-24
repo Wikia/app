@@ -5,6 +5,7 @@
 
 $nav-height: 40px;
 $smart-banner-height: 80px;
+$map-ad-height: 70px;
 
 .error {
 	padding: 0 15px;
@@ -12,12 +13,24 @@ $smart-banner-height: 80px;
 
 .int-map-mobile-map-page {
 	.sb-shown & {
-		#wkPage {
+		iframe {
 			padding-top: $nav-height + $smart-banner-height;
 			// required for smooth animation with smart banner
 			-webkit-transition: padding-top 0.01s;
 		}
+	  	.ad-shown & {
+			iframe {
+		 		padding-top: $nav-height + $smart-banner-height + $map-ad-height;
+		 		// required for smooth animation with smart banner
+		 		-webkit-transition: padding-top 0.01s;
+			}
+	 	}
 	}
+  	.ad-shown & {
+		iframe {
+			padding-top: $nav-height + $map-ad-height;
+		}
+  }
 
 	.WikiaPageHeader {
 		display: none;
