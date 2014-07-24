@@ -325,8 +325,13 @@ div#userloginErrorBox3 {
 		@if ( $responsive-layout-enabled ) {
 
 		} @else {
+			/*
+			 * Both left and right are specified for proper ltr and rtl positioning.
+			 * TODO: Fix CSSJanus
+			 */
 			left: 515px;
 			position: absolute;
+			right: 515px;
 			top: 100px;
 			width: 265px;
 		}
