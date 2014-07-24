@@ -30,6 +30,7 @@ define(
 					createMap
 				],
 				mapCreated: [
+					triggerStorageEvent,
 					showPoiCategoriesModal
 				]
 			},
@@ -190,6 +191,18 @@ define(
 				mapUrl: data.mapUrl
 			});
 			utils.track(utils.trackerActions.IMPRESSION, 'poi-category-modal-shown');
+		}
+
+		/**
+		 * @desc trigger "storage" event (by calling localStorage.setItem) after the map is created
+ 		 */
+		function triggerStorageEvent(data) {
+			if ( localStorage ) {
+				localStorage.setItem('mapCreated', data.id);
+				setTimeout(function() {
+					localStorage.removeItem('mapCreated');
+				}, 0);
+			}
 		}
 
 		/**

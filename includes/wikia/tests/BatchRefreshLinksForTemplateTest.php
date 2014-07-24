@@ -56,7 +56,7 @@ class BatchRefreshLinksForTemplateTest extends PHPUnit_Framework_TestCase {
 
 		$task->expects( $this->exactly( $times ) )
 			->method( 'readyRefreshLinksForTitleTask' )
-			->with( $this->logicalOr( $titles[0], $titles[2], $titles[3] ) )
+			->with( $this->logicalOr( $titles[0], $titles[1], $titles[2] ) )
 			->will( $this->returnValue( $times ) );
 
 		$task->expects( $this->once() )

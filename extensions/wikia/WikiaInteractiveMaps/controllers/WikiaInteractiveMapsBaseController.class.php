@@ -144,7 +144,8 @@ class WikiaInteractiveMapsBaseController extends WikiaController {
 	private function translateError( $errorStatus ) {
 		switch ( $errorStatus ) {
 			case UploadBase::FILE_TOO_LARGE:
-				$errorMessage = wfMessage( 'wikia-interactive-maps-image-uploads-error-file-too-large', $this->getMaxFileSize() )->plain();
+				$maxSize = $this->wg->Lang->formatSize( $this->wg->MaxUploadSize );
+				$errorMessage = wfMessage( 'wikia-interactive-maps-image-uploads-error-file-too-large', $maxSize )->plain();
 				break;
 			case UploadBase::EMPTY_FILE:
 				$errorMessage = wfMessage( 'wikia-interactive-maps-image-uploads-error-empty-file' )->plain();
@@ -165,14 +166,5 @@ class WikiaInteractiveMapsBaseController extends WikiaController {
 		}
 
 		return $errorMessage;
-	}
-
-	/**
-	 * Returns max upload file size in MB (gets it from config)
-	 * @return float
-	 * @todo Extract it somewhere to includes/wikia/
-	 */
-	private function getMaxFileSize() {
-		return $this->wg->MaxUploadSize / 1024 / 1024;
 	}
 }

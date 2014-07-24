@@ -57,3 +57,16 @@ $slotTopHeight: 50px;
 		color: $ad-label-color;
 	}
 }
+
+.wikia-ad-interactive-map {
+	height: 50px;
+	margin: 0 auto 15px;
+	width: 250px;
+
+	& > iframe {
+		border: none;
+		height: 50px;
+		width: 250px;
+	}
+
+}

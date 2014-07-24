@@ -1,4 +1,7 @@
 <?php
+/**
+ * @group UsingDB
+ */
 class WikiaInteractiveMapsParserTagControllerTest extends WikiaBaseTest {
 
 	public function setUp() {

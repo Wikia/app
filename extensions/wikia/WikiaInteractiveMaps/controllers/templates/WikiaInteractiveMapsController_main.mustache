@@ -21,11 +21,10 @@
 	<ul class="map-list">
 		{{#maps}}
 		<li>
-			{{#done}}<a href="{{baseUrl}}/{{id}}">{{/done}}
-			{{^done}}<div class="map-status">{{status_message}}</div>{{/done}}
-			<img src="{{image}}" alt="{{title}}" height="{{mapThumbHeight}}" width="{{mapThumbWidth}}"/>
-			<h3>{{title}}</h3>
-			{{#done}}</a>{{/done}}
+			<a href="{{baseUrl}}/{{id}}">
+				<img src="{{image}}" alt="{{title}}" height="{{mapThumbHeight}}" width="{{mapThumbWidth}}"/>
+				<h3>{{title}}</h3>
+			</a>
 		</li>
 		{{/maps}}
 	</ul>
