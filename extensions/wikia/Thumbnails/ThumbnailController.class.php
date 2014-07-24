@@ -88,7 +88,7 @@ class ThumbnailController extends WikiaController {
 		$metaAttribs = [];
 
 		// Set a positive flag for whether we need to lazy load
-		$options['lazyLoad'] = empty( $options['noLazyLoad'] ) && ImageLazyLoad::isValidLazyLoadedImage( $options['src'] );
+		$options['lazyLoad'] = $this->shouldLazyLoad( $options );
 
 		// Only add RDF metadata when the thumb is not lazy loaded
 		if ( !$options['lazyLoad'] ) {
@@ -195,7 +195,12 @@ class ThumbnailController extends WikiaController {
 		// Merge in imgClass as well
 		if ( !empty( $options['img-class'] ) ) {
 			$this->imgClass = $options['img-class'];
+		} else {
+			$this->imgClass = '';
 		}
+
+		$this->noscript = '';
+		$this->dataSrc = '';
 
 		# Move the href out of the attrs and into its own value
 		$this->linkHref = empty( $linkAttrs['href'] ) ? null : $linkAttrs['href'];
@@ -215,6 +220,19 @@ class ThumbnailController extends WikiaController {
 		if ( empty( $options[ 'fluid' ] ) ) {
 			$this->imgWidth = $thumb->width;
 			$this->imgHeight = $thumb->height;
+		}
+
+		// Set a positive flag for whether we need to lazy load
+		$options['src'] = $this->imgSrc;
+		$options['lazyLoad'] = $this->shouldLazyLoad( $options );
+
+		if ( $options['lazyLoad'] ) {
+			$this->noscript = $this->app->renderView(
+				'ThumbnailController',
+				'imgTag',
+				$this->response->getData()
+			);
+			ImageLazyLoad::setLazyLoadingAttribs( $this->dataSrc, $this->imgSrc, $this->imgClass, $this->imgAttribs );
 		}
 	}
 
@@ -255,5 +273,18 @@ class ThumbnailController extends WikiaController {
 		$this->filePageLink = $filePageLink;
 
 		wfProfileOut( __METHOD__ );
+	}
+
+	/**
+	 * Determines by options if image should be lazyloaded
+	 * @param array $options
+	 * @return bool
+	 */
+	protected function shouldLazyLoad( array $options ) {
+		return (
+			empty( $options['noLazyLoad'] )
+            && isset( $options['src'] )
+			&& ImageLazyLoad::isValidLazyLoadedImage( $options['src'] )
+		);
 	}
 }
