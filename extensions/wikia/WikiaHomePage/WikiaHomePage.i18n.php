@@ -9,7 +9,7 @@ $messages = array();
 
 $messages['en'] = array(
 	'wikiahome-page-header-heading' => 'Create. Collaborate. Connect.',
-	'wikiahome-page-header-subheading' => ' ',
+	'wikiahome-page-header-subheading' => '&nbsp;',
 	'wikiahome-page-header-create-wiki-button' => 'Start a Wiki',
 	'wikiahome-page-header-create-wiki-button-destination' => 'http://www.wikia.com/Special:CreateWiki',
 
