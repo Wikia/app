@@ -1531,6 +1531,7 @@ ve.init.mw.ViewPageTarget.prototype.onWindowPopState = function ( e ) {
 	if ( this.active && newUri.query.veaction !== 'edit' ) {
 		this.actFromPopState = true;
 		this.deactivate();
+		this.emit( 'backButtonDeactivate' );
 		// Trigger Qualaroo survey for anonymous users abandoning edit
 		/*
 		if ( mw.user.anonymous() && window._kiq ) {
