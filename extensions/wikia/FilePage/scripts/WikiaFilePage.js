@@ -1,4 +1,4 @@
-require(['wikia.videoBootstrap', 'jquery', 'wikia.window'], function (VideoBootstrap, jquery, window) {
+require(['wikia.videoBootstrap', 'jquery', 'wikia.window', 'wikia.geo'], function (VideoBootstrap, jquery, window) {
 
 	'use strict';
 
@@ -18,6 +18,23 @@ require(['wikia.videoBootstrap', 'jquery', 'wikia.window'], function (VideoBoots
 		}
 	}
 
+	function initRestrictions() {
+		var viewableRestrictions = $('#restricted-content-viewable');
+		if (viewableRestrictions) {
+		    var data = eval(viewableRestrictions.attr('data-regional-restrictions'));
+			var userRegion = Wikia.geo.getCountryCode().toLowerCase();
+
+			var restrictMessage;
+			if (data.indexOf(userRegion) != -1) {
+				restrictMessage = viewableRestrictions;
+			} else {
+				restrictMessage = $('#restricted-content-unviewable');
+			}
+			restrictMessage.show();
+		}
+	}
+
 	$(initVideo);
+	$(initRestrictions());
 
 });
