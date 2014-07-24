@@ -126,6 +126,14 @@ $messages[ 'en' ] = [
 	'wikia-interactive-maps-delete-pin-log-entry' => 'deleted pin for [[$2]]',
 	'wikia-interactive-maps-hide-filter' => 'Hide',
 	'wikia-interactive-maps-tile-set-exists-error' => 'Template name needs to be unique',
+
+	// default POI categories
+	'wikia-interactive-maps-poi-categories-default-other' => 'Other',
+	'wikia-interactive-maps-poi-categories-default-location' => 'Location',
+	'wikia-interactive-maps-poi-categories-default-quest' => 'Quest',
+	'wikia-interactive-maps-poi-categories-default-character' => 'Character',
+	'wikia-interactive-maps-poi-categories-default-item' => 'Item',
+	'wikia-interactive-maps-poi-categories-default-event' => 'Event',
 ];
 
 $messages[ 'pl' ] = [
@@ -236,6 +244,14 @@ $messages[ 'pl' ] = [
 	'wikia-interactive-maps-delete-pin-log-entry' => '{{GENDER:$1|usunął|usunęła}} nowy punkt na mapie [[$2]]',
 	'wikia-interactive-maps-hide-filter' => 'Ukryj',
 	'wikia-interactive-maps-tile-set-exists-error' => 'Nazwa szablonu musi być unikalna',
+
+	// default POI categories
+	'wikia-interactive-maps-poi-categories-default-other' => 'Pozostałe',
+	'wikia-interactive-maps-poi-categories-default-location' => 'Lokacja',
+	'wikia-interactive-maps-poi-categories-default-quest' => 'Zadanie',
+	'wikia-interactive-maps-poi-categories-default-character' => 'Postać',
+	'wikia-interactive-maps-poi-categories-default-item' => 'Przedmiot',
+	'wikia-interactive-maps-poi-categories-default-event' => 'Wydarzenie',
 ];
 
 $messages[ 'de' ] = [
@@ -346,6 +362,14 @@ $messages[ 'de' ] = [
 	'wikia-interactive-maps-delete-pin-log-entry' => 'Marker für [[$1]] gelöscht',
 	'wikia-interactive-maps-hide-filter' => 'Ausblenden',
 	'wikia-interactive-maps-tile-set-exists-error' => 'Der Vorlagen-Name muss eindeutig sein',
+
+	// default POI categories
+	'wikia-interactive-maps-poi-categories-default-other' => 'Sonstiges',
+	'wikia-interactive-maps-poi-categories-default-location' => 'Ort',
+	'wikia-interactive-maps-poi-categories-default-quest' => 'Quest',
+	'wikia-interactive-maps-poi-categories-default-character' => 'Charakter',
+	'wikia-interactive-maps-poi-categories-default-item' => 'Gegenstand',
+	'wikia-interactive-maps-poi-categories-default-event' => 'Ereignis',
 ];
 
 $messages[ 'es' ] = [
@@ -456,6 +480,14 @@ $messages[ 'es' ] = [
 	'wikia-interactive-maps-delete-pin-log-entry' => 'pin borrado por [[$2]]',
 	'wikia-interactive-maps-hide-filter' => 'Esconder',
 	'wikia-interactive-maps-tile-set-exists-error' => 'El nombre de plantilla debe ser único',
+
+	// default POI categories
+	'wikia-interactive-maps-poi-categories-default-other' => 'Otro',
+	'wikia-interactive-maps-poi-categories-default-location' => 'Lugar',
+	'wikia-interactive-maps-poi-categories-default-quest' => 'Desafío',
+	'wikia-interactive-maps-poi-categories-default-character' => 'Personaje',
+	'wikia-interactive-maps-poi-categories-default-item' => 'Objeto',
+	'wikia-interactive-maps-poi-categories-default-event' => 'Evento',
 ];
 
 $messages[ 'fr' ] = [
@@ -547,6 +579,14 @@ $messages[ 'fr' ] = [
 	'wikia-interactive-maps-delete-pin-log-entry' => "a supprimé un marqueur de [[$2]]",
 	'wikia-interactive-maps-hide-filter' => "Masquer",
 	'wikia-interactive-maps-tile-set-exists-error' => "Le nom du modèle doit être unique",
+
+	// default POI categories
+	'wikia-interactive-maps-poi-categories-default-other' => 'Autre',
+	'wikia-interactive-maps-poi-categories-default-location' => 'Lieu',
+	'wikia-interactive-maps-poi-categories-default-quest' => 'Quête',
+	'wikia-interactive-maps-poi-categories-default-character' => 'Personnage',
+	'wikia-interactive-maps-poi-categories-default-item' => 'Objet',
+	'wikia-interactive-maps-poi-categories-default-event' => 'Évènement',
 ];
 
 $messages[ 'it' ] = [
@@ -766,6 +806,14 @@ $messages[ 'ja' ] = [
 	'wikia-interactive-maps-delete-pin-log-entry' => '[[$2]]の為にピンを削除する',
 	'wikia-interactive-maps-hide-filter' => '隠す',
 	'wikia-interactive-maps-tile-set-exists-error' => 'テンプレートの名前はユニークなものにして下さい',
+
+	// default POI categories
+	'wikia-interactive-maps-poi-categories-default-other' => 'その他',
+	'wikia-interactive-maps-poi-categories-default-location' => 'ロケーション',
+	'wikia-interactive-maps-poi-categories-default-quest' => 'クエスト',
+	'wikia-interactive-maps-poi-categories-default-character' => 'キャラクター',
+	'wikia-interactive-maps-poi-categories-default-item' => 'アイテム',
+	'wikia-interactive-maps-poi-categories-default-event' => 'イベント',
 ];
 
 $messages[ 'pt' ] = [
@@ -876,6 +924,14 @@ $messages[ 'pt' ] = [
 	'wikia-interactive-maps-delete-pin-log-entry' => 'alfinete para [[$2]] deletado',
 	'wikia-interactive-maps-hide-filter' => 'Esconder',
 	'wikia-interactive-maps-tile-set-exists-error' => 'O nome da predefinição precisa ser único',
+
+	// default POI categories
+	'wikia-interactive-maps-poi-categories-default-other' => 'Outro',
+	'wikia-interactive-maps-poi-categories-default-location' => 'Lugar',
+	'wikia-interactive-maps-poi-categories-default-quest' => 'Missão',
+	'wikia-interactive-maps-poi-categories-default-character' => 'Personagem',
+	'wikia-interactive-maps-poi-categories-default-item' => 'Item',
+	'wikia-interactive-maps-poi-categories-default-event' => 'Evento',
 ];
 
 $messages[ 'pt-br' ] = [
@@ -986,6 +1042,14 @@ $messages[ 'pt-br' ] = [
 	'wikia-interactive-maps-delete-pin-log-entry' => 'alfinete para [[$2]] deletado',
 	'wikia-interactive-maps-hide-filter' => 'Esconder',
 	'wikia-interactive-maps-tile-set-exists-error' => 'O nome da predefinição precisa ser único',
+
+	// default POI categories
+	'wikia-interactive-maps-poi-categories-default-other' => 'Outro',
+	'wikia-interactive-maps-poi-categories-default-location' => 'Lugar',
+	'wikia-interactive-maps-poi-categories-default-quest' => 'Missão',
+	'wikia-interactive-maps-poi-categories-default-character' => 'Personagem',
+	'wikia-interactive-maps-poi-categories-default-item' => 'Item',
+	'wikia-interactive-maps-poi-categories-default-event' => 'Evento',
 ];
 
 $messages[ 'ru' ] = [
@@ -1206,6 +1270,14 @@ $messages[ 'zh' ] = [
 	'wikia-interactive-maps-delete-pin-log-entry' => '删除[[$2]]的标记',
 	'wikia-interactive-maps-hide-filter' => '隐藏',
 	'wikia-interactive-maps-tile-set-exists-error' => '模版名称必须为未使用过的词语',
+
+	// default POI categories
+	'wikia-interactive-maps-poi-categories-default-other' => '其他',
+	'wikia-interactive-maps-poi-categories-default-location' => '地理位置',
+	'wikia-interactive-maps-poi-categories-default-quest' => '探索',
+	'wikia-interactive-maps-poi-categories-default-character' => '角色',
+	'wikia-interactive-maps-poi-categories-default-item' => '武器',
+	'wikia-interactive-maps-poi-categories-default-event' => '活动',
 ];
 
 $messages[ 'zh-hant' ] = [
@@ -1316,6 +1388,14 @@ $messages[ 'zh-hant' ] = [
 	'wikia-interactive-maps-delete-pin-log-entry' => '删除[[$2]]的標記',
 	'wikia-interactive-maps-hide-filter' => '隱藏',
 	'wikia-interactive-maps-tile-set-exists-error' => '模板名稱必須未被使用過',
+
+	// default POI categories
+	'wikia-interactive-maps-poi-categories-default-other' => '其他',
+	'wikia-interactive-maps-poi-categories-default-location' => '地理位置',
+	'wikia-interactive-maps-poi-categories-default-quest' => '探索',
+	'wikia-interactive-maps-poi-categories-default-character' => '角色',
+	'wikia-interactive-maps-poi-categories-default-item' => '武器',
+	'wikia-interactive-maps-poi-categories-default-event' => '活動',
 ];
 
 $messages[ 'zh-hk' ] = [
@@ -1426,6 +1506,14 @@ $messages[ 'zh-hk' ] = [
 	'wikia-interactive-maps-delete-pin-log-entry' => '删除[[$2]]的標記',
 	'wikia-interactive-maps-hide-filter' => '隱藏',
 	'wikia-interactive-maps-tile-set-exists-error' => '模板名稱必須未被使用過',
+
+	// default POI categories
+	'wikia-interactive-maps-poi-categories-default-other' => '其他',
+	'wikia-interactive-maps-poi-categories-default-location' => '地理位置',
+	'wikia-interactive-maps-poi-categories-default-quest' => '探索',
+	'wikia-interactive-maps-poi-categories-default-character' => '角色',
+	'wikia-interactive-maps-poi-categories-default-item' => '武器',
+	'wikia-interactive-maps-poi-categories-default-event' => '活動',
 ];
 
 $messages[ 'zh-tw' ] = [
@@ -1536,6 +1624,24 @@ $messages[ 'zh-tw' ] = [
 	'wikia-interactive-maps-delete-pin-log-entry' => '删除[[$2]]的標記',
 	'wikia-interactive-maps-hide-filter' => '隱藏',
 	'wikia-interactive-maps-tile-set-exists-error' => '模板名稱必須未被使用過',
+
+	// default POI categories
+	'wikia-interactive-maps-poi-categories-default-other' => '其他',
+	'wikia-interactive-maps-poi-categories-default-location' => '地理位置',
+	'wikia-interactive-maps-poi-categories-default-quest' => '探索',
+	'wikia-interactive-maps-poi-categories-default-character' => '角色',
+	'wikia-interactive-maps-poi-categories-default-item' => '武器',
+	'wikia-interactive-maps-poi-categories-default-event' => '活動',
+];
+
+$messages[ 'nl' ] = [
+	// default POI categories
+	'wikia-interactive-maps-poi-categories-default-other' => 'Overig',
+	'wikia-interactive-maps-poi-categories-default-location' => 'Locatie',
+	'wikia-interactive-maps-poi-categories-default-quest' => 'Quest',
+	'wikia-interactive-maps-poi-categories-default-character' => 'Personage',
+	'wikia-interactive-maps-poi-categories-default-item' => 'Item',
+	'wikia-interactive-maps-poi-categories-default-event' => 'Gebeurtenis',
 ];
 
 $messages[ 'qqq' ] = [
@@ -1669,5 +1775,11 @@ $messages[ 'qqq' ] = [
 	'wikia-interactive-maps-hide-filter' => 'Name of the button for hiding filter box',
 	'wikia-interactive-maps-tile-set-exists-error' => 'Error, shown when tile set with the same name already exists',
 
+	// default POI categories
+	'wikia-interactive-maps-poi-categories-default-other' => "one of the parent categories of point of interest; the only place where it's displayed is select box while creating or editing POI's categories",
+	'wikia-interactive-maps-poi-categories-default-location' => "one of the parent categories of point of interest; the only place where it's displayed is select box while creating or editing POI's categories",
+	'wikia-interactive-maps-poi-categories-default-quest' => "one of the parent categories of point of interest; the only place where it's displayed is select box while creating or editing POI's categories",
+	'wikia-interactive-maps-poi-categories-default-character' => "one of the parent categories of point of interest; the only place where it's displayed is select box while creating or editing POI's categories",
+	'wikia-interactive-maps-poi-categories-default-item' => "one of the parent categories of point of interest; the only place where it's displayed is select box while creating or editing POI's categories",
+	'wikia-interactive-maps-poi-categories-default-event' => "one of the parent categories of point of interest; the only place where it's displayed is select box while creating or editing POI's categories",
 ];
-
