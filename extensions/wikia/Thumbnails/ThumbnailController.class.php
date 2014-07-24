@@ -283,7 +283,7 @@ class ThumbnailController extends WikiaController {
 	protected function shouldLazyLoad( array $options ) {
 		return (
 			empty( $options['noLazyLoad'] )
-            && isset( $options['src'] )
+			&& isset( $options['src'] )
 			&& ImageLazyLoad::isValidLazyLoadedImage( $options['src'] )
 		);
 	}
