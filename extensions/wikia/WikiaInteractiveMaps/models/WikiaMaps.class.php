@@ -308,7 +308,7 @@ class WikiaMaps extends WikiaObject {
 
 		// MOB-2272 - translate default POI categories names
 		array_map( function( $parentPoiCategory ) {
-			if( isset( $parentPoiCategory->name ) ) {
+			if ( isset( $parentPoiCategory->name ) ) {
 				$msgKey = 'wikia-interactive-maps-poi-categories-default-' . mb_strtolower( $parentPoiCategory->name );
 				$parentPoiCategory->name = wfMessage( $msgKey )->plain();
 			}
