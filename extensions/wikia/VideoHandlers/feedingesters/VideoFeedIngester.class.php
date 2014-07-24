@@ -1327,22 +1327,4 @@ abstract class VideoFeedIngester {
 		return STATIC::$PROVIDER;
 	}
 
-	/**
-	 * Implement per provider - Retrieves all collection feeds
-	 * @throws MethodNotFoundException
-	 */
-	public function getCollectionFeeds() {
-		// Implement on provider ingestion class if applicable
-		throw new MethodNotFoundException( printf( "%s must be implemented by specific provider ingester", __METHOD__ ) );
-	}
-
-	/**
-	 * Implement per provider - Downloads content of given feed
-	 * @param $feedUrl
-	 * @throws MethodNotFoundException
-	 */
-	public function downloadCollectionFeed( $feedUrl ) {
-		// Implement on provider ingestion class if applicable
-		throw new MethodNotFoundException( printf( "%s must be implemented by specific provider ingester", __METHOD__ ) );
-	}
 }

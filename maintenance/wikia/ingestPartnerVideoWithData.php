@@ -98,9 +98,6 @@ foreach ( $providersVideoFeed as $provider ) {
 		die( "No ingestion data found in wikicities. Aborting." );
 	}
 
-	// This is populated per provider with separate feeds per collection
-	$collectionFeeds = [];
-
 	// When necessary download a list of resources into $file and reformat
 	// the start and end date for each provider
 	$file = '';
@@ -136,11 +133,7 @@ foreach ( $providersVideoFeed as $provider ) {
 			$remoteAsset = true;
 			break;
 		case VideoFeedIngester::PROVIDER_CRUNCHYROLL:
-			// file will be created later
-			$startDate = date( 'Y-m-d', $startDateTS ).'T00:00:00-0800';
-			$endDate = date( 'Y-m-d', $endDateTS ).'T00:00:00-0800';
-			// Get the feed for all collections for all series
-			$collectionFeeds = $feedIngester->getCollectionFeeds();
+			// No file needed
 			break;
 		default:
 	}
@@ -157,15 +150,7 @@ foreach ( $providersVideoFeed as $provider ) {
 		$params['keyphrasesCategories'] = $ingestionData['keyphrases'];
 	}
 
-	if ( !empty( $collectionFeeds ) ) {
-		$numCreated = 0;
-		foreach ( $collectionFeeds as $collectionFeed ) {
-			$file = $feedIngester->downloadCollectionFeed( $collectionFeed );
-			$numCreated += $feedIngester->import( $file, $params );
-		}
-	} else {
-		$numCreated = $feedIngester->import( $file, $params );
-	}
+	$numCreated = $feedIngester->import( $file, $params );
 
 	$summary[$provider] = $feedIngester->getResultSummary();
 

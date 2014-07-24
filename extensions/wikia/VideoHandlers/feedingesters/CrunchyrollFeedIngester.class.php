@@ -42,7 +42,7 @@ class CrunchyrollFeedIngester extends VideoFeedIngester {
 	 * Get a flat list of all serie Ids that we must ingest
 	 * @return array
 	 */
-	public function getAllSerieIds() {
+	public function getAllSeriesIds() {
 		$ids = [];
 		foreach ( self::$VIDEO_SERIES as $videoSerie ) {
 			$ids = array_merge( $ids, array_values( $videoSerie ) );
@@ -98,7 +98,7 @@ class CrunchyrollFeedIngester extends VideoFeedIngester {
 	public function getCollectionFeeds() {
 		$content = $this->downloadFeed();
 
-		$seriesIds = $this->getAllSerieIds();
+		$seriesIds = $this->getAllSeriesIds();
 		$leadingString = '/series-';
 
 		$doc = new DOMDocument( '1.0', 'UTF-8' );
@@ -133,130 +133,149 @@ class CrunchyrollFeedIngester extends VideoFeedIngester {
 		$debug = !empty( $params['debug'] );
 		$addlCategories = empty( $params['addlCategories'] ) ? [ ] : $params['addlCategories'];
 
-		$doc = new DOMDocument( '1.0', 'UTF-8' );
-		@$doc->loadXML( $content );
-		$items = $doc->getElementsByTagName( 'item' );
-		$numItems = $items->length;
-		$this->videoFound( $numItems );
+		foreach ( $this->getCollectionFeeds() as $collectionFeed ) {
+			$content = $this->downloadCollectionFeed( $collectionFeed );
 
-		$language = null;
-		$elements = $doc->getElementsByTagName( 'language' );
-		if ( $elements->length > 0 ) {
-			$this->convertLanguageCode( $elements->item( 0 )->textContent );
-		}
+			$doc = new DOMDocument( '1.0', 'UTF-8' );
+			@$doc->loadXML( $content );
+			$items = $doc->getElementsByTagName( 'item' );
+			$numItems = $items->length;
+			$this->videoFound( $numItems );
 
-		for ( $i = 0; $i < $numItems; ++$i ) {
-			$clipData = [];
-			$item = $items->item( $i );
-
-			$clipData['series'] = $item->getElementsByTagName( 'seriesTitle' )->item( 0 )->textContent;
-
-			// check for video name
-			$elements = $item->getElementsByTagName( 'title' );
+			$language = null;
+			$elements = $doc->getElementsByTagName( 'language' );
 			if ( $elements->length > 0 ) {
-				$clipData['titleName'] = $clipData['series'] .' - '. html_entity_decode( $elements->item( 0 )->textContent );
-				$clipData['uniqueName'] = $clipData['titleName'];
-			} else {
-				$this->videoSkipped();
-				continue;
+				$language = $this->convertLanguageCode( $elements->item( 0 )->textContent );
 			}
 
-			// Skip the premium videos - free publish date for them is in the future
-			$elements = $item->getElementsByTagName( 'freePubDate' );
-			if ( $elements->length > 0 ) {
-				$freePublishDate = strtotime( $elements->item( 0 )->textContent );
-				if ( $freePublishDate > time() ) {
-					$this->videoSkipped( "\nPremium video (title: {$clipData['titleName']})" );
+			for ( $i = 0; $i < $numItems; ++$i ) {
+				$clipData = [ ];
+				$item = $items->item( $i );
+
+				$clipData['series'] = $item->getElementsByTagName( 'seriesTitle' )->item( 0 )->textContent;
+
+				// check for video name
+				$elements = $item->getElementsByTagName( 'title' );
+				if ( $elements->length > 0 ) {
+					$clipData['titleName'] = $clipData['series'] . ' - ' . html_entity_decode( $elements->item( 0 )->textContent );
+				} else {
+					$this->videoSkipped();
 					continue;
 				}
-			}
 
-			$clipData['name'] = $clipData['titleName'];
-
-			$elements = $item->getElementsByTagName( 'description' );
-			if ( $elements->length > 0 ) {
-				$clipData['description'] = trim( strip_tags( $elements->item( 0 )->textContent ) );
-			} else {
-				$clipData['description'] = '';
-			}
-
-			// check for video id
-			$elements = $item->getElementsByTagName( 'mediaId' );
-			if ( $elements->length > 0 ) {
-				$clipData['videoId'] = $elements->item( 0 )->textContent;
-			}
-
-			if ( !isset( $clipData['videoId'] ) ) {
-				$this->videoWarnings( "ERROR: videoId NOT found for {$clipData['titleName']} - {$clipData['description']}.\n" );
-				continue;
-			}
-
-			if ( empty( $clipData['videoId'] ) ) {
-				$this->videoWarnings( "ERROR: Empty videoId for {$clipData['titleName']} - {$clipData['description']}.\n" );
-				continue;
-			}
-
-			// check for nonadult videos
-			$elements = $item->getElementsByTagName( 'rating' );
-			$clipData['ageGate'] = ( $elements->length > 0 && $elements->item( 0 )->textContent == 'nonadult' ) ? 0 : 1;
-
-			if ( $clipData['ageGate'] ) {
-				print( "Adult video: {$clipData['titleName']} ({$clipData['videoId']}).\n" );
-			}
-
-			$clipData['ageRequired'] = $clipData['ageGate'] ? '13' : '';
-
-			$clipData['published'] = strtotime( $item->getElementsByTagName( 'pubDate' )->item( 0 )->textContent );
-			$clipData['publisher'] = $item->getElementsByTagName( 'publisher' )->item( 0 )->textContent;
-			$clipData['expirationDate'] = strtotime( $item->getElementsByTagName( 'freeEndPubDate' )->item( 0 )->textContent );
-			$clipData['videoUrl'] = urldecode( $item->getElementsByTagName( 'link' )->item( 0 )->textContent );
-
-			$clipData['subtitle'] = $this->convertSubtitleLanguageCode(
-				$item->getElementsByTagName( 'subtitleLanguages' )->item( 0 )->textContent
-			);
-			$clipData['regionalRestrictions'] = strtoupper(
-				str_replace(' ', ', ', $item->getElementsByTagName( 'restriction' )->item( 0 )->textContent )
-			);
-
-			$clipData['season'] = 'Season ' . $item->getElementsByTagName( 'season' )->item( 0 )->textContent;
-			$clipData['episode'] = 'Episode ' . $item->getElementsByTagName( 'episodeNumber' )->item( 0 )->textContent;
-			$clipData['partnerVideoId'] = $item->getElementsByTagName( 'mediaId' )->item( 0 )->textContent;
-
-			// The first thumbnail returned by crunchyroll is the largest one - get that!
-			$elements = $item->getElementsByTagName( 'thumbnail' );
-			$clipData['thumbnail'] = ( $elements->length > 0 ) ? $elements->item( 0 )->getAttribute( 'url' ) : '';
-
-			$elements = $item->getElementsByTagName( 'keywords' );
-			$clipData['keywords'] = ( $elements->length > 0 ) ? $elements->item( 0 )->textContent : '';
-
-			$elements = $item->getElementsByTagName( 'category' );
-			if ( $elements->length > 0 ) {
-				$clipData['category'] = $this->getCategory( $elements->item( 0 )->textContent );
-				$clipData['type'] = '';
-			}
-
-			if ( $language ) {
-				$clipData['language'] = $language;
-			}
-			$clipData['duration'] = $item->getElementsByTagName( 'duration' )->item( 0 )->textContent;
-
-			$clipData['genres'] = [ ];
-			$clipData['actors'] = [ ];
-			$clipData['hd'] = 0;
-			$clipData['provider'] = 'crunchyroll';
-
-			$msg = '';
-			if ( $this->isClipTypeBlacklisted( $clipData ) ) {
-				if ( $debug ) {
-					$this->videoSkipped( "Skipping {$clipData['titleName']} - {$clipData['description']}. On clip type blacklist\n" );
+				// Skip the premium videos - free publish date for them is in the future
+				$elements = $item->getElementsByTagName( 'freePubDate' );
+				if ( $elements->length > 0 ) {
+					$freePublishDate = strtotime( $elements->item( 0 )->textContent );
+					if ( $freePublishDate > time() ) {
+						$this->videoSkipped( "\nPremium video (title: {$clipData['titleName']})\n" );
+						continue;
+					}
 				}
-			} else {
-				$createParams = array( 'addlCategories' => $addlCategories, 'debug' => $debug );
-				$articlesCreated += $this->createVideo( $clipData, $msg, $createParams );
-			}
 
-			if ( $msg ) {
-				print "ERROR: $msg\n";
+				$clipData['name'] = $clipData['titleName'];
+
+				$elements = $item->getElementsByTagName( 'description' );
+				if ( $elements->length > 0 ) {
+					$clipData['description'] = trim( strip_tags( $elements->item( 0 )->textContent ) );
+				} else {
+					$clipData['description'] = '';
+				}
+
+				// check for video id
+				$elements = $item->getElementsByTagName( 'mediaId' );
+				if ( $elements->length > 0 ) {
+					$clipData['videoId'] = $elements->item( 0 )->textContent;
+				}
+
+				if ( !isset( $clipData['videoId'] ) ) {
+					$this->videoWarnings( "ERROR: videoId NOT found for {$clipData['titleName']} - {$clipData['description']}.\n" );
+					continue;
+				}
+
+				if ( empty( $clipData['videoId'] ) ) {
+					$this->videoWarnings( "ERROR: Empty videoId for {$clipData['titleName']} - {$clipData['description']}.\n" );
+					continue;
+				}
+
+				// check for nonadult videos
+				$elements = $item->getElementsByTagName( 'rating' );
+				$clipData['ageGate'] = ( $elements->length > 0 && $elements->item( 0 )->textContent == 'nonadult' ) ? 0 : 1;
+
+				if ( $clipData['ageGate'] ) {
+					print( "Adult video: {$clipData['titleName']} ({$clipData['videoId']}).\n" );
+				}
+
+				$clipData['ageRequired'] = $clipData['ageGate'] ? '13' : '';
+
+				$clipData['published'] = strtotime( $item->getElementsByTagName( 'pubDate' )->item( 0 )->textContent );
+				$clipData['publisher'] = $item->getElementsByTagName( 'publisher' )->item( 0 )->textContent;
+				$clipData['expirationDate'] = strtotime( $item->getElementsByTagName( 'freeEndPubDate' )->item( 0 )->textContent );
+				$clipData['videoUrl'] = urldecode( $item->getElementsByTagName( 'link' )->item( 0 )->textContent );
+
+				$subTitleLangs = $item->getElementsByTagName( 'subtitleLanguages' );
+				if ( $subTitleLangs->length > 0 ) {
+					$clipData['subtitle'] = $this->convertSubtitleLanguageCode(
+						$item->getElementsByTagName( 'subtitleLanguages' )->item( 0 )->textContent
+					);
+				}
+
+				$clipData['regionalRestrictions'] = strtoupper(
+					str_replace( ' ', ', ', $item->getElementsByTagName( 'restriction' )->item( 0 )->textContent )
+				);
+
+				$elements = $item->getElementsByTagName( 'season' );
+				if ( $elements->length > 0 ) {
+					$clipData['season'] = 'Season ' . $elements->item( 0 )->textContent;
+				} else {
+					$clipData['season'] = '';
+				}
+
+				$elements = $item->getElementsByTagName( 'episodeNumber' );
+				if ( $elements->length > 0 ) {
+					$clipData['episode'] = 'Episode ' . $elements->item( 0 )->textContent;
+				} else {
+					$clipData['episode'] = '';
+				}
+
+				$clipData['partnerVideoId'] = $item->getElementsByTagName( 'mediaId' )->item( 0 )->textContent;
+
+				// The first thumbnail returned by crunchyroll is the largest one - get that!
+				$elements = $item->getElementsByTagName( 'thumbnail' );
+				$clipData['thumbnail'] = ( $elements->length > 0 ) ? $elements->item( 0 )->getAttribute( 'url' ) : '';
+
+				$elements = $item->getElementsByTagName( 'keywords' );
+				$clipData['keywords'] = ( $elements->length > 0 ) ? $elements->item( 0 )->textContent : '';
+
+				$elements = $item->getElementsByTagName( 'category' );
+				if ( $elements->length > 0 ) {
+					$clipData['category'] = $this->getCategory( $elements->item( 0 )->textContent );
+					$clipData['type'] = '';
+				}
+
+				if ( $language ) {
+					$clipData['language'] = $language;
+				}
+				$clipData['duration'] = $item->getElementsByTagName( 'duration' )->item( 0 )->textContent;
+
+				$clipData['genres'] = [ ];
+				$clipData['actors'] = [ ];
+				$clipData['hd'] = 0;
+				$clipData['provider'] = 'crunchyroll';
+
+				$msg = '';
+				if ( $this->isClipTypeBlacklisted( $clipData ) ) {
+					if ( $debug ) {
+						$this->videoSkipped( "Skipping {$clipData['titleName']} - {$clipData['description']}. On clip type blacklist\n" );
+					}
+				} else {
+					$createParams = array( 'addlCategories' => $addlCategories, 'debug' => $debug );
+					$articlesCreated += $this->createVideo( $clipData, $msg, $createParams );
+				}
+
+				if ( $msg ) {
+					print "ERROR: $msg\n";
+				}
 			}
 		}
 
@@ -278,7 +297,9 @@ class CrunchyrollFeedIngester extends VideoFeedIngester {
 		$categories[] = 'Crunchyroll';
 		$categories[] = $data['series'];
 		$categories[] = 'Entertainment';
-		$categories[] = $data['series'] . ': ' . $data['season'];
+		if ( !empty( $data['season'] ) ) {
+			$categories[] = $data['series'] . ': ' . $data['season'];
+		}
 
 		wfProfileOut( __METHOD__ );
 
@@ -298,43 +319,35 @@ class CrunchyrollFeedIngester extends VideoFeedIngester {
 		}
 
 		$metadata['videoUrl'] = empty( $data['videoUrl'] ) ? '' : $data['videoUrl'];
-		$metadata['uniqueName'] = empty( $data['uniqueName'] ) ? '' : $data['uniqueName'];
 
 		return $metadata;
 	}
 
 	/**
 	 * Converts the language code Crunchyroll uses to Wikia's
-	 * @param $crunchyLanguage
+	 * @param string $crunchyLanguage
 	 * @return null|string
 	 */
 	protected function convertLanguageCode( $crunchyLanguage ) {
-		switch ( $crunchyLanguage ) {
-			case 'en-us':
-				$wikiaLanguage = 'en';
-				break;
-			default:
-				$wikiaLanguage = null;
-		}
-
-		return $wikiaLanguage;
+		$crunchyLanguage = substr( $crunchyLanguage, 0, ( int ) strpos( $crunchyLanguage, '-' ) );
+		return $this->getCldrCode( $crunchyLanguage, 'language', false );
 	}
 
 	/**
 	 * Normalize subtitle language code Crunchyroll uses
-	 * @param $crunchySubtitle
+	 * @param string $crunchySubtitles
 	 * @return null|string
 	 */
-	protected function convertSubtitleLanguageCode( $crunchySubtitle ) {
-		switch ( $crunchySubtitle ) {
-			case 'fr - fr':
-				$wikiaLanguage = 'fr';
-				break;
-			default:
-				$wikiaLanguage = null;
+	protected function convertSubtitleLanguageCode( $crunchySubtitles ) {
+		$wikiaLangs = [];
+		$subs = array_unique( explode( ',', $crunchySubtitles ) );
+
+		foreach ( $subs as $sub ) {
+			$code = substr( $sub, 0, ( int ) strpos( $sub, ' ' ) );
+			$wikiaLangs[] = $this->getCldrCode( $code, 'language', false );
 		}
 
-		return $wikiaLanguage;
+		return implode( ', ', $wikiaLangs );
 	}
 
 }
