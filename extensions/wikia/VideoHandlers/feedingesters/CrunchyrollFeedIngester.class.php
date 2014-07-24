@@ -175,7 +175,7 @@ class CrunchyrollFeedIngester extends VideoFeedIngester {
 
 			$elements = $item->getElementsByTagName( 'description' );
 			if ( $elements->length > 0 ) {
-				$clipData['description'] = trim( html_entity_decode( $elements->item( 0 )->textContent ) );
+				$clipData['description'] = trim( strip_tags( $elements->item( 0 )->textContent ) );
 			} else {
 				$clipData['description'] = '';
 			}
