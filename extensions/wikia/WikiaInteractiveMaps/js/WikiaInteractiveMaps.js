@@ -46,6 +46,14 @@ require(
 					},
 					origin: 'wikia-int-map-delete-map',
 					cacheKey: 'wikia_interactive_maps_delete_map'
+				},
+				unDeleteMap: {
+					module: 'wikia.intMaps.unDeleteMap',
+					source: {
+						scripts: ['int_map_undelete_map_js']
+					},
+					origin: 'wikia-int-map-undelete-map',
+					cacheKey: 'wikia_interactive_maps_undelete_map'
 				}
 			};
 
@@ -60,6 +68,10 @@ require(
 			.on('click', 'a#deleteMap', function(event) {
 				event.preventDefault();
 				triggerAction('deleteMap');
+			})
+			.on('click', '#unDeleteMap', function(event) {
+				event.preventDefault();
+				triggerAction('unDeleteMap');
 			});
 
 		if (targetIframe) {
