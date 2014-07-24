@@ -16,19 +16,18 @@ $map-ad-height: 70px;
 }
 
 .int-map-mobile-map-page .ad-shown {
-  iframe {
-	padding-top: $map-ad-height + $nav-height;//$nav-height + $map-ad-height;
-  }
+	iframe {
+		padding-top: $map-ad-height + $nav-height;//$nav-height + $map-ad-height;
+	}
 }
 
 .int-map-mobile-map-page {
-  iframe {
-	padding-top: $nav-height;//$nav-height + $map-ad-height;
-  }
+	iframe {
+		padding-top: $nav-height;//$nav-height + $map-ad-height;
+	}
 }
 
 .int-map-mobile-map-page {
-
 	.WikiaPageHeader {
 		display: none;
 	}
@@ -116,6 +115,6 @@ $map-ad-height: 70px;
 	}
 }
 
-#wkPage {
+.int-map-mobile-map-page #wkPage {
 	padding: 0;
 }
