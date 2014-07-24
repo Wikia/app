@@ -55,8 +55,8 @@ $messages['en'] = array(
 *[http://www.wikia.com/Sports Sports]
 *[http://www.wikia.com/Lifestyle Featured]',
 
-	'wikiahome-community-column1-heading' => 'Community Resources',
-	'wikiahome-community-column1-link' => 'http://community.wikia.com',
+	'wikiahome-community-column1-heading' => 'Wikia University',
+	'wikiahome-community-column1-link' => 'http://community.wikia.com/wiki/Wikia_University',
 	'wikiahome-community-column1-creative' => 'Everything you need to start and grow your community on Wikia from tips and tools to news and access to really helpful people.',
 	'wikiahome-community-column2-heading' => 'Fan Fueled by Wikia',
 	'wikiahome-community-column2-link' => 'http://www.wikia.com/Mobile',
