@@ -209,7 +209,7 @@ class WikiStatsPage extends IncludableSpecialPage
 		asort($aLanguages);
 		#-
 		$hubs = WikiFactoryHub::getInstance();
-		$_cats = $hubs->getCategories();
+		$_cats = $hubs->getAllCategories();
 		$aCategories = array();
 		if ( !empty($_cats) ) {
 			foreach ( $_cats as $id => $cat ) {
@@ -384,7 +384,7 @@ class WikiStatsPage extends IncludableSpecialPage
 		asort($aLanguages);
 		#-
 		$hubs = WikiFactoryHub::getInstance();
-		$_cats = $hubs->getCategories();
+		$_cats = $hubs->getAllCategories();
 		$aCategories = array();
 		if ( !empty($_cats) ) {
 			foreach ( $_cats as $id => $cat ) {
