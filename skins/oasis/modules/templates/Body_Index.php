@@ -149,7 +149,7 @@
 
 		<?= empty($wg->SuppressFooter) ? $app->renderView('Footer', 'Index') : '' ?>
 		<? if(!empty($wg->EnableWikiaHomePageExt)) echo $app->renderView('WikiaHomePage', 'footer') ?>
-		<?= $app->renderView('CorporateFooter', 'Index') ?>
+		<? if(!empty($wg->EnableGlobalFooter)) echo $app->renderView('GlobalFooter', 'index') ?>
 	</div>
 </section><!--WikiaPage-->
 
