@@ -696,6 +696,14 @@ $messages[ 'it' ] = [
 	'wikia-interactive-maps-delete-pin-log-entry' => "segnaposto rimosso per [[$2]]",
 	'wikia-interactive-maps-hide-filter' => "Nascondi",
 	'wikia-interactive-maps-tile-set-exists-error' => "Il nome del template deve essere unico",
+
+	// default POI categories
+	'wikia-interactive-maps-poi-categories-default-other' => 'Altro',
+	'wikia-interactive-maps-poi-categories-default-location' => 'Luogo',
+	'wikia-interactive-maps-poi-categories-default-quest' => 'Missione',
+	'wikia-interactive-maps-poi-categories-default-character' => 'Personaggio',
+	'wikia-interactive-maps-poi-categories-default-item' => 'Oggetto',
+	'wikia-interactive-maps-poi-categories-default-event' => 'Evento',
 ];
 
 $messages[ 'ja' ] = [
