@@ -55,7 +55,6 @@ class VideosModule extends WikiaModel {
 		'thumbHeight'  => self::THUMBNAIL_HEIGHT,
 		'getThumbnail' => true,
 		'thumbOptions' => [
-			'useTemplate' => true,
 			'fluid'       => true,
 			'forceSize'   => 'small',
 		],
