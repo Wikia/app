@@ -38,7 +38,6 @@ class CrunchyrollVideoHandler extends VideoHandler {
 			'html' => $html,
 			'width' => $width,
 			'height' => $height,
-			'init' => 'wikia.videohandler.crunchyroll',
 		];
 	}
 
