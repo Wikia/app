@@ -140,7 +140,7 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 							'WikiaStatsController', 'saveWikiaStatsInWF',
 							array('statsValues' => $statsValues)
 						);
-					} catch (PermissionsException $ex ) {
+					} catch (PermissionsException $ex) {
 						$isAllowed = false;
 					}
 					if ($isAllowed) {
