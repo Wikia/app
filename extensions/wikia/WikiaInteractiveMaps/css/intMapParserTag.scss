@@ -13,6 +13,7 @@ $max-view-button-width: 230px;
 $modal-header-footer-height: 45px;
 
 .wikia-interactive-map-thumbnail {
+	clear: both;
 	cursor: pointer;
 	height: $default-height;
 	line-height:22px;
@@ -81,15 +82,10 @@ $modal-header-footer-height: 45px;
 		padding: 8px 11px 8px 35px;
 		position: absolute;
 		right: 20px;
-
-		&:hover {
-			background-color: #fff;
-			color: $color-buttons;
-		}
 	}
 }
 
-.modal.large iframe[name="wikia-interactive-map"] {
+.modal.large .wikia-interactive-map-wrapper {
 	@include height-calc('100% - #{$modal-header-footer-height * 2}');
 	left: 0;
 	position: absolute;
@@ -101,3 +97,4 @@ $modal-header-footer-height: 45px;
 	position: relative;
 	width: 100%;
 }
+

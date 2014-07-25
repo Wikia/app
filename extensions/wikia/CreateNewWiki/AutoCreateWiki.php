@@ -276,7 +276,7 @@ class AutoCreateWiki {
 	public static function checkCategoryIsCorrect($sValue) {
 		wfProfileIn(__METHOD__);
 		$hubs = WikiFactoryHub::getInstance();
-		$aCategories = $hubs->getCategories();
+		$aCategories = $hubs->getAllCategories();
 		$sResponse = "";
 		if ($sValue == "") {
 			$sResponse = wfMsg('autocreatewiki-empty-category');
