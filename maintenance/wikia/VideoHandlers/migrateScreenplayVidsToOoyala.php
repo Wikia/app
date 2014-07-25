@@ -48,7 +48,7 @@ class MigrateScreenplayVidsToOoyala extends Maintenance {
 		$titles = $this->getScreenplayTitles();
 		$ooyalaAsset = new OoyalaAsset();
 
-		if ( !empty( $this->dryRun ) ) {
+		if ( $this->dryRun ) {
 			echo "Dry run...\n";
 		}
 
@@ -62,7 +62,7 @@ class MigrateScreenplayVidsToOoyala extends Maintenance {
 			}
 
 			$ooyalaData = $this->prepForOoyala( $videoFile );
-			if ( !empty( $this->dryRun ) ) {
+			if ( $this->dryRun ) {
 				echo "Ready to migrate video " . $videoFile->getName() . " to Ooyala with the following data:\n";
 				print_r( $ooyalaData );
 				$success = true;
@@ -79,7 +79,7 @@ class MigrateScreenplayVidsToOoyala extends Maintenance {
 			}
 
 			$localData = $this->prepForLocal( $videoFile, $ooyalaData, $videoId );
-			if ( !empty( $this->dryRun ) ) {
+			if ( $this->dryRun ) {
 				echo "Ready to update video " . $videoFile->getName() . " locally with the following new metadata\n";
 				print_r( unserialize( $localData ) );
 			} else {
@@ -230,7 +230,7 @@ class MigrateScreenplayVidsToOoyala extends Maintenance {
 
 	private function log( $msg ) {
 
-		if ( !empty( $this->verbose ) ) {
+		if ( $this->verbose ) {
 			echo $msg . "\n";
 		}
 	}
