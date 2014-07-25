@@ -27,18 +27,30 @@ class MigrateScreenplayVidsToOoyala extends Maintenance {
 
 	private $migratedVideos = 0;
 	private $skippedVideos = 0;
+	private $verbose = false;
+	private $dryRun = false;
+	private $limit;
 
 	public function __construct() {
 
 		parent::__construct();
 		$this->mDescription = "Migrate Screenplay videos onto Ooyala";
 		$this->addOption( 'verbose', 'Show extra debugging output', false, false, 'v' );
+		$this->addOption( 'dryRun', 'Do a test run of the script without making changes', false, false, 'd' );
+		$this->addOption( 'limit', 'The number of videos to migrate', false, false, 'l' );
 	}
 
 	public function execute() {
+		$this->verbose = $this->hasOption( "verbose" );
+		$this->dryRun = $this->hasOption( "dryRun" );
+		$this->limit =  $this->getOption( "limit", self::BATCH_SIZE );
 
 		$titles = $this->getScreenplayTitles();
 		$ooyalaAsset = new OoyalaAsset();
+
+		if ( !empty( $this->dryRun ) ) {
+			echo "Dry run...\n";
+		}
 
 		foreach ( $titles as $title ) {
 
@@ -50,8 +62,15 @@ class MigrateScreenplayVidsToOoyala extends Maintenance {
 			}
 
 			$ooyalaData = $this->prepForOoyala( $videoFile );
-			// $videoId gets set in addRemoteAsset()
-			$success = $ooyalaAsset->addRemoteAsset( $ooyalaData, $videoId );
+			if ( !empty( $this->dryRun ) ) {
+				echo "Ready to migrate video " . $videoFile->getName() . " to Ooyala with the following data:\n";
+				print_r( $ooyalaData );
+				$success = true;
+				$videoId = "TestID";
+			} else {
+				// $videoId gets set in addRemoteAsset()
+				$success = $ooyalaAsset->addRemoteAsset( $ooyalaData, $videoId );
+			}
 
 			if ( !$success ) {
 				$this->log( "Error uploading video {$ooyalaData['assetTitle']} onto Ooyala. Skipping update locally");
@@ -60,7 +79,12 @@ class MigrateScreenplayVidsToOoyala extends Maintenance {
 			}
 
 			$localData = $this->prepForLocal( $videoFile, $ooyalaData, $videoId );
-			$this->updateVideoLocally( $videoFile, $localData, $videoId );
+			if ( !empty( $this->dryRun ) ) {
+				echo "Ready to update video " . $videoFile->getName() . " locally with the following new metadata\n";
+				print_r( unserialize( $localData ) );
+			} else {
+				$this->updateVideoLocally( $videoFile, $localData, $videoId );
+			}
 			$this->migratedVideos++;
 		}
 
@@ -80,6 +104,7 @@ class MigrateScreenplayVidsToOoyala extends Maintenance {
 		$metadata['thumbnail'] = $videoFile->getThumbUrl();
 		$metadata['pageCategories'] = $this->getPageCategories( $videoFile->getTitle() );
 		$metadata['destinationTitle'] = $videoFile->getTitle()->getText();
+		$metadata['provider'] = 'screenplay';
 
 		$screenPlayIngester = new ScreenplayFeedIngester();
 		$metadata = $screenPlayIngester->generateRemoteAssetData( $videoFile->getTitle()->getText(), $metadata );
@@ -130,7 +155,7 @@ class MigrateScreenplayVidsToOoyala extends Maintenance {
 		$titles = ( new WikiaSQL() )->SELECT( "video_title" )
 			->FROM("video_info")
 			->WHERE( "provider" )->EQUAL_TO( "screenplay" )
-			->LIMIT( self::BATCH_SIZE )
+			->LIMIT( $this->limit )
 			->runLoop( $db, function ( &$titles, $row ) {
 				$titles[] = $row->video_title;
 			});
@@ -186,11 +211,10 @@ class MigrateScreenplayVidsToOoyala extends Maintenance {
 	 */
 	private function updatePageCategory( $videoFile ) {
 
-		global $wgUser;
 		$article = Article::newFromID( $videoFile->getTitle()->getArticleID() );
 		$content = $article->getContent();
 		$content .= self::OOOYALA_CAT;
-		$status = $article->doEdit( $content, self::EDIT_MESSAGE, EDIT_UPDATE | EDIT_SUPPRESS_RC | EDIT_FORCE_BOT, false, $wgUser );
+		$status = $article->doEdit( $content, self::EDIT_MESSAGE, EDIT_UPDATE | EDIT_SUPPRESS_RC | EDIT_FORCE_BOT, false );
 		if ( !$status->isOK() ) {
 			$this->log( "Error adding Ooyala category to " . $videoFile->getName() );
 			$this->log( $status->getMessage() );
