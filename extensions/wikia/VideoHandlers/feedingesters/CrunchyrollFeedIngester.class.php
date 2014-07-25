@@ -250,7 +250,6 @@ class CrunchyrollFeedIngester extends VideoFeedIngester {
 				$elements = $item->getElementsByTagName( 'category' );
 				if ( $elements->length > 0 ) {
 					$clipData['category'] = $this->getCategory( $elements->item( 0 )->textContent );
-					$clipData['type'] = '';
 				}
 
 				if ( $language ) {
