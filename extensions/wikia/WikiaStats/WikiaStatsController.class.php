@@ -42,9 +42,11 @@ class WikiaStatsController extends WikiaController {
 
 	public function saveWikiaStatsInWF() {
 		$statsValues = $this->request->getVal('statsValues');
-		if ( $this->wg->User->isAllowed( 'wikifactory' ) || $this->wg->User->isAllowed( 'managewikiahome' )) {
+		if ( $this->wg->User->isAllowed( 'wikifactory' )) {
 			WikiaDataAccess::cachePurge( $this->getStatsMemcacheKey() );
 			WikiaStatsModel::setWikiaStatsInWF( $statsValues );
+		} else {
+			throw new PermissionsException('wikifactory');
 		}
 	}
 

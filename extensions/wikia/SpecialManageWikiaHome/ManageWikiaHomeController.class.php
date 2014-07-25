@@ -134,12 +134,21 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 				$isValid = $this->statsForm->validate($statsValues);
 
 				if ($isValid) {
-					$this->app->sendRequest(
-						'WikiaStatsController', 'saveWikiaStatsInWF',
-						array('statsValues' => $statsValues)
-					);
-					FlashMessages::put(wfMessage('manage-wikia-home-stats-success')->text());
-					$this->response->redirect($_SERVER['REQUEST_URI']);
+					$isAllowed = true;
+					try {
+						$this->app->sendRequest(
+							'WikiaStatsController', 'saveWikiaStatsInWF',
+							array('statsValues' => $statsValues)
+						);
+					} catch (PermissionsException $ex ) {
+						$isAllowed = false;
+					}
+					if ($isAllowed) {
+						FlashMessages::put(wfMessage('manage-wikia-home-stats-success')->text());
+						$this->response->redirect($_SERVER['REQUEST_URI']);
+					} else {
+						$this->errorMsg = wfMessage('manage-wikia-home-stats-permissions-error')->text();
+					}
 				} else {
 					$this->errorMsg = wfMessage('manage-wikia-home-stats-failure')->text();
 				}
