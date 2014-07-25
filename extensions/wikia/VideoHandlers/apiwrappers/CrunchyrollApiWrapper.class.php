@@ -109,7 +109,7 @@ class CrunchyrollApiWrapper extends IngestionApiWrapper {
 	protected function loadMetadata( array $overrideFields = [] ) {
 		parent::loadMetadata( $overrideFields );
 
-		if ( $this->isAgeGate() ) {
+		if ( $this->isAgeGate() && php_sapi_name() != 'cli' ) {
 			throw new WikiaException( wfMsg( "videohandler-error-restricted-video" ) );
 		}
 
