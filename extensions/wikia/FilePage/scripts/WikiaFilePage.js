@@ -1,4 +1,4 @@
-require(['wikia.videoBootstrap', 'jquery', 'wikia.window', 'wikia.geo'], function (VideoBootstrap, jquery, window) {
+require(['wikia.videoBootstrap', 'jquery', 'wikia.window', 'wikia.geo'], function (VideoBootstrap, jquery, window, geo) {
 
 	'use strict';
 
@@ -22,23 +22,22 @@ require(['wikia.videoBootstrap', 'jquery', 'wikia.window', 'wikia.geo'], functio
 		var $viewableRestrictions = $('#restricted-content-viewable'),
 			data,
 			userRegion,
-			restrictMessage;
+			$restrictMessage;
 
 		if ($viewableRestrictions.length) {
 			data = JSON.parse($viewableRestrictions.attr('data-regional-restrictions'));
-			userRegion = Wikia.geo.getCountryCode().toLowerCase();
-			restrictMessage = '';
+			userRegion = geo.getCountryCode().toLowerCase();
 
 			if (data.indexOf(userRegion) !== -1) {
-				restrictMessage = $viewableRestrictions;
+				$restrictMessage = $viewableRestrictions;
 			} else {
-				restrictMessage = $('#restricted-content-unviewable');
+				$restrictMessage = $('#restricted-content-unviewable');
 			}
-			restrictMessage.show();
+			$restrictMessage.removeClass('hidden');
 		}
 	}
 
 	$(initVideo);
-	$(initRestrictions());
+	$(initRestrictions);
 
 });
