@@ -198,30 +198,40 @@ var WikiBuilder = {
 			});
 		});
 
-		this.wikiCategory.on('change', function( e ) {
+		this.wikiCategory.on('change', function() {
 			var $this = $(this),
 				selectedValue = $this.val(),
-				selectedOption = $this.find('option:selected'),
-				short = selectedOption.data('short'),
-				categoriesset = selectedOption.data('categoriesset'),
-				tohide;
+				selectedOption,
+				selectedShort,
+				categoriesSets = $('.secondary-categories-sets'),
+				categoriesSetId,
+				duplicate;
 
-			if(selectedValue === "-1") {
-				$('.secondary-categories-sets').hide();
+			if(selectedValue === "-1" /* yes, it is a string */) {
+				categoriesSets.hide();
 			} else {
-				$('.secondary-categories-sets').show();
-				if(that.categoriesset !== categoriesset) {
-					$('#categories-set-' + that.categoriesset).hide();
-					$('#categories-set-' + categoriesset).show();
-					that.categoriesset = categoriesset;
+				categoriesSets.show();
+
+				selectedOption = $this.find('option:selected');
+				selectedShort = selectedOption.data('short');
+				categoriesSetId = selectedOption.data('categoriesset');
+
+				if(categoriesSetId !== that.categoriesSetId) {
+					$('#categories-set-' + that.categoriesSetId).hide();
+					$('#categories-set-' + categoriesSetId).show();
+					that.categoriesSetId = categoriesSetId;
 				}
-				if(that.hidden) {
-					that.hidden.show();
+
+				// unhide "duplicates"
+				if(that.hiddenDuplicate) {
+					that.hiddenDuplicate.show();	
 				}
-				tohide = $('#categories-set-' + that.categoriesset).find('[data-short="' + short + '"]');
-				if(tohide) {
-					tohide.attr('checked', false)
-					that.hidden = tohide.parent().hide();
+
+				// hide "duplicates"
+				duplicate = $('#categories-set-' + that.categoriesSetId).find('[data-short="' + selectedShort + '"]');
+				if(duplicate) {
+					duplicate.attr('checked', false);
+					that.hiddenDuplicate = duplicate.parent().hide();
 				}
 			}
 		});
