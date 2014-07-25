@@ -204,9 +204,8 @@ class CrunchyrollFeedIngester extends VideoFeedIngester {
 
 				if ( $clipData['ageGate'] ) {
 					print( "Adult video: {$clipData['titleName']} ({$clipData['videoId']}).\n" );
+					$clipData['ageRequired'] = $clipData['ageGate'] ? '13' : '';
 				}
-
-				$clipData['ageRequired'] = $clipData['ageGate'] ? '13' : '';
 
 				$clipData['published'] = strtotime( $item->getElementsByTagName( 'pubDate' )->item( 0 )->textContent );
 				$clipData['publisher'] = $item->getElementsByTagName( 'publisher' )->item( 0 )->textContent;
