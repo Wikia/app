@@ -151,37 +151,6 @@ class WikiaFileHelper extends Service {
 	}
 
 	/**
-	 * get html for video play button overlay
-	 * @global string $wgBlankImgUrl
-	 * @param integer $width
-	 * @param integer $height
-	 * @return string
-	 */
-	public static function videoPlayButtonOverlay( $width, $height ) {
-		$sizeClass = '';
-		if ( $width <= 170 ) {
-			$sizeClass = 'small';
-		}
-		if ( $width > 360 ) {
-			$sizeClass = 'large';
-		}
-
-		$html = Xml::openElement( 'div', array(
-			'class' => 'Wikia-video-play-button',
-			'style' => 'line-height:' . $height . 'px;width:' . $width . 'px;',
-		));
-
-		$html .= Xml::element( 'img', array(
-			'class' => 'sprite play ' . $sizeClass,
-			'src' => F::app()->wg->BlankImgUrl,
-		));
-
-		$html .= Xml::closeElement( 'div' );
-
-		return $html;
-	}
-
-	/**
 	 * get html for video info overlay
 	 *
 	 * @todo completely remove this function and all functions that only it calls
