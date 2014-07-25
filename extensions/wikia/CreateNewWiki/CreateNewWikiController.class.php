@@ -34,6 +34,8 @@ class CreateNewWikiController extends WikiaController {
 			$currentStep = '';
 		}
 
+		$this->setupVerticalsAndCategories();
+
 		// form field values
 		$hubs = WikiFactoryHub::getInstance();
 		$this->aCategories = $hubs->getAllCategories();
@@ -101,6 +103,68 @@ class CreateNewWikiController extends WikiaController {
 		$this->applicationThemeSettings = SassUtil::getApplicationThemeSettings();
 
 		wfProfileOut( __METHOD__ );
+	}
+
+	private function setupVerticalsAndCategories() {
+		$allVerticals = WikiFactoryHub::getInstance()->getAllVerticals();
+		$allCategories = WikiFactoryHub::getInstance()->getAllCategories();
+		$allCategories = array(
+			1 => array( 'id' => 1, 'name' => 'Humor', 'short' => 'humor'),
+			5 => array( 'id' => 5, 'name' => 'Toys', 'short' => 'toys'),
+			6 => array( 'id' => 6, 'name' => 'Food and Drink', 'short' => 'foodanddrink'),
+			7 => array( 'id' => 7, 'name' => 'Travel', 'short' => 'travel'),
+			8 => array( 'id' => 8, 'name' => 'Education', 'short' => 'edu'),
+			10 => array( 'id' => 10, 'name' => 'Finance', 'short' => 'fin'),
+			11 => array( 'id' => 11, 'name' => 'Politics', 'short' => 'poli'),
+			12 => array( 'id' => 12, 'name' => 'Technology', 'short' => 'tech'),
+			13 => array( 'id' => 13, 'name' => 'Science', 'short' => 'sci'),
+			14 => array( 'id' => 14, 'name' => 'Philosophy', 'short' => 'phil'),
+			15 => array( 'id' => 15, 'name' => 'Sports', 'short' => 'sports'),
+			16 => array( 'id' => 16, 'name' => 'Music', 'short' => 'music'),
+			17 => array( 'id' => 17, 'name' => 'Creative', 'short' => 'crea'),
+			18 => array( 'id' => 18, 'name' => 'Auto', 'short' => 'auto'),
+			21 => array( 'id' => 21, 'name' => 'TV', 'short' => 'tv'),
+			22 => array( 'id' => 22, 'name' => 'Video Games', 'short' => 'videogames'),
+			23 => array( 'id' => 23, 'name' => 'Books', 'short' => 'books'),
+			24 => array( 'id' => 24, 'name' => 'Comics', 'short' => 'comics'),
+			25 => array( 'id' => 25, 'name' => 'Fanon', 'short' => 'fanon'),
+			26 => array( 'id' => 26, 'name' => 'Home and Garden', 'short' => 'homeandgarden'),
+			27 => array( 'id' => 27, 'name' => 'Movies', 'short' => 'movies'),
+			28 => array( 'id' => 28, 'name' => 'Anime', 'short' => 'anime'),
+		);
+
+		// Defines order in which verticals are going to be displayed in the <select>
+		$verticalsOrder = array( 2, 7, 4, 3, 1, 6, 5, 0 );
+
+		// Defines sets of categories and order of categories in each set
+		$categoriesSetsOrder = array(
+			1 => array( 28, 23, 24, 25, 27, 16, 21, 22),
+			2 => array( 28, 18, 17, 8, 25, 10, 6, 26, 1, 14, 11, 13, 15, 12, 5, 7)
+		);
+
+		// Defines mapping between vertical and categories set
+		$verticalToCategoriesSetMapping = array( 2 => 1, 7 => 1, 4 => 1, 3 => 1, 1 => 1, 6 => 1, 5 => 2, 0 => 2 );
+
+		$this->verticals = array();
+		foreach($verticalsOrder as $verticalId) {
+			$this->verticals[] = array(
+				'id' => $allVerticals[$verticalId]['id'],
+				'name' => $allVerticals[$verticalId]['id'],
+				'short' => $allVerticals[$verticalId]['short'],
+				'categoriesSet' => $verticalToCategoriesSetMapping[$verticalId]
+			);
+		}
+		//print_pre($this->verticals);exit();
+
+		$this->categoriesSets = array();
+		foreach($categoriesSetsOrder as $setId => $categoriesOrder) {
+			$categoriesSet = array();
+			foreach($categoriesOrder as $categoryId) {
+				$categoriesSet[] = $allCategories[$categoryId];
+			}
+			$this->categoriesSets[$setId] = $categoriesSet;
+		}
+		//print_pre($this->categoriesSets);exit();
 	}
 
 	/**
