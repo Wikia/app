@@ -416,8 +416,8 @@ $messages['pl'] = array(
 	'wikiahome-page-header-create-wiki-button' => 'Utwórz wiki',
 	'wikiahome-page-header-create-wiki-button-destination' => 'http://www.wikia.com/Special:CreateWiki?uselang=pl',
 
-	'wikiahome-visualisation-remix-mixitup' => 'Miksuj!',
-	'wikiahome-visualisation-remix-mixituptext' => 'Tysiące społeczności na wyciągnięcie ręki. Miksuj i odkrywaj Wikię.',
+	'wikiahome-visualisation-remix-mixitup' => 'Miksuj wiki!',
+	'wikiahome-visualisation-remix-mixituptext' => 'Tysiące wiki na wyciągnięcie ręki. Kliknij, aby zobaczyć więcej.',
 	'wikiahome-visualisation-remix-button' => 'Odśwież',
 
 	'wikia-home-page-preview' => 'Podgląd',
