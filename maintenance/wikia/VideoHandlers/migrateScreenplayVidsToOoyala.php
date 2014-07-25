@@ -130,7 +130,7 @@ class MigrateScreenplayVidsToOoyala extends Maintenance {
 		$titles = ( new WikiaSQL() )->SELECT( "video_title" )
 			->FROM("video_info")
 			->WHERE( "provider" )->EQUAL_TO( "screenplay" )
-			->LIMIT(5)
+			->LIMIT( self::BATCH_SIZE )
 			->runLoop( $db, function ( &$titles, $row ) {
 				$titles[] = $row->video_title;
 			});
