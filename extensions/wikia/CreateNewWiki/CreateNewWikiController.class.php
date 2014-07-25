@@ -36,10 +36,6 @@ class CreateNewWikiController extends WikiaController {
 
 		$this->setupVerticalsAndCategories();
 
-		// form field values
-		$hubs = WikiFactoryHub::getInstance();
-		$this->aCategories = $hubs->getAllCategories();
-
 		$this->aTopLanguages = explode(',', wfMsg('autocreatewiki-language-top-list'));
 		$languages = wfGetFixedLanguageNames();
 		asort( $languages );
@@ -149,7 +145,7 @@ class CreateNewWikiController extends WikiaController {
 		foreach($verticalsOrder as $verticalId) {
 			$this->verticals[] = array(
 				'id' => $allVerticals[$verticalId]['id'],
-				'name' => $allVerticals[$verticalId]['id'],
+				'name' => $allVerticals[$verticalId]['name'],
 				'short' => $allVerticals[$verticalId]['short'],
 				'categoriesSet' => $verticalToCategoriesSetMapping[$verticalId]
 			);

@@ -198,6 +198,34 @@ var WikiBuilder = {
 			});
 		});
 
+		this.wikiCategory.on('change', function( e ) {
+			var $this = $(this),
+				selectedValue = $this.val(),
+				selectedOption = $this.find('option:selected'),
+				short = selectedOption.data('short'),
+				categoriesset = selectedOption.data('categoriesset'),
+				tohide;
+
+			if(selectedValue === "-1") {
+				$('.secondary-categories-sets').hide();
+			} else {
+				$('.secondary-categories-sets').show();
+				if(that.categoriesset !== categoriesset) {
+					$('#categories-set-' + that.categoriesset).hide();
+					$('#categories-set-' + categoriesset).show();
+					that.categoriesset = categoriesset;
+				}
+				if(that.hidden) {
+					that.hidden.show();
+				}
+				tohide = $('#categories-set-' + that.categoriesset).find('[data-short="' + short + '"]');
+				if(tohide) {
+					tohide.attr('checked', false)
+					that.hidden = tohide.parent().hide();
+				}
+			}
+		});
+
 		// Set current step on page load
 		if(WikiBuilderCfg['currentstep']) {
 			var pane = $('#' + WikiBuilderCfg.currentstep);

@@ -396,7 +396,11 @@ div#userloginErrorBox3 {
 		min-width: 210px;
 		max-width: 490px;
 	}
-	.secondary-categories {
+	.secondary-categories-sets {
+		display: none;
+	}
+	.secondary-categories-set {
+		display: none;
 		@include column-count( 4 );
 
 		label {
