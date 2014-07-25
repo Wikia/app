@@ -220,7 +220,7 @@ class AdEngine2Service
 			$wgOasisResponsive, $wgOasisResponsiveLimited,
 			$wgEnableRHonDesktop, $wgAdPageType, $wgOut,
 			$wgRequest, $wgEnableKruxTargeting,
-			$wgAdVideoTargeting, $wgLiftiumOnLoad, $wgAdDriverSevenOneMediaSub4Site,
+			$wgAdVideoTargeting, $wgLiftiumOnLoad, $wgAdDriverSevenOneMediaOverrideSub2Site,
 			$wgDartCustomKeyValues, $wgWikiDirectedAtChildrenByStaff, $wgAdEngineDisableLateQueue,
 			$wgAdDriverUseBottomLeaderboard, $wgAdDriverBottomLeaderboardImpressionCapping, $wgAdDriverEnableAdsInMaps;
 
@@ -241,7 +241,7 @@ class AdEngine2Service
 			'wgAdDriverUseEbay' => $wgAdDriverUseEbay,
 			'wgAdDriverUseDartForSlotsBelowTheFold' => $wgAdDriverUseDartForSlotsBelowTheFold === null ? 'hub' : $wgAdDriverUseDartForSlotsBelowTheFold,
 			'wgAdDriverUseSevenOneMedia' => $wgAdDriverUseSevenOneMedia,
-			'wgAdDriverSevenOneMediaSub4Site' => $wgAdDriverSevenOneMediaSub4Site,
+			'wgAdDriverSevenOneMediaOverrideSub2Site' => $wgAdDriverSevenOneMediaOverrideSub2Site,
 			'wgUserShowAds' => $wgUser->getOption('showAds'),
 			'wgOutboundScreenRedirectDelay' => $wgOutboundScreenRedirectDelay,
 			'wgEnableOutboundScreenExt' => $wgEnableOutboundScreenExt,
