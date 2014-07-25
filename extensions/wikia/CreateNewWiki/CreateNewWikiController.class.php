@@ -293,7 +293,7 @@ class CreateNewWikiController extends WikiaController {
 				return;
 			}
 
-			$createWiki = new CreateWiki($params['wName'], $params['wDomain'], $params['wLanguage'], $params['wCategory']);
+			$createWiki = new CreateWiki($params['wName'], $params['wDomain'], $params['wLanguage'], $params['wCategory'], $params['wCategories']);
 			$error_code = $createWiki->create();
 			$cityId = $createWiki->getWikiInfo('city_id');
 			if(empty($cityId)) {

@@ -157,7 +157,7 @@ var WikiBuilder = {
 		this.descWikiNext.click(function() {
 			that.descWikiNext.attr('disabled', true);
 			var val = that.wikiCategory.find('option:selected').val();
-			if(val) {
+			if(val !== "-1" /* yes, it is a string */) {
 				$.nirvana.sendRequest({
 					controller: 'CreateNewWiki',
 					method: 'Phalanx',
@@ -469,12 +469,18 @@ var WikiBuilder = {
 	createWiki: function() {
 
 		var that = this,
-			throbberWrapper = $('#ThemeWiki .next-controls');
+			throbberWrapper = $('#ThemeWiki .next-controls'),
+			categoryOption = that.wikiCategory.find('option:selected'),
+			categories = [];
 
 		this.requestKeys();
 		this.solveKeys();
 
 		throbberWrapper.startThrobbing();
+
+		$('#categories-set-' + categoryOption.data('categoriesset') + ' :checked').each(function() {
+			categories.push($(this).val());
+		});
 
 		$.nirvana.sendRequest({
 			controller: 'CreateNewWiki',
@@ -484,7 +490,8 @@ var WikiBuilder = {
 					wName: that.wikiName.val(),
 					wDomain: that.wikiDomain.val(),
 					wLanguage: that.wikiLanguage.find('option:selected').val(),
-					wCategory: that.wikiCategory.find('option:selected').val(),
+					wCategory: categoryOption.val(),
+					wCategories: categories,
 					wAllAges: that.wikiAllAges.is(':checked') ? that.wikiAllAges.val() : null,
 					wAnswer: Math.floor(that.answer)
 				}
