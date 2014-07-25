@@ -21,7 +21,7 @@ require_once( dirname( __FILE__ ) . '/../../Maintenance.php' );
  */
 class MigrateScreenplayVidsToOoyala extends Maintenance {
 
-	CONST BATCH_SIZE = 10000;
+	const BATCH_SIZE = 10000;
 	const OOOYALA_CAT = '[[Category:Ooyala]]';
 	const EDIT_MESSAGE = 'Added category Ooyala';
 
@@ -37,7 +37,7 @@ class MigrateScreenplayVidsToOoyala extends Maintenance {
 		$this->mDescription = "Migrate Screenplay videos onto Ooyala";
 		$this->addOption( 'verbose', 'Show extra debugging output', false, false, 'v' );
 		$this->addOption( 'dryRun', 'Do a test run of the script without making changes', false, false, 'd' );
-		$this->addOption( 'limit', 'The number of videos to migrate', false, false, 'l' );
+		$this->addOption( 'limit', 'The number of videos to migrate', false, true, 'l' );
 	}
 
 	public function execute() {
@@ -167,7 +167,7 @@ class MigrateScreenplayVidsToOoyala extends Maintenance {
 	 * Returns a string of categories associated with this video, separated by a comma
 	 * and a space.
 	 * @param $title Title
-	 * @return array
+	 * @return string
 	 */
 	private function getPageCategories( $title ) {
 
