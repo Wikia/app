@@ -87,13 +87,13 @@ require(['jquery', 'wikia.mustache', 'wikia.tracker', 'wikia.loader', require.op
 						uiModal.createComponent(modalConfig, function (mapModal) {
 							mapModal.show();
 
-							require(['wikia.intMap.pontoBridge'], function (pontoBridge) {
-								pontoBridge.init(mapModal.$content.children('iframe')[0]);
-							});
-
 							if (mapAds) {
 								mapAds.initSlot(mapModal.$element.find('.wikia-ad-interactive-map').get(0));
 							}
+
+							require(['wikia.intMap.pontoBridge'], function (pontoBridge) {
+								pontoBridge.init(mapModal.$content.find('#wikiaInteractiveMapIframe')[0]);
+							});
 
 							tracker.track({
 								trackingMethod: 'ga',

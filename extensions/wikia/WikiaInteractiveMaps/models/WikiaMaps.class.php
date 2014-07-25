@@ -253,12 +253,13 @@ class WikiaMaps extends WikiaObject {
 	 * Sends a request to delete a map instance
 	 *
 	 * @param integer $mapId
+	 * @param integer $deleted Is map being deleted or undeleted
 	 *
 	 * @return bool
 	 */
-	public function deleteMapById( $mapId ) {
+	public function updateMapDeletionStatus( $mapId, $deleted ) {
 		$payload = [
-			'deleted' => true
+			'deleted' => $deleted
 		];
 		$url = $this->buildUrl( [ self::ENTRY_POINT_MAP, $mapId ] );
 		return $this->putRequest( $url, $payload );
@@ -304,6 +305,16 @@ class WikiaMaps extends WikiaObject {
 
 		//TODO: consider caching the response
 		$response = $this->sendGetRequest( $url );
+
+		// MOB-2272 - translate default POI categories names
+		array_map( function( $parentPoiCategory ) {
+			if ( isset( $parentPoiCategory->name ) ) {
+				$msgKey = 'wikia-interactive-maps-poi-categories-default-' . mb_strtolower( $parentPoiCategory->name );
+				$parentPoiCategory->name = wfMessage( $msgKey )->plain();
+			}
+
+			return $parentPoiCategory;
+		}, $response[ 'content' ] );
 
 		return $response;
 	}
