@@ -68,9 +68,9 @@ $slotTopHeight: 50px;
 		border: none;
 		height: 50px;
 		left: auto;
+		margin: 0;
 		padding: 0;
 		position: relative;
-		margin: 0;
 		top: auto;
 		width: 250px;
 		z-index: 10;
@@ -78,6 +78,6 @@ $slotTopHeight: 50px;
 }
 
 .int-map-mobile-map-page #mw-content-text > div.wikia-interactive-map-wrapper > div.wikia-ad-interactive-map {
-	padding-top: 10px;
 	height: 60px;
+	padding-top: 10px;
 }
