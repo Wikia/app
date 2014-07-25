@@ -1336,8 +1336,7 @@
 						var $thisThumb = $(this),
 							type = 'video',
 							title = $thisThumb.attr('data-video-name'),
-							key = $thisThumb.attr('data-video-key'),
-							playButtonSpan = Lightbox.thumbPlayButton;
+							key = $thisThumb.attr('data-video-key');
 
 						if (key) {
 							// Check for dupes
@@ -1351,7 +1350,7 @@
 								title: title,
 								key: key,
 								type: type,
-								playButtonSpan: playButtonSpan,
+								playButtonSpan: Lightbox.thumbPlayButton,
 								thumbWrapperClass: Lightbox.videoWrapperClass
 							});
 						}
