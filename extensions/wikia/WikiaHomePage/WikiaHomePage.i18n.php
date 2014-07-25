@@ -262,8 +262,8 @@ $messages['es'] = array(
 *[http://es.wikia.com/Estilo_de_vida Deportes]
 *[http://es.wikia.com/Estilo_de_vida Destacado]',
 
-	'wikiahome-community-column1-heading' => 'Para la comunidad',
-	'wikiahome-community-column1-link' => 'http://comunidad.wikia.com/wiki/Wikia',
+	'wikiahome-community-column1-heading' => 'Universidad de Wikia',
+	'wikiahome-community-column1-link' => 'http://comunidad.wikia.com/wiki/Universidad_de_Wikia',
 	'wikiahome-community-column1-creative' => 'Cualquier cosa que necesites para comenzar y hacer crecer tu comunidad en Wikia, desde consejos y herramientas hasta noticias y acceso a personas que te serán de mucha ayuda.',
 	'wikiahome-community-column2-heading' => 'Innovando en Wikia',
 	'wikiahome-community-column2-link' => 'http://es.wikia.com/M%C3%B3viles',
@@ -555,8 +555,8 @@ $messages['ja'] = array(
 	'wikiahome-hubs-lifestyle-more-heading' => '',
 	'wikiahome-hubs-lifestyle-more-list' => '',
 
-	'wikiahome-community-column1-heading' => 'コミュニティーリソース',
-	'wikiahome-community-column1-link' => 'http://ja.community.wikia.com',
+	'wikiahome-community-column1-heading' => 'ウィキアユニバーシティ',
+	'wikiahome-community-column1-link' => 'http://ja.community.wikia.com/wiki/%E3%82%A6%E3%82%A3%E3%82%AD%E3%82%A2%E3%83%A6%E3%83%8B%E3%83%90%E3%83%BC%E3%82%B7%E3%83%86%E3%82%A3',
 	'wikiahome-community-column1-creative' => 'ウィキアにはあなたがコミュニティーを始め成長させる<br/>ための必要な情報が揃っています。ヒントやツール<br/>そしてニュースをチェックしてみて下さい。<br/>それでも疑問がある時は人々に訪ねることもできます。',
 	'wikiahome-community-column2-heading' => 'ウィキアの改革',
 	'wikiahome-community-column2-link' => 'http://www.wikia.com/Mobile',
