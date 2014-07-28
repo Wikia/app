@@ -16,7 +16,7 @@ define('ext.wikia.adEngine.wikiaGptAdDetect', [
 
 	function isImagePresent(document) {
 		var imgs, i, len, w, h;
-		imgs = document.querySelectorAll('img[width][height]');
+		imgs = document.querySelectorAll('img[width], img[height]');
 
 		for (i = 0, len = imgs.length; i < len; i += 1) {
 			w = imgs[i].getAttribute('width');
