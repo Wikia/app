@@ -57,7 +57,7 @@ ve.init.mw.WikiaTargetEvents.prototype.onBeforeUnload = function () {
 /**
  * Track when document save is complete
  */
-ve.init.mw.TargetEvents.prototype.onSaveComplete = function () {
+ve.init.mw.WikiaTargetEvents.prototype.onSaveComplete = function () {
 	ve.init.mw.WikiaTargetEvents.super.prototype.onSaveComplete.call( this );
 	ve.track( 'wikia', {
 		'action': ve.track.actions.CLICK,
