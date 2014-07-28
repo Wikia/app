@@ -131,11 +131,15 @@ define('wikia.intMap.editPOI', ['jquery', 'wikia.intMap.utils'], function($, uti
 
 		// Setup suggestion key handlers
 		arrowHandlers = {
+			// Enter key
 			13: handleSuggestionsEnter,
+			// Esc key
 			27: handleSuggestionsEscape,
+			// Arrow up
 			38: function() {
 				handleSuggestionsArrow(direction.up);
 			},
+			// Arrow down
 			40: function() {
 				handleSuggestionsArrow(direction.down);
 			}
