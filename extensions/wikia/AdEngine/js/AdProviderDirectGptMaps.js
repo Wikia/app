@@ -11,12 +11,7 @@ define('ext.wikia.adEngine.provider.directGptMaps', [
 	function fillInSlot(slotname, success, hop) {
 		log(['fillInSlot', slotname], 'debug', logGroup);
 
-		function showAdAndCallSuccess() {
-			document.getElementById(slotname).className += ' show';
-			success();
-		}
-
-		wikiaGpt.pushAd(slotname, showAdAndCallSuccess, hop, 'maps');
+		wikiaGpt.pushAd(slotname, success, hop, 'maps');
 		wikiaGpt.flushAds();
 	}
 
