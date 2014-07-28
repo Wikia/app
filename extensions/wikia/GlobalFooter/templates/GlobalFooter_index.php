@@ -1,6 +1,6 @@
 <footer class="CorporateFooter">
 	<nav>
-		<h1><?= wfMsg('oasis-corporatefooter-navigation-header'); ?></h1>
+		<h1><?= wfMessage('oasis-corporatefooter-navigation-header')->text(); ?></h1>
 		<div class="WikiaHubBranding <?= (!$isCorporate ? 'HubBrandingBlackBackground' : ''); ?>">
 			<div class="wordmark">
 				<img src="<?= $wg->BlankImgUrl; ?>" class="sprite logo<?= $hub->cat_id ?>">

@@ -1,8 +1,8 @@
 <?php
 
-$messages = array();
+$messages = [];
 
-$messages['en'] = array(
+$messages['en'] = [
 	//Oasis
 	'oasis-corporatefooter-navigation-header' => 'Wikia Inc Navigation',
 	'oasis-corporatefooter-hub-Entertainment-link' => 'http://www.wikia.com/Entertainment',
@@ -27,9 +27,9 @@ $messages['en'] = array(
 		* [http://www.wikia.com/wiki/Wikia:Terms_of_use Terms of use]
 		* [[Special:Contact|Contact]]
 		* [http://www.wikia.com/wiki/Wikia:Advertising_on_Wikia Advertise]',
-);
+];
 
-$messages['de'] = array(
+$messages['de'] = [
 	//Oasis
 	'oasis-corporatefooter-hub-Entertainment-link' => 'http://de.wikia.com/wiki/Entertainment',
 	'oasis-corporatefooter-hub-Food_and_Drink-link' => 'http://de.wikia.com/Lifestyle',
@@ -53,9 +53,9 @@ $messages['de'] = array(
 * [http://de.wikia.com/Nutzungsbedingungen Nutzungsbedingungen]<span style="color: #ff0000"> (Aktualisiert)</span>
 * [[Special:Contact|Kontakt]]
 * [http://www.wikia.com/wiki/Wikia:Advertising_on_Wikia Auf Wikia werben]',
-);
+];
 
-$messages['fr'] = array(
+$messages['fr'] = [
 	//Oasis
 	'oasis-corporatefooter-hub-Entertainment-link' => 'http://fr.wikia.com/Divertissement',
 	'oasis-corporatefooter-hub-Gaming-link' => 'http://fr.wikia.com/Jeux_vid%C3%A9o',
@@ -77,9 +77,9 @@ $messages['fr'] = array(
 		* [http://fr.wikia.com/Conditions_d\'utilisation Conditions d\'utilisation]<span style="color: #ff0000"> (Mises à jour)</span>
 		* [[Special:Contact|Nous contacter]]
 		* [http://www.wikia.com/wiki/Wikia:Advertising_on_Wikia Publicité]',
-);
+];
 
-$messages['pl'] = array(
+$messages['pl'] = [
 	//Oasis
 	'oasis-corporatefooter-hub-Entertainment-link' => 'http://pl.wikia.com/Rozrywka',
 	'oasis-corporatefooter-hub-Gaming-link' => 'http://pl.wikia.com/Gry',
@@ -102,9 +102,9 @@ $messages['pl'] = array(
 		* [[Special:Contact|Kontakt]]
 		* [http://www.wikia.com/Advertising Reklama]',
 
-);
+];
 
-$messages['es'] = array(
+$messages['es'] = [
 	//Oasis
 	'oasis-corporatefooter-hub-Entertainment-link' => 'http://es.wikia.com/Entretenimiento',
 	'oasis-corporatefooter-hub-Gaming-link' => 'http://es.wikia.com/Videojuegos',
@@ -125,16 +125,16 @@ $messages['es'] = array(
 		* [http://es.wikia.com/T%C3%A9rminos_de_Uso Términos de Uso]
 		* [[Special:Contact|Contactar]]
 		* [http://mediakit.wikia.com/wiki/Contact Publicidad]',
-);
+];
 
-$messages['ia'] = array(
+$messages['ia'] = [
 	'oasis-corporatefooter-hub-Entertainment-link' => 'http://www.wikia.com/Entertainment?uselang=ia',
 	'oasis-corporatefooter-hub-Gaming-link' => 'http://www.wikia.com/Gaming?uselang=ia',
 	'oasis-corporatefooter-hub-Lifestyle-link' => 'http://www.wikia.com/Lifestyle?uselang=ia',
 	'oasis-corporatefooter-hub-Food and Drink-link' => 'http://www.wikia.com/Recipes?uselang=ia',
-);
+];
 
-$messages['ja'] = array(
+$messages['ja'] = [
 	'oasis-corporatefooter-hub-Entertainment-link' => 'http://ja.wikia.com/エンタテインメント',
 	'oasis-corporatefooter-hub-Gaming-link' => 'http://ja.wikia.com/ゲーム',
 	'oasis-corporatefooter-hub-Lifestyle-link' => 'http://ja.wikia.com/ライフスタイル',
@@ -146,31 +146,31 @@ $messages['ja'] = array(
 		*http://www.wikia.com/Privacy_Policy|Privacy Policy　
 		*http://www.wikia.com/Special:CreateWiki|Create a wiki
 		*_LICENSE_',
-);
+];
 
-$messages['mk'] = array(
+$messages['mk'] = [
 	'oasis-corporatefooter-hub-Entertainment-link' => 'http://www.wikia.com/Entertainment?uselang=mk',
 	'oasis-corporatefooter-hub-Gaming-link' => 'http://www.wikia.com/Gaming?uselang=mk',
 	'oasis-corporatefooter-hub-Video_Games-link' => 'http://www.wikia.com/Video_Games?uselang=mk',
 	'oasis-corporatefooter-hub-Lifestyle-link' => 'http://www.wikia.com/Lifestyle?uselang=mk',
 	'oasis-corporatefooter-hub-Food and Drink-link' => 'http://www.wikia.com/Recipes?uselang=mk',
-);
+];
 
-$messages['sr-ec'] = array(
+$messages['sr-ec'] = [
 	'oasis-corporatefooter-hub-Entertainment-link' => 'http://www.wikia.com/Entertainment?uselang=sr-ec',
 	'oasis-corporatefooter-hub-Gaming-link' => 'http://www.wikia.com/Gaming?uselang=sr-ec',
 	'oasis-corporatefooter-hub-Lifestyle-link' => 'http://www.wikia.com/Lifestyle?uselang=sr-ec',
 	'oasis-corporatefooter-hub-Food and Drink-link' => 'http://www.wikia.com/Recipes?uselang=sr-ec',
-);
+];
 
-$messages['sv'] = array(
+$messages['sv'] = [
 	'oasis-corporatefooter-hub-Entertainment-link' => 'http://www.wikia.com/Entertainment',
 	'oasis-corporatefooter-hub-Gaming-link' => 'http://www.wikia.com/Video_Games',
 	'oasis-corporatefooter-hub-Video_Games-link' => 'http://www.wikia.com/Video_Games',
 	'oasis-corporatefooter-hub-Lifestyle-link' => 'http://www.wikia.com/Lifestyle',
-);
+];
 
-$messages['it'] = array(
+$messages['it'] = [
 	//Oasis
 	'shared-Oasis-footer-wikia-links' => '* http://www.wikia.com/About_Us |Su di noi
 		* http://www.wikia.com/Hiring |Lavoro
@@ -187,9 +187,9 @@ $messages['it'] = array(
 		* [http://it.community.wikia.com/wiki/Wiki_della_Community:Termini_di_utilizzo Termini di utilizzo]<span style="color: #ff0000"> (Aggiornati)</span>
 		* [[Special:Contact|Contact]]
 		* [http://www.wikia.com/wiki/Wikia:Advertising_on_Wikia Advertise]',
-);
+];
 
-$messages['ko'] = array(
+$messages['ko'] = [
 	'shared-Oasis-footer-wikia-links' => '*http://www.wikia.com/About_Us|<span>회사 소개</span>
 		*http://ko.wikia.com|<span>중앙 커뮤니티</span>
 		*http://www.wikia.com/Hiring|채용정보
@@ -199,9 +199,9 @@ $messages['ko'] = array(
 		*http://www.wikia.com/Terms_of_Use|이용약관
 		*http://www.wikia.com/Privacy_Policy|개인정보보호정책
 		*_LICENSE_',
-);
+];
 
-$messages['ru'] = array(
+$messages['ru'] = [
 	'shared-Oasis-footer-wikia-links' => '*http://www.wikia.com/About_Us|<span>О Викия</span>
 		*http://www.community.wikia.com|<span>Центральная Вики</span>
 		*http://www.wikia.com/Careers|Карьера
@@ -218,9 +218,9 @@ $messages['ru'] = array(
 		* [http://ru.community.wikia.com/wiki/%D0%92%D0%B8%D0%BA%D0%B8%D1%8F:%D0%A3%D1%81%D0%BB%D0%BE%D0%B2%D0%B8%D1%8F_%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F Условия использования]
 		* [[Special:Contact|Contact]]
 		* [http://www.wikia.com/wiki/Wikia:Advertising_on_Wikia Advertise]',
-);
+];
 
-$messages['zh'] = array(
+$messages['zh'] = [
 	'shared-Oasis-footer-wikia-links' => '*http://www.wikia.com/About_Us|<span>关于我们</span>
 		*http://www.wikia.com/Hiring|<span>维基招聘</span>
 		*http://www.wikia.com/Advertising|<span>广告服务</span>
@@ -229,9 +229,9 @@ $messages['zh'] = array(
 		*http://www.wikia.com/Privacy_Policy|<span>隐私政策</span>
 		*http://www.wikia.com/Special:CreateWiki|<span>创建维基</span>
 		*_LICENSE_',
-);
+];
 
-$messages['fa'] = array(
+$messages['fa'] = [
 	'shared-Oasis-footer-wikia-links' => '*http://www.wikia.com/About_Us|<span>دربارهٔ ما</span>
 		*http://www.community.wikia.com|<span>جامعهٔ مرکزی</span>
 		*http://www.wikia.com/Careers|فرصت‌های شغلی
@@ -241,9 +241,9 @@ $messages['fa'] = array(
 		*http://www.wikia.com/Terms_of_Use|شرایط استفاده
 		*http://www.wikia.com/Privacy_Policy|سیاست حفظ اسرار
 		*_LICENSE_',
-);
+];
 
-$messages['pt-br'] = array(
+$messages['pt-br'] = [
 	'shared-Oasis-footer-wikia-links' => '*http://www.wikia.com/About_Us|<span>Sobre nós</span>
 		*http://www.wikia.com/Hiring|Carreiras
 		*http://www.wikia.com/Advertising|Advertise
@@ -252,9 +252,9 @@ $messages['pt-br'] = array(
 		*http://www.wikia.com/Privacy_Policy|Privacy Policy
 		*_LICENSE_
 		*http://www.wikia.com/Special:CreateWiki|Criar uma wiki'
-);
+];
 
-$messages['ca'] = array(
+$messages['ca'] = [
 	'shared-Oasis-footer-wikia-links' => '*http://ca.wikia.com/wiki/Sobre_nosaltres|<span>Sobre Wikia</span>
 		*http://ca.wikia.com|<span>Comunitat Central</span>
 		*http://www.wikia.com/Hiring|Contractacions
@@ -264,17 +264,17 @@ $messages['ca'] = array(
 		*http://ca.wikia.com/wiki/Wikia:Termes_d%27%C3%BAs|Termes d\'Ús
 		*http://ca.wikia.com/wiki/Wikia:Pol%C3%ADtica_de_Privacitat|Política de Privacitat
 		*http://ca.wikia.com/wiki/Wikia:Llic%C3%A8ncia|CC-BY-SA',
-)
+];
 
-;$messages['cs'] = array(
+$messages['cs'] = [
 	'oasis-corporatefooter-hub-Food and Drink-link' => 'http://www.wikia.com/recipes?uselang=cs',
-);
+];
 
-$messages['gl'] = array(
+$messages['gl'] = [
 	'oasis-corporatefooter-hub-Food and Drink-link' => 'http://www.wikia.com/Recipes?uselang=gl',
-);
+];
 
-$messages['qqq'] = array(
+$messages['qqq'] = [
 	'oasis-corporatefooter-navigation-header' => 'Global footer navigation header',
 	'oasis-corporatefooter-hub-Entertainment-link' => 'Link to Entertainment hub',
 	'oasis-corporatefooter-hub-Gaming-link' => 'Link to Gaming hub',
@@ -285,4 +285,4 @@ $messages['qqq'] = array(
 	'shared-Oasis-footer-wikia-links' => 'All global footer links written in wiki text',
 	'shared-Monobook-footer-wikia-links' => 'All global footer links written
 	in wiki text displayed on Monobook skin'
-);
+];

@@ -1,7 +1,5 @@
 <?php
 
-$dir = dirname(__FILE__) . '/';
-
 $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'GlobalFooter',
 	'author' => 'Bogna "bognix" Knychala',
@@ -9,9 +7,10 @@ $wgExtensionCredits['specialpage'][] = array(
 	'version' => 1.0
 );
 
-$wgAutoloadClasses['GlobalFooterController'] =  $dir . 'GlobalFooterController.class.php';
-$wgAutoloadClasses['GlobalFooterHooks'] =  $dir . 'hooks/GlobalFooterHooks.class.php';
+$wgAutoloadClasses['GlobalFooterController'] =  __DIR__ . '/GlobalFooterController.class.php';
+$wgAutoloadClasses['GlobalFooterHooks'] =  __DIR__ . '/hooks/GlobalFooterHooks.class.php';
 
 $wgHooks['SkinCopyrightFooter'][] = 'GlobalFooterHooks::onSkinCopyrightFooter';
+$wgHooks['OasisSkinAssetGroups'][] = 'GlobalFooterHooks::onOasisSkinAssetGroups';
 
-$wgExtensionMessagesFiles['GlobalFooter'] = $dir . 'GlobalFooter.i18n.php';
+$wgExtensionMessagesFiles['GlobalFooter'] = __DIR__ . '/GlobalFooter.i18n.php';

@@ -1803,10 +1803,11 @@ $config['optimizely_blocking_js'] = array(
 );
 
 /** GlobalFooter extension */
-$config['global_footer.js'] = array(
+$config['global_footer_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
+	'skin' => ['oasis'],
 	'assets' => array(
-		'//extensions/wikia/GlobalFooter/js/GlobalFooter.js'
+		'//extensions/wikia/GlobalFooter/scripts/GlobalFooter.js'
 	)
 );
 
