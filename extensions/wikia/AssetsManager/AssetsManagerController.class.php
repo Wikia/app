@@ -131,23 +131,19 @@ class AssetsManagerController extends WikiaController {
 		}
 
 		// handle mustache templates (BugId:30841)
-		if ( !is_null( $mustache ) ) {
-			$profileId = __METHOD__ . "::mustache::{$mustache}";
+		foreach (['mustache', 'handlebars'] as $templateLanguage) {
+			$template = $$templateLanguage;
+
+			if ( is_null( $template ) ) {
+				continue;
+			}
+
+			$profileId = __METHOD__ . "::$templateLanguage::$template";
 			wfProfileIn( $profileId );
 
-			$mustacheTemplates = explode( ',', $mustache );
+			$templates = explode( ',', $template );
 
-			$this->response->setVal( 'mustache', $this->getTemplates($mustacheTemplates, 'mustache'));
-			wfProfileOut( $profileId );
-		}
-
-		if ( !is_null( $handlebars ) ) {
-			$profileId = __METHOD__ . "::handlebars::{$handlebars}";
-			wfProfileIn( $profileId );
-
-			$handlebarsTemplates = explode( ',', $handlebars );
-
-			$this->response->setVal( 'handlebars', $this->getTemplates($handlebarsTemplates, 'handlebars'));
+			$this->response->setVal( 'mustache', $this->getTemplates($templates, $templateLanguage));
 			wfProfileOut( $profileId );
 		}
 
