@@ -20,7 +20,6 @@ ve.init.mw.WikiaViewPageTarget = function VeInitMwWikiaViewPageTarget() {
 	ve.init.mw.WikiaViewPageTarget.super.call( this );
 
 	// Properties
-	this.events = new ve.init.mw.WikiaTargetEvents( this );
 	this.toolbarSaveButtonEnableTracked = false;
 };
 
