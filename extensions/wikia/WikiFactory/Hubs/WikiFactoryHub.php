@@ -319,11 +319,13 @@ class WikiFactoryHub extends WikiaModel {
 		$categories = $this->getAllCategories( false );
 
 		foreach ( $categories as $categoryId => $category ) {
-			if ( strcasecmp( $name, $category['name'] ) == 0 ) {
+			if ( strcasecmp( $name, $category['name'] ) === 0 ) {
 				$category['id'] = $categoryId;
 				return $category;
 			}
 		}
+
+		return null;
 	}
 
 	/**
