@@ -22,8 +22,8 @@ class removeVideoTitleCategories extends Maintenance {
 
 	const EDIT_MESSAGE = "Removing categories from file pages with same name as the video title";
 
-	protected $verbose = false;
-	protected $dryRun    = false;
+	protected $verbose      = false;
+	protected $dryRun       = false;
 	protected $pagesUpdated = 0;
 	protected $pagesSkipped = 0;
 
@@ -35,8 +35,8 @@ class removeVideoTitleCategories extends Maintenance {
 	}
 
 	public function execute() {
-		$this->dryRun       = $this->hasOption( 'dryRun' );
-		$this->verbose    = $this->hasOption( 'verbose' );
+		$this->dryRun  = $this->hasOption( 'dryRun' );
+		$this->verbose = $this->hasOption( 'verbose' );
 
 		if ( $this->dryRun ) {
 			$this->log( "Dry run. No changes will be made\n------------------" );
