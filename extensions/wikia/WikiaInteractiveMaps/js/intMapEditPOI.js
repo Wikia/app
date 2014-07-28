@@ -261,11 +261,12 @@ define('wikia.intMap.editPOI', ['jquery', 'wikia.intMap.utils'], function($, uti
 	 */
 	function handleSuggestionsArrow(arrowDirection) {
 		var $selected = modal.$suggestions.find('.' + suggestionSelectedClass),
-			selector = arrowDirection === direction.down ? ':first' : ':last',
+			isDownArrow = arrowDirection === direction.down,
+			selector = isDownArrow ? ':first' : ':last',
 			$next;
 		if ($selected.length) {
 			// go to next selected
-			$next = (arrowDirection === direction.down) ? $selected.next() : $selected.prev();
+			$next = isDownArrow ? $selected.next() : $selected.prev();
 
 			if ($next.length) {
 				$selected.removeClass(suggestionSelectedClass);
