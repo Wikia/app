@@ -69,7 +69,7 @@
 			}
 
 			// If category is editor-ve, track for VE account
-			if ( args[i][1] === 'editor-ve' ) {
+			if ( args[i][1] && args[i][1] === 'editor-ve' ) {
 				spec = args[i].slice();
 				spec[0] = 've.' + spec[0];
 				window._gaq.push( spec );
