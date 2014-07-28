@@ -72,5 +72,30 @@
 			$this->assertFalse( $module->isRegionallyRestricted( $videoWithoutRestrictions ) );
 		}
 
+		/**
+		 * Test that category names used by videos module are transformed properly
+		 * into database names (underscores instead of spaces)
+		 */
+		public function testTransformCatNames() {
+			$module = new VideosModule( self::USER_REGION );
+
+			$reflection = new ReflectionClass( $module );
+			$tranformCatNames = $reflection->getMethod( 'transformCatNames' );
+			$tranformCatNames->setAccessible( true );
+
+			$categoryNames = [ "The Hobbit", "The Wiggles Movie" ];
+			$databaseNames = [ "The_Hobbit", "The_Wiggles_Movie" ];
+
+			// Test that names without underscores are transformed properly
+			$result = $tranformCatNames->invoke( $module, $categoryNames );
+			$this->assertEquals( $databaseNames[0], $result[0] );
+			$this->assertEquals( $databaseNames[1], $result[1] );
+
+			// Test that names with underscores are not affected
+			$result = $tranformCatNames->invoke( $module, $databaseNames );
+			$this->assertEquals( $databaseNames[0], $result[0] );
+			$this->assertEquals( $databaseNames[1], $result[1] );
+		}
+
 	}
 
