@@ -9,6 +9,7 @@ class AdEngine2Service
 	const ASSET_GROUP_LIFTIUM = 'liftium_ads_js';
 
 	const PAGE_TYPE_NO_ADS = 'no_ads';                   // show no ads
+	const PAGE_TYPE_MAPS = 'maps';                       // show only ads on maps
 	const PAGE_TYPE_HOMEPAGE_LOGGED = 'homepage_logged'; // show some ads (logged in users on main page)
 	const PAGE_TYPE_CORPORATE = 'corporate';             // show some ads (anonymous users on corporate pages)
 	const PAGE_TYPE_SEARCH = 'search';                   // show some ads (anonymous on search pages)
@@ -67,7 +68,8 @@ class AdEngine2Service
 
 					// Chosen special pages:
 					|| $title->isSpecial('Videos')
-					|| $title->isSpecial('Leaderboard');
+					|| $title->isSpecial('Leaderboard')
+					|| $title->isSpecial('Maps');
 			}
 		}
 
@@ -86,6 +88,11 @@ class AdEngine2Service
 
 			if (WikiaPageType::isSearch()) {
 				$pageLevel = self::PAGE_TYPE_SEARCH;
+				return $pageLevel;
+			}
+
+			if ($title->isSpecial('Maps')) {
+				$pageLevel = self::PAGE_TYPE_MAPS;
 				return $pageLevel;
 			}
 
