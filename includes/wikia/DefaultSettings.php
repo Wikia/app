@@ -1464,7 +1464,7 @@ $wgEnableSpecialSearchCaching = true;
  * @name wgEnableBuckyExt
  * Enables real user performance reporting via Bucky
  */
-$wgEnableBuckyExt = true;
+$wgEnableBuckyExt = false;
 
 /*
  * @name wgBuckySampling
