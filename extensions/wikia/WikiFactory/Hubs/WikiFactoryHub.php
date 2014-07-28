@@ -318,8 +318,8 @@ class WikiFactoryHub extends WikiaModel {
 	public function getCategoryByName( $name ) {
 		$categories = $this->getAllCategories( false );
 
-		foreach ($categories as $categoryId => $category) {
-			if (strcasecmp($name, $category['name']) == 0) {
+		foreach ( $categories as $categoryId => $category ) {
+			if ( strcasecmp( $name, $category['name'] ) == 0 ) {
 				$category['id'] = $categoryId;
 				return $category;
 			}
