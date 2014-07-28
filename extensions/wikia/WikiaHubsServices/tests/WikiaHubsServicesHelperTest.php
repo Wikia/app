@@ -50,7 +50,6 @@ class WikiaHubsServicesHelperTest extends WikiaBaseTest {
 
 	/**
 	 * @dataProvider purgeHubVarnish
-	 * @group Broken
 	 */
 	public function testPurgeHubVarnish($lang, $wikiId, $verticalId, $hubName) {
 		$globalTitleMock = $this->getMock('GlobalTitle', array('purgeSquid'));
@@ -68,13 +67,13 @@ class WikiaHubsServicesHelperTest extends WikiaBaseTest {
 			array('getHubName', 'getGlobalTitleFromText')
 		);
 
-		$hubsHelperMock = $this->getMock($hubsHelperMockClass, array('getCorporateModel'));
+		$hubsHelperMock = $this->getMock($hubsHelperMockClass, array('getCorporateModel', 'getHubName', 'getGlobalTitleFromText'));
 
 		$hubsHelperMock->expects($this->any())
 			->method('getCorporateModel')
 			->will($this->returnValue($corporateModelMock));
 
-		$hubsHelperMockClass::staticExpects($this->any())
+		$hubsHelperMock->expects($this->any())
 			->method('getHubName')
 			->with(
 				$this->equalTo($wikiId),
@@ -82,7 +81,7 @@ class WikiaHubsServicesHelperTest extends WikiaBaseTest {
 			)
 			->will($this->returnValue($hubName));
 
-		$hubsHelperMockClass::staticExpects($this->any())
+		$hubsHelperMock->expects($this->any())
 			->method('getGlobalTitleFromText')
 			->with(
 				$this->equalTo($hubName),

@@ -76,10 +76,11 @@ define('wikia.intMaps.deleteMap',
 		closeError();
 		$.nirvana.sendRequest({
 			controller: 'WikiaInteractiveMaps',
-			method: 'deleteMap',
+			method: 'updateMapDeletionStatus',
 			type: 'POST',
 			data: {
-				mapId: mapId
+				mapId: mapId,
+				deleted: utils.mapDeleted.mapDeleted
 			},
 			callback: function(response) {
 				var redirectUrl = response.redirectUrl;

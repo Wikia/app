@@ -1,10 +1,18 @@
-require(['wikia.window', 'ponto'], function(w, ponto) {
+require([
+	'wikia.window',
+	'wikia.intMap.pontoBridge',
+	require.optional('ext.wikia.adEngine.slot.interactiveMaps')
+], function (w, pontoBridge, mapAds) {
 	'use strict';
 
-	var iframe =  w.document.getElementsByName('wikia-interactive-map')[0];
+	var iframe =  w.document.getElementsByName('wikia-interactive-map')[0],
+		adContainer = w.document.querySelector('.wikia-ad-interactive-map');
 
 	if (iframe) {
-		ponto.setTarget(Ponto.TARGET_IFRAME, '*', iframe.contentWindow);
-		iframe.src = iframe.dataset.url;
+		pontoBridge.init(iframe);
+	}
+
+	if (mapAds) {
+		mapAds.initSlot(adContainer);
 	}
 });

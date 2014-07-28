@@ -273,6 +273,9 @@ class WikiaHomePageController extends WikiaController {
 		$this->interlang = WikiaPageType::isCorporatePage();
 
 		$corporateWikis = $this->helper->getVisualizationWikisData();
+		$corporateHubWikis = $this->helper->getCorporateHubWikis();
+		$corporateHubWikis = array_diff_key($corporateHubWikis, $corporateWikis);
+		$corporateWikis = array_merge($corporateWikis, $corporateHubWikis);
 		$this->selectedLang = $this->wg->ContLang->getCode();
 		$this->dropDownItems = $this->prepareDropdownItems($corporateWikis, $this->selectedLang);
 

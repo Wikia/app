@@ -1,6 +1,7 @@
 @import "skins/oasis/css/mixins/gradient";
 @import "skins/oasis/css/mixins/ellipses";
 @import "skins/oasis/css/core/color";
+@import "skins/oasis/css/mixins/calc";
 
 $content-color: #fff;
 $secondary-content-color: #ccc;
@@ -8,8 +9,11 @@ $gradient-color-start: rgba(0, 0, 0, 0.6);
 $default-width: 680px;
 $default-height: 382px;
 $max-view-button-width: 230px;
+// used to calculate position of map in modal (full modal experience)
+$modal-header-footer-height: 45px;
 
 .wikia-interactive-map-thumbnail {
+	clear: both;
 	cursor: pointer;
 	height: $default-height;
 	line-height:22px;
@@ -78,10 +82,19 @@ $max-view-button-width: 230px;
 		padding: 8px 11px 8px 35px;
 		position: absolute;
 		right: 20px;
-
-		&:hover {
-			background-color: #fff;
-			color: $color-buttons;
-		}
 	}
 }
+
+.modal.large .wikia-interactive-map-wrapper {
+	@include height-calc('100% - #{$modal-header-footer-height * 2}');
+	left: 0;
+	position: absolute;
+	top: $modal-header-footer-height;
+}
+
+.wikia-interactive-map-wrapper {
+	height: 100%;
+	position: relative;
+	width: 100%;
+}
+
