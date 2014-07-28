@@ -4,7 +4,7 @@
 			<h1><?= wfMessage('wikiahome-page-header-heading')->text(); ?></h1>
 			<h4><?= wfMessage('wikiahome-page-header-subheading')->text(); ?></h4>
 		</div>
-		<a class="button create-wiki" href="<?= wfMessage('wikiahome-page-header-create-wiki-button-destination'); ?>"><?= wfMessage('wikiahome-page-header-create-wiki-button'); ?></a>
+		<a class="button create-wiki" href="<?= wfMessage('wikiahome-page-header-create-wiki-button-destination')->text(); ?>"><?= wfMessage('wikiahome-page-header-create-wiki-button')->text(); ?></a>
 		<?= F::app()->renderView('Search', 'Index', array('noautocomplete' => true, 'nonamespaces' => true)); ?>
 	</header>
 	<section class="wikiahomepage-wikis">
@@ -38,12 +38,12 @@
 				<ul class="wikiahomepage-community-social">
 					<li>
 						<a href="<?= wfMessage('oasis-community-social-twitter-link')->text(); ?>">
-							<img class="wikiahomepage-community-social-twitter" src="<?= $wg->BlankImgUrl; ?>"><?= wfMessage('wikiahome-community-social-twitter'); ?>
+							<img class="wikiahomepage-community-social-twitter" src="<?= $wg->BlankImgUrl; ?>"><?= wfMessage('wikiahome-community-social-twitter')->text(); ?>
 						</a>
 					</li>
 					<li>
 						<a href="<?= wfMessage('oasis-community-social-facebook-link')->text(); ?>">
-							<img class="wikiahomepage-community-social-facebook" src="<?= $wg->BlankImgUrl; ?>"><?= wfMessage('wikiahome-community-social-facebook'); ?>
+							<img class="wikiahomepage-community-social-facebook" src="<?= $wg->BlankImgUrl; ?>"><?= wfMessage('wikiahome-community-social-facebook')->text(); ?>
 						</a>
 					</li>
 					<?
@@ -52,7 +52,7 @@
 					?>
 					<li>
 						<a href="<?= $message; ?>">
-							<img class="wikiahomepage-community-social-googleplus" src="<?= $wg->BlankImgUrl; ?>"><?= wfMessage('wikiahome-community-social-googleplus'); ?>
+							<img class="wikiahomepage-community-social-googleplus" src="<?= $wg->BlankImgUrl; ?>"><?= wfMessage('wikiahome-community-social-googleplus')->text(); ?>
 						</a>
 					</li>
 					<? endif; ?>
