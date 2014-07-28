@@ -40,6 +40,9 @@
 		window._gaq.push( ['special._setSampleRate', '100'] ); // No Sampling
 	}
 
+	window._gaq.push( ['ve._setAccount', 'UA-32132943-4'] ); // PROD
+	window._gaq.push( ['ve._setSampleRate', '100'] ); // No Sampling
+
 	/**
 	 * Wrapper function to a generic _gaq push
 	 *
@@ -72,6 +75,13 @@
 				spec = args[i].slice();
 				// Send to Special Wikis Account
 				spec[0] = 'special.' + spec[0];
+				window._gaq.push( spec );
+			}
+
+			// If category is editor-ve, track for VE account
+			if ( args[i][1] && args[i][1] === 'editor-ve' ) {
+				spec = args[i].slice();
+				spec[0] = 've.' + spec[0];
 				window._gaq.push( spec );
 			}
 		}
