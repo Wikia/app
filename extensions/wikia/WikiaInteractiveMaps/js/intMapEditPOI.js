@@ -134,7 +134,9 @@ define('wikia.intMap.editPOI', ['jquery', 'wikia.intMap.utils'], function($, uti
 			// Enter key
 			13: handleSuggestionsEnter,
 			// Esc key
-			27: handleSuggestionsEscape,
+			27: function() {
+				hideSuggestions();
+			},
 			// Arrow up
 			38: function() {
 				handleSuggestionsArrow(direction.up);
@@ -253,14 +255,9 @@ define('wikia.intMap.editPOI', ['jquery', 'wikia.intMap.utils'], function($, uti
 	}
 
 	/**
-	 * @desc Handle Esc key on suggest
-	 */
-	function handleSuggestionsEscape() {
-		hideSuggestions();
-	}
-
-	/**
 	 * @desc Handle Arrow keys on suggest
+	 *
+	 * @param {number} arrowDirection - Value defined in the direction object
 	 */
 	function handleSuggestionsArrow(arrowDirection) {
 		var $selected = modal.$suggestions.find('.' + suggestionSelectedClass),
@@ -304,9 +301,7 @@ define('wikia.intMap.editPOI', ['jquery', 'wikia.intMap.utils'], function($, uti
 			utils.onWriteInInput(
 				event.target,
 				function (inputValue) {
-					getSuggestions(inputValue, function (suggestions) {
-						showSuggestions(suggestions);
-					});
+					getSuggestions(inputValue, showSuggestions);
 				}
 			);
 		}
