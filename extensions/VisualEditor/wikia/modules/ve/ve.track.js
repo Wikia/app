@@ -176,30 +176,31 @@ require( ['wikia.tracker'], function ( tracker ) {
 		}
 
 		// Funnel tracking
-		gaFunnel( data );
+		handleFunnel( data );
 
 		// Send off to Wikia.Tracker
 		tracker.track( ve.extendObject( params, data ) );
 	}
 
 	/**
-	 * Track fake pageviews for VE funnel
+	 * Track fake pageviews in GA for certain events
 	 * @method
 	 * @param {Object} data The tracking data
 	 */
-	function gaFunnel( data ) {
+	function handleFunnel( data ) {
 		var funnelEvents = [
-			'edit-page.impression',
-			'edit-page-ready.impression',
-			'button-publish.enable',
-			'button-cancel.click',
-			'button-publish.click',
-			'dialog-save-publish.click',
-			'publish.success'
-		];
+			'edit-page/impression',
+			'edit-page-ready/impression',
+			'button-publish/enable',
+			'button-cancel/click',
+			'button-publish/click',
+			'dialog-save-publish/click',
+			'publish/success'
+		],
+		funnelEvent = data.label + '/' + data.action;
 
-		if ( $.inArray( data.label + '.' + data.action, funnelEvents ) !== -1 ) {
-			window.gaTrackPageview( '/fake-visual-editor/' + data.label + '/' + data.action );
+		if ( funnelEvents.indexOf( funnelEvent ) !== -1 ) {
+			window.gaTrackPageview( '/fake-visual-editor/' + funnelEvent );
 		}
 	}
 
