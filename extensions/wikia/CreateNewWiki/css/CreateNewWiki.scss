@@ -391,15 +391,15 @@ div#userloginErrorBox3 {
 			right: -16px;
 		}
 	}
-	.category-container {
+	.select-container {
 		float: left;
 		min-width: 210px;
 		max-width: 490px;
 	}
-	.secondary-categories-sets {
+	.categories-sets {
 		display: none;
 	}
-	.secondary-categories-set {
+	.categories-set {
 		display: none;
 		@include column-count( 4 );
 

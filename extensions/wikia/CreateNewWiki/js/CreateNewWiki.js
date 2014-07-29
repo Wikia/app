@@ -26,7 +26,7 @@ var WikiBuilder = {
 		this.wikiDomainCountry = $('#NameWiki .domain-country');
 		this.nameWikiSubmitError = $('#NameWiki .submit-error');
 		this.wikiLanguage = $('#NameWiki select[name=wiki-language]');
-		this.wikiCategory = $('#DescWiki select[name=wiki-category]');
+		this.wikiVertical = $('#DescWiki select[name=wiki-vertical]');
 		this.wikiAllAges = $('#DescWiki input[name=all-ages]');
 		this.allAgesDiv = $('#all-ages-div');
 		this.descWikiSubmitError = $('#DescWiki .submit-error');
@@ -156,7 +156,7 @@ var WikiBuilder = {
 		// Description event handlers
 		this.descWikiNext.click(function() {
 			that.descWikiNext.attr('disabled', true);
-			var val = that.wikiCategory.find('option:selected').val();
+			var val = that.wikiVertical.find('option:selected').val();
 			if(val !== "-1" /* yes, it is a string */) {
 				$.nirvana.sendRequest({
 					controller: 'CreateNewWiki',
@@ -198,12 +198,12 @@ var WikiBuilder = {
 			});
 		});
 
-		this.wikiCategory.on('change', function() {
+		this.wikiVertical.on('change', function() {
 			var $this = $(this),
 				selectedValue = $this.val(),
 				selectedOption,
 				selectedShort,
-				categoriesSets = $('.secondary-categories-sets'),
+				categoriesSets = $('.categories-sets'),
 				categoriesSetId,
 				duplicate;
 
@@ -470,7 +470,7 @@ var WikiBuilder = {
 
 		var that = this,
 			throbberWrapper = $('#ThemeWiki .next-controls'),
-			categoryOption = that.wikiCategory.find('option:selected'),
+			verticalOption = that.wikiVertical.find('option:selected'),
 			categories = [];
 
 		this.requestKeys();
@@ -478,7 +478,7 @@ var WikiBuilder = {
 
 		throbberWrapper.startThrobbing();
 
-		$('#categories-set-' + categoryOption.data('categoriesset') + ' :checked').each(function() {
+		$('#categories-set-' + verticalOption.data('categoriesset') + ' :checked').each(function() {
 			categories.push($(this).val());
 		});
 
@@ -490,7 +490,7 @@ var WikiBuilder = {
 					wName: that.wikiName.val(),
 					wDomain: that.wikiDomain.val(),
 					wLanguage: that.wikiLanguage.find('option:selected').val(),
-					wCategory: categoryOption.val(),
+					wVertical: verticalOption.val(),
 					wCategories: categories,
 					wAllAges: that.wikiAllAges.is(':checked') ? that.wikiAllAges.val() : null,
 					wAnswer: Math.floor(that.answer)

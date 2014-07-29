@@ -150,10 +150,10 @@
 					?>
 				</div>
 
-				<!-- Primary Category -->
-				<div class="category-container">
-					<h3 for="wiki-category"><?= wfMessage('cnw-desc-choose')->escaped() ?></h3>
-					<select name="wiki-category">
+				<!-- Hub Category / Vertical -->
+				<div class="select-container">
+					<h3><?= wfMessage('cnw-desc-select-vertical')->escaped() ?></h3>
+					<select name="wiki-vertical">
 						<option value="-1"><?= wfMessage('cnw-desc-select-one')->escaped() ?></option>
 				<?php
 					foreach ($verticals as $vertical) {
@@ -170,14 +170,14 @@
 					</select>
 				</div>
 
-				<!-- Secondary Category -->
-				<div class="category-container secondary-categories-sets">
-					<h3><?= wfMessage('cnw-desc-choose-secondary')->escaped() ?></h3>
+				<!-- Additional Categories -->
+				<div class="select-container categories-sets">
+					<h3><?= wfMessage('cnw-desc-select-categories')->escaped() ?></h3>
 			<?php
 				foreach ($categoriesSets as $setId => $categoriesSet) {
 			?>
 
-					<div class="secondary-categories-set" id="categories-set-<?= $setId ?>">
+					<div class="categories-set" id="categories-set-<?= $setId ?>">
 				<?php
 					foreach ($categoriesSet as $category) {
 				?>

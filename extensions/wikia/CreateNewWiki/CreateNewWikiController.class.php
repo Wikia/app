@@ -103,31 +103,7 @@ class CreateNewWikiController extends WikiaController {
 
 	private function setupVerticalsAndCategories() {
 		$allVerticals = WikiFactoryHub::getInstance()->getAllVerticals();
-		$allCategories = WikiFactoryHub::getInstance()->getAllCategories();
-		$allCategories = array(
-			1 => array( 'id' => 1, 'name' => 'Humor', 'short' => 'humor'),
-			5 => array( 'id' => 5, 'name' => 'Toys', 'short' => 'toys'),
-			6 => array( 'id' => 6, 'name' => 'Food and Drink', 'short' => 'foodanddrink'),
-			7 => array( 'id' => 7, 'name' => 'Travel', 'short' => 'travel'),
-			8 => array( 'id' => 8, 'name' => 'Education', 'short' => 'edu'),
-			10 => array( 'id' => 10, 'name' => 'Finance', 'short' => 'fin'),
-			11 => array( 'id' => 11, 'name' => 'Politics', 'short' => 'poli'),
-			12 => array( 'id' => 12, 'name' => 'Technology', 'short' => 'tech'),
-			13 => array( 'id' => 13, 'name' => 'Science', 'short' => 'sci'),
-			14 => array( 'id' => 14, 'name' => 'Philosophy', 'short' => 'phil'),
-			15 => array( 'id' => 15, 'name' => 'Sports', 'short' => 'sports'),
-			16 => array( 'id' => 16, 'name' => 'Music', 'short' => 'music'),
-			17 => array( 'id' => 17, 'name' => 'Creative', 'short' => 'crea'),
-			18 => array( 'id' => 18, 'name' => 'Auto', 'short' => 'auto'),
-			21 => array( 'id' => 21, 'name' => 'TV', 'short' => 'tv'),
-			22 => array( 'id' => 22, 'name' => 'Video Games', 'short' => 'videogames'),
-			23 => array( 'id' => 23, 'name' => 'Books', 'short' => 'books'),
-			24 => array( 'id' => 24, 'name' => 'Comics', 'short' => 'comics'),
-			25 => array( 'id' => 25, 'name' => 'Fanon', 'short' => 'fanon'),
-			26 => array( 'id' => 26, 'name' => 'Home and Garden', 'short' => 'homeandgarden'),
-			27 => array( 'id' => 27, 'name' => 'Movies', 'short' => 'movies'),
-			28 => array( 'id' => 28, 'name' => 'Anime', 'short' => 'anime'),
-		);
+		$allCategories = WikiFactoryHub::getInstance()->getAllCategories( true );
 
 		// Defines order in which verticals are going to be displayed in the <select>
 		$verticalsOrder = array( 2, 7, 4, 3, 1, 6, 5, 0 );
@@ -150,7 +126,6 @@ class CreateNewWikiController extends WikiaController {
 				'categoriesSet' => $verticalToCategoriesSetMapping[$verticalId]
 			);
 		}
-		//print_pre($this->verticals);exit();
 
 		$this->categoriesSets = array();
 		foreach($categoriesSetsOrder as $setId => $categoriesOrder) {
@@ -160,7 +135,6 @@ class CreateNewWikiController extends WikiaController {
 			}
 			$this->categoriesSets[$setId] = $categoriesSet;
 		}
-		//print_pre($this->categoriesSets);exit();
 	}
 
 	/**
@@ -229,7 +203,7 @@ class CreateNewWikiController extends WikiaController {
 			empty($params['wName']) ||
 			empty($params['wDomain']) ||
 			empty($params['wLanguage']) ||
-			empty($params['wCategory']))
+			empty($params['wVertical']))
 		{
 			// do nothing
 			$this->status = 'error';
@@ -293,7 +267,7 @@ class CreateNewWikiController extends WikiaController {
 				return;
 			}
 
-			$createWiki = new CreateWiki($params['wName'], $params['wDomain'], $params['wLanguage'], $params['wCategory'], $params['wCategories']);
+			$createWiki = new CreateWiki($params['wName'], $params['wDomain'], $params['wLanguage'], $params['wVertical'], $params['wCategories']);
 			$error_code = $createWiki->create();
 			$cityId = $createWiki->getWikiInfo('city_id');
 			if(empty($cityId)) {

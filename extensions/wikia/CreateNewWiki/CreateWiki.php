@@ -15,7 +15,7 @@
 class CreateWiki {
 
 	/* @var $mDBw DatabaseMysql */
-	private $mName, $mDomain, $mLanguage, $mCategory, $mCategories, $mStarters, $mIP,
+	private $mName, $mDomain, $mLanguage, $mVertical, $mCategories, $mStarters, $mIP,
 		$mPHPbin, $mMYSQLbin, $mMYSQLdump, $mNewWiki, $mFounder,
 		$mLangSubdomain, $mDBw, $mWFSettingVars, $mWFVars,
 		$mDefaultTables, $mAdditionalTables,
@@ -58,7 +58,7 @@ class CreateWiki {
 	 * @param string $domain - domain part without '.wikia.com'
 	 * @param string $language - language code
 	 */
-	public function __construct( $name, $domain, $language, $category, $categories ) {
+	public function __construct( $name, $domain, $language, $vertical, $categories ) {
 		global $wgUser, $IP, $wgAutoloadClasses, $wgRequest;
 
 		// wiki containter
@@ -67,7 +67,7 @@ class CreateWiki {
 		$this->mDomain = $domain;
 		$this->mName = $name;
 		$this->mLanguage = $language;
-		$this->mCategory = $category;
+		$this->mVertical = $vertical;
 		$this->mCategories = $categories;
 		$this->mIP = $IP;
 
@@ -362,8 +362,8 @@ class CreateWiki {
 
 
 		$oHub = WikiFactoryHub::getInstance();
-		$oHub->setVertical( $this->mNewWiki->city_id, $this->mNewWiki->category, "CW Setup" );
-		wfDebugLog( "createwiki", __METHOD__ . ": Wiki added to the vertical: {$this->mNewWiki->category} \n", true );
+		$oHub->setVertical( $this->mNewWiki->city_id, $this->mNewWiki->vertical, "CW Setup" );
+		wfDebugLog( "createwiki", __METHOD__ . ": Wiki added to the vertical: {$this->mNewWiki->vertical} \n", true );
 		for($i = 0; $i < count($this->mNewWiki->categories); $i++) {
 			$oHub->addCategory( $this->mNewWiki->city_id, $this->mNewWiki->categories[$i] );
 			wfDebugLog( "createwiki", __METHOD__ . ": Wiki added to the category: {$this->mNewWiki->categories[$i]} \n", true );
@@ -580,7 +580,7 @@ class CreateWiki {
 		$this->mDomain = preg_replace( "/^(\-)+/", "", $this->mDomain );
 		$this->mNewWiki->domain = strtolower( trim( $this->mDomain ) );
 
-		$this->mNewWiki->category = $this->mCategory;
+		$this->mNewWiki->vertical = $this->mVertical;
 		$this->mNewWiki->categories = $this->mCategories;
 
 		// name
