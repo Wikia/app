@@ -25,6 +25,8 @@ class DBError extends MWException {
 			'msg' => $error,
 			'name' => $db->getDBname(),
 			'server' => $db->getServer(),
+			'errno' => $db->lastErrno(),
+			'err' => $db->lastError(),
 		]);
 	}
 
