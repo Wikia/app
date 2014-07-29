@@ -4,13 +4,10 @@
  * Class CrunchyrollFeedIngester
  */
 class CrunchyrollFeedIngester extends VideoFeedIngester {
-	const NAMESPACE_URI = 'http://search.yahoo.com/mrss/';
-
 	protected static $API_WRAPPER = 'CrunchyrollApiWrapper';
 	protected static $PROVIDER = 'crunchyroll';
-	protected static $CLIP_TYPE_BLACKLIST = [ ];
-	protected static $FEED_URL = 'http://www.crunchyroll.com/syndication/feed?type=series&affiliate_code=af-90111-uhny';
-	protected static $FEED_URL_COLLECTIONS = 'http://www.crunchyroll.com/syndication/feed?type=episodes&id=$1&affiliate_code=af-90111-uhny';
+	protected static $CLIP_TYPE_BLACKLIST = [];
+	protected static $FEED_URL = 'http://www.crunchyroll.com/syndication/feed?type=series';
 
 	/**
 	 * Contains desired series titles and Ids
@@ -65,7 +62,10 @@ class CrunchyrollFeedIngester extends VideoFeedIngester {
 	 * @return int|string
 	 */
 	public function downloadFeed() {
-		return $this->download( static::$FEED_URL );
+		global $wgCrunchyrollConfig;
+
+		$url = str_replace( '$1', $wgCrunchyrollConfig['affiliate_code'], static::$FEED_URL );
+		return $this->download( $url );
 	}
 
 	/**
@@ -96,7 +96,15 @@ class CrunchyrollFeedIngester extends VideoFeedIngester {
 	 * @return array|void
 	 */
 	public function getCollectionFeeds() {
+		wfProfileIn( __METHOD__ );
+
+		$collectionFeeds = [];
+
 		$content = $this->downloadFeed();
+		if ( empty( $content ) ) {
+			wfProfileOut( __METHOD__ );
+			return $collectionFeeds;
+		}
 
 		$seriesIds = $this->getAllSeriesIds();
 		$leadingString = '/series-';
@@ -104,14 +112,16 @@ class CrunchyrollFeedIngester extends VideoFeedIngester {
 		$doc = new DOMDocument( '1.0', 'UTF-8' );
 		@$doc->loadXML( $content );
 		$items = $doc->getElementsByTagName( 'item' );
-		$collectionFeeds = [];
 
 		foreach ( $items as $item ) {
 			$seriesGuid = $item->getElementsByTagName( 'series-guid' )->item( 0 )->textContent;
-			$serieId = ( int ) substr( $seriesGuid, strpos( $seriesGuid, $leadingString ) + strlen( $leadingString ) );
+			$serieId = explode( $leadingString, $seriesGuid );
+			if ( empty( $serieId[1] ) ) {
+				continue;
+			}
 
 			// Filter out series we are not interested in
-			if ( !in_array( $serieId, $seriesIds ) ) {
+			if ( !in_array( intval( $serieId[1] ), $seriesIds ) ) {
 				continue;
 			}
 
@@ -120,21 +130,26 @@ class CrunchyrollFeedIngester extends VideoFeedIngester {
 			$collectionFeeds[] = urldecode( $item->getElementsByTagName( 'link' )->item( 0 )->textContent );
 		}
 
+		wfProfileOut( __METHOD__ );
+
 		return array_unique( $collectionFeeds );
 	}
 
 	/**
 	 * @inheritdoc
 	 */
-	public function import( $content = '', $params = [ ] ) {
+	public function import( $content = '', $params = [] ) {
 		wfProfileIn( __METHOD__ );
 
 		$articlesCreated = 0;
 		$debug = !empty( $params['debug'] );
-		$addlCategories = empty( $params['addlCategories'] ) ? [ ] : $params['addlCategories'];
+		$addlCategories = empty( $params['addlCategories'] ) ? [] : $params['addlCategories'];
 
 		foreach ( $this->getCollectionFeeds() as $collectionFeed ) {
 			$content = $this->downloadCollectionFeed( $collectionFeed );
+			if ( empty( $content ) ) {
+				continue;
+			}
 
 			$doc = new DOMDocument( '1.0', 'UTF-8' );
 			@$doc->loadXML( $content );
@@ -142,14 +157,15 @@ class CrunchyrollFeedIngester extends VideoFeedIngester {
 			$numItems = $items->length;
 			$this->videoFound( $numItems );
 
-			$language = null;
 			$elements = $doc->getElementsByTagName( 'language' );
 			if ( $elements->length > 0 ) {
 				$language = $this->convertLanguageCode( $elements->item( 0 )->textContent );
+			} else {
+				$language = '';
 			}
 
 			for ( $i = 0; $i < $numItems; ++$i ) {
-				$clipData = [ ];
+				$clipData = [];
 				$item = $items->item( $i );
 
 				$clipData['series'] = $item->getElementsByTagName( 'seriesTitle' )->item( 0 )->textContent;
@@ -185,7 +201,7 @@ class CrunchyrollFeedIngester extends VideoFeedIngester {
 				// check for video id
 				$elements = $item->getElementsByTagName( 'mediaId' );
 				if ( $elements->length > 0 ) {
-					$clipData['videoId'] = $elements->item( 0 )->textContent;
+					$clipData['videoId'] = (int) $elements->item( 0 )->textContent;
 				}
 
 				if ( !isset( $clipData['videoId'] ) ) {
@@ -205,7 +221,7 @@ class CrunchyrollFeedIngester extends VideoFeedIngester {
 				if ( $clipData['ageGate'] ) {
 					print( "Adult video: {$clipData['titleName']} ({$clipData['videoId']}).\n" );
 					$clipData['ageRequired'] = '13';
-					$clipData['industryRating'] = 'pg-13';
+					$clipData['industryRating'] = 'PG-13';
 				}
 
 				$clipData['published'] = strtotime( $item->getElementsByTagName( 'pubDate' )->item( 0 )->textContent );
@@ -238,8 +254,6 @@ class CrunchyrollFeedIngester extends VideoFeedIngester {
 					$clipData['episode'] = '';
 				}
 
-				$clipData['partnerVideoId'] = $item->getElementsByTagName( 'mediaId' )->item( 0 )->textContent;
-
 				// The first thumbnail returned by crunchyroll is the largest one - get that!
 				$elements = $item->getElementsByTagName( 'thumbnail' );
 				$clipData['thumbnail'] = ( $elements->length > 0 ) ? $elements->item( 0 )->getAttribute( 'url' ) : '';
@@ -252,13 +266,8 @@ class CrunchyrollFeedIngester extends VideoFeedIngester {
 					$clipData['category'] = $this->getCategory( $elements->item( 0 )->textContent );
 				}
 
-				if ( $language ) {
-					$clipData['language'] = $language;
-				}
+				$clipData['language'] = $language;
 				$clipData['duration'] = $item->getElementsByTagName( 'duration' )->item( 0 )->textContent;
-
-				$clipData['genres'] = [ ];
-				$clipData['actors'] = [ ];
 				$clipData['hd'] = 0;
 				$clipData['provider'] = 'crunchyroll';
 
@@ -328,8 +337,8 @@ class CrunchyrollFeedIngester extends VideoFeedIngester {
 	 * @return null|string
 	 */
 	protected function convertLanguageCode( $crunchyLanguage ) {
-		$crunchyLanguage = substr( $crunchyLanguage, 0, ( int ) strpos( $crunchyLanguage, '-' ) );
-		return $this->getCldrCode( $crunchyLanguage, 'language', false );
+		$lang = explode( '-', $crunchyLanguage );
+		return $this->getCldrCode( $lang[0], 'language', false );
 	}
 
 	/**
@@ -339,14 +348,13 @@ class CrunchyrollFeedIngester extends VideoFeedIngester {
 	 */
 	protected function convertSubtitleLanguageCode( $crunchySubtitles ) {
 		$wikiaLangs = [];
-		$subs = array_unique( explode( ',', $crunchySubtitles ) );
+		$subs = explode( ',', $crunchySubtitles );
 
 		foreach ( $subs as $sub ) {
-			$code = substr( $sub, 0, ( int ) strpos( $sub, ' ' ) );
-			$wikiaLangs[] = $this->getCldrCode( $code, 'language', false );
+			$wikiaLangs[] = $this->convertLanguageCode( $sub );
 		}
 
-		return implode( ', ', $wikiaLangs );
+		return implode( ', ', array_unique( $wikiaLangs ) );
 	}
 
 }

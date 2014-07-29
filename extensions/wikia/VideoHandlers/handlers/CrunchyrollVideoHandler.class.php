@@ -8,7 +8,7 @@ class CrunchyrollVideoHandler extends VideoHandler {
 	 */
 
 	protected $apiName = 'CrunchyrollApiWrapper';
-	protected static $urlTemplate = "http://www.crunchyroll.com/affiliate_iframeplayer?aff=af-90111-uhny&media_id=$1&video_format=106&video_quality=60";
+	protected static $urlTemplate = "http://www.crunchyroll.com/affiliate_iframeplayer?aff=$2&media_id=$1&video_format=106&video_quality=60";
 	protected static $providerHomeUrl = 'http://www.crunchyroll.com/';
 
 	/**
@@ -26,11 +26,12 @@ class CrunchyrollVideoHandler extends VideoHandler {
 	 */
 	public function getEmbed( $articleId, $width, $autoplay = false, $isAjax = false, $postOnload = false ) {
 		$height =  $this->getHeight( $width );
-		$autoPlayStr = ( $autoplay ) ? '1' : '0';
-
 		$sizeString = $this->getSizeString( $width, $height, 'inline' );
 
-		$srcUrl = str_replace( "$1", $this->videoId, static::$urlTemplate) . "&auto_play={$autoPlayStr}";
+		$srcUrl = $this->getEmbedUrl();
+		if ( $autoplay ) {
+			$srcUrl = $srcUrl."&auto_play=1";
+		}
 
 		$html = "<iframe src=\"{$srcUrl}\" {$sizeString}></iframe>";
 
@@ -39,6 +40,15 @@ class CrunchyrollVideoHandler extends VideoHandler {
 			'width' => $width,
 			'height' => $height,
 		];
+	}
+
+	public function getEmbedUrl() {
+		global $wgCrunchyrollConfig;
+
+		$url = str_replace( '$1', $this->videoId, static::$urlTemplate );
+		$url = str_replace( '$2', $wgCrunchyrollConfig['affiliate_code'], $url );
+
+		return $url;
 	}
 
 }
