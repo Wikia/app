@@ -42,6 +42,12 @@ class WikiaInteractiveMapsPoiCategoryController extends WikiaInteractiveMapsBase
 		] );
 	}
 
+	/**
+	 * Cleans up POI category data
+	 *
+	 * @param array $poiCategory
+	 * @return array
+	 */
 	private function cleanUpPoiCategoryData( $poiCategory ) {
 		// id
 		if ( empty( $poiCategory[ 'id' ] ) ) {
@@ -64,7 +70,7 @@ class WikiaInteractiveMapsPoiCategoryController extends WikiaInteractiveMapsBase
 	}
 
 	/**
-	 * Prepare data from request for processing
+	 * Prepares data from request for processing
 	 */
 	private function organizePoiCategoriesData() {
 		$mapId = $this->request->getInt( 'mapId' );
@@ -212,15 +218,6 @@ class WikiaInteractiveMapsPoiCategoryController extends WikiaInteractiveMapsBase
 	}
 
 	/**
-	 * Adds log entry to class property
-	 *
-	 * @param $logEntry
-	 */
-	private function addLogEntry( $logEntry ) {
-		$this->logEntries[] = $logEntry;
-	}
-
-	/**
 	 * Sends delete POI category requests to service
 	 */
 	private function deletePoiCategories() {
@@ -238,5 +235,14 @@ class WikiaInteractiveMapsPoiCategoryController extends WikiaInteractiveMapsBase
 				) );
 			}
 		}
+	}
+
+	/**
+	 * Adds log entry to class property
+	 *
+	 * @param $logEntry
+	 */
+	private function addLogEntry( $logEntry ) {
+		$this->logEntries[] = $logEntry;
 	}
 }

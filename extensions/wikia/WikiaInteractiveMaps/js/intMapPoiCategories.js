@@ -350,7 +350,12 @@ define('wikia.intMap.poiCategories',
 			});
 		}
 
-		function checkIfPoiCategoryInvalid(poiCategory) {
+		/**
+		 * @desc returns true if POI category is invalid
+		 * @param {object} poiCategory
+		 * @returns {boolean} - is valid
+		 */
+		function isPoiCategoryInvalid(poiCategory) {
 			if (utils.isEmpty(poiCategory.name)) {
 				return true;
 			}
@@ -367,7 +372,7 @@ define('wikia.intMap.poiCategories',
 				return false;
 			}
 
-			if (formSerialized.poiCategories.some(checkIfPoiCategoryInvalid)) {
+			if (formSerialized.poiCategories.some(isPoiCategoryInvalid)) {
 				utils.showError(modal, $.msg('wikia-interactive-maps-poi-categories-form-error'));
 				return false;
 			}
@@ -375,6 +380,12 @@ define('wikia.intMap.poiCategories',
 			return true;
 		}
 
+		/**
+		 * @desc checks if POI category data was changed by user
+		 * @param {object} originalPoiCategory
+		 * @param {object} poiCategory
+		 * @returns {boolean} - is POI category changed
+		 */
 		function isPoiCategoryChanged(originalPoiCategory, poiCategory) {
 			if (poiCategory.name !== originalPoiCategory.name) {
 				return true;
@@ -392,6 +403,11 @@ define('wikia.intMap.poiCategories',
 			return false;
 		}
 
+		/**
+		 * @desc organizes form data to object that will be sent to backend
+		 * @param {object} formSerialized
+		 * @returns {object} - organized POI categories data
+		 */
 		function organizePoiCategories(formSerialized) {
 			var poiCategories = {
 				mapId: formSerialized.mapId,
