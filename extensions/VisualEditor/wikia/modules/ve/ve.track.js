@@ -175,8 +175,32 @@ require( ['wikia.tracker'], function ( tracker ) {
 			return;
 		}
 
+		// Funnel tracking
+		gaFunnel( data );
+
 		// Send off to Wikia.Tracker
 		tracker.track( ve.extendObject( params, data ) );
+	}
+
+	/**
+	 * Track fake pageviews for VE funnel
+	 * @method
+	 * @param {Object} data The tracking data
+	 */
+	function gaFunnel( data ) {
+		var funnelEvents = [
+			'edit-page.impression',
+			'edit-page-ready.impression',
+			'button-publish.enable',
+			'button-cancel.click',
+			'button-publish.click',
+			'dialog-save-publish.click',
+			'publish.success'
+		];
+
+		if ( $.inArray( data.label + '.' + data.action, funnelEvents ) !== -1 ) {
+			window.gaTrackPageview( '/fake-visual-editor/' + data.label + '/' + data.action );
+		}
 	}
 
 	/**

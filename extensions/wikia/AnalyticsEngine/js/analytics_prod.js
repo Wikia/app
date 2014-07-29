@@ -270,6 +270,10 @@
 		}
 	};
 
+	window.gaTrackPageview = function( fakePage ) {
+		_gaqWikiaPush( ['_trackPageview', fakePage] );
+	};
+
 }( window ));
 
 (function() {
