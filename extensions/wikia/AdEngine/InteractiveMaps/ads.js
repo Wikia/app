@@ -46,6 +46,7 @@ var ads = (function (window, document) {
 
 						if (parentIframeContainer) {
 							parentIframeContainer.className = parentIframeContainer.className.replace('hidden', '');
+							parentIframeContainer.parentNode.className += ' ad-shown';
 						}
 					}
 				}

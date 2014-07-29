@@ -1719,6 +1719,12 @@ function wfGetCallerClassMethod( $ignoreClasses ) {
 			continue;
 		}
 
+		// skip closures
+		// e.g. "FilePageController:{closure}"
+		if ($entry['function'] === '{closure}') {
+			continue;
+		}
+
 		$method = $entry['class'] . ':' . $entry['function'];
 		break;
 	}
