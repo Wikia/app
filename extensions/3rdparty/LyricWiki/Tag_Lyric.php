@@ -158,9 +158,9 @@ function renderLyricTag($input, $argv, $parser)
 		$ringtoneLink .= "song: \"{$songTitle}\",\n";
 		$ringtoneLink .= "adunit_id: {$AD_ID_STRING},\n";
 		$ringtoneLink .= "div_id: \"cf_async_\" + Math.floor((Math.random() * 999999999)),\n";
-		$ringtoneLink .= "};\n";
-		$ringtoneLink .= "document.write('<div id=\"'+opts.div_id+'\"></div>');var c=function(){cf.showAsyncAd(opts)};if(window.cf)c();else{cf_async=!0;var r=document.createElement(\"script\"),s=document.getElementsByTagName(\"script\")[0];r.async=!0;r.src=\"//srv.tonefuse.com/showads/showad.js\";r.readyState?r.onreadystatechange=function(){if(\"loaded\"==r.readyState||\"complete\"==r.readyState)r.onreadystatechange=null,c()}:r.onload=c;s.parentNode.insertBefore(r,s)};\n";
-		$ringtoneLink .= "})();\n";
+		$ringtoneLink .= "};";
+		$ringtoneLink .= "document.write('<div id=\"'+opts.div_id+'\"></div>');var c=function(){cf.showAsyncAd(opts)};if(window.cf)c();else{cf_async=!0;var r=document.createElement(\"script\"),s=document.getElementsByTagName(\"script\")[0];r.async=!0;r.src=\"//srv.tonefuse.com/showads/showad.js\";r.readyState?r.onreadystatechange=function(){if(\"loaded\"==r.readyState||\"complete\"==r.readyState)r.onreadystatechange=null,c()}:r.onload=c;s.parentNode.insertBefore(r,s)};";
+		$ringtoneLink .= "})();";
 		$ringtoneLink .= "</script>";
 
 		// The links have different adunit_ids above/below lyrics now. This will differentiate them for tracking.
