@@ -359,6 +359,7 @@ div#userloginErrorBox3 {
 		}
 	}
 	textarea {
+		display: block;
 		font-size: 17px;
 		height: 170px;
 		padding: 0;
@@ -385,10 +386,12 @@ div#userloginErrorBox3 {
 		}
 	}
 	.tooltip-icon-wrapper {
+		padding: 0;
 		position: relative;
 		.tooltip-icon {
 			@include tooltip-icon;
-			right: -16px;
+			display: inline-block;
+			position: static;
 		}
 	}
 	.category-container {
@@ -499,6 +502,29 @@ div#userloginErrorBox3 {
 			font-size: 15px;
 			line-height: 25px;
 			width: 200px;
+		}
+	}
+}
+
+/*
+ * TODO: Fix CSSJanus
+ */
+html[dir="rtl"] {
+	#DescWiki {
+		ol {
+			@if ( $responsive-layout-enabled ) {
+
+			} @else {
+				left: auto;
+				right: 515px;
+			}
+		}
+		.category-container {
+			float: right;
+		}
+		.secondary-categories span {
+			margin-left: auto;
+			margin-right: 1.75em;
 		}
 	}
 }
