@@ -1,12 +1,12 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: yurii
  * Date: 7/29/14
  * Time: 2:43 PM
  */
-
-class QuestDetailsController extends WikiaApiController {
+class QuestDetailsApiController extends WikiaApiController {
 
 	const RESPONSE_CACHE_VALIDITY = 3600;
 
@@ -18,16 +18,12 @@ class QuestDetailsController extends WikiaApiController {
 		$limit = $this->getRequest()->getVal( 'limit' );
 
 		$result = $this->findQuestDetails( $fingerprintId, $questId, $limit );
-		$this->setResponseData(
-			$result,
-			[],
-			self::RESPONSE_CACHE_VALIDITY
-		);
+		$this->setResponseData( $result );
 	}
 
 	protected function findQuestDetails( $fingerprintId, $questId, $limit ) {
 		$service = $this->getService();
-
+		return [ 'stub' ];
 	}
 
 	protected function getService() {

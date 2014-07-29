@@ -3,6 +3,6 @@
 $dir = dirname(__FILE__) . '/';
 
 //classes
-$wgAutoloadClasses['QuestDetailsController'] =  $dir . 'QuestDetailsController.class.php';
+$wgAutoloadClasses['QuestDetailsController'] =  $dir . 'QuestDetailsApiController.class.php';
 $wgAutoloadClasses['POIApiController'] =  $dir . "POIApiController.class.php";
-$wgWikiaApiControllers['QuestDetailsController'] = $dir . 'QuestDetailsController.class.php';
+$wgAutoloadClasses['QuestDetailsApiController'] = $dir . 'QuestDetailsApiController.class.php';
