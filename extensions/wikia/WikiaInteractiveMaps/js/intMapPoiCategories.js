@@ -84,8 +84,8 @@ define('wikia.intMap.poiCategories',
 				save: [
 					savePoiCategories
 				],
-				poiCategoriesCreated: [
-					poiCategoriesCreated
+				poiCategoriesSaved: [
+					poiCategoriesSaved
 				],
 				triggerMarkerUpload: [
 					triggerMarkerUpload
@@ -99,7 +99,8 @@ define('wikia.intMap.poiCategories',
 			modalModes = {
 				CREATE: 'create',
 				EDIT: 'edit'
-			};
+			},
+			originalPoCategoriesData;
 
 		/**
 		 * @desc Entry point for modal
@@ -133,6 +134,7 @@ define('wikia.intMap.poiCategories',
 		function setUpModal(data) {
 			setUpTemplateData(data);
 			mapUrl = data.mapUrl;
+			originalPoCategoriesData = data.poiCategories;
 
 			modalConfig.vars.content = utils.render(poiCategoriesTemplate, poiCategoriesTemplateData, {
 				poiCategory: poiCategoryTemplate,
@@ -281,11 +283,11 @@ define('wikia.intMap.poiCategories',
 		 */
 		function markPoiCategoryAsDeleted(poiCategoryId) {
 			// add POI category id to hidden field
-			var poiCategoriesDeletedElement = $('input[name="poiCategoriesDeleted"]'),
-				poiCategoriesDeleted = JSON.parse('[' + poiCategoriesDeletedElement.val() + ']');
+			var deletePoiCategoriesElement = $('input[name="deletePoiCategories"]'),
+				deletePoiCategories = JSON.parse('[' + deletePoiCategoriesElement.val() + ']');
 
-			poiCategoriesDeleted.push(poiCategoryId);
-			poiCategoriesDeletedElement.val(poiCategoriesDeleted.join(','));
+			deletePoiCategories.push(poiCategoryId);
+			deletePoiCategoriesElement.val(deletePoiCategories.join(','));
 		}
 
 		/**
@@ -334,48 +336,91 @@ define('wikia.intMap.poiCategories',
 		}
 
 		/**
-		 * @desc validates POI categories
-		 * @param {object} serializedForm - object with serialized form
-		 * @returns {object} - promise, resolves with validated form
-		 */
-		function validate(serializedForm) {
-			var valid = false,
-				message;
-
-			if (serializedForm['poiCategoryNames[]']) {
-				valid = true;
-				serializedForm['poiCategoryNames[]'].forEach(function (fieldValue) {
-					if (utils.isEmpty(fieldValue)) {
-						valid = false;
-						message = $.msg('wikia-interactive-maps-poi-categories-form-error');
-					}
-				});
-			} else {
-				message = $.msg('wikia-interactive-maps-poi-categories-form-no-category-error');
-			}
-
-			if (valid) {
-				utils.cleanUpError(modal);
-				return serializedForm;
-			} else {
-				utils.showError(modal, message);
-				return false;
-			}
-		}
-
-		/**
 		 * @desc gets parent POI categories list from backend
 		 * @returns {object} - promise
 		 */
 		function getParentPoiCategories() {
 			return $.nirvana.sendRequest({
-				controller: 'WikiaInteractiveMapsPoi',
+				controller: 'WikiaInteractiveMapsPoiCategory',
 				method: 'getParentPoiCategories',
 				format: 'json',
 				onErrorCallback: function (response) {
 					utils.handleNirvanaException(modal, response);
 				}
 			});
+		}
+
+		function checkIfPoiCategoryInvalid(poiCategory) {
+			if (utils.isEmpty(poiCategory.name)) {
+				return true;
+			}
+		}
+
+		/**
+		 * @desc validates POI categories
+		 * @param {object} formSerialized - object with serialized form
+		 * @returns {boolean} - is valid
+		 */
+		function validateFormData(formSerialized) {
+			if (!formSerialized.poiCategories) {
+				utils.showError(modal, $.msg('wikia-interactive-maps-poi-categories-form-no-category-error'));
+				return false;
+			}
+
+			if (formSerialized.poiCategories.some(checkIfPoiCategoryInvalid)) {
+				utils.showError(modal, $.msg('wikia-interactive-maps-poi-categories-form-error'));
+				return false;
+			}
+
+			return true;
+		}
+
+		function isPoiCategoryChanged(originalPoiCategory, poiCategory) {
+			if (poiCategory.name !== originalPoiCategory.name) {
+				return true;
+			}
+
+			if (parseInt(poiCategory.parent_poi_category_id, 10) !== originalPoiCategory.parent_poi_category_id) {
+				return true;
+			}
+
+			// if marker property is not empty it means there was a new image uploaded
+			if (poiCategory.marker) {
+				return true;
+			}
+
+			return false;
+		}
+
+		function organizePoiCategories(formSerialized) {
+			var poiCategories = {
+				mapId: formSerialized.mapId,
+				createPoiCategories: [],
+				updatePoiCategories: [],
+				deletePoiCategories: []
+			};
+
+			if (formSerialized.poiCategories) {
+				formSerialized.poiCategories.forEach(function (poiCategory) {
+					if (poiCategory.id) {
+						var originalPoiCategory = $.grep(originalPoCategoriesData, function (item) {
+							return item.id === parseInt(poiCategory.id, 10);
+						})[0];
+
+						if (originalPoiCategory && isPoiCategoryChanged(originalPoiCategory, poiCategory)) {
+							poiCategories.updatePoiCategories.push(poiCategory);
+						}
+					} else {
+						poiCategories.createPoiCategories.push(poiCategory);
+					}
+				});
+			}
+
+			if (formSerialized.deletePoiCategories) {
+				poiCategories.deletePoiCategories = formSerialized.deletePoiCategories.split(',');
+			}
+
+			return poiCategories;
 		}
 
 		/**
@@ -389,7 +434,7 @@ define('wikia.intMap.poiCategories',
 
 			modal.deactivate();
 			$.nirvana.sendRequest({
-				controller: 'WikiaInteractiveMapsPoi',
+				controller: 'WikiaInteractiveMapsPoiCategory',
 				method: 'editPoiCategories',
 				format: 'json',
 				data: data,
@@ -398,7 +443,7 @@ define('wikia.intMap.poiCategories',
 
 					if (results && results.success) {
 						utils.cleanUpError(modal);
-						modal.trigger('poiCategoriesCreated', results.content);
+						modal.trigger('poiCategoriesSaved', results.content);
 						utils.track(utils.trackerActions.IMPRESSION, 'poi-category-' + mode, parseInt(data.mapId, 10));
 					} else {
 						utils.showError(modal, results.content.message);
@@ -416,16 +461,20 @@ define('wikia.intMap.poiCategories',
 		 * @desc handler method triggered by savePoiCategories event
 		 */
 		function savePoiCategories() {
-			sendPoiCategories(validate(utils.serializeForm(modal.$form)));
+			var formSerialized = modal.$form.serializeObject();
+
+			if (validateFormData(formSerialized)) {
+				sendPoiCategories(organizePoiCategories(formSerialized));
+			}
 		}
 
 		/**
 		 * @desc send callback to ponto and close modal
 		 */
-		function poiCategoriesCreated() {
+		function poiCategoriesSaved(data) {
 			if (mode === modalModes.EDIT) {
 				if (typeof trigger === 'function') {
-					trigger();
+					trigger(data);
 				}
 				modal.trigger('close');
 			} else {
