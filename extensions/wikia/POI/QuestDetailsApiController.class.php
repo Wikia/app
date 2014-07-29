@@ -8,8 +8,6 @@
  */
 class QuestDetailsApiController extends WikiaApiController {
 
-	const RESPONSE_CACHE_VALIDITY = 3600;
-
 	protected $service;
 
 	public function getQuestDetails() {
