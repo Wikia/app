@@ -791,12 +791,21 @@ class ArticlesApiController extends WikiaApiController {
 				$data = [ 'thumbnail' => null, 'original_dimensions' => null ];
 				if ( isset( $images[ $id ] ) ) {
 					$data['thumbnail'] = $images[$id][0]['url'];
-					$data['original_dimensions'] = isset( $images[$id][0]['original_dimensions'] ) ?
-						$images[$id][0]['original_dimensions'] : null;
+
+					if( is_array( $images[$id][0]['original_dimensions'] ) ) {
+						array_walk( $images[$id][0]['original_dimensions'], function(&$item) {
+							$item = intval($item);
+						} );
+
+						$data['original_dimensions'] = $images[$id][0]['original_dimensions'];
+					} else {
+						$data['original_dimensions'] = null;
+					}
 				}
 				$result[ $id ] = $data;
 			}
 		}
+
 		return $result;
 	}
 
