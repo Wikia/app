@@ -21,7 +21,7 @@ ve.init.mw.WikiaTargetEvents = function ( target ) {
 	// Events
 	this.target.connect( this, {
 		'beforeUnload': 'onBeforeUnload',
-		'backButtonClick': 'onBeforeUnload'
+		'deactivateByBackButtonClick': 'onBeforeUnload'
 	} );
 };
 
