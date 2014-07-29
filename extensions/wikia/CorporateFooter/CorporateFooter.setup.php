@@ -4,7 +4,7 @@ $dir = dirname(__FILE__) . '/';
 
 $wgExtensionCredits['specialpage'][] = array(
 		'name' => 'CorporateFooter',
-		'author' => 'Mateusz "Warkot" Warkocki',
+		'author' => 'Mateusz "Warkot" Warkocki, Bogna "bognix" Knychala',
 		'description' => 'CorporateFooter',
 		'version' => 1.0
 		);
