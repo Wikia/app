@@ -143,7 +143,7 @@ class AssetsManagerController extends WikiaController {
 
 			$templates = explode( ',', $template );
 
-			$this->response->setVal( $template, $this->getTemplates($templates, $templateLanguage));
+			$this->response->setVal( $templateLanguage, $this->getTemplates($templates, $templateLanguage));
 			wfProfileOut( $profileId );
 		}
 
