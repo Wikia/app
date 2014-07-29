@@ -37,7 +37,7 @@ REPLACE INTO /*$wgDBprefix*/city_cats (cat_id, cat_name, cat_url, cat_short, cat
 
 /* New categories */
 REPLACE INTO /*$wgDBprefix*/city_cats (cat_id, cat_name, cat_url, cat_short, cat_deprecated, cat_active ) VALUES
-( 21, 'TV', 'http://www.wikia.com/wiki/TV', 'tv', 0, 1);
+( 21, 'TV', 'http://www.wikia.com/wiki/TV', 'tv', 0, 1),
 ( 22, 'Video Games', 'http://gaming.wikia.com', 'videogames', 0, 1),
 ( 23, 'Books', 'http://www.wikia.com/wiki/Books', 'books', 0, 1),
 ( 24, 'Comics', 'http://www.wikia.com/wiki/Comics', 'comics', 0, 1),
