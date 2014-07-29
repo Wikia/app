@@ -367,22 +367,6 @@ class WikiFactoryHub {
 	}
 
 	/**
-	 * Get category by name. Searches through list of categories.
-	 * @param string $name category name
-	 * @return array of category data, including id
-	 */
-	public function getCategoryByName($name) {
-		foreach (self::$mCategories as $categoryId=>$category) {
-			if (strcasecmp($name, $category['name']) == 0) {
-				$category['id'] = $categoryId;
-				return $category;
-			}
-		}
-
-		return null;
-	}
-
-	/**
 	 * Get Krux id for given category
 	 * @param int $categoryId
 	 * @return string Krux category id
