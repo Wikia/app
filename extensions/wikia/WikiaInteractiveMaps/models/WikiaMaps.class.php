@@ -306,15 +306,17 @@ class WikiaMaps extends WikiaObject {
 		//TODO: consider caching the response
 		$response = $this->sendGetRequest( $url );
 
-		// MOB-2272 - translate default POI categories names
-		array_map( function( $parentPoiCategory ) {
-			if ( isset( $parentPoiCategory->name ) ) {
-				$msgKey = 'wikia-interactive-maps-poi-categories-default-' . mb_strtolower( $parentPoiCategory->name );
-				$parentPoiCategory->name = wfMessage( $msgKey )->plain();
-			}
+		if ( !empty( $response[ 'content' ] ) ) {
+			foreach ( $response[ 'content' ] as &$parentPoiCategory ) {
+				if ( isset( $parentPoiCategory->name ) ) {
+					// MOB-2272 - translate default POI categories names
+					$msgKey = 'wikia-interactive-maps-poi-categories-default-' . mb_strtolower( $parentPoiCategory->name );
+					$parentPoiCategory->name = wfMessage( $msgKey )->plain();
+				}
 
-			return $parentPoiCategory;
-		}, $response[ 'content' ] );
+				$parentPoiCategory = array_intersect_key( (array) $parentPoiCategory, array_flip( [ 'id', 'name' ] ) );
+			}
+		}
 
 		return $response;
 	}
