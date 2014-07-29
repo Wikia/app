@@ -231,6 +231,27 @@ class WikiFactoryHub {
 			: null;
 	}
 	/**
+	 * Get a category by name.
+	 *
+	 * Deprecated. This is only for backwards compatibility.
+	 *
+	 * @param string $name
+	 * @return array the category
+	 */
+	public function getCategoryByName( $name ) {
+		$categories = $this->getAllCategories( false );
+
+		foreach ( $categories as $categoryId => $category ) {
+			if ( strcasecmp( $name, $category['name'] ) === 0 ) {
+				$category['id'] = $categoryId;
+				return $category;
+			}
+		}
+
+		return null;
+	}
+
+	/**
 	 * loadCategories
 	 *
 	 * load data from database: city_cats (WF)
@@ -343,22 +364,6 @@ class WikiFactoryHub {
 	 */
 	public function getCategory($id) {
 		return self::$mCategories[$id];
-	}
-
-	/**
-	 * Get category by name. Searches through list of categories.
-	 * @param string $name category name
-	 * @return array of category data, including id
-	 */
-	public function getCategoryByName($name) {
-		foreach (self::$mCategories as $categoryId=>$category) {
-			if (strcasecmp($name, $category['name']) == 0) {
-				$category['id'] = $categoryId;
-				return $category;
-			}
-		}
-
-		return null;
 	}
 
 	/**
