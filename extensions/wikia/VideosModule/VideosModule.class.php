@@ -487,7 +487,7 @@ class VideosModule extends WikiaModel {
 	 * @param $categories
 	 * @return array
 	 */
-	private function transformCatNames( $categories ) {
+	private function transformCatNames( array $categories ) {
 		$transformedCategories = [];
 		foreach ( $categories as $category ) {
 			$transformedCategories[] = str_replace( " ", "_", $category );
