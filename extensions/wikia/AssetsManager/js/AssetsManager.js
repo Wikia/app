@@ -45,7 +45,7 @@ window.Wikia.getMultiTypePackage = function(options) {
 
 	$.each(fieldsToCopy, function() {
 		if (typeof options[this] === 'string') {
-			request[this] = this;
+			request[this] = options[this];
 			send = true;
 		}
 	});
