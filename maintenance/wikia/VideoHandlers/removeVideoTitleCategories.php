@@ -30,12 +30,12 @@ class removeVideoTitleCategories extends Maintenance {
 	public function __construct() {
 		parent::__construct();
 		$this->mDescription = 'Remove categories from file pages which have the same name as the video';
-		$this->addOption( 'dryRun', 'Dry run; make no changes', false, false, 't' );
+		$this->addOption( 'dry-run', 'Dry run; make no changes', false, false, 'd' );
 		$this->addOption( 'verbose', 'Show extra debugging output', false, false, 'v' );
 	}
 
 	public function execute() {
-		$this->dryRun  = $this->hasOption( 'dryRun' );
+		$this->dryRun  = $this->hasOption( 'dry-run' );
 		$this->verbose = $this->hasOption( 'verbose' );
 
 		if ( $this->dryRun ) {
