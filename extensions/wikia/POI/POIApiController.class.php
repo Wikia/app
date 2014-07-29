@@ -1,7 +1,7 @@
 <?php
 
 class POIApiController extends WikiaApiController {
-	public function getNearbyGuests(){
+	public function getNearbyQuests(){
 		$data = json_decode('{
 		  "quests": [
 		    {
