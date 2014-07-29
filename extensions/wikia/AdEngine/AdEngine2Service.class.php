@@ -9,24 +9,19 @@ class AdEngine2Service
 	const ASSET_GROUP_LIFTIUM = 'liftium_ads_js';
 
 	const PAGE_TYPE_NO_ADS = 'no_ads';                   // show no ads
+	const PAGE_TYPE_MAPS = 'maps';                       // show only ads on maps
 	const PAGE_TYPE_HOMEPAGE_LOGGED = 'homepage_logged'; // show some ads (logged in users on main page)
 	const PAGE_TYPE_CORPORATE = 'corporate';             // show some ads (anonymous users on corporate pages)
+	const PAGE_TYPE_SEARCH = 'search';                   // show some ads (anonymous on search pages)
 	const PAGE_TYPE_ALL_ADS = 'all_ads';                 // show all ads!
 
 	const cacheKeyVersion = "2.03a";
 	const cacheTimeout = 1800;
 
-	private $_allPageTypes = [
-		self::PAGE_TYPE_NO_ADS,
-		self::PAGE_TYPE_HOMEPAGE_LOGGED,
-		self::PAGE_TYPE_CORPORATE,
-		self::PAGE_TYPE_ALL_ADS
-	];
-
 	/**
 	 * Get page type for the current page (ad-wise).
 	 * Take into account type of the page and user status.
-	 * Return one of the PAGE_TYPE_* const
+	 * Return one of the PAGE_TYPE_* constants
 	 *
 	 * @return string
 	 */
@@ -73,7 +68,8 @@ class AdEngine2Service
 
 					// Chosen special pages:
 					|| $title->isSpecial('Videos')
-					|| $title->isSpecial('Leaderboard');
+					|| $title->isSpecial('Leaderboard')
+					|| $title->isSpecial('Maps');
 			}
 		}
 
@@ -90,6 +86,16 @@ class AdEngine2Service
 				return $pageLevel;
 			}
 
+			if (WikiaPageType::isSearch()) {
+				$pageLevel = self::PAGE_TYPE_SEARCH;
+				return $pageLevel;
+			}
+
+			if ($title->isSpecial('Maps')) {
+				$pageLevel = self::PAGE_TYPE_MAPS;
+				return $pageLevel;
+			}
+
 			// All ads everywhere else
 			$pageLevel = self::PAGE_TYPE_ALL_ADS;
 			return $pageLevel;
@@ -103,9 +109,9 @@ class AdEngine2Service
 
 		// Override ad level for a (set of) specific page(s)
 		// Use case: sponsor ads on a landing page targeted to Wikia editors (=logged in)
-		if ($wg->Title &&
+		if ($title &&
 			!empty($wg->PagesWithNoAdsForLoggedInUsersOverriden) &&
-			in_array($wg->Title->getDBkey(), $wg->PagesWithNoAdsForLoggedInUsersOverriden)
+			in_array($title->getDBkey(), $wg->PagesWithNoAdsForLoggedInUsersOverriden)
 		) {
 			$pageLevel = self::PAGE_TYPE_CORPORATE;
 			return $pageLevel;
@@ -221,7 +227,7 @@ class AdEngine2Service
 			$wgOasisResponsive, $wgOasisResponsiveLimited,
 			$wgEnableRHonDesktop, $wgAdPageType, $wgOut,
 			$wgRequest, $wgEnableKruxTargeting,
-			$wgAdVideoTargeting, $wgLiftiumOnLoad, $wgAdDriverSevenOneMediaSub4Site,
+			$wgAdVideoTargeting, $wgLiftiumOnLoad, $wgAdDriverSevenOneMediaOverrideSub2Site,
 			$wgDartCustomKeyValues, $wgWikiDirectedAtChildrenByStaff, $wgAdEngineDisableLateQueue,
 			$wgAdDriverUseBottomLeaderboard, $wgAdDriverBottomLeaderboardImpressionCapping, $wgAdDriverEnableAdsInMaps;
 
@@ -233,13 +239,16 @@ class AdEngine2Service
 			'wgEnableAdMeldAPIClientPixels' => $wgEnableAdMeldAPIClientPixels,
 			'wgEnableOpenXSPC' => $wgEnableOpenXSPC,
 
+			// AdConfigMobile.js
+			'adEnginePageType' => self::getPageType(),
+
 			// Ad Driver
 			'wgAdDriverUseCatParam' => array_search($wgLanguageCode, $wgAdPageLevelCategoryLangs),
 			'wgAdPageType' => $wgAdPageType,
 			'wgAdDriverUseEbay' => $wgAdDriverUseEbay,
 			'wgAdDriverUseDartForSlotsBelowTheFold' => $wgAdDriverUseDartForSlotsBelowTheFold === null ? 'hub' : $wgAdDriverUseDartForSlotsBelowTheFold,
 			'wgAdDriverUseSevenOneMedia' => $wgAdDriverUseSevenOneMedia,
-			'wgAdDriverSevenOneMediaSub4Site' => $wgAdDriverSevenOneMediaSub4Site,
+			'wgAdDriverSevenOneMediaOverrideSub2Site' => $wgAdDriverSevenOneMediaOverrideSub2Site,
 			'wgUserShowAds' => $wgUser->getOption('showAds'),
 			'wgOutboundScreenRedirectDelay' => $wgOutboundScreenRedirectDelay,
 			'wgEnableOutboundScreenExt' => $wgEnableOutboundScreenExt,

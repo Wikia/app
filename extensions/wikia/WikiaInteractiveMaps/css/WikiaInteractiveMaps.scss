@@ -3,42 +3,29 @@
 @import "skins/oasis/css/mixins/gradient";
 @import "WikiaMapsShared";
 
-.wikia-interactive-maps {
-	position: relative;
-
-	.wikia-menu-button {
-		padding-left: 10px;
-	}
-}
-
 .maps-controls {
 	position: absolute;
 	right: 0;
 	top: -6px;
 
+	> button,
 	> form,
-	> select,
-	> button {
+	> select {
 		display: block;
 		float: right;
 		margin-left: 10px;
 	}
 }
 
-.WikiaArticle .map-list {
-	list-style: none;
-	margin: 0 0 10px;
-}
-
 .map-list {
+	h3 {
+		@include map-thumb-title($content-color, $gradient-color-start, $map-item-max-width);
+	}
+
 	li {
 		overflow-x: hidden;
 		position: relative;
 		margin: 0px 0px 1px;
-	}
-
-	h3 {
-		@include map-thumb-title($content-color, $gradient-color-start, $map-item-max-width);
 	}
 
 	.map-status {
@@ -56,4 +43,27 @@
 		margin-bottom: 40px;
 		text-align: left;
 	}
+}
+
+.WikiaArticle .map-list {
+	list-style: none;
+	margin: 0 0 10px;
+}
+
+.wikia-interactive-maps {
+	position: relative;
+
+	.wikia-menu-button {
+		padding-left: 10px;
+	}
+}
+
+.wikia-interactive-maps-page-header .wikia-menu-button {
+	padding-left: 8px;
+}
+
+.wikia-interactive-map-wrapper {
+	height: 100%;
+	position: relative;
+	width: 100%;
 }

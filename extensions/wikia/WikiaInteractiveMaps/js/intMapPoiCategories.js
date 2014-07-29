@@ -339,22 +339,26 @@ define('wikia.intMap.poiCategories',
 		 * @returns {object} - promise, resolves with validated form
 		 */
 		function validate(serializedForm) {
-			var valid = false;
+			var valid = false,
+				message;
 
 			if (serializedForm['poiCategoryNames[]']) {
 				valid = true;
 				serializedForm['poiCategoryNames[]'].forEach(function (fieldValue) {
 					if (utils.isEmpty(fieldValue)) {
 						valid = false;
+						message = $.msg('wikia-interactive-maps-poi-categories-form-error');
 					}
 				});
+			} else {
+				message = $.msg('wikia-interactive-maps-poi-categories-form-no-category-error');
 			}
 
 			if (valid) {
 				utils.cleanUpError(modal);
 				return serializedForm;
 			} else {
-				utils.showError(modal, $.msg('wikia-interactive-maps-poi-categories-form-error'));
+				utils.showError(modal, message);
 				return false;
 			}
 		}

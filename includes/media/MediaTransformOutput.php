@@ -240,7 +240,12 @@ class ThumbnailImage extends MediaTransformOutput {
 
 	function renderView( array $options = array() ) {
 		WikiaLogger::instance()->debug( 'Media method '.__METHOD__.' called',
-			array_merge( $options, [ 'url' => $this->url, 'mediaType' => $this->mediaType() ] ) );
+			array_merge( $options, [
+				'url'       => $this->url,
+				'method'    => __METHOD__,
+				'page'      => $this->page,
+				'mediaType' => $this->mediaType()
+			] ) );
 
 		// Make sure to trim the output so that there is no leading whitespace.  The output of this method
 		// may be fed back into code that will be parsed for wikitext and leading whitespace will be
@@ -289,7 +294,12 @@ class ThumbnailImage extends MediaTransformOutput {
 		}
 
 		WikiaLogger::instance()->debug('Media method '.__METHOD__.' called',
-			array_merge( $options, [ 'url' => $this->url, 'method' => __METHOD__ ] ) );
+			array_merge( $options, [
+				'url'       => $this->url,
+				'method'    => __METHOD__,
+				'page'      => $this->page,
+				'mediaType' => $this->mediaType()
+			] ) );
 
 		$alt = empty( $options['alt'] ) ? '' : $options['alt'];
 

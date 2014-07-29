@@ -7,6 +7,8 @@ use Wikia\Search\Test\BaseTest, Wikia\Search\IndexService\DefaultContent, Reflec
 /**
  * Tests the Default Content service, which is pretty thorny
  * @author relwell
+ *
+ * @group Broken
  */
 class DefaultContentTest extends BaseTest
 {

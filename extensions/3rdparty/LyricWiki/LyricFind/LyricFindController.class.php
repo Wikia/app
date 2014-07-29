@@ -38,7 +38,11 @@ class LyricFindController extends WikiaController {
 			$this->response->setCode(self::RESPONSE_OK);
 			$this->response->setContentType('image/gif');
 
-			echo file_get_contents($this->wg->StyleDirectory . '/common/blank.gif');
+			// emit raw GIF content when not in CLI mode
+			// i.e. not running unit tests
+			if ( php_sapi_name() != 'cli' ) {
+				echo file_get_contents($this->wg->StyleDirectory . '/common/blank.gif');
+			}
 		}
 		else {
 			$this->response->setCode(self::RESPONSE_ERR);

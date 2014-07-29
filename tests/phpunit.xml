@@ -47,6 +47,7 @@
 			<group>Stub</group>
 		</exclude>
 	</groups>
+	<!-- Exclude the following from code coverage reports -->
 	<filter>
 		<blacklist>
 			<directory>../bin</directory>
@@ -57,6 +58,7 @@
 			<directory>../lib</directory>
 			<directory>../maintenance</directory>
 			<directory>../math</directory>
+			<directory>../resources</directory>
 			<directory>../serialized</directory>
 			<directory>../static</directory>
 			<directory>../t</directory>
