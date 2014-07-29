@@ -200,6 +200,7 @@ class VideosModule extends WikiaModel {
 		} else {
 			$categories = [ $this->wg->VideosModuleCategories ];
 		}
+		$categories = $this->transformCatNames( $categories );
 
 		$limit = self::LIMIT_CATEGORY_VIDEOS;
 		$sort = 'recent';
@@ -478,5 +479,19 @@ class VideosModule extends WikiaModel {
 			$videoTitles[] = $video['title'];
 		}
 		return $videoTitles;
+	}
+
+	/**
+	 * Make sure categories used by videos module are using the database name as
+	 * opposed to regular name (ie, use underscores instead of spaces)
+	 * @param $categories
+	 * @return array
+	 */
+	private function transformCatNames( array $categories ) {
+		$transformedCategories = [];
+		foreach ( $categories as $category ) {
+			$transformedCategories[] = str_replace( " ", "_", $category );
+		}
+		return $transformedCategories;
 	}
 }
