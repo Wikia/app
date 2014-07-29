@@ -151,7 +151,7 @@ function renderLyricTag($input, $argv, $parser)
 		$ID_BELOW_LYRICS = 39382077;
 		$AD_ID_STRING = "AD_ID_STRING";
 		$ringtoneLink = "";
-		$ringtoneLink = "<script>\n"
+		$ringtoneLink = "<script>\n";
 		$ringtoneLink .= "(function() {\n";
 		$ringtoneLink .= "var opts = {\n";
 		$ringtoneLink .= "artist: \"{$artist}\",\n";
