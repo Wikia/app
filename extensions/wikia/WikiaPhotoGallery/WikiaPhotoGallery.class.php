@@ -577,7 +577,7 @@ class WikiaPhotoGallery extends ImageGallery {
 	 * The new gallery disables the old perrow control, and automatically fit the gallery to the available space in the browser.
 	 */
 	private function renderGallery() {
-		global $wgBlankImgUrl;
+		global $wgBlankImgUrl, $wgEnableMediaGalleryExt;
 
 		wfProfileIn(__METHOD__);
 
@@ -602,6 +602,9 @@ class WikiaPhotoGallery extends ImageGallery {
 
 		if( F::app()->checkSkin( 'wikiamobile' ) ) {
 			$html =  $this->renderWikiaMobileMediaGroup();
+		// Route to new version of galleries - "MediaGallery"
+		} elseif ( !empty( $wgEnableMediaGalleryExt ) ) {
+			$html =  $this->renderMediaGallery();
 		} else {
 
 			// loop throught the images and get height of the tallest one
@@ -1641,6 +1644,36 @@ class WikiaPhotoGallery extends ImageGallery {
 			$result = F::app()->renderView(
 				'WikiaMobileMediaService',
 				'renderMediaGroup',
+				[
+					'items' => $media,
+					'parser' => $this->mParser
+				]
+			);
+		}
+
+		return $result;
+	}
+
+	private function renderMediaGallery() {
+		$media = [];
+		$result = '';
+
+		foreach( $this->mFiles as $val ) {
+			$item = wfFindFile( $val[0] );
+
+			if( !empty( $item ) ) {
+				$media[] = array(
+					'title' => $val[0],
+					'caption' => $val[3],
+					'link' => $val[2]
+				);
+			}
+		}
+
+		if ( !empty( $media ) ) {
+			$result = F::app()->renderView(
+				'MediaGalleryController',
+				'gallery',
 				[
 					'items' => $media,
 					'parser' => $this->mParser
