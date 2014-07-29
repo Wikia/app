@@ -394,12 +394,16 @@ div#userloginErrorBox3 {
 			position: static;
 		}
 	}
-	.category-container {
+	.select-container {
 		float: left;
 		min-width: 210px;
 		max-width: 490px;
 	}
-	.secondary-categories {
+	.categories-sets {
+		display: none;
+	}
+	.categories-set {
+		display: none;
 		@include column-count( 4 );
 
 		label {

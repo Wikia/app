@@ -150,46 +150,45 @@
 					?>
 				</div>
 
-				<!-- Primary Category -->
-				<div class="category-container">
-					<h3 for="wiki-category"><?= wfMessage('cnw-desc-choose')->escaped() ?></h3>
-					<select name="wiki-category">
-						<option value=""><?= wfMessage('cnw-desc-select-one')->escaped() ?></option>
-		<?php
-			foreach ($aCategories as $iCat => $catData) {
-				$sCatName = $catData["name"];
-				if( in_array( $sCatName, array( 'Wikia', 'Wikianswers' ) ) )
-					continue;
-		?>
-						<option value="<?php echo $iCat ?>"><?php echo $sCatName?></option>
-		<?php
-			}
-		?>
-						<option value="3"><?= wfMessage('autocreatewiki-category-other')->escaped() ?></option>
+				<!-- Hub Category / Vertical -->
+				<div class="select-container">
+					<h3><?= wfMessage('cnw-desc-select-vertical')->escaped() ?></h3>
+					<select name="wiki-vertical">
+						<option value="-1"><?= wfMessage('cnw-desc-select-one')->escaped() ?></option>
+				<?php
+					foreach ($verticals as $vertical) {
+				?>
+						<option
+							value="<?= $vertical['id'] ?>"
+							data-short="<?= $vertical['short'] ?>"
+							data-categoriesset="<?= $vertical['categoriesSet'] ?>">
+							<?= $vertical['name'] ?>
+						</option>
+				<?php
+					}
+				?>
 					</select>
 				</div>
 
-				<!-- Secondary Category -->
-				<div class="category-container">
-					<h3><?= wfMessage('cnw-desc-choose-secondary')->escaped() ?></h3>
-					<div class="secondary-categories">
-						<!-- TODO: Replace with real subcategories -->
-						<label><input type="checkbox"><span>Anime</span></label>
-						<label><input type="checkbox"><span>Auto</span></label>
-						<label><input type="checkbox"><span>Creative</span></label>
-						<label><input type="checkbox"><span>Education</span></label>
-						<label><input type="checkbox"><span>Finance</span></label>
-						<label><input type="checkbox"><span>Food &amp; Drink</span></label>
-						<label><input type="checkbox"><span>Home &amp; Gardening</span></label>
-						<label><input type="checkbox"><span>Humor</span></label>
-						<label><input type="checkbox"><span>Philosophy</span></label>
-						<label><input type="checkbox"><span>Politics</span></label>
-						<label><input type="checkbox"><span>Science</span></label>
-						<label><input type="checkbox"><span>Sports</span></label>
-						<label><input type="checkbox"><span>Technology</span></label>
-						<label><input type="checkbox"><span>Toys</span></label>
-						<label><input type="checkbox"><span>Travel</span></label>
+				<!-- Additional Categories -->
+				<div class="select-container categories-sets">
+					<h3><?= wfMessage('cnw-desc-select-categories')->escaped() ?></h3>
+			<?php
+				foreach ($categoriesSets as $setId => $categoriesSet) {
+			?>
+
+					<div class="categories-set" id="categories-set-<?= $setId ?>">
+				<?php
+					foreach ($categoriesSet as $category) {
+				?>
+						<label><input type="checkbox" value="<?= $category['id'] ?>" data-short="<?= $category['short'] ?>"><span><?= $category['name'] ?></span></label>
+				<?php
+					}
+				?>
 					</div>
+			<?php
+				}
+			?>
 				</div>
 
 				<nav class="back-controls">
