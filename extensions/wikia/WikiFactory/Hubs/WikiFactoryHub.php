@@ -527,9 +527,9 @@ class WikiFactoryHub extends WikiaModel {
 		// Extra : is added to make keys that look like __METHOD__ calls
 		$wgMemc->delete( wfSharedMemcKey("WikiFactoryHub:", "loadCategories") );
 
-		$functions = [ "getVerticalId", "getCategoryId", "getCategoryIds", "getWikiCategories" ];
-		foreach ($functions as $function) {
-			$wgMemc->delete( wfMemcKey("WikiFactoryHub:", $function) );
+		$functionNames = [ "getVerticalId", "getCategoryId", "getCategoryIds", "getWikiCategories" ];
+		foreach ($functionNames as $name) {
+			$wgMemc->delete( wfMemcKey("WikiFactoryHub:", $name) );
 		}
 	}
 
