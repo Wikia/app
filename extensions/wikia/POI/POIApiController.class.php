@@ -1,7 +1,7 @@
 <?php
 
 class POIApiController extends WikiaApiController {
-	public function getNearbyGuests(){
+	public function getNearbyQuests(){
 		$data = json_decode('{
 		  "quests": [
 		    {
@@ -29,18 +29,17 @@ class POIApiController extends WikiaApiController {
 		      ],
 		      "metadata": {
 		        "quest_id": "GP_Orc_3",
-		        "map_location": {
-		          "location_x": 12.34,
-		          "location_y": 56.78,
-		          "region": "Map_Region_1"
-		        },
+		        "map_location_x": 12.34,
+		        "map_location_y": 56.78,
+		        "map_region": "Map_Region_1",
 		        "fingerprints": [
 		          "fingerprint_1",
 		          "fingerprint_2"
 		        ]
 		      }
 		    }
-		  ]
+		  ],
+		  "basepath": "http://gameofthrones.wikia.com"
 		}', true );
 
 		$this->setResponseData( $data );
