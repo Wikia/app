@@ -3,6 +3,7 @@
 class HandlebarsService {
 
 	const PARTIALS_DIRECTORY = 'partials';
+	const PARTIALS_PREFIX = '_';
 	const TEMPLATES_DIRECTORY = 'templates';
 	const HANDLEBARS_EXTENSION = 'handlebars';
 
@@ -23,7 +24,7 @@ class HandlebarsService {
 		if ( $pathInfo['extension'] != self::HANDLEBARS_EXTENSION ) {
 			throw new Exception( 'Handlebar template not found in following path: ' . $path );
 		}
-		return $pathInfo['dirname'];
+		return $pathInfo['basename'];
 	}
 
 	/**
@@ -40,7 +41,7 @@ class HandlebarsService {
 		if ( strpos( $pathInfo['dirname'], $templatesDirectory ) === false ) {
 			throw new Exception( 'Templates directory not found in following path: ' . $path );
 		}
-		return $pathInfo['basename'];
+		return $pathInfo['dirname'];
 	}
 
 	/**
@@ -56,7 +57,6 @@ class HandlebarsService {
 		$templateName = $this->extractTemplateNameFromPath( $path );
 		$templateDir = $this->extractTemplateDirFromPath( $path );
 		$partialsDir = $templateDir . DIRECTORY_SEPARATOR . self::PARTIALS_DIRECTORY;
-		$partialsPrefix = '_';
 
 		$partials = is_dir( $partialsDir ) ? $partialsDir : $templateDir;
 
@@ -68,7 +68,7 @@ class HandlebarsService {
 		$handlebars->setPartialsLoader( new \Handlebars\Loader\FilesystemLoader(
 			$partials,
 			[
-				'prefix' => $partialsPrefix
+				'prefix' => self::PARTIALS_PREFIX
 			] )
 		);
 
