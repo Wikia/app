@@ -6,6 +6,7 @@
  * Date: 7/29/14
  * Time: 2:43 PM
  */
+
 class QuestDetailsApiController extends WikiaApiController {
 
 	protected $service;
@@ -21,15 +22,13 @@ class QuestDetailsApiController extends WikiaApiController {
 
 	protected function findQuestDetails( $fingerprintId, $questId, $limit ) {
 		$service = $this->getService();
-		return [ 'stub' ];
+		return $service->query( $fingerprintId );
 	}
 
 	protected function getService() {
 		if ( !isset( $this->service ) ) {
-			// TODO
-			$this->service = null;
+			$this->service = new QuestDetailsSearchService();;
 		}
 		return $this->service;
 	}
-
-} 
+}
