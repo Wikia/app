@@ -64,6 +64,7 @@ class GlobalFooterController extends WikiaController {
 			$catInfo->cat_name = wfMessage('hub-'. $catInfo->cat_name)->text();
 		}
 
+		wfProfileOut( __METHOD__ );
 		return $catInfo;
 	}
 
