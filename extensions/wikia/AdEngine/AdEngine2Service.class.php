@@ -28,6 +28,7 @@ class AdEngine2Service
 	public static function getPageType()
 	{
 		$wg = F::app()->wg;
+		$title = null;
 
 		static $pageLevel = null;
 
@@ -91,7 +92,7 @@ class AdEngine2Service
 				return $pageLevel;
 			}
 
-			if ($title->isSpecial('Maps')) {
+			if ($title && $title->isSpecial('Maps')) {
 				$pageLevel = self::PAGE_TYPE_MAPS;
 				return $pageLevel;
 			}
