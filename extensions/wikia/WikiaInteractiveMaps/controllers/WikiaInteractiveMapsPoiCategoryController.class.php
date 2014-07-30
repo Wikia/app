@@ -48,15 +48,13 @@ class WikiaInteractiveMapsPoiCategoryController extends WikiaInteractiveMapsBase
 	 * @param array $poiCategory
 	 * @return array
 	 */
-	private function cleanUpPoiCategoryData( $poiCategory ) {
-		// id
+	public function cleanUpPoiCategoryData( $poiCategory ) {
 		if ( empty( $poiCategory[ 'id' ] ) ) {
 			unset( $poiCategory[ 'id' ] );
 		} else {
 			$poiCategory[ 'id' ] = (int) $poiCategory[ 'id' ];
 		}
 
-		// parent category
 		$poiCategory[ 'parent_poi_category_id' ] = ( !empty( $poiCategory[ 'parent_poi_category_id' ] ) ) ?
 			(int) $poiCategory[ 'parent_poi_category_id' ] :
 			$this->mapsModel->getDefaultParentPoiCategory();
