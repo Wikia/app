@@ -283,7 +283,7 @@ define('wikia.intMap.poiCategories',
 		 */
 		function markPoiCategoryAsDeleted(poiCategoryId) {
 			// add POI category id to hidden field
-			var poiCategoriesToDeleteElement = $('input[name="poiCategoriesToDelete"]'),
+			var poiCategoriesToDeleteElement = $('#poiCategoriesToDelete'),
 				poiCategoriesToDelete = JSON.parse('[' + poiCategoriesToDeleteElement.val() + ']');
 
 			poiCategoriesToDelete.push(poiCategoryId);
