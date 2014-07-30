@@ -100,7 +100,7 @@ define('wikia.intMap.poiCategories',
 				CREATE: 'create',
 				EDIT: 'edit'
 			},
-			originalPoCategoriesData;
+			originalPoiCategoriesData;
 
 		/**
 		 * @desc Entry point for modal
@@ -134,7 +134,7 @@ define('wikia.intMap.poiCategories',
 		function setUpModal(data) {
 			setUpTemplateData(data);
 			mapUrl = data.mapUrl;
-			originalPoCategoriesData = data.poiCategories;
+			originalPoiCategoriesData = data.poiCategories;
 
 			modalConfig.vars.content = utils.render(poiCategoriesTemplate, poiCategoriesTemplateData, {
 				poiCategory: poiCategoryTemplate,
@@ -419,7 +419,7 @@ define('wikia.intMap.poiCategories',
 			if (formSerialized.poiCategories) {
 				formSerialized.poiCategories.forEach(function (poiCategory) {
 					if (poiCategory.id) {
-						var originalPoiCategory = $.grep(originalPoCategoriesData, function (item) {
+						var originalPoiCategory = $.grep(originalPoiCategoriesData, function (item) {
 							return item.id === parseInt(poiCategory.id, 10);
 						})[0];
 
