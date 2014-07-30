@@ -18,9 +18,9 @@ class WikiaInteractiveMapsPoiCategoryController extends WikiaInteractiveMapsBase
 	 * Entry point to save POI categories
 	 *
 	 * @requestParam Integer $mapId an unique map id
-	 * @requestParam Array $createPoiCategories an array of POI categories to create
-	 * @requestParam Array $updatePoiCategories an array of POI categories to update
-	 * @requestParam Array $deletePoiCategories an array of POI categories ids to delete
+	 * @requestParam Array $poiCategoriesToCreate an array of POI categories to create
+	 * @requestParam Array $poiCategoriesToUpdate an array of POI categories to update
+	 * @requestParam Array $poiCategoriesToDelete an array of POI categories ids to delete
 	 *
 	 * @throws PermissionsException
 	 * @throws BadRequestApiException
@@ -76,22 +76,22 @@ class WikiaInteractiveMapsPoiCategoryController extends WikiaInteractiveMapsBase
 		$mapId = $this->request->getInt( 'mapId' );
 		$this->setData( 'mapId', $mapId );
 
-		$createPoiCategories = $this->request->getArray( 'createPoiCategories' );
-		foreach ( $createPoiCategories as &$poiCategory ) {
+		$poiCategoriesToCreate = $this->request->getArray( 'poiCategoriesToCreate' );
+		foreach ( $poiCategoriesToCreate as &$poiCategory ) {
 			$poiCategory = $this->cleanUpPoiCategoryData( $poiCategory );
 			$poiCategory[ 'map_id' ] = $mapId;
 			$poiCategory[ 'created_by' ] = $this->getData( 'userName' );
 		}
-		$this->setData( 'createPoiCategories', $createPoiCategories );
+		$this->setData( 'poiCategoriesToCreate', $poiCategoriesToCreate );
 
-		$updatePoiCategories = $this->request->getArray( 'updatePoiCategories' );
-		foreach ( $updatePoiCategories as &$poiCategory ) {
+		$poiCategoriesToUpdate = $this->request->getArray( 'poiCategoriesToUpdate' );
+		foreach ( $poiCategoriesToUpdate as &$poiCategory ) {
 			$poiCategory = $this->cleanUpPoiCategoryData( $poiCategory );
 		}
-		$this->setData( 'updatePoiCategories', $updatePoiCategories );
+		$this->setData( 'poiCategoriesToUpdate', $poiCategoriesToUpdate );
 
-		$deletePoiCategories =  $this->request->getArray( 'deletePoiCategories' );
-		$this->setData( 'deletePoiCategories', $deletePoiCategories );
+		$poiCategoriesToDelete =  $this->request->getArray( 'poiCategoriesToDelete' );
+		$this->setData( 'poiCategoriesToDelete', $poiCategoriesToDelete );
 	}
 
 	/**
@@ -103,8 +103,8 @@ class WikiaInteractiveMapsPoiCategoryController extends WikiaInteractiveMapsBase
 	 */
 	private function validatePoiCategories() {
 		$mapId = $this->getData( 'mapId' );
-		$createPoiCategories = $this->getData( 'createPoiCategories' );
-		$updatePoiCategories = $this->getData( 'updatePoiCategories' );
+		$poiCategoriesToCreate = $this->getData( 'poiCategoriesToCreate' );
+		$poiCategoriesToUpdate = $this->getData( 'poiCategoriesToUpdate' );
 
 		if ( !$this->wg->User->isLoggedIn() ) {
 			throw new PermissionsException( WikiaInteractiveMapsController::PAGE_RESTRICTION );
@@ -114,16 +114,16 @@ class WikiaInteractiveMapsPoiCategoryController extends WikiaInteractiveMapsBase
 			throw new InvalidParameterApiException( 'mapId' );
 		}
 
-		foreach ( $createPoiCategories as $poiCategory ) {
+		foreach ( $poiCategoriesToCreate as $poiCategory ) {
 			$this->validatePoiCategory( $poiCategory );
 		}
 
-		foreach ( $updatePoiCategories as $poiCategory ) {
+		foreach ( $poiCategoriesToUpdate as $poiCategory ) {
 			$this->validatePoiCategory( $poiCategory );
 		}
 
-		if ( !$this->validateDeletePoiCategories() ) {
-			throw new InvalidParameterApiException( 'deletePoiCategories' );
+		if ( !$this->validatePoiCategoriesToDelete() ) {
+			throw new InvalidParameterApiException( 'poiCategoriesToDelete' );
 		}
 	}
 
@@ -146,15 +146,15 @@ class WikiaInteractiveMapsPoiCategoryController extends WikiaInteractiveMapsBase
 	 *
 	 * @return bool
 	 */
-	private function validateDeletePoiCategories() {
-		$deletePoiCategories = $this->getData( 'deletePoiCategories' );
+	private function validatePoiCategoriesToDelete() {
+		$poiCategoriesToDelete = $this->getData( 'poiCategoriesToDelete' );
 
-		if ( !is_array( $deletePoiCategories ) ) {
-			$this->setData( 'deletePoiCategories', [] );
+		if ( !is_array( $poiCategoriesToDelete ) ) {
+			$this->setData( 'poiCategoriesToDelete', [] );
 			return true;
 		}
 
-		foreach ( $deletePoiCategories as $poiCategoryId ) {
+		foreach ( $poiCategoriesToDelete as $poiCategoryId ) {
 			if ( !$poiCategoryId > 0 ) {
 				return false;
 			}
@@ -167,14 +167,14 @@ class WikiaInteractiveMapsPoiCategoryController extends WikiaInteractiveMapsBase
 	 * Goes through the list of create/update POI categories and calls responsible methods to save them
 	 */
 	private function savePoiCategories() {
-		$createPoiCategories = $this->getData( 'createPoiCategories' );
-		$updatePoiCategories = $this->getData( 'updatePoiCategories' );
+		$poiCategoriesToCreate = $this->getData( 'poiCategoriesToCreate' );
+		$poiCategoriesToUpdate = $this->getData( 'poiCategoriesToUpdate' );
 
-		foreach ( $createPoiCategories as $poiCategory ) {
+		foreach ( $poiCategoriesToCreate as $poiCategory ) {
 			$this->createPoiCategory( $poiCategory );
 		}
 
-		foreach ( $updatePoiCategories as $poiCategory ) {
+		foreach ( $poiCategoriesToUpdate as $poiCategory ) {
 			$this->updatePoiCategory( $poiCategory );
 		}
 	}
@@ -221,9 +221,9 @@ class WikiaInteractiveMapsPoiCategoryController extends WikiaInteractiveMapsBase
 	 * Sends delete POI category requests to service
 	 */
 	private function deletePoiCategories() {
-		$deletePoiCategories = $this->getData( 'deletePoiCategories' );
+		$poiCategoriesToDelete = $this->getData( 'poiCategoriesToDelete' );
 
-		foreach ( $deletePoiCategories as $poiCategoryId ) {
+		foreach ( $poiCategoriesToDelete as $poiCategoryId ) {
 			$response = $this->mapsModel->deletePoiCategory( $poiCategoryId );
 
 			if ( true === $response[ 'success' ] ) {

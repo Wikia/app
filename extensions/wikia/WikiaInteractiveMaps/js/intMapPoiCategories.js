@@ -283,11 +283,11 @@ define('wikia.intMap.poiCategories',
 		 */
 		function markPoiCategoryAsDeleted(poiCategoryId) {
 			// add POI category id to hidden field
-			var deletePoiCategoriesElement = $('input[name="deletePoiCategories"]'),
-				deletePoiCategories = JSON.parse('[' + deletePoiCategoriesElement.val() + ']');
+			var poiCategoriesToDeleteElement = $('input[name="poiCategoriesToDelete"]'),
+				poiCategoriesToDelete = JSON.parse('[' + poiCategoriesToDeleteElement.val() + ']');
 
-			deletePoiCategories.push(poiCategoryId);
-			deletePoiCategoriesElement.val(deletePoiCategories.join(','));
+			poiCategoriesToDelete.push(poiCategoryId);
+			poiCategoriesToDeleteElement.val(poiCategoriesToDelete.join(','));
 		}
 
 		/**
@@ -398,9 +398,9 @@ define('wikia.intMap.poiCategories',
 		function organizePoiCategories(formSerialized) {
 			var poiCategories = {
 				mapId: formSerialized.mapId,
-				createPoiCategories: [],
-				updatePoiCategories: [],
-				deletePoiCategories: []
+				poiCategoriesToCreate: [],
+				poiCategoriesToUpdate: [],
+				poiCategoriesToDelete: []
 			};
 
 			if (formSerialized.poiCategories) {
@@ -411,16 +411,16 @@ define('wikia.intMap.poiCategories',
 						})[0];
 
 						if (originalPoiCategory && isPoiCategoryChanged(originalPoiCategory, poiCategory)) {
-							poiCategories.updatePoiCategories.push(poiCategory);
+							poiCategories.poiCategoriesToUpdate.push(poiCategory);
 						}
 					} else {
-						poiCategories.createPoiCategories.push(poiCategory);
+						poiCategories.poiCategoriesToCreate.push(poiCategory);
 					}
 				});
 			}
 
-			if (formSerialized.deletePoiCategories) {
-				poiCategories.deletePoiCategories = formSerialized.deletePoiCategories.split(',');
+			if (formSerialized.poiCategoriesToDelete) {
+				poiCategories.poiCategoriesToDelete = formSerialized.poiCategoriesToDelete.split(',');
 			}
 
 			return poiCategories;
