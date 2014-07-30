@@ -4,8 +4,8 @@ class CorporateFooterController extends WikiaController {
 
 	public function index() {
 		$this->interlang = WikiaPageType::isCorporatePage();
+		$this->response->addAsset( 'extensions/wikia/CorporateFooter/styles/CorporateFooter.scss' );
 		$helper = new WikiaHomePageHelper();
-
 		$corporateWikis = $helper->getVisualizationWikisData();
 		$this->selectedLang = $this->wg->ContLang->getCode();
 		$this->dropDownItems = $this->prepareDropdownItems( $corporateWikis, $this->selectedLang );
