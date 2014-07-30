@@ -251,7 +251,7 @@ class VenusController extends WikiaController {
 
 		$isLoggedIn = $wgUser->isLoggedIn();
 
-		$assetGroups = ['oasis_shared_core_js', 'oasis_shared_js'];
+		$assetGroups = ['oasis_shared_core_js', 'oasis_shared_js', 'venus_js'];
 		$assetGroups[] = $isLoggedIn ? 'oasis_user_js' : 'oasis_anon_js';
 
 		$jsLoader = '';

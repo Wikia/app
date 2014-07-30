@@ -87,12 +87,38 @@ class AssetsConfig {
 	}
 
 	/**
+	 * Loads packages definitions from config files in configGroups dir
+	 */
+	private function loadGroups() {
+		wfProfileIn( __METHOD__ );
+
+		if (empty($this->mConfig)) {
+			$this->load();
+		}
+
+		foreach(glob(__DIR__ . '/configGroups/*Config.php') as $fileName) {
+			include_once($fileName);
+			$config = pathinfo($fileName)['filename'];
+			if (!empty($$config)) {
+				foreach($$config as $key => $value) {
+					if(empty($this->mConfig[$key])) {
+						$this->mConfig[$key] = $value;
+					}
+				}
+			}
+		}
+
+		wfProfileOut( __METHOD__ );
+	}
+
+	/**
 	 * Returns the skin(s) which a package is registered for
 	 *
 	 * @author Federico "Lox" Lucignano <federico(at)wikia-inc.com>
 	 */
 	public function getGroupSkin( $groupName ) {
 		$this->load();
+		$this->loadGroups();
 
 		if ( isset( $this->mConfig[$groupName] ) ) {
 			return ( isset( $this->mConfig[$groupName]['skin'] ) ) ? $this->mConfig[$groupName]['skin'] : null;
@@ -109,6 +135,7 @@ class AssetsConfig {
 	 */
 	public function getGroupType( $groupName ) {
 		$this->load();
+		$this->loadGroups();
 
 		if ( isset( $this->mConfig[$groupName] ) ) {
 			return $this->mConfig[$groupName]['type'];
@@ -125,6 +152,7 @@ class AssetsConfig {
 	 */
 	protected function getGroupAssets( $groupName ) {
 		$this->load();
+		$this->loadGroups();
 
 		if ( is_string( $groupName ) && isset( $this->mConfig[$groupName] ) ) {
 			return $this->mConfig[$groupName]['assets'];
@@ -177,6 +205,7 @@ class AssetsConfig {
 
 	public function getGroupNames() {
 		$this->load();
+		$this->loadGroups();
 
 		return array_keys( $this->mConfig );
 	}
