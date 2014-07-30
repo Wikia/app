@@ -88,10 +88,10 @@ class ThumbnailController extends WikiaController {
 		$metaAttribs = [];
 
 		// Set a positive flag for whether we need to lazy load
-		$options['lazyLoad'] = $this->shouldLazyLoad( $options );
+		$lazyLoad = $this->shouldLazyLoad( $options );
 
 		// Only add RDF metadata when the thumb is not lazy loaded
-		if ( !$options['lazyLoad'] ) {
+		if ( !$lazyLoad ) {
 			// link
 			$linkAttribs['itemprop'] = 'video';
 			$linkAttribs['itemscope'] = '';
@@ -139,7 +139,7 @@ class ThumbnailController extends WikiaController {
 		$this->noscript = '';
 		$this->dataSrc = '';
 
-		if ( $options['lazyLoad'] ) {
+		if ( $lazyLoad ) {
 			$this->noscript = $this->app->renderView(
 				'ThumbnailController',
 				'imgTag',
@@ -207,7 +207,7 @@ class ThumbnailController extends WikiaController {
 		unset( $linkAttrs['href'] );
 
 		$this->linkAttrs = ThumbnailHelper::getAttribs( $linkAttrs );
-		$this->imgAttribs  = ThumbnailHelper::getAttribs( $attribs );
+		$this->imgAttrs  = ThumbnailHelper::getAttribs( $attribs );
 		$this->linkClasses = ThumbnailHelper::getImageLinkClasses( $options );
 
 		$file = $thumb->file;
@@ -224,16 +224,18 @@ class ThumbnailController extends WikiaController {
 
 		// Set a positive flag for whether we need to lazy load
 		$options['src'] = $this->imgSrc;
-		$options['lazyLoad'] = $this->shouldLazyLoad( $options );
+		$lazyLoad = $this->shouldLazyLoad( $options );
 
-		if ( $options['lazyLoad'] ) {
+		if ( $lazyLoad ) {
 			$this->noscript = $this->app->renderView(
 				'ThumbnailController',
 				'imgTag',
 				$this->response->getData()
 			);
-			ImageLazyLoad::setLazyLoadingAttribs( $this->dataSrc, $this->imgSrc, $this->imgClass, $this->imgAttribs );
+			ImageLazyLoad::setLazyLoadingAttribs( $this->dataSrc, $this->imgSrc, $this->imgClass, $this->imgAttrs );
 		}
+
+		$this->imgTag = $this->app->renderView( 'ThumbnailController', 'imgTag', $this->response->getData());
 	}
 
 	/**
