@@ -8,12 +8,17 @@ class VenusController extends WikiaController {
 	private static $skinAssetGroups = [];
 
 	private $assetsManager;
+	private $skinTemplateObj;
+	private $service;
 	private $skin;
 
 	public function init() {
 		$this->assetsManager = AssetsManager::getInstance();
+		$this->skinTemplateObj = $this->app->getSkinTemplateObj();
+		$this->service = new VenusService( $this->skinTemplateObj );
 
-		$skinVars = $this->app->getSkinTemplateObj()->data;
+		$skinVars = $this->skinTemplateObj->data;
+
 		// this should be re-viewed and removed if not nessesary
 		$this->pagetitle = $skinVars['pagetitle'];
 		$this->displaytitle = $skinVars['displaytitle'];
@@ -26,6 +31,7 @@ class VenusController extends WikiaController {
 		$this->pagecss = $skinVars['pagecss'];
 		$this->skinnameclass = $skinVars['skinnameclass'];
 		$this->bottomscripts = $skinVars['bottomscripts'];
+
 		// initialize variables
 		$this->comScore = null;
 		$this->quantServe = null;
@@ -35,7 +41,7 @@ class VenusController extends WikiaController {
 		global $wgUser, $wgTitle;
 
 		$this->title = $wgTitle->getText();
-		$this->bodytext = $this->app->getSkinTemplateObj()->data['bodytext'];
+		$this->bodytext = $this->skinTemplateObj->data['bodytext'];
 
 		$this->isUserLoggedIn = $wgUser->isLoggedIn();
 
@@ -43,7 +49,8 @@ class VenusController extends WikiaController {
 
 		$this->setBodyClasses();
 		$this->setHeadItems();
-		$this->prepareAssets();
+		//$this->setAssets();
+
 
 		wfProfileOut(__METHOD__ . ' - skin Operations');
 	}
@@ -57,21 +64,14 @@ class VenusController extends WikiaController {
 		$this->corporateFooter = $this->getCorporateFootet();
 	}
 
-	public function prepareAssets() {
-		//run hook to get assets?
 
-		$this->setStyles();
-		$this->setScripts();
-	}
-
-	private function setBodyClasses() {
-		// generate list of CSS classes for <body> tag
-		$bodyClasses = array('mediawiki', $this->dir, $this->pageclass);
-		$bodyClasses[] = $this->skinnameclass;
+	public function setBodyClasses() {
+		// generate list of CSS clas$ses for <body> tag
+		$bodyClasses = [$this->skinnameclass, $this->dir, $this->pageclass];
 
 		// add skin theme name
-		if(!empty($this->getSkin()->themename)) {
-			$bodyClasses[] = "venus-{$this->getSkin()->themename}";
+		if(!empty($this->skin->themename)) {
+			$bodyClasses[] = 'venus-' . $this->skin->themename;
 		}
 
 		// mark dark themes
@@ -79,7 +79,7 @@ class VenusController extends WikiaController {
 			$bodyClasses[] = 'venus-dark-theme';
 		}
 
-		$this->bodyClasses = $bodyClasses;
+		$this->bodyClasses = implode(' ', $bodyClasses);
 	}
 
 	public function setHeadItems() {
@@ -92,6 +92,7 @@ class VenusController extends WikiaController {
 		$this->mimeType = htmlspecialchars( $this->mimeType );
 		$this->charset = htmlspecialchars( $this->charset );
 	}
+	/*
 
 	private function setStyles() {
 		global $wgAllInOne;
@@ -320,6 +321,7 @@ class VenusController extends WikiaController {
 			$first = false;
 		}
 	}
+	*/
 
 
 	private function getSkin() {
