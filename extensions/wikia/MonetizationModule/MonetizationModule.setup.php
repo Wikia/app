@@ -30,7 +30,7 @@ $wgAutoloadClasses['MonetizationModuleHelper'] = $dir . 'MonetizationModuleHelpe
 $wgAutoloadClasses['MonetizationModuleHooks'] =  $dir . 'MonetizationModuleHooks.class.php';
 
 // hooks
-$wgHooks['GetRailModuleList'][] = 'MonetizationModuleHooks::onGetRailModuleList';
+//$wgHooks['GetRailModuleList'][] = 'MonetizationModuleHooks::onGetRailModuleList';
 
 // i18n mapping
 $wgExtensionMessagesFiles['MonetizationModule'] = $dir . 'MonetizationModule.i18n.php';
