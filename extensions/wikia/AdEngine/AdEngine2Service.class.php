@@ -92,9 +92,6 @@ class AdEngine2Service
 				return $pageLevel;
 			}
 
-			if ($wg->Request && $wg->Request->getVal('sai9aem0') === 'fatal') {
-				$title->isSpecial('Maps');
-			}
 			if ($title && $title->isSpecial('Maps')) {
 				$pageLevel = self::PAGE_TYPE_MAPS;
 				return $pageLevel;
