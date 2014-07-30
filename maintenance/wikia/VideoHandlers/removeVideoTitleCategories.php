@@ -53,12 +53,12 @@ class removeVideoTitleCategories extends Maintenance {
 	 */
 	public function deleteCategoryFromPage( $titles ) {
 		foreach ( $titles as $title ) {
-			$title = Title::newFromText( $title, NS_FILE );
-			$titleName = $title->getText();
-			$escapedTitleName = preg_quote( $titleName );
-			$article = Article::newFromID( $title->getArticleID() );
+			$titleObj = Title::newFromText( $title, NS_FILE );
+			$titleName = $titleObj->getText();
+			$escapedCategoryTag = preg_quote( "[[Category:"  . $titleName . "]]" );
+			$article = Article::newFromID( $titleObj->getArticleID() );
 			$content = $article->getContent();
-			$contentMinusCategory = preg_replace( "/\[\[Category:$escapedTitleName\]\]/", "", $content );
+			$contentMinusCategory = preg_replace( "/$escapedCategoryTag/", "", $content );
 
 			// Check if there really was a category to remove from the page
 			if ( $contentMinusCategory != $content ) {
