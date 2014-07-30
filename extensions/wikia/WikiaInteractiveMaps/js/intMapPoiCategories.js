@@ -356,9 +356,7 @@ define('wikia.intMap.poiCategories',
 		 * @returns {boolean} - is valid
 		 */
 		function isPoiCategoryInvalid(poiCategory) {
-			if (utils.isEmpty(poiCategory.name)) {
-				return true;
-			}
+			return utils.isEmpty(poiCategory.name);
 		}
 
 		/**
@@ -387,20 +385,9 @@ define('wikia.intMap.poiCategories',
 		 * @returns {boolean} - is POI category changed
 		 */
 		function isPoiCategoryChanged(originalPoiCategory, poiCategory) {
-			if (poiCategory.name !== originalPoiCategory.name) {
-				return true;
-			}
-
-			if (parseInt(poiCategory.parent_poi_category_id, 10) !== originalPoiCategory.parent_poi_category_id) {
-				return true;
-			}
-
-			// if marker property is not empty it means there was a new image uploaded
-			if (poiCategory.marker) {
-				return true;
-			}
-
-			return false;
+			return poiCategory.name !== originalPoiCategory.name ||
+				parseInt(poiCategory.parent_poi_category_id, 10) !== originalPoiCategory.parent_poi_category_id ||
+				poiCategory.marker;
 		}
 
 		/**
