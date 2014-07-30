@@ -49,67 +49,87 @@ class QuestDetailsSearchService extends EntitySearchService {
 		return '';
 	}
 
+	protected function startsWith( $haystack, $needle ) {
+		return $needle === "" || strpos( $haystack, $needle ) === 0;
+	}
+
 	protected function getMetadata( &$item ) {
+
 		$metadata = [ ];
-
-		$PREFIX_METADATA = 'metadata_';
-		$LENGTH_PREFIX_METADATA = strlen( $PREFIX_METADATA );
-
-		$SUFFIX_S = '_s';
-		$LENGTH_SUFFIX_S = strlen( $SUFFIX_S );
-
-		$SUFFIX_SS = '_ss';
-		$LENGTH_SUFFIX_SS = strlen( $SUFFIX_SS );
-
-		$SUFFIX_SR = '_sr';
-		$LENGTH_SUFFIX_SR = strlen( $SUFFIX_SR );
-
-		$metadataKeys = [ ];
 		foreach ( $item as $key => $value ) {
-			if ( $this->startsWith( $key, $PREFIX_METADATA ) ) {
-				$metadataKeys[ ] = $key;
+			if ( $this->startsWith( $key, 'metadata_' )
+				&& !$this->startsWith( $key, 'metadata_map_' )
+			) {
+
+				if ( $this->endsWith( $key, '_s' ) ) {
+
+					$metadataKey = substr(
+						$key,
+						strlen( 'metadata_' ),
+						strlen( $key ) - strlen( 'metadata_' ) - strlen( '_s' )
+					);
+
+					$metadata[ $metadataKey ] = $value;
+
+				} else if ( $this->endsWith( $key, '_ss' ) ) {
+
+					$metadataKey = substr(
+						$key,
+						strlen( 'metadata_' ),
+						strlen( $key ) - strlen( 'metadata_' ) - strlen( '_ss' )
+					);
+
+					if ( $metadataKey == 'fingerprint_ids' ) {
+						$metadataKey = 'fingerprints';
+					}
+
+					$metadata[ $metadataKey ] = $value;
+
+				}
 			}
 		}
 
-		foreach ( $metadataKeys as $key ) {
-			$value = $item[ $key ];
-			
-			if ( $this->endsWith( $key, $SUFFIX_S ) ) {
-
-				$metadataKey =
-					substr( $key, $LENGTH_PREFIX_METADATA, strlen( $key ) - $LENGTH_PREFIX_METADATA - $LENGTH_SUFFIX_S );
-				$metadata[ $metadataKey ] = $value;
-
-			} else if ( $this->endsWith( $key, $SUFFIX_SS ) ) {
-
-				$metadataKey =
-					substr( $key, $LENGTH_PREFIX_METADATA, strlen( $key ) - $LENGTH_PREFIX_METADATA - $LENGTH_SUFFIX_SS );
-				$metadata[ $metadataKey ] = $value;
-
-			} else if ( $this->endsWith( $key, $SUFFIX_SR ) ) {
-
-				$metadataKey =
-					substr( $key, $LENGTH_PREFIX_METADATA, strlen( $key ) - $LENGTH_PREFIX_METADATA - $LENGTH_SUFFIX_SR );
-
-				$parts = preg_split( "/[\s,]+/", $value );
-				$x = $parts[ 0 ];
-				$y = $parts[ 1 ];
-
-				$metadata[ $metadataKey ] = [
-					'location_x' => floatval( $x ),
-					'location_y' => floatval( $y ),
-				];
-			}
-		}
+		$metadata[ 'map_location' ] = $this->getMetadataMap( $item );
 
 		return $metadata;
 	}
 
-	protected function startsWith( $haystack, $needle ) {
-		return $needle === "" || strpos( $haystack, $needle ) === 0;
+	protected function getMetadataMap( &$item ) {
+		$map = [ ];
+		foreach ( $item as $key => $value ) {
+			if ( $this->startsWith( $key, 'metadata_map_' ) ) {
+
+				if ( $this->endsWith( $key, '_s' ) ) {
+
+					$mapKey = substr(
+						$key,
+						strlen( 'metadata_map_' ),
+						strlen( $key ) - strlen( 'metadata_map_' ) - strlen( '_s' )
+					);
+
+					$map[ $mapKey ] = $value;
+
+				} else if ( $this->endsWith( $key, '_sr' ) ) {
+
+					$mapKey = substr(
+						$key,
+						strlen( 'metadata_map_' ),
+						strlen( $key ) - strlen( 'metadata_map_' ) - strlen( '_sr' )
+					);
+
+					$parts = preg_split( "/[\s,]+/", $value );
+					$x = $parts[ 0 ];
+					$y = $parts[ 1 ];
+
+					$map[ $mapKey . '_x' ] = floatval( $x );
+					$map[ $mapKey . '_y' ] = floatval( $y );
+				}
+			}
+		}
+		return $map;
 	}
 
 	protected function endsWith( $haystack, $needle ) {
 		return $needle === "" || substr( $haystack, -strlen( $needle ) ) === $needle;
 	}
-} 
+}
