@@ -290,8 +290,8 @@
 	 * @param {string} opt_namespace Namespace of the pageview. Used in GA reporting.
 	 */
 	window.gaTrackPageview = function( fakePage, opt_namespace ) {
-		var nsPrepend = ( opt_namespace ) ? opt_namespace + '.' : '';
-		_gaqWikiaPush( [ nsPrepend + '_trackPageview', fakePage ] );
+		var nsPrefix = ( opt_namespace ) ? opt_namespace + '.' : '';
+		_gaqWikiaPush( [ nsPrefix + '_trackPageview', fakePage ] );
 	};
 
 }( window ));
