@@ -148,8 +148,6 @@ class ThumbnailController extends WikiaController {
 			ImageLazyLoad::setLazyLoadingAttribs( $this->dataSrc, $this->imgSrc, $this->imgClass, $this->imgAttrs );
 		}
 
-		$this->imgTag = $this->app->renderView( 'ThumbnailController', 'imgTag', $this->response->getData());
-
 		// set duration
 		$this->duration = WikiaFileHelper::formatDuration( $duration );
 		$this->durationAttrs = ThumbnailHelper::getAttribs( $durationAttribs );
@@ -234,8 +232,6 @@ class ThumbnailController extends WikiaController {
 			);
 			ImageLazyLoad::setLazyLoadingAttribs( $this->dataSrc, $this->imgSrc, $this->imgClass, $this->imgAttrs );
 		}
-
-		$this->imgTag = $this->app->renderView( 'ThumbnailController', 'imgTag', $this->response->getData());
 	}
 
 	/**
