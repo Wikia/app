@@ -5,7 +5,6 @@
  */
 class MonetizationModuleHelper extends WikiaModel {
 
-	const SLOT_TYPE_RAIL = 'rail';
 	const SLOT_TYPE_ABOVE_TITLE = 'above_title';
 	const SLOT_TYPE_BELOW_TITLE = 'below_title';
 	const SLOT_TYPE_IN_CONTENT = 'in_content';
