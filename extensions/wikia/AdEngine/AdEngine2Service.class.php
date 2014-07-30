@@ -28,6 +28,7 @@ class AdEngine2Service
 	public static function getPageType()
 	{
 		$wg = F::app()->wg;
+		$title = null;
 
 		static $pageLevel = null;
 
