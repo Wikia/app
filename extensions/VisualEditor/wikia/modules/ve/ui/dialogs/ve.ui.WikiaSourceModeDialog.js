@@ -78,7 +78,8 @@ ve.ui.WikiaSourceModeDialog.prototype.getSetupProcess = function ( data ) {
 		}, this )
 		.next( function () {
 			var doc = this.getFragment().getDocument();
-			this.$frame.startThrobbing();
+			this.$body.startThrobbing();
+			this.applyButton.setDisabled( true );
 			// Use the WikiaViewPageTarget object as the target here
 			this.target.serialize(
 				ve.dm.converter.getDomFromModel( doc, false ),
@@ -94,7 +95,8 @@ ve.ui.WikiaSourceModeDialog.prototype.getSetupProcess = function ( data ) {
 ve.ui.WikiaSourceModeDialog.prototype.onSerialize = function ( wikitext ) {
 	this.sourceModeTextarea.setValue( wikitext );
 	this.sourceModeTextarea.$input.focus();
-	this.$frame.stopThrobbing();
+	this.$body.stopThrobbing();
+	this.applyButton.setDisabled( false );
 
 	ve.track( 'wikia', {
 		'action': ve.track.actions.SUCCESS,
