@@ -205,7 +205,8 @@ class SkinChooser {
 		if ( !$useskin && function_exists( 'apache_request_headers' ) ) {
 			$headers = apache_request_headers();
 
-			if ( isset( $headers[ "X-Skin" ] ) && in_array( $headers[ "X-Skin" ], array( "monobook", "oasis", "wikia", "wikiamobile", "uncyclopedia" ) ) ) {
+			if ( isset( $headers[ "X-Skin" ] ) && in_array( $headers[ "X-Skin" ], array( "monobook", "oasis", "venus",
+					"wikia", "wikiamobile", "uncyclopedia" ) ) ) {
 				$skin = Skin::newFromKey( $headers[ "X-Skin" ] );
 				wfProfileOut( __METHOD__ );
 				return false;
@@ -337,9 +338,12 @@ class SkinChooser {
 	}
 
 	private static function showVenusSkin($title) {
-		// Add WikiaPageType::isArticlePage() to enable new skin on article pages
-		return  WikiaPageType::isSearch()
-				|| ($title->isSpecialPage() && $title->getText() == 'VenusTest');
+		global $wgEnableVenusSkin;
+		$isSpecialSearch = WikiaPageType::isSearch();
+		$isSpecialVenusTest = $title->isSpecialPage() && $title->getText() == 'VenusTest';
+
+		//TODO: Add WikiaPageType::isArticlePage() to enable new skin on article pages
+		return $wgEnableVenusSkin && ( $isSpecialSearch || $isSpecialVenusTest );
 	}
 
 	/**
