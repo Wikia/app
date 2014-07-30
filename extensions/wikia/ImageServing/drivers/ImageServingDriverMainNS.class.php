@@ -135,7 +135,7 @@ class ImageServingDriverMainNS extends ImageServingDriverBase {
 
 			foreach ( $imageRedirectsMap as $fromImg => $toImg ) {
 				// prepare the results array )see PLATFORM-358)
-				$batchResponse[$fromImg] = 0;
+				$batchResponse[$toImg] = 0;
 
 				$sql[] = "(SELECT {$this->db->addQuotes($toImg)} AS il_to FROM {$imageLinksTable} JOIN {$pageTable} on page.page_id = il_from WHERE il_to = {$this->db->addQuotes($fromImg)} AND page_namespace IN ({$contentNamespaces}) LIMIT {$sqlCount} )";
 			}
