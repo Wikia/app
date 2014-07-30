@@ -6,7 +6,6 @@
  * Date: 7/29/14
  * Time: 2:43 PM
  */
-
 class QuestDetailsApiController extends WikiaApiController {
 
 	protected $service;
