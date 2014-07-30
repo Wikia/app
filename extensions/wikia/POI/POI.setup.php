@@ -9,3 +9,7 @@ $wgAutoloadClasses['QuestDetailsSearchService'] =  $dir . "QuestDetailsSearchSer
 
 $wgAutoloadClasses['POIApiController'] =  $dir . "POIApiController.class.php";
 $wgAutoloadClasses['QuestDetailsApiController'] = $dir . 'QuestDetailsApiController.class.php';
+$wgAutoloadClasses['ArticleMetadataModel'] = $dir . 'ArticleMetadataModel.php';
+$wgAutoloadClasses['ArticleMetadataService'] = $dir . 'ArticleMetadataService.php';
+
+
