@@ -9,10 +9,6 @@
 
 class PhalanxContentBlock extends WikiaObject {
 	private static $whitelist = null;
-	/**
-	 * @var boolean Whether a content check was already run for the current edit
-	 */
-	private static $isContentChecked = false;
 
 	/**
 	 * @static
