@@ -329,6 +329,7 @@ class HAWelcomeTask extends BaseTask {
 
 	protected function postWallMessageToRecipient() {
 		$this->info( "creating a welcome wall message" );
+		// always send these messages as the defaultWelcomeUser
 		$mWallMessage = WallMessage::buildNewMessageAndPost(
 			$this->welcomeMessage, $this->recipientName, $this->getDefaultWelcomerUser(),
 			$this->getTextVersionOfMessage( 'welcome-message-log' ), false, array(), false, false
@@ -352,12 +353,14 @@ class HAWelcomeTask extends BaseTask {
 
 		$this->info( sprintf( "posting talkpage message to %s from %s",
 			$this->recipientObject->getName(), $this->senderObject->getName() ) );
+
+		// always send these messages as the defaultWelcomeUser
 		$this->getRecipientTalkPage()->doEdit(
 			$welcomeMessage,
 			$this->getTextVersionOfMessage( 'welcome-message-log' ),
 			$this->integerFlags,
 			false,
-			$this->senderObject
+			$this->getDefaultWelcomerUser()
 		);
 	}
 

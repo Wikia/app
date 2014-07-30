@@ -1075,6 +1075,7 @@ class EditPage {
 	 *
 	 * @param $result
 	 * @param $bot bool
+	 * @param $user User
 	 *
 	 * @return Status object, possibly with a message, but always with one of the AS_* constants in $status->value,
 	 *
@@ -1082,9 +1083,13 @@ class EditPage {
 	 * also lots of cases where error metadata is set in the object and retrieved later instead of being returned, e.g.
 	 * AS_CONTENT_TOO_BIG and AS_BLOCKED_PAGE_FOR_USER. All that stuff needs to be cleaned up some time.
 	 */
-	function internalAttemptSave( &$result, $bot = false ) {
+	function internalAttemptSave( &$result, $bot = false, $user = null ) {
 		global $wgFilterCallback, $wgUser, $wgRequest, $wgParser;
 		global $wgMaxArticleSize;
+
+		if ( !isset( $user ) ) {
+			$user = $wgUser;
+		}
 
 		$status = Status::newGood();
 
@@ -1103,8 +1108,8 @@ class EditPage {
 		# Check image redirect
 		if ( $this->mTitle->getNamespace() == NS_FILE &&
 			Title::newFromRedirect( $this->textbox1 ) instanceof Title &&
-			!$wgUser->isAllowed( 'upload' ) ) {
-				$code = $wgUser->isAnon() ? self::AS_IMAGE_REDIRECT_ANON : self::AS_IMAGE_REDIRECT_LOGGED;
+			!$user->isAllowed( 'upload' ) ) {
+				$code = $user->isAnon() ? self::AS_IMAGE_REDIRECT_ANON : self::AS_IMAGE_REDIRECT_LOGGED;
 				$status->setResult( false, $code );
 
 				wfProfileOut( __METHOD__ . '-checks' );
@@ -1153,9 +1158,9 @@ class EditPage {
 			return $status;
 		}
 
-		if ( $wgUser->isBlockedFrom( $this->mTitle, false ) ) {
+		if ( $user->isBlockedFrom( $this->mTitle, false ) ) {
 			// Auto-block user's IP if the account was "hard" blocked
-			$wgUser->spreadAnyEditBlock();
+			$user->spreadAnyEditBlock();
 			# Check block state against master, thus 'false'.
 			$status->setResult( false, self::AS_BLOCKED_PAGE_FOR_USER );
 			wfProfileOut( __METHOD__ . '-checks' );
@@ -1173,8 +1178,8 @@ class EditPage {
 			return $status;
 		}
 
-		if ( !$wgUser->isAllowed( 'edit' ) ) {
-			if ( $wgUser->isAnon() ) {
+		if ( !$user->isAllowed( 'edit' ) ) {
+			if ( $user->isAnon() ) {
 				$status->setResult( false, self::AS_READ_ONLY_PAGE_ANON );
 				wfProfileOut( __METHOD__ . '-checks' );
 				wfProfileOut( __METHOD__ );
@@ -1195,7 +1200,7 @@ class EditPage {
 			wfProfileOut( __METHOD__ );
 			return $status;
 		}
-		if ( $wgUser->pingLimiter() ) {
+		if ( $user->pingLimiter() ) {
 			$status->fatal( 'actionthrottledtext' );
 			$status->value = self::AS_RATE_LIMITED;
 			wfProfileOut( __METHOD__ . '-checks' );
@@ -1305,7 +1310,7 @@ class EditPage {
 			if ( $timestamp != $this->edittime ) {
 				$this->isConflict = true;
 				if ( $this->section == 'new' ) {
-					if ( $this->mArticle->getUserText() == $wgUser->getName() &&
+					if ( $this->mArticle->getUserText() == $user->getName() &&
 						$this->mArticle->getComment() == $this->summary ) {
 						// Probably a duplicate submission of a new comment.
 						// This can happen when squid resends a request after
@@ -1316,7 +1321,7 @@ class EditPage {
 						$this->isConflict = false;
 						wfDebug( __METHOD__ .": conflict suppressed; new section\n" );
 					}
-				} elseif ( $this->section == '' && $this->userWasLastToEdit( $wgUser->getId(), $this->edittime ) ) {
+				} elseif ( $this->section == '' && $this->userWasLastToEdit( $user->getId(), $this->edittime ) ) {
 					# Suppress edit conflict with self, except for section edits where merging is required.
 					wfDebug( __METHOD__ . ": Suppressing edit conflict, same user.\n" );
 					$this->isConflict = false;
@@ -1467,7 +1472,7 @@ class EditPage {
 			( ( $this->minoredit && !$this->isNew ) ? EDIT_MINOR : 0 ) |
 			( $bot ? EDIT_FORCE_BOT : 0 );
 
-		$doEditStatus = $this->mArticle->doEdit( $text, $this->summary, $flags );
+		$doEditStatus = $this->mArticle->doEdit( $text, $this->summary, $flags, false, $user );
 
 		if ( $doEditStatus->isOK() ) {
 			$result['redirect'] = Title::newFromRedirect( $text ) !== null;

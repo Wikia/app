@@ -740,7 +740,7 @@ class ArticleComment {
 
 		$bot = $user->isAllowed('bot');
 
-		return $editPage->internalAttemptSave( $result, $bot );
+		return $editPage->internalAttemptSave( $result, $bot, $user );
 	}
 
 	/**
