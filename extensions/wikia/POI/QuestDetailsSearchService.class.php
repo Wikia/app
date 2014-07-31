@@ -33,8 +33,8 @@ class QuestDetailsSearchService extends EntitySearchService {
 				'url' => $item[ 'url' ],
 				'ns' => $item[ 'ns' ],
 				'revision' => $this->getRevision( $item ),
-				'type' => $item['article_type_s'],
-				'abstract' => wfShortenText( $item[ 'html_en' ], self::DEFAULT_ABSTRACT_LENGTH, true ),
+				'type' => $item[ 'article_type_s' ],
+				'abstract' => $this->getAbstract( $item ),
 				'metadata' => $this->getMetadata( $item ),
 			];
 		}
@@ -51,8 +51,8 @@ class QuestDetailsSearchService extends EntitySearchService {
 	}
 
 	protected function getRevision( &$item ) {
-		$t = Title::newFromIDs( $item['pageid'] );
-		$revId = $t[0]->getLatestRevID();
+		$t = Title::newFromIDs( $item[ 'pageid' ] );
+		$revId = $t[ 0 ]->getLatestRevID();
 		$rev = Revision::newFromId( $revId );
 
 		$revision = [
@@ -63,6 +63,15 @@ class QuestDetailsSearchService extends EntitySearchService {
 		];
 
 		return $revision;
+	}
+
+	protected function getAbstract( &$item ) {
+		foreach ( $item as $key => $value ) {
+			if ( $this->startsWith( $key, 'html_' ) ) {
+				return wfShortenText( $value, self::DEFAULT_ABSTRACT_LENGTH, true );
+			}
+		}
+		return '';
 	}
 
 	protected function getMetadata( &$item ) {
