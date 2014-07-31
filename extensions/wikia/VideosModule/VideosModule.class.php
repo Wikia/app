@@ -190,11 +190,6 @@ class VideosModule extends WikiaModel {
 	public function getVideosByCategory() {
 		wfProfileIn( __METHOD__ );
 
-		if ( empty( $this->wg->VideosModuleCategories ) ) {
-			wfProfileOut( __METHOD__ );
-			return [];
-		}
-
 		if ( is_array( $this->wg->VideosModuleCategories ) ) {
 			$categories = $this->wg->VideosModuleCategories;
 		} else {
