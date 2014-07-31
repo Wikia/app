@@ -216,7 +216,7 @@ class ImageListPager extends TablePager {
 					// begin wikia change
 					// @author Cqm
 					// VOLDEV-65
-					if ( $this->getUser()->isAllowed( 'delete' ) ) {
+					if ( $filePage->userCan( 'delete', $this->getUser() ) ) {
 						// convert message to lower case to match exisiting file link
 						// do it like this so it works for non-english characters, such as accents, etc.
 						$deleteMsg = $this->msg( 'delete' )->escaped();
