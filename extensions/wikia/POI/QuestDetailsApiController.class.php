@@ -13,18 +13,21 @@ class QuestDetailsApiController extends WikiaApiController {
 	public function getQuestDetails() {
 		$fingerprintId = $this->getRequest()->getVal( 'fingerprint_id' );
 		$questId = $this->getRequest()->getVal( 'quest_id' );
+		$category = $this->getRequest()->getVal( 'category' );
 		$limit = $this->getRequest()->getVal( 'limit' );
 
-		$result = $this->findQuestDetails( $fingerprintId, $questId, $limit );
+		$result = $this->findQuestDetails( $fingerprintId, $questId, $category, $limit );
 		$this->setResponseData( $result );
 	}
 
-	protected function findQuestDetails( $fingerprintId, $questId, $limit ) {
+	protected function findQuestDetails( $fingerprintId, $questId, $category, $limit ) {
 		$service = $this->getService();
 
-		return $service->find( [
+		return $service->query( [
 			'fingerprint' => $fingerprintId,
-			'questId' => $questId
+			'questId' => $questId,
+			'category' => $category,
+			'limit' => $limit
 		] );
 	}
 

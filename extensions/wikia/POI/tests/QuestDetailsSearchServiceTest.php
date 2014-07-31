@@ -43,7 +43,7 @@ class QuestDetailsSearchServiceTest extends WikiaBaseTest {
 
 		$questDetailsSearch = $this->getMockedQuestDetailsSearchService();
 
-		$result = $questDetailsSearch->find( [
+		$result = $questDetailsSearch->query( [
 			'fingerprint' => 'test'
 		] );
 
