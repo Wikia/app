@@ -210,7 +210,7 @@ class VenusController extends WikiaController {
 		$this->globalBlockingScripts = '';
 		$jsReferences = array();
 
-		$jsAssetGroups = array( 'oasis_blocking' );
+		$jsAssetGroups = array( 'oasis_blocking', 'venus_head_js' );
 
 		wfRunHooks('OasisSkinAssetGroupsBlocking', array(&$jsAssetGroups));
 		$blockingScripts = $this->assetsManager->getURL($jsAssetGroups);
@@ -251,7 +251,7 @@ class VenusController extends WikiaController {
 
 		$isLoggedIn = $wgUser->isLoggedIn();
 
-		$assetGroups = ['oasis_shared_core_js', 'oasis_shared_js', 'venus_js'];
+		$assetGroups = ['oasis_shared_core_js', 'oasis_shared_js', 'venus_body_js'];
 		$assetGroups[] = $isLoggedIn ? 'oasis_user_js' : 'oasis_anon_js';
 
 		$jsLoader = '';
