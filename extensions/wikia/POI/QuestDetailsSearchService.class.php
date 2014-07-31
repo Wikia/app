@@ -10,6 +10,8 @@ use Wikia\Search\Services\EntitySearchService;
 
 class QuestDetailsSearchService extends EntitySearchService {
 
+	const DEFAULT_ABSTRACT_LENGTH = 200;
+
 	protected function prepareQuery( $fingerprintId ) {
 		$select = $this->getSelect();
 
@@ -30,16 +32,15 @@ class QuestDetailsSearchService extends EntitySearchService {
 				'title' => $this->getTitle( $item ),
 				'url' => $item[ 'url' ],
 				'ns' => $item[ 'ns' ],
+				'revision' => $this->getRevision( $item ),
+				'type' => $item['article_type_s'],
+				'abstract' => wfShortenText( $item[ 'html_en' ], self::DEFAULT_ABSTRACT_LENGTH, true ),
 				'metadata' => $this->getMetadata( $item ),
 			];
 		}
 		return $result;
 	}
 
-	/**
-	 * @param $item
-	 * @return string
-	 */
 	protected function getTitle( &$item ) {
 		foreach ( $item as $key => $value ) {
 			if ( $this->startsWith( $key, 'title_' ) ) {
@@ -49,8 +50,19 @@ class QuestDetailsSearchService extends EntitySearchService {
 		return '';
 	}
 
-	protected function startsWith( $haystack, $needle ) {
-		return $needle === "" || strpos( $haystack, $needle ) === 0;
+	protected function getRevision( &$item ) {
+		$t = Title::newFromIDs( $item['pageid'] );
+		$revId = $t[0]->getLatestRevID();
+		$rev = Revision::newFromId( $revId );
+
+		$revision = [
+			'id' => $revId,
+			'user' => $rev->getUserText( Revision::FOR_PUBLIC ),
+			'user_id' => $rev->getUser( Revision::FOR_PUBLIC ),
+			'timestamp' => wfTimestamp( TS_UNIX, $rev->getTimestamp() )
+		];
+
+		return $revision;
 	}
 
 	protected function getMetadata( &$item ) {
@@ -127,6 +139,10 @@ class QuestDetailsSearchService extends EntitySearchService {
 			}
 		}
 		return $map;
+	}
+
+	protected function startsWith( $haystack, $needle ) {
+		return $needle === "" || strpos( $haystack, $needle ) === 0;
 	}
 
 	protected function endsWith( $haystack, $needle ) {
