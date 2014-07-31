@@ -47,17 +47,8 @@ class QuestDetailsSearchServiceTest extends WikiaBaseTest {
 
 	/** @test */
 	public function testShouldReturnCorrectArticleFormat() {
-		$this->getStaticMethodMock( '\WikiFactory', 'getCurrentStagingHost' )
-			->expects( $this->any() )
-			->method( 'getCurrentStagingHost' )
-			->will( $this->returnCallback( [ $this, 'mock_getCurrentStagingHost' ] ) );
 
-		$mock = $this->getSolariumMock();
-		$mock->expects( $this->once() )
-			->method( 'select' )
-			->will( $this->returnValue( $this->getResultMock( 'getSolariumMainResponse' ) ) );
-
-		$questDetailsSearch = new QuestDetailsSearchServiceMock( $mock );
+		$questDetailsSearch = $this->getMockedQuestDetailsSearchService();
 
 		$result = $questDetailsSearch->query( 'test' );
 
@@ -136,11 +127,28 @@ class QuestDetailsSearchServiceTest extends WikiaBaseTest {
 		$this->assertEquals( $expected, $result );
 	}
 
-	public function mock_getCurrentStagingHost( $arg1, $arg2 ) {
+	protected function getMockedQuestDetailsSearchService() {
+
+		$this->getStaticMethodMock( '\WikiFactory', 'getCurrentStagingHost' )
+			->expects( $this->any() )
+			->method( 'getCurrentStagingHost' )
+			->will( $this->returnCallback( [ $this, 'mock_getCurrentStagingHost' ] ) );
+
+		$mock = $this->getSolariumMock();
+		$mock->expects( $this->once() )
+			->method( 'select' )
+			->will( $this->returnValue( $this->getResultMock( 'getSolariumMainResponse' ) ) );
+
+		$questDetailsSearch = new QuestDetailsSearchServiceMock( $mock );
+
+		return $questDetailsSearch;
+	}
+
+	protected function mock_getCurrentStagingHost( $arg1, $arg2 ) {
 		return 'newhost';
 	}
 
-	private function getSolariumMock() {
+	protected function getSolariumMock() {
 		$client = new \Solarium_Client();
 		$mock = $this->getMockBuilder( '\Solarium_Client' )
 			->getMock();
@@ -152,7 +160,7 @@ class QuestDetailsSearchServiceTest extends WikiaBaseTest {
 		return $mock;
 	}
 
-	private function getResultMock( $responseType ) {
+	protected function getResultMock( $responseType ) {
 		$client = new \Solarium_Client();
 		$mock = new \Solarium_Result_Select(
 			$client,
@@ -163,7 +171,7 @@ class QuestDetailsSearchServiceTest extends WikiaBaseTest {
 		return $mock;
 	}
 
-	private function getSolariumMainResponse() {
+	protected function getSolariumMainResponse() {
 		$body = <<<SOLR_RESPONSE_MOCK
 {
   "responseHeader": {
