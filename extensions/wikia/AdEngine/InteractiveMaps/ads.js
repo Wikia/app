@@ -18,8 +18,8 @@ var ads = (function (window, document) {
 
 		define('ext.wikia.adEngine.gptSlotConfig', function () {
 			var slotMapConfig = {
-				mobile: {
-					MAPS_BUTTON: {size: '250x50'}
+				maps: {
+					MAPS_BUTTON: {size: '320x50'}
 				}
 			};
 
@@ -59,7 +59,7 @@ var ads = (function (window, document) {
 	}
 
 	function fillAd() {
-		require(['ext.wikia.adEngine.provider.directGptMobile'], function (gpt) {
+		require(['ext.wikia.adEngine.provider.directGptMaps'], function (gpt) {
 			gpt.fillInSlot('MAPS_BUTTON', noop, noop);
 		});
 	}

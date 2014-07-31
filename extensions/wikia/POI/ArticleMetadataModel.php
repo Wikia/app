@@ -66,8 +66,12 @@ class ArticleMetadataModel {
 	 * Save the metadata to DB ( page_wikia_props )
 	 * to prop name defined in self::article_prop_name
 	 */
-	public function save() {
+	public function save( $propagateScribeEvent = false ) {
 		$this->setWikiaProp( self::article_prop_name, $this->articleId, $this->getMetadata() );
+		if ( $propagateScribeEvent ) {
+			$article = new Article( $this->articleTitle );
+			ScribeEventProducerController::notifyPageHasChanged( $article->getPage() );
+		}
 	}
 
 	/**
