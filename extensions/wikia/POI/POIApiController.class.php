@@ -44,4 +44,14 @@ class POIApiController extends WikiaApiController {
 
 		$this->setResponseData( $data );
 	}
+
+	public function getNearbyQuests4Real() { //TODO: rename it to getNearbyQuests
+		$lat = $this->request->getVal("lat");
+		$long = $this->request->getVal("long");
+
+		$nearBySearch = $movieSearch = new Wikia\Search\Services\NearbyPOISearchService();
+		$resp = $nearBySearch->queryLocation($lat, $long);
+		var_dump( $resp );
+		die;
+	}
 }
