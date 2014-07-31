@@ -47,8 +47,8 @@
 			<group>Stub</group>
 		</exclude>
 	</groups>
-	<!-- Exclude the following from code coverage reports -->
 	<filter>
+		<!-- Exclude the following from code coverage reports -->
 		<blacklist>
 			<directory>../bin</directory>
 			<directory>../config</directory>
@@ -69,5 +69,8 @@
 			<directory suffix=".setup.php">../extensions</directory>
 			<directory suffix="_setup.php">../extensions</directory>
 		</blacklist>
+		<whitelist>
+			<directory>../lib/Wikia/src</directory>
+		</whitelist>
 	</filter>
 </phpunit>
