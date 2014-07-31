@@ -9,7 +9,6 @@ $wgAutoloadClasses['MetadataSpecialController'] = $dir . 'MetadataSpecialControl
 $wgAutoloadClasses['QuestDetailsApiController'] = $dir . 'QuestDetailsApiController.class.php';
 $wgAutoloadClasses['MetaCSVService'] = $dir . 'MetaCSVService.class.php';
 $wgAutoloadClasses['ArticleMetadataModel'] = $dir . 'ArticleMetadataModel.php';
-$wgAutoloadClasses['ArticleMetadataService'] = $dir . 'ArticleMetadataService.php';
 $wgAutoloadClasses['EntitySearchService'] = $searchDir . "EntitySearchService.php";
 $wgAutoloadClasses['QuestDetailsSearchService'] = $dir . "QuestDetailsSearchService.class.php";
 
