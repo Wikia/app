@@ -45,8 +45,8 @@ class ArticleMetadataModel {
 	 * Load data from database - page_wikia_props
 	 * from prop name defined in self::article_prop_name
 	 */
-	protected function load() {
-		$data = wfGetWikiaPageProp( self::article_prop_name, $this->articleId );
+	public function load() {
+		$data = $this->getWikiaProp( self::article_prop_name, $this->articleId );
 		foreach ( $this->metadata as $meta_key => $meta_val ) {
 			if ( isset( $data[$meta_key] ) && !empty( $data[$meta_key] ) ) {
 				$this->metadata[$meta_key] = $data[$meta_key];
@@ -54,13 +54,20 @@ class ArticleMetadataModel {
 		}
 	}
 
+	protected function getWikiaProp($propName, $articleId) {
+		return wfGetWikiaPageProp( $propName, $articleId );
+	}
+
+	protected function setWikiaProp( $propName, $articleId, $value ) {
+		wfSetWikiaPageProp( $propName, $articleId, $value );
+	}
 
 	/**
 	 * Save the metadata to DB ( page_wikia_props )
 	 * to prop name defined in self::article_prop_name
 	 */
 	public function save() {
-		wfSetWikiaPageProp( self::article_prop_name, $this->articleId, $this->getMetadata() );
+		$this->setWikiaProp( self::article_prop_name, $this->articleId, $this->getMetadata() );
 	}
 
 	/**
