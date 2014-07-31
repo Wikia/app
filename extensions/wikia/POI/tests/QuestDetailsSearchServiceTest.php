@@ -39,13 +39,6 @@ class QuestDetailsSearchServiceMock extends QuestDetailsSearchService {
 
 class QuestDetailsSearchServiceTest extends WikiaBaseTest {
 
-	public function setUp() {
-		$dir = dirname( __FILE__ ) . '/../';
-		$this->setupFile = $dir . 'POI.setup.php';
-		parent::setUp();
-	}
-
-	/** @test */
 	public function testShouldReturnCorrectResponseFormat() {
 
 		$questDetailsSearch = $this->getMockedQuestDetailsSearchService();
