@@ -6,7 +6,7 @@
  *
  * @author Nelson Monterroso <nelson@wikia-inc.com>
  */
-trait PreventBlockedUsers {
+trait PreventBlockedUsersTrait {
 	/**
 	 * list of actions that should be allowed even if a user is blocked
 	 * @return array string list of actions that should be allowed
@@ -41,11 +41,11 @@ trait PreventBlockedUsers {
 }
 
 /**
- * Trait PreventBlockedUsersThrowsError
+ * Trait PreventBlockedUsersThrowsErrorTrait
  * extends base trait to throw a UserBlockedError when a user is prevented from taking an action
  */
-trait PreventBlockedUsersThrowsError {
-	use PreventBlockedUsers;
+trait PreventBlockedUsersThrowsErrorTrait {
+	use PreventBlockedUsersTrait;
 
 	protected function onBlockedUsagePrevented( User $user ) {
 		throw new UserBlockedError( $user->mBlock );
