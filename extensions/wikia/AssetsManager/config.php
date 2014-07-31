@@ -1811,6 +1811,15 @@ $config['global_footer_js'] = array(
 	)
 );
 
+/** CorporateFooter extension */
+$config['corporate_footer_js'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => ['oasis'],
+	'assets' => array(
+		'//extensions/wikia/CorporateFooter/scripts/CorporateFooterTracker.js'
+	)
+);
+
 /* extension/wikia/Bucky */
 $config['bucky_js'] = array(
 	'type' => AssetsManager::TYPE_JS,

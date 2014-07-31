@@ -12,6 +12,6 @@ $wgExtensionCredits['specialpage'][] = array(
 $wgAutoloadClasses['CorporateFooterController'] =  $dir . 'CorporateFooterController.class.php';
 $wgAutoloadClasses['CorporateFooterHooks'] =  $dir . 'hooks/CorporateFooterHooks.class.php';
 
-$wgHooks['SkinCopyrightFooter'][] = 'CorporateFooterHooks::onSkinCopyrightFooter';
+$wgHooks['OasisSkinAssetGroups'][] = 'CorporateFooterHooks::onOasisSkinAssetGroups';
 
 $wgExtensionMessagesFiles['CorporateFooter'] = $dir . 'CorporateFooter.i18n.php';
