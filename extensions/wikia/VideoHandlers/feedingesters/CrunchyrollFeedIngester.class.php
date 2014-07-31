@@ -189,6 +189,11 @@ class CrunchyrollFeedIngester extends VideoFeedIngester {
 					}
 				}
 
+				if ( WikiaFileHelper::getVideoFileFromTitle( $clipData['titleName'] ) ) {
+					$this->videoSkipped( "\nDuplicate video (title: {$clipData['titleName']})\n" );
+					continue;
+				}
+
 				$clipData['name'] = $clipData['titleName'];
 
 				$elements = $item->getElementsByTagName( 'description' );
