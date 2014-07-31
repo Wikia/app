@@ -4,6 +4,9 @@ use Wikia\Search\Test\BaseTest;
 
 include_once dirname( __FILE__ ) . '/../' . "QuestDetailsSearchService.class.php";
 
+/**
+ * Class QuestDetailsSearchServiceMock - used to mock calls of static methods (which must not be tested)
+ */
 class QuestDetailsSearchServiceMock extends QuestDetailsSearchService {
 
 	protected function getRevision( &$item ) {
@@ -11,7 +14,7 @@ class QuestDetailsSearchServiceMock extends QuestDetailsSearchService {
 			'id' => 1234,
 			'user' => 'test_user',
 			'user_id' => 1111,
-			'timestamp' => 1234567
+			'timestamp' => '1234567'
 		];
 		return $revision;
 	}
@@ -32,7 +35,6 @@ class QuestDetailsSearchServiceMock extends QuestDetailsSearchService {
 		}
 		return $result;
 	}
-
 }
 
 class QuestDetailsSearchServiceTest extends WikiaBaseTest {
@@ -57,18 +59,81 @@ class QuestDetailsSearchServiceTest extends WikiaBaseTest {
 
 		$questDetailsSearch = new QuestDetailsSearchServiceMock( $mock );
 
-		$res = $questDetailsSearch->query( 'test' );
+		$result = $questDetailsSearch->query( 'test' );
 
-		/*
-		$this->assertEquals( [
-			'articleId' => 13508,
-			'title' => "The Rains of Castamere (episode)",
-			'url' => "http://newhost/wiki/The_Rains_of_Castamere_(episode)",
-			'quality' => 99,
-			'wikiId' => 1,
-			'contentUrl' => 'http://newhost/api/v1/Articles/AsSimpleJson?id=13508'
-		], $res );
-		*/
+		$this->assertEquals(
+			[
+				[
+					"id" => 155836,
+					"title" => "The Letter B",
+					"url" => "http://muppet.wikia.com/wiki/The_Letter_B",
+					"ns" => 0,
+					"revision" => [
+						"id" => 1234,
+						"user" => "test_user",
+						"user_id" => 1111,
+						"timestamp" => "1234567"
+					],
+					"comments" => 0,
+					"type" => "other",
+					"categories" => [
+						"Sesame Street Songs",
+						"Alphabet"
+					],
+					"abstract" => "\"The Letter B\" is a Sesame Street song from a 1983 episode. Oscar the Grouch finds a letter B by his trash can and wonders aloud what it's doing there. He immediately wishes he hadn't asked...",
+					"metadata" => [
+						"fingerprints" => [
+							"amazing",
+							"great_job",
+							"best"
+						],
+						"quest_id" => "very_good",
+						"map_location" => [
+							"location_x" => 1.11244,
+							"location_y" => -1.21412,
+							"region" => "Map_Region_1"
+						]
+					],
+					"thumbnail" => null,
+					"original_dimensions" => null
+				],
+				[
+					"id" => 8938,
+					"title" => "Ruby",
+					"url" => "http://muppet.wikia.com/wiki/Ruby",
+					"ns" => 0,
+					"revision" => [
+						"id" => 1234,
+						"user" => "test_user",
+						"user_id" => 1111,
+						"timestamp" => "1234567"
+					],
+					"comments" => 0,
+					"type" => "character",
+					"categories" => [
+						"Sesame Street Characters",
+						"Muppet Characters",
+						"Sesame Street Monsters"
+					],
+					"abstract" => "Ruby is a yellow monster from Sesame Street who is very curious and loves to conduct experiments. For instance, in one episode, Ruby wanted to find out what it was like to be blind, so she spent...",
+					"metadata" => [
+						"fingerprints" => [
+							"amazing",
+							"great_job",
+							"best"
+						],
+						"quest_id" => "very_good",
+						"map_location" => [
+							"location_x" => 1.11244,
+							"location_y" => 1.11412,
+							"region" => "Map_Region_1"
+						]
+					],
+					"thumbnail" => null,
+					"original_dimensions" => null
+				]
+			],
+			$result );
 	}
 
 	public function mock_getCurrentStagingHost( $arg1, $arg2 ) {
@@ -295,5 +360,4 @@ SOLR_RESPONSE_MOCK;
 		);
 		return $mock;
 	}
-
 }
