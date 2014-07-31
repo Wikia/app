@@ -69,8 +69,8 @@ class ArticleMetadataModel {
 	public function save( $propagateScribeEvent = false ) {
 		$this->setWikiaProp( self::article_prop_name, $this->articleId, $this->getMetadata() );
 		if ( $propagateScribeEvent ) {
-			$article = new Article($this->articleTitle); 
-			ScribeEventProducerController::notifyPageHasChanged($article->getPage());
+			$article = new Article( $this->articleTitle );
+			ScribeEventProducerController::notifyPageHasChanged( $article->getPage() );
 		}
 	}
 
