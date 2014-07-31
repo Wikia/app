@@ -146,7 +146,7 @@ class VideosModule extends WikiaModel {
 		wfProfileIn( __METHOD__ );
 		$log = WikiaLogger::instance();
 
-		$memcKey = wfMemcKey( 'videomodule', 'wiki_related_videos_topics', self::CACHE_VERSION. $this->userRegion );
+		$memcKey = wfMemcKey( 'videomodule', 'wiki_related_videos_topics', self::CACHE_VERSION, $this->userRegion );
 		$videos = $this->wg->Memc->get( $memcKey );
 
 		$loggingParams = [ 'method' => __METHOD__, 'num' => $numRequired ];
