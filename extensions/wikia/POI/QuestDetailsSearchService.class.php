@@ -14,6 +14,10 @@ class QuestDetailsSearchService extends EntitySearchService {
 	const DEFAULT_THUMBNAIL_WIDTH = 200;
 	const DEFAULT_THUMBNAIL_HEIGHT = 200;
 
+	public static function getRequiredSolrFields() {
+		return [ 'pageid', 'title_*', 'url', 'ns', 'article_type_s', 'categories_*', 'html_*', 'metadata_*' ];
+	}
+
 	protected function prepareQuery( $criteria ) {
 		$select = $this->getSelect();
 
@@ -36,6 +40,8 @@ class QuestDetailsSearchService extends EntitySearchService {
 
 		$select->setQuery( $query );
 
+		$select->setFields( self::getRequiredSolrFields() );
+
 		if( !empty( $criteria[ 'limit' ] ) ) {
 			$select->setRows( intval( $criteria[ 'limit' ] ) );
 		}
@@ -43,7 +49,7 @@ class QuestDetailsSearchService extends EntitySearchService {
 		return $select;
 	}
 
-	protected function consumeResponse( $response ) {
+	public function consumeResponse( $response ) {
 		$result = [ ];
 		foreach ( $response as $item ) {
 

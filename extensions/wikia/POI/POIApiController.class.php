@@ -49,9 +49,14 @@ class POIApiController extends WikiaApiController {
 		$lat = $this->request->getVal("lat");
 		$long = $this->request->getVal("long");
 
-		$nearBySearch = $movieSearch = new Wikia\Search\Services\NearbyPOISearchService();
+		$nearBySearch = new Wikia\Search\Services\NearbyPOISearchService();
+		$nearBySearch->setFields( QuestDetailsSearchService::getRequiredSolrFields() );
 		$resp = $nearBySearch->queryLocation($lat, $long);
-		var_dump( $resp );
-		die;
+
+		// TODO: refactor this reusage of code
+		$questDetailsService = new QuestDetailsSearchService();
+		$ret = $questDetailsService->consumeResponse($resp);
+
+		$this->setResponseData( $ret );
 	}
 }
