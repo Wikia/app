@@ -111,7 +111,8 @@ $messages['en'] = array(
 	'manage-wikia-home-stats-edits-default-label' => 'Changes today fallback',
 	'manage-wikia-home-stats-total-pages-label' => 'Total Pages fallback',
 	'manage-wikia-home-stats-success' => 'Stats updated successfully!',
-	'manage-wikia-home-stats-failure' => 'Data wasn\'t saved. Please correct errors in form and try again. '
+	'manage-wikia-home-stats-failure' => 'Data wasn\'t saved. Please correct errors in form and try again. ',
+	'manage-wikia-home-stats-permissions-error' => 'Data wasn\'t saved. Please make sure you have correct rights to edit this form. '
 );
 
 /** Message documentation (Message documentation)

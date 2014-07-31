@@ -100,7 +100,7 @@ class WAMApiController extends WikiaApiController {
 				return $wamIndex;
 			}
 		);
-
+		
 		if (!$this->request->isInternal() && empty($wamIndex['wam_index'])) {
 			$wamIndex['wam_index'] = (object)$wamIndex['wam_index'];
 		}

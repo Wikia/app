@@ -268,6 +268,40 @@ class WikiaHomePageController extends WikiaController {
 		$this->hubsSlots = $this->prepareHubsSectionSlots();
 	}
 
+	public function footer() {
+		$this->response->addAsset('extensions/wikia/WikiaHomePage/js/CorporateFooterTracker.js');
+		$this->interlang = WikiaPageType::isCorporatePage();
+
+		$corporateWikis = $this->helper->getVisualizationWikisData();
+		$corporateHubWikis = $this->helper->getCorporateHubWikis();
+		$corporateHubWikis = array_diff_key($corporateHubWikis, $corporateWikis);
+		$corporateWikis = array_merge($corporateWikis, $corporateHubWikis);
+		$this->selectedLang = $this->wg->ContLang->getCode();
+		$this->dropDownItems = $this->prepareDropdownItems($corporateWikis, $this->selectedLang);
+
+		if ($this->app->wg->EnableWAMPageExt) {
+			$wamModel = new WAMPageModel();
+			$this->wamPageUrl = $wamModel->getWAMMainPageUrl();
+		}
+	}
+
+	protected function prepareDropdownItems($corpWikis, $selectedLang) {
+		$results = array();
+
+		foreach($corpWikis as $lang => $wiki) {
+			if( $lang !== $selectedLang ) {
+				$results[] = array(
+					'class' => $lang,
+					'href' => $wiki['url'],
+					'text' => '',
+					'title' => $wiki['wikiTitle']
+				);
+			}
+		}
+
+		return $results;
+	}
+
 	public function getStats() {
 		$data = $this->app->sendRequest('WikiaStatsController', 'getWikiaStats')->getData();
 		foreach ($data as $key => $value) {

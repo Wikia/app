@@ -38,34 +38,17 @@ window.Wikia = window.Wikia || {};
  */
 window.Wikia.getMultiTypePackage = function(options) {
 	var request = {},
-		styles = options.styles,
-		scripts = options.scripts,
-		messages = options.messages,
-		templates = options.templates,
-		mustache = options.mustache,
+		fieldsToCopy = ['styles', 'scripts', 'messages', 'mustache', 'handlebars'],
 		callback = options.callback,
 		params = options.params,
 		send = false;
 
-	if(typeof styles === 'string'){
-		request.styles = styles;
-		send = true;
-	}
-
-	if(typeof scripts === 'string'){
-		request.scripts = scripts;
-		send = true;
-	}
-
-	if(typeof messages === 'string'){
-		request.messages = messages;
-		send = true;
-	}
-
-	if(typeof mustache === 'string'){
-		request.mustache = mustache;
-		send = true;
-	}
+	$.each(fieldsToCopy, function() {
+		if (typeof options[this] === 'string') {
+			request[this] = options[this];
+			send = true;
+		}
+	});
 
 	if(typeof templates != 'undefined'){
 		// JSON encode templates entry
