@@ -9,8 +9,8 @@
  * });
  *
  * if ($wrapper->getException()) {
- *	  // oops, something went wrong, but I don't need to clean up $wgUser
- *    // because that's been done for me
+ *	// oops, something went wrong, but I don't need to clean up $wgUser
+ *	// because that's been done for me
  * }
  */
 
@@ -28,17 +28,17 @@ class GlobalStateWrapper {
 	/**
 	 * @param array $globalsToWrap key value pair of global name and overriding value
 	 */
-	function __construct(array $globalsToWrap) {
+	function __construct( array $globalsToWrap ) {
 		$this->globalsToWrap = $globalsToWrap;
 	}
 
-	public function wrap($function) {
+	public function wrap( $function ) {
 		$result = null;
 		$this->captureState();
 
 		try {
 			$result = $function();
-		} catch (\Exception $e) {
+		} catch ( \Exception $e ) {
 			$this->caughtException = $e;
 		}
 
@@ -47,7 +47,7 @@ class GlobalStateWrapper {
 		return $result;
 	}
 
-	public function setCaughtException(Exception $e) {
+	public function setCaughtException( Exception $e ) {
 		$this->caughtException = $e;
 	}
 
@@ -57,14 +57,14 @@ class GlobalStateWrapper {
 
 	protected function captureState() {
 		$this->capturedState = array();
-		foreach($this->globalsToWrap as $globalKey => $globalValue) {
+		foreach ( $this->globalsToWrap as $globalKey => $globalValue ) {
 			$this->capturedState[$globalKey] = $GLOBALS[$globalKey];
 			$GLOBALS[$globalKey] = $globalValue;
 		}
 	}
 
 	protected function restoreState() {
-		foreach($this->globalsToWrap as $globalKey => $globalValue) {
+		foreach ( $this->globalsToWrap as $globalKey => $globalValue ) {
 			$GLOBALS[$globalKey] = $this->capturedState[$globalKey];
 		}
 	}
