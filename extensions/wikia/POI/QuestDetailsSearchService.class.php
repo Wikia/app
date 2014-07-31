@@ -14,13 +14,28 @@ class QuestDetailsSearchService extends EntitySearchService {
 	const DEFAULT_THUMBNAIL_WIDTH = 200;
 	const DEFAULT_THUMBNAIL_HEIGHT = 200;
 
-	protected function prepareQuery( $fingerprintId ) {
+	public function find( $criteria ) {
+		$conditions = [ ];
+
+		if ( !empty( $criteria[ 'fingerprint' ] ) ) {
+			$conditions[ ] = 'metadata_fingerprint_ids_ss:"' . $criteria[ 'fingerprint' ] . '"';
+		}
+		if ( !empty( $criteria[ 'questId' ] ) ) {
+			$conditions[ ] = 'metadata_quest_id_s:"' . $criteria[ 'questId' ] . '"';
+		}
+
+		$query = join( ' AND ', $conditions );
+
+		return $this->query( $query );
+	}
+
+	protected function prepareQuery( $query ) {
 		$select = $this->getSelect();
 
 		$dismax = $select->getDisMax();
 		$dismax->setQueryParser( 'edismax' );
 
-		$select->setQuery( 'metadata_fingerprint_ids_ss:' . $fingerprintId );
+		$select->setQuery( $query );
 
 		return $select;
 	}
