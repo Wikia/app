@@ -4,11 +4,13 @@ namespace Wikia\Search\Services;
 
 class NearbyPOISearchService extends EntitySearchService {
 	const LOCATION_FIELD_NAME = "metadata_map_location_sr";
-	const MAX_RANGE = 300; // This is spartaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-	const MAX_ROWS = 300;
+	const DEFAULT_MAX_RANGE = 300;
+	const DEFAULT_MAX_ROWS = 200;
 	const LATITUDE = "lat";
 	const LONGITUDE = "long";
-	private $fields = [ 'id' ];
+	private $fields = [ 'id', 'metadata_*' ]; // default fields to fetch
+	private $maxRows = self::DEFAULT_MAX_ROWS;
+	private $maxRange = self::DEFAULT_MAX_RANGE;
 
 	public function queryLocation( $lat, $long ) {
 		return $this->query( [ self::LATITUDE => $lat, self::LONGITUDE => $long ] );
@@ -16,6 +18,14 @@ class NearbyPOISearchService extends EntitySearchService {
 
 	public function setFields( $fields ) {
 		$this->fields = $fields;
+	}
+
+	public function setMaxRows( $maxRows ) {
+		$this->maxRows = $maxRows;
+	}
+
+	public function setMaxRange( $maxRange ) {
+		$this->maxRange = $maxRange;
 	}
 
 	protected function prepareQuery( $phrase ) {
@@ -29,17 +39,25 @@ class NearbyPOISearchService extends EntitySearchService {
 		$select->setFields( array_merge( $this->fields, [ "score" ] ) );
 
 		$sfield = self::LOCATION_FIELD_NAME;
-		$distance = self::MAX_RANGE;
+		$distance = $this->maxRange;
 
 		$select->setQuery( "{!geofilt score=distance sfield=${sfield} pt=${lat},${long} d=${distance}}" );
-		$select->setRows( self::MAX_ROWS );
+		$select->setRows( $this->maxRows );
 
-		$select->addSort( "score", \Solarium_Query_Select::SORT_DESC );
-
+		//since score is distance so lower score means less distance
+		$select->addSort( "score", \Solarium_Query_Select::SORT_ASC );
 		return $select;
 	}
 
-	protected function consumeResponse( $response ) {
-		return $response;
+	protected function consumeResponse( $solrResponse ) {
+		$cleanedResponse = [ ];
+		foreach ( $solrResponse as $item ) {
+			$cleanedItem = [ ];
+			foreach ( $item as $fieldName => $field ) {
+				$cleanedItem[$fieldName] = $field;
+			}
+			$cleanedResponse [] = $cleanedItem;
+		}
+		return $cleanedResponse;
 	}
 }
