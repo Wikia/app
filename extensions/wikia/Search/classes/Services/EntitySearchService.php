@@ -121,9 +121,6 @@ class EntitySearchService {
 		if ( $core ) {
 			$config[ 'adapteroptions' ][ 'core' ] = $core;
 		}
-		if ( isset($wgUseDevSearch) && $wgUseDevSearch == true ) {
-			$config['adapteroptions']['host'] = 'dev-search-s4';
-		}
 		$this->client = ( $client !== null ) ? $client : new \Solarium_Client( $config );
 	}
 
