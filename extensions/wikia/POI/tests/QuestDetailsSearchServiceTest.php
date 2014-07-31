@@ -61,79 +61,79 @@ class QuestDetailsSearchServiceTest extends WikiaBaseTest {
 
 		$result = $questDetailsSearch->query( 'test' );
 
-		$this->assertEquals(
+		$expected = [
 			[
-				[
-					"id" => 155836,
-					"title" => "The Letter B",
-					"url" => "http://muppet.wikia.com/wiki/The_Letter_B",
-					"ns" => 0,
-					"revision" => [
-						"id" => 1234,
-						"user" => "test_user",
-						"user_id" => 1111,
-						"timestamp" => "1234567"
-					],
-					"comments" => 0,
-					"type" => "other",
-					"categories" => [
-						"Sesame Street Songs",
-						"Alphabet"
-					],
-					"abstract" => "\"The Letter B\" is a Sesame Street song from a 1983 episode. Oscar the Grouch finds a letter B by his trash can and wonders aloud what it's doing there. He immediately wishes he hadn't asked...",
-					"metadata" => [
-						"fingerprints" => [
-							"amazing",
-							"great_job",
-							"best"
-						],
-						"quest_id" => "very_good",
-						"map_location" => [
-							"location_x" => 1.11244,
-							"location_y" => -1.21412,
-							"region" => "Map_Region_1"
-						]
-					],
-					"thumbnail" => null,
-					"original_dimensions" => null
+				"id" => 155836,
+				"title" => "The Letter B",
+				"url" => "http://muppet.wikia.com/wiki/The_Letter_B",
+				"ns" => 0,
+				"revision" => [
+					"id" => 1234,
+					"user" => "test_user",
+					"user_id" => 1111,
+					"timestamp" => "1234567"
 				],
-				[
-					"id" => 8938,
-					"title" => "Ruby",
-					"url" => "http://muppet.wikia.com/wiki/Ruby",
-					"ns" => 0,
-					"revision" => [
-						"id" => 1234,
-						"user" => "test_user",
-						"user_id" => 1111,
-						"timestamp" => "1234567"
+				"comments" => 0,
+				"type" => "other",
+				"categories" => [
+					"Sesame Street Songs",
+					"Alphabet"
+				],
+				"abstract" => "\"The Letter B\" is a Sesame Street song from a 1983 episode. Oscar the Grouch finds a letter B by his trash can and wonders aloud what it's doing there. He immediately wishes he hadn't asked...",
+				"metadata" => [
+					"fingerprints" => [
+						"amazing",
+						"great_job",
+						"best"
 					],
-					"comments" => 0,
-					"type" => "character",
-					"categories" => [
-						"Sesame Street Characters",
-						"Muppet Characters",
-						"Sesame Street Monsters"
-					],
-					"abstract" => "Ruby is a yellow monster from Sesame Street who is very curious and loves to conduct experiments. For instance, in one episode, Ruby wanted to find out what it was like to be blind, so she spent...",
-					"metadata" => [
-						"fingerprints" => [
-							"amazing",
-							"great_job",
-							"best"
-						],
-						"quest_id" => "very_good",
-						"map_location" => [
-							"location_x" => 1.11244,
-							"location_y" => 1.11412,
-							"region" => "Map_Region_1"
-						]
-					],
-					"thumbnail" => null,
-					"original_dimensions" => null
-				]
+					"quest_id" => "very_good",
+					"map_location" => [
+						"location_x" => 1.11244,
+						"location_y" => -1.21412,
+						"region" => "Map_Region_1"
+					]
+				],
+				"thumbnail" => null,
+				"original_dimensions" => null
 			],
-			$result );
+			[
+				"id" => 8938,
+				"title" => "Ruby",
+				"url" => "http://muppet.wikia.com/wiki/Ruby",
+				"ns" => 0,
+				"revision" => [
+					"id" => 1234,
+					"user" => "test_user",
+					"user_id" => 1111,
+					"timestamp" => "1234567"
+				],
+				"comments" => 0,
+				"type" => "character",
+				"categories" => [
+					"Sesame Street Characters",
+					"Muppet Characters",
+					"Sesame Street Monsters"
+				],
+				"abstract" => "Ruby is a yellow monster from Sesame Street who is very curious and loves to conduct experiments. For instance, in one episode, Ruby wanted to find out what it was like to be blind, so she spent...",
+				"metadata" => [
+					"fingerprints" => [
+						"amazing",
+						"great_job",
+						"best"
+					],
+					"quest_id" => "very_good",
+					"map_location" => [
+						"location_x" => 1.11244,
+						"location_y" => 1.11412,
+						"region" => "Map_Region_1"
+					]
+				],
+				"thumbnail" => null,
+				"original_dimensions" => null
+			]
+		];
+
+		$this->assertEquals( $expected, $result );
 	}
 
 	public function mock_getCurrentStagingHost( $arg1, $arg2 ) {
