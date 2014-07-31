@@ -201,7 +201,7 @@ $wikiahomepage-line-height: 16px;
 				position: relative;
 				text-align: center;
 				width: 160px;
-				
+
 				a.wikia-button.secondary {
 					@include linear-gradient(white, top, white, 35%, #e5e5e5, 100%);
 					border-radius: 0;
@@ -736,7 +736,6 @@ $wikiahomepage-line-height: 16px;
 			}
 			h2 a{
 				color: inherit;
-				
 				&:hover {
 					text-decoration: none;
 				}
@@ -877,23 +876,18 @@ $wikiahomepage-line-height: 16px;
 	}
 }
 
-@each $lang in en de es fr pl ja {
-	body.wikia-contentlang-#{$lang} {
-		.wikiahomepage-community-social-wikia-blog,
-		.wikiahomepage-community-social-twitter,
-		.wikiahomepage-community-social-facebook,
-		.wikiahomepage-community-social-googleplus,
-		.wikiahomepage-community-hero-image,
-		.remix .arrow,
-		.wikia-slot .previewVisit .previcon,
-		.wikia-slot .previewVisit .visicon,
-		.WikiPreviewInterstitial .preview-grey,
-		.wikiahomepage-footer .wikia-menu-button.secondary .sprite.edit-pencil,
-		.wikiahomepage-footer .wikia-menu-button.secondary a {
-			background-image: url("/extensions/wikia/WikiaHomePage/images/community-sprite-#{$lang}.png"); /* $wgCdnStylePath */
-			background-repeat: no-repeat;
-		}
-	}
+.wikiahomepage-community-social-twitter,
+.wikiahomepage-community-social-facebook,
+.wikiahomepage-community-social-googleplus,
+.wikiahomepage-community-hero-image,
+.remix .arrow,
+.wikia-slot .previewVisit .previcon,
+.wikia-slot .previewVisit .visicon,
+.WikiPreviewInterstitial .preview-grey,
+.wikiahomepage-footer .wikia-menu-button.secondary .sprite.edit-pencil,
+.wikiahomepage-footer .wikia-menu-button.secondary a {
+	background-image: url("/extensions/wikia/WikiaHomePage/images/wikiahome-sprite.png"); /* $wgCdnStylePath */
+	background-repeat: no-repeat;
 }
 
 .page-Wikia .start-a-wiki {
@@ -920,9 +914,9 @@ $wikiahomepage-line-height: 16px;
 }
 
 .tooltip-icon-wrapper {
-    padding-right: 0.3em;
-    position: relative;
-    .tooltip-icon {
-        @include tooltip-icon;
-    }
+	padding-right: 0.3em;
+	position: relative;
+	.tooltip-icon {
+		@include tooltip-icon;
+	}
 }
