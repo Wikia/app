@@ -9,7 +9,9 @@
 			"OsamaK",
 			"زكريا",
 			"مشعل الحربي",
-			"Asaifm"
+			"Asaifm",
+			"Tarawneh",
+			"Test Create account"
 		]
 	},
 	"visualeditor": "المحرر المرئي",
@@ -31,6 +33,8 @@
 	"visualeditor-dialog-action-apply": "طبق التعديلات",
 	"visualeditor-dialog-action-cancel": "ألغ",
 	"visualeditor-dialog-action-goback": "ارجع",
+	"visualeditor-dialog-error": "شيء ما خاطئ...",
+	"visualeditor-dialog-error-dismiss": "رجوع",
 	"visualeditor-dialog-command-help-title": "اختصارات لوحة المفاتيح",
 	"visualeditor-formatdropdown-format-heading-label": "عنوان (1-6)",
 	"visualeditor-formatdropdown-format-heading1": "عنوان 1",
@@ -51,6 +55,7 @@
 	"visualeditor-inspector-remove-tooltip": "أزل",
 	"visualeditor-languageinspector-block-tooltip": "نص بلغة أخرى",
 	"visualeditor-languageinspector-title": "اللغة",
+	"visualeditor-languageinspector-widget-changelang": "عدّل اللغة",
 	"visualeditor-languageinspector-widget-label-direction": "الاتجاه",
 	"visualeditor-languageinspector-widget-label-langcode": "رمز اللغة",
 	"visualeditor-languageinspector-widget-label-language": "اللغة",

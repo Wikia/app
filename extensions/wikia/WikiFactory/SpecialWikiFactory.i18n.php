@@ -204,6 +204,7 @@ The fact that these are maximum values is explained by [[Wikia:Awc-metrics-fewer
 * $2 is the number of the first displayed record
 * $3 is the total number of results available (this can be more than the number of records displayed)',
 	'closed-wiki-dump-noexists' => 'Links to three files. The first one contains the contents of all pages on the wiki at their latest revisions. The second one containes the contents of all pages on the wiki and the entire revision history of those. The third one contains all the images that were added to the wiki.',
+	'closed-delete-images' => '{{Identical|Delete image}}',
 	'closed-hide-dumps' => 'The exact meaning is: "Hide database dump and hide image dump", i.e. both are dumps.',
 	'closed-reason' => '{{Identical|Reason}}',
 	'newwikisgraph' => 'Title of a special page',
@@ -1554,7 +1555,7 @@ $messages['diq'] = array(
 	'closewiki-nbr-wiki' => 'Wikiyê $1',
 	'closewiki-unknown' => 'Nêzanayen',
 	'closewiki-return' => 'Peyser şo $1',
-	'wikifactory-button-save' => 'Vurnayîşa qeyd ke',
+	'wikifactory-button-save' => 'Vurnayışan qeyd ke',
 	'awc-metrics-wikis' => 'Wikiya Vinayış',
 	'awc-metrics-select' => 'Wiki bımocne:',
 	'awc-metrics-by-language' => 'Zıwanê cı:',
@@ -2995,6 +2996,7 @@ $messages['lb'] = array(
 	'closewiki-images-url' => 'Billerarchiv: $1',
 	'closewiki-unknown' => 'Onbekannt',
 	'closewiki-return' => 'Zréck op $1',
+	'wikifactory-button-save' => 'Ännerunge späicheren',
 	'awc-metrics-by-language' => 'no Sprooch:',
 	'awc-metrics-category' => "an d'Kategorie:",
 	'awc-metrics-all' => 'all Wikien',
@@ -3580,6 +3582,7 @@ $messages['nb'] = array(
  * @author McDutchie
  * @author SPQRobin
  * @author Siebrand
+ * @author Southparkfan
  * @author Tjcool007
  */
 $messages['nl'] = array(
@@ -3690,7 +3693,8 @@ paginagrootte',
 	'closed-wiki' => 'Gesloten wiki',
 	'closed-wiki-info' => 'Deze wiki is gesloten',
 	'disabled-wiki-info' => 'Deze wiki is uitgeschakeld',
-	'closed-wiki-dump-exists' => 'U kunt uw inhoud ophalen als u wilt.<br />Als uw wiki recent gesloten is, kan het een tijdje duren voordat de bestanden aangemaakt zijn.', # Fuzzy
+	'closed-wiki-dump-exists' => 'U kunt uw inhoud ophalen als u wilt.<br />Als uw wiki recent gesloten is, kan het een tijdje duren voordat de bestanden aangemaakt zijn.',
+	'closed-wiki-dump-links' => "[$1 Huidige pagina's] (deze versie is in het algemeen het beste voor botgebruik)<br />[$2 Huidige pagina's en geschiedenis] (waarschuwing: dit bestand kan zeer groot zijn)",
 	'closed-wiki-dump-noexists' => 'Deze wiki is gesloten.
 Een dump van de inhoud wordt binnen 24 uur beschikbaar gemaakt.
 Kom hier dan terug.',
@@ -4127,6 +4131,7 @@ $messages['ps'] = array(
  * @author Hamilton Abreu
  * @author Luckas
  * @author Masked Rogue
+ * @author Polyethylen
  * @author Rhaijin
  * @author SandroHc
  * @author Waldir
@@ -4194,7 +4199,7 @@ $messages['pt'] = array(
 	'awc-metrics-two-months' => 'criadas há menos de dois meses',
 	'awc-metrics-three-months' => 'criadas há menos de três meses',
 	'awc-metrics-half-year' => 'criadas há menos de seis meses',
-	'awc-metrics-by-email' => 'ou (e-mail do usuário):',
+	'awc-metrics-by-email' => 'ou (correio eletrónico do utilizador):',
 	'awc-metrics-by-user' => 'encontrado por (nome do utilizador):',
 	'awc-metrics-by-dbname' => 'onde os nomes das BDs contenham:',
 	'awc-metrics-by-title' => ' e títulos a partir de:',
@@ -4641,6 +4646,13 @@ $messages['ru'] = array(
 	'newwikisgraph-wikis-created' => 'создано викий',
 	'newwikisgraph-param-all' => 'Всего',
 	'newwikisgraph-param-other' => 'Другие',
+);
+
+/** Scots (Scots)
+ * @author John Reid
+ */
+$messages['sco'] = array(
+	'closed-wiki-dump-links' => '[$1 Nou pages] (this version is uissuallie best fer bot uiss)<br />[$2 Nou pages n histerie] (warnishmant: this file coud be aafa muckle)',
 );
 
 /** Sinhala (සිංහල)
@@ -5414,6 +5426,7 @@ $messages['yi'] = array(
 /** Simplified Chinese (中文（简体）‎)
  * @author Anakmalaysia
  * @author Dimension
+ * @author Ffaarr
  * @author Hydra
  * @author Liuxinyu970226
  * @author Yfdyh000
@@ -5436,7 +5449,7 @@ $messages['zh-hans'] = array(
 	'wikifactory-label-info' => '信息',
 	'wikifactory-label-variables' => '变量',
 	'wikifactory-label-variables2' => '常规',
-	'wikifactory-label-hubs' => '中枢',
+	'wikifactory-label-hubs' => '主题',
 	'wikifactory-label-domains' => '域名',
 	'wikifactory-label-return' => '返回名单',
 	'wikifactory-label-clog' => '修改记录',
@@ -5483,6 +5496,7 @@ $messages['zh-hans'] = array(
 	'awc-metrics-three-months' => '创建于不到3月前',
 	'awc-metrics-half-year' => '创建于不到6月前',
 	'awc-metrics-by-email' => '或者（用户电子邮件）：',
+	'awc-metrics-by-user' => '创始人 (用户名):',
 	'awc-metrics-not-found' => '未找到任何wiki',
 	'awc-metrics-nbr-result' => '结果：',
 	'awc-metrics-created-between' => '创建于$1（YYYY/MM/DD）和$2（YYYY/MM/DD）之间',
@@ -5532,7 +5546,10 @@ $messages['zh-hans'] = array(
  * @author Wrightbus
  */
 $messages['zh-hant'] = array(
+	'wikifactorypagetitle' => 'Wiki出廠配置',
+	'wikifactory' => 'Wiki出廠配置',
 	'closewiki' => '關閉 Wiki',
+	'wf_city_url' => '地址',
 	'wf_city_id' => 'id',
 	'wf_city_title' => '標題',
 	'wf_city_created' => '已建立',
@@ -5546,21 +5563,36 @@ $messages['zh-hant'] = array(
 	'wikifactory-label-info' => '資訊',
 	'wikifactory-label-variables' => '變數',
 	'wikifactory-label-variables2' => '一般',
+	'wikifactory-label-hubs' => '主題',
 	'wikifactory-label-domains' => '域名',
 	'wikifactory-label-return' => '返回清單',
+	'wikifactory-label-clog' => '修改記錄',
+	'wikifactory-label-actions' => '操作',
 	'wikifactory-label-google' => 'Google 工具',
 	'wikifactory-label-close' => '關閉',
 	'wikifactory-label-tags' => '標籤',
 	'wikifactory-label-tags2' => '標籤',
+	'wikifactory-label-masstags' => '標籤集',
+	'wikifactory-label-findtags' => '尋找標籤',
+	'wikifactory-label-ezsharedupload' => '簡易共享上傳',
 	'wikifactory-label-compare' => '比較',
+	'right-wikifactory' => '更改wiki的內部設置',
+	'action-wikifactory' => '更改wiki的內部設置',
 	'wikifactory-domain-edit' => '編輯此網址',
 	'wikifactory-domain-remove' => '從 wiki 刪除此網址',
+	'wikifactory-domain-setmain' => '將此網址提交到wgServer',
+	'closewiki-check-and-confirm' => '檢查 wiki 並確認操作',
 	'closewiki-redirect-to' => '重定向到',
+	'closewiki-message' => '網域名 $1',
+	'closewiki-confirm-button' => "確認$2的'$1'",
+	'closewiki-nbr-wiki' => '$1 個wiki',
 	'closewiki-wiki-closed' => "'''$1''' 已關閉 ($2)",
 	'closewiki-wiki-closed_removed' => "' ' $1 '' 現在關閉並將會刪除 ( $2 )",
 	'closewiki-wiki-closed_redirect' => "' ' $1 '' 被關閉 （ $2 ） ，現在重定向到：$3",
+	'closewiki-images-url' => '圖像存檔：$1',
 	'closewiki-unknown' => '未知',
 	'closewiki-return' => '回到 $1',
+	'wikifactory-button-save' => '儲存變更',
 	'awc-metrics-wikis' => '顯示 Wiki',
 	'awc-metrics-select' => '顯示 Wiki:',
 	'awc-metrics-by-language' => '依照語言：',
@@ -5568,18 +5600,26 @@ $messages['zh-hant'] = array(
 	'awc-metrics-all' => '所有 Wiki',
 	'awc-metrics-all-languages' => '所有語言',
 	'awc-metrics-search' => '搜尋選項：',
+	'awc-metrics-one-week' => '創建於一週以內',
 	'awc-metrics-two-weeks' => '創建 < 2 周前',
 	'awc-metrics-three-weeks' => '創建 < 3 周前',
 	'awc-metrics-one-months' => '創建 < 1 個月前',
 	'awc-metrics-two-months' => '創建 < 2 個月前',
 	'awc-metrics-three-months' => '創建 < 3 個月前',
+	'awc-metrics-half-year' => '創建於六個月以內',
+	'awc-metrics-by-email' => '或者（用戶電子郵件）：',
+	'awc-metrics-by-user' => '創始人 (用户名):',
+	'awc-metrics-nbr-result' => '結果：',
+	'awc-metrics-created-between' => '創建于$1（YYYY/MM/DD）和$2（YYYY/MM/DD）之間',
 	'awc-metrics-wikians' => 'Wikia人<br />(>10 次編輯)',
 	'awc-metrics-articles' => '條目',
-	'awc-metrics-articles-per-day' => '文章數<br>(每日平均)', # Fuzzy
+	'awc-metrics-articles-per-day' => '文章數<br/>(每日平均)', # Fuzzy
 	'awc-metrics-revisions-per-page' => '修改<br />(平均每頁)',
 	'awc-metrics-edits' => '編輯次數',
 	'awc-metrics-db-size' => '資料庫大小',
 	'awc-metrics-images' => '圖片',
+	'awc-metrics-pageviews' => '頁面<br />點閱數',
+	'awc-metrics-statistics' => '統計資料 (各月平均)',
 	'awc-metrics-close' => '關閉',
 	'awc-metrics-close-action' => '關閉',
 	'awc-metrics-active' => '活躍',
@@ -5591,18 +5631,26 @@ $messages['zh-hant'] = array(
 	'awc-metrics-sum-month' => '計數 (每月)',
 	'awc-metrics-sum-day' => '計數 (每日)',
 	'awc-metrics-this-month' => '本月',
+	'awc-metrics-last-month' => '上$1個月',
+	'awc-metrics-close-listed' => '關閉所有列出的',
+	'awc-metrics-exact-match' => '精確匹配',
 	'closed-wiki' => '已關閉的wiki',
 	'closed-wiki-info' => '此wiki已關閉',
 	'disabled-wiki-info' => '此wiki已禁用',
+	'closed-wiki-dump-noexists' => '本維基已被關閉。內容轉存將在 24 小時內提供。請重新檢查。',
 	'closed-wiki-create-wiki' => '創建一個新的 wiki',
 	'closed-wiki-policy' => '查看 Wikia 的關站政策',
 	'closed-create-dump' => 'Create a database dump',
+	'closed-create-image-archive' => '創建圖像存檔',
 	'closed-delete-database-images' => '刪除資料庫和圖像',
 	'closed-delete-images' => '刪除圖像',
 	'closed-free-url' => '把這個網址讓給新的創站人',
+	'closed-hide-dumps' => '隱藏資料庫和圖像轉存',
 	'closed-redirect-url' => '重定向網址',
 	'closed-confirm-btn' => '確認關閉',
 	'closed-reason' => '原因：',
+	'newwikisgraph' => '新wiki圖表',
+	'newwikisgraph-report-title' => '每天創建的wiki',
 	'newwikisgraph-wikis-created' => '已創建的wiki',
 	'newwikisgraph-param-all' => '全部',
 	'newwikisgraph-param-other' => '其他',

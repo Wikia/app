@@ -79,7 +79,7 @@ var WikiBuilder = {
 						UserLoginFacebook.closeSignupModal();
 					};
 				}
-				if( window.FB && onFBloaded ) {  // FB hax
+				if( window.FB && window.onFBloaded ) {  // FB hax
 					onFBloaded();
 				}
 				that.transition('NameWiki', true, '+');

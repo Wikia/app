@@ -30,8 +30,6 @@
 @import "core/background";
 @import "core/globalelements";
 @import "core/GlobalHeader";
-@import "core/GlobalHeaderAB";
-@import "core/GlobalNavigationMenu";
 @import "core/AccountNavigation";
 @import "core/page";
 @import "core/CommentsLikes";
@@ -75,6 +73,7 @@
 @import "extensions/wikia/Forum/css/RelatedForumDiscussion"; // on every article page
 @import "extensions/wikia/TOC/css/toc.scss";
 @import "extensions/wikia/VideosModule/styles/VideosModule";
+@import "extensions/wikia/GlobalFooter/styles/GlobalFooter";
 
 // CSS (needs leading slash and file extension)
 @import "/extensions/wikia/CreatePage/css/CreatePage.css";

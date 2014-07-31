@@ -9,6 +9,7 @@ define('ext.wikia.adEngine.adConfigLate', [
 	// adProviders
 	'ext.wikia.adEngine.provider.evolve',
 	'ext.wikia.adEngine.provider.liftium',
+	'ext.wikia.adEngine.provider.directGpt',
 	'ext.wikia.adEngine.provider.remnantGpt',
 	'ext.wikia.adEngine.provider.null',
 	'ext.wikia.adEngine.provider.sevenOneMedia',
@@ -23,6 +24,7 @@ define('ext.wikia.adEngine.adConfigLate', [
 	// AdProviders
 	adProviderEvolve,
 	adProviderLiftium,
+	adProviderDirectGpt,
 	adProviderRemnantGpt,
 	adProviderNull,
 	adProviderSevenOneMedia, // TODO: move this to the early queue (remove jQuery dependency first)
@@ -39,7 +41,25 @@ define('ext.wikia.adEngine.adConfigLate', [
 		},
 		ie8 = window.navigator && window.navigator.userAgent && window.navigator.userAgent.match(/MSIE [6-8]\./),
 		sevenOneMediaDisabled = abTest && abTest.inGroup('SEVENONEMEDIA_DR', 'DISABLED'),
-		adProviderRemnant;
+		adProviderRemnant,
+
+		dartBtfCountries = {
+			US: true
+		},
+		dartBtfSlots = {
+			INCONTENT_BOXAD_1: true,
+			LEFT_SKYSCRAPER_3: true,
+			PREFOOTER_LEFT_BOXAD: true,
+			PREFOOTER_RIGHT_BOXAD: true
+		},
+		dartBtfVerticals = {
+			Entertainment: true
+		},
+
+		dartBtfEnabled = dartBtfCountries[country] && (
+				window.wgAdDriverUseDartForSlotsBelowTheFold === true ||
+				(window.wgAdDriverUseDartForSlotsBelowTheFold && dartBtfVerticals.hasOwnProperty(window.cscoreCat))
+			);
 
 	if (window.wgEnableRHonDesktop) {
 		adProviderRemnant = adProviderRemnantGpt;
@@ -67,13 +87,6 @@ define('ext.wikia.adEngine.adConfigLate', [
 			return adProviderNull;
 		}
 
-		if (country === 'AU' || country === 'CA' || country === 'NZ') {
-			if (adProviderEvolve.canHandleSlot(slotname)) {
-				log(['getProvider', slot, 'Evolve'], 'info', logGroup);
-				return adProviderEvolve;
-			}
-		}
-
 		// First ask SevenOne Media
 		if (window.wgAdDriverUseSevenOneMedia) {
 			if (adProviderSevenOneMedia.canHandleSlot(slotname)) {
@@ -93,6 +106,18 @@ define('ext.wikia.adEngine.adConfigLate', [
 			if (!liftiumSlotsToShowWithSevenOneMedia[slot[0]]) {
 				return adProviderNull;
 			}
+		}
+
+		if (country === 'AU' || country === 'CA' || country === 'NZ') {
+			if (adProviderEvolve.canHandleSlot(slotname)) {
+				log(['getProvider', slot, 'Evolve'], 'info', logGroup);
+				return adProviderEvolve;
+			}
+		}
+
+		// DART for some slots below the fold a.k.a. coffee cup
+		if (dartBtfEnabled && dartBtfSlots[slotname] && adProviderDirectGpt.canHandleSlot(slotname)) {
+			return adProviderDirectGpt;
 		}
 
 		// Ebay integration

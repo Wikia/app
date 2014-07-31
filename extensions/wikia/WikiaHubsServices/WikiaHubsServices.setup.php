@@ -33,6 +33,7 @@ $wgAutoloadClasses['WikiaHubsModuleFeaturedvideoService'] =  $dir . 'modules/Wik
 $wgAutoloadClasses['WikiaHubsModuleFromthecommunityService'] =  $dir . 'modules/WikiaHubsModuleFromthecommunityService.class.php';
 $wgAutoloadClasses['WikiaHubsModulePollsService'] =  $dir . 'modules/WikiaHubsModulePollsService.class.php';
 $wgAutoloadClasses['WikiaHubsModuleWAMService'] =  $dir . 'modules/WikiaHubsModuleWAMService.class.php';
+$wgAutoloadClasses['WikiaHubsModuleWikiastatsService'] =  $dir . 'modules/WikiaHubsModuleWikiastatsService.class.php';
 
 $wgAutoloadClasses['WikiaHubsServicesHelper'] =  $dir . 'WikiaHubsServicesHelper.class.php';
 $wgAutoloadClasses['WikiaHubsApiController'] = "{$IP}/extensions/wikia/WikiaHubsServices/api/WikiaHubsApiController.class.php";

@@ -19,10 +19,35 @@ class ThemeDesignerHooks {
 		if ( $article instanceof WikiFilePage ) {
 			$title = $article->getTitle();
 			self::resetThemeBackgroundSettings( $title, true );
+			if ( self::isFavicon( $title ) ) {
+				Wikia::invalidateFavicon();
+			}
 		}
 
 		wfProfileOut( __METHOD__ );
 		return true;
+	}
+
+	public static function onUploadComplete( $image ) {
+		wfProfileIn( __METHOD__ );
+
+		if ( self::isFavicon( $image->getTitle() ) ) {
+			Wikia::invalidateFavicon();
+		}
+
+		wfProfileOut( __METHOD__ );
+		return true;
+	}
+
+	private static function isFavicon( $title ) {
+		wfProfileIn( __METHOD__ );
+		if ( $title->getText() == 'Favicon.ico' ) {
+			$isFavicon = true;
+		} else {
+			$isFavicon = false;
+		}
+		wfProfileOut( __METHOD__ );
+		return $isFavicon;
 	}
 
 	private static function resetThemeBackgroundSettings( $title, $isArticleDeleted = false ) {

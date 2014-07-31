@@ -19,7 +19,7 @@ class WikiaHubsV3Controller extends WikiaController {
 	 * @var WikiaHubsModel
 	 */
 	protected $model;
-	
+
 	/**
 	 * @var EditHubModel
 	 */
@@ -61,7 +61,7 @@ class WikiaHubsV3Controller extends WikiaController {
 		$this->response->addAsset('wikiahubs_v3_modal');
 		$this->response->addAsset('wikiahubs_v3_scss');
 		$this->response->addAsset('wikiahubs_v3_scss_mobile');
-		
+
 		$this->wg->Out->addJsConfigVars([
 			'wgWikiaHubsVerticalId' => $this->verticalId
 		]);
@@ -118,7 +118,6 @@ class WikiaHubsV3Controller extends WikiaController {
 		);
 
 		$moduleData = $module->loadData( $editHubModel, $params );
-
 		if (!empty($moduleData)) {
 			return $module->render( $moduleData );
 		} else {
@@ -170,7 +169,7 @@ class WikiaHubsV3Controller extends WikiaController {
 		if( !$this->editHubModelModel ) {
 			$this->editHubModelModel = new EditHubModel($this->app);
 		}
-		
+
 		return $this->editHubModelModel;
 	}
 
@@ -185,6 +184,14 @@ class WikiaHubsV3Controller extends WikiaController {
 		$this->verticalName = $this->getContext()->getTitle()->getText();
 		$this->canonicalVerticalName = str_replace(' ', '', $this->model->getCanonicalVerticalNameById($this->cityId));
 		$this->wg->out->setPageTitle($this->verticalName);
+
+		// For the main page, overwrite the <title> element with the contents of 'pagetitle-view-mainpage'.
+		if ( $this->getContext()->getTitle()->isMainPage() ) {
+			$msg = wfMessage( 'pagetitle-view-mainpage' )->inContentLanguage();
+			if ( !$msg->isDisabled() ) {
+				$this->wg->out->setHTMLTitle( $msg->title( $this->getContext()->getTitle() ) );
+			}
+		}
 	}
 
 	protected function initModel() {

@@ -19,6 +19,8 @@
 ve.ui.MWGalleryInspector = function VeUiMWGalleryInspector( config ) {
 	// Parent constructor
 	ve.ui.MWExtensionInspector.call( this, config );
+
+	this.$element.addClass( 've-ui-mwGalleryInspector' );
 };
 
 /* Inheritance */
@@ -39,6 +41,14 @@ ve.ui.MWGalleryInspector.static.nodeModel = ve.dm.MWGalleryNode;
 /* Methods */
 
 /** */
+ve.ui.MWGalleryInspector.prototype.initialize = function () {
+	// Parent method
+	ve.ui.MWExtensionInspector.prototype.initialize.call( this );
+
+	this.input.$element.addClass( 've-ui-mwGalleryInspector-input' );
+};
+
+/** */
 ve.ui.MWGalleryInspector.prototype.getInputPlaceholder = function () {
 	// 'File:' is always in content language
 	return mw.config.get( 'wgFormattedNamespaces' )['6'] + ':' +
@@ -47,4 +57,4 @@ ve.ui.MWGalleryInspector.prototype.getInputPlaceholder = function () {
 
 /* Registration */
 
-ve.ui.inspectorFactory.register( ve.ui.MWGalleryInspector );
+ve.ui.windowFactory.register( ve.ui.MWGalleryInspector );

@@ -59,6 +59,7 @@ class LilyPond {
 				. htmlspecialchars( $short_code ) . "\">";
 
 			if ( file_exists( "$wgMathDirectory/$md5.png" ) ) {
+				wfProfileOut( __METHOD__ );
 				return $pre . $link . $post;
 			}
 		} else {
@@ -71,6 +72,7 @@ class LilyPond {
 						$md5 . "-" . $i . ".png\" alt=\"" .
 						htmlspecialchars( "page " . $i ) . "\">";
 				}
+				wfProfileOut( __METHOD__ );
 				return $pre . $link . $post;
 			}
 		}
@@ -194,6 +196,7 @@ class LilyPond {
 		if ( $short_code ) {
 			if ( !file_exists( $wgMathDirectory . "/" . $md5 . ".png" ) ) {
 				$errmsg = wfMsg( "math_image_error" );
+				wfProfileOut( __METHOD__ );
 				return "<h3>$mf ($errmsg): " .
 					htmlspecialchars( $lilypond_code ) . "</h3>";
 			}

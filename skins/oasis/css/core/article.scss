@@ -3,6 +3,7 @@
 @import '../placeholders/bodytext';
 @import '../mixins/clearfix';
 @import '../mixins/gradient';
+@import '../mixins/infobox';
 
 .WikiaArticle {
 	@extend %bodytext;
@@ -179,14 +180,12 @@
 		text-align: left;
 	}
 
-	// TODO: look into removing this with VID-1551
 	.tright {
 		clear: right;
 		float: right;
 		margin: 0 0 16px 16px;
 	}
 
-	// TODO: look into removing this with VID-1551
 	.tleft {
 		clear: left;
 		float: left;
@@ -541,6 +540,15 @@
 	.wikia-infobox-caption {
 		font-size: 12px;
 		text-align: center;
+	}
+}
+
+.WikiaArticle {
+	#{$infoboxes} {
+		.article-thumb, .article-thumb.tright, .article-thumb.tleft {
+			margin: 0 auto;
+			float: none;
+		}
 	}
 }
 

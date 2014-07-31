@@ -3,7 +3,7 @@
  * @ingroup Maintenance
  */
 
-echo "Rss cache warmer start: ".date("Y-m-d H:i:s")."\n";
+echo "Rss cache warmer start: " . date("Y-m-d H:i:s") . PHP_EOL;
 
 require_once( dirname( __FILE__ ) .'/../../../../maintenance/Maintenance.php' );
 
@@ -14,26 +14,43 @@ class MaintenanceRss extends Maintenance {
 	}
 
 	function execute() {
-		$this->warmTv();
-		$this->warmGames();
+		$this->warm();
+		$this->purgeVarnish();
 	}
 
-	function warmTv() {
-		echo "| Warming TV cache...\n";
-		$feed = new TvRssModel();
-		$feed->setForceRegenerateFeed( true );
-		$data = $feed->getFeedData();
-		$row = reset($data);
-		echo "| Got ". count($data) . " entries,  last from: " . date( self::DATE_FORMAT, $row['timestamp']) . "\n";
+	protected function warm() {
+		global $wgHubRssFeeds;
+
+		foreach ( $wgHubRssFeeds as $feedName ) {
+			echo "| Warming '$feedName' cache..." . PHP_EOL;
+			$feed = BaseRssModel::newFromName( $feedName );
+			if ( $feed instanceof BaseRssModel ) {
+				$time = time();
+				$numRows = $feed->generateFeedData();
+				echo "| Got " . $numRows . " new entries " . PHP_EOL;
+				\Wikia\Logger\WikiaLogger::instance()
+					->info( __CLASS__ . ' '. $feedName . 'time (s): ' . ( time() - $time ) );
+			} else {
+				echo "| Feed not found: " . $feedName . PHP_EOL;
+			}
+		}
+
 	}
 
-	function warmGames() {
-		echo "| Warming GAMES cache...\n";
-		$feed = new GamesRssModel();
-		$feed->setForceRegenerateFeed( true );
-		$data = $feed->getFeedData();
-		$row = reset($data);
-		echo "| Got ". count($data) . " entries,  last from: " . date( self::DATE_FORMAT, $row['timestamp']) . "\n";
+	public function purgeVarnish() {
+		global $wgHubRssFeeds, $wgServer;
+
+		echo "| Purging varnishen..." . PHP_EOL;
+		
+		$urls = [];
+
+		foreach($wgHubRssFeeds as $feedEndpoint) {
+			$urls []= SpecialPage::getTitleFor( HubRssFeedSpecialController::SPECIAL_NAME )->getFullUrl() . '/' . $feedEndpoint;
+			$urls []= implode( '/', [ $wgServer, 'rss', $feedEndpoint] );
+		}
+
+		$u = new SquidUpdate( $urls );
+		$u->doUpdate();
 	}
 }
 

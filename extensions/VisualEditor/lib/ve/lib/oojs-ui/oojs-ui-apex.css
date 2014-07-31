@@ -1,24 +1,21 @@
 .oo-ui-dialog {
   background-color: #fff;
   background-color: rgba(255, 255, 255, 0.5);
+  /* Opening and closing animation */
+
   opacity: 0;
-  -webkit-transition: all 250ms ease-in-out;
-     -moz-transition: all 250ms ease-in-out;
-      -ms-transition: all 250ms ease-in-out;
-       -o-transition: all 250ms ease-in-out;
-          transition: all 250ms ease-in-out;
 }
 
-.oo-ui-dialog .oo-ui-window-frame {
-  background-color: #fff;
-  border: solid 1px #ccc;
-  border-radius: 0.5em;
+.oo-ui-dialog > .oo-ui-window-frame {
   -webkit-transform: scale(0.5);
      -moz-transform: scale(0.5);
       -ms-transform: scale(0.5);
        -o-transform: scale(0.5);
           transform: scale(0.5);
-  box-shadow: 0 0.2em 1em rgba(0, 0, 0, 0.3);
+}
+
+.oo-ui-dialog.oo-ui-window-setup,
+.oo-ui-dialog.oo-ui-window-setup > .oo-ui-window-frame {
   -webkit-transition: all 250ms ease-in-out;
      -moz-transition: all 250ms ease-in-out;
       -ms-transition: all 250ms ease-in-out;
@@ -26,11 +23,11 @@
           transition: all 250ms ease-in-out;
 }
 
-.oo-ui-dialog-open {
+.oo-ui-dialog.oo-ui-window-ready {
   opacity: 1;
 }
 
-.oo-ui-dialog-open .oo-ui-window-frame {
+.oo-ui-dialog.oo-ui-window-ready > .oo-ui-window-frame {
   -webkit-transform: scale(1);
      -moz-transform: scale(1);
       -ms-transform: scale(1);
@@ -38,8 +35,94 @@
           transform: scale(1);
 }
 
+.oo-ui-dialog-content .oo-ui-window-head,
+.oo-ui-dialog-content .oo-ui-window-body,
+.oo-ui-dialog-content .oo-ui-window-foot {
+  position: absolute;
+  right: 0;
+  left: 0;
+  overflow: hidden;
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+.oo-ui-dialog-content .oo-ui-window-head {
+  top: 0;
+  height: 3.8em;
+  padding: 0.5em;
+}
+
+.oo-ui-dialog-content .oo-ui-window-title {
+  line-height: 2.8em;
+}
+
+.oo-ui-dialog-content .oo-ui-window-icon {
+  width: 2.4em;
+  height: 2.8em;
+  line-height: 2.8em;
+}
+
+.oo-ui-dialog-content .oo-ui-window-closeButton {
+  float: right;
+  margin: 0.25em 0.25em;
+}
+
 .oo-ui-dialog-content .oo-ui-window-body {
+  top: 3.8em;
+  bottom: 4.8em;
+}
+
+.oo-ui-dialog-content-footless .oo-ui-window-body {
+  bottom: 0;
+}
+
+.oo-ui-dialog > .oo-ui-window-frame {
+  top: 1em;
+  bottom: 1em;
+  background-color: #fff;
+  border: solid 1px #ccc;
+  border-radius: 0.5em;
+  box-shadow: 0 0.2em 1em rgba(0, 0, 0, 0.3);
+}
+
+.oo-ui-dialog-small > .oo-ui-window-frame {
+  width: 400px;
+  max-height: 230px;
+}
+
+.oo-ui-dialog-medium > .oo-ui-window-frame {
+  width: 600px;
+  max-height: 460px;
+}
+
+.oo-ui-dialog-large > .oo-ui-window-frame {
+  width: 800px;
+  max-height: 690px;
+}
+
+.oo-ui-dialog-content .oo-ui-window-head,
+.oo-ui-dialog-content .oo-ui-window-foot {
+  z-index: 1;
+}
+
+.oo-ui-dialog-content .oo-ui-window-body {
+  z-index: 2;
   box-shadow: 0 0 0.66em rgba(0, 0, 0, 0.25);
+}
+
+.oo-ui-dialog-content .oo-ui-window-foot {
+  bottom: 0;
+  height: 4.8em;
+  padding: 1em;
+}
+
+.oo-ui-dialog-content .oo-ui-window-foot .oo-ui-buttonedElement-framed {
+  margin: 0.125em 0.25em;
+}
+
+.oo-ui-dialog-content .oo-ui-window-overlay {
+  z-index: 3;
 }
 
 .oo-ui-frame-content {
@@ -156,135 +239,18 @@
   color: #ccc;
 }
 
-.oo-ui-buttonedElement-framed .oo-ui-buttonedElement-button {
-  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.5);
-  background: #eeeeee;
-  background-image: -webkit-gradient(linear, right top, right bottom, color-stop(0%, #ffffff), color-stop(100%, #dddddd));
-  background-image: -webkit-linear-gradient(top, #ffffff 0%, #dddddd 100%);
-  background-image: -moz-linear-gradient(top, #ffffff 0%, #dddddd 100%);
-  background-image: -ms-linear-gradient(top, #ffffff 0%, #dddddd 100%);
-  background-image: -o-linear-gradient(top, #ffffff 0%, #dddddd 100%);
-  background-image: linear-gradient(top, #ffffff 0%, #dddddd 100%);
-  border: 1px #c9c9c9 solid;
-  border-radius: 0.3em;
-  filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0, startColorstr='#ffffff', endColorstr='#dddddd');
-  -webkit-transition: border-color 100ms ease-in-out;
-     -moz-transition: border-color 100ms ease-in-out;
-      -ms-transition: border-color 100ms ease-in-out;
-       -o-transition: border-color 100ms ease-in-out;
-          transition: border-color 100ms ease-in-out;
+.oo-ui-buttonedElement-framed.oo-ui-iconedElement .oo-ui-buttonedElement-button > .oo-ui-iconedElement-icon {
+  margin-right: -0.5em;
+  margin-left: -0.5em;
 }
 
-.oo-ui-buttonedElement-framed .oo-ui-buttonedElement-button:hover,
-.oo-ui-buttonedElement-framed .oo-ui-buttonedElement-button:focus {
-  border-color: #aaa;
+.oo-ui-buttonedElement-framed.oo-ui-iconedElement.oo-ui-labeledElement .oo-ui-buttonedElement-button > .oo-ui-iconedElement-icon {
+  margin-right: 0.3em;
+  margin-left: -0.5em;
 }
 
-.oo-ui-buttonedElement-framed .oo-ui-buttonedElement-button.oo-ui-buttonedElement-active,
-.oo-ui-buttonedElement-framed .oo-ui-buttonedElement-button.oo-ui-buttonedElement-pressed {
-  color: black;
-  background: #eeeeee;
-  background-image: -webkit-gradient(linear, right top, right bottom, color-stop(0%, #dddddd), color-stop(100%, #ffffff));
-  background-image: -webkit-linear-gradient(top, #dddddd 0%, #ffffff 100%);
-  background-image: -moz-linear-gradient(top, #dddddd 0%, #ffffff 100%);
-  background-image: -ms-linear-gradient(top, #dddddd 0%, #ffffff 100%);
-  background-image: -o-linear-gradient(top, #dddddd 0%, #ffffff 100%);
-  background-image: linear-gradient(top, #dddddd 0%, #ffffff 100%);
-  border-color: #c9c9c9;
-  filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0, startColorstr='#dddddd', endColorstr='#ffffff');
-  box-shadow: inset 0 1px 4px 0 rgba(0, 0, 0, 0.07);
-}
-
-.oo-ui-buttonedElement-framed.oo-ui-flaggableElement-primary .oo-ui-buttonedElement-button {
-  background: #cde7f4;
-  background-image: -webkit-gradient(linear, right top, right bottom, color-stop(0%, #eaf4fa), color-stop(100%, #b0d9ee));
-  background-image: -webkit-linear-gradient(top, #eaf4fa 0%, #b0d9ee 100%);
-  background-image: -moz-linear-gradient(top, #eaf4fa 0%, #b0d9ee 100%);
-  background-image: -ms-linear-gradient(top, #eaf4fa 0%, #b0d9ee 100%);
-  background-image: -o-linear-gradient(top, #eaf4fa 0%, #b0d9ee 100%);
-  background-image: linear-gradient(top, #eaf4fa 0%, #b0d9ee 100%);
-  border: solid 1px #a6cee1;
-  filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0, startColorstr='#eaf4fa', endColorstr='#b0d9ee');
-}
-
-.oo-ui-buttonedElement-framed.oo-ui-flaggableElement-primary .oo-ui-buttonedElement-button:hover,
-.oo-ui-buttonedElement-framed.oo-ui-flaggableElement-primary .oo-ui-buttonedElement-button:focus {
-  border-color: #9dc2d4;
-}
-
-.oo-ui-buttonedElement-framed.oo-ui-flaggableElement-primary .oo-ui-buttonedElement-button.oo-ui-buttonedElement-active,
-.oo-ui-buttonedElement-framed.oo-ui-flaggableElement-primary .oo-ui-buttonedElement-button.oo-ui-buttonedElement-pressed {
-  background: #cde7f4;
-  background-image: -webkit-gradient(linear, right top, right bottom, color-stop(0%, #b0d9ee), color-stop(100%, #eaf4fa));
-  background-image: -webkit-linear-gradient(top, #b0d9ee 0%, #eaf4fa 100%);
-  background-image: -moz-linear-gradient(top, #b0d9ee 0%, #eaf4fa 100%);
-  background-image: -ms-linear-gradient(top, #b0d9ee 0%, #eaf4fa 100%);
-  background-image: -o-linear-gradient(top, #b0d9ee 0%, #eaf4fa 100%);
-  background-image: linear-gradient(top, #b0d9ee 0%, #eaf4fa 100%);
-  border: solid 1px #a6cee1;
-  filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0, startColorstr='#b0d9ee', endColorstr='#eaf4fa');
-}
-
-.oo-ui-buttonedElement-framed.oo-ui-flaggableElement-constructive .oo-ui-buttonedElement-button {
-  background: #daf0be;
-  background-image: -webkit-gradient(linear, right top, right bottom, color-stop(0%, #f0fbe1), color-stop(100%, #c3e59a));
-  background-image: -webkit-linear-gradient(top, #f0fbe1 0%, #c3e59a 100%);
-  background-image: -moz-linear-gradient(top, #f0fbe1 0%, #c3e59a 100%);
-  background-image: -ms-linear-gradient(top, #f0fbe1 0%, #c3e59a 100%);
-  background-image: -o-linear-gradient(top, #f0fbe1 0%, #c3e59a 100%);
-  background-image: linear-gradient(top, #f0fbe1 0%, #c3e59a 100%);
-  border: solid 1px #b8d892;
-  filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0, startColorstr='#f0fbe1', endColorstr='#c3e59a');
-}
-
-.oo-ui-buttonedElement-framed.oo-ui-flaggableElement-constructive .oo-ui-buttonedElement-button:hover,
-.oo-ui-buttonedElement-framed.oo-ui-flaggableElement-constructive .oo-ui-buttonedElement-button:focus {
-  border-color: #adcb89;
-}
-
-.oo-ui-buttonedElement-framed.oo-ui-flaggableElement-constructive .oo-ui-buttonedElement-button.oo-ui-buttonedElement-active,
-.oo-ui-buttonedElement-framed.oo-ui-flaggableElement-constructive .oo-ui-buttonedElement-button.oo-ui-buttonedElement-pressed {
-  background: #daf0be;
-  background-image: -webkit-gradient(linear, right top, right bottom, color-stop(0%, #c3e59a), color-stop(100%, #f0fbe1));
-  background-image: -webkit-linear-gradient(top, #c3e59a 0%, #f0fbe1 100%);
-  background-image: -moz-linear-gradient(top, #c3e59a 0%, #f0fbe1 100%);
-  background-image: -ms-linear-gradient(top, #c3e59a 0%, #f0fbe1 100%);
-  background-image: -o-linear-gradient(top, #c3e59a 0%, #f0fbe1 100%);
-  background-image: linear-gradient(top, #c3e59a 0%, #f0fbe1 100%);
-  border: solid 1px #b8d892;
-  filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0, startColorstr='#c3e59a', endColorstr='#f0fbe1');
-}
-
-.oo-ui-buttonedElement-framed.oo-ui-flaggableElement-destructive .oo-ui-buttonedElement-button {
-  color: #d45353;
-}
-
-.oo-ui-buttonedElement-framed.oo-ui-widget-disabled .oo-ui-buttonedElement-button,
-.oo-ui-buttonedElement-framed.oo-ui-widget-disabled .oo-ui-buttonedElement-button.oo-ui-buttonedElement-active,
-.oo-ui-buttonedElement-framed.oo-ui-widget-disabled .oo-ui-buttonedElement-button.oo-ui-buttonedElement-pressed {
-  color: #333;
-  background: #eee;
-  border-color: #ccc;
-  opacity: 0.5;
-  box-shadow: none;
-}
-
-.oo-ui-buttonedElement-framed.oo-ui-widget-disabled .oo-ui-buttonedElement-button:hover,
-.oo-ui-buttonedElement-framed.oo-ui-widget-disabled .oo-ui-buttonedElement-button.oo-ui-buttonedElement-active:hover,
-.oo-ui-buttonedElement-framed.oo-ui-widget-disabled .oo-ui-buttonedElement-button.oo-ui-buttonedElement-pressed:hover,
-.oo-ui-buttonedElement-framed.oo-ui-widget-disabled .oo-ui-buttonedElement-button:focus,
-.oo-ui-buttonedElement-framed.oo-ui-widget-disabled .oo-ui-buttonedElement-button.oo-ui-buttonedElement-active:focus,
-.oo-ui-buttonedElement-framed.oo-ui-widget-disabled .oo-ui-buttonedElement-button.oo-ui-buttonedElement-pressed:focus {
-  border-color: #ccc;
-  box-shadow: none;
-}
-
-.oo-ui-bookletLayout > .oo-ui-gridLayout > .oo-ui-panelLayout {
-  -webkit-transition: width 250ms ease-in-out, height 250ms ease-in-out, top 250ms ease-in-out, left 250ms ease-in-out;
-     -moz-transition: width 250ms ease-in-out, height 250ms ease-in-out, top 250ms ease-in-out, left 250ms ease-in-out;
-      -ms-transition: width 250ms ease-in-out, height 250ms ease-in-out, top 250ms ease-in-out, left 250ms ease-in-out;
-       -o-transition: width 250ms ease-in-out, height 250ms ease-in-out, top 250ms ease-in-out, left 250ms ease-in-out;
-          transition: width 250ms ease-in-out, height 250ms ease-in-out, top 250ms ease-in-out, left 250ms ease-in-out;
+.oo-ui-bookletLayout-stackLayout .oo-ui-panelLayout {
+  padding: 1.5em;
 }
 
 .oo-ui-bookletLayout-outlinePanel {
@@ -305,6 +271,18 @@
 
 .oo-ui-fieldsetLayout > .oo-ui-labeledElement-label {
   font-size: 1.5em;
+}
+
+.oo-ui-panelLayout {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+.oo-ui-panelLayout-padded {
+  padding: 2em;
 }
 
 .oo-ui-barToolGroup .oo-ui-tool {
@@ -626,6 +604,10 @@
   padding-right: 1.5em;
 }
 
+.oo-ui-outlineItemWidget.oo-ui-indicatedElement .oo-ui-indicatedElement-indicator {
+  opacity: 0.5;
+}
+
 .oo-ui-outlineItemWidget-level-0 {
   padding-left: 3.5em;
 }
@@ -663,8 +645,7 @@
   font-style: italic;
 }
 
-.oo-ui-outlineItemWidget.oo-ui-flaggableElement-empty .oo-ui-iconedElement-icon,
-.oo-ui-outlineItemWidget.oo-ui-flaggableElement-empty .oo-ui-indicatedElement-indicator {
+.oo-ui-outlineItemWidget.oo-ui-flaggableElement-empty .oo-ui-iconedElement-icon {
   opacity: 0.5;
 }
 

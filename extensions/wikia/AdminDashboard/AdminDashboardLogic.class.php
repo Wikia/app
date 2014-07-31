@@ -77,6 +77,7 @@ class AdminDashboardLogic {
 				"ManageWikiaHome",
 				"MiniEditor",
 				"MovePage",
+				"Maps",
 				"MultiLookup",
 				"NewFiles",
 				"Newimages",

@@ -36,7 +36,7 @@ class CreateNewWikiController extends WikiaController {
 
 		// form field values
 		$hubs = WikiFactoryHub::getInstance();
-		$this->aCategories = $hubs->getCategories();
+		$this->aCategories = $hubs->getAllCategories();
 
 		$this->aTopLanguages = explode(',', wfMsg('autocreatewiki-language-top-list'));
 		$languages = wfGetFixedLanguageNames();
@@ -96,7 +96,7 @@ class CreateNewWikiController extends WikiaController {
 			'cnw-error-general-heading' => wfMessage( 'cnw-error-general-heading' )->escaped(),
 			'cnw-keys' => $keys
 		);
-		
+
 		// theme designer application theme settings
 		$this->applicationThemeSettings = SassUtil::getApplicationThemeSettings();
 
@@ -282,7 +282,7 @@ class CreateNewWikiController extends WikiaController {
 
 		$text = $wgRequest->getVal('text','');
 		$blockedKeyword = '';
-		
+
 		wfRunHooks( 'CheckContent', array( $text, &$blockedKeyword ) );
 
 		$this->msgHeader = '';

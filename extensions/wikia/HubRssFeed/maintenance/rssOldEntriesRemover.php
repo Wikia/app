@@ -22,21 +22,24 @@ class MaintenanceRss extends Maintenance {
 	}
 
 	function removeOldEntries() {
-		global $wgExternalDatawareDB;
+		global $wgExternalDatawareDB, $wgHubRssFeeds;
+		$prefix = BaseRssModel::getStagingPrefix();
 
-		echo "| REMOVING OLD ENTRIES... \n";
+		$feedNames = [ ];
+		foreach ( $wgHubRssFeeds as $feedName ) {
+			$feedNames[ ] = $prefix . $feedName;
+		}
 
 		$db = wfGetDB( DB_MASTER, null, $wgExternalDatawareDB );
+		( new WikiaSQL() )
+			->DELETE( "wikia_rss_feeds" )
+			->WHERE( "wrf_pub_date < (DATE_SUB(CURDATE(), INTERVAL " . self::DAYS_TO_KEEP_OLD_FEED_ITEMS . " DAY))" )
+			->AND_( 'wrf_feed' )->IN( $feedNames )
+			->run( $db );
 
-		$deleteQuery = "DELETE FROM wikia_rss_feeds "
-			. " where wrf_feed IN ('tv','games') "
-			. " AND wrf_pub_date < (DATE_SUB(CURDATE(), INTERVAL " . self::DAYS_TO_KEEP_OLD_FEED_ITEMS . " DAY))";
-
-		$db->query($deleteQuery);
-
+		echo "| REMOVING OLD ENTRIES... \n";
 		$affectedRows = $db->affectedRows();
-
-		if($affectedRows) {
+		if ( $affectedRows ) {
 			echo "| " . $affectedRows . " OLD ENTRIES REMOVED \n";
 		} else {
 			echo "| NO OLD ENTRIES REMOVED \n";

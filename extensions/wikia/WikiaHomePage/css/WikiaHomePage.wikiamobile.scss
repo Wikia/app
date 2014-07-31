@@ -1,6 +1,5 @@
 @import '../../../../skins/oasis/css/core/color';
 @import '../../../../skins/oasis/css/mixins/clearfix';
-@import "WikiaHomePageHubSlotsColors";
 
 .wkhome {
 	>h1 {
@@ -13,15 +12,13 @@
 	.wkhome-section {
 		@include clearfix;
 		margin-top: 10px;
-		&.hub-slot-1 .wkhome-hero {
-			border-top: 5px solid $hub-color-slot-1;
+
+		@for $i from 1 through 10 {
+			&.hub-slot-#{$i} .wkhome-hero{
+				border-top: 5px solid get_command_line_param("hub-color-slot-#{$i}", $color-wikiahome-community);
+			}
 		}
-		&.hub-slot-2 .wkhome-hero {
-			border-top: 5px solid $hub-color-slot-2;
-		}
-		&.hub-slot-3 .wkhome-hero {
-			border-top: 5px solid $hub-color-slot-3;
-		}
+
 		&.wkhome-community .wkhome-hero {
 			background-color: #f4f4f4;
 			border-top: 5px solid $color-wikiahome-community;

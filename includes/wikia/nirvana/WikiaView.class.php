@@ -33,10 +33,22 @@ class WikiaView {
 	 * @param string $format
 	 */
 	public static function newFromControllerAndMethodName( $controllerName, $methodName, Array $data = array(), $format = WikiaResponse::FORMAT_HTML ) {
+		$app = F::app();
+		// Service classes must be dispatched by full name otherwise we default to a controller.
+		$controllerBaseName = $app->getBaseName( $controllerName );
+		if ($app->isService($controllerName)) {
+			$controllerClassName = $app->getServiceClassName( $controllerBaseName );
+		} else {
+			$controllerClassName = $app->getControllerClassName( $controllerBaseName );
+		}
+
 		$response = new WikiaResponse( $format );
 		$response->setControllerName( $controllerName );
 		$response->setMethodName( $methodName );
 		$response->setData( $data );
+
+		/* @var $controllerClassName WikiaController */
+		$response->setTemplateEngine( $controllerClassName::DEFAULT_TEMPLATE_ENGINE );
 
 		return $response->getView();
 	}
@@ -181,6 +193,13 @@ class WikiaView {
 		$data = $this->response->getData();
 
 		switch($this->response->getTemplateEngine()) {
+			case WikiaResponse::TEMPLATE_ENGINE_HANDLEBARS:
+				$handlebarsService = HandlebarsService::getInstance();
+				$result = $handlebarsService->render( $this->getTemplatePath(), $data );
+				wfProfileOut(__METHOD__);
+
+				return $result;
+				break;
 			case WikiaResponse::TEMPLATE_ENGINE_MUSTACHE:
 				$m = MustacheService::getInstance();
 				$result = $m->render( $this->getTemplatePath(), $data );

@@ -44,6 +44,7 @@ abstract class WikiaHubsModuleService extends WikiaService {
 			$hubParams,
 			$params['ts']
 		);
+
 		$structuredData = WikiaDataAccess::cache(
 			$this->getMemcacheKey($lastTimestamp, $this->skinName),
 			6 * 60 * 60,
@@ -51,7 +52,6 @@ abstract class WikiaHubsModuleService extends WikiaService {
 				return $this->loadStructuredData( $model, $params );
 			}
 		);
-
 		if ( $this->getShouldFilterCommercialData() ) {
 			$structuredData = $this->filterCommercialData( $structuredData );
 		}

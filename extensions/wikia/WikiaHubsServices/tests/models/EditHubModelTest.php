@@ -163,6 +163,7 @@ class EditHubModelTest extends WikiaBaseTest {
 
 	/**
 	 * @group Slow
+	 * @group Broken
 	 * @slowExecutionTime 0.01649 ms
 	 */
 	public function testGetModulesDataWithoutDefaults() {

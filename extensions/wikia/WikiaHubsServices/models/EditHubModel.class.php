@@ -1,7 +1,7 @@
 <?php
 
 class EditHubModel extends WikiaModel {
-	const CACHE_KEY = 'HubsV3v0.91';
+	const CACHE_KEY = 'HubsV3v0.92';
 	const CACHE_KEY_LAST_PUBLISHED_TIMESTAMP = 'v3LastPublishedTimestamp';
 	const HUBS_TABLE_NAME = '`wikia_hub_modules`';
 	const FORM_THUMBNAIL_SIZE = 149;

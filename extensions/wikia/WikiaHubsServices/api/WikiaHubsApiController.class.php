@@ -80,7 +80,7 @@ class WikiaHubsApiController extends WikiaApiController {
 		$timestamp = $this->request->getInt(self::PARAMETER_TIMESTAMP, strtotime('00:00'));
 
 		$model = $this->getModelV3();
-
+		$data = null;
 		if( !$this->isValidModule($model, $moduleId) ) {
 			throw new InvalidParameterApiException( self::PARAMETER_MODULE );
 		}
@@ -104,12 +104,22 @@ class WikiaHubsApiController extends WikiaApiController {
 				'city_id' => $cityId,
 				'ts' => $timestamp,
 			]);
-			$this->response->setVal('data', $data);
+
 		} else {
 			throw new BadRequestApiException();
 		}
 
-		$this->response->setCacheValidity( WikiaResponse::CACHE_STANDARD );
+		$this->setResponseData(
+			[ 'data' => $data ],
+			[ 'urlFields' =>
+				[
+					'articleUrl', 'href', 'hubUrl', 'imageLink',
+					'imageUrl',  'photoUrl', 'url', 'userUrl', 'wikiUrl'
+				]
+			],
+			WikiaResponse::CACHE_STANDARD
+		);
+
 
 		wfProfileOut( __METHOD__ );
 	}

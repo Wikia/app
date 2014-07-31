@@ -4,7 +4,7 @@
 	<?php endif; ?>
 	<?= $header; ?>
 </h2>
-	
+
 <div class="featured-video-content">
 	<figure class="thumb"><?= $video['thumbMarkup']; ?></figure>
 	<p><?= $description; ?></p>

@@ -139,6 +139,7 @@ class WikiaHubsModuleWikiaspicksService extends WikiaHubsModuleEditableService {
 		
 		$structuredData['title'] = $data['moduleTitle'];
 		$structuredData['text'] = $data['text'];
+		$structuredData['photoName'] = isset($data['fileName']) ? $data['fileName'] : '';
 		
 		return $structuredData;
 	}

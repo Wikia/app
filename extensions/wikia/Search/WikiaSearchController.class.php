@@ -316,8 +316,10 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			}
 
 			$queryService = $this->queryServiceFactory->getFromConfig( $searchConfig );
-			if ( ( $minDuration = $this->getVal( 'minseconds' ) ) && ( $maxDuration = $this->getVal( 'maxseconds' ) ) ) {
-				$queryService->setMinDuration( $minDuration)->setMaxDuration( $maxDuration );
+			$minDuration = $this->getVal( 'minseconds' );
+			$maxDuration = $this->getVal( 'maxseconds' );
+			if ( $minDuration && $maxDuration ) {
+				$queryService->setMinDuration( $minDuration )->setMaxDuration( $maxDuration );
 			}
 
 			$log = WikiaLogger::instance();
@@ -784,10 +786,10 @@ class WikiaSearchController extends WikiaSpecialPageController {
 
 	/**
 	 * Determines whether we are on the corporate wiki
-	 * @see WikiaSearchControllerTest::testIsCorporateWiki
+	 * @see SearchControllerTest::testIsCorporateWiki
 	 */
 	protected function  isCorporateWiki() {
-	    return !empty($this->wg->EnableWikiaHomePageExt);
+	    return WikiaPageType::isCorporatePage();
 	}
 
 	/**
@@ -796,7 +798,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 
 	/**
 	 * This is how we generate the subtemplate for the advanced search box.
-	 * @see    WikiaSearchControllerTest::testAdvancedBox
+	 * @see    SearchControllerTest::testAdvancedBox
 	 * @throws Exception
 	 */
 	public function advancedBox() {
@@ -817,7 +819,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 
 	/**
 	 * This is how we generate the search type tabs in the left-hand rail
-	 * @see    WikiaSearchControllerTest::tabs
+	 * @see    SearchControllerTest::tabs
 	 * @throws Exception
 	 */
 	public function tabs() {
@@ -860,7 +862,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 
 	/**
 	 * This handles pagination via a template script.
-	 * @see    WikiaSearchControllerTest::testPagination
+	 * @see    SearchControllerTest::testPagination
 	 * @throws Exception
 	 * @return boolean|null (false if we don't want pagination, fully routed to view via sendSelfRequest if we do want pagination)
 	 */

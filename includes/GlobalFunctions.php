@@ -1129,7 +1129,9 @@ function wfErrorLog( $text, $file ) {
  */
 function wfLogProfilingData() {
 	global $wgRequestTime, $wgDebugLogFile, $wgDebugRawPage, $wgRequest;
-	global $wgProfileLimit, $wgUser;
+	global $wgProfileLimit, $wgUser, $wgProfilingDataLogged;
+
+	$wgProfilingDataLogged = true;
 
 	$profiler = Profiler::instance();
 
@@ -3589,6 +3591,7 @@ function wfFindFile( $title, $options = array() ) {
 	wfProfileIn(__METHOD__);
 
 	if ( F::app()->wg->IsGhostVideo ) {
+		wfProfileOut(__METHOD__);
 		return false;
 	}
 	$file = RepoGroup::singleton()->findFile( $title, $options );

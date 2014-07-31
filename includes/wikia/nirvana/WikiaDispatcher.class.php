@@ -97,6 +97,7 @@ class WikiaDispatcher {
 				if ( $nextCall['reset'] ) $response->resetData();
 			}
 
+			$profilename = null;
 			try {
 
 				// Determine the "base" name for the controller, stripping off Controller/Service/Module
@@ -126,13 +127,7 @@ class WikiaDispatcher {
 				wfProfileIn($profilename);
 
 				$controller = new $controllerClassName; /* @var $controller WikiaController */
-				$controllerReflection = new ReflectionClass($controllerClassName);
-
-				if ($controllerReflection->hasConstant('DEFAULT_TEMPLATE_ENGINE')) {
-					$response->setTemplateEngine($controller::DEFAULT_TEMPLATE_ENGINE);
-				} else {
-					$response->setTemplateEngine(WikiaController::DEFAULT_TEMPLATE_ENGINE);
-				}
+				$response->setTemplateEngine($controllerClassName::DEFAULT_TEMPLATE_ENGINE);
 
 				if ( $callNext ) {
 					list ($nextController, $nextMethod, $resetData) = explode("::", $callNext);
@@ -247,7 +242,9 @@ class WikiaDispatcher {
 					}
 				}
 			} catch ( Exception $e ) {
-				wfProfileOut($profilename);
+				if ($profilename) {
+					wfProfileOut($profilename);
+				}
 
 				$response->setException($e);
 				Wikia::log(__METHOD__, $e->getMessage() );
