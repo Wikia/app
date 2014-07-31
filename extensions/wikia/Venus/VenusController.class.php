@@ -32,6 +32,10 @@ class VenusController extends WikiaController {
 		// initialize variables
 		$this->comScore = null;
 		$this->quantServe = null;
+
+		//TODO clean up wg variables inclusion in views
+		global $wgOut;
+		$this->topScripts = $wgOut->topScripts;
 	}
 
 	public function executeIndex() {
