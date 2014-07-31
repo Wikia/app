@@ -1,9 +1,6 @@
 <?php
 
 class VenusController extends WikiaController {
-
-	const MAIN_SASS_FILE = '/extensions/wikia/Venus/styles/Venus.scss';
-
 	private static $bodyParametersArray = [];
 	private static $skinAssetGroups = [];
 
@@ -16,21 +13,21 @@ class VenusController extends WikiaController {
 		$this->assetsManager = AssetsManager::getInstance();
 		$this->skinTemplateObj = $this->app->getSkinTemplateObj();
 		$this->service = new VenusService( $this->skinTemplateObj );
+		$this->skin = RequestContext::getMain()->getSkin();
 
 		$skinVars = $this->skinTemplateObj->data;
 
 		// this should be re-viewed and removed if not nessesary
-		$this->pagetitle = $skinVars['pagetitle'];
-		$this->displaytitle = $skinVars['displaytitle'];
-		$this->mimetype = $skinVars['mimetype'];
+		$this->pageTitle = $skinVars['pagetitle'];
+		$this->displayTitle = $skinVars['displaytitle'];
+		$this->mimeType = $skinVars['mimetype'];
 		$this->charset = $skinVars['charset'];
-		$this->body_ondblclick = $skinVars['body_ondblclick'];
 		$this->dir = $skinVars['dir'];
 		$this->lang = $skinVars['lang'];
-		$this->pageclass = $skinVars['pageclass'];
-		$this->pagecss = $skinVars['pagecss'];
-		$this->skinnameclass = $skinVars['skinnameclass'];
-		$this->bottomscripts = $skinVars['bottomscripts'];
+		$this->pageClass = $skinVars['pageclass'];
+		$this->pageCss = $skinVars['pagecss'];
+		$this->skinNameClass = $skinVars['skinnameclass'];
+		$this->bottomScriptLinks = $skinVars['bottomscripts'];
 
 		// initialize variables
 		$this->comScore = null;
@@ -41,7 +38,7 @@ class VenusController extends WikiaController {
 		global $wgUser, $wgTitle;
 
 		$this->title = $wgTitle->getText();
-		$this->bodytext = $this->skinTemplateObj->data['bodytext'];
+		$this->contents = $this->skinTemplateObj->data['bodytext'];
 
 		$this->isUserLoggedIn = $wgUser->isLoggedIn();
 
@@ -49,10 +46,7 @@ class VenusController extends WikiaController {
 
 		$this->setBodyClasses();
 		$this->setHeadItems();
-		//$this->setAssets();
-
-
-		wfProfileOut(__METHOD__ . ' - skin Operations');
+		$this->setAssets();
 	}
 
 	public function setBodyModules() {
@@ -60,14 +54,14 @@ class VenusController extends WikiaController {
 		$this->notifications = $this->getNotifications();
 		$this->topAds = $this->getTopAds();
 		$this->wikiHeader = $this->getWikiHeader();
-		$this->footer = $this->getFooter();
+		$this->globalFooter = $this->getGlobalFooter();
 		$this->corporateFooter = $this->getCorporateFootet();
 	}
 
 
 	public function setBodyClasses() {
-		// generate list of CSS clas$ses for <body> tag
-		$bodyClasses = [$this->skinnameclass, $this->dir, $this->pageclass];
+		// generate list of CSS classes for <body> tag
+		$bodyClasses = [$this->skinNameClass, $this->dir, $this->pageClass];
 
 		// add skin theme name
 		if(!empty($this->skin->themename)) {
@@ -85,12 +79,71 @@ class VenusController extends WikiaController {
 	public function setHeadItems() {
 		global $wgOut;
 		$this->headLinks = $wgOut->getHeadLinks();
-		$this->headItems = $this->getSkin()->getHeadItems();
+		$this->headItems = $this->skin->getHeadItems();
 
 		$this->pageTitle = htmlspecialchars( $this->pageTitle );
 		$this->displayTitle = htmlspecialchars( $this->displayTitle );
 		$this->mimeType = htmlspecialchars( $this->mimeType );
 		$this->charset = htmlspecialchars( $this->charset );
+	}
+
+	private function setAssets() {
+		$jsHeadGroups = ['venus_head_js'];
+		$jsHeadFiles = '';
+		$jsBodyGroups = ['venus_body_js'];
+		$jsBodyFiles = '';
+		$cssGroups = ['venus_css'];
+		$cssLinks = '';
+
+		$styles = $this->skin->getStyles();
+		$scripts = $this->skin->getScripts();
+
+		//let extensions manipulate the asset packages (e.g. ArticleComments,
+		//this is done to cut down the number or requests)
+		$this->app->runHook(
+			'VenusAssetsPackages',
+			[
+				&$jsHeadGroups,
+				&$jsBodyGroups,
+				&$cssGroups
+			]
+		);
+
+		//
+		foreach ( $this->assetsManager->getURL( $cssGroups ) as $s ) {
+			if ( $this->assetsManager->checkAssetUrlForSkin( $s, $this->skin ) ) {
+				$cssLinks .= "<link rel=stylesheet href='{$s}'/>";
+			}
+		}
+
+		if ( is_array( $styles ) ) {
+			foreach ( $styles as $s ) {
+				$cssLinks .= "<link rel=stylesheet href='{$s['url']}'/>";
+			}
+		}
+
+		foreach ( $this->assetsManager->getURL( $jsHeadGroups ) as $src ) {
+			if ( $this->assetsManager->checkAssetUrlForSkin( $s, $this->skin ) ) {
+				$jsHeadFiles .= "<script src='{$src}'></script>";
+			}
+		}
+
+		foreach ( $this->assetsManager->getURL( $jsBodyGroups ) as $src ) {
+			if ( $this->assetsManager->checkAssetUrlForSkin( $s, $this->skin ) ) {
+				$jsBodyFiles .= "<script src='{$src}'></script>";
+			}
+		}
+
+		if ( is_array( $scripts ) ) {
+			foreach ( $scripts as $s ) {
+				$jsBodyFiles .= "<script src='{$s['url']}'></script>";
+			}
+		}
+
+		// set variables
+		$this->cssLinks = $cssLinks;
+		$this->jsHeadFiles = $jsHeadFiles;
+		$this->jsBodyFiles = $jsBodyFiles;
 	}
 	/*
 
@@ -323,37 +376,28 @@ class VenusController extends WikiaController {
 	}
 	*/
 
-
-	private function getSkin() {
-		if ( !$this->skin ) {
-			$this->skin = RequestContext::getMain()->getSkin();
-		}
-
-		return $this->skin;
-	}
-
 	public function getGlobalHeader() {
-		return $this->app->renderView('GlobalNavigation', 'Index');
+		//return $this->app->renderView('GlobalNavigation', 'Index');
 	}
 
 	public function getNotifications() {
-		return $this->app->renderView('Notifications', 'Confirmation');
+		//return $this->app->renderView('Notifications', 'Confirmation');
 	}
 
 	public function getWikiHeader() {
-		return $this->app->renderView( 'LocalHeader', 'Index' );
+		//return $this->app->renderView( 'LocalHeader', 'Index' );
 	}
 
 	public function getTopAds() {
 		return $this->app->renderView('Ad', 'Top');
 	}
 
-	public function getFooter() {
-		return $this->app->renderView('Footer', 'Index');
+	public function getGlobalFooter() {
+		//return $this->app->renderView('Footer', 'Index');
 	}
 
 	public function getCorporateFootet() {
-		return $this->app->renderView('CorporateFooter', 'Index');
+		//return $this->app->renderView('CorporateFooter', 'Index');
 	}
 
 	public static function addBodyParameter($parameter) {

@@ -46,7 +46,7 @@ class VenusService extends WikiaService {
 		//let extensions manipulate the asset packages (e.g. ArticleComments,
 		//this is done to cut down the number or requests)
 		$this->app->runHook(
-			'VenuseAssetsPackages',
+			'VenusAssetsPackages',
 			[
 				//This should be a static package - files that need to be loaded on EVERY page
 				&$this->jsBodyPackages,

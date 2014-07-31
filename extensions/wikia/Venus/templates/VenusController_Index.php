@@ -1,14 +1,10 @@
 <!doctype html>
 <html lang="<?= $lang ?>" dir="<?= $dir ?>">
 <head>
-	<meta http-equiv="Content-Type" content="<?= $mimetype ?>; charset=<?= $charset ?>">
-<?php if (BodyController::isResponsiveLayoutEnabled()) : ?>
+	<meta http-equiv="Content-Type" content="<?= $mimeType ?>; charset=<?= $charset ?>">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-<?php else : ?>
-	<meta name="viewport" content="width=1200">
-<?php endif ?>
 	<?= $headLinks ?>
-	<title><?= $pagetitle ?></title>
+	<title><?= $pageTitle ?></title>
 	<?= $cssLinks ?>
 <?
 /*
@@ -24,12 +20,11 @@ normally added. See Skin::setupUserCss()
 <? endif ?>
 
 <? /* RT #68514: load global user CSS (and other page specific CSS added via "SkinTemplateSetupPageCss" hook) */ ?>
-<? if ($pagecss): ?>
-	<style type="text/css"><?= $pagecss ?></style>
+<? if ($pageCss): ?>
+	<style type="text/css"><?= $pageCss ?></style>
 <? endif ?>
 
-	<?= $topScripts ?>
-	<?= $globalBlockingScripts; /*needed for jsLoader and for the async loading of CSS files.*/ ?>
+	<?= $jsHeadFiles ?>
 	<?= $headItems ?>
 </head>
 
@@ -44,17 +39,13 @@ normally added. See Skin::setupUserCss()
 		<header>
 			<h1><?= $title ?></h1>
 		</header>
-		<?= $bodytext ?>
+		<?= $contents ?>
 	</article>
 	<?#TODO: Re-Enable when it's ready = $footer ?>
 	<?#TODO: Re-Enable when it's ready = $corporateFooter ?>
 </section>
 	<!--WikiaPage-->
-<? if ($jsAtBottom): ?>
-	<!-- Combined JS files and head scripts -->
-	<?= $jsFiles ?>
-<? endif ?>
-<?= $bottomScripts ?>
-<?= $cssPrintLinks ?>
+<?= $bottomScriptLinks ?>
+<?#TODO: = $printCssLinks ?>
 </body>
 </html>
