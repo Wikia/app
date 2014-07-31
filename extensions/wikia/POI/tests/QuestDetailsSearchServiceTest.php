@@ -46,7 +46,7 @@ class QuestDetailsSearchServiceTest extends WikiaBaseTest {
 	}
 
 	/** @test */
-	public function testShouldReturnCorrectArticleFormat() {
+	public function testShouldReturnCorrectResponseFormat() {
 
 		$questDetailsSearch = $this->getMockedQuestDetailsSearchService();
 
