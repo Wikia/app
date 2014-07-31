@@ -199,7 +199,7 @@ class HubRssModelTest extends WikiaBaseTest {
 			->getMock();
 
 		$refl = new \ReflectionObject( $mock );
-		$prop = $refl->getProperty( 'EditHubModel' );
+		$prop = $refl->getProperty( 'editHubModel' );
 		$prop->setAccessible( true );
 		$prop->setValue( $mock, $mockToolbox );
 

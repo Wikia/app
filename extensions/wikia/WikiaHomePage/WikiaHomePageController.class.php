@@ -114,49 +114,40 @@ class WikiaHomePageController extends WikiaController {
 			86400 /* 24 hours */,
 			function() use( $langCode ) {
 				$hubSlot = [];
-				$slots = $this->getHubsSectionSlots();
+				$hubsSlots = $this->getHubsSectionSlots();
 				$hubsV3List = $this->getHubsV3List( $langCode );
-				$hubsSlots = $this->fillEmptyHubSlots( $slots['hub_slot'] );
 
-				foreach( $hubsSlots as $slot => &$hub ) {
-					$hubId = $hub['hub_slot'];
-					if( is_numeric( $hubId ) && isset( $hubsV3List[ $hubId ] ) ) {
-						$hubSlot[ $slot ] = $this->prepareHubV3Slot( $hub, $hubsV3List, $slot );
+				foreach( $hubsSlots['hub_slot'] as $slot => $hubId ) {
+					if( !empty( $hubId ) ) {
+						$hubSlot[ $slot ] = $this->prepareHubV3Slot( $hubsV3List[$hubId], $slot );
 					}
 				}
 
 				$index = count( $hubSlot );
 
-				$marketingSlot = $this->prepareMarketingSlots( $slots['marketing_slot'], $index );
+				$marketingSlot = $this->prepareMarketingSlots( $hubsSlots['marketing_slot'], $index );
 				$hubSlot = array_merge($hubSlot, $marketingSlot);
-
 				return $hubSlot;
 			}
 		);
-
 		return $hubSlot;
 	}
 
 	/**
-<<<<<<< HEAD
-=======
-	 * If hub slots are not set, they are filled with hubs v2 data
+	 * Prepare data to display hub v3 slot in hubs section on Wikia homepage
 	 *
-	 * @param Array $hubsSlots data about hub slot
-	 * @return mixed
+	 * @param $hub
+	 * @param $hubsV3List
+	 * @param $slot
+	 * @return array
 	 */
-	private function fillEmptyHubSlots( $hubsSlots ) {
-		$verticals = $this->helper->getWikiVerticals();
-
-		$index = 0;
-		foreach($verticals as $vertical) {
-			if ( !isset( $hubsSlots[ $index ] ) ) {
-				$hubsSlots[ $index ] = $vertical;
-			}
-			$index++;
-		}
-
-		return $hubsSlots;
+	private function prepareHubV3Slot( $hub, $slot ) {
+		return [
+			'classname' =>	'hub-slot-' . ($slot + 1),
+			'heading' => $hub['name'],
+			'heroimageurl' => $this->getHubV3Images( $hub['id'] ),
+			'herourl' => $hub['url'],
+		];
 	}
 
 	/**
@@ -185,50 +176,6 @@ class WikiaHomePageController extends WikiaController {
 		}
 
 		return $marketingSlots;
-	}
-
-	/**
-	 * Prepare data to display hub v2 slot in hubs section on Wikia homepage
-	 *
-	 * @param string $hub
-	 * @return array|null
-	 */
-	private function prepareHubV2Slot( $hub ) {
-		$hubSlot = null;
-
-		switch( $hub ) {
-			case 'Video Games':
-				$categoryId = WikiFactoryHub::CATEGORY_ID_GAMING;
-				$hubSlot = $this->prepareHubsV2Params( 'videogames', $categoryId );
-				break;
-			case 'Entertainment':
-				$categoryId = WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT;
-				$hubSlot = $this->prepareHubsV2Params( 'entertainment', $categoryId );
-				break;
-			case 'Lifestyle':
-				$categoryId = WikiFactoryHub::CATEGORY_ID_LIFESTYLE;
-				$hubSlot = $this->prepareHubsV2Params( 'lifestyle', $categoryId );
-				break;
-		}
-
-		return $hubSlot;
-	}
-
-	/**
->>>>>>> origin/dev
-	 * Prepare parameters needed to display data about hub v3 in hub slot on Wikia homepage
-	 *
-	 * @param $slot slot in hubs section
-	 * @param $hub data about hub
-	 * @return array
-	 */
-	private function prepareRenderParams( $slot, $hub ) {
-		return [
-			'classname' =>		'hub-slot-' . ($slot + 1),
-			'heading' => 		$hub['name'],
-			'heroimageurl' => 	$hub['hubImage'],
-			'herourl' => 		$hub['url']
-		];
 	}
 
 	public function wikiaMobileIndex() {
@@ -530,7 +477,6 @@ class WikiaHomePageController extends WikiaController {
 	 */
 	public function getHubV3Images( $cityId ) {
 		$imageUrl = null;
-
 		$sliderData = $this->getHubSliderData( [ 'city' => $cityId ] );
 
 		if ( isset( $sliderData['data']['slides'][0]['photoName'] ) ) {

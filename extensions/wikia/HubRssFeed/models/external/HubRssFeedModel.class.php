@@ -39,7 +39,7 @@ class HubRssFeedModel extends WikiaModel {
 			'slider' => new WikiaHubsModuleSliderService( $cityId ),
 			'community' => new WikiaHubsModuleFromthecommunityService( $cityId ),
 			'wikiaspicks' => new WikiaHubsModuleWikiaspicksService( $cityId ),
-			'explore' => new WikiaHubsModuleModuleExploreService( $cityId )
+			'explore' => new WikiaHubsModuleExploreService( $cityId )
 		];
 		return $services;
 	}

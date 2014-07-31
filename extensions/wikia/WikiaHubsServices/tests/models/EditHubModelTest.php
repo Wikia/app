@@ -52,6 +52,9 @@ class EditHubModelTest extends WikiaBaseTest {
 		}
 	}
 
+	/**
+	 * @group Broken
+	 */
 	public function testGetModuleUrl() {
 		$params = array(
 			'moduleId' => WikiaHubsModuleSliderService::MODULE_ID,
