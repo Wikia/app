@@ -14,13 +14,28 @@ class QuestDetailsSearchService extends EntitySearchService {
 	const DEFAULT_THUMBNAIL_WIDTH = 200;
 	const DEFAULT_THUMBNAIL_HEIGHT = 200;
 
-	protected function prepareQuery( $fingerprintId ) {
+	public function find( $criteria ) {
+		$conditions = [ ];
+
+		if ( !empty( $criteria[ 'fingerprint' ] ) ) {
+			$conditions[ ] = 'metadata_fingerprint_ids_ss:"' . $criteria[ 'fingerprint' ] . '"';
+		}
+		if ( !empty( $criteria[ 'questId' ] ) ) {
+			$conditions[ ] = 'metadata_quest_id_s:"' . $criteria[ 'questId' ] . '"';
+		}
+
+		$query = join( ' AND ', $conditions );
+
+		return $this->query( $query );
+	}
+
+	protected function prepareQuery( $query ) {
 		$select = $this->getSelect();
 
 		$dismax = $select->getDisMax();
 		$dismax->setQueryParser( 'edismax' );
 
-		$select->setQuery( 'metadata_fingerprint_ids_ss:' . $fingerprintId );
+		$select->setQuery( $query );
 
 		return $select;
 	}
@@ -48,59 +63,71 @@ class QuestDetailsSearchService extends EntitySearchService {
 		return $result;
 	}
 
+	/**
+	 * Searching for field with prefix 'title_' (e.g. 'title_fr' or 'title_en')
+	 * If there are few fields with such prefix - returns value of first one.
+	 * If there are no fields with such prefix - returns empty string.
+	 */
 	protected function getTitle( &$item ) {
-		foreach ( $item as $key => $value ) {
-			if ( $this->startsWith( $key, 'title_' ) ) {
-				return $value;
-			}
-		}
-		return '';
+		$title = $this->findFirstValueByKeyPrefix( $item, 'title_' );
+		return ( $title == null ) ? '' : $title;
 	}
 
+	/**
+	 * Searching for field with prefix 'categories_' (e.g. 'categories_mv_en')
+	 * If there are few fields with such prefix - returns value of first one.
+	 * If there are no fields with such prefix - returns empty array.
+	 */
 	protected function getArticleCategories( &$item ) {
-		foreach ( $item as $key => $value ) {
-			if ( $this->startsWith( $key, 'categories_' ) ) {
-				return $value;
-			}
-		}
-		return '';
+		$categories = $this->findFirstValueByKeyPrefix( $item, 'categories_' );
+		return ( $categories == null ) ? [ ] : $categories;
 	}
 
-	protected function getRevision( &$item ) {
-		$titles = Title::newFromIDs( $item[ 'pageid' ] );
-		$title = $titles[ 0 ];
-		$revId = $title->getLatestRevID();
-		$rev = Revision::newFromId( $revId );
-
-		$revision = [
-			'id' => $revId,
-			'user' => $rev->getUserText( Revision::FOR_PUBLIC ),
-			'user_id' => $rev->getUser( Revision::FOR_PUBLIC ),
-			'timestamp' => wfTimestamp( TS_UNIX, $rev->getTimestamp() )
-		];
-
-		return $revision;
-	}
-
-	protected function getCommentsNumber( &$item ) {
-		$titles = Title::newFromIDs( $item[ 'pageid' ] );
-		$title = $titles[ 0 ];
-		if ( class_exists( 'ArticleCommentList' ) ) {
-			$commentsList = ArticleCommentList::newFromTitle( $title );
-			return $commentsList->getCountAllNested();
-		}
-		return 0;
-	}
-
+	/**
+	 * Searching for field with prefix 'html_' (e.g. 'html_en' or 'html_fr')
+	 * After finding corresponding field - shortening its value.
+	 * If there are few fields with such prefix - working with first one value.
+	 * If there are no fields with such prefix - returns empty string.
+	 */
 	protected function getAbstract( &$item ) {
-		foreach ( $item as $key => $value ) {
-			if ( $this->startsWith( $key, 'html_' ) ) {
-				return wfShortenText( $value, self::DEFAULT_ABSTRACT_LENGTH, true );
-			}
-		}
-		return '';
+		$html = $this->findFirstValueByKeyPrefix( $item, 'html_' );
+		return ( $html == null ) ? '' : wfShortenText( $html, self::DEFAULT_ABSTRACT_LENGTH, true );
 	}
 
+	/**
+	 * Searches for fields, which starts with prefix 'metadata_' (except 'metadata_map_')
+	 * e.g. 'metadata_fingerprint_ids_ss', 'metadata_quest_id_s')
+	 * and groups these fields into separate object.
+	 *
+	 * Prefix 'metadata_' and suffixes '_s' (or '_ss') - will be removed.
+	 *
+	 * If field will have 'fingerprint_ids' - it will be transformed to 'fingerprints'.
+	 *
+	 * All fields, which have prefix 'metadata_map_' will be collected using method self::getMetadataMap
+	 * and appended to result object - under the key 'map_location'.
+	 *
+	 * Example:
+	 *
+	 * Input:
+	 * [
+	 *      'metadata_fingerprint_ids_ss' => [ 'a', 'b', 'c' ],
+	 *      'metadata_quest_id_s' => 'test',
+	 *      'metadata_map_location_cr' => '12.3, 45.6',
+	 *      'metadata_map_region_s' => 'Test',
+	 *      'some_other_field' => 'test',
+	 * ]
+	 *
+	 * Output:
+	 * [
+	 *      'fingerprints' => [ 'a', 'b', 'c' ],
+	 *      'quest_id' => 'test',
+	 *      'map_location' => [
+	 *          'location_x' => 12.3,
+	 *          'location_y' => 45.6,
+	 *          'region' => 'Test'
+	 *      ]
+	 * ]
+	 */
 	protected function getMetadata( &$item ) {
 
 		$metadata = [ ];
@@ -134,6 +161,35 @@ class QuestDetailsSearchService extends EntitySearchService {
 		return $metadata;
 	}
 
+	/**
+	 * Searches for fields, which starts with prefix 'metadata_map_'
+	 * (e.g. 'metadata_map_location_sr', 'metadata_map_region_s')
+	 * and groups these fields into separate object.
+	 *
+	 * Prefix 'metadata_map_' and suffixes '_s' (or '_sr') - will be removed.
+	 *
+	 * If field has suffix '_s' - it will be copied as is.
+	 *
+	 * If field has suffix '_sr' - it will be parsed, in the following way:
+	 * '12.3, 45.6' -> will be parsed to float numbers 12.3 and 45.6
+	 * first number - will get suffix '_x', and second number will get suffix '_y'.
+	 *
+	 * Example:
+	 *
+	 * Input:
+	 * [
+	 *      'metadata_map_location_cr' => '12.3, 45.6',
+	 *      'metadata_map_region_s' => 'Test',
+	 *      'some_other_field' => 'test'
+	 * ]
+	 *
+	 * Output:
+	 * [
+	 *      'location_x' => 12.3,
+	 *      'location_y' => 45.6,
+	 *      'region' => 'Test'
+	 * ]
+	 */
 	protected function getMetadataMap( &$item ) {
 		$map = [ ];
 		foreach ( $item as $key => $value ) {
@@ -149,6 +205,7 @@ class QuestDetailsSearchService extends EntitySearchService {
 
 					$mapKey = $this->cutPrefixAndSuffix( $key, 'metadata_map_', '_sr' );
 
+					// "12.3, 45.6" => [ "12.3", "45.6" ]
 					$parts = preg_split( "/[\s,]+/", $value );
 					$x = $parts[ 0 ];
 					$y = $parts[ 1 ];
@@ -159,6 +216,32 @@ class QuestDetailsSearchService extends EntitySearchService {
 			}
 		}
 		return $map;
+	}
+
+	protected function getRevision( &$item ) {
+		$titles = Title::newFromIDs( $item[ 'pageid' ] );
+		$title = $titles[ 0 ];
+		$revId = $title->getLatestRevID();
+		$rev = Revision::newFromId( $revId );
+
+		$revision = [
+			'id' => $revId,
+			'user' => $rev->getUserText( Revision::FOR_PUBLIC ),
+			'user_id' => $rev->getUser( Revision::FOR_PUBLIC ),
+			'timestamp' => wfTimestamp( TS_UNIX, $rev->getTimestamp() )
+		];
+
+		return $revision;
+	}
+
+	protected function getCommentsNumber( &$item ) {
+		$titles = Title::newFromIDs( $item[ 'pageid' ] );
+		$title = $titles[ 0 ];
+		if ( class_exists( 'ArticleCommentList' ) ) {
+			$commentsList = ArticleCommentList::newFromTitle( $title );
+			return $commentsList->getCountAllNested();
+		}
+		return 0;
 	}
 
 	protected function addThumbnailsInfo( &$result ) {
@@ -197,6 +280,15 @@ class QuestDetailsSearchService extends EntitySearchService {
 			}
 		}
 		return $result;
+	}
+
+	protected function findFirstValueByKeyPrefix( &$hash, $prefix ) {
+		foreach ( $hash as $key => $value ) {
+			if ( $this->startsWith( $key, $prefix ) ) {
+				return $value;
+			}
+		}
+		return null;
 	}
 
 	protected function getImageServing( $ids, $width, $height ) {
