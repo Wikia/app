@@ -1,0 +1,122 @@
+@import 'skins/oasis/css/mixins/clearfix';
+@import 'skins/oasis/css/core/color';
+
+.wikiahomepage-footer {
+	@include clearfix;
+	border-bottom: 1px solid #f1f1f1;
+	border-top: 4px solid $color-wikiahome-border-primary-brand-color;
+	clear: both;
+	margin: 30px 10px 0;
+	padding: 30px 0 95px;
+
+	.grid-1 {
+		position: relative;
+	}
+
+	h3 {
+		font-size: 12px;
+		font-weight: bold;
+		margin-bottom: 10px;
+
+		.editsection {
+			display: none;
+		}
+	}
+
+	ul {
+		li {
+			font-size: 12px;
+			line-height: 19px;
+			margin-top: 3px;
+
+			b {
+				font-weight: bold;
+			}
+
+			a {
+				color: $color-links;
+			}
+		}
+	}
+
+	p {
+		font-size: 12px;
+		line-height: 19px;
+		margin: 5px 0 12px;
+	}
+
+	a.external:after {
+		display: none;
+	}
+
+	.wikia-menu-button.secondary {
+		position: absolute;
+		right: 0;
+		top: 0;
+
+		.sprite.edit-pencil {
+			width: 24px;
+		}
+
+		&.de .sprite.edit-pencil {
+			background-position: -24px -179px;
+		}
+
+		&.en .sprite.edit-pencil {
+			background-position: 0 -179px;
+		}
+
+		&.es .sprite.edit-pencil {
+			background-position: -48px -179px;
+		}
+
+		&.fr .sprite.edit-pencil {
+			background-position: -72px -179px;
+		}
+
+		&.pl .sprite.edit-pencil {
+			background-position: -96px -179px;
+		}
+
+		&.ja .sprite.edit-pencil {
+			background-position: -120px -179px;
+		}
+
+		a {
+			display: block;
+			height: 18px;
+			padding: 0;
+			width: 24px;
+
+			&.de {
+				background-position: -24px -179px;
+			}
+
+			&.en {
+				background-position: 0 -179px;
+			}
+
+			&.es {
+				background-position: -48px -179px;
+			}
+
+			&.fr {
+				background-position: -72px -179px;
+			}
+
+			&.pl {
+				background-position: -96px -179px;
+			}
+
+			&.ja {
+				background-position: -120px -179px;
+			}
+		}
+
+		li {
+			cursor: pointer;
+			margin: 0;
+			padding: 3px 0 3px 3px;
+		}
+	}
+}

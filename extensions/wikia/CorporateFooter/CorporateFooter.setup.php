@@ -1,17 +1,15 @@
 <?php
 
-$dir = dirname(__FILE__) . '/';
+$wgExtensionCredits[ 'specialpage' ][] = array(
+	'name' => 'CorporateFooter',
+	'author' => 'Mateusz "Warkot" Warkocki, Bogna "bognix" Knychala',
+	'description' => 'CorporateFooter',
+	'version' => 1.0
+);
 
-$wgExtensionCredits['specialpage'][] = array(
-		'name' => 'CorporateFooter',
-		'author' => 'Mateusz "Warkot" Warkocki, Bogna "bognix" Knychala',
-		'description' => 'CorporateFooter',
-		'version' => 1.0
-		);
+$wgAutoloadClasses[ 'CorporateFooterController' ] = __DIR__ . '/CorporateFooterController.class.php';
+$wgAutoloadClasses[ 'CorporateFooterHooks' ] = __DIR__ . '/hooks/CorporateFooterHooks.class.php';
 
-$wgAutoloadClasses['CorporateFooterController'] =  $dir . 'CorporateFooterController.class.php';
-$wgAutoloadClasses['CorporateFooterHooks'] =  $dir . 'hooks/CorporateFooterHooks.class.php';
+$wgHooks[ 'OasisSkinAssetGroups' ][] = 'CorporateFooterHooks::onOasisSkinAssetGroups';
 
-$wgHooks['OasisSkinAssetGroups'][] = 'CorporateFooterHooks::onOasisSkinAssetGroups';
-
-$wgExtensionMessagesFiles['CorporateFooter'] = $dir . 'CorporateFooter.i18n.php';
+$wgExtensionMessagesFiles[ 'CorporateFooter' ] = __DIR__ . '/CorporateFooter.i18n.php';
