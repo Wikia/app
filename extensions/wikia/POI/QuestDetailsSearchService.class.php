@@ -33,6 +33,7 @@ class QuestDetailsSearchService extends EntitySearchService {
 				'url' => $item[ 'url' ],
 				'ns' => $item[ 'ns' ],
 				'revision' => $this->getRevision( $item ),
+				'comments' => $this->getCommentsNumber( $item ),
 				'type' => $item[ 'article_type_s' ],
 				'abstract' => $this->getAbstract( $item ),
 				'metadata' => $this->getMetadata( $item ),
@@ -51,8 +52,9 @@ class QuestDetailsSearchService extends EntitySearchService {
 	}
 
 	protected function getRevision( &$item ) {
-		$t = Title::newFromIDs( $item[ 'pageid' ] );
-		$revId = $t[ 0 ]->getLatestRevID();
+		$titles = Title::newFromIDs( $item[ 'pageid' ] );
+		$title = $titles[ 0 ];
+		$revId = $title->getLatestRevID();
 		$rev = Revision::newFromId( $revId );
 
 		$revision = [
@@ -63,6 +65,16 @@ class QuestDetailsSearchService extends EntitySearchService {
 		];
 
 		return $revision;
+	}
+
+	protected function getCommentsNumber( &$item ) {
+		$titles = Title::newFromIDs( $item[ 'pageid' ] );
+		$title = $titles[ 0 ];
+		if ( class_exists( 'ArticleCommentList' ) ) {
+			$commentsList = ArticleCommentList::newFromTitle( $title );
+			return $commentsList->getCountAllNested();
+		}
+		return 0;
 	}
 
 	protected function getAbstract( &$item ) {
