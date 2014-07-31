@@ -37,6 +37,7 @@ class QuestDetailsSearchService extends EntitySearchService {
 				'revision' => $this->getRevision( $item ),
 				'comments' => $this->getCommentsNumber( $item ),
 				'type' => $item[ 'article_type_s' ],
+				'categories' => $this->getArticleCategories( $item ),
 				'abstract' => $this->getAbstract( $item ),
 				'metadata' => $this->getMetadata( $item ),
 			];
@@ -50,6 +51,15 @@ class QuestDetailsSearchService extends EntitySearchService {
 	protected function getTitle( &$item ) {
 		foreach ( $item as $key => $value ) {
 			if ( $this->startsWith( $key, 'title_' ) ) {
+				return $value;
+			}
+		}
+		return '';
+	}
+
+	protected function getArticleCategories( &$item ) {
+		foreach ( $item as $key => $value ) {
+			if ( $this->startsWith( $key, 'categories_' ) ) {
 				return $value;
 			}
 		}
@@ -101,13 +111,13 @@ class QuestDetailsSearchService extends EntitySearchService {
 
 				if ( $this->endsWith( $key, '_s' ) ) {
 
-					$metadataKey = $this->cutPrefixAndSuffix($key, 'metadata_', '_s');
+					$metadataKey = $this->cutPrefixAndSuffix( $key, 'metadata_', '_s' );
 
 					$metadata[ $metadataKey ] = $value;
 
 				} else if ( $this->endsWith( $key, '_ss' ) ) {
 
-					$metadataKey = $this->cutPrefixAndSuffix($key, 'metadata_', '_ss');
+					$metadataKey = $this->cutPrefixAndSuffix( $key, 'metadata_', '_ss' );
 
 					if ( $metadataKey == 'fingerprint_ids' ) {
 						$metadataKey = 'fingerprints';
@@ -131,13 +141,13 @@ class QuestDetailsSearchService extends EntitySearchService {
 
 				if ( $this->endsWith( $key, '_s' ) ) {
 
-					$mapKey = $this->cutPrefixAndSuffix($key, 'metadata_map_', '_s');
+					$mapKey = $this->cutPrefixAndSuffix( $key, 'metadata_map_', '_s' );
 
 					$map[ $mapKey ] = $value;
 
 				} else if ( $this->endsWith( $key, '_sr' ) ) {
 
-					$mapKey = $this->cutPrefixAndSuffix($key, 'metadata_map_', '_sr');
+					$mapKey = $this->cutPrefixAndSuffix( $key, 'metadata_map_', '_sr' );
 
 					$parts = preg_split( "/[\s,]+/", $value );
 					$x = $parts[ 0 ];
