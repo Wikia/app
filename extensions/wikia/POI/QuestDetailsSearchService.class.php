@@ -11,6 +11,8 @@ use Wikia\Search\Services\EntitySearchService;
 class QuestDetailsSearchService extends EntitySearchService {
 
 	const DEFAULT_ABSTRACT_LENGTH = 200;
+	const DEFAULT_THUMBNAIL_WIDTH = 200;
+	const DEFAULT_THUMBNAIL_HEIGHT = 200;
 
 	protected function prepareQuery( $fingerprintId ) {
 		$select = $this->getSelect();
@@ -39,6 +41,9 @@ class QuestDetailsSearchService extends EntitySearchService {
 				'metadata' => $this->getMetadata( $item ),
 			];
 		}
+
+		$this->addThumbnailsInfo( $result );
+
 		return $result;
 	}
 
@@ -160,6 +165,48 @@ class QuestDetailsSearchService extends EntitySearchService {
 			}
 		}
 		return $map;
+	}
+
+	protected function addThumbnailsInfo( &$result ) {
+		$articleIds = [ ];
+		foreach ( $result as &$item ) {
+			$articleIds[ ] = $item[ 'id' ];
+		}
+
+		$thumbnails = $this->getArticlesThumbnails( $articleIds );
+
+		foreach ( $result as &$item ) {
+			$id = $item[ 'id' ];
+			$thumbnailProps = $thumbnails[ $id ];
+			foreach ( $thumbnailProps as $key => $value ) {
+				$item[ $key ] = $value;
+			}
+		}
+	}
+
+	protected function getArticlesThumbnails( $articles, $width = self::DEFAULT_THUMBNAIL_WIDTH, $height = self::DEFAULT_THUMBNAIL_HEIGHT ) {
+		$ids = !is_array( $articles ) ? [ $articles ] : $articles;
+		$result = [ ];
+		if ( $width > 0 && $height > 0 ) {
+			$is = $this->getImageServing( $ids, $width, $height );
+			//only one image max is returned
+			$images = $is->getImages( 1 );
+			//parse results
+			foreach ( $ids as $id ) {
+				$data = [ 'thumbnail' => null, 'original_dimensions' => null ];
+				if ( isset( $images[ $id ] ) ) {
+					$data[ 'thumbnail' ] = $images[ $id ][ 0 ][ 'url' ];
+					$data[ 'original_dimensions' ] = isset( $images[ $id ][ 0 ][ 'original_dimensions' ] ) ?
+						$images[ $id ][ 0 ][ 'original_dimensions' ] : null;
+				}
+				$result[ $id ] = $data;
+			}
+		}
+		return $result;
+	}
+
+	protected function getImageServing( $ids, $width, $height ) {
+		return new ImageServing( $ids, $width, $height );
 	}
 
 	protected function startsWith( $haystack, $needle ) {
