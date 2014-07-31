@@ -99,7 +99,7 @@ class WikiaInteractiveMapsPoiCategoryController extends WikiaInteractiveMapsBase
 	 * @throws BadRequestApiException
 	 * @throws InvalidParameterApiException
 	 */
-	private function validatePoiCategories() {
+	public function validatePoiCategories() {
 		$mapId = $this->getData( 'mapId' );
 		$poiCategoriesToCreate = $this->getData( 'poiCategoriesToCreate' );
 		$poiCategoriesToUpdate = $this->getData( 'poiCategoriesToUpdate' );
@@ -131,7 +131,7 @@ class WikiaInteractiveMapsPoiCategoryController extends WikiaInteractiveMapsBase
 	 * @param array $poiCategory
 	 * @throws BadRequestApiException
 	 */
-	private function validatePoiCategory( $poiCategory ) {
+	public function validatePoiCategory( $poiCategory ) {
 		$poiCategoryName = trim( $poiCategory[ 'name' ] );
 
 		if ( empty( $poiCategoryName ) ) {
@@ -144,7 +144,7 @@ class WikiaInteractiveMapsPoiCategoryController extends WikiaInteractiveMapsBase
 	 *
 	 * @return bool
 	 */
-	private function validatePoiCategoriesToDelete() {
+	public function validatePoiCategoriesToDelete() {
 		$poiCategoriesToDelete = $this->getData( 'poiCategoriesToDelete' );
 
 		if ( !is_array( $poiCategoriesToDelete ) ) {
@@ -153,7 +153,7 @@ class WikiaInteractiveMapsPoiCategoryController extends WikiaInteractiveMapsBase
 		}
 
 		foreach ( $poiCategoriesToDelete as $poiCategoryId ) {
-			if ( !$poiCategoryId > 0 ) {
+			if ( !( $poiCategoryId > 0 ) ) {
 				return false;
 			}
 		}
