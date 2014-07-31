@@ -510,9 +510,8 @@ ve.init.mw.ViewPageTarget.prototype.onSaveErrorEmpty = function () {
  */
 ve.init.mw.ViewPageTarget.prototype.onSaveErrorSpamBlacklist = function ( editApi ) {
 	this.showSaveError(
-		/* Wikia change: We use Phalanx for spam filtering instead of the SpamBlacklist extension, as well as a
-		   modified message. Therefore it's easier to get the i18n message on the back-end and just show it here.
-		*/
+		// Wikia change: We use Phalanx for spam filtering instead of the SpamBlacklist extension, as well as a
+		// modified message. Therefore it's easier to get the i18n message on the back-end and just show it here.
 		$( $.parseHTML( editApi.spamblacklist ) ),
 		false // prevents reapply
 	);
