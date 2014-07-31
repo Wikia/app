@@ -90,28 +90,14 @@ class WikiFactoryHub extends WikiaModel {
 			$title = $wgTitle;
 		}
 		$cat_id = $this->getCategoryId( $city_id );
+		$categories = $this->getAllCategories( false );
+
 		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 		$oTmpl->set_vars( array(
 			"title"			=> $title,
 			"cat_id"		=> $cat_id,
 			"city_id"	 	=> $city_id,
-			"categories" 	=> $this->mOldCategories
-		));
-
-		return $oTmpl->render("categories");
-	}
-
-	/**
-	 * return HTML select for category choosing
-	 * FIXME: This uses the old categories and template system and will have to be updated
-	 */
-	public function getSelect( $cat_id ) {
-
-		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
-		$oTmpl->set_vars( array(
-			"title"			=> null,
-			"cat_id"		=> $cat_id,
-			"categories" 	=> $this->mOldCategories
+			"categories" 	=> $categories
 		));
 
 		return $oTmpl->render("categories");
