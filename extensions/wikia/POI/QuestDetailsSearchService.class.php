@@ -14,7 +14,12 @@ class QuestDetailsSearchService extends EntitySearchService {
 	const DEFAULT_THUMBNAIL_WIDTH = 200;
 	const DEFAULT_THUMBNAIL_HEIGHT = 200;
 
-	public function find( $criteria ) {
+	protected function prepareQuery( $criteria ) {
+		$select = $this->getSelect();
+
+		$dismax = $select->getDisMax();
+		$dismax->setQueryParser( 'edismax' );
+
 		$conditions = [ ];
 
 		if ( !empty( $criteria[ 'fingerprint' ] ) ) {
@@ -23,19 +28,17 @@ class QuestDetailsSearchService extends EntitySearchService {
 		if ( !empty( $criteria[ 'questId' ] ) ) {
 			$conditions[ ] = 'metadata_quest_id_s:"' . $criteria[ 'questId' ] . '"';
 		}
+		if ( !empty( $criteria[ 'category' ] ) ) {
+			$conditions[ ] = 'categories_mv_en:"' . $criteria[ 'category' ] . '"';
+		}
 
 		$query = join( ' AND ', $conditions );
 
-		return $this->query( $query );
-	}
-
-	protected function prepareQuery( $query ) {
-		$select = $this->getSelect();
-
-		$dismax = $select->getDisMax();
-		$dismax->setQueryParser( 'edismax' );
-
 		$select->setQuery( $query );
+
+		if( !empty( $criteria[ 'limit' ] ) ) {
+			$select->setRows( intval( $criteria[ 'limit' ] ) );
+		}
 
 		return $select;
 	}
