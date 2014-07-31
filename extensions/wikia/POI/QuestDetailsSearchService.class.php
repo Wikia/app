@@ -101,21 +101,13 @@ class QuestDetailsSearchService extends EntitySearchService {
 
 				if ( $this->endsWith( $key, '_s' ) ) {
 
-					$metadataKey = substr(
-						$key,
-						strlen( 'metadata_' ),
-						strlen( $key ) - strlen( 'metadata_' ) - strlen( '_s' )
-					);
+					$metadataKey = $this->cutPrefixAndSuffix($key, 'metadata_', '_s');
 
 					$metadata[ $metadataKey ] = $value;
 
 				} else if ( $this->endsWith( $key, '_ss' ) ) {
 
-					$metadataKey = substr(
-						$key,
-						strlen( 'metadata_' ),
-						strlen( $key ) - strlen( 'metadata_' ) - strlen( '_ss' )
-					);
+					$metadataKey = $this->cutPrefixAndSuffix($key, 'metadata_', '_ss');
 
 					if ( $metadataKey == 'fingerprint_ids' ) {
 						$metadataKey = 'fingerprints';
@@ -139,21 +131,13 @@ class QuestDetailsSearchService extends EntitySearchService {
 
 				if ( $this->endsWith( $key, '_s' ) ) {
 
-					$mapKey = substr(
-						$key,
-						strlen( 'metadata_map_' ),
-						strlen( $key ) - strlen( 'metadata_map_' ) - strlen( '_s' )
-					);
+					$mapKey = $this->cutPrefixAndSuffix($key, 'metadata_map_', '_s');
 
 					$map[ $mapKey ] = $value;
 
 				} else if ( $this->endsWith( $key, '_sr' ) ) {
 
-					$mapKey = substr(
-						$key,
-						strlen( 'metadata_map_' ),
-						strlen( $key ) - strlen( 'metadata_map_' ) - strlen( '_sr' )
-					);
+					$mapKey = $this->cutPrefixAndSuffix($key, 'metadata_map_', '_sr');
 
 					$parts = preg_split( "/[\s,]+/", $value );
 					$x = $parts[ 0 ];
@@ -209,11 +193,15 @@ class QuestDetailsSearchService extends EntitySearchService {
 		return new ImageServing( $ids, $width, $height );
 	}
 
-	protected function startsWith( $haystack, $needle ) {
-		return $needle === "" || strpos( $haystack, $needle ) === 0;
+	protected function cutPrefixAndSuffix( $str, $prefix, $suffix ) {
+		return substr( $str, strlen( $prefix ), strlen( $str ) - strlen( $prefix ) - strlen( $suffix ) );
 	}
 
-	protected function endsWith( $haystack, $needle ) {
-		return $needle === "" || substr( $haystack, -strlen( $needle ) ) === $needle;
+	protected function startsWith( $str, $prefix ) {
+		return $prefix === "" || strpos( $str, $prefix ) === 0;
+	}
+
+	protected function endsWith( $str, $suffix ) {
+		return $suffix === "" || substr( $str, -strlen( $suffix ) ) === $suffix;
 	}
 }
