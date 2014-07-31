@@ -196,7 +196,8 @@ class WikiaInteractiveMapsPoiCategoryControllerTest extends WikiaBaseTest {
 		$poiCategoryControllerMock = $this->getMock(
 			'WikiaInteractiveMapsPoiCategoryController',
 			array_merge( [ 'getData' ], $additionalMethodsToMock ),
-			[], '', false );
+			[], '', false
+		);
 
 		$poiCategoryControllerMock->wg->User = $this->getUserMock( true );
 
