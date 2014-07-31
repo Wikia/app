@@ -36,6 +36,12 @@ class LogstashFormatter extends \Monolog\Formatter\LogstashFormatter implements 
 		}
 
 		if (!empty($record['context'])) {
+			// macbre: log exception details
+			if (!empty($record['context']['exception'])) {
+				$message['@exception'] = $record['context']['exception'];
+				unset($record['context']['exception']);
+			}
+
 			$message['@context'] = $record['context'];
 		}
 
