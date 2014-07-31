@@ -23,7 +23,7 @@ require([
 		// instantiate rail view
 		if ($rail.hasClass('loaded')) {
 			// Debugging to see if there's a race condition. This fires if there's a bug. (VID-1769)
-			Wikia.syslog(Wikia.log.levels.debug, 'VideosModule', {railLoaded: true});
+			Wikia.syslog(Wikia.log.levels.debug, 'VideosModule', {railLoaded: true, adsShown: !!window.wgShowAds});
 			init();
 		} else {
 			$rail.on('afterLoad.rail', init);
