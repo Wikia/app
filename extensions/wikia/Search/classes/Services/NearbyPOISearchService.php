@@ -32,8 +32,8 @@ class NearbyPOISearchService extends EntitySearchService {
 		if ( !array_key_exists( self::LATITUDE, $phrase ) or !array_key_exists( self::LONGITUDE, $phrase ) ) {
 			throw new \Exception( "Nearby POI search query is not an array of lat, long" );
 		}
-		$lat = $this->sanitizeQuery( $phrase[self::LATITUDE] );
-		$long = $this->sanitizeQuery( $phrase[self::LONGITUDE] );
+		$lat = doubleval( $phrase[self::LATITUDE] );
+		$long = doubleval( $phrase[self::LONGITUDE] );
 
 		$select = $this->getSelect();
 		$select->setFields( array_merge( $this->fields, [ "score" ] ) );
