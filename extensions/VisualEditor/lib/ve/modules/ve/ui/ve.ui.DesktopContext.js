@@ -550,12 +550,14 @@ ve.ui.DesktopContext.prototype.handleFloat = function () {
  */
 ve.ui.DesktopContext.prototype.shouldFloat = function () {
 	var toolbarHeight = this.surface.getTarget().getToolbar().$element.height(),
-		focusedNodeBounds = this.surface.getView().getFocusedNode().boundingRect,
+		focusedNode = this.surface.getView().getFocusedNode(),
 		surfaceOffsetTop = this.surface.$element.offset().top,
 		contextTop = this.$window.scrollTop() + toolbarHeight + this.floatThreshold - surfaceOffsetTop,
-		contextBottom = contextTop + this.popup.getPopup().height();
+		contextBottom = contextTop + this.popup.getPopup().height(),
+		focusedNodeTop = focusedNode.getRelativeOffset().top,
+		focusedNodeBottom = focusedNodeTop + focusedNode.getDimensions().height;
 
-	return ( focusedNodeBounds.top <= contextTop && focusedNodeBounds.bottom >= contextBottom );
+	return ( focusedNodeTop <= contextTop && focusedNodeBottom >= contextBottom );
 };
 
 /*
