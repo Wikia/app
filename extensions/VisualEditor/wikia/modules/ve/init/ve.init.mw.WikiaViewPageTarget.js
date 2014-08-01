@@ -115,7 +115,7 @@ ve.init.mw.WikiaViewPageTarget.prototype.onSaveDialogReview = function () {
 	ve.track( 'wikia', {
 		'action': ve.track.actions.CLICK,
 		'label': 'dialog-save-review-changes-button',
-		'duration': this.events.timings.saveReview - this.events.timings.saveWorkflowBegin
+		'value': ve.track.normalizeDuration( this.events.timings.saveReview - this.events.timings.saveWorkflowBegin )
 	} );
 };
 
@@ -129,7 +129,7 @@ ve.init.mw.WikiaViewPageTarget.prototype.onToolbarCancelButtonClick = function (
 	ve.track( 'wikia', {
 		'action': ve.track.actions.CLICK,
 		'label': 'button-cancel',
-		'duration': ve.now() - this.events.timings.surfaceReady
+		'value': ve.track.normalizeDuration( ve.now() - this.events.timings.surfaceReady )
 	} );
 	mw.hook( 've.cancelButton' ).fire();
 	/*
@@ -159,7 +159,7 @@ ve.init.mw.WikiaViewPageTarget.prototype.onToolbarSaveButtonClick = function () 
 	ve.track( 'wikia', {
 		'action': ve.track.actions.CLICK,
 		'label': 'button-publish',
-		'duration': ve.now() - this.events.timings.surfaceReady
+		'value': ve.track.normalizeDuration( ve.now() - this.events.timings.surfaceReady )
 	} );
 	ve.init.mw.ViewPageTarget.prototype.onToolbarSaveButtonClick.call( this );
 };
@@ -189,7 +189,7 @@ ve.init.mw.WikiaViewPageTarget.prototype.updateToolbarSaveButtonState = function
 		ve.track( 'wikia', {
 			'action': ve.track.actions.ENABLE,
 			'label': 'button-publish',
-			'duration': ve.now() - this.events.timings.surfaceReady
+			'value': ve.track.normalizeDuration( ve.now() - this.events.timings.surfaceReady )
 		} );
 	}
 };
