@@ -205,7 +205,7 @@ ve.ui.WikiaSourceModeDialog.prototype.onParseError = function ( ) {
 			action: 'parsoid-parsewt-error'
 		} );
 	}
-	alert( ve.msg( 'visualeditor-saveerror', '' ) );
+	alert( ve.msg( 'wikia-visualeditor-save-error-generic' ) );
 };
 
 ve.ui.windowFactory.register( ve.ui.WikiaSourceModeDialog );
