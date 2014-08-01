@@ -7,7 +7,7 @@
  * @author Nelson Monterroso <nelson@wikia-inc.com>
  */
 
-trait UserAllowedRequirement {
+trait UserAllowedRequirementTrait {
 	protected $userAccessDefaultRequirement;
 
 	/**
@@ -47,8 +47,8 @@ trait UserAllowedRequirement {
 	}
 }
 
-trait UserAllowedRequirementThrowsError {
-	use UserAllowedRequirement;
+trait UserAllowedRequirementThrowsErrorTrait {
+	use UserAllowedRequirementTrait;
 
 	protected function onUserAllowedRequirementFailed(User $user, $perms) {
 		throw new PermissionsError(implode(', ', $perms));
