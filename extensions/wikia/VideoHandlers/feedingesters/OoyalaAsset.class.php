@@ -187,7 +187,7 @@ class OoyalaAsset extends WikiaModel {
 	 * @param array $data
 	 * @return boolean $resp
 	 */
-	public function addRemoteAsset( $data ) {
+	public function addRemoteAsset( $data, &$videoId = null ) {
 		wfProfileIn( __METHOD__ );
 
 		$resp = false;
@@ -210,6 +210,7 @@ class OoyalaAsset extends WikiaModel {
 			$response = $req->getContent();
 			$asset = json_decode( $response, true );
 
+			$videoId = $asset['embed_code'];
 			print( "Ooyala: Uploaded Remote Asset: $data[provider]: $asset[name] \n" );
 			foreach( explode( "\n", var_export( $asset, 1 ) ) as $line ) {
 				print ":: $line\n";
