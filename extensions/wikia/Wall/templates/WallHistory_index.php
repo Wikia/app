@@ -38,16 +38,16 @@
 							<?php endif; ?>
 						</td>
 						<td>
-							<a href="<?php echo $entry['authorurl'] ?>"><?= AvatarService::renderAvatar($entry['username'], 20); ?></a>
+							<a href="<?= $entry['authorurl']; ?>"><?= AvatarService::renderAvatar($entry['username'], 20); ?></a>
 						</td>
 						<td>
-							<?= wfMessage( $wallHistoryMsg[$entry['prefix'].$entry['type']], array(
-									'$1' => '',
-									'$2' => $entry['displayname'],
-									'$3' => Xml::element('a', array('href' => $entry['msguserurl']), $entry['msgusername']),
-									'$4' => Xml::element('a', array('href' => $entry['msgurl'], 'class' => 'creation'), $entry['metatitle']),
-									'$5' => '<a href="'.$entry['msgurl'] . '">#'. $entry['msgid']. '</a>'
-							) )->text(); ?>
+							<?= wfMessage( $wallHistoryMsg[$entry['prefix'] . $entry['type']] )->rawParams( [
+								'',
+								$entry['displayname'],
+								Xml::element('a', array('href' => $entry['msguserurl']), $entry['msgusername']),
+								Xml::element('a', array('href' => $entry['msgurl'], 'class' => 'creation'), $entry['metatitle']),
+								'<a href="'.$entry['msgurl'] . '">#'. $entry['msgid']. '</a>'
+							] )->escaped(); ?>
 
 							<?php
 								if( !empty($entry['actions']) ):
@@ -55,7 +55,7 @@
 									foreach($entry['actions'] as $key => $action):
 										$htmldata = $action;
 										unset($htmldata['msg']);
-										$actions[] = wfMessage( 'parentheses' )->rawParams( Xml::element('a', $htmldata , $action['msg']) )->plain();
+										$actions[] = wfMessage( 'parentheses' )->rawParams( Xml::element('a', $htmldata , $action['msg']) )->escaped();
 									endforeach;
 									echo Xml::openElement('span', array('class' => 'actions'));
 									echo implode(' ',$actions);
@@ -87,15 +87,15 @@
 						<td>
 							<?php
 								if( $entry['type'] === WH_NEW ) {
-									echo wfMessage( $wallHistoryMsg[$entry['type']], array(
-										'$1' => Xml::element('a', array('href' => $entry['msgurl'], 'class' => 'creation'), $entry['metatitle']),
-										'$2' => $entry['displayname'],
-									) )->text();
+									echo wfMessage( $wallHistoryMsg[$entry['type']] )->rawParams( [
+										Xml::element('a', array('href' => $entry['msgurl'], 'class' => 'creation'), $entry['metatitle']),
+										$entry['displayname'],
+									] )->escaped();
 								} else {
-									echo wfMessage( $wallHistoryMsg[$entry['type']], array(
-										'$1' => Xml::element('a', array('href' => $entry['msgurl']), $entry['metatitle']),
-										'$2' => $entry['displayname'],
-									) )->text();
+									echo wfMessage( $wallHistoryMsg[$entry['type']] )->rawParams( [
+										Xml::element('a', array('href' => $entry['msgurl']), $entry['metatitle']),
+										$entry['displayname'],
+									] )->escaped();
 								}
 							?>
 							<?php
@@ -104,14 +104,14 @@
 									foreach($entry['actions'] as $key => $action):
 										$htmldata = $action;
 										unset($htmldata['msg']);
-										$actions[] = wfMessage( 'parentheses' )->rawParams( Xml::element('a', $htmldata , $action['msg']) )->plain();
+										$actions[] = wfMessage( 'parentheses' )->rawParams( Xml::element('a', $htmldata , $action['msg']) )->escaped();
 									endforeach;
 									echo Xml::openElement('span', array('class' => 'actions'));
 									echo implode(' ',$actions);
 									echo Xml::closeElement('span');
 								endif;
 							?>
-							<span class="threadHistory"><?= wfMessage( 'parentheses' )->rawParams( $entry['historyLink'] )->plain(); ?></span>
+							<span class="threadHistory"><?= wfMessage( 'parentheses' )->rawParams( $entry['historyLink'] )->escaped(); ?></span>
 						</td>
 						<td>
 							<span class='timestamp'>
