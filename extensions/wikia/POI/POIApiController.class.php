@@ -49,14 +49,13 @@ class POIApiController extends WikiaApiController {
 		$lat = $this->request->getVal("lat");
 		$long = $this->request->getVal("long");
 
+		$solrHelper = new QuestDetailsSolrHelper();
+
 		$nearBySearch = new Wikia\Search\Services\NearbyPOISearchService();
-		$nearBySearch->setFields( QuestDetailsSearchService::getRequiredSolrFields() );
-		$resp = $nearBySearch->queryLocation($lat, $long);
+		$nearBySearch->setFields( $solrHelper->getRequiredSolrFields() );
+		$solrResponse = $nearBySearch->queryLocation( $lat, $long );
+		$result = $solrHelper->consumeResponse( $solrResponse );
 
-		// TODO: refactor this reusage of code
-		$questDetailsService = new QuestDetailsSearchService();
-		$ret = $questDetailsService->consumeResponse($resp);
-
-		$this->setResponseData( $ret );
+		$this->setResponseData( $result );
 	}
 }

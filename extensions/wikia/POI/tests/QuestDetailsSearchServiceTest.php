@@ -2,12 +2,12 @@
 
 use Wikia\Search\Test\BaseTest;
 
-include_once dirname( __FILE__ ) . '/../' . "QuestDetailsSearchService.class.php";
+include_once dirname( __FILE__ ) . '/../' . "QuestDetailsSolrHelper.class.php";
 
 /**
  * Class QuestDetailsSearchServiceMock - used to mock calls of static methods (which must not be tested)
  */
-class QuestDetailsSearchServiceMock extends QuestDetailsSearchService {
+class QuestDetailsSearchSolrHelperMock extends QuestDetailsSolrHelper {
 
 	protected function getRevision( &$item ) {
 		$revision = [
@@ -38,6 +38,12 @@ class QuestDetailsSearchServiceMock extends QuestDetailsSearchService {
 }
 
 class QuestDetailsSearchServiceTest extends WikiaBaseTest {
+
+	public function setUp() {
+		$dir = dirname( __FILE__ ) . '/../';
+		$this->setupFile = $dir . 'POI.setup.php';
+		parent::setUp();
+	}
 
 	public function testShouldReturnCorrectResponseFormat() {
 
@@ -134,7 +140,9 @@ class QuestDetailsSearchServiceTest extends WikiaBaseTest {
 			->method( 'select' )
 			->will( $this->returnValue( $this->getResultMock( 'getSolariumMainResponse' ) ) );
 
-		$questDetailsSearch = new QuestDetailsSearchServiceMock( $mock );
+		$questDetailsSearch = new QuestDetailsSearchService( $mock );
+
+		$questDetailsSearch->setSolrHelper( new QuestDetailsSearchSolrHelperMock() );
 
 		return $questDetailsSearch;
 	}
