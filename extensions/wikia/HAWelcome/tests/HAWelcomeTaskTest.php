@@ -104,6 +104,7 @@ class HAWelcomeTaskTest extends WikiaBaseTest {
 
 	public function testPostTalkPageToRecipientWhenNotExists() {
 		$sender = $this->getMock( '\User', ['getName'] );
+		$defaultWelcomer = $this->getMock( '\User' );
 		$recipient = $this->getMock( '\User', ['getName'] );
 
 		$talkPage = $this->getMock( '\Article', ['exists', 'getContent', 'doEdit'], [], '', false );
@@ -117,7 +118,7 @@ class HAWelcomeTaskTest extends WikiaBaseTest {
 			->method( 'getContent' )
 			->will( $this->returnValue( $talkPageContent ) );
 
-		$task = $this->getMock( '\HAWelcomeTask', ['getRecipientTalkPage', 'getTextVersionOfMessage'], [], '', false );
+		$task = $this->getMock( '\HAWelcomeTask', ['getRecipientTalkPage', 'getTextVersionOfMessage', 'getDefaultWelcomerUser'], [], '', false );
 
 		$task->expects( $this->exactly( 2 ) )
 			->method( 'getRecipientTalkPage' )
@@ -127,6 +128,10 @@ class HAWelcomeTaskTest extends WikiaBaseTest {
 		$task->expects( $this->once() )
 			->method( 'getTextVersionOfMessage' )
 			->will( $this->returnValue( $textMessage ) );
+
+		$task->expects( $this->once() )
+			->method( 'getDefaultWelcomerUser' )
+			->will( $this->returnValue( $defaultWelcomer ) );
 
 		$sender->expects( $this->once() )
 			->method( 'getName' )
@@ -138,7 +143,7 @@ class HAWelcomeTaskTest extends WikiaBaseTest {
 
 		$talkPage->expects( $this->once() )
 			->method( 'doEdit' )
-			->with( null, $textMessage, 0, false, $sender )
+			->with( null, $textMessage, 0, false, $defaultWelcomer )
 			->will( $this->returnValue( null ) );
 
 		$task->setSenderObject( $sender );

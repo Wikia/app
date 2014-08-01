@@ -1,6 +1,7 @@
 <?php
 
 use Wikia\Tasks\Tasks\BaseTask;
+use Wikia\Util\GlobalStateWrapper;
 
 class HAWelcomeTask extends BaseTask {
 	use IncludeMessagesTrait;
@@ -112,7 +113,7 @@ class HAWelcomeTask extends BaseTask {
 		return true;
 	}
 
-	private function getDefaultWelcomerUser() {
+	protected function getDefaultWelcomerUser() {
 		return User::newFromName( self::DEFAULT_WELCOMER );
 	}
 
@@ -328,18 +329,33 @@ class HAWelcomeTask extends BaseTask {
 	}
 
 	protected function postWallMessageToRecipient() {
-		$this->info( "creating a welcome wall message" );
-		$mWallMessage = WallMessage::buildNewMessageAndPost(
-			$this->welcomeMessage, $this->recipientName, $this->getDefaultWelcomerUser(),
-			$this->getTextVersionOfMessage( 'welcome-message-log' ), false, array(), false, false
-		);
+		$defaultWelcomeUser = $this->getDefaultWelcomerUser();
 
-		// Sets the sender of the message when the actual message
-		// was posted by the welcome bot
-		if ( $mWallMessage ) {
-			$mWallMessage->setPostedAsBot( $this->senderObject );
-			$mWallMessage->sendNotificationAboutLastRev();
-		}
+		// some of the lower level methods used in buildNewMessageAndPost do not pass the
+		// $user object down the call stack and instead rely on the $wgUser which is
+		// not set in a Task environment
+		$wrapper = new GlobalStateWrapper(array(
+			'wgUser' => $defaultWelcomeUser
+		));
+
+		$this->info( "creating a welcome wall message" );
+		$welcomeMessage = $this->welcomeMessage;
+		$recipientName  = $this->recipientName;
+		$textMessage    = $this->getTextVersionOfMessage( 'welcome-message-log' );
+		$wrapper->wrap(function () use ($welcomeMessage, $recipientName, $defaultWelcomeUser) {
+			$mWallMessage = WallMessage::buildNewMessageAndPost(
+				$welcomeMessage, $recipientName, $defaultWelcomeUser,
+				$textMessage, false, array(), false, false
+			);
+
+			// Sets the sender of the message when the actual message
+			// was posted by the welcome bot
+			if ( $mWallMessage ) {
+				$mWallMessage->setPostedAsBot( $this->senderObject );
+				$mWallMessage->sendNotificationAboutLastRev();
+			}
+		});
+
 	}
 
 	public function postTalkPageMessageToRecipient() {
@@ -352,12 +368,13 @@ class HAWelcomeTask extends BaseTask {
 
 		$this->info( sprintf( "posting talkpage message to %s from %s",
 			$this->recipientObject->getName(), $this->senderObject->getName() ) );
+
 		$this->getRecipientTalkPage()->doEdit(
 			$welcomeMessage,
 			$this->getTextVersionOfMessage( 'welcome-message-log' ),
 			$this->integerFlags,
 			false,
-			$this->senderObject
+			$this->getDefaultWelcomerUser()
 		);
 	}
 
