@@ -8,20 +8,21 @@
  *		// ... do some stuff with core that expects $wgUser
  * });
  *
- * if ($wrapper->getException()) {
- *	// oops, something went wrong, but I don't need to clean up $wgUser
- *	// because that's been done for me
- * }
  */
 
 namespace Wikia\Util;
 
 class GlobalStateWrapper {
 
-	private $caughtException = null;
 
+	/*
+	 * @var array $globalsToWrap
+	 */
 	private $globalsToWrap = null;
 
+	/*
+	 * @var array $capturedState
+	 */
 	private $capturedState = null;
 
 
@@ -33,26 +34,27 @@ class GlobalStateWrapper {
 	}
 
 	public function wrap( $function ) {
+		if ( !is_callable( $function ) ) {
+			throw new \InvalidArgumentException( "Error, the \$function parameter provided is not callable." );
+		}
+
 		$result = null;
+		$caughtException = null;
 		$this->captureState();
 
 		try {
 			$result = $function();
 		} catch ( \Exception $e ) {
-			$this->caughtException = $e;
+			$caughtException = $e;
 		}
 
 		$this->restoreState();
 
+		if ( isset( $caughtException ) ) {
+			throw $caughtException;
+		}
+
 		return $result;
-	}
-
-	public function setCaughtException( Exception $e ) {
-		$this->caughtException = $e;
-	}
-
-	public function getException() {
-		return $this->caughtException;
 	}
 
 	protected function captureState() {

@@ -40,17 +40,18 @@ class GlobalStateWrapperTest extends PHPUnit_Framework_TestCase {
 			'arrayGlobalState'  => $newArray
 		) );
 
-		$exceptionMessage = "an exception";
+		$exceptionWasThrown = false;
+		$result = null;
 		try {
-			$result = $wrapper->wrap( function () use ( $exceptionMessage ) {
-				throw new Exception( $exceptionMessage );
+			$result = $wrapper->wrap( function () {
+				throw new Exception( 'foo' );
 			} );
 		} catch ( Exception $e ) {
-			$this->fail( "caught outside" );
+			$exceptionWasThrown = true;
 		}
 
 		$this->assertNull( $result );
-		$this->assertEquals( $exceptionMessage, $wrapper->getException()->getMessage() );
+		$this->assertTrue( $exceptionWasThrown );
 
 		// make sure they are restored after the exception
 		$this->assertEquals( $this->scalarValue, $GLOBALS['scalarGlobalState'] );
@@ -79,9 +80,16 @@ class GlobalStateWrapperTest extends PHPUnit_Framework_TestCase {
 		} );
 
 		$this->assertEquals( array( 'a', 'b' ), $result );
-		$this->assertNull( $wrapper->getException() );
 		$this->assertEquals( $this->scalarValue, $scalarGlobalState );
 		$this->assertEquals( $this->arrayValue, $arrayGlobalState );
+	}
+
+	/**
+	 * @expectedException     InvalidArgumentException
+	 */
+	public function testWrapWithNotCallable() {
+		$wrapper = new GlobalStateWrapper( array() );
+		$wrapper->wrap( 'foo' );
 	}
 
 }
