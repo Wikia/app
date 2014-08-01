@@ -883,9 +883,7 @@ $wikiahomepage-line-height: 16px;
 .remix .arrow,
 .wikia-slot .previewVisit .previcon,
 .wikia-slot .previewVisit .visicon,
-.WikiPreviewInterstitial .preview-grey,
-.wikiahomepage-footer .wikia-menu-button.secondary .sprite.edit-pencil,
-.wikiahomepage-footer .wikia-menu-button.secondary a {
+.WikiPreviewInterstitial .preview-grey {
 	background-image: url("/extensions/wikia/WikiaHomePage/images/wikiahome-sprite.png"); /* $wgCdnStylePath */
 	background-repeat: no-repeat;
 }

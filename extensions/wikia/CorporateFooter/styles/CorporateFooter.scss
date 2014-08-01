@@ -55,70 +55,42 @@
 		top: 0;
 
 		.sprite.edit-pencil {
+			background-position: 0 0;
 			width: 24px;
 		}
 
-		&.de .sprite.edit-pencil {
-			background-position: -24px -220px;
+		&.de .sprite.edit-pencil, a.de {
+			background-image: URL('/extensions/wikia/CorporateFooter/images/de.png'); /* base64 */
 		}
 
-		&.en .sprite.edit-pencil {
-			background-position: 0 -220px;
+		&.en .sprite.edit-pencil, a.en {
+			background-image: URL('/extensions/wikia/CorporateFooter/images/en.png'); /* base64 */
 		}
 
-		&.es .sprite.edit-pencil {
-			background-position: -48px -220px;
+		&.es .sprite.edit-pencil, a.es {
+			background-image: URL('/extensions/wikia/CorporateFooter/images/es.png'); /* base64 */
 		}
 
-		&.fr .sprite.edit-pencil {
-			background-position: -72px -220px;
+		&.fr .sprite.edit-pencil, a.fr {
+			background-image: URL('/extensions/wikia/CorporateFooter/images/fr.png'); /* base64 */
 		}
 
-		&.pl .sprite.edit-pencil {
-			background-position: -96px -220px;
+		&.ja .sprite.edit-pencil, a.ja {
+			background-image: URL('/extensions/wikia/CorporateFooter/images/ja.png'); /* base64 */
 		}
 
-		&.ja .sprite.edit-pencil {
-			background-position: -120px -220px;
+		&.pl .sprite.edit-pencil, a.pl {
+			background-image: URL('/extensions/wikia/CorporateFooter/images/pl.png'); /* base64 */
 		}
 
-		&.pt-br .sprite.edit-pencil {
-			background-position: -144px -220px;
+		&.pt-br .sprite.edit-pencil, a.pt-br {
+			background-image: URL('/extensions/wikia/CorporateFooter/images/br.png'); /* base64 */
 		}
 
 		a {
-			display: block;
 			height: 18px;
 			padding: 0;
 			width: 24px;
-
-			&.de {
-				background-position: -24px -220px;
-			}
-
-			&.en {
-				background-position: 0 -220px;
-			}
-
-			&.es {
-				background-position: -48px -220px;
-			}
-
-			&.fr {
-				background-position: -72px -220px;
-			}
-
-			&.pl {
-				background-position: -96px -220px;
-			}
-
-			&.ja {
-				background-position: -120px -220px;
-			}
-
-			&.pt-br {
-				background-position: -144px -220px;
-			}
 		}
 
 		li {
