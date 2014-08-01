@@ -3,7 +3,7 @@
  * VisualEditor user interface WikiaSourceModeDialog class.
  */
 
-/*global mw, veTrack */
+/*global alert, mw, veTrack */
 
 /**
  * Dialog for editing wikitext in source mode.
@@ -154,7 +154,8 @@ ve.ui.WikiaSourceModeDialog.prototype.parse = function ( ) {
  */
 ve.ui.WikiaSourceModeDialog.prototype.onParseSuccess = function ( response ) {
 	var target, parseStart;
-	if ( !response || response.error || !response.visualeditor || response.visualeditor.result !== 'success' ) {
+	if ( !response || response.error || !response.visualeditor ||
+		response.visualeditor.result !== 'success' || response.visualeditor.content === false ) {
 		return this.onParseError.call( this );
 	}
 
@@ -206,7 +207,7 @@ ve.ui.WikiaSourceModeDialog.prototype.onParseError = function ( ) {
 			action: 'parsoid-parsewt-error'
 		} );
 	}
-	// TODO: error handling?
+	alert( ve.msg( 'wikia-visualeditor-save-error-generic' ) );
 };
 
 ve.ui.windowFactory.register( ve.ui.WikiaSourceModeDialog );
