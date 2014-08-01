@@ -8,7 +8,17 @@
  */
 class QuestDetailsApiController extends WikiaApiController {
 
+	/**
+	 * @var QuestDetailsSearchService
+	 */
 	protected $service;
+
+	/**
+	 * @param \QuestDetailsSearchService $service
+	 */
+	public function setService( $service ) {
+		$this->service = $service;
+	}
 
 	public function getQuestDetails() {
 		$fingerprintId = $this->getRequest()->getVal( 'fingerprint_id' );
@@ -33,7 +43,8 @@ class QuestDetailsApiController extends WikiaApiController {
 
 	protected function getService() {
 		if ( !isset( $this->service ) ) {
-			$this->service = new QuestDetailsSearchService();;
+			// TODO: consider using of some dependency injection mechanism
+			$this->service = new QuestDetailsSearchService();
 		}
 		return $this->service;
 	}
