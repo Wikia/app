@@ -20,7 +20,8 @@ ve.init.mw.WikiaTargetEvents = function ( target ) {
 
 	// Events
 	this.target.connect( this, {
-		'beforeUnload': 'onBeforeUnload'
+		'beforeUnload': 'onBeforeUnload',
+		'popStateDeactivated': 'onPopStateDeactivated'
 	} );
 };
 
@@ -56,11 +57,22 @@ ve.init.mw.WikiaTargetEvents.prototype.onBeforeUnload = function () {
 /**
  * Track when document save is complete
  */
-ve.init.mw.TargetEvents.prototype.onSaveComplete = function () {
+ve.init.mw.WikiaTargetEvents.prototype.onSaveComplete = function () {
 	ve.init.mw.WikiaTargetEvents.super.prototype.onSaveComplete.call( this );
 	ve.track( 'wikia', {
 		'action': ve.track.actions.CLICK,
 		'label': 'dialog-save-publish',
 		'duration': ve.now() - this.timings.saveInitiated
+	} );
+};
+
+/*
+ * Track when user deactivates VE by clicking back button
+ */
+ve.init.mw.WikiaTargetEvents.prototype.onPopStateDeactivated = function () {
+	ve.track( 'wikia', {
+		'action': ve.track.actions.CLICK,
+		'label': 'back',
+		'duration': ve.now() - this.timings.surfaceReady
 	} );
 };
