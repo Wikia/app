@@ -45,8 +45,20 @@ class QuestDetailsSearchServiceTest extends WikiaBaseTest {
 		parent::setUp();
 	}
 
-	public function testShouldReturnCorrectResponseFormat() {
+	/**
+	 * @covers  QuestDetailsSearchService::constructQuery
+	 * @dataProvider makeCriteriaQuery_Provider
+	 */
+	public function testCorrectnessOfQueryBuilding( $criteria, $expectedQuery ) {
+		$questDetailsSearch = new QuestDetailsSearchService();
 
+		$this->assertEquals(
+			$expectedQuery,
+			$questDetailsSearch->constructQuery( $criteria )
+		);
+	}
+
+	public function testShouldReturnCorrectResponseFormat() {
 		$questDetailsSearch = $this->getMockedQuestDetailsSearchService();
 
 		$result = $questDetailsSearch->query( [
@@ -244,5 +256,18 @@ SOLR_RESPONSE_MOCK;
 			[ 'HTTP/1.1 200 OK' ]
 		);
 		return $mock;
+	}
+
+	public function makeCriteriaQuery_Provider() {
+		return [
+			[ [ 'fingerprint' => 'test' ], 'metadata_fingerprint_ids_ss:"test"' ],
+			[ [ 'fingerprint' => 'test', 'questId'=>null, 'category'=>null ], 'metadata_fingerprint_ids_ss:"test"' ],
+			[ [ 'fingerprint' => 'test', 'questId'=>'', 'category'=>'' ], 'metadata_fingerprint_ids_ss:"test"' ],
+			[ [ 'questId' => '123' ], 'metadata_quest_id_s:"123"' ],
+			[ [ 'category' => 'Test' ], 'categories_mv_en:"Test"' ],
+			[ [ 'fingerprint' => 'test', 'questId' => '123' ], 'metadata_fingerprint_ids_ss:"test" AND metadata_quest_id_s:"123"' ],
+			[ [ 'fingerprint' => 'test', 'category' => 'Test' ], 'metadata_fingerprint_ids_ss:"test" AND categories_mv_en:"Test"' ],
+			[ [ 'questId' => '123', 'category' => 'Test' ], 'metadata_quest_id_s:"123" AND categories_mv_en:"Test"' ],
+		];
 	}
 }
