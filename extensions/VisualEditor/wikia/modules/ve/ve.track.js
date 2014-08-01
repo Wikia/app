@@ -189,7 +189,6 @@ require( ['wikia.tracker'], function ( tracker ) {
 	 */
 	function handleFunnel( data ) {
 		var funnelEvents = [
-			'edit-page/impression',
 			'edit-page-ready/impression',
 			'button-publish/enable',
 			'button-cancel/click',
