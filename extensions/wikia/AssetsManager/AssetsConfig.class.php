@@ -11,7 +11,7 @@ class AssetsConfig {
 	private /* array */ $mConfig;
 
 	public static function getSiteJS( $combine ) {
-		return array(Title::newFromText('-')->getFullURL('action=raw&smaxage=0&gen=js&useskin=oasis'));
+		return array( Title::newFromText( '-' )->getFullURL( 'action=raw&smaxage=0&gen=js&useskin=oasis' ) );
 	}
 
 	public static function getRTEAssets( $combine ) {
@@ -23,12 +23,12 @@ class AssetsConfig {
 		);
 
 		$input = file_get_contents( $IP . '/' . $path . '/ckeditor/ckeditor.wikia.pack' );
-		$input = substr( $input, strpos($input, 'files :') + 7 );
+		$input = substr( $input, strpos( $input, 'files :' ) + 7 );
 		$input = trim( $input, " \n\t[]{}" );
 
 		// get all *.js files from ckeditor.wikia.pack file
 		if ( preg_match_all( '%[^/]\'([^\']+).js%', $input, $matches, PREG_SET_ORDER ) ) {
-			foreach( $matches as $match ) {
+			foreach ( $matches as $match ) {
 				$name = $match[1] . '.js';
 				$files[] = $path . '/ckeditor/' . $name;
 			}
@@ -41,7 +41,7 @@ class AssetsConfig {
 		global $wgOasisResponsive;
 		$files = [];
 
-		if (class_exists('EditPageLayoutHelper')) {
+		if ( class_exists( 'EditPageLayoutHelper' ) ) {
 			$files = EditPageLayoutHelper::getAssets();
 		}
 		// $wgOasisResponsive determines if the EditPreview extension is loaded
@@ -59,7 +59,7 @@ class AssetsConfig {
 	public static function getJQueryUrl( $combine, $minify, $params ) {
 		global $wgUseJQueryFromCDN;
 
-		if (!empty($wgUseJQueryFromCDN) && empty($params['noexternals'])) {
+		if ( !empty( $wgUseJQueryFromCDN ) && empty( $params['noexternals'] ) ) {
 			$url = $minify
 				? '#external_http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js'
 				: '#external_http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.js';
@@ -67,7 +67,7 @@ class AssetsConfig {
 			$url = 'resources/jquery/jquery-1.8.2.js';
 		}
 
-		return array($url);
+		return array( $url );
 	}
 
 	/**
@@ -75,15 +75,28 @@ class AssetsConfig {
 	 *
 	 * @author Federico "Lox" Lucignano <federico(at)wikia-inc.com>
 	 */
-	private function load(){
+	private function load() {
 		wfProfileIn( __METHOD__ );
 
-		if( empty( $this->mConfig ) ) {
+		if ( empty( $this->mConfig ) ) {
 			include( 'config.php' );
 			$this->mConfig = $config;
 		}
 
 		wfProfileOut( __METHOD__ );
+
+		wfProfileIn( __METHOD__ . 'Groups' );
+
+		foreach ( glob ( __DIR__ . '/configGroups/*Config.php' ) as $fileName ) {
+			include_once( $fileName  );
+			$configFileName = pathinfo( $fileName )['filename'];
+			if ( !empty ( $$configFileName ) ) {
+				$configVar = $$configFileName;
+				$this->mConfig = array_merge( $this->mConfig, $configVar );
+			}
+		}
+
+		wfProfileOut( __METHOD__ . 'Groups' );
 	}
 
 	/**
@@ -97,7 +110,7 @@ class AssetsConfig {
 		if ( isset( $this->mConfig[$groupName] ) ) {
 			return ( isset( $this->mConfig[$groupName]['skin'] ) ) ? $this->mConfig[$groupName]['skin'] : null;
 		} else {
-			//this is being called on non-defined groups programmatically, so no need to log failure
+			// this is being called on non-defined groups programmatically, so no need to log failure
 			return null;
 		}
 	}
@@ -113,7 +126,7 @@ class AssetsConfig {
 		if ( isset( $this->mConfig[$groupName] ) ) {
 			return $this->mConfig[$groupName]['type'];
 		} else {
-			//this is being called on non-defined groups programmatically, so no need to log failure
+			// this is being called on non-defined groups programmatically, so no need to log failure
 			return null;
 		}
 	}
@@ -130,7 +143,7 @@ class AssetsConfig {
 			return $this->mConfig[$groupName]['assets'];
 		} else {
 			$requestDetails = AssetsManager::getRequestDetails();
-			Wikia::log(__METHOD__, false, "group '{$groupName}' doesn't exist ({$requestDetails})", true /* $always */);
+			Wikia::log( __METHOD__, false, "group '{$groupName}' doesn't exist ({$requestDetails})", true /* $always */ );
 			return array();
 		}
 	}
@@ -160,10 +173,10 @@ class AssetsConfig {
 			} elseif ( substr( $item, 0, 7 ) == '#group_' ) {
 				// reference to another group
 				$assets = array_merge( $assets, $this->resolve( substr( $item, 7 ), $combine, $minify, $params ) );
-			} elseif ( substr ($item, 0, 10 ) == '#function_' ) {
+			} elseif ( substr ( $item, 0, 10 ) == '#function_' ) {
 				// reference to a function that returns array of URIs
 				$assets = array_merge( $assets, call_user_func( substr( $item, 10 ), $combine, $minify, $params ) );
-			} elseif ( substr ($item, 0, 10 ) == '#external_' ) {
+			} elseif ( substr ( $item, 0, 10 ) == '#external_' ) {
 				// reference to a file to be fetched by the browser from external server (BugId:9522)
 				$assets[] = $item;
 			} elseif ( Http::isValidURI( $item ) ) {
