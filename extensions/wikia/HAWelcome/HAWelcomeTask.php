@@ -334,15 +334,15 @@ class HAWelcomeTask extends BaseTask {
 		// some of the lower level methods used in buildNewMessageAndPost do not pass the
 		// $user object down the call stack and instead rely on the $wgUser which is
 		// not set in a Task environment
-		$wrapper = new GlobalStateWrapper(array(
+		$wrapper = new GlobalStateWrapper( array(
 			'wgUser' => $defaultWelcomeUser
-		));
+		) );
 
 		$this->info( "creating a welcome wall message" );
 		$welcomeMessage = $this->welcomeMessage;
 		$recipientName  = $this->recipientName;
 		$textMessage    = $this->getTextVersionOfMessage( 'welcome-message-log' );
-		$wrapper->wrap(function () use ($welcomeMessage, $recipientName, $defaultWelcomeUser) {
+		$wrapper->wrap( function () use ( $welcomeMessage, $recipientName, $defaultWelcomeUser ) {
 			$mWallMessage = WallMessage::buildNewMessageAndPost(
 				$welcomeMessage, $recipientName, $defaultWelcomeUser,
 				$textMessage, false, array(), false, false
@@ -354,7 +354,7 @@ class HAWelcomeTask extends BaseTask {
 				$mWallMessage->setPostedAsBot( $this->senderObject );
 				$mWallMessage->sendNotificationAboutLastRev();
 			}
-		});
+		} );
 
 	}
 
