@@ -24,6 +24,7 @@ normally added. See Skin::setupUserCss()
 	<style type="text/css"><?= $pageCss ?></style>
 <? endif ?>
 
+	<?= $jsTopScripts ?>
 	<?= $jsHeadFiles ?>
 	<?= $headItems ?>
 </head>
@@ -45,7 +46,7 @@ normally added. See Skin::setupUserCss()
 	<?#TODO: Re-Enable when it's ready = $corporateFooter ?>
 </section>
 	<!--WikiaPage-->
-<?= $bottomScriptLinks ?>
+<?= $jsBottomScripts ?>
 <?#TODO: = $printCssLinks ?>
 </body>
 </html>

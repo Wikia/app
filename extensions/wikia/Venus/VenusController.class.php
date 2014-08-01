@@ -6,13 +6,11 @@ class VenusController extends WikiaController {
 
 	private $assetsManager;
 	private $skinTemplateObj;
-	private $service;
 	private $skin;
 
 	public function init() {
 		$this->assetsManager = AssetsManager::getInstance();
 		$this->skinTemplateObj = $this->app->getSkinTemplateObj();
-		$this->service = new VenusService( $this->skinTemplateObj );
 		$this->skin = RequestContext::getMain()->getSkin();
 
 		$skinVars = $this->skinTemplateObj->data;
@@ -88,6 +86,8 @@ class VenusController extends WikiaController {
 	}
 
 	private function setAssets() {
+		global $wgOut;
+
 		$jsHeadGroups = ['venus_head_js'];
 		$jsHeadFiles = '';
 		$jsBodyGroups = ['venus_body_js'];
@@ -144,6 +144,7 @@ class VenusController extends WikiaController {
 		$this->cssLinks = $cssLinks;
 		$this->jsHeadFiles = $jsHeadFiles;
 		$this->jsBodyFiles = $jsBodyFiles;
+		$this->jsTopScripts = $wgOut->topScripts;
 	}
 	/*
 

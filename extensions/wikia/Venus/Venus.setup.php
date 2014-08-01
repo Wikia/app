@@ -42,7 +42,6 @@ $wgExtensionCredits['other'][] =
  * controllers
  */
 $wgAutoloadClasses['VenusController'] = __DIR__ . '/VenusController.class.php';
-$wgAutoloadClasses['VenusService'] = __DIR__ . '/VenusService.class.php';
 //$wgAutoloadClasses['GlobalNavigationController'] = __DIR__ . '/../GlobalNavigation/GlobalNavigationController.class.php';
 //$wgAutoloadClasses['LocalNavigationController'] = __DIR__ . '/../LocalNavigation/LocalNavigationController.class.php';
 //$wgAutoloadClasses['LocalHeaderController'] = __DIR__ . '/../LocalNavigation/LocalHeaderController.class.php';
