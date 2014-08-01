@@ -97,6 +97,9 @@
 			'action': Wikia.Tracker.ACTIONS.IMPRESSION,
 			'label': 'edit-page'
 		} );
+		// This can't be tracked with its friends in ve.track.js because that file has not been loaded yet
+		window.gaTrackPageview( '/fake-visual-editor/edit-page/impression', 've' );
+
 		if ( !getTargetDeferred ) {
 			getTargetDeferred = $.Deferred();
 			loadTargetDeferred = $.Deferred();
