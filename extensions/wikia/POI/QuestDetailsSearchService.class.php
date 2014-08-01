@@ -23,7 +23,7 @@ class QuestDetailsSearchService extends EntitySearchService {
 	const SOLR_QUEST_ID_FIELD = 'metadata_quest_id_s';
 
 	const SOLR_CATEGORY_FIELD = 'categories_mv_en';
-	
+
 	const SOLR_AND = ' AND ';
 
 	/**

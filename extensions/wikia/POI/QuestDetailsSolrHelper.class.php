@@ -9,8 +9,22 @@
 class QuestDetailsSolrHelper {
 
 	const DEFAULT_ABSTRACT_LENGTH = 200;
+
 	const DEFAULT_THUMBNAIL_WIDTH = 200;
+
 	const DEFAULT_THUMBNAIL_HEIGHT = 200;
+
+	/**
+	 * @var int
+	 */
+	protected $abstractLength = self::DEFAULT_ABSTRACT_LENGTH;
+
+	/**
+	 * @param int $abstractLength
+	 */
+	public function setAbstractLength( $abstractLength ) {
+		$this->abstractLength = $abstractLength;
+	}
 
 	public function getRequiredSolrFields() {
 		return [ 'pageid', 'title_*', 'url', 'ns', 'article_type_s', 'categories_*', 'html_*', 'metadata_*' ];
@@ -45,9 +59,9 @@ class QuestDetailsSolrHelper {
 	 * If there are few fields with such prefix - working with first one value.
 	 * If there are no fields with such prefix - returns empty string.
 	 */
-	protected function getAbstract( &$item ) {
+	protected function getAbstract( $item ) {
 		$html = $this->findFirstValueByKeyPrefix( $item, 'html_', '' );
-		return wfShortenText( $html, self::DEFAULT_ABSTRACT_LENGTH, true );
+		return wfShortenText( $html, $this->abstractLength, true );
 	}
 
 	/**
@@ -84,21 +98,21 @@ class QuestDetailsSolrHelper {
 	 *      ]
 	 * ]
 	 */
-	protected function getMetadata( &$item ) {
+	protected function getMetadata( $item ) {
 
 		$metadata = [ ];
 		foreach ( $item as $key => $value ) {
-			if ( $this->startsWith( $key, 'metadata_' )
-				&& !$this->startsWith( $key, 'metadata_map_' )
+			if ( startsWith( $key, 'metadata_' )
+				&& !startsWith( $key, 'metadata_map_' )
 			) {
 
-				if ( $this->endsWith( $key, '_s' ) ) {
+				if ( endsWith( $key, '_s' ) ) {
 
 					$metadataKey = $this->cutPrefixAndSuffix( $key, 'metadata_', '_s' );
 
 					$metadata[ $metadataKey ] = $value;
 
-				} else if ( $this->endsWith( $key, '_ss' ) ) {
+				} else if ( endsWith( $key, '_ss' ) ) {
 
 					$metadataKey = $this->cutPrefixAndSuffix( $key, 'metadata_', '_ss' );
 
@@ -146,18 +160,18 @@ class QuestDetailsSolrHelper {
 	 *      'region' => 'Test'
 	 * ]
 	 */
-	protected function getMetadataMap( &$item ) {
+	protected function getMetadataMap( $item ) {
 		$map = [ ];
 		foreach ( $item as $key => $value ) {
-			if ( $this->startsWith( $key, 'metadata_map_' ) ) {
+			if ( startsWith( $key, 'metadata_map_' ) ) {
 
-				if ( $this->endsWith( $key, '_s' ) ) {
+				if ( endsWith( $key, '_s' ) ) {
 
 					$mapKey = $this->cutPrefixAndSuffix( $key, 'metadata_map_', '_s' );
 
 					$map[ $mapKey ] = $value;
 
-				} else if ( $this->endsWith( $key, '_sr' ) ) {
+				} else if ( endsWith( $key, '_sr' ) ) {
 
 					$mapKey = $this->cutPrefixAndSuffix( $key, 'metadata_map_', '_sr' );
 
@@ -174,7 +188,7 @@ class QuestDetailsSolrHelper {
 		return $map;
 	}
 
-	protected function getRevision( &$item ) {
+	protected function getRevision( $item ) {
 		$titles = Title::newFromIDs( $item[ 'pageid' ] );
 		$title = $titles[ 0 ];
 		$revId = $title->getLatestRevID();
@@ -190,7 +204,7 @@ class QuestDetailsSolrHelper {
 		return $revision;
 	}
 
-	protected function getCommentsNumber( &$item ) {
+	protected function getCommentsNumber( $item ) {
 		$titles = Title::newFromIDs( $item[ 'pageid' ] );
 		$title = $titles[ 0 ];
 		if ( class_exists( 'ArticleCommentList' ) ) {
@@ -238,9 +252,9 @@ class QuestDetailsSolrHelper {
 		return $result;
 	}
 
-	protected function findFirstValueByKeyPrefix( &$hash, $prefix, $defaultValue = null ) {
+	protected function findFirstValueByKeyPrefix( $hash, $prefix, $defaultValue = null ) {
 		foreach ( $hash as $key => $value ) {
-			if ( $this->startsWith( $key, $prefix ) ) {
+			if ( startsWith( $key, $prefix ) ) {
 				return $value;
 			}
 		}
@@ -253,13 +267,5 @@ class QuestDetailsSolrHelper {
 
 	protected function cutPrefixAndSuffix( $str, $prefix, $suffix ) {
 		return substr( $str, strlen( $prefix ), strlen( $str ) - strlen( $prefix ) - strlen( $suffix ) );
-	}
-
-	protected function startsWith( $str, $prefix ) {
-		return $prefix === "" || strpos( $str, $prefix ) === 0;
-	}
-
-	protected function endsWith( $str, $suffix ) {
-		return $suffix === "" || substr( $str, -strlen( $suffix ) ) === $suffix;
 	}
 } 
