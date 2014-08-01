@@ -29,6 +29,25 @@ class QuestDetailsSearchService extends EntitySearchService {
 		$dismax = $select->getDisMax();
 		$dismax->setQueryParser( 'edismax' );
 
+		$query = $this->constructQuery( $criteria );
+
+		$select->setQuery( $query );
+
+		$select->setFields( $this->getSolrHelper()->getRequiredSolrFields() );
+
+		$limit = $this->getLimit( $criteria );
+		if( $limit != null ) {
+			$select->setRows( $limit );
+		}
+
+		return $select;
+	}
+
+	public function consumeResponse( $response ) {
+		return $this->getSolrHelper()->consumeResponse( $response );
+	}
+
+	public function constructQuery( $criteria ) {
 		$conditions = [ ];
 
 		if ( !empty( $criteria[ 'fingerprint' ] ) ) {
@@ -43,18 +62,13 @@ class QuestDetailsSearchService extends EntitySearchService {
 
 		$query = join( ' AND ', $conditions );
 
-		$select->setQuery( $query );
-
-		$select->setFields( $this->getSolrHelper()->getRequiredSolrFields() );
-
-		if( !empty( $criteria[ 'limit' ] ) ) {
-			$select->setRows( intval( $criteria[ 'limit' ] ) );
-		}
-
-		return $select;
+		return $query;
 	}
 
-	public function consumeResponse( $response ) {
-		return $this->getSolrHelper()->consumeResponse( $response );
+	public function getLimit( $criteria ) {
+		if( !empty( $criteria[ 'limit' ] ) ) {
+			return $criteria[ 'limit' ];
+		}
+		return null;
 	}
 }
