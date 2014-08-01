@@ -39,6 +39,8 @@ require([
 			linksWrapper.append(mobileSwitch);
 		});
 	}
+
+	//@TODO this logic should be moved to CorporateFooter script when it's moved to separate extension
 	// Support clicking on whole language flag button, not only the flag itself
 	$( function() {
 		$( '.wikiahomepage-footer' ).on( 'click', '.wikia-menu-button.secondary li', function ( event ) {
@@ -48,6 +50,6 @@ require([
 				event.stopPropagation();
 				$( this ).children( 'a' ).get( 0 ).click();
 			}
-		} );
-	} );
+		});
+	});
 });

@@ -66,7 +66,7 @@ describe('AdConfig2Late', function () {
 		expect(adConfig.getProvider(['foo'])).toBe(adProviderNullMock, 'adProviderNullMock');
 	});
 
-	it('getProvider returns SevenOneMedia if it can handle it (for wgAdDriverUseSevenOneMedia)', function () {
+	it('getProvider returns SevenOneMedia if it can handle it (for wgAdDriverUseSevenOneMedia) Poland', function () {
 		var adProviderNullMock = {name: 'NullMock'},
 			adProviderEvolveMock = {name: 'EvolveMock', canHandleSlot: function () {return true;}},
 			adProviderDirectGpt = {name: 'DirectGpt', canHandleSlot: function () {return true;}},
@@ -77,6 +77,35 @@ describe('AdConfig2Late', function () {
 			windowMock = {wgAdDriverUseSevenOneMedia: true},
 			abTestMock = {inGroup: function () {return false;}},
 			geoMock = { getCountryCode: function () { return 'PL'; } },
+			adConfig;
+
+		adConfig = modules['ext.wikia.adEngine.adConfigLate'](
+			logMock,
+			windowMock,
+			abTestMock,
+			geoMock,
+			adProviderEvolveMock,
+			adProviderLiftiumMock,
+			adProviderDirectGpt,
+			adProviderRemnantGpt,
+			adProviderNullMock,
+			adProviderSevenOneMedia
+		);
+
+		expect(adConfig.getProvider(['foo'])).toBe(adProviderSevenOneMedia, 'adProviderSevenOneMediaMock');
+	});
+
+	it('getProvider returns SevenOneMedia if it can handle it (for wgAdDriverUseSevenOneMedia) Australia', function () {
+		var adProviderNullMock = {name: 'NullMock'},
+			adProviderEvolveMock = {name: 'EvolveMock', canHandleSlot: function () {return true;}},
+			adProviderDirectGpt = {name: 'DirectGpt', canHandleSlot: function () {return true;}},
+			adProviderRemnantGpt = {name: 'RemnantGpt', canHandleSlot: function () {return true;}},
+			adProviderLiftiumMock = {name: 'LiftiumMock', canHandleSlot: function () {return true;}},
+			adProviderSevenOneMedia = {name: 'SevenOneMediaMock', canHandleSlot: function () {return true;}},
+			logMock = function () {},
+			windowMock = {wgAdDriverUseSevenOneMedia: true},
+			abTestMock = {inGroup: function () {return false;}},
+			geoMock = { getCountryCode: function () { return 'AU'; } },
 			adConfig;
 
 		adConfig = modules['ext.wikia.adEngine.adConfigLate'](

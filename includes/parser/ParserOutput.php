@@ -142,6 +142,7 @@ class ParserOutput extends CacheTime {
 		$mTimestamp;                  # Timestamp of the revision
 	private $mIndexPolicy = '';       # 'index' or 'noindex'?  Any other value will result in no change.
 	private $mAccessedOptions = array(); # List of ParserOptions (stored in the keys)
+	private $mPreventClickjacking = false; # Whether to emit X-Frame-Options: DENY
 
 	# <Wikia>
 	public $mPerformanceStats = array();
@@ -377,6 +378,7 @@ class ParserOutput extends CacheTime {
 		$this->addModuleMessages( $out->getModuleMessages() );
 
 		$this->mHeadItems = array_merge( $this->mHeadItems, $out->getHeadItemsArray() );
+		$this->mPreventClickjacking = $this->mPreventClickjacking || $out->getPreventClickjacking();
 	}
 
 	/**
@@ -453,4 +455,15 @@ class ParserOutput extends CacheTime {
 	 function recordOption( $option ) {
 		 $this->mAccessedOptions[$option] = true;
 	 }
+
+	/**
+	 * Get or set the prevent-clickjacking flag
+	 *
+	 * @since 1.24
+	 * @param boolean|null $flag New flag value, or null to leave it unchanged
+	 * @return boolean Old flag value
+	 */
+	public function preventClickjacking( $flag = null ) {
+		return wfSetVar( $this->mPreventClickjacking, $flag );
+	}
 }

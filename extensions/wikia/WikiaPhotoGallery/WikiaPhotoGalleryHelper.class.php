@@ -662,7 +662,7 @@ class WikiaPhotoGalleryHelper {
 			$image['videoPlayButton'] = false;
 			if( WikiaFileHelper::isFileTypeVideo($img) ) {
 				// Get play button overlay for video thumb
-				$image['videoPlayButton'] = WikiaFileHelper::videoPlayButtonOverlay( self::STRICT_IMG_WIDTH_PREV, self::STRICT_IMG_HEIGHT_PREV );
+				$image['videoPlayButton'] = '<span class="play-circle"></span>';
 			}
 
 			//need to use parse() - see RT#44270

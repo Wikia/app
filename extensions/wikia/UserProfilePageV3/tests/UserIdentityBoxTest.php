@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * @group Broken
+ */
 class UserIdentityBoxTest extends WikiaBaseTest {
 	const TOP_WIKI_LIMIT = 5;
 

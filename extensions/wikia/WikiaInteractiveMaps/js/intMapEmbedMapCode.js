@@ -20,6 +20,7 @@ define('wikia-interactive-embed-map-code', ['jquery', 'wikia.intMap.utils'], fun
 		templateData = {
 			infoMessage: $.msg('wikia-interactive-maps-embed-map-code-info'),
 			sizeLabel:  $.msg('wikia-interactive-maps-embed-map-code-size-label'),
+			uselang: '?uselang=' + window.wgUserLanguage,
 			sizes: [
 				{
 					size: 'small',

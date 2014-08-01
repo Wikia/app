@@ -12,6 +12,7 @@ abstract class VideoFeedIngester {
 	const PROVIDER_ANYCLIP = 'anyclip';
 	const PROVIDER_OOYALA = 'ooyala';
 	const PROVIDER_IVA = 'iva';
+	const PROVIDER_CRUNCHYROLL = 'crunchyroll';
 
 	// Caching constants; all integers are seconds
 	const CACHE_KEY = 'videofeedingester-2';
@@ -30,6 +31,7 @@ abstract class VideoFeedIngester {
 		self::PROVIDER_IVA,
 		self::PROVIDER_SCREENPLAY,
 		self::PROVIDER_OOYALA,
+		self::PROVIDER_CRUNCHYROLL,
 	];
 
 	// These providers are not ingested daily, but can be ingested from if specifically named
@@ -692,11 +694,9 @@ abstract class VideoFeedIngester {
 		// values should not be imported. This assumption will have to
 		// change if we consider values that fall into a range, such as
 		// duration < MIN_VALUE
-		if ( is_array( static::$CLIP_TYPE_BLACKLIST ) ) {
+		if ( !empty( static::$CLIP_TYPE_BLACKLIST ) && is_array( static::$CLIP_TYPE_BLACKLIST ) ) {
 			$arrayIntersect = array_intersect( static::$CLIP_TYPE_BLACKLIST, $clipData );
-			if ( !empty( $arrayIntersect ) && $arrayIntersect == static::$CLIP_TYPE_BLACKLIST ) {
-				return true;
-			}
+			return ( !empty( $arrayIntersect ) && $arrayIntersect == static::$CLIP_TYPE_BLACKLIST );
 		}
 
 		return false;
