@@ -73,6 +73,7 @@
 @import 'extensions/wikia/TOC/css/toc.scss';
 @import 'extensions/wikia/VideosModule/styles/VideosModule';
 @import 'extensions/wikia/GlobalFooter/styles/GlobalFooter';
+@import 'extensions/wikia/MediaGallery/styles/MediaGallery.scss'; // TODO: load on demand (maybe)
 
 // CSS (needs leading slash and file extension)
 @import '/extensions/wikia/CreatePage/css/CreatePage.css';

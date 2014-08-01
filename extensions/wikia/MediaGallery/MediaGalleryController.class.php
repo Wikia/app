@@ -20,6 +20,7 @@ class MediaGalleryController extends WikiaController {
 		}
 
 		$this->media = $media;
+		$this->count = count($media);
 	}
 
 }

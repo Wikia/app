@@ -1575,20 +1575,25 @@ class WikiaPhotoGallery extends ImageGallery {
 	 * @param array $box
 	 * @return String
 	 */
-	public function cropURL( File $file, array $box ) {
+	public function cropURL( File $file, array $box, $position = null ) {
 		list( $adjWidth, $adjHeight ) = $this->fitClosest( $file, $box );
 
+		$height = $file->getHeight();
+		$width = $file->getHeight();
+
 		if ( $adjHeight == $box['h'] ) {
-			$height = $file->getHeight();
 			$width = $box['w'] * ($file->getHeight()/$box['h']);
 		}
 
 		if ( $adjWidth == $box['w'] ) {
 			$height = $box['h'] * ($file->getWidth()/$box['w']);
-			$width = $file->getHeight();
 		}
 
-		$cropStr = sprintf( "%d,%d,%d,%d", 0, $width, 0, $height );
+		if ( $position ) {
+			$cropStr = sprintf( "%dx%dx%d", $width, $height, $position );
+		} else {
+			$cropStr = sprintf( "%dpx-0,%d,0,%d", $adjWidth, $width, $height );
+		}
 
 		$append = '';
 		$mime = strtolower( $file->getMimeType() );
@@ -1596,7 +1601,7 @@ class WikiaPhotoGallery extends ImageGallery {
 			$append = '.png';
 		}
 
-		return wfReplaceImageServer( $file->getThumbUrl( $adjWidth . 'px-' . $cropStr . '-' . $file->getName() . $append ) );
+		return wfReplaceImageServer( $file->getThumbUrl( $cropStr . '-' . $file->getName() . $append ) );
 	}
 
 
