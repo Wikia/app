@@ -22,13 +22,13 @@ class QuestDetailsSolrHelper {
 
 			$result[ ] = [
 				'id' => $item[ 'pageid' ],
-				'title' => $this->getTitle( $item ),
+				'title' => $this->findFirstValueByKeyPrefix( $item, 'title_', '' ),
 				'url' => $item[ 'url' ],
 				'ns' => $item[ 'ns' ],
 				'revision' => $this->getRevision( $item ),
 				'comments' => $this->getCommentsNumber( $item ),
 				'type' => $item[ 'article_type_s' ],
-				'categories' => $this->getArticleCategories( $item ),
+				'categories' => $this->findFirstValueByKeyPrefix( $item, 'categories_', [] ),
 				'abstract' => $this->getAbstract( $item ),
 				'metadata' => $this->getMetadata( $item ),
 			];
@@ -40,34 +40,14 @@ class QuestDetailsSolrHelper {
 	}
 
 	/**
-	 * Searching for field with prefix 'title_' (e.g. 'title_fr' or 'title_en')
-	 * If there are few fields with such prefix - returns value of first one.
-	 * If there are no fields with such prefix - returns empty string.
-	 */
-	protected function getTitle( &$item ) {
-		$title = $this->findFirstValueByKeyPrefix( $item, 'title_' );
-		return ( $title == null ) ? '' : $title;
-	}
-
-	/**
-	 * Searching for field with prefix 'categories_' (e.g. 'categories_mv_en')
-	 * If there are few fields with such prefix - returns value of first one.
-	 * If there are no fields with such prefix - returns empty array.
-	 */
-	protected function getArticleCategories( &$item ) {
-		$categories = $this->findFirstValueByKeyPrefix( $item, 'categories_' );
-		return ( $categories == null ) ? [ ] : $categories;
-	}
-
-	/**
 	 * Searching for field with prefix 'html_' (e.g. 'html_en' or 'html_fr')
 	 * After finding corresponding field - shortening its value.
 	 * If there are few fields with such prefix - working with first one value.
 	 * If there are no fields with such prefix - returns empty string.
 	 */
 	protected function getAbstract( &$item ) {
-		$html = $this->findFirstValueByKeyPrefix( $item, 'html_' );
-		return ( $html == null ) ? '' : wfShortenText( $html, self::DEFAULT_ABSTRACT_LENGTH, true );
+		$html = $this->findFirstValueByKeyPrefix( $item, 'html_', '' );
+		return wfShortenText( $html, self::DEFAULT_ABSTRACT_LENGTH, true );
 	}
 
 	/**
@@ -258,13 +238,13 @@ class QuestDetailsSolrHelper {
 		return $result;
 	}
 
-	protected function findFirstValueByKeyPrefix( &$hash, $prefix ) {
+	protected function findFirstValueByKeyPrefix( &$hash, $prefix, $defaultValue = null ) {
 		foreach ( $hash as $key => $value ) {
 			if ( $this->startsWith( $key, $prefix ) ) {
 				return $value;
 			}
 		}
-		return null;
+		return $defaultValue;
 	}
 
 	protected function getImageServing( $ids, $width, $height ) {
