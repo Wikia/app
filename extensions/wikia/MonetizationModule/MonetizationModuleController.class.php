@@ -19,7 +19,6 @@ class MonetizationModuleController extends WikiaController {
 		}
 
 		$this->response->addAsset( 'monetization_module_css' );
-		$this->response->addAsset( 'monetization_module_js' );
 
 		$params = [
 			's_id' => $this->wg->CityId,

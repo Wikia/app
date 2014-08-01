@@ -20,32 +20,15 @@ class MonetizationModuleHooks {
         // TODO: figure out why this hook is registered twice
         $app = F::app();
 
-        if ( $app->wg->MonetizationScriptsLoaded ) {
+        if ( $app->wg->MonetizationScriptsLoaded || !MonetizationModuleHelper::canShowModule() ) {
             wfProfileOut(__METHOD__);
             return true;
         }
 
-        $isFromSearchScript =  <<<QQ
-            var isFromSearch = function () {
-            var ref = document.referrer;
-            if (ref.indexOf('https://www.google.com/') == 0 || (ref.indexOf('google.') != -1 && ref.indexOf('mail.google.com') == -1 && ref.indexOf('url?q=') == -1 && ref.indexOf('q=') != -1)) return true;
-            if (ref.indexOf('bing.com') != -1 && ref.indexOf('q=') != -1) return true;
-            if (ref.indexOf('yahoo.com') != -1 && ref.indexOf('p=') != -1) return true;
-            if (ref.indexOf('ask.com') != -1 && ref.indexOf('q=') != -1) return true;
-            if (ref.indexOf('aol.com') != -1 && ref.indexOf('q=') != -1) return true;
-            if (ref.indexOf('baidu.com') != -1 && ref.indexOf('wd=') != -1) return true;
-            if (ref.indexOf('yandex.com') != -1 && ref.indexOf('text=') != -1) return true;
-            if (document.cookie.replace(/(?:(?:^|.*;\s*)fromsearch\s*\=\s*([^;]*).*$)|^.*$/, "$1") == "1") return true;
-			return false;
-			};
-			var fromsearch = isFromSearch();
-			if (fromsearch) {
-                var date = new Date();
-                date.setTime(date.getTime() + (30 * 60 * 1000));
-                document.cookie = 'fromsearch=1; expires='+date.toGMTString()+'; path=/';
-            }
-QQ;
-        $scripts .= Html::inlineScript($isFromSearchScript) . "\n";
+        foreach ( AssetsManager::getInstance()->getURL( [ 'monetization_module_js' ] ) as $script ) {
+            $scripts .= '<script src="' . $script . '"></script>';
+        }
+
         $app->wg->MonetizationScriptsLoaded = true;
 
         wfProfileOut(__METHOD__);

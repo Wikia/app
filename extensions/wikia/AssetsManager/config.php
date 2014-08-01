@@ -1826,6 +1826,8 @@ $config['monetization_module_js'] = array(
 	'skin' => [ 'oasis' ],
 	'assets' => [
 		'//extensions/wikia/MonetizationModule/scripts/MonetizationModule.js',
+		'//extensions/wikia/MonetizationModule/scripts/MonetizationModuleHelper.js',
+
 	]
 );
 

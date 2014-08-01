@@ -29,6 +29,7 @@ class MonetizationModuleHelper extends WikiaModel {
 			&& in_array( $app->wg->Title->getNamespace(), $showableNameSpaces )
 			&& in_array( $app->wg->request->getVal( 'action' ), [ 'view', null ] )
 			&& $app->wg->request->getVal( 'diff' ) === null
+			&& $app->wg->User->isAnon()
 			&& $app->checkSkin( 'oasis' )
 		) {
 			$status = true;
