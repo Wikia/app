@@ -103,11 +103,11 @@ use Swagger\Annotations as SWG;
  *
  * @SWG\Api(
  * 	path="/WikiaHubs/ModuleData",
- * 	description="Get explore module data from given date and city",
+ * 	description="Get explore module data from given date and wiki",
  * 	@SWG\Operations(
  * 		@SWG\Operation(
  * 			httpMethod="GET",
- * 			summary="Get explore module data from given date and city",
+ * 			summary="Get explore module data from given date and wiki",
  * 			nickname="getModuleData",
  * 			responseClass="WikiaHubsResultSet",
  * 			@SWG\ErrorResponses(
@@ -145,11 +145,11 @@ use Swagger\Annotations as SWG;
  *
  * @SWG\Api(
  * 	path="/WikiaHubs/ModuleDataV3",
- * 	description="Get explore module data from given date and city",
+ * 	description="Get explore module data from given date and wiki",
  * 	@SWG\Operations(
  * 		@SWG\Operation(
  * 			httpMethod="GET",
- * 			summary="Get explore module data from given date and city",
+ * 			summary="Get explore module data from given date and wiki",
  * 			nickname="getModuleDataV3",
  * 			responseClass="WikiaHubsResultSet",
  * 			@SWG\ErrorResponses(

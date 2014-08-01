@@ -137,7 +137,6 @@ class WikiaHomePageController extends WikiaController {
 	 * Prepare data to display hub v3 slot in hubs section on Wikia homepage
 	 *
 	 * @param $hub
-	 * @param $hubsV3List
 	 * @param $slot
 	 * @return array
 	 */

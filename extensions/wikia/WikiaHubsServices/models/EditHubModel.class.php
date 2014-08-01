@@ -7,16 +7,16 @@ class EditHubModel extends WikiaModel {
 	const FORM_THUMBNAIL_SIZE = 149;
 	const FORM_FIELD_PREFIX = 'WikiaHubs';
 	const STRTOTIME_MIDNIGHT = '00:00';
-	protected $statuses = array();
-	protected $modules = array();
-	protected $editableModules = array();
-	protected $nonEditableModules = array();
+	protected $statuses = [];
+	protected $modules = [];
+	protected $editableModules = [];
+	protected $nonEditableModules = [];
 	protected $modulesCount;
 	protected $specialPageClass = 'SpecialPage';
 	protected $userClass = 'User';
 
 	// Tags that will NOT get stripped from curator-provided text
-	protected $allowedTags = array('<a>', '<br>');
+	protected $allowedTags = ['<a>', '<br>'];
 
 	public function __construct($app = null) {
 		parent::__construct();
@@ -25,12 +25,12 @@ class EditHubModel extends WikiaModel {
 			$this->setApp($app);
 		}
 
-		$this->statuses = array(
+		$this->statuses = [
 			'NOT_PUBLISHED' => 1,
 			'PUBLISHED' => 2
-		);
+		];
 
-		$this->editableModules = array(
+		$this->editableModules = [
 			WikiaHubsModuleSliderService::MODULE_ID => 'slider',
 			WikiaHubsModuleWikiaspicksService::MODULE_ID => 'wikias-picks',
 			WikiaHubsModuleFeaturedvideoService::MODULE_ID => 'featured-video',
@@ -38,7 +38,7 @@ class EditHubModel extends WikiaModel {
 			WikiaHubsModuleFromthecommunityService::MODULE_ID => 'from-the-community',
 			WikiaHubsModulePollsService::MODULE_ID => 'polls',
 			WikiaHubsModulePopularvideosService::MODULE_ID => 'popular-videos'
-		);
+		];
 
 		if ($this->wg->DisableWAMOnHubs) {
 			$this->nonEditableModules[WikiaHubsModuleWikiastatsService::MODULE_ID] = 'wikia-stats';
@@ -61,27 +61,25 @@ class EditHubModel extends WikiaModel {
 	 */
 	public function getCalendarData($cityId, $beginTimestamp, $endTimestamp) {
 		global $wgExternalSharedDB;
-		$sdb = wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB);
-		$conds = array(
-			'city_id' => $cityId,
-		);
+		$sdb = wfGetDB(DB_SLAVE, [], $wgExternalSharedDB);
+		$conds = [ 'city_id' => $cityId ];
 
 		$conds = $sdb->makeList($conds, LIST_AND);
 		$conds .= ' AND hub_date >= ' . $sdb->timestamp($beginTimestamp)
 			. ' AND hub_date <= ' . $sdb->timestamp($endTimestamp);
 
-		$fields = array('hub_date', 'module_status');
+		$fields = ['hub_date', 'module_status'];
 
-		$options = array(
-			'GROUP BY' => array(
+		$options = [
+			'GROUP BY' => [
 				'hub_date',
 				'module_status'
-			)
-		);
+			]
+		];
 
 		$results = $sdb->select(self::HUBS_TABLE_NAME, $fields, $conds, __METHOD__, $options);
 
-		$out = array();
+		$out = [];
 		while ($row = $sdb->fetchRow($results)) {
 			$out[$row['hub_date']] = $row['module_status'];
 		}
@@ -103,10 +101,10 @@ class EditHubModel extends WikiaModel {
 	public function getModulesData($cityId, $timestamp, $activeModule = WikiaHubsModuleSliderService::MODULE_ID) {
 		$moduleList = $this->getModuleList($cityId, $timestamp);
 
-		$modulesData = array(
+		$modulesData = [
 			'lastEditor' => null,
-			'moduleList' => array()
-		);
+			'moduleList' => []
+		];
 
 		$userClass = $this->getUserClass();
 		foreach ($moduleList as $moduleId => &$module) {
@@ -196,14 +194,14 @@ class EditHubModel extends WikiaModel {
 		global $wgExternalSharedDB;
 		$sdb = wfGetDB(
 			($useMaster) ? DB_MASTER : DB_SLAVE,
-			array(),
+			[],
 			$wgExternalSharedDB
 		);
 
-		$conds = array(
+		$conds = [
 			'city_id' => $cityId,
 			'module_status' => $this->statuses['PUBLISHED']
-		);
+		];
 
 		$conds = $sdb->makeList($conds, LIST_AND);
 		$conds .= ' AND hub_date <= ' . $sdb->timestamp($timestamp);
@@ -224,28 +222,28 @@ class EditHubModel extends WikiaModel {
 	 */
 	protected function getModulesDataFromDb($cityId, $timestamp, $moduleId = null) {
 		global $wgExternalSharedDB;
-		$sdb = wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB);
-		$conds = array(
+		$sdb = wfGetDB(DB_SLAVE, [], $wgExternalSharedDB);
+		$conds = [
 			'city_id' => $cityId,
 			'hub_date' => $sdb->timestamp($timestamp),
-		);
+		];
 
 		if( is_int($moduleId) ) {
 			$conds['module_id'] = $moduleId;
 		}
 
-		$fields = array('module_id', 'module_status', 'module_data', 'last_edit_timestamp', 'last_editor_id');
+		$fields = ['module_id', 'module_status', 'module_data', 'last_edit_timestamp', 'last_editor_id'];
 
 		$results = $sdb->select(self::HUBS_TABLE_NAME, $fields, $conds, __METHOD__);
 
-		$out = array();
+		$out = [];
 		while ($row = $sdb->fetchRow($results)) {
-			$out[$row['module_id']] = array(
+			$out[$row['module_id']] = [
 				'status' => $row['module_status'],
 				'lastEditTime' => $row['last_edit_timestamp'],
 				'lastEditorId' => $row['last_editor_id'],
 				'data' => json_decode($row['module_data'], true)
-			);
+			];
 		}
 
 		return $out;
@@ -257,15 +255,15 @@ class EditHubModel extends WikiaModel {
 	 * @return array
 	 */
 	protected function getDefaultModuleList() {
-		$out = array();
+		$out = [];
 
 		foreach ($this->editableModules as $moduleId => $moduleName) {
-			$out[$moduleId] = array(
+			$out[$moduleId] = [
 				'status' => $this->statuses['NOT_PUBLISHED'],
 				'lastEditTime' => null,
 				'lastEditorId' => null,
-				'data' => array()
-			);
+				'data' => []
+			];
 		}
 
 		return $out;
@@ -294,10 +292,10 @@ class EditHubModel extends WikiaModel {
 	public function getModuleUrl( $timestamp, $moduleId ) {
 		$specialPage = $this->getSpecialPageClass();
 		return $specialPage::getTitleFor('EditHub', 'editHub')->getLocalURL(
-			array(
+			[
 				'moduleId' => $moduleId,
 				'date' => $timestamp
-			)
+			]
 		);
 	}
 
@@ -371,17 +369,17 @@ class EditHubModel extends WikiaModel {
 			return;
 		}
 
-		$mdb = wfGetDB(DB_MASTER, array(), $wgExternalSharedDB);
+		$mdb = wfGetDB(DB_MASTER, [], $wgExternalSharedDB);
 		$hubDate = date('Y-m-d', $timestamp);
 
-		$changes = array(
+		$changes = [
 			'module_status' => $this->statuses['PUBLISHED']
-		);
+		];
 
-		$conditions = array(
+		$conditions = [
 			'city_id' => $cityId,
 			'hub_date' => $hubDate
-		);
+		];
 
 		$dbSuccess = $mdb->update(self::HUBS_TABLE_NAME, $changes, $conditions, __METHOD__);
 
@@ -409,15 +407,15 @@ class EditHubModel extends WikiaModel {
 	 */
 	public function checkModulesSaved($cityId, $timestamp) {
 		global $wgExternalSharedDB;
-		$sdb = wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB);
+		$sdb = wfGetDB(DB_SLAVE, [], $wgExternalSharedDB);
 
 		$hubDate = date('Y-m-d', $timestamp);
 
-		$fields = array('count(module_id)');
-		$conds = array(
+		$fields = ['count(module_id)'];
+		$conds = [
 			'city_id' => $cityId,
 			'hub_date' => $hubDate
-		);
+		];
 
 		$result = $sdb->select(self::HUBS_TABLE_NAME, $fields, $conds);
 
@@ -445,21 +443,21 @@ class EditHubModel extends WikiaModel {
 	 */
 	public function saveModule($params, $timestamp, $moduleId, $data, $editorId) {
 		global $wgExternalSharedDB;
-		$mdb = wfGetDB(DB_MASTER, array(), $wgExternalSharedDB);
-		$sdb = wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB);
+		$mdb = wfGetDB(DB_MASTER, [], $wgExternalSharedDB);
+		$sdb = wfGetDB(DB_SLAVE, [], $wgExternalSharedDB);
 
-		$updateData = array(
+		$updateData = [
 			'module_data' => json_encode($data),
 			'last_editor_id' => $editorId,
-		);
+		];
 
-		$conds = array(
+		$conds = [
 			'lang_code' => $params['langCode'],
 			'vertical_id' => $params['verticalId'],
 			'city_id' => $params['cityId'],
 			'module_id' => $moduleId,
 			'hub_date' => $mdb->timestamp($timestamp)
-		);
+		];
 
 		$result = $sdb->selectField(self::HUBS_TABLE_NAME, 'count(1)', $conds, __METHOD__);
 
@@ -533,7 +531,7 @@ class EditHubModel extends WikiaModel {
 		$visualizationModel = new CityVisualization();
 		$wikisData = $visualizationModel->getVisualizationWikisData();
 
-		$regions = array();
+		$regions = [];
 
 		foreach ($wikisData as $wikiData) {
 			$regions[$wikiData['lang']] = Language::getLanguageName($wikiData['lang']);
@@ -551,20 +549,20 @@ class EditHubModel extends WikiaModel {
 	 * @return array
 	 */
 	public function getVideoData ($fileName, $thumbSize) {
-		$videoData = array();
+		$videoData = [];
 		$title = Title::newFromText($fileName, NS_FILE);
 		if (!empty($title)) {
 			$file = wffindFile($title);
 		}
 		if (!empty($file)) {
-			$htmlParams = array(
+			$htmlParams = [
 				'file-link' => true,
 				'duration' => true,
 				'img-class' => 'media',
-				'linkAttribs' => array('class' => 'video-thumbnail lightbox', 'data-video-name' => $fileName )
-			);
+				'linkAttribs' => [ 'class' => 'video-thumbnail lightbox', 'data-video-name' => $fileName ]
+			];
 
-			$thumb = $file->transform(array('width' => $thumbSize));
+			$thumb = $file->transform( ['width' => $thumbSize] );
 
 			$videoData['videoThumb'] = $thumb->toHtml($htmlParams);
 			$videoData['videoTimestamp'] = $file->getTimestamp();
