@@ -1,5 +1,7 @@
 <?php
 
+use \Wikia\Logger\WikiaLogger;
+
 /**
  * Class MonetizationModuleHelper
  */
@@ -51,6 +53,7 @@ class MonetizationModuleHelper extends WikiaModel {
 
 		global $wgMonetizationServiceUrl;
 
+		$log = WikiaLogger::instance();
 		$url = $wgMonetizationServiceUrl.'?'.http_build_query( $params );
 		$req = MWHttpRequest::factory( $url, [ 'noProxy' => true ] );
 		$status = $req->execute();
@@ -58,7 +61,8 @@ class MonetizationModuleHelper extends WikiaModel {
 			$result = json_decode( $req->getContent(), true );
 		} else {
 			$result = false;
-			print( "ERROR: problem getting monetization units (".$status->getMessage().").\n" );
+			$loggingParams = array_merge( [ 'method' => __METHOD__ ], $params );
+			$log->debug( "Monetization: ".__METHOD__." - cannot get monetization units (".$status->getMessage().").", $loggingParams );
 		}
 
 		wfProfileOut( __METHOD__ );

@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * @group Broken
+ */
 class UserProfilePageTest extends WikiaBaseTest {
 	const TEST_WIKI_ID = 111;
 	const TEST_CAPTION = 'Test caption';

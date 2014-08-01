@@ -233,10 +233,17 @@ define('ext.wikia.adEngine.sevenOneMediaHelper', [
 	}
 
 	function initialize(firstSlotname) {
-		var subsite = window.cscoreCat && window.cscoreCat.toLowerCase(),
-			sub2site = pageLevelParams.s1.replace('_', ''),
-			sub3site = subsite === 'lifestyle' ? window.cityShort : '',
-			sub4site = window.wgAdDriverSevenOneMediaSub4Site || '';
+		var subsite, sub2site, sub3site;
+
+		subsite = window.cscoreCat && window.cscoreCat.toLowerCase();
+
+		if (window.wgAdDriverSevenOneMediaOverrideSub2Site) {
+			sub2site = window.wgAdDriverSevenOneMediaOverrideSub2Site;
+			sub3site = pageLevelParams.s1.replace('_', '');
+		} else {
+			sub2site = pageLevelParams.s1.replace('_', '');
+			sub3site = subsite === 'lifestyle' ? window.cityShort : '';
+		}
 
 		initialized = true;
 
@@ -247,7 +254,6 @@ define('ext.wikia.adEngine.sevenOneMediaHelper', [
 			SOI_SUBSITE: subsite,
 			SOI_SUB2SITE: sub2site,
 			SOI_SUB3SITE: sub3site,
-			SOI_SUB4SITE: sub4site,
 			SOI_CONTENT: 'content',
 			SOI_WERBUNG: true
 		});

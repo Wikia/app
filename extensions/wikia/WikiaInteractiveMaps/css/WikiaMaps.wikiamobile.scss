@@ -5,20 +5,29 @@
 
 $nav-height: 40px;
 $smart-banner-height: 80px;
+$map-ad-height: 70px;
 
 .error {
 	padding: 0 15px;
 }
 
-.int-map-mobile-map-page {
-	.sb-shown & {
-		#wkPage {
-			padding-top: $nav-height + $smart-banner-height;
-			// required for smooth animation with smart banner
-			-webkit-transition: padding-top 0.01s;
-		}
-	}
+.smartbanner {
+	display: none;
+}
 
+.int-map-mobile-map-page .ad-shown {
+	iframe {
+		padding-top: $map-ad-height + $nav-height;
+	}
+}
+
+.int-map-mobile-map-page {
+	iframe {
+		padding-top: $nav-height;
+	}
+}
+
+.int-map-mobile-map-page {
 	.WikiaPageHeader {
 		display: none;
 	}
@@ -31,7 +40,6 @@ $smart-banner-height: 80px;
 			height: 100% !important;
 			left: 0;
 			margin: 0;
-			padding: 40px 0 0 0;
 			position: absolute;
 			top: 0;
 			width: 100% !important;
@@ -45,19 +53,13 @@ $smart-banner-height: 80px;
 
 	// required to be displayed over #wkPage which needs to occupy entire window - header and smartbanner.
 	// tried to set #wkPage using calc() but Android < 4.4 doesn't support it
-	#wkTopNav,
-	.smartbanner {
+	#wkTopNav {
 		z-index: $highest-z-index + 1;
 	}
 
 	#wkPage {
 		@include box-sizing-border-box();
 		height: 100%;
-		padding-top: $nav-height;
-		position: absolute;
-		top: 0;
-		// required for smooth animation with smart banner
-		-webkit-transition: padding-top 1s;
 		width: 100%;
 	}
 }
@@ -85,7 +87,7 @@ $smart-banner-height: 80px;
 		position: relative;
 
 		img {
-			height: auto;			
+			height: auto;
 			width: 100%;
 		}
 	}
@@ -113,6 +115,6 @@ $smart-banner-height: 80px;
 	}
 }
 
-#wkPage {
+.int-map-mobile-map-page #wkPage {
 	padding: 0;
 }

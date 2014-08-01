@@ -452,12 +452,8 @@ class WikiFactoryPage extends SpecialPage {
 		if( !is_null( $cat_id ) ){
 			$hub = WikiFactoryHub::getInstance();
 			$hub->setCategory( $this->mWiki->city_id, $cat_id, $reason );
-			$categories = $hub->getCategories();
 
-			// ugly fast fix for fb#9937 (until all the hub management is cleaned up)
-			global $wgMemc;
-			$key = sprintf("%s:%d", 'WikiFactory::getCategory', intval($this->mWiki->city_id));
-			$wgMemc->delete( $key );
+			$categories = $hub->getAllCategories();
 
 			return Wikia::successbox( "Hub is now set to: ". $categories[ $cat_id ]['name'] );
 		}
