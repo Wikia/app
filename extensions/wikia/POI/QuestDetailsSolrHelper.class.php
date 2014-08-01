@@ -266,6 +266,9 @@ class QuestDetailsSolrHelper {
 	}
 
 	protected function cutPrefixAndSuffix( $str, $prefix, $suffix ) {
-		return substr( $str, strlen( $prefix ), strlen( $str ) - strlen( $prefix ) - strlen( $suffix ) );
+		$prefixLen = mb_strlen( $prefix );
+		$suffixLen = mb_strlen( $suffix );
+		$strLen = mb_strlen( $str );
+		return substr( $str, $prefixLen, $strLen - $prefixLen - $suffixLen );
 	}
 } 
