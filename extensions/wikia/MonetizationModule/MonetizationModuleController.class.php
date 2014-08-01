@@ -6,42 +6,29 @@ class MonetizationModuleController extends WikiaController {
 
 	/**
 	 * Monetization Module
-	 * @requestParam string location [rail/bottom/bottom-ads/article-title]
-	 * @responseParam string title
-	 * @responseParam array products - list of products
+	 * @requestParam string geo
+	 * @responseParam array data - list of modules
 	 */
 	public function index() {
 		wfProfileIn( __METHOD__ );
 
-		if ( !$this->app->checkSkin( 'oasis' ) ) {
-			$this->skipRendering();
+		if ( !MonetizationModuleHelper::canShowModule() ) {
+			$this->data = '';
 			wfProfileOut( __METHOD__ );
 			return true;
 		}
 
-		$location = $this->request->getVal( 'location', MonetizationModuleHelper::LOCATION_BOTTOM );
+		$this->response->addAsset( 'monetization_module_css' );
+		$this->response->addAsset( 'monetization_module_js' );
 
-		MonetizationModuleHelper::replaceBottomAds( $location, $this->request );
+		$params = [
+			's_id' => $this->wg->CityId,
+			'geo' => MonetizationModuleHelper::getCountryCode( $this->request ),
+		];
+		$this->data = MonetizationModuleHelper::getMonetizationUnits( $params );
 
-		if ( !MonetizationModuleHelper::canShowModule( $location ) ) {
-			$this->skipRendering();
-			wfProfileOut( __METHOD__ );
-			return true;
-		}
-
-		if ( MonetizationModuleHelper::canLoadAssets( $location ) ) {
-			$this->response->addAsset( 'monetization_module_css' );
-			$this->response->addAsset( 'monetization_module_js' );
-		}
-
-		$type = $this->wg->MonetizationModuleOptions[$location];
-		if ( !method_exists( $this, $type ) ) {
-			$this->skipRendering();
-			wfProfileOut( __METHOD__ );
-			return true;
-		}
-
-		$this->forward( __CLASS__, $type );
+		// set cache control to 1 hour
+		$this->response->setCacheValidity( MonetizationModuleHelper::CACHE_TTL );
 
 		wfProfileOut( __METHOD__ );
 	}
@@ -92,24 +79,6 @@ class MonetizationModuleController extends WikiaController {
 		$this->className = ( $location == MonetizationModuleHelper::LOCATION_RAIL ) ? 'module' : '';
 		$this->type = 'ecommerce';
 		$this->position = $location;
-
-		wfProfileOut( __METHOD__ );
-	}
-
-	/**
-	 * Ad Unit
-	 * @requestParam string location [rail/bottom/bottom-ads/article-title]
-	 * @responseParam string position [rail/bottom/bottom-ads/article-title]
-	 * @responseParam string adClient
-	 * @responseParam string adSlot
-	 */
-	public function ad() {
-		wfProfileIn( __METHOD__ );
-
-		$this->type = 'ad-unit';
-		$this->position = $this->request->getVal( 'location', MonetizationModuleHelper::LOCATION_ARTICLE_TITLE );
-		$this->adClient = $this->wg->GoogleAdClient;
-		$this->adSlot = '6789179427';
 
 		wfProfileOut( __METHOD__ );
 	}

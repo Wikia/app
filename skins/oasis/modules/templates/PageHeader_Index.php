@@ -1,6 +1,6 @@
 <?php
-	if ( !empty( $wg->EnableMonetizationModuleExt ) ) {
-		echo $app->renderView( 'MonetizationModule', 'index', [ 'location' => MonetizationModuleHelper::LOCATION_LOCAL_NAV ] );
+		if ( !empty( $monetizationModules[MonetizationModuleHelper::SLOT_TYPE_ABOVE_TITLE] ) ) {
+			echo $monetizationModules[MonetizationModuleHelper::SLOT_TYPE_ABOVE_TITLE];
 	}
 ?>
 <header id="WikiaPageHeader" class="WikiaPageHeader">
@@ -58,8 +58,8 @@
 	?>
 </header>
 <?php
-	if ( !empty( $wg->EnableMonetizationModuleExt ) ) {
-		echo $app->renderView( 'MonetizationModule', 'index', [ 'location' => MonetizationModuleHelper::LOCATION_ARTICLE_TITLE ] );
+	if ( !empty( $monetizationModules[MonetizationModuleHelper::SLOT_TYPE_BELOW_TITLE] ) ) {
+		echo $monetizationModules[MonetizationModuleHelper::SLOT_TYPE_BELOW_TITLE];
 	}
 ?>
 <?php
