@@ -6,7 +6,6 @@
 	<?= $headLinks ?>
 	<title><?= $pageTitle ?></title>
 	<?= $cssLinks ?>
-<? /* RT #68514: load global user CSS (and other page specific CSS added via "SkinTemplateSetupPageCss" hook) */ ?>
 	<?= $pageCss ?>
 	<?= $jsTopScripts ?>
 	<?= $jsHeadFiles ?>
@@ -29,9 +28,9 @@
 	<?#TODO: Re-Enable when it's ready = $footer ?>
 	<?#TODO: Re-Enable when it's ready = $corporateFooter ?>
 </section>
-	<!--WikiaPage-->
+<!--$jsBodyFiles-->
 <?= $jsBodyFiles ?>
-<!-- ? -->
+<!-- $bottomScriptLinks -->
 <?= $bottomScriptLinks ?>
 <?#TODO: = $printCssLinks ?>
 </body>
