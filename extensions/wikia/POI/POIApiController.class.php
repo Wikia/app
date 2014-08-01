@@ -20,8 +20,8 @@ class POIApiController extends WikiaApiController {
 		      "abstract": "Quest description...",
 		       "thumbnail": "http://img2.wikia.nocookie.net/__cb20140618075345/gameofthrones/images/thumb/6/62/Meera-Reed-Profile_2-HD.png/200px-0%2C523%2C0%2C523-Meera-Reed-Profile_2-HD.png",
 		      "original_dimensions": {
-		        "width": "523",
-		        "height": "670"
+		        "width": 523,
+		        "height": 670
 		      },
 		      "categories": [
 		        "Weapons",

@@ -14,3 +14,7 @@ $wgAutoloadClasses['QuestDetailsSearchService'] = $dir . "QuestDetailsSearchServ
 $wgAutoloadClasses['QuestDetailsSolrHelper'] = $dir . "QuestDetailsSolrHelper.class.php";
 
 $wgSpecialPages['Metadata']		= 'MetadataSpecialController';
+
+$wgAvailableRights[] = 'metadata';
+$wgGroupPermissions['*']['metadata'] = false;
+$wgGroupPermissions['staff']['metadata'] = true;

@@ -4,6 +4,7 @@ class ArticleMetadataModel {
 
 	const quest_id = "quest_id";
 	const fingerprints = "fingerprints";
+	const ability_id = "ability_id";
 	const map_region = "map_region";
 
 	const article_prop_name = WPP_PALANTIR_METADATA;
@@ -14,6 +15,7 @@ class ArticleMetadataModel {
 	protected $metadata = [
 		self::quest_id => "",
 		self::map_region => "",
+		self::ability_id => "",
 		self::fingerprints => [],
 	];
 
@@ -21,7 +23,7 @@ class ArticleMetadataModel {
 		$this->articleId = (int) $articleId;
 		$this->articleTitle = Title::newFromID( $this->articleId );
 		if ( is_null( $this->articleTitle ) ) {
-			return null;
+			throw new TitleNotFoundException();
 		}
 		$this->load();
 	}
@@ -34,10 +36,10 @@ class ArticleMetadataModel {
 	 */
 	public static function newFromString( $title ) {
 		$titleObject = Title::newFromText( $title );
-		if ( $titleObject && $titleObject->exists() ) {
-			return new self( $titleObject->getArticleId() );
+		if ( !$titleObject || !$titleObject->exists() ) {
+			throw new TitleNotFoundException();
 		}
-		return null;
+		return new self( $titleObject->getArticleId() );
 	}
 
 
@@ -86,7 +88,7 @@ class ArticleMetadataModel {
 		}
 
 		if ( is_array( $this->metadata[ $fieldName ] ) && !is_array( $value ) ) {
-			throw new FingerprintsNotArrayException('fingerprints should be an array (or use addFingerprint method)');
+			throw new FieldNotArrayException( $fieldName );
 		} else {
 			$this->metadata[ $fieldName ] = $value;
 		}
@@ -131,4 +133,5 @@ class ArticleMetadataModel {
 
 //exceptions
 class NotValidPOIMetadataFieldException extends WikiaException { }
-class FingerprintsNotArrayException extends WikiaException { }
+class FieldNotArrayException extends WikiaException { }
+class TitleNotFoundException extends WikiaException { }
