@@ -49,7 +49,7 @@ ve.init.mw.WikiaTargetEvents.prototype.onBeforeUnload = function () {
 		ve.track( 'wikia', {
 			'action': ve.track.actions.CLOSE,
 			'label': 'window',
-			'duration': this.timings.beforeUnload - this.timings.surfaceReady
+			'value': ve.track.normalizeDuration( this.timings.beforeUnload - this.timings.surfaceReady )
 		} );
 	}
 };
@@ -62,7 +62,7 @@ ve.init.mw.WikiaTargetEvents.prototype.onSaveComplete = function () {
 	ve.track( 'wikia', {
 		'action': ve.track.actions.CLICK,
 		'label': 'dialog-save-publish',
-		'duration': ve.now() - this.timings.saveInitiated
+		'value': ve.track.normalizeDuration( ve.now() - this.timings.saveInitiated )
 	} );
 };
 
@@ -73,6 +73,6 @@ ve.init.mw.WikiaTargetEvents.prototype.onPopStateDeactivated = function () {
 	ve.track( 'wikia', {
 		'action': ve.track.actions.CLICK,
 		'label': 'back',
-		'duration': ve.now() - this.timings.surfaceReady
+		'value': ve.track.normalizeDuration( ve.now() - this.timings.surfaceReady )
 	} );
 };
