@@ -13,7 +13,7 @@ class VideosModule extends WikiaModel {
 	const LIMIT_VIDEOS = 20;
 	const LIMIT_CATEGORY_VIDEOS = 40;
 	const CACHE_TTL = 3600;
-	const CACHE_VERSION = 2;
+	const CACHE_VERSION = 3;
 
 	const STAFF_PICK_PREFIX = 'Staff_Pick_';
 	const STAFF_PICK_GLOBAL_CATEGORY = 'Staff_Pick_Global';
@@ -104,7 +104,7 @@ class VideosModule extends WikiaModel {
 		wfProfileIn( __METHOD__ );
 		$log = WikiaLogger::instance();
 
-		$memcKey = wfMemcKey( 'videomodule', 'local_videos', self::CACHE_VERSION, $sort );
+		$memcKey = wfMemcKey( 'videomodule', 'local_videos', self::CACHE_VERSION, $sort, $this->userRegion );
 		$videos = $this->wg->Memc->get( $memcKey );
 
 		$loggingParams = [ 'method' => __METHOD__, 'num' => $numRequired, 'sort' => $sort ];
@@ -146,7 +146,7 @@ class VideosModule extends WikiaModel {
 		wfProfileIn( __METHOD__ );
 		$log = WikiaLogger::instance();
 
-		$memcKey = wfMemcKey( 'videomodule', 'wiki_related_videos_topics', self::CACHE_VERSION );
+		$memcKey = wfMemcKey( 'videomodule', 'wiki_related_videos_topics', self::CACHE_VERSION, $this->userRegion );
 		$videos = $this->wg->Memc->get( $memcKey );
 
 		$loggingParams = [ 'method' => __METHOD__, 'num' => $numRequired ];
@@ -225,7 +225,7 @@ class VideosModule extends WikiaModel {
 
 		sort( $category );
 		$hashCategory = md5( json_encode( $category ) );
-		$memcKey = wfSharedMemcKey( 'videomodule', 'videolist', self::CACHE_VERSION, $hashCategory, $sort );
+		$memcKey = wfSharedMemcKey( 'videomodule', 'videolist', self::CACHE_VERSION, $hashCategory, $sort, $this->userRegion );
 		$videos = $this->wg->Memc->get( $memcKey );
 
 		$loggingParams = [
