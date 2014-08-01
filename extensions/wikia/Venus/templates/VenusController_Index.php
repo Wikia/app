@@ -6,24 +6,8 @@
 	<?= $headLinks ?>
 	<title><?= $pageTitle ?></title>
 	<?= $cssLinks ?>
-<?
-/*
-Add the wiki and user-specific overrides last.  This is a special case in Oasis because the modules run
-later than normal extensions and therefore add themselves later than the wiki/user specific CSS is
-normally added. See Skin::setupUserCss()
-*/
-?>
-<? if (!empty($wg->OasisLastCssScripts)): ?>
-	<? foreach ($wg->OasisLastCssScripts as $src): ?>
-		<link rel="stylesheet" href="<?= $src ?>">
-	<? endforeach ?>
-<? endif ?>
-
 <? /* RT #68514: load global user CSS (and other page specific CSS added via "SkinTemplateSetupPageCss" hook) */ ?>
-<? if ($pageCss): ?>
-	<style type="text/css"><?= $pageCss ?></style>
-<? endif ?>
-
+	<?= $pageCss ?>
 	<?= $jsTopScripts ?>
 	<?= $jsHeadFiles ?>
 	<?= $headItems ?>
@@ -46,7 +30,9 @@ normally added. See Skin::setupUserCss()
 	<?#TODO: Re-Enable when it's ready = $corporateFooter ?>
 </section>
 	<!--WikiaPage-->
-<?= $jsBottomScripts ?>
+<?= $jsBodyFiles ?>
+<!-- ? -->
+<?= $bottomScriptLinks ?>
 <?#TODO: = $printCssLinks ?>
 </body>
 </html>
