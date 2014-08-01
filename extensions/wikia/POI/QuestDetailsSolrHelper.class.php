@@ -1,11 +1,11 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: yurii
  * Date: 8/1/14
  * Time: 11:04 AM
  */
-
 class QuestDetailsSolrHelper {
 
 	const DEFAULT_ABSTRACT_LENGTH = 200;
@@ -13,6 +13,11 @@ class QuestDetailsSolrHelper {
 	const DEFAULT_THUMBNAIL_WIDTH = 200;
 
 	const DEFAULT_THUMBNAIL_HEIGHT = 200;
+
+	private $imageDimensionFields = [
+		'width',
+		'height'
+	];
 
 	/**
 	 * @var int
@@ -42,7 +47,7 @@ class QuestDetailsSolrHelper {
 				'revision' => $this->getRevision( $item ),
 				'comments' => $this->getCommentsNumber( $item ),
 				'type' => $item[ 'article_type_s' ],
-				'categories' => $this->findFirstValueByKeyPrefix( $item, 'categories_', [] ),
+				'categories' => $this->findFirstValueByKeyPrefix( $item, 'categories_', [ ] ),
 				'abstract' => $this->getAbstract( $item ),
 				'metadata' => $this->getMetadata( $item ),
 			];
@@ -231,11 +236,11 @@ class QuestDetailsSolrHelper {
 		}
 	}
 
-	protected function getArticlesThumbnails( $articles, $width = self::DEFAULT_THUMBNAIL_WIDTH, $height = self::DEFAULT_THUMBNAIL_HEIGHT ) {
+	protected function getArticlesThumbnails( $articles ) {
 		$ids = !is_array( $articles ) ? [ $articles ] : $articles;
 		$result = [ ];
-		if ( $width > 0 && $height > 0 ) {
-			$is = $this->getImageServing( $ids, $width, $height );
+		if ( self::DEFAULT_THUMBNAIL_WIDTH > 0 && self::DEFAULT_THUMBNAIL_HEIGHT > 0 ) {
+			$is = $this->getImageServing( $ids, self::DEFAULT_THUMBNAIL_WIDTH, self::DEFAULT_THUMBNAIL_HEIGHT );
 			//only one image max is returned
 			$images = $is->getImages( 1 );
 			//parse results
@@ -243,13 +248,32 @@ class QuestDetailsSolrHelper {
 				$data = [ 'thumbnail' => null, 'original_dimensions' => null ];
 				if ( isset( $images[ $id ] ) ) {
 					$data[ 'thumbnail' ] = $images[ $id ][ 0 ][ 'url' ];
-					$data[ 'original_dimensions' ] = isset( $images[ $id ][ 0 ][ 'original_dimensions' ] ) ?
-						$images[ $id ][ 0 ][ 'original_dimensions' ] : null;
+					if ( is_array( $images[ $id ][ 0 ][ 'original_dimensions' ] ) ) {
+						array_walk( $images[ $id ][ 0 ][ 'original_dimensions' ], [ $this, 'normalizeDimension' ] );
+
+						$data[ 'original_dimensions' ] = $images[ $id ][ 0 ][ 'original_dimensions' ];
+					} else {
+						$data[ 'original_dimensions' ] = null;
+					}
 				}
 				$result[ $id ] = $data;
 			}
 		}
 		return $result;
+	}
+
+	/**
+	 * Normalizes (converts to integer) $dimension passed to the method, stored
+	 * under $key.
+	 * Meant to be used as callable in array_walk
+	 *
+	 * @param $dimension
+	 * @param $key
+	 */
+	protected function normalizeDimension( &$dimension, $key ) {
+		if ( in_array( $key, $this->imageDimensionFields ) ) {
+			$dimension = intval( $dimension );
+		}
 	}
 
 	protected function findFirstValueByKeyPrefix( $hash, $prefix, $defaultValue = null ) {
