@@ -5,22 +5,12 @@ $media-margin: .5em;
 	margin: 0 $media-margin * -1;
 	width: auto;
 
-	&.count-2 .media{
+	&.count-2 .media {
 		@include grid-column(5);
 		&:first-child {
 			@include grid-column(5, false, false, 1);
 		}
 	}
-<<<<<<< Updated upstream
-	&.count-3 .media {
-		@include grid-column(4);
-	}
-	&.count-4 .media {
-		@include grid-column(3);
-	}
-	&.count-5 .media {
-		@include grid-column(6);
-=======
 
 	&.count-3 .media {
 		@include grid-column(4);
@@ -33,42 +23,30 @@ $media-margin: .5em;
 	&.count-5 .media {
 		@include grid-column(6);
 
->>>>>>> Stashed changes
 		&:nth-child(n+2) {
 			@include grid-column(3);
 		}
 	}
-<<<<<<< Updated upstream
-=======
 
->>>>>>> Stashed changes
 	&.count-6 .media {
 		@include grid-column(4);
 	}
+
 	&.count-7 .media {
 		@include grid-column(4);
-<<<<<<< Updated upstream
-=======
 
->>>>>>> Stashed changes
 		&:nth-child(n+4) {
 			@include grid-column(3);
 		}
 	}
-<<<<<<< Updated upstream
-=======
 
->>>>>>> Stashed changes
 	&.count-8 .media {
 		@include grid-column(3);
 	}
 
 	&[class*="count-"] .media:nth-child(n) {
 		padding: $media-margin;
-<<<<<<< Updated upstream
-=======
 
->>>>>>> Stashed changes
 		img {
 			width: 100%;
 		}
