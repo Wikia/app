@@ -61,6 +61,8 @@ class UpdateThumbnailTask extends BaseTask {
 
 		if ( !$status->isGood() ) {
 			$this->log( "error", $delayIndex, $title->getText(), $provider, [ 'errorMsg' => $status->getMessage() ] );
+		// A good status doesn't necessarily mean we updated the actual thumbnail. A good status is returned for
+		// successfully uploading the default thumb as well. Actually check the img sha to see if the thumb changed
 		} elseif ( $file->getSha1() != self::DEFAULT_THUMB_SHA ) {
 			$this->log( "success", $delayIndex, $title->getText(), $provider, [ 'thumbnail' => $file->getThumbUrl() ] );
 		}
