@@ -173,6 +173,8 @@ $config['oasis_noads_extensions_js'] = array(
 		'//extensions/wikia/EditorSurvey/js/EditorSurvey.js',
 		// Image and video thumbnail mustache templates
 		'//extensions/wikia/Thumbnails/scripts/templates.mustache.js',
+		// handlebars - uncomment this when introducing first client-side rendered handlebars template
+		// '//resources/wikia/libraries/handlebars/handlebars.js',
 	)
 );
 
@@ -317,7 +319,6 @@ $config['oasis_nojquery_shared_js'] = array(
 		'//skins/oasis/js/PageHeader.js',
 		'//skins/oasis/js/Search.js',
 		'//skins/oasis/js/WikiaFooter.js',
-		'//skins/oasis/js/CorporateFooter.js',
 		'//skins/oasis/js/buttons.js',
 		'//skins/oasis/js/WikiHeader.js',
 		'//skins/oasis/js/WikiaNotifications.js',
@@ -671,7 +672,7 @@ $config['interactivemaps_ads_js'] = array(
 		'//resources/wikia/modules/window.js',
 
 		// Advertisement libs
-		'//extensions/wikia/AdEngine/js/AdProviderDirectGptMobile.js',
+		'//extensions/wikia/AdEngine/js/AdProviderDirectGptMaps.js',
 		'//extensions/wikia/AdEngine/js/WikiaGptHelper.js',
 		'//extensions/wikia/AdEngine/InteractiveMaps/ads.js'
 	)
@@ -1798,6 +1799,15 @@ $config['optimizely_blocking_js'] = array(
 	'skin' => [ 'oasis', 'wikiamobile' ],
 	'assets' => array(
 		'//extensions/wikia/Optimizely/scripts/OptimizelyBlocking.js',
+	)
+);
+
+/** GlobalFooter extension */
+$config['global_footer_js'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => ['oasis'],
+	'assets' => array(
+		'//extensions/wikia/GlobalFooter/scripts/GlobalFooter.js'
 	)
 );
 
