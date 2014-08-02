@@ -1,10 +1,12 @@
 <?php
 use Wikia\Tasks\Tasks\BaseTask;
+use Wikia\Logger\WikiaLogger;
 
 class UpdateThumbnailTask extends BaseTask {
 
 	const DEFAULT_PROVIDER = "default";
 	const IVA = "ooyala/iva";
+	const DEFAULT_THUMB_SHA = "m03a6fnvxhk8oj5kgnt11t6j7phj5nh";
 
 	private static $delays = [
 		self::DEFAULT_PROVIDER => [
@@ -30,8 +32,19 @@ class UpdateThumbnailTask extends BaseTask {
 	 */
 	public function retryThumbUpload( $title, $delayIndex, $provider, $videoId ) {
 		global $IP, $wgCityId;
-		// IVA requires extra steps to update their thumbnail, use the script we have for that
+
+		/** @var Title $title */
+		$file = WikiaFileHelper::getVideoFileFromTitle( $title );
+		if ( empty( $file ) ) {
+			$msg = "File not found on wiki";
+			$this->log( "error", $title, $delayIndex, $provider, [ "errorMsg" => $msg ] );
+			return Status::newFatal( $msg );
+		}
+
 		$delayIndex++;
+		$this->log( "start", $delayIndex, $title->getText(), $provider );
+
+		// IVA requires extra steps to update their thumbnail, use the script we have for that
 		if ( $provider == self::IVA ) {
 			$cmd = sprintf( "SERVER_ID={$wgCityId} php {$IP}/maintenance/wikia/VideoHandlers/updateOoyalaThumbnail.php --videoId={$videoId} --delayIndex={$delayIndex}" );
 			$response = wfShellExec( $cmd, $exitStatus );
@@ -39,14 +52,19 @@ class UpdateThumbnailTask extends BaseTask {
 				$msg = "Video thumbnail uploaded successfully";
 				$status = Status::newGood( $msg );
 			} else {
-				$msg = "Error uploading video thumbnail";
-				$status = Status::newFatal( $msg );
+				$status = Status::newFatal( $response );
 			}
 		} else {
-			$file = WikiaFileHelper::getVideoFileFromTitle( $title );
 			$helper = new VideoHandlerHelper();
 			$status = $helper->resetVideoThumb( $file, null, $delayIndex );
 		}
+
+		if ( !$status->isGood() ) {
+			$this->log( "error", $delayIndex, $title->getText(), $provider, [ 'errorMsg' => $status->getMessage() ] );
+		} elseif ( $file->getSha1() != self::DEFAULT_THUMB_SHA ) {
+			$this->log( "success", $delayIndex, $title->getText(), $provider, [ 'thumbnail' => $file->getThumbUrl() ] );
+		}
+
 		return $status;
 	}
 
@@ -75,5 +93,18 @@ class UpdateThumbnailTask extends BaseTask {
 			$provider = self::DEFAULT_PROVIDER;
 		}
 		return count( self::$delays[$provider] );
+	}
+
+	public function log( $action, $delay, $title, $provider, $extraInfo = [] ) {
+		$context = [
+			"action" => $action,
+			"attemptCount" => $delay,
+			"timeWaited" => self::getDelay( $provider, $delay - 1 ),
+			"title" => $title,
+			"provider" => $provider
+		];
+		$context = array_merge( $context, $extraInfo );
+
+		WikiaLogger::instance()->info( "UpdateThumbnailTaskLogging", $context );
 	}
 }
