@@ -2527,9 +2527,8 @@ class DPLMain {
         // LIMIT ....
         // we must switch off LIMITS when going for categories as output goal (due to mysql limitations)
         if ( (!ExtDynamicPageList::$allowUnlimitedResults || $iCount>=0) && $sGoal != 'categories' ) {
-    		$sSqlWhere .= " LIMIT $iOffset, ";
 			if ($iCount<0) $iCount=intval(ExtDynamicPageList::$options['count']['default']);
-			$sSqlWhere .= $iCount;
+	 		$sSqlWhere .= " LIMIT $iCount OFFSET $iOffset ";
 		}
 
         // when we go for a list of categories as result we transform the output of the normal query into a subquery
