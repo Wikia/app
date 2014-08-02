@@ -505,7 +505,8 @@ define('wikia.intMap.poiCategories',
 		}
 
 		return {
-			init: init
+			init: init,
+			isPoiCategoryChanged: isPoiCategoryChanged // for unit testing
 		};
 	}
 );

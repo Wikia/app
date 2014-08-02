@@ -154,7 +154,11 @@ module.exports = function(config) {
 			'resources/wikia/libraries/jquery/throttle-debounce/jquery.throttle-debounce.js', // $.throttle
 			'extensions/wikia/ImageLazyLoad/js/ImgLzy.module.js',
 			'extensions/wikia/ImageLazyLoad/js/ImageLazyLoad.js',
-			'extensions/wikia/ImageLazyLoad/spec/*.spec.js'
+			'extensions/wikia/ImageLazyLoad/spec/*.spec.js',
+
+			// WikiaMaps
+			'extensions/wikia/WikiaInteractiveMaps/js/intMapPoiCategories.js',
+			'extensions/wikia/WikiaInteractiveMaps/spec/*.spec.js'
 		]
 	});
 };
