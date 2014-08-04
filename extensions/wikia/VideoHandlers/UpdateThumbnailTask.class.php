@@ -100,7 +100,7 @@ class UpdateThumbnailTask extends BaseTask {
 	/**
 	 * Logs a message regarding the status of an UpdateThumbnail Task.
 	 * @param $action String, one of "start", "error" or "success"
-	 * @param $delay Integer, Corresponds to an index in one of the self::DELAYS
+	 * @param $delay Integer, Corresponds to an index in one of the self::$delays
 	 * @param $title String, The title of the video
 	 * @param $provider String, The provider of the video
 	 * @param array $extraInfo, Any extra information we want to log
