@@ -430,7 +430,11 @@ class WikiaResponse {
 	}
 
 	public function setTemplateEngine( $engine ) {
-		if ( in_array( $engine, array(self::TEMPLATE_ENGINE_PHP, self::TEMPLATE_ENGINE_MUSTACHE, self::TEMPLATE_ENGINE_HANDLEBARS)) ) {
+		if ( in_array( $engine, array(
+				self::TEMPLATE_ENGINE_PHP,
+				self::TEMPLATE_ENGINE_MUSTACHE,
+				self::TEMPLATE_ENGINE_HANDLEBARS)
+		) ) {
 			$this->templateEngine = $engine;
 		}
 	}

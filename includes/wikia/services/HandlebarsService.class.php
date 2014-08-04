@@ -1,6 +1,10 @@
 <?php
 
 class HandlebarsService {
+	const PARTIALS_DIRECTORY = 'partials';
+	const PARTIALS_PREFIX = '_';
+	const TEMPLATES_DIRECTORY = 'templates';
+	const HANDLEBARS_EXTENSION = 'handlebars';
 
 	protected function __construct() {
 		\Handlebars\Autoloader::register();
@@ -14,11 +18,12 @@ class HandlebarsService {
 	 * @return string template name
 	 */
 	private function extractTemplateNameFromPath($path) {
-		$matches = [];
-		if (preg_match('/\\w+.handlebars/', $path, $matches) != 1) {
-			throw new Exception('Handlebar template not found in following path: ' . $path);
+		$pathInfo = pathinfo( $path );
+
+		if ( $pathInfo['extension'] != self::HANDLEBARS_EXTENSION ) {
+			throw new Exception( 'Handlebar template not found in following path: ' . $path );
 		}
-		return $matches[0];
+		return $pathInfo['basename'];
 	}
 
 	/**
@@ -29,11 +34,13 @@ class HandlebarsService {
 	 * @return string Path to templates directory (absolute)
 	 */
 	private function extractTemplateDirFromPath($path) {
-		$matches = [];
-		if (preg_match('/\/(.+)templates\//', $path, $matches) != 1) {
-			throw new Exception('Templates directory not found in following path: ' . $path);
+		$pathInfo = pathinfo( $path );
+		$templatesDirectory = DIRECTORY_SEPARATOR . self::TEMPLATES_DIRECTORY . DIRECTORY_SEPARATOR;
+
+		if ( strpos( $pathInfo['dirname'], $templatesDirectory ) === false ) {
+			throw new Exception( 'Templates directory not found in following path: ' . $path );
 		}
-		return $matches[0];
+		return $pathInfo['dirname'];
 	}
 
 	/**
@@ -46,23 +53,25 @@ class HandlebarsService {
 	public function render($path, $data) {
 		wfProfileIn( __METHOD__ );
 
-		$templateName = $this->extractTemplateNameFromPath($path);
-		$templateDir = $this->extractTemplateDirFromPath($path);
-		$partials = $templateDir . DIRECTORY_SEPARATOR . 'partials';
-		$partialsPrefix = '_';
+		$templateName = $this->extractTemplateNameFromPath( $path );
+		$templateDir = $this->extractTemplateDirFromPath( $path );
+		$partialsDir = $templateDir . DIRECTORY_SEPARATOR . self::PARTIALS_DIRECTORY;
+
+		$partials = is_dir( $partialsDir ) ? $partialsDir : $templateDir;
 
 		wfProfileIn( __METHOD__ . " - template: {$path}" );
 
 		$handlebars = new \Handlebars\Handlebars();
 
-		$handlebars->setLoader(new \Handlebars\Loader\FilesystemLoader($templateDir));
-		$handlebars->setPartialsLoader(new \Handlebars\Loader\FilesystemLoader(
+		$handlebars->setLoader( new \Handlebars\Loader\FilesystemLoader( $templateDir ) );
+		$handlebars->setPartialsLoader( new \Handlebars\Loader\FilesystemLoader(
 			$partials,
 			[
-				'prefix' => $partialsPrefix
-			]));
+				'prefix' => self::PARTIALS_PREFIX
+			] )
+		);
 
-		$contents = $handlebars->render( $templateName, $data);
+		$contents = $handlebars->render( $templateName, $data );
 
 		wfProfileOut( __METHOD__ . " - template: {$path}" );
 

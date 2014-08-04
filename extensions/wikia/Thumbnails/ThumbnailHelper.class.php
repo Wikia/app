@@ -143,7 +143,7 @@ class ThumbnailHelper extends WikiaModel {
 		// If we have the details icon enabled, have the anchor wrapping the image link to the
 		// raw file.  If not, keep previous behavior and link to the file page
 
-		if ( F::app()->wg->ShowArticleThumbDetailsIcon ) {
+		if ( F::app()->wg->ShowArticleThumbDetailsIcon && !F::app()->checkSkin( 'monobook' ) ) {
 			$defaultHref = $thumb->file->getUrl();
 		} else {
 			$defaultHref = $thumb->file->getTitle()->getLocalURL();

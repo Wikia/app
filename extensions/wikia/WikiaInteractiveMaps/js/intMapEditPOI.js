@@ -74,7 +74,14 @@ define('wikia.intMap.editPOI', ['jquery', 'wikia.intMap.utils'], function($, uti
 			CREATE: 'create',
 			EDIT: 'edit'
 		},
-		poiModalMode;
+		poiModalMode,
+		suggestionsVisible = false,
+		suggestionSelectedClass = 'selected',
+		arrowHandlers,
+		direction = {
+			up: 1,
+			down: -1
+		};
 
 	/**
 	 * @desc Entry point for  modal
@@ -121,6 +128,25 @@ define('wikia.intMap.editPOI', ['jquery', 'wikia.intMap.utils'], function($, uti
 
 			modal.show();
 		});
+
+		// Setup suggestion key handlers
+		arrowHandlers = {
+			// Enter key
+			13: handleSuggestionsEnter,
+			// Esc key
+			27: function() {
+				hideSuggestions();
+			},
+			// Arrow up
+			38: function() {
+				handleSuggestionsArrow(direction.up);
+			},
+			// Arrow down
+			40: function() {
+				handleSuggestionsArrow(direction.down);
+			}
+		};
+
 	}
 
 	/**
@@ -213,20 +239,73 @@ define('wikia.intMap.editPOI', ['jquery', 'wikia.intMap.utils'], function($, uti
 	}
 
 	/**
+	 * @desc Scrolls $container to position $element on the top
+	 * @param {object} $container
+	 * @param {object} $element
+	 */
+	function scrollToElement($container, $element) {
+		$container.scrollTop($container.scrollTop() + $element.position().top);
+	}
+
+	/**
+	 * @desc Handle Enter key on suggest
+	 */
+	function handleSuggestionsEnter() {
+		modal.$suggestions.find('.' + suggestionSelectedClass).find('a').click();
+	}
+
+	/**
+	 * @desc Handle Arrow keys on suggest
+	 *
+	 * @param {number} arrowDirection - Value defined in the direction object
+	 */
+	function handleSuggestionsArrow(arrowDirection) {
+		var $selected = modal.$suggestions.find('.' + suggestionSelectedClass),
+			isDownArrow = arrowDirection === direction.down,
+			selector = isDownArrow ? ':first' : ':last',
+			$next;
+		if ($selected.length) {
+			// go to next selected
+			$next = isDownArrow ? $selected.next() : $selected.prev();
+
+			if ($next.length) {
+				$selected.removeClass(suggestionSelectedClass);
+				$next.addClass(suggestionSelectedClass);
+				scrollToElement(modal.$suggestions, $next);
+			}
+		} else {
+			modal.$suggestions.children(selector).addClass(suggestionSelectedClass);
+		}
+	}
+
+	/**
+	 * @desc Handle control keys on suggestion
+	 * @param {number} keyCode
+	 * @returns {boolean} true if handled
+	 */
+	function processSuggestKeyEvents(keyCode) {
+		if (suggestionsVisible && arrowHandlers.hasOwnProperty(keyCode)) {
+			arrowHandlers[keyCode]();
+			return true;
+		}
+		return false;
+	}
+
+	/**
 	 * @desc handler for article suggestions
 	 * @param {Event} event
 	 */
 	function suggestArticles(event) {
 		removeImagePreview();
 
-		utils.onWriteInInput(
-			event.target,
-			function (inputValue) {
-				getSuggestions(inputValue, function (suggestions) {
-					showSuggestions(suggestions);
-				});
-			}
-		);
+		if (!processSuggestKeyEvents(event.keyCode)) {
+			utils.onWriteInInput(
+				event.target,
+				function (inputValue) {
+					getSuggestions(inputValue, showSuggestions);
+				}
+			);
+		}
 	}
 
 	/**
@@ -254,6 +333,7 @@ define('wikia.intMap.editPOI', ['jquery', 'wikia.intMap.utils'], function($, uti
 	 * @param {object} suggestions - object with suggestions items {items: [] }
 	 */
 	function showSuggestions(suggestions) {
+		suggestionsVisible = true;
 		modal.$suggestions
 			.html(utils.render(articleSuggestionTemplate, suggestions))
 			.removeClass('hidden');
@@ -263,6 +343,7 @@ define('wikia.intMap.editPOI', ['jquery', 'wikia.intMap.utils'], function($, uti
 	 * @desc hide suggestions list
 	 */
 	function hideSuggestions() {
+		suggestionsVisible = false;
 		modal.$suggestions
 			.html('')
 			.addClass('hidden');
