@@ -2,7 +2,8 @@
 
 use Wikia\Search\Test\BaseTest;
 
-include_once dirname( __FILE__ ) . '/../' . "QuestDetailsSolrHelper.class.php";
+include_once dirname( __FILE__ ) . '/../../../Services/QuestDetails/' . "QuestDetailsSolrHelper.class.php";
+include_once dirname( __FILE__ ) . '/../../../Services/QuestDetails/' . "QuestDetailsSearchService.class.php";
 
 /**
  * Class QuestDetailsSearchServiceMock - used to mock calls of static methods (which must not be tested)
@@ -38,12 +39,6 @@ class QuestDetailsSearchSolrHelperMock extends QuestDetailsSolrHelper {
 }
 
 class QuestDetailsSearchServiceTest extends WikiaBaseTest {
-
-	public function setUp() {
-		$dir = dirname( __FILE__ ) . '/../';
-		$this->setupFile = $dir . 'POI.setup.php';
-		parent::setUp();
-	}
 
 	protected static function getFn( $obj, $name ) {
 		$class = new ReflectionClass( get_class( $obj ) );

@@ -10,8 +10,8 @@ $wgAutoloadClasses['QuestDetailsApiController'] = $dir . 'QuestDetailsApiControl
 $wgAutoloadClasses['MetaCSVService'] = $dir . 'MetaCSVService.class.php';
 $wgAutoloadClasses['ArticleMetadataModel'] = $dir . 'ArticleMetadataModel.php';
 $wgAutoloadClasses['EntitySearchService'] = $searchDir . "EntitySearchService.php";
-$wgAutoloadClasses['QuestDetailsSearchService'] = $dir . "QuestDetailsSearchService.class.php";
-$wgAutoloadClasses['QuestDetailsSolrHelper'] = $dir . "QuestDetailsSolrHelper.class.php";
+$wgAutoloadClasses['QuestDetailsSearchService'] = $searchDir . "QuestDetails/QuestDetailsSearchService.class.php";
+$wgAutoloadClasses['QuestDetailsSolrHelper'] = $searchDir . "QuestDetails/QuestDetailsSolrHelper.class.php";
 
 $wgSpecialPages['Metadata']		= 'MetadataSpecialController';
 
