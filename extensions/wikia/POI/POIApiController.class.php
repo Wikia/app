@@ -16,14 +16,23 @@ class POIApiController extends WikiaApiController {
 
 	//TODO: rename it to getNearbyQuests
 	public function getNearbyQuests4Real() {
-		$lat = $this->request->getVal("lat");
-		$long = $this->request->getVal("long");
+		$lat = $this->getRequest()->getVal( 'location_x' );
+		$long = $this->getRequest()->getVal( 'location_y' );
+		$region = $this->getRequest()->getVal( 'region' );
+		$radius = $this->getRequest()->getVal( 'radius' );
+		$limit = $this->getRequest()->getVal( 'limit' );
 
 		$solrHelper = $this->getSolrHelper();
 		$nearbySearch = $this->getNearbySearch();
 
 		$nearbySearch->setFields( $solrHelper->getRequiredSolrFields() );
-		$solrResponse = $nearbySearch->queryLocation( $lat, $long );
+		$solrResponse = $nearbySearch->query( [
+			NearbyPOISearchService::LATITUDE => $lat,
+			NearbyPOISearchService::LONGITUDE => $long,
+			NearbyPOISearchService::RADIUS => $radius,
+			NearbyPOISearchService::REGION => $region,
+			NearbyPOISearchService::LIMIT => $limit
+		] );
 		$result = $solrHelper->consumeResponse( $solrResponse );
 
 		$this->setResponseData( $result );

@@ -8,23 +8,31 @@
  */
 class QuestDetailsApiController extends WikiaApiController {
 
+	const FINGERPRINT_REQUEST_PARAM = 'fingerprint_id';
+
+	const QUEST_ID_REQUEST_PARAM = 'quest_id';
+
+	const CATEGORY_REQUEST_PARAM = 'category';
+
+	const LIMIT_REQUEST_PARAM = 'limit';
+
 	/**
 	 * @var QuestDetailsSearchService
 	 */
 	protected $questDetailsSearch;
 
 	public function getQuestDetails() {
-		$fingerprintId = $this->getRequest()->getVal( 'fingerprint_id' );
-		$questId = $this->getRequest()->getVal( 'quest_id' );
-		$category = $this->getRequest()->getVal( 'category' );
-		$limit = $this->getRequest()->getVal( 'limit' );
+		$fingerprintId = $this->getRequest()->getVal( self::FINGERPRINT_REQUEST_PARAM );
+		$questId = $this->getRequest()->getVal( self::QUEST_ID_REQUEST_PARAM );
+		$category = $this->getRequest()->getVal( self::CATEGORY_REQUEST_PARAM );
+		$limit = $this->getRequest()->getVal( self::LIMIT_REQUEST_PARAM );
 
 		$service = $this->getQuestDetailsSearch();
 		$result = $service->query( [
-			'fingerprint' => $fingerprintId,
-			'questId' => $questId,
-			'category' => $category,
-			'limit' => $limit
+			QuestDetailsSearchService::FINGERPRINT_CRITERIA => $fingerprintId,
+			QuestDetailsSearchService::QUEST_ID_CRITERIA => $questId,
+			QuestDetailsSearchService::CATEGORY_CRITERIA => $category,
+			QuestDetailsSearchService::LIMIT_CRITERIA => $limit
 		] );
 
 		$this->setResponseData( $result );
