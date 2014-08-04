@@ -1259,7 +1259,7 @@ $wgSitewideDisableSevenOneMedia = false;
 
 /**
  * @name $wgSitewideDisableIVW2
- * Whether to enable SevenOneMedia Disaster Recovery (true) or the not (false)
+ * Whether to enable IVW2 Analytics pixel Disaster Recovery (true) or the not (false)
  */
 $wgSitewideDisableIVW2 = false;
 

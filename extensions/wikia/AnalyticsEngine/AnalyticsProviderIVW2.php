@@ -5,6 +5,21 @@ class AnalyticsProviderIVW2 implements iAnalyticsProvider {
 		return null;
 	}
 
+	/**
+	 * Register "instant" global JS
+	 *
+	 * @param array $vars
+	 *
+	 * @return bool
+	 */
+	static public function onInstantGlobalsGetVariables(array &$vars)
+	{
+		// DR
+		$vars[] = 'wgSitewideDisableIVW2';
+
+		return true;
+	}
+
 	function trackEvent($event, $eventDetails = array()) {
 		// IVW is de-only tracking
 		if (F::app()->wg->Title->getPageLanguage()->getCode() != 'de') {
@@ -30,11 +45,12 @@ class AnalyticsProviderIVW2 implements iAnalyticsProvider {
 				$script = <<<SCRIPT
 <!-- SZM VERSION="2.0" -->
 <script>
-
-if (window.Wikia && window.Wikia.AbTest && !window.Wikia.AbTest.inGroup('IVW2_DR', 'DISABLED')) {
+require(['wikia.instantGlobals'], function(instantGlobals){
+	if (instantGlobals.wgSitewideDisableIVW2) {
+		return;
+	}
 	document.write($ivwScriptTagEscaped);
-}
-
+});
 </script>
 SCRIPT;
 				return $script;
