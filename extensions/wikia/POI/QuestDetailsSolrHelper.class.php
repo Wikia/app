@@ -180,17 +180,39 @@ class QuestDetailsSolrHelper {
 
 					$mapKey = $this->cutPrefixAndSuffix( $key, 'metadata_map_', '_sr' );
 
-					// "12.3, 45.6" => [ "12.3", "45.6" ]
-					$parts = preg_split( "/[\s,]+/", $value );
-					$x = $parts[ 0 ];
-					$y = $parts[ 1 ];
+					$coordinates = $this->parseCoordinates( $value );
 
-					$map[ $mapKey . '_x' ] = floatval( $x );
-					$map[ $mapKey . '_y' ] = floatval( $y );
+					$map[ $mapKey . '_x' ] = $coordinates[ 'x' ];
+					$map[ $mapKey . '_y' ] = $coordinates[ 'y' ];
 				}
 			}
 		}
 		return $map;
+	}
+
+	/**
+	 * Parsing string with coordinates
+	 * @param $str - e.g. "12.3, 45.6"
+	 * @return array - e.g. [ 'x' => 12.3, 'y' => 45.6 ]
+	 * @throws Exception - when string has invalid format
+	 */
+	protected function parseCoordinates( $str ) {
+
+		// e.g. matches: "12.3, 45.6"
+		if(preg_match( '/-?\d+(\.\d+)?\s*,\s*-?\d+(\.\d+)?/i', $str )) {
+
+			// "12.3, 45.6" => [ "12.3", "45.6" ]
+			$parts = preg_split( "/[\s,]+/", $str );
+
+			$x = $parts[ 0 ];
+			$y = $parts[ 1 ];
+
+			return [
+				'x' => floatval( $x ),
+				'y' => floatval( $y )
+			];
+		}
+		throw new Exception( 'Invalid format of string with coordinates: ' . $str );
 	}
 
 	protected function getRevision( $item ) {
