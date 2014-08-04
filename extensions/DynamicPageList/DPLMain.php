@@ -1823,6 +1823,9 @@ class DPLMain {
         $sTemplateLinksTable = $dbr->tableName( 'templatelinks' );
         $sSqlPageLinksTable = '';
         $sSqlExternalLinksTable = '';
+        $sSqlCreationRevisionTable = '';
+        $sSqlNoCreationRevisionTable = '';
+        $sSqlChangeRevisionTable = '';
         $sSqlCond_page_pl = '';
         $sSqlCond_page_el = '';
         $sSqlCond_page_tpl = '';
@@ -2173,20 +2176,27 @@ class DPLMain {
 
         // Revisions ==================================
         if ( $sCreatedBy != "" ) {
-            $sSqlCond_page_rev .= ' AND ' . $dbr->addQuotes($sCreatedBy) . ' = (SELECT rev_user_text FROM '.$sRevisionTable
-                                .' WHERE '.$sRevisionTable.'.rev_page=page_id ORDER BY '.$sRevisionTable.'.rev_timestamp ASC LIMIT 1)';
-        }
-        if ( $sNotCreatedBy != "" ) {
-            $sSqlCond_page_rev .= ' AND ' . $dbr->addQuotes($sNotCreatedBy) . ' != (SELECT rev_user_text FROM '.$sRevisionTable
-                                .' WHERE '.$sRevisionTable.'.rev_page=page_id ORDER BY '.$sRevisionTable.'.rev_timestamp ASC LIMIT 1)';
-        }
-        if ( $sModifiedBy != "" ) {
-            $sSqlCond_page_rev .= ' AND ' . $dbr->addQuotes($sModifiedBy) . ' IN (SELECT rev_user_text FROM '.$sRevisionTable
-                                .' WHERE '.$sRevisionTable.'.rev_page=page_id)';
-        }
-        if ( $sNotModifiedBy != "" ) {
-            $sSqlCond_page_rev .= ' AND ' . $dbr->addQuotes($sNotModifiedBy) . ' NOT IN (SELECT rev_user_text FROM '.$sRevisionTable.' WHERE '.$sRevisionTable.'.rev_page=page_id)';
-        }
+			$sSqlCreationRevisionTable = $sRevisionTable . ' AS creation_rev, ';
+			$sSqlCond_page_rev .= ' AND ' . $dbr->addQuotes($sCreatedBy) . ' = creation_rev.rev_user_text'
+								.' AND creation_rev.rev_page = page_id'
+								.' AND creation_rev.rev_parent_id = 0';
+		}
+		if ( $sNotCreatedBy != "" ) {
+			$sSqlNoCreationRevisionTable = $sRevisionTable . ' AS no_creation_rev, ';
+			$sSqlCond_page_rev .= ' AND ' . $dbr->addQuotes($sCreatedBy) . ' != no_creation_rev.rev_user_text'
+								.' AND no_creation_rev.rev_page = page_id'
+								.' AND no_creation_rev.rev_parent_id = 0';
+		}
+		if ( $sModifiedBy != "" ) {
+			$sSqlChangeRevisionTable = $sRevisionTable . ' AS change_rev, ';
+			$sSqlCond_page_rev .= ' AND ' . $dbr->addQuotes($sCreatedBy) . ' = change_rev.rev_user_text'
+								.' AND change_rev.rev_page = page_id';
+		}
+		if ( $sNotModifiedBy != "" ) {
+			$sSqlCond_page_rev .= ' AND NOT EXISTS (SELECT 1 FROM '.$sRevisionTable
+								.' WHERE '.$sRevisionTable.'.rev_page=page_id AND '.
+								$sRevisionTable.'.rev_user_text = ' . $dbr->addQuotes($sNotModifiedBy) . ' LIMIT 1)';
+		}
         if ( $sLastModifiedBy != "" ) {
             $sSqlCond_page_rev .= ' AND ' . $dbr->addQuotes($sLastModifiedBy) . ' = (SELECT rev_user_text FROM '.$sRevisionTable
                                 .' WHERE '.$sRevisionTable.'.rev_page=page_id ORDER BY '.$sRevisionTable.'.rev_timestamp DESC LIMIT 1)';
@@ -2268,7 +2278,7 @@ class DPLMain {
             					$sPageTable.'.page_title AS page_title,'.$sPageTable.'.page_id AS page_id' . $sSqlSelPage . $sSqlSortkey . $sSqlPage_counter .
                                 $sSqlPage_size . $sSqlPage_touched . $sSqlRev_user .
                                 $sSqlRev_timestamp . $sSqlRev_id . $sSqlCats . $sSqlCl_timestamp .
-                                ' FROM ' . $sSqlRevisionTable . $sSqlRCTable . $sSqlPageLinksTable . $sSqlExternalLinksTable . $sPageTable;
+                                ' FROM ' . $sSqlRevisionTable . $sSqlCreationRevisionTable . $sSqlNoCreationRevisionTable . $sSqlChangeRevisionTable . $sSqlRCTable . $sSqlPageLinksTable . $sSqlExternalLinksTable . $sPageTable;
 
         // JOIN ...
         if($sSqlClHeadTable != '' || $sSqlClTableForGC != '') {
