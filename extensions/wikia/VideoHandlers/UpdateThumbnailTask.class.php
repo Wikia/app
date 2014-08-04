@@ -97,6 +97,14 @@ class UpdateThumbnailTask extends BaseTask {
 		return count( self::$delays[$provider] );
 	}
 
+	/**
+	 * Logs a message regarding the status of an UpdateThumbnail Task.
+	 * @param $action String, one of "start", "error" or "success"
+	 * @param $delay Integer, Corresponds to an index in one of the self::DELAYS
+	 * @param $title String, The title of the video
+	 * @param $provider String, The provider of the video
+	 * @param array $extraInfo, Any extra information we want to log
+	 */
 	public function log( $action, $delay, $title, $provider, $extraInfo = [] ) {
 		$context = [
 			"action" => $action,
