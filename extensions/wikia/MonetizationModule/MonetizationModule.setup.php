@@ -22,11 +22,14 @@ $wgExtensionCredits['monetizationmodule'][] = [
 
 $dir = dirname( __FILE__ ) . '/';
 
-// controllers
+// autoload
 $wgAutoloadClasses['MonetizationModuleController'] =  $dir . 'MonetizationModuleController.class.php';
-
-// classes
 $wgAutoloadClasses['MonetizationModuleHelper'] = $dir . 'MonetizationModuleHelper.class.php';
+$wgAutoloadClasses['MonetizationModuleHooks'] = $dir . 'MonetizationModuleHooks.class.php';
 
 // i18n mapping
 $wgExtensionMessagesFiles['MonetizationModule'] = $dir . 'MonetizationModule.i18n.php';
+
+// hooks
+$wgHooks['WikiaSkinTopScripts'][] = 'MonetizationModuleHooks::onWikiaSkinTopScripts';
+
