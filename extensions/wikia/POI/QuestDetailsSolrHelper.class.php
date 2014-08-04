@@ -202,7 +202,7 @@ class QuestDetailsSolrHelper {
 		if(preg_match( '/-?\d+(\.\d+)?\s*,\s*-?\d+(\.\d+)?/i', $str )) {
 
 			// "12.3, 45.6" => [ "12.3", "45.6" ]
-			$parts = preg_split( "/[\s,]+/", $str );
+			$parts = preg_split( "/\s*,\s*/", $str );
 
 			$x = $parts[ 0 ];
 			$y = $parts[ 1 ];

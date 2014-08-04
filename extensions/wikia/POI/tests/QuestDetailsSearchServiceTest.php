@@ -45,8 +45,19 @@ class QuestDetailsSearchServiceTest extends WikiaBaseTest {
 		parent::setUp();
 	}
 
+	protected static function getFn( $obj, $name ) {
+		$class = new ReflectionClass( get_class( $obj ) );
+		$method = $class->getMethod( $name );
+		$method->setAccessible( true );
+
+		return function () use ( $obj, $method ) {
+			$args = func_get_args();
+			return $method->invokeArgs( $obj, $args );
+		};
+	}
+
 	/**
-	 * @covers  QuestDetailsSearchService::constructQuery
+	 * @covers       QuestDetailsSearchService::constructQuery
 	 * @dataProvider makeCriteriaQuery_Provider
 	 */
 	public function testCorrectnessOfQueryBuilding( $criteria, $expectedQuery ) {
@@ -56,6 +67,41 @@ class QuestDetailsSearchServiceTest extends WikiaBaseTest {
 			$expectedQuery,
 			$questDetailsSearch->constructQuery( $criteria )
 		);
+	}
+
+	/**
+	 * @covers       QuestDetailsSolrHelper::parseCoordinates
+	 * @dataProvider makeParseCoordinates_Provider
+	 */
+	public function testParseCoordinatesString( $str, $x, $y ) {
+		$solrHelper = new QuestDetailsSolrHelper();
+
+		$parseCoordinates = self::getFn( $solrHelper, 'parseCoordinates' );
+
+		$result = $parseCoordinates( $str );
+
+		$this->assertEquals( $x, $result[ 'x' ] );
+		$this->assertEquals( $y, $result[ 'y' ] );
+	}
+
+	/**
+	 * @covers       QuestDetailsSolrHelper::parseCoordinates
+	 */
+	public function testParseCoordinatesInvalidString() {
+		$solrHelper = new QuestDetailsSolrHelper();
+
+		$parseCoordinates = self::getFn( $solrHelper, 'parseCoordinates' );
+
+		$exceptionBeenThrown = false;
+		try {
+			$parseCoordinates( 'invalid' );
+		} catch ( Exception $e ) {
+			$exceptionBeenThrown = true;
+		}
+
+		if ( !$exceptionBeenThrown ) {
+			$this->fail( 'Whet parsing invalid coordinates - exception must be thrown' );
+		}
 	}
 
 	public function testShouldReturnCorrectResponseFormat() {
@@ -261,13 +307,26 @@ SOLR_RESPONSE_MOCK;
 	public function makeCriteriaQuery_Provider() {
 		return [
 			[ [ 'fingerprint' => 'test' ], 'metadata_fingerprint_ids_ss:"test"' ],
-			[ [ 'fingerprint' => 'test', 'questId'=>null, 'category'=>null ], 'metadata_fingerprint_ids_ss:"test"' ],
-			[ [ 'fingerprint' => 'test', 'questId'=>'', 'category'=>'' ], 'metadata_fingerprint_ids_ss:"test"' ],
+			[ [ 'fingerprint' => 'test', 'questId' => null, 'category' => null ], 'metadata_fingerprint_ids_ss:"test"' ],
+			[ [ 'fingerprint' => 'test', 'questId' => '', 'category' => '' ], 'metadata_fingerprint_ids_ss:"test"' ],
 			[ [ 'questId' => '123' ], 'metadata_quest_id_s:"123"' ],
 			[ [ 'category' => 'Test' ], 'categories_mv_en:"Test"' ],
 			[ [ 'fingerprint' => 'test', 'questId' => '123' ], 'metadata_fingerprint_ids_ss:"test" AND metadata_quest_id_s:"123"' ],
 			[ [ 'fingerprint' => 'test', 'category' => 'Test' ], 'metadata_fingerprint_ids_ss:"test" AND categories_mv_en:"Test"' ],
 			[ [ 'questId' => '123', 'category' => 'Test' ], 'metadata_quest_id_s:"123" AND categories_mv_en:"Test"' ],
+		];
+	}
+
+	public function makeParseCoordinates_Provider() {
+		return [
+			[ '1, 1', 1, 1 ],
+			[ '1, -1', 1, -1 ],
+			[ '-1, 1', -1, 1 ],
+			[ '1.0, 1.0', 1, 1 ],
+			[ '1.23, 4.56', 1.23, 4.56 ],
+			[ '1.23, -4.56', 1.23, -4.56 ],
+			[ '-1.23, 4.56', -1.23, 4.56 ],
+			[ '-1.23, -4.56', -1.23, -4.56 ],
 		];
 	}
 }
