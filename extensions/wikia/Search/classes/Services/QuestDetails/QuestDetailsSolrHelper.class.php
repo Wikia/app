@@ -35,7 +35,7 @@ class QuestDetailsSolrHelper {
 		return [ 'pageid', 'title_*', 'url', 'ns', 'article_type_s', 'categories_*', 'html_*', 'metadata_*' ];
 	}
 
-	public function consumeResponse( $response, $metadataOnly ) {
+	public function consumeResponse( $response, $metadataOnly = false ) {
 		$result = [ ];
 		foreach ( $response as $item ) {
 
