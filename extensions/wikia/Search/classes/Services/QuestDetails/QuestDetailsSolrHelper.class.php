@@ -35,25 +35,34 @@ class QuestDetailsSolrHelper {
 		return [ 'pageid', 'title_*', 'url', 'ns', 'article_type_s', 'categories_*', 'html_*', 'metadata_*' ];
 	}
 
-	public function consumeResponse( $response ) {
+	public function consumeResponse( $response, $metadataOnly ) {
 		$result = [ ];
 		foreach ( $response as $item ) {
 
-			$result[ ] = [
-				'id' => $item[ 'pageid' ],
-				'title' => $this->findFirstValueByKeyPrefix( $item, 'title_', '' ),
-				'url' => $item[ 'url' ],
-				'ns' => $item[ 'ns' ],
-				'revision' => $this->getRevision( $item ),
-				'comments' => $this->getCommentsNumber( $item ),
-				'type' => $item[ 'article_type_s' ],
-				'categories' => $this->findFirstValueByKeyPrefix( $item, 'categories_', [ ] ),
-				'abstract' => $this->getAbstract( $item ),
-				'metadata' => $this->getMetadata( $item ),
-			];
+			if( $metadataOnly ) {
+				$result[ ] = [
+					'id' => $item[ 'pageid' ],
+					'metadata' => $this->getMetadata( $item ),
+				];
+			} else {
+				$result[ ] = [
+					'id' => $item[ 'pageid' ],
+					'title' => $this->findFirstValueByKeyPrefix( $item, 'title_', '' ),
+					'url' => $item[ 'url' ],
+					'ns' => $item[ 'ns' ],
+					'revision' => $this->getRevision( $item ),
+					'comments' => $this->getCommentsNumber( $item ),
+					'type' => $item[ 'article_type_s' ],
+					'categories' => $this->findFirstValueByKeyPrefix( $item, 'categories_', [ ] ),
+					'abstract' => $this->getAbstract( $item ),
+					'metadata' => $this->getMetadata( $item ),
+				];
+			}
 		}
 
-		$this->addThumbnailsInfo( $result );
+		if( !$metadataOnly ) {
+			$this->addThumbnailsInfo( $result );
+		}
 
 		return $result;
 	}

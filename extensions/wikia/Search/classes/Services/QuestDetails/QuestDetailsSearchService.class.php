@@ -18,11 +18,17 @@ class QuestDetailsSearchService extends EntitySearchService {
 
 	const LIMIT_CRITERIA = 'limit';
 
+	const IDS_CRITERIA = 'ids';
+
+	const METADATA_ONLY_CRITERIA = 'metadataOnly';
+
 	const SOLR_FINGERPRINT_FIELD = 'metadata_fingerprint_ids_ss';
 
 	const SOLR_QUEST_ID_FIELD = 'metadata_quest_id_s';
 
 	const SOLR_CATEGORY_FIELD = 'categories_mv_en';
+
+	const SOLR_PAGE_ID_FIELD = 'pageid';
 
 	const SOLR_AND = ' AND ';
 
@@ -30,6 +36,8 @@ class QuestDetailsSearchService extends EntitySearchService {
 	 * @var QuestDetailsSolrHelper
 	 */
 	protected $solrHelper;
+
+	protected $extractMetadataOnly;
 
 	public function setSolrHelper( $solrHelper ) {
 		$this->solrHelper = $solrHelper;
@@ -53,7 +61,16 @@ class QuestDetailsSearchService extends EntitySearchService {
 
 		$select->setQuery( $query );
 
-		$select->setFields( $this->getSolrHelper()->getRequiredSolrFields() );
+		$this->extractMetadataOnly = false;
+		if( !empty( $criteria[ self::METADATA_ONLY_CRITERIA ] ) ) {
+			$this->extractMetadataOnly = $criteria[ self::METADATA_ONLY_CRITERIA ];
+		}
+
+		if( !$this->extractMetadataOnly ) {
+			$select->setFields( $this->getSolrHelper()->getRequiredSolrFields() );
+		} else {
+			$select->setFields( [ 'pageid', 'metadata_*' ] );
+		}
 
 		$limit = $this->getLimit( $criteria );
 		if( $limit != null ) {
@@ -64,7 +81,7 @@ class QuestDetailsSearchService extends EntitySearchService {
 	}
 
 	public function consumeResponse( $response ) {
-		return $this->getSolrHelper()->consumeResponse( $response );
+		return $this->getSolrHelper()->consumeResponse( $response, $this->extractMetadataOnly );
 	}
 
 	public function constructQuery( $criteria ) {
@@ -78,6 +95,10 @@ class QuestDetailsSearchService extends EntitySearchService {
 		}
 		if ( !empty( $criteria[ self::CATEGORY_CRITERIA ] ) ) {
 			$conditions[ ] = $this->queryExactMatch( self::SOLR_CATEGORY_FIELD, $criteria[ self::CATEGORY_CRITERIA ] );
+		}
+		if( !empty( $criteria[ self::IDS_CRITERIA ] ) ) {
+			$ids = $criteria[ self::IDS_CRITERIA ];
+			$conditions[ ] = self::SOLR_PAGE_ID_FIELD . ':(' . join( ' ', $ids ) . ')';
 		}
 
 		$query = join( self::SOLR_AND, $conditions );
