@@ -1,5 +1,7 @@
 <?php
 
+use Wikia\Search\Services\NearbyPOISearchService;
+
 class POIApiController extends WikiaApiController {
 
 	/**
@@ -39,7 +41,7 @@ class POIApiController extends WikiaApiController {
 	 */
 	public function getNearbySearch() {
 		if( empty( $this->nearbySearch ) ) {
-			$this->nearbySearch = new Wikia\Search\Services\NearbyPOISearchService();
+			$this->nearbySearch = new NearbyPOISearchService();
 		}
 		return $this->nearbySearch;
 	}
