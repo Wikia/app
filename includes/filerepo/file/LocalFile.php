@@ -1139,6 +1139,21 @@ class LocalFile extends File {
 			$wikiPage->doEdit( $pageText, $comment, EDIT_NEW | EDIT_SUPPRESS_RC, false, $user );
 		}
 
+		try {
+			$dbg = wfGetDB(DB_MASTER, null, 'wikicities');
+			$uuid = $this->guidv4();
+
+			(new WikiaSQL)->INSERT( 'media_map' )
+				->SET( 'uuid', $uuid )
+				->SET( 'wikia_id', F::app()->wg->CityId )
+				->SET( 'media_name', $this->getName() )
+				->run( $dbg );
+
+		} catch ( \Exception $e ) {
+			$dbw->rollback();
+			return false;
+		}
+
 		/* wikia change - begin (VID-1568) */
 		// Update/Insert video info
 		try {
@@ -1213,6 +1228,15 @@ class LocalFile extends File {
 		}
 
 		return true;
+	}
+
+	function guidv4() {
+		$data = openssl_random_pseudo_bytes(16);
+
+		$data[6] = chr(ord($data[6]) & 0x0f | 0x40); // set version to 0100
+		$data[8] = chr(ord($data[8]) & 0x3f | 0x80); // set bits 6-7 to 10
+
+		return vsprintf('%s%s-%s-%s-%s-%s%s%s', str_split(bin2hex($data), 4));
 	}
 
 	/**
