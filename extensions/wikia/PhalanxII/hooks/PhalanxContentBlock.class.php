@@ -24,6 +24,54 @@ class PhalanxContentBlock extends WikiaObject {
 	 */
 	static public function editFilter( $editPage, $text, $section, &$hookError, $summary ) {
 		wfProfileIn( __METHOD__ );
+		list( $contentIsBlocked, $errorMessage ) = self::checkContentFromEditPage( $editPage );
+
+		if ( $contentIsBlocked ) {
+			// we found block
+			$editPage->spamPageWithContent( $errorMessage );
+		}
+
+		wfProfileOut( __METHOD__ );
+		return !$contentIsBlocked;
+	}
+
+	/**
+	 * Hook function for APIEditBeforeSave. This hook is run before the "EditFilter" hook, when applicable.
+	 *
+	 * @param $editPage EditPage
+	 * @param $text string
+	 * @param $resultArr array
+	 * @return bool
+	 */
+	static function filterAPIEditBeforeSave( $editPage, $text, &$resultArr ) {
+		wfProfileIn( __METHOD__ );
+		list( $contentIsBlocked, $errorMessage ) = self::checkContentFromEditPage( $editPage, 'getBlockMessage' );
+
+		if ( $contentIsBlocked ) {
+			// Something was blocked
+			$resultArr['spamblacklist'] = $errorMessage;
+		}
+
+		wfProfileOut( __METHOD__ );
+		return !$contentIsBlocked;
+	}
+
+	/**
+	 * Check for blocked content in an EditPage object
+	 *
+	 * @param $editPage EditPage
+	 * @param $errorFunctionName string
+	 * @return array Whether the content was NOT blocked, and the error message if content is blocked
+	 */
+	static private function checkContentFromEditPage( $editPage, $errorFunctionName = null ) {
+		wfProfileIn( __METHOD__ );
+		static $contentWasChecked = false;
+		static $contentIsBlocked = false;
+		static $errorMessage = '';
+
+		if ( $contentWasChecked ) {
+			return [ $contentIsBlocked, $errorMessage ];
+		}
 
 		if (self::isContentBlockingDisabled()) {
 			wfProfileOut( __METHOD__ );
@@ -39,7 +87,7 @@ class PhalanxContentBlock extends WikiaObject {
 		$textbox = $editPage->textbox1;
 		
 		/* compare summary with spam-whitelist */
-		if ( !empty( $summary ) && !empty( $textbox ) && is_null(self::$whitelist) ) {
+		if ( !empty( $summary ) && !empty( $textbox ) && is_null( self::$whitelist ) ) {
 			self::$whitelist = $phalanxModel->buildWhiteList();
 		}
 
@@ -48,22 +96,22 @@ class PhalanxContentBlock extends WikiaObject {
 			$summary = preg_replace( self::$whitelist, '', $summary );
 		}
 
-		$error_msg = '';
-		$ret = $phalanxModel->match_summary( $summary );
-		if ( $ret !== false ) {
+		$contentIsBlocked = !$phalanxModel->match_summary( $summary );
+		if ( $contentIsBlocked === false ) {
 			/* check content */
-			$ret = PhalanxContentBlock::editContent( $textbox, $error_msg, $phalanxModel );
+			$contentIsBlocked = !self::editContent( $textbox, $errorMessage, $phalanxModel, $errorFunctionName );
 		} else {
-			$error_msg = $phalanxModel->contentBlock();
+			if ( $errorFunctionName !== null ) {
+				$errorMessage = call_user_func( array( $phalanxModel, $errorFunctionName ) );
+			}
+			else {
+				$errorMessage = $phalanxModel->contentBlock();
+			}
 		}
 
-		if ( $ret === false ) {
-			// we found block
-			$editPage->spamPageWithContent( $error_msg );
-		}
-		
+		$contentWasChecked = true;
 		wfProfileOut( __METHOD__ );
-		return $ret;
+		return [ $contentIsBlocked, $errorMessage ];
 	}
 
 	/*
@@ -109,8 +157,12 @@ class PhalanxContentBlock extends WikiaObject {
 	 * @static
 	 *
 	 * hook 
+	 * @param $textbox string
+	 * @param $error_msg string
+	 * @param $phalanxModel PhalanxModel
+	 * @param $errorFunctionName string
 	 */
-	static public function editContent( $textbox, &$error_msg, $phalanxModel = null ) {
+	static public function editContent( $textbox, &$error_msg, $phalanxModel = null, $errorFunctionName = null ) {
 		wfProfileIn( __METHOD__ );
 
 		$title = RequestContext::getMain()->getTitle();
@@ -133,7 +185,12 @@ class PhalanxContentBlock extends WikiaObject {
 		$ret = $phalanxModel->match_content( $textbox );	
 		
 		if ( $ret === false ) {
-			$error_msg = $phalanxModel->contentBlock();
+			if ( $errorFunctionName !== null ) {
+				$error_msg = call_user_func( array( $phalanxModel, $errorFunctionName ) );
+			}
+			else {
+				$error_msg = $phalanxModel->contentBlock();
+			}
 		}
 		
 		wfProfileOut( __METHOD__ );

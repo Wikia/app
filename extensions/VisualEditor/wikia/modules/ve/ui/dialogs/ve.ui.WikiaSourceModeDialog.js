@@ -3,7 +3,7 @@
  * VisualEditor user interface WikiaSourceModeDialog class.
  */
 
-/*global mw*/
+/*global alert, mw, veTrack */
 
 /**
  * Dialog for editing wikitext in source mode.
@@ -78,7 +78,8 @@ ve.ui.WikiaSourceModeDialog.prototype.getSetupProcess = function ( data ) {
 		}, this )
 		.next( function () {
 			var doc = this.getFragment().getDocument();
-			this.$frame.startThrobbing();
+			this.$body.startThrobbing();
+			this.applyButton.setDisabled( true );
 			// Use the WikiaViewPageTarget object as the target here
 			this.target.serialize(
 				ve.dm.converter.getDomFromModel( doc, false ),
@@ -94,7 +95,8 @@ ve.ui.WikiaSourceModeDialog.prototype.getSetupProcess = function ( data ) {
 ve.ui.WikiaSourceModeDialog.prototype.onSerialize = function ( wikitext ) {
 	this.sourceModeTextarea.setValue( wikitext );
 	this.sourceModeTextarea.$input.focus();
-	this.$frame.stopThrobbing();
+	this.$body.stopThrobbing();
+	this.applyButton.setDisabled( false );
 
 	ve.track( 'wikia', {
 		'action': ve.track.actions.SUCCESS,
@@ -152,7 +154,8 @@ ve.ui.WikiaSourceModeDialog.prototype.parse = function ( ) {
  */
 ve.ui.WikiaSourceModeDialog.prototype.onParseSuccess = function ( response ) {
 	var target, parseStart;
-	if ( !response || response.error || !response.visualeditor || response.visualeditor.result !== 'success' ) {
+	if ( !response || response.error || !response.visualeditor ||
+		response.visualeditor.result !== 'success' || response.visualeditor.content === false ) {
 		return this.onParseError.call( this );
 	}
 
@@ -199,7 +202,12 @@ ve.ui.WikiaSourceModeDialog.prototype.onParseError = function ( ) {
 		'label': 'dialog-source-parse',
 		'value': ve.now() - this.timings.parseStart
 	} );
-	// TODO: error handling?
+	if ( window.veTrack ) {
+		veTrack( {
+			action: 'parsoid-parsewt-error'
+		} );
+	}
+	alert( ve.msg( 'wikia-visualeditor-save-error-generic' ) );
 };
 
 ve.ui.windowFactory.register( ve.ui.WikiaSourceModeDialog );

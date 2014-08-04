@@ -40,6 +40,9 @@
 		window._gaq.push( ['special._setSampleRate', '100'] ); // No Sampling
 	}
 
+	window._gaq.push( ['ve._setAccount', 'UA-32132943-4'] ); // PROD
+	window._gaq.push( ['ve._setSampleRate', '100'] ); // No Sampling
+
 	/**
 	 * Wrapper function to a generic _gaq push
 	 *
@@ -65,14 +68,23 @@
 				continue;
 			}
 
-			// Send to Main Account
 			window._gaq.push( args[i] );
 
-			if ( window.wgIsGASpecialWiki ) {
-				spec = args[i].slice();
-				// Send to Special Wikis Account
-				spec[0] = 'special.' + spec[0];
-				window._gaq.push( spec );
+			// Push to specific namespaces if method not already namespaced
+			if ( args[i][0].indexOf( '.' ) === -1 ) {
+				if ( window.wgIsGASpecialWiki ) {
+					spec = args[i].slice();
+					// Send to Special Wikis Account
+					spec[0] = 'special.' + spec[0];
+					window._gaq.push( spec );
+				}
+
+				// If category is editor-ve, track for VE account
+				if ( args[i][1] && args[i][1] === 'editor-ve' ) {
+					spec = args[i].slice();
+					spec[0] = 've.' + spec[0];
+					window._gaq.push( spec );
+				}
 			}
 		}
 	}
@@ -268,6 +280,18 @@
 			_gaqWikiaPush( args );
 		} catch ( e ) {
 		}
+	};
+
+
+	/**
+	 * Track a fake pageview in Google Analytics
+	 *
+	 * @param {string} fakepage The fake URL to track. This should begin with a leading '/'.
+	 * @param {string} opt_namespace Namespace of the pageview. Used in GA reporting.
+	 */
+	window.gaTrackPageview = function( fakePage, opt_namespace ) {
+		var nsPrefix = ( opt_namespace ) ? opt_namespace + '.' : '';
+		_gaqWikiaPush( [ nsPrefix + '_trackPageview', fakePage ] );
 	};
 
 }( window ));
