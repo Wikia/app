@@ -21,17 +21,17 @@ class MonetizationModuleHooks {
         $app = F::app();
 
         if ( $app->wg->MonetizationScriptsLoaded || !MonetizationModuleHelper::canShowModule() ) {
-            wfProfileOut(__METHOD__);
+            wfProfileOut( __METHOD__ );
             return true;
         }
 
-        foreach ( AssetsManager::getInstance()->getURL( [ 'monetization_module_js' ] ) as $script ) {
+        foreach ( AssetsManager::getInstance()->getURL( [ 'monetization_module_top_script_js' ] ) as $script ) {
             $scripts .= '<script src="' . $script . '"></script>';
         }
 
         $app->wg->MonetizationScriptsLoaded = true;
 
-        wfProfileOut(__METHOD__);
+        wfProfileOut( __METHOD__ );
         return true;
     }
 }

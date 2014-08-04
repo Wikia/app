@@ -1834,9 +1834,17 @@ $config['monetization_module_js'] = array(
 	'skin' => [ 'oasis' ],
 	'assets' => [
 		'//extensions/wikia/MonetizationModule/scripts/MonetizationModule.js',
-		'//extensions/wikia/MonetizationModule/scripts/MonetizationModuleHelper.js',
 
 	]
+);
+
+$config['monetization_module_top_script_js'] = array(
+    'type' => AssetsManager::TYPE_JS,
+    'skin' => [ 'oasis' ],
+    'assets' => [
+        '//extensions/wikia/MonetizationModule/scripts/MonetizationModuleTopScript.js',
+
+    ]
 );
 
 /* extension/wikia/WikiaInteractiveMaps */
