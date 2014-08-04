@@ -58,7 +58,7 @@ class MetaCSVService extends UploadFromFile {
 				foreach($meta as $field => $val){
 					$model->setField($field, $val);
 				}
-				$model->save();
+				$model->save( true );
 			}catch(TitleNotFoundException $e){
 				$errors[$title] = 'Title not found';
 			}catch(FieldNotArrayException $e){
