@@ -99,6 +99,15 @@ class ImageServing {
 		wfProfileIn( __METHOD__ );
 		$articles = $this->articles;
 		$out = array();
+
+		// force ImageServing to return an empty list
+		// see PLATFORM-392
+		global $wgImageServingForceNoResults;
+		if (!empty($wgImageServingForceNoResults)) {
+			wfProfileOut(__METHOD__);
+			return $out;
+		}
+
 		if( !empty( $articles ) ) {
 			if( $this->db == null ) {
 				$db = wfGetDB( DB_SLAVE, array() );
