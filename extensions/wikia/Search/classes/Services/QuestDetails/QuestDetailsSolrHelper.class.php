@@ -40,10 +40,8 @@ class QuestDetailsSolrHelper {
 		foreach ( $response as $item ) {
 
 			if( $metadataOnly ) {
-				$result[ ] = [
-					'id' => $item[ 'pageid' ],
-					'metadata' => $this->getMetadata( $item ),
-				];
+				$id = $item[ 'pageid' ];
+				$result[ $id ] = $this->getMetadata( $item );
 			} else {
 				$result[ ] = [
 					'id' => $item[ 'pageid' ],
