@@ -19,6 +19,12 @@ class ArticleMetadataModel {
 		self::fingerprints => [],
 	];
 
+	protected $solr_mapping = [
+		self::quest_id => "metadata_quest_id_s",
+		self::ability_id => "metadata_ability_id_s",
+		self::fingerprints => "metadata_fingerprint_ids_ss",
+	];
+
 	public function __construct( $articleId ) {
 		$this->articleId = (int) $articleId;
 		$this->articleTitle = Title::newFromID( $this->articleId );
@@ -28,6 +34,12 @@ class ArticleMetadataModel {
 		$this->load();
 	}
 
+	/**
+	 * @return array
+	 */
+	public function getSolrMapping() {
+		return $this->solr_mapping;
+	}
 
 	/**
 	 * Creates new object if article exists
