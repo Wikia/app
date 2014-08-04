@@ -37,6 +37,9 @@ class UpdateThumbnailTask extends BaseTask {
 		$file = WikiaFileHelper::getVideoFileFromTitle( $title );
 		if ( empty( $file ) ) {
 			$msg = "File not found on wiki";
+			if ( $title instanceof Title ) {
+				$title = $title->getText();
+			}
 			$this->log( "error", $delayIndex, $title, $provider, [ "errorMsg" => $msg ] );
 			return Status::newFatal( $msg );
 		}
