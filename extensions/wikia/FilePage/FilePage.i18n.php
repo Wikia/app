@@ -12,7 +12,8 @@ $messages['en'] = array(
 	'video-page-global-file-list-header' => 'Appears on these wikis',
 	'video-page-from-provider' => 'From $1',
 	'video-page-expires' => 'Content expires on $1',
-	'video-page-regional-restrictions' => 'This video can only be viewed in $1',
+	'video-page-regional-restrictions-viewable' => 'This video is regionally restricted',
+	'video-page-regional-restrictions-unviewable' => 'This video is not viewable in your location',
 	'video-page-views' => '$1 {{PLURAL:$1|View|Views}}',
 	'video-page-see-more-info' => 'Show more info',
 	'video-page-see-less-info' => 'Show less info',
@@ -43,8 +44,8 @@ $messages['qqq'] = array(
 * $1 is the provider name.',
 	'video-page-expires' => 'After the date specified, the video content will no longer be available to view. Parameters:
 * $1 is a date',
-	'video-page-regional-restrictions' => 'Denotes the countries where the video is available for viewing. Parameters:
-* $1 - comma-separated country names.',
+	'video-page-regional-restrictions-viewable' => 'Message shown when a video has viewing restricted by region and is currently viewable',
+	'video-page-regional-restrictions-unviewable' => 'Message shown when a video has viewing restricted by region but is currently not viewable',
 	'video-page-views' => 'Shows total number of views (plays) of the video. Parameters:
 * $1 - a number of views (integer)
 {{Identical|View}}',

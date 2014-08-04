@@ -75,14 +75,14 @@ class ArticlesApiControllerTest extends \WikiaBaseTest {
 		return [
 			[
 				[ '1' ],
-				[ '1' => [ [ 'url' => 'http://fake.url', 'original_dimensions' => 1, 'other' => 2 ] ] ],
-				[ '1' => [ 'thumbnail' => 'http://fake.url', 'original_dimensions' => 1 ] ]
+				[ '1' => [ [ 'url' => 'http://fake.url', 'original_dimensions' => null, 'other' => 2 ] ] ],
+				[ '1' => [ 'thumbnail' => 'http://fake.url', 'original_dimensions' => null ] ]
 			],
 			[
 				[ '1' ],
-				[ '1' => [ [ 'url' => 'http://fake.url', 'original_dimensions' => 1, 'other' => 2 ],
-					[ 'url' => 'http://fake.url', 'original_dimensions' => 1, 'other' => 2 ] ] ],
-				[ '1' => [ 'thumbnail' => 'http://fake.url', 'original_dimensions' => 1 ] ]
+				[ '1' => [ [ 'url' => 'http://fake.url', 'original_dimensions' => null, 'other' => 2 ],
+				[ 'url' => 'http://fake.url', 'original_dimensions' => null, 'other' => 2 ] ] ],
+				[ '1' => [ 'thumbnail' => 'http://fake.url', 'original_dimensions' => null ] ]
 			],
 			[
 				[ '1' ],
@@ -91,21 +91,23 @@ class ArticlesApiControllerTest extends \WikiaBaseTest {
 			],
 			[
 				[ '1', '2' ],
-				[ '1' => [ [ 'url' => 'http://fake.url', 'original_dimensions' => 1, 'other' => 2 ] ],
-					'2' => [ [ 'url' => 'http://fake2.url', 'original_dimensions' => 2 ] ] ],
-				[ '1' => [ 'thumbnail' => 'http://fake.url', 'original_dimensions' => 1 ],
-					'2' => [ 'thumbnail' => 'http://fake2.url', 'original_dimensions' => 2 ] ]
+				[
+					'1' => [ [ 'url' => 'http://fake.url', 'original_dimensions' => null, 'other' => 2 ] ],
+					'2' => [ [ 'url' => 'http://fake2.url', 'original_dimensions' => null ] ] ],
+				[ '1' => [ 'thumbnail' => 'http://fake.url', 'original_dimensions' => null ],
+					'2' => [ 'thumbnail' => 'http://fake2.url', 'original_dimensions' => null ] ]
 			],
 			[
 				[ '1', '2' ],
-				[ '1' => [ [ 'url' => 'http://fake.url', 'original_dimensions' => 1, 'other' => 2 ] ] ],
-				[ '1' => [ 'thumbnail' => 'http://fake.url', 'original_dimensions' => 1 ],
+				[ '1' => [ [ 'url' => 'http://fake.url', 'original_dimensions' => null, 'other' => 2 ] ] ],
+				[
+					'1' => [ 'thumbnail' => 'http://fake.url', 'original_dimensions' => null ],
 					'2' => [ 'thumbnail' => null, 'original_dimensions' => null ] ]
 			],
 			[
 				'1',
-				[ '1' => [ [ 'url' => 'http://fake.url', 'original_dimensions' => 1, 'other' => 2 ] ] ],
-				[ '1' => [ 'thumbnail' => 'http://fake.url', 'original_dimensions' => 1 ] ]
+				[ '1' => [ [ 'url' => 'http://fake.url', 'original_dimensions' => null, 'other' => 2 ] ] ],
+				[ '1' => [ 'thumbnail' => 'http://fake.url', 'original_dimensions' => null ] ]
 			]
 		];
 	}

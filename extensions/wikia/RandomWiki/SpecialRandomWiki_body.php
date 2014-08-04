@@ -48,10 +48,12 @@ class RandomWiki extends SpecialPage {
 			$this->mCookie->history = array( );
 
 			if ( !empty( $wikiID ) ) {
-				$hub = WikiFactory::getCategoryId( $wikiID );
+				$hub = WikiFactoryHub::getInstance();
+				// FIXME: change this to verticalId
+				$cat_id = $hub->getCategoryId( $wikiID );
 
-				if ( is_object( $hub ) ) {
-					$this->mCookie->origHub = $hub->cat_id;
+				if ( $cat_id ) {
+					$this->mCookie->origHub = $cat_id;
 					$this->mCookie->langCode = WikiFactory::getWikiByID( $wikiID )->city_lang;
 					$this->mCookie->history[ ] = $wikiID;
 				}
