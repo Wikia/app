@@ -41,7 +41,7 @@ class VenusController extends WikiaController {
 		$this->topScripts = $wgOut->topScripts;
 	}
 
-	public function executeIndex() {
+	public function index() {
 		global $wgUser, $wgTitle;
 
 		$this->title = $wgTitle->getText();
@@ -54,6 +54,8 @@ class VenusController extends WikiaController {
 		$this->setBodyClasses();
 		$this->setHeadItems();
 		$this->setAssets();
+
+		$this->response->setTemplateEngine(WikiaResponse::TEMPLATE_ENGINE_HANDLEBARS);
 	}
 
 	public function setBodyModules() {
@@ -87,11 +89,6 @@ class VenusController extends WikiaController {
 		global $wgOut;
 		$this->headLinks = $wgOut->getHeadLinks();
 		$this->headItems = $this->skin->getHeadItems();
-
-		$this->pageTitle = htmlspecialchars( $this->pageTitle );
-		$this->displayTitle = htmlspecialchars( $this->displayTitle );
-		$this->mimeType = htmlspecialchars( $this->mimeType );
-		$this->charset = htmlspecialchars( $this->charset );
 	}
 
 	private function setAssets() {

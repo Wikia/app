@@ -16,7 +16,6 @@
 	}
 	.branding {
 		background: transparent;
-		left: 10px;
 		padding: 1px;
 		position: absolute;
 		top: 0;
@@ -35,7 +34,7 @@
 
 				height: 16px;
 				width: 54px;
-				margin: 2px 5px;
+				margin: 4px 5px 0;
 			}
 			.wordmark9 { //lifestyle
 				background-position: -159px 0px;
@@ -90,10 +89,22 @@
 			&:first-child {
 				border: none;
 			}
+			&:last-child {
+				padding-right: 0;
+			}
 
 			a {
 				color: $color-links;
 			}
 		}
+	}
+}
+
+body.skin-oasis {
+	.global-footer .branding {
+		left: 10px;
+	}
+	ul li:last-child {
+		padding-right: 8px;
 	}
 }
