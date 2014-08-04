@@ -1,0 +1,103 @@
+a {
+	text-decoration: none;
+	color: inherit;
+}
+
+.clearfix {
+	clear: both;
+}
+
+.results-section {
+	margin-top: 30px;
+}
+
+.result-count {
+	margin-bottom: 5px;
+	font-size: 16px;
+	font-family: "Helvetica Neue";
+	text-align: left;
+	color: #64696C;
+}
+
+.subtext {
+	font-size: 16px;
+	line-height: 22px;
+	color: #64696C;
+}
+
+.headline {
+	font-size: 22px;
+	line-height: 26px;
+	color: #0A6EB4;
+}
+
+.body-text {
+	font-size: 18px;
+	line-height: 24px;
+	color: #3C3C3C;
+}
+
+.results {
+	margin-top: 40px;
+}
+
+.result {
+	margin-top: 35px;
+	.searchmatch {
+		font-weight: bold;
+	}
+	.thumbnail {
+		background-color: #EEF1F3;
+		text-align: center;
+		width: 280px;
+		height: 158px;
+		line-height: 158px;
+		img {
+			vertical-align: middle;
+		}
+		.duration {
+			display: none;
+		}
+		.play-circle {
+			background-image: url('/extensions/wikia/Search/images/play_btn.svg'); /* base64 */
+			background-position: center;
+			background-repeat: no-repeat;
+			bottom: 15px;
+			height: 33px;
+			left: 15px;
+			width: 33px;
+			position: absolute;
+		}
+	}
+	.result-description {
+		.headline {
+			margin: 0;
+		}
+		.subtext {
+			margin-top: 8px;
+			margin-bottom: 14px;
+		}
+	}
+}
+
+@media screen and (max-width: 1023px) {
+	.thumbnail {
+		height: 138px;
+		line-height: 138px;
+		width: 245px;
+		img {
+			max-width: 245px;
+		}
+	}
+}
+
+@media screen and (min-width: 1024px) and (max-width: 1280) {
+	.thumbnail {
+		height: 139px;
+		line-height: 139px;
+		width: 247px;
+		img {
+			max-width: 247px;
+		}
+	}
+}

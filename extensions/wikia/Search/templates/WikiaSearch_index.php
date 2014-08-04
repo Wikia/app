@@ -18,7 +18,7 @@
 
 		<?php echo $tabs; ?>
 
-		<div class="results-wrapper grid-3 alpha">
+			<div class="results-wrapper grid-3 alpha">
 			<?php if(!empty($wikiMatch)):?>
 				<?=$wikiMatch?>
 			<?php endif; ?>
@@ -36,14 +36,14 @@
 							<a href="<?=preg_replace('/&hub=[^&]+/', '', $_SERVER['REQUEST_URI'])?>"><?= wfMsg('wikiasearch2-search-all-wikia') ?></a>
 						<?php endif ?>
 					</p>
-	
+
 					<? if ($results->getQuery() && $query != $results->getQuery()) : ?>
 					<p><?= wfMsg( 'wikiasearch2-spellcheck', $query, $results->getQuery() ) ?></p>
 					<? endif; ?>
 					<? if ( !$hasArticleMatch && $isMonobook ): ?>
 						<?=wfMsgExt('searchmenu-new', array('parse'), $query);?>
 					<? endif; ?>
-	
+
 					<ul class="Results">
 					<?php $pos = 0; ?>
 					<?php foreach( $results as $result ): ?>
@@ -71,7 +71,7 @@
 								if (count($topArticles->getVal('pages'))>0) {
 									echo $topArticles->toString();
 									continue;
-								} 							
+								}
 							}
 							// display standard view instead
 							echo $app->getView( 'WikiaSearch', WikiaSearchController::WIKIA_DEFAULT_RESULT, array(
@@ -85,7 +85,7 @@
 					</ul>
 
 					<?= $paginationLinks; ?>
-	
+
 				<?php else: ?>
 					<? if ( !$hasArticleMatch && $isMonobook ): ?>
 						<?=wfMsgExt('searchmenu-new', array('parse'), $query);?>
@@ -93,7 +93,7 @@
 					<p class="no-result"><i><?=wfMsg('wikiasearch2-noresults')?></i></p>
 				<?php endif; ?>
 			<?php else: // add border in center column for blank search page BugId: 48489 ?>
-				<p>&nbsp;</p>	
+				<p>&nbsp;</p>
 			<?php endif; ?>
 
 			</div>

@@ -92,6 +92,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	 */
 	public function index() {
 		global $wgEnableSpecialSearchCaching;
+		global $wgEnableVenusSkin;
 
 		$this->handleSkinSettings();
 		//will change template depending on passed ab group
@@ -111,6 +112,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			$search->search();
 		}
 
+		$this->venusEnabled = $wgEnableVenusSkin;
 		$this->setPageTitle( $searchConfig );
 		$this->setResponseValuesFromConfig( $searchConfig );
 	}
@@ -746,6 +748,11 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		    $this->overrideTemplate( 'WikiaMobileIndex' );
 		}
 
+		if ( $skin instanceof SkinVenus ) {
+			$this->overrideTemplate( 'Venus_index' );
+			$this->response->addAsset( 'extensions/wikia/Search/css/WikiaSearch.venus.scss' );
+		}
+
 		return true;
 	}
 
@@ -753,11 +760,14 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	 * Called in index action to handle overriding template for different abTests
 	 */
 	protected function handleLayoutAbTest( $abGroup, $ns = null ) {
+		global $wgEnableVenusSkin;
 		$abs = explode( ',', $abGroup );
 		//check if template for ab test exists
 		$view = static::WIKIA_DEFAULT_RESULT;
 		$categoryModule = false;
-		if ( !empty( $abs ) ) {
+		if (!empty($wgEnableVenusSkin)) {
+			$view = 'VenusResult';
+		} else if ( !empty( $abs ) ) {
 			//set ab for category
 			if ( in_array( 47, $abs ) ) {
 				$categoryModule = true;
@@ -900,7 +910,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$this->setVal( 'limit', 			$config->getLimit() );
 		$this->setVal( 'filters',			$config->getPublicFilterKeys() );
 		$this->setVal( 'by_category', 		$this->getVal('by_category', false) );
-
 	}
+
 }
 
