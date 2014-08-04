@@ -51,6 +51,7 @@ $wgResourceModules += array(
 	'ext.visualEditor.wikiaViewPageTarget' => $wgVisualEditorWikiaResourceTemplate + array(
 		'scripts' => array(
 			've/init/ve.init.mw.WikiaViewPageTarget.js',
+			've/init/ve.init.mw.WikiaTargetEvents.js'
 		),
 		'styles' => array(
 			've/init/styles/ve.init.mw.WikiaViewPageTarget.css'
@@ -167,7 +168,8 @@ $wgResourceModules += array(
 			'wikia-visualeditor-dialog-orientation-start-button',
 			'wikia-visualeditor-dialog-meta-languages-readonlynote',
 			'wikia-visualeditor-dialog-transclusion-no-template-description',
-			'wikia-visualeditor-dialog-map-insert-title'
+			'wikia-visualeditor-dialog-map-insert-title',
+			'wikia-visualeditor-save-error-generic',
 		),
 		'dependencies' => array(
 			'ext.visualEditor.core.desktop',
@@ -190,6 +192,8 @@ $wgHooks['ResourceLoaderTestModules'][] = 'VisualEditorWikiaHooks::onResourceLoa
 $wgHooks['MakeGlobalVariablesScript'][] = 'VisualEditorWikiaHooks::onMakeGlobalVariablesScript';
 
 /* Configuration */
+
+$wgDefaultUserOptions['useeditwarning'] = true;
 
 // Disable VE for blog namespaces
 if ( !empty( $wgEnableBlogArticles ) ) {
