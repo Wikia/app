@@ -4,6 +4,16 @@ use Wikia\Search\Services\NearbyPOISearchService;
 
 class POIApiController extends WikiaApiController {
 
+	const LOCATION_X_REQUEST_PARAM = 'location_x';
+
+	const LOCATION_Y_REQUEST_PARAM = 'location_y';
+
+	const REGION_REQUEST_PARAM = 'region';
+
+	const RADIUS_REQUEST_PARAM = 'radius';
+
+	const LIMIT_REQUEST_PARAM = 'limit';
+
 	/**
 	 * @var QuestDetailsSolrHelper
 	 */
@@ -14,13 +24,12 @@ class POIApiController extends WikiaApiController {
 	 */
 	protected $nearbySearch;
 
-	//TODO: rename it to getNearbyQuests
-	public function getNearbyQuests4Real() {
-		$lat = $this->getRequest()->getVal( 'location_x' );
-		$long = $this->getRequest()->getVal( 'location_y' );
-		$region = $this->getRequest()->getVal( 'region' );
-		$radius = $this->getRequest()->getVal( 'radius' );
-		$limit = $this->getRequest()->getVal( 'limit' );
+	public function getNearbyQuests() {
+		$lat = $this->getRequest()->getVal( self::LOCATION_X_REQUEST_PARAM );
+		$long = $this->getRequest()->getVal( self::LOCATION_Y_REQUEST_PARAM );
+		$region = $this->getRequest()->getVal( self::REGION_REQUEST_PARAM );
+		$radius = $this->getRequest()->getVal( self::RADIUS_REQUEST_PARAM );
+		$limit = $this->getRequest()->getVal( self::LIMIT_REQUEST_PARAM );
 
 		$solrHelper = $this->getSolrHelper();
 		$nearbySearch = $this->getNearbySearch();
@@ -70,50 +79,5 @@ class POIApiController extends WikiaApiController {
 			$this->solrHelper = new QuestDetailsSolrHelper();
 		}
 		return $this->solrHelper;
-	}
-
-	// TODO: this is just temporary API stub
-	public function getNearbyQuests(){
-		$data = json_decode('{
-		  "quests": [
-		    {
-		      "id": 1234,
-		      "title": "Meera Reed",
-		      "ns": 0,
-		      "url": "/wiki/Meera_Reed",
-		      "revision": {
-		        "id": 8792,
-		        "user": "MarkvA",
-		        "user_id": 1171508,
-		        "timestamp": "1390496670"
-		      },
-		      "comments": 0,
-		      "type": "article",
-		      "abstract": "Quest description...",
-		       "thumbnail": "http://img2.wikia.nocookie.net/__cb20140618075345/gameofthrones/images/thumb/6/62/Meera-Reed-Profile_2-HD.png/200px-0%2C523%2C0%2C523-Meera-Reed-Profile_2-HD.png",
-		      "original_dimensions": {
-		        "width": 523,
-		        "height": 670
-		      },
-		      "categories": [
-		        "Weapons",
-		        "Items"
-		      ],
-		      "metadata": {
-		        "quest_id": "GP_Orc_3",
-		        "map_location_x": 12.34,
-		        "map_location_y": 56.78,
-		        "map_region": "Map_Region_1",
-		        "fingerprints": [
-		          "fingerprint_1",
-		          "fingerprint_2"
-		        ]
-		      }
-		    }
-		  ],
-		  "basepath": "http://gameofthrones.wikia.com"
-		}', true );
-
-		$this->setResponseData( $data );
 	}
 }
