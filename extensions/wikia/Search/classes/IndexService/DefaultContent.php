@@ -348,7 +348,7 @@ class DefaultContent extends AbstractService
 		$service = $this->getService();
 		$extensionEnabled = $service->getGlobal( 'EnablePOIExt' );
 		if ( $extensionEnabled ) {
-			$articleMetadata = new \ArticleMetadataModel( $this->currentPageId );
+			$articleMetadata = new \ArticleMetadataModel( $this->currentPageId, true );
 			$solrMapping = $articleMetadata->getSolrMapping();
 			$metadata = $articleMetadata->getMetadata();
 

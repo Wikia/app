@@ -11,6 +11,7 @@ class ArticleMetadataModel {
 
 	protected $articleId = 0;
 	protected $articleTitle = null;
+	protected $dbVersion = DB_SLAVE;
 
 	protected $metadata = [
 		self::quest_id => "",
@@ -25,11 +26,14 @@ class ArticleMetadataModel {
 		self::fingerprints => "metadata_fingerprint_ids_ss",
 	];
 
-	public function __construct( $articleId ) {
+	public function __construct( $articleId, $useMaster = false ) {
 		$this->articleId = (int) $articleId;
 		$this->articleTitle = Title::newFromID( $this->articleId );
 		if ( is_null( $this->articleTitle ) ) {
 			throw new TitleNotFoundException();
+		}
+		if ( $useMaster ) {
+			$this->dbVersion = DB_MASTER;
 		}
 		$this->load();
 	}
@@ -69,7 +73,7 @@ class ArticleMetadataModel {
 	}
 
 	protected function getWikiaProp($propName, $articleId) {
-		return wfGetWikiaPageProp( $propName, $articleId );
+		return wfGetWikiaPageProp( $propName, $articleId, $this->dbVersion );
 	}
 
 	protected function setWikiaProp( $propName, $articleId, $value ) {
