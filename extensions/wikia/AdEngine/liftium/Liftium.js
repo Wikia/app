@@ -68,6 +68,10 @@ Liftium.addEventListener = function(item, eventName, callback){
 
 
 Liftium.beaconCall = function (url, cb){
+	if (window.Wikia && window.Wikia.InstantGlobals && window.Wikia.InstantGlobals.wgSitewideDisableLiftium) {
+		Liftium.d('(Fake) Liftium Disaster Recovery enabled.', 1);
+		return;
+	}
 	// Create an image and call the beacon
 	var img = new Image(0, 0);
 	// Append a cache buster
@@ -249,6 +253,11 @@ Liftium.buildQueryString = function(nvpairs, sep){
 
 
 Liftium.callAd = function (sizeOrSlot, slotPlacement) {
+	if (window.Wikia && window.Wikia.InstantGlobals && window.Wikia.InstantGlobals.wgSitewideDisableLiftium) {
+		Liftium.d('(Fake) Liftium Disaster Recovery enabled.', 1);
+		return;
+	}
+
 	if (LiftiumOptions.offline){
 		Liftium.d("Not printing tag because LiftiumOptions.offline is set");
 		return false;
@@ -422,6 +431,11 @@ Liftium.callIframeAd = function(slotname, tag, adIframe){
 
 Liftium.callInjectedIframeAd = function (sizeOrSlot, iframeElement, slotPlacement){
 	Liftium.d("Calling injected Iframe Ad for " + sizeOrSlot, 1);
+
+	if (window.Wikia && window.Wikia.InstantGlobals && window.Wikia.InstantGlobals.wgSitewideDisableLiftium) {
+		Liftium.d('(Fake) Liftium Disaster Recovery enabled.', 1);
+		return;
+	}
 
 	var slotname = Liftium.getContainingDivId(iframeElement);
 	Liftium.d("It's " + iframeElement.id + " inside " + slotname + " div", 3);
@@ -1413,6 +1427,10 @@ Liftium.in_array = function (needle, haystack, ignoreCase){
 
 
 Liftium.init = function (callback) {
+	if (window.Wikia && window.Wikia.InstantGlobals && window.Wikia.InstantGlobals.wgSitewideDisableLiftium) {
+		Liftium.d('(Fake) Liftium Disaster Recovery enabled.', 1);
+		return;
+	}
 
 	if (Liftium.e(LiftiumOptions.pubid)){
 		// Liftium.reportError("LiftiumOptions.pubid must be set", "publisher"); // TODO: provide a link to documentation
@@ -1778,6 +1796,10 @@ Liftium.normalizeColor = function(input){
 
 Liftium.onLoadHandler = function () {
 	//Liftium.trackEvent(["onload", Liftium.formatTrackTime(Liftium.debugTime(), 30)], "UA-17475676-7");
+	if (window.Wikia && window.Wikia.InstantGlobals && window.Wikia.InstantGlobals.wgSitewideDisableLiftium) {
+		Liftium.d('(Fake) Liftium Disaster Recovery enabled.', 1);
+		return;
+	}
 
 	Liftium.pageLoaded = true;
 	if (!Liftium.e(Liftium.config) && Liftium.iframesLoaded()) {
