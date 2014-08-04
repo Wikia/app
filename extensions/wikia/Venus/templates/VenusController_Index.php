@@ -25,7 +25,7 @@
 		</header>
 		<?= $contents ?>
 	</article>
-	<?#TODO: Re-Enable when it's ready = $footer ?>
+	<?= $globalFooter ?>
 	<?#TODO: Re-Enable when it's ready = $corporateFooter ?>
 </section>
 <!--$jsBodyFiles-->

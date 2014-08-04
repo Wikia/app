@@ -28,6 +28,8 @@ class VenusController extends WikiaController {
 
 		if ($pageCss = $skinVars['pagecss']) {
 			$this->pageCss = '<style type="text/css">' . $pageCss . '</style>';
+		} else {
+			$this->pageCss = '';
 		}
 
 		// initialize variables
@@ -172,7 +174,7 @@ class VenusController extends WikiaController {
 	}
 
 	public function getGlobalFooter() {
-		//return $this->app->renderView('Footer', 'Index');
+		return $this->app->renderView('GlobalFooter', 'index');
 	}
 
 	public function getCorporateFootet() {

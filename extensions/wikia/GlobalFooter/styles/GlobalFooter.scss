@@ -1,4 +1,8 @@
-.CorporateFooter  {
+@import "skins/oasis/css/mixins/clearfix";
+@import "skins/oasis/css/core/color";
+
+.global-footer  {
+	box-sizing: content-box;
 	clear: left;
 	font-size: 11px;
 	padding-bottom: 10px;
@@ -10,16 +14,42 @@
 			display: none;
 		}
 	}
-	.WikiaHubBranding {
+	.branding {
 		background: transparent;
 		left: 10px;
 		padding: 1px;
 		position: absolute;
 		top: 0;
+		&.black {
+			background: black;
+		}
 		.wordmark {
 			float: left;
 			position: relative;
 			width: 66px;
+
+			img {
+				background-color: transparent;
+				background-image: url(/extensions/wikia/GlobalFooter/images/sprite.png); /* $wgCdnStylePath */
+				background-repeat: no-repeat;
+
+				height: 16px;
+				width: 54px;
+				margin: 2px 5px;
+			}
+			.wordmark9 { //lifestyle
+				background-position: -159px 0px;
+			}
+			.wordmark2 { //video games
+				background-position: -53px 0px;
+			}
+			.wordmark3 { //entertainment
+				background-position: -106px 0px;
+			}
+			//"default" logo -- com logo
+			.wordmark4 {
+				background-position: 0px 0px;
+			}
 		}
 		.hub {
 			background: $color-page;
@@ -45,9 +75,6 @@
 				color: $color-wikiahome-lifestyle;
 			}
 		}
-	}
-	.HubBrandingBlackBackground {
-		background: black;
 	}
 	ul {
 		list-style: none;

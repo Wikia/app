@@ -25,3 +25,12 @@ $VenusConfig['venus_css'] = [
 		'//extensions/wikia/Venus/styles/Venus.scss'
 	]
 ];
+
+/** GlobalFooter extension */
+$VenusConfig['global_footer_css'] = array(
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => ['venus'],
+	'assets' => array(
+		'//extensions/wikia/GlobalFooter/styles/GlobalFooter.scss'
+	)
+);
