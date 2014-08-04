@@ -1,6 +1,67 @@
 <?php
 
 class POIApiController extends WikiaApiController {
+
+	/**
+	 * @var QuestDetailsSolrHelper
+	 */
+	protected $solrHelper;
+
+	/**
+	 * @var Wikia\Search\Services\NearbyPOISearchService
+	 */
+	protected $nearbySearch;
+
+	//TODO: rename it to getNearbyQuests
+	public function getNearbyQuests4Real() {
+		$lat = $this->request->getVal("lat");
+		$long = $this->request->getVal("long");
+
+		$solrHelper = $this->getSolrHelper();
+		$nearbySearch = $this->getNearbySearch();
+
+		$nearbySearch->setFields( $solrHelper->getRequiredSolrFields() );
+		$solrResponse = $nearbySearch->queryLocation( $lat, $long );
+		$result = $solrHelper->consumeResponse( $solrResponse );
+
+		$this->setResponseData( $result );
+	}
+
+	/**
+	 * @param \Wikia\Search\Services\NearbyPOISearchService $nearbySearch
+	 */
+	public function setNearbySearch( $nearbySearch ) {
+		$this->nearbySearch = $nearbySearch;
+	}
+
+	/**
+	 * @return \Wikia\Search\Services\NearbyPOISearchService
+	 */
+	public function getNearbySearch() {
+		if( empty( $this->nearbySearch ) ) {
+			$this->nearbySearch = new Wikia\Search\Services\NearbyPOISearchService();
+		}
+		return $this->nearbySearch;
+	}
+
+	/**
+	 * @param \QuestDetailsSolrHelper $solrHelper
+	 */
+	public function setSolrHelper( $solrHelper ) {
+		$this->solrHelper = $solrHelper;
+	}
+
+	/**
+	 * @return \QuestDetailsSolrHelper
+	 */
+	public function getSolrHelper() {
+		if( empty( $this->solrHelper ) ) {
+			$this->solrHelper = new QuestDetailsSolrHelper();
+		}
+		return $this->solrHelper;
+	}
+
+	// TODO: this is just temporary API stub
 	public function getNearbyQuests(){
 		$data = json_decode('{
 		  "quests": [
@@ -43,19 +104,5 @@ class POIApiController extends WikiaApiController {
 		}', true );
 
 		$this->setResponseData( $data );
-	}
-
-	public function getNearbyQuests4Real() { //TODO: rename it to getNearbyQuests
-		$lat = $this->request->getVal("lat");
-		$long = $this->request->getVal("long");
-
-		$solrHelper = new QuestDetailsSolrHelper();
-
-		$nearBySearch = new Wikia\Search\Services\NearbyPOISearchService();
-		$nearBySearch->setFields( $solrHelper->getRequiredSolrFields() );
-		$solrResponse = $nearBySearch->queryLocation( $lat, $long );
-		$result = $solrHelper->consumeResponse( $solrResponse );
-
-		$this->setResponseData( $result );
 	}
 }
