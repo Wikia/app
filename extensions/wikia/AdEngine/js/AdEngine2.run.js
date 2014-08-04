@@ -11,6 +11,7 @@ require([
 	'wikia.log',
 	'wikia.window',
 	'wikia.tracker',
+	'wikia.instantGlobals',
 	'ext.wikia.adEngine.adEngine',
 	'ext.wikia.adEngine.adConfig',
 	'ext.wikia.adEngine.evolveSlotConfig',
@@ -22,7 +23,7 @@ require([
 	'ext.wikia.adEngine.slotTweaker',
 	'ext.wikia.adEngine.messageListener',
 	require.optional('wikia.abTest')
-], function (log, window, tracker, adEngine, adConfig, evolveSlotConfig, adLogicPageParams, wikiaDart, slotTracker, lateAdsQueue, adLogicHighValueCountry, slotTweaker, messageListener, abTest) {
+], function (log, window, tracker, instantGlobals, adEngine, adConfig, evolveSlotConfig, adLogicPageParams, wikiaDart, slotTracker, lateAdsQueue, adLogicHighValueCountry, slotTweaker, messageListener, abTest) {
 	'use strict';
 
 	var module = 'AdEngine2.run',
@@ -119,7 +120,7 @@ require([
 		window.wgAfterContentAndJS.push(startEarlyQueue);
 	}
 
-	if (window.wgEnableRHonDesktop) {
+	if (window.wgEnableRHonDesktop || instantGlobals.wgAdDriverLiftiumDR) {
 		window.wgAfterContentAndJS.push(window.AdEngine_loadLateAds);
 	}
 

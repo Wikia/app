@@ -68,10 +68,6 @@ Liftium.addEventListener = function(item, eventName, callback){
 
 
 Liftium.beaconCall = function (url, cb){
-	if (window.Wikia && window.Wikia.AbTest && window.Wikia.AbTest.inGroup('LIFTIUM_DR', 'DISABLED')) {
-		Liftium.d('(Fake) AB experiment LIFTIUM_DR, group DISABLED', 1);
-		return;
-	}
 	// Create an image and call the beacon
 	var img = new Image(0, 0);
 	// Append a cache buster
