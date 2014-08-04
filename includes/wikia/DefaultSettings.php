@@ -1247,19 +1247,22 @@ $wgAdDriverBottomLeaderboardImpressionCapping = [2, 4, 6];
 
 /**
  * @name $wgSitewideDisableLiftium
- * Whether to enable Liftium Disaster Recovery (true) or the not (false)
+ * @link http://one.wikia-inc.com/wiki/Ads/Disaster_recovery
+ * Disable Liftium sitewide in case a disaster happens (it's an instant global).
  */
 $wgSitewideDisableLiftium = false;
 
 /**
  * @name $wgSitewideDisableSevenOneMedia
- * Whether to enable SevenOneMedia Disaster Recovery (true) or the not (false)
+ * @link http://one.wikia-inc.com/wiki/Ads/Disaster_recovery
+ * Disable SevenOneMedia sitewide in case a disaster happens (it's an instant global).
  */
 $wgSitewideDisableSevenOneMedia = false;
 
 /**
  * @name $wgSitewideDisableIVW2
- * Whether to enable IVW2 Analytics pixel Disaster Recovery (true) or the not (false)
+ * @link http://one.wikia-inc.com/wiki/Ads/Disaster_recovery
+ * Disable IVW2 Analytics pixel sitewide in case a disaster happens (it's an instant global).
  */
 $wgSitewideDisableIVW2 = false;
 
