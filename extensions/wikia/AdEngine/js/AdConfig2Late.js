@@ -64,7 +64,7 @@ define('ext.wikia.adEngine.adConfigLate', [
 	if (window.wgEnableRHonDesktop) {
 		adProviderRemnant = adProviderRemnantGpt;
 	} else {
-		adProviderRemnant = instantGlobals.wgAdDriverLiftiumDR ? adProviderNull : adProviderLiftium;
+		adProviderRemnant = instantGlobals.wgSitewideDisableLiftium ? adProviderNull : adProviderLiftium;
 	}
 
 	function getProvider(slot) {
@@ -95,7 +95,7 @@ define('ext.wikia.adEngine.adConfigLate', [
 					return adProviderNull;
 				}
 
-				if (instantGlobals.wgAdDriverSevenOneMediaDR) {
+				if (instantGlobals.wgSitewideDisableSevenOneMedia) {
 					log('SevenOneMedia disabled by DR. Using Null provider instead', 'warn', logGroup);
 					return adProviderNull;
 				}

@@ -132,8 +132,8 @@ describe('AdConfig2Late', function () {
 			adProviderLiftiumMock = {name: 'LiftiumMock', canHandleSlot: function () {return true;}},
 			adProviderSevenOneMedia = {name: 'SevenOneMediaMock', canHandleSlot: function () {return true;}},
 			logMock = function () {},
-			windowMock = {wgAdDriverUseSevenOneMedia: true, wgAdDriverSevenOneMediaDR: true},
-			instantGlobalsMock = { wgAdDriverSevenOneMediaDR: true },
+			windowMock = {wgAdDriverUseSevenOneMedia: true, wgSitewideDisableSevenOneMedia: true},
+			instantGlobalsMock = { wgSitewideDisableSevenOneMedia: true },
 			geoMock = { getCountryCode: function () { return 'PL'; } },
 			adConfig;
 

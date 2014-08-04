@@ -1246,16 +1246,22 @@ $wgAdDriverUseTopInContentBoxad = true;
 $wgAdDriverBottomLeaderboardImpressionCapping = [2, 4, 6];
 
 /**
- * @name $wgAdDriverLiftiumDR
+ * @name $wgSitewideDisableLiftium
  * Whether to enable Liftium Disaster Recovery (true) or the not (false)
  */
-$wgAdDriverLiftiumDR = false;
+$wgSitewideDisableLiftium = false;
 
 /**
- * @name $wgAdDriverSevenOneMediaDR
+ * @name $wgSitewideDisableSevenOneMedia
  * Whether to enable SevenOneMedia Disaster Recovery (true) or the not (false)
  */
-$wgAdDriverSevenOneMediaDR = false;
+$wgSitewideDisableSevenOneMedia = false;
+
+/**
+ * @name $wgSitewideDisableIVW2
+ * Whether to enable SevenOneMedia Disaster Recovery (true) or the not (false)
+ */
+$wgSitewideDisableIVW2 = false;
 
 /**
  * @name $wgAdDriverUseSevenOneMedia

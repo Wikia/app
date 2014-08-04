@@ -120,7 +120,7 @@ require([
 		window.wgAfterContentAndJS.push(startEarlyQueue);
 	}
 
-	if (window.wgEnableRHonDesktop || instantGlobals.wgAdDriverLiftiumDR) {
+	if (window.wgEnableRHonDesktop || instantGlobals.wgSitewideDisableLiftium) {
 		window.wgAfterContentAndJS.push(window.AdEngine_loadLateAds);
 	}
 

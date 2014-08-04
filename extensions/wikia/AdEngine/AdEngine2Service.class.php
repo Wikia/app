@@ -141,8 +141,8 @@ class AdEngine2Service
 
 	public static function shouldLoadLiftium()
 	{
-		global $wgAdDriverLiftiumDR, $wgEnableRHonDesktop, $wgAdEngineDisableLateQueue;
-		return !($wgEnableRHonDesktop || $wgAdEngineDisableLateQueue || $wgAdDriverLiftiumDR);
+		global $wgSitewideDisableLiftium, $wgEnableRHonDesktop, $wgAdEngineDisableLateQueue;
+		return !($wgEnableRHonDesktop || $wgAdEngineDisableLateQueue || $wgSitewideDisableLiftium);
 	}
 
 	public static function shouldLoadLateQueue()
