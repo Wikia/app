@@ -1,11 +1,5 @@
 <?php
 
-/**
- * Created by PhpStorm.
- * User: yurii
- * Date: 8/1/14
- * Time: 11:04 AM
- */
 class QuestDetailsSolrHelper {
 
 	const DEFAULT_ABSTRACT_LENGTH = 200;

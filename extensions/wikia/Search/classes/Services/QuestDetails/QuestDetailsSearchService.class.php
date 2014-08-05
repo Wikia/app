@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: yurii
- * Date: 7/30/14
- * Time: 11:27 AM
- */
 
 use Wikia\Search\Services\EntitySearchService;
 
