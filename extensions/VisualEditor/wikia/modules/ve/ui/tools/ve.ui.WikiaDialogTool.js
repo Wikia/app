@@ -69,8 +69,22 @@ if ( mw.config.get( 'wgEnableWikiaInteractiveMaps' ) === true ) {
  * @param {Object} [config] Config options
  */
 ve.ui.WikiaSourceModeDialogTool = function VeUiWikiaSourceModeDialogTool( toolGroup, config ) {
+	var accessKeyPrefix = mw.util.tooltipAccessKeyPrefix.replace( /-/g, ' + ' );
+
 	// Parent constructor
 	ve.ui.WikiaSourceModeDialogTool.super.call( this, toolGroup, config );
+
+	// Initialization
+	ve.ui.triggerRegistry.register(
+		'wikiaSourceMode', {
+			'mac': new ve.ui.Trigger( accessKeyPrefix + '[' ),
+			'pc': new ve.ui.Trigger( accessKeyPrefix + '[' )
+		}
+	);
+	ve.ui.commandRegistry.register(
+		new ve.ui.Command( 'wikiaSourceMode', 'window', 'open', 'wikiaSourceMode' )
+	);
+	this.toolGroup.getToolbar().getSurface().addCommands( ['wikiaSourceMode'] );
 };
 
 OO.inheritClass( ve.ui.WikiaSourceModeDialogTool, ve.ui.DialogTool );
@@ -81,20 +95,6 @@ ve.ui.WikiaSourceModeDialogTool.static.icon = 'source';
 ve.ui.WikiaSourceModeDialogTool.static.title =
 	OO.ui.deferMsg( 'wikia-visualeditor-dialogbutton-wikiasourcemode-tooltip' );
 ve.ui.WikiaSourceModeDialogTool.static.commandName = 'wikiaSourceMode';
-
-/**
- * @inheritdoc
- */
-ve.ui.WikiaSourceModeDialogTool.prototype.onSelect = function () {
-	var command = this.getCommand();
-	if ( command.data.length < 2 ) {
-		command.data.push( { 'target': this.toolbar.getTarget() } );
-	}
-	ve.ui.DialogTool.prototype.onSelect.apply( this, arguments );
-};
-
-ve.ui.toolFactory.register( ve.ui.WikiaSourceModeDialogTool );
-
 ve.ui.toolFactory.register( ve.ui.WikiaSourceModeDialogTool );
 
 /**
