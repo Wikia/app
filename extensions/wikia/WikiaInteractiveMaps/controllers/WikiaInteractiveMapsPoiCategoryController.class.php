@@ -36,26 +36,9 @@ class WikiaInteractiveMapsPoiCategoryController extends WikiaInteractiveMapsBase
 		WikiaMapsLogger::addLogEntries( $this->logEntries );
 		$this->logEntries = [];
 
-		$resultsContent = [];
-
-		$poiCategoriesCreated = $this->getData( 'poiCategoriesCreated' );
-		if ( !empty( $poiCategoriesCreated ) ) {
-			$resultsContent[ 'poiCategoriesCreated' ] = $poiCategoriesCreated;
-		}
-
-		$poiCategoriesUpdated = $this->getData( 'poiCategoriesUpdated' );
-		if ( !empty( $poiCategoriesUpdated ) ) {
-			$resultsContent[ 'poiCategoriesUpdated' ] = $poiCategoriesUpdated;
-		}
-
-		$poiCategoriesDeleted = $this->getData( 'poiCategoriesDeleted' );
-		if ( !empty( $poiCategoriesDeleted ) ) {
-			$resultsContent[ 'poiCategoriesDeleted' ] = $poiCategoriesDeleted;
-		}
-
 		$results = [
 			'success' => true,
-			'content' => $resultsContent
+			'content' => $this->getResultsContent()
 		];
 		
 		$this->setVal( 'results', $results );
@@ -290,6 +273,32 @@ class WikiaInteractiveMapsPoiCategoryController extends WikiaInteractiveMapsBase
 		}
 
 		$this->setData( 'poiCategoriesDeleted', $poiCategoriesDeleted );
+	}
+
+	/**
+	 * Formats POI categories save result
+	 *
+	 * @return array
+	 */
+	private function getResultsContent() {
+		$resultsContent = [];
+
+		$poiCategoriesCreated = $this->getData( 'poiCategoriesCreated' );
+		if ( !empty( $poiCategoriesCreated ) ) {
+			$resultsContent[ 'poiCategoriesCreated' ] = $poiCategoriesCreated;
+		}
+
+		$poiCategoriesUpdated = $this->getData( 'poiCategoriesUpdated' );
+		if ( !empty( $poiCategoriesUpdated ) ) {
+			$resultsContent[ 'poiCategoriesUpdated' ] = $poiCategoriesUpdated;
+		}
+
+		$poiCategoriesDeleted = $this->getData( 'poiCategoriesDeleted' );
+		if ( !empty( $poiCategoriesDeleted ) ) {
+			$resultsContent[ 'poiCategoriesDeleted' ] = $poiCategoriesDeleted;
+		}
+
+		return $resultsContent;
 	}
 
 	/**

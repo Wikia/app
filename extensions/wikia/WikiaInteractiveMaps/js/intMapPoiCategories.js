@@ -100,7 +100,7 @@ define('wikia.intMap.poiCategories',
 				CREATE: 'create',
 				EDIT: 'edit'
 			},
-			originalPoiCategoriesData;
+			poiCategoriesOriginalData;
 
 		/**
 		 * @desc Entry point for modal
@@ -134,7 +134,7 @@ define('wikia.intMap.poiCategories',
 		function setUpModal(data) {
 			setUpTemplateData(data);
 			mapUrl = data.mapUrl;
-			originalPoiCategoriesData = data.poiCategories;
+			poiCategoriesOriginalData = data.poiCategories;
 
 			modalConfig.vars.content = utils.render(poiCategoriesTemplate, poiCategoriesTemplateData, {
 				poiCategory: poiCategoryTemplate,
@@ -380,16 +380,16 @@ define('wikia.intMap.poiCategories',
 
 		/**
 		 * @desc checks if POI category data was changed by user
-		 * @param {object} originalPoiCategory
+		 * @param {object} poiCategoryOriginal
 		 * @param {object} poiCategory
 		 * @returns {boolean} - is POI category changed
 		 */
-		function isPoiCategoryChanged(originalPoiCategory, poiCategory) {
-			if (poiCategory.name !== originalPoiCategory.name) {
+		function isPoiCategoryChanged(poiCategoryOriginal, poiCategory) {
+			if (poiCategory.name !== poiCategoryOriginal.name) {
 				return true;
 			}
 
-			if (poiCategory.parent_poi_category_id !== originalPoiCategory.parent_poi_category_id) {
+			if (poiCategory.parent_poi_category_id !== poiCategoryOriginal.parent_poi_category_id) {
 				return true;
 			}
 
@@ -416,7 +416,7 @@ define('wikia.intMap.poiCategories',
 
 			if (formSerialized.poiCategories) {
 				formSerialized.poiCategories.forEach(function (poiCategory) {
-					var originalPoiCategory;
+					var poiCategoryOriginal;
 
 					if (poiCategory.parent_poi_category_id) {
 						poiCategory.parent_poi_category_id = parseInt(poiCategory.parent_poi_category_id, 10);
@@ -425,9 +425,9 @@ define('wikia.intMap.poiCategories',
 					if (poiCategory.id) {
 						poiCategory.id = parseInt(poiCategory.id, 10);
 
-						originalPoiCategory = findPoiCategoryById(poiCategory.id, originalPoiCategoriesData);
+						poiCategoryOriginal = findPoiCategoryById(poiCategory.id, poiCategoriesOriginalData);
 
-						if (originalPoiCategory && isPoiCategoryChanged(originalPoiCategory, poiCategory)) {
+						if (poiCategoryOriginal && isPoiCategoryChanged(poiCategoryOriginal, poiCategory)) {
 							poiCategories.poiCategoriesToUpdate.push(poiCategory);
 						}
 					} else {
@@ -489,41 +489,60 @@ define('wikia.intMap.poiCategories',
 			}
 		}
 
+		/**
+		 * @desc finds POI category in array by looking at ids
+		 * @param id - POI category id
+		 * @param poiCategories - array of POI categories
+		 * @returns {object|null} - POI category with given id or null if not found
+		 */
 		function findPoiCategoryById(id, poiCategories) {
 			return $.grep(poiCategories, function (item) {
 				return item.id === id;
 			})[0];
 		}
 
+		/**
+		 * @desc cleans up POI category data after updating it, copies what's needed from the original data
+		 * @param poiCategoryUpdated
+		 * @param poiCategoryOriginal
+		 */
+		function setPoiCategoryUpdatedData(poiCategoryUpdated, poiCategoryOriginal) {
+			poiCategoryUpdated.map_id = poiCategoryOriginal.map_id;
+			poiCategoryUpdated.status = poiCategoryOriginal.status;
+			poiCategoryUpdated.marker = (!poiCategoryOriginal.no_marker && !poiCategoryUpdated.marker) ?
+				poiCategoryOriginal.marker :
+				poiCategoryUpdated.marker;
+
+			if (poiCategoryOriginal.no_marker && !poiCategoryUpdated.marker) {
+				poiCategoryUpdated.no_marker = true;
+			}
+		}
+
+		/**
+		 * @desc cleans up POI categories data after edit
+		 * @param {object} dataSent - POI categories sent to backend
+		 * @param {object} dataReceived - response from backend, array of actions done and categories affected
+		 * @returns {Array} - current POI categories list
+		 */
 		function updatePoiCategoriesData(dataSent, dataReceived) {
 			var currentPoiCategories = [];
 
-			originalPoiCategoriesData.forEach(function (originalPoiCategory) {
+			poiCategoriesOriginalData.forEach(function (poiCategoryOriginal) {
 				var poiCategoryUpdated = null;
 
 				if (
 					dataReceived.poiCategoriesUpdated &&
-					dataReceived.poiCategoriesUpdated.indexOf(originalPoiCategory.id) > -1
+					dataReceived.poiCategoriesUpdated.indexOf(poiCategoryOriginal.id) > -1
 				) {
-					poiCategoryUpdated = findPoiCategoryById(originalPoiCategory.id, dataSent.poiCategoriesToUpdate);
+					poiCategoryUpdated = findPoiCategoryById(poiCategoryOriginal.id, dataSent.poiCategoriesToUpdate);
 					if (poiCategoryUpdated) {
-						poiCategoryUpdated.map_id = originalPoiCategory.map_id;
-						poiCategoryUpdated.status = originalPoiCategory.status;
-						poiCategoryUpdated.marker = (!originalPoiCategory.no_marker && !poiCategoryUpdated.marker) ?
-							originalPoiCategory.marker :
-							poiCategoryUpdated.marker;
-
-						if (originalPoiCategory.no_marker && !poiCategoryUpdated.marker) {
-							poiCategoryUpdated.no_marker = true;
-						}
-
-						currentPoiCategories.push(poiCategoryUpdated);
+						currentPoiCategories.push(setPoiCategoryUpdatedData(poiCategoryUpdated, poiCategoryOriginal));
 					}
 				} else if (
 					!(dataReceived.poiCategoriesDeleted &&
-					dataReceived.poiCategoriesDeleted.indexOf(originalPoiCategory.id) > -1)
+					dataReceived.poiCategoriesDeleted.indexOf(poiCategoryOriginal.id) > -1)
 				) {
-					currentPoiCategories.push(originalPoiCategory);
+					currentPoiCategories.push(poiCategoryOriginal);
 				}
 
 				// else the POI category was deleted and we skip it
@@ -541,16 +560,12 @@ define('wikia.intMap.poiCategories',
 		/**
 		 * @desc Handler for poiCategoriesSaved event. Sends data to Ponto and closes the modal or redirects to map page.
 		 * @param {object} dataSent - POI categories sent to backend
-		 * @param {object} dataReceived - response from backend, array of actions done and ids affected
+		 * @param {object} dataReceived - response from backend, array of actions done and categories affected
 		 */
 		function poiCategoriesSaved(dataSent, dataReceived) {
 			if (mode === modalModes.EDIT) {
 				if (typeof pontoTrigger === 'function') {
-					//TODO remove this
-					var updatedData = updatePoiCategoriesData(dataSent, dataReceived);
-					console.log(updatedData);
-
-					//pontoTrigger(updatePoiCategoriesData(dataSent, dataReceived));
+					pontoTrigger(updatePoiCategoriesData(dataSent, dataReceived));
 				}
 				modal.trigger('close');
 			} else {
