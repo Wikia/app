@@ -650,8 +650,8 @@ class ArticlesApiController extends WikiaApiController {
 		];
 	}
 
-	protected function addMetadata( $collection ) {
-		if ( isset( $this->wg->EnablePOIExt ) ) {
+	protected function appendMetadata( $collection ) {
+		if ( !empty( $this->wg->EnablePOIExt ) ) {
 			$questDetailsSearch = new QuestDetailsSearchService();
 			$result = $questDetailsSearch->query(
 				[
@@ -764,7 +764,7 @@ class ArticlesApiController extends WikiaApiController {
 			}
 		}
 
-		$collection = $this->addMetadata( $collection );
+		$collection = $this->appendMetadata( $collection );
 
 		$thumbnails = null;
 		//if strict return to original ids order
