@@ -23,3 +23,8 @@ $wgAutoloadClasses['MediaGalleryController'] =  $dir . 'MediaGalleryController.c
 
 // i18n mapping
 $wgExtensionMessagesFiles['MediaGallery'] = $dir . 'MediaGallery.i18n.php';
+
+JSMessages::registerPackage('MediaGallery', array(
+	'mediagallery-show-more',
+	'mediagallery-show-less',
+));

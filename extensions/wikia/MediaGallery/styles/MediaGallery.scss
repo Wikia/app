@@ -44,12 +44,33 @@ $media-margin: .5em;
 		@include grid-column(3);
 	}
 
+	&.count-many .media {
+		@include grid-column(3);
+
+		&:nth-child(n+9) {
+			display: none;
+			opacity: 0;
+			transition: opacity 2s ease-in-out;
+			padding: $media-margin;
+		}
+		&.show {
+			display: block;
+			opacity: 1;
+		}
+	}
+
 	&[class*="count-"] .media:nth-child(n) {
 		padding: $media-margin;
 
 		img {
 			width: 100%;
 		}
+	}
+
+	.more {
+		clear: both;
+		margin: 20px auto;
+		text-align: center;
 	}
 }
 

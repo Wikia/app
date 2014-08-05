@@ -605,6 +605,8 @@ class WikiaPhotoGallery extends ImageGallery {
 		// Route to new version of galleries - "MediaGallery"
 		} elseif ( !empty( $wgEnableMediaGalleryExt ) ) {
 			$html =  $this->renderMediaGallery();
+			// remove spaces from html produced by mustache template
+			$html = trim( preg_replace( '/\n+/', ' ', $html ) );
 		} else {
 
 			// loop throught the images and get height of the tallest one
