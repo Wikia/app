@@ -650,6 +650,17 @@ class ArticlesApiController extends WikiaApiController {
 		];
 	}
 
+	protected function addMetadata( $collection ) {
+		if ( isset( $this->wg->EnablePOIExt ) ) {
+			$questDetailsSearch = new QuestDetailsSearchService();
+			$result = $questDetailsSearch->query( [ 'ids' => array_keys( $collection ), 'metadataOnly' => true ] );
+			foreach ( $result as $key => $item ) {
+				$collection[ $key ] = array_merge( $collection[ $key ], [ 'metadata' => $item ] );
+			}
+		}
+		return $collection;
+	}
+
 	protected function getArticlesDetails( $articleIds, $articleKeys = [], $width = 0, $height = 0, $abstract = 0, $strict = false ) {
 		$articles = is_array( $articleIds ) ? $articleIds : [ $articleIds ];
 		$ids = [];
@@ -747,6 +758,8 @@ class ArticlesApiController extends WikiaApiController {
 				$details = array_merge( $details, $thumbnails[ $id ] );
 			}
 		}
+
+		$collection = $this->addMetadata( $collection );
 
 		$thumbnails = null;
 		//if strict return to original ids order
