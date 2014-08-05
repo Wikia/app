@@ -220,10 +220,10 @@ class WikiaInteractiveMapsPoiCategoryController extends WikiaInteractiveMapsBase
 
 			return $poiCategory;
 		} else {
-			WikiaLogger::instance()->error('WikiaMaps tried to create POI category and failed', [
+			WikiaLogger::instance()->error( 'WikiaMaps tried to create POI category and failed', [
 				'poiCategory' => $poiCategory,
 				'response' => $response
-			]);
+			] );
 			return null;
 		}
 	}
@@ -249,10 +249,10 @@ class WikiaInteractiveMapsPoiCategoryController extends WikiaInteractiveMapsBase
 
 			return $poiCategoryId;
 		} else {
-			WikiaLogger::instance()->error('WikiaMaps tried to update POI category and failed', [
+			WikiaLogger::instance()->error( 'WikiaMaps tried to update POI category and failed', [
 				'poiCategory' => $poiCategory,
 				'response' => $response
-			]);
+			] );
 			return null;
 		}
 	}
@@ -277,10 +277,10 @@ class WikiaInteractiveMapsPoiCategoryController extends WikiaInteractiveMapsBase
 					[ $this->wg->User->getName(), $poiCategoryId ]
 				) );
 			} else {
-				WikiaLogger::instance()->error('WikiaMaps tried to delete POI category and failed', [
+				WikiaLogger::instance()->error( 'WikiaMaps tried to delete POI category and failed', [
 					'poiCategoryId' => $poiCategoryId,
 					'response' => $response
-				]);
+				] );
 			}
 		}
 
