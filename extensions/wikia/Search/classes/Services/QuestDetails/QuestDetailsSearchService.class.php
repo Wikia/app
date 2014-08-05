@@ -79,6 +79,7 @@ class QuestDetailsSearchService extends EntitySearchService {
 	public function withIds( $ids ) {
 		if( !empty( $ids ) ) {
 			$this->conditions[ ] = self::SOLR_PAGE_ID_FIELD . ':(' . join( ' ', $ids ) . ')';
+			$this->limit( count( $ids ) );
 		}
 		return $this;
 	}
