@@ -1919,8 +1919,8 @@ $config['media_gallery_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => ['oasis'],
 	'assets' => [
-		'//extensions/wikia/MediaGallery/scripts/controllers/index.js',
-		'//extensions/wikia/MediaGallery/scripts/views/toggler.js',
 		'//extensions/wikia/MediaGallery/scripts/templates.mustache.js',
+		'//extensions/wikia/MediaGallery/scripts/views/toggler.js',
+		'//extensions/wikia/MediaGallery/scripts/controllers/index.js',
 	]
 ];

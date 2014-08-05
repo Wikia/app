@@ -50,15 +50,15 @@ $media-margin: .5em;
 		@include grid-column(3);
 
 		&:nth-child(n+9) {
-			display: none;
 			opacity: 0;
-			transition: opacity 2s ease-in-out;
 			padding: $media-margin;
+			position: absolute;
+			transition: opacity 2s ease-in-out;
 		}
 
 		&.show {
-			display: block;
 			opacity: 1;
+			position: static;
 		}
 	}
 
