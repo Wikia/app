@@ -951,28 +951,25 @@ class ArticlesApiController extends WikiaApiController {
 
 			$parsedArticle = $article->getParserOutput();
 
-			$articleContent = json_decode($parsedArticle->getText());
+			$articleContent = json_decode( $parsedArticle->getText() );
 
 			$wgArticleAsJson = false;
 			$categories = [];
 
 			foreach(array_keys( $parsedArticle->getCategories() ) as $category) {
+				$categoryTitle = Title::newFromText( $category, NS_CATEGORY );
+
 				$categories[] = [
-					"title" => $category,
-					"url" => Title::newFromText($category, NS_CATEGORY)->getLocalURL()
+					"title" => $categoryTitle->getText(),
+					"url" => $categoryTitle->getLocalURL()
 				];
 			}
 
 			$result = [
-				'payload' => [
-					'title' => $parsedArticle->getDisplayTitle(),
-					'article' => $articleContent->content,
-					'user' => $article->getUser(),
-					'media' => $articleContent->media,
-					'users' => $articleContent->users,
-					'categories' => $categories,
-				],
-				'baseUrl' => $this->wg->Server
+				'content' => $articleContent->content,
+				'media' => $articleContent->media,
+				'users' => $articleContent->users,
+				'categories' => $categories,
 			];
 
 			$this->setResponseData( $result, '', self::SIMPLE_JSON_VARNISH_CACHE_EXPIRATION );

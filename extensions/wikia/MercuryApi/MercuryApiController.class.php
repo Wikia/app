@@ -7,6 +7,9 @@ class MercuryApiController extends WikiaController {
 	const NUMBER_CONTRIBUTORS = 6;
 	const DEFAULT_PAGE = 1;
 
+	const ARTICLE_ID_PARAMETER_NAME = "id";
+	const ARTICLE_TITLE_PARAMETER_NAME = "title";
+
 	private $mercuryApi = null;
 
 	public function __construct() {
@@ -15,54 +18,28 @@ class MercuryApiController extends WikiaController {
 	}
 
 	/**
-	 * @desc Returns number of comments per article
-	 *
-	 * @throws NotFoundApiException
-	 * @throws InvalidParameterApiException
-	 */
-	public function getArticleCommentsCount() {
-		$articleId = $this->request->getInt( self::PARAM_ARTICLE_ID );
-
-		if( $articleId === 0 ) {
-			throw new InvalidParameterApiException( self::PARAM_ARTICLE_ID );
-		}
-
-		$title = Title::newFromID( $articleId );
-		if ( empty( $title ) ) {
-			throw new NotFoundApiException( self::PARAM_ARTICLE_ID );
-		}
-
-		$count = 0;
-		if ( !empty( $this->app->wg->EnableArticleCommentsExt ) ) {
-			// Article comments not enabled
-			$count = $this->mercuryApi->articleCommentsCount( $title );
-		}
-		$this->response->setVal( 'count', $count );
-		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
-	}
-
-	/**
 	 * @desc Returns user ids for top contributors
 	 *
 	 * @throws NotFoundApiException
 	 * @throws InvalidParameterApiException
 	 */
-	public function getTopContributorsPerArticle() {
-		$articleId = $this->request->getInt( self::PARAM_ARTICLE_ID );
+	public function getTopContributorsPerArticle( $title = null ) {
+		if( is_null( $title ) ) {
+			$articleId = $this->request->getInt( self::PARAM_ARTICLE_ID );
 
-		if( $articleId === 0 ) {
-			throw new InvalidParameterApiException( self::PARAM_ARTICLE_ID );
-		}
+			if( $articleId === 0 ) {
+				throw new InvalidParameterApiException( self::PARAM_ARTICLE_ID );
+			}
 
-		$title = Title::newFromID( $articleId );
-		if ( empty( $title ) ) {
-			throw new NotFoundApiException( self::PARAM_ARTICLE_ID );
+			$title = Title::newFromID( $articleId );
+			if ( empty( $title ) ) {
+				throw new NotFoundApiException( self::PARAM_ARTICLE_ID );
+			}
 		}
 
 		$usersIds = $this->mercuryApi->topContributorsPerArticle( $title, self::NUMBER_CONTRIBUTORS );
 
-		$this->response->setVal( 'items', $usersIds );
-		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
+		return $usersIds;
 	}
 
 	/**
@@ -114,4 +91,61 @@ class MercuryApiController extends WikiaController {
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 	}
 
+	public function getArticleDetails( $articleId ){
+		return $this->sendRequest( 'ArticlesApi', 'getDetails', ['ids' => $articleId] )->getData()['items'][$articleId];
+	}
+
+	public function getTopContributorsDetails( $ids ) {
+		return $this->sendRequest( 'UserApi', 'getDetails', ['ids' => implode(',', $ids)] )->getData()['items'];
+	}
+
+	public function getArticleJson( $articleId ) {
+		return $this->sendRequest( 'ArticlesApi', 'getAsJson', ['id' => $articleId] )->getData();
+	}
+
+	public function getRelatedPages( $articleId, $limit = 6 ){
+		return $this->sendRequest( 'RelatedPagesApi', 'getList', ['ids' => $articleId, 'limit' => $limit] )->getData()['items'][$articleId];
+	}
+
+	public function getArticle(){
+		$title = null;
+
+		$articleId = $this->request->getInt(self::ARTICLE_ID_PARAMETER_NAME, NULL);
+		$articleTitle = $this->request->getVal(self::ARTICLE_TITLE_PARAMETER_NAME, NULL);
+
+		if ( !empty( $articleId ) && !empty( $articleTitle ) ) {
+			throw new BadRequestApiException( 'Can\'t use id and title in the same request' );
+		}
+
+		if ( empty( $articleId ) && empty( $articleTitle ) ) {
+			throw new BadRequestApiException( 'You need to pass title or id of an article' );
+		}
+
+		if ( !empty( $articleId ) ) {
+			$article = Article::newFromID( $articleId );
+		} else {
+			$title = Title::newFromText( $articleTitle, NS_MAIN );
+
+			if ( $title instanceof Title && $title->exists() ) {
+				$article = Article::newFromTitle( $title, RequestContext::getMain() );
+				$articleId = $title->getArticleId();
+			}
+		}
+
+		if ( empty( $article ) ) {
+			throw new NotFoundApiException( "Unable to find any article" );
+		}
+
+		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
+
+		$userIds = $this->getTopContributorsPerArticle( $title );
+
+		$this->response->setVal( 'data', [
+			'details' => $this->getArticleDetails( $articleId ),
+			'topContributors' => $this->getTopContributorsDetails( $userIds ),
+			'article' => $this->getArticleJson( $articleId ),
+			'relatedPages' => $this->getRelatedPages( $articleId ),
+			'basePath' => $this->wg->Server
+		]);
+	}
 }
