@@ -1,7 +1,7 @@
 <?php
 
 class MetaCSVService extends UploadFromFile {
-	const CSV_MAX_LEN = 1000;
+	const CSV_MAX_LINE_LEN = 4096;
 	const CSV_DELIMITER = ";";
 	const CSV_QUOTE = '"';
 	const FORM_FILE = 'meta';
@@ -19,7 +19,7 @@ class MetaCSVService extends UploadFromFile {
 		}
 		$fp = fopen( $f, 'r' );
 		$out = [ ];
-		while ( $data = fgetcsv( $fp, self::CSV_MAX_LEN, self::CSV_DELIMITER, self::CSV_QUOTE ) ) {
+		while ( $data = fgetcsv( $fp, self::CSV_MAX_LINE_LEN, self::CSV_DELIMITER, self::CSV_QUOTE ) ) {
 			$row = [ ];
 			foreach ( $this->availFields as $key => $field ) {
 				$value = $data[ $key ];
