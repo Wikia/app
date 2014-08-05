@@ -1938,3 +1938,15 @@ $config['int_map_parser_tag_js_wikiamobile'] = [
 		'//extensions/wikia/WikiaInteractiveMaps/js/WikiaInteractiveMapsParserTag.wikiamobile.js'
 	]
 ];
+
+
+// todo: include this package somewhere
+$config['media_gallery_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => ['oasis'],
+	'assets' => [
+		'//extensions/wikia/MediaGallery/js/controllers/index.js',
+		'//extensions/wikia/MediaGallery/js/views/expand.js',
+		'//extensions/wikia/MediaGallery/js/templates.mustache.js',
+	]
+];

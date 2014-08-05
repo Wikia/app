@@ -1,4 +1,8 @@
-<div class="media-gallery-wrapper count-{{count}}"> {{!-- keep the following on one line; otherwise extra tags will be added --}}
-	{{#media}}<div class="media"><img src="{{src}}"></div>{{/media}}
+<div class="media-gallery-wrapper count-{{count}}" data-count="{{count}}">
+	{{#media}}
+		<div class="media">
+			<img src="{{src}}">
+		</div>
+	{{/media}}
 </div>
 
