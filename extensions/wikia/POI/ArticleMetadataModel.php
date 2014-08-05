@@ -2,29 +2,29 @@
 
 class ArticleMetadataModel {
 
-	const quest_id = "quest_id";
-	const fingerprints = "fingerprints";
-	const ability_id = "ability_id";
-	const map_region = "map_region";
+	const QUEST_ID = "quest_id";
+	const FINGERPRINTS = "fingerprints";
+	const ABILITY_ID = "ability_id";
+	const MAP_REGION = "map_region";
 
-	const article_prop_name = WPP_PALANTIR_METADATA;
+	const ARTICLE_PROP_NAME = WPP_PALANTIR_METADATA;
 
 	protected $articleId = 0;
 	protected $articleTitle = null;
 	protected $dbVersion = DB_SLAVE;
 
 	protected $metadata = [
-		self::quest_id => "",
-		self::map_region => "",
-		self::ability_id => "",
-		self::fingerprints => [],
+		self::QUEST_ID => "",
+		self::MAP_REGION => "",
+		self::ABILITY_ID => "",
+		self::FINGERPRINTS => [],
 	];
 
 	protected $solr_mapping = [
-		self::quest_id => "metadata_quest_id_s",
-		self::ability_id => "metadata_ability_id_s",
-		self::fingerprints => "metadata_fingerprint_ids_ss",
-		self::map_region => "metadata_map_region_s"
+		self::QUEST_ID => "metadata_quest_id_s",
+		self::ABILITY_ID => "metadata_ability_id_s",
+		self::FINGERPRINTS => "metadata_fingerprint_ids_ss",
+		self::MAP_REGION => "metadata_map_region_s"
 	];
 
 	public function __construct( $articleId, $useMaster = false ) {
@@ -65,7 +65,7 @@ class ArticleMetadataModel {
 	 * from prop name defined in self::article_prop_name
 	 */
 	public function load() {
-		$data = $this->getWikiaProp( self::article_prop_name, $this->articleId );
+		$data = $this->getWikiaProp( self::ARTICLE_PROP_NAME, $this->articleId );
 		foreach ( $this->metadata as $meta_key => $meta_val ) {
 			if ( isset( $data[$meta_key] ) && !empty( $data[$meta_key] ) ) {
 				$this->metadata[$meta_key] = $data[$meta_key];
@@ -86,7 +86,7 @@ class ArticleMetadataModel {
 	 * to prop name defined in self::article_prop_name
 	 */
 	public function save( $propagateScribeEvent = false ) {
-		$this->setWikiaProp( self::article_prop_name, $this->articleId, $this->getMetadata() );
+		$this->setWikiaProp( self::ARTICLE_PROP_NAME, $this->articleId, $this->getMetadata() );
 		if ( $propagateScribeEvent ) {
 			$article = new Article( $this->articleTitle );
 			ScribeEventProducerController::notifyPageHasChanged( $article->getPage() );
@@ -112,21 +112,21 @@ class ArticleMetadataModel {
 	}
 
 	public function addFingerprint( $name ) {
-		if ( !in_array($this->metadata[ self::fingerprints ], $name) ) {
-			$this->metadata[ self::fingerprints ][] = $name;
+		if ( !in_array($this->metadata[ self::FINGERPRINTS ], $name) ) {
+			$this->metadata[ self::FINGERPRINTS ][] = $name;
 		}
 	}
 
 	public function removeFingerprint( $name ) {
-		foreach ( $this->metadata[ self::fingerprints ] as $i => $fp ) {
+		foreach ( $this->metadata[ self::FINGERPRINTS ] as $i => $fp ) {
 			if ( $fp == $name ) {
-				unset( $this->metadata[self::fingerprints][$i] );
+				unset( $this->metadata[self::FINGERPRINTS][$i] );
 			}
 		}
 	}
 
 	public function clearAllFingerprints() {
-		$this->metadata[ self::fingerprints ] = [];
+		$this->metadata[ self::FINGERPRINTS ] = [];
 	}
 
 	/**
