@@ -4,16 +4,6 @@ use Wikia\Search\Services\NearbyPOISearchService;
 
 class POIApiController extends WikiaApiController {
 
-	const LOCATION_X_REQUEST_PARAM = 'location_x';
-
-	const LOCATION_Y_REQUEST_PARAM = 'location_y';
-
-	const REGION_REQUEST_PARAM = 'region';
-
-	const RADIUS_REQUEST_PARAM = 'radius';
-
-	const LIMIT_REQUEST_PARAM = 'limit';
-
 	/**
 	 * @var QuestDetailsSolrHelper
 	 */
@@ -25,11 +15,11 @@ class POIApiController extends WikiaApiController {
 	protected $nearbySearch;
 
 	public function getNearbyQuests() {
-		$lat = $this->getRequest()->getVal( self::LOCATION_X_REQUEST_PARAM );
-		$long = $this->getRequest()->getVal( self::LOCATION_Y_REQUEST_PARAM );
-		$region = $this->getRequest()->getVal( self::REGION_REQUEST_PARAM );
-		$radius = $this->getRequest()->getVal( self::RADIUS_REQUEST_PARAM );
-		$limit = $this->getRequest()->getVal( self::LIMIT_REQUEST_PARAM );
+		$lat = $this->getRequest()->getVal( 'location_x' );
+		$long = $this->getRequest()->getVal( 'location_y' );
+		$region = $this->getRequest()->getVal( 'region' );
+		$radius = $this->getRequest()->getVal( 'radius' );
+		$limit = $this->getRequest()->getVal( 'limit' );
 
 		$solrHelper = $this->getSolrHelper();
 		$nearbySearch = $this->getNearbySearch();
