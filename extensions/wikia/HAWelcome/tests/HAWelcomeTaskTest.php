@@ -394,5 +394,34 @@ class HAWelcomeTaskTest extends WikiaBaseTest {
 		$task->sendWelcomeMessage( $params );
 	}
 
+	public function testExecuteAndPostMessage() {
+		$defaultUser = $this->getMock( '\User' );
+		$wallMessage = $this->getMock( '\WallMessage', [], [], '', false );
+		$task = $this->getMock( '\HAWelcomeTask', ['getDefaultWelcomerUser', 'getTextVersionOfMessage', 'executeBuildAndPostWallMessage'], [], '', false );
+
+		$welcomeMessage = "hello";
+		$recipientName  = "bob";
+		$textMessage    = "a text message";
+
+		$task->setWelcomeMessage( $welcomeMessage );
+		$task->setRecipientUserName( $recipientName );
+
+		$task->expects( $this->once() )
+			->method( 'getTextVersionOfMessage' )
+			->with( 'welcome-message-log' )
+			->will( $this->returnValue( $textMessage ) );
+
+		$task->expects( $this->once() )
+			->method( 'executeBuildAndPostWallMessage' )
+			->with( $defaultUser, $welcomeMessage, $recipientName, $textMessage )
+			->will( $this->returnValue( $wallMessage ) );
+
+		$task->expects( $this->once() )
+			->method( 'getDefaultWelcomerUser' )
+			->will( $this->returnValue( $defaultUser ) );
+
+		$message = $task->postWallMessageToRecipient();
+		$this->assertEquals( $wallMessage, $message );
+	}
 
 }

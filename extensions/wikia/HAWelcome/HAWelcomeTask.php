@@ -45,17 +45,6 @@ class HAWelcomeTask extends BaseTask {
 	/** @type string */
 	private $welcomeMessage = null;
 
-	public function getRecipientId() {
-		return $this->recipientId;
-	}
-
-	public function getRecipientUserName() {
-		return $this->recipientName;
-	}
-
-	public function getTimestamp() {
-		return $this->timestamp;
-	}
 
 	protected function getLoggerContext() {
 		return ['task' => __CLASS__];
@@ -328,7 +317,7 @@ class HAWelcomeTask extends BaseTask {
 		}
 	}
 
-	protected function postWallMessageToRecipient() {
+	public function postWallMessageToRecipient() {
 		$defaultWelcomeUser = $this->getDefaultWelcomerUser();
 
 		// some of the lower level methods used in buildNewMessageAndPost do not pass the
@@ -342,20 +331,27 @@ class HAWelcomeTask extends BaseTask {
 		$welcomeMessage = $this->welcomeMessage;
 		$recipientName  = $this->recipientName;
 		$textMessage    = $this->getTextVersionOfMessage( 'welcome-message-log' );
-		$wrapper->wrap( function () use ( $welcomeMessage, $recipientName, $defaultWelcomeUser ) {
-			$mWallMessage = WallMessage::buildNewMessageAndPost(
-				$welcomeMessage, $recipientName, $defaultWelcomeUser,
-				$textMessage, false, array(), false, false
-			);
 
-			// Sets the sender of the message when the actual message
-			// was posted by the welcome bot
-			if ( $mWallMessage ) {
-				$mWallMessage->setPostedAsBot( $this->senderObject );
-				$mWallMessage->sendNotificationAboutLastRev();
-			}
+		$message = $wrapper->wrap( function () use ( $defaultWelcomeUser, $welcomeMessage, $recipientName, $textMessage ) {
+			return $this->executeBuildAndPostWallMessage( $defaultWelcomeUser, $welcomeMessage, $recipientName, $textMessage );
 		} );
 
+		return $message;
+	}
+
+	protected function executeBuildAndPostWallMessage( $defaultWelcomeUser, $welcomeMessage, $recipientName, $textMessage ) {
+		$wallMessage = WallMessage::buildNewMessageAndPost(
+			$welcomeMessage, $recipientName, $defaultWelcomeUser, $textMessage, false, array(), false, false
+		);
+
+		// Sets the sender of the message when the actual message
+		// was posted by the welcome bot
+		if ( $welcomeMessage ) {
+			$welcomeMessage->setPostedAsBot( $this->senderObject );
+			$welcomeMessage->sendNotificationAboutLastRev();
+		}
+
+		return $wallMessage;
 	}
 
 	public function postTalkPageMessageToRecipient() {
@@ -453,5 +449,26 @@ class HAWelcomeTask extends BaseTask {
 		$this->recipientObject = $recipient;
 		return $this;
 	}
+
+	public function getRecipientId() {
+		return $this->recipientId;
+	}
+
+	public function getRecipientUserName() {
+		return $this->recipientName;
+	}
+
+	public function setRecipientUserName( $name ) {
+		$this->recipientName = $name;
+	}
+
+	public function getTimestamp() {
+		return $this->timestamp;
+	}
+
+	public function setWelcomeMessage( $message ) {
+		$this->welcomeMessage = $message;
+	}
+
 
 }
