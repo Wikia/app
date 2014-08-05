@@ -29,6 +29,13 @@
 		},
 		spinnerTimeoutId = null;
 
+	function getOptimizelyExperimentId( experimentName ) {
+		if ( experimentName === 'VE Focus Mode' ) {
+			return mw.config.get( 'wgDevelEnvironment' ) ? 1459280459 : 1673360028;
+		}
+		return null;
+	}
+
 	function initSpinner() {
 		var $spinner = $( '<div>' )
 				.addClass( 've-spinner visible' )
@@ -89,7 +96,7 @@
 
 		/* Optimizely */
 		window.optimizely = window.optimizely || [];
-		window.optimizely.push( ['activate', 1459280459] );
+		window.optimizely.push( ['activate', getOptimizelyExperimentId( 'VE Focus Mode' )] );
 
 		showSpinner();
 
