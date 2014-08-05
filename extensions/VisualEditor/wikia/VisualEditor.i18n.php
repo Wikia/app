@@ -53,6 +53,7 @@ $messages['en'] = array(
 	'wikia-visualeditor-dialog-meta-languages-readonlynote' => 'This is a list of pages in other languages that are linked to this one. For now, it can only be edited in source mode.',
 	'wikia-visualeditor-dialog-transclusion-no-template-description' => 'You are editing the "$1" template.',
 	'wikia-visualeditor-dialog-map-insert-title' => 'Insert map',
+	'wikia-visualeditor-save-error-generic' => 'Error saving data to server.',
 );
 
 /** Message documentation (Message documentation)
@@ -121,6 +122,7 @@ $messages['qqq'] = array(
 	'wikia-visualeditor-dialog-orientation-text' => 'Text under greeting enticing users to edit with VisualEditor.',
 	'wikia-visualeditor-dialog-orientation-start-button' => 'Button that closes greeting dialog and shows VisualEditor.',
 	'wikia-visualeditor-dialog-map-insert-title' => 'Map insert dialog title text.\n{{Identical|Insert media}}',
+	'wikia-visualeditor-save-error-generic' => 'Generic error message for parse failures',
 );
 
 /** Tunisian Spoken Arabic ( زَوُن)
