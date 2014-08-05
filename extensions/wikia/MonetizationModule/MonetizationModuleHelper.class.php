@@ -54,7 +54,13 @@ class MonetizationModuleHelper extends WikiaModel {
 		global $wgMonetizationServiceUrl;
 
 		$log = WikiaLogger::instance();
-		$url = $wgMonetizationServiceUrl.'?'.http_build_query( $params );
+		$apiVersion = 'v1';
+
+		if ( !endsWith($wgMonetizationServiceUrl, '/') ) {
+			$url = $wgMonetizationServiceUrl.'/';
+		}
+
+		$url .= 'api/'.$apiVersion.'?'.http_build_query( $params );
 		$req = MWHttpRequest::factory( $url, [ 'noProxy' => true ] );
 		$status = $req->execute();
 		if ( $status->isGood() ) {
