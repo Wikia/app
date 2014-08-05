@@ -1,3 +1,5 @@
+@import 'skins/oasis/css/lib/foundation.custom/foundation.custom';
+
 $media-margin: .5em;
 
 .media-gallery-wrapper {
@@ -53,6 +55,7 @@ $media-margin: .5em;
 			transition: opacity 2s ease-in-out;
 			padding: $media-margin;
 		}
+
 		&.show {
 			display: block;
 			opacity: 1;

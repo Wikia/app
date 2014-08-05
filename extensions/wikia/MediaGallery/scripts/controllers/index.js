@@ -1,9 +1,7 @@
-alert('go!');
-require(['mediaGallery.toggler'], function (Toggle) {
+require(['mediaGallery.toggler'], function (Toggler) {
 	'use strict';
-
 	$(function () {
-		var toggler = new Toggle({
+		var toggler = new Toggler({
 			$el: $('.media-gallery-wrapper')
 		});
 		toggler.init();
