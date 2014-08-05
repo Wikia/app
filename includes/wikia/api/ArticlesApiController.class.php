@@ -653,12 +653,11 @@ class ArticlesApiController extends WikiaApiController {
 	protected function appendMetadata( $collection ) {
 		if ( !empty( $this->wg->EnablePOIExt ) ) {
 			$questDetailsSearch = new QuestDetailsSearchService();
-			$result = $questDetailsSearch->query(
-				[
-					QuestDetailsSearchService::IDS_CRITERIA => array_keys( $collection ),
-                    QuestDetailsSearchService::METADATA_ONLY_CRITERIA => true
-				]
-			);
+			$result = $questDetailsSearch->newQuery()
+				->withIds( array_keys( $collection ) )
+				->metadataOnly()
+				->search();
+
 			foreach ( $result as $key => $item ) {
 				$collection[ $key ] = array_merge( $collection[ $key ], [ 'metadata' => $item ] );
 			}
