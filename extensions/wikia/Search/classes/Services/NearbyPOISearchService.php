@@ -3,49 +3,111 @@
 namespace Wikia\Search\Services;
 
 class NearbyPOISearchService extends EntitySearchService {
-	const LOCATION_FIELD_NAME = "metadata_map_location_sr";
-	const DEFAULT_MAX_RANGE = 300;
-	const DEFAULT_MAX_ROWS = 200;
-	const LATITUDE = "lat";
-	const LONGITUDE = "long";
-	private $fields = [ 'id', 'metadata_*' ]; // default fields to fetch
-	private $maxRows = self::DEFAULT_MAX_ROWS;
-	private $maxRange = self::DEFAULT_MAX_RANGE;
 
-	public function queryLocation( $lat, $long ) {
-		return $this->query( [ self::LATITUDE => $lat, self::LONGITUDE => $long ] );
+	const LOCATION_FIELD_NAME = "metadata_map_location_sr";
+
+	const DEFAULT_MAX_RANGE = 300;
+
+	const DEFAULT_MAX_ROWS = 200;
+
+	private $fields;
+
+	protected $latitude;
+
+	protected $longitude;
+
+	protected $radius;
+
+	protected $region;
+
+	protected $limit;
+
+	public function newQuery() {
+		// default fields to fetch
+		$this->fields = [ 'id', 'metadata_*', 'score' ];
+		$this->limit = self::DEFAULT_MAX_ROWS;
+		$this->radius = self::DEFAULT_MAX_RANGE;
+		$this->region = null;
+		$this->latitude = 0;
+		$this->longitude = 0;
+		return $this;
+	}
+
+	public function latitude( $lat ) {
+		if( !empty( $lat ) ) {
+			$this->latitude = $lat;
+		}
+		return $this;
+	}
+
+	public function longitude( $long ) {
+		if( !empty( $long ) ) {
+			$this->longitude = $long;
+		}
+		return $this;
+	}
+
+	public function radius( $radius ) {
+		if( !empty( $radius ) ) {
+			$this->radius = $radius;
+		}
+		return $this;
+	}
+
+	public function region( $region ) {
+		if( !empty( $region ) ) {
+			$this->region = $region;
+		}
+		return $this;
+	}
+
+	public function limit( $limit ) {
+		if( !empty( $limit ) ) {
+			$this->limit = $limit;
+		}
+		return $this;
 	}
 
 	public function setFields( $fields ) {
-		$this->fields = $fields;
-	}
-
-	public function setMaxRows( $maxRows ) {
-		$this->maxRows = $maxRows;
-	}
-
-	public function setMaxRange( $maxRange ) {
-		$this->maxRange = $maxRange;
-	}
-
-	protected function prepareQuery( $phrase ) {
-		if ( !array_key_exists( self::LATITUDE, $phrase ) or !array_key_exists( self::LONGITUDE, $phrase ) ) {
-			throw new \Exception( "Nearby POI search query is not an array of lat, long" );
+		if( !empty( $fields ) ) {
+			$this->fields = $fields;
+			$this->fields = array_merge( $this->fields, [ 'score' ] );
 		}
-		$lat = $this->sanitizeQuery( $phrase[self::LATITUDE] );
-		$long = $this->sanitizeQuery( $phrase[self::LONGITUDE] );
+		return $this;
+	}
 
-		$select = $this->getSelect();
-		$select->setFields( array_merge( $this->fields, [ "score" ] ) );
+	public function search() {
+		$query = $this->constructQuery();
+		return $this->query( $query );
+	}
 
+	protected function constructQuery() {
+		if ( empty( $this->region ) ) {
+			return $this->getGeoQuery();
+		} else {
+			return $this->getGeoQuery() . ' AND metadata_map_region_s:"' . $this->region . '"';
+		}
+	}
+
+	protected function getGeoQuery() {
+		$lat = $this->latitude;
+		$long = $this->longitude;
+		$distance = $this->radius;
 		$sfield = self::LOCATION_FIELD_NAME;
-		$distance = $this->maxRange;
+		$geoQuery = "({!geofilt score=distance sfield=${sfield} pt=${lat},${long} d=${distance}})";
+		return $geoQuery;
+	}
 
-		$select->setQuery( "{!geofilt score=distance sfield=${sfield} pt=${lat},${long} d=${distance}}" );
-		$select->setRows( $this->maxRows );
+	protected function prepareQuery( $query ) {
+		$select = $this->getSelect();
+
+		$select->setQuery( $query );
+		$select->setFields( $this->fields );
+		$select->setRows( $this->limit );
 
 		//since score is distance so lower score means less distance
-		$select->addSort( "score", \Solarium_Query_Select::SORT_ASC );
+		$select->addSort( 'score', \Solarium_Query_Select::SORT_ASC );
+
 		return $select;
 	}
 
