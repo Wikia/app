@@ -58,11 +58,19 @@ class MercuryApi {
 	 *
 	 * @return mixed
 	 */
-	public function getWikiSettings() {
-		global $wgLanguageCode;
+	public function getWikiVariables() {
+		global $wgLanguageCode,
+			   $wgCityId,
+			   $wgDBname,
+			   $wgSitename;
+
 		return [
+			'dbName' => $wgDBname,
+			'siteName' => $wgSitename,
+			'id' => $wgCityId,
 			'language' => $wgLanguageCode,
-			'theme' => SassUtil::getOasisSettings()
+			'theme' => SassUtil::getOasisSettings(),
+			'namespaces' => MWNamespace::getCanonicalNamespaces()
 		];
 	}
 
