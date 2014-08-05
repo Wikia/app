@@ -210,7 +210,15 @@
 		},
 
 		setupTabs: function () {
-			$( '#ca-ve-edit' ).click( init.onEditTabClick );
+			var $veEditTab = $( '#ca-ve-edit' );
+			$veEditTab.click( init.onEditTabClick );
+
+			if ( vePreferred ) {
+				$( '#ca-edit' ).attr( 'accesskey', 's' );
+				$veEditTab.attr( 'accesskey', 'e' );
+			} else {
+				$veEditTab.attr( 'accesskey', 's' );
+			}
 		},
 
 		setupSectionLinks: function () {
