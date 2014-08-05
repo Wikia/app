@@ -136,7 +136,7 @@ class QuestDetailsSearchServiceTest extends WikiaBaseTest {
 					"Sesame Street Songs",
 					"Alphabet"
 				],
-				"abstract" => "\"The Letter B\" is a Sesame Street song from a 1983 episode. Oscar the Grouch finds a letter B by his trash can and wonders aloud what it's doing there. He immediately wishes he hadn't asked...",
+				"abstract" => "\"The Letter B\" is a Sesame Street song from a 1983 episode. Oscar the Grouch finds a letter B by his trash can and wonders aloud what it's doing there. He immediately wishes he hadn't asked, because",
 				"metadata" => [
 					"fingerprints" => [
 						"amazing",
@@ -171,7 +171,7 @@ class QuestDetailsSearchServiceTest extends WikiaBaseTest {
 					"Muppet Characters",
 					"Sesame Street Monsters"
 				],
-				"abstract" => "Ruby is a yellow monster from Sesame Street who is very curious and loves to conduct experiments. For instance, in one episode, Ruby wanted to find out what it was like to be blind, so she spent...",
+				"abstract" => "Ruby is a yellow monster from Sesame Street who is very curious and loves to conduct experiments. For instance, in one episode, Ruby wanted to find out what it was like to be blind, so she spent the",
 				"metadata" => [
 					"fingerprints" => [
 						"amazing",

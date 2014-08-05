@@ -14,15 +14,16 @@ class MetaCSVServiceTest extends WikiaBaseTest {
 	}
 	public function testFileReadOK(){
 		$fileContents =<<<CSV
-	"Gameplay Walkthrough: Intro of Ratbag";"f1,f1a";"q1";"a1"
-	"Shadow Strike";"f2";"q2";"a2"
+	"Gameplay Walkthrough: Intro of Ratbag";"f1,f1a";"q1";"a1";"a2"
+	"Shadow Strike";"f2";"q2";"a2";"b2"
 CSV;
 		$expect = [
-			['title' => 'Gameplay Walkthrough: Intro of Ratbag', "fingerprints" => [ "f1", "f1a" ], "quest_id" => "q1", "ability_id" => "a1" ],
-			['title' => 'Shadow Strike', "fingerprints" => [ "f2" ], "quest_id" => "q2", "ability_id" => "a2" ]
+			'Gameplay Walkthrough: Intro of Ratbag' => ["fingerprints" => [ "f1", "f1a" ], "quest_id" => "q1", "ability_id" => "a1", "map_region" => "a2"],
+			'Shadow Strike' => ["fingerprints" => [ "f2" ], "quest_id" => "q2", "ability_id" => "a2", "map_region" => "b2"]
 		];
 		file_put_contents($this->tmpFile, $fileContents);
 		$service = new MetaCSVService();
+		var_dump($service->LoadDataFromFile($this->tmpFile));
 		$this->assertEquals($expect, $service->LoadDataFromFile($this->tmpFile));
 
 	}
