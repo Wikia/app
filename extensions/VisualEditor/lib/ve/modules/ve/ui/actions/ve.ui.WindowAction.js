@@ -52,9 +52,9 @@ ve.ui.WindowAction.prototype.open = function ( name, data ) {
 			this.surface.getModel().getDocument().getDir();
 
 	data = ve.extendObject( {
-			'dir': dir,
-			'target': this.surface.getTarget()
-		}, data );
+		'dir': dir,
+		'target': this.surface.getTarget()
+	}, data );
 
 	if ( windowClass.prototype instanceof ve.ui.Dialog ) {
 		win = this.surface.getDialogs().getWindow( name );
