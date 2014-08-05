@@ -58,7 +58,7 @@ class VenusController extends WikiaController {
 		$this->response->setTemplateEngine(WikiaResponse::TEMPLATE_ENGINE_HANDLEBARS);
 	}
 
-	public function setBodyModules() {
+	private function setBodyModules() {
 		$this->globalHeader = $this->getGlobalHeader();
 		$this->notifications = $this->getNotifications();
 		$this->topAds = $this->getTopAds();
@@ -68,7 +68,7 @@ class VenusController extends WikiaController {
 	}
 
 
-	public function setBodyClasses() {
+	private function setBodyClasses() {
 		// generate list of CSS classes for <body> tag
 		$bodyClasses = [$this->skinNameClass, $this->dir, $this->pageClass];
 
@@ -85,7 +85,7 @@ class VenusController extends WikiaController {
 		$this->bodyClasses = implode(' ', $bodyClasses);
 	}
 
-	public function setHeadItems() {
+	private function setHeadItems() {
 		global $wgOut;
 		$this->headLinks = $wgOut->getHeadLinks();
 		$this->headItems = $this->skin->getHeadItems();
@@ -154,23 +154,23 @@ class VenusController extends WikiaController {
 		$this->jsTopScripts = $wgOut->topScripts;
 	}
 
-	public function getGlobalHeader() {
+	private function getGlobalHeader() {
 		//return $this->app->renderView('GlobalNavigation', 'Index');
 	}
 
-	public function getNotifications() {
+	private function getNotifications() {
 		//return $this->app->renderView('Notifications', 'Confirmation');
 	}
 
-	public function getWikiHeader() {
+	private function getWikiHeader() {
 		//return $this->app->renderView( 'LocalHeader', 'Index' );
 	}
 
-	public function getTopAds() {
+	private function getTopAds() {
 		return $this->app->renderView('Ad', 'Top');
 	}
 
-	public function getGlobalFooter() {
+	private function getGlobalFooter() {
 		return $this->app->renderView('GlobalFooter', 'index');
 	}
 
