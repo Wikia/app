@@ -128,7 +128,21 @@ class Hooks
 		}
 		return true;
 	}
-	
+
+	/**
+	 * Venus skin hook to add assets so they are minified and concatenated
+	 * @param  array $jsHeadPackages
+	 * @param  array $jsBodyPackages
+	 * @param  array $scssPackages
+	 * @return boolean
+	 */
+	public static function onVenusAssetsPackages( &$jsHeadPackages, &$jsBodyPackages, &$scssPackages ){
+		if( \F::app()->wg->Title->isSpecial( 'Search' ) ) {
+			$scssPackages[] = 'wikiasearch_scss_venus';
+		}
+		return true;
+	}
+
 	/**
 	 * Uses MediaWiki LinkEnd hook to store outbound links
 	 * @param unknown_type $skin

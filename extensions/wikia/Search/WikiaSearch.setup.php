@@ -33,7 +33,7 @@ spl_autoload_register( function( $class ) {
 			return true;
 		}
 		return false;
-	}  
+	}
 });
 
 /**
@@ -70,6 +70,7 @@ $wgHooks['GetPreferences'][] = 'Wikia\Search\Hooks::onGetPreferences';
  * hooks
  */
 $wgHooks['WikiaMobileAssetsPackages'][] = 'Wikia\Search\Hooks::onWikiaMobileAssetsPackages';
+$wgHooks['VenusAssetsPackages'][] = 'Wikia\Search\Hooks::onVenusAssetsPackages';
 
 global $wgExternalSharedDB;
 if ( empty( $wgExternalSharedDB ) ) {
