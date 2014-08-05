@@ -95,16 +95,16 @@ class MercuryApiController extends WikiaController {
 		return $this->sendRequest( 'ArticlesApi', 'getDetails', ['ids' => $articleId] )->getData()['items'][$articleId];
 	}
 
-	public function getTopContributorsDetails( $ids ) {
-		return $this->sendRequest( 'UserApi', 'getDetails', ['ids' => implode(',', $ids)] )->getData()['items'];
-	}
-
 	public function getArticleJson( $articleId ) {
 		return $this->sendRequest( 'ArticlesApi', 'getAsJson', ['id' => $articleId] )->getData();
 	}
 
+	public function getTopContributorsDetails( $ids ) {
+		return $this->sendRequest( 'UserApi', 'getDetails', ['ids' => implode(',', $ids)] )->getData()['items'];
+	}
+
 	public function getRelatedPages( $articleId, $limit = 6 ){
-		return $this->sendRequest( 'RelatedPagesApi', 'getList', ['ids' => $articleId, 'limit' => $limit] )->getData()['items'][$articleId];
+		return RelatedPages::getInstance()->get( $articleId, $limit );
 	}
 
 	public function getArticle(){
