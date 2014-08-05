@@ -358,7 +358,7 @@ class WikiaMaps extends WikiaObject {
 	 * @return Array
 	 */
 	public function deletePoiCategory( $poiCategoryId ) {
-		$this->deleteRequest(
+		return $this->deleteRequest(
 			$this->buildUrl( [ self::ENTRY_POINT_POI_CATEGORY, $poiCategoryId ] )
 		);
 	}

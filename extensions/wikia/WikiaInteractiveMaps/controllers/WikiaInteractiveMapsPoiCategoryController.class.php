@@ -36,10 +36,29 @@ class WikiaInteractiveMapsPoiCategoryController extends WikiaInteractiveMapsBase
 		WikiaMapsLogger::addLogEntries( $this->logEntries );
 		$this->logEntries = [];
 
-		//TODO after merging with MOB-1778 (batch methods for categories) it has to be changed anyway
-		$this->setVal( 'results', [
-			'success' => true
-		] );
+		$resultsContent = [];
+
+		$poiCategoriesCreated = $this->getData( 'poiCategoriesCreated' );
+		if ( !empty( $poiCategoriesCreated ) ) {
+			$resultsContent[ 'poiCategoriesCreated' ] = $poiCategoriesCreated;
+		}
+
+		$poiCategoriesUpdated = $this->getData( 'poiCategoriesUpdated' );
+		if ( !empty( $poiCategoriesUpdated ) ) {
+			$resultsContent[ 'poiCategoriesUpdated' ] = $poiCategoriesUpdated;
+		}
+
+		$poiCategoriesDeleted = $this->getData( 'poiCategoriesDeleted' );
+		if ( !empty( $poiCategoriesDeleted ) ) {
+			$resultsContent[ 'poiCategoriesDeleted' ] = $poiCategoriesDeleted;
+		}
+
+		$results = [
+			'success' => true,
+			'content' => $resultsContent
+		];
+		
+		$this->setVal( 'results', $results );
 	}
 
 	/**
@@ -88,7 +107,7 @@ class WikiaInteractiveMapsPoiCategoryController extends WikiaInteractiveMapsBase
 		}
 		$this->setData( 'poiCategoriesToUpdate', $poiCategoriesToUpdate );
 
-		$poiCategoriesToDelete =  $this->request->getArray( 'poiCategoriesToDelete' );
+		$poiCategoriesToDelete = $this->request->getArray( 'poiCategoriesToDelete' );
 		$this->setData( 'poiCategoriesToDelete', $poiCategoriesToDelete );
 	}
 
@@ -168,30 +187,55 @@ class WikiaInteractiveMapsPoiCategoryController extends WikiaInteractiveMapsBase
 		$poiCategoriesToCreate = $this->getData( 'poiCategoriesToCreate' );
 		$poiCategoriesToUpdate = $this->getData( 'poiCategoriesToUpdate' );
 
+		$poiCategoriesCreated = [];
+		$poiCategoriesUpdated = [];
+
 		foreach ( $poiCategoriesToCreate as $poiCategory ) {
-			$this->createPoiCategory( $poiCategory );
+			$poiCategoryCreated = $this->createPoiCategory( $poiCategory );
+
+			if ( !empty( $poiCategoryCreated ) ) {
+				$poiCategoriesCreated []= $poiCategoryCreated;
+			}
 		}
 
 		foreach ( $poiCategoriesToUpdate as $poiCategory ) {
-			$this->updatePoiCategory( $poiCategory );
+			$poiCategoryUpdated = $this->updatePoiCategory( $poiCategory );
+
+			if ( !empty( $poiCategoryUpdated ) ) {
+				$poiCategoriesUpdated []= $poiCategoryUpdated;
+			}
 		}
+
+		$this->setData( 'poiCategoriesCreated', $poiCategoriesCreated );
+		$this->setData( 'poiCategoriesUpdated', $poiCategoriesUpdated );
 	}
 
 	/**
 	 * Sends create POI category request to service
 	 *
 	 * @param array $poiCategory
+	 * @return int - created POI category's id
 	 */
 	private function createPoiCategory( $poiCategory ) {
 		$response = $this->mapsModel->savePoiCategory( $poiCategory );
 
 		if ( true === $response[ 'success' ] ) {
+			$poiCategoryId = $response[ 'content' ]->id;
+
 			$this->addLogEntry( WikiaMapsLogger::newLogEntry(
 				WikiaMapsLogger::ACTION_CREATE_PIN_TYPE,
 				$this->getData( 'mapId' ),
 				$poiCategory[ 'name' ],
-				[ $this->wg->User->getName(), $response->id ]
+				[ $this->wg->User->getName(), $poiCategoryId ]
 			) );
+
+			$poiCategory[ 'id' ] = $poiCategoryId;
+			unset( $poiCategory[ 'created_by' ] );
+
+			return $poiCategory;
+		} else {
+			// TODO log error
+			return null;
 		}
 	}
 
@@ -199,10 +243,11 @@ class WikiaInteractiveMapsPoiCategoryController extends WikiaInteractiveMapsBase
 	 * Sends update POI category request to service
 	 *
 	 * @param array $poiCategory
+	 * @return int - updated POI category's id
 	 */
 	private function updatePoiCategory( $poiCategory ) {
 		$poiCategoryId = $poiCategory[ 'id' ];
-		unset( $poiCategory[ 'id' ] );
+		unset( $poiCategory[ 'id' ] ); // API doesn't allow it in request
 		$response = $this->mapsModel->updatePoiCategory( $poiCategoryId, $poiCategory );
 
 		if ( true === $response[ 'success' ] ) {
@@ -212,6 +257,11 @@ class WikiaInteractiveMapsPoiCategoryController extends WikiaInteractiveMapsBase
 				$poiCategory[ 'name' ],
 				[ $this->wg->User->getName(), $poiCategoryId ]
 			) );
+
+			return $poiCategoryId;
+		} else {
+			// TODO log error
+			return null;
 		}
 	}
 
@@ -220,19 +270,26 @@ class WikiaInteractiveMapsPoiCategoryController extends WikiaInteractiveMapsBase
 	 */
 	private function deletePoiCategories() {
 		$poiCategoriesToDelete = $this->getData( 'poiCategoriesToDelete' );
+		$poiCategoriesDeleted = [];
 
 		foreach ( $poiCategoriesToDelete as $poiCategoryId ) {
 			$response = $this->mapsModel->deletePoiCategory( $poiCategoryId );
 
 			if ( true === $response[ 'success' ] ) {
+				$poiCategoriesDeleted []= (int) $poiCategoryId;
+
 				$this->addLogEntry( WikiaMapsLogger::newLogEntry(
 					WikiaMapsLogger::ACTION_DELETE_PIN_TYPE,
 					$this->getData( 'mapId' ),
 					$poiCategoryId,
 					[ $this->wg->User->getName(), $poiCategoryId ]
 				) );
+			} else {
+				// TODO log error
 			}
 		}
+
+		$this->setData( 'poiCategoriesDeleted', $poiCategoriesDeleted );
 	}
 
 	/**

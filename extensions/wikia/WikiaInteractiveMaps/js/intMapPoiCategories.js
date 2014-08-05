@@ -91,7 +91,7 @@ define('wikia.intMap.poiCategories',
 					triggerMarkerUpload
 				]
 			},
-			trigger,
+			pontoTrigger,
 			params,
 			mapId,
 			mapUrl,
@@ -110,7 +110,7 @@ define('wikia.intMap.poiCategories',
 		 */
 		function init(templates, _params, _trigger) {
 			// set reference to params and trigger callback
-			trigger = _trigger;
+			pontoTrigger = _trigger;
 			params = _params;
 			mapId = params.mapId;
 
@@ -389,7 +389,7 @@ define('wikia.intMap.poiCategories',
 				return true;
 			}
 
-			if (parseInt(poiCategory.parent_poi_category_id, 10) !== originalPoiCategory.parent_poi_category_id) {
+			if (poiCategory.parent_poi_category_id !== originalPoiCategory.parent_poi_category_id) {
 				return true;
 			}
 
@@ -408,7 +408,7 @@ define('wikia.intMap.poiCategories',
 		 */
 		function organizePoiCategories(formSerialized) {
 			var poiCategories = {
-				mapId: formSerialized.mapId,
+				mapId: parseInt(formSerialized.mapId, 10),
 				poiCategoriesToCreate: [],
 				poiCategoriesToUpdate: [],
 				poiCategoriesToDelete: []
@@ -416,22 +416,29 @@ define('wikia.intMap.poiCategories',
 
 			if (formSerialized.poiCategories) {
 				formSerialized.poiCategories.forEach(function (poiCategory) {
+					var originalPoiCategory;
+
+					if (poiCategory.parent_poi_category_id) {
+						poiCategory.parent_poi_category_id = parseInt(poiCategory.parent_poi_category_id, 10);
+					}
+
 					if (poiCategory.id) {
-						var originalPoiCategory = $.grep(originalPoiCategoriesData, function (item) {
-							return item.id === parseInt(poiCategory.id, 10);
-						})[0];
+						poiCategory.id = parseInt(poiCategory.id, 10);
+
+						originalPoiCategory = findPoiCategoryById(poiCategory.id, originalPoiCategoriesData);
 
 						if (originalPoiCategory && isPoiCategoryChanged(originalPoiCategory, poiCategory)) {
 							poiCategories.poiCategoriesToUpdate.push(poiCategory);
 						}
 					} else {
+						delete poiCategory.id;
 						poiCategories.poiCategoriesToCreate.push(poiCategory);
 					}
 				});
 			}
 
 			if (formSerialized.poiCategoriesToDelete) {
-				poiCategories.poiCategoriesToDelete = formSerialized.poiCategoriesToDelete.split(',');
+				poiCategories.poiCategoriesToDelete = formSerialized.poiCategoriesToDelete.split(',').map(Number);
 			}
 
 			return poiCategories;
@@ -457,8 +464,8 @@ define('wikia.intMap.poiCategories',
 
 					if (results && results.success) {
 						utils.cleanUpError(modal);
-						modal.trigger('poiCategoriesSaved', results.content);
-						utils.track(utils.trackerActions.IMPRESSION, 'poi-category-' + mode, parseInt(data.mapId, 10));
+						modal.trigger('poiCategoriesSaved', data, results.content);
+						utils.track(utils.trackerActions.IMPRESSION, 'poi-category-' + mode, data.mapId);
 					} else {
 						utils.showError(modal, results.content.message);
 						modal.activate();
@@ -482,13 +489,68 @@ define('wikia.intMap.poiCategories',
 			}
 		}
 
+		function findPoiCategoryById(id, poiCategories) {
+			return $.grep(poiCategories, function (item) {
+				return item.id === id;
+			})[0];
+		}
+
+		function updatePoiCategoriesData(dataSent, dataReceived) {
+			var currentPoiCategories = [];
+
+			originalPoiCategoriesData.forEach(function (originalPoiCategory) {
+				var poiCategoryUpdated = null;
+
+				if (
+					dataReceived.poiCategoriesUpdated &&
+					dataReceived.poiCategoriesUpdated.indexOf(originalPoiCategory.id) > -1
+				) {
+					poiCategoryUpdated = findPoiCategoryById(originalPoiCategory.id, dataSent.poiCategoriesToUpdate);
+					if (poiCategoryUpdated) {
+						poiCategoryUpdated.map_id = originalPoiCategory.map_id;
+						poiCategoryUpdated.status = originalPoiCategory.status;
+						poiCategoryUpdated.marker = (!originalPoiCategory.no_marker && !poiCategoryUpdated.marker) ?
+							originalPoiCategory.marker :
+							poiCategoryUpdated.marker;
+
+						if (originalPoiCategory.no_marker && !poiCategoryUpdated.marker) {
+							poiCategoryUpdated.no_marker = true;
+						}
+
+						currentPoiCategories.push(poiCategoryUpdated);
+					}
+				} else if (
+					!(dataReceived.poiCategoriesDeleted &&
+					dataReceived.poiCategoriesDeleted.indexOf(originalPoiCategory.id) > -1)
+				) {
+					currentPoiCategories.push(originalPoiCategory);
+				}
+
+				// else the POI category was deleted and we skip it
+			});
+
+			if (dataReceived.poiCategoriesCreated) {
+				dataReceived.poiCategoriesCreated.forEach(function (poiCategory) {
+					currentPoiCategories.push(poiCategory);
+				});
+			}
+
+			return currentPoiCategories;
+		}
+
 		/**
-		 * @desc send callback to ponto and close modal
+		 * @desc Handler for poiCategoriesSaved event. Sends data to Ponto and closes the modal or redirects to map page.
+		 * @param {object} dataSent - POI categories sent to backend
+		 * @param {object} dataReceived - response from backend, array of actions done and ids affected
 		 */
-		function poiCategoriesSaved(data) {
+		function poiCategoriesSaved(dataSent, dataReceived) {
 			if (mode === modalModes.EDIT) {
-				if (typeof trigger === 'function') {
-					trigger(data);
+				if (typeof pontoTrigger === 'function') {
+					//TODO remove this
+					var updatedData = updatePoiCategoriesData(dataSent, dataReceived);
+					console.log(updatedData);
+
+					//pontoTrigger(updatePoiCategoriesData(dataSent, dataReceived));
 				}
 				modal.trigger('close');
 			} else {
