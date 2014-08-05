@@ -505,6 +505,7 @@ define('wikia.intMap.poiCategories',
 		 * @desc cleans up POI category data after updating it, copies what's needed from the original data
 		 * @param poiCategoryUpdated
 		 * @param poiCategoryOriginal
+		 * @returns {object} - POI category with current data
 		 */
 		function setPoiCategoryUpdatedData(poiCategoryUpdated, poiCategoryOriginal) {
 			poiCategoryUpdated.map_id = poiCategoryOriginal.map_id;
@@ -516,6 +517,8 @@ define('wikia.intMap.poiCategories',
 			if (poiCategoryOriginal.no_marker && !poiCategoryUpdated.marker) {
 				poiCategoryUpdated.no_marker = true;
 			}
+
+			return poiCategoryUpdated;
 		}
 
 		/**
