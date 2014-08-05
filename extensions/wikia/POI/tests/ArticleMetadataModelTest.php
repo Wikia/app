@@ -7,6 +7,9 @@ class ArticleMetadataModelTest extends WikiaBaseTest {
 		parent::setUp();
 	}
 
+	/**
+	 * @group Integration
+	 */
 	public function testReadData() {
 
 		$propValue = ['quest_id' => 1,
@@ -27,7 +30,9 @@ class ArticleMetadataModelTest extends WikiaBaseTest {
 		$this->assertEquals($meta['fingerprints'][1], $propValue['fingerprints'][1], 'fingerprint elem');
 	}
 
-
+	/**
+	 * @group Integration
+	 */
 	public function testSave() {
 		$stub = $this->getMock('ArticleMetadataModel', ['getWikiaProp', 'setWikiaProp'], array(1));
 
