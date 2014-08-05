@@ -55,19 +55,22 @@ class UpdateThumbnailTask extends BaseTask {
 				$msg = "Video thumbnail uploaded successfully";
 				$status = Status::newGood( $msg );
 			} else {
-				$status = Status::newFatal( $response );
+				$msg = "Error uploading video thumbnail: $response";
+				$status = Status::newFatal( $msg );
 			}
 		} else {
 			$helper = new VideoHandlerHelper();
 			$status = $helper->resetVideoThumb( $file, null, $delayIndex );
 		}
 
-		if ( !$status->isGood() ) {
+		if ( $status->isGood() ) {
+			// A good status doesn't necessarily mean we updated the actual thumbnail. A good status is returned for
+			// successfully uploading the default thumb as well. Actually check the img sha to see if the thumb changed
+			if ( $file->getSha1() != self::DEFAULT_THUMB_SHA ) {
+				$this->log( "success", $delayIndex, $title->getText(), $provider, [ 'thumbnail' => $file->getThumbUrl() ] );
+			}
+		} else {
 			$this->log( "error", $delayIndex, $title->getText(), $provider, [ 'errorMsg' => $status->getMessage() ] );
-		// A good status doesn't necessarily mean we updated the actual thumbnail. A good status is returned for
-		// successfully uploading the default thumb as well. Actually check the img sha to see if the thumb changed
-		} elseif ( $file->getSha1() != self::DEFAULT_THUMB_SHA ) {
-			$this->log( "success", $delayIndex, $title->getText(), $provider, [ 'thumbnail' => $file->getThumbUrl() ] );
 		}
 
 		return $status;
@@ -103,21 +106,25 @@ class UpdateThumbnailTask extends BaseTask {
 	/**
 	 * Logs a message regarding the status of an UpdateThumbnail Task.
 	 * @param $action String, one of "start", "error" or "success"
-	 * @param $delay Integer, Corresponds to an index in one of the self::$delays
+	 * @param $delayIndex Integer, Corresponds to an index in one of the self::$delays
 	 * @param $title String, The title of the video
 	 * @param $provider String, The provider of the video
 	 * @param array $extraInfo, Any extra information we want to log
 	 */
-	public function log( $action, $delay, $title, $provider, $extraInfo = [] ) {
+	public function log( $action, $delayIndex, $title, $provider, $extraInfo = [] ) {
 		$context = [
 			"action" => $action,
-			"attemptCount" => $delay,
-			"timeWaited" => self::getDelay( $provider, $delay - 1 ),
+			"attemptCount" => $delayIndex,
+			"timeWaited" => self::getDelay( $provider, $delayIndex - 1 ),
 			"title" => $title,
 			"provider" => $provider
 		];
 		$context = array_merge( $context, $extraInfo );
 
-		WikiaLogger::instance()->info( "UpdateThumbnailTaskLogging", $context );
+		if ( $action == "error" ) {
+			WikiaLogger::instance()->error( "UpdateThumbnailTaskLogging", $context );
+		} else {
+			WikiaLogger::instance()->info( "UpdateThumbnailTaskLogging", $context );
+		}
 	}
 }
