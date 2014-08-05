@@ -1,11 +1,5 @@
 <?php
 
-/**
- * Created by PhpStorm.
- * User: yurii
- * Date: 8/1/14
- * Time: 11:04 AM
- */
 class QuestDetailsSolrHelper {
 
 	const DEFAULT_ABSTRACT_LENGTH = 200;
@@ -35,25 +29,32 @@ class QuestDetailsSolrHelper {
 		return [ 'pageid', 'title_*', 'url', 'ns', 'article_type_s', 'categories_*', 'html_*', 'metadata_*' ];
 	}
 
-	public function consumeResponse( $response ) {
+	public function consumeResponse( $response, $metadataOnly = false ) {
 		$result = [ ];
 		foreach ( $response as $item ) {
 
-			$result[ ] = [
-				'id' => $item[ 'pageid' ],
-				'title' => $this->findFirstValueByKeyPrefix( $item, 'title_', '' ),
-				'url' => $item[ 'url' ],
-				'ns' => $item[ 'ns' ],
-				'revision' => $this->getRevision( $item ),
-				'comments' => $this->getCommentsNumber( $item ),
-				'type' => $item[ 'article_type_s' ],
-				'categories' => $this->findFirstValueByKeyPrefix( $item, 'categories_', [ ] ),
-				'abstract' => $this->getAbstract( $item ),
-				'metadata' => $this->getMetadata( $item ),
-			];
+			if( $metadataOnly ) {
+				$id = $item[ 'pageid' ];
+				$result[ $id ] = $this->getMetadata( $item );
+			} else {
+				$result[ ] = [
+					'id' => $item[ 'pageid' ],
+					'title' => $this->findFirstValueByKeyPrefix( $item, 'title_', '' ),
+					'url' => $item[ 'url' ],
+					'ns' => $item[ 'ns' ],
+					'revision' => $this->getRevision( $item ),
+					'comments' => $this->getCommentsNumber( $item ),
+					'type' => $item[ 'article_type_s' ],
+					'categories' => $this->findFirstValueByKeyPrefix( $item, 'categories_', [ ] ),
+					'abstract' => $this->getAbstract( $item ),
+					'metadata' => $this->getMetadata( $item ),
+				];
+			}
 		}
 
-		$this->addThumbnailsInfo( $result );
+		if( !$metadataOnly ) {
+			$this->addThumbnailsInfo( $result );
+		}
 
 		return $result;
 	}
@@ -202,7 +203,7 @@ class QuestDetailsSolrHelper {
 		if(preg_match( '/-?\d+(\.\d+)?\s*,\s*-?\d+(\.\d+)?/i', $str )) {
 
 			// "12.3, 45.6" => [ "12.3", "45.6" ]
-			$parts = preg_split( "/[\s,]+/", $str );
+			$parts = preg_split( "/\s*,\s*/", $str );
 
 			$x = $parts[ 0 ];
 			$y = $parts[ 1 ];

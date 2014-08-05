@@ -1,24 +1,11 @@
 <?php
 
-/**
- * Created by PhpStorm.
- * User: yurii
- * Date: 7/29/14
- * Time: 2:43 PM
- */
 class QuestDetailsApiController extends WikiaApiController {
 
 	/**
 	 * @var QuestDetailsSearchService
 	 */
-	protected $service;
-
-	/**
-	 * @param \QuestDetailsSearchService $service
-	 */
-	public function setService( $service ) {
-		$this->service = $service;
-	}
+	protected $questDetailsSearch;
 
 	public function getQuestDetails() {
 		$fingerprintId = $this->getRequest()->getVal( 'fingerprint_id' );
@@ -26,26 +13,32 @@ class QuestDetailsApiController extends WikiaApiController {
 		$category = $this->getRequest()->getVal( 'category' );
 		$limit = $this->getRequest()->getVal( 'limit' );
 
-		$result = $this->findQuestDetails( $fingerprintId, $questId, $category, $limit );
+		$result = $this->getQuestDetailsSearch()
+			->newQuery()
+			->withFingerprint( $fingerprintId )
+			->withQuestId( $questId )
+			->withCategory( $category )
+			->limit( $limit )
+			->search();
+
 		$this->setResponseData( $result );
 	}
 
-	protected function findQuestDetails( $fingerprintId, $questId, $category, $limit ) {
-		$service = $this->getService();
-
-		return $service->query( [
-			'fingerprint' => $fingerprintId,
-			'questId' => $questId,
-			'category' => $category,
-			'limit' => $limit
-		] );
+	/**
+	 * @param QuestDetailsSearchService $service
+	 */
+	public function setQuestDetailsSearch( $service ) {
+		$this->questDetailsSearch = $service;
 	}
 
-	protected function getService() {
-		if ( !isset( $this->service ) ) {
+	/**
+	 * @return QuestDetailsSearchService
+	 */
+	protected function getQuestDetailsSearch() {
+		if ( !isset( $this->questDetailsSearch ) ) {
 			// TODO: consider using of some dependency injection mechanism
-			$this->service = new QuestDetailsSearchService();
+			$this->questDetailsSearch = new QuestDetailsSearchService();
 		}
-		return $this->service;
+		return $this->questDetailsSearch;
 	}
 }

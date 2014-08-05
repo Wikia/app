@@ -11,6 +11,7 @@ class ArticleMetadataModel {
 
 	protected $articleId = 0;
 	protected $articleTitle = null;
+	protected $dbVersion = DB_SLAVE;
 
 	protected $metadata = [
 		self::QUEST_ID => "",
@@ -19,15 +20,31 @@ class ArticleMetadataModel {
 		self::FINGERPRINTS => [],
 	];
 
-	public function __construct( $articleId ) {
+	protected $solr_mapping = [
+		self::quest_id => "metadata_quest_id_s",
+		self::ability_id => "metadata_ability_id_s",
+		self::fingerprints => "metadata_fingerprint_ids_ss",
+		self::map_region => "metadata_map_region_s"
+	];
+
+	public function __construct( $articleId, $useMaster = false ) {
 		$this->articleId = (int) $articleId;
 		$this->articleTitle = Title::newFromID( $this->articleId );
 		if ( is_null( $this->articleTitle ) ) {
 			throw new TitleNotFoundException();
 		}
+		if ( $useMaster ) {
+			$this->dbVersion = DB_MASTER;
+		}
 		$this->load();
 	}
 
+	/**
+	 * @return array
+	 */
+	public function getSolrMapping() {
+		return $this->solr_mapping;
+	}
 
 	/**
 	 * Creates new object if article exists
@@ -57,7 +74,7 @@ class ArticleMetadataModel {
 	}
 
 	protected function getWikiaProp($propName, $articleId) {
-		return wfGetWikiaPageProp( $propName, $articleId );
+		return wfGetWikiaPageProp( $propName, $articleId, $this->dbVersion );
 	}
 
 	protected function setWikiaProp( $propName, $articleId, $value ) {

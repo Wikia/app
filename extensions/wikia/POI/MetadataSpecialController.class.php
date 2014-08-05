@@ -35,7 +35,7 @@ class MetadataSpecialController extends WikiaSpecialPageController {
 
 	public function index() {
 		if ( !$this->checkAccess() ) {
-			return false;
+			$this->forward( "MetadataSpecialController", "noperms" );
 		} else {
 			try {
 				$response = $this->getResponse();
@@ -57,6 +57,8 @@ class MetadataSpecialController extends WikiaSpecialPageController {
 			}
 		}
 	}
+
+	public function noperms() {	}
 
 	protected function checkAccess() {
 		return ( $this->wg->User->isLoggedIn() && $this->wg->User->isAllowed( 'metadata' ) );
