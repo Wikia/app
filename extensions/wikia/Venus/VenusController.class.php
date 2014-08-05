@@ -25,18 +25,14 @@ class VenusController extends WikiaController {
 		$this->pageClass = $skinVars['pageclass'];
 		$this->skinNameClass = $skinVars['skinnameclass'];
 		$this->bottomScriptLinks = $skinVars['bottomscripts'];
+		$this->pageCss = $this->getPageCss();
 
-		if ($pageCss = $skinVars['pagecss']) {
-			$this->pageCss = '<style type="text/css">' . $pageCss . '</style>';
-		} else {
-			$this->pageCss = '';
-		}
 
 		// initialize variables
 		$this->comScore = null;
 		$this->quantServe = null;
 
-		//TODO clean up wg variables inclusion in views
+		//TODO clean up wg variables inclusion in views (CON-1533)
 		global $wgOut;
 		$this->topScripts = $wgOut->topScripts;
 	}
@@ -55,7 +51,7 @@ class VenusController extends WikiaController {
 		$this->setHeadItems();
 		$this->setAssets();
 
-		$this->response->setTemplateEngine(WikiaResponse::TEMPLATE_ENGINE_HANDLEBARS);
+		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
 	}
 
 	private function setBodyModules() {
@@ -91,6 +87,16 @@ class VenusController extends WikiaController {
 		$this->headItems = $this->skin->getHeadItems();
 	}
 
+	private function getPageCss() {
+		$skinVars = $this->skinTemplateObj->data;
+
+		if ($pageCss = $skinVars['pagecss']) {
+			return '<style type="text/css">' . $pageCss . '</style>';
+		} else {
+			return '';
+		}
+	}
+
 	private function setAssets() {
 		global $wgOut;
 
@@ -115,7 +121,6 @@ class VenusController extends WikiaController {
 			]
 		);
 
-		//
 		foreach ( $this->assetsManager->getURL( $cssGroups ) as $s ) {
 			if ( $this->assetsManager->checkAssetUrlForSkin( $s, $this->skin ) ) {
 				$cssLinks .= "<link rel=stylesheet href='{$s}'/>";
@@ -125,7 +130,6 @@ class VenusController extends WikiaController {
 		if ( is_array( $styles ) ) {
 			foreach ( $styles as $s ) {
 				$cssLinks .= $s['tag'];
-				//TODO: Compare with $cssLinks .= "<link rel=stylesheet href='{$s['url']}'/>";
 			}
 		}
 
@@ -149,9 +153,8 @@ class VenusController extends WikiaController {
 
 		// set variables
 		$this->cssLinks = $cssLinks;
-		$this->jsHeadFiles = $jsHeadFiles;
 		$this->jsBodyFiles = $jsBodyFiles;
-		$this->jsTopScripts = $wgOut->topScripts;
+		$this->jsHeadScripts = $wgOut->topScripts . $jsHeadFiles;
 	}
 
 	private function getGlobalHeader() {
