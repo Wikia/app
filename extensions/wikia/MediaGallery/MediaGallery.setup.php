@@ -21,6 +21,10 @@ $dir = dirname(__FILE__) . '/';
 //classes
 $wgAutoloadClasses['MediaGalleryController'] =  $dir . 'MediaGalleryController.class.php';
 
+// hooks
+$wgAutoloadClasses['MediaGalleryHooks'] =  $dir . 'MediaGalleryHooks.class.php';
+$wgHooks['OutputPageBeforeHTML'][] = 'MediaGalleryHooks::onOutputPageBeforeHTML';
+
 // i18n mapping
 $wgExtensionMessagesFiles['MediaGallery'] = $dir . 'MediaGallery.i18n.php';
 
