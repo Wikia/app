@@ -58,9 +58,23 @@ class QuestDetailsSearchServiceTest extends WikiaBaseTest {
 	public function testCorrectnessOfQueryBuilding( $criteria, $expectedQuery ) {
 		$questDetailsSearch = new QuestDetailsSearchService();
 
+		if( empty( $criteria[ 'fingerprint' ] ) ) {
+			$criteria[ 'fingerprint' ] = null;
+		}
+		if( empty( $criteria[ 'questId' ] ) ) {
+			$criteria[ 'questId' ] = null;
+		}
+		if( empty( $criteria[ 'category' ] ) ) {
+			$criteria[ 'category' ] = null;
+		}
+
 		$this->assertEquals(
 			$expectedQuery,
-			$questDetailsSearch->constructQuery( $criteria )
+			$questDetailsSearch->newQuery()
+				->withFingerprint( $criteria[ 'fingerprint' ] )
+				->withQuestId( $criteria[ 'questId' ] )
+				->withCategory( $criteria[ 'category' ] )
+				->makeQuery()
 		);
 	}
 
@@ -102,9 +116,7 @@ class QuestDetailsSearchServiceTest extends WikiaBaseTest {
 	public function testShouldReturnCorrectResponseFormat() {
 		$questDetailsSearch = $this->getMockedQuestDetailsSearchService();
 
-		$result = $questDetailsSearch->query( [
-			'fingerprint' => 'test'
-		] );
+		$result = $questDetailsSearch->newQuery()->search();
 
 		$expected = [
 			[

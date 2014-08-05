@@ -10,6 +10,8 @@ use Wikia\Search\Services\EntitySearchService;
 
 class QuestDetailsSearchService extends EntitySearchService {
 
+	const DEFAULT_LIMIT_SOLR_RESPONSE = 300;
+
 	const FINGERPRINT_CRITERIA = 'fingerprint';
 
 	const QUEST_ID_CRITERIA = 'questId';
@@ -39,43 +41,80 @@ class QuestDetailsSearchService extends EntitySearchService {
 
 	protected $extractMetadataOnly;
 
-	public function setSolrHelper( $solrHelper ) {
-		$this->solrHelper = $solrHelper;
+	protected $conditions = [ ];
+
+	protected $requiredFields = [ ];
+
+	protected $limit = self::DEFAULT_LIMIT_SOLR_RESPONSE;
+
+	public function newQuery() {
+		$this->conditions = [ ];
+		$this->limit = self::DEFAULT_LIMIT_SOLR_RESPONSE;
+		$this->requiredFields = $this->getSolrHelper()->getRequiredSolrFields();
+		$this->extractMetadataOnly = false;
+		return $this;
 	}
 
-	public function getSolrHelper() {
-		if( empty( $this->solrHelper ) ) {
-			// TODO: consider using of some dependency injection mechanism
-			$this->solrHelper = new QuestDetailsSolrHelper();
+	public function withFingerprint( $fingerprint ) {
+		if( !empty( $fingerprint ) ) {
+			$this->conditions[ ] = $this->queryExactMatch( self::SOLR_FINGERPRINT_FIELD, $fingerprint );
 		}
-		return $this->solrHelper;
+		return $this;
 	}
 
-	protected function prepareQuery( $criteria ) {
+	public function withQuestId( $questId ) {
+		if( !empty( $questId ) ) {
+			$this->conditions[ ] = $this->queryExactMatch( self::SOLR_QUEST_ID_FIELD, $questId );
+		}
+		return $this;
+	}
+
+	public function withCategory( $category ) {
+		if( !empty( $category ) ) {
+			$this->conditions[ ] = $this->queryExactMatch( self::SOLR_CATEGORY_FIELD, $category );
+		}
+		return $this;
+	}
+
+	public function withIds( $ids ) {
+		if( !empty( $ids ) ) {
+			$this->conditions[ ] = self::SOLR_PAGE_ID_FIELD . ':(' . join( ' ', $ids ) . ')';
+		}
+		return $this;
+	}
+
+	public function metadataOnly() {
+		$this->requiredFields = [ 'pageid', 'metadata_*' ];
+		$this->extractMetadataOnly = true;
+		return $this;
+	}
+
+	public function limit( $limit ) {
+		if( !empty( $limit ) ) {
+			$this->limit = $limit;
+		}
+		return $this;
+	}
+
+	public function search() {
+		$query = $this->makeQuery();
+		return $this->query( $query );
+	}
+
+	public function makeQuery() {
+		$query = join( self::SOLR_AND, $this->conditions );
+		return $query;
+	}
+
+	protected function prepareQuery( $query ) {
 		$select = $this->getSelect();
 
 		$dismax = $select->getDisMax();
 		$dismax->setQueryParser( 'edismax' );
 
-		$query = $this->constructQuery( $criteria );
-
 		$select->setQuery( $query );
-
-		$this->extractMetadataOnly = false;
-		if( !empty( $criteria[ self::METADATA_ONLY_CRITERIA ] ) ) {
-			$this->extractMetadataOnly = $criteria[ self::METADATA_ONLY_CRITERIA ];
-		}
-
-		if( !$this->extractMetadataOnly ) {
-			$select->setFields( $this->getSolrHelper()->getRequiredSolrFields() );
-		} else {
-			$select->setFields( [ 'pageid', 'metadata_*' ] );
-		}
-
-		$limit = $this->getLimit( $criteria );
-		if( $limit != null ) {
-			$select->setRows( $limit );
-		}
+		$select->setFields( $this->requiredFields );
+		$select->setRows( $this->limit );
 
 		return $select;
 	}
@@ -84,36 +123,18 @@ class QuestDetailsSearchService extends EntitySearchService {
 		return $this->getSolrHelper()->consumeResponse( $response, $this->extractMetadataOnly );
 	}
 
-	public function constructQuery( $criteria ) {
-		$conditions = [ ];
+	public function setSolrHelper( $solrHelper ) {
+		$this->solrHelper = $solrHelper;
+	}
 
-		if ( !empty( $criteria[ self::FINGERPRINT_CRITERIA ] ) ) {
-			$conditions[ ] = $this->queryExactMatch( self::SOLR_FINGERPRINT_FIELD, $criteria[ self::FINGERPRINT_CRITERIA ] );
+	public function getSolrHelper() {
+		if( empty( $this->solrHelper ) ) {
+			$this->solrHelper = new QuestDetailsSolrHelper();
 		}
-		if ( !empty( $criteria[ self::QUEST_ID_CRITERIA ] ) ) {
-			$conditions[ ] = $this->queryExactMatch( self::SOLR_QUEST_ID_FIELD, $criteria[ self::QUEST_ID_CRITERIA ] );
-		}
-		if ( !empty( $criteria[ self::CATEGORY_CRITERIA ] ) ) {
-			$conditions[ ] = $this->queryExactMatch( self::SOLR_CATEGORY_FIELD, $criteria[ self::CATEGORY_CRITERIA ] );
-		}
-		if( !empty( $criteria[ self::IDS_CRITERIA ] ) ) {
-			$ids = $criteria[ self::IDS_CRITERIA ];
-			$conditions[ ] = self::SOLR_PAGE_ID_FIELD . ':(' . join( ' ', $ids ) . ')';
-		}
-
-		$query = join( self::SOLR_AND, $conditions );
-
-		return $query;
+		return $this->solrHelper;
 	}
 
 	protected function queryExactMatch( $field, $value ) {
 		return $field.':"'.$value.'"';
-	}
-
-	public function getLimit( $criteria ) {
-		if( !empty( $criteria[ self::LIMIT_CRITERIA ] ) ) {
-			return $criteria[ self::LIMIT_CRITERIA ];
-		}
-		return null;
 	}
 }
