@@ -7,18 +7,6 @@ a {
 	clear: both;
 }
 
-.results-section {
-	margin-top: 30px;
-}
-
-.result-count {
-	margin-bottom: 5px;
-	font-size: 16px;
-	font-family: "Helvetica Neue";
-	text-align: left;
-	color: #64696C;
-}
-
 .subtext {
 	font-size: 16px;
 	line-height: 22px;
@@ -37,6 +25,18 @@ a {
 	color: #3C3C3C;
 }
 
+.results-section {
+	margin-top: 30px;
+}
+
+.result-count {
+	margin-bottom: 5px;
+	font-size: 16px;
+	font-family: "Helvetica Neue";
+	text-align: left;
+	color: #64696C;
+}
+
 .results {
 	margin-top: 40px;
 }
@@ -51,9 +51,15 @@ a {
 		text-align: center;
 		width: 280px;
 		height: 158px;
-		line-height: 158px;
-		img {
+		display: table;
+		.thumbnail-wrapper {
+			display: table-cell;
 			vertical-align: middle;
+			position: relative;
+		}
+		.image-wrapper {
+			display: inline;
+			position: relative;
 		}
 		.duration {
 			display: none;
@@ -83,7 +89,6 @@ a {
 @media screen and (max-width: 1023px) {
 	.thumbnail {
 		height: 138px;
-		line-height: 138px;
 		width: 245px;
 		img {
 			max-width: 245px;
@@ -94,7 +99,6 @@ a {
 @media screen and (min-width: 1024px) and (max-width: 1280) {
 	.thumbnail {
 		height: 139px;
-		line-height: 139px;
 		width: 247px;
 		img {
 			max-width: 247px;

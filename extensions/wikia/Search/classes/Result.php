@@ -241,6 +241,27 @@ class Result extends ReadWrite {
 		return $this['thumbnail'];
 	}
 
+	public function getThumbnailHtmlForVenus() {
+
+		$maxThumbnailWidthInVenus = 280;
+		$maxThumbnailHeightInVenus = 158;
+
+		wfProfileIn( __METHOD__ );
+		if (! isset( $this['thumbnail'] ) ) {
+			try {
+				$this['thumbnail'] = $this->service->getThumbnailHtml(
+					$this['pageid'],
+					['width'=>$maxThumbnailWidthInVenus, 'height'=>$maxThumbnailHeightInVenus],
+					['desc-link'=>true, 'img-class'=>'thumbimage', 'duration'=>false]
+				);
+			} catch ( \Exception $e ) {
+				$this['thumbnail'] = '';
+			}
+		}
+		wfProfileOut( __METHOD__ );
+		return $this['thumbnail'];
+	}
+
 	public function getThumbnailHtml() {
 		wfProfileIn( __METHOD__ );
 		if (! isset( $this['thumbnail'] ) ) {

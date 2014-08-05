@@ -1,10 +1,12 @@
 <section class="result clearfix">
 	<div class="row">
 		<?php if ( $result['ns'] == NS_FILE ) {
-			$thumbnailHtml = $result->getThumbnailHtml();
+			$thumbnailHtml = $result->getThumbnailHtmlForVenus();
 		}?>
 		<?php if(! empty( $thumbnailHtml ) ): ?>
-			<div class="thumbnail small-4 medium-3 large-3 columns no-padding"><?= $thumbnailHtml ?></div>
+			<div class="thumbnail small-4 medium-3 large-3 columns no-padding">
+				<div class="thumbnail-wrapper"><div class="image-wrapper"><?= $thumbnailHtml ?></div></div>
+			</div>
 			<div><? // Open media-text div when there's a thumbnail ?>
 		<?php endif; ?>
 		<section class="result-description clearfix">
@@ -58,7 +60,6 @@
 					<span><a href="<?= $result->getEscapedUrl(); ?>" <?='class="result-link subtext" data-pos="'.$pos.'"' . ( $result->getVar('isArticleMatch') ? ' data-event="search_click_match"' : '' );?> ><?=Language::factory($wg->ContentLanguage)->truncate($result->getTextUrl(), 90);?></a></span>
 				</div>
 			<?php endif; ?>
-
 			<?php if(! empty( $thumbnailHtml ) ): ?>
 		</section>
 		</div> <? // Close media-text div when there's a thumbnail ?>
