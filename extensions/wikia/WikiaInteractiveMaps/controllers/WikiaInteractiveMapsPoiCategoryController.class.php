@@ -1,4 +1,7 @@
 <?php
+
+use Wikia\Logger\WikiaLogger;
+
 /**
  * Class WikiaInteractiveMapsPoiCategoryController
  * AJAX entry points for points of interest's categories (POI category) manipulations
@@ -217,7 +220,10 @@ class WikiaInteractiveMapsPoiCategoryController extends WikiaInteractiveMapsBase
 
 			return $poiCategory;
 		} else {
-			// TODO log error
+			WikiaLogger::instance()->error('WikiaMaps tried to create POI category and failed', [
+				'poiCategory' => $poiCategory,
+				'response' => $response
+			]);
 			return null;
 		}
 	}
@@ -243,7 +249,10 @@ class WikiaInteractiveMapsPoiCategoryController extends WikiaInteractiveMapsBase
 
 			return $poiCategoryId;
 		} else {
-			// TODO log error
+			WikiaLogger::instance()->error('WikiaMaps tried to update POI category and failed', [
+				'poiCategory' => $poiCategory,
+				'response' => $response
+			]);
 			return null;
 		}
 	}
@@ -268,7 +277,10 @@ class WikiaInteractiveMapsPoiCategoryController extends WikiaInteractiveMapsBase
 					[ $this->wg->User->getName(), $poiCategoryId ]
 				) );
 			} else {
-				// TODO log error
+				WikiaLogger::instance()->error('WikiaMaps tried to delete POI category and failed', [
+					'poiCategoryId' => $poiCategoryId,
+					'response' => $response
+				]);
 			}
 		}
 
