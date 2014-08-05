@@ -54,6 +54,7 @@ $messages['en'] = array(
 	'wikia-visualeditor-dialog-transclusion-no-template-description' => 'You are editing the "$1" template.',
 	'wikia-visualeditor-dialog-map-insert-title' => 'Insert map',
 	'wikia-visualeditor-save-error-generic' => 'Error saving data to server.',
+	'wikia-visualeditor-dialogbutton-wikiasourcemode' => 'Source',
 );
 
 /** Message documentation (Message documentation)

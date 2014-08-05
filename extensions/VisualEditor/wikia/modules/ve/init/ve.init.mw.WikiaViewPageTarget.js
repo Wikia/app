@@ -63,14 +63,27 @@ ve.init.mw.WikiaViewPageTarget.static.toolbarGroups = [
 ve.init.mw.WikiaViewPageTarget.static.actionsToolbarConfig = [
 	{
 		'include': [ 'notices' ]
-	},
-	{
-		'type': 'list',
-		'icon': 'menu',
-		'indicator': 'down',
-		'include': [ 'wikiaMeta', 'categories', 'wikiaHelp', 'wikiaCommandHelp', 'wikiaSourceMode' ]
 	}
 ];
+
+var toolbarDropdown =  {
+	'type': 'list',
+	'icon': 'menu',
+	'indicator': 'down',
+	'include': [ 'wikiaMeta', 'categories', 'wikiaHelp', 'wikiaCommandHelp' ]
+};
+
+optimizely_source_variant = 3;
+
+if ( window.optimizely_source_variant === 1 ) {
+	toolbarDropdown.include.push( 'wikiaSourceMode' );
+	ve.init.mw.WikiaViewPageTarget.static.actionsToolbarConfig.push( toolbarDropdown );
+}
+if ( window.optimizely_source_variant === 2 || window.optimizely_source_variant === 3 ) {
+	ve.init.mw.WikiaViewPageTarget.static.toolbarGroups.push( toolbarDropdown );
+	ve.init.mw.WikiaViewPageTarget.static.actionsToolbarConfig.push( { 'include': [ 'wikiaSourceMode' ] } );
+}
+
 
 ve.init.mw.WikiaViewPageTarget.prototype.getNonEditableUIElements = function () {
 	var $elements,
