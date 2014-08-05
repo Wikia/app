@@ -166,14 +166,12 @@ class WikiaStatsModel extends WikiaModel {
 		$this->editsDefaultFallback = self::EDITS_DEFAULT_FALLBACK < $statsFromWF['editsDefault'] ?
 			$statsFromWF['editsDefault'] : self::EDITS_DEFAULT_FALLBACK;
 
-		$this->totalCommunitiesFallback = self::TOTAL_COMMUNITIES_FALLBACK < $statsFromWF['totalCommunities'] ?
-			$statsFromWF['totalCommunities'] : self::TOTAL_COMMUNITIES_FALLBACK;
-
 		$this->totalPagesFallback = self::TOTAL_PAGES_FALLBACK < $statsFromWF['totalPages'] ?
 			$statsFromWF['totalPages'] : self::TOTAL_PAGES_FALLBACK;
 
-		$this->lastDaysCommunitiesFallback = self::LAST_DAYS_NEW_COMMUNITIES_FALLBACK < $statsFromWF['lastDaysCommunities'] ?
-			$statsFromWF['lastDaysCommunities'] : self::LAST_DAYS_NEW_COMMUNITIES_FALLBACK;
+		$this->totalCommunitiesFallback = self::TOTAL_COMMUNITIES_FALLBACK;
+
+		$this->lastDaysCommunitiesFallback = self::LAST_DAYS_NEW_COMMUNITIES_FALLBACK;
 
 		//Mobile percentage value is set via WF so WF value is not a fallback
 		$this->mobilePercentage = self::MOBILE_PERCENTAGE_FALLBACK < $statsFromWF['mobilePercentage'] ?

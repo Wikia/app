@@ -482,7 +482,7 @@ class ScreenplayFeedIngester extends VideoFeedIngester {
 	 * @param boolean $generateUrl
 	 * @return array $data
 	 */
-	protected function generateRemoteAssetData( $name, $data, $generateUrl = true ) {
+	public function generateRemoteAssetData( $name, $data, $generateUrl = true ) {
 		$data['assetTitle'] = $name;
 		$data['duration'] = $data['duration'] * 1000;
 		$data['published'] = empty( $data['published'] ) ? '' : strftime( '%Y-%m-%d', $data['published'] );

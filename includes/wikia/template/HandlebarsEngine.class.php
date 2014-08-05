@@ -20,6 +20,7 @@ class HandlebarsEngine extends Engine {
 	public function __construct() {
 		\Handlebars\Autoloader::register();
 	}
+
 	/**
 	 * @see Engine::exists() for documentation and usage
 	 */
