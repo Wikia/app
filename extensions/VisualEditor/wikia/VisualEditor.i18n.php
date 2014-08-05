@@ -124,6 +124,8 @@ $messages['qqq'] = array(
 	'wikia-visualeditor-dialog-orientation-start-button' => 'Button that closes greeting dialog and shows VisualEditor.',
 	'wikia-visualeditor-dialog-map-insert-title' => 'Map insert dialog title text.\n{{Identical|Insert media}}',
 	'wikia-visualeditor-save-error-generic' => 'Generic error message for parse failures',
+	'wikia-visualeditor-dialogbutton-wikiasourcemode' => 'Call-to-action text rendered in the toolbar button for opening the dialog to edit wikitext in source mode.
+{{Identical|Source editor}}',
 );
 
 /** Tunisian Spoken Arabic ( زَوُن)
