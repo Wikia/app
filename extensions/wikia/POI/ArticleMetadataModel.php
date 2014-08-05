@@ -24,6 +24,7 @@ class ArticleMetadataModel {
 		self::quest_id => "metadata_quest_id_s",
 		self::ability_id => "metadata_ability_id_s",
 		self::fingerprints => "metadata_fingerprint_ids_ss",
+		self::map_region => "metadata_map_region_s"
 	];
 
 	public function __construct( $articleId, $useMaster = false ) {

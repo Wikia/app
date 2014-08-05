@@ -7,7 +7,7 @@ class MetaCSVService extends UploadFromFile {
 	const FORM_FILE = 'meta';
 	const FIELD_TITLE = 'title';
 
-	protected $availFields = [ self::FIELD_TITLE, 'fingerprints', 'quest_id','ability_id' ];
+	protected $availFields = [ self::FIELD_TITLE, 'fingerprints', 'quest_id','ability_id', 'map_region' ];
 	protected $arrayFields = [ 'fingerprints' ];
 	protected $inputFile;
 
