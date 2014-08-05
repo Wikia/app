@@ -2,10 +2,10 @@
 
 class ArticleMetadataModel {
 
-	const quest_id = "quest_id";
-	const fingerprints = "fingerprints";
-	const ability_id = "ability_id";
-	const map_region = "map_region";
+	const QUEST_ID = "quest_id";
+	const FINGERPRINTS = "fingerprints";
+	const ABILITY_ID = "ability_id";
+	const MAP_REGION = "map_region";
 
 	const article_prop_name = WPP_PALANTIR_METADATA;
 
@@ -13,10 +13,10 @@ class ArticleMetadataModel {
 	protected $articleTitle = null;
 
 	protected $metadata = [
-		self::quest_id => "",
-		self::map_region => "",
-		self::ability_id => "",
-		self::fingerprints => [],
+		self::QUEST_ID => "",
+		self::MAP_REGION => "",
+		self::ABILITY_ID => "",
+		self::FINGERPRINTS => [],
 	];
 
 	public function __construct( $articleId ) {
@@ -95,21 +95,21 @@ class ArticleMetadataModel {
 	}
 
 	public function addFingerprint( $name ) {
-		if ( !in_array($this->metadata[ self::fingerprints ], $name) ) {
-			$this->metadata[ self::fingerprints ][] = $name;
+		if ( !in_array($this->metadata[ self::FINGERPRINTS ], $name) ) {
+			$this->metadata[ self::FINGERPRINTS ][] = $name;
 		}
 	}
 
 	public function removeFingerprint( $name ) {
-		foreach ( $this->metadata[ self::fingerprints ] as $i => $fp ) {
+		foreach ( $this->metadata[ self::FINGERPRINTS ] as $i => $fp ) {
 			if ( $fp == $name ) {
-				unset( $this->metadata[self::fingerprints][$i] );
+				unset( $this->metadata[self::FINGERPRINTS][$i] );
 			}
 		}
 	}
 
 	public function clearAllFingerprints() {
-		$this->metadata[ self::fingerprints ] = [];
+		$this->metadata[ self::FINGERPRINTS ] = [];
 	}
 
 	/**
