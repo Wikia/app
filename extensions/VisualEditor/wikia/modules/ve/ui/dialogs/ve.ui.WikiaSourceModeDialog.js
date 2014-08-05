@@ -85,6 +85,10 @@ ve.ui.WikiaSourceModeDialog.prototype.getSetupProcess = function ( data ) {
 				ve.dm.converter.getDomFromModel( doc, false ),
 				ve.bind( this.onSerialize, this )
 			);
+			// Add class to iframe body that is required for linksuggest styling
+			this.$( 'body' ).addClass( 'skin-oasis' );
+			// Initialize linksuggest on the dialog textarea
+			this.$( this.sourceModeTextarea.$element.find( 'textarea' ) ).linksuggest();
 		}, this );
 };
 

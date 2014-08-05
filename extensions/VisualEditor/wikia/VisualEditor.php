@@ -180,6 +180,7 @@ $wgResourceModules += array(
 );
 
 $wgVisualEditorPluginModules[] = 'ext.visualEditor.wikiaCore';
+$wgVisualEditorPluginModules[] = 'ext.wikia.LinkSuggest';
 
 /* Messages */
 

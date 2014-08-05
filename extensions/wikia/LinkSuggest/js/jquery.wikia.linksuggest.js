@@ -47,7 +47,12 @@ $.widget( 'wikia.linksuggest', {
 		// @see http://blog.jquery.com/2012/08/09/jquery-1-8-released/
 		var eventsData = $._data(this.element.get(0), 'events');
 		if ( typeof( eventsData && eventsData.keydown ) !== "undefined" ) {
-			this._jQueryUIKeydown = eventsData.keydown[0].handler;
+			for ( var i = 0; i < eventsData.keydown.length; i++ ) {
+				if ( eventsData.keydown[i].namespace === 'autocomplete' && eventsData.keydown[i].type === 'keydown' ) {
+					this._jQueryUIKeydown = eventsData.keydown[i].handler;
+					break;
+				}
+			}
 		}
 		this.element.unbind( 'keydown.autocomplete' )
 		.bind( eventType + '.linksuggest', function( thisInstance ) {
