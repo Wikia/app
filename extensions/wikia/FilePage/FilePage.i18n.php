@@ -445,8 +445,6 @@ Aggiungi la descrizione qui.',
 	'file-page-more-links' => 'Vedi elenco completo',
 );
 
-);
-
 /** Japanese (日本語)
  * @author BryghtShadow
  * @author Tommy6
@@ -1056,8 +1054,6 @@ $messages['zh-hant'] = array(
 	'file-page-tab-history' => '檔案歷史',
 	'file-page-tab-metadata' => '元數據',
 	'file-page-more-links' => '查看完整清單',
-);
-
 );
 
 /** Chinese (Hong Kong) (中文（香港）‎)
