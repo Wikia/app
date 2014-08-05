@@ -46,6 +46,37 @@ $wgExtensionCredits["parserhook"][]=array(
 }
 
 ################################################################################
+# Inject ToneFuze ads onto Artist pages
+#
+# The Lyrics tag adds ToneFuze to the lyrics pages, this will cram the tags into
+# artist pages also.
+
+// Note: in normal MediaWiki, the SkinTemplateOutputPageBeforeExec is probably the right place
+// to change this, but in Wikia code, that isn't applied late enough, and skin 'title' is overridden
+// by wgOut->getPageTitle() after that hook is called.
+$wgHooks['BeforePageDisplay'][] = 'toneFuzeOnArtistPages_onBeforePageDisplay';
+
+function toneFuzeOnArtistPages_onBeforePageDisplay( OutputPage &$out, Skin &$skin ) {
+	global $wgTitle;
+
+	// lyrics pages will only be in the main namespace after the merge
+	if($wgTitle->getNamespace() == NS_MAIN){
+		$origTitle = $out->getPageTitle();
+		if(0 == preg_match("/.+:+/", $origTitle)){ // only do this on Artist pages.
+		
+			// TODO: Inject tonefuze below the Contents box.
+//print "BODY TEXT: ".$out->mBodyText;
+			// TODO: Inject tonefuze below the Contents box.
+		
+			//$out->setPageTitle( $origTitle. wfMsg('H1-lyricssuffix')); // added as a message so that it can be translated
+		}
+	}
+
+	return true;
+} // end toneFuzeOnArtistPages_onBeforePageDisplay()
+
+
+################################################################################
 # Lyric Render Section
 #
 # This section has no configuration, and can be ignored.
