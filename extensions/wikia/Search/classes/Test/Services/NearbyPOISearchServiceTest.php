@@ -21,7 +21,7 @@ class NearbyPOISearchServiceTest extends BaseTest {
 
 		$movieSearch->setLang( 'en' );
 
-		$res = $movieSearch->query( [ NearbyPOISearchService::LATITUDE => 1, NearbyPOISearchService::LONGITUDE => 1 ] );
+		$res = $movieSearch->newQuery()->search();
 		$this->assertEquals( [ [
 			'id' => '831_155836',
 			'metadata_fingerprint_ids_ss' => [ "amazing", "great_job", "best" ],

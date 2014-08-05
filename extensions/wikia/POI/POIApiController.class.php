@@ -24,14 +24,15 @@ class POIApiController extends WikiaApiController {
 		$solrHelper = $this->getSolrHelper();
 		$nearbySearch = $this->getNearbySearch();
 
-		$nearbySearch->setFields( $solrHelper->getRequiredSolrFields() );
-		$solrResponse = $nearbySearch->query( [
-			NearbyPOISearchService::LATITUDE => $lat,
-			NearbyPOISearchService::LONGITUDE => $long,
-			NearbyPOISearchService::RADIUS => $radius,
-			NearbyPOISearchService::REGION => $region,
-			NearbyPOISearchService::LIMIT => $limit
-		] );
+		$solrResponse = $nearbySearch->newQuery()
+			->latitude( $lat )
+			->longitude( $long )
+			->radius( $radius )
+			->region( $region )
+			->setFields( $solrHelper->getRequiredSolrFields() )
+			->limit( $limit )
+			->search();
+
 		$result = $solrHelper->consumeResponse( $solrResponse );
 
 		$this->setResponseData( $result );
