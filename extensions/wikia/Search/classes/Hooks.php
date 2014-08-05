@@ -159,5 +159,9 @@ class Hooks
 		self::$outboundLinks = [];
 		return $links;
 	}
-	
+
+	static public function onVenusAssetsPackages( &$jsHeadGroups, &$jsBodyGroups, &$cssGroups ) {
+		$cssGroups[] = 'venus_search_css';
+		return true;
+	}
 }

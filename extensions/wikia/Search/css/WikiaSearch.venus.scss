@@ -1,6 +1,6 @@
 a {
-	text-decoration: none;
 	color: inherit;
+	text-decoration: none;
 }
 
 .clearfix {
@@ -8,21 +8,21 @@ a {
 }
 
 .subtext {
+	color: #64696C;
 	font-size: 16px;
 	line-height: 22px;
-	color: #64696C;
 }
 
 .headline {
+	color: #0A6EB4;
 	font-size: 22px;
 	line-height: 26px;
-	color: #0A6EB4;
 }
 
 .body-text {
+	color: #3C3C3C;
 	font-size: 18px;
 	line-height: 24px;
-	color: #3C3C3C;
 }
 
 .results-section {
@@ -30,11 +30,11 @@ a {
 }
 
 .result-count {
-	margin-bottom: 5px;
-	font-size: 16px;
-	font-family: "Helvetica Neue";
-	text-align: left;
 	color: #64696C;
+	font-family: "Helvetica Neue";
+	font-size: 16px;
+	margin-bottom: 5px;
+	text-align: left;
 }
 
 .results {
@@ -48,10 +48,10 @@ a {
 	}
 	.thumbnail {
 		background-color: #EEF1F3;
+		display: table;
+		height: 158px;
 		text-align: center;
 		width: 280px;
-		height: 158px;
-		display: table;
 		.thumbnail-wrapper {
 			display: table-cell;
 			vertical-align: middle;
@@ -71,8 +71,8 @@ a {
 			bottom: 15px;
 			height: 33px;
 			left: 15px;
-			width: 33px;
 			position: absolute;
+			width: 33px;
 		}
 	}
 	.result-description {
@@ -80,8 +80,8 @@ a {
 			margin: 0;
 		}
 		.subtext {
-			margin-top: 8px;
 			margin-bottom: 14px;
+			margin-top: 8px;
 		}
 	}
 }

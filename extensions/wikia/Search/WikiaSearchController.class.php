@@ -91,8 +91,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	 * This is the main search action. Special:Search points here.
 	 */
 	public function index() {
-		global $wgEnableSpecialSearchCaching;
-		global $wgEnableVenusSkin;
+		global $wgEnableSpecialSearchCaching, $wgEnableVenusSkin;
 
 		$this->handleSkinSettings();
 		//will change template depending on passed ab group
@@ -103,6 +102,11 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		}
 
 		$this->handleLayoutAbTest( $this->getVal( 'ab', null ), $searchConfig->getNamespaces() );
+
+		if (!empty($wgEnableVenusSkin)) {
+			$this->overrideLayout();
+		}
+
 		if ( $searchConfig->getQuery()->hasTerms() ) {
 			$search = $this->queryServiceFactory->getFromConfig( $searchConfig);
 			/* @var $search Wikia\Search\QueryService\Select\Dismax\OnWiki */
@@ -112,9 +116,12 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			$search->search();
 		}
 
-		$this->venusEnabled = $wgEnableVenusSkin;
 		$this->setPageTitle( $searchConfig );
 		$this->setResponseValuesFromConfig( $searchConfig );
+	}
+
+	private function overrideLayout() {
+		$this->setVal( 'resultView', 'VenusResult' );
 	}
 
 	/**
@@ -739,18 +746,16 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		}
 		$skin = $this->wg->User->getSkin();
 		if ( $skin instanceof SkinMonoBook ) {
-		    $this->response->addAsset ('extensions/wikia/Search/monobook/monobook.scss' );
+			$this->response->addAsset ('extensions/wikia/Search/monobook/monobook.scss' );
 		}
 		if ( $skin instanceof SkinOasis || $skin instanceof SkinVenus ) {
-		    $this->response->addAsset( 'extensions/wikia/Search/css/WikiaSearch.scss' );
+			$this->response->addAsset( 'extensions/wikia/Search/css/WikiaSearch.scss' );
 		}
 		if ( $skin instanceof SkinWikiaMobile ) {
-		    $this->overrideTemplate( 'WikiaMobileIndex' );
+			$this->overrideTemplate( 'WikiaMobileIndex' );
 		}
-
 		if ( $skin instanceof SkinVenus ) {
 			$this->overrideTemplate( 'Venus_index' );
-			$this->response->addAsset( 'extensions/wikia/Search/css/WikiaSearch.venus.scss' );
 		}
 
 		return true;
