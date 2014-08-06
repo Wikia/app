@@ -46,38 +46,6 @@ $wgExtensionCredits["parserhook"][]=array(
 }
 
 ################################################################################
-# Inject ToneFuze ads onto Artist pages
-#
-# The Lyrics tag adds ToneFuze to the lyrics pages, this will cram the tags into
-# artist pages also.
-
-// Note: in normal MediaWiki, the SkinTemplateOutputPageBeforeExec is probably the right place
-// to change this, but in Wikia code, that isn't applied late enough, and skin 'title' is overridden
-// by wgOut->getPageTitle() after that hook is called.
-$wgHooks['OuptutPageBeforeHTML'][] = 'toneFuzeOnArtistPages_onBeforePageDisplay';
-
-function toneFuzeOnArtistPages_onBeforePageDisplay( OutputPage &$out, &$text ) {
-	global $wgTitle;
-
-	// lyrics pages will only be in the main namespace after the merge
-	if($wgTitle->getNamespace() == NS_MAIN){
-		$origTitle = $out->getPageTitle();
-		if(0 == preg_match("/.+:+/", $origTitle)){ // only do this on Artist pages.
-		
-			// TODO: Inject tonefuze below the Contents box.
-//print "BODY TEXT: ".$out->mBodyText;
-			// TODO: Inject tonefuze below the Contents box.
-		
-			//$out->setPageTitle( $origTitle. wfMsg('H1-lyricssuffix')); // added as a message so that it can be translated
-		}
-	}
-
-	//return true;
-	return $out; // need to return this for OutputPageBeforeHTML
-} // end toneFuzeOnArtistPages_onBeforePageDisplay()
-
-
-################################################################################
 # Lyric Render Section
 #
 # This section has no configuration, and can be ignored.
@@ -160,25 +128,10 @@ function renderLyricTag($input, $argv, $parser)
 		$artist = $parser->mTitle->getDBkey();
 		$colonIndex = strpos("$artist", ":");
 		$songTitle = $parser->mTitle->getText();
-//		$artistLink = $artist;
-//		$songLink = $songTitle;
 		if($colonIndex !== false){
 			$artist = substr($artist, 0, $colonIndex);
 			$songTitle = substr($songTitle, $colonIndex+1);
-
-//			$artistLink = str_replace(" ", "+", $artist);
-//			$songLink = str_replace(" ", "+", $songTitle);
 		}
-		//$artistLink = str_replace("_", "+", $artistLink);
-		//$songLink = str_replace("_", "+", $songLink);
-		//$href = "<a href='http://www.ringtonematcher.com/co/ringtonematcher/02/noc.asp?sid=WILWros&amp;artist=".urlencode($artistLink)."&amp;song=".urlencode($songLink)."' rel='nofollow' target='_blank'>";
-		//$ringtoneLink = "";
-		//$ringtoneLink = "<div class='rtMatcher'>";
-		//$ringtoneLink.= "$href<img src='" . $imgPath . "/phone_left.gif' alt='phone' width='16' height='17'/> ";
-		//$ringtoneLink.= "Send \"$songTitle\" Ringtone to your Cell";
-		//$ringtoneLink.= " <img src='" . $imgPath . "/phone_right.gif' alt='phone' width='16' height='17'/></a>";
-		//$ringtoneLink.= "<span class='adNotice'>Ad</span>";
-		//$ringtoneLink.= "</div>";
 
 		// The links have different adunit_ids above/below lyrics now. This will differentiate them for tracking.
 		$aboveLink = getToneFuzeLink($isAboveLyrics=true, $artist, $songTitle);
