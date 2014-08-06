@@ -23,7 +23,6 @@ CSV;
 		];
 		file_put_contents($this->tmpFile, $fileContents);
 		$service = new MetaCSVService();
-		var_dump($service->LoadDataFromFile($this->tmpFile));
 		$this->assertEquals($expect, $service->LoadDataFromFile($this->tmpFile));
 
 	}
