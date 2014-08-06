@@ -202,8 +202,8 @@ define('wikia.intMap.poiCategories',
 
 		/**
 		 * @desc extends array of POI categories
-		 * @param {Array} poiCategories - array of POI category objects
-		 * @returns {Array} - array of extended POI categories objects
+		 * @param {array} poiCategories - array of POI category objects
+		 * @returns {array} - array of extended POI categories objects
 		 */
 		function extendPoiCategoriesData(poiCategories) {
 			var extendedPoiCategories = [];
@@ -525,7 +525,7 @@ define('wikia.intMap.poiCategories',
 		 * @desc cleans up POI categories data after edit
 		 * @param {object} dataSent - POI categories sent to backend
 		 * @param {object} dataReceived - response from backend, array of actions done and categories affected
-		 * @returns {Array} - current POI categories list
+		 * @returns {array} - current POI categories list
 		 */
 		function updatePoiCategoriesData(dataSent, dataReceived) {
 			var currentPoiCategories = [];
