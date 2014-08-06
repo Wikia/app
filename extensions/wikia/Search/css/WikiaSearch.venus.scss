@@ -51,12 +51,12 @@ a {
 		font-weight: bold;
 	}
 	.thumbnail {
-		background-color: $color-article-thumb-background;
 		display: table;
 		height: 158px;
 		text-align: center;
 		width: 280px;
 		.thumbnail-wrapper {
+			background-color: $color-article-thumb-background;
 			display: table-cell;
 			position: relative;
 			vertical-align: middle;

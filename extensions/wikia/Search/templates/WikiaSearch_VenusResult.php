@@ -4,7 +4,7 @@
 			$thumbnailHtml = $result->getThumbnailHtmlForVenus();
 		}?>
 		<?php if(! empty( $thumbnailHtml ) ): ?>
-			<div class="thumbnail small-4 medium-3 large-3 columns no-padding">
+			<div class="thumbnail small-4 medium-3 large-3 columns">
 				<div class="thumbnail-wrapper"><div class="image-wrapper"><?= $thumbnailHtml ?></div></div>
 			</div>
 			<div><? // Open media-text div when there's a thumbnail ?>

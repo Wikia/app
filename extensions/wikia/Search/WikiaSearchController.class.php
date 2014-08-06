@@ -647,8 +647,6 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	 */
 	protected function setResponseValuesFromConfig( Wikia\Search\Config $searchConfig ) {
 
-		global $wgLanguageCode;
-
 		$response = $this->getResponse();
 		$format = $response->getFormat();
 		if ( $format == 'json' || $format == 'jsonp' ) {
@@ -716,32 +714,52 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		if ( $this->wg->OnWikiSearchIncludesWikiMatch && $searchConfig->hasWikiMatch() ) {
 			$this->registerWikiMatch( $searchConfig );
 		}
+
+		$this->setVal( 'topWikiArticles', $this->setTopArticlesModule( $searchConfig, $isMonobook, $isGridLayoutEnabled ));
+	}
+
+	private function setTopArticlesModule( $searchConfig, $isMonobook, $isGridLayoutEnabled ) {
+		global $wgLanguageCode;
+
+		$isInterWiki = $searchConfig->getInterWiki();
 		$topWikiArticlesHtml = '';
 
-		if ( ! $searchConfig->getInterWiki() && $wgLanguageCode == 'en' && !$isMonobook ) {
-			if ( $this->app->checkSkin( 'venus' ) ) {
+		if ( !$isInterWiki && $wgLanguageCode == 'en' && !$isMonobook ) {
+			if ( $this->app->checkSkin( 'venus' ) && !in_array(NS_FILE, $searchConfig->getNamespaces()) ) {
 				$method = 'topWikiArticlesForVenus';
-			} else {
-				$method = 'topWikiArticles';
+				$cacheKey = $this->getMemcacheKeyForTopArticles($method, $isGridLayoutEnabled);
+				$topWikiArticlesHtml = $this->getTopArticlesHTML($method, $cacheKey);
 			}
-			$dbname = $this->wg->DBName;
-			$cacheKey = wfMemcKey(
-				__CLASS__,
-				'WikiaSearch',
-				$method,
-				$this->wg->CityId,
-				static::TOP_ARTICLES_CACHE,
-				$isGridLayoutEnabled
-			);
-			$topWikiArticlesHtml = WikiaDataAccess::cache(
-				$cacheKey,
-				86400 * 5, // 5 days, one business week
-				function () use ( $method ) {
-					return $this->app->renderView( 'WikiaSearchController', $method );
-				}
-			);
+			if ( !$this->app->checkSkin( 'venus' ) ) {
+				$method = 'topWikiArticles';
+				$cacheKey = $this->getMemcacheKeyForTopArticles($method, $isGridLayoutEnabled);
+				$topWikiArticlesHtml = $this->getTopArticlesHTML($method, $cacheKey);
+			}
 		}
-		$this->setVal( 'topWikiArticles', $topWikiArticlesHtml );
+
+		return $topWikiArticlesHtml;
+	}
+
+	private function getMemcacheKeyForTopArticles($method, $isGridLayoutEnabled) {
+		$cacheKey = wfMemcKey(
+			__CLASS__,
+			'WikiaSearch',
+			'topWikiArticlesForVenus',
+			$this->wg->CityId,
+			static::TOP_ARTICLES_CACHE,
+			$isGridLayoutEnabled
+		);
+		return $cacheKey;
+	}
+
+	private function getTopArticlesHTML( $method, $cacheKey ) {
+		return WikiaDataAccess::cache(
+			$cacheKey,
+			86400 * 5, // 5 days, one business week
+			function () use ($method) {
+				return $this->app->renderView( 'WikiaSearchController', $method );
+			}
+		);
 	}
 
 	/**
