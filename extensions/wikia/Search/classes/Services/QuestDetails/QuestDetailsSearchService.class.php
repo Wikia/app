@@ -24,7 +24,7 @@ class QuestDetailsSearchService extends EntitySearchService {
 
 	const SOLR_CATEGORY_FIELD = 'categories_mv_en';
 
-	const SOLR_PAGE_ID_FIELD = 'pageid';
+	const SOLR_ID_FIELD = 'id';
 
 	const SOLR_AND = ' AND ';
 
@@ -70,12 +70,21 @@ class QuestDetailsSearchService extends EntitySearchService {
 		return $this;
 	}
 
-	public function withIds( $ids ) {
+	public function withIds( $ids, $wikiId ) {
 		if( !empty( $ids ) ) {
-			$this->conditions[ ] = self::SOLR_PAGE_ID_FIELD . ':(' . join( ' ', $ids ) . ')';
+			$ids = $this->appendWikiIdToIds( $ids, $wikiId );
+			$this->conditions[ ] = self::SOLR_ID_FIELD . ':(' . join( ' ', $ids ) . ')';
 			$this->limit( count( $ids ) );
 		}
 		return $this;
+	}
+
+	protected function appendWikiIdToIds( $ids, $wikiId ) {
+		$idsWithWikiId = [ ];
+		foreach( $ids as $id ) {
+			$idsWithWikiId[] = $wikiId . '_' . $id;
+		}
+		return $idsWithWikiId;
 	}
 
 	public function metadataOnly() {

@@ -654,7 +654,7 @@ class ArticlesApiController extends WikiaApiController {
 		if ( !empty( $this->wg->EnablePOIExt ) ) {
 			$questDetailsSearch = new QuestDetailsSearchService();
 			$result = $questDetailsSearch->newQuery()
-				->withIds( array_keys( $collection ) )
+				->withIds( array_keys( $collection ), $this->wg->CityId )
 				->metadataOnly()
 				->search();
 
