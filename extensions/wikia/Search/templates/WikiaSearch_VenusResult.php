@@ -1,5 +1,5 @@
-<section class="result clearfix">
-	<div>
+<section class="result">
+	<div class="row">
 		<?php if ( $result['ns'] == NS_FILE ) {
 			$thumbnailHtml = $result->getThumbnailHtmlForVenus();
 		}?>
@@ -9,7 +9,7 @@
 			</div>
 			<div><? // Open media-text div when there's a thumbnail ?>
 		<?php endif; ?>
-		<section class="result-description clearfix">
+		<section class="result-description small-6 medium-7 large-7 columns">
 			<h1 class="headline">
 				<?php
 				$title = $result->getTitle();
