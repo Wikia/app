@@ -32,6 +32,9 @@
 	function getOptimizelyExperimentId( experimentName ) {
 		if ( experimentName === 'VE Focus Mode' ) {
 			return mw.config.get( 'wgDevelEnvironment' ) ? 1459280459 : 1673360028;
+		} else if ( experimentName === 'VE Source Entry Point' ) {
+			return 1673650053;
+			//return mw.config.get( 'wgDevelEnvironment' ) ? 1673650053 : 1673650053;
 		}
 		return null;
 	}
@@ -97,6 +100,7 @@
 		/* Optimizely */
 		window.optimizely = window.optimizely || [];
 		window.optimizely.push( ['activate', getOptimizelyExperimentId( 'VE Focus Mode' )] );
+		window.veSourceEntryPoint = 3;
 
 		showSpinner();
 

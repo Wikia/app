@@ -5,7 +5,7 @@
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
-/*global mw, veTrack */
+/*global mw, veTrack, window */
 
 /**
  * Initialization MediaWiki view page target.
@@ -16,6 +16,16 @@
  * @constructor
  */
 ve.init.mw.WikiaViewPageTarget = function VeInitMwWikiaViewPageTarget() {
+	var toolbarDropdown, wikiaSourceMode;
+	if ( window.veSourceEntryPoint && ( window.veSourceEntryPoint === 2 || window.veSourceEntryPoint === 3 ) ) {
+		// Move toolbar dropdown from actionsToolbarConfig to toolbarGroups and wikiaSourceMode
+		// from toolbar dropdown to actionsToolbarConfig
+		toolbarDropdown = ve.init.mw.WikiaViewPageTarget.static.actionsToolbarConfig.pop();
+		wikiaSourceMode = toolbarDropdown.include.pop();
+		ve.init.mw.WikiaViewPageTarget.static.toolbarGroups.push( toolbarDropdown );
+		ve.init.mw.WikiaViewPageTarget.static.actionsToolbarConfig.push( { 'include': [ wikiaSourceMode ] } );
+	}
+
 	// Parent constructor
 	ve.init.mw.WikiaViewPageTarget.super.call( this );
 
@@ -63,27 +73,14 @@ ve.init.mw.WikiaViewPageTarget.static.toolbarGroups = [
 ve.init.mw.WikiaViewPageTarget.static.actionsToolbarConfig = [
 	{
 		'include': [ 'notices' ]
+	},
+	{
+		'type': 'list',
+		'icon': 'menu',
+		'indicator': 'down',
+		'include': [ 'wikiaMeta', 'categories', 'wikiaHelp', 'wikiaCommandHelp', 'wikiaSourceMode' ]
 	}
 ];
-
-var toolbarDropdown =  {
-	'type': 'list',
-	'icon': 'menu',
-	'indicator': 'down',
-	'include': [ 'wikiaMeta', 'categories', 'wikiaHelp', 'wikiaCommandHelp' ]
-};
-
-optimizely_source_variant = 3;
-
-if ( window.optimizely_source_variant === 1 ) {
-	toolbarDropdown.include.push( 'wikiaSourceMode' );
-	ve.init.mw.WikiaViewPageTarget.static.actionsToolbarConfig.push( toolbarDropdown );
-}
-if ( window.optimizely_source_variant === 2 || window.optimizely_source_variant === 3 ) {
-	ve.init.mw.WikiaViewPageTarget.static.toolbarGroups.push( toolbarDropdown );
-	ve.init.mw.WikiaViewPageTarget.static.actionsToolbarConfig.push( { 'include': [ 'wikiaSourceMode' ] } );
-}
-
 
 ve.init.mw.WikiaViewPageTarget.prototype.getNonEditableUIElements = function () {
 	var $elements,
@@ -231,25 +228,6 @@ ve.init.mw.WikiaViewPageTarget.prototype.onLoadError = function ( jqXHR, status,
 			action: 've-load-error',
 			status: status
 		} );
-	}
-};
-
-/**
- * @inheritdoc
- */
-ve.init.mw.WikiaViewPageTarget.prototype.maybeShowDialogs = function () {
-	var uri = new mw.Uri( location.href );
-	// Parent method
-	ve.init.mw.ViewPageTarget.prototype.maybeShowDialogs.call( this );
-
-	if ( mw.user.anonymous() && !uri.query.redlink ) {
-		window.optimizely = window.optimizely || [];
-		window.optimizely.push( ['activate', 1248850316] );
-
-		if ( window.veOrientationEnabled && !window.localStorage.getItem( 'WikiaVEOrientationViewed' ) ) {
-			this.surface.getDialogs().getWindow( 'wikiaOrientation' ).open();
-			window.localStorage.setItem( 'WikiaVEOrientationViewed', true );
-		}
 	}
 };
 
