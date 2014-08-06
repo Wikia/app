@@ -91,7 +91,7 @@ ve.ui.WikiaSourceModeDialog.prototype.getSetupProcess = function ( data ) {
 			mw.loader.using(
 				'ext.wikia.LinkSuggest',
 				ve.bind( function () {
-					this.$( this.sourceModeTextarea.$input ).linksuggest();
+					this.sourceModeTextarea.$input.linksuggest();
 				}, this )
 			);
 		}, this );
