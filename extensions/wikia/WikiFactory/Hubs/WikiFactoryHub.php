@@ -411,7 +411,7 @@ class WikiFactoryHub extends WikiaModel {
 			->UPDATE( 'city_list' )
 				->SET( 'city_vertical', $vertical_id )
 			->WHERE( 'city_id' )->EQUAL_TO( $city_id )
-			->run( $this->getSharedDB() );
+			->run( $this->getSharedDB( DB_MASTER ) );
 
 		$this->clearCache( $city_id );
 
