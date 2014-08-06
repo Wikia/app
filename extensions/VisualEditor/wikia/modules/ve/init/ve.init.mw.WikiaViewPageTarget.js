@@ -161,7 +161,7 @@ ve.init.mw.WikiaViewPageTarget.prototype.onToolbarSaveButtonClick = function () 
 		veTrack( { action: 've-save-button-click' } );
 	}
 
-	if ( window.veOrientationEnabled !== undefined || window.veFocusMode !== undefined ) {
+	if ( window.veSourceEntryPoint ) {
 		window.optimizely = window.optimizely || [];
 		window.optimizely.push( ['trackEvent', 've-save-button-click'] );
 	}
@@ -192,7 +192,7 @@ ve.init.mw.WikiaViewPageTarget.prototype.updateToolbarSaveButtonState = function
 		!this.toolbarSaveButtonEnableTracked &&
 		( this.toolbarSaveButtonEnableTracked = !this.toolbarSaveButton.isDisabled() )
 	) {
-		if ( window.veOrientationEnabled !== undefined ) {
+		if ( window.veSourceEntryPoint !== undefined ) {
 			window.optimizely = window.optimizely || [];
 			window.optimizely.push( ['trackEvent', 've-save-button-enable'] );
 		}
