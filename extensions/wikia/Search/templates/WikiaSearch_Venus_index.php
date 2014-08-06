@@ -67,5 +67,12 @@
 			<p class="no-result"><i><?=wfMsg('wikiasearch2-noresults')?></i></p>
 		<?php endif; ?>
 	</article>
+		<div class="SearchAdsTopWrapper WikiaRail <?= !empty($isGridLayoutEnabled) ? 'grid-2' : '' ?> alpha">
+			<?= F::app()->renderView('Ad', 'Index', ['slotName' => 'TOP_RIGHT_BOXAD', 'pageTypes' => ['search']]); ?>
+			<?= $topWikiArticles ?>
+			<?= F::app()->renderView('Ad', 'Index', ['slotName' => 'LEFT_SKYSCRAPER_2', 'pageTypes' => ['search']]); ?>
+			<div id="WikiaAdInContentPlaceHolder"></div>
+		</div>
 	</div>
 </form>
+

@@ -1,6 +1,6 @@
 <?php if ( !empty( $pages ) ) : ?>
 <?php $counter = 0; ?>
-<section class="top-wiki-articles small-5 medium-4 large-4 columns">
+<section class="top-wiki-articles small-5 medium-4 large-4 push-1 columns">
 	<h1><?= wfMessage( 'wikiasearch2-top-module-test-1' )->plain() ?></h1>
 	<?php foreach ( $pages as $page ) : ?>
 	<?php if ( !empty( $page[ 'thumbnailSize' ] ) && $page[ 'thumbnailSize' ] === 'large' ): ?>

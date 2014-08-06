@@ -719,7 +719,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$topWikiArticlesHtml = '';
 
 		if ( ! $searchConfig->getInterWiki() && $wgLanguageCode == 'en' && !$isMonobook ) {
-			if ( $this->app->checkSkin( 'venus' ) ){
+			if ( $this->app->checkSkin( 'venus' ) ) {
 				$method = 'topWikiArticlesForVenus';
 			} else {
 				$method = 'topWikiArticles';

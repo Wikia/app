@@ -1,5 +1,5 @@
 <section class="result clearfix">
-	<div class="row">
+	<div>
 		<?php if ( $result['ns'] == NS_FILE ) {
 			$thumbnailHtml = $result->getThumbnailHtmlForVenus();
 		}?>
