@@ -1,5 +1,7 @@
+<<<<<<< HEAD
 @import "skins/oasis/css/core/color.scss";
 @import "extensions/wikia/Venus/styles/mixins.scss";
+@import '../../venus/styles/variables.scss';
 
 a {
 	color: inherit;
@@ -92,6 +94,20 @@ a {
 	}
 }
 
+.top-wiki-articles {
+	padding: 0;
+	//	width: 364px;
+	width: ($large-grid-column + $large-grid-margin) * 4 + $large-grid-gutter * 3;
+
+	a {
+		font-weight: bold;
+	}
+
+	.thumbnail-small {
+		float: left;
+	}
+}
+
 @media screen and (max-width: 1023px) {
 	.headline {
 		font-size: 18px;
@@ -111,6 +127,9 @@ a {
 		img {
 			max-width: 245px;
 		}
+	}
+	.top-wiki-articles {
+		width: ($small-grid-column + $small-grid-margin) * 4 + $small-grid-gutter * 3;
 	}
 }
 
@@ -133,5 +152,8 @@ a {
 		img {
 			max-width: 247px;
 		}
+	}
+	.top-wiki-articles {
+		width: ($medium-grid-column + $medium-grid-margin) * 4 + $medium-grid-gutter * 3;
 	}
 }
