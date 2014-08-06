@@ -135,7 +135,9 @@ class WikiaInteractiveMapsPoiCategoryController extends WikiaInteractiveMapsBase
 		$poiCategoryName = trim( $poiCategory[ 'name' ] );
 
 		if ( empty( $poiCategoryName ) ) {
-			throw new BadRequestApiException( wfMessage( 'wikia-interactive-maps-create-map-bad-request-error' )->plain() );
+			throw new BadRequestApiException(
+				wfMessage( 'wikia-interactive-maps-create-map-bad-request-error' )->plain()
+			);
 		}
 	}
 
