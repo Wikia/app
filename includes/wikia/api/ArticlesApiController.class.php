@@ -658,8 +658,12 @@ class ArticlesApiController extends WikiaApiController {
 				->metadataOnly()
 				->search();
 
-			foreach ( $result as $key => $item ) {
-				$collection[ $key ] = array_merge( $collection[ $key ], [ 'metadata' => $item ] );
+			foreach ( $collection as $key => $item ) {
+				$meta = [ ];
+				if ( !empty( $result[ $key ] ) ) {
+					$meta = $result[ $key ];
+				}
+				$collection[ $key ] = array_merge( $collection[ $key ], [ 'metadata' => $meta ] );
 			}
 		}
 		return $collection;
