@@ -36,6 +36,8 @@ class AdEngine2Service
 			return $pageLevel;
 		}
 
+		$title = isset($wg->Title) ? $wg->Title : null;
+
 		if (WikiaPageType::isActionPage()
 			|| $wg->Request->getBool('noexternals', $wg->NoExternals)
 			|| $wg->Request->getBool('noads', false)
@@ -51,27 +53,24 @@ class AdEngine2Service
 			|| WikiaPageType::isForum()
 			|| WikiaPageType::isWikiaHub();
 
-		if (!$runAds) {
-			if ($wg->Title) {
-				$title = $wg->Title;
-				$namespace = $title->getNamespace();
-				$runAds = in_array($namespace, $wg->ContentNamespaces)
-					|| isset($wg->ExtraNamespaces[$namespace])
+		if (!$runAds && $title) {
+			$namespace = $title->getNamespace();
+			$runAds = in_array($namespace, $wg->ContentNamespaces)
+				|| isset($wg->ExtraNamespaces[$namespace])
 
-					// Blogs:
-					|| BodyController::isBlogListing()
-					|| BodyController::isBlogPost()
+				// Blogs:
+				|| BodyController::isBlogListing()
+				|| BodyController::isBlogPost()
 
-					// Quiz, category and project pages:
-					|| (defined('NS_WIKIA_PLAYQUIZ') && $title->inNamespace(NS_WIKIA_PLAYQUIZ))
-					|| (defined('NS_CATEGORY') && $namespace == NS_CATEGORY)
-					|| (defined('NS_PROJECT') && $namespace == NS_PROJECT)
+				// Quiz, category and project pages:
+				|| (defined('NS_WIKIA_PLAYQUIZ') && $title->inNamespace(NS_WIKIA_PLAYQUIZ))
+				|| (defined('NS_CATEGORY') && $namespace == NS_CATEGORY)
+				|| (defined('NS_PROJECT') && $namespace == NS_PROJECT)
 
-					// Chosen special pages:
-					|| $title->isSpecial('Videos')
-					|| $title->isSpecial('Leaderboard')
-					|| $title->isSpecial('Maps');
-			}
+				// Chosen special pages:
+				|| $title->isSpecial('Videos')
+				|| $title->isSpecial('Leaderboard')
+				|| $title->isSpecial('Maps');
 		}
 
 		if (!$runAds) {
