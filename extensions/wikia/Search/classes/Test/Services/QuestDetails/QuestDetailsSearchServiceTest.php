@@ -136,7 +136,7 @@ class QuestDetailsSearchServiceTest extends WikiaBaseTest {
 					"Sesame Street Songs",
 					"Alphabet"
 				],
-				"abstract" => "\"The Letter B\" is a Sesame Street song from a 1983 episode. Oscar the Grouch finds a letter B by his trash can and wonders aloud what it's doing there. He immediately wishes he hadn't asked, because",
+				"abstract" => "Some text goes here",
 				"metadata" => [
 					"fingerprints" => [
 						"amazing",
@@ -171,7 +171,7 @@ class QuestDetailsSearchServiceTest extends WikiaBaseTest {
 					"Muppet Characters",
 					"Sesame Street Monsters"
 				],
-				"abstract" => "Ruby is a yellow monster from Sesame Street who is very curious and loves to conduct experiments. For instance, in one episode, Ruby wanted to find out what it was like to be blind, so she spent the",
+				"abstract" => "Ruby is a yellow monster",
 				"metadata" => [
 					"fingerprints" => [
 						"amazing",
@@ -263,7 +263,7 @@ class QuestDetailsSearchServiceTest extends WikiaBaseTest {
           "Alphabet"
         ],
         "ns": 0,
-        "html_en": "\"The Letter B\" is a Sesame Street song from a 1983 episode. Oscar the Grouch finds a letter B by his trash can and wonders aloud what it's doing there. He immediately wishes he hadn't asked, because Gilbert and Sullivan show up to answer his question in song. Each verse to the song concerns different categories of B items. First, Olivia, dressed in a fancy gown and bonnet, demonstrates the various foods whose names start with that letter. Maria, in a baseball uniform, sings about sports and games, and Bob, as a zookeeper, lists off several B animals before being pounced on by Barkley. A much annoyed Oscar remarks \"you have to be careful asking a question around here. Sometimes, you get a really silly answer.\" Notes Maria's verse is based on \"Take Me Out to the Ball Game.\" See also Letter B Music by Joe Raposo Lyrics by Emily Kingsley Date 1983 Publisher Jonico Music, Inc., Sesame Street, Inc.",
+        "html_en": "Some text goes here",
         "title_en": "The Letter B",
         "url": "http://muppet.wikia.com/wiki/The_Letter_B",
         "title_em": "The Letter B",
@@ -285,7 +285,7 @@ class QuestDetailsSearchServiceTest extends WikiaBaseTest {
           "Sesame Street Monsters"
         ],
         "ns": 0,
-        "html_en": "Ruby is a yellow monster from Sesame Street who is very curious and loves to conduct experiments. For instance, in one episode, Ruby wanted to find out what it was like to be blind, so she spent the entire day wearing a blindfold. She debuted in Season 19 and appeared on the show through Season 23. Ruby appeared in the Monsterpiece Theater segment \"Guys and Dolls,\" where she sang about her love for trucks. She also appeared on the bus with Farley in the song \"Forty Blocks From My Home.\" Ruby and Gina graduating, Screenshot taken from a clip in Stars and Street Forever! Ruby and Prairie Dawn. Screenshot taken from a clip in Sesame Street: 20 and Still Counting Ruby and Bob rollerskating. Screenshot taken from a clip in Big Bird's Birthday or Let Me Eat Cake Add a photo to this gallery Add a photo to this gallery Appearances Sesame Street Sesame Street: 20 and Still Counting Big Bird's Birthday or Let Me Eat Cake Book appearances What Do You Do? (1992 edition) See also Sesame Street Monsters Performer: Camille Bonora",
+        "html_en": "Ruby is a yellow monster",
         "title_en": "Ruby",
         "url": "http://muppet.wikia.com/wiki/Ruby",
         "title_em": "Ruby",
