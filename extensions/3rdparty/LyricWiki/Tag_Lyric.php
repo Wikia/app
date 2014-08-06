@@ -130,6 +130,7 @@ function renderLyricTag($input, $argv, $parser)
 		$songTitle = "";
 		if($colonIndex !== false){
 			$artist = substr($artist, 0, $colonIndex);
+			$songTitle = $parser->mTitle->getText();
 			$songTitle = substr($songTitle, $colonIndex+1);
 		}
 
@@ -180,6 +181,7 @@ function renderToneFuzeTag($input, $argv, $parser){
 	$songTitle = "";
 	if($colonIndex !== false){
 		$artist = substr($artist, 0, $colonIndex);
+		$songTitle = $parser->mTitle->getText();
 		$songTitle = substr($songTitle, $colonIndex+1);
 	}
 	$retVal = getToneFuzeLink($isAbove, $artist, $songTitle);	
