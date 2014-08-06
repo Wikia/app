@@ -37,18 +37,21 @@
 				<p><?= wfMsg( 'wikiasearch2-spellcheck', $query, $results->getQuery() ) ?></p>
 			<? endif; ?>
 			<? if ( !$hasArticleMatch && $isMonobook ): ?>
-				<?=wfMsgExt('searchmenu-new', array('parse'), $query);?>
+				<?=wfMessage('searchmenu-new')->parse($query)?>
 			<? endif; ?>
 
 			<section class="results">
-				<?php $pos = 0; ?>
+				<?php
+					$pos = 0;
+					$posShift = (($currentPage - 1) * $resultsPerPage);
+				?>
 				<?php foreach( $results as $result ): ?>
 					<?php
 					$pos++;
-						echo $app->getView( 'WikiaSearch', $resultView, array(
+						echo $app->getView( 'WikiaSearch', 'VenusResult', array(
 							'result' => $result,
 							'gpos' => 0,
-							'pos' => $pos + (($currentPage - 1) * $resultsPerPage),
+							'pos' => $pos + $posShift,
 							'query' => $query
 						));
 					?>

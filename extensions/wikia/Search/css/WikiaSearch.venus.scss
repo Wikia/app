@@ -1,3 +1,6 @@
+@import "skins/oasis/css/core/color.scss";
+@import "extensions/wikia/Venus/styles/mixins.scss";
+
 a {
 	color: inherit;
 	text-decoration: none;
@@ -5,22 +8,22 @@ a {
 
 .clearfix {
 	clear: both;
+	@include clearfix;
 }
 
 .subtext {
-	color: #64696C;
+	color: $color-alternate-text;
 	font-size: 16px;
 	line-height: 22px;
 }
 
 .headline {
-	color: #0A6EB4;
+	color: $color-links;
 	font-size: 22px;
 	line-height: 26px;
 }
 
 .body-text {
-	color: #3C3C3C;
 	font-size: 18px;
 	line-height: 24px;
 }
@@ -30,7 +33,7 @@ a {
 }
 
 .result-count {
-	color: #64696C;
+	color: $color-alternate-text;
 	font-family: "Helvetica Neue";
 	font-size: 16px;
 	margin-bottom: 5px;
@@ -47,19 +50,22 @@ a {
 		font-weight: bold;
 	}
 	.thumbnail {
-		background-color: #EEF1F3;
+		background-color: $color-article-thumb-background;
 		display: table;
 		height: 158px;
 		text-align: center;
 		width: 280px;
 		.thumbnail-wrapper {
 			display: table-cell;
-			vertical-align: middle;
 			position: relative;
+			vertical-align: middle;
 		}
 		.image-wrapper {
 			display: inline;
 			position: relative;
+			img {
+				vertical-align: text-bottom;
+			}
 		}
 		.duration {
 			display: none;
@@ -87,6 +93,18 @@ a {
 }
 
 @media screen and (max-width: 1023px) {
+	.headline {
+		font-size: 18px;
+		line-height: 22px;
+	}
+	.subtext {
+		font-size: 14px;
+		line-height: 22px;
+	}
+	.body-text {
+		font-size: 16px;
+		line-height: 22px;
+	}
 	.thumbnail {
 		height: 138px;
 		width: 245px;
@@ -97,6 +115,18 @@ a {
 }
 
 @media screen and (min-width: 1024px) and (max-width: 1280) {
+	.headline {
+		font-size: 18px;
+		line-height: 22px;
+	}
+	.subtext {
+		font-size: 14px;
+		line-height: 22px;
+	}
+	.body-text {
+		font-size: 16px;
+		line-height: 22px;
+	}
 	.thumbnail {
 		height: 139px;
 		width: 247px;

@@ -103,10 +103,6 @@ class WikiaSearchController extends WikiaSpecialPageController {
 
 		$this->handleLayoutAbTest( $this->getVal( 'ab', null ), $searchConfig->getNamespaces() );
 
-		if (!empty($wgEnableVenusSkin)) {
-			$this->overrideLayout();
-		}
-
 		if ( $searchConfig->getQuery()->hasTerms() ) {
 			$search = $this->queryServiceFactory->getFromConfig( $searchConfig);
 			/* @var $search Wikia\Search\QueryService\Select\Dismax\OnWiki */
@@ -118,10 +114,6 @@ class WikiaSearchController extends WikiaSpecialPageController {
 
 		$this->setPageTitle( $searchConfig );
 		$this->setResponseValuesFromConfig( $searchConfig );
-	}
-
-	private function overrideLayout() {
-		$this->setVal( 'resultView', 'VenusResult' );
 	}
 
 	/**
