@@ -71,6 +71,8 @@
 		<input type="hidden" name="wpToken" value="<?= htmlspecialchars( $editToken ); ?>" />
 	</form>
 <?php if( $isDisabled ) { ?>
+<div><?php echo $blockMessage ?></div>
+
 <?= wfMsg('edit-account-closed-flag'); ?>
 	<form method="post" action="">
 		<input type="submit" value="<?php echo wfMsg('editaccount-submit-cleardisable') ?>" <?= $disabled; ?> />

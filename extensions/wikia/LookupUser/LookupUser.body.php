@@ -313,6 +313,15 @@ EOT
 		} else {
 			$wgOut->addWikiText( '*' . wfMessage('lookupuser-table-cannot-be-displayed')->text() );
 		}
+
+		// Get last log message if disabled
+		if ( $user->getOption( 'disabled' ) ) {
+
+			$blockMessage = EditAccount::getLastUserLogEntry( $user );
+
+			$wgOut->addHTML( '<ul>' . $blockMessage . '</ul>' );
+
+		}
 		//End: Small Stuff Week
 
 		$wgOut->addWikiText( '*' . wfMessage( 'lookupuser-useroptions' )->text() . '<br />' . $optionsString );
