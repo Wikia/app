@@ -274,7 +274,7 @@ class WikiaApiController extends WikiaController {
 	 * @param string|array $imageFields - fields to remove if we don't serve images
 	 * @param int $cacheValidity set only if greater than 0
 	 */
-	protected function setResponseData( $data, $processFields, $cacheValidity = 0 ) {
+	protected function setResponseData( $data, $processFields = null, $cacheValidity = 0 ) {
 
 		if ( is_array( $data ) ) {
 			$data = $this->processImgFields( $data, $processFields );

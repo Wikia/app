@@ -1504,3 +1504,8 @@ $wgProfilerSendViaScribe = true;
  */
 $wgDisableWAMOnHubs = false;
 
+/**
+ * Force ImageServing to return an empty list
+ * see PLATFORM-392
+ */
+$wgImageServingForceNoResults = false;

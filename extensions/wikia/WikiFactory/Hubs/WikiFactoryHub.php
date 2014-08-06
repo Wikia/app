@@ -39,7 +39,7 @@ class WikiFactoryHub extends WikiaModel {
 	const CATEGORY_ID_GREEN = 19;
 	const CATEGORY_ID_ANSWERS = 20;
 
-	private static $mCategoryKruxMap = array(
+	private $mCategoryKruxMap = array(
 	    self::CATEGORY_ID_HUMOR		=> 'Hixwr2ar',
 	    self::CATEGORY_ID_GAMING		=> 'Hi0kJsuv',
 	    self::CATEGORY_ID_ENTERTAINMENT	=> 'Hi0kPhMT',
@@ -202,7 +202,7 @@ class WikiFactoryHub extends WikiaModel {
 			->SELECT( "city_vertical" )
 			->FROM( "city_list" )
 			->WHERE ("city_id")->EQUAL_TO( $city_id )
-			->cache( $this->$cache_ttl, wfSharedMemcKey( __METHOD__, $city_id ) )
+			->cache( $this->cache_ttl, wfSharedMemcKey( __METHOD__, $city_id ) )
 			->runLoop( $this->getSharedDB() );
 
 		return $id;

@@ -22,7 +22,7 @@ REPLACE INTO /*$wgDBprefix*/city_cats (cat_id, cat_name, cat_url, cat_short, cat
 ( 6, 'Food and Drink', 'http://www.wikia.com/wiki/FoodAndDrink', 'foodanddrink', 1, 1 ),
 ( 7, 'Travel', 'http://www.wikia.com/wiki/Travel', 'travel', 1, 1 ),
 ( 8, 'Education', 'http://www.wikia.com/wiki/Education', 'edu', 1, 1 ),
-( 9, 'Lifestyle', 'http://www.wikia.com/wiki/Lifestyle', 'life' 1, 0 ),
+( 9, 'Lifestyle', 'http://www.wikia.com/wiki/Lifestyle', 'life', 1, 0 ),
 ( 10, 'Finance', 'http://www.wikia.com/wiki/Finance', 'fin', 1, 1 ),
 ( 11, 'Politics', 'http://www.wikia.com/wiki/Politics', 'poli', 1, 1 ),
 ( 12, 'Technology', 'http://www.wikia.com/wiki/Technology', 'tech', 1, 1 ),

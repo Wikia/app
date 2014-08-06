@@ -265,11 +265,11 @@ class AutoCreateWiki {
 		return $sResponse;
 	}
 
-	protected static function getLanguageNames() {
+	public static function getLanguageNames() {
 		return Language::getLanguageNames();
 	}
 
-	protected static function checkDomainExists($sName, $sLang, $type) {
+	public static function checkDomainExists($sName, $sLang, $type) {
 		return AutoCreateWiki::domainExists($sName, $sLang, $type);
 	}
 

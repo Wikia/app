@@ -7,7 +7,7 @@ use Wikia\Search\Test\BaseTest;
 class NearbyPOISearchServiceTest extends BaseTest {
 
 	/** @test */
-	public function shouldReturnCorrectArticleFormat() {
+	public function shouldReturnCorrectFormat() {
 		$this->getStaticMethodMock( '\WikiFactory', 'getCurrentStagingHost' )
 			->expects( $this->any() )
 			->method( 'getCurrentStagingHost' )
@@ -21,7 +21,7 @@ class NearbyPOISearchServiceTest extends BaseTest {
 
 		$movieSearch->setLang( 'en' );
 
-		$res = $movieSearch->queryLocation( 1.2, 3.1 );
+		$res = $movieSearch->newQuery()->search();
 		$this->assertEquals( [ [
 			'id' => '831_155836',
 			'metadata_fingerprint_ids_ss' => [ "amazing", "great_job", "best" ],
