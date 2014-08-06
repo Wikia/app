@@ -99,7 +99,7 @@
 
 		/* Optimizely */
 		window.optimizely = window.optimizely || [];
-		window.optimizely.push( ['activate', getOptimizelyExperimentId( 'VE Focus Mode' )] );
+		window.optimizely.push( ['activate', getOptimizelyExperimentId( 'VE Source Entry Point' )] );
 		window.veSourceEntryPoint = 3;
 
 		showSpinner();
