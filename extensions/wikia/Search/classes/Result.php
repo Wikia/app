@@ -266,7 +266,7 @@ class Result extends ReadWrite {
 		wfProfileIn( __METHOD__ );
 		if (! isset( $this['thumbnail'] ) ) {
 			try {
-				$this['thumbnail'] = $this->service->getThumbnailHtml( $this['pageid'], ['width'=>280, 'height'=>158] );
+				$this['thumbnail'] = $this->service->getThumbnailHtml( $this['pageid'] );
 			} catch ( \Exception $e ) {
 				$this['thumbnail'] = '';
 			}

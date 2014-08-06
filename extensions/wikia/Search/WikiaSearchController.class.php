@@ -91,7 +91,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	 * This is the main search action. Special:Search points here.
 	 */
 	public function index() {
-		global $wgEnableSpecialSearchCaching, $wgEnableVenusSkin;
+		global $wgEnableSpecialSearchCaching;
 
 		$this->handleSkinSettings();
 		//will change template depending on passed ab group
@@ -740,7 +740,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		if ( $skin instanceof SkinMonoBook ) {
 			$this->response->addAsset ('extensions/wikia/Search/monobook/monobook.scss' );
 		}
-		if ( $skin instanceof SkinOasis || $skin instanceof SkinVenus ) {
+		if ( $skin instanceof SkinOasis ) {
 			$this->response->addAsset( 'extensions/wikia/Search/css/WikiaSearch.scss' );
 		}
 		if ( $skin instanceof SkinWikiaMobile ) {
@@ -757,14 +757,11 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	 * Called in index action to handle overriding template for different abTests
 	 */
 	protected function handleLayoutAbTest( $abGroup, $ns = null ) {
-		global $wgEnableVenusSkin;
 		$abs = explode( ',', $abGroup );
 		//check if template for ab test exists
 		$view = static::WIKIA_DEFAULT_RESULT;
 		$categoryModule = false;
-		if (!empty($wgEnableVenusSkin)) {
-			$view = 'VenusResult';
-		} else if ( !empty( $abs ) ) {
+		if ( !empty( $abs ) ) {
 			//set ab for category
 			if ( in_array( 47, $abs ) ) {
 				$categoryModule = true;
