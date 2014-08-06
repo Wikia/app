@@ -1581,7 +1581,7 @@ class WikiaPhotoGallery extends ImageGallery {
 		list( $adjWidth, $adjHeight ) = $this->fitClosest( $file, $box );
 
 		$height = $file->getHeight();
-		$width = $file->getHeight();
+		$width = $file->getWidth();
 
 		if ( $adjHeight == $box['h'] ) {
 			$width = $box['w'] * ($file->getHeight()/$box['h']);
