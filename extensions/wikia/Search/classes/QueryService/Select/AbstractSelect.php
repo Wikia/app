@@ -176,7 +176,7 @@ abstract class AbstractSelect
 	public function search() {
 		$this->getMatch();
 		$this->prepareRequest()
-		     ->prepareResponse( $this->sendSearchRequestToClient() )
+			->prepareResponse( $this->sendSearchRequestToClient() )
 		;
 		return $this->getConfig()->getResults();
 	}

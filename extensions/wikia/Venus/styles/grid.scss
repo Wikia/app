@@ -1,5 +1,10 @@
 @import "libs/foundation.custom/components/grid";
 
+.columns.no-padding {
+	padding-left: 0;
+	padding-right: 0;
+}
+
 .row:not(.full) {
 	@media #{$small-only} {
 		$width: $small-grid-width - 2 * $small-grid-margin;
@@ -32,4 +37,3 @@
 		min-width: $large-grid-width;
 	}
 }
-

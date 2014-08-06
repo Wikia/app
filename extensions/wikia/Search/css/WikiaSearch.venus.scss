@@ -1,0 +1,137 @@
+@import "skins/oasis/css/core/color.scss";
+@import "extensions/wikia/Venus/styles/mixins.scss";
+
+a {
+	color: inherit;
+	text-decoration: none;
+}
+
+.clearfix {
+	clear: both;
+	@include clearfix;
+}
+
+.subtext {
+	color: $color-alternate-text;
+	font-size: 16px;
+	line-height: 22px;
+}
+
+.headline {
+	color: $color-links;
+	font-size: 22px;
+	line-height: 26px;
+}
+
+.body-text {
+	font-size: 18px;
+	line-height: 24px;
+}
+
+.results-section {
+	margin-top: 30px;
+}
+
+.result-count {
+	color: $color-alternate-text;
+	font-family: "Helvetica Neue";
+	font-size: 16px;
+	margin-bottom: 5px;
+	text-align: left;
+}
+
+.results {
+	margin-top: 40px;
+}
+
+.result {
+	margin-top: 35px;
+	.searchmatch {
+		font-weight: bold;
+	}
+	.thumbnail {
+		background-color: $color-article-thumb-background;
+		display: table;
+		height: 158px;
+		text-align: center;
+		width: 280px;
+		.thumbnail-wrapper {
+			display: table-cell;
+			position: relative;
+			vertical-align: middle;
+		}
+		.image-wrapper {
+			display: inline;
+			position: relative;
+			img {
+				vertical-align: text-bottom;
+			}
+		}
+		.duration {
+			display: none;
+		}
+		.play-circle {
+			background-image: url('/extensions/wikia/Search/images/play_btn.svg'); /* base64 */
+			background-position: center;
+			background-repeat: no-repeat;
+			bottom: 15px;
+			height: 33px;
+			left: 15px;
+			position: absolute;
+			width: 33px;
+		}
+	}
+	.result-description {
+		.headline {
+			margin: 0;
+		}
+		.subtext {
+			margin-bottom: 14px;
+			margin-top: 8px;
+		}
+	}
+}
+
+@media screen and (max-width: 1023px) {
+	.headline {
+		font-size: 18px;
+		line-height: 22px;
+	}
+	.subtext {
+		font-size: 14px;
+		line-height: 22px;
+	}
+	.body-text {
+		font-size: 16px;
+		line-height: 22px;
+	}
+	.thumbnail {
+		height: 138px;
+		width: 245px;
+		img {
+			max-width: 245px;
+		}
+	}
+}
+
+@media screen and (min-width: 1024px) and (max-width: 1280) {
+	.headline {
+		font-size: 18px;
+		line-height: 22px;
+	}
+	.subtext {
+		font-size: 14px;
+		line-height: 22px;
+	}
+	.body-text {
+		font-size: 16px;
+		line-height: 22px;
+	}
+	.thumbnail {
+		height: 139px;
+		width: 247px;
+		img {
+			max-width: 247px;
+		}
+	}
+}

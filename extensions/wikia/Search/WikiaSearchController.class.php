@@ -102,6 +102,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		}
 
 		$this->handleLayoutAbTest( $this->getVal( 'ab', null ), $searchConfig->getNamespaces() );
+
 		if ( $searchConfig->getQuery()->hasTerms() ) {
 			$search = $this->queryServiceFactory->getFromConfig( $searchConfig);
 			/* @var $search Wikia\Search\QueryService\Select\Dismax\OnWiki */
@@ -737,13 +738,16 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		}
 		$skin = $this->wg->User->getSkin();
 		if ( $skin instanceof SkinMonoBook ) {
-		    $this->response->addAsset ('extensions/wikia/Search/monobook/monobook.scss' );
+			$this->response->addAsset ('extensions/wikia/Search/monobook/monobook.scss' );
 		}
-		if ( $skin instanceof SkinOasis || $skin instanceof SkinVenus ) {
-		    $this->response->addAsset( 'extensions/wikia/Search/css/WikiaSearch.scss' );
+		if ( $skin instanceof SkinOasis ) {
+			$this->response->addAsset( 'extensions/wikia/Search/css/WikiaSearch.scss' );
 		}
 		if ( $skin instanceof SkinWikiaMobile ) {
-		    $this->overrideTemplate( 'WikiaMobileIndex' );
+			$this->overrideTemplate( 'WikiaMobileIndex' );
+		}
+		if ( $skin instanceof SkinVenus ) {
+			$this->overrideTemplate( 'Venus_index' );
 		}
 
 		return true;
@@ -900,7 +904,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$this->setVal( 'limit', 			$config->getLimit() );
 		$this->setVal( 'filters',			$config->getPublicFilterKeys() );
 		$this->setVal( 'by_category', 		$this->getVal('by_category', false) );
-
 	}
+
 }
 
