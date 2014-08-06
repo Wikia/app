@@ -11,7 +11,9 @@ describe('VideosModule -- sData Data: ', function () {
 		VideosData = modules['videosmodule.models.videos'](nirvana, geo);
 		instance = new VideosData();
 
-		VideosData = "foo";
+
+
+
 		
 		spyOn(geo, 'getCountryCode').andReturn('US');
 		spyOn(nirvana, 'getJson').andReturn({
