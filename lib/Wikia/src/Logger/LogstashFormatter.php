@@ -32,17 +32,16 @@ class LogstashFormatter extends \Monolog\Formatter\LogstashFormatter implements 
 		);
 
 		if (!empty($record['extra'])) {
-			$message['@fields'] = [];
-			foreach ($record['extra'] as $key => $val) {
-				$message['@fields'][$key] = $val;
-			}
+			$message['@fields'] = $record['extra'];
 		}
 
 		if (!empty($record['context'])) {
-			$message['@context'] = [];
-			foreach ($record['context'] as $key => $val) {
-				$message['@context'][$key] = $val;
+			if (!empty($record['context']['exception'])) {
+				$message['@exception'] = $record['context']['exception'];
+				unset($record['context']['exception']);
 			}
+
+			$message['@context'] = $record['context'];
 		}
 
 		if ($this->isInDevMode()) {

@@ -63,6 +63,7 @@ module.exports = function(config) {
 			//Advertisement
 			'extensions/wikia/AdEngine/js/AdConfig2.js',
 			'extensions/wikia/AdEngine/js/AdConfig2Late.js',
+			'extensions/wikia/AdEngine/js/AdConfigMobile.js',
 			'extensions/wikia/AdEngine/js/AdDecoratorPageDimensions.js',
 			'extensions/wikia/AdEngine/js/AdEngine2.js',
 			'extensions/wikia/AdEngine/js/EventDispatcher.js',
@@ -82,7 +83,6 @@ module.exports = function(config) {
 			'extensions/wikia/AdEngine/js/MessageListener.js',
 			'extensions/wikia/AdEngine/js/WikiaDartHelper.js',
 			'extensions/wikia/AdEngine/js/WikiaDartVideoHelper.js',
-			'extensions/wikia/AdEngine/js/WikiaGptHop.js',
 			'extensions/wikia/AdEngine/js/WikiaGptAdDetect.js',
 
 			'extensions/wikia/AdEngine/js/spec/*.spec.js',

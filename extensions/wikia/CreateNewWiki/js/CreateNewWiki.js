@@ -26,7 +26,7 @@ var WikiBuilder = {
 		this.wikiDomainCountry = $('#NameWiki .domain-country');
 		this.nameWikiSubmitError = $('#NameWiki .submit-error');
 		this.wikiLanguage = $('#NameWiki select[name=wiki-language]');
-		this.wikiCategory = $('#DescWiki select[name=wiki-category]');
+		this.wikiVertical = $('#DescWiki select[name=wiki-vertical]');
 		this.wikiAllAges = $('#DescWiki input[name=all-ages]');
 		this.allAgesDiv = $('#all-ages-div');
 		this.descWikiSubmitError = $('#DescWiki .submit-error');
@@ -79,7 +79,7 @@ var WikiBuilder = {
 						UserLoginFacebook.closeSignupModal();
 					};
 				}
-				if( window.FB && onFBloaded ) {  // FB hax
+				if( window.FB && window.onFBloaded ) {  // FB hax
 					onFBloaded();
 				}
 				that.transition('NameWiki', true, '+');
@@ -156,8 +156,8 @@ var WikiBuilder = {
 		// Description event handlers
 		this.descWikiNext.click(function() {
 			that.descWikiNext.attr('disabled', true);
-			var val = that.wikiCategory.find('option:selected').val();
-			if(val) {
+			var val = that.wikiVertical.find('option:selected').val();
+			if(val !== "-1" /* yes, it is a string */) {
 				$.nirvana.sendRequest({
 					controller: 'CreateNewWiki',
 					method: 'Phalanx',
@@ -196,6 +196,44 @@ var WikiBuilder = {
 					that.transition('ThemeWiki', true, '+');
 				}
 			});
+		});
+
+		this.wikiVertical.on('change', function() {
+			var $this = $(this),
+				selectedValue = $this.val(),
+				selectedOption,
+				selectedShort,
+				categoriesSets = $('.categories-sets'),
+				categoriesSetId,
+				duplicate;
+
+			if(selectedValue === "-1" /* yes, it is a string */) {
+				categoriesSets.hide();
+			} else {
+				categoriesSets.show();
+
+				selectedOption = $this.find('option:selected');
+				selectedShort = selectedOption.data('short');
+				categoriesSetId = selectedOption.data('categoriesset');
+
+				if(categoriesSetId !== that.categoriesSetId) {
+					$('#categories-set-' + that.categoriesSetId).hide();
+					$('#categories-set-' + categoriesSetId).show();
+					that.categoriesSetId = categoriesSetId;
+				}
+
+				// unhide "duplicates"
+				if(that.hiddenDuplicate) {
+					that.hiddenDuplicate.show();	
+				}
+
+				// hide "duplicates"
+				duplicate = $('#categories-set-' + that.categoriesSetId).find('[data-short="' + selectedShort + '"]');
+				if(duplicate) {
+					duplicate.attr('checked', false);
+					that.hiddenDuplicate = duplicate.parent().hide();
+				}
+			}
 		});
 
 		// Set current step on page load
@@ -431,12 +469,18 @@ var WikiBuilder = {
 	createWiki: function() {
 
 		var that = this,
-			throbberWrapper = $('#ThemeWiki .next-controls');
+			throbberWrapper = $('#ThemeWiki .next-controls'),
+			verticalOption = that.wikiVertical.find('option:selected'),
+			categories = [];
 
 		this.requestKeys();
 		this.solveKeys();
 
 		throbberWrapper.startThrobbing();
+
+		$('#categories-set-' + verticalOption.data('categoriesset') + ' :checked').each(function() {
+			categories.push($(this).val());
+		});
 
 		$.nirvana.sendRequest({
 			controller: 'CreateNewWiki',
@@ -446,7 +490,8 @@ var WikiBuilder = {
 					wName: that.wikiName.val(),
 					wDomain: that.wikiDomain.val(),
 					wLanguage: that.wikiLanguage.find('option:selected').val(),
-					wCategory: that.wikiCategory.find('option:selected').val(),
+					wVertical: verticalOption.val(),
+					wCategories: categories,
 					wAllAges: that.wikiAllAges.is(':checked') ? that.wikiAllAges.val() : null,
 					wAnswer: Math.floor(that.answer)
 				}

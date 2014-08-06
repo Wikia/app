@@ -1,0 +1,19 @@
+// Monobook skin specific styling
+@import "../../../../../skins/wikia/css/color";
+
+.Forum {
+	.activity,
+	.board-description,
+	.description,
+	.last-post {
+		color: $color-text;
+	}
+
+	.board {
+		border-bottom: 1px dotted $color-page-border;
+
+		&:first-child {
+			border-top: 1px dotted $color-page-border;
+		}
+	}
+}

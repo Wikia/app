@@ -2,7 +2,7 @@
 
 class WikiaHubsServicesHelper
 {
-	const HUBSV2_IMAGES_MEMC_KEY_VER = '1.03';
+	const HUBSV2_IMAGES_MEMC_KEY_VER = '1.04';
 	const HUBSV2_IMAGES_MEMC_KEY_PREFIX = 'hubv2images';
 
 	private $corporateModel = null;
@@ -46,7 +46,7 @@ class WikiaHubsServicesHelper
 	public function purgeHubVarnish($lang, $verticalId) {
 		$wikiId = $this->getCorporateModel()->getCorporateWikiIdByLang($lang);
 
-		$hubTitle = static::getGlobalTitleFromText(static::getHubName($wikiId, $verticalId), $wikiId);
+		$hubTitle = $this->getGlobalTitleFromText($this->getHubName($wikiId, $verticalId), $wikiId);
 		$hubTitle->purgeSquid();
 	}
 
@@ -58,7 +58,7 @@ class WikiaHubsServicesHelper
 	 *
 	 * @return GlobalTitle|null|Title
 	 */
-	protected static function getGlobalTitleFromText($mainPageName, $wikiId) {
+	protected function getGlobalTitleFromText($mainPageName, $wikiId) {
 			return GlobalTitle::newFromText($mainPageName, NS_MAIN, $wikiId);
 	}
 
@@ -88,8 +88,8 @@ class WikiaHubsServicesHelper
 	 *
 	 * @throws Exception
 	 */
-	public static function getHubName($wikiId, $verticalId) {
-		$hubsV2Pages = static::getHubsV2Pages($wikiId);
+	public function getHubName($wikiId, $verticalId) {
+		$hubsV2Pages = $this->getHubsV2Pages($wikiId);
 		if (!isset($hubsV2Pages[$verticalId])) {
 			throw new Exception('There is no hub page for selected wikiId and vertical');
 		}
@@ -103,7 +103,7 @@ class WikiaHubsServicesHelper
 	 *
 	 * @return mixed
 	 */
-	protected static function getHubsV2Pages($wikiId) {
+	protected function getHubsV2Pages($wikiId) {
 		return WikiFactory::getVarValueByName('wgWikiaHubsV2Pages', $wikiId);
 	}
 

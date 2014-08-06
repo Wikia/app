@@ -623,6 +623,7 @@ class MediaWikiServiceTest extends BaseTest
 	
 	/**
 	 * @group Slow
+	 * @group Broken
 	 * @slowExecutionTime 0.11852 ms
 	 * One day this test will actually work as advertised.
 	 * @covers \Wikia\Search\MediaWikiService::getBacklinksCountFromPageId
@@ -648,7 +649,7 @@ class MediaWikiServiceTest extends BaseTest
 		    ->with         ( $title )
 		    ->will         ( $this->returnValue( $data ) )
 		;
-		
+
 		$this->mockClass( '\ApiService', $mockApiService );
 		$this->mockClass( '\ApiService', $mockApiService );
 
@@ -1013,6 +1014,7 @@ class MediaWikiServiceTest extends BaseTest
 	
 	/**
 	 * @group Slow
+	 * @group Broken
 	 * @slowExecutionTime 0.09684 ms
 	 * @covers \Wikia\Search\MediaWikiService::getMediaDetailFromPageId
 	 */
@@ -1535,6 +1537,7 @@ class MediaWikiServiceTest extends BaseTest
 	
 	/**
 	 * @group Slow
+	 * @group Broken
 	 * @slowExecutionTime 0.08865 ms
 	 * @covers Wikia\Search\MediaWikiService::getGlobalForWiki
 	 */
@@ -1819,6 +1822,7 @@ class MediaWikiServiceTest extends BaseTest
 	
 	/**
 	 * @group Slow
+	 * @group Broken
 	 * @slowExecutionTime 0.09557 ms
 	 * @covers Wikia\Search\MediaWikiService::getArticleMatchForTermAndNamespaces
 	 */
@@ -2098,6 +2102,7 @@ class MediaWikiServiceTest extends BaseTest
 	
 	/**
 	 * @group Slow
+	 * @group Broken
 	 * @slowExecutionTime 0.08756 ms
 	 * @covers Wikia\Search\MediaWikiService::getWikiFromWikiId
 	 */
@@ -2532,6 +2537,7 @@ class MediaWikiServiceTest extends BaseTest
 	
 	/**
 	 * @group Slow
+	 * @group Broken
 	 * @slowExecutionTime 0.09379 ms
 	 * @covers Wikia\Search\MediaWikiService::getVideoViewsForPageId
 	 */
@@ -2757,6 +2763,7 @@ class MediaWikiServiceTest extends BaseTest
 	
 	/**
 	 * @group Slow
+	 * @group Broken
 	 * @slowExecutionTime 0.14423 ms
 	 * @covers Wikia\Search\MediaWikiService::getMainPageTitleForWikiId
 	 */
@@ -2811,6 +2818,7 @@ class MediaWikiServiceTest extends BaseTest
 	
 	/**
 	 * @group Slow
+	 * @group Broken
 	 * @slowExecutionTime 0.09433 ms
 	 * @covers Wikia\Search\MediaWikiService::getDescriptionTextForWikiId
 	 */
@@ -2854,6 +2862,7 @@ class MediaWikiServiceTest extends BaseTest
 	
 	/**
 	 * @group Slow
+	 * @group Broken
 	 * @slowExecutionTime 0.09148 ms
 	 * @covers Wikia\Search\MediaWikiService::getHubForWikiId
 	 */
@@ -2876,6 +2885,7 @@ class MediaWikiServiceTest extends BaseTest
 	
 	/**
 	 * @group Slow
+	 * @group Broken
 	 * @slowExecutionTime 0.09163 ms
 	 * @covers Wikia\Search\MediaWikiService::getSubHubForWikiId
 	 */
@@ -2897,6 +2907,7 @@ class MediaWikiServiceTest extends BaseTest
 	
 	/**
 	 * @group Slow
+	 * @group Broken
 	 * @slowExecutionTime 0.09473 ms
 	 * @covers Wikia\Search\MediaWikiService::getMainPageTextForWikiId
 	 */

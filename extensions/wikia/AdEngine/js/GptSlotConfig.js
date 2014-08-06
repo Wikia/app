@@ -12,6 +12,7 @@ define('ext.wikia.adEngine.gptSlotConfig', function () {
 			HOME_TOP_LEADERBOARD:       {size: '728x90,1030x130,1030x65,1030x250,970x250,970x90,970x66,970x180,980x150', loc: 'top'},
 			HOME_TOP_RIGHT_BOXAD:       {size: '300x250,300x600,300x1050', loc: 'top'},
 			HUB_TOP_LEADERBOARD:        {size: '728x90,1030x130,1030x65,1030x250,970x250,970x90,970x66,970x180,980x150', loc: 'top'},
+			INCONTENT_BOXAD_1:          {size: '300x250', loc: 'middle'},
 			INVISIBLE_SKIN:             {size: '1000x1000,1x1', loc: 'top'},
 			LEFT_SKYSCRAPER_2:          {size: '160x600', loc: 'middle'},
 			LEFT_SKYSCRAPER_3:          {size: '160x600', loc: 'footer'},
@@ -25,10 +26,11 @@ define('ext.wikia.adEngine.gptSlotConfig', function () {
 			PREFOOTER_RIGHT_BOXAD:      {size: '300x250', loc: 'footer'},
 			TEST_TOP_RIGHT_BOXAD:       {size: '300x250,300x600,300x1050', loc: 'top'},
 			TEST_HOME_TOP_RIGHT_BOXAD:  {size: '300x250,300x600,300x1050', loc: 'top'},
+			TOP_IN_CONTENT_BOXAD:       {size: '300x250', loc: 'top'},
 			TOP_LEADERBOARD:            {size: '728x90,1030x130,1030x65,1030x250,970x250,970x90,970x66,970x180,980x150', loc: 'top'},
 			TOP_RIGHT_BOXAD:            {size: '300x250,300x600,300x1050', loc: 'top'},
 			WIKIA_BAR_BOXAD_1:          {size: '320x50,320x70,320x100', loc: 'bottom'},
-			WIKIA_BAR_BOXAD_2:          {size: '728x90,300x250', loc: 'bottom'},
+			BOTTOM_LEADERBOARD:          {size: '728x90,300x250', loc: 'bottom'},
 			GPT_FLUSH: 'flushonly'
 		},
 		mobile: {

@@ -1,4 +1,4 @@
-/*global define*/
+/*global define,require*/
 define('ext.wikia.adEngine.adConfig', [
 	// regular dependencies
 	'wikia.log',
@@ -13,7 +13,11 @@ define('ext.wikia.adEngine.adConfig', [
 	// adProviders
 	'ext.wikia.adEngine.provider.directGpt',
 	'ext.wikia.adEngine.provider.later',
-	'ext.wikia.adEngine.provider.null'
+	'ext.wikia.adEngine.provider.null',
+
+	// adSlots
+	require.optional('ext.wikia.adEngine.slot.topInContentBoxad')
+
 ], function (
 	// regular dependencies
 	log,
@@ -28,7 +32,10 @@ define('ext.wikia.adEngine.adConfig', [
 	// adProviders
 	adProviderDirectGpt,
 	adProviderLater,
-	adProviderNull
+	adProviderNull,
+
+	// adSlots
+	topInContentBoxad
 ) {
 	'use strict';
 
@@ -56,10 +63,11 @@ define('ext.wikia.adEngine.adConfig', [
 		'MODAL_INTERSTITIAL_4': true,
 		'TEST_HOME_TOP_RIGHT_BOXAD': true,
 		'TEST_TOP_RIGHT_BOXAD': true,
+		'TOP_IN_CONTENT_BOXAD': true,
 		'TOP_LEADERBOARD': true,
 		'TOP_RIGHT_BOXAD': true,
 		'WIKIA_BAR_BOXAD_1': true,
-		'WIKIA_BAR_BOXAD_2': true,
+		'BOTTOM_LEADERBOARD': true,
 		'GPT_FLUSH': true
 	};
 
@@ -137,6 +145,10 @@ define('ext.wikia.adEngine.adConfig', [
 		// Non-high-value slots go to ad provider Later
 		log(['getProvider', slot, 'Later (Liftium)'], 'info', logGroup);
 		return adProviderLater;
+	}
+
+	if (topInContentBoxad) {
+		topInContentBoxad.init();
 	}
 
 	return {

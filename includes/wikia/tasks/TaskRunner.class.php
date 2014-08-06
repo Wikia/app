@@ -15,47 +15,48 @@ class TaskRunner {
 
 	private $exception;
 
-	function __construct($taskId, $taskList, $callOrder, $createdBy) {
+	function __construct( $taskId, $taskList, $callOrder, $createdBy ) {
 		$this->taskId = $taskId;
-		$this->callOrder = json_decode($callOrder, true);
+		$this->callOrder = json_decode( $callOrder, true );
+		$taskList = json_decode( $taskList, true );
 
-		$taskList = json_decode($taskList, true);
-		foreach ($taskList as $taskData) {
+		foreach ( $taskList as $taskData ) {
 			/** @var \Wikia\Tasks\Tasks\BaseTask $task */
 			$task = new $taskData['class']();
-			$task->createdBy($createdBy);
-			$task->unserialize($taskData['context'], $taskData['calls']);
+			$task->taskId( $taskId );
+			$task->createdBy( $createdBy );
+			$task->unserialize( $taskData['context'], $taskData['calls'] );
 
 			try {
 				$task->init();
-			} catch (Exception $e) {
+			} catch ( Exception $e ) {
 				$this->exception = $e;
 				break;
 			}
 
-			$this->taskList []= $task;
+			$this->taskList [] = $task;
 		}
 	}
 
 	function run() {
-		if ($this->exception) {
-			$this->results []= $this->exception;
+		if ( $this->exception ) {
+			$this->results [] = $this->exception;
 			return;
 		}
 
-		foreach ($this->callOrder as $callData) {
-			list($classIndex, $callIndex) = $callData;
+		foreach ( $this->callOrder as $callData ) {
+			list( $classIndex, $callIndex ) = $callData;
 
 			/** @var \Wikia\Tasks\Tasks\BaseTask $task */
 			$task = $this->taskList[$classIndex];
-			list($method, $args) = $task->getCall($callIndex);
-			foreach ($args as $i => $arg) {
-				if (is_array($arg) || is_object($arg)) {
+			list( $method, $args ) = $task->getCall( $callIndex );
+			foreach ( $args as $i => $arg ) {
+				if ( is_array( $arg ) || is_object( $arg ) ) {
 					continue;
 				}
 
-				if (preg_match('/^#([0-9]+)$/', trim($arg), $match)) {
-					if (!isset($this->results[$match[1]])) {
+				if ( preg_match( '/^#([0-9]+)$/', trim( $arg ), $match ) ) {
+					if ( !isset( $this->results[$match[1]] ) ) {
 						throw new InvalidArgumentException;
 					}
 
@@ -63,10 +64,10 @@ class TaskRunner {
 				}
 			}
 
-			$result = $task->execute($method, $args);
-			$this->results []= $result;
+			$result = $task->execute( $method, $args );
+			$this->results [] = $result;
 
-			if ($result instanceof Exception) {
+			if ( $result instanceof Exception ) {
 				break;
 			}
 		}
@@ -77,8 +78,8 @@ class TaskRunner {
 			'status' => 'success',
 		];
 
-		$result = $this->results[count($this->results) - 1];
-		if ($result instanceof Exception) {
+		$result = $this->results[count( $this->results ) - 1];
+		if ( $result instanceof Exception ) {
 			$json->status = 'failure';
 			$json->reason = $result->getMessage();
 		} else {
@@ -89,20 +90,30 @@ class TaskRunner {
 	}
 
 	// TODO: remove once we are completely off old job/task systems
-	static function isLegacy($taskName) {
-		return !self::isModern($taskName);
+	static function isLegacy( $taskName ) {
+		return !self::isModern( $taskName );
 	}
 
-	static function isModern($taskName) {
-		return in_array($taskName, [
-			'BloglistDeferredPurgeJob',
-			'BlogTask',
+	static function isModern( $taskName ) {
+		return in_array( $taskName, [
 			'CreatePdfThumbnailsJob',
 //		'CreateWikiLocalJob',
-			'ParsoidCacheUpdateJob',
-			'PromoteImageReviewTask',
+			'HAWelcomeJob',
+			'RefreshLinksJob',
+			'HTMLCacheUpdate',
+			'ImageReviewTask',
+			'MultiDeleteTask',
+			'MultiMoveTask',
+			'MultiWikiEditTask',
+//			'PromoteImageReviewTask',
+			'ReplaceTextJob',
+			'SFCreatePageJob',
+			'SMW_NMSendMailJob',
+			'SMWRefreshJob',
+			'SWMSendToGroupTask',
+			'SMWUpdateJob',
 			'UserRollback',
-//			'UserRename',
-		]);
+			'UserRename',
+		] );
 	}
 }

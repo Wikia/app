@@ -75,7 +75,7 @@ end
 --
 -- @param s
 local function isValidTag( s )
-	return s:match( '^[a-zA-Z]+$' )
+	return s:match( '^[a-zA-Z0-9]+$' )
 end
 
 -- Escape a value, for use in HTML

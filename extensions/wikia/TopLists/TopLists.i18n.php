@@ -120,6 +120,7 @@ Head to Wikia to check out the changes! $1
 );
 
 /** Message documentation (Message documentation)
+ * @author Liuxinyu970226
  * @author Purodha
  * @author Shirayuki
  * @author Siebrand
@@ -137,9 +138,14 @@ $messages['qqq'] = array(
 	'toplists-cancel-button' => '{{Identical|Cancel}}',
 	'toplits-image-browser-selected-picture' => '$1 is the title of the image page.',
 	'toplists-image-browser-upload-btn' => '{{Identical|Choose}}',
+	'toplists-list-votes-num' => '{{Identical|Vote}}',
+	'toplists-list-created-by' => '{{Identical|By}}',
 	'toplists-list-vote-up' => 'Keep this as short as possible. Everything exceeding allowed lenght will be cutted out!',
 	'toplists-seconds' => '{{Identical|Second}}',
 	'toplists-minutes' => '{{Identical|Minute}}',
+	'toplists-hours' => '{{Identical|Hour}}',
+	'toplists-days' => '{{Identical|Day}}',
+	'toplists-weeks' => '{{Identical|Week}}',
 	'toplists-create-button-msg' => '{{Identical|Create list}}',
 	'toplists-oasis-only' => 'Displayed to users who try to edit or create Top 10 lists in a skin other than the Wikia skin.',
 );
@@ -579,7 +585,7 @@ $messages['diq'] = array(
 	'edittoplist' => 'listey Tewr 10a bıvurnê',
 	'toplists-category' => 'listey Tewr 10a',
 	'toplists-editor-title-label' => 'Nameyê liste',
-	'toplists-editor-image-browser-tooltip' => 'Resim deke',
+	'toplists-editor-image-browser-tooltip' => 'Yew resım cı ke',
 	'toplists-create-button' => 'Liste vırazê',
 	'toplists-update-button' => 'Listi qeyd ke',
 	'toplists-cancel-button' => 'Bıtexelne',
@@ -1293,7 +1299,7 @@ $messages['mk'] = array(
 	'toplists-error-invalid-picture' => 'Одбраната слика не е важечка',
 	'toplists-error-title-exists' => 'Статијава веќе постои. Можете да појдете на <a href="$2" target="_blank">$1</a> или да дадете друго име',
 	'toplists-error-title-spam' => 'Дадениот текст содржи извесни зборови што се сметаат за спам',
-	'toplists-error-article-blocked' => 'Нажалост, не ви е дозволено да создадете статија со ова име',
+	'toplists-error-article-blocked' => 'За жал, не ви е дозволено да создадете статија со ова име',
 	'toplists-error-article-not-exists' => '„$1“ не постои., Дали сакате да ја <a href="$2" target="_blank">создадете</a>?',
 	'toplists-error-picture-not-exists' => '„$1“ не постои. Дали сакате да ја <a href="$2" target="_blank">подигнете</a>?',
 	'toplists-error-duplicated-entry' => 'Истото име не може да се користи повеќе од еднаш',
@@ -2198,6 +2204,7 @@ $messages['sr-ec'] = array(
 );
 
 /** Swedish (svenska)
+ * @author Lokal Profil
  * @author Tobulos1
  * @author WikiPhoenix
  */
@@ -2241,8 +2248,8 @@ $messages['sv'] = array(
 	'toplists-update-button' => 'Spara listan',
 	'toplists-cancel-button' => 'Avbryt',
 	'toplists-items-removed' => '$1 {{PLURAL:$1|objekt|objekt}} borttagna',
-	'toplists-items-created' => '$1 {{PLURAL:$1|objekt|objekt}} skapade',
-	'toplists-items-updated' => '$1 {{PLURAL:$1|objekt|objekt}} uppdaterade',
+	'toplists-items-created' => '$1 objekt {{PLURAL:$1|skapat|skapade}}',
+	'toplists-items-updated' => '$1 objekt {{PLURAL:$1|uppdaterat|uppdaterade}}',
 	'toplists-items-nochange' => 'Inga objekt ändrades',
 	'toplits-image-browser-no-picture-selected' => 'Ingen bild markerad',
 	'toplits-image-browser-clear-picture' => 'Rensa bild',
@@ -2503,11 +2510,30 @@ $messages['vi'] = array(
  * @author Dimension
  * @author Hydra
  * @author Hzy980512
+ * @author Liuxinyu970226
  */
 $messages['zh-hans'] = array(
+	'toplists-desc' => '前10列表',
+	'right-toplists-create-edit-list' => '创建和编辑前10列表页面',
+	'right-toplists-create-item' => '创建前10列表页面并加入项',
+	'right-toplists-edit-item' => '编辑前10列表页面的项',
+	'right-toplists-delete-item' => '从前10列表页面删除项',
+	'createtoplist' => '创建新的前10列表',
+	'edittoplist' => '编辑前10列表',
+	'toplists-category' => '前10列表',
+	'toplists-error-title-exists' => '此页面已存在。您可前往<a href="$2" target="_blank">$1</a>或提供一个不同的名字。',
+	'toplists-error-article-not-exists' => '“$1”不存在。您是否希望<a href="$2" target="_blank">创建它</a>？',
+	'toplists-error-picture-not-exists' => '“$1”不存在。您是否希望<a href="$2" target="_blank">上传它</a>？',
 	'toplists-error-duplicated-entry' => '该名称不可重复使用。',
+	'toplists-item-cannot-delete' => '删除此项失败。',
+	'toplists-error-image-already-exists' => '已存在同名图片。',
+	'toplists-error-add-item-list-not-exists' => '前10列表“$1”不存在。',
+	'action-toplists-create-edit-list' => '创建和编辑前10列表页面',
 	'toplists-editor-title-label' => '列表名称',
 	'toplists-editor-title-placeholder' => '为列表命名',
+	'toplists-editor-related-article-label' => '相关页面<small>（可选但会选择一个合适图片）</small>',
+	'toplists-editor-related-article-placeholder' => '输入现有页面名称',
+	'toplists-editor-description-label' => '您的前10列表的一段简介',
 	'toplists-editor-description-placeholder' => '输入描述',
 	'toplists-editor-image-browser-tooltip' => '添加图片',
 	'toplists-editor-remove-item-tooltip' => '移除项目',
@@ -2522,11 +2548,26 @@ $messages['zh-hans'] = array(
 	'toplists-items-updated' => '更新了$1个项目',
 	'toplists-items-nochange' => '没有修改项目',
 	'toplits-image-browser-no-picture-selected' => '没有图片被选中',
+	'toplits-image-browser-clear-picture' => '清空图片',
+	'toplits-image-browser-selected-picture' => '当前选择的：$1',
 	'toplists-image-browser-upload-btn' => '选择',
 	'toplists-image-browser-upload-label' => '上载您自己的',
+	'toplists-list-creation-summary' => '创建一个列表$1',
+	'toplists-list-update-summary' => '更新一个列表$1',
 	'toplists-item-creation-summary' => '创建新的列表项',
+	'toplists-item-update-summary' => '更新一个列表项',
+	'toplists-item-remove-summary' => '从列表中移除项',
+	'toplists-item-restored' => '恢复项',
+	'toplists-list-related-to' => '相关：',
+	'toplists-list-votes-num' => '{{PLURAL:$1|$1次<br />投票}}',
+	'toplists-list-created-by' => '由[[User:$1|$1]]',
+	'toplists-list-vote-up' => '投票',
+	'toplists-list-hotitem-count' => '$1在$2上{{PLURAL:$1|投票}}',
 	'toplists-list-add-item-label' => '添加东西',
+	'toplists-list-add-item-name-label' => '使列表保持下去……',
 	'toplists-list-item-voted' => '投票了',
+	'toplists-createpage-dialog-label' => '前10列表',
+	'toplists-email-subject' => '前10列表已更新',
 	'toplists-email-body' => '来自Wikia的问候！
 
 该列表<a href="$1">$2</a>在Wikia上已被修改。
@@ -2538,6 +2579,13 @@ $messages['zh-hans'] = array(
 - Wikia
 
 您可以<a href="$4">退订</a>本列表的变动。',
+	'toplists-seconds' => '$1{{PLURAL:$1|秒}}',
+	'toplists-minutes' => '$1{{PLURAL:$1|分钟}}',
+	'toplists-hours' => '$1{{PLURAL:$1|小时}}',
+	'toplists-days' => '$1{{PLURAL:$1|天}}',
+	'toplists-weeks' => '$1{{PLURAL:$1|周}}',
+	'toplists-msg-fb-OnRateArticle-short' => '在$WIKINAME投票了一个前10列表！',
+	'toplists-create-heading' => '<em>新的！</em>创建你自己的前十',
 	'toplists-create-button-msg' => '创建列表',
 );
 

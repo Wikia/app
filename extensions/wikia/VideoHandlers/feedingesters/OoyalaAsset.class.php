@@ -2,6 +2,8 @@
 
 class OoyalaAsset extends WikiaModel {
 
+	const TIMEOUT = 60;
+
 	/**
 	 * Constructs a URL to get assets from Ooyala API
 	 * @param integer $apiPageSize
@@ -42,7 +44,12 @@ class OoyalaAsset extends WikiaModel {
 	public static function getApiContent( $url ) {
 		wfProfileIn( __METHOD__ );
 
-		$req = MWHttpRequest::factory( $url, [ 'noProxy' => true ] );
+		$options = [
+			'noProxy' => true,
+			'timeout' => self::TIMEOUT
+		];
+
+		$req = MWHttpRequest::factory( $url, $options );
 		$status = $req->execute();
 		if ( $status->isGood() ) {
 			$result = json_decode( $req->getContent(), true );
@@ -180,7 +187,7 @@ class OoyalaAsset extends WikiaModel {
 	 * @param array $data
 	 * @return boolean $resp
 	 */
-	public function addRemoteAsset( $data ) {
+	public function addRemoteAsset( $data, &$videoId = null ) {
 		wfProfileIn( __METHOD__ );
 
 		$resp = false;
@@ -203,6 +210,7 @@ class OoyalaAsset extends WikiaModel {
 			$response = $req->getContent();
 			$asset = json_decode( $response, true );
 
+			$videoId = $asset['embed_code'];
 			print( "Ooyala: Uploaded Remote Asset: $data[provider]: $asset[name] \n" );
 			foreach( explode( "\n", var_export( $asset, 1 ) ) as $line ) {
 				print ":: $line\n";
@@ -301,7 +309,7 @@ class OoyalaAsset extends WikiaModel {
 			$meta = json_decode( $req->getContent(), true );
 			$resp = true;
 
-			print( "Ooyala: Updated Metadata for $videoId: \n" );
+			print( "Ooyala: Added Metadata for $videoId: \n" );
 			foreach( explode( "\n", var_export( $meta, true ) ) as $line ) {
 				print ":: $line\n";
 			}
@@ -322,13 +330,23 @@ class OoyalaAsset extends WikiaModel {
 	 * @return boolean $resp
 	 */
 	public static function updateMetadata( $videoId, $metadata ) {
-		$method = 'PATCH';
 		$reqPath = '/v2/assets/'.$videoId.'/metadata';
+		return self::updateAsset( $videoId, $metadata, $reqPath );
+	}
 
-		$reqBody = json_encode( $metadata );
+	/**
+	 * Send request to Ooyala to update asset
+	 * @param string $videoId
+	 * @param array $params
+	 * @param string $reqPath
+	 * @return boolean $resp
+	 */
+	public static function updateAsset( $videoId, $params, $reqPath ) {
+		$method = 'PATCH';
+		$reqBody = json_encode( $params );
 
 		$url = OoyalaApiWrapper::getApi( $method, $reqPath, array(), $reqBody );
-		echo "\tRequest to update metadata: $url\n";
+		echo "\tRequest to update asset: $url\n";
 
 		$options = [
 			'method'   => $method,
@@ -342,16 +360,28 @@ class OoyalaAsset extends WikiaModel {
 			$meta = json_decode( $req->getContent(), true );
 			$resp = true;
 
-			echo "\tUpdated Metadata for $videoId: \n";
+			echo "\tUpdated Asset for $videoId: \n";
 			foreach( explode( "\n", var_export( $meta, true ) ) as $line ) {
 				echo "\t\t:: $line\n";
 			}
 		} else {
 			$resp = false;
-			echo "\tERROR: problem updating metadata (".$status->getMessage().").\n";
+			echo "\tERROR: problem updating asset (".$status->getMessage().").\n";
 		}
 
 		return $resp;
+	}
+
+	/**
+	 * Send request to Ooyala to update urls for remote asset
+	 * @param string $videoId
+	 * @param array $urls
+	 * @return boolean $resp
+	 */
+	public static function updateRemoteAssetUrls( $videoId, $urls ) {
+		$reqPath = '/v2/assets/'.$videoId;
+		$params['stream_urls'] = $urls;
+		return self::updateAsset( $videoId, $params, $reqPath );
 	}
 
 	/**

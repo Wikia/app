@@ -10,314 +10,255 @@
 namespace Wikia\Tasks\Tasks;
 
 class MultiTask extends BaseTask {
-	private $params = [];
-	private $main_params = [];
-	private $username;
-	private $page;
-	private $action = '';
-	private $result = [];
-	
 	/**
-	 * add/change text of page on Wikis
-	 *
-	 * @param int $uid - User ID
-	 * @param string $article - Article name (with namespace if needed)
-	 * @param string $text - Text to add to comtent
-	 * @param string $summary - Summary of edit
-	 * @param string $wikis - Comma separated list of Wikis (database names)
-	 * @param string $lang - Edit pages only on language-base Wikis
-	 * @param string $cat - Edit pages only on category-base Wikis
-	 * @param string $params - Comma separated list of edit params: <ul><li>m: minor edit,</li><li>b: bot (hidden) edit,</li><li>a: enable autosummary,</li><li>no-rc: do not show the change in recent changes,</li><li>newonly: skip existing articles</li></ul>
-	 * 
-	 * @return double
+	 * @param $params
+	 * @return bool
 	 */
-	public function edit( $uid, $article = '', $text = '', $summary = '', $wikis = '', $lang = '', $cat = '', $params = '' ) {
-		# set username
-		$oUser = \User::newFromId( $uid );
-		if ( $oUser instanceof \User ) {
-			$oUser->load();
-			$this->username = $oUser->getName();
-		} else {
-			$this->username = '';
-		}
-		
-		if ( empty( $this->username ) ) {
-			$error = 'Username cannot be empty';
-			throw new \Exception( $error . ': ' . __METHOD__  );
-			return $error;
-		}
-		
-		# check params
-		if ( !empty( $params ) ) {
-			foreach ( explode( ',', $params ) as $param ) {
-				$this->params[] = trim( $param );
-			}
+	public function move( $params ) {
+		/** @var \Title $oldTitle */
+		list($_, $impersonatedUsername, $oldTitle) = $this->parseCommon($params);
+		$newTitle = isset($params['newpage']) ? \Title::newFromText($params['newpage']) : null;
+
+		if (!is_object($oldTitle) || !is_object($newTitle)) {
+			$this->error('move page request invalid, terminating', [
+				'old_page' => $params['page'],
+				'new_page' => $params['newpage'],
+			]);
+
+			return false;
 		}
 
-		# check page title
-		$this->page = \Title::newFromText( $article );
-		if ( !is_object( $this->page ) ) {
-			$error = 'Invalid article (' . $article . ')';
-			throw new \Exception( $error . ': ' . __METHOD__ );
-			return $error;
-		}
+		$oldNamespace = $oldTitle->getNamespace();
+		$oldTitleText = str_replace(' ', '_', $oldTitle->getText());
+		$newNamespace = $newTitle->getNamespace();
+		$newTitleText = str_replace(' ', '_', $newTitle->getText());
 
-		# parse text options 
-		$this->main_params = [
-			'u' => $this->username,
-			't' => str_replace( ' ', '_', $this->page->getText() ),
-			'n' => $this->page->getNamespace(),
-			'x' => $text,
-			's' => $summary
+		$commandParams = [ // each param has an extra "-" because the script reads it this way
+			'-u' => $impersonatedUsername,
+			'-ot' => $oldTitleText,
+			'-on' => $oldNamespace,
+			'-nt' => $newTitleText,
+			'-nn' => $newNamespace,
 		];
-		
-		# check wikis
-		$task_wikis = [];
-		if ( !empty( $wikis ) ) {
-			$task_wikis = explode( ",", $wikis );
-		}
-		
-		$this->action = 'edit';
-		$result = $this->runOnWikis( $task_wikis, $lang, $cat );
-		
-		return $result;
-	}
-	
-	/**
-	 * go with each supplied wiki and delete the supplied article
-	 *
-	 * @param int $uid - Remove page as User
-	 * @param string $article - Article name (with namespace if needed)
-	 * @param string $text - Text to add to comtent
-	 * @param string $wikis - Comma separated list of Wikis (database names)
-	 * @param string $lang - Wikis with language
-	 * @param string $cat - Wikis in category
-	 * @param string $reason - Reason of removing
-	 * @param string $params - Comma separated list of delete params: <ul><li>s: bitfields to further suppress the content (Revision::DELETED_TEXT, Revision::DELETED_COMMENT, Revision::DELETED_USER, Revision::DELETED_RESTRICTED),</li></ul>
-	 * 
-	 * @return double
-	 */
-	public function delete( $uid, $article = '', $wikis = '', $lang = '', $cat = '', $reason = '', $params = '' ) {
-		# set username
-		$oUser = \User::newFromId( $uid );
-		if ( $oUser instanceof \User ) {
-			$oUser->load();
-			$this->username = $oUser->getName();
-		} else {
-			$this->username = '';
-		}
-		
-		if ( empty( $this->username ) ) {
-			$error = 'Username cannot be empty';
-			throw new \Exception( $error . ': ' . __METHOD__  );
-			return $error;
-		}
-		
-		# check params
-		if ( !empty( $params ) ) {
-			foreach ( explode( ',', $params ) as $param ) {
-				$this->params[] = trim( $param );
-			}
+
+		if (isset($params['reason'])) {
+			$commandParams['-r'] = $params['reason'];
 		}
 
-		# check page title
-		$this->page = \Title::newFromText( $article );
-		if ( !is_object($this->page) ) {
-			$error = 'Invalid article (' . $article . ')';
-			throw new \Exception( $error . ': ' . __METHOD__ );
-			return $error;
+		if (isset($params['redirect'])) {
+			$commandParams['-redirect'] = 1;
 		}
 
-		# parse text options 
-		$this->main_params = [
-			't' => str_replace( ' ', '_', $this->page->getText() ),
-			'u' => $this->username,
-			'r' => $reason,
-		];
-		
-		# check wikis
-		$task_wikis = [];
-		if ( !empty( $wikis ) ) {
-			$task_wikis = explode( ",", $wikis );
-		}		
+		if (isset($params['watch'])) {
+			$commandParams['-watch'] = 1;
+		}
 
-		$this->action = 'delete';
-		$result = $this->runOnWikis( $task_wikis, $lang, $cat );
+		$result = $this->runOnWikis(
+			$params['wikis'],
+			$params['lang'],
+			$params['cat'],
+			$params['selwikia'],
+			'move',
+			$commandParams
+		);
 
-		return $result;
+		return array_sum($result);
 	}
 
 	/**
-	 * move page to another page on Wikis
-	 *
-	 * @param int $uid - User ID
-	 * @param string $article - Article name (with namespace if needed)
-	 * @param string $newarticle - New article name (with namespace if needed)
-	 * @param string $reason - Reason of article movin'
-	 * @param string $wikis - Comma separated list of Wikis (database names)
-	 * @param string $lang - Wikis with language
-	 * @param string $cat - Wikis in category
-	 * @param string $params - Comma separated list of edit params: <ul><li>watch: add new article to watchlist,</li><li>redirect: set new page as redirect to old one</li></ul>
-	 * 
-	 * @return double
+	 * @param $params
+	 * @return bool
 	 */
-	public function move( $uid, $article = '', $newarticle = '', $reason = '', $wikis = '', $lang = '', $cat = '', $params = '' ) {
-		# set username
-		$oUser = \User::newFromId( $uid );
-		if ( $oUser instanceof \User ) {
-			$oUser->load();
-			$this->username = $oUser->getName();
-		} else {
-			$this->username = '';
+	public function delete( $params ) {
+		/** @var \Title $page */
+		/** @var \User $createdBy */
+		list($createdBy, $impersonatedUsername, $page) = $this->parseCommon($params);
+
+		$this->info('deleting page', [
+			'user' => $createdBy->getName(),
+			'impersonating' => $impersonatedUsername,
+			'title' => $params['page'],
+		]);
+
+		if (!is_object($page)) {
+			$this->error('page is invalid, terminating task', [
+				'title' => $params['page'],
+			]);
+
+			return false;
 		}
-		
-		if ( empty( $this->username ) ) {
-			$error = 'Username cannot be empty';
-			throw new \Exception( $error . ': ' . __METHOD__  );
-			return $error;
+
+		$commandParams = [
+			't' => str_replace(' ', '_', $page->getPrefixedText()),
+			'u' => $impersonatedUsername,
+		];
+
+		if (isset($params['suppress']) && $params['suppress'] === true) {
+			$commandParams['s'] = null;
 		}
-		
-		# check params
-		if ( !empty( $params ) ) {
-			foreach ( explode( ',', $params ) as $param ) {
-				$this->params[] = trim( $param );
+
+		if (isset($params['reason'])) {
+			$commandParams['r'] = $params['reason'];
+		}
+
+		$result = $this->runOnWikis(
+			$params['wikis'],
+			$params['lang'],
+			$params['cat'],
+			$params['selwikia'],
+			'delete',
+			$commandParams
+		);
+
+		return array_sum($result);
+	}
+
+	/**
+	 * @param $params
+	 * @return bool|int
+	 */
+	public function edit( $params ) {
+		/** @var \Title $page */
+		list($_, $impersonatedUsername, $page) = $this->parseCommon($params);
+
+		if (!is_object($page)) {
+			$this->error('page is invalid, terminating task', [
+				'title' => $params['page'],
+			]);
+
+			return false;
+		}
+
+		$commandParams = [
+			't' => str_replace(' ', '_', $page->getText()),
+			'n' => $page->getNamespace(),
+			'x' => $params['text'],
+		];
+
+		if (!empty($impersonatedUsername)) {
+			$commandParams['u'] = $impersonatedUsername;
+		}
+
+		if (!empty($params['summary'])) {
+			$commandParams['s'] = $params['summary'];
+		}
+
+		$optionsSwitches = ['m','b','a','-no-rc', '-newonly'];
+		for ($i = 0; $i < count($params['flags']); ++$i) {
+			if ($params['flags'][$i]) {
+				$commandParams[$optionsSwitches[$i]] = null;
 			}
 		}
 
-		# check old page title
-		$old_page = \Title::newFromText( $article );
-		if ( !is_object($old_page) ) {
-			$error = 'Invalid article (' . $article . ')';
-			throw new \Exception( $error . ': ' . __METHOD__ );
-			return $error;
-		}
-		
-		# check page title
-		$this->page = \Title::newFromText( $newarticle );
-		if ( !is_object($this->page) ) {
-			$error = 'Invalid article (' . $article . ')';
-			throw new \Exception( $error . ': ' . __METHOD__ );
-			return $error;
+		$result = $this->runOnWikis(
+			$params['wikis'],
+			$params['lang'],
+			$params['cat'],
+			$params['selwikia'],
+			'edit',
+			$commandParams
+		);
+
+		return array_sum($result);
+	}
+
+	private function parseCommon($params) {
+		$impersonatedName = isset($params['user']) ? $params['user'] : 'Maintenance script';
+		$createdBy = \User::newFromId($this->createdBy);
+		$impersonatedUser = \User::newFromName($impersonatedName);
+		$page = isset($params['page']) ? \Title::newFromText($params['page']) : null;
+
+		if (!is_object($impersonatedUser)) {
+			$impersonatedName = '';
 		}
 
-		# parse text options 
-		$this->main_params = [
-			'u' => $this->username,
-			'ot' => str_replace( ' ', '_', $old_page->getText() ),
-			'on' => $old_page->getNamespace(),
-			'nt' => str_replace( ' ', '_', $this->page->getText() ),
-			'nn' => $this->page->getNamespace(),
-		];
-		
-		if ( !empty( $reason ) ) {
-			$this->main_params[ 'r' ] = $reason;
-		}
-		
-		# check wikis
-		$task_wikis = [];
-		if ( !empty( $wikis ) ) {
-			$task_wikis = explode( ",", $wikis );
-		}		
-
-		$this->action = 'move';
-		$result = $this->runOnWikis( $task_wikis, $lang, $cat );
-
-		return $result;
+		return [$createdBy, $impersonatedName, $page];
 	}
 	
-	private function runOnWikis( $wikis=[], $lang = '', $cat = '' ) {
+	private function runOnWikis($wikiInputRaw, $lang, $cat, $wikiId, $action, $commandParams) {
 		global $wgExternalSharedDB ;
 		$db = wfGetDB (DB_SLAVE, array(), $wgExternalSharedDB);
+
+		$wikiDomains = [];
+		foreach (explode("\n", $wikiInputRaw) as $wikiLine) {
+			foreach (explode(',', $wikiLine) as $wikiLinePart) {
+				$wikiLinePart = trim($wikiLinePart);
+				if (!empty($wikiLinePart)) {
+					$wikiDomains []= $wikiLinePart;
+				}
+			}
+		}
 		
 		// Get a count of articles in a category.  Give at least a very small cache TTL
-		$query = (new \WikiaSQL())->cache( 60 )
-			->SELECT( 'city_list.city_id' )
-				->FIELD('city_dbname')
-				->FIELD('city_url')
+		$query = (new \WikiaSQL())->cacheGlobal( 60 )
+			->SELECT( 'city_list.city_id', 'city_list.city_dbname', 'city_list.city_url' )
 			->FROM( 'city_list' )
 			->WHERE( 'city_public' )->EQUAL_TO( 1 );
 
-		$count = 0;
-		# check conditions
-		if ( !empty( $lang ) ) 
-			$query->AND_( 'city_lang' )->EQUAL_TO( $lang );
-			
-		if ( !empty( $cat ) )
-			$query->AND_( 'cat_id' )->EQUAL_TO( $cat );
-
-		if ( !empty( $wikis ) && count( $wikis ) == 1 ) {
-			$query->AND_( 'city_dbname' )->EQUAL_TO( reset( $wikis ) );
-		} elseif ( !empty( $wikis ) ) {
-			$query->AND_( 'city_domain' )->IN( $wikis );
+		if ( !empty( $lang ) ) {
+			$query->AND_( 'city_list.city_lang' )->EQUAL_TO( $lang );
 		}
-		
-		if ( empty( $wikis ) && !empty( $cat) ) {
-			$join = [
-				'table' => 'city_cat_mapping',
-				'on'	=> 'city_cat_mapping.city_id = city_list.city_id'
-			];
-		} elseif ( !empty( $wikis ) ) {
-			$join = [
-				'table' => 'city_domains',
-				'on'	=> 'city_list.city_id = city_domains.city_id'
-			];
-		}
-		
-		$query->JOIN( $join['table'] )->ON( $join['on'] );
-		// Run the query we've built
 
-		$count = 0;
-		$result = $query->runLoop( $db, function( &$result, $row ) use ( &$count ) {
-			$res = $this->callback( $count, $row );
+		if (!empty($wikiId)) {
+			$query->AND_('city_list.city_id')->EQUAL_TO($wikiId);
+		}
+
+		if (!empty($cat)) {
+			$cat = intval($cat);
+			$query->AND_( 'city_cat_mapping.cat_id' )->EQUAL_TO( $cat )
+				->JOIN('city_cat_mapping')->ON('city_cat_mapping.city_id', 'city_list.city_id');
+		}
+
+		if (!empty($wikiDomains)) {
+			$query->AND_('city_domains.city_domain')->IN($wikiDomains)
+				->JOIN('city_domains')->ON('city_domains.city_id', 'city_list.city_id');
+		}
+
+		$result = $query->runLoop( $db, function( &$result, $row ) use ( $action, $commandParams ) {
+			$row->city_server = \WikiFactory::getVarValueByName( "wgServer", $row->city_id );
+			$row->city_script = \WikiFactory::getVarValueByName( "wgScript", $row->city_id );
+			$res = $this->runCommand( $row, $action, $commandParams );
 			$result[ $row->city_dbname ] = ( $res == false ) ? 0 : 1 ;
 		} );
 
 		return $result;
 	}
 	
-	private function makeCommand( $row ) {
-		global $IP, $wgWikiaLocalSettingsPath;
+	private function makeCommand( $row, $action, $params ) {
+		global $IP;
 
-		$row->city_server = \WikiFactory::getVarValueByName( "wgServer", $row->city_id );
-		$row->city_script = \WikiFactory::getVarValueByName( "wgScript", $row->city_id );
-		
-		$sCommand = "SERVER_ID=". $row->city_id ." php $IP/maintenance/wikia/{$this->action}On.php ";
+		$command = "SERVER_ID=". $row->city_id ." php $IP/maintenance/wikia/{$action}On.php";
 
-		# check text params
-		foreach ( $this->main_params as $opt => $value ) {
-			if ( !is_null( $value ) ) {
-				$sCommand .= sprintf( "-%s %s ", $opt, escapeshellarg( $value ) );
+		foreach ( $params as $opt => $value ) {
+			$command .= " -{$opt} ";
+			if ($value !== null) {
+				$command .= escapeshellarg($value);
 			}
 		}
-
-		# check params 
-		if ( !empty( $this->params ) ) {
-			foreach ( $this->params as $param ) { 
-				if ( !is_null( $param ) ) {
-					$sCommand .= sprintf( "-%s ", $param );
-				}
-			}
-		} 
-
-		$sCommand .= "--conf $wgWikiaLocalSettingsPath";
 		
-		return $sCommand;
+		return $command;
 	}
-	
-	private function callback( &$count, $row ) {
-		$command = $this->makeCommand( $row );
+
+	private function runCommand( $row, $action, $params ) {
+		$command = $this->makeCommand( $row, $action, $params );
 		$response = wfShellExec( $command, $result );
 	
-		if ( $result ) {
+		if ( $result !== 0 ) {
 			$res = false;
-			$this->log( 'Multi task (' . $this->action . ') error! (' . $row->city_server . '). Error code returned: ' .  $result . ' Error was: ' . $response );
+			$this->error('Multi task error!', [
+				'action' => $action,
+				'server' => $row->city_server,
+				'exitStatus' => $result,
+				'error' => $response,
+			]);
 		}
 		else {
 			$res = true;
-			$this->log( $this->action . ' done: <a href="' . $row->city_server . $row->city_script . '?title=' . wfEscapeWikiText( $response ) . '">' .$row->city_server . $row->city_script . '?title=' . $response . '</a>');
-			$count++;
+			$this->info('Multi task complete!', [
+				'link' => "{$row->city_server}{$row->city_script}?title=".wfEscapeWikiText($response),
+			]);
 		}
 		
 		return $res;
-	} 
+	}
 }

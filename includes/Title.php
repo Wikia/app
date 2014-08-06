@@ -4451,13 +4451,30 @@ class Title {
 	 * on the number of links. Typically called on create and delete.
 	 */
 	public function touchLinks() {
-		$u = new HTMLCacheUpdate( $this, 'pagelinks' );
-		$u->doUpdate();
+		// Wikia Change Start @author Scott Rabin (srabin@wikia-inc.com)
+		if ( TaskRunner::isModern('HTMLCacheUpdate') ) {
+			global $wgCityId;
 
-		if ( $this->getNamespace() == NS_CATEGORY ) {
-			$u = new HTMLCacheUpdate( $this, 'categorylinks' );
+			$affectedTables = [ 'pagelinks' ];
+			if ( $this->getNamespace() == NS_CATEGORY ) {
+				$affectedTables[] = 'categorylinks';
+			}
+
+			$task = ( new \Wikia\Tasks\Tasks\HTMLCacheUpdateTask() )
+				->wikiId( $wgCityId )
+				->title( $this );
+			$task->call( 'purge', $affectedTables );
+			$task->queue();
+		} else {
+			$u = new HTMLCacheUpdate( $this, 'pagelinks' );
 			$u->doUpdate();
+
+			if ( $this->getNamespace() == NS_CATEGORY ) {
+				$u = new HTMLCacheUpdate( $this, 'categorylinks' );
+				$u->doUpdate();
+			}
 		}
+		// Wikia Change End
 	}
 
 	/**
@@ -4604,6 +4621,21 @@ class Title {
 			$this->mBacklinkCache = new BacklinkCache( $this );
 		}
 		return $this->mBacklinkCache;
+	}
+
+	/**
+	 * Get the backlinks for a given table. Cached in process memory only.
+	 *
+	 * This is a local wrapper around the local BacklinkCache instance to prevent
+	 * reaching from other objects, through the title, to the BacklinkCache.
+	 *
+	 * @param $table String
+	 * @param $startId Integer or false
+	 * @param $endId Integer or false
+	 * @return TitleArrayFromResult
+	 */
+	public function getLinksFromBacklinkCache( $table, $start, $end ) {
+		return $this->getBacklinkCache()->getLinks( $table, $start, $end );
 	}
 
 	/**

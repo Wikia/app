@@ -206,7 +206,7 @@
 				Lightbox.openModal.removeClass('share-mode').removeClass('more-info-mode');
 				Lightbox.openModal.share.html('');
 				Lightbox.openModal.moreInfo.html('');
-			}).on('click.Lightbox', Lightbox.openModal.pin, function (evt) {
+			}).on('click.Lightbox', Lightbox.openModal.pin.selector, function (evt) {
 				// Pin the toolbar on icon click
 				var target = $(evt.target),
 					overlayActive = Lightbox.openModal.data('overlayactive'),
@@ -313,6 +313,9 @@
 			updateLightbox: function (data) {
 				Lightbox.image.getDimensions(data.imageUrl, function (dimensions) {
 
+					// render media
+					data.imageHeight = dimensions.imageHeight;
+
 					var css = {
 							height: dimensions.modalHeight
 						},
@@ -328,9 +331,6 @@
 					}
 
 					Lightbox.openModal.css(css);
-
-					// render media
-					data.imageHeight = dimensions.imageHeight;
 
 					// Hack to vertically align the image in the lightbox
 					Lightbox.openModal.media
@@ -1107,6 +1107,8 @@
 						origin: 'image-lightbox',
 						callback: function () {
 							doShareEmail(addresses);
+							// see VID-473 - Reload page on lightbox close
+							LightboxLoader.reloadOnClose = true;
 						}
 					});
 				}
@@ -1334,8 +1336,7 @@
 						var $thisThumb = $(this),
 							type = 'video',
 							title = $thisThumb.attr('data-video-name'),
-							key = $thisThumb.attr('data-video-key'),
-							playButtonSpan = Lightbox.thumbPlayButton;
+							key = $thisThumb.attr('data-video-key');
 
 						if (key) {
 							// Check for dupes
@@ -1349,7 +1350,7 @@
 								title: title,
 								key: key,
 								type: type,
-								playButtonSpan: playButtonSpan,
+								playButtonSpan: Lightbox.thumbPlayButton,
 								thumbWrapperClass: Lightbox.videoWrapperClass
 							});
 						}
@@ -1428,11 +1429,7 @@
 					break;
 
 				case 'videosModule':
-					if (!clickSource) {
-						clickSource = parent.hasClass('videos-module-rail') ?
-							VPS.VIDEOS_MODULE_RAIL :
-							VPS.VIDEOS_MODULE_BOTTOM;
-					}
+					clickSource = clickSource || VPS.VIDEOS_MODULE_RAIL;
 
 					carouselType = 'videosModule';
 					trackingCarouselType = 'videos-module';

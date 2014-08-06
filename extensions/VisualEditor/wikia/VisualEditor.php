@@ -51,6 +51,7 @@ $wgResourceModules += array(
 	'ext.visualEditor.wikiaViewPageTarget' => $wgVisualEditorWikiaResourceTemplate + array(
 		'scripts' => array(
 			've/init/ve.init.mw.WikiaViewPageTarget.js',
+			've/init/ve.init.mw.WikiaTargetEvents.js'
 		),
 		'styles' => array(
 			've/init/styles/ve.init.mw.WikiaViewPageTarget.css'
@@ -73,6 +74,7 @@ $wgResourceModules += array(
 			've/dm/ve.dm.WikiaInlineVideoNode.js',
 			've/dm/ve.dm.WikiaCart.js',
 			've/dm/ve.dm.WikiaCartItem.js',
+			've/dm/ve.dm.WikiaMapNode.js',
 
 			// ce
 			've/ce/ve.ce.WikiaMediaCaptionNode.js',
@@ -83,6 +85,7 @@ $wgResourceModules += array(
 			've/ce/ve.ce.WikiaVideoNode.js',
 			've/ce/ve.ce.WikiaBlockVideoNode.js',
 			've/ce/ve.ce.WikiaInlineVideoNode.js',
+			've/ce/ve.ce.WikiaMapNode.js',
 
 			// ui
 			've/ui/ve.ui.WikiaCommandRegistry.js',
@@ -91,16 +94,21 @@ $wgResourceModules += array(
 			've/ui/dialogs/ve.ui.WikiaReferenceDialog.js',
 			've/ui/dialogs/ve.ui.WikiaSaveDialog.js',
 			've/ui/dialogs/ve.ui.WikiaSourceModeDialog.js',
+			've/ui/dialogs/ve.ui.WikiaOrientationDialog.js',
+			've/ui/dialogs/ve.ui.WikiaMapInsertDialog.js',
 			've/ui/tools/ve.ui.WikiaDialogTool.js',
 			've/ui/tools/ve.ui.WikiaHelpTool.js',
 			've/ui/tools/ve.ui.WikiaMWGalleryInspectorTool.js',
-			've/ui/tools/ve.ui.WikiaMWLinkInspectorTool.js',
+			've/ui/tools/ve.ui.WikiaMWLinkNodeInspectorTool.js',
 			've/ui/widgets/ve.ui.WikiaCartWidget.js',
 			've/ui/widgets/ve.ui.WikiaCartItemWidget.js',
 			've/ui/widgets/ve.ui.WikiaDimensionsWidget.js',
 			've/ui/widgets/ve.ui.WikiaMediaPageWidget.js',
 			've/ui/widgets/ve.ui.WikiaMediaSelectWidget.js',
 			've/ui/widgets/ve.ui.WikiaMediaOptionWidget.js',
+			've/ui/widgets/ve.ui.WikiaPhotoOptionWidget.js',
+			've/ui/widgets/ve.ui.WikiaVideoOptionWidget.js',
+			've/ui/widgets/ve.ui.WikiaMapOptionWidget.js',
 			've/ui/widgets/ve.ui.WikiaMediaResultsWidget.js',
 			've/ui/widgets/ve.ui.WikiaMediaQueryWidget.js',
 			've/ui/widgets/ve.ui.WikiaUploadWidget.js',
@@ -113,6 +121,12 @@ $wgResourceModules += array(
 			'videohandler-video-views',
 			'wikia-visualeditor-preference-enable',
 			'wikia-visualeditor-dialogbutton-wikiamediainsert-tooltip',
+			'wikia-visualeditor-dialogbutton-wikiamapinsert-tooltip',
+			'wikia-visualeditor-dialog-wikiamapinsert-create-button',
+			'wikia-visualeditor-dialog-wikiamapinsert-headline',
+			'wikia-visualeditor-dialog-wikiamapinsert-empty-headline',
+			'wikia-visualeditor-dialog-wikiamapinsert-empty-text',
+
 			'wikia-visualeditor-dialog-wikiamediainsert-insert-button',
 			'wikia-visualeditor-dialog-wikiamediainsert-item-license-label',
 			'wikia-visualeditor-dialog-wikiamediainsert-item-title-label',
@@ -149,6 +163,13 @@ $wgResourceModules += array(
 			'wikia-visualeditor-notification-media-permission-denied',
 			'wikia-visualeditor-notification-video-preview-not-available',
 			'accesskey-save',
+			'wikia-visualeditor-dialog-orientation-headline',
+			'wikia-visualeditor-dialog-orientation-text',
+			'wikia-visualeditor-dialog-orientation-start-button',
+			'wikia-visualeditor-dialog-meta-languages-readonlynote',
+			'wikia-visualeditor-dialog-transclusion-no-template-description',
+			'wikia-visualeditor-dialog-map-insert-title',
+			'wikia-visualeditor-save-error-generic',
 		),
 		'dependencies' => array(
 			'ext.visualEditor.core.desktop',
@@ -172,7 +193,20 @@ $wgHooks['MakeGlobalVariablesScript'][] = 'VisualEditorWikiaHooks::onMakeGlobalV
 
 /* Configuration */
 
+$wgDefaultUserOptions['useeditwarning'] = true;
+
 // Disable VE for blog namespaces
-if ( defined( 'NS_BLOG_ARTICLE' ) && defined( 'NS_BLOG_ARTICLE_TALK' ) ) {
-	$wgVisualEditorNamespaces = array_diff( $wgVisualEditorNamespaces, array( NS_BLOG_ARTICLE, NS_BLOG_ARTICLE_TALK ) );
+if ( !empty( $wgEnableBlogArticles ) ) {
+	$tempArray = array();
+	foreach ( $wgVisualEditorNamespaces as $key => &$value ) {
+		if ( $value === NS_BLOG_ARTICLE || $value === NS_BLOG_ARTICLE_TALK ) {
+			continue;
+		}
+		$tempArray[] = $value;
+	}
+	$wgVisualEditorNamespaces = $tempArray;
 }
+
+// Add additional valid namespaces for Wikia
+$wgVisualEditorNamespaces[] = NS_CATEGORY;
+$wgVisualEditorNamespaces[] = NS_PROJECT;

@@ -1,9 +1,9 @@
 <a
 	href="{{linkHref}}"
 	class="video video-thumbnail {{size}} {{#linkClasses}}{{.}} {{/linkClasses}}"
-	{{#linkAttrs}}{{{.}}} {{/linkAttrs}}>
+	{{#linkAttrs}} {{{.}}}{{/linkAttrs}}>
 
-	{{>Thumbnail_imgThumbnail}}
+	{{>Thumbnail_imgTag}}
 	{{#noscript}}<noscript>{{{noscript}}}</noscript>{{/noscript}}
 
 	<span class="duration" {{#durationAttrs}}{{{.}}} {{/durationAttrs}}>{{duration}}</span>

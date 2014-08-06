@@ -2944,6 +2944,17 @@ $messages['tly'] = array(
 	'scavengerhunt-button-delete' => 'Рәдд кардеј',
 );
 
+/** Turkish (Türkçe)
+ * @author Sucsuzz
+ */
+$messages['tr'] = array(
+	'scavengerhunt-list-header-name' => 'Oyun ismi',
+	'scavengerhunt-button-save' => 'Kaydet',
+	'scavengerhunt-quit-game-button-quit' => 'Çık',
+	'scavengerhunt-quit-game-button-cancel' => 'İptal',
+	'scavengerhunt-label-entry-form-username' => 'Kullanıcı Adı',
+);
+
 /** Ukrainian (українська)
  * @author A1
  * @author Andriykopanytsia
@@ -3117,15 +3128,39 @@ $messages['zh-hans'] = array(
 	'scavengerhunt-label-image-check' => '（显示图像）',
 	'scavengerhunt-label-general' => '简单介绍',
 	'scavengerhunt-label-name' => '名：',
+	'scavengerhunt-label-starting-clue-title' => '弹窗标题：',
+	'scavengerhunt-label-starting-clue-text' => '弹窗文本：',
+	'scavengerhunt-label-starting-clue-image' => '弹窗图片（URL地址）：',
+	'scavengerhunt-label-starting-clue-button-text' => '弹窗按钮文字：',
+	'scavengerhunt-label-starting-clue-button-target' => '弹窗按钮目标（URL地址）：',
+	'scavengerhunt-label-article-hidden-image' => '隐藏图片：',
+	'scavengerhunt-label-entry-form' => '报表',
+	'scavengerhunt-label-entry-form-title' => '弹窗标题：',
+	'scavengerhunt-label-entry-form-text' => '弹窗文本：',
+	'scavengerhunt-label-entry-form-image' => '弹窗图片（URL地址）：',
+	'scavengerhunt-label-entry-form-question' => '弹窗问题：',
+	'scavengerhunt-label-entry-form-button-text' => '按钮文本：',
 	'scavengerhunt-label-goodbye' => '再见弹出菜单',
+	'scavengerhunt-label-goodbye-title' => '弹窗标题：',
+	'scavengerhunt-label-goodbye-text' => '弹窗消息：',
+	'scavengerhunt-label-goodbye-image' => '弹窗图片（URL地址）：',
 	'scavengerhunt-button-add' => '添加一个游戏',
 	'scavengerhunt-button-save' => '保存',
 	'scavengerhunt-button-disable' => '禁用',
 	'scavengerhunt-button-enable' => '启用',
 	'scavengerhunt-button-delete' => '删除',
 	'scavengerhunt-button-export' => '导出为CSV',
+	'scavengerhunt-button-remove-section' => '移除此步',
+	'scavengerhunt-form-error' => '请更正以下错误：',
+	'scavengerhunt-form-error-clueColor' => '请提供有效的颜色格式（#XXX）',
 	'scavengerhunt-entry-form-name' => '您的名字：',
 	'scavengerhunt-entry-form-email' => '您的电子邮件地址：',
+	'scavengerhunt-entry-form-submit' => '提交文章',
+	'scavengerhunt-label-sprite-X1' => '魔鬼左上角',
+	'scavengerhunt-label-sprite-X2' => '魔鬼右下角',
+	'scavengerhunt-game-has-been-deleted' => '狩猎游戏已删除',
+	'scavengerhunt-game-more-to-go' => '只有#更多可走。',
+	'scavengerhunt-label-progress-bar' => '进度栏',
 	'scavengerhunt-quit-game-button-quit' => '退出',
 	'scavengerhunt-quit-game-button-cancel' => '取消',
 	'scavengerhunt-quit-game-button-stay' => '保持游戏',
@@ -3133,6 +3168,7 @@ $messages['zh-hans'] = array(
 	'scavengerhunt-label-entry-form-username' => '用户名',
 	'scavengerhunt-label-clue-color' => '字体颜色',
 	'scavengerhunt-label-clue-size' => '字体大小',
+	'scavengerhunt-label-article-congrats' => '祝贺消息',
 	'scavengerhunt-label-facebook' => 'Facebook分享',
 	'scavengerhunt-facebook-image' => 'Facebook分享的图片',
 	'scavengerhunt-facebook-description' => 'Facebook分享的文本',

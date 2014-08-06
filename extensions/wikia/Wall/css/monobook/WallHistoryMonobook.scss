@@ -1,0 +1,25 @@
+// Monobook skin specific styling
+@import "../../../../../skins/wikia/css/color";
+
+.Wall .SortingBar,
+.WallHistory .SortingBar {
+	background: $color-page;
+}
+
+#WallHistory  {
+	.summaryBubble,
+	#WallThreadHistory .summaryBubble {
+		background: $color-page;
+	}
+
+	.summaryBubble:after,
+	#WallThreadHistory .summaryBubble:after  {
+		background: $color-page;
+	}
+
+
+	.summaryBubble:before,
+	#WallThreadHistory .summaryBubble:before  {
+		background: $color-page;
+	}
+}

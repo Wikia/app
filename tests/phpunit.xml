@@ -48,6 +48,7 @@
 		</exclude>
 	</groups>
 	<filter>
+		<!-- Exclude the following from code coverage reports -->
 		<blacklist>
 			<directory>../bin</directory>
 			<directory>../config</directory>
@@ -57,6 +58,7 @@
 			<directory>../lib</directory>
 			<directory>../maintenance</directory>
 			<directory>../math</directory>
+			<directory>../resources</directory>
 			<directory>../serialized</directory>
 			<directory>../static</directory>
 			<directory>../t</directory>
@@ -67,5 +69,8 @@
 			<directory suffix=".setup.php">../extensions</directory>
 			<directory suffix="_setup.php">../extensions</directory>
 		</blacklist>
+		<whitelist>
+			<directory>../lib/Wikia/src</directory>
+		</whitelist>
 	</filter>
 </phpunit>

@@ -6,6 +6,7 @@ var CreatePage = {
 	context: null,
 	wgArticlePath: mw.config.get( 'wgArticlePath' ),
 	canUseVisualEditor: ( mw.libs && mw.libs.ve ? mw.libs.ve.canCreatePageUsingVE() : false ),
+	redlinkParam: '',
 
 	checkTitle: function( title ) {
 		'use strict';
@@ -19,10 +20,11 @@ var CreatePage = {
 			if ( response.result === 'ok' ) {
 				if ( CreatePage.canUseVisualEditor && mw.libs.ve.isInValidNamespace( title ) ) {
 					articlePath = CreatePage.wgArticlePath.replace( '$1', encodeURIComponent( title ) );
-					location.href = articlePath + '?veaction=edit';
+					location.href = articlePath + '?veaction=edit' + CreatePage.redlinkParam;
 				} else {
 					location.href = CreatePage.options[ CreatePage.canUseVisualEditor ? 'blank' :
-						CreatePage.pageLayout ].submitUrl.replace( '$1', encodeURIComponent( title ) );
+						CreatePage.pageLayout ].submitUrl.replace( '$1', encodeURIComponent( title ) ) +
+						CreatePage.redlinkParam;
 				}
 			}
 			else {
@@ -258,32 +260,13 @@ var CreatePage = {
 
 	redLinkClick: function( e, titleText ) {
 		'use strict';
+		CreatePage.redlinkParam = '&redlink=1';
 
 		if ( CreatePage.canUseVisualEditor ) {
 			CreatePage.track( { action: 'click', label: 've-redlink-click' } );
 		}
 
-		var title = titleText.split( ':' ),
-			isContentNamespace = false,
-			i;
-
-		if ( window.ContentNamespacesText && ( title.length > 1 ) ) {
-			for ( i in window.ContentNamespacesText ) {
-				if ( title[ 0 ] === window.ContentNamespacesText[ i ] ) {
-					isContentNamespace = true;
-				}
-			}
-		}
-		else {
-			isContentNamespace = true;
-		}
-
-		if ( isContentNamespace ) {
-			CreatePage.requestDialog( e, titleText );
-		}
-		else {
-			return false;
-		}
+		CreatePage.requestDialog( e, titleText );
 	},
 
 	init: function( context ) {
@@ -316,7 +299,7 @@ var CreatePage = {
 				}
 			}
 
-			$( 'a.new' ).bind( 'click', function( e ) {
+			$( '#WikiaArticle' ).on( 'click', 'a.new', function( e ) {
 				CreatePage.redLinkClick( e, CreatePage.getTitleFromUrl( this.href ) );
 			});
 

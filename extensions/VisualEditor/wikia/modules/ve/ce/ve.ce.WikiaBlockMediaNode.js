@@ -21,7 +21,7 @@
 ve.ce.WikiaBlockMediaNode = function VeCeWikiaBlockMediaNode( model, config ) {
 
 	// Parent constructor
-	ve.ce.BranchNode.call( this, model, config );
+	ve.ce.WikiaBlockMediaNode.super.call( this, model, config );
 
 	// Initialize
 	this.rebuild();
@@ -55,14 +55,14 @@ ve.ce.WikiaBlockMediaNode.static.cssClasses = {
 	'default': {
 		'left': 'tleft',
 		'right': 'tright',
-		'center' : 'tnone',
-		'none' : 'tnone'
+		'center': 'tnone',
+		'none': 'tnone'
 	},
 	'none': {
 		'left': 'floatleft',
 		'right': 'floatright',
-		'center' : 'floatnone',
-		'none' : 'floatnone'
+		'center': 'floatnone',
+		'none': 'floatnone'
 	}
 };
 
@@ -230,7 +230,6 @@ ve.ce.WikiaBlockMediaNode.prototype.rebuild = function () {
 	// Update references for mixins
 	this.$focusable = this.$element;
 	this.$phantomable = this.$element;
-	this.$relocatable = this.$element;
 	this.$image = $image;
 	this.$resizable = $image;
 	this.$thumb = $thumb;

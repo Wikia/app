@@ -129,6 +129,7 @@ $messages['en'] = array(
 $messages['qqq'] = array(
 	'multiwikiedit_button' => '{{Identical|Edit}}',
 	'multiwikiedit_on' => 'Label for dropdown menu where user can select type of wikis to run script on',
+	'multiwikiedit_minoredit_caption' => '{{Identical|Minor edit}}',
 	'multiwikiedit_all_wikis' => '{{Identical|All wikis}}',
 	'multiwikiedit_success_subtitle' => '{{Identical|For $1}}',
 	'multiwikiedit_max_display_size' => 'Parameters:
@@ -988,6 +989,7 @@ $messages['eo'] = array(
  * @author Armando-Martin
  * @author Bola
  * @author Crazymadlover
+ * @author Fitoschido
  * @author Ihojose
  * @author Locos epraix
  * @author Mor
@@ -1059,7 +1061,7 @@ $messages['es'] = array(
 	'multidelete_info_empty_list' => 'No se encontraron títulos provistos en los wikis seleccionados.',
 	'multidelete_task_added' => 'Tarea de borrado múltiple #$1 fue agregada',
 	'multidelete_task_error' => 'Hubo un error en la adición de una tarea de borrado múltiple.',
-	'multidelete_task_none_selected' => 'No seleccionas te ningún artículo. La tarea no fue agregada.',
+	'multidelete_task_none_selected' => 'No seleccionaste ningún artículo. No se añadió la tarea.',
 	'multidelete_select_all' => 'Seleccionar todo',
 	'multidelete_page' => 'Páginas a ser borradas',
 	'multidelete_reason' => 'Motivo de borrado',
@@ -3552,6 +3554,7 @@ $messages['tl'] = array(
 
 /** Turkish (Türkçe)
  * @author Incelemeelemani
+ * @author Sucsuzz
  * @author Suelnur
  */
 $messages['tr'] = array(
@@ -3559,6 +3562,7 @@ $messages['tr'] = array(
 	'multiwikiedit_confirm' => 'ONAYLA',
 	'multiwikiedit_caption' => 'Sayfa listesi',
 	'multiwikiedit_title' => 'Çoklu Wiki Düzenle',
+	'multiwikiedit_minoredit_caption' => 'Küçük değişiklik',
 	'multiwikiedit_this_wiki' => 'bu wiki',
 	'multiwikiedit_inbox_caption' => 'virgülle ayrılmış',
 	'multiwikiedit_all_wikis' => 'tüm vikiler',
@@ -3567,6 +3571,7 @@ $messages['tr'] = array(
 	'multidelete_button' => 'SİL',
 	'multidelete_caption' => 'Sayfa listesi',
 	'multidelete_title' => 'Çoklu Sil',
+	'multiwikifinder-redirect' => 'yönlendirme',
 );
 
 /** Tatar (Cyrillic script) (татарча)
@@ -3718,7 +3723,9 @@ $messages['zh-hans'] = array(
 	'multiwikiedit_confirm' => '确定',
 	'multiwikiedit_caption' => '页面列表',
 	'multiwikiedit_title' => '跨维基编辑',
+	'multiwikiedit_as' => '运行代码为',
 	'multiwikiedit_or' => '<b>或</b>',
+	'multiwikiedit_task_added' => '多wiki编辑任务#$1已加入。',
 	'multiwikiedit_on' => '运行该脚本于',
 	'multiwikiedit_page' => '待撰页面',
 	'multiwikiedit_page_text' => '要保存的文本',
@@ -3738,10 +3745,13 @@ $messages['zh-hans'] = array(
 	'multiwikiedit_all_wikis' => '所有维基',
 	'multiwikiedit_selected_wikis' => '被选中的维基',
 	'multiwikiedit_success_subtitle' => '为$1',
+	'multiwikiedit_omitting_nonexistant' => '省略不存在页面$1。',
+	'multiwikiedit_omitting_invalid' => '省略无效页面$1。',
 	'multiwikiedit_file_bad_format' => '该文件应为纯文本',
 	'multiwikiedit_file_missing' => '无法读取指定文件',
 	'multiwikiedit_select_script' => '编辑页面脚本',
 	'multiwikiedit_select_yourself' => '您',
+	'multiwikiedit_tasks_list' => '要运行的任务列表',
 	'multiwikiedit_edit_options' => '编辑选项',
 	'action-multiwikiedit' => '编辑一批页面',
 	'multidelete' => '批量删除页面',
@@ -3749,15 +3759,19 @@ $messages['zh-hans'] = array(
 	'multidelete_caption' => '页面列表',
 	'multidelete_title' => '删除多项',
 	'multidelete_or' => '<b>或</b>',
+	'multidelete_task_added' => '多重删除任务#$1已加入。',
 	'multidelete_select_all' => '选择全部',
 	'multidelete_page' => '待删除页面',
 	'multidelete_reason' => '删除原因',
+	'multidelete_list_caption' => '在特定wiki列表中',
 	'multidelete_processing' => '页面删除中',
 	'multidelete_this_wiki' => '这个维基',
 	'multidelete_inbox_caption' => '或以逗号隔开',
 	'multidelete_all_wikis' => '所有维基',
 	'multidelete_selected_wikis' => '已选择的维基',
 	'multidelete_success_subtitle' => '为$1',
+	'multidelete_omitting_nonexistant' => '省略不存在页面$1。',
+	'multidelete_omitting_invalid' => '省略无效页面$1。',
 	'multidelete_file_bad_format' => '该文件应为纯文本',
 	'multidelete_file_missing' => '无法读取提供的文件',
 	'multidelete_split_results' => "在单个任务中您的段落字数过高。其已被分割为'''$1'''个任务，每个任务中共'''$2'''个段落。",
@@ -3782,6 +3796,7 @@ $messages['zh-hans'] = array(
 	'multiwikifindpagenames' => '查找页面名称',
 	'multiwikienterpagename' => '输入页面名称：',
 	'multiwikirecords' => '找到了$1个维基',
+	'multiwikifinder-redirect' => '重定向',
 	'action-multiwikifinder' => '在Wikia搜寻一个特定的标题',
 );
 

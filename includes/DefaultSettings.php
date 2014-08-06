@@ -33,7 +33,7 @@ $wgConf = new SiteConfiguration;
 /** @endcond */
 
 /** MediaWiki version number */
-$wgVersion = '1.19.16';
+$wgVersion = '1.19.18';
 
 /** Name of the site. It must be changed in LocalSettings.php */
 $wgSitename = 'MediaWiki';
@@ -448,11 +448,6 @@ $wgCacheSharedUploads = true;
 * The timeout for copy uploads is set by $wgHTTPTimeout.
 */
 $wgAllowCopyUploads = false;
-/**
- * Allow asynchronous copy uploads.
- * This feature is experimental and broken as of r81612.
- */
-$wgAllowAsyncCopyUploads = false;
 
 /**
  * Max size for uploads, in bytes. If not set to an array, applies to all
@@ -1073,16 +1068,6 @@ $wgEnableEmail = true;
 $wgEnableUserEmail = true;
 
 /**
- * Set to true to put the sending user's email in a Reply-To header
- * instead of From. ($wgEmergencyContact will be used as From.)
- *
- * Some mailers (eg sSMTP) set the SMTP envelope sender to the From value,
- * which can cause problems with SPF validation and leak recipient addressses
- * when bounces are sent to the sender.
- */
-$wgUserEmailUseReplyTo = false;
-
-/**
  * Minimum time, in hours, which must elapse between password reminder
  * emails for a given account. This is to prevent abuse by mail flooding.
  */
@@ -1174,12 +1159,6 @@ $wgEnotifImpersonal = false;
  * match the limit on your mail server.
  */
 $wgEnotifMaxRecips = 500;
-
-/**
- * Send mails via the job queue. This can be useful to reduce the time it
- * takes to save a page that a lot of people are watching.
- */
-$wgEnotifUseJobQ = false;
 
 /**
  * Use real name instead of username in e-mail "from" field.
@@ -4930,10 +4909,7 @@ $wgJobClasses = array(
 	'refreshLinks2' => 'RefreshLinksJob2',
 	'htmlCacheUpdate' => 'HTMLCacheUpdateJob',
 	'html_cache_update' => 'HTMLCacheUpdateJob', // backwards-compatible
-	'sendMail' => 'EmaillingJob',
-	'enotifNotify' => 'EnotifNotifyJob',
 	'fixDoubleRedirect' => 'DoubleRedirectJob',
-	'uploadFromUrl' => 'UploadFromUrlJob',
 );
 
 /**
@@ -5610,7 +5586,6 @@ $wgHTTPProxy = false;
 
 /************************************************************************//**
  * @name   Job queue
- * See also $wgEnotifUseJobQ.
  * @{
  */
 

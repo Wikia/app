@@ -7,6 +7,7 @@ use Wikia\Search\Test\BaseTest, ReflectionMethod, Wikia\Search\QueryService\Depe
 /**
  * Tests default functionality shared by all dismax-style query services
  * @author relwell
+ * @group Broken
  */
 class AbstractDismaxTest extends BaseTest
 {

@@ -100,6 +100,7 @@ $messages['ca'] = array(
 
 /** Czech (čeština)
  * @author Dontlietome7
+ * @author H4nek
  */
 $messages['cs'] = array(
 	'imgplc-add-image' => 'Přidat obrázek',
@@ -107,6 +108,7 @@ $messages['cs'] = array(
 	'imgplc-placeholder' => 'Zástupný symbol',
 	'imgplc-image' => 'Obrázek',
 	'imgplc-notinhistory' => 'Nemůžete přidat obrázek v režimu historie.',
+	'imgplc-notinhistory-video' => 'Nemůžete přidat video v režimu historie.',
 );
 
 /** German (Deutsch)
@@ -590,6 +592,15 @@ $messages['tly'] = array(
 	'imgplc-image' => 'Шикил',
 );
 
+/** Turkish (Türkçe)
+ * @author Sucsuzz
+ */
+$messages['tr'] = array(
+	'imgplc-add-image' => 'Resim Ekle',
+	'imgplc-add-video' => 'Video Ekle',
+	'imgplc-image' => 'Resim',
+);
+
 /** Tatar (Cyrillic script) (татарча)
  * @author Ajdar
  */
@@ -636,6 +647,14 @@ $messages['zh-hans'] = array(
 	'imgplc-image' => '照片',
 	'imgplc-notinhistory' => '您不能在历史模式中添加图片。',
 	'imgplc-notinhistory-video' => '您不能在历史模式中添加视频。',
+);
+
+/** Traditional Chinese (中文（繁體）‎)
+ * @author Ffaarr
+ */
+$messages['zh-hant'] = array(
+	'imgplc-add-image' => '增加圖片',
+	'imgplc-add-video' => '增加影片',
 );
 
 /** Chinese (Hong Kong) (中文（香港）‎)

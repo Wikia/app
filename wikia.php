@@ -17,16 +17,16 @@ if ($wgProfiler instanceof Profiler) {
 }
 
 // Construct a tag for newrelic -- wgRequest is global in this scope
-if( function_exists( 'newrelic_name_transaction' ) ) {
-	if ( function_exists( 'newrelic_disable_autorum') ) {
-		newrelic_disable_autorum();
-	}
-	newrelic_name_transaction('Nirvana');
-	if ( function_exists( 'newrelic_add_custom_parameter' ) && is_object($wgRequest)) {
-		newrelic_add_custom_parameter( 'controller', $wgRequest->getVal( 'controller' ) );
-		newrelic_add_custom_parameter( 'method', $wgRequest->getVal( 'method' ) );
-	}
+Transaction::setEntryPoint(Transaction::ENTRY_POINT_NIRVANA);
+if ( is_object($wgRequest) ) {
+	Transaction::setAttribute(Transaction::PARAM_CONTROLLER, $wgRequest->getVal( 'controller' ));
+	Transaction::setAttribute(Transaction::PARAM_METHOD, $wgRequest->getVal( 'method' ));
 }
+
+if ( function_exists( 'newrelic_disable_autorum') ) {
+	newrelic_disable_autorum();
+}
+
 
 if ( !empty( $wgEnableNirvanaAPI ) ){
 	// temporarily force ApiDocs extension regardless of config
