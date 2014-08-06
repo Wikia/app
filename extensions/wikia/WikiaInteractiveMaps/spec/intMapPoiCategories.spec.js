@@ -1,34 +1,67 @@
-describe('poiCategories', function () {
+describe('WikiaMaps.poiCategories', function () {
 	'use strict';
 
-	var jQueryMock = jasmine.createSpyObj('$', ['msg']);
+	var jQueryMock = jasmine.createSpyObj('$', ['msg']),
+		poiCategoriesModule = modules['wikia.intMap.poiCategories'](jQueryMock);
 
-	var poiCategoriesModule = modules['wikia.intMap.poiCategories'](jQueryMock),
-		poiCategories;
+	it('registers AMD module', function() {
+		expect(typeof poiCategoriesModule).toBe('object');
+	});
 
-	dump(jasmine.getEnv());
-	expect(typeof poiCategoriesModule).toBe('object');
-	expect(typeof poiCategoriesModule.isPoiCategoryChanged).toBe('function');
+	it('checks if POI category has changed', function() {
+		expect(typeof poiCategoriesModule.isPoiCategoryChanged).toBe('function');
 
-	poiCategories = [
-		{
-			originalPoiCategory:
+		var testData = [
 			{
-				name: 'name',
-				parent_poi_category_id: ''
+				originalPoiCategory: {
+					name: 'name',
+					parent_poi_category_id: 1
+				},
+				newPoiCategory: {
+					name: 'changed name',
+					parent_poi_category_id: 1
+				},
+				isChanged: true
 			},
-			newPoiCategory:
 			{
-				name: 'name',
-				parent_poi_category_id: '',
-				marker: ''
+				originalPoiCategory: {
+					name: 'name',
+					parent_poi_category_id: 1
+				},
+				newPoiCategory: {
+					name: 'name',
+					parent_poi_category_id: 1
+				},
+				isChanged: false
 			},
-			isChanged: false
-		}
-	];
+			{
+				originalPoiCategory: {
+					name: 'name',
+					parent_poi_category_id: 1
+				},
+				newPoiCategory: {
+					name: 'name',
+					parent_poi_category_id: 2
+				},
+				isChanged: true
+			},
+			{
+				originalPoiCategory: {
+					name: 'name',
+					parent_poi_category_id: 1
+				},
+				newPoiCategory: {
+					name: 'name',
+					parent_poi_category_id: 1,
+					marker: 'new marker URL'
+				},
+				isChanged: true
+			}
+		];
 
-	poiCategories.forEach(function (testCase) {
-		var isChanged = poiCategoriesModule.isPoiCategoryChanged(testCase.originalPoiCategory, testCase.newPoiCategory);
-		expect(isChanged).toBe(testCase.isChanged);
+		testData.forEach(function (testCase) {
+			var isChanged = poiCategoriesModule.isPoiCategoryChanged(testCase.originalPoiCategory, testCase.newPoiCategory);
+			expect(isChanged).toBe(testCase.isChanged);
+		});
 	});
 });
