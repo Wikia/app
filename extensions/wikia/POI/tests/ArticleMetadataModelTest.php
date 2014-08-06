@@ -10,6 +10,7 @@ class ArticleMetadataModelTest extends WikiaBaseTest {
 
 	/**
 	 * @group Integration
+	 * @covers ArticleMetadataModel::save
 	 */
 	public function testReadData() {
 
@@ -17,7 +18,7 @@ class ArticleMetadataModelTest extends WikiaBaseTest {
 			'fingerprints' => [ 'fa', 'fb', 'fc' ],
 			'map_region' => 3 ];
 
-		$stub = $this->getMock( 'ArticleMetadataModel', [ 'getWikiaProp', 'setWikiaProp' ], array( 1 ) );
+		$stub = $this->getMock( 'ArticleMetadataModel', [ 'getWikiaProp', 'setWikiaProp', 'extractTitle' ], array( 1 ) );
 		$stub->expects( $this->any() )->method( 'getWikiaProp' )->willReturn( $propValue );
 		$stub->load();
 
@@ -31,24 +32,41 @@ class ArticleMetadataModelTest extends WikiaBaseTest {
 
 	/**
 	 * @group Integration
+	 * @covers ArticleMetadataModel::save
 	 */
 	public function testSave() {
-		$stub = $this->getMock( 'ArticleMetadataModel', [ 'getWikiaProp', 'setWikiaProp' ], array( 1 ) );
+		$stub = $this->getMock( 'ArticleMetadataModel', [ 'getWikiaProp', 'setWikiaProp', 'extractTitle' ], array( 1 ) );
 
-		$propValue = [ 'quest_id' => 1,
+		$propValue = [
+			'quest_id' => 1,
 			'fingerprints' => [ 'fa', 'fb', 'fc' ],
-			'map_region' => 3 ];
+			'map_region' => 3,
+			'ability_id' => 'aaa'
+		];
 
 		$stub->expects( $this->any() )
 			->method( 'setWikiaProp' )
-			->with( ArticleMetadataModel::article_prop_name, 1, $propValue );
+			->with( ArticleMetadataModel::ARTICLE_PROP_NAME, 1, $propValue );
 
 		$stub->setField( 'quest_id', 1 );
 		$stub->setField( 'map_region', 3 );
+		$stub->setField( 'ability_id', 'aaa' );
 		$stub->addFingerprint( 'fa' );
 		$stub->addFingerprint( 'fb' );
 		$stub->addFingerprint( 'fc' );
 
 		$stub->save();
 	}
+
+	/**
+	 * @expectedException TitleNotFoundException
+	 * @covers ArticleMetadataModel::newFromString
+	 */
+	public function testIndexNotFound() {
+		ArticleMetadataModel::newFromString("bnvghcfrt6t7y8uhgftdr567");
+
+	}
+
+
+
 }
