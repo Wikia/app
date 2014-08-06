@@ -1,10 +1,10 @@
-@import "skins/oasis/css/core/color";
+@import "skins/shared/color";
 @import "extensions/wikia/Venus/styles/layout";
-@import "skins/oasis/css/mixins/box-shadow";
-@import "skins/oasis/css/mixins/clearfix";
-@import "skins/oasis/css/mixins/gradient";
-@import "skins/oasis/css/mixins/menus";
-@import "skins/oasis/css/mixins/wordmark";
+@import "skins/shared/mixins/box-shadow";
+@import "skins/shared/mixins/clearfix";
+@import "skins/shared/mixins/gradient";
+@import "skins/shared/mixins/menus";
+@import "skins/shared/mixins/wordmark";
 
 $color-level-3rd: mix($color-buttons, $color-page, 20%);
 @if $is-dark-wiki {

@@ -15,17 +15,17 @@ class VenusController extends WikiaController {
 
 		$skinVars = $this->app->getSkinTemplateObj()->data;
 		// this should be re-viewed and removed if not nessesary
-		$this->pagetitle = $skinVars['pagetitle'];
-		$this->displaytitle = $skinVars['displaytitle'];
-		$this->mimetype = $skinVars['mimetype'];
-		$this->charset = $skinVars['charset'];
-		$this->body_ondblclick = $skinVars['body_ondblclick'];
-		$this->dir = $skinVars['dir'];
-		$this->lang = $skinVars['lang'];
-		$this->pageclass = $skinVars['pageclass'];
-		$this->pagecss = $skinVars['pagecss'];
-		$this->skinnameclass = $skinVars['skinnameclass'];
-		$this->bottomscripts = $skinVars['bottomscripts'];
+		$this->pagetitle = self::array_get($skinVars, 'pagetitle');
+		$this->displaytitle = self::array_get($skinVars, 'displaytitle');
+		$this->mimetype = self::array_get($skinVars, 'mimetype');
+		$this->charset = self::array_get($skinVars, 'charset');
+		$this->body_ondblclick = self::array_get($skinVars, 'body_ondblclick');
+		$this->dir = self::array_get($skinVars, 'dir');
+		$this->lang = self::array_get($skinVars, 'lang');
+		$this->pageclass = self::array_get($skinVars, 'pageclass');
+		$this->pagecss = self::array_get($skinVars, 'pagecss');
+		$this->skinnameclass = self::array_get($skinVars, 'skinnameclass');
+		$this->bottomscripts = self::array_get($skinVars, 'bottomscripts');
 		// initialize variables
 		$this->comScore = null;
 		$this->quantServe = null;
@@ -331,27 +331,27 @@ class VenusController extends WikiaController {
 	}
 
 	public function getGlobalHeader() {
-		return $this->app->renderView('GlobalNavigation', 'Index');
+		//return $this->app->renderView('GlobalNavigation', 'Index');
 	}
 
 	public function getNotifications() {
-		return $this->app->renderView('Notifications', 'Confirmation');
+		//return $this->app->renderView('Notifications', 'Confirmation');
 	}
 
 	public function getWikiHeader() {
-		return $this->app->renderView( 'LocalHeader', 'Index' );
+		//return $this->app->renderView( 'LocalHeader', 'Index' );
 	}
 
 	public function getTopAds() {
-		return $this->app->renderView('Ad', 'Top');
+		//return $this->app->renderView('Ad', 'Top');
 	}
 
 	public function getFooter() {
-		return $this->app->renderView('Footer', 'Index');
+		//return $this->app->renderView('Footer', 'Index');
 	}
 
 	public function getCorporateFootet() {
-		return $this->app->renderView('CorporateFooter', 'Index');
+		//return $this->app->renderView('CorporateFooter', 'Index');
 	}
 
 	public static function addBodyParameter($parameter) {
@@ -365,5 +365,9 @@ class VenusController extends WikiaController {
 	 */
 	public static function addSkinAssetGroup($group) {
 		self::$skinAssetGroups[] = $group;
+	}
+
+	private static function array_get($array, $index) {
+		return isset($array[$index]) ? $array[$index] : '';
 	}
 }

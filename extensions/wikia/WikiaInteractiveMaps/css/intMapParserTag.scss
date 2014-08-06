@@ -1,7 +1,7 @@
-@import "skins/oasis/css/mixins/gradient";
-@import "skins/oasis/css/mixins/ellipses";
-@import "skins/oasis/css/core/color";
-@import "skins/oasis/css/mixins/calc";
+@import "skins/shared/mixins/gradient";
+@import "skins/shared/mixins/ellipses";
+@import "skins/shared/color";
+@import "skins/shared/mixins/calc";
 
 $content-color: #fff;
 $secondary-content-color: #ccc;
