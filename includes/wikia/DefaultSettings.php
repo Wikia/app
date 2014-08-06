@@ -1473,7 +1473,7 @@ $wgEnableBuckyExt = true;
  * Sets the sampling rate for Bucky reporting, sampling applied at each page view.
  * Unit: percent (100 = all, 1 = 1%, 0.1 = 0.1%)
  */
-$wgBuckySampling = 1;
+$wgBuckySampling = 10;
 
 /*
  * @name wgXhprofUDPHost
