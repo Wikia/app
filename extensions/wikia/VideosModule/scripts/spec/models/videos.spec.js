@@ -10,6 +10,11 @@ describe('VideosModule -- sData Data: ', function () {
 		geo = modules['wikia.geo']();
 		VideosData = modules['videosmodule.models.videos'](nirvana, geo);
 		instance = new VideosData();
+
+
+
+
+		
 		spyOn(geo, 'getCountryCode').andReturn('US');
 		spyOn(nirvana, 'getJson').andReturn({
 			done: function (cb) {
