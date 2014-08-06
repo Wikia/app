@@ -7,6 +7,7 @@ before_install:
   - cd $TRAVIS_BUILD_DIR/extensions/VisualEditor/lib/ve/
   - npm install grunt-cli
 install:
+  - cd $TRAVIS_BUILD_DIR/
   - npm install
   - cd $TRAVIS_BUILD_DIR/extensions/VisualEditor/
   - npm install
@@ -18,6 +19,7 @@ before_script:
   - cd $TRAVIS_BUILD_DIR/extensions/VisualEditor/lib/ve/
   - grunt build
 script:
+  - cd $TRAVIS_BUILD_DIR/
   - npm test
   - cd $TRAVIS_BUILD_DIR/extensions/VisualEditor/
   - npm test
