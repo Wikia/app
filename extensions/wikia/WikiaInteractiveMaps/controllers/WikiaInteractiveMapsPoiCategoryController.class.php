@@ -180,7 +180,7 @@ class WikiaInteractiveMapsPoiCategoryController extends WikiaInteractiveMapsBase
 			$poiCategoryCreated = $this->createPoiCategory( $poiCategory );
 
 			if ( !empty( $poiCategoryCreated ) ) {
-				$poiCategoriesCreated []= $poiCategoryCreated;
+				$poiCategoriesCreated[] = $poiCategoryCreated;
 			}
 		}
 
@@ -188,7 +188,7 @@ class WikiaInteractiveMapsPoiCategoryController extends WikiaInteractiveMapsBase
 			$poiCategoryUpdated = $this->updatePoiCategory( $poiCategory );
 
 			if ( !empty( $poiCategoryUpdated ) ) {
-				$poiCategoriesUpdated []= $poiCategoryUpdated;
+				$poiCategoriesUpdated[] = $poiCategoryUpdated;
 			}
 		}
 
@@ -268,7 +268,7 @@ class WikiaInteractiveMapsPoiCategoryController extends WikiaInteractiveMapsBase
 			$response = $this->mapsModel->deletePoiCategory( $poiCategoryId );
 
 			if ( true === $response[ 'success' ] ) {
-				$poiCategoriesDeleted []= (int) $poiCategoryId;
+				$poiCategoriesDeleted[] = (int) $poiCategoryId;
 
 				$this->addLogEntry( WikiaMapsLogger::newLogEntry(
 					WikiaMapsLogger::ACTION_DELETE_PIN_TYPE,
