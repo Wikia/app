@@ -127,7 +127,7 @@ function renderLyricTag($input, $argv, $parser)
 		$imgPath = "$wgExtensionsPath/3rdparty/LyricWiki";
 		$artist = $parser->mTitle->getDBkey();
 		$colonIndex = strpos("$artist", ":");
-		$songTitle = $parser->mTitle->getText();
+		$songTitle = "";
 		if($colonIndex !== false){
 			$artist = substr($artist, 0, $colonIndex);
 			$songTitle = substr($songTitle, $colonIndex+1);
@@ -177,7 +177,7 @@ function renderToneFuzeTag($input, $argv, $parser){
 	// Parse out artist and/or song-title from the page title.
 	$artist = $parser->mTitle->getDBkey();
 	$colonIndex = strpos("$artist", ":");
-	$songTitle = $parser->mTitle->getText();
+	$songTitle = "";
 	if($colonIndex !== false){
 		$artist = substr($artist, 0, $colonIndex);
 		$songTitle = substr($songTitle, $colonIndex+1);
