@@ -581,6 +581,16 @@ class CreateWiki {
 		$this->mNewWiki->domain = strtolower( trim( $this->mDomain ) );
 
 		$this->mNewWiki->vertical = $this->mVertical;
+
+		// Map new verticals to old categories while in transition so that "hub" code still works
+		// If a user selects a vertical we will also add the old category that matches best with it
+		// This code can be removed after we are fully using the new verticals (PLATFORM-403)
+
+		// uses array_unshift to make sure hub category is first, because we take the first cat from SQL
+		if ( $this->mVertical == 1 ) array_unshift($this->mCategories, 2);	// Video games
+		if ( in_array( $this->mVertical, [2,3,4,5,6] ) ) array_unshift($this->mCategories, 3); // Entertainment
+		if ( $this->mVertical == 7 ) array_unshift($this->mCategories, 9);	// Lifestyle
+
 		$this->mNewWiki->categories = $this->mCategories;
 
 		// name
