@@ -1,4 +1,4 @@
-@import "../../../../../skins/oasis/css/mixins/gradient";
+@import "skins/shared/mixins/gradient";
 
 @mixin hubs-vertical-coloring($color-wikiahome-hubcolor, $color-wikiahome-hubcolor-dark){
 	$whitecolor: #fff;

@@ -1,0 +1,17 @@
+//@mixin clearfix {
+//	zoom: 1; // IE
+//
+//	&:after {
+//		clear: both;
+//		content: " ";
+//		display: block;
+//		height: 0;
+//		overflow: hidden; // (BugId:11677)
+//		visibility: hidden;
+//	}
+//}
+
+@mixin clearfix {
+	&:before, &:after { content: " "; display: table; }
+	&:after { clear: both; }
+}

@@ -1,9 +1,8 @@
 // reset css
 @import "libs/normalize";
 
-// import variables and mixins
+// import variables
 @import "variables";
-@import "mixins";
 
 // import general styles
 @import "general";
@@ -12,6 +11,3 @@
 @import "grid";
 @import "visibility";
 
-
-// hide "Retrived from..." print footer
-.printfooter { display: none; }
