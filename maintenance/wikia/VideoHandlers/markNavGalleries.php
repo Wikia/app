@@ -139,9 +139,9 @@ class MarkAsNav extends Maintenance {
 	 * @return string
 	 */
 	public function handleGallery( array $matches ) {
-		$galleryParams = $matches[1];
-		$galleryContent = $matches[2];
-		$galleryLines = explode("\n", $galleryContent);
+		$galleryParams = trim( $matches[1] );
+		$galleryContent = trim( $matches[2] );
+		$galleryLines = array_filter( explode( "\n", $galleryContent ) );
 
 		$hasTypeParam = false;
 
@@ -157,7 +157,7 @@ class MarkAsNav extends Maintenance {
 
 				// Note if a type param is already given.  This indicates we've already acted on this gallery tag in a
 				// previous run or its different gallery type (e.g., slider, slideshow)
-				if ( $paramName = 'type' ) {
+				if ( $paramName == 'type' ) {
 					$hasTypeParam = true;
 				}
 			}
@@ -167,6 +167,12 @@ class MarkAsNav extends Maintenance {
 		if ( $hasTypeParam ) {
 			return $matches[0];
 		}
+
+		// Requirements state not to convert galleries that only contain one image
+		if ( count($galleryLines) <= 1 ) {
+			return $matches[0];
+		}
+
 
 		// Look for any linked images
 		$hasLink = false;
