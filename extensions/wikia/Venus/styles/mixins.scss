@@ -23,3 +23,33 @@
 	overflow: visible;
 	clip: auto;
 }
+
+// makes a chevron
+@mixin chevron($height: 10px, $thickness: 2px, $direction: 'left', $color: #000) {
+    &::before {
+        content: '';
+        display: inline-block;
+        position: relative;
+        left: 0px;
+        top: -1px;
+        border-style: solid;
+        border-color: $color;
+        border-width: $thickness $thickness 0 0;
+        height: $height / 2;
+        width: $height / 2;
+        vertical-align: middle;
+
+        @if ($direction == 'down') {
+            transform: rotate(135deg);
+
+        } @else if ($direction == 'left') {
+            transform: rotate(-135deg);
+
+        } @else if ($direction == 'right') {
+            transform: rotate(45deg);
+
+        } @else if ($direction == 'up') {
+            transform: rotate(-45deg);
+        }
+    }
+}

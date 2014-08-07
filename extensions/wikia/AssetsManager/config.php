@@ -1433,14 +1433,6 @@ $config['wampage_js'] = array(
 
 /** WikiaSearch **/
 
-$config['wikiasearch_scss_venus'] = array(
-    'type' => AssetsManager::TYPE_SCSS,
-    'skin' => 'venus',
-    'assets' => array(
-        '//extensions/wikia/Search/css/WikiaSearch.venus.scss'
-    )
-);
-
 $config['wikiasearch_js_wikiamobile'] = array(
     'type' => AssetsManager::TYPE_JS,
     'skin' => 'wikiamobile',

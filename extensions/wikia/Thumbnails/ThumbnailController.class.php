@@ -133,7 +133,9 @@ class ThumbnailController extends WikiaController {
 		$this->mediaName = htmlspecialchars( $title->getText() );
 		$this->imgClass = empty( $options['imgClass'] ) ? '' : $options['imgClass'];;
 		$this->imgAttrs = ThumbnailHelper::getAttribs( $imgAttribs );
-		$this->alt = $options['alt'];
+		if (array_key_exists('alt', $options)) {
+			$this->alt = $options['alt'];
+		}
 
 		// data-src attribute in case of lazy loading
 		$this->noscript = '';

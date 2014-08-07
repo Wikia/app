@@ -63,6 +63,26 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	const HOT_ARTICLE_IMAGE_WIDTH_FLUID = 270;
 	const HOT_ARTICLE_IMAGE_HEIGHT_FLUID = 135;
 
+	/**
+	 * Dimensions for hot article image in Top Wiki Articles module in Venus Skin
+	 */
+	const HOT_ARTICLE_IMAGE_WIDTH_VENUS = 364;
+	const HOT_ARTICLE_IMAGE_HEIGHT_VENUS = 364;
+
+	/**
+	 * Dimensions for top articles images in Top Wiki Articles module
+	 */
+	const TOP_ARTICLES_IMAGE_WIDTH = 80;
+	const TOP_ARTICLES_IMAGE_HEIGHT = 80;
+
+	/**
+	 * Dimensions for top articles images in Top Wiki Articles module in Venus Skin
+	 */
+	const TOP_ARTICLES_IMAGE_WIDTH_VENUS = 82;
+	const TOP_ARTICLES_IMAGE_HEIGHT_VENUS = 82;
+
+
+
 	const CROSS_WIKI_PROMO_THUMBNAIL_HEIGHT = 120;
 	const CROSS_WIKI_PROMO_THUMBNAIL_WIDTH = 180;
 
@@ -102,6 +122,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		}
 
 		$this->handleLayoutAbTest( $this->getVal( 'ab', null ), $searchConfig->getNamespaces() );
+
 		if ( $searchConfig->getQuery()->hasTerms() ) {
 			$search = $this->queryServiceFactory->getFromConfig( $searchConfig);
 			/* @var $search Wikia\Search\QueryService\Select\Dismax\OnWiki */
@@ -118,6 +139,10 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	/**
 	 * Accesses top wiki articles for right rail, see PLA-466
 	 */
+	public function topWikiArticlesForVenus() {
+		self::topWikiArticles();
+	}
+
 	public function topWikiArticles() {
 		global $wgLang;
 		$pages = [];
@@ -125,26 +150,36 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			$pageData = $this->app->sendRequest( 'ArticlesApiController', 'getTop', [ 'namespaces' => 0 ] )->getData();
 			$ids = [];
 			$counter = 0;
-			foreach ( $pageData['items'] as $pageDatum ) {
-				$ids[] = $pageDatum['id'];
+			foreach ( $pageData[ 'items' ] as $pageDatum ) {
+				$ids[] = $pageDatum[ 'id' ];
 				if ( $counter++ >= 12 ) {
 					break;
 				}
 			}
 			if ( ! empty( $ids ) ) {
-				$params = [ 'ids' => implode( ',', $ids ), 'height' => 80, 'width' => 80, 'abstract' => 120 ];
+				$topArticlesDimensions = $this->getTopArticlesImageDimensions();
+				$params = [
+					'ids' => implode( ',', $ids ),
+					'height' => $topArticlesDimensions[ 'height' ],
+					'width' => $topArticlesDimensions[ 'width' ],
+					'abstract' => 120
+				];
 				$detailResponse = $this->app->sendRequest( 'ArticlesApiController', 'getDetails', $params )->getData();
-				$dimensions = $this->getHotArticleImageDimensions();
-				foreach ( $detailResponse['items'] as $id => $item ) {
-					if ( ! empty( $item['thumbnail'] ) ) {
-						$item['thumbnailSize'] = "small";
+				$hotArticleDimensions = $this->getHotArticleImageDimensions();
+				foreach ( $detailResponse[ 'items' ] as $id => $item ) {
+					if ( !empty( $item[ 'thumbnail' ] ) ) {
+						$item[ 'thumbnailSize' ] = 'small';
 						//get the first one image from imageServing as it needs other size
 						if ( empty( $pages ) ) {
-							$is = new ImageServing( [ $id ], $dimensions['width'], $dimensions['height'] );
+							$is = new ImageServing(
+								[ $id ],
+								$hotArticleDimensions[ 'width' ],
+								$hotArticleDimensions[ 'height' ]
+							);
 							$result = $is->getImages( 1 );
-							if ( ! empty( $result[ $id ][ 0 ][ 'url' ] ) ) {
+							if ( !empty( $result[ $id ][ 0 ][ 'url' ] ) ) {
 								$item[ 'thumbnail' ] = $result[ $id ][ 0 ][ 'url' ];
-								$item['thumbnailSize'] = "large";
+								$item[ 'thumbnailSize' ] = 'large';
 							}
 						}
 						//render date
@@ -159,7 +194,12 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	}
 
 	private function getHotArticleImageDimensions() {
-		if ( BodyController::isGridLayoutEnabled() ) {
+		if ( $this->app->checkSkin( 'venus' ) ) {
+			$dimensions = [
+				'width' => self::HOT_ARTICLE_IMAGE_WIDTH_VENUS,
+				'height' => self::HOT_ARTICLE_IMAGE_HEIGHT_VENUS
+			];
+		} else if ( BodyController::isGridLayoutEnabled() ) {
 			$dimensions = [
 				'width' => self::HOT_ARTICLE_IMAGE_WIDTH,
 				'height' => self::HOT_ARTICLE_IMAGE_HEIGHT
@@ -170,7 +210,21 @@ class WikiaSearchController extends WikiaSpecialPageController {
 				'height' => self::HOT_ARTICLE_IMAGE_HEIGHT_FLUID
 			];
 		}
+		return $dimensions;
+	}
 
+	private function getTopArticlesImageDimensions() {
+		if ( $this->app->checkSkin( 'venus' ) ) {
+			$dimensions = [
+				'width' => self::TOP_ARTICLES_IMAGE_WIDTH_VENUS,
+				'height' => self::TOP_ARTICLES_IMAGE_HEIGHT_VENUS
+			];
+		} else {
+			$dimensions = [
+				'width' => self::TOP_ARTICLES_IMAGE_WIDTH,
+				'height' => self::TOP_ARTICLES_IMAGE_HEIGHT
+			];
+		}
 		return $dimensions;
 	}
 
@@ -593,8 +647,6 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	 */
 	protected function setResponseValuesFromConfig( Wikia\Search\Config $searchConfig ) {
 
-		global $wgLanguageCode;
-
 		$response = $this->getResponse();
 		$format = $response->getFormat();
 		if ( $format == 'json' || $format == 'jsonp' ) {
@@ -662,28 +714,52 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		if ( $this->wg->OnWikiSearchIncludesWikiMatch && $searchConfig->hasWikiMatch() ) {
 			$this->registerWikiMatch( $searchConfig );
 		}
+
+		$this->setVal( 'topWikiArticles', $this->setTopArticlesModule( $searchConfig, $isMonobook, $isGridLayoutEnabled ));
+	}
+
+	private function setTopArticlesModule( $searchConfig, $isMonobook, $isGridLayoutEnabled ) {
+		global $wgLanguageCode;
+
+		$isInterWiki = $searchConfig->getInterWiki();
 		$topWikiArticlesHtml = '';
 
-		if ( ! $searchConfig->getInterWiki() && $wgLanguageCode == 'en'
-			&& !$isMonobook ) {
-			$dbname = $this->wg->DBName;
-			$cacheKey = wfMemcKey(
-				__CLASS__,
-				'WikiaSearch',
-				'topWikiArticles',
-				$this->wg->CityId,
-				static::TOP_ARTICLES_CACHE,
-				$isGridLayoutEnabled
-			);
-			$topWikiArticlesHtml = WikiaDataAccess::cache(
-				$cacheKey,
-				86400 * 5, // 5 days, one business week
-				function () {
-					return $this->app->renderView( 'WikiaSearchController', 'topWikiArticles' );
-				}
-			);
+		if ( !$isInterWiki && $wgLanguageCode == 'en' && !$isMonobook ) {
+			if ( $this->app->checkSkin( 'venus' ) && !in_array(NS_FILE, $searchConfig->getNamespaces()) ) {
+				$method = 'topWikiArticlesForVenus';
+				$cacheKey = $this->getMemcacheKeyForTopArticles($method, $isGridLayoutEnabled);
+				$topWikiArticlesHtml = $this->getTopArticlesHTML($method, $cacheKey);
+			}
+			if ( !$this->app->checkSkin( 'venus' ) ) {
+				$method = 'topWikiArticles';
+				$cacheKey = $this->getMemcacheKeyForTopArticles($method, $isGridLayoutEnabled);
+				$topWikiArticlesHtml = $this->getTopArticlesHTML($method, $cacheKey);
+			}
 		}
-		$this->setVal( 'topWikiArticles', $topWikiArticlesHtml );
+
+		return $topWikiArticlesHtml;
+	}
+
+	private function getMemcacheKeyForTopArticles($method, $isGridLayoutEnabled) {
+		$cacheKey = wfMemcKey(
+			__CLASS__,
+			'WikiaSearch',
+			$method,
+			$this->wg->CityId,
+			static::TOP_ARTICLES_CACHE,
+			$isGridLayoutEnabled
+		);
+		return $cacheKey;
+	}
+
+	private function getTopArticlesHTML( $method, $cacheKey ) {
+		return WikiaDataAccess::cache(
+			$cacheKey,
+			86400 * 5, // 5 days, one business week
+			function () use ($method) {
+				return $this->app->renderView( 'WikiaSearchController', $method );
+			}
+		);
 	}
 
 	/**
@@ -737,13 +813,18 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		}
 		$skin = $this->wg->User->getSkin();
 		if ( $skin instanceof SkinMonoBook ) {
-		    $this->response->addAsset ('extensions/wikia/Search/monobook/monobook.scss' );
+			$this->response->addAsset ('extensions/wikia/Search/monobook/monobook.scss' );
 		}
+
 		if ( $skin instanceof SkinOasis ) {
 		    $this->response->addAsset( 'extensions/wikia/Search/css/WikiaSearch.scss' );
 		}
+
 		if ( $skin instanceof SkinWikiaMobile ) {
-		    $this->overrideTemplate( 'WikiaMobileIndex' );
+			$this->overrideTemplate( 'WikiaMobileIndex' );
+		}
+		if ( $skin instanceof SkinVenus ) {
+			$this->overrideTemplate( 'Venus_index' );
 		}
 
 		return true;
@@ -900,7 +981,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$this->setVal( 'limit', 			$config->getLimit() );
 		$this->setVal( 'filters',			$config->getPublicFilterKeys() );
 		$this->setVal( 'by_category', 		$this->getVal('by_category', false) );
-
 	}
+
 }
 

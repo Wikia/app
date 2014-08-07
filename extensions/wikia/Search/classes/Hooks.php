@@ -137,9 +137,7 @@ class Hooks
 	 * @return boolean
 	 */
 	public static function onVenusAssetsPackages( &$jsHeadPackages, &$jsBodyPackages, &$scssPackages ){
-		if( \F::app()->wg->Title->isSpecial( 'Search' ) ) {
-			$scssPackages[] = 'wikiasearch_scss_venus';
-		}
+		$scssPackages[] = 'venus_search_css';
 		return true;
 	}
 
