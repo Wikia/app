@@ -39,6 +39,7 @@ $wgAutoloadClasses['InfoboxBuilder\InfoboxBuilderHooks'] = __DIR__ . '/InfoboxBu
  */
 $wgHooks['ParserFirstCallInit'][]        = '\InfoboxBuilder\InfoboxBuilderHooks::setupParserHook';
 $wgHooks['ScribuntoExternalLibraries'][] = '\InfoboxBuilder\InfoboxBuilderHooks::registerScribuntoLibraries';
+$wgHooks['EditPageLayoutExecute'][]       = '\InfoboxBuilder\InfoboxBuilderHooks::addInfoboxBuilderStyles';
 
 /**
  * I18n files
@@ -49,7 +50,6 @@ $wgExtensionMessagesFiles['InfoboxBuilderMagic'] = __DIR__ . '/InfoboxBuilder.ma
 /**
  * Register SCSS with the default theme for an infobox
  */
-
 $wgResourceModules['ext.wikia.InfoboxBuilder'] = [
 	'styles' => [ 'resources/infoboxBuilder.scss' ],
 	'localBasePath' => __DIR__,
