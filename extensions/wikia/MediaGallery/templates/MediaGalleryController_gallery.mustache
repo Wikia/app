@@ -1,7 +1,7 @@
-<div class="media-gallery-wrapper count-{{count}}" data-count="{{count}}">
+<div class="media-gallery-wrapper count-{{count}}">
 	{{#media}}
-		<div class="media">
-			<img src="{{src}}">
+		<div class="media {{classes}}">
+			<img src="{{src}}" {{#dataSrc}}data-src="{{dataSrc}}"{{/dataSrc}}>
 		</div>
 	{{/media}}
 </div>
