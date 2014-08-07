@@ -1,3 +1,104 @@
-.wikia-paginator {
+@mixin chevron($height: 10px, $thickness: 2px, $direction: 'left', $color: #000) {
+    &::before {
+        content: '';
+        display: inline-block;
+        position: relative;
+        left: 0px;
+        top: -1px;
+        border-style: solid;
+        border-color: $color;
+        border-width: $thickness $thickness 0 0;
+        height: $height / 2;
+        width: $height / 2;
+        vertical-align: middle;
 
+        @if ($direction == 'down') {
+            transform: rotate(135deg);
+
+        } @else if ($direction == 'left') {
+            transform: rotate(-135deg);
+
+        } @else if ($direction == 'right') {
+            transform: rotate(45deg);
+
+        } @else if ($direction == 'up') {
+            transform: rotate(-45deg);
+        }
+    }
+}
+
+
+.wikia-paginator {
+    height: 75px;
+    line-height: 75px;
+    padding: 0px;
+    margin: 40px 0px;
+    border-style: solid;
+    border-color: #eef1f3;
+    border-width: 1px 0px;
+    text-align: center;
+
+    ul {
+        list-style: none;
+        padding: 0px;
+        margin: 0px;
+        list-style-type: none;
+        letter-spacing: 0;
+        display: inline-block;
+
+        li {
+            margin: 0px;
+            padding: 0px;
+            float: left;
+        }
+
+        .paginator-page {
+            height: 18px;
+            margin: 0 14px;
+            padding: 0px;
+            color: #0a6eb4;
+            text-decoration: none;
+
+            &:hover {
+                cursor: pointer;
+            }
+            &.active {
+                color: #3c3c3c;
+            }
+        }
+        .paginator-spacer {
+            display: inline-block;
+            height: 16px;
+            line-height: 16px;
+            margin: 0px;
+            min-width: 20px;
+            padding: 2px;
+            text-align: center;
+            color: #3c3c3c;
+        }
+        .paginator-prev,
+        .paginator-next {
+            span {
+                display: none;
+            }
+        }
+        .paginator-prev {
+            padding: 0;
+            margin: 0;
+            @include chevron(25px, 3px, 'left', #0a6eb4);
+
+            &.disabled {
+                @include chevron(25px, 3px, 'left', #c8d2d7);
+            }
+        }
+        .paginator-next {
+            padding: 0;
+            margin: 0 0px 6px;
+            @include chevron(25px, 3px, 'right', #0a6eb4);
+
+            &.disabled {
+                @include chevron(25px, 3px, 'right', #c8d2d7);
+            }
+        }
+    }
 }
