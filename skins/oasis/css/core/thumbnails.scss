@@ -15,10 +15,6 @@ $color-subtle-text: mix($color-page, $color-alternate-text, 50%);
 	}
 }
 
-a.image, a.video {
-	display: inline-block;
-}
-
 // Article thumbnails
 .article-thumb {
 	margin-bottom: 15px;
