@@ -20,12 +20,14 @@ $wgExtensionCredits['other'][] = array(
 );
 
 /**
- * Displays an error message if the IP address has not been whitelisted.
+ * Displays an error message if the IP address or the special page has not been whitelisted.
  */
 function efGuardCheckpointCharlie( $oTitle, $unused, $oOutputPage, $oUser, $oWebRequest, $oMediaWiki) {
-	global $wgCheckpointCharlieWhitelist;
+	global $wgCheckpointCharlieIPWhitelist, $wgCheckpointCharlieSpecialPagesWhitelist;
 
-	if ( !in_array( $oWebRequest->getIP(), $wgCheckpointCharlieWhitelist ) && NS_SPECIAL == $oTitle->getNamespace() ) {
+	if ( !in_array( $oWebRequest->getIP(), $wgCheckpointCharlieIPWhitelist )
+		&& NS_SPECIAL == $oTitle->getNamespace()
+		&& !in_array( $oTitle->getDBkey(), $wgCheckpointCharlieSpecialPagesWhitelist ) ) {
 		throw new ErrorPageError( 'checkpointcharlie-title', 'checkpointcharlie-content' );
 	}
 
