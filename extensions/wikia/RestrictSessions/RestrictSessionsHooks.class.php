@@ -22,7 +22,7 @@ class RestrictSessionsHooks extends \ContextSource {
 	}
 
 	/**
-	 * Add IP address and User Agent to session data if user is a staff member.
+	 * Add IP address to session data if user is a staff member.
 	 *
 	 * @param  User   $user    The current user object
 	 * @param  array  $session Array of session data that will be added to $_SESSION
@@ -40,7 +40,7 @@ class RestrictSessionsHooks extends \ContextSource {
 	}
 
 	/**
-	 * Check IP address and User Agent match session data if user is a staff member.
+	 * Check IP address matches session data if user is a staff member.
 	 *
 	 * @param  User   $user   The user object being loaded
 	 * @param  bool   $result Whether or not to continue authentication process
@@ -97,6 +97,12 @@ class RestrictSessionsHooks extends \ContextSource {
 		return true;
 	}
 
+	/**
+	 * Check if an IP address is in a whitelisted range.
+	 *
+	 * @param  string  $ipAddress IP address to whitelist
+	 * @return boolean
+	 */
 	public function isWhiteListedIP( $ipAddress ) {
 		$ipAddress = \IP::sanitizeIP( $ipAddress );
 		$whitelistRanges = $this->getWhitelistRanges();
@@ -112,6 +118,11 @@ class RestrictSessionsHooks extends \ContextSource {
 		return $isWhitelisted;
 	}
 
+	/**
+	 * Get whitelisted IP ranges
+	 *
+	 * @return array List of whitelisted IP ranges
+	 */
 	private function getWhitelistRanges() {
 		global $wgSessionIPWhitelist;
 
