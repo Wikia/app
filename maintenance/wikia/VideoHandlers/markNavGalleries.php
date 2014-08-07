@@ -1,15 +1,19 @@
 <?php
 /**
- * Script to mark any gallery using link= functionality, e.g.:
+ * Script to mark any gallery with more than one image using link= functionality, e.g.:
  *
  * <gallery>
  * Photo.jpg|link=http://www.foo.com/
+ * Photo2.jpg
+ * ...
  * </gallery>
  *
  * with parameter type=navigation, e.g.:
  *
  * <gallery type="navigation">
  * Photo.jpg|link=http://www.foo.com/
+ * Photo2.jpg
+ * ...
  * </gallery>
  *
  * https://wikia-inc.atlassian.net/browse/VID-1877
