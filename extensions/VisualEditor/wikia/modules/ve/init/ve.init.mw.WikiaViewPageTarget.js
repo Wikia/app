@@ -16,14 +16,22 @@
  * @constructor
  */
 ve.init.mw.WikiaViewPageTarget = function VeInitMwWikiaViewPageTarget() {
-	var toolbarDropdown, wikiaSourceMode;
-	if ( window.veSourceEntryPoint && ( window.veSourceEntryPoint === 2 || window.veSourceEntryPoint === 3 ) ) {
-		// Move toolbar dropdown from actionsToolbarConfig to toolbarGroups and wikiaSourceMode
-		// from toolbar dropdown to actionsToolbarConfig
-		toolbarDropdown = ve.init.mw.WikiaViewPageTarget.static.actionsToolbarConfig.pop();
-		wikiaSourceMode = toolbarDropdown.include.pop();
-		ve.init.mw.WikiaViewPageTarget.static.toolbarGroups.push( toolbarDropdown );
-		ve.init.mw.WikiaViewPageTarget.static.actionsToolbarConfig.push( { 'include': [ wikiaSourceMode ] } );
+	var boldItalicLink, toolbarDropdown, wikiaSourceMode;
+
+	if ( window.veSourceEntryPoint ) {
+		if ( window.veSourceEntryPoint.hideBoldItalicLink ) {
+			boldItalicLink = ve.init.mw.WikiaViewPageTarget.static.toolbarGroups.splice( 2, 1 );
+			ve.init.mw.WikiaViewPageTarget.static.toolbarGroups[ 2 ].include = [].concat(
+				boldItalicLink[ 0 ].include,
+				ve.init.mw.WikiaViewPageTarget.static.toolbarGroups[ 2 ].include
+			);
+		}
+		if ( window.veSourceEntryPoint.sourceButtonInToolbar ) {
+			toolbarDropdown = ve.init.mw.WikiaViewPageTarget.static.actionsToolbarConfig.pop();
+			wikiaSourceMode = toolbarDropdown.include.pop();
+			ve.init.mw.WikiaViewPageTarget.static.toolbarGroups.push( toolbarDropdown );
+			ve.init.mw.WikiaViewPageTarget.static.actionsToolbarConfig.push( { 'include': [ wikiaSourceMode ] } );
+		}
 	}
 
 	// Parent constructor

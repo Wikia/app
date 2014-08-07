@@ -35,7 +35,7 @@
 		} else if ( experimentName === 'VE Source Entry Point Anon' ) {
 			return 1673650053;
 		} else if ( experimentName === 'VE Source Entry Point User' ) {
-			return 1667121062;
+			return 1673650053;
 		}
 		return null;
 	}

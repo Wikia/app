@@ -71,7 +71,7 @@ if ( mw.config.get( 'wgEnableWikiaInteractiveMaps' ) === true ) {
 ve.ui.WikiaSourceModeDialogTool = function VeUiWikiaSourceModeDialogTool( toolGroup, config ) {
 	// Parent constructor
 	ve.ui.WikiaSourceModeDialogTool.super.call( this, toolGroup, config );
-	if ( window.veSourceEntryPoint && window.veSourceEntryPoint === 3 ) {
+	if ( window.veSourceEntryPoint && window.veSourceEntryPoint.sourceButtonAsText ) {
 		this.title = ve.msg( 'wikia-visualeditor-dialogbutton-wikiasourcemode' );
 		this.$element.addClass( 've-ui-wikiaSourceModeDialogTool' );
 	}
