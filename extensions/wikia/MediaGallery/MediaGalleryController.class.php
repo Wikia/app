@@ -8,15 +8,26 @@ class MediaGalleryController extends WikiaController {
 		$items = $this->getVal( 'items' );
 		$media = [];
 
-		foreach ( $items as $item ) {
+		foreach ( $items as $idx => $item ) {
 			$file = wfFindFile( $item['title'] );
 
 			if ( !$file instanceof File ) {
 				continue; // todo: possible add error state
 			}
 			$thumb = $file->transform( ['width'=>500, 'height'=>500] );
+
+			$src = wfReplaceImageServer( $thumb->getUrl(), $file->getTimestamp() );
+			$dataSrc = false;
+			$classes = '';
+			if ( $idx >= self::MAX_ITEMS ) {
+				$dataSrc = $src;
+				$src = F::app()->wg->BlankImgUrl;
+				$classes = 'hidden';
+			}
 			$media[] = [
-				'src' => wfReplaceImageServer( $thumb->getUrl(), $file->getTimestamp() ), // todo: do we need wfReplaceImageServer?
+				'src' => $src,
+				'dataSrc' => $dataSrc,
+				'classes' => $classes,
 			];
 		}
 
