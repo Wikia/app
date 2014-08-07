@@ -27,6 +27,4 @@ $wgAvailableRights[] = 'restrictsession';
 $wgGroupPermissions['staff']['restrictsession'] = true;
 $wgGroupPermissions['util']['restrictsession'] = true;
 
-$wgHooks['UserSetCookies'][] = '\RestrictSessions\RestrictSessionsHooks::onUserSetCookies';
-$wgHooks['UserLoadFromSession'][] = '\RestrictSessions\RestrictSessionsHooks::onUserLoadFromSession';
-$wgHooks['UserLogout'][] = '\RestrictSessions\RestrictSessionsHooks::onUserLogout';
+$wgExtensionFunctions[] = '\RestrictSessions\RestrictSessionsHooks::setupHooks';

@@ -20,12 +20,12 @@ class RestrictSessionsTest extends \WikiaBaseTest {
 			->method( 'getIP' )
 			->will( $this->returnValue( '127.0.0.1' ) );
 
-		$this->setupRequestContextMock( $requestMock );
+		$restrictSessionsMock = $this->getRestrictSessionsMock( $requestMock );
 
 		$sessions = [];
 		$cookies = [];
 
-		RestrictSessionsHooks::onUserSetCookies( $userMock, $sessions, $cookies );
+		$restrictSessionsMock->onUserSetCookies( $userMock, $sessions, $cookies );
 
 		$this->assertTrue(
 			array_key_exists( RestrictSessionsHooks::IP_SESSION_KEY, $sessions ) &&
@@ -41,12 +41,12 @@ class RestrictSessionsTest extends \WikiaBaseTest {
 		$requestMock->expects( $this->never() )
 			->method( 'getIP' );
 
-		$this->setupRequestContextMock( $requestMock );
+		$restrictSessionsMock = $this->getRestrictSessionsMock( $requestMock );
 
 		$sessions = [];
 		$cookies = [];
 
-		RestrictSessionsHooks::onUserSetCookies( $userMock, $sessions, $cookies );
+		$restrictSessionsMock->onUserSetCookies( $userMock, $sessions, $cookies );
 
 		$this->assertTrue( !array_key_exists( RestrictSessionsHooks::IP_SESSION_KEY, $sessions ) );
 	}
@@ -74,11 +74,11 @@ class RestrictSessionsTest extends \WikiaBaseTest {
 				]
 			) );
 
-		$this->setupRequestContextMock( $requestMock );
+		$restrictSessionsMock = $this->getRestrictSessionsMock( $requestMock );
 
 		$result = null;
 
-		RestrictSessionsHooks::onUserLoadFromSession( $userMock, $result );
+		$restrictSessionsMock->onUserLoadFromSession( $userMock, $result );
 
 		$this->assertTrue( $result === null );
 	}
@@ -106,11 +106,11 @@ class RestrictSessionsTest extends \WikiaBaseTest {
 				]
 			) );
 
-		$this->setupRequestContextMock( $requestMock );
+		$restrictSessionsMock = $this->getRestrictSessionsMock( $requestMock );
 
 		$result = null;
 
-		RestrictSessionsHooks::onUserLoadFromSession( $userMock, $result );
+		$restrictSessionsMock->onUserLoadFromSession( $userMock, $result );
 
 		$this->assertFalse( $result );
 	}
@@ -138,11 +138,11 @@ class RestrictSessionsTest extends \WikiaBaseTest {
 				]
 			) );
 
-		$this->setupRequestContextMock( $requestMock );
+		$restrictSessionsMock = $this->getRestrictSessionsMock( $requestMock );
 
 		$result = null;
 
-		RestrictSessionsHooks::onUserLoadFromSession( $userMock, $result );
+		$restrictSessionsMock->onUserLoadFromSession( $userMock, $result );
 
 		$this->assertFalse( $result );
 	}
@@ -165,11 +165,11 @@ class RestrictSessionsTest extends \WikiaBaseTest {
 			->with( 'wsUserID' )
 			->will( $this->returnValue( 1234 ) );
 
-		$this->setupRequestContextMock( $requestMock );
+		$restrictSessionsMock = $this->getRestrictSessionsMock( $requestMock );
 
 		$result = null;
 
-		RestrictSessionsHooks::onUserLoadFromSession( $userMock, $result );
+		$restrictSessionsMock->onUserLoadFromSession( $userMock, $result );
 
 		$this->assertTrue( $result === null );
 	}
@@ -197,11 +197,11 @@ class RestrictSessionsTest extends \WikiaBaseTest {
 				]
 			) );
 
-		$this->setupRequestContextMock( $requestMock );
+		$restrictSessionsMock = $this->getRestrictSessionsMock( $requestMock );
 
 		$result = null;
 
-		RestrictSessionsHooks::onUserLoadFromSession( $userMock, $result );
+		$restrictSessionsMock->onUserLoadFromSession( $userMock, $result );
 
 		$this->assertFalse( $result );
 	}
@@ -229,11 +229,79 @@ class RestrictSessionsTest extends \WikiaBaseTest {
 				]
 			) );
 
-		$this->setupRequestContextMock( $requestMock );
+		$restrictSessionsMock = $this->getRestrictSessionsMock( $requestMock );
 
 		$result = null;
 
-		RestrictSessionsHooks::onUserLoadFromSession( $userMock, $result );
+		$restrictSessionsMock->onUserLoadFromSession( $userMock, $result );
+
+		$this->assertFalse( $result );
+	}
+
+	public function testUserLoadFromSessionIsStaffAndIPWhitelisted() {
+		$userMock = $this->getUserMock( true );
+
+		$requestMock = $this->getMock( '\WebRequest', [ 'getIP', 'getCookie', 'getSessionData' ] );
+
+		$requestMock->expects( $this->once() )
+			->method( 'getIP' )
+			->will( $this->returnValue( '127.0.0.1' ) );
+
+		$requestMock->expects( $this->once() )
+			->method( 'getCookie' )
+			->with( 'UserID' )
+			->will( $this->returnValue( 1234 ) );
+
+		$requestMock->expects( $this->any() )
+			->method( 'getSessionData' )
+			->will( $this->returnValueMap(
+				[
+					[ 'wsUserID', 1234 ],
+					[ RestrictSessionsHooks::IP_SESSION_KEY, '0.0.0.0' ]
+				]
+			) );
+
+		$restrictSessionsMock = $this->getRestrictSessionsMock( $requestMock );
+
+		$this->mockGlobalVariable( 'wgSessionIPWhitelist', [ '127.0.0.0/16' ] );
+
+		$result = null;
+
+		$restrictSessionsMock->onUserLoadFromSession( $userMock, $result );
+
+		$this->assertTrue( $result === null );
+	}
+
+	public function testUserLoadFromSessionIsStaffAndIPNotWhitelisted() {
+		$userMock = $this->getUserMock( true );
+
+		$requestMock = $this->getMock( '\WebRequest', [ 'getIP', 'getCookie', 'getSessionData' ] );
+
+		$requestMock->expects( $this->once() )
+			->method( 'getIP' )
+			->will( $this->returnValue( '127.0.0.1' ) );
+
+		$requestMock->expects( $this->once() )
+			->method( 'getCookie' )
+			->with( 'UserID' )
+			->will( $this->returnValue( 1234 ) );
+
+		$requestMock->expects( $this->any() )
+			->method( 'getSessionData' )
+			->will( $this->returnValueMap(
+				[
+					[ 'wsUserID', 1234 ],
+					[ RestrictSessionsHooks::IP_SESSION_KEY, '0.0.0.0' ]
+				]
+			) );
+
+		$restrictSessionsMock = $this->getRestrictSessionsMock( $requestMock );
+
+		$this->mockGlobalVariable( 'wgSessionIPWhitelist', [ '127.0.1.0/24' ] );
+
+		$result = null;
+
+		$restrictSessionsMock->onUserLoadFromSession( $userMock, $result );
 
 		$this->assertFalse( $result );
 	}
@@ -247,9 +315,9 @@ class RestrictSessionsTest extends \WikiaBaseTest {
 			->method( 'setSessionData' )
 			->with( RestrictSessionsHooks::IP_SESSION_KEY, null );
 
-		$this->setupRequestContextMock( $requestMock );
+		$restrictSessionsMock = $this->getRestrictSessionsMock( $requestMock );
 
-		RestrictSessionsHooks::onUserLogout( $userMock );
+		$restrictSessionsMock->onUserLogout( $userMock );
 	}
 
 	public function testUserLogoutIsNotStaff() {
@@ -260,9 +328,36 @@ class RestrictSessionsTest extends \WikiaBaseTest {
 		$requestMock->expects( $this->never() )
 			->method( 'setSessionData' );
 
-		$this->setupRequestContextMock( $requestMock );
+		$restrictSessionsMock = $this->getRestrictSessionsMock( $requestMock );
 
-		RestrictSessionsHooks::onUserLogout( $userMock );
+		$restrictSessionsMock->onUserLogout( $userMock );
+	}
+
+	public function testIsWhiteListedIpWhitelisted() {
+		$this->mockGlobalVariable( 'wgSessionIPWhitelist', [ '127.0.0.0/16' ] );
+
+		$restrictSessions = new RestrictSessionsHooks();
+		$result = $restrictSessions->isWhiteListedIP( '127.0.0.1' );
+
+		$this->assertTrue( $result );
+	}
+
+	public function testIsWhiteListedIpNotWhitelisted() {
+		$this->mockGlobalVariable( 'wgSessionIPWhitelist', [ '127.0.1.0/24' ] );
+
+		$restrictSessions = new RestrictSessionsHooks();
+		$result = $restrictSessions->isWhiteListedIP( '127.0.0.1' );
+
+		$this->assertFalse( $result );
+	}
+
+	public function testIsWhiteListedIpEmptyWhitelist() {
+		$this->mockGlobalVariable( 'wgSessionIPWhitelist', [] );
+
+		$restrictSessions = new RestrictSessionsHooks();
+		$result = $restrictSessions->isWhiteListedIP( '127.0.0.1' );
+
+		$this->assertFalse( $result );
 	}
 
 	private function getUserMock( $isAllowedResult ) {
@@ -285,14 +380,14 @@ class RestrictSessionsTest extends \WikiaBaseTest {
 		return $userMock;
 	}
 
-	private function setupRequestContextMock( $requestMock ) {
-		$requestContextMock = $this->getMock( '\RequestContext', [ 'getRequest' ] );
+	private function getRestrictSessionsMock( $requestMock ) {
+		$restrictSessionsMock = $this->getMock( '\RestrictSessions\RestrictSessionsHooks', [ 'getRequest' ] );
 
-		$requestContextMock->expects( $this->once() )
+		$restrictSessionsMock->expects( $this->once() )
 			->method( 'getRequest' )
 			->will( $this->returnValue( $requestMock ) );
 
-		$this->mockClass( '\RequestContext', $requestContextMock, 'getMain' );
+		return $restrictSessionsMock;
 	}
 
 }
