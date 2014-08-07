@@ -47,7 +47,15 @@ $.widget( 'wikia.linksuggest', {
 		// @see http://blog.jquery.com/2012/08/09/jquery-1-8-released/
 		var eventsData = $._data(this.element.get(0), 'events');
 		if ( typeof( eventsData && eventsData.keydown ) !== "undefined" ) {
-			this._jQueryUIKeydown = eventsData.keydown[0].handler;
+			// There may be more than one keydown handler attached to this element, and the autocomplete handler may not
+			// be the first in the array, so loop through the array to find the handler we need
+			for ( var i = 0; i < eventsData.keydown.length; i++ ) {
+				if ( eventsData.keydown[i].namespace === 'autocomplete' && eventsData.keydown[i].type === 'keydown' ) {
+					// Copy the original autocomplete.keydown handler
+					this._jQueryUIKeydown = eventsData.keydown[i].handler;
+					break;
+				}
+			}
 		}
 		this.element.unbind( 'keydown.autocomplete' )
 		.bind( eventType + '.linksuggest', function( thisInstance ) {
@@ -60,11 +68,12 @@ $.widget( 'wikia.linksuggest', {
 	},
 	_jQueryUIKeydown: null,
 	_keydown: function( event ) {
-		var keyCode = $.ui.keyCode;
+		var keyCode = $.ui.keyCode,
+			autocompleteInstance = this.element.data( 'autocomplete' );
 		switch( event.keyCode ) {
 			case keyCode.UP:
 			case keyCode.DOWN:
-				if ( !this.element.data( 'autocomplete' ).menu.element.is( ':visible' ) ) {
+				if ( !autocompleteInstance.menu.element.is( ':visible' ) ) {
 					// If menu element is not visible, ignore.
 					// Autocomplete event handler just prevents default
 					// behavior, which is not what we want
@@ -73,13 +82,13 @@ $.widget( 'wikia.linksuggest', {
 				break;
 			case keyCode.TAB:
 				// don't navigate away from the field on tab when selecting an item
-				if ( this.element.data( 'autocomplete' ).menu.active ) {
+				if ( autocompleteInstance.menu.active ) {
 					event.preventDefault();
 				}
 				break;
 			case keyCode.ESCAPE:
 				// return without setting any value
-				this.element.data( 'autocomplete' ).close( event );
+				autocompleteInstance.close( event );
 				return;
 				break;
 			case keyCode.PAGE_UP:
@@ -101,7 +110,7 @@ $.widget( 'wikia.linksuggest', {
 		}
 		// If we not already returned from this function, fire the old autocomplete handler
 		if ( $.isFunction( this._jQueryUIKeydown ) ) {
-			this._jQueryUIKeydown.apply( this.element.data( 'autocomplete' ), arguments );
+			this._jQueryUIKeydown.apply( autocompleteInstance, arguments );
 		}
 	},
 	_sendQuery: function( request, response ) {
