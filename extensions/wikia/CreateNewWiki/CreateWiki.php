@@ -587,8 +587,8 @@ class CreateWiki {
 		// This code can be removed after we are fully using the new verticals (PLATFORM-403)
 
 		// uses array_unshift to make sure hub category is first, because we take the first cat from SQL
-		if ( $this->mVertical == 1 ) array_unshift($this->mCategories, 2);	// Video games
-		if ( in_array( $this->mVertical, [2,3,4,5,6] ) ) array_unshift($this->mCategories, 3); // Entertainment
+		if ( $this->mVertical == 2 ) array_unshift($this->mCategories, 2);	// Video games
+		if ( in_array( $this->mVertical, [1,3,4,5,6] ) ) array_unshift($this->mCategories, 3); // Entertainment
 		if ( $this->mVertical == 7 ) array_unshift($this->mCategories, 9);	// Lifestyle
 
 		$this->mNewWiki->categories = $this->mCategories;
