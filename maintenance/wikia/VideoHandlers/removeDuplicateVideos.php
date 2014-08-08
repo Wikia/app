@@ -71,7 +71,7 @@ function deleteFromVideoWiki( $name ) {
 	if ( $ret == 'ok' ) {
 		$success = true;
 	} else {
-		echo "... Error: $name removed from Ooyala but cannot be removed from video wiki (".$response->getVal( 'msg', '' ).")\n";
+		echo "... Error: $name cannot be removed from video wiki (".$response->getVal( 'msg', '' ).")\n";
 		$success = false;
 	}
 
@@ -200,7 +200,7 @@ foreach ( $duplicateVideos as $video ) {
 					$resp = true;
 				} else {
 					$resp = $ooyala->deleteAsset( $videoId );
-					if ( $resp && !$dryRun ) {
+					if ( $resp ) {
 						$resp = deleteFromVideoWiki( $name );
 					}
 				}
