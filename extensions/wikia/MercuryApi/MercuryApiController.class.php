@@ -183,10 +183,4 @@ class MercuryApiController extends WikiaController {
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 	}
 
-	public function getAnnotationId() {
-		$annotationId = $this->Annotation->getNextAnnotationid();
-		$this->setVal( "data", $annotationId );
-		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
-	}
-
 }
