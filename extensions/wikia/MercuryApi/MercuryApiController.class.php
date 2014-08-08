@@ -8,10 +8,12 @@ class MercuryApiController extends WikiaController {
 	const DEFAULT_PAGE = 1;
 
 	private $mercuryApi = null;
+	private $Annotation = null;
 
 	public function __construct() {
 		parent::__construct();
 		$this->mercuryApi = new MercuryApi();
+		$this->Annotation = new MercuryAnnotation();
 	}
 
 	/**
@@ -111,6 +113,69 @@ class MercuryApiController extends WikiaController {
 		$this->response->setVal( 'payload', $comments );
 		$this->response->setVal( 'pagesCount', $commentsData['pagesCount'] );
 		$this->response->setVal( 'basePath', $this->wg->Server );
+		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
+	}
+
+	/**
+	 * Do an edit on a snippet of text.
+	 */
+	public function editSnippet() {
+		$articleId = $this->getVal("articleId");
+		$origText = $this->getVal("origText");
+		$edit = $this->getVal("edit");
+
+		$response = $this->mercuryApi->editSnippet( $articleId, $origText, $edit );
+
+		$this->setVal("response", $response);
+		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
+	}
+
+	/**
+	 * Get all the annotations for a given article and annotation id
+	 */
+	public function getAnnotationComments() {
+		$annotationId = $this->getVal( "annotationId" );
+		$articleId = $this->getVal( "articleId" );
+
+		$response = $this->Annotation->getAnnotations( $articleId, $annotationId );
+
+		$this->setVal("data", $response);
+		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
+	}
+
+	/**
+	 * Save a new comment on an existing annotation
+	 */
+	public function setAnnotationComment() {
+		$annotationId = $this->getVal( "annotationId" );
+		$articleId = $this->getVal( "articleId" );
+		$comment = $this->getVal( "comment" );
+
+		$response = $this->Annotation->setAnnotation( $articleId, $annotationId, $comment );
+
+		$this->setVal("data", $response);
+		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
+
+	}
+
+	/**
+	 * Create a new annotation and save the first comment
+	 */
+	public function createAnnotation() {
+		$annotationId = $this->getVal( "annotationId" );
+		$articleId = $this->getVal( "articleId" );
+		$origText = $this->getVal("origText");
+		$newText = "<span class='annotation' id='$annotationId'>" . $origText . "</span>";
+		$comment = $this->getVal( "comment" );
+
+		$editResponse = $this->mercuryApi->editSnippet( $articleId, $origText, $newText );
+		if ( $editResponse['success'] ) {
+			$annotateResponse = $this->Annotation->setAnnotation( $articleId, $annotationId, $comment );
+			$this->setVal( "data", $annotateResponse );
+		} else {
+			$this->setVal( "data", $editResponse );
+		}
+
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 	}
 

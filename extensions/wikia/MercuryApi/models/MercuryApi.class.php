@@ -157,4 +157,23 @@ class MercuryApi {
 	private function clearUsers() {
 		$this->users = [];
 	}
+
+	/**
+	 * Edit a selected snippet of text.
+	 * @param $articleId
+	 * @param $origText
+	 * @param $newText
+	 * @return array
+	 */
+	public function editSnippet( $articleId, $origText, $newText ) {
+		$article = Article::newFromID( $articleId );
+		$oldContent = $article->getContent();
+		$newContent = preg_replace("/$origText/", $newText, $oldContent );
+		$status = $article->doEdit( $newContent, 'mobile edit', EDIT_UPDATE | EDIT_MINOR, false );
+
+		return [
+			"success" => $status->isOK() ? true : false,
+			"message" => $status->isOK() ? "Successfully edit" : $status->getMessage()
+		];
+	}
 }
