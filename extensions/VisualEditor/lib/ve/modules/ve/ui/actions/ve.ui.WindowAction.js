@@ -51,17 +51,14 @@ ve.ui.WindowAction.prototype.open = function ( name, data ) {
 			this.surface.getView().getDocument().getDirectionFromRange( fragment.getRange() ) :
 			this.surface.getModel().getDocument().getDir();
 
-	data = ve.extendObject( {
-		'dir': dir,
-		'target': this.surface.getTarget()
-	}, data );
+	data = ve.extendObject( { 'dir': dir }, data );
 
 	if ( windowClass.prototype instanceof ve.ui.Dialog ) {
 		win = this.surface.getDialogs().getWindow( name );
 	} else if ( windowClass.prototype instanceof ve.ui.Inspector ) {
 		win = this.surface.getContext().getInspector( name );
 	}
-	win.open( fragment, data );
+	win.open( fragment, data, this.surface );
 };
 
 /* Registration */
