@@ -1588,7 +1588,7 @@ $wgSessionsInMemcached = false;
  */
 $wgSessionHandler = null;
 
-/**Wikia change - begin - @author: Michał ‘Mix’ Roszka <mix@wikia-inc.com>
+/** Wikia change - begin - @author: Michał ‘Mix’ Roszka <mix@wikia-inc.com>
  *
  * See: https://wikia-inc.atlassian.net/browse/PLATFORM-308
  *
