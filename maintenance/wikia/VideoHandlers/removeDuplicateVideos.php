@@ -131,7 +131,7 @@ if ( empty( $wgCityId ) ) {
 
 $dryRun = isset( $options['dry-run'] );
 $videoTitle = isset( $options['name'] ) ? $options['name'] : '';
-const VIDEO_USER = "Wikia_Video_Library";
+const VIDEO_USER = "WikiaBot";
 
 echo "Wiki: $wgCityId ($wgDBname)\n";
 
