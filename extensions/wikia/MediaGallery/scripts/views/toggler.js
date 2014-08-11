@@ -13,10 +13,11 @@ define('mediaGallery.toggler', ['mediaGallery.templates.mustache'], function (te
 		var $el = options.$el;
 
 		this.$el = $el;
-		this.total = $el.data('count');
-		this.count = options.count || 16;
-		this.visible = options.visible || 8;
 		this.$media = $el.find('.media');
+		this.$overflow = this.$media.filter('.hidden');
+		this.interval = options.interval || 2;
+		this.visible = this.$media.not(this.$overflow).length;
+		this.oVisible = this.visible;
 	}
 
 	Toggler.prototype.init = function () {
@@ -30,8 +31,8 @@ define('mediaGallery.toggler', ['mediaGallery.templates.mustache'], function (te
 				showLess: $.msg('mediagallery-show-less')
 			};
 		this.$el.append(Mustache.render(templates[templateName], data));
-		this.$more = this.$el.find('.more');
-		this.$less = this.$el.find('.less');
+		this.$more = this.$el.find('.show');
+		this.$less = this.$el.find('.hide');
 	};
 
 	Toggler.prototype.bindEvents = function () {
@@ -40,15 +41,22 @@ define('mediaGallery.toggler', ['mediaGallery.templates.mustache'], function (te
 	};
 
 	Toggler.prototype.showMore = function () {
-		var $first = this.$media.eq(this.visible),
-			last = this.visible + this.count,
-			$elems = $first.nextUntil(':nth-child(' + last + ')');
+		var start = this.visible,
+			end = start + this.interval,
+			$elems = this.$media.slice(start, end);
 
-		$elems.addClass('show');
+		// update tally of visible images
+		this.visible += this.interval;
+
+		$elems.find('img').attr('src', function () {
+			return $(this).attr('data-src');
+		});
+		$elems.removeClass('hidden');
 	};
 
 	Toggler.prototype.showLess = function () {
-
+		this.visible = this.oVisible;
+		this.$overflow.addClass('hidden');
 	};
 
 	return Toggler;

@@ -48,17 +48,13 @@ $media-margin: .5em;
 
 	&.count-many .media {
 		@include grid-column(3);
+		transition: opacity 1s ease-in-out;
 
-		&:nth-child(n+9) {
+		&.hidden {
 			opacity: 0;
 			padding: $media-margin;
 			position: absolute;
-			transition: opacity 2s ease-in-out;
-		}
-
-		&.show {
-			opacity: 1;
-			position: static;
+			transition: opacity 0;
 		}
 	}
 
@@ -75,5 +71,6 @@ $media-margin: .5em;
 		margin: 20px auto;
 		text-align: center;
 	}
+
 }
 
