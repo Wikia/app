@@ -1,17 +1,57 @@
-// Highest z-index
-$zTop: 5000100;
+@import "skins/oasis/css/core/color";
 
-// breakpoints
-$width-min: 768px;
-$width-tablet: 1024px;
-$width-desktop: 1280px;
+body {
+	color: $color-text;
+	font-family: Helvetica, Arial, sans-serif;
+	font-size: 12px;
+	margin: 0;
+	overflow-x: auto;
+	padding: 0 0 30px 0;
+}
 
-$width-gutter: 20px;
-$width-outside: 1030px;
-$wikia-search-base-width: 200px;
+a {
+	color: $color-links;
+	text-decoration: none;
+	&:hover {
+		text-decoration: underline;
+	}
+}
 
-// wikiaheader-width for the globalheader and gamestarlogo
-$wikiaheader-width: $width-outside + 14px;
+.wikia-page {
+	background: $color-page;
+	border: 1px solid $color-page-border;
+	margin: 0 auto;
+	padding: $small-grid-margin;
 
-// global-navigation height
-$wikiaglobal-nav-height: 37px;
+	@media #{$small-only} {
+		width: $small-grid-width;
+	}
+	@media #{$medium-only} {
+		width: $medium-grid-width;
+	}
+	@media #{$large-up} {
+		width: $large-grid-width;
+	}
+}
+
+//.row:not(.full) {
+//	@media #{$small-only} {
+//		$width: $small-grid-width - 2 * $small-grid-margin;
+//		max-width: $width;
+//		min-width: $width;
+//	}
+//	@media #{$medium-only} {
+//		$width: $medium-grid-width - 2 * $medium-grid-margin;
+//		max-width: $width;
+//		min-width: $width;
+//	}
+//	@media #{$large-up} {
+//		$width: $large-grid-width - 2 * $large-grid-margin;
+//		max-width: $width;
+//		min-width: $width;
+//	}
+//}
+//
+//.row.full {
+//}
+//

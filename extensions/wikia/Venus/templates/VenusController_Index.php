@@ -28,7 +28,6 @@ normally added. See Skin::setupUserCss()
 	<?= $jsHeadFiles ?>
 	<?= $headItems ?>
 </head>
-
 <body class="<?= $bodyClasses ?>">
 <div id="ad-skin" class="wikia-ad noprint"></div>
 <?#TODO: Re-Enable when it's ready = $globalHeader ?>
