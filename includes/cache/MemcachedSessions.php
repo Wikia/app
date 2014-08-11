@@ -118,6 +118,12 @@ function memsess_gc( $maxlifetime ) {
 }
 
 function memsess_write_close() {
+	/** Wikia change - begin - PLATFORM-308 */
+	global $wgSessionDebugData;
+	$wgSessionDebugData[] = [ 'event' => 'write_close' ];
+	\Wikia\Logger\WikiaLogger::instance()->setDevModeWithES();
+	\Wikia\Logger\WikiaLogger::instance()->debug( 'platform_308', [ 'data' => 'Mix is here' ] );
+	/** Wikia change - end */
 	session_write_close();
 }
 
