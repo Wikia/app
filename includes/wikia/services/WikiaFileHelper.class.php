@@ -599,4 +599,35 @@ class WikiaFileHelper extends Service {
 		return $addedBy;
 	}
 
+	/**
+	 * Return a URL that displays $file shrunk to have the closest dimension meet $box.  Images smaller than the
+	 * bounding box will not be affected.  The part of the image that extends beyond the $box dimensions will be
+	 * cropped out.  The result is an image that completely fills the box with no empty space, but is cropped.
+	 *
+	 * @param File $file
+	 * @param $dimension
+	 * @return String
+	 */
+	public static function getSquaredThumbnailUrl( File $file, $dimension ) {
+		$height = $file->getHeight();
+		$width = $file->getWidth();
+
+		if ( $height > $width ) {
+			// portrait
+			$cropStr = sprintf( "%dx%dx1", $dimension, $dimension );
+		} else if ( $width > $height ) {
+			// landscape
+			$cropStr = sprintf( "%dx%dx5", $dimension, $dimension );
+		} else {
+			$cropStr = sprintf( "%dx%d", $dimension, $dimension );
+		}
+
+		$append = '';
+		$mime = strtolower( $file->getMimeType() );
+		if ( $mime == 'image/svg+xml' || $mime == 'image/svg' ) {
+			$append = '.png';
+		}
+
+		return wfReplaceImageServer( $file->getThumbUrl( $cropStr . '-' . $file->getName() . $append ) );
+	}
 }
