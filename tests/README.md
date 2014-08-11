@@ -66,14 +66,6 @@ In ```tests``` directory type in ```./php-slow-list```
 This script will list all slow test cases with execution time.
 Second list include list of class with count of slow tests cases.
 
-### Running all tests (including infrastructure tests)
-
-Run all tests on a specific wiki (by providing database name):
-```
-cd /usr/wikia/source/wiki/tests
-ant -f build-wikia.xml phpunit -Ddbname=muppet
-```
-
 ## Running JS unit tests
 
 ```
