@@ -9,7 +9,7 @@ $include-html-classes: true !default;
 $include-html-grid-classes: $include-html-classes !default;
 $include-xl-html-grid-classes: false !default;
 
-$row-width: rem-calc(1000) !default;
+$row-width: 100% !default; //rem-calc(1000) !default;
 $total-columns: 12 !default;
 
 // We use these to control text direction settings

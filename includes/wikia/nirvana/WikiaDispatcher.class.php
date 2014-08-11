@@ -114,6 +114,7 @@ class WikiaDispatcher {
 				}
 
 				if ( empty( $wgAutoloadClasses[$controllerClassName] ) ) {
+					echo($controllerClassName);
 					throw new ControllerNotFoundException($controllerName);
 				}
 

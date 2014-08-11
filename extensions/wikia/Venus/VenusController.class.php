@@ -78,7 +78,7 @@ class VenusController extends WikiaController {
 			$bodyClasses[] = 'venus-dark-theme';
 		}
 
-		$this->bodyClasses = implode(' ', $bodyClasses);
+		$this->bodyClasses = implode(' ', array_merge($bodyClasses, self::getBackgroundClasses()));
 	}
 
 	private function setHeadItems() {
@@ -157,7 +157,7 @@ class VenusController extends WikiaController {
 		$this->jsHeadScripts = $wgOut->topScripts . $jsHeadFiles;
 	}
 
-	private function getGlobalHeader() {
+	public function getGlobalHeader() {
 		//return $this->app->renderView('GlobalNavigation', 'Index');
 	}
 
@@ -170,7 +170,7 @@ class VenusController extends WikiaController {
 	}
 
 	private function getTopAds() {
-		return $this->app->renderView('Ad', 'Top');
+		//return $this->app->renderView('Ad', 'Top');
 	}
 
 	private function getGlobalFooter() {
@@ -192,5 +192,25 @@ class VenusController extends WikiaController {
 	 */
 	public static function addSkinAssetGroup($group) {
 		self::$skinAssetGroups[] = $group;
+	}
+
+	private static function getBackgroundClasses() {
+		global $wgOasisThemeSettings;
+		$themeSettings = $wgOasisThemeSettings; // OMG
+
+		$bodyClasses = [];
+		if ( isset($themeSettings['background-fixed'])
+			&& filter_var($themeSettings['background-fixed'], FILTER_VALIDATE_BOOLEAN) )
+		{
+			$bodyClasses[] = 'background-fixed';
+		}
+
+		if ( isset($themeSettings['background-tiled'])
+			&& !filter_var($themeSettings['background-tiled'], FILTER_VALIDATE_BOOLEAN) )
+		{
+			$bodyClasses[] = 'background-not-tiled';
+		}
+
+		return $bodyClasses;
 	}
 }

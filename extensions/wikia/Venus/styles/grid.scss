@@ -1,35 +1,7 @@
 @import "libs/foundation.custom/components/grid";
 
-.row:not(.full) {
-	@media #{$small-only} {
-		$width: $small-grid-width - 2 * $small-grid-margin;
-		max-width: $width;
-		min-width: $width;
-	}
-	@media #{$medium-only} {
-		$width: $medium-grid-width - 2 * $medium-grid-margin;
-		max-width: $width;
-		min-width: $width;
-	}
-	@media #{$large-up} {
-		$width: $large-grid-width - 2 * $large-grid-margin;
-		max-width: $width;
-		min-width: $width;
-	}
-}
-
-.row.full {
-	@media #{$small-only} {
-		max-width: $small-grid-width;
-		min-width: $small-grid-width;
-	}
-	@media #{$medium-only} {
-		max-width: $medium-grid-width;
-		min-width: $medium-grid-width;
-	}
-	@media #{$large-up} {
-		max-width: $large-grid-width;
-		min-width: $large-grid-width;
-	}
+.columns.no-padding {
+	padding-left: 0;
+	padding-right: 0;
 }
 

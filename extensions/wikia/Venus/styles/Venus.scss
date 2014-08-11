@@ -8,6 +8,10 @@
 // import general styles
 @import "general";
 
+// import page layout and background
+@import "layout";
+@import "background";
+
 // import grid & visibility from foundation
 @import "grid";
 @import "visibility";

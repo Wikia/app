@@ -1,5 +1,6 @@
 // functions are needed
 @import "libs/foundation.custom/functions";
+@import "z-index";
 
 // Base
 
@@ -25,7 +26,6 @@ $medium-only: "#{$screen} and (min-width:#{lower-bound($medium-range)}) and (max
 
 $large-up: "#{$screen} and (min-width:#{lower-bound($large-range)})";
 $large-only: "#{$screen} and (min-width:#{lower-bound($large-range)}) and (max-width:#{upper-bound($large-range)})";
-
 
 
 // Grid
