@@ -128,7 +128,7 @@ $background-is-wide: if( $background-width > $breakpoint-fluid, true, false );
 	$gradient-offset: $background-margin + ( $background-width-half - $width-gradient );
 
 	// Middle space
-	$width-middle: $breakpoint-max - ($background-width + 2 * $llbackground-offset);
+	$width-middle: $breakpoint-max - ($background-width + 2 * $background-offset);
 	$margin-middle: $width-middle / -2;
 
 	body.background-dynamic.skin-oasis {

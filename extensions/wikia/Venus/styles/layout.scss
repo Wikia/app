@@ -33,25 +33,3 @@ a {
 		width: $large-grid-width;
 	}
 }
-
-//.row:not(.full) {
-//	@media #{$small-only} {
-//		$width: $small-grid-width - 2 * $small-grid-margin;
-//		max-width: $width;
-//		min-width: $width;
-//	}
-//	@media #{$medium-only} {
-//		$width: $medium-grid-width - 2 * $medium-grid-margin;
-//		max-width: $width;
-//		min-width: $width;
-//	}
-//	@media #{$large-up} {
-//		$width: $large-grid-width - 2 * $large-grid-margin;
-//		max-width: $width;
-//		min-width: $width;
-//	}
-//}
-//
-//.row.full {
-//}
-//
