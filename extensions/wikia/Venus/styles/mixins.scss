@@ -1,3 +1,4 @@
+@import 'variables';
 
 // We use this to do clear floats
 @mixin clearfix {
@@ -52,4 +53,18 @@
             transform: rotate(-45deg);
         }
     }
+}
+
+@mixin grid-width($columns-count) {
+	@media #{$small-only} {
+		width: ($small-grid-column * $columns-count) + ($small-grid-gutter * ($columns-count - 1)) + ($small-grid-gutter * ($columns-count * 2));
+	}
+
+	@media #{$medium-only} {
+		width: ($medium-grid-column * $columns-count) + ($medium-grid-gutter * ($columns-count - 1)) + ($medium-grid-gutter * ($columns-count * 2));
+	}
+
+	@media #{$large-up} {
+		width: ($large-grid-column * $columns-count) + ($large-grid-gutter * ($columns-count - 1)) + ($large-grid-gutter * ($columns-count * 2));
+	}
 }

@@ -18,7 +18,7 @@
 	<?= $tabs ?>
 
 	<div class="row">
-		<article class="results-section small-6 medium-7 large-7 columns">
+		<article class="results-section small-12 medium-8 large-7 columns">
 			<?php if( $resultsFound > 0 ): ?>
 				<span class="result-count">
 					<?php if( empty( $isOneResultsPageOnly ) ): ?>
@@ -56,18 +56,17 @@
 							));
 						?>
 					<?php endforeach; ?>
+					<?= $paginationLinks; ?>
 				</section>
-
-				<?= $paginationLinks; ?>
 
 			<?php else: ?>
 				<?php if ( !$hasArticleMatch && $isMonobook ): ?>
-					<?= wfMsgExt( 'searchmenu-new', array('parse'), $query); ?>
+					<?= wfMessage( 'searchmenu-new' )->parse( $query ); ?>
 				<?php endif; ?>
 				<div class="no-result"><em><?= wfMessage( 'wikiasearch2-noresults' )->text() ?></em></div>
 			<?php endif; ?>
 		</article>
-		<div class="small-5 medium-4 large-4 small-offset-1 medium-offset-1 large-offset-1 columns">
+		<div class="small-5 medium-4 large-4 small-offset-1 medium-offset-1 large-offset-1 columns search-right-rail">
 			<div class="SearchAdsTopWrapper">
 				<?= F::app()->renderView('Ad', 'Index', ['slotName' => 'TOP_RIGHT_BOXAD', 'pageTypes' => ['search']]); ?>
 			</div>
