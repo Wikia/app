@@ -1,28 +1,28 @@
-# Unit Tests
+Unit Tests
+==========
 
 ## Running PHP unit tests
 
-Please note that **DevBoxSettings.php is not included** when unit tests are executed.
+> Please note that **DevBoxSettings.php is not included** when unit tests are executed
 
 ### Running a single tests
 
 ```
-cd /usr/wikia/source/wiki/tests
-ant -f build-wikia.xml -Dunittest=../extensions/wikia/AssetsManager/tests/AssetsManagerTest.php phpunit-single
+make phpunit-single test=../extensions/wikia/AssetsManager/tests/AssetsManagerTest.php
 ```
 
-### Running all tests
+### Running all tests for a given extension
 
-New way:
 ```
-cd /usr/wikia/source/wiki/tests
+./php-extension FooExtension
+```
+
+will run all tests (except of Broken) from ``/extensions/wikia/FooExtension``.
+
+### Running all unit tests
+
+```
 ./php-all
-```
-
-Old way:
-```
-cd /usr/wikia/source/wiki/tests
-ant -f build-wikia.xml php
 ```
 
 These commands will run all tests from ``tests`` subdirectories of:
@@ -31,7 +31,7 @@ These commands will run all tests from ``tests`` subdirectories of:
 * /extensions/FBConnect
 * /extensions/wikia
 
-excluding the following groups: Infrastructure, Integration, Broken, Stub, Monitoring, Hack.
+excluding the following groups: ``Broken, Stub, Monitoring, Hack``.
 
 Test file needs to match ``*Test.php`` and the class in the file should extend ``WikiaBaseTest``
 
@@ -81,5 +81,4 @@ cd /usr/wikia/source/wiki/tests
 karma start karma/js-unit.conf.js
 ```
 
-For more info see
-https://internal.wikia-inc.com/wiki/Unit_Testing/JS
+For more info see [docs on internal](https://internal.wikia-inc.com/wiki/Unit_Testing/JS)
