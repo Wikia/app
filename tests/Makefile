@@ -5,6 +5,12 @@ CMD_PHPUNIT=php run-test.php \
 	--log-junit build/logs/phpunit.xml \
 	--configuration phpunit.xml
 
+# command to run karma
+CMD_KARMA=karma start \
+	--single-run \
+	--no-auto-watch \
+	--reporters progress,junit,coverage
+
 # set up an environment
 export SERVER_DBNAME=firefly
 
@@ -45,6 +51,20 @@ phpunit-slow-list: prepare
 	${CMD_PHPUNIT} \
 		--exclude-group Infrastructure,Integration,Broken,Stub,Monitoring,Hack \
 		--slow-list
+
+#
+# JavaScript TESTS
+#
+
+# runs unit tests
+karma-unit: prepare
+	${CMD_KARMA} \
+		karma/js-unit.conf.js
+
+# runs infrastructure tests
+karma-integration: prepare
+	${CMD_KARMA} \
+		karma/js-integration.conf.js
 
 #
 # CODE COVERAGE

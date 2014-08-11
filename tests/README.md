@@ -66,11 +66,11 @@ In ```tests``` directory type in ```./php-slow-list```
 This script will list all slow test cases with execution time.
 Second list include list of class with count of slow tests cases.
 
-## Running JS unit tests
+## Running JS unit & infrastructure tests
 
 ```
-cd /usr/wikia/source/wiki/tests
-karma start karma/js-unit.conf.js
+make karma-unit karma-integration
 ```
 
 For more info see [docs on internal](https://internal.wikia-inc.com/wiki/Unit_Testing/JS)
+
