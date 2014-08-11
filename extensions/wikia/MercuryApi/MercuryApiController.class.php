@@ -15,17 +15,31 @@ class MercuryApiController extends WikiaController {
 	}
 
 	/**
+	 * @desc Returns Article id from request
+	 *
+	 * @requestParam Integer $articleId Article Id
+	 *
+	 * @return int articleId
+	 * @throws InvalidParameterApiException
+	 */
+	private function getArticleId() {
+		$articleId = $this->request->getInt( self::PARAM_ARTICLE_ID );
+
+		if( $articleId === 0 ) {
+			throw new InvalidParameterApiException( self::PARAM_ARTICLE_ID );
+		}
+
+		return $articleId;
+	}
+
+	/**
 	 * @desc Returns number of comments per article
 	 *
 	 * @throws NotFoundApiException
 	 * @throws InvalidParameterApiException
 	 */
 	public function getArticleCommentsCount() {
-		$articleId = $this->request->getInt( self::PARAM_ARTICLE_ID );
-
-		if( $articleId === 0 ) {
-			throw new InvalidParameterApiException( self::PARAM_ARTICLE_ID );
-		}
+		$articleId = $this->getArticleId();
 
 		$title = Title::newFromID( $articleId );
 		if ( empty( $title ) ) {
@@ -48,11 +62,7 @@ class MercuryApiController extends WikiaController {
 	 * @throws InvalidParameterApiException
 	 */
 	public function getTopContributorsPerArticle() {
-		$articleId = $this->request->getInt( self::PARAM_ARTICLE_ID );
-
-		if( $articleId === 0 ) {
-			throw new InvalidParameterApiException( self::PARAM_ARTICLE_ID );
-		}
+		$articleId = $this->getArticleId();
 
 		$title = Title::newFromID( $articleId );
 		if ( empty( $title ) ) {
@@ -82,11 +92,7 @@ class MercuryApiController extends WikiaController {
 	 * @throws InvalidParameterApiException
 	 */
 	public function getArticleComments() {
-		$articleId = $this->request->getInt( self::PARAM_ARTICLE_ID, 0 );
-
-		if( $articleId === 0 ) {
-			throw new InvalidParameterApiException( self::PARAM_ARTICLE_ID );
-		}
+		$articleId = $this->getArticleId();
 
 		$title = Title::newFromID( $articleId );
 		if ( !( $title instanceof Title ) ) {
