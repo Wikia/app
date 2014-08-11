@@ -59,7 +59,7 @@ class ArticleMetadataModelTest extends WikiaBaseTest {
 	}
 
 	/**
-	 * @group Integration
+	 * @group UsingDB
 	 * @expectedException TitleNotFoundException
 	 * @covers ArticleMetadataModel::newFromString
 	 */
