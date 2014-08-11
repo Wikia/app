@@ -59,12 +59,12 @@ class ArticleMetadataModelTest extends WikiaBaseTest {
 	}
 
 	/**
+	 * @group UsingDB
 	 * @expectedException TitleNotFoundException
 	 * @covers ArticleMetadataModel::newFromString
 	 */
 	public function testIndexNotFound() {
 		ArticleMetadataModel::newFromString("bnvghcfrt6t7y8uhgftdr567");
-
 	}
 
 
