@@ -28,6 +28,7 @@ class Transaction {
 	const PARAM_FUNCTION = 'function';
 	const PARAM_SPECIAL_PAGE_NAME = 'special_page';
 	const PARAM_API_ACTION = 'api_action';
+	const PARAM_WIKI = 'wiki';
 
 	const PSEUDO_PARAM_TYPE = 'type';
 
@@ -45,6 +46,7 @@ class Transaction {
 		static $instance;
 		if ( $instance === null ) {
 			$instance = new TransactionTrace( array(
+				// plugins
 				new TransactionTraceNewrelic(),
 			) );
 		}
