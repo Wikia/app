@@ -10,7 +10,7 @@ $messages = array();
 $messages['en'] = array(
 	// general
 	'wikiahubs-v3-button-cancel' => 'Cancel',
-	'wikiahubs-v3-search-placeholder' => 'Search Wikia',
+	'wikiahubs-search-placeholder' => 'Search Wikia',
 
 	// suggest article
 	'wikiahubs-v3-suggest-article-header' => 'Suggest an Article',
@@ -53,7 +53,7 @@ $messages['en'] = array(
 
 $messages['de'] = array(
 	'wikiahubs-v3-button-cancel' => 'Abbrechen',
-	'wikiahubs-v3-search-placeholder' => 'Wikia durchsuchen',
+	'wikiahubs-search-placeholder' => 'Wikia durchsuchen',
 
 	// suggest article
 	'wikiahubs-v3-suggest-article-header' => 'Artikel vorschlagen',
@@ -96,7 +96,7 @@ $messages['de'] = array(
 $messages['fr'] = array(
 	// general
 	'wikiahubs-v3-button-cancel' => 'Annuler',
-	'wikiahubs-v3-search-placeholder' => 'Rechercher sur Wikia',
+	'wikiahubs-search-placeholder' => 'Rechercher sur Wikia',
 
 	// suggest article
 	'wikiahubs-v3-suggest-article-header' => 'Suggérer un article',
@@ -139,7 +139,7 @@ $messages['fr'] = array(
 $messages['es'] = array(
 	// general
 	'wikiahubs-v3-button-cancel' => 'Cancelar',
-	'wikiahubs-v3-search-placeholder' => 'Buscar en Wikia',
+	'wikiahubs-search-placeholder' => 'Buscar en Wikia',
 
 	// suggest article
 	'wikiahubs-v3-suggest-article-header' => 'Sugerir un artículo',
@@ -179,7 +179,7 @@ $messages['es'] = array(
 $messages['pl'] = [
 	// general
 	'wikiahubs-v3-button-cancel' => 'Anuluj',
-	'wikiahubs-v3-search-placeholder' => 'Szukaj na Wikii',
+	'wikiahubs-search-placeholder' => 'Szukaj na Wikii',
 
 	// suggest article
 	'wikiahubs-v3-suggest-article-header' => 'Zasugeruj artykuł',
@@ -222,7 +222,7 @@ $messages['pl'] = [
 $messages['ja'] = array(
 	// general
 	'wikiahubs-v3-button-cancel' => 'キャンセル',
-	'wikiahubs-v3-search-placeholder' => 'ウィキアを検索する',
+	'wikiahubs-search-placeholder' => 'ウィキアを検索する',
 
 	// suggest article
 	'wikiahubs-v3-suggest-article-header' => '記事を投稿する',
