@@ -136,9 +136,9 @@ class ThumbnailController extends WikiaController {
 		$this->imgSrc = $options['src'];
 		$this->mediaKey = htmlspecialchars( $title->getDBKey() );
 		$this->mediaName = htmlspecialchars( $title->getText() );
-		$this->imgClass = empty( $options['imgClass'] ) ? '' : $options['imgClass'];;
+		$this->imgClass = empty( $options['imgClass'] ) ? '' : $options['imgClass'];
 		$this->imgAttrs = ThumbnailHelper::getAttribs( $imgAttribs );
-		$this->alt = $options['alt'];
+		$this->alt = isset( $options['alt'] ) ? $options['alt'] : $this->mediaName; // default to title
 
 		// data-src attribute in case of lazy loading
 		$this->noscript = '';
@@ -222,7 +222,7 @@ class ThumbnailController extends WikiaController {
 		$title = $file->getTitle();
 		$this->mediaKey = htmlspecialchars( $title->getDBKey() );
 		$this->mediaName = htmlspecialchars( $title->getText() );
-		$this->alt = $options['alt'];
+		$this->alt = isset( $options['alt'] ) ? $options['alt'] : $this->mediaName; // default to title
 
 		// Check fluid
 		if ( empty( $options[ 'fluid' ] ) ) {
