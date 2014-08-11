@@ -8,27 +8,42 @@ class MediaGalleryController extends WikiaController {
 		$items = $this->getVal( 'items' );
 		$media = [];
 
-		foreach ( $items as $idx => $item ) {
+		$itemCount = count( $items );
+
+		$dimensionIndex = 0;
+		foreach ( $items as $item ) {
 			$file = wfFindFile( $item['title'] );
 
 			if ( !$file instanceof File ) {
 				continue; // todo: possible add error state
 			}
-			$thumb = $file->transform( ['width'=>500, 'height'=>500] );
 
-			$src = wfReplaceImageServer( $thumb->getUrl(), $file->getTimestamp() );
-			$dataSrc = false;
-			$classes = '';
-			if ( $idx >= self::MAX_ITEMS ) {
-				$dataSrc = $src;
-				$src = F::app()->wg->BlankImgUrl;
-				$classes = 'hidden';
-			}
-			$media[] = [
-				'src' => $src,
-				'dataSrc' => $dataSrc,
-				'classes' => $classes,
+			$dimension = MediaGalleryHelper::getDimensionBySizeAndOrder( $itemCount, $dimensionIndex );
+			$dimensions = [
+				'width' => $dimension,
+				'height' => $dimension,
 			];
+			$thumb = $file->transform( $dimensions );
+			$thumbUrl = wfReplaceImageServer(
+				WikiaFileHelper::getSquaredThumbnailUrl( $file, $dimension ),
+				$file->getTimestamp()
+			);
+
+			$params = [
+				'thumb' => $thumb,
+				'options' => [
+					'custom-img-src' => $thumbUrl,
+					'file-link' => $file->getUrl(),
+					'fluid' => true,
+				]
+			];
+			$markup = $this->app->renderView(
+				'ThumbnailController',
+				'image',
+				$params
+			);
+			$media[] = $markup;
+			++$dimensionIndex;
 		}
 
 		$count = count( $media );
