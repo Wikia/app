@@ -36,7 +36,6 @@ class MercuryApiController extends WikiaController {
 	 * @desc Returns number of comments per article
 	 *
 	 * @throws NotFoundApiException
-	 * @throws InvalidParameterApiException
 	 */
 	public function getArticleCommentsCount() {
 		$articleId = $this->getArticleId();
@@ -59,7 +58,6 @@ class MercuryApiController extends WikiaController {
 	 * @desc Returns user ids for top contributors
 	 *
 	 * @throws NotFoundApiException
-	 * @throws InvalidParameterApiException
 	 */
 	public function getTopContributorsPerArticle() {
 		$articleId = $this->getArticleId();
@@ -89,7 +87,6 @@ class MercuryApiController extends WikiaController {
 	 *
 	 * @throws NotFoundApiException
 	 * @throws BadRequestApiException
-	 * @throws InvalidParameterApiException
 	 */
 	public function getArticleComments() {
 		$articleId = $this->getArticleId();
