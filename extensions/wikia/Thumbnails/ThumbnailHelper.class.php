@@ -272,6 +272,11 @@ class ThumbnailHelper extends WikiaModel {
 			$classes[] = "link-external";
 		}
 
+		// Check for fluid
+		if ( ! empty( $options[ 'fluid' ] ) ) {
+			$classes[] = 'fluid';
+		}
+
 		return $classes;
 	}
 
