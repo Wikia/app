@@ -29,10 +29,10 @@ function memsess_key( $id ) {
  * @return Boolean: success
  */
 function memsess_open( $save_path, $session_name ) {
-	/* Wikia change - begin - PLATFORM-308 */
+	/** Wikia change - begin - PLATFORM-308 */
 	global $wgSessionDebugData;
 	$wgSessionDebugData[] = [ 'event' => 'open', 'save_path' => $save_path, 'session_name' => $session_name ];
-	/* Wikia change - end */
+	/** Wikia change - end */
 	return true;
 }
 
@@ -43,10 +43,10 @@ function memsess_open( $save_path, $session_name ) {
  * @return Boolean: success
  */
 function memsess_close() {
-	/* Wikia change - begin - PLATFORM-308 */
+	/** Wikia change - begin - PLATFORM-308 */
 	global $wgSessionDebugData;
 	$wgSessionDebugData[] = [ 'event' => 'close' ];
-	/* Wikia change - end */
+	/** Wikia change - end */
 	return true;
 }
 
@@ -60,10 +60,10 @@ function memsess_read( $id ) {
 	$memc =& getMemc();
 	$data = $memc->get( memsess_key( $id ) );
 
-	/* Wikia change - begin - PLATFORM-308 */
+	/** Wikia change - begin - PLATFORM-308 */
 	global $wgSessionDebugData;
 	$wgSessionDebugData[] = [ 'event' => 'read', 'id' => $id ];
-	/* Wikia change - end */
+	/** Wikia change - end */
 
 	if( ! $data ) return '';
 	return $data;
@@ -80,10 +80,10 @@ function memsess_write( $id, $data ) {
 	$memc =& getMemc();
 	$memc->set( memsess_key( $id ), $data, 3600 );
 
-	/* Wikia change - begin - PLATFORM-308 */
+	/** Wikia change - begin - PLATFORM-308 */
 	global $wgSessionDebugData;
 	$wgSessionDebugData[] = [ 'event' => 'write', 'id' => $id, 'data' => $data ];
-	/* Wikia change - end */
+	/** Wikia change - end */
 
 	return true;
 }
@@ -98,10 +98,10 @@ function memsess_destroy( $id ) {
 	$memc =& getMemc();
 	$memc->delete( memsess_key( $id ) );
 
-	/* Wikia change - begin - PLATFORM-308 */
+	/** Wikia change - begin - PLATFORM-308 */
 	global $wgSessionDebugData;
 	$wgSessionDebugData[] = [ 'event' => 'destroy', 'id' => $id ];
-	/* Wikia change - end */
+	/** Wikia change - end */
 
 	return true;
 }
@@ -143,4 +143,3 @@ function &getMemc() {
 		return $wgMemc;
 	}
 }
-
