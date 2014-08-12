@@ -151,68 +151,68 @@ a {
  }
 
 .wikia-paginator {
-    height: 75px;
-    line-height: 75px;
-    padding: 0px;
-    margin: 40px 0px;
-    border-style: solid;
-    border-color: #eef1f3;
-    border-width: 1px 0px;
-    text-align: center;
+	border: #eef1f3 solid;
+	border-width: 1px 0;
+	height: 75px;
+	line-height: 75px;
+	margin: 40px 0;
+	padding: 0;
+	text-align: center;
 
-    ul {
-        list-style: none;
-        padding: 0px;
-        margin: 0px;
-        list-style-type: none;
-        letter-spacing: 0;
-        display: inline-block;
+	ul {
+		display: inline-block;
+		letter-spacing: 0;
+		list-style: none;
+		margin: 0;
+		padding: 0;
 
-        li {
-            margin: 0px;
-            padding: 0px;
-            float: left;
-        }
+		li {
+			float: left;
+			margin: 0;
+			padding: 0;
+		}
 
-        .paginator-page {
-            height: 18px;
-            margin: 0 10px;
-            padding: 0 4px;
-            color: #0a6eb4;
-            text-decoration: none;
+		.paginator-page {
+			color: #0a6eb4;
+			height: 18px;
+			margin: 0 10px;
+			padding: 0 4px;
 
-            &:hover {
-                cursor: pointer;
-            }
-            &.active {
-                color: #3c3c3c;
-            }
-        }
-        .paginator-prev,
-        .paginator-next {
-            span {
-                display: none;
-            }
-        }
-        .paginator-prev {
-            padding: 0;
-            margin: 0;
-            @include chevron(25px, 3px, 'left', #0a6eb4);
+			&:hover {
+				cursor: pointer;
+			}
+			&.active {
+				color: #3c3c3c;
+			}
+		}
 
-            &.disabled {
-                @include chevron(25px, 3px, 'left', #c8d2d7);
-            }
-        }
-        .paginator-next {
-            padding: 0;
-            margin: 0 0px 6px;
-            @include chevron(25px, 3px, 'right', #0a6eb4);
+		.paginator-prev,
+		.paginator-next {
+			span {
+				display: none;
+			}
+		}
 
-            &.disabled {
-                @include chevron(25px, 3px, 'right', #c8d2d7);
-            }
-        }
-    }
+		.paginator-prev {
+			@include chevron(25px, 3px, 'left', #0a6eb4);
+			margin: 0;
+			padding: 0;
+
+			&.disabled {
+				@include chevron(25px, 3px, 'left', #c8d2d7);
+			}
+		}
+
+		.paginator-next {
+			@include chevron(25px, 3px, 'right', #0a6eb4);
+			margin: 0 0 6px;
+			padding: 0;
+
+			&.disabled {
+				@include chevron(25px, 3px, 'right', #c8d2d7);
+			}
+		}
+	}
 }
 
 @media screen and (max-width: 1023px) {
