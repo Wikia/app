@@ -1,30 +1,30 @@
-@import "libs/foundation.custom/components/grid";
+@import 'libs/foundation.custom/components/grid';
 
 padded.columns, .padded-column {
-	@media ($small-only) {
+	@media #{$small-only} {
 		padding-left: $small-grid-column-padding;
 		padding-right: $small-grid-column-padding;
 	}
-	@media ($medium-only) {
+	@media #{$medium-only} {
 		padding-left: $medium-grid-column-padding;
 		padding-right: $medium-grid-column-padding;
 	}
-	@media ($large-up) {
+	@media #{$large-up} {
 		padding-left: $large-grid-column-padding;
 		padding-right: $large-grid-column-padding;
 	}
 }
 
 .padded.row, .padded-row {
-	@media ($small-only) {
+	@media #{$small-only} {
 		padding-left: $small-grid-content-padding;
 		padding-right: $small-grid-content-padding;
 	}
-	@media ($medium-only) {
+	@media #{$medium-only} {
 		padding-left: $medium-grid-content-padding;
 		padding-right: $medium-grid-content-padding;
 	}
-	@media ($large-up) {
+	@media #{$large-up} {
 		padding-left: $large-grid-content-padding;
 		padding-right: $large-grid-content-padding;
 	}

@@ -68,3 +68,17 @@
 		width: $columns-count * ($large-grid-column + $large-grid-gutter) - $large-grid-gutter;
 	}
 }
+
+@mixin grid-height($columns-count) {
+	@media #{$small-only} {
+		height: $columns-count * ($small-grid-column + $small-grid-gutter) - $small-grid-gutter;
+	}
+
+	@media #{$medium-only} {
+		height: $columns-count * ($medium-grid-column + $medium-grid-gutter) - $medium-grid-gutter;
+	}
+
+	@media #{$large-up} {
+		height: $columns-count * ($large-grid-column + $large-grid-gutter) - $large-grid-gutter;
+	}
+}
