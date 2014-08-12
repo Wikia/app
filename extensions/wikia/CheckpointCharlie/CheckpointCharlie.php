@@ -10,13 +10,12 @@
  * Extension credits.
  */
 $wgExtensionCredits['other'][] = array(
-    'path'              => __FILE__,
-    'name'              => 'CheckpointCharlie',
-    'description'       => 'Whitelist IP addresses allowed access to special pages.',
-    'descriptionmsg'    => 'checkpointcharlie-desc',
-    'version'           => '1.0',
-    'author'            => array( '[http://community.wikia.com/wiki/User:Mroszka Michał ‘Mix’ Roszka]' ),
-    'url'               => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/CheckpointCharlie/',
+	'path'              => __FILE__,
+	'name'              => 'CheckpointCharlie',
+	'descriptionmsg'    => 'checkpointcharlie-desc',
+	'version'           => '1.0',
+	'author'            => array( '[http://community.wikia.com/wiki/User:Mroszka Michał ‘Mix’ Roszka]' ),
+	'url'               => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/CheckpointCharlie/',
 );
 
 /**
@@ -29,7 +28,8 @@ function efGuardCheckpointCharlie( $oTitle, $unused, $oOutputPage, $oUser, $oWeb
 
 	if ( !$oRestrictedSessions->isWhiteListedIP( $oWebRequest->getIP() )
 		&& NS_SPECIAL == $oTitle->getNamespace()
-		&& !in_array( $oTitle->getDBkey(), $wgCheckpointCharlieSpecialPagesWhitelist ) ) {
+		&& !in_array( $oTitle->getDBkey(), $wgCheckpointCharlieSpecialPagesWhitelist )
+	) {
 		throw new ErrorPageError( 'checkpointcharlie-title', 'checkpointcharlie-content' );
 	}
 
@@ -44,4 +44,4 @@ $wgExtensionMessagesFiles['CheckpointCharlie'] = __DIR__ . '/CheckpointCharlie.i
 /**
  * Hooks.
  */
-$wgHooks['BeforeInitialize'][]   = 'efGuardCheckpointCharlie';
+$wgHooks['BeforeInitialize'][] = 'efGuardCheckpointCharlie';
