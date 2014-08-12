@@ -105,7 +105,7 @@ class TaskRunner {
 			'MultiDeleteTask',
 			'MultiMoveTask',
 			'MultiWikiEditTask',
-//			'PromoteImageReviewTask',
+//			'PromoteImageReviewTask', NOTE - this is removed in https://github.com/Wikia/app/pull/4086
 			'ReplaceTextJob',
 			'SFCreatePageJob',
 			'SMW_NMSendMailJob',

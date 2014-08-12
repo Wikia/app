@@ -811,19 +811,9 @@ class SiteWideMessages extends SpecialPage {
 	}
 
 	private function queueTask($taskArgs) {
-		if (TaskRunner::isModern('SWMSendToGroupTask')) {
-			$task = new \Wikia\Tasks\Tasks\SiteWideMessagesTask();
-			$task->call('send', $taskArgs);
-			$taskId = $task->queue();
-		} else {
-			$oTask = new SWMSendToGroupTask();
-			$oTask->createTask(
-				$taskArgs,
-				TASK_QUEUED,
-				BatchTask::PRIORITY_HIGH
-			);
-			$taskId = $oTask->getID();
-		}
+		$task = new \Wikia\Tasks\Tasks\SiteWideMessagesTask();
+		$task->call('send', $taskArgs);
+		$taskId = $task->queue();
 
 		return $taskId;
 	}
