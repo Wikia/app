@@ -23,20 +23,21 @@ class VenusController extends WikiaController {
 		$this->dir = $skinVars['dir'];
 		$this->lang = $skinVars['lang'];
 		$this->pageClass = $skinVars['pageclass'];
-		$this->pageCss = $skinVars['pagecss'];
 		$this->skinNameClass = $skinVars['skinnameclass'];
 		$this->bottomScriptLinks = $skinVars['bottomscripts'];
+		$this->pageCss = $this->getPageCss();
+
 
 		// initialize variables
 		$this->comScore = null;
 		$this->quantServe = null;
 
-		//TODO clean up wg variables inclusion in views
+		//TODO clean up wg variables inclusion in views (CON-1533)
 		global $wgOut;
 		$this->topScripts = $wgOut->topScripts;
 	}
 
-	public function executeIndex() {
+	public function index() {
 		global $wgUser, $wgTitle;
 
 		$this->title = $wgTitle->getText();
@@ -49,9 +50,11 @@ class VenusController extends WikiaController {
 		$this->setBodyClasses();
 		$this->setHeadItems();
 		$this->setAssets();
+
+		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
 	}
 
-	public function setBodyModules() {
+	private function setBodyModules() {
 		$this->globalHeader = $this->getGlobalHeader();
 		$this->notifications = $this->getNotifications();
 		$this->topAds = $this->getTopAds();
@@ -61,7 +64,7 @@ class VenusController extends WikiaController {
 	}
 
 
-	public function setBodyClasses() {
+	private function setBodyClasses() {
 		// generate list of CSS classes for <body> tag
 		$bodyClasses = [$this->skinNameClass, $this->dir, $this->pageClass];
 
@@ -78,18 +81,25 @@ class VenusController extends WikiaController {
 		$this->bodyClasses = implode(' ', array_merge($bodyClasses, self::getBackgroundClasses()));
 	}
 
-	public function setHeadItems() {
+	private function setHeadItems() {
 		global $wgOut;
 		$this->headLinks = $wgOut->getHeadLinks();
 		$this->headItems = $this->skin->getHeadItems();
+	}
 
-		$this->pageTitle = htmlspecialchars( $this->pageTitle );
-		$this->displayTitle = htmlspecialchars( $this->displayTitle );
-		$this->mimeType = htmlspecialchars( $this->mimeType );
-		$this->charset = htmlspecialchars( $this->charset );
+	private function getPageCss() {
+		$skinVars = $this->skinTemplateObj->data;
+
+		if ($pageCss = $skinVars['pagecss']) {
+			return '<style type="text/css">' . $pageCss . '</style>';
+		} else {
+			return '';
+		}
 	}
 
 	private function setAssets() {
+		global $wgOut;
+
 		$jsHeadGroups = ['venus_head_js'];
 		$jsHeadFiles = '';
 		$jsBodyGroups = ['venus_body_js'];
@@ -111,7 +121,6 @@ class VenusController extends WikiaController {
 			]
 		);
 
-		//
 		foreach ( $this->assetsManager->getURL( $cssGroups ) as $s ) {
 			if ( $this->assetsManager->checkAssetUrlForSkin( $s, $this->skin ) ) {
 				$cssLinks .= "<link rel=stylesheet href='{$s}'/>";
@@ -120,7 +129,7 @@ class VenusController extends WikiaController {
 
 		if ( is_array( $styles ) ) {
 			foreach ( $styles as $s ) {
-				$cssLinks .= "<link rel=stylesheet href='{$s['url']}'/>";
+				$cssLinks .= $s['tag'];
 			}
 		}
 
@@ -144,36 +153,28 @@ class VenusController extends WikiaController {
 
 		// set variables
 		$this->cssLinks = $cssLinks;
-		$this->jsHeadFiles = $jsHeadFiles;
 		$this->jsBodyFiles = $jsBodyFiles;
-	}
-
-	private function getSkin() {
-		if ( !$this->skin ) {
-			$this->skin = RequestContext::getMain()->getSkin();
-		}
-
-		return $this->skin;
+		$this->jsHeadScripts = $wgOut->topScripts . $jsHeadFiles;
 	}
 
 	public function getGlobalHeader() {
 		//return $this->app->renderView('GlobalNavigation', 'Index');
 	}
 
-	public function getNotifications() {
+	private function getNotifications() {
 		//return $this->app->renderView('Notifications', 'Confirmation');
 	}
 
-	public function getWikiHeader() {
+	private function getWikiHeader() {
 		//return $this->app->renderView( 'LocalHeader', 'Index' );
 	}
 
-	public function getTopAds() {
+	private function getTopAds() {
 		//return $this->app->renderView('Ad', 'Top');
 	}
 
-	public function getGlobalFooter() {
-		//return $this->app->renderView('Footer', 'Index');
+	private function getGlobalFooter() {
+		return $this->app->renderView('GlobalFooter', 'index');
 	}
 
 	public function getCorporateFootet() {

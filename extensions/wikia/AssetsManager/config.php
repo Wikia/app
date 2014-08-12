@@ -1844,9 +1844,18 @@ $config['optimizely_blocking_js'] = array(
 /** GlobalFooter extension */
 $config['global_footer_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
-	'skin' => ['oasis'],
+	'skin' => ['oasis', 'venus'],
 	'assets' => array(
 		'//extensions/wikia/GlobalFooter/scripts/GlobalFooter.js'
+	)
+);
+
+/** CorporateFooter extension */
+$config['corporate_footer_js'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => ['oasis'],
+	'assets' => array(
+		'//extensions/wikia/CorporateFooter/scripts/CorporateFooterTracker.js'
 	)
 );
 
@@ -1856,6 +1865,7 @@ $config['bucky_js'] = array(
 	'skin' => [ 'oasis' ],
 	'assets' => array(
 		'//extensions/wikia/Bucky/vendor/BuckyClient/bucky.js',
+		'//extensions/wikia/Bucky/js/bucky_init.js',
 	)
 );
 
