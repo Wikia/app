@@ -130,15 +130,16 @@ class QuestDetailsSolrHelper {
 
 					if( !empty( $value ) ) {
 						$metadata[ $metadataKey ] = $value;
-					} else {
-						$metadata[ $metadataKey ] = [ ];
 					}
-
 				}
 			}
 		}
 
-		$metadata[ 'map_location' ] = $this->getMetadataMap( $item );
+		$metadataMap = $this->getMetadataMap( $item );
+
+		if( !empty( $metadataMap ) ) {
+			$metadata[ 'map_location' ] = $metadataMap;
+		}
 
 		return $metadata;
 	}
@@ -189,10 +190,12 @@ class QuestDetailsSolrHelper {
 
 					$mapKey = $this->cutPrefixAndSuffix( $key, 'metadata_map_', '_sr' );
 
-					$coordinates = $this->parseCoordinates( $value );
+					if( !empty( $value ) ) {
+						$coordinates = $this->parseCoordinates( $value );
 
-					$map[ $mapKey . '_x' ] = $coordinates[ 'x' ];
-					$map[ $mapKey . '_y' ] = $coordinates[ 'y' ];
+						$map[ $mapKey . '_x' ] = $coordinates[ 'x' ];
+						$map[ $mapKey . '_y' ] = $coordinates[ 'y' ];
+					}
 				}
 			}
 		}
