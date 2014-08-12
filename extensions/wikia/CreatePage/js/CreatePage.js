@@ -260,8 +260,10 @@ var CreatePage = {
 
 	redLinkClick: function( e, titleText ) {
 		'use strict';
-		var title = titleText.split( ':' ),
-			isContentNamespace = true;
+		var title = new mw.Title.newFromText( titleText ),
+			namespace = title.getNamespacePrefix().replace( ':', '' ),
+			inContentEditable = $( e.target ).closest( '[contenteditable="true"]' ).length,
+			showDialog = true;
 
 		CreatePage.redlinkParam = '&redlink=1';
 
@@ -270,15 +272,15 @@ var CreatePage = {
 		}
 
 		if (
-			title.length > 1 &&
-			mw.config.get('wgNamespaceIds')[ title[0].toLowerCase() ] &&
+			inContentEditable ||
+			mw.config.get('wgNamespaceIds')[ namespace.toLowerCase() ] &&
 			window.ContentNamespacesText &&
 			window.ContentNamespacesText.indexOf( title[0] ) === -1
 		) {
-			isContentNamespace = false;
+			showDialog = false;
 		}
 
-		if ( isContentNamespace ) {
+		if ( showDialog ) {
 			CreatePage.requestDialog( e, titleText );
 		} else {
 			return false;
@@ -316,9 +318,7 @@ var CreatePage = {
 			}
 
 			$( '#WikiaArticle' ).on( 'click', 'a.new', function( e ) {
-				if ( !$( e.target ).closest( '[contenteditable="true"]' ).length ) {
-					CreatePage.redLinkClick( e, CreatePage.getTitleFromUrl( this.href ) );
-				}
+				CreatePage.redLinkClick( e, CreatePage.getTitleFromUrl( this.href ) );
 			});
 
 			$( '.createboxButton' ).bind( 'click', function( e ) {
