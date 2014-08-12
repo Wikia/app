@@ -31,19 +31,22 @@ $large-only: "#{$screen} and (min-width:#{lower-bound($large-range)}) and (max-w
 // Content Width
 $small-content-width: 768px;
 $medium-content-width: 1024px;
-$large-content-width: 1160px;
+$large-content-width: 1156px;
 
 // Grid Size
 
 // col: 38px, gutter 8px, grid margin 16px, col padding 8px
 $small-grid-column: 38px;
-$small-grid-margin: 16px;
+$small-grid-column-padding: 8px;
+$small-grid-content-padding: 16px;
 $small-grid-gutter: 8px;
 // col: 53px, gutter 10px, grid margin 19px, col padding 10px
 $medium-grid-column: 53px;
-$medium-grid-margin: 19px;
+$medium-grid-column-padding: 10px;
+$medium-grid-content-padding: 19px;
 $medium-grid-gutter: 10px;
 // col: 58px, gutter 20px, grid margin 20px, col padding 12px
 $large-grid-column: 58px;
-$large-grid-margin: 20px;
+$large-grid-column-padding: 12px;
+$large-grid-content-padding: 20px;
 $large-grid-gutter: 12px;

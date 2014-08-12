@@ -1432,7 +1432,6 @@ $config['wampage_js'] = array(
 );
 
 /** WikiaSearch **/
-
 $config['wikiasearch_js_wikiamobile'] = array(
     'type' => AssetsManager::TYPE_JS,
     'skin' => 'wikiamobile',
