@@ -91,7 +91,7 @@ define('wikia.intMap.poiCategories',
 					triggerMarkerUpload
 				]
 			},
-			trigger,
+			pontoTrigger,
 			params,
 			mapId,
 			mapUrl,
@@ -100,7 +100,7 @@ define('wikia.intMap.poiCategories',
 				CREATE: 'create',
 				EDIT: 'edit'
 			},
-			originalPoiCategoriesData;
+			poiCategoriesOriginalData;
 
 		/**
 		 * @desc Entry point for modal
@@ -110,7 +110,7 @@ define('wikia.intMap.poiCategories',
 		 */
 		function init(templates, _params, _trigger) {
 			// set reference to params and trigger callback
-			trigger = _trigger;
+			pontoTrigger = _trigger;
 			params = _params;
 			mapId = params.mapId;
 
@@ -134,7 +134,7 @@ define('wikia.intMap.poiCategories',
 		function setUpModal(data) {
 			setUpTemplateData(data);
 			mapUrl = data.mapUrl;
-			originalPoiCategoriesData = data.poiCategories;
+			poiCategoriesOriginalData = data.poiCategories;
 
 			modalConfig.vars.content = utils.render(poiCategoriesTemplate, poiCategoriesTemplateData, {
 				poiCategory: poiCategoryTemplate,
@@ -202,8 +202,8 @@ define('wikia.intMap.poiCategories',
 
 		/**
 		 * @desc extends array of POI categories
-		 * @param {Array} poiCategories - array of POI category objects
-		 * @returns {Array} - array of extended POI categories objects
+		 * @param {array} poiCategories - array of POI category objects
+		 * @returns {array} - array of extended POI categories objects
 		 */
 		function extendPoiCategoriesData(poiCategories) {
 			var extendedPoiCategories = [];
@@ -380,16 +380,16 @@ define('wikia.intMap.poiCategories',
 
 		/**
 		 * @desc checks if POI category data was changed by user
-		 * @param {object} originalPoiCategory
+		 * @param {object} poiCategoryOriginal
 		 * @param {object} poiCategory
 		 * @returns {boolean} - is POI category changed
 		 */
-		function isPoiCategoryChanged(originalPoiCategory, poiCategory) {
-			if (poiCategory.name !== originalPoiCategory.name) {
+		function isPoiCategoryChanged(poiCategoryOriginal, poiCategory) {
+			if (poiCategory.name !== poiCategoryOriginal.name) {
 				return true;
 			}
 
-			if (parseInt(poiCategory.parent_poi_category_id, 10) !== originalPoiCategory.parent_poi_category_id) {
+			if (poiCategory.parent_poi_category_id !== poiCategoryOriginal.parent_poi_category_id) {
 				return true;
 			}
 
@@ -408,7 +408,7 @@ define('wikia.intMap.poiCategories',
 		 */
 		function organizePoiCategories(formSerialized) {
 			var poiCategories = {
-				mapId: formSerialized.mapId,
+				mapId: parseInt(formSerialized.mapId, 10),
 				poiCategoriesToCreate: [],
 				poiCategoriesToUpdate: [],
 				poiCategoriesToDelete: []
@@ -416,22 +416,29 @@ define('wikia.intMap.poiCategories',
 
 			if (formSerialized.poiCategories) {
 				formSerialized.poiCategories.forEach(function (poiCategory) {
-					if (poiCategory.id) {
-						var originalPoiCategory = $.grep(originalPoiCategoriesData, function (item) {
-							return item.id === parseInt(poiCategory.id, 10);
-						})[0];
+					var poiCategoryOriginal;
 
-						if (originalPoiCategory && isPoiCategoryChanged(originalPoiCategory, poiCategory)) {
+					if (poiCategory.parent_poi_category_id) {
+						poiCategory.parent_poi_category_id = parseInt(poiCategory.parent_poi_category_id, 10);
+					}
+
+					if (poiCategory.id) {
+						poiCategory.id = parseInt(poiCategory.id, 10);
+
+						poiCategoryOriginal = findPoiCategoryById(poiCategory.id, poiCategoriesOriginalData);
+
+						if (poiCategoryOriginal && isPoiCategoryChanged(poiCategoryOriginal, poiCategory)) {
 							poiCategories.poiCategoriesToUpdate.push(poiCategory);
 						}
 					} else {
+						delete poiCategory.id;
 						poiCategories.poiCategoriesToCreate.push(poiCategory);
 					}
 				});
 			}
 
 			if (formSerialized.poiCategoriesToDelete) {
-				poiCategories.poiCategoriesToDelete = formSerialized.poiCategoriesToDelete.split(',');
+				poiCategories.poiCategoriesToDelete = formSerialized.poiCategoriesToDelete.split(',').map(Number);
 			}
 
 			return poiCategories;
@@ -457,8 +464,8 @@ define('wikia.intMap.poiCategories',
 
 					if (results && results.success) {
 						utils.cleanUpError(modal);
-						modal.trigger('poiCategoriesSaved', results.content);
-						utils.track(utils.trackerActions.IMPRESSION, 'poi-category-' + mode, parseInt(data.mapId, 10));
+						modal.trigger('poiCategoriesSaved', data, results.content);
+						utils.track(utils.trackerActions.IMPRESSION, 'poi-category-' + mode, data.mapId);
 					} else {
 						utils.showError(modal, results.content.message);
 						modal.activate();
@@ -483,12 +490,85 @@ define('wikia.intMap.poiCategories',
 		}
 
 		/**
-		 * @desc send callback to ponto and close modal
+		 * @desc finds POI category in array by looking at ids
+		 * @param id - POI category id
+		 * @param poiCategories - array of POI categories
+		 * @returns {object|null} - POI category with given id or null if not found
 		 */
-		function poiCategoriesSaved(data) {
+		function findPoiCategoryById(id, poiCategories) {
+			return $.grep(poiCategories, function (item) {
+				return item.id === id;
+			})[0];
+		}
+
+		/**
+		 * @desc cleans up POI category data after updating it, copies what's needed from the original data
+		 * @param poiCategoryUpdated
+		 * @param poiCategoryOriginal
+		 * @returns {object} - POI category with current data
+		 */
+		function setPoiCategoryUpdatedData(poiCategoryUpdated, poiCategoryOriginal) {
+			poiCategoryUpdated.map_id = poiCategoryOriginal.map_id;
+			poiCategoryUpdated.status = poiCategoryOriginal.status;
+			poiCategoryUpdated.marker = (!poiCategoryOriginal.no_marker && !poiCategoryUpdated.marker) ?
+				poiCategoryOriginal.marker :
+				poiCategoryUpdated.marker;
+
+			if (poiCategoryOriginal.no_marker && !poiCategoryUpdated.marker) {
+				poiCategoryUpdated.no_marker = true;
+			}
+
+			return poiCategoryUpdated;
+		}
+
+		/**
+		 * @desc cleans up POI categories data after edit
+		 * @param {object} dataSent - POI categories sent to backend
+		 * @param {object} dataReceived - response from backend, array of actions done and categories affected
+		 * @returns {array} - current POI categories list
+		 */
+		function updatePoiCategoriesData(dataSent, dataReceived) {
+			var currentPoiCategories = [];
+
+			poiCategoriesOriginalData.forEach(function (poiCategoryOriginal) {
+				var poiCategoryUpdated = null;
+
+				if (
+					dataReceived.poiCategoriesUpdated &&
+					dataReceived.poiCategoriesUpdated.indexOf(poiCategoryOriginal.id) > -1
+				) {
+					poiCategoryUpdated = findPoiCategoryById(poiCategoryOriginal.id, dataSent.poiCategoriesToUpdate);
+					if (poiCategoryUpdated) {
+						currentPoiCategories.push(setPoiCategoryUpdatedData(poiCategoryUpdated, poiCategoryOriginal));
+					}
+				} else if (
+					!(dataReceived.poiCategoriesDeleted &&
+					dataReceived.poiCategoriesDeleted.indexOf(poiCategoryOriginal.id) > -1)
+				) {
+					currentPoiCategories.push(poiCategoryOriginal);
+				}
+
+				// else the POI category was deleted and we skip it
+			});
+
+			if (dataReceived.poiCategoriesCreated) {
+				dataReceived.poiCategoriesCreated.forEach(function (poiCategory) {
+					currentPoiCategories.push(poiCategory);
+				});
+			}
+
+			return currentPoiCategories;
+		}
+
+		/**
+		 * @desc Handler for poiCategoriesSaved event. Sends data to Ponto and closes the modal or redirects to map page.
+		 * @param {object} dataSent - POI categories sent to backend
+		 * @param {object} dataReceived - response from backend, array of actions done and categories affected
+		 */
+		function poiCategoriesSaved(dataSent, dataReceived) {
 			if (mode === modalModes.EDIT) {
-				if (typeof trigger === 'function') {
-					trigger(data);
+				if (typeof pontoTrigger === 'function') {
+					pontoTrigger(updatePoiCategoriesData(dataSent, dataReceived));
 				}
 				modal.trigger('close');
 			} else {

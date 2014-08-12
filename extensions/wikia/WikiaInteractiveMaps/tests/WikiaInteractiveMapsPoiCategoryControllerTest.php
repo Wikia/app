@@ -60,6 +60,16 @@ class WikiaInteractiveMapsPoiCategoryControllerTest extends WikiaBaseTest {
 				]
 			],
 			[
+				'Name trimmed',
+				[
+					'name' => 'name with a space '
+				],
+				[
+					'name' => 'name with a space',
+					'parent_poi_category_id' => self::DEFAULT_PARENT_POI_CATEGORY
+				]
+			],
+			[
 				'Parent POI category id converted to integer',
 				[
 					'parent_poi_category_id' => '3'
@@ -81,34 +91,51 @@ class WikiaInteractiveMapsPoiCategoryControllerTest extends WikiaBaseTest {
 	}
 
 	/**
-	 * Tests if validatePoiCategories method throws PermissionsException when user is not logged in
+	 * Tests if validatePoiCategoriesData method throws PermissionsException when user is not logged in
 	 */
-	public function testValidatePoiCategories_user_not_logged_in() {
+	public function testValidatePoiCategoriesData_user_not_logged_in() {
 		$poiCategoryControllerMock = $this->getPoiCategoryControllerMock();
 		$poiCategoryControllerMock->wg->User = $this->getUserMock( false );
 
 		$this->setExpectedException( 'PermissionsException', 'No Permissions' );
 
-		$poiCategoryControllerMock->validatePoiCategories();
+		$poiCategoryControllerMock->validatePoiCategoriesData();
 	}
 
 	/**
-	 * Tests if validatePoiCategories method throws InvalidParameterApiException when mapId is invalid
+	 * Tests if validatePoiCategoriesData method throws InvalidParameterApiException when mapId is invalid
 	 */
-	public function testValidatePoiCategories_invalid_mapId() {
+	public function testValidatePoiCategoriesData_invalid_mapId() {
 		$poiCategoryControllerMock = $this->getPoiCategoryControllerMock( [
 			[ 'mapId', false, 'invalidOne' ]
 		] );
 
 		$this->setExpectedException( 'InvalidParameterApiException', 'Bad request' );
 
-		$poiCategoryControllerMock->validatePoiCategories();
+		$poiCategoryControllerMock->validatePoiCategoriesData();
+	}
+
+	/**
+	 * Tests if validatePoiCategoriesData method throws InvalidParameterApiException when validatePoiCategoriesToDelete returns false
+	 */
+	public function testValidatePoiCategoriesData_invalid_poiCategoriesToCreate() {
+		$poiCategoryControllerMock = $this->getPoiCategoryControllerMock( [
+			[ 'mapId', false, 1 ] //valid mapId
+		], [ 'validatePoiCategories' ] );
+
+		$poiCategoryControllerMock->expects( $this->once() )
+			->method( 'validatePoiCategories' )
+			->will( $this->returnValue( false ) );
+
+		$this->setExpectedException( 'InvalidParameterApiException', 'Bad request' );
+
+		$poiCategoryControllerMock->validatePoiCategoriesData();
 	}
 
 	/**
 	 * Tests if validatePoiCategories method throws InvalidParameterApiException when validatePoiCategoriesToDelete returns false
 	 */
-	public function testValidatePoiCategories_invalid_poiCategoriesToDelete() {
+	public function testValidatePoiCategoriesData_invalid_poiCategoriesToDelete() {
 		$poiCategoryControllerMock = $this->getPoiCategoryControllerMock( [
 			[ 'mapId', false, 1 ] //valid mapId
 		], [ 'validatePoiCategoriesToDelete' ] );
@@ -119,26 +146,62 @@ class WikiaInteractiveMapsPoiCategoryControllerTest extends WikiaBaseTest {
 
 		$this->setExpectedException( 'InvalidParameterApiException', 'Bad request' );
 
-		$poiCategoryControllerMock->validatePoiCategories();
+		$poiCategoryControllerMock->validatePoiCategoriesData();
 	}
 
 	/**
-	 * Tests if validatePoiCategory method throws BadRequestApiException when there is empty string for POI category name
+	 * Tests validatePoiCategories method
+	 *
+	 * @dataProvider validatePoiCategoriesDataProvider
+	 * @param $message
+	 * @param $params
+	 * @param $expected
 	 */
-	public function testValidatePoiCategory_invalid() {
+	public function testValidatePoiCategories( $message, $params, $expected ) {
 		$poiCategoryControllerMock = $this->getPoiCategoryControllerMock();
 
-		$this->setExpectedException( 'BadRequestApiException', 'Bad request' );
+		$this->assertEquals(
+			$expected,
+			$poiCategoryControllerMock->validatePoiCategories( $params ),
+			$message
+		);
+	}
 
-		$poiCategoryControllerMock->validatePoiCategory( [
-			'name' => ' '
-		] );
+	/**
+	 * Provides dataset for testValidatePoiCategories
+	 *
+	 * @return array
+	 */
+	public function validatePoiCategoriesDataProvider() {
+		return [
+			[
+				'valid POI category',
+				[
+					[
+						'name' => 'Some POI category'
+					]
+				],
+				true
+			],
+			[
+				'empty POI category name',
+				[
+					[
+						'name' => ''
+					]
+				],
+				false
+			]
+		];
 	}
 
 	/**
 	 * Tests validatePoiCategoriesToDelete method
 	 *
 	 * @dataProvider validatePoiCategoriesToDeleteDataProvider
+	 * @param $message
+	 * @param $params
+	 * @param $expected
 	 */
 	public function testValidatePoiCategoriesToDelete( $message, $params, $expected ) {
 		$poiCategoryControllerMock = $this->getPoiCategoryControllerMock( [
