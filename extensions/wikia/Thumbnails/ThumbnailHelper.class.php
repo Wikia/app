@@ -115,9 +115,13 @@ class ThumbnailHelper extends WikiaModel {
 		$attribs = array(
 			'alt'    => $alt,
 			'src'    => $thumb->url,
-			'width'  => $thumb->width,
-			'height' => $thumb->height,
 		);
+
+		// Only include dimensions for non-fluid images
+		if ( empty( $options['fluid'] ) ) {
+			$attribs['width']  = $thumb->width;
+			$attribs['height'] = $thumb->height;
+		}
 
 		if ( !empty( $options['valign'] ) ) {
 			$attribs['style'] = "vertical-align: {$options['valign']}";
