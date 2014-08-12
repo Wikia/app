@@ -2,7 +2,7 @@
 
 class MediaGalleryHelper {
 
-	const DIMENSION_UNIT = 83.333; // 500/6
+	const DIMENSION_UNIT = 80; // Approximation of optimal column width break point
 
 	private $dimensionMultiples = [
 		1 => [6],
