@@ -36,7 +36,7 @@ class MediaGalleryController extends WikiaController {
 				'options' => [
 					'custom-img-src' => $thumbUrl,
 					'file-link' => $file->getUrl(),
-				    'fluid' => true,
+					'fluid' => true,
 				]
 			];
 			$markup = $this->app->renderView(
