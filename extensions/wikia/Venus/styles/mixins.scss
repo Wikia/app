@@ -2,7 +2,7 @@
 
 // We use this to do clear floats
 @mixin clearfix {
-	&:before, &:after { content: " "; display: table; }
+	&:before, &:after { content: ' '; display: table; }
 	&:after { clear: both; }
 }
 
@@ -27,44 +27,44 @@
 
 // makes a chevron
 @mixin chevron($height: 10px, $thickness: 2px, $direction: 'left', $color: #000) {
-    &::before {
-        content: '';
-        display: inline-block;
-        position: relative;
-        left: 0px;
-        top: -1px;
-        border-style: solid;
-        border-color: $color;
-        border-width: $thickness $thickness 0 0;
-        height: $height / 2;
-        width: $height / 2;
-        vertical-align: middle;
+	&::before {
+		border-color: $color;
+		border-style: solid;
+		border-width: $thickness $thickness 0 0;
+		content: '';
+		display: inline-block;
+		height: $height / 2;
+		left: 0;
+		position: relative;
+		top: -1px;
+		vertical-align: middle;
+		width: $height / 2;
 
-        @if ($direction == 'down') {
-            transform: rotate(135deg);
+		@if ($direction == 'down') {
+			transform: rotate(135deg);
 
-        } @else if ($direction == 'left') {
-            transform: rotate(-135deg);
+		} @else if ($direction == 'left') {
+			transform: rotate(-135deg);
 
-        } @else if ($direction == 'right') {
-            transform: rotate(45deg);
+		} @else if ($direction == 'right') {
+			transform: rotate(45deg);
 
-        } @else if ($direction == 'up') {
-            transform: rotate(-45deg);
-        }
-    }
+		} @else if ($direction == 'up') {
+			transform: rotate(-45deg);
+		}
+	}
 }
 
 @mixin grid-width($columns-count) {
 	@media #{$small-only} {
-		width: ($small-grid-column * $columns-count) + ($small-grid-gutter * ($columns-count - 1)) + ($small-grid-gutter * ($columns-count * 2));
+		width: $columns-count * ($small-grid-column + $small-grid-gutter) - $small-grid-gutter;
 	}
 
 	@media #{$medium-only} {
-		width: ($medium-grid-column * $columns-count) + ($medium-grid-gutter * ($columns-count - 1)) + ($medium-grid-gutter * ($columns-count * 2));
+		width: $columns-count * ($medium-grid-column + $medium-grid-gutter) - $medium-grid-gutter;
 	}
 
 	@media #{$large-up} {
-		width: ($large-grid-column * $columns-count) + ($large-grid-gutter * ($columns-count - 1)) + ($large-grid-gutter * ($columns-count * 2));
+		width: $columns-count * ($large-grid-column + $large-grid-gutter) - $large-grid-gutter;
 	}
 }
