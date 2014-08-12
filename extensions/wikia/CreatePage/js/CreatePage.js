@@ -262,7 +262,7 @@ var CreatePage = {
 		'use strict';
 		var title = new mw.Title.newFromText( titleText ),
 			namespace = title.getNamespacePrefix().replace( ':', '' ),
-			inContentEditable = $( e.target ).closest( '[contenteditable="true"]' ).length,
+			visualEditorActive = $( 'html' ).hasClass( 've-activated'),
 			showDialog = true;
 
 		CreatePage.redlinkParam = '&redlink=1';
@@ -272,7 +272,7 @@ var CreatePage = {
 		}
 
 		if (
-			inContentEditable ||
+			visualEditorActive ||
 			mw.config.get('wgNamespaceIds')[ namespace.toLowerCase() ] &&
 			window.ContentNamespacesText &&
 			window.ContentNamespacesText.indexOf( title[0] ) === -1
