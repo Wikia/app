@@ -28,20 +28,22 @@ $large-up: "#{$screen} and (min-width:#{lower-bound($large-range)})";
 $large-only: "#{$screen} and (min-width:#{lower-bound($large-range)}) and (max-width:#{upper-bound($large-range)})";
 
 
-// Grid
+// Content Width
+$small-content-width: 768px;
+$medium-content-width: 1024px;
+$large-content-width: 1160px;
+
+// Grid Size
 
 // col: 38px, gutter 8px, grid margin 16px, col padding 8px
-$small-grid-width: 768px;
 $small-grid-column: 38px;
 $small-grid-margin: 16px;
 $small-grid-gutter: 8px;
 // col: 53px, gutter 10px, grid margin 19px, col padding 10px
-$medium-grid-width: 1024px;
 $medium-grid-column: 53px;
 $medium-grid-margin: 19px;
 $medium-grid-gutter: 10px;
 // col: 58px, gutter 20px, grid margin 20px, col padding 12px
-$large-grid-width: 1159px;
 $large-grid-column: 58px;
 $large-grid-margin: 20px;
 $large-grid-gutter: 12px;

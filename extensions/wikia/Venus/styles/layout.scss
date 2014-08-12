@@ -24,12 +24,12 @@ a {
 	padding: $small-grid-margin;
 
 	@media #{$small-only} {
-		width: $small-grid-width;
+		width: $small-content-width;
 	}
 	@media #{$medium-only} {
-		width: $medium-grid-width;
+		width: $medium-content-width;
 	}
 	@media #{$large-up} {
-		width: $large-grid-width;
+		width: $large-content-width;
 	}
 }
