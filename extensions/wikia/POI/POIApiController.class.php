@@ -100,6 +100,10 @@ class POIApiController extends WikiaApiController {
 		if ( !empty( $radius ) && !preg_match( '/^\d+(\.\d+)?$/i', $radius ) ) {
 			throw new BadRequestApiException( "Parameter 'radius' is invalid" );
 		}
+		$radius = doubleval( $radius );
+		if( $radius > 180 ) {
+			throw new BadRequestApiException( "Invalid radius: radiuses are range 0 to 180: provided radius: ${radius}" );
+		}
 
 		if ( !empty( $limit ) && !preg_match( '/^\d+$/i', $limit ) ) {
 			throw new BadRequestApiException( "Parameter 'limit' is invalid" );
