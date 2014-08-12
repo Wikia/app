@@ -95,7 +95,7 @@ class POIApiController extends WikiaApiController {
 		}
 
 		$long = doubleval( $long );
-		if ( ( $lat < -180 ) || ( $lat > 180 ) ) {
+		if ( ( $long < -180 ) || ( $long > 180 ) ) {
 			throw new BadRequestApiException( "Invalid longitude: longitudes are range -90 to 90: provided lon: ${long}" );
 		}
 
