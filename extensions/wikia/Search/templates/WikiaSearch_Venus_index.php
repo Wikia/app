@@ -17,7 +17,7 @@
 
 	<?= $tabs ?>
 
-	<div class="row">
+	<div class="padded-content">
 		<article class="results-section small-12 medium-8 large-7 columns">
 			<?php if( $resultsFound > 0 ): ?>
 				<span class="result-count">

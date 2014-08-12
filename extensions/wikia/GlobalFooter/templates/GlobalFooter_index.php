@@ -1,4 +1,4 @@
-<footer class="global-footer row">
+<footer class="global-footer">
 	<nav>
 		<h1><?= wfMessage('oasis-corporatefooter-navigation-header')->text(); ?></h1>
 		<div class="branding <?= (!$isCorporate ? 'black' : ''); ?>">

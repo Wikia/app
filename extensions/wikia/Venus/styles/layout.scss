@@ -22,8 +22,14 @@ a {
 	background: $color-page;
 	border: 1px solid $color-page-border;
 	margin: 0 auto;
-	padding: $small-grid-content-padding;
+	padding: 0;
 
+	& > header {
+		@include content-padding;
+	}
+}
+
+.wikia-page {
 	@media #{$small-only} {
 		width: $small-content-width;
 	}
@@ -33,4 +39,8 @@ a {
 	@media #{$large-up} {
 		width: $large-content-width;
 	}
+}
+
+.padded-content {
+	@include content-padding;
 }

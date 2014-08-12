@@ -1,0 +1,5 @@
+@import "extensions/wikia/Venus/styles/mixins";
+
+.global-footer {
+	@include content-padding;
+}

@@ -39,6 +39,7 @@ $VenusConfig['global_footer_css'] = [
 	'type' => AssetsManager::TYPE_SCSS,
 	'skin' => ['venus'],
 	'assets' => [
-		'//extensions/wikia/GlobalFooter/styles/GlobalFooter.scss'
+		'//extensions/wikia/GlobalFooter/styles/GlobalFooter.scss',
+		'//extensions/wikia/GlobalFooter/styles/GlobalFooter.venus.scss'
 	]
 ];
