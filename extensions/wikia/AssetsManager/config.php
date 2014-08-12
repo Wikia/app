@@ -1,4 +1,5 @@
 <?php
+
 $config = array();
 
 /******** Shared libraries and assets *******/
@@ -1842,7 +1843,7 @@ $config['optimizely_blocking_js'] = array(
 /** GlobalFooter extension */
 $config['global_footer_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
-	'skin' => ['oasis'],
+	'skin' => ['oasis', 'venus'],
 	'assets' => array(
 		'//extensions/wikia/GlobalFooter/scripts/GlobalFooter.js'
 	)

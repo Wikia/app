@@ -9,8 +9,6 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 	exit( 1 );
 }
 
-$dir = dirname( __FILE__ );
-
 /**
  * info
  */
@@ -43,10 +41,7 @@ $wgExtensionCredits['other'][] =
 /**
  * controllers
  */
-$wgAutoloadClasses['VenusController'] = $dir . '/VenusController.class.php';
-$wgAutoloadClasses['GlobalNavigationController'] = $dir . '/../GlobalNavigation/GlobalNavigationController.class.php';
-$wgAutoloadClasses['LocalNavigationController'] = $dir . '/../LocalNavigation/LocalNavigationController.class.php';
-$wgAutoloadClasses['LocalHeaderController'] = $dir . '/../LocalNavigation/LocalHeaderController.class.php';
+$wgAutoloadClasses['VenusController'] = __DIR__ . '/VenusController.class.php';
 
 /**
  * special pages
@@ -55,7 +50,7 @@ $wgAutoloadClasses['LocalHeaderController'] = $dir . '/../LocalNavigation/LocalH
 /**
  * message files
  */
-//$wgExtensionMessagesFiles['Venus'] = "{$dir}/Venus.i18n.php";
+//$wgExtensionMessagesFiles['Venus'] = __DIR__ . '/Venus.i18n.php';
 
 /**
  * hooks

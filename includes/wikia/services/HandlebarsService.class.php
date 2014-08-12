@@ -35,7 +35,7 @@ class HandlebarsService {
 	 */
 	private function extractTemplateDirFromPath($path) {
 		$pathInfo = pathinfo( $path );
-		$templatesDirectory = DIRECTORY_SEPARATOR . self::TEMPLATES_DIRECTORY . DIRECTORY_SEPARATOR;
+		$templatesDirectory = DIRECTORY_SEPARATOR . self::TEMPLATES_DIRECTORY;
 
 		if ( strpos( $pathInfo['dirname'], $templatesDirectory ) === false ) {
 			throw new Exception( 'Templates directory not found in following path: ' . $path );
