@@ -24,7 +24,7 @@ class HubRssModelTest extends WikiaBaseTest {
 		$wgAutoloadClasses[ 'WikiaHubsModuleEditableService' ] = $dir . '../WikiaHubsServices/modules/WikiaHubsModuleEditableService.class.php';
 		$wgAutoloadClasses[ 'WikiaHubsModuleFeaturedvideoService' ] = $dir . '../WikiaHubsServices/modules/WikiaHubsModuleFeaturedvideoService.class.php';
 		$wgAutoloadClasses[ 'WikiaHubsModuleExploreService' ] = $dir . '../WikiaHubsServices/modules/WikiaHubsModuleExploreService.class.php';
-		$wgAutoloadClasses[ 'WikiaHubsModulePollsService' ] = $dir . '../WikiaHubsServices/modules/WikiaHubsxModulePollsService.class.php';
+		$wgAutoloadClasses[ 'WikiaHubsModulePollsService' ] = $dir . '../WikiaHubsServices/modules/WikiaHubsModulePollsService.class.php';
 		$wgAutoloadClasses[ 'WikiaHubsModulePopularvideosService' ] = $dir . '../WikiaHubsServices/modules/WikiaHubsModulePopularvideosService.class.php';
 		$wgAutoloadClasses[ 'WikiaHubsExploreModel' ] = $dir . '../WikiaHubsServices/models/WikiaHubsExploreModel.class.php';
 		$wgAutoloadClasses[ 'WikiaHubsModuleWAMService' ] = $dir . '../WikiaHubsServices/modules/WikiaHubsModuleWAMService.class.php';
