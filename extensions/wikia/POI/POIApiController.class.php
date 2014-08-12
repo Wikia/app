@@ -79,10 +79,12 @@ class POIApiController extends WikiaApiController {
 	}
 
 	protected function validateParameters( $lat, $long, $radius, $limit ) {
+		// positive and negative floating numbers
 		if ( !preg_match( '/^-?\d+(\.\d+)?$/i', $lat ) ) {
 			throw new BadRequestApiException( "Parameter 'location_x' is invalid" );
 		}
 
+		// positive and negative floating numbers
 		if ( !preg_match( '/^-?\d+(\.\d+)?$/i', $long ) ) {
 			throw new BadRequestApiException( "Parameter 'location_y' is invalid" );
 		}
@@ -97,6 +99,7 @@ class POIApiController extends WikiaApiController {
 			throw new BadRequestApiException( "Invalid longitude: longitudes are range -90 to 90: provided lon: ${long}" );
 		}
 
+		// only positive floating numbers
 		if ( !empty( $radius ) && !preg_match( '/^\d+(\.\d+)?$/i', $radius ) ) {
 			throw new BadRequestApiException( "Parameter 'radius' is invalid" );
 		}
@@ -105,6 +108,7 @@ class POIApiController extends WikiaApiController {
 			throw new BadRequestApiException( "Invalid radius: radiuses are range 0 to 180: provided radius: ${radius}" );
 		}
 
+		// only positive integer numbers
 		if ( !empty( $limit ) && !preg_match( '/^\d+$/i', $limit ) ) {
 			throw new BadRequestApiException( "Parameter 'limit' is invalid" );
 		}
