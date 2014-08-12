@@ -4905,8 +4905,6 @@ $wgHooks = &Hooks::getHandlersArray();
  * can add to this to provide custom jobs
  */
 $wgJobClasses = array(
-	'htmlCacheUpdate' => 'HTMLCacheUpdateJob',
-	'html_cache_update' => 'HTMLCacheUpdateJob', // backwards-compatible
 	'fixDoubleRedirect' => 'DoubleRedirectJob',
 );
 
