@@ -1,6 +1,8 @@
 Unit Tests
 ==========
 
+Tests build jobs are defined in the Makefile. Helper shell script are provided.
+
 ## Running PHP unit tests
 
 > Please note that **DevBoxSettings.php is not included** when unit tests are executed
@@ -17,7 +19,7 @@ make phpunit-single test=../extensions/wikia/AssetsManager/tests/AssetsManagerTe
 ./php-extension FooExtension
 ```
 
-will run all tests (except of Broken) from ``/extensions/wikia/FooExtension``.
+will run all tests (except of ``@group Broken``) from ``/extensions/wikia/FooExtension``.
 
 ### Running all unit tests
 
@@ -25,7 +27,7 @@ will run all tests (except of Broken) from ``/extensions/wikia/FooExtension``.
 ./php-all
 ```
 
-These commands will run all tests from ``tests`` subdirectories of:
+These commands will run all tests (unit, infrastructure and integration) from ``tests`` subdirectories of:
 
 * /includes/wikia
 * /extensions/FBConnect
@@ -73,4 +75,3 @@ make karma-unit karma-integration
 ```
 
 For more info see [docs on internal](https://internal.wikia-inc.com/wiki/Unit_Testing/JS)
-

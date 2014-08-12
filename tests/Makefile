@@ -2,8 +2,8 @@
 
 # command to run PHPUnit
 CMD_PHPUNIT=php run-test.php \
-	--log-junit build/logs/phpunit.xml \
-	--configuration phpunit.xml
+	--log-junit=build/logs/phpunit.xml \
+	--configuration=phpunit.xml
 
 # command to run karma
 CMD_KARMA=karma start \
@@ -49,7 +49,7 @@ phpunit-fast: prepare
 # lists all slow test cases with execution time
 phpunit-slow-list: prepare
 	${CMD_PHPUNIT} \
-		--exclude-group Infrastructure,Integration,Broken,Stub,Monitoring,Hack \
+		--exclude-group=Infrastructure,Integration,Broken,Stub,Monitoring,Hack \
 		--slow-list
 
 #
