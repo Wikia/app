@@ -21,6 +21,8 @@ class POIApiController extends WikiaApiController {
 		$radius = $this->getRequest()->getVal( 'radius' );
 		$limit = $this->getRequest()->getVal( 'limit' );
 
+		$this->validateParameters( $lat, $long, $radius, $limit );
+
 		$solrHelper = $this->getSolrHelper();
 		$nearbySearch = $this->getNearbySearch();
 
@@ -34,6 +36,10 @@ class POIApiController extends WikiaApiController {
 			->search();
 
 		$result = $solrHelper->consumeResponse( $solrResponse );
+
+		if( empty( $result ) ) {
+			throw new NotFoundApiException();
+		}
 
 		$this->setResponseData( $result );
 	}
@@ -70,5 +76,33 @@ class POIApiController extends WikiaApiController {
 			$this->solrHelper = new QuestDetailsSolrHelper();
 		}
 		return $this->solrHelper;
+	}
+
+	protected function validateParameters( $lat, $long, $radius, $limit ) {
+		if ( !preg_match( '/^-?\d+(\.\d+)?$/i', $lat ) ) {
+			throw new BadRequestApiException( "Parameter 'location_x' is invalid" );
+		}
+
+		if ( !preg_match( '/^-?\d+(\.\d+)?$/i', $long ) ) {
+			throw new BadRequestApiException( "Parameter 'location_y' is invalid" );
+		}
+
+		$lat = doubleval( $lat );
+		if ( ( $lat < -90 ) || ( $lat > 90 ) ) {
+			throw new BadRequestApiException( "Invalid latitude: latitudes are range -90 to 90: provided lat: ${lat}" );
+		}
+
+		$long = doubleval( $long );
+		if ( ( $lat < -180 ) || ( $lat > 180 ) ) {
+			throw new BadRequestApiException( "Invalid longitude: longitudes are range -90 to 90: provided lon: ${long}" );
+		}
+
+		if ( !empty( $radius ) && !preg_match( '/^\d+(\.\d+)?$/i', $radius ) ) {
+			throw new BadRequestApiException( "Parameter 'radius' is invalid" );
+		}
+
+		if ( !empty( $limit ) && !preg_match( '/^\d+$/i', $limit ) ) {
+			throw new BadRequestApiException( "Parameter 'limit' is invalid" );
+		}
 	}
 }
