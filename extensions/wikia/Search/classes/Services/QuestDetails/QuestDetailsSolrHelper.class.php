@@ -116,7 +116,9 @@ class QuestDetailsSolrHelper {
 
 					$metadataKey = $this->cutPrefixAndSuffix( $key, 'metadata_', '_s' );
 
-					$metadata[ $metadataKey ] = $value;
+					if( !empty( $value ) ) {
+						$metadata[ $metadataKey ] = $value;
+					}
 
 				} else if ( endsWith( $key, '_ss' ) ) {
 
@@ -126,7 +128,11 @@ class QuestDetailsSolrHelper {
 						$metadataKey = 'fingerprints';
 					}
 
-					$metadata[ $metadataKey ] = $value;
+					if( !empty( $value ) ) {
+						$metadata[ $metadataKey ] = $value;
+					} else {
+						$metadata[ $metadataKey ] = [ ];
+					}
 
 				}
 			}
@@ -175,7 +181,9 @@ class QuestDetailsSolrHelper {
 
 					$mapKey = $this->cutPrefixAndSuffix( $key, 'metadata_map_', '_s' );
 
-					$map[ $mapKey ] = $value;
+					if( !empty( $value ) ) {
+						$map[ $mapKey ] = $value;
+					}
 
 				} else if ( endsWith( $key, '_sr' ) ) {
 
