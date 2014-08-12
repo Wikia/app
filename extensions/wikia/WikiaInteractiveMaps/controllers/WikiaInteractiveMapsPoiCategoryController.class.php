@@ -276,20 +276,13 @@ class WikiaInteractiveMapsPoiCategoryController extends WikiaInteractiveMapsBase
 	 */
 	private function getResultsContent() {
 		$resultsContent = [];
+		$sections = [ 'poiCategoriesCreated', 'poiCategoriesUpdated', 'poiCategoriesDeleted' ];
 
-		$poiCategoriesCreated = $this->getData( 'poiCategoriesCreated' );
-		if ( !empty( $poiCategoriesCreated ) ) {
-			$resultsContent[ 'poiCategoriesCreated' ] = $poiCategoriesCreated;
-		}
-
-		$poiCategoriesUpdated = $this->getData( 'poiCategoriesUpdated' );
-		if ( !empty( $poiCategoriesUpdated ) ) {
-			$resultsContent[ 'poiCategoriesUpdated' ] = $poiCategoriesUpdated;
-		}
-
-		$poiCategoriesDeleted = $this->getData( 'poiCategoriesDeleted' );
-		if ( !empty( $poiCategoriesDeleted ) ) {
-			$resultsContent[ 'poiCategoriesDeleted' ] = $poiCategoriesDeleted;
+		foreach ( $sections as $section ) {
+			$sectionData = $this->getData( $section );
+			if ( !empty( $sectionData ) ) {
+				$resultsContent[ $section ] = $sectionData;
+			}
 		}
 
 		return $resultsContent;
