@@ -70,7 +70,7 @@ ve.ui.WikiaSourceModeDialog.prototype.initialize = function () {
 	mw.loader.using(
 		'ext.wikia.LinkSuggest',
 		ve.bind( function () {
-			this.sourceModeTextarea.$input.linksuggest();
+			this.sourceModeTextarea.$input.linksuggest( { stopKeydownPropagation: true } );
 		}, this )
 	);
 };

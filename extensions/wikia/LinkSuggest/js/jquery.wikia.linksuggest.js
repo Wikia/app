@@ -16,7 +16,8 @@ $.widget( 'wikia.linksuggest', {
 	options: {
 		minLength: 3,
 		delay: 300,
-		url: window.wgScript
+		url: window.wgScript,
+		stopKeydownPropagation: false
 	},
 	_create: function() {
 		var self = this;
@@ -70,6 +71,9 @@ $.widget( 'wikia.linksuggest', {
 	_keydown: function( event ) {
 		var keyCode = $.ui.keyCode,
 			autocompleteInstance = this.element.data( 'autocomplete' );
+		if ( this.options.stopKeydownPropagation ) {
+			event.stopPropagation();
+		}
 		switch( event.keyCode ) {
 			case keyCode.UP:
 			case keyCode.DOWN:
@@ -105,7 +109,7 @@ $.widget( 'wikia.linksuggest', {
 			case keyCode.END:
 			case keyCode.HOME:
 				// ignore metakeys (shift, ctrl, alt)
-				return
+				return;
 				break;
 		}
 		// If we not already returned from this function, fire the old autocomplete handler
