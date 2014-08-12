@@ -1164,10 +1164,6 @@ class RenameUserProcess {
 			$o->mRequestorName = $requestor->getName();
 		}
 
-		if (!empty($data['global_task_id'])) {
-			$o->mGlobalTask = UserRenameGlobalTask::newFromID($data['global_task_id']);
-		}
-
 		$o->addLog("newFromData(): Requestor id={$o->mRequestorId} name={$o->mRequestorName}");
 
 		wfProfileOut(__METHOD__);
