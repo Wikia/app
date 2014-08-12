@@ -262,8 +262,7 @@ var CreatePage = {
 		'use strict';
 		var title = new mw.Title.newFromText( titleText ),
 			namespace = title.getNamespacePrefix().replace( ':', '' ),
-			visualEditorActive = $( 'html' ).hasClass( 've-activated'),
-			showDialog = true;
+			visualEditorActive = $( 'html' ).hasClass( 've-activated');
 
 		CreatePage.redlinkParam = '&redlink=1';
 
@@ -277,13 +276,9 @@ var CreatePage = {
 			window.ContentNamespacesText &&
 			window.ContentNamespacesText.indexOf( title[0] ) === -1
 		) {
-			showDialog = false;
-		}
-
-		if ( showDialog ) {
-			CreatePage.requestDialog( e, titleText );
-		} else {
 			return false;
+		} else {
+			CreatePage.requestDialog( e, titleText );
 		}
 	},
 
