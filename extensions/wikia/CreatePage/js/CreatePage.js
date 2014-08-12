@@ -266,27 +266,7 @@ var CreatePage = {
 			CreatePage.track( { action: 'click', label: 've-redlink-click' } );
 		}
 
-		var title = titleText.split( ':' ),
-			isContentNamespace = false,
-			i;
-
-		if ( window.ContentNamespacesText && ( title.length > 1 ) ) {
-			for ( i in window.ContentNamespacesText ) {
-				if ( title[ 0 ] === window.ContentNamespacesText[ i ] ) {
-					isContentNamespace = true;
-				}
-			}
-		}
-		else {
-			isContentNamespace = true;
-		}
-
-		if ( isContentNamespace ) {
-			CreatePage.requestDialog( e, titleText );
-		}
-		else {
-			return false;
-		}
+		CreatePage.requestDialog( e, titleText );
 	},
 
 	init: function( context ) {
@@ -319,7 +299,7 @@ var CreatePage = {
 				}
 			}
 
-			$( 'a.new' ).bind( 'click', function( e ) {
+			$( '#WikiaArticle' ).on( 'click', 'a.new', function( e ) {
 				CreatePage.redLinkClick( e, CreatePage.getTitleFromUrl( this.href ) );
 			});
 

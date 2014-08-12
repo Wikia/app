@@ -14,6 +14,7 @@ window.Wikia = window.Wikia || {};
  *		scripts - comma-separated list of AssetsManager groups
  *		messages - comma-separated list of JSMessages packages (messages are registered automagically)
  * 		mustache - comma-separated list of paths to Mustache-powered templates
+ * 		handlebars - comma-separated list of paths to Handlebars-powered templates
  *		params - an object with all the additional parameters for the request (e.g. useskin, forceprofile, etc.)
  *		callback - function to be called with fetched JSON object
  *
@@ -38,6 +39,7 @@ window.Wikia = window.Wikia || {};
  */
 window.Wikia.getMultiTypePackage = function(options) {
 	var request = {},
+		templates = options.templates,
 		fieldsToCopy = ['styles', 'scripts', 'messages', 'mustache', 'handlebars'],
 		callback = options.callback,
 		params = options.params,

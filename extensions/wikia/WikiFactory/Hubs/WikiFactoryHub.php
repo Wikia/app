@@ -411,7 +411,7 @@ class WikiFactoryHub extends WikiaModel {
 			->UPDATE( 'city_list' )
 				->SET( 'city_vertical', $vertical_id )
 			->WHERE( 'city_id' )->EQUAL_TO( $city_id )
-			->run( $this->getSharedDB() );
+			->run( $this->getSharedDB( DB_MASTER ) );
 
 		$this->clearCache( $city_id );
 
@@ -452,21 +452,26 @@ class WikiFactoryHub extends WikiaModel {
 		}
 	}
 
+	// Add 1 category
 	public function addCategory ( $city_id, $category ) {
 
-		$current_categories = $this->getCategoryIds( $city_id );
-		$new_categories = array_unique(array_merge( $current_categories, [$category] ));
-
-		$this->updateCategories( $city_id, $new_categories );
+		( new WikiaSQL() )
+			->INSERT( 'city_cat_mapping' )
+				->SET( 'city_id', $city_id )
+				->SET( 'cat_id', $category )
+			->run( $this->getSharedDB( DB_MASTER ) );
 
 	}
 
+	// Remove 1 category
 	public function removeCategory ( $city_id, $category ) {
 
-		$current_categories = $this->getCategoryIds( $city_id );
-		$new_categories = array_unique(array_diff( $current_categories, [$category] ));
+		( new WikiaSQL() )
+			->DELETE( 'city_cat_mapping' )
+				->WHERE( 'city_id', $city_id )
+				->AND( 'cat_id', $category )
+			->run( $this->getSharedDB( DB_MASTER ) );
 
-		$this->updateCategories( $city_id, $new_categories );
 	}
 
 	/**
