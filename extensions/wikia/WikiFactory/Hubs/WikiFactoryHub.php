@@ -39,7 +39,7 @@ class WikiFactoryHub extends WikiaModel {
 	const CATEGORY_ID_GREEN = 19;
 	const CATEGORY_ID_ANSWERS = 20;
 
-	private static $mCategoryKruxMap = array(
+	private $mCategoryKruxMap = array(
 	    self::CATEGORY_ID_HUMOR		=> 'Hixwr2ar',
 	    self::CATEGORY_ID_GAMING		=> 'Hi0kJsuv',
 	    self::CATEGORY_ID_ENTERTAINMENT	=> 'Hi0kPhMT',
@@ -202,7 +202,7 @@ class WikiFactoryHub extends WikiaModel {
 			->SELECT( "city_vertical" )
 			->FROM( "city_list" )
 			->WHERE ("city_id")->EQUAL_TO( $city_id )
-			->cache( $this->$cache_ttl, wfSharedMemcKey( __METHOD__, $city_id ) )
+			->cache( $this->cache_ttl, wfSharedMemcKey( __METHOD__, $city_id ) )
 			->runLoop( $this->getSharedDB() );
 
 		return $id;
@@ -411,7 +411,7 @@ class WikiFactoryHub extends WikiaModel {
 			->UPDATE( 'city_list' )
 				->SET( 'city_vertical', $vertical_id )
 			->WHERE( 'city_id' )->EQUAL_TO( $city_id )
-			->run( $this->getSharedDB() );
+			->run( $this->getSharedDB( DB_MASTER ) );
 
 		$this->clearCache( $city_id );
 
@@ -452,21 +452,26 @@ class WikiFactoryHub extends WikiaModel {
 		}
 	}
 
+	// Add 1 category
 	public function addCategory ( $city_id, $category ) {
 
-		$current_categories = $this->getCategoryIds( $city_id );
-		$new_categories = array_unique(array_merge( $current_categories, [$category] ));
-
-		$this->updateCategories( $city_id, $new_categories );
+		( new WikiaSQL() )
+			->INSERT( 'city_cat_mapping' )
+				->SET( 'city_id', $city_id )
+				->SET( 'cat_id', $category )
+			->run( $this->getSharedDB( DB_MASTER ) );
 
 	}
 
+	// Remove 1 category
 	public function removeCategory ( $city_id, $category ) {
 
-		$current_categories = $this->getCategoryIds( $city_id );
-		$new_categories = array_unique(array_diff( $current_categories, [$category] ));
+		( new WikiaSQL() )
+			->DELETE( 'city_cat_mapping' )
+				->WHERE( 'city_id', $city_id )
+				->AND( 'cat_id', $category )
+			->run( $this->getSharedDB( DB_MASTER ) );
 
-		$this->updateCategories( $city_id, $new_categories );
 	}
 
 	/**

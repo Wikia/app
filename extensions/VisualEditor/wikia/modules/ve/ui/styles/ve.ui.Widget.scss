@@ -176,14 +176,37 @@
 	top: 0;
 	z-index: $zTop;
 
-	div {
+	/* A/B Test: Hide */
+	&.optimizely-none {
+		display: none;
+	}
+	/* A/B Test: Opaque page color */
+	&.optimizely-opaque {
+		opacity: 1;
+
+		.ve-ui-wikiaFocusWidget-shield {
+			background-color: $color-page
+		}
+	}
+
+	.ve-ui-wikiaFocusWidget-shield {
 		background-color: #000;
+		left: 0;
 		position: absolute;
 		top: 0;
-		left: 0;
 	}
-	.ve-ui-wikiaFocusWidget-right {
+	.ve-ui-wikiaFocusWidget-rightShield {
 		left: auto;
 		right: 0;
+	}
+	.ve-ui-wikiaFocusWidget-stroke {
+		background-color: $color-page-border;
+		position: absolute;
+	}
+	.ve-ui-wikiaFocusWidget-leftStroke, .ve-ui-wikiaFocusWidget-rightStroke {
+		width: 1px;
+	}
+	.ve-ui-wikiaFocusWidget-topStroke, .ve-ui-wikiaFocusWidget-bottomStroke {
+		height: 1px;
 	}
 }

@@ -477,6 +477,7 @@ $messages['tl'] = array(
 
 /** Ukrainian (українська)
  * @author Andriykopanytsia
+ * @author Mykola Swarnyk
  * @author Steve.rusyn
  * @author SteveR
  * @author Ua2004
@@ -488,6 +489,11 @@ $messages['uk'] = array(
 	'sharedhelp-searchprofile' => 'Сторінки довідки',
 	'sharedhelp-searchprofile-tooltip' => 'Пошук у довідці',
 	'shared_help_info' => 'Питання? Запитайте на [[w:Special:Forum|Форумі спільноти]].',
+	'shared_help_edit_info' => 'Текст довідки у вікні зберігається в [[w:Help:$1|Help:$1]] на Вікії $2. Див. [[Help:Shared Help]] для додаткової інформації.
+
+Будь-які зміни, які поширюються на "всі" Вікії, повинні бути виконані на примірнику Вікії $2. [[w:Help_talk:$1|Запропонувати зміни тут]].
+
+Якщо ви захочете пояснити використання, стиль і вказівки до процедур, які будуть застосовуватись лише на {{SITENAME}}, текст має бути розміщений на цій сторінці. Текст, доданий у цьому полі редагування, буде відображатися понад рамкою вікна довідкового тексту.',
 	'shared_help_search_info' => 'Щоб знайти допомогу з редагування, будь ласка, відвідайте  [http://c.wikia.com/wiki/Special:Search?search=$1 Портал спільноти]',
 	'shared_help_was_redirect' => 'Ця сторінка є переспрямуванням до $1',
 );

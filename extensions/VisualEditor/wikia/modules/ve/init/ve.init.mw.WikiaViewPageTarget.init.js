@@ -29,6 +29,13 @@
 		},
 		spinnerTimeoutId = null;
 
+	function getOptimizelyExperimentId( experimentName ) {
+		if ( experimentName === 'VE Focus Mode' ) {
+			return mw.config.get( 'wgDevelEnvironment' ) ? 1459280459 : 1673360028;
+		}
+		return null;
+	}
+
 	function initSpinner() {
 		var $spinner = $( '<div>' )
 				.addClass( 've-spinner visible' )
@@ -62,6 +69,11 @@
 		var $spinner = $( '.ve-spinner[data-type="loading"]' ),
 			$message = $spinner.find( 'p.message' );
 
+		/* Optimizely */
+		if ( window.veFocusMode === 'opaque' ) {
+			$spinner.addClass( 'optimizely-opaque' );
+		}
+
 		$message.hide();
 		$spinner.fadeIn( 400 );
 
@@ -82,12 +94,19 @@
 	function getTarget() {
 		var loadTargetDeferred;
 
+		/* Optimizely */
+		window.optimizely = window.optimizely || [];
+		window.optimizely.push( ['activate', getOptimizelyExperimentId( 'VE Focus Mode' )] );
+
 		showSpinner();
 
 		Wikia.Tracker.track( trackerConfig, {
 			'action': Wikia.Tracker.ACTIONS.IMPRESSION,
 			'label': 'edit-page'
 		} );
+		// This can't be tracked with its friends in ve.track.js because that file has not been loaded yet
+		window.gaTrackPageview( '/fake-visual-editor/edit-page/impression', 've' );
+
 		if ( !getTargetDeferred ) {
 			getTargetDeferred = $.Deferred();
 			loadTargetDeferred = $.Deferred();

@@ -1,0 +1,34 @@
+{
+  "name": "Wikia-app",
+  "description": "Main Wikia application",
+  "private": true,
+  "version": "0.0.1",
+  "scripts": {
+    "test": "karma start tests/karma/js-unit.conf.js --single-run"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/Wikia/app.git"
+  },
+  "author": "",
+  "license": "GPL-2.0+",
+  "bugs": {
+    "url": "https://github.com/Wikia/app/issues"
+  },
+  "homepage": "https://github.com/Wikia/app",
+  "devDependencies": {
+    "karma-coverage": "~0.1.1",
+    "karma-junit-reporter": "~0.1.0",
+    "karma-coffee-preprocessor": "~0.1.2",
+    "istanbul": "~0.1.44",
+    "karma-chrome-launcher": "~0.1.4",
+    "karma-script-launcher": "~0.1.0",
+    "karma-firefox-launcher": "~0.1.3",
+    "karma-html2js-preprocessor": "~0.1.0",
+    "karma-jasmine": "~0.1.5",
+    "requirejs": "~2.1.14",
+    "karma-requirejs": "~0.2.2",
+    "karma-phantomjs-launcher": "~0.1.4",
+    "karma": "~0.10.4"
+  }
+}
