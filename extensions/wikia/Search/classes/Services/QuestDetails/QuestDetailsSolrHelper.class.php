@@ -37,18 +37,41 @@ class QuestDetailsSolrHelper {
 				$id = $item[ 'pageid' ];
 				$result[ $id ] = $this->getMetadata( $item );
 			} else {
-				$result[ ] = [
+				$resultItem = [
+					// These fields must be present always
 					'id' => $item[ 'pageid' ],
 					'title' => $this->findFirstValueByKeyPrefix( $item, 'title_', '' ),
 					'url' => $item[ 'url' ],
 					'ns' => $item[ 'ns' ],
-					'revision' => $this->getRevision( $item ),
-					'comments' => $this->getCommentsNumber( $item ),
-					'type' => $item[ 'article_type_s' ],
-					'categories' => $this->findFirstValueByKeyPrefix( $item, 'categories_', [ ] ),
-					'abstract' => $this->getAbstract( $item ),
-					'metadata' => $this->getMetadata( $item ),
+					'revision' => $this->getRevision( $item )
 				];
+
+				$comments = $this->getCommentsNumber( $item );
+				if( !empty( $comments ) ) {
+					$resultItem[ 'comments' ] = $comments;
+				}
+
+				$type = $item[ 'article_type_s' ];
+				if( !empty( $type ) ) {
+					$resultItem[ 'type' ] = $type;
+				}
+
+				$categories = $this->findFirstValueByKeyPrefix( $item, 'categories_', [ ] );
+				if( !empty( $categories ) ) {
+					$resultItem[ 'categories' ] = $categories;
+				}
+
+				$abstract = $this->getAbstract( $item );
+				if( !empty( $abstract ) ) {
+					$resultItem[ 'abstract' ] = $abstract;
+				}
+
+				$metadata = $this->getMetadata( $item );
+				if( !empty( $metadata ) ) {
+					$resultItem[ 'metadata' ] = $metadata;
+				}
+
+				$result[ ] = $resultItem;
 			}
 		}
 
@@ -229,6 +252,9 @@ class QuestDetailsSolrHelper {
 
 	protected function getRevision( $item ) {
 		$titles = Title::newFromIDs( $item[ 'pageid' ] );
+		if( empty( $titles ) ) {
+			return null;
+		}
 		$title = $titles[ 0 ];
 		$revId = $title->getLatestRevID();
 		$rev = Revision::newFromId( $revId );
@@ -245,12 +271,15 @@ class QuestDetailsSolrHelper {
 
 	protected function getCommentsNumber( $item ) {
 		$titles = Title::newFromIDs( $item[ 'pageid' ] );
+		if( empty( $titles ) ) {
+			return null;
+		}
 		$title = $titles[ 0 ];
 		if ( class_exists( 'ArticleCommentList' ) ) {
 			$commentsList = ArticleCommentList::newFromTitle( $title );
 			return $commentsList->getCountAllNested();
 		}
-		return 0;
+		return null;
 	}
 
 	protected function addThumbnailsInfo( &$result ) {
