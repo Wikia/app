@@ -306,7 +306,7 @@ class WikiaMaps extends WikiaObject {
 		//TODO: consider caching the response
 		$response = $this->sendGetRequest( $url );
 
-		if ( $response[ 'success' ] && !empty( $response[ 'content' ] ) ) {
+		if ( $response[ 'success' ] ) {
 			foreach ( $response[ 'content' ] as &$parentPoiCategory ) {
 				if ( isset( $parentPoiCategory->name ) ) {
 					// MOB-2272 - translate default POI categories names
