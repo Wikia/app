@@ -133,6 +133,7 @@ $messages['br'] = array(
 	'specialcontact-problemdesc' => 'Kemennadenn',
 	'specialcontact-mail' => 'Kas da Wikia',
 	'specialcontact-ccme' => 'Kas un eilenn eus ar gemennadenn-mañ din',
+	'specialcontact-notyou' => "N'eo ket c'hwi ?",
 	'specialcontact-captchainfo' => 'Ebarzhit an destenn er skeudenn, mar plij.',
 	'specialcontact-captchatitle' => 'Ger dispisaet',
 	'specialcontact-formtitle' => 'Mont e darempred gant skipailh skoazell Wikia',

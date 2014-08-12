@@ -203,7 +203,6 @@ class VideoEmbedToolSearchService
 			'thumbHeight'  => $this->getHeight(),
 			'getThumbnail' => true,
 			'thumbOptions' => [
-				'useTemplate' => true,
 				'forceSize'   => 'small',
 			],
 		];

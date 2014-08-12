@@ -8,11 +8,11 @@ class UpdateThumbnailTask extends BaseTask {
 
 	private static $delays = [
 		self::DEFAULT_PROVIDER => [
-			"20 seconds",
+			"5 minutes",
 			"1 hour",
 			"1 day" ],
 		self::IVA => [
-			"20 seconds",
+			"5 minutes",
 			"1 hour",
 			"1 week" ]
 	];

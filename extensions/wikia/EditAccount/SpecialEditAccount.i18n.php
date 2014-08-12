@@ -439,6 +439,7 @@ $messages['ce'] = array(
  * @author Chmee2
  * @author Darth Daron
  * @author Dontlietome7
+ * @author H4nek
  */
 $messages['cs'] = array(
 	'editaccount' => 'Upravit účet',
@@ -459,6 +460,7 @@ $messages['cs'] = array(
 	'editaccount-label-toggleadopt-prevent' => 'Zabránit automatickému převzetí',
 	'editaccount-label-toggleadopt-allow' => 'Povolit automatické převzetí',
 	'editaccount-label-reason' => 'Důvod:',
+	'editaccount-label-clearemail' => 'Vymazat e-mailovou adresu',
 	'editaccount-submit-email' => 'Uložit e-mailovou adresu',
 	'editaccount-submit-pass' => 'Uložit heslo',
 	'editaccount-submit-realname' => 'Uložit skutečné jméno',
@@ -633,6 +635,7 @@ $messages['el'] = array(
  * @author Benfutbol10
  * @author Crazymadlover
  * @author Erdemaslancan
+ * @author Fitoschido
  * @author Pertile
  * @author Translationista
  * @author VegaDark
@@ -698,7 +701,7 @@ $messages['es'] = array(
 	'editaccount-log-entry-email' => 'correo electrónico cambiado para el usuario $2',
 	'editaccount-log-entry-pass' => 'Se ha cambiado la contraseña para el usuario $2',
 	'editaccount-log-entry-realname' => 'nombre real cambiado para el usuario $2',
-	'editaccount-log-entry-close' => 'cuenta deshabilitada $2',
+	'editaccount-log-entry-close' => 'cuenta desactivada $2',
 	'edit-account-closed-flag' => '<div class="errorbox" style="padding: 1em;">Esta cuenta ha sido deshabilitada globalmente en Wikia.</div>',
 	'right-editaccount' => 'Editar las preferencias de otros usuarios',
 	'action-editaccount' => 'editar la información de otros usuarios',
@@ -1225,11 +1228,27 @@ $messages['it'] = array(
  */
 $messages['ja'] = array(
 	'editaccount' => 'アカウントの編集',
+	'editaccount-title' => '特別:EditAccount',
+	'editaccount-frame-manage' => 'アカウントの編集',
+	'editaccount-frame-usage' => '注釈',
+	'editaccount-label-select' => 'ユーザーアカウントを選択',
+	'editaccount-submit-account' => 'アカウント管理',
+	'editaccount-frame-account' => 'ユーザー アカウントを編集：$1',
+	'editaccount-frame-close' => '利用者アカウントを無効化：$1',
+	'editaccount-label-email' => '新しいメールアドレスを設定',
+	'editaccount-label-pass' => '新しいパスワードを設定',
+	'editaccount-label-realname' => '新しい本名を設定',
+	'editaccount-label-clearunsub' => '購読停止',
 	'editaccount-label-reason' => '理由:',
 	'editaccount-submit-pass' => 'パスワードを保存',
+	'editaccount-submit-realname' => '本名を保存',
+	'editaccount-submit-close' => 'アカウントの削除',
 	'editaccount-submit-button' => '保存',
+	'editaccount-success-pass' => 'アカウントのパスワードは$1に変更されました。',
+	'editaccount-success-realname' => 'アカウントの本名が$1に変更されました。',
 	'editaccount-invalid-email' => "''$1'' は有効なメールアドレスではありません。",
 	'editaccount-labal-account-status' => 'アカウントの状態',
+	'edit-account-closed-flag' => '<div class="errorbox" style="padding: 1em;">このアカウントは、ウィキアによってグローバルに無効にされました。</div>',
 );
 
 /** Georgian (ქართული)
@@ -2747,6 +2766,7 @@ $messages['vi'] = array(
 	'editaccount-label-toggleadopt-prevent' => 'Ngăn chặn nhận con nuôi tự động',
 	'editaccount-label-toggleadopt-allow' => 'Cho phép tự động nhận con nuôi',
 	'editaccount-label-reason' => 'Lý do:',
+	'editaccount-label-clearemail' => 'Địa chỉ email rõ ràng',
 	'editaccount-submit-email' => 'Lưu địa chỉ e-mail',
 	'editaccount-submit-pass' => 'Lưu mật khẩu',
 	'editaccount-submit-realname' => 'Lưu tên thật',

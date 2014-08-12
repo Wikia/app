@@ -175,6 +175,7 @@ class WikiaHomePageHelper extends WikiaModel {
 	 */
 	public function updateHubSlotsToV2($hubSlots) {
 		$hubSlotsV2 = [];
+		if (empty($hubSlots)) return $hubSlotsV2;
 		foreach( $hubSlots as $slot ) {
 			$hubSlotsV2['hub_slot'][] = $slot['hub_slot'];
 		}
