@@ -4,6 +4,12 @@ use Wikia\Search\Services\NearbyPOISearchService;
 
 class POIApiController extends WikiaApiController {
 
+	const PI = 3.14;
+
+	const EARTH_RADIUS = 6374;
+
+	const DEGREES_2_PI = 180;
+
 	/**
 	 * @var QuestDetailsSolrHelper
 	 */
@@ -23,13 +29,15 @@ class POIApiController extends WikiaApiController {
 
 		$this->validateParameters( $lat, $long, $radius, $limit );
 
+		$radiusKilometers = $this->radiusDegreesToKilometers( $radius );
+
 		$solrHelper = $this->getSolrHelper();
 		$nearbySearch = $this->getNearbySearch();
 
 		$solrResponse = $nearbySearch->newQuery()
 			->latitude( $lat )
 			->longitude( $long )
-			->radius( $radius )
+			->radius( $radiusKilometers )
 			->region( $region )
 			->setFields( $solrHelper->getRequiredSolrFields() )
 			->limit( $limit )
@@ -42,6 +50,10 @@ class POIApiController extends WikiaApiController {
 		}
 
 		$this->setResponseData( $result );
+	}
+
+	protected function radiusDegreesToKilometers( $radiusDegrees ) {
+		return $radiusDegrees * self::EARTH_RADIUS  / self::DEGREES_2_PI * self::PI;
 	}
 
 	/**
