@@ -333,31 +333,29 @@ class RestrictSessionsTest extends \WikiaBaseTest {
 		$restrictSessionsMock->onUserLogout( $userMock );
 	}
 
-	public function testIsWhiteListedIpWhitelisted() {
-		$this->mockGlobalVariable( 'wgSessionIPWhitelist', [ '127.0.0.0/16' ] );
+	/**
+	 * @dataProvider isWhiteListedProvider
+	 */
+	public function testIsWhiteListed( $whiteList, $ipAddress, $expectedResult ) {
+		$this->mockGlobalVariable( 'wgSessionIPWhitelist', $whiteList );
 
 		$restrictSessions = new RestrictSessionsHooks();
-		$result = $restrictSessions->isWhiteListedIP( '127.0.0.1' );
+		$result = $restrictSessions->isWhiteListedIP( $ipAddress );
 
-		$this->assertTrue( $result );
+		$this->assertTrue( $result === $expectedResult );
 	}
 
-	public function testIsWhiteListedIpNotWhitelisted() {
-		$this->mockGlobalVariable( 'wgSessionIPWhitelist', [ '127.0.1.0/24' ] );
-
-		$restrictSessions = new RestrictSessionsHooks();
-		$result = $restrictSessions->isWhiteListedIP( '127.0.0.1' );
-
-		$this->assertFalse( $result );
-	}
-
-	public function testIsWhiteListedIpEmptyWhitelist() {
-		$this->mockGlobalVariable( 'wgSessionIPWhitelist', [] );
-
-		$restrictSessions = new RestrictSessionsHooks();
-		$result = $restrictSessions->isWhiteListedIP( '127.0.0.1' );
-
-		$this->assertFalse( $result );
+	public function isWhiteListedProvider() {
+		return [
+			// IP in whitelist range
+			[ [ '127.0.0.0/16' ], '127.0.0.1', true ],
+			// IP not in whitelist range
+			[ [ '127.0.1.0/24' ], '127.0.0.1', false ],
+			// Single IP whitelisted
+			[ [ '127.0.1.0/24', '127.0.0.1' ], '127.0.0.1', true ],
+			// Empty whitelist
+			[ [], '127.0.0.1', false ],
+		];
 	}
 
 	private function getUserMock( $isAllowedResult ) {
