@@ -382,7 +382,6 @@ $.widget( 'wikia.linksuggest', {
 	_open: function( event, ui ) {
 		var menu = this.element.data( 'autocomplete' ).menu.element,
 			offset = this._getCaretPosition(),
-			width = menu.outerWidth(),
 			height = menu.outerHeight(),
 			props = {
 			my: 'left top',
@@ -391,7 +390,10 @@ $.widget( 'wikia.linksuggest', {
 			offset: offset.join( ' ' ),
 			collision: 'fit none'
 		};
-		if ( offset.left + width > this.element.outerWidth() ) {
+		// Override autocomplete's menu width -- which matches the width of the input element -- to make menu narrower.
+		menu.width( '' );
+		// Prevent menu from displaying too far to the right (and being clipped).
+		if ( offset[0] + menu.outerWidth() > this.element.outerWidth() ) {
 			props.my = 'right top';
 		}
 		//Bugid: 100516 - prevent from showing the dropdown outside the screen
@@ -400,7 +402,7 @@ $.widget( 'wikia.linksuggest', {
 			offset[1] = offset[1] - 25;
 			props.offset = offset.join( ' ' );
 		}
-		menu.width( '' ).position( props );
+		menu.position( props );
 	}
 
 });
