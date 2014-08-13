@@ -15,6 +15,12 @@ class MonetizationModuleHelper extends WikiaModel {
 	const SLOT_TYPE_FOOTER = 'footer';
 
 	const CACHE_TTL = 3600;
+	// TODO: encapsulate in Monetization Client
+	// do not change unless monetization service changes
+	const MONETIZATION_SERVICE_CACHE_PREFIX = 'monetization';
+
+	static $SUPPORTED_COUNTRY_CODES = [ 'AU', 'CA', 'DE', 'HK', 'MX', 'RU', 'TW', 'UK', 'US' ];
+	const REST_OF_WORLD = 'ROW';
 
 	/**
 	 * Show the Module only on File pages, Article pages, and Main pages
@@ -50,11 +56,27 @@ class MonetizationModuleHelper extends WikiaModel {
 	 */
 	public static function getMonetizationUnits( $params ) {
 		wfProfileIn( __METHOD__ );
-
-		global $wgMonetizationServiceUrl;
-
 		$log = WikiaLogger::instance();
-		$url = $wgMonetizationServiceUrl.'?'.http_build_query( $params );
+
+		global $wgMonetizationServiceUrl, $wgMemc;
+
+		// this cache key must match the one set by the MonetizationService
+		// and should not use the wgCachePrefix()
+		$cacheKey = self::createCacheKey( $params );
+		$log->debug( "Monetization: " . __METHOD__ . " - lookup with cache key: $cacheKey" );
+		$json_results = $wgMemc->get( $cacheKey );
+
+		if ( !empty( $json_results ) ) {
+			return json_decode( $json_results, true );
+		}
+
+		$apiVersion = 'v1';
+
+		if ( !endsWith( $wgMonetizationServiceUrl, '/' ) ) {
+			$url = $wgMonetizationServiceUrl . '/';
+		}
+
+		$url .= 'api/' . $apiVersion . '?' . http_build_query( $params );
 		$req = MWHttpRequest::factory( $url, [ 'noProxy' => true ] );
 		$status = $req->execute();
 		if ( $status->isGood() ) {
@@ -88,6 +110,44 @@ class MonetizationModuleHelper extends WikiaModel {
 		wfProfileOut( __METHOD__ );
 
 		return $countryCode;
+	}
+
+	/**
+	 * Creates the cache key for the given parameters.
+	 *
+	 * @param array $params
+	 * @return string
+	 */
+	public static function createCacheKey( array $params ) {
+		$cacheKey = self::MONETIZATION_SERVICE_CACHE_PREFIX;
+
+		if ( !empty( $params['s_id'] ) ) {
+			$cacheKey .= ':' . $params['s_id'];
+		}
+
+		if ( !empty( $params['geo'] ) ) {
+			$cacheKey .= ':' . self::convertCountryCode( $params['geo'] );
+		} else {
+			$cacheKey .= ':' . self::REST_OF_WORLD;
+		}
+
+		return $cacheKey;
+	}
+
+	/**
+	 * Converts the country code to 'ROW' if the country code passed in
+	 * is not one of the 9 countries that are supported. Otherwise,
+	 * just returns the country code (all uppercase).
+	 *
+	 * @param $countryCode
+	 * @return string
+	 */
+	public static function convertCountryCode( $countryCode ) {
+		if ( in_array( $countryCode, MonetizationModuleHelper::$SUPPORTED_COUNTRY_CODES ) ) {
+			return strtoupper( $countryCode );
+		}
+
+		return MonetizationModuleHelper::REST_OF_WORLD;
 	}
 
 }
