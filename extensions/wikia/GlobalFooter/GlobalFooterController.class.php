@@ -38,7 +38,10 @@ class GlobalFooterController extends WikiaController {
 		foreach($globalFooterLinks as $link) {
 			if(strpos(trim($link), '*') === 0) {
 				$parsedLink = parseItem($link);
-				if ((strpos($parsedLink['text'], 'LICENSE') !== false) || $parsedLink['text'] == 'GFDL') {
+				if ((array_key_exists('text', $parsedLink) &&
+					strpos($parsedLink['text'], 'LICENSE') !== false
+					|| $parsedLink['text'] == 'GFDL')
+				) {
 					$parsedLink['isLicense'] = true;
 				} else {
 					$parsedLink['isLicense'] = false;
