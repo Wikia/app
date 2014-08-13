@@ -9,8 +9,6 @@ class MediaGalleryController extends WikiaController {
 		$media = [];
 
 		$itemCount = count( $items );
-		$mediaGalleryHelper = new MediaGalleryHelper();
-		$dimensionMultiples = $mediaGalleryHelper->getDimensionMultiples( $itemCount );
 
 		$dimensionIndex = 0;
 		foreach ( $items as $item ) {
@@ -20,7 +18,7 @@ class MediaGalleryController extends WikiaController {
 				continue; // todo: possible add error state
 			}
 
-			$dimension = MediaGalleryHelper::DIMENSION_UNIT * $dimensionMultiples[$dimensionIndex];
+			$dimension = MediaGalleryHelper::getDimensionBySizeAndOrder( $itemCount, $dimensionIndex );
 			$dimensions = [
 				'width' => $dimension,
 				'height' => $dimension,
