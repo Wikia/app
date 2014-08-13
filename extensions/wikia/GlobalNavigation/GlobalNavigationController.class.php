@@ -69,6 +69,10 @@ class GlobalNavigationController extends WikiaController {
 		$this->response->setVal( 'displayHeader', !$this->wg->HideNavigationHeaders );
 	}
 
+	public function venus() {
+
+	}
+
 	/*
 	 * This (recursive) function generates tree from menuNodes.
 	 * It basically reverts part of NavigationModel parse; changes simple array
