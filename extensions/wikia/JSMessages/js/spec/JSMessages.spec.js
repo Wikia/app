@@ -20,7 +20,7 @@ describe("JSMessages", function () {
 		msg = modules.JSMessages(nirvanaMock, $, window);
 
 	it('registers AMD module', function() {
-		expect(typeof msg).toBe('function');
+		expect(typeof msg).toBe('string');
 		expect(typeof msg.get).toBe('function');
 		expect(typeof msg.getForContent).toBe('function');
 	});
