@@ -8,7 +8,7 @@ class POIApiController extends WikiaApiController {
 
 	const EARTH_RADIUS = 6374;
 
-	const DEGREES_2_PI = 180;
+	const DEGREES_PI = 180;
 
 	/**
 	 * @var QuestDetailsSolrHelper
@@ -53,7 +53,7 @@ class POIApiController extends WikiaApiController {
 	}
 
 	protected function radiusDegreesToKilometers( $radiusDegrees ) {
-		return $radiusDegrees * self::EARTH_RADIUS  / self::DEGREES_2_PI * self::PI;
+		return $radiusDegrees * self::EARTH_RADIUS  / self::DEGREES_PI * self::PI;
 	}
 
 	/**
@@ -108,7 +108,7 @@ class POIApiController extends WikiaApiController {
 
 		$long = doubleval( $long );
 		if ( ( $long < -180 ) || ( $long > 180 ) ) {
-			throw new BadRequestApiException( "Invalid longitude: longitudes are range -90 to 90: provided lon: ${long}" );
+			throw new BadRequestApiException( "Invalid longitude: longitudes are range -180 to 180: provided lon: ${long}" );
 		}
 
 		// only positive floating numbers
