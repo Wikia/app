@@ -8,7 +8,7 @@ class POIApiController extends WikiaApiController {
 
 	const EARTH_RADIUS = 6374;
 
-	const DEGREES_PI = 180;
+	const DEGREES_IN_PI = 180;
 
 	/**
 	 * @var QuestDetailsSolrHelper
@@ -53,7 +53,7 @@ class POIApiController extends WikiaApiController {
 	}
 
 	protected function radiusDegreesToKilometers( $radiusDegrees ) {
-		return $radiusDegrees * self::EARTH_RADIUS  / self::DEGREES_PI * self::PI;
+		return $radiusDegrees * self::EARTH_RADIUS  / self::DEGREES_IN_PI * self::PI;
 	}
 
 	/**
