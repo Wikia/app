@@ -16,12 +16,12 @@ $wgAutoloadClasses['PopularArticlesModel']	= $dir . 'models/external/PopularArti
 $wgAutoloadClasses['EntertainmentHubOnlyRssModel'] = $dir . 'models/EntertainmentHubOnlyRssModel.class.php';
 $wgAutoloadClasses['LifestyleHubOnlyRssModel'] = $dir . 'models/LifestyleHubOnlyRssModel.class.php';
 $wgAutoloadClasses['HubOnlyRssModel'] = $dir . 'models/HubOnlyRssModel.class.php';
+$wgAutoloadClasses['MarvelRssModel'] = $dir . 'models/MarvelRssModel.class.php';
 
 $wgSpecialPages['HubRssFeed']		= 'HubRssFeedSpecialController';
 
-$wgHubRssFeeds = array(
-	 'Entertainment', 'Lifestyle', 'Games', 'TV'
-);
+$wgHubRssFeeds = [ 'Entertainment', 'Lifestyle', 'Games', 'TV', 'Marvel' ];
+
 
 foreach ( $wgHubRssFeeds as $feed ) {
 	if ( isset( $_SERVER['SCRIPT_URL'] ) && strcmp( $_SERVER['SCRIPT_URL'],  '/rss/'.$feed ) === 0 ) {

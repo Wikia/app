@@ -38,6 +38,7 @@ class HubRssFeedSpecialController extends WikiaSpecialPageController {
 
 	public function notfound() {
 		global $wgHubRssFeeds;
+		var_dump($wgHubRssFeeds); die();
 		$url = $this->currentTitle->getFullUrl();
 		$links = [ ];
 
