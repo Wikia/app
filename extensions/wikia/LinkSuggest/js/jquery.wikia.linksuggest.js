@@ -16,8 +16,7 @@ $.widget( 'wikia.linksuggest', {
 	options: {
 		minLength: 3,
 		delay: 300,
-		url: window.wgScript,
-		stopKeydownPropagation: false
+		url: window.wgScript
 	},
 	_create: function() {
 		var self = this;
@@ -71,9 +70,6 @@ $.widget( 'wikia.linksuggest', {
 	_keydown: function( event ) {
 		var keyCode = $.ui.keyCode,
 			autocompleteInstance = this.element.data( 'autocomplete' );
-		if ( this.options.stopKeydownPropagation ) {
-			event.stopPropagation();
-		}
 		switch( event.keyCode ) {
 			case keyCode.UP:
 			case keyCode.DOWN:
@@ -91,6 +87,9 @@ $.widget( 'wikia.linksuggest', {
 				}
 				break;
 			case keyCode.ESCAPE:
+				if ( autocompleteInstance.menu.element.is(':visible') ) {
+					event.stopPropagation();
+				}
 				// return without setting any value
 				autocompleteInstance.close( event );
 				return;
@@ -386,7 +385,9 @@ $.widget( 'wikia.linksuggest', {
 	_open: function( event, ui ) {
 		var menu = this.element.data( 'autocomplete' ).menu.element,
 			offset = this._getCaretPosition(),
+			width,
 			height = menu.outerHeight(),
+			elementWidth = this.element.outerWidth(),
 			props = {
 			my: 'left top',
 			at: 'left top',
@@ -396,9 +397,11 @@ $.widget( 'wikia.linksuggest', {
 		};
 		// Override autocomplete's menu width -- which matches the width of the input element -- to make menu narrower.
 		menu.width( '' );
+		width = menu.outerWidth();
 		// Prevent menu from displaying too far to the right (and being clipped).
-		if ( offset[0] + menu.outerWidth() > this.element.outerWidth() ) {
-			props.my = 'right top';
+		if ( offset[0] + width > elementWidth ) {
+			offset[0] = elementWidth - ( width + 10 );
+			props.offset = offset.join( ' ' );
 		}
 		//Bugid: 100516 - prevent from showing the dropdown outside the screen
 		if ( offset[1] + height > this.element.outerHeight() ) {
