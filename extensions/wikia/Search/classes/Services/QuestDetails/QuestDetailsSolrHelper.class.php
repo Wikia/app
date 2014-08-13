@@ -294,7 +294,9 @@ class QuestDetailsSolrHelper {
 			$id = $item[ 'id' ];
 			$thumbnailProps = $thumbnails[ $id ];
 			foreach ( $thumbnailProps as $key => $value ) {
-				$item[ $key ] = $value;
+				if( !empty( $value ) ) {
+					$item[ $key ] = $value;
+				}
 			}
 		}
 	}
