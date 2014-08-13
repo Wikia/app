@@ -167,6 +167,13 @@ class WikiFactoryHub extends WikiaModel {
 	public function getCategoryId( $city_id ) {
 
 		wfProfileIn( __METHOD__ );
+
+		global $wgWikiaEnvironment;
+		if ( $wgWikiaEnvironment == WIKIA_ENV_INTERNAL ) {
+			wfProfileOut( __METHOD__ );
+			return 0;
+		}
+
 		$categories = (new WikiaSQL())
 			->SELECT( "cat_id" )
 			->FROM( "city_cats" )
