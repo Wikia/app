@@ -50,6 +50,8 @@ module.exports = function (config) {
 			'resources/wikia/modules/stringhelper.js',
 			'resources/wikia/modules/thumbnailer.js',
 			'resources/wikia/modules/uniqueId.js',
+			'resources/wikia/libraries/mustache/mustache.js',
+			'resources/wikia/libraries/jquery/ellipses.js',
 
 			//UI Repo JS API
 			'resources/wikia/modules/uicomponent.js',
@@ -157,8 +159,9 @@ module.exports = function (config) {
 			'extensions/wikia/ImageLazyLoad/spec/*.spec.js',
 
 			// Thumbnails
+			'extensions/wikia/Thumbnails/scripts/templates.mustache.js',
 			'extensions/wikia/Thumbnails/scripts/views/titleThumbnail.js',
-			'extensions/wikia/Thumbnails/scripts/spec/*.spec.js',
+			'extensions/wikia/Thumbnails/scripts/spec/*.spec.js'
 		]
 	});
 };
