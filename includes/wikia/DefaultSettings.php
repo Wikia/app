@@ -204,6 +204,7 @@ $wgAutoloadClasses['WikiaSpamRegexBatch'] = $IP . '/extensions/wikia/WikiaSpamRe
 $wgAutoloadClasses[ 'Wikia\Template\Engine' ] = "{$IP}/includes/wikia/template/Engine.class.php";
 $wgAutoloadClasses[ 'Wikia\Template\PHPEngine' ] = "{$IP}/includes/wikia/template/PHPEngine.class.php";
 $wgAutoloadClasses[ 'Wikia\Template\MustacheEngine' ] = "{$IP}/includes/wikia/template/MustacheEngine.class.php";
+$wgAutoloadClasses[ 'Wikia\Template\HandlebarsEngine' ] = "{$IP}/includes/wikia/template/HandlebarsEngine.class.php";
 //deprecated, will be removed
 $wgAutoloadClasses[ 'EasyTemplate' ] = "{$IP}/includes/wikia/EasyTemplate.php";
 
@@ -217,6 +218,7 @@ $wgAutoloadClasses[ "WikiFactory"                     ] = "$IP/extensions/wikia/
 $wgAutoloadClasses[ "WikiFactoryHub"                  ] = "$IP/extensions/wikia/WikiFactory/Hubs/WikiFactoryHub.php";
 $wgAutoloadClasses[ 'SimplePie'                       ] = "$IP/lib/vendor/SimplePie/simplepie.inc";
 $wgAutoloadClasses[ 'MustachePHP'                     ] = "$IP/lib/vendor/mustache.php/Mustache.php";
+$wgAutoloadClasses[ 'Handlebars\\Autoloader'          ] = "$IP/lib/vendor/Handlebars/Autoloader.php";
 $wgAutoloadClasses[ 'GMetricClient'                   ] = "$IP/lib/vendor/GMetricClient.class.php";
 $wgAutoloadClasses[ 'FakeLocalFile'                   ] = "$IP/includes/wikia/FakeLocalFile.class.php";
 $wgAutoloadClasses[ 'WikiaUploadStash'                ] = "$IP/includes/wikia/upload/WikiaUploadStash.class.php";
@@ -310,6 +312,7 @@ $wgAutoloadClasses['WAMService'] = $IP . '/includes/wikia/services/WAMService.cl
 $wgAutoloadClasses['VideoService'] = $IP . '/includes/wikia/services/VideoService.class.php';
 $wgAutoloadClasses['UserService']  =  $IP.'/includes/wikia/services/UserService.class.php';
 $wgAutoloadClasses['MustacheService'] = $IP . '/includes/wikia/services/MustacheService.class.php';
+$wgAutoloadClasses['HandlebarsService'] = $IP . '/includes/wikia/services/HandlebarsService.class.php';
 $wgAutoloadClasses['RevisionService'] = $IP . '/includes/wikia/services/RevisionService.class.php';
 $wgAutoloadClasses['InfoboxesService'] = $IP . '/includes/wikia/services/InfoboxesService.class.php';
 $wgAutoloadClasses['RenderContentOnlyHelper'] = $IP . '/includes/wikia/RenderContentOnlyHelper.class.php';
@@ -332,7 +335,6 @@ $wgAutoloadClasses['BodyController'] = $IP.'/skins/oasis/modules/BodyController.
 $wgAutoloadClasses['BodyContentOnlyController'] = $IP.'/skins/oasis/modules/BodyContentOnlyController.class.php';
 $wgAutoloadClasses['ContentDisplayController'] = $IP.'/skins/oasis/modules/ContentDisplayController.class.php';
 $wgAutoloadClasses['GlobalHeaderController'] = $IP.'/skins/oasis/modules/GlobalHeaderController.class.php';
-$wgAutoloadClasses['CorporateFooterController'] = $IP.'/skins/oasis/modules/CorporateFooterController.class.php';
 $wgAutoloadClasses['WikiHeaderController'] = $IP.'/skins/oasis/modules/WikiHeaderController.class.php';
 $wgAutoloadClasses['SearchController'] = $IP.'/skins/oasis/modules/SearchController.class.php';
 $wgAutoloadClasses['PageHeaderController'] = $IP.'/skins/oasis/modules/PageHeaderController.class.php';
@@ -382,10 +384,10 @@ $wgAutoloadClasses['Wikia\UI\DataException'] = $IP . '/includes/wikia/ui/excepti
 $wgAutoloadClasses['Wikia\UI\UIFactoryApiController'] = $IP . '/includes/wikia/ui/UIFactoryApiController.class.php';
 
 // Traits
-$wgAutoloadClasses['PreventBlockedUsers'] = $IP . '/includes/wikia/traits/PreventBlockedUsers.trait.php';
-$wgAutoloadClasses['PreventBlockedUsersThrowsError'] = $IP . '/includes/wikia/traits/PreventBlockedUsers.trait.php';
-$wgAutoloadClasses['UserAllowedRequirement'] = $IP . '/includes/wikia/traits/UserAllowedRequirement.trait.php';
-$wgAutoloadClasses['UserAllowedRequirementThrowsError'] = $IP . '/includes/wikia/traits/UserAllowedRequirement.trait.php';
+$wgAutoloadClasses['PreventBlockedUsersTrait'] = $IP . '/includes/wikia/traits/PreventBlockedUsersTrait.php';
+$wgAutoloadClasses['PreventBlockedUsersThrowsErrorTrait'] = $IP . '/includes/wikia/traits/PreventBlockedUsersTrait.php';
+$wgAutoloadClasses['UserAllowedRequirementTrait'] = $IP . '/includes/wikia/traits/UserAllowedRequirementTrait.php';
+$wgAutoloadClasses['UserAllowedRequirementThrowsErrorTrait'] = $IP . '/includes/wikia/traits/UserAllowedRequirementTrait.php';
 $wgAutoloadClasses['IncludeMessagesTrait'] = $IP . '/includes/wikia/traits/IncludeMessagesTrait.php';
 
 // Spotlights AB test
@@ -1255,10 +1257,10 @@ $wgAdDriverUseSevenOneMedia = null;
 $wgAdDriverUseSevenOneMediaInLanguages = ['de'];
 
 /**
- * @name $wgAdDriverSevenOneMediaSub4Site
- * Global variable SOI_SUB4SITE value for SevenOne Media ads
+ * @name $wgAdDriverSevenOneMediaOverrideSub2Site
+ * Enable override SOI_SUB2SITE with string defined in value for SevenOne Media ads
  */
-$wgAdDriverSevenOneMediaSub4Site = null;
+$wgAdDriverSevenOneMediaOverrideSub2Site = null;
 
 /**
  * @name $wgAdDriverUseDartForSlotsBelowTheFold
@@ -1464,14 +1466,14 @@ $wgEnableSpecialSearchCaching = true;
  * @name wgEnableBuckyExt
  * Enables real user performance reporting via Bucky
  */
-$wgEnableBuckyExt = false;
+$wgEnableBuckyExt = true;
 
 /*
  * @name wgBuckySampling
  * Sets the sampling rate for Bucky reporting, sampling applied at each page view.
  * Unit: percent (100 = all, 1 = 1%, 0.1 = 0.1%)
  */
-$wgBuckySampling = 1;
+$wgBuckySampling = 10;
 
 /*
  * @name wgXhprofUDPHost
@@ -1502,3 +1504,8 @@ $wgProfilerSendViaScribe = true;
  */
 $wgDisableWAMOnHubs = false;
 
+/**
+ * Force ImageServing to return an empty list
+ * see PLATFORM-392
+ */
+$wgImageServingForceNoResults = false;

@@ -26,6 +26,9 @@ class WikiaMaps extends WikiaObject {
 
 	const MAP_THUMB_PREFIX = '/thumb/';
 	const DEFAULT_REAL_MAP_URL = 'http://img.wikia.nocookie.net/intmap_Geo_Map/default-geo.jpg';
+	const DELTA_Y_DEFAULT = 1;
+	const DELTA_Y_CENTERED = 5;
+	const THUMB_ALIGNMENT_CENTER = 'center';
 
 	const DB_DUPLICATE_ENTRY ='ER_DUP_ENTRY';
 
@@ -250,12 +253,13 @@ class WikiaMaps extends WikiaObject {
 	 * Sends a request to delete a map instance
 	 *
 	 * @param integer $mapId
+	 * @param integer $deleted Is map being deleted or undeleted
 	 *
 	 * @return bool
 	 */
-	public function deleteMapById( $mapId ) {
+	public function updateMapDeletionStatus( $mapId, $deleted ) {
 		$payload = [
-			'deleted' => true
+			'deleted' => $deleted
 		];
 		$url = $this->buildUrl( [ self::ENTRY_POINT_MAP, $mapId ] );
 		return $this->putRequest( $url, $payload );
@@ -301,6 +305,16 @@ class WikiaMaps extends WikiaObject {
 
 		//TODO: consider caching the response
 		$response = $this->sendGetRequest( $url );
+
+		// MOB-2272 - translate default POI categories names
+		array_map( function( $parentPoiCategory ) {
+			if ( isset( $parentPoiCategory->name ) ) {
+				$msgKey = 'wikia-interactive-maps-poi-categories-default-' . mb_strtolower( $parentPoiCategory->name );
+				$parentPoiCategory->name = wfMessage( $msgKey )->plain();
+			}
+
+			return $parentPoiCategory;
+		}, $response[ 'content' ] );
 
 		return $response;
 	}
@@ -517,20 +531,22 @@ class WikiaMaps extends WikiaObject {
 	 * @desc returns URL to the cropped thumb of an image
 	 *
 	 * @param String $url - image url
-	 * @param Integer $width
-	 * @param Integer $height
+	 * @param Integer $width desired width of a thumbnail
+	 * @param Integer $height desired height of a thumbnail
 	 * @param String $align - crop align (origin || center)
- 	 *
+	 *
 	 * @return String - thumbnail URL
 	 */
-	public function createCroppedThumb( $url, $width, $height, $align = 'center' ) {
-		$imageServing = new ImageServing( null, $width, $height );
+	public function createCroppedThumb( $url, $width, $height, $align = self::THUMB_ALIGNMENT_CENTER ) {
 		$breakPoint = strrpos( $url, '/' );
 		$baseURL = substr( $url, 0, $breakPoint );
 		$fileName = substr( $url , $breakPoint + 1 );
-		$crop = urlencode( $imageServing->getCut( $width, $height, $align ) );
+		$deltaY = $align === self::THUMB_ALIGNMENT_CENTER ? self::DELTA_Y_CENTERED : self::DELTA_Y_DEFAULT;
 
-		return $baseURL . self::MAP_THUMB_PREFIX . $fileName . '/' . $crop . '-' . $fileName;
+		return ImagesService::getThumbUrlFromFileUrl(
+			$baseURL . self::MAP_THUMB_PREFIX . $fileName,
+			$width . 'x' . $height . 'x' . $deltaY
+		);
 	}
 
 	/**

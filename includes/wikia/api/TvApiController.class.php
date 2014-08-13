@@ -42,10 +42,11 @@ class TvApiController extends WikiaApiController {
 			throw new NotFoundApiException();
 		}
 
-		$response = $this->getResponse();
-		$response->setValues( $result );
-
-		$response->setCacheValidity( self::RESPONSE_CACHE_VALIDITY );
+		$this->setResponseData(
+			$result,
+			[ 'urlFields' => [ 'contentUrl', 'url' ] ],
+			self::RESPONSE_CACHE_VALIDITY
+		);
 	}
 
 	protected function findEpisode( $seriesName, $episodeName, $lang, $quality = null ) {

@@ -510,8 +510,9 @@ ve.init.mw.ViewPageTarget.prototype.onSaveErrorEmpty = function () {
  */
 ve.init.mw.ViewPageTarget.prototype.onSaveErrorSpamBlacklist = function ( editApi ) {
 	this.showSaveError(
-		// TODO: Use mediawiki.language equivalant of Language.php::listToText once it exists
-		ve.msg( 'spamprotectiontext' ) + ' ' + ve.msg( 'spamprotectionmatch', editApi.spamblacklist.split( '|' ).join( ', ' ) ),
+		// Wikia change: We use Phalanx for spam filtering instead of the SpamBlacklist extension, as well as a
+		// modified message. Therefore it's easier to get the i18n message on the back-end and just show it here.
+		$( $.parseHTML( editApi.spamblacklist ) ),
 		false // prevents reapply
 	);
 	this.events.trackSaveError( 'spamblacklist' );
@@ -1527,10 +1528,12 @@ ve.init.mw.ViewPageTarget.prototype.onWindowPopState = function ( e ) {
 	if ( !this.active && newUri.query.veaction === 'edit' ) {
 		this.actFromPopState = true;
 		this.activate();
+		this.emit( 'popStateActivated' );
 	}
 	if ( this.active && newUri.query.veaction !== 'edit' ) {
 		this.actFromPopState = true;
 		this.deactivate();
+		this.emit( 'popStateDeactivated' );
 		// Trigger Qualaroo survey for anonymous users abandoning edit
 		/*
 		if ( mw.user.anonymous() && window._kiq ) {
@@ -1644,7 +1647,7 @@ ve.init.mw.ViewPageTarget.prototype.maybeShowDialogs = function () {
 		// preference to influence anonymous users (use the config
 		// variable for that; besides the pref value would be stale if
 		// the wiki uses static html caching).
-		usePrefs = !mw.user.isAnon();
+		usePrefs = !mw.user.anonymous();
 		prefSaysShow = usePrefs && !mw.user.options.get( 'visualeditor-hidebetawelcome' );
 		urlSaysHide = 'vehidebetadialog' in this.currentUri.query;
 
@@ -1700,6 +1703,8 @@ ve.init.mw.ViewPageTarget.prototype.onBeforeUnload = function () {
 	var fallbackResult,
 		message,
 		onBeforeUnloadHandler = this.onBeforeUnloadHandler;
+
+	this.emit( 'beforeUnload' );
 	// Check if someone already set on onbeforeunload hook
 	if ( this.onBeforeUnloadFallback ) {
 		// Get the result of their onbeforeunload hook

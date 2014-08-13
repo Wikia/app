@@ -10,11 +10,13 @@
 /**
  * Singleton class for handling Hubs
  */
-class WikiFactoryHub {
+class WikiFactoryHub extends WikiaModel {
 
 	#--- static variables
 	private static $mInstance = false;
-	private static $mCategories = array();
+	private $mOldCategories = array();
+	private $mNewCategories = array();
+	private $cache_ttl = 86400;  // 1 day
 
 	const CATEGORY_ID_HUMOR = 1;
 	const CATEGORY_ID_GAMING = 2;
@@ -37,7 +39,7 @@ class WikiFactoryHub {
 	const CATEGORY_ID_GREEN = 19;
 	const CATEGORY_ID_ANSWERS = 20;
 
-	private static $mCategoryKruxMap = array(
+	private $mCategoryKruxMap = array(
 	    self::CATEGORY_ID_HUMOR		=> 'Hixwr2ar',
 	    self::CATEGORY_ID_GAMING		=> 'Hi0kJsuv',
 	    self::CATEGORY_ID_ENTERTAINMENT	=> 'Hi0kPhMT',
@@ -61,17 +63,6 @@ class WikiFactoryHub {
 	);
 
 	/**
-	 * private constructor
-	 *
-	 * @access private
-	 * @author Krzysztof Krzyżaniak <eloy@wikia.com>
-	 *
-	 */
-	private function __construct( ) {
-		self::$mCategories = $this->loadCategories();
-	}
-
-	/**
 	 * getInstance
 	 *
 	 * get singleton instance of class
@@ -89,50 +80,9 @@ class WikiFactoryHub {
 	}
 
 	/**
-	 * getBreadCrumb
-	 *
-	 * get category structure using global function
-	 *
-	 * @access public
-	 * @author Krzysztof Krzyżaniak <eloy@wikia.com>
-	 * @author Emil Podlaszewski <emil@wikia.com>
-	 *
-	 * @param $city_id
-	 * @return array An array with categories
-	 */
-	public function getBreadCrumb( $city_id ) {
-		global $wgExternalSharedDB;
-
-		wfProfileIn( __METHOD__ );
-
-		$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
-		$cat_id = $dbr->selectField(
-			"city_cat_mapping",
-			"cat_id",
-			array( "city_id" => $city_id )
-		);
-
-		$cats = array();
-		while( !empty( $cat_id ) ) {
-			$res = $dbr->select(
-				array( "city_cat_structure", "city_cats" ),
-				array( "cat_name", "cat_url", "cat_parent_id" ),
-				array( "city_cat_structure.cat_id=city_cats.cat_id", "city_cat_structure.cat_id={$cat_id}" )
-			);
-			if( $row = $dbr->fetchObject( $res ) ) {
-				$cats[] = array( "name" => $row->cat_name, "url" => $row->cat_url, "id" => intval( $cat_id ), "parentId" => intval( $row->cat_parent_id ) );
-				$cat_id = $row->cat_parent_id;
-			}
-		}
-		wfProfileOut( __METHOD__ );
-
-		$cats = array_reverse( $cats );
-
-		return $cats;
-	}
-
-	/**
 	 * return HTML select for category choosing
+	 * FIXME: This uses the old categories and template system and will have to be updated
+	 * FIXME: move this UI related code back into the wikifactory special page?
 	 */
 	public function getForm( $city_id, &$title = null ) {
 		global $wgTitle;
@@ -140,106 +90,238 @@ class WikiFactoryHub {
 			$title = $wgTitle;
 		}
 		$cat_id = $this->getCategoryId( $city_id );
+		$categories = $this->getAllCategories( false );
+
 		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 		$oTmpl->set_vars( array(
 			"title"			=> $title,
 			"cat_id"		=> $cat_id,
 			"city_id"	 	=> $city_id,
-			"categories" 	=> self::$mCategories
+			"categories" 	=> $categories
 		));
 
 		return $oTmpl->render("categories");
 	}
 
 	/**
-	 * return HTML select for category choosing
-	 */
-	public function getSelect( $cat_id ) {
-
-		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
-		$oTmpl->set_vars( array(
-			"title"			=> null,
-			"cat_id"		=> $cat_id,
-			"categories" 	=> self::$mCategories
-		));
-
-		return $oTmpl->render("categories");
-	}
-
-	/**
-	 * getCategories
+	 * getAllCategories
 	 *
-	 * get category identifier for given wiki
+	 * Get all categories and properties of those categories
 	 *
 	 * @access public
-	 * @author Krzysztof Krzyżaniak <eloy@wikia.com>
 	 *
-	 * @return array	category names and ids from
+	 * @param $active boolean flag to return old or new categories, by default load the old ones while we are in transition phase
+	 * @return array category names and ids from city_cats table
 	 */
-	public function getCategories( ) {
-		return self::$mCategories;
+	public function getAllCategories( $new = false ) {
+
+		if (empty($this->mNewCategories) || empty($this->mOldCategories)) {
+			$this->loadCategories();
+		}
+
+		if ( $new ) {
+			return $this->mNewCategories;
+		} else {
+			// Deprecated/old categories
+			return $this->mOldCategories;
+		}
+	}
+
+	/**
+	 * getAllVerticals
+	 *
+	 * Get all verticals and properties of those verticals
+	 */
+
+	public function getAllVerticals() {
+
+		$verticals = (new WikiaSQL())
+			->SELECT()
+				->FIELD( "vertical_id as id")
+				->FIELD( "vertical_name as name")
+				->FIELD( "vertical_url as url")
+				->FIELD( "vertical_short as short")
+			->FROM( "city_verticals" )
+			->cache ( $this->cache_ttl, wfSharedMemcKey(__METHOD__) )
+			->runLoop( $this->getSharedDB(), function ( &$result, $row)  {
+				$result[] = get_object_vars($row);
+			});
+
+		return $verticals;
 	}
 
 	/**
 	 * getCategoryId
 	 *
-	 * get category identifier for given wiki
+	 * get deprecated/old category id for given wiki
 	 *
 	 * @access public
 	 * @author Krzysztof Krzyżaniak <eloy@wikia.com>
 	 *
 	 * @param $city_id
 	 * @return integer category id from city_cat_mapping table
+	 *
+	 * @deprecated Category is now an array, use getCategoryIds( $city_id )
 	 */
+
 	public function getCategoryId( $city_id ) {
-		global $wgExternalSharedDB, $wgMemc;
 
 		wfProfileIn( __METHOD__ );
-
-		$memkey = sprintf("%s:%d", __METHOD__, $city_id);
-		$cat_id = $wgMemc->get($memkey);
-		if ( empty( $cat_id ) ) {
-			$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
-			$oRow = $dbr->selectRow(
-				array( "city_cat_mapping" ),
-				array( "cat_id" ),
-				array( "city_id" => $city_id ),
-				__METHOD__
-			);
-			$cat_id = isset( $oRow->cat_id ) ? $oRow->cat_id : null ;
-			if ( $cat_id ) $wgMemc->set( $memkey, $cat_id, 60 * 60 * 24 );
-		}
-
+		$categories = (new WikiaSQL())
+			->SELECT( "cat_id" )
+			->FROM( "city_cats" )
+			->JOIN ( "city_cat_mapping" )->USING( "cat_id" )
+			->WHERE( "city_id" )->EQUAL_TO( $city_id )
+			->AND_( "cat_deprecated" )->EQUAL_TO ( 1 )  // always return the "old" category
+			->cache( $this->cache_ttl, wfSharedMemcKey( __METHOD__, $city_id ) )
+			->runLoop ( $this->getSharedDB(), function ( &$result, $row ) {
+				$result[]= $row->cat_id;
+			});
 		wfProfileOut( __METHOD__ );
 
-		return $cat_id;
+		// Some wikis have no cat_mapping entry, but this should be fixed soon
+		if (isset ($categories[0])) {
+			return $categories[0];
+		} else {
+			return 0;
+		}
 	}
 
 	/**
-	 * get category name
+	 * getVerticalId
+	 *
+	 * Each wiki has one vertical
+	 *
+	 * @param  $city_id Wiki Id
+	 * @return Integer vertical_id
+	 */
+
+	public function getVerticalId( $city_id ) {
+
+		$id = (new WikiaSQL())
+			->SELECT( "city_vertical" )
+			->FROM( "city_list" )
+			->WHERE ("city_id")->EQUAL_TO( $city_id )
+			->cache( $this->cache_ttl, wfSharedMemcKey( __METHOD__, $city_id ) )
+			->runLoop( $this->getSharedDB() );
+
+		return $id;
+	}
+
+	/**
+	 * getCategoryIds  This is the NEW function to use
+	 *
+	 * get list of (just) category ids for given wiki
+	 *
+	 * @access public
+	 *
+	 * @param $city_id
+	 * @return array of categories (empty if wiki is not in a category)
+	 *
+	 */
+
+	public function getCategoryIds( $city_id, $active = 1 ) {
+		global $wgExternalSharedDB;
+		if( !$wgExternalSharedDB || empty($city_id) ) {
+			return array();
+		}
+
+		$categories = (new WikiaSQL())
+			->SELECT( "cat_id" )
+			->FROM( "city_cats" )
+			->JOIN ( "city_cat_mapping" )->USING( "cat_id" )
+			->WHERE( "city_id" )->EQUAL_TO( $city_id )
+			->AND_( "cat_active" )->EQUAL_TO ( $active )
+			->cache( $this->cache_ttl, wfSharedMemcKey( __METHOD__, $city_id ) )
+			->runLoop ( $this->getSharedDB(), function ( &$result, $row ) {
+				$result[]= $row->cat_id;
+			});
+
+		return $categories;
+	}
+
+	/**
+	 * Removed getCategories() function since it was ambiguous
+	 * This function returns the list of categories AND category metadata for a wiki
+	 * get category metadata (id, name, url, short, deprecated, active) for a wiki
+	 * @param  integer $city_id  wiki_id
+	 * @return array of keys/values (id, name, url, short, deprecated, active)
+	 */
+	public function getWikiCategories( $city_id, $active = 1 ) {
+
+		// query instead of lookup in AllCategories list
+		$categories = (new WikiaSQL())
+			->SELECT( "*" )
+			->FROM( "city_cats" )
+			->JOIN ( "city_cat_mapping" )->USING( "cat_id" )
+			->WHERE( "city_id ")->EQUAL_TO( $city_id )
+			->AND_( "cat_active" )->EQUAL_TO ( $active )
+			->cache ( $this->cache_ttl, wfSharedMemcKey( __METHOD__, $city_id ) )
+			->runLoop( $this->getSharedDB(), function ( &$result, $row)  {
+				$result[] = get_object_vars($row);
+			});
+
+		return $categories;
+
+	}
+
+	/**
+	 * get single category name for a wiki
+	 * This is deprecated, use getWikiCategories instead
+	 * @deprecated
 	 */
 	public function getCategoryName( $city_id ) {
 		$cat_id = $this->getCategoryId( $city_id );
-		return isset( self::$mCategories[ $cat_id ] )
-			? self::$mCategories[ $cat_id ]["name"]
+		$categories = $this->getAllCategories(false);
+		return isset( $categories[ $cat_id ] )
+			? $categories[ $cat_id ]["name"]
 			: null;
 	}
+
+	/**
+	 * get single "short" category name for a wiki
+	 * This is deprecated, use getWikiCategories instead
+	 * @param  [type] $city_id [description]
+	 * @return [type]          [description]
+	 * @deprecated
+	 */
 	public function getCategoryShort( $city_id ) {
 		$cat_id = $this->getCategoryId( $city_id );
-		return isset( self::$mCategories[ $cat_id ] )
-			? self::$mCategories[ $cat_id ]["short"]
+		$categories = $this->getAllCategories(false);
+		return isset( $categories[ $cat_id ] )
+			? $categories[ $cat_id ]["short"]
 			: null;
 	}
+
+	/**
+	 * Get a category by name.
+	 *
+	 * Deprecated. This is only for backwards compatibility.
+	 *
+	 * @param string $name
+	 * @return array the category
+	 */
+	public function getCategoryByName( $name ) {
+		$categories = $this->getAllCategories( false );
+
+		foreach ( $categories as $categoryId => $category ) {
+			if ( strcasecmp( $name, $category['name'] ) === 0 ) {
+				$category['id'] = $categoryId;
+				return $category;
+			}
+		}
+
+		return null;
+	}
+
 	/**
 	 * loadCategories
 	 *
-	 * load data from database: city_cats (WF)
-	 *
-	 * @author Krzysztof Krzyżaniak <eloy@wikia.com>
-	 *
-	 * @return array	array with category maps id => name
+	 * load all categories from city_cats table in wikicities database (WF)
+	 *	 *
+	 * @return array	array with category maps id => name, short
 	 */
-	private function loadCategories() {
+	private function loadCategoriesOld() {
 		global $wgExternalSharedDB ;
 		$tmp = array();
 		if( !$wgExternalSharedDB ) {
@@ -277,34 +359,119 @@ class WikiFactoryHub {
 		return $tmp;
 	}
 
-	/**
-	 * getIdByName
-	 *
-	 * get category id for hub using category name
-	 *
-	 * @access public
-	 * @author Krzysztof Krzyżaniak <eloy@wikia.com>
-	 *
-	 * @param string $name
-	 * @return integer category id
-	 */
-	public function getIdByName( $name ) {
+	// LoadCategories
+	// Loads ALL categories from city_cats table
+	// Loads deprecated (old) categories into a separate array from active (new) categories
+
+	private function loadCategories() {
+
 		global $wgExternalSharedDB;
-		wfProfileIn( __METHOD__ );
+		if( !$wgExternalSharedDB ) {
+			return array();
+		}
 
-		$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
-		$oRow = $dbr->selectRow(
-			array( "city_cats" ),
-			array( "cat_id" ),
-			array( "cat_name" => htmlspecialchars( $name ) ),
-			__METHOD__
-		);
+		$categories = (new WikiaSQL())
+			->SELECT()
+				->FIELD( "cat_id as id")
+				->FIELD( "cat_name as name")
+				->FIELD( "cat_url as url")
+				->FIELD( "cat_short as short")
+				->FIELD( "cat_deprecated as deprecated")
+				->FIELD( "cat_active as active")
+			->FROM( "city_cats" )
+			->cache ( $this->cache_ttl, wfSharedMemcKey( __METHOD__ ))  // global cache
+			->runLoop( $this->getSharedDB(), function (&$result, $row) {
+				$arr = get_object_vars($row);
+				//$result['all'][] = $arr;
+				if ($row->active) {
+					$result['active'][$row->id] = $arr;
+				}
+				if ($row->deprecated) {
+					$result['deprecated'][$row->id] = $arr;
+				}
+			} );
 
-		$id = isset( $oRow->cat_id ) ? $oRow->cat_id : false;
+		$this->mOldCategories = $categories['deprecated'];
+		$this->mNewCategories = $categories['active'];
 
-		wfProfileOut( __METHOD__ );
+	}
 
-		return $id;
+	/**
+	 * setVertical
+	 * update the vertical for the wiki
+	 *
+	 * @param integer   $city_id     identifier from city_list
+	 * @param integer   $vertical_id vertical identifier
+	 * @param string    $reason      optional extra reason string for logging
+	 */
+
+	public function setVertical ( $city_id, $vertical_id, $reason) {
+
+		( new WikiaSQL() )
+			->UPDATE( 'city_list' )
+				->SET( 'city_vertical', $vertical_id )
+			->WHERE( 'city_id' )->EQUAL_TO( $city_id )
+			->run( $this->getSharedDB( DB_MASTER ) );
+
+		$this->clearCache( $city_id );
+
+		if( !empty($reason) ) {
+			$reason = " ( $reason )";
+		}
+		// I guess we should look up the name here
+		WikiFactory::log( WikiFactory::LOG_CATEGORY, "Vertical changed to $vertical_id $reason", $city_id );
+
+	}
+
+	/**
+	 * Given an array of category ids, set the wiki to be in those categories.
+	 * Also delete any categories that the wiki WAS in.
+	 * @param  [type] $city_id    [description]
+	 * @param  array  $categories [description]
+	 * @return [type]             [description]
+	 */
+
+	public function updateCategories ( $city_id, array $categories ) {
+		global $wgExternalSharedDB;
+
+		$values = array();
+		// MySQL style multi-row insert
+		foreach ($categories as $category) {
+			$values[]= ["city_id" => $city_id, "cat_id" => $category];
+		}
+
+		if (!empty ( $values) ) {
+			$dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
+
+			$dbw->begin();
+			$dbw->delete( "city_cat_mapping", array( "city_id" => $city_id ), __METHOD__ );
+			$dbw->insert( "city_cat_mapping", $values, __METHOD__  );
+			$dbw->commit();
+
+			$this->clearCache( $city_id );
+		}
+	}
+
+	// Add 1 category
+	public function addCategory ( $city_id, $category ) {
+
+		( new WikiaSQL() )
+			->INSERT( 'city_cat_mapping' )
+				->SET( 'city_id', $city_id )
+				->SET( 'cat_id', $category )
+			->run( $this->getSharedDB( DB_MASTER ) );
+
+	}
+
+	// Remove 1 category
+	public function removeCategory ( $city_id, $category ) {
+
+		( new WikiaSQL() )
+			->DELETE( 'city_cat_mapping' )
+				->WHERE( 'city_id', $city_id )
+				->AND( 'cat_id', $category )
+			->run( $this->getSharedDB( DB_MASTER ) );
+
 	}
 
 	/**
@@ -315,50 +482,56 @@ class WikiFactoryHub {
 	 * @param integer   $city_id    identifier from city_list
 	 * @param integer   $cat_id     category identifier
 	 * @param string    $reason     optional extra reason string for logging
+	 *
+	 * @deprecated This function is deprecated.  Now that there are multiple categories, we have to add/remove them with a new interface
 	 */
+
 	public function setCategory( $city_id, $cat_id, $reason='' ) {
 		global $wgExternalSharedDB;
 		wfProfileIn( __METHOD__ );
 
 		$dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
+
 		$dbw->begin();
 		$dbw->delete( "city_cat_mapping", array( "city_id" => $city_id ), __METHOD__ );
 		$dbw->insert( "city_cat_mapping", array( "city_id" => $city_id, "cat_id" => $cat_id ), __METHOD__  );
+		$dbw->commit();
 
-		$categories = $this->getCategories();
+		$this->clearCache( $city_id );
+
 		if( !empty($reason) ) {
 			$reason = " (" . (string)$reason . ")";
 		}
 		WikiFactory::log( WikiFactory::LOG_CATEGORY, "Category changed to {$categories[$cat_id]['name']}".$reason, $city_id );
 
-		$dbw->commit();
-
 		wfProfileOut( __METHOD__ );
+	}
+
+	/**
+	 * On updating anything related to city verticals or city categories, purge
+	 * @param  [type] $city_id [description]
+	 * @return none
+	 */
+	public function clearCache($city_id) {
+		global $wgMemc;
+
+		// Extra : is added to make keys that look like __METHOD__ calls
+		$functionNames = [ "getVerticalId", "getCategoryId", "getCategoryIds", "getWikiCategories" ];
+		foreach ($functionNames as $name) {
+			$wgMemc->delete( wfSharedMemcKey("WikiFactoryHub:", $name, $city_id ) );
+		}
 	}
 
 	/**
 	 *
 	 * @param integer $id category id
-	 * @return array of category id
+	 * @return category data
+	 *
+	 * Pretty sure this function is unused?
 	 */
-	public function getCategory($id) {
-		return self::$mCategories[$id];
-	}
-
-	/**
-	 * Get category by name. Searches through list of categories.
-	 * @param string $name category name
-	 * @return array of category data, including id
-	 */
-	public function getCategoryByName($name) {
-		foreach (self::$mCategories as $categoryId=>$category) {
-			if (strcasecmp($name, $category['name']) == 0) {
-				$category['id'] = $categoryId;
-				return $category;
-			}
-		}
-
-		return null;
+	public function getCategory($id, $new = false) {
+		$categories = $this->getAllCategories($new);
+		return $categories[$id];
 	}
 
 	/**
@@ -367,8 +540,8 @@ class WikiFactoryHub {
 	 * @return string Krux category id
 	 */
 	public function getKruxId($categoryId) {
-		if (isset(self::$mCategoryKruxMap[$categoryId])) {
-			return self::$mCategoryKruxMap[$categoryId];
+		if (isset($this->mCategoryKruxMap[$categoryId])) {
+			return $this->mCategoryKruxMap[$categoryId];
 		}
 
 		return '';

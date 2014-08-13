@@ -334,14 +334,11 @@ define(
 			var htmlEscapes = {
 					'&': '&amp;',
 					'<': '&lt;',
-					'>': '&gt;',
-					'"': '&quot;',
-					'\'': '&#39;',
-					'/': '&#x2F;'
+					'>': '&gt;'
 				},
-				htmlEscaper = /[&<>"'\/]/g;
+				htmlEscapeMatcher = /[&<>]/g;
 
-			return ('' + string).replace(htmlEscaper, function (match) {
+			return ('' + string).replace(htmlEscapeMatcher, function (match) {
 				return htmlEscapes[match];
 			});
 		}
@@ -385,6 +382,11 @@ define(
 			showError: showError,
 			cleanUpError: cleanUpError,
 			createThumbURL: createThumbURL,
+
+			mapDeleted: {
+				mapNotDeleted: 0,
+				mapDeleted: 1
+			},
 			onWriteInInput: onWriteInInput,
 			escapeHtml: escapeHtml,
 			track: track,

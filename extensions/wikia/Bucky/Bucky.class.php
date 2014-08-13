@@ -9,24 +9,21 @@ class Bucky {
 	const DEFAULT_SAMPLING = 1; // percentage
 	const BASE_URL = '//speed.wikia.net/__rum';
 
-	static public function onSkinAfterBottomScripts( Skin $skin, &$bottomScripts ) {
+	static public function onWikiaSkinTopScripts( array &$vars, &$scripts ) {
 		$app = F::app();
-		if ( $app->checkSkin('oasis',$skin) ) {
+		if ( $app->checkSkin( 'oasis' ) ) {
+			// todo: find better place for it
 			$wgBuckySampling = $app->wg->BuckySampling;
 			$url = self::BASE_URL; // "/v1/send" is automatically appended
 			$sample = (isset($wgBuckySampling) ? $wgBuckySampling : self::DEFAULT_SAMPLING) / 100;
-			$context = array_merge(array(
-				'env' => $app->wg->WikiaEnvironment,
-			),Transaction::getAll());
-			$config = json_encode(array(
+			$config = array(
 				'host' => $url,
 				'sample' => $sample,
 				'aggregationInterval' => 1000,
 				'protocol' => 2,
-				'context' => $context,
-			));
-			$script = "<script>$(function(){Bucky.setOptions({$config});$(window).load(function(){setTimeout(function(){Bucky.sendPagePerformance(false);},0);});});</script>";
-			$bottomScripts .= $script;
+			);
+
+			$vars['wgBuckyConfig'] = $config;
 		}
 
 		return true;

@@ -57,3 +57,27 @@ $slotTopHeight: 50px;
 		color: $ad-label-color;
 	}
 }
+
+#mw-content-text div.wikia-ad-interactive-map,
+.int-map-mobile-map-page #mw-content-text > div.wikia-interactive-map-wrapper > div.wikia-ad-interactive-map {
+	height: 50px;
+	margin: 0 auto 15px;
+	width: 320px;
+
+	& > iframe {
+		border: none;
+		height: 50px;
+		left: auto;
+		margin: 0;
+		padding: 0;
+		position: relative;
+		top: auto;
+		width: 320px;
+		z-index: 10;
+	}
+}
+
+.int-map-mobile-map-page #mw-content-text > div.wikia-interactive-map-wrapper > div.wikia-ad-interactive-map {
+	height: 60px;
+	padding-top: 10px;
+}

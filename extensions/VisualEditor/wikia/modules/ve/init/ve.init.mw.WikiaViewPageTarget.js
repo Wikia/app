@@ -19,6 +19,7 @@ ve.init.mw.WikiaViewPageTarget = function VeInitMwWikiaViewPageTarget() {
 	// Parent constructor
 	ve.init.mw.WikiaViewPageTarget.super.call( this );
 
+	// Properties
 	this.toolbarSaveButtonEnableTracked = false;
 };
 
@@ -55,7 +56,7 @@ ve.init.mw.WikiaViewPageTarget.static.toolbarGroups = [
 		'type': 'list',
 		'label': OO.ui.deferMsg( 'visualeditor-toolbar-insert' ),
 		'indicator': 'down',
-		'include': [ 'wikiaMediaInsert', 'number', 'bullet', 'transclusion', 'reference', 'referenceList' ]
+		'include': [ 'wikiaMediaInsert', 'wikiaMapInsert', 'number', 'bullet', 'transclusion', 'reference', 'referenceList' ]
 	}
 ];
 
@@ -114,7 +115,7 @@ ve.init.mw.WikiaViewPageTarget.prototype.onSaveDialogReview = function () {
 	ve.track( 'wikia', {
 		'action': ve.track.actions.CLICK,
 		'label': 'dialog-save-review-changes-button',
-		'duration': this.events.timings.saveReview - this.events.timings.saveWorkflowBegin
+		'value': ve.track.normalizeDuration( this.events.timings.saveReview - this.events.timings.saveWorkflowBegin )
 	} );
 };
 
@@ -125,7 +126,11 @@ ve.init.mw.WikiaViewPageTarget.prototype.onToolbarCancelButtonClick = function (
 			isDirty: !this.toolbarSaveButton.isDisabled() ? 'yes' : 'no'
 		} );
 	}
-	ve.track( 'wikia', { 'action': ve.track.actions.CLICK, 'label': 'button-cancel' } );
+	ve.track( 'wikia', {
+		'action': ve.track.actions.CLICK,
+		'label': 'button-cancel',
+		'value': ve.track.normalizeDuration( ve.now() - this.events.timings.surfaceReady )
+	} );
 	mw.hook( 've.cancelButton' ).fire();
 	/*
 	// Trigger Qualaroo survey for anonymous users abandoning edit
@@ -146,12 +151,16 @@ ve.init.mw.WikiaViewPageTarget.prototype.onToolbarSaveButtonClick = function () 
 		veTrack( { action: 've-save-button-click' } );
 	}
 
-	if ( window.veOrientationEnabled !== undefined ) {
+	if ( window.veOrientationEnabled !== undefined || window.veFocusMode !== undefined ) {
 		window.optimizely = window.optimizely || [];
 		window.optimizely.push( ['trackEvent', 've-save-button-click'] );
 	}
 
-	ve.track( 'wikia', { 'action': ve.track.actions.CLICK, 'label': 'button-publish' } );
+	ve.track( 'wikia', {
+		'action': ve.track.actions.CLICK,
+		'label': 'button-publish',
+		'value': ve.track.normalizeDuration( ve.now() - this.events.timings.surfaceReady )
+	} );
 	ve.init.mw.ViewPageTarget.prototype.onToolbarSaveButtonClick.call( this );
 };
 
@@ -177,7 +186,11 @@ ve.init.mw.WikiaViewPageTarget.prototype.updateToolbarSaveButtonState = function
 			window.optimizely = window.optimizely || [];
 			window.optimizely.push( ['trackEvent', 've-save-button-enable'] );
 		}
-		ve.track( 'wikia', { 'action': ve.track.actions.ENABLE, 'label': 'button-publish' } );
+		ve.track( 'wikia', {
+			'action': ve.track.actions.ENABLE,
+			'label': 'button-publish',
+			'value': ve.track.normalizeDuration( ve.now() - this.events.timings.surfaceReady )
+		} );
 	}
 };
 
@@ -230,7 +243,7 @@ ve.init.mw.WikiaViewPageTarget.prototype.maybeShowDialogs = function () {
 /**
  * @inheritdoc
  */
-ve.init.mw.ViewPageTarget.prototype.replacePageContent = function ( html, categoriesHtml ) {
+ve.init.mw.WikiaViewPageTarget.prototype.replacePageContent = function ( html, categoriesHtml ) {
 	var insertTarget,
 		$mwContentText = $( '#mw-content-text' ),
 		$content = $( $.parseHTML( html ) );
@@ -258,4 +271,58 @@ ve.init.mw.ViewPageTarget.prototype.replacePageContent = function ( html, catego
 
 	mw.hook( 'wikipage.content' ).fire( $mwContentText );
 	$( '#catlinks' ).replaceWith( categoriesHtml );
+};
+
+/**
+ * Handle failure from serialization
+ *
+ * @method
+ * @param {object} jqXHR
+ * @param {string} status Text status message
+ */
+ve.init.mw.WikiaViewPageTarget.prototype.onSerializeError = function ( jqXHR, status ) {
+	if ( window.veTrack ) {
+		veTrack( {
+			action: 'parsoid-serialize-error',
+			status: status
+		} );
+	}
+	ve.init.mw.WikiaViewPageTarget.super.prototype.onSerializeError.call( this, jqXHR, status );
+};
+
+/**
+ * Handle failure when retrieving diff
+ *
+ * @method
+ * @param {object} jqXHR
+ * @param {string} status Text status message
+ */
+ve.init.mw.WikiaViewPageTarget.prototype.onShowChangesError = function ( jqXHR, status ) {
+	if ( window.veTrack ) {
+		veTrack( {
+			action: 'parsoid-diff-error',
+			status: status
+		} );
+	}
+	ve.init.mw.WikiaViewPageTarget.super.prototype.onShowChangesError.call( this, jqXHR, status );
+};
+
+/**
+ * Handle failure when saving changes
+ *
+ * @method
+ * @param {HTMLDocument} doc HTML document we tried to save
+ * @param {object} saveData Options that were used
+ * @param {object} jqXHR
+ * @param {string} status Text status message
+ * @param {object|null} data API response data
+ */
+ve.init.mw.WikiaViewPageTarget.prototype.onSaveError = function ( doc, saveData, jqXHR, status, data ) {
+	if ( window.veTrack ) {
+		veTrack( {
+			action: 'parsoid-save-error',
+			status: status
+		} );
+	}
+	ve.init.mw.WikiaViewPageTarget.super.prototype.onSaveError.call( this, doc, saveData, jqXHR, status, data );
 };
