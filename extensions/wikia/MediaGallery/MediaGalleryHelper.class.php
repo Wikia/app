@@ -2,7 +2,7 @@
 
 class MediaGalleryHelper {
 
-	const DIMENSION_UNIT = 80; // Approximation of optimal column width break point
+	const DIMENSION_UNIT = 80; // Approximation of column width at optimal break point
 
 	const DIMENSION_MULTIPLE_DEFAULT = 3;
 
