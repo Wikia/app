@@ -113,7 +113,7 @@ class ThumbnailHelper extends WikiaModel {
 		$alt = empty( $options['alt'] ) ? $title->getText() : $options['alt'];
 
 		$attribs = array(
-			'alt'    => $alt,
+			'alt'    => Sanitizer::encodeAttribute($alt),
 			'src'    => $thumb->url,
 			'width'  => $thumb->width,
 			'height' => $thumb->height,
