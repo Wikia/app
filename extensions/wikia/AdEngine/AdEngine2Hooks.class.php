@@ -38,21 +38,6 @@ class AdEngine2Hooks {
 		return true;
 	}
 
-
-	/**
-	 * Register global JS variables bottom
-	 *
-	 * @param array $vars
-	 *
-	 * @return bool
-	 */
-	static public function onMakeGlobalVariablesScript(array &$vars) {
-		foreach (AdEngine2Service::getBottomJsVariables() as $varName => $varValue) {
-			$vars[$varName] = $varValue;
-		}
-		return true;
-	}
-
 	/**
 	 * Register "instant" global JS
 	 *

@@ -322,81 +322,12 @@ class AdEngine2Service
 	}
 
 	/**
-	 * Get names of variables from getJsVariables to expose in top
-	 *
-	 * @return array
-	 */
-	private static function getTopJsVariableNames()
-	{
-		$topVars = [
-			'adDriver2ForcedStatus',         // DART creatives
-			'adDriverLastDARTCallNoAds',     // TODO: remove var
-			'adslots2',                      // AdEngine2_Ad.php
-			'cityShort',                     // AdLogicPageParams.js
-			'cscoreCat',                     // analytics_prod.js
-			'wgAdsShowableOnPage',           // TODO: remove var
-			'wgEnableKruxTargeting',         // Krux.js
-			'wgKruxCategoryId',              // Krux.run.js
-			'wgShowAds',                     // analytics_prod.js
-			'wgUserShowAds',                 // JWPlayer.class.php
-			'wikiaPageIsCorporate',          // analytics_prod.js
-			'wikiaPageType',                 // analytics_prod.js
-		];
-		if (self::areAdsInHead()) {
-			$topVars = array_merge($topVars, [
-				'wgAdEngineDisableLateQueue',    // AdConfig2.js
-				'wgAdDriverUseSevenOneMedia',    // AdConfig2.js
-				'wgAdDriverForceDirectGptAd',    // AdConfig2.js
-				'wgAdDriverForceLiftiumAd',      // AdConfig2.js
-				'wgAdDriverTrackState',          // SlotTracker.js
-				'wgAdDriverUseCatParam',         // AdLogicPageParams.js
-				'wgDartCustomKeyValues',         // AdLogicPageParams.js
-				'wgEnableRHonDesktop',           // AdEngine2.run.js
-				'wgHighValueCountries',          // AdLogicHighValueCountry.js
-				'wgLoadAdsInHead',               // AdEngine2.run.js
-				'wgLoadLateAdsAfterPageLoad',        // AdEngine2.run.js
-				'wgUsePostScribe',               // AdEngine2.run.js, scriptwriter.js
-				'wgWikiDirectedAtChildren',      // AdLogicPageParams.js
-				'wikiaPageIsHub',                // AdLogicPageParams.js
-			]);
-		}
-		return $topVars;
-	}
-
-	/**
 	 * Get variables to expose in top of HTML
 	 *
 	 * @return array
 	 */
 	public static function getTopJsVariables()
 	{
-		$allVars = self::getJsVariables();
-		$topVars = [];
-
-		$keysToInclude = self::getTopJsVariableNames();
-		foreach ($keysToInclude as $key) {
-			if (isset($allVars[$key])) {
-				$topVars[$key] = $allVars[$key];
-			}
-		}
-		return $topVars;
-	}
-
-	/**
-	 * Get variables to expose in bottom of HTML
-	 *
-	 * @return array
-	 */
-	public static function getBottomJsVariables()
-	{
-		// Remember in PHP this actually makes an array copy:
-		$bottomVars = self::getJsVariables();
-
-		$keysToExclude = self::getTopJsVariableNames();
-		foreach ($keysToExclude as $key) {
-			unset($bottomVars[$key]);
-		}
-
-		return $bottomVars;
+		return self::getJsVariables();
 	}
 }
