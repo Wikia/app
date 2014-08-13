@@ -8,7 +8,7 @@
 
 var base = require('./karma.base.conf.js');
 
-module.exports = function(config) {
+module.exports = function (config) {
 	'use strict';
 
 	base(config);
@@ -154,7 +154,11 @@ module.exports = function(config) {
 			'resources/wikia/libraries/jquery/throttle-debounce/jquery.throttle-debounce.js', // $.throttle
 			'extensions/wikia/ImageLazyLoad/js/ImgLzy.module.js',
 			'extensions/wikia/ImageLazyLoad/js/ImageLazyLoad.js',
-			'extensions/wikia/ImageLazyLoad/spec/*.spec.js'
+			'extensions/wikia/ImageLazyLoad/spec/*.spec.js',
+
+			// Thumbnails
+			'extensions/wikia/Thumbnails/scripts/views/titleThumbnail.js',
+			'extensions/wikia/Thumbnails/scripts/spec/*.spec.js',
 		]
 	});
 };
