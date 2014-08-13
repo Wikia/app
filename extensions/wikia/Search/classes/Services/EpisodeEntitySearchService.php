@@ -11,7 +11,7 @@ class EpisodeEntitySearchService extends EntitySearchService {
 	const EPISODE_TYPE = 'tv_episode';
 	const DEFAULT_SLOP = 1;
 	
-	private static $ARTICLE_TYPES_SUPPORTED_LANGS = ['en'];
+	private static $ARTICLE_TYPES_SUPPORTED_LANGS = [ 'en', 'de' ];
 
 	protected function prepareQuery( $query ) {
 		$select = $this->getSelect();

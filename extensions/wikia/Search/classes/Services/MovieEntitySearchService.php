@@ -10,7 +10,7 @@ class MovieEntitySearchService extends EntitySearchService {
 	const MOVIE_TYPE = 'movie';
 	const API_URL = 'api/v1/Articles/AsSimpleJson?id=';
 	private static $EXCLUDED_WIKIS = [ 'uncyclopedia.wikia.com' ];
-	private static $ARTICLE_TYPES_SUPPORTED_LANGS = [ 'en' ];
+	private static $ARTICLE_TYPES_SUPPORTED_LANGS = [ 'en', 'de' ];
 
 	protected function prepareQuery( $query ) {
 		$select = $this->getSelect();
