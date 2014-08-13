@@ -37,18 +37,41 @@ class QuestDetailsSolrHelper {
 				$id = $item[ 'pageid' ];
 				$result[ $id ] = $this->getMetadata( $item );
 			} else {
-				$result[ ] = [
+				$resultItem = [
+					// These fields must be present always
 					'id' => $item[ 'pageid' ],
 					'title' => $this->findFirstValueByKeyPrefix( $item, 'title_', '' ),
 					'url' => $item[ 'url' ],
 					'ns' => $item[ 'ns' ],
-					'revision' => $this->getRevision( $item ),
-					'comments' => $this->getCommentsNumber( $item ),
-					'type' => $item[ 'article_type_s' ],
-					'categories' => $this->findFirstValueByKeyPrefix( $item, 'categories_', [ ] ),
-					'abstract' => $this->getAbstract( $item ),
-					'metadata' => $this->getMetadata( $item ),
+					'revision' => $this->getRevision( $item )
 				];
+
+				$comments = $this->getCommentsNumber( $item );
+				if( !empty( $comments ) ) {
+					$resultItem[ 'comments' ] = $comments;
+				}
+
+				$type = $item[ 'article_type_s' ];
+				if( !empty( $type ) ) {
+					$resultItem[ 'type' ] = $type;
+				}
+
+				$categories = $this->findFirstValueByKeyPrefix( $item, 'categories_', [ ] );
+				if( !empty( $categories ) ) {
+					$resultItem[ 'categories' ] = $categories;
+				}
+
+				$abstract = $this->getAbstract( $item );
+				if( !empty( $abstract ) ) {
+					$resultItem[ 'abstract' ] = $abstract;
+				}
+
+				$metadata = $this->getMetadata( $item );
+				if( !empty( $metadata ) ) {
+					$resultItem[ 'metadata' ] = $metadata;
+				}
+
+				$result[ ] = $resultItem;
 			}
 		}
 
@@ -116,7 +139,9 @@ class QuestDetailsSolrHelper {
 
 					$metadataKey = $this->cutPrefixAndSuffix( $key, 'metadata_', '_s' );
 
-					$metadata[ $metadataKey ] = $value;
+					if( !empty( $value ) ) {
+						$metadata[ $metadataKey ] = $value;
+					}
 
 				} else if ( endsWith( $key, '_ss' ) ) {
 
@@ -126,13 +151,18 @@ class QuestDetailsSolrHelper {
 						$metadataKey = 'fingerprints';
 					}
 
-					$metadata[ $metadataKey ] = $value;
-
+					if( !empty( $value ) ) {
+						$metadata[ $metadataKey ] = $value;
+					}
 				}
 			}
 		}
 
-		$metadata[ 'map_location' ] = $this->getMetadataMap( $item );
+		$metadataMap = $this->getMetadataMap( $item );
+
+		if( !empty( $metadataMap ) ) {
+			$metadata[ 'map_location' ] = $metadataMap;
+		}
 
 		return $metadata;
 	}
@@ -175,16 +205,20 @@ class QuestDetailsSolrHelper {
 
 					$mapKey = $this->cutPrefixAndSuffix( $key, 'metadata_map_', '_s' );
 
-					$map[ $mapKey ] = $value;
+					if( !empty( $value ) ) {
+						$map[ $mapKey ] = $value;
+					}
 
 				} else if ( endsWith( $key, '_sr' ) ) {
 
 					$mapKey = $this->cutPrefixAndSuffix( $key, 'metadata_map_', '_sr' );
 
-					$coordinates = $this->parseCoordinates( $value );
+					if( !empty( $value ) ) {
+						$coordinates = $this->parseCoordinates( $value );
 
-					$map[ $mapKey . '_x' ] = $coordinates[ 'x' ];
-					$map[ $mapKey . '_y' ] = $coordinates[ 'y' ];
+						$map[ $mapKey . '_x' ] = $coordinates[ 'x' ];
+						$map[ $mapKey . '_y' ] = $coordinates[ 'y' ];
+					}
 				}
 			}
 		}
@@ -218,6 +252,9 @@ class QuestDetailsSolrHelper {
 
 	protected function getRevision( $item ) {
 		$titles = Title::newFromIDs( $item[ 'pageid' ] );
+		if( empty( $titles ) ) {
+			return null;
+		}
 		$title = $titles[ 0 ];
 		$revId = $title->getLatestRevID();
 		$rev = Revision::newFromId( $revId );
@@ -234,12 +271,15 @@ class QuestDetailsSolrHelper {
 
 	protected function getCommentsNumber( $item ) {
 		$titles = Title::newFromIDs( $item[ 'pageid' ] );
+		if( empty( $titles ) ) {
+			return null;
+		}
 		$title = $titles[ 0 ];
 		if ( class_exists( 'ArticleCommentList' ) ) {
 			$commentsList = ArticleCommentList::newFromTitle( $title );
 			return $commentsList->getCountAllNested();
 		}
-		return 0;
+		return null;
 	}
 
 	protected function addThumbnailsInfo( &$result ) {

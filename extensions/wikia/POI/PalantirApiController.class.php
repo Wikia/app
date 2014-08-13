@@ -1,6 +1,6 @@
 <?php
 
-class QuestDetailsApiController extends WikiaApiController {
+class PalantirApiController extends WikiaApiController {
 
 	/**
 	 * @var QuestDetailsSearchService
@@ -13,6 +13,8 @@ class QuestDetailsApiController extends WikiaApiController {
 		$category = $this->getRequest()->getVal( 'category' );
 		$limit = $this->getRequest()->getVal( 'limit' );
 
+		$this->validateParameters( $limit );
+
 		$result = $this->getQuestDetailsSearch()
 			->newQuery()
 			->withFingerprint( $fingerprintId )
@@ -20,6 +22,10 @@ class QuestDetailsApiController extends WikiaApiController {
 			->withCategory( $category )
 			->limit( $limit )
 			->search();
+
+		if( empty( $result ) ) {
+			throw new NotFoundApiException();
+		}
 
 		$this->setResponseData( $result );
 	}
@@ -40,5 +46,11 @@ class QuestDetailsApiController extends WikiaApiController {
 			$this->questDetailsSearch = new QuestDetailsSearchService();
 		}
 		return $this->questDetailsSearch;
+	}
+
+	protected function validateParameters( $limit ) {
+		if ( !empty( $limit ) && !preg_match( '/^\d+$/i', $limit ) ) {
+			throw new BadRequestApiException( "Parameter 'limit' is invalid" );
+		}
 	}
 }
