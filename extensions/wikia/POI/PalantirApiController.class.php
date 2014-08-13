@@ -1,6 +1,6 @@
 <?php
 
-class QuestDetailsApiController extends WikiaApiController {
+class PalantirApiController extends WikiaApiController {
 
 	/**
 	 * @var QuestDetailsSearchService
