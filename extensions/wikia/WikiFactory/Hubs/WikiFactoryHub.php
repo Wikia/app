@@ -16,7 +16,17 @@ class WikiFactoryHub extends WikiaModel {
 	private static $mInstance = false;
 	private $mOldCategories = array();
 	private $mNewCategories = array();
+	private $mAllCatefories = array();
 	private $cache_ttl = 86400;  // 1 day
+
+	const HUB_ID_OTHER = 0;
+	const HUB_ID_TV = 1;
+	const HUB_ID_VIDEO_GAMES = 2;
+	const HUB_ID_BOOKS = 3;
+	const HUB_ID_COMICS = 4;
+	const HUB_ID_LIFESTYLE = 5;
+	const HUB_ID_MUSIC = 6;
+	const HUB_ID_MOVIES = 7;
 
 	const CATEGORY_ID_HUMOR = 1;
 	const CATEGORY_ID_GAMING = 2;
@@ -38,6 +48,14 @@ class WikiFactoryHub extends WikiaModel {
 	const CATEGORY_ID_AUTO = 18;
 	const CATEGORY_ID_GREEN = 19;
 	const CATEGORY_ID_ANSWERS = 20;
+	const CATEGORY_ID_TV = 21;
+	const CATEGORY_ID_VIDEOGAMES = 22;
+	const CATEGORY_ID_BOOKS = 23;
+	const CATEGORY_ID_COMICS = 24;
+	const CATEGORY_ID_FANON = 25;
+	const CATEGORY_ID_HOMEANDGARDEN = 26;
+	const CATEGORY_ID_MOVIES = 27;
+	const CATEFORY_ID_ANIME = 28;
 
 	private $mCategoryKruxMap = array(
 	    self::CATEGORY_ID_HUMOR		=> 'Hixwr2ar',
@@ -120,7 +138,7 @@ class WikiFactoryHub extends WikiaModel {
 			->FROM( "city_verticals" )
 			->cache ( $this->cache_ttl, wfSharedMemcKey(__METHOD__) )
 			->runLoop( $this->getSharedDB(), function ( &$result, $row)  {
-				$result[] = get_object_vars($row);
+				$result[$row->id] = get_object_vars($row);
 			});
 
 		return $verticals;
@@ -313,7 +331,7 @@ class WikiFactoryHub extends WikiaModel {
 			->cache ( $this->cache_ttl, wfSharedMemcKey( __METHOD__ ))  // global cache
 			->runLoop( $this->getSharedDB(), function (&$result, $row) {
 				$arr = get_object_vars($row);
-				//$result['all'][] = $arr;
+				$result['all'][$row->id] = $arr;
 				if ($row->active) {
 					$result['active'][$row->id] = $arr;
 				}
@@ -322,6 +340,7 @@ class WikiFactoryHub extends WikiaModel {
 				}
 			} );
 
+		$this->mAllCategories = $categories['all'];
 		$this->mOldCategories = $categories['deprecated'];
 		$this->mNewCategories = $categories['active'];
 
@@ -350,7 +369,9 @@ class WikiFactoryHub extends WikiaModel {
 			$reason = " ( $reason )";
 		}
 		// I guess we should look up the name here
-		WikiFactory::log( WikiFactory::LOG_CATEGORY, "Vertical changed to $vertical_id $reason", $city_id );
+		$verticals = $this->getAllVerticals();
+		$name = $verticals[$vertical_id]['name'];
+		WikiFactory::log( WikiFactory::LOG_CATEGORY, "Vertical changed to $name. $reason", $city_id );
 
 	}
 
@@ -362,7 +383,7 @@ class WikiFactoryHub extends WikiaModel {
 	 * @return [type]             [description]
 	 */
 
-	public function updateCategories ( $city_id, array $categories ) {
+	public function updateCategories ( $city_id, array $categories, $reason ) {
 		global $wgExternalSharedDB;
 
 		$values = array();
@@ -381,6 +402,20 @@ class WikiFactoryHub extends WikiaModel {
 
 			$this->clearCache( $city_id );
 		}
+
+		# pretty clunky way to load all the categories just for the name, maybe refactor this?
+		$this->loadCategories();
+		$cat_names = array();
+		foreach ($categories as $id) {
+			$cat_names[] = $this->mAllCategories[$id]['name'];
+		}
+		$message = join(", ", $cat_names);
+		if( !empty($reason) ) {
+			$reason = " ( $reason )";
+		}
+
+		WikiFactory::log( WikiFactory::LOG_CATEGORY, "Categories changed to $message. $reason", $city_id );
+
 	}
 
 	// Add 1 category
