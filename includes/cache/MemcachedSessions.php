@@ -125,7 +125,7 @@ function memsess_write_close() {
 	session_write_close();
 	/** Wikia change - begin - PLATFORM-308 */
 	$wgSessionDebugData[] = [ 'event' => 'write_close-end' ];
-	if ( mt_rand( 1, 100 ) <= 30 ) {
+	if ( mt_rand( 1, 100 ) <= 60 ) {
 		\Wikia\Logger\WikiaLogger::instance()->debug( 'PLATFORM-308', [ 'data' => $wgSessionDebugData ] );
 	}
 	/** Wikia change - end */
