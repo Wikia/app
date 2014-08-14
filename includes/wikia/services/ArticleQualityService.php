@@ -158,6 +158,10 @@ class ArticleQualityService extends Service {
 			$article = new Article( $title );
 			$parser = $article->getParserOutput();
 
+			if ( !$parser instanceof ParserOutput ) {
+				return null;
+			}
+
 			$inputs = [
 				'outbound' => 0,
 				'inbound' => 0,
