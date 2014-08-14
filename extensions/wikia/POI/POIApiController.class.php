@@ -43,6 +43,7 @@ class POIApiController extends WikiaApiController {
 			->region( $region )
 			->setFields( $solrHelper->getRequiredSolrFields() )
 			->limit( $limit )
+			->withWikiaId( $this->wg->CityId )
 			->search();
 
 		$result = $solrHelper->consumeResponse( $solrResponse );
