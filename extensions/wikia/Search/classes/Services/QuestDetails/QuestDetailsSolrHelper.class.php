@@ -47,7 +47,7 @@ class QuestDetailsSolrHelper {
 				];
 
 				$comments = $this->getCommentsNumber( $item );
-				if( !empty( $comments ) ) {
+				if( is_int( $comments ) ) {
 					$resultItem[ 'comments' ] = $comments;
 				}
 

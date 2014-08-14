@@ -149,9 +149,7 @@ class QuestDetailsSearchServiceTest extends WikiaBaseTest {
 						"location_y" => -1.21412,
 						"region" => "Map_Region_1"
 					]
-				],
-				"thumbnail" => null,
-				"original_dimensions" => null
+				]
 			],
 			[
 				"id" => 8938,
@@ -184,9 +182,7 @@ class QuestDetailsSearchServiceTest extends WikiaBaseTest {
 						"location_y" => 1.11412,
 						"region" => "Map_Region_1"
 					]
-				],
-				"thumbnail" => null,
-				"original_dimensions" => null
+				]
 			]
 		];
 
