@@ -52,7 +52,7 @@ class QuestDetailsSearchServiceTest extends WikiaBaseTest {
 	}
 
 	/**
-	 * @covers       QuestDetailsSearchService::constructQuery
+	 * @covers       QuestDetailsSearchService::makeQuery
 	 * @dataProvider makeCriteriaQuery_Provider
 	 */
 	public function testCorrectnessOfQueryBuilding( $criteria, $expectedQuery ) {
