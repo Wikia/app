@@ -210,8 +210,7 @@
 		},
 
 		setupTabs: function () {
-			var $veEditTab = $( '#ca-ve-edit' );
-			$veEditTab.click( init.onEditTabClick );
+			$( '#ca-ve-edit' ).click( init.onEditTabClick );
 		},
 
 		setupSectionLinks: function () {

@@ -79,7 +79,7 @@ class EditorPreference {
 					'text' => wfMessage( $visualEditorMessageKey )->setContext( $skin->getContext() )->text(),
 					'class' => '',
 					// Visual Editor is main Edit tab if...
-					'main' => $isVisualEditorPrimaryEditor,
+					'main' => $isVisualEditorPrimaryEditor
 				);
 
 				// Alter the edit tab
