@@ -96,9 +96,10 @@ ve.ui.WikiaCategoryInputWidget.prototype.getCategories = function () {
 ve.ui.WikiaCategoryInputWidget.prototype.getFilteredQueryData = function ( categories ) {
 	var i,
 		formattedData = { 'query': { 'allcategories': [] } },
-		filteredCategories = $.ui.autocomplete.filter( categories, this.value );
+		filteredCategories = $.ui.autocomplete.filter( categories, this.value ).slice( 0, 10 ),
+		categories = formattedData.query.allcategories;
 	for ( i in filteredCategories ) {
-		formattedData.query.allcategories.push( { '*': filteredCategories[i] } );
+		categories.push( { '*': filteredCategories[i] } );
 	}
 	return formattedData;
 };
