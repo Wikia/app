@@ -55,7 +55,8 @@
 			<directory>../docs</directory>
 			<directory>../images</directory>
 			<directory>../languages</directory>
-			<directory>../lib</directory>
+			<directory>../lib/composer</directory>
+			<directory>../lib/vendor</directory>
 			<directory>../maintenance</directory>
 			<directory>../math</directory>
 			<directory>../resources</directory>
@@ -69,8 +70,5 @@
 			<directory suffix=".setup.php">../extensions</directory>
 			<directory suffix="_setup.php">../extensions</directory>
 		</blacklist>
-		<whitelist>
-			<directory>../lib/Wikia/src</directory>
-		</whitelist>
 	</filter>
 </phpunit>
