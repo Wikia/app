@@ -20,7 +20,7 @@ a {
 .wikia-page {
 	background: $color-page;
 	border: 1px solid $color-page-border;
-	padding: $small-grid-margin;
+	padding: $global-navigation-height + $small-grid-margin $small-grid-margin $small-grid-margin;
 }
 
 .page-width {

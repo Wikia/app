@@ -1,13 +1,16 @@
 @import "../../Venus/styles/mixins";
+@import "../../Venus/styles/variables";
 
 $nav-background-color: #fff;
 $nav-active-color: #092140;
 $nav-border-color: #c7d1d8;
 
-$nav-height: 56px;
-
 .global-navigation {
 	background-color: $nav-background-color;
+	border-bottom: 1px solid $nav-border-color;
+	position: fixed;
+	width: 100%;
+	z-index: $global-navigation-z-index;
 
 	.page-width {
 		@include clearfix;
@@ -19,7 +22,7 @@ $nav-height: 56px;
 .global-navigation-item {
 	border-left: 1px solid $nav-border-color;
 	float: left;
-	height: $nav-height;
+	height: $global-navigation-height;
 }
 
 .global-navigation-link {
@@ -27,7 +30,7 @@ $nav-height: 56px;
 	display: table-cell;
 	font-size: 18px;
 	font-weight: bold;
-	height: $nav-height;
+	height: $global-navigation-height;
 	padding: 0 20px; // TODO breakpoints
 	vertical-align: middle;
 }
