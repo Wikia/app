@@ -75,7 +75,7 @@ $messages['en'] = array(
 	'editaccount-log-entry-pass' => 'changed password for user $2',
 	'editaccount-log-entry-realname' => 'changed real name for user $2',
 	'editaccount-log-entry-close' => 'disabled account $2',
-	'edit-account-closed-flag' => '<div class="errorbox" style="padding: 1em;">This account has been disabled globally by Wikia.</div>',
+	'edit-account-closed-flag' => '<div class="errorbox" style="padding: 1em;">This account has been disabled globally by [[Help:Closing an account|user choice]], or by Wikia.</div>',
 	// For Special:ListGroupRights
 	'right-editaccount' => "Edit other users' information",
 	'action-editaccount' => "edit other users' information",
