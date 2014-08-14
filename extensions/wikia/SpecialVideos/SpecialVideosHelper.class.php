@@ -182,7 +182,7 @@ class SpecialVideosHelper extends WikiaModel {
 	 * @return array
 	 */
 	public function getVideosViaMediaService( $sort, $page, $providers = [], $category = '', $options = [] ) {
-		global $wgDBname;
+		global $wgDBname, $wgExternalSharedDB;
 
 		if ( $this->app->checkSkin( 'wikiamobile' ) ) {
 			$limit = self::VIDEOS_PER_PAGE_MOBILE;
@@ -205,8 +205,25 @@ class SpecialVideosHelper extends WikiaModel {
 			];
 		}
 
+		// select cv_value from city_variables join city_list on (city_list.city_id = city_variables.cv_city_id)
+		// where cv_variable_id=17 and city_dbname='thelastofus'
+		// Get the image URL path for this wikia
+		$db = wfGetDB( DB_SLAVE, [], $wgExternalSharedDB );
+		$wikiImagePath = (new WikiaSQL())
+			->SELECT( 'cv_value' )
+			->FROM( 'city_variables' )
+			->JOIN( 'city_list' )->ON( 'city_id', 'cv_city_id' )
+			->WHERE( 'cv_variable_id' )->EQUAL_TO( 17 )
+			->AND_( 'city_dbname' )->EQUAL_TO( $wgDBname )
+			->run( $db, function( $result ) {
+				/** @var ResultWrapper $result */
+				$row = $result->fetchObject();
+				return empty( $row ) ? '' : unserialize( $row->cv_value );
+			});
+
 		$params = [
-			'wiki' => $wgDBname, //TODO: Get the actual image path from city_variables (@see cv_variable_id == 17)
+			'wikiImagePath' => $wikiImagePath,
+			'wiki' => $wgDBname, //TODO: Remove
 			'wikiDB' => $wgDBname,
 			'mediaType' => 'video',
 			'providers' => empty( $providers ) ? [] : ( array ) $providers,

@@ -18,7 +18,8 @@ class MediaClientService {
 
 	/**
 	 * @param array $params
-	 *  'wiki' - string, required - wikia name
+	 *  'wiki' - string, required - wikia name //TODO: Remove
+	 *  'wikiImagePath' - string, required - wikia image path
 	 *  'wikiDB' - string, required - wikia database name
 	 *  'mediaType' - string, required - video/image & possibly audio
 	 *  'title' - string, optional - title of a file - providing this returns only the file
@@ -31,12 +32,13 @@ class MediaClientService {
 	 * @throws InvalidArgumentException
 	 */
 	public function getMedia( array $params ) {
-		if ( !isset( $params['wiki'], $params['wikiDB'], $params['wiki'], $params['mediaType'] ) ) {
+		if ( !isset( $params['wiki'], $params['wikiImagePath'], $params['wikiDB'], $params['wiki'], $params['mediaType'] ) ) {
 			throw new InvalidArgumentException( 'Missing required parameters wiki, wikiDB, mediaType' );
 		}
 
 		$filterParams = [
-			'wiki' => $params['wiki'],
+			'wiki' => $params['wiki'], // TODO: Remove
+			'wikiImagePath' => $params['wikiImagePath'],
 			'wikiDB' => $params['wikiDB'],
 			'mediaType' => $params['mediaType'],
 		];
