@@ -10,6 +10,8 @@ class POIApiController extends WikiaApiController {
 
 	const DEGREES_IN_PI = 180;
 
+	const DEFAULT_RADIUS = 180;
+
 	/**
 	 * @var QuestDetailsSolrHelper
 	 */
@@ -24,7 +26,7 @@ class POIApiController extends WikiaApiController {
 		$lat = $this->getRequest()->getVal( 'latitude' );
 		$long = $this->getRequest()->getVal( 'longitude' );
 		$region = $this->getRequest()->getVal( 'region' );
-		$radius = $this->getRequest()->getVal( 'radius' );
+		$radius = $this->getRequest()->getVal( 'radius', self::DEFAULT_RADIUS );
 		$limit = $this->getRequest()->getVal( 'limit' );
 
 		$this->validateParameters( $lat, $long, $radius, $limit );
