@@ -51,17 +51,29 @@ define(
 		 */
 		function getAssets(source, cacheKey) {
 			var dfd = new $.Deferred(),
-				assets = cache.getVersioned(cacheKey);
+				assets = cache.getVersioned(cacheKey),
+				messages;
 
 			if (assets) {
 				dfd.resolve(assets);
 			} else {
-				loader({
-					type: loader.MULTI,
-					resources: source
-				}).done(function (assets) {
-					dfd.resolve(assets);
-				});
+				if (source.messages) {
+					messages = source.messages;
+					delete source.messages;
+
+					$.when(
+						loader({
+							type: loader.MULTI,
+							resources: source
+						}),
+						$.getMessages(messages)
+					).done(dfd.resolve);
+				} else {
+					loader({
+						type: loader.MULTI,
+						resources: source
+					}).done(dfd.resolve);
+				}
 			}
 
 			return dfd.promise();
