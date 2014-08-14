@@ -213,7 +213,9 @@ class TvApiController extends WikiaApiController {
 			}
 
 			if ( $result !== null ) {
-				return $result;
+				if ( ( $quality == null ) || ( $result[ 'quality' ] !== null && $result[ 'quality' ] >= $quality ) ) {
+					return $result;
+				}
 			}
 		}
 		return false;
