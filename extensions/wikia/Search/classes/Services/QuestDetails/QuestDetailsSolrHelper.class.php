@@ -52,24 +52,16 @@ class QuestDetailsSolrHelper {
 				}
 
 				$type = $item[ 'article_type_s' ];
-				if( !empty( $type ) ) {
-					$resultItem[ 'type' ] = $type;
-				}
+				$this->addIfNotEmpty( $resultItem, 'type', $type );
 
 				$categories = $this->findFirstValueByKeyPrefix( $item, 'categories_', [ ] );
-				if( !empty( $categories ) ) {
-					$resultItem[ 'categories' ] = $categories;
-				}
+				$this->addIfNotEmpty( $resultItem, 'categories', $categories );
 
 				$abstract = $this->getAbstract( $item );
-				if( !empty( $abstract ) ) {
-					$resultItem[ 'abstract' ] = $abstract;
-				}
+				$this->addIfNotEmpty( $resultItem, 'abstract', $abstract );
 
 				$metadata = $this->getMetadata( $item );
-				if( !empty( $metadata ) ) {
-					$resultItem[ 'metadata' ] = $metadata;
-				}
+				$this->addIfNotEmpty( $resultItem, 'metadata', $metadata );
 
 				$result[ ] = $resultItem;
 			}
@@ -139,9 +131,7 @@ class QuestDetailsSolrHelper {
 
 					$metadataKey = $this->cutPrefixAndSuffix( $key, 'metadata_', '_s' );
 
-					if( !empty( $value ) ) {
-						$metadata[ $metadataKey ] = $value;
-					}
+					$this->addIfNotEmpty( $metadata, $metadataKey, $value );
 
 				} else if ( endsWith( $key, '_ss' ) ) {
 
@@ -151,9 +141,7 @@ class QuestDetailsSolrHelper {
 						$metadataKey = 'fingerprints';
 					}
 
-					if( !empty( $value ) ) {
-						$metadata[ $metadataKey ] = $value;
-					}
+					$this->addIfNotEmpty( $metadata, $metadataKey, $value );
 				}
 			}
 		}
@@ -205,9 +193,7 @@ class QuestDetailsSolrHelper {
 
 					$mapKey = $this->cutPrefixAndSuffix( $key, 'metadata_map_', '_s' );
 
-					if( !empty( $value ) ) {
-						$map[ $mapKey ] = $value;
-					}
+					$this->addIfNotEmpty( $map, $mapKey, $value );
 
 				} else if ( endsWith( $key, '_sr' ) ) {
 
@@ -359,5 +345,34 @@ class QuestDetailsSolrHelper {
 		$suffixLen = mb_strlen( $suffix );
 		$strLen = mb_strlen( $str );
 		return substr( $str, $prefixLen, $strLen - $prefixLen - $suffixLen );
+	}
+
+	protected function addIfNotEmpty( &$hash, $key, $value ) {
+		if( !empty( $value ) ) {
+
+			if( is_array( $value ) ) {
+
+				$cleanedArray = $this->removeEmptyItems( $value );
+
+				if( !empty( $cleanedArray ) ) {
+					$hash[ $key ] = $cleanedArray;
+				}
+
+			} else {
+				$hash[ $key ] = $value;
+			}
+		}
+	}
+
+	protected function removeEmptyItems( $array ) {
+		$cleanedArray = [ ];
+
+		foreach( $array as $key => $value ) {
+			if( !empty( $value ) ) {
+				$cleanedArray[ $key ] = $value;
+			}
+		}
+
+		return $cleanedArray;
 	}
 } 

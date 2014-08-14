@@ -171,11 +171,6 @@ class QuestDetailsSearchServiceTest extends WikiaBaseTest {
 				],
 				"abstract" => "Ruby is a yellow monster",
 				"metadata" => [
-					"fingerprints" => [
-						"amazing",
-						"great_job",
-						"best"
-					],
 					"quest_id" => "very_good",
 					"map_location" => [
 						"location_x" => 1.11244,
@@ -183,6 +178,26 @@ class QuestDetailsSearchServiceTest extends WikiaBaseTest {
 						"region" => "Map_Region_1"
 					]
 				]
+			],
+			[
+				"id" => 123,
+				"title" => "Ruby",
+				"url" => "http://muppet.wikia.com/wiki/Ruby",
+				"ns" => 0,
+				"revision" => [
+					"id" => 1234,
+					"user" => "test_user",
+					"user_id" => 1111,
+					"timestamp" => "1234567"
+				],
+				"comments" => 0,
+				"type" => "character",
+				"categories" => [
+					"Sesame Street Characters",
+					"Muppet Characters",
+					"Sesame Street Monsters"
+				],
+				"abstract" => "Ruby is a yellow monster"
 			]
 		];
 
@@ -249,7 +264,7 @@ class QuestDetailsSearchServiceTest extends WikiaBaseTest {
     }
   },
   "response": {
-    "numFound": 2,
+    "numFound": 3,
     "start": 0,
     "docs": [
       {
@@ -267,7 +282,8 @@ class QuestDetailsSearchServiceTest extends WikiaBaseTest {
         "metadata_fingerprint_ids_ss": [
           "amazing",
           "great_job",
-          "best"
+          "best",
+          ""
         ],
         "metadata_quest_id_s": "very_good",
         "metadata_map_location_sr": "1.11244,-1.21412",
@@ -287,13 +303,28 @@ class QuestDetailsSearchServiceTest extends WikiaBaseTest {
         "title_em": "Ruby",
         "article_type_s": "character",
         "metadata_fingerprint_ids_ss": [
-          "amazing",
-          "great_job",
-          "best"
+          ""
         ],
         "metadata_quest_id_s": "very_good",
         "metadata_map_location_sr": "1.11244,1.11412",
         "metadata_map_region_s": "Map_Region_1"
+      },
+      {
+        "pageid": 123,
+        "categories_mv_en": [
+          "Sesame Street Characters",
+          "Muppet Characters",
+          "Sesame Street Monsters"
+        ],
+        "ns": 0,
+        "html_en": "Ruby is a yellow monster",
+        "title_en": "Ruby",
+        "url": "http://muppet.wikia.com/wiki/Ruby",
+        "title_em": "Ruby",
+        "article_type_s": "character",
+        "metadata_fingerprint_ids_ss": [
+          ""
+        ]
       }
     ]
   }
