@@ -9,20 +9,20 @@ $nav-height: 56px;
 .global-navigation {
 	background-color: $nav-background-color;
 
-	@include clearfix;
-}
+	.page-width {
+		@include clearfix;
 
-.global-navigation-item {
-	border-right: 1px solid $nav-border-color;
-	float: left;
-	height: $nav-height;
-
-	&:last-child {
-		border: 0;
+		border-right: 1px solid $nav-border-color;
 	}
 }
 
-.start-wikia {
+.global-navigation-item {
+	border-left: 1px solid $nav-border-color;
+	float: left;
+	height: $nav-height;
+}
+
+.global-navigation-link {
 	color: $nav-border-color;
 	display: table-cell;
 	font-size: 18px;
@@ -30,10 +30,20 @@ $nav-height: 56px;
 	height: $nav-height;
 	padding: 0 20px; // TODO breakpoints
 	vertical-align: middle;
+}
 
+.start-wikia {
 	&:hover {
 		background-color: $nav-active-color;
 		color: $nav-background-color;
 		text-decoration: none;
+	}
+}
+
+.wikia-logo {
+	img {
+		background-image: url("/extensions/wikia/GlobalNavigation/images/wikia_logo.svg"); /* base64 */
+		background-position: center;
+		background-repeat: no-repeat;
 	}
 }
