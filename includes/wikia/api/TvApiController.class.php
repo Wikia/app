@@ -201,13 +201,16 @@ class TvApiController extends WikiaApiController {
 		$wikis = $wikiService->query( $seriesName );
 
 		foreach ( $wikis as $wiki ) {
-			$seriesService = $this->getSeriesService();
-			$seriesService->setWikiId( $wiki['id'] )
-				->setLang( $lang )
-				->setQuality( ($quality !== null ) ? $quality : self::DEFAULT_QUALITY );
-			$namespaces = WikiFactory::getVarValueByName( self::WG_CONTENT_NAMESPACES_KEY, $wiki['id'] );
-			$seriesService->setNamespace( $namespaces );
-			$result = $seriesService->query( $seriesName );
+			$result = $this->getTitle( $seriesName, $wiki[ 'id' ] );
+			if ( $result == null ) {
+				$seriesService = $this->getSeriesService();
+				$seriesService->setWikiId( $wiki['id'] )
+					->setLang( $lang )
+					->setQuality( ($quality !== null ) ? $quality : self::DEFAULT_QUALITY );
+				$namespaces = WikiFactory::getVarValueByName( self::WG_CONTENT_NAMESPACES_KEY, $wiki['id'] );
+				$seriesService->setNamespace( $namespaces );
+				$result = $seriesService->query( $seriesName );
+			}
 
 			if ( $result !== null ) {
 				return $result;
