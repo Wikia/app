@@ -97,9 +97,9 @@ ve.ui.WikiaCategoryInputWidget.prototype.getFilteredQueryData = function ( categ
 	var i,
 		formattedData = { 'query': { 'allcategories': [] } },
 		filteredCategories = $.ui.autocomplete.filter( categories, this.value ).slice( 0, 10 ),
-		categories = formattedData.query.allcategories;
+		allCategories = formattedData.query.allcategories;
 	for ( i in filteredCategories ) {
-		categories.push( { '*': filteredCategories[i] } );
+		allCategories.push( { '*': filteredCategories[i] } );
 	}
 	return formattedData;
 };
