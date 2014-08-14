@@ -15,6 +15,7 @@ define('thumbnails.views.titleThumbnail', [
 	function TitleView(options) {
 		this.model = options.model;
 		this.el = document.createElement(options.el || 'div');
+		this.$el = $(this.el);
 		this.isFluid = (typeof options.isFluid === 'undefined') ? true : options.isFluid;
 		this.initialize();
 	}

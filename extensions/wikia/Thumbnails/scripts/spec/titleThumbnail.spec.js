@@ -12,13 +12,15 @@ describe('titleThumbnail module', function () {
 	// Some mock thumbnail HTML, doesn't really matter except for matching below.
 	thumbnailHtml = '<a href="' + url + '" class="video-thumbnail"><img src="#"></a> ';
 
-	instance = new TitleThumbnail({
+	beforeEach(function () {
+		instance = new TitleThumbnail({
 			model: {
 				thumbnail: thumbnailHtml,
 				title: title,
 				url: url
 			}
 		});
+	});
 
 	it('should be defined', function () {
 		expect(TitleThumbnail).toBeDefined();
@@ -29,7 +31,7 @@ describe('titleThumbnail module', function () {
 	});
 
 	it('should render html', function () {
-		var html = '';
+		var html;
 
 		instance.render();
 		html = instance.el.innerHTML;
@@ -37,5 +39,20 @@ describe('titleThumbnail module', function () {
 		expect(html).toMatch('class="video-thumbnail"');
 		expect(html).toMatch('title="' + title + '"');
 		expect(html).toMatch('<a href="' + url + '">' + title + '</a>');
+	});
+
+	it('render should return instance', function () {
+		expect(instance.render() instanceof TitleThumbnail).toBe(true);
+	});
+
+	it('should apply ellipses', function () {
+		var ellipses;
+
+		instance.render();
+		instance.applyEllipses();
+		ellipses = instance.$el
+			.find('.title a')
+			.data('ellipses');
+		expect(typeof ellipses).toBe('object');
 	});
 });
