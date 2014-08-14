@@ -347,7 +347,7 @@ class QuestDetailsSolrHelper {
 		return substr( $str, $prefixLen, $strLen - $prefixLen - $suffixLen );
 	}
 
-	protected function addIfNotEmpty( &$hash, $key, $value ) {
+	protected function addIfNotEmpty( &$hashMap, $key, $value ) {
 		if( !empty( $value ) ) {
 
 			if( is_array( $value ) ) {
@@ -355,11 +355,11 @@ class QuestDetailsSolrHelper {
 				$cleanedArray = $this->removeEmptyItems( $value );
 
 				if( !empty( $cleanedArray ) ) {
-					$hash[ $key ] = $cleanedArray;
+					$hashMap[ $key ] = $cleanedArray;
 				}
 
 			} else {
-				$hash[ $key ] = $value;
+				$hashMap[ $key ] = $value;
 			}
 		}
 	}
