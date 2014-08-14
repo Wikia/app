@@ -81,8 +81,18 @@ class GlobalNavigationController extends WikiaController {
 			$centralUrl = $this->wg->LangToCentralMap[$userLang];
 		}
 
-		$this->response->setVal('centralUrl', $centralUrl);
+		$createWikiUrl = GlobalTitle::newFromText(
+			'CreateNewWiki',
+			NS_SPECIAL,
+			WikiService::WIKIAGLOBAL_CITY_ID
+		)->getFullURL();
 
+		if ($userLang != 'en') {
+			$createWikiUrl .= '?uselang=' . $userLang;
+		}
+
+		$this->response->setVal('centralUrl', $centralUrl);
+		$this->response->setVal('createWikiUrl', $createWikiUrl);
 	}
 
 	/*

@@ -17,3 +17,5 @@ $wgExtensionCredits['specialpage'][] = array(
 
 // constroller classes
 $wgAutoloadClasses['GlobalNavigationController'] =  $dir . 'GlobalNavigationController.class.php';
+
+$wgExtensionMessagesFiles['GlobalNavigation'] = $dir . '/GlobalNavigation.i18n.php';

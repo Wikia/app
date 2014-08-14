@@ -1,6 +1,39 @@
+@import "../../Venus/styles/mixins";
+
 $nav-background-color: #fff;
+$nav-active-color: #092140;
+$nav-border-color: #c7d1d8;
+
+$nav-height: 56px;
 
 .global-navigation {
 	background-color: $nav-background-color;
-	height: 56px;
+
+	@include clearfix;
+}
+
+.global-navigation-item {
+	border-right: 1px solid $nav-border-color;
+	float: left;
+	height: $nav-height;
+
+	&:last-child {
+		border: 0;
+	}
+}
+
+.start-wikia {
+	color: $nav-border-color;
+	display: table-cell;
+	font-size: 18px;
+	font-weight: bold;
+	height: $nav-height;
+	padding: 0 20px; // TODO breakpoints
+	vertical-align: middle;
+
+	&:hover {
+		background-color: $nav-active-color;
+		color: $nav-background-color;
+		text-decoration: none;
+	}
 }
