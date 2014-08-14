@@ -80,30 +80,6 @@ class WikiFactoryHub extends WikiaModel {
 	}
 
 	/**
-	 * return HTML select for category choosing
-	 * FIXME: This uses the old categories and template system and will have to be updated
-	 * FIXME: move this UI related code back into the wikifactory special page?
-	 */
-	public function getForm( $city_id, &$title = null ) {
-		global $wgTitle;
-		if( is_null( $title ) ) {
-			$title = $wgTitle;
-		}
-		$cat_id = $this->getCategoryId( $city_id );
-		$categories = $this->getAllCategories( false );
-
-		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
-		$oTmpl->set_vars( array(
-			"title"			=> $title,
-			"cat_id"		=> $cat_id,
-			"city_id"	 	=> $city_id,
-			"categories" 	=> $categories
-		));
-
-		return $oTmpl->render("categories");
-	}
-
-	/**
 	 * getAllCategories
 	 *
 	 * Get all categories and properties of those categories
@@ -203,9 +179,9 @@ class WikiFactoryHub extends WikiaModel {
 			->FROM( "city_list" )
 			->WHERE ("city_id")->EQUAL_TO( $city_id )
 			->cache( $this->cache_ttl, wfSharedMemcKey( __METHOD__, $city_id ) )
-			->runLoop( $this->getSharedDB() );
+			->run( $this->getSharedDB(), function( $result ) { return $result->fetchObject(); });
 
-		return $id;
+		return $id->city_vertical;
 	}
 
 	/**
@@ -232,7 +208,7 @@ class WikiFactoryHub extends WikiaModel {
 			->JOIN ( "city_cat_mapping" )->USING( "cat_id" )
 			->WHERE( "city_id" )->EQUAL_TO( $city_id )
 			->AND_( "cat_active" )->EQUAL_TO ( $active )
-			->cache( $this->cache_ttl, wfSharedMemcKey( __METHOD__, $city_id ) )
+			->cache( $this->cache_ttl, wfSharedMemcKey( __METHOD__, $city_id, "$active" ) )
 			->runLoop ( $this->getSharedDB(), function ( &$result, $row ) {
 				$result[]= $row->cat_id;
 			});
@@ -256,7 +232,7 @@ class WikiFactoryHub extends WikiaModel {
 			->JOIN ( "city_cat_mapping" )->USING( "cat_id" )
 			->WHERE( "city_id ")->EQUAL_TO( $city_id )
 			->AND_( "cat_active" )->EQUAL_TO ( $active )
-			->cache ( $this->cache_ttl, wfSharedMemcKey( __METHOD__, $city_id ) )
+			->cache ( $this->cache_ttl, wfSharedMemcKey( __METHOD__, $city_id, "$active" ) )
 			->runLoop( $this->getSharedDB(), function ( &$result, $row)  {
 				$result[] = get_object_vars($row);
 			});
@@ -312,51 +288,6 @@ class WikiFactoryHub extends WikiaModel {
 		}
 
 		return null;
-	}
-
-	/**
-	 * loadCategories
-	 *
-	 * load all categories from city_cats table in wikicities database (WF)
-	 *	 *
-	 * @return array	array with category maps id => name, short
-	 */
-	private function loadCategoriesOld() {
-		global $wgExternalSharedDB ;
-		$tmp = array();
-		if( !$wgExternalSharedDB ) {
-			return array();
-		}
-
-		wfProfileIn( __METHOD__ );
-		global $wgWikiFactoryCacheType;
-		$oMemc = wfGetCache( $wgWikiFactoryCacheType );
-		$memkey = sprintf("%s", __METHOD__);
-		$cached = $oMemc->get($memkey);
-		if ( empty($cached) ) {
-
-			$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
-			Wikia::log( __METHOD__, "var", $wgExternalSharedDB );
-			$oRes = $dbr->select(
-				array( "city_cats" ),
-				array( "*" ),
-				null,
-				__METHOD__,
-				array( "ORDER BY" => "cat_name" )
-			);
-
-			while ( $oRow = $dbr->fetchObject( $oRes ) ) {
-				$tmp[ $oRow->cat_id ] = array( "name" => $oRow->cat_name, "short" => $oRow->cat_short );
-			}
-
-			$dbr->freeResult( $oRes );
-			$oMemc->set($memkey, $tmp, 60*60*24);
-		} else {
-			$tmp = $cached;
-		}
-
-		wfProfileOut( __METHOD__ );
-		return $tmp;
 	}
 
 	// LoadCategories
@@ -515,10 +446,18 @@ class WikiFactoryHub extends WikiaModel {
 	public function clearCache($city_id) {
 		global $wgMemc;
 
+		$wgMemc->delete( wfSharedMemcKey("WikiFactoryHub::loadCategories") );
+
 		// Extra : is added to make keys that look like __METHOD__ calls
-		$functionNames = [ "getVerticalId", "getCategoryId", "getCategoryIds", "getWikiCategories" ];
+		$functionNames = [ "getVerticalId", "getCategoryId"];
 		foreach ($functionNames as $name) {
 			$wgMemc->delete( wfSharedMemcKey("WikiFactoryHub:", $name, $city_id ) );
+		}
+
+		$functionNames = [ "getCategoryIds", "getWikiCategories" ];
+		foreach ($functionNames as $name) {
+			$wgMemc->delete( wfSharedMemcKey("WikiFactoryHub:", $name, $city_id, 0 ) );
+			$wgMemc->delete( wfSharedMemcKey("WikiFactoryHub:", $name, $city_id, 1 ) );
 		}
 	}
 
