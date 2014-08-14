@@ -105,12 +105,12 @@ class POIApiController extends WikiaApiController {
 
 		$lat = doubleval( $lat );
 		if ( ( $lat < -90 ) || ( $lat > 90 ) ) {
-			throw new BadRequestApiException( "Invalid latitude: latitudes are range -90 to 90: provided latitude: ${lat}" );
+			throw new BadRequestApiException( "Invalid latitude: latitudes range from -90 to 90: provided latitude: ${lat}" );
 		}
 
 		$long = doubleval( $long );
 		if ( ( $long < -180 ) || ( $long > 180 ) ) {
-			throw new BadRequestApiException( "Invalid longitude: longitudes are range -180 to 180: provided longitude: ${long}" );
+			throw new BadRequestApiException( "Invalid longitude: longitudes range from -180 to 180: provided longitude: ${long}" );
 		}
 
 		// only positive floating numbers
