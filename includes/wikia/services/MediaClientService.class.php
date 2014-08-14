@@ -18,15 +18,15 @@ class MediaClientService {
 
 	/**
 	 * @param array $params
-	 *  'wikiImagePath' - string, required - wikia image path
-	 *  'wikiDB' - string, required - wikia database name
 	 *  'mediaType' - string, required - video/image & possibly audio
+	 *  'wikiImagePath' - string, optional - wikia image path - defaults to current wikia's
+	 *  'wikiDB' - string, optional - wikia database name - defaults to current wikia's
 	 *  'title' - string, optional - title of a file - providing this returns only the file
 	 *  'categories' - array, optional - wikia video categories
 	 *  'providers' - array, optional - wikia video providers
 	 *  'page' - int, optional - offset page number - defaults to 0
 	 *  'limit' - int, optional
-	 *  'sort' - string, optional
+	 *  'sort' - string, optional - values: 'recent', 'trend', 'popular'
 	 * @return array of stdClass media objects
 	 * @throws InvalidArgumentException
 	 */
