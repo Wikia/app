@@ -22,6 +22,7 @@ ve.ui.WikiaCategoryInputWidget = function VeUiWikiaCategoryInputWidget( category
 	ve.ui.WikiaCategoryInputWidget.super.call( this, categoryWidget, config );
 
 	mw.loader.use( 'jquery.ui.autocomplete' );
+	this.getCategories();
 };
 
 /* Inheritance */
@@ -34,6 +35,33 @@ OO.inheritClass( ve.ui.WikiaCategoryInputWidget, ve.ui.MWCategoryInputWidget );
  * @inheritdoc
  */
 ve.ui.WikiaCategoryInputWidget.prototype.getLookupRequest = function () {
+	var deferred = $.Deferred();
+
+	this.getCategories().done( ve.bind( function ( categories ) {
+		clearTimeout( this.lookupTimeout );
+		this.lookupTimeout = setTimeout(
+			ve.bind(
+				deferred.resolve( this.getFilteredQueryData( categories ) ),
+				this
+			),
+			300
+		);
+	}, this ) );
+
+	// OO.ui.LookupInputWidget.getLookupMenuItems requires an "abort" method for the promise
+	// returned by this function, which jQuery does not support except for jqXHR objects. So
+	// extend the return value with a dummy abort method.
+	return $.extend( deferred.promise(), {
+		'abort': function () { return; }
+	} );
+};
+
+/**
+ * Get all categories for the current wiki via API request and return as a promise object
+ *
+ * @returns {Promise}
+ */
+ve.ui.WikiaCategoryInputWidget.prototype.getCategories = function () {
 	var deferred;
 
 	if ( !this.categoriesPromise ) {
@@ -55,46 +83,22 @@ ve.ui.WikiaCategoryInputWidget.prototype.getLookupRequest = function () {
 		this.categoriesPromise = deferred.promise();
 	}
 
-	// OO.ui.LookupInputWidget.getLookupMenuItems requires an "abort" method for the promise
-	// returned by this function, which jQuery does not support except for jqXHR objects. So
-	// extend the return value with a dummy abort method.
-	return $.extend( this.categoriesPromise, {
-		'abort': function () { return; }
-	} );
+	return this.categoriesPromise;
 };
 
 /**
- * Wraps the parent method in a delay for performance increase. Filtering after every character typed
- * is too slow and will freeze even the fastest browser.
- * @inheritdoc
- */
-ve.ui.WikiaCategoryInputWidget.prototype.onLookupInputChange = function () {
-	window.clearTimeout( this.lookupTimeout );
-	this.lookupTimeout = window.setTimeout( ve.bind( function () {
-		this.openLookupMenu();
-	}, this ), 300 );	
-};
-
-/**
- * @inheritdoc
- */
-ve.ui.WikiaCategoryInputWidget.prototype.getLookupCacheItemFromData = function ( data ) {
-	// The categories are returned from the Nirvana API request as an ordinary array. Here the array is
-	// searched for the user's input and the results converted into the format used by the parent method.
-	data = this.formatAsQueryData( $.ui.autocomplete.filter( data, this.value ) );
-	return ve.ui.WikiaCategoryInputWidget.super.prototype.getLookupCacheItemFromData.call( this, data );
-};
-
-/**
- * Convert an array of categories into the format used by ve.ui.MWCategoryInputWidget.getLookupCacheItemFromData
+ * Filter the categories by the current input value, and convert the result into the format used
+ * by ve.ui.MWCategoryInputWidget.getLookupCacheItemFromData
  *
  * @param {array} categories
  * @returns {Object}
  */
-ve.ui.WikiaCategoryInputWidget.prototype.formatAsQueryData = function ( categories ) {
-	var i, formattedData = {'query': { 'allcategories': [] } };
-	for ( i in categories ) {
-		formattedData.query.allcategories.push( { '*': categories[i] } );
+ve.ui.WikiaCategoryInputWidget.prototype.getFilteredQueryData = function ( categories ) {
+	var i,
+		formattedData = { 'query': { 'allcategories': [] } },
+		filteredCategories = $.ui.autocomplete.filter( categories, this.value );
+	for ( i in filteredCategories ) {
+		formattedData.query.allcategories.push( { '*': filteredCategories[i] } );
 	}
 	return formattedData;
 };
