@@ -179,12 +179,13 @@ $messages['de'] = array(
 
 /** Zazaki (Zazaki)
  * @author Erdemaslancan
+ * @author Mirzali
  */
 $messages['diq'] = array(
 	'interwikiedit' => 'Vurnkarê interwiki',
 	'iwedit-title' => 'Vurnkarê interwiki',
 	'iwedit-all-interwikis' => 'interwikiy pêro',
-	'iwedit-update' => 'Noroc resn',
+	'iwedit-update' => 'Rocane ke',
 );
 
 /** Spanish (español)
@@ -383,7 +384,7 @@ $messages['lb'] = array(
 	'iwedit-all-interwikis' => 'all Interwikien',
 	'iwedit-update' => 'Aktualiséieren',
 	'iwedit-error' => '<p>Et ass e Feeler geschitt.</p>',
-	'iwedit-success' => '<p>De Linkg gouf ugeluecht</p>',
+	'iwedit-success' => '<p>De Link gouf ugeluecht</p>',
 );
 
 /** لوری (لوری)

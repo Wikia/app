@@ -27,12 +27,16 @@ class ArticleMetadataModel {
 		self::MAP_REGION => "metadata_map_region_s"
 	];
 
-	public function __construct( $articleId, $useMaster = false ) {
-		$this->articleId = (int) $articleId;
+	protected function extractTitle(){
 		$this->articleTitle = Title::newFromID( $this->articleId );
 		if ( is_null( $this->articleTitle ) ) {
 			throw new TitleNotFoundException();
 		}
+	}
+
+	public function __construct( $articleId, $useMaster = false ) {
+		$this->articleId = (int) $articleId;
+		$this->extractTitle();
 		if ( $useMaster ) {
 			$this->dbVersion = DB_MASTER;
 		}

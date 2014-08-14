@@ -170,6 +170,26 @@ $messages['ce'] = array(
 	'video-page-description-heading' => 'Цуьнах лаьцна',
 );
 
+/** Czech (čeština)
+ * @author H4nek
+ */
+$messages['cs'] = array(
+	'video-page-file-list-header' => 'Vyskytuje se na těchto stránkách',
+	'video-page-global-file-list-header' => 'Vyskytuje se na těchto wiki',
+	'video-page-from-provider' => 'Z $1',
+	'video-page-expires' => 'Obsah vyprší $1',
+	'video-page-views' => '$1 {{PLURAL:$1|zhlédnutí}}',
+	'video-page-description-heading' => 'Popis',
+	'video-page-description-zero-state' => 'Zatím zde není žádný popis.',
+	'video-page-add-description-link-text' => 'Přidat popis.',
+	'video-page-file-list-pagination' => '$1 z $2',
+	'file-page-replace-button' => 'Nahradit',
+	'file-page-tab-about' => 'O souboru',
+	'file-page-tab-history' => 'Historie souboru',
+	'file-page-tab-metadata' => 'Metadata',
+	'file-page-more-links' => 'Viz celý seznam',
+);
+
 /** Danish (dansk)
  * @author Luckas
  */
@@ -323,8 +343,8 @@ $messages['fr'] = array(
 	'video-page-global-file-list-header' => 'Apparaît sur ces wikis',
 	'video-page-from-provider' => 'De $1',
 	'video-page-expires' => 'Le contenu expire le $1',
-	'video-page-regional-restrictions-viewable' => 'Des restrictions régionales s\'appliquent à cette vidéo',
-	'video-page-regional-restrictions-unviewable' => 'Cette vidéo n\'est pas consultable d\'où vous vous trouvez',
+	'video-page-regional-restrictions-viewable' => "Des restrictions régionales s'appliquent à cette vidéo",
+	'video-page-regional-restrictions-unviewable' => "Cette vidéo n'est pas consultable d'où vous vous trouvez",
 	'video-page-views' => '$1 {{PLURAL:$1|vue|vues}}',
 	'video-page-see-more-info' => "Afficher plus d'informations",
 	'video-page-see-less-info' => "Afficher moins d'informations",
@@ -431,13 +451,11 @@ $messages['it'] = array(
 	'video-page-see-more-info' => 'Visualizza ulteriori informazioni',
 	'video-page-see-less-info' => 'Mostra meno informazioni',
 	'video-page-description-heading' => 'Descrizione',
-	'video-page-description-zero-state' => 'Non c\'è ancora nessuna descrizione.',
+	'video-page-description-zero-state' => "Non c'è ancora nessuna descrizione.",
 	'video-page-add-description-link-text' => 'Aggiungi una descrizione.',
 	'video-page-default-description-header-and-text' => '== Descrizione ==
 Aggiungi la descrizione qui.',
 	'video-page-file-list-pagination' => '$1 di $2',
-
-	/* file page */
 	'file-page-replace-button' => 'Sostituisci',
 	'file-page-tab-about' => 'Chi siamo',
 	'file-page-tab-history' => 'Cronologia file',
@@ -1047,8 +1065,6 @@ $messages['zh-hant'] = array(
 	'video-page-default-description-header-and-text' => '==描述==
 在這裡輸入描述性內容。',
 	'video-page-file-list-pagination' => '$2的$1',
-
-	/* file page */
 	'file-page-replace-button' => '替換',
 	'file-page-tab-about' => '關於',
 	'file-page-tab-history' => '檔案歷史',

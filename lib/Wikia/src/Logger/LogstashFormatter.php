@@ -36,6 +36,11 @@ class LogstashFormatter extends \Monolog\Formatter\LogstashFormatter implements 
 		}
 
 		if (!empty($record['context'])) {
+			if (!empty($record['context']['exception'])) {
+				$message['@exception'] = $record['context']['exception'];
+				unset($record['context']['exception']);
+			}
+
 			$message['@context'] = $record['context'];
 		}
 

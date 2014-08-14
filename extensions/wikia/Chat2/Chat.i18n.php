@@ -639,6 +639,7 @@ $messages['ce'] = array(
 
 /** Czech (čeština)
  * @author Chmee2
+ * @author H4nek
  * @author Macinosak
  * @author Mormegil
  * @author Quinn
@@ -690,6 +691,7 @@ $messages['cs'] = array(
 	'chat-edit-count' => '{{PLURAL:$1|$1 editace|$1 editací}}',
 	'chat-member-since' => 'Členem od $1',
 	'chat-great-youre-logged-in' => 'Skvělé! Jste přihlášeni.',
+	'chat-user-menu-message-wall' => 'Zeď zpráv',
 	'chat-user-menu-talk-page' => 'Diskusní stránka',
 	'chat-user-menu-contribs' => 'Příspěvky',
 	'chat-user-menu-private' => 'Soukromá zpráva',
