@@ -20,8 +20,11 @@ a {
 .wikia-page {
 	background: $color-page;
 	border: 1px solid $color-page-border;
-	margin: 0 auto;
 	padding: $small-grid-margin;
+}
+
+.page-width {
+	margin: 0 auto;
 
 	@media #{$small-only} {
 		width: $small-content-width;
