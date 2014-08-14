@@ -25,7 +25,8 @@ class SeriesEntitySearchService extends EntitySearchService {
 		$dismax->setQueryParser( 'edismax' );
 
 		$select->setQuery( $preparedQuery );
-		$select->setRows( static::ARTICLES_LIMIT );
+		$limit = $this->getRowLimit();
+		$select->setRows( isset( $limit ) ? $limit : static::ARTICLES_LIMIT );
 
 		$namespaces = $this->getNamespace() ? $this->getNamespace() : static::DEFAULT_NAMESPACE;
 		$namespaces = is_array( $namespaces ) ? $namespaces : [ $namespaces ];
@@ -57,9 +58,10 @@ class SeriesEntitySearchService extends EntitySearchService {
 	}
 
 	protected function consumeResponse( $response ) {
+		$result = null;
 		foreach ( $response as $item ) {
 			if ( $item[ 'score' ] > static::MINIMAL_ARTICLE_SCORE ) {
-				return [
+				$result[ $item[ 'pageid' ] ] = [
 					'wikiId' => $item[ 'wid' ],
 					'articleId' => $item[ 'pageid' ],
 					'title' => $item[ 'title_' . $this->getLang() ],
@@ -69,7 +71,7 @@ class SeriesEntitySearchService extends EntitySearchService {
 				];
 			}
 		}
-		return null;
+		return $result;
 	}
 
 	protected function createQuery( $query ) {
