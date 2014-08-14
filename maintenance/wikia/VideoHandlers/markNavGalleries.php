@@ -189,7 +189,7 @@ class MarkAsNav extends Maintenance {
 
 		if ( $hasLink ) {
 			// Return an updated gallery tag if it contains links
-			return "<gallery".( empty( $galleryParams ) ? '' : " $galleryParams" )." type=\"navigation\">\n".trim( $galleryContent )."\n</gallery>";
+			return "<gallery".( empty( $galleryParams ) ? '' : " $galleryParams" )." type=\"navigation\">\n$galleryContent\n</gallery>";
 		} else {
 			// Return gallery tag unaltered if there are no linked gallery images
 			return $matches[0];
