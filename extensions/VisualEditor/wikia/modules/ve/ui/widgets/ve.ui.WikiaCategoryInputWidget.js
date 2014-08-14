@@ -73,9 +73,9 @@ ve.ui.WikiaCategoryInputWidget.prototype.getCategories = function () {
 			method: 'getWikiCategories',
 			type: 'GET'
 		} )
-		.done( ve.bind( function ( categories ) {
+		.done( function ( categories ) {
 			deferred.resolve( categories );
-		}, this ) )
+		} )
 		.fail( function () {
 			deferred.resolve( [] );
 		} );
