@@ -663,7 +663,9 @@ class ArticlesApiController extends WikiaApiController {
 				if ( !empty( $result[ $key ] ) ) {
 					$meta = $result[ $key ];
 				}
-				$collection[ $key ] = array_merge( $collection[ $key ], [ 'metadata' => $meta ] );
+				if( !empty( $meta ) ) {
+					$collection[ $key ] = array_merge( $collection[ $key ], [ 'metadata' => $meta ] );
+				}
 			}
 		}
 		return $collection;
