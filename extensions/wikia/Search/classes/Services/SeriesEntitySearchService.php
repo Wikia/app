@@ -6,7 +6,7 @@ class SeriesEntitySearchService extends EntitySearchService {
 
 	const DEFAULT_NAMESPACE = 0;
 	const ARTICLES_LIMIT = 1;
-	const MINIMAL_ARTICLE_SCORE = 1;
+	const MINIMAL_ARTICLE_SCORE = 5;
 	const API_URL = 'api/v1/Articles/AsSimpleJson?id=';
 	const SERIES_TYPE = 'tv_series';
 	const OTHER_TYPE = 'other';
