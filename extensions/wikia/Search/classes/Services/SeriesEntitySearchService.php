@@ -48,7 +48,7 @@ class SeriesEntitySearchService extends EntitySearchService {
 			$this->withLang( 'redirect_titles_mv', $slang ) . '^2',
 		] ) );
 
-		$dismax->setBoostQuery( 'article_type_s:"' . self::SERIES_TYPE . '"^8' );
+		$dismax->setBoostQuery( 'article_type_s:"' . self::SERIES_TYPE . '"^20' );
 
 		$dismax->setQueryPhraseSlop( static::DEFAULT_SLOP );
 		$dismax->setPhraseSlop( static::DEFAULT_SLOP );
