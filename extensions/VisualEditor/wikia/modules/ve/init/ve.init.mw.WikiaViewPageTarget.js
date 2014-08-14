@@ -5,7 +5,7 @@
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
-/*global mw, veTrack */
+/*global mw, veTrack, window */
 
 /**
  * Initialization MediaWiki view page target.
@@ -16,6 +16,24 @@
  * @constructor
  */
 ve.init.mw.WikiaViewPageTarget = function VeInitMwWikiaViewPageTarget() {
+	var boldItalicLink, toolbarDropdown, wikiaSourceMode;
+
+	if ( window.veSourceEntryPoint ) {
+		if ( window.veSourceEntryPoint.hideBoldItalicLink ) {
+			boldItalicLink = ve.init.mw.WikiaViewPageTarget.static.toolbarGroups.splice( 2, 1 );
+			ve.init.mw.WikiaViewPageTarget.static.toolbarGroups[ 2 ].include = [].concat(
+				boldItalicLink[ 0 ].include,
+				ve.init.mw.WikiaViewPageTarget.static.toolbarGroups[ 2 ].include
+			);
+		}
+		if ( window.veSourceEntryPoint.sourceButtonInToolbar ) {
+			toolbarDropdown = ve.init.mw.WikiaViewPageTarget.static.actionsToolbarConfig.pop();
+			wikiaSourceMode = toolbarDropdown.include.pop();
+			ve.init.mw.WikiaViewPageTarget.static.toolbarGroups.push( toolbarDropdown );
+			ve.init.mw.WikiaViewPageTarget.static.actionsToolbarConfig.push( { 'include': [ wikiaSourceMode ] } );
+		}
+	}
+
 	// Parent constructor
 	ve.init.mw.WikiaViewPageTarget.super.call( this );
 
@@ -151,7 +169,7 @@ ve.init.mw.WikiaViewPageTarget.prototype.onToolbarSaveButtonClick = function () 
 		veTrack( { action: 've-save-button-click' } );
 	}
 
-	if ( window.veOrientationEnabled !== undefined || window.veFocusMode !== undefined ) {
+	if ( window.veSourceEntryPoint ) {
 		window.optimizely = window.optimizely || [];
 		window.optimizely.push( ['trackEvent', 've-save-button-click'] );
 	}
@@ -182,7 +200,7 @@ ve.init.mw.WikiaViewPageTarget.prototype.updateToolbarSaveButtonState = function
 		!this.toolbarSaveButtonEnableTracked &&
 		( this.toolbarSaveButtonEnableTracked = !this.toolbarSaveButton.isDisabled() )
 	) {
-		if ( window.veOrientationEnabled !== undefined ) {
+		if ( window.veSourceEntryPoint !== undefined ) {
 			window.optimizely = window.optimizely || [];
 			window.optimizely.push( ['trackEvent', 've-save-button-enable'] );
 		}
@@ -218,25 +236,6 @@ ve.init.mw.WikiaViewPageTarget.prototype.onLoadError = function ( jqXHR, status,
 			action: 've-load-error',
 			status: status
 		} );
-	}
-};
-
-/**
- * @inheritdoc
- */
-ve.init.mw.WikiaViewPageTarget.prototype.maybeShowDialogs = function () {
-	var uri = new mw.Uri( location.href );
-	// Parent method
-	ve.init.mw.ViewPageTarget.prototype.maybeShowDialogs.call( this );
-
-	if ( mw.user.anonymous() && !uri.query.redlink ) {
-		window.optimizely = window.optimizely || [];
-		window.optimizely.push( ['activate', 1248850316] );
-
-		if ( window.veOrientationEnabled && !window.localStorage.getItem( 'WikiaVEOrientationViewed' ) ) {
-			this.surface.getDialogs().getWindow( 'wikiaOrientation' ).open();
-			window.localStorage.setItem( 'WikiaVEOrientationViewed', true );
-		}
 	}
 };
 

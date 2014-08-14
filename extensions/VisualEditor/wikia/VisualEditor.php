@@ -170,6 +170,7 @@ $wgResourceModules += array(
 			'wikia-visualeditor-dialog-transclusion-no-template-description',
 			'wikia-visualeditor-dialog-map-insert-title',
 			'wikia-visualeditor-save-error-generic',
+			'wikia-visualeditor-dialogbutton-wikiasourcemode'
 		),
 		'dependencies' => array(
 			'ext.visualEditor.core.desktop',
