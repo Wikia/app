@@ -20,6 +20,7 @@ class PalantirApiController extends WikiaApiController {
 			->withFingerprint( $fingerprintId )
 			->withQuestId( $questId )
 			->withCategory( $category )
+			->withWikiId( $this->wg->CityId )
 			->limit( $limit )
 			->search();
 
