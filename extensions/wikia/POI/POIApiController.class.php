@@ -119,7 +119,7 @@ class POIApiController extends WikiaApiController {
 		}
 		$radius = doubleval( $radius );
 		if( $radius > 180 ) {
-			throw new BadRequestApiException( "Invalid radius: radiuses are range 0 to 180: provided radius: ${radius}" );
+			throw new BadRequestApiException( "Invalid radius: radius range from 0 to 180: provided radius: ${radius}" );
 		}
 
 		// only positive integer numbers
