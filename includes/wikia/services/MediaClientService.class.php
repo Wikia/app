@@ -18,7 +18,6 @@ class MediaClientService {
 
 	/**
 	 * @param array $params
-	 *  'wiki' - string, required - wikia name //TODO: Remove
 	 *  'wikiImagePath' - string, required - wikia image path
 	 *  'wikiDB' - string, required - wikia database name
 	 *  'mediaType' - string, required - video/image & possibly audio
@@ -32,12 +31,17 @@ class MediaClientService {
 	 * @throws InvalidArgumentException
 	 */
 	public function getMedia( array $params ) {
-		if ( !isset( $params['wiki'], $params['wikiImagePath'], $params['wikiDB'], $params['wiki'], $params['mediaType'] ) ) {
-			throw new InvalidArgumentException( 'Missing required parameters wiki, wikiDB, mediaType' );
+		if ( !isset( $params['mediaType'] ) ) {
+			throw new InvalidArgumentException( 'mediaType is missing. Must be video or image' );
+		}
+
+		if ( !isset( $params['wikiImagePath'], $params['wikiDB'] ) ) {
+			global $wgDBname;
+			$params['wikiDB'] = $wgDBname;
+			$params['wikiImagePath'] = $this->getImagePath( $wgDBname );
 		}
 
 		$filterParams = [
-			'wiki' => $params['wiki'], // TODO: Remove
 			'wikiImagePath' => $params['wikiImagePath'],
 			'wikiDB' => $params['wikiDB'],
 			'mediaType' => $params['mediaType'],
@@ -93,4 +97,35 @@ class MediaClientService {
 		return $content;
 	}
 
+	/**
+	 * Get the image path for given wikia DB name
+	 * @param string $dbName
+	 * @return string
+	 * @throws Exception
+	 */
+	protected function getImagePath( $dbName ) {
+		global $wgExternalSharedDB;
+
+		// Get the image URL path for this wikia
+		$db = wfGetDB( DB_SLAVE, [ ], $wgExternalSharedDB );
+		$wikiImagePath = ( new WikiaSQL() )
+			->SELECT( 'cv_value' )
+			->FROM( 'city_variables' )
+			->JOIN( 'city_list' )->ON( 'city_id', 'cv_city_id' )
+			->WHERE( 'cv_variable_id' )->EQUAL_TO( 17 )
+			->AND_( 'city_dbname' )->EQUAL_TO( $dbName )
+			->run( $db, function ( $result ) {
+					$row = $result->fetchObject();
+					return empty( $row ) ? '' : unserialize( $row->cv_value );
+				}
+			);
+
+		if ( empty( $wikiImagePath ) ) {
+			throw new Exception( 'Image path was not found!' );
+		}
+
+		// E.g. /images/t/thelastofus/images => thelastofus/images
+		$parts = explode( '/', $wikiImagePath );
+		return $parts[3] . '/' . $parts[4];
+	}
 }

@@ -205,26 +205,7 @@ class SpecialVideosHelper extends WikiaModel {
 			];
 		}
 
-		// select cv_value from city_variables join city_list on (city_list.city_id = city_variables.cv_city_id)
-		// where cv_variable_id=17 and city_dbname='thelastofus'
-		// Get the image URL path for this wikia
-		$db = wfGetDB( DB_SLAVE, [], $wgExternalSharedDB );
-		$wikiImagePath = (new WikiaSQL())
-			->SELECT( 'cv_value' )
-			->FROM( 'city_variables' )
-			->JOIN( 'city_list' )->ON( 'city_id', 'cv_city_id' )
-			->WHERE( 'cv_variable_id' )->EQUAL_TO( 17 )
-			->AND_( 'city_dbname' )->EQUAL_TO( $wgDBname )
-			->run( $db, function( $result ) {
-				/** @var ResultWrapper $result */
-				$row = $result->fetchObject();
-				return empty( $row ) ? '' : unserialize( $row->cv_value );
-			});
-
 		$params = [
-			'wikiImagePath' => $wikiImagePath,
-			'wiki' => $wgDBname, //TODO: Remove
-			'wikiDB' => $wgDBname,
 			'mediaType' => 'video',
 			'providers' => empty( $providers ) ? [] : ( array ) $providers,
 			'categories' => empty( $category ) ? [] : ( array ) $category,
