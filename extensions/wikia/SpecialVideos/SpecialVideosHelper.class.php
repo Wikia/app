@@ -174,6 +174,93 @@ class SpecialVideosHelper extends WikiaModel {
 	}
 
 	/**
+	 * @param string $sort
+	 * @param int $page
+	 * @param array $providers
+	 * @param string $category
+	 * @param array $options
+	 * @return array
+	 */
+	public function getVideosViaMediaService( $sort, $page, $providers = [], $category = '', $options = [] ) {
+		global $wgDBname;
+
+		if ( $this->app->checkSkin( 'wikiamobile' ) ) {
+			$limit = self::VIDEOS_PER_PAGE_MOBILE;
+			$providers = $this->wg->WikiaMobileSupportedVideos;
+			$thumbOptions = [
+				'useTemplate' => true,
+				'fluid'       => true,
+				'forceSize'   => 'small',
+				'imgClass'    => 'media',
+				'dataParams'  => true,
+			];
+		} else {
+			$limit = self::VIDEOS_PER_PAGE;
+			$providers = empty( $providers ) ? [] : explode( ',', $providers );
+			$thumbOptions = [
+				'fluid'          => true,
+				'showViews'      => true,
+				'fixedHeight'    => self::THUMBNAIL_HEIGHT,
+				'hidePlayButton' => true,
+			];
+		}
+
+		$params = [
+			'wiki' => $wgDBname, //TODO: Get the actual image path from city_variables (@see cv_variable_id == 17)
+			'wikiDB' => $wgDBname,
+			'mediaType' => 'video',
+			'providers' => empty( $providers ) ? [] : ( array ) $providers,
+			'categories' => empty( $category ) ? [] : ( array ) $category,
+			'page' => $page,
+			'limit' => $limit,
+			'sort' => $sort,
+		];
+
+		$videoOptions = [
+			'thumbWidth'       => self::THUMBNAIL_WIDTH,
+			'thumbHeight'      => self::THUMBNAIL_HEIGHT,
+			'postedInArticles' => self::POSTED_IN_ARTICLES,
+			'thumbOptions'     => $thumbOptions,
+			'getThumbnail'     => ( !isset( $options['getThumbnail'] ) || $options['getThumbnail'] ),
+		];
+
+		$mediaService = new MediaClientService();
+		$media = $mediaService->getMedia( $params );
+
+		$videos = [];
+		$helper = new VideoHandlerHelper();
+		foreach ( $media as &$medium ) {
+			$medium = ( array ) $medium;
+			$medium['title'] = $medium['name'];
+			unset( $medium['name'] );
+
+			$videoDetail = $helper->getVideoDetail( $medium, $videoOptions );
+			if ( !empty( $videoDetail ) ) {
+				$byUserMsg = WikiaFileHelper::getByUserMsg( $videoDetail['userName'], $videoDetail['timestamp'] );
+				$viewTotal = wfMessage( 'videohandler-video-views', $this->wg->Lang->formatNum( $videoDetail['viewsTotal'] ) )->text();
+
+				$videos[] = [
+					'title' => $videoDetail['fileTitle'],
+					'fileKey' => $videoDetail['title'],
+					'fileUrl' => $videoDetail['fileUrl'],
+					'thumbnail' => $videoDetail['thumbnail'],
+					'timestamp' => wfTimeFormatAgo( $videoDetail['timestamp'], false ),
+					'updated' => $videoDetail['timestamp'],
+					'viewTotal' => $viewTotal,
+					'byUserMsg' => $byUserMsg,
+					'truncatedList' => $videoDetail['truncatedList'],
+					'duration' => $videoDetail['duration'],
+					'thumbUrl' => $videoDetail['thumbUrl'],
+					'embedUrl' => $videoDetail['embedUrl'],
+				];
+			}
+		}
+		unset( $medium );
+
+		return $videos;
+	}
+
+	/**
 	 * Get a count of videos that would be returned by $videoParams when passed to getVideos()
 	 * @param array $videoParams
 	 *   [ array( 'sort' => string, 'page' => int, 'category' => string, 'provider' => string ) ]
