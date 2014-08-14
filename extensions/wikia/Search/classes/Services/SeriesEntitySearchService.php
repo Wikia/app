@@ -6,10 +6,13 @@ class SeriesEntitySearchService extends EntitySearchService {
 
 	const DEFAULT_NAMESPACE = 0;
 	const ARTICLES_LIMIT = 1;
-	const MINIMAL_ARTICLE_SCORE = 0.4;
+	const MINIMAL_ARTICLE_SCORE = 1;
 	const API_URL = 'api/v1/Articles/AsSimpleJson?id=';
 	const SERIES_TYPE = 'tv_series';
+	const OTHER_TYPE = 'other';
 	const DEFAULT_SLOP = 1;
+
+	private static $ARTICLE_TYPES_SUPPORTED_LANGS = ['en'];
 
 	protected function prepareQuery( $query ) {
 		$select = $this->getSelect();
@@ -28,6 +31,9 @@ class SeriesEntitySearchService extends EntitySearchService {
 		$namespaces = is_array( $namespaces ) ? $namespaces : [ $namespaces ];
 		$select->createFilterQuery( 'ns' )->setQuery( '+(ns:(' . implode( ' ', $namespaces ) . '))' );
 		$select->createFilterQuery( 'main_page' )->setQuery( '-(is_main_page:true)' );
+		if ( in_array( strtolower( $slang ), static::$ARTICLE_TYPES_SUPPORTED_LANGS ) ) {
+			$select->createFilterQuery( 'type' )->setQuery( '+(article_type_s:' . static::SERIES_TYPE . ' ' . self::OTHER_TYPE . ')' );
+		}
 
 		$dismax->setQueryFields( implode( ' ', [
 			'title_em^8',

@@ -7,7 +7,7 @@ class WikiSeriesEntitySearchService extends EntitySearchService {
 	const XWIKI_CORE = 'xwiki';
 	const WIKI_LIMIT = 1;
 	const MINIMAL_WIKIA_ARTICLES = 20;
-	const MINIMAL_WIKIA_SCORE = 1;
+	const MINIMAL_WIKIA_SCORE = 2;
 	const DEFAULT_SLOP = 1;
 
 	private static $EXCLUDED_WIKIS = [ '*fanon.wikia.com', '*answers.wikia.com' ];
@@ -39,7 +39,7 @@ class WikiSeriesEntitySearchService extends EntitySearchService {
 			'sitename_txt^2 all_domains_mv_wd^5' );
 		$dismax->setPhraseFields( 'series_mv_tm^15 sitename_txt^2 all_domains_mv_wd^5' );
 
-		$dismax->setBoostFunctions( 'wam_i^2' );
+		$dismax->setBoostFunctions( 'wam_i^4' );
 
 		$dismax->setQueryPhraseSlop(static::DEFAULT_SLOP);
 		$dismax->setPhraseSlop(static::DEFAULT_SLOP);
