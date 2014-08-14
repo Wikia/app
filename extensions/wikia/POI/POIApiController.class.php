@@ -10,6 +10,8 @@ class POIApiController extends WikiaApiController {
 
 	const DEGREES_IN_PI = 180;
 
+	const DEFAULT_RADIUS = 180;
+
 	/**
 	 * @var QuestDetailsSolrHelper
 	 */
@@ -21,10 +23,10 @@ class POIApiController extends WikiaApiController {
 	protected $nearbySearch;
 
 	public function getNearbyQuests() {
-		$lat = $this->getRequest()->getVal( 'location_x' );
-		$long = $this->getRequest()->getVal( 'location_y' );
+		$lat = $this->getRequest()->getVal( 'latitude' );
+		$long = $this->getRequest()->getVal( 'longitude' );
 		$region = $this->getRequest()->getVal( 'region' );
-		$radius = $this->getRequest()->getVal( 'radius' );
+		$radius = $this->getRequest()->getVal( 'radius', self::DEFAULT_RADIUS );
 		$limit = $this->getRequest()->getVal( 'limit' );
 
 		$this->validateParameters( $lat, $long, $radius, $limit );
@@ -93,22 +95,22 @@ class POIApiController extends WikiaApiController {
 	protected function validateParameters( $lat, $long, $radius, $limit ) {
 		// positive and negative floating numbers
 		if ( !preg_match( '/^-?\d+(\.\d+)?$/i', $lat ) ) {
-			throw new BadRequestApiException( "Parameter 'location_x' is invalid" );
+			throw new BadRequestApiException( "Parameter 'latitude' is invalid" );
 		}
 
 		// positive and negative floating numbers
 		if ( !preg_match( '/^-?\d+(\.\d+)?$/i', $long ) ) {
-			throw new BadRequestApiException( "Parameter 'location_y' is invalid" );
+			throw new BadRequestApiException( "Parameter 'longitude' is invalid" );
 		}
 
 		$lat = doubleval( $lat );
 		if ( ( $lat < -90 ) || ( $lat > 90 ) ) {
-			throw new BadRequestApiException( "Invalid latitude: latitudes are range -90 to 90: provided lat: ${lat}" );
+			throw new BadRequestApiException( "Invalid latitude: latitudes range from -90 to 90: provided latitude: ${lat}" );
 		}
 
 		$long = doubleval( $long );
 		if ( ( $long < -180 ) || ( $long > 180 ) ) {
-			throw new BadRequestApiException( "Invalid longitude: longitudes are range -180 to 180: provided lon: ${long}" );
+			throw new BadRequestApiException( "Invalid longitude: longitudes range from -180 to 180: provided longitude: ${long}" );
 		}
 
 		// only positive floating numbers
