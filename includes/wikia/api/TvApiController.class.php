@@ -95,7 +95,7 @@ class TvApiController extends WikiaApiController {
 				$episodeService->setNamespace( $namespaces );
 				$result = $episodeService->query( $episodeName );
 				if ( $result === null ) {
-					$result = $this->getTitle( $episodeName, $wiki[ 'id' ] );
+					$result = $this->getExactMatch( $episodeName, $wiki[ 'id' ] );
 				}
 				if ( $result === null ) {
 					$namespaceNames = WikiFactory::getVarValueByName( self::WG_EXTRA_LOCAL_NAMESPACES_KEY, $wiki[ 'id' ] );
@@ -132,8 +132,23 @@ class TvApiController extends WikiaApiController {
 		return $this->episodeService;
 	}
 
+	protected function getExactMatch( $text, $wikiId ) {
+		$title = $this->getTitle( $text, $wikiId );
+		if ( $title !== null ) {
+			$articleId = (int)$title->getArticleID();
+			return [
+				'wikiId' => $wikiId,
+				'articleId' => $articleId,
+				'title' => $title->getText(),
+				'url' => $title->getFullURL(),
+				'quality' => $this->getArticleQuality( $wikiId, $articleId ),
+				'contentUrl' => $this->getContentUrl( $wikiId, $articleId )
+			];
+		}
+		return null;
+	}
+
 	protected function getTitle( $text, $wikiId ) {
-		//try exact phrase
 		$underscoredText = str_replace( ' ', '_', $text );
 		$title = $this->createTitle( $underscoredText, $wikiId );
 		if ( !$title->exists() ) {
@@ -144,15 +159,7 @@ class TvApiController extends WikiaApiController {
 			$title = $title->getRedirectTarget();
 		}
 		if ( $title->exists() ) {
-			$articleId = (int)$title->getArticleID();
-			return [
-				'wikiId' => $wikiId,
-				'articleId' => $articleId,
-				'title' => $title->getText(),
-				'url' => $title->getFullURL(),
-				'quality' => $this->getArticleQuality( $wikiId, $articleId ),
-				'contentUrl' => $this->getContentUrl( $wikiId, $articleId )
-			];
+			return $title;
 		}
 		return null;
 	}
@@ -201,21 +208,21 @@ class TvApiController extends WikiaApiController {
 		$wikis = $wikiService->query( $seriesName );
 
 		foreach ( $wikis as $wiki ) {
-			$result = $this->getTitle( $seriesName, $wiki[ 'id' ] );
-			if ( $result == null ) {
-				$seriesService = $this->getSeriesService();
-				$seriesService->setWikiId( $wiki['id'] )
-					->setLang( $lang )
-					->setQuality( ($quality !== null ) ? $quality : self::DEFAULT_QUALITY );
-				$namespaces = WikiFactory::getVarValueByName( self::WG_CONTENT_NAMESPACES_KEY, $wiki['id'] );
-				$seriesService->setNamespace( $namespaces );
-				$result = $seriesService->query( $seriesName );
-			}
+			$seriesService = $this->getSeriesService();
+			$seriesService->setWikiId( $wiki['id'] )
+				->setLang( $lang )
+				->setQuality( ($quality !== null ) ? $quality : self::DEFAULT_QUALITY );
+			$namespaces = WikiFactory::getVarValueByName( self::WG_CONTENT_NAMESPACES_KEY, $wiki['id'] );
+			$seriesService->setNamespace( $namespaces );
+			$seriesService->setRowLimit(3);
+			$result = $seriesService->query( $seriesName );
 
+			$exact = $this->getTitle( $seriesName, $wiki[ 'id' ] );
+			if ( $exact !== null && isset( $result[ $exact->getArticleID() ] ) ) {
+				return $result[ $exact->getArticleID() ];
+			}
 			if ( $result !== null ) {
-				if ( ( $quality == null ) || ( $result[ 'quality' ] !== null && $result[ 'quality' ] >= $quality ) ) {
-					return $result;
-				}
+				return reset($result);
 			}
 		}
 		return false;
