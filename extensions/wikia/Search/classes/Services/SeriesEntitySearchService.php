@@ -32,7 +32,7 @@ class SeriesEntitySearchService extends EntitySearchService {
 		$select->createFilterQuery( 'ns' )->setQuery( '+(ns:(' . implode( ' ', $namespaces ) . '))' );
 		$select->createFilterQuery( 'main_page' )->setQuery( '-(is_main_page:true)' );
 		if ( in_array( strtolower( $slang ), static::$ARTICLE_TYPES_SUPPORTED_LANGS ) ) {
-			$select->createFilterQuery( 'type' )->setQuery( '+(article_type_s:' . static::SERIES_TYPE . ' ' . self::OTHER_TYPE . ')' );
+			$select->createFilterQuery( 'type' )->setQuery( '+(article_type_s:(' . static::SERIES_TYPE . ' ' . self::OTHER_TYPE . '))' );
 		}
 
 		$dismax->setQueryFields( implode( ' ', [
@@ -48,7 +48,7 @@ class SeriesEntitySearchService extends EntitySearchService {
 			$this->withLang( 'redirect_titles_mv', $slang ) . '^2',
 		] ) );
 
-		$dismax->setBoostQuery( 'article_type_s:"' . self::SERIES_TYPE . '"^100' );
+		$dismax->setBoostQuery( 'article_type_s:"' . self::SERIES_TYPE . '"^8' );
 
 		$dismax->setQueryPhraseSlop( static::DEFAULT_SLOP );
 		$dismax->setPhraseSlop( static::DEFAULT_SLOP );
