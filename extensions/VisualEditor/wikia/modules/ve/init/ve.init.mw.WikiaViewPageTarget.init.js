@@ -212,13 +212,6 @@
 		setupTabs: function () {
 			var $veEditTab = $( '#ca-ve-edit' );
 			$veEditTab.click( init.onEditTabClick );
-
-			if ( vePreferred ) {
-				$( '#ca-edit' ).attr( 'accesskey', 's' );
-				$veEditTab.attr( 'accesskey', 'e' );
-			} else {
-				$veEditTab.attr( 'accesskey', 's' );
-			}
 		},
 
 		setupSectionLinks: function () {
@@ -337,9 +330,9 @@
 			$veEdit = $( '#ca-ve-edit' );
 		// This class may still be used by CSS
 		$( 'html' ).addClass( 've-not-available' );
-		// If VE is the main edit link, clone the alternate edit attributes into it
+		// If VE is the main edit link, clone the href into it
 		if ( vePreferred && $veEdit.length > 0 ) {
-			$veEdit.attr( { href: $edit.attr( 'href' ), accesskey: $edit.attr( 'accesskey' ) } );
+			$veEdit.attr( 'href', $edit.attr( 'href' ) );
 			$edit.parent().remove();
 		} else {
 			$veEdit.parent().remove();

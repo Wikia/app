@@ -79,13 +79,21 @@ class EditorPreference {
 					'text' => wfMessage( $visualEditorMessageKey )->setContext( $skin->getContext() )->text(),
 					'class' => '',
 					// Visual Editor is main Edit tab if...
-					'main' => $isVisualEditorPrimaryEditor
+					'main' => $isVisualEditorPrimaryEditor,
 				);
 
 				// Alter the edit tab
 				$editTab = $data;
 				$editTab['text'] = wfMessage( $editMessageKey )->setContext( $skin->getContext() )->text();
 				$editTab['main'] = !$visualEditorTab['main'];
+
+				if ( $isVisualEditorPrimaryEditor ) {
+					$visualEditorTab['accesskey'] = 'e';
+					$editTab['accesskey'] = 's';
+				} else {
+					$visualEditorTab['accesskey'] = 's';
+					$editTab['accesskey'] = 'e';
+				}
 
 				$newViews['edit'] = $editTab;
 				$newViews['ve-edit'] = $visualEditorTab;
