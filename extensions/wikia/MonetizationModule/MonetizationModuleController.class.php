@@ -24,6 +24,7 @@ class MonetizationModuleController extends WikiaController {
 		$params = [
 			's_id' => $this->wg->CityId,
 			'geo' => MonetizationModuleHelper::getCountryCode( $this->request ),
+			'max' => MonetizationModuleHelper::calculateNumberOfAds( $this->wg->Title->mLength ),
 		];
 		$this->data = MonetizationModuleHelper::getMonetizationUnits( $params );
 
