@@ -13,6 +13,7 @@ class MediaGalleryController extends WikiaController {
 		$dimensionIndex = 0;
 		foreach ( $items as $item ) {
 			$file = wfFindFile( $item['title'] );
+			$classes = [];
 
 			if ( !$file instanceof File ) {
 				continue; // todo: possible add error state
@@ -42,23 +43,27 @@ class MediaGalleryController extends WikiaController {
 				'image',
 				$params
 			);
-			$media[] = $markup;
+
+			// Hide overflow items
+			if ( $dimensionIndex >= self::MAX_ITEMS ) {
+				$classes[] = "hidden";
+				$classes[] = "fade";
+			}
+
+			$media[] = [
+				'thumbnail' => $markup,
+				'classes' => join( " ", $classes )
+			];
 			++$dimensionIndex;
 		}
 
 		$count = count( $media );
-		$showMore = false;
-		$showLess = false;
 		if ( $count > self::MAX_ITEMS ) {
 			$count = 'many';
-			$showMore = wfMessage( 'mediagallery-show-more' );
-			$showLess = wfMessage( 'mediagallery-show-less' );
 		}
 
 		$this->media = $media;
 		$this->count = $count;
-		$this->showMore = $showMore;
-		$this->showLess = $showLess;
 	}
 
 }

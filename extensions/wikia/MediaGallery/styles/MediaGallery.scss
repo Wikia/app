@@ -48,13 +48,16 @@ $media-margin: .5em;
 
 	&.count-many .media {
 		@include grid-column(3);
-		transition: opacity 1s ease-in-out;
+		transition: all 1s ease-in-out;
 
 		&.hidden {
+			display: none;
 			opacity: 0;
-			padding: $media-margin;
-			position: absolute;
-			transition: opacity 0;
+		}
+
+		&.fade {
+			opacity: 0;
+			transition-duration: .5s;
 		}
 	}
 
@@ -68,8 +71,17 @@ $media-margin: .5em;
 
 	.more {
 		clear: both;
-		margin: 20px auto;
+		margin: 0 auto;
+		padding: .5em;
 		text-align: center;
+
+		button {
+			outline: none;
+
+			&:first-child {
+				margin-right: 1em;
+			}
+		}
 	}
 
 }
