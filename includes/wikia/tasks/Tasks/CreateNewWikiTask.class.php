@@ -38,14 +38,14 @@ class CreateNewWikiTask extends BaseTask {
 
 		if ( $params['founderId'] ) {
 			$this->info('loading founding user', ['founder_id' => $params['founderId']]);
-			$this->founder = \User::newFromId( $params['founder_id'] );
+			$this->founder = \User::newFromId( $params['founderId'] );
 			$this->founder->load();
 		}
 
 		if ( !$this->founder || $this->founder->isAnon() ) {
 			$this->warning('cannot load founding user', ['founder_id' => $params['founderId']]);
 			if ( !empty( $params['founderName'] ) ) {
-				$this->founder = \User::newFromName( $params['founder_name'] );
+				$this->founder = \User::newFromName( $params['founderName'] );
 				$this->founder->load();
 			}
 		}
@@ -53,7 +53,7 @@ class CreateNewWikiTask extends BaseTask {
 		if ( !$this->founder || $this->founder->isAnon() ) {
 			global $wgExternalAuthType;
 			if ( $wgExternalAuthType ) {
-				$extUser = \ExternalUser::newFromName( $params['founder_name'] );
+				$extUser = \ExternalUser::newFromName( $params['founderName'] );
 				if ( is_object( $extUser ) ) {
 					$extUser->linkToLocal( $extUser->getId() );
 				}
