@@ -42,7 +42,7 @@ $namespaces['fi'] = array(
 	NS_BLOG_ARTICLE		=> 'Käyttäjän_blogi',
 	NS_BLOG_ARTICLE_TALK	=> 'Blogikommentti',
 	NS_BLOG_LISTING		=> 'Blogi',
-	NS_BLOG_LISTING_TALK	=> 'Keskustelu blogista',
+	NS_BLOG_LISTING_TALK	=> 'Keskustelu_blogista',
 );
 
 /**
