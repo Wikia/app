@@ -64,6 +64,7 @@ class MediaGalleryController extends WikiaController {
 
 		$this->media = $media;
 		$this->count = $count;
+		$this->addImageButton = wfMessage('mediagallery-add-image-button')->plain();
 	}
 
 }
