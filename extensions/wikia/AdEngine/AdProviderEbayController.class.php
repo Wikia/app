@@ -34,8 +34,8 @@ class AdProviderEbayController extends WikiaController
 			$allProducts = [];
 		}
 
-		if (count($allProducts) > 3) {
-			$rand_keys = array_rand($allProducts, 4);
+		if (count($allProducts) > 2) {
+			$rand_keys = array_rand($allProducts, 3);
 		} else {
 			$rand_keys = array_keys($allProducts);
 		}
@@ -45,9 +45,11 @@ class AdProviderEbayController extends WikiaController
 			$products[] = $allProducts[$key];
 		}
 
+		$this->title = preg_replace('/Wiki/', '', $this->wg->Sitename) . ' ' . wfMessage('adengine-ebay-deals');
 		$this->products = $products;
 		$this->query = $query;
 		$this->rssUrl = $rssUrl;
+		$this->isMobile = $this->request->getVal('skin', 'oasis') == 'wikiamobile';
 	}
 
 	/**

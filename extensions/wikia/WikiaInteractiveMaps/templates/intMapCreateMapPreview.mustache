@@ -1,0 +1,25 @@
+<form class="WikiaForm create-map-form">
+	<div class="input-group">
+		<label for="intMapTitle">{{titleLabel}}</label>
+		<input type="text" class="wide" name="map-title" placeholder="{{titlePlaceholder}}" value="">
+	</div>
+
+	{{#tileSetData}}
+
+	{{^geo}}
+	{{^tileSetId}}
+	<div class="input-group">
+		<label for="intMapTileSetTitle">{{tileSetTitleLabel}}</label>
+		<input type="text" class="wide" name="tile-set-title" placeholder="{{tileSetTitlePlaceholder}}" value="">
+	</div>
+	{{/tileSetId}}
+	{{/geo}}
+
+	<img src="{{fileThumbUrl}}{{originalImageURL}}" alt="{{previewImgAlt}}" id="intMapPreviewImage" class="intMapPreviewImage" width="100%" height="auto" />
+
+	{{#tileSetId}}
+	<input type="hidden" id="intMapTileSet" value="{{tileSetId}}">
+	{{/tileSetId}}
+
+	{{/tileSetData}}
+</form>

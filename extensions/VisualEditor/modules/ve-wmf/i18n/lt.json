@@ -1,0 +1,13 @@
+{
+	"@metadata": {
+		"authors": [
+			"Audriusa",
+			"Eitvys200"
+		]
+	},
+	"tag-visualeditor-needcheck": "[[{{MediaWiki:visualeditor-descriptionpagelink}} |VisualEditor: Patikrinti]]",
+	"tag-visualeditor-needcheck-description": "Redaguota su [[{{MediaWiki:visualeditor-descriptionpagelink}} |VisualEditor]]. Sistema aptiko galimai nenorėtų keitimų.",
+	"visualeditor-feedback-tool": "Palikti atsiliepimą",
+	"visualeditor-help-label": "Skaityti vartotojo vadovą",
+	"visualeditor-help-title": "Vartotojo vadovas kaip naudotis redaktoriumi"
+}

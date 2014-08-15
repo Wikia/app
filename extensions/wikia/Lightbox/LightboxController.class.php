@@ -83,7 +83,7 @@ class LightboxController extends WikiaController {
 	 * converts array in format of
 	 *   title (as text or object)
 	 *   type (video or image)
-	 * into array that includes thumburl and playbutton and title is always text
+	 * into array that includes thumburl and title is always text
 	 *
 	 * @param $mediaTable
 	 * @return array
@@ -100,7 +100,7 @@ class LightboxController extends WikiaController {
 	}
 
 	/**
-	 * Creates a single carousel thumb entry
+	 * Creates a single carousel thumb entry.
 	 * @param $entry - must have 'title'(image title) and 'type'(image|video) defined
 	 * @return array|string
 	 */
@@ -120,7 +120,6 @@ class LightboxController extends WikiaController {
 				'type' => $entry['type'],
 				'key' => $media->getDBKey(),
 				'title' => $media->getText(),
-				'playButtonSpan' => $entry['type'] == 'video' ? WikiaFileHelper::videoPlayButtonOverlay( self::THUMBNAIL_WIDTH, self::THUMBNAIL_HEIGHT ) : ''
 			);
 		}
 		return $thumb;
@@ -215,6 +214,9 @@ class LightboxController extends WikiaController {
 
 		// Make sure that a request with missing &format=json does not throw a "template not found" exception
 		$this->response->setFormat( 'json' );
+
+		// set cache control to 15 minutes
+		$this->response->setCacheValidity( 900 );
 	}
 
 	/**

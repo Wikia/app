@@ -1,0 +1,21 @@
+{
+	"@metadata": {
+		"authors": [
+			"Emperyan",
+			"Incelemeelemani",
+			"LuCKY",
+			"Maidis",
+			"Rapsar",
+			"Talha Samil Cakir",
+			"TurkishStyles"
+		]
+	},
+	"tag-visualeditor": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|Görsel Düzenleyici]]",
+	"tag-visualeditor-description": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|Görsel Düzenleyici]] kullanarak düzenleyin",
+	"tag-visualeditor-needcheck": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|Görsel Düzenleyici: Doğrula]]",
+	"tag-visualeditor-needcheck-description": "Sistem [[{{MediaWiki:visualeditor-descriptionpagelink}}|görsel düzenleyici]] ile düzenleyemeyeceğiniz, ancak kaynağı değiştir bağlantısıyla editör ile yapabileceğiniz değişiklik yaptığınızı tespit etti.",
+	"visualeditor-feedback-link": "Project:Görsel Düzenleyici/Geri bildirim",
+	"visualeditor-feedback-tool": "Geri bildirim bırak",
+	"visualeditor-help-label": "Kullanıcı kılavuzunu okuyun",
+	"visualeditor-help-title": "Editörü nasıl kullanacağınız hakkında kullanım kılavuzu"
+}

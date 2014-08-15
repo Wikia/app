@@ -1,0 +1,26 @@
+{
+	"@metadata": {
+		"authors": [
+			"Cainamarques",
+			"Fúlvio",
+			"GoEThe",
+			"Hamilton Abreu",
+			"Helder.wiki",
+			"Jaideraf",
+			"Jdforrester",
+			"Luckas",
+			"Vitorvicentevalente",
+			"SandroHc"
+		]
+	},
+	"tag-visualeditor": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|Editor Visual]]",
+	"tag-visualeditor-description": "Edição realizada utilizando o [[{{MediaWiki:visualeditor-descriptionpagelink}}|Editor Visual]]",
+	"tag-visualeditor-needcheck": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|Editor Visual: Verificar]]",
+	"tag-visualeditor-needcheck-description": "Edição feita com o [[{{MediaWiki:visualeditor-descriptionpagelink}}|Editor Visual]] em que o sistema detectou que o código wiki possivelmente teve alterações não intencionais.",
+	"tag-visualeditor-switched": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|Editor Visual: Trocado]]",
+	"tag-visualeditor-switched-description": "O utilizador iniciou a edição com o Editor Visual e depois mudou para o editor de texto wiki.",
+	"visualeditor-feedback-link": "Project:Editor Visual/Comentários",
+	"visualeditor-feedback-tool": "Deixar um comentário",
+	"visualeditor-help-label": "Leia o guia do utilizador",
+	"visualeditor-help-title": "Guia do utilizador para aprender a utilizar o editor"
+}

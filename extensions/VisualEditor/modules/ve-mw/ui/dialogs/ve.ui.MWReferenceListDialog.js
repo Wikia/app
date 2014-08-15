@@ -1,7 +1,7 @@
 /*!
  * VisualEditor user interface MWReferenceListDialog class.
  *
- * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
@@ -9,154 +9,141 @@
  * Dialog for inserting and editing MediaWiki reference lists.
  *
  * @class
- * @extends ve.ui.MWDialog
+ * @extends ve.ui.NodeDialog
  *
  * @constructor
- * @param {ve.ui.WindowSet} windowSet Window set this dialog is part of
  * @param {Object} [config] Configuration options
  */
-ve.ui.MWReferenceListDialog = function VeUiMWReferenceListDialog( windowSet, config ) {
+ve.ui.MWReferenceListDialog = function VeUiMWReferenceListDialog( config ) {
 	// Parent constructor
-	ve.ui.MWDialog.call( this, windowSet, config );
+	ve.ui.MWReferenceListDialog.super.call( this, config );
 };
 
 /* Inheritance */
 
-OO.inheritClass( ve.ui.MWReferenceListDialog, ve.ui.MWDialog );
+OO.inheritClass( ve.ui.MWReferenceListDialog, ve.ui.NodeDialog );
 
 /* Static Properties */
 
 ve.ui.MWReferenceListDialog.static.name = 'referenceList';
 
-ve.ui.MWReferenceListDialog.static.titleMessage = 'visualeditor-dialog-referencelist-title';
+ve.ui.MWReferenceListDialog.static.title =
+	OO.ui.deferMsg( 'visualeditor-dialog-referencelist-title' );
 
 ve.ui.MWReferenceListDialog.static.icon = 'references';
+
+ve.ui.MWReferenceListDialog.static.modelClasses = [ ve.dm.MWReferenceListNode ];
+
+ve.ui.MWReferenceListDialog.static.defaultSize = 'small';
 
 /* Methods */
 
 /**
  * @inheritdoc
  */
+ve.ui.MWReferenceListDialog.prototype.getApplyButtonLabel = function () {
+	return this.selectedNode instanceof ve.dm.MWReferenceListNode ?
+		ve.ui.MWReferenceListDialog.super.prototype.getApplyButtonLabel.call( this ) :
+		ve.msg( 'visualeditor-dialog-referencelist-insert-button' );
+};
+
+/**
+ * @inheritdoc
+ */
+ve.ui.MWReferenceListDialog.prototype.applyChanges = function () {
+	var refGroup, listGroup, oldListGroup, attrChanges, doc,
+		surfaceModel = this.getFragment().getSurface();
+
+	// Save changes
+	refGroup = this.groupInput.getValue();
+	listGroup = 'mwReference/' + refGroup;
+
+	if ( this.selectedNode ) {
+		// Edit existing model
+		doc = surfaceModel.getDocument();
+		oldListGroup = this.selectedNode.getAttribute( 'listGroup' );
+
+		if ( listGroup !== oldListGroup ) {
+			attrChanges = {
+				listGroup: listGroup,
+				refGroup: refGroup
+			};
+			surfaceModel.change(
+				ve.dm.Transaction.newFromAttributeChanges(
+					doc, this.selectedNode.getOuterRange().start, attrChanges
+				)
+			);
+		}
+	} else {
+		// Collapse returns a new fragment, so update this.fragment
+		this.fragment = this.getFragment().collapseRangeToEnd().insertContent( [
+			{
+				'type': 'mwReferenceList',
+				'attributes': {
+					'listGroup': listGroup,
+					'refGroup': refGroup
+				}
+			},
+			{ 'type': '/mwReferenceList' }
+		] );
+	}
+
+	// Parent method
+	return ve.ui.MWReferenceListDialog.super.prototype.applyChanges.call( this );
+};
+
+/**
+ * @inheritdoc
+ */
 ve.ui.MWReferenceListDialog.prototype.initialize = function () {
 	// Parent method
-	ve.ui.MWDialog.prototype.initialize.call( this );
+	ve.ui.MWReferenceListDialog.super.prototype.initialize.call( this );
 
 	// Properties
 	this.editPanel = new OO.ui.PanelLayout( {
 		'$': this.$, 'scrollable': true, 'padded': true
 	} );
 	this.optionsFieldset = new OO.ui.FieldsetLayout( {
-		'$': this.$,
-		'label': ve.msg( 'visualeditor-dialog-reference-options-section' ),
-		'icon': 'settings'
+		'$': this.$
 	} );
 
-	this.groupInput = new OO.ui.TextInputWidget( { '$': this.$ } );
-	this.groupLabel = new OO.ui.InputLabelWidget( {
+	this.groupInput = new OO.ui.TextInputWidget( {
 		'$': this.$,
-		'input': this.groupInput,
+		'placeholder': ve.msg( 'visualeditor-dialog-reference-options-group-placeholder' )
+	} );
+	this.groupField = new OO.ui.FieldLayout( this.groupInput, {
+		'$': this.$,
+		'align': 'top',
 		'label': ve.msg( 'visualeditor-dialog-reference-options-group-label' )
 	} );
 
-	this.applyButton = new OO.ui.PushButtonWidget( {
-		'$': this.$,
-		'label': ve.msg( 'visualeditor-dialog-action-apply' ),
-		'flags': ['primary']
-	} );
-
-	// Events
-	this.applyButton.connect( this, { 'click': [ 'close', { 'action': 'apply' } ] } );
-
 	// Initialization
-	this.optionsFieldset.$element.append( this.groupLabel.$element, this.groupInput.$element );
+	this.optionsFieldset.addItems( [ this.groupField ] );
 	this.editPanel.$element.append( this.optionsFieldset.$element );
-	this.$body.append( this.editPanel.$element );
-	this.$foot.append( this.applyButton.$element );
+	this.panels.addItems( [ this.editPanel ] );
 };
 
 /**
  * @inheritdoc
  */
-ve.ui.MWReferenceListDialog.prototype.setup = function ( data ) {
-	// Parent method
-	ve.ui.MWDialog.prototype.setup.call( this, data );
+ve.ui.MWReferenceListDialog.prototype.getSetupProcess = function ( data ) {
+	return ve.ui.MWReferenceListDialog.super.prototype.getSetupProcess.call( this, data )
+		.next( function () {
+			var node, refGroup;
 
-	var node, refGroup;
-
-	// Prepopulate from existing node if we're editing a node
-	// instead of inserting a new one
-	node = this.surface.getView().getFocusedNode();
-	if ( node instanceof ve.ce.MWReferenceListNode ) {
-		refGroup = node.getModel().getAttribute( 'refGroup' );
-
-	} else {
-		refGroup = '';
-	}
-
-	this.groupInput.setValue( refGroup );
-
-	/**
-	 * Focused node.
-	 *
-	 * @private
-	 * @property {ve.ce.MWReferenceListNode|undefined}
-	 */
-	this.node = node;
-};
-
-/**
- * @inheritdoc
- */
-ve.ui.MWReferenceListDialog.prototype.teardown = function ( data ) {
-	var refGroup, listGroup, oldListGroup, attrChanges,
-		doc, model,
-		surfaceModel = this.surface.getModel(),
-		node = this.node;
-
-	// Data initialization
-	data = data || {};
-
-	// Save changes
-	if ( data.action === 'apply' ) {
-		refGroup = this.groupInput.getValue();
-		listGroup = 'mwReference/' + refGroup;
-
-		if ( node ) {
-			// Edit existing model
-			doc = surfaceModel.getDocument();
-			model = node.getModel();
-			oldListGroup = model.getAttribute( 'listGroup' );
-
-			if ( listGroup !== oldListGroup ) {
-				attrChanges = {
-					listGroup: listGroup,
-					refGroup: refGroup
-				};
-				surfaceModel.change(
-					ve.dm.Transaction.newFromAttributeChanges(
-						doc, model.getOuterRange().start, attrChanges
-					)
-				);
+			// Prepopulate from existing node if we're editing a node
+			// instead of inserting a new one
+			node = this.getFragment().getSelectedNode();
+			if ( this.selectedNode instanceof ve.dm.MWReferenceListNode ) {
+				refGroup = node.getAttribute( 'refGroup' );
+			} else {
+				refGroup = '';
 			}
-		} else {
-			// Create new model
-			surfaceModel.getFragment().collapseRangeToEnd().insertContent( [
-				{
-					'type': 'mwReferenceList',
-					'attributes': {
-						'listGroup': listGroup,
-						'refGroup': refGroup
-					}
-				},
-				{ 'type': '/mwReferenceList' }
-			] );
-		}
-	}
 
-	// Parent method
-	ve.ui.MWDialog.prototype.teardown.call( this, data );
+			this.groupInput.setValue( refGroup );
+		}, this );
 };
 
 /* Registration */
 
-ve.ui.dialogFactory.register( ve.ui.MWReferenceListDialog );
+ve.ui.windowFactory.register( ve.ui.MWReferenceListDialog );

@@ -1,0 +1,26 @@
+{
+	"@metadata": {
+		"authors": [
+			"Dalba",
+			"Ebraminio",
+			"Jdforrester",
+			"Ladsgroup",
+			"Mjbmr",
+			"Nojan Madinehi",
+			"Reza1615",
+			"Taha",
+			"درفش کاویانی",
+			"Armin1392"
+		]
+	},
+	"tag-visualeditor": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|ویرایش‌گر دیداری]]",
+	"tag-visualeditor-description": "ویرایش با استفاده از [[{{MediaWiki:visualeditor-descriptionpagelink}}|ویرایش‌گر دیداری]] صورت گرفته‌است",
+	"tag-visualeditor-needcheck": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|ویرایشگر دیداری: بررسی]]",
+	"tag-visualeditor-needcheck-description": "ویرایش انجام‌شده با [[{{MediaWiki:visualeditor-descriptionpagelink}}|ویرایشگر دیداری]] که در آن سامانه احتمال وقوع تغییرات ناخواسته در ویکی‌متن را شناسایی کرد.",
+	"tag-visualeditor-switched": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|ویرایشگر دیداریːتغییر جهت داده شده]]",
+	"tag-visualeditor-switched-description": "کاربر شروع به ویرایش با استفاده از ویرایشگر دیداری کرد سپس به ویرایشگر متن ویکی تغییر داده شد.",
+	"visualeditor-feedback-link": "Project:ویرایشگر دیداری/بازخورد",
+	"visualeditor-feedback-tool": "گذاشتن بازخورد",
+	"visualeditor-help-label": "راهنمای کاربر را بخوانید.",
+	"visualeditor-help-title": "راهنمای کاربری استفاده از ویرایشگر"
+}

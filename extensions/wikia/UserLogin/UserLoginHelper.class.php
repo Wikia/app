@@ -80,6 +80,7 @@ class UserLoginHelper extends WikiaModel {
 
 		if( !$this->wg->StatsDBEnabled ) {
 			//no stats DB, can't get list of users with avatars
+			wfProfileOut( __METHOD__ );
 			return array();
 		}
 

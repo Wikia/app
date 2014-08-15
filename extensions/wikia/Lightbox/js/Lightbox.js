@@ -10,7 +10,7 @@
 		current: {
 			type: '', // image or video
 			title: '', // currently displayed file name
-			carouselType: '', // articleMedia, relatedVideos, or latestPhotos
+			carouselType: '', // articleMedia or latestPhotos
 			index: -1, // ex: LightboxLoader.cache[Lightbox.current.carouselType][Lightbox.current.index]
 			thumbs: [], // master list of thumbnails inside carousel; purged after closing the lightbox
 			placeholderIdx: -1
@@ -66,7 +66,7 @@
 
 			// Check screen height for future interactions
 			Lightbox.shortScreen = ($(window).height() <
-				LightboxLoader.defaults.height + LightboxLoader.defaults.topOffset);
+				LightboxLoader.defaults.height + LightboxLoader.defaults.topOffset + 20); // buffer by 20px
 
 			// Add template to modal
 			Lightbox.openModal.find('.modalContent').html(LightboxLoader.templateHtml);
@@ -87,6 +87,7 @@
 			LightboxLoader.cache.details[Lightbox.current.title] = Lightbox.initialFileDetail;
 			Lightbox.updateMedia();
 			Lightbox.showOverlay();
+
 			Lightbox.hideOverlay(3000);
 
 			LightboxLoader.lightboxLoading = false;
@@ -105,6 +106,11 @@
 			// attach event handlers
 			Lightbox.bindEvents();
 
+			if (Wikia.isTouchScreen()) {
+				Lightbox.openModal.pin
+					.click()
+					.hide();
+			}
 		},
 		cacheDOM: function () {
 			// Template cache
@@ -113,6 +119,7 @@
 			Lightbox.openModal.progressTemplate = $('#LightboxCarouselProgressTemplate');
 			Lightbox.openModal.headerTemplate = $('#LightboxHeaderTemplate');
 			Lightbox.openModal.headerAdTemplate = $('#LightboxHeaderAdTemplate');
+			Lightbox.openModal.pin = $('.LightboxCarousel .toolbar .pin');
 
 			// Cache error message
 			Lightbox.openModal.errorMessage = $('#LightboxErrorMessage').html();
@@ -144,7 +151,9 @@
 			}).on('mouseleave.Lightbox', function () {
 				// Hide Lightbox header and footer on mouse leave.
 				Lightbox.hideOverlay(10);
-			}).on('click.Lightbox', '.LightboxHeader .share-button', function () {
+			}).on('click.Lightbox', '.LightboxHeader .share-button', function (e) {
+				e.preventDefault();
+
 				// Show share screen on button click
 				if (Lightbox.current.type === 'video') {
 					Lightbox.video.destroyVideo();
@@ -197,7 +206,7 @@
 				Lightbox.openModal.removeClass('share-mode').removeClass('more-info-mode');
 				Lightbox.openModal.share.html('');
 				Lightbox.openModal.moreInfo.html('');
-			}).on('click.Lightbox', '.LightboxCarousel .toolbar .pin', function (evt) {
+			}).on('click.Lightbox', Lightbox.openModal.pin.selector, function (evt) {
 				// Pin the toolbar on icon click
 				var target = $(evt.target),
 					overlayActive = Lightbox.openModal.data('overlayactive'),
@@ -304,6 +313,9 @@
 			updateLightbox: function (data) {
 				Lightbox.image.getDimensions(data.imageUrl, function (dimensions) {
 
+					// render media
+					data.imageHeight = dimensions.imageHeight;
+
 					var css = {
 							height: dimensions.modalHeight
 						},
@@ -319,9 +331,6 @@
 					}
 
 					Lightbox.openModal.css(css);
-
-					// render media
-					data.imageHeight = dimensions.imageHeight;
 
 					// Hack to vertically align the image in the lightbox
 					Lightbox.openModal.media
@@ -719,6 +728,11 @@
 		hideOverlay: function (delay) {
 			var overlay = Lightbox.openModal;
 
+			// Don't enable hover show/hide for touch screens
+			if (Wikia.isTouchScreen()) {
+				return;
+			}
+
 			// If an interstitial ad is being shown, do not hideOverlay
 			if (Lightbox.ads.adIsShowing) {
 				return;
@@ -732,17 +746,6 @@
 					}, (delay || 1200)
 				);
 			}
-		},
-		getModalOptions: function (modalHeight, topOffset) {
-			var modalOptions = {
-				id: 'LightboxModal',
-				className: 'LightboxModal',
-				height: modalHeight,
-				width: 970, // modal adds 30px of padding to width
-				noHeadline: true,
-				topOffset: topOffset
-			};
-			return modalOptions;
 		},
 		updateMedia: function () {
 			var key = Lightbox.current.key,
@@ -831,7 +834,6 @@
 		// order by priority position in carousel backfill
 		carouselTypes: [
 			'videosModule',
-			'relatedVideos',
 			'articleMedia',
 			'latestPhotos'
 		],
@@ -1063,7 +1065,7 @@
 
 						if (data.errors.length) {
 							$(data.errors).each(function () {
-								errorMsg += this;
+								errorMsg += this.toString();
 							});
 						}
 						if (data.sent.length) {
@@ -1105,6 +1107,8 @@
 						origin: 'image-lightbox',
 						callback: function () {
 							doShareEmail(addresses);
+							// see VID-473 - Reload page on lightbox close
+							LightboxLoader.reloadOnClose = true;
 						}
 					});
 				}
@@ -1198,7 +1202,7 @@
 								key: key,
 								type: type,
 								playButtonSpan: playButtonSpan,
-								thumbLiClass: (type === 'video') ? Lightbox.videoWrapperClass : ''
+								thumbWrapperClass: (type === 'video') ? Lightbox.videoWrapperClass : ''
 							});
 						}
 					});
@@ -1211,58 +1215,6 @@
 						Lightbox.backfillCount += thumbArr.length;
 					}
 
-				}
-
-				// Add thumbs to current lightbox cache
-				Lightbox.current.thumbs = Lightbox.current.thumbs.concat(thumbArr);
-
-				Lightbox.addThumbsToCarousel(thumbArr, backfill);
-			},
-			// Get related videos from DOM
-			relatedVideos: function (backfill) {
-				var cached = LightboxLoader.cache.relatedVideos,
-					thumbArr = [],
-					playButton = Lightbox.thumbPlayButton,
-					RVI = window.RelatedVideosIds,
-					i,
-					arrLength,
-					key,
-					title;
-
-				if (!window.RelatedVideosIds) {
-					return;
-				}
-
-				if (cached.length) {
-					thumbArr = cached;
-				} else {
-
-					for (i = 0, arrLength = RVI.length; i < arrLength; i++) {
-						key = RVI[i].key;
-						title = RVI[i].title;
-
-						if (!key) {
-							key = title.replace(/ /g, '_');
-						}
-
-						thumbArr.push({
-							thumbUrl: Lightbox.thumbParams(RVI[i].thumb, 'video'),
-							key: key,
-							title: title,
-							type: 'video',
-							playButtonSpan: playButton,
-							thumbLiClass: Lightbox.videoWrapperClass
-						});
-
-					}
-
-					// Fill relatedVideos cache
-					LightboxLoader.cache.relatedVideos = thumbArr;
-
-					// Count backfill items for progress bar
-					if (backfill) {
-						Lightbox.backfillCount += thumbArr.length;
-					}
 				}
 
 				// Add thumbs to current lightbox cache
@@ -1384,8 +1336,7 @@
 						var $thisThumb = $(this),
 							type = 'video',
 							title = $thisThumb.attr('data-video-name'),
-							key = $thisThumb.attr('data-video-key'),
-							playButtonSpan = Lightbox.thumbPlayButton;
+							key = $thisThumb.attr('data-video-key');
 
 						if (key) {
 							// Check for dupes
@@ -1399,8 +1350,8 @@
 								title: title,
 								key: key,
 								type: type,
-								playButtonSpan: playButtonSpan,
-								thumbLiClass: Lightbox.videoWrapperClass
+								playButtonSpan: Lightbox.thumbPlayButton,
+								thumbWrapperClass: Lightbox.videoWrapperClass
 							});
 						}
 					});
@@ -1462,14 +1413,6 @@
 				trackingCarouselType = '';
 
 			switch (id) {
-				// Related Videos
-				case 'RelatedVideosRL':
-					clickSource = clickSource || VPS.RV;
-
-					carouselType = 'relatedVideos';
-					trackingCarouselType = 'related-videos';
-					break;
-
 				// Embeded in Article Comments
 				case 'WikiaArticleComments':
 					clickSource = clickSource || VPS.EMBED;
@@ -1486,11 +1429,7 @@
 					break;
 
 				case 'videosModule':
-					if ( !clickSource ) {
-						clickSource = parent.hasClass('videos-module-rail') ?
-							VPS.VIDEOS_MODULE_RAIL :
-							VPS.VIDEOS_MODULE_BOTTOM;
-					}
+					clickSource = clickSource || VPS.VIDEOS_MODULE_RAIL;
 
 					carouselType = 'videosModule';
 					trackingCarouselType = 'videos-module';
@@ -1547,7 +1486,6 @@
 					carouselType = 'articleMedia';
 					trackingCarouselType = 'article';
 			}
-
 
 			return {
 				clickSource: clickSource,

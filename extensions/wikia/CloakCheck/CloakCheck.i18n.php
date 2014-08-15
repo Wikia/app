@@ -439,8 +439,19 @@ $messages['kn'] = array(
 
 /** Korean (한국어)
  * @author Cafeinlove
+ * @author Hym411
+ * @author Miri-Nae
+ * @author 관인생략
  */
 $messages['ko'] = array(
+	'cloakcheck' => 'IRC cloak 자격 확인',
+	'cloakcheck-desc' => 'IRC cloak을 위한 올인원 자격 증명을 제공합니다.',
+	'cloakcheck-form-username' => '사용자 이름:',
+	'cloakcheck-process-empty' => '사용자명은 공백으로 할 수 없습니다.',
+	'cloakcheck-process-notexist' => '일치하는 사용자가 존재하지 않습니다.',
+	'cloakcheck-process-username' => '사용자명: $1',
+	'cloakcheck-process-accountage-yes' => '계정이 충분히 오래되었습니다.',
+	'cloakcheck-process-accountage-no' => '계정이 충분히 오래되지 않았습니다.',
 	'cloakcheck-process-emailconf-yes' => '이메일 주소가 인증되었습니다.',
 	'cloakcheck-process-emailconf-no' => '이메일 주소가 인증되지 않았습니다.',
 );
@@ -651,6 +662,8 @@ $messages['ps'] = array(
 
 /** Portuguese (português)
  * @author Hamilton Abreu
+ * @author Luckas
+ * @author Polyethylen
  * @author Waldir
  */
 $messages['pt'] = array(

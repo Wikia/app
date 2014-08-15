@@ -128,6 +128,10 @@ class NewWikisPage extends AlphabeticPager {
 		return 'desc';
 	}
 
+	function isExpensive() {
+		return false;
+	}
+
 	function getQueryInfo() {
 		$query = array(
 			'tables' => array( 'city_list' ),
@@ -239,7 +243,8 @@ class NewWikisPage extends AlphabeticPager {
 		$this->getLangs();
 
 		$hubs = WikiFactoryHub::getInstance();
-		$hubs = $hubs->getCategories();
+		// fixme, this logic (and the form) need to be split into Verticals and Categories
+		$hubs = $hubs->getAllCategories();
 		$this->hubs = array( 0 => 'All' );
 		if ( !empty($hubs) ) {
 			foreach ($hubs as $id => $hub_options) {

@@ -1,0 +1,16 @@
+{
+	"@metadata": {
+		"authors": [
+			"AnakngAraw",
+			"Sky Harbor"
+		]
+	},
+	"tag-visualeditor": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor]]",
+	"tag-visualeditor-description": "Pagbabagong ginawa gamit ang [[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor]]",
+	"tag-visualeditor-needcheck": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor: Tiyakin]]",
+	"tag-visualeditor-needcheck-description": "Pagbabagong ginawa gamit ang [[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor]] kung saan natagpuan ng sistema ang wikisintaksis na maaaring magdulot ng 'di-inatasang pagbabago.",
+	"visualeditor-feedback-link": "Project:VisualEditor/Komentaryo",
+	"visualeditor-feedback-tool": "Mag-iwan ng komento",
+	"visualeditor-help-label": "Basahin ang gabay sa paggamit",
+	"visualeditor-help-title": "Gabay sa paggamit ng editor"
+}

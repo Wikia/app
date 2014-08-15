@@ -17,6 +17,7 @@ $messages['en'] = array(
 
 	'manage-wikia-home-hubs-slot-heading' => 'Hubs slots setup',
 	'manage-wikia-home-hubs-slot-success' => 'Hubs slots have been saved.',
+	'manage-wikia-home-hubs-slot-error' => 'There was an error while saving. Please try again.',
 	'manage-wikia-home-hubs-slot' => 'Slot $1',
 	'manage-wikia-home-hubs-slot-name' => 'Hub name',
 	'manage-wikia-home-hubs-slot-description' => 'Hub description',
@@ -30,6 +31,11 @@ $messages['en'] = array(
 	'manage-wikia-home-collections-add-failure-image' => '$1 can\'t be added to this collection because its main image has been rejected.',
 	'manage-wikia-home-collections-remove-success' => 'Wiki removed successfully from the collection.',
 	'manage-wikia-home-collections-invalid-action' => 'That action does not exist.',
+
+	'manage-wikia-home-marketing-invalid-width' => 'Image width should be $maxWidth px.',
+	'manage-wikia-home-marketing-invalid-height' => 'Image height should be $maxHeight px.',
+	'manage-wikia-home-marketing-invalid-size' => 'Image size should be $maxWidth x $maxHeight px.',
+	'manage-wikia-home-marketing-not-complete' => 'To use marketing slot, all fields need to be filled.',
 
 	'manage-wikia-home-verticals-proportions' => 'Number of wikis per vertical',
 
@@ -105,7 +111,8 @@ $messages['en'] = array(
 	'manage-wikia-home-stats-edits-default-label' => 'Changes today fallback',
 	'manage-wikia-home-stats-total-pages-label' => 'Total Pages fallback',
 	'manage-wikia-home-stats-success' => 'Stats updated successfully!',
-	'manage-wikia-home-stats-failure' => 'Data wasn\'t saved. Please correct errors in form and try again. '
+	'manage-wikia-home-stats-failure' => 'Data wasn\'t saved. Please correct errors in form and try again. ',
+	'manage-wikia-home-stats-permissions-error' => 'Data wasn\'t saved. Please make sure you have correct rights to edit this form. '
 );
 
 /** Message documentation (Message documentation)
@@ -123,6 +130,7 @@ Parameters:
 	'manage-wikia-home-visualization-wikis' => 'A label next to selectbox with a list of wikis where visualization is enabled (corporate wikis)',
 	'manage-wikia-home-hubs-slot-heading' => 'Header for Wikia homepage hubs slots management section',
 	'manage-wikia-home-hubs-slot-success' => 'Message after successful save.',
+	'manage-wikia-home-hubs-slot-error' => 'Message when error occured.',
 	'manage-wikia-home-hubs-slot' => 'Determines which hub slot from hubs section on wikia homepage will be edited',
 	'manage-wikia-home-hubs-slot-name' => 'Label for select list with hub wiki names.',
 	'manage-wikia-home-hubs-slot-description' => 'Label for textarea field to shortly describe hub.',
@@ -252,6 +260,11 @@ $messages['ar'] = array(
 	'manage-wikia-home-wikis-in-slots-heading' => 'إعداد فتحات',
 	'manage-wikia-home-wikis-in-slots-total' => 'العدد الكلي للفتحات: $1',
 	'manage-wikia-home-visualization-wikis' => 'شركات ويكي مصورة:',
+	'manage-wikia-home-hubs-slot' => 'خانة $1',
+	'manage-wikia-home-hubs-slot-name' => 'اسم النادي',
+	'manage-wikia-home-hubs-slot-description' => 'وصف النادي',
+	'manage-wikia-home-hubs-slot-more-links' => 'روابط "المزيد في..."',
+	'manage-wikia-home-hubs-slot-empty-option' => '-- خانة فارغة --',
 	'manage-wikia-home-wikis-in-slots-success' => 'تغيرت أرقام الفتحات.',
 	'manage-wikia-home-collections-success' => 'تم حفظ المجموعات.',
 	'manage-wikia-home-collections-add-success' => 'تم إضافة ويكي بنجاح إلى المجموعة.',
@@ -269,6 +282,7 @@ $messages['ar'] = array(
 	'manage-wikia-home-wiki-name-filter' => 'ابدأ بكتابة اسم ويكي وستصبح القائمة أقصر:',
 	'manage-wikia-home-wiki-filter' => 'مرشّح',
 	'manage-wikia-home-wiki-filter-reset' => 'إزالة',
+	'manage-wikia-home-wiki-list-download' => 'تنزيل القائمة الكاملة',
 	'manage-wikia-home-wiki-list-id' => 'معرف',
 	'manage-wikia-home-wiki-list-vertical' => 'رأسي',
 	'manage-wikia-home-wiki-list-headline' => 'اسم الويكي',
@@ -385,6 +399,7 @@ $messages['br'] = array(
 	'manage-wikia-home-wikis-in-visualization-heading' => 'Roll a wikioù da welet',
 	'manage-wikia-home-wiki-filter' => 'Sil',
 	'manage-wikia-home-wiki-filter-reset' => 'Diverkañ',
+	'manage-wikia-home-wiki-list-download' => 'Pellgargañ ar roll klok',
 	'manage-wikia-home-wiki-list-id' => 'Id',
 	'manage-wikia-home-wiki-list-vertical' => 'A-hed',
 	'manage-wikia-home-wiki-list-headline' => 'Anv ar wiki',
@@ -515,7 +530,27 @@ $messages['ca'] = array(
  */
 $messages['ce'] = array(
 	'manage-wikia-home-hubs-slot' => 'Слот $1',
+	'manage-wikia-home-hubs-slot-name' => 'Хабан цӀе',
 	'manage-wikia-home-wiki-list-blocked' => 'Блоктоьхна',
+);
+
+/** Czech (čeština)
+ * @author H4nek
+ */
+$messages['cs'] = array(
+	'manage-wikia-home-change-button' => 'Změnit',
+	'manage-wikia-home-wikis-in-visualization-heading' => 'Seznam wiki ve vizualizaci',
+	'manage-wikia-home-wiki-name-filter' => 'Začněte psát název wiki a seznam se zkrátí.',
+	'manage-wikia-home-wiki-filter' => 'Filtrovat',
+	'manage-wikia-home-wiki-list-headline' => 'Název wiki',
+	'manage-wikia-home-wiki-list-blocked' => 'Zablokováno',
+	'manage-wikia-home-wiki-list-blocked-no' => 'Ne',
+	'manage-wikia-home-wiki-list-blocked-yes' => 'Ano',
+	'manage-wikia-home-wiki-list-promoted-no' => 'Ne',
+	'manage-wikia-home-wiki-list-promoted-yes' => 'Ano',
+	'manage-wikia-home-wiki-list-official-no' => 'Ne',
+	'manage-wikia-home-wiki-list-official-yes' => 'Ano',
+	'manage-wikia-home-collections-setup-save-button' => 'Uložit',
 );
 
 /** German (Deutsch)
@@ -529,6 +564,7 @@ $messages['de'] = array(
 	'manage-wikia-home-visualization-wikis' => 'Unternehmenswikis mit Visualisierung:',
 	'manage-wikia-home-hubs-slot-heading' => 'Einrichtung von Hubslots',
 	'manage-wikia-home-hubs-slot-success' => 'Die Hubslots wurden gespeichert.',
+	'manage-wikia-home-hubs-slot-error' => 'Beim Speichern gab es einen Fehler. Bitte erneut versuchen.',
 	'manage-wikia-home-hubs-slot' => 'Slot $1',
 	'manage-wikia-home-hubs-slot-name' => 'Name des Hubs',
 	'manage-wikia-home-hubs-slot-description' => 'Beschreibung des Hubs',
@@ -644,6 +680,7 @@ $messages['es'] = array(
 	'manage-wikia-home-visualization-wikis' => 'Wikis corporativos con visualización:',
 	'manage-wikia-home-hubs-slot-heading' => 'Configuración de espacios de hubs',
 	'manage-wikia-home-hubs-slot-success' => 'Los espacios de hubs han sido guardados.',
+	'manage-wikia-home-hubs-slot-error' => 'Hubo un error al guardar. Inténtalo nuevamente.',
 	'manage-wikia-home-hubs-slot' => 'Espacio $1',
 	'manage-wikia-home-hubs-slot-name' => 'Nombre del hub',
 	'manage-wikia-home-hubs-slot-description' => 'Descripción del hub',
@@ -666,6 +703,8 @@ $messages['es'] = array(
 	'manage-wikia-home-wiki-name-filter' => 'Comienza a escribir el nombre del wiki y la lista se hará corta:',
 	'manage-wikia-home-wiki-filter' => 'Filtro',
 	'manage-wikia-home-wiki-filter-reset' => 'Borrar',
+	'manage-wikia-home-wiki-list-download' => 'Descargar lista completa',
+	'manage-wikia-home-wiki-list-download-tooltip' => 'Valores separados por coma (CSV​​) con codificación UTF-8.',
 	'manage-wikia-home-wiki-list-id' => 'ID',
 	'manage-wikia-home-wiki-list-vertical' => 'Vertical',
 	'manage-wikia-home-wiki-list-headline' => 'Nombre del wiki',
@@ -814,6 +853,7 @@ $messages['fr'] = array(
 	'manage-wikia-home-visualization-wikis' => "Wikis ''corporate'' avec visualisation :",
 	'manage-wikia-home-hubs-slot-heading' => 'Paramétrage des emplacements centraux',
 	'manage-wikia-home-hubs-slot-success' => 'Les emplacements centraux ont été enregistrés.',
+	'manage-wikia-home-hubs-slot-error' => 'Une erreur s’est produite lors de l’enregistrement. Veuillez réessayer.',
 	'manage-wikia-home-hubs-slot' => 'Emplacement $1',
 	'manage-wikia-home-hubs-slot-name' => 'Nom du centre',
 	'manage-wikia-home-hubs-slot-description' => 'Description du centre',
@@ -996,10 +1036,21 @@ $messages['id'] = array(
 	'manage-wikia-home-collection-add-file-button' => 'Tambahkan foto',
 );
 
+/** Italian (italiano)
+ * @author PeppeAeco
+ */
+$messages['it'] = array(
+	'manage-wikia-home-hubs-slot' => 'Slot $1',
+	'manage-wikia-home-hubs-slot-empty-option' => '-- Slot vuoto --',
+	'manage-wikia-home-stats-failure' => 'I dati non sono stati salvati. Si prega di correggere errori e riprovare.',
+);
+
 /** Japanese (日本語)
+ * @author Barrel0116
  * @author Dude1717
  */
 $messages['ja'] = array(
+	'manage-wikia-home-collection-add-file-button' => '画像を追加',
 	'manage-wikia-home-stats-failure' => 'データは保存されませんでした。フォームのエラーを修正して、やり直してください。',
 );
 
@@ -1041,10 +1092,13 @@ $messages['ko'] = array(
  * @author Robby
  */
 $messages['lb'] = array(
+	'manage-wikia-home-hubs-slot-error' => 'Et gouf e Feeler beim Späicheren. Probéiert w.e.g. nach eng Kéier.',
 	'manage-wikia-home-hubs-slot' => 'Slot $1',
 	'manage-wikia-home-hubs-slot-more-links' => '"Méi op..." Linken',
 	'manage-wikia-home-hubs-slot-empty-option' => '-- Eidele Slot --',
 	'manage-wikia-home-change-button' => 'Änneren',
+	'manage-wikia-home-wiki-filter' => 'Filter',
+	'manage-wikia-home-wiki-filter-reset' => 'Eidel maachen',
 	'manage-wikia-home-wiki-list-blocked-no' => 'Neen',
 	'manage-wikia-home-wiki-list-blocked-yes' => 'Jo',
 	'manage-wikia-home-wiki-list-promoted-no' => 'Neen',
@@ -1339,6 +1393,7 @@ $messages['oc'] = array(
  * @author Pan Cube
  * @author Pio387
  * @author Sovq
+ * @author Vengir
  */
 $messages['pl'] = array(
 	'managewikiahome' => 'Zarządzenie Wikia Home',
@@ -1346,6 +1401,7 @@ $messages['pl'] = array(
 	'manage-wikia-home-wikis-in-slots-heading' => 'Ustawienie slotów',
 	'manage-wikia-home-wikis-in-slots-total' => 'Ilość slotów: $1',
 	'manage-wikia-home-visualization-wikis' => 'Wiki z włączonymi wizualizacjami:',
+	'manage-wikia-home-hubs-slot-error' => 'Wystąpił błąd podczas zapisywania. Proszę spróbować ponownie.',
 	'manage-wikia-home-hubs-slot' => 'Slot $1',
 	'manage-wikia-home-hubs-slot-name' => 'Nazwa Huba',
 	'manage-wikia-home-hubs-slot-description' => 'Opis Huba',
@@ -1368,6 +1424,8 @@ $messages['pl'] = array(
 	'manage-wikia-home-wiki-name-filter' => 'Zacznij wpisywać nazwę wiki a lista się skróci',
 	'manage-wikia-home-wiki-filter' => 'Filtr',
 	'manage-wikia-home-wiki-filter-reset' => 'Wyczyść',
+	'manage-wikia-home-wiki-list-download' => 'Pobierz pełną listę',
+	'manage-wikia-home-wiki-list-download-tooltip' => 'Wartości oddzielone przecinkami (plik CSV) z kodowaniem UTF-8.',
 	'manage-wikia-home-wiki-list-id' => 'ID',
 	'manage-wikia-home-wiki-list-vertical' => 'Vertical',
 	'manage-wikia-home-wiki-list-headline' => 'Nazwa wiki',
@@ -1566,6 +1624,7 @@ $messages['ru'] = array(
 	'manage-wikia-home-visualization-wikis' => 'Общие вики с визуализацией:',
 	'manage-wikia-home-hubs-slot-heading' => 'Установка слотов в хабах',
 	'manage-wikia-home-hubs-slot-success' => 'Слоты в хабах были сохранены.',
+	'manage-wikia-home-hubs-slot-error' => 'При сохранении произошла ошибка. Пожалуйста, попробуйте еще раз.',
 	'manage-wikia-home-hubs-slot' => 'Слот $1',
 	'manage-wikia-home-hubs-slot-name' => 'Название хаба',
 	'manage-wikia-home-hubs-slot-description' => 'Описание хаба',
@@ -1828,6 +1887,8 @@ $messages['tr'] = array(
 
 /** Ukrainian (українська)
  * @author Andriykopanytsia
+ * @author Mykola Swarnyk
+ * @author Ua2004
  */
 $messages['uk'] = array(
 	'managewikiahome' => 'Управління Будинком Вікія',
@@ -1837,6 +1898,7 @@ $messages['uk'] = array(
 	'manage-wikia-home-visualization-wikis' => 'Корпоративні вікі з візуалізацією:',
 	'manage-wikia-home-hubs-slot-heading' => 'Установка слотів у хабах',
 	'manage-wikia-home-hubs-slot-success' => 'Концентратори слотів були збережені.',
+	'manage-wikia-home-hubs-slot-error' => 'Сталася помилка під час збереження. Будь ласка, спробуйте ще раз.',
 	'manage-wikia-home-hubs-slot' => 'Слот $1',
 	'manage-wikia-home-hubs-slot-name' => 'Назва концентратора',
 	'manage-wikia-home-hubs-slot-description' => 'Опис концентратора',
@@ -1859,6 +1921,8 @@ $messages['uk'] = array(
 	'manage-wikia-home-wiki-name-filter' => 'Почніть вводити назву вікі і список стане коротшим:',
 	'manage-wikia-home-wiki-filter' => 'Фільтр',
 	'manage-wikia-home-wiki-filter-reset' => 'Очистити',
+	'manage-wikia-home-wiki-list-download' => 'Завантажити повний список',
+	'manage-wikia-home-wiki-list-download-tooltip' => 'CSV-файл із кодуванням UTF-8.',
 	'manage-wikia-home-wiki-list-id' => 'ID',
 	'manage-wikia-home-wiki-list-vertical' => 'Вертикаль',
 	'manage-wikia-home-wiki-list-headline' => 'Назва вікі',
@@ -1938,8 +2002,11 @@ $messages['zh-hans'] = array(
 	'manage-wikia-home-wrong-rights' => '您可能已登出，或者您没有权限使用此特殊页面。',
 	'manage-wikia-home-wikis-in-slots-heading' => '插槽部署',
 	'manage-wikia-home-wikis-in-slots-total' => '插槽总计：$1',
+	'manage-wikia-home-hubs-slot-heading' => '集线器插槽配置',
+	'manage-wikia-home-hubs-slot-success' => '集线器插槽已保存。',
 	'manage-wikia-home-hubs-slot' => '插槽$1',
 	'manage-wikia-home-hubs-slot-name' => '集线器名',
+	'manage-wikia-home-hubs-slot-description' => '集线器描述',
 	'manage-wikia-home-hubs-slot-more-links' => '“更多...”连接',
 	'manage-wikia-home-hubs-slot-empty-option' => '-- 空插槽 --',
 	'manage-wikia-home-wikis-in-slots-success' => '数字插槽已被更改。',
@@ -1950,6 +2017,8 @@ $messages['zh-hans'] = array(
 	'manage-wikia-home-wikis-in-visualization-heading' => '已实现可视化的维基列表',
 	'manage-wikia-home-wiki-filter' => '过滤器',
 	'manage-wikia-home-wiki-filter-reset' => '清除',
+	'manage-wikia-home-wiki-list-download' => '下载完整列表',
+	'manage-wikia-home-wiki-list-download-tooltip' => '用UTF-8编码的逗号分隔值（CSV）文件。',
 	'manage-wikia-home-wiki-list-id' => '身份',
 	'manage-wikia-home-wiki-list-vertical' => '垂直',
 	'manage-wikia-home-wiki-list-headline' => '维基名字',
@@ -1968,8 +2037,13 @@ $messages['zh-hans'] = array(
 	'manage-wikia-home-wiki-list-all-verticals' => '所有垂直',
 	'manage-wikia-home-modal-title' => '更改维基状态',
 	'manage-wikia-home-modal-title-collection' => '编辑维基集合',
+	'manage-wikia-home-modal-content-add-collection' => '您希望将此wiki加入收藏么？',
+	'manage-wikia-home-modal-content-remove-collection' => '您希望将此wiki从收藏中移除么？',
 	'manage-wikia-home-modal-content-add-blocked-wiki-warning' => '您不能向集合中添加被锁定的维基。',
+	'manage-wikia-home-modal-content-blocked-wiki-in-collection-warning' => '此wiki不应该收藏因为它已被封禁。它将从收藏中移除。',
 	'manage-wikia-home-modal-content-blocked-wiki-title' => '本维基被封禁',
+	'manage-wikia-home-modal-content-removed-blocked-in-collection' => '此wiki现在作为收藏的一部分并不能被封禁。',
+	'manage-wikia-home-modal-too-many-wikis-in-collection' => '您不能加入更多wiki至此收藏。',
 	'manage-wikia-home-modal-button-no' => '否',
 	'manage-wikia-home-modal-button-yes' => '是',
 	'manage-wikia-home-modal-button-okay' => '好',
@@ -1987,6 +2061,8 @@ $messages['zh-hans'] = array(
 	'manage-wikia-home-stats-header' => '公司的主页面统计',
 	'manage-wikia-home-stats-visitors-label' => '每月访客',
 	'manage-wikia-home-stats-mobile-percentage-label' => '% 移动端访客',
+	'manage-wikia-home-stats-edits-default-label' => '更改今天备选',
+	'manage-wikia-home-stats-total-pages-label' => '总页面备选',
 	'manage-wikia-home-stats-success' => '统计更新成功！',
 	'manage-wikia-home-stats-failure' => '数据未保存。请更正表单中的错误并重试。',
 );

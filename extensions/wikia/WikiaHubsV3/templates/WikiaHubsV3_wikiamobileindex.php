@@ -1,8 +1,8 @@
 <section class="WikiaHubs">
-	<?= $modules[MarketingToolboxModuleSliderService::MODULE_ID] ?>
-	<?= $modules[MarketingToolboxModuleExploreService::MODULE_ID] ?>
-	<?= $modules[MarketingToolboxModuleFeaturedvideoService::MODULE_ID] ?>
-	<?= $modules[MarketingToolboxModuleWikiaspicksService::MODULE_ID] ?>
-	<?= $modules[MarketingToolboxModuleFromthecommunityService::MODULE_ID] ?>
-	<?= $modules[MarketingToolboxModulePollsService::MODULE_ID] ?>
+	<?= $modules[WikiaHubsModuleSliderService::MODULE_ID] ?>
+	<?= $modules[WikiaHubsModuleExploreService::MODULE_ID] ?>
+	<?= $modules[WikiaHubsModuleFeaturedvideoService::MODULE_ID] ?>
+	<?= $modules[WikiaHubsModuleWikiaspicksService::MODULE_ID] ?>
+	<?= $modules[WikiaHubsModuleFromthecommunityService::MODULE_ID] ?>
+	<?= $modules[WikiaHubsModulePollsService::MODULE_ID] ?>
 </section>

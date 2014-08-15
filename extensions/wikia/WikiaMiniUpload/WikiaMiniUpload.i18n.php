@@ -561,6 +561,7 @@ $messages['br'] = array(
 
 /** Catalan (català)
  * @author BroOk
+ * @author Fitoschido
  * @author Gemmaa
  * @author Paucabot
  */
@@ -623,7 +624,7 @@ $messages['ca'] = array(
 	'wmu-columns' => '$1 {{PLURAL:$1|columna|columnes}}',
 	'wmu-column' => 'Columnes',
 	'wmu-added-from-plc' => "Arxiu afegit mitjançant posicionador d'imatge",
-	'wmu-uploaddisabled' => 'La càrrega de fitxers està deshabilitada en aquest wiki',
+	'wmu-uploaddisabled' => 'La càrrega de fitxers està inhabilitada en aquest wiki',
 	'wmu-gallery-success' => 'Has afegit una imatge a una galeria nova. Clica abaix per a afegir més imatges o inserir una galeria',
 	'wmu-gallery-btn1' => 'Afegir una altra imatge',
 	'wmu-gallery-btn2' => 'Insereix una galeria a la pàgina',
@@ -994,14 +995,14 @@ $messages['diq'] = array(
 	'wmu-next' => "8'ê peyêni",
 	'wmu-success-placeholder' => '<h1>Muaffaq</h1>',
 	'wmu-back' => 'Peyser',
-	'wmu-imagebutton' => 'Resım deke',
+	'wmu-imagebutton' => 'Resım cı ke',
 	'wmu-hide-license-msg' => 'nuşteya lisansi bınımne',
 	'wmu-show-license-msg' => 'nuşteyê lisansi bımocne',
 	'wmu-placeholder' => 'Cayê tepıstışi',
 	'wmu-gallery' => 'Galeriye',
 	'wmu-columns' => '$1 {{PLURAL:$1|Estûn|Estûni}}',
 	'wmu-column' => 'Estûni',
-	'wmu-gallery-btn1' => 'Ju na dosya deke',
+	'wmu-gallery-btn1' => 'Zewbina resım cı ke',
 	'wmu-alignment' => 'Hiza fi',
 );
 
@@ -1027,6 +1028,7 @@ $messages['eo'] = array(
  * @author Armando-Martin
  * @author Benfutbol10
  * @author Crazymadlover
+ * @author Fitoschido
  * @author McDutchie
  * @author Peter17
  * @author Translationista
@@ -1091,7 +1093,7 @@ $messages['es'] = array(
 	'wmu-columns' => '$1 {{PLURAL:$1|columna|columnas}}',
 	'wmu-column' => 'Columnas',
 	'wmu-added-from-plc' => 'Archivo añadido mediante posicionador de imagen',
-	'wmu-uploaddisabled' => 'La subida de archivos está deshabilitada en este wiki',
+	'wmu-uploaddisabled' => 'La carga de archivos está desactivada en este wiki',
 	'wmu-gallery-success' => 'Has añadido una imagen a una nueva galería. Haga click abajo para añadir más imágenes o insertar la galería',
 	'wmu-gallery-btn1' => 'Añadir otra imagen',
 	'wmu-gallery-btn2' => 'Inserte galería en la página',
@@ -3117,6 +3119,13 @@ $messages['tt-cyrl'] = array(
 	'wmu-filetype-incorrect' => 'Бу йөкләмәнең файл киңәйтелмәсе дөрес түгел.',
 	'wmu-hide-license-msg' => 'лицензия текстын күрсәтергә',
 	'wmu-show-license-msg' => 'лицензия текстын яшерергә',
+);
+
+/** Tuvinian (тыва дыл)
+ * @author Agilight
+ */
+$messages['tyv'] = array(
+	'wmu-find' => 'Диле',
 );
 
 /** Ukrainian (українська)

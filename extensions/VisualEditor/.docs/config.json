@@ -2,16 +2,18 @@
 	"--title": "VisualEditor Code Documentation",
 	"--categories": "../.docs/categories.json",
 	"--eg-iframe": "../.docs/eg-iframe.html",
-	"--warnings": ["-no_doc"],
+	"--tags": "./CustomTags.rb",
+	"--warnings": ["-nodoc(class,public)"],
 	"--builtin-classes": true,
-	"--external": "HTMLDocument,Window",
+	"--warnings-exit-nonzero": true,
+	"--external": "HTMLDocument,Window,Node",
 	"--output": "../docs",
 	"--": [
 		"./external.js",
-		"../modules/oojs",
-		"../modules/oojs-ui",
-		"../modules/unicodejs",
-		"../modules/ve",
+		"../lib/ve/.docs/external.js",
+		"../lib/ve/lib/oojs",
+		"../lib/ve/lib/oojs-ui",
+		"../lib/ve/modules",
 		"../modules/ve-mw"
 	]
 }

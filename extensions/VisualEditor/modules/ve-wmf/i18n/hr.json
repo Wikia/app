@@ -1,0 +1,14 @@
+{
+	"@metadata": {
+		"authors": [
+			"MaGa",
+			"Roberta F.",
+			"SpeedyGonsales"
+		]
+	},
+	"tag-visualeditor": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor]]",
+	"tag-visualeditor-description": "Uređivanje napravljeno [[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditorom]]",
+	"visualeditor-feedback-tool": "Napišite povratnu informaciju",
+	"visualeditor-help-label": "Pročitajte vodič za korisnike",
+	"visualeditor-help-title": "Korisnički vodič za uporabu VisualEditora"
+}

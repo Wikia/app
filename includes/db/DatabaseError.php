@@ -19,6 +19,15 @@ class DBError extends MWException {
 	function __construct( DatabaseBase &$db, $error ) {
 		$this->db = $db;
 		parent::__construct( $error );
+
+		// Wikia change - @author macbre - MAIN-2304
+		\Wikia\Logger\WikiaLogger::instance()->error('DBError', [
+			'name' => $db->getDBname(),
+			'server' => $db->getServer(),
+			'errno' => $db->lastErrno(),
+			'err' => $db->lastError(),
+			'exception' => $this,
+		]);
 	}
 
 	/**

@@ -367,14 +367,12 @@ HTML
 
 		// check namespaces
 		global $wgWysiwygDisabledNamespaces, $wgWysiwygDisableOnTalk, $wgEnableSemanticMediaWikiExt;
-		if(!empty($wgWysiwygDisabledNamespaces) && is_array($wgWysiwygDisabledNamespaces)) {
-			if(in_array(self::$title->getNamespace(), $wgWysiwygDisabledNamespaces)) {
-				self::disableEditor('disablednamespace');
-			}
-		} else {
-			if(self::$title->getNamespace() == NS_TEMPLATE || self::$title->getNamespace() == NS_MEDIAWIKI) {
-				self::disableEditor('namespace');
-			}
+		if ( !empty( $wgWysiwygDisabledNamespaces ) && is_array( $wgWysiwygDisabledNamespaces )
+			&& in_array( self::$title->getNamespace(), $wgWysiwygDisabledNamespaces )
+		) {
+			self::disableEditor( 'disablednamespace' );
+		} elseif ( self::$title->getNamespace() == NS_TEMPLATE || self::$title->getNamespace() == NS_MEDIAWIKI ) {
+			self::disableEditor( 'namespace' );
 		}
 		if(!empty($wgWysiwygDisableOnTalk)) {
 			if(self::$title->isTalkPage()) {

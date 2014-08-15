@@ -470,6 +470,12 @@ class SpecialPageFactory {
 
 		$page->including( $including );
 
+		// Wikia change - begin - @author: wladek
+		if ( !$including ) {
+			Transaction::setAttribute(Transaction::PARAM_SPECIAL_PAGE_NAME, $page->getName());
+		}
+		// Wikia change - end
+
 		// Execute special page
 		$profName = 'Special:' . $page->getName();
 		wfProfileIn( $profName );

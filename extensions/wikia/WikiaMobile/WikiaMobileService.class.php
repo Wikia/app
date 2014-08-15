@@ -42,23 +42,18 @@ class WikiaMobileService extends WikiaService {
 
 		$mobileAdService = new WikiaMobileAdService();
 
-		if ( $mobileAdService->shouldLoadAssets() ) {
-			$useGpt = $this->wg->Request->getBool( 'usegpt', $this->wg->AdDriverUseGptMobile );
-			$this->jsBodyPackages[] = $useGpt ? 'wikiamobile_ads_gpt_js' : 'wikiamobile_ads_js';
+		if ( $mobileAdService->shouldShowAds() ) {
+			$this->jsBodyPackages[] = 'wikiamobile_ads_js';
 
-			if ($this->wg->AdDriverTrackState) {
+			if ( $this->wg->AdDriverTrackState ) {
 				$this->globalVariables['wgAdDriverTrackState'] = $this->wg->AdDriverTrackState;
 			}
 
-			if ($useGpt && $this->wg->AdDriverEnableRemnantGptMobile) {
+			if ( $this->wg->AdDriverEnableRemnantGptMobile ) {
 				$this->globalVariables['wgAdDriverEnableRemnantGptMobile'] = $this->wg->AdDriverEnableRemnantGptMobile;
 			}
 
-			if ( $mobileAdService->shouldShowAds() ) {
-				$topLeaderBoardAd = $this->app->renderView( 'WikiaMobileAdService', 'topLeaderBoard' );
-				$this->globalVariables['wgShowAds'] = true;
-				$this->globalVariables['wgUsePostScribe'] = true; /** @see ADEN-666 */
-			}
+			$topLeaderBoardAd = $this->app->renderView( 'WikiaMobileAdService', 'topLeaderBoard' );
 		}
 
 		$this->response->setVal( 'topLeaderBoardAd', $topLeaderBoardAd );
@@ -169,7 +164,15 @@ class WikiaMobileService extends WikiaService {
 					AnalyticsEngine::EVENT_PAGEVIEW
 				) .
 				AnalyticsEngine::track(
+					'Viglink',
+					AnalyticsEngine::EVENT_PAGEVIEW
+				) .
+				AnalyticsEngine::track(
 					'ClarityRay',
+					AnalyticsEngine::EVENT_PAGEVIEW
+				) .
+				AnalyticsEngine::track(
+					'PageFair',
 					AnalyticsEngine::EVENT_PAGEVIEW
 				);
 		}

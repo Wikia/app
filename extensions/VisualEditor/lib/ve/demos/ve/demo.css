@@ -1,0 +1,53 @@
+/*!
+ * VisualEditor standalone demo
+ *
+ * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
+ * @license The MIT License (MIT); see LICENSE.txt
+ */
+
+body {
+	margin: 0;
+	padding: 0;
+	overflow-y: scroll;
+	background: #fff;
+	font: normal 1em/1.5 sans-serif;
+}
+
+/* Demo */
+
+.ve-demo-menu {
+	list-style: none;
+	margin: 0;
+	padding: 0.75em 1.5em;
+	display: inline-block;
+}
+
+.ve-demo-menu li {
+	list-style: none;
+	margin: 0 0.75em 0 0;
+	padding: 0;
+	display: inline-block;
+}
+
+.ve-demo-source {
+	width: 100%;
+}
+
+.ve-demo-source textarea {
+	font-family: monospace;
+	border: 0;
+}
+
+.ve-demo-source.oo-ui-widget-enabled textarea:focus {
+	box-shadow: none;
+}
+
+/* Editor */
+
+.ve-ce-documentNode {
+	padding: 0.75em 1.5em;
+}
+
+.ve-ui-debugBar {
+	padding: 1.5em;
+}

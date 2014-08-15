@@ -11,11 +11,18 @@
 			triggeredFromRTE = event && event.type === 'rte',
 			callback = null,
 			wikiaEditor,
+			track = null,
 			options;
 
-		if (event && event.data && event.data.element) {
-			// Video or Placeholder element was clicked in RTE
-			element = event.data.element;
+		if (event && event.data ) {
+			if (event.data.element) {
+				// Video or Placeholder element was clicked in RTE
+				element = event.data.element;
+			}
+			if (event.data.track) {
+				// extra tracking info sent from extension
+				track = event.data.track;
+			}
 		}
 
 		if (triggeredFromRTE) {
@@ -64,48 +71,42 @@
 				}
 
 			};
-		} else if (mode === 'edit') {
+		} else if (mode === 'edit' && element) {
 			callback = function (embedData) {
-				if (element != 'undefined') {
-					var wikitext = '';
+				var wikitext = '';
 
-					// Handle video placeholders in the editor [[File:Placeholder|video]]
-					if (element.hasClass('media-placeholder')) {
-						wikitext = embedData.wikitext;
+				// Handle video placeholders in the editor [[File:Placeholder|video]]
+				if (element.hasClass('media-placeholder')) {
+					wikitext = embedData.wikitext;
+					RTE.mediaEditor.update(element, wikitext, embedData);
+				} else {
+					// generate wikitext
+					wikitext = '[[' + embedData.href + '|thumb';
+
+					if (embedData.align) {
+						wikitext += '|' + embedData.align;
+					}
+
+					if (embedData.width) {
+						wikitext += '|' + embedData.width + 'px';
+					}
+
+					if (embedData.caption) {
+						wikitext += '|' + embedData.caption;
+					}
+
+					wikitext += ']]';
+
+					if (element) {
+						// update existing video
 						RTE.mediaEditor.update(element, wikitext, embedData);
+
+						require(['wikia.vet'], function (vet) {
+							vet.close();
+						});
 					} else {
-						// generate wikitext
-						wikitext = '[[' + embedData.href;
-
-						if (embedData.thumb) {
-							wikitext += '|thumb';
-						}
-
-						if (embedData.align) {
-							wikitext += '|' + embedData.align;
-						}
-
-						if (embedData.width) {
-							wikitext += '|' + embedData.width + 'px';
-						}
-
-						if (embedData.caption) {
-							wikitext += '|' + embedData.caption;
-						}
-
-						wikitext += ']]';
-
-						if (element) {
-							// update existing video
-							RTE.mediaEditor.update(element, wikitext, embedData);
-
-							require(['wikia.vet'], function (vet) {
-								vet.close();
-							});
-						} else {
-							// add new video
-							RTE.mediaEditor.addVideo(wikitext, embedData);
-						}
+						// add new video
+						RTE.mediaEditor.addVideo(wikitext, embedData);
 					}
 				}
 			};
@@ -115,12 +116,13 @@
 			callbackAfterEmbed: callback,
 			embedPresets: embedPresets,
 			onClose: onClose,
-			startPoint: startPoint
+			startPoint: startPoint,
+			track: track
 		};
 
 		window.vetLoader.load(options);
 	};
 
-	window.VET_WikiaEditor = editorVET;
+	window.vetWikiaEditor = editorVET;
 
 })(window, jQuery);

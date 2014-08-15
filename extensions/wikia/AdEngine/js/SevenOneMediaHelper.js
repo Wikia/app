@@ -31,7 +31,7 @@ define('ext.wikia.adEngine.sevenOneMediaHelper', [
 				SOI_PD: true,    // pushdown
 				SOI_BB: true,    // billboard
 				SOI_WP: true,    // wallpaper
-				SOI_FP: !window.wgAdDriverSevenOneMediaDisableFirePlaces     // fireplace
+				SOI_FP: false    // fireplace
 			},
 			'rectangle1': {
 				SOI_RT1: true,
@@ -233,9 +233,17 @@ define('ext.wikia.adEngine.sevenOneMediaHelper', [
 	}
 
 	function initialize(firstSlotname) {
-		var subsite = window.cscoreCat && window.cscoreCat.toLowerCase(),
-			sub2site = pageLevelParams.s1.replace('_', ''),
+		var subsite, sub2site, sub3site;
+
+		subsite = window.cscoreCat && window.cscoreCat.toLowerCase();
+
+		if (window.wgAdDriverSevenOneMediaOverrideSub2Site) {
+			sub2site = window.wgAdDriverSevenOneMediaOverrideSub2Site;
+			sub3site = pageLevelParams.s1.replace('_', '');
+		} else {
+			sub2site = pageLevelParams.s1.replace('_', '');
 			sub3site = subsite === 'lifestyle' ? window.cityShort : '';
+		}
 
 		initialized = true;
 

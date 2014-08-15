@@ -22,7 +22,7 @@ ve.ce.WikiaVideoCaptionNode = function VeCeWikiaVideoCaptionNode( model, config 
 	this.$title = null;
 
 	// Parent constructor
-	ve.ce.WikiaMediaCaptionNode.call( this, model, config );
+	ve.ce.WikiaVideoCaptionNode.super.call( this, model, config );
 };
 
 /* Inheritance */
@@ -42,11 +42,7 @@ ve.ce.WikiaVideoCaptionNode.static.name = 'wikiaVideoCaption';
  * @returns {jQuery} The properly scoped jQuery object
  */
 ve.ce.WikiaVideoCaptionNode.prototype.createTitle = function () {
-	var title,
-		attribution = this.model.parent.getAttribute( 'attribution' );
-
-	title = mw.Title.newFromText( attribution.title );
-
+	var title = new mw.Title( this.model.parent.getAttribute('resource').replace( './', '' ) );
 	// It's inside a protected node, so user can't see href/title.
 	return this.$( '<p>' )
 		.addClass( 'title ve-no-shield' )
@@ -65,7 +61,10 @@ ve.ce.WikiaVideoCaptionNode.prototype.onSplice = function () {
 	if ( !this.$title ) {
 		this.$title = this.createTitle();
 	}
-	this.$title.insertAfter( this.$details );
+	// insert title before caption
+	if ( this.children.length ) {
+		this.children[0].$element.before( this.$title );
+	}
 };
 
 /* Registration */

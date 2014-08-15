@@ -4,18 +4,24 @@
 	 * Videos Module test
 	 *
 	 * @category Wikia
+	 * @group UsingDB
 	 */
 	class VideosModuleTest extends WikiaBaseTest {
 
 		const TEST_CITY_ID = 79860;
-		protected static $videoBlacklist = [ 'Video_10' ];
+		const USER_REGION = "US";
+		protected static $videoBlacklist = [ 'Basic_Instinct_The_Leg_Cross', 'WWE_Divas_Undressed_(2002)_-_Trailer' ];
 
 		public function setUp() {
 			$this->setupFile = dirname(__FILE__) . '/../VideosModule.setup.php';
 			parent::setUp();
 		}
 
-		protected function setUpMock( $missingArticleIdMessage ) {
+		/**
+		 * Currently unused, but could be useful in the future so keeping it around.
+		 */
+		protected function setUpMockCache() {
+
 			// mock cache
 			$mock_cache = $this->getMock( 'stdClass', [ 'get', 'set', 'delete' ] );
 			$mock_cache->expects( $this->any() )
@@ -28,47 +34,68 @@
 
 			$this->mockGlobalVariable( 'wgMemc', $mock_cache );
 
-			$this->mockGlobalVariable( 'wgVideosModuleBlackList', self::$videoBlacklist );
 			$this->mockGlobalVariable( 'wgCityId', self::TEST_CITY_ID );
-
-			$this->mockMessage( 'videosmodule-error-no-articleId', $missingArticleIdMessage );
-			$this->mockMessage( 'videosmodule-title-default', 'title' );
 		}
 
+		public function testIsBlackListed() {
+
+			$module = new VideosModule( self::USER_REGION );
+
+			// Mock the blacklist so that it doesn't depend on changes to the wgVideosModuleBlackList global
+			$reflection = new ReflectionClass( $module );
+			$blackListProp = $reflection->getProperty( 'blacklist' );
+			$blackListProp->setAccessible( true );
+			$blackListProp->setValue( $module, [ self::$videoBlacklist[0] ] );
+
+			$blackListedVideo = [ 'title' => self::$videoBlacklist[0] ];
+			$this->assertTrue( $module->isBlackListed( $blackListedVideo ) );
+
+			$nonBlackListedVideo = [ 'title' => 'A_Very_Agreeable_Video' ];
+			$this->assertFalse( $module->isBlackListed( $nonBlackListedVideo ) );
+		}
+
+		public function testIsRegionallyRestricted() {
+
+			$module = new VideosModule( self::USER_REGION );
+
+			$videoWithRestrictionsEU = [ "regionalRestrictions" => "GB, DE" ];
+			$videoWithRestrictionsNA = [ "regionalRestrictions" => "CA, US" ];
+			$videoWithoutRestrictions = null;
+
+			// Test that a video with regional restrictions and a user in a different region comes back as restricted
+			$this->assertTrue( $module->isRegionallyRestricted( $videoWithRestrictionsEU ) );
+
+			// Test that a video with regional restrictions and a user in one of those regions comes back as
+			// not restricted
+			$this->assertFalse( $module->isRegionallyRestricted( $videoWithRestrictionsNA ) );
+
+			// Test that a video without any regional restrictions comes back as not restricted
+			$this->assertFalse( $module->isRegionallyRestricted( $videoWithoutRestrictions ) );
+		}
 
 		/**
-		 * Test Video Module Controller
-		 * @dataProvider videosModuleDataProvider
+		 * Test that category names used by videos module are transformed properly
+		 * into database names (underscores instead of spaces)
 		 */
-		public function testVideosModule( $requestParams, $expectedData ) {
-			$this->setUpMock( $expectedData['msg'] );
+		public function testTransformCatNames() {
+			$module = new VideosModule( self::USER_REGION );
 
-			$response = $this->app->sendRequest( 'VideosModule', 'index', $requestParams );
+			$reflection = new ReflectionClass( $module );
+			$tranformCatNames = $reflection->getMethod( 'transformCatNames' );
+			$tranformCatNames->setAccessible( true );
 
-			$responseData = $response->getData();
-			$this->assertEquals( $expectedData['result'], $responseData['result'] );
-			$this->assertEquals( $expectedData['msg'], $responseData['msg'] );
-			$this->assertEquals( $expectedData['videos'], $responseData['videos'] );
-		}
+			$categoryNames = [ "The Hobbit", "The Wiggles Movie" ];
+			$databaseNames = [ "The_Hobbit", "The_Wiggles_Movie" ];
 
-		public function videosModuleDataProvider() {
-			$requestParams1 = [
-				'articleId' => null,
-				'limit' => null,
-				'local' => null,
-				'sort' => null,
-			];
+			// Test that names without underscores are transformed properly
+			$result = $tranformCatNames->invoke( $module, $categoryNames );
+			$this->assertEquals( $databaseNames[0], $result[0] );
+			$this->assertEquals( $databaseNames[1], $result[1] );
 
-			$expectedData1 = [
-				'result' => 'error',
-				'msg' => 'Article no Id message',
-				'videos' => [],
-			];
-
-			return [
-				// Related videos + no article id
-				[ $requestParams1, $expectedData1 ],
-			];
+			// Test that names with underscores are not affected
+			$result = $tranformCatNames->invoke( $module, $databaseNames );
+			$this->assertEquals( $databaseNames[0], $result[0] );
+			$this->assertEquals( $databaseNames[1], $result[1] );
 		}
 
 	}

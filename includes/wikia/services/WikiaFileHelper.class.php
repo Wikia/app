@@ -151,140 +151,6 @@ class WikiaFileHelper extends Service {
 	}
 
 	/**
-	 * get html for video play button overlay
-	 * @global string $wgBlankImgUrl
-	 * @param integer $width
-	 * @param integer $height
-	 * @return string
-	 */
-	public static function videoPlayButtonOverlay( $width, $height ) {
-		$sizeClass = '';
-		if ( $width <= 170 ) {
-			$sizeClass = 'small';
-		}
-		if ( $width > 360 ) {
-			$sizeClass = 'large';
-		}
-
-		$html = Xml::openElement( 'div', array(
-			'class' => 'Wikia-video-play-button',
-			'style' => 'line-height:' . $height . 'px;width:' . $width . 'px;',
-		));
-
-		$html .= Xml::element( 'img', array(
-			'class' => 'sprite play ' . $sizeClass,
-			'src' => F::app()->wg->BlankImgUrl,
-		));
-
-		$html .= Xml::closeElement( 'div' );
-
-		return $html;
-	}
-
-	/**
-	 * get html for video info overlay
-	 * @param integer $width
-	 * @param Title|string $title
-	 * @param Boolean $showViews
-	 * @return string
-	 */
-	public static function videoInfoOverlay( $width, $title = null, $showViews = false ) {
-		$html = '';
-		if ( $width > 230 && !empty( $title ) ) {
-			$file = self::getFileFromTitle( $title );
-			if ( !empty( $file ) ) {
-				// info
-				$attribs = [
-					"class" => "info-overlay",
-					"style" => "width: {$width}px;"
-				];
-
-				// video title
-				$contentWidth = $width - 60;
-				$videoTitle = $title->getText();
-				$content = self::videoOverlayTitle( $videoTitle, $contentWidth );
-
-				// video duration
-				$duration = '';
-				$fileMetadata = $file->getMetadata();
-				if ( $fileMetadata ) {
-					$fileMetadata = unserialize( $fileMetadata );
-					if ( array_key_exists( 'duration', $fileMetadata ) ) {
-						$duration = $fileMetadata['duration'];
-						$isoDuration = self::formatDurationISO8601( $duration );
-						$content .= '<meta itemprop="duration" content="'.$isoDuration.'">';
-					}
-				}
-
-				$content .= self::videoOverlayDuration( self::formatDuration( $duration ) );
-				$content .= '<br />';
-
-				// video views
-				$videoTitle = $title->getDBKey();
-				if ( $showViews ) {
-					$views = MediaQueryService::getTotalVideoViewsByTitle( $videoTitle );
-					$content .= self::videoOverlayViews( $views );
-					$attribs['class'] .= " info-overlay-with-views";
-					$content .= '<meta itemprop="interactionCount" content="UserPlays:'.$views.'" />';
-				}
-
-				$html = Xml::tags( 'span', $attribs, $content );
-			}
-		}
-
-		return $html;
-	}
-
-	/**
-	 * get html for title for video overlay
-	 * @param $title
-	 * @param $width
-	 * @return string
-	 */
-	public static function videoOverlayTitle( $title, $width ) {
-		$attribs = array(
-			'class' => 'info-overlay-title',
-			'style' => 'max-width:'.$width.'px;',
-			'itemprop' => 'name',
-		);
-
-		return Xml::element( 'span', $attribs, $title, false );
-	}
-
-	/**
-	 * get html for duration for video overlay
-	 * @param $duration
-	 * @return string
-	 */
-	public static function videoOverlayDuration( $duration ) {
-		$html = '';
-		if ( !empty($duration) ) {
-			$attribs = array(
-				'class' => 'info-overlay-duration',
-				'itemprop' => 'duration',
-			);
-
-			$html = Xml::element( 'span', $attribs, "($duration)", false );
-		}
-
-		return $html;
-	}
-
-	/**
-	 * get html for views for video overlay
-	 * @param $views
-	 * @return string
-	 */
-	public static function videoOverlayViews( $views ) {
-		$attribs = array(
-			'class' => 'info-overlay-views',
-		);
-		$views = wfMessage( 'videohandler-video-views', F::app()->wg->Lang->formatNum( $views ) )->text();
-
-		return Xml::element( 'span', $attribs, $views, false );
-	}
-
-	/**
 	 * Checks if user wants to have old image bahaviour
 	 * @return boolean
 	 */
@@ -489,6 +355,17 @@ class WikiaFileHelper extends Service {
 		return array( $truncatedList, $isTruncated );
 	}
 
+	/**
+	 * Gathers information about a video
+	 *
+	 * @deprecated Use VideoHandlerHelper::getVideoDetailFromWiki or VideoHandlerHelper::getVideoDetail instead
+	 *
+	 * @param $arr
+	 * @param Title $title
+	 * @param int $width
+	 * @param int $height
+	 * @param bool $force16x9Ratio
+	 */
 	public static function inflateArrayWithVideoData( &$arr, Title $title, $width=150, $height=75, $force16x9Ratio=false ) {
 		$arr['ns'] = $title->getNamespace();
 		$arr['nsText'] = $title->getNsText();

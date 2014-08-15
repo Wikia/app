@@ -103,6 +103,7 @@ class WikiaFilePage extends ImagePage {
 			'providerUrl' => $file->getProviderHomeUrl(),
 			'detailUrl' => $file->getProviderDetailUrl(),
 			'views' => MediaQueryService::getTotalVideoViewsByTitle( $file->getTitle()->getDBKey() ),
+			'regionalRestrictions' => $file->getRegionalRestrictions(),
 		);
 
 		$caption = $app->renderView( 'FilePageController', 'videoCaption', $captionDetails );

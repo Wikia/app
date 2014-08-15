@@ -5,33 +5,30 @@ class AdEngine2Service
 
 	const ASSET_GROUP_CORE = 'oasis_shared_core_js';
 	const ASSET_GROUP_ADENGINE = 'adengine2_js';
+	const ASSET_GROUP_ADENGINE_LATE = 'adengine2_late_js';
 	const ASSET_GROUP_LIFTIUM = 'liftium_ads_js';
 
 	const PAGE_TYPE_NO_ADS = 'no_ads';                   // show no ads
+	const PAGE_TYPE_MAPS = 'maps';                       // show only ads on maps
 	const PAGE_TYPE_HOMEPAGE_LOGGED = 'homepage_logged'; // show some ads (logged in users on main page)
 	const PAGE_TYPE_CORPORATE = 'corporate';             // show some ads (anonymous users on corporate pages)
+	const PAGE_TYPE_SEARCH = 'search';                   // show some ads (anonymous on search pages)
 	const PAGE_TYPE_ALL_ADS = 'all_ads';                 // show all ads!
 
 	const cacheKeyVersion = "2.03a";
 	const cacheTimeout = 1800;
 
-	private $_allPageTypes = [
-		self::PAGE_TYPE_NO_ADS,
-		self::PAGE_TYPE_HOMEPAGE_LOGGED,
-		self::PAGE_TYPE_CORPORATE,
-		self::PAGE_TYPE_ALL_ADS
-	];
-
 	/**
 	 * Get page type for the current page (ad-wise).
 	 * Take into account type of the page and user status.
-	 * Return one of the PAGE_TYPE_* const
+	 * Return one of the PAGE_TYPE_* constants
 	 *
 	 * @return string
 	 */
 	public static function getPageType()
 	{
 		$wg = F::app()->wg;
+		$title = null;
 
 		static $pageLevel = null;
 
@@ -44,7 +41,7 @@ class AdEngine2Service
 			|| $wg->Request->getBool('noads', false)
 			|| $wg->ShowAds === false
 			|| $wg->EnableAdEngineExt === false
-			|| !F::app()->checkSkin(['oasis'])
+			|| !F::app()->checkSkin(['oasis', 'wikiamobile'])
 		) {
 			$pageLevel = self::PAGE_TYPE_NO_ADS;
 			return $pageLevel;
@@ -72,7 +69,8 @@ class AdEngine2Service
 
 					// Chosen special pages:
 					|| $title->isSpecial('Videos')
-					|| $title->isSpecial('Leaderboard');
+					|| $title->isSpecial('Leaderboard')
+					|| $title->isSpecial('Maps');
 			}
 		}
 
@@ -84,8 +82,18 @@ class AdEngine2Service
 		$user = $wg->User;
 		if (!$user->isLoggedIn() || $user->getOption('showAds')) {
 			// Only leaderboard, medrec and invisible on corporate sites for anonymous users
-			if ($wg->EnableWikiaHomePageExt) {
+			if (WikiaPageType::isCorporatePage()) {
 				$pageLevel = self::PAGE_TYPE_CORPORATE;
+				return $pageLevel;
+			}
+
+			if (WikiaPageType::isSearch()) {
+				$pageLevel = self::PAGE_TYPE_SEARCH;
+				return $pageLevel;
+			}
+
+			if ($title && $title->isSpecial('Maps')) {
+				$pageLevel = self::PAGE_TYPE_MAPS;
 				return $pageLevel;
 			}
 
@@ -95,16 +103,16 @@ class AdEngine2Service
 		}
 
 		// Logged in users get some ads on the main pages (except on the corporate sites)
-		if (!$wg->EnableWikiaHomePageExt && WikiaPageType::isMainPage()) {
+		if (!WikiaPageType::isCorporatePage() && WikiaPageType::isMainPage()) {
 			$pageLevel = self::PAGE_TYPE_HOMEPAGE_LOGGED;
 			return $pageLevel;
 		}
 
 		// Override ad level for a (set of) specific page(s)
 		// Use case: sponsor ads on a landing page targeted to Wikia editors (=logged in)
-		if ($wg->Title &&
+		if ($title &&
 			!empty($wg->PagesWithNoAdsForLoggedInUsersOverriden) &&
-			in_array($wg->Title->getDBkey(), $wg->PagesWithNoAdsForLoggedInUsersOverriden)
+			in_array($title->getDBkey(), $wg->PagesWithNoAdsForLoggedInUsersOverriden)
 		) {
 			$pageLevel = self::PAGE_TYPE_CORPORATE;
 			return $pageLevel;
@@ -130,6 +138,18 @@ class AdEngine2Service
 		return in_array($pageType, $pageTypes);
 	}
 
+	public static function shouldLoadLiftium()
+	{
+		global $wgEnableRHonDesktop, $wgAdEngineDisableLateQueue;
+		return !$wgEnableRHonDesktop && !$wgAdEngineDisableLateQueue;
+	}
+
+	public static function shouldLoadLateQueue()
+	{
+		global $wgAdEngineDisableLateQueue;
+		return !$wgAdEngineDisableLateQueue;
+	}
+
 	/**
 	 * Check if for current page the ads can be displayed or not.
 	 *
@@ -144,6 +164,12 @@ class AdEngine2Service
 	{
 		global $wgLoadAdsInHead;
 		return $wgLoadAdsInHead;
+	}
+
+	public static function areAdsAfterPageLoad()
+	{
+		global $wgLoadLateAdsAfterPageLoad;
+		return $wgLoadLateAdsAfterPageLoad;
 	}
 
 	public static function getCachedCategory()
@@ -194,26 +220,19 @@ class AdEngine2Service
 	private static function getJsVariables()
 	{
 		global $wgCityId, $wgEnableAdsInContent, $wgEnableOpenXSPC,
-			$wgHighValueCountriesDefault, $wgUser,
-			$wgEnableAdMeldAPIClient, $wgEnableAdMeldAPIClientPixels,
+			$wgUser, $wgEnableAdMeldAPIClient, $wgEnableAdMeldAPIClientPixels,
 			$wgOutboundScreenRedirectDelay, $wgEnableOutboundScreenExt,
-			$wgAdDriverUseSevenOneMedia, $wgAdDriverUseEbay,
+			$wgAdDriverUseSevenOneMedia, $wgAdDriverUseEbay, $wgAdDriverUseDartForSlotsBelowTheFold,
 			$wgAdPageLevelCategoryLangs, $wgLanguageCode, $wgAdDriverTrackState,
 			$wgAdDriverForceDirectGptAd, $wgAdDriverForceLiftiumAd,
 			$wgOasisResponsive, $wgOasisResponsiveLimited,
-			$wgEnableRHonDesktop, $wgAdPageType, $wgOut,
-			$wgRequest, $wgEnableKruxTargeting, $wgNoExternals,
-			$wgAdVideoTargeting, $wgLiftiumOnLoad,
-			$wgDartCustomKeyValues, $wgWikiDirectedAtChildrenByStaff;
+			$wgEnableRHonDesktop, $wgOut,
+			$wgRequest, $wgEnableKruxTargeting,
+			$wgAdVideoTargeting, $wgLiftiumOnLoad, $wgAdDriverSevenOneMediaOverrideSub2Site,
+			$wgDartCustomKeyValues, $wgWikiDirectedAtChildrenByStaff, $wgAdEngineDisableLateQueue,
+			$wgAdDriverUseBottomLeaderboard, $wgAdDriverBottomLeaderboardImpressionCapping, $wgAdDriverEnableAdsInMaps;
 
 		$vars = [];
-
-		$highValueCountries = WikiFactory::getVarValueByName(
-			'wgHighValueCountries',
-			[$wgCityId, Wikia::COMMUNITY_WIKI_ID],
-			false,
-			$wgHighValueCountriesDefault
-		);
 
 		$variablesToExpose = [
 			'wgEnableAdsInContent' => $wgEnableAdsInContent,
@@ -221,12 +240,15 @@ class AdEngine2Service
 			'wgEnableAdMeldAPIClientPixels' => $wgEnableAdMeldAPIClientPixels,
 			'wgEnableOpenXSPC' => $wgEnableOpenXSPC,
 
+			// AdConfigMobile.js
+			'adEnginePageType' => self::getPageType(),
+
 			// Ad Driver
-			'wgHighValueCountries' => $highValueCountries,
 			'wgAdDriverUseCatParam' => array_search($wgLanguageCode, $wgAdPageLevelCategoryLangs),
-			'wgAdPageType' => $wgAdPageType,
 			'wgAdDriverUseEbay' => $wgAdDriverUseEbay,
+			'wgAdDriverUseDartForSlotsBelowTheFold' => $wgAdDriverUseDartForSlotsBelowTheFold === null ? 'hub' : $wgAdDriverUseDartForSlotsBelowTheFold,
 			'wgAdDriverUseSevenOneMedia' => $wgAdDriverUseSevenOneMedia,
+			'wgAdDriverSevenOneMediaOverrideSub2Site' => $wgAdDriverSevenOneMediaOverrideSub2Site,
 			'wgUserShowAds' => $wgUser->getOption('showAds'),
 			'wgOutboundScreenRedirectDelay' => $wgOutboundScreenRedirectDelay,
 			'wgEnableOutboundScreenExt' => $wgEnableOutboundScreenExt,
@@ -235,9 +257,11 @@ class AdEngine2Service
 			'wgAdDriverForceDirectGptAd' => $wgAdDriverForceDirectGptAd,
 			'wgAdDriverForceLiftiumAd' => $wgAdDriverForceLiftiumAd,
 			'wgAdVideoTargeting' => $wgAdVideoTargeting,
+			'wgAdEngineDisableLateQueue' => $wgAdEngineDisableLateQueue,
 
 			// AdEngine2.js
 			'wgLoadAdsInHead' => AdEngine2Service::areAdsInHead(),
+			'wgLoadLateAdsAfterPageLoad' => AdEngine2Service::areAdsAfterPageLoad(),
 			'wgShowAds' => AdEngine2Service::areAdsShowableOnPage(),
 			'wgAdsShowableOnPage' => AdEngine2Service::areAdsShowableOnPage(), // not used
 			'wgAdDriverStartLiftiumOnLoad' => $wgLiftiumOnLoad,
@@ -256,11 +280,14 @@ class AdEngine2Service
 			'wgDartCustomKeyValues' => $wgDartCustomKeyValues,
 			'wgWikiDirectedAtChildren' => (bool) $wgWikiDirectedAtChildrenByStaff,
 
-			// WikiaDartHelper.js
+			// AdLogicPageParams.js, SevenOneMediaHelper.js, AnalyticsProviderQuantServe.php
 			'cityShort' => AdEngine2Service::getCachedCategory()['short'],
+
+			// intMapPontoBridge.js
+			'wgAdDriverEnableAdsInMaps' => $wgAdDriverEnableAdsInMaps,
 		];
 
-		if (!empty($wgEnableKruxTargeting) && empty($wgNoExternals)) {
+		if (!empty($wgEnableKruxTargeting)) {
 			$cat = AdEngine2Service::getCachedCategory();
 			$variablesToExpose['wgKruxCategoryId'] = WikiFactoryHub::getInstance()->getKruxId($cat['id']);
 		}
@@ -269,6 +296,10 @@ class AdEngine2Service
 			$url = ResourceLoader::makeCustomURL($wgOut, ['wikia.ext.adengine.sevenonemedia'], 'scripts');
 			$variablesToExpose['wgAdDriverSevenOneMediaCombinedUrl'] = $url;
 			$variablesToExpose['wgAdDriverSevenOneMediaDisableFirePlaces'] = !empty($wgOasisResponsive) && empty($wgOasisResponsiveLimited);
+		}
+
+		if ($wgAdDriverUseBottomLeaderboard) {
+			$variablesToExpose['wgAdDriverBottomLeaderboardImpressionCapping'] = $wgAdDriverBottomLeaderboardImpressionCapping;
 		}
 
 		foreach($variablesToExpose as $varName => $varValue) {
@@ -290,79 +321,12 @@ class AdEngine2Service
 	}
 
 	/**
-	 * Get names of variables from getJsVariables to expose in top
-	 *
-	 * @return array
-	 */
-	private static function getTopJsVariableNames()
-	{
-		$topVars = [
-			'adDriver2ForcedStatus',         // DART creatives
-			'adDriverLastDARTCallNoAds',     // TODO: remove var
-			'adslots2',                      // AdEngine2_Ad.php
-			'wgAdsShowableOnPage',           // TODO: remove var
-			'wgEnableKruxTargeting',         // Krux.js
-			'wgKruxCategoryId',              // Krux.run.js
-			'wgShowAds',                     // analytics_prod.js
-			'wgUserShowAds',                 // JWPlayer.class.php
-			'wikiaPageIsCorporate',          // analytics_prod.js
-			'wikiaPageType',                 // analytics_prod.js
-		];
-		if (self::areAdsInHead()) {
-			$topVars = array_merge($topVars, [
-				'cityShort',                     // AdLogicPageParams.js
-				'cscoreCat',                     // analytics_prod.js, AdLogicPageParams.js
-				'wgAdDriverUseSevenOneMedia',    // AdConfig2.js
-				'wgAdDriverForceDirectGptAd',    // AdConfig2.js
-				'wgAdDriverForceLiftiumAd',      // AdConfig2.js
-				'wgAdDriverTrackState',          // SlotTracker.js
-				'wgAdDriverUseCatParam',         // AdLogicPageParams.js
-				'wgDartCustomKeyValues',         // AdLogicPageParams.js
-				'wgEnableRHonDesktop',           // AdEngine2.run.js
-				'wgHighValueCountries',          // AdLogicHighValueCountry.js
-				'wgLoadAdsInHead',               // AdEngine2.run.js
-				'wgUsePostScribe',               // AdEngine2.run.js, scriptwriter.js
-				'wgWikiDirectedAtChildren',      // AdLogicPageParams.js
-				'wikiaPageIsHub',                // AdLogicPageParams.js
-			]);
-		}
-		return $topVars;
-	}
-
-	/**
 	 * Get variables to expose in top of HTML
 	 *
 	 * @return array
 	 */
 	public static function getTopJsVariables()
 	{
-		$allVars = self::getJsVariables();
-		$topVars = [];
-
-		$keysToInclude = self::getTopJsVariableNames();
-		foreach ($keysToInclude as $key) {
-			if (isset($allVars[$key])) {
-				$topVars[$key] = $allVars[$key];
-			}
-		}
-		return $topVars;
-	}
-
-	/**
-	 * Get variables to expose in bottom of HTML
-	 *
-	 * @return array
-	 */
-	public static function getBottomJsVariables()
-	{
-		// Remember in PHP this actually makes an array copy:
-		$bottomVars = self::getJsVariables();
-
-		$keysToExclude = self::getTopJsVariableNames();
-		foreach ($keysToExclude as $key) {
-			unset($bottomVars[$key]);
-		}
-
-		return $bottomVars;
+		return self::getJsVariables();
 	}
 }

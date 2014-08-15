@@ -1,0 +1,16 @@
+{
+	"@metadata": {
+		"authors": [
+			"Cekli829",
+			"Interfase",
+			"Jduranboger"
+		]
+	},
+	"tag-visualeditor": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|Vizual redaktor]]",
+	"tag-visualeditor-description": "Redaktə [[{{MediaWiki:visualeditor-descriptionpagelink}}|Vizual redaktorun]] köməyi ilə edilib",
+	"tag-visualeditor-needcheck": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|Vizual redaktor: Yoxla]]",
+	"visualeditor-feedback-link": "Layihə:Vizual redaktor/Rəy",
+	"visualeditor-feedback-tool": "Rəy bildir",
+	"visualeditor-help-label": "İstifadəçinin bələdçisini oxu",
+	"visualeditor-help-title": "Redaktoru necə işlətmək haqqında istifadəçinin bələdçisini"
+}

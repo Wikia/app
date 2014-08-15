@@ -5,12 +5,16 @@
 @import "skins/oasis/css/mixins/box-sizing";
 @import "skins/oasis/css/mixins/flexbox";
 
-.ve-indicator {
+.ve-spinner {
 	@include align-items( center );
 	@include blackout();
 	@include flexbox();
 	@include justify-content( center );
 	opacity: 0;
+
+	&.optimizely-opaque {
+		@include blackout( transparentize( $color-page, 0.15 ) );
+	}
 
 	.content {
 		@include box-shadow( 1px, 2px, 5px, rgba(0, 0, 0, .7) );

@@ -320,6 +320,7 @@ $messages['ps'] = array(
  * @author Hamilton Abreu
  * @author Imperadeiro98
  * @author Luckas
+ * @author Polyethylen
  */
 $messages['pt'] = array(
 	'wikiaconfirmemail-error-empty-code' => 'Código de confirmação vazio',

@@ -1,0 +1,42 @@
+{
+	"@metadata": {
+		"authors": [
+			"Amikeco",
+			"Bouron",
+			"Odisha1",
+			"Psubhashish",
+			"ଶିତିକଣ୍ଠ ଦାଶ"
+		]
+	},
+	"tooltip-ca-ve-edit": "Фæив ацы фарс визуалон ивæнæй",
+	"visualeditor-beta-appendix": "бетæ",
+	"visualeditor-beta-label": "бетæ",
+	"visualeditor-ca-editsource": "Бындур ивын",
+	"visualeditor-ca-ve-create": "Уындæй ивæн",
+	"visualeditor-ca-ve-edit": "Уындæй ивæн",
+	"visualeditor-desc": "Visual MediaWiki-йæн",
+	"visualeditor-dialog-meta-categories-category": "Категори",
+	"visualeditor-dialog-meta-categories-data-label": "Категоритæ",
+	"visualeditor-dialog-meta-categories-input-newcategorylabel": "Ног категори",
+	"visualeditor-dialog-meta-categories-section": "Категоритæ",
+	"visualeditor-dialog-meta-languages-label": "Æвзæгтæ",
+	"visualeditor-dialog-meta-languages-section": "Æвзæгтæ",
+	"visualeditor-editnotices-tool": "$1 {{PLURAL:$1|хъусинаг|хъусинагы}}",
+	"visualeditor-linkinspector-suggest-external-link": "Веб-æрвитæн",
+	"visualeditor-linkinspector-suggest-new-page": "Ног фарс",
+	"visualeditor-mainnamespacepagelink": "Project:Сæйраг номдон",
+	"visualeditor-notification-created": "$1 конд æрцыд.",
+	"visualeditor-notification-restored": "$1 фæлхатт æрцыд.",
+	"visualeditor-notification-saved": "{{grammar:genitive|$1}} цы ивтай, уый æвæрд æрцыд.",
+	"visualeditor-savedialog-label-create": "Фарс бакæнын",
+	"visualeditor-savedialog-label-error": "Рæдыд",
+	"visualeditor-savedialog-label-report": "Проблемæ бацамонын",
+	"visualeditor-savedialog-label-restore": "Фарс рацаразын",
+	"visualeditor-savedialog-label-review-good": "Мæнмæ хорз кæсы",
+	"visualeditor-savedialog-label-save": "Фарс нывæрын",
+	"visualeditor-savedialog-title-review": "Фен цы фæивтай",
+	"visualeditor-savedialog-title-save": "Ивдтытæ нывæрын",
+	"visualeditor-toolbar-savedialog": "Нывæрын",
+	"visualeditor-usernamespacepagelink": "Project:Архайæджы номдон",
+	"visualeditor-viewpage-savewarning": "Æцæг дæ фæнды æнæ нывæрынæй фæстæмæ кæсынмæ ацæуын?"
+}

@@ -9,7 +9,6 @@
 		// cached thumbnail arrays and detailed info
 		cache: {
 			articleMedia: [], // Article Media
-			relatedVideos: [], // Related Video
 			latestPhotos: [], // Latest Photos from DOM
 			wikiPhotos: [], // Back fill of photos from wiki
 			videosModule: [],
@@ -22,11 +21,12 @@
 		inlineVideoLoading: [],
 		videoInstance: null,
 		pageAds: $('#TOP_RIGHT_BOXAD'), // if more ads start showing up over lightbox, add them here
+		reloadOnClose: false, // Means to reload the page on closing the lightbox - see VID-473
 		defaults: {
 			// start with default modal options
 			id: 'LightboxModal',
 			className: 'LightboxModal',
-			width: 970, // modal adds 30px of padding to width
+			width: 970, // modal adds 40px of padding to width
 			noHeadline: true,
 			topOffset: 25,
 			height: 628,
@@ -56,13 +56,15 @@
 				if (LightboxLoader.videoInstance) {
 					LightboxLoader.videoInstance.clearTimeoutTrack();
 				}
+				if (LightboxLoader.reloadOnClose) {
+					window.location.reload();
+				}
 			}
 		},
 		videoThumbWidthThreshold: 400,
 		init: function () {
 			var self = this,
 				$article = $('#WikiaArticle'),
-				$videos = $('#RelatedVideosRL'),
 				$photos = $('#LatestPhotosModule'),
 				$comments = $('#WikiaArticleComments'), // event handled with $footer
 				$footer = $('#WikiaArticleFooter'), // bottom videos module
@@ -70,7 +72,7 @@
 				$videoHomePage = $('#latest-videos-wrapper');
 
 			// Bind click event to initiate lightbox
-			$article.add($photos).add($videos).add($footer).add($videosModule)
+			$article.add($photos).add($footer).add($videosModule)
 				.off('.lightbox')
 				.on('click.lightbox', '.lightbox, a.image', function (e) {
 					var $this = $(this),
@@ -92,8 +94,6 @@
 						$parent = $videoHomePage;
 					} else if ($this.closest($article).length) {
 						$parent = $article;
-					} else if ($this.closest($videos).length) {
-						$parent = $videos;
 					} else if ($this.closest($photos).length) {
 						$parent = $photos;
 					} else if ($this.closest($comments).length) {
@@ -110,13 +110,8 @@
 
 					// Handle edge cases
 
-					// Allow links to open lightbox without a thumbnail. The link itself must contain data-image-key.
-					// Used in RelatedVideos.
-					if ($this.hasClass('lightbox-link-to-open')) {
-						fileKey = $this.attr('data-image-key') || $this.attr('data-video-key');
-
 					// TODO: refactor wikia slideshow
-					} else if ($this.hasClass('wikia-slideshow-popout')) {
+					if ($this.hasClass('wikia-slideshow-popout')) {
 						$slideshowImg = $this.parents('.wikia-slideshow-toolbar')
 							.siblings('.wikia-slideshow-images-wrapper')
 							.find('li:visible')
@@ -168,7 +163,6 @@
 						}
 					}
 				);
-
 		},
 
 		/**
@@ -354,14 +348,17 @@
 		},
 		/**
 		 *
-		 * @param $link Anchor that was clicked
-		 * @param [$thumb] Optional thumbnail image inside clicked anchor
+		 * @param {jQuery} $link Anchor that was clicked
+		 * @param {jQuery} [$thumb] Optional thumbnail image inside clicked anchor
 		 * @param {jQuery} event jQuery click event
 		 * @returns {boolean}
 		 */
 		hasLightbox: function ($link, $thumb, event) {
+			var modalPadding = 40; // amount of padding that modal adds to the width specified
+
 			// if any of the following conditions are true, don't open the lightbox
 			return !(
+				$(window).width() < LightboxLoader.defaults.width + modalPadding || // browser is too small, like tablet
 				$link.hasClass('link-internal') ||
 				$link.hasClass('link-external') ||
 				$thumb && $thumb.attr('data-shared-help') ||
@@ -388,7 +385,6 @@
 
 		// Constants for tracking the source of a click
 		clickSource: {
-			RV: 'relatedVideos',
 			LP: 'latestPhotos',
 			EMBED: 'embed',
 			SEARCH: 'search',
@@ -397,7 +393,6 @@
 			SHARE: 'share',
 			HUBS: 'hubs',
 			OTHER: 'other',
-			VIDEOS_MODULE_BOTTOM: 'bottomVideosModule',
 			VIDEOS_MODULE_RAIL: 'railVideosModule',
 			VIDEO_HOME_PAGE: 'videoHomePage'
 		}

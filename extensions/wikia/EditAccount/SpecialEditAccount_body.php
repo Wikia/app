@@ -37,11 +37,12 @@ class EditAccount extends SpecialPage {
 	 * @param $par Mixed: parameter passed to the page or null
 	 */
 	public function execute( $par ) {
-		global $wgOut, $wgEnableUserLoginExt, $wgExternalAuthType, $wgTitle;
+		global $wgEnableUserLoginExt, $wgExternalAuthType;
 
 		// Set page title and other stuff
 		$this->setHeaders();
 		$user = $this->getUser();
+		$output = $this->getOutput();
 
 		# If the user isn't permitted to access this special page, display an error
 		if ( !$user->isAllowed( 'editaccount' ) ) {
@@ -50,7 +51,7 @@ class EditAccount extends SpecialPage {
 
 		# Show a message if the database is in read-only mode
 		if ( wfReadOnly() ) {
-			$wgOut->readOnlyPage();
+			$output->readOnlyPage();
 			return;
 		}
 
@@ -58,6 +59,9 @@ class EditAccount extends SpecialPage {
 		if ( $user->isBlocked() ) {
 			throw new UserBlockedError( $this->getUser()->mBlock );
 		}
+
+		$output->addModuleStyles( 'ext.editAccount' );
+
 		$request = $this->getRequest();
 
 		$action = $request->getVal( 'wpAction' );
@@ -114,7 +118,7 @@ class EditAccount extends SpecialPage {
 			&& ( !$request->wasPosted()
 				|| !$user->matchEditToken( $request->getVal( 'wpToken' ) ) )
 		) {
-			$this->getOutput()->addHTML(
+			$output->addHTML(
 				Xml::element( 'p', [ 'class' => 'error' ], $this->msg( 'sessionfailure' )->text() )
 			);
 			return;
@@ -144,7 +148,8 @@ class EditAccount extends SpecialPage {
 				$this->mStatusMsg = $this->mStatus ? wfMsg( 'editaccount-requested' ) : wfMsg( 'editaccount-not-requested' );
 				break;
 			case 'closeaccountconfirm':
-				$this->mStatus = $this->closeAccount( $this->mUser, $changeReason, $this->mStatusMsg, $this->mStatusMsg2 );
+				$keepEmail = !$request->getBool( 'clearemail', false );
+				$this->mStatus = self::closeAccount( $this->mUser, $changeReason, $this->mStatusMsg, $this->mStatusMsg2, $keepEmail );
 				$template = $this->mStatus ? 'selectuser' : 'displayuser';
 				break;
 			case 'clearunsub':
@@ -166,7 +171,7 @@ class EditAccount extends SpecialPage {
 				$template = 'selectuser';
 		}
 
-		$wgOut->setPageTitle( wfMsg( 'editaccount-title' ) );
+		$output->setPageTitle( $this->msg( 'editaccount-title' )->plain() );
 
 		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . '/templates/' );
 		$oTmpl->set_Vars( array(
@@ -220,7 +225,7 @@ class EditAccount extends SpecialPage {
 		}
 
 		// HTML output
-		$wgOut->addHTML( $oTmpl->render( $template ) );
+		$output->addHTML( $oTmpl->render( $template ) );
 	}
 
 	/**
@@ -317,7 +322,7 @@ class EditAccount extends SpecialPage {
 			}
 			$this->mStatusMsg = wfMsgExt( $message, array( 'parsemag' ), $params );
 			return false;
-	 }
+		}
 	}
 
 	/**
@@ -349,15 +354,17 @@ class EditAccount extends SpecialPage {
 	}
 
 	/**
-	 * Scrambles the user's password, sets an empty e-mail and marks as disabled
+	 * Clears the user's password, sets an empty e-mail and marks as disabled
 	 *
-	 * @param $user User User account to close
-	 * @param $changeReason String reason for change
-	 * @param $mStatusMsg String Main error message
-	 * @param $mStatusMsg2 String Secondary (non-critical) error message
-	 * @return Boolean: true on success, false on failure
+	 * @param  User    $user         User account to close
+	 * @param  string  $changeReason Reason for change
+	 * @param  string  $mStatusMsg   Main error message
+	 * @param  string  $mStatusMsg2  Secondary (non-critical) error message
+	 * @param  boolean $keepEmail    Optionally keep the email address in a
+	 *                               user option
+	 * @return boolean               true on success, false on failure
 	 */
-	public static function closeAccount( $user = '', $changeReason = '', &$mStatusMsg = '', &$mStatusMsg2 = '' ) {
+	public static function closeAccount( $user = '', $changeReason = '', &$mStatusMsg = '', &$mStatusMsg2 = '', $keepEmail = true ) {
 		global $wgEnableFacebookConnectExt;
 		if ( empty( $user ) ) {
 			throw new Exception( 'User object is invalid.' );
@@ -386,12 +393,12 @@ class EditAccount extends SpecialPage {
 		}
 
 		# close account and invalidate cache + cluster data
-		Wikia::invalidateUser( $user, true, true );
+		Wikia::invalidateUser( $user, true, $keepEmail, true );
 		if ( !empty( $wgEnableFacebookConnectExt ) ) {
 			self::disconnectFBConnect( $user );
 		}
 
-		if ( $user->getEmail() == ''  ) {
+		if ( $user->getEmail() == '' ) {
 			$title = Title::newFromText( 'EditAccount', NS_SPECIAL );
 			// Log what was done
 			$log = new LogPage( 'editaccnt' );

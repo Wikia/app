@@ -166,8 +166,8 @@ class WikiaPhotoGallery extends ImageGallery {
 	/**
 	 * Get value of parsed parameter
 	 */
-	public function getParam($name) {
-		return isset($this->mParsedParams[$name]) ? $this->mParsedParams[$name] : null;
+	public function getParam($name, $default = null) {
+		return isset($this->mParsedParams[$name]) ? $this->mParsedParams[$name] : $default;
 	}
 
 	/**
@@ -559,7 +559,10 @@ class WikiaPhotoGallery extends ImageGallery {
 		}
 
 		$out .= JSSnippets::addToStack(
-			array( '/extensions/wikia/WikiaPhotoGallery/js/WikiaPhotoGallery.view.js', ),
+			array(
+				'/extensions/wikia/WikiaPhotoGallery/js/WikiaPhotoGallery.view.js',
+				'/extensions/wikia/WikiaPhotoGallery/css/gallery.scss',
+			),
 			array(),
 			'WikiaPhotoGalleryView.init'
 		);
@@ -666,7 +669,7 @@ class WikiaPhotoGallery extends ImageGallery {
 
 			$perRow = ($this->mPerRow > 0) ? $this->mPerRow : 'dynamic';
 			$position = $this->getParam('position');
-			$captionsPosition = $this->getParam('captionposition');
+			$captionsPosition = $this->getParam('captionposition', 'below');
 			$captionsAlign = $this->getParam('captionalign');
 			$captionsSize = $this->getParam('captionsize');
 			$captionsColor = (!empty($captionColor)) ? $captionColor : null;
@@ -692,6 +695,7 @@ class WikiaPhotoGallery extends ImageGallery {
 				'hash' => $hash,
 				'class' =>  'wikia-gallery'.
 					(($isTemplate) ? ' template' : null).
+					" wikia-gallery-caption-{$captionsPosition}".
 					" wikia-gallery-position-{$position}".
 					" wikia-gallery-spacing-{$spacing}".
 					" wikia-gallery-border-{$borderSize}".
@@ -761,13 +765,14 @@ class WikiaPhotoGallery extends ImageGallery {
 				 */
 				$imageTitle = $imageData[0];
 				$fileObject = $fileObjectsCache[$index];
+				$imageTitleText = $imageTitle->getText();
 
 				$image['height'] = $height;
 				$image['width'] = $thumbSize;
 				$image['caption'] = $imageData[1];
 
 				if (!is_object($fileObject) || ($imageTitle->getNamespace() != NS_FILE)) {
-					$image['linkTitle'] = $image['titleText'] = $imageTitle->getText();
+					$image['linkTitle'] = $image['titleText'] = $imageTitleText;
 					$image['thumbnail'] = false;
 					$image['link'] = Skin::makeSpecialUrl("Upload", array( 'wpDestFile' => $image['linkTitle'] ) );
 					$image['classes'] = 'image broken-image accent new';
@@ -789,7 +794,7 @@ class WikiaPhotoGallery extends ImageGallery {
 
 					$image['link'] = $imageData[2];
 
-					$linkAttribs = $this->parseLink($imageTitle->getLocalUrl(), $imageTitle->getText(), $image['link']);
+					$linkAttribs = $this->parseLink($imageTitle->getLocalUrl(), $imageTitleText, $image['link']);
 
 					$image['link'] = $linkAttribs['href'];
 					$image['linkTitle'] = $linkAttribs['title'];
@@ -858,8 +863,14 @@ class WikiaPhotoGallery extends ImageGallery {
 
 				if (!empty($image['thumbnail'])) {
 					if ( $isVideo ) {
+						$thumbHtml = '';
+						$duration = $fileObject->getMetadataDuration();
+						if ( !empty( $duration ) ) {
+							$duration = WikiaFileHelper::formatDuration( $duration );
+							$thumbHtml .= '<span class="duration">' . $duration . '</span>';
+						}
 						$playButtonSize = ThumbnailHelper::getThumbnailSize( $image['width'] );
-						$thumbHtml = $this->videoPlayButton;
+						$thumbHtml .= $this->videoPlayButton;
 						$linkAttribs['class'] .= ' video video-thumbnail ' . $playButtonSize;
 					} else {
 						$thumbHtml = '';
@@ -912,6 +923,11 @@ class WikiaPhotoGallery extends ImageGallery {
 					$html .= Xml::closeElement('div');
 				}
 
+				// Insert video titles here
+				if ($isVideo) {
+					$html .= '<div class="title">' . $imageTitleText . '</div>';
+				}
+
 				if (!empty($image['caption'])) {
 					$html .= Xml::openElement(
 						'div',
@@ -947,12 +963,6 @@ class WikiaPhotoGallery extends ImageGallery {
 				if ($perRow == 'dynamic') {
 					$html .= Xml::element('br');
 				}
-
-				// add button for Monaco
-				$html .= Xml::openElement('span', array('class' => 'wikia-gallery-add noprint', 'style' => 'display: none'));
-				$html .= Xml::element('img', array('src' => $wgBlankImgUrl, 'class' => 'sprite-small add'));
-				$html .= Xml::element('a', array('href' => '#'), wfMessage('wikiaPhotoGallery-viewmode-addphoto')->inContentLanguage()->text());
-				$html .= Xml::closeElement('span');
 
 				// add button for Oasis
 				$html .= Xml::openElement('a', array('class' => 'wikia-photogallery-add wikia-button noprint', 'style' => 'display: none'));
@@ -1240,6 +1250,7 @@ class WikiaPhotoGallery extends ImageGallery {
 		$slideshowHtml .= JSSnippets::addToStack(
 			array(
 				'/resources/wikia/libraries/jquery/slideshow/jquery-slideshow-0.4.js',
+				'/extensions/wikia/WikiaPhotoGallery/css/slideshow.scss',
 				'/extensions/wikia/WikiaPhotoGallery/js/WikiaPhotoGallery.slideshow.js'
 			),
 			array(),
@@ -1260,18 +1271,18 @@ class WikiaPhotoGallery extends ImageGallery {
 	 */
 
 	private function renderSlider() {
-		wfProfileIn(__METHOD__);
+		wfProfileIn( __METHOD__ );
 
 		// do not render empty sliders
-		if (empty($this->mFiles)) {
-			wfProfileOut(__METHOD__);
+		if ( empty( $this->mFiles ) ) {
+			wfProfileOut( __METHOD__ );
 			return '';
 		}
 
 		$orientation = $this->getParam('orientation');
 
 		// setup image serving for main images and navigation thumbnails
-		if( $orientation == 'mosaic' ) {
+		if ( $orientation == 'mosaic' ) {
 			$imagesDimensions = array(
 				'w' => WikiaPhotoGalleryHelper::WIKIA_GRID_SLIDER_MOSAIC_MIN_IMG_WIDTH,
 				'h' => WikiaPhotoGalleryHelper::SLIDER_MOSAIC_MIN_IMG_HEIGHT,
@@ -1286,7 +1297,7 @@ class WikiaPhotoGallery extends ImageGallery {
 				'w' => WikiaPhotoGalleryHelper::SLIDER_MIN_IMG_WIDTH,
 				'h' => WikiaPhotoGalleryHelper::SLIDER_MIN_IMG_HEIGHT,
 			);
-			if ( $orientation == 'right' ){
+			if ( $orientation == 'right' ) {
 				$sliderClass = 'vertical';
 				$thumbDimensions = array(
 					"w" => 110,
@@ -1300,8 +1311,6 @@ class WikiaPhotoGallery extends ImageGallery {
 				);
 			}
 		}
-
-		$imageServingForThumbs = new ImageServing(null, $thumbDimensions['w'], $thumbDimensions);
 
 		$out = array();
 
@@ -1326,57 +1335,33 @@ class WikiaPhotoGallery extends ImageGallery {
 			wfRunHooks( 'BeforeGalleryFindFile', array( &$this, &$nt, &$time, &$descQuery ) );
 
 			$file = wfFindFile( $nt, $time );
-			if ( is_object($file) && ($nt->getNamespace() == NS_FILE)) {
+			if ( is_object( $file ) && ( $nt->getNamespace() == NS_FILE ) ) {
+				list( $adjWidth, $adjHeight ) = $this->fitWithin( $file, $imagesDimensions );
 
-				$aspect = $file->getWidth() / $file->getHeight();
-				$adjWidth = $file->getWidth();
-				$adjHeight = $file->getHeight();
-
-				// If the image extends beyond the slider's viewing box in either dimention
-				// scaled down the image
-				if (($file->getWidth() > $imagesDimensions['w']) || ($file->getHeight() > $imagesDimensions['h'])) {
-					if (($file->getWidth() - $imagesDimensions['w']) > ($file->getHeight() - $imagesDimensions['h'])) {
-						// Oversized image, constrain on width
-						$adjWidth = $imagesDimensions['w'];
-						$adjHeight = intval($adjWidth / $aspect);
-					} else {
-						// Oversized image, constrain on height
-						$adjHeight = $imagesDimensions['h'];
-						$adjWidth = intval($adjHeight * $aspect);
-					}
-				}
-
-				if ( F::app()->checkSkin( 'wikiamobile' ) ){
+				if ( F::app()->checkSkin( 'wikiamobile' ) ) {
 					$imageUrl = wfReplaceImageServer( $file->getUrl(), $file->getTimestamp() );
 				} else {
-					$imageServingForImages = new ImageServing(null, $imagesDimensions['w'], array("w" => $adjWidth, "h" => $adjHeight));
-					// generate cropped version of big image (fit within 660x360 box)
-					// BugId:9678 image thumbnailer does not always land on 360px height since we scale on width
-					// so this also scales image UP if it is too small (stretched is better than blank)
-					// max() added due to BugId:20644
-					$imageUrl = $imageServingForImages->getUrl($file, max($imagesDimensions['w'], $file->getWidth()), max($imagesDimensions['h'], $file->getHeight()));
+					$imageUrl = $this->resizeURL( $file, $imagesDimensions );
 				}
 
 				// generate navigation thumbnails
-				$thumbUrl = $imageServingForThumbs->getUrl($file, $file->getWidth(), $file->getHeight());
+				$thumbUrl = $this->cropURL( $file, $thumbDimensions );
 
 				// Handle videos
 				$videoHtml = false;
 				$videoPlayButton = false;
 				$navClass = '';
 
-				if( WikiaFileHelper::isFileTypeVideo($file) ) {
+				if ( WikiaFileHelper::isFileTypeVideo( $file ) ) {
 					// Get HTML for main video image
 					$htmlParams = array(
 						'file-link' => true,
 						'linkAttribs' => array( 'class' => 'wikiaPhotoGallery-slider force-lightbox' ),
-						'hideOverlay' => true,
-						'useTemplate' => true,
 					);
 
 					$videoHtml = $file->transform( array( 'width' => $imagesDimensions['w'] ) )->toHtml( $htmlParams );
 
-					// Get play button overlay for video thumb
+					// Get play button overlay for little video thumb
 					$videoPlayButton = $this->videoPlayButton;
 					$navClass = 'xxsmall video-thumbnail';
 				}
@@ -1446,7 +1431,7 @@ class WikiaPhotoGallery extends ImageGallery {
 				'imagesDimensions' => $imagesDimensions,
 			));
 
-			if( F::app()->checkSkin( 'wikiamobile' ) ) {
+			if ( F::app()->checkSkin( 'wikiamobile' ) ) {
 				$html = $template->render('renderWikiaMobileSlider');
 			} else if($orientation == 'mosaic') {
 				$html = $template->render('renderMosaicSlider');
@@ -1454,7 +1439,7 @@ class WikiaPhotoGallery extends ImageGallery {
 				$html = $template->render('renderSlider');
 			}
 
-			if ($orientation == 'mosaic') {
+			if ( $orientation == 'mosaic' ) {
 				$sliderResources = array(
 					'/resources/wikia/libraries/modernizr/modernizr-2.0.6.js',
 					'/extensions/wikia/WikiaPhotoGallery/css/WikiaPhotoGallery.slidertag.mosaic.scss',
@@ -1491,13 +1476,135 @@ class WikiaPhotoGallery extends ImageGallery {
 	}
 
 	/**
+	 * Return height and width for the image $file, to fit within the bounds given by $dim.  This
+	 * preserves the aspect ratio for $file.  The original file height and width will be returned for images
+	 * both shorter and narrower than $dim.
+	 *
+	 * @param File $file
+	 * @param array $dim
+	 * @return array
+	 */
+	public function fitWithin( File $file, array $dim ) {
+		$aspect = $file->getWidth() / $file->getHeight();
+		$adjWidth = $file->getWidth();
+		$adjHeight = $file->getHeight();
+
+		// If the image extends beyond the given dimensions in height or width then scale down the image to fit
+		// entirely within the dimensions
+		if (($file->getWidth() > $dim['w']) || ($file->getHeight() > $dim['h'])) {
+			if (($file->getWidth() - $dim['w']) > ($file->getHeight() - $dim['h'])) {
+				// Oversized image, constrain on width
+				$adjWidth = $dim['w'];
+				$adjHeight = intval($adjWidth / $aspect);
+			} else {
+				// Oversized image, constrain on height
+				$adjHeight = $dim['h'];
+				$adjWidth = intval($adjHeight * $aspect);
+			}
+		}
+
+		return [$adjWidth, $adjHeight];
+	}
+
+	/**
+	 * Return height and width for image $file such that the image is shrunk (keeping aspect ratio) to just the
+	 * height or width of $dim, whichever is closest.  Typically the image will then be cropped to the $dim bounds.
+	 * The original file height and width will be returned for images both shorter and narrower than $dim.
+	 *
+	 * @param File $file
+	 * @param array $dim
+	 * @return array
+	 */
+	public function fitClosest( File $file, array $dim ) {
+		$aspect = $file->getWidth() / $file->getHeight();
+		$adjWidth = $file->getWidth();
+		$adjHeight = $file->getHeight();
+
+		// Adjust the image to the closest dimension.
+		if ( ($file->getWidth() > $dim['w']) || ($file->getHeight() > $dim['h']) ) {
+			$widthDelta = $file->getWidth() - $dim['w'];
+			$heightDelta = $file->getHeight() - $dim['h'];
+
+			if ( ( $widthDelta > 0 ) && ( $widthDelta < $heightDelta ) ) {
+				// Oversized image, constrain on width
+				$adjWidth = $dim['w'];
+				$adjHeight = intval($adjWidth / $aspect);
+			} else {
+				// Oversized image, constrain on height
+				$adjHeight = $dim['h'];
+				$adjWidth = intval($adjHeight * $aspect);
+			}
+		}
+
+		return [$adjWidth, $adjHeight];
+	}
+
+	/**
+	 * Return a URL that displays $file shrunk to fit within the bounding box $box.  Images smaller than the bounding
+	 * box will not be affected.  The effect is an image that fits completely within the $box, but may have empty space
+	 * on either side or on top and bottom.
+	 *
+	 * @param File $file
+	 * @param array $box An array of width and height giving the bounds (as a height and width) of the new image.
+	 *                   Keys are:
+	 *                   w : the bounding width
+	 *                   h : the bounding height
+	 * @return String
+	 */
+	public function resizeURL( File $file, array $box ) {
+		list( $adjWidth, $adjHeight ) = $this->fitWithin( $file, $box );
+
+		$append = '';
+		$mime = strtolower( $file->getMimeType() );
+		if ( $mime == 'image/svg+xml' || $mime == 'image/svg' ) {
+			$append = '.png';
+		}
+
+		return wfReplaceImageServer( $file->getThumbUrl( $adjWidth . 'px-' . $file->getName() . $append ) );
+	}
+
+	/**
+	 * Return a URL that displays $file shrunk to have the closest dimension meet $box.  Images smaller than the
+	 * bounding box will not be affected.  The part of the image that extends beyond the $box dimensions will be
+	 * cropped out.  The result is an image that completely fills the box with no empty space, but is cropped.
+	 *
+	 * @param File $file
+	 * @param array $box
+	 * @return String
+	 */
+	public function cropURL( File $file, array $box ) {
+		list( $adjWidth, $adjHeight ) = $this->fitClosest( $file, $box );
+
+		if ( $adjHeight == $box['h'] ) {
+			$height = $file->getHeight();
+			$width = $box['w'] * ($file->getHeight()/$box['h']);
+		}
+
+		if ( $adjWidth == $box['w'] ) {
+			$height = $box['h'] * ($file->getWidth()/$box['w']);
+			$width = $file->getHeight();
+		}
+
+		$cropStr = sprintf( "%d,%d,%d,%d", 0, $width, 0, $height );
+
+		$append = '';
+		$mime = strtolower( $file->getMimeType() );
+		if ( $mime == 'image/svg+xml' || $mime == 'image/svg' ) {
+			$append = '.png';
+		}
+
+		return wfReplaceImageServer( $file->getThumbUrl( $adjWidth . 'px-' . $cropStr . '-' . $file->getName() . $append ) );
+	}
+
+
+	/**
 	 * Get object for given image (and call hook)
 	 *
-	 * @param $title Title object of the image
+	 * @param Title $nt Title object for the image
 	 *
 	 * @return LocalFile|Bool
 	 */
-	private function getImage($nt) {
+	private function getImage( $nt ) {
 		wfProfileIn(__METHOD__);
 
 		// Give extensions a chance to select the file revision for us

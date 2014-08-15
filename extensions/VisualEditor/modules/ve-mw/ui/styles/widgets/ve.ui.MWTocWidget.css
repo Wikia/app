@@ -1,0 +1,28 @@
+/*!
+ * VisualEditor MediaWiki UserInterface MWTocWidget styles.
+ *
+ * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
+ * @license The MIT License (MIT); see LICENSE.txt
+ */
+
+.ve-ui-mwTocWidget {
+	/* Margin to mock the standard appearance of TOC */
+	margin: 1em 0 0 0;
+}
+.ve-ui-mwTocWidget .toctoggle {
+	margin: 0.25em;
+}
+.ve-ui-mwTocWidget .toctoggle:before {
+	content: ' [';
+}
+.ve-ui-mwTocWidget .toctoggle:after {
+	content: '] ';
+}
+
+.ve-ui-mwTocWidget .tocnumber:after {
+	content: ' ';
+}
+
+.ve-ui-mwTocWidget a {
+	cursor: pointer;
+}

@@ -143,10 +143,15 @@
 	}
 }
 
-
+.hubs-slots {
+	@include clearfix;
+}
 .hub-slot {
 	display: inline-block;
 	width: 30%;
+	.image-placeholder {
+		margin: 10px 0;
+	}
 	.input-group {
 		margin: 10px 0;
 	}

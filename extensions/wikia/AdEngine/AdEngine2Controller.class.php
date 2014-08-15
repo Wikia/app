@@ -4,6 +4,13 @@
  * AdEngine II Controller
  */
 class AdEngine2Controller extends WikiaController {
+
+	public function init() {
+		if ($this->wg->AdDriverUseEbay && $this->wg->Skin !== 'wikiamobile') {
+			$this->response->addAsset( 'adengine2_ebay_scss' );
+		}
+	}
+
 	public static function getLiftiumOptionsScript() {
 		wfProfileIn(__METHOD__);
 
@@ -54,5 +61,6 @@ class AdEngine2Controller extends WikiaController {
 
 		$this->showAd = AdEngine2Service::shouldShowAd($pageTypes);
 		$this->slotName = $slotName;
+		$this->pageTypes = $pageTypes;
 	}
 }

@@ -362,15 +362,6 @@ $color-related-videos-background: darken($color-page, 20%);
 		.VideoEmbedCaption {
 			width: 394px;
 		}
-		input.VideoEmbedCaption {
-			clear: left;
-			display: none;
-			float: left;
-			margin-top: 8px;
-			&.show {
-				display: block;
-			}
-		}
 		.input-group {
 			clear: both;
 			padding: 15px 0;
@@ -437,10 +428,6 @@ $color-related-videos-background: darken($color-page, 20%);
 				text-indent: 100%;
 				width: 44px;
 				white-space: nowrap;
-
-				&.VideoEmbedNoThumbOption {
-					background-position: 0px -49px;
-				}
 			}
 			.vet-layout-label {
 				background: url("/extensions/wikia/VideoEmbedTool/images/MediatoolsSprite.png") 0px -89px no-repeat; /* $wgCdnStylePath */

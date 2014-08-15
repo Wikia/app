@@ -95,6 +95,8 @@ class NumberFormart {
 			}
 		}
 
+		wfProfileOut(__METHOD__);
+
 		return $output;
 	}
 

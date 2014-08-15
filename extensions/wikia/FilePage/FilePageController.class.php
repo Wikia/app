@@ -94,6 +94,7 @@ class FilePageController extends WikiaController {
 		$result = array();
 		if ( empty( $summary ) || empty( $type ) ) {
 			$this->result = $result;
+			wfProfileOut( __METHOD__ );
 			return;
 		}
 
@@ -198,10 +199,18 @@ class FilePageController extends WikiaController {
 			$expireDate = wfMessage( 'video-page-expires', $date )->text();
 		}
 
+		// Get restricted country list
+		$regionalRestrictions = $this->getVal( 'regionalRestrictions', '' );
+		if ( !empty( $regionalRestrictions ) ) {
+			// Create a list of restrictions to pass to the front end
+			$regionalRestrictions = json_encode( explode( ',', str_replace( ', ', ',', $regionalRestrictions ) ) );
+		}
+
 		$this->provider = ucwords( $provider );
 		$this->detailUrl = $this->getVal( 'detailUrl' );
 		$this->providerUrl = $this->getVal( 'providerUrl' );
 		$this->expireDate = $expireDate;
+		$this->regionalRestrictions = $regionalRestrictions;
 		$this->viewCount = $this->getVal( 'views' );
 
 		wfProfileOut( __METHOD__ );

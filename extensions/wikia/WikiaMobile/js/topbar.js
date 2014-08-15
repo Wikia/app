@@ -87,12 +87,9 @@ function (
 
 		searchInput.focus();
 
-		/*
-	 Hiding topbar while searchForm open -> first line for Android,
-	 Second line for iOS to wait for the browser to show keyboard (first
-	 version will not work for iOS browsers as they will move the topbar back
-	 to the viewport
-	 */
+		// Hiding topbar while searchForm open -> first line for Android. Second line for iOS to wait for the browser
+		// to show keyboard (first version will not work for iOS browsers as they will move the topbar back to the
+		// viewport
 		searchForm.scrollIntoView();
 		setTimeout(function () {
 			searchForm.scrollIntoView();
@@ -200,7 +197,7 @@ function (
 					throbber.remove(wkPrf);
 
 					loader.processStyle(res.styles);
-					wkPrf.insertAdjacentHTML('beforeend', res.templates.UserLoginSpecial_index);
+					wkPrf.insertAdjacentHTML('beforeend', res.templates.UserLoginSpecial_index); // jshint ignore:line
 					loader.processScript(res.scripts);
 
 					wkPrf.className += ' loaded';

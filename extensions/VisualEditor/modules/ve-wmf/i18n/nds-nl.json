@@ -1,0 +1,15 @@
+{
+	"@metadata": {
+		"authors": [
+			"Servien"
+		]
+	},
+	"tag-visualeditor": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|Visuele tekstverwarker]]",
+	"tag-visualeditor-description": "Bewarking emaakt mit behulp van de [[{{MediaWiki:visualeditor-descriptionpagelink}}|visuele tekstverwarker]]",
+	"tag-visualeditor-needcheck": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|Visuele tekstverwarker: naokieken]]",
+	"tag-visualeditor-needcheck-description": "Bewarking edaon mit de [[{{MediaWiki:visualeditor-descriptionpagelink}}|visuele tekstverwarker]] waorbie t systeem op-emörken hef dat der in de wikitekste meugelik onbedoelde wiezigingen esleupen bin.",
+	"visualeditor-feedback-link": "Project:Visuele tekstverwarker/Kommentaar",
+	"visualeditor-feedback-tool": "Kommentaar geven",
+	"visualeditor-help-label": "Lees de gebrukershaandleiding",
+	"visualeditor-help-title": "Gebrukershaandleiding veur de tekstverwarker"
+}

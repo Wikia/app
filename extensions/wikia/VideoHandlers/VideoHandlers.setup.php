@@ -5,6 +5,10 @@
  * @author Will Lee <wlee at wikia-inc.com>
  * @author Piotr Bablok <pbablok at wikia-inc.com>
  * @author Jacek Jursza <jacek at wikia-inc.com>
+ * @author Saipetch Kongkatong <saipetch at wikia-inc.com>
+ * @author Liz Lee <Liz at wikia-inc.com>
+ * @author Garth Webb <garth at wikia-inc.com>
+ * @author James Sutterfield <james at wikia-inc.com>
  * @date 2011-12-06
  * @copyright Copyright (C) 2010 Jakub Kurcek, Wikia Inc.
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
@@ -17,6 +21,10 @@ $wgExtensionCredits['videohandlers'][] = array(
 		"Will Lee <wlee at wikia-inc.com>",
 		"Piotr Bablok <pbablok at wikia-inc.com>",
 		"Jacek Jursza <jacek at wikia-inc.com>",
+		"Saipetch Kongkatong <saipetch at wikia-inc.com>",
+		"Liz Lee <liz at wikia-inc.com>",
+		"Garth Webb <garth at wikia-inc.com>",
+		"James Sutterfield <james at wikia-inc.com>",
 	),
 	'url' => 'http://video.wikia.com',
 	'descriptionmsg' => 'wikia-videohandlers-desc',
@@ -41,6 +49,7 @@ $wgAutoloadClasses[ 'VideoHandlerController' ] = $dir . '/VideoHandlerController
 $wgAutoloadClasses[ 'VideoHandlerHooks' ] = $dir . '/VideoHandlerHooks.class.php';
 $wgAutoloadClasses[ 'VideoFileUploader' ] = $dir . '/VideoFileUploader.class.php';
 $wgAutoloadClasses[ 'VideoHandlerHelper' ] = $dir . '/VideoHandlerHelper.class.php';
+$wgAutoloadClasses[ 'UpdateThumbnailTask' ] = $dir . '/UpdateThumbnailTask.class.php';
 
 // actions
 $wgAutoloadClasses[ 'WikiaRevertVideoAction'] = $dir . '/actions/WikiaRevertVideoAction.php';
@@ -103,7 +112,6 @@ $wgHooks['FindRedirectedFile'][] = 'VideoHandlerHooks::onFindRedirectedFile';
 $wgHooks['UploadFromUrlReallyFetchFile'][] = 'VideoHandlerHooks::onUploadFromUrlReallyFetchFile';
 
 
-$wgHooks['FileUpload'][] = 'VideoInfoHooksHelper::onFileUpload';
 $wgHooks['ArticleSaveComplete'][] = 'VideoInfoHooksHelper::onArticleSaveComplete';
 $wgHooks['FileDeleteComplete'][] = 'VideoInfoHooksHelper::onFileDeleteComplete';
 $wgHooks['FileUndeleteComplete'][] = 'VideoInfoHooksHelper::onFileUndeleteComplete';
@@ -232,6 +240,10 @@ $wgAutoloadClasses['YoukuApiWrapper'] =  $dir . '/apiwrappers/YoukuApiWrapper.cl
 $wgAutoloadClasses['YoukuVideoHandler'] =  $dir . '/handlers/YoukuVideoHandler.class.php';
 $wgMediaHandlers['video/youku'] = 'YoukuVideoHandler';
 
+$wgAutoloadClasses['CrunchyrollApiWrapper'] =  $dir . '/apiwrappers/CrunchyrollApiWrapper.class.php';
+$wgAutoloadClasses['CrunchyrollVideoHandler'] =  $dir . '/handlers/CrunchyrollVideoHandler.class.php';
+$wgMediaHandlers['video/crunchyroll'] = 'CrunchyrollVideoHandler';
+
 /**
  * Feed ingesters
  */
@@ -242,6 +254,7 @@ $wgAutoloadClasses[ 'IgnFeedIngester' ] = $dir . '/feedingesters/IgnFeedIngester
 $wgAutoloadClasses[ 'AnyclipFeedIngester' ] = $dir . '/feedingesters/AnyclipFeedIngester.class.php';
 $wgAutoloadClasses[ 'OoyalaFeedIngester' ] = $dir . '/feedingesters/OoyalaFeedIngester.class.php';
 $wgAutoloadClasses[ 'IvaFeedIngester' ] = $dir . '/feedingesters/IvaFeedIngester.class.php';
+$wgAutoloadClasses[ 'CrunchyrollFeedIngester' ] = $dir . '/feedingesters/CrunchyrollFeedIngester.class.php';
 
 $wgAutoloadClasses[ 'OoyalaAsset' ] = $dir . '/feedingesters/OoyalaAsset.class.php';
 

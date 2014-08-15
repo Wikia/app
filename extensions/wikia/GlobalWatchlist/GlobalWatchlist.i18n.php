@@ -324,6 +324,25 @@ $messages['fo'] = array(
 	'globalwatchlist-desc' => 'Sendir t-post samandráttir einaferð um vikuna við eftirlitssíðum á øllum wikium',
 	'tog-watchlistdigest' => 'Send mær ein Vikuligan eftirlitssamandrátt (Weekly Watchlist Digest)',
 	'tog-watchlistdigestclear' => 'Merk allar síður frá mínum viku-eftirlits-samandrátti sum vitjaðar',
+	'globalwatchlist-see-more' => 'Vinarliga kanna tín lokala eftirlitslista fyri at síggja fleiri broytingar',
+	'globalwatchlist-digest-email-subject' => 'Vikusamandráttur',
+	'globalwatchlist-digest-email-body' => 'Hey $1,
+
+Hetta er ein listi av síðum á tínum Wikia-eftirlistslista, sum eru blivnar broyttar síðan tú seinast vitjaði tær.
+
+$2
+
+
+Hetta er ein listi við bloggusíðum á tínum Wikia-eftirlitslista, sum eru blivnar rættaðar ella viðmerktar síðan tú seinast vitjaði tær. 
+
+$3
+
+Vinarliga vitja og rætta ofta...
+
+Wikia
+
+* Fyri at broyta tínar innstillingar til fráboðanir viðvíkjandi eftirlistslitanum, vinarliga vitja  http://www.wikia.com/wiki/Special:Preferences
+* Fyri at merkja allar síður á tínum Vikusamandrátti sum lisnar, hygg so eftir møguleikanum í "Eftirlitslista" knøttinum á síðuni fyri tínar Innstillingar',
 	'globalwatchlist-blog-page-title-comment' => '$1 ($2 {{PLURAL:$2|viðmerking|viðmerkingar}})',
 	'globalwatchlist-no-page-found' => 'Ongin síða funnin.',
 	'globalwatchlist-no-blog-page-found' => 'Ongin bloggsíða funnin.',
@@ -819,6 +838,8 @@ $messages['ps'] = array(
 
 /** Portuguese (português)
  * @author Hamilton Abreu
+ * @author Luckas
+ * @author Polyethylen
  */
 $messages['pt'] = array(
 	'globalwatchlist-desc' => 'Envia mensagens mensais de resumo das páginas vigiadas em todas as wikis',

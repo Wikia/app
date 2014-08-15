@@ -293,6 +293,7 @@ class AbstractServiceTest extends BaseTest
 	
 	/**
 	 * @group Slow
+	 * @group Broken
 	 * @slowExecutionTime 0.07976 ms
 	 * @covers Wikia\Search\IndexService\AbstractService::getService
 	 */

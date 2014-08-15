@@ -1,0 +1,21 @@
+{
+	"@metadata": {
+		"authors": [
+			"Aftab1995",
+			"Bellayet",
+			"Jayantanth",
+			"Nasir8891",
+			"Runab",
+			"Sayak Sarkar"
+		]
+	},
+	"tag-visualeditor": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|ভিজ্যুয়ালএডিটর]]",
+	"tag-visualeditor-description": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|ভিজ্যুয়ালএডিটর]] দ্বারা সম্পাদিত",
+	"tag-visualeditor-needcheck": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|ভিজ্যুয়ালএডিটর: যাচাই করুন]]",
+	"tag-visualeditor-needcheck-description": "এই সম্পাদনাটি [[{{MediaWiki:visualeditor-descriptionpagelink}}|ভিজ্যুয়ালএডিটর]] ব্যবহার করে সম্পাদনা করা হয়েছে যেখানে সিস্টেম সনাক্ত করেছে উইকিটেক্সটে সম্ভাব্য অনিচ্ছাকৃত পরিবর্তন ঘটেছে।",
+	"tag-visualeditor-switched": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|ভিজ্যুয়ালএডিটর: সুইচড]]",
+	"visualeditor-feedback-link": "Project:ভিজ্যুয়ালএডিটর/প্রতিক্রিয়া",
+	"visualeditor-feedback-tool": "আপনার প্রতিক্রিয়া জানান",
+	"visualeditor-help-label": "ব্যবহারকারী নির্দেশিকা পড়ুন",
+	"visualeditor-help-title": "কিভাবে এডিটর ব্যবহার করতে হবে তার জন্য ব্যবহারকারী নির্দেশিকা"
+}

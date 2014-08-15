@@ -143,7 +143,7 @@ class WikiaPageType {
 	public static function isWikiaHub() {
 		global $wgEnableWikiaHubsV3Ext;
 
-		return HubService::isCurrentPageAWikiaHub() || !empty( $wgEnableWikiaHubsV3Ext );
+		return !empty( $wgEnableWikiaHubsV3Ext );
 	}
 
 	/**
@@ -153,7 +153,9 @@ class WikiaPageType {
 	 */
 	public static function isWikiaHubMain() {
 		global $wgTitle;
-		$isMainPage = ( wfMessage( 'mainpage' )->inContentLanguage()->text() == $wgTitle->getText() );
+		$mainPageName = trim( str_replace( '_', ' ', wfMessage( 'mainpage' )->inContentLanguage()->text() ) );
+		$isMainPage = ( strcasecmp( $mainPageName, $wgTitle->getText() ) === 0 ) && $wgTitle->getNamespace() === NS_MAIN;
+
 		return ( self::isWikiaHub() && $isMainPage );
 	}
 

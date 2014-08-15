@@ -619,8 +619,10 @@ $messages['kn'] = array(
 
 /** Korean (한국어)
  * @author Cafeinlove
+ * @author 관인생략
  */
 $messages['ko'] = array(
+	'lightbox-forum' => '포럼',
 	'lightbox-share-button-email' => '이메일',
 	'lightbox-share-email-page-label-address' => '이메일 주소',
 );
@@ -1130,6 +1132,13 @@ $messages['tr'] = array(
 	'lightbox-share-email-error-caption' => 'Hata',
 );
 
+/** Tuvinian (тыва дыл)
+ * @author Agilight
+ */
+$messages['tyv'] = array(
+	'lightbox-forum' => 'Шуулган',
+);
+
 /** Ukrainian (українська)
  * @author Andriykopanytsia
  * @author Steve.rusyn
@@ -1214,6 +1223,12 @@ $messages['zh-hans'] = array(
 	'lightbox-blog-link' => '博客链接',
 	'lightbox-send' => '发送',
 	'lightbox-share-description' => '照片在 $1 上$2',
+	'lightbox-share-email-subject' => '$1在Wikia上向您发送了一张照片',
+	'lightbox-share-email-body' => '嗨，有人想在Wikia向您展示一张照片。看看怎么回事：
+
+$1
+
+——Wikia团队',
 	'lightbox-share-button-email' => '电子邮件',
 	'lightbox-share-button-www' => '分享',
 	'lightbox-share-button-embed' => '嵌入',
@@ -1233,13 +1248,14 @@ $messages['zh-hans'] = array(
 /** Traditional Chinese (中文（繁體）‎)
  * @author Ffaarr
  * @author Justincheng12345
+ * @author LNDDYL
  * @author Radish10cm
  */
 $messages['zh-hant'] = array(
-	'lightbox_details_tooltip' => '查看圖片詳細資訊',
+	'lightbox_details_tooltip' => '檢視圖片詳細資訊',
 	'lightbox-blog-link' => '部落格連結',
 	'lightbox-share-button-email' => '電子郵件',
 	'lightbox-share-button-www' => '分享',
 	'lightbox-share-button-embed' => '嵌入',
-	'lightbox-share-email-page-label-address' => '電郵地址',
+	'lightbox-share-email-page-label-address' => '電郵位址',
 );

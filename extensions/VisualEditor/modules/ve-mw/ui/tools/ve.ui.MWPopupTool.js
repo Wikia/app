@@ -3,7 +3,7 @@
 /*!
  * VisualEditor MediaWiki UserInterface popup tool classes.
  *
- * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
@@ -29,18 +29,18 @@ ve.ui.MWNoticesPopupTool = function VeUiMWNoticesPopupTool( toolGroup, config ) 
 	OO.ui.PopupTool.call( this, toolGroup, config );
 
 	// Properties
-	this.$items = this.$( '<div>' );
+	this.$items = this.$( '<div>' ).addClass( 've-ui-mwNoticesPopupTool-items' );
 
 	// Initialization
 	for ( key in items ) {
-		this.$items.append( items[key] );
-	}
-	this.$items
-		.addClass( 've-ui-mwNoticesPopupTool-items' )
-		.children()
+		$( items[key] )
 			.addClass( 've-ui-mwNoticesPopupTool-item' )
 			.find( 'a' )
 				.attr( 'target', '_blank' );
+
+		this.$items.append( items[key] );
+	}
+
 	this.popup.$body.append( this.$items );
 
 	// Automatically show/hide
@@ -62,8 +62,9 @@ OO.inheritClass( ve.ui.MWNoticesPopupTool, OO.ui.PopupTool );
 ve.ui.MWNoticesPopupTool.static.name = 'notices';
 ve.ui.MWNoticesPopupTool.static.group = 'utility';
 ve.ui.MWNoticesPopupTool.static.icon = 'alert';
-ve.ui.MWNoticesPopupTool.static.titleMessage = 'visualeditor-editnotices-tool';
-ve.ui.MWNoticesPopupTool.static.autoAdd = false;
+ve.ui.MWNoticesPopupTool.static.title = OO.ui.deferMsg( 'visualeditor-editnotices-tooltip' );
+ve.ui.MWNoticesPopupTool.static.autoAddToCatchall = false;
+ve.ui.MWNoticesPopupTool.static.autoAddToGroup = false;
 
 /* Methods */
 
@@ -76,7 +77,7 @@ ve.ui.MWNoticesPopupTool.prototype.getTitle = function () {
 	var items = this.toolbar.getTarget().getEditNotices(),
 		count = ve.getObjectKeys( items ).length;
 
-	return ve.msg( this.constructor.static.titleMessage, count );
+	return ve.msg( this.constructor.static.title, count );
 };
 
 /**
@@ -111,13 +112,31 @@ ve.ui.MWHelpPopupTool = function VeUiMWHelpPopupTool( toolGroup, config ) {
 
 	// Properties
 	this.$items = this.$( '<div>' );
-	this.helpButton = new OO.ui.IconButtonWidget( {
+	this.helpButton = new OO.ui.ButtonWidget( {
+		'$': this.$,
+		'frameless': true,
 		'icon': 'help',
 		'title': ve.msg( 'visualeditor-help-title' ),
 		'href': new mw.Title( ve.msg( 'wikia-visualeditor-help-link' ) ).getUrl(),
 		'target': '_blank',
 		'label': ve.msg( 'visualeditor-help-label' )
 	} );
+	this.keyboardShortcutsButton = new OO.ui.ButtonWidget( {
+		'$': this.$,
+		'frameless': true,
+		'icon': 'help',
+		'label': ve.msg( 'visualeditor-dialog-command-help-title' )
+	} );
+	this.feedbackButton = new OO.ui.ButtonWidget( {
+		'$': this.$,
+		'frameless': true,
+		'icon': 'comment',
+		'label': ve.msg( 'visualeditor-feedback-tool' )
+	} );
+
+	// Events
+	this.feedbackButton.connect( this, { 'click': 'onFeedbackClick' } );
+	this.keyboardShortcutsButton.connect( this, { 'click': 'onKeyboardShortcutsClick' } );
 
 	// Initialization
 	this.$items
@@ -131,6 +150,8 @@ ve.ui.MWHelpPopupTool = function VeUiMWHelpPopupTool( toolGroup, config ) {
 			this.$( '<div>' )
 				.addClass( 've-ui-mwHelpPopupTool-item' )
 				.append( this.helpButton.$element )
+				.append( this.keyboardShortcutsButton.$element )
+				.append( this.feedbackButton.$element )
 		);
 	if ( ve.version.id !== false ) {
 		this.$items
@@ -162,6 +183,15 @@ ve.ui.MWHelpPopupTool = function VeUiMWHelpPopupTool( toolGroup, config ) {
 
 OO.inheritClass( ve.ui.MWHelpPopupTool, OO.ui.PopupTool );
 
+/* Static Properties */
+
+ve.ui.MWHelpPopupTool.static.name = 'help';
+ve.ui.MWHelpPopupTool.static.group = 'utility';
+ve.ui.MWHelpPopupTool.static.icon = 'help';
+ve.ui.MWHelpPopupTool.static.title = OO.ui.deferMsg( 'visualeditor-help-tool' );
+ve.ui.MWHelpPopupTool.static.autoAddToCatchall = false;
+ve.ui.MWHelpPopupTool.static.autoAddToGroup = false;
+
 /* Methods */
 
 /**
@@ -172,15 +202,15 @@ ve.ui.MWHelpPopupTool.prototype.onSelect = function () {
 	return OO.ui.PopupTool.prototype.onSelect.call( this );
 };
 
-/* Static Properties */
-
-ve.ui.MWHelpPopupTool.static.name = 'help';
-ve.ui.MWHelpPopupTool.static.group = 'utility';
-ve.ui.MWHelpPopupTool.static.icon = 'help';
-ve.ui.MWHelpPopupTool.static.titleMessage = 'visualeditor-help-tool';
-ve.ui.MWHelpPopupTool.static.autoAdd = false;
-
-/* Methods */
+/**
+ * Handle clicks on the keyboard shortcuts button.
+ *
+ * @method
+ */
+ve.ui.MWHelpPopupTool.prototype.onKeyboardShortcutsClick = function () {
+	this.hidePopup();
+	ve.ui.commandRegistry.lookup( 'commandHelp' ).execute( this.toolbar.getSurface() );
+};
 
 /* Registration */
 

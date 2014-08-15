@@ -101,6 +101,7 @@ $messages['qqq'] = array(
 	'founderprogressbar-list-task-label' => '{{Identical|Task}}',
 	'founderprogressbar-photo-add10-label' => 'Goal.',
 	'founderprogressbar-category-add3-label' => '',
+	'founderprogressbar-browse-page-name' => '{{Identical|Browse}}',
 );
 
 /** Arabic (العربية)
@@ -325,11 +326,14 @@ $messages['ce'] = array(
 
 /** Czech (čeština)
  * @author Chmee2
+ * @author H4nek
  */
 $messages['cs'] = array(
 	'founderprogressbar-skip-for-now' => 'Pro teď přeskočit',
 	'founderprogressbar-task-completed' => 'Dokončeno',
+	'founderprogressbar-profile-edit-label' => 'Vyplnit svůj Profil',
 	'founderprogressbar-total-edit75-label' => 'Dosáhli jste 75 editací',
+	'founderprogressbar-gallery-add-label' => 'Přidat fotogalerii',
 	'founderprogressbar-video-add-label' => 'Přidat video',
 	'founderprogressbar-browse-page-name' => 'Procházet',
 );
@@ -463,12 +467,13 @@ $messages['de-formal'] = array(
 
 /** Zazaki (Zazaki)
  * @author Erdemaslancan
+ * @author Mirzali
  */
 $messages['diq'] = array(
 	'founderprogressbar-task-completed' => 'Temamyayo',
 	'founderprogressbar-list-task-label' => 'Wezifey',
 	'founderprogressbar-commcorner-edit-label' => 'Kışta Cemaeti bıvurne',
-	'founderprogressbar-video-add-label' => 'Video deke',
+	'founderprogressbar-video-add-label' => 'Yew video cı ke',
 	'founderprogressbar-browse-page-name' => 'Çımpawe',
 );
 
@@ -975,7 +980,7 @@ $messages['ia'] = array(
 	'founderprogressbar-category-edit-label' => 'Modificar un pagina de categoria',
 	'founderprogressbar-category-edit-description' => 'Le categorias non solmente monstra ligamines a tote le paginas in le categoria, tu pote anque modificar los pro explicar al gente le thema del categoria e le typo de paginas que debe esser inserite in illo. In addition, si tu insere qualcosa in le pagina de categoria, le color del ligamines a illo cambia de rubie a blau, dante un impression plus active.',
 	'founderprogressbar-wikialabs-visit-label' => 'Visitar Wikia Labs',
-	'founderprogressbar-wikialabs-visit-description' => 'Wikia Labs permitte activar le novissime functionalitate de Wikia in tu wiki. Iste functionalitate es in stadio beta, ma es un bon maniera de vider lo que expectar de Wikia e de probar lo tu mesme.',
+	'founderprogressbar-wikialabs-visit-description' => 'Wikia Labs permitte activar le novissime functionalitate de Wikia in tu wiki. Iste functionalitate es in phase experimental, ma es un bon maniera de vider lo que expectar de Wikia e de probar lo tu mesme.',
 	'founderprogressbar-fb-connect-label' => 'Facebook Connect',
 	'founderprogressbar-fb-connect-description' => 'Diffunde tote le labor que tu face! Facebook Connect permitte divider le actiones que tu exeque in tu wiki con tu amicos de Facebook. Es possibile seliger le actiones que tu vole publicar in Facebook. Solmente un administrator debe activar isto pro completar le carga.',
 	'founderprogressbar-category-add5-label' => 'Attinger $1 {{PLURAL:$1|categoria|categorias}}',
@@ -1057,6 +1062,7 @@ $messages['id'] = array(
 );
 
 /** Japanese (日本語)
+ * @author Barrel0116
  * @author Shirayuki
  * @author Tommy6
  */
@@ -1093,13 +1099,16 @@ $messages['ja'] = array(
 	'founderprogressbar-category-add5-label' => 'カテゴリ数を$1件にする',
 	'founderprogressbar-gallery-add-label' => '画像ギャラリーを追加する',
 	'founderprogressbar-gallery-add-description' => '画像ギャラリーは、多数の画像をページ内で展示形式で表示させるのに適しています。また、訪問者の興味を引き続ける方法として、ウィキ内で（例えばページごとに）異なる画像表示方式を組み合わせるのが効果的です。',
+	'founderprogressbar-commcorner-edit-label' => 'コミュニティコーナーを編集',
 	'founderprogressbar-video-add-label' => '動画を追加する',
 	'founderprogressbar-user-add5-label' => 'ユーザープロフィール数を5件にする',
 	'founderprogressbar-user-add5-description' => '良いウィキを支えるのは、良いコミュニティです。たくさんの編集者が活躍する最高のウィキにするための第一歩として、編集者数5人を目指しましょう！',
 	'founderprogressbar-recentchanges-visit-label' => '「最近の更新」を見てみる',
 	'founderprogressbar-wordmark-edit-label' => 'ロゴをアップロードする',
+	'founderprogressbar-toptenlist-add-label' => 'トップ10リストを追加',
 	'founderprogressbar-blogpost-add-label' => 'ブログの記事を投稿する',
 	'founderprogressbar-bonus-photo-add10-description' => 'さらに画像を追加し、ウィキをより魅力的なものにしましょう。画像を10件追加すると、ボーナスタスクのクレジットを1つ獲得できます。',
+	'founderprogressbar-browse-page-name' => 'ブラウズ',
 );
 
 /** Kannada (ಕನ್ನಡ)
@@ -1107,6 +1116,14 @@ $messages['ja'] = array(
  */
 $messages['kn'] = array(
 	'founderprogressbar-task-completed' => 'ಪೂರ್ಣ',
+);
+
+/** Korean (한국어)
+ * @author 관인생략
+ */
+$messages['ko'] = array(
+	'founderprogressbar-progress-see-full-list' => '전체 목록 보기',
+	'founderprogressbar-progress-hide-full-list' => '전체 목록 숨기기',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
@@ -2074,9 +2091,11 @@ $messages['tl'] = array(
 );
 
 /** Turkish (Türkçe)
+ * @author Sucsuzz
  * @author Suelnur
  */
 $messages['tr'] = array(
+	'founderprogressbar-video-add-label' => 'Video ekle',
 	'founderprogressbar-recentchanges-visit-label' => 'Son Değişiklikleri ziyaret et',
 );
 
@@ -2336,6 +2355,7 @@ $messages['zh-hans'] = array(
  * @author Ffaarr
  */
 $messages['zh-hant'] = array(
+	'founderprogressbar-credits' => '一個為新維基創建者的任務與指南中心',
 	'founderprogressbar-widget-label' => '{{SITENAME}}的進展',
 	'founderprogressbar-progress-label' => '完成的任務',
 	'founderprogressbar-progress-see-full-list' => '查看完整清單',
@@ -2364,6 +2384,8 @@ $messages['zh-hant'] = array(
 	'founderprogressbar-category-add3-label' => '達到 $1   {{PLURAL:$1| Category|分類}}',
 	'founderprogressbar-category-add3-description' => '分類是組織你的wiki最好的方法之一，也讓人們很容易找到想要的頁面。簡單的分類就好，過多的分類反而可能造成混淆',
 	'founderprogressbar-commcentral-visit-label' => '訪問創建者與管理員中心',
+	'founderprogressbar-commcentral-visit-description' => '你不是一個人！創始人和管理員中心是Wikia分享建議和技巧的社區，在那裡可以找到幫助頁面，指導和Wikia員工的聯繫方式。',
+	'founderprogressbar-wikiactivity-visit-label' => '訪問維基動態',
 	'founderprogressbar-profile-edit-label' => '填寫您的檔案頁',
 	'founderprogressbar-profile-edit-description' => '設定檔頁可告訴來你的 wiki的人更多關於你的事，也有助於建立社群的感覺。',
 	'founderprogressbar-photo-add20-label' => '達到 $1 {{PLURAL:$1|Photo|圖片}}',

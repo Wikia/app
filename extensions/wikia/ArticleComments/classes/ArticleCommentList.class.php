@@ -745,8 +745,16 @@ class ArticleCommentList {
 						/* @var $oCommentTitle Title */
 						$data = $taskParams;
 						$data['page'] = $oCommentTitle->getFullText();
-						$thisTask = new MultiDeleteTask( $data );
-						$submit_id = $thisTask->submitForm();
+
+						if (TaskRunner::isModern('MultiDeleteTask')) {
+							$task = new \Wikia\Tasks\Tasks\MultiTask();
+							$task->call('delete', $data);
+							$submit_id = $task->queue();
+						} else {
+							$thisTask = new MultiDeleteTask( $data );
+							$submit_id = $thisTask->submitForm();
+						}
+
 						Wikia::log( __METHOD__, 'deletecomment', "Added task ($submit_id) for {$data['page']} page" );
 					}
 				}

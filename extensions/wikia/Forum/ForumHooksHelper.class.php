@@ -72,7 +72,6 @@ class ForumHooksHelper {
 	}
 
 	static protected function getIndexPath() {
-		$app = F::App();
 		$indexPage = Title::newFromText( 'Forum', NS_SPECIAL );
 		return array( 'title' => wfMessage( 'forum-forum-title' )->escaped(), 'url' => $indexPage->getFullUrl() );
 	}
@@ -162,36 +161,6 @@ class ForumHooksHelper {
 		}
 
 		return true;
-	}
-
-	static public function onWallContributionsLine($pageNamespace, $wallMessage, $wfMsgOptsBase, &$ret) {
-		if ( $pageNamespace != NS_WIKIA_FORUM_BOARD ) {
-			return true;
-		}
-
-		if ( empty( $wfMsgOptsBase['articleTitleVal'] ) ) {
-			$wfMsgOptsBase['articleTitleTxt'] = wfMessage( 'forum-recentchanges-deleted-reply-title' )->text();
-		}
-
-		$wfMsgOpts = array(
-			$wfMsgOptsBase['articleFullUrl'],
-			$wfMsgOptsBase['articleTitleTxt'],
-			$wfMsgOptsBase['wallPageFullUrl'],
-			$wfMsgOptsBase['wallPageName'],
-			$wfMsgOptsBase['createdAt'],
-			$wfMsgOptsBase['DiffLink'],
-			$wfMsgOptsBase['historyLink']
-		);
-
-		if ( $wfMsgOptsBase['isThread'] && $wfMsgOptsBase['isNew'] ) {
-			$wfMsgOpts[] = Xml::element( 'strong', array(), wfMessage( 'newpageletter' )->plain() . ' ' );
-		} else {
-			$wfMsgOpts[] = '';
-		}
-
-		$ret .= wfMessage( 'forum-contributions-line', $wfMsgOpts )->text();
-
-		return false;
 	}
 
 	static public function onWallRecentchangesMessagePrefix($namespace, &$prefix) {
@@ -493,4 +462,28 @@ class ForumHooksHelper {
 
 		return true;
 	}
+
+	/**
+	 * Ensure that the comments_index record (if it exists) for an article is marked as deleted
+	 * when an article is deleted. This event must be run inside the transaction in WikiPage::doDeleteArticleReal
+	 * otherwise the Article referenced will no longer exist and the lookup for it's associated
+	 * comments_index row will fail.
+	 *
+	 * @param WikiPage $page WikiPage object
+	 * @param User $user User object [not used]
+	 * @param string $reason [not used]
+	 * @param int $id [not used]
+	 * @return bool true
+	 *
+	 */
+	static public function onArticleDoDeleteArticleBeforeLogEntry( &$page, &$user, $reason, $id ) {
+		$title = $page->getTitle();
+		if ( $title instanceof Title ) {
+			$wallMessage = WallMessage::newFromTitle($title);
+			$wallMessage->setInCommentsIndex(WPP_WALL_ADMINDELETE, 1);
+		}
+
+		return true;
+	}
+
 }

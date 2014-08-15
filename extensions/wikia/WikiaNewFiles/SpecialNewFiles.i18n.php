@@ -249,6 +249,28 @@ $messages['uk'] = array(
 	'wikianewfiles-more' => 'більше...',
 );
 
+/** Vietnamese (Tiếng Việt)
+ * @author Baonguyen21022003
+ */
+$messages['vi'] = array(
+	'wikianewfiles-title' => 'Tập tin mới trên wiki này',
+	'wikianewfiles-desc' => 'Kéo dài một [[Special:NewFiles|trang đặc biệt]] để ghi chép nội dung đè lên một số định dạng của tiêu đề.',
+	'wikianewfiles-uploadby' => 'bởi {{GENDER:$2|$1}}',
+	'wikianewfiles-postedin' => 'Đăng vào',
+	'wikianewfiles-more' => 'thêm',
+);
+
+/** Simplified Chinese (中文（简体）‎)
+ * @author Liuxinyu970226
+ */
+$messages['zh-hans'] = array(
+	'wikianewfiles-title' => '此wiki的新文件',
+	'wikianewfiles-desc' => '扩充[[Special:NewFiles|特殊页面]]以重写一些页顶格式',
+	'wikianewfiles-uploadby' => '由{{GENDER:$2|$1}}',
+	'wikianewfiles-postedin' => '发布于',
+	'wikianewfiles-more' => '更多…',
+);
+
 /** Traditional Chinese (中文（繁體）‎)
  * @author Ffaarr
  */

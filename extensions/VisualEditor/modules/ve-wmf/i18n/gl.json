@@ -1,0 +1,19 @@
+{
+	"@metadata": {
+		"authors": [
+			"Alison",
+			"Kscanne",
+			"Toliño"
+		]
+	},
+	"tag-visualeditor": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|Editor visual]]",
+	"tag-visualeditor-description": "Edición feita mediante o [[{{MediaWiki:visualeditor-descriptionpagelink}}|editor visual]]",
+	"tag-visualeditor-needcheck": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|Editor visual: Comprobar]]",
+	"tag-visualeditor-needcheck-description": "Edición feita mediante o [[{{MediaWiki:visualeditor-descriptionpagelink}}|editor visual]] na que o sistema detectou que o texto wiki posiblemente teña modificacións non intencionadas.",
+	"tag-visualeditor-switched": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|Editor visual: Cambio]]",
+	"tag-visualeditor-switched-description": "O usuario empezou editando mediante o editor visual e logo cambiou ao editor de texto wiki.",
+	"visualeditor-feedback-link": "Project:Editor visual/Comentarios",
+	"visualeditor-feedback-tool": "Deixe un comentario",
+	"visualeditor-help-label": "Ler a guía de usuario",
+	"visualeditor-help-title": "Guía de usuario sobre como utilizar o editor"
+}

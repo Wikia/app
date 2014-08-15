@@ -1,0 +1,19 @@
+{
+	"@metadata": {
+		"authors": [
+			"Basharh",
+			"Bishnu Saikia",
+			"Xuacu"
+		]
+	},
+	"tag-visualeditor": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor]]",
+	"tag-visualeditor-description": "Edición fecha usando [[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor]]",
+	"tag-visualeditor-needcheck": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor: Comprobar]]",
+	"tag-visualeditor-needcheck-description": "Edición fecha usando [[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor]] na que'l sistema detectó que'l testu wiki pue tener cambeos nun deseaos.",
+	"tag-visualeditor-switched": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor: Cambiáu]]",
+	"tag-visualeditor-switched-description": "L'usuariu principió la edición usando VisualEditor y llueu cambió al editor de testu wiki.",
+	"visualeditor-feedback-link": "Project:VisualEditor/Feedback",
+	"visualeditor-feedback-tool": "Dexar un comentariu",
+	"visualeditor-help-label": "Lleer la guía del usuariu",
+	"visualeditor-help-title": "Guía del usuariu tocante a cómo usar l'editor"
+}

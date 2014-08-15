@@ -15,7 +15,7 @@
 class CreateWiki {
 
 	/* @var $mDBw DatabaseMysql */
-	private $mName, $mDomain, $mLanguage, $mHub, $mStarters, $mIP,
+	private $mName, $mDomain, $mLanguage, $mVertical, $mCategories, $mStarters, $mIP,
 		$mPHPbin, $mMYSQLbin, $mMYSQLdump, $mNewWiki, $mFounder,
 		$mLangSubdomain, $mDBw, $mWFSettingVars, $mWFVars,
 		$mDefaultTables, $mAdditionalTables,
@@ -41,7 +41,6 @@ class CreateWiki {
 	const IMGROOT              = "/images/";
 	const IMAGEURL             = "http://images.wikia.com/";
 	const CREATEWIKI_LOGO      = "http://images.wikia.com/central/images/2/22/Wiki_Logo_Template.png";
-	const CREATEWIKI_ICON      = "http://images.wikia.com/central/images/6/64/Favicon.ico";
 	const DEFAULT_STAFF        = "Angela";
 	const DEFAULT_USER         = 'Default';
 	const DEFAULT_DOMAIN       = "wikia.com";
@@ -50,7 +49,6 @@ class CreateWiki {
 	const DEFAULT_NAME         = "Wiki";
 	const DEFAULT_WIKI_TYPE    = "";
 	const DEFAULT_WIKI_LOGO    = '$wgUploadPath/b/bc/Wiki.png';
-	const DEFAULT_WIKI_FAVICON = '$wgUploadPath/6/64/Favicon.ico';
 
 
 	/**
@@ -59,9 +57,8 @@ class CreateWiki {
 	 * @param string $name - name of wiki (set later as $wgSiteinfo)
 	 * @param string $domain - domain part without '.wikia.com'
 	 * @param string $language - language code
-	 * @param integer $hub - category/hub which should be set for created wiki
 	 */
-	public function __construct( $name, $domain, $language, $hub ) {
+	public function __construct( $name, $domain, $language, $vertical, $categories ) {
 		global $wgUser, $IP, $wgAutoloadClasses, $wgRequest;
 
 		// wiki containter
@@ -70,7 +67,8 @@ class CreateWiki {
 		$this->mDomain = $domain;
 		$this->mName = $name;
 		$this->mLanguage = $language;
-		$this->mHub = $hub;
+		$this->mVertical = $vertical;
+		$this->mCategories = $categories;
 		$this->mIP = $IP;
 
 		// founder of wiki
@@ -95,6 +93,7 @@ class CreateWiki {
 				"pl" => "plstarter",
 				"ru" => "rustarter",
 				"it" => "italianstarter",
+				'fi' => 'fistarter',
 			)
 		);
 
@@ -295,11 +294,11 @@ class CreateWiki {
 			return self::ERROR_SQL_FILE_BROKEN;
 		}
 
-		// Hack to slow down the devbox database creation
+		// Hack to slow down the devbox database creation because createTables() returns
+		// before the tables are created on the slave, and the uploadImage function hits the slave
 		global $wgDevelEnvironment;
 		if (isset($wgDevelEnvironment)) {
-			$position = $this->mNewWiki->dbw->getMasterPos();
-			$wait = $this->mNewWiki->dbw->masterPosWait($position, 10);
+			sleep(15);
 		}
 
 		/**
@@ -324,7 +323,7 @@ class CreateWiki {
 		$this->mNewWiki->dbw->insert( "site_stats", array( "ss_row_id" => "1"), __METHOD__ );
 
 		/**
-		 * copy default logo & favicon
+		 * copy default logo
 		 */
 
 
@@ -333,13 +332,6 @@ class CreateWiki {
 			wfDebugLog( "createwiki", __METHOD__ . ": Default logo has been uploaded\n", true );
 		} else {
 			wfDebugLog( "createwiki", __METHOD__ . ": Default logo has not been uploaded - " . print_r($res['errors'], true) . "\n", true );
-		}
-
-		$res = ImagesService::uploadImageFromUrl( self::CREATEWIKI_ICON, (object) ['name' => 'Favicon.ico'], $uploader );
-		if (  $res['status'] == true  ) {
-			wfDebugLog( "createwiki", __METHOD__ . ": Default favicon has been uploaded\n", true );
-		} else {
-			wfDebugLog( "createwiki", __METHOD__ . ": Default favicon has not been uploaded - " . print_r($res['errors'], true) . "\n", true );
 		}
 
 		/**
@@ -353,8 +345,12 @@ class CreateWiki {
 		}
 		// BugId:15644 - I need to pass this to CreateWikiLocalJob::changeStarterContributions
 		$job_params->sDbStarter = $this->sDbStarter;
-		$localJob = new CreateWikiLocalJob( Title::newFromText( NS_MAIN, "Main" ), $job_params );
-		$localJob->WFinsert( $this->mNewWiki->city_id, $this->mNewWiki->dbname );
+
+		if (!TaskRunner::isModern('CreateWikiLocalJob')) {
+			$localJob = new CreateWikiLocalJob( Title::newFromText( NS_MAIN, "Main" ), $job_params );
+			$localJob->WFinsert( $this->mNewWiki->city_id, $this->mNewWiki->dbname );
+		}
+
 		wfDebugLog( "createwiki", __METHOD__ . ": New createWiki local job created \n", true );
 
 		/**
@@ -364,12 +360,14 @@ class CreateWiki {
 		wfDebugLog( "createwiki", __METHOD__ . ": Database changes commited \n", true );
 		$wgSharedDB = $tmpSharedDB;
 
-		/**
-		 * set hub/category
-		 */
+
 		$oHub = WikiFactoryHub::getInstance();
-		$oHub->setCategory( $this->mNewWiki->city_id, $this->mNewWiki->hub, "CW Setup" );
-		wfDebugLog( "createwiki", __METHOD__ . ": Wiki added to the category hub: {$this->mNewWiki->hub} \n", true );
+		$oHub->setVertical( $this->mNewWiki->city_id, $this->mNewWiki->vertical, "CW Setup" );
+		wfDebugLog( "createwiki", __METHOD__ . ": Wiki added to the vertical: {$this->mNewWiki->vertical} \n", true );
+		for($i = 0; $i < count($this->mNewWiki->categories); $i++) {
+			$oHub->addCategory( $this->mNewWiki->city_id, $this->mNewWiki->categories[$i] );
+			wfDebugLog( "createwiki", __METHOD__ . ": Wiki added to the category: {$this->mNewWiki->categories[$i]} \n", true );
+		}
 
 		/**
 		 * define wiki type
@@ -424,8 +422,6 @@ class CreateWiki {
 			$tags->addTagsByName( $langTag );
 		}
 
-		$tags->addTagsByName( $this->mNewWiki->hub );
-
 		/**
 		 * move main page -> this code exists in CreateWikiLocalJob - so it is not needed anymore
 		 */
@@ -439,21 +435,33 @@ class CreateWiki {
 		$wgUser = $oldUser;
 		unset($oldUser);
 
-		/**
-		 * inform task manager
-		 */
-		$Task = new LocalMaintenanceTask();
-		$Task->createTask(
-			array(
-				"city_id" => $this->mNewWiki->city_id,
-				"command" => "maintenance/runJobs.php",
-				"type"    => "CWLocal",
-				"data"    => $this->mNewWiki,
-				"server"  => rtrim( $this->mNewWiki->url, "/" )
-			),
-			TASK_QUEUED,
-			BatchTask::PRIORITY_HIGH
-		);
+		if (TaskRunner::isModern('CreateWikiLocalJob')) {
+			$creationTask = new CreateNewWikiTask();
+
+			(new \Wikia\Tasks\AsyncTaskList())
+				->wikiId($this->mNewWiki->city_id)
+				->prioritize()
+				->add($creationTask->call('postCreationSetup', $job_params))
+				->add($creationTask->call('maintenance', rtrim($this->mNewWiki->url, "/")))
+				->queue();
+		} else {
+			/**
+			 * inform task manager
+			 */
+			$Task = new LocalMaintenanceTask();
+			$Task->createTask(
+				array(
+					"city_id" => $this->mNewWiki->city_id,
+					"command" => "maintenance/runJobs.php",
+					"type"    => "CWLocal",
+					"data"    => $this->mNewWiki,
+					"server"  => rtrim( $this->mNewWiki->url, "/" )
+				),
+				TASK_QUEUED,
+				BatchTask::PRIORITY_HIGH
+			);
+		}
+
 		wfDebugLog( "createwiki", __METHOD__ . ": Local maintenance task added\n", true );
 
 		wfProfileOut( __METHOD__ );
@@ -572,8 +580,18 @@ class CreateWiki {
 		$this->mDomain = preg_replace( "/^(\-)+/", "", $this->mDomain );
 		$this->mNewWiki->domain = strtolower( trim( $this->mDomain ) );
 
-		// hub
-		$this->mNewWiki->hub = $this->mHub;
+		$this->mNewWiki->vertical = $this->mVertical;
+
+		// Map new verticals to old categories while in transition so that "hub" code still works
+		// If a user selects a vertical we will also add the old category that matches best with it
+		// This code can be removed after we are fully using the new verticals (PLATFORM-403)
+
+		// uses array_unshift to make sure hub category is first, because we take the first cat from SQL
+		if ( $this->mVertical == 2 ) array_unshift($this->mCategories, 2);	// Video games
+		if ( in_array( $this->mVertical, [1,3,4,5,6] ) ) array_unshift($this->mCategories, 3); // Entertainment
+		if ( $this->mVertical == 7 ) array_unshift($this->mCategories, 9);	// Lifestyle
+
+		$this->mNewWiki->categories = $this->mCategories;
 
 		// name
 		$this->mNewWiki->name = strtolower( trim( $this->mDomain ) );
@@ -902,8 +920,6 @@ class CreateWiki {
 		$this->mWFSettingVars['wgLocalInterwiki']         = $this->mNewWiki->sitename;
 		$this->mWFSettingVars['wgLanguageCode']           = $this->mNewWiki->language;
 		$this->mWFSettingVars['wgServer']                 = rtrim( $this->mNewWiki->url, "/" );
-		$this->mWFSettingVars['wgFavicon']                = self::DEFAULT_WIKI_FAVICON;
-		$this->mWFSettingVars['wgEnableEditEnhancements'] = true;
 		$this->mWFSettingVars['wgEnableSectionEdit']      = true;
 		$this->mWFSettingVars['wgEnableSwiftFileBackend'] = true;
 		$this->mWFSettingVars['wgOasisLoadCommonCSS']     = true;

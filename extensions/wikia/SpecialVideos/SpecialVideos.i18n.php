@@ -32,6 +32,7 @@ $messages['en'] = array(
 	'specialvideos-filter-entertainment' => 'Trending in Entertainment',
 	'specialvideos-btn-load-more' => 'Load More',
 	'specialvideos-posted-in-label' => 'Posted in',
+	'related-videos-tooltip-add' => 'Add a video to this wiki',
 );
 
 $messages['qqq'] = array(
@@ -74,6 +75,7 @@ $messages['de'] = array(
 	'specialvideos-uploadby' => 'von $1',
 	'specialvideos-posted-in' => 'Veröffentlicht auf $1',
 	'special-videos-add-video' => 'Video hinzufügen',
+	'related-videos-tooltip-add' => 'Eine Video zu dieser Seite hinzufügen',
 );
 
 $messages['es'] = array(
@@ -88,6 +90,7 @@ $messages['es'] = array(
 	'specialvideos-uploadby' => 'por $1',
 	'specialvideos-posted-in' => 'Publicado en $1',
 	'special-videos-add-video' => 'Añade un video',
+	'related-videos-tooltip-add' => 'Añadir un vídeo a esta página',
 );
 
 $messages['fr'] = array(
@@ -102,6 +105,35 @@ $messages['fr'] = array(
 	'specialvideos-uploadby' => 'par $1',
 	'specialvideos-posted-in' => 'Postée sur $1',
 	'special-videos-add-video' => 'Ajouter une vidéo',
+	'related-videos-tooltip-add' => 'Ajouter une vidéo à cette page.',
+);
+
+$messages['gl'] = array(
+	'related-videos-tooltip-add' => 'Engadir un vídeo a esta páxina',
+);
+
+$messages['hu'] = array(
+	'related-videos-tooltip-add' => 'Videó hozzáadása az oldalhoz',
+);
+
+$messages['ia'] = array(
+	'related-videos-tooltip-add' => 'Adder un video a iste pagina',
+);
+
+$messages['mk'] = array(
+	'related-videos-tooltip-add' => 'Додај видео во страницава',
+);
+
+$messages['ms'] = array(
+	'related-videos-tooltip-add' => 'Letakkan video pada laman ini',
+);
+
+$messages['nb'] = array(
+	'related-videos-tooltip-add' => 'Legg til en video på denne siden',
+);
+
+$messages['nl'] = array(
+	'related-videos-tooltip-add' => 'Video aan deze pagina toevoegen',
 );
 
 $messages['pl'] = array(
@@ -116,6 +148,7 @@ $messages['pl'] = array(
 	'specialvideos-uploadby' => 'dodał(a) $1',
 	'specialvideos-posted-in' => 'Użyto w $1',
 	'special-videos-add-video' => 'Dodaj film',
+	'related-videos-tooltip-add' => 'Dodaj film do tej strony',
 );
 
 $messages['ru'] = array(
@@ -130,6 +163,15 @@ $messages['ru'] = array(
 	'specialvideos-uploadby' => 'от $1',
 	'specialvideos-posted-in' => 'Опубликовано в $1',
 	'special-videos-add-video' => 'Добавить видео',
+	'related-videos-tooltip-add' => 'Добавить видео на эту страницу',
+);
+
+$messages['sv'] = array(
+	'related-videos-tooltip-add' => 'Lägg till en video på denna sida',
+);
+
+$messages['tl'] = array(
+	'related-videos-tooltip-add' => 'Magdagdag ng isang bidyo sa pahinang ito',
 );
 
 $messages['it'] = array(

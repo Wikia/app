@@ -10,6 +10,8 @@
  * @author Owen Davis <owen(at)wikia-inc.com>
  */
 abstract class WikiaDispatchableObject extends WikiaObject {
+	const DEFAULT_TEMPLATE_ENGINE = WikiaResponse::TEMPLATE_ENGINE_PHP;
+	const NIRVANA_API_PATH = '/wikia.php';
 
 	/**
 	 * Mediawiki RequestContext object
@@ -222,32 +224,78 @@ abstract class WikiaDispatchableObject extends WikiaObject {
 	}
 
 	/**
-	 * Returns the URL that would be used for an Ajax or API call (Nirvana) to access this method
+	 * Alias: WikiaDispatchableObject::getFullUrl
+	 *
+	 * Returns the full URL that would be used for an Ajax or API call (Nirvana) to access this method
 	 *
 	 * @param string $method The method name
 	 * @param array $params An hash with the parameters for the request and their possible values,
 	 * schema ['paramName' => 'value', ...]
+	 * @param string $format Response format - Constants defined in WikiaResponse
 	 *
 	 * @return string The absolute URL
 	 */
-	public static function getUrl( $method, Array $params = null ) {
-		$app = F::app();
-		$basePath = wfExpandUrl( $app->wg->Server . $app->wg->ScriptPath . '/wikia.php' );
+	public static function getUrl( $method, array $params = null, $format = null ) {
+		return self::getFullUrl( $method, $params, $format );
+	}
 
-		$baseParams = array(
-			'controller' => preg_replace( "/Controller$/", '', get_called_class() ),
-			'method' => $method
-		);
+	/**
+	 * Returns the local URL that would be used for an Ajax or API call (Nirvana) to access this method
+	 *
+	 * @param string $method The method name
+	 * @param array $params An hash with the parameters for the request and their possible values,
+	 * schema ['paramName' => 'value', ...]
+	 * @param string $format Response format - Constants defined in WikiaResponse
+	 *
+	 * @return string The absolute URL
+	 */
+	public static function getLocalUrl( $method, $params = null, $format = null ) {
+		$baseParams = array( 'controller' => preg_replace( "/Controller$/", '', get_called_class() ), 'method' => $method );
 
-		if ( !empty( $params ) ) {
+		if ( !empty( $format ) ) {
+			$params['format'] = $format;
+		}
+
+		if ( ! empty( $params ) ) {
 			//WikiaAPI requests accept only sorted params
 			//to cut down caching variants
 			ksort( $params );
 			$baseParams = array_merge( $baseParams, $params );
 		}
 
-		return wfAppendQuery( $basePath, $baseParams );
+		return wfAppendQuery( self::NIRVANA_API_PATH, $baseParams );
 	}
+
+	/**
+	 * Returns the full URL that would be used for an Ajax or API call (Nirvana) to access this method
+	 *
+	 * @param string $method The method name
+	 * @param array $params An hash with the parameters for the request and their possible values,
+	 * schema ['paramName' => 'value', ...]
+	 * @param string $format Response format - Constants defined in WikiaResponse
+	 *
+	 * @return string The absolute URL
+	 */
+	public static function getFullUrl( $method, $params = null, $format = null ) {
+		$app = F::app();
+		return wfExpandUrl( $app->wg->Server . $app->wg->ScriptPath . self::getLocalUrl( $method, $params, $format ) );
+	}
+
+	/**
+	 * Returns the nocookie URL that would be used for an API call (Nirvana) to access this method
+	 *
+	 * @param string $method The method name
+	 * @param array $params An hash with the parameters for the request and their possible values,
+	 * schema ['paramName' => 'value', ...]
+	 * @param string $format Response format - Constants defined in WikiaResponse
+	 *
+	 * @return string The absolute URL
+	 */
+	public static function getNoCookieUrl( $method, $params = null, $format = null ) {
+		$app = F::app();
+		return wfExpandUrl( $app->wg->CdnApiUrl . $app->wg->ScriptPath . self::getLocalUrl( $method, $params, $format ) );
+	}
+
 
 	/**
 	 * Purges URL's for multiple methods at once

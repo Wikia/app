@@ -11,6 +11,7 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 
 	var logGroup = 'ext.wikia.adEngine.adLogicPageParams',
 		hostname = window.location.hostname.toString(),
+		adsInHeadExperiment = window.wgLoadAdsInHead && abTest && abTest.getGroup('ADS_IN_HEAD'),
 		maxNumberOfCategories = 3,
 		maxNumberOfKruxSegments = 27; // keep the DART URL part for Krux segments below 500 chars
 
@@ -159,6 +160,10 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 			ab: getAb()
 		};
 
+		if (window.wgArticleId) {
+			params.pageid = zone1 + '/' + window.wgArticleId;
+		}
+
 		if (adLogicPageDimensions && adLogicPageDimensions.hasPreFooters()) {
 			params.hasp = 'yes';
 		} else {
@@ -171,7 +176,10 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 		}
 
 		extend(params, decodeLegacyDartParams(window.wgDartCustomKeyValues));
-		extend(params, decodeLegacyDartParams(window.amzn_targs));
+
+		if (!adsInHeadExperiment) {
+			extend(params, decodeLegacyDartParams(window.amzn_targs));
+		}
 
 		log(params, 9, logGroup);
 		return params;

@@ -9,7 +9,7 @@ class WikiaApiController extends WikiaController {
 	const DEFAULT_FORMAT_INDEX = 0;
 	const API_ENDPOINT_TEST = 'test';
 	const API_ENDPOINT_INTERNAL = 'internal';
-
+	const REF_URL_ARGUMENT = 'ref';
 	private $allowedFormats = array(
 		'json',
 		'raw'
@@ -133,7 +133,7 @@ class WikiaApiController extends WikiaController {
 	 */
 	
 	public function hideNonCommercialContent() {
-		return stripos($this->request->getScriptUrl(), "/api/v1")===0;
+		return stripos($this->getRequest()->getScriptUrl(), "/api/v1")===0;
 	}
 		
 	/** Block content if this wiki is does not allow commercial use of it's content outside of Wikia
@@ -155,10 +155,10 @@ class WikiaApiController extends WikiaController {
 	 * - 'test' if caller is using /api/test entrypoint
 	 */
 	public function getApiVersion() {
-		$url = $this->request->getScriptUrl();
-		if (stripos($this->request->getScriptUrl(), "/api/v1")===0) {
+		$url = $this->getRequest()->getScriptUrl();
+		if (stripos($url, "/api/v1")===0) {
 			return 1;
-		} else if (stripos($this->request->getScriptUrl(), "/api/test")===0) {
+		} else if (stripos($url, "/api/test")===0) {
 			return self::API_ENDPOINT_TEST;
 		} else {
 			return self::API_ENDPOINT_INTERNAL;
@@ -184,44 +184,120 @@ class WikiaApiController extends WikiaController {
 	 */
 	protected function serveImages() {
 		global  $wgApiDisableImages;
-		if($this->request->isInternal() || $this->getApiVersion() == self::API_ENDPOINT_INTERNAL ){
+		if( $this->getRequest()->isInternal() || $this->getApiVersion() == self::API_ENDPOINT_INTERNAL ){
 			return true;
 		}
 		return ( isset( $wgApiDisableImages ) && $wgApiDisableImages === true ) ? false : true;
 	}
 
 	/**
+	 * Returns "ref=xxx" from request url
+	 * @return bool|string
+	 */
+	protected function getRefUrlPart() {
+		$ref = $this->getRequest()->getVal( self::REF_URL_ARGUMENT );
+		if ( !$ref ) {
+			return false;
+		}
+		return http_build_query( [ self::REF_URL_ARGUMENT => $ref ] );
+	}
+
+	/**
+	 * Prepare input array for replaceArrayValues
+	 * convert array to [ field_name => N ]
+	 * @param $array | string
+	 * @return array
+	 */
+	protected function createFieldsArray( $array ){
+		if ( !is_array( $array ) ) {
+			$array = [ $array ];
+		}
+		return array_flip( $array );
+	}
+
+	/**
+	 * Process all fields containing image url;
+	 * Remove them if serveImages returns false
+	 * @param $data
+	 * @param $processFields
+	 * @return mixed
+	 */
+	protected function processImgFields( $data, $processFields ) {
+		$imageFields = isset( $processFields['imgFields'] ) ? $processFields[ 'imgFields' ] : null;
+		if ( !$this->serveImages() && !empty( $imageFields ) ) {
+
+			self::replaceArrayValues( $data, $this->createFieldsArray( $imageFields ),
+				function ( $inputVal ) {
+					return is_array( $inputVal ) ? [ ] : null;
+				}
+			);
+		}
+		return $data;
+	}
+
+	/**
+	 * Process all fields containing urls;
+	 * Add "ref=xxx" to them
+	 * @param $data
+	 * @param $processFields
+	 * @return mixed
+	 */
+	protected function processUrlFields( $data, $processFields ) {
+		$urlsFields = isset( $processFields['urlFields'] ) ? $processFields[ 'urlFields' ] : null;
+		$urlRef = $this->getRefUrlPart();
+
+		if ( $urlRef && !empty( $urlsFields ) ) {
+			self::replaceArrayValues( $data, $this->createFieldsArray( $urlsFields ),
+				function ( $inputVal ) use ( $urlRef ) {
+
+					if ( is_array( $inputVal ) ) {
+						foreach ( $inputVal as $k => $orgValue ) {
+							if ( !empty( $orgValue ) ) {
+								$char = stripos( $orgValue, '?' ) !== false ? '&' : '?';
+								$inputVal[ $k ] = $orgValue . $char . $urlRef;
+							}
+						}
+					} elseif ( !empty( $inputVal ) ) {
+						$char = stripos( $inputVal, '?' ) !== false ? '&' : '?';
+						return $inputVal . $char . $urlRef;
+					}
+					return $inputVal;
+				}
+			);
+		}
+		return $data;
+	}
+
+
+	/**
 	 * @param $data data to set as output
 	 * @param string|array $imageFields - fields to remove if we don't serve images
 	 * @param int $cacheValidity set only if greater than 0
 	 */
-	protected function setResponseData( $data, $imageFields = null, $cacheValidity = 0 ) {
-		if ( !$this->serveImages() && is_array( $data ) && !empty( $imageFields ) ) {
-			if ( !is_array( $imageFields ) ) {
-				$imageFields = [ $imageFields ];
-			}
-			//convert array to [ field_name => N ]
-			$imageFields = array_flip( $imageFields );
-			self::clear_array( $data, $imageFields );
+	protected function setResponseData( $data, $processFields = null, $cacheValidity = 0 ) {
+
+		if ( is_array( $data ) ) {
+			$data = $this->processImgFields( $data, $processFields );
+			$data = $this->processUrlFields( $data, $processFields );
 		}
-		$this->response->setData( $data );
+		$response = $this->getResponse();
+		$response->setData( $data );
 		if ( $cacheValidity > 0 ) {
-			$this->response->setCacheValidity( $cacheValidity );
+			$response->setCacheValidity( $cacheValidity );
 		}
 	}
 
 	/**
-	 * recursive search in array and clean values where key is in "$fields"
+	 * recursive search in array and replace values where key is in "$fields"
 	 * @param $input
 	 * @param $fields
 	 */
-	protected static function clear_array( &$input, &$fields ) {
+	protected static function replaceArrayValues( &$input, $fields, callable $replaceFnc ) {
 		foreach ( $input as $key => &$val ) {
-			$isArray = is_array( $val );
-			if ( array_key_exists( $key, $fields ) ) {
-				$val = $isArray ? [ ] : null;
-			} elseif ( $isArray ) {
-				self::clear_array( $val, $fields );
+			if ( isset( $fields[ $key ] ) ) {
+				$val = $replaceFnc($val);
+			} elseif ( is_array( $val ) ) {
+				self::replaceArrayValues( $val, $fields, $replaceFnc );
 			}
 		}
 	}
@@ -232,6 +308,6 @@ class WikiaApiController extends WikiaController {
 class ApiNonCommercialOnlyException extends ForbiddenException {
 	protected $details = "API access to this wiki is disabled because it's license disallows commercial use outside of Wikia.";
 }
-	
+
 	
 	

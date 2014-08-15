@@ -13,16 +13,15 @@ ve.ce.wikiaExample = ( function ( utils ) {
 		fakeLinkUrlResolved = ve.resolveUrl( fakeLinkUrl, document ),
 		fakeImageUrl = 'Bar',
 		fakeImageUrlResolved = ve.resolveUrl( fakeImageUrl, document ),
-		media = {};
+		media = {},
+		defaultThumbWidth = mw.config.get( 'wgVisualEditorConfig' ).defaultUserOptions.defaultthumbsize,
+		defaultThumbHeight = ( defaultThumbWidth / 2 );
 
 	/* Data */
 
 	media.data = {
-		'attribution': {
-			'minWidth': 100
-		},
-		'defaultWidth': 200,
-		'defaultHeight': 100
+		'defaultWidth': defaultThumbWidth,
+		'defaultHeight': defaultThumbHeight
 	};
 
 	media.data.cssClasses = {
@@ -30,14 +29,14 @@ ve.ce.wikiaExample = ( function ( utils ) {
 			'frame': {
 				'left': 'tleft',
 				'right': 'tright',
-				'center' : 'tnone',
-				'none' : 'tnone'
+				'center': 'tnone',
+				'none': 'tnone'
 			},
 			'none': {
 				'left': 'floatleft',
 				'right': 'floatright',
-				'center' : 'floatnone',
-				'none' : 'floatnone'
+				'center': 'floatnone',
+				'none': 'floatnone'
 			}
 		},
 		'htmlDomAlign': {
@@ -74,22 +73,12 @@ ve.ce.wikiaExample = ( function ( utils ) {
 
 	/* Mock HTML */
 
-	media.html = {
-		'shield':
-			'<img class="ve-ce-protectedNode-shield" ' +
-				'src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7">'
-	};
+	media.html = { };
 
 	media.html.block = {
-		'attribution':
-			'<p class="attribution">' +
-				// TODO: update this once the attribution message is changed in VID-1559
-				mw.message( 'oasis-content-picture-added-by', '<a href="/wiki/User:Foo">Foo</a>' ).plain() +
-			'</p>',
 		'caption':
 			'<figcaption class="ve-ce-branchNode">' +
-				'<a class="sprite details ve-no-shield"></a>' +
-				'<p class="ve-ce-generated-wrapper caption ve-ce-branchNode">abc</p>' +
+				'<p class="ve-ce-paragraphNode ve-ce-generated-wrapper caption ve-ce-branchNode">abc</p>' +
 			'</figcaption>',
 		'frame':
 			'<figure class="article-thumb" style="">' +
@@ -106,9 +95,8 @@ ve.ce.wikiaExample = ( function ( utils ) {
 
 	media.html.inline = {
 		'frameless':
-			'<a class="image ve-ce-mwInlineImageNode ve-ce-leafNode ve-ce-generatedContentNode ve-ce-protectedNode" contenteditable="false">' +
+			'<a class="image mw-default-size ve-ce-mwInlineImageNode ve-ce-leafNode ve-ce-generatedContentNode ve-ce-noHighlight ve-ce-focusableNode" contenteditable="false">' +
 				'<img src="' + fakeImageUrlResolved + '" width="" height="">' +
-				media.html.shield +
 			'</a>'
 	};
 
@@ -121,19 +109,19 @@ ve.ce.wikiaExample = ( function ( utils ) {
 
 	media.html.video.block = {
 		'title':
-			'<p class="title ve-no-shield">Bar</p>'
+			'<p class="title ve-no-shield">FooBar</p>'
 	};
 
 	/* Mock HTMLDOM */
 
 	media.htmlDom = {
 		'block':
-			'<figure data-mw=\'{"attribution":{"username":"Foo","title":"Bar"}}\'>' +
+			'<figure data-mw=\'{"user":"Foo"}\'>' +
 				'<a href="' + fakeLinkUrl + '"><img src="' + fakeImageUrl + '" resource="FooBar"></a>' +
 				'<figcaption>abc</figcaption>' +
 			'</figure>',
 		'inline':
-			'<span data-mw=\'{"attribution":{"username":"Foo","title":"Bar"}}\'>' +
+			'<span data-mw=\'{"user":"Foo"}\'>' +
 				'<a href="' + fakeLinkUrl + '"><img src="' + fakeImageUrl + '" resource="FooBar"></a>' +
 			'</span>'
 	};
@@ -172,7 +160,7 @@ ve.ce.wikiaExample = ( function ( utils ) {
 	 * @param {Object} attributes The node attributes from which to build the mock.
 	 * @returns {String} The mocked HTMLDOM.
 	 */
-	media.getHtmlDom = function( displayType, rdfaType, attributes ) {
+	media.getHtmlDom = function ( displayType, rdfaType, attributes ) {
 		var $mock = $( media.htmlDom[ displayType ] ),
 			typeOf = rdfaType;
 
@@ -204,7 +192,6 @@ ve.ce.wikiaExample = ( function ( utils ) {
 	/* Block Media */
 
 	media.block = { 'mw:Image': {}, 'mw:Video': {} };
-
 
 	/**
 	 * Get the mocked HTML output for a block media node.
@@ -238,12 +225,9 @@ ve.ce.wikiaExample = ( function ( utils ) {
 			$figcaption = $mock.find( 'figcaption' );
 			$caption = $figcaption.find( '.caption' );
 
-			// DOM order is sprite, title, caption, attribution
+			// DOM order is title, caption
 			if ( rdfaType === 'mw:Video' ) {
 				$caption.before( media.html.video.block.title );
-			}
-			if ( width >= media.data.attribution.minWidth ) {
-				$figcaption.append( media.html.block.attribution );
 			}
 		} else {
 			$mock.removeAttr( 'style' );
@@ -255,15 +239,13 @@ ve.ce.wikiaExample = ( function ( utils ) {
 		}
 
 		$mock
-			.addClass( 've-ce-branchNode ve-ce-generatedContentNode ve-ce-protectedNode' )
-			.attr( 'contenteditable', false )
-			.append( media.html.shield );
+			.addClass( 've-ce-branchNode ve-ce-generatedContentNode ve-ce-noHighlight ve-ce-focusableNode' )
+			.attr( 'contenteditable', false );
 
 		$mock.find( 'img[src="' + fakeImageUrlResolved + '"]' ).attr( {
 			height: attributes.height,
 			width: width
 		} );
-
 
 		return $mock[ 0 ].outerHTML;
 	};
@@ -275,7 +257,7 @@ ve.ce.wikiaExample = ( function ( utils ) {
 	 * @param {Object} attributes The node attributes from which to build the mock.
 	 * @returns {String} The mocked HTML.
 	 */
-	 media.block[ 'mw:Image' ].getHtml = media.block.getHtml;
+	media.block[ 'mw:Image' ].getHtml = media.block.getHtml;
 
 	/**
 	 * Get the mocked HTML output for a block video node.

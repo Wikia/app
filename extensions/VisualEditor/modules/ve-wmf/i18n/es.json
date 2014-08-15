@@ -1,0 +1,29 @@
+{
+	"@metadata": {
+		"authors": [
+			"Armando-Martin",
+			"Aruizdr",
+			"Benfutbol10",
+			"DJ Nietzsche",
+			"Erdemaslancan",
+			"Fitoschido",
+			"Imre",
+			"Invadinado",
+			"Jdforrester",
+			"Jduranboger",
+			"PoLuX124",
+			"Ralgis",
+			"Thehelpfulone"
+		]
+	},
+	"tag-visualeditor": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|Editor visual]]",
+	"tag-visualeditor-description": "Modificación hecha con el [[{{MediaWiki:visualeditor-descriptionpagelink}}|editor visual]]",
+	"tag-visualeditor-needcheck": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|Editor visual: Comprobar]]",
+	"tag-visualeditor-needcheck-description": "Edición realizada con el [[{{MediaWiki:visualeditor-descriptionpagelink}}|editor visual]] en la que el sistema detectó posibles cambios no intencionales.",
+	"tag-visualeditor-switched": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor: Switched]]",
+	"tag-visualeditor-switched-description": "Usuario comenzó a editar utilizando el Editor Visual y luego cambió al editor en modo fuente.",
+	"visualeditor-feedback-link": "Wikipedia:Editor visual/Comentar",
+	"visualeditor-feedback-tool": "Comentar",
+	"visualeditor-help-label": "Leer la guía de usuario",
+	"visualeditor-help-title": "Guía de usuario para utilizar el editor"
+}

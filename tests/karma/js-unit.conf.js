@@ -8,7 +8,7 @@
 
 var base = require('./karma.base.conf.js');
 
-module.exports = function(config) {
+module.exports = function (config) {
 	'use strict';
 
 	base(config);
@@ -30,7 +30,6 @@ module.exports = function(config) {
 			'extensions/wikia/WikiaMobile/js/mediagallery.js',
 			'extensions/wikia/WikiaMobile/js/media.js',
 			'extensions/wikia/WikiaMobile/js/pager.js',
-			'extensions/wikia/WikiaMobile/js/ads.js',
 			'extensions/wikia/WikiaMobile/js/share.js',
 			'extensions/wikia/WikiaMobile/js/tables.js',
 			'extensions/wikia/WikiaMobile/js/throbber.js',
@@ -51,6 +50,8 @@ module.exports = function(config) {
 			'resources/wikia/modules/stringhelper.js',
 			'resources/wikia/modules/thumbnailer.js',
 			'resources/wikia/modules/uniqueId.js',
+			'resources/wikia/libraries/mustache/mustache.js',
+			'resources/wikia/libraries/jquery/ellipses.js',
 
 			//UI Repo JS API
 			'resources/wikia/modules/uicomponent.js',
@@ -64,23 +65,28 @@ module.exports = function(config) {
 			//Advertisement
 			'extensions/wikia/AdEngine/js/AdConfig2.js',
 			'extensions/wikia/AdEngine/js/AdConfig2Late.js',
+			'extensions/wikia/AdEngine/js/AdConfigMobile.js',
+			'extensions/wikia/AdEngine/js/AdDecoratorPageDimensions.js',
 			'extensions/wikia/AdEngine/js/AdEngine2.js',
+			'extensions/wikia/AdEngine/js/EventDispatcher.js',
 			'extensions/wikia/AdEngine/js/AdLogicDartSubdomain.js',
 			'extensions/wikia/AdEngine/js/AdLogicHighValueCountry.js',
+			'extensions/wikia/AdEngine/js/AdLogicPageDimensions.js',
 			'extensions/wikia/AdEngine/js/AdLogicPageParams.js',
 			'extensions/wikia/AdEngine/js/AdLogicPageParamsLegacy.js',
-			'extensions/wikia/AdEngine/js/AdLogicPageDimensions.js',
-			'extensions/wikia/AdEngine/js/AdDecoratorPageDimensions.js',
-			'extensions/wikia/AdEngine/js/EvolveSlotConfig.js',
-			'extensions/wikia/AdEngine/js/AdProviderEvolve.js',
 			'extensions/wikia/AdEngine/js/AdProviderDirectGpt.js',
+			'extensions/wikia/AdEngine/js/AdProviderEvolve.js',
 			'extensions/wikia/AdEngine/js/AdProviderLater.js',
 			'extensions/wikia/AdEngine/js/AdProviderLiftium.js',
 			'extensions/wikia/AdEngine/js/AdProviderNull.js',
 			'extensions/wikia/AdEngine/js/DartUrl.js',
 			'extensions/wikia/AdEngine/js/EvolveHelper.js',
+			'extensions/wikia/AdEngine/js/EvolveSlotConfig.js',
+			'extensions/wikia/AdEngine/js/MessageListener.js',
 			'extensions/wikia/AdEngine/js/WikiaDartHelper.js',
-			'extensions/wikia/AdEngine/js/WikiaDartMobileHelper.js',
+			'extensions/wikia/AdEngine/js/WikiaDartVideoHelper.js',
+			'extensions/wikia/AdEngine/js/WikiaGptAdDetect.js',
+
 			'extensions/wikia/AdEngine/js/spec/*.spec.js',
 
 			//PhalanxII
@@ -150,7 +156,12 @@ module.exports = function(config) {
 			'resources/wikia/libraries/jquery/throttle-debounce/jquery.throttle-debounce.js', // $.throttle
 			'extensions/wikia/ImageLazyLoad/js/ImgLzy.module.js',
 			'extensions/wikia/ImageLazyLoad/js/ImageLazyLoad.js',
-			'extensions/wikia/ImageLazyLoad/spec/*.spec.js'
+			'extensions/wikia/ImageLazyLoad/spec/*.spec.js',
+
+			// Thumbnails
+			'extensions/wikia/Thumbnails/scripts/templates.mustache.js',
+			'extensions/wikia/Thumbnails/scripts/views/titleThumbnail.js',
+			'extensions/wikia/Thumbnails/scripts/spec/*.spec.js'
 		]
 	});
 };

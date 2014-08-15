@@ -1,7 +1,7 @@
 /*!
  * VisualEditor UserInterface MediaWiki MWReferenceDialog class.
  *
- * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
@@ -9,43 +9,136 @@
  * Dialog for editing MediaWiki references.
  *
  * @class
- * @extends ve.ui.MWDialog
+ * @extends ve.ui.NodeDialog
  *
  * @constructor
- * @param {ve.ui.WindowSet} windowSet Window set this dialog is part of
  * @param {Object} [config] Configuration options
  */
-ve.ui.MWReferenceDialog = function VeUiMWReferenceDialog( windowSet, config ) {
+ve.ui.MWReferenceDialog = function VeUiMWReferenceDialog( config ) {
 	// Parent constructor
-	ve.ui.MWDialog.call( this, windowSet, config );
+	ve.ui.MWReferenceDialog.super.call( this, config );
 
 	// Properties
-	this.ref = null;
+	this.referenceModel = null;
+
+	// Events
+	this.connect( this, { 'ready': 'onReady' } );
 };
 
 /* Inheritance */
 
-OO.inheritClass( ve.ui.MWReferenceDialog, ve.ui.MWDialog );
+OO.inheritClass( ve.ui.MWReferenceDialog, ve.ui.NodeDialog );
 
 /* Static Properties */
 
 ve.ui.MWReferenceDialog.static.name = 'reference';
 
-ve.ui.MWReferenceDialog.static.titleMessage = 'visualeditor-dialog-reference-title';
+ve.ui.MWReferenceDialog.static.title =
+	OO.ui.deferMsg( 'visualeditor-dialog-reference-title' );
 
 ve.ui.MWReferenceDialog.static.icon = 'reference';
 
+ve.ui.MWReferenceDialog.static.modelClasses = [ ve.dm.MWReferenceNode ];
+
 ve.ui.MWReferenceDialog.static.toolbarGroups = [
+	// History
 	{ 'include': [ 'undo', 'redo' ] },
-	{ 'include': [ 'bold', 'italic', 'link', 'clear' ] },
-	{ 'include': [ 'number', 'bullet', 'outdent', 'indent' ] },
-	{ 'include': '*', 'exclude': [ { 'group': 'format' }, 'reference', 'referenceList' ] }
+	// No formatting
+	/* {
+		'type': 'menu',
+		'indicator': 'down',
+		'title': OO.ui.deferMsg( 'visualeditor-toolbar-format-tooltip' ),
+		'include': [ { 'group': 'format' } ],
+		'promote': [ 'paragraph' ],
+		'demote': [ 'preformatted', 'heading1' ]
+	},*/
+	// Style
+	{
+		'type': 'list',
+		'icon': 'text-style',
+		'indicator': 'down',
+		'title': OO.ui.deferMsg( 'visualeditor-toolbar-style-tooltip' ),
+		'include': [ { 'group': 'textStyle' }, 'clear' ],
+		'promote': [ 'bold', 'italic' ],
+		'demote': [ 'strikethrough', 'code', 'underline', 'clear' ]
+	},
+	// Link
+	{ 'include': [ 'link' ] },
+	// Cite
+	{
+		'type': 'list',
+		'label': OO.ui.deferMsg( 'visualeditor-toolbar-cite-label' ),
+		'indicator': 'down',
+		'include': [ { 'group': 'cite-transclusion' } ]
+	},
+	// No structure
+	/* {
+		'type': 'list',
+		'icon': 'bullet-list',
+		'indicator': 'down',
+		'include': [ { 'group': 'structure' } ],
+		'demote': [ 'outdent', 'indent' ]
+	},*/
+	// Insert
+	{
+		'label': OO.ui.deferMsg( 'visualeditor-toolbar-insert' ),
+		'indicator': 'down',
+		'include': '*',
+		'exclude': [
+			{ 'group': 'format' },
+			{ 'group': 'structure' },
+			'reference',
+			'referenceList',
+			'gallery'
+		],
+		'promote': [ 'mediaInsert' ],
+		'demote': [ 'language', 'specialcharacter' ]
+	}
 ];
 
 ve.ui.MWReferenceDialog.static.surfaceCommands = [
-	'undo', 'redo', 'bold', 'italic', 'link', 'clear',
-	'underline', 'subscript', 'superscript'
+	'undo',
+	'redo',
+	'bold',
+	'italic',
+	'link',
+	'clear',
+	'underline',
+	'subscript',
+	'superscript',
+	'pasteSpecial'
 ];
+
+/**
+ * Get the paste rules for the surface widget in the dialog
+ *
+ * @see ve.dm.ElementLinearData#sanitize
+ * @return {Object} Paste rules
+ */
+ve.ui.MWReferenceDialog.static.getPasteRules = function () {
+	return ve.extendObject(
+		ve.copy( ve.init.target.constructor.static.pasteRules ),
+		{
+			'all': {
+				'blacklist': OO.simpleArrayUnion(
+					ve.getProp( ve.init.target.constructor.static.pasteRules, 'all', 'blacklist' ) || [],
+					[
+						// Nested references are impossible
+						'mwReference', 'mwReferenceList',
+						// Lists are tables are actually possible in wikitext with a leading
+						// line break but we prevent creating these with the UI
+						'list', 'listItem', 'definitionList', 'definitionListItem',
+						'table', 'tableCaption', 'tableSection', 'tableRow', 'tableCell'
+					]
+				),
+				// Headings are not possible in wikitext without HTML
+				'conversions': {
+					'mwHeading': 'paragraph'
+				}
+			}
+		}
+	);
+};
 
 /* Methods */
 
@@ -53,56 +146,53 @@ ve.ui.MWReferenceDialog.static.surfaceCommands = [
  * Handle reference surface change events
  */
 ve.ui.MWReferenceDialog.prototype.onDocumentTransact = function () {
-	var data = this.referenceSurface.getContent(),
+	var data = this.referenceModel.getDocument().data,
 		// TODO: Check for other types of empty, e.g. only whitespace?
-		disabled = data.length <= 4;
+		applyDisabled = data.countNoninternalElements() <= 2;
 
-	this.insertButton.setDisabled( disabled );
-	this.applyButton.setDisabled( disabled );
+	this.applyButton.setDisabled( applyDisabled );
+	this.selectButton.setDisabled( !applyDisabled || this.search.isIndexEmpty() );
 };
 
 /**
  * Handle search select events.
  *
- * @param {Object|null} item Reference attributes or null if no item is selected
+ * @param {ve.dm.MWReferenceModel|null} ref Reference model or null if no item is selected
  */
-ve.ui.MWReferenceDialog.prototype.onSearchSelect = function ( item ) {
-	if ( item ) {
-		this.useReference( item );
-		this.close( { 'action': 'insert' } );
+ve.ui.MWReferenceDialog.prototype.onSearchSelect = function ( ref ) {
+	if ( ref instanceof ve.dm.MWReferenceModel ) {
+		if ( this.selectedNode instanceof ve.dm.MWReferenceNode ) {
+			this.getFragment().removeContent();
+			this.selectedNode = null;
+		}
+		this.useReference( ref );
+		// HACK - This proves that the interface for ActionDialog is screwed up
+		this.onApplyButtonClick();
 	}
+};
+
+/**
+ * Handle window ready events
+ */
+ve.ui.MWReferenceDialog.prototype.onReady = function () {
+	// Focus the reference surface
+	this.referenceSurface.focus();
 };
 
 /**
  * Work on a specific reference.
  *
- * @param {Object} [ref] Reference attributes, omit to work on a new reference
+ * @param {ve.dm.MWReferenceModel} [ref] Reference model, omit to work on a new reference
  * @chainable
  */
 ve.ui.MWReferenceDialog.prototype.useReference = function ( ref ) {
-	var newDoc, refGroup,
-		doc = this.surface.getModel().getDocument();
-
-	if ( ref ) {
+	// Properties
+	if ( ref instanceof ve.dm.MWReferenceModel ) {
 		// Use an existing reference
-		this.ref = {
-			'listKey': ref.listKey,
-			'listGroup': ref.listGroup,
-			'refGroup': ref.refGroup,
-			'listIndex': ref.listIndex
-		};
-		newDoc = doc.cloneFromRange( doc.getInternalList().getItemNode( ref.listIndex ).getRange() );
-		refGroup = ref.refGroup;
+		this.referenceModel = ref;
 	} else {
 		// Create a new reference
-		this.ref = null;
-		newDoc = new ve.dm.Document( [
-			{ 'type': 'paragraph', 'internal': { 'generated': 'wrapper' } },
-			{ 'type': '/paragraph' },
-			{ 'type': 'internalList' },
-			{ 'type': '/internalList' }
-		] );
-		refGroup = '';
+		this.referenceModel = new ve.dm.MWReferenceModel();
 	}
 
 	// Cleanup
@@ -112,20 +202,28 @@ ve.ui.MWReferenceDialog.prototype.useReference = function ( ref ) {
 
 	// Properties
 	this.referenceSurface = new ve.ui.SurfaceWidget(
-		newDoc,
+		this.referenceModel.getDocument(),
 		{
 			'$': this.$,
 			'tools': this.constructor.static.toolbarGroups,
-			'commands': this.constructor.static.surfaceCommands
+			'commands': this.constructor.static.surfaceCommands,
+			'pasteRules': this.constructor.static.getPasteRules()
 		}
 	);
 
-	// Event handlers
-	this.referenceSurface.getSurface().getModel().getDocument()
-		.connect( this, { 'transact': 'onDocumentTransact' } );
+	// Events
+	this.referenceModel.getDocument().connect( this, { 'transact': 'onDocumentTransact' } );
+	this.referenceSurface.getSurface().getModel().connect( this, {
+		'documentUpdate': function () {
+			this.wikitextWarning = ve.init.mw.ViewPageTarget.static.checkForWikitextWarning(
+				this.referenceSurface.getSurface(),
+				this.wikitextWarning
+			);
+		}
+	} );
 
 	// Initialization
-	this.referenceGroupInput.setValue( refGroup );
+	this.referenceGroupInput.setValue( this.referenceModel.getGroup() );
 	this.contentFieldset.$element.append( this.referenceSurface.$element );
 	this.referenceSurface.initialize();
 
@@ -135,31 +233,55 @@ ve.ui.MWReferenceDialog.prototype.useReference = function ( ref ) {
 /**
  * @inheritdoc
  */
+ve.ui.MWReferenceDialog.prototype.getApplyButtonLabel = function () {
+	return this.selectedNode instanceof ve.dm.MWReferenceNode ?
+		ve.ui.MWReferenceDialog.super.prototype.getApplyButtonLabel.call( this ) :
+		ve.msg( 'visualeditor-dialog-reference-insert-button' );
+};
+
+/**
+ * @inheritdoc
+ */
+ve.ui.MWReferenceDialog.prototype.applyChanges = function () {
+	var surfaceModel = this.getFragment().getSurface();
+
+	this.referenceModel.setGroup( this.referenceGroupInput.getValue() );
+
+	// Insert reference (will auto-create an internal item if needed)
+	if ( !( this.selectedNode instanceof ve.dm.MWReferenceNode ) ) {
+		if ( !this.referenceModel.findInternalItem( surfaceModel ) ) {
+			this.referenceModel.insertInternalItem( surfaceModel );
+		}
+		// Collapse returns a new fragment, so update this.fragment
+		this.fragment = this.getFragment().collapseRangeToEnd();
+		this.referenceModel.insertReferenceNode( this.getFragment() );
+	}
+
+	// Update internal item
+	this.referenceModel.updateInternalItem( surfaceModel );
+
+	// Parent method
+	return ve.ui.MWReferenceDialog.super.prototype.applyChanges.call( this );
+};
+
+/**
+ * @inheritdoc
+ */
 ve.ui.MWReferenceDialog.prototype.initialize = function () {
 	// Parent method
-	ve.ui.MWDialog.prototype.initialize.call( this );
+	ve.ui.MWReferenceDialog.super.prototype.initialize.call( this );
 
 	// Properties
-	this.panels = new OO.ui.StackPanelLayout( { '$': this.$ } );
 	this.editPanel = new OO.ui.PanelLayout( {
 		'$': this.$, 'scrollable': true, 'padded': true
 	} );
 	this.searchPanel = new OO.ui.PanelLayout( { '$': this.$ } );
-	this.applyButton = new OO.ui.PushButtonWidget( {
+	this.selectButton = new OO.ui.ButtonWidget( {
 		'$': this.$,
-		'label': ve.msg( 'visualeditor-dialog-action-apply' ),
-		'flags': ['primary']
+		'label': ve.msg ( 'visualeditor-dialog-reference-useexisting-label' ),
+		'flags': ['secondary']
 	} );
-	this.insertButton = new OO.ui.PushButtonWidget( {
-		'$': this.$,
-		'label': ve.msg( 'visualeditor-dialog-reference-insert-button' ),
-		'flags': ['constructive']
-	} );
-	this.selectButton = new OO.ui.PushButtonWidget( {
-		'$': this.$,
-		'label': ve.msg ( 'visualeditor-dialog-reference-useexisting-label' )
-	} );
-	this.backButton = new OO.ui.PushButtonWidget( {
+	this.backButton = new OO.ui.ButtonWidget( {
 		'$': this.$,
 		'label': ve.msg( 'visualeditor-dialog-action-goback' )
 	} );
@@ -170,31 +292,24 @@ ve.ui.MWReferenceDialog.prototype.initialize = function () {
 		'icon': 'settings'
 	} );
 	// TODO: Use a drop-down or something, and populate with existing groups instead of free-text
-	this.referenceGroupInput = new OO.ui.TextInputWidget( { '$': this.$ } );
-	this.referenceGroupLabel = new OO.ui.InputLabelWidget( {
+	this.referenceGroupInput = new OO.ui.TextInputWidget( {
 		'$': this.$,
-		'input': this.referenceGroupInput,
+		'placeholder': ve.msg( 'visualeditor-dialog-reference-options-group-placeholder' )
+	} );
+	this.referenceGroupField = new OO.ui.FieldLayout( this.referenceGroupInput, {
+		'$': this.$,
+		'align': 'top',
 		'label': ve.msg( 'visualeditor-dialog-reference-options-group-label' )
 	} );
-	this.search = new ve.ui.MWReferenceSearchWidget(
-		this.surface, { '$': this.$ }
-	);
+	this.search = new ve.ui.MWReferenceSearchWidget( { '$': this.$ } );
 
 	// Events
-	this.applyButton.connect( this, { 'click': [ 'close', { 'action': 'apply' } ] } );
-	this.insertButton.connect( this, { 'click': [ 'close', { 'action': 'insert' } ] } );
-	this.selectButton.connect( this, { 'click': function () {
-		this.backButton.$element.show();
-		this.insertButton.$element.hide();
-		this.selectButton.$element.hide();
-		this.panels.showItem( this.searchPanel );
-		this.search.getQuery().$input.focus().select();
-	} } );
+	this.selectButton.connect( this, { 'click': 'useExistingReference' } );
 	this.backButton.connect( this, { 'click': function () {
 		this.backButton.$element.hide();
-		this.insertButton.$element.show();
+		this.applyButton.$element.show();
 		this.selectButton.$element.show();
-		this.panels.showItem( this.editPanel );
+		this.panels.setItem( this.editPanel );
 		this.editPanel.$element.find( '.ve-ce-documentNode' ).focus();
 	} } );
 	this.search.connect( this, { 'select': 'onSearchSelect' } );
@@ -202,142 +317,77 @@ ve.ui.MWReferenceDialog.prototype.initialize = function () {
 	// Initialization
 	this.panels.addItems( [ this.editPanel, this.searchPanel ] );
 	this.editPanel.$element.append( this.contentFieldset.$element, this.optionsFieldset.$element );
-	this.optionsFieldset.$element.append( this.referenceGroupLabel.$element, this.referenceGroupInput.$element );
+	this.optionsFieldset.addItems( [ this.referenceGroupField ] );
 	this.searchPanel.$element.append( this.search.$element );
-	this.$body.append( this.panels.$element );
 	this.$foot.append(
 		this.applyButton.$element,
-		this.insertButton.$element,
 		this.selectButton.$element,
 		this.backButton.$element
 	);
 };
 
 /**
- * @inheritdoc
+ * Switches dialog to use existing reference mode
  */
-ve.ui.MWReferenceDialog.prototype.setup = function ( data ) {
-	// Parent method
-	ve.ui.MWDialog.prototype.setup.call( this, data );
+ve.ui.MWReferenceDialog.prototype.useExistingReference = function () {
+	this.backButton.$element.show();
+	this.applyButton.$element.hide();
+	this.selectButton.$element.hide();
+	this.panels.setItem( this.searchPanel );
+	this.search.getQuery().focus().select();
+};
 
-	var ref,
-		focusedNode = this.surface.getView().getFocusedNode();
+/**
+ * @inheritdoc
+ * @param {Object} [data] Setup data
+ * @param {boolean} [data.useExistingReference] Open the dialog in "use existing reference" mode
+ */
+ve.ui.MWReferenceDialog.prototype.getSetupProcess = function ( data ) {
+	return ve.ui.MWReferenceDialog.super.prototype.getSetupProcess.call( this, data )
+		.next( function () {
+			this.panels.setItem( this.editPanel );
+			if ( this.selectedNode instanceof ve.dm.MWReferenceNode ) {
+				this.useReference(
+					ve.dm.MWReferenceModel.static.newFromReferenceNode( this.selectedNode )
+				);
+			} else {
+				this.useReference( null );
+				this.applyButton.setDisabled( true );
+			}
+			this.selectButton.$element.show();
+			this.applyButton.$element.show();
+			this.backButton.$element.hide();
+			this.search.buildIndex( this.getFragment().getDocument().getInternalList() );
 
-	if ( focusedNode instanceof ve.ce.MWReferenceNode ) {
-		ref = focusedNode.getModel().getAttributes();
-		this.applyButton.$element.show();
-		this.insertButton.$element.hide();
-		this.selectButton.$element.hide();
-	} else {
-		this.applyButton.$element.hide();
-		this.insertButton.$element.show();
-		this.selectButton.$element.show();
-	}
-	this.backButton.$element.hide();
-	this.panels.showItem( this.editPanel );
-	this.useReference( ref );
-	this.search.buildIndex();
-	this.selectButton.setDisabled( !this.search.getResults().getItems().length );
+			if ( data.useExisting ) {
+				this.useExistingReference();
+			}
+
+			// If we're using an existing reference, start off disabled
+			// If not, set disabled based on whether or not there are any existing ones.
+			this.selectButton.setDisabled(
+				this.selectedNode instanceof ve.dm.MWReferenceNode ||
+				this.search.isIndexEmpty()
+			);
+		}, this );
 };
 
 /**
  * @inheritdoc
  */
-ve.ui.MWReferenceDialog.prototype.teardown = function ( data ) {
-	var i, len, txs, item, newDoc, group, refGroup, listGroup, keyIndex, refNodes,
-		surfaceModel = this.surface.getModel(),
-		// Store the original selection browsers may reset it after
-		// the first model change.
-		selection = surfaceModel.getSelection().clone(),
-		doc = surfaceModel.getDocument(),
-		internalList = doc.getInternalList();
-
-	// Data initialization
-	data = data || {};
-
-	if ( data.action === 'insert' || data.action === 'apply' ) {
-		newDoc = this.referenceSurface.getSurface().getModel().getDocument();
-		refGroup = this.referenceGroupInput.getValue();
-		listGroup = 'mwReference/' + refGroup;
-
-		// Internal item changes
-		if ( this.ref ) {
-			// Group/key has changed
-			if ( this.ref.listGroup !== listGroup ) {
-				// Get all reference nodes with the same group and key
-				group = internalList.getNodeGroup( this.ref.listGroup );
-				refNodes = group.keyedNodes[this.ref.listKey] ?
-					group.keyedNodes[this.ref.listKey].slice() :
-					[ group.firstNodes[this.ref.listIndex] ];
-				// Check for name collision when moving items between groups
-				keyIndex = internalList.getKeyIndex( this.ref.listGroup, this.ref.listKey );
-				if ( keyIndex !== undefined ) {
-					// Resolve name collision by generating a new list key
-					this.ref.listKey = 'auto/' + internalList.getNextUniqueNumber();
-				}
-				// Update the group name of all references nodes with the same group and key
-				txs = [];
-				for ( i = 0, len = refNodes.length; i < len; i++ ) {
-					// HACK: Removing and re-inserting nodes to/from the internal list is done
-					// because internal list doesn't yet support attribute changes
-					refNodes[i].removeFromInternalList();
-					txs.push( ve.dm.Transaction.newFromAttributeChanges(
-						doc,
-						refNodes[i].getOuterRange().start,
-						{ 'refGroup': refGroup, 'listGroup': listGroup }
-					) );
-				}
-				surfaceModel.change( txs );
-				// HACK: Same as above, internal list issues
-				for ( i = 0, len = refNodes.length; i < len; i++ ) {
-					refNodes[i].addToInternalList();
-				}
-				this.ref.listGroup = listGroup;
-				this.ref.refGroup = refGroup;
+ve.ui.MWReferenceDialog.prototype.getTeardownProcess = function ( data ) {
+	return ve.ui.MWReferenceDialog.super.prototype.getTeardownProcess.call( this, data )
+		.first( function () {
+			this.search.getQuery().setValue( '' );
+			if ( this.wikitextWarning ) {
+				this.wikitextWarning.close();
 			}
-			// Update internal node content
-			surfaceModel.change(
-				ve.dm.Transaction.newFromDocumentReplace(
-					doc, internalList.getItemNode( this.ref.listIndex ), newDoc
-				)
-			);
-		}
-
-		// Content changes
-		if ( data.action === 'insert' ) {
-			if ( !this.ref ) {
-				listGroup = 'mwReference/' + refGroup;
-				// Create new internal item
-				this.ref = {
-					'listKey': 'auto/' + internalList.getNextUniqueNumber(),
-					'listGroup': listGroup,
-					'refGroup': refGroup
-				};
-				// Insert an internal item, then inject the subdocument into it
-				item = internalList.getItemInsertion( this.ref.listGroup, this.ref.listKey, [] );
-				surfaceModel.change( item.transaction );
-				this.ref.listIndex = item.index;
-				surfaceModel.change(
-					ve.dm.Transaction.newFromDocumentReplace(
-						doc, internalList.getItemNode( this.ref.listIndex ), newDoc
-					)
-				);
-			}
-			// Add reference at cursor
-			surfaceModel.getFragment( selection ).collapseRangeToEnd().insertContent( [
-				{ 'type': 'mwReference', 'attributes': this.ref }, { 'type': '/mwReference' }
-			] );
-		}
-	}
-
-	this.referenceSurface.destroy();
-	this.referenceSurface = null;
-	this.ref = null;
-
-	// Parent method
-	ve.ui.MWDialog.prototype.teardown.call( this, data );
+			this.referenceSurface.destroy();
+			this.referenceSurface = null;
+			this.referenceModel = null;
+		}, this );
 };
 
 /* Registration */
 
-ve.ui.dialogFactory.register( ve.ui.MWReferenceDialog );
+ve.ui.windowFactory.register( ve.ui.MWReferenceDialog );

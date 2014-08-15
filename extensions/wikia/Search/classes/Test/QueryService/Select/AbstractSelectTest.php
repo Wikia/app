@@ -6,6 +6,8 @@ namespace Wikia\Search\Test\QueryService\Select;
 use Wikia, ReflectionProperty, ReflectionMethod, Wikia\Search\Utilities;
 /**
  * Tests core functionality shared by other Select instances
+ *
+ * @group Broken
  */
 class AbstractSelectTest extends Wikia\Search\Test\BaseTest {
 

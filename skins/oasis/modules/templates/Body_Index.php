@@ -86,8 +86,17 @@
 					<div class="home-top-right-ads">
 					<?php
 						if ( !WikiaPageType::isCorporatePage() && !$wg->EnableVideoPageToolExt && WikiaPageType::isMainPage() ) {
-							echo $app->renderView('Ad', 'Index', ['slotName' => 'HOME_TOP_RIGHT_BOXAD', 'pageTypes' => ['homepage_logged', 'corporate', 'all_ads']]);
+							echo $app->renderView('Ad', 'Index', [
+								'slotName' => 'HOME_TOP_RIGHT_BOXAD',
+								'pageFairId' => isset($wg->AnalyticsProviderPageFairSlotIds['MEDREC']) ? $wg->AnalyticsProviderPageFairSlotIds['MEDREC'] : null,
+								'pageTypes' => ['homepage_logged', 'corporate', 'all_ads']
+							]);
 						}
+
+						if (!WikiaPageType::isCorporatePage() && !WikiaPageType::isMainPage() && $wg->AdDriverUseTopInContentBoxad) {
+							echo $app->renderView('Ad', 'Index', ['slotName' => 'TOP_IN_CONTENT_BOXAD']);
+						}
+
 					?>
 					</div>
 
@@ -139,8 +148,8 @@
 		?>
 
 		<?= empty($wg->SuppressFooter) ? $app->renderView('Footer', 'Index') : '' ?>
-		<? if(!empty($wg->EnableWikiaHomePageExt)) echo $app->renderView('WikiaHomePage', 'footer') ?>
-		<?= $app->renderView('CorporateFooter', 'Index') ?>
+		<? if(!empty($wg->EnableCorporateFooterExt)) echo $app->renderView('CorporateFooter', 'index') ?>
+		<? if(!empty($wg->EnableGlobalFooterExt)) echo $app->renderView('GlobalFooter', 'index') ?>
 	</div>
 </section><!--WikiaPage-->
 

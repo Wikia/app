@@ -32,7 +32,8 @@ class Http {
 	 *    - userAgent           A user agent, if you want to override the default
 	 *                          MediaWiki/$wgVersion
 	 *    - headers             Additional headers for request
-	 * @return Mixed: (bool)false on failure or a string on success
+	 *    - returnInstance      If set the method will return MWHttpRequest instance instead of string|boolean
+	 * @return Mixed: (bool)false on failure or a string on success or MWHttpRequest instance if returnInstance option is set
 	 */
 	public static function request( $method, $url, $options = array() ) {
 		$fname = __METHOD__ . '::' . $method;
@@ -65,7 +66,7 @@ class Http {
 
 		// Wikia change - @author: mech - begin
 		// log all the requests we make (except valid Phalanx calls, as we have a lot of them)
-		$caller =  wfGetCallerClassMethod( [ __CLASS__, 'Hooks' ] );
+		$caller =  wfGetCallerClassMethod( [ __CLASS__, 'Hooks', 'ApiService' ] );
 		$isOk = $status->isOK();
 		if ( class_exists( 'Wikia\\Logger\\WikiaLogger' ) && ( !$isOk || false === strpos( $caller, 'Phalanx' ) ) ) {
 
@@ -85,9 +86,13 @@ class Http {
 
 		}
 
-		if ( $isOk ) {
-		// Wikia change - end
+		// Wikia change - @author: nAndy - begin
+		// Introduced new returnInstance options to return MWHttpRequest instance instead of string-bool mix
+		if( !empty( $options['returnInstance'] ) ) {
+			$ret = $req;
+		} else if( $isOk ) {
 			$ret = $req->getContent();
+			// Wikia change - end
 		} else {
 			$ret = false;
 		}
@@ -103,7 +108,7 @@ class Http {
 	 * @param $url
 	 * @param $timeout string
 	 * @param $options array
-	 * @return string
+	 * @return string|bool|MWHttpRequest
 	 */
 	public static function get( $url, $timeout = 'default', $options = array() ) {
 		$options['timeout'] = $timeout;
@@ -116,7 +121,7 @@ class Http {
 	 *
 	 * @param $url
 	 * @param $options array
-	 * @return string
+	 * @return string|bool|MWHttpRequest
 	 */
 	public static function post( $url, $options = array() ) {
 		return Http::request( 'POST', $url, $options );

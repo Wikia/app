@@ -298,7 +298,7 @@
 		}
 		if ( externalIds.length > 0 ) {
 			log('init', 'Loading external configuration');
-			var url = '/wikia.php?controller=AbTesting&method=externalData&callback=Wikia.AbTest.loadExternalData&ids=';
+			var url = window.wgCdnApiUrl + '/wikia.php?controller=AbTesting&method=externalData&callback=Wikia.AbTest.loadExternalData&ids=';
 			url += externalIds.join(',');
 			document.write('<scr'+'ipt src="'+encodeURI(url)+'"></script>');
 		}
