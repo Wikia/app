@@ -50,8 +50,7 @@ $wgResourceModules += array(
 	),
 	'ext.visualEditor.wikiaViewPageTarget' => $wgVisualEditorWikiaResourceTemplate + array(
 		'scripts' => array(
-			've/init/ve.init.mw.WikiaViewPageTarget.js',
-			've/init/ve.init.mw.WikiaTargetEvents.js'
+			've/init/ve.init.mw.WikiaViewPageTarget.js'
 		),
 		'styles' => array(
 			've/init/styles/ve.init.mw.WikiaViewPageTarget.css'
