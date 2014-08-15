@@ -29,13 +29,12 @@ OO.inheritClass( ve.ui.WikiaCommandHelpDialog, ve.ui.MWCommandHelpDialog );
  */
 ve.ui.WikiaCommandHelpDialog.static.getCommandGroups = function () {
 	var commandGroups = ve.ui.WikiaCommandHelpDialog.super.static.getCommandGroups.call( this ),
-		accessKeyPrefix = mw.util.tooltipAccessKeyPrefix.toUpperCase().replace( /-/g, ' + ' ),
-		source = ve.msg( 'wikia-visualeditor-accesskey-wikiasourcemode' );
+		accessKeyPrefix = mw.util.tooltipAccessKeyPrefix.toUpperCase().replace( /-/g, ' + ' );
 
 	if ( source !== '-' && source !== '' ) {
 		commandGroups.other.commands.push(
 			{
-				'shortcuts': [ accessKeyPrefix + source.toUpperCase() ],
+				'shortcuts': [ accessKeyPrefix + '[' ],
 				'msg': 'wikia-visualeditor-dialog-wikiasourcemode-title'
 			}
 		);
