@@ -470,7 +470,6 @@ class WikiFactoryPage extends SpecialPage {
 	 * @return mixed	info when change, null when not changed
 	 */
 	private function doUpdateHubs( &$request ) {
-
 		$vertical_id = $request->getVal("wpWikiVertical", null);
 		$cat_ids = $request->getArray( "wpWikiCategory", null );
 		$reason = $request->getVal( "wpReason", null );
