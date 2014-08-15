@@ -68,10 +68,6 @@ $namespaces['it'] = array(
 	NS_USER_WALL_MESSAGE_GREETING	=> 'Benvenuto_bacheca',
 );
 
-$namespaceAliases = array(
-	'Discussione' => NS_USER_WALL_MESSAGE,
-);
-
 /**
  * Japanese (日本語)
  */
