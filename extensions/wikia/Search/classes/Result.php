@@ -243,8 +243,8 @@ class Result extends ReadWrite {
 
 	public function getThumbnailHtmlForVenus() {
 
-		$maxThumbnailWidthInVenus = 258;
-		$maxThumbnailHeightInVenus = 145;
+		$maxThumbnailWidthInVenus = 246;
+		$maxThumbnailHeightInVenus = 138;
 
 		wfProfileIn( __METHOD__ );
 		if (! isset( $this['thumbnail'] ) ) {

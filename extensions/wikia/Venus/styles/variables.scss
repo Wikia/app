@@ -11,7 +11,7 @@ $breakpoint-upper: 1280px;
 
 $small-range: (0, $breakpoint-lower - 1);
 $medium-range: ($breakpoint-lower, $breakpoint-upper);
-$large-range: ($breakpoint-upper + 1, 1440px);
+$large-range: ($breakpoint-upper + 1, 999999999px);
 
 $screen: 'only screen';
 

@@ -1,14 +1,15 @@
-<section class="result-entry">
 	<?php if ( $result['ns'] == NS_FILE ) {
 		$thumbnailHtml = $result->getThumbnailHtmlForVenus();
 	}?>
 	<?php if(! empty( $thumbnailHtml ) ): ?>
+	<li class="result-entry-file">
 		<div class="result-thumbnail-wrapper">
 			<div class="result-thumbnail"><div class="image-wrapper"><?= $thumbnailHtml ?></div></div>
 		</div>
 		<div class="result-thumbnail-description"><? // Open media-text div when there's a thumbnail ?>
+	<?php else: ?>
+		<li class="result-entry">
 	<?php endif; ?>
-	<section>
 		<h1 class="headline">
 			<?php
 				$title = $result->getTitle();
@@ -20,20 +21,14 @@
 					'data-pos' => $dataPos
 				];
 				?>
-				<a href="<?= $href ?>"
-					class="<?= $trackingData['classes']?>"
-					data-pos="<?= $trackingData['data-pos']?>"
-				><?= $title ?></a>
+				<a href="<?= $href ?>" class="<?= $trackingData['classes']?>" data-pos="<?= $trackingData['data-pos']?>"><?= $title ?></a>
 		</h1>
 
 		<? if ($redirectTitle = $result->getVar('redirectTitle')): ?>
 			<p class="redirect-title subtext">&mdash;
 				<?= wfMessage( 'wikiasearch2-results-redirected-from' )->text() ?>
 			</p>
-			<a href="<?=$result->getVar('redirectUrl')?>"
-				class="<?= $trackingData['classes']?>"
-				data-pos="<?= $trackingData['data-pos']?>"
-			><?= $result->getVar('redirectTitle') ?></a>
+			<a href="<?=$result->getVar('redirectUrl')?>" class="<?= $trackingData['classes']?>" data-pos="<?= $trackingData['data-pos']?>"><?= $result->getVar('redirectTitle') ?></a>
 		<? endif; ?>
 
 		<? if ($result->getVar('ns') == NS_FILE): ?>
@@ -50,18 +45,14 @@
 				?>
 			</p>
 		<? endif; ?>
-		<section class="body-text">
-			<?= $result->getText(); ?>
-		</section>
+		<p class="body-text"><?= $result->getText(); ?></p>
 
 		<?php if(empty($inGroup)): ?>
 			<div>
-				<span><a href="<?= $result->getEscapedUrl(); ?>" <?='class="result-link subtext" data-pos="'.$pos.'"' . ( $result->getVar('isArticleMatch') ? ' data-event="search_click_match"' : '' );?> ><?=Language::factory($wg->ContentLanguage)->truncate($result->getTextUrl(), 90);?></a></span>
+				<a href="<?= $result->getEscapedUrl(); ?>" <?='class="result-link subtext" data-pos="'.$pos.'"' . ( $result->getVar('isArticleMatch') ? ' data-event="search_click_match"' : '' );?> ><?=Language::factory($wg->ContentLanguage)->truncate($result->getTextUrl(), 90);?></a>
 			</div>
 		<?php endif; ?>
-		<?php if(! empty( $thumbnailHtml ) ): ?>
-	</section>
-	</div> <? // Close media-text div when there's a thumbnail ?>
+			<?php if(! empty( $thumbnailHtml ) ): ?>
+		</div> <? // Close media-text div when there's a thumbnail ?>
 <?php endif; ?>
-</section>
-
+</li>

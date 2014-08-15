@@ -1,58 +1,51 @@
-@import 'skins/oasis/css/core/color.scss';
-@import 'extensions/wikia/Venus/styles/mixins.scss';
-@import 'extensions/wikia/Venus/styles/variables.scss';
+@import 'skins/oasis/css/core/color';
+@import 'extensions/wikia/Venus/styles/variables';
+@import 'extensions/wikia/Venus/styles/mixins';
 
-@mixin thumbnail-size($columns-count) {
+@mixin video-thumbnail-size($small-columns-count, $medium-columns-count: 0, $large-columns-count: 0) {
+	@if $medium-columns-count == 0 {
+		$medium-columns-count: $small-columns-count;
+	}
+
+	@if $large-columns-count == 0 {
+		$large-columns-count: $small-columns-count;
+	}
+
+	$width: $large-columns-count * ($large-grid-column + $large-grid-gutter) - $large-grid-gutter - 2 * $large-grid-column-padding;
+	height: round($width * 9 / 16);
+	width: $width;
+
 	@media #{$small-only} {
-		$width: ($small-grid-column * $columns-count) + ($small-grid-gutter * ($columns-count - 1)) + ($small-grid-gutter * ($columns-count * 2));
-		$height: $width * 9 / 16;
-		height: $height;
+		$width: $small-columns-count * ($small-grid-column + $small-grid-gutter) - $small-grid-gutter - 2 * $large-grid-column-padding;
+		height: round($width * 9 / 16);
 		width: $width;
 	}
 
 	@media #{$medium-only} {
-		$width: ($medium-grid-column * $columns-count) + ($medium-grid-gutter * ($columns-count - 1)) + ($medium-grid-gutter * ($columns-count * 2));
-		$height: $width * 9 / 16;
-		height: $height;
+		$width: $medium-columns-count * ($medium-grid-column + $medium-grid-gutter) - $medium-grid-gutter - 2 * $large-grid-column-padding;
+		height: round($width * 9 / 16);
 		width: $width;
 	}
-
-	@media #{$large-up} {
-		$width: ($large-grid-column * $columns-count) + ($large-grid-gutter * ($columns-count - 1)) + ($large-grid-gutter * ($columns-count * 2));
-		$height: $width * 9 / 16;
-		height: $height;
-		width: $width;
-	}
-}
-
-@mixin image-size($columns-count) {
-	@media #{$small-only} {
-		max-width: ($small-grid-column * $columns-count) + ($small-grid-gutter * ($columns-count - 1)) + ($small-grid-gutter * ($columns-count * 2));
-	}
-
-	@media #{$medium-only} {
-		max-width: ($medium-grid-column * $columns-count) + ($small-grid-gutter * ($columns-count - 1)) + ($small-grid-gutter * ($columns-count * 2));
-	}
-
-	@media #{$large-up} {
-		max-width: ($large-grid-column * $columns-count) + ($large-grid-gutter * ($columns-count - 1)) + ($large-grid-gutter * ($columns-count * 2));
-	}
-}
-
-a {
-	color: inherit;
-	text-decoration: none;
 }
 
 .body-text {
 	font-size: 18px;
 	line-height: 24px;
+	margin: 0;
 }
 
 .headline {
 	color: $color-links;
 	font-size: 22px;
 	line-height: 26px;
+}
+
+.search-right-rail {
+	float: right;
+}
+
+.search-right-rail {
+	@include grid-attribute-size(margin-left, 1);
 }
 
 .subtext {
@@ -64,25 +57,47 @@ a {
 .results-section {
 	margin-top: 30px;
 
+	.no-result,
 	.result-count {
 		color: $color-alternate-text;
 		font-size: 16px;
-		margin-bottom: 5px;
-		text-align: left;
 	}
 
 	.results {
-		margin-top: 40px;
+		list-style: none;
+		margin-top: 30px;
+		padding: 0;
 
-		.result-entry {
+		.result-entry,
+		.result-entry-file {
 			margin-top: 35px;
+
+			.headline {
+				margin: 0;
+			}
+
+			.subtext {
+				margin-bottom: 8px;
+				margin-top: 2px;
+			}
+
+			.result-link.subtext {
+				word-wrap: break-word;
+			}
 
 			.searchmatch {
 				font-weight: bold;
 			}
+		}
+
+		.result-entry-file {
+			.result-thumbnail-description {
+				display: inline-block;
+			}
 
 			.result-thumbnail-wrapper {
 				display: inline-table;
+				margin-right: $small-grid-gutter;
 				text-align: center;
 				vertical-align: top;
 
@@ -117,31 +132,49 @@ a {
 					width: 33px;
 				}
 			}
+		}
+	}
+}
+
+.results-section {
+	.results {
+		.result-entry {
+			@include grid-attribute-size(width, 11, 7, 7);
+			@include grid-column-padding;
+		}
+	}
+}
+
+.results-section {
+	.results {
+		.result-entry-file {
+			.result-thumbnail-wrapper {
+				@include grid-attribute-size(width, 4, 3, 3);
+				@include grid-column-padding;
+			}
+
+			.result-thumbnail-wrapper img {
+				@include grid-attribute-size(max-width, 4, 3, 3); // TODO: horizontal grid-padding must be subtracted
+			}
 
 			.result-thumbnail-description {
-				display: inline-block;
-				.headline {
-					margin: 0;
-				}
-
-				.subtext {
-					margin-bottom: 14px;
-					margin-top: 8px;
-				}
-
-				.result-link.subtext {
-					word-wrap: break-word;
-				}
+				@include grid-attribute-size(width, 8, 5, 5);
+				@include grid-column-padding;
 			}
 		}
 	}
 }
 
+.search-right-rail {
+	@include grid-attribute-size(width, 5, 4, 4);
+}
+
 .top-wiki-articles {
 	font-size: 16px;
 	line-height: 22px;
+	list-style: none;
+	margin-bottom: 20px;
 	padding: 0;
-	@include grid-width(4);
 
 	a {
 		color: $color-links;
@@ -149,44 +182,64 @@ a {
 		font-weight: bold;
 	}
 
-	div {
-		overflow: hidden;
-	}
-
 	h1 {
-		color: $color-wikiahome-community;
+		color: $color-header;
 		font-size: 18px;
 		margin: 40px 0 0;
-		padding: 0 $large-grid-gutter;
 	}
 
 	img {
 		float: left;
 	}
 
+	.top-wiki-articles-item,
+	.top-wiki-articles-snippet {
+		margin: 0;
+		overflow: hidden;
+	}
+
 	.top-wiki-articles-item {
-		border-bottom: 1px solid $color-text-light;
+		border-bottom: 1px solid $color-article-thumb-background;
 		padding: 20px 0;
 	}
 
 	.top-wiki-articles-snippet {
 		color: $color-text-dark;
-		padding: 0 $large-grid-gutter;
 	}
 
 	.thumbnail-large {
-		@include grid-width(4);
 		margin-bottom: 20px;
+	}
+}
+
+.top-wiki-articles {
+	@include grid-attribute-size(width, 5, 4, 4);
+}
+
+.top-wiki-articles {
+	h1 {
+		padding: 0;
+		@include grid-column-padding;
+	}
+
+	.thumbnail-large {
+		@include grid-attribute-size(width, 5, 4, 4);
 	}
 
 	.thumbnail-small {
-		@include grid-width(1);
+		@include grid-attribute-size(width, 1);
 	}
- }
+
+	.top-wiki-articles-snippet {
+		padding: 0;
+		@include grid-column-padding;
+	}
+}
 
 .wikia-paginator {
-	border: #eef1f3 solid;
+	border: solid $color-article-thumb-background;
 	border-width: 1px 0;
+	clear: both;
 	height: 75px;
 	line-height: 75px;
 	margin: 40px 0;
@@ -207,14 +260,15 @@ a {
 		}
 
 		.paginator-page {
-			color: #0a6eb4;
-			height: 18px;
+			color: $color-links;
+			font-size: 18px;
 			margin: 0 10px;
 			padding: 0 4px;
 
 			&:hover {
 				cursor: pointer;
 			}
+
 			&.active {
 				color: #3c3c3c;
 			}
@@ -228,36 +282,24 @@ a {
 		}
 
 		.paginator-prev {
-			@include chevron(25px, 3px, 'left', #0a6eb4);
+			@include chevron(25px, 3px, 'left', $color-links);
 			margin: 0;
 			padding: 0;
 
 			&.disabled {
-				@include chevron(25px, 3px, 'left', #c8d2d7);
+				@include chevron(25px, 3px, 'left', $color-text-light);
 			}
 		}
 
 		.paginator-next {
-			@include chevron(25px, 3px, 'right', #0a6eb4);
+			@include chevron(25px, 3px, 'right', $color-links);
 			margin: 0 0 6px;
 			padding: 0;
 
 			&.disabled {
-				@include chevron(25px, 3px, 'right', #c8d2d7);
+				@include chevron(25px, 3px, 'right', $color-text-light);
 			}
 		}
-	}
-}
-
-@media #{$large-up} {
-	.result-thumbnail-wrapper {
-		@include thumbnail-size(3);
-		img {
-			@include image-size(3);
-		}
-	}
-	.result-thumbnail-description {
-		@include grid-width(4);
 	}
 }
 
@@ -277,39 +319,22 @@ a {
 		line-height: 22px;
 	}
 
-	.result-thumbnail-wrapper {
-		@include thumbnail-size(3);
-		img {
-			@include image-size(3);
+	.results-section {
+		.results {
+			.result-entry-file {
+				.result-thumbnail-wrapper {
+					margin-right: $medium-grid-gutter;
+				}
+			}
 		}
-	}
-	.result-thumbnail-description {
-		@include grid-width(5);
 	}
 
 	.top-wiki-articles {
-		@include grid-width(4);
-
 		a {
 			display: block;
 		}
 
-		h1 {
-			padding: 0 $medium-grid-gutter;
-		}
-
-		.top-wiki-articles-snippet {
-			padding: 0 $medium-grid-gutter;
-		}
-
-		.thumbnail-large {
-			@include grid-width(4);
-			@include grid-height(4);
-		}
-
 		.thumbnail-small {
-			@include grid-width(1);
-			@include grid-height(1);
 			margin-right: $medium-grid-gutter;
 		}
 	}
@@ -319,10 +344,6 @@ a {
 	.body-text {
 		font-size: 16px;
 		line-height: 22px;
-	}
-
-	.search-right-rail {
-		display: none;
 	}
 
 	.headline {
@@ -335,15 +356,19 @@ a {
 		line-height: 22px;
 	}
 
-	.result-thumbnail-wrapper {
-		@include thumbnail-size(4);
-		img {
-			@include image-size(4);
+	.results-section {
+			 .results {
+				 .result-entry-file {
+					 .result-thumbnail-wrapper {
+						 margin-right: $small-grid-gutter;
+					 }
+				 }
+			 }
+		 }
+
+	.top-wiki-articles {
+		a {
+			display: block;
 		}
 	}
-
-	.result-thumbnail-description {
-		@include grid-width(7);
-	}
-
 }

@@ -767,7 +767,7 @@ class ArticlesApiController extends WikiaApiController {
 			}
 		}
 
-		$collection = $this->appendMetadata( $collection );
+//		$collection = $this->appendMetadata( $collection );
 
 		$thumbnails = null;
 		//if strict return to original ids order
