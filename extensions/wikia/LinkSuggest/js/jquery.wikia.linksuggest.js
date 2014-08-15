@@ -60,7 +60,7 @@ $.widget( 'wikia.linksuggest', {
 		this.element.unbind( 'keydown.autocomplete' )
 		.bind( eventType + '.linksuggest', function( thisInstance ) {
 			return function() {
-				thisInstance._keydown.apply( thisInstance, arguments );
+				return thisInstance._keydown.apply( thisInstance, arguments );
 			};
 		}( this ));
 		// deactivate some menu weird behavior
@@ -83,16 +83,14 @@ $.widget( 'wikia.linksuggest', {
 			case keyCode.TAB:
 				// don't navigate away from the field on tab when selecting an item
 				if ( autocompleteInstance.menu.active ) {
-					event.preventDefault();
+					return false;
 				}
 				break;
 			case keyCode.ESCAPE:
 				if ( autocompleteInstance.menu.element.is(':visible') ) {
-					event.stopPropagation();
+					autocompleteInstance.close( event );
+					return false;
 				}
-				// return without setting any value
-				autocompleteInstance.close( event );
-				return;
 				break;
 			case keyCode.PAGE_UP:
 			case keyCode.PAGE_DOWN:
