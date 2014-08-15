@@ -90,6 +90,8 @@ ve.init.mw.WikiaViewPageTarget.static.actionsToolbarConfig = [
 	}
 ];
 
+ve.init.mw.WikiaViewPageTarget.static.surfaceCommands.push( 'wikiaSourceMode' );
+
 ve.init.mw.WikiaViewPageTarget.prototype.getNonEditableUIElements = function () {
 	var $elements,
 		ns = mw.config.get( 'wgNamespaceNumber' );
@@ -333,12 +335,4 @@ ve.init.mw.WikiaViewPageTarget.prototype.onSaveError = function ( doc, saveData,
 		} );
 	}
 	ve.init.mw.WikiaViewPageTarget.super.prototype.onSaveError.call( this, doc, saveData, jqXHR, status, data );
-};
-
-/**
- * @inheritdoc
- */
-ve.init.mw.WikiaViewPageTarget.prototype.onSurfaceReady = function () {
-	this.surface.addCommands( ['wikiaSourceMode'] );
-	ve.init.mw.WikiaViewPageTarget.super.prototype.onSurfaceReady.call( this );
 };
