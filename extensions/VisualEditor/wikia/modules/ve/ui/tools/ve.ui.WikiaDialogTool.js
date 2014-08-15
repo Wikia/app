@@ -69,23 +69,8 @@ if ( mw.config.get( 'wgEnableWikiaInteractiveMaps' ) === true ) {
  * @param {Object} [config] Config options
  */
 ve.ui.WikiaSourceModeDialogTool = function VeUiWikiaSourceModeDialogTool( toolGroup, config ) {
-	var accessKeyPrefix = mw.util.tooltipAccessKeyPrefix.replace( /-/g, ' + ' );
-
 	// Parent constructor
 	ve.ui.WikiaSourceModeDialogTool.super.call( this, toolGroup, config );
-
-	// Initialization
-	ve.ui.triggerRegistry.register(
-		'wikiaSourceMode', {
-			'mac': new ve.ui.Trigger( accessKeyPrefix + '[' ),
-			'pc': new ve.ui.Trigger( accessKeyPrefix + '[' )
-		}
-	);
-	ve.ui.commandRegistry.register(
-		new ve.ui.Command( 'wikiaSourceMode', 'window', 'open', 'wikiaSourceMode' )
-	);
-	this.toolGroup.getToolbar().getSurface().addCommands( ['wikiaSourceMode'] );
-
 	if ( window.veSourceEntryPoint && window.veSourceEntryPoint.sourceButtonAsText ) {
 		this.title = ve.msg( 'wikia-visualeditor-dialogbutton-wikiasourcemode' );
 		this.$element.addClass( 've-ui-noIconDialogTool' );

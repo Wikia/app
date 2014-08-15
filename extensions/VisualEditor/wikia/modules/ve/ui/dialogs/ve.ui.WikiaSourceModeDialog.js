@@ -81,7 +81,7 @@ ve.ui.WikiaSourceModeDialog.prototype.initialize = function () {
 ve.ui.WikiaSourceModeDialog.prototype.getSetupProcess = function ( data ) {
 	return ve.ui.WikiaSourceModeDialog.super.prototype.getSetupProcess.call( this, data )
 		.first( function () {
-			this.target = data.target;
+			this.target = this.surface.getTarget();
 			this.openCount++;
 			this.timings.serializeStart = ve.now();
 		}, this )
