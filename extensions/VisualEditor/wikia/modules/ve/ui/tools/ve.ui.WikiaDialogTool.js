@@ -85,6 +85,11 @@ ve.ui.WikiaSourceModeDialogTool = function VeUiWikiaSourceModeDialogTool( toolGr
 		new ve.ui.Command( 'wikiaSourceMode', 'window', 'open', 'wikiaSourceMode' )
 	);
 	this.toolGroup.getToolbar().getSurface().addCommands( ['wikiaSourceMode'] );
+
+	if ( window.veSourceEntryPoint && window.veSourceEntryPoint.sourceButtonAsText ) {
+		this.title = ve.msg( 'wikia-visualeditor-dialogbutton-wikiasourcemode' );
+		this.$element.addClass( 've-ui-noIconDialogTool' );
+	}
 };
 
 OO.inheritClass( ve.ui.WikiaSourceModeDialogTool, ve.ui.DialogTool );

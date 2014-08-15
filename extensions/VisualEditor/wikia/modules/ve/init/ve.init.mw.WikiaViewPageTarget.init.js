@@ -29,6 +29,17 @@
 		},
 		spinnerTimeoutId = null;
 
+	function getOptimizelyExperimentId( experimentName ) {
+		if ( experimentName === 'VE Focus Mode' ) {
+			return mw.config.get( 'wgDevelEnvironment' ) ? 1459280459 : 1673360028;
+		} else if ( experimentName === 'VE Source Entry Point Anon' ) {
+			return 1673650053;
+		} else if ( experimentName === 'VE Source Entry Point User' ) {
+			return 1673650053;
+		}
+		return null;
+	}
+
 	function initSpinner() {
 		var $spinner = $( '<div>' )
 				.addClass( 've-spinner visible' )
@@ -89,7 +100,11 @@
 
 		/* Optimizely */
 		window.optimizely = window.optimizely || [];
-		window.optimizely.push( ['activate', 1459280459] );
+		if ( mw.user.anonymous() ) {
+			window.optimizely.push( ['activate', getOptimizelyExperimentId( 'VE Source Entry Point Anon' )] );
+		} else {
+			window.optimizely.push( ['activate', getOptimizelyExperimentId( 'VE Source Entry Point User' )] );
+		}
 
 		showSpinner();
 
@@ -329,9 +344,9 @@
 			$veEdit = $( '#ca-ve-edit' );
 		// This class may still be used by CSS
 		$( 'html' ).addClass( 've-not-available' );
-		// If VE is the main edit link, clone the alternate edit attributes into it
+		// If VE is the main edit link, clone the href into it
 		if ( vePreferred && $veEdit.length > 0 ) {
-			$veEdit.attr( { href: $edit.attr( 'href' ), accesskey: $edit.attr( 'accesskey' ) } );
+			$veEdit.attr( 'href', $edit.attr( 'href' ) );
 			$edit.parent().remove();
 		} else {
 			$veEdit.parent().remove();
