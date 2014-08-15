@@ -389,12 +389,12 @@ $.widget( 'wikia.linksuggest', {
 			height = menu.outerHeight(),
 			elementWidth = this.element.outerWidth(),
 			props = {
-			my: 'left top',
-			at: 'left top',
-			of: this.element,
-			offset: offset.join( ' ' ),
-			collision: 'fit none'
-		};
+				my: 'left top',
+				at: 'left top',
+				of: this.element,
+				offset: offset.join( ' ' ),
+				collision: 'fit none'
+			};
 		// Override autocomplete's menu width -- which matches the width of the input element -- to make menu narrower.
 		menu.width( '' );
 		width = menu.outerWidth();
