@@ -31,14 +31,12 @@ ve.ui.WikiaCommandHelpDialog.static.getCommandGroups = function () {
 	var commandGroups = ve.ui.WikiaCommandHelpDialog.super.static.getCommandGroups.call( this ),
 		accessKeyPrefix = mw.util.tooltipAccessKeyPrefix.toUpperCase().replace( /-/g, ' + ' );
 
-	if ( source !== '-' && source !== '' ) {
-		commandGroups.other.commands.push(
-			{
-				'shortcuts': [ accessKeyPrefix + '[' ],
-				'msg': 'wikia-visualeditor-dialog-wikiasourcemode-title'
-			}
-		);
-	}
+	commandGroups.other.commands.push(
+		{
+			'shortcuts': [ accessKeyPrefix + '[' ],
+			'msg': 'wikia-visualeditor-dialog-wikiasourcemode-title'
+		}
+	);
 
 	return commandGroups;
 };
