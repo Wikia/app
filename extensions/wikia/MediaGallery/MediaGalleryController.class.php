@@ -3,9 +3,12 @@
 class MediaGalleryController extends WikiaController {
 	const DEFAULT_TEMPLATE_ENGINE = WikiaResponse::TEMPLATE_ENGINE_MUSTACHE;
 	const MAX_ITEMS = 8;
+	const MAX_EXPANDED_ITEMS = 100;
 
 	public function gallery() {
 		$items = $this->getVal( 'items' );
+		$expanded = ( bool ) $this->getVal( 'expand', false ); //TODO: pass in expand
+
 		$media = [];
 
 		$itemCount = count( $items );
@@ -64,6 +67,8 @@ class MediaGalleryController extends WikiaController {
 
 		$this->media = $media;
 		$this->count = $count;
+		$this->expanded = $expanded;
+		$this->max = $expanded ? self::MAX_EXPANDED_ITEMS : self::MAX_ITEMS;
 	}
 
 }
