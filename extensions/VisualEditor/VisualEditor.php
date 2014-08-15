@@ -249,6 +249,7 @@ $wgResourceModules += array(
 			'modules/ve-mw/init/ve.init.mw.Platform.js',
 			'modules/ve-mw/init/ve.init.mw.Target.js',
 			'modules/ve-mw/init/ve.init.mw.TargetEvents.js',
+			'wikia/modules/ve/init/ve.init.mw.WikiaTargetEvents.js',
 		),
 		'dependencies' => array(
 			'jquery.visibleText',

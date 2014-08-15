@@ -307,6 +307,15 @@ ve.init.mw.WikiaViewPageTarget.prototype.onShowChangesError = function ( jqXHR, 
 };
 
 /**
+ * @inheritdoc
+ */
+ve.init.mw.WikiaViewPageTarget.prototype.changeDocumentTitle = function () {
+	// TODO: If Wikia ever has a different message for article creating vs. editing - then use it.
+	document.title = ve.msg( 'editing', mw.config.get( 'wgTitle' ) ) +
+		' - ' + mw.config.get( 'wgSiteName' );
+};
+
+/**
  * Handle failure when saving changes
  *
  * @method
