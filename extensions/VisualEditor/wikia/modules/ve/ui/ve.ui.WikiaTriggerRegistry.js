@@ -9,7 +9,7 @@
 
 ve.ui.triggerRegistry.register(
 	'wikiaSourceMode', {
-		'mac': new ve.ui.WikiaTrigger( mw.util.tooltipAccessKeyPrefix.replace( /-/g, ' + ' ) + '[' ),
+		'mac': new ve.ui.WikiaTrigger( ve.ui.WikiaTrigger.static.accessKeyPrefix + '[' ),
 		'pc': new ve.ui.WikiaTrigger( ve.ui.WikiaTrigger.static.accessKeyPrefix + '[' )
 	}
 );
