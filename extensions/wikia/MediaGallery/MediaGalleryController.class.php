@@ -67,12 +67,9 @@ class MediaGalleryController extends WikiaController {
 
 		$this->media = $media;
 		$this->count = $count;
-<<<<<<< HEAD
 		$this->expanded = $expanded;
 		$this->max = $expanded ? self::MAX_EXPANDED_ITEMS : self::MAX_ITEMS;
-=======
 		$this->addImageButton = wfMessage('mediagallery-add-image-button')->plain();
->>>>>>> VID-1854-gallery
 	}
 
 }
