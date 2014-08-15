@@ -71,15 +71,16 @@ $media-margin: .5em;
 
 	.more {
 		clear: both;
-		margin: 0 auto;
+		margin-left: -1em;
 		padding: .5em;
 		text-align: center;
 
 		button {
+			margin-left: 1em;
 			outline: none;
 
-			&:first-child {
-				margin-right: 1em;
+			&.hidden {
+				display: none;
 			}
 		}
 	}
