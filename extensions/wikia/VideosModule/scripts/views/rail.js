@@ -23,7 +23,7 @@ define('videosmodule.views.rail', [
 		this.articleId = window.wgArticleId;
 		// Default number of videos, this is the number of videos we'd like to display if possible
 		this.numVids = 5;
-		this.minNumVids = 10;
+		this.minNumVids = 5;
 
 		// Make sure we're on an article page
 		if (this.articleId) {
