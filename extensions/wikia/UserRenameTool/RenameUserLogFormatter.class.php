@@ -17,23 +17,15 @@ class RenameUserLogFormatter {
 	}
 
 	static protected function getCommunityTask( $taskId ) {
-		if ( TaskRunner::isModern('UserRename') ) {
-			$title = GlobalTitle::newFromText('Tasks/log', NS_SPECIAL, COMMUNITY_CENTRAL_CITY_ID);
-			return Xml::element(
-				'a',
-				[
-					'href' => $title->getFullURL(['id' => $taskId]),
-				],
-				"#{$taskId}",
-				false
-			);
-		} else {
-			$taskId = intval($taskId);
-			$title = GlobalTitle::newFromText('TaskManager', NS_SPECIAL, COMMUNITY_CENTRAL_CITY_ID);
-			return Xml::element('a',array('href'=>$title->getFullURL(
-				"action=log&id={$taskId}&offset=0"
-			)),"#{$taskId}",false);
-		}
+		$title = GlobalTitle::newFromText('Tasks/log', NS_SPECIAL, COMMUNITY_CENTRAL_CITY_ID);
+		return Xml::element(
+			'a',
+			[
+				'href' => $title->getFullURL(['id' => $taskId]),
+			],
+			"#{$taskId}",
+			false
+		);
 	}
 
 	static public function getCityLink( $cityId ) {
