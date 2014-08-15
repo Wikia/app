@@ -344,9 +344,9 @@
 			$veEdit = $( '#ca-ve-edit' );
 		// This class may still be used by CSS
 		$( 'html' ).addClass( 've-not-available' );
-		// If VE is the main edit link, clone the alternate edit attributes into it
+		// If VE is the main edit link, clone the href into it
 		if ( vePreferred && $veEdit.length > 0 ) {
-			$veEdit.attr( { href: $edit.attr( 'href' ), accesskey: $edit.attr( 'accesskey' ) } );
+			$veEdit.attr( 'href', $edit.attr( 'href' ) );
 			$edit.parent().remove();
 		} else {
 			$veEdit.parent().remove();
