@@ -164,11 +164,8 @@ ve.ui.MWCategoryInputWidget.prototype.getLookupMenuItemsFromData = function ( da
 		item = matchingCategories[i];
 		itemTitle = new mw.Title( 'Category:' + item ).getPrefixedText();
 		if (
-			// Wikia change: Only filter categories by beginning of string if search input
-			// length is less than 3. This is for performance reasons. Otherwise, return
-			// results for search input anywhere in the category.
 			ve.indexOf( item, existingCategories ) === -1 &&
-			( this.value.length > 2 || item.lastIndexOf( category.value, 0 ) === 0 ) || (
+			item.lastIndexOf( category.value, 0 ) === 0 || (
 				redirectStorage[itemTitle] !== undefined &&
 				$.grep( redirectStorage[itemTitle], searchForQueryWithinRedirectInfo ).length
 			)
@@ -187,11 +184,8 @@ ve.ui.MWCategoryInputWidget.prototype.getLookupMenuItemsFromData = function ( da
 		item = hiddenCategories[i];
 		itemTitle = new mw.Title( 'Category:' + item ).getPrefixedText();
 		if (
-			// Wikia change: Only filter categories by beginning of string if search input
-			// length is less than 3. This is for performance reasons. Otherwise, return
-			// results for search input anywhere in the category.
 			ve.indexOf( item, existingCategories ) === -1 &&
-			( this.value.length > 2 || item.lastIndexOf( category.value, 0 ) === 0 ) || (
+			item.lastIndexOf( category.value, 0 ) === 0 || (
 				redirectStorage[itemTitle] !== undefined &&
 				$.grep( redirectStorage[itemTitle], searchForQueryWithinRedirectInfo ).length
 			)

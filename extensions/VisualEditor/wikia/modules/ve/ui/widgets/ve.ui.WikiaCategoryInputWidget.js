@@ -38,7 +38,10 @@ ve.ui.WikiaCategoryInputWidget.prototype.getLookupRequest = function () {
 	var deferred = $.Deferred();
 
 	this.getCategories().done( ve.bind( function ( categories ) {
-		deferred.resolve( this.getFilteredQueryData( categories, this.value ) );
+		deferred.resolve(
+			// Only return filtered results for at least 3 characters
+			this.value.length > 2 ? this.filterCategories( categories, this.value ) : []
+		);
 	}, this ) );
 
 	// OO.ui.LookupInputWidget.getLookupMenuItems requires an "abort" method for the promise
@@ -83,21 +86,20 @@ ve.ui.WikiaCategoryInputWidget.prototype.getCategories = function () {
  * Filter the categories by the given search term, and convert the result into the format used
  * by ve.ui.MWCategoryInputWidget.getLookupCacheItemFromData
  *
- * @param {string} search Search term/input
+ * @param {string} term Search term
  * @param {array} categories
  * @returns {Object}
  */
-ve.ui.WikiaCategoryInputWidget.prototype.getFilteredQueryData = function ( categories, search ) {
+ve.ui.WikiaCategoryInputWidget.prototype.filterCategories = function ( categories, term ) {
 	var i,
+		filteredCategories = $.ui.autocomplete.filter( categories, term ),
 		formattedData = { 'query': { 'allcategories': [] } },
-		filteredCategories,
 		allCategories = formattedData.query.allcategories;
 
-	// Only return filtered results for at least 3 characters
-	filteredCategories = search.length > 2 ? $.ui.autocomplete.filter( categories, search ) : [];
 	for ( i in filteredCategories ) {
 		allCategories.push( { '*': filteredCategories[i] } );
 	}
+
 	return formattedData;
 };
 
