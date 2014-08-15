@@ -90,6 +90,8 @@ ve.init.mw.WikiaViewPageTarget.static.actionsToolbarConfig = [
 	}
 ];
 
+ve.init.mw.WikiaViewPageTarget.static.surfaceCommands.push( 'wikiaSourceMode' );
+
 ve.init.mw.WikiaViewPageTarget.prototype.getNonEditableUIElements = function () {
 	var $elements,
 		ns = mw.config.get( 'wgNamespaceNumber' );
