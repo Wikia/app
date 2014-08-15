@@ -81,17 +81,9 @@ class MediaClientService {
 	 * @throws Exception
 	 */
 	protected function getContent( $url ) {
-		$ch = curl_init( $url );
-
-		curl_setopt( $ch, CURLOPT_HEADER, 0 );
-		curl_setopt( $ch, CURLOPT_RETURNTRANSFER, 1 );
-		curl_setopt( $ch, CURLOPT_CONNECTTIMEOUT, self::API_CONNECTION_TIMEOUT );
-
-		$content = curl_exec( $ch );
-		curl_close( $ch );
-
+		$content = Http::request( 'GET', $url, ['noProxy' => true] );
 		if ( !$content ) {
-			throw new Exception( 'Failed to get data from media api. ' . curl_error( $ch ) );
+			throw new Exception( 'Failed to get data from media api.' );
 		}
 
 		return $content;
@@ -104,24 +96,31 @@ class MediaClientService {
 	 * @throws Exception
 	 */
 	protected function getImagePath( $dbName ) {
-		global $wgExternalSharedDB;
+		global $wgUploadDirectory;
 
-		// Get the image URL path for this wikia
-		$db = wfGetDB( DB_SLAVE, [ ], $wgExternalSharedDB );
-		$wikiImagePath = ( new WikiaSQL() )
-			->SELECT( 'cv_value' )
-			->FROM( 'city_variables' )
-			->JOIN( 'city_list' )->ON( 'city_id', 'cv_city_id' )
-			->WHERE( 'cv_variable_id' )->EQUAL_TO( 17 )
-			->AND_( 'city_dbname' )->EQUAL_TO( $dbName )
-			->run( $db, function ( $result ) {
-					$row = $result->fetchObject();
-					return empty( $row ) ? '' : unserialize( $row->cv_value );
-				}
-			);
+		if ( !empty( $wgUploadDirectory ) ) {
+			$wikiImagePath = $wgUploadDirectory;
+		} else {
+			// Go to the db to get it!
 
-		if ( empty( $wikiImagePath ) ) {
-			throw new Exception( 'Image path was not found!' );
+			global $wgExternalSharedDB;
+			// Get the image URL path for this wikia
+			$db = wfGetDB( DB_SLAVE, [ ], $wgExternalSharedDB );
+			$wikiImagePath = ( new WikiaSQL() )
+				->SELECT( 'cv_value' )
+				->FROM( 'city_variables' )
+				->JOIN( 'city_list' )->ON( 'city_id', 'cv_city_id' )
+				->WHERE( 'cv_variable_id' )->EQUAL_TO( 17 )
+				->AND_( 'city_dbname' )->EQUAL_TO( $dbName )
+				->run( $db, function ( $result ) {
+						$row = $result->fetchObject();
+						return empty( $row ) ? '' : unserialize( $row->cv_value );
+					}
+				);
+
+			if ( empty( $wikiImagePath ) ) {
+				throw new Exception( 'Image path was not found!' );
+			}
 		}
 
 		// E.g. /images/t/thelastofus/images => thelastofus/images
