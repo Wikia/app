@@ -177,7 +177,6 @@ class ThumbnailController extends WikiaController {
 	 *	 	img-class
 	 * 		title
 	 * 		valign
-	 * 		custom-img-src
 	 */
 	public function image() {
 		$this->mediaType = 'image';
@@ -189,11 +188,7 @@ class ThumbnailController extends WikiaController {
 		$linkAttrs   = ThumbnailHelper::getImageLinkAttribs( $thumb, $options );
 		$attribs     = ThumbnailHelper::getImageAttribs( $thumb, $options );
 
-		if ( !empty( $options['custom-img-src'] ) ) {
-			$this->imgSrc = $options['custom-img-src'];
-		} else {
-			$this->imgSrc = $thumb->url;
-		}
+		$this->imgSrc = $thumb->url;
 
 		// Merge in imgClass as well
 		if ( !empty( $options['img-class'] ) ) {

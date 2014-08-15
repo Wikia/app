@@ -19,7 +19,7 @@ class MediaGalleryController extends WikiaController {
 				continue; // todo: possible add error state
 			}
 
-			$dimension = MediaGalleryHelper::getDimensionBySizeAndOrder( $itemCount, $dimensionIndex );
+			$dimension = MediaGalleryHelper::getImageWidth( $itemCount, $dimensionIndex );
 			$dimensions = [
 				'width' => $dimension,
 				'height' => $dimension,
@@ -29,11 +29,11 @@ class MediaGalleryController extends WikiaController {
 				WikiaFileHelper::getSquaredThumbnailUrl( $file, $dimension ),
 				$file->getTimestamp()
 			);
+			$thumb->setUrl( $thumbUrl );
 
 			$params = [
 				'thumb' => $thumb,
 				'options' => [
-					'custom-img-src' => $thumbUrl,
 					'file-link' => $file->getUrl(),
 					'fluid' => true,
 				]
