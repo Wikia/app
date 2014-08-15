@@ -38,14 +38,7 @@ ve.ui.WikiaCategoryInputWidget.prototype.getLookupRequest = function () {
 	var deferred = $.Deferred();
 
 	this.getCategories().done( ve.bind( function ( categories ) {
-		clearTimeout( this.lookupTimeout );
-		this.lookupTimeout = setTimeout(
-			ve.bind(
-				deferred.resolve( this.getFilteredQueryData( categories ) ),
-				this
-			),
-			300
-		);
+		deferred.resolve( this.getFilteredQueryData( categories, this.value ) );
 	}, this ) );
 
 	// OO.ui.LookupInputWidget.getLookupMenuItems requires an "abort" method for the promise
@@ -87,19 +80,81 @@ ve.ui.WikiaCategoryInputWidget.prototype.getCategories = function () {
 };
 
 /**
- * Filter the categories by the current input value, and convert the result into the format used
+ * Filter the categories by the given search term, and convert the result into the format used
  * by ve.ui.MWCategoryInputWidget.getLookupCacheItemFromData
  *
+ * @param {string} search Search term/input
  * @param {array} categories
  * @returns {Object}
  */
-ve.ui.WikiaCategoryInputWidget.prototype.getFilteredQueryData = function ( categories ) {
+ve.ui.WikiaCategoryInputWidget.prototype.getFilteredQueryData = function ( categories, search ) {
 	var i,
 		formattedData = { 'query': { 'allcategories': [] } },
-		filteredCategories = $.ui.autocomplete.filter( categories, this.value ).slice( 0, 10 ),
+		filteredCategories,
 		allCategories = formattedData.query.allcategories;
+
+	// Only return filtered results for at least 3 characters
+	filteredCategories = search.length > 2 ? $.ui.autocomplete.filter( categories, search ) : [];
 	for ( i in filteredCategories ) {
 		allCategories.push( { '*': filteredCategories[i] } );
 	}
 	return formattedData;
+};
+
+/**
+ * Get list of menu items from a server response.
+ * Note: This function was copied and modified from ve.ui.MWCategoryInputWidget
+ *
+ * @param {Object} data Query result
+ * @returns {OO.ui.MenuItemWidget[]} Menu items
+ */
+ve.ui.WikiaCategoryInputWidget.prototype.getLookupMenuItemsFromData = function ( data ) {
+	var i, len, item,
+		exactMatch = false,
+		newCategoryItems = [],
+		existingCategoryItems = [],
+		matchingCategoryItems = [],
+		items = [],
+		menu$ = this.lookupMenu.$,
+		category = this.value;
+
+	i = 0;
+	$.each( data, function ( title ) {
+		// Limit matched categories to 10
+		if ( i >= 10 ) {
+			return false;
+		}
+		if ( title.toUpperCase() === category.toUpperCase() ) {
+			exactMatch = true;
+		}
+		matchingCategoryItems.push( title );
+		i++;
+	} );
+
+	// New category
+	if ( !exactMatch ) {
+		newCategoryItems.push( category );
+	}
+
+	// Add sections for non-empty groups
+	if ( newCategoryItems.length ) {
+		items.push( new OO.ui.MenuSectionItemWidget(
+			'newCategory', { '$': menu$, 'label': ve.msg( 'visualeditor-dialog-meta-categories-input-newcategorylabel' ) }
+		) );
+		for ( i = 0, len = newCategoryItems.length; i < len; i++ ) {
+			item = newCategoryItems[i];
+			items.push( new OO.ui.MenuItemWidget( item, { '$': menu$, 'label': item } ) );
+		}
+	}
+	if ( matchingCategoryItems.length ) {
+		items.push( new OO.ui.MenuSectionItemWidget(
+			'matchingCategories', { '$': menu$, 'label': ve.msg( 'visualeditor-dialog-meta-categories-input-matchingcategorieslabel' ) }
+		) );
+		for ( i = 0, len = matchingCategoryItems.length; i < len; i++ ) {
+			item = matchingCategoryItems[i];
+			items.push( this.getMenuItemWidgetFromCategoryName( item, menu$ ) );
+		}
+	}
+
+	return items;
 };
