@@ -21,7 +21,7 @@
 ve.ui.WikiaTrigger = function VeUiWikiaTrigger( e, allowInvalidPrimary ) {
 	// Parent constructor
 	ve.ui.WikiaTrigger.super.call( this, e, allowInvalidPrimary );
-}
+};
 
 /* Inheritance */
 

@@ -1215,7 +1215,7 @@ ve.init.mw.ViewPageTarget.prototype.showSaveDialog = function () {
 		this.surface.getModel().getFragment(),
 		{ 'dir': this.surface.getModel().getDocument().getLang() }
 	)
-		// Call onSaveDialogClose() when the save dialog starts closing 	1229
+		// Call onSaveDialogClose() when the save dialog starts closing
 		.always( ve.bind( function ( opened ) {
 			opened.always( ve.bind( this.onSaveDialogClose, this ) );
 		}, this ) );
