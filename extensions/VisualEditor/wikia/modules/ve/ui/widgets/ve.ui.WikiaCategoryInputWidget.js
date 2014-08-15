@@ -112,7 +112,6 @@ ve.ui.WikiaCategoryInputWidget.prototype.getLookupMenuItemsFromData = function (
 	var i, len, item,
 		exactMatch = false,
 		newCategoryItems = [],
-		existingCategoryItems = [],
 		matchingCategoryItems = [],
 		items = [],
 		menu$ = this.lookupMenu.$,
