@@ -1210,4 +1210,61 @@ class WikiaPhotoGalleryHelper {
 				break;
 		}
 	}
+
+	/**
+	 * Checks if newly created galleries have any linked images. If so, adds type=navigation
+	 * to the gallery tag. Logic, variable names, ane basically everything unabashedly adapted
+	 * (read: stolen) from markNavGalleries.php, a script which does the same thing but to galleries
+	 * which have already been saved, whereas this hook addresses new galleries which are created
+	 * going forward. See VID-1888 for more information.
+	 * @param $editPage
+	 * @param $request
+	 * @return bool
+	 */
+	static public function onImportFormData( $editPage, $request ) {
+		$editPage->textbox1 = preg_replace_callback(
+			'/< *gallery([^>]*)>([^<]+)< *\/ *gallery *>/',
+			function( $matches ) {
+				$galleryParams = trim( $matches[1] );
+				$galleryContent = trim( $matches[2] );
+				$galleryLines = array_filter( explode( "\n", $galleryContent ) );
+
+				if ( preg_match_all( "/([^ =\"']+) *= *[\"']?([^ \"']+)[\"']?/", $galleryParams, $paramMatches ) ) {
+					foreach ( $paramMatches[1] as $paramName ) {
+						$paramName = strtolower( $paramName );
+
+						// If we have a type param, return this gallery untouched
+						if ( $paramName == 'type' ) {
+							return $matches[0];
+						}
+					}
+				}
+
+				// Requirements state not to convert galleries that only contain one image
+				if ( count( $galleryLines ) <= 1 ) {
+					return $matches[0];
+				}
+
+				// Look for any linked images
+				$hasLink = false;
+				foreach ( $galleryLines as $line ) {
+					if ( preg_match( '/\| *link=/', $line ) ) {
+						$hasLink = true;
+						break;
+					}
+				}
+
+				if ( $hasLink ) {
+					// Return an updated gallery tag if it contains links
+					return "<gallery".( empty( $galleryParams ) ? '' : " $galleryParams" )." type=\"navigation\">\n$galleryContent\n</gallery>";
+				} else {
+					// Return gallery tag unaltered if there are no linked gallery images
+					return $matches[0];
+				}
+			},
+			$editPage->textbox1
+		);
+
+		return True;
+	}
 }

@@ -45,6 +45,7 @@ $wgHooks['EditPage::showEditForm:initial2'][] = 'WikiaPhotoGalleryHelper::setupE
 $wgHooks['Parser::FetchTemplateAndTitle'][] = 'WikiaPhotoGalleryHelper::fetchTemplateAndTitle';
 /* temp transition code until grid is fully rolled out, remove and integrate after transition */
 $wgHooks['MakeGlobalVariablesScript'][] = 'WikiaPhotoGalleryHelper::makeGlobalVariablesScriptForWikiaGrid';
+$wgHooks['EditPage::importFormData'][] = 'WikiaPhotoGalleryHelper::onImportFormData';
 /* end temp transistion code */
 
 // i18n
