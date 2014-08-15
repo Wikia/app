@@ -43,7 +43,6 @@
 	},
 	"excludeFiles": [
 		"**/node_modules/**",
-		"**/lib/**",
-	    "**/*.mustache.js"
+		"**/lib/**"
 	]
 }
