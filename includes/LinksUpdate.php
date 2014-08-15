@@ -277,24 +277,16 @@ class LinksUpdate {
 	}
 
 	private function queueRefreshTasks( $batches ) {
+		global $wgCityId;
 		$legacyJobs = array();
 
 		foreach ( $batches as $batch ) {
 			list( $start, $end ) = $batch;
-			if ( TaskRunner::isModern( 'RefreshLinksJob' ) ) {
-				global $wgCityId;
-				$task = new BatchRefreshLinksForTemplate();
-				$task->title( $this->mTitle );
-				$task->wikiId( $wgCityId );
-				$task->call( 'refreshTemplateLinks', $start, $end );
-				$task->queue();
-			} else {
-				$params = array(
-					'start' => $start,
-					'end' => $end,
-				);
-				$legacyJobs[] = new RefreshLinksJob2( $this->mTitle, $params );
-			}
+			$task = new BatchRefreshLinksForTemplate();
+			$task->title( $this->mTitle );
+			$task->wikiId( $wgCityId );
+			$task->call( 'refreshTemplateLinks', $start, $end );
+			$task->queue();
 		}
 
 		if ( !empty( $legacyJobs ) ) {
@@ -954,29 +946,16 @@ class LinksUpdate {
 	 * @param $changed
 	 */
 	private function invalidateProperties( $changed ) {
-		global $wgPagePropLinkInvalidations;
+		global $wgPagePropLinkInvalidations, $wgCityId;
 
 		foreach ( $changed as $name => $value ) {
 			if ( isset( $wgPagePropLinkInvalidations[$name] ) ) {
 				// Wikia change begin @author Scott Rabin (srabin@wikia-inc.com)
-				if ( TaskRunner::isModern('HTMLCacheUpdate') ) {
-					global $wgCityId;
-
-					$task = ( new \Wikia\Tasks\Tasks\HTMLCacheUpdateTask() )
-						->wikiId( $wgCityId )
-						->title( $this->mTitle );
-					$task->call( 'purge', $wgPagePropLinkInvalidations[$name] );
-					$task->queue();
-				} else {
-					$inv = $wgPagePropLinkInvalidations[$name];
-					if ( !is_array( $inv ) ) {
-						$inv = array( $inv );
-					}
-					foreach ( $inv as $table ) {
-						$update = new HTMLCacheUpdate( $this->mTitle, $table );
-						$update->doUpdate();
-					}
-				}
+				$task = ( new \Wikia\Tasks\Tasks\HTMLCacheUpdateTask() )
+					->wikiId( $wgCityId )
+					->title( $this->mTitle );
+				$task->call( 'purge', $wgPagePropLinkInvalidations[$name] );
+				$task->queue();
 				// Wikia change end
 			}
 		}

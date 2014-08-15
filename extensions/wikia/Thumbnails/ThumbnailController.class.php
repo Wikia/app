@@ -83,7 +83,12 @@ class ThumbnailController extends WikiaController {
 		}
 
 		// set duration
-		$duration = $file->getMetadataDuration();
+		// The file is not always an instance of a class with magic getters implemented. see VID-1753
+		if ( is_callable( [$file, 'getMetadataDuration'] ) ) {
+			$duration = $file->getMetadataDuration();
+		} else {
+			$duration = null;
+		}
 		$durationAttribs = [];
 		$metaAttribs = [];
 
@@ -177,7 +182,6 @@ class ThumbnailController extends WikiaController {
 	 *	 	img-class
 	 * 		title
 	 * 		valign
-	 * 		custom-img-src
 	 */
 	public function image() {
 		$this->mediaType = 'image';
@@ -189,11 +193,7 @@ class ThumbnailController extends WikiaController {
 		$linkAttrs   = ThumbnailHelper::getImageLinkAttribs( $thumb, $options );
 		$attribs     = ThumbnailHelper::getImageAttribs( $thumb, $options );
 
-		if ( !empty( $options['custom-img-src'] ) ) {
-			$this->imgSrc = $options['custom-img-src'];
-		} else {
-			$this->imgSrc = $thumb->url;
-		}
+		$this->imgSrc = $thumb->url;
 
 		// Merge in imgClass as well
 		if ( !empty( $options['img-class'] ) ) {

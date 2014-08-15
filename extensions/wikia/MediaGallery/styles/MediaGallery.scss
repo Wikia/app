@@ -7,11 +7,12 @@ $media-margin: .5em;
 	margin: 0 $media-margin * -1;
 	width: auto;
 
+	&.count-1 .media {
+		@include grid-column(5, false, false, 3);
+	}
+
 	&.count-2 .media {
-		@include grid-column(5);
-		&:first-child {
-			@include grid-column(5, false, false, 1);
-		}
+		@include grid-column(6);
 	}
 
 	&.count-3 .media {
@@ -69,20 +70,33 @@ $media-margin: .5em;
 		}
 	}
 
+	.media-gallery-inner {
+		clear: both;
+	}
+
 	.more {
 		clear: both;
-		margin: 0 auto;
+		margin-left: $media-margin * -2;
 		padding: .5em;
 		text-align: center;
 
 		button {
+			margin-left: $media-margin * 2;
 			outline: none;
 
-			&:first-child {
-				margin-right: 1em;
+			&.hidden {
+				display: none;
 			}
 		}
 	}
 
+	.add-image {
+		float: right;
+		margin-right: $media-margin + .1; // add a little space for right border
+	}
 }
 
+// display the add image button on the same line as headers that come directly before the gallery
+h2 + .media-gallery-wrapper .add-image {
+	margin-top: -2.55em;
+}

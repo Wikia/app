@@ -15,7 +15,7 @@ define('mediaGallery.toggler', ['mediaGallery.templates.mustache'], function (te
 		this.$el = $el;
 		this.$media = $el.find('.media');
 		this.$overflow = this.$media.filter('.hidden');
-		this.interval = options.interval || 16;
+		this.interval = options.interval || 12;
 		this.visible = this.$media.not(this.$overflow).length;
 		this.oVisible = this.visible;
 	}
@@ -48,13 +48,19 @@ define('mediaGallery.toggler', ['mediaGallery.templates.mustache'], function (te
 		// update tally of visible images
 		this.visible += this.interval;
 
-//		$elems.find('img').attr('src', function () {
-//			return $(this).attr('data-src');
-//		});
 		$elems.removeClass('hidden');
+
+		// wait till after display:block before starting transition
 		setTimeout(function () {
 			$elems.removeClass('fade');
 		}, 0);
+
+		this.$less.removeClass('hidden');
+
+		// hide the 'show more' button if there's no more to show
+		if (end >= this.$media.length) {
+			this.$more.addClass('hidden');
+		}
 	};
 
 	Toggler.prototype.showLess = function () {
@@ -64,9 +70,14 @@ define('mediaGallery.toggler', ['mediaGallery.templates.mustache'], function (te
 
 		this.visible = this.oVisible;
 		this.$overflow.addClass('fade');
+
+		// wait till after fade out transition to hide the element
 		setTimeout(function () {
 			self.$overflow.addClass('hidden');
 		}, fadeDuration);
+
+		this.$more.removeClass('hidden');
+		this.$less.addClass('hidden');
 	};
 
 	return Toggler;

@@ -490,31 +490,6 @@ class RenameUserProcess {
 			return false;
 		}
 
-		if ( !TaskRunner::isModern('UserRename') ) {
-			//create a new task for the Task Manager to store the logs for the global process
-			$this->mGlobalTask = new UserRenameGlobalTask();
-			$this->mGlobalTask->createTask(
-				array(
-					'requestor_id' => $this->mRequestorId,
-					'requestor_name' => $this->mRequestorName,
-					'rename_user_id' => $this->mUserId,
-					'rename_old_name' => $this->mOldUsername,
-					'rename_new_name' => $this->mNewUsername,
-					'reason' => $this->mReason,
-					'tasks' => array()
-				),
-				TASK_STARTED,
-				BatchTask::PRIORITY_HIGH
-			);
-			$this->addLogDestination(self::LOG_BATCH_TASK, $this->mGlobalTask);
-			$this->addLog("---USERNAMES LOG BEGIN---\n".$this->getInternalLog()."---USERNAMES LOG END---");
-
-			$tasks = array($this->mGlobalTask->getID());
-
-			// Put the starting line to log
-			$this->addMainLog("start", RenameUserLogFormatter::start($this->mRequestorName, $this->mOldUsername, $this->mNewUsername, $this->mReason, $tasks));
-		}
-
 		// Execute the worker
 		$status = false;
 
@@ -523,10 +498,6 @@ class RenameUserProcess {
 		} catch (Exception $e) {
 			$this->addLog($e->getMessage() . ' in ' . $e->getFile() . ' at line ' . $e->getLine());
 			$this->addError(wfMessage('userrenametool-error-cannot-rename-unexpected')->inContentLanguage()->text());
-		}
-
-		if ( !TaskRunner::isModern('UserRename') ) {
-			$this->mGlobalTask->closeTask($status);
 		}
 
 		// Analyze status
@@ -682,38 +653,10 @@ class RenameUserProcess {
 			'phalanx_block_id' => $this->mPhalanxBlockId,
 			'reason' => $this->mReason,
 		);
-		if ( TaskRunner::isModern('UserRename') ) {
-			$task = ( new UserRenameTask() )
-				->setPriority( \Wikia\Tasks\Queues\PriorityQueue::NAME );
-
-			$task->call( 'renameUser', $wikiIDs, $callParams );
-			$task->queue();
-		} else {
-			// create a new task for the Task Manager to handle all the global tables
-			$this->addLog("Setting up a task for processing global DB");
-			$task = new UserRenameGlobalTask();
-			$task->createTask(
-				array(
-					'rename_user_id'  => $this->mUserId,
-					'rename_old_name' => $this->mOldUsername,
-					'rename_new_name' => $this->mNewUsername,
-					'tasks'           => array(),
-				),
-				TASK_QUEUED,
-				BatchTask::PRIORITY_HIGH
-			);
-			$this->addLog("Task created with ID " . $task->getID());
-
-			$this->addLog("Setting up a task for processing local DB's");
-			$callParams['city_ids'] = $wikiIDs;
-			$callParams['global_task_id'] = $this->mGlobalTask->getID();
-			//create a new task for the Task Manager to handle all the local tables per each wiki
-			$task = new UserRenameLocalTask();
-			$task->createTask( $callParams, TASK_QUEUED, BatchTask::PRIORITY_HIGH );
-
-			$this->addLog("Task created with ID " . $task->getID());
-			$this->addLog("User rename global task end.");
-		}
+		$task = ( new UserRenameTask() )
+			->setPriority( \Wikia\Tasks\Queues\PriorityQueue::NAME );
+		$task->call( 'renameUser', $wikiIDs, $callParams );
+		$task->queue();
 
 		wfProfileOut(__METHOD__);
 		return true;
@@ -1219,10 +1162,6 @@ class RenameUserProcess {
 		if (!empty($o->mRequestorId) && empty($o->mRequestorName)) {
 			$requestor = User::newFromId($o->mRequestorId);
 			$o->mRequestorName = $requestor->getName();
-		}
-
-		if (!empty($data['global_task_id'])) {
-			$o->mGlobalTask = UserRenameGlobalTask::newFromID($data['global_task_id']);
 		}
 
 		$o->addLog("newFromData(): Requestor id={$o->mRequestorId} name={$o->mRequestorName}");

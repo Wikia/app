@@ -1,8 +1,11 @@
 <div class="media-gallery-wrapper count-{{count}}"{{#expanded}} data-expand="{{max}}"{{/expanded}}>
-	{{#media}}
-		<div class="media {{classes}}">
-			{{{thumbnail}}}
-		</div>
-	{{/media}}
+	<button class="add-image">{{addImageButton}}</button>
+	<div class="media-gallery-inner">
+		{{#media}}
+			<div class="media {{classes}}">
+				{{{thumbnail}}}
+			</div>
+		{{/media}}
+	</div>
 </div>
 
