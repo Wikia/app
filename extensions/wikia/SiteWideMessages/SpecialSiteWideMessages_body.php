@@ -221,15 +221,13 @@ class SiteWideMessages extends SpecialPage {
 					$formData['messageContent'] = $wgOut->parse($mText);
 					$formData['sendResult'] = wfMsg('swm-msg-sent-ok');
 					if ( !empty( $mTaskId ) ) {
-						$mTaskId = intval( $mTaskId );
+						$mTaskId = $mTaskId;
 						$taskLink = Linker::linkKnown(
-							GlobalTitle::newFromText( 'TaskManager', NS_SPECIAL, 177 ),
+							GlobalTitle::newFromText( 'Tasks/log', NS_SPECIAL, 177 ),
 							"#{$mTaskId}",
 							array(),
 							array(
-								'action' => 'log',
 								'id' => $mTaskId,
-								'offset' => 0
 							)
 						);
 						$formData['sendResult'] .= wfMsg( 'swm-msg-sent-task', $taskLink );
