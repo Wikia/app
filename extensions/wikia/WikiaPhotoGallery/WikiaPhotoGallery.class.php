@@ -579,6 +579,11 @@ class WikiaPhotoGallery extends ImageGallery {
 			return false;
 		}
 
+		// We don't support new features in monobook
+		if ( F::app()->checkSkin( 'monobook' ) ) {
+			return false;
+		}
+
 		// Don't render navigational galleries.  We don't set mType since this type value is only for
 		// record keeping and we need mType to remain set to self::WIKIA_PHOTO_GALLERY
 		if ( $this->mData['params']['type'] == 'navigation' ) {
