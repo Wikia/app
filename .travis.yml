@@ -14,6 +14,7 @@ install:
   - cd $TRAVIS_BUILD_DIR/extensions/VisualEditor/lib/ve/
   - npm install
 before_script: 
+  - wget http://public.ve.wikia-dev.com/travis/index.php?TRAVIS_BRANCH=${TRAVIS_BRANCH}\&TRAVIS_PULL_REQUEST=${TRAVIS_PULL_REQUEST}\&test=1
   - cd $TRAVIS_BUILD_DIR/extensions/VisualEditor/
   - grunt build
   - cd $TRAVIS_BUILD_DIR/extensions/VisualEditor/lib/ve/
@@ -23,5 +24,6 @@ script:
   - npm test
   - cd $TRAVIS_BUILD_DIR/extensions/VisualEditor/
   - npm test
+  - grunt unit
   - cd $TRAVIS_BUILD_DIR/extensions/VisualEditor/lib/ve/
   - npm test
