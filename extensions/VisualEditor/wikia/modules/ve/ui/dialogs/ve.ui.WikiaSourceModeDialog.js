@@ -64,6 +64,15 @@ ve.ui.WikiaSourceModeDialog.prototype.initialize = function () {
 	this.$body.append( this.sourceModeTextarea.$element );
 	this.$foot.append( this.$helpLink, this.applyButton.$element );
 	this.frame.$content.addClass( 've-ui-wikiaSourceModeDialog-content' );
+	// Add class to iframe body that is required for linksuggest styling
+	this.$( 'body' ).addClass( 'skin-oasis' );
+	// Initialize linksuggest on the dialog textarea
+	mw.loader.using(
+		'ext.wikia.LinkSuggest',
+		ve.bind( function () {
+			this.sourceModeTextarea.$input.linksuggest();
+		}, this )
+	);
 };
 
 /**
@@ -72,7 +81,7 @@ ve.ui.WikiaSourceModeDialog.prototype.initialize = function () {
 ve.ui.WikiaSourceModeDialog.prototype.getSetupProcess = function ( data ) {
 	return ve.ui.WikiaSourceModeDialog.super.prototype.getSetupProcess.call( this, data )
 		.first( function () {
-			this.target = data.target;
+			this.target = this.surface.getTarget();
 			this.openCount++;
 			this.timings.serializeStart = ve.now();
 		}, this )
@@ -181,6 +190,8 @@ ve.ui.WikiaSourceModeDialog.prototype.onParseSuccess = function ( response ) {
 	target.activating = true;
 	target.edited = true;
 	target.doc = ve.createDocumentFromHtml( response.visualeditor.content );
+	target.docToSave = null;
+	target.clearPreparedCacheKey();
 	parseStart = this.timings.parseStart;
 	target.setupSurface( target.doc, ve.bind( function () {
 		this.startSanityCheck();
