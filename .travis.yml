@@ -20,6 +20,7 @@ before_script:
 script:
   - cd $TRAVIS_BUILD_DIR/extensions/VisualEditor/
   - npm test
+  - grunt unit
   - cd $TRAVIS_BUILD_DIR/extensions/VisualEditor/lib/ve/
   - npm test
 after_script:
