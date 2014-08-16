@@ -100,6 +100,7 @@
 
 		/* Optimizely */
 		window.optimizely = window.optimizely || [];
+
 		if ( mw.user.anonymous() ) {
 			window.optimizely.push( ['activate', getOptimizelyExperimentId( 'VE Source Entry Point Anon' )] );
 		} else {

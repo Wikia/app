@@ -1,3 +1,2 @@
 #!/bin/sh
-ant -f build-wikia.xml jsunit
-ant -f build-wikia.xml jsintegration
+make karma-unit karma-integration
