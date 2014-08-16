@@ -604,7 +604,7 @@ class WikiaPhotoGallery extends ImageGallery {
 			$html =  $this->renderWikiaMobileMediaGroup();
 		// Route to new version of galleries - "MediaGallery"
 		} elseif ( !empty( $wgEnableMediaGalleryExt ) ) {
-			$html =  $this->renderMediaGallery();
+			$html =  $this->renderMediaGallery( $this->mData['params'] );
 			// remove spaces from html produced by mustache template
 			$html = trim( preg_replace( '/\n+/', ' ', $html ) );
 		} else {
@@ -1661,7 +1661,12 @@ class WikiaPhotoGallery extends ImageGallery {
 		return $result;
 	}
 
-	private function renderMediaGallery() {
+	/**
+	 * Render Media Gallery (gallery version 2014)
+	 * @param array $params Gallery tag parameters
+	 * @return string
+	 */
+	private function renderMediaGallery( array $params = [] ) {
 		$media = [];
 		$result = '';
 
@@ -1683,7 +1688,8 @@ class WikiaPhotoGallery extends ImageGallery {
 				'gallery',
 				[
 					'items' => $media,
-					'parser' => $this->mParser
+					'parser' => $this->mParser,
+					'gallery_params' => $params,
 				]
 			);
 		}

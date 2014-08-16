@@ -7,7 +7,8 @@ class MediaGalleryController extends WikiaController {
 
 	public function gallery() {
 		$items = $this->getVal( 'items' );
-		$expanded = ( bool ) $this->getVal( 'expand', false ); //TODO: pass in expand
+		$galleryParams = $this->getVal( 'gallery_params', [] ); // gallery tag parameters
+		$expanded = !empty( $galleryParams['expand'] );
 
 		$media = [];
 
