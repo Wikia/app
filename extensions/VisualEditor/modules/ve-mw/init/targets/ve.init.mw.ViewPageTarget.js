@@ -1227,8 +1227,16 @@ ve.init.mw.ViewPageTarget.prototype.showSaveDialog = function () {
  * @fires saveWorkflowEnd
  */
 ve.init.mw.ViewPageTarget.prototype.onSaveDialogClose = function () {
-	this.docToSave = null;
-	this.clearPreparedCacheKey();
+	// Clear the cached HTML and cache key once the document changes
+	var clear = ve.bind( function () {
+		this.docToSave = null;
+		this.clearPreparedCacheKey();
+	}, this );
+	if ( this.surface ) {
+		this.surface.getModel().getDocument().once( 'transact', clear );
+	} else {
+		clear();
+	}
 	this.emit( 'saveWorkflowEnd' );
 };
 

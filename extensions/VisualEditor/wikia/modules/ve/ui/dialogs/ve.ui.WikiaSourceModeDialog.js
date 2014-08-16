@@ -190,6 +190,8 @@ ve.ui.WikiaSourceModeDialog.prototype.onParseSuccess = function ( response ) {
 	target.activating = true;
 	target.edited = true;
 	target.doc = ve.createDocumentFromHtml( response.visualeditor.content );
+	target.docToSave = null;
+	target.clearPreparedCacheKey();
 	parseStart = this.timings.parseStart;
 	target.setupSurface( target.doc, ve.bind( function () {
 		this.startSanityCheck();
