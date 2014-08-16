@@ -10,6 +10,7 @@ module.exports = function ( grunt ) {
 
 	grunt.loadNpmTasks( 'grunt-contrib-csslint' );
 	grunt.loadNpmTasks( 'grunt-contrib-jshint' );
+	grunt.loadNpmTasks( 'grunt-contrib-qunit' );
 	grunt.loadNpmTasks( 'grunt-contrib-watch' );
 	grunt.loadNpmTasks( 'grunt-banana-checker' );
 	grunt.loadNpmTasks( 'grunt-jscs-checker' );
@@ -83,6 +84,15 @@ module.exports = function ( grunt ) {
 				'<%= csslint.all %>'
 			],
 			tasks: 'test'
+		},
+		qunit: {
+			all: {
+				options: {
+					urls: [
+						'http://vetest.ve.wikia-dev.com/wiki/Special:JavaScriptTest/qunit'
+					]
+				}
+			}
 		}
 	} );
 
@@ -90,4 +100,5 @@ module.exports = function ( grunt ) {
 	grunt.registerTask( 'lint', [ 'jshint', 'jscs', 'csslint', 'banana' ] );
 	grunt.registerTask( 'test', [ 'build', 'lint' ] );
 	grunt.registerTask( 'default', 'test' );
+	grunt.registerTask( 'unit', 'qunit' );
 };
