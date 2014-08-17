@@ -4,27 +4,27 @@
 
 class DPL {
 
-	var $mArticles;
-	var $mHeadingType; 	// type of heading: category, user, etc. (depends on 'ordermethod' param)
-	var $mHListMode; 	// html list mode for headings
-	var $mListMode;		// html list mode for pages
-	var $mEscapeLinks;	// whether to escape img/cat or not
-	var $mAddExternalLink; // whether to add the text of an external link or not
-	var $mIncPage; 		// true only if page transclusion is enabled
-	var $mIncMaxLen; 	// limit for text to include
-	var $mIncSecLabels         = array(); // array of labels of sections to transclude
-	var $mIncSecLabelsMatch    = array(); // array of match patterns for sections to transclude
-	var $mIncSecLabelsNotMatch = array(); // array of NOT match patterns for sections to transclude
-	var $mIncParsed;    // whether to match raw parameters or parsed contents
-	var $mParser;
-	var $mParserOptions;
-	var $mParserTitle;
-	var $mLogger; 		// DPLLogger
-	var $mOutput;
-	var $mReplaceInTitle;
- 	var $filteredCount = 0;	// number of (filtered) row count
-	var $nameSpaces;
-	var $mTableRow;	// formatting rules for table fields
+	public $mArticles;
+	public $mHeadingType; 	// type of heading: category, user, etc. (depends on 'ordermethod' param)
+	public $mHListMode; 	// html list mode for headings
+	public $mListMode;		// html list mode for pages
+	public $mEscapeLinks;	// whether to escape img/cat or not
+	public $mAddExternalLink; // whether to add the text of an external link or not
+	public $mIncPage; 		// true only if page transclusion is enabled
+	public $mIncMaxLen; 	// limit for text to include
+	public $mIncSecLabels         = array(); // array of labels of sections to transclude
+	public $mIncSecLabelsMatch    = array(); // array of match patterns for sections to transclude
+	public $mIncSecLabelsNotMatch = array(); // array of NOT match patterns for sections to transclude
+	public $mIncParsed;    // whether to match raw parameters or parsed contents
+	public $mParser;
+	public $mParserOptions;
+	public $mParserTitle;
+	public $mLogger; 		// DPLLogger
+	public $mOutput;
+	public $mReplaceInTitle;
+ 	public $filteredCount = 0;	// number of (filtered) row count
+	public $nameSpaces;
+	public $mTableRow;	// formatting rules for table fields
 
 	function __construct($headings, $bHeadingCount, $iColumns, $iRows, $iRowSize, $sRowColFormat, $articles, $headingtype, $hlistmode,
 				 $listmode, $bescapelinks, $baddexternallink, $includepage, $includemaxlen, $includeseclabels, $includeseclabelsmatch,
