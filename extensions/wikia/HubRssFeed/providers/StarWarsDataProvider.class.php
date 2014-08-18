@@ -4,6 +4,6 @@ class StarWarsDataProvider {
 
 	public function getData() {
 
-		
+
 	}
 }
