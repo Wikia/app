@@ -26,6 +26,8 @@ class QuestDetailsSearchService extends EntitySearchService {
 
 	const SOLR_ID_FIELD = 'id';
 
+	const SOLR_WIKI_ID = 'wid';
+
 	const SOLR_AND = ' AND ';
 
 	/**
@@ -75,6 +77,13 @@ class QuestDetailsSearchService extends EntitySearchService {
 			$ids = $this->appendWikiIdToIds( $ids, $wikiId );
 			$this->conditions[ ] = self::SOLR_ID_FIELD . ':(' . join( ' ', $ids ) . ')';
 			$this->limit( count( $ids ) );
+		}
+		return $this;
+	}
+
+	public function withWikiId( $wikiId ) {
+		if( !empty( $wikiId ) ) {
+			$this->conditions[ ] = $this->queryExactMatch( self::SOLR_WIKI_ID, $wikiId );
 		}
 		return $this;
 	}
