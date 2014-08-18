@@ -64,7 +64,6 @@ function wfJSVariablesTopScripts(Array &$vars, &$scripts) {
 
 	$vars['wgTransactionContext'] = array_merge(array(
 		'env' => $wg->WikiaEnvironment,
-		'cityId' => $wg->CityId,
 	),Transaction::getAll());
 
 	$scripts .= Html::inlineScript("var wgNow = new Date();") .	"\n";

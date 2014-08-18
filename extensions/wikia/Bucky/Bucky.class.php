@@ -15,8 +15,8 @@ class Bucky {
 			// todo: find better place for it
 			$wgBuckySampling = $app->wg->BuckySampling;
 			$url = self::BASE_URL; // "/v1/send" is automatically appended
-			// Bucky sampling can be set by request param so we want to check if it's in range from 1 to 100
-			$sample = ( ( isset( $wgBuckySampling ) && $wgBuckySampling > 0 && $wgBuckySampling <= 100 )
+			// Bucky sampling can be set by request param so we want to check if it's in range from 0 to 100
+			$sample = ( ( isset( $wgBuckySampling ) && $wgBuckySampling >= 0 && $wgBuckySampling <= 100 )
 					? $wgBuckySampling : self::DEFAULT_SAMPLING ) / 100;
 			$config = array(
 				'host' => $url,

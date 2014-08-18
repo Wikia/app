@@ -12,7 +12,7 @@ require([
 	wgTransactionContext.country = geo.getCountryCode();
 	wgTransactionContext.url = window.location.href;
 	wgTransactionContext.userAgent = window.navigator.userAgent;
-	wgTransactionContext.os = window.navigator.platform || 'unknown';
+	wgTransactionContext.os = window.navigator.platform;
 	wgTransactionContext.bodySize = document.getElementsByTagName('body')[0].innerHTML.length;
 
 });
