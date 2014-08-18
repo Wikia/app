@@ -35,6 +35,8 @@ $nav-border-color: #c7d1d8;
 }
 
 .start-wikia {
+	@include grid-attribute-size( 'width', 1, 2, 2 );
+
 	text-align: center;
 
 	&:hover {
@@ -60,21 +62,10 @@ $nav-border-color: #c7d1d8;
 		&:after {
 			content: "+";
 			display: block;
-			width: 54px; // TODO use function for width calculation
 		}
 
 		span {
 			display: none;
 		}
-	}
-}
-@media #{$medium-only} {
-	.start-wikia {
-		width: 156px; // TODO use function for width calculation
-	}
-}
-@media #{$large-up} {
-	.start-wikia {
-		width: 176px; // TODO use function for width calculation
 	}
 }
