@@ -458,6 +458,8 @@ class WikiaFileHelper extends Service {
 				$data['userPageUrl'] = $user->getUserPage()->getFullURL();
 				$data['description']  = $mediaPage->getContent();
 				$data['articles'] = $articleList;
+				$data['width'] = $width;
+				$data['height'] = $height;
 			}
 		}
 

@@ -6,10 +6,10 @@ class ArticleAsJson extends WikiaService {
 
 	const CACHE_VERSION = '0.0.1';
 
-	private static function createMarker(){
+	private static function createMarker($width = 0, $height = 0){
 		$id = count(self::$media) - 1;
 
-		return "<script class='article-media' data-ref={$id}></script>";
+		return "<script class='article-media' data-ref={$id} data-width='{$width}' data-height='{$height}'></script>";
 	}
 
 	private static function createMediaObj($details, $imageName, $caption = "") {
@@ -28,7 +28,9 @@ class ArticleAsJson extends WikiaService {
 				)->getText(),
 			'user' => $details['userName'],
 			'embed' => $details['videoEmbedCode'],
-			'views' => (int) $details['videoViews']
+			'views' => (int) $details['videoViews'],
+			'width' => (int) $details['width'],
+			'height' => (int) $details['height']
 		];
 
 		wfProfileOut( __METHOD__ );
@@ -59,6 +61,7 @@ class ArticleAsJson extends WikiaService {
 
 			foreach($data['images'] as $image) {
 				$details = WikiaFileHelper::getMediaDetail( Title::newFromText( $image['name'], NS_FILE ) );
+
 				$media[] = self::createMediaObj($details, $image['name'], $image['caption']);
 
 				self::addUserObj($details);
@@ -66,7 +69,7 @@ class ArticleAsJson extends WikiaService {
 
 			self::$media[] = $media;
 
-			$out = self::createMarker();
+			$out = self::createMarker(300, 300);
 
 			wfProfileOut( __METHOD__ );
 			return false;
@@ -88,7 +91,7 @@ class ArticleAsJson extends WikiaService {
 
 			self::addUserObj($details);
 
-			$res = self::createMarker();
+			$res = self::createMarker($details['width'],$details['height']);
 
 			wfProfileOut( __METHOD__ );
 			return false;
