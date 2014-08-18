@@ -616,7 +616,7 @@ $config['wikiamobile_tables_js'] = array(
 	)
 );
 
-$config['wikiamobile_ads_js'] = array(
+$config['base_ads_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => 'wikiamobile',
 	'assets' => array(
@@ -641,7 +641,22 @@ $config['wikiamobile_ads_js'] = array(
 
 		// Video ads
 		'//extensions/wikia/AdEngine/js/WikiaDartVideoHelper.js',
+	)
+);
 
+$config['mercury_ads_js'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => array(
+		'//resources/wikia/libraries/modil/modil.js',
+		'#group_base_ads_js',
+	)
+);
+
+$config['wikiamobile_ads_js'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => 'wikiamobile',
+	'assets' => array(
+		'#group_base_ads_js',
 		// Run!
 		'//extensions/wikia/WikiaMobile/js/ads_run.js',
 	)
