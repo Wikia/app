@@ -1,10 +1,14 @@
 @import "skins/oasis/css/core/responsive-variables";
+@import "../../Venus/styles/variables";
 
 .page-width {
 	margin: 0 auto;
 	width: $width-outside;
 }
 
+.WikiaTopAds {
+	padding: $global-navigation-height + 10px 0 10px;
+}
 
 @media screen and (max-width: $breakpoint-content) {
 	.page-width {
