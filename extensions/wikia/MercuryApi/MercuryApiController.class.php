@@ -46,8 +46,8 @@ class MercuryApiController extends WikiaController {
 	 * @desc Returns theme settings for the current wiki
 	 */
 	public function getWikiVariables() {
-		$theme = $this->mercuryApi->getWikiVariables();
-		$this->response->setVal( 'data', $theme );
+		$wikiVariables = $this->mercuryApi->getWikiVariables();
+		$this->response->setVal( 'data', $wikiVariables );
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 	}
 
