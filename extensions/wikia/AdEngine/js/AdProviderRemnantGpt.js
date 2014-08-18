@@ -1,28 +1,36 @@
 /*global define*/
 define('ext.wikia.adEngine.provider.remnantGpt', [
 	'wikia.log',
+	'wikia.window',
 	'ext.wikia.adEngine.slotTweaker',
 	'ext.wikia.adEngine.wikiaGptHelper',
 	'ext.wikia.adEngine.gptSlotConfig'
-], function (log, slotTweaker, wikiaGpt, gptSlotConfig) {
+], function (log, window, slotTweaker, wikiaGpt, gptSlotConfig) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.provider.remnantGpt',
 		srcName = 'rh',
-		slotMap = gptSlotConfig.getConfig(srcName);
+		secondCallToDPF = false,
+		slotMap = gptSlotConfig.getConfig(srcName),
+		slotsCalled = {};
+
+	function enableSecondCallToDFP(value) {
+		secondCallToDPF = value;
+	}
 
 	function canHandleSlot(slotname) {
 
-		if (!slotMap[slotname]) {
+		if (!slotMap[slotname] || slotsCalled[slotname]) {
 			return false;
 		}
 
-		return true;
+		return window.wgEnableRHonDesktop || secondCallToDPF;
 	}
 
-	function fillInSlot(slotname, success) {
-
+	function fillInSlot(slotname, success, hop) {
 		log(['fillInSlot', slotname], 5, logGroup);
+
+		slotsCalled[slotname] = true;
 
 		wikiaGpt.pushAd(
 			slotname,
@@ -33,12 +41,17 @@ define('ext.wikia.adEngine.provider.remnantGpt', [
 
 				success();
 			},
-			function () { // Hop
+			function (adInfo) { // Hop
 				log(slotname + ' was not filled by DART', 'info', logGroup);
 
-				slotTweaker.hide(slotname);
+				if (secondCallToDPF) {
+					adInfo.method = 'hop';
+					hop(adInfo, 'Liftium');
+				} else {
+					slotTweaker.hide(slotname);
+					success();
+				}
 
-				success();
 			},
 			srcName
 		);
@@ -49,6 +62,7 @@ define('ext.wikia.adEngine.provider.remnantGpt', [
 	return {
 		name: 'RemnantGpt',
 		canHandleSlot: canHandleSlot,
-		fillInSlot: fillInSlot
+		fillInSlot: fillInSlot,
+		enableSecondCallToDFP: enableSecondCallToDFP
 	};
 });
