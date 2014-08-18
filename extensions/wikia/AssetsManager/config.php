@@ -631,7 +631,6 @@ $config['base_ads_js'] = array(
 		'//extensions/wikia/AdEngine/js/AdEngine2.js',
 		'//extensions/wikia/AdEngine/js/AdProviderRemnantGptMobile.js',
 		'//extensions/wikia/AdEngine/js/AdProviderDirectGptMobile.js',
-		'//extensions/wikia/AdEngine/js/AdProviderEbay.js',
 		'//extensions/wikia/AdEngine/js/AdProviderNull.js',
 		'//extensions/wikia/AdEngine/js/GptSlotConfig.js',
 		'//extensions/wikia/AdEngine/js/SlotTracker.js',
@@ -648,7 +647,18 @@ $config['mercury_ads_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
 		'//resources/wikia/libraries/modil/modil.js',
+		'#group_tracker_js',
+		'//resources/wikia/modules/log.js',
+		'//resources/wikia/modules/window.js',
+		'//resources/wikia/modules/document.js',
+		'//resources/wikia/modules/location.js',
+		'//resources/wikia/modules/querystring.js',
+		'//resources/wikia/modules/cookies.js',
+		'//resources/wikia/modules/geo.js',
+
 		'#group_base_ads_js',
+
+		'//extensions/wikia/AdEngine/js/AdEngine.mercury.run.js',
 	)
 );
 
@@ -657,6 +667,7 @@ $config['wikiamobile_ads_js'] = array(
 	'skin' => 'wikiamobile',
 	'assets' => array(
 		'#group_base_ads_js',
+		'//extensions/wikia/AdEngine/js/AdProviderEbay.js',
 		// Run!
 		'//extensions/wikia/WikiaMobile/js/ads_run.js',
 	)

@@ -6,7 +6,7 @@ define('ext.wikia.adEngine.adConfigMobile', [
 	'ext.wikia.adEngine.provider.directGptMobile',
 	'ext.wikia.adEngine.provider.remnantGptMobile',
 	'ext.wikia.adEngine.provider.null',
-	'ext.wikia.adEngine.provider.ebay'
+	require.optional('ext.wikia.adEngine.provider.ebay')
 ], function (log, window, document, adProviderDirectGpt, adProviderRemnantGpt, adProviderNull, adProviderEbay) {
 	'use strict';
 
@@ -29,7 +29,7 @@ define('ext.wikia.adEngine.adConfigMobile', [
 			return adProviderNull;
 		}
 
-		if (window.wgAdDriverUseEbay && adProviderEbay.canHandleSlot(slotName)) {
+		if (window.wgAdDriverUseEbay && adProviderEbay && adProviderEbay.canHandleSlot(slotName)) {
 			document.getElementById(slotName).className += ' show';
 			return adProviderEbay;
 		}
