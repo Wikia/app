@@ -19,6 +19,8 @@ $wgAutoloadClasses['HubOnlyRssModel'] = $dir . 'models/HubOnlyRssModel.class.php
 
 $wgSpecialPages['HubRssFeed']		= 'HubRssFeedSpecialController';
 
+$wgAutoloadClasses['StarWarsDataProvider']	= $dir . 'providers/StarWarsDataProvider.class.php';
+
 $wgHubRssFeeds = array(
 	 'Entertainment', 'Lifestyle', 'Games', 'TV'
 );
