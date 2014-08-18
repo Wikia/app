@@ -42,10 +42,7 @@
 
 .search-right-rail {
 	float: right;
-}
-
-.search-right-rail {
-	@include grid-attribute-size(margin-left, 1);
+	margin-left: $large-grid-column + 2 * $large-grid-gutter;
 }
 
 .subtext {
@@ -136,32 +133,24 @@
 	}
 }
 
-.results-section {
-	.results {
-		.result-entry {
-			@include grid-attribute-size(width, 11, 7, 7);
-			@include grid-column-padding;
-		}
-	}
+.results-section .results .result-entry {
+	@include grid-attribute-size(width, 11, 7, 7);
+	@include grid-column-padding;
 }
 
-.results-section {
-	.results {
-		.result-entry-file {
-			.result-thumbnail-wrapper {
-				@include grid-attribute-size(width, 4, 3, 3);
-				@include grid-column-padding;
-			}
+.results-section .results .result-entry-file {
+	.result-thumbnail-wrapper {
+		@include grid-attribute-size(width, 4, 3, 3);
+		@include grid-column-padding;
+	}
 
-			.result-thumbnail-wrapper img {
-				@include grid-attribute-size(max-width, 4, 3, 3); // TODO: horizontal grid-padding must be subtracted
-			}
+	.result-thumbnail-wrapper img {
+		@include grid-attribute-size(max-width, 4, 3, 3); // TODO: horizontal grid-padding must be subtracted
+	}
 
-			.result-thumbnail-description {
-				@include grid-attribute-size(width, 8, 5, 5);
-				@include grid-column-padding;
-			}
-		}
+	.result-thumbnail-description {
+		@include grid-attribute-size(width, 8, 5, 5);
+		@include grid-column-padding;
 	}
 }
 
@@ -205,6 +194,7 @@
 
 	.top-wiki-articles-snippet {
 		color: $color-text-dark;
+		word-wrap: break-word;
 	}
 
 	.thumbnail-large {
@@ -270,7 +260,7 @@
 			}
 
 			&.active {
-				color: #3c3c3c;
+				color: $color-header;
 			}
 		}
 
@@ -314,19 +304,17 @@
 		line-height: 22px;
 	}
 
+	.search-right-rail {
+		margin-left: $medium-grid-column + 2 * $medium-grid-gutter;
+	}
+
 	.subtext {
 		font-size: 14px;
 		line-height: 22px;
 	}
 
-	.results-section {
-		.results {
-			.result-entry-file {
-				.result-thumbnail-wrapper {
-					margin-right: $medium-grid-gutter;
-				}
-			}
-		}
+	.results-section .results .result-entry-file .result-thumbnail-wrapper {
+		margin-right: $medium-grid-gutter;
 	}
 
 	.top-wiki-articles {
@@ -351,24 +339,21 @@
 		line-height: 22px;
 	}
 
+	.search-right-rail {
+		margin-left: $small-grid-column + 2 * $small-grid-gutter;
+	}
+
 	.subtext {
 		font-size: 14px;
 		line-height: 22px;
 	}
 
-	.results-section {
-			 .results {
-				 .result-entry-file {
-					 .result-thumbnail-wrapper {
-						 margin-right: $small-grid-gutter;
-					 }
-				 }
-			 }
-		 }
+	.results-section .results .result-entry-file .result-thumbnail-wrapper {
+		margin-right: $small-grid-gutter;
+	}
 
-	.top-wiki-articles {
-		a {
-			display: block;
-		}
+
+	.top-wiki-articles a {
+		display: block;
 	}
 }
