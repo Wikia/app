@@ -150,4 +150,25 @@ class MonetizationModuleHelper extends WikiaModel {
 		return MonetizationModuleHelper::REST_OF_WORLD;
 	}
 
+	/**
+	 * Very rudimentary way to determine the number of ads to display.
+	 * If the page length (text chars count only) is greater than 5K
+	 * then it is considered a "long" article, in between 1.5-5K it is
+	 * considered "medium" and anything less than 1.5K is considered
+	 * "short"
+	 *
+	 * @param $pageLength
+	 * @return int
+	 */
+	public static function calculateNumberOfAds( $pageLength ) {
+		if ( $pageLength > 5000 ) {
+			// long length article
+			return 3;
+		} else if ( $pageLength > 1500 ) {
+			// medium length article
+			return 2;
+		}
+		// short articles
+		return 1;
+	}
 }
