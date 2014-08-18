@@ -23,6 +23,7 @@ a {
 	border: 1px solid $color-page-border;
 	margin: 0 auto;
 	padding: 0;
+	width: $large-content-width;
 
 	& > header {
 		@include grid-content-padding;
@@ -33,11 +34,9 @@ a {
 	@media #{$small-only} {
 		width: $small-content-width;
 	}
+
 	@media #{$medium-only} {
 		width: $medium-content-width;
-	}
-	@media #{$large-up} {
-		width: $large-content-width;
 	}
 }
 
