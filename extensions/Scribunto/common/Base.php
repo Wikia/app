@@ -136,6 +136,26 @@ abstract class ScribuntoEngineBase {
 		}
 		return $this->modules[$key];
 	}
+	/**
+	 * Wikia change by adamk@wikia-inc.com
+	 * Load shared a module from dev.wikia.com.
+	 * @param  GlobalTitle $title GlobalTitle instance of a shared module.
+	 * @return mixed              Returns a module if found and null otherwise.
+	 */
+	function fetchSharedModule( GlobalTitle $title ) {
+		$key = $title->getPrefixedText();
+
+		if( !array_key_exists( $key, $this->modules ) ) {
+			$text = $title->getContent();
+			if ( $text === false ) {
+				$this->modules[$key] = null;
+				return null;
+			}
+			$this->modules[$key] = $this->newModule( $text, $key );
+		}
+
+		return $this->modules[$key];
+	}
 
 	/**
 	 * Validates the script and returns a Status object containing the syntax
