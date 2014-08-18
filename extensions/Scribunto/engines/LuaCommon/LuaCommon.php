@@ -314,12 +314,21 @@ abstract class Scribunto_LuaEngine extends ScribuntoEngineBase {
 			return array( $init );
 		}
 
-		$title = Title::newFromText( $name );
-		if ( !$title || $title->getNamespace() != NS_MODULE ) {
-			return array();
+		if ( preg_match( "/^Dev:/", $name ) ) {
+			$sDevName = preg_replace( "/^Dev:/", "", $name );
+			$title = GlobalTitle::newFromText( $sDevName, NS_MODULE, 7931 );
+			if ( !$title ) {
+				return array();
+			}
+			$module = $this->fetchSharedModule( $title );
+		}	else {
+			$title = Title::newFromText( $name );
+			if ( !$title || $title->getNamespace() != NS_MODULE ) {
+				return array();
+			}
+			$module = $this->fetchModuleFromParser( $title );
 		}
 
-		$module = $this->fetchModuleFromParser( $title );
 		if ( $module ) {
 			return array( $module->getInitChunk() );
 		} else {
