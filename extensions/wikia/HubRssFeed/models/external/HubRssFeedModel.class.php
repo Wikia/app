@@ -9,9 +9,9 @@ class HubRssFeedModel extends WikiaModel {
 	const MIN_DATE_FOUND = 1262300400; //2010-01-01
 
 	/**
-	 * @var MarketingToolboxModel
+	 * @var EditHubModel
 	 */
-	protected $marketingToolboxV3Model;
+	protected $editHubModel;
 
 	protected $lang;
 
@@ -25,7 +25,7 @@ class HubRssFeedModel extends WikiaModel {
 	 * Set up marketing toolbox model (HubsV3)
 	 */
 	private function setUpModel() {
-		$this->marketingToolboxV3Model = new MarketingToolboxV3Model( $this->app );
+		$this->editHubModel = new EditHubModel( $this->app );
 	}
 
 	/**
@@ -36,17 +36,17 @@ class HubRssFeedModel extends WikiaModel {
 	 */
 	protected function getServicesV3( $cityId ) {
 		$services = [
-			'slider' => new MarketingToolboxModuleSliderService( $this->lang, MarketingToolboxV3Model::SECTION_HUBS, 0, $cityId, MarketingToolboxV3Model::VERSION ),
-			'community' => new MarketingToolboxModuleFromthecommunityService( $this->lang, MarketingToolboxV3Model::SECTION_HUBS, 0, $cityId, MarketingToolboxV3Model::VERSION ),
-			'wikiaspicks' => new MarketingToolboxModuleWikiaspicksService( $this->lang, MarketingToolboxV3Model::SECTION_HUBS, 0, $cityId, MarketingToolboxV3Model::VERSION ),
-			'explore' => new MarketingToolboxModuleExploreService( $this->lang, MarketingToolboxV3Model::SECTION_HUBS, 0, $cityId, MarketingToolboxV3Model::VERSION )
+			'slider' => new WikiaHubsModuleSliderService( $cityId ),
+			'community' => new WikiaHubsModuleFromthecommunityService( $cityId ),
+			'wikiaspicks' => new WikiaHubsModuleWikiaspicksService( $cityId ),
+			'explore' => new WikiaHubsModuleExploreService( $cityId )
 		];
 		return $services;
 	}
 
 
 	/*
-	 * Get data from MarketingToolboxModelV3 (don't care about timestamps consistency)
+	 * Get data from EditHubModel (don't care about timestamps consistency)
 	 *
 	 * @param $cityId
 	 * @return array
@@ -56,13 +56,8 @@ class HubRssFeedModel extends WikiaModel {
 			return [ ];
 		}
 
-		$params = [
-			'sectionId' => MarketingToolboxV3Model::SECTION_HUBS,
-			'cityId' => $cityId,
-		];
-
 		$currentData = $this->getDataFromModulesV3( $cityId );
-		$timestamp = $this->marketingToolboxV3Model->getLastPublishedTimestamp( $params, $prevTimestamp );
+		$timestamp = $this->editHubModel->getLastPublishedTimestamp( $cityId, $prevTimestamp );
 
 		foreach ( $currentData as &$val ) {
 			$val[ 'timestamp' ] = $timestamp;
@@ -72,7 +67,7 @@ class HubRssFeedModel extends WikiaModel {
 		$prevTimestamp = $timestamp - 1;
 
 		for ( $i = 0; $i < self::MAX_DATE_LOOP; $i++ ) {
-			$prevTimestamp = $this->marketingToolboxV3Model->getLastPublishedTimestamp( $params, $prevTimestamp );
+			$prevTimestamp = $this->editHubModel->getLastPublishedTimestamp( $cityId, $prevTimestamp );
 
 			$prevData = null;
 			if ( $prevTimestamp ) {
@@ -114,7 +109,7 @@ class HubRssFeedModel extends WikiaModel {
 	}
 
 	/**
-	 * Get normalized partial data from MarketingToolboxModelV3 from given timestamp
+	 * Get normalized partial data from EditHubModel from given timestamp
 	 * @see normalizeDataFromModules
 	 *
 	 * @param $cityId
@@ -126,7 +121,7 @@ class HubRssFeedModel extends WikiaModel {
 		$data = [ ];
 
 		foreach ( $services as $k => &$v ) {
-			$data[ $k ] = $v->loadData( $this->marketingToolboxV3Model, [
+			$data[ $k ] = $v->loadData( $this->editHubModel, [
 				'city_id' => $cityId,
 				'ts' => $timestamp
 			] );

@@ -161,7 +161,7 @@ class WikiaPageType {
 	public static function isWikiaHub() {
 		global $wgEnableWikiaHubsV3Ext;
 
-		return HubService::isCurrentPageAWikiaHub() || !empty( $wgEnableWikiaHubsV3Ext );
+		return !empty( $wgEnableWikiaHubsV3Ext );
 	}
 
 	/**
