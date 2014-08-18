@@ -9,7 +9,6 @@ class SeriesEntitySearchService extends EntitySearchService {
 	const MINIMAL_ARTICLE_SCORE = 5;
 	const API_URL = 'api/v1/Articles/AsSimpleJson?id=';
 	const SERIES_TYPE = 'tv_series';
-	const OTHER_TYPE = 'other';
 	const DEFAULT_SLOP = 1;
 
 	private static $ARTICLE_TYPES_SUPPORTED_LANGS = ['en'];
@@ -33,7 +32,7 @@ class SeriesEntitySearchService extends EntitySearchService {
 		$select->createFilterQuery( 'ns' )->setQuery( '+(ns:(' . implode( ' ', $namespaces ) . '))' );
 		$select->createFilterQuery( 'main_page' )->setQuery( '-(is_main_page:true)' );
 		if ( in_array( strtolower( $slang ), static::$ARTICLE_TYPES_SUPPORTED_LANGS ) ) {
-			$select->createFilterQuery( 'type' )->setQuery( '+(article_type_s:(' . static::SERIES_TYPE . ' ' . self::OTHER_TYPE . '))' );
+			$select->createFilterQuery( 'type' )->setQuery( '+(article_type_s:' . static::SERIES_TYPE . ')' );
 		}
 
 		$dismax->setQueryFields( implode( ' ', [
@@ -49,8 +48,6 @@ class SeriesEntitySearchService extends EntitySearchService {
 			$this->withLang( 'redirect_titles_mv', $slang ) . '^2',
 		] ) );
 
-		$dismax->setBoostQuery( 'article_type_s:"' . self::SERIES_TYPE . '"^20' );
-
 		$dismax->setQueryPhraseSlop( static::DEFAULT_SLOP );
 		$dismax->setPhraseSlop( static::DEFAULT_SLOP );
 
@@ -58,10 +55,9 @@ class SeriesEntitySearchService extends EntitySearchService {
 	}
 
 	protected function consumeResponse( $response ) {
-		$result = null;
 		foreach ( $response as $item ) {
 			if ( $item[ 'score' ] > static::MINIMAL_ARTICLE_SCORE ) {
-				$result[ $item[ 'pageid' ] ] = [
+				return [
 					'wikiId' => $item[ 'wid' ],
 					'articleId' => $item[ 'pageid' ],
 					'title' => $item[ 'title_' . $this->getLang() ],
@@ -71,7 +67,7 @@ class SeriesEntitySearchService extends EntitySearchService {
 				];
 			}
 		}
-		return $result;
+		return null;
 	}
 
 	protected function createQuery( $query ) {

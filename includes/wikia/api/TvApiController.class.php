@@ -214,15 +214,10 @@ class TvApiController extends WikiaApiController {
 				->setQuality( ($quality !== null ) ? $quality : self::DEFAULT_QUALITY );
 			$namespaces = WikiFactory::getVarValueByName( self::WG_CONTENT_NAMESPACES_KEY, $wiki['id'] );
 			$seriesService->setNamespace( $namespaces );
-			$seriesService->setRowLimit(3);
 			$result = $seriesService->query( $seriesName );
 
-			$exact = $this->getTitle( $seriesName, $wiki[ 'id' ] );
-			if ( $exact !== null && isset( $result[ $exact->getArticleID() ] ) ) {
-				return $result[ $exact->getArticleID() ];
-			}
 			if ( $result !== null ) {
-				return reset($result);
+				return $result;
 			}
 		}
 		return false;
