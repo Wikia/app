@@ -126,8 +126,6 @@ class MercuryApiController extends WikiaController {
 	 * @throws BadRequestApiException
 	 */
 	public function getArticle(){
-		$title = null;
-
 		$articleId = $this->request->getInt(self::ARTICLE_ID_PARAMETER_NAME, NULL);
 		$articleTitle = $this->request->getVal(self::ARTICLE_TITLE_PARAMETER_NAME, NULL);
 
@@ -139,24 +137,21 @@ class MercuryApiController extends WikiaController {
 			throw new BadRequestApiException( 'You need to pass title or id of an article' );
 		}
 
-		if ( !empty( $articleId ) ) {
-			$article = Article::newFromID( $articleId );
-		} else {
+		if ( empty( $articleId ) ) {
 			$title = Title::newFromText( $articleTitle, NS_MAIN );
 
 			if ( $title instanceof Title && $title->exists() ) {
-				$article = Article::newFromTitle( $title, RequestContext::getMain() );
 				$articleId = $title->getArticleId();
 			}
 		}
 
-		if ( empty( $article ) ) {
+		if ( empty( $articleId ) ) {
 			throw new NotFoundApiException( "Unable to find any article" );
 		}
 
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 
-		$userIds = $this->getTopContributorsPerArticle( $title );
+		$userIds = $this->getTopContributorsPerArticle( $articleId );
 
 		$this->response->setVal( 'data', [
 			'details' => $this->getArticleDetails( $articleId ),

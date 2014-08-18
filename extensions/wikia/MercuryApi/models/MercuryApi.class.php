@@ -24,11 +24,11 @@ class MercuryApi {
 	/**
 	 * @desc Fetch all time top contributors for article
 	 *
-	 * @param Title $title - Article title
+	 * @param int $articleId - Article id
 	 * @param $limit - maximum number of contributors to fetch
 	 * @return array
 	 */
-	public function topContributorsPerArticle( Title $title, $limit) {
+	public function topContributorsPerArticle( $articleId, $limit) {
 		$db = wfGetDB( DB_SLAVE );
 		$res = $db->select(
 			'revision',
@@ -36,7 +36,7 @@ class MercuryApi {
 				'rev_user'
 			],
 			[
-				'rev_page' => (int)$title->getArticleId(),
+				'rev_page' => $articleId,
 				'rev_deleted' => 0
 			],
 			__METHOD__,
@@ -48,7 +48,7 @@ class MercuryApi {
 		);
 		$result = [];
 		while($row = $db->fetchObject($res)) {
-			$result[] = (int)$row->rev_user;
+			$result[] = (int) $row->rev_user;
 		}
 		return $result;
 	}
