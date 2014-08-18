@@ -84,7 +84,7 @@ class MercuryApiController extends WikiaController {
 		if( $articleId === 0 ) {
 			throw new InvalidParameterApiException( self::PARAM_ARTICLE_ID );
 		}
-
+		
 		$title = Title::newFromID( $articleId );
 		if ( !( $title instanceof Title ) ) {
 			throw new NotFoundApiException( self::PARAM_ARTICLE_ID );
