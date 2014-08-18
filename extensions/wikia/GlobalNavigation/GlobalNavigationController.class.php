@@ -70,6 +70,9 @@ class GlobalNavigationController extends WikiaController {
 	}
 
 	public function venus() {
+		Wikia::addAssetsToOutput('global_navigation_css');
+		// TODO remove after when Oasis is retired
+		//Wikia::addAssetsToOutput('global_navigation_oasis_css');
 		$userLang = $this->wg->Lang->getCode();
 		// Link to Wikia home page
 		$centralUrl = 'http://www.wikia.com/Wikia';

@@ -1,0 +1,27 @@
+@import "skins/oasis/css/core/responsive-variables";
+
+.page-width {
+	margin: 0 auto;
+	width: $width-outside;
+}
+
+
+@media screen and (max-width: $breakpoint-content) {
+	.page-width {
+		width: 100%;
+	}
+}
+
+@media screen and (min-width: $breakpoint-fluid) and (max-width: $breakpoint-max - 1) {
+	.page-width {
+		margin: 0 $width-adskin;
+		width: auto;
+	}
+}
+
+@media screen and (min-width: $breakpoint-max) {
+	.page-width {
+		margin: 0 auto;
+		width: $width-outside-max;
+	}
+}

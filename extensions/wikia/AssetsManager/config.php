@@ -1952,3 +1952,12 @@ $config['int_map_parser_tag_js_wikiamobile'] = [
 		'//extensions/wikia/WikiaInteractiveMaps/js/WikiaInteractiveMapsParserTag.wikiamobile.js'
 	]
 ];
+
+/** GlobalNavigation extension */
+$config['global_navigation_oasis_css'] = array(
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => ['oasis'],
+	'assets' => array(
+		'//extensions/wikia/GlobalNavigation/css/GlobalNavigationOasis.scss'
+	)
+);
