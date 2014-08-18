@@ -145,8 +145,8 @@ class QuestDetailsSearchServiceTest extends WikiaBaseTest {
 					],
 					"quest_id" => "very_good",
 					"map_location" => [
-						"location_x" => 1.11244,
-						"location_y" => -1.21412,
+						"latitude" => 1.11244,
+						"longitude" => -1.21412,
 						"region" => "Map_Region_1"
 					]
 				]
@@ -173,8 +173,8 @@ class QuestDetailsSearchServiceTest extends WikiaBaseTest {
 				"metadata" => [
 					"quest_id" => "very_good",
 					"map_location" => [
-						"location_x" => 1.11244,
-						"location_y" => 1.11412,
+						"latitude" => 1.11244,
+						"longitude" => 1.11412,
 						"region" => "Map_Region_1"
 					]
 				]
