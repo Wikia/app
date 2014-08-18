@@ -4,6 +4,14 @@ use Wikia\Search\Services\NearbyPOISearchService;
 
 class POIApiController extends WikiaApiController {
 
+	const PI = 3.14;
+
+	const EARTH_RADIUS = 6374;
+
+	const DEGREES_IN_PI = 180;
+
+	const DEFAULT_RADIUS = 180;
+
 	/**
 	 * @var QuestDetailsSolrHelper
 	 */
@@ -15,11 +23,15 @@ class POIApiController extends WikiaApiController {
 	protected $nearbySearch;
 
 	public function getNearbyQuests() {
-		$lat = $this->getRequest()->getVal( 'location_x' );
-		$long = $this->getRequest()->getVal( 'location_y' );
+		$lat = $this->getRequest()->getVal( 'latitude' );
+		$long = $this->getRequest()->getVal( 'longitude' );
 		$region = $this->getRequest()->getVal( 'region' );
-		$radius = $this->getRequest()->getVal( 'radius' );
+		$radius = $this->getRequest()->getVal( 'radius', self::DEFAULT_RADIUS );
 		$limit = $this->getRequest()->getVal( 'limit' );
+
+		$this->validateParameters( $lat, $long, $radius, $limit );
+
+		$radiusKilometers = $this->radiusDegreesToKilometers( $radius );
 
 		$solrHelper = $this->getSolrHelper();
 		$nearbySearch = $this->getNearbySearch();
@@ -27,7 +39,7 @@ class POIApiController extends WikiaApiController {
 		$solrResponse = $nearbySearch->newQuery()
 			->latitude( $lat )
 			->longitude( $long )
-			->radius( $radius )
+			->radius( $radiusKilometers )
 			->region( $region )
 			->setFields( $solrHelper->getRequiredSolrFields() )
 			->limit( $limit )
@@ -35,7 +47,15 @@ class POIApiController extends WikiaApiController {
 
 		$result = $solrHelper->consumeResponse( $solrResponse );
 
+		if( empty( $result ) ) {
+			throw new NotFoundApiException();
+		}
+
 		$this->setResponseData( $result );
+	}
+
+	protected function radiusDegreesToKilometers( $radiusDegrees ) {
+		return $radiusDegrees * self::EARTH_RADIUS  / self::DEGREES_IN_PI * self::PI;
 	}
 
 	/**
@@ -70,5 +90,41 @@ class POIApiController extends WikiaApiController {
 			$this->solrHelper = new QuestDetailsSolrHelper();
 		}
 		return $this->solrHelper;
+	}
+
+	protected function validateParameters( $lat, $long, $radius, $limit ) {
+		// positive and negative floating numbers
+		if ( !preg_match( '/^-?\d+(\.\d+)?$/i', $lat ) ) {
+			throw new BadRequestApiException( "Parameter 'latitude' is invalid" );
+		}
+
+		// positive and negative floating numbers
+		if ( !preg_match( '/^-?\d+(\.\d+)?$/i', $long ) ) {
+			throw new BadRequestApiException( "Parameter 'longitude' is invalid" );
+		}
+
+		$lat = doubleval( $lat );
+		if ( ( $lat < -90 ) || ( $lat > 90 ) ) {
+			throw new BadRequestApiException( "Invalid latitude: latitudes range from -90 to 90: provided latitude: ${lat}" );
+		}
+
+		$long = doubleval( $long );
+		if ( ( $long < -180 ) || ( $long > 180 ) ) {
+			throw new BadRequestApiException( "Invalid longitude: longitudes range from -180 to 180: provided longitude: ${long}" );
+		}
+
+		// only positive floating numbers
+		if ( !empty( $radius ) && !preg_match( '/^\d+(\.\d+)?$/i', $radius ) ) {
+			throw new BadRequestApiException( "Parameter 'radius' is invalid" );
+		}
+		$radius = doubleval( $radius );
+		if( $radius > 180 ) {
+			throw new BadRequestApiException( "Invalid radius: radiuses range from 0 to 180: provided radius: ${radius}" );
+		}
+
+		// only positive integer numbers
+		if ( !empty( $limit ) && !preg_match( '/^\d+$/i', $limit ) ) {
+			throw new BadRequestApiException( "Parameter 'limit' is invalid" );
+		}
 	}
 }

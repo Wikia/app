@@ -244,7 +244,8 @@ class ThumbnailImage extends MediaTransformOutput {
 				'url'       => $this->url,
 				'method'    => __METHOD__,
 				'page'      => $this->page,
-				'mediaType' => $this->mediaType()
+				'mediaType' => $this->mediaType(),
+				'fileType'  => get_class( $this->file )
 			] ) );
 
 		// Make sure to trim the output so that there is no leading whitespace.  The output of this method
@@ -298,7 +299,8 @@ class ThumbnailImage extends MediaTransformOutput {
 				'url'       => $this->url,
 				'method'    => __METHOD__,
 				'page'      => $this->page,
-				'mediaType' => $this->mediaType()
+				'mediaType' => $this->mediaType(),
+				'fileType'  => get_class( $this->file )
 			] ) );
 
 		$alt = empty( $options['alt'] ) ? '' : $options['alt'];

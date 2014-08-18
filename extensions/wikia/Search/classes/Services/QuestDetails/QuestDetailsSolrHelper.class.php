@@ -37,18 +37,33 @@ class QuestDetailsSolrHelper {
 				$id = $item[ 'pageid' ];
 				$result[ $id ] = $this->getMetadata( $item );
 			} else {
-				$result[ ] = [
+				$resultItem = [
+					// These fields must be present always
 					'id' => $item[ 'pageid' ],
 					'title' => $this->findFirstValueByKeyPrefix( $item, 'title_', '' ),
 					'url' => $item[ 'url' ],
 					'ns' => $item[ 'ns' ],
-					'revision' => $this->getRevision( $item ),
-					'comments' => $this->getCommentsNumber( $item ),
-					'type' => $item[ 'article_type_s' ],
-					'categories' => $this->findFirstValueByKeyPrefix( $item, 'categories_', [ ] ),
-					'abstract' => $this->getAbstract( $item ),
-					'metadata' => $this->getMetadata( $item ),
+					'revision' => $this->getRevision( $item )
 				];
+
+				$comments = $this->getCommentsNumber( $item );
+				if( isset( $comments ) ) {
+					$resultItem[ 'comments' ] = $comments;
+				}
+
+				$type = $item[ 'article_type_s' ];
+				$this->addIfNotEmpty( $resultItem, 'type', $type );
+
+				$categories = $this->findFirstValueByKeyPrefix( $item, 'categories_', [ ] );
+				$this->addIfNotEmpty( $resultItem, 'categories', $categories );
+
+				$abstract = $this->getAbstract( $item );
+				$this->addIfNotEmpty( $resultItem, 'abstract', $abstract );
+
+				$metadata = $this->getMetadata( $item );
+				$this->addIfNotEmpty( $resultItem, 'metadata', $metadata );
+
+				$result[ ] = $resultItem;
 			}
 		}
 
@@ -116,7 +131,7 @@ class QuestDetailsSolrHelper {
 
 					$metadataKey = $this->cutPrefixAndSuffix( $key, 'metadata_', '_s' );
 
-					$metadata[ $metadataKey ] = $value;
+					$this->addIfNotEmpty( $metadata, $metadataKey, $value );
 
 				} else if ( endsWith( $key, '_ss' ) ) {
 
@@ -126,13 +141,16 @@ class QuestDetailsSolrHelper {
 						$metadataKey = 'fingerprints';
 					}
 
-					$metadata[ $metadataKey ] = $value;
-
+					$this->addIfNotEmpty( $metadata, $metadataKey, $value );
 				}
 			}
 		}
 
-		$metadata[ 'map_location' ] = $this->getMetadataMap( $item );
+		$metadataMap = $this->getMetadataMap( $item );
+
+		if( !empty( $metadataMap ) ) {
+			$metadata[ 'map_location' ] = $metadataMap;
+		}
 
 		return $metadata;
 	}
@@ -175,16 +193,18 @@ class QuestDetailsSolrHelper {
 
 					$mapKey = $this->cutPrefixAndSuffix( $key, 'metadata_map_', '_s' );
 
-					$map[ $mapKey ] = $value;
+					$this->addIfNotEmpty( $map, $mapKey, $value );
 
 				} else if ( endsWith( $key, '_sr' ) ) {
 
 					$mapKey = $this->cutPrefixAndSuffix( $key, 'metadata_map_', '_sr' );
 
-					$coordinates = $this->parseCoordinates( $value );
+					if( !empty( $value ) ) {
+						$coordinates = $this->parseCoordinates( $value );
 
-					$map[ $mapKey . '_x' ] = $coordinates[ 'x' ];
-					$map[ $mapKey . '_y' ] = $coordinates[ 'y' ];
+						$map[ $mapKey . '_x' ] = $coordinates[ 'x' ];
+						$map[ $mapKey . '_y' ] = $coordinates[ 'y' ];
+					}
 				}
 			}
 		}
@@ -218,6 +238,9 @@ class QuestDetailsSolrHelper {
 
 	protected function getRevision( $item ) {
 		$titles = Title::newFromIDs( $item[ 'pageid' ] );
+		if( empty( $titles ) ) {
+			return null;
+		}
 		$title = $titles[ 0 ];
 		$revId = $title->getLatestRevID();
 		$rev = Revision::newFromId( $revId );
@@ -234,12 +257,15 @@ class QuestDetailsSolrHelper {
 
 	protected function getCommentsNumber( $item ) {
 		$titles = Title::newFromIDs( $item[ 'pageid' ] );
+		if( empty( $titles ) ) {
+			return null;
+		}
 		$title = $titles[ 0 ];
 		if ( class_exists( 'ArticleCommentList' ) ) {
 			$commentsList = ArticleCommentList::newFromTitle( $title );
 			return $commentsList->getCountAllNested();
 		}
-		return 0;
+		return null;
 	}
 
 	protected function addThumbnailsInfo( &$result ) {
@@ -254,7 +280,9 @@ class QuestDetailsSolrHelper {
 			$id = $item[ 'id' ];
 			$thumbnailProps = $thumbnails[ $id ];
 			foreach ( $thumbnailProps as $key => $value ) {
-				$item[ $key ] = $value;
+				if( !empty( $value ) ) {
+					$item[ $key ] = $value;
+				}
 			}
 		}
 	}
@@ -317,5 +345,34 @@ class QuestDetailsSolrHelper {
 		$suffixLen = mb_strlen( $suffix );
 		$strLen = mb_strlen( $str );
 		return substr( $str, $prefixLen, $strLen - $prefixLen - $suffixLen );
+	}
+
+	protected function addIfNotEmpty( &$hashMap, $key, $value ) {
+		if( !empty( $value ) ) {
+
+			if( is_array( $value ) ) {
+
+				$cleanedArray = $this->removeEmptyItems( $value );
+
+				if( !empty( $cleanedArray ) ) {
+					$hashMap[ $key ] = $cleanedArray;
+				}
+
+			} else {
+				$hashMap[ $key ] = $value;
+			}
+		}
+	}
+
+	protected function removeEmptyItems( $array ) {
+		$cleanedArray = [ ];
+
+		foreach( $array as $key => $value ) {
+			if( !empty( $value ) ) {
+				$cleanedArray[ $key ] = $value;
+			}
+		}
+
+		return $cleanedArray;
 	}
 } 

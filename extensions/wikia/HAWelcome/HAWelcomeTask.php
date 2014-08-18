@@ -336,6 +336,8 @@ class HAWelcomeTask extends BaseTask {
 			return $this->executeBuildAndPostWallMessage( $defaultWelcomeUser, $welcomeMessage, $recipientName, $textMessage );
 		} );
 
+		$message = $this->setWallMessagePostedAsBot( $message );
+
 		return $message;
 	}
 
@@ -344,11 +346,15 @@ class HAWelcomeTask extends BaseTask {
 			$welcomeMessage, $recipientName, $defaultWelcomeUser, $textMessage, false, array(), false, false
 		);
 
+		return $wallMessage;
+	}
+
+	protected function setWallMessagePostedAsBot( $wallMessage ) {
 		// Sets the sender of the message when the actual message
 		// was posted by the welcome bot
-		if ( $welcomeMessage ) {
-			$welcomeMessage->setPostedAsBot( $this->senderObject );
-			$welcomeMessage->sendNotificationAboutLastRev();
+		if ( $wallMessage ) {
+			$wallMessage->setPostedAsBot( $this->senderObject );
+			$wallMessage->sendNotificationAboutLastRev();
 		}
 
 		return $wallMessage;

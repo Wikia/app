@@ -1,8 +1,8 @@
 @import "../../../../skins/oasis/css/mixins/clearfix";
 @import "../../../../skins/oasis/css/core/color";
 
-$color-toolbox-datepicker-published-background: #deedbd;
-$color-toolbox-datepicker-inprog-background: #d4ecf7;
+$color-edithub-datepicker-published-background: #deedbd;
+$color-edithub-datepicker-inprog-background: #d4ecf7;
 
 .EditHub {
 	background-color: $color-article-thumb-background;
@@ -30,11 +30,11 @@ $color-toolbox-datepicker-inprog-background: #d4ecf7;
 
 .ui-datepicker.ui-widget {
 	.published a {
-		background-color: $color-toolbox-datepicker-published-background;
+		background-color: $color-edithub-datepicker-published-background;
 	}
 
 	.inProg a {
-		background-color: $color-toolbox-datepicker-inprog-background;
+		background-color: $color-edithub-datepicker-inprog-background;
 	}
 
 	.ui-datepicker-current-day-legend a {
