@@ -9,8 +9,8 @@ class StarWarsDataProvider {
 
 		$xpath = new DOMXPath($doc);
 
-		$news = $xpath->query("//li[./../../h2/span[@class='mw-headline']]");
-		foreach($news as $newsNode) {
+		$newsNodes = $xpath->query("//li[./../../h2/span[@class='mw-headline']]");
+		foreach($newsNodes as $newsNode) {
 
 			$month = $this->getNodeValueByXPath( $xpath, "./../preceding::p[1]/a/@title", $newsNode );
 			if(!$month) {
@@ -28,7 +28,6 @@ class StarWarsDataProvider {
 			}
 
 			$description = $newsNode->textContent;
-
 
 			$result[ ] = [
 				'date' => $year . ' ' . $month,
