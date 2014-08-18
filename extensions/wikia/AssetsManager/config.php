@@ -793,17 +793,6 @@ $config['monobook_js'] = array(
 	)
 );
 
-/** Venus Skin **/
-$config['global_navigation_scss'] = array(
-	'type' => AssetsManager::TYPE_SCSS,
-	'skin' => 'venus',
-	'assets' => array(
-		'//extensions/wikia/GlobalNavigation/css/GlobalNavigation.scss',
-		'//extensions/wikia/GlobalNavigation/css/GlobalNavigationMenu.scss',
-		'//extensions/wikia/GlobalNavigation/css/AccountNavigation.scss'
-	)
-);
-
 $config['global_navigation_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => 'venus',
