@@ -147,30 +147,36 @@ class MarkAsNav extends Maintenance {
 		$galleryContent = trim( $matches[2] );
 		$galleryLines = array_filter( explode( "\n", $galleryContent ) );
 
-		// Requirements state not to convert galleries that only contain one image
-		if ( count($galleryLines) <= 1 ) {
-			return $matches[0];
-		}
-
 		// Keep a tally of params being used
+		$params = [];
 		if ( preg_match_all( "/([^ =\"']+) *= *[\"']?([^ \"']+)[\"']?/", $galleryParams, $paramMatches ) ) {
-			foreach ( $paramMatches[1] as $paramName ) {
-				$paramName = strtolower( $paramName );
+			$names = $paramMatches[1];
+			$values = $paramMatches[2];
+
+			for ( $idx = 0; $idx < count($names); $idx++ ) {
+				$paramName = strtolower( $names[$idx] );
+				$paramValue = $values[$idx];
 
 				if ( empty( $this->galleryParamTally[$paramName] ) ) {
 					$this->galleryParamTally[$paramName] = 0;
 				}
 				$this->galleryParamTally[$paramName]++;
+				$params[$paramName] = $paramValue;
 			}
 		}
 
 		// If we have a navigation param, return this gallery untouched
-		if ( !empty( $this->galleryParamTally['navigation'] ) ) {
+		if ( !empty( $params['navigation'] ) ) {
 			return $matches[0];
 		}
 
 		// Ignore sliders
-		if ( !empty( $this->galleryParamTally['type'] ) && $this->galleryParamTally['type'] == 'slider' ) {
+		if ( !empty( $params['type'] ) && $params['type'] == 'slider' ) {
+			return $matches[0];
+		}
+
+		// Requirements state not to convert galleries that only contain one image
+		if ( count($galleryLines) <= 1 ) {
 			return $matches[0];
 		}
 
