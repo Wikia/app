@@ -45,10 +45,9 @@ class AnalyticsProviderIVW2 implements iAnalyticsProvider {
 				$script = <<<SCRIPT
 <!-- SZM VERSION="2.0" -->
 <script>
-if (window.Wikia && window.Wikia.InstantGlobals && window.Wikia.InstantGlobals.wgSitewideDisableIVW2) {
-	return;
+if (!(window.Wikia && window.Wikia.InstantGlobals && window.Wikia.InstantGlobals.wgSitewideDisableIVW2)) {
+	document.write($ivwScriptTagEscaped);
 }
-document.write($ivwScriptTagEscaped);
 </script>
 SCRIPT;
 				return $script;
