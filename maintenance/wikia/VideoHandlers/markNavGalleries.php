@@ -8,9 +8,9 @@
  * ...
  * </gallery>
  *
- * with parameter type=navigation, e.g.:
+ * with parameter navigation="true", e.g.:
  *
- * <gallery type="navigation">
+ * <gallery navigation="true">
  * Photo.jpg|link=http://www.foo.com/
  * Photo2.jpg
  * ...
@@ -95,7 +95,7 @@ class MarkAsNav extends Maintenance {
 	}
 
 	/**
-	 * Update the page given by $pageId adding a type="navigation" parameter on all navigation image galleries.
+	 * Update the page given by $pageId adding a navigation="true" parameter on all navigation image galleries.
 	 *
 	 * @param $pageId
 	 */
@@ -147,7 +147,10 @@ class MarkAsNav extends Maintenance {
 		$galleryContent = trim( $matches[2] );
 		$galleryLines = array_filter( explode( "\n", $galleryContent ) );
 
-		$hasTypeParam = false;
+		// Requirements state not to convert galleries that only contain one image
+		if ( count($galleryLines) <= 1 ) {
+			return $matches[0];
+		}
 
 		// Keep a tally of params being used
 		if ( preg_match_all( "/([^ =\"']+) *= *[\"']?([^ \"']+)[\"']?/", $galleryParams, $paramMatches ) ) {
@@ -158,25 +161,18 @@ class MarkAsNav extends Maintenance {
 					$this->galleryParamTally[$paramName] = 0;
 				}
 				$this->galleryParamTally[$paramName]++;
-
-				// Note if a type param is already given.  This indicates we've already acted on this gallery tag in a
-				// previous run or its different gallery type (e.g., slider, slideshow)
-				if ( $paramName == 'type' ) {
-					$hasTypeParam = true;
-				}
 			}
 		}
 
-		// If we have a type param, return this gallery untouched
-		if ( $hasTypeParam ) {
+		// If we have a navigation param, return this gallery untouched
+		if ( !empty( $this->galleryParamTally['navigation'] ) ) {
 			return $matches[0];
 		}
 
-		// Requirements state not to convert galleries that only contain one image
-		if ( count($galleryLines) <= 1 ) {
+		// Ignore sliders
+		if ( !empty( $this->galleryParamTally['type'] ) && $this->galleryParamTally['type'] == 'slider' ) {
 			return $matches[0];
 		}
-
 
 		// Look for any linked images
 		$hasLink = false;
@@ -189,7 +185,7 @@ class MarkAsNav extends Maintenance {
 
 		if ( $hasLink ) {
 			// Return an updated gallery tag if it contains links
-			return "<gallery".( empty( $galleryParams ) ? '' : " $galleryParams" )." type=\"navigation\">\n$galleryContent\n</gallery>";
+			return "<gallery".( empty( $galleryParams ) ? '' : " $galleryParams" )." navigation=\"true\">\n$galleryContent\n</gallery>";
 		} else {
 			// Return gallery tag unaltered if there are no linked gallery images
 			return $matches[0];
