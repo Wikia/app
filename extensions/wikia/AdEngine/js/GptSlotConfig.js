@@ -38,7 +38,7 @@ define('ext.wikia.adEngine.gptSlotConfig', function () {
 			MOBILE_IN_CONTENT:          {size: '300x250,1x1'},
 			MOBILE_PREFOOTER:           {size: '300x250,1x1'}
 		},
-		rh: {
+		remnant: {
 			EXIT_STITIAL_BOXAD_1:       {size: '300x250'},
 			HOME_TOP_LEADERBOARD:       {size: '728x90', loc: 'top'},
 			HOME_TOP_RIGHT_BOXAD:       {size: '300x250', loc: 'top'},

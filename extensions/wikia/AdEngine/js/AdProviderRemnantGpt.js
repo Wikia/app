@@ -9,7 +9,7 @@ define('ext.wikia.adEngine.provider.remnantGpt', [
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.provider.remnantGpt',
-		srcName = 'rh',
+		srcName = 'remnant',
 		secondCallToDPF = false,
 		slotMap = gptSlotConfig.getConfig(srcName),
 		slotsCalled = {};
