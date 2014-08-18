@@ -41,7 +41,14 @@ define('ext.wikia.adEngine.adConfigLate', [
 		},
 		ie8 = window.navigator && window.navigator.userAgent && window.navigator.userAgent.match(/MSIE [6-8]\./),
 		sevenOneMediaDisabled = abTest && abTest.inGroup('SEVENONEMEDIA_DR', 'DISABLED'),
-		adProviderRemnant,
+
+		dartSecondCallInCountries = {
+			US: true
+		},
+		dartSecondCallVerticals = {
+			Gaming: true
+		},
+		dartSecondCallEnabled = dartSecondCallInCountries[country] && dartSecondCallVerticals.hasOwnProperty(window.cscoreCat),
 
 		dartBtfCountries = {
 			US: true
@@ -61,12 +68,6 @@ define('ext.wikia.adEngine.adConfigLate', [
 				(window.wgAdDriverUseDartForSlotsBelowTheFold && dartBtfVerticals.hasOwnProperty(window.cscoreCat))
 			);
 
-	if (window.wgEnableRHonDesktop) {
-		adProviderRemnant = adProviderRemnantGpt;
-	} else {
-		adProviderRemnant = adProviderLiftium;
-	}
-
 	function getProvider(slot) {
 		var slotname = slot[0];
 
@@ -80,8 +81,8 @@ define('ext.wikia.adEngine.adConfigLate', [
 		}
 
 		if (slot[2] === 'Liftium' || window.wgAdDriverForceLiftiumAd) {
-			if (adProviderRemnant.canHandleSlot(slotname)) {
-				return adProviderRemnant;
+			if (adProviderLiftium.canHandleSlot(slotname)) {
+				return adProviderLiftium;
 			}
 			log('#' + slotname + ' disabled. Forced Liftium, but it can\'t handle it', 7, logGroup);
 			return adProviderNull;
@@ -130,8 +131,18 @@ define('ext.wikia.adEngine.adConfigLate', [
 			}
 		}
 
-		if (adProviderRemnant.canHandleSlot(slotname)) {
-			return adProviderRemnant;
+
+		if (dartSecondCallEnabled) {
+			adProviderRemnantGpt.enableSecondCallToDFP(true);
+		}
+
+
+		if (adProviderRemnantGpt.canHandleSlot(slotname)) {
+			return adProviderRemnantGpt;
+		}
+
+		if (adProviderLiftium.canHandleSlot(slotname)) {
+			return adProviderLiftium;
 		}
 
 		return adProviderNull;
