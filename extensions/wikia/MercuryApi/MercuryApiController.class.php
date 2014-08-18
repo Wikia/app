@@ -20,35 +20,55 @@ class MercuryApiController extends WikiaController {
 	/**
 	 * @desc Returns user ids for top contributors
 	 *
-	 * @throws NotFoundApiException
-	 * @throws InvalidParameterApiException
+	 * @param Title $title
+	 *
+	 * @return int[]
 	 */
-	public function getTopContributorsPerArticle( $title = null ) {
-		if( is_null( $title ) ) {
-			$articleId = $this->request->getInt( self::PARAM_ARTICLE_ID );
-
-			if( $articleId === 0 ) {
-				throw new InvalidParameterApiException( self::PARAM_ARTICLE_ID );
-			}
-
-			$title = Title::newFromID( $articleId );
-			if ( empty( $title ) ) {
-				throw new NotFoundApiException( self::PARAM_ARTICLE_ID );
-			}
-		}
-
+	private function getTopContributorsPerArticle( $title ) {
 		$usersIds = $this->mercuryApi->topContributorsPerArticle( $title, self::NUMBER_CONTRIBUTORS );
 
 		return $usersIds;
 	}
 
 	/**
-	 * @desc Returns theme settings for the current wiki
+	 * @desc returns article details
+	 *
+	 * @param int $articleId
+	 * @return mixed
 	 */
-	public function getWikiVariables() {
-		$wikiVariables = $this->mercuryApi->getWikiVariables();
-		$this->response->setVal( 'data', $wikiVariables );
-		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
+	private function getArticleDetails( $articleId ){
+		return $this->sendRequest( 'ArticlesApi', 'getDetails', ['ids' => $articleId] )->getData()['items'][$articleId];
+	}
+
+	/**
+	 * @desc returns an article in simplified json structure
+	 *
+	 * @param int $articleId
+	 * @return array
+	 */
+	private function getArticleJson( $articleId ) {
+		return $this->sendRequest( 'ArticlesApi', 'getAsJson', ['id' => $articleId] )->getData();
+	}
+
+	/**
+	 * @desc returns top contributors user details
+	 *
+	 * @param int[] $ids
+	 * @return mixed
+	 */
+	private function getTopContributorsDetails( $ids ) {
+		return $this->sendRequest( 'UserApi', 'getDetails', ['ids' => implode(',', $ids)] )->getData()['items'];
+	}
+
+	/**
+	 * @desc returns related pages
+	 *
+	 * @param int $articleId
+	 * @param int $limit
+	 * @return null
+	 */
+	private function getRelatedPages( $articleId, $limit = 6 ){
+		return RelatedPages::getInstance()->get( $articleId, $limit );
 	}
 
 	/**
@@ -91,22 +111,20 @@ class MercuryApiController extends WikiaController {
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 	}
 
-	public function getArticleDetails( $articleId ){
-		return $this->sendRequest( 'ArticlesApi', 'getDetails', ['ids' => $articleId] )->getData()['items'][$articleId];
+	/**
+	 * @desc Returns wiki variables for the current wiki
+	 *
+	 */
+	public function getWikiVariables() {
+		$wikiVariables = $this->mercuryApi->getWikiVariables();
+		$this->response->setVal( 'data', $wikiVariables );
+		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 	}
 
-	public function getArticleJson( $articleId ) {
-		return $this->sendRequest( 'ArticlesApi', 'getAsJson', ['id' => $articleId] )->getData();
-	}
-
-	public function getTopContributorsDetails( $ids ) {
-		return $this->sendRequest( 'UserApi', 'getDetails', ['ids' => implode(',', $ids)] )->getData()['items'];
-	}
-
-	public function getRelatedPages( $articleId, $limit = 6 ){
-		return RelatedPages::getInstance()->get( $articleId, $limit );
-	}
-
+	/**
+	 * @throws NotFoundApiException
+	 * @throws BadRequestApiException
+	 */
 	public function getArticle(){
 		$title = null;
 
