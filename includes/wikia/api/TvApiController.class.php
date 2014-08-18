@@ -65,7 +65,7 @@ class TvApiController extends WikiaApiController {
 		if ( !$result ) {
 			throw new NotFoundApiException();
 		}
-		
+
 		$this->setResponseData(
 			$result,
 			[ 'urlFields' => [ 'contentUrl', 'url' ] ],
@@ -95,7 +95,7 @@ class TvApiController extends WikiaApiController {
 				$episodeService->setNamespace( $namespaces );
 				$result = $episodeService->query( $episodeName );
 				if ( $result === null ) {
-					$result = $this->getExactMatch( $episodeName, $wiki[ 'id' ] );
+					$result = $this->getTitle( $episodeName, $wiki[ 'id' ] );
 				}
 				if ( $result === null ) {
 					$namespaceNames = WikiFactory::getVarValueByName( self::WG_EXTRA_LOCAL_NAMESPACES_KEY, $wiki[ 'id' ] );
@@ -132,23 +132,8 @@ class TvApiController extends WikiaApiController {
 		return $this->episodeService;
 	}
 
-	protected function getExactMatch( $text, $wikiId ) {
-		$title = $this->getTitle( $text, $wikiId );
-		if ( $title !== null ) {
-			$articleId = (int)$title->getArticleID();
-			return [
-				'wikiId' => $wikiId,
-				'articleId' => $articleId,
-				'title' => $title->getText(),
-				'url' => $title->getFullURL(),
-				'quality' => $this->getArticleQuality( $wikiId, $articleId ),
-				'contentUrl' => $this->getContentUrl( $wikiId, $articleId )
-			];
-		}
-		return null;
-	}
-
 	protected function getTitle( $text, $wikiId ) {
+		//try exact phrase
 		$underscoredText = str_replace( ' ', '_', $text );
 		$title = $this->createTitle( $underscoredText, $wikiId );
 		if ( !$title->exists() ) {
@@ -159,7 +144,15 @@ class TvApiController extends WikiaApiController {
 			$title = $title->getRedirectTarget();
 		}
 		if ( $title->exists() ) {
-			return $title;
+			$articleId = (int)$title->getArticleID();
+			return [
+				'wikiId' => $wikiId,
+				'articleId' => $articleId,
+				'title' => $title->getText(),
+				'url' => $title->getFullURL(),
+				'quality' => $this->getArticleQuality( $wikiId, $articleId ),
+				'contentUrl' => $this->getContentUrl( $wikiId, $articleId )
+			];
 		}
 		return null;
 	}
