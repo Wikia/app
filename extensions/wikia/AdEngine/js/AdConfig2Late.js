@@ -68,8 +68,6 @@ define('ext.wikia.adEngine.adConfigLate', [
 				(window.wgAdDriverUseDartForSlotsBelowTheFold && dartBtfVerticals.hasOwnProperty(window.cscoreCat))
 			);
 
-	adProviderRemnantGpt.enableSecondCallToDFP(dartSecondCallEnabled);
-
 	function getProvider(slot) {
 		var slotname = slot[0];
 
@@ -133,7 +131,7 @@ define('ext.wikia.adEngine.adConfigLate', [
 			}
 		}
 
-		if (adProviderRemnantGpt.canHandleSlot(slotname)) {
+		if (dartSecondCallEnabled && adProviderRemnantGpt.canHandleSlot(slotname)) {
 			return adProviderRemnantGpt;
 		}
 
