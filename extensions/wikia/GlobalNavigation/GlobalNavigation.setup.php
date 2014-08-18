@@ -19,3 +19,9 @@ $wgExtensionCredits['specialpage'][] = array(
 $wgAutoloadClasses['GlobalNavigationController'] =  $dir . 'GlobalNavigationController.class.php';
 
 $wgExtensionMessagesFiles['GlobalNavigation'] = $dir . '/GlobalNavigation.i18n.php';
+
+// hook classes
+$wgAutoloadClasses['GlobalNavigationHooks'] =  $dir . 'GlobalNavigationHooks.php';
+
+// hooks
+$wgHooks['VenusAssetsPackages'][] = 'GlobalNavigationHooks::onVenusAssetsPackages';

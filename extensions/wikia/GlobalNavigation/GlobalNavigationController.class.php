@@ -70,10 +70,6 @@ class GlobalNavigationController extends WikiaController {
 	}
 
 	public function venus() {
-		// TODO
-		$this->response->addAsset('extensions/wikia/GlobalNavigation/css/GlobalNavigationVenus.scss');
-
-
 		$userLang = $this->wg->Lang->getCode();
 		// Link to Wikia home page
 		$centralUrl = 'http://www.wikia.com/Wikia';
