@@ -56,24 +56,22 @@ define(
 
 			if (assets) {
 				dfd.resolve(assets);
-			} else {
-				if (source.messages) {
-					messages = source.messages;
-					delete source.messages;
+			} else if (source.messages) {
+				messages = source.messages;
+				delete source.messages;
 
-					$.when(
-						loader({
-							type: loader.MULTI,
-							resources: source
-						}),
-						$.getMessages(messages)
-					).done(dfd.resolve);
-				} else {
+				$.when(
 					loader({
 						type: loader.MULTI,
 						resources: source
-					}).done(dfd.resolve);
-				}
+					}),
+					$.getMessages(messages)
+				).done(dfd.resolve);
+			} else {
+				loader({
+					type: loader.MULTI,
+					resources: source
+				}).done(dfd.resolve);
 			}
 
 			return dfd.promise();
