@@ -22,7 +22,7 @@ class StarWarsDataProvider {
 				continue;
 			}
 
-			$link = $this->getNodeValueByXPath( $xpath, "(./a[last()])[last()]/@href", $newsNode );
+			$link = $this->getNodeValueByXPath( $xpath, "(.//a[last()])[last()]/@href", $newsNode );
 			if(!$link) {
 				continue;
 			}
