@@ -586,7 +586,8 @@ class WikiaPhotoGallery extends ImageGallery {
 
 		// Don't render navigational galleries.  We don't set mType since this type value is only for
 		// record keeping and we need mType to remain set to self::WIKIA_PHOTO_GALLERY
-		if ( $this->mData['params']['type'] == 'navigation' ) {
+		if ( !empty( $this->mData['params']['type'] )
+			&& $this->mData['params']['type']  == 'navigation' ) {
 			return false;
 		}
 
@@ -607,7 +608,8 @@ class WikiaPhotoGallery extends ImageGallery {
 			}
 
 			// Count non-video files
-			if ( ! WikiaFileHelper::isFileTypeVideo( $file ) ) {
+			if ( ! WikiaFileHelper::isFileTypeVideo( $file ) &&
+				 ! WikiaFileHelper::isFileTypeOgg( $file )) {
 				$numImages++;
 			}
 		}

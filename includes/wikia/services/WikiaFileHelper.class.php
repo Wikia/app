@@ -7,6 +7,33 @@ class WikiaFileHelper extends Service {
 	const maxWideoWidth = 1200;
 
 	/**
+	 * Ogg files are the only video file type we allow upload.  As such we treat them differently
+	 * than other video, externally stored video.  It would be best if this functionality could be
+	 * incorporated into our VideoHandlers extension but given the OGG usage this is low priority.
+	 *
+	 * @param Title|File $file
+	 *
+	 * @return bool
+	 */
+	public static function isFileTypeOgg( $file ) {
+		// File can be video only when new video logic is enabled for the wiki
+		if ( $file instanceof Title ) {
+			$file = wfFindFile( $file );
+		}
+		return self::isOggFile( $file );
+	}
+
+	/**
+	 * Checks whether this file is an OGG file or not
+	 * @param File $file
+	 *
+	 * @return bool
+	 */
+	public static function isOggFile( $file ) {
+		return ( $file instanceof LocalFile && $file->getHandler() instanceof OggHandler );
+	}
+
+	/**
 	 * Checks if given File is video
 	 * @param File|Title $file object or Title object eventually
 	 * @return boolean
