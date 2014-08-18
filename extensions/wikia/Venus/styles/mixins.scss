@@ -1,7 +1,8 @@
+@import 'variables';
 
 // We use this to do clear floats
 @mixin clearfix {
-	&:before, &:after { content: " "; display: table; }
+	&:before, &:after { content: ' '; display: table; }
 	&:after { clear: both; }
 }
 
@@ -22,4 +23,81 @@
 	width: auto;
 	overflow: visible;
 	clip: auto;
+}
+
+// makes a chevron
+@mixin chevron($height: 10px, $thickness: 2px, $direction: 'left', $color: #000) {
+	&::before {
+		border-color: $color;
+		border-style: solid;
+		border-width: $thickness $thickness 0 0;
+		content: '';
+		display: inline-block;
+		height: round($height / 2);
+		left: 0;
+		position: relative;
+		top: -1px;
+		vertical-align: middle;
+		width: round($height / 2);
+
+		@if ($direction == 'down') {
+			transform: rotate(135deg);
+		} @else if ($direction == 'left') {
+			transform: rotate(-135deg);
+		} @else if ($direction == 'right') {
+			transform: rotate(45deg);
+		} @else if ($direction == 'up') {
+			transform: rotate(-45deg);
+		}
+	}
+}
+
+@mixin grid-attribute-size($attribute: width, $small-columns-count: 1, $medium-columns-count: 0, $large-columns-count: 0) {
+	@if $medium-columns-count == 0 {
+		$medium-columns-count: $small-columns-count;
+	}
+
+	@if $large-columns-count == 0 {
+		$large-columns-count: $small-columns-count;
+	}
+
+	#{$attribute}: $large-columns-count * ($large-grid-column + $large-grid-gutter) - $large-grid-gutter;
+
+	@media #{$small-only} {
+		#{$attribute}: $small-columns-count * ($small-grid-column + $small-grid-gutter) - $small-grid-gutter;
+	}
+
+	@media #{$medium-only} {
+		#{$attribute}: $medium-columns-count * ($medium-grid-column + $medium-grid-gutter) - $medium-grid-gutter;
+	}
+}
+
+@mixin grid-column-padding() {
+	padding-left: $large-grid-column-padding;
+	padding-right: $large-grid-column-padding;
+
+	@media #{$medium-only} {
+		padding-left: $medium-grid-column-padding;
+		padding-right: $medium-grid-column-padding;
+	}
+
+	@media #{$small-only} {
+		padding-left: $small-grid-column-padding;
+		padding-right: $small-grid-column-padding;
+	}
+}
+
+@mixin grid-content-padding() {
+	padding-left: $large-content-padding;
+	padding-right: $large-content-padding;
+
+	@media #{$medium-only} {
+		padding-left: $medium-content-padding;
+		padding-right: $medium-content-padding;
+	}
+
+	@media #{$small-only} {
+		padding-left: $small-content-padding;
+		padding-right: $small-content-padding;
+	}
 }
