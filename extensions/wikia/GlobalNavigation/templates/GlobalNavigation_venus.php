@@ -7,7 +7,7 @@
 			Search goes here
 		</div>
 		<div class="global-navigation-item">
-			<a href="<?= htmlspecialchars($createWikiUrl) ?>" class="global-navigation-link start-wikia"><?= wfMessage('global-navigation-create-wiki')->text(); ?></a>
+			<a href="<?= htmlspecialchars($createWikiUrl) ?>" class="global-navigation-link start-wikia"><span><?= wfMessage('global-navigation-create-wiki')->text(); ?></span></a>
 		</div>
 		<div class="global-navigation-item">
 			user login
