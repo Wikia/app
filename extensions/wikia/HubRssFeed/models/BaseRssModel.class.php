@@ -362,7 +362,7 @@ abstract class BaseRssModel extends WikiaService {
 	}
 
 	protected function getDataFromHubs( $hubId, $fromTimestamp, $duplicates = [ ] ) {
-		$model = new HubRssFeedModel( self::getFeedLanguage() );
+		$model = new HubRssFeedModel( static::getFeedLanguage() );
 		$v3 = $model->getRealDataV3( $hubId, null, true );
 		foreach ( $v3 as $key => $item ) {
 			if ( $item[ 'timestamp' ] < $fromTimestamp ) {
