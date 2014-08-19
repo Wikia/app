@@ -1,5 +1,5 @@
 <?php
-
+/*TODO: Refactor in 20% (mostly copied from GamesRssFeed)*/
 class MarvelRssModel extends BaseRssModel {
 	const FEED_NAME = 'Marvel';
 	const MAX_NUM_ITEMS_IN_FEED = 15;
