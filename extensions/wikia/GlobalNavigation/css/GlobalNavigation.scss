@@ -1,9 +1,7 @@
 @import "../../Venus/styles/mixins";
 @import "../../Venus/styles/variables";
+@import "GlobalNavigationColors";
 
-$nav-background-color: #fff;
-$nav-active-color: #092140;
-$nav-border-color: #c7d1d8;
 
 .global-navigation {
 	background-color: $nav-background-color;
@@ -23,6 +21,7 @@ $nav-border-color: #c7d1d8;
 	border-left: 1px solid $nav-border-color;
 	float: left;
 	height: $global-navigation-height;
+	position: relative;
 }
 
 .global-navigation-link {

@@ -41,6 +41,7 @@ $VenusConfig['global_navigation_css'] = array(
 	'type' => AssetsManager::TYPE_SCSS,
 	'skin' => ['venus', 'oasis'],
 	'assets' => array(
-		'//extensions/wikia/GlobalNavigation/css/GlobalNavigation.scss'
+		'//extensions/wikia/GlobalNavigation/css/GlobalNavigation.scss',
+		'//extensions/wikia/GlobalNavigation/css/GlobalNavigationHubsMenu.scss'
 	)
 );

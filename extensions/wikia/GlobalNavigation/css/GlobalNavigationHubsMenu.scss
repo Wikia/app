@@ -1,0 +1,12 @@
+@import "../../Venus/styles/variables";
+@import "GlobalNavigationColors";
+
+.hubs-menu {
+	background-color: $hubsmenu-background-color;
+	border: 1px solid $nav-border-color;
+	border-top: 0;
+	color: $nav-active-color;
+	position: absolute;
+	top: $global-navigation-height;
+	width: 768px;
+}
