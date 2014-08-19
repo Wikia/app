@@ -411,12 +411,12 @@ function finishConnectingUser(client, socket ){
 		// another browser. Kick that other instance before continuing (multiple instances cause all kinds of weirdness.
 		var existingId = sessionIdsByKey[config.getKey_userInRoom(client.myUser.get('name'), client.roomId)];
 
-		console.log("existingId: " + existingId );
+		logger.debug("existingId: " + existingId );
 
 		var oldClient = existingId != "undefined" ? socket.connected[existingId] : false;
 
 		if(oldClient && oldClient.userKey != client.userKey ){
-			console.log("oldClient key:" + oldClient.userKey);
+			logger.debug("oldClient key:" + oldClient.userKey);
 
 			oldClient.donotSendPart = true;
 			if(!oldClient.logout) {
