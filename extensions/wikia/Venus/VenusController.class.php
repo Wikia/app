@@ -55,7 +55,7 @@ class VenusController extends WikiaController {
 	}
 
 	private function setBodyModules() {
-		$this->globalHeader = $this->getGlobalHeader();
+		$this->globalNavigation = $this->getGlobalNavigation();
 		$this->notifications = $this->getNotifications();
 		$this->topAds = $this->getTopAds();
 		$this->wikiHeader = $this->getWikiHeader();
@@ -157,7 +157,7 @@ class VenusController extends WikiaController {
 		$this->jsHeadScripts = $wgOut->topScripts . $jsHeadFiles;
 	}
 
-	public function getGlobalHeader() {
+	public function getGlobalNavigation() {
 		return $this->app->renderView('GlobalNavigation', 'index');
 	}
 
