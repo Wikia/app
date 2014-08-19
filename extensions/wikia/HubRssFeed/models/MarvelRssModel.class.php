@@ -2,15 +2,12 @@
 /*TODO: Refactor in 20% (mostly copied from GamesRssFeed)*/
 class MarvelRssModel extends BaseRssModel {
 	const FEED_NAME = 'Marvel';
+	const LANGUAGE = 'en';
 	const MAX_NUM_ITEMS_IN_FEED = 15;
 	const SOURCE_BLOGS = 'blogs';
 
 	public function getFeedTitle() {
 		return 'Wikia Marvel Feed';
-	}
-
-	public function getFeedLanguage() {
-		return 'en';
 	}
 
 	public function getFeedDescription() {
