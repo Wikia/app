@@ -52,7 +52,6 @@ class HubRssFeedSpecialController extends WikiaSpecialPageController {
 
 
 	public function index() {
-
 		$hubName = (string)$this->request->getVal( 'par' );
 
 		$ref = (string)$this->request->getVal( 'ref' );

@@ -96,7 +96,7 @@ class TaskRunner {
 
 	static function isModern( $taskName ) {
 		return in_array( $taskName, [
-//		'CreateWikiLocalJob',
+			'CreateWikiLocalJob',
 //			'PromoteImageReviewTask', NOTE - this is removed in https://github.com/Wikia/app/pull/4086
 		] );
 	}
