@@ -35,7 +35,7 @@ $nav-border-color: #c7d1d8;
 }
 
 .start-wikia {
-	@include grid-attribute-size( 'width', 1, 2, 2 );
+	@include grid-column-width( 'medium', 2 );
 
 	text-align: center;
 
@@ -56,9 +56,10 @@ $nav-border-color: #c7d1d8;
 	}
 }
 
-
 @media #{$small-only} {
 	.start-wikia {
+		@include grid-column-width( 'small', 1 );
+
 		&:after {
 			content: "+";
 			display: block;
@@ -67,5 +68,11 @@ $nav-border-color: #c7d1d8;
 		span {
 			display: none;
 		}
+	}
+}
+
+@media #{$large-up} {
+	.start-wikia {
+		@include grid-column-width( 'large', 2 );
 	}
 }
