@@ -1,15 +1,18 @@
 require(['mediaGallery.toggler'], function (Toggler) {
 	'use strict';
 	$(function () {
-		var maxImagesShown = 8,
+		var visible = 8,
 			$galleries = $('.media-gallery-wrapper'),
 			togglers = [];
 
 		$galleries.each(function () {
-			var toggler = new Toggler({
+			var $this = $(this),
+				toggler = new Toggler({
 				$el: $(this)
 			});
-			if (toggler.$media.length > maxImagesShown) {
+
+			visible = $this.attr('data-visible') || visible;
+			if (toggler.$media.length > visible) {
 				toggler.init();
 				togglers.push(toggler);
 			}
