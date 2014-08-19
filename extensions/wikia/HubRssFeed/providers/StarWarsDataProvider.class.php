@@ -23,6 +23,7 @@ class StarWarsDataProvider {
 			if( !$link ) {
 				continue;
 			}
+			$link = $this->normalizeLink( $link );
 
 			$title = $this->getTitle( $xpath, $newsNode );
 
@@ -41,6 +42,23 @@ class StarWarsDataProvider {
 		}
 
 		return $result;
+	}
+
+	protected function normalizeLink( $link ) {
+		if( strpos( $link, 'http://' ) === 0 ) {
+			return $link;
+		}
+
+		if( preg_match( '/^\/wiki\/.+$/', $link ) ) {
+			$pageTitle = preg_replace( '/^\/wiki\/(.+)$/', '$1', $link );
+			$pageTitle = urldecode( $pageTitle );
+			$title = Title::newFromText( $pageTitle );
+			if( $title ) {
+				$link = $title->getFullUrl();
+			}
+		}
+
+		return $link;
 	}
 
 	protected function filterAfterTimestamp( $items, $startTimestamp ) {
@@ -108,7 +126,6 @@ class StarWarsDataProvider {
 		$doc = new \DOMDocument();
 		$html = preg_replace("/\s+/", " ", $html);
 		$doc->loadHTML("<?xml encoding=\"UTF-8\">\n<html><body>" . $html . "</body></html>");
-		$doc->normalizeDocument();
 		return $doc;
 	}
 }
