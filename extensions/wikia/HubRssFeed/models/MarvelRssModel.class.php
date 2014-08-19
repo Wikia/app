@@ -18,7 +18,7 @@ class MarvelRssModel extends BaseRssModel {
  		$blogData = $this->getDataFromBlogs( $lastTimestamp );
 		$blogData = $this->removeDuplicates( $blogData, $duplicates );
 
-		$out = $this->finalizeRecords($blogData, self::FEED_NAME );
+		$out = $this->finalizeRecords($blogData, self::getFeedName() );
 		return $out;
 	}
 
