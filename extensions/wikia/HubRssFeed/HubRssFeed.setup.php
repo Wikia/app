@@ -24,7 +24,7 @@ $wgSpecialPages['HubRssFeed']		= 'HubRssFeedSpecialController';
 $wgAutoloadClasses['StarWarsDataProvider']	= $dir . 'providers/StarWarsDataProvider.class.php';
 
 $wgHubRssFeeds = array(
-	 'Entertainment', 'Lifestyle', 'Games', 'TV'
+	 'Entertainment', 'Lifestyle', 'Games', 'TV', 'StarWars'
 );
 
 foreach ( $wgHubRssFeeds as $feed ) {
