@@ -2,7 +2,13 @@
 
 class StarWarsDataProvider {
 
+	const WOOKIEENEWS_URL = 'http://starwars.wikia.com/wiki/Wookieepedia:Wookieenews';
+
+	const SOURCE = 'xpath';
+
 	const WOOKIEENEWS_PAGE_ID = 105;
+
+	const STAR_WARS_WIKIA_ID = 147;
 
 	public function getData( $startTimestamp = null ) {
 		$result = [ ];
@@ -33,7 +39,10 @@ class StarWarsDataProvider {
 				'timestamp' => $timestamp,
 				'title' => $title,
 				'description' => $description,
-				'link' => $link
+				'url' => $link,
+				'wikia_id' => self::STAR_WARS_WIKIA_ID,
+				'page_id' => self::WOOKIEENEWS_PAGE_ID,
+				'source' => self::SOURCE
 			];
 		}
 
@@ -52,7 +61,7 @@ class StarWarsDataProvider {
 		if( preg_match( '/^\/wiki\/.+$/', $link ) ) {
 			$pageTitle = preg_replace( '/^\/wiki\/(.+)$/', '$1', $link );
 			$pageTitle = urldecode( $pageTitle );
-			$title = Title::newFromText( $pageTitle );
+			$title = GlobalTitle::newFromText( $pageTitle, NS_MAIN, self::STAR_WARS_WIKIA_ID );
 			if( $title ) {
 				$link = $title->getFullUrl();
 			}
@@ -119,13 +128,8 @@ class StarWarsDataProvider {
 	}
 
 	protected function getNewsPageDOM() {
-		$article = \Article::newFromID( self::WOOKIEENEWS_PAGE_ID );
-		$requestContext = new RequestContext();
-		$parserOptions = \ParserOptions::newFromContext( $requestContext );
-		$html = $article->getPage()->getParserOutput( $parserOptions )->getText();
 		$doc = new \DOMDocument();
-		$html = preg_replace("/\s+/", " ", $html);
-		$doc->loadHTML("<?xml encoding=\"UTF-8\">\n<html><body>" . $html . "</body></html>");
+		$doc->loadHTML( Http::get( self::WOOKIEENEWS_URL ) );
 		return $doc;
 	}
 }
