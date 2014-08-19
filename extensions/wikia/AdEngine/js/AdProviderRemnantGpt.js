@@ -28,12 +28,12 @@ define('ext.wikia.adEngine.provider.remnantGpt', [
 
 		wikiaGpt.pushAd(
 			slotname,
-			function () { // Success
+			function (adInfo) { // Success
 				slotTweaker.removeDefaultHeight(slotname);
 				slotTweaker.removeTopButtonIfNeeded(slotname);
 				slotTweaker.adjustLeaderboardSize(slotname);
 
-				success();
+				success(adInfo);
 			},
 			function (adInfo) { // Hop
 				log(slotname + ' was not filled by DART', 'info', logGroup);
