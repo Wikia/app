@@ -117,7 +117,7 @@ class StarWarsDataProvider {
 		// we consider that it is a title
 		foreach( $linkNodes as $linkNode ) {
 			$text = $linkNode->textContent;
-			if( ( strpos( $text, '.' ) == false )
+			if( ( strpos( $text, '.' ) === false )
 				&& ( (bool) preg_match( '/[A-Z]/', $text ) )
 				&& ( ! ( (bool) preg_match( '/^read more.*$/i', $text ) ) ) ) {
 				return $text;
