@@ -3,11 +3,11 @@
 
 $nav-background-color: #fff;
 $nav-active-color: #092140;
-$nav-border-color: #c7d1d8;
+$nav-alternative-color: #c7d1d8;
 
 .global-navigation {
 	background-color: $nav-background-color;
-	border-bottom: 1px solid $nav-border-color;
+	border-bottom: 1px solid $nav-alternative-color;
 	position: fixed;
 	width: 100%;
 	z-index: $global-navigation-z-index;
@@ -15,18 +15,18 @@ $nav-border-color: #c7d1d8;
 	.page-width {
 		@include clearfix;
 
-		border-right: 1px solid $nav-border-color;
+		border-right: 1px solid $nav-alternative-color;
 	}
 }
 
 .global-navigation-item {
-	border-left: 1px solid $nav-border-color;
+	border-left: 1px solid $nav-alternative-color;
 	float: left;
 	height: $global-navigation-height;
 }
 
 .global-navigation-link {
-	color: $nav-border-color;
+	color: $nav-alternative-color;
 	display: table-cell;
 	font-size: 18px;
 	font-weight: bold;
