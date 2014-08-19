@@ -11,7 +11,7 @@ class StarWarsDataProvider {
 
 		$xpath = new DOMXPath($doc);
 
-		$newsNodes = $xpath->query("//li[./../../h2/span[@class='mw-headline']]");
+		$newsNodes = $xpath->query( "//li[./../../h2/span[@class='mw-headline']]" );
 		foreach($newsNodes as $newsNode) {
 
 			$timestamp = $this->getTimestamp( $xpath, $newsNode );
@@ -24,10 +24,13 @@ class StarWarsDataProvider {
 				continue;
 			}
 
+			$title = $this->getTitle( $xpath, $newsNode );
+
 			$description = $newsNode->textContent;
 
 			$result[ ] = [
 				'timestamp' => $timestamp,
+				'title' => $title,
 				'description' => $description,
 				'link' => $link
 			];
@@ -37,6 +40,12 @@ class StarWarsDataProvider {
 	}
 
 	protected function getTimestamp( $xpath, $contextNode ) {
+		$dayMonthYear = $this->getDate( $xpath, $contextNode );
+		$timestamp = strtotime( $dayMonthYear );
+		return $timestamp;
+	}
+
+	protected function getDate( $xpath, $contextNode ) {
 		$dayAndMonth = $this->getNodeValueByXPath( $xpath, "./../preceding::p[1]/a/@title", $contextNode );
 		if(!$dayAndMonth) {
 			return null;
@@ -47,8 +56,8 @@ class StarWarsDataProvider {
 			return null;
 		}
 
-		$timestamp = strtotime( $dayAndMonth . ' ' . $year );
-		return $timestamp;
+		$dayMonthYear =  $dayAndMonth . ', ' . $year;
+		return $dayMonthYear;
 	}
 
 	protected function getNodeValueByXPath( $xpath, $query, $contextNode ) {
@@ -58,6 +67,23 @@ class StarWarsDataProvider {
 		} else {
 			return $node->nodeValue;
 		}
+	}
+
+	protected function getTitle( $xpath, $contextNode ) {
+		$linkNodes = $xpath->query( ".//a", $contextNode );
+		// Iterating across text of all links
+		// If text of link doesn't contain dot, doesn't contain 'Read more' and contains uppercase later -
+		// we consider that it is a title
+		foreach( $linkNodes as $linkNode ) {
+			$text = $linkNode->textContent;
+			if( ( strpos( $text, '.' ) == false )
+				&& ( (bool) preg_match( '/[A-Z]/', $text ) )
+				&& ( ! ( (bool) preg_match( '/^read more.*$/i', $text ) ) ) ) {
+				return $text;
+			}
+		}
+		// Fallback
+		return $this->getDate( $xpath, $contextNode );
 	}
 
 	protected function getNewsPageDOM() {
