@@ -8,8 +8,8 @@ require(['mediaGallery.toggler'], function (Toggler) {
 		$galleries.each(function () {
 			var $this = $(this),
 				toggler = new Toggler({
-				$el: $(this)
-			});
+					$el: $this
+				});
 
 			visibleCount = $this.attr('data-visible-count') || visibleCount;
 			if (toggler.$media.length > visibleCount) {
