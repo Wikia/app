@@ -76,13 +76,6 @@ class WikiaPhotoGallery extends ImageGallery {
 	public $mFiles = array();
 
 	/**
-	 * List of external images - have to be different from mFiles as it has different type of data
-	 *
-	 * @var $mExternalImages array
-	 */
-	private $mExternalImages = false;
-
-	/**
 	 * @var string play button html
 	 * @todo refactor this extension so it's easier to insert a template instead of hard coded strings
 	 */
@@ -258,7 +251,8 @@ class WikiaPhotoGallery extends ImageGallery {
 		} elseif ( !empty($params['type']) && $params['type'] == 'slider' ) {
 
 			$this->mType = self::WIKIA_PHOTO_SLIDER;
-						// choose slideshow alignment
+
+			// choose slideshow alignment
 			if (isset($params['orientation']) && in_array($params['orientation'], array('bottom', 'right', 'mosaic'))) {
 				$this->setParam('orientation', $params['orientation']);
 			} else {
@@ -308,6 +302,10 @@ class WikiaPhotoGallery extends ImageGallery {
 			$this->cleanupColorParam('bordercolor');
 			$this->cleanupColorParam('captiontextcolor');
 		}
+
+		// Read the 'navigation' parameter common to all gallery types
+		$useNavigation = !empty( $params['navigation'] ) && strtolower( $params['navigation'] ) == 'true';
+		$this->setParam( 'navigation', $useNavigation );
 
 		wfProfileOut(__METHOD__);
 	}
@@ -584,10 +582,8 @@ class WikiaPhotoGallery extends ImageGallery {
 			return false;
 		}
 
-		// Don't render navigational galleries.  We don't set mType since this type value is only for
-		// record keeping and we need mType to remain set to self::WIKIA_PHOTO_GALLERY
-		if ( !empty( $this->mData['params']['type'] )
-			&& $this->mData['params']['type']  == 'navigation' ) {
+		// Don't render navigational galleries.
+		if ( $this->getParam( 'navigation' ) ) {
 			return false;
 		}
 
@@ -596,8 +592,8 @@ class WikiaPhotoGallery extends ImageGallery {
 			return false;
 		}
 
-		// Make sure that when we ignore all the images and red-linked files that
-		// there is still more than one displayable image
+		// The last test; make sure when we ignore videos and red-linked files
+		// that there are still at least two displayable images
 		$numImages = 0;
 		foreach( $this->mFiles as $val ) {
 			$file = wfFindFile( $val[0] );
@@ -612,14 +608,15 @@ class WikiaPhotoGallery extends ImageGallery {
 				 ! WikiaFileHelper::isFileTypeOgg( $file )) {
 				$numImages++;
 			}
+
+			// If we have at least two images, we can render this gallery
+			if ( $numImages >= 2 ) {
+				return true;
+			}
 		}
 
-		// Render if there are two or more valid images in this gallery
-		if ( $numImages < 2 ) {
-			return false;
-		}
-
-		return true;
+		// We didn't find enough images to display
+		return false;
 	}
 
 	/**
