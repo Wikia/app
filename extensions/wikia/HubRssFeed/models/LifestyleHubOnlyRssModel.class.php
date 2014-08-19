@@ -7,7 +7,7 @@ class LifestyleHubOnlyRssModel extends HubOnlyRssModel {
 		return 'Wikia Lifestyle Feed';
 	}
 
-	public function getFeedLanguage() {
+	public static function getFeedLanguage() {
 		return 'en';
 	}
 

@@ -15,7 +15,7 @@ class TvRssModel extends BaseRssModel {
 		return 'Wikia TV Feed';
 	}
 
-	public function getFeedLanguage() {
+	public static function getFeedLanguage() {
 		return 'en';
 	}
 
@@ -24,7 +24,7 @@ class TvRssModel extends BaseRssModel {
 	}
 
 	protected function shouldGenerateAdditionalContent() {
-		$timeDiff = mktime() - $this->getLastInsertFeedTimestamp( self::FEED_NAME, self::SOURCE_GENERATOR ) ;
+		$timeDiff = mktime() - $this->getLastInsertFeedTimestamp( self::getFeedName(), self::SOURCE_GENERATOR ) ;
 		return $timeDiff > self::ADD_CONTENT_PERIOD;
 	}
 
@@ -71,7 +71,7 @@ class TvRssModel extends BaseRssModel {
 			}
 		}
 
-		return  $this->finalizeRecords( $rawData, self::FEED_NAME );
+		return  $this->finalizeRecords( $rawData, self::getFeedName() );
 	}
 
 	protected function getWikisFromPast() {
@@ -79,7 +79,7 @@ class TvRssModel extends BaseRssModel {
 		$wikisData = ( new WikiaSQL() )
 			->SELECT( ' distinct(wrf_wikia_id) wid ' )
 			->FROM( 'wikia_rss_feeds' )
-			->WHERE( 'wrf_feed' )->EQUAL_TO( self::FEED_NAME )
+			->WHERE( 'wrf_feed' )->EQUAL_TO( self::getFeedName() )
 			->ORDER_BY( 'wrf_pub_date DESC' )
 			->LIMIT( 3 )
 			->runLoop( $this->getDbSlave(), function ( &$wikisData, $row ) {

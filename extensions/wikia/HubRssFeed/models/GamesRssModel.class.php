@@ -11,7 +11,7 @@ class GamesRssModel extends BaseRssModel {
 		return 'Wikia Games Feed';
 	}
 
-	public function getFeedLanguage() {
+	public static function getFeedLanguage() {
 		return 'en';
 	}
 
@@ -29,7 +29,7 @@ class GamesRssModel extends BaseRssModel {
 			$hubData
 		);
 
-		$out = $this->finalizeRecords($rawData, self::FEED_NAME );
+		$out = $this->finalizeRecords($rawData, self::getFeedName() );
 		return $out;
 	}
 
