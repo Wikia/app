@@ -4,7 +4,7 @@ class StarWarsDataProvider {
 
 	const WOOKIEENEWS_PAGE_ID = 105;
 
-	public function getData( $startTimestamp ) {
+	public function getData( $startTimestamp = null ) {
 		$result = [ ];
 
 		$doc = $this->getNewsPageDOM();
@@ -36,6 +36,20 @@ class StarWarsDataProvider {
 			];
 		}
 
+		if( $startTimestamp ) {
+			$result = $this->filterAfterTimestamp( $result, $startTimestamp );
+		}
+
+		return $result;
+	}
+
+	protected function filterAfterTimestamp( $items, $startTimestamp ) {
+		$result = [ ];
+		foreach( $items as $item ) {
+			if( $item[ 'timestamp' ] >= $startTimestamp ) {
+				$result[ ] = $item;
+			}
+		}
 		return $result;
 	}
 
