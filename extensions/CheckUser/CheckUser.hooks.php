@@ -68,33 +68,40 @@ class CheckUserHooks {
 	public static function updateCUPasswordResetData( User $user, $ip, $account ) {
 		global $wgRequest;
 
-		// Get XFF header
-		$xff = $wgRequest->getHeader( 'X-Forwarded-For' );
-		list( $xff_ip, $isSquidOnly ) = IP::getClientIPfromXFF( $xff );
-		// Get agent
-		$agent = $wgRequest->getHeader( 'User-Agent' );
-		$dbw = wfGetDB( DB_MASTER );
-		$cuc_id = $dbw->nextSequenceValue( 'cu_changes_cu_id_seq' );
-		$rcRow = array(
-			'cuc_id'         => $cuc_id,
-			'cuc_namespace'  => NS_USER,
-			'cuc_title'      => '',
-			'cuc_minor'      => 0,
-			'cuc_user'       => $user->getId(),
-			'cuc_user_text'  => $user->getName(),
-			'cuc_actiontext' => wfMsgForContent( 'checkuser-reset-action', $account->getName() ),
-			'cuc_comment'    => '',
-			'cuc_this_oldid' => 0,
-			'cuc_last_oldid' => 0,
-			'cuc_type'       => RC_LOG,
-			'cuc_timestamp'  => $dbw->timestamp( wfTimestampNow() ),
-			'cuc_ip'         => IP::sanitizeIP( $ip ),
-			'cuc_ip_hex'     => $ip ? IP::toHex( $ip ) : null,
-			'cuc_xff'        => !$isSquidOnly ? $xff : '',
-			'cuc_xff_hex'    => ( $xff_ip && !$isSquidOnly ) ? IP::toHex( $xff_ip ) : null,
-			'cuc_agent'      => $agent
-		);
-		$dbw->insert( 'cu_changes', $rcRow, __METHOD__ );
+		$userId = $user->getId();
+		$userName = $user->getName();
+		if( !is_null( $userId ) ) {
+			// Get XFF header
+			$xff = $wgRequest->getHeader( 'X-Forwarded-For' );
+			list( $xff_ip, $isSquidOnly ) = IP::getClientIPfromXFF( $xff );
+			// Get agent
+			$agent = $wgRequest->getHeader( 'User-Agent' );
+			$dbw = wfGetDB( DB_MASTER );
+			$cuc_id = $dbw->nextSequenceValue( 'cu_changes_cu_id_seq' );
+			$rcRow = array(
+				'cuc_id'         => $cuc_id,
+				'cuc_namespace'  => NS_USER,
+				'cuc_title'      => '',
+				'cuc_minor'      => 0,
+				'cuc_user'       => $userId,
+				'cuc_user_text'  => $userName,
+				'cuc_actiontext' => wfMsgForContent( 'checkuser-reset-action', $account->getName() ),
+				'cuc_comment'    => '',
+				'cuc_this_oldid' => 0,
+				'cuc_last_oldid' => 0,
+				'cuc_type'       => RC_LOG,
+				'cuc_timestamp'  => $dbw->timestamp( wfTimestampNow() ),
+				'cuc_ip'         => IP::sanitizeIP( $ip ),
+				'cuc_ip_hex'     => $ip ? IP::toHex( $ip ) : null,
+				'cuc_xff'        => !$isSquidOnly ? $xff : '',
+				'cuc_xff_hex'    => ( $xff_ip && !$isSquidOnly ) ? IP::toHex( $xff_ip ) : null,
+				'cuc_agent'      => $agent
+			);
+			$dbw->insert( 'cu_changes', $rcRow, __METHOD__ );
+		} else {
+			debug_print_backtrace();
+			var_dump($user);
+		}
 
 		return true;
 	}
