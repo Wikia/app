@@ -174,6 +174,7 @@ class SpecialVideosHelper extends WikiaModel {
 	}
 
 	/**
+	 * Get Videos via Media service (Electrum)
 	 * @param string $sort
 	 * @param int $page
 	 * @param array $providers
@@ -182,8 +183,6 @@ class SpecialVideosHelper extends WikiaModel {
 	 * @return array
 	 */
 	public function getVideosViaMediaService( $sort, $page, $providers = [], $category = '', $options = [] ) {
-		global $wgDBname, $wgExternalSharedDB;
-
 		if ( $this->app->checkSkin( 'wikiamobile' ) ) {
 			$limit = self::VIDEOS_PER_PAGE_MOBILE;
 			$providers = $this->wg->WikiaMobileSupportedVideos;

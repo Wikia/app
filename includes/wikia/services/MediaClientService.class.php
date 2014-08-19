@@ -15,8 +15,11 @@ class MediaClientService {
 	const API_MEDIA_RESOURCE = 'media';
 	const API_CONNECTION_TIMEOUT = 5;
 	const DEFAULT_PAGE_SIZE = 10;
+	const CITY_VARIABLES_POOL_NAME = 'wgUploadDirectory';
 
 	/**
+	 * Get a set of media file data via the Electrum media service
+	 *
 	 * @param array $params
 	 *  'mediaType' - string, required - video/image & possibly audio
 	 *  'wikiImagePath' - string, optional - wikia image path - defaults to current wikia's
@@ -36,9 +39,9 @@ class MediaClientService {
 		}
 
 		if ( !isset( $params['wikiImagePath'], $params['wikiDB'] ) ) {
-			global $wgDBname;
-			$params['wikiDB'] = $wgDBname;
-			$params['wikiImagePath'] = $this->getImagePath( $wgDBname );
+			$dbName = F::app()->wg->DBname;
+			$params['wikiDB'] = $dbName;
+			$params['wikiImagePath'] = $this->getImagePath( $dbName );
 		}
 
 		$filterParams = [
@@ -96,10 +99,10 @@ class MediaClientService {
 	 * @throws Exception
 	 */
 	protected function getImagePath( $dbName ) {
-		global $wgUploadDirectory;
+		$uploadDirectory = F::app()->wg->DBname;
 
-		if ( !empty( $wgUploadDirectory ) ) {
-			$wikiImagePath = $wgUploadDirectory;
+		if ( !empty( $uploadDirectory ) ) {
+			$wikiImagePath = $uploadDirectory;
 		} else {
 			// Go to the db to get it!
 
@@ -110,7 +113,8 @@ class MediaClientService {
 				->SELECT( 'cv_value' )
 				->FROM( 'city_variables' )
 				->JOIN( 'city_list' )->ON( 'city_id', 'cv_city_id' )
-				->WHERE( 'cv_variable_id' )->EQUAL_TO( 17 )
+				->JOIN( 'city_variables_pool' )
+				->WHERE( 'cv_name' )->EQUAL_TO( self::CITY_VARIABLES_POOL_NAME )
 				->AND_( 'city_dbname' )->EQUAL_TO( $dbName )
 				->run( $db, function ( $result ) {
 						$row = $result->fetchObject();
