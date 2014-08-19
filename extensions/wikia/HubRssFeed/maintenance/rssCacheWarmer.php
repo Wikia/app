@@ -20,10 +20,12 @@ class MaintenanceRss extends Maintenance {
 
 	protected function warm() {
 		global $wgHubRssFeeds;
+		global $wgLanguageCode;
 
 		foreach ( $wgHubRssFeeds as $feedName ) {
 			echo "| Warming '$feedName' cache..." . PHP_EOL;
-			$feed = BaseRssModel::newFromName( $feedName );
+			$langExtFeedName = $feedName . ucfirst( $wgLanguageCode );
+			$feed = BaseRssModel::newFromName( $langExtFeedName );
 			if ( $feed instanceof BaseRssModel ) {
 				$time = time();
 				$numRows = $feed->generateFeedData();
