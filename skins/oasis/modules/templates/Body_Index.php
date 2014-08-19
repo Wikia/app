@@ -11,7 +11,7 @@
 <div id="ad-skin" class="wikia-ad noprint"></div>
 
 <? if ( !empty( $wg->EnableGlobalNavExt ) ): ?>
-	<?= $app->renderView('GlobalNavigation', 'venus') ?>
+	<?= $app->renderView('GlobalNavigation', 'index') ?>
 <? else: ?>
 	<?= $app->renderView('GlobalHeader', 'Index') ?>
 <? endif ?>

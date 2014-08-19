@@ -158,7 +158,7 @@ class VenusController extends WikiaController {
 	}
 
 	public function getGlobalHeader() {
-		return $this->app->renderView('GlobalNavigation', 'venus');
+		return $this->app->renderView('GlobalNavigation', 'index');
 	}
 
 	private function getNotifications() {
