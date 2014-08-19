@@ -1661,6 +1661,10 @@ class WikiaPhotoGallery extends ImageGallery {
 		return $result;
 	}
 
+	/**
+	 * Render Media Gallery (gallery version 2014)
+	 * @return string
+	 */
 	private function renderMediaGallery() {
 		$media = [];
 		$result = '';
@@ -1683,7 +1687,8 @@ class WikiaPhotoGallery extends ImageGallery {
 				'gallery',
 				[
 					'items' => $media,
-					'parser' => $this->mParser
+					'parser' => $this->mParser,
+					'gallery_params' => $this->mData['params'],
 				]
 			);
 		}
