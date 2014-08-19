@@ -16,6 +16,8 @@ $wgAutoloadClasses['PopularArticlesModel']	= $dir . 'models/external/PopularArti
 $wgAutoloadClasses['EntertainmentHubOnlyRssModel'] = $dir . 'models/EntertainmentHubOnlyRssModel.class.php';
 $wgAutoloadClasses['LifestyleHubOnlyRssModel'] = $dir . 'models/LifestyleHubOnlyRssModel.class.php';
 $wgAutoloadClasses['HubOnlyRssModel'] = $dir . 'models/HubOnlyRssModel.class.php';
+$wgAutoloadClasses['StarWarsRssModel'] = $dir . 'models/StarWarsRssModel.class.php';
+$wgAutoloadClasses['StarWarsDataProvider'] = $dir . 'providers/StarWarsDataProvider.class.php';
 
 $wgSpecialPages['HubRssFeed']		= 'HubRssFeedSpecialController';
 
