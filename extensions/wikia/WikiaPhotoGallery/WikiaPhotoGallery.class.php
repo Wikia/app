@@ -1730,21 +1730,18 @@ class WikiaPhotoGallery extends ImageGallery {
 		$media = [];
 		$result = '';
 
-		foreach( $this->mFiles as $val ) {
+		foreach ( $this->mFiles as $val ) {
 			$file = wfFindFile( $val[0] );
 
-			if( !empty( $file ) ) {
-				// Ignore videos
-				if ( WikiaFileHelper::isFileTypeVideo( $file ) ) {
-					continue;
-				}
-
-				$media[] = array(
-					'title' => $val[0],
-					'caption' => $val[3],
-					'link' => $val[2]
-				);
+			if ( empty( $file ) || WikiaFileHelper::isFileTypeVideo( $file ) ) {
+				continue;
 			}
+
+			$media[] = [
+				'title' => $val[0],
+				'caption' => $val[3],
+				'link' => $val[2],
+			];
 		}
 
 		if ( !empty( $media ) ) {
