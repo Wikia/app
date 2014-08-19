@@ -1212,9 +1212,8 @@ class WikiaPhotoGalleryHelper {
 	}
 
 	/**
-	 * Checks if any gallery tags present following an edit and if so calls addNavigationTypeToGalleries to
-	 * potentially add type='navigation' to the tag. See description for addNavigationTypeToGalleries for
-	 * more info.
+	 * Checks if the gallery parameter navigation="true" needs to be added to or removed from galleries.
+	 * See checkNavigationParamGalleries for more information.
 	 * @param $editPage
 	 * @param $request
 	 * @return bool
@@ -1222,7 +1221,7 @@ class WikiaPhotoGalleryHelper {
 	static public function onImportFormData( $editPage, $request ) {
 		$editPage->textbox1 = preg_replace_callback(
 			'/< *gallery([^>]*)>([^<]+)< *\/ *gallery *>/',
-			'WikiaPhotoGalleryHelper::addNavigationTypeToGalleries',
+			'WikiaPhotoGalleryHelper::checkNavigationParamGalleries',
 			$editPage->textbox1
 		);
 
@@ -1230,27 +1229,36 @@ class WikiaPhotoGalleryHelper {
 	}
 
 	/**
-	 * Checks if a gallery has any linked images. If so, adds type='navigation' to the gallery tag.
-	 * Logic, variable names, ane basically everything unabashedly adapted (read: stolen) from
-	 * markNavGalleries.php, a script which does the same thing but to galleries which have already
-	 * been saved, whereas this hook addresses new galleries which are created going forward.
+	 * Checks if a gallery needs to have the parameter navigation="true" added or removed from
+	 * it's tag. The spec says that if the gallery has 2 or more images, one of which is linked,
+	 * and the gallery is not a slider (ie, has type="slider" as a parameter), then the gallery
+	 * should have navigation="true" added to the tag. If it has navigation="true" already and
+	 * the gallery is edited to removed all linked images, the parameter should be removed.
 	 * See VID-1888 for more information.
 	 * @param $matches
 	 * @return string
 	 */
-	static public function addNavigationTypeToGalleries( $matches ) {
+	static public function checkNavigationParamGalleries( $matches ) {
 		$galleryParams = trim( $matches[1] );
 		$galleryContent = trim( $matches[2] );
 		$galleryLines = array_filter( explode( "\n", $galleryContent ) );
+		$hasNavigationParam = false;
 
 		if ( preg_match_all( "/([^ =\"']+) *= *[\"']?([^ \"']+)[\"']?/", $galleryParams, $paramMatches ) ) {
-			foreach ( $paramMatches[1] as $paramName ) {
+			$paramNames = $paramMatches[1];
+			$paramValues = $paramMatches[2];
+			foreach ( $paramNames as $paramIndex => $paramName ) {
 				$paramName = strtolower( $paramName );
 
-				// If we have a type param, return this gallery untouched
-				if ( $paramName == 'type' ) {
+				// If this gallery is a slider, return untouched
+				if ( $paramName == 'type' && strtolower( $paramValues[$paramIndex] ) == 'slider' ) {
 					return $matches[0];
 				}
+
+				if ( $paramName == 'navigation' ) {
+					$hasNavigationParam = true;
+				}
+
 			}
 		}
 
@@ -1268,13 +1276,18 @@ class WikiaPhotoGalleryHelper {
 			}
 		}
 
-		if ( $hasLink ) {
-			// Return an updated gallery tag if it contains links
-			return "<gallery".( empty( $galleryParams ) ? '' : " $galleryParams" )." type=\"navigation\">\n$galleryContent\n</gallery>";
+		if ( $hasLink && !$hasNavigationParam ) {
+			// Add navigation if gallery has links
+			$gallery = "<gallery".( empty( $galleryParams ) ? '' : " $galleryParams" )." navigation=\"true\">\n$galleryContent\n</gallery>";
+		} elseif ( !$hasLink && $hasNavigationParam ) {
+			// Removed navigation param if gallery has no links
+			$galleryParams = preg_replace( '/navigation\s*=[\'"]\s*true[\'"]/i', '', $galleryParams );
+			$gallery =  "<gallery".( empty( $galleryParams ) ? '' : " $galleryParams" ).">\n$galleryContent\n</gallery>";
 		} else {
 			// Return gallery tag unaltered if there are no linked gallery images
-			return $matches[0];
+			$gallery = $matches[0];
 		}
 
+		return $gallery;
 	}
 }
