@@ -50,8 +50,7 @@ $wgResourceModules += array(
 	),
 	'ext.visualEditor.wikiaViewPageTarget' => $wgVisualEditorWikiaResourceTemplate + array(
 		'scripts' => array(
-			've/init/ve.init.mw.WikiaViewPageTarget.js',
-			've/init/ve.init.mw.WikiaTargetEvents.js'
+			've/init/ve.init.mw.WikiaViewPageTarget.js'
 		),
 		'styles' => array(
 			've/init/styles/ve.init.mw.WikiaViewPageTarget.css'
@@ -89,6 +88,9 @@ $wgResourceModules += array(
 
 			// ui
 			've/ui/ve.ui.WikiaCommandRegistry.js',
+			've/ui/ve.ui.WikiaTrigger.js',
+			've/ui/ve.ui.WikiaTriggerRegistry.js',
+			've/ui/dialogs/ve.ui.WikiaCommandHelpDialog.js',
 			've/ui/dialogs/ve.ui.WikiaMediaEditDialog.js',
 			've/ui/dialogs/ve.ui.WikiaMediaInsertDialog.js',
 			've/ui/dialogs/ve.ui.WikiaReferenceDialog.js',
@@ -114,7 +116,8 @@ $wgResourceModules += array(
 			've/ui/widgets/ve.ui.WikiaUploadWidget.js',
 			've/ui/widgets/ve.ui.WikiaMediaPreviewWidget.js',
 			've/ui/widgets/ve.ui.WikiaDropTargetWidget.js',
-			've/ui/widgets/ve.ui.WikiaFocusWidget.js'
+			've/ui/widgets/ve.ui.WikiaFocusWidget.js',
+			've/ui/widgets/ve.ui.WikiaCategoryInputWidget.js'
 		),
 		'messages' => array(
 			'oasis-content-picture-added-by',
@@ -170,6 +173,7 @@ $wgResourceModules += array(
 			'wikia-visualeditor-dialog-transclusion-no-template-description',
 			'wikia-visualeditor-dialog-map-insert-title',
 			'wikia-visualeditor-save-error-generic',
+			'wikia-visualeditor-dialogbutton-wikiasourcemode'
 		),
 		'dependencies' => array(
 			'ext.visualEditor.core.desktop',

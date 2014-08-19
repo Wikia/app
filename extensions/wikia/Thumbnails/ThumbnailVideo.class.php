@@ -140,7 +140,13 @@ class ThumbnailVideo extends ThumbnailImage {
 		// Only WikiaMobile beyond this point
 
 		WikiaLogger::instance()->debug('Media method '.__METHOD__.' called',
-			array_merge( $options, [ 'url' => $this->url, 'method' => __METHOD__ ] ) );
+			array_merge( $options, [
+				'url'       => $this->url,
+				'method'    => __METHOD__,
+				'page'      => $this->page,
+				'mediaType' => $this->mediaType(),
+				'fileType'  => get_class( $this->file )
+			] ) );
 
 		$alt = empty( $options['alt'] ) ? '' : $options['alt'];
 

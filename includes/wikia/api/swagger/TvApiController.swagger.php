@@ -104,6 +104,52 @@ use Swagger\Annotations as SWG;
  *		)
  * 	)
  *)
+ * @SWG\Api(
+ * 	path="/Tv/Series",
+ * 	description="Get article against series name",
+ * 	@SWG\Operations(
+ * 		@SWG\Operation(
+ * 			httpMethod="GET",
+ * 			summary="Get article against series name",
+ * 			nickname="getSeries",
+ * 			responseClass="TvResultSet",
+ *			@SWG\ErrorResponses(
+ *				@SWG\ErrorResponse( code="400", reason="seriesName not provided" ),
+ *				@SWG\ErrorResponse( code="404", reason="Results not found" )
+ *				),
+ *			@SWG\Parameters(
+ *				@SWG\Parameter(
+ *					name="seriesName",
+ *					description="The name of series",
+ *					paramType="query",
+ *					required="true",
+ *					allowMultiple="false",
+ *					dataType="string",
+ *					defaultValue=""
+ *				),
+ * 				@SWG\Parameter(
+ * 					name="minArticleQuality",
+ * 					description="Minimal value of article quality. Ranges from 0 to 99",
+ * 					paramType="query",
+ * 					required="false",
+ * 					allowMultiple="false",
+ * 					dataType="int",
+ * 					defaultValue="10",
+ * 					@SWG\AllowableValues(valueType="RANGE",min="0", max="99")
+ *				),
+ * 				@SWG\Parameter(
+ *					name="lang",
+ *					description="Comma separated language codes (e.g. en,de,fr)",
+ *					paramType="query",
+ *					required="false",
+ *					allowMultiple="false",
+ *					dataType="string",
+ *					defaultValue="en"
+ *				)
+ *			)
+ *		)
+ * 	)
+ *)
  *
  */
 die;

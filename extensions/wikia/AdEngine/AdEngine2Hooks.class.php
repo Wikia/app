@@ -14,7 +14,7 @@ class AdEngine2Hooks {
 		// TODO: review top and bottom vars (important for adsinhead)
 
 		global $wgAdDriverForceDirectGptAd, $wgAdDriverForceLiftiumAd, $wgEnableRHonDesktop, $wgEnableRHonMobile,
-			   $wgLiftiumOnLoad, $wgNoExternals, $wgAdVideoTargeting, $wgAdPageType, $wgEnableKruxTargeting,
+			   $wgLiftiumOnLoad, $wgNoExternals, $wgAdVideoTargeting, $wgEnableKruxTargeting,
 			   $wgAdEngineDisableLateQueue, $wgLoadAdsInHead, $wgLoadLateAdsAfterPageLoad;
 
 		$wgNoExternals = $request->getBool( 'noexternals', $wgNoExternals );
@@ -28,28 +28,12 @@ class AdEngine2Hooks {
 
 		$wgAdDriverForceDirectGptAd = $request->getBool( 'forcedirectgpt', $wgAdDriverForceDirectGptAd );
 		$wgAdDriverForceLiftiumAd = $request->getBool( 'forceliftium', $wgAdDriverForceLiftiumAd );
-		$wgAdPageType = AdEngine2Service::getPageType();
 
 		$wgLoadAdsInHead = $request->getBool( 'adsinhead', $wgLoadAdsInHead );
 		$wgLoadLateAdsAfterPageLoad = $request->getBool( 'lateadsafterload', $wgLoadLateAdsAfterPageLoad );
 
 		$wgEnableKruxTargeting = !$wgAdEngineDisableLateQueue && !$wgNoExternals && $wgEnableKruxTargeting;
 
-		return true;
-	}
-
-
-	/**
-	 * Register global JS variables bottom
-	 *
-	 * @param array $vars
-	 *
-	 * @return bool
-	 */
-	static public function onMakeGlobalVariablesScript(array &$vars) {
-		foreach (AdEngine2Service::getBottomJsVariables() as $varName => $varValue) {
-			$vars[$varName] = $varValue;
-		}
 		return true;
 	}
 

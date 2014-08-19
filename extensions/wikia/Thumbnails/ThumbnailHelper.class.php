@@ -19,7 +19,7 @@ class ThumbnailHelper extends WikiaModel {
 	 * @param array $attrs [ array( key => value ) ]
 	 * @return array [ array( 'key="value"' ) ]
 	 */
-	public static function getAttribs( $attrs ) {
+	public static function getAttribs( array $attrs ) {
 		$attribs = [];
 		foreach ( $attrs as $key => $value ) {
 			$str = $key;
@@ -113,7 +113,7 @@ class ThumbnailHelper extends WikiaModel {
 		$alt = empty( $options['alt'] ) ? $title->getText() : $options['alt'];
 
 		$attribs = array(
-			'alt'    => $alt,
+			'alt'    => Sanitizer::encodeAttribute($alt),
 			'src'    => $thumb->url,
 			'width'  => $thumb->width,
 			'height' => $thumb->height,
@@ -153,7 +153,7 @@ class ThumbnailHelper extends WikiaModel {
 		if ( !empty( $options['custom-url-link'] ) ) {
 			$linkAttribs = [ 'href' => $options['custom-url-link'] ];
 			if ( !empty( $options['title'] ) ) {
-				$linkAttribs['title'] = $options['title'];
+				$linkAttribs['title'] = Sanitizer::encodeAttribute( $options['title'] );
 			}
 			if ( !empty( $options['custom-target-link'] ) ) {
 				$linkAttribs['target'] = $options['custom-target-link'];
@@ -163,17 +163,17 @@ class ThumbnailHelper extends WikiaModel {
 			$title = $options['custom-title-link'];
 			$linkAttribs = [
 				'href' => $title->getLinkURL(),
-				'title' => empty( $options['title'] ) ? $title->getFullText() : $options['title']
+				'title' => Sanitizer::encodeAttribute( empty( $options['title'] ) ? $title->getFullText() : $options['title'] )
 			];
 		} elseif ( !empty( $options['desc-link'] ) ) {
 			$linkAttribs = [ 'href' => $defaultHref ];
 			if ( !empty( $options['title'] ) ) {
-				$linkAttribs['title'] = $options['title'];
+				$linkAttribs['title'] = Sanitizer::encodeAttribute( $options['title'] );
 			}
 		} elseif ( !empty( $options['file-link'] ) ) {
 			$linkAttribs = [ 'href' => $defaultHref ];
 		} else {
-			$linkAttribs = false;
+			$linkAttribs = [];
 		}
 
 		return $linkAttribs;

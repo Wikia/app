@@ -343,7 +343,6 @@ $messages['br'] = array(
 	'phalanx-format-exact' => 'rik',
 	'phalanx-tab-main' => 'Merañ ar siloù',
 	'phalanx-tab-secondary' => 'Amprouiñ ar siloù',
-	'phalanx-section-type-page-edition' => 'Page editing'
 	'phalanx-block-success' => "Ouzhpennet eo bet ar bloc'h",
 	'phalanx-block-failure' => "Ur fazi a oa bet pa oad oc'h ouzhpennañ ar bloc'h",
 	'phalanx-modify-success' => "Kemmet eo bet ar bloc'h",
@@ -366,6 +365,7 @@ $messages['br'] = array(
 	'phalanx-stats-table-create' => 'Krouet',
 	'phalanx-stats-table-expire' => "A ya d'e dermen",
 	'phalanx-stats-table-exact' => 'Rik',
+	'phalanx-stats-table-case' => 'Tirenneg',
 	'phalanx-stats-table-language' => 'Yezh',
 	'phalanx-stats-table-text' => 'Testenn',
 	'phalanx-stats-table-reason' => 'Abeg',
@@ -458,7 +458,7 @@ Si us plau [[especial: Contact|contact Wikia]] sobre el problema.", # Fuzzy
 	'phalanx-user-block-new-account' => "Nom d'usuari no està disponible per a la matrícula. Si us plau, escolliu un altre.",
 	'phalanx-user-block-withreason-ip' => 'Aquesta adreça IP és impedir edició a través de tota la xarxa Wikia per vandalisme o altre interrupció per vostè o algú que comparteix la seva adreça IP.
 Si vostè creu que això és error, si us plau [[Wikia especials: Contact|contact]].<br>El blocker també va donar aquesta raó addicional:  $1 .', # Fuzzy
-	'phalanx-user-block-withreason-exact' => 'Aquest usuari o adreça IP han estat bloquejats per editar en tota Wikia degut a vandalisme o altres molèsties causades. 
+	'phalanx-user-block-withreason-exact' => 'Aquest usuari o adreça IP han estat bloquejats per editar en tota Wikia degut a vandalisme o altres molèsties causades.
 Si vostè creu que es tracta d\'un error, si us plau, [[Special:Contact|contacti amb Wikia]].<br />Raó addicional de bloqueig: <span class="notranslate" traduir="no">$1</span>.',
 	'phalanx-user-block-withreason-similar' => "Aquest nom d'usuari te impedida  l´edició a través de tota la xarxa Wikia per vandalisme o altre interrupció per un usuari amb un nom semblant.
 Si us plau [[especial: Contact|contact Wikia]] sobre el problema.<br>El blocker també va donar aquesta raó addicional:  $1 .", # Fuzzy
@@ -1659,7 +1659,7 @@ $messages['mk'] = array(
 	'phalanx-help-type-answers-question-title' => 'Овој филтер блокира создавање на прашање (страница) ако насловот одговара на некој од изразите наведени на црниот список.
 
 Напомена: работи само на викија за одговорање на прашања',
-	'phalanx-help-type-answers-recent-questions' => 'Овој филтер спречува приказ на прашања (страници) во низа изводи (посреднички елементи, списоци, пописи направени со ознаки). 
+	'phalanx-help-type-answers-recent-questions' => 'Овој филтер спречува приказ на прашања (страници) во низа изводи (посреднички елементи, списоци, пописи направени со ознаки).
 Филтерот не спречува создавање на таквите страници.
 
 Напомена: работи само на викија за одговорање на прашања',
@@ -1922,7 +1922,7 @@ Note: fungerer kun på Svar-wikier.',
 	'phalanx-help-type-user-email' => 'Dette filteret hindrer kontoopprettelse med en blokkert e-postadresse.',
 	'phalanx-user-block-reason-ip' => 'Denne IP-adressen er forhindret i å redigere over hele Wikia-nettverket  grunnet vandalisme eller annt hærverk fra deg eller noen som deler din IP-adresse.
 Om du mener dette er en feil, vennligst [[Special:Contact|kontakt Wikia]].',
-	'phalanx-user-block-reason-exact' => 'Dette brukernavnet eller IP-adressen er forhindret i år redigere over hele Wikia-nettverket grunnet vandalisme eller annet hærverk. 
+	'phalanx-user-block-reason-exact' => 'Dette brukernavnet eller IP-adressen er forhindret i år redigere over hele Wikia-nettverket grunnet vandalisme eller annet hærverk.
 Om du mener dette er en feil, vennligst [[Special:Contact|kontakt Wikia]].',
 	'phalanx-user-block-reason-similar' => 'Dette brukernavnet er forhindret i å redigere over hele Wikia-nettverket grunnet vandalisme eller annet hærverk av en bruker med lignende navn.
 Vennligst opprett et alternativt brukernavn eller [[Special:Contact|kontakt Wikia]] om problemet.',
@@ -2275,7 +2275,7 @@ $messages['pms'] = array(
 	'phalanx-block-failure' => "A-i é staje n'eror an giontand ël blocagi",
 	'phalanx-modify-success' => "Ël blocagi a l'é stàit modificà për da bin",
 	'phalanx-modify-failure' => "A-i é staje n'eror durant la modìfica dël blocagi",
-	'phalanx-modify-warning' => "A l'é an camin ch'a modìfica ël blocagi d'identificativ #$1. 
+	'phalanx-modify-warning' => "A l'é an camin ch'a modìfica ël blocagi d'identificativ #$1.
 Sgnacand ancima a «{{int:phalanx-edit-block}}» soe modìfiche a saran argistrà!",
 	'phalanx-test-description' => 'Test fornì për la preuva contra ij blocagi corent.',
 	'phalanx-test-submit' => 'Preuva',
@@ -2299,7 +2299,7 @@ A ampediss pa che na pàgina esistenta a sia modificà.',
 	'phalanx-help-type-answers-question-title' => 'Sto filtr a blòca la creassion ëd na chestion (pàgina), se sò tìtol a corispond a chèich fras dla lista nèira.
 
 Nòta: a marcia mach dzora le wiki ëd sòrt Rispòste.',
-	'phalanx-help-type-answers-recent-questions' => 'Sto filtr a ampediss ëd visualisé dle chestion (pàgine) ant vàire surtìe (widget, liste, liste generà da tichëtte). 
+	'phalanx-help-type-answers-recent-questions' => 'Sto filtr a ampediss ëd visualisé dle chestion (pàgine) ant vàire surtìe (widget, liste, liste generà da tichëtte).
 A ampediss pa che coste pàgine a sio creà.
 
 Nòta: a marcia mach dzora le wiki ëd sòrt Rispòste.',
@@ -3176,14 +3176,18 @@ $messages['zh-hans'] = array(
 	'phalanx-label-type' => '类型：',
 	'phalanx-label-lang' => '语言：',
 	'phalanx-view-type' => '封禁形式…',
+	'phalanx-view-blocker' => '搜索过滤器文本：',
+	'phalanx-view-blocks' => '搜索过滤器',
 	'phalanx-view-id' => '通过ID获取过滤器：',
 	'phalanx-view-id-submit' => '获取过滤器',
 	'phalanx-format-text' => '纯文本',
 	'phalanx-format-regex' => '正则表达式',
+	'phalanx-format-case' => '大小写敏感',
 	'phalanx-format-exact' => '精确',
 	'phalanx-tab-main' => '管理过滤器',
 	'phalanx-tab-secondary' => '测试过滤器',
 	'phalanx-block-success' => '封禁已成功添加',
+	'phalanx-modify-warning' => '您正在编辑封禁ID#$1。点击“{{int:phalanx-edit-block}}”将保存您的更改！',
 	'phalanx-test-submit' => '测试',
 	'phalanx-test-results-legend' => '测试结果',
 	'phalanx-display-row-blocks' => '封禁：$1',
@@ -3192,7 +3196,9 @@ $messages['zh-hans'] = array(
 	'phalanx-link-modify' => '修改',
 	'phalanx-link-stats' => '状态',
 	'phalanx-reset-form' => '重置表单',
+	'phalanx-legend-input' => '创建或修改过滤器',
 	'phalanx-unblock-message' => '封禁ID#$1已成功移除',
+	'phalanx-stats-title' => 'Phalanx 统计',
 	'phalanx-stats-block-notfound' => '封禁ID找不到',
 	'phalanx-stats-table-id' => '封禁ID',
 	'phalanx-stats-table-user' => '加入者',
@@ -3220,4 +3226,12 @@ $messages['zh-hans'] = array(
 	'phalanx-stats-table-wiki-last-edited' => '最后编辑',
 	'phalanx-email-filter-hidden' => '电子邮件过滤器已隐藏。您并无权限查看文本。',
 	'action-phalanx' => '使用集成的反垃圾邮件机制',
+	'right-phalanxexempt' => 'Phalanx规则例外',
+);
+
+/** Traditional Chinese (中文（繁體）‎)
+ * @author Liuxinyu970226
+ */
+$messages['zh-hant'] = array(
+	'phalanx-type-user' => '使用者',
 );

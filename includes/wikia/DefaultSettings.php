@@ -667,7 +667,6 @@ $wgLangCreationVariables = array();
  */
 $wgJobClasses[ "CWLocal" ] = "CreateWikiLocalJob";
 include_once( "$IP/extensions/wikia/CreateNewWiki/CreateWikiLocalJob.php" );
-$wgAutoloadClasses[ 'CreateNewWikiTask' ] = "$IP/extensions/wikia/CreateNewWiki/CreateNewWikiTask.class.php";
 
 /**
  * Tasks
@@ -1078,8 +1077,6 @@ $wgResourceLoaderAssetsSkinMapping = array(
 	'oasis' => 'wikia', // in Oasis we use Wikia.js (and Wikia.css) instead of Oasis.js (Oasis.css)
 );
 
-$wgWikiaHubsPages = array();
-
 /**
  * @see https://wikia.fogbugz.com/default.asp?36946
  * core mediawiki feature variable
@@ -1240,7 +1237,7 @@ $wgAdDriverUseBottomLeaderboard = false;
  * @name $wgAdDriverUseTopInContentBoxad
  * Whether to enable new in-content top ad TOP_IN_CONTENT_BOXAD
  */
-$wgAdDriverUseTopInContentBoxad = false;
+$wgAdDriverUseTopInContentBoxad = true;
 
 /**
  * @name $wgAdDriverBottomLeaderboardImpressionCapping
@@ -1473,7 +1470,7 @@ $wgEnableBuckyExt = true;
  * Sets the sampling rate for Bucky reporting, sampling applied at each page view.
  * Unit: percent (100 = all, 1 = 1%, 0.1 = 0.1%)
  */
-$wgBuckySampling = 1;
+$wgBuckySampling = 10;
 
 /*
  * @name wgXhprofUDPHost

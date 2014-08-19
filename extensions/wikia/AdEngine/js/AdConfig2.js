@@ -63,7 +63,7 @@ define('ext.wikia.adEngine.adConfig', [
 		'MODAL_INTERSTITIAL_4': true,
 		'TEST_HOME_TOP_RIGHT_BOXAD': true,
 		'TEST_TOP_RIGHT_BOXAD': true,
-		'TOP_IN_CONTENT_BOXAD': true,
+		'TOP_INCONTENT_BOXAD': true,
 		'TOP_LEADERBOARD': true,
 		'TOP_RIGHT_BOXAD': true,
 		'WIKIA_BAR_BOXAD_1': true,

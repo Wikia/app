@@ -16,7 +16,17 @@ class WikiFactoryHub extends WikiaModel {
 	private static $mInstance = false;
 	private $mOldCategories = array();
 	private $mNewCategories = array();
+	private $mAllCatefories = array();
 	private $cache_ttl = 86400;  // 1 day
+
+	const HUB_ID_OTHER = 0;
+	const HUB_ID_TV = 1;
+	const HUB_ID_VIDEO_GAMES = 2;
+	const HUB_ID_BOOKS = 3;
+	const HUB_ID_COMICS = 4;
+	const HUB_ID_LIFESTYLE = 5;
+	const HUB_ID_MUSIC = 6;
+	const HUB_ID_MOVIES = 7;
 
 	const CATEGORY_ID_HUMOR = 1;
 	const CATEGORY_ID_GAMING = 2;
@@ -38,6 +48,14 @@ class WikiFactoryHub extends WikiaModel {
 	const CATEGORY_ID_AUTO = 18;
 	const CATEGORY_ID_GREEN = 19;
 	const CATEGORY_ID_ANSWERS = 20;
+	const CATEGORY_ID_TV = 21;
+	const CATEGORY_ID_VIDEOGAMES = 22;
+	const CATEGORY_ID_BOOKS = 23;
+	const CATEGORY_ID_COMICS = 24;
+	const CATEGORY_ID_FANON = 25;
+	const CATEGORY_ID_HOMEANDGARDEN = 26;
+	const CATEGORY_ID_MOVIES = 27;
+	const CATEFORY_ID_ANIME = 28;
 
 	private $mCategoryKruxMap = array(
 	    self::CATEGORY_ID_HUMOR		=> 'Hixwr2ar',
@@ -77,30 +95,6 @@ class WikiFactoryHub extends WikiaModel {
 			self::$mInstance = new WikiFactoryHub();
 		}
 		return self::$mInstance;
-	}
-
-	/**
-	 * return HTML select for category choosing
-	 * FIXME: This uses the old categories and template system and will have to be updated
-	 * FIXME: move this UI related code back into the wikifactory special page?
-	 */
-	public function getForm( $city_id, &$title = null ) {
-		global $wgTitle;
-		if( is_null( $title ) ) {
-			$title = $wgTitle;
-		}
-		$cat_id = $this->getCategoryId( $city_id );
-		$categories = $this->getAllCategories( false );
-
-		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
-		$oTmpl->set_vars( array(
-			"title"			=> $title,
-			"cat_id"		=> $cat_id,
-			"city_id"	 	=> $city_id,
-			"categories" 	=> $categories
-		));
-
-		return $oTmpl->render("categories");
 	}
 
 	/**
@@ -144,7 +138,7 @@ class WikiFactoryHub extends WikiaModel {
 			->FROM( "city_verticals" )
 			->cache ( $this->cache_ttl, wfSharedMemcKey(__METHOD__) )
 			->runLoop( $this->getSharedDB(), function ( &$result, $row)  {
-				$result[] = get_object_vars($row);
+				$result[$row->id] = get_object_vars($row);
 			});
 
 		return $verticals;
@@ -167,6 +161,13 @@ class WikiFactoryHub extends WikiaModel {
 	public function getCategoryId( $city_id ) {
 
 		wfProfileIn( __METHOD__ );
+
+		global $wgWikiaEnvironment;
+		if ( $wgWikiaEnvironment == WIKIA_ENV_INTERNAL ) {
+			wfProfileOut( __METHOD__ );
+			return 0;
+		}
+
 		$categories = (new WikiaSQL())
 			->SELECT( "cat_id" )
 			->FROM( "city_cats" )
@@ -203,9 +204,9 @@ class WikiFactoryHub extends WikiaModel {
 			->FROM( "city_list" )
 			->WHERE ("city_id")->EQUAL_TO( $city_id )
 			->cache( $this->cache_ttl, wfSharedMemcKey( __METHOD__, $city_id ) )
-			->runLoop( $this->getSharedDB() );
+			->run( $this->getSharedDB(), function( $result ) { return $result->fetchObject(); });
 
-		return $id;
+		return $id->city_vertical;
 	}
 
 	/**
@@ -232,7 +233,7 @@ class WikiFactoryHub extends WikiaModel {
 			->JOIN ( "city_cat_mapping" )->USING( "cat_id" )
 			->WHERE( "city_id" )->EQUAL_TO( $city_id )
 			->AND_( "cat_active" )->EQUAL_TO ( $active )
-			->cache( $this->cache_ttl, wfSharedMemcKey( __METHOD__, $city_id ) )
+			->cache( $this->cache_ttl, wfSharedMemcKey( __METHOD__, $city_id, "$active" ) )
 			->runLoop ( $this->getSharedDB(), function ( &$result, $row ) {
 				$result[]= $row->cat_id;
 			});
@@ -256,7 +257,7 @@ class WikiFactoryHub extends WikiaModel {
 			->JOIN ( "city_cat_mapping" )->USING( "cat_id" )
 			->WHERE( "city_id ")->EQUAL_TO( $city_id )
 			->AND_( "cat_active" )->EQUAL_TO ( $active )
-			->cache ( $this->cache_ttl, wfSharedMemcKey( __METHOD__, $city_id ) )
+			->cache ( $this->cache_ttl, wfSharedMemcKey( __METHOD__, $city_id, "$active" ) )
 			->runLoop( $this->getSharedDB(), function ( &$result, $row)  {
 				$result[] = get_object_vars($row);
 			});
@@ -314,51 +315,6 @@ class WikiFactoryHub extends WikiaModel {
 		return null;
 	}
 
-	/**
-	 * loadCategories
-	 *
-	 * load all categories from city_cats table in wikicities database (WF)
-	 *	 *
-	 * @return array	array with category maps id => name, short
-	 */
-	private function loadCategoriesOld() {
-		global $wgExternalSharedDB ;
-		$tmp = array();
-		if( !$wgExternalSharedDB ) {
-			return array();
-		}
-
-		wfProfileIn( __METHOD__ );
-		global $wgWikiFactoryCacheType;
-		$oMemc = wfGetCache( $wgWikiFactoryCacheType );
-		$memkey = sprintf("%s", __METHOD__);
-		$cached = $oMemc->get($memkey);
-		if ( empty($cached) ) {
-
-			$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
-			Wikia::log( __METHOD__, "var", $wgExternalSharedDB );
-			$oRes = $dbr->select(
-				array( "city_cats" ),
-				array( "*" ),
-				null,
-				__METHOD__,
-				array( "ORDER BY" => "cat_name" )
-			);
-
-			while ( $oRow = $dbr->fetchObject( $oRes ) ) {
-				$tmp[ $oRow->cat_id ] = array( "name" => $oRow->cat_name, "short" => $oRow->cat_short );
-			}
-
-			$dbr->freeResult( $oRes );
-			$oMemc->set($memkey, $tmp, 60*60*24);
-		} else {
-			$tmp = $cached;
-		}
-
-		wfProfileOut( __METHOD__ );
-		return $tmp;
-	}
-
 	// LoadCategories
 	// Loads ALL categories from city_cats table
 	// Loads deprecated (old) categories into a separate array from active (new) categories
@@ -382,7 +338,7 @@ class WikiFactoryHub extends WikiaModel {
 			->cache ( $this->cache_ttl, wfSharedMemcKey( __METHOD__ ))  // global cache
 			->runLoop( $this->getSharedDB(), function (&$result, $row) {
 				$arr = get_object_vars($row);
-				//$result['all'][] = $arr;
+				$result['all'][$row->id] = $arr;
 				if ($row->active) {
 					$result['active'][$row->id] = $arr;
 				}
@@ -391,6 +347,7 @@ class WikiFactoryHub extends WikiaModel {
 				}
 			} );
 
+		$this->mAllCategories = $categories['all'];
 		$this->mOldCategories = $categories['deprecated'];
 		$this->mNewCategories = $categories['active'];
 
@@ -411,7 +368,7 @@ class WikiFactoryHub extends WikiaModel {
 			->UPDATE( 'city_list' )
 				->SET( 'city_vertical', $vertical_id )
 			->WHERE( 'city_id' )->EQUAL_TO( $city_id )
-			->run( $this->getSharedDB() );
+			->run( $this->getSharedDB( DB_MASTER ) );
 
 		$this->clearCache( $city_id );
 
@@ -419,7 +376,9 @@ class WikiFactoryHub extends WikiaModel {
 			$reason = " ( $reason )";
 		}
 		// I guess we should look up the name here
-		WikiFactory::log( WikiFactory::LOG_CATEGORY, "Vertical changed to $vertical_id $reason", $city_id );
+		$verticals = $this->getAllVerticals();
+		$name = $verticals[$vertical_id]['name'];
+		WikiFactory::log( WikiFactory::LOG_CATEGORY, "Vertical changed to $name. $reason", $city_id );
 
 	}
 
@@ -431,7 +390,7 @@ class WikiFactoryHub extends WikiaModel {
 	 * @return [type]             [description]
 	 */
 
-	public function updateCategories ( $city_id, array $categories ) {
+	public function updateCategories ( $city_id, array $categories, $reason ) {
 		global $wgExternalSharedDB;
 
 		$values = array();
@@ -450,23 +409,42 @@ class WikiFactoryHub extends WikiaModel {
 
 			$this->clearCache( $city_id );
 		}
+
+		# pretty clunky way to load all the categories just for the name, maybe refactor this?
+		$this->loadCategories();
+		$cat_names = array();
+		foreach ($categories as $id) {
+			$cat_names[] = $this->mAllCategories[$id]['name'];
+		}
+		$message = join(", ", $cat_names);
+		if( !empty($reason) ) {
+			$reason = " ( $reason )";
+		}
+
+		WikiFactory::log( WikiFactory::LOG_CATEGORY, "Categories changed to $message. $reason", $city_id );
+
 	}
 
+	// Add 1 category
 	public function addCategory ( $city_id, $category ) {
 
-		$current_categories = $this->getCategoryIds( $city_id );
-		$new_categories = array_unique(array_merge( $current_categories, [$category] ));
-
-		$this->updateCategories( $city_id, $new_categories );
+		( new WikiaSQL() )
+			->INSERT( 'city_cat_mapping' )
+				->SET( 'city_id', $city_id )
+				->SET( 'cat_id', $category )
+			->run( $this->getSharedDB( DB_MASTER ) );
 
 	}
 
+	// Remove 1 category
 	public function removeCategory ( $city_id, $category ) {
 
-		$current_categories = $this->getCategoryIds( $city_id );
-		$new_categories = array_unique(array_diff( $current_categories, [$category] ));
+		( new WikiaSQL() )
+			->DELETE( 'city_cat_mapping' )
+				->WHERE( 'city_id', $city_id )
+				->AND( 'cat_id', $category )
+			->run( $this->getSharedDB( DB_MASTER ) );
 
-		$this->updateCategories( $city_id, $new_categories );
 	}
 
 	/**
@@ -510,10 +488,18 @@ class WikiFactoryHub extends WikiaModel {
 	public function clearCache($city_id) {
 		global $wgMemc;
 
+		$wgMemc->delete( wfSharedMemcKey("WikiFactoryHub::loadCategories") );
+
 		// Extra : is added to make keys that look like __METHOD__ calls
-		$functionNames = [ "getVerticalId", "getCategoryId", "getCategoryIds", "getWikiCategories" ];
+		$functionNames = [ "getVerticalId", "getCategoryId"];
 		foreach ($functionNames as $name) {
 			$wgMemc->delete( wfSharedMemcKey("WikiFactoryHub:", $name, $city_id ) );
+		}
+
+		$functionNames = [ "getCategoryIds", "getWikiCategories" ];
+		foreach ($functionNames as $name) {
+			$wgMemc->delete( wfSharedMemcKey("WikiFactoryHub:", $name, $city_id, 0 ) );
+			$wgMemc->delete( wfSharedMemcKey("WikiFactoryHub:", $name, $city_id, 1 ) );
 		}
 	}
 

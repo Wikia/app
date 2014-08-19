@@ -654,12 +654,18 @@ class ArticlesApiController extends WikiaApiController {
 		if ( !empty( $this->wg->EnablePOIExt ) ) {
 			$questDetailsSearch = new QuestDetailsSearchService();
 			$result = $questDetailsSearch->newQuery()
-				->withIds( array_keys( $collection ) )
+				->withIds( array_keys( $collection ), $this->wg->CityId )
 				->metadataOnly()
 				->search();
 
-			foreach ( $result as $key => $item ) {
-				$collection[ $key ] = array_merge( $collection[ $key ], [ 'metadata' => $item ] );
+			foreach ( $collection as $key => $item ) {
+				$meta = [ ];
+				if ( !empty( $result[ $key ] ) ) {
+					$meta = $result[ $key ];
+				}
+				if( !empty( $meta ) ) {
+					$collection[ $key ] = array_merge( $collection[ $key ], [ 'metadata' => $meta ] );
+				}
 			}
 		}
 		return $collection;

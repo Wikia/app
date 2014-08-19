@@ -11,7 +11,7 @@
  */
 use \Wikia\Logger\WikiaLogger;
 
-
+ 
 class WikiaHomePageHelper extends WikiaModel {
 
 	const VIDEO_GAMES_SLOTS_VAR_NAME = 'wgWikiaHomePageVideoGamesSlots';
@@ -175,6 +175,7 @@ class WikiaHomePageHelper extends WikiaModel {
 	 */
 	public function updateHubSlotsToV2($hubSlots) {
 		$hubSlotsV2 = [];
+		if (empty($hubSlots)) return $hubSlotsV2;
 		foreach( $hubSlots as $slot ) {
 			$hubSlotsV2['hub_slot'][] = $slot['hub_slot'];
 		}
@@ -472,6 +473,7 @@ class WikiaHomePageHelper extends WikiaModel {
 			'review_status' => $reviewStatus,
 			'user_href' => '',
 			'links' => array(),
+			'isVideoThumb' => false,
 			'date' => '',
 		);
 	}
@@ -541,8 +543,8 @@ class WikiaHomePageHelper extends WikiaModel {
 			$imageId = $imageTitle->getArticleID();
 		}
 		WikiaLogger::instance()->debug( "Special:Promote", ['method' => __METHOD__, 'imageName' => $imageName,
-		                                                    'imageTitle' => $imageTitle, 'imageId' => $imageId] );
-
+			'imageTitle' => $imageTitle, 'imageId' => $imageId] );
+		
 
 		wfProfileOut(__METHOD__);
 		return $imageId;

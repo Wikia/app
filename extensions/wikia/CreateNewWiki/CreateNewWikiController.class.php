@@ -198,12 +198,11 @@ class CreateNewWikiController extends WikiaController {
 			// log if called with old params
 			trigger_error("CreateWiki called with 2nd old params." . $params['wikiaName'] . " " . $params['wikiaDomain'] . " " . $wgRequest->getIP() . " " . $wgUser->getName() . " " . $wgUser->getId(), E_USER_WARNING);
 		}
-
 		if ( empty($params) ||
 			empty($params['wName']) ||
 			empty($params['wDomain']) ||
 			empty($params['wLanguage']) ||
-			empty($params['wVertical']))
+			(!isset($params['wVertical']) || $params['wVertical'] === '-1'))
 		{
 			// do nothing
 			$this->status = 'error';
@@ -267,7 +266,10 @@ class CreateNewWikiController extends WikiaController {
 				return;
 			}
 
-			$createWiki = new CreateWiki($params['wName'], $params['wDomain'], $params['wLanguage'], $params['wVertical'], $params['wCategories']);
+			$categories = isset($params['wCategories']) ? $params['wCategories'] : array();
+
+			$createWiki = new CreateWiki($params['wName'], $params['wDomain'], $params['wLanguage'], $params['wVertical'], $categories);
+
 			$error_code = $createWiki->create();
 			$cityId = $createWiki->getWikiInfo('city_id');
 			if(empty($cityId)) {
