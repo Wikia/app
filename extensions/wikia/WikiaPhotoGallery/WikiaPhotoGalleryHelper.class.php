@@ -1230,7 +1230,7 @@ class WikiaPhotoGalleryHelper {
 
 	/**
 	 * Checks if a gallery needs to have the parameter navigation="true" added or removed from
-	 * it's tag. The spec says that if the gallery has 2 or more images, one of which is linked,
+	 * its tag. The spec says that if the gallery has 2 or more images, one of which is linked,
 	 * and the gallery is not a slider (ie, has type="slider" as a parameter), then the gallery
 	 * should have navigation="true" added to the tag. If it has navigation="true" already and
 	 * the gallery is edited to removed all linked images, the parameter should be removed.
