@@ -34,7 +34,7 @@ abstract class BaseRssModel extends WikiaService {
 	}
 
 	public static function getFeedName() {
-		return static::FEED_NAME . ucfirst( static::getFeedLanguage() );
+		return static::FEED_NAME . static::getFeedLanguage();
 	}
 
 	public function getFeedData() {

@@ -24,7 +24,7 @@ class MaintenanceRss extends Maintenance {
 
 		foreach ( $wgHubRssFeeds as $feedName ) {
 			echo "| Warming '$feedName' cache..." . PHP_EOL;
-			$langExtFeedName = $feedName . ucfirst( $wgLanguageCode );
+			$langExtFeedName = $feedName . $wgLanguageCode;
 			$feed = BaseRssModel::newFromName( $langExtFeedName );
 			if ( $feed instanceof BaseRssModel ) {
 				$time = time();
