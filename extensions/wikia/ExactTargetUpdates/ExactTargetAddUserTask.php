@@ -1,8 +1,9 @@
 <?php
 
 use Wikia\Tasks\Tasks\BaseTask;
+use Wikia\Logger\WikiaLogger;
 
-class ExactTargetUpdates extends BaseTask {
+class ExactTargetAddUserTask extends BaseTask {
 	use IncludeMessagesTrait;
 
 	/**
@@ -105,5 +106,9 @@ class ExactTargetUpdates extends BaseTask {
 		} catch ( SoapFault $e ) {
 			WikiaLogger::instance()->error( "SoapFault:" . "Name: " . $e->getMessage() . "ErrorCode: " . $e->getCode() );
 		}
+	}
+
+	protected function getLoggerContext() {
+		return ['task' => __CLASS__];
 	}
 }
