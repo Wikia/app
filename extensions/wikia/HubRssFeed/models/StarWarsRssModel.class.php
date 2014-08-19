@@ -3,6 +3,7 @@
 class StarWarsRssModel extends BaseRssModel {
 
 	const FEED_NAME = "StarWars";
+	const MAX_NUM_ITEMS_IN_FEED = 15;
 
 	public function getFeedTitle() {
 		return 'Wikia StarWars Feed';
