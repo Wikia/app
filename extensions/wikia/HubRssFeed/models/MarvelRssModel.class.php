@@ -3,7 +3,6 @@
 class MarvelRssModel extends BaseRssModel {
 	const FEED_NAME = 'Marvel';
 	const MAX_NUM_ITEMS_IN_FEED = 15;
-	const FRESH_CONTENT_TTL_HOURS = 24;
 	const SOURCE_BLOGS = 'blogs';
 
 	public function getFeedTitle() {
