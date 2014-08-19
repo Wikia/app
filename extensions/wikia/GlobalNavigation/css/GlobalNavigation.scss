@@ -35,6 +35,8 @@ $nav-border-color: #c7d1d8;
 }
 
 .start-wikia {
+	@include grid-column-width( 'medium', 2 );
+
 	text-align: center;
 
 	&:hover {
@@ -54,9 +56,10 @@ $nav-border-color: #c7d1d8;
 	}
 }
 
-
 @media #{$small-only} {
 	.start-wikia {
+		@include grid-column-width( 'small', 1 );
+
 		&:after {
 			content: "+";
 			display: block;
@@ -68,13 +71,9 @@ $nav-border-color: #c7d1d8;
 		}
 	}
 }
-@media #{$medium-only} {
-	.start-wikia {
-		width: 156px; // TODO use function for width calculation
-	}
-}
+
 @media #{$large-up} {
 	.start-wikia {
-		width: 176px; // TODO use function for width calculation
+		@include grid-column-width( 'large', 2 );
 	}
 }
