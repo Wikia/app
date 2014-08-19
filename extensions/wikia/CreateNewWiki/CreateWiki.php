@@ -436,7 +436,7 @@ class CreateWiki {
 		unset($oldUser);
 
 		if (TaskRunner::isModern('CreateWikiLocalJob')) {
-			$creationTask = new CreateNewWikiTask();
+			$creationTask = new \Wikia\Tasks\Tasks\CreateNewWikiTask();
 
 			(new \Wikia\Tasks\AsyncTaskList())
 				->wikiId($this->mNewWiki->city_id)

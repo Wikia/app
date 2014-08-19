@@ -667,7 +667,6 @@ $wgLangCreationVariables = array();
  */
 $wgJobClasses[ "CWLocal" ] = "CreateWikiLocalJob";
 include_once( "$IP/extensions/wikia/CreateNewWiki/CreateWikiLocalJob.php" );
-$wgAutoloadClasses[ 'CreateNewWikiTask' ] = "$IP/extensions/wikia/CreateNewWiki/CreateNewWikiTask.class.php";
 
 /**
  * Tasks
@@ -1238,7 +1237,7 @@ $wgAdDriverUseBottomLeaderboard = false;
  * @name $wgAdDriverUseTopInContentBoxad
  * Whether to enable new in-content top ad TOP_IN_CONTENT_BOXAD
  */
-$wgAdDriverUseTopInContentBoxad = false;
+$wgAdDriverUseTopInContentBoxad = true;
 
 /**
  * @name $wgAdDriverBottomLeaderboardImpressionCapping

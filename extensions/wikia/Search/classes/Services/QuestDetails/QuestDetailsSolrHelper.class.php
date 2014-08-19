@@ -202,8 +202,8 @@ class QuestDetailsSolrHelper {
 					if( !empty( $value ) ) {
 						$coordinates = $this->parseCoordinates( $value );
 
-						$map[ $mapKey . '_x' ] = $coordinates[ 'x' ];
-						$map[ $mapKey . '_y' ] = $coordinates[ 'y' ];
+						$map[ 'latitude' ] = $coordinates[ 'x' ];
+						$map[ 'longitude' ] = $coordinates[ 'y' ];
 					}
 				}
 			}

@@ -781,6 +781,12 @@ class WikiaHomePageController extends WikiaController {
 		return true;
 	}
 
+	public static function onArticleFromTitle ( &$title, &$article ) {
+		$redirectService = new RedirectService('hubsv2');
+		$redirectService->redirectIfURLExists();
+		return true;
+	}
+
 	/**
 	 * Gets language variable to get proper sprite image.
 	 * If corporate page exists for passed language code this code is returned
