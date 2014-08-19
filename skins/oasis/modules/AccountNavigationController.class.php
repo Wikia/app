@@ -13,7 +13,7 @@ class AccountNavigationController extends WikiaController {
 	/**
 	 * Render personal URLs item as HTML link
 	 */
-	private function renderPersonalUrl($id) {
+	private function renderPersonalUrl($id, $returnOpeningTagOnly = false) {
 		wfProfileIn(__METHOD__);
 		$personalUrl = $this->personal_urls[$id];
 
@@ -42,14 +42,23 @@ class AccountNavigationController extends WikiaController {
 		}
 
 		$ret = Xml::openElement('a', $attributes);
-		$ret.= $personalUrl['text'];
-		if(array_key_exists('afterText', $personalUrl)) {
-			$ret.= $personalUrl['afterText'];
+		if ( !$returnOpeningTagOnly ) {
+			$ret.= $personalUrl['text'];
+			if(array_key_exists('afterText', $personalUrl)) {
+				$ret.= $personalUrl['afterText'];
+			}
+			$ret.= Xml::closeElement('a');
 		}
-		$ret.= Xml::closeElement('a');
 
 		wfProfileOut(__METHOD__);
 		return $ret;
+	}
+
+	/**
+	 * Render URL closing HTML tag
+	 */
+	private function renderUrlClosingTag() {
+		return Xml::closeElement('a');
 	}
 
 	/**
@@ -60,6 +69,7 @@ class AccountNavigationController extends WikiaController {
 
 		// Import the starting set of urls from the skin template
 		$this->personal_urls = F::app()->getSkinTemplateObj()->data['personal_urls'];
+
 		if ($wgUser->isAnon()) {
 			// add login and register links for anons
 			//$skin = RequestContext::getMain()->getSkin();
@@ -106,6 +116,14 @@ class AccountNavigationController extends WikiaController {
 
 		global $wgUser, $wgEnableUserLoginExt;
 
+		$requestParams = $this->getRequest()->getParams();
+		$dropdownTemplate = 'dropdown';
+
+		if ( !empty( $requestParams[ 'template' ] ) ) {
+			$this->overrideTemplate( $requestParams[ 'template' ] );
+			$dropdownTemplate = $requestParams[ 'template' ] . 'Dropdown';
+		}
+
 		$this->setupPersonalUrls();
 
 		$this->itemsBefore = array();
@@ -123,7 +141,14 @@ class AccountNavigationController extends WikiaController {
 			$this->registerLink = $this->renderPersonalUrl('register');
 			$this->loginDropdown = '';
 			if(!empty($wgEnableUserLoginExt)) {
-				$this->loginDropdown = (string)F::app()->sendRequest( 'UserLoginSpecial', 'dropdown', array('param' => 'paramvalue' ));
+				$this->loginDropdown = (string)F::app()->sendRequest(
+					'UserLoginSpecial',
+					'dropdown',
+					[
+						'template' => $dropdownTemplate,
+						'registerLink' => $this->registerLink
+					]
+				);
 			}
 		}
 		else {

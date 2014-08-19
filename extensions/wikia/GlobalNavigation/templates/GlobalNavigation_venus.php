@@ -11,6 +11,8 @@
 		</div>
 		<div class="global-navigation-item">
 			user login
+			<?= $app->renderView('AccountNavigation', 'Index', [ 'template' => 'venus' ] ) ?>
+			<?= $app->renderView('WallNotifications', 'Index') ?>
 		</div>
 	</div>
 </nav>
