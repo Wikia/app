@@ -1237,7 +1237,7 @@ $wgAdDriverUseBottomLeaderboard = false;
  * @name $wgAdDriverUseTopInContentBoxad
  * Whether to enable new in-content top ad TOP_IN_CONTENT_BOXAD
  */
-$wgAdDriverUseTopInContentBoxad = false;
+$wgAdDriverUseTopInContentBoxad = true;
 
 /**
  * @name $wgAdDriverBottomLeaderboardImpressionCapping
