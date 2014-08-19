@@ -1,15 +1,16 @@
 <?php
 
-class ExactTargetUpdatesTaskHooks {
+class ExactTargetUpdatesHooks {
 
-	public static function onConfirmEmailComplete( User &$user ) {
+	public static function onConfirmEmailComplete( User $user ) {
 		$aParams = self::prepareParams( $user );
-		$task = new ExactTargetUpdatesTask();
+		$task = new ExactTargetAddUserTask();
 		$task->call( 'sendNewUserData', $aParams );
 		$task->queue();
+		return true;
 	}
 
-	private function prepareParams( User $oUser ) {
+	public function prepareParams( User $oUser ) {
 		$aUserParams =[];
 		$aUserParams[ 'user_id' ] = $oUser->getId();
 		$aUserParams[ 'user_name' ] = $oUser->getName();
@@ -19,7 +20,6 @@ class ExactTargetUpdatesTaskHooks {
 		$aUserParams[ 'user_registration' ] = $oUser->getRegistration();
 		$aUserParams[ 'user_editcount' ] = $oUser->getEditCount();
 		$aUserParams[ 'user_options' ] = $oUser->getOptions();
-		$aUserParams[ 'user_options' ] = $oUser->setOptions();
 		$aUserParams[ 'user_touched' ] = $oUser->getTouched();
 		return $aUserParams;
 	}

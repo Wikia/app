@@ -43,9 +43,10 @@ $wgExtensionMessagesFiles[ 'ExactTargetUpdates' ] = $dir . '/ExactTargetUpdates.
 
 $wgAutoloadClasses['ExactTargetAddUserTask'] =  $dir . '/ExactTargetAddUserTask.php' ;
 $wgAutoloadClasses['ExactTargetUpdatesHooks'] =  $dir . '/ExactTargetUpdatesHooks.php' ;
+$wgAutoloadClasses['ExactTargetSoapClient'] =  $dir . '/lib/exacttarget_soap_client.php' ;
 
 /**
  * @global Array The list of hooks.
  * @see http://www.mediawiki.org/wiki/Manual:$wgHooks
  */
-$wgHooks['ConfirmEmailComplete'][] = 'ExactTargetUpdatesTaskHooks::onConfirmEmailComplete';
+$wgHooks['ConfirmEmailComplete'][] = 'ExactTargetUpdatesHooks::onConfirmEmailComplete';
