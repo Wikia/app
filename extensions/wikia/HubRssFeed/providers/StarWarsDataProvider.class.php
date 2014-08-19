@@ -2,7 +2,9 @@
 
 class StarWarsDataProvider {
 
-	public function getData() {
+	const WOOKIEENEWS_PAGE_ID = 105;
+
+	public function getData( $startTimestamp ) {
 		$result = [ ];
 
 		$doc = $this->getNewsPageDOM();
@@ -12,31 +14,41 @@ class StarWarsDataProvider {
 		$newsNodes = $xpath->query("//li[./../../h2/span[@class='mw-headline']]");
 		foreach($newsNodes as $newsNode) {
 
-			$month = $this->getNodeValueByXPath( $xpath, "./../preceding::p[1]/a/@title", $newsNode );
-			if(!$month) {
-				continue;
-			}
-
-			$year = $this->getNodeValueByXPath( $xpath, "./../preceding::h2[1]//a", $newsNode );
-			if(!$year) {
+			$timestamp = $this->getTimestamp( $xpath, $newsNode );
+			if( !$timestamp ) {
 				continue;
 			}
 
 			$link = $this->getNodeValueByXPath( $xpath, "(.//a[last()])[last()]/@href", $newsNode );
-			if(!$link) {
+			if( !$link ) {
 				continue;
 			}
 
 			$description = $newsNode->textContent;
 
 			$result[ ] = [
-				'date' => $year . ' ' . $month,
+				'timestamp' => $timestamp,
 				'description' => $description,
 				'link' => $link
 			];
 		}
 
 		return $result;
+	}
+
+	protected function getTimestamp( $xpath, $contextNode ) {
+		$dayAndMonth = $this->getNodeValueByXPath( $xpath, "./../preceding::p[1]/a/@title", $contextNode );
+		if(!$dayAndMonth) {
+			return null;
+		}
+
+		$year = $this->getNodeValueByXPath( $xpath, "./../preceding::h2[1]//a", $contextNode );
+		if(!$year) {
+			return null;
+		}
+
+		$timestamp = strtotime( $dayAndMonth . ' ' . $year );
+		return $timestamp;
 	}
 
 	protected function getNodeValueByXPath( $xpath, $query, $contextNode ) {
@@ -49,8 +61,10 @@ class StarWarsDataProvider {
 	}
 
 	protected function getNewsPageDOM() {
-		$article = \Article::newFromID( 105 );
-		$html = $article->getPage()->getParserOutput( \ParserOptions::newFromContext( new RequestContext() ) )->getText();
+		$article = \Article::newFromID( self::WOOKIEENEWS_PAGE_ID );
+		$requestContext = new RequestContext();
+		$parserOptions = \ParserOptions::newFromContext( $requestContext );
+		$html = $article->getPage()->getParserOutput( $parserOptions )->getText();
 		$doc = new \DOMDocument();
 		$html = preg_replace("/\s+/", " ", $html);
 		$doc->loadHTML("<?xml encoding=\"UTF-8\">\n<html><body>" . $html . "</body></html>");
