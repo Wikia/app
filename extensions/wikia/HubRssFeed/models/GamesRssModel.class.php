@@ -2,6 +2,7 @@
 
 class GamesRssModel extends BaseRssModel {
 	const FEED_NAME = 'Games';
+	const LANGUAGE = 'en';
 	const MAX_NUM_ITEMS_IN_FEED = 15;
 	const GAMING_HUB_CITY_ID = 955764;
 	const FRESH_CONTENT_TTL_HOURS = 24;
@@ -9,10 +10,6 @@ class GamesRssModel extends BaseRssModel {
 
 	public function getFeedTitle() {
 		return 'Wikia Games Feed';
-	}
-
-	public static function getFeedLanguage() {
-		return 'en';
 	}
 
 	public function getFeedDescription() {

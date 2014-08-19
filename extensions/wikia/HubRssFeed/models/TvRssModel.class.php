@@ -2,6 +2,7 @@
 
 class TvRssModel extends BaseRssModel {
 	const FEED_NAME = 'TV';
+	const LANGUAGE = 'en';
 	const TVRAGE_RSS_YESTERDAY = "http://www.tvrage.com/myrss.php?class=scripted&date=yesterday";
 	const TVRAGE_RSS_TODAY = "http://www.tvrage.com/myrss.php?class=scripted&date=today";
 	const MIN_ARTICLE_QUALITY = 30;
@@ -13,10 +14,6 @@ class TvRssModel extends BaseRssModel {
 
 	public function getFeedTitle() {
 		return 'Wikia TV Feed';
-	}
-
-	public static function getFeedLanguage() {
-		return 'en';
 	}
 
 	public function getFeedDescription() {

@@ -2,13 +2,9 @@
 
 class GamesDeHubOnlyRssModel extends HubOnlyRssModel {
 	const FEED_NAME = 'Games';
-
+	const LANGUAGE = 'de';
 	public function getFeedTitle() {
 		return 'Wikia Videospiele Feed';
-	}
-
-	public static function getFeedLanguage() {
-		return 'de';
 	}
 
 	public function getFeedDescription() {

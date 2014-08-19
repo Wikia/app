@@ -2,12 +2,9 @@
 
 class EntertainmentDeHubOnlyRssModel extends HubOnlyRssModel {
 	const FEED_NAME = 'Entertainment';
+	const LANGUAGE = 'de';
 	public function getFeedTitle() {
 		return 'Wikia Entertainment Feed';
-	}
-
-	public static function getFeedLanguage() {
-		return 'de';
 	}
 
 	public function getFeedDescription() {
