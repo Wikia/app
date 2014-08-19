@@ -52,7 +52,8 @@ class HubRssFeedSpecialController extends WikiaSpecialPageController {
 
 
 	public function index() {
-		$hubName = (string)$this->request->getVal( 'par' );
+
+		$hubName = (string)$this->request->getVal( 'par' ) . $this->wg->LanguageCode;
 
 		$ref = (string)$this->request->getVal( 'ref' );
 
