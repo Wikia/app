@@ -594,7 +594,6 @@ class WikiaPhotoGallery extends ImageGallery {
 
 		// The last test; make sure when we ignore videos and red-linked files
 		// that there are still at least two displayable images
-		$numImages = 0;
 		foreach( $this->mFiles as $val ) {
 			$file = wfFindFile( $val[0] );
 
@@ -603,19 +602,14 @@ class WikiaPhotoGallery extends ImageGallery {
 				continue;
 			}
 
-			// Count non-video files
+			// We found at least one non-video file
 			if ( ! WikiaFileHelper::isFileTypeVideo( $file ) &&
 				 ! WikiaFileHelper::isFileTypeOgg( $file )) {
-				$numImages++;
-			}
-
-			// If we have at least two images, we can render this gallery
-			if ( $numImages >= 2 ) {
 				return true;
 			}
 		}
 
-		// We didn't find enough images to display
+		// We didn't find any images to display
 		return false;
 	}
 
@@ -1733,7 +1727,9 @@ class WikiaPhotoGallery extends ImageGallery {
 		foreach ( $this->mFiles as $val ) {
 			$file = wfFindFile( $val[0] );
 
-			if ( empty( $file ) || WikiaFileHelper::isFileTypeVideo( $file ) ) {
+			if ( empty( $file ) ||
+				WikiaFileHelper::isFileTypeVideo( $file ) ||
+				WikiaFileHelper::isFileTypeOgg( $file ) ) {
 				continue;
 			}
 
