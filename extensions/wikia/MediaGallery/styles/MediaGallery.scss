@@ -99,7 +99,7 @@ $media-margin: .5em;
 	 * Calculate caption default and hover positions:
 	 * Default state:
 	 *    - Absolutely positioned top of caption to 100%
-	 *    - Add a negative top margin to pull the caption up the sum of it's own height: padding plus one line-height
+	 *    - Add a negative top margin to pull the caption up the sum of it's own height (padding plus one line-height)
 	 *    - Also, pull it up a bit more to offset the parent element's margins ($media-margin)
 	 * Hover state:
 	 *    - Reset caption's negative top margin to 0
@@ -108,7 +108,8 @@ $media-margin: .5em;
 
 	$caption-line-height: 1.5em;
 	$caption-padding: .7em;
-	$caption-margin-top: ($caption-padding * 2) + $caption-line-height + $media-margin;
+	$caption-height: ($caption-padding * 2) + $caption-line-height;
+	$caption-top-offset: -1 * ($caption-height + $media-margin);
 
 	.caption {
 		@include background-opacity(#000, 60);
@@ -116,12 +117,13 @@ $media-margin: .5em;
 		color: #fff;
 		left: $media-margin;
 		line-height: $caption-line-height;
-		margin-top: -1 * $caption-margin-top;
+		margin-top: $caption-top-offset;
+		overflow: auto;
 		padding: $caption-padding;
 		position: absolute;
 		right: $media-margin;
 		top: 100%;
-		transition: all .5s linear;
+		transition: all .4s linear;
 
 		.inner {
 			overflow: hidden;
