@@ -22,7 +22,6 @@ $wgSpecialPages['HubRssFeed']		= 'HubRssFeedSpecialController';
 
 $wgHubRssFeeds = [ 'Entertainment', 'Lifestyle', 'Games', 'TV', 'Marvel' ];
 
-
 foreach ( $wgHubRssFeeds as $feed ) {
 	if ( isset( $_SERVER['SCRIPT_URL'] ) && strcmp( $_SERVER['SCRIPT_URL'],  '/rss/'.$feed ) === 0 ) {
 		/*
