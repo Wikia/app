@@ -641,10 +641,10 @@ class WikiaFileHelper extends Service {
 
 		if ( $height > $width ) {
 			// portrait
-			$cropStr = sprintf( "%dx%dx1", $dimension, $dimension );
+			$cropStr = sprintf( "%dx%d-0,%d,0,%d", $dimension, $dimension, $width, $width );
 		} else if ( $width > $height ) {
 			// landscape
-			$cropStr = sprintf( "%dx%dx5", $dimension, $dimension );
+			$cropStr = sprintf( "%dx%d-0,%d,0,%d", $dimension, $dimension, $height, $height );
 		} else {
 			$cropStr = sprintf( "%dx%d", $dimension, $dimension );
 		}
