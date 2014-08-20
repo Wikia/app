@@ -2,7 +2,7 @@ require([
 	'ext.wikia.adEngine.adEngine',
 	'ext.wikia.adEngine.adConfigMobile'
 ], function(adEngine, adConfigMobile){
-	"use strict";
+	'use strict';
 
-	adEngine.run( adConfigMobile, Wikia.ads.slots, 'queue.mobile' );
+	adEngine.run( adConfigMobile, JSON.parse(JSON.stringify(Wikia.ads.slots)), 'queue.mobile' );
 });
