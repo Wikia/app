@@ -4,6 +4,7 @@ class GlobalNavigationController extends WikiaController {
 
 	const CENTRAL_URL = 'http://www.wikia.com';
 	const CENTRAL_LOCAL_URL = '/Wikia';
+	const USE_LANG_PARAMETER = '?uselang=';
 
 	public function index() {
 		Wikia::addAssetsToOutput( 'global_navigation_scss' );
@@ -13,40 +14,49 @@ class GlobalNavigationController extends WikiaController {
 
 		$userLang = $this->wg->Lang->getCode();
 		// Link to Wikia home page
-		$centralUrl = $this->getCentralUrl( true );
+		$centralUrl = $this->getCentralUrl( $userLang, true );
 
-		$createWikiUrl = GlobalTitle::newFromText(
-			'CreateNewWiki',
-			NS_SPECIAL,
-			WikiService::WIKIAGLOBAL_CITY_ID
-		)->getFullURL();
-
-		if ( $userLang != 'en' ) {
-			$createWikiUrl .= '?uselang=' . $userLang;
-		}
+		$createWikiUrl = $this->getCreateNewWikiUrl( $userLang );
 
 		$this->response->setVal( 'centralUrl', $centralUrl );
 		$this->response->setVal( 'createWikiUrl', $createWikiUrl );
 	}
 
 	public function searchVenus() {
-		$centralUrl = $this->getCentralUrl();
+		$lang = $this->wg->Lang->getCode();
+		$centralUrl = $this->getCentralUrl( $lang );
 		$specialSearchTitle = SpecialPage::getTitleFor( 'Search' );
 		$localSearchUrl = $specialSearchTitle->getFullUrl();
+
 		$this->response->setVal( 'globalSearchUrl', $centralUrl . $specialSearchTitle->getLocalURL() );
 		$this->response->setVal( 'localSearchUrl', $localSearchUrl );
 		$this->response->setVal( 'defaultSearchMessage', wfMessage( 'global-navigation-local-search' )->text() );
 		$this->response->setVal( 'defaultSearchUrl', $localSearchUrl );
 	}
 
-	public function getCentralUrl( $appendLocalUrl = false ) {
-		$userLang = $this->wg->Lang->getCode();
-		$centralFromLang = $this->wg->LangToCentralMap[$userLang];
-		if ( !empty( $centralFromLang ) ) {
-			$url = $centralFromLang;
+	public function getCentralUrl( $lang, $appendLocalUrl = false ) {
+		$langToCentralMap = $this->wg->LangToCentralMap;
+		if ( !empty( $langToCentralMap[$lang] ) ) {
+			$url = $langToCentralMap[$lang];
 		} else {
 			$url = $appendLocalUrl ? self::CENTRAL_URL . self::CENTRAL_LOCAL_URL : self::CENTRAL_URL;
+			if ( $lang != 'en' ) {
+				$url .= self::USE_LANG_PARAMETER . $lang;
+			}
 		}
 		return $url;
+	}
+
+	public function getCreateNewWikiUrl( $lang ) {
+		$createWikiUrl = GlobalTitle::newFromText(
+			'CreateNewWiki',
+			NS_SPECIAL,
+			WikiService::WIKIAGLOBAL_CITY_ID
+		)->getFullURL();
+
+		if ( $lang != 'en' ) {
+			$createWikiUrl .= self::USE_LANG_PARAMETER . $lang;
+		}
+		return $createWikiUrl;
 	}
 }
