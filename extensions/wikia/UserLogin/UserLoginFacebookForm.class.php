@@ -50,7 +50,6 @@ class UserLoginFacebookForm extends UserLoginForm {
 
 		if ($user instanceof User) {
 			$user->confirmEmail();
-			wfRunHooks( 'SignupConfirmEmailComplete', array( $user ) );
 			$this->connectWithFacebook($user);
 			$user->saveSettings();
 
