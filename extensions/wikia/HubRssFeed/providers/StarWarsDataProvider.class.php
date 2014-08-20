@@ -53,11 +53,12 @@ class StarWarsDataProvider {
 	}
 
 	/**
-	 * Cut endings, like: 'Read more...', 'Watch here...', 'Watch it here...'
+	 * Cut endings, like: 'Read more...', 'Watch here...', 'Watch it here...', 'Watch the video here...'
 	 */
 	protected function cleanDescription( $description ) {
-		if( preg_match( '/^.+\.\s*(Read more[^a-zA-Z]*|Watch( it)? here[^a-zA-Z]*)$/i', $description ) ) {
-			$cleanedDescription = preg_replace( '/^(.+\.)\s*(Read more[^a-zA-Z]*|Watch( it)? here[^a-zA-Z]*)$/i', '$1', $description );
+		$regexp = '/^(.+\.)\s*(Read more[^a-zA-Z]*|Watch( it| the videos?)? here[^a-zA-Z]*)$/i';
+		if( preg_match( $regexp, $description ) ) {
+			$cleanedDescription = preg_replace( $regexp, '$1', $description );
 			return $cleanedDescription;
 		}
 		return $description;

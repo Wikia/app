@@ -70,6 +70,22 @@ class StarWarsDataProviderTest extends WikiaBaseTest {
 				'Without dot Read more',
 				'Without dot Read more'
 			],
+			[
+				'"Art Attack," the second Star Wars Rebels short, featuring Sabine Wren, airs on Disney XD. Watch the video here…',
+				'"Art Attack," the second Star Wars Rebels short, featuring Sabine Wren, airs on Disney XD.'
+			],
+			[
+				'The first seven minutes of Star Wars Rebels air on Disney XD in an exclusive sneak peek at the upcoming animated series. Watch the video here…',
+				'The first seven minutes of Star Wars Rebels air on Disney XD in an exclusive sneak peek at the upcoming animated series.'
+			],
+			[
+				'The HoloNet News website has been relaunched to tie in with Star Wars Rebels. Watch the videos here…',
+				'The HoloNet News website has been relaunched to tie in with Star Wars Rebels.'
+			],
+			[
+				'Three new Star Wars Rebels videos debut at San Diego Comic-Con 2014, revealing the series\' inclusion of the droid duo C-3PO and R2-D2. Watch the videos here: 1·2·3',
+				'Three new Star Wars Rebels videos debut at San Diego Comic-Con 2014, revealing the series\' inclusion of the droid duo C-3PO and R2-D2.'
+			],
 		];
 	}
 
