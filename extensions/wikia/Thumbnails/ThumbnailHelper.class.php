@@ -216,11 +216,6 @@ class ThumbnailHelper extends WikiaModel {
 		if ( !empty( $options['id'] ) ) {
 			$controller->linkId = $options['id'];
 		}
-
-		// Let extensions add any link attributes
-		if ( isset( $options['linkAttribs'] ) && is_array( $options['linkAttribs'] ) ) {
-			$controller->linkAttrs = self::getAttribs( $options['linkAttribs'] );
-		}
 	}
 
 	/**
@@ -235,7 +230,7 @@ class ThumbnailHelper extends WikiaModel {
 	 *
 	 * @return array
 	 */
-	public static function setVideoLinkClasses( &$controller, $thumb, array &$options ) {
+	public static function setVideoLinkClasses( WikiaController &$controller, MediaTransformOutput $thumb, array &$options ) {
 		$linkClasses = [];
 		if ( empty( $options['noLightbox'] ) ) {
 			$linkClasses[] = 'image';
@@ -247,6 +242,7 @@ class ThumbnailHelper extends WikiaModel {
 			$classes = $options['linkAttribs']['class'];
 
 			// If we got a string, treat it like space separated values and turn it into an array
+			// TODO: we might want to check for arrays as opposed to strings in other places too
 			if ( !is_array( $classes ) ) {
 				$classes = explode( ' ', $classes );
 			}
@@ -280,7 +276,7 @@ class ThumbnailHelper extends WikiaModel {
 	 * @param array $options The thumbnail options passed to toHTML.
 	 * @return array
 	 */
-	public static function setImageLinkClasses ( &$controller, $thumb, array $options ) {
+	public static function setImageLinkClasses( &$controller, $thumb, array $options ) {
 		$classes = [];
 
 		if ( !empty( $options['custom-title-link'] ) ) {
@@ -290,6 +286,35 @@ class ThumbnailHelper extends WikiaModel {
 		}
 
 		$controller->linkClasses = $classes;
+	}
+
+	/**
+	 * Create array of any image attributes that are sent in by extensions
+	 * All values MUST BE SANITIZED before reaching this point
+	 * @param $controller
+	 * @param $thumb
+	 * @param $options
+	 */
+	public static function setExtraImgAttribs( &$controller, $thumb, $options ) {
+		// Let extensions add any link attributes
+		if ( isset( $options['imgAttribs'] ) && is_array( $options['imgAttribs'] ) ) {
+			$controller->extraImgAttrs = self::getAttribs( $options['imgAttribs'] );
+			//lizbug($controller->extraImgAttrs);
+		}
+	}
+
+	/**
+	 * Create array of any link attributes that are sent in by extensions
+	 * All values MUST BE SANITIZED before reaching this point
+	 * @param $controller
+	 * @param $thumb
+	 * @param $options
+	 */
+	public static function setExtraLinkAttribs( &$controller, $thumb, $options ) {
+		// Let extensions add any link attributes
+		if ( isset( $options['linkAttribs'] ) && is_array( $options['linkAttribs'] ) ) {
+			$controller->extraLinkAttrs = self::getAttribs( $options['linkAttribs'] );
+		}
 	}
 
 	/**

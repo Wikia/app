@@ -8,5 +8,6 @@
 	{{#imgWidth}} width="{{imgWidth}}" {{/imgWidth}}
 	{{#imgHeight}} height="{{imgHeight}}" {{/imgHeight}}
 	{{#rdf}} itemprop="thumbnail" {{/rdf}}
-	{{#dataParams}} data-params="{{dataParams}}" {{/dataParams}}
-	{{#onLoad}}onload="{{onLoad}}" {{/onLoad}}>
+	{{#dataParams}} data-params="{{{dataParams}}}" {{/dataParams}}
+	{{#onLoad}}onload="{{onLoad}}" {{/onLoad}}
+	{{#extraImgAttrs}} {{{.}}} {{/extraImgAttrs}}>

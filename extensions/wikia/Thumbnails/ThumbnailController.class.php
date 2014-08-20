@@ -55,8 +55,10 @@ class ThumbnailController extends WikiaController {
 		ThumbnailHelper::setVideoLinkClasses( $this, $thumb, $options );
 		ThumbnailHelper::setVideoLinkAttribs( $this, $thumb, $options );
 		ThumbnailHelper::setVideoImgAttribs( $this, $thumb, $options );
+		ThumbnailHelper::setExtraImgAttribs( $this, $thumb, $options );
+		ThumbnailHelper::setExtraLinkAttribs( $this, $thumb, $options );
 
-		// set duration
+		// Set duration
 		// The file is not always an instance of a class with magic getters implemented. see VID-1753
 		$file = $thumb->file;
 		if ( is_callable( [$file, 'getMetadataDuration'] ) ) {
@@ -113,17 +115,17 @@ class ThumbnailController extends WikiaController {
 	public function image() {
 		$this->mediaType = 'image';
 
-		/** @var MediaTransformOutput $thumb */
 		$thumb   = $this->getVal( 'thumb' );
 		$options = $this->getVal( 'options', array() );
 
 		ThumbnailHelper::setImageLinkAttribs( $this, $thumb, $options );
 		ThumbnailHelper::setImageAttribs( $this, $thumb, $options );
 		ThumbnailHelper::setImageLinkClasses( $this, $thumb, $options );
+		ThumbnailHelper::setExtraImgAttribs( $this, $thumb, $options );
+		ThumbnailHelper::setExtraLinkAttribs( $this, $thumb, $options );
 
 		$this->noscript = '';
 		$this->dataSrc = '';
-
 		if ( ThumbnailHelper::shouldLazyLoad( $this, $options ) ) {
 			$this->noscript = $this->app->renderView(
 				'ThumbnailController',
@@ -132,7 +134,6 @@ class ThumbnailController extends WikiaController {
 			);
 			ImageLazyLoad::setLazyLoadingAttribs( $this );
 		}
-
 	}
 
 	/**

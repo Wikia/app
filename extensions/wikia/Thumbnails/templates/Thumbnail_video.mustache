@@ -4,7 +4,7 @@
 	{{#linkId}} id="{{id}}" {{/linkId}}
 	{{#rdf}} itemprop='video' itemscope itemtype="http://schema.org/VideoObject"{{/rdf}}
 
-	{{#linkAttrs}} {{{.}}}{{/linkAttrs}}>
+	{{#extraLinkAttrs}} {{{.}}}{{/extraLinkAttrs}}>
 
 	{{>Thumbnail_imgTag}}
 	{{#noscript}}<noscript>{{{noscript}}}</noscript>{{/noscript}}
