@@ -249,6 +249,17 @@ $messages['uk'] = array(
 	'wikianewfiles-more' => 'більше...',
 );
 
+/** Vietnamese (Tiếng Việt)
+ * @author Baonguyen21022003
+ */
+$messages['vi'] = array(
+	'wikianewfiles-title' => 'Tập tin mới trên wiki này',
+	'wikianewfiles-desc' => 'Kéo dài một [[Special:NewFiles|trang đặc biệt]] để ghi chép nội dung đè lên một số định dạng của tiêu đề.',
+	'wikianewfiles-uploadby' => 'bởi {{GENDER:$2|$1}}',
+	'wikianewfiles-postedin' => 'Đăng vào',
+	'wikianewfiles-more' => 'thêm',
+);
+
 /** Simplified Chinese (中文（简体）‎)
  * @author Liuxinyu970226
  */

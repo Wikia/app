@@ -808,6 +808,7 @@ $messages['ca'] = array(
 
 /** Czech (čeština)
  * @author Darth Daron
+ * @author H4nek
  */
 $messages['cs'] = array(
 	'forum-forum-title' => 'Fórum',
@@ -822,6 +823,7 @@ $messages['cs'] = array(
 	'forum-specialpage-board-lastpostby' => 'Poslední příspěvek od',
 	'forum-specialpage-policies-edit' => 'Upravit',
 	'forum-specialpage-policies' => 'Pravidla na fóra/FAQ',
+	'forum-board-topic-title' => 'Diskuze o $1',
 	'forum-board-topics' => 'Témata',
 	'forum-board-thread-follow' => 'Sledovat',
 	'forum-board-thread-following' => 'Sledováno',
@@ -849,6 +851,12 @@ $messages['cs'] = array(
 	'forum-mail-notification-subject' => '$1 -- $2',
 	'forum-activity-module-heading' => 'Aktivita fóra',
 	'forum-related-module-heading' => 'Související vlákna',
+	'forum-autoboard-body-4' => 'Máte dotaz ohledně wiki nebo tématu? Ptejte se tady!',
+	'forum-autoboard-title-5' => 'Zábava a hry',
+	'forum-related-discussion-new-post-button' => 'Zahájit diskusi',
+	'forum-related-discussion-new-post-tooltip' => 'Zahájit novou diskusi o $1',
+	'forum-related-discussion-total-replies' => '$1{{PLURAL:$1|zpráva|zprávy|zpráv}}',
+	'forum-confirmation-board-deleted' => '"$1" bylo smazáno.',
 );
 
 /** German (Deutsch)
@@ -3937,12 +3945,18 @@ $messages['zh-hans'] = array(
 	'forum-discussion-placeholder-title' => '您希望谈论些什么？',
 	'forum-discussion-placeholder-message' => '发送一条新信息至$1板面',
 	'forum-discussion-placeholder-message-short' => '创建新消息',
+	'forum-notification-user1-reply-to-your' => '$1在$3板块{{GENDER:$1|回复了}}您的帖子',
 	'forum-notification-user2-reply-to-your' => '$1和$2在$3的讨论版上回复了你',
+	'forum-notification-user3-reply-to-your' => '$1与其他用户回复了您在$3板块的帖子',
+	'forum-notification-user1-reply-to-someone' => '$1在$3板块{{GENDER:$1|作出回答}}',
 	'forum-notification-user2-reply-to-someone' => '$1和$2在$3的讨论板上做出了回复',
 	'forum-notification-user3-reply-to-someone' => '$1等人$3讨论版上做出了回复',
 	'forum-notification-newmsg-on-followed-wall' => '$1在$2板块发送了一条消息',
 	'forum-mail-notification-new-someone' => '$AUTHOR_NAME在$WIKI的$BOARDNAME板块写了一个新回复。',
 	'forum-mail-notification-new-your' => '$AUTHOR_NAME在$WIKI的$BOARDNAME板块写了一个新回复。',
+	'forum-mail-notification-reply-your' => '$AUTHOR_NAME在$WIKI的$BOARDNAME板块回复了您的帖子',
+	'forum-mail-notification-reply-his' => '$AUTHOR_NAME在$WIKI的$BOARDNAME板块作出回答',
+	'forum-mail-notification-reply-someone' => '$AUTHOR_NAME在$WIKI的$BOARDNAME板块作出回答',
 	'forum-mail-notification-html-greeting' => 'Hi $1，',
 	'forum-mail-notification-html-button' => '查看会话',
 	'forum-mail-notification-subject' => '$1——$2',
@@ -3983,11 +3997,18 @@ ___________________________________________<br />
 	'forum-recentchanges-new-message' => '在[[$1|$2板面]]',
 	'forum-recentchanges-edit' => '编辑信息',
 	'forum-recentchanges-removed-thread' => '已从[[$3|$4 板块]]移除回复“[[$1|$2]]”',
+	'forum-recentchanges-removed-reply' => '从[[$3|$4板块]]的“[[$1|$2]]”移除回复',
+	'forum-recentchanges-restored-thread' => '恢复帖子“[[$1|$2]]”至[[$3|$4板块]]',
+	'forum-recentchanges-restored-reply' => '恢复在“[[$1|$2]]”的回复至[[$3|$4板块]]',
+	'forum-recentchanges-deleted-thread' => '从[[$3|$4板块]]删除帖子“[[$1|$2]]”',
+	'forum-recentchanges-deleted-reply' => '从[[$3|$4板块]]删除来自“[[$1|$2]]”的回复',
 	'forum-recentchanges-deleted-reply-title' => '一个主题',
 	'forum-recentchanges-namespace-selector-message-wall' => '论坛讨论区',
 	'forum-recentchanges-thread-group' => '$1 在<a href="$2">$3 板块</a>',
 	'forum-recentchanges-history-link' => '板面历史',
 	'forum-recentchanges-thread-history-link' => '帖子历史',
+	'forum-recentchanges-closed-thread' => '从[[$3|$4]]关闭帖子“[[$1|$2]]”',
+	'forum-recentchanges-reopened-thread' => '从[[$3|$4]]重启帖子“[[$1|$2]]”',
 	'forum-board-history-title' => '板面历史',
 	'forum-specialpage-oldforum-link' => '旧论坛存档',
 	'forum-admin-page-breadcrumb' => '管理员面板管理',
@@ -3999,6 +4020,8 @@ ___________________________________________<br />
 	'forum-admin-edit-board-title' => '板块标题',
 	'forum-admin-edit-board-description' => '版块描述',
 	'forum-admin-delete-and-merge-board-modal-heading' => '删除板块：$1',
+	'forum-admin-delete-board-title' => '请输入板块名以确认您想删除：',
+	'forum-admin-merge-board-destination' => '选择板块合并至：',
 	'forum-admin-delete-and-merge-button-label' => '删除与合并',
 	'forum-admin-link-label' => '管理版块',
 	'forum-autoboard-title-1' => '一般讨论',
@@ -4013,6 +4036,7 @@ ___________________________________________<br />
 	'forum-board-title-validation-exists' => '已存在同名板块',
 	'forum-board-validation-count' => '板块最多可以有$1个',
 	'forum-board-id-validation-missing' => '板块id丢失',
+	'forum-board-no-board-warning' => '我们找不到那个标题的板块。这里是论坛板块列表。',
 	'forum-old-notification-message' => '本论坛已存档',
 	'forum-old-notification-navigation-button' => '访问新论坛',
 	'forum-related-discussion-heading' => '关于$1的讨论',
@@ -4025,6 +4049,7 @@ ___________________________________________<br />
 
 /** Traditional Chinese (中文（繁體）‎)
  * @author Ffaarr
+ * @author LNDDYL
  */
 $messages['zh-hant'] = array(
 	'forum-forum-title' => '論壇',
@@ -4128,7 +4153,7 @@ $messages['zh-hant'] = array(
 	'forum-specialpage-oldforum-link' => '舊論壇存檔',
 	'forum-admin-page-breadcrumb' => '管理員板面管理',
 	'forum-admin-create-new-board-label' => '創建新板面',
-	'forum-admin-create-new-board-modal-heading' => '創建一個新的板面',
+	'forum-admin-create-new-board-modal-heading' => '建立一個新的板面',
 	'forum-admin-create-new-board-title' => '板面標題',
 	'forum-admin-create-new-board-description' => '板面描述',
 	'forum-admin-edit-board-modal-heading' => '編輯板面: $1',
@@ -4164,7 +4189,6 @@ $messages['zh-hant'] = array(
 	'forum-related-discussion-new-post-button' => '發起討論',
 	'forum-related-discussion-new-post-tooltip' => '發起關於$1的討論',
 	'forum-related-discussion-total-replies' => '$1條訊息',
-
 	'forum-related-discussion-see-more' => '參見更多討論',
 	'forum-confirmation-board-deleted' => '“$1”已被删除。',
 );

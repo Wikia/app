@@ -2091,7 +2091,7 @@ $messages['lb'] = array(
 	'rte-ck-link-error-title' => 'Feeler',
 	'rte-ck-link-external-tab' => 'Externe Link',
 	'rte-ck-link-external-url' => 'URL',
-	'rte-ck-link-internal-pageName' => 'Säitennumm:',
+	'rte-ck-link-internal-pageName' => 'Säitennumm',
 	'rte-ck-link-internal-tab' => 'Interne Link',
 	'rte-ck-media-delete' => 'ewechhuelen',
 	'rte-ck-media-edit' => 'änneren',
@@ -4217,9 +4217,11 @@ $messages['zh-hans'] = array(
 
 /** Traditional Chinese (中文（繁體）‎)
  * @author Ffaarr
+ * @author Liuxinyu970226
  */
 $messages['zh-hant'] = array(
 	'rte-ck-hoverPreview-delete' => '刪除',
+	'rte-ck-templateDropDown-label' => '樣版',
 	'rte-ck-templateEditor-editor-previewButton' => '預覽',
 	'rte-ck-templateEditor-editor-previewTitle' => '預覽',
 	'rte-ck-mut-add' => '添加影片 （測試版）',

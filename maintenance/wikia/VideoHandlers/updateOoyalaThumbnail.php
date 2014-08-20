@@ -143,6 +143,7 @@ $page = 1;
 $total = 0;
 $failed = 0;
 $skipped = 0;
+const ERRNO = 1;
 
 do {
 	// connect to provider API
@@ -155,7 +156,7 @@ do {
 	}
 
 	if ( $response === false ) {
-		exit();
+		exit( ERRNO );
 	}
 
 	if ( !empty( $videoId ) ) {
@@ -240,3 +241,7 @@ do {
 } while( !empty( $nextPage ) );
 
 echo "\nTotal videos: ".$total.", Success: ".( $total - $failed - $skipped ).", Failed: $failed, Skipped: $skipped\n\n";
+
+if ( $failed ) {
+	exit( ERRNO );
+}

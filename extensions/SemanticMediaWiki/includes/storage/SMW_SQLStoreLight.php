@@ -405,13 +405,9 @@ class SMWSQLStoreLight extends SMWStore {
 		foreach ( $titles as $title ) {
 			if ( ( $namespaces == false ) || ( in_array( $title->getNamespace(), $namespaces ) ) ) {
 				// wikia change start - jobqueue migration
-				if ( TaskRunner::isModern( 'SMWUpdateJob' ) ) {
-					$task = new \Wikia\Tasks\Tasks\JobWrapperTask();
-					$task->call( 'SMWUpdateJob', $title );
-					$updatejobs[] = $task;
-				} else {
-					$updatejobs[] = new SMWUpdateJob( $title );
-				}
+				$task = new \Wikia\Tasks\Tasks\JobWrapperTask();
+				$task->call( 'SMWUpdateJob', $title );
+				$updatejobs[] = $task;
 				// wikia change end
 
 				$emptyrange = false;
@@ -422,28 +418,19 @@ class SMWSQLStoreLight extends SMWStore {
 
 		if ( $usejobs ) {
 			// wikia change start - jobqueue migration
-			if ( TaskRunner::isModern( 'SMWUpdateJob' ) ) {
-				\Wikia\Tasks\Tasks\BaseTask::batch( $updatejobs );
-			} else {
-				Job::batchInsert( $updatejobs );
-			}
+			\Wikia\Tasks\Tasks\BaseTask::batch( $updatejobs );
 			// wikia change end
 		} else {
 			foreach ( $updatejobs as $job ) {
 				// wikia change start - jobqueue migration
-				if ( TaskRunner::isModern( 'SMWUpdateJob' ) ) {
-					/** @var \Wikia\Tasks\Tasks\JobWrapperTask $job */
-					try {
-						$job->init();
-					} catch ( Exception $e ) {
-						continue;
-					}
-
-					$job->wrap( 'SMWUpdateJob' );
-					\Wikia\Tasks\Tasks\BaseTask::batch( $updatejobs );
-				} else {
-					$job->run();
+				/** @var \Wikia\Tasks\Tasks\JobWrapperTask $job */
+				try {
+					$job->init();
+				} catch ( Exception $e ) {
+					continue;
 				}
+
+				$job->wrap( 'SMWUpdateJob' );
 				// wikia change end
 			}
 		}

@@ -2,7 +2,7 @@
 @import "skins/shared/mixins/clearfix";
 @import "skins/shared/mixins/gradient";
 @import "skins/shared/mixins/box-sizing";
-@import "Colors";
+@import "WikiaHubsColors";
 @import 'Explore';
 @import 'HubsPopularVideos';
 @import 'FeaturedVideo';
@@ -11,7 +11,7 @@
 @import 'SponsoredBox';
 @import 'WamScore';
 @import 'WikiaStats';
-
+/oasis/css
 $wikiahubs-line-height: 16px;
 
 .WikiaArticleCategories {

@@ -100,6 +100,7 @@ $messages['ca'] = array(
 
 /** Czech (čeština)
  * @author Dontlietome7
+ * @author H4nek
  */
 $messages['cs'] = array(
 	'imgplc-add-image' => 'Přidat obrázek',
@@ -107,6 +108,7 @@ $messages['cs'] = array(
 	'imgplc-placeholder' => 'Zástupný symbol',
 	'imgplc-image' => 'Obrázek',
 	'imgplc-notinhistory' => 'Nemůžete přidat obrázek v režimu historie.',
+	'imgplc-notinhistory-video' => 'Nemůžete přidat video v režimu historie.',
 );
 
 /** German (Deutsch)

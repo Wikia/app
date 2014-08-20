@@ -568,6 +568,7 @@ $messages['ce'] = array(
 
 /** Czech (čeština)
  * @author Chmee2
+ * @author H4nek
  * @author Jezevec
  * @author Reaperman
  */
@@ -579,6 +580,8 @@ $messages['cs'] = array(
 	'cnw-name-wiki-headline' => 'Vytvořit Wiki',
 	'cnw-name-wiki-label' => 'Název vaší wiki',
 	'cnw-name-wiki-wiki' => 'Wiki',
+	'cnw-name-wiki-domain-label' => 'Dejte vaší wiki adresu',
+	'cnw-name-wiki-submit-error' => 'Hups! K pokračování musíte vyplnit obě políčka výše.',
 	'cnw-login' => 'Přihlásit se',
 	'cnw-signup' => 'Vytvořit účet',
 	'cnw-signup-prompt' => 'Potřebujete účet?',
@@ -593,17 +596,23 @@ $messages['cs'] = array(
 	'cnw-userauth-creative' => 'Přihlásit se',
 	'cnw-userauth-marketing-heading' => 'Nemáte účet?',
 	'cnw-userauth-signup-button' => 'Zaregistrovat se',
-	'cnw-desc-headline' => 'O čem je vaše wiki?',
-	'cnw-desc-creative' => 'Popište vaše téma',
+	'cnw-desc-headline' => 'O čem je vaše wiki?', # Fuzzy
+	'cnw-desc-creative' => 'Popište vaše téma', # Fuzzy
 	'cnw-desc-tip1' => 'Tip',
 	'cnw-desc-tip2' => 'Pššt',
 	'cnw-desc-select-one' => 'Jeden vyberte',
-	'cnw-desc-all-ages' => 'Všechny stránky',
+	'cnw-desc-all-ages' => 'Všechny stránky', # Fuzzy
+	'cnw-desc-default-lang' => 'Vaše wiki bude v $1',
 	'cnw-desc-change-lang' => 'změnit',
 	'cnw-desc-lang' => 'Jazyk',
+	'cnw-desc-wiki-submit-error' => 'Prosím vyberte kategorii',
 	'cnw-theme-headline' => 'Zvolte téma',
+	'cnw-error-general-heading' => 'Omlouváme se',
 	'cnw-error-wiki-limit-header' => 'Dosažen limit Wiki',
 	'cnw-error-blocked-header' => 'Účet zablokován',
+	'cnw-error-bot-header' => 'Byli jste detekováni jako bot',
+	'cnw-error-unconfirmed-email-header' => 'Váš e-mail nebyl potvrzen',
+	'cnw-error-unconfirmed-email' => 'Váš e-mail musí být potvrzen před vytvořením Wiki.',
 );
 
 /** Welsh (Cymraeg)
@@ -1443,15 +1452,15 @@ $messages['ja'] = array(
 	'cnw-userauth-creative' => 'ログイン',
 	'cnw-userauth-marketing-heading' => '登録がまだの場合',
 	'cnw-userauth-signup-button' => '利用者登録',
-	'cnw-desc-headline' => 'どんなウィキを作成しますか？',
-	'cnw-desc-creative' => 'このウィキでどんな話題を扱うのかを記入してください',
+	'cnw-desc-headline' => 'どんなウィキを作成しますか？', # Fuzzy
+	'cnw-desc-creative' => 'このウィキでどんな話題を扱うのかを記入してください', # Fuzzy
 	'cnw-desc-placeholder' => 'ここに入力した内容がメインページに表示されます。',
 	'cnw-desc-tip1' => 'ヒント',
-	'cnw-desc-tip1-creative' => 'この領域を利用し、訪問者に対してこのウィキがどのようなウィキであるかを1・2文で伝えましょう。',
+	'cnw-desc-tip1-creative' => 'この領域を利用し、訪問者に対してこのウィキがどのようなウィキであるかを1・2文で伝えましょう。', # Fuzzy
 	'cnw-desc-tip2' => 'ちょっとした補足',
 	'cnw-desc-tip2-creative' => 'このウィキが扱う話題について、具体的な内容をいくつか挙げましょう。',
 	'cnw-desc-select-one' => '1つを選択',
-	'cnw-desc-all-ages' => 'すべての年齢',
+	'cnw-desc-all-ages' => 'すべての年齢', # Fuzzy
 	'cnw-desc-default-lang' => 'ウィキの言語設定は $1 になっています',
 	'cnw-desc-change-lang' => '変更する',
 	'cnw-desc-lang' => '言語',
@@ -1463,10 +1472,12 @@ $messages['ja'] = array(
 	'cnw-welcome-instruction1' => '下のボタンをクリックすると、新しいページを作成できます。',
 	'cnw-welcome-instruction2' => 'このボタンはウィキ上の様々な場所にも設置されており、いつでも新しいページを作成できます。',
 	'cnw-welcome-help' => '助言を求めたいとき、質問したい時などは <a href="http://ja.wikia.com/">Community Central 日本語版</a> までお越しください。',
-	'cnw-error-general' => 'ウィキの作成中に問題が発生しました。時間をおいてもう一度お試しください。', # Fuzzy
+	'cnw-error-general' => 'ウィキの作成中に問題が発生しました。時間をおいてもう一度お試しください。または、私たちに[[Special:Contact|ご連絡]]ください。',
 	'cnw-error-general-heading' => 'ウィキ作成エラー', # Fuzzy
 	'cnw-error-blocked-header' => 'ブロックされたアカウント',
+	'cnw-error-anon-user-header' => 'ログインしてください',
 	'cnw-error-bot-header' => 'あなたがボットとして検出されています',
+	'cnw-error-unconfirmed-email' => 'Wikiを作成するには、あなたのEメールを確認する必要があります。',
 );
 
 /** Khmer (ភាសាខ្មែរ)

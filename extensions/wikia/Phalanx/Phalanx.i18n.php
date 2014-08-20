@@ -365,6 +365,7 @@ $messages['br'] = array(
 	'phalanx-stats-table-create' => 'Krouet',
 	'phalanx-stats-table-expire' => "A ya d'e dermen",
 	'phalanx-stats-table-exact' => 'Rik',
+	'phalanx-stats-table-case' => 'Tirenneg',
 	'phalanx-stats-table-language' => 'Yezh',
 	'phalanx-stats-table-text' => 'Testenn',
 	'phalanx-stats-table-reason' => 'Abeg',
@@ -3175,14 +3176,18 @@ $messages['zh-hans'] = array(
 	'phalanx-label-type' => '类型：',
 	'phalanx-label-lang' => '语言：',
 	'phalanx-view-type' => '封禁形式…',
+	'phalanx-view-blocker' => '搜索过滤器文本：',
+	'phalanx-view-blocks' => '搜索过滤器',
 	'phalanx-view-id' => '通过ID获取过滤器：',
 	'phalanx-view-id-submit' => '获取过滤器',
 	'phalanx-format-text' => '纯文本',
 	'phalanx-format-regex' => '正则表达式',
+	'phalanx-format-case' => '大小写敏感',
 	'phalanx-format-exact' => '精确',
 	'phalanx-tab-main' => '管理过滤器',
 	'phalanx-tab-secondary' => '测试过滤器',
 	'phalanx-block-success' => '封禁已成功添加',
+	'phalanx-modify-warning' => '您正在编辑封禁ID#$1。点击“{{int:phalanx-edit-block}}”将保存您的更改！',
 	'phalanx-test-submit' => '测试',
 	'phalanx-test-results-legend' => '测试结果',
 	'phalanx-display-row-blocks' => '封禁：$1',
@@ -3191,7 +3196,9 @@ $messages['zh-hans'] = array(
 	'phalanx-link-modify' => '修改',
 	'phalanx-link-stats' => '状态',
 	'phalanx-reset-form' => '重置表单',
+	'phalanx-legend-input' => '创建或修改过滤器',
 	'phalanx-unblock-message' => '封禁ID#$1已成功移除',
+	'phalanx-stats-title' => 'Phalanx 统计',
 	'phalanx-stats-block-notfound' => '封禁ID找不到',
 	'phalanx-stats-table-id' => '封禁ID',
 	'phalanx-stats-table-user' => '加入者',
@@ -3219,4 +3226,12 @@ $messages['zh-hans'] = array(
 	'phalanx-stats-table-wiki-last-edited' => '最后编辑',
 	'phalanx-email-filter-hidden' => '电子邮件过滤器已隐藏。您并无权限查看文本。',
 	'action-phalanx' => '使用集成的反垃圾邮件机制',
+	'right-phalanxexempt' => 'Phalanx规则例外',
+);
+
+/** Traditional Chinese (中文（繁體）‎)
+ * @author Liuxinyu970226
+ */
+$messages['zh-hant'] = array(
+	'phalanx-type-user' => '使用者',
 );

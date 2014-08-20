@@ -738,22 +738,8 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 		);
 
 		$wikis = $response->getVal('list', []);
-		$verticals = $this->helper->getWikiVerticals();
 		$fields = $this->hubsForm->getFields();
 		$hubValues = $fields['hub_slot']['value'];
-
-		$index = 0;
-		foreach ($verticals as $vertical) {
-			if( !isset($fields['hub_slot']['value'][$index]) ) {
-				$hubValues[$index] = $vertical;
-			}
-			$index++;
-
-			$choices[] = [
-				'value' => $vertical,
-				'option' => $vertical
-			];
-		}
 
 		foreach ($wikis as $wiki) {
 			$choices[] = [

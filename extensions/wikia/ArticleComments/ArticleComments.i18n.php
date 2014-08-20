@@ -1890,6 +1890,7 @@ Wikia
 
 /** Japanese (日本語)
  * @author 2nd-player
+ * @author Barrel0116
  * @author Schu
  * @author Shirayuki
  * @author Tommy6
@@ -1943,15 +1944,18 @@ $PAGETITLE に $PAGEEDITOR がコメントをつけました。
 $PAGETITLE_URL
 
 Wikia', # Fuzzy
-	'enotif_body_article_comment-HTML' => '<p>$WATCHINGUSERNAMEさん、
+	'enotif_body_article_comment-HTML' => '<p>$WATCHINGUSERNAMEさん、こんにちは。
 <br /><br />
-$PAGETITLE に $PAGEEDITOR がコメントをつけました。
+{{SITENAME}}の$PAGETITLEに、新たなコメントがつきました。このリンクから、すべてのコメントが閲覧できます：$PAGETITLE_URL#WikiaArticleComments
 <br /><br />
-コメントを見るには次のURLにアクセスしてください:<br />
-<a href="$PAGETITLE_URL">$PAGETITLE</a>
+- ウィキア コミュニティ サポート
 <br /><br />
-Wikia
-</p>', # Fuzzy
+___________________________________________
+<ul>
+<li>コミュニティセントラル上のヘルプやアドバイスを見つける：<a href="http://ja.community.wikia.com">http://ja.community.wikia.com</a><li>
+<li>私たちからのメッセージを受け取りたくないですか？あなたは、設定から受信設定を変更することができます: <a href="http://ja.community.wikia.com/Special:Preferences">http://ja.community.wikia.com/Special:Preferences</a></li>
+</ul>
+</p>',
 );
 
 /** Georgian (ქართული)
@@ -3142,6 +3146,7 @@ $messages['ps'] = array(
 
 /** Portuguese (português)
  * @author Hamilton Abreu
+ * @author Leon saudanha
  * @author Malafaya
  * @author Pttraduc
  * @author SandroHc
@@ -3198,18 +3203,18 @@ Há um comentário novo em $PAGETITLE na {{SITENAME}}. Use este link para ver to
 ___________________________________________
 * Encontra ajuda e conselhos na Central da Comunidade: http://community.wikia.com
 * Quer receber menos mensagens nossas? Pode alterar as suas preferências de mensagens aqui: http://community.wikia.com/Special:Preferences',
-	'enotif_body_article_comment-HTML' => '<p>Olá $WATCHINGUSERNAME,
-<br /><br />
-Há um comentário novo em $PAGETITLE na {{SITENAME}}. Use este link para ver todos os comentários: $PAGETITLE_URL#WikiaArticleComments
-<br><br>
-- Apoio da Comunidade Wikia
-<br /><br />
+	'enotif_body_article_comment-HTML' => '<p> Olá $ WATCHINGUSERNAME,
+<br /> <br />
+Há um novo comentário em US $ PAGETITLE em {{SITENAME}}. Use este link para ver todos os comentários: $ PAGETITLE_URL # WikiaArticleComments
+<br /> <br />
+- Suporte Comunidade Wikia 
+<br /> <br />
 ___________________________________________
 <ul>
-<li>Encontra ajuda e conselhos na Central da Comunidade: <a href="http://community.wikia.com">http://community.wikia.com</a></li>
-<li>Quer receber menos mensagens nossas? Pode alterar as suas preferências de mensagens aqui: <a href="http://community.wikia.com/Special:Preferences">http://community.wikia.com/Special:Preferences</a></li>
-</ul>
-</p>', # Fuzzy
+<li> Procure ajuda e aconselhamento sobre a Comunidade Central: <a href="http://community.wikia.com"> http://community.wikia.com </ a> <li>
+<li> Quer receber menos mensagens de nós? Você pode cancelar ou alterar suas preferências de e-mail aqui: <a href="http://community.wikia.com/Special:Preferences">http://community.wikia.com/Special:Preferences</a></li>
+</ ul>
+</ p>',
 );
 
 /** Brazilian Portuguese (português do Brasil)
@@ -3911,6 +3916,7 @@ $messages['tzm'] = array(
  * @author A1
  * @author Andriykopanytsia
  * @author Base
+ * @author Mykola Swarnyk
  * @author Steve.rusyn
  * @author SteveR
  * @author Ua2004
@@ -3944,7 +3950,7 @@ $messages['uk'] = array(
 	'article-comments-page-spacer' => '&#160...&#160',
 	'article-comments-delete-reason' => 'Батьківську статтю або коментар видалено.',
 	'article-comments-empty-comment' => "Ви не можете надіслати порожній коментар. <a href='$1'>Видалити його?</a>",
-	'wikiamobile-article-comments-counter' => '$1 {{PLURAL:$1|коментар|коментарів|коментарі}}',
+	'wikiamobile-article-comments-counter' => '$1 {{PLURAL:$1|коментар|коментарі|коментарів}}',
 	'wikiamobile-article-comments-header' => 'коментарі',
 	'wikiamobile-article-comments-more' => 'Завантажити більше',
 	'wikiamobile-article-comments-prev' => 'Завантажити попередні',
@@ -3964,7 +3970,7 @@ $messages['uk'] = array(
 - Підтримка спільноти Wikia
 
 ___________________________________________
-* Знайти допомогу і пораду в громадському центрі: http://community.wikia.com
+* Знайти допомогу і пораду в Громадському центрі: http://community.wikia.com
 * Хочете отримувати менше повідомлень від нас? Ви можете відмовитися або змінити налаштування вашої електронної пошти тут: http://community.wikia.com/Special:Preferences',
 	'enotif_body_article_comment-HTML' => '<p>Привіт $WATCHINGUSERNAME.
 <br /><br />
@@ -4023,6 +4029,7 @@ $messages['vi'] = array(
 	'article-comments-page-spacer' => '&#160...&#160',
 	'article-comments-delete-reason' => 'Bài viết gốc / bình luận gốc đã bị xóa.',
 	'article-comments-empty-comment' => "Bạn không thể đăng một bình luận rỗng. <a href='$1'>Xóa nó thay thế?</a>",
+	'wikiamobile-article-comments-counter' => '$1 {{PLURAL:$1|bình luận|bình luận}}',
 	'wikiamobile-article-comments-header' => 'Bình luận',
 	'wikiamobile-article-comments-more' => 'Tải thêm',
 	'wikiamobile-article-comments-prev' => 'Tải bản trước',
@@ -4140,6 +4147,7 @@ ___________________________________________
 
 /** Traditional Chinese (中文（繁體）‎)
  * @author Ffaarr
+ * @author LNDDYL
  */
 $messages['zh-hant'] = array(
 	'article-comments-file-page' => "<a href='$1'>評論由 $2</a> 於 <a href='$3'>$4</a> 發表",
@@ -4174,7 +4182,7 @@ $messages['zh-hant'] = array(
 	'wikiamobile-article-comments-more' => '載入更多',
 	'wikiamobile-article-comments-prev' => '載入前面的',
 	'wikiamobile-article-comments-none' => '沒有評論',
-	'wikiamobile-article-comments-view' => '查看回覆',
+	'wikiamobile-article-comments-view' => '檢視回覆',
 	'wikiamobile-article-comments-replies' => '回覆',
 	'wikiamobile-article-comments-post-reply' => '發表回覆',
 	'wikiamobile-article-comments-post' => '發佈',
