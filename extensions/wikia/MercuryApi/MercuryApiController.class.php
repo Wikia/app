@@ -139,10 +139,14 @@ class MercuryApiController extends WikiaController {
 
 		if ( empty( $articleId ) ) {
 			$title = Title::newFromText( $articleTitle, NS_MAIN );
+		} else {
+			$title = Title::newFromId( $articleId, NS_MAIN );
+		}
 
-			if ( $title instanceof Title && $title->exists() ) {
-				$articleId = $title->getArticleId();
-			}
+		if ( $title instanceof Title && $title->isKnown() ) {
+			$articleId = $title->getArticleId();
+		} else {
+			$articleId = false;
 		}
 
 		if ( empty( $articleId ) ) {
