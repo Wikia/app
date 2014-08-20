@@ -793,15 +793,6 @@ $config['monobook_js'] = array(
 	)
 );
 
-$config['global_navigation_js'] = array(
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => 'venus',
-	'assets' => array(
-		'//extensions/wikia/GlobalNavigation/js/GlobalNavigation.js',
-		'//extensions/wikia/GlobalNavigation/js/GlobalNavigationSearch.js'
-	)
-);
-
 $config['local_navigation_scss'] = array(
 	'type' => AssetsManager::TYPE_SCSS,
 	'skin' => 'venus',
@@ -1944,7 +1935,7 @@ $config['int_map_parser_tag_js_wikiamobile'] = [
 ];
 
 /** GlobalNavigation extension */
-$config['global_navigation_oasis_css'] = array(
+$config['global_navigation_oasis_scss'] = array(
 	'type' => AssetsManager::TYPE_SCSS,
 	'skin' => ['oasis'],
 	'assets' => array(

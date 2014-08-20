@@ -37,7 +37,7 @@ $VenusConfig['global_footer_css'] = array(
 
 
 /** GlobalNavigation extension */
-$VenusConfig['global_navigation_css'] = array(
+$VenusConfig['global_navigation_scss'] = array(
 	'type' => AssetsManager::TYPE_SCSS,
 	'skin' => ['venus', 'oasis'],
 	'assets' => array(

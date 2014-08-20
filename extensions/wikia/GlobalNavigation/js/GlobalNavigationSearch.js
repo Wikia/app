@@ -3,11 +3,10 @@
 	var formElement, selectElement, searchLabel;
 
 	function setFormOptions() {
-		var selectedOption, selectedElementText;
+		var selectedOption;
 
 		selectedOption = selectElement.selectedOptions[0];
-		selectedElementText = selectedOption.text;
-		searchLabel.textContent = selectedElementText;
+		searchLabel.textContent = selectedOption.text;
 		formElement.action = selectedOption.getAttribute('data-search-url');
 	}
 
