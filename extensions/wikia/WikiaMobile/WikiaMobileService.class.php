@@ -164,10 +164,6 @@ class WikiaMobileService extends WikiaService {
 					AnalyticsEngine::EVENT_PAGEVIEW
 				) .
 				AnalyticsEngine::track(
-					'Viglink',
-					AnalyticsEngine::EVENT_PAGEVIEW
-				) .
-				AnalyticsEngine::track(
 					'ClarityRay',
 					AnalyticsEngine::EVENT_PAGEVIEW
 				) .

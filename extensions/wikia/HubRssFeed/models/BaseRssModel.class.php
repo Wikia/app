@@ -27,17 +27,23 @@ abstract class BaseRssModel extends WikiaService {
 
 	public abstract function getFeedTitle();
 
-	public abstract function getFeedLanguage();
-
 	public abstract function getFeedDescription();
 
+	public static function getFeedLanguage() {
+		return static::LANGUAGE;
+	}
+
+	public static function getFeedName() {
+		return static::FEED_NAME . static::getFeedLanguage();
+	}
+
 	public function getFeedData() {
-		return $this->getLastRecordsFromDb( static::FEED_NAME, static::MAX_NUM_ITEMS_IN_FEED );
+		return $this->getLastRecordsFromDb( static::getFeedName(), static::MAX_NUM_ITEMS_IN_FEED );
 	}
 
 	public function generateFeedData() {
-		$duplicates = $this->getLastDuplicatesFromDb( static::FEED_NAME );
-		$timestamp = $this->getLastFeedTimestamp( static::FEED_NAME ) + 1;
+		$duplicates = $this->getLastDuplicatesFromDb( static::getFeedName() );
+		$timestamp = $this->getLastFeedTimestamp( static::getFeedName() ) + 1;
 		return $this->loadData( $timestamp, $duplicates );
 	}
 
@@ -49,16 +55,22 @@ abstract class BaseRssModel extends WikiaService {
 	 */
 	public static function newFromName( $feedName ) {
 		switch ( $feedName ) {
-			case GamesRssModel::FEED_NAME:
+			case GamesRssModel::getFeedName():
 				return new GamesRssModel();
-			case TvRssModel::FEED_NAME:
+			case GamesDeHubOnlyRssModel::getFeedName():
+				return new GamesDeHubOnlyRssModel();
+			case TvRssModel::getFeedName():
 				return new TvRssModel();
-			case LifestyleHubOnlyRssModel::FEED_NAME:
+			case LifestyleHubOnlyRssModel::getFeedName():
 				return new LifestyleHubOnlyRssModel();
-			case EntertainmentHubOnlyRssModel::FEED_NAME:
+			case EntertainmentHubOnlyRssModel::getFeedName():
 				return new EntertainmentHubOnlyRssModel();
-			case StarWarsRssModel::FEED_NAME:
-				return new StarWarsRssModel();
+			case EntertainmentDeHubOnlyRssModel::getFeedName():
+				return new EntertainmentDeHubOnlyRssModel();
+			case MarvelRssModel::getFeedName():
+				return new MarvelRssModel();
+			/*TODO:case StarWarsRssModel::FEED_NAME:
+				return new StarWarsRssModel();*/
 			default:
 				return null;
 		}
@@ -356,7 +368,7 @@ abstract class BaseRssModel extends WikiaService {
 	}
 
 	protected function getDataFromHubs( $hubId, $fromTimestamp, $duplicates = [ ] ) {
-		$model = new HubRssFeedModel( $this->getFeedLanguage() );
+		$model = new HubRssFeedModel( static::getFeedLanguage() );
 		$v3 = $model->getRealDataV3( $hubId, null, true );
 		foreach ( $v3 as $key => $item ) {
 			if ( $item[ 'timestamp' ] < $fromTimestamp ) {

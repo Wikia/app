@@ -58,7 +58,7 @@ class MenuButtonController extends WikiaController {
 			$this->nofollow = $data['nofollow'];
 		}
 
-		$this->actionAccessKey = MenuButtonController::accessKey($this->actionName);
+		$this->actionAccessKey = MenuButtonController::accessKey( $this->actionName, $this->action );
 
 		// default CSS class
 		$this->class = 'wikia-button';
@@ -126,10 +126,7 @@ class MenuButtonController extends WikiaController {
 
 			// add accesskeys for dropdown items
 			foreach($data['dropdown'] as $key => &$item) {
-				$accesskey = MenuButtonController::accessKey($key);
-				if ($accesskey != false && is_array($item) && !isset($item['accesskey'])) {
-					$item['accesskey'] = $accesskey;
-				}
+				$item['accesskey'] = MenuButtonController::accessKey( $key, $item );
 			}
 
 			$this->class = 'wikia-menu-button';
@@ -184,39 +181,43 @@ class MenuButtonController extends WikiaController {
 		return $signUpHref;
 	}
 
-	private static function accessKey($key) {
-		$accesskey = false;
-		switch($key) {
-			case 'addtopic':
-				$accesskey = 'a';
-				break;
-			case 'edit':
-				$accesskey = 'e';
-				break;
-			case 'editprofile':
-				$accesskey = 'e';
-				break;
-			case 'move':
-				$accesskey = 'm';
-				break;
+	private static function accessKey( $actionName, $action ) {
+		if ( is_array( $action ) && isset( $action['accesskey'] ) ) {
+			$accesskey = $action['accesskey'];
+		} else {
+			switch($actionName) {
+				case 'addtopic':
+					$accesskey = 'a';
+					break;
+				case 'edit':
+					$accesskey = 'e';
+					break;
+				case 'editprofile':
+					$accesskey = 'e';
+					break;
+				case 'move':
+					$accesskey = 'm';
+					break;
 
-			case 'protect':
-			case 'unprotect':
-				$accesskey = '=';
-				break;
+				case 'protect':
+				case 'unprotect':
+					$accesskey = '=';
+					break;
 
-			case 'delete':
-			case 'undelete':
-				$accesskey = 'd';
-				break;
+				case 'delete':
+				case 'undelete':
+					$accesskey = 'd';
+					break;
 
-			case 'history':
-				$accesskey = 'h';
-				break;
+				case 'history':
+					$accesskey = 'h';
+					break;
 
-			default:
-				$accesskey = false;
+				default:
+					$accesskey = false;
+			}
 		}
+
 		return $accesskey;
 	}
 

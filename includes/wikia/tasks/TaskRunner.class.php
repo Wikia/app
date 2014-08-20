@@ -96,24 +96,8 @@ class TaskRunner {
 
 	static function isModern( $taskName ) {
 		return in_array( $taskName, [
-			'CreatePdfThumbnailsJob',
-//		'CreateWikiLocalJob',
-			'HAWelcomeJob',
-			'RefreshLinksJob',
-			'HTMLCacheUpdate',
-			'ImageReviewTask',
-			'MultiDeleteTask',
-			'MultiMoveTask',
-			'MultiWikiEditTask',
-//			'PromoteImageReviewTask',
-			'ReplaceTextJob',
-			'SFCreatePageJob',
-			'SMW_NMSendMailJob',
-			'SMWRefreshJob',
-			'SWMSendToGroupTask',
-			'SMWUpdateJob',
-			'UserRollback',
-			'UserRename',
+			'CreateWikiLocalJob',
+//			'PromoteImageReviewTask', NOTE - this is removed in https://github.com/Wikia/app/pull/4086
 		] );
 	}
 }

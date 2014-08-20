@@ -39,7 +39,10 @@ $namespaceNames = array(
 	NS_SPECIAL          => 'Toiminnot',
 	NS_TALK             => 'Keskustelu',
 	NS_USER             => 'Käyttäjä',
-	NS_USER_TALK        => 'Keskustelu_käyttäjästä',
+	// begin Wikia change
+	// VOLDEV-64
+	NS_USER_TALK        => 'Käyttäjän_keskustelusivu',
+	// end Wikia change
 	NS_PROJECT_TALK     => 'Keskustelu_{{GRAMMAR:elative|$1}}',
 	NS_FILE             => 'Tiedosto',
 	NS_FILE_TALK        => 'Keskustelu_tiedostosta',
@@ -54,6 +57,10 @@ $namespaceNames = array(
 );
 
 $namespaceAliases = array(
+	// begin Wikia change
+	// VOLDEV-64
+	'Keskustelu_käyttäjästä' => NS_USER_TALK,
+	// end Wikia change
 	'Kuva' => NS_FILE,
 	'Keskustelu_kuvasta' => NS_FILE_TALK,
 );
@@ -256,7 +263,10 @@ $specialPageAliases = array(
 	'Mostrevisions'             => array( 'Muokatuimmat_sivut' ),
 	'Movepage'                  => array( 'Siirrä_sivu' ),
 	'Mycontributions'           => array( 'Omat_muokkaukset' ),
-	'Mypage'                    => array( 'Oma_sivu' ),
+	// begin Wikia change
+	// VOLDEV-64
+	'Mypage'                    => array( 'Omasivu', 'Oma_sivu' ),
+	// end Wikia change
 	'Mytalk'                    => array( 'Oma_keskustelu' ),
 	'Myuploads'                 => array( 'Omat_tiedostot' ),
 	'Newimages'                 => array( 'Uudet_tiedostot', 'Uudet_kuvat' ),
