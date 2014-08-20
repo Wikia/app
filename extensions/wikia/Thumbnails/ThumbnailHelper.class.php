@@ -7,11 +7,6 @@
 class ThumbnailHelper extends WikiaModel {
 
 	/**
-	 * @const int Minimum width of thumbnail to show icon link to file page on hover
-	 */
-	const MIN_INFO_ICON_WIDTH = 100;
-
-	/**
 	 * Get attributes for mustache template
 	 * Don't use this for values that need to be escaped.
 	 * Wrap attributes in three curly braces so quote marks don't get escaped.
@@ -81,24 +76,6 @@ class ThumbnailHelper extends WikiaModel {
 		}
 
 		return htmlentities( json_encode( [ $dataParams ] ) , ENT_QUOTES );
-	}
-
-	/**
-	 * Get message for by user section
-	 * @param File $file
-	 * @param boolean $isVideo
-	 * @return string $addedBy
-	 */
-	public static function getByUserMsg( $file, $isVideo ) {
-		$addedAt = $file->getTimestamp();
-		if ( $isVideo ) {
-			$videoInfo = VideoInfo::newFromTitle( $file->getTitle()->getDBkey() );
-			if ( !empty( $videoInfo ) ) {
-				$addedAt = $videoInfo->getAddedAt();
-			}
-		}
-
-		return WikiaFileHelper::getByUserMsg( $file->getUser(), $addedAt );
 	}
 
 	/**
@@ -179,37 +156,61 @@ class ThumbnailHelper extends WikiaModel {
 		return $linkAttribs;
 	}
 
-	public static function getVideoImgAttribs( File $file, array $options ) {
-		// Get alt for img tag
+	public static function setVideoImgAttribs( &$controller, $thumb, array $options ) {
+		// get alt for img tag
+		$file = $thumb->file;
 		$title = $file->getTitle();
+		$controller->alt = empty( $options['alt'] ) ? $title->getText() : $options['alt'];
 
-		$alt = empty( $options['alt'] ) ? $title->getText() : $options['alt'];
-		$imgAttribs['alt'] = htmlspecialchars( $alt );
+		// set image attributes
+		$controller->imgSrc = $options['src'];
+		$controller->mediaKey = htmlspecialchars( $title->getDBKey() );
+		$controller->mediaName = htmlspecialchars( $title->getText() );
+		$controller->imgClass = empty( $options['imgClass'] ) ? [] : explode(' ', $options['imgClass']);
 
-		// set data-params for img tag on mobile
-		if ( !empty( $options['dataParams'] ) ) {
-			$imgSrc = empty( $options['src'] ) ? null : $options['src'];
-
-			$imgAttribs['data-params'] = self::getDataParams( $file, $imgSrc, $options );
+		// check fluid
+		if ( empty( $options['fluid'] ) ) {
+			$controller->imgWidth = $thumb->width;
+			$controller->imgHeight = $thumb->height;
 		}
 
-		return $imgAttribs;
+		// Prefer the src given in options over what's passed in directly.
+		// @TODO there is no reason to pass two versions of image source.  See if both are actually used and pick one
+		// @TODO Mobile passes via options['source'] - see if that's necessary
+		$imgSrc = empty( $options['src'] ) ? $thumb->url : $options['src'];
+		$controller->imgSrc = $imgSrc;
+
+		// set data-params for img tag on mobile
+		// TODO: only used on mobile, could be made into separate template
+		if ( !empty( $options['dataParams'] ) ) {
+			$controller->dataParams = self::getDataParams( $file, $imgSrc, $options );
+		}
 	}
 
-	public static function getVideoLinkAttribs( File $file, array $options ) {
-		$linkAttribs = [];
+	public static function setVideoLinkAttribs( &$controller, $thumb, array $options ) {
+		// Get href for a tag
+		$file = $thumb->file;
+		$title = $file->getTitle();
+		$linkHref = $title->getFullURL();
+
+		// Get timestamp for older versions of files (used on file page history tab)
+		if ( $file instanceof OldLocalFile ) {
+			$archive_name = $file->getArchiveName();
+			if ( !empty( $archive_name ) ) {
+				$linkHref .= '?t='.$file->getTimestamp();
+			}
+		}
+		$controller->linkHref = $linkHref;
 
 		// Get the id parameter for a tag
 		if ( !empty( $options['id'] ) ) {
-			$linkAttribs['id'] = $options['id'];
+			$controller->linkId = $options['id'];
 		}
 
-		// Let extension override any link attributes
+		// Let extensions add any link attributes
 		if ( isset( $options['linkAttribs'] ) && is_array( $options['linkAttribs'] ) ) {
-			$linkAttribs = array_merge( $linkAttribs, $options['linkAttribs'] );
+			$controller->linkAttrs = self::getAttribs( $options['linkAttribs'] );
 		}
-
-		return $linkAttribs;
 	}
 
 	/**
@@ -224,7 +225,7 @@ class ThumbnailHelper extends WikiaModel {
 	 *
 	 * @return array
 	 */
-	public static function getVideoLinkClasses( array &$options ) {
+	public static function setVideoLinkClasses( &$controller, $thumb, array &$options ) {
 		$linkClasses = [];
 		if ( empty( $options['noLightbox'] ) ) {
 			$linkClasses[] = 'image';
@@ -254,7 +255,13 @@ class ThumbnailHelper extends WikiaModel {
 			$linkClasses[] = 'fluid';
 		}
 
-		return array_unique( $linkClasses );
+		if ( !empty( $options['forceSize'] ) ) {
+			$linkClasses[] = $options['forceSize'];
+		} else {
+			$linkClasses = self::getThumbnailSize( $thumb->width );
+		}
+
+		$controller->linkClasses = array_unique( $linkClasses );
 	}
 
 	/**
@@ -276,14 +283,15 @@ class ThumbnailHelper extends WikiaModel {
 	}
 
 	/**
-	 * Logic for whether to display the link to the file page overlayed on an image.
-	 *
-	 * @param $width
+	 * Determines by options if image should be lazyloaded
+	 * @param array $options
 	 * @return bool
 	 */
-	public static function canShowInfoIcon( $width ) {
-		return !empty( F::app()->wg->ShowArticleThumbDetailsIcon )
-			&& $width >= self::MIN_INFO_ICON_WIDTH;
-
+	public static function shouldLazyLoad( $controller, array $options ) {
+		return (
+			empty( $options['noLazyLoad'] )
+			&& isset( $controller->imgSrc )
+			&& ImageLazyLoad::isValidLazyLoadedImage( $controller->imgSrc )
+		);
 	}
 }

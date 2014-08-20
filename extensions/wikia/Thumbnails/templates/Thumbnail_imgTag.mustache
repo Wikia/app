@@ -1,10 +1,12 @@
-<img
-	src="{{imgSrc}}"
-	{{#alt}}alt="{{{alt}}}"{{/alt}}
-	{{#imgClass}}class="{{imgClass}}"{{/imgClass}}
+<img src="{{imgSrc}}"
+	{{#alt}} alt="{{{alt}}}" {{/alt}}
+	{{#imgClass}} class="{{.}}" {{/imgClass}}
 	data-{{mediaType}}-key="{{mediaKey}}"
 	data-{{mediaType}}-name="{{mediaName}}"
-	{{#dataSrc}}data-src="{{dataSrc}}"{{/dataSrc}}
-	{{#imgWidth}}width="{{imgWidth}}"{{/imgWidth}}
-	{{#imgHeight}}height="{{imgHeight}}"{{/imgHeight}}
+	{{#dataSrc}} data-src="{{dataSrc}}" {{/dataSrc}}
+	{{#imgWidth}} width="{{imgWidth}}" {{/imgWidth}}
+	{{#imgHeight}} height="{{imgHeight}}" {{/imgHeight}}
+	{{#rdf}} itemprop="thumbnail" {{/rdf}}
+	{{#dataParams}} data-params="{{dataParams}}" {{/dataParams}}
+	{{#onLoad}}onload="{{onLoad}}" {{/onLoad}}
 	{{#imgAttrs}} {{{.}}}{{/imgAttrs}}>

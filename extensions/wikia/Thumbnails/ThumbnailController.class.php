@@ -4,6 +4,11 @@ class ThumbnailController extends WikiaController {
 	const DEFAULT_TEMPLATE_ENGINE = WikiaResponse::TEMPLATE_ENGINE_MUSTACHE;
 
 	/**
+	 * @const int Minimum width of thumbnail to show icon link to file page on hover
+	 */
+	const MIN_INFO_ICON_WIDTH = 100;
+
+	/**
 	 * Thumbnail Template
 	 * @requestParam MediaTransformOutput thumb
 	 * @requestParam array options
@@ -22,14 +27,8 @@ class ThumbnailController extends WikiaController {
 	 * @responseParam string height
 	 * @responseParam string linkHref
 	 * @responseParam array linkClasses
+	 * @responseParam string linkId
 	 * @responseParam array linkAttrs
-	 *	Keys:
-	 *		id - id attribute for link,
-	 *		class - css class
-	 *		data-timestamp - timestamp of the file
-	 *		itemprop - for RDF metadata
-	 *		itemscope - for RDF metadata
-	 *		itemtype - for RDF metadata
 	 * @responseParam string size [ xsmall, small, medium, large, xlarge ]
 	 * @responseParam string imgSrc
 	 * @responseParam string mediaKey
@@ -50,115 +49,43 @@ class ThumbnailController extends WikiaController {
 	public function video() {
 		wfProfileIn( __METHOD__ );
 
-		$this->mediaType = 'video';
-
 		$thumb   = $this->getVal( 'thumb' );
 		$options = $this->getVal( 'options', array() );
 
-		$file = $thumb->file;
-		$imgSrc = $thumb->url;
-		$width = $thumb->width;
-		$height = $thumb->height;
-
-		/** @var Title $title */
-		$title = $file->getTitle();
-
-		// Prefer the src given in options over what's passed in directly.
-		// @TODO there is no reason to pass two versions of image source.  See if both are actually used and pick one
-		$options['src'] = empty( $options['src'] ) ? $imgSrc : $options['src'];
-
-		$linkClasses = ThumbnailHelper::getVideoLinkClasses( $options );
-		$linkAttribs = ThumbnailHelper::getVideoLinkAttribs( $file, $options );
-		$imgAttribs  = ThumbnailHelper::getVideoImgAttribs( $file, $options );
-
-		// get href for a tag
-		$linkHref = $title->getFullURL();
-
-		// this is used for video thumbnails on file page history tables to insure you see the older version of a file when thumbnail is clicked.
-		if ( $file instanceof OldLocalFile ) {
-			$archive_name = $file->getArchiveName();
-			if ( !empty( $archive_name ) ) {
-				$linkHref .= '?t='.$file->getTimestamp();
-			}
-		}
+		ThumbnailHelper::setVideoLinkClasses( $this, $thumb, $options );
+		ThumbnailHelper::setVideoLinkAttribs( $this, $thumb, $options );
+		ThumbnailHelper::setVideoImgAttribs( $this, $thumb, $options );
 
 		// set duration
 		// The file is not always an instance of a class with magic getters implemented. see VID-1753
+		$file = $thumb->file;
 		if ( is_callable( [$file, 'getMetadataDuration'] ) ) {
 			$duration = $file->getMetadataDuration();
 		} else {
 			$duration = null;
 		}
-		$durationAttribs = [];
-		$metaAttribs = [];
 
-		// Set a positive flag for whether we need to lazy load
-		$lazyLoad = $this->shouldLazyLoad( $options );
-
-		// Only add RDF metadata when the thumb is not lazy loaded
-		if ( !$lazyLoad ) {
-			// link
-			$linkAttribs['itemprop'] = 'video';
-			$linkAttribs['itemscope'] = '';
-			$linkAttribs['itemtype'] = 'http://schema.org/VideoObject';
-
-			// image
-			$imgAttribs['itemprop'] = 'thumbnail';
-
-			//duration
-			if ( !empty( $duration ) ) {
-				$durationAttribs['itemprop'] = 'duration';
-				$metaAttribs[] = [
-					'itemprop' => 'duration',
-					'content' => WikiaFileHelper::formatDurationISO8601( $duration ),
-				];
-			}
-		}
-
-		// check fluid
-		if ( empty( $options[ 'fluid' ] ) ) {
-			$this->imgWidth = $width;
-			$this->imgHeight = $height;
-		}
-
-		// set link attributes
-		$this->linkHref = $linkHref;
-		$this->linkClasses = array_unique( $linkClasses );
-		$this->linkAttrs = ThumbnailHelper::getAttribs( $linkAttribs );
-
-		if ( !empty( $options['forceSize'] ) ) {
-			$this->size = $options['forceSize'];
-		} else {
-			$this->size = ThumbnailHelper::getThumbnailSize( $width );
-		}
-
-		// set image attributes
-		$this->imgSrc = $options['src'];
-		$this->mediaKey = htmlspecialchars( $title->getDBKey() );
-		$this->mediaName = htmlspecialchars( $title->getText() );
-		$this->imgClass = empty( $options['imgClass'] ) ? '' : $options['imgClass'];;
-		$this->imgAttrs = ThumbnailHelper::getAttribs( $imgAttribs );
-		$this->alt = $imgAttribs['alt'];
+		$this->duration = WikiaFileHelper::formatDuration( $duration );
+		$this->mediaType = 'video';
 
 		// data-src attribute in case of lazy loading
 		$this->noscript = '';
 		$this->dataSrc = '';
 
-		if ( $lazyLoad ) {
+		if ( ThumbnailHelper::shouldLazyLoad( $this, $options ) ) {
 			$this->noscript = $this->app->renderView(
 				'ThumbnailController',
 				'imgTag',
 				$this->response->getData()
 			);
-			ImageLazyLoad::setLazyLoadingAttribs( $this->dataSrc, $this->imgSrc, $this->imgClass, $this->imgAttrs );
+			ImageLazyLoad::setLazyLoadingAttribs( $this );
+		} else {
+			// Only add RDF metadata when the thumb is not lazy loaded
+			$this->rdf = true;
+			if ( !empty( $duration ) ) {
+				$this->durationISO = WikiaFileHelper::formatDurationISO8601( $duration );
+			}
 		}
-
-		// set duration
-		$this->duration = WikiaFileHelper::formatDuration( $duration );
-		$this->durationAttrs = ThumbnailHelper::getAttribs( $durationAttribs );
-
-		// set meta
-		$this->metaAttrs = $metaAttribs;
 
 		wfProfileOut( __METHOD__ );
 	}
@@ -197,9 +124,9 @@ class ThumbnailController extends WikiaController {
 
 		// Merge in imgClass as well
 		if ( !empty( $options['img-class'] ) ) {
-			$this->imgClass = $options['img-class'];
+			$this->imgClass = explode( ' ', $options['img-class'] );
 		} else {
-			$this->imgClass = '';
+			$this->imgClass = [];
 		}
 
 		$this->noscript = '';
@@ -227,7 +154,7 @@ class ThumbnailController extends WikiaController {
 
 		// Set a positive flag for whether we need to lazy load
 		$options['src'] = $this->imgSrc;
-		$lazyLoad = $this->shouldLazyLoad( $options );
+		$lazyLoad = ThumbnailHelper::shouldLazyLoad( $this, $options );
 
 		if ( $lazyLoad ) {
 			$this->noscript = $this->app->renderView(
@@ -235,7 +162,7 @@ class ThumbnailController extends WikiaController {
 				'imgTag',
 				$this->response->getData()
 			);
-			ImageLazyLoad::setLazyLoadingAttribs( $this->dataSrc, $this->imgSrc, $this->imgClass, $this->imgAttrs );
+			ImageLazyLoad::setLazyLoadingAttribs( $this );
 		}
 	}
 
@@ -272,22 +199,9 @@ class ThumbnailController extends WikiaController {
 		$this->url = $url;
 		$this->caption = $caption;
 		$this->width = $width;
-		$this->showInfoIcon = !empty( $filePageLink ) && ThumbnailHelper::canShowInfoIcon( $width );
+		$this->showInfoIcon = !empty( $filePageLink ) && $width >= self::MIN_INFO_ICON_WIDTH;
 		$this->filePageLink = $filePageLink;
 
 		wfProfileOut( __METHOD__ );
-	}
-
-	/**
-	 * Determines by options if image should be lazyloaded
-	 * @param array $options
-	 * @return bool
-	 */
-	protected function shouldLazyLoad( array $options ) {
-		return (
-			empty( $options['noLazyLoad'] )
-			&& isset( $options['src'] )
-			&& ImageLazyLoad::isValidLazyLoadedImage( $options['src'] )
-		);
 	}
 }

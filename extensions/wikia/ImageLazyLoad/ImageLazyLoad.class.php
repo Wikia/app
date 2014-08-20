@@ -137,12 +137,16 @@ class ImageLazyLoad  {
 	 * @param string $imgClass
 	 * @param array $imgAttribs
 	 */
-	public static function setLazyLoadingAttribs( &$dataSrc, &$imgSrc, &$imgClass, &$imgAttribs ) {
-		$imgClass = self::getImgClass( [ 'class' => $imgClass ] );
-		$dataSrc = $imgSrc;
-		$imgSrc = wfBlankImgUrl();
-		$attribs = ThumbnailHelper::getAttribs( [ 'onload' => self::IMG_ONLOAD ] );
-		$imgAttribs = array_merge( $imgAttribs, $attribs );
+	public static function setLazyLoadingAttribs( &$controller /*&$dataSrc, &$imgSrc, &$imgClass, &$imgAttribs*/ ) {
+		//$imgClass = self::getImgClass( [ 'class' => $imgClass ] );
+		//$dataSrc = $imgSrc;
+		//$imgSrc = wfBlankImgUrl();
+		//$attribs = ThumbnailHelper::getAttribs( [ 'onload' => self::IMG_ONLOAD ] );
+		//$imgAttribs = array_merge( $imgAttribs, $attribs );
+		$controller->onLoad = self::IMG_ONLOAD;
+		$controller->imgClass = array_merge($controller->imgClass, explode(' ', self::LAZY_IMAGE_CLASSES));
+		$controller->dataSrc = $controller->imgSrc;
+		$controller->imgSrc = wfBlankImgUrl();
 	}
 
 	/**
