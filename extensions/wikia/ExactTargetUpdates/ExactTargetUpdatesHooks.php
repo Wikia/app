@@ -13,17 +13,18 @@ class ExactTargetUpdatesHooks {
 		return true;
 	}
 
-	public function prepareParams( User $oUser ) {
-		$aUserParams =[];
-		$aUserParams[ 'user_id' ] = $oUser->getId();
-		$aUserParams[ 'user_name' ] = $oUser->getName();
-		$aUserParams[ 'user_real_name' ] = $oUser->getRealName();
-		$aUserParams[ 'user_email' ] = $oUser->getEmail();
-		$aUserParams[ 'user_email_authenticated' ] = $oUser->getEmailAuthenticationTimestamp();
-		$aUserParams[ 'user_registration' ] = $oUser->getRegistration();
-		$aUserParams[ 'user_editcount' ] = $oUser->getEditCount();
-		$aUserParams[ 'user_options' ] = $oUser->getOptions();
-		$aUserParams[ 'user_touched' ] = $oUser->getTouched();
+	public static function prepareParams( User $oUser ) {
+		$aUserParams =[
+			'user_id' => $oUser->getId(),
+			'user_name' => $oUser->getName(),
+			'user_real_name' => $oUser->getRealName(),
+			'user_email' => $oUser->getEmail(),
+			'user_email_authenticated' => $oUser->getEmailAuthenticationTimestamp(),
+			'user_registration' => $oUser->getRegistration(),
+			'user_editcount' => $oUser->getEditCount(),
+			'user_options' => $oUser->getOptions(),
+			'user_touched' => $oUser->getTouched()
+		];
 		return $aUserParams;
 	}
 }
