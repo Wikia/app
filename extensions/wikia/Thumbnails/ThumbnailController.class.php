@@ -9,41 +9,23 @@ class ThumbnailController extends WikiaController {
 	const MIN_INFO_ICON_WIDTH = 100;
 
 	/**
-	 * Thumbnail Template
+	 * Render core video thumbnail HTML
 	 * @requestParam MediaTransformOutput thumb
-	 * @requestParam array options
-	 *	Keys:
-	 *      alt - alt for image
-	 *      fluid - image will take the width of it's container
-	 *      forceSize - 'xsmall' | 'small' | 'medium' | 'large' | 'xlarge'
-	 *      hidePlayButton - hide play buttonforceSize - 'xsmall' | 'small' | 'medium' | 'large' | 'xlarge'
-	 *      id - id for link
-	 *      imgClass - string of space separated classes for image
-	 *      ???used??? linkAttribs - link attributes [ array( 'class' => 'video' ) ]
-	 *      noLightbox - not show image or video in lightbox,
-	 *      ???used??? src - source for image
-	 *
+	 * @requestParam array options - See ThumbnailHelper class for more detail
 	 * @responseParam string width
 	 * @responseParam string height
 	 * @responseParam string linkHref
 	 * @responseParam array linkClasses
 	 * @responseParam string linkId
 	 * @responseParam array linkAttrs
-	 * @responseParam string size [ xsmall, small, medium, large, xlarge ]
 	 * @responseParam string imgSrc
 	 * @responseParam string mediaKey
 	 * @responseParam string mediaName
 	 * @responseParam array imgClass
-	 * @responseParam array imgAttrs
-	 *	Keys:
-	 *		alt - alt for image
-	 *		itemprop - for RDF metadata
+	 * @responseParam array extraImgAttrs
 	 * @responseParam string dataSrc - data-src attribute for image lazy loading
 	 * @responseParam string duration (HH:MM:SS)
-	 * @responseParam array durationAttrs
-	 *	Keys:
-	 *		itemprop - for RDF metadata
-	 * @responseParam array metaAttrs - for RDF metadata [ array( array( 'itemprop' => '', 'content' => '' ) ) ]
+	 * @responseParam array durationISO
 	 * @responseParam string mediaType - 'image' | 'video'
 	 */
 	public function video() {
@@ -92,25 +74,10 @@ class ThumbnailController extends WikiaController {
 		wfProfileOut( __METHOD__ );
 	}
 
-	public function imgTag() {
-		$this->response->setData( $this->request->getParams() );
-	}
-
 	/**
-	 * Image controller
+	 * Render core image thumbnail HTML
 	 * @requestParam MediaTransformOutput thumb
-	 * @requestParam array options
-	 *	Keys:
-	 * 		alt
-	 * 		custom-target-link
-	 * 		custom-title-link
-	 * 		custom-url-link
-	 * 		desc-query
-	 * 		desc-link
-	 * 		file-link
-	 *	 	img-class
-	 * 		title
-	 * 		valign
+	 * @requestParam array options - See ThumbnailHelper class for more detail
 	 */
 	public function image() {
 		$this->mediaType = 'image';
@@ -134,6 +101,13 @@ class ThumbnailController extends WikiaController {
 			);
 			ImageLazyLoad::setLazyLoadingAttribs( $this );
 		}
+	}
+
+	/**
+	 * Render the img tag for images, videos, and noscript tags in the case of lazy loading
+	 */
+	public function imgTag() {
+		$this->response->setData( $this->request->getParams() );
 	}
 
 	/**
