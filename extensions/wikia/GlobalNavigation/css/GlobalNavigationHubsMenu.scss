@@ -1,4 +1,5 @@
 @import "../../Venus/styles/variables";
+@import "skins/oasis/css/mixins/columns";
 @import "GlobalNavigationColors";
 
 .hubs-menu {
@@ -32,8 +33,21 @@
 				&:after {
 					background-color: $hubsmenu-background-color;
 					border: 31px solid transparent;
-					border-left-color: red;
+					border-left-color: red; // TODO
 					border-width: 31px 12px;
+				}
+
+				.icon {
+					&:before {
+						background-color: rgba(0, 0, 0, 0.3);
+						border-radius: 50%;
+						content: " ";
+						left: 10px;
+						width: 50px;
+						height: 50px;
+						position: absolute;
+						top: 6px;
+					}
 				}
 			}
 
@@ -44,10 +58,35 @@
 				height: 62px;
 				width: 24px;
 			}
+
+			.icon {
+				background-color: red; // TODO
+				background-image: url("/extensions/wikia/GlobalNavigation/images/comics.svg"); /* base64 */
+				background-position: center;
+				background-repeat: no-repeat;
+				display: inline-block;
+				float: left;
+				height: 62px;
+				position: relative;
+				width: 70px;
+			}
 		}
 	}
 	section {
+		@include column-count( 2 );
+
 		float: left;
+		font-size: 15px;
 		width: 464px;
+
+		h2 {
+			font-size: 15px;
+			margin: 21px 0 5px;
+		}
+
+		a {
+			display: block;
+			padding: 7px 0 6px;
+		}
 	}
 }
