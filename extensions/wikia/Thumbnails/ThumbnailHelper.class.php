@@ -258,7 +258,7 @@ class ThumbnailHelper extends WikiaModel {
 		if ( !empty( $options['forceSize'] ) ) {
 			$linkClasses[] = $options['forceSize'];
 		} else {
-			$linkClasses = self::getThumbnailSize( $thumb->width );
+			$linkClasses[] = self::getThumbnailSize( $thumb->width );
 		}
 
 		$controller->linkClasses = array_unique( $linkClasses );
