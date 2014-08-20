@@ -84,29 +84,38 @@ class ThumbnailHelper extends WikiaModel {
 	 * @param array $options
 	 * @return array
 	 */
-	public static function getImageAttribs( MediaTransformOutput $thumb, array $options ) {
+	public static function setImageAttribs( &$controller, MediaTransformOutput $thumb, array $options ) {
 		/** @var Title $title */
 		$title = $thumb->file->getTitle();
-		$alt = empty( $options['alt'] ) ? $title->getText() : $options['alt'];
+		$titleText = '';
 
-		$attribs = array(
-			'alt'    => Sanitizer::encodeAttribute($alt),
-			'src'    => $thumb->url,
-			'width'  => $thumb->width,
-			'height' => $thumb->height,
+		if ( $title instanceof Title ) {
+			$titleText = $title->getText();
+			$controller->mediaKey = htmlspecialchars( urlencode( $title->getDBKey() ) );
+			$controller->mediaName = htmlspecialchars( $titleText );
+		}
+
+		$controller->alt = Sanitizer::encodeAttribute(
+			empty( $options['alt'] ) ? $titleText : $options['alt']
 		);
 
+		$controller->imgSrc = $thumb->url;
+
+		// Check fluid
+		if ( empty( $options[ 'fluid' ] ) ) {
+			$controller->imgWidth = $thumb->width;
+			$controller->imgHeight = $thumb->height;
+		}
+
 		if ( !empty( $options['valign'] ) ) {
-			$attribs['style'] = "vertical-align: {$options['valign']}";
+			$controller->style = "vertical-align: {$options['valign']}";
 		}
 
-		$title = $thumb->file->getTitle();
-		if ( $title instanceof Title ) {
-			$attribs['data-image-name'] = htmlspecialchars( $title->getText() );
-			$attribs['data-image-key']  = htmlspecialchars( urlencode( $title->getDBKey() ) );
+		if ( !empty( $options['img-class'] ) ) {
+			$controller->imgClass = explode( ' ', $options['img-class'] );
+		} else {
+			$controller->imgClass = [];
 		}
-
-		return $attribs;
 	}
 
 	/**
@@ -116,44 +125,49 @@ class ThumbnailHelper extends WikiaModel {
 	 * @param array $options
 	 * @return array|bool
 	 */
-	public static function getImageLinkAttribs( MediaTransformOutput $thumb, array $options ) {
+	public static function setImageLinkAttribs( &$controller, MediaTransformOutput $thumb, array $options ) {
+		$href = false;
+		$title = false;
+		$target = false;
+
 		// If we have the details icon enabled, have the anchor wrapping the image link to the
 		// raw file.  If not, keep previous behavior and link to the file page
-
 		if ( F::app()->wg->ShowArticleThumbDetailsIcon && !F::app()->checkSkin( 'monobook' ) ) {
 			$defaultHref = $thumb->file->getUrl();
 		} else {
 			$defaultHref = $thumb->file->getTitle()->getLocalURL();
 		}
 
-
 		if ( !empty( $options['custom-url-link'] ) ) {
-			$linkAttribs = [ 'href' => $options['custom-url-link'] ];
+			$href = $options['custom-url-link'];
 			if ( !empty( $options['title'] ) ) {
-				$linkAttribs['title'] = Sanitizer::encodeAttribute( $options['title'] );
+				$title = Sanitizer::encodeAttribute( $options['title'] );
 			}
 			if ( !empty( $options['custom-target-link'] ) ) {
-				$linkAttribs['target'] = $options['custom-target-link'];
+				$target = $options['custom-target-link'];
 			}
+
 		} elseif ( !empty( $options['custom-title-link'] ) ) {
 			/** @var Title $title */
-			$title = $options['custom-title-link'];
-			$linkAttribs = [
-				'href' => $title->getLinkURL(),
-				'title' => Sanitizer::encodeAttribute( empty( $options['title'] ) ? $title->getFullText() : $options['title'] )
-			];
+			$titleObj = $options['custom-title-link'];
+			$href = $titleObj->getLinkURL();
+			$title = Sanitizer::encodeAttribute(
+				empty( $options['title'] ) ? $titleObj->getFullText() : $options['title']
+			);
+
 		} elseif ( !empty( $options['desc-link'] ) ) {
-			$linkAttribs = [ 'href' => $defaultHref ];
+			$href = $defaultHref;
 			if ( !empty( $options['title'] ) ) {
-				$linkAttribs['title'] = Sanitizer::encodeAttribute( $options['title'] );
+				$title = Sanitizer::encodeAttribute( $options['title'] );
 			}
+
 		} elseif ( !empty( $options['file-link'] ) ) {
-			$linkAttribs = [ 'href' => $defaultHref ];
-		} else {
-			$linkAttribs = [];
+			$href = $defaultHref;
 		}
 
-		return $linkAttribs;
+		$controller->href = $href;
+		$controller->title = $title;
+		$controller->target = $target;
 	}
 
 	public static function setVideoImgAttribs( &$controller, $thumb, array $options ) {
@@ -270,16 +284,16 @@ class ThumbnailHelper extends WikiaModel {
 	 * @param array $options The thumbnail options passed to toHTML.
 	 * @return array
 	 */
-	public static function getImageLinkClasses ( array $options ) {
-
+	public static function setImageLinkClasses ( &$controller, $thumb, array $options ) {
 		$classes = [];
-		if ( !empty( $options["custom-title-link"] ) ) {
-			$classes[] = "link-internal";
-		} elseif ( !empty( $options["custom-url-link"] ) ) {
-			$classes[] = "link-external";
+
+		if ( !empty( $options['custom-title-link'] ) ) {
+			$classes[] = 'link-internal';
+		} elseif ( !empty( $options['custom-url-link'] ) ) {
+			$classes[] = 'link-external';
 		}
 
-		return $classes;
+		$controller->linkClasses = $classes;
 	}
 
 	/**

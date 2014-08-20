@@ -117,46 +117,14 @@ class ThumbnailController extends WikiaController {
 		$thumb   = $this->getVal( 'thumb' );
 		$options = $this->getVal( 'options', array() );
 
-		$linkAttrs   = ThumbnailHelper::getImageLinkAttribs( $thumb, $options );
-		$attribs     = ThumbnailHelper::getImageAttribs( $thumb, $options );
-
-		$this->imgSrc = $thumb->url;
-
-		// Merge in imgClass as well
-		if ( !empty( $options['img-class'] ) ) {
-			$this->imgClass = explode( ' ', $options['img-class'] );
-		} else {
-			$this->imgClass = [];
-		}
+		ThumbnailHelper::setImageLinkAttribs( $this, $thumb, $options );
+		ThumbnailHelper::setImageAttribs( $this, $thumb, $options );
+		ThumbnailHelper::setImageLinkClasses( $this, $thumb, $options );
 
 		$this->noscript = '';
 		$this->dataSrc = '';
 
-		# Move the href out of the attrs and into its own value
-		$this->linkHref = empty( $linkAttrs['href'] ) ? null : $linkAttrs['href'];
-		unset( $linkAttrs['href'] );
-
-		$this->linkAttrs = ThumbnailHelper::getAttribs( $linkAttrs );
-		$this->imgAttrs  = ThumbnailHelper::getAttribs( $attribs );
-		$this->linkClasses = ThumbnailHelper::getImageLinkClasses( $options );
-
-		$file = $thumb->file;
-		$title = $file->getTitle();
-		$this->mediaKey = htmlspecialchars( $title->getDBKey() );
-		$this->mediaName = htmlspecialchars( $title->getText() );
-		$this->alt = $attribs['alt'];
-
-		// Check fluid
-		if ( empty( $options[ 'fluid' ] ) ) {
-			$this->imgWidth = $thumb->width;
-			$this->imgHeight = $thumb->height;
-		}
-
-		// Set a positive flag for whether we need to lazy load
-		$options['src'] = $this->imgSrc;
-		$lazyLoad = ThumbnailHelper::shouldLazyLoad( $this, $options );
-
-		if ( $lazyLoad ) {
+		if ( ThumbnailHelper::shouldLazyLoad( $this, $options ) ) {
 			$this->noscript = $this->app->renderView(
 				'ThumbnailController',
 				'imgTag',
@@ -164,6 +132,7 @@ class ThumbnailController extends WikiaController {
 			);
 			ImageLazyLoad::setLazyLoadingAttribs( $this );
 		}
+
 	}
 
 	/**

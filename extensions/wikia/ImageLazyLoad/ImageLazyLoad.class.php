@@ -144,7 +144,7 @@ class ImageLazyLoad  {
 		//$attribs = ThumbnailHelper::getAttribs( [ 'onload' => self::IMG_ONLOAD ] );
 		//$imgAttribs = array_merge( $imgAttribs, $attribs );
 		$controller->onLoad = self::IMG_ONLOAD;
-		$controller->imgClass = array_merge($controller->imgClass, explode(' ', self::LAZY_IMAGE_CLASSES));
+		$controller->imgClass = array_merge( $controller->imgClass, explode( ' ', self::LAZY_IMAGE_CLASSES ) );
 		$controller->dataSrc = $controller->imgSrc;
 		$controller->imgSrc = wfBlankImgUrl();
 	}
