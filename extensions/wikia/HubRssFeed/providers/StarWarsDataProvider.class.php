@@ -2,8 +2,6 @@
 
 class StarWarsDataProvider {
 
-	const WOOKIEENEWS_URL = 'http://starwars.wikia.com/wiki/Wookieepedia:Wookieenews';
-
 	const SOURCE = 'xpath';
 
 	const WOOKIEENEWS_PAGE_ID = 105;
@@ -128,8 +126,9 @@ class StarWarsDataProvider {
 	}
 
 	protected function getNewsPageDOM() {
+		$t = GlobalTitle::newFromId( self::WOOKIEENEWS_PAGE_ID, self::STAR_WARS_WIKIA_ID );
 		$doc = new \DOMDocument();
-		$doc->loadHTML( Http::get( self::WOOKIEENEWS_URL ) );
+		$doc->loadHTML( Http::request( "GET",  $t->getFullURL() , [ 'followRedirects' => true ] ) );
 		return $doc;
 	}
 }
