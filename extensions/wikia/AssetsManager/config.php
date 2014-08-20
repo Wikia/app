@@ -797,7 +797,8 @@ $config['global_navigation_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => 'venus',
 	'assets' => array(
-		'//extensions/wikia/GlobalNavigation/js/GlobalNavigation.js'
+		'//extensions/wikia/GlobalNavigation/js/GlobalNavigation.js',
+		'//extensions/wikia/GlobalNavigation/js/GlobalNavigationSearch.js'
 	)
 );
 
@@ -1947,6 +1948,7 @@ $config['global_navigation_oasis_css'] = array(
 	'type' => AssetsManager::TYPE_SCSS,
 	'skin' => ['oasis'],
 	'assets' => array(
-		'//extensions/wikia/GlobalNavigation/css/GlobalNavigationOasis.scss'
+		'//extensions/wikia/GlobalNavigation/css/GlobalNavigationOasis.scss',
+		'//extensions/wikia/GlobalNavigation/css/GlobalNavigationSearchOasis.scss'
 	)
 );
