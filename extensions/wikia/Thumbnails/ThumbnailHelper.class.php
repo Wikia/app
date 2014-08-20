@@ -210,7 +210,6 @@ class ThumbnailHelper extends WikiaModel {
 
 		// Prefer the src given in options over what's passed in directly.
 		// @TODO there is no reason to pass two versions of image source.  See if both are actually used and pick one
-		// @TODO Mobile passes via options['source'] - see if that's necessary
 		$imgSrc = empty( $options['src'] ) ? $thumb->url : $options['src'];
 		$controller->imgSrc = $imgSrc;
 
@@ -274,7 +273,6 @@ class ThumbnailHelper extends WikiaModel {
 			$classes = $options['linkAttribs']['class'];
 
 			// If we got a string, treat it like space separated values and turn it into an array
-			// TODO: we might want to check for arrays as opposed to strings in other places too
 			if ( !is_array( $classes ) ) {
 				$classes = explode( ' ', $classes );
 			}
