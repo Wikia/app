@@ -80,11 +80,16 @@ class ThumbnailHelper extends WikiaModel {
 
 	/**
 	 * Collect the img tag attributes from $options
+	 * @param WikiaController $controller
 	 * @param MediaTransformOutput $thumb
 	 * @param array $options
-	 * @return array
+	 *  Keys:
+	 *      alt
+	 *      fluid
+	 *      valign
+	 *      img-class
 	 */
-	public static function setImageAttribs( &$controller, MediaTransformOutput $thumb, array $options ) {
+	public static function setImageAttribs( WikiaController &$controller, MediaTransformOutput $thumb, array $options ) {
 		/** @var Title $title */
 		$title = $thumb->file->getTitle();
 		$titleText = '';
@@ -116,12 +121,18 @@ class ThumbnailHelper extends WikiaModel {
 
 	/**
 	 * Get anchor tag attributes for an image
-	 *
+	 * @param WikiaController $controller
 	 * @param MediaTransformOutput $thumb
 	 * @param array $options
-	 * @return array|bool
+	 *  Keys:
+	 *      custom-url-link
+	 *      custom-target-link
+	 *      title
+	 *      custom-title-link
+	 *      desc-link
+	 *      file-link
 	 */
-	public static function setImageLinkAttribs( &$controller, MediaTransformOutput $thumb, array $options ) {
+	public static function setImageLinkAttribs( WikiaController &$controller, MediaTransformOutput $thumb, array $options ) {
 		$href = false;
 		$title = false;
 		$target = false;
@@ -166,7 +177,20 @@ class ThumbnailHelper extends WikiaModel {
 		$controller->target = $target;
 	}
 
-	public static function setVideoImgAttribs( &$controller, $thumb, array $options ) {
+	/**
+	 * Set attributes for video's img tag
+	 * @param WikiaController $controller
+	 * @param MediaTransformOutput $thumb
+	 * @param array $options
+	 *  Keys:
+	 *      alt
+	 *      src
+	 *      img-class
+	 *      fluid
+	 *      src
+	 *      dataParams
+	 */
+	public static function setVideoImgAttribs( WikiaController &$controller, MediaTransformOutput $thumb, array $options ) {
 		// get alt for img tag
 		$file = $thumb->file;
 		$title = $file->getTitle();
@@ -197,7 +221,15 @@ class ThumbnailHelper extends WikiaModel {
 		}
 	}
 
-	public static function setVideoLinkAttribs( &$controller, $thumb, array $options ) {
+	/**
+	 * Set attributes for video's anchor tag
+	 * @param WikiaController $controller
+	 * @param MediaTransformOutput $thumb
+	 * @param array $options
+	 *  Keys:
+	 *      id
+	 */
+	public static function setVideoLinkAttribs( WikiaController &$controller, MediaTransformOutput $thumb, array $options ) {
 		// Get href for a tag
 		$file = $thumb->file;
 		$title = $file->getTitle();
@@ -219,16 +251,16 @@ class ThumbnailHelper extends WikiaModel {
 	}
 
 	/**
-	 * Create an array of needed classes for video thumbs anchors.
-	 *
-	 * @param array $options The thumbnail options passed to toHTML.  This method cares about:
-	 *
-	 * - $options[ 'noLightbox' ]
-	 * - $options[ 'linkAttribs' ][ 'class' ]
-	 * - $options[ 'hidePlayButton' ]
-	 * - $options[ 'fluid' ]
-	 *
-	 * @return array
+	 * Set classes for video's anchor tag
+	 * @param WikiaController $controller
+	 * @param MediaTransformOutput $thumb
+	 * @param array $options
+	 *  Keys:
+	 *      noLightbox
+	 *      linkAttribs
+	 *      hidePlayButton
+	 *      fluid
+	 *      forceSize
 	 */
 	public static function setVideoLinkClasses( WikiaController &$controller, MediaTransformOutput $thumb, array &$options ) {
 		$linkClasses = [];
@@ -271,58 +303,69 @@ class ThumbnailHelper extends WikiaModel {
 	}
 
 	/**
-	 * Create an array of needed classes for image thumbs anchors.
-	 *
-	 * @param array $options The thumbnail options passed to toHTML.
-	 * @return array
+	 * Set classes for image's anchor tag
+	 * @param $controller
+	 * @param MediaTransformOutput $thumb
+	 * @param array $options
 	 */
-	public static function setImageLinkClasses( &$controller, $thumb, array $options ) {
-		$classes = [];
+	public static function setImageLinkClasses( &$controller, MediaTransformOutput $thumb, array &$options ) {
+		$linkClasses = [];
 
 		if ( !empty( $options['custom-title-link'] ) ) {
-			$classes[] = 'link-internal';
+			$linkClasses[] = 'link-internal';
 		} elseif ( !empty( $options['custom-url-link'] ) ) {
-			$classes[] = 'link-external';
+			$linkClasses[] = 'link-external';
 		}
 
-		$controller->linkClasses = $classes;
+		// Pull out any classes found in the linkAttribs parameter
+		if ( !empty( $options['linkAttribs']['class'] ) ) {
+			$classes = $options['linkAttribs']['class'];
+
+			// If we got a string, treat it like space separated values and turn it into an array
+			if ( !is_array( $classes ) ) {
+				$classes = explode( ' ', $classes );
+			}
+
+			$linkClasses = array_merge( $linkClasses, $classes );
+			unset( $options['linkAttribs']['class'] );
+		}
+		$controller->linkClasses = $linkClasses;
 	}
 
 	/**
 	 * Create array of any image attributes that are sent in by extensions
 	 * All values MUST BE SANITIZED before reaching this point
-	 * @param $controller
-	 * @param $thumb
-	 * @param $options
+	 * @param WikiaController $controller
+	 * @param MediaTransformOutput $thumb
+	 * @param array $options
 	 */
-	public static function setExtraImgAttribs( &$controller, $thumb, $options ) {
+	public static function setExtraImgAttribs( WikiaController &$controller, MediaTransformOutput $thumb, array $options ) {
 		// Let extensions add any link attributes
 		if ( isset( $options['imgAttribs'] ) && is_array( $options['imgAttribs'] ) ) {
 			$controller->extraImgAttrs = self::getAttribs( $options['imgAttribs'] );
-			//lizbug($controller->extraImgAttrs);
 		}
 	}
 
 	/**
 	 * Create array of any link attributes that are sent in by extensions
 	 * All values MUST BE SANITIZED before reaching this point
-	 * @param $controller
-	 * @param $thumb
-	 * @param $options
+	 * @param WikiaController $controller
+	 * @param MediaTransformOutput $thumb
+	 * @param array $options
 	 */
-	public static function setExtraLinkAttribs( &$controller, $thumb, $options ) {
-		// Let extensions add any link attributes
+	public static function setExtraLinkAttribs( WikiaController &$controller, MediaTransformOutput $thumb, array $options ) {
 		if ( isset( $options['linkAttribs'] ) && is_array( $options['linkAttribs'] ) ) {
 			$controller->extraLinkAttrs = self::getAttribs( $options['linkAttribs'] );
 		}
 	}
 
 	/**
-	 * Determines by options if image should be lazyloaded
+	 * Determines if image should be lazyloaded
+	 * @param WikiaController $controller
 	 * @param array $options
 	 * @return bool
 	 */
-	public static function shouldLazyLoad( $controller, array $options ) {
+	public static function shouldLazyLoad( WikiaController $controller, array $options ) {
 		return (
 			empty( $options['noLazyLoad'] )
 			&& isset( $controller->imgSrc )
