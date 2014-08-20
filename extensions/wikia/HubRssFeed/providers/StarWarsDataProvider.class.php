@@ -139,8 +139,8 @@ class StarWarsDataProvider {
 	 */
 	protected function canBeTitle( $text ) {
 		return ( strpos( $text, '.' ) === false )
-		&& ( (bool) preg_match( '/[A-Z]/', $text ) )
-		&& ( ! ( (bool) preg_match( '/^read more.*$/i', $text ) ) );
+			&& ( preg_match( '/[A-Z]/', $text ) )
+			&& ( ! ( (bool) preg_match( '/^read more.*$/i', $text ) ) );
 	}
 
 	protected function getNewsPageDOM() {
