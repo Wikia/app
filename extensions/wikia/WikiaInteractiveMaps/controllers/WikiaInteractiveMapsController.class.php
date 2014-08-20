@@ -205,8 +205,8 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 	 * @param string $name - name of the special page
 	 * @return string
 	 */
-	static function getSpecialMapsUrl() {
-		return SpecialPage::getTitleFor( self::PAGE_NAME )->getFullUrl();
+	static function getSpecialUrl( $name = self::PAGE_NAME ) {
+		return SpecialPage::getTitleFor( $name )->getFullUrl();
 	}
 
 	/**
@@ -242,9 +242,9 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 					wfMessage( 'wikia-interactive-maps-delete-map-success' )->text() :
 					wfMessage( 'wikia-interactive-maps-undelete-map-success' )->text()
 			);
-			$redirectUrl = $this->getSpecialUrl( self::PAGE_NAME );
+			$redirectUrl = $this->getSpecialUrl();
 			if ( $deleted === self::MAP_NOT_DELETED ) {
-				$redirectUrl = $this->getSpecialUrl( self::PAGE_NAME ) . '/' . $mapId;
+				$redirectUrl = $this->getSpecialUrl() . '/' . $mapId;
 			}
 			$this->response->setVal( 'redirectUrl', $redirectUrl );
 		}
@@ -336,7 +336,7 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 		$this->setVal( 'hasMaps', !empty( $mapsResponse->total ) );
 		$this->setVal( 'learnMoreUrl', self::MAPS_WIKIA_URL );
 
-		$this->setVal( 'baseUrl', WikiaInteractiveMapsController::getSpecialMapsUrl() );
+		$this->setVal( 'baseUrl', self::getSpecialUrl() );
 	}
 
 	/**
