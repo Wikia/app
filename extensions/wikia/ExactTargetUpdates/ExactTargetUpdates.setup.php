@@ -49,4 +49,4 @@ $wgAutoloadClasses['ExactTargetSoapClient'] =  $dir . '/lib/exacttarget_soap_cli
  * @global Array The list of hooks.
  * @see http://www.mediawiki.org/wiki/Manual:$wgHooks
  */
-$wgHooks['ConfirmEmailComplete'][] = 'ExactTargetUpdatesHooks::onConfirmEmailComplete';
+$wgHooks['SignupConfirmEmailComplete'][] = 'ExactTargetUpdatesHooks::onSignupConfirmEmailComplete';

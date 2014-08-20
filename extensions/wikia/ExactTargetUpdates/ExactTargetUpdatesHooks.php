@@ -2,7 +2,7 @@
 
 class ExactTargetUpdatesHooks {
 
-	public static function onConfirmEmailComplete( User $user ) {
+	public static function onSignupConfirmEmailComplete( User $user ) {
 		global $wgWikiaEnvironment;
 		if ($wgWikiaEnvironment == WIKIA_ENV_PROD) {
 			$aParams = self::prepareParams( $user );
