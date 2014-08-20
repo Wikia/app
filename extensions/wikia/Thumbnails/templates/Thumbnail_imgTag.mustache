@@ -1,6 +1,6 @@
 <img src="{{imgSrc}}"
 	{{#alt}} alt="{{{alt}}}" {{/alt}}
-	{{#imgClass}} class="{{.}} " {{/imgClass}}
+	class="{{#imgClass}}{{.}} {{/imgClass}}"
 	{{#style}} style="{{style}}" {{/style}}
 	data-{{mediaType}}-key="{{mediaKey}}"
 	data-{{mediaType}}-name="{{mediaName}}"
@@ -9,5 +9,4 @@
 	{{#imgHeight}} height="{{imgHeight}}" {{/imgHeight}}
 	{{#rdf}} itemprop="thumbnail" {{/rdf}}
 	{{#dataParams}} data-params="{{dataParams}}" {{/dataParams}}
-	{{#onLoad}}onload="{{onLoad}}" {{/onLoad}}
-	{{#imgAttrs}} {{{.}}}{{/imgAttrs}}>
+	{{#onLoad}}onload="{{onLoad}}" {{/onLoad}}>

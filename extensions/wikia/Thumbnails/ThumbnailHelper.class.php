@@ -111,11 +111,7 @@ class ThumbnailHelper extends WikiaModel {
 			$controller->style = "vertical-align: {$options['valign']}";
 		}
 
-		if ( !empty( $options['img-class'] ) ) {
-			$controller->imgClass = explode( ' ', $options['img-class'] );
-		} else {
-			$controller->imgClass = [];
-		}
+		$controller->imgClass = empty( $options['img-class'] ) ? [] : explode( ' ', $options['img-class'] );
 	}
 
 	/**
@@ -180,7 +176,7 @@ class ThumbnailHelper extends WikiaModel {
 		$controller->imgSrc = $options['src'];
 		$controller->mediaKey = htmlspecialchars( $title->getDBKey() );
 		$controller->mediaName = htmlspecialchars( $title->getText() );
-		$controller->imgClass = empty( $options['imgClass'] ) ? [] : explode(' ', $options['imgClass']);
+		$controller->imgClass = empty( $options['img-class'] ) ? [] : explode( ' ', $options['img-class'] );
 
 		// check fluid
 		if ( empty( $options['fluid'] ) ) {
