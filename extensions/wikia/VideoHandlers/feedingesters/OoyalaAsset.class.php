@@ -93,13 +93,12 @@ class OoyalaAsset extends WikiaModel {
 	 * @param int $max
 	 * @return array $assets
 	 */
-	public static function getAssetsBySourceId( $sourceId, $source, $assetType = 'remote_asset', $max = 3 ) {
+	public static function getAssetsBySourceId( $sourceId, $assetType = 'remote_asset', $max = 3 ) {
 		wfProfileIn( __METHOD__ );
 
 		$cond = [
 			"asset_type='$assetType'",
 			"metadata.sourceid='$sourceId'",
-			"metadata.source='$source'",
 		];
 
 		$params = [

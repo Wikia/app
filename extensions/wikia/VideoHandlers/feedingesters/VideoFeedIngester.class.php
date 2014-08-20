@@ -253,7 +253,7 @@ abstract class VideoFeedIngester {
 
 		// check if the video id exists in Ooyala.
 		if ( $remoteAsset ) {
-			$dupAssets = OoyalaAsset::getAssetsBySourceId( $id, $provider );
+			$dupAssets = OoyalaAsset::getAssetsBySourceId( $id );
 			if ( !empty( $dupAssets ) ) {
 				if ( $this->reupload === false ) {
 					$this->videoSkipped( "Skipping $name (Id: $id, $provider) - video already exists in remote assets.\n" );
