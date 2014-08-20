@@ -6,7 +6,6 @@ $wgExtensionCredits['other'][] = array(
 	'descriptionmsg'	=> 'Extension that extracts from an article as much as we can to send it as an json to a client',
 );
 
-$app = F::app();
 $dir = dirname(__FILE__) . '/';
 
 //classes
