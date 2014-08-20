@@ -10,7 +10,6 @@
 			<a href="<?= htmlspecialchars($createWikiUrl) ?>" class="global-navigation-link start-wikia"><span><?= wfMessage('global-navigation-create-wiki')->text(); ?></span></a>
 		</div>
 		<div class="global-navigation-item">
-			user login
 			<?= $app->renderView('AccountNavigation', 'Index', [ 'template' => 'venus' ] ) ?>
 			<?= $app->renderView('WallNotifications', 'Index') ?>
 		</div>
