@@ -32,6 +32,7 @@ class StarWarsDataProvider {
 			$title = $this->getTitle( $xpath, $newsNode );
 
 			$description = $newsNode->textContent;
+			$description = $this->cleanDescription( $description );
 
 			$result[ ] = [
 				'timestamp' => $timestamp,
@@ -49,6 +50,17 @@ class StarWarsDataProvider {
 		}
 
 		return $result;
+	}
+
+	/**
+	 * Cut endings, like: 'Read more...', 'Watch here...', 'Watch it here...'
+	 */
+	protected function cleanDescription( $description ) {
+		if( preg_match( '/^.+\.\s*(Read more[^a-zA-Z]*|Watch( it)? here[^a-zA-Z]*|)$/i', $description ) ) {
+			$cleanedDescription = preg_replace( '/^(.+\.)\s*(Read more[^a-zA-Z]*|Watch( it)? here[^a-zA-Z]*)$/i', '$1', $description );
+			return $cleanedDescription;
+		}
+		return $description;
 	}
 
 	protected function normalizeLink( $link ) {
@@ -121,9 +133,11 @@ class StarWarsDataProvider {
 		return $this->getDate( $xpath, $contextNode );
 	}
 
+	/**
+	 * If text of link doesn't contain dot, doesn't contain 'Read more' and contains uppercase later -
+	 * we consider that it can be a title
+	 */
 	protected function canBeTitle( $text ) {
-		// If text of link doesn't contain dot, doesn't contain 'Read more' and contains uppercase later -
-		// we consider that it can be a title
 		return ( strpos( $text, '.' ) === false )
 		&& ( (bool) preg_match( '/[A-Z]/', $text ) )
 		&& ( ! ( (bool) preg_match( '/^read more.*$/i', $text ) ) );
