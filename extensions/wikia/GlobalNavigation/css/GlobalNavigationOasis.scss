@@ -6,8 +6,12 @@
 	width: $width-outside;
 }
 
-.WikiaTopAds {
-	padding: $global-navigation-height + 10px 0 10px;
+.WikiaSiteWrapper {
+	padding-top: $global-navigation-height + 1px;
+}
+
+.global-navigation {
+	margin-top: -$global-navigation-height - 1px;
 }
 
 @media screen and (max-width: $breakpoint-content) {
