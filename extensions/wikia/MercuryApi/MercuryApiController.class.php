@@ -84,7 +84,7 @@ class MercuryApiController extends WikiaController {
 		if( $articleId === 0 ) {
 			throw new InvalidParameterApiException( self::PARAM_ARTICLE_ID );
 		}
-		
+
 		$title = Title::newFromID( $articleId );
 		if ( !( $title instanceof Title ) ) {
 			throw new NotFoundApiException( self::PARAM_ARTICLE_ID );
@@ -158,8 +158,8 @@ class MercuryApiController extends WikiaController {
 		$this->response->setVal( 'data', [
 			'details' => $this->getArticleDetails( $articleId ),
 			'topContributors' => $this->getTopContributorsDetails(
-				$this->getTopContributorsPerArticle( $articleId )
-			),
+					$this->getTopContributorsPerArticle( $articleId )
+				),
 			'article' => $this->getArticleJson( $articleId ),
 			'relatedPages' => $this->getRelatedPages( $articleId ),
 			'basePath' => $this->wg->Server
