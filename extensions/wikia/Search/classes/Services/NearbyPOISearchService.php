@@ -22,6 +22,8 @@ class NearbyPOISearchService extends EntitySearchService {
 
 	protected $limit;
 
+	protected $wikiaId;
+
 	public function newQuery() {
 		// default fields to fetch
 		$this->fields = [ 'id', 'metadata_*', 'score' ];
@@ -44,6 +46,11 @@ class NearbyPOISearchService extends EntitySearchService {
 		if( !empty( $long ) ) {
 			$this->longitude = $long;
 		}
+		return $this;
+	}
+
+	public  function withWikiaId( $wikiaId ) {
+		$this->wikiaId = $wikiaId;
 		return $this;
 	}
 
@@ -82,11 +89,15 @@ class NearbyPOISearchService extends EntitySearchService {
 	}
 
 	protected function constructQuery() {
-		if ( empty( $this->region ) ) {
-			return $this->getGeoQuery();
-		} else {
-			return $this->getGeoQuery() . ' AND metadata_map_region_s:"' . $this->region . '"';
+		$conditions = [ ];
+		$conditions[ ] = $this->getGeoQuery();
+		if ( !empty( $this->region ) ) {
+			$conditions[ ] = 'metadata_map_region_s:"' . $this->region . '"';
 		}
+		if( !empty( $this->wikiaId ) ) {
+			$conditions[ ] = 'wid:"' . $this->wikiaId . '"';
+		}
+		return join( ' AND ', $conditions );
 	}
 
 	protected function getGeoQuery() {
