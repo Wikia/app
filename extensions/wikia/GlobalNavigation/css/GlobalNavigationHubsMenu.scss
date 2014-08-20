@@ -7,6 +7,47 @@
 	border-top: 0;
 	color: $nav-active-color;
 	position: absolute;
-	top: $global-navigation-height;
+	top: $global-navigation-height + 1px;
 	width: 768px;
+
+	a {
+		color: $nav-active-color;
+	}
+
+	.hubs {
+		float:left;
+		width: 302px;
+
+		nav {
+			background-color: $nav-background-color;
+			font-size: 18px;
+			line-height: 62px;
+			text-transform: uppercase;
+
+			&.active {
+				background-color: red; // TODO
+				color: $nav-background-color;
+				font-weight: bold;
+
+				&:after {
+					background-color: $hubsmenu-background-color;
+					border: 31px solid transparent;
+					border-left-color: red;
+					border-width: 31px 12px;
+				}
+			}
+
+			&:after {
+				background-color: $hubsmenu-background-color;
+				content: " ";
+				float: right;
+				height: 62px;
+				width: 24px;
+			}
+		}
+	}
+	section {
+		float: left;
+		width: 464px;
+	}
 }
