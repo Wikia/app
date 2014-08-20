@@ -155,11 +155,11 @@ class MercuryApiController extends WikiaController {
 
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 
-		$userIds = $this->getTopContributorsPerArticle( $articleId );
-
 		$this->response->setVal( 'data', [
 			'details' => $this->getArticleDetails( $articleId ),
-			'topContributors' => $this->getTopContributorsDetails( $userIds ),
+			'topContributors' => $this->getTopContributorsDetails(
+				$this->getTopContributorsPerArticle( $articleId )
+			),
 			'article' => $this->getArticleJson( $articleId ),
 			'relatedPages' => $this->getRelatedPages( $articleId ),
 			'basePath' => $this->wg->Server
