@@ -52,6 +52,7 @@
 	}
 }
 
+// TODO think how to aggregate media queries in output css file or extract mixins for every breakpoint
 @mixin grid-attribute-size($attribute: width, $small-columns-count: 1, $medium-columns-count: 0, $large-columns-count: 0) {
 	@if $medium-columns-count == 0 {
 		$medium-columns-count: $small-columns-count;

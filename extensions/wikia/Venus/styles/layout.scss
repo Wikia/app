@@ -1,5 +1,4 @@
 @import 'skins/oasis/css/core/color';
-@import 'extensions/wikia/Venus/styles/mixins';
 
 body {
 	color: $color-text;
@@ -23,25 +22,22 @@ a {
 	background: $color-page;
 	border: 1px solid $color-page-border;
 	padding: $global-navigation-height 0 0;
-}
-
-.page-width {
-	margin: 0 auto;
-	padding: 0;
-	width: $large-content-width;
 
 	& > header {
 		@include grid-content-padding;
 	}
 }
 
-.wikia-page {
+.page-width {
+	margin: 0 auto;
+	width: $medium-content-width;
+
 	@media #{$small-only} {
 		width: $small-content-width;
 	}
 
-	@media #{$medium-only} {
-		width: $medium-content-width;
+	@media #{$large-up} {
+		width: $large-content-width;
 	}
 }
 
