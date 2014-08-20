@@ -3,10 +3,13 @@
 class ExactTargetUpdatesHooks {
 
 	public static function onConfirmEmailComplete( User $user ) {
-		$aParams = self::prepareParams( $user );
-		$task = new ExactTargetAddUserTask();
-		$task->call( 'sendNewUserData', $aParams );
-		$task->queue();
+		global $wgWikiaEnvironment;
+		if ($wgWikiaEnvironment == WIKIA_ENV_PROD) {
+			$aParams = self::prepareParams( $user );
+			$task = new ExactTargetAddUserTask();
+			$task->call( 'sendNewUserData', $aParams );
+			$task->queue();
+		}
 		return true;
 	}
 
