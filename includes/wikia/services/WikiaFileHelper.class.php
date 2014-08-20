@@ -636,15 +636,27 @@ class WikiaFileHelper extends Service {
 	 * @return String
 	 */
 	public static function getSquaredThumbnailUrl( File $file, $dimension ) {
-		$height = $file->getHeight();
-		$width = $file->getWidth();
+		$height = ( int ) $file->getHeight();
+		$width = ( int ) $file->getWidth();
 
 		if ( $height > $width ) {
 			// portrait
 			$cropStr = sprintf( "%dx%d-0,%d,0,%d", $dimension, $dimension, $width, $width );
 		} else if ( $width > $height ) {
 			// landscape
-			$cropStr = sprintf( "%dx%d-0,%d,0,%d", $dimension, $dimension, $height, $height );
+
+			// Thumbnailer does not return a perfect square for images with height > dimension in AxBxC format
+			// Therefore this check is necessary
+			if ( $height < $dimension ) {
+				$cropStr = sprintf( "%dx%dx5", $dimension, $dimension );
+			} else {
+				// Image must be centered it horizontally
+				$xOffset = ( int )( ( $width - $dimension ) / 2 );
+				$cropStr = sprintf(
+					"%dx%d-%d,%d,%d,%d",
+					$dimension, $dimension, $xOffset, $dimension + $xOffset, 0, $dimension
+				);
+			}
 		} else {
 			$cropStr = sprintf( "%dx%d", $dimension, $dimension );
 		}
