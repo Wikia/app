@@ -4,7 +4,6 @@ use Wikia\Tasks\Tasks\BaseTask;
 use Wikia\Logger\WikiaLogger;
 
 class ExactTargetAddUserTask extends BaseTask {
-	use IncludeMessagesTrait;
 
 	/**
 	 * Task for creating all necessary objects in ExactTarget related to newly created user
@@ -52,7 +51,7 @@ class ExactTargetAddUserTask extends BaseTask {
 			WikiaLogger::instance()->info( $oClient->__getLastResponse() );
 
 		} catch ( SoapFault $e ) {
-			WikiaLogger::instance()->error( "SoapFault:" . "Name: " . $e->getMessage() . "ErrorCode: " . $e->getCode() );
+			WikiaLogger::instance()->error( 'SoapFault:' . $e->getMessage() . 'ErrorCode: ' . $e->getCode() );
 		}
 	}
 
@@ -95,7 +94,7 @@ class ExactTargetAddUserTask extends BaseTask {
 			$oSubscriber->EmailAddress = $sUserEmail;
 
 			/* Create the subscriber */
-			$oSoapVar = new SoapVar( $oSubscriber, SOAP_ENC_OBJECT, 'Subscriber', "http://exacttarget.com/wsdl/partnerAPI" );
+			$oSoapVar = new SoapVar( $oSubscriber, SOAP_ENC_OBJECT, 'Subscriber', 'http://exacttarget.com/wsdl/partnerAPI' );
 			$oRequest = new ExactTarget_CreateRequest();
 			$oRequest->Options = NULL;
 			$oRequest->Objects = array( $oSoapVar );
@@ -104,7 +103,7 @@ class ExactTargetAddUserTask extends BaseTask {
 			WikiaLogger::instance()->info( $oClient->__getLastResponse() );
 
 		} catch ( SoapFault $e ) {
-			WikiaLogger::instance()->error( "SoapFault:" . "Name: " . $e->getMessage() . "ErrorCode: " . $e->getCode() );
+			WikiaLogger::instance()->error( 'SoapFault:' . $e->getMessage() . 'ErrorCode: ' . $e->getCode() );
 		}
 	}
 
