@@ -119,15 +119,22 @@ function memsess_gc( $maxlifetime ) {
 
 function memsess_write_close() {
 	/** Wikia change - begin - PLATFORM-308 */
-	global $wgSessionDebugData;
+	global $wgSessionDebugData, $wgRequest, $wgUser;
 	$wgSessionDebugData[] = [ 'event' => 'write_close-begin' ];
 	/** Wikia change - end */
 	session_write_close();
 	/** Wikia change - begin - PLATFORM-308 */
 	$wgSessionDebugData[] = [ 'event' => 'write_close-end' ];
-	if ( mt_rand( 1, 100 ) <= 1 ) {
-		\Wikia\Logger\WikiaLogger::instance()->debug( 'PLATFORM-308', [ 'data' => $wgSessionDebugData ] );
-	}
+	\Wikia\Logger\WikiaLogger::instance()->debug(
+		'PLATFORM-308',
+		[
+			'data'       => $wgSessionDebugData,
+			'ip'         => IP::sanitizeIP( $wgRequest->getIP() ),
+			'user_id'    => $wgUser->getId(),
+			'user_name'  => $wgUser->getName(),
+			'session_id' => session_id()
+		]
+	);
 	/** Wikia change - end */
 }
 
