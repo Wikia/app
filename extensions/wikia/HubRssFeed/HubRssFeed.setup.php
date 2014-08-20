@@ -19,6 +19,9 @@ $wgAutoloadClasses['GamesRssModel']	= $dir . 'models/GamesRssModel.class.php';
 $wgAutoloadClasses['LifestyleHubOnlyRssModel'] = $dir . 'models/LifestyleHubOnlyRssModel.class.php';
 $wgAutoloadClasses['EntertainmentHubOnlyRssModel'] = $dir . 'models/EntertainmentHubOnlyRssModel.class.php';
 $wgAutoloadClasses['MarvelRssModel'] = $dir . 'models/MarvelRssModel.class.php';
+$wgAutoloadClasses['StarWarsRssModel'] = $dir . 'models/StarWarsRssModel.class.php';
+$wgAutoloadClasses['StarWarsDataProvider'] = $dir . 'providers/StarWarsDataProvider.class.php';
+
 
 //de rss
 $wgAutoloadClasses['GamesDeHubOnlyRssModel']	= $dir . 'models/GamesDeHubOnlyRssModel.class.php';
@@ -27,7 +30,7 @@ $wgAutoloadClasses['EntertainmentDeHubOnlyRssModel']	= $dir . 'models/Entertainm
 $wgSpecialPages['HubRssFeed']		= 'HubRssFeedSpecialController';
 
 $wgHubRssFeedsAll = array(
-	'en' => [ 'Entertainment', 'Lifestyle', 'Games', 'TV', 'Marvel' ],
+	'en' => [ 'Entertainment', 'Lifestyle', 'Games', 'TV', 'Marvel', 'StarWars' ],
 	'de' => [ 'Entertainment', 'Games' ]
 );
 $wgHubRssFeeds = $wgHubRssFeedsAll[ $wgLanguageCode ];

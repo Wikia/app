@@ -69,6 +69,8 @@ abstract class BaseRssModel extends WikiaService {
 				return new EntertainmentDeHubOnlyRssModel();
 			case MarvelRssModel::getFeedName():
 				return new MarvelRssModel();
+			case StarWarsRssModel::getFeedName():
+				return new StarWarsRssModel();
 			default:
 				return null;
 		}
