@@ -34,3 +34,13 @@ $VenusConfig['global_footer_css'] = array(
 		'//extensions/wikia/GlobalFooter/styles/GlobalFooter.scss'
 	)
 );
+
+
+/** GlobalNavigation extension */
+$VenusConfig['global_navigation_css'] = array(
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => ['venus', 'oasis'],
+	'assets' => array(
+		'//extensions/wikia/GlobalNavigation/css/GlobalNavigation.scss'
+	)
+);

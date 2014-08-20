@@ -21,22 +21,23 @@ a {
 .wikia-page {
 	background: $color-page;
 	border: 1px solid $color-page-border;
-	margin: 0 auto;
-	padding: 0;
-	width: $large-content-width;
+	padding: $global-navigation-height 0 0;
 
 	& > header {
 		@include grid-content-padding;
 	}
 }
 
-.wikia-page {
+.page-width {
+	margin: 0 auto;
+	width: $medium-content-width;
+
 	@media #{$small-only} {
 		width: $small-content-width;
 	}
 
-	@media #{$medium-only} {
-		width: $medium-content-width;
+	@media #{$large-up} {
+		width: $large-content-width;
 	}
 }
 

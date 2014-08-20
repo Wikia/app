@@ -52,6 +52,7 @@
 	}
 }
 
+// TODO think how to aggregate media queries in output css file or extract mixins for every breakpoint
 @mixin grid-attribute-size($attribute: width, $small-columns-count: 1, $medium-columns-count: 0, $large-columns-count: 0) {
 	@if $medium-columns-count == 0 {
 		$medium-columns-count: $small-columns-count;
@@ -69,6 +70,22 @@
 
 	@media #{$medium-only} {
 		#{$attribute}: $medium-columns-count * ($medium-grid-column + $medium-grid-gutter) - $medium-grid-gutter;
+	}
+}
+
+// calculate column width in pixels for different screen sizes
+// $breakpoint: one of 'small', 'medium', 'large'
+@mixin grid-column-width( $breakpoint, $columns-count ) {
+	@if $breakpoint == small {
+		width: $columns-count * ($small-grid-column + $small-grid-gutter) - $small-grid-gutter;
+	}
+
+	@if $breakpoint == medium {
+		width: $columns-count * ($medium-grid-column + $medium-grid-gutter) - $medium-grid-gutter;
+	}
+
+	@if $breakpoint == large {
+		width: $columns-count * ($large-grid-column + $large-grid-gutter) - $large-grid-gutter;
 	}
 }
 

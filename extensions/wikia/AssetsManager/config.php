@@ -793,17 +793,6 @@ $config['monobook_js'] = array(
 	)
 );
 
-/** Venus Skin **/
-$config['global_navigation_scss'] = array(
-	'type' => AssetsManager::TYPE_SCSS,
-	'skin' => 'venus',
-	'assets' => array(
-		'//extensions/wikia/GlobalNavigation/css/GlobalNavigation.scss',
-		'//extensions/wikia/GlobalNavigation/css/GlobalNavigationMenu.scss',
-		'//extensions/wikia/GlobalNavigation/css/AccountNavigation.scss'
-	)
-);
-
 $config['global_navigation_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => 'venus',
@@ -1952,3 +1941,12 @@ $config['int_map_parser_tag_js_wikiamobile'] = [
 		'//extensions/wikia/WikiaInteractiveMaps/js/WikiaInteractiveMapsParserTag.wikiamobile.js'
 	]
 ];
+
+/** GlobalNavigation extension */
+$config['global_navigation_oasis_css'] = array(
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => ['oasis'],
+	'assets' => array(
+		'//extensions/wikia/GlobalNavigation/css/GlobalNavigationOasis.scss'
+	)
+);
