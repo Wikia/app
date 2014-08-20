@@ -4,13 +4,10 @@ class StarWarsRssModel extends BaseRssModel {
 
 	const FEED_NAME = "StarWars";
 	const MAX_NUM_ITEMS_IN_FEED = 15;
+	const LANGUAGE = 'en';
 
 	public function getFeedTitle() {
 		return 'Wikia StarWars Feed';
-	}
-
-	public function getFeedLanguage() {
-		return 'en';
 	}
 
 	public function getFeedDescription() {
@@ -31,7 +28,7 @@ class StarWarsRssModel extends BaseRssModel {
 			$out[ $item[ 'url' ] ] = $item;
 		}
 		$out = $this->fixDuplicatedTimestamps( $out );
-		$out = $this->addFeedsToDb( $out, self::FEED_NAME );
+		$out = $this->addFeedsToDb( $out, self::getFeedName()  );
 		return $out;
 	}
 
