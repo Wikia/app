@@ -111,18 +111,22 @@ class StarWarsDataProvider {
 	protected function getTitle( $xpath, $contextNode ) {
 		$linkNodes = $xpath->query( ".//a", $contextNode );
 		// Iterating across text of all links
-		// If text of link doesn't contain dot, doesn't contain 'Read more' and contains uppercase later -
-		// we consider that it is a title
 		foreach( $linkNodes as $linkNode ) {
 			$text = $linkNode->textContent;
-			if( ( strpos( $text, '.' ) === false )
-				&& ( (bool) preg_match( '/[A-Z]/', $text ) )
-				&& ( ! ( (bool) preg_match( '/^read more.*$/i', $text ) ) ) ) {
+			if( $this->canBeTitle( $text ) ) {
 				return $text;
 			}
 		}
-		// Fallback
+		// Fallback: consider date of article as a title
 		return $this->getDate( $xpath, $contextNode );
+	}
+
+	protected function canBeTitle( $text ) {
+		// If text of link doesn't contain dot, doesn't contain 'Read more' and contains uppercase later -
+		// we consider that it can be a title
+		return ( strpos( $text, '.' ) === false )
+		&& ( (bool) preg_match( '/[A-Z]/', $text ) )
+		&& ( ! ( (bool) preg_match( '/^read more.*$/i', $text ) ) );
 	}
 
 	protected function getNewsPageDOM() {
