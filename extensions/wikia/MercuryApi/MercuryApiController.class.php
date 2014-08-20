@@ -72,6 +72,42 @@ class MercuryApiController extends WikiaController {
 	}
 
 	/**
+	 * @return Int
+	 * @throws NotFoundApiException
+	 * @throws BadRequestApiException
+	 */
+	private function getArticleIdFromRequest(){
+		$articleId = $this->request->getInt(self::ARTICLE_ID_PARAMETER_NAME, NULL);
+		$articleTitle = $this->request->getVal(self::ARTICLE_TITLE_PARAMETER_NAME, NULL);
+
+		if ( !empty( $articleId ) && !empty( $articleTitle ) ) {
+			throw new BadRequestApiException( 'Can\'t use id and title in the same request' );
+		}
+
+		if ( empty( $articleId ) && empty( $articleTitle ) ) {
+			throw new BadRequestApiException( 'You need to pass title or id of an article' );
+		}
+
+		if ( empty( $articleId ) ) {
+			$title = Title::newFromText( $articleTitle, NS_MAIN );
+		} else {
+			$title = Title::newFromId( $articleId, NS_MAIN );
+		}
+
+		if ( $title instanceof Title && $title->isKnown() ) {
+			$articleId = $title->getArticleId();
+		} else {
+			$articleId = false;
+		}
+
+		if ( empty( $articleId ) ) {
+			throw new NotFoundApiException( "Unable to find any article" );
+		}
+
+		return $articleId;
+	}
+
+	/**
 	 * @desc Returns article comments in JSON format
 	 *
 	 * @throws NotFoundApiException
@@ -79,16 +115,7 @@ class MercuryApiController extends WikiaController {
 	 * @throws InvalidParameterApiException
 	 */
 	public function getArticleComments() {
-		$articleId = $this->request->getInt( self::PARAM_ARTICLE_ID, 0 );
-
-		if( $articleId === 0 ) {
-			throw new InvalidParameterApiException( self::PARAM_ARTICLE_ID );
-		}
-
-		$title = Title::newFromID( $articleId );
-		if ( !( $title instanceof Title ) ) {
-			throw new NotFoundApiException( self::PARAM_ARTICLE_ID );
-		}
+		$articleId = $this->getArticleIdFromRequest();
 
 		$page = $this->request->getInt( self::PARAM_PAGE, self::DEFAULT_PAGE );
 
@@ -126,32 +153,7 @@ class MercuryApiController extends WikiaController {
 	 * @throws BadRequestApiException
 	 */
 	public function getArticle(){
-		$articleId = $this->request->getInt(self::ARTICLE_ID_PARAMETER_NAME, NULL);
-		$articleTitle = $this->request->getVal(self::ARTICLE_TITLE_PARAMETER_NAME, NULL);
-
-		if ( !empty( $articleId ) && !empty( $articleTitle ) ) {
-			throw new BadRequestApiException( 'Can\'t use id and title in the same request' );
-		}
-
-		if ( empty( $articleId ) && empty( $articleTitle ) ) {
-			throw new BadRequestApiException( 'You need to pass title or id of an article' );
-		}
-
-		if ( empty( $articleId ) ) {
-			$title = Title::newFromText( $articleTitle, NS_MAIN );
-		} else {
-			$title = Title::newFromId( $articleId, NS_MAIN );
-		}
-
-		if ( $title instanceof Title && $title->isKnown() ) {
-			$articleId = $title->getArticleId();
-		} else {
-			$articleId = false;
-		}
-
-		if ( empty( $articleId ) ) {
-			throw new NotFoundApiException( "Unable to find any article" );
-		}
+		$articleId = $this->getArticleIdFromRequest();
 
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 
