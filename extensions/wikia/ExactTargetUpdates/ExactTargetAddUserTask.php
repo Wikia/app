@@ -36,7 +36,7 @@ class ExactTargetAddUserTask extends BaseTask {
 			$DE->CustomerKey = "user";
 
 			$apiProperties = [];
-			foreach ( $aUserData as $key => $value ){
+			foreach ( $aUserData as $key => $value ) {
 				$apiProperties[] = $this->prepareApiProperty( $key,  $value );
 			}
 
@@ -48,10 +48,12 @@ class ExactTargetAddUserTask extends BaseTask {
 			$oRequest->Objects = array( $oSoapVar );
 			$oClient->Create( $oRequest );
 
-			WikiaLogger::instance()->info( $oClient->__getLastResponse() );
+			/* Log response */
+			$this->info( $oClient->__getLastResponse() );
 
 		} catch ( SoapFault $e ) {
-			WikiaLogger::instance()->error( 'SoapFault:' . $e->getMessage() . 'ErrorCode: ' . $e->getCode() );
+			/* Log error */
+			$this->error( 'SoapFault:' . $e->getMessage() . 'ErrorCode: ' . $e->getCode() );
 		}
 	}
 
@@ -100,10 +102,12 @@ class ExactTargetAddUserTask extends BaseTask {
 			$oRequest->Objects = array( $oSoapVar );
 			$oClient->Create( $oRequest );
 
-			WikiaLogger::instance()->info( $oClient->__getLastResponse() );
+			/* Log response */
+			$this->info( $oClient->__getLastResponse() );
 
 		} catch ( SoapFault $e ) {
-			WikiaLogger::instance()->error( 'SoapFault:' . $e->getMessage() . 'ErrorCode: ' . $e->getCode() );
+			/* Log error */
+			$this->error( 'SoapFault:' . $e->getMessage() . 'ErrorCode: ' . $e->getCode() );
 		}
 	}
 
