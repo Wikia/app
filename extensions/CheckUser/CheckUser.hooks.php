@@ -68,9 +68,11 @@ class CheckUserHooks {
 	public static function updateCUPasswordResetData( User $user, $ip, $account ) {
 		global $wgRequest;
 
+		/** Wikia change - begin - CONN-587 */
 		$userId = $user->getId();
 		$userName = $user->getName();
 		if( !is_null( $userId ) ) {
+		/** Wikia change - end */
 			// Get XFF header
 			$xff = $wgRequest->getHeader( 'X-Forwarded-For' );
 			list( $xff_ip, $isSquidOnly ) = IP::getClientIPfromXFF( $xff );
@@ -98,10 +100,20 @@ class CheckUserHooks {
 				'cuc_agent'      => $agent
 			);
 			$dbw->insert( 'cu_changes', $rcRow, __METHOD__ );
+		/** Wikia change - begin - CONN-587 */
 		} else {
-			debug_print_backtrace();
-			var_dump($user);
+			\Wikia\Logger\WikiaLogger::instance()->debug(
+				'CONN-587 - db error while changing user password',
+				[
+					'user_name' => $userName,
+					'ip' => $ip,
+					'account_name' => ($account instanceof User) ? $account->getName() : null,
+					'session_id' => session_id(),
+					'backtrace' => json_encode(debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS)),
+				]
+			);
 		}
+		/** Wikia change - end */
 
 		return true;
 	}
