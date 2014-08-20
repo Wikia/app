@@ -344,6 +344,62 @@ use Swagger\Annotations as SWG;
  * 	)
  * )
  *
+ * @SWG\Api(
+ * 	path="/Palantir/QuestDetails",
+ * 	description="Get quest details",
+ * 	@SWG\Operations(
+ * 		@SWG\Operation(
+ * 			httpMethod="GET",
+ * 			summary="Get quest details",
+ * 			nickname="getQuestDetails",
+ * 			responseClass="ExpandedPalantirListArticleResultSet",
+ * 			@SWG\ErrorResponses(
+ * 				@SWG\ErrorResponse( code="400", reason="Latitude/longitude parameter is invalid" ),
+ * 				@SWG\ErrorResponse( code="404", reason="Results not found" )
+ * 			),
+ * 			@SWG\Parameters(
+ *    			@SWG\Parameter(
+ * 					name="fingerprint_id",
+ * 					description="Fingerprint ID",
+ * 					paramType="query",
+ * 					required="false",
+ * 					allowMultiple="false",
+ * 					dataType="string",
+ * 					defaultValue=""
+ * 				),
+ *      		@SWG\Parameter(
+ * 					name="quest_id",
+ * 					description="Quest ID",
+ * 					paramType="query",
+ * 					required="false",
+ * 					allowMultiple="false",
+ * 					dataType="string",
+ * 					defaultValue=""
+ * 				),
+ *   			@SWG\Parameter(
+ * 					name="category",
+ * 					description="Return only articles belonging to the provided valid category title",
+ * 					paramType="query",
+ * 					required="false",
+ * 					allowMultiple="false",
+ * 					dataType="string",
+ * 					defaultValue=""
+ * 				),
+ * 				@SWG\Parameter(
+ * 					name="limit",
+ * 					description="Limit the number of results",
+ * 					paramType="query",
+ * 					required="false",
+ * 					allowMultiple="false",
+ * 					dataType="int",
+ * 					defaultValue="25"
+ * 				)
+ * 			)
+ * 		)
+ * 	)
+ * )
+ *
+ *
  */
 
 die;
