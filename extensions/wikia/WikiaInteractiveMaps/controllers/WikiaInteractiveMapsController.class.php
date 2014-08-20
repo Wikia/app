@@ -112,6 +112,11 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 
 		$map = $this->mapsModel->getMapByIdFromApi( $mapId );
 
+		if ( (int) $this->wg->CityId !== $map->city_id ) {
+			$targetUrl = GlobalTitle::newFromText( self::PAGE_NAME, NS_SPECIAL, $map->city_id )->getFullURL();
+			$this->wg->out->redirect( $targetUrl . '/' . $mapId );
+		}
+
 		if ( isset( $map->title ) ) {
 			$this->wg->out->setHTMLTitle( $map->title );
 
