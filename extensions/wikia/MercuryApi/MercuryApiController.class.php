@@ -33,7 +33,7 @@ class MercuryApiController extends WikiaController {
 	}
 
 	/**
-	 * @desc Returns number of comments per articlep
+	 * @desc Returns number of comments per article
 	 *
 	 * @throws NotFoundApiException
 	 */
