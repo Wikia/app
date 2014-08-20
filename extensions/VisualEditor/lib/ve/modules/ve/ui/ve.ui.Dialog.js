@@ -41,8 +41,9 @@ OO.inheritClass( ve.ui.Dialog, OO.ui.Dialog );
 /**
  * @inheritdoc
  */
-ve.ui.Dialog.prototype.open = function ( fragment, data ) {
+ve.ui.Dialog.prototype.open = function ( fragment, data, surface ) {
 	this.fragment = fragment;
+	this.surface = surface;
 
 	// Parent method
 	return ve.ui.Dialog.super.prototype.open.call( this, data );

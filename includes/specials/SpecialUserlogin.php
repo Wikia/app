@@ -1449,6 +1449,10 @@ class LoginForm extends SpecialPage {
 	 * Renew the user's session id, using strong entropy
 	 */
 	private function renewSessionId() {
+		/** Wikia change - begin - PLATFORM-308 */
+		global $wgSessionDebugData;
+		$wgSessionDebugData[] = [ 'event' => 'renewSessionId-begin' ];
+		/** Wikia change - end */
 		if ( wfCheckEntropy() ) {
 			session_regenerate_id( false );
 		} else {
@@ -1460,6 +1464,9 @@ class LoginForm extends SpecialPage {
 			session_start();
 			$_SESSION = $tmp;
 		}
+		/** Wikia change - begin - PLATFORM-308 */
+		$wgSessionDebugData[] = [ 'event' => 'renewSessionId-end' ];
+		/** Wikia change - end */
 	}
 
 	/**

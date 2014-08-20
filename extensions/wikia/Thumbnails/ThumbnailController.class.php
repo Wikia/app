@@ -83,7 +83,12 @@ class ThumbnailController extends WikiaController {
 		}
 
 		// set duration
-		$duration = $file->getMetadataDuration();
+		// The file is not always an instance of a class with magic getters implemented. see VID-1753
+		if ( is_callable( [$file, 'getMetadataDuration'] ) ) {
+			$duration = $file->getMetadataDuration();
+		} else {
+			$duration = null;
+		}
 		$durationAttribs = [];
 		$metaAttribs = [];
 

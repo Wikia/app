@@ -1001,18 +1001,13 @@ abstract class File {
 		$title = $this->getTitle();
 		if ( $title ) {
 			// Wikia change begin @author Scott Rabin (srabin@wikia-inc.com)
-			if ( TaskRunner::isModern('HTMLCacheUpdate') ) {
-				global $wgCityId;
+			global $wgCityId;
 
-				$task = ( new \Wikia\Tasks\Tasks\HTMLCacheUpdateTask() )
-					->wikiId( $wgCityId )
-					->title( $title );
-				$task->call( 'purge', 'imagelinks' );
-				$task->queue();
-			} else {
-				$update = new HTMLCacheUpdate( $title, 'imagelinks' );
-				$update->doUpdate();
-			}
+			$task = ( new \Wikia\Tasks\Tasks\HTMLCacheUpdateTask() )
+				->wikiId( $wgCityId )
+				->title( $title );
+			$task->call( 'purge', 'imagelinks' );
+			$task->queue();
 			// Wikia change end
 		}
 	}

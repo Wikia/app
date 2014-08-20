@@ -680,7 +680,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.onGetImageInfoSuccess = function ( deferr
 	for ( i = 0; i < data.query.pageids.length; i++ ) {
 		item = data.query.pages[ data.query.pageids[i] ];
 		results.push( {
-			'title': item.title,
+			'title': 'File:' + ( new mw.Title( item.title ) ).getMainText(),
 			'height': item.imageinfo[0].thumbheight,
 			'width': item.imageinfo[0].thumbwidth,
 			'url': item.imageinfo[0].thumburl
