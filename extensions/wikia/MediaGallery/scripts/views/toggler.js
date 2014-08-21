@@ -61,6 +61,8 @@ define('mediaGallery.toggler', ['mediaGallery.templates.mustache'], function (te
 		if (end >= this.$media.length) {
 			this.$more.addClass('hidden');
 		}
+
+		this.track('show-new-gallery-more-images');
 	};
 
 	Toggler.prototype.showLess = function () {
@@ -78,6 +80,18 @@ define('mediaGallery.toggler', ['mediaGallery.templates.mustache'], function (te
 
 		this.$more.removeClass('hidden');
 		this.$less.addClass('hidden');
+
+		this.track('show-new-gallery-less-images');
+	};
+
+	Toggler.prototype.track = function (label) {
+		Wikia.Tracker.track({
+			category: 'article',
+			action: Wikia.Tracker.ACTIONS.click,
+			label: label,
+			trackingMethod: 'both',
+			value: 0
+		});
 	};
 
 	return Toggler;

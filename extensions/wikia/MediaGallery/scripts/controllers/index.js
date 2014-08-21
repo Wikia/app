@@ -15,6 +15,16 @@ require(['mediaGallery.toggler'], function (Toggler) {
 			if (toggler.$media.length > visibleCount) {
 				toggler.init();
 				togglers.push(toggler);
+
+				toggler.$media.on('click', function () {
+					Wikia.Tracker.track({
+						category: 'article',
+						action: Wikia.Tracker.ACTIONS.click,
+						label: 'show-new-gallery-lightbox',
+						trackingMethod: 'both',
+						value: 0
+					});
+				});
 			}
 		});
 	});
