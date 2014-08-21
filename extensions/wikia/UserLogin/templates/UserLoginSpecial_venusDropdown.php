@@ -1,7 +1,6 @@
 <div id="UserLoginDropdown" class="UserLoginDropdown subnav">
+	<div class="ajaxRegisterContainer"><?= $registerLink ?></div>
 <?
-	echo $registerLink;
-
 	$tabIndex = 0;
 	$cachedMessages = [
 		'yourname' => wfMessage('yourname')->escaped(),
@@ -27,17 +26,18 @@
 			array(
 				'type' => 'text',
 				'name' => 'username',
-				'placeholder' => $cachedMessages[ 'yourname' ],
+				'class' => 'hide-label',
 				'isRequired' => true,
+				'placeholder' => $cachedMessages[ 'yourname' ],
 				'label' => $cachedMessages[ 'yourname' ],
 				'tabindex' => ++$tabIndex,
 			),
 			array(
 				'type' => 'password',
 				'name' => 'password',
-				'placeholder' => $cachedMessages[ 'yourpassword' ],
-				'class' => 'password-input',
+				'class' => 'password-input hide-label',
 				'isRequired' => true,
+				'placeholder' => $cachedMessages[ 'yourpassword' ],
 				'label' =>  $cachedMessages[ 'yourpassword' ],
 				'tabindex' => ++$tabIndex,
 			),

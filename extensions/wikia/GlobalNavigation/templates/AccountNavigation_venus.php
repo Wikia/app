@@ -16,10 +16,6 @@
 			<?php endforeach; ?>
 		</ul>
 		<?php endif; ?>
+		<?= $isAnon ? $loginDropdown : '' ?>
 	</li>
-	<?php if ( $isAnon ): ?>
-	<li>
-		<?= $loginDropdown ?>
-	</li>
-	<?php endif; ?>
 </ul>

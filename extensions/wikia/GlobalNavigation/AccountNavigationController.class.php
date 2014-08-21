@@ -13,7 +13,7 @@ class AccountNavigationController extends WikiaController {
 	/**
 	 * Render personal URLs item as HTML link
 	 */
-	private function renderPersonalUrl($id, $returnOpeningTagOnly = false, $wrapUrlText = false ) {
+	private function renderPersonalUrl($id, $noClosingTag = false, $wrapUrlText = false ) {
 		wfProfileIn(__METHOD__);
 		$personalUrl = $this->personal_urls[$id];
 
@@ -50,19 +50,12 @@ class AccountNavigationController extends WikiaController {
 		if(array_key_exists('afterText', $personalUrl)) {
 			$ret.= $personalUrl['afterText'];
 		}
-		if ( !$returnOpeningTagOnly ) {
+		if ( !$noClosingTag ) {
 			$ret.= Xml::closeElement('a');
 		}
 
 		wfProfileOut(__METHOD__);
 		return $ret;
-	}
-
-	/**
-	 * Render URL closing HTML tag
-	 */
-	private function renderUrlClosingTag() {
-		return Xml::closeElement('a');
 	}
 
 	/**
@@ -143,7 +136,6 @@ class AccountNavigationController extends WikiaController {
 			// render Login and Register links
 			$this->loginLink = $this->renderPersonalUrl('login');
 			$this->loginLinkOpeningTag = $this->renderPersonalUrl('login', true, true);
-			$this->linkClosingTag = $this->renderUrlClosingTag();
 			$this->registerLink = $this->renderPersonalUrl('register');
 			$this->loginDropdown = '';
 			if(!empty($wgEnableUserLoginExt)) {

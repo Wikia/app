@@ -1,0 +1,202 @@
+@import 'skins/oasis/css/core/color';
+@import 'skins/oasis/css/core/layout';
+@import 'skins/oasis/css/mixins/box-shadow';
+@import 'skins/oasis/css/mixins/box-sizing';
+@import 'skins/oasis/css/mixins/gradient';
+@import 'skins/oasis/css/mixins/placeholder';
+@import '../mixins/divider';
+
+//TODO: replace the colors with ones from the shared file
+$nav-background-color: #fff;
+$nav-font-color: #092140;
+$nav-font-alternative-color: #666;
+$dropdown-font-color: #0a5fa3;
+$menu-hover-bg-color: #edf1f4;
+$new-border-color: #c7d1d8;
+$facebook-background-color: #3c5b9b;
+$facebook-button-divider-color: #6381b4;
+$nav-active-color: #092140;
+$nav-alternative-color: #c7d1d8;
+
+.UserLoginDropdown {
+	background-color: $color-page;
+	border: 1px solid $nav-alternative-color;
+	color: $color-text;
+	display: none;
+	font-size: 11px;
+	list-style: none;
+	padding: 0;
+	position: absolute;
+	right: 0;
+	top: 43px;
+	width: 250px;
+
+	&.show {
+		display: block;
+	}
+
+	.ajaxRegisterContainer {
+		background-color: $nav-font-color;
+		padding: 20px;
+
+		.ajaxRegister {
+			background-color: $dropdown-font-color;
+			color: $nav-background-color;
+			display: block;
+			font-size: 15px;
+			font-weight: bold;
+			line-height: 40px;
+			text-align: center;
+			text-transform: uppercase;
+
+			&:hover, &:active {
+				text-decoration: none;
+			}
+		}
+	}
+
+	.hide-label label {
+		display: none;
+	}
+
+	.WikiaForm {
+		padding: 0 20px;
+
+		.forgot-password {
+			color: $dropdown-font-color;
+			font-size: 12px;
+			margin: 5px 0 20px;
+		}
+
+		.general-errors {
+			margin-top: 15px;
+		}
+
+		.input-group {
+			@include box-sizing;
+			line-height: inherit;
+			margin: 0;
+			padding: 0 10px;
+			width: 100%;
+		}
+
+		.keep-logged-in {
+			padding-top: 15px;
+			vertical-align: middle;
+		}
+
+		.login-button {
+			padding: 0;
+		}
+
+		input[type=text],
+		input[type=password] {
+			@include box-sizing;
+			@include clear-box-shadow;
+
+			@include placeholder {
+				color: $new-border-color;
+				font-style: italic;
+			}
+
+			border: 0;
+			border-bottom: 1px solid $new-border-color;
+			color: $nav-font-color;
+			font-size: 15px;
+			height: 40px;
+			padding: 15px 0 5px;
+			width: 100%;
+
+			&, &:focus, &:active {
+				background: none;
+				outline: none;
+			}
+		}
+
+		input[type=checkbox] {
+			margin: 0;
+		}
+
+		input.login-button[type="submit"] {
+			@include clear-linear-gradient;
+			background-color: $nav-font-color;
+			border: 0;
+			border-radius: 0;
+			color: $nav-background-color;
+			display: block;
+			font-size: 15px;
+			font-weight: bold;
+			height: 40px;
+			line-height: 40px;
+			margin-top: 25px;
+			padding: 0 20px;
+			text-transform: uppercase;
+			width: 100%;
+		}
+
+		div {
+			padding: 0;
+		}
+
+		fieldset {
+			border: 0;
+			margin: 0;
+			padding: 0;
+			width: 100%;
+		}
+
+		label {
+			color: $nav-font-alternative-color;
+			font-size: 12px;
+			margin: 0;
+		}
+	}
+
+	.sso-login {
+		padding: 20px;
+
+		> .sso-login-divider {
+			@include divider;
+			border-color: $new-border-color;
+			font-size: 12px;
+			margin-top: 0;
+			text-transform: uppercase;
+
+			> span {
+				background-color: $nav-background-color;
+			}
+		}
+
+		.wikia-button-facebook {
+			border: 0;
+			border-radius: 0;
+			color: $nav-background-color;
+			display: block;
+			font-size: 15px;
+			font-weight: bold;
+			height: 40px;
+			line-height: 40px;
+			padding: 0;
+			text-align: center;
+			text-transform: uppercase;
+
+			&, &:hover, &:active {
+				@include clear-linear-gradient;
+				background-color: $facebook-background-color;
+				text-decoration: none;
+			}
+		}
+
+		.sprite.facebook {
+			background-image: url('/skins/oasis/images/GlobalHeaderAB/fb_icon.png'); /* $wgCdnStylePath */
+			background-position: 15px bottom;
+			background-repeat: no-repeat;
+			border-right: 1px solid $facebook-button-divider-color;
+			float: left;
+			height: 40px;
+			margin: 0;
+			width: 41px;
+		}
+	}
+}
+

@@ -1950,3 +1950,13 @@ $config['global_navigation_oasis_css'] = array(
 		'//extensions/wikia/GlobalNavigation/css/GlobalNavigationOasis.scss'
 	)
 );
+
+/** this pack should be loaded only if GlobalNavigation extension is disabled */
+$config['global_header_css'] = array(
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => ['oasis'],
+	'assets' => array(
+		'//skins/oasis/css/core/AccountNavigation.scss',
+		'//extensions/wikia/UserLogin/css/UserLoginDropdown.scss'
+	)
+);

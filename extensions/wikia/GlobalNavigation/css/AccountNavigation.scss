@@ -1,100 +1,171 @@
-@import "skins/oasis/css/core/color";
-@import "extensions/wikia/Venus/styles/variables";
-@import "extensions/wikia/Venus/styles/layout";
-@import "skins/oasis/css/mixins/box-shadow";
-@import "skins/oasis/css/mixins/gradient";
-@import "skins/oasis/css/mixins/menus";
+@import 'skins/oasis/css/core/color';
+@import 'skins/oasis/css/mixins/box-shadow';
+@import 'skins/oasis/css/mixins/gradient';
+@import 'skins/oasis/css/mixins/menus';
 
 .AccountNavigation {
 	line-height: 20px;
 	list-style: none;
 	position: absolute;
-	top: 1px;
 	right: 20px;
+	top: 1px;
+	
 	li {
 		border: 0;
 		height: 29px;
 		margin-top: 0;
 		padding: 4px 0 0;
 		position: relative;
+		
 		&:hover {
 			@include linear-gradient(false, top, rgba(#000, 0), 0, #000, 100%);
 		}
+		
 		&.nohover:hover {
 			background: transparent;
 		}
+		
 		&:last-child a {
 			border: 0;
 		}
+		
 		>a {
 			border-right: 1px solid mix($color-header-text, $color-header, 20%);
 			display: inline-block;
 			height: 22px;
 			line-height: 24px;
 			padding: 0 15px;
+
 			&:hover {
 				text-decoration: none;
 			}
 		}
+		
 		& .chevron {
-			position: relative;
 			left: 6px;
+			position: relative;
 		}
 	}
+	
 	#fbconnect {
 		a {
-			border: none;
-			line-height: 1em;
+			border: 0;
 			height: 18px;
+			line-height: 1em;
 			padding: 0;
 		}
 	}
+	
 	.avatar {
 		float: left;
 		margin-right: 5px;
 		vertical-align: middle;
 	}
+}
 
-	.subnav {
-		@include menu-heavy;
-		@include box-shadow(0, 5px, 10px, rgba(0, 0, 0, 0.5));
-		display: block;
-		padding: 0px;
-		right: 0;
-		top: -9999px;
-		&.show {
-			top: 33px;
-		}
-		> li {
-			float: none;
-			height: auto;
-			&:hover {
-				background-image: none;
+@import 'skins/oasis/css/core/color';
+@import 'extensions/wikia/Venus/styles/variables';
+@import 'extensions/wikia/Venus/styles/layout';
+@import 'skins/oasis/css/mixins/box-shadow';
+@import 'skins/oasis/css/mixins/box-sizing';
+@import 'skins/oasis/css/mixins/gradient';
+@import 'skins/oasis/css/mixins/menus';
+@import 'skins/oasis/css/mixins/placeholder';
+
+$new-nav-height: 66px;
+$new-breakpoint-small: 1024px;
+$new-breakpoint-big: 1280px;
+$search-select-width: 125px;
+
+$nav-background-color: #fff;
+$nav-font-color: #092140;
+$nav-font-alternative-color: #666;
+$dropdown-font-color: #0a5fa3;
+$menu-hover-bg-color: #edf1f4;
+$new-border-color: #c7d1d8;
+$facebook-background-color: #3c5b9b;
+
+.AccountNavigation {
+	border-left: 1px solid $new-border-color;
+	right: 0;
+	top: 0;
+
+	> li {
+		@include box-sizing;
+		height: $new-nav-height;
+		padding: 0;
+
+		&:hover {
+			background: none;
+			background-color: $menu-hover-bg-color;
+
+			.bubbles.reddot {
+				background-color: $menu-hover-bg-color;
 			}
-			> a {
-				padding: 10px;
-				color: $color-text;
-				&:hover {
-					@include box-shadow(0,0,5px, mix($color-buttons, $color-page, 25%), inset);
-					$color-account-nav: mix($color-buttons, $color-page, 20%);
-					@if lightness($color-page) < 50 {
-						$color-account-nav: lighten($color-account-nav, 8%);
-					}
-					background-color: $color-account-nav;
+
+			.chevron {
+				border-top-color: $nav-font-color;
+			}
+		}
+
+		> a {
+			border: 0;
+			display: block;
+			padding: 15px 23px 15px 39px;
+
+			.bubbles.reddot {
+				background-color: #fff;
+				border-radius: 9px;
+				height: 18px;
+				left: 32px;
+				position: absolute;
+				top: 16px;
+				width: 19px;
+
+				#bubbles_count {
+					background: red;
+					border-radius: 8px;
+					float: none;
+					font-size: 12px;
+					left: 2px;
+					line-height: 14px;
+					padding: 0 4px;
+					position: relative;
+					text-align: center;
+					top: -3px;
 				}
 			}
 		}
-		a {
-			border-right: 0;
+
+		.chevron {
+			border-top-color: $new-border-color;
+			border-width: 5px;
+			margin-top: 14px;
+			position: static;
 		}
-	}
-	>li>a {
-		color: $color-header-text;
-		&:visited, &:active {
-			color: $color-header-text;
+
+
+		.avatar {
+			border: 0;
+			border-radius: 50%;
+			margin-right: 6px;
+		}
+
+		.avatarContainer {
+			border-radius: 50%;
+			float: left;
+			height: 36px;
+			margin-right: 5px;
+			overflow: hidden;
+			width: 36px;
+		}
+
+		.login-text {
+			display: none;
 		}
 	}
 }
+
 // disable overrides (main offender: user talk page gets different color if it's not created yet,
 // but for new Account Navigation we don't want that)
 #AccountNavigation li a.new { color: $color-text !important; }
