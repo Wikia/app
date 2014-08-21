@@ -1,4 +1,4 @@
-require(['mediaGallery.toggler'], function (Toggler) {
+require(['mediaGallery.toggler', 'mediaGallery.media'], function (Toggler, Media) {
 	'use strict';
 	$(function () {
 		var visibleCount = 8,
@@ -7,24 +7,24 @@ require(['mediaGallery.toggler'], function (Toggler) {
 
 		$galleries.each(function () {
 			var $this = $(this),
+				media = [],
 				toggler = new Toggler({
 					$el: $this
 				});
+
+			// create new views for each media item
+			toggler.$media.each(function () {
+				var medium = new Media({
+					$el: $(this)
+				});
+				medium.init();
+				media.push(medium);
+			});
 
 			visibleCount = $this.attr('data-visible-count') || visibleCount;
 			if (toggler.$media.length > visibleCount) {
 				toggler.init();
 				togglers.push(toggler);
-
-				toggler.$media.on('click', function () {
-					Wikia.Tracker.track({
-						category: 'article',
-						action: Wikia.Tracker.ACTIONS.click,
-						label: 'show-new-gallery-lightbox',
-						trackingMethod: 'both',
-						value: 0
-					});
-				});
 			}
 		});
 	});

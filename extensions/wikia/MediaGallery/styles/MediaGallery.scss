@@ -95,9 +95,8 @@ $media-margin: .5em;
 	 *    - Absolutely positioned top of caption to 100%
 	 *    - Add a negative top margin to pull the caption up the sum of it's own height (padding plus one line-height)
 	 *    - Also, pull it up a bit more to offset the parent element's padding ($media-margin)
-	 * Hover state:
-	 *    - Reset caption's negative top margin to 0
-	 *    - Set the absolutely positioned top to only the $media-margin offset
+	 * Hovered class:
+	 *    - Expand caption content so it's height can be calculated by JS.
 	 */
 
 	$caption-line-height: 1.5em;
@@ -125,13 +124,8 @@ $media-margin: .5em;
 			white-space: nowrap;
 		}
 
-		&:hover {
-			margin-top: 0;
-			top: $media-margin;
-
-			.inner {
-				white-space: normal;
-			}
+		&.hovered .inner {
+			white-space: normal;
 		}
 	}
 
