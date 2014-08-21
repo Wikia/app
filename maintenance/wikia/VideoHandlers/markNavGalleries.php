@@ -49,6 +49,8 @@ class MarkAsNav extends Maintenance {
 		$this->test = $this->hasOption( 'test' );
 		$this->verbose = $this->hasOption( 'verbose' );
 
+		$start = time();
+
 		if ( $this->test ) {
 			echo "*** TEST MODE ***\n";
 		}
@@ -66,11 +68,8 @@ class MarkAsNav extends Maintenance {
 			$this->updatePage( $pageId );
 		}
 
-		echo "\tUnique gallery params:";
-		foreach ( $this->galleryParamTally as $tag => $count ) {
-			echo " $tag=$count";
-		}
-		echo "\n";
+		$elapsed = time() - $start;
+		echo "Done: $elapsed s\n";
 	}
 
 	/**
