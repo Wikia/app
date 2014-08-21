@@ -8,7 +8,7 @@ class MediaGalleryController extends WikiaController {
 	public function gallery() {
 		$items = $this->getVal( 'items' );
 		$galleryParams = $this->getVal( 'gallery_params', [] ); // gallery tag parameters
-		$expanded = !empty( $galleryParams['expand'] );
+		$visibleCount = empty( $galleryParams['expand'] ) ? self::MAX_ITEMS : self::MAX_EXPANDED_ITEMS;
 
 		$media = [];
 
@@ -49,7 +49,7 @@ class MediaGalleryController extends WikiaController {
 			);
 
 			// Hide overflow items
-			if ( $dimensionIndex >= self::MAX_ITEMS ) {
+			if ( $dimensionIndex >= $visibleCount ) {
 				$classes[] = "hidden";
 				$classes[] = "fade";
 			}
@@ -62,15 +62,9 @@ class MediaGalleryController extends WikiaController {
 			++$dimensionIndex;
 		}
 
-		$count = count( $media );
-		if ( $count > self::MAX_ITEMS ) {
-			$count = 'many';
-		}
-
 		$this->media = $media;
-		$this->count = $count;
-		$this->expanded = $expanded;
-		$this->max = $expanded ? self::MAX_EXPANDED_ITEMS : self::MAX_ITEMS;
+		$this->count = count( $media );
+		$this->visibleCount = $visibleCount;
 		$this->addImageButton = wfMessage('mediagallery-add-image-button')->plain();
 	}
 

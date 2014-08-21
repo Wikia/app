@@ -8,8 +8,25 @@ $media-margin: .5em;
 	margin: 0 $media-margin * -1;
 	width: auto;
 
+	// default is 8 or more images
 	.media {
+		@include grid-column(3);
 		position: relative;
+		transition: all 1s ease-in-out;
+
+		img {
+			width: 100%;
+		}
+
+		&.hidden {
+			display: none;
+			opacity: 0;
+		}
+
+		&.fade {
+			opacity: 0;
+			transition-duration: .5s;
+		}
 	}
 
 	&.count-1 .media {
@@ -48,31 +65,8 @@ $media-margin: .5em;
 		}
 	}
 
-	&.count-8 .media {
-		@include grid-column(3);
-	}
-
-	&.count-many .media {
-		@include grid-column(3);
-		transition: all 1s ease-in-out;
-
-		&.hidden {
-			display: none;
-			opacity: 0;
-		}
-
-		&.fade {
-			opacity: 0;
-			transition-duration: .5s;
-		}
-	}
-
 	&[class*="count-"] .media:nth-child(n) {
 		padding: $media-margin;
-
-		img {
-			width: 100%;
-		}
 	}
 
 	.media-gallery-inner {
