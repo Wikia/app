@@ -237,8 +237,8 @@ class ThumbnailHelper extends WikiaModel {
 
 		// Get timestamp for older versions of files (used on file page history tab)
 		if ( $file instanceof OldLocalFile ) {
-			$archive_name = $file->getArchiveName();
-			if ( !empty( $archive_name ) ) {
+			$archiveName = $file->getArchiveName();
+			if ( !empty( $archiveName ) ) {
 				$linkHref .= '?t='.$file->getTimestamp();
 			}
 		}
