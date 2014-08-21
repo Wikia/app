@@ -642,23 +642,32 @@ class WikiaFileHelper extends Service {
 		if ( $height > $width ) {
 			// portrait
 			$cropStr = sprintf( "%dx%d-0,%d,0,%d", $dimension, $dimension, $width, $width );
-		} else if ( $width > $height ) {
+		} else {
 			// landscape
 
+			$thumbEndWidth = null;
 			// Thumbnailer does not return a perfect square for images with height > dimension in AxBxC format
+			// Also it does not return square images at all when height < dimension in AxB-X0,X1,Y0,Y1 format
 			// Therefore this check is necessary
-			if ( $height < $dimension ) {
-				$cropStr = sprintf( "%dx%dx5", $dimension, $dimension );
+			if ( $width > $dimension ) {
+				// If thumbnail fits within original image, X-offset is based on width/height difference
+				// Otherwise, width/dimension difference determines horizontal windowing.
+				if ( $height >= $dimension ) {
+					$xOffset = ( int ) round( ( $width - $height ) / 2 );
+					$thumbEndWidth = $width - $xOffset;
+					$thumbHeight = $height;
+				} else {
+					$xOffset = ( int ) round( ( $width - $dimension ) / 2 );
+				}
 			} else {
-				// Image must be centered it horizontally
-				$xOffset = ( int )( ( $width - $dimension ) / 2 );
-				$cropStr = sprintf(
-					"%dx%d-%d,%d,%d,%d",
-					$dimension, $dimension, $xOffset, $dimension + $xOffset, 0, $dimension
-				);
+				$xOffset = 0;
 			}
-		} else {
-			$cropStr = sprintf( "%dx%d", $dimension, $dimension );
+
+			if ( !$thumbEndWidth ) {
+				$thumbEndWidth = max( $width, $dimension ) - $xOffset;
+				$thumbHeight = min( $height, $dimension );
+			}
+			$cropStr = sprintf( "%dx%d-%d,%d,%d,%d", $dimension, $dimension, $xOffset, $thumbEndWidth, 0, $thumbHeight );
 		}
 
 		$append = '';
