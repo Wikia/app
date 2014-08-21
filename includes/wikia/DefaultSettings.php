@@ -1222,10 +1222,10 @@ $wgEnableAdEngineExt = true;
 $wgAdDriverUseEbay = false;
 
 /**
- * @name $wgAdDriverUseGptRemnant
+ * @name $wgAdDriverUseRemnantGpt
  * Enables additional call to dart before Liftium
  */
-$wgAdDriverUseGptRemnant = false;
+$wgAdDriverUseRemnantGpt = false;
 
 /**
  * @name $wgAdDriverUseBottomLeaderboard

@@ -42,14 +42,6 @@ define('ext.wikia.adEngine.adConfigLate', [
 		ie8 = window.navigator && window.navigator.userAgent && window.navigator.userAgent.match(/MSIE [6-8]\./),
 		sevenOneMediaDisabled = instantGlobals.wgSitewideDisableSevenOneMedia,
 
-		dartSecondCallInCountries = {
-			US: true
-		},
-		dartSecondCallVerticals = {
-			Gaming: true
-		},
-		dartSecondCallEnabled = dartSecondCallInCountries[country] && dartSecondCallVerticals.hasOwnProperty(window.cscoreCat),
-
 		dartBtfCountries = {
 			US: true
 		},
@@ -132,7 +124,7 @@ define('ext.wikia.adEngine.adConfigLate', [
 			}
 		}
 
-		if (dartSecondCallEnabled && adProviderRemnantGpt.canHandleSlot(slotname)) {
+		if (window.wgAdDriverUseRemnantGpt && adProviderRemnantGpt.canHandleSlot(slotname)) {
 			return adProviderRemnantGpt;
 		}
 
