@@ -34,7 +34,8 @@ describe('AdProviderEvolve', function(){
 				getDomainKV: function() {return 'dmn=mock;';},
 				getHostnamePrefix: function() {return 'hostpre=mock;';},
 				getCustomKeyValues: function() {return '';},
-				getKruxKeyValues: function() {return '';}
+				getKruxKeyValues: function() {return '';},
+				getS1KeyValue: function () { return 's1=_somedb;'; }
 			}
 			, scriptWriterMock
 			, windowMock = {wgInsideUnitTest: true, location: {hostname: 'mock'}}
@@ -51,7 +52,6 @@ describe('AdProviderEvolve', function(){
 			logMock, windowMock, documentMock, scriptWriterMock, slotTweakerMock, adLogicPageParamsLegacyMock, kruxMock, evolveHelperMock, evolveSlotConfig
 		);
 
-		windowMock.wgDBname = 'somedb';
 		windowMock.wgDartCustomKeyValues = null;
 		windowMock.cscoreCat = null;
 

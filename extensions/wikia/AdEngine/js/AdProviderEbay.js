@@ -3,10 +3,10 @@
 define('ext.wikia.adEngine.provider.ebay', [
 	'wikia.log',
 	'jquery',
-	'wikia.window',
+	'ext.wikia.adEngine.adContext',
 	'wikia.document',
 	'wikia.geo'
-], function (log, $, window, document, geo) {
+], function (log, $, adContext, document, geo) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.provider.ebay';
@@ -19,7 +19,7 @@ define('ext.wikia.adEngine.provider.ebay', [
 		log(['fillInSlot', slotname], 'info', logGroup);
 
 		var params = {
-			skin: window.skin,
+			skin: adContext.targeting.skin,
 			title: document.title
 		};
 
@@ -39,7 +39,7 @@ define('ext.wikia.adEngine.provider.ebay', [
 			callback: function (data) {
 				var slot = $('#' + slotname).html(data).addClass('ebay-ads').removeClass('default-height');
 
-				if (window.wikiaPageType !== 'article') {
+				if (adContext.targeting.pageType !== 'article') {
 					slot.addClass('ebay-ads-responsive');
 				}
 

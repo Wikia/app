@@ -3,8 +3,9 @@
 define('ext.wikia.adEngine.wikiaGptAdDetect', [
 	'wikia.log',
 	'wikia.window',
+	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.messageListener'
-], function (log, window, messageListener) {
+], function (log, window, adContext, messageListener) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.wikiaGptAdDetect',
@@ -101,7 +102,7 @@ define('ext.wikia.adEngine.wikiaGptAdDetect', [
 			return 'empty';
 		}
 
-		if (window.skin !== 'wikiamobile') {
+		if (adContext.targeting.skin !== 'wikiamobile') {
 			return 'always_success';
 		}
 

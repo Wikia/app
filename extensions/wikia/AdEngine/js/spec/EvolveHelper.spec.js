@@ -1,29 +1,35 @@
-describe('EvolveHelper', function(){
-	it('getSect', function() {
-		var logMock = function() {}
-			, windowMock = {}
-			;
+/*global describe, it, modules, expect*/
+describe('EvolveHelper', function () {
+	'use strict';
+	it('getSect', function () {
+		var logMock = function () {},
+			adContextMock = {targeting: {}},
+			evolveHelper;
 
-		evolveHelper = modules['ext.wikia.adEngine.evolveHelper'](logMock, windowMock);
+		evolveHelper = modules['ext.wikia.adEngine.evolveHelper'](logMock, adContextMock);
 
-		windowMock.wgDBname = null;
-		windowMock.wgDartCustomKeyValues = null;
-		windowMock.cscoreCat = null;
+		adContextMock.targeting.wikiDbName = null;
+		adContextMock.targeting.wikiCustomKeyValues = null;
+		adContextMock.targeting.wikiVertical = null;
+		evolveHelper = modules['ext.wikia.adEngine.evolveHelper'](logMock, adContextMock);
 
 		expect(evolveHelper.getSect()).toBe('ros', 'ros');
 
-		windowMock.wgDartCustomKeyValues = 'foo=bar;media=tv';
-		windowMock.cscoreCat = 'Entertainment';
+		adContextMock.targeting.wikiCustomKeyValues = 'foo=bar;media=tv';
+		adContextMock.targeting.wikiVertical = 'Entertainment';
+		evolveHelper = modules['ext.wikia.adEngine.evolveHelper'](logMock, adContextMock);
 
 		expect(evolveHelper.getSect()).toBe('tv', 'tv entertainment');
 
-		windowMock.wgDartCustomKeyValues = 'foo=bar';
-		windowMock.cscoreCat = 'Entertainment';
+		adContextMock.targeting.wikiCustomKeyValues = 'foo=bar';
+		adContextMock.targeting.wikiVertical = 'Entertainment';
+		evolveHelper = modules['ext.wikia.adEngine.evolveHelper'](logMock, adContextMock);
 
 		expect(evolveHelper.getSect()).toBe('entertainment', 'foo entertainment');
 
-		windowMock.wgDartCustomKeyValues = 'foo=bar;media=movie';
-		windowMock.cscoreCat = 'Entertainment';
+		adContextMock.targeting.wikiCustomKeyValues = 'foo=bar;media=movie';
+		adContextMock.targeting.wikiVertical = 'Entertainment';
+		evolveHelper = modules['ext.wikia.adEngine.evolveHelper'](logMock, adContextMock);
 
 		expect(evolveHelper.getSect()).toBe('movies', 'movie entertainment');
 	});

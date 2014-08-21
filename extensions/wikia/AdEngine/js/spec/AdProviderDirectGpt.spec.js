@@ -1,5 +1,9 @@
 describe('AdProviderDirectGpt', function(){
 
+	var adContextMock = {
+		forceProviders: {}
+	};
+
 	it('Leaderboard works as expected in low value countries', function() {
 		var logMock = function() {},
 			windowMock = {},
@@ -27,6 +31,7 @@ describe('AdProviderDirectGpt', function(){
 			windowMock,
 			geoMock,
 			cacheStorageMock,
+			adContextMock,
 			slotTweakerMock,
 			adLogicHighValueCountryMock,
 			wikiaGptMock,
@@ -71,6 +76,7 @@ describe('AdProviderDirectGpt', function(){
 			windowMock,
 			geoMock,
 			cacheStorageMock,
+			adContextMock,
 			slotTweakerMock,
 			adLogicHighValueCountryMock,
 			wikiaGptMock,
@@ -119,6 +125,7 @@ describe('AdProviderDirectGpt', function(){
 			windowMock,
 			geoMock,
 			cacheStorageMock,
+			adContextMock,
 			slotTweakerMock,
 			adLogicHighValueCountryMock,
 			wikiaGptMock,
@@ -168,6 +175,7 @@ describe('AdProviderDirectGpt', function(){
 			windowMock,
 			geoMock,
 			cacheStorageMock,
+			adContextMock,
 			slotTweakerMock,
 			adLogicHighValueCountryMock,
 			wikiaGptMock,
@@ -225,6 +233,7 @@ describe('AdProviderDirectGpt', function(){
 			windowMock,
 			geoMock,
 			cacheStorageMock,
+			adContextMock,
 			slotTweakerMock,
 			adLogicHighValueCountryMock,
 			wikiaGptMock,

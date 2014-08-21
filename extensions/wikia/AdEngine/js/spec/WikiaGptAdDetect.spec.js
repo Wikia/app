@@ -11,10 +11,13 @@ describe('Method ext.wikia.adEngine.wikiaGptAdDetect.onAdLoad', function () {
 				log: noop,
 				success: noop,
 				hop: noop,
-				window: windowMock
+				window: windowMock,
+				adContext: {
+					targeting: {}
+				}
 			};
 
-			gptHop = modules['ext.wikia.adEngine.wikiaGptAdDetect'](mocks.log, mocks.window);
+			gptHop = modules['ext.wikia.adEngine.wikiaGptAdDetect'](mocks.log, mocks.window, mocks.adContext);
 
 			spyOn(mocks, 'success');
 			spyOn(mocks, 'hop');
@@ -37,9 +40,14 @@ describe('Method ext.wikia.adEngine.wikiaGptAdDetect.onAdLoad', function () {
 				log: noop,
 				success: noop,
 				hop: noop,
-				window: {skin: 'wikiamobile'},
+				window: {},
 				iframe: {},
-				iframeDoc: {}
+				iframeDoc: {},
+				adContext: {
+					targeting: {
+						skin: 'wikiamobile'
+					}
+				}
 			};
 
 			mocks.iframe.contentWindow = {};
@@ -57,7 +65,7 @@ describe('Method ext.wikia.adEngine.wikiaGptAdDetect.onAdLoad', function () {
 			mocks.iframeDoc.querySelector = specialAd ? returnObj : noop;
 			mocks.iframeDoc.querySelectorAll = function () { return []; };
 
-			gptHop = modules['ext.wikia.adEngine.wikiaGptAdDetect'](mocks.log, mocks.window);
+			gptHop = modules['ext.wikia.adEngine.wikiaGptAdDetect'](mocks.log, mocks.window, mocks.adContext);
 
 			spyOn(mocks, 'success');
 			spyOn(mocks, 'hop');

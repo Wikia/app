@@ -1,5 +1,5 @@
 /*global define*/
-define('ext.wikia.adEngine.evolveHelper', ['wikia.log', 'wikia.window'], function (log, window) {
+define('ext.wikia.adEngine.evolveHelper', ['wikia.log', 'ext.wikia.adEngine.adContext'], function (log, adContext) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.evolveHelper',
@@ -8,25 +8,25 @@ define('ext.wikia.adEngine.evolveHelper', ['wikia.log', 'wikia.window'], functio
 	getSect = function () {
 		log('getSect', 5, logGroup);
 
-		var kv = window.wgDartCustomKeyValues || '',
-			hub = window.cscoreCat || '',
+		var kv = adContext.targeting.wikiCustomKeyValues || '',
+			vertical = adContext.targeting.wikiVertical || '',
 			sect;
 
-		if (window.wgDBname === 'wikiaglobal') {
+		if (adContext.targeting.wikiDbName === 'wikiaglobal') {
 			sect = 'home';
-			if (window.wgPageName === 'Video_Games') {
+			if (adContext.targeting.pageName === 'Video_Games') {
 				sect = 'gaming';
 			}
-			if (window.wgPageName === 'Entertainment') {
+			if (adContext.targeting.pageName === 'Entertainment') {
 				sect = 'entertainment';
 			}
 		} else if (kv.indexOf('movie') !== -1) {
 			sect = 'movies';
 		} else if (kv.indexOf('tv') !== -1) {
 			sect = 'tv';
-		} else if (hub === 'Entertainment') {
+		} else if (vertical === 'Entertainment') {
 			sect = 'entertainment';
-		} else if (hub === 'Gaming') {
+		} else if (vertical === 'Gaming') {
 			sect = 'gaming';
 		} else {
 			sect = 'ros';

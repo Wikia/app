@@ -3,10 +3,10 @@
 
 define('ext.wikia.adEngine.slotTracker', [
 	'wikia.log',
-	'wikia.window',
+	'ext.wikia.adEngine.adContext',
 	'wikia.tracker',
 	require.optional('wikia.abTest')
-], function (log, window, tracker, abTest) {
+], function (log, adContext, tracker, abTest) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.slotTracker',
@@ -45,8 +45,8 @@ define('ext.wikia.adEngine.slotTracker', [
 			TOP_RIGHT_BOXAD:        'medrec',
 			WIKIA_BAR_BOXAD_1:      'wikiabar'
 		},
-		adsInHead = window.wgLoadAdsInHead && abTest && abTest.getGroup('ADS_IN_HEAD'),
-		adsAfterPageLoad = window.wgLoadLateAdsAfterPageLoad && abTest && abTest.getGroup('ADS_AFTER_PAGE_LOAD');
+		adsInHead = adContext.opts.adsInHead && abTest && abTest.getGroup('ADS_IN_HEAD'),
+		adsAfterPageLoad = adContext.opts.lateAdsAfterPageLoad && abTest && abTest.getGroup('ADS_AFTER_PAGE_LOAD');
 
 	// The filtering function
 	function isInteresting(eventName, data) {
@@ -69,7 +69,7 @@ define('ext.wikia.adEngine.slotTracker', [
 			return false;
 		}
 		// Don't track state events yet
-		if (!window.wgAdDriverTrackState && eventName.match(/^state/)) {
+		if (!adContext.opts.trackSlotState && eventName.match(/^state/)) {
 			return false;
 		}
 
