@@ -110,6 +110,10 @@ class MarkAsNav extends Maintenance {
 			return;
 		}
 
+		// Make
+		global $wgTitle;
+		$wgTitle = $article->getTitle();
+
 		$text = $article->getContent();
 
 		// Update galleries that use links and collect some stats
