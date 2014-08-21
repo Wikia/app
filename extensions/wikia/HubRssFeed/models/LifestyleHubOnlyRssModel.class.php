@@ -2,13 +2,10 @@
 
 class LifestyleHubOnlyRssModel extends HubOnlyRssModel {
 	const FEED_NAME = 'Lifestyle';
+	const LANGUAGE = 'en';
 
 	public function getFeedTitle() {
 		return 'Wikia Lifestyle Feed';
-	}
-
-	public function getFeedLanguage() {
-		return 'en';
 	}
 
 	public function getFeedDescription() {
