@@ -107,6 +107,13 @@ class MonetizationModuleHelper extends WikiaModel {
 			$cacheKey .= ':' . $params['s_id'];
 		}
 
+		if ( !empty( $params['geo'] ) ) {
+			$cacheKey .= ':' . $params['geo'];
+		} else {
+			// set the default to be rest of world ('ROW')
+			$cacheKey .= ':ROW';
+		}
+
 		return $cacheKey;
 	}
 
