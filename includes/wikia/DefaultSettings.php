@@ -1199,12 +1199,6 @@ $wgAdPageLevelCategoryLangs = [ 'en' => true ];;
 $wgEnableJavaScriptErrorLogging = false;
 
 /**
- * @name $wgEnableRHonDesktop
- * Enables RH- hack on Desktop
- */
-$wgEnableRHonDesktop = false;
-
-/**
  * @name $wgLoadLateAdsAfterPageLoad
  * Enables postpones start for ads in late queue until page "load" event.
  */
@@ -1227,6 +1221,12 @@ $wgEnableAdEngineExt = true;
  * Whether to enable AdProviderEbay (true) or not (false)
  */
 $wgAdDriverUseEbay = false;
+
+/**
+ * @name $wgAdDriverUseGptRemnant
+ * Enables additional call to dart before Liftium
+ */
+$wgAdDriverUseGptRemnant = false;
 
 /**
  * @name $wgAdDriverUseBottomLeaderboard

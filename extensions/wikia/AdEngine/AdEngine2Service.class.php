@@ -140,8 +140,8 @@ class AdEngine2Service
 
 	public static function shouldLoadLiftium()
 	{
-		global $wgEnableRHonDesktop, $wgAdEngineDisableLateQueue;
-		return !$wgEnableRHonDesktop && !$wgAdEngineDisableLateQueue;
+		global $wgAdEngineDisableLateQueue;
+		return !$wgAdEngineDisableLateQueue;
 	}
 
 	public static function shouldLoadLateQueue()
@@ -226,7 +226,7 @@ class AdEngine2Service
 			$wgAdPageLevelCategoryLangs, $wgLanguageCode, $wgAdDriverTrackState,
 			$wgAdDriverForceDirectGptAd, $wgAdDriverForceLiftiumAd,
 			$wgOasisResponsive, $wgOasisResponsiveLimited,
-			$wgEnableRHonDesktop, $wgOut,
+		    $wgAdDriverUseGptRemnant, $wgOut,
 			$wgRequest, $wgEnableKruxTargeting,
 			$wgAdVideoTargeting, $wgLiftiumOnLoad, $wgAdDriverSevenOneMediaOverrideSub2Site,
 			$wgDartCustomKeyValues, $wgWikiDirectedAtChildrenByStaff, $wgAdEngineDisableLateQueue,
@@ -247,13 +247,13 @@ class AdEngine2Service
 			'wgAdDriverUseCatParam' => array_search($wgLanguageCode, $wgAdPageLevelCategoryLangs),
 			'wgAdDriverUseEbay' => $wgAdDriverUseEbay,
 			'wgAdDriverUseDartForSlotsBelowTheFold' => $wgAdDriverUseDartForSlotsBelowTheFold === null ? 'hub' : $wgAdDriverUseDartForSlotsBelowTheFold,
+			'wgAdDriverUseGptRemnant' => $wgAdDriverUseGptRemnant,
 			'wgAdDriverUseSevenOneMedia' => $wgAdDriverUseSevenOneMedia,
 			'wgAdDriverSevenOneMediaOverrideSub2Site' => $wgAdDriverSevenOneMediaOverrideSub2Site,
 			'wgUserShowAds' => $wgUser->getOption('showAds'),
 			'wgOutboundScreenRedirectDelay' => $wgOutboundScreenRedirectDelay,
 			'wgEnableOutboundScreenExt' => $wgEnableOutboundScreenExt,
 			'wgAdDriverTrackState' => $wgAdDriverTrackState,
-			'wgEnableRHonDesktop' => $wgEnableRHonDesktop,
 			'wgAdDriverForceDirectGptAd' => $wgAdDriverForceDirectGptAd,
 			'wgAdDriverForceLiftiumAd' => $wgAdDriverForceLiftiumAd,
 			'wgAdVideoTargeting' => $wgAdVideoTargeting,

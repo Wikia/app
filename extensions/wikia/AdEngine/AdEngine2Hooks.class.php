@@ -13,7 +13,7 @@ class AdEngine2Hooks {
 
 		// TODO: review top and bottom vars (important for adsinhead)
 
-		global $wgAdDriverForceDirectGptAd, $wgAdDriverForceLiftiumAd, $wgEnableRHonDesktop, $wgEnableRHonMobile,
+		global $wgAdDriverForceDirectGptAd, $wgAdDriverForceLiftiumAd, $wgAdDriverUseGptRemnant,
 			   $wgLiftiumOnLoad, $wgNoExternals, $wgAdVideoTargeting, $wgEnableKruxTargeting,
 			   $wgAdEngineDisableLateQueue, $wgLoadAdsInHead, $wgLoadLateAdsAfterPageLoad;
 
@@ -21,8 +21,7 @@ class AdEngine2Hooks {
 		$wgLiftiumOnLoad = $request->getBool( 'liftiumonload', (bool)$wgLiftiumOnLoad );
 		$wgAdVideoTargeting = $request->getBool( 'videotargetting', (bool)$wgAdVideoTargeting );
 
-		$wgEnableRHonDesktop = $request->getBool( 'gptremnant', $wgEnableRHonDesktop );
-		$wgEnableRHonMobile = $request->getBool( 'gptremnant', $wgEnableRHonMobile );
+		$wgAdDriverUseGptRemnant = $request->getBool( 'gptremnant', $wgAdDriverUseGptRemnant );
 
 		$wgAdEngineDisableLateQueue = $request->getBool( 'noremnant', $wgAdEngineDisableLateQueue );
 
