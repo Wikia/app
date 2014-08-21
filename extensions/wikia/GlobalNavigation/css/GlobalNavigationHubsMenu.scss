@@ -70,7 +70,6 @@
 		.icon {
 			background-position: 15px center;
 			background-repeat: no-repeat;
-			background-size: 52px;
 			display: inline-block;
 			float: left;
 			height: 62px;
@@ -107,7 +106,8 @@
 
 		h2 {
 			font-size: 15px;
-			margin: 21px 0 5px;
+			font-weight: bold;
+			padding: 21px 0 5px;
 		}
 
 		a {
