@@ -103,8 +103,7 @@ class CheckUserHooks {
 			\Wikia\Logger\WikiaLogger::instance()->debug(
 				'CONN-587 - db error while changing user password',
 				[
-					'exception' => $e->getMessage(),
-					'backtrace' => $e->getTraceAsString(),
+					'exception' => $e,
 					'user_name' => $user->getName(),
 					'ip' => $ip,
 					'account_name' => ( $account instanceof User ) ? $account->getName() : null,
