@@ -9,12 +9,11 @@ define('ext.wikia.adEngine.provider.remnantGpt', [
 
 	var logGroup = 'ext.wikia.adEngine.provider.remnantGpt',
 		srcName = 'remnant',
-		slotMap = gptSlotConfig.getConfig(srcName),
-		slotsCalled = {};
+		slotMap = gptSlotConfig.getConfig(srcName);
 
 	function canHandleSlot(slotname) {
 
-		if (!slotMap[slotname] || slotsCalled[slotname]) {
+		if (!slotMap[slotname]) {
 			return false;
 		}
 
@@ -23,8 +22,6 @@ define('ext.wikia.adEngine.provider.remnantGpt', [
 
 	function fillInSlot(slotname, success, hop) {
 		log(['fillInSlot', slotname], 5, logGroup);
-
-		slotsCalled[slotname] = true;
 
 		wikiaGpt.pushAd(
 			slotname,
