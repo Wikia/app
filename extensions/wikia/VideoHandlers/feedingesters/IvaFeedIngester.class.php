@@ -511,24 +511,24 @@ class IvaFeedIngester extends VideoFeedIngester {
 
 		$articlesCreated = 0;
 
-		// Ingest any content from the defined video sets above
-		$videoParams = [ 'apiType' => 'EntertainmentProgram' ];
-		foreach( self::$VIDEO_SETS as $keyword => $videoSet ) {
-			$videoParams['keyword'] = $keyword;
-
-			foreach( $videoSet as $value ) {
-				$videoParams['videoSet'] = $value;
-				$videoParams['isPublishedId'] = ( is_numeric( $value ) );
-
-				$result = $this->ingestVideos( $createParams, $startDate, $endDate, $videoParams );
-				if ( $result === false ) {
-					wfProfileOut( __METHOD__ );
-					return 0;
-				}
-
-				$articlesCreated += $result;
-			}
-		}
+//		// Ingest any content from the defined video sets above
+//		$videoParams = [ 'apiType' => 'EntertainmentProgram' ];
+//		foreach( self::$VIDEO_SETS as $keyword => $videoSet ) {
+//			$videoParams['keyword'] = $keyword;
+//
+//			foreach( $videoSet as $value ) {
+//				$videoParams['videoSet'] = $value;
+//				$videoParams['isPublishedId'] = ( is_numeric( $value ) );
+//
+//				$result = $this->ingestVideos( $createParams, $startDate, $endDate, $videoParams );
+//				if ( $result === false ) {
+//					wfProfileOut( __METHOD__ );
+//					return 0;
+//				}
+//
+//				$articlesCreated += $result;
+//			}
+//		}
 
 		// Ingest Movie Assets
 		$videoParams = [ 'apiType' => 'VideoAssets' ];
