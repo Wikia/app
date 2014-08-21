@@ -167,38 +167,44 @@ use Swagger\Annotations as SWG;
  * 	@SWG\Property(
  * 		name="latitude",
  * 		type="float",
- * 		required="true",
+ * 		required="false",
  * 		description="Latitude of the POI"
  * 	)
  *  @SWG\Property(
  * 		name="longitude",
  * 		type="float",
- * 		required="true",
+ * 		required="false",
  * 		description="Longitude of the POI"
  * 	)
  * 	@SWG\Property(
  * 		name="region",
  * 		type="string",
- * 		required="true",
+ * 		required="false",
  * 		description="Region ID"
  * 	)
  *
  * @SWG\Model( id="Metadata" )
+ * 	@SWG\Property(
+ * 		name="ability_id",
+ * 		type="string",
+ * 		required="false",
+ * 		description="The ID of the ability"
+ * 	)
  *  @SWG\Property(
  * 		name="fingerprints",
  * 		type="array",
- * 		required="true",
+ * 		required="false",
  * 		description="An array of fingerprint IDs"
  * 	)
  *  @SWG\Property(
  * 		name="quest_id",
  * 		type="string",
- * 		required="true",
+ * 		required="false",
  * 		description="The ID of the quest"
  * 	)
  * 	@SWG\Property(
  *  	name="map_location",
- * 		required="true",
+ * 		required="false",
  * 		type="array",
  * 		items="$ref:MapLocation"
  *  )
