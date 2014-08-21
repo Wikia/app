@@ -7,7 +7,7 @@ echo "Rss cache warmer start: " . date("Y-m-d H:i:s") . PHP_EOL;
 
 require_once( dirname( __FILE__ ) .'/../../../../maintenance/Maintenance.php' );
 
-class MaintenanceRss extends Maintenance {
+class MaintenanceRssWarmer extends Maintenance {
 	const DATE_FORMAT = 'Y-m-d H:i:s';
 	function __construct() {
 		parent::__construct();
@@ -56,6 +56,6 @@ class MaintenanceRss extends Maintenance {
 	}
 }
 
-$maintClass = 'MaintenanceRss';
+$maintClass = 'MaintenanceRssWarmer';
 require_once( RUN_MAINTENANCE_IF_MAIN );
 
