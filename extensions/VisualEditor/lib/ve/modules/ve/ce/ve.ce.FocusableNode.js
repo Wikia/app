@@ -521,7 +521,7 @@ ve.ce.FocusableNode.prototype.getDimensions = function () {
  *
  * @return {string} 'left' or 'right'
  */
-ve.ce.FocusableNode.prototype.getBias = function () {
+ve.ce.FocusableNode.prototype.getHorizontalBias = function () {
 	var articleCenter = this.surface.$element.width() / 2,
 		nodeCenter = this.getDimensions().width / 2 + this.boundingRect.left;
 
