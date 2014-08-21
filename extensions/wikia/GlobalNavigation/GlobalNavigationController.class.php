@@ -22,7 +22,7 @@ class GlobalNavigationController extends WikiaController {
 		$this->response->setVal( 'createWikiUrl', $createWikiUrl );
 	}
 
-	public function searchVenus() {
+	public function searchIndex() {
 		$lang = $this->wg->Lang->getCode();
 		$centralUrl = $this->getCentralUrl( $lang );
 		$specialSearchTitle = SpecialPage::getTitleFor( 'Search' );
