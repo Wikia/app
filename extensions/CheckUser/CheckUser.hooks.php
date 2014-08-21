@@ -69,9 +69,7 @@ class CheckUserHooks {
 		global $wgRequest;
 
 		/** Wikia change - begin - CONN-587 */
-		$userId = $user->getId();
-		$userName = $user->getName();
-		if( !is_null( $userId ) ) {
+		try {
 		/** Wikia change - end */
 			// Get XFF header
 			$xff = $wgRequest->getHeader( 'X-Forwarded-For' );
@@ -85,8 +83,8 @@ class CheckUserHooks {
 				'cuc_namespace'  => NS_USER,
 				'cuc_title'      => '',
 				'cuc_minor'      => 0,
-				'cuc_user'       => $userId,
-				'cuc_user_text'  => $userName,
+				'cuc_user'       => $user->getId(),
+				'cuc_user_text'  => $user->getName(),
 				'cuc_actiontext' => wfMsgForContent( 'checkuser-reset-action', $account->getName() ),
 				'cuc_comment'    => '',
 				'cuc_this_oldid' => 0,
@@ -101,15 +99,16 @@ class CheckUserHooks {
 			);
 			$dbw->insert( 'cu_changes', $rcRow, __METHOD__ );
 		/** Wikia change - begin - CONN-587 */
-		} else {
+		} catch( Exception $e ) {
 			\Wikia\Logger\WikiaLogger::instance()->debug(
 				'CONN-587 - db error while changing user password',
 				[
-					'user_name' => $userName,
+					'exception' => $e->getMessage(),
+					'backtrace' => $e->getTraceAsString(),
+					'user_name' => $user->getName(),
 					'ip' => $ip,
-					'account_name' => ($account instanceof User) ? $account->getName() : null,
+					'account_name' => ( $account instanceof User ) ? $account->getName() : null,
 					'session_id' => session_id(),
-					'backtrace' => json_encode(debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS)),
 				]
 			);
 		}
