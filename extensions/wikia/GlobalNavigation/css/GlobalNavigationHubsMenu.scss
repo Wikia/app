@@ -65,7 +65,6 @@
 
 			.icon {
 				background-color: red; // TODO
-				background-image: url("/extensions/wikia/GlobalNavigation/images/comics.svg"); /* base64 */
 				background-position: center;
 				background-repeat: no-repeat;
 				background-size: 52px;
@@ -140,13 +139,37 @@
 				}
 
 				.icon {
+					margin-right: 33px;
 					width: 90px;
 				}
 
 				.label {
-					width: 168px;
+					width: 155px;
 				}
 			}
 		}
 	}
+
+	.books .icon {
+		background-image: url("/extensions/wikia/GlobalNavigation/images/books.svg"); /* base64 */
+	}
+	.comics .icon {
+		background-image: url("/extensions/wikia/GlobalNavigation/images/comics.svg"); /* base64 */
+	}
+	.games .icon {
+		background-image: url("/extensions/wikia/GlobalNavigation/images/games.svg"); /* base64 */
+	}
+	.lifestyle .icon {
+		background-image: url("/extensions/wikia/GlobalNavigation/images/lifestyle.svg"); /* base64 */
+	}
+	.movies .icon {
+		background-image: url("/extensions/wikia/GlobalNavigation/images/movies.svg"); /* base64 */
+	}
+	.music .icon {
+		background-image: url("/extensions/wikia/GlobalNavigation/images/music.svg"); /* base64 */
+	}
+	.tv .icon {
+		background-image: url("/extensions/wikia/GlobalNavigation/images/tv.svg"); /* base64 */
+	}
+
 }
