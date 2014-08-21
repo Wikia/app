@@ -633,7 +633,7 @@ class WikiaPhotoGallery extends ImageGallery {
 
 			wfProfileOut(__METHOD__);
 			return $html;
-		} elseif ( $this->canRenderMediaGallery() ) {
+		} elseif ( F::app()->wg->Title->getNamespace() !== NS_SPECIAL && $this->canRenderMediaGallery() ) {
 			$html =  $this->renderMediaGallery();
 
 			// remove spaces from html produced by mustache template
