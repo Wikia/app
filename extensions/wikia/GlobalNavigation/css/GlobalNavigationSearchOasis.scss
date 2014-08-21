@@ -1,7 +1,7 @@
 .search-form-wrapper {
-	box-sizing: padding-box;
+	box-sizing: border-box;
 	&:after, &:before, * {
-		box-sizing: padding-box;
+		box-sizing: border-box;
 	}
 	.chevron {
 		vertical-align: baseline;
