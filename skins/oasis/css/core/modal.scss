@@ -1,10 +1,10 @@
-@import "color";
+@import "skins/shared/color";
 @import "layout";
-@import "../mixins/bodytext";
-@import "../mixins/border-opacity";
-@import "../mixins/box-shadow";
-@import "../mixins/clearfix";
-@import "../mixins/gradient";
+@import "skins/shared/mixins/bodytext";
+@import "skins/shared/mixins/border-opacity";
+@import "skins/shared/mixins/box-shadow";
+@import "skins/shared/mixins/clearfix";
+@import "skins/shared/mixins/gradient";
 
 $modal-border-opacity: 80;
 @if $is-dark-wiki {
