@@ -1,7 +1,6 @@
 <?php
 
 use Wikia\Tasks\Tasks\BaseTask;
-use Wikia\Logger\WikiaLogger;
 
 class ExactTargetAddUserTask extends BaseTask {
 

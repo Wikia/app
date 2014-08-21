@@ -13,7 +13,7 @@ $messages['en'] = array(
  * Message documentation
  */
 $messages['qqq'] = array(
-	'exacttarget-updates-description' => 'The description of the extension displayed on the Special:Version page.',
+	'exacttarget-updates-description' => '{{desc}}',
 );
 
 /** Polish (polski)

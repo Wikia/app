@@ -4,7 +4,7 @@ class ExactTargetUpdatesHooks {
 
 	public static function onSignupConfirmEmailComplete( User $user ) {
 		global $wgWikiaEnvironment;
-		if ($wgWikiaEnvironment == WIKIA_ENV_PROD) {
+		if ( $wgWikiaEnvironment == WIKIA_ENV_PROD ) {
 			$aParams = self::prepareParams( $user );
 			$task = new ExactTargetAddUserTask();
 			$task->call( 'sendNewUserData', $aParams );
@@ -14,7 +14,7 @@ class ExactTargetUpdatesHooks {
 	}
 
 	public static function prepareParams( User $oUser ) {
-		$aUserParams =[
+		$aUserParams = [
 			'user_id' => $oUser->getId(),
 			'user_name' => $oUser->getName(),
 			'user_real_name' => $oUser->getRealName(),
