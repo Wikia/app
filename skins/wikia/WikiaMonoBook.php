@@ -64,6 +64,20 @@ abstract class WikiaSkinMonoBook extends WikiaSkin {
 		// setup footer links
         $tpl->set('footerlinks',  wfMsgExt( 'Shared-Monobook-footer-wikia-links', 'parse' ) );
 
+		/**
+		* Set a link for copyrights icon using wgRightsPage
+		* change by Adam Karmiński <adamk@wikia-inc.com>
+		**/
+		
+		if( !$tpl->data['footericons']['copyright']['copyright']['url'] ) {
+			global $wgRightsPage;
+
+			if( $wgRightsPage ) {
+				$oRightsPage = Title::newFromText( $wgRightsPage );
+				$tpl->data['footericons']['copyright']['copyright']['url'] = $oRightsPage->getFullURL();
+			}
+		}
+		
 		# rt33045
 		$tpl->set('contact',    '<a href="'. $wgUser->getSkin()->makeUrl('Special:Contact') . '" title="Contact Wikia">Contact Wikia</a>');
 
