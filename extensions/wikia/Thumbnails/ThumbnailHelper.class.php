@@ -11,10 +11,11 @@ class ThumbnailHelper extends WikiaModel {
 	 * Don't use this for values that need to be escaped.
 	 * Wrap attributes in three curly braces so quote marks don't get escaped.
 	 * Ex: {{# attrs }}{{{ . }}} {{/ attrs }}
+	 * @todo change output so we can use it like: {{key}}="{{value}}"
 	 * @param array $attrs [ array( key => value ) ]
 	 * @return array [ array( 'key="value"' ) ]
 	 */
-	public static function getAttribs( array $attrs ) {
+	protected  static function getAttribs( array $attrs ) {
 		$attribs = [];
 		foreach ( $attrs as $key => $value ) {
 			$str = $key;
@@ -116,7 +117,7 @@ class ThumbnailHelper extends WikiaModel {
 			$controller->style = "vertical-align: {$options['valign']}";
 		}
 
-		$controller->imgClass = empty( $options['img-class'] ) ? [] : explode( ' ', $options['img-class'] );
+		$controller->imgClass = self::getImgClass( $options );
 	}
 
 	/**
@@ -172,7 +173,7 @@ class ThumbnailHelper extends WikiaModel {
 			$href = $defaultHref;
 		}
 
-		$controller->href = $href;
+		$controller->linkHref = $href;
 		$controller->title = $title;
 		$controller->target = $target;
 	}
@@ -200,7 +201,7 @@ class ThumbnailHelper extends WikiaModel {
 		$controller->imgSrc = $options['src'];
 		$controller->mediaKey = htmlspecialchars( $title->getDBKey() );
 		$controller->mediaName = htmlspecialchars( $title->getText() );
-		$controller->imgClass = empty( $options['img-class'] ) ? [] : explode( ' ', $options['img-class'] );
+		$controller->imgClass = self::getImgClass( $options );
 
 		// check fluid
 		if ( empty( $options['fluid'] ) ) {
@@ -263,22 +264,10 @@ class ThumbnailHelper extends WikiaModel {
 	 */
 	public static function setVideoLinkClasses( WikiaController &$controller, MediaTransformOutput $thumb, array &$options ) {
 		$linkClasses = [];
+
 		if ( empty( $options['noLightbox'] ) ) {
 			$linkClasses[] = 'image';
 			$linkClasses[] = 'lightbox';
-		}
-
-		// Pull out any classes found in the linkAttribs parameter
-		if ( !empty( $options['linkAttribs']['class'] ) ) {
-			$classes = $options['linkAttribs']['class'];
-
-			// If we got a string, treat it like space separated values and turn it into an array
-			if ( !is_array( $classes ) ) {
-				$classes = explode( ' ', $classes );
-			}
-
-			$linkClasses = array_merge( $linkClasses, $classes );
-			unset( $options['linkAttribs']['class'] );
 		}
 
 		// Hide the play button
@@ -297,6 +286,7 @@ class ThumbnailHelper extends WikiaModel {
 			$linkClasses[] = self::getThumbnailSize( $thumb->width );
 		}
 
+		self::setLinkAttribsClass( $linkClasses, $options );
 		$controller->linkClasses = array_unique( $linkClasses );
 	}
 
@@ -315,18 +305,7 @@ class ThumbnailHelper extends WikiaModel {
 			$linkClasses[] = 'link-external';
 		}
 
-		// Pull out any classes found in the linkAttribs parameter
-		if ( !empty( $options['linkAttribs']['class'] ) ) {
-			$classes = $options['linkAttribs']['class'];
-
-			// If we got a string, treat it like space separated values and turn it into an array
-			if ( !is_array( $classes ) ) {
-				$classes = explode( ' ', $classes );
-			}
-
-			$linkClasses = array_merge( $linkClasses, $classes );
-			unset( $options['linkAttribs']['class'] );
-		}
+		self::setLinkAttribsClass( $linkClasses, $options );
 		$controller->linkClasses = $linkClasses;
 	}
 
@@ -369,5 +348,33 @@ class ThumbnailHelper extends WikiaModel {
 			&& isset( $controller->imgSrc )
 			&& ImageLazyLoad::isValidLazyLoadedImage( $controller->imgSrc )
 		);
+	}
+
+	/**
+	 * Pull out any classes found in the img-class parameter
+	 * @param array $options
+	 * @return array
+	 */
+	protected static function getImgClass( array $options ) {
+		return empty( $options['img-class'] ) ? [] : explode( ' ', $options['img-class'] );
+	}
+
+	/**
+	 * Pull out any classes found in the linkAttribs parameter.
+	 * @param array $linkClasses
+	 * @param array $options
+	 */
+	protected static function setLinkAttribsClass( array &$linkClasses, array &$options ) {
+		if ( !empty( $options['linkAttribs']['class'] ) ) {
+			$classes = $options['linkAttribs']['class'];
+
+			// If we got a string, treat it like space separated values and turn it into an array
+			if ( !is_array( $classes ) ) {
+				$classes = explode( ' ', $classes );
+			}
+
+			$linkClasses = array_merge( $linkClasses, $classes );
+			unset( $options['linkAttribs']['class'] );
+		}
 	}
 }

@@ -31,7 +31,7 @@ class ThumbnailController extends WikiaController {
 	public function video() {
 		wfProfileIn( __METHOD__ );
 
-		$thumb   = $this->getVal( 'thumb' );
+		$thumb = $this->getVal( 'thumb' );
 		$options = $this->getVal( 'options', array() );
 
 		ThumbnailHelper::setVideoLinkClasses( $this, $thumb, $options );
