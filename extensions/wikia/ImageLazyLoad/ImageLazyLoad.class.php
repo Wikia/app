@@ -131,9 +131,9 @@ class ImageLazyLoad  {
 
 	/**
 	 * Update thumbnail img attributes when lazy loading
-	 * @param $controller
+	 * @param WikiaController $controller
 	 */
-	public static function setLazyLoadingAttribs( &$controller ) {
+	public static function setLazyLoadingAttribs( WikiaController &$controller ) {
 		$controller->onLoad = self::IMG_ONLOAD;
 		$controller->imgClass = array_merge( $controller->imgClass, explode( ' ', self::LAZY_IMAGE_CLASSES ) );
 		$controller->dataSrc = $controller->imgSrc;
