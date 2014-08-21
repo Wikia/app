@@ -104,6 +104,33 @@ class ThumbnailController extends WikiaController {
 	}
 
 	/**
+	 * Render image tags for the MediaGallery
+	 * @requestParam MediaTransformOutput thumb
+	 */
+	public function gallery() {
+		$this->mediaType = 'image';
+
+		$thumb = $this->getVal( 'thumb' );
+
+		// Use the image template
+		$this->overrideTemplate( "image" );
+
+		$this->linkHref = $thumb->file->getTitle()->getLinkURL();
+		ThumbnailHelper::setImageAttribs( $this, $thumb, [ "fluid" => true ] );
+
+		$this->noscript = '';
+		$this->dataSrc = '';
+		if ( ThumbnailHelper::shouldLazyLoad( $this, [] ) ) {
+			$this->noscript = $this->app->renderView(
+				'ThumbnailController',
+				'imgTag',
+				$this->response->getData()
+			);
+			ImageLazyLoad::setLazyLoadingAttribs( $this );
+		}
+	}
+
+	/**
 	 * Render the img tag for images, videos, and noscript tags in the case of lazy loading
 	 */
 	public function imgTag() {
