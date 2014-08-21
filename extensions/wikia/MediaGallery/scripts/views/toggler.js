@@ -91,7 +91,7 @@ define('mediaGallery.toggler', ['mediaGallery.templates.mustache'], function (te
 			label: label,
 			trackingMethod: 'both',
 			value: 0
-		}, {});
+		});
 	};
 
 	return Toggler;

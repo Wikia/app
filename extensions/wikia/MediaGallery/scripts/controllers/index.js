@@ -16,15 +16,13 @@ require(['mediaGallery.toggler'], function (Toggler) {
 				toggler.init();
 				togglers.push(toggler);
 
-				toggler.$media.each(function () {
-					$this.on('click', function () {
-						Wikia.Tracker.track({
-							category: 'article',
-							action: Wikia.Tracker.ACTIONS.click,
-							label: 'show-new-gallery-lightbox',
-							trackingMethod: 'both',
-							value: 0
-						}, {});
+				toggler.$media.on('click', function () {
+					Wikia.Tracker.track({
+						category: 'article',
+						action: Wikia.Tracker.ACTIONS.click,
+						label: 'show-new-gallery-lightbox',
+						trackingMethod: 'both',
+						value: 0
 					});
 				});
 			}
