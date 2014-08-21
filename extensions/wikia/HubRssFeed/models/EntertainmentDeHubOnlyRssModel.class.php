@@ -1,18 +1,18 @@
 <?php
 
-class EntertainmentHubOnlyRssModel extends HubOnlyRssModel {
+class EntertainmentDeHubOnlyRssModel extends HubOnlyRssModel {
 	const FEED_NAME = 'Entertainment';
-	const LANGUAGE = 'en';
+	const LANGUAGE = 'de';
 	public function getFeedTitle() {
 		return 'Wikia Entertainment Feed';
 	}
 
 	public function getFeedDescription() {
-		return 'From Wikia community - Entertainment';
+		return 'Aus der Community - Entertainment';
 	}
 
 	protected function getHubCityIds() {
-		return [ 952442, 952445, 952443 ];
+		return [ 997567, 953627, 953542, 953665 ];
 	}
 
 
