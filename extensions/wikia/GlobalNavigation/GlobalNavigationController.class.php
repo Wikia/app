@@ -4,6 +4,7 @@ class GlobalNavigationController extends WikiaController {
 
 	const CENTRAL_URL = 'http://www.wikia.com';
 	const CENTRAL_LOCAL_URL = '/Wikia';
+	const DEFAULT_LANG = 'en';
 	const USE_LANG_PARAMETER = '?uselang=';
 
 	public function index() {
@@ -40,7 +41,7 @@ class GlobalNavigationController extends WikiaController {
 			$url = $langToCentralMap[$lang];
 		} else {
 			$url = $appendLocalUrl ? self::CENTRAL_URL . self::CENTRAL_LOCAL_URL : self::CENTRAL_URL;
-			if ( $lang != 'en' ) {
+			if ( $lang != self::DEFAULT_LANG ) {
 				$url .= self::USE_LANG_PARAMETER . $lang;
 			}
 		}
@@ -54,7 +55,7 @@ class GlobalNavigationController extends WikiaController {
 			WikiService::WIKIAGLOBAL_CITY_ID
 		)->getFullURL();
 
-		if ( $lang != 'en' ) {
+		if ( $lang != self::DEFAULT_LANG ) {
 			$createWikiUrl .= self::USE_LANG_PARAMETER . $lang;
 		}
 		return $createWikiUrl;
