@@ -30,7 +30,6 @@ $dir = __DIR__;
 $wgExtensionCredits['other'][] = array(
 	'path'              => __FILE__,
 	'name'              => 'ExactTargetUpdates',
-	'description'       => 'Sends push updates to ExactTarget.com on various hooks.',
 	'descriptionmsg'    => 'exacttarget-updates-description',
 	'version'           => '0.1',
 	'author'            => array(
