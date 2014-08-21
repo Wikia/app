@@ -19,6 +19,10 @@ class MonetizationModuleHelper extends WikiaModel {
 	// do not change unless monetization service changes
 	const MONETIZATION_SERVICE_CACHE_PREFIX = 'monetization';
 
+	const API_VERSION = 'v1';
+	const COUNTRY_REST_OF_WORLD = 'ROW';
+	const IN_CONTENT_KEYWORD = '<h2>';
+
 	/**
 	 * Show the Module only on File pages, Article pages, and Main pages
 	 * @return boolean
@@ -47,34 +51,32 @@ class MonetizationModuleHelper extends WikiaModel {
 
 	/**
 	 * Get monetization units
-	 * @global string $wgMonetizationServiceUrl
 	 * @param array $params
 	 * @return array|false $result
 	 */
 	public static function getMonetizationUnits( $params ) {
 		wfProfileIn( __METHOD__ );
-		$log = WikiaLogger::instance();
 
-		global $wgMonetizationServiceUrl, $wgMemc;
+		$app = F::app();
+		$log = WikiaLogger::instance();
 
 		// this cache key must match the one set by the MonetizationService
 		// and should not use the wgCachePrefix(), wfSharedMemcKey() or
 		// wfMemcKey() methods
 		$cacheKey = self::createCacheKey( $params );
 		$log->debug( "Monetization: " . __METHOD__ . " - lookup with cache key: $cacheKey" );
-		$json_results = $wgMemc->get( $cacheKey );
 
+		$json_results = $app->wg->Memc->get( $cacheKey );
 		if ( !empty( $json_results ) ) {
+			wfProfileOut( __METHOD__ );
 			return json_decode( $json_results, true );
 		}
 
-		$apiVersion = 'v1';
-
-		if ( !endsWith( $wgMonetizationServiceUrl, '/' ) ) {
-			$url = $wgMonetizationServiceUrl . '/';
+		if ( !endsWith( $app->wg->MonetizationServiceUrl, '/' ) ) {
+			$url = $app->wg->MonetizationServiceUrl . '/';
 		}
 
-		$url .= 'api/' . $apiVersion . '?' . http_build_query( $params );
+		$url .= 'api/' . self::API_VERSION . '?' . http_build_query( $params );
 		$req = MWHttpRequest::factory( $url, [ 'noProxy' => true ] );
 		$status = $req->execute();
 		if ( $status->isGood() ) {
@@ -127,4 +129,33 @@ class MonetizationModuleHelper extends WikiaModel {
 		// short articles
 		return 1;
 	}
+
+	/**
+	 * Insert in-content ad unit
+	 * @param string $body
+	 * @param array $monetizationUnits
+	 * @return string
+	 */
+	public static function insertIncontentUnit( $body, $monetizationUnits ) {
+		wfProfileIn( __METHOD__ );
+
+		if ( !empty( $monetizationUnits[self::SLOT_TYPE_IN_CONTENT] ) ) {
+			$pos1 = strpos( $body, self::IN_CONTENT_KEYWORD );
+			if ( !empty( $pos1 ) ) {
+				$pos2 = strpos( $body, self::IN_CONTENT_KEYWORD, $pos1 + strlen( self::IN_CONTENT_KEYWORD ) );
+				if ( !empty( $pos2 ) ) {
+					$body = substr_replace( $body, $monetizationUnits[self::SLOT_TYPE_IN_CONTENT], $pos2, 0 );
+				} else {
+					$body .= $monetizationUnits[self::SLOT_TYPE_IN_CONTENT];
+				}
+			} else {
+				$body .= $monetizationUnits[self::SLOT_TYPE_IN_CONTENT];
+			}
+		}
+
+		wfProfileOut( __METHOD__ );
+
+		return $body;
+	}
+
 }
