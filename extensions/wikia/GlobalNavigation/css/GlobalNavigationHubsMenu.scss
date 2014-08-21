@@ -17,13 +17,12 @@
 
 	.hubs {
 		float:left;
-		width: 302px;
+		width: 268px;
 
 		nav {
 			background-color: $nav-background-color;
 			font-size: 18px;
 			line-height: 62px;
-			text-transform: uppercase;
 
 			&.active {
 				background-color: red; // TODO
@@ -42,7 +41,7 @@
 						background-color: rgba(0, 0, 0, 0.3);
 						border-radius: 50%;
 						content: " ";
-						left: 10px;
+						left: 16px;
 						width: 50px;
 						height: 50px;
 						position: absolute;
@@ -64,11 +63,20 @@
 				background-image: url("/extensions/wikia/GlobalNavigation/images/comics.svg"); /* base64 */
 				background-position: center;
 				background-repeat: no-repeat;
+				background-size: 52px;
 				display: inline-block;
 				float: left;
 				height: 62px;
+				margin-right: 20px;
 				position: relative;
-				width: 70px;
+				width: 82px;
+			}
+
+			.label {
+				border-bottom: 1px solid $hubsmenu-background-color;
+				display: inline-block;
+				height: 62px;
+				width: 142px;
 			}
 		}
 	}
@@ -77,6 +85,7 @@
 
 		float: left;
 		font-size: 15px;
+		padding-left: 10px;
 		width: 464px;
 
 		h2 {

@@ -1,7 +1,7 @@
 <nav class="hubs-menu">
 	<div class="hubs">
 		<? foreach($menuNodes as $hub): ?>
-			<nav class="<?=$hub['specialAttr']; ?> active">
+			<nav class="<?=$hub['specialAttr']; ?>">
 				<span class="icon"></span>
 				<span class="label"><?=$hub['text']; ?></span>
 			</nav>
