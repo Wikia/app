@@ -46,7 +46,7 @@
 }
 
 .wikia-logo {
-	padding: 0 20px; // TODO change padding when hamburger is ready
+	padding: 0 16px 0 20px;
 
 	img {
 		background-image: url("/extensions/wikia/GlobalNavigation/images/wikia_logo.svg"); /* base64 */
@@ -73,5 +73,9 @@
 @media #{$large-up} {
 	.start-wikia {
 		@include grid-column-width( 'large', 2 );
+	}
+
+	.wikia-logo {
+		padding-right: 20px;
 	}
 }

@@ -3,6 +3,20 @@
 @import "skins/oasis/css/mixins/columns";
 @import "GlobalNavigationColors";
 
+.hubs-entry-point {
+	background-image: url("/extensions/wikia/GlobalNavigation/images/hubs_entry_point.svg"); /* base64 */
+	background-position: 0 center;
+	background-repeat: no-repeat;
+	padding: 0 9px 0 22px;
+
+	&:after {
+		border: 5px solid $nav-background-color;
+		border-top-color: $nav-border-color;
+		content: " ";
+		display: inline-block;
+	}
+}
+
 .hubs-menu {
 	background-color: $hubsmenu-background-color;
 	border: 1px solid $nav-border-color;
@@ -107,6 +121,7 @@
 		h2 {
 			font-size: 15px;
 			font-weight: bold;
+			margin: 0;
 			padding: 21px 0 5px;
 		}
 
@@ -115,58 +130,6 @@
 			padding: 7px 0 6px;
 		}
 	}
-
-	@media #{$small-only} {
-		.hubs {
-			nav {
-				&.active {
-					.icon {
-						&:before {
-							left: 10px;
-						}
-					}
-				}
-
-				.icon {
-					background-position: 10px center;
-					width: 90px;
-				}
-
-				.label {
-					width: 154px;
-				}
-			}
-		}
-	}
-
-	@media #{$large-up} {
-		.hubs {
-			width: 302px;
-			nav {
-				&.active {
-					.icon {
-						&:before {
-							left: 20px;
-						}
-					}
-				}
-
-				.icon {
-					background-position: 20px center;
-					width: 123px;
-
-					&:after {
-						width: 33px;
-					}
-				}
-
-				.label {
-					width: 155px;
-				}
-			}
-		}
-	}
-
 
 	.books {
 		background-color: $color-vertical-books;
@@ -250,6 +213,65 @@
 		}
 		.icon {
 			background-image: url("/extensions/wikia/GlobalNavigation/images/tv.svg"); /* base64 */
+		}
+	}
+}
+
+@media #{$small-only} {
+	.hubsmenu {
+		.hubs {
+			nav {
+				&.active {
+					.icon {
+						&:before {
+							left: 10px;
+						}
+					}
+				}
+
+				.icon {
+					background-position: 10px center;
+					width: 90px;
+				}
+
+				.label {
+					width: 154px;
+				}
+			}
+		}
+	}
+}
+
+@media #{$large-up} {
+	.hubs-entry-point {
+		padding-right: 23px;
+	}
+
+	.hubsmenu {
+		.hubs {
+			width: 302px;
+			nav {
+				&.active {
+					.icon {
+						&:before {
+							left: 20px;
+						}
+					}
+				}
+
+				.icon {
+					background-position: 20px center;
+					width: 123px;
+
+					&:after {
+						width: 33px;
+					}
+				}
+
+				.label {
+					width: 155px;
+				}
+			}
 		}
 	}
 }
