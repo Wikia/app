@@ -112,10 +112,7 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 
 		$map = $this->mapsModel->getMapByIdFromApi( $mapId );
 
-		if ( (int) $this->wg->CityId !== $map->city_id ) {
-			$targetUrl = GlobalTitle::newFromText( self::PAGE_NAME, NS_SPECIAL, $map->city_id )->getFullURL();
-			$this->wg->out->redirect( $targetUrl . '/' . $mapId );
-		}
+		$this->redirectIfForeignWiki( $map->city_id, $mapId );
 
 		if ( isset( $map->title ) ) {
 			$this->wg->out->setHTMLTitle( $map->title );
@@ -160,6 +157,17 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 
 		$this->response->addAsset( 'extensions/wikia/WikiaInteractiveMaps/css/WikiaInteractiveMaps.scss' );
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
+	}
+
+	public function redirectIfForeignWiki( $cityId, $mapId ) {
+		if ( (int) $this->wg->CityId !== $cityId ) {
+			$targetUrl = $this->getWikiPageUrl( self::PAGE_NAME, NS_SPECIAL, $cityId );
+			$this->wg->out->redirect( $targetUrl . '/' . $mapId );
+		}
+	}
+
+	protected function getWikiPageUrl( $text, $namespace = NS_MAIN, $cityId = null ) {
+		return GlobalTitle::newFromText( $text, $namespace, $cityId )->getFullURL();
 	}
 
 	/**
