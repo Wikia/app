@@ -13,8 +13,6 @@ class ApiTemplateParameters extends ApiBase {
 	}
 
 	public function execute() {
-		global $wgRequest, $wgParser;
-
 		$params = $this->extractRequestParams();
 		$templates = explode( '|', $params['templates'] );
 		$templateHelper = new TemplatePageHelper();
