@@ -27,5 +27,18 @@ require(['mediaGallery.toggler', 'mediaGallery.media'], function (Toggler, Media
 				togglers.push(toggler);
 			}
 		});
+
+		$galleries.on('click', '.media > a', function () {
+			// get index of media item in gallery
+			var index = $(this).parent().index();
+
+			Wikia.Tracker.track({
+				category: 'media-gallery',
+				action: Wikia.Tracker.ACTIONS.CLICK,
+				label: 'gallery-item',
+				trackingMethod: 'both',
+				value: index
+			});
+		});
 	});
 });

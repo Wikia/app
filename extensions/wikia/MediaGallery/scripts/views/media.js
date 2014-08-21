@@ -8,7 +8,6 @@ define('mediaGallery.media', [], function () {
 
 	Media.prototype.init = function () {
 		this.setupCaption();
-		this.initTracking();
 	};
 
 	Media.prototype.setupCaption = function () {
@@ -45,18 +44,6 @@ define('mediaGallery.media', [], function () {
 		this.$caption
 			.removeClass('hovered')
 			.removeAttr('style');
-	};
-
-	Media.prototype.initTracking = function () {
-		this.$el.on('click', function () {
-			Wikia.Tracker.track({
-				category: 'MediaGallery',
-				action: Wikia.Tracker.ACTIONS.click,
-				label: 'show-new-gallery-lightbox',
-				trackingMethod: 'both',
-				value: 0
-			});
-		});
 	};
 
 	return Media;
