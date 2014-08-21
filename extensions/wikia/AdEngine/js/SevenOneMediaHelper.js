@@ -17,7 +17,17 @@ define('ext.wikia.adEngine.sevenOneMediaHelper', [
 		initialized = false,
 		pageLevelParams = adLogicPageParams.getPageLevelParams(),
 		soiKeywordsParams = ['pform', 'media', 'gnre', 'egnre', 's1'],
-
+		soiKeywordsSegments = {
+			'ocr05ve5z': true,
+			'ocr1te1tc': true,
+			'ocr2nqlbs': true,
+			'ocry7a4xg': true,
+			'ocr52415y': true,
+			'ocr7jc18a': true,
+			'ocr6m2jd6': true,
+			'ocr8h7h1n': true,
+			'ocr88oqh9': true
+		},
 		slotVars = {
 			'popup1': {
 				SOI_PU1: true,
@@ -209,7 +219,7 @@ define('ext.wikia.adEngine.sevenOneMediaHelper', [
 	function generateSoiKeywords() {
 		log('generateSoiKeywords', 'debug', logGroup);
 
-		var i, len, param, val, valIndex, valLen, keywords = [];
+		var i, len, param, val, valIndex, valLen, keywords = [], krux = window.Krux;
 
 		// Get all values for params defined in soiKeywordsParams
 		for (i = 0, len = soiKeywordsParams.length; i < len; i += 1) {
@@ -224,6 +234,14 @@ define('ext.wikia.adEngine.sevenOneMediaHelper', [
 			if (val && val.length) {
 				for (valIndex = 0, valLen = val.length; valIndex < valLen; valIndex += 1) {
 					keywords.push(val[valIndex]);
+				}
+			}
+		}
+
+		if (krux && krux.segments && krux.segments.length) {
+			for (i = 0, len = krux.segments.length; i < len; i += 1) {
+				if (soiKeywordsSegments[krux.segments[i]]) {
+					keywords.push(krux.segments[i]);
 				}
 			}
 		}
