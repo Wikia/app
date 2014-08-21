@@ -116,9 +116,7 @@ ve.ui.WikiaFocusWidget.prototype.adjustLayout = function () {
 
 	if ( layout ) {
 		for ( shield in layout ) {
-			for ( property in layout[shield] ) {
-				this['$' + shield].css( property, layout[shield][property] );
-			}
+			this['$' + shield].css( layout[shield] );
 		}
 	}
 };
