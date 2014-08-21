@@ -1,0 +1,18 @@
+.search-form-wrapper {
+	box-sizing: padding-box;
+	&:after, &:before, * {
+		box-sizing: padding-box;
+	}
+	.chevron {
+		vertical-align: baseline;
+	}
+}
+
+.search-select-wrapper {
+	vertical-align: baseline;
+	.search-select {
+		color: inherit;
+		font: inherit;
+		margin: 0;
+	}
+}
