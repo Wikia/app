@@ -113,10 +113,10 @@ class ThumbnailController extends WikiaController {
 		$thumb = $this->getVal( 'thumb' );
 
 		// Use the image template
-		$this->overrideTemplate( "image" );
+		$this->overrideTemplate( 'image' );
 
 		$this->linkHref = $thumb->file->getTitle()->getLinkURL();
-		ThumbnailHelper::setImageAttribs( $this, $thumb, [ "fluid" => true ] );
+		ThumbnailHelper::setImageAttribs( $this, $thumb, [ 'fluid' => true ] );
 
 		$this->noscript = '';
 		$this->dataSrc = '';
