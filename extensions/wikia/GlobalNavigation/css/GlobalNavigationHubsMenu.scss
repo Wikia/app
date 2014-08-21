@@ -21,7 +21,8 @@
 
 		nav {
 			background-color: $nav-background-color;
-			font-size: 18px;
+			font-size: 0;
+			height: 62px;
 			line-height: 62px;
 
 			&.active {
@@ -47,6 +48,10 @@
 						position: absolute;
 						top: 6px;
 					}
+				}
+
+				.label {
+					border: 0;
 				}
 			}
 
@@ -75,6 +80,7 @@
 			.label {
 				border-bottom: 1px solid $hubsmenu-background-color;
 				display: inline-block;
+				font-size: 18px;
 				height: 62px;
 				width: 142px;
 			}
@@ -96,6 +102,51 @@
 		a {
 			display: block;
 			padding: 7px 0 6px;
+		}
+	}
+
+	@media #{$small-only} {
+		.hubs {
+			nav {
+				&.active {
+					.icon {
+						&:before {
+							left: 10px;
+						}
+					}
+				}
+
+				.icon {
+					width: 70px;
+				}
+
+				.label {
+					width: 154px;
+				}
+			}
+		}
+	}
+
+	@media #{$large-up} {
+		.hubs {
+			width: 302px;
+			nav {
+				&.active {
+					.icon {
+						&:before {
+							left: 20px;
+						}
+					}
+				}
+
+				.icon {
+					width: 90px;
+				}
+
+				.label {
+					width: 168px;
+				}
+			}
 		}
 	}
 }
