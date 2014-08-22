@@ -65,7 +65,7 @@ function memsess_read( $id ) {
 			throw new Exception();
 		}
 	} catch ( Exception $e ) {
-		$wgSessionDebugData[] = [ 'event' => 'read', 'id' => 'empty', 'backtrace' => serialize( $e->getTrace() ) ];
+		$wgSessionDebugData[] = [ 'event' => 'read', 'id' => 'empty', 'backtrace' => json_encode( $e->getTrace() ) ];
 		memsess_destroy( $id );
 		return true;
 	}
@@ -98,7 +98,7 @@ function memsess_write( $id, $data ) {
 			throw new Exception();
 		}
 	} catch ( Exception $e ) {
-		$wgSessionDebugData[] = [ 'event' => 'write', 'id' => 'empty', 'backtrace' => serialize( $e->getTrace() ) ];
+		$wgSessionDebugData[] = [ 'event' => 'write', 'id' => 'empty', 'backtrace' => json_encode( $e->getTrace() ) ];
 		memsess_destroy( $id );
 		return true;
 	}
