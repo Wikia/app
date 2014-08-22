@@ -152,6 +152,7 @@ function memsess_write_close() {
 	/** Wikia change - begin - PLATFORM-308 */
 	$wgSessionDebugData[] = [ 'event' => 'write_close-end' ];
 	$sBrowser = isset( $_SERVER['HTTP_USER_AGENT'] )? $_SERVER['HTTP_USER_AGENT'] : 'unknown';
+	$sCookie = isset( $_COOKIE['wikicities_session'] )? $_COOKIE['wikicities_session'] : 'empty';
 	\Wikia\Logger\WikiaLogger::instance()->debug(
 		'PLATFORM-308',
 		[
@@ -160,7 +161,9 @@ function memsess_write_close() {
 			'user_id'    => $wgUser->getId(),
 			'user_name'  => $wgUser->getName(),
 			'session_id' => session_id(),
-			'user_agent' => $sBrowser
+			'user_agent' => $sBrowser,
+			'cookie'     => $sCookie
+
 		]
 	);
 	/** Wikia change - end */
