@@ -13,16 +13,16 @@ class SassUtilTest extends WikiaBaseTest {
 	function testSassUtil() {
 		$sassParams = SassUtil::getSassParams();
 
-		$this->assertInternalType('string', $sassParams);
-		$this->assertRegExp('/&color-page=%23[A-F0-9]{6}&/i', $sassParams);
+		$this->assertInternalType( 'string', $sassParams );
+		$this->assertRegExp( '/&color-page=%23[A-F0-9]{6}&/i', $sassParams );
 	}
 
 	/**
 	 * @dataProvider isRTLProvider
 	 */
 	public function testIsRTL( $userRTL, $wikiRTL, $expected ) {
-		$this->mockGlobalVariable('wgContLang', $this->getLanguageMock($wikiRTL));
-		$this->mockGlobalVariable('wgLang', $this->getLanguageMock($userRTL));
+		$this->mockGlobalVariable( 'wgContLang', $this->getLanguageMock( $wikiRTL ) );
+		$this->mockGlobalVariable( 'wgLang', $this->getLanguageMock( $userRTL ) );
 
 		$this->assertEquals( $expected, SassUtil::isRTL() );
 	}
@@ -33,9 +33,9 @@ class SassUtilTest extends WikiaBaseTest {
 	 * @param bool|null $isRTL
 	 * @bool Language|null
 	 */
-	private function getLanguageMock($isRTL) {
-		if (is_bool($isRTL)) {
-			return $this->mockClassWithMethods('Language', ['isRTL' => $isRTL]);
+	private function getLanguageMock( $isRTL ) {
+		if ( is_bool( $isRTL ) ) {
+			return $this->mockClassWithMethods( 'Language', ['isRTL' => $isRTL] );
 		}
 		else {
 			return null;
@@ -75,12 +75,12 @@ class SassUtilTest extends WikiaBaseTest {
 	/**
 	 * @dataProvider isThemeDarkProvider
 	 */
-	public function testIsThemeDark($color, $isDark) {
+	public function testIsThemeDark( $color, $isDark ) {
 		$settings = [
 			'color-page' => $color
 		];
 
-		$this->assertEquals($isDark, SassUtil::isThemeDark($settings));
+		$this->assertEquals( $isDark, SassUtil::isThemeDark( $settings ) );
 	}
 
 	public function isThemeDarkProvider() {
