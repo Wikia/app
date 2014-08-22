@@ -33,7 +33,7 @@ $wgConf = new SiteConfiguration;
 /** @endcond */
 
 /** MediaWiki version number */
-$wgVersion = '1.19.17';
+$wgVersion = '1.19.18';
 
 /** Name of the site. It must be changed in LocalSettings.php */
 $wgSitename = 'MediaWiki';
@@ -4905,10 +4905,6 @@ $wgHooks = &Hooks::getHandlersArray();
  * can add to this to provide custom jobs
  */
 $wgJobClasses = array(
-	'refreshLinks' => 'RefreshLinksJob',
-	'refreshLinks2' => 'RefreshLinksJob2',
-	'htmlCacheUpdate' => 'HTMLCacheUpdateJob',
-	'html_cache_update' => 'HTMLCacheUpdateJob', // backwards-compatible
 	'fixDoubleRedirect' => 'DoubleRedirectJob',
 );
 

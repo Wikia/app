@@ -86,11 +86,6 @@ ve.init.mw.TargetEvents.prototype.onSaveInitated = function () {
 ve.init.mw.TargetEvents.prototype.onSaveComplete = function () {
 	this.track( 'performance.user.saveComplete', { 'duration': ve.now() - this.timings.saveInitiated } );
 	this.timings.saveRetries = 0;
-	ve.track( 'wikia', {
-		'action': ve.track.actions.CLICK,
-		'label': 'dialog-save-publish',
-		'duration': ve.now() - this.timings.saveInitiated
-	} );
 };
 
 /**

@@ -2,6 +2,8 @@
 
 class OoyalaAsset extends WikiaModel {
 
+	const TIMEOUT = 60;
+
 	/**
 	 * Constructs a URL to get assets from Ooyala API
 	 * @param integer $apiPageSize
@@ -42,7 +44,12 @@ class OoyalaAsset extends WikiaModel {
 	public static function getApiContent( $url ) {
 		wfProfileIn( __METHOD__ );
 
-		$req = MWHttpRequest::factory( $url, [ 'noProxy' => true ] );
+		$options = [
+			'noProxy' => true,
+			'timeout' => self::TIMEOUT
+		];
+
+		$req = MWHttpRequest::factory( $url, $options );
 		$status = $req->execute();
 		if ( $status->isGood() ) {
 			$result = json_decode( $req->getContent(), true );
@@ -180,7 +187,7 @@ class OoyalaAsset extends WikiaModel {
 	 * @param array $data
 	 * @return boolean $resp
 	 */
-	public function addRemoteAsset( $data ) {
+	public function addRemoteAsset( $data, &$videoId = null ) {
 		wfProfileIn( __METHOD__ );
 
 		$resp = false;
@@ -203,6 +210,7 @@ class OoyalaAsset extends WikiaModel {
 			$response = $req->getContent();
 			$asset = json_decode( $response, true );
 
+			$videoId = $asset['embed_code'];
 			print( "Ooyala: Uploaded Remote Asset: $data[provider]: $asset[name] \n" );
 			foreach( explode( "\n", var_export( $asset, 1 ) ) as $line ) {
 				print ":: $line\n";

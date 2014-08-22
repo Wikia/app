@@ -97,15 +97,7 @@ class HubService extends Service {
 	public static function getCategoryInfoForCurrentPage() {
 		$cityId = F::app()->wg->CityId;
 
-		$categoryId = null;
-
-		if( WikiaPageType::isCorporatePage() ) {
-			$categoryId = self::getHubIdForCurrentPage();
-		}
-
-		if( empty($categoryId) ) {
-			$categoryId = self::getCategoryIdForCity($cityId);
-		}
+		$categoryId = self::getCategoryIdForCity($cityId);
 
 		return self::constructCategoryInfoFromCategoryId($categoryId);
 	}
@@ -145,42 +137,6 @@ class HubService extends Service {
 		}
 
 		return $categoryId;
-	}
-
-	/**
-	 * Check if current page is a Wikia hub
-	 *
-	 * @return bool
-	 */
-	public static function isCurrentPageAWikiaHub() {
-		return !!self::getHubIdForCurrentPage();
-	}
-
-	private static function getHubIdForCurrentPage() {
-		$categoryId = null;
-		if (F::app()->wg->EnableWikiaHubsV2Ext) {
-			$categoryId = self::getHubIdForCurrentPageV2();
-		}
-		return $categoryId;
-	}
-
-	private static function getHubIdForCurrentPageV2() {
-		$baseText = F::app()->wg->Title->getBaseText();
-
-		/** @var $tmpTitle Title */
-		$tmpTitle = Title::newFromText($baseText);
-
-		$hubsPages = F::app()->wg->WikiaHubsV2Pages;
-
-		if ($tmpTitle instanceof Title) {
-			/* @var $title Title */
-			$hubName = $tmpTitle->getDbKey();
-
-			if ($hubName) {
-				return array_search($hubName, $hubsPages);
-			}
-		}
-		return false;
 	}
 
 	private static function constructCategoryInfoFromCategoryId($categoryId) {

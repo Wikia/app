@@ -55,7 +55,7 @@ define(
 				],
 				uploadTileSetImage: [
 					function() {
-						$uploadInput.click()
+						$uploadInput.click();
 					}
 				],
 				previousStep: [
@@ -80,10 +80,6 @@ define(
 			// stack for holding choose tile set steps
 			stepsStack = [],
 			cachedTileSets = {},
-			// dalay time for jQuery debounde
-			dabounceDelay = 250,
-			// minimum number of characters to trigger search request
-			searchCharLength = 2,
 			thumbSize = 116,
 			// cached selectors
 			$sections,
@@ -113,13 +109,13 @@ define(
 				.on('change', '#intMapUpload', function(event) {
 					uploadNewTileSetImage(event.target.parentNode);
 				})
-				.on('keyup', '#intMapTileSetSearch', $.debounce(dabounceDelay, searchForTileSets));
+				.on('keyup', '#intMapTileSetSearch', $.debounce(utils.constants.debounceDelay, searchForTileSets));
 
 		}
 
 		/**
 		 * @desc Render Choose tile set modal
-		 */ 
+		 */
 		function renderChooseTileSet() {
 			modal.$innerContent.html(utils.render(uiTemplate, templateData));
 
@@ -190,7 +186,6 @@ define(
 		function previousStep() {
 			// removes current step from stack
 			stepsStack.pop();
-
 			showStep(stepsStack.pop());
 		}
 
@@ -199,10 +194,13 @@ define(
 		 * @param {Event} event
 		 */
 		function selectTileSet(event) {
-			var $target = $(event.currentTarget);
+			var $target = $(event.currentTarget),
+				mapTypeChosen = $target.data('type');
+
+			utils.track(utils.trackerActions.CLICK_LINK_IMAGE, mapTypeChosen + '-map-chosen');
 
 			modal.trigger('previewTileSet', {
-				type: $target.data('type'),
+				type: mapTypeChosen,
 				tileSetId: $target.data('id'),
 				originalImageURL: $target.data('image')
 			});
@@ -213,12 +211,10 @@ define(
 		 * @param {Event} event - search term
 		 */
 		function searchForTileSets(event) {
-			var trimmedKeyword = event.target.value.trim();
-
-			if (trimmedKeyword.length >= searchCharLength) {
-				loadTileSets(trimmedKeyword);
+			utils.onWriteInInput(event.target, function (inputValue) {
+				loadTileSets(inputValue);
 				$clearSearchBtn.removeClass('hidden');
-			}
+			});
 		}
 
 		/**

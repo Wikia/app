@@ -43,6 +43,7 @@ class HAWelcomeTaskHooks {
 			return true;
 		}
 
+
 		$dispatcher = new HAWelcomeTaskHookDispatcher();
 		$dispatcher->setRevisionObject( $revisionObject )
 			->setCityId( $wgCityId )

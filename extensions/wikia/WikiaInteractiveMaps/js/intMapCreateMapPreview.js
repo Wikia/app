@@ -30,6 +30,7 @@ define(
 					createMap
 				],
 				mapCreated: [
+					triggerStorageEvent,
 					showPoiCategoriesModal
 				]
 			},
@@ -66,10 +67,10 @@ define(
 
 		/**
 		 * @desc initializes and configures UI
+		 *
 		 * @param {object} modalRef - modal component
 		 * @param {string} mustacheTemplate - mustache template
 		 */
-
 		function init(modalRef, mustacheTemplate) {
 			modal = modalRef;
 			template = mustacheTemplate;
@@ -79,9 +80,9 @@ define(
 
 		/**
 		 * @desc shows preview step before creating a map
+		 *
 		 * @param {object} tileSet - chosen tile set data
 		 */
-
 		function preview(tileSet) {
 			var originalImageURL = tileSet.originalImageURL;
 			modal.trigger('cleanUpError');
@@ -168,6 +169,7 @@ define(
 					if (data && data.success) {
 						modal.trigger('cleanUpError');
 						modal.trigger('mapCreated', data.content);
+						trackMapCreation(tileSetData);
 					} else {
 						modal.trigger('error', data.content.message);
 					}
@@ -188,10 +190,24 @@ define(
 				mapId: data.id,
 				mapUrl: data.mapUrl
 			});
+			utils.track(utils.trackerActions.IMPRESSION, 'poi-category-modal-shown');
+		}
+
+		/**
+		 * @desc trigger "storage" event (by calling localStorage.setItem) after the map is created
+ 		 */
+		function triggerStorageEvent(data) {
+			if ( localStorage ) {
+				localStorage.setItem('mapCreated', data.id);
+				setTimeout(function() {
+					localStorage.removeItem('mapCreated');
+				}, 0);
+			}
 		}
 
 		/**
 		 * @desc opens modal associated with chosen action preceded by forced login modal for anons
+		 *
 		 * @param {string} action - name of action
 		 * @param {object} params
 		 */
@@ -207,7 +223,21 @@ define(
 			}
 		}
 
+		/**
+		 * @desc Sends tracking data to GA depending on tileSetData
+		 *
+		 * @param {object} tileSetData
+		 */
+		function trackMapCreation(tileSetData) {
+			var tileSetId = tileSetData.tileSetId,
+				mapTypeChosen = tileSetData.type,
+				label = mapTypeChosen + '-map-created' +
+					((!tileSetId && mapTypeChosen !== 'geo') ? '-with-new-tileset' : '');
+
+			utils.track(utils.trackerActions.IMPRESSION, label, tileSetId);
+		}
+
 		return {
 			init: init
-		}
+		};
 });

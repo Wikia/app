@@ -2,8 +2,9 @@
 
 use Wikia\Search\Config;
 use Wikia\Search\QueryService\Factory;
-use Wikia\Search\Services\SeriesEntitySearchService;
+use Wikia\Search\Services\WikiSeriesEntitySearchService;
 use Wikia\Search\Services\EpisodeEntitySearchService;
+use Wikia\Search\Services\SeriesEntitySearchService;
 
 
 class TvApiController extends WikiaApiController {
@@ -17,6 +18,8 @@ class TvApiController extends WikiaApiController {
 	const WG_CONTENT_NAMESPACES_KEY = 'wgContentNamespaces';
 	/** @var Array wikis */
 	protected $wikis = [ ];
+	/** @var WikiSeriesEntitySearchService seriesService */
+	protected $wikiSeriesService;
 	/** @var SeriesEntitySearchService seriesService */
 	protected $seriesService;
 	/** @var EpisodeEntitySearchService episodeService */
@@ -26,7 +29,7 @@ class TvApiController extends WikiaApiController {
 		$request = $this->getRequest();
 		$seriesName = $this->getRequiredParam( 'seriesName' );
 		$episodeName = $this->getRequiredParam( 'episodeName' );
-		$lang = $request->getVal( 'lang', static::LANG_SETTING );
+		$lang = $request->getVal( 'lang', self::LANG_SETTING );
 		$minQuality = $request->getVal( 'minArticleQuality', null );
 		if ( $minQuality !== null ) {
 			$minQuality = (int)$minQuality;
@@ -42,10 +45,32 @@ class TvApiController extends WikiaApiController {
 			throw new NotFoundApiException();
 		}
 
-		$response = $this->getResponse();
-		$response->setValues( $result );
+		$this->setResponseData(
+			$result,
+			[ 'urlFields' => [ 'contentUrl', 'url' ] ],
+			self::RESPONSE_CACHE_VALIDITY
+		);
+	}
 
-		$response->setCacheValidity( self::RESPONSE_CACHE_VALIDITY );
+	public function getSeries() {
+		$request = $this->getRequest();
+		$name = $this->getRequiredParam( 'seriesName' );
+		$lang = $request->getVal( 'lang', self::LANG_SETTING );
+		$minQuality = $request->getVal( 'minArticleQuality', null );
+		if ( $minQuality !== null ) {
+			$minQuality = (int)$minQuality;
+		}
+
+		$result = $this->findSeries( $name, $lang, $minQuality );
+		if ( !$result ) {
+			throw new NotFoundApiException();
+		}
+
+		$this->setResponseData(
+			$result,
+			[ 'urlFields' => [ 'contentUrl', 'url' ] ],
+			self::RESPONSE_CACHE_VALIDITY
+		);
 	}
 
 	protected function findEpisode( $seriesName, $episodeName, $lang, $quality = null ) {
@@ -56,13 +81,13 @@ class TvApiController extends WikiaApiController {
 		// this replaces american right apostrophe with normal one
 		$episodeName = str_replace("’", "'", $episodeName);
 
-		$seriesService = $this->getSeriesService();
+		$seriesService = $this->getWikiSeriesService();
 		$seriesService->setLang( $lang );
 		$wikis = $seriesService->query( $seriesName );
 		if ( !empty( $wikis ) ) {
 			$episodeService = $this->getEpisodeService();
 			$episodeService->setLang( $lang )
-				->setQuality( ($quality !== null ) ? $quality : static::DEFAULT_QUALITY );
+				->setQuality( ($quality !== null ) ? $quality : self::DEFAULT_QUALITY );
 			$result = null;
 			foreach ( $wikis as $wiki ) {
 				$episodeService->setWikiId( $wiki[ 'id' ] );
@@ -93,11 +118,11 @@ class TvApiController extends WikiaApiController {
 		return false;
 	}
 
-	protected function getSeriesService() {
-		if ( !isset( $this->seriesService ) ) {
-			$this->seriesService = new SeriesEntitySearchService();
+	protected function getWikiSeriesService() {
+		if ( !isset( $this->wikiSeriesService ) ) {
+			$this->wikiSeriesService = new WikiSeriesEntitySearchService();
 		}
-		return $this->seriesService;
+		return $this->wikiSeriesService;
 	}
 
 	protected function getEpisodeService() {
@@ -166,7 +191,35 @@ class TvApiController extends WikiaApiController {
 			->setVideoSearch( false )
 			->setOnWiki( true )
 			->setPageId( (int)$articleId )
-			->setNamespaces( [ static::NAMESPACE_SETTING ] );
+			->setNamespaces( [ self::NAMESPACE_SETTING ] );
 		return $searchConfig;
+	}
+
+	protected function findSeries( $seriesName, $lang, $quality = null ) {
+		$wikiService = $this->getWikiSeriesService();
+		$wikiService->setLang( $lang );
+		$wikis = $wikiService->query( $seriesName );
+
+		foreach ( $wikis as $wiki ) {
+			$seriesService = $this->getSeriesService();
+			$seriesService->setWikiId( $wiki['id'] )
+				->setLang( $lang )
+				->setQuality( ($quality !== null ) ? $quality : self::DEFAULT_QUALITY );
+			$namespaces = WikiFactory::getVarValueByName( self::WG_CONTENT_NAMESPACES_KEY, $wiki['id'] );
+			$seriesService->setNamespace( $namespaces );
+			$result = $seriesService->query( $seriesName );
+
+			if ( $result !== null ) {
+				return $result;
+			}
+		}
+		return false;
+	}
+
+	protected function getSeriesService() {
+		if ( !isset( $this->seriesService ) ) {
+			$this->seriesService = new SeriesEntitySearchService();
+		}
+		return $this->seriesService;
 	}
 }

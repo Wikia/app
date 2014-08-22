@@ -14,7 +14,7 @@ class AdEngine2Hooks {
 		// TODO: review top and bottom vars (important for adsinhead)
 
 		global $wgAdDriverForceDirectGptAd, $wgAdDriverForceLiftiumAd, $wgEnableRHonDesktop, $wgEnableRHonMobile,
-			   $wgLiftiumOnLoad, $wgNoExternals, $wgAdVideoTargeting, $wgAdPageType, $wgEnableKruxTargeting,
+			   $wgLiftiumOnLoad, $wgNoExternals, $wgAdVideoTargeting, $wgEnableKruxTargeting,
 			   $wgAdEngineDisableLateQueue, $wgLoadAdsInHead, $wgLoadLateAdsAfterPageLoad;
 
 		$wgNoExternals = $request->getBool( 'noexternals', $wgNoExternals );
@@ -28,28 +28,12 @@ class AdEngine2Hooks {
 
 		$wgAdDriverForceDirectGptAd = $request->getBool( 'forcedirectgpt', $wgAdDriverForceDirectGptAd );
 		$wgAdDriverForceLiftiumAd = $request->getBool( 'forceliftium', $wgAdDriverForceLiftiumAd );
-		$wgAdPageType = AdEngine2Service::getPageType();
 
 		$wgLoadAdsInHead = $request->getBool( 'adsinhead', $wgLoadAdsInHead );
 		$wgLoadLateAdsAfterPageLoad = $request->getBool( 'lateadsafterload', $wgLoadLateAdsAfterPageLoad );
 
 		$wgEnableKruxTargeting = !$wgAdEngineDisableLateQueue && !$wgNoExternals && $wgEnableKruxTargeting;
 
-		return true;
-	}
-
-
-	/**
-	 * Register global JS variables bottom
-	 *
-	 * @param array $vars
-	 *
-	 * @return bool
-	 */
-	static public function onMakeGlobalVariablesScript(array &$vars) {
-		foreach (AdEngine2Service::getBottomJsVariables() as $varName => $varValue) {
-			$vars[$varName] = $varValue;
-		}
 		return true;
 	}
 
@@ -92,7 +76,7 @@ class AdEngine2Hooks {
 	 */
 	static public function onOasisSkinAssetGroups(&$jsAssets) {
 
-		global $wgAdDriverUseWikiaBarBoxad2, $wgAdDriverUseTopInContentBoxad;
+		global $wgAdDriverUseBottomLeaderboard, $wgAdDriverUseTopInContentBoxad;
 
 		$coreGroupIndex = array_search(AdEngine2Service::ASSET_GROUP_CORE, $jsAssets);
 		if ($coreGroupIndex === false) {
@@ -119,9 +103,12 @@ class AdEngine2Hooks {
 			$jsAssets[] = AdEngine2Service::ASSET_GROUP_LIFTIUM;
 		}
 
-		if ($wgAdDriverUseWikiaBarBoxad2 === true) {
-			$jsAssets[] = 'adengine2_wikiabar_boxad_js';
+		if ($wgAdDriverUseBottomLeaderboard === true) {
+			$jsAssets[] = 'adengine2_bottom_leaderboard_js';
 		}
+
+		$jsAssets[] = 'adengine2_interactive_maps_js';
+
 		return true;
 	}
 
@@ -172,7 +159,7 @@ class AdEngine2Hooks {
 			$scriptModules[] = 'wikia.location';
 			$scriptModules[] = 'wikia.log';
 			$scriptModules[] = 'wikia.querystring';
-			$scriptModules[] = 'wikia.tracker';
+			$scriptModules[] = 'wikia.tracker.stub';
 		}
 		return true;
 	}

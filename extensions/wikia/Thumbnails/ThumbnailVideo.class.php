@@ -126,14 +126,10 @@ class ThumbnailVideo extends ThumbnailImage {
 			return $this->renderAsThumbnailImage( $options );
 		}
 
-		if ( !F::app()->checkSkin( 'wikiamobile' ) ) {
-			$options['useTemplate'] = true;
-		}
-
 		wfProfileIn( __METHOD__ );
 
-		// Migrate to new system which uses a template instead of this toHtml method
-		if ( !empty( $options['useTemplate'] ) ) {
+		// All non-WikiaMobile skins use Nirvana to render HTML now. WikiaMobile is slowly migrating with 'useTemplate'
+		if ( !F::app()->checkSkin( 'wikiamobile' ) || !empty( $options['useTemplate'] ) ) {
 			$html = $this->renderView( $options );
 
 			wfProfileOut( __METHOD__ );
@@ -141,24 +137,18 @@ class ThumbnailVideo extends ThumbnailImage {
 			return $html;
 		}
 
+		// Only WikiaMobile beyond this point
+
 		WikiaLogger::instance()->debug('Media method '.__METHOD__.' called',
-			array_merge( $options, [ 'url' => $this->url, 'method' => __METHOD__ ] ) );
+			array_merge( $options, [
+				'url'       => $this->url,
+				'method'    => __METHOD__,
+				'page'      => $this->page,
+				'mediaType' => $this->mediaType(),
+				'fileType'  => get_class( $this->file )
+			] ) );
 
 		$alt = empty( $options['alt'] ) ? '' : $options['alt'];
-
-		/*
-		 * in order to disable RDF metadata in video thumbnails
-		 * pass disableRDF parameter to toHtml method
-		 */
-		$useRDFData = ( !empty( $options['disableRDF'] ) && $options['disableRDF'] == true ) ? false : true;
-
-
-		/**
-		 * Note: if title is empty and alt is not, make the title empty, don't
-		 * use alt; only use alt if title is not set
-		 * wikia change, Inez
-		 */
-		$title = !isset( $options['title'] ) ? $alt : $options['title'];
 
 		$videoTitle = $this->file->getTitle();
 
@@ -237,36 +227,15 @@ class ThumbnailVideo extends ThumbnailImage {
 			$duration = WikiaFileHelper::formatDuration( $this->file->getMetadataDuration() );
 		}
 
-		if ( isset( $options['constHeight'] ) ) {
-			$this->appendHtmlCrop( $linkAttribs, $options );
-		}
-
-		$html = Xml::openElement( 'a', $linkAttribs );
-
 		if ( !empty( $duration ) ) {
 			$timerProp = array( 'class'=>'timer' );
 			if ( $useRDFData ) {
 				$timerProp['itemprop'] = 'duration';
 			}
-			$html .= Xml::element( 'div', $timerProp,  $duration );
 		}
 
-		if ( isset( $options['constHeight'] ) && $this->height > $options['constHeight'] ) {
-			$playButtonHeight = $options['constHeight'];
-		} else {
-			$playButtonHeight = $this->height;
-		}
-
-		$html .= WikiaFileHelper::videoPlayButtonOverlay( $this->width, $playButtonHeight );
-		$html .= Xml::element( 'img', $attribs, '', true );
-
-
-		if ( empty( $options['hideOverlay'] ) ) {
-			$showViews = empty( $options['showViews'] ) ? false : true;
-			$html .= WikiaFileHelper::videoInfoOverlay( $this->width, $videoTitle, $showViews );
-		}
-
-		$html .= ( $linkAttribs && isset( $linkAttribs['href'] ) ) ? Xml::closeElement( 'a' ) : '';
+		// WikiaMobile completely reconstructs the html
+		$html = '';
 
 		//give extensions a chance to modify the markup
 		wfRunHooks( 'ThumbnailVideoHTML', array( $options, $linkAttribs, $attribs, $this->file,  &$html ) );
@@ -274,23 +243,5 @@ class ThumbnailVideo extends ThumbnailImage {
 		wfProfileOut( __METHOD__ );
 
 		return $html;
-	}
-
-	private function appendHtmlCrop( &$linkAttribs, $options ) {
-
-		if ( !isset( $linkAttribs['style'] ) ) $linkAttribs['style'] = '';
-
-		$linkAttribs['style'] .= 'overlay:hidden;';
-
-		if ( $this->height <= $options['constHeight'] ) {
-
-			$linkAttribs['style'] .= "height:{$this->height}px;";
-			$linkAttribs['style'] .= 'margin-bottom:'.( $options['constHeight'] - $this->height )."px;";
-			$linkAttribs['style'] .= 'padding-top:'.floor( ($options['constHeight'] - $this->height)/2 )."px;";
-
-		} else {
-
-			$linkAttribs['style'] .= "height:{$options['constHeight']}px;";
-		}
 	}
 }

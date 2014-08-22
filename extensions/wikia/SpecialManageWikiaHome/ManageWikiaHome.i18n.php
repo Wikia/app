@@ -111,7 +111,8 @@ $messages['en'] = array(
 	'manage-wikia-home-stats-edits-default-label' => 'Changes today fallback',
 	'manage-wikia-home-stats-total-pages-label' => 'Total Pages fallback',
 	'manage-wikia-home-stats-success' => 'Stats updated successfully!',
-	'manage-wikia-home-stats-failure' => 'Data wasn\'t saved. Please correct errors in form and try again. '
+	'manage-wikia-home-stats-failure' => 'Data wasn\'t saved. Please correct errors in form and try again. ',
+	'manage-wikia-home-stats-permissions-error' => 'Data wasn\'t saved. Please make sure you have correct rights to edit this form. '
 );
 
 /** Message documentation (Message documentation)
@@ -398,6 +399,7 @@ $messages['br'] = array(
 	'manage-wikia-home-wikis-in-visualization-heading' => 'Roll a wikioù da welet',
 	'manage-wikia-home-wiki-filter' => 'Sil',
 	'manage-wikia-home-wiki-filter-reset' => 'Diverkañ',
+	'manage-wikia-home-wiki-list-download' => 'Pellgargañ ar roll klok',
 	'manage-wikia-home-wiki-list-id' => 'Id',
 	'manage-wikia-home-wiki-list-vertical' => 'A-hed',
 	'manage-wikia-home-wiki-list-headline' => 'Anv ar wiki',
@@ -530,6 +532,25 @@ $messages['ce'] = array(
 	'manage-wikia-home-hubs-slot' => 'Слот $1',
 	'manage-wikia-home-hubs-slot-name' => 'Хабан цӀе',
 	'manage-wikia-home-wiki-list-blocked' => 'Блоктоьхна',
+);
+
+/** Czech (čeština)
+ * @author H4nek
+ */
+$messages['cs'] = array(
+	'manage-wikia-home-change-button' => 'Změnit',
+	'manage-wikia-home-wikis-in-visualization-heading' => 'Seznam wiki ve vizualizaci',
+	'manage-wikia-home-wiki-name-filter' => 'Začněte psát název wiki a seznam se zkrátí.',
+	'manage-wikia-home-wiki-filter' => 'Filtrovat',
+	'manage-wikia-home-wiki-list-headline' => 'Název wiki',
+	'manage-wikia-home-wiki-list-blocked' => 'Zablokováno',
+	'manage-wikia-home-wiki-list-blocked-no' => 'Ne',
+	'manage-wikia-home-wiki-list-blocked-yes' => 'Ano',
+	'manage-wikia-home-wiki-list-promoted-no' => 'Ne',
+	'manage-wikia-home-wiki-list-promoted-yes' => 'Ano',
+	'manage-wikia-home-wiki-list-official-no' => 'Ne',
+	'manage-wikia-home-wiki-list-official-yes' => 'Ano',
+	'manage-wikia-home-collections-setup-save-button' => 'Uložit',
 );
 
 /** German (Deutsch)
@@ -1866,6 +1887,7 @@ $messages['tr'] = array(
 
 /** Ukrainian (українська)
  * @author Andriykopanytsia
+ * @author Mykola Swarnyk
  * @author Ua2004
  */
 $messages['uk'] = array(
@@ -1876,6 +1898,7 @@ $messages['uk'] = array(
 	'manage-wikia-home-visualization-wikis' => 'Корпоративні вікі з візуалізацією:',
 	'manage-wikia-home-hubs-slot-heading' => 'Установка слотів у хабах',
 	'manage-wikia-home-hubs-slot-success' => 'Концентратори слотів були збережені.',
+	'manage-wikia-home-hubs-slot-error' => 'Сталася помилка під час збереження. Будь ласка, спробуйте ще раз.',
 	'manage-wikia-home-hubs-slot' => 'Слот $1',
 	'manage-wikia-home-hubs-slot-name' => 'Назва концентратора',
 	'manage-wikia-home-hubs-slot-description' => 'Опис концентратора',
@@ -1979,8 +2002,11 @@ $messages['zh-hans'] = array(
 	'manage-wikia-home-wrong-rights' => '您可能已登出，或者您没有权限使用此特殊页面。',
 	'manage-wikia-home-wikis-in-slots-heading' => '插槽部署',
 	'manage-wikia-home-wikis-in-slots-total' => '插槽总计：$1',
+	'manage-wikia-home-hubs-slot-heading' => '集线器插槽配置',
+	'manage-wikia-home-hubs-slot-success' => '集线器插槽已保存。',
 	'manage-wikia-home-hubs-slot' => '插槽$1',
 	'manage-wikia-home-hubs-slot-name' => '集线器名',
+	'manage-wikia-home-hubs-slot-description' => '集线器描述',
 	'manage-wikia-home-hubs-slot-more-links' => '“更多...”连接',
 	'manage-wikia-home-hubs-slot-empty-option' => '-- 空插槽 --',
 	'manage-wikia-home-wikis-in-slots-success' => '数字插槽已被更改。',
@@ -1992,6 +2018,7 @@ $messages['zh-hans'] = array(
 	'manage-wikia-home-wiki-filter' => '过滤器',
 	'manage-wikia-home-wiki-filter-reset' => '清除',
 	'manage-wikia-home-wiki-list-download' => '下载完整列表',
+	'manage-wikia-home-wiki-list-download-tooltip' => '用UTF-8编码的逗号分隔值（CSV）文件。',
 	'manage-wikia-home-wiki-list-id' => '身份',
 	'manage-wikia-home-wiki-list-vertical' => '垂直',
 	'manage-wikia-home-wiki-list-headline' => '维基名字',
@@ -2010,8 +2037,13 @@ $messages['zh-hans'] = array(
 	'manage-wikia-home-wiki-list-all-verticals' => '所有垂直',
 	'manage-wikia-home-modal-title' => '更改维基状态',
 	'manage-wikia-home-modal-title-collection' => '编辑维基集合',
+	'manage-wikia-home-modal-content-add-collection' => '您希望将此wiki加入收藏么？',
+	'manage-wikia-home-modal-content-remove-collection' => '您希望将此wiki从收藏中移除么？',
 	'manage-wikia-home-modal-content-add-blocked-wiki-warning' => '您不能向集合中添加被锁定的维基。',
+	'manage-wikia-home-modal-content-blocked-wiki-in-collection-warning' => '此wiki不应该收藏因为它已被封禁。它将从收藏中移除。',
 	'manage-wikia-home-modal-content-blocked-wiki-title' => '本维基被封禁',
+	'manage-wikia-home-modal-content-removed-blocked-in-collection' => '此wiki现在作为收藏的一部分并不能被封禁。',
+	'manage-wikia-home-modal-too-many-wikis-in-collection' => '您不能加入更多wiki至此收藏。',
 	'manage-wikia-home-modal-button-no' => '否',
 	'manage-wikia-home-modal-button-yes' => '是',
 	'manage-wikia-home-modal-button-okay' => '好',

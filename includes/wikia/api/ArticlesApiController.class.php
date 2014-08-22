@@ -59,6 +59,12 @@ class ArticlesApiController extends WikiaApiController {
 	const SIMPLE_JSON_ARTICLE_ID_PARAMETER_NAME = "id";
 	const SIMPLE_JSON_ARTICLE_TITLE_PARAMETER_NAME = "title";
 
+	private $imageDimensionFields = [
+		'width',
+		'height'
+	];
+
+
 	/**
 	 * Get the top articles by pageviews optionally filtering by category and/or namespaces
 	 *
@@ -210,7 +216,7 @@ class ArticlesApiController extends WikiaApiController {
 
 		$this->setResponseData(
 			[ 'basepath' => $this->wg->Server, 'items' => $collection ],
-			'thumbnail',
+			[ 'imgFields'=> 'thumbnail', 'urlFields' => [ 'thumbnail', 'url' ] ],
 			self::CLIENT_CACHE_VALIDITY
 		);
 
@@ -245,7 +251,7 @@ class ArticlesApiController extends WikiaApiController {
 		}
 		$this->setResponseData(
 			[ 'basepath' => $this->wg->Server, 'items' => $mostLinkedOutput ],
-			'thumbnail',
+			[ 'imgFields'=> 'thumbnail', 'urlFields' => [ 'thumbnail', 'url' ] ],
 			self::CLIENT_CACHE_VALIDITY
 		);
 	}
@@ -418,7 +424,7 @@ class ArticlesApiController extends WikiaApiController {
 		$results = array_slice( $results, 0, $limit );
 		$this->setResponseData(
 			[ 'items' => $results, 'basepath' => $this->wg->Server ],
-			'thumbnail',
+			[ 'imgFields'=> 'thumbnail', 'urlFields' => [ 'thumbnail', 'url', 'avatar' ] ],
 			self::NEW_ARTICLES_VARNISH_CACHE_EXPIRATION
 		);
 		wfProfileOut( __METHOD__ );
@@ -574,7 +580,11 @@ class ArticlesApiController extends WikiaApiController {
 				$responseValues[ 'offset' ] = $articles[ 1 ];
 			}
 
-			$this->setResponseData( $responseValues, 'thumbnail', self::CLIENT_CACHE_VALIDITY );
+			$this->setResponseData(
+				$responseValues,
+				[ 'imgFields'=> 'thumbnail', 'urlFields' => [ 'thumbnail', 'url' ] ],
+				self::CLIENT_CACHE_VALIDITY
+			);
 		} else {
 			wfProfileOut( __METHOD__ );
 			throw new NotFoundApiException( 'No members' );
@@ -624,7 +634,7 @@ class ArticlesApiController extends WikiaApiController {
 		 */
 		$this->setResponseData(
 			[ 'items' => $collection, 'basepath' => $this->wg->Server ],
-			'thumbnail',
+			[ 'imgFields'=> 'thumbnail', 'urlFields' => [ 'thumbnail', 'url' ] ],
 			self::CLIENT_CACHE_VALIDITY
 		);
 
@@ -639,6 +649,27 @@ class ArticlesApiController extends WikiaApiController {
 			'length' => $this->request->getInt( static::PARAMETER_ABSTRACT, static::DEFAULT_ABSTRACT_LEN ),
 			'titleKeys' => $this->request->getArray( self::PARAMETER_TITLES )
 		];
+	}
+
+	protected function appendMetadata( $collection ) {
+		if ( !empty( $this->wg->EnablePOIExt ) ) {
+			$questDetailsSearch = new QuestDetailsSearchService();
+			$result = $questDetailsSearch->newQuery()
+				->withIds( array_keys( $collection ), $this->wg->CityId )
+				->metadataOnly()
+				->search();
+
+			foreach ( $collection as $key => $item ) {
+				$meta = [ ];
+				if ( !empty( $result[ $key ] ) ) {
+					$meta = $result[ $key ];
+				}
+				if( !empty( $meta ) ) {
+					$collection[ $key ] = array_merge( $collection[ $key ], [ 'metadata' => $meta ] );
+				}
+			}
+		}
+		return $collection;
 	}
 
 	protected function getArticlesDetails( $articleIds, $articleKeys = [], $width = 0, $height = 0, $abstract = 0, $strict = false ) {
@@ -739,6 +770,8 @@ class ArticlesApiController extends WikiaApiController {
 			}
 		}
 
+		$collection = $this->appendMetadata( $collection );
+
 		$thumbnails = null;
 		//if strict return to original ids order
 		if ( $strict ) {
@@ -788,13 +821,34 @@ class ArticlesApiController extends WikiaApiController {
 				$data = [ 'thumbnail' => null, 'original_dimensions' => null ];
 				if ( isset( $images[ $id ] ) ) {
 					$data['thumbnail'] = $images[$id][0]['url'];
-					$data['original_dimensions'] = isset( $images[$id][0]['original_dimensions'] ) ?
-						$images[$id][0]['original_dimensions'] : null;
+
+					if( is_array( $images[$id][0]['original_dimensions'] ) ) {
+						array_walk( $images[$id][0]['original_dimensions'], [$this, 'normalizeDimension'] );
+
+						$data['original_dimensions'] = $images[$id][0]['original_dimensions'];
+					} else {
+						$data['original_dimensions'] = null;
+					}
 				}
 				$result[ $id ] = $data;
 			}
 		}
+
 		return $result;
+	}
+
+	/**
+	 * Normalizes (converts to integer) $dimension passed to the method, stored
+	 * under $key.
+	 * Meant to be used as callable in array_walk
+	 *
+	 * @param $dimension
+	 * @param $key
+	 */
+	protected function normalizeDimension(&$dimension, $key) {
+		if ( in_array( $key, $this->imageDimensionFields ) ) {
+			$dimension = intval( $dimension );
+		}
 	}
 
 	protected function getImageServing( $ids, $width, $height ) {
@@ -910,7 +964,11 @@ class ArticlesApiController extends WikiaApiController {
 		$jsonFormatService = new JsonFormatService();
 		$jsonSimple = $jsonFormatService->getSimpleFormatForArticle( $article );
 
-		$this->setResponseData( $jsonSimple, 'images', self::SIMPLE_JSON_VARNISH_CACHE_EXPIRATION );
+		$this->setResponseData(
+			$jsonSimple,
+			[ 'imgFields'=>'images', 'urlFields' => 'src' ],
+			self::SIMPLE_JSON_VARNISH_CACHE_EXPIRATION
+		);
 	}
 
 	public function getAsJson() {
@@ -1004,7 +1062,7 @@ class ArticlesApiController extends WikiaApiController {
 		$result = array_slice( $result, 0, $limit );
 		$this->setResponseData(
 			[ 'items' => $result, 'basepath' => $this->wg->Server ],
-			'thumbnail',
+			[ 'imgFields'=> 'thumbnail', 'urlFields' => [ 'thumbnail', 'url' ] ],
 			self::CLIENT_CACHE_VALIDITY
 		);
 

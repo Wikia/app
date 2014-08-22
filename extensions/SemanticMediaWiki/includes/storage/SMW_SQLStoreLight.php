@@ -46,8 +46,8 @@ class SMWSQLStoreLight extends SMWStore {
 	public function getSemanticData( $subject, $filter = false ) {
 		wfProfileIn( "SMWSQLStoreLight::getSemanticData (SMW)" );
 		SMWSQLStoreLight::$in_getSemanticData++; // do not clear the cache when called recursively
-		//*** Find out if this subject exists ***//
-		if ( $subject instanceof Title ) { ///TODO: can this still occur?
+		// *** Find out if this subject exists ***//
+		if ( $subject instanceof Title ) { /// TODO: can this still occur?
 			$sid = $subject->getArticleID();
 			$svalue = SMWWikiPageValue::makePageFromTitle( $subject );
 		} elseif ( $subject instanceof SMWWikiPageValue ) {
@@ -61,7 +61,7 @@ class SMWSQLStoreLight extends SMWStore {
 			wfProfileOut( "SMWSQLStoreLight::getSemanticData (SMW)" );
 			return isset( $svalue ) ? ( new SMWSemanticData( $svalue ) ) : null;
 		}
-		//*** Prepare the cache ***//
+		// *** Prepare the cache ***//
 		if ( !array_key_exists( $sid, $this->m_semdata ) ) { // new cache entry
 			$this->m_semdata[$sid] = new SMWSemanticData( $svalue, false );
 			$this->m_sdstate[$sid] = array();
@@ -73,7 +73,7 @@ class SMWSQLStoreLight extends SMWStore {
 			$this->m_semdata = array( $sid => $this->m_semdata[$sid] );
 			$this->m_sdstate = array( $sid => $this->m_sdstate[$sid] );
 		}
-		//*** Read the data ***//
+		// *** Read the data ***//
 		$db = wfGetDB( DB_SLAVE );
 		foreach ( array( 'smwsimple_data', 'smwsimple_special' ) as $tablename ) {
 			if ( array_key_exists( $tablename, $this->m_sdstate[$sid] ) ) continue;
@@ -198,7 +198,7 @@ class SMWSQLStoreLight extends SMWStore {
 		}
 		foreach ( array( 'smwsimple_data', 'smwsimple_special' ) as $tablename ) {
 			$res = $db->select( $tablename, 'DISTINCT propname',
-				'pageid=' . $db->addQuotes($sid) . $this->getSQLConditions( $suboptions, 'propname', 'propname' ),
+				'pageid=' . $db->addQuotes( $sid ) . $this->getSQLConditions( $suboptions, 'propname', 'propname' ),
 				'SMW::getProperties', $this->getSQLOptions( $suboptions, 'propname' ) );
 			foreach ( $res as $row ) {
 				$result[] = new SMWDIProperty( $row->propname );
@@ -256,9 +256,9 @@ class SMWSQLStoreLight extends SMWStore {
 		wfProfileIn( 'SMWSQLStoreLight::deleteSubject (SMW)' );
 		wfRunHooks( 'SMWSQLStoreLight::deleteSubjectBefore', array( $this, $subject ) );
 		$this->deleteSemanticData( SMWWikiPageValue::makePageFromTitle( $subject ) );
-		///FIXME: if a property page is deleted, more pages may need to be updated by jobs!
-		///TODO: who is responsible for these updates? Some update jobs are currently created in SMW_Hooks, some internally in the store
-		///FIXME: clean internal caches here
+		/// FIXME: if a property page is deleted, more pages may need to be updated by jobs!
+		/// TODO: who is responsible for these updates? Some update jobs are currently created in SMW_Hooks, some internally in the store
+		/// FIXME: clean internal caches here
 		wfRunHooks( 'SMWSQLStoreLight::deleteSubjectAfter', array( $this, $subject ) );
 		wfProfileOut( 'SMWSQLStoreLight::deleteSubject (SMW)' );
 	}
@@ -279,7 +279,7 @@ class SMWSQLStoreLight extends SMWStore {
 					continue;  // subobjects not supported in this store right now; maybe could simply be PHP serialized
 				} else {
 					$uvals = array( 'pageid' => $sid, 'propname' => $property->getDBkey(),
-					                'value' => ( $tablename == 'smwsimple_special' ? reset($dv->getDBkeys()) : serialize($dv->getDBkeys()) ) );
+					                'value' => ( $tablename == 'smwsimple_special' ? reset( $dv->getDBkeys() ) : serialize( $dv->getDBkeys() ) ) );
 				}
 				if ( !array_key_exists( $tablename, $updates ) ) $updates[$tablename] = array();
 				$updates[$tablename][] = $uvals;
@@ -332,7 +332,7 @@ class SMWSQLStoreLight extends SMWStore {
 	}
 
 	public function getStatistics() {
-		return array('PROPUSES' => 0, 'USEDPROPS' => 0, 'DECLPROPS' => 0 ); // not supported by this store
+		return array( 'PROPUSES' => 0, 'USEDPROPS' => 0, 'DECLPROPS' => 0 ); // not supported by this store
 	}
 
 ///// Setup store /////
@@ -404,18 +404,34 @@ class SMWSQLStoreLight extends SMWStore {
 		$titles = Title::newFromIDs( $tids );
 		foreach ( $titles as $title ) {
 			if ( ( $namespaces == false ) || ( in_array( $title->getNamespace(), $namespaces ) ) ) {
-				$updatejobs[] = new SMWUpdateJob( $title );
+				// wikia change start - jobqueue migration
+				$task = new \Wikia\Tasks\Tasks\JobWrapperTask();
+				$task->call( 'SMWUpdateJob', $title );
+				$updatejobs[] = $task;
+				// wikia change end
+
 				$emptyrange = false;
 			}
 		}
 
-		wfRunHooks('smwRefreshDataJobs', array(&$updatejobs));
+		wfRunHooks( 'smwRefreshDataJobs', array( &$updatejobs ) );
 
 		if ( $usejobs ) {
-			Job::batchInsert( $updatejobs );
+			// wikia change start - jobqueue migration
+			\Wikia\Tasks\Tasks\BaseTask::batch( $updatejobs );
+			// wikia change end
 		} else {
 			foreach ( $updatejobs as $job ) {
-				$job->run();
+				// wikia change start - jobqueue migration
+				/** @var \Wikia\Tasks\Tasks\JobWrapperTask $job */
+				try {
+					$job->init();
+				} catch ( Exception $e ) {
+					continue;
+				}
+
+				$job->wrap( 'SMWUpdateJob' );
+				// wikia change end
 			}
 		}
 

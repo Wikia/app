@@ -6,10 +6,17 @@ define(
 		'wikia.cache',
 		'wikia.loader',
 		'wikia.ui.factory',
-		'wikia.mustache'
+		'wikia.mustache',
+		'wikia.tracker'
 	],
-	function($, w, cache, loader, uiFactory, mustache) {
+	function($, w, cache, loader, uiFactory, mustache, tracker) {
 		'use strict';
+
+		// const variables used across int map UI
+		var constants = {
+			debounceDelay: 250,
+			minCharLength: 2
+		};
 
 		/**
 		 * @desc loads all assets for create map modal and initialize it
@@ -44,17 +51,27 @@ define(
 		 */
 		function getAssets(source, cacheKey) {
 			var dfd = new $.Deferred(),
-				assets = cache.getVersioned(cacheKey);
+				assets = cache.getVersioned(cacheKey),
+				messages;
 
 			if (assets) {
 				dfd.resolve(assets);
+			} else if (source.messages) {
+				messages = source.messages;
+				delete source.messages;
+
+				$.when(
+					loader({
+						type: loader.MULTI,
+						resources: source
+					}),
+					$.getMessages(messages)
+				).done(dfd.resolve);
 			} else {
 				loader({
 					type: loader.MULTI,
 					resources: source
-				}).done(function (assets) {
-					dfd.resolve(assets);
-				});
+				}).done(dfd.resolve);
 			}
 
 			return dfd.promise();
@@ -257,8 +274,16 @@ define(
 			w.UserLogin.refreshIfAfterForceLogin();
 		}
 
+		/**
+		 * @desc handle nirvana exception errors
+		 * @param {object} modal - modal instance
+		 * @param {object} response - nirvana response object
+		 */
 		function handleNirvanaException(modal, response) {
-			showError(modal, response.statusText);
+			var responseText = response.responseText,
+				message = JSON.parse(responseText).exception.details;
+
+			showError(modal, message || response.statusText);
 		}
 
 		/**
@@ -297,7 +322,61 @@ define(
 			return baseUrl + '/thumb/' + fileName + '/' + crop + fileName;
 		}
 
+		/**
+		 * @desc handler for writing in input field
+		 * @param {Element} input - HTML <input> element
+		 * @param {function} cb - callback function fired when input text is long enough
+		 */
+		function onWriteInInput(input, cb) {
+			var trimmedKeyword = input.value.trim();
+
+			if (trimmedKeyword.length >= constants.minCharLength) {
+				cb(trimmedKeyword);
+			}
+		}
+
+		/**
+		 * @desc escapes HTML entities
+		 * @param string
+		 * @returns {string}
+		 */
+		function escapeHtml(string) {
+			var htmlEscapes = {
+					'&': '&amp;',
+					'<': '&lt;',
+					'>': '&gt;'
+				},
+				htmlEscapeMatcher = /[&<>]/g;
+
+			return ('' + string).replace(htmlEscapeMatcher, function (match) {
+				return htmlEscapes[match];
+			});
+		}
+
+		/**
+		 * @desc Wrapper for our Wikia.Tracker.track method - sends to GA tracking info
+		 *
+		 * @param {string} action one of Wikia.Tracker.ACTIONS
+		 * @param {string} label
+		 * @param {integer} value
+		 */
+		function track(action, label, value) {
+			var trackingParams = {
+				trackingMethod: 'ga',
+				category: 'map',
+				action: action,
+				label: label
+			};
+
+			if (typeof(value) !== 'undefined') {
+				trackingParams.value = value;
+			}
+
+			tracker.track(trackingParams);
+		}
+
 		return {
+			constants: constants,
 			loadModal: loadModal,
 			createModal: createModal,
 			bindEvents: bindEvents,
@@ -312,7 +391,17 @@ define(
 			handleNirvanaException: handleNirvanaException,
 			showError: showError,
 			cleanUpError: cleanUpError,
-			createThumbURL: createThumbURL
-		}
+			createThumbURL: createThumbURL,
+
+			mapDeleted: {
+				mapNotDeleted: 0,
+				mapDeleted: 1
+			},
+			onWriteInInput: onWriteInInput,
+			escapeHtml: escapeHtml,
+			track: track,
+			trackerActions: tracker.ACTIONS
+		};
 	}
 );
+

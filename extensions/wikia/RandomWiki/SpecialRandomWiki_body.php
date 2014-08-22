@@ -48,10 +48,12 @@ class RandomWiki extends SpecialPage {
 			$this->mCookie->history = array( );
 
 			if ( !empty( $wikiID ) ) {
-				$hub = WikiFactory::getCategory( $wikiID );
+				$hub = WikiFactoryHub::getInstance();
+				// FIXME: change this to verticalId
+				$cat_id = $hub->getCategoryId( $wikiID );
 
-				if ( is_object( $hub ) ) {
-					$this->mCookie->origHub = $hub->cat_id;
+				if ( $cat_id ) {
+					$this->mCookie->origHub = $cat_id;
 					$this->mCookie->langCode = WikiFactory::getWikiByID( $wikiID )->city_lang;
 					$this->mCookie->history[ ] = $wikiID;
 				}
@@ -128,7 +130,7 @@ class RandomWiki extends SpecialPage {
 		$wgRequest->response()->setcookie( self::COOKIE_NAME_TOKEN, $cookieValue, time() + ( 3600 * self::COOKIE_EXPIRY ) );
 
 		$url = WikiFactory::getVarValueByName( 'wgServer', $destinationID );
-		
+
 		//FB#1033: avoid being sent to Special:WikiActivity when logged-in, see MyHomw::getInitialMainPage
 		if ( $wgUser->isLoggedIn() ) {
 			$url .= '?redirect=no';

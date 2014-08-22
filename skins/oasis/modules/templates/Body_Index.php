@@ -94,7 +94,7 @@
 						}
 
 						if (!WikiaPageType::isCorporatePage() && !WikiaPageType::isMainPage() && $wg->AdDriverUseTopInContentBoxad) {
-							echo $app->renderView('Ad', 'Index', ['slotName' => 'TOP_IN_CONTENT_BOXAD']);
+							echo $app->renderView('Ad', 'Index', ['slotName' => 'TOP_INCONTENT_BOXAD']);
 						}
 
 					?>
@@ -148,8 +148,8 @@
 		?>
 
 		<?= empty($wg->SuppressFooter) ? $app->renderView('Footer', 'Index') : '' ?>
-		<? if(!empty($wg->EnableWikiaHomePageExt)) echo $app->renderView('WikiaHomePage', 'footer') ?>
-		<?= $app->renderView('CorporateFooter', 'Index') ?>
+		<? if(!empty($wg->EnableCorporateFooterExt)) echo $app->renderView('CorporateFooter', 'index') ?>
+		<? if(!empty($wg->EnableGlobalFooterExt)) echo $app->renderView('GlobalFooter', 'index') ?>
 	</div>
 </section><!--WikiaPage-->
 

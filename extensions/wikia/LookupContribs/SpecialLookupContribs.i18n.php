@@ -997,6 +997,8 @@ Vergewëssert Iech datt Dir Iech beim Benotzernumm net vertippt hutt.</p>',
 	'lookupcontribswikioptions' => 'Optiounen',
 	'lookupcontribsnext' => 'nächst',
 	'lookupcontribsprevious' => 'vireg',
+	'lookupcontribsrestore' => 'restauréieren',
+	'lookupcontribscontribs' => 'Kontributiounen',
 	'right-lookupcontribs' => 'Déi global Ännerunge vu Benotzer weisen',
 	'lookupcontribsshowpages' => 'All Säiten ($1 Nummraim)',
 	'lookupcontribscontent' => 'Inhalt',
@@ -2006,6 +2008,7 @@ $messages['yi'] = array(
 /** Simplified Chinese (中文（简体）‎)
  * @author Dimension
  * @author Hydra
+ * @author Impersonator 1
  * @author Liuxinyu970226
  * @author Mywood
  * @author Yfdyh000
@@ -2021,6 +2024,8 @@ $messages['zh-hans'] = array(
 	'lookupcontribsselectfor' => '搜索：',
 	'lookupcontribsdisplaymode' => '显示模式：',
 	'lookupcontribsselectmodenormal' => '该用户最近的贡献',
+	'lookupcontribsselectmodefinal' => '此用户的最终贡献',
+	'lookupcontribsselectmodeall' => '此用户的所有贡献',
 	'lookupcontribsfullurls' => '完整URL',
 	'lookupcontribslinks' => '贡献链接',
 	'lookupcontribsgo' => '提交',
@@ -2029,6 +2034,7 @@ $messages['zh-hans'] = array(
 	'lookupcontribsinvalidviewmode' => '<p class="error">“<b>$1</b>”不是有效的视图模式。</p>',
 	'lookupcontribsinvalidmode' => '<p class="error">“<b>$1</b>”不是有效的模式。</p>',
 	'lookupcontribsselectwikis' => '选择维基：',
+	'lookupcontribslistwikiainfo' => '由<b>$1</b>编辑条目的wiki列表',
 	'lookupcontribsnoresultfound' => '未找到结果！',
 	'lookupcontribsinvalidresults' => '无效的结果！',
 	'lookupcontribswiki' => '维基',
