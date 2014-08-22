@@ -7,6 +7,7 @@ class AdEngine2Service
 	const ASSET_GROUP_ADENGINE = 'adengine2_js';
 	const ASSET_GROUP_ADENGINE_LATE = 'adengine2_late_js';
 	const ASSET_GROUP_LIFTIUM = 'liftium_ads_js';
+	const ASSET_GROUP_TOP_INCONTENT_JS = 'adengine2_top_in_content_boxad_js';
 
 	const PAGE_TYPE_NO_ADS = 'no_ads';                   // show no ads
 	const PAGE_TYPE_MAPS = 'maps';                       // show only ads on maps
@@ -28,6 +29,7 @@ class AdEngine2Service
 	public static function getPageType()
 	{
 		$wg = F::app()->wg;
+		$title = null;
 
 		static $pageLevel = null;
 
@@ -91,7 +93,7 @@ class AdEngine2Service
 				return $pageLevel;
 			}
 
-			if ($title->isSpecial('Maps')) {
+			if ($title && $title->isSpecial('Maps')) {
 				$pageLevel = self::PAGE_TYPE_MAPS;
 				return $pageLevel;
 			}
@@ -225,7 +227,7 @@ class AdEngine2Service
 			$wgAdPageLevelCategoryLangs, $wgLanguageCode, $wgAdDriverTrackState,
 			$wgAdDriverForceDirectGptAd, $wgAdDriverForceLiftiumAd,
 			$wgOasisResponsive, $wgOasisResponsiveLimited,
-			$wgEnableRHonDesktop, $wgAdPageType, $wgOut,
+			$wgEnableRHonDesktop, $wgOut,
 			$wgRequest, $wgEnableKruxTargeting,
 			$wgAdVideoTargeting, $wgLiftiumOnLoad, $wgAdDriverSevenOneMediaOverrideSub2Site,
 			$wgDartCustomKeyValues, $wgWikiDirectedAtChildrenByStaff, $wgAdEngineDisableLateQueue,
@@ -244,7 +246,6 @@ class AdEngine2Service
 
 			// Ad Driver
 			'wgAdDriverUseCatParam' => array_search($wgLanguageCode, $wgAdPageLevelCategoryLangs),
-			'wgAdPageType' => $wgAdPageType,
 			'wgAdDriverUseEbay' => $wgAdDriverUseEbay,
 			'wgAdDriverUseDartForSlotsBelowTheFold' => $wgAdDriverUseDartForSlotsBelowTheFold === null ? 'hub' : $wgAdDriverUseDartForSlotsBelowTheFold,
 			'wgAdDriverUseSevenOneMedia' => $wgAdDriverUseSevenOneMedia,
@@ -321,81 +322,12 @@ class AdEngine2Service
 	}
 
 	/**
-	 * Get names of variables from getJsVariables to expose in top
-	 *
-	 * @return array
-	 */
-	private static function getTopJsVariableNames()
-	{
-		$topVars = [
-			'adDriver2ForcedStatus',         // DART creatives
-			'adDriverLastDARTCallNoAds',     // TODO: remove var
-			'adslots2',                      // AdEngine2_Ad.php
-			'cityShort',                     // AdLogicPageParams.js
-			'cscoreCat',                     // analytics_prod.js
-			'wgAdsShowableOnPage',           // TODO: remove var
-			'wgEnableKruxTargeting',         // Krux.js
-			'wgKruxCategoryId',              // Krux.run.js
-			'wgShowAds',                     // analytics_prod.js
-			'wgUserShowAds',                 // JWPlayer.class.php
-			'wikiaPageIsCorporate',          // analytics_prod.js
-			'wikiaPageType',                 // analytics_prod.js
-		];
-		if (self::areAdsInHead()) {
-			$topVars = array_merge($topVars, [
-				'wgAdEngineDisableLateQueue',    // AdConfig2.js
-				'wgAdDriverUseSevenOneMedia',    // AdConfig2.js
-				'wgAdDriverForceDirectGptAd',    // AdConfig2.js
-				'wgAdDriverForceLiftiumAd',      // AdConfig2.js
-				'wgAdDriverTrackState',          // SlotTracker.js
-				'wgAdDriverUseCatParam',         // AdLogicPageParams.js
-				'wgDartCustomKeyValues',         // AdLogicPageParams.js
-				'wgEnableRHonDesktop',           // AdEngine2.run.js
-				'wgHighValueCountries',          // AdLogicHighValueCountry.js
-				'wgLoadAdsInHead',               // AdEngine2.run.js
-				'wgLoadLateAdsAfterPageLoad',        // AdEngine2.run.js
-				'wgUsePostScribe',               // AdEngine2.run.js, scriptwriter.js
-				'wgWikiDirectedAtChildren',      // AdLogicPageParams.js
-				'wikiaPageIsHub',                // AdLogicPageParams.js
-			]);
-		}
-		return $topVars;
-	}
-
-	/**
 	 * Get variables to expose in top of HTML
 	 *
 	 * @return array
 	 */
 	public static function getTopJsVariables()
 	{
-		$allVars = self::getJsVariables();
-		$topVars = [];
-
-		$keysToInclude = self::getTopJsVariableNames();
-		foreach ($keysToInclude as $key) {
-			if (isset($allVars[$key])) {
-				$topVars[$key] = $allVars[$key];
-			}
-		}
-		return $topVars;
-	}
-
-	/**
-	 * Get variables to expose in bottom of HTML
-	 *
-	 * @return array
-	 */
-	public static function getBottomJsVariables()
-	{
-		// Remember in PHP this actually makes an array copy:
-		$bottomVars = self::getJsVariables();
-
-		$keysToExclude = self::getTopJsVariableNames();
-		foreach ($keysToExclude as $key) {
-			unset($bottomVars[$key]);
-		}
-
-		return $bottomVars;
+		return self::getJsVariables();
 	}
 }

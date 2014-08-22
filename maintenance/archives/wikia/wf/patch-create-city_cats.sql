@@ -22,7 +22,7 @@ REPLACE INTO /*$wgDBprefix*/city_cats (cat_id, cat_name, cat_url, cat_short, cat
 ( 6, 'Food and Drink', 'http://www.wikia.com/wiki/FoodAndDrink', 'foodanddrink', 1, 1 ),
 ( 7, 'Travel', 'http://www.wikia.com/wiki/Travel', 'travel', 1, 1 ),
 ( 8, 'Education', 'http://www.wikia.com/wiki/Education', 'edu', 1, 1 ),
-( 9, 'Lifestyle', 'http://www.wikia.com/wiki/Lifestyle', 'life' 1, 0 ),
+( 9, 'Lifestyle', 'http://www.wikia.com/wiki/Lifestyle', 'life', 1, 0 ),
 ( 10, 'Finance', 'http://www.wikia.com/wiki/Finance', 'fin', 1, 1 ),
 ( 11, 'Politics', 'http://www.wikia.com/wiki/Politics', 'poli', 1, 1 ),
 ( 12, 'Technology', 'http://www.wikia.com/wiki/Technology', 'tech', 1, 1 ),
@@ -37,7 +37,7 @@ REPLACE INTO /*$wgDBprefix*/city_cats (cat_id, cat_name, cat_url, cat_short, cat
 
 /* New categories */
 REPLACE INTO /*$wgDBprefix*/city_cats (cat_id, cat_name, cat_url, cat_short, cat_deprecated, cat_active ) VALUES
-( 21, 'TV', 'http://www.wikia.com/wiki/TV', 'tv', 0, 1);
+( 21, 'TV', 'http://www.wikia.com/wiki/TV', 'tv', 0, 1),
 ( 22, 'Video Games', 'http://gaming.wikia.com', 'videogames', 0, 1),
 ( 23, 'Books', 'http://www.wikia.com/wiki/Books', 'books', 0, 1),
 ( 24, 'Comics', 'http://www.wikia.com/wiki/Comics', 'comics', 0, 1),

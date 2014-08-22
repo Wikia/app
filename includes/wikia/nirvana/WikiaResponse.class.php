@@ -38,6 +38,7 @@ class WikiaResponse {
 	 */
 	const TEMPLATE_ENGINE_PHP = 'php';
 	const TEMPLATE_ENGINE_MUSTACHE = 'mustache';
+	const TEMPLATE_ENGINE_HANDLEBARS = 'handlebars';
 
 	/**
 	 * Caching times
@@ -429,7 +430,11 @@ class WikiaResponse {
 	}
 
 	public function setTemplateEngine( $engine ) {
-		if ( in_array( $engine, array(self::TEMPLATE_ENGINE_PHP, self::TEMPLATE_ENGINE_MUSTACHE)) ) {
+		if ( in_array( $engine, array(
+				self::TEMPLATE_ENGINE_PHP,
+				self::TEMPLATE_ENGINE_MUSTACHE,
+				self::TEMPLATE_ENGINE_HANDLEBARS)
+		) ) {
 			$this->templateEngine = $engine;
 		}
 	}

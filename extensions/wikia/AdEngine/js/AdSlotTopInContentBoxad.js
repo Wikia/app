@@ -8,7 +8,7 @@ define('ext.wikia.adEngine.slot.topInContentBoxad', [
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.slot.topInContentBoxad',
-		slotName = 'TOP_IN_CONTENT_BOXAD',
+		slotName = 'TOP_INCONTENT_BOXAD',
 		articleHeightMaxDelta = 125,
 		result = null;
 

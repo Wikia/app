@@ -51,17 +51,27 @@ define(
 		 */
 		function getAssets(source, cacheKey) {
 			var dfd = new $.Deferred(),
-				assets = cache.getVersioned(cacheKey);
+				assets = cache.getVersioned(cacheKey),
+				messages;
 
 			if (assets) {
 				dfd.resolve(assets);
+			} else if (source.messages) {
+				messages = source.messages;
+				delete source.messages;
+
+				$.when(
+					loader({
+						type: loader.MULTI,
+						resources: source
+					}),
+					$.getMessages(messages)
+				).done(dfd.resolve);
 			} else {
 				loader({
 					type: loader.MULTI,
 					resources: source
-				}).done(function (assets) {
-					dfd.resolve(assets);
-				});
+				}).done(dfd.resolve);
 			}
 
 			return dfd.promise();
@@ -334,14 +344,11 @@ define(
 			var htmlEscapes = {
 					'&': '&amp;',
 					'<': '&lt;',
-					'>': '&gt;',
-					'"': '&quot;',
-					'\'': '&#39;',
-					'/': '&#x2F;'
+					'>': '&gt;'
 				},
-				htmlEscaper = /[&<>"'\/]/g;
+				htmlEscapeMatcher = /[&<>]/g;
 
-			return ('' + string).replace(htmlEscaper, function (match) {
+			return ('' + string).replace(htmlEscapeMatcher, function (match) {
 				return htmlEscapes[match];
 			});
 		}

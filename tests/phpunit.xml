@@ -47,15 +47,16 @@
 			<group>Stub</group>
 		</exclude>
 	</groups>
-	<!-- Exclude the following from code coverage reports -->
 	<filter>
+		<!-- Exclude the following from code coverage reports -->
 		<blacklist>
 			<directory>../bin</directory>
 			<directory>../config</directory>
 			<directory>../docs</directory>
 			<directory>../images</directory>
 			<directory>../languages</directory>
-			<directory>../lib</directory>
+			<directory>../lib/composer</directory>
+			<directory>../lib/vendor</directory>
 			<directory>../maintenance</directory>
 			<directory>../math</directory>
 			<directory>../resources</directory>

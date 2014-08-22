@@ -238,14 +238,6 @@ class VideoFileUploader {
 			$task->delay( $delay );
 			$task->call( 'retryThumbUpload', $this->getDestinationTitle(), $delayIndex, $provider, $this->sVideoId );
 			$task->queue();
-			$context = [
-				'videoTitle' => $this->getDestinationTitle(),
-				'provider'   => $provider,
-				'delay'      => $delay
-			];
-			\Wikia\Logger\WikiaLogger::instance()->info(
-				"Job Queue job scheduled for missing thumbnail",
-				$context );
 		}
 	}
 

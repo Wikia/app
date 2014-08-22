@@ -18,8 +18,8 @@ var ads = (function (window, document) {
 
 		define('ext.wikia.adEngine.gptSlotConfig', function () {
 			var slotMapConfig = {
-				mobile: {
-					MAPS_BUTTON: {size: '250x50'}
+				maps: {
+					MAPS_BUTTON: { size: '320x50,1x1' }
 				}
 			};
 
@@ -40,15 +40,18 @@ var ads = (function (window, document) {
 
 		define('ext.wikia.adEngine.wikiaGptAdDetect', function () {
 			function onAdLoad(slotname, gptEvent) {
-				if (!gptEvent.isEmpty) {
-					if (window.name) {
-						var parentIframeContainer = window.parent.document.getElementById(window.name).parentNode;
+				var parentIframeContainer,
+					height = gptEvent.size && gptEvent.size[1];
 
-						if (parentIframeContainer) {
-							parentIframeContainer.className = parentIframeContainer.className.replace('hidden', '');
-							parentIframeContainer.parentNode.className += ' ad-shown';
-						}
-					}
+				if (!window.name || gptEvent.isEmpty || height <= 1) {
+					return;
+				}
+
+				parentIframeContainer = window.parent.document.getElementById(window.name).parentNode;
+
+				if (parentIframeContainer) {
+					parentIframeContainer.className = parentIframeContainer.className.replace('hidden', '');
+					parentIframeContainer.parentNode.className += ' ad-shown';
 				}
 			}
 
@@ -59,7 +62,7 @@ var ads = (function (window, document) {
 	}
 
 	function fillAd() {
-		require(['ext.wikia.adEngine.provider.directGptMobile'], function (gpt) {
+		require(['ext.wikia.adEngine.provider.directGptMaps'], function (gpt) {
 			gpt.fillInSlot('MAPS_BUTTON', noop, noop);
 		});
 	}

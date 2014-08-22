@@ -173,6 +173,8 @@ $config['oasis_noads_extensions_js'] = array(
 		'//extensions/wikia/EditorSurvey/js/EditorSurvey.js',
 		// Image and video thumbnail mustache templates
 		'//extensions/wikia/Thumbnails/scripts/templates.mustache.js',
+		// handlebars - uncomment this when introducing first client-side rendered handlebars template
+		// '//resources/wikia/libraries/handlebars/handlebars.js',
 	)
 );
 
@@ -317,7 +319,6 @@ $config['oasis_nojquery_shared_js'] = array(
 		'//skins/oasis/js/PageHeader.js',
 		'//skins/oasis/js/Search.js',
 		'//skins/oasis/js/WikiaFooter.js',
-		'//skins/oasis/js/CorporateFooter.js',
 		'//skins/oasis/js/buttons.js',
 		'//skins/oasis/js/WikiHeader.js',
 		'//skins/oasis/js/WikiaNotifications.js',
@@ -671,7 +672,7 @@ $config['interactivemaps_ads_js'] = array(
 		'//resources/wikia/modules/window.js',
 
 		// Advertisement libs
-		'//extensions/wikia/AdEngine/js/AdProviderDirectGptMobile.js',
+		'//extensions/wikia/AdEngine/js/AdProviderDirectGptMaps.js',
 		'//extensions/wikia/AdEngine/js/WikiaGptHelper.js',
 		'//extensions/wikia/AdEngine/InteractiveMaps/ads.js'
 	)
@@ -1092,7 +1093,7 @@ $config['VET_js'] = array(
 
 /**
  * @name VideoPageTool
- * @description Assets for the VideoPageTool, same styles as SpecialMarketingToolbox
+ * @description Assets for the VideoPageTool, same styles as SpecialEditHub
  * The JS is split into two different packages for the dashboard and edit pages
  */
 
@@ -1305,40 +1306,6 @@ $config['wikiahomepage_scss_wikiamobile'] = array(
 	'skin' => 'wikiamobile',
 	'assets' => array(
 		'//extensions/wikia/WikiaHomePage/css/WikiaHomePage.wikiamobile.scss'
-	)
-);
-
-/** WikiaHubsV2 **/
-//TODO: remove after HubsV3 release @WikiaHubsV2Remove
-$config['wikiahubs_v2'] = array(
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => array('oasis'),
-	'assets' => array(
-		'//extensions/wikia/WikiaHubsV2/js/WikiaHubsV2.js'
-	)
-);
-
-$config['wikiahubs_v2_modal'] = array(
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => array('oasis'),
-	'assets' => array(
-		'//extensions/wikia/WikiaHubsV2/js/WikiaHubsV2Modals.js'
-	)
-);
-
-$config['wikiahubs_v2_scss'] = array(
-	'type' => AssetsManager::TYPE_SCSS,
-	'skin' => array('oasis'),
-	'assets' => array(
-		'//extensions/wikia/WikiaHubsV2/css/WikiaHubsV2.scss'
-	)
-);
-
-$config['wikiahubs_v2_scss_mobile'] = array(
-	'type' => AssetsManager::TYPE_SCSS,
-	'skin' => array('wikiamobile'),
-	'assets' => array(
-		'//extensions/wikia/WikiaHubsV2/css/WikiaHubsV2Mobile.scss'
 	)
 );
 
@@ -1801,12 +1768,32 @@ $config['optimizely_blocking_js'] = array(
 	)
 );
 
+/** GlobalFooter extension */
+$config['global_footer_js'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => ['oasis'],
+	'assets' => array(
+		'//extensions/wikia/GlobalFooter/scripts/GlobalFooter.js'
+	)
+);
+
+/** CorporateFooter extension */
+$config['corporate_footer_js'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => ['oasis'],
+	'assets' => array(
+		'//extensions/wikia/CorporateFooter/scripts/CorporateFooterTracker.js'
+	)
+);
+
 /* extension/wikia/Bucky */
 $config['bucky_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => [ 'oasis' ],
 	'assets' => array(
 		'//extensions/wikia/Bucky/vendor/BuckyClient/bucky.js',
+		'//extensions/wikia/Bucky/js/bucky_init.js',
+		'//extensions/wikia/Bucky/js/bucky_metrics.js',
 	)
 );
 

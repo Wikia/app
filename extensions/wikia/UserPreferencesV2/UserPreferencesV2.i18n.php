@@ -1408,7 +1408,7 @@ $messages['vi'] = array(
 	'preferences-v2-redirect-recent-changes' => 'Thay đổi gần đây',
 	'preferences-v2-redirect-explanation' => 'Tùy chọn trang đích cho phép bạn chọn nơi bạn đi khi bạn gõ $1 vào trình duyệt của bạn.',
 	'prefs-monobookv2' => 'MonoBook',
-	'prefs-under-the-hood' => 'Dưới mui xe',
+	'prefs-under-the-hood' => 'Hiển thị',
 	'prefs-recent-changesv2' => 'Thay đổi gần đây, lịch sử, và các nhật trình liên quan',
 	'prefs-followed-pagesv2' => 'Theo trang nguồn cấp dữ liệu',
 	'prefs-advanced-displayv2' => 'Tùy chọn nâng cao Hiển thị',
@@ -1446,6 +1446,7 @@ $messages['vo'] = array(
 );
 
 /** Simplified Chinese (中文（简体）‎)
+ * @author Liuxinyu970226
  * @author Qiyue2001
  * @author Sora
  * @author Yfdyh000
@@ -1487,6 +1488,7 @@ $messages['zh-hans'] = array(
 	'tog-highlightbrokenv2' => '显示坏掉的链接为红色，不带问号标记。',
 	'tog-showAdsv2' => '广告：',
 	'prefs-addressv2' => '地址',
+	'prefs-followed-pages-iv2' => '关注页面让我……',
 	'preferences-v2-watchdefault' => '编辑',
 	'preferences-v2-watchmoves' => '移动',
 	'preferences-v2-watchdeletion' => '删除',

@@ -53,12 +53,13 @@ define('ext.wikia.adEngine.adConfigLate', [
 			PREFOOTER_RIGHT_BOXAD: true
 		},
 		dartBtfVerticals = {
-			Entertainment: true
+			Entertainment: true,
+			Gaming: true
 		},
 
 		dartBtfEnabled = dartBtfCountries[country] && (
 				window.wgAdDriverUseDartForSlotsBelowTheFold === true ||
-				(window.wgAdDriverUseDartForSlotsBelowTheFold && dartBtfVerticals.hasOwnProperty(window.cscoreCat))
+				(window.wgAdDriverUseDartForSlotsBelowTheFold && dartBtfVerticals[window.cscoreCat])
 			);
 
 	if (window.wgEnableRHonDesktop) {

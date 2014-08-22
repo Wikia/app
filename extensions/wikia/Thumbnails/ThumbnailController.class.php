@@ -83,15 +83,20 @@ class ThumbnailController extends WikiaController {
 		}
 
 		// set duration
-		$duration = $file->getMetadataDuration();
+		// The file is not always an instance of a class with magic getters implemented. see VID-1753
+		if ( is_callable( [$file, 'getMetadataDuration'] ) ) {
+			$duration = $file->getMetadataDuration();
+		} else {
+			$duration = null;
+		}
 		$durationAttribs = [];
 		$metaAttribs = [];
 
 		// Set a positive flag for whether we need to lazy load
-		$options['lazyLoad'] = $this->shouldLazyLoad( $options );
+		$lazyLoad = $this->shouldLazyLoad( $options );
 
 		// Only add RDF metadata when the thumb is not lazy loaded
-		if ( !$options['lazyLoad'] ) {
+		if ( !$lazyLoad ) {
 			// link
 			$linkAttribs['itemprop'] = 'video';
 			$linkAttribs['itemscope'] = '';
@@ -133,13 +138,13 @@ class ThumbnailController extends WikiaController {
 		$this->mediaName = htmlspecialchars( $title->getText() );
 		$this->imgClass = empty( $options['imgClass'] ) ? '' : $options['imgClass'];;
 		$this->imgAttrs = ThumbnailHelper::getAttribs( $imgAttribs );
-		$this->alt = $options['alt'];
+		$this->alt = $imgAttribs['alt'];
 
 		// data-src attribute in case of lazy loading
 		$this->noscript = '';
 		$this->dataSrc = '';
 
-		if ( $options['lazyLoad'] ) {
+		if ( $lazyLoad ) {
 			$this->noscript = $this->app->renderView(
 				'ThumbnailController',
 				'imgTag',
@@ -147,8 +152,6 @@ class ThumbnailController extends WikiaController {
 			);
 			ImageLazyLoad::setLazyLoadingAttribs( $this->dataSrc, $this->imgSrc, $this->imgClass, $this->imgAttrs );
 		}
-
-		$this->imgTag = $this->app->renderView( 'ThumbnailController', 'imgTag', $this->response->getData());
 
 		// set duration
 		$this->duration = WikiaFileHelper::formatDuration( $duration );
@@ -207,14 +210,14 @@ class ThumbnailController extends WikiaController {
 		unset( $linkAttrs['href'] );
 
 		$this->linkAttrs = ThumbnailHelper::getAttribs( $linkAttrs );
-		$this->imgAttribs  = ThumbnailHelper::getAttribs( $attribs );
+		$this->imgAttrs  = ThumbnailHelper::getAttribs( $attribs );
 		$this->linkClasses = ThumbnailHelper::getImageLinkClasses( $options );
 
 		$file = $thumb->file;
 		$title = $file->getTitle();
 		$this->mediaKey = htmlspecialchars( $title->getDBKey() );
 		$this->mediaName = htmlspecialchars( $title->getText() );
-		$this->alt = $options['alt'];
+		$this->alt = $attribs['alt'];
 
 		// Check fluid
 		if ( empty( $options[ 'fluid' ] ) ) {
@@ -224,15 +227,15 @@ class ThumbnailController extends WikiaController {
 
 		// Set a positive flag for whether we need to lazy load
 		$options['src'] = $this->imgSrc;
-		$options['lazyLoad'] = $this->shouldLazyLoad( $options );
+		$lazyLoad = $this->shouldLazyLoad( $options );
 
-		if ( $options['lazyLoad'] ) {
+		if ( $lazyLoad ) {
 			$this->noscript = $this->app->renderView(
 				'ThumbnailController',
 				'imgTag',
 				$this->response->getData()
 			);
-			ImageLazyLoad::setLazyLoadingAttribs( $this->dataSrc, $this->imgSrc, $this->imgClass, $this->imgAttribs );
+			ImageLazyLoad::setLazyLoadingAttribs( $this->dataSrc, $this->imgSrc, $this->imgClass, $this->imgAttrs );
 		}
 	}
 

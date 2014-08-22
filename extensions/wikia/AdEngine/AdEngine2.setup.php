@@ -11,7 +11,6 @@ $wgAutoloadClasses['AdProviderEbayController'] = __DIR__ . '/AdProviderEbayContr
 // Hooks for AdEngine2
 $wgHooks['AfterInitialize'][] = 'AdEngine2Hooks::onAfterInitialize';
 $wgHooks['WikiaSkinTopScripts'][] = 'AdEngine2Hooks::onWikiaSkinTopScripts';
-$wgHooks['MakeGlobalVariablesScript'][] = 'AdEngine2Hooks::onMakeGlobalVariablesScript';
 $wgHooks['OasisSkinAssetGroupsBlocking'][] = 'AdEngine2Hooks::onOasisSkinAssetGroupsBlocking';
 $wgHooks['WikiaSkinTopModules'][] = 'AdEngine2Hooks::onWikiaSkinTopModules';
 $wgHooks['WikiaMobileAssetsPackages'][] = 'AdEngine2Hooks::onWikiaMobileAssetsPackages';

@@ -7,7 +7,7 @@ echo "Rss cache warmer start: " . date("Y-m-d H:i:s") . PHP_EOL;
 
 require_once( dirname( __FILE__ ) .'/../../../../maintenance/Maintenance.php' );
 
-class MaintenanceRss extends Maintenance {
+class MaintenanceRssWarmer extends Maintenance {
 	const DATE_FORMAT = 'Y-m-d H:i:s';
 	function __construct() {
 		parent::__construct();
@@ -20,10 +20,12 @@ class MaintenanceRss extends Maintenance {
 
 	protected function warm() {
 		global $wgHubRssFeeds;
+		global $wgLanguageCode;
 
 		foreach ( $wgHubRssFeeds as $feedName ) {
 			echo "| Warming '$feedName' cache..." . PHP_EOL;
-			$feed = BaseRssModel::newFromName( $feedName );
+			$langExtFeedName = $feedName . $wgLanguageCode;
+			$feed = BaseRssModel::newFromName( $langExtFeedName );
 			if ( $feed instanceof BaseRssModel ) {
 				$time = time();
 				$numRows = $feed->generateFeedData();
@@ -54,6 +56,6 @@ class MaintenanceRss extends Maintenance {
 	}
 }
 
-$maintClass = 'MaintenanceRss';
+$maintClass = 'MaintenanceRssWarmer';
 require_once( RUN_MAINTENANCE_IF_MAIN );
 

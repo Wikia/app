@@ -112,6 +112,8 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 
 		$map = $this->mapsModel->getMapByIdFromApi( $mapId );
 
+		$this->redirectIfForeignWiki( $map->city_id, $mapId );
+
 		if ( isset( $map->title ) ) {
 			$this->wg->out->setHTMLTitle( $map->title );
 
@@ -155,6 +157,17 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 
 		$this->response->addAsset( 'extensions/wikia/WikiaInteractiveMaps/css/WikiaInteractiveMaps.scss' );
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
+	}
+
+	public function redirectIfForeignWiki( $cityId, $mapId ) {
+		if ( (int) $this->wg->CityId !== $cityId ) {
+			$targetUrl = $this->getWikiPageUrl( self::PAGE_NAME, NS_SPECIAL, $cityId );
+			$this->wg->out->redirect( $targetUrl . '/' . $mapId );
+		}
+	}
+
+	protected function getWikiPageUrl( $text, $namespace = NS_MAIN, $cityId = null ) {
+		return GlobalTitle::newFromText( $text, $namespace, $cityId )->getFullURL();
 	}
 
 	/**
@@ -205,8 +218,8 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 	 * @param string $name - name of the special page
 	 * @return string
 	 */
-	static function getSpecialMapsUrl( ) {
-		return Title::newFromText( self::PAGE_NAME, NS_SPECIAL )->getFullUrl();
+	static function getSpecialUrl( $name = self::PAGE_NAME ) {
+		return SpecialPage::getTitleFor( $name )->getFullUrl();
 	}
 
 	/**
@@ -242,9 +255,9 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 					wfMessage( 'wikia-interactive-maps-delete-map-success' )->text() :
 					wfMessage( 'wikia-interactive-maps-undelete-map-success' )->text()
 			);
-			$redirectUrl = $this->getSpecialUrl( self::PAGE_NAME );
+			$redirectUrl = $this->getSpecialUrl();
 			if ( $deleted === self::MAP_NOT_DELETED ) {
-				$redirectUrl = $this->getSpecialUrl( self::PAGE_NAME ) . '/' . $mapId;
+				$redirectUrl = $this->getSpecialUrl() . '/' . $mapId;
 			}
 			$this->response->setVal( 'redirectUrl', $redirectUrl );
 		}
@@ -336,8 +349,7 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 		$this->setVal( 'hasMaps', !empty( $mapsResponse->total ) );
 		$this->setVal( 'learnMoreUrl', self::MAPS_WIKIA_URL );
 
-		$baseUrl = $this->getContext()->getTitle()->getFullURL();
-		$this->setVal( 'baseUrl', $baseUrl );
+		$this->setVal( 'baseUrl', self::getSpecialUrl() );
 	}
 
 	/**
