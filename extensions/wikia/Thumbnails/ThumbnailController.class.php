@@ -52,10 +52,6 @@ class ThumbnailController extends WikiaController {
 		$this->duration = WikiaFileHelper::formatDuration( $duration );
 		$this->mediaType = 'video';
 
-		// data-src attribute in case of lazy loading
-		$this->noscript = '';
-		$this->dataSrc = '';
-
 		$lazyLoaded = ThumbnailHelper::setLazyLoad( $this, $options );
 		if ( !$lazyLoaded ) {
 			// Only add RDF metadata when the thumb is not lazy loaded
