@@ -18,6 +18,7 @@ abstract class SearchServiceBaseTest extends BaseTest {
 			$this->solariumMock = $this->getSolariumMock();
 			$this->solariumMock->expects( $this->any() )
 				->method( 'select' )
+				->with( $this->getMockRequest() )
 				->will( $this->returnValue( $this->getResultMock( $useResponse ) ) );
 		}
 
@@ -29,6 +30,12 @@ abstract class SearchServiceBaseTest extends BaseTest {
 	 * @return string Solr response body
 	 */
 	protected abstract function getMockResponse();
+
+	/**
+	 * Checks solarium request
+	 * @return mixed
+	 */
+	protected function getMockRequest() {}
 
 	protected function getSolariumMock() {
 		$client = new \Solarium_Client();
