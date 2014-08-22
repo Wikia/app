@@ -73,3 +73,13 @@
 		@include grid-column-width( 'large', 2 );
 	}
 }
+
+@media #{$below-small} {
+	.global-navigation {
+		min-width: 767px;
+		position: static;
+	}
+	.wikia-page {
+		padding-top: 0;
+	}
+}
