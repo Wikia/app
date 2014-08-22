@@ -2,7 +2,7 @@
 <nav class="hubs-menu">
 	<div class="hubs">
 		<? foreach($menuNodes as $hub): ?>
-			<nav class="<?=$hub['specialAttr']; ?>">
+			<nav class="<?=$hub['specialAttr']; ?><? if ( $activeNode === $hub['specialAttr'] ):?> active<? endif ?>">
 				<span class="icon"></span>
 				<span class="label"><?=$hub['text']; ?></span>
 			</nav>

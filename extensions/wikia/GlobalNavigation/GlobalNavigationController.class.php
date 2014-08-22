@@ -32,6 +32,8 @@ class GlobalNavigationController extends WikiaController {
 	public function hubsMenu() {
 		$menuNodes = $this->getMenuNodes();
 		$this->response->setVal('menuNodes', $menuNodes);
+		// TODO get proper category
+		$this->response->setVal('activeNode', 'tv');
 	}
 
 	public function lazyLoadHubsMenu() {
