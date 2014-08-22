@@ -31,11 +31,11 @@ class TemplatePageHelper {
 	 * @param string $title
 	 */
 	public function setTemplateByName( $title ) {
-		$namespacePrefix = MWNamespace::getCanonicalName( NS_TEMPLATE ) . ':';
-		if ( strpos( $title, $namespacePrefix ) !== 0 ) {
-			$title = $namespacePrefix . $title;
-		}
-		$this->title = Title::newFromText( $title );
+		$this->title = Title::newFromText(
+			$title,
+			// Check whether namespace has to be passed in or if it was included in $title
+			strpos( $title, MWNamespace::getCanonicalName( NS_TEMPLATE ) . ':' ) !== 0 ? NS_TEMPLATE : null
+		);
 		$this->templateName = $this->title->getText();
 	}
 
@@ -62,7 +62,7 @@ class TemplatePageHelper {
 	 */
 	protected function getParser() {
 		if ( $this->parser === null ) {
-			global $wgParser, $wgRDBEnabled;
+			global $wgParser;
 
 			$wgParser->getstriplist(); //we need to create (unstub) this object, because of in_array($tagName, $stripList) in parser
 			$this->parser = new Parser();
@@ -87,7 +87,7 @@ class TemplatePageHelper {
 	}
 
 	/**
-	 * Gets the resulting HTML from parsing the given wikitext and Title
+	 * Gets the resulting HTML from parsing the given wikitext using the given Title
 	 * @param string $wikitext
 	 * @param Title $titleObj
 	 * @return string HTML markup
