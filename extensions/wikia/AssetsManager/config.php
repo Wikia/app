@@ -616,7 +616,7 @@ $config['wikiamobile_tables_js'] = array(
 	)
 );
 
-$config['base_ads_js'] = array(
+$config['mobile_base_ads_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => 'wikiamobile',
 	'assets' => array(
@@ -656,7 +656,7 @@ $config['mercury_ads_js'] = array(
 		'//resources/wikia/modules/cookies.js',
 		'//resources/wikia/modules/geo.js',
 
-		'#group_base_ads_js',
+		'#group_mobile_base_ads_js',
 
 		'//extensions/wikia/AdEngine/js/AdEngine.mercury.run.js',
 	)
@@ -666,8 +666,7 @@ $config['wikiamobile_ads_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => 'wikiamobile',
 	'assets' => array(
-		'#group_base_ads_js',
-		'//extensions/wikia/AdEngine/js/AdProviderEbay.js',
+		'#group_mobile_base_ads_js',
 		// Run!
 		'//extensions/wikia/WikiaMobile/js/ads_run.js',
 	)
