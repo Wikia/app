@@ -350,9 +350,9 @@ ve.ui.MWTemplateDialog.prototype.getSetupProcess = function ( data ) {
 					template = ve.dm.MWTemplateModel.newFromName(
 						this.transclusionModel, data.template
 					);
-					promise = this.transclusionModel.addPart( template ).done( function () {
-						template.addPromptedParameters();
-					} );
+					promise = this.transclusionModel.addPart( template ).done( ve.bind( function() {
+						this.initialzeNewTemplateParameters();
+					}, this ) );
 				} else {
 					// New template placeholder
 					promise = this.transclusionModel.addPart(
@@ -362,12 +362,37 @@ ve.ui.MWTemplateDialog.prototype.getSetupProcess = function ( data ) {
 			} else {
 				// Load existing template
 				promise = this.transclusionModel
-					.load( ve.copy( this.selectedNode.getAttribute( 'mw' ) ) );
+					.load( ve.copy( this.selectedNode.getAttribute( 'mw' ) ) )
+					.done( ve.bind( function() {
+						this.initializeTemplateParameters();
+					}, this ) );
 			}
+
 			this.applyButton.setDisabled( true );
 			this.pushPending();
 			promise.always( ve.bind( this.onTransclusionReady, this ) );
 		}, this );
+};
+
+// TODO: Document
+ve.ui.MWTemplateDialog.prototype.initialzeNewTemplateParameters = function () {
+	var i, parts = this.transclusionModel.getParts();
+	for ( i = 0; i < parts.length; i++ ) {
+		if ( parts[i] instanceof ve.dm.MWTemplateModel ) {
+			//parts[i].addPromptedParameters();
+			parts[i].addUnusedParameters();
+		}
+	}
+};
+
+// TODO: Document
+ve.ui.MWTemplateDialog.prototype.initializeTemplateParameters = function () {
+	var i, parts = this.transclusionModel.getParts();
+	for ( i = 0; i < parts.length; i++ ) {
+		if ( parts[i] instanceof ve.dm.MWTemplateModel ) {
+			parts[i].addUnusedParameters();
+		}
+	}
 };
 
 /**

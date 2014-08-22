@@ -307,6 +307,19 @@ ve.dm.MWTemplateModel.prototype.addPromptedParameters = function () {
 	}
 };
 
+// TODO: Document
+ve.dm.MWTemplateModel.prototype.addUnusedParameters = function () {
+	var i, len,
+		spec = this.getSpec(),
+		names = spec.getParameterNames();
+
+	for ( i = 0, len = names.length; i < len; i++ ) {
+		if ( !this.hasParameter( names[i] ) ) {
+			this.addParameter( new ve.dm.MWParameterModel( this, names[i] ) );
+		}
+	}
+};
+
 /**
  * Set original data, to be used as a base for serialization.
  *
