@@ -55,6 +55,18 @@ class WikiaPhotoGalleryHelper {
 		// calculate "unique" hash of each gallery
 		$ig->calculateHash($params);
 
+
+		// This is temporary for the prototype stage of media gallery
+		// TODO: Remove this block once media gallery is ready to be fully deployed
+		if ( F::app()->wg->Request->getVal( 'gallery' ) == 'new' ) {
+			global $wgEnableParserCache, $wgEnableMediaGalleryExt;
+
+			$wgEnableMediaGalleryExt = true;
+
+			// Parser cache must be disabled if media gallery is requested via query parameter
+			$wgEnableParserCache = false;
+		}
+
 		wfProfileOut(__METHOD__);
 
 		return true;
