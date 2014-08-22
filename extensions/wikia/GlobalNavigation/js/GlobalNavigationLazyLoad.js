@@ -53,7 +53,7 @@ $(function () {
 		$('#hubs').on('mouseenter', 'nav', function(){
 			var links = $('.hub-links'),
 				active = $('> .active', links),
-				vertical = $(this).attr('class');
+				vertical = $(this).data('vertical');
 
 			active.removeClass('active');
 			$('.' + vertical + '-links', links).addClass('active');

@@ -33,15 +33,19 @@ class GlobalNavigationController extends WikiaController {
 		$menuNodes = $this->getMenuNodes();
 		$this->response->setVal('menuNodes', $menuNodes);
 
-		// TODO get proper category
-		$this->response->setVal('activeNode', 'tv');
+		$activeNode = $this->getActiveNode();
+		$activeNodeIndex = $this->getActiveNodeIndex($menuNodes, $activeNode);
+		$this->response->setVal('activeNodeIndex', $activeNodeIndex);
 	}
 
 	public function lazyLoadHubsMenu() {
 		$langCode = $this->request->getVal('lang', null);
 
 		$lazyLoadMenuNodes = $this->getMenuNodes( $langCode );
-		array_shift($lazyLoadMenuNodes);
+
+		$activeNode = $this->getActiveNode();
+		$activeNodeIndex = $this->getActiveNodeIndex($lazyLoadMenuNodes, $activeNode);
+		array_splice($lazyLoadMenuNodes, $activeNodeIndex, 1);
 
 		$this->response->setFormat( 'json' );
 		$this->response->setData($lazyLoadMenuNodes);
@@ -53,5 +57,25 @@ class GlobalNavigationController extends WikiaController {
 		);
 
 		return $menuNodes;
+	}
+
+	private function getActiveNodeIndex( $menuNodes, $activeNode ) {
+		$nodeIndex = 0;
+
+		foreach ( $menuNodes as $index => $hub ) {
+			if ( $hub['specialAttr'] === $activeNode ) {
+				$nodeIndex = $index;
+				break;
+			}
+		}
+
+		return $nodeIndex;
+	}
+
+	private function getActiveNode() {
+		// TODO get proper category
+		$activeNode = 'tv';
+
+		return $activeNode;
 	}
 }
