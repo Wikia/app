@@ -76,6 +76,7 @@
 		}
 
 		&:after {
+			-webkit-backface-visibility: hidden;
 			background-color: $hubsmenu-background-color;
 			content: " ";
 			float: right;
