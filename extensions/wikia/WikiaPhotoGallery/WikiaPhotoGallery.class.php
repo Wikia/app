@@ -571,7 +571,16 @@ class WikiaPhotoGallery extends ImageGallery {
 		return $out;
 	}
 
+	/**
+	 * Determine if media gallery should be rendered
+	 * @return bool
+	 */
 	private function canRenderMediaGallery() {
+		// Do not render media gallery for special pages - It is only for UGC pages
+		if ( F::app()->wg->Title->getNamespace() === NS_SPECIAL ) {
+			return false;
+		}
+
 		// If the extension isn't enabled we aren't rendering this as a media gallery
 		if ( ! F::app()->wg->EnableMediaGalleryExt ) {
 			return false;
@@ -633,7 +642,7 @@ class WikiaPhotoGallery extends ImageGallery {
 
 			wfProfileOut(__METHOD__);
 			return $html;
-		} elseif ( F::app()->wg->Title->getNamespace() !== NS_SPECIAL && $this->canRenderMediaGallery() ) {
+		} elseif ( $this->canRenderMediaGallery() ) {
 			$html =  $this->renderMediaGallery();
 
 			// remove spaces from html produced by mustache template
