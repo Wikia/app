@@ -108,15 +108,16 @@ $media-margin: .5em;
 		@include background-opacity(#000, 60);
 		bottom: $media-margin;
 		color: #fff;
+		font-size: 12px;
 		left: $media-margin;
 		line-height: $caption-line-height;
 		margin-top: $caption-top-offset;
-		overflow: auto;
+		overflow: hidden;
 		padding: $caption-padding;
 		position: absolute;
 		right: $media-margin;
 		top: 100%;
-		transition: all .4s linear;
+		transition: all 400ms linear;
 
 		.inner {
 			overflow: hidden;
@@ -124,8 +125,14 @@ $media-margin: .5em;
 			white-space: nowrap;
 		}
 
-		&.hovered .inner {
-			white-space: normal;
+		&.hovered {
+			.inner {
+				white-space: normal;
+			}
+		}
+
+		&.scroll {
+			overflow: auto;
 		}
 	}
 
