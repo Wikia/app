@@ -337,6 +337,27 @@ class ThumbnailHelper extends WikiaModel {
 	}
 
 	/**
+	 * Checks if an image should be lazy loaded, and if so sets the necessary attributes
+	 * @param WikiaController $controller
+	 * @param array $options
+	 * @return bool
+	 */
+	public static function setLazyLoad( WikiaController &$controller, array $options = [] ) {
+		$lazyLoaded = false;
+		if ( self::shouldLazyLoad( $controller, $options ) ) {
+			$lazyLoaded = true;
+			$controller->noscript = $controller->app->renderView(
+				'ThumbnailController',
+				'imgTag',
+				$controller->response->getData()
+			);
+			ImageLazyLoad::setLazyLoadingAttribs( $controller );
+		}
+
+		return $lazyLoaded;
+	}
+
+	/**
 	 * Determines if image should be lazyloaded
 	 * @param WikiaController $controller
 	 * @param array $options
