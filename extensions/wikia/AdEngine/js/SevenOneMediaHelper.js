@@ -1,13 +1,14 @@
 /* jshint camelcase:false, maxparams:false */
-/*global define*/
+/*global define,require*/
 define('ext.wikia.adEngine.sevenOneMediaHelper', [
 	'jquery',
 	'wikia.log',
 	'wikia.window',
 	'wikia.tracker',
 	'wikia.scriptwriter',
-	'ext.wikia.adEngine.adLogicPageParams'
-], function ($, log, window, tracker, scriptWriter, adLogicPageParams) {
+	'ext.wikia.adEngine.adLogicPageParams',
+	require.optional('ext.wikia.adEngine.krux')
+], function ($, log, window, tracker, scriptWriter, adLogicPageParams, Krux) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.sevenOneMediaHelper',
@@ -219,7 +220,7 @@ define('ext.wikia.adEngine.sevenOneMediaHelper', [
 	function generateSoiKeywords() {
 		log('generateSoiKeywords', 'debug', logGroup);
 
-		var i, len, param, val, valIndex, valLen, keywords = [], krux = window.Krux;
+		var i, len, param, val, valIndex, valLen, keywords = [];
 
 		// Get all values for params defined in soiKeywordsParams
 		for (i = 0, len = soiKeywordsParams.length; i < len; i += 1) {
@@ -238,10 +239,10 @@ define('ext.wikia.adEngine.sevenOneMediaHelper', [
 			}
 		}
 
-		if (krux && krux.segments && krux.segments.length) {
-			for (i = 0, len = krux.segments.length; i < len; i += 1) {
-				if (soiKeywordsSegments[krux.segments[i]]) {
-					keywords.push(krux.segments[i]);
+		if (Krux && Krux.segments && Krux.segments.length) {
+			for (i = 0, len = Krux.segments.length; i < len; i += 1) {
+				if (soiKeywordsSegments[Krux.segments[i]]) {
+					keywords.push(Krux.segments[i]);
 				}
 			}
 		}
