@@ -4,5 +4,6 @@ require([
 ], function(adEngine, adConfigMobile){
 	'use strict';
 
-	adEngine.run( adConfigMobile, JSON.parse(JSON.stringify(Wikia.ads.slots)), 'queue.mobile' );
+	//I need a copy of Wikia.ads.slots as .run destroys it
+	adEngine.run( adConfigMobile, $.extend([], Wikia.ads.slots), 'queue.mobile' );
 });
