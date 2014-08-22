@@ -8,38 +8,52 @@
  */
 
 class TemplatePageHelper {
-	const TEMPLATE_NAMESPACE = 'Template';
-
 	protected $parser;
 	protected $parserOptions;
 	protected $templateName;
 	protected $title;
 
-	function __construct__( $template = null ) {
-		if ( $template instanceof Title ) {
-			$this->setTitle( $template );
+	/**
+	 * Constructor
+	 * @param Title|string Template title as a Title object or the article name (with or without namespace)
+	 */
+	function __construct__( $title = null ) {
+		if ( $title instanceof Title ) {
+			$this->setTemplateByTitle( $title );
 		}
-		elseif ( is_string( $template ) ) {
-			$this->setTemplateName( $template );
+		elseif ( is_string( $title ) ) {
+			$this->setTemplateByName( $title );
 		}
 	}
 
 	/**
-	 * Given a template name, sets the template name and Title object used by the class instance
-	 * @param string $templateName
+	 * Given a template article title, sets the template name and Title object used by the class instance
+	 * @param string $title
 	 */
-	public function setTemplateName( $templateName ) {
-		$this->templateName = $templateName;
-		$this->title = Title::newFromText( self::TEMPLATE_NAMESPACE . ':' . $templateName );
+	public function setTemplateByName( $title ) {
+		$namespacePrefix = MWNamespace::getCanonicalName( NS_TEMPLATE ) . ':';
+		if ( strpos( $title, $namespacePrefix ) !== 0 ) {
+			$title = $namespacePrefix . $title;
+		}
+		$this->title = Title::newFromText( $title );
+		$this->templateName = $this->title->getText();
 	}
 
 	/**
 	 * Given a Title object, sets the template name and Title object used by the class instance
 	 * @param Title $titleObj
 	 */
-	public function setTitle( Title $titleObj ) {
+	public function setTemplateByTitle( Title $titleObj ) {
 		$this->title = $titleObj;
-		$this->templateName = $titleObj->getText();
+		$this->templateName = $this->title->getText();
+	}
+
+	/**
+	 * Access the Title object for the current template
+	 * @return Title
+	 */
+	public function getTitle() {
+		return $this->title;
 	}
 
 	/**

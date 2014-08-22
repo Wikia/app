@@ -14,15 +14,16 @@ class ApiTemplateParameters extends ApiBase {
 
 	public function execute() {
 		$params = $this->extractRequestParams();
-		$templates = explode( '|', $params['templates'] );
+		$titles = explode( '|', $params['titles'] );
 		$templateHelper = new TemplatePageHelper();
 
-		foreach ( $templates as $template ) {
-			$templateHelper->setTemplateName( $template );
-			$availableParams[$template] = $templateHelper->getTemplateParams();
+		$templatePages = [];
+		foreach ( $titles as $title ) {
+			$templateHelper->setTemplateByName( $title );
+			$templatePages[$templateHelper->getTitle()->getArticleId()] = ['params' => $templateHelper->getTemplateParams()];
 		}
 
-		$this->getResult()->addValue( null, 'parameters', $availableParams );
+		$this->getResult()->addValue( null, 'pages', $templatePages );
 	}
 
 	/**
@@ -30,7 +31,7 @@ class ApiTemplateParameters extends ApiBase {
 	 */
 	public function getAllowedParams() {
 		return array(
-			'templates' => array(
+			'titles' => array(
 				ApiBase::PARAM_TYPE => 'string',
 				ApiBase::PARAM_REQUIRED => true,
 			),

@@ -155,7 +155,7 @@ class RTEAjax {
 				$out['exists'] = $wgRDBData['title']->exists() ? true : false;
 
 				if ($out['exists']) {
-					$templateHelper->setTitle( $wgRDBData['title'] );
+					$templateHelper->setTemplateByTitle( $wgRDBData['title'] );
 					$out['availableParams'] = $templateHelper->getTemplateParams();
 				}
 
