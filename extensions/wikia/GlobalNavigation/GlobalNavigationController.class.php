@@ -4,6 +4,7 @@ class GlobalNavigationController extends WikiaController {
 
 	public function venus() {
 		Wikia::addAssetsToOutput('global_navigation_css');
+		Wikia::addAssetsToOutput('global_navigation_js');
 		// TODO remove after when Oasis is retired
 		Wikia::addAssetsToOutput('global_navigation_oasis_css');
 
