@@ -30,7 +30,23 @@ class GlobalNavigationController extends WikiaController {
 	}
 
 	public function hubsMenu() {
-		$menuNodes = (new NavigationModel(true /* useSharedMemcKey */) )->getTree( 'shared-global-navigation-abtest' );
+		$menuNodes = $this->getMenuNodes();
 		$this->response->setVal('menuNodes', $menuNodes);
+	}
+
+	public function lazyLoadHubsMenu() {
+		$lazyLoadMenuNodes = $this->getMenuNodes();
+		array_shift($lazyLoadMenuNodes);
+
+		$this->response->setFormat( 'json' );
+		$this->response->setData($lazyLoadMenuNodes);
+	}
+
+	private function getMenuNodes() {
+		$menuNodes = (new NavigationModel(true /* useSharedMemcKey */) )->getTree(
+			'shared-global-navigation-abtest'
+		);
+
+		return $menuNodes;
 	}
 }

@@ -7,7 +7,6 @@ $VenusConfig['venus_body_js'] = [
 	'skin' => 'venus',
 	'assets' => [
 		'//extensions/wikia/Venus/scripts/Venus.js',
-		'#function_AssetsConfig::getJQueryUrl',
 	]
 ];
 
@@ -15,6 +14,10 @@ $VenusConfig['venus_head_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => 'venus',
 	'assets' => [
+		'#function_AssetsConfig::getJQueryUrl',
+		'//resources/wikia/libraries/mustache/mustache.js',
+		'//extensions/wikia/JSMessages/js/JSMessages.js',
+		'//resources/wikia/modules/nirvana.js',
 	]
 ];
 
@@ -25,16 +28,6 @@ $VenusConfig['venus_css'] = [
 		'//extensions/wikia/Venus/styles/Venus.scss'
 	]
 ];
-
-/** GlobalFooter extension */
-$VenusConfig['global_footer_css'] = array(
-	'type' => AssetsManager::TYPE_SCSS,
-	'skin' => ['venus'],
-	'assets' => array(
-		'//extensions/wikia/GlobalFooter/styles/GlobalFooter.scss'
-	)
-);
-
 
 /** GlobalNavigation extension */
 $VenusConfig['global_navigation_css'] = array(
@@ -52,5 +45,16 @@ $VenusConfig['global_navigation_js'] = [
 	'assets' => [
 		'//resources/wikia/libraries/menu-aim/menu-aim.js',
 		'//extensions/wikia/GlobalNavigation/js/GlobalNavigationHubsMenu.js',
+		'//extensions/wikia/GlobalNavigation/js/GlobalNavigation.js',
+		'//extensions/wikia/GlobalNavigation/js/GlobalNavigationLazyLoad.js',
 	]
 ];
+
+/** GlobalFooter extension */
+$VenusConfig['global_footer_css'] = array(
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => ['venus'],
+	'assets' => array(
+		'//extensions/wikia/GlobalFooter/styles/GlobalFooter.scss'
+	)
+);

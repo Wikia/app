@@ -8,12 +8,14 @@
 			</nav>
 		<? endforeach ?>
 	</div>
-	<section>
-		<? foreach($menuNodes[0]['children'] as $category): ?>
-			<h2><?=$category['text']?></h2>
-			<? foreach($category['children'] as $node): ?>
-				<a href="<?=$node['href']?>"><?=$node['text']?></a>
+	<div class="hub-links">
+		<section class="<?= $menuNodes[0]['specialAttr'] ?>-links active">
+			<? foreach($menuNodes[0]['children'] as $category): ?>
+				<h2><?=$category['text']?></h2>
+				<? foreach($category['children'] as $node): ?>
+					<a href="<?=$node['href']?>"><?=$node['text']?></a>
+				<? endforeach ?>
 			<? endforeach ?>
-		<? endforeach ?>
-	</section>
+		</section>
+	</div>
 </nav>

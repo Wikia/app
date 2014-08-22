@@ -115,6 +115,11 @@
 	section {
 		@include column-count( 2 );
 
+		&.active {
+			display: block;
+		}
+
+		display: none;
 		float: left;
 		font-size: 15px;
 		padding-left: 10px;

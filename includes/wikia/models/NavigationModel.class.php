@@ -161,7 +161,6 @@ class NavigationModel extends WikiaModel {
 	}
 
 	public function getTree( $messageName ) {
-		// TODO add cache
 		$this->menuNodes = $this->parse(
 			NavigationModel::TYPE_MESSAGE,
 			$messageName,
@@ -169,11 +168,19 @@ class NavigationModel extends WikiaModel {
 			1800 /* 3 hours */
 		);
 
-		$menuData = [];
+		$menuData = WikiaDataAccess::cache(
+			'global-navigation-hubs-menu-tree',
+			1800,
+			function() {
+				$menuData = [];
 
-		foreach( $this->menuNodes[0]['children'] as $id ) {
-			$menuData[] = $this->recursiveConvertMenuNodeToArray( $id );
-		}
+				foreach( $this->menuNodes[0]['children'] as $id ) {
+					$menuData[] = $this->recursiveConvertMenuNodeToArray( $id );
+				}
+
+				return $menuData;
+			}
+		);
 
 		return $menuData;
 	}
