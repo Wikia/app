@@ -1,19 +1,29 @@
 (function() {
 	'use strict';
 	document.addEventListener('DOMContentLoaded', function() {
-		var formElement, selectElement, searchLabel, chevron;
+		var inputResultLang, formElement, selectElement, searchLabel, chevron;
+
+
 		function setFormOptions() {
 			var selectedOption;
 
 			selectedOption = selectElement.selectedOptions[0];
 			searchLabel.textContent = selectedOption.text;
 			formElement.action = selectedOption.getAttribute('data-search-url');
+			if (selectedOption.value === 'global') {
+				inputResultLang.disabled = false;
+			} else if (selectedOption.value === 'local') {
+				inputResultLang.disabled = true;
+			}
 		}
 
+		inputResultLang = document.getElementById('search-input-resultLang');
+		chevron = document.getElementById('search-form-chevron');
+		formElement = document.getElementById('search-form');
 		selectElement = document.getElementById('search-select');
 		searchLabel = document.getElementById('search-label-inline');
-		formElement = document.getElementById('search-form');
-		chevron = document.getElementById('search-form-chevron');
+
+		setFormOptions();
 
 		selectElement.addEventListener('change', function() {
 			setFormOptions();
