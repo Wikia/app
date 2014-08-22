@@ -67,9 +67,9 @@ class ThumbnailController extends WikiaController {
 		// @TODO there is no reason to pass two versions of image source.  See if both are actually used and pick one
 		$options['src'] = empty( $options['src'] ) ? $imgSrc : $options['src'];
 
-		$linkClasses = $this->getVideoLinkClasses( $options );
-		$linkAttribs = $this->getVideoLinkAttribs( $file, $options );
-		$imgAttribs  = $this->getVideoImgAttribs( $file, $options );
+		$linkClasses = ThumbnailHelper::getVideoLinkClasses( $options );
+		$linkAttribs = ThumbnailHelper::getVideoLinkAttribs( $file, $options );
+		$imgAttribs  = ThumbnailHelper::getVideoImgAttribs( $file, $options );
 
 		// get href for a tag
 		$linkHref = $title->getFullURL();
@@ -83,15 +83,20 @@ class ThumbnailController extends WikiaController {
 		}
 
 		// set duration
-		$duration = $file->getMetadataDuration();
+		// The file is not always an instance of a class with magic getters implemented. see VID-1753
+		if ( is_callable( [$file, 'getMetadataDuration'] ) ) {
+			$duration = $file->getMetadataDuration();
+		} else {
+			$duration = null;
+		}
 		$durationAttribs = [];
 		$metaAttribs = [];
 
 		// Set a positive flag for whether we need to lazy load
-		$options['lazyLoad'] = empty( $options['noLazyLoad'] ) && ImageLazyLoad::isValidLazyLoadedImage( $options['src'] );
+		$lazyLoad = $this->shouldLazyLoad( $options );
 
 		// Only add RDF metadata when the thumb is not lazy loaded
-		if ( !$options['lazyLoad'] ) {
+		if ( !$lazyLoad ) {
 			// link
 			$linkAttribs['itemprop'] = 'video';
 			$linkAttribs['itemscope'] = '';
@@ -133,13 +138,13 @@ class ThumbnailController extends WikiaController {
 		$this->mediaName = htmlspecialchars( $title->getText() );
 		$this->imgClass = empty( $options['imgClass'] ) ? '' : $options['imgClass'];;
 		$this->imgAttrs = ThumbnailHelper::getAttribs( $imgAttribs );
-		$this->alt = $options['alt'];
+		$this->alt = $imgAttribs['alt'];
 
 		// data-src attribute in case of lazy loading
 		$this->noscript = '';
 		$this->dataSrc = '';
 
-		if ( $options['lazyLoad'] ) {
+		if ( $lazyLoad ) {
 			$this->noscript = $this->app->renderView(
 				'ThumbnailController',
 				'imgTag',
@@ -148,8 +153,6 @@ class ThumbnailController extends WikiaController {
 			ImageLazyLoad::setLazyLoadingAttribs( $this->dataSrc, $this->imgSrc, $this->imgClass, $this->imgAttrs );
 		}
 
-		$this->imgTag = $this->app->renderView( 'ThumbnailController', 'imgTag', $this->response->getData());
-
 		// set duration
 		$this->duration = WikiaFileHelper::formatDuration( $duration );
 		$this->durationAttrs = ThumbnailHelper::getAttribs( $durationAttribs );
@@ -157,90 +160,7 @@ class ThumbnailController extends WikiaController {
 		// set meta
 		$this->metaAttrs = $metaAttribs;
 
-		// This can be removed once we fully rollout the article thumbnails with the
-		// details icon. This just allows us to do it in stages. (Don't forget to update
-		// the mustached checks as well). See VID-1788
-		$this->showInfoIcon = $this->canShowInfoIcon();
-
 		wfProfileOut( __METHOD__ );
-	}
-
-	/**
-	 * Create an array of needed classes for video thumbs anchors.
-	 *
-	 * @param array $options The thumbnail options passed to toHTML.  This method cares about:
-	 *
-	 * - $options[ 'noLightbox' ]
-	 * - $options[ 'linkAttribs' ][ 'class' ]
-	 * - $options[ 'hidePlayButton' ]
-	 * - $options[ 'fluid' ]
-	 *
-	 * @return array
-	 */
-	protected function getVideoLinkClasses( array &$options ) {
-		$linkClasses = [];
-		if ( empty( $options['noLightbox'] ) ) {
-			$linkClasses[] = 'image';
-			$linkClasses[] = 'lightbox';
-		}
-
-		// Pull out any classes found in the linkAttribs parameter
-		if ( !empty( $options['linkAttribs']['class'] ) ) {
-			$classes = $options['linkAttribs']['class'];
-
-			// If we got a string, treat it like space separated values and turn it into an array
-			if ( !is_array( $classes ) ) {
-				$classes = explode( ' ', $classes );
-			}
-
-			$linkClasses = array_merge( $linkClasses, $classes );
-			unset( $options['linkAttribs']['class'] );
-		}
-
-		// Hide the play button
-		if ( !empty( $options['hidePlayButton'] ) ) {
-			$linkClasses[] = 'hide-play';
-		}
-
-		// Check for fluid
-		if ( ! empty( $options[ 'fluid' ] ) ) {
-			$linkClasses[] = 'fluid';
-		}
-
-		return array_unique( $linkClasses );
-	}
-
-	protected function getVideoLinkAttribs( File $file, array $options ) {
-		$linkAttribs = [];
-
-		// Get the id parameter for a tag
-		if ( !empty( $options['id'] ) ) {
-			$linkAttribs['id'] = $options['id'];
-		}
-
-		// Let extension override any link attributes
-		if ( isset( $options['linkAttribs'] ) && is_array( $options['linkAttribs'] ) ) {
-			$linkAttribs = array_merge( $linkAttribs, $options['linkAttribs'] );
-		}
-
-		return $linkAttribs;
-	}
-
-	protected function getVideoImgAttribs( File $file, array $options ) {
-		// Get alt for img tag
-		$title = $file->getTitle();
-
-		$alt = empty( $options['alt'] ) ? $title->getText() : $options['alt'];
-		$imgAttribs['alt'] = htmlspecialchars( $alt );
-
-		// set data-params for img tag on mobile
-		if ( !empty( $options['dataParams'] ) ) {
-			$imgSrc = empty( $options['src'] ) ? null : $options['src'];
-
-			$imgAttribs['data-params'] = ThumbnailHelper::getDataParams( $file, $imgSrc, $options );
-		}
-
-		return $imgAttribs;
 	}
 
 	public function imgTag() {
@@ -270,135 +190,59 @@ class ThumbnailController extends WikiaController {
 		$thumb   = $this->getVal( 'thumb' );
 		$options = $this->getVal( 'options', array() );
 
-		$linkAttrs   = $this->getImageLinkAttribs( $thumb, $options );
-		$attribs     = $this->getImageAttribs( $thumb, $options );
+		$linkAttrs   = ThumbnailHelper::getImageLinkAttribs( $thumb, $options );
+		$attribs     = ThumbnailHelper::getImageAttribs( $thumb, $options );
 
 		$this->imgSrc = $thumb->url;
 
 		// Merge in imgClass as well
 		if ( !empty( $options['img-class'] ) ) {
 			$this->imgClass = $options['img-class'];
+		} else {
+			$this->imgClass = '';
 		}
+
+		$this->noscript = '';
+		$this->dataSrc = '';
 
 		# Move the href out of the attrs and into its own value
 		$this->linkHref = empty( $linkAttrs['href'] ) ? null : $linkAttrs['href'];
 		unset( $linkAttrs['href'] );
 
 		$this->linkAttrs = ThumbnailHelper::getAttribs( $linkAttrs );
-		$this->imgAttribs  = ThumbnailHelper::getAttribs( $attribs );
+		$this->imgAttrs  = ThumbnailHelper::getAttribs( $attribs );
+		$this->linkClasses = ThumbnailHelper::getImageLinkClasses( $options );
 
 		$file = $thumb->file;
 		$title = $file->getTitle();
 		$this->mediaKey = htmlspecialchars( $title->getDBKey() );
 		$this->mediaName = htmlspecialchars( $title->getText() );
-		$this->alt = $options['alt'];
-
-		// This can be removed once we fully rollout the article thumbnails with the
-		// details icon. This just allows us to do it in stages. (Don't forget to update
-		// the mustached checks as well). See VID-1788
-		$this->showInfoIcon = $this->canShowInfoIcon();
+		$this->alt = $attribs['alt'];
 
 		// Check fluid
 		if ( empty( $options[ 'fluid' ] ) ) {
 			$this->imgWidth = $thumb->width;
 			$this->imgHeight = $thumb->height;
 		}
-	}
 
-	/**
-	 * Get anchor tag attributes for an image
-	 *
-	 * @param MediaTransformOutput $thumb
-	 * @param array $options
-	 * @return array|bool
-	 */
-	protected function getImageLinkAttribs( MediaTransformOutput $thumb, array $options ) {
+		// Set a positive flag for whether we need to lazy load
+		$options['src'] = $this->imgSrc;
+		$lazyLoad = $this->shouldLazyLoad( $options );
 
-		if ( !empty( $options['custom-url-link'] ) ) {
-			$linkAttribs = array( 'href' => $options['custom-url-link'] );
-			if ( !empty( $options['title'] ) ) {
-				$linkAttribs['title'] = $options['title'];
-			}
-			if ( !empty( $options['custom-target-link'] ) ) {
-				$linkAttribs['target'] = $options['custom-target-link'];
-			}
-		} elseif ( !empty( $options['custom-title-link'] ) ) {
-			/** @var Title $title */
-			$title = $options['custom-title-link'];
-			$linkAttribs = array(
-				'href' => $title->getLinkURL(),
-				'title' => empty( $options['title'] ) ? $title->getFullText() : $options['title']
+		if ( $lazyLoad ) {
+			$this->noscript = $this->app->renderView(
+				'ThumbnailController',
+				'imgTag',
+				$this->response->getData()
 			);
-		} elseif ( !empty( $options['desc-link'] ) ) {
-			// Comes from hooks BeforeParserFetchFileAndTitle and only LinkedRevs subscribes
-			// to this and it doesn't seem to be loaded ... ask if used and add logging to see if used
-			$query = empty( $options['desc-query'] )  ? '' : $options['desc-query'];
-
-			$linkAttribs = $this->getDescLinkAttribs( $thumb, empty( $options['title'] ) ? null : $options['title'], $query );
-		} elseif ( !empty( $options['file-link'] ) ) {
-			$linkAttribs = array( 'href' => $thumb->file->getURL() );
-		} else {
-			$linkAttribs = false;
+			ImageLazyLoad::setLazyLoadingAttribs( $this->dataSrc, $this->imgSrc, $this->imgClass, $this->imgAttrs );
 		}
-
-		return $linkAttribs;
 	}
 
 	/**
-	 * Collect the img tag attributes from $options
-	 * @param MediaTransformOutput $thumb
-	 * @param array $options
-	 * @return array
+	 * Article figure tags with thumbnails inside. All videos and block images use this.
 	 */
-	protected function getImageAttribs( MediaTransformOutput $thumb, array $options ) {
-		/** @var Title $title */
-		$title = $thumb->file->getTitle();
-		$alt = empty( $options['alt'] ) ? $title->getText() : $options['alt'];
-
-		$attribs = array(
-			'alt'    => $alt,
-			'src'    => $thumb->url,
-			'width'  => $thumb->width,
-			'height' => $thumb->height,
-		);
-
-		if ( !empty( $options['valign'] ) ) {
-			$attribs['style'] = "vertical-align: {$options['valign']}";
-		}
-
-		$title = $thumb->file->getTitle();
-		if ( $title instanceof Title ) {
-			$attribs['data-image-name'] = htmlspecialchars( $title->getText() );
-			$attribs['data-image-key']  = htmlspecialchars( urlencode( $title->getDBKey() ) );
-		}
-
-		return $attribs;
-	}
-
-	/**
-	 * Used in getImageLinkAttribs when getting the linkAttribs
-	 *
-	 * @param MediaTransformOutput $thumb The thumbnail object
-	 * @param string $title A title object
-	 * @param array $params
-	 * @return array
-	 */
-	public function getDescLinkAttribs( MediaTransformOutput $thumb, $title = null, $params = null ) {
-		$query = $thumb->page ? ( 'page=' . urlencode( $thumb->page ) ) : '';
-		if ( $params ) {
-			$query .= $query ? '&'.$params : $params;
-		}
-		$attribs = [ 'href' => $thumb->file->getTitle()->getLocalURL( $query ) ];
-		if ( $title ) {
-			$attribs['title'] = $title;
-		}
-		return $attribs;
-	}
-
-	/**
-	 * Article figure tags with thumbnails inside
-	 */
-	public function articleThumbnail() {
+	public function articleBlock() {
 		wfProfileIn( __METHOD__ );
 
 		$file = $this->getVal( 'file' );
@@ -413,11 +257,13 @@ class ThumbnailController extends WikiaController {
 
 		// only show titles for videos
 		$title = '';
+		$filePageLink = false;
 		if ( $file instanceof File ) {
 			$isVideo = WikiaFileHelper::isVideoFile( $file );
 			if ( $isVideo ) {
 				$title = $file->getTitle()->getText();
 			}
+			$filePageLink = $file->getTitle()->getLocalURL();
 		}
 
 		$this->thumbnail = $thumbnail;
@@ -426,12 +272,22 @@ class ThumbnailController extends WikiaController {
 		$this->url = $url;
 		$this->caption = $caption;
 		$this->width = $width;
+		$this->showInfoIcon = !empty( $filePageLink ) && ThumbnailHelper::canShowInfoIcon( $width );
+		$this->filePageLink = $filePageLink;
 
 		wfProfileOut( __METHOD__ );
 	}
 
-	public function canShowInfoIcon() {
-		return !empty( $this->wg->ShowArticleThumbDetailsIcon );
+	/**
+	 * Determines by options if image should be lazyloaded
+	 * @param array $options
+	 * @return bool
+	 */
+	protected function shouldLazyLoad( array $options ) {
+		return (
+			empty( $options['noLazyLoad'] )
+			&& isset( $options['src'] )
+			&& ImageLazyLoad::isValidLazyLoadedImage( $options['src'] )
+		);
 	}
-
 }

@@ -202,15 +202,8 @@ class FilePageController extends WikiaController {
 		// Get restricted country list
 		$regionalRestrictions = $this->getVal( 'regionalRestrictions', '' );
 		if ( !empty( $regionalRestrictions ) ) {
-			$countryNames = Wikia::getCountryNames( explode( ',', str_replace( ', ', ',', $regionalRestrictions ) ) );
-
-			if ( !empty( $countryNames ) ) {
-				$countries = implode( ', ', array_values( $countryNames ) );
-			} else {
-				$countries = $regionalRestrictions;
-			}
-
-			$regionalRestrictions = wfMessage( 'video-page-regional-restrictions', $countries )->text();
+			// Create a list of restrictions to pass to the front end
+			$regionalRestrictions = json_encode( explode( ',', str_replace( ', ', ',', $regionalRestrictions ) ) );
 		}
 
 		$this->provider = ucwords( $provider );

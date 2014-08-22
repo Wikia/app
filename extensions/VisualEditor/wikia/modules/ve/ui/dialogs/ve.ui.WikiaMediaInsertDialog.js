@@ -14,6 +14,10 @@
  * @param {Object} [config] Config options
  */
 ve.ui.WikiaMediaInsertDialog = function VeUiMWMediaInsertDialog( config ) {
+	config =  $.extend( config, {
+		width: '840px'
+	} );
+
 	// Parent constructor
 	ve.ui.WikiaMediaInsertDialog.super.call( this, config );
 };
@@ -290,11 +294,11 @@ ve.ui.WikiaMediaInsertDialog.prototype.onSearchCheck = function ( item ) {
  * @param {Object|null} item The item to preview or `null` if closing the preview.
  */
 ve.ui.WikiaMediaInsertDialog.prototype.onMediaPreview = function ( item ) {
-	var model = item.getModel();
-	if ( model.type === 'photo' ) {
-		this.mediaPreview.openForImage( model.title, model.url );
-	} else {
-		this.mediaPreview.openForVideo( model.title, model.provider, model.videoId );
+	var data = item.getData();
+	if ( data.type === 'photo' ) {
+		this.mediaPreview.openForImage( data.title, data.url );
+	} else if ( data.type === 'video' ) {
+		this.mediaPreview.openForVideo( data.title, data.provider, data.videoId );
 	}
 };
 
@@ -676,7 +680,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.onGetImageInfoSuccess = function ( deferr
 	for ( i = 0; i < data.query.pageids.length; i++ ) {
 		item = data.query.pages[ data.query.pageids[i] ];
 		results.push( {
-			'title': item.title,
+			'title': 'File:' + ( new mw.Title( item.title ) ).getMainText(),
 			'height': item.imageinfo[0].thumbheight,
 			'width': item.imageinfo[0].thumbwidth,
 			'url': item.imageinfo[0].thumburl

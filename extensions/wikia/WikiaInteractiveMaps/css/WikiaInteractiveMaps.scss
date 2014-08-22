@@ -1,59 +1,31 @@
-@import "skins/oasis/css/mixins/background-opacity";
-@import "skins/oasis/css/core/color";
-@import "skins/oasis/css/mixins/gradient";
-
-// TODO used also for parser tag - could be abstracted
-$content-color: #fff;
-$gradient-color-start: rgba(0, 0, 0, 0.7);
-$map-item-max-width: 1110px;
-
-.wikia-interactive-maps {
-	position: relative;
-
-	.wikia-menu-button {
-		padding-left: 10px;
-	}
-}
+@import "skins/shared/mixins/background-opacity";
+@import "skins/shared/color";
+@import "skins/shared/mixins/gradient";
+@import "WikiaMapsShared";
 
 .maps-controls {
 	position: absolute;
 	right: 0;
 	top: -6px;
 
+	> button,
 	> form,
-	> select,
-	> button {
+	> select {
 		display: block;
 		float: right;
 		margin-left: 10px;
 	}
 }
 
-.WikiaArticle .map-list {
-	list-style: none;
-	margin: 0 0 10px;
-}
-
 .map-list {
+	h3 {
+		@include map-thumb-title($content-color, $gradient-color-start, $map-item-max-width);
+	}
+
 	li {
 		overflow-x: hidden;
 		position: relative;
 		margin: 0px 0px 1px;
-	}
-
-	h3 {
-		@include linear-gradient(transparent, top, transparent, 0%, $gradient-color-start, 100%);
-
-		border: 0;
-		bottom: 0;
-		box-sizing: border-box;
-		color: $content-color;
-		left: 0;
-		margin: 0;
-		max-width: $map-item-max-width;
-		padding: 50px 20px 20px;
-		position: absolute;
-		width: 100%;
 	}
 
 	.map-status {
@@ -71,4 +43,27 @@ $map-item-max-width: 1110px;
 		margin-bottom: 40px;
 		text-align: left;
 	}
+}
+
+.WikiaArticle .map-list {
+	list-style: none;
+	margin: 0 0 10px;
+}
+
+.wikia-interactive-maps {
+	position: relative;
+
+	.wikia-menu-button {
+		padding-left: 10px;
+	}
+}
+
+.wikia-interactive-maps-page-header .wikia-menu-button {
+	padding-left: 8px;
+}
+
+.wikia-interactive-map-wrapper {
+	height: 100%;
+	position: relative;
+	width: 100%;
 }

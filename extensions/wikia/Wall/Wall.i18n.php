@@ -198,8 +198,8 @@ The original post and your summary will still appear in the wiki's history.",
 	'wall-recentchanges-restored-reply' => 'restored reply on "[[$1|$2]]" to [[$3|$4\'s wall]]',
 	'wall-recentchanges-deleted-thread' => 'deleted thread "[[$1|$2]]" from [[$3|$4\'s wall]]',
 	'wall-recentchanges-deleted-reply' => 'deleted reply from "[[$1|$2]]" from [[$3|$4\'s wall]]',
-	'wall-recentchanges-closed-thread' => 'closed thread "[[$1|$2]] on [[$3|$4\'s wall]]"',
-	'wall-recentchanges-reopened-thread' => 'reopened thread "[[$1|$2]] on [[$3|$4\'s wall]]"',
+	'wall-recentchanges-closed-thread' => 'closed thread "[[$1|$2]]" on [[$3|$4\'s wall]]',
+	'wall-recentchanges-reopened-thread' => 'reopened thread "[[$1|$2]]" on [[$3|$4\'s wall]]',
 
 	'wall-recentchanges-deleted-reply-title' => 'A reply on message wall',
 	'wall-recentchanges-wall-created-title' => 'Created a message wall',
@@ -381,6 +381,7 @@ your email preferences here: http://community.wikia.com/Special:Preferences',
 );
 
 /** Message documentation (Message documentation)
+ * @author Liuxinyu970226
  * @author Metalhead64
  * @author PtM
  * @author SandroHc
@@ -669,9 +670,9 @@ This message follows after http://messaging.wikia.com/wiki/MediaWiki:Prefs-email
 * $3 is wall owner',
 	'wall-recentchanges-history-link' => 'Recent changes, link to wall history for items about removed and deleted threads',
 	'wall-recentchanges-thread-history-link' => 'Recent changes, link to thread history for items about removed replies',
-	'wall-contributions-line' => "Contributions item. Parameters:
+	'wall-contributions-line' => 'Contributions item. Parameters:
 * $2 is thread title
-* $4 is wall owner",
+* $4 is wall owner',
 	'wall-whatlinkshere-wall-line' => 'What links here item. Parameters:
 * $2 is thread title
 * $4 is wall owner',
@@ -715,7 +716,8 @@ checkbox on Special:Block',
 	'wall-history-sorting-oldest-first' => 'sorting option, view oldest changes first',
 	'wall-history-summary-label' => 'wall history page, heading for summary item.
 {{Identical|Summary}}',
-	'wall-history-rail-wall' => "wall history page, who's involved box - link to user's wall",
+	'wall-history-rail-wall' => "wall history page, who's involved box - link to user's wall
+{{Identical|Wall}}",
 	'wall-history-rail-contribs' => "wall history page, who's involved box - link to user's contributions list.
 {{Identical|Contribution}}",
 	'wall-history-rail-block' => "wall history page, who's involved box - link for admins to block user.
@@ -820,8 +822,10 @@ checkbox on Special:Block',
 	'wall-votes-number-tooltip' => 'Tooltip under numbers of Kudos.',
 	'wall-votes-vote-tooltip' => 'hover tooltip instructing users they can vote',
 	'wall-votes-voted-tooltip' => 'hover tooltip instructing users they have already voted',
-	'wall-quote-author' => 'part of quoted text, contain information about author of quoted text',
-	'wall-quote-reply-to' => 'link label to quoted text. $1 is a number such as "reply to 123"',
+	'wall-quote-author' => 'part of quoted text, contain information about author of quoted text
+{{Identical|Wrote}}',
+	'wall-quote-reply-to' => 'link label to quoted text. $1 is a number such as "reply to 123"
+{{Identical|Reply to}}',
 	'wall-topic-input-heading' => 'Topic input label.
 {{Identical|Topic}}',
 	'wall-topic-input-placeholder' => 'Adding topic instruction and call to action. State that it is optional',
@@ -4808,9 +4812,11 @@ $messages['lb'] = array(
 	'wall-notifications' => 'Notifikatiounen',
 	'wall-notifications-markasread-all-wikis' => 'All Wikiën',
 	'wall-notifications-markasread-this-wiki' => 'Dës Wiki',
+	'wall-recentchanges-edit' => 'Message geännert',
 	'wall-history' => 'Versiounen',
 	'wall-history-who-involved-wall-title' => 'Wien ass bedeelegt?',
 	'wall-history-summary-label' => 'Resumé',
+	'wall-history-rail-contribs' => 'Kontributiounen',
 	'wall-topic-input-heading' => 'Thema',
 	'wall-topic-input-placeholder' => 'En Thema derbäisetzen (fakultativ)',
 	'wall-topic-edit-save' => 'Späicheren',
@@ -9091,20 +9097,44 @@ $messages['zh-hans'] = array(
 	'wall-message-delete' => '删除',
 	'wall-message-close-thread' => '关闭这个标题',
 	'wall-message-reopen-thread' => '重启这个标题',
+	'wall-message-removed-thread-because' => '$1移除了此帖子因为：',
+	'wall-message-deleted-thread-because' => '$1删除了此帖子因为：',
+	'wall-message-restore-thread' => '恢复帖子',
+	'wall-message-move-thread' => '移动此帖子',
+	'wall-message-removed-reply-because' => '$1移除了此回复因为：',
+	'wall-message-deleted-reply-because' => '$1删除了此回复因为：',
+	'wall-message-closed-by' => '[[$2|$1]]已关闭此帖子',
+	'wall-message-closed-by-because' => '$1关闭了此帖子，原因：',
 	'wall-message-restore-reply' => '还原回复',
+	'wall-delete-reason' => '用户/管理员活动',
+	'wall-user-talk-page-archive-anchor' => '查看已存档讨论页',
+	'wall-user-talk-archive-page-title' => '用户讨论页存档',
 	'wall-action-all-confirm-cancel' => '取消',
+	'wall-action-all-confirm-notify' => '通知管理员',
 	'wall-action-remove-reply-title' => '移除此回复',
+	'wall-action-remove-thread-title' => '移除此帖子',
 	'wall-delete-error-title' => '错误',
 	'wall-action-remove-confirm' => '请告诉我们移除原因：',
 	'wall-action-remove-confirm-ok' => '删除',
 	'wall-action-close-thread-title' => '关闭此对话',
+	'wall-action-close-thread-confirm-info' => '此帖子仍将可以访问。',
 	'wall-action-close-confirm-ok' => '关闭',
+	'wall-action-admin-thread-title' => '删除此帖子',
 	'wall-action-admin-reply-title' => '删除本条回复',
 	'wall-action-admin-confirm' => '请告诉我们删除原因：',
 	'wall-action-admin-confirm-ok' => '删除',
 	'wall-action-restore-thread-title' => '还原此对话',
+	'wall-action-restore-reply-title' => '恢复此回复',
 	'wall-action-restore-confirm-ok' => '还原',
+	'wall-action-rev-thread-title' => '删除此帖子的修订？',
+	'wall-action-rev-reply-title' => '删除此回复的修订？',
+	'wall-action-rev-reply-confirm' => '您确信要删除此消息吗？',
 	'wall-action-rev-confirm-ok' => '确认删除',
+	'wall-action-move-thread-heading' => '移动此帖子',
+	'wall-action-move-validation-select-wall' => '请选择板块',
+	'wall-action-move-topics-summary' => '帖子已移动',
+	'wall-action-move-thread-ok' => '移动帖子',
+	'wall-action-move-board-label' => '选择板块移动至',
 	'wall-notifications' => '通知',
 	'wall-notifications-all' => '全部通知',
 	'wall-notifications-markasread' => '标记全部为已读',
@@ -9127,38 +9157,106 @@ $messages['zh-hans'] = array(
 	'wn-user1-reply-other-a-wall' => '$1回复了$2',
 	'wn-newmsg-onmywall' => '$1在您的墙上留言了',
 	'wn-newmsg-on-followed-wall' => '$1在$2的墙上留言了',
+	'wall-sorting-newest-threads' => '最新帖子',
+	'wall-sorting-oldest-threads' => '最旧帖子',
 	'wall-sorting-newest-replies' => '最新回复',
 	'wall-sorting-most-active' => '最活跃',
 	'wall-sorting-archived' => '已归档的',
 	'tog-enotifmywall' => '…有人在我的信息墙上留言',
 	'wall-deleted-msg-pagetitle' => '信息已删除',
 	'wall-deleted-msg-return-to' => '返回$1的留言墙',
+	'wall-deleted-msg-view' => '（查看/恢复）',
+	'wall-recentchanges-wall-thread' => '墙帖子',
 	'wall-recentchanges-new-message' => '在[[$1|$2的信息墙上]]',
-
+	'wall-recentchanges-edit' => '已编辑信息',
+	'wall-recentchanges-deleted-reply-title' => '消息墙上的答复',
+	'wall-recentchanges-wall-created-title' => '已创建一个信息墙',
 	'wall-recentchanges-namespace-selector-message-wall' => '留言墙',
+	'wall-recentchanges-thread-group' => '<a href="$2">$3墙</a>上的$1',
+	'wall-recentchanges-history-link' => '墙历史',
+	'wall-recentchanges-thread-history-link' => '帖子历史',
+	'wall-contributions-line' => '[[$3|$4的墙]]上的[[$1|$2]]',
+	'wall-whatlinkshere-wall-line' => '<a href="$3">$4的墙</a>上的<a href="$1">$2</a>',
 	'wall-message-staff-text' => '该用户是Wikia工作人员',
 	'wall-wiki-activity-on' => '在[[$1上|$2的留言墙]]',
+	'wall-removed-thread-undo' => '此帖子已移除。$1',
+	'wall-removed-reply-undo' => '此回复已移除。$1',
 	'wall-removed-reply' => '这条回复已被删除',
+	'wall-deleted-thread-undo' => '此帖子已删除。$1',
+	'wall-deleted-reply-undo' => '此回复已删除。$1',
+	'wall-deleted-reply' => '此回复已删除',
 	'wall-history' => '历史',
+	'wall-history-title' => '墙历史',
 	'wall-history-who-involved-wall-title' => '涉及谁？',
+	'wall-history-thread-created' => '$1由$2创建',
+	'wall-history-thread-removed' => '$1由$2移除',
+	'wall-history-thread-restored' => '$1由$2恢复',
+	'wall-history-thread-admin-deleted' => '$1由$2删除',
 	'wall-history-sorting-newest-first' => '最近优先',
 	'wall-history-sorting-oldest-first' => '最久优先',
+	'wall-history-summary-label' => '摘要',
+	'wall-history-rail-wall' => '墙',
 	'wall-history-rail-contribs' => '贡献',
 	'wall-history-rail-block' => '封禁',
 	'wall-history-action-view' => '查看',
+	'wall-history-action-restore' => '还原',
+	'wall-history-action-thread-history' => '帖子历史',
+	'wall-thread-history-title' => '帖子历史',
+	'wall-thread-history-thread-created' => '$1 $2创建了此帖子',
+	'wall-thread-history-reply-created' => '$1 $2做出回复',
+	'wall-history-action-restore-reply' => '恢复回复',
+	'wall-history-action-restore-thread' => '恢复帖子',
 	'mail-notification-html-greeting' => '嗨！$1,',
 	'mail-notification-html-button' => '查看会话',
+	'mail-notification-body' => '嗨$WATCHER，
+
+$SUBJECT
+$METATITLE
+$MESSAGE_NO_HTML
+
+--$AUTHOR
+
+参见会话（$MESSAGE_LINK）
+
+Wikia团队
+___________________________________________
+* 在社群中心寻找帮助和建议：http://community.wikia.com
+* 希望收取来自我们的更少消息？您可点此退订或更改您的电子邮件设置：http://community.wikia.com/Special:Preferences',
+	'mail-notification-body-HTML' => '嗨$WATCHER，
+			<p>$SUBJECT。</p>
+			<p><a href="$MESSAGE_LINK">$METATITLE</a></p>
+			<p>$MESSAGE_HTML</p>
+			<p>-- $AUTHOR_SIGNATURE<p>
+			<p><a style="padding: 4px 10px;background-color: #006CB0; color: #FFF !important;text-decoration: none;" href="$MESSAGE_LINK">参见会话</a></p>
+			<p>Wikia团队</p>
+___________________________________________<br />
+* 在社群中心寻找帮助和建议：http://community.wikia.com
+* 希望收取来自我们的更少消息？您可点此退订或更改您的电子邮件设置：http://community.wikia.com/Special:Preferences',
 	'prefs-email-wall-v2' => '留言墙和论坛',
 	'tog-enotifwallthread-v2' => '邮件通知我…',
+	'tog-enotifmywall-every' => '更多消息与回复',
 	'tog-enotifmywall-reminder' => '以每日提醒邮件',
 	'tog-enotifmywall-noemail' => '从不。不向我发送任何留言墙或论坛邮件',
+	'wallshowsource-toggle-v2' => '在帖子启用{{int:user-action-menu-view-source}}',
+	'wallshowsource-toggle' => '在消息墙帖子上启用{{int:user-action-menu-view-source}}',
+	'walldelete-toggle' => '帖子中启用修订版本删除',
 	'wall-notifications-notifyeveryone' => '由$1设置高亮',
+	'wall-message-notifyeveryone' => '高亮此帖子',
+	'wall-message-unnotifyeveryone' => '取消高亮此帖子',
+	'wall-votes-modal-title' => '荣誉',
+	'wall-votes-number' => '$1份{{PLURAL:$1|荣誉}}',
+	'wall-quote-author' => '$1写道：',
+	'wall-quote-reply-to' => '回复#$1',
+	'wall-topic-input-heading' => '主题',
+	'wall-topic-input-placeholder' => '添加主题（可选）',
+	'wall-topic-edit' => '编辑主题',
 	'wall-topic-edit-save' => '保存',
 	'wall-topic-edit-cancel' => '取消',
 );
 
 /** Traditional Chinese (中文（繁體）‎)
  * @author Ffaarr
+ * @author LNDDYL
  * @author Liflon
  */
 $messages['zh-hant'] = array(
@@ -9312,13 +9410,12 @@ $messages['zh-hant'] = array(
 	'tog-enotifwallthread' => '…有人回覆我所關注的討論串',
 	'tog-enotifmywall' => '…有人在我的訊息牆上發布新的留言',
 	'wall-deleted-msg-pagetitle' => '訊息已刪除',
-	'wall-deleted-msg-text' => '你想查看的訊息已被刪除',
+	'wall-deleted-msg-text' => '你想檢視的訊息已被刪除',
 	'wall-deleted-msg-return-to' => '返回到 $1 的訊息牆。',
-	'wall-deleted-msg-view' => '（查看/還原）',
+	'wall-deleted-msg-view' => '（檢視/還原）',
 	'wall-recentchanges-wall-thread' => '牆上的討論串',
 	'wall-recentchanges-new-message' => '在[[$1|$2的訊息牆上]]',
 	'wall-recentchanges-edit' => '編輯訊息',
-
 	'wall-recentchanges-removed-thread' => '從[[$3|$4的訊息牆 wall]]移除討論串 "[[$1|$2]]"',
 	'wall-recentchanges-removed-reply' => '從[[$3|$4的訊息牆]]的"[[$1|$2]]"討論串移除回覆',
 	'wall-recentchanges-restored-thread' => '將討論串"[[$1|$2]]" 恢復到[[$3|$4\'的訊息牆]]',
@@ -9326,18 +9423,18 @@ $messages['zh-hant'] = array(
 	'wall-recentchanges-deleted-thread' => '從[[$3|$4的訊息牆]]刪除討論串 "[[$1|$2]]"',
 	'wall-recentchanges-deleted-reply' => '從[[$3|$4的訊息牆]]的"[[$1|$2]]"討論串刪除回覆',
 	'wall-recentchanges-closed-thread' => '從[[$3|$4的訊息牆]]關閉討論串 "[[$1|$2]]"',
-	'wall-recentchanges-reopened-thread' => '將討論串"[[$1|$2]]" 再度於[[$3|$4\'的訊息牆]]開啟',
+	'wall-recentchanges-reopened-thread' => '將討論串"[[$1|$2]]" 再度於[[$3|$4\'的訊息牆]]開啟', # Fuzzy
 	'wall-recentchanges-deleted-reply-title' => '訊息牆的一則回覆',
 	'wall-recentchanges-wall-created-title' => '創建訊息牆',
 	'wall-recentchanges-namespace-selector-message-wall' => '訊息牆',
 	'wall-recentchanges-thread-group' => ' <a href="$2">$3的訊息牆</a>上的討論 $1',
 	'wall-recentchanges-history-link' => '頁面歷史',
 	'wall-recentchanges-thread-history-link' => '討論串歷史',
-	'wall-contributions-line' => '[[$1|$2]] on [[$3|$4\'的訊息牆]]',
+	'wall-contributions-line' => "[[$1|$2]] on [[$3|$4'的訊息牆]]",
 	'wall-message-not-found' => '找不到此消息。如果您看到此錯誤，請用[[special:Contact]] 聯繫 Wikia，並儘量提供關於這個問題發生的詳細訊息。謝謝！', # Fuzzy
 	'wall-message-staff-text' => '此使用者是 Wikia 職員',
 	'wall-ipballowusertalk' => '允許此使用者在被封禁時在自己的訊息牆上發布訊息',
-	'wall-ipbwatchuser' => '觀看此使用者的用戶頁，並關注其訊息牆',
+	'wall-ipbwatchuser' => '觀看此使用者的使用者頁面，並關注其訊息牆',
 	'wall-wiki-activity-on' => '在[[$1上|$2的訊息牆]]',
 	'wall-removed-thread-undo' => '此討論串已被移除。$1',
 	'wall-removed-reply-undo' => '本回覆已被移除。$1',
@@ -9359,7 +9456,7 @@ $messages['zh-hant'] = array(
 	'wall-history-rail-wall' => '訊息牆',
 	'wall-history-rail-contribs' => '貢獻',
 	'wall-history-rail-block' => '封禁',
-	'wall-history-action-view' => '查看',
+	'wall-history-action-view' => '檢視',
 	'wall-history-action-restore' => '恢復',
 	'wall-history-action-thread-history' => '討論串歷史',
 	'wall-thread-history-title' => '討論串歷史', # Fuzzy
@@ -9392,7 +9489,7 @@ $messages['zh-hant'] = array(
 	'tog-enotifmywall-every' => '所有訊息和回覆',
 	'tog-enotifmywall-sincevisited' => '在我上次觀看之後，一個討論串一次',
 	'tog-enotifmywall-reminder' => '每天以電子郵件提醒',
-	'tog-enotifmywall-noemail' => '不，不要發送信和訊息牆和論壇相關的郵件',
+	'tog-enotifmywall-noemail' => '不，不要寄信和訊息牆和論壇相關的郵件',
 	'wallshowsource-toggle-v2' => '在討論串啟用 查看源代碼',
 	'wallshowsource-toggle' => '在訊息牆留言上啟用 查看源代碼',
 	'walldelete-toggle' => '在討論串上啟用版本刪除',

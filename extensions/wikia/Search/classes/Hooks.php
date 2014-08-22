@@ -115,7 +115,7 @@ class Hooks
 	
 	/**
 	 * WikiaMobile hook to add assets so they are minified and concatenated
-	 * @see    WikiaSearchControllerTest::testOnWikiaMobileAssetsPackages
+	 * @see    SearchControllerTest::testOnWikiaMobileAssetsPackages
 	 * @param  array $jsHeadPackages
 	 * @param  array $jsBodyPackages
 	 * @param  array $scssPackages

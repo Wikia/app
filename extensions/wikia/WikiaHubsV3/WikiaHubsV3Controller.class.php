@@ -19,11 +19,11 @@ class WikiaHubsV3Controller extends WikiaController {
 	 * @var WikiaHubsModel
 	 */
 	protected $model;
-	
+
 	/**
-	 * @var MarketingToolboxModel
+	 * @var EditHubModel
 	 */
-	protected $marketingToolboxModel;
+	protected $editHubModelModel;
 
 	protected $format;
 	protected $verticalId;
@@ -45,15 +45,15 @@ class WikiaHubsV3Controller extends WikiaController {
 			$this->overrideTemplate('404');
 			return;
 		}
-		$toolboxModel = new MarketingToolboxV3Model();
+		$editHubModel = new EditHubModel();
 
 		$this->modules = array();
 
-		foreach($toolboxModel->getModulesIds() as $moduleId) {
+		foreach($editHubModel->getModulesIds() as $moduleId) {
 			$this->modules[$moduleId] = $this->renderModule(
-				$toolboxModel,
+				$editHubModel,
 				$moduleId,
-				$toolboxModel->getNotTranslatedModuleName($moduleId)
+				$editHubModel->getNotTranslatedModuleName($moduleId)
 			);
 		}
 
@@ -61,7 +61,7 @@ class WikiaHubsV3Controller extends WikiaController {
 		$this->response->addAsset('wikiahubs_v3_modal');
 		$this->response->addAsset('wikiahubs_v3_scss');
 		$this->response->addAsset('wikiahubs_v3_scss_mobile');
-		
+
 		$this->wg->Out->addJsConfigVars([
 			'wgWikiaHubsVerticalId' => $this->verticalId
 		]);
@@ -96,33 +96,28 @@ class WikiaHubsV3Controller extends WikiaController {
 	protected function checkAccess() {
 		return $this->hubTimestamp !== false
 			&& ($this->hubTimestamp <= time()
-				|| $this->wg->User->isLoggedIn() && $this->wg->User->isAllowed('marketingtoolbox')
+				|| $this->wg->User->isLoggedIn() && $this->wg->User->isAllowed('edithub')
 			);
 	}
 
 	/**
 	 * Render one module with given data
 	 *
-	 * @param MarketingToolboxV3Model $toolboxModel
+	 * @param EditHubModel $editHubModel
 	 * @param string $moduleName
 	 * @param array  $moduleData
 	 *
 	 * @return string
 	 */
-	protected function renderModule( $toolboxModel, $moduleId, $moduleName ) {
+	protected function renderModule( $editHubModel, $moduleId, $moduleName ) {
 		$params = $this->getParams();
 
-		$module = MarketingToolboxModuleService::getModuleByName(
+		$module = WikiaHubsModuleService::getModuleByName(
 			$moduleName,
-			null,
-			null,
-			null,
-			$this->cityId,
-			self::HUBS_VERSION
+			$this->cityId
 		);
 
-		$moduleData = $module->loadData( $toolboxModel, $params );
-
+		$moduleData = $module->loadData( $editHubModel, $params );
 		if (!empty($moduleData)) {
 			return $module->render( $moduleData );
 		} else {
@@ -168,14 +163,14 @@ class WikiaHubsV3Controller extends WikiaController {
 	}
 
 	/**
-	 * @return MarketingToolboxModel
+	 * @return EditHubModel
 	 */
-	protected function getMarketingToolboxModel() {
-		if( !$this->marketingToolboxModel ) {
-			$this->marketingToolboxModel = new MarketingToolboxV3Model($this->app);
+	protected function getEditHubModelModel() {
+		if( !$this->editHubModelModel ) {
+			$this->editHubModelModel = new EditHubModel($this->app);
 		}
-		
-		return $this->marketingToolboxModel;
+
+		return $this->editHubModelModel;
 	}
 
 	protected function initFormat() {
@@ -207,4 +202,6 @@ class WikiaHubsV3Controller extends WikiaController {
 	protected function initHubTimestamp() {
 		$this->hubTimestamp = $this->getRequest()->getVal('hubTimestamp');
 	}
+
+
 }

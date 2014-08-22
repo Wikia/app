@@ -1,2 +1,2 @@
 #!/bin/sh
-ant -f build-wikia.xml  -Dunittest=../extensions/wikia/$1 phpunit-single
+make phpunit-single test=../extensions/wikia/$1
