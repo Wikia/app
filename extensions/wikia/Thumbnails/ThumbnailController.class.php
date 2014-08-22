@@ -37,8 +37,8 @@ class ThumbnailController extends WikiaController {
 		ThumbnailHelper::setVideoLinkClasses( $this, $thumb, $options );
 		ThumbnailHelper::setVideoLinkAttribs( $this, $thumb, $options );
 		ThumbnailHelper::setVideoImgAttribs( $this, $thumb, $options );
-		ThumbnailHelper::setExtraImgAttribs( $this, $thumb, $options );
-		ThumbnailHelper::setExtraLinkAttribs( $this, $thumb, $options );
+		ThumbnailHelper::setExtraImgAttribs( $this, $options );
+		ThumbnailHelper::setExtraLinkAttribs( $this, $options );
 
 		// Set duration
 		// The file is not always an instance of a class with magic getters implemented. see VID-1753
@@ -81,10 +81,9 @@ class ThumbnailController extends WikiaController {
 
 		ThumbnailHelper::setImageLinkAttribs( $this, $thumb, $options );
 		ThumbnailHelper::setImageAttribs( $this, $thumb, $options );
-		ThumbnailHelper::setImageLinkClasses( $this, $thumb, $options );
-		ThumbnailHelper::setExtraImgAttribs( $this, $thumb, $options );
-		ThumbnailHelper::setExtraLinkAttribs( $this, $thumb, $options );
-
+		ThumbnailHelper::setImageLinkClasses( $this, $options );
+		ThumbnailHelper::setExtraImgAttribs( $this, $options );
+		ThumbnailHelper::setExtraLinkAttribs( $this, $options );
 		ThumbnailHelper::setLazyLoad( $this, $options );
 	}
 
