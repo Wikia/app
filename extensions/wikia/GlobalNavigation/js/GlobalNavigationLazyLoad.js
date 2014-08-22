@@ -43,7 +43,7 @@ $(function () {
 		}
 	});
 
-	$('.hubs').on('mouseenter', 'nav', function(){
+	$('#hubs').on('mouseenter', 'nav', function(){
 		var links = $('.hub-links'),
 			active = $('> .active', links),
 			vertical = $(this).attr('class');

@@ -1,5 +1,5 @@
 <a class="hubs-entry-point global-navigation-link"></a>
-<nav class="hubs-menu">
+<nav id="hubs" class="hubs-menu">
 	<div class="hubs">
 		<? foreach($menuNodes as $hub): ?>
 			<nav class="<?=$hub['specialAttr']; ?><? if ( $activeNode === $hub['specialAttr'] ):?> active<? endif ?>">
