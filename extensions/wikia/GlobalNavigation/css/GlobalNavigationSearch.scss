@@ -54,6 +54,9 @@
 			margin-left: 6px;
 			position: relative;
 			top: 2px;
+			&.dark {
+				border-top-color: $search-input-label-dark;
+			}
 		}
 	}
 }

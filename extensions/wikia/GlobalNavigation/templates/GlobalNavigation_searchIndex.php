@@ -4,7 +4,7 @@
 		<div class="search-select-wrapper table-cell">
 			<div class="search-select-overlay">
 				<span class="search-label-inline" id="search-label-inline"><?= $defaultSearchMessage; ?></span>
-				<img class="chevron" src="data:image/gif;base64,R0lGODlhAQABAIABAAAAAP///yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D"/>
+				<img class="chevron" id="search-form-chevron" src="data:image/gif;base64,R0lGODlhAQABAIABAAAAAP///yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D"/>
 			</div>
 			<select class="search-select" id="search-select">
 				<option value="local" selected="selected" data-search-url="<?= $localSearchUrl; ?>"><?= wfMessage('global-navigation-local-search')->text(); ?></option>
