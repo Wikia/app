@@ -32,20 +32,23 @@ class GlobalNavigationController extends WikiaController {
 	public function hubsMenu() {
 		$menuNodes = $this->getMenuNodes();
 		$this->response->setVal('menuNodes', $menuNodes);
+
 		// TODO get proper category
 		$this->response->setVal('activeNode', 'tv');
 	}
 
 	public function lazyLoadHubsMenu() {
-		$lazyLoadMenuNodes = $this->getMenuNodes();
+		$langCode = $this->request->getVal('lang', null);
+
+		$lazyLoadMenuNodes = $this->getMenuNodes( $langCode );
 		array_shift($lazyLoadMenuNodes);
 
 		$this->response->setFormat( 'json' );
 		$this->response->setData($lazyLoadMenuNodes);
 	}
 
-	private function getMenuNodes() {
-		$menuNodes = (new NavigationModel(true /* useSharedMemcKey */) )->getTree(
+	private function getMenuNodes( $langCode = null ) {
+		$menuNodes = (new NavigationModel(true /* useSharedMemcKey */, $langCode) )->getTree(
 			'shared-global-navigation-abtest'
 		);
 

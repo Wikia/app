@@ -37,6 +37,7 @@ class NavigationModel extends WikiaModel {
 	const ERR_MAGIC_WORD_IN_LEVEL_1 = 'Magic word at level 1';
 
 	private $menuNodes;
+	private $menuLangCode;
 
 	private $biggestCategories;
 	private $lastExtraIndex = 1000;
@@ -56,10 +57,11 @@ class NavigationModel extends WikiaModel {
 	// list of errors encountered when parsing the wikitext
 	private $errors = array();
 
-	public function __construct( $useSharedMemcKey = false ) {
+	public function __construct( $useSharedMemcKey = false, $langCode = null ) {
 		parent::__construct();
 
 		$this->useSharedMemcKey = $useSharedMemcKey;
+		$this->menuLangCode = !$langCode ? $this->wg->Lang->getCode() : $langCode;
 	}
 
 	/**
@@ -86,7 +88,7 @@ class NavigationModel extends WikiaModel {
 
 		$messageName = str_replace(' ', '_', $messageName);
 
-		return implode( ':', array( __CLASS__, $wikiId, $this->wg->Lang->getCode(), $messageName, self::version ) );
+		return implode( ':', array( __CLASS__, $wikiId, $this->menuLangCode, $messageName, self::version ) );
 	}
 
 	public function clearMemc( $key = self::WIKIA_GLOBAL_VARIABLE, $city_id = false ){
@@ -169,7 +171,7 @@ class NavigationModel extends WikiaModel {
 		);
 
 		$menuData = WikiaDataAccess::cache(
-			'global-navigation-hubs-menu-tree',
+			$this->getMemcKey('global-navigation-hubs-menu-tree'),
 			1800,
 			function() {
 				$menuData = [];

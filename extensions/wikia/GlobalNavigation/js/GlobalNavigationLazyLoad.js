@@ -1,15 +1,22 @@
 $(function () {
 	'use strict';
 
-	var menuLoaded = false;
+	require(['jquery', 'wikia.nirvana', 'wikia.querystring'], function($, nirvana, Querystring){
 
-	function getMenuItems() {
-		$.when(
-				$.nirvana.sendRequest({
+		var menuLoaded = false;
+
+		function getMenuItems() {
+			var lang = Querystring().getVal('uselang');
+
+			$.when(
+				nirvana.sendRequest({
 					controller: 'GlobalNavigationController',
 					method: 'lazyLoadHubsMenu',
 					format: 'json',
-					type: 'GET'
+					type: 'GET',
+					data: {
+						lang: lang
+					}
 				})
 			).done(function(menuItems){
 				var sections = '',
@@ -35,20 +42,21 @@ $(function () {
 				$('.hubs-menu > .hub-links').append(sections);
 				menuLoaded = true;
 			});
-	}
-
-	$('.wikia-logo').on('mouseenter', function(){
-		if( !menuLoaded ) {
-			getMenuItems();
 		}
-	});
 
-	$('#hubs').on('mouseenter', 'nav', function(){
-		var links = $('.hub-links'),
-			active = $('> .active', links),
-			vertical = $(this).attr('class');
+		$('.wikia-logo').on('mouseenter', function(){
+			if( !menuLoaded ) {
+				getMenuItems();
+			}
+		});
 
-		active.removeClass('active');
-		$('.' + vertical + '-links', links).addClass('active');
+		$('#hubs').on('mouseenter', 'nav', function(){
+			var links = $('.hub-links'),
+				active = $('> .active', links),
+				vertical = $(this).attr('class');
+
+			active.removeClass('active');
+			$('.' + vertical + '-links', links).addClass('active');
+		});
 	});
 });
