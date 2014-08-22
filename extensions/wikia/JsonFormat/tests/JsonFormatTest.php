@@ -91,7 +91,7 @@ class JsonFormatTest extends WikiaBaseTest {
 		foreach ( $content as $key => $params ) {
 			if ( is_numeric( $key ) ) {
 				if ( empty( $data[$key] ) ) {
-					$this->fail("Key $key not found in data.  Expecting: " . print_r( [ $key => $params ], true ) );
+					$this->fail( "Key $key not found in data.  Expecting: " . print_r( [ $key => $params ], true ) );
 				} else {
 					$element = $data[ $key ];
 					$this->checkContent( $element, $params );
