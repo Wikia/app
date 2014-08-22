@@ -13,12 +13,12 @@ abstract class SearchServiceBaseTest extends BaseTest {
 	 * @param string $useResponse provide method name for mock response
 	 * @return \PHPUnit_Framework_MockObject_MockObject solarium mock
 	 */
-	public function useSolariumMock( $useResponse = 'getSolariumMainResponse' ) {
+	public function useSolariumMock( $useRequest = 'getMockRequest', $useResponse = 'getSolariumMainResponse' ) {
 		if ( !isset( $this->solariumMock ) ) {
 			$this->solariumMock = $this->getSolariumMock();
 			$this->solariumMock->expects( $this->any() )
 				->method( 'select' )
-				->with( $this->getMockRequest() )
+				->with( $this->{$useRequest}() )
 				->will( $this->returnValue( $this->getResultMock( $useResponse ) ) );
 		}
 
