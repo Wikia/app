@@ -98,7 +98,7 @@ ve.ui.WikiaFocusWidget.prototype.unsetNode = function () {
  * @method
  */
 ve.ui.WikiaFocusWidget.prototype.adjustLayout = function () {
-	var shield, property,
+	var shield,
 		surfaceOffset = this.$surface.offset(),
 		surfaceEdges = {
 			right: surfaceOffset.left + this.$surface.width(),
