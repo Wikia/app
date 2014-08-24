@@ -10,6 +10,7 @@ class Listusers extends SpecialRedirectToSpecial {
 	var $mCityId;
 	var $mAction;
 	var $mTitle;
+	var $mDefGroups;
 	var $mGroups;
 	var $mFilterStart;
 	var $mContribs;
