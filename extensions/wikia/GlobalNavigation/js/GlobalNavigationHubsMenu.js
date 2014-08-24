@@ -21,6 +21,9 @@
 		vertical = $(row).addClass('active').data('vertical');
 		subMenuSelector = '.' + vertical + '-links';
 
+
+		// TODO:
+		// this (lazyLoad) should finally go to the hamburger button click event
 		if (window.lazyLoad === undefined) {
 			throw("There isn't lazyLoad object loaded!");
 		}
