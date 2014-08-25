@@ -20,9 +20,16 @@ class ApiTemplateParameters extends ApiBase {
 		$templatePages = [];
 		foreach ( $titles as $title ) {
 			$templateHelper->setTemplateByName( $title );
-			$templatePages[$templateHelper->getTitle()->getArticleId()] = ['params' => $templateHelper->getTemplateParams()];
+			$articleId = $templateHelper->getTitle()->getArticleId();
+			if ( $articleId > 0 ) {
+				$templatePages[$articleId] = [
+					'title' => $title,
+					'params' => $templateHelper->getTemplateParams()
+				];
+			}
 		}
 
+		$this->getResult()->setIndexedTagName( $templatePages, 'pages' );
 		$this->getResult()->addValue( null, 'pages', $templatePages );
 	}
 

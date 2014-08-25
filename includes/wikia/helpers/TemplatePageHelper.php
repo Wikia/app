@@ -31,9 +31,7 @@ class TemplatePageHelper {
 	 * @param string $title
 	 */
 	public function setTemplateByName( $title ) {
-		global $wgContLang;
-		$this->title = Title::newFromText( $title );
-		$this->templateName = $this->title->getText();
+		$this->setTemplateByTitle( Title::newFromText( $title ) );
 	}
 
 	/**
