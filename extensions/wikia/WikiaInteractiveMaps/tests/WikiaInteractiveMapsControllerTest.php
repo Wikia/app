@@ -49,4 +49,54 @@ class WikiaInteractiveMapsControllerTest extends WikiaBaseTest {
 
 		return $mock;
 	}
+
+	public function testMap_mapNotFound() {
+		$exceptionObject = new stdClass();
+		$exceptionObject->message = 'Map not found';
+		$exceptionObject->details = 'Map with given id (1) was not found.';
+
+		$appMock = $this->getMock( 'WikiaApp', [ 'checkSkin' ], [], '', false );
+		$appMock->expects( $this->once() )
+			->method( 'checkSkin' )
+			->will( $this->returnValue(false) );
+
+		$requestMock = $this->getMock( 'WikiaRequest', [ 'getInt' ], [], '', false );
+		$requestMock->expects( $this->any() )
+			->method( 'getInt' )
+			->will( $this->returnValue(1) );
+
+		$responseMock = $this->getMock( 'WikiaResponse', [ 'addAsset', 'setTemplateEngine' ], [], '', false );
+		$responseMock->expects( $this->once() )
+			->method( 'addAsset' );
+		$responseMock->expects( $this->once() )
+			->method( 'setTemplateEngine' );
+
+		$mapsModelMock = $this->getMock( 'WikiaMaps', [ 'getMapByIdFromApi' ], [], '', false );
+		$mapsModelMock->expects( $this->once() )
+			->method( 'getMapByIdFromApi' )
+			->will( $this->returnValue( $exceptionObject ) );
+
+		$mapsControllerMock = $this->getMock( 'WikiaInteractiveMapsController', [
+			'getModel',
+			'redirectIfForeignWiki',
+			'setVal',
+			'addAsset',
+			'setTemplateEngine'
+		], [], '', false );
+
+		$mapsControllerMock->expects( $this->once() )
+			->method( 'getModel' )
+			->will( $this->returnValue( $mapsModelMock ) );
+		$mapsControllerMock->expects( $this->never() )
+			->method( 'redirectIfForeignWiki' );
+		$mapsControllerMock->expects( $this->any() )
+			->method( 'setVal' );
+
+		$mapsControllerMock->app = $appMock;
+		$mapsControllerMock->request = $requestMock;
+		$mapsControllerMock->response = $responseMock;
+
+		$mapsControllerMock->map();
+	}
+
 }
