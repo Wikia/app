@@ -6,6 +6,16 @@ class GlobalNavigationController extends WikiaController {
 	const USE_LANG_PARAMETER = '?uselang=';
 	const CENTRAL_WIKI_SEARCH = '/wiki/Special:Search';
 
+	/**
+	 * @var WikiaCorporateModel
+	 */
+	private $wikiCorporateModel;
+
+	public function __construct() {
+		parent::__construct();
+		$this->wikiCorporateModel = new WikiaCorporateModel();
+	}
+
 	public function index() {
 		Wikia::addAssetsToOutput( 'global_navigation_scss' );
 		Wikia::addAssetsToOutput( 'global_navigation_js' );
@@ -37,9 +47,9 @@ class GlobalNavigationController extends WikiaController {
 	public function getCentralUrlForLang( $lang, $fullUrl ) {
 		$centralWikiExists = $this->centralWikiInLangExists( $lang );
 		if ( $centralWikiExists ) {
-			$title = $this->getGlobalTitleForLang( $lang );
+			$title = $this->getCentralWikiTitleForLang( $lang );
 		} else {
-			$title = $this->getGlobalTitleForLang( self::DEFAULT_LANG );
+			$title = $this->getCentralWikiTitleForLang( self::DEFAULT_LANG );
 		}
 
 		if ( $fullUrl ) {
@@ -72,7 +82,12 @@ class GlobalNavigationController extends WikiaController {
 	}
 
 	protected function centralWikiInLangExists( $lang ) {
-		return !empty( $this->wg->LangToCentralMap[$lang] );
+		try {
+			GlobalTitle::newMainPage( $this->wikiCorporateModel->getCorporateWikiIdByLang( $lang ) );
+		} catch ( Exception $ex ) {
+			return false;
+		}
+		return true;
 	}
 
 	protected function getCreateNewWikiFullUrl() {
@@ -83,9 +98,8 @@ class GlobalNavigationController extends WikiaController {
 		)->getFullURL();
 	}
 
-	protected function getGlobalTitleForLang( $lang ) {
-		$model = new WikiaCorporateModel();
-		return GlobalTitle::newMainPage( $model->getCorporateWikiIdByLang( $lang ) );
+	protected function getCentralWikiTitleForLang( $lang ) {
+		return GlobalTitle::newMainPage( $this->wikiCorporateModel->getCorporateWikiIdByLang( $lang ) );
 	}
 
 	protected function getTitleForSearch() {

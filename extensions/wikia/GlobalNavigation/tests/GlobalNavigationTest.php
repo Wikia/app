@@ -18,9 +18,9 @@ class GlobalNavigationTest extends WikiaBaseTest {
 			->method( 'getFullURL' )
 			->will( $this->returnValue( $fullUrl ) );
 
-		$globalNavMock = $this->getMock( 'GlobalNavigationController', ['getGlobalTitleForLang'] );
+		$globalNavMock = $this->getMock( 'GlobalNavigationController', ['getCentralWikiTitleForLang'] );
 		$globalNavMock->expects( $this->any() )
-			->method( 'getGlobalTitleForLang' )->will( $this->returnValue( $globalTitleMock ) );
+			->method( 'getCentralWikiTitleForLang' )->will( $this->returnValue( $globalTitleMock ) );
 
 		$result = $globalNavMock->getCentralUrlForLang( $lang , true );
 		$this->assertEquals( $expectedUrl, $result, 'Wiki Central full url is different than expected' );
@@ -28,9 +28,10 @@ class GlobalNavigationTest extends WikiaBaseTest {
 
 	public function testGetCentralFullUrlDataProvider() {
 		return [
-			['en', 'http://www.wikia.com/Wikia', 'http://www.wikia.com/Wikia'],
-			['zh', 'http://www.wikia.com/Wikia', 'http://www.wikia.com/Wikia?uselang=zh'],
 			['de', 'http://de.wikia.com/Wikia', 'http://de.wikia.com/Wikia'],
+			['en', 'http://www.wikia.com/Wikia', 'http://www.wikia.com/Wikia'],
+			['it', 'http://www.wikia.com/Wikia', 'http://www.wikia.com/Wikia?uselang=it'],
+			['zh', 'http://www.wikia.com/Wikia', 'http://www.wikia.com/Wikia?uselang=zh'],
 		];
 	}
 
@@ -45,9 +46,9 @@ class GlobalNavigationTest extends WikiaBaseTest {
 			->method( 'getServer' )
 			->will( $this->returnValue( $expectedUrl ) );
 
-		$globalNavMock = $this->getMock( 'GlobalNavigationController', ['getGlobalTitleForLang'] );
+		$globalNavMock = $this->getMock( 'GlobalNavigationController', ['getCentralWikiTitleForLang'] );
 		$globalNavMock->expects( $this->any() )
-			->method( 'getGlobalTitleForLang' )->will( $this->returnValue( $globalTitleMock ) );
+			->method( 'getCentralWikiTitleForLang' )->will( $this->returnValue( $globalTitleMock ) );
 
 		$result = $globalNavMock->getCentralUrlForLang( $lang , false );
 		$this->assertEquals( $expectedUrl, $result, 'Wiki Central server url is different than expected' );
@@ -55,9 +56,10 @@ class GlobalNavigationTest extends WikiaBaseTest {
 
 	public function testGetCentralServerUrlDataProvider() {
 		return [
-			['en', 'http://www.wikia.com'],
-			['zh', 'http://www.wikia.com'],
 			['de', 'http://de.wikia.com'],
+			['en', 'http://www.wikia.com'],
+			['it', 'http://www.wikia.com'],
+			['zh', 'http://www.wikia.com'],
 		];
 	}
 
@@ -80,9 +82,10 @@ class GlobalNavigationTest extends WikiaBaseTest {
 
 	public function testGetGlobalSearchUrlDataProvider() {
 		return [
-			['en', 'http://www.wikia.com', '/wiki/Special:Search', 'http://www.wikia.com/wiki/Special:Search'],
-			['zh', 'http://www.wikia.com', null, 'http://www.wikia.com/wiki/Special:Search'],
 			['de', 'http://de.wikia.com', '/wiki/Spezial:Suche', 'http://de.wikia.com/wiki/Spezial:Suche'],
+			['en', 'http://www.wikia.com', '/wiki/Special:Search', 'http://www.wikia.com/wiki/Special:Search'],
+			['it', 'http://www.wikia.com', null, 'http://www.wikia.com/wiki/Special:Search'],
+			['zh', 'http://www.wikia.com', null, 'http://www.wikia.com/wiki/Special:Search'],
 		];
 	}
 
@@ -103,8 +106,9 @@ class GlobalNavigationTest extends WikiaBaseTest {
 
 	public function testGetCreateNewWikiUrlDataProvider() {
 		return [
-			['en', 'http://www.wikia.com/Special:CreateNewWiki'],
 			['de', 'http://www.wikia.com/Special:CreateNewWiki?uselang=de'],
+			['en', 'http://www.wikia.com/Special:CreateNewWiki'],
+			['it', 'http://www.wikia.com/Special:CreateNewWiki?uselang=it'],
 			['zh', 'http://www.wikia.com/Special:CreateNewWiki?uselang=zh'],
 		];
 	}
