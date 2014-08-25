@@ -6,23 +6,22 @@ use Wikia\Search\Test\BaseTest;
 
 abstract class SearchServiceBaseTest extends BaseTest {
 
-	protected $solariumMock;
-
 	/**
 	 * Return solarium mock
-	 * @param string $useResponse provide method name for mock response
+	 * @param Solarium_Query_Select $useRequest request object
+	 * @param string $useResponse solr response
 	 * @return \PHPUnit_Framework_MockObject_MockObject solarium mock
 	 */
-	public function useSolariumMock( $useRequest = 'getMockRequest', $useResponse = 'getSolariumMainResponse' ) {
-		if ( !isset( $this->solariumMock ) ) {
-			$this->solariumMock = $this->getSolariumMock();
-			$this->solariumMock->expects( $this->any() )
-				->method( 'select' )
-				->with( $this->{$useRequest}() )
-				->will( $this->returnValue( $this->getResultMock( $useResponse ) ) );
-		}
+	public function useSolariumMock( $useRequest = null, $useResponse = null ) {
+		$useRequest = ( $useRequest == null ) ? $this->getMockRequest() : $useRequest;
+		$useResponse = ( $useResponse == null ) ? $this->getMockResponse() : $useResponse;
+		$solariumMock = $this->getSolariumMock();
+		$solariumMock->expects( $this->any() )
+			->method( 'select' )
+			->with( $useRequest )
+			->will( $this->returnValue( $this->getResultMock( $useResponse ) ) );
 
-		return $this->solariumMock;
+		return $solariumMock;
 	}
 
 	/**
@@ -54,16 +53,16 @@ abstract class SearchServiceBaseTest extends BaseTest {
 		$mock = new \Solarium_Result_Select(
 			$client,
 			$client->createSelect(),
-			$this->{$responseType}()
+			$this->getSolariumMainResponse( $responseType )
 		);
 
 		return $mock;
 	}
 
-	protected function getSolariumMainResponse() {
+	protected function getSolariumMainResponse( $responseType ) {
 		//empty solr response
 		$mock = new \Solarium_Client_Response(
-			$this->getMockResponse(),
+			$responseType,
 			[ 'HTTP/1.1 200 OK' ]
 		);
 		return $mock;
