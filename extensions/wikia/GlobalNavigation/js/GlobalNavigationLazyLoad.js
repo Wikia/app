@@ -33,7 +33,7 @@ $(function () {
 			$sections = $($.parseHTML(sections));
 			$sections.filter(subMenuSelector).addClass('active');
 
-			$('.hubs-menu > .hub-links').append($sections);
+			$('#hubs > .hub-links').append($sections);
 
 			menuLoading = false;
 			menuLoaded = true;

@@ -1,7 +1,8 @@
 (function(){
+	'use strict';
 	var $hubLinks;
 
-	$hubLinks = $('.hub-links');
+	$hubLinks = $('#hubs > .hub-links');
 
 	/**
 	 * menuAim is a method from an external module to handle dropdown menus with very good user experience
@@ -37,7 +38,7 @@
 	}
 
 	function deactivateSubmenu (row) {
-		$('.hub-links > section').add(row).removeClass('active');
+		$('> section', $hubLinks).add(row).removeClass('active');
 	}
 
 })();
