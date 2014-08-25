@@ -1920,6 +1920,7 @@ $config['media_gallery_js'] = [
 	'skin' => ['oasis'],
 	'assets' => [
 		'//extensions/wikia/MediaGallery/scripts/templates.mustache.js',
+		'//extensions/wikia/MediaGallery/scripts/views/media.js',
 		'//extensions/wikia/MediaGallery/scripts/views/toggler.js',
 		'//extensions/wikia/MediaGallery/scripts/controllers/index.js',
 	]

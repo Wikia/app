@@ -49,7 +49,8 @@ class MediaGalleryController extends WikiaController {
 
 			$media[] = [
 				'thumbnail' => $markup,
-				'classes' => join( " ", $classes )
+				'classes' => join( " ", $classes ),
+				'caption' => $item['caption'],
 			];
 			++$dimensionIndex;
 		}

@@ -202,6 +202,7 @@ class ThumbnailHelper extends WikiaModel {
 		$controller->mediaKey = htmlspecialchars( $title->getDBKey() );
 		$controller->mediaName = htmlspecialchars( $title->getText() );
 		$controller->imgClass = self::getImgClass( $options );
+<<<<<<< HEAD
 
 		// check fluid
 		if ( empty( $options['fluid'] ) ) {
@@ -209,6 +210,15 @@ class ThumbnailHelper extends WikiaModel {
 			$controller->imgHeight = $thumb->height;
 		}
 
+=======
+
+		// check fluid
+		if ( empty( $options['fluid'] ) ) {
+			$controller->imgWidth = $thumb->width;
+			$controller->imgHeight = $thumb->height;
+		}
+
+>>>>>>> VID-1939
 		// Prefer the src given in options over what's passed in directly.
 		// @TODO there is no reason to pass two versions of image source.  See if both are actually used and pick one
 		$imgSrc = empty( $options['src'] ) ? $thumb->url : $options['src'];
@@ -234,6 +244,7 @@ class ThumbnailHelper extends WikiaModel {
 		$file = $thumb->file;
 		$title = $file->getTitle();
 		$linkHref = $title->getFullURL();
+<<<<<<< HEAD
 
 		// Get timestamp for older versions of files (used on file page history tab)
 		if ( $file instanceof OldLocalFile ) {
@@ -244,6 +255,18 @@ class ThumbnailHelper extends WikiaModel {
 		}
 		$controller->linkHref = $linkHref;
 
+=======
+
+		// Get timestamp for older versions of files (used on file page history tab)
+		if ( $file instanceof OldLocalFile ) {
+			$archiveName = $file->getArchiveName();
+			if ( !empty( $archiveName ) ) {
+				$linkHref .= '?t='.$file->getTimestamp();
+			}
+		}
+		$controller->linkHref = $linkHref;
+
+>>>>>>> VID-1939
 		// Get the id parameter for a tag
 		if ( !empty( $options['id'] ) ) {
 			$controller->linkId = $options['id'];
@@ -293,9 +316,16 @@ class ThumbnailHelper extends WikiaModel {
 	/**
 	 * Set classes for image's anchor tag
 	 * @param $controller
+<<<<<<< HEAD
 	 * @param array $options
 	 */
 	public static function setImageLinkClasses( &$controller, array &$options ) {
+=======
+	 * @param MediaTransformOutput $thumb
+	 * @param array $options
+	 */
+	public static function setImageLinkClasses( &$controller, MediaTransformOutput $thumb, array &$options ) {
+>>>>>>> VID-1939
 		$linkClasses = [];
 
 		if ( !empty( $options['custom-title-link'] ) ) {
@@ -312,6 +342,7 @@ class ThumbnailHelper extends WikiaModel {
 	 * Create array of any image attributes that are sent in by extensions
 	 * All values MUST BE SANITIZED before reaching this point
 	 * @param WikiaController $controller
+<<<<<<< HEAD
 	 * @param array $options
 	 */
 	public static function setExtraImgAttribs( WikiaController &$controller, array $options ) {
@@ -349,9 +380,33 @@ class ThumbnailHelper extends WikiaModel {
 				$controller->response->getData()
 			);
 			ImageLazyLoad::setLazyLoadingAttribs( $controller );
+=======
+	 * @param MediaTransformOutput $thumb
+	 * @param array $options
+	 */
+	public static function setExtraImgAttribs( WikiaController &$controller, MediaTransformOutput $thumb, array $options ) {
+		// Let extensions add any link attributes
+		if ( isset( $options['imgAttribs'] ) && is_array( $options['imgAttribs'] ) ) {
+			$controller->extraImgAttrs = self::getAttribs( $options['imgAttribs'] );
+>>>>>>> VID-1939
 		}
+	}
 
+<<<<<<< HEAD
 		return $lazyLoaded;
+=======
+	/**
+	 * Create array of any link attributes that are sent in by extensions
+	 * All values MUST BE SANITIZED before reaching this point
+	 * @param WikiaController $controller
+	 * @param MediaTransformOutput $thumb
+	 * @param array $options
+	 */
+	public static function setExtraLinkAttribs( WikiaController &$controller, MediaTransformOutput $thumb, array $options ) {
+		if ( isset( $options['linkAttribs'] ) && is_array( $options['linkAttribs'] ) ) {
+			$controller->extraLinkAttrs = self::getAttribs( $options['linkAttribs'] );
+		}
+>>>>>>> VID-1939
 	}
 
 	/**
@@ -376,6 +431,7 @@ class ThumbnailHelper extends WikiaModel {
 	protected static function getImgClass( array $options ) {
 		return empty( $options['img-class'] ) ? [] : explode( ' ', $options['img-class'] );
 	}
+<<<<<<< HEAD
 
 	/**
 	 * Pull out any classes found in the linkAttribs parameter.
@@ -391,6 +447,23 @@ class ThumbnailHelper extends WikiaModel {
 				$classes = explode( ' ', $classes );
 			}
 
+=======
+
+	/**
+	 * Pull out any classes found in the linkAttribs parameter.
+	 * @param array $linkClasses
+	 * @param array $options
+	 */
+	protected static function setLinkAttribsClass( array &$linkClasses, array &$options ) {
+		if ( !empty( $options['linkAttribs']['class'] ) ) {
+			$classes = $options['linkAttribs']['class'];
+
+			// If we got a string, treat it like space separated values and turn it into an array
+			if ( !is_array( $classes ) ) {
+				$classes = explode( ' ', $classes );
+			}
+
+>>>>>>> VID-1939
 			$linkClasses = array_merge( $linkClasses, $classes );
 			unset( $options['linkAttribs']['class'] );
 		}

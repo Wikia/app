@@ -1,4 +1,5 @@
 @import 'skins/oasis/css/lib/foundation.custom/foundation.custom';
+@import 'skins/oasis/css/mixins/background-opacity';
 
 $media-margin: .5em;
 
@@ -10,6 +11,7 @@ $media-margin: .5em;
 	// default is 8 or more images
 	.media {
 		@include grid-column(3);
+		position: relative;
 		transition: all 1s ease-in-out;
 
 		img {
@@ -84,6 +86,53 @@ $media-margin: .5em;
 			&.hidden {
 				display: none;
 			}
+		}
+	}
+
+	/**
+	 * Calculate caption default and hover positions:
+	 * Default state:
+	 *    - Absolutely positioned top of caption to 100%
+	 *    - Add a negative top margin to pull the caption up the sum of it's own height (padding plus one line-height)
+	 *    - Also, pull it up a bit more to offset the parent element's padding ($media-margin)
+	 * Hovered class:
+	 *    - Expand caption content so it's height can be calculated by JS.
+	 */
+
+	$caption-line-height: 1.5em;
+	$caption-padding: .75em;
+	$caption-height: ($caption-padding * 2) + $caption-line-height;
+	$caption-top-offset: -1 * ($caption-height + $media-margin);
+
+	.caption {
+		@include background-opacity(#000, 60);
+		bottom: $media-margin;
+		color: #fff;
+		font-size: 12px;
+		left: $media-margin;
+		line-height: $caption-line-height;
+		margin-top: $caption-top-offset;
+		overflow: hidden;
+		padding: $caption-padding;
+		position: absolute;
+		right: $media-margin;
+		top: 100%;
+		transition: all 400ms linear;
+
+		.inner {
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+		}
+
+		&.hovered {
+			.inner {
+				white-space: normal;
+			}
+		}
+
+		&.scroll {
+			overflow: auto;
 		}
 	}
 

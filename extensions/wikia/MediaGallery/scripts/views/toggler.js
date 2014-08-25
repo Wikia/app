@@ -62,7 +62,7 @@ define('mediaGallery.toggler', ['mediaGallery.templates.mustache'], function (te
 			this.$more.addClass('hidden');
 		}
 
-		this.track('show-new-gallery-more-images');
+		this.track('show-more-items', this.visible);
 	};
 
 	Toggler.prototype.showLess = function () {
@@ -81,16 +81,16 @@ define('mediaGallery.toggler', ['mediaGallery.templates.mustache'], function (te
 		this.$more.removeClass('hidden');
 		this.$less.addClass('hidden');
 
-		this.track('show-new-gallery-less-images');
+		this.track('show-less-items');
 	};
 
-	Toggler.prototype.track = function (label) {
+	Toggler.prototype.track = function (label, count) {
 		Wikia.Tracker.track({
-			category: 'article',
-			action: Wikia.Tracker.ACTIONS.click,
+			category: 'media-lightbox',
+			action: Wikia.Tracker.ACTIONS.CLICK,
 			label: label,
 			trackingMethod: 'both',
-			value: 0
+			value: count || 0
 		});
 	};
 
