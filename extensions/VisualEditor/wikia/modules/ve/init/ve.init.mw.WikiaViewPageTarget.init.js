@@ -33,9 +33,9 @@
 		if ( experimentName === 'VE Focus Mode' ) {
 			return mw.config.get( 'wgDevelEnvironment' ) ? 1459280459 : 1673360028;
 		} else if ( experimentName === 'VE Source Entry Point Anon' ) {
-			return 1673650053;
+			return mw.config.get( 'wgDevelEnvironment' ) ? 1673650053 : 1783530197;
 		} else if ( experimentName === 'VE Source Entry Point User' ) {
-			return 1673650053;
+			return mw.config.get( 'wgDevelEnvironment' ) ? 1673650053 : 1779071141;
 		}
 		return null;
 	}

@@ -8,14 +8,14 @@
 @import 'lib/foundation.custom/foundation.custom';
 
 // Mixins
-@import 'mixins/bodytext';
-@import 'mixins/border-opacity';
-@import 'mixins/box-shadow';
-@import 'mixins/clearfix';
-@import 'mixins/forms';
-@import 'mixins/gradient';
-@import 'mixins/menus';
-@import 'mixins/wordmark';
+@import 'skins/shared/mixins/bodytext';
+@import 'skins/shared/mixins/border-opacity';
+@import 'skins/shared/mixins/box-shadow';
+@import 'skins/shared/mixins/clearfix';
+@import 'skins/shared/mixins/forms';
+@import 'skins/shared/mixins/gradient';
+@import 'skins/shared/mixins/menus';
+@import 'skins/shared/mixins/wordmark';
 
 // Core
 @import 'core/buttons';
@@ -23,7 +23,7 @@
 @import 'core/autocomplete';
 @import 'core/typography';
 @import 'core/sprite';
-@import 'core/color';
+@import 'skins/shared/color';
 @import 'core/reset';
 @import 'core/modal';
 @import 'core/body';

@@ -24,6 +24,13 @@ class MonetizationModuleController extends WikiaController {
 			's_id' => $this->wg->CityId,
 			'max' => MonetizationModuleHelper::calculateNumberOfAds( $this->wg->Title->mLength ),
 		];
+
+		$mcachePurge = $this->wg->request->getVal( 'mcache', false );
+
+		if ( $mcachePurge ) {
+			$params['mcache'] = $mcachePurge;
+		}
+
 		$this->data = MonetizationModuleHelper::getMonetizationUnits( $params );
 
 		// set cache control to 1 hour
