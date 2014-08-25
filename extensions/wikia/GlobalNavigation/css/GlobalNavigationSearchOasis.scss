@@ -1,31 +1,29 @@
-@import "../../Venus/styles/variables";
-@import "skins/oasis/css/mixins/calc";
+@import '../../Venus/styles/variables';
+@import 'skins/oasis/css/mixins/calc';
 
-$modulesWidth: round(5 * ($large-grid-column + $large-grid-gutter) + (2 * $large-content-padding - 1px));
+$other-modules-width: 5 * $large-grid-column +  3 * $large-grid-gutter + 2 * $large-content-padding - 1px;
+
 .search-container {
-	@include width-calc('100% - #{$modulesWidth}');
+	@include width-calc('100% - #{$other-modules-width}');
 }
 
 @media #{$medium-only} {
-	$modulesWidth: round(5 * ($medium-grid-column + $medium-grid-gutter) + (2 * $medium-content-padding - 1px));
+	$other-modules-width: 5 * $medium-grid-column + 3 * $medium-grid-gutter + 2 * $medium-content-padding - 1px;
+
 	.search-container {
-		@include width-calc('100% - #{$modulesWidth}');
+		@include width-calc('100% - #{$other-modules-width}');
 	}
 }
 
 @media #{$small-only} {
-	$modulesWidth: round(4.6 * ($small-grid-column + $small-grid-gutter) + (2 * $small-content-padding - 1px));
+	$other-modules-width: round(4.54 * $small-grid-column + 3 * $small-grid-gutter + 2 * $small-content-padding - 1px);
+
 	.search-container {
-		@include width-calc('100% - #{$modulesWidth}');
+		@include width-calc('100% - #{$other-modules-width}');
 	}
 }
 
-
 .search-form-wrapper {
-	&, &:after, &:before, * {
-		box-sizing: border-box;
-	}
-
 	.chevron {
 		vertical-align: baseline;
 	}
