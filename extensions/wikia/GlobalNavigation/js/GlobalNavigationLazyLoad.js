@@ -15,7 +15,8 @@ $(function () {
 		 */
 		getMenuItemsDone = function (menuItems) {
 			var $sections, i, item, link, links, submenu,
-				sections = '';
+				sections = '',
+				$hubLinks = $('#hubs > .hub-links');
 
 			for(i = 0; i < menuItems.length; i++) {
 				submenu = menuItems[i].children;
@@ -31,9 +32,10 @@ $(function () {
 			}
 
 			$sections = $($.parseHTML(sections));
+			$('> .active', $hubLinks).removeClass('active');
 			$sections.filter(subMenuSelector).addClass('active');
 
-			$('#hubs > .hub-links').append($sections);
+			$hubLinks.append($sections);
 
 			menuLoading = false;
 			menuLoaded = true;

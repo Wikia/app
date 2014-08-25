@@ -1,8 +1,9 @@
 (function(){
 	'use strict';
-	var $hubLinks;
+	var $hubLinks, $verticals;
 
 	$hubLinks = $('#hubs > .hub-links');
+	$verticals = $('#hubs > .hubs');
 
 	/**
 	 * menuAim is a method from an external module to handle dropdown menus with very good user experience
@@ -30,6 +31,7 @@
 		}
 
 		if (!lazyLoad.isMenuWorking()) {
+			$('.active', $verticals).not($(row)).removeClass('active');
 			lazyLoad.getMenuItems(subMenuSelector);
 		}
 		else {
