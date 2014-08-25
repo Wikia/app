@@ -15,6 +15,11 @@ class SeriesEntitySearchService extends EntitySearchService {
 
 	private static $ARTICLE_TYPES_SUPPORTED_LANGS = ['en'];
 
+	public function __construct( $client = null, $helper = null ) {
+		$helper = ( $helper == null ) ? new OutputFormatter() : $helper;
+		parent::__construct( $client, $helper );
+	}
+
 	protected function prepareQuery( $query ) {
 		$select = $this->getSelect();
 
@@ -63,9 +68,9 @@ class SeriesEntitySearchService extends EntitySearchService {
 					'wikiId' => $item[ 'wid' ],
 					'articleId' => $item[ 'pageid' ],
 					'title' => $item[ 'title_' . $this->getLang() ],
-					'url' => OutputFormatter::replaceHostUrl( $item[ 'url' ] ),
+					'url' => $this->getHelper()->replaceHostUrl( $item[ 'url' ] ),
 					'quality' => $item[ 'article_quality_i' ],
-					'contentUrl' => OutputFormatter::replaceHostUrl( 'http://' . $item[ 'host' ] . '/' . self::API_URL . $item[ 'pageid' ] ),
+					'contentUrl' => $this->getHelper()->replaceHostUrl( 'http://' . $item[ 'host' ] . '/' . self::API_URL . $item[ 'pageid' ] ),
 				];
 			}
 		}

@@ -10,11 +10,9 @@ class MovieEntitySearchServiceTest extends SearchServiceBaseTest {
 		$this->getStaticMethodMock( '\WikiFactory', 'getCurrentStagingHost' )
 			->expects( $this->any() )
 			->method( 'getCurrentStagingHost' )
-			->will( $this->returnCallback( [ $this, 'mock_getCurrentStagingHost' ] ) );
-	}
-
-	public function mock_getCurrentStagingHost( $arg1, $arg2 ) {
-		return 'newhost';
+			->will( $this->returnCallback( function () {
+				return 'newhost';
+			} ) );
 	}
 
 	/**

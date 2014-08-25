@@ -26,6 +26,9 @@ class EntitySearchService {
 	protected $urls;
 	protected $wikiId;
 
+	/** @var mixed $helper Helper class */
+	protected $helper;
+
 	/**
 	 * @param mixed $filters
 	 */
@@ -115,13 +118,16 @@ class EntitySearchService {
 		return $this->ids;
 	}
 	
-	public function __construct( $client = null ) {
+	public function __construct( $client = null, $helper = null ) {
 		$config = $this->getConfig();
 		$core = $this->getCore();
 		if ( $core ) {
 			$config[ 'adapteroptions' ][ 'core' ] = $core;
 		}
 		$this->client = ( $client !== null ) ? $client : new \Solarium_Client( $config );
+		if ( $helper !== null ) {
+			$this->setHelper( $helper );
+		}
 	}
 
 	public function query( $phrase ) {
@@ -176,6 +182,13 @@ class EntitySearchService {
 		$this->hubs = $hubs;
 	}
 
+	public function getHelper() {
+		return $this->helper;
+	}
+
+	public function setHelper( $helper ) {
+		$this->helper = $helper;
+	}
 
 	protected function prepareQuery( $query ) {
 		$select = $this->getSelect();

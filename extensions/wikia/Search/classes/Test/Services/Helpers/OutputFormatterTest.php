@@ -12,7 +12,9 @@ class OutputFormatterTest extends BaseTest {
 			->expects( $this->any() )
 			->method( 'getCurrentStagingHost' )
 			->will( $this->returnCallback( [ $this, 'mock_getCurrentStagingHost' ] ) );
-		$res = OutputFormatter::replaceHostUrl('http://bigbangtheory.wikia.com/api/v1/Articles/AsSimpleJson?id=1880');
+
+		$formatter = new OutputFormatter();
+		$res = $formatter->replaceHostUrl('http://bigbangtheory.wikia.com/api/v1/Articles/AsSimpleJson?id=1880');
 		$this->assertEquals('http://newhost/api/v1/Articles/AsSimpleJson?id=1880', $res);
 	}
 
