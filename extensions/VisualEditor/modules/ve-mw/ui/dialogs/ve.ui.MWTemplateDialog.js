@@ -367,14 +367,21 @@ ve.ui.MWTemplateDialog.prototype.getSetupProcess = function ( data ) {
 						this.initializeTemplateParameters();
 					}, this ) );
 			}
-
 			this.applyButton.setDisabled( true );
 			this.pushPending();
 			promise.always( ve.bind( this.onTransclusionReady, this ) );
 		}, this );
 };
 
-// TODO: Document
+/**
+ * Initialize parameters for new template insertion
+ * TODO: Wikia: Re-implement to minimize amount of changes to core class.
+ * Methods initialzeNewTemplateParameters and initializeTemplateParameters should be created
+ * and pushed upstream. Former should call addPromptedParameters while latter should be empty.
+ * In case of Wikia both should be overwriten in a subclass and both should call addUnusedParameters.
+ *
+ * @method
+ */
 ve.ui.MWTemplateDialog.prototype.initialzeNewTemplateParameters = function () {
 	var i, parts = this.transclusionModel.getParts();
 	for ( i = 0; i < parts.length; i++ ) {
@@ -385,15 +392,12 @@ ve.ui.MWTemplateDialog.prototype.initialzeNewTemplateParameters = function () {
 	}
 };
 
-// TODO: Document
-ve.ui.MWTemplateDialog.prototype.initializeTemplateParameters = function () {
-	var i, parts = this.transclusionModel.getParts();
-	for ( i = 0; i < parts.length; i++ ) {
-		if ( parts[i] instanceof ve.dm.MWTemplateModel ) {
-			parts[i].addUnusedParameters();
-		}
-	}
-};
+/**
+ * Initialize parameters for existing template modification
+ *
+ * @method
+ */
+ve.ui.MWTemplateDialog.prototype.initializeTemplateParameters = ve.ui.MWTemplateDialog.prototype.initialzeNewTemplateParameters;
 
 /**
  * @inheritdoc

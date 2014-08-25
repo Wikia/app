@@ -307,7 +307,12 @@ ve.dm.MWTemplateModel.prototype.addPromptedParameters = function () {
 	}
 };
 
-// TODO: Document
+/**
+ * Add all unused parameters, if any.
+ * TODO: Wikia: Re-implement without modifying core class
+ *
+ * @method
+ */
 ve.dm.MWTemplateModel.prototype.addUnusedParameters = function () {
 	var i, len,
 		spec = this.getSpec(),
