@@ -5,7 +5,7 @@ namespace Wikia\Search\Services\Helpers;
 use WikiFactory;
 
 class OutputFormatter {
-	const WIKIA_URL_REGEXP = '|^(http(s?)://)(([^\.]+)\.wikia\.com)|';
+	const WIKIA_URL_REGEXP = '|^(http(s?)://)((\w{2}\.?)([^\.]+)\.wikia\.com)|';
 
 	public function replaceHostUrl( $url ) {
 		global $wgStagingEnvironment, $wgDevelEnvironment;
