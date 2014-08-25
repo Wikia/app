@@ -32,11 +32,7 @@ class TemplatePageHelper {
 	 */
 	public function setTemplateByName( $title ) {
 		global $wgContLang;
-		$this->title = Title::newFromText(
-			$title,
-			// Check whether namespace has to be passed in or if it was included in $title
-			strpos( $title, $wgContLang->getNsText( NS_TEMPLATE ) . ':' ) !== 0 ? NS_TEMPLATE : null
-		);
+		$this->title = Title::newFromText( $title );
 		$this->templateName = $this->title->getText();
 	}
 
