@@ -32,7 +32,7 @@
 
 	.hubs {
 		float:left;
-		width: 268px;
+		width: 256px;
 	}
 	nav {
 		background-color: $nav-background-color;
@@ -47,7 +47,7 @@
 			&:after {
 				background-color: $hubsmenu-background-color;
 				border: 31px solid transparent;
-				border-width: 31px 12px;
+				border-width: 31px 0 31px 12px;
 				height: 0;
 				width: 0;
 			}
@@ -81,7 +81,7 @@
 			content: " ";
 			float: right;
 			height: 62px;
-			width: 24px;
+			width: 12px;
 		}
 
 		.icon {
@@ -123,7 +123,7 @@
 		display: none;
 		float: left;
 		font-size: 15px;
-		padding-left: 10px;
+		padding-left: 22px;
 		width: 464px;
 
 		h2 {
