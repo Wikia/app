@@ -342,7 +342,7 @@ abstract class Scribunto_LuaEngine extends ScribuntoEngineBase {
 			if ( !$title || $title->getNamespace() != NS_MODULE ) {
 				return array();
 			}
-			$module = $this->fetchModuleFromParser( $title );
+			$module = $this->fetchModuleFromParser( $title, SHARED_MODULES_PREFIX );
 		}
 		/**
 		 * Wikia change end
