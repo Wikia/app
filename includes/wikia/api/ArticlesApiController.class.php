@@ -67,8 +67,6 @@ class ArticlesApiController extends WikiaApiController {
 		parent::__construct();
 		$this->setOutputFieldTypes(
 			[
-				"items" => self::OUTPUT_FIELD_CAST_NULLS | self::OUTPUT_FIELD_TYPE_OBJECT,
-				"timestamp" => self::OUTPUT_FIELD_CAST_NULLS | self::OUTPUT_FIELD_TYPE_INT,
 				"width" => self::OUTPUT_FIELD_CAST_NULLS | self::OUTPUT_FIELD_TYPE_INT,
 				"height" => self::OUTPUT_FIELD_CAST_NULLS | self::OUTPUT_FIELD_TYPE_INT
 			]
