@@ -72,9 +72,41 @@ class GlobalNavigationController extends WikiaController {
 		return $nodeIndex;
 	}
 
+	/**
+	 * Get active node in Hamburger menu
+	 * Temporary method until we full migrate to new verticals
+	 *
+	 * @return string
+	 */
 	private function getActiveNode() {
-		// TODO get proper category
-		$activeNode = 'tv';
+		global $wgCityId;
+		$activeNode = '';
+
+		$wikiFactoryHub = WikiFactoryHub::getInstance();
+		$verticalId = $wikiFactoryHub->getVerticalId($wgCityId);
+
+		if ( $verticalId != WikiFactoryHub::HUB_ID_OTHER ) {
+			$allVerticals = $wikiFactoryHub->getAllVerticals();
+			if ( isset( $allVerticals[$verticalId]['short'] ) ) {
+				$activeNode = $allVerticals[$verticalId]['short'];
+			}
+		} else {
+			$categoryId = WikiFactory::getCategory( $wgCityId )->cat_id;
+
+			switch( $categoryId ) {
+				case WikiFactoryHub::CATEGORY_ID_GAMING:
+					$activeNode = 'games';
+					break;
+				case WikiFactoryHub::CATEGORY_ID_MUSIC:
+					$activeNode = 'music';
+					break;
+				case WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT:
+					$activeNode = 'tv';
+					break;
+				default:
+					$activeNode = 'lifestyle';
+			}
+		}
 
 		return $activeNode;
 	}
