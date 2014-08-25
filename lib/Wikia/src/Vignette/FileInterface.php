@@ -2,7 +2,7 @@
 
 namespace Wikia\Vignette;
 
-Interface FileInterface {
+interface FileInterface {
 	public function getRel();
 	public function getTimestamp();
 }
