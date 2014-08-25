@@ -24,10 +24,6 @@
 		&:hover {
 			background: none;
 
-//			.bubbles.reddot {
-//				background-color: $menu-hover-bg-color;
-//			}
-
 			.chevron {
 				border-top-color: $nav-active-color;
 			}
@@ -58,7 +54,7 @@
 			}
 		}
 
-		.avatarContainer {
+		.avatar-container {
 			border-radius: 50%;
 			float: left;
 			height: 36px;
@@ -122,7 +118,7 @@
 				@include grid-column-width('small', 1, $small-grid-gutter + $small-content-padding - 2px);
 			}
 
-			.avatarContainer {
+			.avatar-container {
 				margin-left: $small-grid-column-padding + $small-grid-gutter;
 			}
 		}
@@ -145,7 +141,7 @@
 				@include grid-column-width('medium', 1, $medium-grid-gutter + $medium-content-padding - 2px);
 			}
 
-			.avatarContainer {
+			.avatar-container {
 				$width: $medium-grid-gutter + $medium-grid-column + $medium-content-padding - 1px;
 				margin-left: $width - $medium-content-padding - $medium-grid-column-padding - 42px;
 			}
