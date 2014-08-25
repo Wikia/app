@@ -110,7 +110,7 @@ ve.ui.Dialog.prototype.initialize = function () {
 	if ( this.allowScroll ) {
 		this.onWindowMouseWheelHandler = function () {
 			return true;
-		}
+		};
 	}
 };
 
