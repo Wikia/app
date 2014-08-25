@@ -458,6 +458,7 @@ class BodyController extends WikiaController {
 		if ( !empty( $this->wg->EnableMonetizationModuleExt ) ) {
 			$this->monetizationModules = $this->sendRequest( 'MonetizationModule', 'index' )->getData()['data'];
 			$this->headerModuleParams['monetizationModules'] = $this->monetizationModules;
+			$this->bodytext = MonetizationModuleHelper::insertIncontentUnit( $this->bodytext, $this->monetizationModules );
 		}
 
 		$namespace = $wgTitle->getNamespace();

@@ -12,7 +12,7 @@ class MonetizationModuleHooks {
      *
      * @return bool
      */
-    static public function onWikiaSkinTopScripts(&$vars, &$scripts) {
+	public static function onWikiaSkinTopScripts( &$vars, &$scripts ) {
         wfProfileIn( __METHOD__ );
 
         // This hook is registered twice so we're going to check if the
@@ -34,4 +34,5 @@ class MonetizationModuleHooks {
         wfProfileOut( __METHOD__ );
         return true;
     }
+
 }
