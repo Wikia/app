@@ -293,10 +293,9 @@ class ThumbnailHelper extends WikiaModel {
 	/**
 	 * Set classes for image's anchor tag
 	 * @param $controller
-	 * @param MediaTransformOutput $thumb
 	 * @param array $options
 	 */
-	public static function setImageLinkClasses( &$controller, MediaTransformOutput $thumb, array &$options ) {
+	public static function setImageLinkClasses( &$controller, array &$options ) {
 		$linkClasses = [];
 
 		if ( !empty( $options['custom-title-link'] ) ) {
@@ -313,10 +312,9 @@ class ThumbnailHelper extends WikiaModel {
 	 * Create array of any image attributes that are sent in by extensions
 	 * All values MUST BE SANITIZED before reaching this point
 	 * @param WikiaController $controller
-	 * @param MediaTransformOutput $thumb
 	 * @param array $options
 	 */
-	public static function setExtraImgAttribs( WikiaController &$controller, MediaTransformOutput $thumb, array $options ) {
+	public static function setExtraImgAttribs( WikiaController &$controller, array $options ) {
 		// Let extensions add any link attributes
 		if ( isset( $options['imgAttribs'] ) && is_array( $options['imgAttribs'] ) ) {
 			$controller->extraImgAttrs = self::getAttribs( $options['imgAttribs'] );
@@ -327,13 +325,33 @@ class ThumbnailHelper extends WikiaModel {
 	 * Create array of any link attributes that are sent in by extensions
 	 * All values MUST BE SANITIZED before reaching this point
 	 * @param WikiaController $controller
-	 * @param MediaTransformOutput $thumb
 	 * @param array $options
 	 */
-	public static function setExtraLinkAttribs( WikiaController &$controller, MediaTransformOutput $thumb, array $options ) {
+	public static function setExtraLinkAttribs( WikiaController &$controller, array $options ) {
 		if ( isset( $options['linkAttribs'] ) && is_array( $options['linkAttribs'] ) ) {
 			$controller->extraLinkAttrs = self::getAttribs( $options['linkAttribs'] );
 		}
+	}
+
+	/**
+	 * Checks if an image should be lazy loaded, and if so sets the necessary attributes
+	 * @param WikiaController $controller
+	 * @param array $options
+	 * @return bool
+	 */
+	public static function setLazyLoad( WikiaController &$controller, array $options = [] ) {
+		$lazyLoaded = false;
+		if ( self::shouldLazyLoad( $controller, $options ) ) {
+			$lazyLoaded = true;
+			$controller->noscript = $controller->app->renderView(
+				'ThumbnailController',
+				'imgTag',
+				$controller->response->getData()
+			);
+			ImageLazyLoad::setLazyLoadingAttribs( $controller );
+		}
+
+		return $lazyLoaded;
 	}
 
 	/**

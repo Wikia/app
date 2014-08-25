@@ -35,17 +35,10 @@ class MediaGalleryController extends WikiaController {
 			);
 			$thumb->setUrl( $thumbUrl );
 
-			$params = [
-				'thumb' => $thumb,
-				'options' => [
-					'file-link' => $file->getUrl(),
-					'fluid' => true,
-				]
-			];
 			$markup = $this->app->renderView(
 				'ThumbnailController',
-				'image',
-				$params
+				'gallery',
+				[ 'thumb' => $thumb ]
 			);
 
 			// Hide overflow items
