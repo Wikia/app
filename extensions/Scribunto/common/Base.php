@@ -138,7 +138,7 @@ abstract class ScribuntoEngineBase {
 	}
 	/**
 	 * Wikia change begin
-	 * Load shared a module from dev.wikia.com.
+	 * Load a shared module from dev.wikia.com.
 	 * @author Adam Karmiński <adamk@wikia-inc.com>
 	 * @param  GlobalTitle $title GlobalTitle instance of a shared module.
 	 * @return mixed              Returns a module if found and null otherwise.
