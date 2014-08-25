@@ -14,9 +14,11 @@ $(function () {
 		 * @param  {object} menuItems JSON object with all submenu for Global Nav data
 		 */
 		getMenuItemsDone = function (menuItems) {
-			var $sections, i, item, link, links, submenu,
-				sections = '',
-				$hubLinks = $('#hubs > .hub-links');
+			var sections = '', i, item, link, links, submenu,
+				$sections, $subMenu,
+				$hubs = $('#hubs'),
+				$verticals = $('> .hubs', $hubs),
+				$hubLinks = $('> .hub-links', $hubs);
 
 			for(i = 0; i < menuItems.length; i++) {
 				submenu = menuItems[i].children;
@@ -32,8 +34,16 @@ $(function () {
 			}
 
 			$sections = $($.parseHTML(sections));
+			$subMenu = $sections.filter(subMenuSelector);
 			$('> .active', $hubLinks).removeClass('active');
-			$sections.filter(subMenuSelector).addClass('active');
+
+			if($subMenu.length) {
+				$subMenu.addClass('active');
+			} else {
+				subMenuSelector = '.' + $('> .active', $verticals).data('vertical') + '-links';
+				$sections.filter(subMenuSelector).addClass('active');
+			}
+
 
 			$hubLinks.append($sections);
 
