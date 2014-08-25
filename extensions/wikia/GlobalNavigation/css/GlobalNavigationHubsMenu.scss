@@ -26,11 +26,10 @@
 .hubs-menu {
 	background-color: $hubsmenu-background-color;
 	border: 1px solid $nav-border-color;
-	border-top: 0;
 	color: $nav-active-color;
 	display: none;
 	position: absolute;
-	top: $global-navigation-height + 1px;
+	top: $global-navigation-height;
 	width: 768px;
 
 	a {
