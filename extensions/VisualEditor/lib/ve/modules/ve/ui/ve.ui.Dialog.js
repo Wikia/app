@@ -29,6 +29,7 @@ ve.ui.Dialog = function VeUiDialog( config ) {
 	if ( config.height ) {
 		this.frame.$element.parent().css( 'height', config.height );
 	}
+	// TODO: Wikia (ve-sprint-25): Consider handling some of these configuration options with a mixin
 	if ( config.draggable ) {
 		this.draggable = true;
 		this.$element.addClass( 'oo-ui-dialog-draggable' );
