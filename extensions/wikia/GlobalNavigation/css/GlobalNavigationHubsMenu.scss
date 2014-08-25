@@ -39,10 +39,21 @@
 		font-size: 0;
 		height: 62px;
 		line-height: 62px;
+		position: relative;
 
 		&.active {
 			color: $nav-background-color;
 			font-weight: bold;
+
+			&:before {
+				border-radius: 50%;
+				content: " ";
+				left: 16px;
+				width: 50px;
+				height: 50px;
+				position: absolute;
+				top: 6px;
+			}
 
 			&:after {
 				background-color: $hubsmenu-background-color;
@@ -53,16 +64,6 @@
 			}
 
 			.icon {
-				&:before {
-					background-color: rgba(0, 0, 0, 0.3);
-					border-radius: 50%;
-					content: " ";
-					left: 16px;
-					width: 50px;
-					height: 50px;
-					position: absolute;
-					top: 6px;
-				}
 
 				&:after {
 					background-color: transparent;
@@ -143,6 +144,10 @@
 		background-color: $color-vertical-books;
 
 		&.active {
+			&:before {
+				background-color: $color-vertical-books-secondary;
+			}
+
 			&:after {
 				border-left-color: $color-vertical-books;
 			}
@@ -155,6 +160,10 @@
 		background-color: $color-vertical-comics;
 
 		&.active {
+			&:before {
+				background-color: $color-vertical-comics-secondary;
+			}
+
 			&:after {
 				border-left-color: $color-vertical-comics;
 			}
@@ -167,6 +176,10 @@
 		background-color: $color-vertical-games;
 
 		&.active {
+			&:before {
+				background-color: $color-vertical-games-secondary;
+			}
+
 			&:after {
 				border-left-color: $color-vertical-games;
 			}
@@ -179,6 +192,10 @@
 		background-color: $color-vertical-lifestyle;
 
 		&.active {
+			&:before {
+				background-color: $color-vertical-lifestyle-secondary;
+			}
+
 			&:after {
 				border-left-color: $color-vertical-lifestyle;
 			}
@@ -191,6 +208,10 @@
 		background-color: $color-vertical-movies;
 
 		&.active {
+			&:before {
+				background-color: $color-vertical-movies-secondary;
+			}
+
 			&:after {
 				border-left-color: $color-vertical-movies;
 			}
@@ -203,6 +224,10 @@
 		background-color: $color-vertical-music;
 
 		&.active {
+			&:before {
+				background-color: $color-vertical-music-secondary;
+			}
+
 			&:after {
 				border-left-color: $color-vertical-music;
 			}
@@ -215,6 +240,10 @@
 		background-color: $color-vertical-tv;
 
 		&.active {
+			&:before {
+				background-color: $color-vertical-tv-secondary;
+			}
+
 			&:after {
 				border-left-color: $color-vertical-tv;
 			}
