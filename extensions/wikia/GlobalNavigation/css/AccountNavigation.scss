@@ -1,100 +1,155 @@
-@import "skins/oasis/css/core/color";
-@import "extensions/wikia/Venus/styles/variables";
-@import "extensions/wikia/Venus/styles/layout";
-@import "skins/oasis/css/mixins/box-shadow";
-@import "skins/oasis/css/mixins/gradient";
-@import "skins/oasis/css/mixins/menus";
+@import 'extensions/wikia/Venus/styles/variables';
+@import 'extensions/wikia/Venus/styles/mixins';
+@import 'GlobalNavigationColors';
+
+.account-navigation-container {
+	@include grid-column-width('large', 1, $large-grid-gutter + $large-content-padding - 1px);
+}
 
 .AccountNavigation {
-	line-height: 20px;
-	list-style: none;
-	position: absolute;
-	top: 1px;
-	right: 20px;
-	li {
+	margin: 0;
+	padding: 0;
+	width: 100%;
+
+	> li {
 		border: 0;
-		height: 29px;
+		list-style: none;
 		margin-top: 0;
-		padding: 4px 0 0;
-		position: relative;
-		&:hover {
-			@include linear-gradient(false, top, rgba(#000, 0), 0, #000, 100%);
-		}
+		padding: 0;
+
 		&.nohover:hover {
 			background: transparent;
 		}
-		&:last-child a {
-			border: 0;
-		}
-		>a {
-			border-right: 1px solid mix($color-header-text, $color-header, 20%);
-			display: inline-block;
-			height: 22px;
-			line-height: 24px;
-			padding: 0 15px;
-			&:hover {
-				text-decoration: none;
+
+		&:hover {
+			background: none;
+
+			.chevron {
+				border-top-color: $nav-active-color;
 			}
 		}
-		& .chevron {
-			position: relative;
-			left: 6px;
+
+		> a {
+			@include grid-column-width('large', 1, $large-grid-gutter + $large-content-padding - 2px);
 		}
-	}
-	#fbconnect {
-		a {
-			border: none;
-			line-height: 1em;
-			height: 18px;
-			padding: 0;
+
+		.chevron {
+			border-style: solid;
+			border-top-color: $nav-alternative-color;
+			border-width: 5px;
+			color: transparent;
+			margin-top: 18px;
 		}
-	}
-	.avatar {
-		float: left;
-		margin-right: 5px;
-		vertical-align: middle;
+
+		.avatar {
+			border: 0;
+			border-radius: 50%;
+
+			rect {
+				fill: $nav-alternative-color;
+			}
+
+			&.logged-user rect {
+				fill: $nav-active-color;
+			}
+		}
+
+		.avatar-container {
+			border-radius: 50%;
+			float: left;
+			height: 36px;
+			margin: 0 6px 0 38px;
+			width: 36px;
+		}
+
+		.login-text {
+			display: none;
+		}
 	}
 
-	.subnav {
-		@include menu-heavy;
-		@include box-shadow(0, 5px, 10px, rgba(0, 0, 0, 0.5));
-		display: block;
-		padding: 0px;
-		right: 0;
-		top: -9999px;
+	.user-menu {
+		@include grid-column-width('large', 2, $large-content-padding);
+		border: 1px solid $nav-alternative-color;
+		display: none;
+		font-size: 15px;
+		padding: 0;
+		position: relative;
+		right: $large-grid-column + 1px;
+
 		&.show {
-			top: 33px;
+			display: table;
 		}
-		> li {
-			float: none;
-			height: auto;
-			&:hover {
-				background-image: none;
-			}
-			> a {
-				padding: 10px;
-				color: $color-text;
+
+		li {
+			display: table-row;
+			height: 51px;
+			list-style: none;
+
+			a {
+				background-color: $nav-background-color;
+				border-top: 1px solid $nav-alternative-color;
+				display: table-cell;
+				padding: 15px 20px;
+				text-decoration: none;
+				vertical-align: middle;
+				word-break: break-all;
+
 				&:hover {
-					@include box-shadow(0,0,5px, mix($color-buttons, $color-page, 25%), inset);
-					$color-account-nav: mix($color-buttons, $color-page, 20%);
-					@if lightness($color-page) < 50 {
-						$color-account-nav: lighten($color-account-nav, 8%);
-					}
-					background-color: $color-account-nav;
+					background-color: $dropdown-font-color;
+					color: $nav-background-color;
 				}
 			}
-		}
-		a {
-			border-right: 0;
-		}
-	}
-	>li>a {
-		color: $color-header-text;
-		&:visited, &:active {
-			color: $color-header-text;
+
+			&:first-child a {
+				border-top: 0;
+			}
 		}
 	}
 }
-// disable overrides (main offender: user talk page gets different color if it's not created yet,
-// but for new Account Navigation we don't want that)
-#AccountNavigation li a.new { color: $color-text !important; }
+
+@media #{$small-only} {
+	.account-navigation-container {
+		@include grid-column-width('small', 1, $small-grid-gutter + $small-content-padding - 1px);
+	}
+
+	.AccountNavigation {
+		> li {
+			> a {
+				@include grid-column-width('small', 1, $small-grid-gutter + $small-content-padding - 2px);
+			}
+
+			.avatar-container {
+				margin-left: $small-grid-column-padding + $small-grid-gutter;
+			}
+		}
+
+		.user-menu {
+			@include grid-column-width('small', 3, $small-content-padding);
+			right: 2 * $small-grid-column + $small-grid-gutter + 1px;
+		}
+	}
+}
+
+@media #{$medium-only} {
+	.account-navigation-container {
+		@include grid-column-width('medium', 1, $medium-grid-gutter + $medium-content-padding - 1px);
+	}
+
+	.AccountNavigation {
+		> li {
+			> a {
+				@include grid-column-width('medium', 1, $medium-grid-gutter + $medium-content-padding - 2px);
+			}
+
+			.avatar-container {
+				$width: $medium-grid-gutter + $medium-grid-column + $medium-content-padding - 1px;
+				margin-left: $width - $medium-content-padding - $medium-grid-column-padding - 42px;
+			}
+		}
+
+		.user-menu {
+			@include grid-column-width('medium', 2, $medium-content-padding);
+			right: $medium-grid-column + 1px;
+		}
+	}
+}
