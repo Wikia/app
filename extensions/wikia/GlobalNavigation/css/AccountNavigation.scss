@@ -1,118 +1,53 @@
+//TODO: removed unnecessary imports
 @import 'skins/oasis/css/core/color';
-@import 'skins/oasis/css/mixins/box-shadow';
-@import 'skins/oasis/css/mixins/gradient';
-@import 'skins/oasis/css/mixins/menus';
-
-.AccountNavigation {
-	line-height: 20px;
-	list-style: none;
-	position: absolute;
-	right: 20px;
-	top: 1px;
-	
-	li {
-		border: 0;
-		height: 29px;
-		margin-top: 0;
-		padding: 4px 0 0;
-		position: relative;
-		
-		&:hover {
-			@include linear-gradient(false, top, rgba(#000, 0), 0, #000, 100%);
-		}
-		
-		&.nohover:hover {
-			background: transparent;
-		}
-		
-		&:last-child a {
-			border: 0;
-		}
-		
-		>a {
-			border-right: 1px solid mix($color-header-text, $color-header, 20%);
-			display: inline-block;
-			height: 22px;
-			line-height: 24px;
-			padding: 0 15px;
-
-			&:hover {
-				text-decoration: none;
-			}
-		}
-		
-		& .chevron {
-			left: 6px;
-			position: relative;
-		}
-	}
-	
-	#fbconnect {
-		a {
-			border: 0;
-			height: 18px;
-			line-height: 1em;
-			padding: 0;
-		}
-	}
-	
-	.avatar {
-		float: left;
-		margin-right: 5px;
-		vertical-align: middle;
-	}
-}
-
-@import 'skins/oasis/css/core/color';
-@import 'extensions/wikia/Venus/styles/variables';
-@import 'extensions/wikia/Venus/styles/layout';
 @import 'skins/oasis/css/mixins/box-shadow';
 @import 'skins/oasis/css/mixins/box-sizing';
 @import 'skins/oasis/css/mixins/gradient';
 @import 'skins/oasis/css/mixins/menus';
 @import 'skins/oasis/css/mixins/placeholder';
+@import 'extensions/wikia/Venus/styles/variables';
+@import 'extensions/wikia/Venus/styles/mixins';
+@import 'GlobalNavigationColors';
 
-$new-nav-height: 66px;
-$new-breakpoint-small: 1024px;
-$new-breakpoint-big: 1280px;
-$search-select-width: 125px;
-
-$nav-background-color: #fff;
-$nav-font-color: #092140;
-$nav-font-alternative-color: #666;
-$dropdown-font-color: #0a5fa3;
-$menu-hover-bg-color: #edf1f4;
-$new-border-color: #c7d1d8;
-$facebook-background-color: #3c5b9b;
+.account-navigation-container {
+	@include grid-column-width('large', 1, $large-grid-gutter + $large-content-padding - 1px);
+}
 
 .AccountNavigation {
-	border-left: 1px solid $new-border-color;
-	right: 0;
-	top: 0;
+//	display: table;
+	margin: 0;
+	padding: 0;
+	width: 100%;
 
 	> li {
 		@include box-sizing;
-		height: $new-nav-height;
+		border: 0;
+//		display: table-row;
+		list-style: none;
+		margin-top: 0;
 		padding: 0;
+		position: absolute;
+
+		&.nohover:hover {
+			background: transparent;
+		}
 
 		&:hover {
 			background: none;
-			background-color: $menu-hover-bg-color;
 
-			.bubbles.reddot {
-				background-color: $menu-hover-bg-color;
-			}
+//			.bubbles.reddot {
+//				background-color: $menu-hover-bg-color;
+//			}
 
 			.chevron {
-				border-top-color: $nav-font-color;
+				border-top-color: $nav-active-color;
 			}
 		}
 
 		> a {
-			border: 0;
-			display: block;
-			padding: 15px 23px 15px 39px;
+			@include grid-column-width('large', 1, $large-grid-gutter + $large-content-padding - 2px);
 
+			// this part is for the message count (wall) notifications
 			.bubbles.reddot {
 				background-color: #fff;
 				border-radius: 9px;
@@ -138,25 +73,27 @@ $facebook-background-color: #3c5b9b;
 		}
 
 		.chevron {
-			border-top-color: $new-border-color;
+			border-style: solid;
+			border-top-color: $nav-alternative-color;
 			border-width: 5px;
-			margin-top: 14px;
-			position: static;
+			color: transparent;
+			margin-top: 18px;
 		}
-
 
 		.avatar {
 			border: 0;
 			border-radius: 50%;
-			margin-right: 6px;
+
+			rect {
+				fill: $nav-alternative-color;
+			}
 		}
 
 		.avatarContainer {
 			border-radius: 50%;
 			float: left;
 			height: 36px;
-			margin-right: 5px;
-			overflow: hidden;
+			margin: 0 6px 0 38px;
 			width: 36px;
 		}
 
@@ -164,8 +101,91 @@ $facebook-background-color: #3c5b9b;
 			display: none;
 		}
 	}
+
+	.user-menu {
+		@include grid-column-width('large', 2, $large-content-padding);
+		border: 1px solid $nav-alternative-color;
+		padding: 0;
+		display: none;
+		display: table;
+		font-size: 15px;
+		position: relative;
+		right: $large-grid-column + 1px;
+
+		&.show {
+			display: table;
+		}
+
+		li {
+			display: table-row;
+			list-style: none;
+			height: 51px;
+
+			a {
+				background-color: $nav-background-color;
+				border-top: 1px solid $nav-alternative-color;
+				display: table-cell;
+				padding: 15px 20px;
+				text-decoration: none;
+				vertical-align: middle;
+				word-break: break-all;
+
+				&:hover {
+					background-color: $dropdown-font-color;
+					color: $nav-background-color;
+				}
+			}
+
+			&:first-child a {
+				border-top: 0;
+			}
+		}
+	}
 }
 
-// disable overrides (main offender: user talk page gets different color if it's not created yet,
-// but for new Account Navigation we don't want that)
-#AccountNavigation li a.new { color: $color-text !important; }
+@media #{$small-only} {
+	.account-navigation-container {
+		@include grid-column-width('small', 1, $small-grid-gutter + $small-content-padding - 1px);
+	}
+
+	.AccountNavigation {
+		> li {
+			> a {
+				@include grid-column-width('small', 1, $small-grid-gutter + $small-content-padding - 2px);
+			}
+
+			.avatarContainer {
+				margin-left: $small-grid-column-padding + $small-grid-gutter;
+			}
+		}
+
+		.user-menu {
+			@include grid-column-width('small', 3, $small-content-padding);
+			right: 2 * $small-grid-column + $small-grid-gutter + 1px;
+		}
+	}
+}
+
+@media #{$medium-only} {
+	.account-navigation-container{
+		@include grid-column-width('medium', 1, $medium-grid-gutter + $medium-content-padding - 1px);
+	}
+
+	.AccountNavigation {
+		> li {
+			> a {
+				@include grid-column-width('medium', 1, $medium-grid-gutter + $medium-content-padding - 2px);
+			}
+
+			.avatarContainer {
+				$width: $medium-grid-gutter + $medium-grid-column + $medium-content-padding - 1px;
+				margin-left: $width - $medium-content-padding - $medium-grid-column-padding - 42px;
+			}
+		}
+
+		.user-menu {
+			@include grid-column-width('medium', 2, $medium-content-padding);
+			right: $medium-grid-column + 1px;
+		}
+	}
+}

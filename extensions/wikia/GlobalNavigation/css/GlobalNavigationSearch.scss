@@ -1,25 +1,33 @@
 @import "GlobalNavigationColors";
 @import "../../Venus/styles/mixins";
 
+.search-container{
+	@include grid-column-width('large', 7, 2 * $large-grid-gutter);
+}
+
 .search-form-wrapper {
 	display: table;
 	font-size: 18px;
 	margin-bottom: 10px;
 	margin-top: 10px;
 	width: 100%;
+
 	.search-form {
 		display: table-row;
 		width: 100%;
 	}
+
 	.search-label-bold {
 		color: $search-input-label-dark;
 		font-weight: bold;
 		padding-left: 16px;
 		width: 0;
 	}
+
 	.search-label-inline {
 		color: $nav-alternative-color;
 	}
+
 	.table-cell {
 		display: table-cell;
 		white-space: nowrap;
@@ -31,6 +39,7 @@
 	padding-left: 5px;
 	position: relative;
 	width: 0;
+
 	.search-select {
 		border: none;
 		cursor: pointer;
@@ -40,12 +49,15 @@
 		position: absolute;
 		top:0;
 	}
+
 	.chevron {
 		border-style: solid;
 		width: 0;
 	}
+
 	.search-select-overlay {
 		display: inline-block;
+
 		.chevron {
 			border-color: $nav-background-color;
 			border-width: 5px;
@@ -59,8 +71,10 @@
 }
 
 .global-nav-search-input-wrapper {
+	padding-right: $large-grid-gutter;
 	position: relative;
 	width: 100%;
+
 	.search-input {
 		background-color: $search-input-background;
 		border: none;
@@ -73,6 +87,7 @@
 		padding-right: 39px;
 		width: 100%;
 	}
+
 	.search-submit {
 		background-color: transparent;
 		background-image: url("/extensions/wikia/GlobalNavigation/images/search_icon.svg"); /* base64 */
@@ -80,17 +95,19 @@
 		border: 0;
 		padding: 9px;
 		position: absolute;
+		right: 21px;
 		top: 9px;
 	}
 }
 
-.search-container {
-	@include grid-attribute-size('width', 7.5, 7, 7);
-}
-
 @media #{$small-only} {
+	.search-container {
+		@include grid-column-width('small', 7.4, 2 * $small-grid-gutter);
+	}
+
 	.global-nav-search-input-wrapper {
-		padding-right: 8px;
+		padding-right: $small-grid-gutter;
+
 		.search-submit {
 			right: 17px;
 		}
@@ -98,19 +115,15 @@
 }
 
 @media #{$medium-only} {
+	.search-container {
+		@include grid-column-width('medium', 7, 2 * $medium-grid-gutter);
+	}
+
 	.global-nav-search-input-wrapper {
-		padding-right: 10px;
+		padding-right: $medium-grid-gutter;
+
 		.search-submit {
 			right: 19px;
-		}
-	}
-}
-
-@media #{$large-up} {
-	.global-nav-search-input-wrapper {
-		padding-right: 12px;
-		.search-submit {
-			right: 21px;
 		}
 	}
 }

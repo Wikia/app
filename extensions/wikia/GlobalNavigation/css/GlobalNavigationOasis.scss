@@ -1,6 +1,14 @@
 @import "skins/oasis/css/core/responsive-variables";
 @import "../../Venus/styles/variables";
 
+.global-navigation {
+	box-sizing: border-box;
+
+	*, *:before, *:after {
+		box-sizing: inherit;
+	}
+}
+
 .page-width {
 	margin: 0 auto;
 	width: $width-outside;

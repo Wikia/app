@@ -4,13 +4,14 @@
 	<li class="nohover"><?= $item ?></li>
 	<?php endforeach; ?>
 	<li>
-		<?= $isAnon ? $loginLinkOpeningTag : '<a accesskey="." href="' . $profileLink . '">' ?>
+		<?= $isAnon ? $loginLinkOpeningTag : '<a accesskey="." href="' . $profileLink . '" class="global-navigation-link">' ?>
 			<div class="avatarContainer">
 				<?= empty( $profileAvatar ) ? $avatarPlaceholder : $profileAvatar ?>
 			</div>
+			<img class="chevron" src="<?= $wg->BlankImgUrl; ?>">
 		</a>
 		<?php if ( !$isAnon ): ?>
-		<ul class="subnav WikiaMenuElement">
+		<ul class="user-menu subnav">
 			<?php foreach($dropdown as $link): ?>
 			<li><?= $link ?></li>
 			<?php endforeach; ?>

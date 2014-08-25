@@ -42,9 +42,9 @@ $VenusConfig['global_navigation_scss'] = [
 	'skin' => ['venus', 'oasis'],
 	'assets' => [
 		'//extensions/wikia/GlobalNavigation/css/GlobalNavigation.scss',
+		'//extensions/wikia/GlobalNavigation/css/GlobalNavigationSearch.scss',
 		'//extensions/wikia/GlobalNavigation/css/AccountNavigation.scss',
-		'//extensions/wikia/UserLogin/css/UserLoginDropdown.venus.scss',
-		'//extensions/wikia/GlobalNavigation/css/GlobalNavigationSearch.scss'
+		'//extensions/wikia/UserLogin/css/UserLoginDropdown.venus.scss'
 	]
 ];
 

@@ -12,8 +12,13 @@ class AccountNavigationController extends WikiaController {
 
 	/**
 	 * Render personal URLs item as HTML link
+	 * @param $id
+	 * @param bool $wrapUrlText
+	 * @param bool $noAfterText
+	 * @param bool $noClosingTag
+	 * @return string
 	 */
-	private function renderPersonalUrl($id, $noClosingTag = false, $wrapUrlText = false ) {
+	private function renderPersonalUrl( $id, $wrapUrlText = false, $noAfterText = false, $noClosingTag = false ) {
 		wfProfileIn(__METHOD__);
 		$personalUrl = $this->personal_urls[$id];
 
@@ -47,7 +52,7 @@ class AccountNavigationController extends WikiaController {
 			$urlText = '<span class="' . $id . '-text">' . $urlText . '</span>';
 		}
 		$ret.= $urlText;
-		if(array_key_exists('afterText', $personalUrl)) {
+		if(array_key_exists('afterText', $personalUrl) && !$noAfterText) {
 			$ret.= $personalUrl['afterText'];
 		}
 		if ( !$noClosingTag ) {
@@ -61,7 +66,7 @@ class AccountNavigationController extends WikiaController {
 	/**
 	 * Modify personal URLs list
 	 */
-	private function setupPersonalUrls() {
+	private function setupPersonalUrls( $aditionalUrlClases = [] ) {
 		global $wgUser, $wgComboAjaxLogin;
 
 		// Import the starting set of urls from the skin template
@@ -101,8 +106,15 @@ class AccountNavigationController extends WikiaController {
 				'href' => Skin::makeSpecialUrl('UserSignup'),
 				'class' => 'ajaxRegister'
 			);
-		}
-		else {
+
+			if ( !empty( $aditionalUrlClases ) ) {
+				foreach ( $aditionalUrlClases as $id => $classList ) {
+					foreach ( $classList as $class ) {
+						$this->personal_urls[ $id ][ 'class' ] .= ' ' . $class;
+					}
+				}
+			}
+		} else {
 			// use Mypage message for userpage entry
 			$this->personal_urls['userpage']['text'] = wfMsg('mypage');
 		}
@@ -115,13 +127,17 @@ class AccountNavigationController extends WikiaController {
 
 		$requestParams = $this->getRequest()->getParams();
 		$dropdownTemplate = 'dropdown';
+		$aditionalUrlClasses = [];
+		$avatarSize = 20;
 
 		if ( !empty( $requestParams[ 'template' ] ) ) {
 			$this->overrideTemplate( $requestParams[ 'template' ] );
 			$dropdownTemplate = $requestParams[ 'template' ] . 'Dropdown';
+			$aditionalUrlClasses = [ 'login' => [ 'global-navigation-link' ] ];
+			$avatarSize = 36;
 		}
 
-		$this->setupPersonalUrls();
+		$this->setupPersonalUrls( $aditionalUrlClasses );
 
 		$this->itemsBefore = array();
 		$this->isAnon = $wgUser->isAnon();
@@ -134,9 +150,9 @@ class AccountNavigationController extends WikiaController {
 			}
 
 			// render Login and Register links
-			$this->loginLink = $this->renderPersonalUrl('login');
-			$this->loginLinkOpeningTag = $this->renderPersonalUrl('login', true, true);
-			$this->registerLink = $this->renderPersonalUrl('register');
+			$this->loginLink = $this->renderPersonalUrl( 'login', false );
+			$this->loginLinkOpeningTag = $this->renderPersonalUrl( 'login', true, true, true );
+			$this->registerLink = $this->renderPersonalUrl( 'register', false );
 			$this->loginDropdown = '';
 			if(!empty($wgEnableUserLoginExt)) {
 				$this->loginDropdown = (string)F::app()->sendRequest(
@@ -148,11 +164,15 @@ class AccountNavigationController extends WikiaController {
 					]
 				);
 			}
-		}
-		else {
+		} else {
 			// render user avatar and link to his user page
 			$this->profileLink = AvatarService::getUrl($this->username);
-			$this->profileAvatar = AvatarService::renderAvatar($this->username, 20);
+//			var_dump(AvatarService::getDefaultAvatar($avatarSize));
+//			$mh = Masthead::newFromUser( User::newFromName( $this->username ) );
+//			var_dump($mh->hasAvatar());
+//			var_dump($mh->isDefault());
+//			var_dump($mh->getDefaultAvatars());
+			$this->profileAvatar = AvatarService::renderAvatar($this->username, $avatarSize);
 
 			// dropdown items
 			$possibleItems = array('mytalk', 'following', 'preferences');
@@ -163,7 +183,7 @@ class AccountNavigationController extends WikiaController {
 
 			foreach($possibleItems as $item) {
 				if (isset($this->personal_urls[$item])) {
-					$dropdownItems[] = $this->renderPersonalUrl($item);
+					$dropdownItems[] = $this->renderPersonalUrl( $item, false );
 				}
 			}
 
@@ -178,7 +198,7 @@ class AccountNavigationController extends WikiaController {
 			);
 
 			// logout link
-			$dropdownItems[] = $this->renderPersonalUrl('logout');
+			$dropdownItems[] = $this->renderPersonalUrl( 'logout', false );
 			$this->dropdown = $dropdownItems;
 		}
 

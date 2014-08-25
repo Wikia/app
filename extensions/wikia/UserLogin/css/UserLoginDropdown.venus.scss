@@ -5,39 +5,30 @@
 @import 'skins/oasis/css/mixins/gradient';
 @import 'skins/oasis/css/mixins/placeholder';
 @import '../mixins/divider';
-
-//TODO: replace the colors with ones from the shared file
-$nav-background-color: #fff;
-$nav-font-color: #092140;
-$nav-font-alternative-color: #666;
-$dropdown-font-color: #0a5fa3;
-$menu-hover-bg-color: #edf1f4;
-$new-border-color: #c7d1d8;
-$facebook-background-color: #3c5b9b;
-$facebook-button-divider-color: #6381b4;
-$nav-active-color: #092140;
-$nav-alternative-color: #c7d1d8;
+@import 'extensions/wikia/Venus/styles/variables';
+@import 'extensions/wikia/Venus/styles/mixins';
+@import 'extensions/wikia/GlobalNavigation/css/GlobalNavigationColors';
 
 .UserLoginDropdown {
+	@include grid-column-width('large', 2, $large-grid-column-padding + $large-grid-gutter + $large-content-padding);
 	background-color: $color-page;
 	border: 1px solid $nav-alternative-color;
 	color: $color-text;
 	display: none;
 	font-size: 11px;
+	left: - $large-grid-column - $large-grid-gutter - $large-grid-column-padding - 1;
 	list-style: none;
 	padding: 0;
 	position: absolute;
-	right: 0;
-	top: 43px;
-	width: 250px;
+	top: $global-navigation-height;
 
 	&.show {
 		display: block;
 	}
 
 	.ajaxRegisterContainer {
-		background-color: $nav-font-color;
-		padding: 20px;
+		background-color: $nav-active-color;
+		padding: $large-content-padding;
 
 		.ajaxRegister {
 			background-color: $dropdown-font-color;
@@ -60,7 +51,7 @@ $nav-alternative-color: #c7d1d8;
 	}
 
 	.WikiaForm {
-		padding: 0 20px;
+		padding: 0 $large-content-padding;
 
 		.forgot-password {
 			color: $dropdown-font-color;
@@ -95,13 +86,13 @@ $nav-alternative-color: #c7d1d8;
 			@include clear-box-shadow;
 
 			@include placeholder {
-				color: $new-border-color;
+				color: $nav-alternative-color;
 				font-style: italic;
 			}
 
 			border: 0;
-			border-bottom: 1px solid $new-border-color;
-			color: $nav-font-color;
+			border-bottom: 1px solid $nav-alternative-color;
+			color: $nav-active-color;
 			font-size: 15px;
 			height: 40px;
 			padding: 15px 0 5px;
@@ -119,7 +110,7 @@ $nav-alternative-color: #c7d1d8;
 
 		input.login-button[type="submit"] {
 			@include clear-linear-gradient;
-			background-color: $nav-font-color;
+			background-color: $nav-active-color;
 			border: 0;
 			border-radius: 0;
 			color: $nav-background-color;
@@ -129,7 +120,7 @@ $nav-alternative-color: #c7d1d8;
 			height: 40px;
 			line-height: 40px;
 			margin-top: 25px;
-			padding: 0 20px;
+			padding: 0 $large-content-padding;
 			text-transform: uppercase;
 			width: 100%;
 		}
@@ -153,11 +144,11 @@ $nav-alternative-color: #c7d1d8;
 	}
 
 	.sso-login {
-		padding: 20px;
+		padding: $large-content-padding;
 
 		> .sso-login-divider {
 			@include divider;
-			border-color: $new-border-color;
+			border-color: $nav-alternative-color;
 			font-size: 12px;
 			margin-top: 0;
 			text-transform: uppercase;
@@ -200,3 +191,48 @@ $nav-alternative-color: #c7d1d8;
 	}
 }
 
+@media #{$small-only} {
+	.UserLoginDropdown {
+		@include grid-column-width('small', 3, - $small-grid-column-padding + $small-content-padding);
+		left: - 2 * $small-grid-column - 1;
+
+		.sso-login {
+			padding: $small-content-padding;
+		}
+
+		.ajaxRegisterContainer {
+			padding: $small-content-padding;
+		}
+
+		.WikiaForm {
+			padding: 0 $small-content-padding;
+
+			input.login-button[type="submit"] {
+				padding: 0 $small-content-padding;
+			}
+		}
+	}
+}
+
+@media #{$medium-only} {
+	.UserLoginDropdown {
+		@include grid-column-width('medium', 2, $medium-grid-column-padding + $medium-grid-gutter + $medium-content-padding);
+		left: - $medium-grid-column - $medium-grid-gutter - $medium-grid-column-padding - 1;
+
+		.sso-login {
+			padding: $medium-content-padding;
+		}
+
+		.ajaxRegisterContainer {
+			padding: $medium-content-padding;
+		}
+
+		.WikiaForm {
+			padding: 0 $medium-content-padding;
+
+			input.login-button[type="submit"] {
+				padding: 0 $medium-content-padding;
+			}
+		}
+	}
+}
