@@ -62,15 +62,17 @@ class MercuryApi {
 		global $wgLanguageCode,
 			   $wgCityId,
 			   $wgDBname,
-			   $wgSitename;
+			   $wgSitename,
+			   $wgCacheBuster;
 
 		return [
+			'cacheBuster' => $wgCacheBuster,
 			'dbName' => $wgDBname,
-			'siteName' => $wgSitename,
 			'id' => $wgCityId,
 			'language' => $wgLanguageCode,
-			'theme' => SassUtil::getOasisSettings(),
-			'namespaces' => MWNamespace::getCanonicalNamespaces()
+			'namespaces' => MWNamespace::getCanonicalNamespaces(),
+			'siteName' => $wgSitename,
+			'theme' => SassUtil::getOasisSettings()
 		];
 	}
 
