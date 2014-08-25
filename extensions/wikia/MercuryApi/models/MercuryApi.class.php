@@ -66,9 +66,9 @@ class MercuryApi {
 			   $wgCacheBuster;
 
 		return [
-			'cacheBuster' => $wgCacheBuster,
+			'cacheBuster' => (int) $wgCacheBuster,
 			'dbName' => $wgDBname,
-			'id' => $wgCityId,
+			'id' => (int) $wgCityId,
 			'language' => $wgLanguageCode,
 			'namespaces' => MWNamespace::getCanonicalNamespaces(),
 			'siteName' => $wgSitename,
