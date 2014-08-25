@@ -103,15 +103,16 @@ ve.ui.Dialog.prototype.onCloseButtonClick = function () {
 /**
  * @inheritdoc
  */
-ve.ui.Dialog.prototype.setup = function () {
-	var label = ve.track.nameToLabel( this.constructor.static.name ),
-		params = { 'action': ve.track.actions.OPEN, 'label': 'dialog-' + label };
+ve.ui.Dialog.prototype.getSetupProcess = function ( data ) {
+	return ve.ui.Dialog.super.prototype.getSetupProcess.apply( this, data )
+		.next( function () {
+			var label = ve.track.nameToLabel( this.constructor.static.name ),
+				params = { 'action': ve.track.actions.OPEN, 'label': 'dialog-' + label };
 
-	OO.ui.Dialog.prototype.setup.apply( this, arguments );
+			if ( this.openCount ) {
+				params.value = this.openCount;
+			}
 
-	if ( this.openCount ) {
-		params.value = this.openCount;
-	}
-
-	ve.track( 'wikia', params );
+			ve.track( 'wikia', params );
+		}, this );
 };
