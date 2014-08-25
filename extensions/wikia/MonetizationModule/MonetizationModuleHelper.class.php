@@ -20,7 +20,6 @@ class MonetizationModuleHelper extends WikiaModel {
 	const MONETIZATION_SERVICE_CACHE_PREFIX = 'monetization';
 
 	const API_VERSION = 'v1';
-	const COUNTRY_REST_OF_WORLD = 'ROW';
 	const IN_CONTENT_KEYWORD = '<h2>';
 
 	/**
@@ -141,15 +140,15 @@ class MonetizationModuleHelper extends WikiaModel {
 
 		if ( !empty( $monetizationUnits[self::SLOT_TYPE_IN_CONTENT] ) ) {
 			$pos1 = strpos( $body, self::IN_CONTENT_KEYWORD );
-			if ( !empty( $pos1 ) ) {
-				$pos2 = strpos( $body, self::IN_CONTENT_KEYWORD, $pos1 + strlen( self::IN_CONTENT_KEYWORD ) );
-				if ( !empty( $pos2 ) ) {
-					$body = substr_replace( $body, $monetizationUnits[self::SLOT_TYPE_IN_CONTENT], $pos2, 0 );
-				} else {
-					$body .= $monetizationUnits[self::SLOT_TYPE_IN_CONTENT];
-				}
-			} else {
+			if ( $pos1 === false ) {
 				$body .= $monetizationUnits[self::SLOT_TYPE_IN_CONTENT];
+			} else {
+				$pos2 = strpos( $body, self::IN_CONTENT_KEYWORD, $pos1 + strlen( self::IN_CONTENT_KEYWORD ) );
+				if ( $pos2 === false ) {
+					$body .= $monetizationUnits[self::SLOT_TYPE_IN_CONTENT];
+				} else {
+					$body = substr_replace( $body, $monetizationUnits[self::SLOT_TYPE_IN_CONTENT], $pos2, 0 );
+				}
 			}
 		}
 
