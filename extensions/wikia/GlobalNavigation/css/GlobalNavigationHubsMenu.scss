@@ -17,11 +17,18 @@
 	}
 }
 
+.global-navigation-item:hover {
+	.hubs-menu {
+		display: block;
+	}
+}
+
 .hubs-menu {
 	background-color: $hubsmenu-background-color;
 	border: 1px solid $nav-border-color;
 	border-top: 0;
 	color: $nav-active-color;
+	display: none;
 	position: absolute;
 	top: $global-navigation-height + 1px;
 	width: 768px;
