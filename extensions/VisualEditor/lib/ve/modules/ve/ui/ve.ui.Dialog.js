@@ -29,6 +29,13 @@ ve.ui.Dialog = function VeUiDialog( config ) {
 	if ( config.height ) {
 		this.frame.$element.parent().css( 'height', config.height );
 	}
+	if ( config.draggable ) {
+		this.draggable = true;
+		this.$element.addClass( 'oo-ui-dialog-draggable' );
+	}
+	if ( config.overlayless ) {
+		this.$element.addClass( 'oo-ui-dialog-overlayless' );
+	}
 
 	// Properties
 	this.fragment = null;
@@ -58,6 +65,48 @@ ve.ui.Dialog.prototype.close = function ( data ) {
 		.then( ve.bind( function () {
 			this.fragment = null;
 		}, this ) );
+};
+
+/**
+ * @inheritdoc
+ */
+ve.ui.Dialog.prototype.initialize = function () {
+	// Parent method
+	ve.ui.Dialog.super.prototype.initialize.call( this );
+
+	if ( this.draggable ) {
+		this.initDraggable();
+	}
+};
+
+/**
+ * Initialize draggable dialog
+ */
+ve.ui.Dialog.prototype.initDraggable = function () {
+	this.$dragHandle = this.$( '<div>' ).addClass( 'oo-ui-dialog-drag-handle' );
+	this.$dragIframeFix = this.$( '<div>' ).addClass( 'oo-ui-dialog-drag-iframe-fix' );
+
+	this.frame.$element.parent().draggable( {
+		'handle': this.$dragHandle,
+		'start': ve.bind( this.onDragStart, this ),
+		'stop': ve.bind( this.onDragStop, this )
+	} );
+
+	this.frame.$element.parent().prepend( this.$dragIframeFix, this.$dragHandle );
+};
+
+/*
+ * Handle when dragging begins
+ */
+ve.ui.Dialog.prototype.onDragStart = function () {
+	this.$element.addClass( 'oo-ui-dialog-dragging' );
+};
+
+/*
+ * Handle when dragging ends
+ */
+ve.ui.Dialog.prototype.onDragStop = function () {
+	this.$element.removeClass( 'oo-ui-dialog-dragging' );
 };
 
 /**

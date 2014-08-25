@@ -1,3 +1,4 @@
+@import "skins/oasis/css/mixins/transition";
 @import "skins/oasis/css/core/color";
 
 
@@ -54,4 +55,47 @@
 .oo-ui-window-head.oo-ui-texture-pending,
 .oo-ui-window-foot.oo-ui-texture-pending {
 	background-image: none;
+}
+
+.oo-ui-dialog-overlayless {
+	background-color: transparent;
+}
+
+.oo-ui-dialog-drag-handle {
+	-webkit-backface-visibility: hidden;
+	background: red;
+	cursor: move;
+	height: 20px;
+	left: 50%;
+	margin-left: -30px;
+	position: absolute;
+	top: .7em;
+	width: 60px;
+}
+.oo-ui-dialog-drag-iframe-fix {
+	bottom: 0;
+	display: none;
+	left: 0;
+	position: absolute;
+	right: 0;
+	top: 0;
+}
+
+/* Draggable */
+.oo-ui-dialog-draggable {
+	> .oo-ui-window-frame {
+		bottom: auto;
+		height: 300px;
+		right: auto;
+	}
+}
+.oo-ui-dialog.oo-ui-dialog-dragging {
+	@include transition-shorthand( none );
+
+	> .oo-ui-window-frame {
+		@include transition-shorthand( none );
+	}
+	.oo-ui-dialog-drag-iframe-fix {
+		display: block;
+	}
 }
