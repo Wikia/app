@@ -19,8 +19,7 @@
 	left: - $large-grid-column - 1;
 	list-style: none;
 	padding: 0;
-	position: absolute;
-	top: $global-navigation-height;
+	position: relative;
 
 	&.show {
 		display: block;

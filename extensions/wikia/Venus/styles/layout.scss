@@ -31,14 +31,14 @@ a {
 
 .page-width {
 	margin: 0 auto;
-	width: $medium-content-width;
+	width: $large-content-width;
 
 	@media #{$small-only} {
 		width: $small-content-width;
 	}
 
-	@media #{$large-up} {
-		width: $large-content-width;
+	@media #{$medium-only} {
+		width: $medium-content-width;
 	}
 }
 

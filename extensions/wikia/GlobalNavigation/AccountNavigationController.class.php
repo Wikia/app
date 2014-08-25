@@ -167,12 +167,10 @@ class AccountNavigationController extends WikiaController {
 		} else {
 			// render user avatar and link to his user page
 			$this->profileLink = AvatarService::getUrl($this->username);
-//			var_dump(AvatarService::getDefaultAvatar($avatarSize));
-//			$mh = Masthead::newFromUser( User::newFromName( $this->username ) );
-//			var_dump($mh->hasAvatar());
-//			var_dump($mh->isDefault());
-//			var_dump($mh->getDefaultAvatars());
-			$this->profileAvatar = AvatarService::renderAvatar($this->username, $avatarSize);
+			$this->profileAvatar = '';
+			if ( !AvatarService::isEmptyOrFirstDefault( $this->username ) ) {
+				$this->profileAvatar = AvatarService::renderAvatar($this->username, $avatarSize);
+			}
 
 			// dropdown items
 			$possibleItems = array('mytalk', 'following', 'preferences');

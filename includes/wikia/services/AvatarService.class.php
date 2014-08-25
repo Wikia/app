@@ -214,4 +214,34 @@ class AvatarService extends Service {
 		wfProfileOut(__METHOD__);
 		return $ret;
 	}
+
+	/**
+	 * isEmptyOrFirstDefault -- check if the user has set none or uses the first of the default avatars
+	 */
+	static public function isEmptyOrFirstDefault( $userName ) {
+		wfProfileIn( __METHOD__ );
+		global $wgStylePath;
+
+		if ( class_exists( 'Masthead' ) ) {
+			$avatarUrl = Masthead::newFromUserName($userName)->mUser->getOption( AVATAR_USER_OPTION_NAME );
+			$images = getMessageForContentAsArray( 'blog-avatar-defaults' );
+			$firstDefaultImage = $images[ 0 ];
+			if( $avatarUrl === '' || substr($avatarUrl, -strlen($firstDefaultImage)) === $firstDefaultImage ) {
+				wfProfileOut( __METHOD__ );
+				return true;
+			}
+		} else {
+			$avatarUrl = self::getAvatarUrl( $userName );
+			var_dump( $avatarUrl );
+			$avatarDefaultUrlStart = "{$wgStylePath}/oasis/images/generic_avatar";
+			var_dump($avatarDefaultUrlStart);
+			if( $avatarUrl === '' || strpos( $avatarUrl, $avatarDefaultUrlStart ) === 0 ) {
+				wfProfileOut( __METHOD__ );
+				return true;
+			}
+		}
+
+		wfProfileOut( __METHOD__ );
+		return false;
+	}
 }

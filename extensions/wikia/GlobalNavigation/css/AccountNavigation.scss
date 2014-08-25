@@ -1,10 +1,3 @@
-//TODO: removed unnecessary imports
-@import 'skins/oasis/css/core/color';
-@import 'skins/oasis/css/mixins/box-shadow';
-@import 'skins/oasis/css/mixins/box-sizing';
-@import 'skins/oasis/css/mixins/gradient';
-@import 'skins/oasis/css/mixins/menus';
-@import 'skins/oasis/css/mixins/placeholder';
 @import 'extensions/wikia/Venus/styles/variables';
 @import 'extensions/wikia/Venus/styles/mixins';
 @import 'GlobalNavigationColors';
@@ -14,19 +7,15 @@
 }
 
 .AccountNavigation {
-//	display: table;
 	margin: 0;
 	padding: 0;
 	width: 100%;
 
 	> li {
-		@include box-sizing;
 		border: 0;
-//		display: table-row;
 		list-style: none;
 		margin-top: 0;
 		padding: 0;
-		position: absolute;
 
 		&.nohover:hover {
 			background: transparent;
@@ -46,30 +35,6 @@
 
 		> a {
 			@include grid-column-width('large', 1, $large-grid-gutter + $large-content-padding - 2px);
-
-			// this part is for the message count (wall) notifications
-			.bubbles.reddot {
-				background-color: #fff;
-				border-radius: 9px;
-				height: 18px;
-				left: 32px;
-				position: absolute;
-				top: 16px;
-				width: 19px;
-
-				#bubbles_count {
-					background: red;
-					border-radius: 8px;
-					float: none;
-					font-size: 12px;
-					left: 2px;
-					line-height: 14px;
-					padding: 0 4px;
-					position: relative;
-					text-align: center;
-					top: -3px;
-				}
-			}
 		}
 
 		.chevron {
@@ -86,6 +51,10 @@
 
 			rect {
 				fill: $nav-alternative-color;
+			}
+
+			&.logged-user rect {
+				fill: $nav-active-color;
 			}
 		}
 
@@ -105,10 +74,9 @@
 	.user-menu {
 		@include grid-column-width('large', 2, $large-content-padding);
 		border: 1px solid $nav-alternative-color;
-		padding: 0;
 		display: none;
-		display: table;
 		font-size: 15px;
+		padding: 0;
 		position: relative;
 		right: $large-grid-column + 1px;
 
@@ -118,8 +86,8 @@
 
 		li {
 			display: table-row;
-			list-style: none;
 			height: 51px;
+			list-style: none;
 
 			a {
 				background-color: $nav-background-color;
@@ -167,7 +135,7 @@
 }
 
 @media #{$medium-only} {
-	.account-navigation-container{
+	.account-navigation-container {
 		@include grid-column-width('medium', 1, $medium-grid-gutter + $medium-content-padding - 1px);
 	}
 
