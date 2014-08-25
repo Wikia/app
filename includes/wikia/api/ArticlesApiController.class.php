@@ -973,14 +973,24 @@ class ArticlesApiController extends WikiaApiController {
 	public function getPopular() {
 		$limit = $this->getRequest()->getInt( self::PARAMETER_LIMIT, self::POPULAR_ARTICLES_PER_WIKI );
 		$expand = $this->request->getBool( static::PARAMETER_EXPAND, false );
+		$baseArticleId = $this->getRequest()->getVal( 'baseArticleId', null );
 		if ( $limit < 1 || $limit > self::POPULAR_ARTICLES_PER_WIKI ) {
 			throw new OutOfRangeApiException( self::PARAMETER_LIMIT, 1, self::POPULAR_ARTICLES_PER_WIKI );
 		}
 		$key = self::getCacheKey( self::POPULAR_CACHE_ID, '' , [ $expand ]);
 
 		$result = $this->wg->Memc->get( $key );
+		if( $baseArticleId ) {
+			// we need more data than in cache
+			$result = false;
+		}
 		if ( $result === false ) {
-			$result = $this->getResultFromConfig( $this->getConfigFromRequest() );
+			$searchConfig = $this->getConfigFromRequest();
+			if( $baseArticleId ) {
+				$searchConfig->setLimit( 100 );
+				$limit = 100;
+			}
+			$result = $this->getResultFromConfig( $searchConfig );
 			if ( $expand ) {
 				$articleIds = [];
 				$params = $this->getDetailsParams();
@@ -994,6 +1004,33 @@ class ArticlesApiController extends WikiaApiController {
 		}
 
 		$result = array_slice( $result, 0, $limit );
+
+		if( $baseArticleId ) {
+			$db = wfGetDB( DB_SLAVE );
+			$links = ( new \WikiaSQL() )
+				->SELECT( 'pl_title' )
+				->FROM( 'pagelinks' )
+				->WHERE( 'pl_from' )->EQUAL_TO( $baseArticleId )
+				->AND_( 'pl_namespace' )->EQUAL_TO( 0 )
+				->runLoop(
+					$db,
+					function( &$dataCollector, $row ){
+						$link = '/wiki/' . $row->pl_title;
+						$dataCollector[ $link ] = true;
+					}
+				);
+
+			$result2 = [];
+			foreach( $result as $key=>$item ) {
+				$link = $item[ 'url' ];
+				if( !empty( $links[ $link ] ) ) {
+					$result2[] = $item;
+				}
+			}
+
+			$result = $result2;
+		}
+
 		$this->setResponseData(
 			[ 'items' => $result, 'basepath' => $this->wg->Server ],
 			[ 'imgFields'=> 'thumbnail', 'urlFields' => [ 'thumbnail', 'url' ] ],
