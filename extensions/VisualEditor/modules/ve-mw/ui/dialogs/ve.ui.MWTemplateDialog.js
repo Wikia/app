@@ -375,7 +375,7 @@ ve.ui.MWTemplateDialog.prototype.getSetupProcess = function ( data ) {
 
 /**
  * Initialize parameters for new template insertion
- * TODO: Wikia: Re-implement to minimize amount of changes to core class.
+ * TODO: Wikia (ve-sprint-25): Re-implement to minimize amount of changes to core class.
  * Methods initialzeNewTemplateParameters and initializeTemplateParameters should be created
  * and pushed upstream. Former should call addPromptedParameters while latter should be empty.
  * In case of Wikia both should be overwriten in a subclass and both should call addUnusedParameters.

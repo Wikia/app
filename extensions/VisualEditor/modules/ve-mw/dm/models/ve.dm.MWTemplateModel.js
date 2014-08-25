@@ -309,7 +309,7 @@ ve.dm.MWTemplateModel.prototype.addPromptedParameters = function () {
 
 /**
  * Add all unused parameters, if any.
- * TODO: Wikia: Re-implement without modifying core class
+ * TODO: Wikia (ve-sprint-25): Re-implement without modifying core class
  *
  * @method
  */
