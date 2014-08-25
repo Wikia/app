@@ -15,6 +15,9 @@
  * @param {Object} [config] Configuration options
  */
 ve.ui.MWTransclusionDialog = function VeUiMWTransclusionDialog( config ) {
+	// Configuration initialization
+	config = ve.extendObject( { 'allowScroll': true }, config );
+
 	// Parent constructor
 	ve.ui.MWTransclusionDialog.super.call( this, config );
 

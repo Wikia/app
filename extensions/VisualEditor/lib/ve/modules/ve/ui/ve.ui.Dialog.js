@@ -29,6 +29,9 @@ ve.ui.Dialog = function VeUiDialog( config ) {
 	if ( config.height ) {
 		this.frame.$element.parent().css( 'height', config.height );
 	}
+	if ( config.allowScroll ) {
+		this.allowScroll = true;
+	}
 
 	// Properties
 	this.fragment = null;
@@ -98,6 +101,17 @@ ve.ui.Dialog.prototype.onCloseButtonClick = function () {
 		'action': ve.track.actions.CLICK,
 		'label': 'dialog-' + label + '-button-close'
 	} );
+};
+
+ve.ui.Dialog.prototype.initialize = function () {
+	// Parent method
+	ve.ui.Dialog.super.prototype.initialize.call( this );
+
+	if ( this.allowScroll ) {
+		this.onWindowMouseWheelHandler = function () {
+			return true;
+		}
+	}
 };
 
 /**
