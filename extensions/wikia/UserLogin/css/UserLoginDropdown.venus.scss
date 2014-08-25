@@ -16,7 +16,7 @@
 	color: $color-text;
 	display: none;
 	font-size: 11px;
-	left: - $large-grid-column - $large-grid-gutter - $large-grid-column-padding - 1;
+	left: - $large-grid-column - 1;
 	list-style: none;
 	padding: 0;
 	position: absolute;
@@ -194,7 +194,7 @@
 @media #{$small-only} {
 	.UserLoginDropdown {
 		@include grid-column-width('small', 3, - $small-grid-column-padding + $small-content-padding);
-		left: - 2 * $small-grid-column - 1;
+		left: - (2 * $small-grid-column) - 1;
 
 		.sso-login {
 			padding: $small-content-padding;
@@ -217,7 +217,7 @@
 @media #{$medium-only} {
 	.UserLoginDropdown {
 		@include grid-column-width('medium', 2, $medium-grid-column-padding + $medium-grid-gutter + $medium-content-padding);
-		left: - $medium-grid-column - $medium-grid-gutter - $medium-grid-column-padding - 1;
+		left: - $medium-grid-column - 1;
 
 		.sso-login {
 			padding: $medium-content-padding;

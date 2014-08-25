@@ -23,6 +23,9 @@
 }
 
 @media screen and (max-width: $breakpoint-content) {
+	.global-navigation {
+		min-width: $width-outside-min;
+	}
 	.page-width {
 		width: 100%;
 	}
