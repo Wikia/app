@@ -7,7 +7,7 @@
 	<?php endforeach; ?>
 	<li>
 		<?= $isAnon ? $loginLinkOpeningTag : '<a accesskey="." href="' . $profileLink . '" class="global-navigation-link">' ?>
-			<div class="avatarContainer">
+			<div class="avatar-container">
 				<?= empty( $profileAvatar ) ? $avatarPlaceholder : $profileAvatar ?>
 			</div>
 			<img class="chevron" src="<?= $wg->BlankImgUrl; ?>">
