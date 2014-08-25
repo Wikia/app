@@ -1028,6 +1028,17 @@ class ArticlesApiController extends WikiaApiController {
 				}
 			}
 
+			$limit = $this->getRequest()->getInt( self::PARAMETER_LIMIT, self::POPULAR_ARTICLES_PER_WIKI );
+			foreach( $result as $key=>$item ) {
+				if( count( $result2 ) >= $limit ) {
+					break;
+				}
+				$link = $item[ 'url' ];
+				if( empty( $links[ $link ] ) ) {
+					$result2[] = $item;
+				}
+			}
+
 			$result = $result2;
 		}
 
