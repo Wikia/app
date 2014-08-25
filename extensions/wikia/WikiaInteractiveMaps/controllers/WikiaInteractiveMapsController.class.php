@@ -27,7 +27,7 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 	private $mapsModel;
 
 	/**
-	 * @desc Special page constructor
+	 * Special page constructor
 	 *
 	 * @param null $name
 	 * @param string $restriction
@@ -158,6 +158,11 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
 	}
 
+	/**
+	 * Redirects to a single map page on right wikia if the current wikia id isn't the same as the map's city_id
+	 * @param Integer $cityId
+	 * @param Integer $mapId
+	 */
 	public function redirectIfForeignWiki( $cityId, $mapId ) {
 		if ( (int) $this->wg->CityId !== $cityId ) {
 			$targetUrl = $this->getWikiPageUrl( self::PAGE_NAME, NS_SPECIAL, $cityId );
@@ -165,6 +170,13 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 		}
 	}
 
+	/**
+	 * Returns full URL for a wiki with given $cityId
+	 * @param String $text
+	 * @param Integer $namespace
+	 * @param Integer|null $cityId
+	 * @return string
+	 */
 	protected function getWikiPageUrl( $text, $namespace = NS_MAIN, $cityId = null ) {
 		return GlobalTitle::newFromText( $text, $namespace, $cityId )->getFullURL();
 	}
@@ -187,7 +199,8 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 	}
 
 	/**
-	 * @desc Renders the menu markup for the map page from mustache
+	 * Renders the menu markup for the map page from mustache
+	 * @param Integer $deleted flag which tells if a map was deleted
 	 * @return string
 	 */
 	function getMenuMarkup( $deleted ) {
@@ -209,11 +222,11 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 			];
 		}
 
-		return F::app()->renderView( 'MenuButton', 'index', $actionButtonArray );
+		return $this->app->renderView( 'MenuButton', 'index', $actionButtonArray );
 	}
 
 	/**
-	 * @desc Obtains a url to a special page with a given path
+	 * Obtains a url to a special page with a given path
 	 * @param string $name - name of the special page
 	 * @return string
 	 */
@@ -222,7 +235,7 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 	}
 
 	/**
-	 * @desc Ajax method for un/deleting a map from IntMaps API
+	 * Ajax method for un/deleting a map from IntMaps API
 	 */
 	public function updateMapDeletionStatus() {
 		$mapId = $this->request->getVal( 'mapId', 0 );
@@ -274,10 +287,8 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 
 	/**
 	 * Generates offset value based on current page and items per page
-	 *
 	 * @param int $currentPage
 	 * @param int $itemsPerPage
-	 *
 	 * @return int mixed
 	 */
 	private function getPaginationOffset( $currentPage, $itemsPerPage ) {
@@ -296,7 +307,6 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 
 	/**
 	 * Iterates through $items and changes image URL to thumbnail
-	 *
 	 * @param Array $items
 	 * @param Integer $width
 	 * @param Integer $height
@@ -309,7 +319,6 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 
 	/**
 	 * Sets template variables depending on skin
-	 *
 	 * @param Array $mapsResponse an array taken from API response
 	 * @param String $selectedSort a sorting option passed in $_GET
 	 */
@@ -353,7 +362,6 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 
 	/**
 	 * Renders pagination and adds it to template variables for Oasis skin
-	 *
 	 * @param Integer $totalMaps
 	 * @param Integer $currentPage
 	 * @param Array $urlParams

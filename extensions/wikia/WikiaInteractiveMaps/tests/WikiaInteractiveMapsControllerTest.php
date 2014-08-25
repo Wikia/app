@@ -11,6 +11,9 @@ class WikiaInteractiveMapsControllerTest extends WikiaBaseTest {
 		parent::setUp();
 	}
 
+	/**
+	 * @covers WikiaInteractiveMapsController::redirectIfForeignWiki
+	 */
 	public function testRedirectIfForeignWiki_not_foreign() {
 		$wikiaInteractiveMapsControllerMock = $this->getControllerMock( 'testRedirectIfForeignWiki' );
 
@@ -24,6 +27,9 @@ class WikiaInteractiveMapsControllerTest extends WikiaBaseTest {
 		$wikiaInteractiveMapsControllerMock->redirectIfForeignWiki( self::WIKI_CITY_ID, 1 );
 	}
 
+	/**
+	 * @covers WikiaInteractiveMapsController::redirectIfForeignWiki
+	 */
 	public function testRedirectIfForeignWiki_foreign() {
 		$wikiaInteractiveMapsControllerMock = $this->getControllerMock( 'testRedirectIfForeignWiki' );
 
@@ -37,6 +43,9 @@ class WikiaInteractiveMapsControllerTest extends WikiaBaseTest {
 		$wikiaInteractiveMapsControllerMock->redirectIfForeignWiki( self::WIKI_FOREIGN_CITY_ID, 1 );
 	}
 
+	/**
+	 * @covers WikiaInteractiveMapsController::map
+	 */
 	public function testMap_mapNotFound() {
 		$exceptionObject = new stdClass();
 		$exceptionObject->message = 'Map not found';
@@ -51,6 +60,39 @@ class WikiaInteractiveMapsControllerTest extends WikiaBaseTest {
 		$mapsControllerMock->expects( $this->once() )
 			->method( 'getModel' )
 			->will( $this->returnValue( $mapsModelMock ) );
+		$mapsControllerMock->expects( $this->never() )
+			->method( 'redirectIfForeignWiki' );
+
+		$mapsControllerMock->map();
+	}
+
+	/**
+	 * @covers WikiaInteractiveMapsController::map
+	 */
+	public function testMap_mapFoundNotRedirected() {
+		$mapMock = new stdClass();
+		$mapMock->title = 'A Unit Test Map';
+		$mapMock->map_id = 123;
+		$mapMock->city_id = self::WIKI_CITY_ID;
+		$mapMock->deleted = 0;
+
+		$mapsModelMock = $this->getMock( 'WikiaMaps', [ 'getMapByIdFromApi', 'getMapRenderUrl' ], [], '', false );
+		$mapsModelMock->expects( $this->once() )
+			->method( 'getMapByIdFromApi' )
+			->will( $this->returnValue( $mapMock ) );
+		$mapsModelMock->expects( $this->once() )
+			->method( 'getMapRenderUrl' );
+
+		$mapsControllerMock = $this->getControllerMock( 'testMap' );
+		$mapsControllerMock->expects( $this->once() )
+			->method( 'getModel' )
+			->will( $this->returnValue( $mapsModelMock ) );
+		$mapsControllerMock->expects( $this->once() )
+			->method( 'redirectIfForeignWiki' );
+		$mapsControllerMock->expects( $this->once() )
+			->method( 'getMenuMarkup' );
+
+		$mapsControllerMock->wg->CityId = self::WIKI_CITY_ID;
 
 		$mapsControllerMock->map();
 	}
@@ -92,13 +134,15 @@ class WikiaInteractiveMapsControllerTest extends WikiaBaseTest {
 					'redirectIfForeignWiki',
 					'setVal',
 					'addAsset',
-					'setTemplateEngine'
+					'setTemplateEngine',
+					'getMenuMarkup'
 				], [], '', false );
 
-				$mapsControllerMock->expects( $this->never() )
-					->method( 'redirectIfForeignWiki' );
 				$mapsControllerMock->expects( $this->any() )
 					->method( 'setVal' );
+
+				$outputPageMock = $this->getMock( 'OutputPage', [], [], '', false );
+				$mapsControllerMock->wg->out = $outputPageMock;
 
 				$mapsControllerMock->app = $appMock;
 				$mapsControllerMock->request = $requestMock;
