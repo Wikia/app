@@ -18,6 +18,7 @@ class MonetizationModuleHelper extends WikiaModel {
 	// TODO: encapsulate in Monetization Client
 	// do not change unless monetization service changes
 	const MONETIZATION_SERVICE_CACHE_PREFIX = 'monetization';
+	const RENDERING_IN_PROCESS = 1;
 
 	/**
 	 * Show the Module only on File pages, Article pages, and Main pages
@@ -64,7 +65,10 @@ class MonetizationModuleHelper extends WikiaModel {
 		$log->debug( "Monetization: " . __METHOD__ . " - lookup with cache key: $cacheKey" );
 		$json_results = $wgMemc->get( $cacheKey );
 
-		if ( !empty( $json_results ) ) {
+		if ( $json_results == RENDERING_IN_PROCESS ) {
+			// TODO: potentially block until rendering finishes, until then return nothing
+			return false;
+		} else if ( !empty( $json_results ) ) {
 			return json_decode( $json_results, true );
 		}
 
@@ -101,6 +105,13 @@ class MonetizationModuleHelper extends WikiaModel {
 
 		if ( !empty( $params['s_id'] ) ) {
 			$cacheKey .= ':' . $params['s_id'];
+		}
+
+		if ( !empty( $params['geo'] ) ) {
+			$cacheKey .= ':' . $params['geo'];
+		} else {
+			// set the default to be rest of world ('ROW')
+			$cacheKey .= ':ROW';
 		}
 
 		return $cacheKey;

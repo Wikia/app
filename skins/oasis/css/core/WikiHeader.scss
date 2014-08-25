@@ -1,10 +1,10 @@
-@import "color";
+@import "skins/shared/color";
 @import "layout";
-@import "../mixins/box-shadow";
-@import "../mixins/clearfix";
-@import "../mixins/gradient";
-@import "../mixins/menus";
-@import "../mixins/wordmark";
+@import "skins/shared/mixins/box-shadow";
+@import "skins/shared/mixins/clearfix";
+@import "skins/shared/mixins/gradient";
+@import "skins/shared/mixins/menus";
+@import "skins/shared/mixins/wordmark";
 
 $color-level-3rd: mix($color-buttons, $color-page, 20%);
 @if $is-dark-wiki {
