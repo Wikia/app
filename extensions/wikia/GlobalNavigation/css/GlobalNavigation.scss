@@ -1,6 +1,6 @@
-@import "../../Venus/styles/mixins";
-@import "../../Venus/styles/variables";
-@import "GlobalNavigationColors";
+@import '../../Venus/styles/mixins';
+@import '../../Venus/styles/variables';
+@import 'GlobalNavigationColors';
 
 .global-navigation {
 	background-color: $nav-background-color;
@@ -54,7 +54,7 @@
 	padding: 0 20px; // TODO change padding when hamburger is ready
 
 	img {
-		background-image: url("/extensions/wikia/GlobalNavigation/images/wikia_logo.svg"); /* base64 */
+		background-image: url('/extensions/wikia/GlobalNavigation/images/wikia_logo.svg'); /* base64 */
 		background-position: center;
 		background-repeat: no-repeat;
 	}
@@ -71,7 +71,7 @@
 
 	.start-wikia {
 		&:after {
-			content: "+";
+			content: '+';
 			display: block;
 		}
 
