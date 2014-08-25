@@ -172,6 +172,7 @@ class EntitySearchService {
 
 	public function setNamespace( $namespace ) {
 		$this->namespace = $namespace;
+		return $this;
 	}
 
 	public function getHubs() {
