@@ -3,7 +3,7 @@ $messages = [];
 
 $messages['en'] = [
 	'global-navigation-create-wiki' => 'Start a wikia',
-	'shared-global-navigation-abtest' => "*http://comicshub.wikia.com/wiki/Comics_Hub|Comics|comics
+	'global-navigation-hubs-menu' => "*http://comicshub.wikia.com/wiki/Comics_Hub|Comics|comics
 
 **#|Hot off the Press
 ***http://comic-con.wikia.com/wiki/Comic-Con_Wiki|Comic-Con 2014
@@ -218,5 +218,5 @@ $messages['en'] = [
 
 $messages['qqq'] = [
 	'global-navigation-create-wiki' => 'Label on create new wikia button on Global Navigation - top bar',
-	'shared-global-navigation-abtest' => 'TODO' // TODO
+	'global-navigation-hubs-menu' => 'Global Navigation Hubs Menu structure. For example see English translation.'
 ];

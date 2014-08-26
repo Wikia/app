@@ -53,7 +53,7 @@ class GlobalNavigationController extends WikiaController {
 
 	private function getMenuNodes( $langCode = null ) {
 		$menuNodes = (new NavigationModel(true /* useSharedMemcKey */, $langCode) )->getTree(
-			'shared-global-navigation-abtest'
+			'global-navigation-hubs-menu'
 		);
 
 		return $menuNodes;
