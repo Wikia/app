@@ -81,6 +81,11 @@ ve.ui.Dialog.prototype.initialize = function () {
 	if ( this.draggable ) {
 		this.initDraggable();
 	}
+	if ( this.allowScroll ) {
+		this.onWindowMouseWheelHandler = function () {
+			return true;
+		};
+	}
 };
 
 /**
@@ -151,17 +156,6 @@ ve.ui.Dialog.prototype.onCloseButtonClick = function () {
 		'action': ve.track.actions.CLICK,
 		'label': 'dialog-' + label + '-button-close'
 	} );
-};
-
-ve.ui.Dialog.prototype.initialize = function () {
-	// Parent method
-	ve.ui.Dialog.super.prototype.initialize.call( this );
-
-	if ( this.allowScroll ) {
-		this.onWindowMouseWheelHandler = function () {
-			return true;
-		};
-	}
 };
 
 /**
