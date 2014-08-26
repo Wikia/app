@@ -228,7 +228,7 @@ ve.dm.MWTransclusionModel.prototype.fetch = function () {
 	// TODO: Wikia (ve-sprint-25): Re-implement without modifying core class
 	request = ve.init.target.constructor.static.apiRequest( {
 		'action': 'templateparameters',
-		'titles': titles.join( '|' ),
+		'titles': titles.join( '|' )
 	} )
 		.done( function ( data ) {
 			var page, i, id;
