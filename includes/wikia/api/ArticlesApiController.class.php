@@ -10,7 +10,7 @@ class ArticlesApiController extends WikiaApiController {
 
 	const CACHE_VERSION = 15;
 
-	const POPULAR_ARTICLES_PER_WIKI = 10;
+	const POPULAR_ARTICLES_PER_WIKI = 100;
 	const POPULAR_ARTICLES_NAMESPACE = 0;
 
 	const MAX_ITEMS = 250;
@@ -62,7 +62,7 @@ class ArticlesApiController extends WikiaApiController {
 		'width',
 		'height'
 	];
-	const TRENDING_POPULAR_LIMIT = 100;
+
 	const PARAMETER_BASE_ARTICLE_ID = 'baseArticleId';
 
 
@@ -980,18 +980,11 @@ class ArticlesApiController extends WikiaApiController {
 			throw new OutOfRangeApiException( self::PARAMETER_LIMIT, 1, self::POPULAR_ARTICLES_PER_WIKI );
 		}
 
-		$cacheParams = [ $expand ];
-		if( $baseArticleId ) {
-			$cacheParams[ ] = 'trendingPopular';
-		}
-		$key = self::getCacheKey( self::POPULAR_CACHE_ID, '' , $cacheParams );
+		$key = self::getCacheKey( self::POPULAR_CACHE_ID, '' , [ $expand ] );
 
 		$result = $this->wg->Memc->get( $key );
 		if ( $result === false ) {
 			$searchConfig = $this->getConfigFromRequest();
-			if( $baseArticleId !== false ) {
-				$searchConfig->setLimit( self::TRENDING_POPULAR_LIMIT );
-			}
 			$result = $this->getResultFromConfig( $searchConfig );
 			if ( $expand ) {
 				$articleIds = [];
@@ -1026,6 +1019,7 @@ class ArticlesApiController extends WikiaApiController {
 				$link = $item[ 'url' ];
 				if( !empty( $linksHashSet[ $link ] ) ) {
 					$resultForArticle[] = $item;
+					unset( $result[ $key ] );
 				}
 			}
 
@@ -1033,10 +1027,7 @@ class ArticlesApiController extends WikiaApiController {
 				if( count( $resultForArticle ) >= $limit ) {
 					break;
 				}
-				$link = $item[ 'url' ];
-				if( empty( $linksHashSet[ $link ] ) ) {
-					$resultForArticle[] = $item;
-				}
+				$resultForArticle[] = $item;
 			}
 
 			$result = $resultForArticle;
