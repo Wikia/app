@@ -340,7 +340,7 @@ ve.dm.MWTemplateModel.prototype.setOriginalData = function ( data ) {
 ve.dm.MWTemplateModel.prototype.serialize = function () {
 	var name,
 		template = ve.extendObject(
-			null, this.originalData || {}, { 'target': this.getTarget(), 'params': {} }
+			{}, this.originalData, { 'target': this.getTarget(), 'params': {} }
 		),
 		params = this.getParameters();
 
