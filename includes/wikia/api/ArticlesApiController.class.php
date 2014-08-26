@@ -984,8 +984,7 @@ class ArticlesApiController extends WikiaApiController {
 
 		$popular = $this->wg->Memc->get( $key );
 		if ( $popular === false ) {
-			$searchConfig = $this->getConfigFromRequest();
-			$popular = $this->getResultFromConfig( $searchConfig );
+			$popular = $this->getResultFromConfig( $this->getConfigFromRequest() );
 			if ( $expand ) {
 				$articleIds = [];
 				$params = $this->getDetailsParams();
