@@ -353,7 +353,7 @@ ve.dm.MWTemplateModel.prototype.serialize = function () {
 			continue;
 		}
 		if ( params[name].getValue() === '' ) {
-			if ( template.originalParams.indexOf( name ) !== -1 ) {
+			if ( template.originalParams.indexOf( name ) === -1 ) {
 				continue;
 			}
 		}
