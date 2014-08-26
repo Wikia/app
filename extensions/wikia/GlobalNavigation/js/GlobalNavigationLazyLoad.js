@@ -10,7 +10,7 @@ $(function () {
 		menuLoading = false;
 
 		/**
-		 * What is happen when request comes back with success (Creation of submenus)
+		 * Callback to handle request that come back with success (Creation of submenus)
 		 * @param  {object} menuItems JSON object with all submenu for Global Nav data
 		 */
 		getMenuItemsDone = function (menuItems) {
@@ -52,7 +52,7 @@ $(function () {
 		};
 
 		/**
-		 * What is happen when there is some error with request...
+		 * Callback to handle request when there is some error...
 		 */
 		getMenuItemsFail = function () {
 			menuLoading = false;
