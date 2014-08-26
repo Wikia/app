@@ -1,9 +1,10 @@
-$(function () {
-	'use strict';
+define(
+	'wikia.globalnavigation.lazyload',
+	['jquery', 'wikia.nirvana', 'wikia.querystring'],
+	function lazyLoad($, nirvana, Querystring) {
+		'use strict';
 
-	require(['jquery', 'wikia.nirvana', 'wikia.querystring'], function($, nirvana, Querystring){
-
-		var getMenuItems, getMenuItemsDone, getMenuItemsFail, getMenuItemsProgress, isMenuWorking, lazyLoad, menuLoading,
+		var getHubLinks, getMenuItemsDone, errorHandler, isMenuWorking, menuLoading,
 			menuLoaded, subMenuSelector;
 
 		menuLoaded = false;
@@ -54,12 +55,12 @@ $(function () {
 		/**
 		 * Callback to handle request when there is some error...
 		 */
-		getMenuItemsFail = function () {
+		errorHandler = function () {
 			menuLoading = false;
 			menuLoaded = false;
 		};
 
-		getMenuItems = function (selector) {
+		getHubLinks = function (selector) {
 			var lang;
 
 			if (menuLoaded || menuLoading) {
@@ -68,7 +69,7 @@ $(function () {
 
 			menuLoading = true;
 
-			lang = Querystring().getVal('uselang');
+			lang = new Querystring().getVal('uselang');
 			subMenuSelector = selector;
 
 			$.when(
@@ -83,7 +84,7 @@ $(function () {
 				})
 			).then(
 				getMenuItemsDone,
-				getMenuItemsFail
+				errorHandler
 			);
 		};
 
@@ -91,15 +92,9 @@ $(function () {
 			return (menuLoading || menuLoaded);
 		};
 
-		/**
-		 * Export of the public methods.
-		 * TODO: maybe it should be done by sth like 'window.globNav.lazyLoad' object
-		 * (with 'globNav' defined in the main GlobalNavigation module)...
-		 * @type {Object}
-		 */
-		window.lazyLoad = {
-			'getMenuItems': getMenuItems,
-			'isMenuWorking': isMenuWorking
+		return {
+			getHubLinks: getHubLinks,
+			isMenuWorking: isMenuWorking
 		};
-	});
-});
+	}
+);
