@@ -107,6 +107,67 @@ class MercuryApiController extends WikiaController {
 		return $articleId;
 	}
 
+	private function getAdsContext( $articleId ) {
+		$title = Title::newFromID( $articleId );
+		$this->wg->title = $title;
+
+		$adEngineVariables = AdEngine2Service::getTopJsVariables();
+		$requestContext = RequestContext::newExtraneousContext( $title );
+
+		return [
+			'opts' => [
+				'adsInHead' => $adEngineVariables[ 'wgLoadAdsInHead' ],
+				'disableLateQueue' => $adEngineVariables[ 'wgAdEngineDisableLateQueue' ],
+				'lateAdsAfterPageLoad' => $adEngineVariables[ 'wgLoadLateAdsAfterPageLoad' ],
+				'pageType' => $adEngineVariables[ 'adEnginePageType' ],
+				'showAds' => $adEngineVariables[ 'wgShowAds' ],
+				'usePostScribe' => $adEngineVariables[ 'wgUsePostScribe' ],
+				'trackSlotState' => $adEngineVariables[ 'wgAdDriverTrackState' ],
+			],
+			'targeting' => [
+				'enableKruxTargeting' => $adEngineVariables[ 'wgEnableKruxTargeting' ],
+				'kruxCategoryId' => isset( $adEngineVariables[ 'wgKruxCategoryId' ] ) ?
+						$adEngineVariables['wgKruxCategoryId'] :
+						0,
+				'pageArticleId' => $title->getArticleId(),
+				'pageCategories' => $adEngineVariables[ 'wgAdDriverUseCatParam' ] ?
+						$requestContext->getOutput()->getCategories() : // FIXME
+						[],
+				'pageIsArticle' => $requestContext->getOutput()->isArticle(), // FIXME
+				'pageIsHub' => $adEngineVariables[ 'wikiaPageIsHub' ],
+				'pageName' => $title->getPrefixedDBKey(),
+				'pageType' => $adEngineVariables[ 'wikiaPageType' ],
+				'sevenOneMediaSub2Site' => $adEngineVariables[ 'wgAdDriverSevenOneMediaOverrideSub2Site' ],
+				'skin' => $requestContext->getOutput()->getSkin()->getSkinName(),
+				'wikiCategory' => $adEngineVariables[ 'cityShort' ],
+				'wikiCustomKeyValues' => $adEngineVariables[ 'wgDartCustomKeyValues' ], // FIXME
+				'wikiDbName' => $this->wg->DBname,
+				'wikiDirectedAtChildren' => $adEngineVariables[ 'wgWikiDirectedAtChildren' ],
+				'wikiLanguage' => $title->getPageLanguage()->getCode(),
+				'wikiVertical' => $adEngineVariables[ 'cscoreCat' ],
+			],
+			'providers' => [
+				'ebay' => $adEngineVariables[ 'wgAdDriverUseEbay' ],
+				'sevenOneMedia' => $adEngineVariables[ 'wgAdDriverUseSevenOneMedia' ],
+				'sevenOneMediaCombinedUrl' => isset( $adEngineVariables[ 'wgAdDriverSevenOneMediaCombinedUrl' ] ) ?
+						$adEngineVariables[ 'wgAdDriverSevenOneMediaCombinedUrl' ] :
+						null,
+				'remnantGptMobile' => $this->wg->AdDriverEnableRemnantGptMobile,
+			],
+			'slots' => [
+				'bottomLeaderboardImpressionCapping' => isset(
+							$adEngineVariables[ 'wgAdDriverBottomLeaderboardImpressionCapping ']
+						) ?
+						$adEngineVariables[ 'wgAdDriverBottomLeaderboardImpressionCapping '] :
+						null
+			],
+			'forceProviders' => [
+				'directGpt' => $adEngineVariables[ 'wgAdDriverForceDirectGptAd' ],
+				'liftium' => $adEngineVariables[ 'wgAdDriverForceLiftiumAd' ],
+			]
+		];
+	}
+
 	/**
 	 * @desc Returns article comments in JSON format
 	 *
@@ -164,6 +225,7 @@ class MercuryApiController extends WikiaController {
 				),
 			'article' => $this->getArticleJson( $articleId ),
 			'relatedPages' => $this->getRelatedPages( $articleId ),
+			'adsContext' => $this->getAdsContext( $articleId ),
 			'basePath' => $this->wg->Server
 		]);
 	}
