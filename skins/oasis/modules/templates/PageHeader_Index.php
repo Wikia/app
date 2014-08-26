@@ -1,5 +1,5 @@
 <?php
-		if ( !empty( $monetizationModules[MonetizationModuleHelper::SLOT_TYPE_ABOVE_TITLE] ) ) {
+		if ( !empty( $wg->EnableMonetizationModuleExt ) && !empty( $monetizationModules[MonetizationModuleHelper::SLOT_TYPE_ABOVE_TITLE] ) ) {
 			echo $monetizationModules[MonetizationModuleHelper::SLOT_TYPE_ABOVE_TITLE];
 	}
 ?>
@@ -58,7 +58,7 @@
 	?>
 </header>
 <?php
-	if ( !empty( $monetizationModules[MonetizationModuleHelper::SLOT_TYPE_BELOW_TITLE] ) ) {
+	if ( !empty( $wg->EnableMonetizationModuleExt ) && !empty( $monetizationModules[MonetizationModuleHelper::SLOT_TYPE_BELOW_TITLE] ) ) {
 		echo $monetizationModules[MonetizationModuleHelper::SLOT_TYPE_BELOW_TITLE];
 	}
 ?>
