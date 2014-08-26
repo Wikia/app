@@ -525,7 +525,7 @@ define('wikia.intMap.poiCategories',
 		 * @desc cleans up POI categories data after edit
 		 * @param {object} dataSent - POI categories sent to backend
 		 * @param {object} dataReceived - response from backend, array of actions done and categories affected
-		 * @returns {array} - current POI categories list
+		 * @returns {Array} - current POI categories list
 		 */
 		function updatePoiCategoriesData(dataSent, dataReceived) {
 			var currentPoiCategories = [];
