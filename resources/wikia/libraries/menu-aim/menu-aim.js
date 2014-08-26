@@ -248,7 +248,6 @@
 		 */
 		mousemoveDocument = function(e) {
 			mouseLocs.push({x: e.pageX, y: e.pageY});
-			console.log({x: e.pageX, y: e.pageY});
 
 			if (mouseLocs.length > MOUSE_LOCS_TRACKED) {
 				mouseLocs.shift();
