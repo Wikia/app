@@ -8,10 +8,10 @@
 
 class ApiOutboundingLinksService {
 
-	public function getOutboundingLinksSet( $articleId ) {
+	public function getOutboundingLinks( $articleId ) {
 		$db = wfGetDB( DB_SLAVE );
 
-		$linksHashSet = ( new \WikiaSQL() )
+		$links = ( new \WikiaSQL() )
 			->SELECT( 'pl_title' )
 			->FROM( 'pagelinks' )
 			->WHERE( 'pl_from' )->EQUAL_TO( $articleId )
@@ -21,11 +21,11 @@ class ApiOutboundingLinksService {
 				function( &$dataCollector, $row ){
 					$title = Title::newFromText( $row->pl_title );
 					$link = $title->getLinkURL();
-					$dataCollector[ $link ] = true;
+					$dataCollector[ ] = $link;
 				}
 			);
 
-		return $linksHashSet;
+		return $links;
 	}
 
 } 

@@ -982,48 +982,31 @@ class ArticlesApiController extends WikiaApiController {
 
 		$key = self::getCacheKey( self::POPULAR_CACHE_ID, '' , [ $expand ] );
 
-		$result = $this->wg->Memc->get( $key );
-		if ( $result === false ) {
+		$popular = $this->wg->Memc->get( $key );
+		if ( $popular === false ) {
 			$searchConfig = $this->getConfigFromRequest();
-			$result = $this->getResultFromConfig( $searchConfig );
+			$popular = $this->getResultFromConfig( $searchConfig );
 			if ( $expand ) {
 				$articleIds = [];
 				$params = $this->getDetailsParams();
-				foreach($result as $item){
+				foreach($popular as $item){
 					$articleIds[] = $item['id'];
 				}
-				$result = $this->getArticlesDetails( $articleIds, $params[ 'titleKeys' ], $params[ 'width' ], $params[ 'height' ], $params[ 'length' ], true );
+				$popular = $this->getArticlesDetails( $articleIds, $params[ 'titleKeys' ], $params[ 'width' ], $params[ 'height' ], $params[ 'length' ], true );
 			}
 
-			$this->wg->set( $key, $result, self::CLIENT_CACHE_VALIDITY );
+			$this->wg->set( $key, $popular, self::CLIENT_CACHE_VALIDITY );
 		}
 
 		if( $baseArticleId !== false ) {
-			$linksHashSet = ( new ApiOutboundingLinksService() )->getOutboundingLinksSet( $baseArticleId );
-
-			$resultForArticle = [];
-			foreach( $result as $key=>$item ) {
-				$link = $item[ 'url' ];
-				if( !empty( $linksHashSet[ $link ] ) ) {
-					$resultForArticle[] = $item;
-					unset( $result[ $key ] );
-				}
-			}
-
-			foreach( $result as $key=>$item ) {
-				if( count( $resultForArticle ) >= $limit ) {
-					break;
-				}
-				$resultForArticle[] = $item;
-			}
-
-			$result = $resultForArticle;
+			$links = ( new ApiOutboundingLinksService() )->getOutboundingLinks( $baseArticleId );
+			$popular = $this->reorderForLinks( $popular, $links );
 		}
 
-		$result = array_slice( $result, 0, $limit );
+		$popular = array_slice( $popular, 0, $limit );
 
 		$this->setResponseData(
-			[ 'items' => $result, 'basepath' => $this->wg->Server ],
+			[ 'items' => $popular, 'basepath' => $this->wg->Server ],
 			[ 'imgFields'=> 'thumbnail', 'urlFields' => [ 'thumbnail', 'url' ] ],
 			self::CLIENT_CACHE_VALIDITY
 		);
@@ -1086,5 +1069,31 @@ class ArticlesApiController extends WikiaApiController {
 		$memc = F::app()->wg->Memc;
 		$memc->delete( self::getCacheKey( $id, self::ARTICLE_CACHE_ID ) );
 		$memc->delete( self::getCacheKey( $id, self::DETAILS_CACHE_ID ) );
+	}
+
+	/**
+	 * TODO
+	 */
+	protected function reorderForLinks( $popular, $links ) {
+		$linksHashSet = [ ];
+		foreach( $links as $link ) {
+			$linksHashSet[ $link ] = true;
+		}
+
+		$popularForArticle = [ ];
+		foreach ( $popular as $key => $item ) {
+			$link = $item[ 'url' ];
+			if ( array_key_exists( $link, $linksHashSet ) ) {
+				$popularForArticle[ ] = $item;
+			}
+		}
+
+		foreach ( $popular as $key => $item ) {
+			$link = $item[ 'url' ];
+			if ( !array_key_exists( $link, $linksHashSet ) ) {
+				$popularForArticle[ ] = $item;
+			}
+		}
+		return $popularForArticle;
 	}
 }
