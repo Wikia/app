@@ -21,6 +21,8 @@ define(
 				$verticals = $('> .hubs', $hubs),
 				$hubLinks = $('> .hub-links', $hubs);
 
+
+			// TODO: remove after fetching html from controller
 			for(i = 0; i < menuItems.length; i++) {
 				submenu = menuItems[i].children;
 				sections += '<section class="'+ menuItems[i].specialAttr +'-links">';

@@ -9,13 +9,6 @@
 		<? endforeach ?>
 	</div>
 	<div class="hub-links">
-		<section class="<?= $menuNodes[$activeNodeIndex]['specialAttr'] ?>-links active">
-			<? foreach($menuNodes[$activeNodeIndex]['children'] as $category): ?>
-				<h2><?=$category['text']?></h2>
-				<? foreach($category['children'] as $node): ?>
-					<a href="<?=$node['href']?>"><?=$node['text']?></a>
-				<? endforeach ?>
-			<? endforeach ?>
-		</section>
+		<?= $app->renderView('GlobalNavigation', 'hubsMenuSections', ['menuSections' => $menuNodes[$activeNodeIndex]]); ?>
 	</div>
 </nav>

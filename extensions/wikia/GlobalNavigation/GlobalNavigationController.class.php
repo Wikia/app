@@ -53,6 +53,11 @@ class GlobalNavigationController extends WikiaController {
 		$this->response->setVal('activeNodeIndex', $activeNodeIndex);
 	}
 
+	public function hubsMenuSections() {
+		$menuSections = $this->request->getVal('menuSections', []);
+		$this->response->setVal('menuSections', $menuSections);
+	}
+
 	public function lazyLoadHubsMenu() {
 		$langCode = $this->request->getVal('lang', null);
 
@@ -62,8 +67,8 @@ class GlobalNavigationController extends WikiaController {
 		$activeNodeIndex = $this->getActiveNodeIndex($lazyLoadMenuNodes, $activeNode);
 		array_splice($lazyLoadMenuNodes, $activeNodeIndex, 1);
 
-		$this->response->setFormat( 'json' );
-		$this->response->setData($lazyLoadMenuNodes);
+		$sectionsHtml = $this->app->renderView('GlobalNavigation', 'hubsMenuSections', ['menuSections' => $lazyLoadMenuNodes]);
+		$this->setVal('menuSections', $sectionsHtml);
 	}
 
 	private function getMenuNodes( $langCode = null ) {
