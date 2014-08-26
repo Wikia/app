@@ -1,8 +1,8 @@
-@import "color";
+@import "skins/shared/color";
 @import "layout";
-@import "../mixins/box-shadow";
-@import "../mixins/clearfix";
-@import "../mixins/gradient";
+@import "skins/shared/mixins/box-shadow";
+@import "skins/shared/mixins/clearfix";
+@import "skins/shared/mixins/gradient";
 
 .skin-oasis {
 	.cke_browser_gecko{

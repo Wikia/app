@@ -1,4 +1,4 @@
-@import "skins/oasis/css/mixins/forms";
+@import "skins/shared/mixins/forms";
 
 $error-color: mix(#ff0000, #d4d4d4, 75%);
 @if $is-dark-wiki {
