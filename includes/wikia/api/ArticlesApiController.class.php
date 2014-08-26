@@ -4,7 +4,10 @@
  *
  * @author Federico "Lox" Lucignano <federico@wikia-inc.com>
  */
-use Wikia\Search\Config, Wikia\Search\QueryService\Factory, Wikia\Search\QueryService\DependencyContainer;
+use Wikia\Search\Config;
+use Wikia\Search\QueryService\Factory;
+use Wikia\Search\QueryService\DependencyContainer;
+use Wikia\Util\GlobalStateWrapper;
 
 class ArticlesApiController extends WikiaApiController {
 
@@ -496,7 +499,10 @@ class ArticlesApiController extends WikiaApiController {
 					$namespaces = implode( '|', $namespaces );
 				}
 
-				$articles = self::getCategoryMembers( $category->getFullText(), $limit, $offset, $namespaces );
+				$wrapper = new GlobalStateWrapper( array( 'wgMiserMode' => false ) );
+				$articles = $wrapper->wrap( function () use ( $category, $limit, $offset, $namespaces ) {
+					return self::getCategoryMembers( $category->getFullText(), $limit, $offset, $namespaces );
+				} );
 			} else {
 				wfProfileOut( __METHOD__ );
 				throw new InvalidParameterApiException( self::PARAMETER_CATEGORY );
