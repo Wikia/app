@@ -1,0 +1,50 @@
+@import 'skins/oasis/css/core/color';
+
+body {
+	color: $color-text;
+	font-family: Helvetica, Arial, sans-serif;
+	font-size: 12px;
+	margin: 0;
+	overflow-x: auto;
+	padding: 0 0 30px;
+}
+
+a {
+	color: $color-links;
+	text-decoration: none;
+
+	&:hover {
+		text-decoration: underline;
+	}
+}
+
+.wikia-page {
+	background: $color-page;
+	border: 1px solid $color-page-border;
+	padding: $global-navigation-height 0 0;
+
+	& > header {
+		@include grid-content-padding;
+	}
+}
+
+.page-width {
+	margin: 0 auto;
+	width: $medium-content-width;
+
+	@media #{$small-only} {
+		width: $small-content-width;
+	}
+
+	@media #{$large-up} {
+		width: $large-content-width;
+	}
+}
+
+.padded-content {
+	@include grid-content-padding;
+}
+
+.padded-column {
+	@include grid-column-padding;
+}

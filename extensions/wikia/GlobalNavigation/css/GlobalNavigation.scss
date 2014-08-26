@@ -1,0 +1,85 @@
+@import "../../Venus/styles/mixins";
+@import "../../Venus/styles/variables";
+@import "GlobalNavigationColors";
+
+.global-navigation {
+	background-color: $nav-background-color;
+	border-bottom: 1px solid $nav-alternative-color;
+	position: fixed;
+	width: 100%;
+	z-index: $global-navigation-z-index;
+
+	.page-width {
+		@include clearfix;
+
+		border-right: 1px solid $nav-alternative-color;
+	}
+}
+
+.global-navigation-item {
+	border-left: 1px solid $nav-alternative-color;
+	float: left;
+	height: $global-navigation-height;
+}
+
+.global-navigation-link {
+	color: $nav-alternative-color;
+	display: table-cell;
+	font-size: 18px;
+	font-weight: bold;
+	height: $global-navigation-height;
+	vertical-align: middle;
+}
+
+.start-wikia {
+	@include grid-column-width( 'medium', 2 );
+
+	text-align: center;
+
+	&:hover {
+		background-color: $nav-active-color;
+		color: $nav-background-color;
+		text-decoration: none;
+	}
+}
+
+.wikia-logo {
+	padding: 0 20px; // TODO change padding when hamburger is ready
+
+	img {
+		background-image: url("/extensions/wikia/GlobalNavigation/images/wikia_logo.svg"); /* base64 */
+		background-position: center;
+		background-repeat: no-repeat;
+	}
+}
+
+@media #{$small-only} {
+	.start-wikia {
+		@include grid-column-width( 'small', 1 );
+
+		&:after {
+			content: "+";
+			display: block;
+		}
+
+		span {
+			display: none;
+		}
+	}
+}
+
+@media #{$large-up} {
+	.start-wikia {
+		@include grid-column-width( 'large', 2 );
+	}
+}
+
+@media #{$below-small} {
+	.global-navigation {
+		min-width: 767px;
+		position: static;
+	}
+	.wikia-page {
+		padding-top: 0;
+	}
+}

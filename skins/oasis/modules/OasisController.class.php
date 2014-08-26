@@ -300,41 +300,6 @@ class OasisController extends WikiaController {
 		wfProfileOut(__METHOD__);
 	}
 
-	private function rewriteJSlinks( $link ) {
-		global $IP;
-		wfProfileIn( __METHOD__ );
-
-		$parts = explode( "?cb=", $link ); // look for http://*/filename.js?cb=XXX
-
-		if ( count( $parts ) == 2 ) {
-			//$hash = md5(file_get_contents($IP . '/' . $parts[0]));
-			$fileName = $parts[0];
-			$fileName = preg_replace("#^(https?:)?//[^/]+#","",$fileName);
-			$hash = filemtime( $IP . '/' . $fileName);
-			$link = $parts[0].'?cb='.$hash;
-		} else {
-			$ret = preg_replace_callback(
-				'#(/__cb)([0-9]+)/([^ ]*)#', // look for http://*/__cbXXXXX/* type of URLs
-				function ( $matches ) {
-					global $IP, $wgStyleVersion;
-					$filename = explode('?',$matches[3]); // some filenames may additionaly end with ?$wgStyleVersion
-					//$hash = hexdec(substr(md5(file_get_contents( $IP . '/' . $filename[0])),0,6));
-					$hash = filemtime( $IP . '/' . $filename[0] );
-					return str_replace( $wgStyleVersion, $hash, $matches[0]);
-				},
-				$link
-			);
-
-			if ( $ret ) {
-				$link = $ret;
-			}
-		}
-		//error_log( $link );
-
-		wfProfileOut( __METHOD__ );
-		return $link;
-	}
-
 	/**
 	 * Gets the URL and converts it to minified one if it points to single static file (JS or CSS)
 	 * If it's not recognized as static asset the original URL is returned
@@ -403,7 +368,7 @@ class OasisController extends WikiaController {
 
 		foreach($blockingScripts as $blockingFile) {
 			if( $wgSpeedBox && $wgDevelEnvironment ) {
-				$blockingFile = $this->rewriteJSlinks( $blockingFile );
+				$blockingFile = $this->assetsManager->rewriteJSlinks( $blockingFile );
 			}
 
 			$this->globalBlockingScripts .= "<script type=\"$wgJsMimeType\" src=\"$blockingFile\"></script>";
@@ -426,7 +391,7 @@ class OasisController extends WikiaController {
 						$url = $this->minifySingleAsset( $url );
 					}
 					if ( !empty( $wgSpeedBox ) && !empty( $wgDevelEnvironment ) ) {
-						$url = $this->rewriteJSlinks( $url );
+						$url = $this->assetsManager->rewriteJSlinks( $url );
 					}
 					$jsReferences[] = $url;
 				}
@@ -455,7 +420,7 @@ class OasisController extends WikiaController {
 		// get urls
 		if (!empty($wgSpeedBox) && !empty($wgDevelEnvironment)) {
 			foreach ($assets as $index => $url) {
-				$assets[$index] = $this->rewriteJSlinks( $url );
+				$assets[$index] = $this->assetsManager->rewriteJSlinks( $url );
 			}
 		}
 

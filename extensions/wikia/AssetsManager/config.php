@@ -1,4 +1,5 @@
 <?php
+
 $config = array();
 
 /******** Shared libraries and assets *******/
@@ -789,6 +790,24 @@ $config['monobook_js'] = array(
 
 		'//resources/wikia/libraries/bootstrap/tooltip.js',
 		'//resources/wikia/libraries/bootstrap/popover.js',
+	)
+);
+
+$config['local_navigation_scss'] = array(
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => 'venus',
+	'assets' => array(
+		'//extensions/wikia/LocalNavigation/css/PageHeader.scss',
+		'//extensions/wikia/LocalNavigation/css/WikiHeader.scss'
+	)
+);
+
+$config['local_navigation_js'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => 'venus',
+	'assets' => array(
+		'//extensions/wikia/LocalNavigation/css/PageHeader.js',
+		'//extensions/wikia/LocalNavigation/css/WikiHeader.js'
 	)
 );
 
@@ -1762,7 +1781,7 @@ $config['qualaroo_blocking_js'] = array(
 /** Optimizely Blocking **/
 $config['optimizely_blocking_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
-	'skin' => [ 'oasis', 'wikiamobile' ],
+	'skin' => [ 'oasis', 'wikiamobile', 'venus' ],
 	'assets' => array(
 		'//extensions/wikia/Optimizely/scripts/OptimizelyBlocking.js',
 	)
@@ -1771,7 +1790,7 @@ $config['optimizely_blocking_js'] = array(
 /** GlobalFooter extension */
 $config['global_footer_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
-	'skin' => ['oasis'],
+	'skin' => ['oasis', 'venus'],
 	'assets' => array(
 		'//extensions/wikia/GlobalFooter/scripts/GlobalFooter.js'
 	)
@@ -1915,3 +1934,13 @@ $config['int_map_parser_tag_js_wikiamobile'] = [
 		'//extensions/wikia/WikiaInteractiveMaps/js/WikiaInteractiveMapsParserTag.wikiamobile.js'
 	]
 ];
+
+/** GlobalNavigation extension */
+$config['global_navigation_oasis_scss'] = array(
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => ['oasis'],
+	'assets' => array(
+		'//extensions/wikia/GlobalNavigation/css/GlobalNavigationOasis.scss',
+		'//extensions/wikia/GlobalNavigation/css/GlobalNavigationSearchOasis.scss'
+	)
+);

@@ -743,4 +743,91 @@ class AssetsManager {
 			throw new WikiaException( 'No resources to load specified' );
 		}
 	}
+
+	public function rewriteJSlinks( $link ) {
+		global $IP;
+		wfProfileIn( __METHOD__ );
+
+		$parts = explode( "?cb=", $link ); // look for http://*/filename.js?cb=XXX
+
+		if ( count( $parts ) == 2 ) {
+			//$hash = md5(file_get_contents($IP . '/' . $parts[0]));
+			$fileName = $parts[0];
+			$fileName = preg_replace("#^(https?:)?//[^/]+#","",$fileName);
+			$hash = filemtime( $IP . '/' . $fileName);
+			$link = $parts[0].'?cb='.$hash;
+		} else {
+			$ret = preg_replace_callback(
+				'#(/__cb)([0-9]+)/([^ ]*)#', // look for http://*/__cbXXXXX/* type of URLs
+				function ( $matches ) {
+					global $IP, $wgStyleVersion;
+					$filename = explode('?',$matches[3]); // some filenames may additionaly end with ?$wgStyleVersion
+					//$hash = hexdec(substr(md5(file_get_contents( $IP . '/' . $filename[0])),0,6));
+					$hash = filemtime( $IP . '/' . $filename[0] );
+					return str_replace( $wgStyleVersion, $hash, $matches[0]);
+				},
+				$link
+			);
+
+			if ( $ret ) {
+				$link = $ret;
+			}
+		}
+		//error_log( $link );
+
+		wfProfileOut( __METHOD__ );
+		return $link;
+	}
+
+	/**
+	 * Gets the URL and converts it to minified one if it points to single static file (JS or CSS)
+	 * If it's not recognized as static asset the original URL is returned
+	 *
+	 * @param $url string URL to be inspected
+	 * @return string
+	 */
+	public function minifySingleAsset( $url ) {
+		global $wgAllInOne, $wgExtensionsPath, $wgStylePath, $wgResourceBasePath;
+
+		if ( !empty( $wgAllInOne ) ) {
+			static $map;
+			if (empty($map)) {
+				$map = [
+					[ $wgExtensionsPath, 'extensions/' ],
+					[ $wgStylePath, 'skins/' ],
+					// $wgResourceBasePath = $wgCdnStylePath (there's no /resources in it)
+					[ $wgResourceBasePath . '/resources', 'resources/' ],
+				];
+			}
+
+			// BugId:38195 - don't minify already minified assets
+			if (strpos($url, '/__am/') !== false) {
+				return $url;
+			}
+
+			// don't minify already minified JS files
+			if (strpos($url, '.min.js') !== false) {
+				return $url;
+			}
+
+			foreach ($map as $item) {
+				list( $prefix, $replacement ) = $item;
+
+				// BugId: 38195 - wgExtensionPath / stylePath / ResourceBasePath do not end with a slash
+				// add one to remove double slashes in resulting URL
+				$prefix .= '/';
+
+				if (startsWith($url, $prefix)) {
+					$nurl = substr($url,strlen($prefix));
+					$matches = array();
+					if (preg_match("/^([^?]+)/",$nurl,$matches)) {
+						if (preg_match("/\\.(css|js)\$/i",$matches[1])) {
+							return $this->getOneCommonURL($replacement . $matches[1], true);
+						}
+					}
+				}
+			}
+		}
+		return $url;
+	}
 }
