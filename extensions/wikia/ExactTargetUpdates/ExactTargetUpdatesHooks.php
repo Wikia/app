@@ -3,17 +3,24 @@
 class ExactTargetUpdatesHooks {
 
 	public static function onSignupConfirmEmailComplete( User $user ) {
+		$thisInstance = new ExactTargetUpdatesHooks();
+		$thisInstance->onSignupConfirmEmailCompleteRun( $user );
+		return true;
+	}
+
+	public function onSignupConfirmEmailCompleteRun( User $user ) {
 		global $wgWikiaEnvironment;
 		if ( $wgWikiaEnvironment != WIKIA_ENV_DEV && $wgWikiaEnvironment != WIKIA_ENV_INTERNAL ) {
-			$aParams = self::prepareParams( $user );
+			$aParams = $this->prepareParams( $user );
+			var_dump($aParams);
 			$task = new ExactTargetAddUserTask();
-			$task->call( 'sendNewUserData', $aParams );
-			$task->queue();
+			var_dump($task->call( 'sendNewUserData', $aParams ));
+			var_dump($task->queue());
 		}
 		return true;
 	}
 
-	public static function prepareParams( User $oUser ) {
+	public function prepareParams( User $oUser ) {
 		$aUserParams = [
 			'user_id' => $oUser->getId(),
 			'user_name' => $oUser->getName(),
