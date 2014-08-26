@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: yurii
- * Date: 8/26/14
- * Time: 3:07 PM
- */
 
 class ApiOutboundingLinksService {
 
