@@ -3,9 +3,9 @@
 /**
  * Renders anon / user menu at top right corner of the page
  *
- * @author Maciej Brencz
+ * @author Mateusz "Warkot" Warkocki based on work of Maciej Brencz
  */
-class AccountNavigationController extends WikiaController {
+class GlobalNavigationAccountNavigationController extends WikiaController {
 
 	// This one really is a local class variable
 	var $personal_urls;
@@ -104,7 +104,7 @@ class AccountNavigationController extends WikiaController {
 		}
 	}
 
-	public function executeIndex() {
+	public function index() {
 		wfProfileIn( __METHOD__ );
 
 		global $wgUser, $wgEnableUserLoginExt;
@@ -114,12 +114,12 @@ class AccountNavigationController extends WikiaController {
 		$aditionalUrlClasses = [];
 		$avatarSize = 20;
 
-		if ( !empty( $requestParams[ 'template' ] ) ) {
-			$this->overrideTemplate( $requestParams[ 'template' ] );
-			$dropdownTemplate = $requestParams[ 'template' ] . 'Dropdown';
+//		if ( !empty( $requestParams[ 'template' ] ) ) {
+//			$this->overrideTemplate( $requestParams[ 'template' ] );
+			$dropdownTemplate = 'venusDropdown';
 			$aditionalUrlClasses = [ 'login' => [ 'global-navigation-link' ] ];
 			$avatarSize = 36;
-		}
+//		}
 
 		$this->setupPersonalUrls( $aditionalUrlClasses );
 
