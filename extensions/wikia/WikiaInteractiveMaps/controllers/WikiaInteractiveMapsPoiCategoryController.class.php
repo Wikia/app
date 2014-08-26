@@ -229,6 +229,7 @@ class WikiaInteractiveMapsPoiCategoryController extends WikiaInteractiveMapsBase
 
 				$poiCategoriesUpdated[] = $poiCategoryId;
 			} else {
+				$poiCategory[ 'id' ] = $poiCategoryId;
 				WikiaLogger::instance()->error( 'WikiaMaps tried to update POI category and failed', [
 					'poiCategory' => $poiCategory,
 					'response' => $response
