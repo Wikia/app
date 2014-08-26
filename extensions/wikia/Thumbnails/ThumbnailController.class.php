@@ -37,8 +37,8 @@ class ThumbnailController extends WikiaController {
 		ThumbnailHelper::setVideoLinkClasses( $this, $thumb, $options );
 		ThumbnailHelper::setVideoLinkAttribs( $this, $thumb, $options );
 		ThumbnailHelper::setVideoImgAttribs( $this, $thumb, $options );
-		ThumbnailHelper::setExtraImgAttribs( $this, $thumb, $options );
-		ThumbnailHelper::setExtraLinkAttribs( $this, $thumb, $options );
+		ThumbnailHelper::setExtraImgAttribs( $this, $options );
+		ThumbnailHelper::setExtraLinkAttribs( $this, $options );
 
 		// Set duration
 		// The file is not always an instance of a class with magic getters implemented. see VID-1753
@@ -52,18 +52,8 @@ class ThumbnailController extends WikiaController {
 		$this->duration = WikiaFileHelper::formatDuration( $duration );
 		$this->mediaType = 'video';
 
-		// data-src attribute in case of lazy loading
-		$this->noscript = '';
-		$this->dataSrc = '';
-
-		if ( ThumbnailHelper::shouldLazyLoad( $this, $options ) ) {
-			$this->noscript = $this->app->renderView(
-				'ThumbnailController',
-				'imgTag',
-				$this->response->getData()
-			);
-			ImageLazyLoad::setLazyLoadingAttribs( $this );
-		} else {
+		$lazyLoaded = ThumbnailHelper::setLazyLoad( $this, $options );
+		if ( !$lazyLoaded ) {
 			// Only add RDF metadata when the thumb is not lazy loaded
 			$this->rdf = true;
 			if ( !empty( $duration ) ) {
@@ -87,20 +77,27 @@ class ThumbnailController extends WikiaController {
 
 		ThumbnailHelper::setImageLinkAttribs( $this, $thumb, $options );
 		ThumbnailHelper::setImageAttribs( $this, $thumb, $options );
-		ThumbnailHelper::setImageLinkClasses( $this, $thumb, $options );
-		ThumbnailHelper::setExtraImgAttribs( $this, $thumb, $options );
-		ThumbnailHelper::setExtraLinkAttribs( $this, $thumb, $options );
+		ThumbnailHelper::setImageLinkClasses( $this, $options );
+		ThumbnailHelper::setExtraImgAttribs( $this, $options );
+		ThumbnailHelper::setExtraLinkAttribs( $this, $options );
+		ThumbnailHelper::setLazyLoad( $this, $options );
+	}
 
-		$this->noscript = '';
-		$this->dataSrc = '';
-		if ( ThumbnailHelper::shouldLazyLoad( $this, $options ) ) {
-			$this->noscript = $this->app->renderView(
-				'ThumbnailController',
-				'imgTag',
-				$this->response->getData()
-			);
-			ImageLazyLoad::setLazyLoadingAttribs( $this );
-		}
+	/**
+	 * Render image tags for the MediaGallery
+	 * @requestParam MediaTransformOutput thumb
+	 */
+	public function gallery() {
+		$this->mediaType = 'image';
+
+		$thumb = $this->getVal( 'thumb' );
+
+		// Use the image template
+		$this->overrideTemplate( 'image' );
+
+		$this->linkHref = $thumb->file->getTitle()->getLinkURL();
+		ThumbnailHelper::setImageAttribs( $this, $thumb, [ 'fluid' => true ] );
+		ThumbnailHelper::setLazyLoad( $this );
 	}
 
 	/**

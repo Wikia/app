@@ -45,6 +45,14 @@ abstract class MediaTransformOutput {
 	}
 
 	/**
+	 * Set the URL for thumb object
+	 * @param string $url
+	 */
+	public function setUrl( $url ) {
+		$this->url = $url;
+	}
+
+	/**
 	 * @return string|false The permanent thumbnail storage path
 	 */
 	public function getStoragePath() {
