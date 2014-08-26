@@ -7,10 +7,11 @@ class ArticleAsJson extends WikiaService {
 	const CACHE_VERSION = '0.0.1';
 
 	private static function createMarker($width = 0, $height = 0, $isGallery = false){
+		$blankImgUrl = F::app()->wg->blankImgUrl;
 		$id = count(self::$media) - 1;
 		$classes = 'article-media' . ($isGallery ? ' gallery' : '');
 
-		return "<script class='{$classes}' data-ref='{$id}' data-width='{$width}' data-height='{$height}'></script>";
+		return "<img src='{$blankImgUrl}' class='{$classes}' data-ref='{$id}' width='{$width}' height='{$height}' />";
 	}
 
 	private static function createMediaObj($details, $imageName, $caption = "") {
