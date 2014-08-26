@@ -11,7 +11,7 @@ use Wikia\Util\GlobalStateWrapper;
 
 class ArticlesApiController extends WikiaApiController {
 
-	const CACHE_VERSION = 15;
+	const CACHE_VERSION = 16;
 
 	const POPULAR_ARTICLES_PER_WIKI = 10;
 	const POPULAR_ARTICLES_NAMESPACE = 0;
