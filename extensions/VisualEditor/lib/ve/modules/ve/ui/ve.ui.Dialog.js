@@ -92,7 +92,7 @@ ve.ui.Dialog.prototype.initialize = function () {
  * Initialize draggable dialog
  */
 ve.ui.Dialog.prototype.initDraggable = function () {
-	this.$dragHandle = this.$( '<div>' ).addClass( 'oo-ui-dialog-drag-handle' );
+	this.$dragHandle = this.$( '<div>' ).addClass( 'oo-ui-dialog-drag-handle oo-ui-icon-grabber' );
 	this.$dragIframeFix = this.$( '<div>' ).addClass( 'oo-ui-dialog-drag-iframe-fix' );
 
 	this.frame.$element.parent().draggable( {
