@@ -9,6 +9,6 @@
 		<? endforeach ?>
 	</div>
 	<div class="hub-links">
-		<?= $app->renderView('GlobalNavigation', 'hubsMenuSections', ['menuSections' => $menuNodes[$activeNodeIndex]]); ?>
+		<?= $app->renderView('GlobalNavigation', 'hubsMenuSections', ['menuSections' => [$menuNodes[$activeNodeIndex]]]); ?>
 	</div>
 </nav>

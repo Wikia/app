@@ -67,8 +67,8 @@ class GlobalNavigationController extends WikiaController {
 		$activeNodeIndex = $this->getActiveNodeIndex($lazyLoadMenuNodes, $activeNode);
 		array_splice($lazyLoadMenuNodes, $activeNodeIndex, 1);
 
-		$sectionsHtml = $this->app->renderView('GlobalNavigation', 'hubsMenuSections', ['menuSections' => $lazyLoadMenuNodes]);
-		$this->setVal('menuSections', $sectionsHtml);
+		$this->response->setVal('menuSections', $lazyLoadMenuNodes);
+		$this->overrideTemplate( 'hubsMenuSections' );
 	}
 
 	private function getMenuNodes( $langCode = null ) {

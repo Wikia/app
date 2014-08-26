@@ -15,28 +15,12 @@ define(
 		 * @param  {object} menuItems JSON object with all submenu for Global Nav data
 		 */
 		getMenuItemsDone = function (menuItems) {
-			var sections = '', i, item, link, links, submenu,
-				$sections, $subMenu,
+			var $sections, $subMenu,
 				$hubs = $('#hubs'),
 				$verticals = $('> .hubs', $hubs),
 				$hubLinks = $('> .hub-links', $hubs);
 
-
-			// TODO: remove after fetching html from controller
-			for(i = 0; i < menuItems.length; i++) {
-				submenu = menuItems[i].children;
-				sections += '<section class="'+ menuItems[i].specialAttr +'-links">';
-				for(item = 0; item < submenu.length; item++) {
-					links = submenu[item].children;
-					sections += '<h2>' + submenu[item].text + '</h2>';
-					for(link = 0; link < links.length; link++) {
-						sections += '<a href="'+ links[link].href +'">' + links[link].text + '</a>';
-					}
-				}
-				sections += '</section>';
-			}
-
-			$sections = $($.parseHTML(sections));
+			$sections = $($.parseHTML(menuItems));
 			$subMenu = $sections.filter(subMenuSelector);
 			$('> .active', $hubLinks).removeClass('active');
 
@@ -78,7 +62,7 @@ define(
 				nirvana.sendRequest({
 					controller: 'GlobalNavigationController',
 					method: 'lazyLoadHubsMenu',
-					format: 'json',
+					format: 'html',
 					type: 'GET',
 					data: {
 						lang: lang
