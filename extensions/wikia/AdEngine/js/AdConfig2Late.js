@@ -3,7 +3,7 @@ define('ext.wikia.adEngine.adConfigLate', [
 	// regular dependencies
 	'wikia.log',
 	'wikia.window',
-	'wikia.abTest',
+	'wikia.instantGlobals',
 	'wikia.geo',
 
 	// adProviders
@@ -18,7 +18,7 @@ define('ext.wikia.adEngine.adConfigLate', [
 	// regular dependencies
 	log,
 	window,
-	abTest,
+	instantGlobals,
 	geo,
 
 	// AdProviders
@@ -40,7 +40,6 @@ define('ext.wikia.adEngine.adConfigLate', [
 			'TOP_BUTTON_WIDE.force': true
 		},
 		ie8 = window.navigator && window.navigator.userAgent && window.navigator.userAgent.match(/MSIE [6-8]\./),
-		sevenOneMediaDisabled = abTest && abTest.inGroup('SEVENONEMEDIA_DR', 'DISABLED'),
 		adProviderRemnant,
 
 		dartBtfCountries = {
@@ -65,7 +64,7 @@ define('ext.wikia.adEngine.adConfigLate', [
 	if (window.wgEnableRHonDesktop) {
 		adProviderRemnant = adProviderRemnantGpt;
 	} else {
-		adProviderRemnant = adProviderLiftium;
+		adProviderRemnant = instantGlobals.wgSitewideDisableLiftium ? adProviderNull : adProviderLiftium;
 	}
 
 	function getProvider(slot) {
@@ -96,8 +95,8 @@ define('ext.wikia.adEngine.adConfigLate', [
 					return adProviderNull;
 				}
 
-				if (sevenOneMediaDisabled) {
-					log('SevenOneMedia disabled by A/B test. Using Null provider instead', 'warn', logGroup);
+				if (instantGlobals.wgSitewideDisableSevenOneMedia) {
+					log('SevenOneMedia disabled by DR. Using Null provider instead', 'warn', logGroup);
 					return adProviderNull;
 				}
 

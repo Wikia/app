@@ -45,6 +45,10 @@ class AdEngine2Hooks {
 	 */
 	static public function onInstantGlobalsGetVariables(array &$vars)
 	{
+		// DR
+		$vars[] = 'wgSitewideDisableLiftium';
+		$vars[] = 'wgSitewideDisableSevenOneMedia';
+
 		$vars[] = 'wgHighValueCountries';
 		$vars[] = 'wgAmazonDirectTargetedBuyCountries';
 
