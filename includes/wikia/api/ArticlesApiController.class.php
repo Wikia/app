@@ -62,6 +62,8 @@ class ArticlesApiController extends WikiaApiController {
 		'width',
 		'height'
 	];
+	const TRENDING_POPULAR_LIMIT = 100;
+	const PARAMETER_BASE_ARTICLE_ID = 'baseArticleId';
 
 
 	/**
@@ -973,17 +975,22 @@ class ArticlesApiController extends WikiaApiController {
 	public function getPopular() {
 		$limit = $this->getRequest()->getInt( self::PARAMETER_LIMIT, self::POPULAR_ARTICLES_PER_WIKI );
 		$expand = $this->request->getBool( static::PARAMETER_EXPAND, false );
-		$baseArticleId = $this->getRequest()->getVal( 'baseArticleId', false );
+		$baseArticleId = $this->getRequest()->getVal( self::PARAMETER_BASE_ARTICLE_ID, false );
 		if ( $limit < 1 || $limit > self::POPULAR_ARTICLES_PER_WIKI ) {
 			throw new OutOfRangeApiException( self::PARAMETER_LIMIT, 1, self::POPULAR_ARTICLES_PER_WIKI );
 		}
-		$key = self::getCacheKey( self::POPULAR_CACHE_ID, '' , [ $expand, $baseArticleId ]);
+
+		$cacheParams = [ $expand ];
+		if( $baseArticleId ) {
+			$cacheParams[ ] = 'trendingPopular';
+		}
+		$key = self::getCacheKey( self::POPULAR_CACHE_ID, '' , $cacheParams );
 
 		$result = $this->wg->Memc->get( $key );
 		if ( $result === false ) {
 			$searchConfig = $this->getConfigFromRequest();
-			if( $baseArticleId ) {
-				$searchConfig->setLimit( 100 );
+			if( $baseArticleId !== false ) {
+				$searchConfig->setLimit( self::TRENDING_POPULAR_LIMIT );
 			}
 			$result = $this->getResultFromConfig( $searchConfig );
 			if ( $expand ) {
@@ -1000,7 +1007,7 @@ class ArticlesApiController extends WikiaApiController {
 
 		if( $baseArticleId !== false ) {
 			$db = wfGetDB( DB_SLAVE );
-			$links = ( new \WikiaSQL() )
+			$linksHashSet = ( new \WikiaSQL() )
 				->SELECT( 'pl_title' )
 				->FROM( 'pagelinks' )
 				->WHERE( 'pl_from' )->EQUAL_TO( $baseArticleId )
@@ -1017,7 +1024,7 @@ class ArticlesApiController extends WikiaApiController {
 			$resultForArticle = [];
 			foreach( $result as $key=>$item ) {
 				$link = $item[ 'url' ];
-				if( !empty( $links[ $link ] ) ) {
+				if( !empty( $linksHashSet[ $link ] ) ) {
 					$resultForArticle[] = $item;
 				}
 			}
@@ -1027,7 +1034,7 @@ class ArticlesApiController extends WikiaApiController {
 					break;
 				}
 				$link = $item[ 'url' ];
-				if( empty( $links[ $link ] ) ) {
+				if( empty( $linksHashSet[ $link ] ) ) {
 					$resultForArticle[] = $item;
 				}
 			}
