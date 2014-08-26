@@ -13,7 +13,7 @@ class VideosModule extends WikiaModel {
 	const LIMIT_VIDEOS = 20;
 	const LIMIT_CATEGORY_VIDEOS = 40;
 	const CACHE_TTL = 3600;
-	const CACHE_VERSION = 2;
+	const CACHE_VERSION = 3;
 
 	const STAFF_PICK_PREFIX = 'Staff_Pick_';
 	const STAFF_PICK_GLOBAL_CATEGORY = 'Staff_Pick_Global';
@@ -29,7 +29,7 @@ class VideosModule extends WikiaModel {
 
 	const DEFAULT_REGION = "US";
 
-	protected $blacklist;               // black listed videos we never want to show in videos module
+	protected $blacklist = [];          // black listed videos we never want to show in videos module
 	protected $blacklistCount = null;   // number of blacklist videos
 	protected $existingVideos = [];     // list of titles of existing videos (those which have been added already)
 	protected $userRegion;
@@ -37,8 +37,14 @@ class VideosModule extends WikiaModel {
 	public function __construct( $userRegion ) {
 		// All black listed videos are stored in WikiFactory in the wgVideosModuleBlackList variable
 		// on Community wiki.
-		$serializedBlackList = WikiFactory::getVarByName( "wgVideosModuleBlackList", WikiFactory::COMMUNITY_CENTRAL )->cv_value;
-		$this->blacklist = unserialize( $serializedBlackList );
+		$communityBlacklist = WikiFactory::getVarByName( "wgVideosModuleBlackList", WikiFactory::COMMUNITY_CENTRAL );
+
+		// Set the blacklist if there is data for it
+		if ( is_object( $communityBlacklist ) ) {
+			$serializedBlackList = $communityBlacklist->cv_value;
+			$this->blacklist = unserialize( $serializedBlackList );
+		}
+
 		$this->userRegion = $userRegion;
 		parent::__construct();
 	}
@@ -49,7 +55,6 @@ class VideosModule extends WikiaModel {
 		'thumbHeight'  => self::THUMBNAIL_HEIGHT,
 		'getThumbnail' => true,
 		'thumbOptions' => [
-			'useTemplate' => true,
 			'fluid'       => true,
 			'forceSize'   => 'small',
 		],
@@ -99,7 +104,7 @@ class VideosModule extends WikiaModel {
 		wfProfileIn( __METHOD__ );
 		$log = WikiaLogger::instance();
 
-		$memcKey = wfMemcKey( 'videomodule', 'local_videos', self::CACHE_VERSION, $sort );
+		$memcKey = wfMemcKey( 'videomodule', 'local_videos', self::CACHE_VERSION, $sort, $this->userRegion );
 		$videos = $this->wg->Memc->get( $memcKey );
 
 		$loggingParams = [ 'method' => __METHOD__, 'num' => $numRequired, 'sort' => $sort ];
@@ -141,7 +146,7 @@ class VideosModule extends WikiaModel {
 		wfProfileIn( __METHOD__ );
 		$log = WikiaLogger::instance();
 
-		$memcKey = wfMemcKey( 'videomodule', 'wiki_related_videos_topics', self::CACHE_VERSION );
+		$memcKey = wfMemcKey( 'videomodule', 'wiki_related_videos_topics', self::CACHE_VERSION, $this->userRegion );
 		$videos = $this->wg->Memc->get( $memcKey );
 
 		$loggingParams = [ 'method' => __METHOD__, 'num' => $numRequired ];
@@ -195,6 +200,7 @@ class VideosModule extends WikiaModel {
 		} else {
 			$categories = [ $this->wg->VideosModuleCategories ];
 		}
+		$categories = $this->transformCatNames( $categories );
 
 		$limit = self::LIMIT_CATEGORY_VIDEOS;
 		$sort = 'recent';
@@ -219,7 +225,7 @@ class VideosModule extends WikiaModel {
 
 		sort( $category );
 		$hashCategory = md5( json_encode( $category ) );
-		$memcKey = wfSharedMemcKey( 'videomodule', 'videolist', self::CACHE_VERSION, $hashCategory, $sort );
+		$memcKey = wfSharedMemcKey( 'videomodule', 'videolist', self::CACHE_VERSION, $hashCategory, $sort, $this->userRegion );
 		$videos = $this->wg->Memc->get( $memcKey );
 
 		$loggingParams = [
@@ -473,5 +479,19 @@ class VideosModule extends WikiaModel {
 			$videoTitles[] = $video['title'];
 		}
 		return $videoTitles;
+	}
+
+	/**
+	 * Make sure categories used by videos module are using the database name as
+	 * opposed to regular name (ie, use underscores instead of spaces)
+	 * @param $categories
+	 * @return array
+	 */
+	private function transformCatNames( array $categories ) {
+		$transformedCategories = [];
+		foreach ( $categories as $category ) {
+			$transformedCategories[] = str_replace( " ", "_", $category );
+		}
+		return $transformedCategories;
 	}
 }

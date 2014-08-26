@@ -121,6 +121,8 @@ jQuery(function($){
 				label = 'video';
 			} else if (el.hasClass('image')) {
 				label = 'image';
+			} else if (el.parents('.infobox, .wikia-infobox').length > 0) {
+				label = 'infobox';
 			} else if (el.hasClass('external')) {
 				label = 'link-external';
 			} else if (el.hasClass('wikia-photogallery-add')) {

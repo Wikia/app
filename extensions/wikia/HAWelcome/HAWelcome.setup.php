@@ -49,7 +49,6 @@ $wgGroupPermissions['bot']['welcomeexempt'] = true;
 
 $wgExtensionMessagesFiles[ 'HAWelcome' ] = $dir . '/HAWelcome.i18n.php';
 
-$wgAutoloadClasses['HAWelcomeJob'] =  $dir . 'HAWelcomeJob.php' ;
 $wgAutoloadClasses['HAWelcomeHooks'] =  $dir . 'HAWelcomeHooks.php' ;
 $wgAutoloadClasses['HAWelcomeTask'] =  $dir . 'HAWelcomeTask.php' ;
 $wgAutoloadClasses['HAWelcomeTaskHooks'] =  $dir . 'HAWelcomeTaskHooks.php' ;
@@ -69,9 +68,3 @@ $wgHooks['UserRights'][] = 'HAWelcomeHooks::onUserRightsChange';
  * @see http://www.mediawiki.org/wiki/Manual:RunJobs.php
  */
 define( 'HAWELCOME_JOB_IDENTIFIER', 'HAWelcome' );
-
-/**
- * @global Array Map jobs to their handling classes.
- * @see http://www.mediawiki.org/wiki/Manual:$wgJobClasses
- */
-$wgJobClasses[HAWELCOME_JOB_IDENTIFIER] = 'HAWelcomeJob';

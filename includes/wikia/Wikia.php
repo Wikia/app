@@ -413,13 +413,10 @@ class Wikia {
 
 		$method = $sub ? $method . "-" . $sub : $method;
 		if( $wgDevelEnvironment || $wgErrorLog || $always ) {
-			if (class_exists('Wikia\\Logger\\WikiaLogger')) {
-				$method = preg_match('/-WIKIA$/', $method) ? str_replace('-WIKIA', '', $method) : $method;
-				\Wikia\Logger\WikiaLogger::instance()->debug($message, ['method' => $method]);
-			} else {
-				error_log( $method . ":{$wgDBname}/{$wgCityId}:" . $message );
-			}
+			$method = preg_match('/-WIKIA$/', $method) ? str_replace('-WIKIA', '', $method) : $method;
+			\Wikia\Logger\WikiaLogger::instance()->debug($message, ['method' => $method]);
 		}
+
 		/**
 		 * commandline = echo
 		 */
@@ -1608,7 +1605,7 @@ class Wikia {
 	 */
 	static public function onAfterInitialize($title, $article, $output, $user, WebRequest $request, $wiki) {
 		// allinone
-		global $wgResourceLoaderDebug, $wgAllInOne, $wgUseSiteJs, $wgUseSiteCss, $wgAllowUserJs, $wgAllowUserCss;
+		global $wgResourceLoaderDebug, $wgAllInOne, $wgUseSiteJs, $wgUseSiteCss, $wgAllowUserJs, $wgAllowUserCss, $wgBuckySampling;
 
 		$wgAllInOne = $request->getBool('allinone', $wgAllInOne) !== false;
 		if ($wgAllInOne === false) {
@@ -1620,6 +1617,7 @@ class Wikia {
 		$wgUseSiteCss = $request->getBool( 'usesitecss', $wgUseSiteCss ) !== false;
 		$wgAllowUserJs = $request->getBool( 'allowuserjs', $wgAllowUserJs ) !== false;
 		$wgAllowUserCss = $request->getBool( 'allowusercss', $wgAllowUserCss ) !== false;
+		$wgBuckySampling = $request->getInt( 'buckysampling', $wgBuckySampling );
 
 		return true;
 	}

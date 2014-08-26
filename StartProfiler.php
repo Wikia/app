@@ -28,8 +28,8 @@ if( !empty( $_GET['forceprofile'] ) ) {
 	require_once( dirname(__FILE__).'/includes/profiler/ProfilerSimpleTrace.php' );
 	$wgProfiler = new ProfilerSimpleTrace(array());
 } elseif ($wgProfilerRequestSample <= $wgProfilerSamplePercent  ) {
-	require_once( dirname(__FILE__).'/includes/profiler/ProfilerSimpleUDP.php' );
-	$wgProfiler = new ProfilerSimpleUDP(array());
+	require_once( dirname(__FILE__).'/includes/profiler/ProfilerSimpleDataCollector.php' );
+	$wgProfiler = new ProfilerSimpleDataCollector(array());
 } elseif ($wgProfilerRequestSample <= $wgProfilerSamplePercent + $wgXhprofSamplePercent ) {
 	if ( function_exists('xhprof_enable') ) {
 		require_once( dirname(__FILE__).'/includes/profiler/ProfilerXhprof.php' );

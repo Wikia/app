@@ -84,14 +84,23 @@ class DefaultContent extends AbstractService
 				'iscontent'                  => $service->isPageIdContent( $pageId ) ? 'true' : 'false',
 				'is_main_page'               => $service->isPageIdMainPage( $pageId ) ? 'true' : 'false',
 				];
-		return array_merge(
+
+		$returnValue = array_merge(
 				$this->getPageContentFromParseResponse( $response ),
+				$this->getArticleSnippet( $response ),
 				$this->getCategoriesFromParseResponse( $response ),
 				$this->getHeadingsFromParseResponse( $response ),
 				$this->getOutboundLinks(),
 				$pageFields,
 				$this->getNolangTxt()
 				);
+
+		$poiMetadata = $this->getPOIMetadata();
+		if ( is_array( $poiMetadata ) && count( $poiMetadata ) > 0 ) {
+			$returnValue = array_merge( $returnValue, $poiMetadata );
+		}
+
+		return $returnValue;
 	}
 
 	/**
@@ -133,6 +142,15 @@ class DefaultContent extends AbstractService
 		return $this->getService()->getGlobal( 'AppStripsHtml' ) ? (new Utilities)->field( $field ) : $field;
 	}
 
+	protected function getArticleSnippet( array $response ) {
+		$html = empty( $response['parse']['text']['*'] ) ? '' : $response['parse']['text']['*'];
+		$jsonFormatService = new JsonFormatService();
+		$text = $jsonFormatService->getArticleSnippet( $html );
+		return [
+			'snippet_s' => $text
+		];
+	}
+
 	/**
 	 * Wraps logic for creating the initial result array, based on which implementation we're using.
 	 * The old version strips HTML from the backend; the new version strips HTML within the IndexService.
@@ -140,28 +158,9 @@ class DefaultContent extends AbstractService
 	 * @return array
 	 */
 	protected function getPageContentFromParseResponse( array $response ) {
-		global $wgSimpleHtmlSearchIndexer;
 		$html = empty( $response['parse']['text']['*'] ) ? '' : $response['parse']['text']['*'];
-
-		if( $wgSimpleHtmlSearchIndexer ) {
-			$jsonFormatService = new JsonFormatService();
-			$jsonSimple = $jsonFormatService->getSimpleFormatForHtml( $html );
-			$simplifier = new JsonFormatSimplifier();
-			$text = $simplifier->simplifyToText( $jsonSimple );
-
-			$words = explode( ' ', $text );
-			$wordCount = count( $words );
-			$upTo100Words = implode( ' ', array_slice( $words, 0, min( array( $wordCount, 100 ) ) ) );
-			$this->pushNolangTxt( $upTo100Words );
-			return [
-					'nolang_txt'           => $upTo100Words,
-					'words'                => $wordCount,
-					$this->field( 'html' ) => $text
-				];
-		} else {
-			if ( $this->getService()->getGlobal( 'AppStripsHtml' ) ) {
-				return $this->prepValuesFromHtml( $html );
-			}
+		if ( $this->getService()->getGlobal( 'AppStripsHtml' ) ) {
+			return $this->prepValuesFromHtml( $html );
 		}
 		return [ 'html' => html_entity_decode($html, ENT_COMPAT, 'UTF-8') ];
 	}
@@ -343,5 +342,24 @@ class DefaultContent extends AbstractService
 	protected function getPlaintextFromDom( simple_html_dom $dom ) {
 		$tables = $this->extractAsidesFromDom( $dom );
 		return preg_replace( '/\s+/', ' ', strip_tags( $dom->plaintext . ' ' . $tables ) );
+	}
+
+	protected function getPOIMetadata() {
+		$service = $this->getService();
+		$extensionEnabled = $service->getGlobal( 'EnablePOIExt' );
+		if ( $extensionEnabled ) {
+			$articleMetadata = new \ArticleMetadataModel( $this->currentPageId, true );
+			$solrMapping = $articleMetadata->getSolrMapping();
+			$metadata = $articleMetadata->getMetadata();
+
+			$output = [];
+			foreach ( $metadata as $field => $value ) {
+				if ( isset($solrMapping[$field]) ) {
+					$output[ $solrMapping[$field] ] = $value;
+				}
+			}
+			return $output;
+		}
+		return null;
 	}
 }

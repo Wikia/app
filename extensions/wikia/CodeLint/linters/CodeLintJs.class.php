@@ -65,10 +65,6 @@ class CodeLintJs extends CodeLint {
 		// generate path to "wrapper" script running jslint
 		$runScript = __DIR__ . '/../js/run-jslint.js';
 
-		// generate path to jslint.js
-		$libDirectory = "$IP/lib/vendor";
-		$params['jslint'] = "{$libDirectory}/jslint/jslint.js";
-
 		// file to perform lint on
 		$params['file'] = $fileName;
 

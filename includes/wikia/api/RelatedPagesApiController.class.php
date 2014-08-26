@@ -46,7 +46,7 @@ class RelatedPagesApiController extends WikiaApiController {
 
 			$this->setResponseData(
 				[ 'items' => $related, 'basepath' => $this->wg->Server ],
-				'imgUrl',
+				[ 'imgFields'=> 'imgUrl', 'urlFields' => [ 'imgUrl', 'url' ] ],
 				self::CACHE_DURATION
 			);
 

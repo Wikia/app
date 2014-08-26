@@ -5,7 +5,7 @@ $wgExtensionCredits[ 'specialpage' ][] = [
 	'name' => 'Wikia Interactive Maps',
 	'author' => [
 		'Andrzej "nAndy" Łukaszewski',
-		'Bart(łomey) K.',
+		'Bartłomiej "Bart" Kowalczyk',
 		'Evgeniy "aquilax" Vasilev',
 		'Jakub "Student" Olek',
 		'Rafał Leszczyński',
@@ -38,6 +38,9 @@ $wgSpecialPageGroups[ 'Maps' ] = 'wikia';
 $wgHooks[ 'ParserFirstCallInit' ][] = 'WikiaInteractiveMapsParserTagController::parserTagInit';
 $wgHooks[ 'SkinAfterBottomScripts' ][] = 'WikiaInteractiveMapsHooks::onSkinAfterBottomScripts';
 $wgHooks[ 'OutputPageBeforeHTML' ][] = 'WikiaInteractiveMapsHooks::onOutputPageBeforeHTML';
+
+// mobile
+$wgHooks['WikiaMobileAssetsPackages'][] = 'WikiaInteractiveMapsHooks::onWikiaMobileAssetsPackages';
 
 // i18n mapping
 $wgExtensionMessagesFiles[ 'WikiaInteractiveMaps' ] = $dir . 'WikiaInteractiveMaps.i18n.php';
@@ -76,6 +79,7 @@ $logActionsHandler = 'WikiaMapsLogger::formatLogEntry';
 $wgLogActionsHandlers[ 'maps/create_map' ] = $logActionsHandler;
 $wgLogActionsHandlers[ 'maps/update_map' ] = $logActionsHandler;
 $wgLogActionsHandlers[ 'maps/delete_map' ] = $logActionsHandler;
+$wgLogActionsHandlers[ 'maps/undelete_map' ] = $logActionsHandler;
 
 $wgLogActionsHandlers[ 'maps/create_pin_type' ] = $logActionsHandler;
 $wgLogActionsHandlers[ 'maps/update_pin_type' ] = $logActionsHandler;

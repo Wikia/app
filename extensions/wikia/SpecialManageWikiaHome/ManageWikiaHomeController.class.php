@@ -92,7 +92,7 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 		$collectionValues = $this->prepareArrayFieldsToShow($this->collectionsList);
 		$wikisPerCollection = $this->getWikisPerCollection($this->collectionsList);
 
-		$statsValues = $this->helper->getStatsFromWF();
+		$statsValues = $this->app->sendRequest('WikiaStatsController', 'getWikiaStatsFromWF')->getData();
 
 		if( $this->request->wasPosted() ) {
 			if ( $this->request->getVal('wikis-in-slots',false) ) {
@@ -134,9 +134,21 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 				$isValid = $this->statsForm->validate($statsValues);
 
 				if ($isValid) {
-					$this->helper->saveStatsToWF($statsValues);
-					FlashMessages::put(wfMessage('manage-wikia-home-stats-success')->text());
-					$this->response->redirect($_SERVER['REQUEST_URI']);
+					$isAllowed = true;
+					try {
+						$this->app->sendRequest(
+							'WikiaStatsController', 'saveWikiaStatsInWF',
+							array('statsValues' => $statsValues)
+						);
+					} catch (PermissionsException $ex) {
+						$isAllowed = false;
+					}
+					if ($isAllowed) {
+						FlashMessages::put(wfMessage('manage-wikia-home-stats-success')->text());
+						$this->response->redirect($_SERVER['REQUEST_URI']);
+					} else {
+						$this->errorMsg = wfMessage('manage-wikia-home-stats-permissions-error')->text();
+					}
 				} else {
 					$this->errorMsg = wfMessage('manage-wikia-home-stats-failure')->text();
 				}
@@ -172,7 +184,10 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 		$this->form->setFieldsValues($collectionValues);
 		$this->statsForm->setFieldsValues($statsValues);
 		$this->verticals = $this->helper->getWikiVerticals();
-		$this->marketingImages = $this->prepareMarketingSlotImages($savedSlotsValues['marketing_slot']);
+		$this->marketingImages = [];
+		if (array_key_exists('marketing_slots', $savedSlotsValues)) {
+			$this->marketingImages = $this->prepareMarketingSlotImages($savedSlotsValues['marketing_slot']);
+		}
 		$this->prepareHubsForm($homePageSlotsValues);
 
 		$this->setVal('videoGamesAmount', $videoGamesAmount);
@@ -654,10 +669,12 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 	 */
 	private function prepareMarketingSlotImages( $marketingSlots ) {
 		$marketingImages = [];
-		foreach ($marketingSlots as $key => $slot) {
-			if (!empty($slot['marketing_slot_image'])) {
-				$photo = ImagesService::getLocalFileThumbUrlAndSizes($slot['marketing_slot_image'], 149, ImagesService::EXT_JPG);
-				$marketingImages[$key] = $photo->url;
+		if (!empty($marketingSlots)) {
+			foreach ($marketingSlots as $key => $slot) {
+				if (!empty($slot['marketing_slot_image'])) {
+					$photo = ImagesService::getLocalFileThumbUrlAndSizes($slot['marketing_slot_image'], 149, ImagesService::EXT_JPG);
+					$marketingImages[$key] = $photo->url;
+				}
 			}
 		}
 		return $marketingImages;
@@ -721,22 +738,8 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 		);
 
 		$wikis = $response->getVal('list', []);
-		$verticals = $this->helper->getWikiVerticals();
 		$fields = $this->hubsForm->getFields();
 		$hubValues = $fields['hub_slot']['value'];
-
-		$index = 0;
-		foreach ($verticals as $vertical) {
-			if( !isset($fields['hub_slot']['value'][$index]) ) {
-				$hubValues[$index] = $vertical;
-			}
-			$index++;
-
-			$choices[] = [
-				'value' => $vertical,
-				'option' => $vertical
-			];
-		}
 
 		foreach ($wikis as $wiki) {
 			$choices[] = [

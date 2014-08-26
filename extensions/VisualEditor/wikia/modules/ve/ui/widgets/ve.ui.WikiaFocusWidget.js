@@ -20,10 +20,14 @@ ve.ui.WikiaFocusWidget = function VeUiWikiaFocusWidget( surface ) {
 	this.surface = surface;
 	this.spacing = 10;
 	this.uniqueLayoutId = 0;
-	this.$top = this.$( '<div>' ).addClass( 've-ui-wikiaFocusWidget-top' );
-	this.$right = this.$( '<div>' ).addClass( 've-ui-wikiaFocusWidget-right' );
-	this.$bottom = this.$( '<div>' ).addClass( 've-ui-wikiaFocusWidget-bottom' );
-	this.$left = this.$( '<div>' ).addClass( 've-ui-wikiaFocusWidget-left' );
+	this.$top = this.$( '<div>' )
+		.addClass( 've-ui-wikiaFocusWidget-shield ve-ui-wikiaFocusWidget-topShield' );
+	this.$right = this.$( '<div>' )
+		.addClass( 've-ui-wikiaFocusWidget-shield ve-ui-wikiaFocusWidget-rightShield' );
+	this.$bottom = this.$( '<div>' )
+		.addClass( 've-ui-wikiaFocusWidget-shield ve-ui-wikiaFocusWidget-bottomShield' );
+	this.$left = this.$( '<div>' )
+		.addClass( 've-ui-wikiaFocusWidget-shield ve-ui-wikiaFocusWidget-leftShield' );
 	this.$body = this.$( this.getElementDocument() ).find( 'body:first' );
 	this.$window = this.$( this.getElementWindow() );
 	this.$surface = surface.$element;
@@ -35,6 +39,16 @@ ve.ui.WikiaFocusWidget = function VeUiWikiaFocusWidget( surface ) {
 	if ( mw.config.get( 'wgEnableWikiaBarExt' ) && !mw.config.get( 'WikiaBar' ).isWikiaBarHidden() ) {
 		this.showWikiaBar = true;
 	}
+
+	// A/B Test Elements, may be added onDocumentSetup.
+	this.$topStroke = this.$( '<div>' )
+		.addClass( 've-ui-wikiaFocusWidget-stroke ve-ui-wikiaFocusWidget-topStroke' );
+	this.$rightStroke = this.$( '<div>' )
+		.addClass( 've-ui-wikiaFocusWidget-stroke ve-ui-wikiaFocusWidget-rightStroke' );
+	this.$bottomStroke = this.$( '<div>' )
+		.addClass( 've-ui-wikiaFocusWidget-stroke ve-ui-wikiaFocusWidget-bottomStroke' );
+	this.$leftStroke = this.$( '<div>' )
+		.addClass( 've-ui-wikiaFocusWidget-stroke ve-ui-wikiaFocusWidget-leftStroke' );
 
 	// Events
 	this.surface.getView().getDocument().getDocumentNode()
@@ -101,6 +115,34 @@ ve.ui.WikiaFocusWidget.prototype.adjustLayout = function () {
 				'height': documentDimensions.height,
 				'width': surfaceEdges.left - this.spacing
 			} );
+
+		if ( window.veFocusMode === 'opaque' ) {
+			this.$topStroke
+				.css( {
+					'top': topEdge - this.spacing,
+					'left': surfaceEdges.left - this.spacing,
+					'width': surfaceEdges.right - surfaceEdges.left + ( this.spacing * 2 )
+				} );
+			this.$rightStroke
+				.css( {
+					'top': topEdge - this.spacing,
+					'left': surfaceEdges.right + this.spacing,
+					'height': surfaceEdges.bottom - topEdge + this.spacing
+				} );
+			this.$bottomStroke
+				.css( {
+					'top': surfaceEdges.bottom,
+					'left': surfaceEdges.left - this.spacing,
+					'width': surfaceEdges.right - surfaceEdges.left + ( this.spacing * 2 )
+				} );
+			this.$leftStroke
+				.css( {
+					'top': topEdge - this.spacing,
+					'left': surfaceEdges.left - this.spacing - 1,
+					'height': surfaceEdges.bottom - topEdge + this.spacing
+				} );
+		}
+
 	}
 };
 
@@ -109,6 +151,15 @@ ve.ui.WikiaFocusWidget.prototype.onDocumentSetup = function () {
 
 	if ( this.surface.getDir() === 'rtl' ) {
 		this.switchDirection();
+	}
+
+	/* Optimizely */
+	if ( window.veFocusMode !== undefined ) {
+		this.$element.addClass( 'optimizely-' + window.veFocusMode );
+
+		if ( window.veFocusMode === 'opaque' ) {
+			this.$element.append( this.$topStroke, this.$rightStroke, this.$bottomStroke, this.$leftStroke );
+		}
 	}
 
 	this.hideDistractions();
