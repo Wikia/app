@@ -1015,7 +1015,8 @@ class ArticlesApiController extends WikiaApiController {
 				->runLoop(
 					$db,
 					function( &$dataCollector, $row ){
-						$link = '/wiki/' . $row->pl_title;
+						$title = Title::newFromText( $row->pl_title );
+						$link = $title->getLinkURL();
 						$dataCollector[ $link ] = true;
 					}
 				);
