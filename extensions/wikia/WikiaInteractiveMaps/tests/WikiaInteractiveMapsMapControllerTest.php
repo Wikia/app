@@ -21,8 +21,6 @@ class WikiaInteractiveMapsMapControllerTest extends WikiaBaseTest {
 		$userMock->expects( $this->never() )
 			->method( 'isLoggedIn' );
 
-		$controllerMock->request = $this->getWikiaRequestMock();
-		$controllerMock->wg->CityId = 123;
 		$controllerMock->wg->User = $userMock;
 
 		$this->setExpectedException( 'BadRequestApiException' );
@@ -38,8 +36,6 @@ class WikiaInteractiveMapsMapControllerTest extends WikiaBaseTest {
 		$userMock->expects( $this->never() )
 			->method( 'isLoggedIn' );
 
-		$controllerMock->request = $this->getWikiaRequestMock();
-		$controllerMock->wg->CityId = 123;
 		$controllerMock->wg->User = $userMock;
 
 		$this->setExpectedException( 'InvalidParameterApiException' );
@@ -48,21 +44,17 @@ class WikiaInteractiveMapsMapControllerTest extends WikiaBaseTest {
 
 	public function testCreateMap_throws_permission_exception_when_anon() {
 		$controllerMock = $this->getWikiaInteractiveMapsMapController();
-		$controllerMock->expects( $this->any() )
-			->method( 'getData' )
-			->will( $this->onConsecutiveCalls(
-				1,
-				'http://mocked.image.url.com',
-				'Mocked Map Title'
-			) );
 
 		$userMock = $this->getUserMock();
 		$userMock->expects( $this->once() )
 			->method( 'isLoggedIn' )
 			->willReturn( false );
+		$userMock->expects( $this->never() )
+			->method( 'getName' );
+		$userMock->expects( $this->never() )
+			->method( 'isBlocked' );
 
-		$controllerMock->request = $this->getWikiaRequestMock();
-		$controllerMock->wg->CityId = 123;
+		$this->mockGetDataForUserTests( $controllerMock );
 		$controllerMock->wg->User = $userMock;
 
 		$this->setExpectedException( 'PermissionsException' );
@@ -71,27 +63,18 @@ class WikiaInteractiveMapsMapControllerTest extends WikiaBaseTest {
 
 	public function testCreateMap_throws_permission_exception_when_blocked() {
 		$controllerMock = $this->getWikiaInteractiveMapsMapController();
-		$controllerMock->expects( $this->any() )
-			->method( 'getData' )
-			->will( $this->onConsecutiveCalls(
-				1,
-				'http://mocked.image.url.com',
-				'Mocked Map Title'
-			) );
 
 		$userMock = $this->getUserMock();
 		$userMock->expects( $this->once() )
 			->method( 'isLoggedIn' )
 			->willReturn( true );
-		$userMock->expects( $this->once() )
-			->method( 'getName' )
-			->willReturn( 'Mocked user name' );
+		$userMock->expects( $this->never() )
+			->method( 'getName' );
 		$userMock->expects( $this->once() )
 			->method( 'isBlocked' )
 			->willReturn( true );
 
-		$controllerMock->request = $this->getWikiaRequestMock();
-		$controllerMock->wg->CityId = 123;
+		$this->mockGetDataForUserTests( $controllerMock );
 		$controllerMock->wg->User = $userMock;
 
 		$this->setExpectedException( 'PermissionsException' );
@@ -130,6 +113,20 @@ class WikiaInteractiveMapsMapControllerTest extends WikiaBaseTest {
 			->disableOriginalConstructor()
 			->getMock();
 
+		$controllerMock->request = $this->getWikiaRequestMock();
+		$controllerMock->wg->CityId = 123;
+
 		return $controllerMock;
 	}
+
+	private function mockGetDataForUserTests( $controllerMock ) {
+		$controllerMock->expects( $this->any() )
+			->method( 'getData' )
+			->will( $this->onConsecutiveCalls(
+				1,
+				'http://mocked.image.url.com',
+				'Mocked Map Title'
+			) );
+	}
+
 }

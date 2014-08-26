@@ -109,7 +109,7 @@ class WikiaInteractiveMapsMapController extends WikiaInteractiveMapsBaseControll
 			throw new InvalidParameterApiException( 'title' );
 		}
 
-		if ( !$this->wg->User->isLoggedIn() ) {
+		if ( !$this->wg->User->isLoggedIn() || $this->wg->User->isBlocked() ) {
 			throw new PermissionsException( WikiaInteractiveMapsController::PAGE_RESTRICTION );
 		}
 	}
