@@ -42,7 +42,7 @@ abstract class Scribunto_LuaEngine extends ScribuntoEngineBase {
 	 * Set constants for modules shared from dev.wikia.com
 	 * @author Adam Karmiński <adamk@wikia-inc.com>
 	 */
-	const SHARED_MODULES_PREFIX = "Dev:";
+	const SHARED_MODULES_PREFIX = 'Dev:';
 	const SHARED_MODULES_DEV_CITYID = 7931;
 	/**
 	 * Wikia change end
@@ -330,19 +330,19 @@ abstract class Scribunto_LuaEngine extends ScribuntoEngineBase {
 		 * Support modules shared from dev.wikia.com
 		 * @author Adam Karmiński <adamk@wikia-inc.com>
 		 */
-		if ( strpos( SHARED_MODULES_PREFIX, $name ) !== FALSE ) {
-			$sNameOnDev = substr( $name, strlen( SHARED_MODULES_PREFIX ) );
-			$title = GlobalTitle::newFromText( $sNameOnDev, NS_MODULE, SHARED_MODULES_DEV_CITYID );
+		if ( strpos( $name, self::SHARED_MODULES_PREFIX ) === 0 ) {
+			$sNameOnDev = substr( $name, strlen( self::SHARED_MODULES_PREFIX ) );
+			$title = GlobalTitle::newFromText( $sNameOnDev, NS_MODULE, self::SHARED_MODULES_DEV_CITYID );
 			if ( !$title ) {
 				return array();
 			}
-			$module = $this->fetchSharedModule( $title );
+			$module = $this->fetchSharedModule( $title, self::SHARED_MODULES_PREFIX );
 		} else {
 			$title = Title::newFromText( $name );
 			if ( !$title || $title->getNamespace() != NS_MODULE ) {
 				return array();
 			}
-			$module = $this->fetchModuleFromParser( $title, SHARED_MODULES_PREFIX );
+			$module = $this->fetchModuleFromParser( $title );
 		}
 		/**
 		 * Wikia change end

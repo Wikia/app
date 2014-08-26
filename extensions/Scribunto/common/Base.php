@@ -136,6 +136,7 @@ abstract class ScribuntoEngineBase {
 		}
 		return $this->modules[$key];
 	}
+
 	/**
 	 * Wikia change begin
 	 * Load a shared module from dev.wikia.com.
@@ -146,7 +147,7 @@ abstract class ScribuntoEngineBase {
 	function fetchSharedModule( GlobalTitle $title, $prefix ) {
 		$key = $prefix . $title->getText();
 
-		if( !array_key_exists( $key, $this->modules ) ) {
+		if ( !array_key_exists( $key, $this->modules ) ) {
 			$text = $title->getContent();
 			if ( $text === false ) {
 				$this->modules[$key] = null;
