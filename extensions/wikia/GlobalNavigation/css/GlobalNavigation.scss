@@ -1,9 +1,6 @@
 @import "../../Venus/styles/mixins";
 @import "../../Venus/styles/variables";
-
-$nav-background-color: #fff;
-$nav-active-color: #092140;
-$nav-alternative-color: #c7d1d8;
+@import "GlobalNavigationColors";
 
 .global-navigation {
 	background-color: $nav-background-color;
@@ -74,5 +71,15 @@ $nav-alternative-color: #c7d1d8;
 @media #{$large-up} {
 	.start-wikia {
 		@include grid-column-width( 'large', 2 );
+	}
+}
+
+@media #{$below-small} {
+	.global-navigation {
+		min-width: 767px;
+		position: static;
+	}
+	.wikia-page {
+		padding-top: 0;
 	}
 }
