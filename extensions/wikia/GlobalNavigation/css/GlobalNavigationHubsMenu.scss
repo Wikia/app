@@ -11,7 +11,7 @@
 
 	&:after {
 		border: 5px solid $nav-background-color;
-		border-top-color: $nav-border-color;
+		border-top-color: $nav-alternative-color;
 		content: " ";
 		display: inline-block;
 	}
@@ -25,7 +25,7 @@
 
 .hubs-menu {
 	background-color: $hubsmenu-background-color;
-	border: 1px solid $nav-border-color;
+	border: 1px solid $nav-alternative-color;
 	color: $nav-active-color;
 	display: none;
 	position: absolute;

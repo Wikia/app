@@ -213,10 +213,16 @@ $messages['en'] = [
 ***http://tea.wikia.com/wiki/WikiTea|Tea
 ***http://coffee.wikia.com/wiki/Main_Page|Coffee
 ***http://lifestylehub.wikia.com/wiki/Lifestyle_Hub|More...
-"
+",
+	'global-navigation-search-label' => 'Search',
+	'global-navigation-local-search' => 'this wikia',
+	'global-navigation-global-search' => 'all of Wikia',
 ];
 
 $messages['qqq'] = [
 	'global-navigation-create-wiki' => 'Label on create new wikia button on Global Navigation - top bar',
-	'global-navigation-hubs-menu' => 'Global Navigation Hubs Menu structure. For example see English translation.'
+	'global-navigation-hubs-menu' => 'Global Navigation Hubs Menu structure. For example see English translation.',
+	'global-navigation-search-label' => 'Label for Search input - common part for local and global search',
+	'global-navigation-local-search' => 'Label for Search input when local search is selected',
+	'global-navigation-global-search' => 'Label for Search input when global search is selected',
 ];

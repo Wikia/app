@@ -51,10 +51,28 @@ $VenusConfig['global_navigation_js'] = [
 ];
 
 /** GlobalFooter extension */
-$VenusConfig['global_footer_css'] = array(
+$VenusConfig['global_footer_scss'] = array(
 	'type' => AssetsManager::TYPE_SCSS,
 	'skin' => ['venus'],
 	'assets' => array(
 		'//extensions/wikia/GlobalFooter/styles/GlobalFooter.scss'
+	)
+);
+
+/** GlobalNavigation extension */
+$VenusConfig['global_navigation_scss'] = array(
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => ['venus'],
+	'assets' => array(
+		'//extensions/wikia/GlobalNavigation/css/GlobalNavigation.scss',
+		'//extensions/wikia/GlobalNavigation/css/GlobalNavigationSearch.scss'
+	)
+);
+
+$VenusConfig['global_navigation_js'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => ['venus', 'oasis'],
+	'assets' => array(
+		'//extensions/wikia/GlobalNavigation/js/GlobalNavigationSearch.js',
 	)
 );

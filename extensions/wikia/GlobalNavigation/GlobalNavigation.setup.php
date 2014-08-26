@@ -6,8 +6,6 @@
  *
  */
 
-$dir = dirname(__FILE__) . '/';
-
 $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'GlobalNavigation',
 	'author' => 'Damian "kvas" Jóźwiak',
@@ -15,7 +13,7 @@ $wgExtensionCredits['specialpage'][] = array(
 	'version' => 1.0
 );
 
-// constroller classes
-$wgAutoloadClasses['GlobalNavigationController'] =  $dir . 'GlobalNavigationController.class.php';
+// controller classes
+$wgAutoloadClasses['GlobalNavigationController'] =  __DIR__ . '/GlobalNavigationController.class.php';
 
-$wgExtensionMessagesFiles['GlobalNavigation'] = $dir . '/GlobalNavigation.i18n.php';
+$wgExtensionMessagesFiles['GlobalNavigation'] = __DIR__ . '/GlobalNavigation.i18n.php';
