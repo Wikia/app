@@ -1004,8 +1004,9 @@ class ArticlesApiController extends WikiaApiController {
 
 		$popular = array_slice( $popular, 0, $limit );
 
+		global $wgServer;
 		$this->setResponseData(
-			[ 'items' => $popular, 'basepath' => $this->wg->Server ],
+			[ 'items' => $popular, 'basepath' => $wgServer ],
 			[ 'imgFields'=> 'thumbnail', 'urlFields' => [ 'thumbnail', 'url' ] ],
 			self::CLIENT_CACHE_VALIDITY
 		);
