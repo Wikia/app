@@ -135,15 +135,30 @@ ve.ui.Dialog.prototype.getTeardownProcess = function ( data ) {
 		}, this );
 };
 
+/**
+ * @inheritdoc
+ */
 ve.ui.Dialog.prototype.getSetupProcess = function ( data ) {
 	return ve.ui.Dialog.super.prototype.getSetupProcess.apply( this, data )
 		.next( function () {
+			var label = ve.track.nameToLabel( this.constructor.static.name ),
+				params = { 'action': ve.track.actions.OPEN, 'label': 'dialog-' + label };
+
 			if ( this.draggable ) {
 				this.alignToSurface();
 			}
+
+			if ( this.openCount ) {
+				params.value = this.openCount;
+			}
+
+			ve.track( 'wikia', params );
 		}, this );
 };
 
+/**
+ * Aligns the edge of the dialog with the edge of the surface
+ */
 ve.ui.Dialog.prototype.alignToSurface = function () {
 	var padding = 10,
 		$surface = this.surface.getView().$element,
@@ -179,21 +194,4 @@ ve.ui.Dialog.prototype.onCloseButtonClick = function () {
 		'action': ve.track.actions.CLICK,
 		'label': 'dialog-' + label + '-button-close'
 	} );
-};
-
-/**
- * @inheritdoc
- */
-ve.ui.Dialog.prototype.getSetupProcess = function ( data ) {
-	return ve.ui.Dialog.super.prototype.getSetupProcess.apply( this, data )
-		.next( function () {
-			var label = ve.track.nameToLabel( this.constructor.static.name ),
-				params = { 'action': ve.track.actions.OPEN, 'label': 'dialog-' + label };
-
-			if ( this.openCount ) {
-				params.value = this.openCount;
-			}
-
-			ve.track( 'wikia', params );
-		}, this );
 };
