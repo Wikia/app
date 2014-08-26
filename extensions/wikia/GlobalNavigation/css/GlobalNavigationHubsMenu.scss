@@ -21,6 +21,9 @@
 	.hubs-menu {
 		display: block;
 	}
+	.hubs-entry-point:after {
+		border-top-color: $nav-active-color;
+	}
 }
 
 .hubs-menu {
