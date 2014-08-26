@@ -1089,6 +1089,14 @@ class ArticlesApiController extends WikiaApiController {
 	 * @param links - array of strings
 	 */
 	protected function reorderForLinks( $popular, $links ) {
+		if( empty( $popular ) ) {
+			return [ ];
+		}
+
+		if( empty( $links ) ) {
+			return $popular;
+		}
+
 		$linksHashSet = [ ];
 		foreach( $links as $link ) {
 			$linksHashSet[ $link ] = true;
