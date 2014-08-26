@@ -352,10 +352,9 @@ ve.dm.MWTemplateModel.prototype.serialize = function () {
 		if ( name === '' ) {
 			continue;
 		}
-		if ( params[name].getValue() === '' ) {
-			if ( template.originalParams.indexOf( name ) === -1 ) {
-				continue;
-			}
+		// TODO: Wikia (ve-sprint-25): Re-implement without modifying core class
+		if ( params[name].getValue() === '' && template.originalParams.indexOf( name ) === -1 ) {
+			continue;
 		}
 		template.params[params[name].getOriginalName()] = { 'wt': params[name].getValue() };
 	}
