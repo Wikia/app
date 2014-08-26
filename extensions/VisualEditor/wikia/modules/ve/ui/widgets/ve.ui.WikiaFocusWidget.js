@@ -20,7 +20,7 @@ ve.ui.WikiaFocusWidget = function VeUiWikiaFocusWidget( surface ) {
 	this.surface = surface;
 	this.node = null;
 	this.spacing = 10;
-	this.uniqueLayoutId = 0;
+	this.layout = null;
 	this.$top = this.$( '<div>' )
 		.addClass( 've-ui-wikiaFocusWidget-shield ve-ui-wikiaFocusWidget-topShield' );
 	this.$right = this.$( '<div>' )
@@ -114,10 +114,11 @@ ve.ui.WikiaFocusWidget.prototype.adjustLayout = function () {
 			this.getLayoutForNode( surfaceOffset, surfaceEdges, documentDimensions ) :
 			this.getLayoutForArticle( surfaceOffset, surfaceEdges, documentDimensions );
 
-	if ( layout ) {
+	if ( JSON.stringify( layout ) !== JSON.stringify( this.layout ) ) {
 		for ( shield in layout ) {
 			this['$' + shield].css( layout[shield] );
 		}
+		this.layout = layout;
 	}
 };
 
@@ -128,40 +129,34 @@ ve.ui.WikiaFocusWidget.prototype.adjustLayout = function () {
  * @param {object} surfaceOffset jQuery offset() object for this.$surface
  * @param {object} surfaceEdges Location of the edges of the surface
  * @param {object} documentDimensions Size of the document
- * @returns {object} Layout configuration
  */
 ve.ui.WikiaFocusWidget.prototype.getLayoutForArticle = function ( surfaceOffset, surfaceEdges, documentDimensions ) {
-	var topEdge,
-		uniqueLayoutId = this.$window.width() * this.$body.outerHeight() * this.surface.$element.height();
+	var topEdge;
 
-	if ( uniqueLayoutId !== this.uniqueLayoutId ) {
-		this.uniqueLayoutId = uniqueLayoutId;
+	// Handle NS_USER
+	topEdge = mw.config.get( 'wgNamespaceNumber' ) === 2 ?
+		surfaceEdges.top :
+		this.$navBackground.offset().top + this.$navBackground.height();
 
-		// Handle NS_USER
-		topEdge = mw.config.get( 'wgNamespaceNumber' ) === 2 ?
-			surfaceEdges.top :
-			this.$navBackground.offset().top + this.$navBackground.height();
-
-		return {
-			'top': {
-				'height': topEdge,
-				'width': documentDimensions.width
-			},
-			'right': {
-				'height': documentDimensions.height,
-				'width': documentDimensions.width - surfaceEdges.right - this.spacing
-			},
-			'bottom': {
-				'top': surfaceEdges.bottom,
-				'height': documentDimensions.height - surfaceEdges.bottom + this.spacing,
-				'width': documentDimensions.width
-			},
-			'left': {
-				'height': documentDimensions.height,
-				'width': surfaceEdges.left - this.spacing
-			}
-		};
-	}
+	return {
+		'top': {
+			'height': topEdge,
+			'width': documentDimensions.width
+		},
+		'right': {
+			'height': documentDimensions.height,
+			'width': documentDimensions.width - surfaceEdges.right - this.spacing
+		},
+		'bottom': {
+			'top': surfaceEdges.bottom,
+			'height': documentDimensions.height - surfaceEdges.bottom + this.spacing,
+			'width': documentDimensions.width
+		},
+		'left': {
+			'height': documentDimensions.height,
+			'width': surfaceEdges.left - this.spacing
+		}
+	};
 };
 
 /**
@@ -171,35 +166,29 @@ ve.ui.WikiaFocusWidget.prototype.getLayoutForArticle = function ( surfaceOffset,
  * @param {object} surfaceOffset jQuery offset() object for this.$surface
  * @param {object} surfaceEdges Location of the edges of the surface
  * @param {object} documentDimensions Size of the document
- * @returns {object} Layout configuration
  */
 ve.ui.WikiaFocusWidget.prototype.getLayoutForNode = function ( surfaceOffset, surfaceEdges, documentDimensions ) {
-	var bounds = this.node.boundingRect,
-		uniqueLayoutId = bounds.top + bounds.right + bounds.bottom + bounds.left;
+	var bounds = this.node.boundingRect;
 
-	if ( uniqueLayoutId !== this.uniqueLayoutId ) {
-		this.uniqueLayoutId = uniqueLayoutId;
-
-		return {
-			'top': {
-				'height': surfaceOffset.top + bounds.top,
-				'width': documentDimensions.width
-			},
-			'right': {
-				'height': documentDimensions.height,
-				'width': documentDimensions.width - surfaceEdges.left - bounds.right
-			},
-			'bottom': {
-				'top': surfaceEdges.top + bounds.bottom,
-				'height': documentDimensions.height - bounds.bottom - surfaceEdges.top,
-				'width': documentDimensions.width
-			},
-			'left': {
-				'height': documentDimensions.height,
-				'width': surfaceEdges.left + bounds.left
-			}
-		};
-	}
+	return {
+		'top': {
+			'height': surfaceOffset.top + bounds.top,
+			'width': documentDimensions.width
+		},
+		'right': {
+			'height': documentDimensions.height,
+			'width': documentDimensions.width - surfaceEdges.left - bounds.right
+		},
+		'bottom': {
+			'top': surfaceEdges.top + bounds.bottom,
+			'height': documentDimensions.height - bounds.bottom - surfaceEdges.top,
+			'width': documentDimensions.width
+		},
+		'left': {
+			'height': documentDimensions.height,
+			'width': surfaceEdges.left + bounds.left
+		}
+	};
 };
 
 /**
@@ -219,7 +208,6 @@ ve.ui.WikiaFocusWidget.prototype.onDocumentSetup = function () {
 
 	// Run adjustLayout() a few times while images load, etc
 	interval = setInterval( ve.bind( function () {
-		this.uniqueLayoutId = 0;
 		this.adjustLayout();
 		if ( i === 2 ) {
 			clearInterval( interval );
