@@ -31,8 +31,7 @@ class ArticleAsJson extends WikiaService {
 					new ParserOptions(),
 					false
 				)->getText(),
-			'user' => $details['userName'],
-			'mediaType' => $details['mediaType']
+			'user' => $details['userName']
 		];
 
 		if ( !empty( $details['width'] ) ) {
