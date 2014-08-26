@@ -999,20 +999,7 @@ class ArticlesApiController extends WikiaApiController {
 		}
 
 		if( $baseArticleId !== false ) {
-			$db = wfGetDB( DB_SLAVE );
-			$linksHashSet = ( new \WikiaSQL() )
-				->SELECT( 'pl_title' )
-				->FROM( 'pagelinks' )
-				->WHERE( 'pl_from' )->EQUAL_TO( $baseArticleId )
-				->AND_( 'pl_namespace' )->EQUAL_TO( NS_MAIN )
-				->runLoop(
-					$db,
-					function( &$dataCollector, $row ){
-						$title = Title::newFromText( $row->pl_title );
-						$link = $title->getLinkURL();
-						$dataCollector[ $link ] = true;
-					}
-				);
+			$linksHashSet = ( new ApiOutboundingLinksService() )->getOutboundingLinksSet( $baseArticleId );
 
 			$resultForArticle = [];
 			foreach( $result as $key=>$item ) {
