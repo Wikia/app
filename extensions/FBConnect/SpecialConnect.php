@@ -567,6 +567,7 @@ class SpecialConnect extends SpecialPage {
 		} else {
 			// CONN-421: Auto authenticate user's email on FBConnect
 			$u->confirmEmail();
+			wfRunHooks( 'SignupConfirmEmailComplete', array( $u ) );
 		}
 
 		$u->setRealName( $this->mRealName );

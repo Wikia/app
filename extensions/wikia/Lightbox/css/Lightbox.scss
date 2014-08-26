@@ -1,10 +1,10 @@
-@import "skins/oasis/css/mixins/arrow";
-@import "skins/oasis/css/mixins/background-opacity";
-@import "skins/oasis/css/mixins/box-shadow";
-@import "skins/oasis/css/mixins/box-sizing-border-box";
-@import "skins/oasis/css/mixins/clearfix";
-@import "skins/oasis/css/mixins/transition";
-@import "skins/oasis/css/core/color";
+@import "skins/shared/mixins/arrow";
+@import "skins/shared/mixins/background-opacity";
+@import "skins/shared/mixins/box-shadow";
+@import "skins/shared/mixins/box-sizing-border-box";
+@import "skins/shared/mixins/clearfix";
+@import "skins/shared/mixins/transition";
+@import "skins/shared/color";
 @import "mixins/sprite-Lightbox";
 
 $lightbox-overlay-show-duration: 200ms;

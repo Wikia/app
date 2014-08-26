@@ -80,7 +80,7 @@ abstract class MediaTransformOutput {
 	 * @param array $options
 	 * @return string
 	 */
-	public function renderView( $options = array() ) {
+	public function renderView( array $options = [] ) {
 		return $this->toHtml( $options );
 	}
 	/**
@@ -246,7 +246,7 @@ class ThumbnailImage extends MediaTransformOutput {
 		return 'image';
 	}
 
-	function renderView( array $options = array() ) {
+	function renderView( array $options = [] ) {
 		WikiaLogger::instance()->debug( 'Media method '.__METHOD__.' called',
 			array_merge( $options, [
 				'url'       => $this->url,
@@ -399,7 +399,7 @@ class MediaTransformError extends MediaTransformOutput {
 	 * @author Garth
 	 */
 	// Keep the same error functionality as before
-	function renderView ( $options = array() ) {
+	function renderView ( array $options = [] ) {
 		return $this->toHtml( $options );
 	}
 	/**

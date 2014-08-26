@@ -1,10 +1,10 @@
-@import "skins/oasis/css/core/color";
+@import "skins/shared/color";
 @import "skins/oasis/css/core/layout";
 @import "skins/oasis/css/helpers/table-layout";
-@import "skins/oasis/css/mixins/box-sizing";
-@import "skins/oasis/css/mixins/clearfix";
-@import "skins/oasis/css/mixins/gradient";
-@import "skins/oasis/css/mixins/cursor";
+@import "skins/shared/mixins/box-sizing";
+@import "skins/shared/mixins/clearfix";
+@import "skins/shared/mixins/gradient";
+@import "skins/shared/mixins/cursor";
 @import "mixins/ve-icon";
 
 $size-cart-item: 80px;
