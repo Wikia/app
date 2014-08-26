@@ -10,7 +10,7 @@ class JsonFormatTest extends WikiaBaseTest {
 	public function setUp() {
 		global $IP;
 		$this->setupFile = "$IP/extensions/wikia/JsonFormat/JsonFormat.setup.php";
-	t 	$this->mockGlobalVariable( 'wgTitle', Title::newFromText( 'TestPageDoesNotExist' ));
+	 	$this->mockGlobalVariable( 'wgTitle', Title::newFromText( 'TestPageDoesNotExist' ) );
 		parent::setUp();
 	}
 
