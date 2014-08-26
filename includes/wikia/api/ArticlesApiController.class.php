@@ -973,22 +973,17 @@ class ArticlesApiController extends WikiaApiController {
 	public function getPopular() {
 		$limit = $this->getRequest()->getInt( self::PARAMETER_LIMIT, self::POPULAR_ARTICLES_PER_WIKI );
 		$expand = $this->request->getBool( static::PARAMETER_EXPAND, false );
-		$baseArticleId = $this->getRequest()->getVal( 'baseArticleId', null );
+		$baseArticleId = $this->getRequest()->getVal( 'baseArticleId', false );
 		if ( $limit < 1 || $limit > self::POPULAR_ARTICLES_PER_WIKI ) {
 			throw new OutOfRangeApiException( self::PARAMETER_LIMIT, 1, self::POPULAR_ARTICLES_PER_WIKI );
 		}
-		$key = self::getCacheKey( self::POPULAR_CACHE_ID, '' , [ $expand ]);
+		$key = self::getCacheKey( self::POPULAR_CACHE_ID, '' , [ $expand, $baseArticleId ]);
 
 		$result = $this->wg->Memc->get( $key );
-		if( $baseArticleId ) {
-			// we need more data than in cache
-			$result = false;
-		}
 		if ( $result === false ) {
 			$searchConfig = $this->getConfigFromRequest();
 			if( $baseArticleId ) {
 				$searchConfig->setLimit( 100 );
-				$limit = 100;
 			}
 			$result = $this->getResultFromConfig( $searchConfig );
 			if ( $expand ) {
@@ -1003,15 +998,13 @@ class ArticlesApiController extends WikiaApiController {
 			$this->wg->set( $key, $result, self::CLIENT_CACHE_VALIDITY );
 		}
 
-		$result = array_slice( $result, 0, $limit );
-
-		if( $baseArticleId ) {
+		if( $baseArticleId !== false ) {
 			$db = wfGetDB( DB_SLAVE );
 			$links = ( new \WikiaSQL() )
 				->SELECT( 'pl_title' )
 				->FROM( 'pagelinks' )
 				->WHERE( 'pl_from' )->EQUAL_TO( $baseArticleId )
-				->AND_( 'pl_namespace' )->EQUAL_TO( 0 )
+				->AND_( 'pl_namespace' )->EQUAL_TO( NS_MAIN )
 				->runLoop(
 					$db,
 					function( &$dataCollector, $row ){
@@ -1021,27 +1014,28 @@ class ArticlesApiController extends WikiaApiController {
 					}
 				);
 
-			$result2 = [];
+			$resultForArticle = [];
 			foreach( $result as $key=>$item ) {
 				$link = $item[ 'url' ];
 				if( !empty( $links[ $link ] ) ) {
-					$result2[] = $item;
+					$resultForArticle[] = $item;
 				}
 			}
 
-			$limit = $this->getRequest()->getInt( self::PARAMETER_LIMIT, self::POPULAR_ARTICLES_PER_WIKI );
 			foreach( $result as $key=>$item ) {
-				if( count( $result2 ) >= $limit ) {
+				if( count( $resultForArticle ) >= $limit ) {
 					break;
 				}
 				$link = $item[ 'url' ];
 				if( empty( $links[ $link ] ) ) {
-					$result2[] = $item;
+					$resultForArticle[] = $item;
 				}
 			}
 
-			$result = $result2;
+			$result = $resultForArticle;
 		}
+
+		$result = array_slice( $result, 0, $limit );
 
 		$this->setResponseData(
 			[ 'items' => $result, 'basepath' => $this->wg->Server ],
