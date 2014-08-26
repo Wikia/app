@@ -6,10 +6,11 @@ class ArticleAsJson extends WikiaService {
 
 	const CACHE_VERSION = '0.0.1';
 
-	private static function createMarker($width = 0, $height = 0){
+	private static function createMarker($width = 0, $height = 0, $isGallery = false){
 		$id = count(self::$media) - 1;
+		$classes = 'article-media' . ($isGallery ? ' gallery' : '');
 
-		return "<script class='article-media' data-ref={$id} data-width='{$width}' data-height='{$height}'></script>";
+		return "<script class='{$classes}' data-ref='{$id}' data-width='{$width}' data-height='{$height}'></script>";
 	}
 
 	private static function createMediaObj($details, $imageName, $caption = "") {
@@ -69,7 +70,11 @@ class ArticleAsJson extends WikiaService {
 
 			self::$media[] = $media;
 
-			$out = self::createMarker(300, 300);
+			if ( !empty( $media ) ) {
+				$out = self::createMarker($media[0]['width'], $media[0]['height'], true);
+			} else {
+				$out = '';
+			}
 
 			wfProfileOut( __METHOD__ );
 			return false;
