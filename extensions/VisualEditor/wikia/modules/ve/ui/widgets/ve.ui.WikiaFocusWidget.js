@@ -21,6 +21,7 @@ ve.ui.WikiaFocusWidget = function VeUiWikiaFocusWidget( surface ) {
 	this.node = null;
 	this.spacing = 10;
 	this.layout = null;
+	this.layoutHash = null;
 	this.$top = this.$( '<div>' )
 		.addClass( 've-ui-wikiaFocusWidget-shield ve-ui-wikiaFocusWidget-topShield' );
 	this.$right = this.$( '<div>' )
@@ -114,11 +115,12 @@ ve.ui.WikiaFocusWidget.prototype.adjustLayout = function () {
 			this.getLayoutForNode( surfaceOffset, surfaceEdges, documentDimensions ) :
 			this.getLayoutForArticle( surfaceOffset, surfaceEdges, documentDimensions );
 
-	if ( JSON.stringify( layout ) !== JSON.stringify( this.layout ) ) {
+	if ( OO.getHash( layout ) !== this.layoutHash ) {
 		for ( shield in layout ) {
 			this['$' + shield].css( layout[shield] );
 		}
 		this.layout = layout;
+		this.layoutHash = OO.getHash( this.layout );
 	}
 };
 
