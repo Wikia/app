@@ -12,10 +12,9 @@ class ExactTargetUpdatesHooks {
 		global $wgWikiaEnvironment;
 		if ( $wgWikiaEnvironment != WIKIA_ENV_DEV && $wgWikiaEnvironment != WIKIA_ENV_INTERNAL ) {
 			$aParams = $this->prepareParams( $user );
-			var_dump($aParams);
 			$task = new ExactTargetAddUserTask();
-			var_dump($task->call( 'sendNewUserData', $aParams ));
-			var_dump($task->queue());
+			$task->call( 'sendNewUserData', $aParams );
+			$task->queue();
 		}
 		return true;
 	}
