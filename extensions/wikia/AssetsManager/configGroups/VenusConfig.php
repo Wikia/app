@@ -30,12 +30,13 @@ $VenusConfig['venus_css'] = [
 ];
 
 /** GlobalNavigation extension */
-$VenusConfig['global_navigation_css'] = array(
+$VenusConfig['global_navigation_scss'] = array(
 	'type' => AssetsManager::TYPE_SCSS,
 	'skin' => ['venus', 'oasis'],
 	'assets' => array(
 		'//extensions/wikia/GlobalNavigation/css/GlobalNavigation.scss',
-		'//extensions/wikia/GlobalNavigation/css/GlobalNavigationHubsMenu.scss'
+		'//extensions/wikia/GlobalNavigation/css/GlobalNavigationHubsMenu.scss',
+		'//extensions/wikia/GlobalNavigation/css/GlobalNavigationSearch.scss'
 	)
 );
 
@@ -47,6 +48,7 @@ $VenusConfig['global_navigation_js'] = [
 		'//extensions/wikia/GlobalNavigation/js/GlobalNavigationLazyLoad.js',
 		'//extensions/wikia/GlobalNavigation/js/GlobalNavigationHubsMenu.js',
 		'//extensions/wikia/GlobalNavigation/js/GlobalNavigation.js',
+		'//extensions/wikia/GlobalNavigation/js/GlobalNavigationSearch.js',
 	]
 ];
 
@@ -56,23 +58,5 @@ $VenusConfig['global_footer_scss'] = array(
 	'skin' => ['venus'],
 	'assets' => array(
 		'//extensions/wikia/GlobalFooter/styles/GlobalFooter.scss'
-	)
-);
-
-/** GlobalNavigation extension */
-$VenusConfig['global_navigation_scss'] = array(
-	'type' => AssetsManager::TYPE_SCSS,
-	'skin' => ['venus'],
-	'assets' => array(
-		'//extensions/wikia/GlobalNavigation/css/GlobalNavigation.scss',
-		'//extensions/wikia/GlobalNavigation/css/GlobalNavigationSearch.scss'
-	)
-);
-
-$VenusConfig['global_navigation_js'] = array(
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => ['venus', 'oasis'],
-	'assets' => array(
-		'//extensions/wikia/GlobalNavigation/js/GlobalNavigationSearch.js',
 	)
 );
