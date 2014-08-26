@@ -20,7 +20,7 @@ define(
 				$verticals = $('> .hubs', $hubs),
 				$hubLinks = $('> .hub-links', $hubs);
 
-			$sections = $($.parseHTML(menuItems));
+			$sections = $($.parseHTML(menuItems)).removeClass('active');
 			$subMenu = $sections.filter(subMenuSelector);
 			$('> .active', $hubLinks).removeClass('active');
 
