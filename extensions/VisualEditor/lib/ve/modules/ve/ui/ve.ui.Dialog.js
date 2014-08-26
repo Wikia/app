@@ -135,6 +135,29 @@ ve.ui.Dialog.prototype.getTeardownProcess = function ( data ) {
 		}, this );
 };
 
+ve.ui.Dialog.prototype.getSetupProcess = function ( data ) {
+	return ve.ui.Dialog.super.prototype.getSetupProcess.apply( this, data )
+		.next( function () {
+			if ( this.draggable ) {
+				this.alignToSurface();
+			}
+		}, this );
+};
+
+ve.ui.Dialog.prototype.alignToSurface = function () {
+	var padding = 10,
+		$surface = this.surface.getView().$element,
+		surfaceOffset = $surface.offset();
+
+	if ( this.surface.getView().getFocusedNode().getHorizontalBias() === 'right' ) {
+		this.frame.$element.parent()
+			.css( 'left', surfaceOffset.left - padding );
+	} else {
+		this.frame.$element.parent()
+			.css( 'left', surfaceOffset.left + $surface.width() - this.frame.$element.parent().outerWidth() + padding );
+	}
+};
+
 /**
  * Get the surface fragment the dialog is for
  *
