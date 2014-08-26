@@ -498,7 +498,7 @@ define('wikia.intMap.poiCategories',
 		function findPoiCategoryById(id, poiCategories) {
 			return $.grep(poiCategories, function (item) {
 				return item.id === id;
-			})[0];
+			})[0] || null;
 		}
 
 		/**
