@@ -3,6 +3,9 @@
 class ArticleAsJson extends WikiaService {
 	static $media = [];
 	static $users = [];
+	static $getMediaDetailConfig = [
+		'imageMaxWidth' => false
+	];
 
 	const CACHE_VERSION = '0.0.1';
 
@@ -29,11 +32,22 @@ class ArticleAsJson extends WikiaService {
 					false
 				)->getText(),
 			'user' => $details['userName'],
-			'embed' => $details['videoEmbedCode'],
-			'views' => (int) $details['videoViews'],
-			'width' => (int) $details['width'],
-			'height' => (int) $details['height']
+			'mediaType' => $details['mediaType']
 		];
+
+		if ( !empty( $details['width'] ) ) {
+			$media['width'] = (int) $details['width'];
+		}
+
+		if ( !empty( $details['height'] ) ) {
+			$media['height'] = (int) $details['height'];
+		}
+
+		if ( $details['mediaType'] == 'video' ) {
+			$media['views'] = (int) $details['videoViews'];
+			$media['embed'] = $details['videoEmbedCode'];
+			$media['provider'] = $details['providerName'];
+		}
 
 		wfProfileOut( __METHOD__ );
 		return $media;
@@ -62,7 +76,7 @@ class ArticleAsJson extends WikiaService {
 			$media = [];
 
 			foreach($data['images'] as $image) {
-				$details = WikiaFileHelper::getMediaDetail( Title::newFromText( $image['name'], NS_FILE ) );
+				$details = WikiaFileHelper::getMediaDetail( Title::newFromText( $image['name'], NS_FILE ), self::$getMediaDetailConfig );
 
 				$media[] = self::createMediaObj($details, $image['name'], $image['caption']);
 
@@ -91,13 +105,13 @@ class ArticleAsJson extends WikiaService {
 		wfProfileIn( __METHOD__ );
 
 		if ( $wgArticleAsJson ) {
-			$details = WikiaFileHelper::getMediaDetail( $title );
+			$details = WikiaFileHelper::getMediaDetail( $title, self::$getMediaDetailConfig );
 
 			self::$media[] = self::createMediaObj($details, $title->getText(), $frameParams['caption']);
 
 			self::addUserObj($details);
 
-			$res = self::createMarker($details['width'],$details['height']);
+			$res = self::createMarker($details['width'], $details['height']);
 
 			wfProfileOut( __METHOD__ );
 			return false;
