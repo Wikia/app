@@ -66,6 +66,7 @@ class ArticlesApiController extends WikiaApiController {
 		'height'
 	];
 
+	private $excludeNamespacesFromCategoryMembersDBQuery = false;
 
 	/**
 	 * Get the top articles by pageviews optionally filtering by category and/or namespaces
@@ -499,7 +500,18 @@ class ArticlesApiController extends WikiaApiController {
 					$namespaces = implode( '|', $namespaces );
 				}
 
-				$wrapper = new GlobalStateWrapper( array( 'wgMiserMode' => false ) );
+				/**
+				 * Wrapping global wgMiserMode.
+				 *
+				 * wgMiserMode = true (default) changes the behavior of categorymembers mediawiki API, causing it to
+				 * filter by namespace after making database query constrained by $limit and thus resulting
+				 * in Api returning fewer than $limit results
+				 *
+				 * wgMiserMode = false filters on DB level
+				 */
+				$wrapper = new GlobalStateWrapper( [
+					'wgMiserMode' => $this->excludeNamespacesFromCategoryMembersDBQuery
+				] );
 				$articles = $wrapper->wrap( function () use ( $category, $limit, $offset, $namespaces ) {
 					return self::getCategoryMembers( $category->getFullText(), $limit, $offset, $namespaces );
 				} );
@@ -1064,5 +1076,21 @@ class ArticlesApiController extends WikiaApiController {
 		$memc = F::app()->wg->Memc;
 		$memc->delete( self::getCacheKey( $id, self::ARTICLE_CACHE_ID ) );
 		$memc->delete( self::getCacheKey( $id, self::DETAILS_CACHE_ID ) );
+	}
+
+	/**
+	 * @param $value boolean
+	 *
+	 * @see wgMiserMode
+	 */
+	public function setExcludeNamespacesFromCategoryMembersDBQuery($value) {
+		$this->excludeNamespacesFromCategoryMembersDBQuery = $value;
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function getExcludeNamespacesFromCategoryMembersDBQuery() {
+		return $this->excludeNamespacesFromCategoryMembersDBQuery;
 	}
 }
