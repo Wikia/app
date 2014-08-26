@@ -5,8 +5,6 @@
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
-/*global mw */
-
 ( function () {
 var hasOwn = Object.hasOwnProperty,
 	specCache = {};
@@ -233,7 +231,7 @@ ve.dm.MWTransclusionModel.prototype.fetch = function () {
 		'titles': titles.join( '|' ),
 	} )
 		.done( function ( data ) {
-			var page, i;
+			var page, i, id;
 			if ( data && data.pages ) {
 				for ( id in data.pages ) {
 					page = data.pages[id];
