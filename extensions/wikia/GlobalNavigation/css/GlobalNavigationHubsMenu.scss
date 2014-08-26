@@ -28,6 +28,7 @@
 	border: 1px solid $nav-alternative-color;
 	color: $nav-active-color;
 	display: none;
+	left: -1px;
 	position: absolute;
 	top: $global-navigation-height;
 	width: 768px;
