@@ -1075,10 +1075,14 @@ class ArticlesApiController extends WikiaApiController {
 	 * that items, which urls are in array $links - will be moved to the beginning of array.
 	 *
 	 * Example:
-	 * 1) Assume that $popular = [ [ url => '1'], [ url => '2'], [ url => '3'], [ url => '4'], [ url => '5'], [ url => '6'] ]
-	 * 2) Assume that $links = [ '2', '4', '5', '100', '200' ]
 	 *
-	 * This method will returns following array:
+	 * Assume that:
+	 * $popular = [ [ url => '1'], [ url => '2'], [ url => '3'], [ url => '4'], [ url => '5'], [ url => '6'] ]
+	 *
+	 * Assume that:
+	 * $links = [ '2', '4', '5', '100', '200' ]
+	 *
+	 * This method will returns the following array:
 	 * [ [ url => '2'], [ url => '4'], [ url => '5'], [ url => '1'], [ url => '3'], [ url => '6'] ]
 	 *
 	 * @param popular - array of objects, which contains field 'url'
