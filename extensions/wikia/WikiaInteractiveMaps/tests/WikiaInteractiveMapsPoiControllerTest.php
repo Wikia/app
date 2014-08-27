@@ -57,6 +57,25 @@ class WikiaInteractiveMapsPoiControllerTest extends WikiaBaseTest {
 		$controllerMock->editPoi();
 	}
 
+	public function testDeletePoi_throws_permission_error_when_anon() {
+		$userMock = $this->getUserMock();
+
+		$userMock->expects( $this->once() )
+			->method( 'isLoggedIn' )
+			->willReturn( false );
+
+		$controllerMock = $this->getWikiaInteractiveMapsPoiControllertMock();
+		$controllerMock->expects( $this->any() )
+			->method( 'getData' )
+			->with( 'poiId' )
+			->willReturn( 1 );
+
+		$controllerMock->wg->User = $userMock;
+
+		$this->setExpectedException( 'PermissionsException' );
+		$controllerMock->deletePoi();
+	}
+
 	private function getWikiaInteractiveMapsPoiControllertMock() {
 		$requestMock = $this->getMockBuilder( 'WikiaRequest' )
 			->setMethods( [ 'getVal', 'getArray', 'getInt' ] )
