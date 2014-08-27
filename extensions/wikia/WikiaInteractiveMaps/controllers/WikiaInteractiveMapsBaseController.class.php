@@ -167,4 +167,14 @@ class WikiaInteractiveMapsBaseController extends WikiaController {
 
 		return $errorMessage;
 	}
+
+	/**
+	 * Simple getter
+	 *
+	 * @return WikiaMaps
+	 */
+	public function getModel() {
+		return $this->mapsModel;
+	}
+
 }
