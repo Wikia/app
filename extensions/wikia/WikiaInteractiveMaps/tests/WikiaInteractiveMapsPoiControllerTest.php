@@ -7,14 +7,43 @@ class WikiaInteractiveMapsPoiControllerTest extends WikiaBaseTest {
 		parent::setUp();
 	}
 
-	public function testEditPoiCategories_throws_permission_error() {
+	public function testEditPoiCategories_throws_permission_error_when_anon() {
+		$userMock = $this->getUserMock();
+
+		$userMock->expects( $this->once() )
+			->method( 'isLoggedIn' )
+			->willReturn( false );
+
+		$controllerMock = $this->getWikiaInteractiveMapsPoiControllertMock();
+		$controllerMock->wg->User = $userMock;
+
+		$this->setExpectedException( 'PermissionsException' );
+		$controllerMock->editPoiCategories();
+	}
+
+	public function testEditPoiCategories_throws_permission_error_when_user_blocked() {
+		$this->markTestSkipped();
+
+		$userMock = $this->getUserMock();
+
+		$userMock->expects( $this->once() )
+			->method( 'isLoggedIn' )
+			->willReturn( true );
+
+		$userMock->expects( $this->once() )
+			->method( 'isBlocked' )
+			->willReturn( true );
+
+		$controllerMock = $this->getWikiaInteractiveMapsPoiControllertMock();
+		$controllerMock->wg->User = $userMock;
+
+		$this->setExpectedException( 'PermissionsException' );
+		$controllerMock->editPoiCategories();
+	}
+
+	private function getWikiaInteractiveMapsPoiControllertMock() {
 		$requestMock = $this->getMockBuilder( 'WikiaRequest' )
 			->setMethods( [ 'getVal', 'getArray' ] )
-			->disableOriginalConstructor()
-			->getMock();
-
-		$userMock = $this->getMockBuilder( 'User' )
-			->setMethods( [ 'getName', 'isLoggedIn' ] )
 			->disableOriginalConstructor()
 			->getMock();
 
@@ -24,10 +53,15 @@ class WikiaInteractiveMapsPoiControllerTest extends WikiaBaseTest {
 			->getMock();
 
 		$controllerMock->request = $requestMock;
-		$controllerMock->wg->User = $userMock;
 
-		$this->setExpectedException( 'PermissionsException' );
-		$controllerMock->editPoiCategories();
+		return $controllerMock;
+	}
+
+	private function getUserMock() {
+		return $this->getMockBuilder( 'User' )
+			->setMethods( [ 'getName', 'isLoggedIn', 'isBlocked' ] )
+			->disableOriginalConstructor()
+			->getMock();
 	}
 
 }
