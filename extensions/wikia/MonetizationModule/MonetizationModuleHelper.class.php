@@ -21,7 +21,7 @@ class MonetizationModuleHelper extends WikiaModel {
 	const RENDERING_IN_PROCESS = 1;
 
 	const API_VERSION = 'v1';
-	const API_TIMEOUT = 200;				// timeout in milliseconds
+	const API_TIMEOUT = 50;				// timeout in milliseconds
 	const IN_CONTENT_KEYWORD = '<h2>';
 
 	/**
@@ -84,7 +84,10 @@ class MonetizationModuleHelper extends WikiaModel {
 		$url .= 'api/' . self::API_VERSION . '?' . http_build_query( $params );
 		$options = [
 			'noProxy' => true,
-			'curlOptions' => [ CURLOPT_TIMEOUT_MS => self::API_TIMEOUT ],
+			'curlOptions' => [
+				CURLOPT_TIMEOUT_MS => self::API_TIMEOUT,
+				CURLOPT_NOSIGNAL => true,
+			],
 		];
 		$req = MWHttpRequest::factory( $url, $options );
 		$status = $req->execute();
