@@ -22,8 +22,6 @@ class WikiaInteractiveMapsPoiControllerTest extends WikiaBaseTest {
 	}
 
 	public function testEditPoiCategories_throws_permission_error_when_user_blocked() {
-		$this->markTestSkipped();
-
 		$userMock = $this->getUserMock();
 
 		$userMock->expects( $this->once() )

@@ -222,7 +222,7 @@ class WikiaInteractiveMapsPoiController extends WikiaInteractiveMapsBaseControll
 		$createPoiCategories = $this->getData( 'createPoiCategories' );
 		$updatePoiCategories = $this->getData( 'updatePoiCategories' );
 
-		if ( !$this->wg->User->isLoggedIn() ) {
+		if ( !$this->wg->User->isLoggedIn() || $this->wg->User->isBlocked() ) {
 			throw new PermissionsException( WikiaInteractiveMapsController::PAGE_RESTRICTION );
 		}
 
