@@ -125,7 +125,13 @@ function memsess_destroy( $id ) {
 	$memc->delete( memsess_key( $id ) );
 
 	/** Wikia change - begin - PLATFORM-308 */
-	global $wgSessionDebugData;
+	global $wgSessionDebugData, $wgSessionName, $wgCookiePrefix;
+	$sSessionName =  $wgSessionName ? $wgSessionName : $wgCookiePrefix . '_session';
+	// Attempt to remove the cookie from the client.
+	if ( isset( $_COOKIE[$sSessionName] ) ) {
+		setcookie( $sSessionName, $id, time() - 3600 );
+		unset( $_COOKIE[$sSessionName] );
+	}
 	$wgSessionDebugData[] = [ 'event' => 'destroy', 'id' => $id ];
 	/** Wikia change - end */
 
@@ -145,14 +151,15 @@ function memsess_gc( $maxlifetime ) {
 
 function memsess_write_close() {
 	/** Wikia change - begin - PLATFORM-308 */
-	global $wgSessionDebugData, $wgRequest, $wgUser;
+	global $wgSessionDebugData, $wgRequest, $wgUser, $wgSessionName, $wgCookiePrefix;
 	$wgSessionDebugData[] = [ 'event' => 'write_close-begin' ];
 	/** Wikia change - end */
 	session_write_close();
 	/** Wikia change - begin - PLATFORM-308 */
 	$wgSessionDebugData[] = [ 'event' => 'write_close-end' ];
 	$sBrowser = isset( $_SERVER['HTTP_USER_AGENT'] )? $_SERVER['HTTP_USER_AGENT'] : 'unknown';
-	$sCookie = isset( $_COOKIE['wikicities_session'] )? $_COOKIE['wikicities_session'] : 'empty';
+	$sSessionName =  $wgSessionName ? $wgSessionName : $wgCookiePrefix . '_session';
+	$sCookie = isset( $_COOKIE[$sSessioName] )? $_COOKIE[$sSessionName] : 'empty';
 	\Wikia\Logger\WikiaLogger::instance()->debug(
 		'PLATFORM-308',
 		[
