@@ -24,6 +24,17 @@ class MonetizationModuleHelper extends WikiaModel {
 	const API_TIMEOUT = 50;				// timeout in milliseconds
 	const IN_CONTENT_KEYWORD = '<h2>';
 
+	const FONT_COLOR_DARK_THEME = 'd5d4d4';
+	const FONT_COLOR_LIGHT_THEME = '3a3a3a';
+
+	protected static $mapThemeSettings = [
+		'data-color-bg'     => 'color-page',
+		'data-color-border' => 'color-page',
+		'data-color-link'   => 'color',
+		'data-color-url'    => 'color-links',
+		'data-color-text'   => 'color',
+	];
+
 	/**
 	 * Show the Module only on File pages, Article pages, and Main pages
 	 * @return boolean
@@ -92,7 +103,11 @@ class MonetizationModuleHelper extends WikiaModel {
 		$req = MWHttpRequest::factory( $url, $options );
 		$status = $req->execute();
 		if ( $status->isGood() ) {
-			$result = json_decode( $req->getContent(), true );
+			$result = $req->getContent();
+			if ( !empty( $result ) ) {
+				$result = self::setThemeSettings( json_decode( $result, true ) );
+				$app->wg->Memc->set( $cacheKey, json_encode( $result ), self::CACHE_TTL );
+			}
 		} else {
 			$result = false;
 			$loggingParams = array_merge( [ 'method' => __METHOD__ ], $params );
@@ -175,6 +190,39 @@ class MonetizationModuleHelper extends WikiaModel {
 		wfProfileOut( __METHOD__ );
 
 		return $body;
+	}
+
+	/**
+	 * Set wiki theme setting to the ad units
+	 * @param array $adUnits
+	 * @return array
+	 */
+	public static function setThemeSettings( $adUnits ) {
+		wfProfileIn( __METHOD__ );
+
+		if ( is_array( $adUnits ) ) {
+			$theme = SassUtil::getOasisSettings();
+			if ( SassUtil::isThemeDark() ) {
+				$theme['color'] = self::FONT_COLOR_DARK_THEME;
+			} else {
+				$theme['color'] = self::FONT_COLOR_LIGHT_THEME;
+			}
+
+			$adSettings = '';
+			foreach( self::$mapThemeSettings as $key => $value ) {
+				if ( !empty( $theme[$value] ) ) {
+					$adSettings .= $key.'="'.$theme[$value].'" ';
+				}
+			}
+
+			foreach ( $adUnits as &$unit ) {
+				$unit = str_replace( '$theme', $adSettings, $unit );
+			}
+		}
+
+		wfProfileOut( __METHOD__ );
+
+		return $adUnits;
 	}
 
 }
