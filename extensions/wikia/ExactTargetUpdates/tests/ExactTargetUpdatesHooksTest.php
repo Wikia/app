@@ -1,6 +1,7 @@
 <?php
 
 class ExactTargetUpdatesHooksTest extends WikiaBaseTest {
+
 	public function PrepareParamstest() {
 		$userMock = $this->getMockBuilder( 'User' )
 			->disableOriginalConstructor()
