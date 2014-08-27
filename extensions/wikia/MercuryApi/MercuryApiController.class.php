@@ -72,11 +72,11 @@ class MercuryApiController extends WikiaController {
 	}
 
 	/**
-	 * @return Int
+	 * @return Title Article Title
 	 * @throws NotFoundApiException
 	 * @throws BadRequestApiException
 	 */
-	private function getArticleIdFromRequest(){
+	private function getTitleFromRequest(){
 		$articleId = $this->request->getInt(self::ARTICLE_ID_PARAMETER_NAME, NULL);
 		$articleTitle = $this->request->getVal(self::ARTICLE_TITLE_PARAMETER_NAME, NULL);
 
@@ -94,78 +94,15 @@ class MercuryApiController extends WikiaController {
 			$title = Title::newFromId( $articleId, NS_MAIN );
 		}
 
-		if ( $title instanceof Title && $title->isKnown() ) {
-			$articleId = $title->getArticleId();
-		} else {
-			$articleId = false;
+		if ( !$title instanceof Title || !$title->isKnown() ) {
+			$title = false;
 		}
 
-		if ( empty( $articleId ) ) {
+		if ( empty( $title ) ) {
 			throw new NotFoundApiException( "Unable to find any article" );
 		}
 
-		return $articleId;
-	}
-
-	private function getAdsContext( $articleId ) {
-		$title = Title::newFromID( $articleId );
-		$this->wg->title = $title;
-
-		$adEngineVariables = AdEngine2Service::getTopJsVariables();
-		$requestContext = RequestContext::newExtraneousContext( $title );
-
-		return [
-			'opts' => [
-				'adsInHead' => $adEngineVariables[ 'wgLoadAdsInHead' ],
-				'disableLateQueue' => $adEngineVariables[ 'wgAdEngineDisableLateQueue' ],
-				'lateAdsAfterPageLoad' => $adEngineVariables[ 'wgLoadLateAdsAfterPageLoad' ],
-				'pageType' => $adEngineVariables[ 'adEnginePageType' ],
-				'showAds' => $adEngineVariables[ 'wgShowAds' ],
-				'usePostScribe' => $adEngineVariables[ 'wgUsePostScribe' ],
-				'trackSlotState' => $adEngineVariables[ 'wgAdDriverTrackState' ],
-			],
-			'targeting' => [
-				'enableKruxTargeting' => $adEngineVariables[ 'wgEnableKruxTargeting' ],
-				'kruxCategoryId' => isset( $adEngineVariables[ 'wgKruxCategoryId' ] ) ?
-						$adEngineVariables['wgKruxCategoryId'] :
-						0,
-				'pageArticleId' => $title->getArticleId(),
-				'pageCategories' => $adEngineVariables[ 'wgAdDriverUseCatParam' ] ?
-						$requestContext->getOutput()->getCategories() : // FIXME
-						[],
-				'pageIsArticle' => $requestContext->getOutput()->isArticle(), // FIXME
-				'pageIsHub' => $adEngineVariables[ 'wikiaPageIsHub' ],
-				'pageName' => $title->getPrefixedDBKey(),
-				'pageType' => $adEngineVariables[ 'wikiaPageType' ],
-				'sevenOneMediaSub2Site' => $adEngineVariables[ 'wgAdDriverSevenOneMediaOverrideSub2Site' ],
-				'skin' => $requestContext->getOutput()->getSkin()->getSkinName(),
-				'wikiCategory' => $adEngineVariables[ 'cityShort' ],
-				'wikiCustomKeyValues' => $adEngineVariables[ 'wgDartCustomKeyValues' ], // FIXME
-				'wikiDbName' => $this->wg->DBname,
-				'wikiDirectedAtChildren' => $adEngineVariables[ 'wgWikiDirectedAtChildren' ],
-				'wikiLanguage' => $title->getPageLanguage()->getCode(),
-				'wikiVertical' => $adEngineVariables[ 'cscoreCat' ],
-			],
-			'providers' => [
-				'ebay' => $adEngineVariables[ 'wgAdDriverUseEbay' ],
-				'sevenOneMedia' => $adEngineVariables[ 'wgAdDriverUseSevenOneMedia' ],
-				'sevenOneMediaCombinedUrl' => isset( $adEngineVariables[ 'wgAdDriverSevenOneMediaCombinedUrl' ] ) ?
-						$adEngineVariables[ 'wgAdDriverSevenOneMediaCombinedUrl' ] :
-						null,
-				'remnantGptMobile' => $this->wg->AdDriverEnableRemnantGptMobile,
-			],
-			'slots' => [
-				'bottomLeaderboardImpressionCapping' => isset(
-							$adEngineVariables[ 'wgAdDriverBottomLeaderboardImpressionCapping ']
-						) ?
-						$adEngineVariables[ 'wgAdDriverBottomLeaderboardImpressionCapping '] :
-						null
-			],
-			'forceProviders' => [
-				'directGpt' => $adEngineVariables[ 'wgAdDriverForceDirectGptAd' ],
-				'liftium' => $adEngineVariables[ 'wgAdDriverForceLiftiumAd' ],
-			]
-		];
+		return $title;
 	}
 
 	/**
@@ -214,18 +151,21 @@ class MercuryApiController extends WikiaController {
 	 * @throws BadRequestApiException
 	 */
 	public function getArticle(){
-		$articleId = $this->getArticleIdFromRequest();
+		$title = $this->getTitleFromRequest();
+		$articleId = $title->getArticleId();
 
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
+
+		$article = $this->getArticleJson( $articleId );
 
 		$this->response->setVal( 'data', [
 			'details' => $this->getArticleDetails( $articleId ),
 			'topContributors' => $this->getTopContributorsDetails(
 					$this->getTopContributorsPerArticle( $articleId )
 				),
-			'article' => $this->getArticleJson( $articleId ),
+			'article' => $article,
 			'relatedPages' => $this->getRelatedPages( $articleId ),
-			'adsContext' => $this->getAdsContext( $articleId ),
+			'adsContext' => $this->mercuryApi->getAdsContext( $title, $this->wg, $article[ 'categories' ] ),
 			'basePath' => $this->wg->Server
 		]);
 	}
