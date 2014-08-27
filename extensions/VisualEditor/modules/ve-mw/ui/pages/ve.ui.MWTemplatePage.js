@@ -5,8 +5,6 @@
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
-/*global mw */
-
 /**
  * MediaWiki transclusion dialog template page.
  *
@@ -19,8 +17,6 @@
  * @param {Object} [config] Configuration options
  */
 ve.ui.MWTemplatePage = function VeUiMWTemplatePage( template, name, config ) {
-	var title;
-
 	// Configuration initialization
 	config = ve.extendObject( {
 		'scrollable': false
