@@ -68,7 +68,11 @@ class MercuryApiController extends WikiaController {
 	 * @return null
 	 */
 	private function getRelatedPages( $articleId, $limit = 6 ){
-		return RelatedPages::getInstance()->get( $articleId, $limit );
+		if ( class_exists( 'RelatedPages' ) ) {
+			return RelatedPages::getInstance()->get( $articleId, $limit );
+		} else {
+			return false;
+		}
 	}
 
 	/**
@@ -154,19 +158,25 @@ class MercuryApiController extends WikiaController {
 		$title = $this->getTitleFromRequest();
 		$articleId = $title->getArticleId();
 
-		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
-
 		$article = $this->getArticleJson( $articleId );
 
-		$this->response->setVal( 'data', [
+		$data = [
 			'details' => $this->getArticleDetails( $articleId ),
 			'topContributors' => $this->getTopContributorsDetails(
 					$this->getTopContributorsPerArticle( $articleId )
 				),
 			'article' => $article,
-			'relatedPages' => $this->getRelatedPages( $articleId ),
 			'adsContext' => $this->mercuryApi->getAdsContext( $title, $this->wg, $article[ 'categories' ] ),
 			'basePath' => $this->wg->Server
-		]);
+		];
+
+		$relatedPages = $this->getRelatedPages( $articleId );
+		if ( !empty( $relatedPages ) ) {
+			$data['relatedPages'] = $relatedPages;
+		}
+
+		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
+
+		$this->response->setVal( 'data', $data );
 	}
 }
