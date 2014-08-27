@@ -42,6 +42,7 @@ define('ext.wikia.adEngine.gptSlotConfig', function () {
 			EXIT_STITIAL_BOXAD_1:       {size: '300x250'},
 			HOME_TOP_LEADERBOARD:       {size: '728x90', loc: 'top'},
 			HOME_TOP_RIGHT_BOXAD:       {size: '300x250', loc: 'top'},
+			INCONTENT_BOXAD_1:          {size: '300x250', loc: 'middle'},
 			LEFT_SKYSCRAPER_2:          {size: '160x600', loc: 'middle'},
 			LEFT_SKYSCRAPER_3:          {size: '160x600', loc: 'footer'},
 			TEST_TOP_RIGHT_BOXAD:       {size: '300x250', loc: 'top'},
