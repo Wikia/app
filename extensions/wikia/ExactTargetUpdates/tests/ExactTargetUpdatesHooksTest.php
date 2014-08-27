@@ -73,65 +73,39 @@ class ExactTargetUpdatesHooksTest extends WikiaBaseTest {
 
 	function testTaskNotCreatedOnDev() {
 
-		// Define environment constants if not defined yet
+		/* Define environment constants if not defined yet */
 		if ( !defined( 'WIKIA_ENV_DEV' ) ) {
-				define( WIKIA_ENV_DEV, 'test-dev') ;
+			define( WIKIA_ENV_DEV, 'test-dev') ;
 		}
 		if ( !defined( 'WIKIA_ENV_INTERNAL' ) ) {
-				define( WIKIA_ENV_INTERNAL, 'test-internal' );
+			define( WIKIA_ENV_INTERNAL, 'test-internal' );
 		}
 
-		// Setup mocks
+		/* Mock wgWikiaEnvironment */
 		$this->mockGlobalVariable( 'wgWikiaEnvironment', WIKIA_ENV_DEV );
 
+		/* Mock user */
 		$userMock = $this->getMockBuilder( 'User' )
 			->disableOriginalConstructor()
 			->getMock();
 
-		// ExactTargetAddUserTask
-		$mockAddUserTaskParams = array (
-			'call' => [ 'will' => 'null', 'expects' => 0 ],
-			'queue' => [ 'will' => 'null', 'expects' => 0 ],
-		);
-		$this->setUpMockObject( 'ExactTargetAddUserTask', $mockAddUserTaskParams, true );
+		/* Mock ExactTargetAddUserTask */
+		$mockAddUserTask = $this->getMock( 'ExactTargetAddUserTask', [ 'call', 'queue' ] );
+		$mockAddUserTask
+			->expects( $this->never() )
+			->method( 'call' );
+		$mockAddUserTask
+			->expects( $this->never() )
+			->method( 'queue' );
 
-		// Mock tested class ExactTargetUpdatesHooks
+		/* Mock tested class ExactTargetUpdatesHooks */
 		$exactTargetUpdatesHooksMock = $this->getMock( 'ExactTargetUpdatesHooks', [ 'prepareParams' ] );
-		// Override prepareParams method output
-		$exactTargetUpdatesHooksMock->expects( $this->never() )
-			->method( 'prepareParams' )
-			->will( $this->returnValue( ['foo'=>'bar'] ) );
+		$exactTargetUpdatesHooksMock
+			->expects( $this->never() )
+			->method( 'prepareParams' );
 
-		$getReturnToFromQueryMethod = new ReflectionMethod( 'ExactTargetUpdatesHooks', 'onSignupConfirmEmailCompleteRun' );
-
-		$getReturnToFromQueryMethod->invoke( $exactTargetUpdatesHooksMock, $userMock );
-	}
-
-	protected function setUpMockObject( $objectName, $objectParams = null, $needSetInstance = false ) {
-		$mockObject = $objectParams;
-		if ( is_array( $objectParams ) ) {
-
-			$methods = array_keys( $objectParams );
-
-			$mockObject = $this->getMock( $objectName, $methods );
-
-			foreach( $objectParams as $method => $methodParams ) {
-					if ( isset( $methodParams['expects'] ) && is_int( $methodParams['expects'] ) ) {
-						$mockObject->expects( $this->exactly($methodParams['expects']) )
-							->method( $method )
-							->will( $this->returnValue( $methodParams['will'] ) );
-					} else {
-
-					$mockObject->expects( $this->any() )
-						->method( $method )
-						->will( $this->returnValue( $methodParams['will'] ) );
-					}
-			}
-
-		}
-
-		if ( $needSetInstance ) {
-			$this->mockClass( $objectName, $mockObject );
-		}
+		/* Run test */
+		/* @var ExactTargetUpdatesHooks $exactTargetUpdatesHooksMock (mock of ExactTargetUpdatesHooks) */
+		$exactTargetUpdatesHooksMock->addTheAddUserTask( $userMock, $mockAddUserTask );
 	}
 }
