@@ -125,13 +125,7 @@ function memsess_destroy( $id ) {
 	$memc->delete( memsess_key( $id ) );
 
 	/** Wikia change - begin - PLATFORM-308 */
-	global $wgSessionDebugData, $wgSessionName, $wgCookiePrefix;
-	$sSessionName =  $wgSessionName ? $wgSessionName : $wgCookiePrefix . '_session';
-	// Attempt to remove the cookie from the client.
-	if ( isset( $_COOKIE[$sSessionName] ) ) {
-		setcookie( $sSessionName, $id, time() - 3600 );
-		unset( $_COOKIE[$sSessionName] );
-	}
+	global $wgSessionDebugData;
 	$wgSessionDebugData[] = [ 'event' => 'destroy', 'id' => $id ];
 	/** Wikia change - end */
 
