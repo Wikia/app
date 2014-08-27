@@ -92,7 +92,7 @@ ve.ui.Dialog.prototype.initialize = function () {
  * Initialize draggable dialog
  */
 ve.ui.Dialog.prototype.initDraggable = function () {
-	this.$dragHandle = this.$( '<div>' ).addClass( 'oo-ui-dialog-drag-handle' );
+	this.$dragHandle = this.$( '<div>' ).addClass( 'oo-ui-dialog-drag-handle oo-ui-icon-grabber' );
 	this.$dragIframeFix = this.$( '<div>' ).addClass( 'oo-ui-dialog-drag-iframe-fix' );
 
 	this.frame.$element.parent().draggable( {
@@ -136,6 +136,44 @@ ve.ui.Dialog.prototype.getTeardownProcess = function ( data ) {
 };
 
 /**
+ * @inheritdoc
+ */
+ve.ui.Dialog.prototype.getSetupProcess = function ( data ) {
+	return ve.ui.Dialog.super.prototype.getSetupProcess.apply( this, data )
+		.next( function () {
+			var label = ve.track.nameToLabel( this.constructor.static.name ),
+				params = { 'action': ve.track.actions.OPEN, 'label': 'dialog-' + label };
+
+			if ( this.draggable ) {
+				this.alignToSurface();
+			}
+
+			if ( this.openCount ) {
+				params.value = this.openCount;
+			}
+
+			ve.track( 'wikia', params );
+		}, this );
+};
+
+/**
+ * Aligns the edge of the dialog with the edge of the surface
+ */
+ve.ui.Dialog.prototype.alignToSurface = function () {
+	var padding = 10,
+		$surface = this.surface.getView().$element,
+		surfaceOffset = $surface.offset();
+
+	if ( this.surface.getView().getFocusedNode().getHorizontalBias() === 'right' ) {
+		this.frame.$element.parent()
+			.css( 'left', surfaceOffset.left - padding );
+	} else {
+		this.frame.$element.parent()
+			.css( 'left', surfaceOffset.left + $surface.width() - this.frame.$element.parent().outerWidth() + padding );
+	}
+};
+
+/**
  * Get the surface fragment the dialog is for
  *
  * @returns {ve.dm.SurfaceFragment|null} Surface fragment the dialog is for, null if the dialog is closed
@@ -156,20 +194,4 @@ ve.ui.Dialog.prototype.onCloseButtonClick = function () {
 		'action': ve.track.actions.CLICK,
 		'label': 'dialog-' + label + '-button-close'
 	} );
-};
-
-/**
- * @inheritdoc
- */
-ve.ui.Dialog.prototype.setup = function () {
-	var label = ve.track.nameToLabel( this.constructor.static.name ),
-		params = { 'action': ve.track.actions.OPEN, 'label': 'dialog-' + label };
-
-	OO.ui.Dialog.prototype.setup.apply( this, arguments );
-
-	if ( this.openCount ) {
-		params.value = this.openCount;
-	}
-
-	ve.track( 'wikia', params );
 };
