@@ -169,6 +169,92 @@ describe('WikiaMaps.poiCategoriesModel', function () {
 		});
 	});
 
+	it('organizes POI categories', function () {
+		expect(typeof poiCategoriesModelModule.organizePoiCategories).toBe('function');
+
+		var testData = [
+			{
+				input: {
+					formSerialized: {
+						mapId: 1,
+						poiCategories: [
+							{
+								id: 1,
+								map_id: 1,
+								marker: '',
+								name: 'first category, modified',
+								parent_poi_category_id: 3,
+								status: 1
+							},
+							{
+								id: 3,
+								map_id: 1,
+								marker: '',
+								name: 'second category',
+								parent_poi_category_id: 1,
+								status: 1
+							},
+							{
+								marker: 'http://marker.url',
+								name: 'new category',
+								parent_poi_category_id: ''
+							}
+						],
+						poiCategoriesToDelete: '2'
+					},
+					poiCategoriesOriginalData: [
+						{
+							id: 1,
+							map_id: 1,
+							marker: 'http://marker.url',
+							name: 'first category',
+							parent_poi_category_id: 3,
+							status: 1
+						},
+						{
+							id: 2,
+							map_id: 1,
+							marker: 'http://marker.url',
+							name: 'second category',
+							parent_poi_category_id: 1,
+							status: 1
+						}
+					]
+				},
+				expectedOutput: {
+					mapId: 1,
+					poiCategoriesToCreate: [
+						{
+							marker: 'http://marker.url',
+							name: 'new category',
+							parent_poi_category_id: ''
+						}
+					],
+					poiCategoriesToUpdate: [
+						{
+							id: 1,
+							map_id: 1,
+							marker: '',
+							name: 'first category, modified',
+							parent_poi_category_id: 3,
+							status: 1
+						}
+					],
+					poiCategoriesToDelete: [ 2 ]
+				}
+			}
+		];
+
+		testData.forEach(function (testCase) {
+			var poiCategoriesOrganized;
+
+			poiCategoriesModelModule.setPoiCategoriesOriginalData(testCase.input.poiCategoriesOriginalData);
+			poiCategoriesOrganized = poiCategoriesModelModule.organizePoiCategories(testCase.input.formSerialized);
+
+			expect(poiCategoriesOrganized).toEqual(testCase.expectedOutput);
+		});
+	});
+
 	it('sets POI category updated data', function () {
 		expect(typeof poiCategoriesModelModule.setPoiCategoryUpdatedData).toBe('function');
 
