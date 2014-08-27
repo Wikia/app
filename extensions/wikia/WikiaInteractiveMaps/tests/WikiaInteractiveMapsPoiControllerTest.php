@@ -58,8 +58,6 @@ class WikiaInteractiveMapsPoiControllerTest extends WikiaBaseTest {
 	}
 
 	public function testEditPoi_throws_permission_error_when_blocked() {
-		$this->markTestSkipped();
-
 		$userMock = $this->getUserMock();
 
 		$userMock->expects( $this->once() )
@@ -84,8 +82,6 @@ class WikiaInteractiveMapsPoiControllerTest extends WikiaBaseTest {
 	}
 
 	public function testDeletePoi_throws_permission_error_when_anon() {
-		$this->markTestSkipped();
-		
 		$userMock = $this->getUserMock();
 
 		$userMock->expects( $this->once() )

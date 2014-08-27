@@ -438,7 +438,7 @@ class WikiaInteractiveMapsPoiController extends WikiaInteractiveMapsBaseControll
 			throw new BadRequestApiException( wfMessage( 'wikia-interactive-maps-create-map-bad-request-error' )->plain() );
 		}
 
-		if ( !$this->wg->User->isLoggedIn() ) {
+		if ( !$this->wg->User->isLoggedIn() || $this->wg->User->isBlocked() ) {
 			throw new PermissionsException( WikiaInteractiveMapsController::PAGE_RESTRICTION );
 		}
 	}
