@@ -136,6 +136,13 @@ ve.ui.MWTransclusionDialog.prototype.onAddParameterButtonClick = function () {
 };
 
 /**
+ * Handle mode button click events.
+ */
+ve.ui.MWTransclusionDialog.prototype.onModeButtonClick = function () {
+	this.setMode( this.mode === 'single' ? 'multiple' : 'single' );
+};
+
+/**
  * Handle booklet layout page set events.
  *
  * @param {OO.ui.PageLayout} page Active page
@@ -151,6 +158,7 @@ ve.ui.MWTransclusionDialog.prototype.onBookletLayoutSet = function ( page ) {
  */
 ve.ui.MWTransclusionDialog.prototype.onReplacePart = function ( removed, added ) {
 	ve.ui.MWTransclusionDialog.super.prototype.onReplacePart.call( this, removed, added );
+	this.modeButton.setDisabled( !this.isSingleTemplateTransclusion() );
 };
 
 /**
@@ -219,6 +227,13 @@ ve.ui.MWTransclusionDialog.prototype.setMode = function ( mode ) {
 	}
 	this.setSize( single ? 'medium' : 'large' );
 	this.bookletLayout.toggleOutline( !single );
+	this.modeButton
+		.setLabel( ve.msg(
+			single ?
+				'visualeditor-dialog-transclusion-multiple-mode' :
+				'visualeditor-dialog-transclusion-single-mode'
+		) )
+		.setDisabled( !this.isSingleTemplateTransclusion() );
 	this.updateTitle();
 };
 
@@ -265,6 +280,10 @@ ve.ui.MWTransclusionDialog.prototype.initialize = function () {
 	ve.ui.MWTransclusionDialog.super.prototype.initialize.call( this );
 
 	// Properties
+	this.modeButton = new OO.ui.ButtonWidget( {
+		'$': this.$,
+		'flags': ['secondary']
+	} );
 	this.addTemplateButton = new OO.ui.ButtonWidget( {
 		'$': this.$,
 		'frameless': true,
@@ -285,6 +304,7 @@ ve.ui.MWTransclusionDialog.prototype.initialize = function () {
 	} );
 
 	// Events
+	this.modeButton.connect( this, { 'click': 'onModeButtonClick' } );
 	this.bookletLayout.connect( this, { 'set': 'onBookletLayoutSet' } );
 	this.addTemplateButton.connect( this, { 'click': 'onAddTemplateButtonClick' } );
 	this.addContentButton.connect( this, { 'click': 'onAddContentButtonClick' } );
@@ -297,6 +317,7 @@ ve.ui.MWTransclusionDialog.prototype.initialize = function () {
 		} );
 
 	// Initialization
+	this.$foot.append( this.modeButton.$element );
 };
 
 /**
@@ -306,6 +327,7 @@ ve.ui.MWTransclusionDialog.prototype.getSetupProcess = function ( data ) {
 	return ve.ui.MWTransclusionDialog.super.prototype.getSetupProcess.call( this, data )
 		.first( function () {
 			this.setMode( 'single' );
+			this.modeButton.setDisabled( true );
 		}, this );
 };
 

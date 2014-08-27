@@ -5,6 +5,8 @@
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
+/*global mw */
+
 /**
  * MediaWiki transclusion dialog template page.
  *
@@ -17,6 +19,8 @@
  * @param {Object} [config] Configuration options
  */
 ve.ui.MWTemplatePage = function VeUiMWTemplatePage( template, name, config ) {
+	var title;
+
 	// Configuration initialization
 	config = ve.extendObject( {
 		'scrollable': false
@@ -29,6 +33,7 @@ ve.ui.MWTemplatePage = function VeUiMWTemplatePage( template, name, config ) {
 	this.template = template;
 	this.spec = template.getSpec();
 	this.$more = this.$( '<div>' );
+	this.$description = this.$( '<div>' );
 	this.removeButton = new OO.ui.ButtonWidget( {
 			'$': this.$,
 			'frameless': true,
@@ -53,6 +58,21 @@ ve.ui.MWTemplatePage = function VeUiMWTemplatePage( template, name, config ) {
 		.connect( this, { 'click': 'onAddButtonClick' } );
 
 	// Initialization
+	this.$description.addClass( 've-ui-mwTemplatePage-description' );
+	if ( this.spec.getDescription() ) {
+		this.$description.text( this.spec.getDescription() );
+	} else {
+		title = new mw.Title( this.template.getTitle() );
+		this.$description
+			.addClass( 've-ui-mwTemplatePage-description-missing' )
+			.append( ve.msg(
+				'wikia-visualeditor-dialog-transclusion-no-template-description',
+				title.getNameText(),
+				ve.getHtmlAttributes( { 'target': '_blank', 'href': title.getUrl() } ),
+				mw.user
+			) );
+	}
+	this.infoFieldset.$element.append( this.$description );
 	this.$more
 		.addClass( 've-ui-mwTemplatePage-more' )
 		.append( this.addButton.$element );

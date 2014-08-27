@@ -5,8 +5,6 @@
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
-/* global mw */
-
 /**
  * MediaWiki transclusion dialog template page.
  *
@@ -31,9 +29,7 @@ ve.ui.MWParameterPage = function VeUiMWParameterPage( parameter, name, config ) 
 
 	// Properties
 	this.parameter = parameter;
-	this.template = parameter.getTemplate();
-	this.spec = this.template.getSpec();
-	this.templateName = this.template.originalData.target.wt;
+	this.spec = parameter.getTemplate().getSpec();
 	this.defaultValue = this.spec.getParameterDefaultValue( paramName );
 	this.$info = this.$( '<div>' );
 	this.$actions = this.$( '<div>' );
@@ -73,19 +69,9 @@ ve.ui.MWParameterPage = function VeUiMWParameterPage( parameter, name, config ) 
 			'frameless': true,
 			'icon': 'parameter',
 			'label': ve.msg( 'visualeditor-dialog-transclusion-add-param' ),
-			'tabIndex': -1,
-			'classes': [ 've-ui-mwParameterPage-addButton' ]
+			'tabIndex': -1
 		} )
 		.connect( this, { 'click': 'onAddButtonClick' } );
-	this.templateInfoButton = new OO.ui.ButtonWidget( {
-			'$': this.$,
-			'frameless': true,
-			'icon': 'arrow-circled',
-			'label': ve.msg( 'wikia-visualeditor-dialog-transclusion-get-info', this.templateName ),
-			'tabIndex': -1,
-			'classes': [ 've-ui-mwParameterPage-templateInfoButton' ]
-		} )
-		.connect( this, { 'click': 'onTemplateInfoButtonClick' } );
 	this.statusIndicator = new OO.ui.IndicatorWidget( {
 		'$': this.$,
 		'classes': [ 've-ui-mwParameterPage-statusIndicator' ]
@@ -114,7 +100,7 @@ ve.ui.MWParameterPage = function VeUiMWParameterPage( parameter, name, config ) 
 		);
 	this.$more
 		.addClass( 've-ui-mwParameterPage-more' )
-		.append( this.addButton.$element, this.templateInfoButton.$element );
+		.append( this.addButton.$element );
 	this.$element
 		.addClass( 've-ui-mwParameterPage' )
 		.append( this.$info, this.$actions, this.$field, this.$more );
@@ -190,10 +176,6 @@ ve.ui.MWParameterPage.prototype.onRemoveButtonClick = function () {
 ve.ui.MWParameterPage.prototype.onAddButtonClick = function () {
 	var template = this.parameter.getTemplate();
 	template.addParameter( new ve.dm.MWParameterModel( template ) );
-};
-
-ve.ui.MWParameterPage.prototype.onTemplateInfoButtonClick = function () {
-	window.open( new mw.Title( this.template.title ).getUrl() );
 };
 
 ve.ui.MWParameterPage.prototype.onLabelClick = function () {

@@ -1,8 +1,22 @@
 .ve-ui-mwTemplateDialog {
 	.ve-ui-mwParameterPage-infoButton,
 	.ve-ui-mwParameterPage-removeButton,
-	.ve-ui-mwParameterPage-addButton {
+	.ve-ui-mwParameterPage-addButton,
+	.ve-ui-mwTransclusionDialog-modeButton,
+	.ve-ui-mwTemplatePage-description {
 		display: none;
+	}
+
+	.ve-ui-mwParameterPage-info {
+		padding-left: 0.5em;
+	}
+
+	.ve-ui-mwParameterPage-actions {
+		padding-right: 0.5em;
+	}
+
+	.ve-ui-mwParameterPage-field {
+		padding: 0.75em 0.5em;
 	}
 
 	.ve-ui-mwParameterPage-more {

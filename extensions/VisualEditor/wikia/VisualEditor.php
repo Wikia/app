@@ -101,6 +101,7 @@ $wgResourceModules += array(
 			've/ui/dialogs/ve.ui.WikiaOrientationDialog.js',
 			've/ui/dialogs/ve.ui.WikiaMapInsertDialog.js',
 			've/ui/dialogs/ve.ui.WikiaTransclusionDialog.js',
+			've/ui/pages/ve.ui.WikiaParameterPage.js',
 			've/ui/tools/ve.ui.WikiaDialogTool.js',
 			've/ui/tools/ve.ui.WikiaHelpTool.js',
 			've/ui/tools/ve.ui.WikiaMWGalleryInspectorTool.js',

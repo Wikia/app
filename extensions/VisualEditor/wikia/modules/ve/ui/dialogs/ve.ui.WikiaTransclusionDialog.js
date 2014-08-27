@@ -59,6 +59,7 @@ ve.ui.WikiaTransclusionDialog.prototype.initialize = function () {
 	this.cancelButton.connect( this, { 'click': 'onCancelButtonClick' } );
 
 	// Initialization
+	this.modeButton.$element.addClass( 've-ui-mwTransclusionDialog-modeButton' );
 	this.$foot.append( this.cancelButton.$element );
 };
 
