@@ -10,8 +10,9 @@ class ArticlesApiController extends WikiaApiController {
 
 	const CACHE_VERSION = 15;
 
-	const POPULAR_ARTICLES_PER_WIKI = 100;
+	const POPULAR_ARTICLES_PER_WIKI = 10;
 	const POPULAR_ARTICLES_NAMESPACE = 0;
+	const TRENDING_ARTICLES_LIMIT = 100;
 
 	const MAX_ITEMS = 250;
 	const ITEMS_PER_BATCH = 25;
@@ -980,11 +981,19 @@ class ArticlesApiController extends WikiaApiController {
 			throw new OutOfRangeApiException( self::PARAMETER_LIMIT, 1, self::POPULAR_ARTICLES_PER_WIKI );
 		}
 
-		$key = self::getCacheKey( self::POPULAR_CACHE_ID, '' , [ $expand ] );
+		$key = self::getCacheKey( self::POPULAR_CACHE_ID, '' , [ $expand, $baseArticleId ] );
 
 		$popular = $this->wg->Memc->get( $key );
 		if ( $popular === false ) {
-			$popular = $this->getResultFromConfig( $this->getConfigFromRequest() );
+
+			$popularConfig = $this->getConfigFromRequest();
+
+			if( $baseArticleId !== false ) {
+				// For finding trending articles - we need to extract larger amount of popular articles
+				$popularConfig->setLimit( self::TRENDING_ARTICLES_LIMIT );
+			}
+
+			$popular = $this->getResultFromConfig( $popularConfig );
 			if ( $expand ) {
 				$articleIds = [];
 				$params = $this->getDetailsParams();
@@ -994,12 +1003,41 @@ class ArticlesApiController extends WikiaApiController {
 				$popular = $this->getArticlesDetails( $articleIds, $params[ 'titleKeys' ], $params[ 'width' ], $params[ 'height' ], $params[ 'length' ], true );
 			}
 
-			$this->wg->set( $key, $popular, self::CLIENT_CACHE_VALIDITY );
-		}
+			if( $baseArticleId !== false ) {
+				// For finding trending articles - we perform reranking of popular articles
 
-		if( $baseArticleId !== false ) {
-			$links = ( new ApiOutboundingLinksService() )->getOutboundingLinks( $baseArticleId );
-			$popular = $this->reorderForLinks( $popular, $links );
+				$links = ( new ApiOutboundingLinksService() )->getOutboundingLinks( $baseArticleId );
+				$rerankedPopular = $this->reorderForLinks( $popular, $links );
+
+				if( $rerankedPopular === $popular ) {
+					// If popular articles were not reranked ($rerankedPopular have the same order as $popular)
+					// It means - that given article doesn't have links to any popular articles within whole wikia
+
+					// So, we perform the following fallback:
+					// 1) Find category to which base article belongs
+					// 2) Get most popular articles of this category
+					// 3) Rerank these articles due to links in base article
+
+					$category = $this->getCategoryOfArticle( $baseArticleId );
+
+					if( !empty( $category ) ) {
+						// If article connected to category
+
+						$popularForCategory = $this->getPopularForCategory( $category );
+						// Cope with case, when there is very small amount of articles in given category
+						$popularForCategory = array_merge( $popularForCategory, $popular );
+
+						$rerankedPopularForCategory = $this->reorderForLinks( $popularForCategory, $links );
+
+						$popular = $rerankedPopularForCategory;
+					}
+
+				} else {
+					$popular = $rerankedPopular;
+				}
+			}
+
+			$this->wg->set( $key, $popular, self::CLIENT_CACHE_VALIDITY );
 		}
 
 		$popular = array_slice( $popular, 0, $limit );
@@ -1011,6 +1049,40 @@ class ArticlesApiController extends WikiaApiController {
 			self::CLIENT_CACHE_VALIDITY
 		);
 
+	}
+
+	protected function getCategoryOfArticle( $articleId ) {
+		global $wgCityId;
+
+		$categoriesConfig = (new Wikia\Search\Config())
+			->setDirectLuceneQuery( true )
+			->setQuery( 'id:' . $wgCityId . '_' . $articleId )
+			->setLimit( 1 );
+
+		$categories = ( new Factory )->getFromConfig( $categoriesConfig )->searchAsApi( [ 'categories_mv_en' ] );
+
+		if( !empty( $categories[0] )
+			&& !empty( $categories[0]['categories_mv_en'] )
+			&& !empty( $categories[0]['categories_mv_en'][0] ) ) {
+
+			return $categories[0]['categories_mv_en'][0];
+		}
+
+		return null;
+	}
+
+	protected function getPopularForCategory( $category ) {
+		global $wgCityId;
+
+		$popularForCategoryConfig = (new Wikia\Search\Config())
+			->setLimit( self::TRENDING_ARTICLES_LIMIT )
+			->setDirectLuceneQuery(true)
+			->setRank( \Wikia\Search\Config::RANK_MOST_VIEWED )
+			->setQuery( '(wid:' . $wgCityId . ') AND (ns:' . NS_MAIN . ') AND (categories_mv_en:' . $category . ')' );
+
+		$popularForCategory = $this->getResultFromConfig( $popularForCategoryConfig );
+
+		return $popularForCategory;
 	}
 
 	/**
