@@ -82,8 +82,8 @@ define('wikia.intMap.poiCategoriesModel',
 
 		/**
 		 * @desc finds POI category in array by looking at ids
-		 * @param id - POI category id
-		 * @param poiCategories - array of POI categories
+		 * @param {int} id - POI category id
+		 * @param {Array} poiCategories - array of POI categories
 		 * @returns {object|null} - POI category with given id or null if not found
 		 */
 		function findPoiCategoryById(id, poiCategories) {
@@ -158,8 +158,8 @@ define('wikia.intMap.poiCategoriesModel',
 		/**
 		 * @desc gets POI category that was updated, returns null if it wasn't
 		 * @param {object} poiCategoryOriginal
-		 * @param {object} poiCategoriesToUpdate - POI categories to update, sent to backend
-		 * @param {object} poiCategoriesUpdated - response from backend, array of updated categories
+		 * @param {Array} poiCategoriesToUpdate - POI categories to update, sent to backend
+		 * @param {Array} poiCategoriesUpdated - response from backend, array of updated categories
 		 * @returns {object|null} - updated POI category or null
 		 */
 		function getPoiCategoryUpdated(poiCategoryOriginal, poiCategoriesToUpdate, poiCategoriesUpdated) {

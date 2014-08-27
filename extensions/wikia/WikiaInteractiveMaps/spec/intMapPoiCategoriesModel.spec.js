@@ -75,7 +75,7 @@ describe('WikiaMaps.poiCategoriesModel', function () {
 					poiCategory: {
 						id: 1
 					},
-					poiCategoriesDeleted: [ 1, 2, 3 ]
+					poiCategoriesDeleted: [1, 2, 3]
 				},
 				expectedOutput: true
 			},
@@ -93,7 +93,7 @@ describe('WikiaMaps.poiCategoriesModel', function () {
 					poiCategory: {
 						id: 2
 					},
-					poiCategoriesDeleted: [ 1 ]
+					poiCategoriesDeleted: [1]
 				},
 				expectedOutput: false
 			}
@@ -378,85 +378,90 @@ describe('WikiaMaps.poiCategoriesModel', function () {
 		var testData = [
 			{
 				input: {
-					poiCategoryUpdated: {
-						map_id: 1,
-						status: 1,
-						marker: 'http://marker.url'
-					},
 					poiCategoryOriginal: {
+						id: 1,
 						map_id: 1,
-						status: 1,
-						marker: 'http://old.marker.url'
-					}
-				},
-				expectedOutput: {
-					map_id: 1,
-					status: 1,
-					marker: 'http://marker.url'
-				}
-			},
-			{
-				input: {
-					poiCategoryUpdated: {
-						map_id: 1,
-						status: 1,
-						marker: 'http://marker.url'
-					},
-					poiCategoryOriginal: {
-						map_id: 1,
-						status: 1,
-						no_marker: true
-					}
-				},
-				expectedOutput: {
-					map_id: 1,
-					status: 1,
-					marker: 'http://marker.url'
-				}
-			},
-			{
-				input: {
-					poiCategoryUpdated: {
-						map_id: 1,
+						marker: 'http://marker.url',
+						name: 'category',
+						parent_poi_category_id: 1,
 						status: 1
 					},
-					poiCategoryOriginal: {
-						map_id: 1,
-						status: 1,
-						marker: 'http://old.marker.url'
-					}
+					poiCategoriesToUpdate: [
+						{
+							id: 1,
+							map_id: 1,
+							marker: '',
+							name: 'modified category',
+							parent_poi_category_id: 1,
+							status: 1
+						}
+					],
+					poiCategoriesUpdated: [1]
 				},
 				expectedOutput: {
+					id: 1,
 					map_id: 1,
-					status: 1,
-					marker: 'http://old.marker.url'
+					marker: 'http://marker.url',
+					name: 'modified category',
+					parent_poi_category_id: 1,
+					status: 1
 				}
 			},
 			{
 				input: {
-					poiCategoryUpdated: {
-						map_id: 1,
-						status: 1,
-						marker: ''
-					},
 					poiCategoryOriginal: {
+						id: 1,
 						map_id: 1,
-						status: 1,
-						no_marker: true
-					}
+						marker: 'http://marker.url',
+						name: 'category',
+						parent_poi_category_id: 1,
+						status: 1
+					},
+					poiCategoriesToUpdate: [
+						{
+							id: 2,
+							map_id: 1,
+							marker: '',
+							name: 'some other category',
+							parent_poi_category_id: 1,
+							status: 1
+						}
+					],
+					poiCategoriesUpdated: [2]
 				},
-				expectedOutput: {
-					map_id: 1,
-					status: 1,
-					marker: '',
-					no_marker: true
-				}
+				expectedOutput: null
+			},
+			{
+				input: {
+					poiCategoryOriginal: {
+						id: 1,
+						map_id: 1,
+						marker: 'http://marker.url',
+						name: 'category',
+						parent_poi_category_id: 1,
+						status: 1
+					},
+					poiCategoriesToUpdate: [
+						{
+							id: 1,
+							map_id: 1,
+							marker: '',
+							name: 'modified category',
+							parent_poi_category_id: 1,
+							status: 1
+						}
+					],
+					poiCategoriesUpdated: []
+				},
+				expectedOutput: null
 			}
 		];
 
 		testData.forEach(function (testCase) {
-			var poiCategory = poiCategoriesModelModule.setPoiCategoryUpdatedData(
-				testCase.input.poiCategoryUpdated, testCase.input.poiCategoryOriginal
+			var poiCategory = poiCategoriesModelModule.getPoiCategoryUpdated(
+				testCase.input.poiCategoryOriginal,
+				testCase.input.poiCategoriesToUpdate,
+				testCase.input.poiCategoriesUpdated
 			);
 			expect(poiCategory).toEqual(testCase.expectedOutput);
 		});
