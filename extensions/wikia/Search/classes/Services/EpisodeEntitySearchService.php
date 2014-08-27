@@ -10,7 +10,8 @@ class EpisodeEntitySearchService extends EntitySearchService {
 	const API_URL = 'api/v1/Articles/AsSimpleJson?id=';
 	const EPISODE_TYPE = 'tv_episode';
 	const DEFAULT_SLOP = 1;
-	
+	const EXACT_MATCH_FIELD = "tv_episode_mv_em";
+
 	private static $ARTICLE_TYPES_SUPPORTED_LANGS = ['en'];
 
 	protected function prepareQuery( $query ) {
@@ -28,9 +29,9 @@ class EpisodeEntitySearchService extends EntitySearchService {
 
 		$namespaces = $this->getNamespace() ? $this->getNamespace() : static::DEFAULT_NAMESPACE;
 		$namespaces = is_array( $namespaces ) ? $namespaces : [ $namespaces ];
-		$select->createFilterQuery( 'ns' )->setQuery( '+(ns:(' . implode( ' ', $namespaces ) . '))' );
+		$select->createFilterQuery( 'ns' )->setQuery( '+(ns:(' . implode( ' ', $namespaces ) . ')' . ' OR ' . static::EXACT_MATCH_FIELD . ':*)' );
 		if ( in_array( strtolower( $slang ), static::$ARTICLE_TYPES_SUPPORTED_LANGS ) ) {
-			$select->createFilterQuery( 'type' )->setQuery( '+(article_type_s:' . static::EPISODE_TYPE . ')' );
+			$select->createFilterQuery( 'type' )->setQuery( '+(article_type_s:' . static::EPISODE_TYPE . ' OR ' . static::EXACT_MATCH_FIELD . ':*)' );
 		}
 
 		$dismax->setQueryFields( implode( ' ', [
@@ -38,12 +39,14 @@ class EpisodeEntitySearchService extends EntitySearchService {
 			'titleStrict',
 			$this->withLang( 'title', $slang ),
 			$this->withLang( 'redirect_titles_mv', $slang ),
+			static::EXACT_MATCH_FIELD . "^10",
 		] ) );
 		$dismax->setPhraseFields( implode( ' ', [
 			'title_em^8',
 			'titleStrict^8',
 			$this->withLang( 'title', $slang ) . '^2',
 			$this->withLang( 'redirect_titles_mv', $slang ) . '^2',
+			static::EXACT_MATCH_FIELD . "^10",
 		] ) );
 
 		$dismax->setQueryPhraseSlop( static::DEFAULT_SLOP );
@@ -71,7 +74,7 @@ class EpisodeEntitySearchService extends EntitySearchService {
 	protected function createQuery( $query ) {
 		$options = [ ];
 		if ( $this->getQuality() !== null ) {
-			$options[ ] = '+(article_quality_i:[' . $this->getQuality() . ' TO *])';
+			$options[] = '+(article_quality_i:[' . $this->getQuality() . ' TO *]' . ' OR ' . static::EXACT_MATCH_FIELD . ':*)';
 		}
 		if ( $this->getWikiId() !== null ) {
 			$options[ ] = '+(wid:' . $this->getWikiId() . ')';
