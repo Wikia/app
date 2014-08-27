@@ -409,7 +409,7 @@ ve.ui.MWTemplateDialog.prototype.initialzeNewTemplateParameters = function () {
  */
 ve.ui.MWTemplateDialog.prototype.initializeTemplateParameters = ve.ui.MWTemplateDialog.prototype.initialzeNewTemplateParameters;
 
-ve.ui.MWTemplateDialog.prototype.onFilterInputChange = function() {
+ve.ui.MWTemplateDialog.prototype.onFilterInputChange = function () {
 	var value = this.filterInput.getValue().toLowerCase().trim(),
 		parts = this.transclusionModel.getParts(),
 		i, len, part, page, parameters, parameter, parameterMatch;
@@ -430,7 +430,7 @@ ve.ui.MWTemplateDialog.prototype.onFilterInputChange = function() {
 			parameters = part.getParameters();
 			parameterMatch = false;
 			for ( parameter in parameters ) {
-				page = this.bookletLayout.getPage( part.getId() + "/" + parameter );
+				page = this.bookletLayout.getPage( part.getId() + '/' + parameter );
 				if (
 					value !== '' &&
 					parameters[parameter].getName().toLowerCase().indexOf( value ) === -1 &&
