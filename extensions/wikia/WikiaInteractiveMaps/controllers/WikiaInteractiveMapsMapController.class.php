@@ -178,7 +178,12 @@ class WikiaInteractiveMapsMapController extends WikiaInteractiveMapsBaseControll
 		}
 
 		$result = false;
-		if ( $mapId && $this->wg->User->isLoggedIn() && !$this->wg->User->isBlocked() ) {
+
+		if( !$this->wg->User->isLoggedIn() || $this->wg->User->isBlocked() ) {
+			throw new WikiaInteractiveMapsPermissionException();
+		}
+
+		if ( $mapId ) {
 			$result = $this->getModel()->updateMapDeletionStatus( $mapId, $deleted )[ 'success' ];
 		}
 

@@ -101,6 +101,7 @@ class WikiaInteractiveMapsMapControllerTest extends WikiaBaseTest {
 		$controllerMock->request = $requestMock;
 		$controllerMock->wg->User = $userMock;
 
+		$this->setExpectedException( 'WikiaInteractiveMapsPermissionException' );
 		$controllerMock->updateMapDeletionStatus();
 	}
 
@@ -135,6 +136,7 @@ class WikiaInteractiveMapsMapControllerTest extends WikiaBaseTest {
 		$controllerMock->request = $requestMock;
 		$controllerMock->wg->User = $userMock;
 
+		$this->setExpectedException( 'WikiaInteractiveMapsPermissionException' );
 		$controllerMock->updateMapDeletionStatus();
 	}
 
