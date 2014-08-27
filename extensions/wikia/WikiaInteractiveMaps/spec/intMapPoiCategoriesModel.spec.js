@@ -240,7 +240,40 @@ describe('WikiaMaps.poiCategoriesModel', function () {
 							status: 1
 						}
 					],
-					poiCategoriesToDelete: [ 2 ]
+					poiCategoriesToDelete: [2]
+				}
+			},
+			{
+				input: {
+					formSerialized: {
+						mapId: 1,
+						poiCategories: [],
+						poiCategoriesToDelete: '1,2'
+					},
+					poiCategoriesOriginalData: [
+						{
+							id: 1,
+							map_id: 1,
+							marker: 'http://marker.url',
+							name: 'first category',
+							parent_poi_category_id: 3,
+							status: 1
+						},
+						{
+							id: 2,
+							map_id: 1,
+							marker: 'http://marker.url',
+							name: 'second category',
+							parent_poi_category_id: 1,
+							status: 1
+						}
+					]
+				},
+				expectedOutput: {
+					mapId: 1,
+					poiCategoriesToCreate: [],
+					poiCategoriesToUpdate: [],
+					poiCategoriesToDelete: [1, 2]
 				}
 			}
 		];
