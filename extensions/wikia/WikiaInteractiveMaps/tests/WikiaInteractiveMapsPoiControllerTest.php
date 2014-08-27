@@ -9,7 +9,6 @@ class WikiaInteractiveMapsPoiControllerTest extends WikiaBaseTest {
 
 	public function testEditPoiCategories_throws_permission_error_when_anon() {
 		$userMock = $this->getUserMock();
-
 		$userMock->expects( $this->once() )
 			->method( 'isLoggedIn' )
 			->willReturn( false );
@@ -23,11 +22,9 @@ class WikiaInteractiveMapsPoiControllerTest extends WikiaBaseTest {
 
 	public function testEditPoiCategories_throws_permission_error_when_user_blocked() {
 		$userMock = $this->getUserMock();
-
 		$userMock->expects( $this->once() )
 			->method( 'isLoggedIn' )
 			->willReturn( true );
-
 		$userMock->expects( $this->once() )
 			->method( 'isBlocked' )
 			->willReturn( true );
@@ -39,17 +36,42 @@ class WikiaInteractiveMapsPoiControllerTest extends WikiaBaseTest {
 		$controllerMock->editPoiCategories();
 	}
 
+	public function testEditPoi_throws_permission_error_when_anon() {
+		$userMock = $this->getUserMock();
+
+		$userMock->expects( $this->once() )
+			->method( 'isLoggedIn' )
+			->willReturn( false );
+
+		$controllerMock = $this->getWikiaInteractiveMapsPoiControllertMock();
+		$controllerMock->expects( $this->any() )
+			->method( 'getData' )
+			->willReturn( 'Mocked Data.' );
+		$controllerMock->expects( $this->any() )
+			->method( 'isValidArticleTitle' )
+			->willReturn( true );
+
+		$controllerMock->wg->User = $userMock;
+
+		$this->setExpectedException( 'PermissionsException' );
+		$controllerMock->editPoi();
+	}
+
 	private function getWikiaInteractiveMapsPoiControllertMock() {
 		$requestMock = $this->getMockBuilder( 'WikiaRequest' )
-			->setMethods( [ 'getVal', 'getArray' ] )
+			->setMethods( [ 'getVal', 'getArray', 'getInt' ] )
 			->disableOriginalConstructor()
 			->getMock();
 
 		$controllerMock = $this->getMockBuilder( 'WikiaInteractiveMapsPoiController' )
-			->setMethods( [ 'setData', 'getData', 'organizePoiCategoriesData', 'getModel' ] )
+			->setMethods( [
+				'setData',
+				'getData',
+				'getModel',
+				'isValidArticleTitle',
+			] )
 			->disableOriginalConstructor()
 			->getMock();
-
 		$controllerMock->request = $requestMock;
 
 		return $controllerMock;

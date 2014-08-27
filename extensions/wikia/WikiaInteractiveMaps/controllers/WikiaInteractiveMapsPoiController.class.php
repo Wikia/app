@@ -473,7 +473,7 @@ class WikiaInteractiveMapsPoiController extends WikiaInteractiveMapsBaseControll
 	 *
 	 * @return bool
 	 */
-	private function isValidArticleTitle() {
+	public function isValidArticleTitle() {
 		$articleTitle = $this->getData( 'articleTitle' );
 		$valid = false;
 
