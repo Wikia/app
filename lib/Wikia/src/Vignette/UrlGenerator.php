@@ -134,6 +134,15 @@ class UrlGenerator {
 		return $url;
 	}
 
+	public function __toString() {
+		$string = "";
+		try {
+			$string = $this->url();
+		} catch (\Exception $e) {}
+
+		return $string;
+	}
+
 	protected function getLoggerContext() {
 		return [
 			'file' => $this->file == null ? "" : $this->file->getName(),

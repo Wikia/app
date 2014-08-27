@@ -22,22 +22,19 @@ class UrlGeneratorTest extends PHPUnit_Framework_TestCase {
 			->method('getTimestamp')
 			->will($this->returnValue('12345'));
 
-		$generator1 = new UrlGenerator($file);
 		$this->assertEquals(
 			'/tests/a/ab/SomeFile.jpg/revision/latest/width/100/height/100?cb=12345',
-			$generator1->url()
+			new UrlGenerator($file)
 		);
 
-		$generator2 = (new UrlGenerator($file))->width(50)->height(75)->revision('09876')->backgroundFill('#ababab');
 		$this->assertEquals(
 			'/tests/a/ab/SomeFile.jpg/revision/09876/width/50/height/75?fill=%23ababab',
-			$generator2->url()
+			(new UrlGenerator($file))->width(50)->height(75)->revision('09876')->backgroundFill('#ababab')
 		);
 
-		$generator3 = (new UrlGenerator($file))->width(50)->height(75)->backgroundFill('transparent');
 		$this->assertEquals(
 			'/tests/a/ab/SomeFile.jpg/revision/latest/width/50/height/75?fill=transparent&cb=12345',
-			$generator3->url()
+			(new UrlGenerator($file))->width(50)->height(75)->backgroundFill('transparent')
 		);
 	}
 }
