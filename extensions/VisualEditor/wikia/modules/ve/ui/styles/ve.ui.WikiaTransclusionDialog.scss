@@ -1,0 +1,24 @@
+.ve-ui-mwTemplateDialog {
+	.ve-ui-mwParameterPage-infoButton,
+	.ve-ui-mwParameterPage-removeButton,
+	.ve-ui-mwParameterPage-addButton {
+		display: none;
+	}
+
+	.ve-ui-mwParameterPage-more {
+		.oo-ui-buttonedElement.oo-ui-iconedElement .oo-ui-iconedElement-icon {
+			float: right;
+			height: 18px;
+			margin-left: 5px;
+			width: 18px;
+		}
+
+		.oo-ui-labeledElement-label {
+			line-height: 18px;
+		}
+	}
+
+	.oo-ui-window-foot .oo-ui-flaggableElement-secondary {
+		float: right;
+	}
+}
