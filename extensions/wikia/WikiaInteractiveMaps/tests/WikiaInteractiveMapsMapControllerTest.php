@@ -125,11 +125,11 @@ class WikiaInteractiveMapsMapControllerTest extends WikiaBaseTest {
 			->setMethods( [ 'updateMapDeletionStatus' ] )
 			->disableOriginalConstructor()
 			->getMock();
-		$modelMock->expects( $this->once() )
+		$modelMock->expects( $this->never() )
 			->method( 'updateMapDeletionStatus' );
 
 		$controllerMock = $this->getWikiaInteractiveMapsMapController();
-		$controllerMock->expects( $this->once() )
+		$controllerMock->expects( $this->any() )
 			->method( 'getModel' )
 			->willReturn( $modelMock );
 		$controllerMock->request = $requestMock;
