@@ -212,7 +212,50 @@ describe('WikiaMaps.poiCategoriesModel', function () {
 		});
 	});
 
-	/*it('', function () {
+	it('sets POI category updated data', function () {
+		expect(typeof poiCategoriesModelModule.isPoiCategoryDeleted).toBe('function');
 
-	});*/
+		var testData = [
+			{
+				input: {
+					poiCategory: {
+						id: 1
+					},
+					dataReceived: {
+						poiCategoriesDeleted: [ 1, 2, 3 ]
+					}
+				},
+				expectedOutput: true
+			},
+			{
+				input: {
+					poiCategory: {
+						id: 1
+					},
+					dataReceived: {
+						poiCategoriesDeleted: []
+					}
+				},
+				expectedOutput: false
+			},
+			{
+				input: {
+					poiCategory: {
+						id: 2
+					},
+					dataReceived: {
+						poiCategoriesDeleted: [ 1 ]
+					}
+				},
+				expectedOutput: false
+			}
+		];
+
+		testData.forEach(function (testCase) {
+			var poiCategoryDeleted = poiCategoriesModelModule.isPoiCategoryDeleted(
+				testCase.input.poiCategory, testCase.input.dataReceived
+			);
+			expect(poiCategoryDeleted).toBe(testCase.expectedOutput);
+		});
+	});
 });
