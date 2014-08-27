@@ -975,6 +975,27 @@ class WikiaPhotoGalleryHelper {
 	}
 
 	/**
+	 * Hook handler - Add a key for new gallery to parser cache
+	 * TODO: Remove this hook once media gallery is ready to be fully deployed
+	 *
+	 * @param $hash
+	 * @return bool
+	 */
+	public static function addMediaGalleryCacheKey( &$hash ) {
+		global $wgRequest, $wgEnableMediaGalleryExt;
+
+		if ( $wgRequest->getVal( 'gallery' ) == 'new' ) {
+
+			$wgEnableMediaGalleryExt = true;
+
+			// Add a key to parser cache key
+			$hash .= '!' . 'NewGallery';
+		}
+
+		return true;
+	}
+
+	/**
 	 * Check whether upload is allowed for current user and with current config
 	 * @author Macbre
 	 */
