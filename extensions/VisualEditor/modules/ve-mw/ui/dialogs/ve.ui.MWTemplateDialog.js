@@ -114,7 +114,8 @@ ve.ui.MWTemplateDialog.prototype.onReplacePart = function ( removed, added ) {
 			if ( added instanceof ve.dm.MWTemplateModel && this.loaded ) {
 				// Prevent selection changes
 				this.preventReselection = true;
-				added.addPromptedParameters();
+				//added.addPromptedParameters();
+				added.addUnusedParameters();
 				this.preventReselection = false;
 				names = added.getParameterNames();
 				params = added.getParameters();
@@ -319,10 +320,19 @@ ve.ui.MWTemplateDialog.prototype.initialize = function () {
 			this.constructor.static.bookletLayoutConfig
 		)
 	);
+	this.filterInput = new OO.ui.TextInputWidget( {
+		'$': this.$,
+		'icon': 'search',
+		'type': 'search'
+	} );
+
+	// Events
+	this.filterInput.on( 'change', ve.bind( this.onFilterInputChange, this ) );
 
 	// Initialization
 	this.frame.$content.addClass( 've-ui-mwTemplateDialog' );
 	this.panels.addItems( [ this.bookletLayout ] );
+	this.$body.append( this.filterInput.$element );
 };
 
 /**
@@ -398,6 +408,49 @@ ve.ui.MWTemplateDialog.prototype.initialzeNewTemplateParameters = function () {
  * @method
  */
 ve.ui.MWTemplateDialog.prototype.initializeTemplateParameters = ve.ui.MWTemplateDialog.prototype.initialzeNewTemplateParameters;
+
+ve.ui.MWTemplateDialog.prototype.onFilterInputChange = function() {
+	var value = this.filterInput.getValue().toLowerCase().trim(),
+		parts = this.transclusionModel.getParts(),
+		i, len, part, page, parameters, parameter, parameterMatch;
+
+	// iterate over all parts of the transclusion (templates and contents)
+	for ( i = 0, len = parts.length; i < len; i++ ) {
+		part = parts[i];
+
+		if ( part instanceof ve.dm.MWTransclusionContentModel ) { // content
+			page = this.bookletLayout.getPage( part.getId() );
+			if ( value !== '' && part.getValue().toLowerCase().indexOf( value ) === -1 ) {
+				page.$element.hide();
+			} else {
+				page.$element.show();
+			}
+		} else if ( part instanceof ve.dm.MWTemplateModel ) { // template
+			// iterate over all parameters of the template
+			parameters = part.getParameters();
+			parameterMatch = false;
+			for ( parameter in parameters ) {
+				page = this.bookletLayout.getPage( part.getId() + "/" + parameter );
+				if (
+					value !== '' &&
+					parameters[parameter].getName().toLowerCase().indexOf( value ) === -1 &&
+					parameters[parameter].getValue().toLowerCase().indexOf( value ) === -1
+				) {
+					page.$element.hide();
+				} else {
+					parameterMatch = true;
+					page.$element.show();
+				}
+				page = this.bookletLayout.getPage( part.getId() );
+				if ( !parameterMatch ) {
+					page.$element.hide();
+				} else {
+					page.$element.show();
+				}
+			}
+		}
+	}
+};
 
 /**
  * @inheritdoc
