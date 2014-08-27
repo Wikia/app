@@ -104,6 +104,40 @@ class WikiaInteractiveMapsMapControllerTest extends WikiaBaseTest {
 		$controllerMock->updateMapDeletionStatus();
 	}
 
+	public function testUpdateMapDeletionStatus_blocked() {
+		$userMock = $this->getUserMock();
+		$userMock->expects( $this->once() )
+			->method( 'isLoggedIn' )
+			->willReturn( true );
+		$userMock->expects( $this->once() )
+			->method( 'isBlocked' )
+			->willReturn( true );
+
+		$requestMock = $this->getWikiaRequestMock();
+		$requestMock->expects( $this->once() )
+			->method( 'getVal' )
+			->willReturn( 1 );
+		$requestMock->expects( $this->once() )
+			->method( 'getInt' )
+			->willReturn( WikiaMaps::MAP_DELETED );
+
+		$modelMock = $this->getMockBuilder( 'WikiaMaps' )
+			->setMethods( [ 'updateMapDeletionStatus' ] )
+			->disableOriginalConstructor()
+			->getMock();
+		$modelMock->expects( $this->once() )
+			->method( 'updateMapDeletionStatus' );
+
+		$controllerMock = $this->getWikiaInteractiveMapsMapController();
+		$controllerMock->expects( $this->once() )
+			->method( 'getModel' )
+			->willReturn( $modelMock );
+		$controllerMock->request = $requestMock;
+		$controllerMock->wg->User = $userMock;
+
+		$controllerMock->updateMapDeletionStatus();
+	}
+
 	private function getWikiaRequestMock() {
 		$requestMock = $this->getMockBuilder( 'WikiaRequest' )
 			->setMethods( [ 'getVal', 'getInt' ] )
