@@ -280,9 +280,19 @@ define(
 		 * @param {object} response - nirvana response object
 		 */
 		function handleNirvanaException(modal, response) {
+			showError(modal, getNirvanaExceptionMessage(response));
+		}
+
+		/**
+		 * @desc Returns exception message
+		 * @param {object} response XHR response object
+		 * @returns {string}
+		 */
+		function getNirvanaExceptionMessage(response) {
 			var responseText = response.responseText,
 				message = JSON.parse(responseText).exception.details;
-			showError(modal, message || response.statusText);
+
+			return message || response.statusText;
 		}
 
 		/**
@@ -388,6 +398,7 @@ define(
 			showForceLoginModal: showForceLoginModal,
 			refreshIfAfterForceLogin: refreshIfAfterForceLogin,
 			handleNirvanaException: handleNirvanaException,
+			getNirvanaExceptionMessage: getNirvanaExceptionMessage,
 			showError: showError,
 			cleanUpError: cleanUpError,
 			createThumbURL: createThumbURL,

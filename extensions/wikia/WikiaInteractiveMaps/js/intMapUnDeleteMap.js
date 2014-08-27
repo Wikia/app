@@ -27,8 +27,8 @@ define('wikia.intMaps.unDeleteMap', ['jquery', 'wikia.querystring', 'wikia.intMa
 					showError(response);
 				}
 			},
-			onErrorCallback: function (error) {
-				showError(error.statusText);
+			onErrorCallback: function (response) {
+				showError(utils.getNirvanaExceptionMessage(response));
 			}
 		});
 	}
