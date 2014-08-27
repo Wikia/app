@@ -71,13 +71,13 @@ define('wikia.intMap.poiCategoriesModel',
 
 		/**
 		 * @desc checks if POI category was deleted
-		 * @param poiCategory
-		 * @param dataReceived
+		 * @param {object} poiCategory
+		 * @param {Array} poiCategoriesDeleted
 		 * @returns {boolean}
 		 */
-		function isPoiCategoryDeleted(poiCategory, dataReceived) {
-			return dataReceived.poiCategoriesDeleted &&
-			dataReceived.poiCategoriesDeleted.indexOf(poiCategory.id) > -1;
+		function isPoiCategoryDeleted(poiCategory, poiCategoriesDeleted) {
+			return poiCategoriesDeleted &&
+			poiCategoriesDeleted.indexOf(poiCategory.id) > -1;
 		}
 
 		/**
@@ -158,18 +158,18 @@ define('wikia.intMap.poiCategoriesModel',
 		/**
 		 * @desc gets POI category that was updated, returns null if it wasn't
 		 * @param {object} poiCategoryOriginal
-		 * @param {object} dataSent - POI categories sent to backend
-		 * @param {object} dataReceived - response from backend, array of actions done and categories affected
+		 * @param {object} poiCategoriesToUpdate - POI categories to update, sent to backend
+		 * @param {object} poiCategoriesUpdated - response from backend, array of updated categories
 		 * @returns {object|null} - updated POI category or null
 		 */
-		function getPoiCategoryUpdated(poiCategoryOriginal, dataSent, dataReceived) {
+		function getPoiCategoryUpdated(poiCategoryOriginal, poiCategoriesToUpdate, poiCategoriesUpdated) {
 			var poiCategoryUpdated;
 
 			if (
-				dataReceived.poiCategoriesUpdated &&
-				dataReceived.poiCategoriesUpdated.indexOf(poiCategoryOriginal.id) > -1
+				poiCategoriesUpdated &&
+				poiCategoriesUpdated.indexOf(poiCategoryOriginal.id) > -1
 			) {
-				poiCategoryUpdated = findPoiCategoryById(poiCategoryOriginal.id, dataSent.poiCategoriesToUpdate);
+				poiCategoryUpdated = findPoiCategoryById(poiCategoryOriginal.id, poiCategoriesToUpdate);
 				if (poiCategoryUpdated) {
 					poiCategoryUpdated = setPoiCategoryUpdatedData(poiCategoryUpdated, poiCategoryOriginal);
 				}
@@ -188,7 +188,9 @@ define('wikia.intMap.poiCategoriesModel',
 			var currentPoiCategories = [];
 
 			poiCategoriesOriginalData.forEach(function (poiCategoryOriginal) {
-				var poiCategoryUpdated = getPoiCategoryUpdated(poiCategoryOriginal, dataSent, dataReceived);
+				var poiCategoryUpdated = getPoiCategoryUpdated(
+					poiCategoryOriginal, dataSent.poiCategoriesToUpdate, dataReceived.poiCategoriesUpdated
+				);
 
 				// POI category updated
 				if (poiCategoryUpdated) {
@@ -197,7 +199,7 @@ define('wikia.intMap.poiCategoriesModel',
 				}
 
 				// POI category not changed
-				if (!isPoiCategoryDeleted(poiCategoryOriginal, dataReceived)) {
+				if (!isPoiCategoryDeleted(poiCategoryOriginal, dataReceived.poiCategoriesDeleted)) {
 					currentPoiCategories.push(poiCategoryOriginal);
 				}
 
@@ -224,6 +226,7 @@ define('wikia.intMap.poiCategoriesModel',
 			findPoiCategoryById: findPoiCategoryById,
 			organizePoiCategories: organizePoiCategories,
 			setPoiCategoryUpdatedData: setPoiCategoryUpdatedData,
+			getPoiCategoryUpdated: getPoiCategoryUpdated,
 			updatePoiCategoriesData: updatePoiCategoriesData
 		};
 	}
