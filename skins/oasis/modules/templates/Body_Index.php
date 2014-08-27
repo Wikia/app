@@ -98,7 +98,7 @@
 						}
 
 						if (!WikiaPageType::isCorporatePage() && !WikiaPageType::isMainPage() && $wg->AdDriverUseTopInContentBoxad) {
-							echo $app->renderView('Ad', 'Index', ['slotName' => 'TOP_IN_CONTENT_BOXAD']);
+							echo $app->renderView('Ad', 'Index', ['slotName' => 'TOP_INCONTENT_BOXAD']);
 						}
 
 					?>

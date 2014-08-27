@@ -56,12 +56,14 @@ class HAWelcomeTaskHookDispatcher {
 				return true;
 			}
 
-			$this->markHAWelcomePosted();
-			$this->queueWelcomeTask( $this->getTitleObjectFromRevision() );
-			$this->info( "queued welcome task" );
+			$this->info( "queueing welcome task for user" );
 		} else {
-			$this->info( "aborting the welcome hook for an anonymous user" );
+			$this->info( "queueing welcome task for an anonymous user" );
 		}
+
+		$this->markHAWelcomePosted();
+		$this->queueWelcomeTask( $this->getTitleObjectFromRevision() );
+		$this->info( "queued welcome task" );
 
 		return true;
 	}

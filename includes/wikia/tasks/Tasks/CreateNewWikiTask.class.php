@@ -7,12 +7,12 @@
  * @author Nelson Monterroso <nelson@wikia-inc.com>
  */
 
-use Wikia\Tasks\Tasks\BaseTask;
+namespace Wikia\Tasks\Tasks;
 
 class CreateNewWikiTask extends BaseTask {
 	const DEFAULT_USER = 'Default';
 
-	/** @var User */
+	/** @var \User */
 	private $founder;
 
 	private $wikiName;
@@ -24,7 +24,7 @@ class CreateNewWikiTask extends BaseTask {
 
 		parent::init();
 
-		$this->title = Title::newFromText( NS_MAIN, "Main" );
+		$this->title = \Title::newFromText( NS_MAIN, "Main" );
 		require_once( "$IP/extensions/CheckUser/install.inc" );
 	}
 
@@ -38,14 +38,14 @@ class CreateNewWikiTask extends BaseTask {
 
 		if ( $params['founderId'] ) {
 			$this->info('loading founding user', ['founder_id' => $params['founderId']]);
-			$this->founder = User::newFromId( $params['founder_id'] );
+			$this->founder = \User::newFromId( $params['founderId'] );
 			$this->founder->load();
 		}
 
 		if ( !$this->founder || $this->founder->isAnon() ) {
 			$this->warning('cannot load founding user', ['founder_id' => $params['founderId']]);
 			if ( !empty( $params['founderName'] ) ) {
-				$this->founder = User::newFromName( $params['founder_name'] );
+				$this->founder = \User::newFromName( $params['founderName'] );
 				$this->founder->load();
 			}
 		}
@@ -53,17 +53,17 @@ class CreateNewWikiTask extends BaseTask {
 		if ( !$this->founder || $this->founder->isAnon() ) {
 			global $wgExternalAuthType;
 			if ( $wgExternalAuthType ) {
-				$extUser = ExternalUser::newFromName( $params['founder_name'] );
+				$extUser = \ExternalUser::newFromName( $params['founderName'] );
 				if ( is_object( $extUser ) ) {
 					$extUser->linkToLocal( $extUser->getId() );
 				}
 			}
 		}
 
-		$wgUser = User::newFromName( 'CreateWiki script' );
+		$wgUser = \User::newFromName( 'CreateWiki script' );
 
-		$this->wikiName = isset( $params['sitename'] ) ? $params['sitename'] : WikiFactory::getVarValueByName( 'wgSitename', $params['city_id'], true );
-		$this->wikiLang = isset( $params['language'] ) ? $params['language'] : WikiFactory::getVarValueByName( 'wgLanguageCode', $params['city_id'] );
+		$this->wikiName = isset( $params['sitename'] ) ? $params['sitename'] : \WikiFactory::getVarValueByName( 'wgSitename', $params['city_id'], true );
+		$this->wikiLang = isset( $params['language'] ) ? $params['language'] : \WikiFactory::getVarValueByName( 'wgLanguageCode', $params['city_id'] );
 
 		$this->moveMainPage();
 		$this->changeStarterContributions( $params );
@@ -97,19 +97,19 @@ class CreateNewWikiTask extends BaseTask {
 		$this->info( 'run refreshLinks.php', ['exitStatus' => $exitStatus, 'output' => $output] );
 
 		$this->info( "Remove edit lock" );
-		$variable = WikiFactory::getVarByName( 'wgReadOnly', $wgCityId );
+		$variable = \WikiFactory::getVarByName( 'wgReadOnly', $wgCityId );
 		if ( isset( $variable->cv_variable_id ) ) {
-			WikiFactory::removeVarById( $variable->cv_variable_id, $wgCityId );
-			WikiFactory::clearCache( $wgCityId );
+			\WikiFactory::removeVarById( $variable->cv_variable_id, $wgCityId );
+			\WikiFactory::clearCache( $wgCityId );
 		}
 
-		$dbname = WikiFactory::IDtoDB( $wgCityId );
+		$dbname = \WikiFactory::IDtoDB( $wgCityId );
 		$cmd = sprintf( "perl /usr/wikia/backend/bin/scribe/events_local_users.pl --usedb={$dbname} " );
 		$output = wfShellExec( $cmd, $exitStatus );
 		$this->info( 'run events_local_users.pl', ['exitStatus' => $exitStatus, 'output' => $output] );
 
 		$wgMemc = wfGetMainCache();
-		$wgMemc->delete( WikiFactory::getVarsKey( $wgCityId ) );
+		$wgMemc->delete( \WikiFactory::getVarsKey( $wgCityId ) );
 
 		return true;
 	}
@@ -123,21 +123,21 @@ class CreateNewWikiTask extends BaseTask {
 		$source = wfMsgForContent( 'Mainpage' );
 		$target = $wgSitename;
 
-		$sourceTitle = Title::newFromText( $source );
+		$sourceTitle = \Title::newFromText( $source );
 		if ( !$sourceTitle ) {
-			$sourceTitle = Title::newFromText( "Main_Page" );
+			$sourceTitle = \Title::newFromText( "Main_Page" );
 			if ( !$sourceTitle ) {
 				$this->error("invalid page title", ["title" => $source]);
 				return;
 			}
 		}
 
-		$mainArticle = new Article( $sourceTitle, 0 );
+		$mainArticle = new \Article( $sourceTitle, 0 );
 		if ( $mainArticle->exists() ) {
 			/**
 			 * check target title
 			 */
-			$targetTitle = Title::newFromText( $target );
+			$targetTitle = \Title::newFromText( $target );
 			if ( $targetTitle ) {
 				$moveContext = [
 					'source' => $sourceTitle->getPrefixedText(),
@@ -152,8 +152,8 @@ class CreateNewWikiTask extends BaseTask {
 						/**
 						 * fill Mediawiki:Mainpage with new title
 						 */
-						$mwMainPageTitle = Title::newFromText( "Mainpage", NS_MEDIAWIKI );
-						$mwMainPageArticle = new Article( $mwMainPageTitle, 0 );
+						$mwMainPageTitle = \Title::newFromText( "Mainpage", NS_MEDIAWIKI );
+						$mwMainPageArticle = new \Article( $mwMainPageTitle, 0 );
 						$mwMainPageArticle->doEdit( $targetTitle->getText(), "SEO", EDIT_SUPPRESS_RC | EDIT_MINOR | EDIT_FORCE_BOT );
 						$mwMainPageArticle->doPurge();
 
@@ -162,7 +162,7 @@ class CreateNewWikiTask extends BaseTask {
 						 */
 						$sourceTalkTitle = $sourceTitle->getTalkPage();
 						$targetTalkTitle = $targetTitle->getTalkPage();
-						if ( $sourceTalkTitle instanceof Title && $sourceTalkTitle->exists() && $targetTalkTitle instanceof Title ) {
+						if ( $sourceTalkTitle instanceof \Title && $sourceTalkTitle->exists() && $targetTalkTitle instanceof \Title ) {
 							$moveContext = [
 								'source' => $sourceTalkTitle->getPrefixedText(),
 								'target' => $targetTalkTitle->getPrefixedText(),
@@ -200,7 +200,7 @@ class CreateNewWikiTask extends BaseTask {
 	 */
 	private function changeStarterContributions( $params ) {
 		$dbw = wfGetDB( DB_MASTER );
-		$contributor = User::newFromName( self::DEFAULT_USER );
+		$contributor = \User::newFromName( self::DEFAULT_USER );
 		$lastRevTimestamp = 0;
 
 		/**
@@ -208,7 +208,7 @@ class CreateNewWikiTask extends BaseTask {
 		 * revisions created during the starter import - (timestamp not
 		 * greater than the timestamp of the latest starter revision.
 		 */
-		$updateSql = ( new WikiaSQL() )
+		$updateSql = ( new \WikiaSQL() )
 			->UPDATE( 'revision' )
 			->SET( 'rev_user', $contributor->getId() )
 			->SET( 'rev_user_text', $contributor->getName() )
@@ -221,10 +221,10 @@ class CreateNewWikiTask extends BaseTask {
 			$starterDb = wfGetDb( DB_SLAVE, array(), $params['sDbStarter'] );
 
 			if ( is_object( $starterDb ) ) {
-				$lastRevTimestamp = ( new WikiaSQL() )
+				$lastRevTimestamp = ( new \WikiaSQL() )
 					->SELECT( 'max(rev_timestamp)' )->AS_( 'rev_timestamp' )
 					->FROM( 'revision' )
-					->run( $starterDb, function ( ResultWrapper $res ) use ( $updateSql ) {
+					->run( $starterDb, function ( \ResultWrapper $res ) use ( $updateSql ) {
 						$row = $res->fetchObject();
 
 						if ( $row ) {
@@ -264,8 +264,8 @@ class CreateNewWikiTask extends BaseTask {
 		/**
 		 * set apropriate staff member
 		 */
-		$wgUser = Wikia::staffForLang( $this->wikiLang );
-		$wgUser = ( $wgUser instanceof User ) ? $wgUser : User::newFromName( "Angela" );
+		$wgUser = \Wikia::staffForLang( $this->wikiLang );
+		$wgUser = ( $wgUser instanceof \User ) ? $wgUser : \User::newFromName( "Angela" );
 
 		$talkParams = array( $this->founder->getName(), $wgUser->getName(), $wgUser->getRealName(), $this->wikiName );
 
@@ -300,7 +300,7 @@ class CreateNewWikiTask extends BaseTask {
 		}
 
 		if ( !empty( $wgEnableWallExt ) ) {
-			$wallMessage = WallMessage::buildNewMessageAndPost( $talkBody, $this->founder->getName(), $wgUser, $wallTitle,
+			$wallMessage = \WallMessage::buildNewMessageAndPost( $talkBody, $this->founder->getName(), $wgUser, $wallTitle,
 				false, array(), true, false );
 			if ( $wallMessage === false ) {
 				return false;
@@ -316,7 +316,7 @@ class CreateNewWikiTask extends BaseTask {
 			/**
 			 * and now create talk article
 			 */
-			$talkArticle = new Article( $talkPage, 0 );
+			$talkArticle = new \Article( $talkPage, 0 );
 			if ( !$talkArticle->exists() ) {
 				$talkArticle->doEdit( $talkBody, wfMsg( "autocreatewiki-welcometalk-log" ), EDIT_SUPPRESS_RC | EDIT_MINOR | EDIT_FORCE_BOT );
 			} else {
@@ -346,7 +346,7 @@ class CreateNewWikiTask extends BaseTask {
 	private function protectKeyPages() {
 		global $wgUser, $wgWikiaKeyPages;
 
-		$wgUser = User::newFromName( "CreateWiki script" );
+		$wgUser = \User::newFromName( "CreateWiki script" );
 		if ( $wgUser->isAnon() ) {
 			$wgUser->addToDatabase();
 		}
@@ -361,7 +361,7 @@ class CreateNewWikiTask extends BaseTask {
 		$restrictions[ "move" ] = 'sysop';
 		$restrictions[ "create" ] = 'sysop';
 		$titleRestrictions = 'sysop';
-		$expiry_string = Block::infinity();
+		$expiry_string = \Block::infinity();
 		$expiry_array = array( 'edit' => $expiry_string, 'move' => $expiry_string );
 
 		/**
@@ -372,14 +372,14 @@ class CreateNewWikiTask extends BaseTask {
 		$wgUser->addGroup( 'staff' );
 
 		foreach ( $wgWikiaKeyPages as $pageName ) {
-			$title = Title::newFromText( $pageName );
-			$article = new Article( $title );
+			$title = \Title::newFromText( $pageName );
+			$article = new \Article( $title );
 
 			if ( $article->exists() ) {
 				$cascade = 0;
 				$ok = $article->updateRestrictions( $restrictions, $reason, $cascade, $expiry_array );
 			} else {
-				$wikiPage = WikiPage::factory( $title );
+				$wikiPage = \WikiPage::factory( $title );
 				$ignored_reference = false; // doing this because MW1.19 doUpdateRestrictions() is weird, and has this passed by reference
 				$status = $wikiPage->doUpdateRestrictions( array( 'create' => $titleRestrictions ), array( 'create' => $expiry_string ), $ignored_reference, $reason, $wgUser );
 				$ok = $status->isOK();
@@ -404,25 +404,25 @@ class CreateNewWikiTask extends BaseTask {
 	private function sendRevisionToScribe() {
 		$dbr = wfGetDB( DB_SLAVE );
 
-		$numRows = ( new WikiaSQL() )
+		$numRows = ( new \WikiaSQL() )
 			->SELECT( 'rev_page as page_id', 'rev_id', 'rev_user' )
 			->FROM( 'revision' )
 			->WHERE( 'rev_page' )->GREATER_THAN( 0 )
 			->ORDER_BY( 'rev_id' )
-			->run( $dbr, function ( ResultWrapper $res ) {
+			->run( $dbr, function ( \ResultWrapper $res ) {
 				global $wgEnableScribeNewReport;
 
 				$numRows = 0;
 				$pages = [ ];
 
 				while ( $row = $res->fetchObject() ) {
-					$article = Article::newFromID( $row->page_id );
-					$user = User::newFromId( $row->rev_user );
-					$revision = Revision::newFromId( $row->rev_id );
+					$article = \Article::newFromID( $row->page_id );
+					$user = \User::newFromId( $row->rev_user );
+					$revision = \Revision::newFromId( $row->rev_id );
 
 					if ( $wgEnableScribeNewReport ) {
 						$key = ( isset( $pages[ $row->page_id ] ) ) ? 'edit' : 'create';
-						$scribeProducer = new ScribeEventProducer( $key, 0 );
+						$scribeProducer = new \ScribeEventProducer( $key, 0 );
 						if ( is_object( $scribeProducer ) ) {
 							if ( $scribeProducer->buildEditPackage( $article, $user, $revision ) ) {
 								$scribeProducer->sendLog();
@@ -430,11 +430,11 @@ class CreateNewWikiTask extends BaseTask {
 						}
 					} else {
 						$flags = "";
-						$status = Status::newGood( array() );
+						$status = \Status::newGood( array() );
 						$status->value[ 'new' ] = ( isset( $pages[ $row->page_id ] ) ? false : true );
 						$archive = 0;
 
-						ScribeProducer::saveComplete( $article, $user, null, null, null, $archive, null, $flags, $revision, $status, 0 );
+						\ScribeProducer::saveComplete( $article, $user, null, null, null, $archive, null, $flags, $revision, $status, 0 );
 					}
 
 					$pages[ $row->page_id ] = $row->rev_id;

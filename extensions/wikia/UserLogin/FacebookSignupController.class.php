@@ -126,6 +126,7 @@ class FacebookSignupController extends WikiaController {
 
 			// CONN-421 Auto confirm Facebook accounts' emails
 			$user->confirmEmail();
+			wfRunHooks( 'SignupConfirmEmailComplete', array( $user ) );
 
 			// Add new user to log
 			$userLoginHelper = new UserLoginHelper();
