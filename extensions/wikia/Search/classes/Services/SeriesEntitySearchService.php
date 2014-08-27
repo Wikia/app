@@ -12,7 +12,7 @@ class SeriesEntitySearchService extends EntitySearchService {
 	const DEFAULT_SLOP = 1;
 	const EXACT_MATCH_FIELD = "tv_series_mv_em";
 
-	private static $ARTICLE_TYPES_SUPPORTED_LANGS = ['en'];
+	private static $ARTICLE_TYPES_SUPPORTED_LANGS = [ 'en' ];
 
 	protected function prepareQuery( $query ) {
 		$select = $this->getSelect();
@@ -76,7 +76,7 @@ class SeriesEntitySearchService extends EntitySearchService {
 	protected function createQuery( $query ) {
 		$options = [ ];
 		if ( $this->getQuality() !== null ) {
-			$options[] = '+(article_quality_i:[' . $this->getQuality() . ' TO *])';
+			$options[ ] = '+(article_quality_i:[' . $this->getQuality() . ' TO *])';
 		}
 		if ( $this->getWikiId() !== null ) {
 			$options[ ] = '+(wid:' . $this->getWikiId() . ')';
