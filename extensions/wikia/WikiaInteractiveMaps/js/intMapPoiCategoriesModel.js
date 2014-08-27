@@ -25,6 +25,19 @@ define('wikia.intMap.poiCategoriesModel',
 		}
 
 		/**
+		 * @desc sends POI categories data to PHP controller
+		 * @param {object} data - object with serialized and validated form
+		 */
+		function sendPoiCategories(data) {
+			return $.nirvana.sendRequest({
+				controller: 'WikiaInteractiveMapsPoiCategory',
+				method: 'editPoiCategories',
+				format: 'json',
+				data: data
+			});
+		}
+
+		/**
 		 * @desc returns true if POI category is invalid
 		 * @param {object} poiCategory
 		 * @returns {boolean} - is valid
@@ -54,6 +67,17 @@ define('wikia.intMap.poiCategoriesModel',
 			}
 
 			return false;
+		}
+
+		/**
+		 * @desc checks if POI category was deleted
+		 * @param poiCategory
+		 * @param dataReceived
+		 * @returns {boolean}
+		 */
+		function isPoiCategoryDeleted(poiCategory, dataReceived) {
+			return dataReceived.poiCategoriesDeleted &&
+			dataReceived.poiCategoriesDeleted.indexOf(poiCategory.id) > -1;
 		}
 
 		/**
@@ -112,19 +136,6 @@ define('wikia.intMap.poiCategoriesModel',
 		}
 
 		/**
-		 * @desc sends POI categories data to PHP controller
-		 * @param {object} data - object with serialized and validated form
-		 */
-		function sendPoiCategories(data) {
-			return $.nirvana.sendRequest({
-				controller: 'WikiaInteractiveMapsPoiCategory',
-				method: 'editPoiCategories',
-				format: 'json',
-				data: data
-			});
-		}
-
-		/**
 		 * @desc cleans up POI category data after updating it, copies what's needed from the original data
 		 * @param {object} poiCategoryUpdated
 		 * @param {object} poiCategoryOriginal
@@ -168,17 +179,6 @@ define('wikia.intMap.poiCategoriesModel',
 		}
 
 		/**
-		 * @desc checks if POI category was deleted
-		 * @param poiCategory
-		 * @param dataReceived
-		 * @returns {boolean}
-		 */
-		function isPoiCategoryDeleted(poiCategory, dataReceived) {
-			return dataReceived.poiCategoriesDeleted &&
-			dataReceived.poiCategoriesDeleted.indexOf(poiCategory.id) > -1;
-		}
-
-		/**
 		 * @desc cleans up POI categories data after edit
 		 * @param {object} dataSent - POI categories sent to backend
 		 * @param {object} dataReceived - response from backend, array of actions done and categories affected
@@ -217,12 +217,12 @@ define('wikia.intMap.poiCategoriesModel',
 		return {
 			setPoiCategoriesOriginalData: setPoiCategoriesOriginalData,
 			getParentPoiCategories: getParentPoiCategories,
+			sendPoiCategories: sendPoiCategories,
 			isPoiCategoryInvalid: isPoiCategoryInvalid,
 			isPoiCategoryChanged: isPoiCategoryChanged,
 			isPoiCategoryDeleted: isPoiCategoryDeleted,
 			findPoiCategoryById: findPoiCategoryById,
 			organizePoiCategories: organizePoiCategories,
-			sendPoiCategories: sendPoiCategories,
 			setPoiCategoryUpdatedData: setPoiCategoryUpdatedData,
 			updatePoiCategoriesData: updatePoiCategoriesData
 		};
