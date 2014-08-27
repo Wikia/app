@@ -409,6 +409,11 @@ ve.ui.MWTemplateDialog.prototype.initialzeNewTemplateParameters = function () {
  */
 ve.ui.MWTemplateDialog.prototype.initializeTemplateParameters = ve.ui.MWTemplateDialog.prototype.initialzeNewTemplateParameters;
 
+/**
+ * Handle the filter input change
+ * TODO: Wikia (ve-sprint-25): Code in this method could be optimized in plenty of ways
+ * but at this moment it's unknown if optimizing it is needed
+ */
 ve.ui.MWTemplateDialog.prototype.onFilterInputChange = function () {
 	var value = this.filterInput.getValue().toLowerCase().trim(),
 		parts = this.transclusionModel.getParts(),
@@ -441,6 +446,8 @@ ve.ui.MWTemplateDialog.prototype.onFilterInputChange = function () {
 					parameterMatch = true;
 					page.$element.show();
 				}
+				// if there was no match among all parameters for the template then
+				// hide template page as well (so not only parameters)
 				page = this.bookletLayout.getPage( part.getId() );
 				if ( !parameterMatch ) {
 					page.$element.hide();
