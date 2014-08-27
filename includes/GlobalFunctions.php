@@ -3367,17 +3367,12 @@ function wfCheckEntropy() {
  */
 function wfFixSessionID() {
 	// If the cookie or session id is already set we already have a session and should abort
-	if ( isset( $_COOKIE[ session_name() ] ) || session_id() ) {
+	if ( !empty( $_COOKIE[ session_name() ] ) || session_id() ) {
 		return;
 	}
 
-	$entropyEnabled = wfCheckEntropy();
-
-	// If built-in entropy is not enabled or not sufficient override php's built in session id generation code
-	if ( !$entropyEnabled ) {
-		wfDebug( __METHOD__ . ": PHP's built in entropy is disabled or not sufficient, overriding session id generation using our cryptrand source.\n" );
-		session_id( MWCryptRand::generateHex( 32 ) );
-	}
+	wfDebug( __METHOD__ . ": PHP's built in entropy is disabled or not sufficient, overriding session id generation using our cryptrand source.\n" );
+	session_id( MWCryptRand::generateHex( 32 ) );
 }
 
 /**
