@@ -198,7 +198,6 @@ class ThumbnailHelper extends WikiaModel {
 		$controller->alt = empty( $options['alt'] ) ? $title->getText() : $options['alt'];
 
 		// set image attributes
-		$controller->imgSrc = $options['src'];
 		$controller->mediaKey = htmlspecialchars( $title->getDBKey() );
 		$controller->mediaName = htmlspecialchars( $title->getText() );
 		$controller->imgClass = self::getImgClass( $options );
