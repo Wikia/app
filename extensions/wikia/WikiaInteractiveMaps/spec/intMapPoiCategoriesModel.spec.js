@@ -63,4 +63,62 @@ describe('WikiaMaps.poiCategoriesModel', function () {
 			expect(isChanged).toBe(testCase.isChanged);
 		});
 	});
+
+	it('finds POI category by id', function () {
+		expect(typeof poiCategoriesModelModule.findPoiCategoryById).toBe('function');
+
+		var testData = [
+			{
+				input: {
+					id: 1,
+					poiCategories: [
+						{
+							id: 1,
+							name: 'first one'
+						},
+						{
+							id: 2,
+							name: 'second one'
+						}
+					]
+				},
+				expectedOutput: {
+					id: 1,
+					name: 'first one'
+				}
+			},
+			{
+				input: {
+					id: 3,
+					poiCategories: [
+						{
+							id: 1,
+							name: 'first one'
+						},
+						{
+							id: 2,
+							name: 'second one'
+						}
+					]
+				},
+				expectedOutput: null
+			},
+			{
+				input: {
+					id: 1,
+					poiCategories: []
+				},
+				expectedOutput: null
+			}
+		];
+
+		testData.forEach(function (testCase) {
+			var poiCategory = poiCategoriesModelModule.findPoiCategoryById(testCase.input.id, testCase.input.poiCategories);
+			expect(poiCategory).toEqual(testCase.expectedOutput);
+		});
+	});
+
+	/*it('', function () {
+
+	});*/
 });

@@ -12,24 +12,7 @@ describe('WikiaMaps.poiCategories', function () {
 		expect(typeof poiCategoriesModule.extendPoiCategoryData).toBe('function');
 		expect(typeof poiCategoriesModule.poiCategoryTemplateData).toBe('object');
 
-		var getParentPoiCategories = function (parentPoiCategories, categorySelected) {
-				var parentPoiCategoriesCopy = parentPoiCategories.slice(0);
-				parentPoiCategoriesCopy.forEach(function (category) {
-					category.selected = (category.id === categorySelected) ? ' selected' : null;
-				});
-				return parentPoiCategoriesCopy;
-			},
-			parentPoiCategories = [
-				{
-					id: 1,
-					name: 'first'
-				},
-				{
-					id: 2,
-					name: 'second'
-				}
-			],
-			testData = [
+		var testData = [
 				{
 					input: {
 						id: 1,
@@ -41,16 +24,62 @@ describe('WikiaMaps.poiCategories', function () {
 						id: 1,
 						name: 'category name',
 						marker: 'http://marker.jpg',
-						parentPoiCategories: getParentPoiCategories(parentPoiCategories, 1)
+						parentPoiCategories: [
+							{
+								id: 1,
+								name: 'first',
+								selected: ' selected'
+							},
+							{
+								id: 2,
+								name: 'second',
+								selected: null
+							}
+						]
+					}
+				},
+				{
+					input: {
+						id: 2,
+						name: 'category name',
+						marker: '',
+						no_marker: true,
+						parent_poi_category_id: 2
+					},
+					expectedOutput: {
+						id: 2,
+						name: 'category name',
+						parentPoiCategories: [
+							{
+								id: 1,
+								name: 'first',
+								selected: null
+							},
+							{
+								id: 2,
+								name: 'second',
+								selected: ' selected'
+							}
+						]
 					}
 				}
 			];
 
-		poiCategoriesModule.poiCategoryTemplateData.parentPoiCategories = parentPoiCategories;
+		// normally handled by getParentPoiCategories()
+		poiCategoriesModule.poiCategoryTemplateData.parentPoiCategories = [
+			{
+				id: 1,
+				name: 'first'
+			},
+			{
+				id: 2,
+				name: 'second'
+			}
+		];
 
 		testData.forEach(function (testCase) {
 			var output = poiCategoriesModule.extendPoiCategoryData(testCase.input, poiCategoriesModule.poiCategoryTemplateData),
-				expectedOutput = $.extend(poiCategoriesModule.poiCategoryTemplateData, testCase.expectedOutput);
+				expectedOutput = $.extend({}, poiCategoriesModule.poiCategoryTemplateData, testCase.expectedOutput);
 
 			expect(output).toEqual(expectedOutput);
 		});
