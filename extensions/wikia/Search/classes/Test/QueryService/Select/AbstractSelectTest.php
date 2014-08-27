@@ -804,7 +804,7 @@ class AbstractSelectTest extends Wikia\Search\Test\BaseTest {
 		    ->will   ( $this->returnValue( $mockConfig ) )
 		;
 
-		$this->proxyClass( 'Wikia\Search\ResultSet\Factory', $mockResultSetFactory );
+		$this->mockClass( 'Wikia\Search\ResultSet\Factory', $mockResultSetFactory );
 
 		$reflspell = new ReflectionMethod( $mockSelect, 'prepareResponse' );
 		$reflspell->setAccessible( true );
