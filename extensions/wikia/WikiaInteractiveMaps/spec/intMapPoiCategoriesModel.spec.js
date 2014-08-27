@@ -59,7 +59,9 @@ describe('WikiaMaps.poiCategoriesModel', function () {
 		];
 
 		testData.forEach(function (testCase) {
-			var isChanged = poiCategoriesModelModule.isPoiCategoryChanged(testCase.originalPoiCategory, testCase.newPoiCategory);
+			var isChanged = poiCategoriesModelModule.isPoiCategoryChanged(
+				testCase.originalPoiCategory, testCase.newPoiCategory
+			);
 			expect(isChanged).toBe(testCase.isChanged);
 		});
 	});
@@ -113,7 +115,99 @@ describe('WikiaMaps.poiCategoriesModel', function () {
 		];
 
 		testData.forEach(function (testCase) {
-			var poiCategory = poiCategoriesModelModule.findPoiCategoryById(testCase.input.id, testCase.input.poiCategories);
+			var poiCategory = poiCategoriesModelModule.findPoiCategoryById(
+				testCase.input.id, testCase.input.poiCategories
+			);
+			expect(poiCategory).toEqual(testCase.expectedOutput);
+		});
+	});
+
+	it('sets POI category updated data', function () {
+		expect(typeof poiCategoriesModelModule.setPoiCategoryUpdatedData).toBe('function');
+
+		var testData = [
+			{
+				input: {
+					poiCategoryUpdated: {
+						map_id: 1,
+						status: 1,
+						marker: 'http://marker.url'
+					},
+					poiCategoryOriginal: {
+						map_id: 1,
+						status: 1,
+						marker: 'http://old.marker.url'
+					}
+				},
+				expectedOutput: {
+					map_id: 1,
+					status: 1,
+					marker: 'http://marker.url'
+				}
+			},
+			{
+				input: {
+					poiCategoryUpdated: {
+						map_id: 1,
+						status: 1,
+						marker: 'http://marker.url'
+					},
+					poiCategoryOriginal: {
+						map_id: 1,
+						status: 1,
+						no_marker: true
+					}
+				},
+				expectedOutput: {
+					map_id: 1,
+					status: 1,
+					marker: 'http://marker.url'
+				}
+			},
+			{
+				input: {
+					poiCategoryUpdated: {
+						map_id: 1,
+						status: 1
+					},
+					poiCategoryOriginal: {
+						map_id: 1,
+						status: 1,
+						marker: 'http://old.marker.url'
+					}
+				},
+				expectedOutput: {
+					map_id: 1,
+					status: 1,
+					marker: 'http://old.marker.url'
+				}
+			},
+			{
+				input: {
+					poiCategoryUpdated: {
+						map_id: 1,
+						status: 1,
+						marker: ''
+					},
+					poiCategoryOriginal: {
+						map_id: 1,
+						status: 1,
+						no_marker: true
+					}
+				},
+				expectedOutput: {
+					map_id: 1,
+					status: 1,
+					marker: '',
+					no_marker: true
+				}
+			}
+		];
+
+		testData.forEach(function (testCase) {
+			var poiCategory = poiCategoriesModelModule.setPoiCategoryUpdatedData(
+				testCase.input.poiCategoryUpdated, testCase.input.poiCategoryOriginal
+			);
 			expect(poiCategory).toEqual(testCase.expectedOutput);
 		});
 	});
