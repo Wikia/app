@@ -55,18 +55,6 @@ class WikiaPhotoGalleryHelper {
 		// calculate "unique" hash of each gallery
 		$ig->calculateHash($params);
 
-
-		// This is temporary for the prototype stage of media gallery
-		// TODO: Remove this block once media gallery is ready to be fully deployed
-		if ( F::app()->wg->Request->getVal( 'gallery' ) == 'new' ) {
-			global $wgEnableParserCache, $wgEnableMediaGalleryExt;
-
-			$wgEnableMediaGalleryExt = true;
-
-			// Parser cache must be disabled if media gallery is requested via query parameter
-			$wgEnableParserCache = false;
-		}
-
 		wfProfileOut(__METHOD__);
 
 		return true;
@@ -983,6 +971,27 @@ class WikiaPhotoGalleryHelper {
 		if( $text !== false ) {
 			$text = str_replace('<gallery ', "<gallery source=\"template\x7f\" ", $text);
 		}
+		return true;
+	}
+
+	/**
+	 * Hook handler - Add a key for new gallery to parser cache
+	 * TODO: Remove this hook once media gallery is ready to be fully deployed
+	 *
+	 * @param $hash
+	 * @return bool
+	 */
+	public static function addMediaGalleryCacheKey( &$hash ) {
+		global $wgRequest, $wgEnableMediaGalleryExt;
+
+		if ( $wgRequest->getVal( 'gallery' ) == 'new' ) {
+
+			$wgEnableMediaGalleryExt = true;
+
+			// Add a key to parser cache key
+			$hash .= '!' . 'NewGallery';
+		}
+
 		return true;
 	}
 

@@ -47,6 +47,9 @@ $wgHooks['Parser::FetchTemplateAndTitle'][] = 'WikiaPhotoGalleryHelper::fetchTem
 $wgHooks['MakeGlobalVariablesScript'][] = 'WikiaPhotoGalleryHelper::makeGlobalVariablesScriptForWikiaGrid';
 $wgHooks['EditPage::importFormData'][] = 'WikiaPhotoGalleryHelper::onImportFormData';
 /* end temp transistion code */
+// This is temporary for the prototype stage of media gallery
+// TODO: Remove this hook once media gallery is ready to be fully deployed
+$wgHooks[ 'PageRenderingHash' ][] = 'WikiaPhotoGalleryHelper::addMediaGalleryCacheKey';
 
 // i18n
 $wgExtensionMessagesFiles['WikiaPhotoGallery'] = $dir.'/WikiaPhotoGallery.i18n.php';
