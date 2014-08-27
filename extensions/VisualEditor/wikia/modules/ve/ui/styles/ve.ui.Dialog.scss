@@ -64,12 +64,13 @@
 .oo-ui-dialog-drag-handle {
 	-webkit-backface-visibility: hidden;
 	cursor: move;
-	height: 24px;
+	height: 18px;
 	left: 50%;
-	margin-left: -24px;
+	margin-left: -17px;
+	opacity: .2;
 	position: absolute;
-	top: .7em;
-	width: 48px;
+	top: .8em;
+	width: 36px;
 }
 .oo-ui-dialog-drag-iframe-fix {
 	bottom: 0;
