@@ -40,19 +40,9 @@ class UrlGenerator {
 	/** @var array hash of query parameters to send to the thumbnailer */
 	private $query = [];
 
-	public function __construct($file=null) {
-		if ($file !== null) {
-			$this->file($file);
-		}
-	}
-
-	/**
-	 * @param FileInterface $file
-	 * @return $this
-	 */
-	public function file(FileInterface $file) {
+	public function __construct(FileInterface $file) {
 		$this->file = $file;
-		return $this;
+		$this->original();
 	}
 
 	/**
@@ -96,11 +86,78 @@ class UrlGenerator {
 
 	/**
 	 * Fill the background with a specific color, instead of white
-	 * @param string $color color accepted by ImageMagick (http://www.imagemagick.org/script/color.php), or a hex code
+	 * @param string $color color accepted by ImageMagick (http://www.imagemagick.org/script/color.php), or a hex code.
+	 * This only applies when $this->mode = self::MODE_FIXED_ASPECT_RATIO
 	 * @return $this
 	 */
 	public function backgroundFill($color) {
 		$this->query['fill'] = $color;
+		return $this;
+	}
+
+	/**
+	 * original image
+	 * @return $this
+	 */
+	public function original() {
+		$this->mode(self::MODE_ORIGINAL);
+		return $this;
+	}
+
+	/**
+	 * reorient the image
+	 * @return $this
+	 */
+	public function reorient() {
+		$this->mode(self::MODE_REORIENT);
+		return $this;
+	}
+
+	/**
+	 * create a new thumbnail that is allowed to be bigger than the original
+	 * @return $this
+	 */
+	public function thumbnail() {
+		$this->mode(self::MODE_THUMBNAIL);
+		return $this;
+	}
+
+	/**
+	 * create a new thumbnail that is not allowed to be bigger than the original
+	 * @return $this
+	 */
+	public function thumbnailDown() {
+		$this->mode(self::MODE_THUMBNAIL_DOWN);
+		return $this;
+	}
+
+	/**
+	 * zoom crop, allowed to be bigger than the original
+	 * @return $this
+	 */
+	public function zoomCrop() {
+		$this->mode(self::MODE_ZOOM_CROP);
+		return $this;
+	}
+
+	/**
+	 * zoom crop, not allowed to be bigger than the original
+	 * @return $this
+	 */
+	public function zoomCropDown() {
+		$this->mode(self::MODE_ZOOM_CROP_DOWN);
+		return $this;
+	}
+
+	/**
+	 * return an image that is exactly $this->width x $this->height with the source image centered vertically
+	 * or horizontally (depending on which side is longer). The background is filled with the value passed to
+	 * $this->backgroundFill(), or white if no background value is specified.
+	 *
+	 * @return $this
+	 */
+	public function fixedAspectRatio() {
+		$this->mode(self::MODE_FIXED_ASPECT_RATIO);
 		return $this;
 	}
 
@@ -111,12 +168,6 @@ class UrlGenerator {
 	 */
 	public function url() {
 		global $wgVignetteUrl;
-
-		if ($this->file == null) {
-			$message = "trying to generate url without a file";
-			$this->error($message);
-			throw new \Exception($message);
-		}
 
 		$bucketPath = self::bucketPath();
 		$url = "{$wgVignetteUrl}/{$bucketPath}/{$this->file->getRel()}/revision/{$this->revision}/width/{$this->width}/height/{$this->height}";
@@ -135,17 +186,12 @@ class UrlGenerator {
 	}
 
 	public function __toString() {
-		$string = "";
-		try {
-			$string = $this->url();
-		} catch (\Exception $e) {}
-
-		return $string;
+		return $this->url();
 	}
 
 	protected function getLoggerContext() {
 		return [
-			'file' => $this->file == null ? "" : $this->file->getName(),
+			'file' => $this->file->getName(),
 		];
 	}
 
