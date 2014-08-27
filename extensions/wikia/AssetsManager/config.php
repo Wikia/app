@@ -1876,6 +1876,7 @@ $config['int_map_poi_categories_js'] = [
 	'assets' => [
 		'//extensions/wikia/WikiaInteractiveMaps/js/intMapUtils.js',
 		'//extensions/wikia/WikiaInteractiveMaps/js/intMapPoiCategories.js',
+		'//extensions/wikia/WikiaInteractiveMaps/js/intMapPoiCategoriesModel.js',
 		'//resources/wikia/libraries/jquery/serialize-object/jquery.serialize-object.js',
 	]
 ];

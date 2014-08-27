@@ -2,66 +2,57 @@ describe('WikiaMaps.poiCategories', function () {
 	'use strict';
 
 	var jQueryMock = jasmine.createSpyObj('$', ['msg']),
-		poiCategoriesModule = modules['wikia.intMap.poiCategories'](jQueryMock);
+		poiCategoriesModule = modules['wikia.intMap.poiCategories'](jQuery);
 
 	it('registers AMD module', function() {
 		expect(typeof poiCategoriesModule).toBe('object');
 	});
 
-	it('checks if POI category has changed', function() {
-		expect(typeof poiCategoriesModule.isPoiCategoryChanged).toBe('function');
+	it('extends POI category data', function() {
+		expect(typeof poiCategoriesModule.extendPoiCategoryData).toBe('function');
+		expect(typeof poiCategoriesModule.poiCategoryTemplateData).toBe('object');
 
-		var testData = [
-			{
-				originalPoiCategory: {
-					name: 'name',
-					parent_poi_category_id: 1
-				},
-				newPoiCategory: {
-					name: 'changed name',
-					parent_poi_category_id: 1
-				},
-				isChanged: true
+		var getParentPoiCategories = function (parentPoiCategories, categorySelected) {
+				var parentPoiCategoriesCopy = parentPoiCategories.slice(0);
+				parentPoiCategoriesCopy.forEach(function (category) {
+					category.selected = (category.id === categorySelected) ? ' selected' : null;
+				});
+				return parentPoiCategoriesCopy;
 			},
-			{
-				originalPoiCategory: {
-					name: 'name',
-					parent_poi_category_id: 1
+			parentPoiCategories = [
+				{
+					id: 1,
+					name: 'first'
 				},
-				newPoiCategory: {
-					name: 'name',
-					parent_poi_category_id: 1
-				},
-				isChanged: false
-			},
-			{
-				originalPoiCategory: {
-					name: 'name',
-					parent_poi_category_id: 1
-				},
-				newPoiCategory: {
-					name: 'name',
-					parent_poi_category_id: 2
-				},
-				isChanged: true
-			},
-			{
-				originalPoiCategory: {
-					name: 'name',
-					parent_poi_category_id: 1
-				},
-				newPoiCategory: {
-					name: 'name',
-					parent_poi_category_id: 1,
-					marker: 'new marker URL'
-				},
-				isChanged: true
-			}
-		];
+				{
+					id: 2,
+					name: 'second'
+				}
+			],
+			testData = [
+				{
+					input: {
+						id: 1,
+						name: 'category name',
+						marker: 'http://marker.jpg',
+						parent_poi_category_id: 1
+					},
+					expectedOutput: {
+						id: 1,
+						name: 'category name',
+						marker: 'http://marker.jpg',
+						parentPoiCategories: getParentPoiCategories(parentPoiCategories, 1)
+					}
+				}
+			];
+
+		poiCategoriesModule.poiCategoryTemplateData.parentPoiCategories = parentPoiCategories;
 
 		testData.forEach(function (testCase) {
-			var isChanged = poiCategoriesModule.isPoiCategoryChanged(testCase.originalPoiCategory, testCase.newPoiCategory);
-			expect(isChanged).toBe(testCase.isChanged);
+			var output = poiCategoriesModule.extendPoiCategoryData(testCase.input, poiCategoriesModule.poiCategoryTemplateData),
+				expectedOutput = $.extend(poiCategoriesModule.poiCategoryTemplateData, testCase.expectedOutput);
+
+			expect(output).toEqual(expectedOutput);
 		});
 	});
 });

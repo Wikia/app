@@ -3,9 +3,10 @@ define('wikia.intMap.poiCategories',
 		'jquery',
 		'wikia.querystring',
 		'wikia.window',
-		'wikia.intMap.utils'
+		'wikia.intMap.utils',
+		'wikia.intMap.poiCategoriesModel'
 	],
-	function($, qs, w, utils) {
+	function($, qs, w, utils, poiCategoriesModel) {
 		'use strict';
 
 		// reference to modal component
@@ -99,12 +100,11 @@ define('wikia.intMap.poiCategories',
 			modalModes = {
 				CREATE: 'create',
 				EDIT: 'edit'
-			},
-			poiCategoriesOriginalData;
+			};
 
 		/**
 		 * @desc Entry point for modal
-		 * @param {array} templates - mustache templates
+		 * @param {Array} templates - mustache templates
 		 * @param {object} _params - params from iframe (ponto) or map creation modal
 		 * @param {function} _trigger - callback function to send result back to iframe (ponto)
 		 */
@@ -134,7 +134,7 @@ define('wikia.intMap.poiCategories',
 		function setUpModal(data) {
 			setUpTemplateData(data);
 			mapUrl = data.mapUrl;
-			poiCategoriesOriginalData = data.poiCategories;
+			poiCategoriesModel.setPoiCategoriesOriginalData(data.poiCategories);
 
 			modalConfig.vars.content = utils.render(poiCategoriesTemplate, poiCategoriesTemplateData, {
 				poiCategory: poiCategoryTemplate,
@@ -176,9 +176,10 @@ define('wikia.intMap.poiCategories',
 		/**
 		 * @desc extends POI category
 		 * @param {object} poiCategory - data for POI category
+		 * @param {object} poiCategoryTemplateData
 		 * @returns {object} - POI category data with default template variables
 		 */
-		function extendPoiCategoryData(poiCategory) {
+		function extendPoiCategoryData(poiCategory, poiCategoryTemplateData) {
 			// clone this object so we don't overwrite default template data
 			var extendedPoiCategoryTemplateData = $.extend(true, {}, poiCategoryTemplateData);
 
@@ -202,14 +203,14 @@ define('wikia.intMap.poiCategories',
 
 		/**
 		 * @desc extends array of POI categories
-		 * @param {array} poiCategories - array of POI category objects
-		 * @returns {array} - array of extended POI categories objects
+		 * @param {Array} poiCategories - array of POI category objects
+		 * @returns {Array} - array of extended POI categories objects
 		 */
 		function extendPoiCategoriesData(poiCategories) {
 			var extendedPoiCategories = [];
 
 			poiCategories.forEach(function (poiCategory) {
-				extendedPoiCategories.push(extendPoiCategoryData(poiCategory));
+				extendedPoiCategories.push(extendPoiCategoryData(poiCategory, poiCategoryTemplateData));
 			});
 
 			return extendedPoiCategories;
@@ -223,7 +224,7 @@ define('wikia.intMap.poiCategories',
 			var dfd = new $.Deferred(),
 				parentPoiCategories;
 
-			getParentPoiCategories()
+			poiCategoriesModel.getParentPoiCategories()
 				.then(function (response) {
 					var data = response.results;
 
@@ -236,6 +237,8 @@ define('wikia.intMap.poiCategories',
 
 					poiCategoryTemplateData.parentPoiCategories = parentPoiCategories;
 					dfd.resolve();
+				}, function (response) {
+					utils.handleNirvanaException(modal, response);
 				});
 
 			return dfd.promise();
@@ -257,7 +260,7 @@ define('wikia.intMap.poiCategories',
 		 * @desc adds blank POI category input field
 		 */
 		function addPoiCategory() {
-			modal.$form.append(utils.render(poiCategoryTemplate, extendPoiCategoryData({}), {
+			modal.$form.append(utils.render(poiCategoryTemplate, extendPoiCategoryData({}, poiCategoryTemplateData), {
 				parentPoiCategory: parentPoiCategoryTemplate
 			}));
 		}
@@ -336,30 +339,6 @@ define('wikia.intMap.poiCategories',
 		}
 
 		/**
-		 * @desc gets parent POI categories list from backend
-		 * @returns {object} - promise
-		 */
-		function getParentPoiCategories() {
-			return $.nirvana.sendRequest({
-				controller: 'WikiaInteractiveMapsPoiCategory',
-				method: 'getParentPoiCategories',
-				format: 'json',
-				onErrorCallback: function (response) {
-					utils.handleNirvanaException(modal, response);
-				}
-			});
-		}
-
-		/**
-		 * @desc returns true if POI category is invalid
-		 * @param {object} poiCategory
-		 * @returns {boolean} - is valid
-		 */
-		function isPoiCategoryInvalid(poiCategory) {
-			return utils.isEmpty(poiCategory.name);
-		}
-
-		/**
 		 * @desc validates POI categories
 		 * @param {object} formSerialized - object with serialized form
 		 * @returns {boolean} - is valid
@@ -370,78 +349,12 @@ define('wikia.intMap.poiCategories',
 				return false;
 			}
 
-			if (formSerialized.poiCategories.some(isPoiCategoryInvalid)) {
+			if (formSerialized.poiCategories.some(poiCategoriesModel.isPoiCategoryInvalid)) {
 				utils.showError(modal, $.msg('wikia-interactive-maps-poi-categories-form-error'));
 				return false;
 			}
 
 			return true;
-		}
-
-		/**
-		 * @desc checks if POI category data was changed by user
-		 * @param {object} poiCategoryOriginal
-		 * @param {object} poiCategory
-		 * @returns {boolean} - is POI category changed
-		 */
-		function isPoiCategoryChanged(poiCategoryOriginal, poiCategory) {
-			if (poiCategory.name !== poiCategoryOriginal.name) {
-				return true;
-			}
-
-			if (poiCategory.parent_poi_category_id !== poiCategoryOriginal.parent_poi_category_id) {
-				return true;
-			}
-
-			// if marker property is not empty it means there was a new image uploaded
-			if (poiCategory.marker) {
-				return true;
-			}
-
-			return false;
-		}
-
-		/**
-		 * @desc organizes form data to object that will be sent to backend
-		 * @param {object} formSerialized
-		 * @returns {object} - organized POI categories data
-		 */
-		function organizePoiCategories(formSerialized) {
-			var poiCategories = {
-				mapId: parseInt(formSerialized.mapId, 10),
-				poiCategoriesToCreate: [],
-				poiCategoriesToUpdate: [],
-				poiCategoriesToDelete: []
-			};
-
-			if (formSerialized.poiCategories) {
-				formSerialized.poiCategories.forEach(function (poiCategory) {
-					var poiCategoryOriginal;
-
-					if (poiCategory.parent_poi_category_id) {
-						poiCategory.parent_poi_category_id = parseInt(poiCategory.parent_poi_category_id, 10);
-					}
-
-					if (poiCategory.id) {
-						poiCategory.id = parseInt(poiCategory.id, 10);
-
-						poiCategoryOriginal = findPoiCategoryById(poiCategory.id, poiCategoriesOriginalData);
-
-						if (poiCategoryOriginal && isPoiCategoryChanged(poiCategoryOriginal, poiCategory)) {
-							poiCategories.poiCategoriesToUpdate.push(poiCategory);
-						}
-					} else {
-						delete poiCategory.id;
-						poiCategories.poiCategoriesToCreate.push(poiCategory);
-					}
-				});
-			}
-
-			if (formSerialized.poiCategoriesToDelete) {
-				poiCategories.poiCategoriesToDelete = formSerialized.poiCategoriesToDelete.split(',').map(Number);
-			}
-
-			return poiCategories;
 		}
 
 		/**
@@ -454,12 +367,8 @@ define('wikia.intMap.poiCategories',
 			}
 
 			modal.deactivate();
-			$.nirvana.sendRequest({
-				controller: 'WikiaInteractiveMapsPoiCategory',
-				method: 'editPoiCategories',
-				format: 'json',
-				data: data,
-				callback: function(response) {
+			poiCategoriesModel.sendPoiCategories(data)
+				.then(function (response) {
 					var results = response.results;
 
 					if (results && results.success) {
@@ -470,105 +379,37 @@ define('wikia.intMap.poiCategories',
 						utils.showError(modal, results.content.message);
 						modal.activate();
 					}
-				},
-				onErrorCallback: function(response) {
+				}, function (response) {
 					utils.handleNirvanaException(modal, response);
 					modal.activate();
-				}
-			});
+				});
 		}
 
 		/**
 		 * @desc handler method triggered by savePoiCategories event
 		 */
 		function savePoiCategories() {
-			var formSerialized = modal.$form.serializeObject();
+			var formSerialized = modal.$form.serializeObject(),
+				poiCategoriesOrganized;
 
 			if (validateFormData(formSerialized)) {
-				sendPoiCategories(organizePoiCategories(formSerialized));
+				poiCategoriesOrganized = poiCategoriesModel.organizePoiCategories(formSerialized);
+				sendPoiCategories(poiCategoriesOrganized);
 			}
 		}
 
 		/**
-		 * @desc finds POI category in array by looking at ids
-		 * @param id - POI category id
-		 * @param poiCategories - array of POI categories
-		 * @returns {object|null} - POI category with given id or null if not found
-		 */
-		function findPoiCategoryById(id, poiCategories) {
-			return $.grep(poiCategories, function (item) {
-				return item.id === id;
-			})[0] || null;
-		}
-
-		/**
-		 * @desc cleans up POI category data after updating it, copies what's needed from the original data
-		 * @param poiCategoryUpdated
-		 * @param poiCategoryOriginal
-		 * @returns {object} - POI category with current data
-		 */
-		function setPoiCategoryUpdatedData(poiCategoryUpdated, poiCategoryOriginal) {
-			poiCategoryUpdated.map_id = poiCategoryOriginal.map_id;
-			poiCategoryUpdated.status = poiCategoryOriginal.status;
-			poiCategoryUpdated.marker = (!poiCategoryOriginal.no_marker && !poiCategoryUpdated.marker) ?
-				poiCategoryOriginal.marker :
-				poiCategoryUpdated.marker;
-
-			if (poiCategoryOriginal.no_marker && !poiCategoryUpdated.marker) {
-				poiCategoryUpdated.no_marker = true;
-			}
-
-			return poiCategoryUpdated;
-		}
-
-		/**
-		 * @desc cleans up POI categories data after edit
-		 * @param {object} dataSent - POI categories sent to backend
-		 * @param {object} dataReceived - response from backend, array of actions done and categories affected
-		 * @returns {Array} - current POI categories list
-		 */
-		function updatePoiCategoriesData(dataSent, dataReceived) {
-			var currentPoiCategories = [];
-
-			poiCategoriesOriginalData.forEach(function (poiCategoryOriginal) {
-				var poiCategoryUpdated = null;
-
-				if (
-					dataReceived.poiCategoriesUpdated &&
-					dataReceived.poiCategoriesUpdated.indexOf(poiCategoryOriginal.id) > -1
-				) {
-					poiCategoryUpdated = findPoiCategoryById(poiCategoryOriginal.id, dataSent.poiCategoriesToUpdate);
-					if (poiCategoryUpdated) {
-						currentPoiCategories.push(setPoiCategoryUpdatedData(poiCategoryUpdated, poiCategoryOriginal));
-					}
-				} else if (
-					!(dataReceived.poiCategoriesDeleted &&
-					dataReceived.poiCategoriesDeleted.indexOf(poiCategoryOriginal.id) > -1)
-				) {
-					currentPoiCategories.push(poiCategoryOriginal);
-				}
-
-				// else the POI category was deleted and we skip it
-			});
-
-			if (dataReceived.poiCategoriesCreated) {
-				dataReceived.poiCategoriesCreated.forEach(function (poiCategory) {
-					currentPoiCategories.push(poiCategory);
-				});
-			}
-
-			return currentPoiCategories;
-		}
-
-		/**
-		 * @desc Handler for poiCategoriesSaved event. Sends data to Ponto and closes the modal or redirects to map page.
+		 * @desc Handler for poiCategoriesSaved event. Sends data to Ponto and closes the modal or redirects to map page
 		 * @param {object} dataSent - POI categories sent to backend
 		 * @param {object} dataReceived - response from backend, array of actions done and categories affected
 		 */
 		function poiCategoriesSaved(dataSent, dataReceived) {
+			var updatedPoiCategories;
+
 			if (mode === modalModes.EDIT) {
 				if (typeof pontoTrigger === 'function') {
-					pontoTrigger(updatePoiCategoriesData(dataSent, dataReceived));
+					updatedPoiCategories = poiCategoriesModel.updatePoiCategoriesData(dataSent, dataReceived);
+					pontoTrigger(updatedPoiCategories);
 				}
 				modal.trigger('close');
 			} else {
@@ -586,7 +427,8 @@ define('wikia.intMap.poiCategories',
 
 		return {
 			init: init,
-			isPoiCategoryChanged: isPoiCategoryChanged // for unit testing
+			extendPoiCategoryData: extendPoiCategoryData,
+			poiCategoryTemplateData: poiCategoryTemplateData
 		};
 	}
 );
