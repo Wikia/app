@@ -57,7 +57,7 @@ class WikiaInteractiveMapsMapControllerTest extends WikiaBaseTest {
 		$this->mockGetDataForUserTests( $controllerMock );
 		$controllerMock->wg->User = $userMock;
 
-		$this->setExpectedException( 'PermissionsException' );
+		$this->setExpectedException( 'WikiaInteractiveMapsPermissionException' );
 		$controllerMock->createMap();
 	}
 
@@ -77,7 +77,7 @@ class WikiaInteractiveMapsMapControllerTest extends WikiaBaseTest {
 		$this->mockGetDataForUserTests( $controllerMock );
 		$controllerMock->wg->User = $userMock;
 
-		$this->setExpectedException( 'PermissionsException' );
+		$this->setExpectedException( 'WikiaInteractiveMapsPermissionException' );
 		$controllerMock->createMap();
 	}
 
