@@ -66,6 +66,53 @@ describe('WikiaMaps.poiCategoriesModel', function () {
 		});
 	});
 
+	it('checks if POI category was deleted', function () {
+		expect(typeof poiCategoriesModelModule.isPoiCategoryDeleted).toBe('function');
+
+		var testData = [
+			{
+				input: {
+					poiCategory: {
+						id: 1
+					},
+					dataReceived: {
+						poiCategoriesDeleted: [ 1, 2, 3 ]
+					}
+				},
+				expectedOutput: true
+			},
+			{
+				input: {
+					poiCategory: {
+						id: 1
+					},
+					dataReceived: {
+						poiCategoriesDeleted: []
+					}
+				},
+				expectedOutput: false
+			},
+			{
+				input: {
+					poiCategory: {
+						id: 2
+					},
+					dataReceived: {
+						poiCategoriesDeleted: [ 1 ]
+					}
+				},
+				expectedOutput: false
+			}
+		];
+
+		testData.forEach(function (testCase) {
+			var poiCategoryDeleted = poiCategoriesModelModule.isPoiCategoryDeleted(
+				testCase.input.poiCategory, testCase.input.dataReceived
+			);
+			expect(poiCategoryDeleted).toBe(testCase.expectedOutput);
+		});
+	});
+
 	it('finds POI category by id', function () {
 		expect(typeof poiCategoriesModelModule.findPoiCategoryById).toBe('function');
 
@@ -209,53 +256,6 @@ describe('WikiaMaps.poiCategoriesModel', function () {
 				testCase.input.poiCategoryUpdated, testCase.input.poiCategoryOriginal
 			);
 			expect(poiCategory).toEqual(testCase.expectedOutput);
-		});
-	});
-
-	it('sets POI category updated data', function () {
-		expect(typeof poiCategoriesModelModule.isPoiCategoryDeleted).toBe('function');
-
-		var testData = [
-			{
-				input: {
-					poiCategory: {
-						id: 1
-					},
-					dataReceived: {
-						poiCategoriesDeleted: [ 1, 2, 3 ]
-					}
-				},
-				expectedOutput: true
-			},
-			{
-				input: {
-					poiCategory: {
-						id: 1
-					},
-					dataReceived: {
-						poiCategoriesDeleted: []
-					}
-				},
-				expectedOutput: false
-			},
-			{
-				input: {
-					poiCategory: {
-						id: 2
-					},
-					dataReceived: {
-						poiCategoriesDeleted: [ 1 ]
-					}
-				},
-				expectedOutput: false
-			}
-		];
-
-		testData.forEach(function (testCase) {
-			var poiCategoryDeleted = poiCategoriesModelModule.isPoiCategoryDeleted(
-				testCase.input.poiCategory, testCase.input.dataReceived
-			);
-			expect(poiCategoryDeleted).toBe(testCase.expectedOutput);
 		});
 	});
 });
