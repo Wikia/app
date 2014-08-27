@@ -17,7 +17,7 @@ class WikiaInteractiveMapsPoiControllerTest extends WikiaBaseTest {
 		$controllerMock = $this->getWikiaInteractiveMapsPoiControllertMock();
 		$controllerMock->wg->User = $userMock;
 
-		$this->setExpectedException( 'PermissionsException' );
+		$this->setExpectedException( 'WikiaInteractiveMapsPermissionException' );
 		$controllerMock->editPoiCategories();
 	}
 
@@ -35,7 +35,7 @@ class WikiaInteractiveMapsPoiControllerTest extends WikiaBaseTest {
 		$controllerMock = $this->getWikiaInteractiveMapsPoiControllertMock();
 		$controllerMock->wg->User = $userMock;
 
-		$this->setExpectedException( 'PermissionsException' );
+		$this->setExpectedException( 'WikiaInteractiveMapsPermissionException' );
 		$controllerMock->editPoiCategories();
 	}
 
