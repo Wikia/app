@@ -29,17 +29,6 @@ ve.ui.Dialog = function VeUiDialog( config ) {
 	if ( config.height ) {
 		this.frame.$element.parent().css( 'height', config.height );
 	}
-	// TODO: Wikia (ve-sprint-25): Consider handling some of these configuration options with a mixin
-	if ( config.draggable ) {
-		this.draggable = true;
-		this.$element.addClass( 'oo-ui-dialog-draggable' );
-	}
-	if ( config.overlayless ) {
-		this.$element.addClass( 'oo-ui-dialog-overlayless' );
-	}
-	if ( config.allowScroll ) {
-		this.allowScroll = true;
-	}
 
 	// Properties
 	this.fragment = null;
@@ -48,6 +37,39 @@ ve.ui.Dialog = function VeUiDialog( config ) {
 /* Inheritance */
 
 OO.inheritClass( ve.ui.Dialog, OO.ui.Dialog );
+
+ve.ui.Dialog.prototype.setDraggable = function () {
+	this.draggable = true;
+	this.$element.addClass( 'oo-ui-dialog-draggable' );
+
+	this.$dragHandle = this.$( '<div>' ).addClass( 'oo-ui-dialog-drag-handle oo-ui-icon-grabber' );
+	this.$dragIframeFix = this.$( '<div>' ).addClass( 'oo-ui-dialog-drag-iframe-fix' );
+
+	this.frame.$element.parent().draggable( {
+		'handle': this.$dragHandle,
+		'start': ve.bind( this.onDragStart, this ),
+		'stop': ve.bind( this.onDragStop, this )
+	} );
+
+	this.frame.$element.parent().prepend( this.$dragIframeFix, this.$dragHandle );
+};
+
+ve.ui.Dialog.prototype.unsetDraggable = function () {
+	this.draggable = false;
+	this.$element.removeClass( 'oo-ui-dialog-draggable' );
+	this.$dragHandle.add( this.$dragIframeFix ).remove();
+	this.frame.$element.parent().css( { 'top': '', 'left': '' } );
+};
+
+ve.ui.Dialog.prototype.setOverlayless = function () {
+	this.overlayless = true;
+	this.$element.addClass( 'oo-ui-dialog-overlayless' );
+};
+
+ve.ui.Dialog.prototype.unsetOverlayless = function () {
+	this.overlayless = false;
+	this.$element.removeClass( 'oo-ui-dialog-overlayless' );
+};
 
 /**
  * @inheritdoc
@@ -69,39 +91,6 @@ ve.ui.Dialog.prototype.close = function ( data ) {
 		.then( ve.bind( function () {
 			this.fragment = null;
 		}, this ) );
-};
-
-/**
- * @inheritdoc
- */
-ve.ui.Dialog.prototype.initialize = function () {
-	// Parent method
-	ve.ui.Dialog.super.prototype.initialize.call( this );
-
-	if ( this.draggable ) {
-		this.initDraggable();
-	}
-	if ( this.allowScroll ) {
-		this.onWindowMouseWheelHandler = function () {
-			return true;
-		};
-	}
-};
-
-/**
- * Initialize draggable dialog
- */
-ve.ui.Dialog.prototype.initDraggable = function () {
-	this.$dragHandle = this.$( '<div>' ).addClass( 'oo-ui-dialog-drag-handle oo-ui-icon-grabber' );
-	this.$dragIframeFix = this.$( '<div>' ).addClass( 'oo-ui-dialog-drag-iframe-fix' );
-
-	this.frame.$element.parent().draggable( {
-		'handle': this.$dragHandle,
-		'start': ve.bind( this.onDragStart, this ),
-		'stop': ve.bind( this.onDragStop, this )
-	} );
-
-	this.frame.$element.parent().prepend( this.$dragIframeFix, this.$dragHandle );
 };
 
 /*
@@ -143,10 +132,6 @@ ve.ui.Dialog.prototype.getSetupProcess = function ( data ) {
 		.next( function () {
 			var label = ve.track.nameToLabel( this.constructor.static.name ),
 				params = { 'action': ve.track.actions.OPEN, 'label': 'dialog-' + label };
-
-			if ( this.draggable ) {
-				this.alignToSurface();
-			}
 
 			if ( this.openCount ) {
 				params.value = this.openCount;
