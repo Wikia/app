@@ -29,7 +29,7 @@ class EpisodeEntitySearchService extends EntitySearchService {
 
 		$namespaces = $this->getNamespace() ? $this->getNamespace() : static::DEFAULT_NAMESPACE;
 		$namespaces = is_array( $namespaces ) ? $namespaces : [ $namespaces ];
-		$select->createFilterQuery( 'ns' )->setQuery( '+(ns:(' . implode( ' ', $namespaces ) . ')' . ' OR ' . static::EXACT_MATCH_FIELD . ':*)' );
+		$select->createFilterQuery( 'ns' )->setQuery( '+(ns:(' . implode( ' ', $namespaces ) . '))');
 		if ( in_array( strtolower( $slang ), static::$ARTICLE_TYPES_SUPPORTED_LANGS ) ) {
 			$select->createFilterQuery( 'type' )->setQuery( '+(article_type_s:' . static::EPISODE_TYPE . ' OR ' . static::EXACT_MATCH_FIELD . ':*)' );
 		}
@@ -74,7 +74,7 @@ class EpisodeEntitySearchService extends EntitySearchService {
 	protected function createQuery( $query ) {
 		$options = [ ];
 		if ( $this->getQuality() !== null ) {
-			$options[] = '+(article_quality_i:[' . $this->getQuality() . ' TO *]' . ' OR ' . static::EXACT_MATCH_FIELD . ':*)';
+			$options[] = '+(article_quality_i:[' . $this->getQuality() . ' TO *])';
 		}
 		if ( $this->getWikiId() !== null ) {
 			$options[ ] = '+(wid:' . $this->getWikiId() . ')';

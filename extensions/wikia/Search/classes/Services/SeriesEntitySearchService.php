@@ -30,7 +30,7 @@ class SeriesEntitySearchService extends EntitySearchService {
 
 		$namespaces = $this->getNamespace() ? $this->getNamespace() : static::DEFAULT_NAMESPACE;
 		$namespaces = is_array( $namespaces ) ? $namespaces : [ $namespaces ];
-		$select->createFilterQuery( 'ns' )->setQuery( '+(ns:(' . implode( ' ', $namespaces ) . ')' . ' OR ' . static::EXACT_MATCH_FIELD . ':*)' );
+		$select->createFilterQuery( 'ns' )->setQuery( '+(ns:(' . implode( ' ', $namespaces ) . '))' );
 		$select->createFilterQuery( 'main_page' )->setQuery( '-(is_main_page:true)' );
 		if ( in_array( strtolower( $slang ), static::$ARTICLE_TYPES_SUPPORTED_LANGS ) ) {
 			$select->createFilterQuery( 'type' )->setQuery( '+(article_type_s:' . static::SERIES_TYPE . ' OR ' . static::EXACT_MATCH_FIELD . ':*)' );
@@ -76,7 +76,7 @@ class SeriesEntitySearchService extends EntitySearchService {
 	protected function createQuery( $query ) {
 		$options = [ ];
 		if ( $this->getQuality() !== null ) {
-			$options[] = '+(article_quality_i:[' . $this->getQuality() . ' TO *]' . ' OR ' . static::EXACT_MATCH_FIELD . ':*)';
+			$options[] = '+(article_quality_i:[' . $this->getQuality() . ' TO *])';
 		}
 		if ( $this->getWikiId() !== null ) {
 			$options[ ] = '+(wid:' . $this->getWikiId() . ')';
