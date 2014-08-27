@@ -76,9 +76,15 @@ class ExactTargetAddUserTask extends BaseTask {
 	 * @param Integer $iUserId User ID
 	 * @param Array $aUserProperties key-value array ['property_name'=>'property_value']
 	 */
-	public function createUserPropertiesDE( $iUserId, $aUserProperties ) {
+	public function createUserPropertiesDataExtension( $iUserId, $aUserProperties ) {
+		$this->callApiToCreateUserPropertiesDataExtension($iUserId, $aUserProperties);
+	}
+
+	protected function callApiToCreateUserPropertiesDataExtension( $iUserId, $aUserProperties ) {
 		global $wgExactTargetApiConfig;
 		$wsdl = $wgExactTargetApiConfig[ 'wsdl' ];
+
+		$oRequest = $this->prepareRequest( $iUserId, $aUserProperties );
 
 		try {
 			/* Create the Soap Client */
@@ -86,40 +92,59 @@ class ExactTargetAddUserTask extends BaseTask {
 			$oClient->username = $wgExactTargetApiConfig[ 'username' ];
 			$oClient->password = $wgExactTargetApiConfig[ 'password' ];
 
-			/* @var $aSoapVars Array of SoapVar objects */
-			$aSoapVars = [];
-			/* Prepare Soap vars */
-			foreach ( $aUserProperties as $sProperty => $sValue ) {
 
-				/* Create new DataExtensionObject that reflects user_properties table data */
-				$DE = new ExactTarget_DataExtensionObject();
-				/* CustomerKey is a key that indicates Wikia table reflected by DataExtension */
-				$DE->CustomerKey = "user_properties";
-
-				/* @var $apiProperties Array of ExactTarget_APIProperty objects */
-				$apiProperties = [];
-				$apiProperties[] = $this->prepareApiProperty( 'up_user',  $iUserId );
-				$apiProperties[] = $this->prepareApiProperty( 'up_property',  $sProperty );
-				$apiProperties[] = $this->prepareApiProperty( 'up_value',  $sValue );
-
-				$DE->Properties = $apiProperties;
-				$aSoapVars[] = new SoapVar( $DE, SOAP_ENC_OBJECT, 'DataExtensionObject', "http://exacttarget.com/wsdl/partnerAPI" );
-			}
-
-			$oRequest = new ExactTarget_CreateRequest();
-			$oRequest->Options = NULL;
-			$oRequest->Objects = $aSoapVars;
-
-			/* Call the API to create DataExtension object */
 			$oClient->Create( $oRequest );
 
 			/* Log response */
 			$this->info( $oClient->__getLastResponse() );
-
 		} catch ( SoapFault $e ) {
 			/* Log error */
 			$this->error( 'SoapFault:' . $e->getMessage() . 'ErrorCode: ' . $e->getCode() );
 		}
+	}
+
+	protected function prepareRequest( $iUserId, $aUserProperties ) {
+
+		$aSoapVars = $this->prepareSoapVars($iUserId, $aUserProperties);
+
+		$oRequest = new ExactTarget_CreateRequest();
+		$oRequest->Options = NULL;
+		$oRequest->Objects = $aSoapVars;
+		return $oRequest;
+	}
+
+	protected function prepareSoapVars( $iUserId, $aUserProperties ) {
+
+		$aDE = $this->prepareDataExtensionObjects( $iUserId, $aUserProperties );
+
+		$aSoapVars = [];
+		foreach( $aDE as $DE ) {
+			$aSoapVars[] = $this->wrapDataExtensionObjectToSoapVar( $DE );
+		}
+		return $aSoapVars;
+	}
+
+	protected function prepareDataExtensionObjects( $iUserId, $aUserProperties ) {
+		$aDE = [];
+		foreach ( $aUserProperties as $sProperty => $sValue ) {
+			/* Create new DataExtensionObject that reflects user_properties table data */
+			$DE = new ExactTarget_DataExtensionObject();
+			/* CustomerKey is a key that indicates Wikia table reflected by DataExtension */
+			$DE->CustomerKey = "user_properties";
+
+			/* @var $apiProperties Array of ExactTarget_APIProperty objects */
+			$apiProperties = [];
+			$apiProperties[] = $this->prepareApiProperty( 'up_user',  $iUserId );
+			$apiProperties[] = $this->prepareApiProperty( 'up_property',  $sProperty );
+			$apiProperties[] = $this->prepareApiProperty( 'up_value',  $sValue );
+
+			$DE->Properties = $apiProperties;
+			$aDE[] = $DE;
+		}
+	}
+
+	protected function wrapDataExtensionObjectToSoapVar( $DE ) {
+		return new SoapVar( $DE, SOAP_ENC_OBJECT, 'DataExtensionObject', "http://exacttarget.com/wsdl/partnerAPI" );
 	}
 
 	/**
