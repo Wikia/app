@@ -31,7 +31,8 @@ class MonetizationModuleController extends WikiaController {
 			$params['mcache'] = $mcachePurge;
 		}
 
-		$this->data = MonetizationModuleHelper::getMonetizationUnits( $params );
+		$helper = new MonetizationModuleHelper();
+		$this->data = $helper->getMonetizationUnits( $params );
 
 		// set cache control to 1 hour
 		$this->response->setCacheValidity( MonetizationModuleHelper::CACHE_TTL );

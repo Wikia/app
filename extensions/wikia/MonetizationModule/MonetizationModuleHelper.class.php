@@ -26,6 +26,7 @@ class MonetizationModuleHelper extends WikiaModel {
 
 	const FONT_COLOR_DARK_THEME = 'd5d4d4';
 	const FONT_COLOR_LIGHT_THEME = '3a3a3a';
+	const THEME_SETTINGS_KEYWORD = '$theme';
 
 	protected static $mapThemeSettings = [
 		'data-color-bg'     => 'color-page',
@@ -66,10 +67,9 @@ class MonetizationModuleHelper extends WikiaModel {
 	 * @param array $params
 	 * @return array|false $result
 	 */
-	public static function getMonetizationUnits( $params ) {
+	public function getMonetizationUnits( $params ) {
 		wfProfileIn( __METHOD__ );
 
-		$app = F::app();
 		$log = WikiaLogger::instance();
 
 		// this cache key must match the one set by the MonetizationService
@@ -78,18 +78,18 @@ class MonetizationModuleHelper extends WikiaModel {
 		$cacheKey = self::createCacheKey( $params );
 		$log->debug( "Monetization: " . __METHOD__ . " - lookup with cache key: $cacheKey" );
 
-		$json_results = $app->wg->Memc->get( $cacheKey );
+		$json_results = $this->wg->Memc->get( $cacheKey );
 		if ( $json_results == RENDERING_IN_PROCESS ) {
 			// TODO: potentially block until rendering finishes, until then return nothing
 			wfProfileOut( __METHOD__ );
 			return false;
 		} else if ( !empty( $json_results ) ) {
 			wfProfileOut( __METHOD__ );
-			return json_decode( $json_results, true );
+			return $this->setThemeSettings( $json_results, $cacheKey );
 		}
 
-		if ( !endsWith( $app->wg->MonetizationServiceUrl, '/' ) ) {
-			$url = $app->wg->MonetizationServiceUrl . '/';
+		if ( !endsWith( $this->wg->MonetizationServiceUrl, '/' ) ) {
+			$url = $this->wg->MonetizationServiceUrl . '/';
 		}
 
 		$url .= 'api/' . self::API_VERSION . '?' . http_build_query( $params );
@@ -105,8 +105,7 @@ class MonetizationModuleHelper extends WikiaModel {
 		if ( $status->isGood() ) {
 			$result = $req->getContent();
 			if ( !empty( $result ) ) {
-				$result = self::setThemeSettings( json_decode( $result, true ) );
-				$app->wg->Memc->set( $cacheKey, json_encode( $result ), self::CACHE_TTL );
+				$result = $this->setThemeSettings( $result, $cacheKey );
 			}
 		} else {
 			$result = false;
@@ -117,6 +116,45 @@ class MonetizationModuleHelper extends WikiaModel {
 		wfProfileOut( __METHOD__ );
 
 		return $result;
+	}
+
+	/**
+	 * Set wiki theme setting to the ad units
+	 * @param array $adUnits
+	 * @param string $memcKey
+	 * @return array
+	 */
+	public function setThemeSettings( $adUnits, $memcKey ) {
+		wfProfileIn( __METHOD__ );
+
+		$found = strstr( $adUnits, self::THEME_SETTINGS_KEYWORD );
+		$adUnits = json_decode( $adUnits, true );
+		if ( !empty( $found ) && is_array( $adUnits ) ) {
+			$theme = SassUtil::getOasisSettings();
+			if ( SassUtil::isThemeDark() ) {
+				$theme['color'] = self::FONT_COLOR_DARK_THEME;
+			} else {
+				$theme['color'] = self::FONT_COLOR_LIGHT_THEME;
+			}
+
+			$adSettings = '';
+			foreach( self::$mapThemeSettings as $key => $value ) {
+				if ( !empty( $theme[$value] ) ) {
+					$adSettings .= $key.'="'.$theme[$value].'" ';
+				}
+			}
+
+			foreach ( $adUnits as &$unit ) {
+				$unit = str_replace( '$theme', $adSettings, $unit );
+			}
+
+			// set cache
+			$this->wg->Memc->set( $memcKey, json_encode( $adUnits ), self::CACHE_TTL );
+		}
+
+		wfProfileOut( __METHOD__ );
+
+		return $adUnits;
 	}
 
 	/**
@@ -190,39 +228,6 @@ class MonetizationModuleHelper extends WikiaModel {
 		wfProfileOut( __METHOD__ );
 
 		return $body;
-	}
-
-	/**
-	 * Set wiki theme setting to the ad units
-	 * @param array $adUnits
-	 * @return array
-	 */
-	public static function setThemeSettings( $adUnits ) {
-		wfProfileIn( __METHOD__ );
-
-		if ( is_array( $adUnits ) ) {
-			$theme = SassUtil::getOasisSettings();
-			if ( SassUtil::isThemeDark() ) {
-				$theme['color'] = self::FONT_COLOR_DARK_THEME;
-			} else {
-				$theme['color'] = self::FONT_COLOR_LIGHT_THEME;
-			}
-
-			$adSettings = '';
-			foreach( self::$mapThemeSettings as $key => $value ) {
-				if ( !empty( $theme[$value] ) ) {
-					$adSettings .= $key.'="'.$theme[$value].'" ';
-				}
-			}
-
-			foreach ( $adUnits as &$unit ) {
-				$unit = str_replace( '$theme', $adSettings, $unit );
-			}
-		}
-
-		wfProfileOut( __METHOD__ );
-
-		return $adUnits;
 	}
 
 }
