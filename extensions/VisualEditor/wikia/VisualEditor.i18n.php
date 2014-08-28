@@ -31,7 +31,7 @@ $messages['en'] = array(
 	'wikia-visualeditor-beta-warning' => 'This is Wikia\'s beta integration of the VisualEditor. There are some rough edges, but we hope you love it!',
 	'wikia-visualeditor-wikitext-warning' => 'You are using the beta VisualEditor - wikitext does not work here. Select \'Source mode\' from the \'More\' menu to use wikitext.',
 	'wikia-visualeditor-aliennode-tooltip' => 'Sorry, this element can only be edited in the Classic Editor for now.',
-	'wikia-visualeditor-dialog-transclusion-title' => 'Template',
+	'wikia-visualeditor-dialog-transclusion-title' => 'Edit',
 	'wikia-visualeditor-dialogbutton-transclusion-tooltip' => 'Template',
 	'wikia-visualeditor-savedialog-label-save' => 'Publish',
 	'wikia-visualeditor-savedialog-label-restore' => 'Restore page',
@@ -55,6 +55,8 @@ $messages['en'] = array(
 	'wikia-visualeditor-dialog-map-insert-title' => 'Insert map',
 	'wikia-visualeditor-save-error-generic' => 'Error saving data to server.',
 	'wikia-visualeditor-dialogbutton-wikiasourcemode' => 'Source',
+	'wikia-visualeditor-dialog-done-button' => 'Done',
+	'wikia-visualeditor-dialog-transclusion-get-info' => 'Get info about the "$1" template',
 );
 
 /** Message documentation (Message documentation)
@@ -126,6 +128,8 @@ $messages['qqq'] = array(
 	'wikia-visualeditor-save-error-generic' => 'Generic error message for parse failures',
 	'wikia-visualeditor-dialogbutton-wikiasourcemode' => 'Call-to-action text rendered in the toolbar button for opening the dialog to edit wikitext in source mode.
 {{Identical|Source editor}}',
+	'wikia-visualeditor-dialog-done-button' => 'Button text for applying changes in a dialog.',
+	'wikia-visualeditor-dialog-transclusion-get-info' => 'Call to action to get information about the currently-displayed template.',
 );
 
 /** Tunisian Spoken Arabic ( زَوُن)

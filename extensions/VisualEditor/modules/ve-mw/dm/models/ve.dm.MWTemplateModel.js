@@ -340,12 +340,20 @@ ve.dm.MWTemplateModel.prototype.setOriginalData = function ( data ) {
 ve.dm.MWTemplateModel.prototype.serialize = function () {
 	var name,
 		template = ve.extendObject(
-			this.originalData || {}, { 'target': this.getTarget(), 'params': {} }
+			{}, this.originalData, { 'target': this.getTarget(), 'params': {} }
 		),
 		params = this.getParameters();
 
+	if ( !template.originalParams ) {
+		template.originalParams = Object.keys( this.originalData.params );
+	}
+
 	for ( name in params ) {
 		if ( name === '' ) {
+			continue;
+		}
+		// TODO: Wikia (ve-sprint-25): Re-implement without modifying core class
+		if ( params[name].getValue() === '' && template.originalParams.indexOf( name ) === -1 ) {
 			continue;
 		}
 		template.params[params[name].getOriginalName()] = { 'wt': params[name].getValue() };
