@@ -82,7 +82,7 @@ ve.ui.WikiaTransclusionDialog.prototype.updateTitle = function () {
 ve.ui.WikiaTransclusionDialog.prototype.getSetupProcess = function ( data ) {
 	return ve.ui.WikiaTransclusionDialog.super.prototype.getSetupProcess.call( this, data )
 		.next( function () {
-			var multipart =  ( this.selectedNode.partsList.length > 1 ) ? true : false;
+			var multipart = !this.selectedNode.isSingleTemplate();
 			this.setMode( multipart ? 'multiple' : 'single' );
 
 			if ( !multipart ) {
@@ -101,15 +101,12 @@ ve.ui.WikiaTransclusionDialog.prototype.getSetupProcess = function ( data ) {
 		}, this );
 };
 
-/**
- * @inheritdoc
- */
-ve.ui.WikiaTransclusionDialog.prototype.close = function ( data ) {
-	this.surface.getFocusWidget().unsetNode();
-
-	// Parent method
-	return ve.ui.WikiaTransclusionDialog.super.prototype.close.call( this, data )
-		.then( ve.bind( function () {
+ve.ui.WikiaTransclusionDialog.prototype.getTeardownProcess = function ( data ) {
+	return ve.ui.WikiaTransclusionDialog.super.prototype.getTeardownProcess.call( this, data )
+		.first( function () {
+			this.surface.getFocusWidget().unsetNode();
+		}, this )
+		.next( function () {
 			if ( this.draggable ) {
 				this.unsetDraggable();
 			}
@@ -120,7 +117,7 @@ ve.ui.WikiaTransclusionDialog.prototype.close = function ( data ) {
 				this.unsetAllowScroll();
 			}
 			this.frame.$element.parent().css( 'width', '' );
-		}, this ) );
+		}, this );
 };
 
 /* Registration */

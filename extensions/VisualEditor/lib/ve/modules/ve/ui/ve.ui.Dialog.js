@@ -57,7 +57,11 @@ ve.ui.Dialog.prototype.setDraggable = function () {
 ve.ui.Dialog.prototype.unsetDraggable = function () {
 	this.draggable = false;
 	this.$element.removeClass( 'oo-ui-dialog-draggable' );
-	this.$dragHandle.add( this.$dragIframeFix ).remove();
+
+	this.$dragHandle.remove();
+	this.$dragIframeFix.remove();
+	this.$dragHandle = this.$dragIframeFix = null;
+
 	this.frame.$element.parent().css( { 'top': '', 'left': '' } );
 };
 
