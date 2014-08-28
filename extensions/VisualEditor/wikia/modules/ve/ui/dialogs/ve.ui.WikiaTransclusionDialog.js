@@ -52,22 +52,52 @@ ve.ui.WikiaTransclusionDialog.prototype.initialize = function () {
 	this.cancelButton = new OO.ui.ButtonWidget( {
 		'$': this.$,
 		'flags': ['secondary'],
-		'label': ve.msg( 'visualeditor-dialog-action-cancel' )
+		'label': ve.msg( 'visualeditor-dialog-action-cancel' ),
+		'classes': [ 've-ui-wikiaTransclusionDialog-cancelButton' ]
+	} );
+	this.previewButton = new OO.ui.ButtonWidget( {
+		'$': this.$,
+		'flags': ['secondary'],
+		'label': ve.msg( 'wikia-visualeditor-dialog-transclusion-preview-button' ),
+		'disabled': true
 	} );
 
 	// Events
 	this.cancelButton.connect( this, { 'click': 'onCancelButtonClick' } );
+	this.previewButton.connect( this, { 'click': 'onPreviewButtonClick' } );
 
 	// Initialization
 	this.modeButton.$element.addClass( 've-ui-mwTransclusionDialog-modeButton' );
-	this.$foot.append( this.cancelButton.$element );
+	this.$foot.append( this.previewButton.$element, this.cancelButton.$element );
+};
+
+/**
+ * @inheritdoc
+ */
+ve.ui.WikiaTransclusionDialog.prototype.getReadyProcess = function ( data ) {
+	return ve.ui.WikiaTransclusionDialog.super.prototype.getReadyProcess.call( this, data )
+		.next( function () {
+			this.transclusionModel.connect( this, { 'change': 'onParameterInputValueChange' } );
+		}, this );
 };
 
 /**
  * Handles action when clicking cancel button
  */
 ve.ui.WikiaTransclusionDialog.prototype.onCancelButtonClick = function () {
-	this.close();
+	this.close( { 'action': 'cancel' } );
+};
+
+/**
+ * Handles action when clicking preview button
+ */
+ve.ui.WikiaTransclusionDialog.prototype.onPreviewButtonClick = function () {
+	this.previewButton.setDisabled( true );
+};
+
+ve.ui.WikiaTransclusionDialog.prototype.onParameterInputValueChange = function () {
+	this.previewButton.setDisabled( false );
+	// TODO: update the template preview
 };
 
 /**

@@ -46,6 +46,9 @@ OO.inheritClass( ve.ui.WikiaParameterPage, ve.ui.MWParameterPage );
 
 /* Methods */
 
-ve.ui.MWParameterPage.prototype.onTemplateInfoButtonClick = function () {
+/**
+ * Handles action when clicking template info button
+ */
+ve.ui.WikiaParameterPage.prototype.onTemplateInfoButtonClick = function () {
 	window.open( new mw.Title( this.template.getTitle() ).getUrl() );
 };
