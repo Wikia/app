@@ -15,14 +15,6 @@
  * @param {Object} [config] Configuration options
  */
 ve.ui.WikiaTransclusionDialog = function VeUiWikiaTransclusionDialog( config ) {
-	// Configuration initialization
-	config = ve.extendObject( {
-		'width': '400px',
-		'draggable': true,
-		'overlayless': true,
-		'allowScroll': true
-	}, config );
-
 	// Parent constructor
 	ve.ui.WikiaTransclusionDialog.super.call( this, config );
 };
@@ -82,6 +74,53 @@ ve.ui.WikiaTransclusionDialog.prototype.getApplyButtonLabel = function () {
  */
 ve.ui.WikiaTransclusionDialog.prototype.updateTitle = function () {
 	this.setTitle( this.constructor.static.title );
+};
+
+/**
+ * @inheritdoc
+ */
+ve.ui.WikiaTransclusionDialog.prototype.getSetupProcess = function ( data ) {
+	return ve.ui.WikiaTransclusionDialog.super.prototype.getSetupProcess.call( this, data )
+		.next( function () {
+			var multipart =  ( this.selectedNode.partsList.length > 1 ) ? true : false;
+			this.setMode( multipart ? 'multiple' : 'single' );
+
+			if ( !multipart ) {
+				// Appearance
+				this.frame.$element.parent().css( 'width', 400 );
+				this.alignToSurface();
+				// Drag
+				this.setDraggable();
+				// Overlay
+				this.setOverlayless();
+				// Scroll
+				$( window ).off( 'mousewheel', this.onWindowMouseWheelHandler );
+				// Focus
+				this.surface.getFocusWidget().setNode( this.surface.getView().getFocusedNode() );
+			}
+		}, this );
+};
+
+/**
+ * @inheritdoc
+ */
+ve.ui.WikiaTransclusionDialog.prototype.close = function ( data ) {
+	this.surface.getFocusWidget().unsetNode();
+
+	// Parent method
+	return ve.ui.WikiaTransclusionDialog.super.prototype.close.call( this, data )
+		.then( ve.bind( function () {
+			if ( this.draggable ) {
+				this.unsetDraggable();
+			}
+			if ( this.overlayless ) {
+				this.unsetOverlayless();
+			}
+			if ( this.allowScroll ) {
+				this.unsetAllowScroll();
+			}
+			this.frame.$element.parent().css( 'width', '' );
+		}, this ) );
 };
 
 /* Registration */

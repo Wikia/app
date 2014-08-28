@@ -328,40 +328,7 @@ ve.ui.MWTransclusionDialog.prototype.getSetupProcess = function ( data ) {
 		.first( function () {
 			this.setMode( 'single' );
 			this.modeButton.setDisabled( true );
-		}, this )
-		.next( function () {
-			var multipart =  ( this.selectedNode.partsList.length > 1 ) ? true : false;
-			this.setMode( multipart ? 'multiple' : 'single' );
-
-			if ( !multipart ) {
-				this.setDraggable();
-				this.setOverlayless();
-				this.alignToSurface();
-				$( window ).off( 'mousewheel', this.onWindowMouseWheelHandler );
-				this.surface.getFocusWidget().setNode( this.surface.getView().getFocusedNode() );
-			}
 		}, this );
-};
-
-/**
- * @inheritdoc
- */
-ve.ui.MWTransclusionDialog.prototype.close = function ( data ) {
-	this.surface.getFocusWidget().unsetNode();
-
-	// Parent method
-	return ve.ui.MWTransclusionDialog.super.prototype.close.call( this, data )
-		.then( ve.bind( function () {
-			if ( this.draggable ) {
-				this.unsetDraggable();
-			}
-			if ( this.overlayless ) {
-				this.unsetOverlayless();
-			}
-			if ( this.allowScroll ) {
-				this.unsetAllowScroll();
-			}
-		}, this ) );
 };
 
 /**
