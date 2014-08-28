@@ -17,7 +17,6 @@ $wgAutoloadClasses['AnalyticsProviderDynamicYield'] = __DIR__ . '/AnalyticsProvi
 $wgAutoloadClasses['AnalyticsProviderIVW2'] = __DIR__ . '/AnalyticsProviderIVW2.php';
 $wgAutoloadClasses['AnalyticsProviderBlueKai'] = __DIR__ . '/AnalyticsProviderBlueKai.php';
 $wgAutoloadClasses['AnalyticsProviderDatonics'] = __DIR__ . '/AnalyticsProviderDatonics.php';
-$wgAutoloadClasses['AnalyticsProviderViglink'] = __DIR__ . '/AnalyticsProviderViglink.php';
 $wgAutoloadClasses['AnalyticsProviderClarityRay'] = __DIR__ . '/AnalyticsProviderClarityRay.php';
 $wgAutoloadClasses['AnalyticsProviderPageFair'] = __DIR__ . '/AnalyticsProviderPageFair.php';
 
@@ -27,6 +26,7 @@ $wgHooks['WikiaSkinTopScripts'][] = 'AnalyticsProviderGAS::onWikiaSkinTopScripts
 $wgHooks['SkinAfterBottomScripts'][] = 'AnalyticsProviderClarityRay::onSkinAfterBottomScripts';
 $wgHooks['SkinAfterBottomScripts'][] = 'AnalyticsProviderPageFair::onSkinAfterBottomScripts';
 $wgHooks['OasisSkinAssetGroupsBlocking'][] = 'AnalyticsProviderGAS::onOasisSkinAssetGroupsBlocking';
+$wgHooks['InstantGlobalsGetVariables'][] = 'AnalyticsProviderIVW2::onInstantGlobalsGetVariables';
 
 //register hook for WikiaMobile skin to get the asset as part of the head js package in one request
 $wgHooks['WikiaMobileAssetsPackages'][] = 'AnalyticsProviderGAS::onWikiaMobileAssetsPackages';

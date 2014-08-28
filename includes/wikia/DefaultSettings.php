@@ -667,7 +667,6 @@ $wgLangCreationVariables = array();
  */
 $wgJobClasses[ "CWLocal" ] = "CreateWikiLocalJob";
 include_once( "$IP/extensions/wikia/CreateNewWiki/CreateWikiLocalJob.php" );
-$wgAutoloadClasses[ 'CreateNewWikiTask' ] = "$IP/extensions/wikia/CreateNewWiki/CreateNewWikiTask.class.php";
 
 /**
  * Tasks
@@ -1078,8 +1077,6 @@ $wgResourceLoaderAssetsSkinMapping = array(
 	'oasis' => 'wikia', // in Oasis we use Wikia.js (and Wikia.css) instead of Oasis.js (Oasis.css)
 );
 
-$wgWikiaHubsPages = array();
-
 /**
  * @see https://wikia.fogbugz.com/default.asp?36946
  * core mediawiki feature variable
@@ -1240,13 +1237,34 @@ $wgAdDriverUseBottomLeaderboard = false;
  * @name $wgAdDriverUseTopInContentBoxad
  * Whether to enable new in-content top ad TOP_IN_CONTENT_BOXAD
  */
-$wgAdDriverUseTopInContentBoxad = false;
+$wgAdDriverUseTopInContentBoxad = true;
 
 /**
  * @name $wgAdDriverBottomLeaderboardImpressionCapping
  * Impression capping for BOTTOM_LEADERBOARD. Array with the numbers of the potential ad calls.
  */
 $wgAdDriverBottomLeaderboardImpressionCapping = [2, 4, 6];
+
+/**
+ * @name $wgSitewideDisableLiftium
+ * @link http://one.wikia-inc.com/wiki/Ads/Disaster_recovery
+ * Disable Liftium sitewide in case a disaster happens (it's an instant global).
+ */
+$wgSitewideDisableLiftium = false;
+
+/**
+ * @name $wgSitewideDisableSevenOneMedia
+ * @link http://one.wikia-inc.com/wiki/Ads/Disaster_recovery
+ * Disable SevenOneMedia sitewide in case a disaster happens (it's an instant global).
+ */
+$wgSitewideDisableSevenOneMedia = false;
+
+/**
+ * @name $wgSitewideDisableIVW2
+ * @link http://one.wikia-inc.com/wiki/Ads/Disaster_recovery
+ * Disable IVW2 Analytics pixel sitewide in case a disaster happens (it's an instant global).
+ */
+$wgSitewideDisableIVW2 = false;
 
 /**
  * @name $wgAdDriverUseSevenOneMedia

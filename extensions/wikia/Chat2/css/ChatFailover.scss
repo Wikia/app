@@ -1,10 +1,10 @@
-@import "../../../../skins/oasis/css/mixins/gradient";
-@import "../../../../skins/oasis/css/mixins/box-shadow";
-@import "../../../../skins/oasis/css/core/reset";
-@import "../../../../skins/oasis/css/core/color";
-@import "../../../../skins/oasis/css/core/buttons";
-@import "../../../../skins/oasis/css/core/typography";
-@import "../../../../skins/oasis/css/mixins/clearfix";
+@import "skins/shared/mixins/gradient";
+@import "skins/shared/mixins/box-shadow";
+@import "skins/oasis/css/core/reset";
+@import "skins/shared/color";
+@import "skins/oasis/css/core/buttons";
+@import "skins/oasis/css/core/typography";
+@import "skins/shared/mixins/clearfix";
 
 $roundness: 2px;
 

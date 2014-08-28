@@ -1,8 +1,8 @@
-@import "skins/oasis/css/mixins/box-shadow";
-@import "skins/oasis/css/mixins/box-sizing";
-@import "skins/oasis/css/mixins/calc";
-@import "skins/oasis/css/mixins/gradient";
-@import "skins/oasis/css/mixins/placeholder";
+@import "skins/shared/mixins/box-shadow";
+@import "skins/shared/mixins/box-sizing";
+@import "skins/shared/mixins/calc";
+@import "skins/shared/mixins/gradient";
+@import "skins/shared/mixins/placeholder";
 
 $new-nav-height: 66px;
 $new-breakpoint-small: 1024px;

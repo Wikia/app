@@ -1125,14 +1125,9 @@ class ArticleComment {
 		$taskParams['page'] = $oCommentTitle->getFullText();
 		$taskParams['newpage'] = $newCommentTitle->getFullText();
 
-		if (TaskRunner::isModern('MultiMoveTask')) {
-			$task = new \Wikia\Tasks\Tasks\MultiTask();
-			$task->call('move', $taskParams);
-			$submit_id = $task->queue();
-		} else {
-			$thisTask = new MultiMoveTask( $taskParams );
-			$submit_id = $thisTask->submitForm();
-		}
+		$task = new \Wikia\Tasks\Tasks\MultiTask();
+		$task->call('move', $taskParams);
+		$submit_id = $task->queue();
 
 		Wikia::log( __METHOD__, 'deletecomment', "Added move task ($submit_id) for {$taskParams['page']} page" );
 

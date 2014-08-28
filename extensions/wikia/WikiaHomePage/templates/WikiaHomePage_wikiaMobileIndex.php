@@ -2,7 +2,6 @@
 	<h1><?= wfMsg('wikiahome-page-header-heading') ?></h1>
 	<h2><?= wfMsg('wikiahome-page-header-subheading') ?></h2>
 
-
 	<? foreach ( $hubsSlots as $hubsSlot ): ?>
 		<? if ( !empty($hubsSlot) ): ?>
 			<section class="wkhome-section <?= $hubsSlot['classname']?>">

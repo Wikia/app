@@ -1,6 +1,6 @@
-@import 'skins/oasis/css/core/color';
-@import 'skins/oasis/css/mixins/clearfix';
-@import 'skins/oasis/css/mixins/transform';
+@import 'skins/shared/color';
+@import 'skins/shared/mixins/clearfix';
+@import 'skins/shared/mixins/transform';
 @import './mixins/_sprite-VideoPageTool.scss';
 
 $pagination-color-normal: #e0dfdf;

@@ -260,13 +260,26 @@ var CreatePage = {
 
 	redLinkClick: function( e, titleText ) {
 		'use strict';
+		var title = new mw.Title.newFromText( titleText ),
+			namespace = title.getNamespacePrefix().replace( ':', '' ),
+			visualEditorActive = $( 'html' ).hasClass( 've-activated' );
+
 		CreatePage.redlinkParam = '&redlink=1';
 
 		if ( CreatePage.canUseVisualEditor ) {
 			CreatePage.track( { action: 'click', label: 've-redlink-click' } );
 		}
 
-		CreatePage.requestDialog( e, titleText );
+		if (
+			visualEditorActive ||
+			mw.config.get( 'wgNamespaceIds' )[ namespace.toLowerCase() ] &&
+			window.ContentNamespacesText &&
+			window.ContentNamespacesText.indexOf( title[0] ) === -1
+		) {
+			return false;
+		} else {
+			CreatePage.requestDialog( e, titleText );
+		}
 	},
 
 	init: function( context ) {

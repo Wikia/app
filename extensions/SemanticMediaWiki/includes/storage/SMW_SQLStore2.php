@@ -1541,13 +1541,9 @@ class SMWSQLStore2 extends SMWStore {
 		foreach ( $titles as $title ) {
 			if ( ( $namespaces == false ) || ( in_array( $title->getNamespace(), $namespaces ) ) ) {
 				// wikia change start - jobqueue migration
-				if ( TaskRunner::isModern( 'SMWUpdateJob' ) ) {
-					$task = new \Wikia\Tasks\Tasks\JobWrapperTask();
-					$task->call( 'SMWUpdateJob', $title );
-					$updatejobs[] = $task;
-				} else {
-					$updatejobs[] = new SMWUpdateJob( $title );
-				}
+				$task = new \Wikia\Tasks\Tasks\JobWrapperTask();
+				$task->call( 'SMWUpdateJob', $title );
+				$updatejobs[] = $task;
 				// wikia change end
 
 				$emptyrange = false;
@@ -1573,13 +1569,9 @@ class SMWSQLStore2 extends SMWStore {
 
 				if ( $title !== null && !$title->exists() ) {
 					// wikia change start - jobqueue migration
-					if ( TaskRunner::isModern( 'SMWUpdateJob' ) ) {
-						$task = new \Wikia\Tasks\Tasks\JobWrapperTask();
-						$task->call( 'SMWUpdateJob', $title );
-						$updatejobs[] = $task;
-					} else {
-						$updatejobs[] = new SMWUpdateJob( $title );
-					}
+					$task = new \Wikia\Tasks\Tasks\JobWrapperTask();
+					$task->call( 'SMWUpdateJob', $title );
+					$updatejobs[] = $task;
 					// wikia change end
 				}
 			} elseif ( $row->smw_iw == SMW_SQL2_SMWIW_OUTDATED ) { // remove outdated internal object references
@@ -1600,28 +1592,19 @@ class SMWSQLStore2 extends SMWStore {
 
 		if ( $usejobs ) {
 			// wikia change start - jobqueue migration
-			if ( TaskRunner::isModern( 'SMWUpdateJob' ) ) {
-				\Wikia\Tasks\Tasks\BaseTask::batch( $updatejobs );
-			} else {
-				Job::batchInsert( $updatejobs );
-			}
+			\Wikia\Tasks\Tasks\BaseTask::batch( $updatejobs );
 			// wikia change end
 		} else {
 			foreach ( $updatejobs as $job ) {
 				// wikia change start - jobqueue migration
-				if ( TaskRunner::isModern( 'SMWUpdateJob' ) ) {
-					/** @var \Wikia\Tasks\Tasks\JobWrapperTask $job */
-					try {
-						$job->init();
-					} catch ( Exception $e ) {
-						continue;
-					}
-
-					$job->wrap( 'SMWUpdateJob' );
-					\Wikia\Tasks\Tasks\BaseTask::batch( $updatejobs );
-				} else {
-					$job->run();
+				/** @var \Wikia\Tasks\Tasks\JobWrapperTask $job */
+				try {
+					$job->init();
+				} catch ( Exception $e ) {
+					continue;
 				}
+
+				$job->wrap( 'SMWUpdateJob' );
 				// wikia change end
 			}
 		}
@@ -2449,13 +2432,9 @@ class SMWSQLStore2 extends SMWStore {
 							$title = Title::makeTitleSafe( $row->ns, $row->t );
 							if ( !is_null( $title ) ) {
 								// wikia change start - jobqueue migration
-								if ( TaskRunner::isModern( 'SMWUpdateJob' ) ) {
-									$task = new \Wikia\Tasks\Tasks\JobWrapperTask();
-									$task->call( 'SMWUpdateJob', $title );
-									$jobs[] = $task;
-								} else {
-									$jobs[] = new SMWUpdateJob( $title );
-								}
+								$task = new \Wikia\Tasks\Tasks\JobWrapperTask();
+								$task->call( 'SMWUpdateJob', $title );
+								$jobs[] = $task;
 								// wikia change end
 							}
 						}
@@ -2470,13 +2449,9 @@ class SMWSQLStore2 extends SMWStore {
 								$title = Title::makeTitleSafe( $row->ns, $row->t );
 								if ( !is_null( $title ) ) {
 									// wikia change start - jobqueue migration
-									if ( TaskRunner::isModern( 'SMWUpdateJob' ) ) {
-										$task = new \Wikia\Tasks\Tasks\JobWrapperTask();
-										$task->call( 'SMWUpdateJob', $title );
-										$jobs[] = $task;
-									} else {
-										$jobs[] = new SMWUpdateJob( $title );
-									}
+									$task = new \Wikia\Tasks\Tasks\JobWrapperTask();
+									$task->call( 'SMWUpdateJob', $title );
+									$jobs[] = $task;
 									// wikia change end
 								}
 							}
@@ -2488,11 +2463,7 @@ class SMWSQLStore2 extends SMWStore {
 				/// NOTE: we do not update the concept cache here; this remains an offline task
 
 				/// NOTE: this only happens if $smwgEnableUpdateJobs was true above:
-				if ( TaskRunner::isModern( 'SMWUpdateJob' ) ) {
-					\Wikia\Tasks\Tasks\BaseTask::batch( $jobs );
-				} else {
-					Job::batchInsert( $jobs );
-				}
+				\Wikia\Tasks\Tasks\BaseTask::batch( $jobs );
 			}
 		}
 

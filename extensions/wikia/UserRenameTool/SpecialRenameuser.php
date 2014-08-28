@@ -64,10 +64,6 @@ $wgLogTypes[]                          = 'renameuser';
 $wgLogNames['renameuser']              = 'userrenametool-logpage';
 $wgLogHeaders['renameuser']            = 'userrenametool-logpagetext';
 
-//task types
-extAddBatchTask(dirname(__FILE__)."/UserRenameLocalTask.php", "renameuser_local", "UserRenameLocalTask");
-extAddBatchTask(dirname(__FILE__)."/UserRenameGlobalTask.php", "renameuser_global", "UserRenameGlobalTask");
-
 //hooks
 $wgHooks['StaffLog::formatRow'][] = 'UserRenameToolStaffLogFormatRow';
 

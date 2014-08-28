@@ -147,14 +147,14 @@ class HAWelcomeTask extends BaseTask {
 		$this->info( "attempting to create welcome user page" );
 		$recipientProfile = $this->getRecipientProfilePage();
 		if ( ! $recipientProfile->exists() ) {
-			$this->info( sprintf( "creating welcome user page for %s from %s",
-				$this->recipientObject->getName(), $this->senderObject->getName() ) );
+			$this->info( sprintf( "creating welcome user page for %s",
+				$this->recipientObject->getName() ) );
 			$recipientProfile->doEdit(
 				$this->getWelcomePageTemplateForRecipient(),
 				false,
 				$this->integerFlags,
 				false,
-				$this->senderObject
+				$this->getDefaultWelcomerUser()
 			);
 		}
 	}
@@ -336,6 +336,8 @@ class HAWelcomeTask extends BaseTask {
 			return $this->executeBuildAndPostWallMessage( $defaultWelcomeUser, $welcomeMessage, $recipientName, $textMessage );
 		} );
 
+		$message = $this->setWallMessagePostedAsBot( $message );
+
 		return $message;
 	}
 
@@ -344,11 +346,15 @@ class HAWelcomeTask extends BaseTask {
 			$welcomeMessage, $recipientName, $defaultWelcomeUser, $textMessage, false, array(), false, false
 		);
 
+		return $wallMessage;
+	}
+
+	protected function setWallMessagePostedAsBot( $wallMessage ) {
 		// Sets the sender of the message when the actual message
 		// was posted by the welcome bot
-		if ( $welcomeMessage ) {
-			$welcomeMessage->setPostedAsBot( $this->senderObject );
-			$welcomeMessage->sendNotificationAboutLastRev();
+		if ( $wallMessage ) {
+			$wallMessage->setPostedAsBot( $this->senderObject );
+			$wallMessage->sendNotificationAboutLastRev();
 		}
 
 		return $wallMessage;

@@ -8,7 +8,7 @@
 
 var base = require('./karma.base.conf.js');
 
-module.exports = function(config) {
+module.exports = function (config) {
 	'use strict';
 
 	base(config);
@@ -50,6 +50,8 @@ module.exports = function(config) {
 			'resources/wikia/modules/stringhelper.js',
 			'resources/wikia/modules/thumbnailer.js',
 			'resources/wikia/modules/uniqueId.js',
+			'resources/wikia/libraries/mustache/mustache.js',
+			'resources/wikia/libraries/jquery/ellipses.js',
 
 			//UI Repo JS API
 			'resources/wikia/modules/uicomponent.js',
@@ -155,6 +157,11 @@ module.exports = function(config) {
 			'extensions/wikia/ImageLazyLoad/js/ImgLzy.module.js',
 			'extensions/wikia/ImageLazyLoad/js/ImageLazyLoad.js',
 			'extensions/wikia/ImageLazyLoad/spec/*.spec.js',
+
+			// Thumbnails
+			'extensions/wikia/Thumbnails/scripts/templates.mustache.js',
+			'extensions/wikia/Thumbnails/scripts/views/titleThumbnail.js',
+			'extensions/wikia/Thumbnails/scripts/spec/*.spec.js',
 
 			// WikiaMaps
 			'extensions/wikia/WikiaInteractiveMaps/js/intMapPoiCategories.js',

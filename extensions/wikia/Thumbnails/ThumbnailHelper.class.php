@@ -19,7 +19,7 @@ class ThumbnailHelper extends WikiaModel {
 	 * @param array $attrs [ array( key => value ) ]
 	 * @return array [ array( 'key="value"' ) ]
 	 */
-	public static function getAttribs( $attrs ) {
+	public static function getAttribs( array $attrs ) {
 		$attribs = [];
 		foreach ( $attrs as $key => $value ) {
 			$str = $key;
@@ -113,7 +113,7 @@ class ThumbnailHelper extends WikiaModel {
 		$alt = empty( $options['alt'] ) ? $title->getText() : $options['alt'];
 
 		$attribs = array(
-			'alt'    => $alt,
+			'alt'    => Sanitizer::encodeAttribute($alt),
 			'src'    => $thumb->url,
 			'width'  => $thumb->width,
 			'height' => $thumb->height,
@@ -173,7 +173,7 @@ class ThumbnailHelper extends WikiaModel {
 		} elseif ( !empty( $options['file-link'] ) ) {
 			$linkAttribs = [ 'href' => $defaultHref ];
 		} else {
-			$linkAttribs = false;
+			$linkAttribs = [];
 		}
 
 		return $linkAttribs;
