@@ -12,6 +12,33 @@
  */
 class LBFactory_Wikia extends LBFactory_Multi {
 
+	function __construct( $conf ) {
+		self::normalizeMultipleMasters($conf);
+
+		parent::__construct($conf);
+	}
+
+	/**
+	 * Normalize the list of multiple masters and slaves
+	 *
+	 * @param array $sectionLoads
+	 * @author macbre
+	 */
+	static function normalizeMultipleMasters(Array &$conf) {
+		foreach($conf['sectionLoads'] as $sectionName => &$sectionConf) {
+			# section config has both "masters" and "slaves" section
+			if (isset($sectionConf['masters']) && isset($sectionConf['slaves'])) {
+				# randomize masters server and normalize the section config
+				$master = array_rand($sectionConf['masters'], 1);
+
+				wfDebug(sprintf("%s: randomizing master for %s: picked %s\n", __METHOD__, $sectionName, $master) );
+
+				# make it flat
+				$sectionConf = array($master => $sectionConf['masters'][$master]) + $sectionConf['slaves'];
+			}
+		}
+	}
+
 	function getSectionForWiki( $wiki = false ) {
 		global $wgDBname, $wgDBcluster, $smwgUseExternalDB;
 
