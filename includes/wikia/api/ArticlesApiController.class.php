@@ -985,15 +985,7 @@ class ArticlesApiController extends WikiaApiController {
 
 		$popular = $this->wg->Memc->get( $key );
 		if ( $popular === false ) {
-
-			$popularConfig = $this->getConfigFromRequest();
-
-			if( $baseArticleId !== false ) {
-				// For finding trending articles - we need to extract larger amount of popular articles
-				$popularConfig->setLimit( self::TRENDING_ARTICLES_LIMIT );
-			}
-
-			$popular = $this->getResultFromConfig( $popularConfig );
+			$popular = $this->getResultFromConfig( $this->getConfigFromRequest() );
 			if ( $expand ) {
 				$articleIds = [];
 				$params = $this->getDetailsParams();
@@ -1004,37 +996,7 @@ class ArticlesApiController extends WikiaApiController {
 			}
 
 			if( $baseArticleId !== false ) {
-				// For finding trending articles - we perform reranking of popular articles
-
-				$links = ( new ApiOutboundingLinksService() )->getOutboundingLinks( $baseArticleId );
-				$rerankedPopular = $this->reorderForLinks( $popular, $links );
-
-				if( $rerankedPopular === $popular ) {
-					// If popular articles were not reranked ($rerankedPopular have the same order as $popular)
-					// It means - that given article doesn't have links to any popular articles within whole wikia
-
-					// So, we perform the following fallback:
-					// 1) Find category to which base article belongs
-					// 2) Get most popular articles of this category
-					// 3) Rerank these articles due to links in base article
-
-					$category = $this->getCategoryOfArticle( $baseArticleId );
-
-					if( !empty( $category ) ) {
-						// If article connected to category
-
-						$popularForCategory = $this->getPopularForCategory( $category );
-						// Cope with case, when there is very small amount of articles in given category
-						$popularForCategory = array_merge( $popularForCategory, $popular );
-
-						$rerankedPopularForCategory = $this->reorderForLinks( $popularForCategory, $links );
-
-						$popular = $rerankedPopularForCategory;
-					}
-
-				} else {
-					$popular = $rerankedPopular;
-				}
+				$popular = $this->rerankPopularToArticle( $popular, $baseArticleId );
 			}
 
 			$this->wg->set( $key, $popular, self::CLIENT_CACHE_VALIDITY );
@@ -1051,7 +1013,51 @@ class ArticlesApiController extends WikiaApiController {
 
 	}
 
+	/**
+	 * For finding trending articles - we perform reranking of popular articles:
+	 * 1) Extract list of popular articles for given wikia
+	 * 2) Extract links from given article
+	 * 3) Promote that popular articles, to which given article has links (move to top of popular list)
+	 *
+	 * If popular articles were not reranked - it means that
+	 * given article doesn't have links to any popular articles within whole wikia
+	 *
+	 * So, we perform the following fallback:
+	 * 1) Find category to which base article belongs
+	 * 2) Get most popular articles of this category
+	 * 3) Rerank these articles due to links in base article
+	 */
+	protected function rerankPopularToArticle( $popular, $baseArticleId ) {
+		$links = ( new ApiOutboundingLinksService() )->getOutboundingLinks( $baseArticleId );
+		$rerankedPopular = $this->reorderForLinks( $popular, $links );
+
+		if( $rerankedPopular === $popular ) {
+
+			$category = $this->getCategoryOfArticle( $baseArticleId );
+
+			if( !empty( $category ) ) {
+				// If article has category
+
+				$popularForCategory = $this->getPopularForCategory( $category );
+				// Cope with case, when there is very small amount of articles in given category
+				$popularForCategory = array_merge( $popularForCategory, $popular );
+
+				$rerankedPopularForCategory = $this->reorderForLinks( $popularForCategory, $links );
+
+				$popular = $rerankedPopularForCategory;
+			}
+
+		} else {
+			$popular = $rerankedPopular;
+		}
+
+		return $popular;
+	}
+
 	protected function getCategoryOfArticle( $articleId ) {
+
+		// querying Solr for all categories for given article
+
 		global $wgCityId;
 
 		$categoriesConfig = (new Wikia\Search\Config())
@@ -1061,10 +1067,8 @@ class ArticlesApiController extends WikiaApiController {
 
 		$categories = ( new Factory )->getFromConfig( $categoriesConfig )->searchAsApi( [ 'categories_mv_en' ] );
 
-		if( !empty( $categories[0] )
-			&& !empty( $categories[0]['categories_mv_en'] )
-			&& !empty( $categories[0]['categories_mv_en'][0] ) ) {
-
+		if( !empty( $categories[0]['categories_mv_en'][0] ) ) {
+			// returning first category from Solr response
 			return $categories[0]['categories_mv_en'][0];
 		}
 
@@ -1114,9 +1118,16 @@ class ArticlesApiController extends WikiaApiController {
 	 */
 	protected function getConfigFromRequest() {
 		$request = $this->getRequest();
+
+		$limit = self::POPULAR_ARTICLES_PER_WIKI;
+		$baseArticleId = $request->getVal( self::PARAMETER_BASE_ARTICLE_ID, false );
+		if( $baseArticleId !== false ) {
+			$limit = self::TRENDING_ARTICLES_LIMIT;
+		}
+
 		$searchConfig = new Wikia\Search\Config;
 		$searchConfig
-			->setLimit( self::POPULAR_ARTICLES_PER_WIKI )
+			->setLimit( $limit )
 			->setRank( \Wikia\Search\Config::RANK_MOST_VIEWED )
 			->setOnWiki( true )
 			->setNamespaces( [ self::POPULAR_ARTICLES_NAMESPACE ] )
