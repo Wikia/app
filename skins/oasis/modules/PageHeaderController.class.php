@@ -146,6 +146,11 @@ class PageHeaderController extends WikiaController {
 		return $ret;
 	}
 
+	private function isSearchInputDisplayed( $params ) {
+		global $wgEnableGlobalNavExt;
+		return !empty ( $params['showSearchBox'] ) && empty ( $wgEnableGlobalNavExt );
+	}
+
 	public static function formatTimestamp( $stamp ) {
 
 		$diff = time() - strtotime( $stamp );
@@ -167,7 +172,7 @@ class PageHeaderController extends WikiaController {
 	 *    key: showSearchBox (default: false)
 	 */
 	public function executeIndex( $params ) {
-		global $wgTitle, $wgArticle, $wgOut, $wgUser, $wgContLang, $wgSupressPageTitle, $wgSupressPageSubtitle, $wgSuppressNamespacePrefix, $wgCityId, $wgEnableWallExt, $wgEnableGlobalNavExt;
+		global $wgTitle, $wgArticle, $wgOut, $wgUser, $wgContLang, $wgSupressPageTitle, $wgSupressPageSubtitle, $wgSuppressNamespacePrefix, $wgEnableWallExt;
 		wfProfileIn( __METHOD__ );
 
 		$this->isUserLoggedIn = $wgUser->isLoggedIn();
@@ -374,7 +379,7 @@ class PageHeaderController extends WikiaController {
 
 		// if page is rendered using one column layout, show search box as a part of page header
 		// if new global nav is enabled - disable search box
-		$this->showSearchBox = ( isset( $params['showSearchBox'] ) ? $params['showSearchBox'] : false ) && empty( $wgEnableGlobalNavExt );
+		$this->showSearchBox = $this->isSearchInputDisplayed( $params );
 
 		if ( !empty( $wgSupressPageTitle ) ) {
 			$this->title = '';
@@ -619,7 +624,7 @@ class PageHeaderController extends WikiaController {
 	 *    key: showSearchBox (default: false)
 	 */
 	public function executeHubs( $params ) {
-		global $wgSupressPageTitle, $wgEnableGlobalNavExt;
+		global $wgSupressPageTitle;
 
 		wfProfileIn( __METHOD__ );
 
@@ -633,7 +638,7 @@ class PageHeaderController extends WikiaController {
 		$this->tallyMsg = wfMessage( 'oasis-total-articles-mainpage', SiteStats::articles() )->parse();
 
 		// if page is rendered using one column layout, show search box as a part of page header
-		$this->showSearchBox = ( isset( $params['showSearchBox'] ) ? $params['showSearchBox'] : false ) && empty( $wgEnableGlobalNavExt );
+		$this->showSearchBox = $this->isSearchInputDisplayed( $params );
 
 		if ( !empty( $wgSupressPageTitle ) ) {
 			$this->title = '';
