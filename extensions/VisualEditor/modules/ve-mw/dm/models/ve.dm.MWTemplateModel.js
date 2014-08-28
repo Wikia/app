@@ -368,10 +368,15 @@ ve.dm.MWTemplateModel.prototype.serialize = function () {
 ve.dm.MWTemplateModel.prototype.getWikitext = function () {
 	var param,
 		wikitext = this.getTarget().wt,
-		params = this.getParameters();
+		params = this.getParameters(),
+		originalParams = Object.keys( this.originalData.params );
 
 	for ( param in params ) {
 		if ( param === '' ) {
+			continue;
+		}
+		// TODO: Wikia (ve-sprint-25): Re-implement without modifying core class
+		if ( params[param].getValue() === '' && originalParams.indexOf( param ) === -1 ) {
 			continue;
 		}
 		wikitext += '|' + param + '=' +

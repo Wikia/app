@@ -89,7 +89,7 @@ ve.ui.WikiaTransclusionDialog.prototype.onCancelButtonClick = function () {
  */
 ve.ui.WikiaTransclusionDialog.prototype.onPreviewButtonClick = function () {
 	this.previewButton.setDisabled( true );
-	// TODO: update the template preview
+	this.selectedViewNode.update( { wikitext: this.transclusionModel.getWikitext() } );
 };
 
 /**
@@ -120,6 +120,7 @@ ve.ui.WikiaTransclusionDialog.prototype.getSetupProcess = function ( data ) {
 	return ve.ui.WikiaTransclusionDialog.super.prototype.getSetupProcess.call( this, data )
 		.next( function () {
 			var single = this.selectedNode.isSingleTemplate();
+			this.selectedViewNode = this.surface.getView().getFocusedNode();
 			this.setMode( single ? 'single' : 'multiple' );
 
 			if ( single ) {
@@ -133,7 +134,7 @@ ve.ui.WikiaTransclusionDialog.prototype.getSetupProcess = function ( data ) {
 				// Scroll
 				$( window ).off( 'mousewheel', this.onWindowMouseWheelHandler );
 				// Focus
-				this.surface.getFocusWidget().setNode( this.surface.getView().getFocusedNode() );
+				this.surface.getFocusWidget().setNode( this.selectedViewNode );
 			}
 		}, this );
 };
@@ -142,6 +143,10 @@ ve.ui.WikiaTransclusionDialog.prototype.getTeardownProcess = function ( data ) {
 	return ve.ui.WikiaTransclusionDialog.super.prototype.getTeardownProcess.call( this, data )
 		.first( function () {
 			this.surface.getFocusWidget().unsetNode();
+			if ( data && data.action === 'cancel' ) {
+				// update without wikitext passed in the config will just use original value
+				this.selectedViewNode.update();
+			}
 		}, this )
 		.next( function () {
 			if ( this.draggable ) {
