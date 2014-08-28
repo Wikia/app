@@ -42,6 +42,17 @@ class ContributeMenuController extends WikiaController {
 			$specialPagesLinks = array_merge($addVideoLink, $specialPagesLinks);
 		}
 
+		if( !empty( $this->wg->EnableWikiaInteractiveMaps) ) {
+			$addMapsLink = [
+				'Maps' => [
+					'label' => 'wikia-interactive-maps-create-a-map',
+					'class' => 'wikia-maps-create-map'
+				]
+			];
+
+			$specialPagesLinks = array_merge( $addMapsLink, $specialPagesLinks );
+		}
+
 		foreach ($specialPagesLinks as $specialPageName => $link) {
 			$specialPageTitle = SpecialPage::getTitleFor( $specialPageName );
 			if (!$specialPageTitle instanceof Title) {

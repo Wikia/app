@@ -105,6 +105,7 @@ class ContributeMenuControllerTest extends WikiaBaseTest {
 				'maps' => [
 					'text' => 'Create a Map',
 					'href' => '/wiki/Special:Maps',
+					'class' => 'wikia-maps-create-map',
 				]
 			]
 		);
