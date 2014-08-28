@@ -35,7 +35,7 @@ class ContributeMenuController extends WikiaController {
 		if( !empty( $this->wg->EnableSpecialVideosExt) && $this->wg->User->isAllowed('videoupload' ) ) {
 			$addVideoLink = array(
 				'WikiaVideoAdd' => array(
-					'label' => 'oasis-navigation-v2-add-video'			
+					'label' => 'oasis-navigation-v2-add-video'
 				)
 			);
 
@@ -64,15 +64,13 @@ class ContributeMenuController extends WikiaController {
 			$dropdownItems[strtolower($specialPageName)] = $attrs;
 		}
 
-		// show menu edit links
-		$wgUser = F::app()->wg->User;
-
-		if($wgUser->isAllowed('editinterface')) {
+		if( $this->wg->User->isAllowed( 'editinterface' ) ) {
 			$dropdownItems['wikinavedit'] = array(
 				'text' => wfMsg('oasis-navigation-v2-edit-this-menu'),
 				'href' => Title::newFromText(NavigationModel::WIKI_LOCAL_MESSAGE, NS_MEDIAWIKI)->getLocalURL('action=edit'),
 			);
 		}
+
 		$this->response->setVal('dropdownItems', $dropdownItems);
 	}
 }
