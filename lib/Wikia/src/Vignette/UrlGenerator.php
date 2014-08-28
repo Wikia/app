@@ -167,22 +167,24 @@ class UrlGenerator {
 	 * @throws \Exception
 	 */
 	public function url() {
-		global $wgVignetteUrl;
-
 		$bucketPath = self::bucketPath();
-		$url = "{$wgVignetteUrl}/{$bucketPath}/{$this->file->getRel()}/revision/{$this->revision}/width/{$this->width}/height/{$this->height}";
+		$imagePath = "{$bucketPath}/{$this->file->getRel()}/revision/{$this->revision}";
+
+		if ($this->mode != self::MODE_ORIGINAL) {
+			$imagePath .= "/{$this->mode}/width/{$this->width}/height/{$this->height}";
+		}
 
 		if ($this->revision == self::REVISION_LATEST) {
 			$this->query['cb'] = $this->file->getTimestamp();
 		}
 
 		if (!empty($this->query)) {
-			$url .= '?'.implode('&', array_map(function($key, $val) {
+			$imagePath .= '?'.implode('&', array_map(function($key, $val) {
 					return "{$key}=".urlencode($val);
 				}, array_keys($this->query), $this->query));
 		}
 
-		return $url;
+		return self::domainShard($imagePath);
 	}
 
 	public function __toString() {
@@ -193,6 +195,15 @@ class UrlGenerator {
 		return [
 			'file' => $this->file->getName(),
 		];
+	}
+
+	private static function domainShard($imagePath) {
+		global $wgVignetteUrl, $wgImagesServers;
+
+		$hash = ord(sha1($imagePath));
+		$shard = 1 + ($hash % ($wgImagesServers - 1));
+
+		return str_replace('<SHARD>', $shard, $wgVignetteUrl)."/{$imagePath}";
 	}
 
 	/**
