@@ -180,6 +180,7 @@ $wgResourceModules += array(
 			'wikia-visualeditor-dialogbutton-wikiasourcemode',
 			'wikia-visualeditor-dialog-done-button',
 			'wikia-visualeditor-dialog-transclusion-get-info',
+			'wikia-visualeditor-dialog-transclusion-preview-button',
 		),
 		'dependencies' => array(
 			'ext.visualEditor.core.desktop',
