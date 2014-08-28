@@ -466,4 +466,114 @@ describe('WikiaMaps.poiCategoriesModel', function () {
 			expect(poiCategory).toEqual(testCase.expectedOutput);
 		});
 	});
+
+	it('updates POI categories data', function () {
+		expect(typeof poiCategoriesModelModule.updatePoiCategoriesData).toBe('function');
+
+		var testData = [
+			{
+				input: {
+					dataSent: {
+						mapId: 2,
+						poiCategoriesToCreate: [
+							{
+								marker: 'http://new.marker.url',
+								parent_poi_category_id: '',
+								name: 'new category'
+							}
+						],
+						poiCategoriesToUpdate: [
+							{
+								marker: '',
+								parent_poi_category_id: 5,
+								name: 'modified category',
+								id: 74,
+								map_id: 2,
+								status: 0,
+								no_marker: true
+							}
+						],
+						poiCategoriesToDelete: [75]
+					},
+					dataReceived: {
+						poiCategoriesCreated: [
+							{
+								marker: 'http://new.marker.url',
+								parent_poi_category_id: 1,
+								name: 'new category',
+								map_id: 2,
+								id: 76
+							}
+						],
+						poiCategoriesUpdated: [74],
+						poiCategoriesDeleted: [75]
+					},
+					poiCategoriesOriginalData: [
+						{
+							id: 68,
+							parent_poi_category_id: 1,
+							map_id: 2,
+							name: 'category not to be touched',
+							marker: 'http://marker.url',
+							status: 1
+						},
+						{
+							id: 74,
+							parent_poi_category_id: 4,
+							map_id: 2,
+							name: 'to be modified',
+							marker: '/assets/__cb126/vendor/leaflet/images/marker-icon.png',
+							status: 0,
+							no_marker: true
+						},
+						{
+							id: 75,
+							parent_poi_category_id: 1,
+							map_id: 2,
+							name: 'category to be deleted',
+							marker: 'http://marker.url',
+							status: 1
+						}
+					]
+				},
+				expectedOutput: [
+					{
+						id: 68,
+						parent_poi_category_id: 1,
+						map_id: 2,
+						name: 'category not to be touched',
+						marker: 'http://marker.url',
+						status: 1
+					},
+					{
+						marker: '',
+						parent_poi_category_id: 5,
+						name: 'modified category',
+						id: 74,
+						map_id: 2,
+						status: 0,
+						no_marker: true
+					},
+					{
+						marker: 'http://new.marker.url',
+						parent_poi_category_id: 1,
+						name: 'new category',
+						map_id: 2,
+						id: 76
+					}
+				]
+			}
+		];
+
+		testData.forEach(function (testCase) {
+			var currentPoiCategories;
+
+			poiCategoriesModelModule.setPoiCategoriesOriginalData(testCase.input.poiCategoriesOriginalData);
+			currentPoiCategories = poiCategoriesModelModule.updatePoiCategoriesData(
+				testCase.input.dataSent, testCase.input.dataReceived
+			)
+
+			expect(currentPoiCategories).toEqual(testCase.expectedOutput);
+		});
+	});
 });
