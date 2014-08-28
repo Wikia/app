@@ -1,6 +1,5 @@
 <section class="Search this-wiki WikiaGrid clearfix">
 	<form class="WikiaSearch" id="search-v2-form" action="<?=$specialSearchUrl; ?>#">
-	<?php if ( empty( $wg->EnableGlobalNavExt ) ): ?>
 		<div class="SearchInput">
 			<?php if ( !empty( $advancedSearchBox ) ) : ?>
 				<p class="advanced-link"><a href="#" id="advanced-link"><?= wfMessage( 'searchprofile-advanced' ) ?></a></p>
@@ -16,7 +15,6 @@
 				<?php echo $advancedSearchBox; ?>
 			<?php endif ?>
 		</div>
-	<?php endif; ?>
 
 		<?php echo $tabs; ?>
 
