@@ -32,7 +32,7 @@ class ContributeMenuController extends WikiaController {
 			}
 
 			$attrs = [
-				'text' => wfMsg( $link[ 'label' ] ),
+				'text' => wfMessage( $link[ 'label' ] )->escaped(),
 				'href' =>  $specialPageTitle->getLocalURL(),
 			];
 
@@ -92,7 +92,7 @@ class ContributeMenuController extends WikiaController {
 
 	public function getEditPageItem( $url ) {
 		return [
-			'text' => wfMsg( 'oasis-navigation-v2-edit-page' ),
+			'text' => wfMessage( 'oasis-navigation-v2-edit-page' )->escaped(),
 			'href' => $url,
 			// don't use MenuButton module magic to get accesskey for this item (BugId:15698)
 			'accesskey' => false,
@@ -101,7 +101,7 @@ class ContributeMenuController extends WikiaController {
 
 	public function getEditNavItem() {
 		return [
-			'text' => wfMsg( 'oasis-navigation-v2-edit-this-menu' ),
+			'text' => wfMessage( 'oasis-navigation-v2-edit-this-menu' )->escaped(),
 			'href' => Title::newFromText( NavigationModel::WIKI_LOCAL_MESSAGE, NS_MEDIAWIKI )->getLocalURL( 'action=edit' ),
 		];
 	}
