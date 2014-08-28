@@ -2067,6 +2067,22 @@ class Wikia {
 				// Make sure user property is removed
 				$user->setOption( 'disabled-user-email', null );
 			}
+
+			/**
+			 * add logging to investigate CONN-463
+			 */
+			\Wikia\Logger\WikiaLogger::instance()->debug(
+				'CONN-463 - user email is becoming unconfirmed - Wikia invalidateUser',
+				[
+					'user_id' => $user->getId(),
+					'user_name' => $user->getName(),
+					'user_email' => $userEmail,
+				]
+			);
+			/**
+			 * change end
+			 */
+
 			$user->setEmail( '' );
 			$user->setPassword( null );
 			$user->setOption( 'disabled', 1 );

@@ -75,6 +75,22 @@ class SendGridPostbackController extends WikiaApiController {
 					if (!$user) {
 						continue;
 					}
+
+					/**
+					 * add logging to investigate CONN-463
+					 */
+					\Wikia\Logger\WikiaLogger::instance()->debug(
+						'CONN-463 - user email is becoming unconfirmed - SendGrid bounce',
+						[
+							'user_name' => $row->user,
+							'user_id' => $row->user_id,
+							'user_email' => $row->user_email,
+						]
+					);
+					/**
+					 * change end
+					 */
+
 					$user->invalidateEmail();
 					$user->saveSettings();
 				}
