@@ -298,15 +298,10 @@ ve.ce.FocusableNode.prototype.onFocusableResizeEnd = function () {
  * @method
  */
 ve.ce.FocusableNode.prototype.onFocusableRerender = function () {
-	var surface = this.surface.getSurface();
 	if ( this.focused ) {
 		this.redrawHighlights();
 		// reposition menu
-		surface.getContext().update( true, true );
-	}
-	// Wikia change: Adjust focus widget size after FocusableNode is rerendered
-	if ( surface.getFocusWidget() ) {
-		surface.getFocusWidget().adjustLayout();
+		this.surface.getSurface().getContext().update( true, true );
 	}
 };
 
