@@ -80,7 +80,7 @@ ve.ui.WikiaTransclusionDialog.prototype.onTransclusionReady = function () {
 
 	// ve.dm.MWTransclusionModel.prototype.process emits "change" that we want to "ignore"
 	// Other way to implement this would be to override that process method
-	this.transclusionModel.once( 'change', ve.bind( function() {
+	this.transclusionModel.once( 'change', ve.bind( function () {
 		this.transclusionModel.connect( this, { 'change': 'onParameterInputValueChange' } );
 	}, this ) );
 };
