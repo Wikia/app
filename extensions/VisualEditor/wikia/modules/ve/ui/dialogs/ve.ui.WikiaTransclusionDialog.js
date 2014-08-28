@@ -97,11 +97,14 @@ ve.ui.WikiaTransclusionDialog.prototype.onCancelButtonClick = function () {
  */
 ve.ui.WikiaTransclusionDialog.prototype.onPreviewButtonClick = function () {
 	this.previewButton.setDisabled( true );
+	// TODO: update the template preview
 };
 
+/**
+ * Handles action when parameter input value has changed
+ */
 ve.ui.WikiaTransclusionDialog.prototype.onParameterInputValueChange = function () {
 	this.previewButton.setDisabled( false );
-	// TODO: update the template preview
 };
 
 /**
