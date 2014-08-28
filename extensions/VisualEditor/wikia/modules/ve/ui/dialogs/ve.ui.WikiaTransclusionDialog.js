@@ -82,7 +82,7 @@ ve.ui.WikiaTransclusionDialog.prototype.updateTitle = function () {
 ve.ui.WikiaTransclusionDialog.prototype.getSetupProcess = function ( data ) {
 	return ve.ui.WikiaTransclusionDialog.super.prototype.getSetupProcess.call( this, data )
 		.next( function () {
-			var single = !this.selectedNode.isSingleTemplate();
+			var single = this.selectedNode.isSingleTemplate();
 			this.setMode( single ? 'single' : 'multiple' );
 
 			if ( single ) {
