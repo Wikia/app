@@ -50,7 +50,8 @@ class SMWLanguageEn extends SMWLanguage {
 		'Enumeration' => '_str',
 		'Phone number' => '_tel',
 		'E-mail'       => '_ema',
-		'Geographic coordinate' => '_geo'
+		'Geographic coordinate' => '_geo',
+		'Geographic polygon'    => '_gpo',
 	);
 
 	protected $m_SpecialProperties = array(
@@ -71,6 +72,11 @@ class SMWLanguageEn extends SMWLanguage {
 		'_ERRP' => 'Has improper value for',
 		'_LIST' => 'Has fields',
 		'_SOBJ' => 'Has subobject',
+		'_ASK'  => 'Has query',
+		'_ASKST'=> 'Query string',
+		'_ASKFO'=> 'Query format',
+		'_ASKSI'=> 'Query size',
+		'_ASKDE'=> 'Query depth',
 	);
 
 	protected $m_SpecialPropertyAliases = array(

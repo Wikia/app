@@ -113,12 +113,12 @@ function smwfNormalTitleDBKey( $text ) {
  * @param string $text
  */
 function smwfNormalTitleText( $text ) {
-	global $wgCapitalLinks;
+	global $wgCapitalLinks, $wgContLang;
 
 	$text = trim( $text );
 
 	if ( $wgCapitalLinks ) {
-		$text = ucfirst( $text );
+		$text = $wgContLang->ucfirst( $text );
 	}
 
 	return str_replace( '_', ' ', $text );
@@ -156,7 +156,7 @@ function smwfHTMLtoUTF8( $text ) {
 function smwfNumberFormat( $value, $decplaces = 3 ) {
 	global $smwgMaxNonExpNumber;
 
-	$decseparator = wfMsgForContent( 'smw_decseparator' );
+	$decseparator = wfMessage( 'smw_decseparator' )->text();
 
 	// If number is a trillion or more, then switch to scientific
 	// notation. If number is less than 0.0000001 (i.e. twice decplaces),
@@ -200,7 +200,11 @@ function smwfNumberFormat( $value, $decplaces = 3 ) {
 		// Format to some level of precision; number_format does rounding and locale formatting,
 		// x and y are used temporarily since number_format supports only single characters for either
 		$value = number_format( $value, $decplaces, 'x', 'y' );
-		$value = str_replace( array( 'x', 'y' ), array( $decseparator, wfMsgForContent( 'smw_kiloseparator' ) ), $value );
+		$value = str_replace(
+			array( 'x', 'y' ),
+			array( $decseparator, wfMessage( 'smw_kiloseparator' )->inContentLanguage()->text() ),
+			$value
+		);
 
 		// Make it more readable by removing ending .000 from nnn.000
 		//    Assumes substr is faster than a regular expression replacement.
@@ -249,10 +253,13 @@ function smwfEncodeMessages( array $messages, $icon = 'warning', $seperator = ' 
 			$errorList = '<ul>' . implode( $seperator, $messages ) . '</ul>';
 		}
 
-		return '<span class="smwttpersist">' .
-				'<span class="smwtticon">' . htmlspecialchars( $icon ) . '.png</span>' .
-				'<span class="smwttcontent">' . $errorList . '</span>' . 
-			'</span>';
+		return smwfContextHighlighter( array (
+			'context' => 'persitent',
+			'class'   => 'smwtticon ' . htmlspecialchars( $icon ),
+			'type'    => htmlspecialchars( $icon ),
+			'title'   => null,
+			'content' => $errorList
+		) );
 	} else {
 		return '';
 	}
@@ -324,4 +331,45 @@ function smwfGetLinker() {
 	}
 
 	return $linker;
+}
+
+/**
+ * Provide a consistent interface for context hightlighting.
+ *
+ * Escaping should be dealt with before calling this function to ensure proper
+ * handling of html encoded strings
+ *
+ * @var options
+ * context = described as either inline or persitent
+ * title   = a text or null
+ * class   = assigned class which will control if an icon is displayed or not
+ * type    = identifies the entity type
+ * content = ...
+ *
+ * @since 1.8
+ *
+ * @param array options
+ *
+ * @return string
+ */
+function smwfContextHighlighter( array $options ) {
+	// Load RL module
+	SMWOutputs::requireResource( 'ext.smw.tooltips' );
+
+	// Tooltip
+	return Html::rawElement(
+		'span',
+		array(
+			'class' => $options['context'] === 'inline' ? 'smwttinline' : 'smwttpersist' ,
+			'data-type' => $options['type'],
+			'data-context' => $options['context']
+		), Html::rawElement(
+			'span',
+			array( 'class' => $options['class'] ),
+			$options['title']
+			) . Html::rawElement(
+				'span',
+				array( 'class' => 'smwttcontent'), $options['content']
+				)
+	);
 }

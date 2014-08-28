@@ -8,7 +8,7 @@
  * @file SemanticMediaWiki.hooks.php
  * @ingroup SMW
  *
- * @licence GNU GPL v3+
+ * @licence GNU GPL v2+
  * @author Jeroen De Dauw < jeroendedauw@gmail.com >
  */
 final class SMWHooks {
@@ -21,16 +21,10 @@ final class SMWHooks {
 	 *
 	 * @param DatabaseUpdater $updater|null
 	 *
-	 * @return true
+	 * @return boolean
 	 */
-	public static function onSchemaUpdate( /* DatabaseUpdater */ $updater = null ) {
-		// $updater can be null in MW 1.16.
-		if ( !is_null( $updater ) ) {
-			// Method was added in MW 1.19.
-			if ( is_callable( array( $updater, 'addPostDatabaseUpdateMaintenance' ) ) ) {
-				$updater->addPostDatabaseUpdateMaintenance( 'SMWSetupScript' );
-			}
-		}
+	public static function onSchemaUpdate( DatabaseUpdater $updater = null ) {
+		$updater->addExtensionUpdate( array( 'SMWStore::setupStore' ) );
 
 		return true;
 	}
@@ -40,7 +34,7 @@ final class SMWHooks {
 	 *
 	 * @since 1.7
 	 *
-	 * @return true
+	 * @return boolean
 	 */
 	public static function onPageSchemasRegistration() {
 		$GLOBALS['wgPageSchemasHandlerClasses'][] = 'SMWPageSchemas';
@@ -54,10 +48,10 @@ final class SMWHooks {
 	 *
 	 * @param ALTree $admin_links_tree
 	 *
-	 * @return true
+	 * @return boolean
 	 */
 	public static function addToAdminLinks( ALTree &$admin_links_tree ) {
-		$data_structure_section = new ALSection( wfMsg( 'smw_adminlinks_datastructure' ) );
+		$data_structure_section = new ALSection( wfMessage( 'smw_adminlinks_datastructure' )->text() );
 
 		$smw_row = new ALRow( 'smw' );
 		$smw_row->addItem( ALItem::newFromSpecialPage( 'Categories' ) );
@@ -71,19 +65,22 @@ final class SMWHooks {
 
 		$data_structure_section->addRow( $smw_admin_row );
 		$smw_docu_row = new ALRow( 'smw_docu' );
-		$smw_name = wfMsg( 'specialpages-group-smw_group' );
-		$smw_docu_label = wfMsg( 'adminlinks_documentation', $smw_name );
+		$smw_name = wfMessage( 'specialpages-group-smw_group' )->text();
+		$smw_docu_label = wfMessage( 'adminlinks_documentation', $smw_name )->text();
 		$smw_docu_row->addItem( AlItem::newFromExternalLink( 'http://semantic-mediawiki.org/wiki/Help:User_manual', $smw_docu_label ) );
 
 		$data_structure_section->addRow( $smw_docu_row );
-		$admin_links_tree->addSection( $data_structure_section, wfMsg( 'adminlinks_browsesearch' ) );
+		$admin_links_tree->addSection( $data_structure_section, wfMessage( 'adminlinks_browsesearch' )->text() );
 		$smw_row = new ALRow( 'smw' );
-		$displaying_data_section = new ALSection( wfMsg( 'smw_adminlinks_displayingdata' ) );
-		$smw_row->addItem( AlItem::newFromExternalLink( 'http://semantic-mediawiki.org/wiki/Help:Inline_queries', wfMsg( 'smw_adminlinks_inlinequerieshelp' ) ) );
+		$displaying_data_section = new ALSection( wfMessage( 'smw_adminlinks_displayingdata' )->text() );
+		$smw_row->addItem( AlItem::newFromExternalLink(
+			'http://semantic-mediawiki.org/wiki/Help:Inline_queries',
+			wfMessage( 'smw_adminlinks_inlinequerieshelp' )->text()
+		) );
 
 		$displaying_data_section->addRow( $smw_row );
-		$admin_links_tree->addSection( $displaying_data_section, wfMsg( 'adminlinks_browsesearch' ) );
-		$browse_search_section = $admin_links_tree->getSection( wfMsg( 'adminlinks_browsesearch' ) );
+		$admin_links_tree->addSection( $displaying_data_section, wfMessage( 'adminlinks_browsesearch' )->text() );
+		$browse_search_section = $admin_links_tree->getSection( wfMessage( 'adminlinks_browsesearch' )->text() );
 
 		$smw_row = new ALRow( 'smw' );
 		$smw_row->addItem( ALItem::newFromSpecialPage( 'Browse' ) );
@@ -104,7 +101,7 @@ final class SMWHooks {
 	 * @param $title Title
 	 * @param $article Article or null
 	 *
-	 * @return true
+	 * @return boolean
 	 */
 	public static function onArticleFromTitle( Title &$title, /* Article */ &$article ) {
 		if ( $title->getNamespace() == SMW_NS_PROPERTY ) {
@@ -125,7 +122,7 @@ final class SMWHooks {
 	 *
 	 * @param Parser $parser
 	 *
-	 * @return true
+	 * @return boolean
 	 */
 	public static function onParserFirstCallInit( Parser &$parser ) {
 		$parser->setFunctionHook( 'ask', array( 'SMWAsk', 'render' ) );
@@ -151,87 +148,183 @@ final class SMWHooks {
 	 * @param string $text
 	 * @param Skin $skin
 	 *
-	 * @return true
+	 * @return boolean
 	 */
 	public static function addPoweredBySMW( &$text, $skin ) {
 		global $smwgScriptPath;
-		$url = htmlspecialchars( "$smwgScriptPath/skins/images/smw_button.png" );
+		$url = htmlspecialchars( "$smwgScriptPath/resources/images/smw_button.png" );
 		$text .= ' <a href="http://www.semantic-mediawiki.org/wiki/Semantic_MediaWiki"><img src="' . $url . '" alt="Powered by Semantic MediaWiki" /></a>';
 
 		return true;
 	}
 
-    /**
-     * Adds the 'semantic' extension type to the type list.
-     *
-     * @since 1.7.1
-     *
-     * @param $aExtensionTypes Array
-     *
-     * @return true
-     */
-    public static function addSemanticExtensionType( array &$aExtensionTypes ) {
-    	$aExtensionTypes = array_merge( array( 'semantic' => wfMsg( 'version-semantic' ) ), $aExtensionTypes );
-    	return true;
-    }
+	/**
+	 * Adds the 'semantic' extension type to the type list.
+	 *
+	 * @since 1.7.1
+	 *
+	 * @param $aExtensionTypes Array
+	 *
+	 * @return boolean
+	 */
+	public static function addSemanticExtensionType( array &$aExtensionTypes ) {
+		$aExtensionTypes = array_merge( array( 'semantic' => wfMessage( 'version-semantic' )->text() ), $aExtensionTypes );
+		return true;
+	}
 
-    /**
-     * @see SMWHooks::addSemanticExtensionType
-     *
-     * @since 1.7.1
-     *
-     * @param $oSpecialVersion SpecialVersion
-     * @param $aExtensionTypes Array
-     *
-     * @return true
-     */
-    public static function oldAddSemanticExtensionType( SpecialVersion &$oSpecialVersion, array &$aExtensionTypes ) {
-    	return self::addSemanticExtensionType( $aExtensionTypes );
-    }
+	/**
+	 * Register tables to be added to temporary tables for parser tests.
+	 *
+	 * @since 1.7.1
+	 *
+	 * @param array $tables
+	 *
+	 * @return boolean
+	 */
+	public static function onParserTestTables( array &$tables ) {
+		$tables = array_merge(
+			$tables,
+			smwfGetStore()->getParserTestTables()
+		);
 
-    /**
-     * Register tables to be added to temporary tables for parser tests.
-     * @todo Hard-coding this thwarts the modularity/exchangability of the SMW
-     * storage backend. The actual list of required tables depends on the backend
-     * implementation and cannot really be fixed here.
-     *
-     * @since 1.7.1
-     *
-     * @param array $tables
-     *
-     * @return true
-     */
-    public static function onParserTestTables( array &$tables ) {
-    	$tables[] = 'smw_ids';
-    	$tables[] = 'smw_redi2';
-    	$tables[] = 'smw_atts2';
-    	$tables[] = 'smw_rels2';
-    	$tables[] = 'smw_text2';
-    	$tables[] = 'smw_spec2';
-    	$tables[] = 'smw_inst2';
-    	$tables[] = 'smw_subs2';
-    	return true;
-    }
+		return true;
+	}
 
-    /**
-     * Add a link to the toolbox to view the properties of the current page in
-     * Special:Browse. The links has the CSS id "t-smwbrowselink" so that it can be
-     * skinned or hidden with all standard mechanisms (also by individual users
-     * with custom CSS).
-     *
-     * @since 1.7.1
-     *
-     * @param $skintemplate
-     *
-     * @return true
-     */
-    public static function showBrowseLink( $skintemplate ) {
-    	if ( $skintemplate->data['isarticle'] ) {
-    		$browselink = SMWInfolink::newBrowsingLink( wfMsg( 'smw_browselink' ),
-    						$skintemplate->data['titleprefixeddbkey'], false );
-    		echo '<li id="t-smwbrowselink">' . $browselink->getHTML() . '</li>';
-    	}
-    	return true;
-    }
+	/**
+	 * Add a link to the toolbox to view the properties of the current page in
+	 * Special:Browse. The links has the CSS id "t-smwbrowselink" so that it can be
+	 * skinned or hidden with all standard mechanisms (also by individual users
+	 * with custom CSS).
+	 *
+	 * @since 1.7.1
+	 *
+	 * @param $skintemplate
+	 *
+	 * @return boolean
+	 */
+	public static function showBrowseLink( $skintemplate ) {
+		if ( $skintemplate->data['isarticle'] ) {
+			$browselink = SMWInfolink::newBrowsingLink( wfMessage( 'smw_browselink' )->text(),
+							$skintemplate->data['titleprefixeddbkey'], false );
+			echo '<li id="t-smwbrowselink">' . $browselink->getHTML() . '</li>';
+		}
+		return true;
+	}
 
+	/**
+	 * @see https://www.mediawiki.org/wiki/Manual:Hooks/SkinTemplateTabs
+	 * This is here for compatibility with MediaWiki 1.17. Once we can require 1.18, we can ditch this code :)
+	 *
+	 * @since 0.1
+	 *
+	 * @param SkinTemplate $skinTemplate
+	 * @param array $contentActions
+	 *
+	 * @return boolean
+	 */
+	public static function addRefreshTab( SkinTemplate $skinTemplate, array &$contentActions ) {
+		global $wgUser;
+
+		if ( $wgUser->isAllowed( 'purge' ) ) {
+			$contentActions['purge'] = array(
+				'class' => false,
+				'text' => wfMessage( 'smw_purge' )->text(),
+				'href' => $skinTemplate->getTitle()->getLocalUrl( array( 'action' => 'purge' ) )
+			);
+		}
+
+		return true;
+	}
+
+	/**
+	 * Alter the structured navigation links in SkinTemplates.
+	 * @see https://www.mediawiki.org/wiki/Manual:Hooks/SkinTemplateNavigation
+	 *
+	 * @since 1.8
+	 *
+	 * @param SkinTemplate $skinTemplate
+	 * @param array $links
+	 *
+	 * @return boolean
+	 */
+	public static function addStructuredRefreshTab( SkinTemplate &$skinTemplate, array &$links ) {
+		$actions = $links['actions'];
+		self::addRefreshTab( $skinTemplate, $actions );
+		$links['actions'] = $actions;
+
+		return true;
+	}
+
+	/**
+	* Hook to add PHPUnit test cases.
+	* @see https://www.mediawiki.org/wiki/Manual:Hooks/UnitTestsList
+	*
+	* @since 1.8
+	 * 
+	* @param array $files
+	*
+	* @return boolean
+	*/
+	public static function registerUnitTests ( array &$files ) {
+		$testFiles = array(
+			'QueryProcessor',
+
+			'dataitems/DI_Number',
+			'dataitems/DI_Bool',
+			'dataitems/DI_Blob',
+			'dataitems/DI_String',
+			'dataitems/DI_GeoCoord',
+
+			'printers/ResultPrinters',
+
+			'storage/Store',
+		);
+
+		foreach ( $testFiles as $file ) {
+			$files[] = dirname( __FILE__ ) . '/tests/phpunit/includes/' . $file . 'Test.php';
+		}
+
+		return true;
+	}
+
+	/**
+	 * Hook: GetPreferences adds user preference
+	 * @see https://www.mediawiki.org/wiki/Manual:Hooks/GetPreferences
+	 *
+	 * @param User $user
+	 * @param array $preferences
+	 *
+	 * @return true
+	 */
+	public static function onGetPreferences( $user, &$preferences ) {
+
+		// Intro text
+		$preferences['smw-prefs-intro'] =
+			array(
+				'type' => 'info',
+				'label' => '&#160;',
+				'default' => Xml::tags( 'tr', array(),
+					Xml::tags( 'td', array( 'colspan' => 2 ),
+						wfMessage(  'smw-prefs-intro-text' )->parseAsBlock() ) ),
+				'section' => 'smw',
+				'raw' => 1,
+				'rawrow' => 1,
+			);
+
+		// Option to enable tooltip info
+		$preferences['smw-prefs-ask-options-tooltip-display'] = array(
+			'type' => 'toggle',
+			'label-message' => 'smw-prefs-ask-options-tooltip-display',
+			'section' => 'smw/ask-options',
+		);
+
+		// Preference to set option box be collapsed by default
+		$preferences['smw-prefs-ask-options-collapsed-default'] = array(
+			'type' => 'toggle',
+			'label-message' => 'smw-prefs-ask-options-collapsed-default',
+			'section' => 'smw/ask-options',
+		);
+
+		return true;
+	}
 }

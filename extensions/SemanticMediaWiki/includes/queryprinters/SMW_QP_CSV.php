@@ -13,7 +13,7 @@
  * 
  * @ingroup SMWQuery
  */
-class SMWCsvResultPrinter extends SMWResultPrinter {
+class SMWCsvResultPrinter extends SMWExportPrinter {
 	
 	protected $m_sep;
 
@@ -21,21 +21,39 @@ class SMWCsvResultPrinter extends SMWResultPrinter {
 	 * @see SMWResultPrinter::handleParameters
 	 * 
 	 * @since 1.7
-	 * 
+	 *
 	 * @param array $params
 	 * @param $outputmode
 	 */
 	protected function handleParameters( array $params, $outputmode ) {
 		parent::handleParameters( $params, $outputmode );
 		
-		$this->m_sep = str_replace( '_', ' ', $params['sep'] );
+		$this->m_sep = str_replace( '_', ' ', $this->params['sep'] );
 	}
 
-	public function getMimeType( $res ) {
+	/**
+	 * @see SMWIExportPrinter::getMimeType
+	 *
+	 * @since 1.8
+	 *
+	 * @param SMWQueryResult $queryResult
+	 *
+	 * @return string
+	 */
+	public function getMimeType( SMWQueryResult $queryResult ) {
 		return 'text/csv';
 	}
 
-	public function getFileName( $res ) {
+	/**
+	 * @see SMWIExportPrinter::getFileName
+	 *
+	 * @since 1.8
+	 *
+	 * @param SMWQueryResult $queryResult
+	 *
+	 * @return string|boolean
+	 */
+	public function getFileName( SMWQueryResult $queryResult ) {
 		return 'result.csv';
 	}
 
@@ -44,7 +62,7 @@ class SMWCsvResultPrinter extends SMWResultPrinter {
 	}
 
 	public function getName() {
-		return wfMsg( 'smw_printername_csv' );
+		return wfMessage( 'smw_printername_csv' )->text();
 	}
 
 	protected function getResultText( SMWQueryResult $res, $outputmode ) {
@@ -52,7 +70,12 @@ class SMWCsvResultPrinter extends SMWResultPrinter {
 		
 		if ( $outputmode == SMW_OUTPUT_FILE ) { // make CSV file
 			$csv = fopen( 'php://temp', 'r+' );
-			
+			$sep = str_replace( '_', ' ', $this->params['sep'] );
+
+			if ( $this->params['showsep'] ) {
+				fputs( $csv, "sep=" . $sep . "\n" );
+			}
+
 			if ( $this->mShowHeaders ) {
 				$header_items = array();
 				
@@ -60,7 +83,7 @@ class SMWCsvResultPrinter extends SMWResultPrinter {
 					$header_items[] = $pr->getLabel();
 				}
 				
-				fputcsv( $csv, $header_items, $this->m_sep );
+				fputcsv( $csv, $header_items, $sep );
 			}
 			
 			while ( $row = $res->getNext() ) {
@@ -82,41 +105,39 @@ class SMWCsvResultPrinter extends SMWResultPrinter {
 			rewind( $csv );
 			$result .= stream_get_contents( $csv );
 		} else { // just make link to feed
-			if ( $this->getSearchLabel( $outputmode ) ) {
-				$label = $this->getSearchLabel( $outputmode );
-			} else {
-				$label = wfMsgForContent( 'smw_csv_link' );
-			}
-
-			$link = $res->getQueryLink( $label );
-			$link->setParameter( 'csv', 'format' );
-			$link->setParameter( $this->m_sep, 'sep' );
-			
-			if ( array_key_exists( 'mainlabel', $this->params ) && $this->params['mainlabel'] !== false ) {
-				$link->setParameter( $this->params['mainlabel'], 'mainlabel' );
-			}
-				
-			$link->setParameter( $this->mShowHeaders ? 'show' : 'hide', 'headers' );
-			
-			if ( array_key_exists( 'limit', $this->params ) ) {
-				$link->setParameter( $this->params['limit'], 'limit' );
-			} else { // use a reasonable default limit
-				$link->setParameter( 100, 'limit' );
-			}
-			
-			$result .= $link->getText( $outputmode, $this->mLinker );
+			$result .= $this->getLink( $res, $outputmode )->getText( $outputmode, $this->mLinker );
 			$this->isHTML = ( $outputmode == SMW_OUTPUT_HTML ); // yes, our code can be viewed as HTML if requested, no more parsing needed
 		}
 		return $result;
 	}
 
-	public function getParameters() {
-		$params = array_merge( parent::getParameters(), $this->exportFormatParameters() );
-		
-		$params['sep'] = new Parameter( 'sep' );
-		$params['sep']->setMessage( 'smw-paramdesc-csv-sep' );
-		$params['sep']->setDefault( ',' );
-		
+	/**
+	 * @see SMWResultPrinter::getParamDefinitions
+	 *
+	 * @since 1.8
+	 *
+	 * @param $definitions array of IParamDefinition
+	 *
+	 * @return array of IParamDefinition|array
+	 */
+	public function getParamDefinitions( array $definitions ) {
+		$params = parent::getParamDefinitions( $definitions );
+
+		$definitions['searchlabel']->setDefault( wfMessage( 'smw_csv_link' )->inContentLanguage()->text() );
+
+		$definitions['limit']->setDefault( 100 );
+
+		$params[] = array(
+			'name' => 'sep',
+			'message' => 'smw-paramdesc-csv-sep',
+			'default' => ',',
+		);
+
+		$params['showsep'] = array(
+			'type' => 'boolean',
+			'default' => false,
+			'message' => 'smw-paramdesc-showsep',
+		);
 		return $params;
 	}
 

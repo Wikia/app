@@ -12,7 +12,7 @@
  * @author Jeroen De Dauw < jeroendedauw@gmail.com >
  * Based on the SMWCsvResultPrinter class.
  */
-class SMWDSVResultPrinter extends SMWResultPrinter {
+class SMWDSVResultPrinter extends SMWExportPrinter {
 	
 	protected $separator = ':';
 	protected $fileName = 'result.dsv';
@@ -34,13 +34,31 @@ class SMWDSVResultPrinter extends SMWResultPrinter {
 		}
 		
 		$this->fileName = str_replace( ' ', '_', $params['filename'] );
-	}	
+	}
 
-	public function getMimeType( $res ) {
+	/**
+	 * @see SMWIExportPrinter::getMimeType
+	 *
+	 * @since 1.8
+	 *
+	 * @param SMWQueryResult $queryResult
+	 *
+	 * @return string
+	 */
+	public function getMimeType( SMWQueryResult $queryResult ) {
 		return 'text/dsv';
 	}
 
-	public function getFileName( $res ) {
+	/**
+	 * @see SMWIExportPrinter::getFileName
+	 *
+	 * @since 1.8
+	 *
+	 * @param SMWQueryResult $queryResult
+	 *
+	 * @return string|boolean
+	 */
+	public function getFileName( SMWQueryResult $queryResult ) {
 		return $this->fileName;
 	}
 
@@ -49,7 +67,7 @@ class SMWDSVResultPrinter extends SMWResultPrinter {
 	}
 
 	public function getName() {
-		return wfMsg( 'smw_printername_dsv' );
+		return wfMessage( 'smw_printername_dsv' )->text();
 	}
 
 	protected function getResultText( SMWQueryResult $res, $outputmode ) {
@@ -152,46 +170,40 @@ class SMWDSVResultPrinter extends SMWResultPrinter {
 	 * @return string
 	 */		
 	protected function getLinkToFile( SMWQueryResult $res, $outputmode ) {
-		if ( $this->getSearchLabel( $outputmode ) ) {
-			$label = $this->getSearchLabel( $outputmode );
-		} else {
-			$label = wfMsgForContent( 'smw_dsv_link' );
-		}
-
-		$link = $res->getQueryLink( $label );
-		$link->setParameter( 'dsv', 'format' );
-		$link->setParameter( $this->separator, 'separator' );
-		$link->setParameter( $this->fileName, 'filename' );
-		
-		if ( array_key_exists( 'mainlabel', $this->m_params ) && $this->m_params['mainlabel'] !== false ) {
-			$link->setParameter( $this->m_params['mainlabel'], 'mainlabel' );
-		}
-		
-		$link->setParameter( $this->mShowHeaders ? 'show' : 'hide', 'headers' );
-			
-		if ( array_key_exists( 'limit', $this->m_params ) ) {
-			$link->setParameter( $this->m_params['limit'], 'limit' );
-		} else { // Use a reasonable default limit
-			$link->setParameter( 100, 'limit' );
-		}
-
 		// yes, our code can be viewed as HTML if requested, no more parsing needed
 		$this->isHTML = ( $outputmode == SMW_OUTPUT_HTML ); 
-		return $link->getText( $outputmode, $this->mLinker );
+		return $this->getLink( $res, $outputmode )->getText( $outputmode, $this->mLinker );
 	}
 
-	public function getParameters() {
-		$params = array_merge( parent::getParameters(), $this->exportFormatParameters() );
-		
-		$params['separator'] = new Parameter( 'separator' );
-		$params['separator']->setMessage( 'smw-paramdesc-dsv-separator' );
-		$params['separator']->setDefault( $this->separator );
-		$params['separator']->addAliases( 'sep' );
-		
-		$params['filename'] = new Parameter( 'filename' );
-		$params['filename']->setMessage( 'smw-paramdesc-dsv-filename' );
-		$params['filename']->setDefault( $this->fileName );
-		
+	/**
+	 * @see SMWResultPrinter::getParamDefinitions
+	 *
+	 * @since 1.8
+	 *
+	 * @param $definitions array of IParamDefinition
+	 *
+	 * @return array of IParamDefinition|array
+	 */
+	public function getParamDefinitions( array $definitions ) {
+		$params = parent::getParamDefinitions( $definitions );
+
+		$params['searchlabel']->setDefault( wfMessage( 'smw_dsv_link' )->text() );
+
+		$params['limit']->setDefault( 100 );
+
+		$params[] = array(
+			'name' => 'separator',
+			'message' => 'smw-paramdesc-dsv-separator',
+			'default' => $this->separator,
+			'aliases' => 'sep',
+		);
+
+		$params[] = array(
+			'name' => 'filename',
+			'message' => 'smw-paramdesc-dsv-filename',
+			'default' => $this->fileName,
+		);
+
 		return $params;
 	}
 

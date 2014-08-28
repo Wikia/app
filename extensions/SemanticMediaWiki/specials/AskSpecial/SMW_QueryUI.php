@@ -17,7 +17,7 @@
  * @ingroup SMWSpecialPage
  * @ingroup SpecialPage
  */
-abstract class SMWQueryUI extends SpecialPage {
+abstract class SMWQueryUI extends SMWQuerySpecialPage {
 	/**
 	 * The handle for the underlying SMWQueryUIHelper class.
 	 * @var SMWQueryUIHelper
@@ -47,7 +47,7 @@ abstract class SMWQueryUI extends SpecialPage {
 		$this->setHeaders();
 
 		if ( !$smwgQEnabled ) {
-			$wgOut->addHTML( '<br />' . wfMsg( 'smw_iq_disabled' ) );
+			$wgOut->addHTML( '<br />' . wfMessage( 'smw_iq_disabled' )->escaped() );
 			return;
 		}
 
@@ -135,7 +135,7 @@ abstract class SMWQueryUI extends SpecialPage {
 				Html::rawElement(
 					'div',
 					array( 'id' => 'inlinequeryembedinstruct' ),
-					wfMsg( 'smw_ask_embed_instr' )
+					wfMessage( 'smw_ask_embed_instr' )->escaped()
 				) .
 				Html::element( 'textarea',
 					array( 'id' => 'inlinequeryembedarea',
@@ -247,16 +247,17 @@ END;
 					'href' => $this->getTitle()->getLocalURL( wfArrayToCGI( $this->getUrlArgs() ) ),
 					'rel' => 'nofollow'
 				),
-				wfMsg( 'smw_result_prev' )
+				wfMessage( 'smw_result_prev' )->text()
 			);
 
 		} else {
-			$navigation = wfMsg( 'smw_result_prev' );
+			$navigation = wfMessage( 'smw_result_prev' )->text();
 		}
 
+		// @otdo FIXME: i18n patchwork.
 		$navigation .=
 			'&#160;&#160;&#160;&#160; <b>' .
-				wfMsg( 'smw_result_results' ) . ' ' . $wgLang->formatNum( $offset + 1 ) .
+				wfMessage( 'smw_result_results' )->text() . ' ' . $wgLang->formatNum( $offset + 1 ) .
 			' - ' .
 				$wgLang->formatNum( $offset + $this->uiCore->getResultCount() ) .
 			'</b>&#160;&#160;&#160;&#160;';
@@ -271,10 +272,10 @@ END;
 					'href' => $this->getTitle()->getLocalURL( wfArrayToCGI( $this->getUrlArgs() ) ),
 					'rel' => 'nofollow'
 				),
-				wfMsg( 'smw_result_next' )
+				wfMessage( 'smw_result_next' )->text()
 			);
 		} else {
-			$navigation .= wfMsg( 'smw_result_next' );
+			$navigation .= wfMessage( 'smw_result_next' )->text();
 		}
 
 		$first = true;
@@ -526,23 +527,23 @@ END;
 				array( 'class' => 'smw-remove' ) ) .
 			Html::openElement( 'a',
 				array( 'href' => 'javascript:smwRemoveMainLabel()' ) ) .
-			'<img src="' . $smwgScriptPath . '/skins/images/close-button.png" alt="' . wfMsg( 'smw_qui_delete' ) . '">' .
+			'<img src="' . $smwgScriptPath . '/skins/images/close-button.png" alt="' . wfMessage( 'smw_qui_delete' )->text() . '">' .
 			'</a>' .
 			'</span><strong>' .
-			wfMsg( 'smw_qui_rescol' ) .
+			wfMessage( 'smw_qui_rescol' )->text() .
 			'</strong></span>' .
 			Xml::openElement( 'div',
 				array( 'id' => 'mainlabel-dialog',
-					'title' => wfMsg( 'smw_qui_mainlabopts' ),
+					'title' => wfMessage( 'smw_qui_mainlabopts' )->text(),
 					'class' => 'smwmainlabdialog' )
 				) .
 			'<table align="center" ><tr>' .
-				'<td>' . wfMsg( 'smw_qui_dlabel' ) . '</td>' .
+				'<td>' . wfMessage( 'smw_qui_dlabel' )->text() . '</td>' .
 				'<td><input size="25" value="' . $mainLabelText . '" id="mainlabelvis" /></td>' .
 			'</tr></table>' .
 			'</div>' .
 			'<input type="hidden" name="pmainlabel" value="' . $mainLabel . '" id="mainlabelhid" /> ' .
-			'<a class="smwq-more" href="javascript:smw_makeMainlabelDialog()">' . wfMsg( 'smw_qui_options' ) . '</a> ' .
+			'<a class="smwq-more" href="javascript:smw_makeMainlabelDialog()">' . wfMessage( 'smw_qui_options' )->text() . '</a> ' .
 			'</div>';
 		$urlArgs = array();
 		$urlArgs['pmainlabel'] = $mainLabel;
@@ -698,10 +699,10 @@ END;
 					'<span class="smw-remove">' .
 					'<a href="javascript:removePOInstance(\'sort_div_' . $i . '\')">' .
 					'<img src="' . $smwgScriptPath . '/skins/images/close-button.png"' .
-						'alt="' . wfMsg( 'smw_qui_delete' ) .
+						'alt="' . wfMessage( 'smw_qui_delete' )->text() .
 					'">' .
 					'</a></span>';
-				$result .= wfMsg( 'smw_qui_property' ) . '</span>';
+				$result .= wfMessage( 'smw_qui_property' )->text() . '</span>';
 
 				$result .= Html::input( 'property[' . $i . ']',
 					$propertyValues[$key],
@@ -719,23 +720,23 @@ END;
 						$urlArgs["order[$i]"] = $orderValues[$key];
 					}
 					$if1 = ( !array_key_exists( $key, $orderValues ) || $orderValues[$key] == 'NONE' );
-					$result .= Xml::option( wfMsg( 'smw_qui_nosort' ), "NONE", $if1 );
+					$result .= Xml::option( wfMessage( 'smw_qui_nosort' )->text(), "NONE", $if1 );
 
 					$if2 = ( array_key_exists( $key, $orderValues ) && $orderValues[$key] == 'ASC' );
-					$result .= Xml::option( wfMsg( 'smw_qui_ascorder' ), "ASC", $if2 );
+					$result .= Xml::option( wfMessage( 'smw_qui_ascorder' )->text(), "ASC", $if2 );
 
 					$if3 = ( array_key_exists( $key, $orderValues ) && $orderValues[$key] == 'DESC' );
-					$result .= Xml::option( wfMsg( 'smw_qui_descorder' ), "DESC", $if3 );
+					$result .= Xml::option( wfMessage( 'smw_qui_descorder' )->text(), "DESC", $if3 );
 
 					if ( $smwgQRandSortingSupport ) {
 						$if4 = ( array_key_exists( $key, $orderValues ) && $orderValues[$key] == 'RANDOM' );
-						$result .= Xml::option( wfMsg( 'smw_qui_randorder' ), "RANDOM", $if4 );
+						$result .= Xml::option( wfMessage( 'smw_qui_randorder' )->text(), "RANDOM", $if4 );
 					}
 
 					$result .= Xml::closeElement( 'select' );
 
 					$if5 = ( array_key_exists( $key, $displayValues ) );
-					$result .= Xml::checkLabel( wfMsg( 'smw_qui_shownresults' ), "display[$i]", "display$i", $if5 );
+					$result .= Xml::checkLabel( wfMessage( 'smw_qui_shownresults' )->text(), "display[$i]", "display$i", $if5 );
 					if ( $if5 ) {
 						$urlArgs["display[$i]"] = '1';
 					}
@@ -782,7 +783,7 @@ END;
 						'class' => 'smwq-more',
 						'href' => "javascript:smw_makePropDialog('$i')"
 					),
-					WfMsg( 'smw_qui_options' )
+					wfMessage( 'smw_qui_options' )->text()
 				);
 
 				$result .= Xml::closeElement( 'div' );
@@ -809,10 +810,10 @@ END;
 					Html::openElement( 'a',
 						array( 'href' => "javascript:removePOInstance('sort_div_$i')" )
 					) .
-					'<img src="' . $smwgScriptPath . '/skins/images/close-button.png" alt="' . wfMsg( 'smw_qui_delete' ) . '">' .
+					'<img src="' . $smwgScriptPath . '/skins/images/close-button.png" alt="' . wfMessage( 'smw_qui_delete' )->text() . '">' .
 					'</a>' .
 					'</span>' .
-					wfMsg( 'smw_qui_category' ) .
+					wfMessage( 'smw_qui_category' )->text() .
 					'</span>' .
 					Xml::input( "category[$i]",
 						'25',
@@ -834,8 +835,9 @@ END;
 					Html::element( 'a',
 						array( 'id' => "more$i",
 							'class' => 'smwq-more',
-							'href' => "javascript:smw_makeCatDialog('$i')" ),
-							WfMsg( 'smw_qui_options' )
+							'href' => "javascript:smw_makeCatDialog('$i')"
+						),
+						wfMessage( 'smw_qui_options' )->text()
 					) .
 					Xml::closeElement( 'div' );
 				$urlArgs["category[$i]"] =
@@ -858,16 +860,16 @@ END;
 					Html::openelement( 'a',
 						array( 'href' => "javascript:removePOInstance('sort_div_$i')" )
 					) .
-					'<img src="' . $smwgScriptPath . '/skins/images/close-button.png" alt="' . wfMsg( 'smw_qui_delete' ) . '">' .
+					'<img src="' . $smwgScriptPath . '/skins/images/close-button.png" alt="' . wfMessage( 'smw_qui_delete' )->text() . '">' .
 					'</a>' .
 					'</span><strong>' .
-					wfMsg( 'smw_qui_rescol' ) .
+					wfMessage( 'smw_qui_rescol' )->text() .
 					'</strong></span>' .
 					Html::hidden( "maincol_label[$i]",
 						$mainColumnLabels[$key],
 						array ( 'id' => "maincol_label$i" )
 					) . " " .
-					'<a class="smwq-more" href="javascript:smw_makeQueryMatchesDialog(\'' . $i . '\')">' . wfMsg( 'smw_qui_options' ) . '</a> ' .
+					'<a class="smwq-more" href="javascript:smw_makeQueryMatchesDialog(\'' . $i . '\')">' . wfMessage( 'smw_qui_options' )->text() . '</a> ' .
 					'</div>';
 				$urlArgs["maincol_label[$i]"] =
 					( $mainColumnLabels[$key] === '' ) ? ' ':$mainColumnLabels[$key];
@@ -887,22 +889,22 @@ END;
 			'<span class="smwquisortlabel">' .
 			'<span class="smw-remove">' .
 			'<a>' .
-			'<img src="' . $smwgScriptPath . '/skins/images/close-button.png" alt="' . wfMsg( 'smw_qui_delete' ) . '">' .
+			'<img src="' . $smwgScriptPath . '/skins/images/close-button.png" alt="' . wfMessage( 'smw_qui_delete' )->text() . '">' .
 			'</a>' .
 			'</span>' .
-			wfMsg( 'smw_qui_property' ) .
+			wfMessage( 'smw_qui_property' )->text() .
 			'</span>' .
 			Xml::input( 'property_num', '25' ) . " " ;
 		if ( $smwgQSortingSupport ) {
 			$hiddenProperty .= Html::openElement( 'select', array( 'name' => 'order_num' ) ) .
-					Xml::option( wfMsg( 'smw_qui_nosort' ), 'NONE' ) .
-					Xml::option( wfMsg( 'smw_qui_ascorder' ), 'ASC' ) .
-					Xml::option( wfMsg( 'smw_qui_descorder' ), 'DESC' );
+					Xml::option( wfMessage( 'smw_qui_nosort' )->text(), 'NONE' ) .
+					Xml::option( wfMessage( 'smw_qui_ascorder' )->text(), 'ASC' ) .
+					Xml::option( wfMessage( 'smw_qui_descorder' )->text(), 'DESC' );
 			if ( $smwgQRandSortingSupport ) {
-				$hiddenProperty .= Xml::option( wfMsg( 'smw_qui_randorder' ), 'RANDOM' );
+				$hiddenProperty .= Xml::option( wfMessage( 'smw_qui_randorder' )->text(), 'RANDOM' );
 			}
 			$hiddenProperty .= Xml::closeElement( 'select' ) .
-				Xml::checkLabel( wfMsg( 'smw_qui_shownresults' ), "display_num", '', true );
+				Xml::checkLabel( wfMessage( 'smw_qui_shownresults' )->text(), "display_num", '', true );
 		}
 		$hiddenProperty .= Html::hidden( 'prop_label_num', '' ) .
 			Html::hidden( 'prop_format_num', '' ) .
@@ -917,10 +919,10 @@ END;
 			'<span class="smwquisortlabel">' .
 			'<span class="smw-remove">' .
 			'<a>' .
-			'<img src="' . $smwgScriptPath . '/skins/images/close-button.png" alt="' . wfMsg( 'smw_qui_delete' ) . '">' .
+			'<img src="' . $smwgScriptPath . '/skins/images/close-button.png" alt="' . wfMessage( 'smw_qui_delete' )->text() . '">' .
 			'</a>' .
 			'</span>' .
-			wfMsg( 'smw_qui_category' ) . '</span>' .
+			wfMessage( 'smw_qui_category' )->text() . '</span>' .
 			Xml::input( "category_num", '25' ) . " " .
 			'<input type="hidden" name="cat_label_num" />' .
 			'<input type="hidden" name="cat_yes_num" />' .
@@ -935,39 +937,39 @@ END;
 			'<span class="smwquisortlabel">' .
 			'<span class="smw-remove">' .
 			'<a>' .
-			'<img src="' . $smwgScriptPath . '/skins/images/close-button.png" alt="' . wfMsg( 'smw_qui_delete' ) . '">' .
+			'<img src="' . $smwgScriptPath . '/skins/images/close-button.png" alt="' . wfMessage( 'smw_qui_delete' )->text() . '">' .
 			'</a>' .
 			'</span><strong>' .
-			wfMsg( 'smw_qui_rescol' ) . '</strong></span>' .
+			wfMessage( 'smw_qui_rescol' )->text() . '</strong></span>' .
 			Html::hidden( "maincol_label_num", '' ) . " " .
 			Xml::closeElement( 'div' );
 		$hiddenMainColumn = json_encode( $hiddenMainColumn );
 
 		// Create dialog-boxes
 		// create dialogbox for Property options
-		$propertyHtml = Xml::inputLabelSep( wfMsg( 'smw_qui_prop' ),
+		$propertyHtml = Xml::inputLabelSep( wfMessage( 'smw_qui_prop' )->text(),
 			'',
 			'd-property',
 			'd-property'
 		);
-		$propertyLabelHtml = Xml::inputLabelSep( wfMsg( 'smw_qui_labl' ),
+		$propertyLabelHtml = Xml::inputLabelSep( wfMessage( 'smw_qui_labl' )->text(),
 			'',
 			'd-prop-label',
 			'd-prop-label'
 		);
-		$propertyFormatHtml = Xml::inputLabelSep( wfMsg( 'smw_qui_formt' ),
+		$propertyFormatHtml = Xml::inputLabelSep( wfMessage( 'smw_qui_formt' )->text(),
 			'',
 			'd-prop-format',
 			'd-prop-format'
 		);
-		$propertyLimitHtml = Xml::inputLabelSep( wfMsg( 'smw_qui_limt' ),
+		$propertyLimitHtml = Xml::inputLabelSep( wfMessage( 'smw_qui_limt' )->text(),
 			'd-prop-limit',
 			'd-prop-limit'
 		);
 		$propertyDialogBox = Xml::openElement(
 				'div',
 				array( 'id' => 'prop-dialog',
-					'title' => wfMsg( 'smw_prp_options' ),
+					'title' => wfMessage( 'smw_prp_options' )->text(),
 					'class' => 'smwpropdialog' )
 			) .
 			'<table align="center">' .
@@ -979,28 +981,28 @@ END;
 			Xml::closeElement( 'div' );
 
 		// create dialogbox for Category options
-		$categoryHtml = Xml::inputLabelSep( wfMsg( 'smw_qui_dcategory' ),
+		$categoryHtml = Xml::inputLabelSep( wfMessage( 'smw_qui_dcategory' )->text(),
 			'',
 			'd-category',
 			'd-category'
 		);
-		$categoryLabelHtml = Xml::inputLabelSep( wfMsg( 'smw_qui_dlabel' ),
+		$categoryLabelHtml = Xml::inputLabelSep( wfMessage( 'smw_qui_dlabel' )->text(),
 			'',
 			'd-category-label',
 			'd-category-label'
 		);
-		$categoryYesHtml = Xml::inputLabelSep( wfMsg( 'smw_qui_dcatyes' ),
+		$categoryYesHtml = Xml::inputLabelSep( wfMessage( 'smw_qui_dcatyes' )->text(),
 			'',
 			'd-category-yes',
 			'd-category-yes'
 		);
-		$categoryNoHtml = Xml::inputLabelSep( wfMsg( 'smw_qui_dcatno' ),
+		$categoryNoHtml = Xml::inputLabelSep( wfMessage( 'smw_qui_dcatno' )->text(),
 			'',
 			'd-category-no',
 			'd-category-no' );
 		$categoryDialogBox = Xml::openElement( 'div',
 			array( 'id' => 'cat-dialog',
-				'title' => wfMsg( 'smw_qui_catopts' ),
+				'title' => wfMessage( 'smw_qui_catopts' )->text(),
 				'class' => 'smwcatdialog' )
 			) .
 			'<table align="center">' .
@@ -1013,10 +1015,10 @@ END;
 			Xml::closeElement( 'div' );
 
 		// Create dialog box for QueryMatches
-		$mainResLabelHtml = Xml::inputLabelSep( wfMsg( 'smw_qui_dlabel' ), '', 'd-mainres-label' );
+		$mainResLabelHtml = Xml::inputLabelSep( wfMessage( 'smw_qui_dlabel' )->text(), '', 'd-mainres-label' );
 		$mainResDialogBox = Xml::openElement( 'div',
 			array( 'id' => 'mainres-dialog',
-				'title' => wfMsg( 'smw_qui_mainlabopts' ),
+				'title' => wfMessage( 'smw_qui_mainlabopts' )->text(),
 				'class' => 'smwmainlabdialog' )
 			) .
 			'<table align="center">' .
@@ -1025,9 +1027,9 @@ END;
 			Xml::closeElement( 'div' );
 
 		$result .= '<div id="sorting_main"></div>' . "\n";
-		$result .= '[<a href="javascript:smw_addPropertyInstance(\'property_starter\', \'sorting_main\')">' . wfMsg( 'smw_qui_addnprop' ) . '</a>]' .
-					'[<a href="javascript:smw_addCategoryInstance(\'category_starter\', \'sorting_main\')">' . wfMsg( 'smw_qui_addcategory' ) . '</a>]' .
-					'[<a href="javascript:smw_addMainColInstance(\'maincol_starter\', \'sorting_main\')">' . wfMsg( 'smw_qui_addrescol' ) . '</a>]' .
+		$result .= '[<a href="javascript:smw_addPropertyInstance(\'property_starter\', \'sorting_main\')">' . wfMessage( 'smw_qui_addnprop' )->text() . '</a>]' .
+					'[<a href="javascript:smw_addCategoryInstance(\'category_starter\', \'sorting_main\')">' . wfMessage( 'smw_qui_addcategory' )->text() . '</a>]' .
+					'[<a href="javascript:smw_addMainColInstance(\'maincol_starter\', \'sorting_main\')">' . wfMessage( 'smw_qui_addrescol' )->text() . '</a>]' .
 					"\n";
 
 		// Javascript code for handling adding and removing the "sort" inputs
@@ -1035,9 +1037,9 @@ END;
 			$this->enableAutocompletion();
 		}
 		// localisation messages for javascript
-		$optionsMsg = wfMsg( 'smw_qui_options' );
-		$okMsg = wfMsg( 'smw_qui_ok' );
-		$cancelMsg = wfMsg( 'smw_qui_cancel' );
+		$optionsMsg = wfMessage( 'smw_qui_options' )->text();
+		$okMsg = wfMessage( 'smw_qui_ok' )->text();
+		$cancelMsg = wfMessage( 'smw_qui_cancel' )->text();
 		$javascriptText = <<<EOT
 <script type="text/javascript">
 	var num_elements = {$numSortValues};
@@ -1424,29 +1426,29 @@ EOT;
 
 		foreach ( $orders as $i => $order ) {
 			$urlArgs = array();
-			$result .=  "<div id=\"sort_div_$i\">" . wfMsg( 'smw_ask_sortby' ) . ' <input type="text" name="sort[' . $i . ']" value="' .
+			$result .=  "<div id=\"sort_div_$i\">" . wfMessage( 'smw_ask_sortby' )->text() . ' <input type="text" name="sort[' . $i . ']" value="' .
 					htmlspecialchars( $sorts[$i] ) . "\" size=\"25\"/>\n" . '<select name="order[' . $i . ']"><option ';
 			$urlArgs["sort[$i]"] = htmlspecialchars( $sorts[$i] );
 			$urlArgs["order[$i]"] = $order;
 				if ( $order == 'ASC' ) $result .= 'selected="selected" ';
-			$result .=  'value="ASC">' . wfMsg( 'smw_qui_ascorder' ) . '</option><option ';
+			$result .=  'value="ASC">' . wfMessage( 'smw_qui_ascorder' )->text() . '</option><option ';
 				if ( $order == 'DESC' ) $result .= 'selected="selected" ';
 
-			$result .=  'value="DESC">' . wfMsg( 'smw_qui_descorder' ) . "</option></select>\n";
-			$result .= '[<a class="smwq-remove" href="javascript:removeInstance(\'sort_div_' . $i . '\')">' . wfMsg( 'smw_qui_delete' ) . '</a>]' . "\n";
+			$result .=  'value="DESC">' . wfMessage( 'smw_qui_descorder' )->text() . "</option></select>\n";
+			$result .= '[<a class="smwq-remove" href="javascript:removeInstance(\'sort_div_' . $i . '\')">' . wfMessage( 'smw_qui_delete' )->text() . '</a>]' . "\n";
 			$result .= "</div>\n";
 			$this->setUrlArgs( $urlArgs );
 		}
 
-		$hidden =  '<div id="sorting_starter" style="display: none">' . wfMsg( 'smw_ask_sortby' ) . ' <input type="text" size="25" />' . "\n";
+		$hidden =  '<div id="sorting_starter" style="display: none">' . wfMessage( 'smw_ask_sortby' )->text() . ' <input type="text" size="25" />' . "\n";
 		$hidden .= ' <select name="order_num">' . "\n";
-		$hidden .= '	<option value="ASC">' . wfMsg( 'smw_qui_ascorder' ) . "</option>\n";
-		$hidden .= '	<option value="DESC">' . wfMsg( 'smw_qui_descorder' ) . "</option>\n</select>\n";
+		$hidden .= '	<option value="ASC">' . wfMessage( 'smw_qui_ascorder' )->text() . "</option>\n";
+		$hidden .= '	<option value="DESC">' . wfMessage( 'smw_qui_descorder' )->text() . "</option>\n</select>\n";
 		$hidden .= "</div>\n";
 		$hidden = json_encode( $hidden );
 
 		$result .= '<div id="sorting_main"></div>' . "\n";
-		$result .= '<a href="javascript:addInstance(\'sorting_starter\', \'sorting_main\')">' . wfMsg( 'smw_add_sortcondition' ) . '</a>' . "\n";
+		$result .= '<a href="javascript:addInstance(\'sorting_starter\', \'sorting_main\')">' . wfMessage( 'smw_add_sortcondition' )->text() . '</a>' . "\n";
 
 		$num_sort_values = 0;
 
@@ -1458,7 +1460,7 @@ EOT;
 			}
 		}
 		// Javascript code for handling adding and removing the "sort" inputs
-		$delete_msg = wfMsg( 'smw_qui_delete' );
+		$delete_msg = wfMessage( 'smw_qui_delete' )->text();
 
 		SMWOutputs::requireResource( 'jquery' );
 		$javascriptText = <<<EOT
@@ -1659,103 +1661,6 @@ EOT;
 		$this->urlArgs = array();
 	}
 
-
-	/**
-	 * Displays a form section showing the options for a given format,
-	 * based on the getParameters() value for that format's query printer.
-	 *
-	 * @param string $format
-	 * @param array $paramValues The current values for the parameters (name => value)
-	 * @param array $ignoredAttribs Attributes which should not be generated by this method.
-	 *
-	 * @return string
-	 */
-	protected function showFormatOptions( $format, array $paramValues, array $ignoredAttribs = array() ) {
-		$printer = SMWQueryProcessor::getResultPrinter( $format, SMWQueryProcessor::SPECIAL_PAGE );
-
-		$params = method_exists( $printer, 'getValidatorParameters' ) ? $printer->getValidatorParameters() : array();
-
-		$optionsHtml = array();
-		$urlArgs = array();
-
-		foreach ( $params as $param ) {
-			// Ignore the parameters for which we have a special control in the GUI already.
-			if ( in_array( $param->getName(), $ignoredAttribs ) ) {
-				continue;
-			}
-
-			$currentValue = array_key_exists( $param->getName(), $paramValues ) ? $paramValues[$param->getName()] : false;
-
-			$optionsHtml[] =
-				Html::rawElement(
-					'div',
-					array(
-						'style' => 'width: 30%; min-width:220px; margin:5px; padding: 1px; float: left;'
-					),
-					'<label for="p[' . htmlspecialchars( $param->getName() ) . ']">' . htmlspecialchars( $param->getName() ) . ': </label>' .
-					$this->showFormatOption( $param, $currentValue ) .
-					'<br />' .
-					Html::element( 'em', array(), $param->getDescription() )
-				);
-			$urlArgs['p[' . htmlspecialchars( $param->getName() ) . ']'] = $currentValue;
-		}
-		$this->setUrlArgs( $urlArgs );
-
-		for ( $i = 0, $n = count( $optionsHtml ); $i < $n; $i++ ) {
-			if ( $i % 3 == 2 || $i == $n - 1 ) {
-				$optionsHtml[$i] .= "<div style=\"clear: both\";></div>\n";
-			}
-		}
-
-		$i = 0;
-		$rowHtml = '';
-		$resultHtml = '';
-		$flipStyle = true;
-		$flipCount = 0;
-		while ( $option = array_shift( $optionsHtml ) ) {
-			$rowHtml .= $option;
-			$i++;
-
-			$resultHtml .= Html::rawElement(
-				'div',
-				array(
-					'style' => 'background: ' . ( $flipStyle ? 'white' : '#dddddd' ) . ';'
-				),
-				$rowHtml
-			);
-
-			$rowHtml = '';
-			$flipCount++;
-			if ( $flipCount == 3 ) {
-				$flipStyle = !$flipStyle;
-				$flipCount = 0;
-			}
-
-		}
-
-		return $resultHtml;
-	}
-
-
-	/**
-	 * Get the HTML for a single parameter input.
-	 *
-	 * @param Parameter $parameter
-	 * @param mixed $currentValue
-	 *
-	 * @return string
-	 */
-	protected function showFormatOption( Parameter $parameter, $currentValue ) {
-		$input = new ParameterInput( $parameter );
-		$input->setInputName( 'p[' . $parameter->getName() . ']' );
-
-		if ( $currentValue !== false ) {
-			$input->setCurrentValue( $currentValue );
-		}
-
-		return $input->getHtml();
-	}
-
 	/**
 	 * Creates form elements for choosing the result-format and their
 	 * associated format.
@@ -1790,9 +1695,10 @@ EOT;
 			}
 		}
 
+		// @todo FIXME: i18n: Hard coded parentheses.
 		$result[0] = "\n" .	'<select id="formatSelector" name="p[format]" onChange="JavaScript:updateOtherOptions(\'' . $url . '\')">' . "\n" .
 			'<option value="' . $defFormat . '">' . $printer->getName() .
-			' (' . wfMsg( 'smw_ask_defaultformat' ) . ')</option>' . "\n";
+			' (' . wfMessage( 'smw_ask_defaultformat' )->text() . ')</option>' . "\n";
 
 		$formats = array();
 		foreach ( array_keys( $smwgResultFormats ) as $format ) {
@@ -1911,5 +1817,4 @@ END;
 		// hide if no results are found
 		return ( $this->uiCore->getResultCount() != 0 );
 	}
-
 }

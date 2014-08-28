@@ -171,13 +171,42 @@ class SMWDITime extends SMWDataItem {
 	public function getSecond() {
 		return $this->m_seconds;
 	}
-	
+
+	/**
+	 * Creates and returns a new instance of SMWDITime from a MW timestamp.
+	 *
+	 * @since 1.8
+	 *
+	 * @param string $timestamp must be in format
+	 *
+	 * @return SMWDITime|false
+	 */
+	public static function newFromTimestamp( $timestamp ) {
+		$timestamp = wfTimestamp( TS_MW, (string)$timestamp );
+
+		if ( $timestamp === false ) {
+			return false;
+		}
+
+		return new self(
+			SMWDITime::CM_GREGORIAN,
+			substr( $timestamp, 0, 4 ),
+			substr( $timestamp, 4, 2 ),
+			substr( $timestamp, 6, 2 ),
+			substr( $timestamp, 8, 2 ),
+			substr( $timestamp, 10, 2 ),
+			substr( $timestamp, 12, 2 )
+		);
+	}
+
 	/**
 	 * Returns a MW timestamp representatation of the value.
 	 * 
 	 * @since 1.6.2
 	 * 
 	 * @param $outputtype
+	 *
+	 * @return mixed
 	 */
 	public function getMwTimestamp( $outputtype = TS_UNIX ) {
 		return wfTimestamp(
@@ -249,8 +278,8 @@ class SMWDITime extends SMWDataItem {
 	}
 
 	/**
-	 * Create a data item from the provided serialization string and type
-	 * ID.
+	 * Create a data item from the provided serialization string.
+	 *
 	 * @return SMWDITime
 	 */
 	public static function doUnserialize( $serialization ) {
@@ -432,4 +461,10 @@ class SMWDITime extends SMWDataItem {
 		}
 	}
 
+	public function equals( $di ) {
+		if ( $di->getDIType() !== SMWDataItem::TYPE_TIME ) {
+			return false;
+		}
+		return $di->getSortKey() === $this->getSortKey();
+	}
 }

@@ -10,6 +10,10 @@
  * value could be created. It is always invalid and never gets stored or
  * exported, but it can help to transport an error message.
  *
+ * @note SMWDataValue will return a data item of type SMWDIError for invalid
+ * data values. Hence this is the DI type of this DV, even if not mentioned in
+ * this file.
+ *
  * @author Markus Krötzsch
  * @ingroup SMWDataValues
  */
@@ -27,7 +31,7 @@ class SMWErrorValue extends SMWDataValue {
 		if ( $this->m_caption === false ) {
 			$this->m_caption = $value;
 		}
-		$this->addError( wfMsgForContent( 'smw_parseerror' ) );
+		$this->addError( wfMessage( 'smw_parseerror' )->inContentLanguage()->text() );
 	}
 
 	/**

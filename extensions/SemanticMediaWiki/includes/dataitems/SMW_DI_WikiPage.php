@@ -43,9 +43,16 @@ class SMWDIWikiPage extends SMWDataItem {
 	 * of allowed characters (may depend on MW configuration). All of this
 	 * would be more work than it is worth, since callers will usually be
 	 * careful and since errors here do not have major consequences.
+	 *
+	 * @param string $dbkey
+	 * @param integer $namespace
+	 * @param string $interwiki
+	 * @param string $subobjectname
 	 */
 	public function __construct( $dbkey, $namespace, $interwiki, $subobjectname = '' ) {
-		if ( !is_numeric( $namespace ) ) {
+		// Check if the provided value holds an integer
+		// (it can be of type string or float as well, as long as the value is an int)
+		if ( !ctype_digit( ltrim( (string)$namespace, '-' ) ) ) {
 			throw new SMWDataItemException( "Given namespace '$namespace' is not an integer." );
 		}
 		
@@ -105,11 +112,17 @@ class SMWDIWikiPage extends SMWDataItem {
 	}
 
 	public function getSerialization() {
-		if ( $this->m_subobjectname === '' ) {
-			return strval( $this->m_dbkey . '#' . strval( $this->m_namespace ) . '#' . $this->m_interwiki );
-		} else {
-			return strval( $this->m_dbkey . '#' . strval( $this->m_namespace ) . '#' . $this->m_interwiki . '#' . $this->m_subobjectname );
+		$segments = array(
+			$this->m_dbkey,
+			$this->m_namespace,
+			$this->m_interwiki
+		);
+
+		if ( $this->m_subobjectname !== '' ) {
+			$segments[] = $this->m_subobjectname;
 		}
+
+		return implode( '#', $segments );
 	}
 
 	/**
@@ -120,9 +133,9 @@ class SMWDIWikiPage extends SMWDataItem {
 	public static function doUnserialize( $serialization ) {
 		$parts = explode( '#', $serialization, 4 );
 		if ( count( $parts ) == 3 ) {
-			return new SMWDIWikiPage( $parts[0], floatval( $parts[1] ), $parts[2] );
+			return new SMWDIWikiPage( $parts[0], intval( $parts[1] ), $parts[2] );
 		} elseif ( count( $parts ) == 4 ) {
-			return new SMWDIWikiPage( $parts[0], floatval( $parts[1] ), $parts[2], $parts[3] );
+			return new SMWDIWikiPage( $parts[0], intval( $parts[1] ), $parts[2], $parts[3] );
 		} else {
 			throw new SMWDataItemException( "Unserialization failed: the string \"$serialization\" was not understood." );
 		} 
@@ -135,8 +148,18 @@ class SMWDIWikiPage extends SMWDataItem {
 	 * @return SMWDIWikiPage
 	 */
 	public static function newFromTitle( Title $title ) {
-		return new SMWDIWikiPage( $title->getDBkey(), $title->getNamespace(),
-			$title->getInterwiki(), str_replace( ' ', '_', $title->getFragment() ) );
+		return new SMWDIWikiPage(
+			$title->getDBkey(),
+			$title->getNamespace(),
+			$title->getInterwiki(),
+			str_replace( ' ', '_', $title->getFragment() )
+		);
 	}
 
+	public function equals( $di ) {
+		if ( $di->getDIType() !== SMWDataItem::TYPE_WIKIPAGE ) {
+			return false;
+		}
+		return $di->getSerialization() === $this->getSerialization();
+	}
 }

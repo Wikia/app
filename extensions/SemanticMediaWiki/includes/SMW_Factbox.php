@@ -54,7 +54,7 @@ class SMWFactbox {
 			SMWOutputs::requireResource( 'ext.smw.style' );
 			
 			$rdflink = SMWInfolink::newInternalLink(
-				wfMsgForContent( 'smw_viewasrdf' ),
+				wfMessage( 'smw_viewasrdf' )->inContentLanguage()->text(),
 				$wgContLang->getNsText( NS_SPECIAL ) . ':ExportRDF/' .
 					$subjectDv->getWikiValue(),
 				'rdflink'
@@ -68,7 +68,7 @@ class SMWFactbox {
 			
 			$text .= '<div class="smwfact">' .
 				'<span class="smwfactboxhead">' .
-				wfMsgForContent( 'smw_factbox_head', $browselink->getWikiText() ) . '</span>' .
+				wfMessage( 'smw_factbox_head', $browselink->getWikiText() )->inContentLanguage()->text() . '</span>' .
 				'<span class="smwrdflink">' . $rdflink->getWikiText() . '</span>' .
 				'<table class="smwfacttable">' . "\n";
 
@@ -136,19 +136,19 @@ class SMWFactbox {
 		} else {
 			$showfactbox = $smwgShowFactbox;
 		}
-		
+
 		if ( $showfactbox == SMW_FACTBOX_HIDDEN ) { // use shortcut
 			return '';
 		}
 		
 		// Deal with complete dataset only if needed:
-		if ( !isset( $parseroutput->mSMWData ) || $parseroutput->mSMWData->stubObject ) {
-			$semdata = smwfGetStore()->getSemanticData( SMWDIWikiPage::newFromTitle( $title ) );
-		} else {
-			$semdata = $parseroutput->mSMWData;
+		$smwData = SMWParseData::getSMWDataFromParserOutput( $parseroutput );
+
+		if ( $smwData === null || $smwData->stubObject ) {
+			$smwData = smwfGetStore()->getSemanticData( SMWDIWikiPage::newFromTitle( $title ) );
 		}
 		
-		return SMWFactbox::getFactboxText( $semdata, $showfactbox );
+		return SMWFactbox::getFactboxText( $smwData, $showfactbox );
 	}
 
 	/**
@@ -162,12 +162,12 @@ class SMWFactbox {
 	 * @return true
 	 */
 	static public function onOutputPageParserOutput( OutputPage $outputpage, ParserOutput $parseroutput ) {
-		global $wgTitle, $wgParser;
-		$factbox = SMWFactbox::getFactboxTextFromOutput( $parseroutput, $wgTitle );
+		global $wgParser;
+		$factbox = SMWFactbox::getFactboxTextFromOutput( $parseroutput, $outputpage->getTitle() );
 		
 		if ( $factbox !== '' ) {
 			$popts = new ParserOptions();
-			$po = $wgParser->parse( $factbox, $wgTitle, $popts );
+			$po = $wgParser->parse( $factbox, $outputpage->getTitle(), $popts );
 			$outputpage->mSMWFactboxText = $po->getText();
 			// do not forget to grab the outputs header items
 			SMWOutputs::requireFromParserOutput( $po );

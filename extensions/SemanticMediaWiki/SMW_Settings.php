@@ -331,7 +331,7 @@ $smwgResultFormats = array(
 	'template'   => 'SMWListResultPrinter',
 	'count'      => 'SMWListResultPrinter',
 	'debug'      => 'SMWListResultPrinter',
-	'rss'        => 'SMWRSSResultPrinter',
+	'feed'       => 'SMWFeedResultPrinter',
 	'csv'        => 'SMWCsvResultPrinter',
 	'dsv'        => 'SMWDSVResultPrinter',
 	'json'       => 'SMWJSONResultPrinter',
@@ -345,7 +345,7 @@ $smwgResultFormats = array(
 # To disable an alias, do "unset($smwgResultAliases['alias']);" Disabled
 # aliases will be treated like if the alias parameter had been omitted.
 ##
-$smwgResultAliases = array();
+$smwgResultAliases = array( 'feed' => array( 'rss' ) );
 ##
 
 ### Predefined sources for queries
@@ -368,13 +368,6 @@ $smwgQuerySources = array(
 # datatpyes in your language. The default corresponds to "Type:Page".
 ##
 $smwgPDefaultType = '_wpg';
-##
-
-###
-# Settings for RSS export
-##
-$smwgRSSEnabled = true;  // use to switch off RSS (it's not worse than querying Special:Ask, but attracts more users)
-$smwgRSSWithPages = true; // Should RSS feeds deliver whole pages or just link to them?
 ##
 
 ###
