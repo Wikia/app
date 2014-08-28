@@ -452,10 +452,12 @@ ve.ui.MWTemplateDialog.prototype.onFilterInputChange = function () {
 				// if there was no match among all parameters for the template then
 				// hide template page as well (so not only parameters)
 				page = this.bookletLayout.getPage( part.getId() );
-				if ( !parameterMatch ) {
-					page.$element.hide();
-				} else {
-					page.$element.show();
+				if ( this.mode === 'multiple' ) {
+					if ( !parameterMatch ) {
+						page.$element.hide();
+					} else {
+						page.$element.show();
+					}
 				}
 			}
 		}
@@ -469,6 +471,7 @@ ve.ui.MWTemplateDialog.prototype.getTeardownProcess = function ( data ) {
 	return ve.ui.MWTemplateDialog.super.prototype.getTeardownProcess.call( this, data )
 		.first( function () {
 			// Cleanup
+			this.filterInput.setValue( '' );
 			this.$element.removeClass( 've-ui-mwTemplateDialog-ready' );
 			this.transclusionModel.disconnect( this );
 			this.transclusionModel.abortRequests();

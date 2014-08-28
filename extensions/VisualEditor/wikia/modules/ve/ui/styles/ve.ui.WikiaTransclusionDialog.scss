@@ -35,4 +35,44 @@
 	.oo-ui-window-foot .oo-ui-flaggableElement-secondary {
 		float: right;
 	}
+
+	.ve-ui-mwTransclusionDialog-filter {
+		background: $color-page;
+		border-bottom: 1px solid $color-page-border;
+		left: 0;
+		padding: 1.5em 2em;
+		position: absolute;
+		right: 0;
+
+		.oo-ui-textInputWidget {
+			width: 100%;
+		}
+	}
+
+}
+
+.ve-ui-mwTransclusionDialog-single {
+	.oo-ui-gridLayout {
+		margin-top: 5.6em;
+	}
+	.ve-ui-mwTemplatePage {
+		/* TODO: Wikia (ve-sprint-25): This should not be added to the DOM in the first place */
+		display: none;
+	}
+	.oo-ui-bookletLayout-stackLayout {
+		padding-top: 1.5em;
+	}
+}
+
+.ve-ui-mwTransclusionDialog-multiple {
+	.oo-ui-bookletLayout-stackLayout {
+		/* TODO: Wikia (ve-sprint-25): Find where these css properties are being added to the element */
+		bottom: 0 !important;
+		height: auto !important;
+		top: 5.6em !important;
+	}
+	.ve-ui-mwTransclusionDialog-filter {
+		left: 33%;
+		margin-left: 1px;
+	}
 }
