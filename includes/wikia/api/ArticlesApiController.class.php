@@ -1036,11 +1036,8 @@ class ArticlesApiController extends WikiaApiController {
 			$category = $this->getCategoryOfArticle( $baseArticleId );
 
 			if( !empty( $category ) ) {
-				// If article has category
 
 				$popularForCategory = $this->getPopularForCategory( $category );
-				// Cope with case, when there is very small amount of articles in given category
-				$popularForCategory = array_merge( $popularForCategory, $popular );
 
 				$rerankedPopularForCategory = $this->reorderForLinks( $popularForCategory, $links );
 
