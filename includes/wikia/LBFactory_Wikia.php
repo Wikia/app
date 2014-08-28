@@ -13,9 +13,9 @@
 class LBFactory_Wikia extends LBFactory_Multi {
 
 	function __construct( $conf ) {
-		self::normalizeMultipleMasters($conf);
+		self::normalizeMultipleMasters( $conf );
 
-		parent::__construct($conf);
+		parent::__construct( $conf );
 	}
 
 	/**
@@ -23,18 +23,19 @@ class LBFactory_Wikia extends LBFactory_Multi {
 	 *
 	 * @param array $sectionLoads
 	 * @author macbre
+	 * @see PLATFORM-434
 	 */
-	static function normalizeMultipleMasters(Array &$conf) {
-		foreach($conf['sectionLoads'] as $sectionName => &$sectionConf) {
+	static function normalizeMultipleMasters( Array &$conf ) {
+		foreach ( $conf['sectionLoads'] as $sectionName => &$sectionConf ) {
 			# section config has both "masters" and "slaves" section
-			if (isset($sectionConf['masters']) && isset($sectionConf['slaves'])) {
+			if ( isset( $sectionConf['masters'] ) && isset( $sectionConf['slaves'] ) ) {
 				# randomize masters server and normalize the section config
-				$master = array_rand($sectionConf['masters'], 1);
+				$master = array_rand( $sectionConf['masters'], 1 );
 
-				wfDebug(sprintf("%s: randomizing master for %s: picked %s\n", __METHOD__, $sectionName, $master) );
+				wfDebug( sprintf( "%s: randomizing master for %s: picked %s\n", __METHOD__, $sectionName, $master ) );
 
 				# make it flat
-				$sectionConf = array($master => $sectionConf['masters'][$master]) + $sectionConf['slaves'];
+				$sectionConf = array( $master => $sectionConf['masters'][$master] ) + $sectionConf['slaves'];
 			}
 		}
 	}
@@ -56,11 +57,11 @@ class LBFactory_Wikia extends LBFactory_Multi {
 		$section = 'central';
 
 		$this->isSMWClusterActive = false;
-		if( $smwgUseExternalDB ) {
+		if ( $smwgUseExternalDB ) {
 			/**
 			 * set flag, strip database name
 			 */
-			if( substr($dbName, 0, 4 ) == "smw+" && isset( $this->sectionsByDB[ "smw+" ] ) ) {
+			if ( substr( $dbName, 0, 4 ) == "smw+" && isset( $this->sectionsByDB[ "smw+" ] ) ) {
 				$this->isSMWClusterActive = true;
 				$dbName = substr( $dbName, 4 );
 				wfDebugLog( "connect", __METHOD__ . ": smw+ cluster is active, dbname changed to $dbName\n", true );
@@ -71,7 +72,7 @@ class LBFactory_Wikia extends LBFactory_Multi {
 			// this is a db that has a cluster defined in the config file (DB.php)
 			$section = $this->sectionsByDB[$dbName];
 		}
-		elseif( $this->isSMWClusterActive ) {
+		elseif ( $this->isSMWClusterActive ) {
 			// use smw+ entry
 			$section = $this->sectionsByDB[ "smw+" ];
 			wfDebugLog( "connect", __METHOD__ . "-smw: section $section choosen for $wiki\n" );
