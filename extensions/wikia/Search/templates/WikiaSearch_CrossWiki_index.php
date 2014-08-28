@@ -1,4 +1,18 @@
 <section class="Search all-wikia WikiaGrid clearfix">
+	<? if ( empty( $wg->EnableGlobalNavExt ) ): ?>
+		<div class="SearchInput">
+			<p><?= wfMsg('wikiasearch2-global-search-headline') ?></p>
+			<input type="text" name="search" id="search-v2-input" value="<?=$query;?>" />
+			<input type="hidden" name="fulltext" value="Search" />
+			<? if ( !empty($hub) ): ?>
+				<input type="hidden" name="hub" value="<?=$hub?>" />
+			<? endif ?>
+			<? if ( !empty($resultsLang) ): ?>
+				<input type="hidden" name="resultsLang" value="<?=$resultsLang?>" />
+			<? endif ?>
+			<button type="submit" class="wikia-button" id="search-v2-button" value="<?= wfMsg( 'searchbutton' ); ?>"><img src="<?= $wg->BlankImgUrl ?>" class="sprite search" height="17" width="21"></button>
+		</div>
+	<? endif ?>
 	<div class="results-wrapper">
 		<?php if (!empty($results)): ?>
 			<?php if ($resultsFound > 0): ?>
