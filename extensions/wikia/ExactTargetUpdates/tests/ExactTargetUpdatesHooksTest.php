@@ -2,7 +2,7 @@
 
 class ExactTargetUpdatesHooksTest extends WikiaBaseTest {
 
-	public function PrepareParamstest() {
+	public function testPrepareParams() {
 		$userMock = $this->getMockBuilder( 'User' )
 			->disableOriginalConstructor()
 			->setMethods( array( 'getId', 'getName', 'getRealName', 'getEmail', 'getEmailAuthenticationTimestamp',
