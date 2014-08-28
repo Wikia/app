@@ -326,7 +326,7 @@ ve.ui.MWTemplateDialog.prototype.initialize = function () {
 		'type': 'search'
 	} );
 	this.$filter = this.$( '<div>' )
-		.addClass( 've-ui-mwTransclusionDialog-filter' )
+		.addClass( 've-ui-mwTemplateDialog-filter' )
 		.append( this.filterInput.$element );
 
 	// Events
