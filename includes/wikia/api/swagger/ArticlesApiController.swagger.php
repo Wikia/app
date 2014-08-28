@@ -826,7 +826,7 @@ use Swagger\Annotations as SWG;
  * 				),
  *              @SWG\Parameter(
  * 					name="baseArticleId",
- * 					description="Trending and popular for article with given id",
+ * 					description="Trending and popular related to article with given id",
  * 					paramType="query",
  * 					required="false",
  * 					allowMultiple="false",
@@ -863,7 +863,7 @@ use Swagger\Annotations as SWG;
  * 				),
  *              @SWG\Parameter(
  * 					name="baseArticleId",
- * 					description="Trending and popular for article with given id",
+ * 					description="Trending and popular related to article with given id",
  * 					paramType="query",
  * 					required="false",
  * 					allowMultiple="false",
