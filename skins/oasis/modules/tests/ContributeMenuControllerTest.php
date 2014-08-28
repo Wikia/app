@@ -20,6 +20,7 @@ class ContributeMenuControllerTest extends WikiaBaseTest {
 		$controller = new ContributeMenuController();
 		$controller->app = $appMock;
 		$controller->wg->EnableSpecialVideosExt = false;
+		$controller->wg->EnableWikiaInteractiveMaps = false;
 		$controller->setResponse( $responseMock );
 
 		$controller->executeIndex();
@@ -54,6 +55,7 @@ class ContributeMenuControllerTest extends WikiaBaseTest {
 		$controller = new ContributeMenuController();
 		$controller->app = $appMock;
 		$controller->wg->EnableSpecialVideosExt = false;
+		$controller->wg->EnableWikiaInteractiveMaps = false;
 		$controller->setResponse( $responseMock );
 
 		$controller->executeIndex();
@@ -82,6 +84,36 @@ class ContributeMenuControllerTest extends WikiaBaseTest {
 		$controller = new ContributeMenuController();
 		$controller->app = $appMock;
 		$controller->wg->EnableSpecialVideosExt = true;
+		$controller->wg->EnableWikiaInteractiveMaps = false;
+		$controller->setResponse( $responseMock );
+
+		$controller->executeIndex();
+	}
+
+	public function testExecuteIndex_with_maps() {
+		$skinTplObjMock = new stdClass();
+		$skinTplObjMock->data['content_actions'] = [];
+		$appMock = $this->getWikiaAppMock();
+		$appMock->expects( $this->once() )
+			->method( 'getSkinTemplateObj' )
+			->willReturn( $skinTplObjMock );
+
+		$dropDownItems = $this->getDefaultDropdownItems();
+		$dropDownItems = array_merge(
+			$dropDownItems,
+			[
+				'maps' => [
+					'text' => 'Create a Map',
+					'href' => '/wiki/Special:Maps',
+				]
+			]
+		);
+		$responseMock = $this->getWikiaResponseMock( $dropDownItems );
+
+		$controller = new ContributeMenuController();
+		$controller->app = $appMock;
+		$controller->wg->EnableSpecialVideosExt = false;
+		$controller->wg->EnableWikiaInteractiveMaps = true;
 		$controller->setResponse( $responseMock );
 
 		$controller->executeIndex();
@@ -121,6 +153,7 @@ class ContributeMenuControllerTest extends WikiaBaseTest {
 		$controller = new ContributeMenuController();
 		$controller->app = $appMock;
 		$controller->wg->EnableSpecialVideosExt = false;
+		$controller->wg->EnableWikiaInteractiveMaps = false;
 		$controller->wg->User = $userMock;
 		$controller->setResponse( $responseMock );
 
