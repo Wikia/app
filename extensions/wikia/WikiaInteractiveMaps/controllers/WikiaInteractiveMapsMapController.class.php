@@ -109,7 +109,7 @@ class WikiaInteractiveMapsMapController extends WikiaInteractiveMapsBaseControll
 			throw new InvalidParameterApiException( 'title' );
 		}
 
-		if ( !$this->wg->User->isLoggedIn() || $this->wg->User->isBlocked() ) {
+		if ( !$this->isUserAllowed() ) {
 			throw new WikiaInteractiveMapsPermissionException();
 		}
 	}
@@ -179,7 +179,7 @@ class WikiaInteractiveMapsMapController extends WikiaInteractiveMapsBaseControll
 
 		$result = false;
 
-		if( !$this->wg->User->isLoggedIn() || $this->wg->User->isBlocked() ) {
+		if( !$this->isUserAllowed() ) {
 			throw new WikiaInteractiveMapsPermissionException();
 		}
 

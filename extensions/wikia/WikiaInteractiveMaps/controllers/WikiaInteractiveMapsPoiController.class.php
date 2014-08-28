@@ -222,7 +222,7 @@ class WikiaInteractiveMapsPoiController extends WikiaInteractiveMapsBaseControll
 		$createPoiCategories = $this->getData( 'createPoiCategories' );
 		$updatePoiCategories = $this->getData( 'updatePoiCategories' );
 
-		if ( !$this->wg->User->isLoggedIn() || $this->wg->User->isBlocked() ) {
+		if ( !$this->isUserAllowed() ) {
 			throw new WikiaInteractiveMapsPermissionException();
 		}
 
@@ -438,7 +438,7 @@ class WikiaInteractiveMapsPoiController extends WikiaInteractiveMapsBaseControll
 			throw new BadRequestApiException( wfMessage( 'wikia-interactive-maps-create-map-bad-request-error' )->plain() );
 		}
 
-		if ( !$this->wg->User->isLoggedIn() || $this->wg->User->isBlocked() ) {
+		if ( !$this->isUserAllowed() ) {
 			throw new WikiaInteractiveMapsPermissionException();
 		}
 	}
