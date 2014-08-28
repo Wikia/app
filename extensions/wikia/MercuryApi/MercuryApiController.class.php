@@ -158,15 +158,15 @@ class MercuryApiController extends WikiaController {
 		$title = $this->getTitleFromRequest();
 		$articleId = $title->getArticleId();
 
-		$article = $this->getArticleJson( $articleId );
+		$articleAsJson = $this->getArticleJson( $articleId );
 
 		$data = [
 			'details' => $this->getArticleDetails( $articleId ),
 			'topContributors' => $this->getTopContributorsDetails(
 					$this->getTopContributorsPerArticle( $articleId )
 				),
-			'article' => $article,
-			'adsContext' => $this->mercuryApi->getAdsContext( $title, $this->wg, $article[ 'categories' ] ),
+			'article' => $articleAsJson,
+			'adsContext' => $this->mercuryApi->getAdsContext( $title, $this->wg, $articleAsJson[ 'categories' ] ),
 			'basePath' => $this->wg->Server
 		];
 
