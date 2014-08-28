@@ -129,4 +129,16 @@ abstract class WikiaController extends WikiaDispatchableObject {
 			$this->getResponse()->getView()->setTemplatePath( dirname( __FILE__ ) .'/templates/Wikia_help.php' );
 		}
 	}
+
+	/**
+	 * Stub method, which provides a fallback in case
+	 * when user doesn't have permissions to launch controller (e.g. anonymous user).
+	 *
+	 * For example, this controller can be used for developing API for anonymous users, but with access keys.
+	 *
+	 * @return bool
+	 */
+	public function isAnonAccessAllowedInCurrentContext() {
+		return false;
+	}
 }
