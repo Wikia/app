@@ -32,6 +32,7 @@ class SeriesEntitySearchService extends EntitySearchService {
 		$namespaces = is_array( $namespaces ) ? $namespaces : [ $namespaces ];
 		$select->createFilterQuery( 'ns' )->setQuery( '+(ns:(' . implode( ' ', $namespaces ) . '))' );
 		$select->createFilterQuery( 'main_page' )->setQuery( '-(is_main_page:true)' );
+		$select->createFilterQuery( 'series_only' )->setQuery( '-(tv_episode_mv_em:*)' );
 		if ( in_array( strtolower( $slang ), static::$ARTICLE_TYPES_SUPPORTED_LANGS ) ) {
 			$select->createFilterQuery( 'type' )->setQuery( '+(article_type_s:' . static::SERIES_TYPE . ' OR ' . static::EXACT_MATCH_FIELD . ':*)' );
 		}

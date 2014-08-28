@@ -14,6 +14,17 @@ class EpisodeEntitySearchService extends EntitySearchService {
 
 	private static $ARTICLE_TYPES_SUPPORTED_LANGS = [ 'en' ];
 
+	protected $series;
+
+	public function getSeries() {
+		return $this->series;
+	}
+
+	public function setSeries( $series ) {
+		$this->series = $series;
+		return $this;
+	}
+
 	protected function prepareQuery( $query ) {
 		$select = $this->getSelect();
 
@@ -80,7 +91,9 @@ class EpisodeEntitySearchService extends EntitySearchService {
 			$options[ ] = '+(wid:' . $this->getWikiId() . ')';
 		}
 		$options = !empty( $options ) ? ' AND ' . implode( ' AND ', $options ) : '';
-		return '+("' . $query . '")' . $options;
+		$series = $this->sanitizeQuery( $this->getSeries() );
+		$seriesQuery = !empty( $series ) ? " (tv_series_mv_em:{$series})" : '';
+		return '+(("' . $query . '")' . $seriesQuery . ')' . $options;
 	}
 
 }
