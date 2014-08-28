@@ -981,21 +981,21 @@ class ArticlesApiController extends WikiaApiController {
 			throw new OutOfRangeApiException( self::PARAMETER_LIMIT, 1, self::POPULAR_ARTICLES_PER_WIKI );
 		}
 
-		$key = self::getCacheKey( self::POPULAR_CACHE_ID, '' , [ $expand, $baseArticleId ] );
+		$key = self::getCacheKey( self::POPULAR_CACHE_ID, '', [ $expand, $baseArticleId ] );
 
 		$popular = $this->wg->Memc->get( $key );
 		if ( $popular === false ) {
 			$popular = $this->getResultFromConfig( $this->getConfigFromRequest() );
 			if ( $expand ) {
-				$articleIds = [];
+				$articleIds = [ ];
 				$params = $this->getDetailsParams();
-				foreach($popular as $item){
-					$articleIds[] = $item['id'];
+				foreach ( $popular as $item ) {
+					$articleIds[ ] = $item[ 'id' ];
 				}
 				$popular = $this->getArticlesDetails( $articleIds, $params[ 'titleKeys' ], $params[ 'width' ], $params[ 'height' ], $params[ 'length' ], true );
 			}
 
-			if( $baseArticleId !== false ) {
+			if ( $baseArticleId !== false ) {
 				$popular = $this->rerankPopularToArticle( $popular, $baseArticleId );
 			}
 
@@ -1007,7 +1007,7 @@ class ArticlesApiController extends WikiaApiController {
 		global $wgServer;
 		$this->setResponseData(
 			[ 'items' => $popular, 'basepath' => $wgServer ],
-			[ 'imgFields'=> 'thumbnail', 'urlFields' => [ 'thumbnail', 'url' ] ],
+			[ 'imgFields' => 'thumbnail', 'urlFields' => [ 'thumbnail', 'url' ] ],
 			self::CLIENT_CACHE_VALIDITY
 		);
 
@@ -1031,11 +1031,11 @@ class ArticlesApiController extends WikiaApiController {
 		$links = ( new ApiOutboundingLinksService() )->getOutboundingLinks( $baseArticleId );
 		$rerankedPopular = $this->reorderForLinks( $popular, $links );
 
-		if( $rerankedPopular === $popular ) {
+		if ( $rerankedPopular === $popular ) {
 
 			$category = $this->getCategoryOfArticle( $baseArticleId );
 
-			if( !empty( $category ) ) {
+			if ( !empty( $category ) ) {
 
 				$popularForCategory = $this->getPopularForCategory( $category );
 
@@ -1057,16 +1057,16 @@ class ArticlesApiController extends WikiaApiController {
 
 		global $wgCityId;
 
-		$categoriesConfig = (new Wikia\Search\Config())
+		$categoriesConfig = ( new Wikia\Search\Config() )
 			->setDirectLuceneQuery( true )
 			->setQuery( 'id:' . $wgCityId . '_' . $articleId )
 			->setLimit( 1 );
 
 		$categories = ( new Factory )->getFromConfig( $categoriesConfig )->searchAsApi( [ 'categories_mv_en' ] );
 
-		if( !empty( $categories[0]['categories_mv_en'][0] ) ) {
+		if ( !empty( $categories[ 0 ][ 'categories_mv_en' ][ 0 ] ) ) {
 			// returning first category from Solr response
-			return $categories[0]['categories_mv_en'][0];
+			return $categories[ 0 ][ 'categories_mv_en' ][ 0 ];
 		}
 
 		return null;
@@ -1075,9 +1075,9 @@ class ArticlesApiController extends WikiaApiController {
 	protected function getPopularForCategory( $category ) {
 		global $wgCityId;
 
-		$popularForCategoryConfig = (new Wikia\Search\Config())
+		$popularForCategoryConfig = ( new Wikia\Search\Config() )
 			->setLimit( self::TRENDING_ARTICLES_LIMIT )
-			->setDirectLuceneQuery(true)
+			->setDirectLuceneQuery( true )
 			->setRank( \Wikia\Search\Config::RANK_MOST_VIEWED )
 			->setQuery( '(wid:' . $wgCityId . ') AND (ns:' . NS_MAIN . ') AND (categories_mv_en:' . $category . ')' );
 

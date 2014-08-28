@@ -12,7 +12,7 @@ class ApiOutboundingLinksService {
 			->AND_( 'pl_namespace' )->EQUAL_TO( NS_MAIN )
 			->runLoop(
 				$db,
-				function( &$dataCollector, $row ){
+				function ( &$dataCollector, $row ) {
 					$title = Title::newFromText( $row->pl_title );
 					$link = $title->getLinkURL();
 					$dataCollector[ ] = $link;
@@ -22,4 +22,4 @@ class ApiOutboundingLinksService {
 		return $links;
 	}
 
-} 
+}

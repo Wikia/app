@@ -7,7 +7,7 @@
 class ArticlesApiControllerTest extends \WikiaBaseTest {
 
 	/**
-	 * @covers ArticlesApiController::reorderForLinks
+	 * @covers       ArticlesApiController::reorderForLinks
 	 * @dataProvider reorderForLinksDataProvider
 	 */
 	public function testReorderForLinks( $popular, $links, $reordered ) {
@@ -124,24 +124,24 @@ class ArticlesApiControllerTest extends \WikiaBaseTest {
 	public function reorderForLinksDataProvider() {
 		return [
 			[
-				[ [ 'url'=>'1' ], [ 'url'=>'2' ], [ 'url'=>'3' ], [ 'url'=>'4' ], [ 'url'=>'5' ] ],
+				[ [ 'url' => '1' ], [ 'url' => '2' ], [ 'url' => '3' ], [ 'url' => '4' ], [ 'url' => '5' ] ],
 				[ '3', '4', '5' ],
-				[ [ 'url'=>'3' ], [ 'url'=>'4' ], [ 'url'=>'5' ], [ 'url'=>'1' ], [ 'url'=>'2' ] ]
+				[ [ 'url' => '3' ], [ 'url' => '4' ], [ 'url' => '5' ], [ 'url' => '1' ], [ 'url' => '2' ] ]
 			],
 			[
-				[ [ 'url'=>'1' ], [ 'url'=>'2' ], [ 'url'=>'3' ], [ 'url'=>'4' ], [ 'url'=>'5' ] ],
+				[ [ 'url' => '1' ], [ 'url' => '2' ], [ 'url' => '3' ], [ 'url' => '4' ], [ 'url' => '5' ] ],
 				[ '2', '4' ],
-				[ [ 'url'=>'2' ], [ 'url'=>'4' ], [ 'url'=>'1' ], [ 'url'=>'3' ], [ 'url'=>'5' ] ]
+				[ [ 'url' => '2' ], [ 'url' => '4' ], [ 'url' => '1' ], [ 'url' => '3' ], [ 'url' => '5' ] ]
 			],
 			[
-				[ [ 'url'=>'1' ], [ 'url'=>'2' ], [ 'url'=>'3' ], [ 'url'=>'4' ], [ 'url'=>'5' ] ],
+				[ [ 'url' => '1' ], [ 'url' => '2' ], [ 'url' => '3' ], [ 'url' => '4' ], [ 'url' => '5' ] ],
 				[ '2', '200', '4', '100' ],
-				[ [ 'url'=>'2' ], [ 'url'=>'4' ], [ 'url'=>'1' ], [ 'url'=>'3' ], [ 'url'=>'5' ] ]
+				[ [ 'url' => '2' ], [ 'url' => '4' ], [ 'url' => '1' ], [ 'url' => '3' ], [ 'url' => '5' ] ]
 			],
 			[
-				[ [ 'url'=>'1' ], [ 'url'=>'2' ], [ 'url'=>'3' ], [ 'url'=>'4' ], [ 'url'=>'5' ] ],
+				[ [ 'url' => '1' ], [ 'url' => '2' ], [ 'url' => '3' ], [ 'url' => '4' ], [ 'url' => '5' ] ],
 				[ '200', '100' ],
-				[ [ 'url'=>'1' ], [ 'url'=>'2' ], [ 'url'=>'3' ], [ 'url'=>'4' ], [ 'url'=>'5' ] ]
+				[ [ 'url' => '1' ], [ 'url' => '2' ], [ 'url' => '3' ], [ 'url' => '4' ], [ 'url' => '5' ] ]
 			],
 			[
 				[ ],
@@ -154,22 +154,22 @@ class ArticlesApiControllerTest extends \WikiaBaseTest {
 				[ ]
 			],
 			[
-				[ [ 'url'=>'1' ], [ 'url'=>'2' ], [ 'url'=>'3' ], [ 'url'=>'4' ], [ 'url'=>'5' ] ],
+				[ [ 'url' => '1' ], [ 'url' => '2' ], [ 'url' => '3' ], [ 'url' => '4' ], [ 'url' => '5' ] ],
 				[ ],
-				[ [ 'url'=>'1' ], [ 'url'=>'2' ], [ 'url'=>'3' ], [ 'url'=>'4' ], [ 'url'=>'5' ] ]
+				[ [ 'url' => '1' ], [ 'url' => '2' ], [ 'url' => '3' ], [ 'url' => '4' ], [ 'url' => '5' ] ]
 			],
 			[
-				[ [ 'url'=>'1' ], [ 'url'=>'2' ], [ 'url'=>'3' ], [ 'url'=>'4' ], [ 'url'=>'5' ] ],
+				[ [ 'url' => '1' ], [ 'url' => '2' ], [ 'url' => '3' ], [ 'url' => '4' ], [ 'url' => '5' ] ],
 				null,
-				[ [ 'url'=>'1' ], [ 'url'=>'2' ], [ 'url'=>'3' ], [ 'url'=>'4' ], [ 'url'=>'5' ] ]
+				[ [ 'url' => '1' ], [ 'url' => '2' ], [ 'url' => '3' ], [ 'url' => '4' ], [ 'url' => '5' ] ]
 			],
 		];
 	}
 
-	protected static function getFn($obj, $name) {
-		$class = new ReflectionClass(get_class($obj));
-		$method = $class->getMethod($name);
-		$method->setAccessible(true);
+	protected static function getFn( $obj, $name ) {
+		$class = new ReflectionClass( get_class( $obj ) );
+		$method = $class->getMethod( $name );
+		$method->setAccessible( true );
 
 		return function () use ( $obj, $method ) {
 			$args = func_get_args();
