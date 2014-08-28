@@ -354,6 +354,7 @@ ve.ui.MWTemplateDialog.prototype.getSetupProcess = function ( data ) {
 			this.transclusionModel.connect( this, { 'replace': 'onReplacePart' } );
 
 			// Initialization
+			this.filterInput.setValue( '' );
 			if ( !this.selectedNode ) {
 				if ( data.template ) {
 					// New specified template
@@ -450,7 +451,7 @@ ve.ui.MWTemplateDialog.prototype.onFilterInputChange = function () {
 			// if there was no match among all parameters for the template then
 			// hide template page as well (so not only parameters)
 			page = this.bookletLayout.getPage( part.getId() );
-			if ( !parameterMatch ) {
+			if ( value !== '' && !parameterMatch ) {
 				page.$element.hide();
 			} else {
 				page.$element.show();
