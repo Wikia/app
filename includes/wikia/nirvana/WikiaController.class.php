@@ -134,7 +134,8 @@ abstract class WikiaController extends WikiaDispatchableObject {
 	 * Stub method, which provides a fallback in case
 	 * when user doesn't have permissions to launch controller (e.g. anonymous user).
 	 *
-	 * For example, this controller can be used for developing API for anonymous users, but with access keys.
+	 * For example, extending of this method can be used
+	 * for developing API for anonymous users, but with access keys.
 	 *
 	 * @return bool
 	 */
