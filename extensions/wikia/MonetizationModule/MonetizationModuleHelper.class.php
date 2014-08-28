@@ -21,7 +21,7 @@ class MonetizationModuleHelper extends WikiaModel {
 	const RENDERING_IN_PROCESS = 1;
 
 	const API_VERSION = 'v1';
-	const API_TIMEOUT = 50;				// timeout in milliseconds
+	const VAR_NAME_API_TIMEOUT = 'wgMonetizationModuleTimeout';
 	const IN_CONTENT_KEYWORD = '<h2>';
 
 	const FONT_COLOR_DARK_THEME = 'd5d4d4';
@@ -93,13 +93,15 @@ class MonetizationModuleHelper extends WikiaModel {
 		}
 
 		$url .= 'api/' . self::API_VERSION . '?' . http_build_query( $params );
-		$options = [
-			'noProxy' => true,
-			'curlOptions' => [
-				CURLOPT_TIMEOUT_MS => self::API_TIMEOUT,
+		$options = [ 'noProxy' => true ];
+		$timeout = WikiFactory::getVarValueByName( self::VAR_NAME_API_TIMEOUT, WikiFactory::COMMUNITY_CENTRAL );
+		if ( !empty( $timeout ) ) {
+			$options['curlOptions'] = [
+				CURLOPT_TIMEOUT_MS => $timeout,
 				CURLOPT_NOSIGNAL => true,
-			],
-		];
+			];
+		}
+
 		$req = MWHttpRequest::factory( $url, $options );
 		$status = $req->execute();
 		if ( $status->isGood() ) {
