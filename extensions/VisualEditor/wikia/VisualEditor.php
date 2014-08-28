@@ -100,6 +100,8 @@ $wgResourceModules += array(
 			've/ui/dialogs/ve.ui.WikiaSourceModeDialog.js',
 			've/ui/dialogs/ve.ui.WikiaOrientationDialog.js',
 			've/ui/dialogs/ve.ui.WikiaMapInsertDialog.js',
+			've/ui/dialogs/ve.ui.WikiaTransclusionDialog.js',
+			've/ui/pages/ve.ui.WikiaParameterPage.js',
 			've/ui/tools/ve.ui.WikiaDialogTool.js',
 			've/ui/tools/ve.ui.WikiaHelpTool.js',
 			've/ui/tools/ve.ui.WikiaMWGalleryInspectorTool.js',
@@ -175,7 +177,9 @@ $wgResourceModules += array(
 			'wikia-visualeditor-dialog-transclusion-no-template-description',
 			'wikia-visualeditor-dialog-map-insert-title',
 			'wikia-visualeditor-save-error-generic',
-			'wikia-visualeditor-dialogbutton-wikiasourcemode'
+			'wikia-visualeditor-dialogbutton-wikiasourcemode',
+			'wikia-visualeditor-dialog-done-button',
+			'wikia-visualeditor-dialog-transclusion-get-info',
 		),
 		'dependencies' => array(
 			'ext.visualEditor.core.desktop',
