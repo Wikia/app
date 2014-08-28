@@ -325,6 +325,9 @@ ve.ui.MWTemplateDialog.prototype.initialize = function () {
 		'icon': 'search',
 		'type': 'search'
 	} );
+	this.$filter = this.$( '<div>' )
+		.addClass( 've-ui-mwTransclusionDialog-filter' )
+		.append( this.filterInput.$element );
 
 	// Events
 	this.filterInput.on( 'change', ve.bind( this.onFilterInputChange, this ) );
@@ -332,7 +335,7 @@ ve.ui.MWTemplateDialog.prototype.initialize = function () {
 	// Initialization
 	this.frame.$content.addClass( 've-ui-mwTemplateDialog' );
 	this.panels.addItems( [ this.bookletLayout ] );
-	this.$body.append( this.filterInput.$element );
+	this.$body.append( this.$filter );
 };
 
 /**
