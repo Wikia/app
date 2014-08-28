@@ -23,18 +23,18 @@ class UrlGeneratorTest extends PHPUnit_Framework_TestCase {
 			->will($this->returnValue('12345'));
 
 		$this->assertEquals(
-			'/tests/a/ab/SomeFile.jpg/revision/latest/width/100/height/100?cb=12345',
-			new UrlGenerator($file)
+			'/tests/a/ab/SomeFile.jpg/revision/latest?cb=12345',
+			(new UrlGenerator($file))->url()
 		);
 
 		$this->assertEquals(
-			'/tests/a/ab/SomeFile.jpg/revision/09876/width/50/height/75?fill=%23ababab',
-			(new UrlGenerator($file))->width(50)->height(75)->revision('09876')->backgroundFill('#ababab')
+			'/tests/a/ab/SomeFile.jpg/revision/09876/thumbnail/width/50/height/75?fill=%23ababab',
+			(new UrlGenerator($file))->width(50)->height(75)->thumbnail()->revision('09876')->backgroundFill('#ababab')->url()
 		);
 
 		$this->assertEquals(
-			'/tests/a/ab/SomeFile.jpg/revision/latest/width/50/height/75?fill=transparent&cb=12345',
-			(new UrlGenerator($file))->width(50)->height(75)->backgroundFill('transparent')
+			'/tests/a/ab/SomeFile.jpg/revision/latest/zoom-crop/width/50/height/75?fill=transparent&cb=12345',
+			(new UrlGenerator($file))->width(50)->height(75)->zoomCrop()->backgroundFill('transparent')->url()
 		);
 	}
 }
