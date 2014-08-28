@@ -178,7 +178,11 @@ class MercuryApi {
 	 * @return array
 	 */
 	private function getArticleCategoriesTitles( Array $articleCategories ) {
-		return array_column( $articleCategories, 'title' );
+		$categories = [];
+		foreach ( $articleCategories as $category ) {
+			$categories[] = $category[ 'title' ];
+		}
+		return $categories;
 	}
 
 	/**
