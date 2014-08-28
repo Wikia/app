@@ -22,8 +22,6 @@ $dir = dirname(__FILE__);
 $wgExtensionMessagesFiles['Wall'] = $dir . '/Wall.i18n.php';
 $wgAutoloadClasses['WallDisabledHooksHelper'] =  $dir . '/WallDisabledHooksHelper.class.php';
 
-include($dir . '/notification/WallNotifications.setup.php');
-
 //don't let others edit wall messages after turning wall on and off
 $wgHooks['AfterEditPermissionErrors'][] = 'WallDisabledHooksHelper::onAfterEditPermissionErrors';
 include($dir . '/WallNamespaces.php');

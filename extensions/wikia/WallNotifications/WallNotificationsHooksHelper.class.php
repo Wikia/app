@@ -14,7 +14,7 @@ class WallNotificationsHooksHelper {
 
 		if( $user instanceof User && $user->isLoggedIn() && $skin->getSkinName() == 'monobook') {
 			$text .= "<script type=\"{$app->wg->JsMimeType}\" src=\"{$app->wg->ResourceBasePath}/resources/wikia/libraries/jquery/timeago/jquery.timeago.js\"></script>\n" .
-				"<script type=\"{$app->wg->JsMimeType}\" src=\"{$app->wg->ExtensionsPath}/wikia/Wall/js/WallNotifications.js\"></script>\n";
+				"<script type=\"{$app->wg->JsMimeType}\" src=\"{$app->wg->ExtensionsPath}/wikia/WallNotifications/scripts/WallNotifications.js\"></script>\n";
 		}
 
 		return true;
@@ -49,7 +49,7 @@ class WallNotificationsHooksHelper {
 					$personalUrls['wall-notifications']['class'] .= 'prehide';
 				}
 				
-				$app->wg->Out->addStyle( AssetsManager::getInstance()->getSassCommonURL( 'extensions/wikia/Wall/css/monobook/WallNotificationsMonobook.scss' ) );
+				$app->wg->Out->addStyle( AssetsManager::getInstance()->getSassCommonURL( 'extensions/wikia/WallNotifications/styles/monobook/WallNotificationsMonobook.scss' ) );
 			}
 		}
 
