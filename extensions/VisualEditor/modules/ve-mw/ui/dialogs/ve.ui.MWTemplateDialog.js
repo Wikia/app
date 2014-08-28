@@ -325,6 +325,9 @@ ve.ui.MWTemplateDialog.prototype.initialize = function () {
 		'icon': 'search',
 		'type': 'search'
 	} );
+	this.$filter = this.$( '<div>' )
+		.addClass( 've-ui-mwTemplateDialog-filter' )
+		.append( this.filterInput.$element );
 
 	// Events
 	this.filterInput.on( 'change', ve.bind( this.onFilterInputChange, this ) );
@@ -332,7 +335,7 @@ ve.ui.MWTemplateDialog.prototype.initialize = function () {
 	// Initialization
 	this.frame.$content.addClass( 've-ui-mwTemplateDialog' );
 	this.panels.addItems( [ this.bookletLayout ] );
-	this.$body.append( this.filterInput.$element );
+	this.$body.append( this.$filter );
 };
 
 /**
@@ -451,10 +454,12 @@ ve.ui.MWTemplateDialog.prototype.onFilterInputChange = function () {
 			// if there was no match among all parameters for the template then
 			// hide template page as well (so not only parameters)
 			page = this.bookletLayout.getPage( part.getId() );
-			if ( value !== '' && !parameterMatch ) {
-				page.$element.hide();
-			} else {
-				page.$element.show();
+			if ( this.mode === 'multiple' ) {
+				if ( value !== '' && !parameterMatch ) {
+					page.$element.hide();
+				} else {
+					page.$element.show();
+				}
 			}
 		}
 	}
@@ -467,6 +472,7 @@ ve.ui.MWTemplateDialog.prototype.getTeardownProcess = function ( data ) {
 	return ve.ui.MWTemplateDialog.super.prototype.getTeardownProcess.call( this, data )
 		.first( function () {
 			// Cleanup
+			this.filterInput.setValue( '' );
 			this.$element.removeClass( 've-ui-mwTemplateDialog-ready' );
 			this.transclusionModel.disconnect( this );
 			this.transclusionModel.abortRequests();
