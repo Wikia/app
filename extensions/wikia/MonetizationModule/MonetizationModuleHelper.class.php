@@ -129,9 +129,9 @@ class MonetizationModuleHelper extends WikiaModel {
 	public function setThemeSettings( $adUnits, $memcKey ) {
 		wfProfileIn( __METHOD__ );
 
-		$found = strstr( $adUnits, self::THEME_SETTINGS_KEYWORD );
+		$found = strpos( $adUnits, self::THEME_SETTINGS_KEYWORD );
 		$adUnits = json_decode( $adUnits, true );
-		if ( !empty( $found ) && is_array( $adUnits ) ) {
+		if ( $found !== false && is_array( $adUnits ) ) {
 			$theme = SassUtil::getOasisSettings();
 			if ( SassUtil::isThemeDark() ) {
 				$theme['color'] = self::FONT_COLOR_DARK_THEME;
