@@ -446,14 +446,14 @@ ve.ui.MWTemplateDialog.prototype.onFilterInputChange = function () {
 					parameterMatch = true;
 					page.$element.show();
 				}
-				// if there was no match among all parameters for the template then
-				// hide template page as well (so not only parameters)
-				page = this.bookletLayout.getPage( part.getId() );
-				if ( !parameterMatch ) {
-					page.$element.hide();
-				} else {
-					page.$element.show();
-				}
+			}
+			// if there was no match among all parameters for the template then
+			// hide template page as well (so not only parameters)
+			page = this.bookletLayout.getPage( part.getId() );
+			if ( !parameterMatch ) {
+				page.$element.hide();
+			} else {
+				page.$element.show();
 			}
 		}
 	}
