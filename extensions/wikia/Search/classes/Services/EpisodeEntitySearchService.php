@@ -91,8 +91,10 @@ class EpisodeEntitySearchService extends EntitySearchService {
 			$options[ ] = '+(wid:' . $this->getWikiId() . ')';
 		}
 		$options = !empty( $options ) ? ' AND ' . implode( ' AND ', $options ) : '';
-		$series = $this->sanitizeQuery( $this->getSeries() );
-		$seriesQuery = !empty( $series ) ? " (tv_series_mv_em:{$series})" : '';
+		$seriesQuery = '';
+		if ( $this->getSeries() !== null ) {
+			$seriesQuery = ' (tv_series_mv_em:"' . $this->sanitizeQuery( $this->getSeries() ) . '")';
+		}
 		return '+(("' . $query . '")' . $seriesQuery . ')' . $options;
 	}
 
