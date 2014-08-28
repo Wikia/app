@@ -126,13 +126,18 @@ class WikiaInteractiveMapsMapController extends WikiaInteractiveMapsBaseControll
 		] );
 	}
 
+	/**
+	 * Extracts scheme and hostname origin from a given url
+	 * @param $url
+	 * @return string
+	 */
 	static public function getOriginFromUrl( $url ) {
 		$urlParts = parse_url( $url );
 		$host = $urlParts[ 'host' ];
 		//Ensure that preview / verify / sandboxes get the original url
 		$host = str_replace( 'preview.', '', $host );
 		$host = str_replace( 'verify.', '', $host );
-		$host = preg_replace( 'sandbox-.+\./g','', $host );
+		$host = preg_replace( '/sandbox-.+?\./', '', $host );
 		return http_build_url( '', [
 			'scheme' => $urlParts [ 'scheme' ],
 			'host' => $host
