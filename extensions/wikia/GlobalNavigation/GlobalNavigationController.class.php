@@ -42,6 +42,8 @@ class GlobalNavigationController extends WikiaController {
 		$this->response->setVal( 'defaultSearchMessage', wfMessage( 'global-navigation-local-search' )->text() );
 		$this->response->setVal( 'defaultSearchUrl', $localSearchUrl );
 		$this->response->setVal( 'lang', $lang );
+		$globalRequest = $this->wg->request;
+		$this->response->setVal( 'search', $globalRequest->getVal( 'search', $globalRequest->getVal( 'query', '' ) ) );
 	}
 
 	public function getCentralUrlForLang( $lang, $fullUrl ) {
