@@ -74,11 +74,15 @@ ve.ui.WikiaTransclusionDialog.prototype.initialize = function () {
 /**
  * @inheritdoc
  */
-ve.ui.WikiaTransclusionDialog.prototype.getReadyProcess = function ( data ) {
-	return ve.ui.WikiaTransclusionDialog.super.prototype.getReadyProcess.call( this, data )
-		.next( function () {
-			this.transclusionModel.connect( this, { 'change': 'onParameterInputValueChange' } );
-		}, this );
+ve.ui.WikiaTransclusionDialog.prototype.onTransclusionReady = function () {
+	// Parent method
+	ve.ui.WikiaTransclusionDialog.super.prototype.onTransclusionReady.call( this );
+
+	// ve.dm.MWTransclusionModel.prototype.process emits "change" that we want to "ignore"
+	// Other way to implement this would be to override that process method
+	this.transclusionModel.once( 'change', ve.bind( function() {
+		this.transclusionModel.connect( this, { 'change': 'onParameterInputValueChange' } );
+	}, this ) );
 };
 
 /**
