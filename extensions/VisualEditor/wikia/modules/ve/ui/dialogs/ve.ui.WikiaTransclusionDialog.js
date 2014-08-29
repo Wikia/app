@@ -172,7 +172,7 @@ ve.ui.WikiaTransclusionDialog.prototype.getTeardownProcess = function ( data ) {
  */
 ve.ui.WikiaTransclusionDialog.prototype.position = function () {
 	var viewportHeight = $( window ).height(),
-		dialogHeight = Math.min( 600 /* max height */, viewportHeight * 0.7 ),
+		dialogHeight = Math.min( 600, viewportHeight * 0.7 ),
 		padding = 10,
 		$surface = this.surface.getView().$element,
 		surfaceOffset = $surface.offset();
