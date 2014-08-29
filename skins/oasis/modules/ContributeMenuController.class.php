@@ -66,7 +66,7 @@ class ContributeMenuController extends WikiaController {
 
 		// check if Special:Videos is enabled before showing 'add video' link
 		// add video button
-		if( !empty( $this->wg->EnableSpecialVideosExt) && $this->wg->User->isAllowed( 'videoupload' ) ) {
+		if( !empty( $this->wg->EnableSpecialVideosExt ) && $this->wg->User->isAllowed( 'videoupload' ) ) {
 			$addVideoLink = array(
 				'WikiaVideoAdd' => [
 					'label' => 'oasis-navigation-v2-add-video'
@@ -91,7 +91,7 @@ class ContributeMenuController extends WikiaController {
 	}
 
 	/**
-	 * Returns an array passed later to the template; It's a contribute menu "Edit" item
+	 * Returns an array passed later to the template; It's contribute menu "Edit" item
 	 * @param String $url an URL to the page with action=edit parameter
 	 * @return array
 	 */
@@ -105,7 +105,7 @@ class ContributeMenuController extends WikiaController {
 	}
 
 	/**
-	 * Returns an array passed later to the template; It's a contribute menu "Edit" item
+	 * Returns an array passed later to the template; It's contribute menu "Edit navigation" item
 	 * @return array
 	 */
 	public function getEditNavItem() {
