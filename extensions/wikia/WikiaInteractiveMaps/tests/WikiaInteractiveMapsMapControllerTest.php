@@ -8,7 +8,7 @@ class WikiaInteractiveMapsMapControllerTest extends WikiaBaseTest {
 	}
 
 	public function testCreateMap_throws_bad_request_api_exception() {
-		$controllerMock = $this->getWikiaInteractiveMapsMapController();
+		$controllerMock = $this->getWikiaInteractiveMapsMapControllerMock();
 		$controllerMock->expects( $this->any() )
 			->method( 'getData' )
 			->will( $this->onConsecutiveCalls(
@@ -28,9 +28,7 @@ class WikiaInteractiveMapsMapControllerTest extends WikiaBaseTest {
 	}
 
 	public function testCreateMap_throws_invalid_parameter_api_exception() {
-		$controllerMock = $this->getWikiaInteractiveMapsMapController();
-		$controllerMock->expects( $this->any() )
-			->method( 'getData' );
+		$controllerMock = $this->getWikiaInteractiveMapsMapControllerMock();
 
 		$userMock = $this->getUserMock();
 		$userMock->expects( $this->never() )
@@ -43,7 +41,7 @@ class WikiaInteractiveMapsMapControllerTest extends WikiaBaseTest {
 	}
 
 	public function testCreateMap_throws_permission_exception_when_anon() {
-		$controllerMock = $this->getWikiaInteractiveMapsMapController();
+		$controllerMock = $this->getWikiaInteractiveMapsMapControllerMock();
 
 		$userMock = $this->getUserMock();
 		$userMock->expects( $this->once() )
@@ -62,7 +60,7 @@ class WikiaInteractiveMapsMapControllerTest extends WikiaBaseTest {
 	}
 
 	public function testCreateMap_throws_permission_exception_when_blocked() {
-		$controllerMock = $this->getWikiaInteractiveMapsMapController();
+		$controllerMock = $this->getWikiaInteractiveMapsMapControllerMock();
 
 		$userMock = $this->getUserMock();
 		$userMock->expects( $this->once() )
@@ -95,7 +93,7 @@ class WikiaInteractiveMapsMapControllerTest extends WikiaBaseTest {
 			->method( 'getInt' )
 			->willReturn( WikiaMaps::MAP_DELETED );
 
-		$controllerMock = $this->getWikiaInteractiveMapsMapController();
+		$controllerMock = $this->getWikiaInteractiveMapsMapControllerMock();
 		$controllerMock->expects( $this->never() )
 			->method( 'getModel' );
 		$controllerMock->request = $requestMock;
@@ -129,7 +127,7 @@ class WikiaInteractiveMapsMapControllerTest extends WikiaBaseTest {
 		$modelMock->expects( $this->never() )
 			->method( 'updateMapDeletionStatus' );
 
-		$controllerMock = $this->getWikiaInteractiveMapsMapController();
+		$controllerMock = $this->getWikiaInteractiveMapsMapControllerMock();
 		$controllerMock->expects( $this->any() )
 			->method( 'getModel' )
 			->willReturn( $modelMock );
@@ -158,7 +156,7 @@ class WikiaInteractiveMapsMapControllerTest extends WikiaBaseTest {
 		return $userMock;
 	}
 
-	private function getWikiaInteractiveMapsMapController() {
+	private function getWikiaInteractiveMapsMapControllerMock() {
 		$controllerMock = $this->getMockBuilder( 'WikiaInteractiveMapsMapController' )
 			->setMethods( [ 'getData', 'getModel' ] )
 			->disableOriginalConstructor()
