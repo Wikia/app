@@ -1,9 +1,8 @@
 <div class="WallHistory">
-<? if( empty($wallmessageNotFound) ): ?>
-	<?
-		echo F::App()->getView('Wall', 'brickHeader', array(
+<? if ( empty( $wallmessageNotFound ) ): ?>
+	<?= $app->renderView( 'Wall', 'brickHeader', [
 			'path' => $path
-		))->render();
+		] );
 	?>
 
 	<div class="SortingBar">
@@ -13,8 +12,8 @@
 		<div class="SortingMenu">
 			<span class="SortingSelected"><?= $sortingSelected; ?></span>
 			<ul class="SortingList">
-				<? foreach($sortingOptions as $option): ?>
-					<li class="<? if (!empty($option['selected'])): ?>current<? endif ?> <?= $option['id']; ?>">
+				<? foreach ( $sortingOptions as $option ): ?>
+					<li class="<? if ( !empty( $option['selected'] ) ): ?>current<? endif ?> <?= $option['id']; ?>">
 						<a href="<?= $option['href'] ?>" class="sortingOption">
 							<?= $option['text'] ?>
 						</a>
@@ -24,13 +23,13 @@
 		</div>
 	</div>
 
-	<?php if( !empty($wallHistory) ): ?>
+	<?php if ( !empty( $wallHistory ) ): ?>
 		<?php if( $isThreadLevelHistory ): ?>
 			<table id="WallThreadHistory">
-				<?php foreach($wallHistory as $entry): ?>
+				<?php foreach ( $wallHistory as $entry ): ?>
 					<tr>
 						<td>
-							<?php if( $entry['type'] == WH_NEW ): ?>
+							<?php if ( $entry['type'] == WH_NEW ): ?>
 								<a class="msgid" href="<?= $entry['msgurl']; ?>">
 									<sup>#</sup>
 									<?= $entry['msgid']; ?>
@@ -44,22 +43,22 @@
 							<?= wfMessage( $wallHistoryMsg[$entry['prefix'] . $entry['type']] )->rawParams( [
 								'',
 								$entry['displayname'],
-								Xml::element('a', array('href' => $entry['msguserurl']), $entry['msgusername']),
-								Xml::element('a', array('href' => $entry['msgurl'], 'class' => 'creation'), $entry['metatitle']),
+								Xml::element( 'a', [ 'href' => $entry['msguserurl'] ], $entry['msgusername'] ),
+								Xml::element( 'a', [ 'href' => $entry['msgurl'], 'class' => 'creation' ], $entry['metatitle'] ),
 								'<a href="'.$entry['msgurl'] . '">#'. $entry['msgid']. '</a>'
 							] )->escaped(); ?>
 
 							<?php
-								if( !empty($entry['actions']) ):
-									$actions = array();
-									foreach($entry['actions'] as $key => $action):
+								if ( !empty( $entry['actions'] ) ):
+									$actions = [];
+									foreach ( $entry['actions'] as $key => $action ):
 										$htmldata = $action;
 										unset($htmldata['msg']);
-										$actions[] = wfMessage( 'parentheses' )->rawParams( Xml::element('a', $htmldata , $action['msg']) )->escaped();
+										$actions[] = wfMessage( 'parentheses' )->rawParams( Xml::element( 'a', $htmldata , $action['msg'] ) )->escaped();
 									endforeach;
-									echo Xml::openElement('span', array('class' => 'actions'));
-									echo implode(' ',$actions);
-									echo Xml::closeElement('span');
+									echo Xml::openElement( 'span', [ 'class' => 'actions' ] );
+									echo implode( ' ',$actions );
+									echo Xml::closeElement( 'span' );
 								endif;
 							?>
 						</td>
@@ -71,7 +70,7 @@
 					</tr>
 					<tr class="border">
 						<td class="wrapper" colspan="4">
-							<?php if( !empty($entry['reason']) ): ?>
+							<?php if ( !empty( $entry['reason'] ) ): ?>
 								<div class="summaryBubble">
 									<label><?= wfMessage( 'wall-history-summary-label' )->escaped(); ?></label>&nbsp;<?= Linker::formatComment( $entry['reason'] ); ?>
 								</div>
@@ -85,30 +84,25 @@
 				<?php foreach($wallHistory as $entry): ?>
 					<tr class="info-entry">
 						<td>
-							<?php
-								if( $entry['type'] === WH_NEW ) {
-									echo wfMessage( $wallHistoryMsg[$entry['type']] )->rawParams( [
-										Xml::element('a', array('href' => $entry['msgurl'], 'class' => 'creation'), $entry['metatitle']),
+							<?= wfMessage( $wallHistoryMsg[$entry['type']] )->rawParams( [
+										Xml::element( 'a', [
+											'href' => $entry['msgurl'],
+											'class' => $entry['type'] === WH_NEW ? 'creation' : ''
+										], $entry['metatitle'] ),
 										$entry['displayname'],
 									] )->escaped();
-								} else {
-									echo wfMessage( $wallHistoryMsg[$entry['type']] )->rawParams( [
-										Xml::element('a', array('href' => $entry['msgurl']), $entry['metatitle']),
-										$entry['displayname'],
-									] )->escaped();
-								}
 							?>
 							<?php
-								if( !empty($entry['actions']) ):
+								if ( !empty( $entry['actions'] ) ):
 									$actions = array();
-									foreach($entry['actions'] as $key => $action):
+									foreach ( $entry['actions'] as $key => $action ):
 										$htmldata = $action;
-										unset($htmldata['msg']);
-										$actions[] = wfMessage( 'parentheses' )->rawParams( Xml::element('a', $htmldata , $action['msg']) )->escaped();
+										unset( $htmldata['msg'] );
+										$actions[] = wfMessage( 'parentheses' )->rawParams( Xml::element( 'a', $htmldata , $action['msg'] ) )->escaped();
 									endforeach;
-									echo Xml::openElement('span', array('class' => 'actions'));
+									echo Xml::openElement( 'span', [ 'class' => 'actions' ] );
 									echo implode(' ',$actions);
-									echo Xml::closeElement('span');
+									echo Xml::closeElement( 'span' );
 								endif;
 							?>
 							<span class="threadHistory"><?= wfMessage( 'parentheses' )->rawParams( $entry['historyLink'] )->escaped(); ?></span>
@@ -121,7 +115,7 @@
 					</tr>
 					<tr class="border">
 						<td class="wrapper" colspan="2">
-							<?php if( !empty($entry['reason']) ): ?>
+							<?php if ( !empty( $entry['reason'] ) ): ?>
 								<div class="summaryBubble">
 									<label><?= wfMessage( 'wall-history-summary-label' )->escaped(); ?></label>&nbsp;<?= Linker::formatComment( $entry['reason'] ); ?>
 								</div>
@@ -133,7 +127,7 @@
 		<?php endif; ?>
 
 		<?php if($showPager): ?>
-			<?= $app->renderView('PaginationController', 'index', array('totalItems' => $totalItems, 'itemsPerPage' => $itemsPerPage, 'currentPage' => $currentPage, 'url' => $wallHistoryUrl)); ?>
+			<?= $app->renderView( 'PaginationController', 'index', [ 'totalItems' => $totalItems, 'itemsPerPage' => $itemsPerPage, 'currentPage' => $currentPage, 'url' => $wallHistoryUrl ] ); ?>
 		<?php endif;?>
 	<?php endif; ?>
 <?php else: ?>
@@ -147,8 +141,8 @@
 		<div class="SortingMenu">
 			<span class="SortingSelected"><?= $sortingSelected; ?></span>
 			<ul class="SortingList">
-				<? foreach($sortingOptions as $option): ?>
-					<li class="<? if (!empty($option['selected'])): ?>current<? endif ?> <?= $option['id']; ?>">
+				<? foreach ( $sortingOptions as $option ): ?>
+					<li class="<? if ( !empty( $option['selected'] ) ): ?>current<? endif ?> <?= $option['id']; ?>">
 						<a href="<?= $option['href'] ?>" class="sortingOption">
 							<?= $option['text'] ?>
 						</a>
