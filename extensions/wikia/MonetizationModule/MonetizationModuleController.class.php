@@ -20,9 +20,12 @@ class MonetizationModuleController extends WikiaController {
 		$this->response->addAsset( 'monetization_module_css' );
 		$this->response->addAsset( 'monetization_module_js' );
 
+		$helper = new MonetizationModuleHelper();
+
 		$params = [
 			's_id' => $this->wg->CityId,
 			'max' => MonetizationModuleHelper::calculateNumberOfAds( $this->wg->Title->mLength ),
+			'vertical' => $helper->getWikiVertical(),
 		];
 
 		$mcachePurge = $this->wg->request->getVal( 'mcache', false );
@@ -31,7 +34,6 @@ class MonetizationModuleController extends WikiaController {
 			$params['mcache'] = $mcachePurge;
 		}
 
-		$helper = new MonetizationModuleHelper();
 		$this->data = $helper->getMonetizationUnits( $params );
 
 		// set cache control to 1 hour

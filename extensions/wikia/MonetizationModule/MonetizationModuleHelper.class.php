@@ -21,6 +21,7 @@ class MonetizationModuleHelper extends WikiaModel {
 	const RENDERING_IN_PROCESS = 1;
 
 	const API_VERSION = 'v1';
+	const API_DISPLAY = 'display/api';
 	const VAR_NAME_API_TIMEOUT = 'wgMonetizationModuleTimeout';
 	const IN_CONTENT_KEYWORD = '<h2>';
 
@@ -34,6 +35,18 @@ class MonetizationModuleHelper extends WikiaModel {
 		'data-color-link'   => 'color',
 		'data-color-url'    => 'color-links',
 		'data-color-text'   => 'color',
+	];
+
+	// list of verticals
+	protected static $verticals = [
+		WikiFactoryHub::HUB_ID_OTHER       => 'other',
+		WikiFactoryHub::HUB_ID_TV          => 'tv',
+		WikiFactoryHub::HUB_ID_VIDEO_GAMES => 'gaming',
+		WikiFactoryHub::HUB_ID_BOOKS       => 'book',
+		WikiFactoryHub::HUB_ID_COMICS      => 'comics',
+		WikiFactoryHub::HUB_ID_LIFESTYLE   => 'lifestyle',
+		WikiFactoryHub::HUB_ID_MUSIC       => 'music',
+		WikiFactoryHub::HUB_ID_MOVIES      => 'movies',
 	];
 
 	/**
@@ -60,6 +73,25 @@ class MonetizationModuleHelper extends WikiaModel {
 		wfProfileOut( __METHOD__ );
 
 		return $status;
+	}
+
+	/**
+	 * Get wiki vertical
+	 * @return string - wiki vertical
+	 */
+	public function getWikiVertical() {
+		wfProfileIn( __METHOD__ );
+
+		$verticalId = WikiFactoryHub::getInstance()->getVerticalId( $this->wg->CityId );
+		if ( empty( self::$verticals[$verticalId] ) ) {
+			$verticalId = WikiFactoryHub::HUB_ID_OTHER;
+		}
+
+		$name = self::$verticals[$verticalId];
+
+		wfProfileOut( __METHOD__ );
+
+		return $name;
 	}
 
 	/**
@@ -92,7 +124,7 @@ class MonetizationModuleHelper extends WikiaModel {
 			$url = $this->wg->MonetizationServiceUrl . '/';
 		}
 
-		$url .= 'api/' . self::API_VERSION . '?' . http_build_query( $params );
+		$url .= self::API_DISPLAY . self::API_VERSION . '?' . http_build_query( $params );
 		$options = [ 'noProxy' => true ];
 		$timeout = WikiFactory::getVarValueByName( self::VAR_NAME_API_TIMEOUT, WikiFactory::COMMUNITY_CENTRAL );
 		if ( !empty( $timeout ) ) {
