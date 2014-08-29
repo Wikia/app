@@ -279,7 +279,7 @@ class WikiaDispatcher {
 		$nirvanaAccessRules = WikiaAccessRules::instance();
 		$permissions = $nirvanaAccessRules->getRequiredPermissionsFor( get_class( $controller ), $method );
 		foreach ( $permissions as $permission ) {
-			if ( !$app->wg->User->isAllowed( $permission ) && !$controller->isAnonAccessAllowedInCurrentContext() ) {
+			if ( !( $app->wg->User->isAllowed( $permission ) || $controller->isAnonAccessAllowedInCurrentContext() ) ) {
 				throw new PermissionsException( $permission );
 			}
 		}
