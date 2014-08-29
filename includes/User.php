@@ -2253,9 +2253,8 @@ class User {
 		/* invalidate empty email - RT #44046 */
 		if ($str == '') {
 
-			/**
-			 * add logging to investigate CONN-463
-			 */
+			// Wikia change - begin - CONN-463 - user email is becoming unconfirmed
+
 			\Wikia\Logger\WikiaLogger::instance()->debug(
 				'CONN-463 - user email is becoming unconfirmed - User setEmail',
 				[
@@ -2264,9 +2263,8 @@ class User {
 					'user_email' => $this->getEmail(),
 				]
 			);
-			/**
-			 * change end
-			 */
+
+			// Wikia change - end
 
 			$this->invalidateEmail();
 		}

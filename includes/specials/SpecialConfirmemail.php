@@ -208,9 +208,8 @@ class EmailInvalidation extends UnlistedSpecialPage {
 		$user = User::newFromConfirmationCode( $code );
 		if( is_object( $user ) ) {
 
-			/**
-			 * add logging to investigate CONN-463
-			 */
+			// Wikia change - begin - CONN-463 - user email is becoming unconfirmed
+
 			\Wikia\Logger\WikiaLogger::instance()->debug(
 				'CONN-463 - user email is becoming unconfirmed - EmailInvalidate attemptInvalidate',
 				[
@@ -219,9 +218,8 @@ class EmailInvalidation extends UnlistedSpecialPage {
 					'user_email' => $user->getEmail()
 				]
 			);
-			/**
-			 * change end
-			 */
+
+			// Wikia change - end
 
 			$user->invalidateEmail();
 			$user->saveSettings();

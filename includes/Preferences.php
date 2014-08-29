@@ -1518,9 +1518,8 @@ class Preferences {
 					# new behaviour: set this new emailaddr from login-page into user database record
 					$user->setEmail( $newaddr );
 
-					/**
-					 * add logging to investigate CONN-463
-					 */
+					// Wikia change - begin - CONN-463 - user email is becoming unconfirmed
+
 					\Wikia\Logger\WikiaLogger::instance()->debug(
 						'CONN-463 - user email is becoming unconfirmed - Preferences trySetUserEmail',
 						[
@@ -1530,9 +1529,8 @@ class Preferences {
 							'use_new_email' => $newaddr,
 						]
 					);
-					/**
-					 * change end
-					 */
+
+					// Wikia change - end
 
 					/* Wikia change - begin */
 					$user->invalidateEmail();
