@@ -22,32 +22,18 @@ class ContributeMenuControllerTest extends WikiaBaseTest {
 
 		$userMock = $this->getUserMock( self::USER_NOT_ALLOWED );
 
-		$controllerMock = $this->getMockBuilder( 'ContributeMenuController' )
-			->setMethods( [ 'getEditPageItem', 'getSpecialPagesLinks', 'getEditNavItem' ] )
-			->disableOriginalConstructor()
-			->getMock();
-
+		$controllerMock = $this->getContributeMenuControllerMock( $appMock, $responseMock, $userMock );
 		$controllerMock->expects( $this->never() )
 			->method( 'getEditPageItem' );
-
 		$controllerMock->expects( $this->once() )
 			->method( 'getSpecialPagesLinks' );
-
 		$controllerMock->expects( $this->never() )
 			->method( 'getEditNavItem' );
-
-		$controllerMock->app = $appMock;
-		$controllerMock->response = $responseMock;
-		$controllerMock->wg->EnableSpecialVideosExt = false;
-		$controllerMock->wg->EnableWikiaInteractiveMaps = false;
-		$controllerMock->wg->User = $userMock;
 
 		$controllerMock->executeIndex();
 	}
 
 	public function testExecuteIndex_with_edit() {
-		$this->markTestSkipped( 'WIP: refactoring test' );
-
 		$skinTplObjMock = new stdClass();
 		$skinTplObjMock->data[ 'content_actions' ] = [
 			'edit' => [
@@ -62,13 +48,17 @@ class ContributeMenuControllerTest extends WikiaBaseTest {
 
 		$responseMock = $this->getWikiaResponseMock();
 
-		$controller = new ContributeMenuController();
-		$controller->app = $appMock;
-		$controller->wg->EnableSpecialVideosExt = false;
-		$controller->wg->EnableWikiaInteractiveMaps = false;
-		$controller->setResponse( $responseMock );
+		$userMock = $this->getUserMock( self::USER_NOT_ALLOWED );
 
-		$controller->executeIndex();
+		$controllerMock = $this->getContributeMenuControllerMock( $appMock, $responseMock, $userMock );
+		$controllerMock->expects( $this->once() )
+			->method( 'getEditPageItem' );
+		$controllerMock->expects( $this->once() )
+			->method( 'getSpecialPagesLinks' );
+		$controllerMock->expects( $this->never() )
+			->method( 'getEditNavItem' );
+
+		$controllerMock->executeIndex();
 	}
 
 	public function testExecuteIndex_with_video() {
@@ -211,6 +201,21 @@ class ContributeMenuControllerTest extends WikiaBaseTest {
 		}
 
 		return $userMock;
+	}
+
+	private function getContributeMenuControllerMock( $appMock, $responseMock, $userMock ) {
+		$controllerMock = $this->getMockBuilder( 'ContributeMenuController' )
+			->setMethods( [ 'getEditPageItem', 'getSpecialPagesLinks', 'getEditNavItem' ] )
+			->disableOriginalConstructor()
+			->getMock();
+
+		$controllerMock->app = $appMock;
+		$controllerMock->response = $responseMock;
+		$controllerMock->wg->EnableSpecialVideosExt = false;
+		$controllerMock->wg->EnableWikiaInteractiveMaps = false;
+		$controllerMock->wg->User = $userMock;
+
+		return $controllerMock;
 	}
 
 }
