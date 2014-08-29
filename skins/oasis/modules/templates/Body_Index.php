@@ -141,10 +141,6 @@
 						if ( !empty( $monetizationModules[MonetizationModuleHelper::SLOT_TYPE_ABOVE_FOOTER] ) ) {
 							echo $monetizationModules[MonetizationModuleHelper::SLOT_TYPE_ABOVE_FOOTER];
 						}
-
-						if ( !empty( $monetizationModules[MonetizationModuleHelper::SLOT_TYPE_FOOTER] ) ) {
-							echo $monetizationModules[MonetizationModuleHelper::SLOT_TYPE_FOOTER];
-						}
 					}
 				?>
 				<div id="WikiaArticleBottomAd" class="noprint">
