@@ -11,11 +11,11 @@ class WikiaInteractiveMapsMapControllerTest extends WikiaBaseTest {
 		$controllerMock = $this->getWikiaInteractiveMapsMapControllerMock();
 		$controllerMock->expects( $this->any() )
 			->method( 'getData' )
-			->will( $this->onConsecutiveCalls(
-				0,
-				null,
-				null
-			) );
+			->will( $this->returnValueMap( [
+				[ 'tileSetId', false, 0 ],
+				[ 'image', false, null ],
+				[ 'title', false, null ],
+			] ) );
 
 		$userMock = $this->getUserMock();
 		$userMock->expects( $this->never() )
@@ -171,11 +171,11 @@ class WikiaInteractiveMapsMapControllerTest extends WikiaBaseTest {
 	private function mockGetDataForUserTests( $controllerMock ) {
 		$controllerMock->expects( $this->any() )
 			->method( 'getData' )
-			->will( $this->onConsecutiveCalls(
-				1,
-				'http://mocked.image.url.com',
-				'Mocked Map Title'
-			) );
+			->will( $this->returnValueMap( [
+				[ 'tileSetId', false, 1 ],
+				[ 'image', false, 'http://mocked.image.url.com' ],
+				[ 'title', false, 'Mocked Map Title' ],
+			] ) );
 	}
 
 }
