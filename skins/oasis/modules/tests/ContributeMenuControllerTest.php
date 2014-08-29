@@ -61,6 +61,29 @@ class ContributeMenuControllerTest extends WikiaBaseTest {
 		$controllerMock->executeIndex();
 	}
 
+	public function testExecuteIndex_with_edit_nav() {
+		$skinTplObjMock = new stdClass();
+		$skinTplObjMock->data['content_actions'] = [];
+		$appMock = $this->getWikiaAppMock();
+		$appMock->expects( $this->once() )
+			->method( 'getSkinTemplateObj' )
+			->willReturn( $skinTplObjMock );
+
+		$responseMock = $this->getWikiaResponseMock();
+
+		$userMock = $this->getUserMock( self::USER_ALLOWED );
+
+		$controllerMock = $this->getContributeMenuControllerMock( $appMock, $responseMock, $userMock );
+		$controllerMock->expects( $this->never() )
+			->method( 'getEditPageItem' );
+		$controllerMock->expects( $this->once() )
+			->method( 'getSpecialPagesLinks' );
+		$controllerMock->expects( $this->once() )
+			->method( 'getEditNavItem' );
+
+		$controllerMock->executeIndex();
+	}
+
 	public function testExecuteIndex_with_video() {
 		$this->markTestSkipped( 'WIP: refactoring test' );
 
@@ -119,49 +142,6 @@ class ContributeMenuControllerTest extends WikiaBaseTest {
 		$controller->app = $appMock;
 		$controller->wg->EnableSpecialVideosExt = false;
 		$controller->wg->EnableWikiaInteractiveMaps = true;
-		$controller->setResponse( $responseMock );
-
-		$controller->executeIndex();
-	}
-
-	public function testExecuteIndex_with_edit_nav() {
-		$this->markTestSkipped( 'WIP: refactoring test' );
-
-		$skinTplObjMock = new stdClass();
-		$skinTplObjMock->data['content_actions'] = [];
-		$appMock = $this->getWikiaAppMock();
-		$appMock->expects( $this->once() )
-			->method( 'getSkinTemplateObj' )
-			->willReturn( $skinTplObjMock );
-
-		$dropDownItems = $this->getDefaultDropdownItems();
-		$dropDownItems = array_merge(
-			$dropDownItems,
-			[
-				'wikinavedit' => [
-					'text' => 'Edit Wiki Navigation',
-					'href' => '/wiki/MediaWiki:Wiki-navigation?action=edit',
-				],
-			]
-		);
-		$responseMock = $this->getWikiaResponseMock( $dropDownItems );
-
-		$userMock = $this->getMockBuilder( 'User' )
-			->setMethods( [ 'isAllowed', 'getOption' ] )
-			->disableOriginalConstructor()
-			->getMock();
-		$userMock->expects( $this->any() )
-			->method( 'getOption' )
-			->willReturn( 'Mocked Option.' );
-		$userMock->expects( $this->any() )
-			->method( 'isAllowed' )
-			->willReturn( true );
-
-		$controller = new ContributeMenuController();
-		$controller->app = $appMock;
-		$controller->wg->EnableSpecialVideosExt = false;
-		$controller->wg->EnableWikiaInteractiveMaps = false;
-		$controller->wg->User = $userMock;
 		$controller->setResponse( $responseMock );
 
 		$controller->executeIndex();
