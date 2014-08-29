@@ -70,6 +70,8 @@ ve.ui.WikiaTransclusionDialog.prototype.onTransclusionReady = function () {
 	// Parent method
 	ve.ui.WikiaTransclusionDialog.super.prototype.onTransclusionReady.call( this );
 
+	this.filterInput.focus();
+
 	// ve.dm.MWTransclusionModel.prototype.process emits "change" that we want to "ignore"
 	// Other way to implement this would be to override that process method
 	this.transclusionModel.once( 'change', ve.bind( function () {
