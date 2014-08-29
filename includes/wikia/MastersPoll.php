@@ -10,7 +10,7 @@ namespace Wikia;
  */
 class MastersPoll {
 	# store server states in memcache (for 60 seconds)
-	const SERVER_BROKEN = true;
+	const SERVER_BROKEN = 'broken';
 	const SERVER_STATUS_TTL = 60;
 
 	private $conf;
@@ -18,6 +18,12 @@ class MastersPoll {
 	function __construct( Array $conf ) {
 		$this->conf = $conf;
 		$this->normalizeMultipleMasters();
+
+		// ugly hack taken from LoadMonitor_MySQL
+		global $wgMemc;
+		if ( empty( $wgMemc ) ) {
+			$wgMemc = wfGetMainCache();
+		}
 	}
 
 	/**
@@ -25,6 +31,29 @@ class MastersPoll {
 	 */
 	function getConf() {
 		return $this->conf;
+	}
+
+	/**
+	 * Get secondary master node for given section
+	 *
+	 * This method is called when isMasterBroken() returns true
+	 * for the "primary" master node  (i.e. selected by the fair dice roll)
+	 *
+	 * @param $sectionName
+	 * @return bool|mixed
+	 */
+	function getNextMasterForSection($sectionName) {
+		$hosts = array_keys( $this->conf['mastersPoolBySection'][$sectionName] );
+		$hostName = reset( $hosts );
+
+		if (!empty($hostName)) {
+			// resolve settings for hostname
+			return $hostName;
+		}
+		else {
+			// master node not found
+			return false;
+		}
 	}
 
 	/**
@@ -55,6 +84,9 @@ class MastersPoll {
 				# make it flat
 				$sectionConf = array( $master => $sectionConf['masters'][$master] ) + $sectionConf['slaves'];
 			}
+			else {
+				$this->conf['mastersPoolBySection'][$sectionName] = [];
+			}
 		}
 	}
 
@@ -66,14 +98,33 @@ class MastersPoll {
 	 *
 	 * @param array $serverEntry
 	 */
-	static function markMasterAsBroken(Array $serverEntry) {
+	function markMasterAsBroken(Array $serverEntry) {
 		$hostName = $serverEntry['hostName'];
 		wfDebug( sprintf( "%s: marking '%s' as broken\n", __CLASS__, $hostName ) );
 
 		\F::app()->wg->Memc->set( self::getStatusKeyForServer( $hostName ), self::SERVER_BROKEN, self::SERVER_STATUS_TTL );
 	}
 
-	static function getStatusKeyForServer($hostName) {
+	/**
+	 * Check if given master node is broken
+	 *
+	 * @param array $serverEntry
+	 * @return bool
+	 */
+	function isMasterBroken(Array $serverEntry) {
+		$hostName = $serverEntry['hostName'];
+
+		wfDebug( sprintf( "%s: checking if '%s' is broken\n", __CLASS__, $hostName ) );
+		$isBroken = \F::app()->wg->Memc->get( self::getStatusKeyForServer( $hostName ) ) === self::SERVER_BROKEN;
+
+		if ( $isBroken ) {
+			wfDebug( sprintf( "%s: '%s' is marked as broken\n", __CLASS__, $hostName ) );
+		}
+
+		return $isBroken;
+	}
+
+	static private function getStatusKeyForServer($hostName) {
 		return wfSharedMemcKey( __CLASS__, 'status', $hostName );
 	}
 }

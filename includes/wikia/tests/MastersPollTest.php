@@ -20,23 +20,22 @@ class MastersPollTest extends WikiaBaseTest {
 			'db-c1-a4' => 1,
 		];
 
-		$central = array(
+		$central = [
 			'db-c1' => 1,
 			'db-c2' => 1,
-		);
+		];
 
 		$conf = [
-			'class' => 'LBFactory_Wikia',
 			'sectionLoads' => array(
 				'central' => $central,
-				'c1' => array(
+				'c1' => [
 					'masters' => $masters,
 					'slaves' => $slaves,
-				),
-				'c2' => array(
+				],
+				'c2' => [
 					'db-c2-a1' => 1,
 					'db-c2-a2' => 1,
-				),
+				],
 			),
 		];
 
@@ -55,5 +54,9 @@ class MastersPollTest extends WikiaBaseTest {
 		# masters poll
 		$this->assertInternalType('array', $mastersPoll['c1'], 'Masters poll should be generated' );
 		$this->assertNotContains( $selectedMaster, $mastersPoll['c1'], 'Masters poll should not contain selected master' );
+
+		# next master for section
+		$this->assertEquals( false, $poll->getNextMasterForSection('central'), 'This cluster has no secondary master defined' );
+		$this->assertEquals( reset( array_keys( $mastersPoll['c1'] ) ), $poll->getNextMasterForSection('c1'), 'Secondary master is returned' );
 	}
 }

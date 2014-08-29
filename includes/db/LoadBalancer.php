@@ -488,13 +488,24 @@ class LoadBalancer {
 			}
 		}
 
+		// Wikia change - begin
+		// check the status of selected master
+		if ( $i == $this->getWriterIndex() ) {
+			if ( wfGetLBFactory()->getMastersPoll()->isMasterBroken( $this->mServers[0] ) ) {
+				// TODO: handle broken master
+			}
+		}
+		// Wikia change - end
+
 		# Now we have an explicit index into the servers array
 		$conn = $this->openConnection( $i, $wiki );
 		if ( !$conn ) {
+			// Wikia change - begin
 			# master connection error handling
 			if ( $i == $this->getWriterIndex() ) {
 				wfGetLBFactory()->getMastersPoll()->markMasterAsBroken( $this->mServers[$i] );
 			}
+			// Wikia change - end
 
 			$this->reportConnectionError( $this->mErrorConnection );
 		}
