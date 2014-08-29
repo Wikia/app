@@ -996,7 +996,7 @@ class ArticlesApiController extends WikiaApiController {
 			}
 
 			if ( $baseArticleId !== false ) {
-				$popular = $this->rerankPopularToArticle( $popular, $baseArticleId, $limit );
+				$popular = $this->rerankPopularToArticle( $popular, $baseArticleId );
 			}
 
 			$this->wg->set( $key, $popular, self::CLIENT_CACHE_VALIDITY );
@@ -1027,7 +1027,7 @@ class ArticlesApiController extends WikiaApiController {
 	 * 2) Get most popular articles of this category
 	 * 3) Rerank these articles due to links in base article
 	 */
-	protected function rerankPopularToArticle( $popular, $baseArticleId, $limit ) {
+	protected function rerankPopularToArticle( $popular, $baseArticleId ) {
 		$links = ( new ApiOutboundingLinksService() )->getOutboundingLinks( $baseArticleId );
 		$rerankedPopular = $this->reorderForLinks( $popular, $links );
 
@@ -1048,12 +1048,21 @@ class ArticlesApiController extends WikiaApiController {
 				// if base article in the list of popular for category - remove it from this list
 				$popularForCategory = array_filter( $popularForCategory, $this->otherUrlThan( $baseArticleUrl ) );
 
-				if( count( $popularForCategory ) >= $limit ) {
-
-					$rerankedPopularForCategory = $this->reorderForLinks( $popularForCategory, $links );
-
-					$popular = $rerankedPopularForCategory;
+				// collect urls of popular articles for given category
+				$categoryUrls = [ ];
+				foreach( $popularForCategory  as $item ) {
+					$categoryUrls[ ] = $item[ 'url' ];
 				}
+
+				// remove articles from array of popular articles for entire wikia, which have url as popular articles for given category
+				$popular = array_filter( $popular, $this->otherUrlThan( $categoryUrls ) );
+
+				// merge: popular for category + popular for entire wikia
+				$popularForCategory = array_merge( $popularForCategory, $popular );
+
+				$rerankedPopularForCategory = $this->reorderForLinks( $popularForCategory, $links );
+
+				$popular = $rerankedPopularForCategory;
 			}
 
 		} else {
@@ -1064,16 +1073,25 @@ class ArticlesApiController extends WikiaApiController {
 	}
 
 	/**
-	 * Return function, which consumes objects, which contains field 'url'
-	 * and compares value of this field with $baseUrl
-	 * if these values are equal - returns false
+	 * Return function (predicate), which consumes objects, which contains field 'url'
+	 * and compares value of this field with list of $urls
+	 * if this list doesn't contain given url - predicate returns true
 	 *
 	 * This function used for filtering array
 	 */
-	protected function otherUrlThan( $baseUrl ) {
-		return function( $item ) use ( $baseUrl ) {
+	protected function otherUrlThan( $urls ) {
+		if( !is_array( $urls ) ) {
+			$urls = [ $urls ];
+		}
+
+		$hashSet = [ ];
+		foreach( $urls as $url ) {
+			$hashSet[ $url ] = true;
+		}
+
+		return function( $item ) use ( $hashSet ) {
 			$url = $item[ 'url' ];
-			return $url != $baseUrl;
+			return $hashSet[ $url ] !== true;
 		};
 	}
 
