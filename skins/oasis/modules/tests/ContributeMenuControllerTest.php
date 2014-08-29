@@ -84,67 +84,104 @@ class ContributeMenuControllerTest extends WikiaBaseTest {
 		$controllerMock->executeIndex();
 	}
 
-	public function testExecuteIndex_with_video() {
-		$this->markTestSkipped( 'WIP: refactoring test' );
+	/**
+	 * @param String $message - test case description
+	 * @param Boolean $wgEnableSpecialVideosExtMock
+	 * @param Boolean $wgEnableWikiaInteractiveMapsMock
+	 * @param String $isUserAllowed - one of class constants: USER_ALLOWED or USER_NOT_ALLOWED
+	 * @param Array $expected
+	 *
+	 * @dataProvider getSpecialPagesDataProvider
+	 */
+	public function testGetSpecialPagesLinks(
+		$message,
+		$wgEnableSpecialVideosExtMock,
+		$wgEnableWikiaInteractiveMapsMock,
+		$isUserAllowed,
+		$expected
+	) {
+		$userMock = $this->getUserMock( $isUserAllowed );
+		$controllerMock = $this->getMockBuilder( 'ContributeMenuController' )
+			->setMethods( [ 'getDefaultSpecialPagesData' ] )
+			->disableOriginalConstructor()
+			->getMock();
+		$controllerMock->expects( $this->once() )
+			->method( 'getDefaultSpecialPagesData' )
+			->willReturn( [] );
+		$controllerMock->wg->EnableSpecialVideosExt = $wgEnableSpecialVideosExtMock;
+		$controllerMock->wg->EnableWikiaInteractiveMaps = $wgEnableWikiaInteractiveMapsMock;
+		$controllerMock->wg->User = $userMock;
 
-		$skinTplObjMock = new stdClass();
-		$skinTplObjMock->data['content_actions'] = [];
-		$appMock = $this->getWikiaAppMock();
-		$appMock->expects( $this->once() )
-			->method( 'getSkinTemplateObj' )
-			->willReturn( $skinTplObjMock );
-
-		$dropDownItems = $this->getDefaultDropdownItems();
-		$dropDownItems = array_merge(
-			$dropDownItems,
-			[
-				'wikiavideoadd' => [
-					'text' => 'Add a Video',
-					'href' => '/wiki/Special:WikiaVideoAdd',
-				]
-			]
-		);
-		$responseMock = $this->getWikiaResponseMock( $dropDownItems );
-
-		$controller = new ContributeMenuController();
-		$controller->app = $appMock;
-		$controller->wg->EnableSpecialVideosExt = true;
-		$controller->wg->EnableWikiaInteractiveMaps = false;
-		$controller->setResponse( $responseMock );
-
-		$controller->executeIndex();
+		$this->assertEquals( $expected, $controllerMock->getSpecialPagesLinks(), $message );
 	}
 
-	public function testExecuteIndex_with_maps() {
-		$this->markTestSkipped( 'WIP: refactoring test' );
-
-		$skinTplObjMock = new stdClass();
-		$skinTplObjMock->data['content_actions'] = [];
-		$appMock = $this->getWikiaAppMock();
-		$appMock->expects( $this->once() )
-			->method( 'getSkinTemplateObj' )
-			->willReturn( $skinTplObjMock );
-
-		$dropDownItems = $this->getDefaultDropdownItems();
-		$dropDownItems = array_merge(
-			$dropDownItems,
+	public function getSpecialPagesDataProvider() {
+		return [
 			[
-				'maps' => [
-					'text' => 'Create a Map',
-					'href' => '/wiki/Special:Maps',
-					'class' => 'wikia-maps-create-map',
+				'No additional extensions enabled',
+				false,
+				false,
+				self::USER_ALLOWED,
+				[]
+			],
+			[
+				'Video extension is enabled',
+				true,
+				false,
+				self::USER_ALLOWED,
+				[
+					'WikiaVideoAdd' => [
+						'label' => 'oasis-navigation-v2-add-video'
+					]
+				]
+			],
+			[
+				'Video extension is enabled but user does not have rights',
+				true,
+				false,
+				self::USER_NOT_ALLOWED,
+				[]
+			],
+			[
+				'Map extension is enabled',
+				false,
+				true,
+				self::USER_NOT_ALLOWED,
+				[
+					'Maps' => [
+						'label' => 'wikia-interactive-maps-create-a-map',
+						'class' => 'wikia-maps-create-map'
+					]
+				]
+			],
+			[
+				'Video and maps extensions are enabled',
+				true,
+				true,
+				self::USER_ALLOWED,
+				[
+					'WikiaVideoAdd' => [
+						'label' => 'oasis-navigation-v2-add-video'
+					],
+					'Maps' => [
+						'label' => 'wikia-interactive-maps-create-a-map',
+						'class' => 'wikia-maps-create-map'
+					]
+				]
+			],
+			[
+				'Video and maps extensions are enabled but user is not allowed to add videos',
+				true,
+				true,
+				self::USER_NOT_ALLOWED,
+				[
+					'Maps' => [
+						'label' => 'wikia-interactive-maps-create-a-map',
+						'class' => 'wikia-maps-create-map'
+					]
 				]
 			]
-		);
-		$responseMock = $this->getWikiaResponseMock( $dropDownItems );
-
-		$controller = new ContributeMenuController();
-		$controller->app = $appMock;
-		$controller->wg->EnableSpecialVideosExt = false;
-		$controller->wg->EnableWikiaInteractiveMaps = true;
-		$controller->setResponse( $responseMock );
-
-		$controller->executeIndex();
+		];
 	}
 
 	private function getWikiaAppMock() {

@@ -62,15 +62,15 @@ class ContributeMenuController extends WikiaController {
 	 * @return array
 	 */
 	public function getSpecialPagesLinks() {
-		$specialPages = $this->defaultSpecialPagesData;
+		$specialPages = $this->getDefaultSpecialPagesData();
 
 		// check if Special:Videos is enabled before showing 'add video' link
 		// add video button
 		if( !empty( $this->wg->EnableSpecialVideosExt) && $this->wg->User->isAllowed( 'videoupload' ) ) {
 			$addVideoLink = array(
-				'WikiaVideoAdd' => array(
+				'WikiaVideoAdd' => [
 					'label' => 'oasis-navigation-v2-add-video'
-				)
+				]
 			);
 
 			$specialPages = array_merge( $addVideoLink, $specialPages );
@@ -90,6 +90,11 @@ class ContributeMenuController extends WikiaController {
 		return $specialPages;
 	}
 
+	/**
+	 * Returns an array passed later to the template; It's a contribute menu "Edit" item
+	 * @param String $url an URL to the page with action=edit parameter
+	 * @return array
+	 */
 	public function getEditPageItem( $url ) {
 		return [
 			'text' => wfMessage( 'oasis-navigation-v2-edit-page' )->escaped(),
@@ -99,11 +104,23 @@ class ContributeMenuController extends WikiaController {
 		];
 	}
 
+	/**
+	 * Returns an array passed later to the template; It's a contribute menu "Edit" item
+	 * @return array
+	 */
 	public function getEditNavItem() {
 		return [
 			'text' => wfMessage( 'oasis-navigation-v2-edit-this-menu' )->escaped(),
 			'href' => Title::newFromText( NavigationModel::WIKI_LOCAL_MESSAGE, NS_MEDIAWIKI )->getLocalURL( 'action=edit' ),
 		];
+	}
+
+	/**
+	 * Simple getter returns ContributeMenuController::$defaultSpecialPagesData
+	 * @return array
+	 */
+	public function getDefaultSpecialPagesData() {
+		return $this->defaultSpecialPagesData;
 	}
 
 }
