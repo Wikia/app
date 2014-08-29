@@ -135,6 +135,10 @@ ve.ui.WikiaTransclusionDialog.prototype.getSetupProcess = function ( data ) {
 				$( window ).off( 'mousewheel', this.onWindowMouseWheelHandler );
 				// Focus
 				this.surface.getFocusWidget().setNode( this.selectedViewNode );
+				this.surface.getModel().setSelection( null );
+				// We cannot call focusedNode.clearHighlights() here because the focus widget uses the
+				// focusable node's boundingRect property, which is removed by that method.
+				this.selectedViewNode.$highlights.hide();
 			}
 		}, this );
 };
@@ -147,6 +151,7 @@ ve.ui.WikiaTransclusionDialog.prototype.getTeardownProcess = function ( data ) {
 				// update without wikitext passed in the config will just use original value
 				this.selectedViewNode.update();
 			}
+			this.selectedViewNode.$highlights.show();
 		}, this )
 		.next( function () {
 			if ( this.draggable ) {
