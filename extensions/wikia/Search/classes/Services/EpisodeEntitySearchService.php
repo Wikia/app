@@ -6,7 +6,7 @@ class EpisodeEntitySearchService extends EntitySearchService {
 
 	const DEFAULT_NAMESPACE = 0;
 	const ARTICLES_LIMIT = 1;
-	const MINIMAL_ARTICLE_SCORE = 0.8;
+	const MINIMAL_ARTICLE_SCORE = 0.4;
 	const API_URL = 'api/v1/Articles/AsSimpleJson?id=';
 	const EPISODE_TYPE = 'tv_episode';
 	const DEFAULT_SLOP = 1;
@@ -42,7 +42,12 @@ class EpisodeEntitySearchService extends EntitySearchService {
 		$namespaces = is_array( $namespaces ) ? $namespaces : [ $namespaces ];
 		$select->createFilterQuery( 'ns' )->setQuery( '+(ns:(' . implode( ' ', $namespaces ) . '))' );
 		if ( in_array( strtolower( $slang ), static::$ARTICLE_TYPES_SUPPORTED_LANGS ) ) {
-			$select->createFilterQuery( 'type' )->setQuery( '+(article_type_s:' . static::EPISODE_TYPE . ' OR ' . static::EXACT_MATCH_FIELD . ':*)' );
+			$seriesQuery = '';
+			if ( $this->getSeries() !== null ) {
+				$seriesQuery = ' AND tv_series_mv_em:"' . $this->sanitizeQuery( $this->getSeries() ) . '"';
+			}
+			$select->createFilterQuery( 'type' )->setQuery( '+(article_type_s:' . static::EPISODE_TYPE .
+				' OR ' . static::EXACT_MATCH_FIELD . ':*' . $seriesQuery . ')' );
 		}
 
 		$dismax->setQueryFields( implode( ' ', [
@@ -91,11 +96,7 @@ class EpisodeEntitySearchService extends EntitySearchService {
 			$options[ ] = '+(wid:' . $this->getWikiId() . ')';
 		}
 		$options = !empty( $options ) ? ' AND ' . implode( ' AND ', $options ) : '';
-		$seriesQuery = '';
-		if ( $this->getSeries() !== null ) {
-			$seriesQuery = ' (tv_series_mv_em:"' . $this->sanitizeQuery( $this->getSeries() ) . '"^0.1)';
-		}
-		return '+(("' . $query . '")' . $seriesQuery . ')' . $options;
+		return '+("' . $query . '")' . $options;
 	}
 
 }
