@@ -228,7 +228,7 @@ class AdEngine2Service
 			$wgAdDriverForceDirectGptAd, $wgAdDriverForceLiftiumAd,
 			$wgOasisResponsive, $wgOasisResponsiveLimited,
 			$wgAdDriverUseRemnantGpt, $wgOut,
-			$wgRequest, $wgEnableKruxTargeting,
+			$wgRequest, $wgEnableKruxTargeting, $wgAdDriverRubiconCachedOnly,
 			$wgAdVideoTargeting, $wgLiftiumOnLoad, $wgAdDriverSevenOneMediaOverrideSub2Site,
 			$wgDartCustomKeyValues, $wgWikiDirectedAtChildrenByStaff, $wgAdEngineDisableLateQueue,
 			$wgAdDriverUseBottomLeaderboard, $wgAdDriverBottomLeaderboardImpressionCapping, $wgAdDriverEnableAdsInMaps;
@@ -250,6 +250,7 @@ class AdEngine2Service
 			'wgAdDriverUseDartForSlotsBelowTheFold' => $wgAdDriverUseDartForSlotsBelowTheFold === null ? 'hub' : $wgAdDriverUseDartForSlotsBelowTheFold,
 			'wgAdDriverUseRemnantGpt' => $wgAdDriverUseRemnantGpt,
 			'wgAdDriverUseSevenOneMedia' => $wgAdDriverUseSevenOneMedia,
+			'wgAdDriverRubiconCachedOnly' => $wgAdDriverRubiconCachedOnly,
 			'wgAdDriverSevenOneMediaOverrideSub2Site' => $wgAdDriverSevenOneMediaOverrideSub2Site,
 			'wgUserShowAds' => $wgUser->getOption('showAds'),
 			'wgOutboundScreenRedirectDelay' => $wgOutboundScreenRedirectDelay,

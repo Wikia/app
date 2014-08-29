@@ -1270,6 +1270,13 @@ $wgSitewideDisableSevenOneMedia = false;
 $wgSitewideDisableIVW2 = false;
 
 /**
+ * @name $wgSitewideDisableRubiconRTP
+ * @link http://one.wikia-inc.com/wiki/Ads/Disaster_recovery
+ * Disable Rubicon RTP Analytics pixel sitewide in case a disaster happens (it's an instant global).
+ */
+$wgSitewideDisableRubiconRTP = false;
+
+/**
  * @name $wgAdDriverUseSevenOneMedia
  * Whether to use SevenOne Media ads (true) or the other ads (false)
  * Null means true for languages within $wgAdDriverUseSevenOneMediaInLanguages
