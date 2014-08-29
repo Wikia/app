@@ -406,10 +406,6 @@ ve.ce.FocusableNode.prototype.redrawHighlights = function () {
  * @method
  */
 ve.ce.FocusableNode.prototype.positionHighlights = function () {
-	if ( !this.highlighted ) {
-		return;
-	}
-
 	var i, l, top, left, bottom, right,
 		outerRects = [],
 		surfaceOffset = this.surface.getSurface().$element[0].getBoundingClientRect();
@@ -492,9 +488,6 @@ ve.ce.FocusableNode.prototype.positionHighlights = function () {
  * @return {Object} Top and left offsets of the focusable node relative to the surface
  */
 ve.ce.FocusableNode.prototype.getRelativeOffset = function () {
-	if ( !this.highlighted ) {
-		this.createHighlights();
-	}
 	return {
 		'top': this.boundingRect.top,
 		'left': this.boundingRect.left
@@ -507,9 +500,6 @@ ve.ce.FocusableNode.prototype.getRelativeOffset = function () {
  * @return {Object} Width and height of the focusable node
  */
 ve.ce.FocusableNode.prototype.getDimensions = function () {
-	if ( !this.highlighted ) {
-		this.createHighlights();
-	}
 	return {
 		'width': this.boundingRect.right - this.boundingRect.left,
 		'height': this.boundingRect.bottom - this.boundingRect.top
