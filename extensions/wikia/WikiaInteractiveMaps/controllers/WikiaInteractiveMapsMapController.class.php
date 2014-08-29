@@ -170,7 +170,7 @@ class WikiaInteractiveMapsMapController extends WikiaInteractiveMapsBaseControll
 	 * Ajax method for un/deleting a map from IntMaps API
 	 */
 	public function updateMapDeletionStatus() {
-		$mapId = $this->request->getVal( 'mapId', 0 );
+		$mapId = $this->request->getInt( 'mapId' );
 		$deleted = $this->request->getInt( 'deleted' );
 
 		if ( !in_array( $deleted, [ WikiaMaps::MAP_DELETED, WikiaMaps::MAP_NOT_DELETED ] ) ) {

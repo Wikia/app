@@ -86,12 +86,12 @@ class WikiaInteractiveMapsMapControllerTest extends WikiaBaseTest {
 			->willReturn( false );
 
 		$requestMock = $this->getWikiaRequestMock();
-		$requestMock->expects( $this->once() )
-			->method( 'getVal' )
-			->willReturn( 1 );
-		$requestMock->expects( $this->once() )
+		$requestMock->expects( $this->any() )
 			->method( 'getInt' )
-			->willReturn( WikiaMaps::MAP_DELETED );
+			->will( $this->returnValueMap( [
+				[ 'mapId', 0, 1 ],
+				[ 'deleted', 0, WikiaMaps::MAP_DELETED ],
+			] ) );
 
 		$controllerMock = $this->getWikiaInteractiveMapsMapControllerMock();
 		$controllerMock->expects( $this->never() )
@@ -113,12 +113,12 @@ class WikiaInteractiveMapsMapControllerTest extends WikiaBaseTest {
 			->willReturn( true );
 
 		$requestMock = $this->getWikiaRequestMock();
-		$requestMock->expects( $this->once() )
-			->method( 'getVal' )
-			->willReturn( 1 );
-		$requestMock->expects( $this->once() )
+		$requestMock->expects( $this->any() )
 			->method( 'getInt' )
-			->willReturn( WikiaMaps::MAP_DELETED );
+			->will( $this->returnValueMap( [
+				[ 'mapId', 0, 1 ],
+				[ 'deleted', 0, WikiaMaps::MAP_DELETED ],
+			] ) );
 
 		$modelMock = $this->getMockBuilder( 'WikiaMaps' )
 			->setMethods( [ 'updateMapDeletionStatus' ] )
