@@ -7,9 +7,9 @@ define(
 		'wikia.loader',
 		'wikia.ui.factory',
 		'wikia.mustache',
-		'wikia.tracker'
+		'wikia.tracker',
 	],
-	function($, w, cache, loader, uiFactory, mustache, tracker) {
+	function ($, w, cache, loader, uiFactory, mustache, tracker) {
 		'use strict';
 
 		// const variables used across int map UI
@@ -131,8 +131,8 @@ define(
 		 * @param {object} events - object containing array of handlers for each event type
 		 */
 		function bindEvents(modal, events) {
-			Object.keys(events).forEach(function(event) {
-				events[event].forEach(function(handler) {
+			Object.keys(events).forEach(function (event) {
+				events[event].forEach(function (handler) {
 					modal.bind(event, handler);
 				});
 			});
@@ -157,7 +157,7 @@ define(
 			// reset buttons visibility
 			modal.$buttons.addClass('hidden');
 
-			Object.keys(buttons).forEach(function(key) {
+			Object.keys(buttons).forEach(function (key) {
 				modal.$buttons
 					.filter(key)
 					.data('event', buttons[key])
@@ -221,7 +221,7 @@ define(
 				processData: false,
 				type: 'POST',
 				url: w.wgScriptPath + uploadEntryPoint,
-				success: function(response) {
+				success: function (response) {
 					var data = response.results;
 
 					if (data && data.success) {
@@ -236,7 +236,7 @@ define(
 
 					modal.activate();
 				},
-				error: function(response) {
+				error: function (response) {
 					showError(modal, response.results.error);
 					modal.activate();
 				}
@@ -259,7 +259,7 @@ define(
 		function showForceLoginModal(origin, cb) {
 			w.UserLoginModal.show({
 				origin: origin,
-				callback: function() {
+				callback: function () {
 					w.UserLogin.forceLoggedIn = true;
 					cb();
 				}
@@ -337,7 +337,7 @@ define(
 
 		/**
 		 * @desc escapes HTML entities
-		 * @param string
+		 * @param {string} string
 		 * @returns {string}
 		 */
 		function escapeHtml(string) {
@@ -375,6 +375,24 @@ define(
 			tracker.track(trackingParams);
 		}
 
+		/**
+		 * @desc Opens modal associated with chosen action preceded by forced login modal for anons
+		 * @param {object} config intMapConfig module object
+		 * @param {string} action - name of action
+		 */
+		function triggerAction(config, action) {
+			var actionConfig = config.getActionConfig(action);
+
+			if (isUserLoggedIn()) {
+				loadModal(actionConfig);
+				track(tracker.ACTIONS.CLICK_LINK_BUTTON, 'create-map-clicked');
+			} else {
+				showForceLoginModal(actionConfig.origin, function () {
+					loadModal(actionConfig);
+				});
+			}
+		}
+
 		return {
 			constants: constants,
 			loadModal: loadModal,
@@ -400,8 +418,9 @@ define(
 			onWriteInInput: onWriteInInput,
 			escapeHtml: escapeHtml,
 			track: track,
-			trackerActions: tracker.ACTIONS
+			trackerActions: tracker.ACTIONS,
+
+			triggerAction: triggerAction
 		};
 	}
 );
-

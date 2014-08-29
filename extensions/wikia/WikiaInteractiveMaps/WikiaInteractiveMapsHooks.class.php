@@ -15,6 +15,7 @@ class WikiaInteractiveMapsHooks {
 		if ( !empty( $wgEnableWikiaInteractiveMaps ) ) {
 			// add the asset to every page
 			$text .= Html::linkedScript( $wgExtensionsPath . '/wikia/WikiaInteractiveMaps/js/WikiaInteractiveMapsParserTag.js' );
+			$text .= Html::linkedScript( $wgExtensionsPath . '/wikia/WikiaInteractiveMaps/js/WikiaInteractiveMapsCreateMap.js' );
 		}
 
 		// add the asset only on Special:Maps page

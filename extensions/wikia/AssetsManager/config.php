@@ -1811,6 +1811,7 @@ $config['int_map_special_page_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => ['oasis'],
 	'assets' => [
+		'//extensions/wikia/WikiaInteractiveMaps/js/intMapConfig.js',
 		'//extensions/wikia/WikiaInteractiveMaps/js/intMapUtils.js',
 		'#group_int_map_ponto',
 		'//extensions/wikia/WikiaInteractiveMaps/js/WikiaInteractiveMaps.js'
@@ -1834,6 +1835,15 @@ $config['int_map_create_map_js'] = [
 		'//extensions/wikia/WikiaInteractiveMaps/js/intMapCreateMapTileSet.js',
 		'//extensions/wikia/WikiaInteractiveMaps/js/intMapCreateMapPreview.js',
 		'//extensions/wikia/WikiaInteractiveMaps/js/intMapCreateMapModal.js',
+	]
+];
+
+$config['int_map_create_map_contribute_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => ['oasis'],
+	'assets' => [
+		'//extensions/wikia/WikiaInteractiveMaps/js/intMapConfig.js',
+		'//extensions/wikia/WikiaInteractiveMaps/js/intMapUtils.js',
 	]
 ];
 
