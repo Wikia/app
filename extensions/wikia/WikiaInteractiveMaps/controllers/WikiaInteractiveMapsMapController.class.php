@@ -135,9 +135,8 @@ class WikiaInteractiveMapsMapController extends WikiaInteractiveMapsBaseControll
 		$urlParts = parse_url( $url );
 		$host = $urlParts[ 'host' ];
 		//Ensure that preview / verify / sandboxes get the original url
-		$host = str_replace( 'preview.', '', $host );
-		$host = str_replace( 'verify.', '', $host );
-		$host = preg_replace( '/sandbox-.+?\./', '', $host );
+		$patterns = ['/preview\./', '/verify\./', '/sandbox-.+?\./'];
+		$host = preg_replace( $patterns, '', $host );
 		return http_build_url( '', [
 			'scheme' => $urlParts [ 'scheme' ],
 			'host' => $host
