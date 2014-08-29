@@ -6,7 +6,7 @@ class EpisodeEntitySearchService extends EntitySearchService {
 
 	const DEFAULT_NAMESPACE = 0;
 	const ARTICLES_LIMIT = 1;
-	const MINIMAL_ARTICLE_SCORE = 0.4;
+	const MINIMAL_ARTICLE_SCORE = 0.6;
 	const API_URL = 'api/v1/Articles/AsSimpleJson?id=';
 	const EPISODE_TYPE = 'tv_episode';
 	const DEFAULT_SLOP = 1;
@@ -93,7 +93,7 @@ class EpisodeEntitySearchService extends EntitySearchService {
 		$options = !empty( $options ) ? ' AND ' . implode( ' AND ', $options ) : '';
 		$seriesQuery = '';
 		if ( $this->getSeries() !== null ) {
-			$seriesQuery = ' (tv_series_mv_em:"' . $this->sanitizeQuery( $this->getSeries() ) . '")';
+			$seriesQuery = ' (tv_series_mv_em:"' . $this->sanitizeQuery( $this->getSeries() ) . '"^0.1)';
 		}
 		return '+(("' . $query . '")' . $seriesQuery . ')' . $options;
 	}
