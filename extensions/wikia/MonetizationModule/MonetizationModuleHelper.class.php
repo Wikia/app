@@ -161,7 +161,7 @@ class MonetizationModuleHelper extends WikiaModel {
 
 	/**
 	 * Creates the cache key for the given parameters.
-	 *
+	 * Order matters - site_id:country_code:max_slots
 	 * @param array $params
 	 * @return string
 	 */
@@ -177,6 +177,10 @@ class MonetizationModuleHelper extends WikiaModel {
 		} else {
 			// set the default to be rest of world ('ROW')
 			$cacheKey .= ':ROW';
+		}
+
+		if ( isset( $params['max'] ) ) {
+			$cacheKey .= ':' . $params['max'];
 		}
 
 		return $cacheKey;
