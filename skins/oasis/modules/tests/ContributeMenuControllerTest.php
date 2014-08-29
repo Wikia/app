@@ -1,6 +1,9 @@
 <?php
 class ContributeMenuControllerTest extends WikiaBaseTest {
 
+	const USER_ALLOWED = 'allowed';
+	const USER_NOT_ALLOWED = 'not-allowed';
+
 	public function setUp() {
 		global $IP;
 		$this->setupFile = "$IP/skins/oasis/modules/ContributeMenuController.class.php";
@@ -15,18 +18,36 @@ class ContributeMenuControllerTest extends WikiaBaseTest {
 			->method( 'getSkinTemplateObj' )
 			->willReturn( $skinTplObjMock );
 
-		$responseMock = $this->getWikiaResponseMock( $this->getDefaultDropdownItems() );
+		$responseMock = $this->getWikiaResponseMock();
 
-		$controller = new ContributeMenuController();
-		$controller->app = $appMock;
-		$controller->wg->EnableSpecialVideosExt = false;
-		$controller->wg->EnableWikiaInteractiveMaps = false;
-		$controller->setResponse( $responseMock );
+		$userMock = $this->getUserMock( self::USER_NOT_ALLOWED );
 
-		$controller->executeIndex();
+		$controllerMock = $this->getMockBuilder( 'ContributeMenuController' )
+			->setMethods( [ 'getEditPageItem', 'getSpecialPagesLinks', 'getEditNavItem' ] )
+			->disableOriginalConstructor()
+			->getMock();
+
+		$controllerMock->expects( $this->never() )
+			->method( 'getEditPageItem' );
+
+		$controllerMock->expects( $this->once() )
+			->method( 'getSpecialPagesLinks' );
+
+		$controllerMock->expects( $this->never() )
+			->method( 'getEditNavItem' );
+
+		$controllerMock->app = $appMock;
+		$controllerMock->response = $responseMock;
+		$controllerMock->wg->EnableSpecialVideosExt = false;
+		$controllerMock->wg->EnableWikiaInteractiveMaps = false;
+		$controllerMock->wg->User = $userMock;
+
+		$controllerMock->executeIndex();
 	}
 
 	public function testExecuteIndex_with_edit() {
+		$this->markTestSkipped( 'WIP: refactoring test' );
+
 		$skinTplObjMock = new stdClass();
 		$skinTplObjMock->data[ 'content_actions' ] = [
 			'edit' => [
@@ -39,18 +60,7 @@ class ContributeMenuControllerTest extends WikiaBaseTest {
 			->method( 'getSkinTemplateObj' )
 			->willReturn( $skinTplObjMock );
 
-		$dropDownItems = $this->getDefaultDropdownItems();
-		$dropDownItems = array_merge(
-			$dropDownItems,
-			[
-				'edit' => [
-					'text' => 'Edit this Page',
-					'href' => '',
-					'accesskey' => '',
-				]
-			]
-		);
-		$responseMock = $this->getWikiaResponseMock( $dropDownItems );
+		$responseMock = $this->getWikiaResponseMock();
 
 		$controller = new ContributeMenuController();
 		$controller->app = $appMock;
@@ -62,6 +72,8 @@ class ContributeMenuControllerTest extends WikiaBaseTest {
 	}
 
 	public function testExecuteIndex_with_video() {
+		$this->markTestSkipped( 'WIP: refactoring test' );
+
 		$skinTplObjMock = new stdClass();
 		$skinTplObjMock->data['content_actions'] = [];
 		$appMock = $this->getWikiaAppMock();
@@ -91,6 +103,8 @@ class ContributeMenuControllerTest extends WikiaBaseTest {
 	}
 
 	public function testExecuteIndex_with_maps() {
+		$this->markTestSkipped( 'WIP: refactoring test' );
+
 		$skinTplObjMock = new stdClass();
 		$skinTplObjMock->data['content_actions'] = [];
 		$appMock = $this->getWikiaAppMock();
@@ -121,6 +135,8 @@ class ContributeMenuControllerTest extends WikiaBaseTest {
 	}
 
 	public function testExecuteIndex_with_edit_nav() {
+		$this->markTestSkipped( 'WIP: refactoring test' );
+
 		$skinTplObjMock = new stdClass();
 		$skinTplObjMock->data['content_actions'] = [];
 		$appMock = $this->getWikiaAppMock();
@@ -168,38 +184,33 @@ class ContributeMenuControllerTest extends WikiaBaseTest {
 			->getMock();
 	}
 
-	private function getWikiaResponseMock( $expectedDropDownItems ) {
-		$responseMock = $this->getMockBuilder( 'WikiaResponse' )
+	private function getWikiaResponseMock() {
+		return $this->getMockBuilder( 'WikiaResponse' )
 			->setMethods( [ 'setVal', 'getVal' ] )
 			->disableOriginalConstructor()
 			->getMock();
-		$responseMock->expects( $this->once() )
-			->method( 'setVal' )
-			->with(
-				$this->equalTo( 'dropdownItems' ),
-				$this->equalTo( $expectedDropDownItems )
-			);
-
-		return $responseMock;
 	}
 
-	private function getDefaultDropdownItems() {
-		return [
-			'upload' => [
-				'text' => 'Add a Photo',
-				'href' => '/wiki/Special:Upload',
-			],
-			'createpage' => [
-				'text' => 'Add a Page',
-				'href' => '/wiki/Special:CreatePage',
-				'class' => 'createpage',
-			],
-			'wikiactivity' => [
-				'text' => 'Wiki Activity',
-				'href' => '/wiki/Special:WikiActivity',
-				'accesskey' => 'g',
-			],
-		];
+	private function getUserMock( $option ) {
+		$userMock = $this->getMockBuilder( 'User' )
+			->setMethods( [ 'isAllowed', 'getOption' ] )
+			->disableOriginalConstructor()
+			->getMock();
+		$userMock->expects( $this->any() )
+			->method( 'getOption' )
+			->willReturn( 'Mocked Option.' );
+
+		if( $option === self::USER_NOT_ALLOWED ) {
+			$userMock->expects( $this->any() )
+				->method( 'isAllowed' )
+				->willReturn( false );
+		} else if( $option === self::USER_ALLOWED ) {
+			$userMock->expects( $this->any() )
+				->method( 'isAllowed' )
+				->willReturn( true );
+		}
+
+		return $userMock;
 	}
 
 }
