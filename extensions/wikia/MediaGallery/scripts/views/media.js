@@ -20,6 +20,10 @@ define('mediaGallery.media', [], function () {
 			$.proxy(this.captionHover, this),
 			$.proxy(this.captionHoverOut, this)
 		);
+		this.$caption.toggle(
+			$.proxy(this.captionHover, this),
+			$.proxy(this.captionHoverOut, this)
+		);
 	};
 
 	/**
