@@ -147,23 +147,6 @@ ve.ui.Dialog.prototype.getSetupProcess = function ( data ) {
 };
 
 /**
- * Aligns the edge of the dialog with the edge of the surface
- */
-ve.ui.Dialog.prototype.alignToSurface = function () {
-	var padding = 10,
-		$surface = this.surface.getView().$element,
-		surfaceOffset = $surface.offset();
-
-	if ( this.surface.getView().getFocusedNode().getHorizontalBias() === 'right' ) {
-		this.frame.$element.parent()
-			.css( 'left', surfaceOffset.left - padding );
-	} else {
-		this.frame.$element.parent()
-			.css( 'left', surfaceOffset.left + $surface.width() - this.frame.$element.parent().outerWidth() + padding );
-	}
-};
-
-/**
  * Get the surface fragment the dialog is for
  *
  * @returns {ve.dm.SurfaceFragment|null} Surface fragment the dialog is for, null if the dialog is closed
