@@ -4,11 +4,14 @@
  *
  * @author Federico "Lox" Lucignano <federico@wikia-inc.com>
  */
-use Wikia\Search\Config, Wikia\Search\QueryService\Factory, Wikia\Search\QueryService\DependencyContainer;
+use Wikia\Search\Config;
+use Wikia\Search\QueryService\Factory;
+use Wikia\Search\QueryService\DependencyContainer;
+use Wikia\Util\GlobalStateWrapper;
 
 class ArticlesApiController extends WikiaApiController {
 
-	const CACHE_VERSION = 15;
+	const CACHE_VERSION = 16;
 
 	const POPULAR_ARTICLES_PER_WIKI = 10;
 	const POPULAR_ARTICLES_NAMESPACE = 0;
@@ -66,6 +69,7 @@ class ArticlesApiController extends WikiaApiController {
 
 	const PARAMETER_BASE_ARTICLE_ID = 'baseArticleId';
 
+	private $excludeNamespacesFromCategoryMembersDBQuery = false;
 
 	/**
 	 * Get the top articles by pageviews optionally filtering by category and/or namespaces
@@ -499,7 +503,21 @@ class ArticlesApiController extends WikiaApiController {
 					$namespaces = implode( '|', $namespaces );
 				}
 
-				$articles = self::getCategoryMembers( $category->getFullText(), $limit, $offset, $namespaces );
+				/**
+				 * Wrapping global wgMiserMode.
+				 *
+				 * wgMiserMode = true (default) changes the behavior of categorymembers mediawiki API, causing it to
+				 * filter by namespace after making database query constrained by $limit and thus resulting
+				 * in Api returning fewer than $limit results
+				 *
+				 * wgMiserMode = false filters on DB level
+				 */
+				$wrapper = new GlobalStateWrapper( [
+					'wgMiserMode' => $this->excludeNamespacesFromCategoryMembersDBQuery
+				] );
+				$articles = $wrapper->wrap( function () use ( $category, $limit, $offset, $namespaces ) {
+					return self::getCategoryMembers( $category->getFullText(), $limit, $offset, $namespaces );
+				} );
 			} else {
 				wfProfileOut( __METHOD__ );
 				throw new InvalidParameterApiException( self::PARAMETER_CATEGORY );
@@ -1242,5 +1260,21 @@ class ArticlesApiController extends WikiaApiController {
 			}
 		}
 		return $popularForArticle;
+	}
+
+	/**
+	 * @param $value boolean
+	 *
+	 * @see wgMiserMode
+	 */
+	public function setExcludeNamespacesFromCategoryMembersDBQuery($value) {
+		$this->excludeNamespacesFromCategoryMembersDBQuery = $value;
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function getExcludeNamespacesFromCategoryMembersDBQuery() {
+		return $this->excludeNamespacesFromCategoryMembersDBQuery;
 	}
 }

@@ -1199,12 +1199,6 @@ $wgAdPageLevelCategoryLangs = [ 'en' => true ];;
 $wgEnableJavaScriptErrorLogging = false;
 
 /**
- * @name $wgEnableRHonDesktop
- * Enables RH- hack on Desktop
- */
-$wgEnableRHonDesktop = false;
-
-/**
  * @name $wgLoadLateAdsAfterPageLoad
  * Enables postpones start for ads in late queue until page "load" event.
  */
@@ -1229,6 +1223,12 @@ $wgEnableAdEngineExt = true;
 $wgAdDriverUseEbay = false;
 
 /**
+ * @name $wgAdDriverUseRemnantGpt
+ * Enables additional call to dart before Liftium
+ */
+$wgAdDriverUseRemnantGpt = false;
+
+/**
  * @name $wgAdDriverUseBottomLeaderboard
  * Whether to enable new fancy footer ad BOTTOM_LEADERBOARD
  */
@@ -1245,6 +1245,27 @@ $wgAdDriverUseTopInContentBoxad = true;
  * Impression capping for BOTTOM_LEADERBOARD. Array with the numbers of the potential ad calls.
  */
 $wgAdDriverBottomLeaderboardImpressionCapping = [2, 4, 6];
+
+/**
+ * @name $wgSitewideDisableLiftium
+ * @link http://one.wikia-inc.com/wiki/Ads/Disaster_recovery
+ * Disable Liftium sitewide in case a disaster happens (it's an instant global).
+ */
+$wgSitewideDisableLiftium = false;
+
+/**
+ * @name $wgSitewideDisableSevenOneMedia
+ * @link http://one.wikia-inc.com/wiki/Ads/Disaster_recovery
+ * Disable SevenOneMedia sitewide in case a disaster happens (it's an instant global).
+ */
+$wgSitewideDisableSevenOneMedia = false;
+
+/**
+ * @name $wgSitewideDisableIVW2
+ * @link http://one.wikia-inc.com/wiki/Ads/Disaster_recovery
+ * Disable IVW2 Analytics pixel sitewide in case a disaster happens (it's an instant global).
+ */
+$wgSitewideDisableIVW2 = false;
 
 /**
  * @name $wgAdDriverUseSevenOneMedia
