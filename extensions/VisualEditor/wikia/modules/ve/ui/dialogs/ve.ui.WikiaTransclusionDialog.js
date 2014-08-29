@@ -177,6 +177,14 @@ ve.ui.WikiaTransclusionDialog.prototype.position = function () {
 		$surface = this.surface.getView().$element,
 		surfaceOffset = $surface.offset();
 
+	this.frame.$element.parent().css( {
+		'width': 400,
+		'height': dialogHeight,
+		'top': ( viewportHeight - dialogHeight ) / 2,
+		'max-height': 'none',
+		'left': left
+	} );
+
 	if ( this.surface.getView().getFocusedNode().getHorizontalBias() === 'right' ) {
 		this.frame.$element.parent()
 			.css( 'left', surfaceOffset.left - padding );
@@ -184,12 +192,6 @@ ve.ui.WikiaTransclusionDialog.prototype.position = function () {
 		this.frame.$element.parent()
 			.css( 'left', surfaceOffset.left + $surface.width() - this.frame.$element.parent().outerWidth() + padding );
 	}
-	this.frame.$element.parent().css( {
-		'width': 400,
-		'height': dialogHeight,
-		'top': ( viewportHeight - dialogHeight ) / 2,
-		'max-height': 'none'
-	} );
 };
 
 /* Registration */
