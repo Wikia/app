@@ -181,8 +181,7 @@ ve.ui.WikiaTransclusionDialog.prototype.position = function () {
 		'width': 400,
 		'height': dialogHeight,
 		'top': ( viewportHeight - dialogHeight ) / 2,
-		'max-height': 'none',
-		'left': left
+		'max-height': 'none'
 	} );
 
 	if ( this.surface.getView().getFocusedNode().getHorizontalBias() === 'right' ) {
