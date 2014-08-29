@@ -323,7 +323,8 @@ ve.ui.MWTemplateDialog.prototype.initialize = function () {
 	this.filterInput = new OO.ui.TextInputWidget( {
 		'$': this.$,
 		'icon': 'search',
-		'type': 'search'
+		'type': 'search',
+		'placeholder': ve.msg( 'wikia-visualeditor-dialog-transclusion-filter' )
 	} );
 	this.$filter = this.$( '<div>' )
 		.addClass( 've-ui-mwTemplateDialog-filter' )

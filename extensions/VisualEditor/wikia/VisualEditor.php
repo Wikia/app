@@ -154,6 +154,7 @@ $wgResourceModules += array(
 			'wikia-visualeditor-wikitext-warning',
 			'wikia-visualeditor-aliennode-tooltip',
 			'wikia-visualeditor-dialog-transclusion-title',
+			'wikia-visualeditor-dialog-transclusion-filter',
 			'wikia-visualeditor-dialogbutton-transclusion-tooltip',
 			'wikia-visualeditor-savedialog-label-save',
 			'wikia-visualeditor-savedialog-label-restore',
