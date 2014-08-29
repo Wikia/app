@@ -1,11 +1,13 @@
 <?php
 
+use Wikia\MastersPoll;
+
 /**
  * Unit tests for LBFactory_Wikia::normalizeMultipleMasters
  *
  * @author macbre
  */
-class LoadBalancerTest extends WikiaBaseTest {
+class MastersPollTest extends WikiaBaseTest {
 
 	public function testNormalizeMultipleMasters() {
 		$masters = [
@@ -38,11 +40,20 @@ class LoadBalancerTest extends WikiaBaseTest {
 			),
 		];
 
-		LBFactory_Wikia::normalizeMultipleMasters( $conf );
-		$servers = $conf['sectionLoads'];
+		$poll = new MastersPoll($conf);
 
+		$servers = $poll->getConf()['sectionLoads'];
+		$mastersPoll = $poll->getConf()['mastersPoolBySection'];
+
+		$selectedMaster = array_keys( $servers['c1'] )[0];
+
+		# master selection
 		$this->assertEquals( $slaves, array_slice( $servers['c1'], 1 ), 'List of slaves is maintained' );
-		$this->assertContains( array_keys( $servers['c1'] )[0], array_keys( $masters ), 'Master is randomized' );
+		$this->assertContains( $selectedMaster, array_keys( $masters ), 'Master is randomized' );
 		$this->assertEquals( $central, $servers['central'], 'central cluster config is left unchanged' );
+
+		# masters poll
+		$this->assertInternalType('array', $mastersPoll['c1'], 'Masters poll should be generated' );
+		$this->assertNotContains( $selectedMaster, $mastersPoll['c1'], 'Masters poll should not contain selected master' );
 	}
 }

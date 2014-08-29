@@ -491,6 +491,11 @@ class LoadBalancer {
 		# Now we have an explicit index into the servers array
 		$conn = $this->openConnection( $i, $wiki );
 		if ( !$conn ) {
+			# master connection error handling
+			if ( $i == $this->getWriterIndex() ) {
+				wfGetLBFactory()->getMastersPoll()->markMasterAsBroken( $this->mServers[$i] );
+			}
+
 			$this->reportConnectionError( $this->mErrorConnection );
 		}
 

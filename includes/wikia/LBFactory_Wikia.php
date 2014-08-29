@@ -4,6 +4,8 @@
  * @ingroup Database
  */
 
+use Wikia\MastersPoll;
+
 /**
  * A multi-wiki, multi-master factory for Wikia and similar installations.
  * Ignores the old configuration globals
@@ -12,32 +14,15 @@
  */
 class LBFactory_Wikia extends LBFactory_Multi {
 
-	function __construct( $conf ) {
-		self::normalizeMultipleMasters( $conf );
+	private $mastersPoll;
 
-		parent::__construct( $conf );
+	function __construct( $conf ) {
+		$this->mastersPoll = new MastersPoll($conf);
+		parent::__construct( $this->mastersPoll->getConf() );
 	}
 
-	/**
-	 * Normalize the list of multiple masters and slaves
-	 *
-	 * @param array $sectionLoads
-	 * @author macbre
-	 * @see PLATFORM-434
-	 */
-	static function normalizeMultipleMasters( Array &$conf ) {
-		foreach ( $conf['sectionLoads'] as $sectionName => &$sectionConf ) {
-			# section config has both "masters" and "slaves" section
-			if ( isset( $sectionConf['masters'] ) && isset( $sectionConf['slaves'] ) ) {
-				# randomize masters server and normalize the section config
-				$master = array_rand( $sectionConf['masters'], 1 );
-
-				wfDebug( sprintf( "%s: randomizing master for %s: picked %s\n", __METHOD__, $sectionName, $master ) );
-
-				# make it flat
-				$sectionConf = array( $master => $sectionConf['masters'][$master] ) + $sectionConf['slaves'];
-			}
-		}
+	function getMastersPoll() {
+		return $this->mastersPoll;
 	}
 
 	function getSectionForWiki( $wiki = false ) {
