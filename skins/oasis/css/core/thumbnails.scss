@@ -73,6 +73,10 @@ $color-subtle-text: mix($color-page, $color-alternate-text, 50%);
 
 	.caption {
 		color: $color-alternate-text;
+
+		a, img {
+			display: inline;
+		}
 	}
 
 	&.show-info-icon {
