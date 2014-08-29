@@ -88,8 +88,11 @@ ve.ui.WikiaFocusWidget.prototype.setNode = function ( node ) {
 ve.ui.WikiaFocusWidget.prototype.unsetNode = function () {
 	this.node = null;
 	this.adjustLayout();
+
 	this.toolbar.enableFloatable();
+	// The page may already be scrolled, so trigger the scroll handler
 	this.toolbar.onWindowScroll();
+
 	// Delay for animation
 	setTimeout( ve.bind( function () {
 		this.$element.removeClass( 've-ui-wikiaFocusWidget-node' );
