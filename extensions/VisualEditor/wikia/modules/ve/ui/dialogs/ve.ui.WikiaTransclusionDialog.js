@@ -60,7 +60,7 @@ ve.ui.WikiaTransclusionDialog.prototype.initialize = function () {
 
 	// Initialization
 	this.modeButton.$element.addClass( 've-ui-mwTransclusionDialog-modeButton' );
-	this.$foot.append( this.previewButton.$element, this.cancelButton.$element );
+	this.$foot.append( this.cancelButton.$element );
 };
 
 /**
@@ -137,6 +137,8 @@ ve.ui.WikiaTransclusionDialog.prototype.getSetupProcess = function ( data ) {
 				$( window ).off( 'mousewheel', this.onWindowMouseWheelHandler );
 				// Focus
 				this.surface.getFocusWidget().setNode( this.selectedViewNode );
+				// Tools
+				this.$foot.append( this.previewButton.$element );
 			}
 		}, this );
 };
@@ -161,6 +163,7 @@ ve.ui.WikiaTransclusionDialog.prototype.getTeardownProcess = function ( data ) {
 				this.unsetAllowScroll();
 			}
 			this.frame.$element.parent().css( 'width', '' );
+			this.previewButton.$element.remove();
 		}, this );
 };
 
