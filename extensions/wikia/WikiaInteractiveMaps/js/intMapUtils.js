@@ -385,7 +385,6 @@ define(
 
 			if (isUserLoggedIn()) {
 				loadModal(actionConfig);
-				track(tracker.ACTIONS.CLICK_LINK_BUTTON, 'create-map-clicked');
 			} else {
 				showForceLoginModal(actionConfig.origin, function () {
 					loadModal(actionConfig);

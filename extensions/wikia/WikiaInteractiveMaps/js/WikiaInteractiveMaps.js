@@ -20,6 +20,7 @@ require(
 			})
 			.on('click', 'button#createMap', function () {
 				utils.triggerAction(config, 'createMap');
+				utils.track(utils.trackerActions.CLICK_LINK_BUTTON, 'create-map-clicked', 0);
 			})
 			.on('click', 'a#deleteMap', function (event) {
 				event.preventDefault();
