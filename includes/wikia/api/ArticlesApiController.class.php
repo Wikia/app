@@ -996,7 +996,7 @@ class ArticlesApiController extends WikiaApiController {
 			}
 
 			if ( $baseArticleId !== false ) {
-				$popular = $this->rerankPopularToArticle( $popular, $baseArticleId );
+				$popular = $this->rerankPopularToArticle( $popular, $baseArticleId, $limit );
 			}
 
 			$this->wg->set( $key, $popular, self::CLIENT_CACHE_VALIDITY );
@@ -1027,9 +1027,15 @@ class ArticlesApiController extends WikiaApiController {
 	 * 2) Get most popular articles of this category
 	 * 3) Rerank these articles due to links in base article
 	 */
-	protected function rerankPopularToArticle( $popular, $baseArticleId ) {
+	protected function rerankPopularToArticle( $popular, $baseArticleId, $limit ) {
 		$links = ( new ApiOutboundingLinksService() )->getOutboundingLinks( $baseArticleId );
 		$rerankedPopular = $this->reorderForLinks( $popular, $links );
+
+		$baseArticleTitle = Title::newFromID($baseArticleId);
+		$baseArticleUrl = $baseArticleTitle->getLocalURL();
+
+		// if base article in the list of popular - remove it from this list
+		$popular = array_filter( $popular, $this->otherUrlThan( $baseArticleUrl ) );
 
 		if ( $rerankedPopular === $popular ) {
 
@@ -1039,9 +1045,15 @@ class ArticlesApiController extends WikiaApiController {
 
 				$popularForCategory = $this->getPopularForCategory( $category );
 
-				$rerankedPopularForCategory = $this->reorderForLinks( $popularForCategory, $links );
+				// if base article in the list of popular for category - remove it from this list
+				$popularForCategory = array_filter( $popularForCategory, $this->otherUrlThan( $baseArticleUrl ) );
 
-				$popular = $rerankedPopularForCategory;
+				if( count( $popularForCategory ) >= $limit ) {
+
+					$rerankedPopularForCategory = $this->reorderForLinks( $popularForCategory, $links );
+
+					$popular = $rerankedPopularForCategory;
+				}
 			}
 
 		} else {
@@ -1049,6 +1061,20 @@ class ArticlesApiController extends WikiaApiController {
 		}
 
 		return $popular;
+	}
+
+	/**
+	 * Return function, which consumes objects, which contains field 'url'
+	 * and compares value of this field with $baseUrl
+	 * if these values are equal - returns false
+	 *
+	 * This function used for filtering array
+	 */
+	protected function otherUrlThan( $baseUrl ) {
+		return function( $item ) use ( $baseUrl ) {
+			$url = $item[ 'url' ];
+			return $url != $baseUrl;
+		};
 	}
 
 	protected function getCategoryOfArticle( $articleId ) {
