@@ -57,7 +57,6 @@ ve.ui.MWTemplateDialog.static.bookletLayoutConfig = {
 ve.ui.MWTemplateDialog.prototype.onTransclusionReady = function () {
 	this.loaded = true;
 	this.$element.addClass( 've-ui-mwTemplateDialog-ready' );
-	this.filterInput.focus();
 	this.popPending();
 };
 
