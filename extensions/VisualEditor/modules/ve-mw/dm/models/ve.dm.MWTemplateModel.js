@@ -345,7 +345,7 @@ ve.dm.MWTemplateModel.prototype.serialize = function () {
 		params = this.getParameters();
 
 	if ( !template.originalParams ) {
-		template.originalParams = Object.keys( this.originalData.params );
+		template.originalParams = this.originalData ? Object.keys( this.originalData.params ) : [];
 	}
 
 	for ( name in params ) {
@@ -369,7 +369,7 @@ ve.dm.MWTemplateModel.prototype.getWikitext = function () {
 	var param,
 		wikitext = this.getTarget().wt,
 		params = this.getParameters(),
-		originalParams = Object.keys( this.originalData.params );
+		originalParams = this.originalData ? Object.keys( this.originalData.params ) : [];
 
 	for ( param in params ) {
 		if ( param === '' ) {
