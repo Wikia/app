@@ -77,7 +77,8 @@ class WikiaSearchIndexerController extends WikiaController
 	 * @return bool
 	 */
 	public function isAnonAccessAllowedInCurrentContext() {
-		$apiKey = $this->getRequest()->getVal( self::REQUEST_PARAMETER_API_KEY, null );
+		$originalRequest = RequestContext::getMain()->getRequest();
+		$apiKey = $originalRequest->getVal( self::REQUEST_PARAMETER_API_KEY, null );
 		global $wgPrivateWikiaApiAccessKey;
 		if( ( $apiKey !== null ) && ( $apiKey === $wgPrivateWikiaApiAccessKey ) ) {
 			return true;

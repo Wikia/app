@@ -137,6 +137,11 @@ abstract class WikiaController extends WikiaDispatchableObject {
 	 * For example, extending of this method can be used
 	 * for developing API for anonymous users, but with access keys.
 	 *
+	 * Important: due to complexity of existing flow of processing requests -
+	 * at the point of execution of this method, instance of controller is not injected yet with request object
+	 *
+	 * So, if you want to access request, use: RequestContext::getMain()->getRequest()
+	 *
 	 * @return bool
 	 */
 	public function isAnonAccessAllowedInCurrentContext() {
