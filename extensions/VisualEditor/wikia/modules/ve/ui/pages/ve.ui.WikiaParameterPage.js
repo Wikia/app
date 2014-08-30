@@ -28,7 +28,7 @@ ve.ui.WikiaParameterPage = function VeUiWikiaParameterPage( parameter, name, con
 			'$': this.$,
 			'frameless': true,
 			'icon': 'arrow-circled',
-			'label': ve.msg( 'wikia-visualeditor-dialog-transclusion-get-info', this.template.getTarget().wt ),
+			'label': ve.msg( 'wikia-visualeditor-dialog-transclusion-get-info', this.template.getSpec().getLabel() ),
 			'tabIndex': -1,
 			'classes': [ 've-ui-mwParameterPage-templateInfoButton' ]
 		} )

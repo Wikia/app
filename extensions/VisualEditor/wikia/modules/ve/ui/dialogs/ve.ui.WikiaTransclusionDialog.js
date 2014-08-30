@@ -146,8 +146,7 @@ ve.ui.WikiaTransclusionDialog.prototype.getSetupProcess = function ( data ) {
 
 			if ( single ) {
 				// Appearance
-				this.frame.$element.parent().css( 'width', 400 );
-				this.alignToSurface();
+				this.position();
 				// Drag
 				this.setDraggable();
 				// Overlay
@@ -195,7 +194,11 @@ ve.ui.WikiaTransclusionDialog.prototype.getTeardownProcess = function ( data ) {
 			if ( this.allowScroll ) {
 				this.unsetAllowScroll();
 			}
-			this.frame.$element.parent().css( 'width', '' );
+			this.frame.$element.parent().css( {
+				'width': '',
+				'height': '',
+				'max-height': ''
+			} );
 			this.previewButton.$element.remove();
 		}, this );
 };
@@ -238,6 +241,35 @@ ve.ui.WikiaTransclusionDialog.prototype.onFilterInputBlur = function () {
 			'label': 'dialog-template-filter'
 		} );
 		this.shouldTrackFilter = false;
+	}
+};
+
+/**
+ * Position dialog. Vertically in the middle of the viewport
+ * and horizontally with the edge (left or right) of the surface
+ *
+ * @method
+ */
+ve.ui.WikiaTransclusionDialog.prototype.position = function () {
+	var viewportHeight = $( window ).height(),
+		dialogHeight = Math.min( 600, viewportHeight * 0.7 ),
+		padding = 10,
+		$surface = this.surface.getView().$element,
+		surfaceOffset = $surface.offset();
+
+	this.frame.$element.parent().css( {
+		'width': 400,
+		'height': dialogHeight,
+		'top': ( viewportHeight - dialogHeight ) / 2,
+		'max-height': 'none'
+	} );
+
+	if ( this.surface.getView().getFocusedNode().getHorizontalBias() === 'right' ) {
+		this.frame.$element.parent()
+			.css( 'left', surfaceOffset.left - padding );
+	} else {
+		this.frame.$element.parent()
+			.css( 'left', surfaceOffset.left + $surface.width() - this.frame.$element.parent().outerWidth() + padding );
 	}
 };
 
