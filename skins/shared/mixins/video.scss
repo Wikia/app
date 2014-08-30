@@ -1,0 +1,10 @@
+@mixin video {
+	.videoAffiliateLink {
+		margin-bottom: 5px;
+		text-align: center;
+
+		img.crunchyroll-aff-logo {
+			-webkit-user-select: none;
+		}
+	}
+}
