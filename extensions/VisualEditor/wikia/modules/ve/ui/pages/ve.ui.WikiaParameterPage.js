@@ -56,4 +56,3 @@ ve.ui.WikiaParameterPage.prototype.onTemplateInfoButtonClick = function () {
 		'label': 'dialog-template-get-info'
 	} );
 };
-
