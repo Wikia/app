@@ -17,6 +17,9 @@
 ve.ui.WikiaTransclusionDialog = function VeUiWikiaTransclusionDialog( config ) {
 	// Parent constructor
 	ve.ui.WikiaTransclusionDialog.super.call( this, config );
+
+	// Properties
+	this.editFlow = null;
 };
 
 /* Inheritance */
