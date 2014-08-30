@@ -127,6 +127,23 @@ class WikiaInteractiveMapsMapController extends WikiaInteractiveMapsBaseControll
 	}
 
 	/**
+	 * Extracts scheme and hostname origin from a given url
+	 * @param $url
+	 * @return string
+	 */
+	static public function getOriginFromUrl( $url ) {
+		$urlParts = parse_url( $url );
+		$host = $urlParts[ 'host' ];
+		//Ensure that preview / verify / sandboxes get the original url
+		$patterns = ['/preview\./', '/verify\./', '/sandbox-.+?\./'];
+		$host = preg_replace( $patterns, '', $host );
+		return http_build_url( '', [
+			'scheme' => $urlParts [ 'scheme' ],
+			'host' => $host
+		] );
+	}
+
+	/**
 	 * Helper method which sends request to maps service to create a map from existing tiles' set
 	 * and processes the response providing results array
 	 *
@@ -135,12 +152,14 @@ class WikiaInteractiveMapsMapController extends WikiaInteractiveMapsBaseControll
 	private function createMapFromTilesetId() {
 		$cityId = $this->getData( 'cityId' );
 		$wiki = WikiFactory::getWikiByID( $cityId );
+		$url = WikiFactory::getLocalEnvURL( $this->wg->request->getFullRequestURL() );
+		$cityUrl = self::getOriginFromUrl( $url );
 		$response = $this->mapsModel->saveMap( [
 			'title' => $this->getData( 'title' ),
 			'tile_set_id' => $this->getData( 'tileSetId' ),
 			'city_id' => $cityId,
 			'city_title' => $wiki->city_title,
-			'city_url' => $wiki->city_url,
+			'city_url' => $cityUrl,
 			'created_by' => $this->getData( 'creatorName' ),
 		] );
 
