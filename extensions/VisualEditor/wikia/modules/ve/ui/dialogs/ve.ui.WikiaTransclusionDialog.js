@@ -163,6 +163,7 @@ ve.ui.WikiaTransclusionDialog.prototype.getSetupProcess = function ( data ) {
 					$( window ).off( 'mousewheel', this.onWindowMouseWheelHandler );
 					// Focus
 					this.surface.getFocusWidget().setNode( this.selectedViewNode );
+					this.surface.getModel().setSelection( new ve.Range( 0 ) );
 					this.$body.append( this.$filter );
 					// Tools
 					this.$foot.append( this.previewButton.$element );
