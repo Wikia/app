@@ -49,7 +49,8 @@ ve.ui.Dialog.prototype.setDraggable = function () {
 		'handle': this.$dragHandle,
 		'start': ve.bind( this.onDragStart, this ),
 		'stop': ve.bind( this.onDragStop, this ),
-		'containment': 'window'
+		'containment': 'window',
+		'scroll': false
 	} );
 
 	this.frame.$element.parent().prepend( this.$dragIframeFix, this.$dragHandle );
