@@ -187,6 +187,13 @@ class LightboxController extends WikiaController {
 
 		$data = WikiaFileHelper::getMediaDetail( $title, $config );
 
+		if ( isset( $data['providerName'], $data['videoEmbedCode']['html'] ) ) {
+			$data['videoEmbedCode']['html'] = WikiaFileHelper::getVideoAffiliateLogoMarkup( $data['providerName'] ) .
+                $data['videoEmbedCode']['html'];
+		} else {
+			$affiliateVideoLogo = null;
+		}
+
 		$articles = $data['articles'];
 		list( $smallerArticleList, $articleListIsSmaller ) = WikiaFileHelper::truncateArticleList( $articles, self::POSTED_IN_ARTICLES );
 		$isPostedIn = empty( $smallerArticleList ) ? false : true;	// Bool to tell mustache to print "posted in" section

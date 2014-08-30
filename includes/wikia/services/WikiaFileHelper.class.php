@@ -678,4 +678,21 @@ class WikiaFileHelper extends Service {
 
 		return wfReplaceImageServer( $file->getThumbUrl( $cropStr . '-' . $file->getName() . $append ) );
 	}
+
+	/**
+	 * Retrieves the vidoe affiliate logo markup
+	 * @param string $providerName
+	 * @return string
+	 */
+	public static function getVideoAffiliateLogoMarkup( $providerName ) {
+		$markup = '';
+		$providerName = strtolower( $providerName );
+
+		if ( $providerName == 'crunchyroll' ) {
+			$markup = F::app()->renderView( 'FilePageController', 'videoAffiliate', ['provider' => $providerName] );
+		}
+
+		return $markup;
+	}
+
 }

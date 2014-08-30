@@ -1,5 +1,6 @@
 @import "skins/shared/mixins/arrow";
 @import "skins/shared/mixins/clearfix";
+@import "skins/shared/mixins/video";
 @import "skins/shared/color";
 
 .page-listings {
@@ -143,4 +144,8 @@ ul.tabs {
 
 p.hidden {
   display: none;
+}
+
+.WikiaArticle {
+	@include video;
 }
