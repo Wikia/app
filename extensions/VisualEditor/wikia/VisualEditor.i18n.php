@@ -32,6 +32,7 @@ $messages['en'] = array(
 	'wikia-visualeditor-wikitext-warning' => 'You are using the beta VisualEditor - wikitext does not work here. Select \'Source mode\' from the \'More\' menu to use wikitext.',
 	'wikia-visualeditor-aliennode-tooltip' => 'Sorry, this element can only be edited in the Classic Editor for now.',
 	'wikia-visualeditor-dialog-transclusion-title' => 'Edit',
+	'wikia-visualeditor-dialog-transclusion-filter' => 'Search for a particular field or value',
 	'wikia-visualeditor-dialogbutton-transclusion-tooltip' => 'Template',
 	'wikia-visualeditor-savedialog-label-save' => 'Publish',
 	'wikia-visualeditor-savedialog-label-restore' => 'Restore page',
@@ -100,6 +101,7 @@ $messages['qqq'] = array(
 	'wikia-visualeditor-aliennode-tooltip' => 'Tooltip for items that VisualEditor cannot edit',
 	'wikia-visualeditor-dialog-transclusion-title' => 'Title of the transclusion dialog.
 {{Identical|Template}}',
+	'wikia-visualeditor-dialog-transclusion-filter' => 'Placeholder text that appears in the transclusion dialog filter field',
 	'wikia-visualeditor-dialogbutton-transclusion-tooltip' => 'Tooltip for the transclusion tool button.
 {{Identical|Template}}',
 	'wikia-visualeditor-savedialog-label-save' => 'Label text for save button when the user is editing a current revision of an extant page.

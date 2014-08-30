@@ -45,7 +45,8 @@ ve.ui.MWTemplateDialog.static.modelClasses = [ ve.dm.MWTransclusionNode ];
  */
 ve.ui.MWTemplateDialog.static.bookletLayoutConfig = {
 	'continuous': true,
-	'outlined': false
+	'outlined': false,
+	'autoFocus': false
 };
 
 /* Methods */
@@ -140,7 +141,7 @@ ve.ui.MWTemplateDialog.prototype.onReplacePart = function ( removed, added ) {
  * @param {ve.dm.MWParameterModel} param Added param
  */
 ve.ui.MWTemplateDialog.prototype.onAddParameter = function ( param ) {
-	var page;
+	var page, $parameterPages;
 
 	if ( param.getName() ) {
 		page = new ve.ui.WikiaParameterPage( param, param.getId(), { '$': this.$ } );
@@ -154,18 +155,22 @@ ve.ui.MWTemplateDialog.prototype.onAddParameter = function ( param ) {
 		this.onAddParameterBeforeLoad( page );
 	}
 
+	$parameterPages = this.$body.find( '.ve-ui-mwParameterPage' );
+
 	// Recalculate tab indexes
-	this.$body.find( '.ve-ui-mwParameterPage' ).each( function ( index ) {
+	$parameterPages.each( function ( index ) {
 		$( this )
 			.find( '.ve-ui-mwParameterPage-field > .oo-ui-textInputWidget > textarea' )
-				.attr( 'tabindex', index * 3 + 1 )
-			.end()
-			.find( '.ve-ui-mwParameterPage-infoButton > a' )
 				.attr( 'tabindex', index * 3 + 2 )
 			.end()
+			.find( '.ve-ui-mwParameterPage-infoButton > a' )
+				.attr( 'tabindex', index * 3 + 3 )
+			.end()
 			.find( '.ve-ui-mwParameterPage-removeButton > a' )
-				.attr( 'tabindex', index * 3 + 3 );
+				.attr( 'tabindex', index * 3 + 4 );
 	} );
+
+	this.applyButton.$button.attr( 'tabindex', $parameterPages.length * 3 + 2 );
 };
 
 /**
@@ -323,8 +328,10 @@ ve.ui.MWTemplateDialog.prototype.initialize = function () {
 	this.filterInput = new OO.ui.TextInputWidget( {
 		'$': this.$,
 		'icon': 'search',
-		'type': 'search'
+		'type': 'search',
+		'placeholder': ve.msg( 'wikia-visualeditor-dialog-transclusion-filter' )
 	} );
+	this.filterInput.$input.attr( 'tabindex', 1 );
 	this.$filter = this.$( '<div>' )
 		.addClass( 've-ui-mwTemplateDialog-filter' )
 		.append( this.filterInput.$element );
