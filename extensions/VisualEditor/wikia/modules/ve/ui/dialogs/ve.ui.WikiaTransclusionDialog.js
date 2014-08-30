@@ -17,6 +17,8 @@
 ve.ui.WikiaTransclusionDialog = function VeUiWikiaTransclusionDialog( config ) {
 	// Parent constructor
 	ve.ui.WikiaTransclusionDialog.super.call( this, config );
+
+	this.shouldTrackFilter = false;
 };
 
 /* Inheritance */
@@ -222,7 +224,7 @@ ve.ui.WikiaTransclusionDialog.prototype.applyChanges = function () {
  * @inheritdoc
  */
 ve.ui.WikiaTransclusionDialog.prototype.onFilterInputChange = function () {
-	this.shouldTrackSearch = ( this.filterInput.getValue().length > 1 );
+	this.shouldTrackFilter = this.filterInput.getValue().length > 1;
 	return ve.ui.WikiaTransclusionDialog.super.prototype.onFilterInputChange.call( this );
 };
 
@@ -230,12 +232,12 @@ ve.ui.WikiaTransclusionDialog.prototype.onFilterInputChange = function () {
  * Handle blur event on filter input element
  */
 ve.ui.WikiaTransclusionDialog.prototype.onFilterInputBlur = function () {
-	if ( this.shouldTrackSearch ) {
+	if ( this.shouldTrackFilter ) {
 		ve.track( 'wikia', {
 			'action': ve.track.actions.SUBMIT,
 			'label': 'dialog-template-filter'
 		} );
-		this.shouldTrackSearch = false;
+		this.shouldTrackFilter = false;
 	}
 };
 
