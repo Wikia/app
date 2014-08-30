@@ -20,6 +20,7 @@ ve.ui.WikiaTransclusionDialog = function VeUiWikiaTransclusionDialog( config ) {
 
 	// Properties
 	this.editFlow = null;
+	this.shouldTrackFilter = false;
 };
 
 /* Inheritance */
@@ -60,6 +61,7 @@ ve.ui.WikiaTransclusionDialog.prototype.initialize = function () {
 	// Events
 	this.cancelButton.connect( this, { 'click': 'onCancelButtonClick' } );
 	this.previewButton.connect( this, { 'click': 'onPreviewButtonClick' } );
+	this.filterInput.$input.on( 'blur', ve.bind( this.onFilterInputBlur, this ) );
 
 	// Initialization
 	this.modeButton.$element.addClass( 've-ui-mwTransclusionDialog-modeButton' );
@@ -70,6 +72,7 @@ ve.ui.WikiaTransclusionDialog.prototype.initialize = function () {
  * @inheritdoc
  */
 ve.ui.WikiaTransclusionDialog.prototype.onTransclusionReady = function () {
+	var parts;
 	// Parent method
 	ve.ui.WikiaTransclusionDialog.super.prototype.onTransclusionReady.call( this );
 
@@ -80,6 +83,14 @@ ve.ui.WikiaTransclusionDialog.prototype.onTransclusionReady = function () {
 	this.transclusionModel.once( 'change', ve.bind( function () {
 		this.transclusionModel.connect( this, { 'change': 'onParameterInputValueChange' } );
 	}, this ) );
+
+	parts = this.transclusionModel.getParts();
+	if ( parts.length === 1 && parts[0].getParameters().length === 0 ) {
+		ve.track( 'wikia', {
+			'action': ve.track.actions.OPEN,
+			'label': 'dialog-template-no-parameters'
+		} );
+	}
 };
 
 /**
@@ -95,6 +106,13 @@ ve.ui.WikiaTransclusionDialog.prototype.onCancelButtonClick = function () {
 ve.ui.WikiaTransclusionDialog.prototype.onPreviewButtonClick = function () {
 	this.previewButton.setDisabled( true );
 	this.selectedViewNode.update( { wikitext: this.transclusionModel.getWikitext() } );
+	this.previewCount += 1;
+
+	ve.track( 'wikia', {
+		'action': ve.track.actions.CLICK,
+		'label': 'dialog-template-preview-button',
+		'value': this.previewCount
+	} );
 };
 
 /**
@@ -148,10 +166,21 @@ ve.ui.WikiaTransclusionDialog.prototype.getSetupProcess = function ( data ) {
 					this.$body.append( this.$filter );
 					// Tools
 					this.$foot.append( this.previewButton.$element );
+
+					ve.track( 'wikia', {
+						'action': ve.track.actions.OPEN,
+						'label': 'dialog-template-single'
+					} );
 				}
 			} else {
 				this.frame.$content.addClass( 've-ui-mwTemplateDialog-insertFlow' );
+
+				ve.track( 'wikia', {
+					'action': ve.track.actions.OPEN,
+					'label': 'dialog-template-multiple'
+				} );
 			}
+			this.previewCount = 0;
 		}, this );
 };
 
@@ -187,6 +216,47 @@ ve.ui.WikiaTransclusionDialog.prototype.getTeardownProcess = function ( data ) {
 			this.frame.$content.removeClass( 've-ui-mwTemplateDialog-insertFlow ve-ui-mwTemplateDialog-editFlow' );
 
 		}, this );
+};
+
+/**
+ * @inheritdoc
+ */
+ve.ui.WikiaTransclusionDialog.prototype.applyChanges = function () {
+	if ( this.selectedNode ) {
+		if ( this.selectedNode.isSingleTemplate() ) {
+			ve.track( 'wikia', {
+				'action': ve.track.actions.CLICK,
+				'label': 'dialog-template-apply-button-single'
+			} );
+		} else {
+			ve.track( 'wikia', {
+				'action': ve.track.actions.CLICK,
+				'label': 'dialog-template-apply-button-multiple'
+			} );
+		}
+	}
+	return ve.ui.WikiaTransclusionDialog.super.prototype.applyChanges.call( this );
+};
+
+/**
+ * @inheritdoc
+ */
+ve.ui.WikiaTransclusionDialog.prototype.onFilterInputChange = function () {
+	this.shouldTrackFilter = this.filterInput.getValue().length > 1;
+	return ve.ui.WikiaTransclusionDialog.super.prototype.onFilterInputChange.call( this );
+};
+
+/**
+ * Handle blur event on filter input element
+ */
+ve.ui.WikiaTransclusionDialog.prototype.onFilterInputBlur = function () {
+	if ( this.shouldTrackFilter ) {
+		ve.track( 'wikia', {
+			'action': ve.track.actions.SUBMIT,
+			'label': 'dialog-template-filter'
+		} );
+		this.shouldTrackFilter = false;
+	}
 };
 
 /**
