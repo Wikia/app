@@ -28,7 +28,7 @@ ve.ui.WikiaParameterPage = function VeUiWikiaParameterPage( parameter, name, con
 			'$': this.$,
 			'frameless': true,
 			'icon': 'arrow-circled',
-			'label': ve.msg( 'wikia-visualeditor-dialog-transclusion-get-info', this.template.getTarget().wt ),
+			'label': ve.msg( 'wikia-visualeditor-dialog-transclusion-get-info', this.template.getSpec().getLabel() ),
 			'tabIndex': -1,
 			'classes': [ 've-ui-mwParameterPage-templateInfoButton' ]
 		} )
@@ -51,4 +51,8 @@ OO.inheritClass( ve.ui.WikiaParameterPage, ve.ui.MWParameterPage );
  */
 ve.ui.WikiaParameterPage.prototype.onTemplateInfoButtonClick = function () {
 	window.open( new mw.Title( this.template.getTitle() ).getUrl() );
+	ve.track( 'wikia', {
+		'action': ve.track.actions.CLICK,
+		'label': 'dialog-template-get-info'
+	} );
 };
