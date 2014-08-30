@@ -5,8 +5,6 @@
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
-/* global veTrack */
-
 /**
  * Dialog for inserting and editing MediaWiki transclusions.
  *
@@ -98,12 +96,12 @@ ve.ui.WikiaTransclusionDialog.prototype.onPreviewButtonClick = function () {
 	this.previewButton.setDisabled( true );
 	this.selectedViewNode.update( { wikitext: this.transclusionModel.getWikitext() } );
 	this.previewCount += 1;
-	if ( window.veTrack ) {
-		veTrack( {
-			action: 've-template-preview-button-click',
-			value: this.previewCount
-		} );
-	}
+
+	ve.track( 'both', {
+		'action': ve.track.actions.CLICK,
+		'label': 'dialog-template-preview-button',
+		'value': this.previewCount
+	} );
 };
 
 /**
@@ -152,13 +150,15 @@ ve.ui.WikiaTransclusionDialog.prototype.getSetupProcess = function ( data ) {
 				// Tools
 				this.$foot.append( this.previewButton.$element );
 
-				if ( window.veTrack ) {
-					veTrack( { action: 've-template-dialog-open-single' } );
-				}
+				ve.track( 'both', {
+					'action': ve.track.actions.OPEN,
+					'label': 'dialog-template-single'
+				} );
 			} else {
-				if ( window.veTrack ) {
-					veTrack( { action: 've-template-dialog-open-multi' } );
-				}
+				ve.track( 'both', {
+					'action': ve.track.actions.OPEN,
+					'label': 'dialog-template-multiple'
+				} );
 			}
 			this.previewCount = 0;
 		}, this );
@@ -195,11 +195,17 @@ ve.ui.WikiaTransclusionDialog.prototype.getTeardownProcess = function ( data ) {
  * @inheritdoc
  */
 ve.ui.WikiaTransclusionDialog.prototype.applyChanges = function () {
-	if ( window.veTrack ) {
+	if ( this.selectedNode ) {
 		if ( this.selectedNode.isSingleTemplate() ) {
-				veTrack( { action: 've-template-apply-changes-single' } );
+			ve.track( 'both', {
+				'action': ve.track.actions.CLICK,
+				'label': 'dialog-template-apply-button-single'
+			} );
 		} else {
-			veTrack( { action: 've-template-apply-changes-multi' } );
+			ve.track( 'both', {
+				'action': ve.track.actions.CLICK,
+				'label': 'dialog-template-apply-button-multiple'
+			} );
 		}
 	}
 	return ve.ui.WikiaTransclusionDialog.super.prototype.applyChanges.call( this );
@@ -224,8 +230,11 @@ ve.ui.WikiaTransclusionDialog.prototype.onFilterInputFocus = function () {
  * Handle blur event on filter input element
  */
 ve.ui.WikiaTransclusionDialog.prototype.onFilterInputBlur = function () {
-	if ( window.veTrack && this.shouldTrackSearch ) {
-		veTrack( { action: 've-template-filter-search' } );
+	if ( this.shouldTrackSearch ) {
+		ve.track( 'both', {
+			'action': ve.track.actions.SUBMIT,
+			'label': 'dialog-template-filter'
+		} );
 	}
 };
 
@@ -234,13 +243,15 @@ ve.ui.WikiaTransclusionDialog.prototype.onFilterInputBlur = function () {
  */
 ve.ui.WikiaTransclusionDialog.prototype.onReplacePart = function ( removed, added ) {
 	if (
-		window.veTrack &&
 		this.selectedNode &&
 		this.selectedNode.isSingleTemplate() &&
 		added instanceof ve.dm.MWTemplateModel &&
 		added.getParameters().length === 0
 	) {
-		veTrack( { action: 've-template-dialog-no-parameters' } );
+		ve.track( 'both', {
+			'action': ve.track.actions.OPEN,
+			'label': 'dialog-template-no-parameters'
+		} );
 	}
 	return ve.ui.WikiaTransclusionDialog.super.prototype.onReplacePart.call( this, removed, added );
 };

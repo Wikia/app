@@ -5,7 +5,7 @@
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
-/* global mw, veTrack */
+/* global mw */
 
 /**
  * Wikia transclusion dialog template page.
@@ -51,7 +51,9 @@ OO.inheritClass( ve.ui.WikiaParameterPage, ve.ui.MWParameterPage );
  */
 ve.ui.WikiaParameterPage.prototype.onTemplateInfoButtonClick = function () {
 	window.open( new mw.Title( this.template.getTitle() ).getUrl() );
-	if ( window.veTrack ) {
-		veTrack( { action: 've-template-info-click' } );
-	}
+	ve.track( 'both', {
+		'action': ve.track.actions.CLICK,
+		'label': 'dialog-template-get-info'
+	} );
 };
+
