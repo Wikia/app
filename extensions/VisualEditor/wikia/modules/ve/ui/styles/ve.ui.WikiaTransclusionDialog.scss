@@ -51,29 +51,31 @@
 
 }
 
-.ve-ui-mwTransclusionDialog-single {
-	.oo-ui-gridLayout {
-		margin-top: 5.6em;
+.ve-ui-mwTemplateDialog-editFlow {
+	&.ve-ui-mwTransclusionDialog-single {
+		.oo-ui-gridLayout {
+			margin-top: 5.6em;
+		}
+		.ve-ui-mwTemplatePage {
+			/* TODO: Wikia (ve-sprint-25): This should not be added to the DOM in the first place */
+			display: none;
+		}
+		.oo-ui-bookletLayout-stackLayout {
+			box-sizing: border-box;
+			padding-top: 1.5em;
+		}
 	}
-	.ve-ui-mwTemplatePage {
-		/* TODO: Wikia (ve-sprint-25): This should not be added to the DOM in the first place */
-		display: none;
-	}
-	.oo-ui-bookletLayout-stackLayout {
-		box-sizing: border-box;
-		padding-top: 1.5em;
-	}
-}
 
-.ve-ui-mwTransclusionDialog-multiple {
-	.oo-ui-bookletLayout-stackLayout {
-		/* TODO: Wikia (ve-sprint-25): Find where these css properties are being added to the element */
-		bottom: 0 !important;
-		height: auto !important;
-		top: 5.6em !important;
-	}
-	.ve-ui-mwTemplateDialog-filter {
-		left: 33%;
-		margin-left: 1px;
+	&.ve-ui-mwTransclusionDialog-multiple {
+		.oo-ui-bookletLayout-stackLayout {
+			/* TODO: Wikia (ve-sprint-25): Find where these css properties are being added to the element */
+			bottom: 0 !important;
+			height: auto !important;
+			top: 5.6em !important;
+		}
+		.ve-ui-mwTemplateDialog-filter {
+			left: 33%;
+			margin-left: 1px;
+		}
 	}
 }

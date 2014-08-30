@@ -121,24 +121,34 @@ ve.ui.WikiaTransclusionDialog.prototype.updateTitle = function () {
 ve.ui.WikiaTransclusionDialog.prototype.getSetupProcess = function ( data ) {
 	return ve.ui.WikiaTransclusionDialog.super.prototype.getSetupProcess.call( this, data )
 		.next( function () {
-			var single = this.selectedNode.isSingleTemplate();
-			this.selectedViewNode = this.surface.getView().getFocusedNode();
-			this.setMode( single ? 'single' : 'multiple' );
+			this.editFlow = this.selectedNode ? true : false;
 
-			if ( single ) {
-				// Appearance
-				this.frame.$element.parent().css( 'width', 400 );
-				this.alignToSurface();
-				// Drag
-				this.setDraggable();
-				// Overlay
-				this.setOverlayless();
-				// Scroll
-				$( window ).off( 'mousewheel', this.onWindowMouseWheelHandler );
-				// Focus
-				this.surface.getFocusWidget().setNode( this.selectedViewNode );
-				// Tools
-				this.$foot.append( this.previewButton.$element );
+			if ( this.editFlow ) {
+				var single = this.selectedNode.isSingleTemplate();
+				this.selectedViewNode = this.surface.getView().getFocusedNode();
+				this.setMode( single ? 'single' : 'multiple' );
+
+				this.frame.$content.addClass( 've-ui-mwTemplateDialog-editFlow' );
+				this.$body.append( this.$filter );
+
+				if ( single ) {
+					// Appearance
+					this.frame.$element.parent().css( 'width', 400 );
+					this.alignToSurface();
+					// Drag
+					this.setDraggable();
+					// Overlay
+					this.setOverlayless();
+					// Scroll
+					$( window ).off( 'mousewheel', this.onWindowMouseWheelHandler );
+					// Focus
+					this.surface.getFocusWidget().setNode( this.selectedViewNode );
+					this.$body.append( this.$filter );
+					// Tools
+					this.$foot.append( this.previewButton.$element );
+				}
+			} else {
+				this.frame.$content.addClass( 've-ui-mwTemplateDialog-insertFlow' );
 			}
 		}, this );
 };
@@ -147,7 +157,7 @@ ve.ui.WikiaTransclusionDialog.prototype.getTeardownProcess = function ( data ) {
 	return ve.ui.WikiaTransclusionDialog.super.prototype.getTeardownProcess.call( this, data )
 		.first( function () {
 			this.surface.getFocusWidget().unsetNode();
-			if ( data && data.action === 'cancel' ) {
+			if ( this.editFlow && data && data.action === 'cancel' ) {
 				// update without wikitext passed in the config will just use original value
 				this.selectedViewNode.update();
 			}
@@ -164,6 +174,9 @@ ve.ui.WikiaTransclusionDialog.prototype.getTeardownProcess = function ( data ) {
 			}
 			this.frame.$element.parent().css( 'width', '' );
 			this.previewButton.$element.remove();
+			this.$filter.remove();
+			this.frame.$content.removeClass( 've-ui-mwTemplateDialog-insertFlow ve-ui-mwTemplateDialog-editFlow' );
+
 		}, this );
 };
 
