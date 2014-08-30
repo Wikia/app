@@ -77,6 +77,7 @@ ve.ui.WikiaFocusWidget.prototype.setNode = function ( node ) {
 	this.node = node;
 	this.adjustLayout();
 	this.$element.addClass( 've-ui-wikiaFocusWidget-node' );
+	this.toolbar.disableFloatable();
 };
 
 /**
@@ -87,6 +88,11 @@ ve.ui.WikiaFocusWidget.prototype.setNode = function ( node ) {
 ve.ui.WikiaFocusWidget.prototype.unsetNode = function () {
 	this.node = null;
 	this.adjustLayout();
+
+	this.toolbar.enableFloatable();
+	// The page may already be scrolled, so trigger the scroll handler
+	this.toolbar.onWindowScroll();
+
 	// Delay for animation
 	setTimeout( ve.bind( function () {
 		this.$element.removeClass( 've-ui-wikiaFocusWidget-node' );
@@ -200,6 +206,8 @@ ve.ui.WikiaFocusWidget.prototype.getLayoutForNode = function ( surfaceOffset, su
  */
 ve.ui.WikiaFocusWidget.prototype.onDocumentSetup = function () {
 	var interval, i = 0;
+
+	this.toolbar = this.surface.getTarget().getToolbar();
 
 	if ( this.surface.getDir() === 'rtl' ) {
 		this.switchDirection();
