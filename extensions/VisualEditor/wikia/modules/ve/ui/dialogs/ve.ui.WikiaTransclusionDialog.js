@@ -5,6 +5,8 @@
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
+/* global veTrack */
+
 /**
  * Dialog for inserting and editing MediaWiki transclusions.
  *
@@ -57,6 +59,9 @@ ve.ui.WikiaTransclusionDialog.prototype.initialize = function () {
 	// Events
 	this.cancelButton.connect( this, { 'click': 'onCancelButtonClick' } );
 	this.previewButton.connect( this, { 'click': 'onPreviewButtonClick' } );
+	this.filterInput.$input
+		.on( 'focus', ve.bind( this.onFilterInputFocus, this ) )
+		.on( 'blur', ve.bind( this.onFilterInputBlur, this ) );
 
 	// Initialization
 	this.modeButton.$element.addClass( 've-ui-mwTransclusionDialog-modeButton' );
@@ -92,6 +97,13 @@ ve.ui.WikiaTransclusionDialog.prototype.onCancelButtonClick = function () {
 ve.ui.WikiaTransclusionDialog.prototype.onPreviewButtonClick = function () {
 	this.previewButton.setDisabled( true );
 	this.selectedViewNode.update( { wikitext: this.transclusionModel.getWikitext() } );
+	this.previewCount += 1;
+	if ( window.veTrack ) {
+		veTrack( {
+			action: 've-template-preview-button-click',
+			value: this.previewCount
+		} );
+	}
 };
 
 /**
@@ -137,10 +149,22 @@ ve.ui.WikiaTransclusionDialog.prototype.getSetupProcess = function ( data ) {
 				$( window ).off( 'mousewheel', this.onWindowMouseWheelHandler );
 				// Focus
 				this.surface.getFocusWidget().setNode( this.selectedViewNode );
+
+				if ( window.veTrack ) {
+					veTrack( { action: 've-template-dialog-open-single' } );
+				}
+			} else {
+				if ( window.veTrack ) {
+					veTrack( { action: 've-template-dialog-open-multi' } );
+				}
 			}
+			this.previewCount = 0;
 		}, this );
 };
 
+/**
+ * @inheritdoc
+ */
 ve.ui.WikiaTransclusionDialog.prototype.getTeardownProcess = function ( data ) {
 	return ve.ui.WikiaTransclusionDialog.super.prototype.getTeardownProcess.call( this, data )
 		.first( function () {
@@ -162,6 +186,60 @@ ve.ui.WikiaTransclusionDialog.prototype.getTeardownProcess = function ( data ) {
 			}
 			this.frame.$element.parent().css( 'width', '' );
 		}, this );
+};
+
+/**
+ * @inheritdoc
+ */
+ve.ui.WikiaTransclusionDialog.prototype.applyChanges = function () {
+	if ( window.veTrack ) {
+		if ( this.selectedNode.isSingleTemplate() ) {
+				veTrack( { action: 've-template-apply-changes-single' } );
+		} else {
+			veTrack( { action: 've-template-apply-changes-multi' } );
+		}
+	}
+	return ve.ui.WikiaTransclusionDialog.super.prototype.applyChanges.call( this );
+};
+
+/**
+ * @inheritdoc
+ */
+ve.ui.WikiaTransclusionDialog.prototype.onFilterInputChange = function () {
+	this.shouldTrackSearch = ( this.filterInput.getValue().length > 1 );
+	return ve.ui.WikiaTransclusionDialog.super.prototype.onFilterInputChange.call( this );
+};
+
+/**
+ * Handle focus event on filter input element
+ */
+ve.ui.WikiaTransclusionDialog.prototype.onFilterInputFocus = function () {
+	this.shouldTrackSearch = false;
+};
+
+/**
+ * Handle blur event on filter input element
+ */
+ve.ui.WikiaTransclusionDialog.prototype.onFilterInputBlur = function () {
+	if ( window.veTrack && this.shouldTrackSearch ) {
+		veTrack( { action: 've-template-filter-search' } );
+	}
+};
+
+/**
+ * @inheritdoc
+ */
+ve.ui.WikiaTransclusionDialog.prototype.onReplacePart = function ( removed, added ) {
+	if (
+		window.veTrack &&
+		this.selectedNode &&
+		this.selectedNode.isSingleTemplate() &&
+		added instanceof ve.dm.MWTemplateModel &&
+		added.getParameters().length === 0
+	) {
+		veTrack( { action: 've-template-dialog-no-parameters' } );
+	}
+	return ve.ui.WikiaTransclusionDialog.super.prototype.onReplacePart.call( this, removed, added );
 };
 
 /* Registration */
