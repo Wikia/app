@@ -1797,6 +1797,33 @@ $config['bucky_js'] = array(
 	)
 );
 
+/* Monetization Module */
+$config['monetization_module_css'] = array(
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => [ 'oasis' ],
+	'assets' => [
+		'//extensions/wikia/MonetizationModule/styles/MonetizationModule.scss',
+	]
+);
+
+$config['monetization_module_js'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => [ 'oasis' ],
+	'assets' => [
+		'//extensions/wikia/MonetizationModule/scripts/MonetizationModule.js',
+
+	]
+);
+
+$config['monetization_module_top_script_js'] = array(
+    'type' => AssetsManager::TYPE_JS,
+    'skin' => [ 'oasis' ],
+    'assets' => [
+        '//extensions/wikia/MonetizationModule/scripts/MonetizationModuleTopScript.js',
+
+    ]
+);
+
 /* extension/wikia/WikiaInteractiveMaps */
 
 $config['int_map_ponto'] = [
