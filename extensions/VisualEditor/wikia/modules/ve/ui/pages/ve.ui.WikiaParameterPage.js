@@ -51,7 +51,7 @@ OO.inheritClass( ve.ui.WikiaParameterPage, ve.ui.MWParameterPage );
  */
 ve.ui.WikiaParameterPage.prototype.onTemplateInfoButtonClick = function () {
 	window.open( new mw.Title( this.template.getTitle() ).getUrl() );
-	ve.track( 'both', {
+	ve.track( 'wikia', {
 		'action': ve.track.actions.CLICK,
 		'label': 'dialog-template-get-info'
 	} );

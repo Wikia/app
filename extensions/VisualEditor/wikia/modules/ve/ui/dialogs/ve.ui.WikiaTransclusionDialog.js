@@ -82,7 +82,7 @@ ve.ui.WikiaTransclusionDialog.prototype.onTransclusionReady = function () {
 
 	parts = this.transclusionModel.getParts();
 	if ( parts.length === 1 && parts[0].getParameters().length === 0 ) {
-		ve.track( 'both', {
+		ve.track( 'wikia', {
 			'action': ve.track.actions.OPEN,
 			'label': 'dialog-template-no-parameters'
 		} );
@@ -104,7 +104,7 @@ ve.ui.WikiaTransclusionDialog.prototype.onPreviewButtonClick = function () {
 	this.selectedViewNode.update( { wikitext: this.transclusionModel.getWikitext() } );
 	this.previewCount += 1;
 
-	ve.track( 'both', {
+	ve.track( 'wikia', {
 		'action': ve.track.actions.CLICK,
 		'label': 'dialog-template-preview-button',
 		'value': this.previewCount
@@ -157,12 +157,12 @@ ve.ui.WikiaTransclusionDialog.prototype.getSetupProcess = function ( data ) {
 				// Tools
 				this.$foot.append( this.previewButton.$element );
 
-				ve.track( 'both', {
+				ve.track( 'wikia', {
 					'action': ve.track.actions.OPEN,
 					'label': 'dialog-template-single'
 				} );
 			} else {
-				ve.track( 'both', {
+				ve.track( 'wikia', {
 					'action': ve.track.actions.OPEN,
 					'label': 'dialog-template-multiple'
 				} );
@@ -204,12 +204,12 @@ ve.ui.WikiaTransclusionDialog.prototype.getTeardownProcess = function ( data ) {
 ve.ui.WikiaTransclusionDialog.prototype.applyChanges = function () {
 	if ( this.selectedNode ) {
 		if ( this.selectedNode.isSingleTemplate() ) {
-			ve.track( 'both', {
+			ve.track( 'wikia', {
 				'action': ve.track.actions.CLICK,
 				'label': 'dialog-template-apply-button-single'
 			} );
 		} else {
-			ve.track( 'both', {
+			ve.track( 'wikia', {
 				'action': ve.track.actions.CLICK,
 				'label': 'dialog-template-apply-button-multiple'
 			} );
@@ -231,7 +231,7 @@ ve.ui.WikiaTransclusionDialog.prototype.onFilterInputChange = function () {
  */
 ve.ui.WikiaTransclusionDialog.prototype.onFilterInputBlur = function () {
 	if ( this.shouldTrackSearch ) {
-		ve.track( 'both', {
+		ve.track( 'wikia', {
 			'action': ve.track.actions.SUBMIT,
 			'label': 'dialog-template-filter'
 		} );
