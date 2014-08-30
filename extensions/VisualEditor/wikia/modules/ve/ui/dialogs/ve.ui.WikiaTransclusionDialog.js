@@ -57,9 +57,7 @@ ve.ui.WikiaTransclusionDialog.prototype.initialize = function () {
 	// Events
 	this.cancelButton.connect( this, { 'click': 'onCancelButtonClick' } );
 	this.previewButton.connect( this, { 'click': 'onPreviewButtonClick' } );
-	this.filterInput.$input
-		.on( 'focus', ve.bind( this.onFilterInputFocus, this ) )
-		.on( 'blur', ve.bind( this.onFilterInputBlur, this ) );
+	this.filterInput.$input.on( 'blur', ve.bind( this.onFilterInputBlur, this ) );
 
 	// Initialization
 	this.modeButton.$element.addClass( 've-ui-mwTransclusionDialog-modeButton' );
@@ -70,6 +68,7 @@ ve.ui.WikiaTransclusionDialog.prototype.initialize = function () {
  * @inheritdoc
  */
 ve.ui.WikiaTransclusionDialog.prototype.onTransclusionReady = function () {
+	var parts;
 	// Parent method
 	ve.ui.WikiaTransclusionDialog.super.prototype.onTransclusionReady.call( this );
 
@@ -80,6 +79,14 @@ ve.ui.WikiaTransclusionDialog.prototype.onTransclusionReady = function () {
 	this.transclusionModel.once( 'change', ve.bind( function () {
 		this.transclusionModel.connect( this, { 'change': 'onParameterInputValueChange' } );
 	}, this ) );
+
+	parts = this.transclusionModel.getParts();
+	if ( parts.length === 1 && parts[0].getParameters().length === 0 ) {
+		ve.track( 'both', {
+			'action': ve.track.actions.OPEN,
+			'label': 'dialog-template-no-parameters'
+		} );
+	}
 };
 
 /**
@@ -220,13 +227,6 @@ ve.ui.WikiaTransclusionDialog.prototype.onFilterInputChange = function () {
 };
 
 /**
- * Handle focus event on filter input element
- */
-ve.ui.WikiaTransclusionDialog.prototype.onFilterInputFocus = function () {
-	this.shouldTrackSearch = false;
-};
-
-/**
  * Handle blur event on filter input element
  */
 ve.ui.WikiaTransclusionDialog.prototype.onFilterInputBlur = function () {
@@ -235,25 +235,8 @@ ve.ui.WikiaTransclusionDialog.prototype.onFilterInputBlur = function () {
 			'action': ve.track.actions.SUBMIT,
 			'label': 'dialog-template-filter'
 		} );
+		this.shouldTrackSearch = false;
 	}
-};
-
-/**
- * @inheritdoc
- */
-ve.ui.WikiaTransclusionDialog.prototype.onReplacePart = function ( removed, added ) {
-	if (
-		this.selectedNode &&
-		this.selectedNode.isSingleTemplate() &&
-		added instanceof ve.dm.MWTemplateModel &&
-		added.getParameters().length === 0
-	) {
-		ve.track( 'both', {
-			'action': ve.track.actions.OPEN,
-			'label': 'dialog-template-no-parameters'
-		} );
-	}
-	return ve.ui.WikiaTransclusionDialog.super.prototype.onReplacePart.call( this, removed, added );
 };
 
 /* Registration */
