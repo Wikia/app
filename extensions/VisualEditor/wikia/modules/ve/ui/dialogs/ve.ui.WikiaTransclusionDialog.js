@@ -160,7 +160,11 @@ ve.ui.WikiaTransclusionDialog.prototype.getTeardownProcess = function ( data ) {
 			if ( this.allowScroll ) {
 				this.unsetAllowScroll();
 			}
-			this.frame.$element.parent().css( 'width', '' );
+			this.frame.$element.parent().css( {
+				'width': '',
+				'height': '',
+				'max-height': ''
+			} );
 		}, this );
 };
 
