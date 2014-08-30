@@ -51,14 +51,34 @@ ve.ui.WikiaTransclusionDialog.prototype.initialize = function () {
 		'label': ve.msg( 'visualeditor-dialog-action-cancel' ),
 		'classes': [ 've-ui-wikiaTransclusionDialog-cancelButton' ]
 	} );
+	this.filterInput = new OO.ui.TextInputWidget( {
+		'$': this.$,
+		'icon': 'search',
+		'type': 'search',
+		'placeholder': ve.msg( 'wikia-visualeditor-dialog-transclusion-filter' )
+	} );
+	this.$filter = this.$( '<div>' )
+		.addClass( 've-ui-mwTemplateDialog-filter' )
+		.append( this.filterInput.$element );
+	this.previewButton = new OO.ui.ButtonWidget( {
+		'$': this.$,
+		'flags': ['secondary'],
+		'label': ve.msg( 'wikia-visualeditor-dialog-transclusion-preview-button' ),
+		'disabled': true
+	} );
 
 	// Events
 	this.cancelButton.connect( this, { 'click': 'onCancelButtonClick' } );
+	this.filterInput.on( 'change', ve.bind( this.onFilterInputChange, this ) );
 	this.filterInput.$input.on( 'blur', ve.bind( this.onFilterInputBlur, this ) );
+	this.previewButton.connect( this, { 'click': 'onPreviewButtonClick' } );
 
 	// Initialization
 	this.modeButton.$element.addClass( 've-ui-mwTransclusionDialog-modeButton' );
 	this.$foot.append( this.cancelButton.$element );
+	this.filterInput.$input.attr( 'tabindex', 1 );
+	this.$body.append( this.$filter );
+	this.$foot.append( this.previewButton.$element );
 };
 
 /**
@@ -78,7 +98,9 @@ ve.ui.WikiaTransclusionDialog.prototype.onTransclusionReady = function () {
 	}, this ) );
 
 	parts = this.transclusionModel.getParts();
-	if ( parts.length === 1 && parts[0].getParameters().length === 0 ) {
+	if ( parts.length === 1 &&
+		parts[0] instanceof ve.dm.MWTemplateModel &&
+		parts[0].getParameters().length === 0 ) {
 		ve.track( 'wikia', {
 			'action': ve.track.actions.OPEN,
 			'label': 'dialog-template-no-parameters'
@@ -135,7 +157,10 @@ ve.ui.WikiaTransclusionDialog.prototype.updateTitle = function () {
 ve.ui.WikiaTransclusionDialog.prototype.getSetupProcess = function ( data ) {
 	return ve.ui.WikiaTransclusionDialog.super.prototype.getSetupProcess.call( this, data )
 		.next( function () {
+			this.filterInput.setValue( '' );
 			this.editFlow = this.selectedNode ? true : false;
+			this.$filter.hide();
+			this.previewButton.$element.hide();
 
 			if ( this.editFlow ) {
 				var single = this.selectedNode.isSingleTemplate();
@@ -143,7 +168,9 @@ ve.ui.WikiaTransclusionDialog.prototype.getSetupProcess = function ( data ) {
 				this.setMode( single ? 'single' : 'multiple' );
 
 				this.frame.$content.addClass( 've-ui-mwTemplateDialog-editFlow' );
-				this.$body.append( this.$filter );
+
+				// Show filter
+				this.$filter.show();
 
 				if ( single ) {
 					// Appearance
@@ -156,17 +183,8 @@ ve.ui.WikiaTransclusionDialog.prototype.getSetupProcess = function ( data ) {
 					$( window ).off( 'mousewheel', this.onWindowMouseWheelHandler );
 					// Focus
 					this.surface.getFocusWidget().setNode( this.selectedViewNode );
-					this.$body.append( this.$filter );
-					// Tools
-					this.previewButton = new OO.ui.ButtonWidget( {
-						'$': this.$,
-						'flags': ['secondary'],
-						'label': ve.msg( 'wikia-visualeditor-dialog-transclusion-preview-button' ),
-						'disabled': true
-					} );
-					this.previewButton.connect( this, { 'click': 'onPreviewButtonClick' } );
-					this.$foot.append( this.previewButton.$element );
-
+					// Preview button
+					this.previewButton.$element.show();
 					ve.track( 'wikia', {
 						'action': ve.track.actions.OPEN,
 						'label': 'dialog-template-single'
@@ -211,10 +229,7 @@ ve.ui.WikiaTransclusionDialog.prototype.getTeardownProcess = function ( data ) {
 				'height': '',
 				'max-height': ''
 			} );
-			this.previewButton.$element.remove();
-			this.$filter.remove();
 			this.frame.$content.removeClass( 've-ui-mwTemplateDialog-insertFlow ve-ui-mwTemplateDialog-editFlow' );
-
 		}, this );
 };
 
@@ -236,14 +251,6 @@ ve.ui.WikiaTransclusionDialog.prototype.applyChanges = function () {
 		}
 	}
 	return ve.ui.WikiaTransclusionDialog.super.prototype.applyChanges.call( this );
-};
-
-/**
- * @inheritdoc
- */
-ve.ui.WikiaTransclusionDialog.prototype.onFilterInputChange = function () {
-	this.shouldTrackFilter = this.filterInput.getValue().length > 1;
-	return ve.ui.WikiaTransclusionDialog.super.prototype.onFilterInputChange.call( this );
 };
 
 /**
@@ -285,6 +292,60 @@ ve.ui.WikiaTransclusionDialog.prototype.position = function () {
 	} else {
 		this.frame.$element.parent()
 			.css( 'left', surfaceOffset.left + $surface.width() - this.frame.$element.parent().outerWidth() + padding );
+	}
+};
+
+/**
+ * Handle the filter input change
+ * TODO: Wikia (ve-sprint-25): Code in this method could be optimized in plenty of ways
+ * but at this moment it's unknown if optimizing it is needed
+ */
+ve.ui.WikiaTransclusionDialog.prototype.onFilterInputChange = function () {
+	var value = this.filterInput.getValue().toLowerCase().trim(),
+		parts = this.transclusionModel.getParts(),
+		i, len, part, page, parameters, parameter, parameterMatch;
+
+	this.shouldTrackFilter = value.length > 1;
+
+	// iterate over all parts of the transclusion (templates and contents)
+	for ( i = 0, len = parts.length; i < len; i++ ) {
+		part = parts[i];
+
+		if ( part instanceof ve.dm.MWTransclusionContentModel ) { // content
+			page = this.bookletLayout.getPage( part.getId() );
+			if ( value !== '' && part.getValue().toLowerCase().indexOf( value ) === -1 ) {
+				page.$element.hide();
+			} else {
+				page.$element.show();
+			}
+		} else if ( part instanceof ve.dm.MWTemplateModel ) { // template
+			// iterate over all parameters of the template
+			parameters = part.getParameters();
+			parameterMatch = false;
+			for ( parameter in parameters ) {
+				page = this.bookletLayout.getPage( part.getId() + '/' + parameter );
+				if (
+					value !== '' &&
+					parameters[parameter].getName().toLowerCase().indexOf( value ) === -1 &&
+					parameters[parameter].getValue().toLowerCase().indexOf( value ) === -1
+				) {
+					page.$element.hide();
+				} else {
+					parameterMatch = true;
+					page.$element.show();
+				}
+			}
+			// if there was no match among all parameters for the template then
+			// hide template page as well (so not only parameters)
+			page = this.bookletLayout.getPage( part.getId() );
+			if ( this.mode === 'multiple' ) {
+				if ( value !== '' && !parameterMatch ) {
+					page.$element.hide();
+				} else {
+					page.$element.show();
+				}
+			}
+		}
 	}
 };
 
