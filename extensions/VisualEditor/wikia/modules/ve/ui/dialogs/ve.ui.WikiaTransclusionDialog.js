@@ -51,16 +51,9 @@ ve.ui.WikiaTransclusionDialog.prototype.initialize = function () {
 		'label': ve.msg( 'visualeditor-dialog-action-cancel' ),
 		'classes': [ 've-ui-wikiaTransclusionDialog-cancelButton' ]
 	} );
-	this.previewButton = new OO.ui.ButtonWidget( {
-		'$': this.$,
-		'flags': ['secondary'],
-		'label': ve.msg( 'wikia-visualeditor-dialog-transclusion-preview-button' ),
-		'disabled': true
-	} );
 
 	// Events
 	this.cancelButton.connect( this, { 'click': 'onCancelButtonClick' } );
-	this.previewButton.connect( this, { 'click': 'onPreviewButtonClick' } );
 	this.filterInput.$input.on( 'blur', ve.bind( this.onFilterInputBlur, this ) );
 
 	// Initialization
@@ -165,6 +158,13 @@ ve.ui.WikiaTransclusionDialog.prototype.getSetupProcess = function ( data ) {
 					this.surface.getFocusWidget().setNode( this.selectedViewNode );
 					this.$body.append( this.$filter );
 					// Tools
+					this.previewButton = new OO.ui.ButtonWidget( {
+						'$': this.$,
+						'flags': ['secondary'],
+						'label': ve.msg( 'wikia-visualeditor-dialog-transclusion-preview-button' ),
+						'disabled': true
+					} );
+					this.previewButton.connect( this, { 'click': 'onPreviewButtonClick' } );
 					this.$foot.append( this.previewButton.$element );
 
 					ve.track( 'wikia', {
