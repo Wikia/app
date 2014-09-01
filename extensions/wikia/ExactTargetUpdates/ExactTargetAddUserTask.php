@@ -77,10 +77,6 @@ class ExactTargetAddUserTask extends BaseTask {
 	 * @param Array $aUserProperties key-value array ['property_name'=>'property_value']
 	 */
 	public function createUserPropertiesDataExtension( $iUserId, $aUserProperties ) {
-		$this->callApiToCreateUserPropertiesDataExtension($iUserId, $aUserProperties);
-	}
-
-	public function callApiToCreateUserPropertiesDataExtension( $iUserId, $aUserProperties ) {
 
 		$oRequest = $this->prepareRequest( $iUserId, $aUserProperties );
 

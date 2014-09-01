@@ -109,7 +109,7 @@ class ExactTargetAddUserTaskTest extends WikiaBaseTest {
 		$this->assertEquals( $oRequestExpected, $oRequestActual );
 	}
 
-	function testCallApiToCreateUserPropertiesDataExtensionShouldInvokeCreateMethodOnceWithRequestParam() {
+	function testCreateUserPropertiesDataExtensionShouldInvokeCreateMethodOnceWithRequestParam() {
 		/* Params to compare */
 		$iUserId = 12345;
 		$aUserProperties = [
@@ -170,6 +170,6 @@ class ExactTargetAddUserTaskTest extends WikiaBaseTest {
 			->will( $this->returnValue( $soapClient ) );
 
 		/* Run test */
-		$mockAddUserTask->callApiToCreateUserPropertiesDataExtension( $iUserId, $aUserProperties );
+		$mockAddUserTask->createUserPropertiesDataExtension( $iUserId, $aUserProperties );
 	}
 }
