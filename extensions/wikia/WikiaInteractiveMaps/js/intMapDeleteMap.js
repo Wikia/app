@@ -80,7 +80,7 @@ define('wikia.intMaps.deleteMap',
 			type: 'POST',
 			data: {
 				mapId: mapId,
-				deleted: config.mapDeleted.mapDeleted
+				deleted: config.constants.mapDeleted
 			},
 			callback: function (response) {
 				var redirectUrl = response.redirectUrl;

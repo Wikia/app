@@ -46,19 +46,16 @@ define('wikia.intMap.config', [], function () {
 			cacheKey: 'wikia_interactive_maps_undelete_map'
 		}
 	},
-	mapDeleted = {
-		mapNotDeleted: 0,
-		mapDeleted: 1
-	},
 	// const variables used across int map UI
 	constants = {
 		debounceDelay: 250,
-		minCharLength: 2
+		minCharLength: 2,
+		mapNotDeleted: 0,
+		mapDeleted: 1
 	};
 
 	return {
 		actions: actions,
-		mapDeleted: mapDeleted,
 		constants: constants
 	};
 });
