@@ -41,7 +41,7 @@ define('ext.wikia.adEngine.slot.topInContentBoxad', [
 			return result;
 		}
 
-		if (!adContext.targeting.pageIsArticle) {
+		if (!adContext.getContext().targeting.pageIsArticle) {
 			log(['doesNotBreakContent result', false, 'Page is not an article'], 'debug', logGroup);
 
 			return false;

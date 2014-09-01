@@ -7,7 +7,7 @@ require([
 ], function (log, adContext, eventDispatcher, bottomLeaderboard) {
 	'use strict';
 
-	if (!adContext.opts.showAds) {
+	if (!adContext.getContext().opts.showAds) {
 		return false;
 	}
 

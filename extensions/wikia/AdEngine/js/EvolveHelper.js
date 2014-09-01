@@ -8,16 +8,17 @@ define('ext.wikia.adEngine.evolveHelper', ['wikia.log', 'ext.wikia.adEngine.adCo
 	getSect = function () {
 		log('getSect', 5, logGroup);
 
-		var kv = adContext.targeting.wikiCustomKeyValues || '',
-			vertical = adContext.targeting.wikiVertical || '',
+		var context = adContext.getContext(),
+			kv = context.targeting.wikiCustomKeyValues || '',
+			vertical = context.targeting.wikiVertical || '',
 			sect;
 
-		if (adContext.targeting.wikiDbName === 'wikiaglobal') {
+		if (context.targeting.wikiDbName === 'wikiaglobal') {
 			sect = 'home';
-			if (adContext.targeting.pageName === 'Video_Games') {
+			if (context.targeting.pageName === 'Video_Games') {
 				sect = 'gaming';
 			}
-			if (adContext.targeting.pageName === 'Entertainment') {
+			if (context.targeting.pageName === 'Entertainment') {
 				sect = 'entertainment';
 			}
 		} else if (kv.indexOf('movie') !== -1) {

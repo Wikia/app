@@ -24,7 +24,7 @@ define('ext.wikia.adEngine.provider.directGptMobile', [
 		}
 
 		function doHop() {
-			if (adContext.providers.remnantGptMobile) {
+			if (adContext.getContext().providers.remnantGptMobile) {
 				hop({method: 'hop'}, 'RemnantGptMobile');
 			} else {
 				hop({method: 'hop'}, 'Null');

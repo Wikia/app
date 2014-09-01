@@ -11,7 +11,7 @@ define('ext.wikia.adEngine.slot.interactiveMaps', [
 	function initSlot(container) {
 		log(['initSlot', container], 'info', logGroup);
 
-		if (!adContext.opts.showAds || !container) {
+		if (!adContext.getContext().opts.showAds || !container) {
 			return;
 		}
 

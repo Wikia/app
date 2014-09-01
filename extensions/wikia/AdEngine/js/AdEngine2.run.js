@@ -111,7 +111,7 @@ require([
 		window.wgAfterContentAndJS.push(startEarlyQueue);
 	}
 
-	if (adContext.opts.disableLateQueue) {
+	if (adContext.getContext().opts.disableLateQueue) {
 		log('skipping late queue - wgAdEngineDisableLateQueue set to true', 1, module);
 	}
 });
@@ -140,7 +140,7 @@ window.AdEngine_loadLateAds = function () {
 	}
 
 	require(['ext.wikia.adEngine.adContext', require.optional('wikia.abTest')], function (adContext, abTest) {
-		var adsAfterPageLoad = adContext.lateAdsAfterPageLoad && abTest && abTest.inGroup('ADS_AFTER_PAGE_LOAD', 'YES');
+		var adsAfterPageLoad = adContext.getContext().lateAdsAfterPageLoad && abTest && abTest.inGroup('ADS_AFTER_PAGE_LOAD', 'YES');
 
 		if (adsAfterPageLoad) {
 			if (document.readyState === 'complete') {

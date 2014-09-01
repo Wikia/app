@@ -10,7 +10,11 @@ describe('AdLogicPageParamsLegacy', function () {
 
 	function mockAdContext(targeting) {
 		return {
-			targeting: targeting || {}
+			getContext: function () {
+				return {
+					targeting: targeting || {}
+				};
+			}
 		};
 	}
 

@@ -18,10 +18,12 @@ define('ext.wikia.adEngine.provider.ebay', [
 	function fillInSlot(slotname, pSuccess) {
 		log(['fillInSlot', slotname], 'info', logGroup);
 
-		var params = {
-			skin: adContext.targeting.skin,
-			title: document.title
-		};
+		var targeting = adContext.getContext().targeting,
+			params = {
+				skin: targeting.skin,
+				title: document.title
+			};
+
 
 		if (geo) {
 			params.geo = geo.getCountryCode();
@@ -39,7 +41,7 @@ define('ext.wikia.adEngine.provider.ebay', [
 			callback: function (data) {
 				var slot = $('#' + slotname).html(data).addClass('ebay-ads').removeClass('default-height');
 
-				if (adContext.targeting.pageType !== 'article') {
+				if (targeting.pageType !== 'article') {
 					slot.addClass('ebay-ads-responsive');
 				}
 

@@ -12,6 +12,7 @@ define('ext.wikia.adEngine.slotTracker', [
 	var logGroup = 'ext.wikia.adEngine.slotTracker',
 		timeBuckets = [0.0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.5, 5.0, 8.0, 20.0, 60.0],
 		timeCheckpoints = [2.0, 5.0, 8.0, 20.0],
+		context = adContext.getContext(),
 		stats = {
 			allEvents: 0,
 			interestingEvents: 0
@@ -45,8 +46,8 @@ define('ext.wikia.adEngine.slotTracker', [
 			TOP_RIGHT_BOXAD:        'medrec',
 			WIKIA_BAR_BOXAD_1:      'wikiabar'
 		},
-		adsInHead = adContext.opts.adsInHead && abTest && abTest.getGroup('ADS_IN_HEAD'),
-		adsAfterPageLoad = adContext.opts.lateAdsAfterPageLoad && abTest && abTest.getGroup('ADS_AFTER_PAGE_LOAD');
+		adsInHead = context.opts.adsInHead && abTest && abTest.getGroup('ADS_IN_HEAD'),
+		adsAfterPageLoad = context.opts.lateAdsAfterPageLoad && abTest && abTest.getGroup('ADS_AFTER_PAGE_LOAD');
 
 	// The filtering function
 	function isInteresting(eventName, data) {
@@ -69,7 +70,7 @@ define('ext.wikia.adEngine.slotTracker', [
 			return false;
 		}
 		// Don't track state events yet
-		if (!adContext.opts.trackSlotState && eventName.match(/^state/)) {
+		if (!context.opts.trackSlotState && eventName.match(/^state/)) {
 			return false;
 		}
 

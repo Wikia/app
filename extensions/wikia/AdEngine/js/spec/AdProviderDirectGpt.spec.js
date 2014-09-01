@@ -1,7 +1,9 @@
 describe('AdProviderDirectGpt', function(){
 
 	var adContextMock = {
-		forceProviders: {}
+		getContext: function () {
+			return {forceProviders: {}};
+		}
 	};
 
 	it('Leaderboard works as expected in low value countries', function() {

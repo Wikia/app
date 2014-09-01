@@ -13,7 +13,11 @@ describe('Method ext.wikia.adEngine.wikiaGptAdDetect.onAdLoad', function () {
 				hop: noop,
 				window: windowMock,
 				adContext: {
-					targeting: {}
+					getContext: function () {
+						return {
+							targeting: {}
+						};
+					}
 				}
 			};
 
@@ -44,8 +48,12 @@ describe('Method ext.wikia.adEngine.wikiaGptAdDetect.onAdLoad', function () {
 				iframe: {},
 				iframeDoc: {},
 				adContext: {
-					targeting: {
-						skin: 'wikiamobile'
+					getContext: function () {
+						return {
+							targeting: {
+								skin: 'wikiamobile'
+							}
+						};
 					}
 				}
 			};

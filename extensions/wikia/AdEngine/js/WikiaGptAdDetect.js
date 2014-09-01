@@ -13,7 +13,8 @@ define('ext.wikia.adEngine.wikiaGptAdDetect', [
 			'script[src*="/ads.saymedia.com/"]',
 			'script[src*="/native.sharethrough.com/"]',
 			'.celtra-ad-v3, script[src$="/mmadlib.js"]'
-		].join(',');
+		].join(','),
+		isMobile = adContext.getContext().targeting.skin === 'wikiamobile';
 
 	function isImagePresent(document) {
 		var imgs, i, len, w, h;
@@ -102,7 +103,7 @@ define('ext.wikia.adEngine.wikiaGptAdDetect', [
 			return 'empty';
 		}
 
-		if (adContext.targeting.skin !== 'wikiamobile') {
+		if (!isMobile) {
 			return 'always_success';
 		}
 

@@ -11,9 +11,12 @@ define('ext.wikia.adEngine.adLogicPageParamsLegacy', [
 	var pageParams = adLogicPageParams.getPageLevelParams();
 
 	function getCustomKeyValues() {
-		if (adContext.targeting.wikiCustomKeyValues) {
-			return dartUrl.trimParam(adContext.targeting.wikiCustomKeyValues + ';');
+		var wikiCustomKeyValues = adContext.getContext().targeting.wikiCustomKeyValues;
+
+		if (wikiCustomKeyValues) {
+			return dartUrl.trimParam(wikiCustomKeyValues + ';');
 		}
+
 		return '';
 	}
 

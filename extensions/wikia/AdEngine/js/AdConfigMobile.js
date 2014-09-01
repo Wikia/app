@@ -15,16 +15,17 @@ define('ext.wikia.adEngine.adConfigMobile', [
 	};
 
 	function getProvider(slot) {
-		var slotName = slot[0];
+		var slotName = slot[0],
+			context = adContext.getContext();
 
 		// If wgShowAds set to false, hide slots
-		if (!adContext.showAds) {
+		if (!context.opts.showAds) {
 			return adProviderNull;
 		}
 
 		// On pages with type other than all_ads (corporate, homepage_logged, maps), hide slots
 		// @see https://docs.google.com/a/wikia-inc.com/document/d/1Lxz0PQbERWSFvmXurvJqOjPMGB7eZR86V8tpnhGStb4/edit
-		if (!pageTypesWithAdsOnMobile[adContext.pageType]) {
+		if (!pageTypesWithAdsOnMobile[context.targeting.pageType]) {
 			return adProviderNull;
 		}
 

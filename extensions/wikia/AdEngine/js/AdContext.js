@@ -70,5 +70,11 @@ define('ext.wikia.adEngine.adContext', ['wikia.window'], function (w, document) 
 	// Use PostScribe for ScriptWriter implementation when SevenOne Media ads are enabled
 	context.opts.usePostScribe = context.opts.usePostScribe || context.providers.sevenOneMedia;
 
-	return context;
+	function getContext() {
+		return context;
+	}
+
+	return {
+		getContext: getContext
+	};
 });

@@ -12,15 +12,17 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 
 	var logGroup = 'ext.wikia.adEngine.adLogicPageParams',
 		hostname = window.location.hostname.toString(), // TODO: move to wikia.location module
-		adsInHeadExperiment = adContext.opts.adsInHead && abTest && abTest.getGroup('ADS_IN_HEAD'),
+		adsInHeadExperiment = adContext.getContext().opts.adsInHead && abTest && abTest.getGroup('ADS_IN_HEAD'),
 		maxNumberOfCategories = 3,
 		maxNumberOfKruxSegments = 27; // keep the DART URL part for Krux segments below 500 chars
 
 	function getDartHubName() {
-		if (adContext.targeting.wikiVertical === 'Entertainment') {
+		var context = adContext.getContext();
+
+		if (context.targeting.wikiVertical === 'Entertainment') {
 			return 'ent';
 		}
-		if (adContext.targeting.wikiVertical === 'Gaming') {
+		if (context.targeting.wikiVertical === 'Gaming') {
 			return 'gaming';
 		}
 		return 'life';
@@ -53,7 +55,7 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 	}
 
 	function getCategories() {
-		var categories = adContext.targeting.pageCategories,
+		var categories = adContext.getContext().targeting.pageCategories,
 			outCategories;
 
 		if (categories instanceof Array && categories.length > 0) {
@@ -138,36 +140,37 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 			dbName,
 			zone1,
 			zone2,
-			params;
+			params,
+			targeting = adContext.getContext().targeting;
 
-		dbName = '_' + (adContext.targeting.wikiDbName || 'wikia').replace('/[^0-9A-Z_a-z]/', '_');
+		dbName = '_' + (targeting.wikiDbName || 'wikia').replace('/[^0-9A-Z_a-z]/', '_');
 
-		if (adContext.targeting.pageIsHub) {
+		if (targeting.pageIsHub) {
 			site = 'hub';
 			zone1 = '_' + getDartHubName() + '_hub';
 			zone2 = 'hub';
 		} else {
-			site = adContext.targeting.wikiCategory;
+			site = targeting.wikiCategory;
 			zone1 = dbName;
-			zone2 = adContext.targeting.pageType || 'article';
+			zone2 = targeting.pageType || 'article';
 		}
 
 		params = {
 			s0: site,
 			s1: zone1,
 			s2: zone2,
-			artid: adContext.targeting.pageArticleId && adContext.targeting.pageArticleId.toString(),
+			artid: targeting.pageArticleId && targeting.pageArticleId.toString(),
 			dbName: dbName,
 			dmn: getDomain(),
 			hostpre: getHostname(),
-			wpage: adContext.targeting.pageName && adContext.targeting.pageName.toLowerCase(),
-			lang: adContext.targeting.wikiLanguage || 'unknown',
+			wpage: targeting.pageName && targeting.pageName.toLowerCase(),
+			lang: targeting.wikiLanguage || 'unknown',
 			cat: getCategories(),
 			ab: getAb()
 		};
 
-		if (adContext.targeting.pageArticleId) {
-			params.pageid = zone1 + '/' + adContext.targeting.pageArticleId;
+		if (targeting.pageArticleId) {
+			params.pageid = zone1 + '/' + targeting.pageArticleId;
 		}
 
 		if (adLogicPageDimensions && adLogicPageDimensions.hasPreFooters()) {
@@ -176,12 +179,12 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 			params.hasp = 'no';
 		}
 
-		if (Krux && !adContext.targeting.wikiDirectedAtChildren) {
+		if (Krux && !targeting.wikiDirectedAtChildren) {
 			params.u = Krux.user;
 			params.ksgmnt = Krux.segments && Krux.segments.slice(0, maxNumberOfKruxSegments);
 		}
 
-		extend(params, decodeLegacyDartParams(adContext.targeting.wikiCustomKeyValues));
+		extend(params, decodeLegacyDartParams(targeting.wikiCustomKeyValues));
 
 		if (!adsInHeadExperiment) {
 			// This is set in client side (don't move to adContext)

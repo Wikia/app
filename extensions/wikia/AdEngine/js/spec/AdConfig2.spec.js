@@ -17,9 +17,13 @@ describe('AdConfig2', function () {
 
 	function mockAdContext(showAds, providers) {
 		return {
-			opts: {showAds: showAds},
-			providers: providers || {},
-			forceProviders: {}
+			getContext: function () {
+				return {
+					opts: {showAds: showAds},
+					providers: providers || {},
+					forceProviders: {}
+				};
+			}
 		};
 	}
 

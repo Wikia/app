@@ -9,11 +9,11 @@ require([
 	'jquery'
 ], function (window, log, scriptWriter, Krux, adContext, $) {
 	'use strict';
-	if (adContext.targeting.enableKruxTargeting) {
+	if (adContext.getContext().targeting.enableKruxTargeting) {
 		$(window).load(function () {
 			scriptWriter.callLater(function () {
 				log('Loading Krux code', 8, 'Krux.run.js');
-				Krux.load(adContext.targeting.kruxCategoryId);
+				Krux.load(adContext.getContext().targeting.kruxCategoryId);
 			});
 		});
 	}

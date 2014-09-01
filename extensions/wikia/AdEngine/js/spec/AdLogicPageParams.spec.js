@@ -8,9 +8,13 @@ describe('AdLogicPageParams', function () {
 
 	function mockAdContext(targeting) {
 		return {
-			opts: {},
-			targeting: targeting || {},
-			forceProviders: {}
+			getContext: function () {
+				return {
+					opts: {},
+					targeting: targeting || {},
+					forceProviders: {}
+				};
+			}
 		};
 	}
 

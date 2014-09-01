@@ -23,7 +23,7 @@ define('ext.wikia.adEngine.slot.bottomLeaderboard', [
 		now = window.wgNow || new Date(),
 		impressionCacheKey = 'bottomLeaderboard_impressions',
 		forgetImpressionsAfterTime = 3600, // an hour
-		impressionCapping = adContext.slots.bottomLeaderboardImpressionCapping || [],
+		impressionCapping = adContext.getContext().slots.bottomLeaderboardImpressionCapping || [],
 
 		$slot,
 		pageHeight = document.documentElement.scrollHeight,

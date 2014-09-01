@@ -118,7 +118,7 @@ define('ext.wikia.adEngine.provider.directGpt', [
 	function canHandleSlot(slotname) {
 		log(['canHandleSlot', slotname], 'debug', logGroup);
 
-		if (adContext.forceProviders.directGpt && slotMap[slotname]) {
+		if (adContext.getContext().forceProviders.directGpt && slotMap[slotname]) {
 			return true;
 		}
 
