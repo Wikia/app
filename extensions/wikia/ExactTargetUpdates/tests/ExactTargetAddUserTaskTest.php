@@ -70,7 +70,7 @@ class ExactTargetAddUserTaskTest extends WikiaBaseTest {
 		$addTaskMock->sendNewUserData( $aUserData['user_id'], $aUserProperties );
 	}
 
-	function testPrepareRequestShouldReturnRequestObject() {
+	function testPrepareUserPropertiesSoapVarsShouldReturnSoapVarsArray() {
 		/* Params to compare */
 		$iUserId = 12345;
 		$aUserProperties = [
@@ -79,7 +79,7 @@ class ExactTargetAddUserTaskTest extends WikiaBaseTest {
 		];
 
 		/* prepare request mock */
-		$aSoapVars = [];
+		$aSoapVarsExpected = [];
 		foreach ( $aUserProperties as $sProperty => $sValue ) {
 
 			$DE = new ExactTarget_DataExtensionObject();
@@ -102,20 +102,16 @@ class ExactTargetAddUserTaskTest extends WikiaBaseTest {
 			$DE->Properties = $apiProperties;
 
 			$soapVar = new SoapVar( $DE, SOAP_ENC_OBJECT, 'DataExtensionObject', 'http://exacttarget.com/wsdl/partnerAPI' );
-			$aSoapVars[] = $soapVar;
+			$aSoapVarsExpected[] = $soapVar;
 		}
 
-		$oRequestExpected = new ExactTarget_CreateRequest();
-
-		$oRequestExpected->Options = NULL;
-		$oRequestExpected->Objects = $aSoapVars;
-
 		/* Mock tested class */
+		/* @var ExactTargetAddUserTask $mockAddUserTask (mock of ExactTargetAddUserTask) */
 		$mockAddUserTask = $this->getMock( 'ExactTargetAddUserTask', [ 'getClient' ] );
 
 		/* Run test */
-		$oRequestActual = $mockAddUserTask->prepareRequest( $iUserId, $aUserProperties );
-		$this->assertEquals( $oRequestExpected, $oRequestActual );
+		$aSoapVarsActual = $mockAddUserTask->prepareUserPropertiesSoapVars( $iUserId, $aUserProperties );
+		$this->assertEquals( $aSoapVarsExpected, $aSoapVarsActual );
 	}
 
 	function testCreateUserPropertiesDataExtensionShouldInvokeCreateMethodOnceWithRequestParam() {
@@ -168,10 +164,10 @@ class ExactTargetAddUserTaskTest extends WikiaBaseTest {
 			->with( $oRequest );
 
 		/* Mock tested class */
-		$mockAddUserTask = $this->getMock( 'ExactTargetAddUserTask', ['prepareRequest', 'getClient'] );
+		$mockAddUserTask = $this->getMock( 'ExactTargetAddUserTask', ['wrapRequest', 'getClient'] );
 		$mockAddUserTask
 			->expects( $this->once() )
-			->method( 'prepareRequest' )
+			->method( 'wrapRequest' )
 			->will( $this->returnValue( $oRequest ) );
 		$mockAddUserTask
 			->expects( $this->once() )

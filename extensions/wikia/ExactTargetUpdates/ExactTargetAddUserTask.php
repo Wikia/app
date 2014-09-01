@@ -67,7 +67,7 @@ class ExactTargetAddUserTask extends BaseTask {
 
 			$apiProperties = [];
 			foreach ( $aUserData as $key => $value ) {
-				$apiProperties[] = $this->prepareApiProperty( $key,  $value );
+				$apiProperties[] = $this->wrapApiProperty( $key,  $value );
 			}
 
 			$DE->Properties = $apiProperties;
@@ -94,7 +94,8 @@ class ExactTargetAddUserTask extends BaseTask {
 	 */
 	public function createUserPropertiesDataExtension( $iUserId, $aUserProperties ) {
 
-		$oRequest = $this->prepareRequest( $iUserId, $aUserProperties );
+		$aSoapVars = $this->prepareUserPropertiesSoapVars( $iUserId, $aUserProperties );
+		$oRequest = $this->wrapRequest( $aSoapVars );
 
 		try {
 			/* Create the Soap Client */
@@ -110,7 +111,7 @@ class ExactTargetAddUserTask extends BaseTask {
 		}
 	}
 
-	protected function prepareUserPropertiesSoapVars( $iUserId, $aUserProperties ) {
+	public function prepareUserPropertiesSoapVars( $iUserId, $aUserProperties ) {
 
 		$aDE = $this->prepareUserPropertiesDataExtensionObjects( $iUserId, $aUserProperties );
 
@@ -131,9 +132,9 @@ class ExactTargetAddUserTask extends BaseTask {
 
 			/* @var $apiProperties Array of ExactTarget_APIProperty objects */
 			$apiProperties = [];
-			$apiProperties[] = $this->prepareApiProperty( 'up_user',  $iUserId );
-			$apiProperties[] = $this->prepareApiProperty( 'up_property',  $sProperty );
-			$apiProperties[] = $this->prepareApiProperty( 'up_value',  $sValue );
+			$apiProperties[] = $this->wrapApiProperty( 'up_user',  $iUserId );
+			$apiProperties[] = $this->wrapApiProperty( 'up_property',  $sProperty );
+			$apiProperties[] = $this->wrapApiProperty( 'up_value',  $sValue );
 
 			$DE->Properties = $apiProperties;
 			$aDE[] = $DE;
@@ -149,9 +150,7 @@ class ExactTargetAddUserTask extends BaseTask {
 		$oClient->password = $wgExactTargetApiConfig[ 'password' ];
 	}
 
-	public function prepareRequest( $iUserId, $aUserProperties ) {
-		$aSoapVars = $this->prepareUserPropertiesSoapVars( $iUserId, $aUserProperties );
-
+	public function wrapRequest( $aSoapVars ) {
 		$oRequest = new ExactTarget_CreateRequest();
 		$oRequest->Options = NULL;
 		$oRequest->Objects = $aSoapVars;
@@ -170,7 +169,7 @@ class ExactTargetAddUserTask extends BaseTask {
 	 * @param String $value Propert yvalue
 	 * @return ExactTarget_APIProperty
 	 */
-	private function  prepareApiProperty( $key, $value ) {
+	protected function wrapApiProperty( $key, $value ) {
 		$apiProperty = new ExactTarget_APIProperty();
 		$apiProperty->Name = $key;
 		$apiProperty->Value = $value;
