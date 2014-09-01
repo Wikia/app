@@ -293,7 +293,7 @@ class WikiaFileHelper extends Service {
 					$data['isAdded'] = self::isAdded( $file );
 					$mediaPage = self::getMediaPage( $fileTitle );
 				} else {
-					$width = ( $config['imageMaxWidth'] && $width > $config['imageMaxWidth'] ) ? $config['imageMaxWidth'] : $width;
+					$width = isset( $config[ 'imageMaxWidth' ] ) ? min( $config[ 'imageMaxWidth' ], $width ) : $width;
 					$mediaPage = new ImagePage( $fileTitle );
 				}
 
