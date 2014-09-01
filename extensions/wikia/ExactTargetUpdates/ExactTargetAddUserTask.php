@@ -32,7 +32,7 @@ class ExactTargetAddUserTask extends BaseTask {
 			/* Create new DataExtensionObject that reflects user table data */
 			$DE = new ExactTarget_DataExtensionObject();
 			/* CustomerKey is a key that indicates Wikia table reflected by DataExtension */
-			$DE->CustomerKey = "user";
+			$DE->CustomerKey = 'user';
 
 			$apiProperties = [];
 			foreach ( $aUserData as $key => $value ) {
@@ -40,7 +40,7 @@ class ExactTargetAddUserTask extends BaseTask {
 			}
 
 			$DE->Properties = $apiProperties;
-			$oSoapVar = new SoapVar( $DE, SOAP_ENC_OBJECT, 'DataExtensionObject', "http://exacttarget.com/wsdl/partnerAPI" );
+			$oSoapVar = new SoapVar( $DE, SOAP_ENC_OBJECT, 'DataExtensionObject', 'http://exacttarget.com/wsdl/partnerAPI' );
 
 			$oRequest = new ExactTarget_CreateRequest();
 			$oRequest->Options = NULL;
@@ -103,7 +103,7 @@ class ExactTargetAddUserTask extends BaseTask {
 	}
 
 	public function prepareRequest( $iUserId, $aUserProperties ) {
-		$aSoapVars = $this->prepareSoapVars($iUserId, $aUserProperties);
+		$aSoapVars = $this->prepareSoapVars( $iUserId, $aUserProperties );
 
 		$oRequest = new ExactTarget_CreateRequest();
 		$oRequest->Options = NULL;
@@ -128,7 +128,7 @@ class ExactTargetAddUserTask extends BaseTask {
 			/* Create new DataExtensionObject that reflects user_properties table data */
 			$DE = new ExactTarget_DataExtensionObject();
 			/* CustomerKey is a key that indicates Wikia table reflected by DataExtension */
-			$DE->CustomerKey = "user_properties";
+			$DE->CustomerKey = 'user_properties';
 
 			/* @var $apiProperties Array of ExactTarget_APIProperty objects */
 			$apiProperties = [];
@@ -143,7 +143,7 @@ class ExactTargetAddUserTask extends BaseTask {
 	}
 
 	protected function wrapDataExtensionObjectToSoapVar( $DE ) {
-		return new SoapVar( $DE, SOAP_ENC_OBJECT, 'DataExtensionObject', "http://exacttarget.com/wsdl/partnerAPI" );
+		return new SoapVar( $DE, SOAP_ENC_OBJECT, 'DataExtensionObject', 'http://exacttarget.com/wsdl/partnerAPI' );
 	}
 
 	/**

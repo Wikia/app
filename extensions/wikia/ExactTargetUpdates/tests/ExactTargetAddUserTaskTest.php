@@ -1,6 +1,6 @@
 <?php
 
-include __DIR__ . "/../lib/exacttarget_soap_client.php";
+include __DIR__ . '/../lib/exacttarget_soap_client.php';
 
 class ExactTargetAddUserTaskTest extends WikiaBaseTest {
 
@@ -92,7 +92,7 @@ class ExactTargetAddUserTaskTest extends WikiaBaseTest {
 
 			$DE->Properties = $apiProperties;
 
-			$soapVar = new SoapVar( $DE, SOAP_ENC_OBJECT, 'DataExtensionObject', "http://exacttarget.com/wsdl/partnerAPI" );
+			$soapVar = new SoapVar( $DE, SOAP_ENC_OBJECT, 'DataExtensionObject', 'http://exacttarget.com/wsdl/partnerAPI' );
 			$aSoapVars[] = $soapVar;
 		}
 
@@ -140,7 +140,7 @@ class ExactTargetAddUserTaskTest extends WikiaBaseTest {
 
 			$DE->Properties = $apiProperties;
 
-			$soapVar = new SoapVar( $DE, SOAP_ENC_OBJECT, 'DataExtensionObject', "http://exacttarget.com/wsdl/partnerAPI" );
+			$soapVar = new SoapVar( $DE, SOAP_ENC_OBJECT, 'DataExtensionObject', 'http://exacttarget.com/wsdl/partnerAPI' );
 			$aSoapVars[] = $soapVar;
 		}
 
