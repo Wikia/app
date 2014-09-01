@@ -56,7 +56,11 @@ class MastersPollTest extends WikiaBaseTest {
 		$this->assertNotContains( $selectedMaster, $mastersPoll['c1'], 'Masters poll should not contain selected master' );
 
 		# next master for section
-		$this->assertEquals( false, $poll->getNextMasterForSection('central'), 'This cluster has no secondary master defined' );
-		$this->assertEquals( reset( array_keys( $mastersPoll['c1'] ) ), $poll->getNextMasterForSection('c1'), 'Secondary master is returned' );
+		$this->assertEquals( false, $poll->getNextMasterForSection('main-central'), 'This cluster has no secondary master defined' );
+
+		$nextMaster = $poll->getNextMasterForSection( 'main-c1' );
+		$mastersPollForC1 = array_keys( $mastersPoll['c1'] );
+
+		$this->assertEquals( reset( $mastersPollForC1 ), $nextMaster['hostName'], 'Secondary master is returned' );
 	}
 }

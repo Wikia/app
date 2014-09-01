@@ -492,7 +492,14 @@ class LoadBalancer {
 		// check the status of selected master
 		if ( $i == $this->getWriterIndex() ) {
 			if ( wfGetLBFactory()->getMastersPoll()->isMasterBroken( $this->mServers[0] ) ) {
-				// TODO: handle broken master
+				// handle broken master - connect to a different master
+				$clusterInfo = $this->parentInfo()['id'];
+				$newMaster = wfGetLBFactory()->getMastersPoll()->getNextMasterForSection( $clusterInfo );
+
+				// replace the master in LoadBalancer config
+				if ( !empty( $newMaster ) ) {
+					$this->mServers[$i] = $newMaster;
+				}
 			}
 		}
 		// Wikia change - end

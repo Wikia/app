@@ -39,16 +39,27 @@ class MastersPoll {
 	 * This method is called when isMasterBroken() returns true
 	 * for the "primary" master node  (i.e. selected by the fair dice roll)
 	 *
-	 * @param $sectionName
+	 * Return DB server settings array that can be used by LoadBalancer
+	 *
+	 * @param string $clusterInfo eg. main-c1, main-central
 	 * @return bool|mixed
 	 */
-	function getNextMasterForSection($sectionName) {
-		$hosts = array_keys( $this->conf['mastersPoolBySection'][$sectionName] );
+	function getNextMasterForSection($clusterInfo) {
+		$cluserName = explode( '-', $clusterInfo )[1];
+
+		wfDebug( sprintf( "%s: getting next master for %s\n", __CLASS__, $cluserName ) );
+
+		$hosts = array_keys( $this->conf['mastersPoolBySection'][$cluserName] );
 		$hostName = reset( $hosts );
 
-		if (!empty($hostName)) {
+		if ( !empty( $hostName ) ) {
+			wfDebug( sprintf( "%s: using %s as next master for %s\n", __CLASS__, $hostName, $cluserName ) );
+
 			// resolve settings for hostname
-			return $hostName;
+			$servers = wfGetLBFactory()->makeServerArray( $this->conf['serverTemplate'], [ $hostName => 1 ], [] );
+
+			// return the first element
+			return reset( $servers );
 		}
 		else {
 			// master node not found
