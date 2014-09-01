@@ -80,19 +80,14 @@ class ExactTargetAddUserTask extends BaseTask {
 		$this->callApiToCreateUserPropertiesDataExtension($iUserId, $aUserProperties);
 	}
 
-	protected function callApiToCreateUserPropertiesDataExtension( $iUserId, $aUserProperties ) {
-		global $wgExactTargetApiConfig;
-		$wsdl = $wgExactTargetApiConfig[ 'wsdl' ];
+	public function callApiToCreateUserPropertiesDataExtension( $iUserId, $aUserProperties ) {
 
 		$oRequest = $this->prepareRequest( $iUserId, $aUserProperties );
 
 		try {
 			/* Create the Soap Client */
-			$oClient = new ExactTargetSoapClient( $wsdl, array( 'trace'=>1 ) );
-			$oClient->username = $wgExactTargetApiConfig[ 'username' ];
-			$oClient->password = $wgExactTargetApiConfig[ 'password' ];
 
-
+			$oClient = $this->getClient();
 			$oClient->Create( $oRequest );
 
 			/* Log response */
@@ -103,8 +98,15 @@ class ExactTargetAddUserTask extends BaseTask {
 		}
 	}
 
-	protected function prepareRequest( $iUserId, $aUserProperties ) {
+	public function getClient() {
+		global $wgExactTargetApiConfig;
+		$wsdl = $wgExactTargetApiConfig[ 'wsdl' ];
+		$oClient = new ExactTargetSoapClient( $wsdl, array( 'trace'=>1 ) );
+		$oClient->username = $wgExactTargetApiConfig[ 'username' ];
+		$oClient->password = $wgExactTargetApiConfig[ 'password' ];
+	}
 
+	public function prepareRequest( $iUserId, $aUserProperties ) {
 		$aSoapVars = $this->prepareSoapVars($iUserId, $aUserProperties);
 
 		$oRequest = new ExactTarget_CreateRequest();
@@ -141,6 +143,7 @@ class ExactTargetAddUserTask extends BaseTask {
 			$DE->Properties = $apiProperties;
 			$aDE[] = $DE;
 		}
+		return $aDE;
 	}
 
 	protected function wrapDataExtensionObjectToSoapVar( $DE ) {
