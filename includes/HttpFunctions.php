@@ -777,6 +777,13 @@ class CurlHttpRequest extends MWHttpRequest {
 			// Wikia change - end
 		}
 
+		// Wikia change - begin
+		// remove CURLOPT_TIMEOUT if CURLOPT_TIMEOUT_MS is set
+		if ( isset( $this->curlOptions[CURLOPT_TIMEOUT_MS] ) ) {
+			unset( $this->curlOptions[CURLOPT_TIMEOUT] );
+		}
+		// Wikia change - end
+
 		$this->curlOptions[CURLOPT_HTTPHEADER] = $this->getHeaderList();
 
 		$curlHandle = curl_init( $this->url );
@@ -797,7 +804,9 @@ class CurlHttpRequest extends MWHttpRequest {
 		}
 
 		if ( false === curl_exec( $curlHandle ) ) {
-			$code = curl_error( $curlHandle );
+			// Wikia changes - begin
+			$code = curl_errno( $curlHandle );
+			// Wikia change - end
 
 			if ( isset( self::$curlMessageMap[$code] ) ) {
 				$this->status->fatal( self::$curlMessageMap[$code] );

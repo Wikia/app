@@ -4,7 +4,7 @@ define('wikia.intMaps.unDeleteMap', ['jquery', 'wikia.querystring', 'wikia.intMa
 
 	/**
 	 * @desc Show error message
-	 * @param {string} error message
+	 * @param {string} error - error message
 	 */
 	function showError(error) {
 		GlobalNotification.show(error, 'error');
@@ -12,7 +12,7 @@ define('wikia.intMaps.unDeleteMap', ['jquery', 'wikia.querystring', 'wikia.intMa
 
 	function init() {
 		$.nirvana.sendRequest({
-			controller: 'WikiaInteractiveMaps',
+			controller: 'WikiaInteractiveMapsMap',
 			method: 'updateMapDeletionStatus',
 			type: 'POST',
 			data: {
@@ -27,8 +27,8 @@ define('wikia.intMaps.unDeleteMap', ['jquery', 'wikia.querystring', 'wikia.intMa
 					showError(response);
 				}
 			},
-			onErrorCallback: function (error) {
-				showError(error.statusText);
+			onErrorCallback: function (response) {
+				showError(utils.getNirvanaExceptionMessage(response));
 			}
 		});
 	}

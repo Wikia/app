@@ -58,7 +58,7 @@ define('wikia.intMaps.deleteMap',
 			modal = _modal;
 			utils.bindEvents(modal, events);
 
-			modal.$error = modal.$element.find('.map-modal-error');
+			modal.$errorContainer = modal.$element.find('.map-modal-error');
 
 			modal.$element
 				.find('#intMapInnerContent')
@@ -75,7 +75,7 @@ define('wikia.intMaps.deleteMap',
 		modal.deactivate();
 		closeError();
 		$.nirvana.sendRequest({
-			controller: 'WikiaInteractiveMaps',
+			controller: 'WikiaInteractiveMapsMap',
 			method: 'updateMapDeletionStatus',
 			type: 'POST',
 			data: {
@@ -91,6 +91,7 @@ define('wikia.intMaps.deleteMap',
 				}
 			},
 			onErrorCallback: function (response) {
+				modal.activate();
 				utils.handleNirvanaException(modal, response);
 			}
 		});
@@ -101,7 +102,7 @@ define('wikia.intMaps.deleteMap',
 	 */
 	function showError() {
 		modal.activate();
-		modal.$error
+		modal.$errorContainer
 			.html($.msg('wikia-interactive-maps-delete-map-client-error'))
 			.removeClass('hidden');
 	}
@@ -110,7 +111,7 @@ define('wikia.intMaps.deleteMap',
 	 * @desc Hides error container
 	 */
 	function closeError() {
-		modal.$error
+		modal.$errorContainer
 			.html('')
 			.addClass('hidden');
 	}
