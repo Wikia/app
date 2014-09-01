@@ -9,15 +9,15 @@ class ArticleAsJson extends WikiaService {
 
 	const CACHE_VERSION = '0.0.1';
 
-	private static function createMarker($width = 0, $height = 0, $isGallery = false){
+	private static function createMarker( $width = 0, $height = 0, $isGallery = false ){
 		$blankImgUrl = F::app()->wg->blankImgUrl;
-		$id = count(self::$media) - 1;
+		$id = count( self::$media ) - 1;
 		$classes = 'article-media' . ($isGallery ? ' gallery' : '');
 
 		return "<img src='{$blankImgUrl}' class='{$classes}' data-ref='{$id}' width='{$width}' height='{$height}' />";
 	}
 
-	private static function createMediaObj($details, $imageName, $caption = "") {
+	private static function createMediaObj( $details, $imageName, $caption = "" ) {
 		wfProfileIn( __METHOD__ );
 
 		$media = [
@@ -52,7 +52,7 @@ class ArticleAsJson extends WikiaService {
 		return $media;
 	}
 
-	private static function addUserObj($details){
+	private static function addUserObj( $details ){
 		wfProfileIn( __METHOD__ );
 
 		$userTitle = Title::newFromText( $details['userName'], NS_USER );
@@ -80,7 +80,7 @@ class ArticleAsJson extends WikiaService {
 					self::$mediaDetailConfig
 				);
 
-				$media[] = self::createMediaObj($details, $image['name'], $image['caption']);
+				$media[] = self::createMediaObj( $details, $image['name'], $image['caption'] );
 
 				self::addUserObj($details);
 			}
@@ -88,7 +88,7 @@ class ArticleAsJson extends WikiaService {
 			self::$media[] = $media;
 
 			if ( !empty( $media ) ) {
-				$out = self::createMarker($media[0]['width'], $media[0]['height'], true);
+				$out = self::createMarker( $media[0]['width'], $media[0]['height'], true );
 			} else {
 				$out = '';
 			}
@@ -101,7 +101,7 @@ class ArticleAsJson extends WikiaService {
 		return true;
 	}
 
-	public static function onImageBeforeProduceHTML(&$dummy,Title &$title, &$file, &$frameParams, &$handlerParams, &$time, &$res){
+	public static function onImageBeforeProduceHTML( &$dummy,Title &$title, &$file, &$frameParams, &$handlerParams, &$time, &$res ){
 		global $wgArticleAsJson;
 
 		wfProfileIn( __METHOD__ );
@@ -109,11 +109,11 @@ class ArticleAsJson extends WikiaService {
 		if ( $wgArticleAsJson ) {
 			$details = WikiaFileHelper::getMediaDetail( $title, self::$mediaDetailConfig );
 
-			self::$media[] = self::createMediaObj($details, $title->getText(), $frameParams['caption']);
+			self::$media[] = self::createMediaObj( $details, $title->getText(), $frameParams['caption'] );
 
 			self::addUserObj($details);
 
-			$res = self::createMarker($details['width'], $details['height']);
+			$res = self::createMarker( $details['width'], $details['height'] );
 
 			wfProfileOut( __METHOD__ );
 			return false;
