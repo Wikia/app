@@ -47,11 +47,7 @@ define('wikia.intMap.config', [], function () {
 		}
 	};
 
-	function getActionConfig(action) {
-		return actions[action];
-	}
-
 	return {
-		getActionConfig: getActionConfig
+		actions: actions
 	};
 });

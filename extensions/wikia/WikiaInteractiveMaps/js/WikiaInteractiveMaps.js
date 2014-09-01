@@ -19,16 +19,16 @@ require(
 				sortMapList(event.target.value);
 			})
 			.on('click', 'button#createMap', function () {
-				utils.triggerAction(config, 'createMap');
+				utils.triggerAction(utils.getActionConfig('createMap', config));
 				utils.track(utils.trackerActions.CLICK_LINK_BUTTON, 'create-map-clicked', 0);
 			})
 			.on('click', 'a#deleteMap', function (event) {
 				event.preventDefault();
-				utils.triggerAction(config, 'deleteMap');
+				utils.triggerAction(utils.getActionConfig('deleteMap', config));
 			})
 			.on('click', '#unDeleteMap', function (event) {
 				event.preventDefault();
-				utils.triggerAction(config, 'unDeleteMap');
+				utils.triggerAction(utils.getActionConfig('unDeleteMap', config));
 			});
 
 		if (targetIframe) {
@@ -45,7 +45,7 @@ require(
 
 		// VE Insert Map dialog passes this hash to initiate map creating process right away
 		if (w.location.hash === '#createMap') {
-			utils.triggerAction(config, 'createMap');
+			utils.triggerAction(utils.getActionConfig('createMap', config));
 		}
 	}
 );

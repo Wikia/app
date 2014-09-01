@@ -377,12 +377,9 @@ define(
 
 		/**
 		 * @desc Opens modal associated with chosen action preceded by forced login modal for anons
-		 * @param {object} config intMapConfig module object
-		 * @param {string} action - name of action
+		 * @param {object} actionConfig action configuration from intMapsConfig module
 		 */
-		function triggerAction(config, action) {
-			var actionConfig = config.getActionConfig(action);
-
+		function triggerAction(actionConfig) {
 			if (isUserLoggedIn()) {
 				loadModal(actionConfig);
 			} else {
@@ -390,6 +387,16 @@ define(
 					loadModal(actionConfig);
 				});
 			}
+		}
+
+		/**
+		 * @desc Gets requested action configuration from intMapConfig module
+		 * @param {string} action an action name which configuration is placed in intMapConfig.actions
+		 * @param {object} config intMapConfig module
+		 * @returns {object}
+		 */
+		function getActionConfig(action, config) {
+			return config.actions[action];
 		}
 
 		return {
@@ -419,7 +426,8 @@ define(
 			track: track,
 			trackerActions: tracker.ACTIONS,
 
-			triggerAction: triggerAction
+			triggerAction: triggerAction,
+			getActionConfig: getActionConfig
 		};
 	}
 );
