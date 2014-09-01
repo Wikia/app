@@ -49,10 +49,16 @@ define('wikia.intMap.config', [], function () {
 	mapDeleted = {
 		mapNotDeleted: 0,
 		mapDeleted: 1
+	},
+	// const variables used across int map UI
+	constants = {
+		debounceDelay: 250,
+		minCharLength: 2
 	};
 
 	return {
 		actions: actions,
-		mapDeleted: mapDeleted
+		mapDeleted: mapDeleted,
+		constants: constants
 	};
 });

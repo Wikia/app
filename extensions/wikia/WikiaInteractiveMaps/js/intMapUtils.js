@@ -12,12 +12,6 @@ define(
 	function ($, w, cache, loader, uiFactory, mustache, tracker) {
 		'use strict';
 
-		// const variables used across int map UI
-		var constants = {
-			debounceDelay: 250,
-			minCharLength: 2
-		};
-
 		/**
 		 * @desc loads all assets for create map modal and initialize it
 		 * @param {object} action - object with paths to different assets
@@ -325,12 +319,13 @@ define(
 		/**
 		 * @desc handler for writing in input field
 		 * @param {Element} input - HTML <input> element
+		 * @param {integer} minCharLength - minimal length of  a char taken from intMapsConfig cosntants
 		 * @param {function} cb - callback function fired when input text is long enough
 		 */
-		function onWriteInInput(input, cb) {
+		function onWriteInInput(input, minCharLength, cb) {
 			var trimmedKeyword = input.value.trim();
 
-			if (trimmedKeyword.length >= constants.minCharLength) {
+			if (trimmedKeyword.length >= minCharLength) {
 				cb(trimmedKeyword);
 			}
 		}
@@ -400,7 +395,6 @@ define(
 		}
 
 		return {
-			constants: constants,
 			loadModal: loadModal,
 			createModal: createModal,
 			bindEvents: bindEvents,
