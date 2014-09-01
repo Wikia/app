@@ -5,9 +5,10 @@
 
 .hubs-entry-point {
 	background-image: url("/extensions/wikia/GlobalNavigation/images/hubs_entry_point.svg"); /* base64 */
-	background-position: 0 center;
+	background-position: 16px center;
 	background-repeat: no-repeat;
-	padding: 0 9px 0 22px;
+	cursor: pointer;
+	padding: 0 9px 0 38px;
 
 	&:after {
 		border: 5px solid $nav-background-color;
@@ -46,6 +47,7 @@
 	}
 	nav {
 		background-color: $nav-background-color;
+		cursor: pointer;
 		font-size: 0;
 		height: 62px;
 		line-height: 62px;

@@ -1,22 +1,22 @@
-require(['jquery', 'wikia.globalnavigation.lazyload'], function($, GlobalNavLazyLoad){
+require( ['jquery', 'wikia.globalnavigation.lazyload'], function( $, GlobalNavLazyLoad ){
 	'use strict';
 	var $entryPoint, $hubLinks, $verticals;
 
-	$hubLinks = $('#hubs > .hub-links');
-	$verticals = $('#hubs > .hubs');
-	$entryPoint = $('#hubsEntryPoint');
+	$hubLinks = $( '#hubs > .hub-links' );
+	$verticals = $( '#hubs > .hubs' );
+	$entryPoint = $( '#hubsEntryPoint' );
 
-	function activateSubmenu(row) {
+	function activateSubmenu( row ) {
 		var subMenuSelector, vertical;
 
-		vertical = $(row).addClass('active').data('vertical');
+		vertical = $( row ).addClass( 'active' ).data( 'vertical' );
 		subMenuSelector = '.' + vertical + '-links';
 
-		$(subMenuSelector, $hubLinks).addClass('active');
+		$( subMenuSelector, $hubLinks ).addClass( 'active' );
 	}
 
-	function deactivateSubmenu(row) {
-		$('> section', $hubLinks).add(row).removeClass('active');
+	function deactivateSubmenu( row ) {
+		$( '> section', $hubLinks ).add( row ).removeClass( 'active' );
 	}
 
 	/**
@@ -34,19 +34,19 @@ require(['jquery', 'wikia.globalnavigation.lazyload'], function($, GlobalNavLazy
 
 
 	delayedHover(
-		$entryPoint.get(0),
+		$entryPoint.get( 0 ),
 		{
 			checkInterval: 100,
 			maxActivationDistance: 20,
 			onActivate: function () {
-				$entryPoint.addClass('active');
+				$entryPoint.addClass( 'active' );
 
 				if (!GlobalNavLazyLoad.isMenuWorking()) {
 					GlobalNavLazyLoad.getHubLinks();
 				}
 			},
 			onDeactivate: function() {
-				$entryPoint.removeClass('active');
+				$entryPoint.removeClass( 'active' );
 			}
 		}
 	);
