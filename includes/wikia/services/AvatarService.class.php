@@ -226,7 +226,7 @@ class AvatarService extends Service {
 			$avatarUrl = Masthead::newFromUserName($userName)->mUser->getOption( AVATAR_USER_OPTION_NAME );
 			$images = getMessageForContentAsArray( 'blog-avatar-defaults' );
 			$firstDefaultImage = $images[ 0 ];
-			if( $avatarUrl === '' || substr($avatarUrl, -strlen($firstDefaultImage)) === $firstDefaultImage ) {
+			if( empty( $avatarUrl ) || substr( $avatarUrl, -strlen( $firstDefaultImage ) ) === $firstDefaultImage ) {
 				wfProfileOut( __METHOD__ );
 				return true;
 			}

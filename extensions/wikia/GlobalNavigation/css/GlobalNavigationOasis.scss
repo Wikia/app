@@ -23,6 +23,10 @@ body.skin-oasis ul li:last-child {
 	padding-right: 0;
 }
 
+.AccountNavigation {
+	display: block;
+}
+
 @media screen and (max-width: $breakpoint-content) {
 	.global-navigation {
 		min-width: $width-outside-min;

@@ -1,27 +1,92 @@
 <?php
 
 /**
- * Renders anon / user menu at top right corner of the page
+ * Renders anon/user menu at top right corner of the page.
  *
  * @author Mateusz "Warkot" Warkocki based on work of Maciej Brencz
  */
 class GlobalNavigationAccountNavigationController extends WikiaController {
 
-	// This one really is a local class variable
-	var $personal_urls;
+	var $personalUrls;
+
+	public function index() {
+		wfProfileIn( __METHOD__ );
+
+		global $wgUser;
+
+		$this->setupPersonalUrls();
+		$this->isAnon = $wgUser->isAnon();
+		$this->username = $wgUser->getName();
+		$this->accountNavigationText = $this->username;
+
+		if ( $this->isAnon ) {
+			$this->accountNavigationText = wfMessage( 'login' )->text();
+			$this->loginLinkOpeningTag = $this->renderPersonalUrl( 'login', true );
+			$this->registerLink = $this->renderPersonalUrl( 'register' );
+			$this->loginDropdown = (string)F::app()->sendRequest( 'UserLoginSpecial', 'dropdown', [ 'template' => 'venusDropdown', 'registerLink' => $this->registerLink ] );
+		} else {
+			$this->profileLink = AvatarService::getUrl( $this->username );
+			$this->profileAvatar = null;
+			if ( !AvatarService::isEmptyOrFirstDefault( $this->username ) ) {
+				$this->profileAvatar = AvatarService::renderAvatar( $this->username, 36 );
+			}
+
+			$possibleItems = [ 'mytalk', 'following', 'preferences' ];
+			$dropdownItems = [];
+
+			// Allow hooks to modify the dropdown items.
+			wfRunHooks( 'AccountNavigationModuleAfterDropdownItems', [ &$possibleItems, &$this->personalUrls ] );
+
+			foreach ( $possibleItems as $item ) {
+				if ( isset( $this->personalUrls[ $item ] ) ) {
+					$dropdownItems[] = $this->renderPersonalUrl( $item );
+				}
+			}
+
+			// link to Help:Content ('known' -> never render as redlink)
+			$helpLang = array_key_exists( $this->wg->LanguageCode, $this->wg->AvailableHelpLang ) ? $this->wg->LanguageCode : 'en';
+			$dropdownItems[] = Wikia::link(
+				Title::newFromText( wfMessage( 'helppage' )->inLanguage( $helpLang )->text() ),
+				wfMessage( 'help' )->text(),
+				[ 'data-id' => 'help' ],
+				'',
+				[ 'known' ]
+			);
+
+			$dropdownItems[] = $this->renderPersonalUrl( 'logout', false );
+			$this->dropdown = $dropdownItems;
+		}
+
+		wfProfileOut( __METHOD__ );
+	}
 
 	/**
-	 * Render personal URLs item as HTML link
+	 * Checks whether provided string is on blacklist.
 	 *
-	 * @param $id
-	 * @param bool $wrapUrlText
-	 * @param bool $noAfterText
-	 * @param bool $noClosingTag
+	 * @param string $pageName Redirectto page name to be checked against blacklist
+	 * @return bool
+	 */
+	private static function isBlacklisted( $pageName ) {
+		$returntoBlacklist = [ 'Special:UserLogout', 'Special:UserSignup', 'Special:WikiaConfirmEmail', 'Special:Badtitle' ];
+		foreach ( $returntoBlacklist as $blackItem ) {
+			if ( strpos( $pageName, $blackItem ) === 0 ) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	/**
+	 * Render personal URLs item as HTML link.
+	 *
+	 * @param string $id
+	 * @param bool $openingTagOnly Setting to true renders the <a> tag with appropriate attributes but no content
 	 * @return string
 	 */
-	private function renderPersonalUrl( $id, $wrapUrlText = false, $noAfterText = false, $noClosingTag = false ) {
+	private function renderPersonalUrl( $id, $openingTagOnly = false ) {
 		wfProfileIn( __METHOD__ );
-		$personalUrl = $this->personal_urls[ $id ];
+
+		$personalUrl = $this->personalUrls[ $id ];
 
 		$attributes = [ 'data-id' => $id, 'href' => $personalUrl[ 'href' ] ];
 
@@ -29,12 +94,10 @@ class GlobalNavigationAccountNavigationController extends WikiaController {
 			$attributes[ 'rel' ] = 'nofollow';
 		}
 
-		// add class attribute
 		if ( isset( $personalUrl[ 'class' ] ) ) {
 			$attributes[ 'class' ] = $personalUrl[ 'class' ];
 		}
 
-		// add accesskey attribute
 		switch ( $id ) {
 			case 'mytalk':
 				$attributes[ 'accesskey' ] = 'n';
@@ -46,14 +109,8 @@ class GlobalNavigationAccountNavigationController extends WikiaController {
 
 		$ret = Xml::openElement( 'a', $attributes );
 		$urlText = $personalUrl[ 'text' ];
-		if ( $wrapUrlText ) {
-			$urlText = '<span class="' . $id . '-text">' . $urlText . '</span>';
-		}
-		$ret .= $urlText;
-		if ( array_key_exists( 'afterText', $personalUrl ) && !$noAfterText ) {
-			$ret .= $personalUrl[ 'afterText' ];
-		}
-		if ( !$noClosingTag ) {
+		if ( !$openingTagOnly ) {
+			$ret .= $urlText;
 			$ret .= Xml::closeElement( 'a' );
 		}
 
@@ -62,131 +119,26 @@ class GlobalNavigationAccountNavigationController extends WikiaController {
 	}
 
 	/**
-	 * Modify personal URLs list
+	 * Modify personal URLs list.
 	 */
-	private function setupPersonalUrls( $aditionalUrlClases = [] ) {
-		global $wgUser, $wgComboAjaxLogin;
+	private function setupPersonalUrls() {
+		global $wgUser;
 
-		// Import the starting set of urls from the skin template
-		$this->personal_urls = F::app()->getSkinTemplateObj()->data[ 'personal_urls' ];
+		$this->personalUrls = F::app()->getSkinTemplateObj()->data[ 'personal_urls' ];
 
 		if ( $wgUser->isAnon() ) {
-			// add login and register links for anons
-			//$skin = RequestContext::getMain()->getSkin();
-
-			// where to redirect after login
 			$query = F::app()->wg->Request->getValues();
-			if ( isset( $query[ 'title' ] ) ) {
-				if ( !self::isBlacklisted( $query[ 'title' ] ) ) {
-					$returnto = $query[ 'title' ];
-				} else {
-					$returnto = Title::newMainPage()->getPartialURL();
-				}
+			if ( isset( $query[ 'title' ] ) && !self::isBlacklisted( $query[ 'title' ] ) ) {
+				$returnto = $query[ 'title' ];
 			} else {
 				$returnto = Title::newMainPage()->getPartialURL();
 			}
 			$returnto = wfGetReturntoParam( $returnto );
 
-			$this->personal_urls[ 'login' ] = [ 'text' => wfMsg( 'login' ), 'href' => Skin::makeSpecialUrl( 'UserLogin', $returnto ), 'class' => 'ajaxLogin', 'afterText' => Xml::element( 'img', [ 'src' => $this->wg->BlankImgUrl, 'class' => 'chevron', 'width' => '0', 'height' => '0', ], '' ), ];
-
-			$this->personal_urls[ 'register' ] = [ 'text' => wfMsg( 'oasis-signup' ), 'href' => Skin::makeSpecialUrl( 'UserSignup' ), 'class' => 'ajaxRegister' ];
-
-			if ( !empty( $aditionalUrlClases ) ) {
-				foreach ( $aditionalUrlClases as $id => $classList ) {
-					foreach ( $classList as $class ) {
-						$this->personal_urls[ $id ][ 'class' ] .= ' ' . $class;
-					}
-				}
-			}
+			$this->personalUrls[ 'login' ] = [ 'text' => wfMessage( 'login' )->text(), 'href' => Skin::makeSpecialUrl( 'UserLogin', $returnto ), 'class' => 'ajaxLogin global-navigation-link' ];
+			$this->personalUrls[ 'register' ] = [ 'text' => wfMessage( 'oasis-signup' )->text(), 'href' => Skin::makeSpecialUrl( 'UserSignup' ), 'class' => 'ajaxRegister' ];
 		} else {
-			// use Mypage message for userpage entry
-			$this->personal_urls[ 'userpage' ][ 'text' ] = wfMsg( 'mypage' );
+			$this->personalUrls[ 'userpage' ][ 'text' ] = wfMessage( 'mypage' )->text();
 		}
-	}
-
-	public function index() {
-		wfProfileIn( __METHOD__ );
-
-		global $wgUser, $wgEnableUserLoginExt;
-
-		$requestParams = $this->getRequest()->getParams();
-		$dropdownTemplate = 'dropdown';
-		$aditionalUrlClasses = [];
-		$avatarSize = 20;
-
-//		if ( !empty( $requestParams[ 'template' ] ) ) {
-//			$this->overrideTemplate( $requestParams[ 'template' ] );
-			$dropdownTemplate = 'venusDropdown';
-			$aditionalUrlClasses = [ 'login' => [ 'global-navigation-link' ] ];
-			$avatarSize = 36;
-//		}
-
-		$this->setupPersonalUrls( $aditionalUrlClasses );
-
-		$this->itemsBefore = [];
-		$this->isAnon = $wgUser->isAnon();
-		$this->username = $wgUser->getName();
-
-		if ( $this->isAnon ) {
-			// facebook connect
-			if ( !empty( $this->personal_urls[ 'fbconnect' ][ 'html' ] ) ) {
-				$this->itemsBefore = [ $this->personal_urls[ 'fbconnect' ][ 'html' ] ];
-			}
-
-			// render Login and Register links
-			$this->loginLink = $this->renderPersonalUrl( 'login', false );
-			$this->loginLinkOpeningTag = $this->renderPersonalUrl( 'login', true, true, true );
-			$this->registerLink = $this->renderPersonalUrl( 'register', false );
-			$this->loginDropdown = '';
-			if ( !empty( $wgEnableUserLoginExt ) ) {
-				$this->loginDropdown = (string)F::app()->sendRequest( 'UserLoginSpecial', 'dropdown', [ 'template' => $dropdownTemplate, 'registerLink' => $this->registerLink ] );
-			}
-		} else {
-			// render user avatar and link to his user page
-			$this->profileLink = AvatarService::getUrl( $this->username );
-			$this->profileAvatar = '';
-			if ( !AvatarService::isEmptyOrFirstDefault( $this->username ) ) {
-				$this->profileAvatar = AvatarService::renderAvatar( $this->username, $avatarSize );
-			}
-
-			// dropdown items
-			$possibleItems = [ 'mytalk', 'following', 'preferences' ];
-			$dropdownItems = [];
-
-			// Allow hooks to modify the dropdown items.
-			wfRunHooks( 'AccountNavigationModuleAfterDropdownItems', [ &$possibleItems, &$this->personal_urls ] );
-
-			foreach ( $possibleItems as $item ) {
-				if ( isset( $this->personal_urls[ $item ] ) ) {
-					$dropdownItems[] = $this->renderPersonalUrl( $item, false );
-				}
-			}
-
-			// link to Help:Content (never render as redlink)
-			$helpLang = array_key_exists( $this->wg->LanguageCode, $this->wg->AvailableHelpLang ) ? $this->wg->LanguageCode : 'en';
-			$dropdownItems[] = Wikia::link( Title::newFromText( wfMsgExt( 'helppage', [ 'parsemag', 'language' => $helpLang ] ) ), wfMsg( 'help' ), [ 'title' => '', 'data-id' => 'help' ], '', [ 'known' ] );
-
-			// logout link
-			$dropdownItems[] = $this->renderPersonalUrl( 'logout', false );
-			$this->dropdown = $dropdownItems;
-		}
-
-		wfProfileOut( __METHOD__ );
-	}
-
-	/**
-	 * Checks whether provided string is on blacklist.
-	 *
-	 * @param $haystack String Redirectto page name to be checked against blacklist
-	 * @return bool
-	 */
-	public static function isBlacklisted( $haystack ) {
-		$returntoBlacklist = [ 'Special:UserLogout', 'Special:UserSignup', 'Special:WikiaConfirmEmail', 'Special:Badtitle' ];
-		foreach ( $returntoBlacklist as $blackItem ) {
-			if ( strpos( $haystack, $blackItem ) === 0 ) {
-				return true;
-			}
-		}
-		return false;
 	}
 }

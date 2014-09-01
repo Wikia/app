@@ -17,10 +17,6 @@
 		margin-top: 0;
 		padding: 0;
 
-		&.nohover:hover {
-			background: transparent;
-		}
-
 		&:hover {
 			background: none;
 
@@ -33,12 +29,8 @@
 			@include grid-column-width('large', 1, $large-grid-gutter + $large-content-padding - 2px);
 		}
 
-		.chevron {
-			border-style: solid;
-			border-top-color: $nav-alternative-color;
-			border-width: 5px;
-			color: transparent;
-			margin-top: 18px;
+		.account-navigation-text {
+			display: none;
 		}
 
 		.avatar {
@@ -62,8 +54,12 @@
 			width: 36px;
 		}
 
-		.login-text {
-			display: none;
+		.chevron {
+			border-style: solid;
+			border-top-color: $nav-alternative-color;
+			border-width: 5px;
+			color: transparent;
+			margin-top: 18px;
 		}
 	}
 

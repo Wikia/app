@@ -3,8 +3,8 @@
 <?
 	$tabIndex = 0;
 	$cachedMessages = [
-		'yourname' => wfMessage('yourname')->escaped(),
-		'yourpassword' => wfMessage('yourpassword')->escaped(),
+		'yourname' => wfMessage( 'yourname' )->escaped(),
+		'yourpassword' => wfMessage( 'yourpassword' )->escaped(),
 	];
 	$form = array(
 		'inputs' => array(
@@ -35,7 +35,7 @@
 			array(
 				'type' => 'password',
 				'name' => 'password',
-				'class' => 'password-input hide-label',
+				'class' => 'hide-label',
 				'isRequired' => true,
 				'placeholder' => $cachedMessages[ 'yourpassword' ],
 				'label' =>  $cachedMessages[ 'yourpassword' ],
@@ -43,19 +43,19 @@
 			),
 			array(
 				'type' => 'custom',
-				'output' => '<a href="#" class="forgot-password" tabindex="0">'.wfMessage('userlogin-forgot-password')->escaped().'</a>',
+				'output' => '<a href="#" class="forgot-password" tabindex="0">' . wfMessage( 'userlogin-forgot-password' )->escaped() . '</a>',
 			),
 			array(
 				'type' => 'checkbox',
 				'name' => 'keeploggedin',
 				'class' => 'keep-logged-in',
 				'value' => '1',
-				'label' => wfMessage('userlogin-remembermypassword')->escaped(),
+				'label' => wfMessage( 'userlogin-remembermypassword' )->escaped(),
 				'tabindex' => ++$tabIndex,
 			),
 			array(
 				'type' => 'submit',
-				'value' => wfMessage('login')->escaped(),
+				'value' => wfMessage( 'login' )->escaped(),
 				'class' => 'login-button',
 				'tabindex' => ++$tabIndex,
 			),
@@ -67,9 +67,9 @@
 	$form['isInvalid'] = true;
 	$form['errorMsg'] = '';
 
-	echo $app->renderView('WikiaStyleGuideForm', 'index', array('form' => $form));
+	echo $app->renderView( 'WikiaStyleGuideForm', 'index', [ 'form' => $form ] );
 
 	// 3rd party providers buttons
-	echo $app->renderView('UserLoginSpecial', 'Providers', array('tabindex' => ++$tabIndex));
+	echo $app->renderView( 'UserLoginSpecial', 'Providers', [ 'tabindex' => ++$tabIndex ] );
 ?>
 </div>
