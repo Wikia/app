@@ -10,10 +10,13 @@ namespace Wikia;
  */
 class MastersPoll {
 	# store server states in memcache (for 60 seconds)
-	const SERVER_BROKEN = 'broken';
 	const SERVER_STATUS_TTL = 60;
 
+	# how many times connection to master needs to fail to mark it as broken
+	const SERVER_IS_BROKEN_THRESHOLD = 5;
+
 	private $conf;
+	private $memc;
 
 	function __construct( Array $conf ) {
 		$this->conf = $conf;
@@ -24,6 +27,8 @@ class MastersPoll {
 		if ( empty( $wgMemc ) ) {
 			$wgMemc = wfGetMainCache();
 		}
+
+		$this->memc = \F::app()->wg->Memc;
 	}
 
 	/**
@@ -113,7 +118,10 @@ class MastersPoll {
 		$hostName = $serverEntry['hostName'];
 		wfDebug( sprintf( "%s: marking '%s' as broken\n", __CLASS__, $hostName ) );
 
-		\F::app()->wg->Memc->set( self::getStatusKeyForServer( $hostName ), self::SERVER_BROKEN, self::SERVER_STATUS_TTL );
+		$memcKey = self::getStatusKeyForServer( $hostName );
+		$curVal = intval( $this->memc->get( $memcKey ) );
+
+		$this->memc->set( $memcKey, $curVal + 1, self::SERVER_STATUS_TTL );
 	}
 
 	/**
@@ -126,7 +134,9 @@ class MastersPoll {
 		$hostName = $serverEntry['hostName'];
 
 		wfDebug( sprintf( "%s: checking if '%s' is broken\n", __CLASS__, $hostName ) );
-		$isBroken = \F::app()->wg->Memc->get( self::getStatusKeyForServer( $hostName ) ) === self::SERVER_BROKEN;
+
+		$failedConnections = intval( $this->memc->get( self::getStatusKeyForServer( $hostName ) ) );
+		$isBroken = ( $failedConnections >= self::SERVER_IS_BROKEN_THRESHOLD );
 
 		if ( $isBroken ) {
 			wfDebug( sprintf( "%s: '%s' is marked as broken\n", __CLASS__, $hostName ) );
@@ -135,7 +145,7 @@ class MastersPoll {
 		return $isBroken;
 	}
 
-	static private function getStatusKeyForServer($hostName) {
+	static public function getStatusKeyForServer($hostName) {
 		return wfSharedMemcKey( __CLASS__, 'status', $hostName );
 	}
 }
