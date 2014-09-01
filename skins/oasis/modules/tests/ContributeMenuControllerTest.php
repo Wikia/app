@@ -10,9 +10,16 @@ class ContributeMenuControllerTest extends WikiaBaseTest {
 		parent::setUp();
 	}
 
-	public function testExecuteIndex_default() {
+	/**
+	 * @param Array $contentActionsMock
+	 * @param String $isUserAllowed one of class constants: USER_ALLOWED or USER_NOT_ALLOWED
+	 * @param Array $controllerMockedMethodsHash hash describing how many times controller's mocked method should be called
+	 *
+	 * @dataProvider executeIndexDataProvider
+	 */
+	public function textExecuteIndex( $contentActionsMock, $isUserAllowed, $controllerMockedMethodsHash ) {
 		$skinTplObjMock = new stdClass();
-		$skinTplObjMock->data['content_actions'] = [];
+		$skinTplObjMock->data['content_actions'] = $contentActionsMock;
 		$appMock = $this->getWikiaAppMock();
 		$appMock->expects( $this->once() )
 			->method( 'getSkinTemplateObj' )
@@ -20,68 +27,51 @@ class ContributeMenuControllerTest extends WikiaBaseTest {
 
 		$responseMock = $this->getWikiaResponseMock();
 
-		$userMock = $this->getUserMock( self::USER_NOT_ALLOWED );
+		$userMock = $this->getUserMock( $isUserAllowed );
 
-		$controllerMock = $this->getContributeMenuControllerMock( $appMock, $responseMock, $userMock );
-		$controllerMock->expects( $this->never() )
-			->method( 'getEditPageItem' );
-		$controllerMock->expects( $this->once() )
-			->method( 'getSpecialPagesLinks' );
-		$controllerMock->expects( $this->never() )
-			->method( 'getEditNavItem' );
+		$controllerMock = $this->getContributeMenuControllerMock( $appMock, $responseMock, $userMock, $controllerMockedMethodsHash );
 
 		$controllerMock->executeIndex();
 	}
 
-	public function testExecuteIndex_with_edit() {
-		$skinTplObjMock = new stdClass();
-		$skinTplObjMock->data[ 'content_actions' ] = [
-			'edit' => [
-				'href' => '',
-				'class' => '',
-			]
+	public function executeIndexDataProvider() {
+		return [
+			// default behaviour - special pages' links in the menu
+			[
+				'$contentActionsMock' => [],
+				'$isUserAllowed' => self::USER_NOT_ALLOWED,
+				'$controllerMockedMethodsHash' => [
+					'getEditPageItem' => 'never',
+					'getSpecialPagesLinks' => 'once',
+					'getEditNavItem' => 'never',
+				]
+			],
+			// special pages' links and edit link in the menu
+			[
+				'$contentActionsMock' => [
+					'edit' => [
+						'href' => '',
+						'class' => '',
+					]
+				],
+				'$isUserAllowed' => self::USER_NOT_ALLOWED,
+				'$controllerMockedMethodsHash' => [
+					'getEditPageItem' => 'once',
+					'getSpecialPagesLinks' => 'once',
+					'getEditNavItem' => 'never',
+				]
+			],
+			// special pages' links and edit navigation link in the menu
+			[
+				'$contentActionsMock' => [],
+				'$isUserAllowed' => self::USER_ALLOWED,
+				'$controllerMockedMethodsHash' => [
+					'getEditPageItem' => 'never',
+					'getSpecialPagesLinks' => 'once',
+					'getEditNavItem' => 'once',
+				]
+			],
 		];
-		$appMock = $this->getWikiaAppMock();
-		$appMock->expects( $this->once() )
-			->method( 'getSkinTemplateObj' )
-			->willReturn( $skinTplObjMock );
-
-		$responseMock = $this->getWikiaResponseMock();
-
-		$userMock = $this->getUserMock( self::USER_NOT_ALLOWED );
-
-		$controllerMock = $this->getContributeMenuControllerMock( $appMock, $responseMock, $userMock );
-		$controllerMock->expects( $this->once() )
-			->method( 'getEditPageItem' );
-		$controllerMock->expects( $this->once() )
-			->method( 'getSpecialPagesLinks' );
-		$controllerMock->expects( $this->never() )
-			->method( 'getEditNavItem' );
-
-		$controllerMock->executeIndex();
-	}
-
-	public function testExecuteIndex_with_edit_nav() {
-		$skinTplObjMock = new stdClass();
-		$skinTplObjMock->data['content_actions'] = [];
-		$appMock = $this->getWikiaAppMock();
-		$appMock->expects( $this->once() )
-			->method( 'getSkinTemplateObj' )
-			->willReturn( $skinTplObjMock );
-
-		$responseMock = $this->getWikiaResponseMock();
-
-		$userMock = $this->getUserMock( self::USER_ALLOWED );
-
-		$controllerMock = $this->getContributeMenuControllerMock( $appMock, $responseMock, $userMock );
-		$controllerMock->expects( $this->never() )
-			->method( 'getEditPageItem' );
-		$controllerMock->expects( $this->once() )
-			->method( 'getSpecialPagesLinks' );
-		$controllerMock->expects( $this->once() )
-			->method( 'getEditNavItem' );
-
-		$controllerMock->executeIndex();
 	}
 
 	/**
@@ -220,11 +210,23 @@ class ContributeMenuControllerTest extends WikiaBaseTest {
 		return $userMock;
 	}
 
-	private function getContributeMenuControllerMock( $appMock, $responseMock, $userMock ) {
+	/**
+	 * @param $appMock
+	 * @param $responseMock
+	 * @param $userMock
+	 * @param Array $methodsCalls hash describing how many times mocked method should be called
+	 * @return PHPUnit_Framework_MockObject_MockObject
+	 */
+	private function getContributeMenuControllerMock( $appMock, $responseMock, $userMock, $methodsCalls ) {
 		$controllerMock = $this->getMockBuilder( 'ContributeMenuController' )
 			->setMethods( [ 'getEditPageItem', 'getSpecialPagesLinks', 'getEditNavItem' ] )
 			->disableOriginalConstructor()
 			->getMock();
+
+		foreach( $methodsCalls as $method => $fired ) {
+			$controllerMock->expects( $this->$fired() )
+				->method( $method );
+		}
 
 		$controllerMock->app = $appMock;
 		$controllerMock->response = $responseMock;
