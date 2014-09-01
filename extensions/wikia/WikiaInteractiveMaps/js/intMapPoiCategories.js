@@ -100,8 +100,7 @@ define('wikia.intMap.poiCategories',
 			modalModes = {
 				CREATE: 'create',
 				EDIT: 'edit'
-			},
-			poiCategoriesToDeleteElement;
+			};
 
 		/**
 		 * @desc Entry point for modal
@@ -150,6 +149,7 @@ define('wikia.intMap.poiCategories',
 				// cache selectors
 				modal.$errorContainer = modal.$content.children('.error');
 				modal.$form = $('#intMapPoiCategoriesForm');
+				modal.$poiCategoriesToDeleteElement = $('#poiCategoriesToDelete');
 
 				utils.bindEvents(modal, events);
 
@@ -296,12 +296,8 @@ define('wikia.intMap.poiCategories',
 		 * @param poiCategoryId
 		 */
 		function markPoiCategoryAsDeleted(poiCategoryId) {
-			if (!(poiCategoriesToDeleteElement instanceof jQuery)) {
-				poiCategoriesToDeleteElement = $('#poiCategoriesToDelete');
-			}
-
 			// add POI category id to hidden field
-			poiCategoriesToDeleteElement.val(poiCategoriesToDeleteElement.val() + ' ' + poiCategoryId);
+			modal.$poiCategoriesToDeleteElement.val(modal.$poiCategoriesToDeleteElement.val() + ' ' + poiCategoryId);
 		}
 
 		/**
@@ -355,22 +351,20 @@ define('wikia.intMap.poiCategories',
 		 * @returns {boolean} - is valid
 		 */
 		function validateFormData(formSerialized) {
-			var poiCategoryInvalid = false;
+			var poiCategoriesLength,
+				i;
 
 			if (!formSerialized.poiCategories) {
 				utils.showError(modal, $.msg('wikia-interactive-maps-poi-categories-form-no-category-error'));
 				return false;
 			}
 
-			formSerialized.poiCategories.forEach(function (poiCategory) {
-				if (poiCategoriesModel.isPoiCategoryInvalid(poiCategory)) {
-					poiCategoryInvalid = true;
+			poiCategoriesLength = formSerialized.poiCategories.length;
+			for (i = 0; i < poiCategoriesLength; i++) {
+				if (poiCategoriesModel.isPoiCategoryInvalid(formSerialized.poiCategories[i])) {
+					utils.showError(modal, $.msg('wikia-interactive-maps-poi-categories-form-error'));
+					return false;
 				}
-			});
-
-			if (poiCategoryInvalid) {
-				utils.showError(modal, $.msg('wikia-interactive-maps-poi-categories-form-error'));
-				return false;
 			}
 
 			return true;
