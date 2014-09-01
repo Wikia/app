@@ -78,7 +78,7 @@
 @media #{$below-small} {
 	.global-navigation {
 		min-width: 767px;
-		position: static;
+		position: relative;
 	}
 	.wikia-page {
 		padding-top: 0;

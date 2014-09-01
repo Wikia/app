@@ -1,6 +1,7 @@
 @import "../../Venus/styles/variables";
 @import "skins/oasis/css/core/color";
 @import "skins/oasis/css/mixins/columns";
+@import "skins/oasis/css/mixins/blackout";
 @import "GlobalNavigationColors";
 
 .hubs-entry-point {
@@ -27,6 +28,14 @@
 	}
 }
 
+.transparent-out {
+	@include blackout(rgba(1, 1, 1, 0.0));
+
+	&.visible {
+		z-index: $blackout-z-index;
+	}
+}
+
 .hubs-menu {
 	background-color: $hubsmenu-background-color;
 	border: 1px solid $nav-alternative-color;
@@ -44,6 +53,10 @@
 	.hubs {
 		float:left;
 		width: 256px;
+
+		*, *:before, *:after {
+			-webkit-backface-visibility: hidden;
+		}
 	}
 	nav {
 		background-color: $nav-background-color;
@@ -90,7 +103,6 @@
 		}
 
 		&:after {
-			-webkit-backface-visibility: hidden;
 			background-color: $hubsmenu-background-color;
 			content: " ";
 			float: right;

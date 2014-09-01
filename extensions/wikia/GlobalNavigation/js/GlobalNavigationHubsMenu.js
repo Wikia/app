@@ -1,6 +1,6 @@
 require( ['jquery', 'wikia.globalnavigation.lazyload'], function( $, GlobalNavLazyLoad ){
 	'use strict';
-	var $entryPoint, $hubLinks, $verticals;
+	var $entryPoint, $hubLinks, $transparentOut, $verticals;
 
 	$hubLinks = $( '#hubs > .hub-links' );
 	$verticals = $( '#hubs > .hubs' );
@@ -32,22 +32,34 @@ require( ['jquery', 'wikia.globalnavigation.lazyload'], function( $, GlobalNavLa
 			deactivate: deactivateSubmenu
 		});
 
+	function openMenu() {
+		$entryPoint.addClass( 'active' );
+		$transparentOut.addClass( 'visible' );
 
-	delayedHover(
-		$entryPoint.get( 0 ),
-		{
-			checkInterval: 100,
-			maxActivationDistance: 20,
-			onActivate: function () {
-				$entryPoint.addClass( 'active' );
-
-				if (!GlobalNavLazyLoad.isMenuWorking()) {
-					GlobalNavLazyLoad.getHubLinks();
-				}
-			},
-			onDeactivate: function() {
-				$entryPoint.removeClass( 'active' );
-			}
+		if (!GlobalNavLazyLoad.isMenuWorking()) {
+			GlobalNavLazyLoad.getHubLinks();
 		}
-	);
+	}
+
+	function closeMenu() {
+		$entryPoint.removeClass( 'active' );
+		$transparentOut.removeClass( 'visible' );
+	}
+
+	$transparentOut = $('<div />').addClass('transparent-out').appendTo('body');
+	$transparentOut.click(closeMenu);
+
+	if ( !window.touchstart ) {
+		delayedHover(
+			$entryPoint.get( 0 ),
+			{
+				checkInterval: 100,
+				maxActivationDistance: 20,
+				onActivate: openMenu,
+				onDeactivate: closeMenu
+			}
+		);
+	} else {
+		$entryPoint.click(openMenu);
+	}
 });
