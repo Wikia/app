@@ -82,7 +82,7 @@ class WikiaInteractiveMapsPoiController extends WikiaInteractiveMapsBaseControll
 
 		$this->validatePoiData();
 
-		$results = $this->mapsModel->deletePoi( $this->getData( 'poiId' ) );
+		$results = $this->getModel()->deletePoi( $this->getData( 'poiId' ) );
 		if ( true === $results[ 'success' ] ) {
 			WikiaMapsLogger::addLogEntry(
 				WikiaMapsLogger::ACTION_DELETE_PIN,
@@ -102,7 +102,7 @@ class WikiaInteractiveMapsPoiController extends WikiaInteractiveMapsBaseControll
 	 * @return Array
 	 */
 	private function createPoi() {
-		return $this->mapsModel->savePoi( $this->getSanitizedData() );
+		return $this->getModel()->savePoi( $this->getSanitizedData() );
 	}
 
 	/**
@@ -111,7 +111,7 @@ class WikiaInteractiveMapsPoiController extends WikiaInteractiveMapsBaseControll
 	 * @return Array
 	 */
 	private function updatePoi() {
-		return $this->mapsModel->updatePoi(
+		return $this->getModel()->updatePoi(
 			$this->getData( 'poiId' ),
 			$this->getSanitizedData()
 		);
@@ -189,8 +189,8 @@ class WikiaInteractiveMapsPoiController extends WikiaInteractiveMapsBaseControll
 			throw new BadRequestApiException( wfMessage( 'wikia-interactive-maps-create-map-bad-request-error' )->plain() );
 		}
 
-		if ( !$this->wg->User->isLoggedIn() ) {
-			throw new PermissionsException( WikiaInteractiveMapsController::PAGE_RESTRICTION );
+		if ( !$this->isUserAllowed() ) {
+			throw new WikiaInteractiveMapsPermissionException();
 		}
 	}
 
@@ -224,7 +224,7 @@ class WikiaInteractiveMapsPoiController extends WikiaInteractiveMapsBaseControll
 	 *
 	 * @return bool
 	 */
-	private function isValidArticleTitle() {
+	public function isValidArticleTitle() {
 		$articleTitle = $this->getData( 'articleTitle' );
 		$valid = false;
 
@@ -297,7 +297,7 @@ class WikiaInteractiveMapsPoiController extends WikiaInteractiveMapsBaseControll
 		} else {
 			$results = array_map( 
 				function( $item ) {
-					$imageUrl = $this->mapsModel->getArticleImage(
+					$imageUrl = $this->getModel()->getArticleImage(
 						$item[ 0 ][ 'title' ],
 						self::POI_ARTICLE_IMAGE_THUMB_SIZE,
 						self::POI_ARTICLE_IMAGE_THUMB_SIZE
@@ -358,7 +358,7 @@ class WikiaInteractiveMapsPoiController extends WikiaInteractiveMapsBaseControll
 	 * @return Array results array
 	 */
 	private function decorateResults( $results, $fieldsList ) {
-		$response = $this->mapsModel->sendGetRequest( $results[ 'content' ]->url );
+		$response = $this->getModel()->sendGetRequest( $results[ 'content' ]->url );
 
 		foreach ( $fieldsList as $field ) {
 			if ( !empty( $response[ 'content' ]->$field ) ) {
