@@ -4,7 +4,7 @@ define('wikia.intMap.poiCategories',
 		'wikia.querystring',
 		'wikia.window',
 		'wikia.intMap.utils',
-		'wikia.intMap.poiCategoriesModel'
+		'wikia.intMap.poiCategories.model'
 	],
 	function($, qs, w, utils, poiCategoriesModel) {
 		'use strict';
@@ -100,7 +100,8 @@ define('wikia.intMap.poiCategories',
 			modalModes = {
 				CREATE: 'create',
 				EDIT: 'edit'
-			};
+			},
+			poiCategoriesToDeleteElement;
 
 		/**
 		 * @desc Entry point for modal
@@ -118,7 +119,6 @@ define('wikia.intMap.poiCategories',
 			poiCategoryTemplate = templates[1];
 			parentPoiCategoryTemplate = templates[2];
 
-			mode = params.mode || modalModes.CREATE;
 			setModalMode();
 
 			setUpParentPoiCategories()
@@ -135,6 +135,8 @@ define('wikia.intMap.poiCategories',
 			setUpTemplateData(data);
 			mapUrl = data.mapUrl;
 			poiCategoriesModel.setPoiCategoriesOriginalData(data.poiCategories);
+
+			modalConfig.vars.title = (mode === modalModes.EDIT) ? editPoiCategoriesTitle : createPoiCategoriesTitle;
 
 			modalConfig.vars.content = utils.render(poiCategoriesTemplate, poiCategoriesTemplateData, {
 				poiCategory: poiCategoryTemplate,
@@ -164,13 +166,25 @@ define('wikia.intMap.poiCategories',
 		 * @desc sets modal mode (create POI categories / edit existing POI categories)
 		 */
 		function setModalMode() {
-			var title = createPoiCategoriesTitle;
+			mode = params.mode || modalModes.CREATE;
+		}
 
-			if (mode === modalModes.EDIT) {
-				title = editPoiCategoriesTitle;
-			}
+		/**
+		 * @desc marks chosen parent POI category as selected
+		 * @param {Array} parentPoiCategories
+		 * @param {Number} id
+		 * @returns {Array} - updated parent POI categories
+		 */
+		function markParentPoiCategoryAsSelected(parentPoiCategories, id) {
+			parentPoiCategories.forEach(function (parentPoiCategory, i) {
+				if (parentPoiCategory.id === id) {
+					parentPoiCategories[i].selected = ' selected';
+				} else {
+					parentPoiCategories[i].selected = null;
+				}
+			});
 
-			modalConfig.vars.title = title;
+			return parentPoiCategories;
 		}
 
 		/**
@@ -190,13 +204,9 @@ define('wikia.intMap.poiCategories',
 				extendedPoiCategoryTemplateData.marker = poiCategory.marker;
 			}
 
-			extendedPoiCategoryTemplateData.parentPoiCategories.forEach(function (parentPoiCategory, i) {
-				if (parentPoiCategory.id === poiCategory.parent_poi_category_id) {
-					extendedPoiCategoryTemplateData.parentPoiCategories[i].selected = ' selected';
-				} else {
-					extendedPoiCategoryTemplateData.parentPoiCategories[i].selected = null;
-				}
-			});
+			extendedPoiCategoryTemplateData.parentPoiCategories = markParentPoiCategoryAsSelected(
+				extendedPoiCategoryTemplateData.parentPoiCategories, poiCategory.parent_poi_category_id
+			);
 
 			return extendedPoiCategoryTemplateData;
 		}
@@ -260,7 +270,8 @@ define('wikia.intMap.poiCategories',
 		 * @desc adds blank POI category input field
 		 */
 		function addPoiCategory() {
-			modal.$form.append(utils.render(poiCategoryTemplate, extendPoiCategoryData({}, poiCategoryTemplateData), {
+			var poiCategoryDataExtended = extendPoiCategoryData({}, poiCategoryTemplateData);
+			modal.$form.append(utils.render(poiCategoryTemplate, poiCategoryDataExtended, {
 				parentPoiCategory: parentPoiCategoryTemplate
 			}));
 		}
@@ -285,12 +296,12 @@ define('wikia.intMap.poiCategories',
 		 * @param poiCategoryId
 		 */
 		function markPoiCategoryAsDeleted(poiCategoryId) {
-			// add POI category id to hidden field
-			var poiCategoriesToDeleteElement = $('#poiCategoriesToDelete'),
-				poiCategoriesToDelete = JSON.parse('[' + poiCategoriesToDeleteElement.val() + ']');
+			if (!(poiCategoriesToDeleteElement instanceof jQuery)) {
+				poiCategoriesToDeleteElement = $('#poiCategoriesToDelete');
+			}
 
-			poiCategoriesToDelete.push(poiCategoryId);
-			poiCategoriesToDeleteElement.val(poiCategoriesToDelete.join(','));
+			// add POI category id to hidden field
+			poiCategoriesToDeleteElement.val(poiCategoriesToDeleteElement.val() + ' ' + poiCategoryId);
 		}
 
 		/**
@@ -344,12 +355,20 @@ define('wikia.intMap.poiCategories',
 		 * @returns {boolean} - is valid
 		 */
 		function validateFormData(formSerialized) {
+			var poiCategoryInvalid = false;
+
 			if (!formSerialized.poiCategories) {
 				utils.showError(modal, $.msg('wikia-interactive-maps-poi-categories-form-no-category-error'));
 				return false;
 			}
 
-			if (formSerialized.poiCategories.some(poiCategoriesModel.isPoiCategoryInvalid)) {
+			formSerialized.poiCategories.forEach(function (poiCategory) {
+				if (poiCategoriesModel.isPoiCategoryInvalid(poiCategory)) {
+					poiCategoryInvalid = true;
+				}
+			});
+
+			if (poiCategoryInvalid) {
 				utils.showError(modal, $.msg('wikia-interactive-maps-poi-categories-form-error'));
 				return false;
 			}
@@ -389,12 +408,10 @@ define('wikia.intMap.poiCategories',
 		 * @desc handler method triggered by savePoiCategories event
 		 */
 		function savePoiCategories() {
-			var formSerialized = modal.$form.serializeObject(),
-				poiCategoriesOrganized;
+			var formSerialized = modal.$form.serializeObject();
 
 			if (validateFormData(formSerialized)) {
-				poiCategoriesOrganized = poiCategoriesModel.organizePoiCategories(formSerialized);
-				sendPoiCategories(poiCategoriesOrganized);
+				sendPoiCategories(poiCategoriesModel.organizePoiCategories(formSerialized));
 			}
 		}
 
@@ -404,12 +421,9 @@ define('wikia.intMap.poiCategories',
 		 * @param {object} dataReceived - response from backend, array of actions done and categories affected
 		 */
 		function poiCategoriesSaved(dataSent, dataReceived) {
-			var updatedPoiCategories;
-
 			if (mode === modalModes.EDIT) {
 				if (typeof pontoTrigger === 'function') {
-					updatedPoiCategories = poiCategoriesModel.updatePoiCategoriesData(dataSent, dataReceived);
-					pontoTrigger(updatedPoiCategories);
+					pontoTrigger(poiCategoriesModel.preparePoiCategoriesForPonto(dataSent, dataReceived));
 				}
 				modal.trigger('close');
 			} else {
@@ -427,8 +441,9 @@ define('wikia.intMap.poiCategories',
 
 		return {
 			init: init,
+			markParentPoiCategoryAsSelected: markParentPoiCategoryAsSelected,
 			extendPoiCategoryData: extendPoiCategoryData,
-			poiCategoryTemplateData: poiCategoryTemplateData
+			poiCategoryTemplateData: poiCategoryTemplateData // for unit tests
 		};
 	}
 );

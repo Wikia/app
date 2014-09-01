@@ -1,15 +1,26 @@
 describe('WikiaMaps.poiCategoriesModel', function () {
 	'use strict';
 
-	var poiCategoriesModelModule = modules['wikia.intMap.poiCategoriesModel'](jQuery);
+	var utilsModule = modules['wikia.intMap.utils'](jQuery, {}, {}, {}, {}, {}, {}),
+		poiCategoriesModelModule = modules['wikia.intMap.poiCategories.model'](jQuery, utilsModule);
 
 	it('registers AMD module', function() {
 		expect(typeof poiCategoriesModelModule).toBe('object');
+		expect(typeof poiCategoriesModelModule.setPoiCategoriesOriginalData).toBe('function');
+		expect(typeof poiCategoriesModelModule.getParentPoiCategories).toBe('function');
+		expect(typeof poiCategoriesModelModule.sendPoiCategories).toBe('function');
+		expect(typeof poiCategoriesModelModule.isPoiCategoryInvalid).toBe('function');
+		expect(typeof poiCategoriesModelModule.isPoiCategoryChanged).toBe('function');
+		expect(typeof poiCategoriesModelModule.isPoiCategoryDeleted).toBe('function');
+		expect(typeof poiCategoriesModelModule.findPoiCategoryById).toBe('function');
+		expect(typeof poiCategoriesModelModule.cleanUpPoiCategory).toBe('function');
+		expect(typeof poiCategoriesModelModule.organizePoiCategories).toBe('function');
+		expect(typeof poiCategoriesModelModule.setPoiCategoryUpdatedData).toBe('function');
+		expect(typeof poiCategoriesModelModule.getUpdatedPoiCategory).toBe('function');
+		expect(typeof poiCategoriesModelModule.preparePoiCategoriesForPonto).toBe('function');
 	});
 
 	it('checks if POI category has changed', function() {
-		expect(typeof poiCategoriesModelModule.isPoiCategoryChanged).toBe('function');
-
 		var testData = [
 			{
 				originalPoiCategory: {
@@ -67,8 +78,6 @@ describe('WikiaMaps.poiCategoriesModel', function () {
 	});
 
 	it('checks if POI category was deleted', function () {
-		expect(typeof poiCategoriesModelModule.isPoiCategoryDeleted).toBe('function');
-
 		var testData = [
 			{
 				input: {
@@ -108,8 +117,6 @@ describe('WikiaMaps.poiCategoriesModel', function () {
 	});
 
 	it('finds POI category by id', function () {
-		expect(typeof poiCategoriesModelModule.findPoiCategoryById).toBe('function');
-
 		var testData = [
 			{
 				input: {
@@ -163,9 +170,46 @@ describe('WikiaMaps.poiCategoriesModel', function () {
 		});
 	});
 
-	it('organizes POI categories', function () {
-		expect(typeof poiCategoriesModelModule.organizePoiCategories).toBe('function');
+	it('cleans up types of POI category properties', function () {
+		var testData = [
+			{
+				input: {
+					id: '1',
+					parent_poi_category_id: '1'
+				},
+				expectedOutput: {
+					id: 1,
+					parent_poi_category_id: 1
+				}
+			},
+			{
+				input: {
+					id: '',
+					parent_poi_category_id: '1'
+				},
+				expectedOutput: {
+					parent_poi_category_id: 1
+				}
+			},
+			{
+				input: {
+					id: '1',
+					parent_poi_category_id: ''
+				},
+				expectedOutput: {
+					id: 1,
+					parent_poi_category_id: ''
+				}
+			}
+		];
 
+		testData.forEach(function (testCase) {
+			var poiCategory = poiCategoriesModelModule.cleanUpPoiCategory(testCase.input);
+			expect(poiCategory).toEqual(testCase.expectedOutput);
+		});
+	});
+
+	it('organizes POI categories', function () {
 		var testData = [
 			{
 				input: {
@@ -242,7 +286,7 @@ describe('WikiaMaps.poiCategoriesModel', function () {
 					formSerialized: {
 						mapId: 1,
 						poiCategories: [],
-						poiCategoriesToDelete: '1,2'
+						poiCategoriesToDelete: '1 2 '
 					},
 					poiCategoriesOriginalData: [
 						{
@@ -283,8 +327,6 @@ describe('WikiaMaps.poiCategoriesModel', function () {
 	});
 
 	it('sets POI category updated data', function () {
-		expect(typeof poiCategoriesModelModule.setPoiCategoryUpdatedData).toBe('function');
-
 		var testData = [
 			{
 				input: {
@@ -373,8 +415,6 @@ describe('WikiaMaps.poiCategoriesModel', function () {
 	});
 
 	it('gets POI category that was updated', function () {
-		expect(typeof poiCategoriesModelModule.getPoiCategoryUpdated).toBe('function');
-
 		var testData = [
 			{
 				input: {
@@ -458,7 +498,7 @@ describe('WikiaMaps.poiCategoriesModel', function () {
 		];
 
 		testData.forEach(function (testCase) {
-			var poiCategory = poiCategoriesModelModule.getPoiCategoryUpdated(
+			var poiCategory = poiCategoriesModelModule.getUpdatedPoiCategory(
 				testCase.input.poiCategoryOriginal,
 				testCase.input.poiCategoriesToUpdate,
 				testCase.input.poiCategoriesUpdated
@@ -467,9 +507,7 @@ describe('WikiaMaps.poiCategoriesModel', function () {
 		});
 	});
 
-	it('updates POI categories data', function () {
-		expect(typeof poiCategoriesModelModule.updatePoiCategoriesData).toBe('function');
-
+	it('prepares POI categories for Ponto', function () {
 		var testData = [
 			{
 				input: {
@@ -569,7 +607,7 @@ describe('WikiaMaps.poiCategoriesModel', function () {
 			var currentPoiCategories;
 
 			poiCategoriesModelModule.setPoiCategoriesOriginalData(testCase.input.poiCategoriesOriginalData);
-			currentPoiCategories = poiCategoriesModelModule.updatePoiCategoriesData(
+			currentPoiCategories = poiCategoriesModelModule.preparePoiCategoriesForPonto(
 				testCase.input.dataSent, testCase.input.dataReceived
 			)
 

@@ -165,7 +165,8 @@ module.exports = function (config) {
 
 			// WikiaMaps
 			'extensions/wikia/WikiaInteractiveMaps/js/intMapPoiCategories.js',
-			'extensions/wikia/WikiaInteractiveMaps/js/intMapPoiCategoriesModel.js',
+			'extensions/wikia/WikiaInteractiveMaps/js/models/intMapPoiCategoriesModel.js',
+			'extensions/wikia/WikiaInteractiveMaps/js/intMapUtils.js',
 			'extensions/wikia/WikiaInteractiveMaps/spec/*.spec.js'
 		]
 	});

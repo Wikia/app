@@ -1,17 +1,85 @@
 describe('WikiaMaps.poiCategories', function () {
 	'use strict';
 
-	var jQueryMock = jasmine.createSpyObj('$', ['msg']),
-		poiCategoriesModule = modules['wikia.intMap.poiCategories'](jQuery);
+	var poiCategoriesModule = modules['wikia.intMap.poiCategories'](jQuery);
 
 	it('registers AMD module', function() {
 		expect(typeof poiCategoriesModule).toBe('object');
+
+		expect(typeof poiCategoriesModule.markParentPoiCategoryAsSelected).toBe('function');
+		expect(typeof poiCategoriesModule.extendPoiCategoryData).toBe('function');
+		expect(typeof poiCategoriesModule.poiCategoryTemplateData).toBe('object');
+	});
+
+	it('marks parent POI category as selected', function() {
+		var testData = [
+			{
+				input: {
+					parentPoiCategories: [
+						{
+							id: 1,
+							name: 'first'
+						},
+						{
+							id: 2,
+							name: 'second'
+						}
+					],
+					id: 1
+				},
+				expectedOutput: [
+					{
+						id: 1,
+						name: 'first',
+						selected: ' selected'
+					},
+					{
+						id: 2,
+						name: 'second',
+						selected: null
+					}
+				]
+			},
+			{
+				input: {
+					parentPoiCategories: [
+						{
+							id: 1,
+							name: 'first'
+						},
+						{
+							id: 2,
+							name: 'second'
+						}
+					],
+					id: 3
+				},
+				expectedOutput: [
+					{
+						id: 1,
+						name: 'first',
+						selected: null
+					},
+					{
+						id: 2,
+						name: 'second',
+						selected: null
+					}
+				]
+			}
+		];
+
+		testData.forEach(function (testCase) {
+			var output = poiCategoriesModule.markParentPoiCategoryAsSelected(
+					testCase.input.parentPoiCategories, testCase.input.id
+				),
+				expectedOutput = testCase.expectedOutput;
+
+			expect(output).toEqual(expectedOutput);
+		});
 	});
 
 	it('extends POI category data', function() {
-		expect(typeof poiCategoriesModule.extendPoiCategoryData).toBe('function');
-		expect(typeof poiCategoriesModule.poiCategoryTemplateData).toBe('object');
-
 		var testData = [
 				{
 					input: {
