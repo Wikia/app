@@ -1,5 +1,5 @@
 @import '../../Venus/styles/variables';
-@import 'skins/oasis/css/mixins/calc';
+@import 'skins/shared/mixins/calc';
 
 $other-modules-width: 5 * $large-grid-column +  3 * $large-grid-gutter + 2 * $large-content-padding - 1px;
 

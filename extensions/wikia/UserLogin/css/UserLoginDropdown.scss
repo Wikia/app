@@ -1,4 +1,4 @@
-@import "skins/oasis/css/core/color";
+@import "skins/shared/color";
 @import "skins/oasis/css/core/layout";
 @import "../mixins/divider";
 
@@ -57,8 +57,7 @@
 				top: -6px;
 			}
 		}
-		.sso-login-facebook {
-			font-size: 10px;
+		.sso-login-facebook {font-size: 10px;
 			height: 16px;
 			line-height: 16px;
 			padding: 0 9px 0 0;

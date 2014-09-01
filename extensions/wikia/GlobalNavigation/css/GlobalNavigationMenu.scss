@@ -1,7 +1,7 @@
-@import "skins/oasis/css/core/color";
+@import "skins/shared/color";
 @import "extensions/wikia/Venus/styles/variables";
 @import "extensions/wikia/Venus/styles/layout";
-@import "skins/oasis/css/mixins/transition";
+@import "skins/shared/mixins/transition";
 
 #GlobalNavigationMenuButton {
 	background-image: url(/skins/oasis/images/icon_menu.png); /* base64 */

@@ -66,6 +66,9 @@
 			margin-left: 6px;
 			position: relative;
 			top: 2px;
+			&.dark {
+				border-top-color: $search-input-label-dark;
+			}
 		}
 	}
 }
@@ -93,10 +96,12 @@
 		background-image: url("/extensions/wikia/GlobalNavigation/images/search_icon.svg"); /* base64 */
 		background-size: 100% 100%;
 		border: 0;
-		padding: 9px;
+		height: 18px;
+		padding: 0;
 		position: absolute;
 		right: 21px;
 		top: 9px;
+		width: 20px;
 	}
 }
 
