@@ -42,6 +42,11 @@
  *          // to show a submenu's content for the activated row.
  *          activate: function() {},
  *
+ *          // Set DOM node active, by that menu knows which elem should be
+ *          // deactivated before first call to activate .
+ *          // This is param is useful when your menu has active row at default
+ *          activeRow: null,
+ *
  *          // Function to call when a row is deactivated.
  *          deactivate: function() {},
  *
@@ -92,12 +97,6 @@
 	 * Additional functions to help module to work.
 	 */
 	utils = {
-
-		/**
-		 * Just simple one-time-defined function that will do nothing
-		 */
-		noop: function () {},
-
 		/**
 		 * Returns only the elements filtered by the filterSelector
 		 * @param  {Array} elements - DOM elements to be filtered
@@ -178,21 +177,21 @@
 			activate, activationDelay, clickRow, mouseenterRow, mouseenterMenu, mouseleaveMenu, mouseleaveRow, mousemoveDocument,
 			possiblyActivate, mouseMoveTrackerOff, mouseMoveTrackerOn;
 
-		activeRow = null;
 		lastDelayLoc = null;
 		timeoutId = null;
 		mouseLocs = sharedProperties.mouseLocs;
 
 		options = {
+			activeRow: null,
 			rowSelector: "> li",
 			submenuSelector: "*",
 			submenuDirection: "right",
 			tolerance: 75,  // bigger = more forgivey when entering submenu
-			enter: utils.noop,
-			exit: utils.noop,
-			activate: utils.noop,
-			deactivate: utils.noop,
-			exitMenu: utils.noop
+			enter: Function.prototype,
+			exit: Function.prototype,
+			activate: Function.prototype,
+			deactivate: Function.prototype,
+			exitMenu: Function.prototype
 		};
 
 		MOUSE_LOCS_TRACKED = 3;  // number of past mouse locations to track
@@ -206,6 +205,7 @@
 
 			menu = menuToHandle;
 			options = utils.extend(options, opts);
+			activeRow = options.activeRow;
 
 			menu.addEventListener( "mouseleave", mouseleaveMenu );
 			menu.addEventListener( "mouseenter", mouseenterMenu );

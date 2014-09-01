@@ -15,24 +15,18 @@ define(
 		 * @param  {object} menuItems JSON object with all submenu for Global Nav data
 		 */
 		getMenuItemsDone = function (menuItems) {
-			var $sections, $subMenu,
+			var $sections,
 				$hubs = $('#hubs'),
 				$verticals = $('> .hubs', $hubs),
 				$hubLinks = $('> .hub-links', $hubs);
 
 			$sections = $($.parseHTML(menuItems)).removeClass('active');
-			$subMenu = $sections.filter(subMenuSelector);
 			$('> .active', $hubLinks).removeClass('active');
 
-			if($subMenu.length) {
-				$subMenu.addClass('active');
-			} else {
-				subMenuSelector = '.' + $('> .active', $verticals).data('vertical') + '-links';
-				$sections.filter(subMenuSelector).addClass('active');
-			}
-
+			subMenuSelector = '.' + $('> .active', $verticals).data('vertical') + '-links';
 
 			$hubLinks.append($sections);
+			$hubLinks.find(subMenuSelector).addClass('active');
 
 			menuLoading = false;
 			menuLoaded = true;
@@ -46,7 +40,7 @@ define(
 			menuLoaded = false;
 		};
 
-		getHubLinks = function (selector) {
+		getHubLinks = function () {
 			var lang;
 
 			if (menuLoaded || menuLoading) {
@@ -56,7 +50,6 @@ define(
 			menuLoading = true;
 
 			lang = new Querystring().getVal('uselang');
-			subMenuSelector = selector;
 
 			$.when(
 				nirvana.sendRequest({

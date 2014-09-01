@@ -1,9 +1,10 @@
 require(['jquery', 'wikia.globalnavigation.lazyload'], function($, GlobalNavLazyLoad){
 	'use strict';
-	var $hubLinks, $verticals;
+	var $entryPoint, $hubLinks, $verticals;
 
 	$hubLinks = $('#hubs > .hub-links');
 	$verticals = $('#hubs > .hubs');
+	$entryPoint = $('#hubsEntryPoint');
 
 	function activateSubmenu(row) {
 		var subMenuSelector, vertical;
@@ -11,13 +12,7 @@ require(['jquery', 'wikia.globalnavigation.lazyload'], function($, GlobalNavLazy
 		vertical = $(row).addClass('active').data('vertical');
 		subMenuSelector = '.' + vertical + '-links';
 
-		if (!GlobalNavLazyLoad.isMenuWorking()) {
-			$('.active', $verticals).not($(row)).removeClass('active');
-			GlobalNavLazyLoad.getHubLinks(subMenuSelector);
-		}
-		else {
-			$(subMenuSelector, $hubLinks).addClass('active');
-		}
+		$(subMenuSelector, $hubLinks).addClass('active');
 	}
 
 	function deactivateSubmenu(row) {
@@ -29,10 +24,30 @@ require(['jquery', 'wikia.globalnavigation.lazyload'], function($, GlobalNavLazy
 	 * @see https://github.com/Wikia/js-menu-aim
 	 */
 	menuAim(
-		document.querySelector('.hubs'), {
+		$verticals.get( 0 ), {
+			activeRow:  $verticals.find( '.active' ).get( 0 ),
 			rowSelector: 'nav',
 			tolerance: 85,
 			activate: activateSubmenu,
 			deactivate: deactivateSubmenu
 		});
+
+
+	delayedHover(
+		$entryPoint.get(0),
+		{
+			checkInterval: 100,
+			maxActivationDistance: 20,
+			onActivate: function () {
+				$entryPoint.addClass('active');
+
+				if (!GlobalNavLazyLoad.isMenuWorking()) {
+					GlobalNavLazyLoad.getHubLinks();
+				}
+			},
+			onDeactivate: function() {
+				$entryPoint.removeClass('active');
+			}
+		}
+	);
 });
