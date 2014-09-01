@@ -75,7 +75,10 @@ class ArticleAsJson extends WikiaService {
 			$media = [];
 
 			foreach($data['images'] as $image) {
-				$details = WikiaFileHelper::getMediaDetail( Title::newFromText( $image['name'], NS_FILE ), self::$getMediaDetailConfig );
+				$details = WikiaFileHelper::getMediaDetail(
+					Title::newFromText( $image['name'], NS_FILE ),
+					self::$getMediaDetailConfig
+				);
 
 				$media[] = self::createMediaObj($details, $image['name'], $image['caption']);
 
