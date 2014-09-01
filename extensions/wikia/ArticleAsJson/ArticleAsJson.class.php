@@ -3,7 +3,7 @@
 class ArticleAsJson extends WikiaService {
 	static $media = [];
 	static $users = [];
-	static $getMediaDetailConfig = [
+	static $mediaDetailConfig = [
 		'imageMaxWidth' => false
 	];
 
@@ -77,7 +77,7 @@ class ArticleAsJson extends WikiaService {
 			foreach($data['images'] as $image) {
 				$details = WikiaFileHelper::getMediaDetail(
 					Title::newFromText( $image['name'], NS_FILE ),
-					self::$getMediaDetailConfig
+					self::$mediaDetailConfig
 				);
 
 				$media[] = self::createMediaObj($details, $image['name'], $image['caption']);
@@ -107,7 +107,7 @@ class ArticleAsJson extends WikiaService {
 		wfProfileIn( __METHOD__ );
 
 		if ( $wgArticleAsJson ) {
-			$details = WikiaFileHelper::getMediaDetail( $title, self::$getMediaDetailConfig );
+			$details = WikiaFileHelper::getMediaDetail( $title, self::$mediaDetailConfig );
 
 			self::$media[] = self::createMediaObj($details, $title->getText(), $frameParams['caption']);
 
