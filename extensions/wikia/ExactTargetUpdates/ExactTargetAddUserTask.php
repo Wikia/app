@@ -57,9 +57,6 @@ class ExactTargetAddUserTask extends BaseTask {
 	public function createUserDataExtension( $aUserData ) {
 
 		try {
-			/* Create the Soap Client */
-			$oClient = $this->getClient();
-
 			/* Create new DataExtensionObject that reflects user table data */
 			$DE = new ExactTarget_DataExtensionObject();
 			/* CustomerKey is a key that indicates Wikia table reflected by DataExtension */
@@ -69,13 +66,14 @@ class ExactTargetAddUserTask extends BaseTask {
 			foreach ( $aUserData as $key => $value ) {
 				$apiProperties[] = $this->wrapApiProperty( $key,  $value );
 			}
-
 			$DE->Properties = $apiProperties;
+
 			$oSoapVar = $this->wrapDataExtensionObjectToSoapVar( $DE );
 
-			$oRequest = new ExactTarget_CreateRequest();
-			$oRequest->Options = NULL;
-			$oRequest->Objects = array( $oSoapVar );
+			$oRequest = $this->wrapRequest( [ $oSoapVar ] );
+
+			/* Create the Soap Client */
+			$oClient = $this->getClient();
 			$oClient->Create( $oRequest );
 
 			/* Log response */
