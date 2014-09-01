@@ -10,18 +10,10 @@ class ForumController extends WallBaseController {
 
 	public function init() {
 		/**
-		 * Include Forum.scss only if the method is called
-		 * from a page in one of the Forum namespaces.
+		 * Include Forum.scss only if
+		 * the method is called in a Forum context
 		 */
-		$iNS = $this->wg->Title->getNamespace();
-		$aForumNamespaces = array(
-				NS_WIKIA_FORUM_BOARD,
-				NS_WIKIA_FORUM_TOPIC_BOARD,
-				NS_WIKIA_FORUM_BOARD_THREAD,
-				NS_FORUM,
-				NS_FORUM_TALK,
-		);
-		if ( in_array( $iNS, $aForumNamespaces ) ) {
+		if ( ForumHelper::isForum() ) {
 			$this->response->addAsset( 'extensions/wikia/Forum/css/Forum.scss' );
 		}
 	}
