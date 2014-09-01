@@ -12,7 +12,7 @@ class ExactTargetAddUserTask extends BaseTask {
 	public function sendNewUserData( $aUserData, $aUserProperties = array() ) {
 		$this->createSubscriber( $aUserData['user_email'] );
 		$this->createUserDE( $aUserData );
-		$this->createUserPropertiesDE( $aUserData['user_id'], $aUserProperties );
+		$this->createUserPropertiesDataExtension( $aUserData['user_id'], $aUserProperties );
 	}
 
 	/**

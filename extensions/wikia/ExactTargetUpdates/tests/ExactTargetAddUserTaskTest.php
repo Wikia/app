@@ -5,6 +5,62 @@ include __DIR__ . "/../lib/exacttarget_soap_client.php";
 class ExactTargetAddUserTaskTest extends WikiaBaseTest {
 
 
+	function testSendNewUserShouldInvokeCreateSubscriber() {
+		/* Params to compare */
+		$aUserData = [];
+		$aUserProperties = [
+			'property1' => 'value1',
+			'property2' => 'value2'
+		];
+
+		$addTaskMock = $this->getMockBuilder( 'ExactTargetAddUserTask' )
+			->disableOriginalConstructor()
+			->setMethods( [ 'createUserPropertiesDataExtension', 'CreateUserDE', 'createSubscriber' ] )
+			->getMock();
+		$addTaskMock
+			->expects( $this->once() )
+			->method( 'createSubscriber' )
+			->will(  $this->returnValue( NULL ) );
+
+		$addTaskMock->sendNewUserData( $aUserData, $aUserProperties );
+	}
+
+	function testSendNewUserShouldInvokeCreateUserDE() {
+		/* Params to compare */
+		$aUserData = [];
+
+		$addTaskMock = $this->getMockBuilder( 'ExactTargetAddUserTask' )
+			->disableOriginalConstructor()
+			->setMethods( [ 'createUserPropertiesDataExtension', 'CreateUserDE', 'createSubscriber' ] )
+			->getMock();
+		$addTaskMock
+			->expects( $this->once() )
+			->method( 'CreateUserDE' )
+			->will(  $this->returnValue( NULL ) );
+
+		$addTaskMock->sendNewUserData( $aUserData );
+	}
+
+	function testSendNewUserShouldInvokeCreateUserPropertiesDataExtension() {
+		/* Params to compare */
+		$aUserData = [ 'user_id' => 12345 ];
+		$aUserProperties = [
+			'property1' => 'value1',
+			'property2' => 'value2'
+		];
+
+		$addTaskMock = $this->getMockBuilder( 'ExactTargetAddUserTask' )
+			->disableOriginalConstructor()
+			->setMethods( [ 'createUserPropertiesDataExtension', 'CreateUserDE', 'createSubscriber' ] )
+			->getMock();
+		$addTaskMock
+			->expects( $this->once() )
+			->method( 'createUserPropertiesDataExtension' )
+			->will( $this->returnValue( NULL ) );
+
+		$addTaskMock->sendNewUserData( $aUserData['user_id'], $aUserProperties );
+	}
+
 	function testPrepareRequestShouldReturnRequestObject() {
 		/* Params to compare */
 		$iUserId = 12345;
