@@ -132,7 +132,8 @@ class BodyController extends WikiaController {
 			$wgExtraNamespaces, $wgExtraNamespacesLocal,
 			$wgEnableWikiAnswers, $wgEnableHuluVideoPanel,
 			$wgEnableWallEngine, $wgRequest,
-			$wgEnableForumExt, $wgAnalyticsProviderPageFairSlotIds;
+			$wgEnableForumExt, $wgAnalyticsProviderPageFairSlotIds,
+			$wgEnableGlobalNavExt;
 
 		$namespace = $wgTitle->getNamespace();
 		$subjectNamespace = MWNamespace::getSubject($namespace);
@@ -146,6 +147,7 @@ class BodyController extends WikiaController {
 		// Forum Extension
 		if ($wgEnableForumExt && ForumHelper::isForum()) {
 			$railModuleList = array (
+				1500 => array('Search', 'Index', null),
 				1202 => array('Forum', 'forumRelatedThreads', null),
 				1201 => array('Forum', 'forumActivityModule', null),
 				1490 => array('Ad', 'Index', [
@@ -179,11 +181,13 @@ class BodyController extends WikiaController {
 				}
 			} else if ($wgTitle->isSpecial('Leaderboard')) {
 				$railModuleList = array (
+					1500 => array('Search', 'Index', null),
 					$latestActivityKey => array('LatestActivity', 'Index', null),
 					1290 => array('LatestEarnedBadges', 'Index', null)
 				);
 			} else if ($wgTitle->isSpecial('WikiActivity')) {
 				$railModuleList = array (
+					1500 => array('Search', 'Index', null),
 					1102 => array('HotSpots', 'Index', null),
 					1101 => array('CommunityCorner', 'Index', null),
 				);
@@ -192,6 +196,7 @@ class BodyController extends WikiaController {
 				// intentional nothing here
 			} else if ($wgTitle->isSpecial('ThemeDesignerPreview') ) {
 				$railModuleList = array (
+					1500 => array('Search', 'Index', null),
 					$latestActivityKey => array('LatestActivity', 'Index', null),
 				);
 
@@ -205,6 +210,7 @@ class BodyController extends WikiaController {
 				}
 			} else if( $wgTitle->isSpecial('PageLayoutBuilderForm') ) {
 				$railModuleList = array (
+					1501 => array('Search', 'Index', null),
 					1500 => array('PageLayoutBuilderForm', 'Index', null)
 				);
 			} else {
@@ -214,6 +220,12 @@ class BodyController extends WikiaController {
 				wfProfileOut(__METHOD__);
 				return $railModuleList;
 			}
+		} else if ( !self::showUserPagesHeader() ) {
+			// ProfilePagesV3 renders its own search box.
+			// If this page is not a page with the UserPagesHeader on version 3, show search (majority case)
+			$railModuleList = array (
+				1500 => array('Search', 'Index', null),
+			);
 		}
 
 		// Content, category and forum namespaces.  FB:1280 Added file,video,mw,template
@@ -250,6 +262,7 @@ class BodyController extends WikiaController {
 		}
 
 		if (self::isBlogPost() || self::isBlogListing()) {
+			$railModuleList[1500] = array('Search', 'Index', null);
 			$railModuleList[1250] = array('PopularBlogPosts', 'Index', null);
 		}
 
@@ -289,6 +302,16 @@ class BodyController extends WikiaController {
 		]);
 
 		unset($railModuleList[1450]);
+
+		// Do not display Search in Right Rail if Global Navigation is enabled
+		// TODO: Remove all those modules from code above when Global Navigation is final
+		if ( !empty( $wgEnableGlobalNavExt ) ) {
+			foreach ( $railModuleList as $index => $module ) {
+				if ( $module[0] == 'Search' && $module[1] == 'Index' ) {
+					unset( $railModuleList[$index] );
+				}
+			}
+		}
 
 		wfRunHooks( 'GetRailModuleList', array( &$railModuleList ) );
 
