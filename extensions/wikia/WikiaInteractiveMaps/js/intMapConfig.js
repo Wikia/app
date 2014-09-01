@@ -45,9 +45,14 @@ define('wikia.intMap.config', [], function () {
 			origin: 'wikia-int-map-undelete-map',
 			cacheKey: 'wikia_interactive_maps_undelete_map'
 		}
+	},
+	mapDeleted = {
+		mapNotDeleted: 0,
+		mapDeleted: 1
 	};
 
 	return {
-		actions: actions
+		actions: actions,
+		mapDeleted: mapDeleted
 	};
 });

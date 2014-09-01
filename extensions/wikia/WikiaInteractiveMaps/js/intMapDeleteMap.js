@@ -1,6 +1,6 @@
 define('wikia.intMaps.deleteMap',
-	['jquery', 'wikia.querystring', 'wikia.window', 'wikia.intMap.utils'],
-	function($, qs, w, utils) {
+	['jquery', 'wikia.querystring', 'wikia.window', 'wikia.intMap.config', 'wikia.intMap.utils'],
+	function ($, qs, w, config, utils) {
 	'use strict';
 	var modal,
 		modalConfig = {
@@ -54,7 +54,7 @@ define('wikia.intMaps.deleteMap',
 	function init(templates) {
 		modalConfig.vars.content = utils.render(templates[0]);
 
-		utils.createModal(modalConfig, function(_modal) {
+		utils.createModal(modalConfig, function (_modal) {
 			modal = _modal;
 			utils.bindEvents(modal, events);
 
@@ -80,9 +80,9 @@ define('wikia.intMaps.deleteMap',
 			type: 'POST',
 			data: {
 				mapId: mapId,
-				deleted: utils.mapDeleted.mapDeleted
+				deleted: config.mapDeleted.mapDeleted
 			},
-			callback: function(response) {
+			callback: function (response) {
 				var redirectUrl = response.redirectUrl;
 				if (redirectUrl) {
 					qs(redirectUrl).goTo();
@@ -90,7 +90,7 @@ define('wikia.intMaps.deleteMap',
 					showError();
 				}
 			},
-			onErrorCallback: function(response) {
+			onErrorCallback: function (response) {
 				utils.handleNirvanaException(modal, response);
 			}
 		});

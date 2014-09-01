@@ -1,10 +1,10 @@
-define('wikia.intMaps.unDeleteMap', ['jquery', 'wikia.querystring', 'wikia.intMap.utils'], function ($, qs, utils) {
+define('wikia.intMaps.unDeleteMap', ['jquery', 'wikia.querystring', 'wikia.intMap.config'], function ($, qs, config) {
 	'use strict';
 	var mapId = $('iframe[name=wikia-interactive-map]').data('mapid');
 
 	/**
 	 * @desc Show error message
-	 * @param error error message
+	 * @param {string} error message
 	 */
 	function showError(error) {
 		GlobalNotification.show(error, 'error');
@@ -17,9 +17,9 @@ define('wikia.intMaps.unDeleteMap', ['jquery', 'wikia.querystring', 'wikia.intMa
 			type: 'POST',
 			data: {
 				mapId: mapId,
-				deleted: utils.mapDeleted.mapNotDeleted
+				deleted: config.mapDeleted.mapNotDeleted
 			},
-			callback: function(response) {
+			callback: function (response) {
 				var redirectUrl = response.redirectUrl;
 				if (redirectUrl) {
 					qs(redirectUrl).goTo();
@@ -27,7 +27,7 @@ define('wikia.intMaps.unDeleteMap', ['jquery', 'wikia.querystring', 'wikia.intMa
 					showError(response);
 				}
 			},
-			onErrorCallback: function(error) {
+			onErrorCallback: function (error) {
 				showError(error.statusText);
 			}
 		});

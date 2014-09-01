@@ -417,10 +417,6 @@ define(
 			cleanUpError: cleanUpError,
 			createThumbURL: createThumbURL,
 
-			mapDeleted: {
-				mapNotDeleted: 0,
-				mapDeleted: 1
-			},
 			onWriteInInput: onWriteInInput,
 			escapeHtml: escapeHtml,
 			track: track,
