@@ -20,14 +20,10 @@ class ExactTargetAddUserTask extends BaseTask {
 	 * @param Array $aUserData Selected fields from Wikia user table
 	 */
 	public function createUserDE( $aUserData ) {
-		global $wgExactTargetApiConfig;
-		$wsdl = $wgExactTargetApiConfig[ 'wsdl' ];
 
 		try {
 			/* Create the Soap Client */
-			$oClient = new ExactTargetSoapClient( $wsdl, array( 'trace'=>1 ) );
-			$oClient->username = $wgExactTargetApiConfig[ 'username' ];
-			$oClient->password = $wgExactTargetApiConfig[ 'password' ];
+			$oClient = $this->getClient();
 
 			/* Create new DataExtensionObject that reflects user table data */
 			$DE = new ExactTarget_DataExtensionObject();
@@ -40,7 +36,7 @@ class ExactTargetAddUserTask extends BaseTask {
 			}
 
 			$DE->Properties = $apiProperties;
-			$oSoapVar = new SoapVar( $DE, SOAP_ENC_OBJECT, 'DataExtensionObject', 'http://exacttarget.com/wsdl/partnerAPI' );
+			$oSoapVar = $this->wrapDataExtensionObjectToSoapVar( $DE );
 
 			$oRequest = new ExactTarget_CreateRequest();
 			$oRequest->Options = NULL;
