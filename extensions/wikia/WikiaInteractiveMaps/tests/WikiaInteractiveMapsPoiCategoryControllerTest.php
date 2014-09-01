@@ -1,6 +1,10 @@
 <?php
 class WikiaInteractiveMapsPoiCategoryControllerTest extends WikiaBaseTest {
+
 	const DEFAULT_PARENT_POI_CATEGORY = 1;
+	const USER_TYPE_LOGGED_IN = 'logged-in';
+	const USER_TYPE_LOGGED_OUT = 'logged-out';
+	const USER_TYPE_BLOCKED = 'blocked';
 
 	public function setUp() {
 		global $IP;
@@ -90,14 +94,20 @@ class WikiaInteractiveMapsPoiCategoryControllerTest extends WikiaBaseTest {
 		];
 	}
 
-	/**
-	 * Tests if validatePoiCategoriesData method throws PermissionsException when user is not logged in
-	 */
 	public function testValidatePoiCategoriesData_user_not_logged_in() {
 		$poiCategoryControllerMock = $this->getPoiCategoryControllerMock();
-		$poiCategoryControllerMock->wg->User = $this->getUserMock( false );
+		$poiCategoryControllerMock->wg->User = $this->getUserMock( self::USER_TYPE_LOGGED_OUT );
 
-		$this->setExpectedException( 'PermissionsException', 'No Permissions' );
+		$this->setExpectedException( 'WikiaInteractiveMapsPermissionException' );
+
+		$poiCategoryControllerMock->validatePoiCategoriesData();
+	}
+
+	public function testValidatePoiCategoriesData_user_blocked() {
+		$poiCategoryControllerMock = $this->getPoiCategoryControllerMock();
+		$poiCategoryControllerMock->wg->User = $this->getUserMock( self::USER_TYPE_BLOCKED );
+
+		$this->setExpectedException( 'WikiaInteractiveMapsPermissionException' );
 
 		$poiCategoryControllerMock->validatePoiCategoriesData();
 	}
@@ -109,6 +119,7 @@ class WikiaInteractiveMapsPoiCategoryControllerTest extends WikiaBaseTest {
 		$poiCategoryControllerMock = $this->getPoiCategoryControllerMock( [
 			[ 'mapId', false, 'invalidOne' ]
 		] );
+		$poiCategoryControllerMock->wg->User = $this->getUserMock( self::USER_TYPE_LOGGED_IN );
 
 		$this->setExpectedException( 'InvalidParameterApiException', 'Bad request' );
 
@@ -122,6 +133,7 @@ class WikiaInteractiveMapsPoiCategoryControllerTest extends WikiaBaseTest {
 		$poiCategoryControllerMock = $this->getPoiCategoryControllerMock( [
 			[ 'mapId', false, 1 ] //valid mapId
 		], [ 'validatePoiCategories' ] );
+		$poiCategoryControllerMock->wg->User = $this->getUserMock( self::USER_TYPE_LOGGED_IN );
 
 		$poiCategoryControllerMock->expects( $this->once() )
 			->method( 'validatePoiCategories' )
@@ -139,6 +151,7 @@ class WikiaInteractiveMapsPoiCategoryControllerTest extends WikiaBaseTest {
 		$poiCategoryControllerMock = $this->getPoiCategoryControllerMock( [
 			[ 'mapId', false, 1 ] //valid mapId
 		], [ 'validatePoiCategoriesToDelete' ] );
+		$poiCategoryControllerMock->wg->User = $this->getUserMock( self::USER_TYPE_LOGGED_IN );
 
 		$poiCategoryControllerMock->expects( $this->once() )
 			->method( 'validatePoiCategoriesToDelete' )
@@ -262,7 +275,13 @@ class WikiaInteractiveMapsPoiCategoryControllerTest extends WikiaBaseTest {
 			[], '', false
 		);
 
-		$poiCategoryControllerMock->wg->User = $this->getUserMock( true );
+		$requestMock = $this->getMockBuilder( 'WikiaRequest' )
+			->setMethods( [ 'getVal', 'getArray', 'getInt' ] )
+			->disableOriginalConstructor()
+			->getMock();
+		$poiCategoryControllerMock->request = $requestMock;
+
+		$poiCategoryControllerMock->wg->User = $this->getUserMock();
 
 		$poiCategoryControllerMock->expects( $this->any() )
 			->method( 'getData' )
@@ -271,17 +290,29 @@ class WikiaInteractiveMapsPoiCategoryControllerTest extends WikiaBaseTest {
 		return $poiCategoryControllerMock;
 	}
 
-	/**
-	 * Returns mock for User
-	 *
-	 * @param $isLoggedIn - is user logged in
-	 * @return PHPUnit_Framework_MockObject_MockObject|User
-	 */
-	private function getUserMock( $isLoggedIn ) {
-		$userMock = $this->getMock( 'User', [ 'isLoggedIn' ], [], '', false );
-		$userMock->expects( $this->any() )
-			->method( 'isLoggedIn' )
-			->will( $this->returnValue( $isLoggedIn ) );
+	private function getUserMock( $type = 'default' ) {
+		$userMock = $this->getMockBuilder( 'User' )
+			->setMethods( [ 'getName', 'isLoggedIn', 'isBlocked' ] )
+			->disableOriginalConstructor()
+			->getMock();
+
+		switch( $type ) {
+			case self::USER_TYPE_LOGGED_OUT:
+				$userMock->expects( $this->once() )
+					->method( 'isLoggedIn' )
+					->willReturn( false );
+				break;
+			case self::USER_TYPE_BLOCKED:
+				$userMock->expects( $this->once() )
+					->method( 'isBlocked' )
+					->willReturn( true );
+			// no break for purpose - if user is blocked he's logged-in as well
+			case self::USER_TYPE_LOGGED_IN:
+				$userMock->expects( $this->once() )
+					->method( 'isLoggedIn' )
+					->willReturn( true );
+				break;
+		}
 
 		return $userMock;
 	}

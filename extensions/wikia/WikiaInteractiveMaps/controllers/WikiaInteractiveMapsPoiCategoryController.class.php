@@ -13,7 +13,7 @@ class WikiaInteractiveMapsPoiCategoryController extends WikiaInteractiveMapsBase
 	 * Returns parent/default POI categories received from the service
 	 */
 	public function getParentPoiCategories() {
-		$parentPoiCategoriesResponse = $this->mapsModel->getParentPoiCategories();
+		$parentPoiCategoriesResponse = $this->getModel()->getParentPoiCategories();
 		$this->setVal( 'results', $parentPoiCategoriesResponse );
 	}
 
@@ -25,7 +25,7 @@ class WikiaInteractiveMapsPoiCategoryController extends WikiaInteractiveMapsBase
 	 * @requestParam Array $poiCategoriesToUpdate an array of POI categories to update
 	 * @requestParam Array $poiCategoriesToDelete an array of POI categories ids to delete
 	 *
-	 * @throws PermissionsException
+	 * @throws WikiaInteractiveMapsPermissionException
 	 * @throws BadRequestApiException
 	 */
 	public function editPoiCategories() {
@@ -67,7 +67,7 @@ class WikiaInteractiveMapsPoiCategoryController extends WikiaInteractiveMapsBase
 
 		$poiCategory[ 'parent_poi_category_id' ] = ( !empty( $poiCategory[ 'parent_poi_category_id' ] ) ) ?
 			(int) $poiCategory[ 'parent_poi_category_id' ] :
-			$this->mapsModel->getDefaultParentPoiCategory();
+			$this->getModel()->getDefaultParentPoiCategory();
 
 		// if user didn't upload marker then this is empty string. we don't want to send it to api.
 		if ( empty( $poiCategory [ 'marker' ] ) ) {
@@ -105,7 +105,7 @@ class WikiaInteractiveMapsPoiCategoryController extends WikiaInteractiveMapsBase
 	/**
 	 * Validates process of creating POI categories
 	 *
-	 * @throws PermissionsException
+	 * @throws WikiaInteractiveMapsPermissionException
 	 * @throws BadRequestApiException
 	 * @throws InvalidParameterApiException
 	 */
@@ -114,8 +114,8 @@ class WikiaInteractiveMapsPoiCategoryController extends WikiaInteractiveMapsBase
 		$poiCategoriesToCreate = $this->getData( 'poiCategoriesToCreate' );
 		$poiCategoriesToUpdate = $this->getData( 'poiCategoriesToUpdate' );
 
-		if ( !$this->wg->User->isLoggedIn() ) {
-			throw new PermissionsException( WikiaInteractiveMapsController::PAGE_RESTRICTION );
+		if ( !$this->isUserAllowed() ) {
+			throw new WikiaInteractiveMapsPermissionException();
 		}
 
 		if ( !( $mapId > 0 ) ) {
@@ -180,7 +180,7 @@ class WikiaInteractiveMapsPoiCategoryController extends WikiaInteractiveMapsBase
 		$poiCategoriesCreated = [];
 
 		foreach ( $poiCategoriesToCreate as $poiCategory ) {
-			$response = $this->mapsModel->savePoiCategory( $poiCategory );
+			$response = $this->getModel()->savePoiCategory( $poiCategory );
 
 			if ( true === $response[ 'success' ] ) {
 				$poiCategoryId = $response[ 'content' ]->id;
@@ -217,7 +217,7 @@ class WikiaInteractiveMapsPoiCategoryController extends WikiaInteractiveMapsBase
 		foreach ( $poiCategoriesToUpdate as $poiCategory ) {
 			$poiCategoryId = $poiCategory[ 'id' ];
 			unset( $poiCategory[ 'id' ] ); // API doesn't allow it in request
-			$response = $this->mapsModel->updatePoiCategory( $poiCategoryId, $poiCategory );
+			$response = $this->getModel()->updatePoiCategory( $poiCategoryId, $poiCategory );
 
 			if ( true === $response[ 'success' ] ) {
 				$this->addLogEntry( WikiaMapsLogger::newLogEntry(
@@ -248,7 +248,7 @@ class WikiaInteractiveMapsPoiCategoryController extends WikiaInteractiveMapsBase
 		$poiCategoriesDeleted = [];
 
 		foreach ( $poiCategoriesToDelete as $poiCategoryId ) {
-			$response = $this->mapsModel->deletePoiCategory( $poiCategoryId );
+			$response = $this->getModel()->deletePoiCategory( $poiCategoryId );
 
 			if ( true === $response[ 'success' ] ) {
 				$poiCategoriesDeleted[] = (int) $poiCategoryId;
