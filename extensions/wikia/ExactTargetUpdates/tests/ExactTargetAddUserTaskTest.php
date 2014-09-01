@@ -18,7 +18,7 @@ class ExactTargetAddUserTaskTest extends WikiaBaseTest {
 
 		$addTaskMock = $this->getMockBuilder( 'ExactTargetAddUserTask' )
 			->disableOriginalConstructor()
-			->setMethods( [ 'createUserPropertiesDataExtension', 'CreateUserDE', 'createSubscriber' ] )
+			->setMethods( [ 'createUserPropertiesDataExtension', 'createUserDataExtension', 'createSubscriber' ] )
 			->getMock();
 		$addTaskMock
 			->expects( $this->once() )
@@ -28,7 +28,7 @@ class ExactTargetAddUserTaskTest extends WikiaBaseTest {
 		$addTaskMock->sendNewUserData( $aUserData, $aUserProperties );
 	}
 
-	function testSendNewUserShouldInvokeCreateUserDE() {
+	function testSendNewUserShouldInvokecreateUserDataExtension() {
 		/* Params to compare */
 		$aUserData = [
 			'user_id' => '12345',
@@ -37,11 +37,11 @@ class ExactTargetAddUserTaskTest extends WikiaBaseTest {
 
 		$addTaskMock = $this->getMockBuilder( 'ExactTargetAddUserTask' )
 			->disableOriginalConstructor()
-			->setMethods( [ 'createUserPropertiesDataExtension', 'CreateUserDE', 'createSubscriber' ] )
+			->setMethods( [ 'createUserPropertiesDataExtension', 'createUserDataExtension', 'createSubscriber' ] )
 			->getMock();
 		$addTaskMock
 			->expects( $this->once() )
-			->method( 'CreateUserDE' )
+			->method( 'createUserDataExtension' )
 			->will(  $this->returnValue( NULL ) );
 
 		$addTaskMock->sendNewUserData( $aUserData );
@@ -60,7 +60,7 @@ class ExactTargetAddUserTaskTest extends WikiaBaseTest {
 
 		$addTaskMock = $this->getMockBuilder( 'ExactTargetAddUserTask' )
 			->disableOriginalConstructor()
-			->setMethods( [ 'createUserPropertiesDataExtension', 'CreateUserDE', 'createSubscriber' ] )
+			->setMethods( [ 'createUserPropertiesDataExtension', 'createUserDataExtension', 'createSubscriber' ] )
 			->getMock();
 		$addTaskMock
 			->expects( $this->once() )

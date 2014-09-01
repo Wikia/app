@@ -11,7 +11,7 @@ class ExactTargetAddUserTask extends BaseTask {
 	 */
 	public function sendNewUserData( $aUserData, $aUserProperties = array() ) {
 		$this->createSubscriber( $aUserData['user_email'] );
-		$this->createUserDE( $aUserData );
+		$this->createUserDataExtension( $aUserData );
 		$this->createUserPropertiesDataExtension( $aUserData['user_id'], $aUserProperties );
 	}
 
@@ -19,7 +19,7 @@ class ExactTargetAddUserTask extends BaseTask {
 	 * Creates DataExtension object in ExactTarget by API request that reflects Wikia user table
 	 * @param Array $aUserData Selected fields from Wikia user table
 	 */
-	public function createUserDE( $aUserData ) {
+	public function createUserDataExtension( $aUserData ) {
 
 		try {
 			/* Create the Soap Client */
@@ -99,7 +99,7 @@ class ExactTargetAddUserTask extends BaseTask {
 	}
 
 	public function prepareRequest( $iUserId, $aUserProperties ) {
-		$aSoapVars = $this->prepareSoapVars( $iUserId, $aUserProperties );
+		$aSoapVars = $this->prepareUserPropertiesSoapVars( $iUserId, $aUserProperties );
 
 		$oRequest = new ExactTarget_CreateRequest();
 		$oRequest->Options = NULL;
@@ -107,9 +107,9 @@ class ExactTargetAddUserTask extends BaseTask {
 		return $oRequest;
 	}
 
-	protected function prepareSoapVars( $iUserId, $aUserProperties ) {
+	protected function prepareUserPropertiesSoapVars( $iUserId, $aUserProperties ) {
 
-		$aDE = $this->prepareDataExtensionObjects( $iUserId, $aUserProperties );
+		$aDE = $this->prepareUserPropertiesDataExtensionObjects( $iUserId, $aUserProperties );
 
 		$aSoapVars = [];
 		foreach( $aDE as $DE ) {
@@ -118,7 +118,7 @@ class ExactTargetAddUserTask extends BaseTask {
 		return $aSoapVars;
 	}
 
-	protected function prepareDataExtensionObjects( $iUserId, $aUserProperties ) {
+	protected function prepareUserPropertiesDataExtensionObjects( $iUserId, $aUserProperties ) {
 		$aDE = [];
 		foreach ( $aUserProperties as $sProperty => $sValue ) {
 			/* Create new DataExtensionObject that reflects user_properties table data */
