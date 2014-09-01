@@ -6,21 +6,21 @@
 	<li class="notifications-header">
 		<span>
 			<? if ( $wikiCount > 1): ?>
-				<?= wfMsg('wall-notifications-all') ?>
+				<?= wfMessage('wall-notifications-all')->text() ?>
 			<? else: ?>
-				<?= wfMsg('wall-notifications') ?>
+				<?= wfMessage('wall-notifications')->text() ?>
 			<? endif; ?>
 			<? if( !empty($count) ): ?>
 				<? if( $wikiCount == 1 || $notificationCounts[0]['unread'] == 0): ?>
 					<div id="wall-notifications-markasread">
-						<span id="wall-notifications-markasread-this-wiki" style="display: inline-block"><?= wfMsg('wall-notifications-markasread') ?></span>
+						<span id="wall-notifications-markasread-this-wiki" style="display: inline-block"><?= wfMessage('wall-notifications-markasread')->text() ?></span>
 					</div>
 				<? else: ?>
 					<div id="wall-notifications-markasread">
-						<span id="wall-notifications-markasread-sub"><?= wfMsg('wall-notifications-markasread') ?></span>
+						<span id="wall-notifications-markasread-sub"><?= wfMessage('wall-notifications-markasread')->text() ?></span>
 						<div id="wall-notifications-markasread-sub-opts">
-							<span id="wall-notifications-markasread-this-wiki"><?= wfMsg('wall-notifications-markasread-this-wiki') ?></span>
-							<span id="wall-notifications-markasread-all-wikis"><?= wfMsg('wall-notifications-markasread-all-wikis') ?></span>
+							<span id="wall-notifications-markasread-this-wiki"><?= wfMessage('wall-notifications-markasread-this-wiki')->text() ?></span>
+							<span id="wall-notifications-markasread-all-wikis"><?= wfMessage('wall-notifications-markasread-all-wikis')->text() ?></span>
 						</div>
 					</div>
 				<? endif; ?>
@@ -50,7 +50,7 @@
 					</span>
 				</div>
 				<ul class="notifications-for-wiki-list">
-					<li class="notifications-empty"><?= wfMsg('wall-notifications-loading') ?></li>
+					<li class="notifications-empty"><?= wfMessage('wall-notifications-loading')->text() ?></li>
 				</ul>
 			</li>
 		<? endif ?>

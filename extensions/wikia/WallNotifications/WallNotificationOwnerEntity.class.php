@@ -2,9 +2,7 @@
 
 
 class WallNotificationOwnerEntity {
-	public function __construct($wikiId, $userIdRemoving, $userIdWallOwner, $title, $url, $messageId, $parentId, $isReply, $reason) {
-		$app = F::App();
-		
+	public function __construct($wikiId, $data) {
 		$this->data = new stdClass;
 		
 		$this->data->type = 'OWNER';
@@ -12,15 +10,15 @@ class WallNotificationOwnerEntity {
 		$this->data->wiki_id = $wikiId;
 		
 		$this->data->timestamp = wfTimestampNow();
-		$this->data->url = $url;
-		$this->data->title = $title;
-		$this->data->user_removing_id = $userIdRemoving;
-		$this->data->user_wallowner_id = $userIdWallOwner;
-		$this->data->message_id = $messageId;
-		$this->data->is_reply = $isReply;
-		$this->data->hide_for_userid = array( $userIdRemoving, $userIdWallOwner );
-		$this->data->parent_id = $parentId;
-		$this->data->reason = $reason;
+		$this->data->url = $data['url'];
+		$this->data->title = $data['title'];
+		$this->data->user_removing_id = $data['userIdRemoving'];
+		$this->data->user_wallowner_id = $data['userIdWallOwner'];
+		$this->data->message_id = $data['messageId'];
+		$this->data->is_reply = $data['isReply'];
+		$this->data->hide_for_userid = [ $data['userIdRemoving'], $data['userIdWallOwner'] ];
+		$this->data->parent_id = $data['parentId'];
+		$this->data->reason = $data['reason'];
 		
 	}
 }

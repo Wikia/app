@@ -9,7 +9,7 @@
 	<a href="<?= $url ?>">
 		<div class="notification">
 			<div class="msg-title"><?= $helper->shortenText($title, WallNotificationsController::NOTIFICATION_TITLE_LIMIT) ?></div>
-			<?php echo wfMsg('wall-notifications-notifyeveryone', $authors[0]); ?>
+			<?php echo wfMessage('wall-notifications-notifyeveryone', $authors[0])->text(); ?>
 			<div class="timeago" title="<?= $iso_timestamp ?>"></div>
 		</div>
 	</a>

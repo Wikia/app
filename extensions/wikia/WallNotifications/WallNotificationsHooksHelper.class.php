@@ -8,7 +8,7 @@ class WallNotificationsHooksHelper {
 	 *
 	 * @author Liz Lee
 	 */
-	static public function onSkinAfterBottomScripts(Skin $skin, &$text) {
+	static public function onSkinAfterBottomScripts( Skin $skin, &$text ) {
 		$app = F::App();
 		$user = $app->wg->User;
 
@@ -28,7 +28,7 @@ class WallNotificationsHooksHelper {
 	 * @author Tomasz Odrobny
 	 * @author Piotrek Bablok
 	 */
-	static public function onPersonalUrls(&$personalUrls, &$title) {
+	static public function onPersonalUrls( &$personalUrls, &$title ) {
 		$app = F::app();
 		$user = $app->wg->User;
 		if ( $user instanceof User && $user->isLoggedIn() ) {

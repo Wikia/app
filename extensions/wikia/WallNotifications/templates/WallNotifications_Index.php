@@ -6,13 +6,13 @@
 			</div>
 			<ul class="subnav">
 				<li class="notifications-header">
-					<span><?= wfMsg('wall-notifications-all') ?></span>
+					<span><?= wfMessage('wall-notifications-all')->text() ?></span>
 				</li>
-				<li class="notifications-empty"><?= wfMsg('wall-notifications-loading') ?></li>
+				<li class="notifications-empty"><?= wfMessage('wall-notifications-loading')->text() ?></li>
 			</ul>
 		</li>
 	</ul>
 	<div id="WallNotificationsReminder">
-		<a><?= wfMsg('wall-notifications-reminder', '?') ?></a>
+		<a><?= wfMessage('wall-notifications-reminder', '?')->text() ?></a>
 	</div>
 <? endif; ?>
