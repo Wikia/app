@@ -20,25 +20,18 @@ class ExactTargetAddUserTask extends BaseTask {
 	 * @param String $sUserEmail new subscriber email address
 	 */
 	public function createSubscriber( $sUserEmail ) {
-		global $wgExactTargetApiConfig;
-		$wsdl = $wgExactTargetApiConfig[ 'wsdl' ];
-
 		try {
-			/* Create the Soap Client */
-			$oClient = new ExactTargetSoapClient( $wsdl, array( 'trace'=>1 ) );
-			$oClient->username = $wgExactTargetApiConfig[ 'username' ];
-			$oClient->password = $wgExactTargetApiConfig[ 'password' ];
-
 			/* ExactTarget_Subscriber */
 			$oSubscriber = new ExactTarget_Subscriber();
 			$oSubscriber->SubscriberKey = $sUserEmail;
 			$oSubscriber->EmailAddress = $sUserEmail;
 
 			/* Create the subscriber */
-			$oSoapVar = new SoapVar( $oSubscriber, SOAP_ENC_OBJECT, 'Subscriber', 'http://exacttarget.com/wsdl/partnerAPI' );
-			$oRequest = new ExactTarget_CreateRequest();
-			$oRequest->Options = NULL;
-			$oRequest->Objects = array( $oSoapVar );
+			$oSoapVar = $this->wrapToSoapVar( $oSubscriber, 'Subscriber' );
+			$oRequest = $this->wrapRequest( [ $oSoapVar ] );
+
+			/* Create the Soap Client */
+			$oClient = $this->getClient();
 			$oClient->Create( $oRequest );
 
 			/* Log response */
@@ -68,7 +61,7 @@ class ExactTargetAddUserTask extends BaseTask {
 			}
 			$DE->Properties = $apiProperties;
 
-			$oSoapVar = $this->wrapDataExtensionObjectToSoapVar( $DE );
+			$oSoapVar = $this->wrapToSoapVar( $DE );
 
 			$oRequest = $this->wrapRequest( [ $oSoapVar ] );
 
@@ -92,12 +85,11 @@ class ExactTargetAddUserTask extends BaseTask {
 	 */
 	public function createUserPropertiesDataExtension( $iUserId, $aUserProperties ) {
 
-		$aSoapVars = $this->prepareUserPropertiesSoapVars( $iUserId, $aUserProperties );
-		$oRequest = $this->wrapRequest( $aSoapVars );
-
 		try {
-			/* Create the Soap Client */
+			$aSoapVars = $this->prepareUserPropertiesSoapVars( $iUserId, $aUserProperties );
+			$oRequest = $this->wrapRequest( $aSoapVars );
 
+			/* Create the Soap Client */
 			$oClient = $this->getClient();
 			$oClient->Create( $oRequest );
 
@@ -115,7 +107,7 @@ class ExactTargetAddUserTask extends BaseTask {
 
 		$aSoapVars = [];
 		foreach( $aDE as $DE ) {
-			$aSoapVars[] = $this->wrapDataExtensionObjectToSoapVar( $DE );
+			$aSoapVars[] = $this->wrapToSoapVar( $DE );
 		}
 		return $aSoapVars;
 	}
@@ -155,8 +147,8 @@ class ExactTargetAddUserTask extends BaseTask {
 		return $oRequest;
 	}
 
-	protected function wrapDataExtensionObjectToSoapVar( $DE ) {
-		return new SoapVar( $DE, SOAP_ENC_OBJECT, 'DataExtensionObject', 'http://exacttarget.com/wsdl/partnerAPI' );
+	protected function wrapToSoapVar( $object, $objectType = 'DataExtensionObject' ) {
+		return new SoapVar( $object, SOAP_ENC_OBJECT, $objectType, 'http://exacttarget.com/wsdl/partnerAPI' );
 	}
 
 	/**
