@@ -303,17 +303,18 @@ class BodyController extends WikiaController {
 
 		unset($railModuleList[1450]);
 
+		wfRunHooks( 'GetRailModuleList', array( &$railModuleList ) );
+
 		// Do not display Search in Right Rail if Global Navigation is enabled
 		// TODO: Remove all those modules from code above when Global Navigation is final
 		if ( !empty( $wgEnableGlobalNavExt ) ) {
 			foreach ( $railModuleList as $index => $module ) {
 				if ( $module[0] == 'Search' && $module[1] == 'Index' ) {
 					unset( $railModuleList[$index] );
+					break;
 				}
 			}
 		}
-
-		wfRunHooks( 'GetRailModuleList', array( &$railModuleList ) );
 
 		wfProfileOut(__METHOD__);
 
