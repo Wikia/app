@@ -7,7 +7,10 @@ class ExactTargetAddUserTaskTest extends WikiaBaseTest {
 
 	function testSendNewUserShouldInvokeCreateSubscriber() {
 		/* Params to compare */
-		$aUserData = [];
+		$aUserData = [
+			'user_id' => '12345',
+			'user_email' => 'email@email.com'
+		];
 		$aUserProperties = [
 			'property1' => 'value1',
 			'property2' => 'value2'
@@ -27,7 +30,10 @@ class ExactTargetAddUserTaskTest extends WikiaBaseTest {
 
 	function testSendNewUserShouldInvokeCreateUserDE() {
 		/* Params to compare */
-		$aUserData = [];
+		$aUserData = [
+			'user_id' => '12345',
+			'user_email' => 'email@email.com'
+		];
 
 		$addTaskMock = $this->getMockBuilder( 'ExactTargetAddUserTask' )
 			->disableOriginalConstructor()
@@ -43,7 +49,10 @@ class ExactTargetAddUserTaskTest extends WikiaBaseTest {
 
 	function testSendNewUserShouldInvokeCreateUserPropertiesDataExtension() {
 		/* Params to compare */
-		$aUserData = [ 'user_id' => 12345 ];
+		$aUserData = [
+			'user_id' => '12345',
+			'user_email' => 'email@email.com'
+		];
 		$aUserProperties = [
 			'property1' => 'value1',
 			'property2' => 'value2'
