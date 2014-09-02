@@ -2,8 +2,14 @@
 
 namespace Wikia;
 
+use Wikia\Logger\WikiaLogger;
+
 /**
  * This class handles multiple masters in DB config
+ *
+ * Currently MastersPoll can handle up to two masters for each section.
+ * When one of masters node is marked as broken, the second one is used.
+ * Connection errors handling is performed by LoadBalancer class.
  *
  * @author macbre
  * @see PLATFORM-434
@@ -49,7 +55,7 @@ class MastersPoll {
 	 * @param string $clusterInfo eg. main-c1, main-central
 	 * @return bool|mixed
 	 */
-	function getNextMasterForSection($clusterInfo) {
+	function getNextMasterForSection( $clusterInfo ) {
 		$cluserName = explode( '-', $clusterInfo )[1];
 
 		wfDebug( sprintf( "%s: getting next master for %s\n", __CLASS__, $cluserName ) );
@@ -114,14 +120,23 @@ class MastersPoll {
 	 *
 	 * @param array $serverEntry
 	 */
-	function markMasterAsBroken(Array $serverEntry) {
+	function markMasterAsBroken( Array $serverEntry ) {
 		$hostName = $serverEntry['hostName'];
 		wfDebug( sprintf( "%s: marking '%s' as broken\n", __CLASS__, $hostName ) );
 
 		$memcKey = self::getStatusKeyForServer( $hostName );
 		$curVal = intval( $this->memc->get( $memcKey ) );
+		$curVal++;
 
-		$this->memc->set( $memcKey, $curVal + 1, self::SERVER_STATUS_TTL );
+		$this->memc->set( $memcKey, $curVal, self::SERVER_STATUS_TTL );
+
+		# log when we reach the threshold of broken connections (per minute)
+		if ( $curVal >= self::SERVER_IS_BROKEN_THRESHOLD ) {
+			WikiaLogger::instance()->error( __METHOD__, [
+				'hostName' => $hostName,
+				'counter' => $curVal,
+			] );
+		}
 	}
 
 	/**
@@ -130,7 +145,7 @@ class MastersPoll {
 	 * @param array $serverEntry
 	 * @return bool
 	 */
-	function isMasterBroken(Array $serverEntry) {
+	function isMasterBroken( Array $serverEntry ) {
 		$hostName = $serverEntry['hostName'];
 
 		wfDebug( sprintf( "%s: checking if '%s' is broken\n", __CLASS__, $hostName ) );
@@ -145,7 +160,7 @@ class MastersPoll {
 		return $isBroken;
 	}
 
-	static public function getStatusKeyForServer($hostName) {
+	static public function getStatusKeyForServer( $hostName ) {
 		return wfSharedMemcKey( __CLASS__, 'status', $hostName );
 	}
 }
