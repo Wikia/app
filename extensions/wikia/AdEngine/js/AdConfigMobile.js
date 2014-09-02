@@ -25,7 +25,7 @@ define('ext.wikia.adEngine.adConfigMobile', [
 
 		// On pages with type other than all_ads (corporate, homepage_logged, maps), hide slots
 		// @see https://docs.google.com/a/wikia-inc.com/document/d/1Lxz0PQbERWSFvmXurvJqOjPMGB7eZR86V8tpnhGStb4/edit
-		if (!pageTypesWithAdsOnMobile[context.targeting.pageType]) {
+		if (!pageTypesWithAdsOnMobile[context.opts.pageType]) {
 			return adProviderNull;
 		}
 
