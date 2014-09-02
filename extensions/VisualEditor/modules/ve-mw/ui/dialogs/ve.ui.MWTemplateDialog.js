@@ -342,7 +342,6 @@ ve.ui.MWTemplateDialog.prototype.initialize = function () {
 	// Initialization
 	this.frame.$content.addClass( 've-ui-mwTemplateDialog' );
 	this.panels.addItems( [ this.bookletLayout ] );
-	this.$body.append( this.$filter );
 };
 
 /**
