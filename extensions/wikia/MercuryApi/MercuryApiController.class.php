@@ -66,7 +66,7 @@ class MercuryApiController extends WikiaController {
 	 * @return array
 	 */
 	private function getNavigationData(){
-		return $this->sendRequest( 'NavigationApi', 'getData', [] )->getData();
+		return $this->sendRequest( 'NavigationApi', 'getData' )->getData();
 	}
 
 	/**
