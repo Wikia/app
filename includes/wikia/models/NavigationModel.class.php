@@ -198,7 +198,7 @@ class NavigationModel extends WikiaModel {
 	 * and specialAttr for given menu node and all it's children nodes.
 	 * Source ticket: CON-804
 	 *
-	 * IMPORTANT: This function will be called 140 times as on 2014-04-04 - seven hubs,
+	 * IMPORTANT: This function will be called 140 times as on 2014-06-27 - seven hubs,
 	 * four submenus for each hub, five links in each submenu.
 	 *
 	 * @param $index integer of menuitem index to generate data from

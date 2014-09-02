@@ -1,9 +1,10 @@
 require( ['jquery', 'wikia.globalnavigation.lazyload'], function( $, GlobalNavLazyLoad ){
 	'use strict';
-	var $entryPoint, $hubLinks, $transparentOut, $verticals;
+	var $entryPoint, $hubLinks, $hubs, $transparentOut, $verticals;
 
-	$hubLinks = $( '#hubs > .hub-links' );
-	$verticals = $( '#hubs > .hubs' );
+	$hubs = $( '#hubs' );
+	$hubLinks = $hubs.find( '> .hub-links' );
+	$verticals = $hubs.find( '> .hubs' );
 	$entryPoint = $( '#hubsEntryPoint' );
 
 	function activateSubmenu( row ) {

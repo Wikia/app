@@ -29,7 +29,7 @@
 }
 
 .transparent-out {
-	@include blackout(rgba(1, 1, 1, 0.0));
+	@include blackout( rgba( 1, 1, 1, 0.0 ) );
 
 	&.visible {
 		z-index: $blackout-z-index;

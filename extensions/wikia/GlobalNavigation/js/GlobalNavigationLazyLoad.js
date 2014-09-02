@@ -15,12 +15,11 @@ define(
 		 * @param  {object} menuItems JSON object with all submenu for Global Nav data
 		 */
 		getMenuItemsDone = function( menuItems ) {
-			var $sections,
+			var $sections = $( $.parseHTML( menuItems ) ).removeClass( 'active' ),
 				$hubs = $( '#hubs' ),
 				$verticals = $( '> .hubs', $hubs ),
 				$hubLinks = $( '> .hub-links', $hubs );
 
-			$sections = $( $.parseHTML( menuItems ) ).removeClass( 'active' );
 			$( '> .active', $hubLinks ).removeClass( 'active' );
 
 			subMenuSelector = '.' + $( '> .active', $verticals ).data( 'vertical' ) + '-links';
