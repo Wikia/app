@@ -1,7 +1,7 @@
-@import "color";
+@import "skins/shared/color";
 @import "layout";
-@import "../mixins/box-shadow";
-@import "../mixins/gradient";
+@import "skins/shared/mixins/box-shadow";
+@import "skins/shared/mixins/gradient";
 
 .WikiaConfirmation {
 	background: $color-confirmation-background;

@@ -1,7 +1,7 @@
 @import "../../Venus/styles/variables";
-@import "skins/oasis/css/core/color";
-@import "skins/oasis/css/mixins/columns";
-@import "skins/oasis/css/mixins/blackout";
+@import "skins/shared/color";
+@import "skins/shared/mixins/columns";
+@import "skins/shared/mixins/blackout";
 @import "GlobalNavigationColors";
 
 .hubs-entry-point {

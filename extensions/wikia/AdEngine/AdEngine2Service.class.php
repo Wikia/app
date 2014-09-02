@@ -7,6 +7,7 @@ class AdEngine2Service
 	const ASSET_GROUP_ADENGINE = 'adengine2_js';
 	const ASSET_GROUP_ADENGINE_LATE = 'adengine2_late_js';
 	const ASSET_GROUP_LIFTIUM = 'liftium_ads_js';
+	const ASSET_GROUP_TOP_INCONTENT_JS = 'adengine2_top_in_content_boxad_js';
 
 	const PAGE_TYPE_NO_ADS = 'no_ads';                   // show no ads
 	const PAGE_TYPE_MAPS = 'maps';                       // show only ads on maps
