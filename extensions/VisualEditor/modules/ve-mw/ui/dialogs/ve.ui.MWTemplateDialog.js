@@ -325,19 +325,6 @@ ve.ui.MWTemplateDialog.prototype.initialize = function () {
 			this.constructor.static.bookletLayoutConfig
 		)
 	);
-	this.filterInput = new OO.ui.TextInputWidget( {
-		'$': this.$,
-		'icon': 'search',
-		'type': 'search',
-		'placeholder': ve.msg( 'wikia-visualeditor-dialog-transclusion-filter' )
-	} );
-	this.filterInput.$input.attr( 'tabindex', 1 );
-	this.$filter = this.$( '<div>' )
-		.addClass( 've-ui-mwTemplateDialog-filter' )
-		.append( this.filterInput.$element );
-
-	// Events
-	this.filterInput.on( 'change', ve.bind( this.onFilterInputChange, this ) );
 
 	// Initialization
 	this.frame.$content.addClass( 've-ui-mwTemplateDialog' );
@@ -363,7 +350,6 @@ ve.ui.MWTemplateDialog.prototype.getSetupProcess = function ( data ) {
 			this.transclusionModel.connect( this, { 'replace': 'onReplacePart' } );
 
 			// Initialization
-			this.filterInput.setValue( '' );
 			if ( !this.selectedNode ) {
 				if ( data.template ) {
 					// New specified template
@@ -420,65 +406,12 @@ ve.ui.MWTemplateDialog.prototype.initialzeNewTemplateParameters = function () {
 ve.ui.MWTemplateDialog.prototype.initializeTemplateParameters = ve.ui.MWTemplateDialog.prototype.initialzeNewTemplateParameters;
 
 /**
- * Handle the filter input change
- * TODO: Wikia (ve-sprint-25): Code in this method could be optimized in plenty of ways
- * but at this moment it's unknown if optimizing it is needed
- */
-ve.ui.MWTemplateDialog.prototype.onFilterInputChange = function () {
-	var value = this.filterInput.getValue().toLowerCase().trim(),
-		parts = this.transclusionModel.getParts(),
-		i, len, part, page, parameters, parameter, parameterMatch;
-
-	// iterate over all parts of the transclusion (templates and contents)
-	for ( i = 0, len = parts.length; i < len; i++ ) {
-		part = parts[i];
-
-		if ( part instanceof ve.dm.MWTransclusionContentModel ) { // content
-			page = this.bookletLayout.getPage( part.getId() );
-			if ( value !== '' && part.getValue().toLowerCase().indexOf( value ) === -1 ) {
-				page.$element.hide();
-			} else {
-				page.$element.show();
-			}
-		} else if ( part instanceof ve.dm.MWTemplateModel ) { // template
-			// iterate over all parameters of the template
-			parameters = part.getParameters();
-			parameterMatch = false;
-			for ( parameter in parameters ) {
-				page = this.bookletLayout.getPage( part.getId() + '/' + parameter );
-				if (
-					value !== '' &&
-					parameters[parameter].getName().toLowerCase().indexOf( value ) === -1 &&
-					parameters[parameter].getValue().toLowerCase().indexOf( value ) === -1
-				) {
-					page.$element.hide();
-				} else {
-					parameterMatch = true;
-					page.$element.show();
-				}
-			}
-			// if there was no match among all parameters for the template then
-			// hide template page as well (so not only parameters)
-			page = this.bookletLayout.getPage( part.getId() );
-			if ( this.mode === 'multiple' ) {
-				if ( value !== '' && !parameterMatch ) {
-					page.$element.hide();
-				} else {
-					page.$element.show();
-				}
-			}
-		}
-	}
-};
-
-/**
  * @inheritdoc
  */
 ve.ui.MWTemplateDialog.prototype.getTeardownProcess = function ( data ) {
 	return ve.ui.MWTemplateDialog.super.prototype.getTeardownProcess.call( this, data )
 		.first( function () {
 			// Cleanup
-			this.filterInput.setValue( '' );
 			this.$element.removeClass( 've-ui-mwTemplateDialog-ready' );
 			this.transclusionModel.disconnect( this );
 			this.transclusionModel.abortRequests();
