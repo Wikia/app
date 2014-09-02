@@ -61,7 +61,6 @@
 	nav {
 		background-color: $nav-background-color;
 		cursor: pointer;
-		font-size: 0;
 		height: 62px;
 		line-height: 62px;
 		position: relative;
@@ -133,6 +132,7 @@
 			background-color: $nav-background-color;
 			border-bottom: 1px solid $hubsmenu-background-color;
 			display: inline-block;
+			float: left;
 			font-size: 18px;
 			height: 61px;
 			width: 142px;
