@@ -3,6 +3,11 @@
 use Wikia\Tasks\Tasks\BaseTask;
 
 class ExactTargetAddUserTask extends BaseTask {
+	private $oClient;
+
+	public function __construct() {
+		$this->initClient();
+	}
 
 	/**
 	 * Task for creating all necessary objects in ExactTarget related to newly created user
@@ -30,12 +35,11 @@ class ExactTargetAddUserTask extends BaseTask {
 			$oSoapVar = $this->wrapToSoapVar( $oSubscriber, 'Subscriber' );
 			$oRequest = $this->wrapRequest( [ $oSoapVar ] );
 
-			/* Create the Soap Client */
-			$oClient = $this->getClient();
-			$oClient->Create( $oRequest );
+			/* Send API request */
+			$this->oClient->Create( $oRequest );
 
 			/* Log response */
-			$this->info( $oClient->__getLastResponse() );
+			$this->info( $this->oClient->__getLastResponse() );
 
 		} catch ( SoapFault $e ) {
 			/* Log error */
@@ -65,12 +69,11 @@ class ExactTargetAddUserTask extends BaseTask {
 
 			$oRequest = $this->wrapRequest( [ $oSoapVar ] );
 
-			/* Create the Soap Client */
-			$oClient = $this->getClient();
-			$oClient->Create( $oRequest );
+			/* Send API request */
+			$this->oClient->Create( $oRequest );
 
 			/* Log response */
-			$this->info( $oClient->__getLastResponse() );
+			$this->info( $this->oClient->__getLastResponse() );
 
 		} catch ( SoapFault $e ) {
 			/* Log error */
@@ -89,12 +92,11 @@ class ExactTargetAddUserTask extends BaseTask {
 			$aSoapVars = $this->prepareUserPropertiesSoapVars( $iUserId, $aUserProperties );
 			$oRequest = $this->wrapRequest( $aSoapVars );
 
-			/* Create the Soap Client */
-			$oClient = $this->getClient();
-			$oClient->Create( $oRequest );
+			/* Send API request */
+			$this->oClient->Create( $oRequest );
 
 			/* Log response */
-			$this->info( $oClient->__getLastResponse() );
+			$this->info( $this->oClient->__getLastResponse() );
 		} catch ( SoapFault $e ) {
 			/* Log error */
 			$this->error( 'SoapFault:' . $e->getMessage() . 'ErrorCode: ' . $e->getCode() );
@@ -138,6 +140,11 @@ class ExactTargetAddUserTask extends BaseTask {
 		$oClient = new ExactTargetSoapClient( $wsdl, array( 'trace'=>1 ) );
 		$oClient->username = $wgExactTargetApiConfig[ 'username' ];
 		$oClient->password = $wgExactTargetApiConfig[ 'password' ];
+		return $oClient;
+	}
+
+	public function initClient() {
+		$this->oClient = $this->getClient();
 	}
 
 	public function wrapRequest( $aSoapVars ) {

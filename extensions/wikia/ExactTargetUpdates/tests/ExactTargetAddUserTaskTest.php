@@ -164,7 +164,10 @@ class ExactTargetAddUserTaskTest extends WikiaBaseTest {
 			->with( $oRequest );
 
 		/* Mock tested class */
-		$mockAddUserTask = $this->getMock( 'ExactTargetAddUserTask', ['wrapRequest', 'getClient'] );
+		$mockAddUserTask = $this->getMockBuilder( 'ExactTargetAddUserTask' )
+			->disableOriginalConstructor()
+			->setMethods( [ 'wrapRequest', 'getClient' ] )
+			->getMock();
 		$mockAddUserTask
 			->expects( $this->once() )
 			->method( 'wrapRequest' )
@@ -174,7 +177,28 @@ class ExactTargetAddUserTaskTest extends WikiaBaseTest {
 			->method( 'getClient' )
 			->will( $this->returnValue( $soapClient ) );
 
+		$mockAddUserTask->initClient();
 		/* Run test */
 		$mockAddUserTask->createUserPropertiesDataExtension( $iUserId, $aUserProperties );
+	}
+
+	/**
+	 * initClient method should be invoked early as it results in using ExactTargetSoapClient class
+	 * which is autoloaded and that runs a chain of including all necessary ExactTarget API classes from lib dir
+	 * so it generally means ExactTargetSoapClient class have to be used as first class from ExactTarget API classes
+	 */
+	public function testConstructorShouldCallInitClientMethod() {
+		$mockAddUserTask = $this->getMockBuilder( 'ExactTargetAddUserTask' )
+			->disableOriginalConstructor()
+			->setMethods( [ 'initClient' ] )
+			->getMock();
+
+		$mockAddUserTask
+			->expects( $this->once() )
+			->method('initClient');
+
+		$reflectedClass = new ReflectionClass( 'ExactTargetAddUserTask' );
+		$constructor = $reflectedClass->getConstructor();
+		$constructor->invoke( $mockAddUserTask );
 	}
 }
