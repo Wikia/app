@@ -1936,11 +1936,21 @@ $config['int_map_parser_tag_js_wikiamobile'] = [
 ];
 
 /** GlobalNavigation extension */
-$config['global_navigation_oasis_scss'] = array(
+$config['global_navigation_oasis_scss'] = [
 	'type' => AssetsManager::TYPE_SCSS,
 	'skin' => ['oasis'],
-	'assets' => array(
+	'assets' => [
 		'//extensions/wikia/GlobalNavigation/css/GlobalNavigationOasis.scss',
 		'//extensions/wikia/GlobalNavigation/css/GlobalNavigationSearchOasis.scss'
-	)
-);
+	]
+];
+
+/** this pack should be loaded only if GlobalNavigation extension is disabled */
+$config['global_header_css'] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => ['oasis'],
+	'assets' => [
+		'//extensions/wikia/GlobalNavigation/css/GlobalNavigationAccountNavigation.scss',
+		'//extensions/wikia/UserLogin/styles/UserLoginDropdown.scss'
+	]
+];

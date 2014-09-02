@@ -1,8 +1,9 @@
 @import 'skins/shared/color';
+@import 'extensions/wikia/Venus/styles/mixins.scss';
 
 body {
 	color: $color-text;
-	font-family: Helvetica, Arial, sans-serif;
+	font-family: 'Helvetica Neue', 'Arial', sans-serif;
 	font-size: 12px;
 	margin: 0;
 	overflow-x: auto;
@@ -30,14 +31,18 @@ a {
 
 .page-width {
 	margin: 0 auto;
-	width: $medium-content-width;
+	width: $large-content-width;
+}
 
-	@media #{$small-only} {
+@media #{$small-only} {
+	.page-width {
 		width: $small-content-width;
 	}
+}
 
-	@media #{$large-up} {
-		width: $large-content-width;
+@media #{$medium-only} {
+	.page-width {
+		width: $medium-content-width;
 	}
 }
 
