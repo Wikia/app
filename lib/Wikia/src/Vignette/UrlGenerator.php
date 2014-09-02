@@ -16,9 +16,11 @@ class UrlGenerator {
 	const MODE_THUMBNAIL = 'thumbnail';
 	const MODE_THUMBNAIL_DOWN = 'thumbnail-down';
 	const MODE_FIXED_ASPECT_RATIO = 'fixed-aspect-ratio';
+	const MODE_FIXED_ASPECT_RATIO_DOWN = 'fixed-aspect-ratio-down';
+	const MODE_TOP_CROP = 'top-crop';
+	const MODE_TOP_CROP_DOWN = 'top-crop-down';
 	const MODE_ZOOM_CROP = 'zoom-crop';
 	const MODE_ZOOM_CROP_DOWN = 'zoom-crop-down';
-	const MODE_REORIENT = 'reorient';
 
 	const REVISION_LATEST = 'latest';
 
@@ -105,15 +107,6 @@ class UrlGenerator {
 	}
 
 	/**
-	 * reorient the image
-	 * @return $this
-	 */
-	public function reorient() {
-		$this->mode(self::MODE_REORIENT);
-		return $this;
-	}
-
-	/**
 	 * create a new thumbnail that is allowed to be bigger than the original
 	 * @return $this
 	 */
@@ -158,6 +151,34 @@ class UrlGenerator {
 	 */
 	public function fixedAspectRatio() {
 		$this->mode(self::MODE_FIXED_ASPECT_RATIO);
+		return $this;
+	}
+
+	/**
+	 * return an image that is exactly $this->width x $this->height with the source image centered in the image window.
+	 * This mode will not allow the image to enlarge.
+	 * @return $this
+	 */
+	public function fixedAspectRatioDown() {
+		$this->mode(self::MODE_FIXED_ASPECT_RATIO_DOWN);
+		return $this;
+	}
+
+	/**
+	 * top crop, enlargement allowed
+	 * @return $this
+	 */
+	public function topCrop() {
+		$this->mode(self::MODE_TOP_CROP);
+		return $this;
+	}
+
+	/**
+	 * top crop, not allowed to enlarge
+	 * @return $this
+	 */
+	public function topCropDown() {
+		$this->mode(self::MODE_TOP_CROP_DOWN);
 		return $this;
 	}
 
@@ -223,9 +244,11 @@ class UrlGenerator {
 			self::MODE_THUMBNAIL,
 			self::MODE_THUMBNAIL_DOWN,
 			self::MODE_FIXED_ASPECT_RATIO,
+			self::MODE_FIXED_ASPECT_RATIO_DOWN,
+			self::MODE_TOP_CROP,
+			self::MODE_TOP_CROP_DOWN,
 			self::MODE_ZOOM_CROP,
 			self::MODE_ZOOM_CROP_DOWN,
-			self::MODE_REORIENT,
 		];
 	}
 }
