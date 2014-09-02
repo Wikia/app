@@ -211,15 +211,9 @@ class TvApiController extends WikiaApiController {
 	protected function findSeries( $seriesName, $lang, $quality = null ) {
 		$minQuality = $quality !== null ? $quality : self::DEFAULT_QUALITY;
 		//check exact match on series first
-		$exactService = $this->getExactSeriesService();
-		$result = $exactService->query( $seriesName );
-
+		$result = $this->exactMatchOnSeries( $seriesName );
 		if ( $result == null ) {
-			$wikiService = $this->getWikiSeriesService();
-			$wikiService->setLang( $lang );
-			$wikis = $wikiService->query( $seriesName );
-
-			$result = $this->findSeriesOnWikis( $wikis, $seriesName, $lang, $minQuality );
+			$result = $this->searchForSeries( $seriesName, $lang, $minQuality );
 		}
 		if ( $result !== null && $result[ 'quality' ] >= $minQuality ) {
 			return $result;
@@ -227,7 +221,19 @@ class TvApiController extends WikiaApiController {
 		return false;
 	}
 
-	protected function findSeriesOnWikis( $wikis, $seriesName, $lang, $quality = null ) {
+	protected function exactMatchOnSeries( $seriesName ) {
+		$exactService = $this->getExactSeriesService();
+		$result = $exactService->query( $seriesName );
+		if ( $result !== null ) {
+			return $result;
+		}
+		return null;
+	}
+
+	protected function searchForSeries( $seriesName, $lang, $quality = null ) {
+		$wikiService = $this->getWikiSeriesService();
+		$wikiService->setLang( $lang );
+		$wikis = $wikiService->query( $seriesName );
 		foreach ( $wikis as $wiki ) {
 			$seriesService = $this->getSeriesService();
 			$seriesService->setWikiId( $wiki[ 'id' ] )
