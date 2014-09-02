@@ -23,7 +23,7 @@ require( ['jquery', 'wikia.globalnavigation.lazyload'], function( $, GlobalNavLa
 	 * menuAim is a method from an external module to handle dropdown menus with very good user experience
 	 * @see https://github.com/Wikia/js-menu-aim
 	 */
-	menuAim(
+	window.menuAim(
 		$verticals.get( 0 ), {
 			activeRow:  $verticals.find( '.active' ).get( 0 ),
 			rowSelector: 'nav',
@@ -50,7 +50,7 @@ require( ['jquery', 'wikia.globalnavigation.lazyload'], function( $, GlobalNavLa
 	$transparentOut.click(closeMenu);
 
 	if ( !window.touchstart ) {
-		delayedHover(
+		window.delayedHover(
 			$entryPoint.get( 0 ),
 			{
 				checkInterval: 100,

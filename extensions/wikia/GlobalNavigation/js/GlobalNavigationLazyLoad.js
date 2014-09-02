@@ -1,7 +1,7 @@
 define(
 	'wikia.globalnavigation.lazyload',
 	['jquery', 'wikia.nirvana', 'wikia.querystring'],
-	function lazyLoad($, nirvana, Querystring) {
+	function lazyLoad( $, nirvana, Querystring ) {
 		'use strict';
 
 		var getHubLinks, getMenuItemsDone, errorHandler, isMenuWorking, menuLoading,
@@ -14,19 +14,19 @@ define(
 		 * Callback to handle request that come back with success (Creation of submenus)
 		 * @param  {object} menuItems JSON object with all submenu for Global Nav data
 		 */
-		getMenuItemsDone = function (menuItems) {
+		getMenuItemsDone = function( menuItems ) {
 			var $sections,
-				$hubs = $('#hubs'),
-				$verticals = $('> .hubs', $hubs),
-				$hubLinks = $('> .hub-links', $hubs);
+				$hubs = $( '#hubs' ),
+				$verticals = $( '> .hubs', $hubs ),
+				$hubLinks = $( '> .hub-links', $hubs );
 
-			$sections = $($.parseHTML(menuItems)).removeClass('active');
-			$('> .active', $hubLinks).removeClass('active');
+			$sections = $( $.parseHTML( menuItems ) ).removeClass( 'active' );
+			$( '> .active', $hubLinks ).removeClass( 'active' );
 
-			subMenuSelector = '.' + $('> .active', $verticals).data('vertical') + '-links';
+			subMenuSelector = '.' + $( '> .active', $verticals ).data( 'vertical' ) + '-links';
 
-			$hubLinks.append($sections);
-			$hubLinks.find(subMenuSelector).addClass('active');
+			$hubLinks.append( $sections );
+			$hubLinks.find( subMenuSelector ).addClass( 'active' );
 
 			menuLoading = false;
 			menuLoaded = true;
@@ -35,13 +35,14 @@ define(
 		/**
 		 * Callback to handle request when there is some error...
 		 */
-		errorHandler = function () {
+		errorHandler = function() {
 			menuLoading = false;
 			menuLoaded = false;
 		};
 
-		getHubLinks = function () {
-			var lang;
+		getHubLinks = function() {
+			var lang,
+				data = {};
 
 			if (menuLoaded || menuLoading) {
 				return;
@@ -49,7 +50,10 @@ define(
 
 			menuLoading = true;
 
-			lang = new Querystring().getVal('uselang');
+			lang = new Querystring().getVal( 'uselang' );
+			if ( lang ) {
+				data.uselang = lang;
+			}
 
 			$.when(
 				nirvana.sendRequest({
@@ -57,9 +61,7 @@ define(
 					method: 'lazyLoadHubsMenu',
 					format: 'html',
 					type: 'GET',
-					data: {
-						lang: lang
-					}
+					data: data
 				})
 			).then(
 				getMenuItemsDone,
@@ -67,8 +69,8 @@ define(
 			);
 		};
 
-		isMenuWorking = function () {
-			return (menuLoading || menuLoaded);
+		isMenuWorking = function() {
+			return ( menuLoading || menuLoaded );
 		};
 
 		return {

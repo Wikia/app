@@ -36,8 +36,11 @@ class NavigationModel extends WikiaModel {
 	//errors
 	const ERR_MAGIC_WORD_IN_LEVEL_1 = 'Magic word at level 1';
 
+	const LEVEL_1_ITEMS_COUNT = 7;
+	const LEVEL_2_ITEMS_COUNT = 4;
+	const LEVEL_3_ITEMS_COUNT = 5;
+
 	private $menuNodes;
-	private $menuLangCode;
 
 	private $biggestCategories;
 	private $lastExtraIndex = 1000;
@@ -57,11 +60,10 @@ class NavigationModel extends WikiaModel {
 	// list of errors encountered when parsing the wikitext
 	private $errors = array();
 
-	public function __construct( $useSharedMemcKey = false, $langCode = null ) {
+	public function __construct( $useSharedMemcKey = false ) {
 		parent::__construct();
 
 		$this->useSharedMemcKey = $useSharedMemcKey;
-		$this->menuLangCode = !$langCode ? $this->wg->Lang->getCode() : $langCode;
 	}
 
 	/**
@@ -88,7 +90,7 @@ class NavigationModel extends WikiaModel {
 
 		$messageName = str_replace(' ', '_', $messageName);
 
-		return implode( ':', array( __CLASS__, $wikiId, $this->menuLangCode, $messageName, self::version ) );
+		return implode( ':', array( __CLASS__, $wikiId, $this->wg->Lang->getCode(), $messageName, self::version ) );
 	}
 
 	public function clearMemc( $key = self::WIKIA_GLOBAL_VARIABLE, $city_id = false ){
@@ -172,7 +174,7 @@ class NavigationModel extends WikiaModel {
 				$this->menuNodes = $this->parse(
 					NavigationModel::TYPE_MESSAGE,
 					$messageName,
-					array(7, 4, 5),
+					[self::LEVEL_1_ITEMS_COUNT, self::LEVEL_2_ITEMS_COUNT, self::LEVEL_3_ITEMS_COUNT],
 					1800 /* 3 hours */
 				);
 
@@ -188,19 +190,15 @@ class NavigationModel extends WikiaModel {
 	}
 
 	/*
+	 * TODO we should refactor whole model when we remove Oasis
+	 *
 	 * This (recursive) function generates tree from menuNodes.
 	 * It basically reverts part of NavigationModel parse; changes simple array
 	 * structure to a nested tree of elements; contain text, href
 	 * and specialAttr for given menu node and all it's children nodes.
-	 *
-	 * NOTICE: This approach is (very) suboptimal, but it suits A/B test needs.
-	 * In future (production) approach we'll probably want to refactor NavigationModel
-	 * itself and work on that, but the amount of work needed for that is too large
-	 * for simple A/B test.
-	 *
 	 * Source ticket: CON-804
 	 *
-	 * IMPORTANT: This function will be called 60 times as on 2014-04-04 - three hubs,
+	 * IMPORTANT: This function will be called 140 times as on 2014-04-04 - seven hubs,
 	 * four submenus for each hub, five links in each submenu.
 	 *
 	 * @param $index integer of menuitem index to generate data from

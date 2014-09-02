@@ -59,9 +59,7 @@ class GlobalNavigationController extends WikiaController {
 	}
 
 	public function lazyLoadHubsMenu() {
-		$langCode = $this->request->getVal('lang', null);
-
-		$lazyLoadMenuNodes = $this->getMenuNodes( $langCode );
+		$lazyLoadMenuNodes = $this->getMenuNodes();
 
 		$activeNode = $this->getActiveNode();
 		$activeNodeIndex = $this->getActiveNodeIndex($lazyLoadMenuNodes, $activeNode);
@@ -71,8 +69,8 @@ class GlobalNavigationController extends WikiaController {
 		$this->overrideTemplate( 'hubsMenuSections' );
 	}
 
-	private function getMenuNodes( $langCode = null ) {
-		$menuNodes = (new NavigationModel(true /* useSharedMemcKey */, $langCode) )->getTree(
+	private function getMenuNodes() {
+		$menuNodes = (new NavigationModel(true /* useSharedMemcKey */) )->getTree(
 			'global-navigation-hubs-menu'
 		);
 
