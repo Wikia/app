@@ -9,13 +9,10 @@ class WikiaInteractiveMapsHooks {
 	 * @return bool
 	 */
 	public static function onOasisSkinAssetGroups( &$assetsArray ) {
-		if ( self::isSpecialMapsPage() ) {
-		// add the asset only on Special:Maps page
-			$assetsArray = array_merge( $assetsArray, [ 'int_map_special_page_js', 'int_map_contribution_button_create_map_js' ] );
-		} else {
-		// these assets are needed on each page view
-			$assetsArray = array_merge( $assetsArray, [ 'int_map_parser_tag_js', 'int_map_contribution_button_create_map_js' ] );
-		}
+		$mapsAssets = [ 'int_map_contribution_button_create_map_js' ];
+		array_unshift( $mapsAssets, ( self::isSpecialMapsPage() ? 'int_map_special_page_js' : 'int_map_parser_tag_js' ) );
+
+		$assetsArray = array_merge( $assetsArray, $mapsAssets );
 
 		return true;
 	}
