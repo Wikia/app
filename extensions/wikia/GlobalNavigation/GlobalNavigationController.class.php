@@ -41,7 +41,7 @@ class GlobalNavigationController extends WikiaController {
 		$globalRequest = $this->wg->request;
 		$query = $globalRequest->getVal( 'search', $globalRequest->getVal( 'query', '' ) );
 
-		if (WikiaPageType::isCorporatePage()) {
+		if (WikiaPageType::isCorporatePage() && !WikiaPageType::isWikiaHub()) {
 			$this->response->setVal( 'disableLocalSearchOptions', true );
 			$this->response->setVal( 'defaultSearchUrl', $globalSearchUrl );
 		} else {
