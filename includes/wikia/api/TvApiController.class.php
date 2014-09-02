@@ -42,8 +42,9 @@ class TvApiController extends WikiaApiController {
 		$result = null;
 		foreach ( $episodes as $episode ) {
 			$result = $this->findEpisode( $seriesName, trim( $episode ), $lang, $minQuality );
-			if ( $result )
+			if ( $result ) {
 				break;
+			}
 		}
 		if ( !$result ) {
 			throw new NotFoundApiException();
@@ -108,8 +109,9 @@ class TvApiController extends WikiaApiController {
 						foreach ( $namespaces as $ns ) {
 							if ( !MWNamespace::isTalk( $ns ) && isset( $namespaceNames[ $ns ] ) ) {
 								$result = $episodeService->query( $namespaceNames[ $ns ] . ":" . $episodeName );
-								if ( $result !== null )
+								if ( $result !== null ) {
 									break;
+								}
 							}
 						}
 					}

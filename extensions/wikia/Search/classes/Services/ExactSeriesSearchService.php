@@ -14,6 +14,7 @@ class ExactSeriesSearchService extends EntitySearchService {
 
 		$phrase = $this->sanitizeQuery( $query );
 		$select->setQuery( static::EXACT_MATCH_FIELD . ':"' . $phrase . '"' );
+		$select->createFilterQuery( 'no_episodes' )->setQuery( '-(tv_episode_mv_em:*)' );
 		$select->setRows( static::ARTICLES_LIMIT );
 
 		return $select;
@@ -25,10 +26,10 @@ class ExactSeriesSearchService extends EntitySearchService {
 				return [
 					'wikiId' => $item[ 'wid' ],
 					'articleId' => $item[ 'pageid' ],
-					'title' => $item[ 'title_' . $this->getLang() ],
+					'title' => $item[ 'titleStrict' ],
 					'url' => $this->replaceHostUrl( $item[ 'url' ] ),
 					'quality' => $item[ 'article_quality_i' ],
-					'contentUrl' => $this->replaceHostUrl( 'http://' . $item[ 'host' ] . '/' . self::API_URL . $item[ 'pageid' ] ),
+					'contentUrl' => $this->replaceHostUrl( 'http://' . $item[ 'host' ] . '/' . static::API_URL . $item[ 'pageid' ] ),
 				];
 			}
 		}
