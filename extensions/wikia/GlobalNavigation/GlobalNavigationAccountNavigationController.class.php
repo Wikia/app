@@ -1,0 +1,144 @@
+<?php
+
+/**
+ * Renders anon/user menu at top right corner of the page.
+ *
+ * @author Mateusz "Warkot" Warkocki based on work of Maciej Brencz
+ */
+class GlobalNavigationAccountNavigationController extends WikiaController {
+
+	var $personalUrls;
+
+	public function index() {
+		wfProfileIn( __METHOD__ );
+
+		global $wgUser;
+
+		$this->setupPersonalUrls();
+		$this->isAnon = $wgUser->isAnon();
+		$this->username = $wgUser->getName();
+		$this->accountNavigationText = $this->username;
+
+		if ( $this->isAnon ) {
+			$this->accountNavigationText = wfMessage( 'login' )->text();
+			$this->loginLinkOpeningTag = $this->renderPersonalUrl( 'login', true );
+			$this->registerLink = $this->renderPersonalUrl( 'register' );
+			$this->loginDropdown = (string)F::app()->sendRequest( 'UserLoginSpecial', 'dropdown', [ 'template' => 'venusDropdown', 'registerLink' => $this->registerLink ] );
+		} else {
+			$this->profileLink = AvatarService::getUrl( $this->username );
+			$this->profileAvatar = null;
+			if ( !AvatarService::isEmptyOrFirstDefault( $this->username ) ) {
+				$this->profileAvatar = AvatarService::renderAvatar( $this->username, 36 );
+			}
+
+			$possibleItems = [ 'mytalk', 'following', 'preferences' ];
+			$dropdownItems = [];
+
+			// Allow hooks to modify the dropdown items.
+			wfRunHooks( 'AccountNavigationModuleAfterDropdownItems', [ &$possibleItems, &$this->personalUrls ] );
+
+			foreach ( $possibleItems as $item ) {
+				if ( isset( $this->personalUrls[ $item ] ) ) {
+					$dropdownItems[] = $this->renderPersonalUrl( $item );
+				}
+			}
+
+			// link to Help:Content ('known' -> never render as redlink)
+			$helpLang = array_key_exists( $this->wg->LanguageCode, $this->wg->AvailableHelpLang ) ? $this->wg->LanguageCode : 'en';
+			$dropdownItems[] = Wikia::link(
+				Title::newFromText( wfMessage( 'helppage' )->inLanguage( $helpLang )->text() ),
+				wfMessage( 'help' )->text(),
+				[ 'data-id' => 'help' ],
+				'',
+				[ 'known' ]
+			);
+
+			$dropdownItems[] = $this->renderPersonalUrl( 'logout', false );
+			$this->dropdown = $dropdownItems;
+		}
+
+		wfProfileOut( __METHOD__ );
+	}
+
+	/**
+	 * Checks whether provided string is on blacklist.
+	 *
+	 * @param string $pageName Redirectto page name to be checked against blacklist
+	 * @return bool
+	 */
+	private static function isBlacklisted( $pageName ) {
+		$returntoBlacklist = [ 'Special:UserLogout', 'Special:UserSignup', 'Special:WikiaConfirmEmail', 'Special:Badtitle' ];
+		foreach ( $returntoBlacklist as $blackItem ) {
+			if ( strpos( $pageName, $blackItem ) === 0 ) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	/**
+	 * Render personal URLs item as HTML link.
+	 *
+	 * @param string $id
+	 * @param bool $openingTagOnly Setting to true renders the <a> tag with appropriate attributes but no content
+	 * @return string
+	 */
+	private function renderPersonalUrl( $id, $openingTagOnly = false ) {
+		wfProfileIn( __METHOD__ );
+
+		$personalUrl = $this->personalUrls[ $id ];
+
+		$attributes = [ 'data-id' => $id, 'href' => $personalUrl[ 'href' ] ];
+
+		if ( in_array( $id, [ 'login', 'register' ] ) ) {
+			$attributes[ 'rel' ] = 'nofollow';
+		}
+
+		if ( isset( $personalUrl[ 'class' ] ) ) {
+			$attributes[ 'class' ] = $personalUrl[ 'class' ];
+		}
+
+		switch ( $id ) {
+			case 'mytalk':
+				$attributes[ 'accesskey' ] = 'n';
+				break;
+			case 'login':
+				$attributes[ 'accesskey' ] = 'o';
+				break;
+		}
+
+		$ret = Xml::openElement( 'a', $attributes );
+		$urlText = $personalUrl[ 'text' ];
+		if ( !$openingTagOnly ) {
+			$ret .= $urlText;
+			$ret .= Xml::closeElement( 'a' );
+		}
+
+		wfProfileOut( __METHOD__ );
+		return $ret;
+	}
+
+	/**
+	 * Modify personal URLs list.
+	 */
+	private function setupPersonalUrls() {
+		global $wgUser;
+
+		$this->personalUrls = F::app()->getSkinTemplateObj()->data[ 'personal_urls' ];
+
+		if ( $wgUser->isAnon() ) {
+			$query = F::app()->wg->Request->getValues();
+			if ( isset( $query[ 'title' ] ) && !self::isBlacklisted( $query[ 'title' ] ) ) {
+				$returnto = $query[ 'title' ];
+			} else {
+				$returnto = Title::newMainPage()->getPartialURL();
+			}
+			$returnto = wfGetReturntoParam( $returnto );
+
+			$this->personalUrls[ 'login' ] = [ 'text' => wfMessage( 'login' )->text(), 'href' => Skin::makeSpecialUrl( 'UserLogin', $returnto ), 'class' => 'ajaxLogin global-navigation-link' ];
+			$this->personalUrls[ 'register' ] = [ 'text' => wfMessage( 'oasis-signup' )->text(), 'href' => Skin::makeSpecialUrl( 'UserSignup' ), 'class' => 'ajaxRegister' ];
+		} else {
+			$this->personalUrls[ 'userpage' ][ 'text' ] = wfMessage( 'mypage' )->text();
+		}
+	}
+}
