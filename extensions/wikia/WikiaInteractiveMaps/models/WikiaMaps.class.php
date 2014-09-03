@@ -209,7 +209,7 @@ class WikiaMaps extends WikiaObject {
 	 */
 	public function getMapRenderParams ( $shouldHideAttribution ) {
 		$params = [];
-		$params[ 'uselang' ] = $this->wg->lang->getCode();
+		$params[ 'uselang' ] = F::app()->wg->lang->getCode();
 		if ( $shouldHideAttribution ) {
 			$params['hideAttr'] = '1';
 		}
