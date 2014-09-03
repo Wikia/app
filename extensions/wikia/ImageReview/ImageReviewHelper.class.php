@@ -13,6 +13,11 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 	 */
 	const LIMIT_IMAGES_FROM_DB = 24;
 
+	/**
+	 * Define a size of a thumbnail
+	 */
+	const IMAGE_REVIEW_THUMBNAIL_SIZE = 250;
+
 	static $sortOptions = array(
 		'latest first' => 0,
 		'by priority and recency' => 1,
@@ -309,7 +314,12 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 			$record = "(wiki_id = {$row->wiki_id} and page_id = {$row->page_id})";
 
 			if (count($imageList) < self::LIMIT_IMAGES) {
-				$img = ImagesService::getImageSrc( $row->wiki_id, $row->page_id );
+				$oImagePage = GlobalTitle::newFromId( $row->page_id, $row->wiki_id );
+				$oImageGlobal = new GlobalFile( $oImagePage );
+				$img = array(
+					'src' => $oImageGlobal->getThumbUrl( self::IMAGE_REVIEW_THUMBNAIL_SIZE . 'px-' . $oImageGlobal->getName() ),
+					'page' => $oImagePage->getFullUrl(),
+				);
 
 				$extension = pathinfo( strtolower( $img['page'] ), PATHINFO_EXTENSION ); // this needs to use the page index since src for SVG ends in .svg.png :/
 
@@ -321,10 +331,8 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 					$isThumb = true;
 
 					if ( empty( $img['src'] ) ) {
-						// if we don't have a thumb by this opint, we still need to display something, fall back to placeholder
-						$globalTitle = GlobalTitle::newFromId( $row->page_id, $row->wiki_id );
-						if ( is_object( $globalTitle ) ) {
-							$img['page'] = $globalTitle->getFullUrl();
+						if ( is_object( $oImagePage ) ) {
+							$img['page'] = $oImagePage->getFullUrl();
 							// @TODO this should be taken from the code instead of being hardcoded
 							$img['src'] = 'http://images.wikia.com/central/images/8/8c/Wikia_image_placeholder.png';
 						} else {
