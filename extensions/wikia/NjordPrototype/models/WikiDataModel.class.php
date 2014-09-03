@@ -19,7 +19,7 @@ class WikiDataModel {
 	}
 
 	public function setFromAttributes( $attributes ) {
-		$imageName = ! empty( $attributes['imageName'] ) ? $attributes['imageName'] : null;
+		$imageName = ! empty( $attributes['imagename'] ) ? $attributes['imagename'] : null;
 		$this->title = ! empty( $attributes['title'] ) ? $attributes['title'] : null;
 		$this->description = ! empty( $attributes['description'] ) ? $attributes['description'] : null;
 
@@ -27,7 +27,6 @@ class WikiDataModel {
 			$this->initializeImagePath( $imageName );
 		}
 	}
-
 
 	public function storeInProps() {
 		$pageId = Title::newFromText( $this->pageName )->getArticleId();
@@ -54,7 +53,7 @@ class WikiDataModel {
 		$imageTitle = Title::newFromText( $imageName, NS_FILE );
 
 		$file = wfFindFile( $imageTitle );
-		if ( $file->exists() ) {
+		if ( $file && $file->exists() ) {
 			$this->imageName = $imageName;
 
 			$homePageHelper = new WikiaHomePageHelper();

@@ -3,8 +3,8 @@
 var heroData = {
 		title: null,
 		description: null,
-		imageName: null,
-		imagePath: null,
+        imagename: null,
+		imagepath: null,
 		changed: false
 	},
 	$heroModule = $('#MainPageHero'),
@@ -38,7 +38,7 @@ var heroData = {
 		var $this = $(this);
 		heroData.title = $heroModule.find('.hero-title').text();
 		heroData.description = $heroModule.find('.hero-description').text();
-		heroData.imagePath = $heroModule.find('.hero-image').attr('src');
+		heroData.imagepath = $heroModule.find('.hero-image').attr('src');
 		heroData.changed = true;
 
 		//TODO: remove;for debugging purposes
