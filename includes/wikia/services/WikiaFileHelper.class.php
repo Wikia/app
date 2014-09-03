@@ -663,7 +663,7 @@ class WikiaFileHelper extends Service {
 		// going to enlarge it or not
 		if ( $isSmallImage && $imageBelowThreshold ) {
 			// Leave the (small) full sized image as is, but put within the requested container with transparent fill
-			$gen->fixedAspectRatioDown()->backgroundFill('transparent');
+			$gen->fixedAspectRatioDown()->backgroundFill( 'transparent' );
 			$smallerThanDimensions = true;
 		} else {
 			if ( $height > $width ) {
@@ -677,6 +677,6 @@ class WikiaFileHelper extends Service {
 
 		$path = $gen->width( $dimension )->height( $dimension )->url();
 
-		return [ F::app()->wg->ThumbnailerRootUrl.$path, $smallerThanDimensions ];
+		return [ F::app()->wg->ThumbnailerRootUrl . $path, $smallerThanDimensions ];
 	}
 }
