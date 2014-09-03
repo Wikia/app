@@ -440,7 +440,8 @@ function parseItem($line) {
 			if($title) {
 				if ($title->getNamespace() == NS_SPECIAL) {
 					$dbkey = $title->getDBkey();
-					$specialCanonicalName = array_shift(SpecialPageFactory::resolveAlias($dbkey));
+					$pageData = SpecialPageFactory::resolveAlias( $dbkey );
+					$specialCanonicalName = array_shift( $pageData );
 					if (!$specialCanonicalName) $specialCanonicalName = $dbkey;
 				}
 				$title = $title->fixSpecialName();
