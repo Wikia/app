@@ -4,6 +4,7 @@ class NjordController extends WikiaController {
 	public function index() {
 		$this->wg->out->addStyle( AssetsManager::getInstance()->getSassCommonURL( 'extensions/wikia/NjordPrototype/css/Njord.scss' ) );
 		$this->wg->Out->addScriptFile($this->wg->ExtensionsPath . '/wikia/NjordPrototype/scripts/Njord.js');
+		$this->wg->Out->addScriptFile($this->wg->ExtensionsPath . '/wikia/NjordPrototype/scripts/Njord.fileUpload.js');
 
 		$wikiDataModel = new WikiDataModel( Title::newMainPage()->getText() );
 		$wikiDataModel->getFromProps();
