@@ -7,11 +7,23 @@ use Wikia\Util\RequestId;
  */
 class RequestIdTest extends WikiaBaseTest {
 
+	private $serverOriginal;
+
+	function setUp() {
+		parent::setUp();
+		$this->serverOriginal = $_SERVER;
+	}
+
+	function tearDown() {
+		parent::tearDown();
+		$_SERVER = $this->serverOriginal;
+	}
+
 	/**
 	 * @dataProvider isValidIdData
 	 */
-	function testIsValidId($id, $isValid) {
-		$this->assertEquals( $isValid, RequestId::isValidId($id) );
+	function testIsValidId( $id, $isValid ) {
+		$this->assertEquals( $isValid, RequestId::isValidId( $id ) );
 	}
 
 	function isValidIdData() {
@@ -34,18 +46,18 @@ class RequestIdTest extends WikiaBaseTest {
 	/**
 	 * @dataProvider getRequestIdFromHeaderData
 	 */
-	function testGetRequestIdFromHeader($headerValue, $isUsed) {
-		$req = new FauxRequest();
-		$req->setHeader(RequestId::REQUEST_HEADER_NAME, $headerValue);
-		$this->mockGlobalVariable('wgRequest', $req);
+	function testGetRequestIdFromHeader( $headerValue, $isUsed ) {
+		if ( !empty( $headerValue ) ) {
+			$_SERVER['HTTP_X_REQUEST_ID'] = $headerValue;
+		}
 
-		$requestId = (new RequestId())->getRequestId();
+		$requestId = ( new RequestId() )->getRequestId();
 
-		if ($isUsed) {
-			$this->assertEquals($headerValue, $requestId);
+		if ( $isUsed ) {
+			$this->assertEquals( $headerValue, $requestId );
 		}
 		else {
-			$this->assertNotEquals('foo', $requestId);
+			$this->assertNotEquals( 'foo', $requestId );
 		}
 	}
 
@@ -68,9 +80,9 @@ class RequestIdTest extends WikiaBaseTest {
 
 	function testSingleton() {
 		$instance = RequestId::instance();
-		$this->assertEquals($instance->getRequestId(), $instance->getRequestId(), 'ID should be the same for the same instance');
+		$this->assertEquals( $instance->getRequestId(), $instance->getRequestId(), 'ID should be the same for the same instance' );
 
-		$this->assertNotEquals((new RequestId())->getRequestId(), (new RequestId())->getRequestId(), 'ID should be different for different instances');
+		$this->assertNotEquals( ( new RequestId() )->getRequestId(), ( new RequestId() )->getRequestId(), 'ID should be different for different instances' );
 	}
 
 }

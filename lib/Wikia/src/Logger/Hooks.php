@@ -145,7 +145,7 @@ class Hooks {
 			}
 		}
 
-		$fields['unique_id'] = RequestId::instance()->getRequestId();
+		$fields['request_id'] = RequestId::instance()->getRequestId();
 
 		WikiaLogger::instance()->pushContext( $fields, WebProcessor::RECORD_TYPE_FIELDS );
 

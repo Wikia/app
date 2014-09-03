@@ -23,7 +23,7 @@ class RequestId {
 	public static function instance() {
 		static $instance = null;
 
-		if (!isset($instance)) {
+		if ( !isset( $instance ) ) {
 			$instance = new self();
 		}
 
@@ -40,22 +40,23 @@ class RequestId {
 	 */
 	function getRequestId() {
 		// request ID is already generated
-		if ($this->requestId !== false) {
+		if ( $this->requestId !== false ) {
 			return $this->requestId;
 		}
 
 		// try to get the value from request header
-		$req = \F::app()->wg->Request;
-		$headerValue = !empty($req) ? $req->getHeader(self::REQUEST_HEADER_NAME) : false;
+		// we can't simply use $wgRequest as it's not yet set at this point
+		// this method is called on WikiFactoryExecuteComplete hook
+		$headerValue = !empty( $_SERVER['HTTP_X_REQUEST_ID'] ) ? $_SERVER['HTTP_X_REQUEST_ID'] : false;
 
-		if (self::isValidId($headerValue)) {
+		if ( self::isValidId( $headerValue ) ) {
 			$this->requestId = $headerValue;
 			wfDebug( __METHOD__ . ": from HTTP request\n" );
 		}
 		else {
 			// return 23 characters long unique ID + mw prefix
 			// e.g. mw5405bb3d129e76.46189257
-			$this->requestId = uniqid('mw', true);
+			$this->requestId = uniqid( 'mw', true );
 			wfDebug( __METHOD__ . ": generated a new one\n" );
 		}
 
@@ -69,9 +70,9 @@ class RequestId {
 	 * @param $id
 	 * @return bool
 	 */
-	public static function isValidId($id) {
-		return is_string($id) &&
-			strlen($id) === 25 &&
-			startsWith($id, 'mw');
+	public static function isValidId( $id ) {
+		return is_string( $id ) &&
+			strlen( $id ) === 25 &&
+			startsWith( $id, 'mw' );
 	}
 }
