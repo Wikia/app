@@ -5,7 +5,31 @@
 define('ext.wikia.adEngine.adContext', ['wikia.window'], function (w, document) {
 	'use strict';
 
-	var context = w.ads ? w.ads.context : {
+	var context;
+
+	function getContext() {
+		return context;
+	}
+
+	function setContext(newContext) {
+		context = newContext;
+
+		// Always have objects in all categories
+		context.opts = context.opts || {};
+		context.targeting = context.targeting || {};
+		context.providers = context.providers || {};
+		context.forceProviders = context.forceProviders || {};
+
+		// Don't show ads when Sony requests the page
+		if (document && document.referrer && document.referrer.match(/info\.tvsideview\.sony\.net/)) {
+			context.opts.showAds = false;
+		}
+
+		// Use PostScribe for ScriptWriter implementation when SevenOne Media ads are enabled
+		context.opts.usePostScribe = context.opts.usePostScribe || context.providers.sevenOneMedia;
+	}
+
+	setContext( w.ads ? w.ads.context : {
 		opts: {
 			adsInHead: w.wgLoadAdsInHead,
 			disableLateQueue: w.wgAdEngineDisableLateQueue,
@@ -54,27 +78,10 @@ define('ext.wikia.adEngine.adContext', ['wikia.window'], function (w, document) 
 			directGpt: w.wgAdDriverForceDirectGptAd,
 			liftium: w.wgAdDriverForceLiftiumAd
 		}
-	};
-
-	// Always have objects in all categories
-	context.opts = context.opts || {};
-	context.targeting = context.targeting || {};
-	context.providers = context.providers || {};
-	context.forceProviders = context.forceProviders || {};
-
-	// Don't show ads when Sony requests the page
-	if (document && document.referrer && document.referrer.match(/info\.tvsideview\.sony\.net/)) {
-		context.opts.showAds = false;
-	}
-
-	// Use PostScribe for ScriptWriter implementation when SevenOne Media ads are enabled
-	context.opts.usePostScribe = context.opts.usePostScribe || context.providers.sevenOneMedia;
-
-	function getContext() {
-		return context;
-	}
+	});
 
 	return {
-		getContext: getContext
+		getContext: getContext,
+		setContext: setContext
 	};
 });
