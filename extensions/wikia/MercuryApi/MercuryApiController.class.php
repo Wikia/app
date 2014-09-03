@@ -61,6 +61,15 @@ class MercuryApiController extends WikiaController {
 	}
 
 	/**
+	 * @desc Returns local navigation data for current wiki
+	 *
+	 * @return array
+	 */
+	private function getNavigationData(){
+		return $this->sendRequest( 'NavigationApi', 'getData' )->getData();
+	}
+
+	/**
 	 * @desc returns related pages
 	 *
 	 * @param int $articleId
@@ -148,6 +157,7 @@ class MercuryApiController extends WikiaController {
 	 */
 	public function getWikiVariables() {
 		$wikiVariables = $this->mercuryApi->getWikiVariables();
+		$wikiVariables['navData'] = $this->getNavigationData();
 		$this->response->setVal( 'data', $wikiVariables );
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 	}
