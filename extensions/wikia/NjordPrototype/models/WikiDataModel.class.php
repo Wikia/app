@@ -19,11 +19,13 @@ class WikiDataModel {
 	}
 
 	public function setFromAttributes( $attributes ) {
-		$imageName = ! empty( $attributes['image'] ) ? $attributes['image'] : null;
+		$imageName = ! empty( $attributes['imageName'] ) ? $attributes['imageName'] : null;
 		$this->title = ! empty( $attributes['title'] ) ? $attributes['title'] : null;
 		$this->description = ! empty( $attributes['description'] ) ? $attributes['description'] : null;
 
-		$this->initializeImagePath( $imageName );
+		if($imageName) {
+			$this->initializeImagePath( $imageName );
+		}
 	}
 
 
@@ -50,6 +52,7 @@ class WikiDataModel {
 	 */
 	private function initializeImagePath( $imageName ) {
 		$imageTitle = Title::newFromText( $imageName, NS_FILE );
+
 		$file = wfFindFile( $imageTitle );
 		if ( $file->exists() ) {
 			$this->imageName = $imageName;
