@@ -126,11 +126,7 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 			}
 
 			$this->setVal( 'deleted', $deleted );
-			$params = [];
-
-			if ( self::shouldHideAttribution( $cityId ) ) {
-				$params['hideAttr'] = '1';
-			}
+			$params = $model->getMapRenderParams( self::shouldHideAttribution( $cityId ) );
 
 			$url = $model->getMapRenderUrl( [
 				$mapId,
@@ -209,7 +205,7 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 	 * @return bool
 	 */
 	static public function shouldHideAttribution( $mapCityId ) {
-		return $mapCityID == $this->wg->CityId;
+		return $mapCityId == intval( F::app()->wg->CityId );
 	}
 
 	/**

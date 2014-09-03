@@ -197,12 +197,24 @@ class WikiaMaps extends WikiaObject {
 	 * @param array $params Additional get params
 	 * @return string URL
 	 */
-	public function getMapRenderUrl( Array $segments, Array $params = []) {
+	public function getMapRenderUrl( Array $segments, Array $params = [] ) {
 		array_unshift( $segments, self::ENTRY_POINT_RENDER );
-		$params[ 'uselang' ] = $this->wg->lang->getCode();
 		return $this->buildUrl( $segments, $params );
 	}
 
+	/**
+	 * Returns a list of params for the
+	 * @param $shouldHideAttribution
+	 * @return array
+	 */
+	public function getMapRenderParams ( $shouldHideAttribution ) {
+		$params = [];
+		$params[ 'uselang' ] = $this->wg->lang->getCode();
+		if ( $shouldHideAttribution ) {
+			$params['hideAttr'] = '1';
+		}
+		return $params;
+	}
 	/**
 	 * Returns an array of sorting options instances
 	 *
