@@ -111,7 +111,8 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 		$map = $model->getMapByIdFromApi( $mapId );
 
 		if( isset( $map->title ) ) {
-			$this->redirectIfForeignWiki( $map->city_id, $mapId );
+			$cityId = $map->city_id;
+			$this->redirectIfForeignWiki( $cityId, $mapId );
 			$this->wg->out->setHTMLTitle( $map->title );
 
 			$deleted = $map->deleted == WikiaMaps::MAP_DELETED;
@@ -125,12 +126,18 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 			}
 
 			$this->setVal( 'deleted', $deleted );
-			$url = $model->getMapRenderUrl([
+			$params = [];
+
+			if ( self::shouldHideAttribution( $cityId ) ) {
+				$params['hideAttr'] = '1';
+			}
+
+			$url = $model->getMapRenderUrl( [
 				$mapId,
 				$zoom,
 				$lat,
 				$lon
-			]);
+			], $params );
 
 			if ( $mobileSkin ) {
 				$this->setMapOnMobile();
@@ -193,6 +200,16 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 		// skip rendering parts of Wikia page
 		WikiaMobileFooterService::setSkipRendering( true );
 		WikiaMobilePageHeaderService::setSkipRendering( true );
+	}
+
+	/**
+	 * Decides where to hide attribution bar on a map
+	 * For now only for usages inside community that created the map
+	 * @param Integer $mapCityId
+	 * @return bool
+	 */
+	static public function shouldHideAttribution( $mapCityId ) {
+		return $mapCityID == $this->wg->CityId;
 	}
 
 	/**
