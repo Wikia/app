@@ -467,7 +467,7 @@ class MediaWikiServiceTest extends BaseTest
 	 * @group Slow
 	 * @slowExecutionTime 0.12579 ms
 	 * Note: we actually expect an array here but since static method calls are tricky here
-	 * we're using proxyClass with translated version of a response array
+	 * we're using mockClass with translated version of a response array
 	 * @covers \Wikia\Search\MediaWikiService::getParseResponseFromPageId
 	 */
 	public function testGetParseResponseFromPageId() {
@@ -1372,7 +1372,7 @@ class MediaWikiServiceTest extends BaseTest
 			->will   ( $this->returnValue( 'wall message title' ) )
 		;
 
-		$this->proxyClass( '\WallMessage', $wm, 'newFromId' );
+		$this->mockClass( '\WallMessage', $wm, 'newFromId' );
 
 		$get = new ReflectionMethod( '\Wikia\Search\MediaWikiService', 'getTitleString' );
 		$get->setAccessible( true );
@@ -1464,7 +1464,7 @@ class MediaWikiServiceTest extends BaseTest
 //		    ->method ( 'getArticleID' )
 //		    ->will    ( $this->returnValue( $this->pageId ) )
 //		;
-//		$this->proxyClass( '\WallMessage', null, 'newFromId' );
+//		$this->mockClass( '\WallMessage', null, 'newFromId' );
 
 //		$get = new ReflectionMethod( '\Wikia\Search\MediaWikiService', 'getTitleString' );
 //		$get->setAccessible( true );
@@ -2116,7 +2116,7 @@ class MediaWikiServiceTest extends BaseTest
 		    ->with         ( 123 )
 		    ->will         ( $this->returnValue( $wiki ) )
 		;
-		$this->proxyClass( 'WikiFactory', $mockWf );
+		$this->mockClass( 'WikiFactory', $mockWf );
 		$refl = new ReflectionMethod( $mws, 'getWikiFromWikiId' );
 		$refl->setAccessible( true );
 		$this->assertEquals(
