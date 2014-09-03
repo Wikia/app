@@ -3,9 +3,10 @@
 class WikiDataModel {
 	private $pageName;
 	private $imageName;
-	private $imagePath;
-	private $title;
-	private $description;
+
+	public $imagePath;
+	public $title;
+	public $description;
 
 	const WIKI_HERO_IMAGE_PROP_ID = 10001;
 	const WIKI_HERO_TITLE_PROP_ID = 10002;
@@ -42,19 +43,6 @@ class WikiDataModel {
 		$this->description = wfGetWikiaPageProp( self::WIKI_HERO_DESCRIPTION_ID, $pageId );
 
 		$this->initializeImagePath( $this->imageName );
-	}
-
-
-	public function getImagePath() {
-		return $this->imagePath;
-	}
-
-	public function getTitle() {
-		return $this->title;
-	}
-
-	public function getDescription() {
-		return $this->description;
 	}
 
 	/**
