@@ -138,6 +138,7 @@ class WallNotificationsController extends WikiaController {
 			// do not render this notification, it's bugged
 			return false;
 		}
+
 		$data = $notify['grouped'][0]->data;
 		if( isset( $data->type ) && $data->type === 'ADMIN' ) {
 			$this->forward( __CLASS__, 'NotificationAdmin' );

@@ -10,6 +10,7 @@ $wgAutoloadClasses['WallNotificationOwnerEntity'] =  __DIR__ . '/WallNotificatio
 
 $wgAutoloadClasses['WallNotificationEntity'] =  __DIR__ . '/WallNotificationEntity.class.php';
 $wgAutoloadClasses['WallNotificationsController'] =  __DIR__ . '/WallNotificationsController.class.php';
+$wgAutoloadClasses['WallNotificationsVenusController'] =  __DIR__ . '/WallNotificationsVenusController.class.php';
 $wgAutoloadClasses['WallNotificationsExternalController'] =  __DIR__ . '/WallNotificationsExternalController.class.php';
 
 $wgAutoloadClasses['WallNotificationsEveryone'] =  __DIR__ . '/WallNotificationsEveryone.class.php';

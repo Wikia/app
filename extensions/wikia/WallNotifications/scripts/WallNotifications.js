@@ -11,7 +11,10 @@ var WallNotifications = $.createClass(Object, {
 		setTimeout( this.proxy( this.updateCounts ), 300);
 
 		this.$bubblesCount = $('#bubbles_count');
-		this.$wallNotifications = $('#WallNotifications, .wall-notifications-monobook');
+
+		this.$notifications = $('#notifications');
+
+		this.$wallNotifications = $('#WallNotificationsVenus, .wall-notifications-monobook');
 		this.$wallNotificationsReminder = $('#WallNotificationsReminder');
 		this.$wallNotificationsSubnav = this.$wallNotifications.find('.subnav');
 
@@ -44,7 +47,7 @@ var WallNotifications = $.createClass(Object, {
 				.css('background-color', bgcolor)
 				.mouseleave( this.proxy( this.dropdownHide ) );
 		} else {
-			this.$wallNotifications
+			this.$notifications
 				.mouseenter( this.proxy( this.updateCounts ) )
 				.mouseenter( this.proxy( this.fetchForCurrentWiki ) )
 				.one( 'mouseenter', this.proxy( this.hideReminder ) );
@@ -233,7 +236,7 @@ var WallNotifications = $.createClass(Object, {
 			$('#wall-notifications-inner').html(data.html);
 			$('#wall-notifications-inner .notifications-wiki-header').click( this.proxy( this.wikiClick ) );
 		} else {
-			this.$wallNotificationsSubnav.html(data.html);
+			this.$wallNotifications.html(data.html);
 			this.unreadCount = data.count;
 			if (data.count > 0) {
 				this.$bubblesCount.html(data.count).parent().addClass('reddot');
@@ -245,12 +248,12 @@ var WallNotifications = $.createClass(Object, {
 			this.$wallNotificationsReminder.find('a').html(data.reminder);
 
 			var self = this;
-			this.$wallNotificationsSubnav.find('.notifications-for-wiki').each(function() {
+			this.$wallNotifications.find('.notifications-for-wiki').each(function() {
 				var element = $(this);
 				self.wikisUrls[ element.attr('data-wiki-id') ] = element.attr('data-wiki-path');
 			});
 
-			this.$wallNotificationsSubnav.find('.notifications-wiki-header').click( this.proxy( this.wikiClick ) );
+			this.$wallNotifications.find('.notifications-wiki-header').click( this.proxy( this.wikiClick ) );
 		}
 
 	},
@@ -323,7 +326,7 @@ var WallNotifications = $.createClass(Object, {
 
 	updateWikiHtml: function( wikiId, data ) {
 		var wikiEl = ( this.isMonobook ? $('#wall-notifications-inner') : this.$wallNotificationsSubnav ).find('li[data-wiki-id=' + wikiId + ']');
-		var wikiLi = wikiEl.find('.notifications-for-wiki-list');
+		var wikiLi = this.$wallNotifications.find('.notifications-for-wiki-list');
 
 		wikiLi.html(data.html);
 

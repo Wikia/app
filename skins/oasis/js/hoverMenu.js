@@ -203,7 +203,7 @@ var HoverMenuGlobal = {
 $(function() {
 	//Create instances of HoverMenu
 	HoverMenuGlobal.menus.push(new HoverMenu("#GlobalNavigation"));
-	HoverMenuGlobal.menus.push(new HoverMenu("#AccountNavigation"));
+	//HoverMenuGlobal.menus.push(new HoverMenu("#AccountNavigation"));
 	HoverMenuGlobal.menus.push(new HoverMenu("#WallNotifications"));
 	//Accessbility
 	$("div.skiplinkcontainer a").focus(function(evt) {
