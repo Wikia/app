@@ -1,0 +1,26 @@
+.MainpageHero {
+  position: relative;
+
+  h1 {
+    background: rgba(255, 255, 255, .5);
+    display: inline-block;
+    font-weight: 900;
+    left: 2rem;
+    margin: 0 auto;
+    padding: .5em;
+    position: absolute;
+    text-align: center;
+    top: 2rem;
+  }
+
+  span {
+    background: rgba(255, 255, 255, .5);
+    display: inline-block;
+    font-weight: 900;
+    left: 2rem;
+    padding: .5em;
+    position: absolute;
+    text-align: center;
+    top: 6rem;
+  }
+}
