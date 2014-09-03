@@ -35,12 +35,22 @@ class GlobalNavigationController extends WikiaController {
 	public function searchIndex() {
 		$lang = $this->wg->Lang->getCode();
 		$centralUrl = $this->getCentralUrlForLang( $lang, false );
+		$globalSearchUrl = $this->getGlobalSearchUrl( $centralUrl, $lang );
 		$specialSearchTitle = SpecialPage::getTitleFor( 'Search' );
 		$localSearchUrl = $specialSearchTitle->getFullUrl();
-		$this->response->setVal( 'globalSearchUrl', $this->getGlobalSearchUrl( $centralUrl, $lang ) );
-		$this->response->setVal( 'localSearchUrl', $localSearchUrl );
-		$this->response->setVal( 'defaultSearchMessage', wfMessage( 'global-navigation-local-search' )->text() );
-		$this->response->setVal( 'defaultSearchUrl', $localSearchUrl );
+		$globalRequest = $this->wg->request;
+		$query = $globalRequest->getVal( 'search', $globalRequest->getVal( 'query', '' ) );
+
+		if (WikiaPageType::isCorporatePage() && !WikiaPageType::isWikiaHub()) {
+			$this->response->setVal( 'disableLocalSearchOptions', true );
+			$this->response->setVal( 'defaultSearchUrl', $globalSearchUrl );
+		} else {
+			$this->response->setVal( 'globalSearchUrl', $globalSearchUrl );
+			$this->response->setVal( 'localSearchUrl', $localSearchUrl );
+			$this->response->setVal( 'defaultSearchMessage', wfMessage( 'global-navigation-local-search' )->text() );
+			$this->response->setVal( 'defaultSearchUrl', $localSearchUrl );
+		}
+		$this->response->setVal( 'query', $query );
 		$this->response->setVal( 'lang', $lang );
 	}
 

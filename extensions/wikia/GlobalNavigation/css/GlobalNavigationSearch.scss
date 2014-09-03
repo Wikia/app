@@ -1,5 +1,6 @@
 @import "GlobalNavigationColors";
 @import "../../Venus/styles/mixins";
+@import "../../Venus/styles/variables";
 
 .search-form-wrapper {
 	display: table;
@@ -51,7 +52,7 @@
 			border-width: 5px;
 			border-top-color: $nav-alternative-color;
 			margin-top: 14px;
-			margin-left: 6px;
+			margin-left: 2px;
 			position: relative;
 			top: 2px;
 			&.dark {
@@ -95,27 +96,27 @@
 
 @media #{$small-only} {
 	.global-nav-search-input-wrapper {
-		padding-right: 8px;
+		padding-right: $small-grid-gutter + $small-content-padding;
 		.search-submit {
-			right: 17px;
+			right: 34px;
 		}
 	}
 }
 
 @media #{$medium-only} {
 	.global-nav-search-input-wrapper {
-		padding-right: 10px;
+		padding-right: $medium-grid-gutter + $medium-content-padding;
 		.search-submit {
-			right: 19px;
+			right: 38px;
 		}
 	}
 }
 
 @media #{$large-up} {
 	.global-nav-search-input-wrapper {
-		padding-right: 12px;
+		padding-right: $large-grid-gutter + $large-content-padding;
 		.search-submit {
-			right: 21px;
+			right: 42px;
 		}
 	}
 }
