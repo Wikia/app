@@ -2,7 +2,7 @@
   position: relative;
 
   h1 {
-    background: rgba(255, 255, 255, .5);
+    background: rgba(0, 0, 0, .2);
     display: inline-block;
     font-weight: 900;
     left: 2rem;
@@ -13,8 +13,12 @@
     top: 2rem;
   }
 
+  img {
+    width: 100%;
+  }
+
   span {
-    background: rgba(255, 255, 255, .5);
+    background: rgba(0, 0, 0, .2);
     display: inline-block;
     font-weight: 900;
     left: 2rem;

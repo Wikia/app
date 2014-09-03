@@ -10,6 +10,8 @@ class WikiDataModel {
 	const WIKI_HERO_IMAGE_PROP_ID = 10001;
 	const WIKI_HERO_TITLE_PROP_ID = 10002;
 	const WIKI_HERO_DESCRIPTION_ID = 10003;
+	const WIKI_HERO_IMAGE_MAX_WIDTH = 1600;
+	const WIKI_HERO_IMAGE_MAX_HEIGHT = 500;
 
 	public function __construct( $pageName ) {
 		$this->pageName = $pageName;
@@ -24,7 +26,14 @@ class WikiDataModel {
 		$file = wfFindFile( $imageTitle );
 		if ( $file->exists() ) {
 			$this->imageName = $imageName;
-			$this->imagePath = $file->getFullUrl();
+
+			$homePageHelper = new WikiaHomePageHelper();
+
+			$this->imagePath = $homePageHelper->getImageUrlFromFile(
+				$file,
+				self::WIKI_HERO_IMAGE_MAX_WIDTH,
+				self::WIKI_HERO_IMAGE_MAX_HEIGHT
+			);
 		} else {
 			$this->imageName = null;
 			$this->imagePath = null;
