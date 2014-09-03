@@ -10,13 +10,13 @@ define('ext.wikia.adEngine.adConfigMobile', [
 	'use strict';
 
 	var pageTypesWithAdsOnMobile = {
-		'all_ads': true,
-		'corporate': true
-	};
+			'all_ads': true,
+			'corporate': true
+		},
+		context = adContext.getContext();
 
 	function getProvider(slot) {
-		var slotName = slot[0],
-			context = adContext.getContext();
+		var slotName = slot[0];
 
 		// If wgShowAds set to false, hide slots
 		if (!context.opts.showAds) {
@@ -48,8 +48,13 @@ define('ext.wikia.adEngine.adConfigMobile', [
 
 	}
 
+	function setContext (newContext) {
+		context = newContext;
+	}
+
 	return {
 		getDecorators: function () { return []; },
-		getProvider: getProvider
+		getProvider: getProvider,
+		setContext: setContext
 	};
 });
