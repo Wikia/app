@@ -11,7 +11,11 @@
 		<img class="chevron" src="<?= $wg->BlankImgUrl; ?>">
 		</a>
 		<?php if ( !$isAnon ): ?>
-			<ul class="user-menu subnav">
+			<ul class="user-menu subnav show">
+				<li id="notifications">
+					<a href="#">Notifications</a>
+					<?= $app->renderView('WallNotificationsVenus', 'Index'); ?>
+				</li>
 				<?php foreach( $dropdown as $link ): ?>
 					<li><?= $link ?></li>
 				<?php endforeach; ?>

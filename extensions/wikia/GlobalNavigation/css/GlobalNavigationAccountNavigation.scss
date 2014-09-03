@@ -76,12 +76,12 @@
 			display: table;
 		}
 
-		li {
+		> li {
 			display: table-row;
 			height: 51px;
 			list-style: none;
 
-			a {
+			> a {
 				background-color: $nav-background-color;
 				border-top: 1px solid $nav-alternative-color;
 				display: table-cell;
