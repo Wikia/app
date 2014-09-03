@@ -1,6 +1,7 @@
 <?php
 
 class NjordHooks {
+	public static $templateDir;
 
 	public static function onParserFirstCallInit( Parser $parser ) {
 		$parser->setHook( 'hero', 'NjordHooks::renderHeroTag' );
@@ -13,9 +14,8 @@ class NjordHooks {
 		$wikiData->setFromAttributes( $attributes );
 		$wikiData->storeInProps();
 
-		//print_r($parser);
-		//print_r($frame);
-		die;
-		return '';
+		return ( new \Wikia\Template\PHPEngine() )
+			->setData( [ 'wikiData' => $wikiData ] )
+			->render( static::$templateDir . '/mainpage.php' );
 	}
 }

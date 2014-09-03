@@ -14,3 +14,5 @@ $wgAutoloadClasses['NjordModel'] =  $dir . '/models/NjordModel.class.php';
 $wgAutoloadClasses['WikiDataModel'] =  $dir . '/models/WikiDataModel.class.php';
 
 $wgHooks['ParserFirstCallInit'][] = 'NjordHooks::onParserFirstCallInit';
+
+NjordHooks::$templateDir = $dir . '/templates';
