@@ -91,12 +91,20 @@ class ThumbnailController extends WikiaController {
 		$this->mediaType = 'image';
 
 		$thumb = $this->getVal( 'thumb' );
+		if ( $this->getVal( 'border', false ) ) {
+			$imgClass = 'border';
+		} else {
+			$imgClass = '';
+		}
 
 		// Use the image template
 		$this->overrideTemplate( 'image' );
 
 		$this->linkHref = $thumb->file->getTitle()->getLinkURL();
-		ThumbnailHelper::setImageAttribs( $this, $thumb, [ 'fluid' => true ] );
+		ThumbnailHelper::setImageAttribs( $this, $thumb, [
+			'fluid' => true,
+			'img-class' => $imgClass
+		] );
 		ThumbnailHelper::setLazyLoad( $this );
 	}
 
