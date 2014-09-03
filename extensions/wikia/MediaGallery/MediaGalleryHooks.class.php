@@ -29,9 +29,7 @@ class MediaGalleryHooks {
 	}
 
 	public static function onMakeGlobalVariablesScript(Array &$vars) {
-		if ( !empty( F::app()->wg->EnableMediaGalleryExt ) ) {
-			$vars['wgEnableMediaGalleryExt'] = true;
-		}
+		$vars['wgEnableMediaGalleryExt'] = !empty( F::app()->wg->EnableMediaGalleryExt );
 		return true;
 	}
 
