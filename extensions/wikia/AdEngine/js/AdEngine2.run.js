@@ -112,7 +112,12 @@ require([
 	}
 
 	if (adContext.getContext().opts.disableLateQueue) {
-		log('skipping late queue - wgAdEngineDisableLateQueue set to true', 1, module);
+		log('Skipping late queue - wgAdEngineDisableLateQueue set to true', 1, module);
+	} else {
+		if (instantGlobals.wgSitewideDisableLiftium) {
+			log('Liftium disabled by wgSitewideDisableLiftium - running AdEngine_loadLateAds now', 1, module);
+			window.AdEngine_loadLateAds();
+		}
 	}
 });
 
