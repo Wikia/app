@@ -1,7 +1,7 @@
 <?php
 /**
- * Created by adam
- * Date: 02.09.14
+ * This extension handles Modular Main Pages
+ * prototype
  */
 $dir = dirname( __FILE__ );
 
@@ -10,6 +10,7 @@ $dir = dirname( __FILE__ );
  */
 
 $wgAutoloadClasses['NjordHooks'] =  $dir . '/NjordHooks.class.php';
-$wgAutoloadClasses['NjordModel'] =  $dir . '/NjordModel.class.php';
+$wgAutoloadClasses['NjordModel'] =  $dir . '/models/NjordModel.class.php';
+$wgAutoloadClasses['WikiDataModel'] =  $dir . '/models/WikiDataModel.class.php';
 
 $wgHooks['ParserFirstCallInit'][] = 'NjordHooks::onParserFirstCallInit';

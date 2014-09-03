@@ -1,8 +1,4 @@
 <?php
-/**
- * Created by adam
- * Date: 02.09.14
- */
 
 class NjordHooks {
 
@@ -11,13 +7,14 @@ class NjordHooks {
 		return true;
 	}
 
-	public static function renderHeroTag($content, array $attributes, Parser $parser, PPFrame $frame) {
-		$model = new NjordModel();
-		print_r($model);
+	public static function renderHeroTag( $content, array $attributes, Parser $parser, PPFrame $frame ) {
+		$njordModel = new NjordModel();
+		$wikiData = new WikiDataModel( Title::newMainPage()->getText() );
+		$wikiData->setFromAttributes( $attributes );
+		$wikiData->storeInProps();
 
-		print_r($attributes);
-		print_r($parser);
-		print_r($frame);
+		//print_r($parser);
+		//print_r($frame);
 		die;
 		return '';
 	}
