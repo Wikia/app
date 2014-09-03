@@ -33,6 +33,13 @@ class WikiSeriesEntitySearchService extends EntitySearchService {
 			$excluded[ ] = "-(hostname_s:{$ex})";
 		}
 		$select->createFilterQuery( 'A&F' )->setQuery( implode( ' AND ', $excluded ) );
+
+
+		$blacklistQuery = $this->getBlacklistedWikiIdsQuery( "id" );
+
+		if ( !empty( $blacklistQuery ) ) {
+			$select->createFilterQuery( "widblacklist" )->setQuery( $blacklistQuery );
+		}
 		$select->createFilterQuery( 'articles' )->setQuery( 'articles_i:[' . static::MINIMAL_WIKIA_ARTICLES . ' TO *]' );
 
 		$dismax->setQueryFields( 'series_mv_tm^15 description_txt categories_txt top_categories_txt top_articles_txt ' .

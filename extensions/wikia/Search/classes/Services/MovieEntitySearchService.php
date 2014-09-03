@@ -25,6 +25,11 @@ class MovieEntitySearchService extends EntitySearchService {
 
 		$select->setQuery( $preparedQuery );
 		$select->setRows( static::ARTICLES_LIMIT );
+
+		$blacklistQuery = $this->getBlacklistedWikiIdsQuery( "wid" );
+		if ( !empty( $blacklistQuery ) ) {
+			$select->createFilterQuery( "widblacklist" )->setQuery( $blacklistQuery );
+		}
 		$select->createFilterQuery( 'ns' )->setQuery( '+(ns:' . static::ALLOWED_NAMESPACE . ')' );
 		$select->createFilterQuery( 'lang' )->setQuery( '+(lang:' . $slang . ')' );
 		if ( in_array( strtolower( $slang ), static::$ARTICLE_TYPES_SUPPORTED_LANGS ) ) {

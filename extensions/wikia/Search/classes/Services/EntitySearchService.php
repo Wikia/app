@@ -11,6 +11,7 @@ class EntitySearchService {
 	const WORDS_QUERY_LIMIT = 10;
 	const WIKIA_URL_REGEXP = '~^(http(s?)://)(([^\.]+)\.wikia\.com)~';
 
+	public static $BLACKLISTED_WIKI_IDS = [ 113 ];
 	/** @var \Solarium_Client client */
 	protected $client;
 	protected $categories;
@@ -25,6 +26,7 @@ class EntitySearchService {
 	protected $sorts;
 	protected $urls;
 	protected $wikiId;
+	protected $blacklistedWikiIds;
 
 	/**
 	 * @param mixed $filters
@@ -122,6 +124,7 @@ class EntitySearchService {
 			$config[ 'adapteroptions' ][ 'core' ] = $core;
 		}
 		$this->client = ( $client !== null ) ? $client : new \Solarium_Client( $config );
+		$this->blacklistedWikiIds = self::$BLACKLISTED_WIKI_IDS;
 	}
 
 	public function query( $phrase ) {
@@ -226,5 +229,17 @@ class EntitySearchService {
 
 	protected function replaceHost( $details ) {
 		return $details[ 1 ] . WikiFactory::getCurrentStagingHost( $details[ 4 ], $details[ 3 ] );
+	}
+
+	public function getBlacklistedWikiIdsQuery( $wikiIdFieldName ) {
+		if ( !empty( $this->blacklistedWikiIds ) ) {
+			$excluded = [ ];
+			foreach ( $this->blacklistedWikiIds as $wikiId ) {
+				$excluded[] = "-({$wikiIdFieldName}:{$wikiId})";
+			}
+			return implode( ' AND ', $excluded );
+		} else {
+			return null;
+		}
 	}
 }
