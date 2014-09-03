@@ -34,8 +34,6 @@
 		}
 
 		.avatar-container {
-			background-color: $nav-alternative-color;
-			background-image: url('/extensions/wikia/GlobalNavigation/images/avatar.svg'); /* base64 */
 			border-radius: 50%;
 			float: left;
 			height: 36px;
@@ -43,7 +41,16 @@
 			overflow: hidden;
 			width: 36px;
 
-			&.logged-user {
+			&.anon-avatar-placeholder,
+			&.logged-avatar-placeholder {
+				background-image: url('/extensions/wikia/GlobalNavigation/images/avatar.svg'); /* base64 */
+			}
+
+			&.anon-avatar-placeholder {
+				background-color: $nav-alternative-color;
+			}
+
+			&.logged-avatar-placeholder {
 				background-color: $nav-active-color;
 			}
 		}
