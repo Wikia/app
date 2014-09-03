@@ -1,7 +1,7 @@
 .MainPageHero {
   position: relative;
 
-  h1 {
+  .hero-title {
     background: rgba(0, 0, 0, .6);
     color: #fff;
     display: inline-block;
@@ -16,11 +16,11 @@
     top: 2rem;
   }
 
-  img {
+  .hero-image {
     width: 100%;
   }
 
-  span {
+  .hero-description {
     background: rgba(0, 0, 0, .6);
     color: #fff;
     display: inline-block;

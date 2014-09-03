@@ -4,10 +4,10 @@
 
 <header id="MainPageHero" class="MainPageHero">
 	<picture>
-		<img src="<?=$wikiData->getImagePath() ?>" alt="<?= $wikiData->getTitle() ?>" >
+		<img class="hero-image" src="<?=$wikiData->imagePath ?>" alt="<?= $wikiData->title ?>" >
 	</picture>
-	<h1 contenteditable="true"><?= $wikiData->getTitle() ?></h1>
-	<span contenteditable="true" class="descrption"><?= $wikiData->getDescription() ?></span>
+	<h1 contenteditable="true" class="hero-title" ><?= $wikiData->title ?></h1>
+	<span contenteditable="true" class="hero-description"><?= $wikiData->description ?></span>
 	<section id="WikiaSearchHeader" class="WikiaSearchHeader">
 		<?=  F::app()->renderView('Search', 'Index', array('searchFormId' => 'WikiaSearch')) ?>
 	</section>
