@@ -16,14 +16,26 @@ define('mediaGallery.media', [], function () {
 	};
 
 	Media.prototype.setupCaption = function () {
-		this.$caption.hover(
-			$.proxy(this.captionHover, this),
-			$.proxy(this.captionHoverOut, this)
-		);
-		this.$caption.toggle(
-			$.proxy(this.captionHover, this),
-			$.proxy(this.captionHoverOut, this)
-		);
+		if (this.is_touch_device()){
+			// Only bind click events for touch screen devices
+			this.$caption.on('click', $.proxy(function() {
+				if (this.$caption.hasClass('hovered')) {
+					this.captionHoverOut();
+				} else {
+					this.captionHover();
+				}
+			}, this));
+			// If the user taps outside the caption, collapse it as well (a tap
+			// outside of the caption triggers the mouseleave event on touch
+			// screen devices)
+			this.$caption.on('mouseleave', $.proxy(this.captionHoverOut, this));
+		} else {
+			// Otherwise bind to mouseenter and mouseleave
+			this.$caption.hover(
+				$.proxy(this.captionHover, this),
+				$.proxy(this.captionHoverOut, this)
+			);
+		}
 	};
 
 	/**
@@ -64,6 +76,17 @@ define('mediaGallery.media', [], function () {
 		this.$caption
 			.removeClass('hovered scroll')
 			.removeAttr('style');
+	};
+
+	/**
+	 * Check if the user is on a touch device.
+	 * Taken from the following stack overflow answer:
+	 * http://stackoverflow.com/questions/4817029/whats-the-best-way-to-detect-a-touch-screen-device-using-javascript#answer-4819886
+	 * @returns {boolean}
+	 */
+	Media.prototype.is_touch_device = function() {
+		// ontouchstart works on most browsers, onmsgesturechange works on ie10
+		return 'ontouchstart' in window || 'onmsgesturechange' in window;
 	};
 
 	return Media;
