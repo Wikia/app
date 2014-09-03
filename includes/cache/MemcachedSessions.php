@@ -191,3 +191,4 @@ function &getMemc() {
 		return $wgMemc;
 	}
 }
+
