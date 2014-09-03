@@ -17,7 +17,15 @@ class DivContainingHeadersVisitor extends DOMNodeVisitorBase {
 				return true;
 			}
 
+			// if this div contains tabs
 			if( strpos( $currentNode->getAttribute('id'), 'flytab' ) !== false ) {
+				return true;
+			}
+
+			// if any descendant divs contains tabs
+			$xpath = new DOMXPath( $currentNode->ownerDocument );
+			$tabDivs = $xpath->query(".//div[contains(@id, 'flytab')]", $currentNode);
+			if( $tabDivs->length > 0 ) {
 				return true;
 			}
 
@@ -33,6 +41,7 @@ class DivContainingHeadersVisitor extends DOMNodeVisitorBase {
 		/** @var DOMElement $currentNode */
 		DomHelper::verifyDomElementArgument( $currentNode, "currentNode" );
 
+		// current div contains tabs
 		if( strpos( $currentNode->getAttribute('id'), 'flytab' ) !== false ) {
 			$xpath = new DOMXPath( $currentNode->ownerDocument );
 			$tabUrls = $xpath->query(".//@href", $currentNode);
