@@ -5,11 +5,11 @@
 @import 'extensions/wikia/Venus/styles/variables';
 @import 'extensions/wikia/Venus/styles/mixins';
 @import 'extensions/wikia/GlobalNavigation/css/GlobalNavigationColors';
-@import '../mixins/divider';
+@import 'extensions/wikia/UserLogin/mixins/divider';
 
 .UserLoginDropdown {
 	@include grid-column-width('large', 2, $large-grid-column-padding + $large-grid-gutter + $large-content-padding);
-	background-color: $color-page;
+	background-color: $nav-background-color;
 	border: 1px solid $nav-alternative-color;
 	color: $color-text;
 	display: none;

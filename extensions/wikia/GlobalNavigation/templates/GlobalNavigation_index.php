@@ -11,7 +11,6 @@
 		</div>
 		<div class="global-navigation-item account-navigation-container">
 			<?= $app->renderView( 'GlobalNavigationAccountNavigation', 'index' ) ?>
-			<?//= $app->renderView('WallNotifications', 'Index') ?>
 		</div>
 	</div>
 </nav>

@@ -25,6 +25,10 @@ body.skin-oasis ul li:last-child {
 
 .AccountNavigation {
 	display: block;
+
+	.avatar {
+		border: 0;
+	}
 }
 
 @media screen and (max-width: $breakpoint-content) {

@@ -33,25 +33,19 @@
 			display: none;
 		}
 
-		.avatar {
-			border: 0;
-			border-radius: 50%;
-
-			rect {
-				fill: $nav-alternative-color;
-			}
-
-			&.logged-user rect {
-				fill: $nav-active-color;
-			}
-		}
-
 		.avatar-container {
+			background-color: $nav-alternative-color;
+			background-image: url('/extensions/wikia/GlobalNavigation/images/avatar.svg'); /* base64 */
 			border-radius: 50%;
 			float: left;
 			height: 36px;
 			margin: 0 6px 0 38px;
+			overflow: hidden;
 			width: 36px;
+
+			&.logged-user {
+				background-color: $nav-active-color;
+			}
 		}
 
 		.chevron {
