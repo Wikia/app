@@ -54,7 +54,8 @@
 </header>
 <?php
 // render search box
-if ($showSearchBox) {
+
+if ($showSearchBox && !(WikiaPageType::isMainPage() && !empty( $wg->EnableNjordExt) ) ) {
 	?>
 <section id="WikiaSearchHeader" class="WikiaSearchHeader">
 	<?=  F::app()->renderView('Search', 'Index', array('searchFormId' => 'WikiaSearch')) ?>

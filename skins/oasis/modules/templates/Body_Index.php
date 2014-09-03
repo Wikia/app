@@ -24,7 +24,11 @@
 				echo $app->renderView( 'WikiHeader', 'Index' );
 			}
 		?>
-
+		<?php
+		if ( !empty( $wg->EnableNjordExt) && WikiaPageType::isMainPage() ) {
+			echo $app->renderView( 'Njord', 'Index' );
+		}
+		?>
 		<?php
 			if (!empty($wg->EnableWikiAnswers)) {
 				echo $app->renderView('WikiAnswers', 'QuestionBox');

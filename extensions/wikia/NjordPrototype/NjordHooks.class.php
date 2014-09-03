@@ -8,19 +8,10 @@ class NjordHooks {
 		return true;
 	}
 
-	public static function onOutputPageBeforeHTML(OutputPage &$out, &$text) {
-		F::app()->wg->out->addStyle( AssetsManager::getInstance()->getSassCommonURL( 'extensions/wikia/NjordPrototype/css/Njord.scss' ) );
-		return true;
-	}
-
 	public static function renderHeroTag( $content, array $attributes, Parser $parser, PPFrame $frame ) {
-		$njordModel = new NjordModel();
 		$wikiData = new WikiDataModel( Title::newMainPage()->getText() );
 		$wikiData->setFromAttributes( $attributes );
 		$wikiData->storeInProps();
-
-		return ( new \Wikia\Template\PHPEngine() )
-			->setData( [ 'wikiData' => $wikiData ] )
-			->render( static::$templateDir . '/mainpage.php' );
+		return '';
 	}
 }
