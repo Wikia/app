@@ -53,6 +53,11 @@ class Http {
 				$req->setHeader( $name, $value );
 			}
 		}
+
+		// @author macbre
+		// pass Request ID to internal requests
+		$req->setHeader( Wikia\Util\RequestId::REQUEST_HEADER_NAME, Wikia\Util\RequestId::instance()->getRequestId() );
+
 		// Wikia change - end
 		if( isset( $options['userAgent'] ) ) {
 			$req->setUserAgent( $options['userAgent'] );
