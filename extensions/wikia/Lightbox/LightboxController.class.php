@@ -187,13 +187,6 @@ class LightboxController extends WikiaController {
 
 		$data = WikiaFileHelper::getMediaDetail( $title, $config );
 
-		if ( isset( $data['providerName'], $data['videoEmbedCode']['html'] ) ) {
-			$data['videoEmbedCode']['html'] = WikiaFileHelper::getVideoAffiliateLogoMarkup( $data['providerName'] ) .
-                $data['videoEmbedCode']['html'];
-		} else {
-			$affiliateVideoLogo = null;
-		}
-
 		$articles = $data['articles'];
 		list( $smallerArticleList, $articleListIsSmaller ) = WikiaFileHelper::truncateArticleList( $articles, self::POSTED_IN_ARTICLES );
 		$isPostedIn = empty( $smallerArticleList ) ? false : true;	// Bool to tell mustache to print "posted in" section
@@ -218,6 +211,7 @@ class LightboxController extends WikiaController {
 		$this->providerName = $data['providerName'];
 		$this->exists = $data['exists'];
 		$this->isAdded = $data['isAdded'];
+		$this->extraHeight = $data['extraHeight'];
 
 		// Make sure that a request with missing &format=json does not throw a "template not found" exception
 		$this->response->setFormat( 'json' );

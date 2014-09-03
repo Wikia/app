@@ -80,9 +80,6 @@ class WikiaFilePage extends ImagePage {
 
 		$videoDisplay = '<script type="text/javascript">window.playerParams = '.json_encode( $embedCode ).';</script>';
 
-		// Insert any video affiliate logo required above the video
-		$html = WikiaFileHelper::getVideoAffiliateLogoMarkup( $file->getProviderName() ) . $html;
-
 		$videoDisplay .= '<div class="fullImageLink" id="file">' . $html . '</div>';
 
 		$videoDisplay .= $this->getVideoInfoLine( $file );

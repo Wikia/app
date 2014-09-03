@@ -33,7 +33,14 @@ class CrunchyrollVideoHandler extends VideoHandler {
 			$srcUrl = $srcUrl."&auto_play=1";
 		}
 
-		$html = "<iframe src=\"{$srcUrl}\" {$sizeString}></iframe>";
+		$iframe = "<iframe src=\"{$srcUrl}\" {$sizeString}></iframe>";
+
+		if ( true ) { // TODO: Only if not in-line.
+			$widget = F::app()->renderView( 'VideoHandlerController', 'videoAffiliate', ['provider' => 'crunchyroll'] );
+			$html = '<div class="crunchyroll-container">' . $widget . $iframe . '</div>';
+		} else {
+			$html = $iframe;
+		}
 
 		return [
 			'html' => $html,

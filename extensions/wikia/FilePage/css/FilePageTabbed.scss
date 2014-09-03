@@ -1,7 +1,7 @@
 @import "skins/shared/mixins/arrow";
 @import "skins/shared/mixins/clearfix";
-@import "skins/shared/mixins/video";
 @import "skins/shared/color";
+@import "extensions/wikia/VideoHandlers/css/affiliateVideoWidget";
 
 .page-listings {
 	@include clearfix;
@@ -147,5 +147,5 @@ p.hidden {
 }
 
 .WikiaArticle {
-	@include video;
+	@include affiliateVideoWidget;
 }

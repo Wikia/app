@@ -295,6 +295,7 @@ class WikiaFileHelper extends Service {
 			'videoViews' => 0,
 			'exists' => false,
 			'isAdded' => true,
+			'extraHeight' => 0,
 		);
 
 		if ( !empty( $fileTitle ) ) {
@@ -325,6 +326,11 @@ class WikiaFileHelper extends Service {
 					$data['providerName'] = $file->getProviderName();
 					$data['isAdded'] = self::isAdded( $file );
 					$mediaPage = self::getMediaPage( $fileTitle );
+
+					// Extra height is needed for lightbox when more elements must be fitted
+					if ( strtolower( $data['providerName'] ) == 'crunchyroll' ) {
+						$data['extraHeight'] = 52;
+					}
 				} else {
 					$width = $width > $config['imageMaxWidth'] ? $config['imageMaxWidth'] : $width;
 					$mediaPage = new ImagePage( $fileTitle );
@@ -678,21 +684,4 @@ class WikiaFileHelper extends Service {
 
 		return wfReplaceImageServer( $file->getThumbUrl( $cropStr . '-' . $file->getName() . $append ) );
 	}
-
-	/**
-	 * Retrieves the vidoe affiliate logo markup
-	 * @param string $providerName
-	 * @return string
-	 */
-	public static function getVideoAffiliateLogoMarkup( $providerName ) {
-		$markup = '';
-		$providerName = strtolower( $providerName );
-
-		if ( $providerName == 'crunchyroll' ) {
-			$markup = F::app()->renderView( 'FilePageController', 'videoAffiliate', ['provider' => $providerName] );
-		}
-
-		return $markup;
-	}
-
 }

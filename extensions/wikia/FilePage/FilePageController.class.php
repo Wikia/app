@@ -216,32 +216,6 @@ class FilePageController extends WikiaController {
 		wfProfileOut( __METHOD__ );
 	}
 
-	/**
-	 * Display affiliate logo above the video
-	 */
-	public function videoAffiliate() {
-		wfProfileIn( __METHOD__ );
-
-		$provider = strtolower( $this->getVal( 'provider' ) );
-		switch ( $provider ) {
-			case 'crunchyroll':
-				$linkUrl = 'http://www.crunchyroll.com/wikia';
-				$imgSrc = 'http://www.crunchyroll.com/affiliate_asset?widget=IB01A&amp;affiliate=af-90111-uhny?from=wikia';
-				$imgClass = 'crunchyroll-aff-logo';
-				break;
-			default:
-				$linkUrl = null;
-				$imgSrc = null;
-				$imgClass = null;
-		}
-
-		$this->linkUrl = $linkUrl;
-		$this->imgSrc = $imgSrc;
-		$this->imgClass = $imgClass;
-
-		wfProfileOut( __METHOD__ );
-	}
-
 	private function firstPageWithCategory () {
 		wfProfileIn( __METHOD__ );
 
