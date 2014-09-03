@@ -5,8 +5,8 @@ class ExactTargetUpdatesHooksTest extends WikiaBaseTest {
 	public function testPrepareUserParams() {
 		$userMock = $this->getMockBuilder( 'User' )
 			->disableOriginalConstructor()
-			->setMethods( array( 'getId', 'getName', 'getRealName', 'getEmail', 'getEmailAuthenticationTimestamp',
-				'getRegistration', 'getEditCount', 'getOptions', 'getTouched') )
+			->setMethods( [ 'getId', 'getName', 'getRealName', 'getEmail', 'getEmailAuthenticationTimestamp',
+				'getRegistration', 'getEditCount', 'getOptions', 'getTouched' ] )
 			->getMock();
 
 		$aUserParams = [
@@ -17,7 +17,6 @@ class ExactTargetUpdatesHooksTest extends WikiaBaseTest {
 			'user_email_authenticated' => 20140101000000,
 			'user_registration' => 20140101000000,
 			'user_editcount' => 1,
-			'user_options' => ['testint' => 1, 'teststring' => 'string'],
 			'user_touched' => 20140101000000
 		];
 
@@ -58,11 +57,6 @@ class ExactTargetUpdatesHooksTest extends WikiaBaseTest {
 
 		$userMock
 			->expects( $this->once() )
-			->method ( 'getOptions' )
-			->will   ( $this->returnValue( $aUserParams['user_options'] ) );
-
-		$userMock
-			->expects( $this->once() )
 			->method ( 'getTouched' )
 			->will   ( $this->returnValue( $aUserParams['user_touched'] ) );
 
@@ -75,6 +69,40 @@ class ExactTargetUpdatesHooksTest extends WikiaBaseTest {
 
 		$this->assertEquals( $aUserParamsResult, $aUserParams );
 
+	}
+
+	public function testPrepareUserPropertiesParams() {
+		$aUserPropertiesParamsExpected = [
+			'marketingallowed' => 1,
+			'unsubscribed' => NULL,
+			'language' => 'en'
+		];
+
+		$userMock = $this->getMockBuilder( 'User' )
+			->disableOriginalConstructor()
+			->setMethods( [ 'getOption' ] )
+			->getMock();
+
+		// Create a map of arguments to return values.
+		$returnMap = [
+			[ 'marketingallowed', null, false, 1 ],
+			[ 'unsubscribed', null, false, null ],
+			[ 'language', null, false, 'en' ]
+		];
+
+		$userMock
+			->expects( $this->exactly( 3 ) )
+			->method( 'getOption' )
+			->will( $this->returnValueMap( $returnMap ) );
+
+		/* Get mock object of tested class ExactTargetUpdatesHooks without mocking any methods */
+		$exactTargetUpdatesHooksMock = $this->getMock( 'ExactTargetUpdatesHooks', null );
+
+		/* Run test */
+		/* @var ExactTargetUpdatesHooks $exactTargetUpdatesHooksMock (mock of ExactTargetUpdatesHooks) */
+		$aUserPropertiesParamsActual = $exactTargetUpdatesHooksMock->prepareUserPropertiesParams( $userMock );
+
+		$this->assertEquals( $aUserPropertiesParamsActual, $aUserPropertiesParamsExpected );
 	}
 
 	function testTaskNotCreatedOnDev() {
