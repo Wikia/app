@@ -4,7 +4,7 @@ require( ['jquery', 'wikia.globalnavigation.lazyload'], function( $, GlobalNavLa
 
 	$hubs = $( '#hubs' );
 	$hubLinks = $hubs.find( '> .hub-links' );
-	$verticals = $hubs.find( '> .hubs' );
+	$verticals = $hubs.find( '> .hub-list' );
 	$entryPoint = $( '#hubsEntryPoint' );
 
 	function activateSubmenu( row ) {

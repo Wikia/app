@@ -17,7 +17,7 @@ define(
 		getMenuItemsDone = function( menuItems ) {
 			var $sections = $( $.parseHTML( menuItems ) ).removeClass( 'active' ),
 				$hubs = $( '#hubs' ),
-				$verticals = $( '> .hubs', $hubs ),
+				$verticals = $( '> .hub-list', $hubs ),
 				$hubLinks = $( '> .hub-links', $hubs );
 
 			$( '> .active', $hubLinks ).removeClass( 'active' );

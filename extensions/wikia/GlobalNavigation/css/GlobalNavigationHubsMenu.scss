@@ -50,7 +50,7 @@
 		color: $nav-active-color;
 	}
 
-	.hubs {
+	.hub-list {
 		float:left;
 		width: 256px;
 
@@ -280,25 +280,21 @@
 }
 
 @media #{$small-only} {
-	.hubsmenu {
-		.hubs {
-			nav {
-				&.active {
-					.icon {
-						&:before {
-							left: 10px;
-						}
-					}
+	.hubs-menu {
+		nav {
+			&.active {
+				&:before {
+					left: 10px;
 				}
+			}
 
-				.icon {
-					background-position: 10px center;
-					width: 90px;
-				}
+			.icon {
+				background-position: 10px center;
+				width: 90px;
+			}
 
-				.label {
-					width: 154px;
-				}
+			.label {
+				width: 154px;
 			}
 		}
 	}
@@ -309,30 +305,30 @@
 		padding-right: 23px;
 	}
 
-	.hubsmenu {
-		.hubs {
+	.hubs-menu {
+		width: 788px;
+
+		.hub-list {
 			width: 302px;
-			nav {
-				&.active {
-					.icon {
-						&:before {
-							left: 20px;
-						}
-					}
+		}
+		nav {
+			&.active {
+				&:before {
+					left: 20px;
 				}
+			}
 
-				.icon {
-					background-position: 20px center;
-					width: 123px;
+			.icon {
+				background-position: 20px center;
+				width: 123px;
 
-					&:after {
-						width: 33px;
-					}
+				&:after {
+					width: 33px;
 				}
+			}
 
-				.label {
-					width: 155px;
-				}
+			.label {
+				width: 167px;
 			}
 		}
 	}
