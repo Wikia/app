@@ -41,6 +41,12 @@ class DivContainingHeadersVisitor extends DOMNodeVisitorBase {
 				$url = preg_replace( '/^\/wiki\/(.+?)\?.*$/i', '$1', $url->value );
 				$title = Title::newFromURL( $url );
 				$article = Article::newFromTitle( $title, RequestContext::getMain() );
+
+				if( \Wikia\JsonFormat\HtmlParser::$VISITED[ $article->getTitle()->getText() ] ) {
+					continue;
+				}
+				\Wikia\JsonFormat\HtmlParser::$VISITED[ $article->getTitle()->getText() ] = true;
+
 				$article->getContent();
 				$html = $article->getPage()->getParserOutput( \ParserOptions::newFromContext( new RequestContext() ) )->getText();
 				$jsonArticle = $htmlParser->parse( $html );

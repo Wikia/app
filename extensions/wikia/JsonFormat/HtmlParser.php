@@ -5,6 +5,9 @@ namespace Wikia\JsonFormat;
 use Wikia\Measurements\Time;
 
 class HtmlParser {
+
+	public static $VISITED = [ ];
+
 	/**
 	 * @param string $html
 	 * @return \JsonFormatNode

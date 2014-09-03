@@ -56,7 +56,9 @@ class JsonFormatService extends \WikiaService {
 		$cacheKey = wfMemcKey( "SimpleJson", $article->getPage()->getId(), self::SIMPLE_JSON_SCHEMA_VERSION );
 		$jsonSimple = $this->app->wg->memc->get( $cacheKey );
 		if ( $jsonSimple === false ) {
+			\Wikia\JsonFormat\HtmlParser::$VISITED[ $article->getTitle()->getText() ] = true;
 			$jsonFormatRootNode = $this->getJsonFormatForArticle( $article );
+			\Wikia\JsonFormat\HtmlParser::$VISITED = [ ];
 
 			$simplifier = new Wikia\JsonFormat\JsonFormatSimplifier;
 			$jsonSimple = $simplifier->simplify( $jsonFormatRootNode, $article->getTitle()->getText() );
