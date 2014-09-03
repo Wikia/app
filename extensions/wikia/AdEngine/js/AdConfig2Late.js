@@ -1,3 +1,4 @@
+// TODO: ADEN-1332-ize after ADEN-1326
 /*global define*/
 define('ext.wikia.adEngine.adConfigLate', [
 	// regular dependencies
