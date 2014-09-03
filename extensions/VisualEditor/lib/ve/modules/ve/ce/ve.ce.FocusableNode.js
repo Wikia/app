@@ -517,6 +517,18 @@ ve.ce.FocusableNode.prototype.getDimensions = function () {
 };
 
 /**
+ * Get which side of the article the node is biased toward
+ *
+ * @return {string} 'left' or 'right'
+ */
+ve.ce.FocusableNode.prototype.getHorizontalBias = function () {
+	var articleCenter = this.surface.$element.width() / 2,
+		nodeCenter = this.getDimensions().width / 2 + this.boundingRect.left;
+
+	return ( nodeCenter <= articleCenter ) ? 'left' : 'right';
+};
+
+/**
  * Handle window resize event.
  *
  * @method
