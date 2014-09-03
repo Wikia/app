@@ -29,10 +29,6 @@
 			@include grid-column-width('large', 1, $large-grid-gutter + $large-content-padding - 2px);
 		}
 
-		.account-navigation-text {
-			display: none;
-		}
-
 		.avatar-container {
 			border-radius: 50%;
 			float: left;
