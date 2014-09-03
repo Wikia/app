@@ -215,13 +215,7 @@ class WikiaFileHelper extends Service {
 			'userAvatarWidth'       => 16
 		);
 
-		foreach ( $configDefaults as $key => $val ) {
-			if ( empty( $config[$key] ) ) {
-				$config[$key] = $val;
-			}
-		}
-
-		return $config;
+		return array_merge($configDefaults, $config);
 	}
 
 	/**
@@ -299,7 +293,7 @@ class WikiaFileHelper extends Service {
 					$data['isAdded'] = self::isAdded( $file );
 					$mediaPage = self::getMediaPage( $fileTitle );
 				} else {
-					$width = $width > $config['imageMaxWidth'] ? $config['imageMaxWidth'] : $width;
+					$width = isset( $config[ 'imageMaxWidth' ] ) ? min( $config[ 'imageMaxWidth' ], $width ) : $width;
 					$mediaPage = new ImagePage( $fileTitle );
 				}
 
@@ -324,6 +318,8 @@ class WikiaFileHelper extends Service {
 				$data['userPageUrl'] = $user->getUserPage()->getFullURL();
 				$data['description']  = $mediaPage->getContent();
 				$data['articles'] = $articleList;
+				$data['width'] = $width;
+				$data['height'] = $height;
 			}
 		}
 
