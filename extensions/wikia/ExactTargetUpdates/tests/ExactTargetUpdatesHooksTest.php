@@ -2,7 +2,7 @@
 
 class ExactTargetUpdatesHooksTest extends WikiaBaseTest {
 
-	public function testPrepareParams() {
+	public function testPrepareUserParams() {
 		$userMock = $this->getMockBuilder( 'User' )
 			->disableOriginalConstructor()
 			->setMethods( array( 'getId', 'getName', 'getRealName', 'getEmail', 'getEmailAuthenticationTimestamp',
@@ -71,7 +71,7 @@ class ExactTargetUpdatesHooksTest extends WikiaBaseTest {
 
 		/* Run test */
 		/* @var ExactTargetUpdatesHooks $exactTargetUpdatesHooksMock (mock of ExactTargetUpdatesHooks) */
-		$aUserParamsResult = $exactTargetUpdatesHooksMock->prepareParams( $userMock );
+		$aUserParamsResult = $exactTargetUpdatesHooksMock->prepareUserParams( $userMock );
 
 		$this->assertEquals( $aUserParamsResult, $aUserParams );
 
@@ -104,10 +104,10 @@ class ExactTargetUpdatesHooksTest extends WikiaBaseTest {
 			->method( 'queue' );
 
 		/* Get mock object of tested class ExactTargetUpdatesHooks */
-		$exactTargetUpdatesHooksMock = $this->getMock( 'ExactTargetUpdatesHooks', [ 'prepareParams' ] );
+		$exactTargetUpdatesHooksMock = $this->getMock( 'ExactTargetUpdatesHooks', [ 'prepareUserParams' ] );
 		$exactTargetUpdatesHooksMock
 			->expects( $this->never() )
-			->method( 'prepareParams' );
+			->method( 'prepareUserParams' );
 
 		/* Run test */
 		/* @var ExactTargetUpdatesHooks $exactTargetUpdatesHooksMock (mock of ExactTargetUpdatesHooks) */

@@ -14,7 +14,7 @@ class ExactTargetAddUserTask extends BaseTask {
 	 * @param array $aUserData Selected fields from Wikia user table
 	 * @param array $aUserProperties Array of Wikia user gobal properties
 	 */
-	public function sendNewUserData( $aUserData, $aUserProperties = array() ) {
+	public function sendNewUserData( $aUserData, $aUserProperties ) {
 		$this->createSubscriber( $aUserData['user_email'] );
 		$this->createUserDataExtension( $aUserData );
 		$this->createUserPropertiesDataExtension( $aUserData['user_id'], $aUserProperties );
