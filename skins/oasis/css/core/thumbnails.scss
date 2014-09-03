@@ -31,11 +31,7 @@ $color-subtle-text: mix($color-page, $color-alternate-text, 50%);
 	margin-bottom: 15px;
 	margin-top: 6px;
 
-	// target the thumbnail image and parent anchor only
-	a.image-thumbnail,
-	a.video-thumbnail,
-	img[data-image-key],
-	img[data-video-key] {
+	a, img {
 		display: block;
 	}
 
@@ -73,6 +69,10 @@ $color-subtle-text: mix($color-page, $color-alternate-text, 50%);
 
 	.caption {
 		color: $color-alternate-text;
+
+		a, img {
+			display: inline;
+		}
 	}
 
 	&.show-info-icon {
