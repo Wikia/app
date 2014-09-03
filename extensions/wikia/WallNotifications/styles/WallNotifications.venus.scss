@@ -1,0 +1,213 @@
+@import 'extensions/wikia/Venus/styles/variables';
+@import 'extensions/wikia/Venus/styles/mixins';
+
+$nav-font-color: #092140;
+$new-border-color: #c7d1d8;
+
+/*
+#bubbles_count {
+	text-align: right;
+	float: right;
+}
+
+#WallNotificationsVenus {
+
+	li {
+		height: auto;
+		padding: 0;
+		a {
+			height: auto;
+		}
+	}
+	li:hover {
+		@include clear-linear-gradient;
+	}
+	.bubbles {
+		display: none;
+	}
+
+		> li:first-child,
+		> li:nth-child(2) {
+			border: none;
+		}
+
+		li {
+			border-top: 1px solid $new-border-color;
+			width: auto;
+			a:hover {
+				@include clear-box-shadow;
+			}
+		}
+
+		.empty-notifications {
+			display: none;
+		}
+
+		.notifications-header {
+			background-color: $nav-font-color;
+			padding: 23px 20px 17px;
+
+			&:hover {
+				background-color: $nav-font-color !important;
+			}
+
+			span {
+				background-color: inherit;
+				color: $nav-background-color;
+				font-size: 15px;
+				line-height: 1;
+				padding: 0;
+			}
+
+			#wall-notifications-markasread {
+				right: 14px;
+				top: 23px;
+			}
+
+			#wall-notifications-markasread-sub {
+				color: $nav-background-color;
+			}
+
+			#wall-notifications-markasread-this-wiki {
+				color: $new-border-color;
+				font-size: 15px;
+			}
+		}
+
+		.notifications-for-wiki.show {
+			.notifications-wiki-header {
+				background-image: url(/skins/oasis/images/GlobalNavigation/chevron_up.png); /* $wgCdnStylePath /
+			}
+		}
+
+		.notifications-wiki-header {
+			background: #e2e6e9 no-repeat url(/skins/oasis/images/GlobalNavigation/chevron_down.png) 298px 50%; /* $wgCdnStylePath /
+			color: $dropdown-font-color;
+			font-weight: bold;
+			padding: 20px;
+			.chevron {
+				display: none;
+			}
+		}
+
+		.notifications-wiki-count-container {
+			display: none;
+		}
+
+		.notifications-for-wiki-list a {
+			background-color: #f4f6f7;
+			display: block;
+			&:hover {
+				background-color: $nav-background-color !important;
+			}
+
+			.msg-title {
+				color: $nav-font-color;
+				font-size: 15px;
+				width: auto;
+			}
+			.msg-body {
+				color: $nav-font-color;
+				font-size: 15px;
+				width: auto;
+			}
+			.timeago {
+				color: $new-border-color;
+				font-size: 12px;
+				width: auto;
+			}
+			.notification {
+				@include width-calc('100% - 65px');
+				line-height: 22px;
+			}
+		}
+
+}
+*/
+
+#notifications {
+	position: relative;
+}
+
+#WallNotificationsVenus {
+	@include grid-position('large', 2, 'right', $large-content-padding - 1);
+	@include grid-column-width('large', 4, $large-content-padding);
+	background-color: #fff;
+	position: absolute;
+
+	header {
+		height: 51px;
+		font-weight: bold;
+		padding: 15px 20px;
+
+		span {
+			font-size: 12px;
+			font-weight: normal;
+			text-align: right;
+		}
+	}
+
+	.notifications-header {
+		background-color: $nav-font-color;
+		color: $new-border-color;
+		padding-bottom: 0px;
+	}
+
+	.notifications-wiki-header {
+		/* background: #e2e6e9 no-repeat url(/skins/oasis/images/GlobalNavigation/chevron_down.png) 298px 50%; */
+		background-color: #e2e6e9;
+		color: #2b54b5;
+	}
+
+	.notifications-for-wiki {
+		&.show {
+			.notifications-for-wiki-list {
+				display: block;
+			}
+		}
+
+		.notifications-for-wiki-list {
+			display: none;
+
+			a {
+				color: $nav-font-color;
+				text-decoration: none;
+			}
+		}
+	}
+
+	.notification {
+		border-top: 1px solid $new-border-color;
+		line-height: 22px;
+		padding: 20px 0;
+
+		&.empty, &.admin-notification {
+			padding: 20px;
+		}
+
+		&.unread {
+			background-color: yellow;
+		}
+	}
+
+	.avatars {
+		@include grid-column-width('large', 1);
+		display: inline-block;
+		vertical-align: top;
+		text-align: center;
+	}
+
+	.notification-message {
+		@include grid-column-width('large', 3);
+		display: inline-block;
+		h4 {
+			font-size: 15px;
+			font-weight: bold;
+		}
+	}
+
+	time {
+		color: $new-border-color;
+		font-size: 12px;
+	}
+}
