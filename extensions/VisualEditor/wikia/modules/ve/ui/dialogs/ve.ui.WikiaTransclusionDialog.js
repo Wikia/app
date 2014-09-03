@@ -100,7 +100,7 @@ ve.ui.WikiaTransclusionDialog.prototype.onTransclusionReady = function () {
 	parts = this.transclusionModel.getParts();
 	if ( parts.length === 1 &&
 		parts[0] instanceof ve.dm.MWTemplateModel &&
-		parts[0].getParameters().length === 0 ) {
+		Object.keys( parts[0].getParameters() ).length === 0 ) {
 		ve.track( 'wikia', {
 			'action': ve.track.actions.OPEN,
 			'label': 'dialog-template-no-parameters'
@@ -113,6 +113,12 @@ ve.ui.WikiaTransclusionDialog.prototype.onTransclusionReady = function () {
  */
 ve.ui.WikiaTransclusionDialog.prototype.onCancelButtonClick = function () {
 	this.close( { 'action': 'cancel' } );
+
+	ve.track( 'wikia', {
+		'action': ve.track.actions.CLICK,
+		'label': 'dialog-template-button-cancel',
+		'value': this.previewCount
+	} );
 };
 
 /**
@@ -125,7 +131,7 @@ ve.ui.WikiaTransclusionDialog.prototype.onPreviewButtonClick = function () {
 
 	ve.track( 'wikia', {
 		'action': ve.track.actions.CLICK,
-		'label': 'dialog-template-preview-button',
+		'label': 'dialog-template-button-preview',
 		'value': this.previewCount
 	} );
 };
@@ -189,14 +195,14 @@ ve.ui.WikiaTransclusionDialog.prototype.getSetupProcess = function ( data ) {
 						'action': ve.track.actions.OPEN,
 						'label': 'dialog-template-single'
 					} );
+				} else {
+					ve.track( 'wikia', {
+						'action': ve.track.actions.OPEN,
+						'label': 'dialog-template-multiple'
+					} );
 				}
 			} else {
 				this.frame.$content.addClass( 've-ui-mwTemplateDialog-insertFlow' );
-
-				ve.track( 'wikia', {
-					'action': ve.track.actions.OPEN,
-					'label': 'dialog-template-multiple'
-				} );
 			}
 			this.previewCount = 0;
 		}, this );
@@ -241,12 +247,12 @@ ve.ui.WikiaTransclusionDialog.prototype.applyChanges = function () {
 		if ( this.selectedNode.isSingleTemplate() ) {
 			ve.track( 'wikia', {
 				'action': ve.track.actions.CLICK,
-				'label': 'dialog-template-apply-button-single'
+				'label': 'dialog-template-button-apply-single'
 			} );
 		} else {
 			ve.track( 'wikia', {
 				'action': ve.track.actions.CLICK,
-				'label': 'dialog-template-apply-button-multiple'
+				'label': 'dialog-template-button-apply-multiple'
 			} );
 		}
 	}
