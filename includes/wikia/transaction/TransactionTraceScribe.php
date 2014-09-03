@@ -1,8 +1,8 @@
 <?php
 
 /**
- * TransactionTraceScribe implements the TransactionTrace plugin interface and installs Scribe sink
- * when event is recorded.
+ * TransactionTraceScribe implements the TransactionTrace plugin interface and sends all recorded events via Scribe
+ * at the end of request.
  */
 class TransactionTraceScribe {
 
@@ -10,12 +10,11 @@ class TransactionTraceScribe {
 	protected static $installed = false;
 
 	/**
-	 * Installs Scribe sink for transaction events whenever an event is recorded
+	 * Installs request shutdown handler to send all events via Scribe
 	 *
 	 * @param string $type
 	 */
 	public function onEvent( $event ) {
-		wfDebug( __CLASS__ . ": event received\n" );
 		self::install();
 	}
 
@@ -26,7 +25,6 @@ class TransactionTraceScribe {
 		if ( !self::$installed ) {
 			self::$installed = true;
 			register_shutdown_function( array( __CLASS__, 'send' ) );
-			wfDebug( __CLASS__ . ": installing shutdown handler\n" );
 		}
 	}
 
@@ -34,10 +32,8 @@ class TransactionTraceScribe {
 	 * Sends all events via Scribe
 	 */
 	public static function send() {
-		wfDebug( __CLASS__ . ": send() executed\n" );
 		// Check dependencies (perform autoload if required)
 		if ( !is_callable( 'Transaction::getAttributes' ) || !is_callable( 'WScribeClient::singleton' ) ) {
-			wfDebug( __CLASS__ . ": checks failed\n" );
 			return;
 		}
 
@@ -49,11 +45,9 @@ class TransactionTraceScribe {
 		);
 		$data = json_encode( $data );
 
-		wfDebug( __CLASS__ . ": sending: " . $data . "\n" );
 		try {
 			WScribeClient::singleton( self::SCRIBE_KEY )->send( $data );
 		} catch ( TException $e ) {
-			wfDebug( __CLASS__ . ": error sending Scribe message\n" );
 			if ( is_callable( 'Wikia::log' ) ) {
 				Wikia::log( __METHOD__, 'scribeClient exception', $e->getMessage() );
 			}
