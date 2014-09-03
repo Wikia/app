@@ -3387,7 +3387,8 @@ function wfFixSessionID() {
  */
 function wfSetupSession( $sessionId = false ) {
 	global $wgSessionsInMemcached, $wgCookiePath, $wgCookieDomain,
-			$wgCookieSecure, $wgCookieHttpOnly, $wgSessionHandler;
+			$wgCookieSecure, $wgCookieHttpOnly, $wgSessionHandler,
+			$wgSessionDebugData;
 
 	if( $wgSessionsInMemcached ) {
 		if ( !defined( 'MW_COMPILED' ) ) {
@@ -3424,6 +3425,9 @@ function wfSetupSession( $sessionId = false ) {
 		wfFixSessionID();
 	}
 	wfSuppressWarnings();
+	/** Wikia change - begin - PLATFORM-308 */
+	$wgSessionDebugData[] = [ 'event' => 'wfSetupSession-session_start' ];
+	/** Wikia change - end */
 	session_start();
 	wfRestoreWarnings();
 }
