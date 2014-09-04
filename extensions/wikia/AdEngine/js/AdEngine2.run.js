@@ -252,7 +252,7 @@ window.AdEngine_loadLateAds = function () {
 			var action = window.rp_valuation ? 'lookupSuccess' : 'lookupError';
 			tracker.track({
 				ga_category: 'ad/' + action + '/rubicon',
-				ga_action: 'oz_cached_only=' + !!window.oz_cached_only,
+				ga_action: 'oz_cached_only=' + !!window.wgAdDriverRubiconCachedOnly,
 				ga_value: 0,
 				trackingMethod: 'ad'
 			});

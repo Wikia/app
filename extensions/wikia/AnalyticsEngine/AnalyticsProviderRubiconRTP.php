@@ -26,7 +26,7 @@ class AnalyticsProviderRubiconRTP implements iAnalyticsProvider {
 		$ozSite = json_encode(self::OZ_SITE);
 		$ozZone = json_encode(self::OZ_ZONE);
 		$ozSlotSize = json_encode('300x250');
-		$osCachedOnly = json_encode((bool)$wgAdDriverRubiconCachedOnly);
+		$ozCachedOnly = json_encode((bool)$wgAdDriverRubiconCachedOnly);
 		$scriptUrl = json_encode('//tap-cdn.rubiconproject.com/partner/scripts/rubicon/dorothy.js?pc=' . self::OZ_SITE);
 
 
@@ -34,41 +34,42 @@ class AnalyticsProviderRubiconRTP implements iAnalyticsProvider {
 			$code = <<< SCRIPT
 <script>
 	require(['wikia.window', 'wikia.geo', 'wikia.instantGlobals'], function (window, geo, globals) {
+		if (!globals.wgSitewideDisableRubiconRTP && geo.getCountryCode() == "US" ) {
+			var s, i, config = {
+				rp_performance: {
+					Start: Math.round(new Date().getTime() - window.wgNow.getTime()),
+					End: null
+				},
+				oz_async: true,
+				oz_cached_only: {$ozCachedOnly},
+				oz_api: "valuation",
+				oz_ad_server: "dart",
+				oz_site: {$ozSite},
+				oz_zone: {$ozZone},
+				oz_ad_slot_size: {$ozSlotSize},
+				oz_callback: function(response) {
+					var tracker = window.Wikia && window.Wikia.Tracker;
 
-		if (!globals.wgSitewideDisableRubiconRTP && geo.getCountryCode() == "US") {
-			var startTime = new Date(), endTime;
-
-			rp_performance = {
-				Start: Math.round(new Date().getTime() - window.wgNow.getTime()),
-				End: null
-			}
-
-			oz_async       = true;
-			oz_cached_only = {$osCachedOnly};
-
-			oz_api          = "valuation";
-			oz_ad_server    = "dart";
-			oz_site         = {$ozSite};
-			oz_zone         = {$ozZone};
-			oz_ad_slot_size = {$ozSlotSize};
-			oz_callback = function(response) {
-				require(['wikia.tracker'], function(tracker){
 					rp_performance.End = Math.round(new Date().getTime() - window.wgNow.getTime());
 					for (var i in window.rp_performance) {
 						tracker.track({
 							ga_category: 'ad/performance/rubicon' + i + '/wgNow',
-							ga_action: 'oz_cached_only=' + !!window.oz_cached_only,
+							ga_action: 'oz_cached_only=' + !!window.wgAdDriverRubiconCachedOnly,
 							ga_value: rp_performance[i],
 							trackingMethod: 'ad'
 						});
 					}
-				});
+				}
+			};
+
+			for(i in config) {
+				window[i] = config[i];
 			}
 
-			var s = document.createElement('script');
-				s.src = {$scriptUrl};
-				s.async = true;
-				document.body.appendChild(s);
+			s = document.createElement('script');
+			s.src = {$scriptUrl};
+			s.async = true;
+			document.body.appendChild(s);
 		}
 	});
 </script>
