@@ -176,7 +176,7 @@ ve.ui.WikiaFocusWidget.prototype.getLayoutForArticle = function ( surfaceOffset,
  * @param {object} documentDimensions Size of the document
  */
 ve.ui.WikiaFocusWidget.prototype.getLayoutForNode = function ( surfaceOffset, surfaceEdges, documentDimensions ) {
-	var bounds = this.node.boundingRect;
+	var bounds = this.node.getBoundingRect();
 
 	return {
 		'top': {

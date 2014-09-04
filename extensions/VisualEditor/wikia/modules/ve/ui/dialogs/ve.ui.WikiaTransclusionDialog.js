@@ -189,8 +189,11 @@ ve.ui.WikiaTransclusionDialog.prototype.getSetupProcess = function ( data ) {
 					$( window ).off( 'mousewheel', this.onWindowMouseWheelHandler );
 					// Focus
 					this.surface.getFocusWidget().setNode( this.selectedViewNode );
+					this.surface.getModel().setSelection( new ve.Range( 0 ) );
+
 					// Preview button
 					this.previewButton.$element.show();
+
 					ve.track( 'wikia', {
 						'action': ve.track.actions.OPEN,
 						'label': 'dialog-template-single'
