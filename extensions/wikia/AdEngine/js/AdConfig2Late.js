@@ -129,7 +129,7 @@ define('ext.wikia.adEngine.adConfigLate', [
 			return adProviderRemnantGpt;
 		}
 
-		if (adProviderLiftium.canHandleSlot(slotname)) {
+		if (adProviderLiftium.canHandleSlot(slotname) && !instantGlobals.wgSitewideDisableLiftium) {
 			return adProviderLiftium;
 		}
 

@@ -11,26 +11,6 @@ class WikiaInteractiveMapsPoiControllerTest extends WikiaBaseTest {
 		parent::setUp();
 	}
 
-	public function testEditPoiCategories_throws_permission_error_when_anon() {
-		$userMock = $this->getUserMock( self::USER_TYPE_LOGGED_OUT );
-
-		$controllerMock = $this->getWikiaInteractiveMapsPoiControllerMock();
-		$controllerMock->wg->User = $userMock;
-
-		$this->setExpectedException( 'WikiaInteractiveMapsPermissionException' );
-		$controllerMock->editPoiCategories();
-	}
-
-	public function testEditPoiCategories_throws_permission_error_when_user_blocked() {
-		$userMock = $this->getUserMock( self::USER_TYPE_BLOCKED );
-
-		$controllerMock = $this->getWikiaInteractiveMapsPoiControllerMock();
-		$controllerMock->wg->User = $userMock;
-
-		$this->setExpectedException( 'WikiaInteractiveMapsPermissionException' );
-		$controllerMock->editPoiCategories();
-	}
-
 	public function testEditPoi_throws_permission_error_when_anon() {
 		$userMock = $this->getUserMock( self::USER_TYPE_LOGGED_OUT );
 

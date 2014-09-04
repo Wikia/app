@@ -22,7 +22,7 @@ class ProfilerDataScribeSink implements ProfilerDataSink {
 			'time' => microtime(true),
 			'engine' => $data->getEngine(),
 			'profile' => $data->getProfile(),
-			'context' => Transaction::getAll(),
+			'context' => Transaction::getAttributes(),
 			'request' => $data->getRequest(),
 			'entries' => $data->getEntries(),
 		);
