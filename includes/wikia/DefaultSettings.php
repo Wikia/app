@@ -173,6 +173,7 @@ $wgWikiaApiControllers['MoviesApiController'] = "{$IP}/includes/wikia/api/Movies
 
 //Wikia Api exceptions classes
 $wgAutoloadClasses[ 'ApiAccessService' ] = "{$IP}/includes/wikia/api/services/ApiAccessService.php";
+$wgAutoloadClasses[ 'ApiOutboundingLinksService' ] = "{$IP}/includes/wikia/api/services/ApiOutboundingLinksService.php";
 $wgAutoloadClasses[ 'BadRequestApiException'] =  "{$IP}/includes/wikia/api/ApiExceptions.php" ;
 $wgAutoloadClasses[ 'OutOfRangeApiException'] =  "{$IP}/includes/wikia/api/ApiExceptions.php" ;
 $wgAutoloadClasses[ 'MissingParameterApiException'] =  "{$IP}/includes/wikia/api/ApiExceptions.php" ;
@@ -725,6 +726,7 @@ $wgSharedKeyPrefix = "wikicities"; // default value for shared key prefix, @see 
 $wgWikiaMailerDB = 'wikia_mailer';
 
 $wgAutoloadClasses['LBFactory_Wikia'] = "$IP/includes/wikia/LBFactory_Wikia.php";
+$wgAutoloadClasses['Wikia\\MastersPoll'] = "$IP/includes/wikia/MastersPoll.php";
 
 /**
  * @name wgEnableBlogCommentEdit, wgEnabledGroupedBlogComments, wgEnableBlogWatchlist
@@ -1199,12 +1201,6 @@ $wgAdPageLevelCategoryLangs = [ 'en' => true ];;
 $wgEnableJavaScriptErrorLogging = false;
 
 /**
- * @name $wgEnableRHonDesktop
- * Enables RH- hack on Desktop
- */
-$wgEnableRHonDesktop = false;
-
-/**
  * @name $wgLoadLateAdsAfterPageLoad
  * Enables postpones start for ads in late queue until page "load" event.
  */
@@ -1229,6 +1225,12 @@ $wgEnableAdEngineExt = true;
 $wgAdDriverUseEbay = false;
 
 /**
+ * @name $wgAdDriverUseRemnantGpt
+ * Enables additional call to dart before Liftium
+ */
+$wgAdDriverUseRemnantGpt = false;
+
+/**
  * @name $wgAdDriverUseBottomLeaderboard
  * Whether to enable new fancy footer ad BOTTOM_LEADERBOARD
  */
@@ -1245,6 +1247,27 @@ $wgAdDriverUseTopInContentBoxad = true;
  * Impression capping for BOTTOM_LEADERBOARD. Array with the numbers of the potential ad calls.
  */
 $wgAdDriverBottomLeaderboardImpressionCapping = [2, 4, 6];
+
+/**
+ * @name $wgSitewideDisableLiftium
+ * @link http://one.wikia-inc.com/wiki/Ads/Disaster_recovery
+ * Disable Liftium sitewide in case a disaster happens (it's an instant global).
+ */
+$wgSitewideDisableLiftium = false;
+
+/**
+ * @name $wgSitewideDisableSevenOneMedia
+ * @link http://one.wikia-inc.com/wiki/Ads/Disaster_recovery
+ * Disable SevenOneMedia sitewide in case a disaster happens (it's an instant global).
+ */
+$wgSitewideDisableSevenOneMedia = false;
+
+/**
+ * @name $wgSitewideDisableIVW2
+ * @link http://one.wikia-inc.com/wiki/Ads/Disaster_recovery
+ * Disable IVW2 Analytics pixel sitewide in case a disaster happens (it's an instant global).
+ */
+$wgSitewideDisableIVW2 = false;
 
 /**
  * @name $wgAdDriverUseSevenOneMedia

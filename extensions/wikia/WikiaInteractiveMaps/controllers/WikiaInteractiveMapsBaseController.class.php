@@ -167,4 +167,23 @@ class WikiaInteractiveMapsBaseController extends WikiaController {
 
 		return $errorMessage;
 	}
+
+	/**
+	 * Simple getter
+	 *
+	 * @return WikiaMaps
+	 */
+	public function getModel() {
+		return $this->mapsModel;
+	}
+
+	/**
+	 * Returns true if a user is allowed to use maps
+	 *
+	 * @return bool
+	 */
+	public function isUserAllowed() {
+		return $this->wg->User->isLoggedIn() && !$this->wg->User->isBlocked();
+	}
+
 }

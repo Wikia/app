@@ -11,7 +11,7 @@ class SolrDocumentServiceTest extends WikiaBaseTest
 		                  ->disableOriginalConstructor()
 		                  ->setMethods( [ 'offsetGet', 'offsetExists' ] )
 		                  ->getMock();
-		
+
 		$service
 		    ->expects( $this->once() )
 		    ->method ( 'getConfig' )
@@ -57,7 +57,7 @@ class SolrDocumentServiceTest extends WikiaBaseTest
 				SolrDocumentService::$documentCache
 		);
 	}
-	
+
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.01169 ms
@@ -72,7 +72,7 @@ class SolrDocumentServiceTest extends WikiaBaseTest
 		                  ->setMethods( [ 'offsetGet', 'offsetExists' ] )
 		                  ->getMock();
 		$result = $this->getMock( 'Wikia\Search\Result' );
-		
+
 		$service
 		    ->expects( $this->once() )
 		    ->method ( 'getConfig' )
@@ -151,7 +151,7 @@ class SolrDocumentServiceTest extends WikiaBaseTest
 				$service->getResult()
 		);
 	}
-	
+
 	/**
 	 * @covers SolrDocumentService::setArticleId
 	 * @covers SolrDocumentService::getArticleId
@@ -176,7 +176,7 @@ class SolrDocumentServiceTest extends WikiaBaseTest
 				$ds->getArticleId()
 		);
 	}
-	
+
 	/**
 	 * @covers SolrDocumentService::setWikiId
 	 * @covers SolrDocumentService::getWikiId
@@ -211,7 +211,7 @@ class SolrDocumentServiceTest extends WikiaBaseTest
 				$ds->getWikiId()
 		);
 	}
-	
+
 	/**
 	 * @covers SolrDocumentService::getDocumentId
 	 */
@@ -230,7 +230,7 @@ class SolrDocumentServiceTest extends WikiaBaseTest
 		$ds
 		    ->expects( $this->once() )
 		    ->method ( 'getArticleId' )
-		    ->will   ( $this->returnValue( 234 ) ) 
+		    ->will   ( $this->returnValue( 234 ) )
 		;
 		$get = new ReflectionMethod( $ds, 'getDocumentId' );
 		$get->setAccessible( true );
@@ -239,7 +239,7 @@ class SolrDocumentServiceTest extends WikiaBaseTest
 				$get->invoke( $ds )
 		);
 	}
-	
+
 	/**
 	 * @covers SolrDocumentService::getDocumentId
 	 */
@@ -266,14 +266,14 @@ class SolrDocumentServiceTest extends WikiaBaseTest
 				$get->invoke( $ds )
 		);
 	}
-	
+
 	/**
 	 * @covers SolrDocumentService::getConfig
 	 */
 	public function testGetConfigCrossWiki() {
 		$ds = $this->getMock( 'SolrDocumentService', [ 'getCrossWiki' ] );
 		$config = $this->getMock( 'Wikia\Search\Config', [ 'setCrossWikiLuceneQuery', 'setDirectLuceneQuery', 'setLimit' ] );
-		
+
 		$ds
 		    ->expects( $this->once() )
 		    ->method ( 'getCrossWiki' )
@@ -289,7 +289,7 @@ class SolrDocumentServiceTest extends WikiaBaseTest
 		    ->method ( 'setCrossWikiLuceneQuery' )
 		    ->with   ( true )
 		;
-		$this->proxyClass( 'Wikia\Search\Config', $config );
+		$this->mockClass( 'Wikia\Search\Config', $config );
 		$get = new ReflectionMethod( $ds, 'getConfig' );
 		$get->setAccessible( true );
 		$this->assertEquals(
@@ -297,14 +297,14 @@ class SolrDocumentServiceTest extends WikiaBaseTest
 				$get->invoke( $ds )
 		);
 	}
-	
+
 	/**
 	 * @covers SolrDocumentService::getConfig
 	 */
 	public function testGetConfigMain() {
 		$ds = $this->getMock( 'SolrDocumentService', [ 'getCrossWiki' ] );
 		$config = $this->getMock( 'Wikia\Search\Config', [ 'setCrossWikiLuceneQuery', 'setDirectLuceneQuery', 'setLimit' ] );
-		
+
 		$ds
 		    ->expects( $this->once() )
 		    ->method ( 'getCrossWiki' )
@@ -320,7 +320,7 @@ class SolrDocumentServiceTest extends WikiaBaseTest
 		    ->method ( 'setDirectLuceneQuery' )
 		    ->with   ( true )
 		;
-		$this->proxyClass( 'Wikia\Search\Config', $config );
+		$this->mockClass( 'Wikia\Search\Config', $config );
 		$get = new ReflectionMethod( $ds, 'getConfig' );
 		$get->setAccessible( true );
 		$this->assertEquals(
@@ -328,7 +328,7 @@ class SolrDocumentServiceTest extends WikiaBaseTest
 				$get->invoke( $ds )
 		);
 	}
-	
+
 	/**
 	 * @covers SolrDocumentService::getFactory
 	 */
@@ -341,7 +341,7 @@ class SolrDocumentServiceTest extends WikiaBaseTest
 				$get->invoke( $ds )
 		);
 	}
-	
+
 	/**
 	 * @covers SolrDocumentService::getCrossWiki
 	 * @covers SolrDocumentService::setCrossWiki
@@ -369,5 +369,5 @@ class SolrDocumentServiceTest extends WikiaBaseTest
 				$ds->getCrossWiki()
 		);
 	}
-	
+
 }

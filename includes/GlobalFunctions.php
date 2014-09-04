@@ -3367,17 +3367,12 @@ function wfCheckEntropy() {
  */
 function wfFixSessionID() {
 	// If the cookie or session id is already set we already have a session and should abort
-	if ( isset( $_COOKIE[ session_name() ] ) || session_id() ) {
+	if ( !empty( $_COOKIE[ session_name() ] ) || session_id() ) {
 		return;
 	}
 
-	$entropyEnabled = wfCheckEntropy();
-
-	// If built-in entropy is not enabled or not sufficient override php's built in session id generation code
-	if ( !$entropyEnabled ) {
-		wfDebug( __METHOD__ . ": PHP's built in entropy is disabled or not sufficient, overriding session id generation using our cryptrand source.\n" );
-		session_id( MWCryptRand::generateHex( 32 ) );
-	}
+	wfDebug( __METHOD__ . ": PHP's built in entropy is disabled or not sufficient, overriding session id generation using our cryptrand source.\n" );
+	session_id( MWCryptRand::generateHex( 32 ) );
 }
 
 /**
@@ -3387,7 +3382,8 @@ function wfFixSessionID() {
  */
 function wfSetupSession( $sessionId = false ) {
 	global $wgSessionsInMemcached, $wgCookiePath, $wgCookieDomain,
-			$wgCookieSecure, $wgCookieHttpOnly, $wgSessionHandler;
+			$wgCookieSecure, $wgCookieHttpOnly, $wgSessionHandler,
+			$wgSessionDebugData;
 
 	if( $wgSessionsInMemcached ) {
 		if ( !defined( 'MW_COMPILED' ) ) {
@@ -3424,6 +3420,9 @@ function wfSetupSession( $sessionId = false ) {
 		wfFixSessionID();
 	}
 	wfSuppressWarnings();
+	/** Wikia change - begin - PLATFORM-308 */
+	$wgSessionDebugData[] = [ 'event' => 'wfSetupSession-session_start' ];
+	/** Wikia change - end */
 	session_start();
 	wfRestoreWarnings();
 }
@@ -3561,7 +3560,7 @@ function wfGetLB( $wiki = false ) {
 /**
  * Get the load balancer factory object
  *
- * @return LBFactory
+ * @return LBFactory_Wikia
  */
 function &wfGetLBFactory() {
 	return LBFactory::singleton();

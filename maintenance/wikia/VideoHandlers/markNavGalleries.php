@@ -49,6 +49,8 @@ class MarkAsNav extends Maintenance {
 		$this->test = $this->hasOption( 'test' );
 		$this->verbose = $this->hasOption( 'verbose' );
 
+		$start = time();
+
 		if ( $this->test ) {
 			echo "*** TEST MODE ***\n";
 		}
@@ -66,11 +68,8 @@ class MarkAsNav extends Maintenance {
 			$this->updatePage( $pageId );
 		}
 
-		echo "\tUnique gallery params:";
-		foreach ( $this->galleryParamTally as $tag => $count ) {
-			echo " $tag=$count";
-		}
-		echo "\n";
+		$elapsed = time() - $start;
+		echo "Done: $elapsed s\n";
 	}
 
 	/**
@@ -110,7 +109,16 @@ class MarkAsNav extends Maintenance {
 			return;
 		}
 
+		// Make
+		global $wgTitle;
+		$wgTitle = $article->getTitle();
+
 		$text = $article->getContent();
+
+		// Do a quick initial check to see if we're likely to find what we want in here
+		if ( strpos( $text, 'link=' ) === false ) {
+			return;
+		}
 
 		// Update galleries that use links and collect some stats
 		$newText = preg_replace_callback( '/< *gallery([^>]*)>([^<]+)< *\/ *gallery *>/', [ $this, 'handleGallery' ], $text );
@@ -147,8 +155,6 @@ class MarkAsNav extends Maintenance {
 		$galleryContent = trim( $matches[2] );
 		$galleryLines = array_filter( explode( "\n", $galleryContent ) );
 
-		// Keep a tally of params being used
-		$params = [];
 		if ( preg_match_all( "/([^ =\"']+) *= *[\"']?([^ \"']+)[\"']?/", $galleryParams, $paramMatches ) ) {
 			$names = $paramMatches[1];
 			$values = $paramMatches[2];
@@ -157,22 +163,14 @@ class MarkAsNav extends Maintenance {
 				$paramName = strtolower( $names[$idx] );
 				$paramValue = $values[$idx];
 
-				if ( empty( $this->galleryParamTally[$paramName] ) ) {
-					$this->galleryParamTally[$paramName] = 0;
+				if ( $paramName == 'navigation' ) {
+					return $matches[0];
 				}
-				$this->galleryParamTally[$paramName]++;
-				$params[$paramName] = $paramValue;
+
+				if ( $paramName == 'type' && $paramValue == 'slider' ) {
+					return $matches[0];
+				}
 			}
-		}
-
-		// If we have a navigation param, return this gallery untouched
-		if ( !empty( $params['navigation'] ) ) {
-			return $matches[0];
-		}
-
-		// Ignore sliders
-		if ( !empty( $params['type'] ) && $params['type'] == 'slider' ) {
-			return $matches[0];
 		}
 
 		// Requirements state not to convert galleries that only contain one image
