@@ -180,9 +180,7 @@ $wgAutoloadClasses['RealgravityVideoHandler'] =  $dir . '/handlers/RealgravityVi
 $wgAutoloadClasses['RealgravityApiWrapper'] =  $dir . '/apiwrappers/RealgravityApiWrapper.class.php';
 $wgMediaHandlers['video/realgravity'] = 'RealgravityVideoHandler';
 
-$wgAutoloadClasses['ScreenplayVideoHandler'] =  $dir . '/handlers/ScreenplayVideoHandler.class.php';
 $wgAutoloadClasses['ScreenplayApiWrapper'] =  $dir . '/apiwrappers/ScreenplayApiWrapper.class.php';
-$wgMediaHandlers['video/screenplay'] = 'ScreenplayVideoHandler';
 
 $wgAutoloadClasses['IgnVideoHandler'] =  $dir . '/handlers/IgnVideoHandler.class.php';
 $wgAutoloadClasses['IgnApiWrapper'] =  $dir . '/apiwrappers/IgnApiWrapper.class.php';
