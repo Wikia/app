@@ -318,6 +318,8 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 			if (count($imageList) < self::LIMIT_IMAGES) {
 				$oImagePage = GlobalTitle::newFromId( $row->page_id, $row->wiki_id );
 				$oImageGlobal = new GlobalFile( $oImagePage );
+				\Wikia\Logger\WikiaLogger::instance()->debug( __METHOD__, var_dump( $oImagePage ) );
+				\Wikia\Logger\WikiaLogger::instance()->debug( __METHOD__, var_dump( $oImageGlobal ) );
 				$img = array(
 					'src' => $oImageGlobal->getThumbUrl( self::IMAGE_REVIEW_THUMBNAIL_SIZE . 'px-' . $oImageGlobal->getName() ),
 					'page' => $oImagePage->getFullUrl(),
