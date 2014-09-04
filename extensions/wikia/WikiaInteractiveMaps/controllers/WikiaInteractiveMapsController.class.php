@@ -199,16 +199,6 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 	}
 
 	/**
-	 * Decides where to hide attribution bar on a map
-	 * For now only for usages inside community that created the map
-	 * @param Integer $mapCityId
-	 * @return bool
-	 */
-	static public function shouldHideAttribution( $mapCityId ) {
-		return $mapCityId == intval( F::app()->wg->CityId );
-	}
-
-	/**
 	 * Renders the menu markup for the map page from mustache
 	 * @param Integer $deleted flag which tells if a map was deleted
 	 * @return string
