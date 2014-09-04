@@ -87,7 +87,7 @@ $color-subtle-text: mix($color-page, $color-alternate-text, 50%);
 		}
 
 		&:hover {
-			a.info-icon {
+			.info-icon {
 				display: block;
 			}
 
@@ -95,6 +95,11 @@ $color-subtle-text: mix($color-page, $color-alternate-text, 50%);
 				display: none;
 			}
 		}
+	}
+
+	// don't show the icon when a video is playing inline
+	&.inline-video-playing:hover .info-icon {
+		display: none;
 	}
 }
 
