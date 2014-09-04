@@ -2,6 +2,8 @@
 
 /**
  * ImageReview Helper
+ *
+ * @author (contributing) Adam Karmiński <adamk@wikia-inc.com>
  */
 class ImageReviewHelper extends ImageReviewHelperBase {
 
@@ -263,7 +265,7 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 				ORDER BY ' . $this->getOrder($order) . '
 				LIMIT ' . self::LIMIT_IMAGES_FROM_DB . '
 			) as image_review
-			LEFT JOIN pages ON (image_review.wiki_id=pages.page_wikia_id) AND (image_review.page_id=pages.page_id)'
+			LEFT JOIN pages ON (image_review.wiki_id=pages.page_wikia_id) AND (image_review.page_id=pages.page_id) AND (pages.page_is_redirect=\'0\')'
 		);
 
 		$rows = array();
