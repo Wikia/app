@@ -20,7 +20,7 @@
 		&:hover {
 			background: none;
 
-			.chevron {
+			> a .chevron {
 				border-top-color: $nav-active-color;
 			}
 		}

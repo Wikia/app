@@ -1,9 +1,7 @@
 <li class="notification <?= $isUnread ?>">
 	<a href="<?= $url ?>">
 		<div class="avatars">
-			<?php foreach($authors as $key => $author): ?>
-				<?= $author['avatar'] ?>
-			<?php endforeach; ?>
+			<?= $authors[0]['avatar'] ?>
 		</div>
 		<div class="notification-message">
 			<h4><?= $title ?></h4>

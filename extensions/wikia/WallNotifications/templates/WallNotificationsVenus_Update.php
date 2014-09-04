@@ -30,6 +30,7 @@
 					<header class="notifications-wiki-header" style="display: none">
 				<? endif; ?>
 					<?= $wikiData['sitename'] ?>
+					<img class="chevron" src="<?= $wg->BlankImgUrl; ?>">
 				</header>
 				<ul class="notifications-for-wiki-list">
 					<li class="notification empty"><?= wfMessage('wall-notifications-loading')->text() ?></li>

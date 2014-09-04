@@ -159,9 +159,11 @@ $new-border-color: #c7d1d8;
 }
 
 #WallNotificationsVenus {
-	@include grid-position('large', 2, 'right', $large-content-padding - 1);
+	@include grid-position('large', 2, 'right', $large-content-padding - 2);
 	@include grid-column-width('large', 4, $large-content-padding);
 	background-color: #fff;
+	border: 1px solid #c7d1d8;
+	border-top: 0;
 	position: absolute;
 
 	header {
@@ -182,15 +184,36 @@ $new-border-color: #c7d1d8;
 		padding-bottom: 0px;
 	}
 
-	.notifications-wiki-header {
-		background-color: #e2e6e9;
-		color: #2b54b5;
-	}
-
 	.notifications-for-wiki {
 		&.show {
+			.chevron {
+				border-top: 0;
+				border-left: 5px solid transparent;
+				border-right: 5px solid transparent;
+				border-bottom: 5px solid #c7d1d8;
+			}
+
+			.notifications-wiki-header:hover .chevron {
+				border-bottom-color: #2b54b5;
+			}
+
 			.notifications-for-wiki-list {
 				display: block;
+			}
+		}
+
+		.chevron {
+			float: right;
+			margin-top: 10px;
+		}
+
+		.notifications-wiki-header {
+			background-color: #e2e6e9;
+			border-top: 1px solid $new-border-color;
+			color: #2b54b5;
+
+			&:hover .chevron {
+				border-top-color: #2b54b5;
 			}
 		}
 
@@ -209,34 +232,51 @@ $new-border-color: #c7d1d8;
 		line-height: 22px;
 		padding: 20px 0;
 
-		&.empty, &.admin-notification {
-			padding: 20px;
+		.notification-message {
+			@include grid-column-width('large', 3);
+			display: inline-block;
 		}
 
-		&.unread {
-			background-color: yellow;
+		.avatars {
+			@include grid-column-width('large', 1);
+			display: inline-block;
+			vertical-align: top;
+			text-align: center;
 		}
-	}
 
-	.avatars {
-		@include grid-column-width('large', 1);
-		display: inline-block;
-		vertical-align: top;
-		text-align: center;
-	}
-
-	.notification-message {
-		@include grid-column-width('large', 3);
-		display: inline-block;
 		h4 {
 			font-size: 15px;
 			font-weight: bold;
 		}
-	}
 
-	time {
-		color: $new-border-color;
-		font-size: 12px;
+		time {
+			color: $new-border-color;
+			font-size: 12px;
+		}
+
+		&.empty, &.admin-notification {
+			padding: 20px;
+		}
+
+		&.read {
+			background-color: #eef1f3;
+
+			h4, .avatars {
+				opacity: 0.7;
+			}
+		}
+
+		&:hover {
+			background-color: #0a5fa3;
+
+			a {
+				color: #fff;
+
+				h4 {
+					opacity: 1;
+				}
+			}
+		}
 	}
 }
 
