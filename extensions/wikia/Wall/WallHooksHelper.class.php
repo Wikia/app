@@ -964,9 +964,9 @@ class WallHooksHelper {
 			} else {
 				//new, edit
 				if( $rc->mAttribs['rc_type'] == RC_NEW || $rc->mAttribs['rc_type'] == RC_LOG ) {
-					$diffLink = wfMessage( 'diff' )->text();
+					$diffLink = wfMessage( 'diff' )->escaped();
 				} else if( !ChangesList::userCan($rc, Revision::DELETED_TEXT) ) {
-					$diffLink = wfMessage( 'diff' )->text();
+					$diffLink = wfMessage( 'diff' )->escaped();
 				} else {
 					$query = array(
 							'curid' => $rc->mAttribs['rc_cur_id'],
@@ -1595,11 +1595,11 @@ class WallHooksHelper {
 		) . ' (';
 
 		if( $isNew ) {
-			$ret .= $contribsPager->msg( 'diff' )->text();
+			$ret .= $contribsPager->msg( 'diff' )->escaped();
 		} else {
 			$ret .= Linker::linkKnown(
 				$page,
-				$contribsPager->msg( 'diff' )->text(),
+				$contribsPager->msg( 'diff' )->escaped(),
 				[],
 				[
 					'diff' => 'prev',
@@ -1611,14 +1611,7 @@ class WallHooksHelper {
 		$wallMessage = new WallMessage($page);
 		$threadId = $wallMessage->getMessagePageId();
 		$threadTitle = Title::newFromText( $threadId, NS_USER_WALL_MESSAGE );
-		$ret .= ' | '. Linker::linkKnown( $threadTitle, $contribsPager->msg( 'hist' )->text(), [], [ 'action' => 'history' ] ) . ') ';
-
-		$wfMsgOpts = [
-			$wfMsgOptsBase['articleTitle'],
-			$wfMsgOptsBase['articleTitleTxt'],
-			$wfMsgOptsBase['wallTitleTxt'],
-			$wfMsgOptsBase['wallPageName']
-		];
+		$ret .= ' | '. Linker::linkKnown( $threadTitle, $contribsPager->msg( 'hist' )->escaped(), [], [ 'action' => 'history' ] ) . ') ';
 
 		if( $isThread && $isNew ) {
 			$ret .= ChangesList::flag( 'newpage' ) . ' ';
@@ -1629,7 +1622,11 @@ class WallHooksHelper {
 		}
 
 		$prefix = MWNamespace::getSubject( $row->page_namespace ) === NS_WIKIA_FORUM_BOARD ? 'forum' : 'wall';
-		$ret .= $contribsPager->msg( $prefix . '-contributions-line', $wfMsgOpts )->parse();
+		$ret .= $contribsPager->msg( $prefix . '-contributions-line' )
+			->params( $wfMsgOptsBase['articleTitle'] )
+			->rawParams( htmlspecialchars( $wfMsgOptsBase['articleTitleTxt'] ) )
+			->params( $wfMsgOptsBase['wallTitleTxt'], $wfMsgOptsBase['wallPageName'] )
+			->parse();
 
 		if( !$isNew ) {
 			$summary = $rev->getComment();
@@ -1762,7 +1759,7 @@ class WallHooksHelper {
 
 			$wmRef = '';
 			$meta = static::getMetatitleFromTitleObject($app->wg->Title, $wmRef);
-			$pageHeaderModule->title = wfMessage( 'oasis-page-header-diff', $meta )->text();
+			$pageHeaderModule->title = wfMessage( 'oasis-page-header-diff' )->rawParams( htmlspecialchars( $meta ) )->parse();
 			$pageHeaderModule->subtitle = Xml::element( 'a', array( 'href' => $wmRef->getMessagePageUrl() ), wfMessage( 'oasis-page-header-back-to-article' )->text() );
 		}
 
