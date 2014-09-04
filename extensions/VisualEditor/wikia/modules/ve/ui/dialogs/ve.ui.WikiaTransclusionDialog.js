@@ -324,7 +324,7 @@ ve.ui.WikiaTransclusionDialog.prototype.position = function ( zeroState ) {
 		'max-height': 'none'
 	} );
 
-	if ( this.surface.getView().getFocusedNode().getHorizontalBias() === 'right' ) {
+	if ( this.selectedViewNode.getHorizontalBias() === 'right' ) {
 		this.frame.$element.parent()
 			.css( 'left', surfaceOffset.left - padding );
 	} else {
