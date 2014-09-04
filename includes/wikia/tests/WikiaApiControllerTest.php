@@ -342,9 +342,14 @@ class WikiaApiControllerTest extends PHPUnit_Framework_TestCase {
 				[ 'ii' => WikiaApiController::OUTPUT_FIELD_TYPE_INT ]
 			],
 			[
-				[ "items" => [ [ 'ii' => '12.3', 'xx' => 'aa' ] ] ],
-				[ "items" => [ [ 'ii' => 12.3, 'xx' => 'aa' ] ] ],
+				[ "items" => [ [ 'ii' => '12.3', 'xx' => 'bb' ] ] ],
+				[ "items" => [ [ 'ii' => 12.3, 'xx' => 'bb' ] ] ],
 				[ 'ii' => WikiaApiController::OUTPUT_FIELD_TYPE_FLOAT ]
+			],
+			[
+				[ "items" => [ [ 'ii' => [ "str" => 12 ], 'xx' => 'aa' ] ] ],
+				[ "items" => [ [ 'ii' => [ "str" => "12" ], 'xx' => 'aa' ] ] ],
+				[ 'str' => WikiaApiController::OUTPUT_FIELD_TYPE_STRING ]
 			],
 			[
 				[ "items" => [ [ 'ii' => null, 'xx' => 'aa' ] ] ],

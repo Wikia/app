@@ -15,6 +15,7 @@ class WikiaApiController extends WikiaController {
 	const OUTPUT_FIELD_TYPE_OBJECT = 2;
 	const OUTPUT_FIELD_TYPE_INT = 4;
 	const OUTPUT_FIELD_TYPE_FLOAT = 8;
+	const OUTPUT_FIELD_TYPE_STRING = 16;
 	protected $outputFieldsTypes = [ ];
 
 	private $allowedFormats = array(
@@ -300,6 +301,8 @@ class WikiaApiController extends WikiaController {
 				return (object)$val;
 			case self::OUTPUT_FIELD_TYPE_INT:
 				return intval( $val );
+			case self::OUTPUT_FIELD_TYPE_STRING:
+				return (string) $val ;
 			case self::OUTPUT_FIELD_TYPE_FLOAT:
 				return floatval( $val );
 		}
