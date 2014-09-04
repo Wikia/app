@@ -21,7 +21,7 @@ class MonetizationModuleHelper extends WikiaModel {
 	const RENDERING_IN_PROCESS = 1;
 
 	const API_VERSION = 'v1';
-	const API_DISPLAY = 'display/api';
+	const API_DISPLAY = 'display/api/';
 	const VAR_NAME_API_TIMEOUT = 'wgMonetizationModuleTimeout';
 	const IN_CONTENT_KEYWORD = '<h2>';
 
@@ -120,11 +120,12 @@ class MonetizationModuleHelper extends WikiaModel {
 			return $this->setThemeSettings( $json_results, $cacheKey );
 		}
 
-		if ( !endsWith( $this->wg->MonetizationServiceUrl, '/' ) ) {
-			$url = $this->wg->MonetizationServiceUrl . '/';
+		$url = $this->wg->MonetizationServiceUrl;
+		if ( !endsWith( $url, '/' ) ) {
+			$url .= '/';
 		}
-
 		$url .= self::API_DISPLAY . self::API_VERSION . '?' . http_build_query( $params );
+
 		$options = [ 'noProxy' => true ];
 		$timeout = WikiFactory::getVarValueByName( self::VAR_NAME_API_TIMEOUT, WikiFactory::COMMUNITY_CENTRAL );
 		if ( !empty( $timeout ) ) {

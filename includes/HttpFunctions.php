@@ -53,6 +53,11 @@ class Http {
 				$req->setHeader( $name, $value );
 			}
 		}
+
+		// @author macbre
+		// pass Request ID to internal requests
+		$req->setHeader( Wikia\Util\RequestId::REQUEST_HEADER_NAME, Wikia\Util\RequestId::instance()->getRequestId() );
+
 		// Wikia change - end
 		if( isset( $options['userAgent'] ) ) {
 			$req->setUserAgent( $options['userAgent'] );
@@ -71,13 +76,16 @@ class Http {
 		if ( class_exists( 'Wikia\\Logger\\WikiaLogger' ) && ( !$isOk || false === strpos( $caller, 'Phalanx' ) ) ) {
 
 			$requestTime = (int)( ( microtime( true ) - $requestTime ) * 1000.0 );
+			$backendTime = $req->getResponseHeader('x-backend-response-time') ?: 0;
+
 			$params = [
 				'statusCode' => $req->getStatus(),
 				'reqMethod' => $method,
 				'reqUrl' => $url,
 				'caller' => $caller,
 				'isOk' => $isOk,
-				'requestTimeMS' => $requestTime
+				'requestTimeMS' => $requestTime,
+				'backendTimeMS' => intval( 1000 * $backendTime),
 			];
 			if ( !$isOk ) {
 				$params[ 'statusMessage' ] = $status->getMessage();

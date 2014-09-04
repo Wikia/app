@@ -259,10 +259,11 @@ $wgAutoloadClasses[ 'WikiaSQL'                        ] = "$IP/includes/wikia/Wi
 $wgAutoloadClasses[ 'WikiaSQLCache'                   ] = "$IP/includes/wikia/WikiaSQLCache.class.php";
 $wgAutoloadClasses[ 'WikiaSanitizer'                  ] = "$IP/includes/wikia/WikiaSanitizer.class.php";
 $wgAutoloadClasses[ 'ScribePurge'                     ] = "$IP/includes/cache/wikia/ScribePurge.class.php";
-$wgAutoloadClasses[ 'Transaction'                     ] = "$IP/includes/wikia/transactiontrace/Transaction.php";
-$wgAutoloadClasses[ 'TransactionTrace'                ] = "$IP/includes/wikia/transactiontrace/TransactionTrace.php";
-$wgAutoloadClasses[ 'TransactionClassifier'           ] = "$IP/includes/wikia/transactiontrace/TransactionClassifier.php";
-$wgAutoloadClasses[ 'TransactionTraceNewrelic'        ] = "$IP/includes/wikia/transactiontrace/TransactionTraceNewrelic.php";
+$wgAutoloadClasses[ 'Transaction'                     ] = "$IP/includes/wikia/transaction/Transaction.php";
+$wgAutoloadClasses[ 'TransactionTrace'                ] = "$IP/includes/wikia/transaction/TransactionTrace.php";
+$wgAutoloadClasses[ 'TransactionClassifier'           ] = "$IP/includes/wikia/transaction/TransactionClassifier.php";
+$wgAutoloadClasses[ 'TransactionTraceNewrelic'        ] = "$IP/includes/wikia/transaction/TransactionTraceNewrelic.php";
+$wgAutoloadClasses[ 'TransactionTraceScribe'          ] = "$IP/includes/wikia/transaction/TransactionTraceScribe.php";
 $wgHooks          [ 'ArticleViewAddParserOutput'      ][] = 'Transaction::onArticleViewAddParserOutput';
 $wgHooks          [ 'RestInPeace'                     ][] = 'Transaction::onRestInPeace';
 $wgHooks          [ 'RestInPeace'                     ][] = 'ScribePurge::onRestInPeace';
@@ -725,6 +726,7 @@ $wgSharedKeyPrefix = "wikicities"; // default value for shared key prefix, @see 
 $wgWikiaMailerDB = 'wikia_mailer';
 
 $wgAutoloadClasses['LBFactory_Wikia'] = "$IP/includes/wikia/LBFactory_Wikia.php";
+$wgAutoloadClasses['Wikia\\MastersPoll'] = "$IP/includes/wikia/MastersPoll.php";
 
 /**
  * @name wgEnableBlogCommentEdit, wgEnabledGroupedBlogComments, wgEnableBlogWatchlist
