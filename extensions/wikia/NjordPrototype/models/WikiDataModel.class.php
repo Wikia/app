@@ -51,7 +51,6 @@ class WikiDataModel {
 	 */
 	private function initializeImagePath( $imageName ) {
 		$imageTitle = Title::newFromText( $imageName, NS_FILE );
-
 		$file = wfFindFile( $imageTitle );
 		if ( $file && $file->exists() ) {
 			$this->imageName = $imageName;
@@ -63,6 +62,15 @@ class WikiDataModel {
 			$this->imageName = null;
 			$this->imagePath = null;
 		}
+	}
+
+	public function storeInPage() {
+		// TODO: implementation
+
+		$pageTitleObj = Title::newFromText( $this->pageName );
+		$pageArticleObj = new Article( $pageTitleObj );
+		$pageArticleObj->doPurge();
+
 	}
 
 }

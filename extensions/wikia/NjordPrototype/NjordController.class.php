@@ -16,9 +16,10 @@ class NjordController extends WikiaController {
 		$wikiDataModel = new WikiDataModel( Title::newMainPage()->getText() );
 		$wikiDataModel->setFromAttributes( $wikiData );
 
-		/**
-		 * TODO: edit the article (#smutnyszok)
-		 */
+		$wikiDataModel->storeInPage();
+		$wikiDataModel->storeInProps();
+
+
 		$this->wikiData = $wikiDataModel;
 	}
 
