@@ -675,8 +675,8 @@ class WikiaFileHelper extends Service {
 			}
 		}
 
-		$path = $gen->width( $dimension )->height( $dimension )->url();
+		$url = $gen->width( $dimension )->height( $dimension )->url();
 
-		return [ F::app()->wg->ThumbnailerRootUrl . $path, $smallerThanDimensions ];
+		return [ $url, $smallerThanDimensions ];
 	}
 }

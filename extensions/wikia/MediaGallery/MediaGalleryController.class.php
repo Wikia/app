@@ -29,17 +29,16 @@ class MediaGalleryController extends WikiaController {
 				'height' => $dimension,
 			];
 
-			list( $url, $smallerThanDim ) = WikiaFileHelper::getSquaredThumbnailUrl( $file, $dimension );
+			list( $thumbUrl, $smallerThanDim ) = WikiaFileHelper::getSquaredThumbnailUrl( $file, $dimension );
 			$thumb = $file->transform( $dimensions );
-			$thumbUrl = wfReplaceImageServer( $url, $file->getTimestamp() );
 			$thumb->setUrl( $thumbUrl );
 
 			$markup = $this->app->renderView(
 				'ThumbnailController',
 				'gallery',
 				[
-					'thumb'  => $thumb,
-					'border' => $smallerThanDim,
+					'thumb' => $thumb,
+					'options' => [ 'border' => $smallerThanDim ],
 				]
 			);
 
