@@ -24,7 +24,8 @@ class CrunchyrollVideoHandler extends VideoHandler {
 	/**
 	 * @inheritdoc
 	 */
-	public function getEmbed( $articleId, $width, $autoplay = false, $isAjax = false, $postOnload = false ) {
+	public function getEmbed( $width, array $options = [] ) {
+		$autoplay = !empty( $options['autoplay'] );
 		$height =  $this->getHeight( $width );
 		$sizeString = $this->getSizeString( $width, $height, 'inline' );
 
