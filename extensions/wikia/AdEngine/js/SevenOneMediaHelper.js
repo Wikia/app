@@ -1,13 +1,14 @@
 /* jshint camelcase:false, maxparams:false */
-/*global define*/
+/*global define,require*/
 define('ext.wikia.adEngine.sevenOneMediaHelper', [
 	'jquery',
 	'wikia.log',
 	'wikia.window',
 	'wikia.tracker',
 	'wikia.scriptwriter',
-	'ext.wikia.adEngine.adLogicPageParams'
-], function ($, log, window, tracker, scriptWriter, adLogicPageParams) {
+	'ext.wikia.adEngine.adLogicPageParams',
+	require.optional('ext.wikia.adEngine.krux')
+], function ($, log, window, tracker, scriptWriter, adLogicPageParams, Krux) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.sevenOneMediaHelper',
@@ -17,7 +18,17 @@ define('ext.wikia.adEngine.sevenOneMediaHelper', [
 		initialized = false,
 		pageLevelParams = adLogicPageParams.getPageLevelParams(),
 		soiKeywordsParams = ['pform', 'media', 'gnre', 'egnre', 's1'],
-
+		soiKeywordsSegments = {
+			'ocr05ve5z': true,
+			'ocr1te1tc': true,
+			'ocr2nqlbs': true,
+			'ocry7a4xg': true,
+			'ocr52415y': true,
+			'ocr7jc18a': true,
+			'ocr6m2jd6': true,
+			'ocr8h7h1n': true,
+			'ocr88oqh9': true
+		},
 		slotVars = {
 			'popup1': {
 				SOI_PU1: true,
@@ -224,6 +235,14 @@ define('ext.wikia.adEngine.sevenOneMediaHelper', [
 			if (val && val.length) {
 				for (valIndex = 0, valLen = val.length; valIndex < valLen; valIndex += 1) {
 					keywords.push(val[valIndex]);
+				}
+			}
+		}
+
+		if (Krux && Krux.segments && Krux.segments.length) {
+			for (i = 0, len = Krux.segments.length; i < len; i += 1) {
+				if (soiKeywordsSegments[Krux.segments[i]]) {
+					keywords.push(Krux.segments[i]);
 				}
 			}
 		}

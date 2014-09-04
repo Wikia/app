@@ -1,6 +1,6 @@
-@import "color";
-@import "../mixins/clearfix";
-@import "../mixins/gradient";
+@import "skins/shared/color";
+@import "skins/shared/mixins/clearfix";
+@import "skins/shared/mixins/gradient";
 
 ul.tabs,
 ol.tabs {

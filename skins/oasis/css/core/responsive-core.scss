@@ -1,8 +1,8 @@
 @import "layout";
 @import "responsive-variables";
 
-@import "../mixins/box-sizing";
-@import "../mixins/calc";
+@import "skins/shared/mixins/box-sizing";
+@import "skins/shared/mixins/calc";
 
 @if ( $responsive-layout-enabled ) {
 	html {

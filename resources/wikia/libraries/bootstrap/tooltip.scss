@@ -1,6 +1,6 @@
-@import "skins/oasis/css/core/color";
+@import "skins/shared/color";
 @import "skins/oasis/css/core/layout";
-@import "skins/oasis/css/mixins/box-shadow";
+@import "skins/shared/mixins/box-shadow";
 
 $color-shadow: mix(#000000, $color-page, 50%);
 $tooltip-padding: 10px 14px;
