@@ -85,26 +85,47 @@ ve.ui.WikiaTransclusionDialog.prototype.initialize = function () {
  * @inheritdoc
  */
 ve.ui.WikiaTransclusionDialog.prototype.onTransclusionReady = function () {
-	var parts;
+	var zeroStatePage,
+		parts = this.transclusionModel.getParts(),
+		spec = parts[0].getSpec(),
+		name = spec.getLabel(),
+		getInfoPage = new ve.ui.WikiaTemplateGetInfoPage( spec, name, { '$': this.$ } );
+
 	// Parent method
 	ve.ui.WikiaTransclusionDialog.super.prototype.onTransclusionReady.call( this );
 
-	this.filterInput.focus();
+	if ( parts.length === 1 && parts[0] instanceof ve.dm.MWTemplateModel ) {
 
-	// ve.dm.MWTransclusionModel.prototype.process emits "change" that we want to "ignore"
-	// Other way to implement this would be to override that process method
-	this.transclusionModel.once( 'change', ve.bind( function () {
-		this.transclusionModel.connect( this, { 'change': 'onParameterInputValueChange' } );
-	}, this ) );
+		// Zero state
+		if ( Object.keys( parts[0].getParameters() ).length === 0 ) {
+			// Hide stuff
+			this.$filter.hide();
+			this.frame.$content.addClass( 'oo-ui-dialog-content-footless ve-ui-wikiaTransclusionDialog-zeroState' );
 
-	parts = this.transclusionModel.getParts();
-	if ( parts.length === 1 &&
-		parts[0] instanceof ve.dm.MWTemplateModel &&
-		Object.keys( parts[0].getParameters() ).length === 0 ) {
-		ve.track( 'wikia', {
-			'action': ve.track.actions.OPEN,
-			'label': 'dialog-template-no-parameters'
-		} );
+			// Content
+			zeroStatePage = new OO.ui.PageLayout( 'zeroState', {} );
+			zeroStatePage.$element.text( ve.msg( 'wikia-visualeditor-dialog-transclusion-zerostate' ) );
+			this.bookletLayout.addPages( [ zeroStatePage ] );
+
+			// Position
+			this.position( true );
+
+			// Track
+			ve.track( 'wikia', {
+				'action': ve.track.actions.OPEN,
+				'label': 'dialog-template-no-parameters'
+			} );
+		}
+
+		this.bookletLayout.addPages( [ getInfoPage ] );
+	} else {
+		this.filterInput.focus();
+
+		// ve.dm.MWTransclusionModel.prototype.process emits "change" that we want to "ignore"
+		// Other way to implement this would be to override that process method
+		this.transclusionModel.once( 'change', ve.bind( function () {
+			this.transclusionModel.connect( this, { 'change': 'onParameterInputValueChange' } );
+		}, this ) );
 	}
 };
 
@@ -233,12 +254,20 @@ ve.ui.WikiaTransclusionDialog.prototype.getTeardownProcess = function ( data ) {
 			if ( this.allowScroll ) {
 				this.unsetAllowScroll();
 			}
+			if ( this.$zeroState ) {
+				this.$zeroState.remove();
+			}
 			this.frame.$element.parent().css( {
 				'width': '',
 				'height': '',
 				'max-height': ''
 			} );
-			this.frame.$content.removeClass( 've-ui-mwTemplateDialog-insertFlow ve-ui-mwTemplateDialog-editFlow' );
+			this.frame.$content.removeClass( [
+				've-ui-mwTemplateDialog-insertFlow',
+				've-ui-mwTemplateDialog-editFlow',
+				'oo-ui-dialog-content-footless',
+				've-ui-wikiaTransclusionDialog-zeroState'
+			].join( ' ' ) );
 		}, this );
 };
 
@@ -281,9 +310,9 @@ ve.ui.WikiaTransclusionDialog.prototype.onFilterInputBlur = function () {
  *
  * @method
  */
-ve.ui.WikiaTransclusionDialog.prototype.position = function () {
+ve.ui.WikiaTransclusionDialog.prototype.position = function ( zeroState ) {
 	var viewportHeight = $( window ).height(),
-		dialogHeight = Math.min( 600, viewportHeight * 0.7 ),
+		dialogHeight = zeroState ? 200 : Math.min( 600, viewportHeight * 0.7 ),
 		padding = 10,
 		$surface = this.surface.getView().$element,
 		surfaceOffset = $surface.offset();
