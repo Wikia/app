@@ -102,6 +102,16 @@ class DivContainingHeadersVisitor extends DOMNodeVisitorBase {
 	}
 
 	/**
+	 * From description of the task: PLA-1848
+	 *
+	 * Tabs should be rendered as ordinary sections with the same level as the section above.
+	 * The exception is level 1 which is unique to article title.
+	 *
+	 * Sections inside the tabview cannot have levels lower or equal than the tabs.
+	 * Such sections have to have their level increased to be one higher than the tab.
+	 *
+	 * This should apply to the whole tree of levels.
+	 *
 	 * @param $tabSection
 	 */
 	protected function adjustLevel( $tabSection ) {
@@ -109,8 +119,11 @@ class DivContainingHeadersVisitor extends DOMNodeVisitorBase {
 		if ( $this->getJsonFormatBuilder()->getCurrentContainer()->getType() === 'section' ) {
 			$level = $this->getJsonFormatBuilder()->getCurrentContainer()->getLevel();
 		}
-		if ( $level > 1 ) {
-			$this->addLevel( $tabSection, $level - 1 );
+		if ( $level > 0 ) {
+			if ( $level > 1 ) {
+				$level -= 1;
+			}
+			$this->addLevel( $tabSection, $level );
 		}
 	}
 
