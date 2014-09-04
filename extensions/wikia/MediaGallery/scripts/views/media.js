@@ -28,6 +28,9 @@ define('mediaGallery.media', [], function () {
 				self.captionHoverOut();
 			} else {
 				self.$caption.addClass('clicked');
+				// captionHover here is required for touch screen interactions. mouseenter (bound by
+				// hover above) is only triggered for the first click on the caption, unless the user
+				// clicks outside the caption. This ensures captionHover will be called either way.
 				self.captionHover();
 			}
 		});
