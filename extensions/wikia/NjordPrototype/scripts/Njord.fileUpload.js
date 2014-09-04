@@ -12,10 +12,15 @@
 	});
 	$heroModuleUpload.on('drop', function (e) {
 		e.preventDefault();
-		console.info(e.dataTransfer.files)
 		var fd = new FormData();
-		fd.append('file', e.dataTransfer.files[0]);
-
+		if (e.dataTransfer.files.length) {
+			//if file is uploaded
+			fd.append('file', e.dataTransfer.files[0]);
+		} else if (e.dataTransfer.getData('text/html')) {
+			//if url
+			var $img = $(e.dataTransfer.getData('text/html'));
+			fd.append('url', $img.attr('src'));
+		}
 		var client = new XMLHttpRequest();
 		client.open('POST', '/wikia.php?controller=Njord&method=upload', true);
 		client.onreadystatechange = function () {
