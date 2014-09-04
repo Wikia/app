@@ -4,19 +4,25 @@ class WallNotificationsExternalController extends WikiaController {
 	const WALL_WIKI_NAME_MAX_LEN = 32;
 
 	var $helper;
+	private $controllerName;
+
 	public function __construct() {
 		$this->app = F::app();
 	}
 
 	public function init() {
+		global $wgEnableGlobalNavExt;
 		$this->helper = new WallHelper();
+		if( !empty( $wgEnableGlobalNavExt ) ) {
+			$this->controllerName = 'WallNotificationsVenus';
+		} else {
+			$this->controllerName = 'WallNotifications';
+		}
 	}
 
 	public function getUpdateCounts() {
-		global $wgUser;
 		$wne = new WallNotificationsEveryone();
-		//$wne->processQueue( $this->wg->user->getId() );
-		$wne->processQueue( $wgUser->getId() );
+		$wne->processQueue( $this->wg->user->getId() );
 
 		$wn = new WallNotifications();
 		$this->getUpdateCountsInternal( $wn );
@@ -53,12 +59,10 @@ class WallNotificationsExternalController extends WikiaController {
 	}
 
 	private function getUpdateCountsInternal( WallNotifications $wn ) {
-		global $wgUser;
-
 		wfProfileIn(__METHOD__);
 
 		$app = F::app();
-		$all = $wn->getCounts( $wgUser->getId() );
+		$all = $wn->getCounts( $this->wg->user->getId() );
 
 		$sum = 0;
 		foreach( $all as $k => $wiki ) {
@@ -75,8 +79,7 @@ class WallNotificationsExternalController extends WikiaController {
 
 		$app->wg->Memc->set( $notificationKey,  $this->wg->User->getId() );
 
-		//$this->response->setVal( 'html', $this->app->renderView( 'WallNotifications', 'Update', [
-		$this->response->setVal( 'html', $this->app->renderView( 'WallNotificationsVenus', 'Update', [
+		$this->response->setVal( 'html', $this->app->renderView( $this->controllerName, 'Update', [
 			'notificationCounts' => $all, 'count' => $sum, 'notificationKey' => $notificationKey
 		] ) );
 		$this->response->setVal( 'count', $sum );
@@ -95,8 +98,7 @@ class WallNotificationsExternalController extends WikiaController {
 
 		$this->response->setVal(
 			'html',
-			//$this->app->renderView( 'WallNotifications', 'UpdateWiki', [ 'notifications'=>$all ] )
-			$this->app->renderView( 'WallNotificationsVenus', 'UpdateWiki', [ 'notifications'=>$all ] )
+			$this->app->renderView(  $this->controllerName, 'UpdateWiki', [ 'notifications'=>$all ] )
 		);
 		$this->response->setVal( 'unread', $all[ 'unread_count' ] );
 		$this->response->setVal( 'status', true );

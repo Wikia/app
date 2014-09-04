@@ -141,45 +141,43 @@ class WallNotificationsVenusController extends WikiaController {
 	public function Notification() {
 		$isUnread = 'unread';
 		$notify = $this->request->getVal( 'notify' );
+
 		if( empty( $notify['grouped'][0] ) ) {
 			// do not render this notification, it's bugged
 			return false;
 		}
 
-		$data = $notify['grouped'][0]->data;
+		$firstNotify =  $notify['grouped'][0];
+
+		$data = $firstNotify->data;
 		if( isset( $data->type ) && ($data->type === 'ADMIN' || $data->type === 'OWNER') ) {
 			$this->forward( __CLASS__, 'NotificationAdmin' );
 			return;
 		}
-		$authors = [];
-		foreach( $notify['grouped'] as $notify_entity ) {
-			$authors[] = [
-				'displayname' => $notify_entity->data->msg_author_displayname,
-				'username' => $notify_entity->data->msg_author_username,
-				'avatar' => AvatarService::renderAvatar($notify_entity->data->msg_author_username, 36 )
-			];
-		}
+
+		$authors[] = [
+			'displayname' => $firstNotify->data->msg_author_displayname,
+			'username' => $firstNotify->data->msg_author_username,
+			'avatar' => AvatarService::renderAvatar($firstNotify->data->msg_author_username, 36 )
+		];
 
 		// 1 = 1 user,
 		// 2 = 2 users,
 		// 3 = more than 2 users
 
-		$userCount = 1;
-		$authorsCount = count( $authors );
-		if( $authorsCount == 2 ){
-			$userCount = 2;
-		} elseif( $authorsCount > 2 ) {
+		$userCount = count($notify['grouped']);
+		if( $userCount > 3 ) {
 			$userCount = 3;
 		}
 
 		$msg = "";
 		wfRunHooks('NotificationGetNotificationMessage',[
-			&$this, &$msg, $notify['grouped'][0]->isMain(), $data, $authors, $userCount,  $this->wg->User->getName()
+			&$this, &$msg, $firstNotify->isMain(), $data, $authors, $userCount,  $this->wg->User->getName()
 		] );
 
 		if( empty( $msg ) ) {
 			$msg = $this->getNotificationMessage(
-				$notify['grouped'][0]->isMain(),
+				$firstNotify->isMain(),
 				$data,
 				$authors,
 				$userCount,
