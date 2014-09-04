@@ -410,21 +410,17 @@ ve.ce.FocusableNode.prototype.positionHighlights = function () {
 		return;
 	}
 
-	var i, l, top, left, bottom, right,
+	var i, l,
 		surfaceOffset = this.surface.getSurface().$element[0].getBoundingClientRect();
 
 	this.computeRects();
 	this.$highlights.empty();
 
 	for ( i = 0, l = this.outerRects.length; i < l; i++ ) {
-		top = this.outerRects[i].top - surfaceOffset.top;
-		left = this.outerRects[i].left - surfaceOffset.left;
-		bottom = this.outerRects[i].bottom - surfaceOffset.top;
-		right = this.outerRects[i].right - surfaceOffset.left;
 		this.$highlights.append(
 			this.createHighlight().css( {
-				'top': top,
-				'left': left,
+				'top': this.outerRects[i].top - surfaceOffset.top,
+				'left': this.outerRects[i].left - surfaceOffset.left,
 				'height': this.outerRects[i].height,
 				'width': this.outerRects[i].width
 			} )
