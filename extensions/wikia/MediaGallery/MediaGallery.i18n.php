@@ -8,6 +8,12 @@ $messages['en'] = [
 	'mediagallery-add-image-button' => 'Add an image',
 ];
 
+$messages['qqq'] = [
+	'mediagallery-show-more' => 'Button to expand the gallery, showing more images',
+	'mediagallery-show-less' => 'Button to collapse the gallery, showing fewer images',
+	'mediagallery-add-image-button' => 'Button that allows users to add additional images to the gallery',
+];
+
 $messages['es'] = [
 	'mediagallery-show-more' => 'Mostrar más',
 	'mediagallery-show-less' => 'Mostrar menos',
