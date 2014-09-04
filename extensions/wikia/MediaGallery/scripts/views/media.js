@@ -16,10 +16,24 @@ define('mediaGallery.media', [], function () {
 	};
 
 	Media.prototype.setupCaption = function () {
+		var self = this;
+
 		this.$caption.hover(
 			$.proxy(this.captionHover, this),
 			$.proxy(this.captionHoverOut, this)
 		);
+
+		this.$el.on('click', function () {
+			if (self.$caption.hasClass('clicked')) {
+				self.captionHoverOut();
+			} else {
+				self.$caption.addClass('clicked');
+				// captionHover here is required for touch screen interactions. mouseenter (bound by
+				// hover above) is only triggered for the first click on the caption, unless the user
+				// clicks outside the caption. This ensures captionHover will be called either way.
+				self.captionHover();
+			}
+		});
 	};
 
 	/**
@@ -58,7 +72,7 @@ define('mediaGallery.media', [], function () {
 
 	Media.prototype.captionHoverOut = function () {
 		this.$caption
-			.removeClass('hovered scroll')
+			.removeClass('hovered scroll clicked')
 			.removeAttr('style');
 	};
 
