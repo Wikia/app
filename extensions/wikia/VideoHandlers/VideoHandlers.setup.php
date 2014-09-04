@@ -180,6 +180,7 @@ $wgAutoloadClasses['RealgravityVideoHandler'] =  $dir . '/handlers/RealgravityVi
 $wgAutoloadClasses['RealgravityApiWrapper'] =  $dir . '/apiwrappers/RealgravityApiWrapper.class.php';
 $wgMediaHandlers['video/realgravity'] = 'RealgravityVideoHandler';
 
+// Uses Ooyala for video handler
 $wgAutoloadClasses['ScreenplayApiWrapper'] =  $dir . '/apiwrappers/ScreenplayApiWrapper.class.php';
 
 $wgAutoloadClasses['IgnVideoHandler'] =  $dir . '/handlers/IgnVideoHandler.class.php';
