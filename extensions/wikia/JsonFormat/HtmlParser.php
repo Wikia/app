@@ -6,6 +6,12 @@ use Wikia\Measurements\Time;
 
 class HtmlParser {
 
+	/**
+	 * Prevention from circular references, when parsing articles with tabs.
+	 * Used for storing titles of articles, which been visited.
+	 * @var array
+	 * @see DivContainingHeadersVisitor::parseTabs
+	 */
 	public static $VISITED = [ ];
 
 	/**

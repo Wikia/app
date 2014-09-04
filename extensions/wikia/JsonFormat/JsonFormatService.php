@@ -56,8 +56,18 @@ class JsonFormatService extends \WikiaService {
 		$cacheKey = wfMemcKey( "SimpleJson", $article->getPage()->getId(), self::SIMPLE_JSON_SCHEMA_VERSION );
 		$jsonSimple = $this->app->wg->memc->get( $cacheKey );
 		if ( $jsonSimple === false ) {
+
+			/**
+			 * Prevention from circular references, when parsing articles with tabs.
+			 *
+			 * E.g. when page contains tab, which is actually link to itself,
+			 * or if any tab contains tab, which referenced to given page.
+			 *
+			 * @see DivContainingHeadersVisitor::parseTabs
+			 */
 			\Wikia\JsonFormat\HtmlParser::$VISITED[ $article->getTitle()->getText() ] = true;
 			$jsonFormatRootNode = $this->getJsonFormatForArticle( $article );
+			// We have finished parsing of article, so we can clean array of visited articles
 			\Wikia\JsonFormat\HtmlParser::$VISITED = [ ];
 
 			$simplifier = new Wikia\JsonFormat\JsonFormatSimplifier;
