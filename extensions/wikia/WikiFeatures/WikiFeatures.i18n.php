@@ -118,6 +118,10 @@ $messages['qqq'] = array(
 	'wikifeatures-feature-description-wgEnableChat' => 'Feel free not to translate "lol omg rolfl" if there is no proper equivalent in your language. These are acronyms for Laughing Out Loud, Oh My God, and Rolling On The Floor Laughing.',
 	'wikifeatures-feature-heading-wgEnableWikiaInteractiveMaps' => 'Heading title for the Maps feature.',
 	'wikifeatures-feature-description-wgEnableWikiaInteractiveMaps' => 'Description text for the Maps feature.',
+
+	'wikifeatures-feature-heading-wgEnableMediaGalleryExt' => 'Header text for enabling the Media Gallery feature',
+	'wikifeatures-feature-description-wgEnableMediaGalleryExt' => 'Description text for enabling the Media Gallery feature',
+
 	'action-wikifeaturesview' => '{{doc-action|wikifeaturesview}}',
 );
 
