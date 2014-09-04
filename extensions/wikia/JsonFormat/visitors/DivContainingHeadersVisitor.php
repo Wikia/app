@@ -43,42 +43,75 @@ class DivContainingHeadersVisitor extends DOMNodeVisitorBase {
 
 		// current div contains tabs
 		if( strpos( $currentNode->getAttribute('id'), 'flytab' ) !== false ) {
-			$xpath = new DOMXPath( $currentNode->ownerDocument );
-			$tabUrls = $xpath->query(".//@href", $currentNode);
-			$htmlParser = new Wikia\JsonFormat\HtmlParser();
-			foreach( $tabUrls as $url ) {
-				$url = preg_replace( '/^\/wiki\/(.+?)\?.*$/i', '$1', $url->value );
-				$title = Title::newFromURL( $url );
-				$article = Article::newFromTitle( $title, RequestContext::getMain() );
-
-				if( \Wikia\JsonFormat\HtmlParser::$VISITED[ $article->getTitle()->getText() ] ) {
-					continue;
-				}
-				\Wikia\JsonFormat\HtmlParser::$VISITED[ $article->getTitle()->getText() ] = true;
-
-				$article->getContent();
-				$html = $article->getPage()->getParserOutput( \ParserOptions::newFromContext( new RequestContext() ) )->getText();
-				$jsonArticle = $htmlParser->parse( $html );
-
-				$tabSection = new JsonFormatSectionNode( 1, $title->getText() );
-				foreach( $jsonArticle->getChildren() as $child ) {
-					$tabSection->addChild( $child );
-				}
-
-				$level = 0;
-				if( $this->getJsonFormatBuilder()->getCurrentContainer()->getType() === 'section' ) {
-					$level = $this->getJsonFormatBuilder()->getCurrentContainer()->getLevel();
-				}
-				if( $level > 1 ) {
-					$this->addLevel( $tabSection, $level - 1 );
-				}
-
-				$this->getJsonFormatBuilder()->add( $tabSection );
-			}
+			$this->parseTabs( $currentNode );
 			return;
 		}
 
 		$this->iterate( $currentNode->childNodes );
+	}
+
+	/**
+	 * @param DOMNode $currentNode
+	 */
+	protected function parseTabs( DOMNode $currentNode ) {
+		$xpath = new DOMXPath( $currentNode->ownerDocument );
+		$tabUrls = $xpath->query( ".//@href", $currentNode );
+
+		$htmlParser = new Wikia\JsonFormat\HtmlParser();
+
+		foreach ( $tabUrls as $url ) {
+			$article = $this->getArticleByUrl( $url );
+			$title = $article->getTitle()->getText();
+
+			// Prevent from cyclic references
+			if ( \Wikia\JsonFormat\HtmlParser::$VISITED[ $title ] ) {
+				continue;
+			}
+			\Wikia\JsonFormat\HtmlParser::$VISITED[ $title ] = true;
+
+			$tabSection = $this->parseArticleToSection( $article, $htmlParser );
+
+			$this->adjustLevel( $tabSection );
+
+			$this->getJsonFormatBuilder()->add( $tabSection );
+		}
+	}
+
+	protected function getArticleByUrl( $url ) {
+		// Transforming url, e.g.:
+		// "/wiki/Some_Title?action=render" -> "Some_Title"
+		$url = preg_replace( '/^\/wiki\/(.+?)\?.*$/i', '$1', $url->value );
+		$title = Title::newFromURL( $url );
+		$article = Article::newFromTitle( $title, RequestContext::getMain() );
+		return $article;
+	}
+
+	/**
+	 * @param $article
+	 * @param $htmlParser
+	 * @return JsonFormatSectionNode
+	 */
+	protected function parseArticleToSection( $article, $htmlParser ) {
+		$html = $article->getPage()->getParserOutput( \ParserOptions::newFromContext( new RequestContext() ) )->getText();
+		$jsonArticle = $htmlParser->parse( $html );
+		$tabSection = new JsonFormatSectionNode( 1, $article->getTitle()->getText() );
+		foreach ( $jsonArticle->getChildren() as $child ) {
+			$tabSection->addChild( $child );
+		}
+		return $tabSection;
+	}
+
+	/**
+	 * @param $tabSection
+	 */
+	protected function adjustLevel( $tabSection ) {
+		$level = 0;
+		if ( $this->getJsonFormatBuilder()->getCurrentContainer()->getType() === 'section' ) {
+			$level = $this->getJsonFormatBuilder()->getCurrentContainer()->getLevel();
+		}
+		if ( $level > 1 ) {
+			$this->addLevel( $tabSection, $level - 1 );
+		}
 	}
 
 	protected function addLevel( $node, $level ) {
