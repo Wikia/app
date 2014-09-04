@@ -71,7 +71,7 @@ class DivContainingHeadersVisitor extends DOMNodeVisitorBase {
 	 *      </ul>
 	 * </div>
 	 *
-	 * This structure is the same for all wikia pages, which loading tabs bty ajax.
+	 * This structure is the same for all wikia pages, which loading tabs by ajax.
 	 *
 	 * So, this method is iterating over all links inside this list and parsing
 	 * content of corresponding articles (preventing from circular references).
