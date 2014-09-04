@@ -125,8 +125,37 @@ $new-border-color: #c7d1d8;
 }
 */
 
+
+.bubbles {
+	background-color: #fff;
+	border-radius: 50%;
+	height: 20px;
+	left: -6px;
+	position: absolute;
+	top: -6px;
+	width: 20px;
+}
+
+.bubbles-count {
+	background-color: red;
+	border-radius: 50%;
+	color: #fff;
+	font-size: 12px;
+	font-weight: normal;
+	height: 16px;
+	left: 2px;
+	position: absolute;
+	text-align: center;
+	top: 2px;
+	width: 16px;
+}
+
 #notifications {
 	position: relative;
+
+	> a > span {
+		float: right;
+	}
 }
 
 #WallNotificationsVenus {
@@ -154,7 +183,6 @@ $new-border-color: #c7d1d8;
 	}
 
 	.notifications-wiki-header {
-		/* background: #e2e6e9 no-repeat url(/skins/oasis/images/GlobalNavigation/chevron_down.png) 298px 50%; */
 		background-color: #e2e6e9;
 		color: #2b54b5;
 	}
@@ -209,5 +237,35 @@ $new-border-color: #c7d1d8;
 	time {
 		color: $new-border-color;
 		font-size: 12px;
+	}
+}
+
+@media #{$small-only} {
+	#WallNotificationsVenus {
+		@include grid-position('small', 3, 'right', $small-content-padding - 1);
+		@include grid-column-width('small', 6, $small-content-padding);
+
+		.avatars {
+			@include grid-column-width('small', 1);
+		}
+
+		.notification-message {
+			@include grid-column-width('small', 5);
+		}
+	}
+}
+
+@media #{$medium-only} {
+	#WallNotificationsVenus {
+		@include grid-position('medium', 2, 'right', $medium-content-padding - 1);
+		@include grid-column-width('medium', 4, $medium-content-padding);
+
+		.avatars {
+			@include grid-column-width('medium', 1);
+		}
+
+		.notification-message {
+			@include grid-column-width('medium', 3);
+		}
 	}
 }

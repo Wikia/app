@@ -39,6 +39,7 @@ class WallNotificationsVenusController extends WikiaController {
 
 		$notificationCounts = $this->request->getVal( 'notificationCounts' );
 		$this->response->setVal( 'notificationCounts', $notificationCounts );
+		$this->response->setVal( 'wikiCount', count($notificationCounts));
 
 		$unreadCount = $this->request->getVal( 'count ');
 		$this->response->setVal( 'count', $unreadCount );

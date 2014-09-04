@@ -10,7 +10,7 @@ var WallNotifications = $.createClass(Object, {
 		this.currentWikiId = 0; // updated after fetching Notification counts for the 1st time
 		setTimeout( this.proxy( this.updateCounts ), 300);
 
-		this.$bubblesCount = $('#bubbles_count');
+		this.$bubblesCount = $('.notifications-count');
 
 		this.$notifications = $('#notifications');
 

@@ -6,6 +6,9 @@
 		<?= $isAnon ? $loginLinkOpeningTag : '<a accesskey="." href="' . $profileLink . '" class="global-navigation-link">' ?>
 		<span class="account-navigation-text"><?= $accountNavigationText ?></span>
 		<div class="avatar-container">
+			<div class="bubbles">
+				<div class="bubbles-count notifications-count"></div>
+			</div>
 			<?= empty( $profileAvatar ) ? $avatarPlaceholder : $profileAvatar ?>
 		</div>
 		<img class="chevron" src="<?= $wg->BlankImgUrl; ?>">
@@ -13,7 +16,7 @@
 		<?php if ( !$isAnon ): ?>
 			<ul class="user-menu subnav show">
 				<li id="notifications">
-					<a href="#">Notifications</a>
+					<a href="#">Notifications <span class="notifications-count"></span></a>
 					<?= $app->renderView('WallNotificationsVenus', 'Index'); ?>
 				</li>
 				<?php foreach( $dropdown as $link ): ?>

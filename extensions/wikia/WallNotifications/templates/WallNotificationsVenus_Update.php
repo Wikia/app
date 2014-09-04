@@ -1,7 +1,3 @@
-<?php
-	global $wgBlankImgUrl;
-	$wikiCount = count($notificationCounts);
-?>
 <? if($user->isLoggedIn()): ?>
 	<li>
 		<header class="notifications-header">
