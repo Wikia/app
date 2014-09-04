@@ -7,7 +7,6 @@
 *
 *  Last Review: 4/24/2009
 */
-
 (function($) {
 
   $.fn.autocomplete = function(options) {
@@ -282,7 +281,7 @@
       f = this.options.fnFormatResult;
       v = this.getQuery(this.currentValue);
       this.container.hide().empty();
-      
+
       for (var i = 0; i < len; i++) {
       	// wikia change - start
       	suggestion = this.suggestions[i];
@@ -296,7 +295,7 @@
         // wikia change - end
         this.container.append(div);
       }
-      
+
       this.enabled = true;
       this.container.show();
 

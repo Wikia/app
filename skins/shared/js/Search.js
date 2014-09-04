@@ -1,12 +1,18 @@
 WikiaSearchApp = (function() {
 
+	// TODO
+	wgServer = '/';
+	wgScript = 'index.php';
+	wgArticlePath = '/wiki/$1';
+
 	function WikiaSearchApp(id) {
 		this.id = id;
 		this.searchForm = $(id);
+
 		// make autocomplete sticked to right, but only under inputbox (not button on it's right)
 		// 4 is border + padding of autocomplete container
-		this.positionRight = this.searchForm.innerWidth() - this.searchForm.children('input:first-child').outerWidth() + 4;
-		this.searchField = this.searchForm.children('input[placeholder]');
+		this.positionRight = 24;
+		this.searchField = this.searchForm.find('input[type="text"]');
 
 		// RT #141437 - hide HOME_TOP_RIGHT_BOXAD when showing search suggestions
 		this.ads = $("[id$='TOP_RIGHT_BOXAD']");
@@ -40,9 +46,9 @@ WikiaSearchApp = (function() {
 
 	// download necessary dependencies (AutoComplete plugin) and initialize search suggest feature for #search_field
 	WikiaSearchApp.prototype.initSuggest = function() {
-		$.when(
+		/*$.when(
 				$.loadJQueryAutocomplete()
-			).then($.proxy(function() {
+			).then($.proxy(function() {*/
 				this.searchField.autocomplete({
 					serviceUrl: wgServer + wgScript + '?action=ajax&rs=getLinkSuggest&format=json',
 					onSelect: $.proxy(function(value, data, event) {
@@ -69,18 +75,25 @@ WikiaSearchApp = (function() {
 						}
 					}, this),
 					appendTo: this.id,
-					deferRequestBy: 400,
+					deferRequestBy: 200,
 					minLength: 3,
 					maxHeight: 1000,
 					selectedClass: 'selected',
 					width: '100%',
-					positionRight: this.positionRight + 'px',
+					//positionRight: this.positionRight + 'px',
+
+					// TODO width vs position right
 					skipBadQueries: true // BugId:4625 - always send the request even if previous one returned no suggestions
 				});
 				if ( window.Wikia.newSearchSuggestions ) {
 					window.Wikia.newSearchSuggestions.setAsMainSuggestions('search');
 				}
-			}, this));
+		// TODO link action
+		this.searchField.bind('suggestShow', $.proxy(function() {
+				this.searchForm.find('.autocomplete').append('<a class="more">See all</a>');
+
+		}, this));
+			/*}, this));*/
 	};
 
 	return WikiaSearchApp;
@@ -89,4 +102,5 @@ WikiaSearchApp = (function() {
 $(function() {
 	new WikiaSearchApp('#WikiaSearch');
 	new WikiaSearchApp('#HeaderWikiaSearch');
+	new WikiaSearchApp('#search-form');
 });

@@ -6,8 +6,8 @@ $VenusConfig['venus_body_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => 'venus',
 	'assets' => [
+		'//resources/jquery/jquery-2.1.1.js',
 		'//extensions/wikia/Venus/scripts/Venus.js',
-		'#function_AssetsConfig::getJQueryUrl',
 	]
 ];
 
@@ -51,5 +51,8 @@ $VenusConfig['global_navigation_js'] = array(
 	'skin' => ['venus', 'oasis'],
 	'assets' => array(
 		'//extensions/wikia/GlobalNavigation/js/GlobalNavigationSearch.js',
+		// TODO don't load autocomplete on every pv
+		'//resources/wikia/libraries/jquery/autocomplete/jquery.autocomplete.js',
+		'//skins/shared/js/Search.js',
 	)
 );
