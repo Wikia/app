@@ -635,9 +635,15 @@ class WikiaFileHelper extends Service {
 	}
 
 	/**
-	 * Return a URL that displays $file shrunk to have the closest dimension meet $box.  Images smaller than the
-	 * bounding box will not be affected.  The part of the image that extends beyond the $box dimensions will be
-	 * cropped out.  The result is an image that completely fills the box with no empty space, but is cropped.
+	 * Return a URL that displays $file scaled and/or cropped to fill the entire square thumbnail dimensions with
+	 * no whitespace if possible.  Images smaller than the thumbnail size will be enlarged if their image area (L x W)
+	 * is above a certain threshold.  This threshold is expressed as a percentage of the requested thumb area and
+	 * given by:
+	 *
+	 *   self::thumbEnlargeThreshold
+	 *
+	 * Small images that do not meet this threshold will be centered within the thumb container and padded with a
+	 * transparent background.
 	 *
 	 * @param File $file
 	 * @param $dimension
