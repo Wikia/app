@@ -3427,9 +3427,6 @@ function wfSetupSession( $sessionId = false ) {
 		wfFixSessionID();
 	}
 	wfSuppressWarnings();
-	/** Wikia change - begin - PLATFORM-308 */
-	$wgSessionDebugData[] = [ 'event' => 'wfSetupSession-session_start' ];
-	/** Wikia change - end */
 	session_start();
 	wfRestoreWarnings();
 }
