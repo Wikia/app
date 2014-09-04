@@ -41,16 +41,41 @@ class DivContainingHeadersVisitor extends DOMNodeVisitorBase {
 		/** @var DOMElement $currentNode */
 		DomHelper::verifyDomElementArgument( $currentNode, "currentNode" );
 
-		// current div contains tabs
 		if( strpos( $currentNode->getAttribute('id'), 'flytab' ) !== false ) {
+			// current div contains tabs
+			// so, we need to handle tabs
 			$this->parseTabs( $currentNode );
-			return;
+		} else {
+			// this is not div with tabs
+			// so, we will just visit child nodes
+			$this->iterate( $currentNode->childNodes );
 		}
-
-		$this->iterate( $currentNode->childNodes );
 	}
 
 	/**
+	 * This is div with tabs.
+	 * It has following structure:
+	 *
+	 * <div id="flytabs_0">
+	 *      <ul>
+	 *          <li class="selected" data-tab="flytabs_00">
+	 *              <a href="/wiki/New_Moon?action=render">
+	 *                  <span>New Moon</span>
+	 *              </a>
+	 *          </li>
+	 *          <li class="" data-tab="flytabs_01">
+	 *              <a href="/wiki/Eclipse?action=render">
+	 *                  <span>Eclipse</span>
+	 *              </a>
+	 *          </li>
+	 *      </ul>
+	 * </div>
+	 *
+	 * This structure is the same for all wikia pages, which loading tabs bty ajax.
+	 *
+	 * So, this method is iterating over all links inside this list and parsing
+	 * content of corresponding articles (preventing from circular references).
+	 *
 	 * @param DOMNode $currentNode
 	 */
 	protected function parseTabs( DOMNode $currentNode ) {
