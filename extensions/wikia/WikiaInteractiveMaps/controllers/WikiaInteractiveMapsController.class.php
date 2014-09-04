@@ -111,8 +111,8 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 		$map = $model->getMapByIdFromApi( $mapId );
 
 		if( isset( $map->title ) ) {
-			$cityId = $map->city_id;
-			$this->redirectIfForeignWiki( $cityId, $mapId );
+			$mapCityId = $map->city_id;
+			$this->redirectIfForeignWiki( $mapCityId, $mapId );
 			$this->wg->out->setHTMLTitle( $map->title );
 
 			$deleted = $map->deleted == WikiaMaps::MAP_DELETED;
@@ -126,7 +126,7 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 			}
 
 			$this->setVal( 'deleted', $deleted );
-			$params = $model->getMapRenderParams( self::shouldHideAttribution( $cityId ) );
+			$params = $model->getMapRenderParams( $mapCityId );
 
 			$url = $model->getMapRenderUrl( [
 				$mapId,

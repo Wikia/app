@@ -204,17 +204,34 @@ class WikiaMaps extends WikiaObject {
 
 	/**
 	 * Returns a list of params for the
-	 * @param $shouldHideAttribution
+	 *
+	 * @param Integer $mapCityId
+	 *
 	 * @return array
 	 */
-	public function getMapRenderParams ( $shouldHideAttribution ) {
+	public function getMapRenderParams( $mapCityId ) {
 		$params = [];
-		$params[ 'uselang' ] = F::app()->wg->lang->getCode();
-		if ( $shouldHideAttribution ) {
-			$params['hideAttr'] = '1';
+		$params[ 'uselang' ] = $this->wg->Lang->getCode();
+
+		if( $this->shouldHideAttribution( $mapCityId ) ) {
+			$params[ 'hideAttr' ] = '1';
 		}
+
 		return $params;
 	}
+
+	/**
+	 * Decides where to hide attribution bar on a map
+	 * For now only for usages inside community that created the map
+	 *
+	 * @param Integer $mapCityId
+	 *
+	 * @return bool
+	 */
+	public function shouldHideAttribution( $mapCityId ) {
+		return intval( $mapCityId ) === intval( $this->wg->CityId );
+	}
+
 	/**
 	 * Returns an array of sorting options instances
 	 *
