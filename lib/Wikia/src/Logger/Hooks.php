@@ -7,6 +7,8 @@
 
 namespace Wikia\Logger;
 
+use Wikia\Util\RequestId;
+
 class Hooks {
 
 	/**
@@ -141,11 +143,9 @@ class Hooks {
 			if ( isset( $_SERVER['HTTP_REFERER'] ) ) {
 				$fields['referrer'] = $_SERVER['HTTP_REFERER'];
 			}
-
-			if ( isset( $_SERVER['UNIQUE_ID'] ) ) {
-				$fields['unique_id'] = $_SERVER['UNIQUE_ID'];
-			}
 		}
+
+		$fields['request_id'] = RequestId::instance()->getRequestId();
 
 		WikiaLogger::instance()->pushContext( $fields, WebProcessor::RECORD_TYPE_FIELDS );
 

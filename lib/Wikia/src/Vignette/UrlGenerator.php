@@ -22,6 +22,8 @@ class UrlGenerator {
 	const MODE_ZOOM_CROP = 'zoom-crop';
 	const MODE_ZOOM_CROP_DOWN = 'zoom-crop-down';
 
+	const FORMAT_WEBP = "webp";
+
 	const REVISION_LATEST = 'latest';
 
 	/** @var string mode of the image we're requesting */
@@ -45,25 +47,6 @@ class UrlGenerator {
 	public function __construct(FileInterface $file) {
 		$this->file = $file;
 		$this->original();
-	}
-
-	/**
-	 * use the thumbnailer in a specific mode
-	 *
-	 * @param string $mode one of the MODE_ constants defined above
-	 * @return $this
-	 * @throws \InvalidArgumentException
-	 */
-	public function mode($mode) {
-		if (!in_array($mode, self::validModes())) {
-			$this->error("invalid mode", [
-				"mode" => $mode,
-			]);
-			throw new \InvalidArgumentException($mode);
-		}
-
-		$this->mode = $mode;
-		return $this;
 	}
 
 	public function width($width) {
@@ -102,8 +85,7 @@ class UrlGenerator {
 	 * @return $this
 	 */
 	public function original() {
-		$this->mode(self::MODE_ORIGINAL);
-		return $this;
+		return $this->mode(self::MODE_ORIGINAL);
 	}
 
 	/**
@@ -111,8 +93,7 @@ class UrlGenerator {
 	 * @return $this
 	 */
 	public function thumbnail() {
-		$this->mode(self::MODE_THUMBNAIL);
-		return $this;
+		return $this->mode(self::MODE_THUMBNAIL);
 	}
 
 	/**
@@ -120,8 +101,7 @@ class UrlGenerator {
 	 * @return $this
 	 */
 	public function thumbnailDown() {
-		$this->mode(self::MODE_THUMBNAIL_DOWN);
-		return $this;
+		return $this->mode(self::MODE_THUMBNAIL_DOWN);
 	}
 
 	/**
@@ -129,8 +109,7 @@ class UrlGenerator {
 	 * @return $this
 	 */
 	public function zoomCrop() {
-		$this->mode(self::MODE_ZOOM_CROP);
-		return $this;
+		return $this->mode(self::MODE_ZOOM_CROP);
 	}
 
 	/**
@@ -138,8 +117,7 @@ class UrlGenerator {
 	 * @return $this
 	 */
 	public function zoomCropDown() {
-		$this->mode(self::MODE_ZOOM_CROP_DOWN);
-		return $this;
+		return $this->mode(self::MODE_ZOOM_CROP_DOWN);
 	}
 
 	/**
@@ -150,8 +128,7 @@ class UrlGenerator {
 	 * @return $this
 	 */
 	public function fixedAspectRatio() {
-		$this->mode(self::MODE_FIXED_ASPECT_RATIO);
-		return $this;
+		return $this->mode(self::MODE_FIXED_ASPECT_RATIO);
 	}
 
 	/**
@@ -160,8 +137,7 @@ class UrlGenerator {
 	 * @return $this
 	 */
 	public function fixedAspectRatioDown() {
-		$this->mode(self::MODE_FIXED_ASPECT_RATIO_DOWN);
-		return $this;
+		return $this->mode(self::MODE_FIXED_ASPECT_RATIO_DOWN);
 	}
 
 	/**
@@ -169,8 +145,7 @@ class UrlGenerator {
 	 * @return $this
 	 */
 	public function topCrop() {
-		$this->mode(self::MODE_TOP_CROP);
-		return $this;
+		return $this->mode(self::MODE_TOP_CROP);
 	}
 
 	/**
@@ -178,8 +153,15 @@ class UrlGenerator {
 	 * @return $this
 	 */
 	public function topCropDown() {
-		$this->mode(self::MODE_TOP_CROP_DOWN);
-		return $this;
+		return $this->mode(self::MODE_TOP_CROP_DOWN);
+	}
+
+	/**
+	 * request an image in webp format
+	 * @return $this
+	 */
+	public function webp() {
+		return $this->format(self::FORMAT_WEBP);
 	}
 
 	/**
@@ -218,6 +200,22 @@ class UrlGenerator {
 		];
 	}
 
+	/**
+	 * use the thumbnailer in a specific mode
+	 *
+	 * @param string $mode one of the MODE_ constants defined above
+	 * @return $this
+	 */
+	private function mode($mode) {
+		$this->mode = $mode;
+		return $this;
+	}
+
+	private function format($format) {
+		$this->query['format'] = $format;
+		return $this;
+	}
+
 	private static function domainShard($imagePath) {
 		global $wgVignetteUrl, $wgImagesServers;
 
@@ -236,19 +234,5 @@ class UrlGenerator {
 		global $wgUploadPath;
 		preg_match('/http(s?):\/\/(.*?)\/(.*?)\/(.*)$/', $wgUploadPath, $matches);
 		return $matches[3];
-	}
-
-	private static function validModes() {
-		return [
-			self::MODE_ORIGINAL,
-			self::MODE_THUMBNAIL,
-			self::MODE_THUMBNAIL_DOWN,
-			self::MODE_FIXED_ASPECT_RATIO,
-			self::MODE_FIXED_ASPECT_RATIO_DOWN,
-			self::MODE_TOP_CROP,
-			self::MODE_TOP_CROP_DOWN,
-			self::MODE_ZOOM_CROP,
-			self::MODE_ZOOM_CROP_DOWN,
-		];
 	}
 }
