@@ -37,7 +37,8 @@ class MercuryApiController extends WikiaController {
 	 * @return mixed
 	 */
 	private function getArticleDetails( $articleId ){
-		return $this->sendRequest( 'ArticlesApi', 'getDetails', ['ids' => $articleId] )->getData()['items'][$articleId];
+		return $this->sendRequest( 'ArticlesApi', 'getDetails', [ 'ids' => $articleId ] )
+			->getData()[ 'items' ][ $articleId ];
 	}
 
 	/**
@@ -47,7 +48,7 @@ class MercuryApiController extends WikiaController {
 	 * @return array
 	 */
 	private function getArticleJson( $articleId ) {
-		return $this->sendRequest( 'ArticlesApi', 'getAsJson', ['id' => $articleId] )->getData();
+		return $this->sendRequest( 'ArticlesApi', 'getAsJson', [ 'id' => $articleId ] )->getData();
 	}
 
 	/**
@@ -57,7 +58,7 @@ class MercuryApiController extends WikiaController {
 	 * @return mixed
 	 */
 	private function getTopContributorsDetails( $ids ) {
-		return $this->sendRequest( 'UserApi', 'getDetails', ['ids' => implode(',', $ids)] )->getData()['items'];
+		return $this->sendRequest( 'UserApi', 'getDetails', [ 'ids' => implode( ',', $ids ) ] )->getData()[ 'items' ];
 	}
 
 	/**
@@ -81,8 +82,8 @@ class MercuryApiController extends WikiaController {
 	 * @throws BadRequestApiException
 	 */
 	private function getTitleFromRequest(){
-		$articleId = $this->request->getInt(self::ARTICLE_ID_PARAMETER_NAME, NULL);
-		$articleTitle = $this->request->getVal(self::ARTICLE_TITLE_PARAMETER_NAME, NULL);
+		$articleId = $this->request->getInt( self::ARTICLE_ID_PARAMETER_NAME, NULL );
+		$articleTitle = $this->request->getVal( self::ARTICLE_TITLE_PARAMETER_NAME, NULL );
 
 		if ( !empty( $articleId ) && !empty( $articleTitle ) ) {
 			throw new BadRequestApiException( 'Can\'t use id and title in the same request' );
@@ -117,7 +118,11 @@ class MercuryApiController extends WikiaController {
 	 * @throws InvalidParameterApiException
 	 */
 	public function getArticleComments() {
-		$articleId = $this->getArticleIdFromRequest();
+		$articleId = $this->request->getInt( self::ARTICLE_ID_PARAMETER_NAME, NULL );
+
+		if ( empty( $articleId ) ) {
+			throw new MissingParameterApiException( self::ARTICLE_ID_PARAMETER_NAME );
+		}
 
 		$page = $this->request->getInt( self::PARAM_PAGE, self::DEFAULT_PAGE );
 
