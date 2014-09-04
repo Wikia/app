@@ -18,7 +18,7 @@ class VimeoVideoHandler extends VideoHandler {
 		return str_replace('$1', $this->getEmbedVideoId(), $this->googleSitemapCustomVideoUrl);
 	}
 
-	public function getEmbed( $width, array $options ) {
+	public function getEmbed( $width, array $options = [] ) {
 		$autoplay = !empty( $options['autoplay'] );
 		$height =  $this->getHeight( $width );
 

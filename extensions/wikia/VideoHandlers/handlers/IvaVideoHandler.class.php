@@ -7,7 +7,7 @@ class IvaVideoHandler extends VideoHandler {
 	protected static $providerDetailUrlTemplate = 'http://video.wikia.com/';
 	protected static $providerHomeUrl = 'http://video.wikia.com/';
 
-	public function getEmbed( $width, array $options ) {
+	public function getEmbed( $width, array $options = [] ) {
 		$autoplay = !empty( $options['autoplay'] );
 		$height = $this->getHeight( $width );
 		$autoPlayStr = $autoplay ? 'true' : 'false';

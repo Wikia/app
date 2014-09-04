@@ -7,7 +7,7 @@ class TwitchtvVideoHandler extends VideoHandler {
 	protected static $providerDetailUrlTemplate = 'http://www.twitch.tv/$1';
 	protected static $providerHomeUrl = 'http://www.twitch.tv';
 
-	public function getEmbed( $width, array $options ) {
+	public function getEmbed( $width, array $options = [] ) {
 		$autoplay = !empty( $options['autoplay'] );
 		$height = $this->getHeight( $width );
 		$url = $this->getEmbedUrl();

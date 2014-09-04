@@ -9,7 +9,7 @@ class HuluVideoHandler extends VideoHandler {
 	protected static $autoplayParam = "";
 	protected static $autoplayValue = "";
 
-	public function getEmbed( $width, array $options ) {
+	public function getEmbed( $width, array $options = [] ) {
 		$height = $this->getHeight( $width );
 		$url = $this->getEmbedUrl();
 

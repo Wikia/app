@@ -12,7 +12,7 @@ class RealgravityVideoHandler extends VideoHandler {
 	protected static $providerDetailUrlTemplate = 'http://www.realgravity.com/';
 	protected static $providerHomeUrl = 'http://www.realgravity.com/';
 
-	public function getEmbed( $width, array $options ) {
+	public function getEmbed( $width, array $options = [] ) {
 		$autoplay = !empty( $options['autoplay'] );
 		$height = $this->getHeight( $width );
 		$url = $this->getEmbedUrl();

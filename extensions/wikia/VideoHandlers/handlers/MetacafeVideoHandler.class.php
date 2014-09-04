@@ -9,9 +9,9 @@ class MetacafeVideoHandler extends VideoHandler {
 	protected static $autoplayParam = "autoPlay";
 	protected static $autoplayValue = "yes";
 
-	public function getEmbed( $width, array $options ) {
+	public function getEmbed( $width, array $options = [] ) {
 		$autoplay = !empty( $options['autoplay'] );
-		$articleId = isset( $options['articleId'] ) ? ( int ) $options['articleId'] : 0;
+		$articleId = isset( $options['articleId'] ) ? ( int ) $options['articleId'] : null;
 		$height =  $this->getHeight( $width );
 		$sAutoPlayParam = self::$autoplayParam;
 		$sAutoPlayValue = $autoplay  ? self::$autoplayValue : 'no';

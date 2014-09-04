@@ -7,7 +7,7 @@ class UstreamVideoHandler extends VideoHandler {
 	protected static $providerDetailUrlTemplate = 'http://www.ustream.tv/recorded/$1';
 	protected static $providerHomeUrl = 'http://www.ustream.tv/';
 
-	public function getEmbed( $width, array $options ) {
+	public function getEmbed( $width, array $options = [] ) {
 		$autoplay = !empty( $options['autoplay'] );
 		$height = $this->getHeight( $width );
 		$sizeString = $this->getSizeString( $width, $height );

@@ -9,7 +9,7 @@ class DailymotionVideoHandler extends VideoHandler {
 	protected static $autoplayParam = "autoPlay";
 	protected static $autoplayValue = "1";
 
-	public function getEmbed( $width, array $options ) {
+	public function getEmbed( $width, array $options = [] ) {
 		$autoplay = !empty( $options['autoplay'] );
 		$height =  $this->getHeight( $width );
 		$url = $this->getEmbedUrl( $autoplay );

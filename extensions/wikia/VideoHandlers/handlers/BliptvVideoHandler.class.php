@@ -9,7 +9,7 @@ class BliptvVideoHandler extends VideoHandler {
 	protected static $autoplayParam = "autoStart";
 	protected static $autoplayValue = "true";
 
-	public function getEmbed( $width, array $options ) {
+	public function getEmbed( $width, array $options = [] ) {
 		$autoplay = !empty( $options['autoplay'] );
 		$height =  $this->getHeight( $width );
 		$url = $this->getEmbedUrl();

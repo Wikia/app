@@ -7,7 +7,7 @@ class SevenloadVideoHandler extends VideoHandler {
 	protected static $providerHomeUrl = 'http://sevenload.com/';
 	protected static $autoplayParam = "play";
 
-	public function getEmbed( $width, array $options ) {
+	public function getEmbed( $width, array $options = [] ) {
 		$autoplay = !empty( $options['autoplay'] );
 		$height = $this->getHeight( $width );
 		$autoplayStr = ( $autoplay ) ? '/' . self::$autoplayParam : '' ;

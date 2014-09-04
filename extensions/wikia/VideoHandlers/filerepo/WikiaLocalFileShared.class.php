@@ -49,7 +49,7 @@ class WikiaLocalFileShared  {
 	 * Returns embed HTML
 	 *
 	 * @param string $width Desired width of video player
-	 * @param array $options associative array which accepts the following keys
+	 * @param array $options [optional] associative array which accepts the following keys
 	 *  'autoplay' bool Whether the video should play on page load
 	 *  'isAjax' bool Whether the curent request is part of an ajax call
 	 *  'postOnload' bool Whether player is loaded after page onload event (used for JWPlayer)
@@ -70,7 +70,6 @@ class WikiaLocalFileShared  {
 			$handler->setThumbnailImage( $this->oFile->transform( array( 'width' => $width ) ) );
 
 			$handlerOptions = [
-				'articleId' => false, // This used to be always false; just leaving a trace - todo: Remove
 				'autoplay' => $autoplay,
 				'isAjax' => $isAjax,
 				'postOnload' => $postOnload,

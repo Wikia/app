@@ -9,7 +9,7 @@ class YoutubeVideoHandler extends VideoHandler {
 	protected static $autoplayParam = "autoplay";
 	protected static $autoplayValue = "1";
 
-	public function getEmbed( $width, array $options ) {
+	public function getEmbed( $width, array $options = [] ) {
 		$autoplay = !empty( $options['autoplay'] );
 		// YouTube parameters: http://code.google.com/apis/youtube/player_parameters.html
 		$height =  $this->getHeight( $width );
