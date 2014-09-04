@@ -21,4 +21,20 @@ class NjordController extends WikiaController {
 		 */
 		$this->wikiData = $wikiDataModel;
 	}
+
+	public function upload() {
+		if ( $this->getRequest()->wasPosted() ) {
+			$webRequest = $this->getContext()->getRequest();
+
+			$uploader = new UploadFromFile();
+			$uploader->initialize( $webRequest->getFileName('file'), $webRequest->getUpload('file') );
+			$tempFile = new FakeLocalFile(
+				Title::newFromText( uniqid( 'hero_img_tmp_', true ), NS_FILE ),
+				RepoGroup::singleton()->getLocalRepo()
+			);
+			$tempFile->upload( $uploader->getTempPath(), '', '' );
+			$this->getResponse()->setFormat('json');
+			$this->getResponse()->setVal( 'url', $tempFile->getFullUrl() );
+		}
+	}
 }
