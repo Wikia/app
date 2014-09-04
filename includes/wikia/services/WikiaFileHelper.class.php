@@ -327,7 +327,11 @@ class WikiaFileHelper extends Service {
 					if ( isset( $config['maxHeight'] ) ) {
 						$file->setEmbedCodeMaxHeight( $config['maxHeight'] );
 					}
-					$data['videoEmbedCode'] = $file->getEmbedCode( $width, true, true );
+					$options = [
+						'autoplay' => true,
+						'isAjax' => true,
+					];
+					$data['videoEmbedCode'] = $file->getEmbedCode( $width, $options );
 					$data['playerAsset'] = $file->getPlayerAssetUrl();
 					$data['videoViews'] = MediaQueryService::getTotalVideoViewsByTitle( $fileTitle->getDBKey() );
 					$data['providerName'] = $file->getProviderName();
