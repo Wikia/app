@@ -28,5 +28,10 @@ class MediaGalleryHooks {
 		return true;
 	}
 
+	public static function onMakeGlobalVariablesScript(Array &$vars) {
+		$vars['wgEnableMediaGalleryExt'] = !empty( F::app()->wg->EnableMediaGalleryExt );
+		return true;
+	}
+
 }
 
