@@ -665,7 +665,7 @@ class WikiaFileHelper extends Service {
 		$isSmallImage = $height < $dimension || $width < $dimension;
 		$imageBelowThreshold = ( $height * $width ) <= ( self::thumbEnlargeThreshold * $dimension * $dimension );
 
-		// If height or width is less than the square side of our target thumbnail, we need to decide whether we're
+		// If height or width is less than a side of our square target thumbnail, we need to decide whether we're
 		// going to enlarge it or not
 		if ( $isSmallImage && $imageBelowThreshold ) {
 			// Leave the (small) full sized image as is, but put within the requested container with transparent fill
