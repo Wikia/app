@@ -367,7 +367,7 @@ define(
 		 *
 		 * @param {string} action one of Wikia.Tracker.ACTIONS
 		 * @param {string} label
-		 * @param {integer} value
+		 * @param {Number} value
 		 */
 		function track(action, label, value) {
 			var trackingParams = {
@@ -382,6 +382,16 @@ define(
 			}
 
 			tracker.track(trackingParams);
+		}
+
+		/**
+		 * @desc checks if the first param is an array and if the second param is a key of that array
+		 * @param {Array|*} array
+		 * @param {Number} key
+		 * @returns {boolean} - does array has given key
+		 */
+		function inArray(array, key) {
+			return array instanceof Array && array.indexOf(key) > -1;
 		}
 
 		return {
@@ -402,7 +412,6 @@ define(
 			showError: showError,
 			cleanUpError: cleanUpError,
 			createThumbURL: createThumbURL,
-
 			mapDeleted: {
 				mapNotDeleted: 0,
 				mapDeleted: 1
@@ -410,7 +419,8 @@ define(
 			onWriteInInput: onWriteInInput,
 			escapeHtml: escapeHtml,
 			track: track,
-			trackerActions: tracker.ACTIONS
+			trackerActions: tracker.ACTIONS,
+			inArray: inArray
 		};
 	}
 );
