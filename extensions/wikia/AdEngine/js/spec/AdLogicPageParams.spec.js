@@ -315,4 +315,30 @@ describe('AdLogicPageParams', function () {
 		params = getParams({wikiDirectedAtChildren: true}, {kruxSegments: kruxSegments});
 		expect(params.ksgmnt).toBeUndefined('No Krux on COPPA wiki');
 	});
+
+	it('getPageLevelParams esrb + COPPA', function () {
+		var params;
+
+		params = getParams({
+			wikiCustomKeyValues: 'key1=value1;esrb=rating;key2=value2'
+		});
+		expect(params.esrb.toString()).toBe('rating', 'esrb=yes, COPPA=no');
+
+		params = getParams({
+			wikiCustomKeyValues: 'key1=value1;esrb=rating;key2=value2',
+			wikiDirectedAtChildren: true
+		});
+		expect(params.esrb.toString()).toBe('rating', 'esrb=yes, COPPA=yes');
+
+		params = getParams({
+			wikiCustomKeyValues: 'key1=value1;key2=value2'
+		});
+		expect(params.esrb.toString()).toBe('teen', 'esrb=null, COPPA=no');
+
+		params = getParams({
+			wikiCustomKeyValues: 'key1=value1;key2=value2',
+			wikiDirectedAtChildren: true
+		});
+		expect(params.esrb.toString()).toBe('ec', 'esrb=null, COPPA=yes');
+	});
 });

@@ -3371,8 +3371,15 @@ function wfFixSessionID() {
 		return;
 	}
 
-	wfDebug( __METHOD__ . ": PHP's built in entropy is disabled or not sufficient, overriding session id generation using our cryptrand source.\n" );
-	session_id( MWCryptRand::generateHex( 32 ) );
+	global $wgSessionDebugData;
+	$sOldSessionId = session_id();
+	$sNewSessionId = MWCryptRand::generateHex( 32 );
+	$wgSessionDebugData[] = [
+		'event' => __METHOD__,
+		'old_session_id' => $sOldSessionId,
+		'new_session_id' => $sNewSessionId,
+	];
+	session_id( $sNewSessionId );
 }
 
 /**
@@ -3420,9 +3427,6 @@ function wfSetupSession( $sessionId = false ) {
 		wfFixSessionID();
 	}
 	wfSuppressWarnings();
-	/** Wikia change - begin - PLATFORM-308 */
-	$wgSessionDebugData[] = [ 'event' => 'wfSetupSession-session_start' ];
-	/** Wikia change - end */
 	session_start();
 	wfRestoreWarnings();
 }

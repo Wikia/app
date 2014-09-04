@@ -1,7 +1,7 @@
 <?php
 
 /**
- * TransactionTraceNewrelic implements the TransactionTrace plugin interface and handle reporting
+ * TransactionTraceNewrelic implements the TransactionTrace plugin interface and handles reporting
  * transaction type name as newrelic's transaction name and all attributes as custom parameters.
  */
 class TransactionTraceNewrelic {

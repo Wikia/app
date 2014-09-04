@@ -186,6 +186,10 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 
 		extend(params, decodeLegacyDartParams(targeting.wikiCustomKeyValues));
 
+		if (!params.esrb) {
+			params.esrb = targeting.wikiDirectedAtChildren ? 'ec' : 'teen';
+		}
+
 		if (!adsInHeadExperiment) {
 			// This is set in client side (don't move to adContext)
 			extend(params, decodeLegacyDartParams(window.amzn_targs));
