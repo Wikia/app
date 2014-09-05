@@ -658,14 +658,9 @@ class WikiaFileHelper extends Service {
 	 *
 	 * @param File $file
 	 * @param $dimension
-	 * @return array First element of the array is the URL (string value) and the second (boolean) is whether the image
-	 *               used is smaller than the requested dimensions.  One use of this might be to add a border around
-	 *               the image when it is displayed.
+	 * @return string The URL of the image
 	 */
 	public static function getSquaredThumbnailUrl( File $file, $dimension ) {
-		// Note whether the image we use is smaller than the requested dimensions
-		$smallerThanDimensions = false;
-
 		// Create a new url generator
 		$gen = ( new UrlGenerator( $file ) );
 
@@ -681,7 +676,6 @@ class WikiaFileHelper extends Service {
 		if ( $isSmallImage && $imageBelowThreshold ) {
 			// Leave the (small) full sized image as is, but put within the requested container with transparent fill
 			$gen->fixedAspectRatioDown()->backgroundFill( 'transparent' );
-			$smallerThanDimensions = true;
 		} else {
 			if ( $height > $width ) {
 				// Portrait mode, crop at the top
@@ -694,6 +688,6 @@ class WikiaFileHelper extends Service {
 
 		$url = $gen->width( $dimension )->height( $dimension )->url();
 
-		return [ $url, $smallerThanDimensions ];
+		return $url;
 	}
 }
