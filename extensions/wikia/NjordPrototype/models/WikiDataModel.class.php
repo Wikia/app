@@ -3,6 +3,7 @@
 class WikiDataModel {
 	private $pageName;
 	private $imageName;
+	private $cropPosition;
 
 	public $imagePath;
 	public $title;
@@ -11,6 +12,8 @@ class WikiDataModel {
 	const WIKI_HERO_IMAGE_PROP_ID = 10001;
 	const WIKI_HERO_TITLE_PROP_ID = 10002;
 	const WIKI_HERO_DESCRIPTION_ID = 10003;
+	const WIKI_HERO_IMAGE_CROP_POSITION_ID = 10004;
+
 	const WIKI_HERO_IMAGE_MAX_WIDTH = 1600;
 	const WIKI_HERO_IMAGE_MAX_HEIGHT = 500;
 
@@ -19,13 +22,12 @@ class WikiDataModel {
 	}
 
 	public function setFromAttributes( $attributes ) {
-		$imageName = ! empty( $attributes['imagename'] ) ? $attributes['imagename'] : null;
-		$this->title = ! empty( $attributes['title'] ) ? $attributes['title'] : null;
-		$this->description = ! empty( $attributes['description'] ) ? $attributes['description'] : null;
+		$this->imageName = !empty( $attributes['imagename'] ) ? $attributes['imagename'] : null;
+		$this->title = !empty( $attributes['title'] ) ? $attributes['title'] : null;
+		$this->description = !empty( $attributes['description'] ) ? $attributes['description'] : null;
+		$this->cropPosition= !empty( $attributes['cropposition'] ) ? $attributes['cropposition'] : null;
 
-		if ( $imageName ) {
-			$this->initializeImagePath( $imageName );
-		}
+		$this->initializeImagePath( $this->cropPosition );
 	}
 
 	public function storeInProps() {
@@ -34,6 +36,7 @@ class WikiDataModel {
 		wfSetWikiaPageProp( self::WIKI_HERO_IMAGE_PROP_ID, $pageId, $this->imageName );
 		wfSetWikiaPageProp( self::WIKI_HERO_TITLE_PROP_ID, $pageId, $this->title );
 		wfSetWikiaPageProp( self::WIKI_HERO_DESCRIPTION_ID, $pageId, $this->description );
+		wfSetWikiaPageProp( self::WIKI_HERO_IMAGE_CROP_POSITION_ID, $pageId, $this->cropPosition );
 	}
 
 	public function getFromProps() {
@@ -42,21 +45,19 @@ class WikiDataModel {
 		$this->imageName = wfGetWikiaPageProp( self::WIKI_HERO_IMAGE_PROP_ID, $pageId );
 		$this->title = wfGetWikiaPageProp( self::WIKI_HERO_TITLE_PROP_ID, $pageId );
 		$this->description = wfGetWikiaPageProp( self::WIKI_HERO_DESCRIPTION_ID, $pageId );
+		$this->cropPosition = wfGetWikiaPageProp( self::WIKI_HERO_IMAGE_CROP_POSITION_ID, $pageId );
 
-		$this->initializeImagePath( $this->imageName );
+		$this->initializeImagePath( $this->cropPosition );
 	}
 
 	/**
 	 * @param $imageName
 	 */
-	private function initializeImagePath( $imageName ) {
-		$imageTitle = Title::newFromText( $imageName, NS_FILE );
+	private function initializeImagePath( $cropPosition ) {
+		$imageTitle = Title::newFromText( $this->imageName, NS_FILE );
 		$file = wfFindFile( $imageTitle );
 		if ( $file && $file->exists() ) {
-			$this->imageName = $imageName;
-
 			$homePageHelper = new WikiaHomePageHelper();
-
 			$this->imagePath = $homePageHelper->getImageUrlFromFile( $file, self::WIKI_HERO_IMAGE_MAX_WIDTH, self::WIKI_HERO_IMAGE_MAX_HEIGHT );
 		} else {
 			$this->imageName = null;
@@ -77,7 +78,8 @@ class WikiDataModel {
 		$heroTag = Xml::element('hero', $attribs = [
 			'title' => $this->title,
 			'description' => $this->description,
-			'imagename' => $this->imageName
+			'imagename' => $this->imageName,
+			'cropposition' => $this->cropPosition
 		]);
 		$newContent = $heroTag . PHP_EOL . $newContent;
 
@@ -85,5 +87,21 @@ class WikiDataModel {
 		$pageArticleObj->doEdit( $newContent, '' );
 		$pageArticleObj->doPurge();
 
+	}
+
+	public function getImageName() {
+		return $this->imageName;
+	}
+
+	public function setImageName( $imageName ) {
+		$this->imageName = $imageName;
+	}
+
+	public function getImagePath() {
+		return $this->imagePath;
+	}
+
+	public function setImagePath( $imagePath ) {
+		$this->imagePath = $imagePath;
 	}
 }

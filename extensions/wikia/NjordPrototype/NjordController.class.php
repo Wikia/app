@@ -14,18 +14,6 @@ class NjordController extends WikiaController {
 		$this->wikiData = $wikiDataModel;
 	}
 
-	public function saveHeroData() {
-		$wikiData = $this->request->getVal( 'wikiData', [ ] );
-		$wikiDataModel = new WikiDataModel( Title::newMainPage()->getText() );
-		$wikiDataModel->setFromAttributes( $wikiData );
-
-		$wikiDataModel->storeInPage();
-		$wikiDataModel->storeInProps();
-
-
-		$this->wikiData = $wikiDataModel;
-	}
-
 	public function upload() {
 		if ( $this->getRequest()->wasPosted() ) {
 			$url = $this->getRequest()->getVal( 'url', false );
@@ -49,27 +37,43 @@ class NjordController extends WikiaController {
 			$stashFile = $stash->stashFile( $uploader->getTempPath() );
 			$this->getResponse()->setFormat( 'json' );
 			$this->getResponse()->setVal( 'url', $stashFile->getFullUrl() );
-			$this->getResponse()->setVal( 'name', $stashFile->getFileKey() );
+			$this->getResponse()->setVal( 'filename', $stashFile->getFileKey() );
 		}
 	}
 
-	public function saveImage() {
-		$this->getResponse()->setFormat( 'json' );
+	public function saveHeroData() {
 		$success = false;
-		$name = $this->getRequest()->getVal( 'name', false );
-		if ( $name ) {
+
+		$this->getResponse()->setFormat( 'json' );
+
+		$wikiData = $this->request->getVal( 'wikiData', [ ] );
+		$wikiDataModel = new WikiDataModel( Title::newMainPage()->getText() );
+		$wikiDataModel->setFromAttributes( $wikiData );
+		$wikiDataModel->setImageName(!empty( $wikiData['imagename'] ) ? $wikiData['imagename'] : null);
+
+		$imageName = $wikiDataModel->getImageName();
+
+		if ( $imageName ) {
 			$stash = RepoGroup::singleton()->getLocalRepo()->getUploadStash();
-			$temp_file = $stash->getFile( $name );
+
+			$temp_file = $stash->getFile( $imageName );
 			$file = new LocalFile( static::HERO_IMAGE_FILENAME, RepoGroup::singleton()->getLocalRepo() );
 
 			$status = $file->upload( $temp_file->getPath(), '', '' );
 			if ( $status->isOK() ) {
 				$success = true;
+
+				$wikiDataModel->setImageName($file->getTitle()->getDBKey());
+				$wikiDataModel->setImagePath($file->getFullUrl);
+
+				$wikiDataModel->storeInPage();
+				$wikiDataModel->storeInProps();
 			}
 			//clean up stash
-			$stash->removeFile( $name );
+			$stash->removeFile( $imageName );
 		}
+
 		$this->getResponse()->setVal( 'success', $success );
-		$this->getResponse()->setVal( 'url', isset( $file ) ? $file->getFullUrl() : '' );
+		$this->getResponse()->setVal( 'wikiData' , $wikiDataModel );
 	}
 }
