@@ -2,6 +2,8 @@
 
 class CrunchyrollVideoHandler extends VideoHandler {
 
+	const CRUNCHYROLL_WIDGET_HEIGHT_PX = 52;
+
 	/*
 	 * TODO: Create a constant to hold the affiliate ID,
 	 * Parent class should not access static fields directly

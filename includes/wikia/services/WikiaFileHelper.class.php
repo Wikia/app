@@ -342,7 +342,7 @@ class WikiaFileHelper extends Service {
 
 					// Extra height is needed for lightbox when more elements must be fitted
 					if ( strtolower( $data['providerName'] ) == 'crunchyroll' ) {
-						$data['extraHeight'] = 52;
+						$data['extraHeight'] = CrunchyrollVideoHandler::CRUNCHYROLL_WIDGET_HEIGHT_PX;
 					}
 				} else {
 					$width = $width > $config['imageMaxWidth'] ? $config['imageMaxWidth'] : $width;
