@@ -42,13 +42,30 @@ class NjordController extends WikiaController {
 				$uploader = new UploadFromFile();
 				$uploader->initialize( $webRequest->getFileName( 'file' ), $webRequest->getUpload( 'file' ) );
 			}
-			$tempFile = new FakeLocalFile(
-				Title::newFromText( uniqid( 'hero_img_tmp_', true ), NS_FILE ),
-				RepoGroup::singleton()->getLocalRepo()
-			);
-			$tempFile->upload( $uploader->getTempPath(), '', '' );
+			$stash = new UploadStash( RepoGroup::singleton()->getLocalRepo(), $this->getContext()->getUser() );
+			$stashFile = $stash->stashFile( $uploader->getTempPath() );
 			$this->getResponse()->setFormat( 'json' );
-			$this->getResponse()->setVal( 'url', $tempFile->getFullUrl() );
+			$this->getResponse()->setVal( 'url', $stashFile->getFullUrl() );
+			$this->getResponse()->setVal( 'name', $stashFile->getFileKey() );
 		}
+	}
+
+	public function saveImage() {
+		$this->getResponse()->setFormat( 'json' );
+		$success = false;
+		$name = $this->getRequest()->getVal( 'name', false );
+		if ( $name ) {
+			$temp_file = RepoGroup::singleton()->getLocalRepo()->getUploadStash()->getFile( $name );
+			$file = new LocalFile( $temp_file->getName(), RepoGroup::singleton()->getLocalRepo() );
+
+			$status = $file->upload( $temp_file->getPath(), '', '' );
+			if ( $status->isOK() ) {
+				$success = true;
+			}
+			//clean up stash
+			RepoGroup::singleton()->getLocalRepo()->getUploadStash()->removeFile( $name );
+		}
+		$this->getResponse()->setVal( 'success', $success );
+		$this->getResponse()->setVal( 'url', isset( $file ) ? $file->getFullUrl() : '' );
 	}
 }
