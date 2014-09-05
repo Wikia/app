@@ -1050,6 +1050,10 @@ class ArticlesApiController extends WikiaApiController {
 		$rerankedPopular = $this->reorderForLinks( $popular, $links );
 
 		$baseArticleTitle = Title::newFromID($baseArticleId);
+		if( empty( $baseArticleTitle ) ) {
+			// fallback for $baseArticleId, which corresponds to unexisting articles
+			return $popular;
+		}
 		$baseArticleUrl = $baseArticleTitle->getLocalURL();
 
 		// if base article in the list of popular - remove it from this list
