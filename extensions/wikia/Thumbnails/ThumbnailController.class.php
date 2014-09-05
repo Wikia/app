@@ -117,13 +117,6 @@ class ThumbnailController extends WikiaController {
 	}
 
 	/**
-	 * Render the picture tag for images and noscript tags in the case of lazy loading
-	 */
-	public function pictureTag() {
-		$this->response->setData( $this->request->getParams() );
-	}
-
-	/**
 	 * Article figure tags with thumbnails inside. All videos and block images use this.
 	 */
 	public function articleBlock() {
