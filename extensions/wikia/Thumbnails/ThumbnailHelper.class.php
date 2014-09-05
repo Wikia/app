@@ -337,14 +337,13 @@ class ThumbnailHelper extends WikiaModel {
 		}
 	}
 
-
 	/**
 	 * Checks if an image should be lazy loaded, and if so sets the necessary attributes
 	 * @param WikiaController $controller
 	 * @param array $options
 	 * @return bool
 	 */
-	public static function setLazyLoad( WikiaController &$controller, array $options = [] ) {
+	public static function setLazyLoad( WikiaController &$controller, array $options ) {
 		$lazyLoaded = false;
 		if ( self::shouldLazyLoad( $controller, $options ) ) {
 			$lazyLoaded = true;
@@ -423,7 +422,7 @@ class ThumbnailHelper extends WikiaModel {
 		$controller->mediumUrlWebP = WikiaFileHelper::getSquaredThumbnailUrl( $file, $mediumDim, $useWebP )[0];
 
 		// get full size WebP image
-		$controller->thumbUrlWebP = WikiaFileHelper::getSquaredThumbnailUrl( $file, $thumb->getWidth(), $useWebP )[0];
+		$controller->imgSrcWebP = WikiaFileHelper::getSquaredThumbnailUrl( $file, $thumb->getWidth(), $useWebP )[0];
 
 		// Let image template know to use <picture> tag instead of <img> tag
 		$controller->usePictureTag = true;
