@@ -359,45 +359,45 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 		}
 
 		$commit = false;
-		if ( count($invalidImages) > 0 ) {
+		if ( count( $invalidImages ) > 0 ) {
 			$db->update(
 				'image_review',
 				array(
-					'state' => ImageReviewStatuses::STATE_INVALID_IMAGE // changed from STATE_INVALID_IMAGE
+					'state' => ImageReviewStatuses::STATE_INVALID_IMAGE
 				),
-				array( implode(' OR ', $invalidImages) ),
+				array( implode( ' OR ', $invalidImages ) ),
 				__METHOD__
 			);
 			$commit = true;
 		}
 
-		if ( count($iconsWhere) > 0 ) {
+		if ( count( $iconsWhere ) > 0 ) {
 			$db->update(
 					'image_review',
-					array( 'state' => ImageReviewStatuses::STATE_ICO_IMAGE),
-					array( implode(' OR ', $iconsWhere) ),
+					array( 'state' => ImageReviewStatuses::STATE_ICO_IMAGE ),
+					array( implode( ' OR ', $iconsWhere ) ),
 					__METHOD__
 				   );
 			$commit = true;
 		}
 
-		if ( count($unusedImages) > 0 ) {
+		if ( count( $unusedImages ) > 0 ) {
 			$db->update(
 				'image_review',
 				array(
 					'reviewer_id = null',
 					'state' => $state
 				),
-				array( implode(' OR ', $unusedImages) ),
+				array( implode( ' OR ', $unusedImages ) ),
 				__METHOD__
 			);
 			$commit = true;
-			error_log("ImageReview : returning " . count($unusedImages) . " back to the queue");
+			error_log( "ImageReview : returning " . count($unusedImages) . " back to the queue" );
 		}
 
 		if ( $commit ) $db->commit();
 
-		error_log("ImageReview : fetched new " . count($imageList) . " images");
+		error_log( "ImageReview : fetched new " . count( $imageList ) . " images" );
 
 		wfProfileOut( __METHOD__ );
 
