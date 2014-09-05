@@ -319,7 +319,9 @@ class WikiaApiController extends WikiaController {
 		if ( is_array( $data ) ) {
 			$data = $this->processImgFields( $data, $processFields );
 			$data = $this->processUrlFields( $data, $processFields );
-			$data = $this->forceResponseTypes( $data );
+			if ( !$this->getRequest()->isInternal() ) {
+				$data = $this->forceResponseTypes( $data );
+			}
 		}
 		$response = $this->getResponse();
 		$response->setData( $data );

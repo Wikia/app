@@ -150,8 +150,12 @@ class WikiaApiControllerTest extends PHPUnit_Framework_TestCase {
 			->will( $this->returnValue( null ) );
 
 		$mockRequest = $this->getMockBuilder( 'StdClass' )
-			->setMethods( [ 'getVal' ] )
+			->setMethods( [ 'getVal', 'isInternal' ] )
 			->getMock();
+
+		$mockRequest->expects( $this->any() )
+			->method( 'isInternal' )
+			->will( $this->returnValue( false ) );
 
 		if ( $refValue ) {
 			$mockRequest->expects( $this->any() )
@@ -272,7 +276,7 @@ class WikiaApiControllerTest extends PHPUnit_Framework_TestCase {
 	 * @covers WikiaApiController::setResponseData
 	 * @dataProvider setResponseFields_Provider
 	 */
-	public function testSetResponseData_FieldTypes( $data,$expected, $fieldTypes ) {
+	public function testSetResponseData_FieldTypes( $data,$expected, $fieldTypes, $internal) {
 		$mock = $this->getMockBuilder( 'WikiaApiController' )
 			->disableOriginalConstructor()
 			->setMethods( [ 'serveImages', 'getRequest', 'getResponse' ] )
@@ -294,13 +298,17 @@ class WikiaApiControllerTest extends PHPUnit_Framework_TestCase {
 			->will( $this->returnValue( null ) );
 
 		$mockRequest = $this->getMockBuilder( 'StdClass' )
-			->setMethods( [ 'getVal' ] )
+			->setMethods( [ 'getVal', 'isInternal' ] )
 			->getMock();
 
 		$mockRequest->expects( $this->any() )
 				->method( 'getVal' )
 				->with( WikiaApiController::REF_URL_ARGUMENT )
 				->will( $this->returnValue( null ) );
+
+		$mockRequest->expects( $this->any() )
+			->method( 'isInternal' )
+			->will( $this->returnValue( $internal ) );
 
 		$mockRequest->expects( $this->any() )
 			->method( 'getVal' )
@@ -334,37 +342,50 @@ class WikiaApiControllerTest extends PHPUnit_Framework_TestCase {
 			[
 				[ "items" => [ [ 'title' => 't0', 'url' => 'http://a1.a', 'img' => 'www.img1.a/a.png' ] ] ],
 				[ "items" => [ [ 'title' => 't0', 'url' => 'http://a1.a', 'img' => 'www.img1.a/a.png' ] ] ],
-				[]
+				[],
+				false
 			],
 			[
 				[ "items" => [ [ 'ii' => '12-3', 'xx' => 'aa' ] ] ],
 				[ "items" => [ [ 'ii' => 12, 'xx' => 'aa' ] ] ],
-				[ 'ii' => WikiaApiController::OUTPUT_FIELD_TYPE_INT ]
+				[ 'ii' => WikiaApiController::OUTPUT_FIELD_TYPE_INT ],
+				false
+			],
+			[
+				[ "items" => [ [ 'ii' => '12-3', 'xx' => 'aa' ] ] ],
+				[ "items" => [ [ 'ii' => '12-3', 'xx' => 'aa' ] ] ],
+				[ 'ii' => WikiaApiController::OUTPUT_FIELD_TYPE_INT ],
+				true
 			],
 			[
 				[ "items" => [ [ 'ii' => '12.3', 'xx' => 'bb' ] ] ],
 				[ "items" => [ [ 'ii' => 12.3, 'xx' => 'bb' ] ] ],
-				[ 'ii' => WikiaApiController::OUTPUT_FIELD_TYPE_FLOAT ]
+				[ 'ii' => WikiaApiController::OUTPUT_FIELD_TYPE_FLOAT ],
+				false
 			],
 			[
 				[ "items" => [ [ 'ii' => [ "str" => 12 ], 'xx' => 'aa' ] ] ],
 				[ "items" => [ [ 'ii' => [ "str" => "12" ], 'xx' => 'aa' ] ] ],
-				[ 'str' => WikiaApiController::OUTPUT_FIELD_TYPE_STRING ]
+				[ 'str' => WikiaApiController::OUTPUT_FIELD_TYPE_STRING ],
+				false
 			],
 			[
 				[ "items" => [ [ 'ii' => null, 'xx' => 'aa' ] ] ],
 				[ "items" => [ [ 'ii' => null, 'xx' => 'aa' ] ] ],
-				[ 'ii' => WikiaApiController::OUTPUT_FIELD_TYPE_FLOAT ]
+				[ 'ii' => WikiaApiController::OUTPUT_FIELD_TYPE_FLOAT ],
+				false
 			],
 			[
 				[ "items" => [ [ 'ii' => null, 'xx' => 'aa' ] ] ],
 				[ "items" => [ [ 'ii' => 0, 'xx' => 'aa' ] ] ],
-				[ 'ii' => WikiaApiController::OUTPUT_FIELD_TYPE_INT | WikiaApiController::OUTPUT_FIELD_CAST_NULLS ]
+				[ 'ii' => WikiaApiController::OUTPUT_FIELD_TYPE_INT | WikiaApiController::OUTPUT_FIELD_CAST_NULLS ],
+				false
 			],
 			[
 				[ "items" => [ 'ii' => '12', 'xx' => 'aa' ] ] ,
 				[ "items" => $itemsObj ],
-				[ 'ii' => WikiaApiController::OUTPUT_FIELD_TYPE_INT , 'items' =>WikiaApiController::OUTPUT_FIELD_TYPE_OBJECT ]
+				[ 'ii' => WikiaApiController::OUTPUT_FIELD_TYPE_INT , 'items' =>WikiaApiController::OUTPUT_FIELD_TYPE_OBJECT ],
+				false
 			],
 		];
 	}
