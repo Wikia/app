@@ -6,7 +6,7 @@
 @import "skins/shared/mixins/transition";
 @import "skins/shared/color";
 @import "mixins/sprite-Lightbox";
-@import "extensions/wikia/VideoHandlers/css/affiliateVideoWidget";
+@import "extensions/wikia/VideoHandlers/css/crunchyrollWidget";
 
 $lightbox-overlay-show-duration: 200ms;
 $lightbox-overlay-hide-duration: 600ms;
@@ -584,5 +584,5 @@ $color-lightbox-border: mix($color-page-border, $color-page, 75%);
 }
 
 .modalWrapper .media {
-	@include affiliateVideoWidget;
+	@include crunchyrollWidget;
 }
