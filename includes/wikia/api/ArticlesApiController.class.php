@@ -999,7 +999,7 @@ class ArticlesApiController extends WikiaApiController {
 
 		$baseArticleId = $this->getRequest()->getVal( self::PARAMETER_BASE_ARTICLE_ID, false );
 		if( $baseArticleId !== false ) {
-			$this->validateBaseArticleId( $baseArticleId );
+			$this->validateBaseArticleIdOrThrow( $baseArticleId );
 		}
 
 		$expand = $this->request->getBool( static::PARAMETER_EXPAND, false );
