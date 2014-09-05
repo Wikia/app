@@ -95,7 +95,7 @@ class ThumbnailHelper extends WikiaModel {
 	 *      valign
 	 *      img-class
 	 */
-	public static function setImageAttribs( WikiaController &$controller, MediaTransformOutput $thumb, array $options ) {
+	public static function setImageAttribs( WikiaController $controller, MediaTransformOutput $thumb, array $options ) {
 		/** @var Title $title */
 		$title = $thumb->file->getTitle();
 		$titleText = '';
@@ -138,7 +138,7 @@ class ThumbnailHelper extends WikiaModel {
 	 *      desc-link
 	 *      file-link
 	 */
-	public static function setImageLinkAttribs( WikiaController &$controller, MediaTransformOutput $thumb, array $options ) {
+	public static function setImageLinkAttribs( WikiaController $controller, MediaTransformOutput $thumb, array $options ) {
 		$href = false;
 		$title = false;
 		$target = false;
@@ -196,7 +196,7 @@ class ThumbnailHelper extends WikiaModel {
 	 *      src
 	 *      dataParams
 	 */
-	public static function setVideoImgAttribs( WikiaController &$controller, MediaTransformOutput $thumb, array $options ) {
+	public static function setVideoImgAttribs( WikiaController $controller, MediaTransformOutput $thumb, array $options ) {
 		// get alt for img tag
 		$file = $thumb->file;
 		$title = $file->getTitle();
@@ -233,7 +233,7 @@ class ThumbnailHelper extends WikiaModel {
 	 *  Keys:
 	 *      id
 	 */
-	public static function setVideoLinkAttribs( WikiaController &$controller, MediaTransformOutput $thumb, array $options ) {
+	public static function setVideoLinkAttribs( WikiaController $controller, MediaTransformOutput $thumb, array $options ) {
 		// Get href for a tag
 		$file = $thumb->file;
 		$title = $file->getTitle();
@@ -266,7 +266,7 @@ class ThumbnailHelper extends WikiaModel {
 	 *      fluid
 	 *      forceSize
 	 */
-	public static function setVideoLinkClasses( WikiaController &$controller, MediaTransformOutput $thumb, array &$options ) {
+	public static function setVideoLinkClasses( WikiaController $controller, MediaTransformOutput $thumb, array &$options ) {
 		$linkClasses = [];
 
 		if ( empty( $options['noLightbox'] ) ) {
@@ -299,7 +299,7 @@ class ThumbnailHelper extends WikiaModel {
 	 * @param $controller
 	 * @param array $options
 	 */
-	public static function setImageLinkClasses( &$controller, array &$options ) {
+	public static function setImageLinkClasses( $controller, array &$options ) {
 		$linkClasses = [];
 
 		if ( !empty( $options['custom-title-link'] ) ) {
@@ -318,7 +318,7 @@ class ThumbnailHelper extends WikiaModel {
 	 * @param WikiaController $controller
 	 * @param array $options
 	 */
-	public static function setExtraImgAttribs( WikiaController &$controller, array $options ) {
+	public static function setExtraImgAttribs( WikiaController $controller, array $options ) {
 		// Let extensions add any link attributes
 		if ( isset( $options['imgAttribs'] ) && is_array( $options['imgAttribs'] ) ) {
 			$controller->extraImgAttrs = self::getAttribs( $options['imgAttribs'] );
@@ -331,7 +331,7 @@ class ThumbnailHelper extends WikiaModel {
 	 * @param WikiaController $controller
 	 * @param array $options
 	 */
-	public static function setExtraLinkAttribs( WikiaController &$controller, array $options ) {
+	public static function setExtraLinkAttribs( WikiaController $controller, array $options ) {
 		if ( isset( $options['linkAttribs'] ) && is_array( $options['linkAttribs'] ) ) {
 			$controller->extraLinkAttrs = self::getAttribs( $options['linkAttribs'] );
 		}
@@ -343,7 +343,7 @@ class ThumbnailHelper extends WikiaModel {
 	 * @param array $options
 	 * @return bool
 	 */
-	public static function setLazyLoad( WikiaController &$controller, array $options ) {
+	public static function setLazyLoad( WikiaController $controller, array $options ) {
 		$lazyLoaded = false;
 		if ( self::shouldLazyLoad( $controller, $options ) ) {
 			$lazyLoaded = true;
