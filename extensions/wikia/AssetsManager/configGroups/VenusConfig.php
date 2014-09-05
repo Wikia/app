@@ -4,7 +4,7 @@ $VenusConfig = [];
 
 $VenusConfig['venus_body_js'] = [
 	'type' => AssetsManager::TYPE_JS,
-	'skin' => 'venus',
+	'skin' => ['venus'],
 	'assets' => [
 		'//resources/jquery/jquery-2.1.1.min.js',
 
@@ -30,10 +30,6 @@ $VenusConfig['venus_body_js'] = [
 		'//resources/wikia/libraries/sloth/sloth.js',
 		'//resources/wikia/jquery.wikia.js',
 
-		// mw
-		'//resources/mediawiki/mediawiki.js',
-		'//skins/common/wikibits.js',
-
 		//platform components
 		'//extensions/wikia/JSMessages/js/JSMessages.js',
 		'//extensions/wikia/JSSnippets/js/JSSnippets.js',
@@ -41,20 +37,19 @@ $VenusConfig['venus_body_js'] = [
 
 		'//extensions/wikia/Venus/scripts/isTouchScreen.js',
 		'//extensions/wikia/Venus/scripts/Venus.js',
-		'#function_AssetsConfig::getJQueryUrl',
 	]
 ];
 
 $VenusConfig['venus_head_js'] = [
 	'type' => AssetsManager::TYPE_JS,
-	'skin' => 'venus',
+	'skin' => ['venus'],
 	'assets' => [
 	]
 ];
 
 $VenusConfig['venus_css'] = [
 	'type' => AssetsManager::TYPE_SCSS,
-	'skin' => 'venus',
+	'skin' => ['venus'],
 	'assets' => [
 		'//extensions/wikia/Venus/styles/Venus.scss'
 	]
