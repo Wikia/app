@@ -651,11 +651,12 @@ class WikiaFileHelper extends Service {
 	 *
 	 * @param File $file
 	 * @param $dimension
+	 * @param $useWebP
 	 * @return array First element of the array is the URL (string value) and the second (boolean) is whether the image
 	 *               used is smaller than the requested dimensions.  One use of this might be to add a border around
 	 *               the image when it is displayed.
 	 */
-	public static function getSquaredThumbnailUrl( File $file, $dimension ) {
+	public static function getSquaredThumbnailUrl( File $file, $dimension, $useWebP = false ) {
 		// Note whether the image we use is smaller than the requested dimensions
 		$smallerThanDimensions = false;
 
@@ -683,6 +684,10 @@ class WikiaFileHelper extends Service {
 				// Landscape mode, crop in the middle
 				$gen->zoomCrop();
 			}
+		}
+
+		if ( $useWebP ) {
+			$gen->webp();
 		}
 
 		$url = $gen->width( $dimension )->height( $dimension )->url();

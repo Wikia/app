@@ -1,0 +1,45 @@
+<picture>
+
+	{{! Images for large screens }}
+	<source
+		media="(min-width: 1280px)"
+		srcset="{{thumbUrlWebP}}"
+		type="image/webp">
+	<source
+		media="(min-width: 1280px)"
+		srcset="http://www.forkliftnet.com/news/newsimg/201010151601166410.jpg">
+
+	{{! Images for medium screens }}
+	<source
+		media="(min-width: 1024px) and (max-width: 1280px)"
+		srcset="{{mediumUrlWebP}}"
+		type="image/webp">
+	<source
+		media="(min-width: 1024px) and (max-width: 1280px)"
+		srcset="http://www.dongfeng-truck.com/Foton-medium-heavy-duty-truck-3.jpg">
+
+	{{! Images for small screens }}
+	<source
+		media="(max-width: 768px)"
+		srcset="{{smallUrlWebP}}"
+		type="image/webp">
+	<source
+		media="(max-width: 768px)"
+		srcset="http://terawallpaper.com/wp-content/uploads/2014/08/best-small-truck.jpg">
+
+	{{! Fall back to img tag for browsers that don't support picture tag yet }}
+	<img src="{{mediumUrlWebP}}"
+		{{#alt}} alt="{{{alt}}}" {{/alt}}
+		 class="{{#imgClass}}{{.}} {{/imgClass}}"
+		{{#style}} style="{{style}}" {{/style}}
+		 data-{{mediaType}}-key="{{mediaKey}}"
+		 data-{{mediaType}}-name="{{mediaName}}"
+		{{#dataSrc}} data-src="{{dataSrc}}" {{/dataSrc}}
+		{{#imgWidth}} width="{{imgWidth}}" {{/imgWidth}}
+		{{#imgHeight}} height="{{imgHeight}}" {{/imgHeight}}
+		{{#rdf}} itemprop="thumbnail" {{/rdf}}
+		{{#dataParams}} data-params="{{{dataParams}}}" {{/dataParams}}
+		{{#onLoad}} onload="{{onLoad}}" {{/onLoad}}
+		{{#extraImgAttrs}} {{{.}}} {{/extraImgAttrs}}>
+
+</picture>

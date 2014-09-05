@@ -99,18 +99,28 @@ class ThumbnailController extends WikiaController {
 		$options = $this->getVal( 'options', [] );
 		$options['fluid'] = true;
 		$options['img-class'] = empty( $options['border'] ) ? '' : 'border';
+		$options['usePictureTag'] = true;
 
 		$thumb = $this->getVal( 'thumb' );
 
 		$this->linkHref = $thumb->file->getTitle()->getLinkURL();
-		ThumbnailHelper::setImageAttribs( $this, $thumb, $options );
-		ThumbnailHelper::setLazyLoad( $this );
+
+		ThumbnailHelper::setImageAttribs( $this, $thumb, [ 'fluid' => true ] );
+		ThumbnailHelper::setPictureTagInfo( $this, $thumb );
+		ThumbnailHelper::setLazyLoad( $this, $options );
 	}
 
 	/**
 	 * Render the img tag for images, videos, and noscript tags in the case of lazy loading
 	 */
 	public function imgTag() {
+		$this->response->setData( $this->request->getParams() );
+	}
+
+	/**
+	 * Render the picture tag for images and noscript tags in the case of lazy loading
+	 */
+	public function pictureTag() {
 		$this->response->setData( $this->request->getParams() );
 	}
 

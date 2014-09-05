@@ -6,6 +6,9 @@
  */
 class ThumbnailHelper extends WikiaModel {
 
+	const MEDIUM_THUMB_SIZE = .8;
+	const SMALL_THUMB_SIZE = .6;
+
 	/**
 	 * Get attributes for mustache template
 	 * Don't use this for values that need to be escaped.
@@ -332,6 +335,7 @@ class ThumbnailHelper extends WikiaModel {
 		}
 	}
 
+
 	/**
 	 * Checks if an image should be lazy loaded, and if so sets the necessary attributes
 	 * @param WikiaController $controller
@@ -342,9 +346,10 @@ class ThumbnailHelper extends WikiaModel {
 		$lazyLoaded = false;
 		if ( self::shouldLazyLoad( $controller, $options ) ) {
 			$lazyLoaded = true;
+			$method = empty( $option['usePictureTag'] ) ? 'imgTag' : 'pictureTag';
 			$controller->noscript = $controller->app->renderView(
 				'ThumbnailController',
-				'imgTag',
+				$method,
 				$controller->response->getData()
 			);
 			ImageLazyLoad::setLazyLoadingAttribs( $controller );
@@ -393,5 +398,30 @@ class ThumbnailHelper extends WikiaModel {
 			$linkClasses = array_merge( $linkClasses, $classes );
 			unset( $options['linkAttribs']['class'] );
 		}
+	}
+
+	/**
+	 * @param WikiaController $controller
+	 * @param MediaTransformOutput $thumb
+	 */
+	public static function setPictureTagInfo( WikiaController $controller, MediaTransformOutput $thumb ) {
+		$file = $thumb->file;
+		$smallDim = $thumb->getWidth() * self::SMALL_THUMB_SIZE;
+		$mediumDim = $thumb->getWidth() * self::MEDIUM_THUMB_SIZE;
+		$useWebP = true;
+
+		// get small images (original and WebP)
+		$controller->smallUrl = WikiaFileHelper::getSquaredThumbnailUrl( $file, $smallDim )[0];
+		$controller->smallUrlWebP = WikiaFileHelper::getSquaredThumbnailUrl( $file, $smallDim, $useWebP )[0];
+
+		// get medium images (original and WebP)
+		$controller->mediumUrl = WikiaFileHelper::getSquaredThumbnailUrl( $file, $mediumDim )[0];
+		$controller->mediumUrlWebP = WikiaFileHelper::getSquaredThumbnailUrl( $file, $mediumDim, $useWebP )[0];
+
+		// get full size WebP image
+		$controller->thumbUrlWebP = WikiaFileHelper::getSquaredThumbnailUrl( $file, $thumb->getWidth(), $useWebP )[0];
+
+		// Let image template know to use picture instead of img tags
+		$controller->usePictureTag = true;
 	}
 }
