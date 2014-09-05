@@ -1,0 +1,15 @@
+.ve-ui-wikiaTemplateInsertDialog {
+	.ve-ui-wikiaTemplateInsertDialog-search {
+		background: $color-page;
+		border-bottom: 1px solid $color-page-border;
+		left: 0;
+		padding: 1.5em 2em;
+		position: absolute;
+		right: 0;
+
+		.oo-ui-textInputWidget {
+			width: 100%;
+		}
+	}
+
+}
