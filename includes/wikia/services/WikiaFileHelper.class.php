@@ -658,9 +658,7 @@ class WikiaFileHelper extends Service {
 	 *
 	 * @param File $file
 	 * @param $dimension
-	 * @return array First element of the array is the URL (string value) and the second (boolean) is whether the image
-	 *               used is smaller than the requested dimensions.  One use of this might be to add a border around
-	 *               the image when it is displayed.
+	 * @return string The URL of the image
 	 */
 	public static function getSquaredThumbnailUrl( File $file, $dimension ) {
 		// Create a new url generator
