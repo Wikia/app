@@ -195,7 +195,7 @@ $config['oasis_blocking'] = array(
 
 $config['abtesting'] = array(
 	'type' => AssetsManager::TYPE_JS,
-	'skin' => [ 'oasis', 'wikiamobile' ],
+	'skin' => [ 'oasis', 'wikiamobile', 'venus' ],
 	'assets' => array(
 		'//extensions/wikia/AbTesting/js/AbTest.js',
 	)
@@ -1451,18 +1451,18 @@ $config['imagedrop_scss'] = array(
 /** Note: this group is also used in Oasis! */
 $config['analytics_gas_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
-	'skin' => array( 'wikiamobile' ),
-	'assets' => array(
+	'skin' => ['wikiamobile', 'venus' ],
+	'assets' => [
 		'//extensions/wikia/AnalyticsEngine/js/analytics_prod.js'
-	)
+	]
 );
 
 $config['analytics_bluekai_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
-	'skin' => array( 'wikiamobile' ),
-	'assets' => array(
+	'skin' => ['wikiamobile', 'venus' ],
+	'assets' => [
 		'//extensions/wikia/AdEngine/js/AdLogicPageParams.js',
-	)
+	]
 );
 
 /** WikiMap Extension **/

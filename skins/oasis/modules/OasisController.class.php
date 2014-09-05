@@ -374,8 +374,13 @@ class OasisController extends WikiaController {
 			$this->globalBlockingScripts .= "<script type=\"$wgJsMimeType\" src=\"$blockingFile\"></script>";
 		}
 
+//		d($blockingScripts);
+
+
 		// move JS files added to OutputPage to list of files to be loaded
 		$scripts = RequestContext::getMain()->getSkin()->getScripts();
+
+//		d($scripts);
 
 		foreach ( $scripts as $s ) {
 			//add inline scripts to jsFiles and move non-inline to the queue
@@ -441,6 +446,10 @@ class OasisController extends WikiaController {
 		$remove[ ] = $this->topScripts;
 		array_walk( $remove, 'trim' );
 		$headScripts = str_replace( $remove, '', $tpl->data[ 'headscripts' ] );
+
+//		d($this->topScripts);
+
+//		dd($headScripts);
 
 		$this->jsFiles = $headScripts . $jsLoader . $this->jsFiles;
 

@@ -154,25 +154,26 @@ class VenusController extends WikiaController {
 		// set variables
 		$this->cssLinks = $cssLinks;
 		$this->jsBodyFiles = $jsBodyFiles;
-		$this->jsHeadScripts = $this->getTopScripts() . $jsHeadFiles;
+		$this->jsHeadScripts = $this->topScripts . $jsHeadFiles;
+//		$this->jsHeadScripts = $this->getTopScripts() . $jsHeadFiles;
 	}
 
-	function getTopScripts( $globalVariables = [] ){
-		$vars = [];
-		$scripts = '';
-
-		$globalVariables['Wikia'] = new StdClass();
-
-		//this is run to grab all global variables
-		wfRunHooks( 'WikiaSkinTopScripts', [ &$vars, &$scripts, $this ] );
-
-		//global variables
-		//from Output class
-		//and from ResourceLoaderStartUpModule
-		$res = new ResourceVariablesGetter();
-
-		return WikiaSkin::makeInlineVariablesScript( $this->wg->Out->getJSVars() + $res->get() + $vars + $globalVariables ) . $scripts;
-	}
+//	function getTopScripts( $globalVariables = [] ){
+//		$vars = [];
+//		$scripts = '';
+//
+//		$globalVariables['Wikia'] = new StdClass();
+//
+//		//this is run to grab all global variables
+//		wfRunHooks( 'WikiaSkinTopScripts', [ &$vars, &$scripts, $this ] );
+//
+//		//global variables
+//		//from Output class
+//		//and from ResourceLoaderStartUpModule
+//		$res = new ResourceVariablesGetter();
+//
+//		return WikiaSkin::makeInlineVariablesScript( $this->wg->Out->getJSVars() + $res->get() + $vars + $globalVariables ) . $scripts;
+//	}
 
 	public function getGlobalNavigation() {
 		return $this->app->renderView('GlobalNavigation', 'index');

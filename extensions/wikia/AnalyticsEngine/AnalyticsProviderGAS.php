@@ -43,6 +43,11 @@ class AnalyticsProviderGAS implements iAnalyticsProvider {
 		return true;
 	}
 
+	static public function onVenusAssetsPackages( &$jsHeadGroups, &$jsBodyGroups, &$cssGroups) {
+		$jsHeadGroups[] = 'analytics_gas_js';
+		return true;
+	}
+
 	static public function onOasisSkinAssetGroupsBlocking( &$jsAssetGroups ) {
 		// this is only called in Oasis, so there's no need to double-check it
 		$jsAssetGroups[] = 'analytics_gas_js';

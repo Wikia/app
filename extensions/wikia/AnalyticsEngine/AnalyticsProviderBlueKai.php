@@ -11,6 +11,11 @@ class AnalyticsProviderBlueKai implements iAnalyticsProvider
 		return true;
 	}
 
+	static public function onVenusAssetsPackages( &$jsHeadGroups, &$jsBodyGroups, &$cssGroups) {
+		$jsHeadGroups[] = 'analytics_bluekai_js';
+		return true;
+	}
+
 	function getSetupHtml( $params = array() )
 	{
 		return null;

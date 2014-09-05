@@ -31,3 +31,7 @@ $wgHooks['InstantGlobalsGetVariables'][] = 'AnalyticsProviderIVW2::onInstantGlob
 //register hook for WikiaMobile skin to get the asset as part of the head js package in one request
 $wgHooks['WikiaMobileAssetsPackages'][] = 'AnalyticsProviderGAS::onWikiaMobileAssetsPackages';
 $wgHooks['WikiaMobileAssetsPackages'][] = 'AnalyticsProviderBlueKai::onWikiaMobileAssetsPackages';
+
+// register hooks for Venus
+$wgHooks['VenusAssetsPackages'][] = 'AnalyticsProviderGAS::onVenusAssetsPackages';
+$wgHooks['VenusAssetsPackages'][] = 'AnalyticsProviderBlueKai::onVenusAssetsPackages';
