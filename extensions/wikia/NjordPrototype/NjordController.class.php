@@ -64,16 +64,20 @@ class NjordController extends WikiaController {
 				$success = true;
 
 				$wikiDataModel->setImageName($file->getTitle()->getDBKey());
-				$wikiDataModel->setImagePath($file->getFullUrl);
+				$wikiDataModel->setImagePath($file->getFullUrl());
 
 				$wikiDataModel->storeInPage();
 				$wikiDataModel->storeInProps();
+
+				//clean up stash
+				$stash->removeFile( $imageName );
 			}
-			//clean up stash
-			$stash->removeFile( $imageName );
+		}
+		if(!$success) {
+			$wikiDataModel->getFromProps();
 		}
 
 		$this->getResponse()->setVal( 'success', $success );
-		$this->getResponse()->setVal( 'wikiData' , $wikiDataModel );
+		$this->getResponse()->setVal( 'wikiData', $wikiDataModel);
 	}
 }
