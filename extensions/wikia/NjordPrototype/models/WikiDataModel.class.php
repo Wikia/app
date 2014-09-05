@@ -23,7 +23,7 @@ class WikiDataModel {
 		$this->title = ! empty( $attributes['title'] ) ? $attributes['title'] : null;
 		$this->description = ! empty( $attributes['description'] ) ? $attributes['description'] : null;
 
-		if($imageName) {
+		if ( $imageName ) {
 			$this->initializeImagePath( $imageName );
 		}
 	}
@@ -65,12 +65,25 @@ class WikiDataModel {
 	}
 
 	public function storeInPage() {
-		// TODO: implementation
-
 		$pageTitleObj = Title::newFromText( $this->pageName );
 		$pageArticleObj = new Article( $pageTitleObj );
+
+		$articleContents = $pageArticleObj->getContent();
+
+		// Remove the original hero text
+		$newContent = mb_ereg_replace( '<hero(.*?)/>', '', $articleContents, 'mi' );
+
+		// Prepend the hero tag
+		$heroTag = Xml::element('hero', $attribs = [
+			'title' => $this->title,
+			'description' => $this->description,
+			'imagename' => $this->imageName
+		]);
+		$newContent = $heroTag . PHP_EOL . $newContent;
+
+		// save and purge
+		$pageArticleObj->doEdit( $newContent, '' );
 		$pageArticleObj->doPurge();
 
 	}
-
 }
