@@ -54,5 +54,6 @@ $VenusConfig[ 'global_navigation_js' ] = [
 	'skin' => [ 'venus', 'oasis' ],
 	'assets' => [
 		'//extensions/wikia/GlobalNavigation/js/GlobalNavigationSearch.js',
+		'//extensions/wikia/WallNotifications/scripts/WallNotifications.venus.js',
 	]
 ];
