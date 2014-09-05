@@ -155,7 +155,7 @@ class LightboxController extends WikiaController {
 	 */
 	public function getMediaDetail() {
 		$fileTitle = urldecode( $this->request->getVal( 'fileTitle', '' ) );
-		$isInline = urldecode( $this->request->getVal( 'isInline', false ) );
+		$isInline = $this->request->getVal( 'isInline', false );
 
 		// BugId:32939
 		// There is no sane way to check whether $fileTitle is OK other
