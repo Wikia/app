@@ -170,18 +170,23 @@ $new-border-color: #c7d1d8;
 		height: 51px;
 		font-weight: bold;
 		padding: 15px 20px;
-
-		span {
-			font-size: 12px;
-			font-weight: normal;
-			text-align: right;
-		}
 	}
 
 	.notifications-header {
 		background-color: $nav-font-color;
 		color: $new-border-color;
 		padding-bottom: 0px;
+	}
+
+	.notifications-markasread {
+		float: right;
+		font-size: 12px;
+		font-weight: normal;
+		text-align: right;
+
+		span {
+			margin-left: 10px;
+		}
 	}
 
 	.notifications-for-wiki {
@@ -231,6 +236,7 @@ $new-border-color: #c7d1d8;
 		border-top: 1px solid $new-border-color;
 		line-height: 22px;
 		padding: 20px 0;
+		position: relative;
 
 		.notification-message {
 			@include grid-column-width('large', 3);
@@ -258,23 +264,29 @@ $new-border-color: #c7d1d8;
 			padding: 20px;
 		}
 
-		&.read {
-			background-color: #eef1f3;
+		&.admin-notification:before {
+			border-left: 10px solid $nav-font-color;
+			display:block;
+			content:".";
+			color:transparent;
+			height:100%;
+			position:absolute;
+			left:0;
+			padding-top:1px;
+			top: 0;
+		}
 
+		&.read {
 			h4, .avatars {
 				opacity: 0.7;
 			}
 		}
 
 		&:hover {
-			background-color: #0a5fa3;
+			background-color: #eef1f3;
 
-			a {
-				color: #fff;
-
-				h4 {
-					opacity: 1;
-				}
+			h4, .avatars {
+				opacity: 1;
 			}
 		}
 	}
