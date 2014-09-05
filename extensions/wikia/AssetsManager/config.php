@@ -1951,6 +1951,6 @@ $config['global_header_css'] = [
 	'skin' => ['oasis'],
 	'assets' => [
 		'//extensions/wikia/GlobalNavigation/css/GlobalNavigationAccountNavigation.scss',
-		'//extensions/wikia/UserLogin/styles/UserLoginDropdown.scss'
+		'//extensions/wikia/UserLogin/css/UserLoginDropdown.scss'
 	]
 ];
