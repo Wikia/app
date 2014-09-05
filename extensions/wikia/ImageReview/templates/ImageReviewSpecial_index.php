@@ -2,19 +2,19 @@
 	<div style="float: right; text-align: left">
 <?php if ( $accessQuestionable ) { ?>
 		<div class="tally">
-			<a href="<?= $fullUrl ?>"><em><?= $imageCount['unreviewed'] ?></em> <span>unreviewed<br>images</span></a>
+			<a href="<?= $baseUrl ?>"><em><?= $imageCount['unreviewed'] ?></em> <span>unreviewed<br>images</span></a>
 		</div>
 		<div class="tally">
-			<a href="<?= $fullUrl ?>/invalid"><em><?= $imageCount['invalid']?></em> <span>invalid<br>images</span></a>
+			<a href="<?= $baseUrl ?>/invalid"><em><?= $imageCount['invalid']?></em> <span>invalid<br>images</span></a>
 		</div>
 		<div class="tally">
-			<a href="<?= $fullUrl ?>/questionable"><em><?= $imageCount['questionable']?></em> <span>questionable<br>images</span></a>
+			<a href="<?= $baseUrl ?>/questionable"><em><?= $imageCount['questionable']?></em> <span>questionable<br>images</span></a>
 		</div>
 <?php } ?>
 <?php if ( $accessRejected ) { ?>
 
 		<div class="tally">
-			<a href="<?= $fullUrl ?>/rejected"><em><?= $imageCount['rejected']?></em> <span>rejected<br>images</span></a>
+			<a href="<?= $baseUrl ?>/rejected"><em><?= $imageCount['rejected']?></em> <span>rejected<br>images</span></a>
 		</div>
 <?php } ?>
 	</div>
