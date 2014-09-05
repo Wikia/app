@@ -265,7 +265,7 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 				ORDER BY ' . $this->getOrder($order) . '
 				LIMIT ' . self::LIMIT_IMAGES_FROM_DB . '
 			) as image_review
-			LEFT JOIN pages ON (image_review.wiki_id=pages.page_wikia_id) AND (image_review.page_id=pages.page_id) AND (pages.page_is_redirect=\'0\')'
+			LEFT JOIN pages ON (image_review.wiki_id=pages.page_wikia_id) AND (image_review.page_id=pages.page_id) AND (pages.page_is_redirect=0)'
 		);
 
 		$rows = array();
@@ -312,42 +312,30 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 		$db->commit();
 
 		$imageList = $invalidImages = $unusedImages = array();
-		foreach( $rows as $row) {
+		foreach ( $rows as $row ) {
 			$record = "(wiki_id = {$row->wiki_id} and page_id = {$row->page_id})";
 
-			if (count($imageList) < self::LIMIT_IMAGES) {
+			if ( count( $imageList ) < self::LIMIT_IMAGES ) {
 				$oImagePage = GlobalTitle::newFromId( $row->page_id, $row->wiki_id );
-				$oImageGlobal = new GlobalFile( $oImagePage );
-				\Wikia\Logger\WikiaLogger::instance()->debug( __METHOD__, var_dump( $oImagePage ) );
-				\Wikia\Logger\WikiaLogger::instance()->debug( __METHOD__, var_dump( $oImageGlobal ) );
-				$img = array(
-					'src' => $oImageGlobal->getThumbUrl( self::IMAGE_REVIEW_THUMBNAIL_SIZE . 'px-' . $oImageGlobal->getName() ),
+				$oImageGlobalFile = new GlobalFile( $oImagePage );
+				$aImageInfo = array(
+					'src' => $oImageGlobalFile->getThumbUrl( self::IMAGE_REVIEW_THUMBNAIL_SIZE . 'px-' . $oImageGlobalFile->getName() ),
 					'page' => $oImagePage->getFullUrl(),
+					'extension' => pathinfo( strtolower( $aImageInfo['page'] ), PATHINFO_EXTENSION ), // this needs to use the page index since src for SVG ends in .svg.png :/
 				);
+				$bImageExists = $oImageGlobalFile->exists();
 
-				$extension = pathinfo( strtolower( $img['page'] ), PATHINFO_EXTENSION ); // this needs to use the page index since src for SVG ends in .svg.png :/
-
-				if ( empty( $img['src'] ) && $state != ImageReviewStatuses::STATE_QUESTIONABLE && $state != ImageReviewStatuses::STATE_REJECTED ) {
+				if ( !$oImageExists ) {
 					$invalidImages[] = $record;
-				} elseif ( 'ico' == $extension ) {
+					continue;
+				} elseif ( 'ico' == $aImageInfo['extension'] ) {
 					$iconsWhere[] = $record;
+					continue;
 				} else {
 					$isThumb = true;
 
-					if ( empty( $img['src'] ) ) {
-						if ( is_object( $oImagePage ) ) {
-							$img['page'] = $oImagePage->getFullUrl();
-							// @TODO this should be taken from the code instead of being hardcoded
-							$img['src'] = 'http://images.wikia.com/central/images/8/8c/Wikia_image_placeholder.png';
-						} else {
-							// this should never happen
-							$invalidImages[] = $record;
-							continue;
-						}
-					}
-
-					if  ( in_array( $extension, array( 'gif', 'svg' ) ) ) {
-						$img = ImagesService::getImageOriginalUrl( $row->wiki_id, $row->page_id );
+					if  ( in_array( $aImageInfo['extension'], array( 'gif', 'svg' ) ) ) {
+						$aImageInfo = ImagesService::getImageOriginalUrl( $row->wiki_id, $row->page_id );
 						$isThumb = false;
 					}
 
@@ -357,8 +345,8 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 						'wikiId' => $row->wiki_id,
 						'pageId' => $row->page_id,
 						'state' => $row->state,
-						'src' => $img['src'],
-						'url' => $img['page'],
+						'src' => $aImageInfo['src'],
+						'url' => $aImageInfo['page'],
 						'priority' => $row->priority,
 						'flags' => $row->flags,
 						'isthumb' => $isThumb,
@@ -375,7 +363,7 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 			$db->update(
 				'image_review',
 				array(
-					'state' => ImageReviewStatuses::STATE_QUESTIONABLE // changed from STATE_INVALID_IMAGE
+					'state' => ImageReviewStatuses::STATE_INVALID_IMAGE // changed from STATE_INVALID_IMAGE
 				),
 				array( implode(' OR ', $invalidImages) ),
 				__METHOD__
