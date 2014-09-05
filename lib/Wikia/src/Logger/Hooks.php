@@ -151,4 +151,28 @@ class Hooks {
 
 		return true;
 	}
+
+	/**
+	 * Hook into wfDebugLog function and log errors via WikiaLogger
+	 *
+	 * @see PLATFORM-424
+	 *
+	 * @author macbre
+	 * @return bool
+	 */
+	public static function onDebug($text, $logGroup ) {
+		try {
+			// throw an exception to get a backtrace
+			throw new \Exception();
+		}
+		catch(\Exception $ex) {
+			WikiaLogger::instance()->error(rtrim($text), [
+				'logGroup' => $logGroup,
+				'exception' => $ex
+			]);
+		}
+
+		// prevent the default behaviour of wfDebugLog - we already logged all information we need
+		return false;
+	}
 }

@@ -52,13 +52,11 @@ class WikiaLocalFileShared  {
 	 * @param array $options [optional] associative array which accepts the following keys
 	 *  'autoplay' bool Whether the video should play on page load
 	 *  'isAjax' bool Whether the curent request is part of an ajax call
+	 *  'isInline' bool Is embed video file inline
 	 * @return bool|string
 	 */
 	public function getEmbedCode( $width, array $options = [] ) {
 		wfProfileIn( __METHOD__ );
-
-		$autoplay = !empty( $options['autoplay'] );
-		$isAjax = !empty( $options['isAjax'] );
 
 		$handler = $this->oFile->getHandler();
 		if ( $this->isVideo() && !empty($handler) ) {
@@ -67,11 +65,7 @@ class WikiaLocalFileShared  {
 			}
 			$handler->setThumbnailImage( $this->oFile->transform( array( 'width' => $width ) ) );
 
-			$handlerOptions = [
-				'autoplay' => $autoplay,
-				'isAjax' => $isAjax,
-			];
-			$res = $handler->getEmbed( $width, $handlerOptions );
+			$res = $handler->getEmbed( $width, $options );
 
 			$res['title'] = $this->oFile->getTitle()->getDBKey();
 			$res['provider'] = $this->getProviderName();

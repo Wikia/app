@@ -303,6 +303,7 @@ class WikiaFileHelper extends Service {
 			'videoViews' => 0,
 			'exists' => false,
 			'isAdded' => true,
+			'extraHeight' => 0,
 		);
 
 		if ( !empty( $fileTitle ) ) {
@@ -330,6 +331,7 @@ class WikiaFileHelper extends Service {
 					$options = [
 						'autoplay' => true,
 						'isAjax' => true,
+						'isInline' => !empty( $config['isInline'] ),
 					];
 					$data['videoEmbedCode'] = $file->getEmbedCode( $width, $options );
 					$data['playerAsset'] = $file->getPlayerAssetUrl();
@@ -337,6 +339,11 @@ class WikiaFileHelper extends Service {
 					$data['providerName'] = $file->getProviderName();
 					$data['isAdded'] = self::isAdded( $file );
 					$mediaPage = self::getMediaPage( $fileTitle );
+
+					// Extra height is needed for lightbox when more elements must be fitted
+					if ( strtolower( $data['providerName'] ) == 'crunchyroll' ) {
+						$data['extraHeight'] = CrunchyrollVideoHandler::CRUNCHYROLL_WIDGET_HEIGHT_PX;
+					}
 				} else {
 					$width = $width > $config['imageMaxWidth'] ? $config['imageMaxWidth'] : $width;
 					$mediaPage = new ImagePage( $fileTitle );
@@ -651,14 +658,9 @@ class WikiaFileHelper extends Service {
 	 *
 	 * @param File $file
 	 * @param $dimension
-	 * @return array First element of the array is the URL (string value) and the second (boolean) is whether the image
-	 *               used is smaller than the requested dimensions.  One use of this might be to add a border around
-	 *               the image when it is displayed.
+	 * @return string The URL of the image
 	 */
 	public static function getSquaredThumbnailUrl( File $file, $dimension ) {
-		// Note whether the image we use is smaller than the requested dimensions
-		$smallerThanDimensions = false;
-
 		// Create a new url generator
 		$gen = ( new UrlGenerator( $file ) );
 
@@ -674,7 +676,6 @@ class WikiaFileHelper extends Service {
 		if ( $isSmallImage && $imageBelowThreshold ) {
 			// Leave the (small) full sized image as is, but put within the requested container with transparent fill
 			$gen->fixedAspectRatioDown()->backgroundFill( 'transparent' );
-			$smallerThanDimensions = true;
 		} else {
 			if ( $height > $width ) {
 				// Portrait mode, crop at the top
@@ -687,6 +688,6 @@ class WikiaFileHelper extends Service {
 
 		$url = $gen->width( $dimension )->height( $dimension )->url();
 
-		return [ $url, $smallerThanDimensions ];
+		return $url;
 	}
 }

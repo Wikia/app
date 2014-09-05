@@ -7,6 +7,7 @@ $media-margin: .5em;
 .media-gallery-wrapper {
 	@include grid-row();
 	margin: 0 $media-margin * -1;
+	padding: 1px; // leave room for the image outlines
 	width: auto;
 
 	// default is 8 or more images
@@ -16,11 +17,8 @@ $media-margin: .5em;
 		transition: all 1s ease-in-out;
 
 		img {
+			outline: 1px solid $color-page-border-subtle;
 			width: 100%;
-
-			&.border {
-				outline: 1px solid $color-page-border-subtle;
-			}
 		}
 
 		&.hidden {
