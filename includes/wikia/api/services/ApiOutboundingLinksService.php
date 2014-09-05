@@ -19,7 +19,7 @@ class ApiOutboundingLinksService {
 				}
 			);
 
-		if( !$links ) {
+		if( empty( $links ) ) {
 			$links = [ ];
 		}
 
