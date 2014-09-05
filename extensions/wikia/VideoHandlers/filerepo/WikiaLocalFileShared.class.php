@@ -52,7 +52,6 @@ class WikiaLocalFileShared  {
 	 * @param array $options [optional] associative array which accepts the following keys
 	 *  'autoplay' bool Whether the video should play on page load
 	 *  'isAjax' bool Whether the curent request is part of an ajax call
-	 *  'postOnload' bool Whether player is loaded after page onload event (used for JWPlayer)
 	 * @return bool|string
 	 */
 	public function getEmbedCode( $width, array $options = [] ) {
@@ -60,7 +59,6 @@ class WikiaLocalFileShared  {
 
 		$autoplay = !empty( $options['autoplay'] );
 		$isAjax = !empty( $options['isAjax'] );
-		$postOnload = !empty( $options['postOnload'] );
 
 		$handler = $this->oFile->getHandler();
 		if ( $this->isVideo() && !empty($handler) ) {
@@ -72,7 +70,6 @@ class WikiaLocalFileShared  {
 			$handlerOptions = [
 				'autoplay' => $autoplay,
 				'isAjax' => $isAjax,
-				'postOnload' => $postOnload,
 			];
 			$res = $handler->getEmbed( $width, $handlerOptions );
 
