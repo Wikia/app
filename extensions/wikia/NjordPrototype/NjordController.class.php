@@ -55,7 +55,8 @@ class NjordController extends WikiaController {
 		$success = false;
 		$name = $this->getRequest()->getVal( 'name', false );
 		if ( $name ) {
-			$temp_file = RepoGroup::singleton()->getLocalRepo()->getUploadStash()->getFile( $name );
+			$stash = RepoGroup::singleton()->getLocalRepo()->getUploadStash();
+			$temp_file = $stash->getFile( $name );
 			$file = new LocalFile( $temp_file->getName(), RepoGroup::singleton()->getLocalRepo() );
 
 			$status = $file->upload( $temp_file->getPath(), '', '' );
@@ -63,7 +64,7 @@ class NjordController extends WikiaController {
 				$success = true;
 			}
 			//clean up stash
-			RepoGroup::singleton()->getLocalRepo()->getUploadStash()->removeFile( $name );
+			$stash->removeFile( $name );
 		}
 		$this->getResponse()->setVal( 'success', $success );
 		$this->getResponse()->setVal( 'url', isset( $file ) ? $file->getFullUrl() : '' );
