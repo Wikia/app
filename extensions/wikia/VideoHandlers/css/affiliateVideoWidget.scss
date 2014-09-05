@@ -1,10 +1,14 @@
 @mixin affiliateVideoWidget {
-	.videoAffiliateLink {
-		margin-bottom: 5px;
-		text-align: center;
+	.crunchyroll-container {
+		display: inline-block;
 
-		img.crunchyroll-aff-logo {
-			-webkit-user-select: none;
+		.videoAffiliateLink {
+			margin-bottom: 5px;
+			text-align: center;
+
+			img.crunchyroll-aff-logo {
+				-webkit-user-select: none;
+			}
 		}
 	}
 }
