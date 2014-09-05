@@ -49,11 +49,10 @@ class NjordController extends WikiaController {
 		$wikiData = $this->request->getVal( 'wikiData', [ ] );
 		$wikiDataModel = new WikiDataModel( Title::newMainPage()->getText() );
 		$wikiDataModel->setFromAttributes( $wikiData );
-		$wikiDataModel->setImageName(!empty( $wikiData['imagename'] ) ? $wikiData['imagename'] : null);
+		$imageChanged = !empty( $wikiData['imagechanged'] );
+		$imageName = !empty( $wikiData['imagename'] ) ? $wikiData['imagename'] : null;
 
-		$imageName = $wikiDataModel->getImageName();
-
-		if ( $imageName ) {
+		if ( $imageChanged && $imageName ) {
 			$stash = RepoGroup::singleton()->getLocalRepo()->getUploadStash();
 
 			$temp_file = $stash->getFile( $imageName );
@@ -61,8 +60,6 @@ class NjordController extends WikiaController {
 
 			$status = $file->upload( $temp_file->getPath(), '', '' );
 			if ( $status->isOK() ) {
-				$success = true;
-
 				$wikiDataModel->setImageName($file->getTitle()->getDBKey());
 				$wikiDataModel->setImagePath($file->getFullUrl());
 
@@ -71,7 +68,13 @@ class NjordController extends WikiaController {
 
 				//clean up stash
 				$stash->removeFile( $imageName );
+				$success = true;
 			}
+		} else {
+			$wikiDataModel->setImageNameFromProps();
+			$wikiDataModel->storeInPage();
+			$wikiDataModel->storeInProps();
+			$success = true;
 		}
 		if(!$success) {
 			$wikiDataModel->getFromProps();

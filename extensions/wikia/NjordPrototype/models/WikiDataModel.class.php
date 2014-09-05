@@ -51,6 +51,12 @@ class WikiDataModel {
 		$this->initializeImagePath( $this->cropPosition );
 	}
 
+	public function setImageNameFromProps() {
+		$pageId = Title::newFromText( $this->pageName )->getArticleId();
+		$this->imageName = wfGetWikiaPageProp( self::WIKI_HERO_IMAGE_PROP_ID, $pageId );
+		$this->initializeImagePath( $this->cropPosition );
+	}
+
 	/**
 	 * @param $imageName
 	 */

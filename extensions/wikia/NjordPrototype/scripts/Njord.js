@@ -7,7 +7,8 @@
 			imagename: null,
 			imagepath: null,
 			cropposition: 30, // for now let's not give that possibility to the user
-			changed: false
+			imagechanged: false,
+			datachanged: false
 		},
 		$heroModule = $('#MainPageHero'),
 
@@ -26,10 +27,14 @@
 			var $this = $(this);
 			heroData.title = $heroModule.find('.hero-title').text();
 			heroData.description = $heroModule.find('.hero-description').text();
-			heroData.imagepath = imagePath;
-			heroData.imagename = imageName;
+			if (imagePath || imageName) {
+				heroData.imagepath = imagePath;
+				heroData.imagename = imageName;
+				heroData.imagechanged = true;
+			}
 			heroData.changed = true;
 
+			// TODO: remove this debug statement
 			console.log(heroData);
 			return $this;
 		}, onSave = function () {
