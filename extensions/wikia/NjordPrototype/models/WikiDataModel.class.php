@@ -16,16 +16,17 @@ class WikiDataModel {
 
 	const WIKI_HERO_IMAGE_MAX_WIDTH = 1600;
 	const WIKI_HERO_IMAGE_MAX_HEIGHT = 500;
+	const DEFAULT_IMAGE_CROP_POSITION = 0.3;
 
 	public function __construct( $pageName ) {
 		$this->pageName = $pageName;
 	}
 
 	public function setFromAttributes( $attributes ) {
-		$this->imageName = !empty( $attributes['imagename'] ) ? $attributes['imagename'] : null;
-		$this->title = !empty( $attributes['title'] ) ? $attributes['title'] : null;
-		$this->description = !empty( $attributes['description'] ) ? $attributes['description'] : null;
-		$this->cropPosition= !empty( $attributes['cropposition'] ) ? $attributes['cropposition'] : null;
+		$this->imageName = !empty( $attributes[ 'imagename' ] ) ? $attributes[ 'imagename' ] : null;
+		$this->title = !empty( $attributes[ 'title' ] ) ? $attributes[ 'title' ] : null;
+		$this->description = !empty( $attributes[ 'description' ] ) ? $attributes[ 'description' ] : null;
+		$this->cropPosition = !empty( $attributes[ 'cropposition' ] ) ? $attributes[ 'cropposition' ] : null;
 
 		$this->initializeImagePath( $this->cropPosition );
 	}
@@ -57,12 +58,38 @@ class WikiDataModel {
 		$imageTitle = Title::newFromText( $this->imageName, NS_FILE );
 		$file = wfFindFile( $imageTitle );
 		if ( $file && $file->exists() ) {
-			$homePageHelper = new WikiaHomePageHelper();
-			$this->imagePath = $homePageHelper->getImageUrlFromFile( $file, self::WIKI_HERO_IMAGE_MAX_WIDTH, self::WIKI_HERO_IMAGE_MAX_HEIGHT );
+			$this->imagePath = $file->getThumbUrl(
+				$this->getThumbSuffix(
+					$file,
+					self::WIKI_HERO_IMAGE_MAX_WIDTH,
+					self::WIKI_HERO_IMAGE_MAX_HEIGHT,
+					self::DEFAULT_IMAGE_CROP_POSITION
+				) );
 		} else {
 			$this->imageName = null;
 			$this->imagePath = null;
 		}
+	}
+
+	private function getThumbSuffix( File $file, $expectdWidth, $expectedHeight, $crop ) {
+		$originalHeight = $file->getHeight();
+		$originalWidth = $file->getWidth();
+		$originalRation = $originalWidth / $originalHeight;
+		$ratio = $expectdWidth / $expectedHeight;
+		if ( $originalRation > $ratio ) {
+			$width = round( $originalHeight * $ratio );
+			$height = $originalHeight;
+		} else {
+			$width = $originalWidth;
+			$height = round( $originalWidth / $ratio );
+		}
+
+		$width = ( $width > $expectdWidth ) ? $expectdWidth : $width;
+		$left = 0;
+		$right = $originalWidth;
+		$top = round( $originalHeight * $crop );
+		$bottom = $top + $height;
+		return "{$width}px-$left,$right,$top,$bottom";
 	}
 
 	public function storeInPage() {
@@ -75,12 +102,12 @@ class WikiDataModel {
 		$newContent = mb_ereg_replace( '<hero(.*?)/>', '', $articleContents, 'mi' );
 
 		// Prepend the hero tag
-		$heroTag = Xml::element('hero', $attribs = [
+		$heroTag = Xml::element( 'hero', $attribs = [
 			'title' => $this->title,
 			'description' => $this->description,
 			'imagename' => $this->imageName,
 			'cropposition' => $this->cropPosition
-		]);
+		] );
 		$newContent = $heroTag . PHP_EOL . $newContent;
 
 		// save and purge
