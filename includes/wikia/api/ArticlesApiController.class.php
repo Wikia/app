@@ -997,17 +997,12 @@ class ArticlesApiController extends WikiaApiController {
 			throw new OutOfRangeApiException( self::PARAMETER_LIMIT, 1, self::POPULAR_ARTICLES_PER_WIKI );
 		}
 
-		$expand = $this->request->getBool( static::PARAMETER_EXPAND, false );
-
 		$baseArticleId = $this->getRequest()->getVal( self::PARAMETER_BASE_ARTICLE_ID, false );
 		if( $baseArticleId !== false ) {
-			// Checking existence of article
-			$baseArticleTitle = Title::newFromID( $baseArticleId );
-			if( empty( $baseArticleTitle ) ) {
-				$message = wfMessage( 'invalid-parameter-basearticleid', $baseArticleId )->text();
-				throw new BadRequestApiException( $message );
-			}
+			$this->validateBaseArticleId( $baseArticleId );
 		}
+
+		$expand = $this->request->getBool( static::PARAMETER_EXPAND, false );
 
 		$key = self::getCacheKey( self::POPULAR_CACHE_ID, '', [ $expand, $baseArticleId ] );
 
@@ -1286,5 +1281,22 @@ class ArticlesApiController extends WikiaApiController {
 	 */
 	public function getExcludeNamespacesFromCategoryMembersDBQuery() {
 		return $this->excludeNamespacesFromCategoryMembersDBQuery;
+	}
+
+	/**
+	 * Checking existence of article with given $baseArtcileId
+	 *
+	 * If provided id corresponds to non-existent article,
+	 * then throwing BadRequestApiException.
+	 *
+	 * @param $baseArticleId
+	 * @throws BadRequestApiException
+	 */
+	protected function validateBaseArticleId( $baseArticleId ) {
+		$baseArticleTitle = Title::newFromID( $baseArticleId );
+		if ( empty( $baseArticleTitle ) ) {
+			$message = wfMessage( 'invalid-parameter-basearticleid', $baseArticleId )->text();
+			throw new BadRequestApiException( $message );
+		}
 	}
 }
