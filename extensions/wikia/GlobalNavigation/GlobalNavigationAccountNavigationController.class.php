@@ -118,10 +118,15 @@ class GlobalNavigationAccountNavigationController extends WikiaController {
 				break;
 		}
 
-		$markup = Xml::openElement( 'a', $attributes );
+		$markup = '<a';
+		foreach( $attributes as $name => $value ) {
+			$markup .= ' ' . $name .'="' . $value . '"';
+		}
+		$markup .= '>';
+
 		if ( !$openingTagOnly ) {
 			$markup .= $personalUrl[ 'text' ];
-			$markup .= Xml::closeElement( 'a' );
+			$markup .= '</a>';
 		}
 
 		wfProfileOut( __METHOD__ );

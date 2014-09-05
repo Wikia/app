@@ -18,9 +18,9 @@
 		padding: 0;
 
 		&:hover {
-			background: none;
+			background-color: $search-input-background;
 
-			.chevron {
+			.avatar-container:after {
 				border-top-color: $nav-active-color;
 			}
 		}
@@ -30,16 +30,24 @@
 		}
 
 		.avatar-container {
-			border-radius: 50%;
-			float: left;
 			height: 36px;
 			margin: 0 6px 0 38px;
-			overflow: hidden;
 			width: 36px;
+
+			&:after {
+				border: 5px solid;
+				border-top-color: $nav-alternative-color;
+				color: transparent;
+				content: ' ';
+				display: inline-block;
+				margin-top: 18px;
+			}
 
 			&.anon-avatar-placeholder,
 			&.logged-avatar-placeholder {
 				background-image: url('/extensions/wikia/GlobalNavigation/images/avatar.svg'); /* base64 */
+				background-repeat: no-repeat;
+				border-radius: 50%;
 			}
 
 			&.anon-avatar-placeholder {
@@ -49,15 +57,12 @@
 			&.logged-avatar-placeholder {
 				background-color: $nav-active-color;
 			}
+
+			.avatar {
+				border-radius: 50%;
+			}
 		}
 
-		.chevron {
-			border-style: solid;
-			border-top-color: $nav-alternative-color;
-			border-width: 5px;
-			color: transparent;
-			margin-top: 18px;
-		}
 	}
 
 	.user-menu {
@@ -73,19 +78,20 @@
 			display: table;
 		}
 
-		li {
+		> li {
 			display: table-row;
 			height: 51px;
 			list-style: none;
 
-			a {
+			> a {
 				background-color: $nav-background-color;
 				border-top: 1px solid $nav-alternative-color;
+				color: $dropdown-font-color;
 				display: table-cell;
-				padding: 15px 20px;
+				padding: 8px 20px;
 				text-decoration: none;
 				vertical-align: middle;
-				word-break: break-all;
+				word-break: break-word;
 
 				&:hover {
 					background-color: $dropdown-font-color;
