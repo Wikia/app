@@ -469,7 +469,8 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 		$statesToFetch = array(
 			ImageReviewStatuses::STATE_QUESTIONABLE,
 			ImageReviewStatuses::STATE_REJECTED,
-			ImageReviewStatuses::STATE_UNREVIEWED
+			ImageReviewStatuses::STATE_UNREVIEWED,
+			ImageReviewStatuses::STATE_INVALID_IMAGE,
 		);
 		$where[] = 'state in (' . $db->makeList( $statesToFetch ) . ')';
 
@@ -493,6 +494,7 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 			'unreviewed' => 0,
 			'questionable' => 0,
 			'rejected' => 0,
+			'invalid' => 0,
 		);
 		while( $row = $db->fetchObject($result) ) {
 			$total[$row->state] = $row->total;
@@ -506,6 +508,9 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 		}
 		if ( array_key_exists( ImageReviewStatuses::STATE_REJECTED, $total ) ) {
 			$total['rejected'] = $this->wg->Lang->formatNum( $total[ImageReviewStatuses::STATE_REJECTED]);
+		}
+		if ( array_key_exists( ImageReviewStatuses::STATE_INVALID_IMAGE, $total ) ) {
+			$total['invalid'] = $this->wg->Lang->formatNum( $total[ImageReviewStatuses::STATE_INVALID_IMAGE]);
 		}
 		$this->wg->memc->set( $key, $total, 3600 /* 1h */ );
 

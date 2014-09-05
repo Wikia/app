@@ -2,10 +2,13 @@
 	<div style="float: right; text-align: left">
 <?php if ( $accessQuestionable ) { ?>
 		<div class="tally">
-			<em><?= $imageCount['unreviewed'] ?></em> <span>unreviewed<br>images</span>
+			<a href="<?= $fullUrl ?>"><em><?= $imageCount['unreviewed'] ?></em> <span>unreviewed<br>images</span></a>
 		</div>
 		<div class="tally">
 			<a href="<?= $fullUrl ?>/questionable"><em><?= $imageCount['questionable']?></em> <span>questionable<br>images</span></a>
+		</div>
+		<div class="tally">
+			<a href="<?= $fullUrl ?>/invalid"><em><?= $imageCount['invalid']?></em> <span>invalid<br>images</span></a>
 		</div>
 <?php } ?>
 <?php if ( $accessRejected ) { ?>
