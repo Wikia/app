@@ -1004,8 +1004,7 @@ class ArticlesApiController extends WikiaApiController {
 			// Checking existence of article
 			$baseArticleTitle = Title::newFromID( $baseArticleId );
 			if( empty( $baseArticleTitle ) ) {
-				$message =
-					"Value of parameter baseArticleId (${baseArticleId}) corresponds to non-existent article";
+				$message = wfMessage( 'invalid-parameter-basearticleid', $baseArticleId )->text();
 				throw new BadRequestApiException( $message );
 			}
 		}
