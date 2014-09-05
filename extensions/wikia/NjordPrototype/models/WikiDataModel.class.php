@@ -71,12 +71,12 @@ class WikiDataModel {
 		}
 	}
 
-	private function getThumbSuffix( File $file, $expectdWidth, $expectedHeight, $crop ) {
+	private function getThumbSuffix( File $file, $expectedWidth, $expectedHeight, $crop ) {
 		$originalHeight = $file->getHeight();
 		$originalWidth = $file->getWidth();
-		$originalRation = $originalWidth / $originalHeight;
-		$ratio = $expectdWidth / $expectedHeight;
-		if ( $originalRation > $ratio ) {
+		$originalRatio = $originalWidth / $originalHeight;
+		$ratio = $expectedWidth / $expectedHeight;
+		if ( $originalRatio > $ratio ) {
 			$width = round( $originalHeight * $ratio );
 			$height = $originalHeight;
 		} else {
@@ -84,7 +84,7 @@ class WikiDataModel {
 			$height = round( $originalWidth / $ratio );
 		}
 
-		$width = ( $width > $expectdWidth ) ? $expectdWidth : $width;
+		$width = ( $width > $expectedWidth ) ? $expectedWidth : $width;
 		$left = 0;
 		$right = $originalWidth;
 		$top = round( $originalHeight * $crop );
