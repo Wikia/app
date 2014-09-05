@@ -69,12 +69,7 @@ ve.ui.WikiaTemplateInsertDialog.prototype.initialize = function () {
  * Handle change of value in search input
  */
 ve.ui.WikiaTemplateInsertDialog.prototype.onSearchInputChange = function () {
-	var value = this.searchInput.getValue().toLowerCase().trim();
-};
-
-ve.ui.WikiaTemplateInsertDialog.prototype.onSearchResults = function ( results ) {
-	this.select.clearItems();
-	this.select.addItems( results );
+	// TODO
 };
 
 /* Registration */
