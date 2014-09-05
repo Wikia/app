@@ -6,10 +6,13 @@
  */
 class ThumbnailHelper extends WikiaModel {
 
-	// Thumbnail sizes to use for <picture> tags. These are used to create thumbnails
-	// 80% and 60% the size of the original to be displayed on smaller screen sizes.
-	const MEDIUM_THUMB_SIZE = .8;
-	const SMALL_THUMB_SIZE = .6;
+	// Smaller thumbnail size used by picture tag.
+	const SMALL_THUMB_SIZE = .8;
+
+	// The 3 pixel size breakpoints used by the new grid.
+	const SMALL_BREAKPOINT = 768;
+	const MEDIUM_BREAKPOINT = 1024;
+	const LARGE_BREAKPOINT = 1280;
 
 	/**
 	 * Get attributes for mustache template
@@ -409,16 +412,14 @@ class ThumbnailHelper extends WikiaModel {
 	public static function setPictureTagInfo( WikiaController $controller, MediaTransformOutput $thumb ) {
 		$file = $thumb->file;
 		$smallDim = $thumb->getWidth() * self::SMALL_THUMB_SIZE;
-		$mediumDim = $thumb->getWidth() * self::MEDIUM_THUMB_SIZE;
 		$useWebP = true;
 
 		// get small images (original and WebP)
 		$controller->smallUrl = WikiaFileHelper::getSquaredThumbnailUrl( $file, $smallDim )[0];
 		$controller->smallUrlWebP = WikiaFileHelper::getSquaredThumbnailUrl( $file, $smallDim, $useWebP )[0];
 
-		// get medium images (original and WebP)
-		$controller->mediumUrl = WikiaFileHelper::getSquaredThumbnailUrl( $file, $mediumDim )[0];
-		$controller->mediumUrlWebP = WikiaFileHelper::getSquaredThumbnailUrl( $file, $mediumDim, $useWebP )[0];
+		// Set the breakpoint used by the <picture> tag to determine which image to load
+		$controller->breakPoint = self::MEDIUM_BREAKPOINT;
 
 		// get full size WebP image
 		$controller->imgSrcWebP = WikiaFileHelper::getSquaredThumbnailUrl( $file, $thumb->getWidth(), $useWebP )[0];
