@@ -303,6 +303,7 @@ class WikiaFileHelper extends Service {
 			'videoViews' => 0,
 			'exists' => false,
 			'isAdded' => true,
+			'extraHeight' => 0,
 		);
 
 		if ( !empty( $fileTitle ) ) {
@@ -330,6 +331,7 @@ class WikiaFileHelper extends Service {
 					$options = [
 						'autoplay' => true,
 						'isAjax' => true,
+						'isInline' => !empty( $config['isInline'] ),
 					];
 					$data['videoEmbedCode'] = $file->getEmbedCode( $width, $options );
 					$data['playerAsset'] = $file->getPlayerAssetUrl();
@@ -337,6 +339,11 @@ class WikiaFileHelper extends Service {
 					$data['providerName'] = $file->getProviderName();
 					$data['isAdded'] = self::isAdded( $file );
 					$mediaPage = self::getMediaPage( $fileTitle );
+
+					// Extra height is needed for lightbox when more elements must be fitted
+					if ( strtolower( $data['providerName'] ) == 'crunchyroll' ) {
+						$data['extraHeight'] = CrunchyrollVideoHandler::CRUNCHYROLL_WIDGET_HEIGHT_PX;
+					}
 				} else {
 					$width = $width > $config['imageMaxWidth'] ? $config['imageMaxWidth'] : $width;
 					$mediaPage = new ImagePage( $fileTitle );
