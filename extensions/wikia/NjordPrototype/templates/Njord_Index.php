@@ -6,7 +6,8 @@
 	<picture>
 		<div class="upload">
 			<img class="hero-image" src="<?=$wikiData->imagePath ?>" alt="<?= $wikiData->title ?>" >
-			<input type="file" hidden="true">
+			<input name="file" type="file">
+			<button type="submit" class="upload-btn">Upload</button>
 		</div>
 	</picture>
 	<h1 contenteditable="true" class="hero-title" ><?= $wikiData->title ?></h1>
