@@ -28,12 +28,14 @@ class ExactTargetAddUserTaskTest extends WikiaBaseTest {
 		$addTaskMock->sendNewUserData( $aUserData, $aUserProperties );
 	}
 
-	function testSendNewUserShouldInvokecreateUserDataExtension() {
+	function testSendNewUserShouldInvokeCreateUserDataExtension() {
 		/* Params to compare */
 		$aUserData = [
 			'user_id' => '12345',
 			'user_email' => 'email@email.com'
 		];
+		$aUserProperties = [];
+
 
 		$addTaskMock = $this->getMockBuilder( 'ExactTargetAddUserTask' )
 			->disableOriginalConstructor()
@@ -44,7 +46,7 @@ class ExactTargetAddUserTaskTest extends WikiaBaseTest {
 			->method( 'createUserDataExtension' )
 			->will(  $this->returnValue( NULL ) );
 
-		$addTaskMock->sendNewUserData( $aUserData );
+		$addTaskMock->sendNewUserData( $aUserData, $aUserProperties );
 	}
 
 	function testSendNewUserShouldInvokeCreateUserPropertiesDataExtension() {
@@ -70,7 +72,7 @@ class ExactTargetAddUserTaskTest extends WikiaBaseTest {
 		$addTaskMock->sendNewUserData( $aUserData['user_id'], $aUserProperties );
 	}
 
-	function testPrepareUserPropertiesSoapVarsShouldReturnSoapVarsArray() {
+	function testPrepareSoapVarsShouldReturnSoapVarsArray() {
 		/* Params to compare */
 		$iUserId = 12345;
 		$aUserProperties = [
@@ -78,8 +80,7 @@ class ExactTargetAddUserTaskTest extends WikiaBaseTest {
 			'property2' => 'value2'
 		];
 
-		/* prepare request mock */
-		$aSoapVarsExpected = [];
+		/* prepare DataExtension objects array */
 		foreach ( $aUserProperties as $sProperty => $sValue ) {
 
 			$DE = new ExactTarget_DataExtensionObject();
@@ -101,6 +102,13 @@ class ExactTargetAddUserTaskTest extends WikiaBaseTest {
 
 			$DE->Properties = $apiProperties;
 
+			$aDE[] = $DE;
+		}
+
+		/* prepare request mock - array of SoapVars */
+		$aSoapVarsExpected = [];
+		foreach ( $aDE as $DE ) {
+
 			$soapVar = new SoapVar( $DE, SOAP_ENC_OBJECT, 'DataExtensionObject', 'http://exacttarget.com/wsdl/partnerAPI' );
 			$aSoapVarsExpected[] = $soapVar;
 		}
@@ -110,7 +118,7 @@ class ExactTargetAddUserTaskTest extends WikiaBaseTest {
 		$mockAddUserTask = $this->getMock( 'ExactTargetAddUserTask', [ 'getClient' ] );
 
 		/* Run test */
-		$aSoapVarsActual = $mockAddUserTask->prepareUserPropertiesSoapVars( $iUserId, $aUserProperties );
+		$aSoapVarsActual = $mockAddUserTask->prepareSoapVars( $aDE, 'DataExtensionObject' );
 		$this->assertEquals( $aSoapVarsExpected, $aSoapVarsActual );
 	}
 
@@ -166,11 +174,11 @@ class ExactTargetAddUserTaskTest extends WikiaBaseTest {
 		/* Mock tested class */
 		$mockAddUserTask = $this->getMockBuilder( 'ExactTargetAddUserTask' )
 			->disableOriginalConstructor()
-			->setMethods( [ 'wrapRequest', 'getClient' ] )
+			->setMethods( [ 'wrapCreateRequest', 'getClient' ] )
 			->getMock();
 		$mockAddUserTask
 			->expects( $this->once() )
-			->method( 'wrapRequest' )
+			->method( 'wrapCreateRequest' )
 			->will( $this->returnValue( $oRequest ) );
 		$mockAddUserTask
 			->expects( $this->once() )

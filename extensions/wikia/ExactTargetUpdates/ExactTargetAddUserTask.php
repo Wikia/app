@@ -2,12 +2,7 @@
 
 use Wikia\Tasks\Tasks\BaseTask;
 
-class ExactTargetAddUserTask extends BaseTask {
-	private $oClient;
-
-	public function __construct() {
-		$this->initClient();
-	}
+class ExactTargetAddUserTask extends ExactTargetBaseTask {
 
 	/**
 	 * Task for creating all necessary objects in ExactTarget related to newly created user
@@ -33,7 +28,7 @@ class ExactTargetAddUserTask extends BaseTask {
 
 			/* Create the subscriber */
 			$oSoapVar = $this->wrapToSoapVar( $oSubscriber, 'Subscriber' );
-			$oRequest = $this->wrapRequest( [ $oSoapVar ] );
+			$oRequest = $this->wrapCreateRequest( [ $oSoapVar ] );
 
 			/* Send API request */
 			$this->oClient->Create( $oRequest );
@@ -67,7 +62,7 @@ class ExactTargetAddUserTask extends BaseTask {
 
 			$oSoapVar = $this->wrapToSoapVar( $DE );
 
-			$oRequest = $this->wrapRequest( [ $oSoapVar ] );
+			$oRequest = $this->wrapCreateRequest( [ $oSoapVar ] );
 
 			/* Send API request */
 			$this->oClient->Create( $oRequest );
@@ -89,8 +84,9 @@ class ExactTargetAddUserTask extends BaseTask {
 	public function createUserPropertiesDataExtension( $iUserId, $aUserProperties ) {
 
 		try {
-			$aSoapVars = $this->prepareUserPropertiesSoapVars( $iUserId, $aUserProperties );
-			$oRequest = $this->wrapRequest( $aSoapVars );
+			$aDE = $this->prepareUserPropertiesDataExtensionObjects( $iUserId, $aUserProperties );
+			$aSoapVars = $this->prepareSoapVars( $aDE );
+			$oRequest = $this->wrapCreateRequest( $aSoapVars );
 
 			/* Send API request */
 			$this->oClient->Create( $oRequest );
@@ -101,17 +97,6 @@ class ExactTargetAddUserTask extends BaseTask {
 			/* Log error */
 			$this->error( 'SoapFault:' . $e->getMessage() . 'ErrorCode: ' . $e->getCode() );
 		}
-	}
-
-	public function prepareUserPropertiesSoapVars( $iUserId, $aUserProperties ) {
-
-		$aDE = $this->prepareUserPropertiesDataExtensionObjects( $iUserId, $aUserProperties );
-
-		$aSoapVars = [];
-		foreach( $aDE as $DE ) {
-			$aSoapVars[] = $this->wrapToSoapVar( $DE );
-		}
-		return $aSoapVars;
 	}
 
 	protected function prepareUserPropertiesDataExtensionObjects( $iUserId, $aUserProperties ) {
@@ -132,48 +117,5 @@ class ExactTargetAddUserTask extends BaseTask {
 			$aDE[] = $DE;
 		}
 		return $aDE;
-	}
-
-	public function getClient() {
-		global $wgExactTargetApiConfig;
-		$wsdl = $wgExactTargetApiConfig[ 'wsdl' ];
-		$oClient = new ExactTargetSoapClient( $wsdl, array( 'trace'=>1 ) );
-		$oClient->username = $wgExactTargetApiConfig[ 'username' ];
-		$oClient->password = $wgExactTargetApiConfig[ 'password' ];
-		return $oClient;
-	}
-
-	public function initClient() {
-		$this->oClient = $this->getClient();
-	}
-
-	public function wrapRequest( $aSoapVars ) {
-		$oRequest = new ExactTarget_CreateRequest();
-		$oRequest->Options = NULL;
-		$oRequest->Objects = $aSoapVars;
-		return $oRequest;
-	}
-
-	protected function wrapToSoapVar( $object, $objectType = 'DataExtensionObject' ) {
-		return new SoapVar( $object, SOAP_ENC_OBJECT, $objectType, 'http://exacttarget.com/wsdl/partnerAPI' );
-	}
-
-	/**
-	 * Returns ExactTarget_APIProperty object
-	 * This object can be used as ExactTarget_DataExtensionObject property
-	 * It stores key-value pair
-	 * @param String $key Property name
-	 * @param String $value Propert yvalue
-	 * @return ExactTarget_APIProperty
-	 */
-	protected function wrapApiProperty( $key, $value ) {
-		$apiProperty = new ExactTarget_APIProperty();
-		$apiProperty->Name = $key;
-		$apiProperty->Value = $value;
-		return $apiProperty;
-	}
-
-	protected function getLoggerContext() {
-		return ['task' => __CLASS__];
 	}
 }
