@@ -993,11 +993,16 @@ class ArticlesApiController extends WikiaApiController {
 
 	public function getPopular() {
 		$limit = $this->getRequest()->getInt( self::PARAMETER_LIMIT, self::POPULAR_ARTICLES_PER_WIKI );
-		$expand = $this->request->getBool( static::PARAMETER_EXPAND, false );
-		$baseArticleId = $this->getRequest()->getVal( self::PARAMETER_BASE_ARTICLE_ID, false );
 		if ( $limit < 1 || $limit > self::POPULAR_ARTICLES_PER_WIKI ) {
 			throw new OutOfRangeApiException( self::PARAMETER_LIMIT, 1, self::POPULAR_ARTICLES_PER_WIKI );
 		}
+
+		$baseArticleId = $this->getRequest()->getVal( self::PARAMETER_BASE_ARTICLE_ID, false );
+		if( $baseArticleId !== false ) {
+			$this->validateBaseArticleIdOrThrow( $baseArticleId );
+		}
+
+		$expand = $this->request->getBool( static::PARAMETER_EXPAND, false );
 
 		$key = self::getCacheKey( self::POPULAR_CACHE_ID, '', [ $expand, $baseArticleId ] );
 
@@ -1049,7 +1054,7 @@ class ArticlesApiController extends WikiaApiController {
 		$links = ( new ApiOutboundingLinksService() )->getOutboundingLinks( $baseArticleId );
 		$rerankedPopular = $this->reorderForLinks( $popular, $links );
 
-		$baseArticleTitle = Title::newFromID($baseArticleId);
+		$baseArticleTitle = Title::newFromID( $baseArticleId );
 		$baseArticleUrl = $baseArticleTitle->getLocalURL();
 
 		// if base article in the list of popular - remove it from this list
@@ -1276,5 +1281,22 @@ class ArticlesApiController extends WikiaApiController {
 	 */
 	public function getExcludeNamespacesFromCategoryMembersDBQuery() {
 		return $this->excludeNamespacesFromCategoryMembersDBQuery;
+	}
+
+	/**
+	 * Checking existence of article with given $baseArtcileId
+	 *
+	 * If provided id corresponds to non-existent article,
+	 * then throwing BadRequestApiException.
+	 *
+	 * @param $baseArticleId
+	 * @throws BadRequestApiException
+	 */
+	protected function validateBaseArticleIdOrThrow( $baseArticleId ) {
+		$baseArticleTitle = Title::newFromID( $baseArticleId );
+		if ( empty( $baseArticleTitle ) ) {
+			$message = wfMessage( 'invalid-parameter-basearticleid', $baseArticleId )->text();
+			throw new BadRequestApiException( $message );
+		}
 	}
 }
