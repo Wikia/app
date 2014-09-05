@@ -13,8 +13,10 @@ class ArticleAsJson extends WikiaService {
 		$blankImgUrl = F::app()->wg->blankImgUrl;
 		$id = count( self::$media ) - 1;
 		$classes = 'article-media' . ($isGallery ? ' gallery' : '');
+		$width = !empty( $width ) ? " width='{$width}'" : '';
+		$height = !empty( $height ) ? " height='{$height}'": '';
 
-		return "<img src='{$blankImgUrl}' class='{$classes}' data-ref='{$id}' width='{$width}' height='{$height}' />";
+		return "<img src='{$blankImgUrl}' class='{$classes}' data-ref='{$id}'{$width}{$height} />";
 	}
 
 	private static function createMediaObj( $details, $imageName, $caption = "" ) {
