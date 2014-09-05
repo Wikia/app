@@ -417,7 +417,12 @@ $wgHooks['WikiFactory::onExecuteComplete'][] = 'Wikia\\Logger\\Hooks::onWikiFact
 # list of groups for wfDebugLog calls that will be logged using WikiaLogger
 # @see PLATFORM-424
 $wgDebugLogGroups = [
-	'poolcounter' => true
+	'ExternalStorage' => true,
+	'ExternalStoreDB' => true,
+	'MessageCache' => true,
+	'poolcounter' => true,  // errors from PoolCounterWork
+	'replication' => true,  // replication errros / excessive lags
+	'squid' => true,        // timeouts and errors from SquidPurgeClient
 ];
 
 // Register \Wikia\Sass namespace
