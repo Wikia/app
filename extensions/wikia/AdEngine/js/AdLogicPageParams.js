@@ -194,6 +194,10 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 			params.ksgmnt = Krux.segments && Krux.segments.slice(0, maxNumberOfKruxSegments);
 		}
 
+		if (targeting.wikiIsTop1000) {
+			params.top = '1k';
+		}
+
 		extend(params, decodeLegacyDartParams(targeting.wikiCustomKeyValues));
 
 		if (!params.esrb) {
