@@ -14,7 +14,7 @@
  */
 ve.ui.WikiaTemplateGetInfoPage = function VeUiWikiaTemplateGetInfoPage( spec, name, config ) {
 	// Parent constructor
-	OO.ui.PageLayout.call( this, name, config );
+	ve.ui.WikiaTemplateGetInfoPage.super.call( this, name, config );
 
 	// Properties
 	this.spec = spec;

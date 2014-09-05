@@ -254,9 +254,6 @@ ve.ui.WikiaTransclusionDialog.prototype.getTeardownProcess = function ( data ) {
 			if ( this.allowScroll ) {
 				this.unsetAllowScroll();
 			}
-			if ( this.$zeroState ) {
-				this.$zeroState.remove();
-			}
 			this.frame.$element.parent().css( {
 				'width': '',
 				'height': '',
@@ -308,7 +305,7 @@ ve.ui.WikiaTransclusionDialog.prototype.onFilterInputBlur = function () {
  * Position dialog. Vertically in the middle of the viewport
  * and horizontally with the edge (left or right) of the surface
  *
- * @method
+ * @param {boolean} Position as zero state (no params) dialog or not
  */
 ve.ui.WikiaTransclusionDialog.prototype.position = function ( zeroState ) {
 	var viewportHeight = $( window ).height(),
