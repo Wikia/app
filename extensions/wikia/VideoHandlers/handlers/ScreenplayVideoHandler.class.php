@@ -11,7 +11,11 @@ class ScreenplayVideoHandler extends VideoHandler {
 		return JWPlayer::getJavascriptPlayerUrl();
 	}
 
-	public function getEmbed( $articleId, $width, $autoplay = false, $isAjax = false, $postOnload = false ) {
+	public function getEmbed( $width, array $options = [] ) {
+		$articleId = isset( $options['articleId'] ) ? ( int ) $options['articleId'] : null;
+		$autoplay = !empty( $options['autoplay'] );
+		$isAjax = !empty( $options['isAjax'] );
+		$postOnload = !empty( $options['postOnload'] );
 		$height =  $this->getHeight( $width );
 
 		$app = F::app();

@@ -38,7 +38,11 @@ class VideoHandlerController extends WikiaController {
 				} else {
 					$videoId = $file->getVideoId();
 					$assetUrl = $file->getPlayerAssetUrl();
-					$embedCode = $file->getEmbedCode( $width, $autoplay, true );
+					$options = [
+						'autoplay' => $autoplay,
+						'isAjax' => true,
+					];
+					$embedCode = $file->getEmbedCode( $width, $options );
 					$this->setVal( 'videoId', $videoId );
 					$this->setVal( 'asset', $assetUrl );
 					$this->setVal( 'embedCode', $embedCode );

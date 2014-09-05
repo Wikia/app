@@ -80,7 +80,7 @@ class CrossWikiCoreTest extends BaseTest
 				$service->execute()
 		);
 	}
-	
+
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.12268 ms
@@ -91,17 +91,17 @@ class CrossWikiCoreTest extends BaseTest
 		                ->disableOriginalConstructor()
 		                ->setMethods( [ 'getService' ] )
 		                ->getMock();
-		
+
 		$mwService = $this->getMock( 'Wikia\Search\MediaWikiService', [ 'getWikiId', 'getGlobal', 'getLanguageCode', 'getHubForWikiId', 'getHostName', 'getDomainsForWikiId' ] );
-		
+
 		$mockMessage = $this->getMockBuilder( 'WfMessage' )
 							->disableOriginalConstructor()
 							->setMethods( [ 'text' ] )
 							->getMock();
 
-		$mockWiki = (object) [ 
-				'city_created' => '11:11:11 2013-01-01', 
-				'city_last_timestamp' => '11:11:11 2013-01-01', 
+		$mockWiki = (object) [
+				'city_created' => '11:11:11 2013-01-01',
+				'city_last_timestamp' => '11:11:11 2013-01-01',
 				'city_url' => 'http://foo.wikia.com/',
 				'city_dbname' => 'foo'
 				];
@@ -149,13 +149,13 @@ class CrossWikiCoreTest extends BaseTest
 			->method ( 'text' )
 			->will   ( $this->returnValue( '$1 - Foo Wiki - Bar, Baz and More!' ) )
 		;
-		$expected = [ 
-				'id' => 123, 'sitename_txt' => 'foo wiki', 'lang_s' => 'en', 'hub_s' => 'Gaming', 
+		$expected = [
+				'id' => 123, 'sitename_txt' => 'foo wiki', 'lang_s' => 'en', 'hub_s' => 'Gaming',
 				'created_dt' => '11:11:11T2013-01-01Z', 'touched_dt' => '11:11:11T2013-01-01Z', 'url' => 'http://foo.wikia.com/', 'dbname_s' => 'foo',
 				'hostname_s' => 'hostname', 'hostname_txt' => 'hostname', 'all_domains_mv_wd' => [ 'bar.wikia.com', 'baz.wikia.com', 'foo.wikia.com' ], 'domains_txt' => [ 'bar.wikia.com', 'baz.wikia.com', 'foo.wikia.com' ],
 				'wiki_pagetitle_txt' => 'Foo Wiki - Bar, Baz and More!',
 				];
-		$this->proxyClass( 'WikiFactory', $mockWiki, 'getWikiById' );
+		$this->mockClass( 'WikiFactory', $mockWiki, 'getWikiById' );
 		$this->mockGlobalFunction( 'WfMessage', $mockMessage );
 		$ref = new ReflectionMethod( $service, 'getWikiBasics' );
 		$ref->setAccessible( true );
@@ -169,7 +169,7 @@ class CrossWikiCoreTest extends BaseTest
 				$service
 		);
 	}
-	
+
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.08143 ms
@@ -183,8 +183,8 @@ class CrossWikiCoreTest extends BaseTest
 		$wv = $this->getMockBuilder( 'Wikia\Search\IndexService\WikiViews' )
 		           ->disableOriginalConstructor()
 		           ->setMethods( [ 'getStubbedWikiResponse' ] )
-		           ->getMock(); 
-		
+		           ->getMock();
+
 		$response = [ 'contents' => [ 'wikiviews_weekly' => [ 'set' => 123 ], 'wikiviews_monthly' => [ 'set' => 456 ] ] ];
 		$wv
 		    ->expects( $this->once() )
@@ -192,7 +192,7 @@ class CrossWikiCoreTest extends BaseTest
 		    ->will   ( $this->returnValue( $response ) )
 		;
 		$expected = [ 'views_weekly_i' => 123, 'views_monthly_i' => '456' ];
-		$this->proxyClass( 'Wikia\Search\IndexService\WikiViews', $wv );
+		$this->mockClass( 'Wikia\Search\IndexService\WikiViews', $wv );
 		$get = new ReflectionMethod( $service, 'getWikiViews' );
 		$get->setAccessible( true );
 		$this->assertEquals(
@@ -200,7 +200,7 @@ class CrossWikiCoreTest extends BaseTest
 				$get->invoke( $service )
 		);
 	}
-	
+
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.08105 ms
@@ -214,8 +214,8 @@ class CrossWikiCoreTest extends BaseTest
 		$wv = $this->getMockBuilder( 'Wikia\Search\IndexService\Wam' )
 		           ->disableOriginalConstructor()
 		           ->setMethods( [ 'getStubbedWikiResponse' ] )
-		           ->getMock(); 
-		
+		           ->getMock();
+
 		$response = [ 'contents' => [ 'wam' => [ 'set' => 100 ] ] ];
 		$wv
 		    ->expects( $this->once() )
@@ -223,7 +223,7 @@ class CrossWikiCoreTest extends BaseTest
 		    ->will   ( $this->returnValue( $response ) )
 		;
 		$expected = [ 'wam_i' => 100 ];
-		$this->proxyClass( 'Wikia\Search\IndexService\Wam', $wv );
+		$this->mockClass( 'Wikia\Search\IndexService\Wam', $wv );
 		$get = new ReflectionMethod( $service, 'getWam' );
 		$get->setAccessible( true );
 		$this->assertEquals(
@@ -231,7 +231,7 @@ class CrossWikiCoreTest extends BaseTest
 				$get->invoke( $service )
 		);
 	}
-	
+
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.08427 ms
@@ -242,11 +242,11 @@ class CrossWikiCoreTest extends BaseTest
 		                ->disableOriginalConstructor()
 		                ->setMethods( [ 'getService', 'getWikiId' ] )
 		                ->getMock();
-		
+
 		$mwService = $this->getMock( 'Wikia\Search\MediaWikiService', [ 'getApiStatsForWiki' ] );
-		
+
 		$wikiService = $this->getMock( 'WikiService', [ 'getTotalVideos' ] );
-		
+
 		$service
 		    ->expects( $this->once() )
 		    ->method ( 'getService' )
@@ -268,8 +268,8 @@ class CrossWikiCoreTest extends BaseTest
 		    ->with   ( 123 )
 		    ->will   ( $this->returnValue( 50 ) )
 		;
-		$this->proxyClass( 'WikiService', $wikiService );
-		$this->mockApp();
+		$this->mockClass( 'WikiService', $wikiService );
+
 		$get = new ReflectionMethod( $service, 'getWikiStats' );
 		$get->setAccessible( true );
 		$this->assertEquals(
@@ -277,7 +277,7 @@ class CrossWikiCoreTest extends BaseTest
 				$get->invoke( $service )
 		);
 	}
-	
+
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.08302 ms
@@ -288,7 +288,7 @@ class CrossWikiCoreTest extends BaseTest
 		                ->disableOriginalConstructor()
 		                ->setMethods( [ 'getService', 'getWikiId' ] )
 		                ->getMock();
-		
+
 		$mwService = $this->getMock( 'Wikia\Search\MediaWikiService', [ 'getVisualizationInfoForWikiId' ] );
 		$desc = 'this is my description';
 		$headline = 'this is my headline';
@@ -316,7 +316,7 @@ class CrossWikiCoreTest extends BaseTest
 				$get->invoke( $service )
 		);
 	}
-	
+
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.08589 ms
@@ -327,7 +327,7 @@ class CrossWikiCoreTest extends BaseTest
 		                ->disableOriginalConstructor()
 		                ->setMethods( [ 'getService', 'getWikiId' ] )
 		                ->getMock();
-		
+
 		$mwService = $this->getMock( 'Wikia\Search\MediaWikiService', [ 'getVisualizationInfoForWikiId', 'getSimpleMessage', 'getGlobal' ] );
 		$desc = 'this is my description';
 		$headline = 'this is my headline';
