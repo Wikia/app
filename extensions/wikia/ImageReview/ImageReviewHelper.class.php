@@ -325,7 +325,7 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 				);
 				$bImageExists = $oImageGlobalFile->exists();
 
-				if ( !$bImageExists ) {
+				if ( !$bImageExists && $state != ImageReviewStatuses::STATE_INVALID_IMAGE ) {
 					$invalidImages[] = $record;
 					continue;
 				} elseif ( 'ico' == $aImageInfo['extension'] ) {
