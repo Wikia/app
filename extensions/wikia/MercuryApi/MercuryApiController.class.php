@@ -85,11 +85,11 @@ class MercuryApiController extends WikiaController {
 	}
 
 	/**
-	 * @return Int
+	 * @return Title Article Title
 	 * @throws NotFoundApiException
 	 * @throws BadRequestApiException
 	 */
-	private function getArticleIdFromRequest(){
+	private function getTitleFromRequest(){
 		$articleId = $this->request->getInt(self::ARTICLE_ID_PARAMETER_NAME, NULL);
 		$articleTitle = $this->request->getVal(self::ARTICLE_TITLE_PARAMETER_NAME, NULL);
 
@@ -107,17 +107,15 @@ class MercuryApiController extends WikiaController {
 			$title = Title::newFromId( $articleId, NS_MAIN );
 		}
 
-		if ( $title instanceof Title && $title->isKnown() ) {
-			$articleId = $title->getArticleId();
-		} else {
-			$articleId = false;
+		if ( !$title instanceof Title || !$title->isKnown() ) {
+			$title = false;
 		}
 
-		if ( empty( $articleId ) ) {
+		if ( empty( $title ) ) {
 			throw new NotFoundApiException( "Unable to find any article" );
 		}
 
-		return $articleId;
+		return $title;
 	}
 
 	/**
@@ -167,14 +165,18 @@ class MercuryApiController extends WikiaController {
 	 * @throws BadRequestApiException
 	 */
 	public function getArticle(){
-		$articleId = $this->getArticleIdFromRequest();
+		$title = $this->getTitleFromRequest();
+		$articleId = $title->getArticleId();
+
+		$articleAsJson = $this->getArticleJson( $articleId );
 
 		$data = [
 			'details' => $this->getArticleDetails( $articleId ),
 			'topContributors' => $this->getTopContributorsDetails(
 					$this->getTopContributorsPerArticle( $articleId )
 				),
-			'article' => $this->getArticleJson( $articleId ),
+			'article' => $articleAsJson,
+			'adsContext' => $this->mercuryApi->getAdsContext( $title, $this->wg, $articleAsJson[ 'categories' ] ),
 			'basePath' => $this->wg->Server
 		];
 
