@@ -40,7 +40,12 @@ class CrunchyrollVideoHandler extends VideoHandler {
 		if ( $isInline ) {
 			$html = $iframe;
 		} else {
-			$widget = F::app()->renderView( 'VideoHandlerController', 'videoAffiliate', ['provider' => 'crunchyroll'] );
+			$params = [
+				'linkUrl' => 'http://www.crunchyroll.com/wikia',
+				'imgSrc' => 'http://www.crunchyroll.com/affiliate_asset?widget=IB01A&amp;affiliate=af-90111-uhny?from=wikia',
+				'imgClass' => 'crunchyroll-aff-logo',
+			];
+			$widget = F::app()->renderPartial( 'VideoHandlerController', 'videoAffiliate', $params );
 			$html = '<div class="crunchyroll-container">' . $widget . $iframe . '</div>';
 		}
 

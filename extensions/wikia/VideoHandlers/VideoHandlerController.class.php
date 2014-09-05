@@ -4,6 +4,7 @@
  * Class VideoHandlerController
  */
 class VideoHandlerController extends WikiaController {
+	const DEFAULT_TEMPLATE_ENGINE = WikiaResponse::TEMPLATE_ENGINE_MUSTACHE;
 
 	const VIDEO_LIMIT = 100;
 	const DEFAULT_THUMBNAIL_WIDTH = 250;
@@ -354,32 +355,6 @@ class VideoHandlerController extends WikiaController {
 		}
 
 		$this->videos = $videoList;
-
-		wfProfileOut( __METHOD__ );
-	}
-
-	/**
-	 * Display affiliate logo above the video
-	 */
-	public function videoAffiliate() {
-		wfProfileIn( __METHOD__ );
-
-		$provider = strtolower( $this->getVal( 'provider' ) );
-		switch ( $provider ) {
-			case 'crunchyroll':
-				$linkUrl = 'http://www.crunchyroll.com/wikia';
-				$imgSrc = 'http://www.crunchyroll.com/affiliate_asset?widget=IB01A&amp;affiliate=af-90111-uhny?from=wikia';
-				$imgClass = 'crunchyroll-aff-logo';
-				break;
-			default:
-				$linkUrl = null;
-				$imgSrc = null;
-				$imgClass = null;
-		}
-
-		$this->linkUrl = $linkUrl;
-		$this->imgSrc = $imgSrc;
-		$this->imgClass = $imgClass;
 
 		wfProfileOut( __METHOD__ );
 	}
