@@ -1292,7 +1292,7 @@ class ArticlesApiController extends WikiaApiController {
 	 * @param $baseArticleId
 	 * @throws BadRequestApiException
 	 */
-	protected function validateBaseArticleId( $baseArticleId ) {
+	protected function validateBaseArticleIdOrThrow( $baseArticleId ) {
 		$baseArticleTitle = Title::newFromID( $baseArticleId );
 		if ( empty( $baseArticleTitle ) ) {
 			$message = wfMessage( 'invalid-parameter-basearticleid', $baseArticleId )->text();
