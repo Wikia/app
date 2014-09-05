@@ -993,10 +993,21 @@ class ArticlesApiController extends WikiaApiController {
 
 	public function getPopular() {
 		$limit = $this->getRequest()->getInt( self::PARAMETER_LIMIT, self::POPULAR_ARTICLES_PER_WIKI );
-		$expand = $this->request->getBool( static::PARAMETER_EXPAND, false );
-		$baseArticleId = $this->getRequest()->getVal( self::PARAMETER_BASE_ARTICLE_ID, false );
 		if ( $limit < 1 || $limit > self::POPULAR_ARTICLES_PER_WIKI ) {
 			throw new OutOfRangeApiException( self::PARAMETER_LIMIT, 1, self::POPULAR_ARTICLES_PER_WIKI );
+		}
+
+		$expand = $this->request->getBool( static::PARAMETER_EXPAND, false );
+
+		$baseArticleId = $this->getRequest()->getVal( self::PARAMETER_BASE_ARTICLE_ID, false );
+		if( $baseArticleId !== false ) {
+			// Checking existence of article
+			$baseArticleTitle = Title::newFromID( $baseArticleId );
+			if( empty( $baseArticleTitle ) ) {
+				$message =
+					"Value of parameter baseArticleId (${baseArticleId}) corresponds to non-existent article";
+				throw new BadRequestApiException( $message );
+			}
 		}
 
 		$key = self::getCacheKey( self::POPULAR_CACHE_ID, '', [ $expand, $baseArticleId ] );
@@ -1049,11 +1060,7 @@ class ArticlesApiController extends WikiaApiController {
 		$links = ( new ApiOutboundingLinksService() )->getOutboundingLinks( $baseArticleId );
 		$rerankedPopular = $this->reorderForLinks( $popular, $links );
 
-		$baseArticleTitle = Title::newFromID($baseArticleId);
-		if( empty( $baseArticleTitle ) ) {
-			// fallback for $baseArticleId, which corresponds to unexisting articles
-			return $popular;
-		}
+		$baseArticleTitle = Title::newFromID( $baseArticleId );
 		$baseArticleUrl = $baseArticleTitle->getLocalURL();
 
 		// if base article in the list of popular - remove it from this list
