@@ -32,6 +32,9 @@ class WikiaMaps extends WikiaObject {
 
 	const DB_DUPLICATE_ENTRY ='ER_DUP_ENTRY';
 
+	const MAP_NOT_DELETED = 0;
+	const MAP_DELETED = 1;
+
 	/**
 	 * @var array API connection config
 	 */

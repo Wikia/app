@@ -9,7 +9,7 @@ define(
 		'wikia.mustache',
 		'wikia.tracker'
 	],
-	function($, w, cache, loader, uiFactory, mustache, tracker) {
+	function ($, w, cache, loader, uiFactory, mustache, tracker) {
 		'use strict';
 
 		// const variables used across int map UI
@@ -131,8 +131,8 @@ define(
 		 * @param {object} events - object containing array of handlers for each event type
 		 */
 		function bindEvents(modal, events) {
-			Object.keys(events).forEach(function(event) {
-				events[event].forEach(function(handler) {
+			Object.keys(events).forEach(function (event) {
+				events[event].forEach(function (handler) {
 					modal.bind(event, handler);
 				});
 			});
@@ -157,7 +157,7 @@ define(
 			// reset buttons visibility
 			modal.$buttons.addClass('hidden');
 
-			Object.keys(buttons).forEach(function(key) {
+			Object.keys(buttons).forEach(function (key) {
 				modal.$buttons
 					.filter(key)
 					.data('event', buttons[key])
@@ -221,7 +221,7 @@ define(
 				processData: false,
 				type: 'POST',
 				url: w.wgScriptPath + uploadEntryPoint,
-				success: function(response) {
+				success: function (response) {
 					var data = response.results;
 
 					if (data && data.success) {
@@ -236,7 +236,7 @@ define(
 
 					modal.activate();
 				},
-				error: function(response) {
+				error: function (response) {
 					showError(modal, response.results.error);
 					modal.activate();
 				}
@@ -259,7 +259,7 @@ define(
 		function showForceLoginModal(origin, cb) {
 			w.UserLoginModal.show({
 				origin: origin,
-				callback: function() {
+				callback: function () {
 					w.UserLogin.forceLoggedIn = true;
 					cb();
 				}
@@ -280,10 +280,19 @@ define(
 		 * @param {object} response - nirvana response object
 		 */
 		function handleNirvanaException(modal, response) {
+			showError(modal, getNirvanaExceptionMessage(response));
+		}
+
+		/**
+		 * @desc Returns exception message
+		 * @param {object} response XHR response object
+		 * @returns {string}
+		 */
+		function getNirvanaExceptionMessage(response) {
 			var responseText = response.responseText,
 				message = JSON.parse(responseText).exception.details;
 
-			showError(modal, message || response.statusText);
+			return message || response.statusText;
 		}
 
 		/**
@@ -337,7 +346,7 @@ define(
 
 		/**
 		 * @desc escapes HTML entities
-		 * @param string
+		 * @param {string} string
 		 * @returns {string}
 		 */
 		function escapeHtml(string) {
@@ -389,6 +398,7 @@ define(
 			showForceLoginModal: showForceLoginModal,
 			refreshIfAfterForceLogin: refreshIfAfterForceLogin,
 			handleNirvanaException: handleNirvanaException,
+			getNirvanaExceptionMessage: getNirvanaExceptionMessage,
 			showError: showError,
 			cleanUpError: cleanUpError,
 			createThumbURL: createThumbURL,
@@ -404,4 +414,3 @@ define(
 		};
 	}
 );
-

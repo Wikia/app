@@ -1,6 +1,6 @@
-@import "../mixins/clearfix";
-@import "../core/color";
-@import "../mixins/box-sizing";
+@import "skins/shared/mixins/clearfix";
+@import "skins/shared/color";
+@import "skins/shared/mixins/box-sizing";
 
 #preftoc {
 	@include clearfix;

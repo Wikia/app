@@ -1051,8 +1051,7 @@ class WallHooksHelper {
 				//this will be deletion/removal/restore summary
 				$text = $rc->getAttribute('rc_comment');
 
-				if( !empty($text) ) $comment = Xml::element('span', array('class' => 'comment'), ' ('.$text.')');
-				else $comment = '';
+				$comment = Linker::commentBlock( $text );
 			} else {
 				$comment = '';
 			}
@@ -1286,29 +1285,24 @@ class WallHooksHelper {
 	 * @return bool
 	 * @author Andrzej 'nAndy' Łukaszewski
 	 */
-	static public function onWikiaRecentChangesBlockHandlerChangeHeaderBlockGroup($oChangeList, $r, $oRCCacheEntryArray, &$changeRecentChangesHeader, $oTitle, &$headerTitle) {
+	static public function onWikiaRecentChangesBlockHandlerChangeHeaderBlockGroup( $oChangeList, $r, $oRCCacheEntryArray, &$changeRecentChangesHeader, $oTitle, &$headerTitle ) {
 		wfProfileIn(__METHOD__);
 
 		$namespace = MWNamespace::getSubject($oTitle->getNamespace());
 
-		if( WallHelper::isWallNamespace($namespace) ) {
+		if ( WallHelper::isWallNamespace( $namespace ) ) {
 			$changeRecentChangesHeader = true;
 
-			$wm = new WallMessage($oTitle);
-			$wallMsgUrl = $wm->getMessagePageUrl();
-			$wallUrl = $wm->getWallUrl();
-			$pageText = $wm->getMainPageText();
-			$parent = $wm->getTopParentObj();
-			$isMain = is_null($parent);
+			$titleData = self::getMessageOptions( $oRCCacheEntryArray[0], null );
 
-			if( !$isMain ) {
-				$wm = $parent;
-				unset($parent);
-			}
+			$titleObj = Title::newFromText( $titleData['articleTitle'] );
+			$threadLink = Linker::link( $titleObj, htmlspecialchars( $titleData['articleTitleTxt'] ),
+				[ 'title' => $titleData['articleTitleTxt'] ] );
 
-			$wm->load();
-			$wallMsgTitle = $wm->getMetaTitle();
-			$headerTitle = wfMessage( static::getMessagePrefix( $namespace ) . '-thread-group', array( Xml::element( 'a', array( 'href' => $wallMsgUrl ), $wallMsgTitle ), $wallUrl, $pageText ) )->text();
+			$headerTitle = wfMessage( static::getMessagePrefix( $namespace ) . '-thread-group' )
+				->rawParams( $threadLink )
+				->params( $titleData['wallTitleTxt'], $titleData['wallPageName'] )
+				->parse();
 		}
 
 		wfProfileOut(__METHOD__);
@@ -1672,10 +1666,15 @@ class WallHooksHelper {
 	static public function onFilePageImageUsageSingleLink(&$link, &$element) {
 
 		if ( $element->page_namespace == NS_USER_WALL_MESSAGE ) {
-
 			$titleData = WallHelper::getWallTitleData( null, $element );
-			$a = '<a href="'.$titleData['articleFullUrl'].'">'.$titleData['articleTitleTxt'].'</a> ';
-			$link = wfMessage( 'wall-recentchanges-thread-group', array( $a, $titleData['wallPageFullUrl'], $titleData['wallPageName'] ) )->text();
+			$titleObj = Title::newFromText( $titleData['articleTitle'] );
+			$threadLink = Linker::link( $titleObj, htmlspecialchars( $titleData['articleTitleTxt'] ),
+				[ 'title' => $titleData['articleTitleTxt'] ] );
+
+			$link = wfMessage( static::getMessagePrefix( $namespace ) . '-thread-group' )
+				->rawParams( $threadLink )
+				->params( $titleData['wallTitleTxt'], $titleData['wallPageName'] )
+				->parse();
 		}
 		return true;
 	}
@@ -1697,23 +1696,17 @@ class WallHooksHelper {
 
 			$app = F::app();
 			$wlhTitle = SpecialPage::getTitleFor( 'Whatlinkshere' );
-			$wfMsgOptsBase = self::getMessageOptions(null, $row);
-
-			$wfMsgOpts = array(
-				$wfMsgOptsBase['articleFullUrl'],
-				$wfMsgOptsBase['articleTitleTxt'],
-				$wfMsgOptsBase['wallPageFullUrl'],
-				$wfMsgOptsBase['wallPageName'],
-				$wfMsgOptsBase['actionUser'],
-				$wfMsgOptsBase['isThread'],
-				$wfMsgOptsBase['isNew']
-			);
+			$titleData = self::getMessageOptions(null, $row);
 
 			$app->wg->Out->addHtml(
 					Xml::openElement('li') .
-					wfMessage( 'wall-whatlinkshere-wall-line', $wfMsgOpts )->text() .
+					wfMessage( 'wall-whatlinkshere-wall-line' )
+						->params( $titleData['articleTitle'] )
+						->rawParams( htmlspecialchars( $titleData['articleTitleTxt'] ) )
+						->params( $titleData['wallTitleTxt'], $titleData['wallPageName'] )
+						->parse() .
 					' (' .
-					Linker::linkKnown( $wlhTitle, wfMessage( 'whatlinkshere-links' )->text(), [],  [ 'target' => $wfMsgOptsBase['articleTitle'] ]
+					Linker::linkKnown( $wlhTitle, wfMessage( 'whatlinkshere-links' )->escaped(), [],  [ 'target' => $wfMsgOptsBase['articleTitle'] ]
 					) .
 					')' .
 					Xml::closeElement('li')

@@ -1,5 +1,5 @@
-@import "skins/oasis/css/mixins/background-opacity";
-@import "skins/oasis/css/mixins/border-opacity";
+@import "skins/shared/mixins/background-opacity";
+@import "skins/shared/mixins/border-opacity";
 
 // See touchScreen.scss for modified hover state styles
 
@@ -93,14 +93,6 @@
 			.play-circle {
 				display: block;
 			}
-		}
-	}
-
-	&.fluid {
-		width: 100%;
-
-		> img {
-			width: 100%;
 		}
 	}
 

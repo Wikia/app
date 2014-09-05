@@ -10,8 +10,9 @@ class SeriesEntitySearchService extends EntitySearchService {
 	const API_URL = 'api/v1/Articles/AsSimpleJson?id=';
 	const SERIES_TYPE = 'tv_series';
 	const DEFAULT_SLOP = 1;
+	const EXACT_MATCH_FIELD = "tv_series_mv_em";
 
-	private static $ARTICLE_TYPES_SUPPORTED_LANGS = ['en'];
+	private static $ARTICLE_TYPES_SUPPORTED_LANGS = [ 'en' ];
 
 	protected function prepareQuery( $query ) {
 		$select = $this->getSelect();
@@ -31,8 +32,9 @@ class SeriesEntitySearchService extends EntitySearchService {
 		$namespaces = is_array( $namespaces ) ? $namespaces : [ $namespaces ];
 		$select->createFilterQuery( 'ns' )->setQuery( '+(ns:(' . implode( ' ', $namespaces ) . '))' );
 		$select->createFilterQuery( 'main_page' )->setQuery( '-(is_main_page:true)' );
+		$select->createFilterQuery( 'series_only' )->setQuery( '-(tv_episode_mv_em:*)' );
 		if ( in_array( strtolower( $slang ), static::$ARTICLE_TYPES_SUPPORTED_LANGS ) ) {
-			$select->createFilterQuery( 'type' )->setQuery( '+(article_type_s:' . static::SERIES_TYPE . ')' );
+			$select->createFilterQuery( 'type' )->setQuery( '+(article_type_s:' . static::SERIES_TYPE . ' OR ' . static::EXACT_MATCH_FIELD . ':*)' );
 		}
 
 		$dismax->setQueryFields( implode( ' ', [
@@ -40,12 +42,14 @@ class SeriesEntitySearchService extends EntitySearchService {
 			'titleStrict',
 			$this->withLang( 'title', $slang ),
 			$this->withLang( 'redirect_titles_mv', $slang ),
+			static::EXACT_MATCH_FIELD . "^10",
 		] ) );
 		$dismax->setPhraseFields( implode( ' ', [
 			'title_em^8',
 			'titleStrict^8',
 			$this->withLang( 'title', $slang ) . '^2',
 			$this->withLang( 'redirect_titles_mv', $slang ) . '^2',
+			static::EXACT_MATCH_FIELD . "^10",
 		] ) );
 
 		$dismax->setQueryPhraseSlop( static::DEFAULT_SLOP );

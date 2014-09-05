@@ -2,10 +2,10 @@
  * @brief Styles comments as speech bubbles
  * @details Used by both ArticleComments and Wall
  */
-@import "color";
-@import "../mixins/bodytext";
-@import "../mixins/box-sizing";
-@import "../mixins/clearfix";
+@import "skins/shared/color";
+@import "skins/shared/mixins/bodytext";
+@import "skins/shared/mixins/box-sizing";
+@import "skins/shared/mixins/clearfix";
 
 .SpeechBubble {
 	@include clearfix;
