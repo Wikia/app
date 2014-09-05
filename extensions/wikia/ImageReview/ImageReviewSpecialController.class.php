@@ -44,6 +44,9 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 		} elseif ( $action == self::ACTION_QUESTIONABLE && !$this->accessQuestionable ) {
 			$this->specialPage->displayRestrictionError( 'questionableimagereview' );
 			return false;
+		} elseif ( $action == self::ACTION_INVALID && !$this->accessQuestionable ) {
+			$this->specialPage->displayRestrictionError();
+			return false;
 		} elseif ( $action == self::ACTION_REJECTED && !$this->accessRejected ) {
 			$this->specialPage->displayRestrictionError( 'rejectedimagereview' );
 			return false;
