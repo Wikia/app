@@ -415,14 +415,14 @@ class ThumbnailHelper extends WikiaModel {
 		$useWebP = true;
 
 		// get small images (original and WebP)
-		$controller->smallUrl = WikiaFileHelper::getSquaredThumbnailUrl( $file, $smallDim )[0];
-		$controller->smallUrlWebP = WikiaFileHelper::getSquaredThumbnailUrl( $file, $smallDim, $useWebP )[0];
+		$controller->smallUrl = WikiaFileHelper::getSquaredThumbnailUrl( $file, $smallDim );
+		$controller->smallUrlWebP = WikiaFileHelper::getSquaredThumbnailUrl( $file, $smallDim, $useWebP );
 
 		// Set the breakpoint used by the <picture> tag to determine which image to load
 		$controller->breakPoint = self::MEDIUM_BREAKPOINT;
 
 		// get full size WebP image
-		$controller->imgSrcWebP = WikiaFileHelper::getSquaredThumbnailUrl( $file, $thumb->getWidth(), $useWebP )[0];
+		$controller->imgSrcWebP = WikiaFileHelper::getSquaredThumbnailUrl( $file, $thumb->getWidth(), $useWebP );
 
 		// Let image template know to use <picture> tag instead of <img> tag
 		$controller->usePictureTag = true;

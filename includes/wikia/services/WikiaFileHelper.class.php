@@ -658,9 +658,10 @@ class WikiaFileHelper extends Service {
 	 *
 	 * @param File $file
 	 * @param $dimension
+	 * @param $useWebP
 	 * @return string The URL of the image
 	 */
-	public static function getSquaredThumbnailUrl( File $file, $dimension ) {
+	public static function getSquaredThumbnailUrl( File $file, $dimension, $useWebP = false ) {
 		// Create a new url generator
 		$gen = ( new UrlGenerator( $file ) );
 
