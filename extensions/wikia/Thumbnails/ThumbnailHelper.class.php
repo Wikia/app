@@ -6,6 +6,8 @@
  */
 class ThumbnailHelper extends WikiaModel {
 
+	// Thumbnail sizes to use for <picture> tags. These are used to create thumbnails
+	// 80% and 60% the size of the original to be displayed on smaller screen sizes.
 	const MEDIUM_THUMB_SIZE = .8;
 	const SMALL_THUMB_SIZE = .6;
 
@@ -401,6 +403,8 @@ class ThumbnailHelper extends WikiaModel {
 	}
 
 	/**
+	 * Set urls to be used for <picture> tags. Sets both thumbnails in the original format (jpeg, png, etc),
+	 * and WebP to be used if the browser supports it.
 	 * @param WikiaController $controller
 	 * @param MediaTransformOutput $thumb
 	 */
@@ -421,7 +425,7 @@ class ThumbnailHelper extends WikiaModel {
 		// get full size WebP image
 		$controller->thumbUrlWebP = WikiaFileHelper::getSquaredThumbnailUrl( $file, $thumb->getWidth(), $useWebP )[0];
 
-		// Let image template know to use picture instead of img tags
+		// Let image template know to use <picture> tag instead of <img> tag
 		$controller->usePictureTag = true;
 	}
 }
