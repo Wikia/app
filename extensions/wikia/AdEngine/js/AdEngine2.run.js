@@ -246,4 +246,17 @@ window.AdEngine_loadLateAds = function () {
 	window.AdEngine_trackStartLateAds = function () {
 		trackTime('startLateAds');
 	};
+
+	if (window.rp_performance) {
+		require(['wikia.tracker'], function (tracker) {
+			var action = window.rp_valuation ? 'lookupSuccess' : 'lookupError';
+			tracker.track({
+				ga_category: 'ad/' + action + '/rubicon',
+				ga_action: 'oz_cached_only=' + !!window.wgAdDriverRubiconCachedOnly,
+				ga_value: 0,
+				trackingMethod: 'ad'
+			});
+		});
+	}
+
 }(window));
