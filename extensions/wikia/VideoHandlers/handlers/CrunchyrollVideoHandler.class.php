@@ -26,6 +26,7 @@ class CrunchyrollVideoHandler extends VideoHandler {
 	 */
 	public function getEmbed( $width, array $options = [] ) {
 		$autoplay = !empty( $options['autoplay'] );
+		$isInline = !empty( $options['isInline'] );
 		$height =  $this->getHeight( $width );
 		$sizeString = $this->getSizeString( $width, $height, 'inline' );
 
@@ -36,11 +37,11 @@ class CrunchyrollVideoHandler extends VideoHandler {
 
 		$iframe = "<iframe src=\"{$srcUrl}\" {$sizeString}></iframe>";
 
-		if ( true ) { // TODO: Only if not in-line.
+		if ( $isInline ) {
+			$html = $iframe;
+		} else {
 			$widget = F::app()->renderView( 'VideoHandlerController', 'videoAffiliate', ['provider' => 'crunchyroll'] );
 			$html = '<div class="crunchyroll-container">' . $widget . $iframe . '</div>';
-		} else {
-			$html = $iframe;
 		}
 
 		return [

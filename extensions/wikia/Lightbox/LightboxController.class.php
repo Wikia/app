@@ -155,6 +155,7 @@ class LightboxController extends WikiaController {
 	 */
 	public function getMediaDetail() {
 		$fileTitle = urldecode( $this->request->getVal( 'fileTitle', '' ) );
+		$isInline = urldecode( $this->request->getVal( 'isInline', false ) );
 
 		// BugId:32939
 		// There is no sane way to check whether $fileTitle is OK other
@@ -178,6 +179,7 @@ class LightboxController extends WikiaController {
 			'contextWidth'   => $this->request->getVal( 'width', 750 ),
 			'contextHeight'  => $this->request->getVal( 'height', 415 ),
 			'userAvatarWidth'=> 16,
+			'isInline'       => $isInline,
 		);
 
 		// set max height if play in lightbox

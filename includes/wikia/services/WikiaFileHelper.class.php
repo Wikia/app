@@ -331,6 +331,7 @@ class WikiaFileHelper extends Service {
 					$options = [
 						'autoplay' => true,
 						'isAjax' => true,
+						'isInline' => !empty( $config['isInline'] ),
 					];
 					$data['videoEmbedCode'] = $file->getEmbedCode( $width, $options );
 					$data['playerAsset'] = $file->getPlayerAssetUrl();

@@ -94,6 +94,7 @@ abstract class VideoHandler extends BitmapHandler {
 	 *  'articleId' int // deprecated, do not use!
 	 *  'autoplay' bool
 	 *  'isAjax' bool
+	 *  'isInline' bool
 	 *  'postOnload' bool
 	 * @return string Embed HTML
 	 */
