@@ -70,6 +70,17 @@ class ArticlesApiController extends WikiaApiController {
 	const PARAMETER_BASE_ARTICLE_ID = 'baseArticleId';
 
 	private $excludeNamespacesFromCategoryMembersDBQuery = false;
+	
+	public function __construct(){
+		parent::__construct();
+		$this->setOutputFieldTypes(
+			[
+				"width" => self::OUTPUT_FIELD_CAST_NULLS | self::OUTPUT_FIELD_TYPE_INT,
+				"height" => self::OUTPUT_FIELD_CAST_NULLS | self::OUTPUT_FIELD_TYPE_INT
+			]
+		);
+	}
+
 
 	/**
 	 * Get the top articles by pageviews optionally filtering by category and/or namespaces
@@ -843,8 +854,6 @@ class ArticlesApiController extends WikiaApiController {
 					$data['thumbnail'] = $images[$id][0]['url'];
 
 					if( is_array( $images[$id][0]['original_dimensions'] ) ) {
-						array_walk( $images[$id][0]['original_dimensions'], [$this, 'normalizeDimension'] );
-
 						$data['original_dimensions'] = $images[$id][0]['original_dimensions'];
 					} else {
 						$data['original_dimensions'] = null;
@@ -855,20 +864,6 @@ class ArticlesApiController extends WikiaApiController {
 		}
 
 		return $result;
-	}
-
-	/**
-	 * Normalizes (converts to integer) $dimension passed to the method, stored
-	 * under $key.
-	 * Meant to be used as callable in array_walk
-	 *
-	 * @param $dimension
-	 * @param $key
-	 */
-	protected function normalizeDimension(&$dimension, $key) {
-		if ( in_array( $key, $this->imageDimensionFields ) ) {
-			$dimension = intval( $dimension );
-		}
 	}
 
 	protected function getImageServing( $ids, $width, $height ) {
