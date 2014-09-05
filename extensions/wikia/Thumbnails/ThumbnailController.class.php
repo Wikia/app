@@ -99,7 +99,6 @@ class ThumbnailController extends WikiaController {
 		$options = $this->getVal( 'options', [] );
 		$options['fluid'] = true;
 		$options['img-class'] = empty( $options['border'] ) ? '' : 'border';
-		$options['usePictureTag'] = true;
 
 		$thumb = $this->getVal( 'thumb' );
 

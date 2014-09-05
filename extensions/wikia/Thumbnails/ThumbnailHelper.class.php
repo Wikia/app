@@ -347,10 +347,9 @@ class ThumbnailHelper extends WikiaModel {
 		$lazyLoaded = false;
 		if ( self::shouldLazyLoad( $controller, $options ) ) {
 			$lazyLoaded = true;
-			$method = empty( $option['usePictureTag'] ) ? 'imgTag' : 'pictureTag';
 			$controller->noscript = $controller->app->renderView(
 				'ThumbnailController',
-				$method,
+				'imgTag',
 				$controller->response->getData()
 			);
 			ImageLazyLoad::setLazyLoadingAttribs( $controller );
