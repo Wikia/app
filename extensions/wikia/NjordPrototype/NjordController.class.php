@@ -1,6 +1,9 @@
 <?php
 
 class NjordController extends WikiaController {
+
+	const HERO_IMAGE_FILENAME = 'wikia-hero-image';
+
 	public function index() {
 		$this->wg->out->addStyle( AssetsManager::getInstance()->getSassCommonURL( 'extensions/wikia/NjordPrototype/css/Njord.scss' ) );
 		$this->wg->Out->addScriptFile( $this->wg->ExtensionsPath . '/wikia/NjordPrototype/scripts/Njord.js' );
@@ -57,7 +60,7 @@ class NjordController extends WikiaController {
 		if ( $name ) {
 			$stash = RepoGroup::singleton()->getLocalRepo()->getUploadStash();
 			$temp_file = $stash->getFile( $name );
-			$file = new LocalFile( $temp_file->getName(), RepoGroup::singleton()->getLocalRepo() );
+			$file = new LocalFile( static::HERO_IMAGE_FILENAME, RepoGroup::singleton()->getLocalRepo() );
 
 			$status = $file->upload( $temp_file->getPath(), '', '' );
 			if ( $status->isOK() ) {
