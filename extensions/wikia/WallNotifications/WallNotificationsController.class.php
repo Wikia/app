@@ -256,7 +256,7 @@ class WallNotificationsController extends WikiaController {
 				$params['$'.(count($params)+1)] = $this->getDisplayname($data->wall_displayname);
 			}
 		}
-		$msg = wfMessage( $msgid, ['parsemag'], $params )->text();
+		$msg = wfMessage( $msgid, $params )->text();
 		return $msg;
 	}
 

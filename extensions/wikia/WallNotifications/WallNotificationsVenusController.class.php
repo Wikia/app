@@ -155,11 +155,13 @@ class WallNotificationsVenusController extends WikiaController {
 			return;
 		}
 
-		$authors[] = [
-			'displayname' => $firstNotify->data->msg_author_displayname,
-			'username' => $firstNotify->data->msg_author_username,
-			'avatar' => AvatarService::renderAvatar($firstNotify->data->msg_author_username, 36 )
-		];
+		$authors = [];
+		foreach( $notify['grouped'] as $notify_entity ) {
+			$authors[] = [
+				'displayname' => $notify_entity->data->msg_author_displayname,
+				'username' => $notify_entity->data->msg_author_username
+			];
+		}
 
 		// 1 = 1 user,
 		// 2 = 2 users,
