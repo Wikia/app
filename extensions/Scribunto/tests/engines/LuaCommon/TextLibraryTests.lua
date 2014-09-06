@@ -50,12 +50,12 @@ local tests = {
 	},
 
 	{ name = 'encode',
-	  func = mw.text.encode, args = { '<b>foo "bar"</b> & \'baz\'' },
-	  expect = { '&lt;b&gt;foo &quot;bar&quot;&lt;/b&gt; &amp; &#039;baz&#039;' }
+	  func = mw.text.encode, args = { '<b>foo\194\160"bar"</b> & \'baz\'' },
+	  expect = { '&lt;b&gt;foo&nbsp;&quot;bar&quot;&lt;/b&gt; &amp; &#039;baz&#039;' }
 	},
 	{ name = 'encode charset',
-	  func = mw.text.encode, args = { '<b>foo "bar"</b> & \'baz\'', 'aeiou' },
-	  expect = { '<b>f&#111;&#111; "b&#97;r"</b> & \'b&#97;z\'' }
+	  func = mw.text.encode, args = { '<b>foo\194\160"bar"</b> & \'baz\'', 'aeiou' },
+	  expect = { '<b>f&#111;&#111;\194\160"b&#97;r"</b> & \'b&#97;z\'' }
 	},
 
 	{ name = 'decode',

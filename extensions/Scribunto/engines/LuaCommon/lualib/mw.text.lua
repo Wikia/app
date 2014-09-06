@@ -32,7 +32,7 @@ local htmlencode_map = {
 	['&'] = '&amp;',
 	['"'] = '&quot;',
 	["'"] = '&#039;',
-	['\194\160'] = '&#nbsp;',
+	['\194\160'] = '&nbsp;',
 }
 local htmldecode_map = {}
 for k, v in pairs( htmlencode_map ) do
