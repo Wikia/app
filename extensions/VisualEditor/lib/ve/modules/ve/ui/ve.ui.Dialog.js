@@ -38,6 +38,45 @@ ve.ui.Dialog = function VeUiDialog( config ) {
 
 OO.inheritClass( ve.ui.Dialog, OO.ui.Dialog );
 
+ve.ui.Dialog.prototype.setDraggable = function () {
+	this.draggable = true;
+	this.$element.addClass( 'oo-ui-dialog-draggable' );
+
+	this.$dragHandle = this.$( '<div>' ).addClass( 'oo-ui-dialog-drag-handle oo-ui-icon-grabber' );
+	this.$dragIframeFix = this.$( '<div>' ).addClass( 'oo-ui-dialog-drag-iframe-fix' );
+
+	this.frame.$element.parent().draggable( {
+		'handle': this.$dragHandle,
+		'start': ve.bind( this.onDragStart, this ),
+		'stop': ve.bind( this.onDragStop, this ),
+		'containment': 'window',
+		'scroll': false
+	} );
+
+	this.frame.$element.parent().prepend( this.$dragIframeFix, this.$dragHandle );
+};
+
+ve.ui.Dialog.prototype.unsetDraggable = function () {
+	this.draggable = false;
+	this.$element.removeClass( 'oo-ui-dialog-draggable' );
+
+	this.$dragHandle.remove();
+	this.$dragIframeFix.remove();
+	this.$dragHandle = this.$dragIframeFix = null;
+
+	this.frame.$element.parent().css( { 'top': '', 'left': '' } );
+};
+
+ve.ui.Dialog.prototype.setOverlayless = function () {
+	this.overlayless = true;
+	this.$element.addClass( 'oo-ui-dialog-overlayless' );
+};
+
+ve.ui.Dialog.prototype.unsetOverlayless = function () {
+	this.overlayless = false;
+	this.$element.removeClass( 'oo-ui-dialog-overlayless' );
+};
+
 /**
  * @inheritdoc
  */
@@ -60,6 +99,20 @@ ve.ui.Dialog.prototype.close = function ( data ) {
 		}, this ) );
 };
 
+/*
+ * Handle when dragging begins
+ */
+ve.ui.Dialog.prototype.onDragStart = function () {
+	this.$element.addClass( 'oo-ui-dialog-dragging' );
+};
+
+/*
+ * Handle when dragging ends
+ */
+ve.ui.Dialog.prototype.onDragStop = function () {
+	this.$element.removeClass( 'oo-ui-dialog-dragging' );
+};
+
 /**
  * @inheritdoc
  */
@@ -74,6 +127,23 @@ ve.ui.Dialog.prototype.getTeardownProcess = function ( data ) {
 			if ( this.fragment ) {
 				this.fragment.select();
 			}
+		}, this );
+};
+
+/**
+ * @inheritdoc
+ */
+ve.ui.Dialog.prototype.getSetupProcess = function ( data ) {
+	return ve.ui.Dialog.super.prototype.getSetupProcess.apply( this, data )
+		.next( function () {
+			var label = ve.track.nameToLabel( this.constructor.static.name ),
+				params = { 'action': ve.track.actions.OPEN, 'label': 'dialog-' + label };
+
+			if ( this.openCount ) {
+				params.value = this.openCount;
+			}
+
+			ve.track( 'wikia', params );
 		}, this );
 };
 
@@ -98,20 +168,4 @@ ve.ui.Dialog.prototype.onCloseButtonClick = function () {
 		'action': ve.track.actions.CLICK,
 		'label': 'dialog-' + label + '-button-close'
 	} );
-};
-
-/**
- * @inheritdoc
- */
-ve.ui.Dialog.prototype.setup = function () {
-	var label = ve.track.nameToLabel( this.constructor.static.name ),
-		params = { 'action': ve.track.actions.OPEN, 'label': 'dialog-' + label };
-
-	OO.ui.Dialog.prototype.setup.apply( this, arguments );
-
-	if ( this.openCount ) {
-		params.value = this.openCount;
-	}
-
-	ve.track( 'wikia', params );
 };

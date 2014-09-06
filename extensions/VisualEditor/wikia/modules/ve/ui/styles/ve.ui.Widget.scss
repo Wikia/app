@@ -1,5 +1,6 @@
 @import "skins/shared/color";
 @import "skins/oasis/css/core/layout";
+@import "skins/shared/mixins/transition";
 @import "color";
 
 /* Button */
@@ -176,16 +177,11 @@
 	top: 0;
 	z-index: $zTop;
 
-	/* A/B Test: Hide */
-	&.optimizely-none {
-		display: none;
-	}
-	/* A/B Test: Opaque page color */
-	&.optimizely-opaque {
-		opacity: 1;
-
+	/* When focusing on a node, increase z-index to cover toolbar and animate shields */
+	&.ve-ui-wikiaFocusWidget-node {
+		z-index: $zTop + 4;
 		.ve-ui-wikiaFocusWidget-shield {
-			background-color: $color-page
+			@include transition-shorthand( all 250ms ease-in-out );
 		}
 	}
 
