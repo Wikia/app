@@ -1,6 +1,6 @@
 <?php
 
-include __DIR__ . '/../lib/exacttarget_soap_client.php';
+require_once __DIR__ . '/../lib/exacttarget_soap_client.php';
 
 class ExactTargetAddUserTaskTest extends WikiaBaseTest {
 
@@ -35,7 +35,6 @@ class ExactTargetAddUserTaskTest extends WikiaBaseTest {
 			'user_email' => 'email@email.com'
 		];
 		$aUserProperties = [];
-
 
 		$addTaskMock = $this->getMockBuilder( 'ExactTargetAddUserTask' )
 			->disableOriginalConstructor()

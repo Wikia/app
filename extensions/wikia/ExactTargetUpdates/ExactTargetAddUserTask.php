@@ -1,7 +1,5 @@
 <?php
 
-use Wikia\Tasks\Tasks\BaseTask;
-
 class ExactTargetAddUserTask extends ExactTargetBaseTask {
 
 	/**
