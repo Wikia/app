@@ -53,6 +53,11 @@ class Http {
 				$req->setHeader( $name, $value );
 			}
 		}
+
+		// @author macbre
+		// pass Request ID to internal requests
+		$req->setHeader( Wikia\Util\RequestId::REQUEST_HEADER_NAME, Wikia\Util\RequestId::instance()->getRequestId() );
+
 		// Wikia change - end
 		if( isset( $options['userAgent'] ) ) {
 			$req->setUserAgent( $options['userAgent'] );
@@ -65,10 +70,10 @@ class Http {
 		$status = $req->execute();
 
 		// Wikia change - @author: mech - begin
-		// log all the requests we make (except valid Phalanx calls, as we have a lot of them)
-		$caller =  wfGetCallerClassMethod( [ __CLASS__, 'Hooks', 'ApiService' ] );
+		// log all the requests we make
+		$caller =  wfGetCallerClassMethod( [ __CLASS__, 'Hooks', 'ApiService', 'Solarium_Client', 'Solarium_Client_Adapter_Curl' ] );
 		$isOk = $status->isOK();
-		if ( class_exists( 'Wikia\\Logger\\WikiaLogger' ) && ( !$isOk || false === strpos( $caller, 'Phalanx' ) ) ) {
+		if ( class_exists( 'Wikia\\Logger\\WikiaLogger' ) ) {
 
 			$requestTime = (int)( ( microtime( true ) - $requestTime ) * 1000.0 );
 			$backendTime = $req->getResponseHeader('x-backend-response-time') ?: 0;

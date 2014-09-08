@@ -228,10 +228,12 @@ class AdEngine2Service
 			$wgAdDriverForceDirectGptAd, $wgAdDriverForceLiftiumAd,
 			$wgOasisResponsive, $wgOasisResponsiveLimited,
 			$wgAdDriverUseRemnantGpt, $wgOut,
-			$wgRequest, $wgEnableKruxTargeting,
+			$wgRequest, $wgEnableKruxTargeting, $wgAdDriverRubiconCachedOnly,
 			$wgAdVideoTargeting, $wgLiftiumOnLoad, $wgAdDriverSevenOneMediaOverrideSub2Site,
-			$wgDartCustomKeyValues, $wgWikiDirectedAtChildrenByStaff, $wgAdEngineDisableLateQueue,
-			$wgAdDriverUseBottomLeaderboard, $wgAdDriverBottomLeaderboardImpressionCapping, $wgAdDriverEnableAdsInMaps;
+			$wgDartCustomKeyValues, $wgWikiDirectedAtChildrenByStaff,
+			$wgWikiDirectedAtChildrenByFounder, $wgAdEngineDisableLateQueue,
+			$wgAdDriverUseBottomLeaderboard, $wgAdDriverBottomLeaderboardImpressionCapping,
+			$wgAdDriverEnableAdsInMaps;
 
 		$vars = [];
 
@@ -250,6 +252,7 @@ class AdEngine2Service
 			'wgAdDriverUseDartForSlotsBelowTheFold' => $wgAdDriverUseDartForSlotsBelowTheFold === null ? 'hub' : $wgAdDriverUseDartForSlotsBelowTheFold,
 			'wgAdDriverUseRemnantGpt' => $wgAdDriverUseRemnantGpt,
 			'wgAdDriverUseSevenOneMedia' => $wgAdDriverUseSevenOneMedia,
+			'wgAdDriverRubiconCachedOnly' => $wgAdDriverRubiconCachedOnly,
 			'wgAdDriverSevenOneMediaOverrideSub2Site' => $wgAdDriverSevenOneMediaOverrideSub2Site,
 			'wgUserShowAds' => $wgUser->getOption('showAds'),
 			'wgOutboundScreenRedirectDelay' => $wgOutboundScreenRedirectDelay,
@@ -279,7 +282,7 @@ class AdEngine2Service
 			'wgEnableKruxTargeting' => $wgEnableKruxTargeting,
 			'wgUsePostScribe' => $wgRequest->getBool('usepostscribe', false),
 			'wgDartCustomKeyValues' => $wgDartCustomKeyValues,
-			'wgWikiDirectedAtChildren' => (bool) $wgWikiDirectedAtChildrenByStaff,
+			'wgWikiDirectedAtChildren' => $wgWikiDirectedAtChildrenByStaff || $wgWikiDirectedAtChildrenByFounder,
 
 			// AdLogicPageParams.js, SevenOneMediaHelper.js, AnalyticsProviderQuantServe.php
 			'cityShort' => AdEngine2Service::getCachedCategory()['short'],

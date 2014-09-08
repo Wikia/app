@@ -5,11 +5,12 @@ define('ext.wikia.adEngine.provider.directGpt', [
 	'wikia.window',
 	'wikia.geo',
 	'wikia.cache',
+	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.slotTweaker',
 	'ext.wikia.adEngine.adLogicHighValueCountry',
 	'ext.wikia.adEngine.wikiaGptHelper',
 	'ext.wikia.adEngine.gptSlotConfig'
-], function (log, window, Geo, cacheStorage, slotTweaker, adLogicHighValueCountry, wikiaGpt, slotMapConfig) {
+], function (log, window, Geo, cacheStorage, adContext, slotTweaker, adLogicHighValueCountry, wikiaGpt, slotMapConfig) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.provider.directGpt',
@@ -117,7 +118,7 @@ define('ext.wikia.adEngine.provider.directGpt', [
 	function canHandleSlot(slotname) {
 		log(['canHandleSlot', slotname], 'debug', logGroup);
 
-		if (window.wgAdDriverForceDirectGptAd && slotMap[slotname]) {
+		if (adContext.getContext().forceProviders.directGpt && slotMap[slotname]) {
 			return true;
 		}
 
