@@ -1,6 +1,7 @@
 @import "skins/shared/mixins/arrow";
 @import "skins/shared/mixins/clearfix";
 @import "skins/shared/color";
+@import "extensions/wikia/VideoHandlers/css/crunchyrollWidget";
 
 .page-listings {
 	@include clearfix;
@@ -143,4 +144,8 @@ ul.tabs {
 
 p.hidden {
   display: none;
+}
+
+.WikiaArticle {
+	@include crunchyrollWidget;
 }

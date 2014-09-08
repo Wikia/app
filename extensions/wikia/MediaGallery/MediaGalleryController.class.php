@@ -29,17 +29,14 @@ class MediaGalleryController extends WikiaController {
 				'height' => $dimension,
 			];
 
-			list( $thumbUrl, $smallerThanDim ) = WikiaFileHelper::getSquaredThumbnailUrl( $file, $dimension );
+			$thumbUrl = WikiaFileHelper::getSquaredThumbnailUrl( $file, $dimension );
 			$thumb = $file->transform( $dimensions );
 			$thumb->setUrl( $thumbUrl );
 
 			$markup = $this->app->renderView(
 				'ThumbnailController',
 				'gallery',
-				[
-					'thumb' => $thumb,
-					'options' => [ 'border' => $smallerThanDim ],
-				]
+				['thumb' => $thumb]
 			);
 
 			// Hide overflow items

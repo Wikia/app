@@ -269,6 +269,7 @@ $wgHooks          [ 'ArticleViewAddParserOutput'      ][] = 'Transaction::onArti
 $wgHooks          [ 'RestInPeace'                     ][] = 'Transaction::onRestInPeace';
 $wgHooks          [ 'RestInPeace'                     ][] = 'ScribePurge::onRestInPeace';
 $wgAutoloadClasses[ 'Wikia\\Blogs\\BlogTask'          ] = "$IP/extensions/wikia/Blogs/BlogTask.class.php";
+$wgAutoloadClasses[ 'TemplatePageHelper'              ] = "$IP/includes/wikia/helpers/TemplatePageHelper.php";
 
 /**
  * Resource Loader enhancements
@@ -411,8 +412,20 @@ $wgHooks['WikiaSkinTopScripts'][] = 'ReadMoreController::onWikiaSkinTopScripts';
 $wgHooks['WikiaSkinTopScripts'][] = 'Wikia\\Logger\\Hooks::onWikiaSkinTopScripts';
 
 // Set the WikiaLogger mode early in the setup process
+$wgHooks['Debug'][] = 'Wikia\\Logger\\Hooks::onDebug';
 $wgHooks['WikiFactory::execute'][] = 'Wikia\\Logger\\Hooks::onWikiFactoryExecute';
 $wgHooks['WikiFactory::onExecuteComplete'][] = 'Wikia\\Logger\\Hooks::onWikiFactoryExecuteComplete';
+
+# list of groups for wfDebugLog calls that will be logged using WikiaLogger
+# @see PLATFORM-424
+$wgDebugLogGroups = [
+	'ExternalStorage' => true,
+	'ExternalStoreDB' => true,
+	'MessageCache' => true,
+	'poolcounter' => true,  // errors from PoolCounterWork
+	'replication' => true,  // replication errros / excessive lags
+	'squid' => true,        // timeouts and errors from SquidPurgeClient
+];
 
 // Register \Wikia\Sass namespace
 spl_autoload_register( function( $class ) {
@@ -1269,6 +1282,13 @@ $wgSitewideDisableSevenOneMedia = false;
  * Disable IVW2 Analytics pixel sitewide in case a disaster happens (it's an instant global).
  */
 $wgSitewideDisableIVW2 = false;
+
+/**
+ * @name $wgSitewideDisableRubiconRTP
+ * @link http://one.wikia-inc.com/wiki/Ads/Disaster_recovery
+ * Disable Rubicon RTP Analytics pixel sitewide in case a disaster happens (it's an instant global).
+ */
+$wgSitewideDisableRubiconRTP = false;
 
 /**
  * @name $wgAdDriverUseSevenOneMedia

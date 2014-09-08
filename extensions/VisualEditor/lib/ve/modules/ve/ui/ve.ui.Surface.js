@@ -50,7 +50,7 @@ ve.ui.Surface = function VeUiSurface( dataOrDoc, config, target ) {
 	this.enabled = true;
 	this.target = target || null;
 	if ( config && config.focusMode ) {
-		this.focus = new ve.ui.WikiaFocusWidget( this );
+		this.focusWidget = new ve.ui.WikiaFocusWidget( this );
 	}
 
 	// Events
@@ -143,8 +143,8 @@ ve.ui.Surface.prototype.initialize = function () {
 	var $body = $( 'body' );
 
 	this.getView().$element.after( this.$localOverlay );
-	if ( this.focus ) {
-		$body.append( this.focus.$element );
+	if ( this.focusWidget ) {
+		$body.append( this.focusWidget.$element );
 	}
 	// Attach globalOverlay to the global <body>, not the local frame's <body>
 	$body.append( this.$globalOverlay );
@@ -365,4 +365,12 @@ ve.ui.Surface.prototype.getDir = function () {
  */
 ve.ui.Surface.prototype.getTarget = function () {
 	return this.target;
+};
+
+/**
+ * @method
+ * @returns {ve.ui.WikiaFocusWidget}
+ */
+ve.ui.Surface.prototype.getFocusWidget = function () {
+	return this.focusWidget;
 };
