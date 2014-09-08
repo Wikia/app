@@ -12,6 +12,9 @@ $messages['en'] = array(
 	'invalid-data' => "Invalid data",
 	'link-suggest-extension-not-available' => 'Link Suggest extension not available',
 	'related-pages-extension-not-available' => 'Related Pages extension not available',
+	'media-license-dropdown-html' => 'Get media license dropdown HTML.',
+	'default-selected-value' => 'The default (selected) value',
+	'value-for-attr' => 'The value for the "$1" attribute',
 );
 
 /**
@@ -27,4 +30,7 @@ $messages['qqq'] = array(
 	'invalid-data' => "Http error message (555 http error): Invalid data",
 	'link-suggest-extension-not-available' => '404 Http error message in Search suggestion API: informs that Link Suggest extension is not available',
 	'related-pages-extension-not-available' => '404 Http error message in Search suggestion API: informs that Related Pages extension is not available',
+	'media-license-dropdown-html' => 'Message from API Licenses endpoint: about getting media license dropdown HTML.',
+	'default-selected-value' => 'Message from API Licenses endpoint: about default (selected) value',
+	'value-for-attr' => 'Message from API Licenses endpoint: about the value for the given attribute. $1 - name of attribute',
 );
