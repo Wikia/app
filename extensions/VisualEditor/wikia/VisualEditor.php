@@ -114,6 +114,7 @@ $wgResourceModules += array(
 			've/ui/widgets/ve.ui.WikiaMediaSelectWidget.js',
 			've/ui/widgets/ve.ui.WikiaMediaOptionWidget.js',
 			've/ui/widgets/ve.ui.WikiaPhotoOptionWidget.js',
+			've/ui/widgets/ve.ui.WikiaTemplateOptionWidget.js',
 			've/ui/widgets/ve.ui.WikiaVideoOptionWidget.js',
 			've/ui/widgets/ve.ui.WikiaMapOptionWidget.js',
 			've/ui/widgets/ve.ui.WikiaMediaResultsWidget.js',
@@ -185,6 +186,7 @@ $wgResourceModules += array(
 			'wikia-visualeditor-dialog-transclusion-preview-button',
 			'wikia-visualeditor-context-transclusion-description',
 			'wikia-visualeditor-dialog-wikiatemplateinsert-search',
+			'wikia-visualeditor-wikiatemplateoptionwidget-appears',
 		),
 		'dependencies' => array(
 			'ext.visualEditor.core.desktop',

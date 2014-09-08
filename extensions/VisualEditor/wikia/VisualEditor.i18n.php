@@ -60,7 +60,8 @@ $messages['en'] = array(
 	'wikia-visualeditor-dialog-transclusion-get-info' => 'Get info about the "$1" template',
 	'wikia-visualeditor-dialog-transclusion-preview-button' => 'Update preview',
 	'wikia-visualeditor-context-transclusion-description' => 'Edit',
-	'wikia-visualeditor-dialog-wikiatemplateinsert-search' => 'Search for a template by name or article'
+	'wikia-visualeditor-dialog-wikiatemplateinsert-search' => 'Search for a template by name or article',
+	'wikia-visualeditor-wikiatemplateoptionwidget-appears' => 'Appears $1 {{PLURAL:$1|time|times}}',
 );
 
 /** Message documentation (Message documentation)
