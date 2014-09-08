@@ -21,6 +21,18 @@ make phpunit-single test=../extensions/wikia/AssetsManager/tests/AssetsManagerTe
 
 will run all tests (except of ``@group Broken``) from ``/extensions/wikia/FooExtension``.
 
+### Running all tests for a given group or groups
+
+```
+./php-group MediaFeatures
+```
+
+will run all tests marked as ``@group MediaFeatures``.  Any number of groups can be added, e.g.:
+
+```
+./php-group MediaFeatures UsingDB
+```
+
 ### Running all unit tests
 
 ```
