@@ -2,6 +2,7 @@
 
 /**
  * Test ImageServingDriverMainNS::filterImages
+ * @group MediaFeatures
  */
 
 // proxy class to allow unit testing of ImageServingDriverMainNS class

@@ -1,4 +1,10 @@
 <?php
+
+/**
+ * Class ImageServingUnitTest
+ *
+ * @group MediaFeatures
+ */
 class ImageServingUnitTest extends WikiaBaseTest {
 
 	public function setUp() {
