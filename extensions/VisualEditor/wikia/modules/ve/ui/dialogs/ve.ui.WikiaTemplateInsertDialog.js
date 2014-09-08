@@ -49,7 +49,7 @@ ve.ui.WikiaTemplateInsertDialog.prototype.initialize = function () {
 				i,
 				{
 					'$': this.$,
-					'icon': 'template-reversed',
+					'icon': 'template-inverted',
 					'label': 'Super Long Template Name with truncated text because this thing is too long',
 					'appears': '20'
 				}

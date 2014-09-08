@@ -306,7 +306,7 @@
 .oo-ui-icon-template {
 	@include ve-icon(template, mw);
 }
-.oo-ui-icon-template-reversed {
+.oo-ui-icon-template-inverted {
 	@include ve-icon(template, mw, $color-page-opposite);
 }
 

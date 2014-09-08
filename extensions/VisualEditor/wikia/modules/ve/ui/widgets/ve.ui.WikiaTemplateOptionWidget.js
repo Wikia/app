@@ -37,7 +37,7 @@ OO.inheritClass( ve.ui.WikiaTemplateOptionWidget, OO.ui.OptionWidget );
 /**
  * Set the value of the appears element
  *
- * @param {string} value Value to show
+ * @param {number} value Number of times the template appears
  */
 ve.ui.WikiaTemplateOptionWidget.prototype.setAppears = function ( value ) {
 	this.$appears.text( ve.msg( 'wikia-visualeditor-wikiatemplateoptionwidget-appears', value ) );
