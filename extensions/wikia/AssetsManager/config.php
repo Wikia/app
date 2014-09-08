@@ -983,7 +983,7 @@ $config['chat_js2'] = array(
 		//depends on querystring.js and cookies.js
 		'//resources/wikia/modules/log.js',
 
-		'//extensions/wikia/Chat2/js/lib/socket.io.client.js',
+		//'//extensions/wikia/Chat2/js/lib/socket.io.client.js',
 		// must be before controllers.js
 		'//extensions/wikia/Chat2/js/emoticons.js',
 		'//extensions/wikia/Chat2/js/lib/underscore.js',
@@ -1816,6 +1816,33 @@ $config['bucky_js'] = array(
 	)
 );
 
+/* Monetization Module */
+$config['monetization_module_css'] = array(
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => [ 'oasis' ],
+	'assets' => [
+		'//extensions/wikia/MonetizationModule/styles/MonetizationModule.scss',
+	]
+);
+
+$config['monetization_module_js'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => [ 'oasis' ],
+	'assets' => [
+		'//extensions/wikia/MonetizationModule/scripts/MonetizationModule.js',
+
+	]
+);
+
+$config['monetization_module_top_script_js'] = array(
+    'type' => AssetsManager::TYPE_JS,
+    'skin' => [ 'oasis' ],
+    'assets' => [
+        '//extensions/wikia/MonetizationModule/scripts/MonetizationModuleTopScript.js',
+
+    ]
+);
+
 /* extension/wikia/WikiaInteractiveMaps */
 
 $config['int_map_ponto'] = [
@@ -1952,5 +1979,16 @@ $config['global_header_css'] = [
 	'assets' => [
 		'//extensions/wikia/GlobalNavigation/css/GlobalNavigationAccountNavigation.scss',
 		'//extensions/wikia/UserLogin/styles/UserLoginDropdown.scss'
+	]
+];
+
+$config['media_gallery_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => ['oasis'],
+	'assets' => [
+		'//extensions/wikia/MediaGallery/scripts/templates.mustache.js',
+		'//extensions/wikia/MediaGallery/scripts/views/media.js',
+		'//extensions/wikia/MediaGallery/scripts/views/toggler.js',
+		'//extensions/wikia/MediaGallery/scripts/controllers/index.js',
 	]
 ];

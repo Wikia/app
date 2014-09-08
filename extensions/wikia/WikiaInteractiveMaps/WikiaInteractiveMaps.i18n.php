@@ -134,6 +134,9 @@ $messages[ 'en' ] = [
 	'wikia-interactive-maps-poi-categories-default-character' => 'Character',
 	'wikia-interactive-maps-poi-categories-default-item' => 'Item',
 	'wikia-interactive-maps-poi-categories-default-event' => 'Event',
+
+	// errors & exceptions
+	'wikia-interactive-maps-permission-error' => 'Sorry, you do not have permission to edit on this wikia. If you think this was a mistake, please contact an administrator.',
 ];
 
 $messages[ 'pl' ] = [

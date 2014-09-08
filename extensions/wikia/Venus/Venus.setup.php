@@ -29,6 +29,8 @@ $wgExtensionCredits['other'][] =
  * classes
  */
 
+$wgAutoloadClasses['ResourceVariablesGetter'] = "includes/wikia/resourceloader/ResourceVariablesGetter.class.php";
+
 /**
  * services
  */
