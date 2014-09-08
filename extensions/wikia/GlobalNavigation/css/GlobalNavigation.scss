@@ -20,6 +20,12 @@
 	border-left: 1px solid $nav-alternative-color;
 	float: left;
 	height: $global-navigation-height;
+	position: relative;
+}
+
+// TODO temporary fix for menu spacing - remove when all components are ready
+.global-navigation-item:last-child {
+	width: 10px;
 }
 
 .global-navigation-link {
@@ -44,7 +50,7 @@
 }
 
 .wikia-logo {
-	padding: 0 20px; // TODO change padding when hamburger is ready
+	padding: 0 0 0 20px;
 
 	img {
 		background-image: url("/extensions/wikia/GlobalNavigation/images/wikia_logo.svg"); /* base64 */
@@ -77,7 +83,7 @@
 @media #{$below-small} {
 	.global-navigation {
 		min-width: 767px;
-		position: static;
+		position: relative;
 	}
 	.wikia-page {
 		padding-top: 0;

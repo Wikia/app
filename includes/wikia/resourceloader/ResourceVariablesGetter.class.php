@@ -1,6 +1,6 @@
 <?php
 /**
- * Getter for Varialbes coming form Resource Loade
+ * Getter for Variables coming form Resource Loader
  */
 class ResourceVariablesGetter extends ResourceLoaderStartUpModule {
 

@@ -13,7 +13,7 @@ class GlobalFooterHooks {
 	}
 	static public function onVenusAssetsPackages( &$jsHeadGroups, &$jsBodyGroups, &$cssGroups ) {
 		$jsBodyGroups[] = 'global_footer_js';
-		$cssGroups[] = 'global_footer_css';
+		$cssGroups[] = 'global_footer_scss';
 		return true;
 	}
 }

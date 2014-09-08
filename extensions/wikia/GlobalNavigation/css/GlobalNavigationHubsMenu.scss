@@ -1,0 +1,335 @@
+@import "../../Venus/styles/variables";
+@import "skins/shared/color";
+@import "skins/shared/mixins/columns";
+@import "skins/shared/mixins/blackout";
+@import "GlobalNavigationColors";
+
+.hubs-entry-point {
+	background-image: url("/extensions/wikia/GlobalNavigation/images/hubs_entry_point.svg"); /* base64 */
+	background-position: 16px center;
+	background-repeat: no-repeat;
+	cursor: pointer;
+	padding: 0 9px 0 38px;
+
+	&:after {
+		border: 5px solid $nav-background-color;
+		border-top-color: $nav-alternative-color;
+		content: " ";
+		display: inline-block;
+	}
+}
+
+.global-navigation-item.active {
+	.hubs-menu {
+		display: block;
+	}
+	.hubs-entry-point:after {
+		border-top-color: $nav-active-color;
+	}
+}
+
+.transparent-out {
+	@include blackout( rgba( 1, 1, 1, 0.0 ) );
+
+	&.visible {
+		z-index: $blackout-z-index;
+	}
+}
+
+.hubs-menu {
+	background-color: $hubsmenu-background-color;
+	border: 1px solid $nav-alternative-color;
+	color: $nav-active-color;
+	display: none;
+	left: -1px;
+	position: absolute;
+	top: $global-navigation-height;
+	width: 768px;
+
+	a {
+		color: $nav-active-color;
+	}
+
+	.hub-list {
+		float:left;
+		width: 256px;
+
+		*, *:before, *:after {
+			-webkit-backface-visibility: hidden;
+		}
+	}
+	nav {
+		background-color: $nav-background-color;
+		cursor: pointer;
+		height: 62px;
+		line-height: 62px;
+		position: relative;
+
+		&.active {
+			color: $nav-background-color;
+			font-weight: bold;
+
+			&:before {
+				border-radius: 50%;
+				content: " ";
+				left: 16px;
+				width: 50px;
+				height: 50px;
+				position: absolute;
+				top: 6px;
+			}
+
+			&:after {
+				background-color: $hubsmenu-background-color;
+				border: 31px solid transparent;
+				border-width: 31px 0 31px 12px;
+				height: 0;
+				width: 0;
+			}
+
+			.icon {
+
+				&:after {
+					background-color: transparent;
+				}
+			}
+
+			.label {
+				border: 0;
+				background-color: transparent;
+				height: 62px;
+			}
+		}
+
+		&:after {
+			background-color: $hubsmenu-background-color;
+			content: " ";
+			float: right;
+			height: 62px;
+			width: 12px;
+		}
+
+		.icon {
+			background-position: 15px center;
+			background-repeat: no-repeat;
+			display: inline-block;
+			float: left;
+			height: 62px;
+			position: relative;
+			width: 102px;
+
+			&:after {
+				background-color: $nav-background-color;
+				content: " ";
+				display: inline-block;
+				float: right;
+				height: 62px;
+				width: 20px;
+			}
+		}
+
+		.label {
+			background-color: $nav-background-color;
+			border-bottom: 1px solid $hubsmenu-background-color;
+			display: inline-block;
+			float: left;
+			font-size: 18px;
+			height: 61px;
+			width: 142px;
+		}
+	}
+
+	section {
+		@include column-count( 2 );
+
+		&.active {
+			display: block;
+		}
+
+		display: none;
+		float: left;
+		font-size: 15px;
+		padding-left: 22px;
+		width: 464px;
+
+		h2 {
+			font-size: 15px;
+			font-weight: bold;
+			margin: 0;
+			padding: 21px 0 5px;
+		}
+
+		a {
+			display: block;
+			padding: 7px 0 6px;
+		}
+	}
+
+	.books {
+		background-color: $color-vertical-books;
+
+		&.active {
+			&:before {
+				background-color: $color-vertical-books-secondary;
+			}
+
+			&:after {
+				border-left-color: $color-vertical-books;
+			}
+		}
+		.icon {
+			background-image: url("/extensions/wikia/GlobalNavigation/images/books.svg"); /* base64 */
+		}
+	}
+	.comics {
+		background-color: $color-vertical-comics;
+
+		&.active {
+			&:before {
+				background-color: $color-vertical-comics-secondary;
+			}
+
+			&:after {
+				border-left-color: $color-vertical-comics;
+			}
+		}
+		.icon {
+			background-image: url("/extensions/wikia/GlobalNavigation/images/comics.svg"); /* base64 */
+		}
+	}
+	.games {
+		background-color: $color-vertical-games;
+
+		&.active {
+			&:before {
+				background-color: $color-vertical-games-secondary;
+			}
+
+			&:after {
+				border-left-color: $color-vertical-games;
+			}
+		}
+		.icon {
+			background-image: url("/extensions/wikia/GlobalNavigation/images/games.svg"); /* base64 */
+		}
+	}
+	.lifestyle {
+		background-color: $color-vertical-lifestyle;
+
+		&.active {
+			&:before {
+				background-color: $color-vertical-lifestyle-secondary;
+			}
+
+			&:after {
+				border-left-color: $color-vertical-lifestyle;
+			}
+		}
+		.icon {
+			background-image: url("/extensions/wikia/GlobalNavigation/images/lifestyle.svg"); /* base64 */
+		}
+	}
+	.movies {
+		background-color: $color-vertical-movies;
+
+		&.active {
+			&:before {
+				background-color: $color-vertical-movies-secondary;
+			}
+
+			&:after {
+				border-left-color: $color-vertical-movies;
+			}
+		}
+		.icon {
+			background-image: url("/extensions/wikia/GlobalNavigation/images/movies.svg"); /* base64 */
+		}
+	}
+	.music {
+		background-color: $color-vertical-music;
+
+		&.active {
+			&:before {
+				background-color: $color-vertical-music-secondary;
+			}
+
+			&:after {
+				border-left-color: $color-vertical-music;
+			}
+		}
+		.icon {
+			background-image: url("/extensions/wikia/GlobalNavigation/images/music.svg"); /* base64 */
+		}
+	}
+	.tv {
+		background-color: $color-vertical-tv;
+
+		&.active {
+			&:before {
+				background-color: $color-vertical-tv-secondary;
+			}
+
+			&:after {
+				border-left-color: $color-vertical-tv;
+			}
+		}
+		.icon {
+			background-image: url("/extensions/wikia/GlobalNavigation/images/tv.svg"); /* base64 */
+		}
+	}
+}
+
+@media #{$small-only} {
+	.hubs-menu {
+		nav {
+			&.active {
+				&:before {
+					left: 10px;
+				}
+			}
+
+			.icon {
+				background-position: 10px center;
+				width: 90px;
+			}
+
+			.label {
+				width: 154px;
+			}
+		}
+	}
+}
+
+@media #{$large-up} {
+	.hubs-entry-point {
+		padding-right: 23px;
+	}
+
+	.hubs-menu {
+		width: 788px;
+
+		.hub-list {
+			width: 302px;
+		}
+		nav {
+			&.active {
+				&:before {
+					left: 20px;
+				}
+			}
+
+			.icon {
+				background-position: 20px center;
+				width: 123px;
+
+				&:after {
+					width: 33px;
+				}
+			}
+
+			.label {
+				width: 167px;
+			}
+		}
+	}
+}
