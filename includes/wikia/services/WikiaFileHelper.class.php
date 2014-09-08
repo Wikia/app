@@ -657,8 +657,8 @@ class WikiaFileHelper extends Service {
 	 * transparent background.
 	 *
 	 * @param File $file
-	 * @param $dimension
-	 * @param $useWebP
+	 * @param int $dimension
+	 * @param bool $useWebP
 	 * @return string The URL of the image
 	 */
 	public static function getSquaredThumbnailUrl( File $file, $dimension, $useWebP = false ) {
