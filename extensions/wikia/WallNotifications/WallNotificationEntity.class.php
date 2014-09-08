@@ -11,10 +11,6 @@ class WallNotificationEntity {
 	 */
 	public $data_noncached;
 
-	public function __construct() {
-		$this->helper = new WallHelper();
-	}
-
 	/*
 	 *	Public Interface
 	 */

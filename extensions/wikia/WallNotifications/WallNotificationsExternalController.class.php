@@ -3,7 +3,6 @@
 class WallNotificationsExternalController extends WikiaController {
 	const WALL_WIKI_NAME_MAX_LEN = 32;
 
-	var $helper;
 	private $controllerName;
 
 	public function __construct() {
@@ -12,7 +11,6 @@ class WallNotificationsExternalController extends WikiaController {
 
 	public function init() {
 		global $wgEnableGlobalNavExt;
-		$this->helper = new WallHelper();
 		if( !empty( $wgEnableGlobalNavExt ) ) {
 			$this->controllerName = 'WallNotificationsVenus';
 		} else {
