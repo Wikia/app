@@ -996,6 +996,7 @@ class ArticlesApiController extends WikiaApiController {
 		if ( $this->wg->EnableArticleAsJsonApi ) {
 			$articleId = $this->getRequest()->getInt(self::SIMPLE_JSON_ARTICLE_ID_PARAMETER_NAME, NULL);
 			$articleTitle = $this->getRequest()->getVal(self::SIMPLE_JSON_ARTICLE_TITLE_PARAMETER_NAME, NULL);
+			$followRedirects = $this->request->getBool('followRedirects', true);
 
 			if ( !empty( $articleId ) && !empty( $articleTitle ) ) {
 				throw new BadRequestApiException( 'Can\'t use id and title in the same request' );
@@ -1017,6 +1018,10 @@ class ArticlesApiController extends WikiaApiController {
 
 			if ( empty( $article ) ) {
 				throw new NotFoundApiException( "Unable to find any article" );
+			}
+
+			if ( $followRedirects && $article->getPage()->isRedirect() ) {
+				$article = Article::newFromTitle( $article->getPage()->followRedirect(), RequestContext::getMain() );
 			}
 
 			//Response is based on wikiamobile skin as this already removes inline style
