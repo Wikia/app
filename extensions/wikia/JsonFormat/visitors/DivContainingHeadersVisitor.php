@@ -103,9 +103,16 @@ class DivContainingHeadersVisitor extends DOMNodeVisitorBase {
 	}
 
 	protected function getArticleByUrl( $url ) {
-		// Transforming url, e.g.:
+
+		global $wgArticlePath;
+		// Constructing regexp, using $wgArticlePath, e.g.:
+		// "/wiki/$1" -> "/^\/wiki\/(.+?)\?.*$/i"
+		// "$1" -> "/^(.+?)\?.*$/i"
+		$regexp = '/^' . str_replace( '/', '\/', str_replace( '$1', '(.+?)', $wgArticlePath ) ) . '\?.*$/i';
+
+		// Transforming url, using constructed regexp:
 		// "/wiki/Some_Title?action=render" -> "Some_Title"
-		$url = preg_replace( '/^\/wiki\/(.+?)\?.*$/i', '$1', $url->value );
+		$url = preg_replace( $regexp, '$1', $url->value );
 		$title = Title::newFromURL( $url );
 		$article = Article::newFromTitle( $title, RequestContext::getMain() );
 		return $article;
