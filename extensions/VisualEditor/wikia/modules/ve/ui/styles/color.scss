@@ -30,3 +30,8 @@ $color-ve-gradient-shadow: darken($color-ve-gradient, 20%);
 	$color-ve-gradient-light: lighten($color-ve-gradient, 5%);
 	$color-ve-gradient-shadow: darken($color-ve-gradient, 10%);
 }
+
+$color-page-opposite: black;
+@if $is-dark-wiki {
+	$color-page-opposite: white;
+}

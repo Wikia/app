@@ -40,10 +40,31 @@ ve.ui.WikiaTemplateInsertDialog.prototype.initialize = function () {
 	// Properties
 	this.select = new OO.ui.SelectWidget( { '$': this.$ } );
 
+	/* Temporary. Use this to generate 6 option widgets */
+	var i, options;
+	options = [];
+	for ( i = 0; i < 6; i++ ) {
+		options.push(
+			new ve.ui.WikiaTemplateOptionWidget(
+				i,
+				{
+					'$': this.$,
+					'icon': 'template-inverted',
+					'label': 'Super Long Template Name with truncated text because this thing is too long',
+					'appears': '20'
+				}
+			)
+		);
+	}
+
 	// Events
 
 	// Initialization
 	this.frame.$content.addClass( 've-ui-wikiaTemplateInsertDialog' );
+
+	this.select.addItems( options );
+
+	this.$body.append( this.select.$element );
 };
 
 /* Registration */
