@@ -2,7 +2,7 @@
 
 class AnalyticsProviderRubiconRTP implements iAnalyticsProvider {
 
-	const OZ_SITE = '7881/11979';
+	const OZ_SITE = '7450/11979';
 	const OZ_ZONE = '145168';
 
 
