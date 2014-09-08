@@ -23,11 +23,6 @@
 	position: relative;
 }
 
-// TODO temporary fix for menu spacing - remove when all components are ready
-.global-navigation-item:last-child {
-	width: 10px;
-}
-
 .global-navigation-link {
 	color: $nav-alternative-color;
 	display: table-cell;
