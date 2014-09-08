@@ -102,7 +102,7 @@
 
 @media #{$small-only} {
 	.search-container {
-		@include grid-column-width('small', 7.4, 2 * $small-grid-gutter);
+		@include grid-column-width('small', 8, 2 * $small-grid-gutter - 36px);
 	}
 
 	.global-nav-search-input-wrapper {

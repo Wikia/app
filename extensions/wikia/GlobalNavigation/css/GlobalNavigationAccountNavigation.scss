@@ -20,28 +20,29 @@
 		&:hover {
 			background-color: $search-input-background;
 
-			.avatar-container:after {
+			> a:after {
 				border-top-color: $nav-active-color;
 			}
 		}
 
 		> a {
 			@include grid-column-width('large', 1, $large-grid-gutter + $large-content-padding - 2px);
-		}
-
-		.avatar-container {
-			height: 36px;
-			margin: 0 6px 0 38px;
-			width: 36px;
 
 			&:after {
 				border: 5px solid;
 				border-top-color: $nav-alternative-color;
 				color: transparent;
 				content: ' ';
-				display: inline-block;
+				float: left;
 				margin-top: 18px;
 			}
+		}
+
+		.avatar-container {
+			float: left;
+			height: 36px;
+			margin: 0 6px 0 38px;
+			width: 36px;
 
 			&.anon-avatar-placeholder,
 			&.logged-avatar-placeholder {

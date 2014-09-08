@@ -62,7 +62,7 @@
 
 @media #{$small-only} {
 	.wikia-logo-container {
-		@include grid-column-width('small', 2.6, $small-content-padding);
+		@include grid-column-width('small', 2, $small-content-padding + 36px);
 	}
 
 	.start-wikia-container {

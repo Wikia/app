@@ -46,11 +46,6 @@
 				background-color: $signup-background-hover-color;
 				text-decoration: none;
 			}
-
-			&:before {
-				content: ' ';
-				display: table-row;
-			}
 		}
 	}
 
@@ -177,6 +172,7 @@
 			font-weight: bold;
 			height: 40px;
 			line-height: 40px;
+			overflow: hidden;
 			padding: 0;
 			text-align: center;
 			text-transform: uppercase;
