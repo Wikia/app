@@ -411,18 +411,19 @@ class ThumbnailHelper extends WikiaModel {
 	 */
 	public static function setPictureTagInfo( WikiaController $controller, MediaTransformOutput $thumb ) {
 		$file = $thumb->file;
-		$smallDim = $thumb->getWidth() * self::SMALL_THUMB_SIZE;
+		$fullSizeDimension = max( $thumb->getWidth(), $thumb->getHeight() );
+		$smallSizeDimension = $fullSizeDimension * self::SMALL_THUMB_SIZE;
 		$useWebP = true;
 
 		// get small images (original and WebP)
-		$controller->smallUrl = WikiaFileHelper::getSquaredThumbnailUrl( $file, $smallDim );
-		$controller->smallUrlWebP = WikiaFileHelper::getSquaredThumbnailUrl( $file, $smallDim, $useWebP );
+		$controller->smallUrl = WikiaFileHelper::getSquaredThumbnailUrl( $file, $smallSizeDimension );
+		$controller->smallUrlWebP = WikiaFileHelper::getSquaredThumbnailUrl( $file, $smallSizeDimension, $useWebP );
 
 		// Set the breakpoint used by the <picture> tag to determine which image to load
 		$controller->breakPoint = self::MEDIUM_BREAKPOINT;
 
 		// get full size WebP image
-		$controller->imgSrcWebP = WikiaFileHelper::getSquaredThumbnailUrl( $file, $thumb->getWidth(), $useWebP );
+		$controller->imgSrcWebP = WikiaFileHelper::getSquaredThumbnailUrl( $file, $fullSizeDimension, $useWebP );
 
 		// Let image template know to use <picture> tag instead of <img> tag
 		$controller->usePictureTag = true;
