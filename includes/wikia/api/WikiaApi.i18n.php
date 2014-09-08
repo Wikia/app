@@ -10,6 +10,8 @@ $messages['en'] = array(
 	'parameter-exceeds-limit' => "Parameter '$1' exceeds limit of $2",
 	'not-found' => "Not found",
 	'invalid-data' => "Invalid data",
+	'link-suggest-extension-not-available' => 'Link Suggest extension not available',
+	'related-pages-extension-not-available' => 'Related Pages extension not available',
 );
 
 /**
@@ -23,4 +25,6 @@ $messages['qqq'] = array(
 	'parameter-exceeds-limit' => "Error message, which specifies that some parameter exceeds limit. $1 - name of parameter. $2 - limit value",
 	'not-found' => "Http error message (404 http error): Not found",
 	'invalid-data' => "Http error message (555 http error): Invalid data",
+	'link-suggest-extension-not-available' => '404 Http error message in Search suggestion API: informs that Link Suggest extension is not available',
+	'related-pages-extension-not-available' => '404 Http error message in Search suggestion API: informs that Related Pages extension is not available',
 );
