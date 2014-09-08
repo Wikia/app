@@ -137,15 +137,16 @@ if ( empty( $wgWikiaMobileIncludeJSGlobals ) ) {
 			'cscoreCat',
 
 			//ads
+			'adEnginePageType',
+			'cityShort',
+			'wgAdDriverUseEbay',
+			'wgAdVideoTargeting',
+			'wgDartCustomKeyValues',
 			'wgShowAds',
 			'wgUsePostScribe',
-			'wgDartCustomKeyValues',
-			'cityShort',
+			'wgWikiDirectedAtChildren',
 			'wikiaPageIsHub',
 			'wikiaPageType',
-			'wgAdVideoTargeting',
-			'wgAdDriverUseEbay',
-			'adEnginePageType',
 
 			//server/wiki
 			'wgServer',
