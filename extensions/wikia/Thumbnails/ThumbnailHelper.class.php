@@ -346,7 +346,7 @@ class ThumbnailHelper extends WikiaModel {
 	 * @param array $options
 	 * @return bool
 	 */
-	public static function setLazyLoad( WikiaController $controller, array $options ) {
+	public static function setLazyLoad( WikiaController $controller, array $options = [] ) {
 		$lazyLoaded = false;
 		if ( self::shouldLazyLoad( $controller, $options ) ) {
 			$lazyLoaded = true;
