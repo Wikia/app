@@ -39,16 +39,17 @@
 		}
 
 		.avatar-container {
+			border-radius: 50%;
 			float: left;
 			height: 36px;
 			margin: 0 6px 0 38px;
+			overflow: hidden;
 			width: 36px;
 
 			&.anon-avatar-placeholder,
 			&.logged-avatar-placeholder {
 				background-image: url('/extensions/wikia/GlobalNavigation/images/avatar.svg'); /* base64 */
 				background-repeat: no-repeat;
-				border-radius: 50%;
 			}
 
 			&.anon-avatar-placeholder {
@@ -57,10 +58,6 @@
 
 			&.logged-avatar-placeholder {
 				background-color: $nav-active-color;
-			}
-
-			.avatar {
-				border-radius: 50%;
 			}
 		}
 
