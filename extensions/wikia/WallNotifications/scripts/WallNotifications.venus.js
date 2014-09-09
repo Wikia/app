@@ -50,6 +50,16 @@ require(
 					.on('click', '#wall-notifications-markasread-all-wikis', this.proxy( this.markAllAsReadAllWikis ));
 			},
 
+			openNotifications: function(row) {
+				if ( row.getAttribute('id') === 'notifications' ) {
+					$('#WallNotificationsVenus').addClass('show');
+				}
+			},
+
+			closeNotifications: function() {
+				$('#WallNotificationsVenus').removeClass('show');
+			},
+
 			checkIfFromMessageBubble: function() {
 				function urlParam(name){
 					var results = new RegExp('[\\?&]' + name + '=([^&#]*)').exec(window.location.href);
@@ -343,6 +353,16 @@ require(
 
 		$(function () {
 			WallNotifications.init();
+
+			window.menuAim(
+				document.querySelector('.user-menu'), {
+					activeRow: '#notifications',
+					rowSelector: '> li',
+					tolerance: 85,
+					submenuDirection: 'left',
+					activate: WallNotifications.openNotifications,
+					deactivate: WallNotifications.closeNotifications
+			});
 		});
 	}
 );

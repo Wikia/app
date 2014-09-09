@@ -53,6 +53,8 @@ $VenusConfig[ 'global_navigation_js' ] = [
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => [ 'venus', 'oasis' ],
 	'assets' => [
+		'//resources/wikia/libraries/menu-aim/menu-aim.js',
+		'//resources/wikia/libraries/delayed-hover/js-delayed-hover.js',
 		'//extensions/wikia/GlobalNavigation/js/GlobalNavigationSearch.js',
 		'//extensions/wikia/WallNotifications/scripts/WallNotifications.venus.js',
 	]
