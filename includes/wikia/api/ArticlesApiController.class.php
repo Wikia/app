@@ -164,64 +164,58 @@ class ArticlesApiController extends WikiaApiController {
 				unset( $articles[ $mainPageId ] );
 			}
 			$articleIds = array_keys( $articles );
-			if ( $expand ) {
-				$params = $this->getDetailsParams();
-				$collection = $this->getArticlesDetails( $articleIds, $params[ 'titleKeys' ], $params[ 'width' ], $params[ 'height' ], $params[ 'length' ], true );
-			} else {
-				$ids = [];
+			$ids = [];
+			foreach ( array_keys( $articles ) as $i ) {
 
-				foreach ( array_keys( $articles ) as $i ) {
-
-					if ( $i == $mainPageId ) {
-						continue;
-					}
-
-					//data is cached on a per-article basis
-					//to avoid one article requiring purging
-					//the whole collection
-					$cache = $this->wg->Memc->get( self::getCacheKey( $i, self::ARTICLE_CACHE_ID ) );
-
-					if ( !is_array( $cache ) ) {
-						$ids[] = $i;
-					} else {
-						$collection[ $cache[ 'id' ] ] = $cache;
-					}
+				if ( $i == $mainPageId ) {
+					continue;
 				}
 
-				$articles = null;
+				//data is cached on a per-article basis
+				//to avoid one article requiring purging
+				//the whole collection
+				$cache = $this->wg->Memc->get( self::getCacheKey( $i, self::ARTICLE_CACHE_ID ) );
 
-				if ( count( $ids ) > 0 ) {
-					$titles = Title::newFromIDs( $ids );
-
-					if ( !empty( $titles ) ) {
-						foreach ( $titles as $t ) {
-							$id = $t->getArticleID();
-
-							$article = [
-								'id' => $id,
-								'title' => $t->getText(),
-								'url' => $t->getLocalURL(),
-								'ns' => $t->getNamespace()
-							];
-
-							$collection[ $id ] = $article;
-
-							$this->wg->Memc->set( self::getCacheKey( $id, self::ARTICLE_CACHE_ID ), $article, 86400 );
-						}
-					}
-
-					$titles = null;
+				if ( !is_array( $cache ) ) {
+					$ids[] = $i;
+				} else {
+					$collection[ $cache[ 'id' ] ] = $cache;
 				}
-
-				//sort articles correctly
-				$result = [];
-				foreach( $articleIds as $id ) {
-					if ( isset( $collection[ $id ] ) ) {
-						$result[] = $collection[ $id ];
-					}
-				}
-				$collection = $result;
 			}
+
+			$articles = null;
+
+			if ( count( $ids ) > 0 ) {
+				$titles = Title::newFromIDs( $ids );
+
+				if ( !empty( $titles ) ) {
+					foreach ( $titles as $t ) {
+						$id = $t->getArticleID();
+
+						$article = [
+							'id' => $id,
+							'title' => $t->getText(),
+							'url' => $t->getLocalURL(),
+							'ns' => $t->getNamespace()
+						];
+
+						$collection[ $id ] = $article;
+
+						$this->wg->Memc->set( self::getCacheKey( $id, self::ARTICLE_CACHE_ID ), $article, 86400 );
+					}
+				}
+
+				$titles = null;
+			}
+
+			//sort articles correctly
+			$result = [];
+			foreach( $articleIds as $id ) {
+				if ( isset( $collection[ $id ] ) ) {
+					$result[] = $collection[ $id ];
+				}
+			}
+			$collection = $result;
 		} else {
 			wfProfileOut( __METHOD__ );
 			if( $baseArticleId === false ) {
