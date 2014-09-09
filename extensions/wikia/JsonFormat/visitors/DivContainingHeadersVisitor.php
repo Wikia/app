@@ -86,6 +86,9 @@ class DivContainingHeadersVisitor extends DOMNodeVisitorBase {
 
 		foreach ( $tabUrls as $url ) {
 			$article = $this->getArticleByUrl( $url );
+			if( empty( $article ) ) {
+				continue;
+			}
 			$title = $article->getTitle()->getText();
 
 			// Prevent from cyclic references
@@ -103,19 +106,35 @@ class DivContainingHeadersVisitor extends DOMNodeVisitorBase {
 	}
 
 	protected function getArticleByUrl( $url ) {
-
 		global $wgArticlePath;
-		// Constructing regexp, using $wgArticlePath, e.g.:
-		// "/wiki/$1" -> "/^\/wiki\/(.+?)\?.*$/i"
-		// "$1" -> "/^(.+?)\?.*$/i"
-		$regexp = '/^' . str_replace( '/', '\/', str_replace( '$1', '(.+?)', $wgArticlePath ) ) . '\?.*$/i';
-
-		// Transforming url, using constructed regexp:
-		// "/wiki/Some_Title?action=render" -> "Some_Title"
-		$url = preg_replace( $regexp, '$1', $url->value );
+		$url = $this->getUrlWithoutPath( $url->value, $wgArticlePath );
+		if( empty( $url ) ) {
+			return null;
+		}
 		$title = Title::newFromURL( $url );
 		$article = Article::newFromTitle( $title, RequestContext::getMain() );
 		return $article;
+	}
+
+	protected function getUrlWithoutPath( $url, $baseArticlePath ) {
+		if( empty( $url ) ) {
+			return null;
+		}
+
+		if( empty( $baseArticlePath ) || strpos( $baseArticlePath, '$1' ) === false ) {
+			return $url;
+		}
+
+		// Constructing regexp, using $wgArticlePath, e.g.:
+		// "/wiki/$1" -> "/^\/wiki\/(.+?)(\?.*)?$/i"
+		// "$1" -> "/^(.+?)(\?.*)?$/i"
+		$regexp = '/^' . str_replace( '/', '\/', str_replace( '$1', '(.+?)', $baseArticlePath ) ) . '(\?.*)?$/i';
+
+		// Transforming url, using constructed regexp:
+		// "/wiki/Some_Title?action=render" -> "Some_Title"
+		$urlWithoutPath = preg_replace( $regexp, '$1', $url );
+
+		return $urlWithoutPath;
 	}
 
 	/**
