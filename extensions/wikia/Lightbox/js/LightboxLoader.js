@@ -76,7 +76,7 @@
 				.off('.lightbox')
 				.on('click.lightbox', '.lightbox, a.image', function (e) {
 					var $this = $(this),
-						$thumb = $this.children('img').first(),
+						$thumb = $this.find('img').first(),
 						fileKey = $thumb.attr('data-image-key') || $thumb.attr('data-video-key'),
 						$parent,
 						isVideo,
