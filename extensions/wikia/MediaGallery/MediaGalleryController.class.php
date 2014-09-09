@@ -8,6 +8,11 @@ class MediaGalleryController extends WikiaController {
 	public function gallery() {
 		$items = $this->getVal( 'items' );
 		$galleryParams = $this->getVal( 'gallery_params', [] ); // gallery tag parameters
+		// @var $parser Parser
+		$parser = $this->request->getVal( 'parser' );
+		if ( !( $parser instanceof Parser ) ) {
+			$parser = $this->wg->Parser;
+		}
 		$visibleCount = empty( $galleryParams['expand'] ) ? self::MAX_ITEMS : self::MAX_EXPANDED_ITEMS;
 
 		$media = [];
@@ -45,10 +50,18 @@ class MediaGalleryController extends WikiaController {
 				$classes[] = "fade";
 			}
 
+			$caption = '';
+			if ( !empty( $item['caption'] ) ) {
+				// parse any wikitext in caption. Logic borrowed from WikiaMobileMediaService::renderMediaGroup.
+				$caption = $parser->internalParse( $item['caption'] );
+				$parser->replaceLinkHolders( $caption );
+				$caption = $parser->killMarkers( $caption );
+			}
+
 			$media[] = [
 				'thumbnail' => $markup,
 				'classes' => join( " ", $classes ),
-				'caption' => $item['caption'],
+				'caption' => $caption,
 			];
 			++$dimensionIndex;
 		}
