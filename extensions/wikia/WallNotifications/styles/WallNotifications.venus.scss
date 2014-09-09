@@ -41,6 +41,10 @@ $wiki-header-bg-color: #e2e6e9;
 	> a > span {
 		float: right;
 	}
+
+	&:hover #WallNotificationsVenus {
+		display: block;
+	}
 }
 
 #WallNotificationsVenus {
@@ -49,7 +53,12 @@ $wiki-header-bg-color: #e2e6e9;
 	background-color: #fff;
 	border: 1px solid $border-color;
 	border-top: 0;
+	display: none;
 	position: absolute;
+
+	&.show {
+		display: block;
+	}
 
 	header {
 		height: 51px;
@@ -69,7 +78,16 @@ $wiki-header-bg-color: #e2e6e9;
 		text-align: right;
 
 		span {
+			cursor: pointer;
 			margin-left: 10px;
+		}
+
+		div {
+			display: none;
+		}
+
+		&:hover div {
+			display: block;
 		}
 	}
 
@@ -100,6 +118,7 @@ $wiki-header-bg-color: #e2e6e9;
 			background-color: $wiki-header-bg-color;
 			border-top: 1px solid $border-color;
 			color: $wiki-header-color;
+			cursor: pointer;
 
 			&:hover .chevron {
 				border-top-color: $wiki-header-color;
@@ -178,30 +197,34 @@ $wiki-header-bg-color: #e2e6e9;
 
 @media #{$small-only} {
 	#WallNotificationsVenus {
-		@include grid-position('small', 3, 'right', $small-content-padding - 1);
+		@include grid-position('small', 3, 'right', $small-content-padding - 2);
 		@include grid-column-width('small', 6, $small-content-padding);
 
-		.avatars {
-			@include grid-column-width('small', 1);
-		}
+		.notification {
+			.avatars {
+				@include grid-column-width('small', 1);
+			}
 
-		.notification-message {
-			@include grid-column-width('small', 5);
+			.notification-message {
+				@include grid-column-width('small', 5);
+			}
 		}
 	}
 }
 
 @media #{$medium-only} {
 	#WallNotificationsVenus {
-		@include grid-position('medium', 2, 'right', $medium-content-padding - 1);
+		@include grid-position('medium', 2, 'right', $medium-content-padding - 2);
 		@include grid-column-width('medium', 4, $medium-content-padding);
 
-		.avatars {
-			@include grid-column-width('medium', 1);
-		}
+		.notification {
+			.avatars {
+				@include grid-column-width('medium', 1);
+			}
 
-		.notification-message {
-			@include grid-column-width('medium', 3);
+			.notification-message {
+				@include grid-column-width('medium', 3);
+			}
 		}
 	}
 }
