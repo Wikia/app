@@ -213,7 +213,7 @@ class TvApiController extends WikiaApiController {
 	protected function findSeries( $seriesName, $lang, $quality = null ) {
 		$minQuality = $quality !== null ? $quality : self::DEFAULT_QUALITY;
 		//check exact match on series first
-		$result = $this->exactMatchOnSeries( $seriesName );
+		$result = $this->exactMatchOnSeries( $seriesName, $lang );
 		if ( $result == null ) {
 			$result = $this->searchForSeries( $seriesName, $lang, $minQuality );
 		}
@@ -223,8 +223,9 @@ class TvApiController extends WikiaApiController {
 		return false;
 	}
 
-	protected function exactMatchOnSeries( $seriesName ) {
+	protected function exactMatchOnSeries( $seriesName, $lang ) {
 		$exactService = $this->getExactSeriesService();
+		$exactService->setLang( $lang );
 		$result = $exactService->query( $seriesName );
 		if ( $result !== null ) {
 			return $result;
