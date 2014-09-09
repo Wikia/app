@@ -5,6 +5,7 @@
 
 	var $heroModule = $('#MainPageHero'),
 		$heroModuleUpload = $('#MainPageHero .upload'),
+		$heroModuleButton = $('#MainPageHero .upload .upload-btn'),
 		$heroModuleInput = $('#MainPageHero .upload input[name="file"]'),
 		$heroModuleImage = $('#MainPageHero .hero-image');
 
@@ -32,7 +33,11 @@
 		}
 	});
 
-	$heroModuleUpload.find('.upload-btn').on('click', function () {
+	$heroModuleButton.on('click', function () {
+		$heroModuleInput.click();
+	});
+
+	$heroModuleInput.on('change', function() {
 		if ($heroModuleInput[0].files.length) {
 			var fd = new FormData();
 			fd.append('file', $heroModuleInput[0].files[0]);

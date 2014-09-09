@@ -50,6 +50,17 @@
 					// TODO: handle failure
 				}
 			});
+		}, onEdit = function () {
+			$('.hero-title, .hero-description').each(function() {
+				var $this = $(this);
+				if($this.attr('contenteditable')) {
+					$this.removeAttr('contenteditable');
+				} else {
+					$this.attr('contenteditable', true);
+				}
+			});
+			$('.overlay').toggle();
+			$('.upload').toggle();
 		}, onResize = function () {
 			$heroModule.height($heroModule.width() * 5 / 16);
 		};
@@ -58,6 +69,7 @@
 	$('.hero-description').on('focus', onFocus).on('blur keyup paste input', onInput).on('change', onChange);
 	$heroModule.on('change', onChange);
 	$heroModule.on('saveEvent', onSave);
+	$('.edit-btn').on('click', onEdit);
 
 	$(window).resize(onResize);
 

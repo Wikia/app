@@ -1,18 +1,22 @@
 <?php
-	/* @var $wikiData WikiDataModel */
+/* @var $wikiData WikiDataModel */
 ?>
 
 <header id="MainPageHero" class="MainPageHero">
+	<div class="overlay"></div>
+	<div class="upload">
+		<div>Drag&drop image</div>
+		<input name="file" type="file" hidden/>
+
+		<div class="upload-btn new-btn">Upload image</div>
+	</div>
 	<picture>
-		<div class="upload">
-			<img class="hero-image" src="<?=$wikiData->imagePath ?>" alt="<?= $wikiData->title ?>" >
-			<input name="file" type="file">
-			<button type="submit" class="upload-btn">Upload</button>
-		</div>
+		<img class="hero-image" src="<?= $wikiData->imagePath ?>" alt="<?= $wikiData->title ?>">
 	</picture>
-	<h1 contenteditable="true" class="hero-title" ><?= $wikiData->title ?></h1>
-	<span contenteditable="true" class="hero-description"><?= $wikiData->description ?></span>
+	<h1 class="hero-title"><?= $wikiData->title ?></h1>
+	<span class="hero-description"><?= $wikiData->description ?></span>
 	<section id="WikiaSearchHeader" class="WikiaSearchHeader">
-		<?=  F::app()->renderView('Search', 'Index', array('searchFormId' => 'WikiaSearch')) ?>
+		<?= F::app()->renderView( 'Search', 'Index', array( 'searchFormId' => 'WikiaSearch' ) ) ?>
 	</section>
+	<div class="edit-btn new-btn">edit</div>
 </header>

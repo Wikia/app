@@ -3,6 +3,13 @@
   position: relative;
   width: 100%;
 
+  .edit-btn {
+    bottom: 3px;
+    margin: 10px;
+    position: absolute;
+    right: 0;
+  }
+
   .hero-title {
     background: rgba(0, 0, 0, .6);
     color: #fff;
@@ -20,6 +27,7 @@
 
   .hero-image {
     width: 100%;
+    vertical-align: bottom;
   }
 
   .hero-description {
@@ -32,6 +40,25 @@
     position: absolute;
     text-align: center;
     top: 6rem;
+  }
+
+  .overlay {
+    background-color: #000000;
+    display: none;
+    height: 100%;
+    opacity: 0.6;
+    position: absolute;
+    width: 100%;
+  }
+
+  .upload {
+    border: 3px dashed white;
+    display: none;
+    height: 60%;
+    margin: 1%;
+    position: absolute;
+    text-align: center;
+    width: 98%;
   }
 }
 
@@ -53,6 +80,21 @@
   input, .wikia-button {
     height: 1.4rem;
     line-height: 1.4rem;
+  }
+
+  .new-btn {
+    background-color: #092140;
+    color: #fff;
+    display: block;
+    font-weight: bold;
+    padding: 15px 10px;
+    text-align: center;
+    text-decoration: none;
+    text-transform: uppercase;
+
+    &:hover {
+      background-color: #0a5fa3;
+    }
   }
 
   .wikia-button {
