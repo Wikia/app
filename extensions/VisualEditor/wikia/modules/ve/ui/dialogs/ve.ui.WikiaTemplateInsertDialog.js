@@ -93,15 +93,15 @@ ve.ui.WikiaTemplateInsertDialog.prototype.getMostLinkedTemplateData = function (
 	if ( !this.templatesPromise ) {
 		deferred = $.Deferred();
 
-	ve.init.target.constructor.static.apiRequest( {
-		'action': 'templatesuggestions'
-	} )
-		.done( function ( data ) {
-			deferred.resolve( data.templates );
+		ve.init.target.constructor.static.apiRequest( {
+			'action': 'templatesuggestions'
 		} )
-		.fail( function () {
-			deferred.resolve( [] );
-		} );
+			.done( function ( data ) {
+				deferred.resolve( data.templates );
+			} )
+			.fail( function () {
+				deferred.resolve( [] );
+			} );
 
 		this.templatesPromise = deferred.promise();
 	}
