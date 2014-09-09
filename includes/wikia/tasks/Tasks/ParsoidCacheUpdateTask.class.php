@@ -137,13 +137,13 @@ class ParsoidCacheUpdateTask extends BaseTask {
 
 	private function wikiaLog( $data ) {
 		global $wgEnableVisualEditorUI;
-		if ( empty ( $data ) ) {
+		if ( !is_array ( $data ) ) {
 			$data = array();
 		}
-		if ( !isset( $wgEnableVisualEditorUI ) ) {
-			$data['wgEnableVisualEditorUI'] = 'notset';
-		} else {
+		if ( isset( $wgEnableVisualEditorUI ) ) {
 			$data['wgEnableVisualEditorUI'] = $wgEnableVisualEditorUI;
+		} else {
+			$data['wgEnableVisualEditorUI'] = 'notset';
 		}
 		WikiaLogger::instance()->debug( "ParsoidCacheUpdateTask", $data );
 	}
