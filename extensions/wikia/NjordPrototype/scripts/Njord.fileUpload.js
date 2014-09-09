@@ -45,24 +45,9 @@
 		client.open('POST', '/wikia.php?controller=Njord&method=upload', true);
 		client.onreadystatechange = function () {
 			if (client.readyState === 4 && client.status === 200) {
-				var data = JSON.parse(client.responseText),
-					currentWidth = $heroModule.width(),
-					newImage = new Image();
+				var data = JSON.parse(client.responseText);
 
-				newImage.onload = function () {
-					$heroModule.height(currentWidth * 5 / 16);
-
-					var heroImageHeight = this.height,
-						heroModuleHeight = $heroModule.height(),
-						requiredOffset = '-' + ((heroModuleHeight < heroImageHeight) ?
-							((heroImageHeight - heroModuleHeight) * 0.3) :
-							0) + 'px';
-
-					$heroModuleImage.css({'margin-top': requiredOffset});
-				};
-
-				newImage.src = data.url;
-
+				$heroModule.height($heroModule.width() * 5 / 16);
 				$heroModuleImage.attr('src', data.url);
 				$heroModule.trigger('change', [data.url, data.filename]);
 			}

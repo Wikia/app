@@ -16,7 +16,7 @@ class WikiDataModel {
 
 	const WIKI_HERO_IMAGE_MAX_WIDTH = 1600;
 	const WIKI_HERO_IMAGE_MAX_HEIGHT = 500;
-	const DEFAULT_IMAGE_CROP_POSITION = 0.3;
+	const DEFAULT_IMAGE_CROP_POSITION = 0; // Not fully supported yet
 
 	public function __construct( $pageName ) {
 		$this->pageName = $pageName;
