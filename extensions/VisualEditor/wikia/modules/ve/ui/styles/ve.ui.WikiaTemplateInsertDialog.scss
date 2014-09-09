@@ -45,7 +45,7 @@ $option-backgroundColor: mix($color-page, #000000, 90%);
 
 	.oo-ui-labeledElement-label {
 		font-weight: bold;
-		height: 2.4em;
+		max-height: 2.4em;
 		line-height: 1.2em;
 		top: .5em;
 		white-space: normal;
