@@ -104,6 +104,10 @@ class ArticlesApiController extends WikiaApiController {
 		$category = $this->request->getVal( self::PARAMETER_CATEGORY, null );
 		$expand = $this->request->getBool( static::PARAMETER_EXPAND, false );
 		$limit = $this->request->getInt( static::PARAMETER_LIMIT, 0 );
+		$baseArticleId = $this->getRequest()->getVal( self::PARAMETER_BASE_ARTICLE_ID, false );
+		if( $baseArticleId !== false ) {
+			$this->validateBaseArticleIdOrThrow( $baseArticleId );
+		}
 
 		$ids = null;
 
@@ -220,7 +224,13 @@ class ArticlesApiController extends WikiaApiController {
 			}
 		} else {
 			wfProfileOut( __METHOD__ );
-			throw new NotFoundApiException();
+			if( $baseArticleId === false ) {
+				throw new NotFoundApiException();
+			}
+		}
+
+		if( $baseArticleId !== false ) {
+			$collection = $this->rerankPopularToArticle( $collection, $baseArticleId );
 		}
 
 		$limitCollectionSize = self::MAX_ITEMS;
