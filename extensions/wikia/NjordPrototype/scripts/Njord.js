@@ -11,7 +11,7 @@
 			datachanged: false
 		},
 		$heroModule = $('#MainPageHero'),
-
+		$heroImage = $('#MainPageHero .hero-image'),
 		onFocus = function () {
 			var $this = $(this);
 			$this.data('before', $this.html());
@@ -31,6 +31,13 @@
 				heroData.imagepath = imagePath;
 				heroData.imagename = imageName;
 				heroData.imagechanged = true;
+
+				$heroImage.draggable({
+					axis: 'y',
+					drag: function () {
+						heroData.cropposition = Math.abs($heroImage.position().top) / $heroImage.height();
+					}
+				});
 			}
 			heroData.changed = true;
 
@@ -70,7 +77,6 @@
 	$heroModule.on('change', onChange);
 	$heroModule.on('saveEvent', onSave);
 	$('.edit-btn').on('click', onEdit);
-
 	$(window).resize(onResize);
 
 })(window, jQuery);

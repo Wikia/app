@@ -69,7 +69,7 @@ class WikiDataModel {
 					$file,
 					self::WIKI_HERO_IMAGE_MAX_WIDTH,
 					self::WIKI_HERO_IMAGE_MAX_HEIGHT,
-					self::DEFAULT_IMAGE_CROP_POSITION
+					$cropPosition
 				) );
 		} else {
 			$this->imageName = null;
