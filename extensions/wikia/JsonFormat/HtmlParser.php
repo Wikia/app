@@ -12,7 +12,19 @@ class HtmlParser {
 	 * @var array
 	 * @see DivContainingHeadersVisitor::parseTabs
 	 */
-	public static $VISITED_ARTICLES = [ ];
+	protected static $VISITED_ARTICLES = [ ];
+
+	public static function markAsVisited( $articleTitle ) {
+		self::$VISITED_ARTICLES[ $articleTitle ] = true;
+	}
+
+	public static function isVisited( $articleTitle ) {
+		return isset( self::$VISITED_ARTICLES[ $articleTitle ] );
+	}
+
+	public static function clearVisited() {
+		self::$VISITED_ARTICLES = [ ];
+	}
 
 	/**
 	 * @param string $html
