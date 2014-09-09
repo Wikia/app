@@ -241,6 +241,10 @@ class ArticlesApiController extends WikiaApiController {
 			$collection = array_slice( $collection, 0, $limitCollectionSize );
 		}
 
+		if ( $expand ) {
+			$collection = $this->expandArticlesDetails( $collection );
+		}
+
 		$this->setResponseData(
 			[ 'basepath' => $this->wg->Server, 'items' => $collection ],
 			[ 'imgFields'=> 'thumbnail', 'urlFields' => [ 'thumbnail', 'url' ] ],
@@ -1014,17 +1018,13 @@ class ArticlesApiController extends WikiaApiController {
 		$popular = $this->wg->Memc->get( $key );
 		if ( $popular === false ) {
 			$popular = $this->getResultFromConfig( $this->getConfigFromRequest() );
-			if ( $expand ) {
-				$articleIds = [ ];
-				$params = $this->getDetailsParams();
-				foreach ( $popular as $item ) {
-					$articleIds[ ] = $item[ 'id' ];
-				}
-				$popular = $this->getArticlesDetails( $articleIds, $params[ 'titleKeys' ], $params[ 'width' ], $params[ 'height' ], $params[ 'length' ], true );
-			}
 
 			if ( $baseArticleId !== false ) {
 				$popular = $this->rerankPopularToArticle( $popular, $baseArticleId );
+			}
+
+			if ( $expand ) {
+				$popular = $this->expandArticlesDetails( $popular );
 			}
 
 			$this->wg->set( $key, $popular, self::CLIENT_CACHE_VALIDITY );
@@ -1039,6 +1039,17 @@ class ArticlesApiController extends WikiaApiController {
 			self::CLIENT_CACHE_VALIDITY
 		);
 
+	}
+
+
+	protected function expandArticlesDetails( $articles ) {
+		$articleIds = [ ];
+		$params = $this->getDetailsParams();
+		foreach ( $articles as $item ) {
+			$articleIds[ ] = $item[ 'id' ];
+		}
+		$expanded = $this->getArticlesDetails( $articleIds, $params[ 'titleKeys' ], $params[ 'width' ], $params[ 'height' ], $params[ 'length' ], true );
+		return $expanded;
 	}
 
 	/**
