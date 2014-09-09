@@ -9,7 +9,7 @@ class WikiSeriesEntitySearchService extends EntitySearchService {
 	const MINIMAL_WIKIA_SCORE = 2;
 	const DEFAULT_SLOP = 1;
 
-	protected $excludedWikis = [ '*fanon.wikia.com', '*answers.wikia.com' ];
+	protected $blacklistedWikiHosts = [ '*fanon.wikia.com', '*answers.wikia.com' ];
 
 	protected function getCore() {
 		return static::XWIKI_CORE;

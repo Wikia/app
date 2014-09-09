@@ -12,8 +12,8 @@ class EntitySearchService {
 	const WIKIA_URL_REGEXP = '~^(http(s?)://)(([^\.]+)\.wikia\.com)~';
 	const XWIKI_CORE = 'xwiki';
 
-	protected $excludedWikis = [];
-	protected $blacklistedWikiIds = [ 113 ];
+	protected $blacklistedWikiHosts = [];
+	protected $blacklistedWikiIds = [];
 
 	/** @var \Solarium_Client client */
 	protected $client;
@@ -44,6 +44,10 @@ class EntitySearchService {
 		}
 	}
 
+	public function getLicencedWikis() {
+		$licencedService = new \LicensedWikisService();
+		return array_keys($licencedService->getCommercialUseNotAllowedWikis());
+	}
 	/**
 	 * @param mixed $filters
 	 */
@@ -140,6 +144,7 @@ class EntitySearchService {
 			$config[ 'adapteroptions' ][ 'core' ] = $core;
 		}
 		$this->client = ( $client !== null ) ? $client : new \Solarium_Client( $config );
+		$this->blacklistedWikiIds = array_unique( array_merge( $this->blacklistedWikiIds, $this->getLicencedWikis() ) );
 	}
 
 	public function getCoreFieldNames() {
@@ -269,9 +274,9 @@ class EntitySearchService {
 	protected function applyBlackListedWikisQuery( $select ) {
 		$coreFieldNames = $this->getCoreFieldNames();
 
-		if ( !empty( $this->excludedWikis ) ) {
+		if ( !empty( $this->blacklistedWikiHosts ) ) {
 			$excluded = [];
-			foreach ( $this->excludedWikis as $ex ) {
+			foreach ( $this->blacklistedWikiHosts as $ex ) {
 				$excluded[] = "-({$coreFieldNames['wikiHost']}:{$ex})";
 			}
 			$select->createFilterQuery( 'excl' )->setQuery( implode( ' AND ', $excluded ) );
