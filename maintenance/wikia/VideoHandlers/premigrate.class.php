@@ -13,7 +13,6 @@ $providers = $wgVideoMigrationProviderMap;
 	19 => 'Viddler',
 	21 => 'Screenplay',
 	22 => 'Movieclips',
-	23 => 'Realgravity',
 );*/
 
 define('STATUS_UNKNOWN', 0);

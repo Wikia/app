@@ -140,18 +140,6 @@ function mapMetadata( $videoTitle, $ingester, $data ) {
 }
 
 /**
- * mapping additional metadata for RealGravity
- * @param VideoFeedIngester $ingester
- * @param array $data
- * @param array $metadata
- */
-function mapMetadataRealgravity( $ingester, $data, &$metadata ) {
-	$metadata['name'] = '';
-	$metadata['genres'] = $ingester->getStdGenre( $metadata['category'] );
-	$metadata['category'] = $ingester->getCategory( $metadata['category'] );
-}
-
-/**
  * mapping additional metadata for IVA
  * @param VideoFeedIngester $ingester
  * @param array $data
@@ -306,7 +294,7 @@ $categories = array(
 );
 
 // providers that require extra mapping
-$extraMapping = array( 'iva', 'realgravity', 'ign', 'anyclip' );
+$extraMapping = array( 'iva', 'ign', 'anyclip' );
 
 // include cldr extension for language code ($languageNames), country code ($countryNames)
 include( dirname( __FILE__ ).'/../../../extensions/cldr/CldrNames/CldrNamesEn.php' );
