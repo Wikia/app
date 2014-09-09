@@ -18,6 +18,7 @@ $wgAutoloadClasses['ApiAddMediaTemporary'] = $dir . 'ApiAddMediaTemporary.php';
 $wgAutoloadClasses['ApiAddMediaPermanent'] = $dir . 'ApiAddMediaPermanent.php';
 $wgAutoloadClasses['ApiVideoPreview'] = $dir . 'ApiVideoPreview.php';
 $wgAutoloadClasses['ApiTemplateParameters'] = $dir . 'ApiTemplateParameters.php';
+$wgAutoloadClasses['ApiTemplateSuggestions'] = $dir . 'ApiTemplateSuggestions.php';
 
 /* API Modules */
 
@@ -26,6 +27,7 @@ $wgAPIModules['addmediatemporary'] = 'ApiAddMediaTemporary';
 $wgAPIModules['addmediapermanent'] = 'ApiAddMediaPermanent';
 $wgAPIModules['videopreview'] = 'ApiVideoPreview';
 $wgAPIModules['templateparameters'] = 'ApiTemplateParameters';
+$wgAPIModules['templatesuggestions'] = 'ApiTemplateSuggestions';
 
 /* Resource Loader Modules */
 

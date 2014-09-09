@@ -40,31 +40,67 @@ ve.ui.WikiaTemplateInsertDialog.prototype.initialize = function () {
 	// Properties
 	this.select = new OO.ui.SelectWidget( { '$': this.$ } );
 
-	/* Temporary. Use this to generate 6 option widgets */
-	var i, options;
-	options = [];
-	for ( i = 0; i < 6; i++ ) {
+	// Events
+
+	// Initialization
+	this.frame.$content.addClass( 've-ui-wikiaTemplateInsertDialog' );
+	this.$body.append( this.select.$element );
+};
+
+ve.ui.WikiaTemplateInsertDialog.prototype.populateOptions = function ( templates ) {
+	var i,
+		options = [];
+
+	for ( i = 0; i < templates.length; i++ ) {
 		options.push(
 			new ve.ui.WikiaTemplateOptionWidget(
-				i,
+				templates[i],
 				{
 					'$': this.$,
 					'icon': 'template-inverted',
-					'label': 'Super Long Template Name with truncated text because this thing is too long',
-					'appears': '20'
+					'label': templates[i].title,
+					'appears': templates[i].uses
 				}
 			)
 		);
 	}
 
-	// Events
-
-	// Initialization
-	this.frame.$content.addClass( 've-ui-wikiaTemplateInsertDialog' );
-
+	this.select.clearItems();
 	this.select.addItems( options );
+};
 
-	this.$body.append( this.select.$element );
+/**
+ * @inheritdoc
+ */
+ ve.ui.WikiaTemplateInsertDialog.prototype.getSetupProcess = function ( data ) {
+	return ve.ui.WikiaTemplateInsertDialog.super.prototype.getSetupProcess.call( this, data )
+		.next( function () {
+			this.getMostLinkedTemplateData().done( ve.bind( function ( templates ) {
+				this.populateOptions( templates );
+			}, this ) );
+		}, this );
+};
+
+ve.ui.WikiaTemplateInsertDialog.prototype.getMostLinkedTemplateData = function () {
+	var deferred;
+
+	if ( !this.templatesPromise ) {
+		deferred = $.Deferred();
+
+	ve.init.target.constructor.static.apiRequest( {
+		'action': 'templatesuggestions'
+	} )
+		.done( function ( data ) {
+			deferred.resolve( data.templates );
+		} )
+		.fail( function () {
+			deferred.resolve( [] );
+		} );
+
+		this.templatesPromise = deferred.promise();
+	}
+
+	return this.templatesPromise;
 };
 
 /* Registration */
