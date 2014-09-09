@@ -41,6 +41,26 @@ class DivContainingHeadersVisitorTest extends WikiaBaseTest {
 				'Test/subTest'
 			],
 			[
+				'/$1',
+				'/Test',
+				'Test'
+			],
+			[
+				'/$1',
+				'/Test?action=render',
+				'Test'
+			],
+			[
+				'/$1',
+				'/Test/subTest',
+				'Test/subTest'
+			],
+			[
+				'/$1',
+				'/Test/subTest?action=render',
+				'Test/subTest'
+			],
+			[
 				'/wiki/$1',
 				'/wiki/Test',
 				'Test'
