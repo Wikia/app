@@ -47,7 +47,12 @@ class MercuryApiController extends WikiaController {
 	 * @return array
 	 */
 	private function getArticleJson( $articleId ) {
-		return $this->sendRequest( 'ArticlesApi', 'getAsJson', ['id' => $articleId] )->getData();
+		$redirect = $this->request->getVal('redirect');
+
+		return $this->sendRequest( 'ArticlesApi', 'getAsJson', [
+			'id' => $articleId,
+			'redirect' => $redirect
+		] )->getData();
 	}
 
 	/**
