@@ -122,6 +122,10 @@ $media-margin: .5em;
 		top: 100%;
 		transition: all 400ms linear;
 
+		a {
+			color: #b3b3b3;
+		}
+
 		.inner {
 			overflow: hidden;
 			text-overflow: ellipsis;
