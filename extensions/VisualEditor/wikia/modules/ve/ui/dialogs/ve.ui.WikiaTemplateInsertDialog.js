@@ -52,9 +52,7 @@ ve.ui.WikiaTemplateInsertDialog.prototype.initialize = function () {
 
 	this.$body.append( this.stackLayout.$element );
 
-	this.getMostLinkedTemplateData().done( ve.bind( function ( templates ) {
-		this.populateOptions( templates );
-	}, this ) );
+	this.getMostLinkedTemplateData().done( ve.bind( this.populateOptions, this ) );
 };
 
 /**
