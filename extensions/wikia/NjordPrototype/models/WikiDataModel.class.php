@@ -3,12 +3,12 @@
 class WikiDataModel {
 	private $pageName;
 	private $imageName;
-	private $cropPosition;
 
+	public $cropPosition;
+	public $description;
 	public $imagePath;
 	public $originalImagePath;
 	public $title;
-	public $description;
 
 	const WIKI_HERO_IMAGE_PROP_ID = 10001;
 	const WIKI_HERO_TITLE_PROP_ID = 10002;
