@@ -12,115 +12,157 @@ class DivContainingHeadersVisitorTest extends WikiaBaseTest {
 	/**
 	 * @dataProvider getUrlWithoutPathDataProvider
 	 */
-	public function testGetUrlWithoutPath( $test ) {
+	public function testGetUrlWithoutPath( $wgArticlePath, $url, $expected ) {
 		$divVisitor = new DivContainingHeadersVisitor( new \CompositeVisitor(), new \JsonFormatBuilder() );
 		$getUrlWithoutPath = self::getFn( $divVisitor, 'getUrlWithoutPath' );
-		$this->assertEquals( $test[ 'expected' ], $getUrlWithoutPath( $test[ 'url' ], $test[ 'wgArticlePath' ] ) );
+		$this->assertEquals( $expected, $getUrlWithoutPath( $url, $wgArticlePath ) );
 	}
 
 	public function getUrlWithoutPathDataProvider() {
 		return [
 			[
-				'wgArticlePath' => '$1',
-				'url' => 'Test',
-				'expected' => 'Test'
+				'$1',
+				'Test',
+				'Test'
 			],
 			[
-				'wgArticlePath' => '$1',
-				'url' => 'Test?action=render',
-				'expected' => 'Test'
+				'$1',
+				'Test?action=render',
+				'Test'
 			],
 			[
-				'wgArticlePath' => '$1',
-				'url' => 'Test/subTest',
-				'expected' => 'Test/subTest'
+				'$1',
+				'Test/subTest',
+				'Test/subTest'
 			],
 			[
-				'wgArticlePath' => '$1',
-				'url' => 'Test/subTest?action=render',
-				'expected' => 'Test/subTest'
+				'$1',
+				'Test/subTest?action=render',
+				'Test/subTest'
 			],
 			[
-				'wgArticlePath' => '/wiki/$1',
-				'url' => '/wiki/Test',
-				'expected' => 'Test'
+				'/wiki/$1',
+				'/wiki/Test',
+				'Test'
 			],
 			[
-				'wgArticlePath' => '/wiki/$1',
-				'url' => '/wiki/Test?action=render',
-				'expected' => 'Test'
+				'/wiki/$1',
+				'/wiki/Test?action=render',
+				'Test'
 			],
 			[
-				'wgArticlePath' => '/wiki/$1',
-				'url' => '/wiki/Test/subTest',
-				'expected' => 'Test/subTest'
+				'/wiki/$1',
+				'/wiki/Test/subTest',
+				'Test/subTest'
 			],
 			[
-				'wgArticlePath' => '/wiki/$1',
-				'url' => '/wiki/Test/subTest?action=render',
-				'expected' => 'Test/subTest'
+				'/wiki/$1',
+				'/wiki/Test/subTest?action=render',
+				'Test/subTest'
 			],
 			[
-				'wgArticlePath' => '/wiki/$1/stub',
-				'url' => '/wiki/Test/stub',
-				'expected' => 'Test'
+				'/wiki/$1/stub',
+				'/wiki/Test/stub',
+				'Test'
 			],
 			[
-				'wgArticlePath' => '/wiki/$1/stub',
-				'url' => '/wiki/Test/stub?action=render',
-				'expected' => 'Test'
+				'/wiki/$1/stub',
+				'/wiki/Test/stub?action=render',
+				'Test'
 			],
 			[
-				'wgArticlePath' => '/wiki/$1/stub',
-				'url' => '/wiki/Test/subTest/stub',
-				'expected' => 'Test/subTest'
+				'/wiki/$1/stub',
+				'/wiki/Test/subTest/stub',
+				'Test/subTest'
 			],
 			[
-				'wgArticlePath' => '/wiki/$1/stub',
-				'url' => '/wiki/Test/subTest/stub?action=render',
-				'expected' => 'Test/subTest'
+				'/wiki/$1/stub',
+				'/wiki/Test/subTest/stub?action=render',
+				'Test/subTest'
 			],
 			[
-				'wgArticlePath' => '/wiki/$1/stub',
-				'url' => '',
-				'expected' => null
+				'/wiki/stub/$1',
+				'/wiki/stub/Test',
+				'Test'
 			],
 			[
-				'wgArticlePath' => '/wiki/$1/stub',
-				'url' => null,
-				'expected' => null
+				'/wiki/stub/$1',
+				'/wiki/stub/Test?action=render',
+				'Test'
 			],
 			[
-				'wgArticlePath' => null,
-				'url' => null,
-				'expected' => null
+				'/wiki/stub/$1',
+				'/wiki/stub/Test/subTest',
+				'Test/subTest'
 			],
 			[
-				'wgArticlePath' => '',
-				'url' => 'Test',
-				'expected' => 'Test'
+				'/wiki/stub/$1',
+				'/wiki/stub/Test/subTest?action=render',
+				'Test/subTest'
 			],
 			[
-				'wgArticlePath' => null,
-				'url' => 'Test',
-				'expected' => 'Test'
+				'/wiki/stub/$1/ignore',
+				'/wiki/stub/Test/ignore',
+				'Test'
 			],
 			[
-				'wgArticlePath' => 'without sequential characters $ and 1 - which is not a valid case for Wikia stack',
-				'url' => 'Test/subTest',
-				'expected' => 'Test/subTest'
+				'/wiki/stub/$1/ignore',
+				'/wiki/stub/Test/ignore?action=render',
+				'Test'
+			],
+			[
+				'/wiki/stub/$1/ignore',
+				'/wiki/stub/Test/subTest/ignore',
+				'Test/subTest'
+			],
+			[
+				'/wiki/stub/$1/ignore',
+				'/wiki/stub/Test/subTest/ignore?action=render',
+				'Test/subTest'
+			],
+			[
+				'/wiki/$1/stub',
+				'',
+				null
+			],
+			[
+				'/wiki/$1/stub',
+				null,
+				null
+			],
+			[
+				null,
+				null,
+				null
+			],
+			[
+				'',
+				'Test',
+				'Test'
+			],
+			[
+				null,
+				'Test',
+				'Test'
+			],
+			[
+				'without sequential characters $ and 1 - which is not a valid case for Wikia stack',
+				'Test/subTest',
+				'Test/subTest'
 			],
 			[
 				// very artificial test case
-				'wgArticlePath' => '/wiki/$1/stub',
-				'url' => '/wiki/Test/subTest/stub/stub',
-				'expected' => 'Test/subTest/stub'
+				'/wiki/$1/stub',
+				// sub-article has such title, as right piece of $wgArticlePath
+				'/wiki/Test/subTest/stub/stub',
+				'Test/subTest/stub'
 			],
 			[
 				// very artificial test case
-				'wgArticlePath' => '/wiki/$1/stub',
-				'url' => '/wiki/Test/subTest/stub/stub?action=render',
-				'expected' => 'Test/subTest/stub'
+				'/wiki/$1/stub',
+				// sub-article has such title, as right piece of $wgArticlePath
+				'/wiki/Test/subTest/stub/stub?action=render',
+				'Test/subTest/stub'
 			],
 		];
 	}
