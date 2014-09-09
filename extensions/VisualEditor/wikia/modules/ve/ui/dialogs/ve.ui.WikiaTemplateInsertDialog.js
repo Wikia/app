@@ -38,13 +38,19 @@ ve.ui.WikiaTemplateInsertDialog.prototype.initialize = function () {
 	ve.ui.WikiaTemplateInsertDialog.super.prototype.initialize.call( this );
 
 	// Properties
+	this.stackLayout = new OO.ui.StackLayout( { '$': this.$ } );
+	this.panel = new OO.ui.PanelLayout( { '$': this.$ } );
 	this.select = new OO.ui.SelectWidget( { '$': this.$ } );
 
 	// Events
 
 	// Initialization
 	this.frame.$content.addClass( 've-ui-wikiaTemplateInsertDialog' );
-	this.$body.append( this.select.$element );
+
+	this.panel.$element.append( this.select.$element );
+	this.stackLayout.addItems( [ this.panel ] );
+
+	this.$body.append( this.stackLayout.$element );
 };
 
 ve.ui.WikiaTemplateInsertDialog.prototype.populateOptions = function ( templates ) {
