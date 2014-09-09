@@ -51,8 +51,17 @@ ve.ui.WikiaTemplateInsertDialog.prototype.initialize = function () {
 	this.stackLayout.addItems( [ this.panel ] );
 
 	this.$body.append( this.stackLayout.$element );
+
+	this.getMostLinkedTemplateData().done( ve.bind( function ( templates ) {
+		this.populateOptions( templates );
+	}, this ) );
 };
 
+/**
+ * Use the given template data to generate option widgets and populate the dialog's select widget
+ *
+ * @param {array} templates
+ */
 ve.ui.WikiaTemplateInsertDialog.prototype.populateOptions = function ( templates ) {
 	var i,
 		options = [];
@@ -76,17 +85,10 @@ ve.ui.WikiaTemplateInsertDialog.prototype.populateOptions = function ( templates
 };
 
 /**
- * @inheritdoc
+ * Fetch the most-linked templates data
+ *
+ * @returns {jQuery.Promise}
  */
- ve.ui.WikiaTemplateInsertDialog.prototype.getSetupProcess = function ( data ) {
-	return ve.ui.WikiaTemplateInsertDialog.super.prototype.getSetupProcess.call( this, data )
-		.next( function () {
-			this.getMostLinkedTemplateData().done( ve.bind( function ( templates ) {
-				this.populateOptions( templates );
-			}, this ) );
-		}, this );
-};
-
 ve.ui.WikiaTemplateInsertDialog.prototype.getMostLinkedTemplateData = function () {
 	var deferred;
 

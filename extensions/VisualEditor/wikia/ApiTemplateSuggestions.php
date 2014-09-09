@@ -13,8 +13,6 @@ class ApiTemplateSuggestions extends ApiBase {
 	}
 
 	public function execute() {
-		$params = $this->extractRequestParams();
-
 		$fauxRequest = new FauxRequest( [
 			'action' => 'query',
 			'list' => 'querypage',
