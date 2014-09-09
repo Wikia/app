@@ -110,6 +110,18 @@ class DivContainingHeadersVisitorTest extends WikiaBaseTest {
 				'url' => 'Test/subTest',
 				'expected' => 'Test/subTest'
 			],
+			[
+				'wgArticlePath' => '/wiki/$1/stub',
+				// even working is such artificial case
+				'url' => '/wiki/Test/subTest/stub/stub',
+				'expected' => 'Test/subTest/stub'
+			],
+			[
+				'wgArticlePath' => '/wiki/$1/stub',
+				// even working is such artificial case
+				'url' => '/wiki/Test/subTest/stub/stub?action=render',
+				'expected' => 'Test/subTest/stub'
+			],
 		];
 	}
 
