@@ -9,7 +9,8 @@ class FiveminVideoHandler extends VideoHandler {
 	protected static $autoplayParam = "autostart";
 	protected static $autoplayValue = "true";
 
-	public function getEmbed( $articleId, $width, $autoplay = false, $isAjax = false, $postOnload = false ) {
+	public function getEmbed( $width, array $options = [] ) {
+		$autoplay = !empty( $options['autoplay'] );
 		$height =  $this->getHeight( $width );
 		$url = $this->getEmbedUrl( $autoplay );
 		if ($autoplay) {

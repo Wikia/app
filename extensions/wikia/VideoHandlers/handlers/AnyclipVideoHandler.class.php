@@ -14,7 +14,9 @@ class AnyclipVideoHandler extends VideoHandler {
 		return $url;
 	}
 
-	public function getEmbed( $articleId, $width, $autoplay = false, $isAjax = false, $postOnload = false ) {
+	public function getEmbed( $width, array $options = [] ) {
+		$autoplay = !empty( $options['autoplay'] );
+		$isAjax = !empty( $options['isAjax'] );
 		$height =  $this->getHeight( $width );
 		$autoPlayStr = ( $autoplay ) ? 'true' : 'false';
 		$ajaxStr = (bool) $isAjax;

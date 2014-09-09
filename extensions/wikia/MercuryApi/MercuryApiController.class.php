@@ -49,6 +49,12 @@ class MercuryApiController extends WikiaController {
 	 */
 	private function getArticleJson( $articleId ) {
 		return $this->sendRequest( 'ArticlesApi', 'getAsJson', [ 'id' => $articleId ] )->getData();
+		$redirect = $this->request->getVal('redirect');
+
+		return $this->sendRequest( 'ArticlesApi', 'getAsJson', [
+			'id' => $articleId,
+			'redirect' => $redirect
+		] )->getData();
 	}
 
 	/**
@@ -59,6 +65,15 @@ class MercuryApiController extends WikiaController {
 	 */
 	private function getTopContributorsDetails( $ids ) {
 		return $this->sendRequest( 'UserApi', 'getDetails', [ 'ids' => implode( ',', $ids ) ] )->getData()[ 'items' ];
+	}
+
+	/**
+	 * @desc Returns local navigation data for current wiki
+	 *
+	 * @return array
+	 */
+	private function getNavigationData(){
+		return $this->sendRequest( 'NavigationApi', 'getData' )->getData();
 	}
 
 	/**
@@ -151,6 +166,7 @@ class MercuryApiController extends WikiaController {
 	 */
 	public function getWikiVariables() {
 		$wikiVariables = $this->mercuryApi->getWikiVariables();
+		$wikiVariables['navData'] = $this->getNavigationData();
 		$this->response->setVal( 'data', $wikiVariables );
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 	}

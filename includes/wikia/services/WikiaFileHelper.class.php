@@ -1,10 +1,45 @@
 <?php
+
+use Wikia\Vignette\UrlGenerator;
+
 /**
  * Helper service to maintain new video logic / old video logic
  */
 class WikiaFileHelper extends Service {
 
 	const maxWideoWidth = 1200;
+
+	// For images smaller than the requested thumb size determines how close an images area (width x height) must be
+	// to the requested thumbnail area before it will be enlarged.  For example a value of 0.8 means that images
+	// who's area is 80% the area of the requested thumb or larger should be scaled up to the thumb dimensions.
+	const thumbEnlargeThreshold = 0.5;
+
+	/**
+	 * Ogg files are the only video file type we allow upload.  As such we treat them differently
+	 * than other video, externally stored video.  It would be best if this functionality could be
+	 * incorporated into our VideoHandlers extension but given the OGG usage this is low priority.
+	 *
+	 * @param Title|File $file
+	 *
+	 * @return bool
+	 */
+	public static function isFileTypeOgg( $file ) {
+		// File can be video only when new video logic is enabled for the wiki
+		if ( $file instanceof Title ) {
+			$file = wfFindFile( $file );
+		}
+		return self::isOggFile( $file );
+	}
+
+	/**
+	 * Checks whether this file is an OGG file or not
+	 * @param File $file
+	 *
+	 * @return bool
+	 */
+	public static function isOggFile( $file ) {
+		return ( $file instanceof LocalFile && $file->getHandler() instanceof OggHandler );
+	}
 
 	/**
 	 * Checks if given File is video
@@ -215,13 +250,7 @@ class WikiaFileHelper extends Service {
 			'userAvatarWidth'       => 16
 		);
 
-		foreach ( $configDefaults as $key => $val ) {
-			if ( empty( $config[$key] ) ) {
-				$config[$key] = $val;
-			}
-		}
-
-		return $config;
+		return array_merge($configDefaults, $config);
 	}
 
 	/**
@@ -292,14 +321,18 @@ class WikiaFileHelper extends Service {
 					if ( isset( $config['maxHeight'] ) ) {
 						$file->setEmbedCodeMaxHeight( $config['maxHeight'] );
 					}
-					$data['videoEmbedCode'] = $file->getEmbedCode( $width, true, true );
+					$options = [
+						'autoplay' => true,
+						'isAjax' => true,
+					];
+					$data['videoEmbedCode'] = $file->getEmbedCode( $width, $options );
 					$data['playerAsset'] = $file->getPlayerAssetUrl();
 					$data['videoViews'] = MediaQueryService::getTotalVideoViewsByTitle( $fileTitle->getDBKey() );
 					$data['providerName'] = $file->getProviderName();
 					$data['isAdded'] = self::isAdded( $file );
 					$mediaPage = self::getMediaPage( $fileTitle );
 				} else {
-					$width = $width > $config['imageMaxWidth'] ? $config['imageMaxWidth'] : $width;
+					$width = isset( $config[ 'imageMaxWidth' ] ) ? min( $config[ 'imageMaxWidth' ], $width ) : $width;
 					$mediaPage = new ImagePage( $fileTitle );
 				}
 
@@ -324,6 +357,8 @@ class WikiaFileHelper extends Service {
 				$data['userPageUrl'] = $user->getUserPage()->getFullURL();
 				$data['description']  = $mediaPage->getContent();
 				$data['articles'] = $articleList;
+				$data['width'] = $width;
+				$data['height'] = $height;
 			}
 		}
 
@@ -599,4 +634,55 @@ class WikiaFileHelper extends Service {
 		return $addedBy;
 	}
 
+	/**
+	 * Return a URL that displays $file scaled and/or cropped to fill the entire square thumbnail dimensions with
+	 * no whitespace if possible.  Images smaller than the thumbnail size will be enlarged if their image area (L x W)
+	 * is above a certain threshold.  This threshold is expressed as a percentage of the requested thumb area and
+	 * given by:
+	 *
+	 *   self::thumbEnlargeThreshold
+	 *
+	 * Small images that do not meet this threshold will be centered within the thumb container and padded with a
+	 * transparent background.
+	 *
+	 * @param File $file
+	 * @param $dimension
+	 * @return array First element of the array is the URL (string value) and the second (boolean) is whether the image
+	 *               used is smaller than the requested dimensions.  One use of this might be to add a border around
+	 *               the image when it is displayed.
+	 */
+	public static function getSquaredThumbnailUrl( File $file, $dimension ) {
+		// Note whether the image we use is smaller than the requested dimensions
+		$smallerThanDimensions = false;
+
+		// Create a new url generator
+		$gen = ( new UrlGenerator( $file ) );
+
+		// Determine if this image falls into a small image category.  We compare the area of the image with the
+		// area of the requested thumb and use self::thumbEnlargeThreshold as the threshold for enlarging
+		$height = $file->getHeight();
+		$width = $file->getWidth();
+		$isSmallImage = $height < $dimension || $width < $dimension;
+		$imageBelowThreshold = ( $height * $width ) <= ( self::thumbEnlargeThreshold * $dimension * $dimension );
+
+		// If height or width is less than a side of our square target thumbnail, we need to decide whether we're
+		// going to enlarge it or not
+		if ( $isSmallImage && $imageBelowThreshold ) {
+			// Leave the (small) full sized image as is, but put within the requested container with transparent fill
+			$gen->fixedAspectRatioDown()->backgroundFill( 'transparent' );
+			$smallerThanDimensions = true;
+		} else {
+			if ( $height > $width ) {
+				// Portrait mode, crop at the top
+				$gen->topCrop();
+			} else {
+				// Landscape mode, crop in the middle
+				$gen->zoomCrop();
+			}
+		}
+
+		$url = $gen->width( $dimension )->height( $dimension )->url();
+
+		return [ $url, $smallerThanDimensions ];
+	}
 }

@@ -1,11 +1,11 @@
 /*global define*/
 define('ext.wikia.adEngine.provider.directGptMobile', [
 	'wikia.log',
-	'wikia.window',
 	'wikia.document',
+	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.wikiaGptHelper',
 	'ext.wikia.adEngine.gptSlotConfig'
-], function (log, window, document, wikiaGpt, gptSlotConfig) {
+], function (log, document, adContext, wikiaGpt, gptSlotConfig) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.provider.directGptMobile',
@@ -18,20 +18,20 @@ define('ext.wikia.adEngine.provider.directGptMobile', [
 	function fillInSlot(slotname, success, hop) {
 		log(['fillInSlot', slotname], 'debug', logGroup);
 
-		function hopToNull() {
-			hop({method: 'hop'}, 'Null');
-		}
-
-		function hopToRemnant() {
-			hop({method: 'hop'}, 'RemnantGptMobile');
-		}
-
 		function showAdAndCallSuccess() {
 			document.getElementById(slotname).className += ' show';
 			success();
 		}
 
-		wikiaGpt.pushAd(slotname, showAdAndCallSuccess, (window.wgAdDriverEnableRemnantGptMobile ? hopToRemnant : hopToNull), 'mobile');
+		function doHop() {
+			if (adContext.getContext().providers.remnantGptMobile) {
+				hop({method: 'hop'}, 'RemnantGptMobile');
+			} else {
+				hop({method: 'hop'}, 'Null');
+			}
+		}
+
+		wikiaGpt.pushAd(slotname, showAdAndCallSuccess, doHop, 'mobile');
 		wikiaGpt.flushAds();
 	}
 
