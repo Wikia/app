@@ -1,7 +1,7 @@
-(function() {
+(function($) {
 	'use strict';
 	document.addEventListener('DOMContentLoaded', function() {
-		var inputResultLang, formElement, selectElement, searchLabel, chevron;
+		var inputResultLang, formElement, selectElement, $searchInput, searchLabel, chevron;
 
 
 		function setFormOptions() {
@@ -12,16 +12,25 @@
 			formElement.action = selectedOption.getAttribute('data-search-url');
 			if (selectedOption.value === 'global') {
 				inputResultLang.disabled = false;
-			} else if (selectedOption.value === 'local') {
+				if ($searchInput.data('autocomplete')) {
+					$searchInput.data('autocomplete').disable();
+				}
+			} else {
 				inputResultLang.disabled = true;
+				if ($searchInput.data('autocomplete')) {
+					$searchInput.data('autocomplete').enable();
+				}
 			}
 		}
 
+		// TODO change id to camelCase
 		inputResultLang = document.getElementById('search-input-resultLang');
 		chevron = document.getElementById('search-form-chevron');
 		formElement = document.getElementById('search-form');
 		selectElement = document.getElementById('search-select');
 		searchLabel = document.getElementById('search-label-inline');
+		$searchInput = $('#searchInput');
+		// TODO rework to jquery
 
 		setFormOptions();
 
@@ -41,4 +50,4 @@
 			chevron.classList.remove('dark');
 		});
 	});
-}());
+}(jQuery));

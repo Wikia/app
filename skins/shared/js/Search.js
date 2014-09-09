@@ -49,6 +49,7 @@ WikiaSearchApp = (function() {
 		/*$.when(
 				$.loadJQueryAutocomplete()
 			).then($.proxy(function() {*/
+		// TODO recover lazy loading of autocomplete
 				this.searchField.autocomplete({
 					serviceUrl: wgServer + wgScript + '?action=ajax&rs=getLinkSuggest&format=json',
 					onSelect: $.proxy(function(value, data, event) {
@@ -74,26 +75,20 @@ WikiaSearchApp = (function() {
 							window.location.href = location;
 						}
 					}, this),
-					appendTo: this.id,
+					appendTo: '.global-nav-search-input-wrapper',
 					deferRequestBy: 200,
 					minLength: 3,
 					maxHeight: 1000,
 					selectedClass: 'selected',
 					width: '100%',
 					//positionRight: this.positionRight + 'px',
-
-					// TODO width vs position right
 					skipBadQueries: true // BugId:4625 - always send the request even if previous one returned no suggestions
 				});
 				if ( window.Wikia.newSearchSuggestions ) {
 					window.Wikia.newSearchSuggestions.setAsMainSuggestions('search');
 				}
-		// TODO link action
-		this.searchField.bind('suggestShow', $.proxy(function() {
-				this.searchForm.find('.autocomplete').append('<a class="more">See all</a>');
 
-		}, this));
-			/*}, this));*/
+		/*}, this));*/
 	};
 
 	return WikiaSearchApp;

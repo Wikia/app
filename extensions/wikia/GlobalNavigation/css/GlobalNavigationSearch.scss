@@ -28,15 +28,17 @@
 	}
 
 	.autocomplete {
-		// TODO top position
 		background-color: $nav-background-color;
 		border: 1px solid $nav-alternative-color;
 		font-size: 15px;
 		line-height: 18px;
+		margin-top: 9px;
 
 		div {
 			border-bottom: 1px solid $nav-alternative-color;
+			cursor: pointer;
 			padding: 15px 10px;
+			white-space: initial;
 
 			&.selected {
 				background-color: $search-input-background;
@@ -49,20 +51,6 @@
 
 		strong {
 			color: $nav-active-color;
-		}
-		.more {
-			background-color: $nav-active-color;
-			color: $nav-background-color;
-			display: block;
-			font-weight: bold;
-			padding: 15px 10px;
-			text-align: center;
-			text-decoration: none;
-			text-transform: uppercase;
-
-			&:hover {
-				background-color: $nav-cool-blue-color;
-			}
 		}
 	}
 }
@@ -140,6 +128,10 @@
 		.search-submit {
 			right: 34px;
 		}
+
+		.autocomplete-container {
+			right: $small-grid-gutter + $small-content-padding;
+		}
 	}
 }
 
@@ -149,6 +141,10 @@
 		.search-submit {
 			right: 38px;
 		}
+
+		.autocomplete-container {
+			right: $medium-grid-gutter + $medium-content-padding;
+		}
 	}
 }
 
@@ -157,6 +153,10 @@
 		padding-right: $large-grid-gutter + $large-content-padding;
 		.search-submit {
 			right: 42px;
+		}
+
+		.autocomplete-container {
+			right: $large-grid-gutter + $large-content-padding;
 		}
 	}
 }

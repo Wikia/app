@@ -16,3 +16,14 @@
 		margin: 0;
 	}
 }
+
+.autocomplete {
+	border-radius: 0;
+	box-shadow: none;
+	padding: 0;
+
+	div {
+		font-size: 15px;
+		line-height: 18px;
+	}
+}

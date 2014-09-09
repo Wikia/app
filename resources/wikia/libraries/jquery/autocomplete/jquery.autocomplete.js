@@ -2,6 +2,8 @@
 *  Ajax Autocomplete for jQuery, version 1.0.6
 *  (c) 2009 Tomas Kirda
 *
+*  Changed by Wikia - not compatible anymore
+*
 *  Ajax Autocomplete for jQuery is freely distributable under the terms of an MIT-style license.
 *  For details, see the web site: http://www.devbridge.com/projects/autocomplete/jquery/
 *
@@ -11,7 +13,7 @@
 
   $.fn.autocomplete = function(options) {
     return this.each(function() {
-      return new Autocomplete(this, options);
+		$(this).data('autocomplete', new Autocomplete(this, options));
     });
   };
 
@@ -30,6 +32,7 @@
     this.el.attr('autocomplete', 'off');
     this.suggestions = [];
     this.data = [];
+	this.disabled = false;
     this.badQueries = [];
     this.selectedIndex = -1;
     this.currentValue = this.el.val();
@@ -99,7 +102,7 @@
 
       this.mainContainerId = 'AutocompleteContainter_' + uid;
 
-      $('<div id="' + this.mainContainerId + '" style="position:absolute;"><div class="autocomplete-w1"><div class="autocomplete" id="' + autocompleteElId + '" style="display:none; width:' + this.options.width + ';"></div></div></div>').appendTo(this.options.appendTo);
+      $('<div id="' + this.mainContainerId + '"class="autocomplete-container" style="position:absolute;"><div class="autocomplete-w1"><div class="autocomplete" id="' + autocompleteElId + '" style="display:none; width:' + this.options.width + ';"></div></div></div>').appendTo(this.options.appendTo);
 
       this.container = $(this.options.appendTo).find('#' + autocompleteElId);
       this.fixPosition();
@@ -114,6 +117,15 @@
 
       this.container.css({ maxHeight: this.options.maxHeight + 'px' });
     },
+
+	disable: function() {
+		this.disabled = true;
+		this.hide();
+	},
+
+	enable: function() {
+		this.disabled = false;
+	},
 
     fixPosition: function() {
       var offset = this.el.offset();
@@ -178,6 +190,10 @@
     },
 
     onKeyUp: function(e) {
+		if (this.disabled) {
+			return;
+		}
+
       switch (e.keyCode) {
         case 38: //Event.KEY_UP:
         case 40: //Event.KEY_DOWN:
