@@ -10,8 +10,11 @@ use WikiFactory;
 class EntitySearchService {
 	const WORDS_QUERY_LIMIT = 10;
 	const WIKIA_URL_REGEXP = '~^(http(s?)://)(([^\.]+)\.wikia\.com)~';
+	const XWIKI_CORE = 'xwiki';
 
-	public static $BLACKLISTED_WIKI_IDS = [ 113 ];
+	protected $excludedWikis = [];
+	protected $blacklistedWikiIds = [ 113 ];
+
 	/** @var \Solarium_Client client */
 	protected $client;
 	protected $categories;
@@ -26,7 +29,20 @@ class EntitySearchService {
 	protected $sorts;
 	protected $urls;
 	protected $wikiId;
-	protected $blacklistedWikiIds;
+
+
+	/**
+	 * @param array $blacklistedWikiIds
+	 */
+	public function setBlacklistedWikiIds( $blacklistedWikiIds ) {
+		$this->blacklistedWikiIds = $blacklistedWikiIds;
+	}
+
+	public function appendBlacklistedWikiId( $wid ) {
+		if ( !in_array( $wid, $this->blacklistedWikiIds ) ) {
+			$this->blacklistedWikiIds[] = $wid;
+		}
+	}
 
 	/**
 	 * @param mixed $filters
@@ -124,7 +140,21 @@ class EntitySearchService {
 			$config[ 'adapteroptions' ][ 'core' ] = $core;
 		}
 		$this->client = ( $client !== null ) ? $client : new \Solarium_Client( $config );
-		$this->blacklistedWikiIds = self::$BLACKLISTED_WIKI_IDS;
+	}
+
+	public function getCoreFieldNames() {
+		$core = $this->getCore();
+		$core_opt = array( // main core is default
+			'wikiId' 	=> 'wid',
+			'wikiHost'	=> 'host'
+		);
+		switch ( $core ) {
+			case static::XWIKI_CORE:
+				$core_opt['wikiId'] = 'id';
+				$core_opt['wikiHost'] = 'hostname_s';
+			break;
+		}
+		return $core_opt;
 	}
 
 	public function query( $phrase ) {
@@ -231,11 +261,36 @@ class EntitySearchService {
 		return $details[ 1 ] . WikiFactory::getCurrentStagingHost( $details[ 4 ], $details[ 3 ] );
 	}
 
-	public function getBlacklistedWikiIdsQuery( $wikiIdFieldName ) {
+	/**
+	 * Apply excluded wiki IDs and HOSTs.
+	 * @param $select \Solarium_Query_Select
+	 * @return \Solarium_Query_Select
+	 */
+	protected function applyBlackListedWikisQuery( $select ) {
+		$coreFieldNames = $this->getCoreFieldNames();
+
+		if ( !empty( $this->excludedWikis ) ) {
+			$excluded = [];
+			foreach ( $this->excludedWikis as $ex ) {
+				$excluded[] = "-({$coreFieldNames['wikiHost']}:{$ex})";
+			}
+			$select->createFilterQuery( 'excl' )->setQuery( implode( ' AND ', $excluded ) );
+		}
+
+		$blacklistQuery = $this->getBlacklistedWikiIdsQuery();
+		if ( !empty( $blacklistQuery ) ) {
+			$select->createFilterQuery( "widblacklist" )->setQuery( $blacklistQuery );
+		}
+		return $select;
+	}
+
+	protected function getBlacklistedWikiIdsQuery() {
+		$coreFieldNames = $this->getCoreFieldNames();
+
 		if ( !empty( $this->blacklistedWikiIds ) ) {
 			$excluded = [ ];
 			foreach ( $this->blacklistedWikiIds as $wikiId ) {
-				$excluded[] = "-({$wikiIdFieldName}:{$wikiId})";
+				$excluded[] = "-({$coreFieldNames['wikiId']}:{$wikiId})";
 			}
 			return implode( ' AND ', $excluded );
 		} else {

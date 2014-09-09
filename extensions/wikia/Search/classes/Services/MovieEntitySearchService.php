@@ -10,7 +10,7 @@ class MovieEntitySearchService extends EntitySearchService {
 	const MOVIE_TYPE = 'movie';
 	const API_URL = 'api/v1/Articles/AsSimpleJson?id=';
 	const EXACT_MATCH_FIELD = "movie_mv_em";
-	private static $EXCLUDED_WIKIS = [ 'uncyclopedia.wikia.com' ];
+	protected $excludedWikis = [ 'uncyclopedia.wikia.com' ];
 	private static $ARTICLE_TYPES_SUPPORTED_LANGS = [ 'en' ];
 
 	protected function prepareQuery( $query ) {
@@ -26,21 +26,12 @@ class MovieEntitySearchService extends EntitySearchService {
 		$select->setQuery( $preparedQuery );
 		$select->setRows( static::ARTICLES_LIMIT );
 
-		$blacklistQuery = $this->getBlacklistedWikiIdsQuery( "wid" );
-		if ( !empty( $blacklistQuery ) ) {
-			$select->createFilterQuery( "widblacklist" )->setQuery( $blacklistQuery );
-		}
+		$select = $this->applyBlackListedWikisQuery( $select );
+
 		$select->createFilterQuery( 'ns' )->setQuery( '+(ns:' . static::ALLOWED_NAMESPACE . ')' );
 		$select->createFilterQuery( 'lang' )->setQuery( '+(lang:' . $slang . ')' );
 		if ( in_array( strtolower( $slang ), static::$ARTICLE_TYPES_SUPPORTED_LANGS ) ) {
 			$select->createFilterQuery( 'type' )->setQuery( '+(article_type_s:' . static::MOVIE_TYPE . ' OR ' . static::EXACT_MATCH_FIELD . ':*)' );
-		}
-		if ( !empty( static::$EXCLUDED_WIKIS ) ) {
-			$excluded = [ ];
-			foreach ( static::$EXCLUDED_WIKIS as $ex ) {
-				$excluded[ ] = "-(host:{$ex})";
-			}
-			$select->createFilterQuery( 'excl' )->setQuery( implode( ' AND ', $excluded ) );
 		}
 
 		$dismax->setQueryFields( implode( ' ', [

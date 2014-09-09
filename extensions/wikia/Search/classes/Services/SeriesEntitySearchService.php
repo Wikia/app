@@ -31,10 +31,8 @@ class SeriesEntitySearchService extends EntitySearchService {
 		$namespaces = $this->getNamespace() ? $this->getNamespace() : static::DEFAULT_NAMESPACE;
 		$namespaces = is_array( $namespaces ) ? $namespaces : [ $namespaces ];
 
-		$blacklistQuery = $this->getBlacklistedWikiIdsQuery( "wid" );
-		if ( !empty( $blacklistQuery ) ) {
-			$select->createFilterQuery( "widblacklist" )->setQuery( $blacklistQuery );
-		}
+		$select = $this->applyBlackListedWikisQuery( $select );
+
 		$select->createFilterQuery( 'ns' )->setQuery( '+(ns:(' . implode( ' ', $namespaces ) . '))' );
 		$select->createFilterQuery( 'main_page' )->setQuery( '-(is_main_page:true)' );
 		$select->createFilterQuery( 'series_only' )->setQuery( '-(tv_episode_mv_em:*)' );

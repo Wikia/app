@@ -4,13 +4,12 @@ namespace Wikia\Search\Services;
 
 class WikiSeriesEntitySearchService extends EntitySearchService {
 
-	const XWIKI_CORE = 'xwiki';
 	const WIKI_LIMIT = 1;
 	const MINIMAL_WIKIA_ARTICLES = 20;
 	const MINIMAL_WIKIA_SCORE = 2;
 	const DEFAULT_SLOP = 1;
 
-	private static $EXCLUDED_WIKIS = [ '*fanon.wikia.com', '*answers.wikia.com' ];
+	protected $excludedWikis = [ '*fanon.wikia.com', '*answers.wikia.com' ];
 
 	protected function getCore() {
 		return static::XWIKI_CORE;
@@ -28,18 +27,8 @@ class WikiSeriesEntitySearchService extends EntitySearchService {
 		$select->setQuery( '+("' . $phrase . '") AND +(lang_s:' . $slang . ')' );
 		$select->setRows( static::WIKI_LIMIT );
 
-		$excluded = [ ];
-		foreach ( static::$EXCLUDED_WIKIS as $ex ) {
-			$excluded[ ] = "-(hostname_s:{$ex})";
-		}
-		$select->createFilterQuery( 'A&F' )->setQuery( implode( ' AND ', $excluded ) );
+		$select = $this->applyBlackListedWikisQuery( $select );
 
-
-		$blacklistQuery = $this->getBlacklistedWikiIdsQuery( "id" );
-
-		if ( !empty( $blacklistQuery ) ) {
-			$select->createFilterQuery( "widblacklist" )->setQuery( $blacklistQuery );
-		}
 		$select->createFilterQuery( 'articles' )->setQuery( 'articles_i:[' . static::MINIMAL_WIKIA_ARTICLES . ' TO *]' );
 
 		$dismax->setQueryFields( 'series_mv_tm^15 description_txt categories_txt top_categories_txt top_articles_txt ' .
