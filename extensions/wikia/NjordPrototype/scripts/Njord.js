@@ -34,8 +34,6 @@
 			}
 			heroData.changed = true;
 
-			// TODO: remove this debug statement
-			console.log(heroData);
 			return $this;
 		}, onSave = function () {
 			$.nirvana.sendRequest({
@@ -52,11 +50,15 @@
 					// TODO: handle failure
 				}
 			});
+		}, onResize = function () {
+			$heroModule.height($heroModule.width() * 5 / 16);
 		};
 
 	$('.hero-title').on('focus', onFocus).on('blur keyup paste input', onInput).on('change', onChange);
 	$('.hero-description').on('focus', onFocus).on('blur keyup paste input', onInput).on('change', onChange);
 	$heroModule.on('change', onChange);
 	$heroModule.on('saveEvent', onSave);
+
+	$(window).resize(onResize);
 
 })(window, jQuery);

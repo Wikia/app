@@ -25,7 +25,7 @@
 		} else if (e.dataTransfer.getData('text/html')) {
 			//if url
 			var $img = $(e.dataTransfer.getData('text/html'));
-			if(e.target.src !== $img.attr('src')) {
+			if (e.target.src !== $img.attr('src')) {
 				fd.append('url', $img.attr('src'));
 				sendForm(fd);
 			}
@@ -45,7 +45,24 @@
 		client.open('POST', '/wikia.php?controller=Njord&method=upload', true);
 		client.onreadystatechange = function () {
 			if (client.readyState === 4 && client.status === 200) {
-				var data = JSON.parse(client.responseText);
+				var data = JSON.parse(client.responseText),
+					currentWidth = $heroModule.width(),
+					newImage = new Image();
+
+				newImage.onload = function () {
+					$heroModule.height(currentWidth * 5 / 16);
+
+					var heroImageHeight = this.height,
+						heroModuleHeight = $heroModule.height(),
+						requiredOffset = '-' + ((heroModuleHeight < heroImageHeight) ?
+							((heroImageHeight - heroModuleHeight) * 0.3) :
+							0) + 'px';
+
+					$heroModuleImage.css({'margin-top': requiredOffset});
+				};
+
+				newImage.src = data.url;
+
 				$heroModuleImage.attr('src', data.url);
 				$heroModule.trigger('change', [data.url, data.filename]);
 			}
