@@ -8,7 +8,7 @@
 			<? if( $unread ): ?>
 				<p><?= $msg ?></p>
 			<? endif; ?>
-			<time datetime="<?= $iso_timestamp ?>">timeage</time>
+			<time datetime="<?= $iso_timestamp ?>"></time>
 		</div>
 	</a>
 </li>
