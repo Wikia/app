@@ -251,18 +251,17 @@ class SassUtil {
 	 *
 	 * @see PLATFORM-408
 	 *
-	 * RTL should be used if either wiki or user language is RTL
+	 * RTL should be used if user language is RTL
 	 *
 	 * @return bool should RTL be used?
 	 */
 	public static function isRTL() {
 		$app = F::app();
 
-		$wikiLang = $app->wg->ContLang;
+		// this will fallback to wiki content language for anons
 		$userLang = $app->wg->Lang;
 
-		return ( !empty($wikiLang) && $wikiLang->isRTL() ) ||
-			( !empty($userLang) && $userLang->isRTL() );
+		return ( !empty($userLang) && $userLang->isRTL() );
 	}
 
 }
