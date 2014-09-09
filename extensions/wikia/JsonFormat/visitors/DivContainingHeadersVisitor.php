@@ -89,10 +89,10 @@ class DivContainingHeadersVisitor extends DOMNodeVisitorBase {
 			$title = $article->getTitle()->getText();
 
 			// Prevent from cyclic references
-			if ( \Wikia\JsonFormat\HtmlParser::$VISITED[ $title ] ) {
+			if ( \Wikia\JsonFormat\HtmlParser::$VISITED_ARTICLES[ $title ] ) {
 				continue;
 			}
-			\Wikia\JsonFormat\HtmlParser::$VISITED[ $title ] = true;
+			\Wikia\JsonFormat\HtmlParser::$VISITED_ARTICLES[ $title ] = true;
 
 			$tabSection = $this->parseArticleToSection( $article, $htmlParser );
 

@@ -12,7 +12,7 @@ class HtmlParser {
 	 * @var array
 	 * @see DivContainingHeadersVisitor::parseTabs
 	 */
-	public static $VISITED = [ ];
+	public static $VISITED_ARTICLES = [ ];
 
 	/**
 	 * @param string $html

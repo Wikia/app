@@ -65,10 +65,10 @@ class JsonFormatService extends \WikiaService {
 			 *
 			 * @see DivContainingHeadersVisitor::parseTabs
 			 */
-			\Wikia\JsonFormat\HtmlParser::$VISITED[ $article->getTitle()->getText() ] = true;
+			\Wikia\JsonFormat\HtmlParser::$VISITED_ARTICLES[ $article->getTitle()->getText() ] = true;
 			$jsonFormatRootNode = $this->getJsonFormatForArticle( $article );
 			// We have finished parsing of article, so we can clean array of visited articles
-			\Wikia\JsonFormat\HtmlParser::$VISITED = [ ];
+			\Wikia\JsonFormat\HtmlParser::$VISITED_ARTICLES = [ ];
 
 			$simplifier = new Wikia\JsonFormat\JsonFormatSimplifier;
 			$jsonSimple = $simplifier->simplify( $jsonFormatRootNode, $article->getTitle()->getText() );
