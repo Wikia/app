@@ -6,6 +6,7 @@ class WikiDataModel {
 	private $cropPosition;
 
 	public $imagePath;
+	public $originalImagePath;
 	public $title;
 	public $description;
 
@@ -28,7 +29,7 @@ class WikiDataModel {
 		$this->description = !empty( $attributes[ 'description' ] ) ? $attributes[ 'description' ] : null;
 		$this->cropPosition = !empty( $attributes[ 'cropposition' ] ) ? $attributes[ 'cropposition' ] : null;
 
-		$this->initializeImagePath( $this->cropPosition );
+		$this->initializeImagePaths( $this->cropPosition );
 	}
 
 	public function storeInProps() {
@@ -48,19 +49,19 @@ class WikiDataModel {
 		$this->description = wfGetWikiaPageProp( self::WIKI_HERO_DESCRIPTION_ID, $pageId );
 		$this->cropPosition = wfGetWikiaPageProp( self::WIKI_HERO_IMAGE_CROP_POSITION_ID, $pageId );
 
-		$this->initializeImagePath( $this->cropPosition );
+		$this->initializeImagePaths( $this->cropPosition );
 	}
 
 	public function setImageNameFromProps() {
 		$pageId = Title::newFromText( $this->pageName )->getArticleId();
 		$this->imageName = wfGetWikiaPageProp( self::WIKI_HERO_IMAGE_PROP_ID, $pageId );
-		$this->initializeImagePath( $this->cropPosition );
+		$this->initializeImagePaths( $this->cropPosition );
 	}
 
 	/**
 	 * @param $imageName
 	 */
-	private function initializeImagePath( $cropPosition ) {
+	private function initializeImagePaths( $cropPosition ) {
 		$imageTitle = Title::newFromText( $this->imageName, NS_FILE );
 		$file = wfFindFile( $imageTitle );
 		if ( $file && $file->exists() ) {
@@ -71,9 +72,11 @@ class WikiDataModel {
 					self::WIKI_HERO_IMAGE_MAX_HEIGHT,
 					$cropPosition
 				) );
+			$this->originalImagePath = $file->getFullUrl();
 		} else {
 			$this->imageName = null;
 			$this->imagePath = null;
+			$this->originalImagePath = null;
 		}
 	}
 

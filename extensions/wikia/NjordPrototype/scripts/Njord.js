@@ -6,7 +6,7 @@
 			description: null,
 			imagename: null,
 			imagepath: null,
-			cropposition: 30, // for now let's not give that possibility to the user
+			cropposition: 0,
 			imagechanged: false,
 			datachanged: false
 		},
@@ -58,9 +58,9 @@
 				}
 			});
 		}, onEdit = function () {
-			$('.hero-title, .hero-description').each(function() {
+			$('.hero-title, .hero-description').each(function () {
 				var $this = $(this);
-				if($this.attr('contenteditable')) {
+				if ($this.attr('contenteditable')) {
 					$this.removeAttr('contenteditable');
 				} else {
 					$this.attr('contenteditable', true);
