@@ -38,12 +38,14 @@ ve.ui.WikiaTemplateInsertDialog.prototype.initialize = function () {
 	ve.ui.WikiaTemplateInsertDialog.super.prototype.initialize.call( this );
 
 	// Properties
+	this.stackLayout = new OO.ui.StackLayout( { '$': this.$ } );
+	this.panel = new OO.ui.PanelLayout( { '$': this.$ } );
 	this.select = new OO.ui.SelectWidget( { '$': this.$ } );
 
-	/* Temporary. Use this to generate 6 option widgets */
+	/* Temporary. Use this to generate 26 option widgets */
 	var i, options;
 	options = [];
-	for ( i = 0; i < 6; i++ ) {
+	for ( i = 0; i < 26; i++ ) {
 		options.push(
 			new ve.ui.WikiaTemplateOptionWidget(
 				i,
@@ -64,7 +66,10 @@ ve.ui.WikiaTemplateInsertDialog.prototype.initialize = function () {
 
 	this.select.addItems( options );
 
-	this.$body.append( this.select.$element );
+	this.panel.$element.append( this.select.$element );
+	this.stackLayout.addItems( [ this.panel ] );
+
+	this.$body.append( this.stackLayout.$element );
 };
 
 /* Registration */
