@@ -6,6 +6,10 @@
 @import 'extensions/wikia/Venus/styles/mixins';
 @import 'extensions/wikia/GlobalNavigation/css/GlobalNavigationColors';
 
+.AccountNavigation.active .UserLoginDropdown {
+	display: block;
+}
+
 .UserLoginDropdown {
 	@include grid-column-width('large', 2, $large-grid-column-padding + $large-grid-gutter + $large-content-padding);
 	background-color: $nav-background-color;
@@ -195,10 +199,6 @@
 			width: 41px;
 		}
 	}
-}
-
-.AccountNavigation.active .UserLoginDropdown {
-	display: block;
 }
 
 @media #{$small-only} {

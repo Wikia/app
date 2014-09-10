@@ -12,6 +12,10 @@
 	width: 100%;
 
 	&.active {
+		.user-menu {
+			display: table;
+		}
+
 		> li {
 			background-color: $search-input-background;
 
@@ -100,10 +104,6 @@
 			}
 		}
 	}
-}
-
-.AccountNavigation.active .user-menu {
-	display: table;
 }
 
 @media #{$small-only} {
