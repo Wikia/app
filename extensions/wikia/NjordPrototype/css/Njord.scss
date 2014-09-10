@@ -84,6 +84,21 @@
     margin: auto;
   }
 
+  .upload-hover {
+    background: rgba(255, 255, 255, .2);
+    .upload-btn {
+      opacity: .7;
+    }
+  }
+
+  .upload-mask {
+    display: none;
+    height: 100%;
+    position: absolute;
+    width: 100%;
+    z-index: 1;
+  }
+
   .upload-text {
     color: #FFFFFF;
     font-size: 3em;

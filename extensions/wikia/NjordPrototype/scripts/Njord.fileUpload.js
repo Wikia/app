@@ -3,20 +3,35 @@
 
 	jQuery.event.props.push('dataTransfer');
 
-	var $heroModule = $('#MainPageHero'),
+	var $body = $('body'),
+		$heroModule = $('#MainPageHero'),
 		$heroModuleUpload = $('#MainPageHero .upload'),
+		$heroModuleUploadMask = $('#MainPageHero .upload .upload-mask'),
 		$heroModuleButton = $('#MainPageHero .upload .upload-btn'),
 		$heroModuleInput = $('#MainPageHero .upload input[name="file"]'),
 		$heroModuleImage = $('#MainPageHero .hero-image');
 
+	//turn off browser image handling
+	$body.on('dragover', function() {return false;});
+	$body.on('dragend', function() {return false;});
+	$body.on('drop', function() {return false;});
+
 	//those two are needed to cancel default behaviour
 	$heroModuleUpload.on('dragover', function () {
+		$('.upload').addClass('upload-hover');
+		$heroModuleUploadMask.show();
 		return false;
 	});
-	$heroModuleUpload.on('dragend', function () {
+	$heroModuleUploadMask.on('dragleave', function () {
+		$('.upload').removeClass('upload-hover');
+		$heroModuleUploadMask.hide();
+	});
+	$heroModuleUploadMask.on('dragend', function () {
 		return false;
 	});
-	$heroModuleUpload.on('drop', function (e) {
+	$heroModuleUploadMask.on('drop', function (e) {
+		$('.upload').removeClass('upload-hover');
+		$heroModuleUploadMask.hide();
 		e.preventDefault();
 		var fd = new FormData();
 		if (e.dataTransfer.files.length) {

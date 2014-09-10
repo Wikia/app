@@ -6,6 +6,7 @@
 	<div class="edit-area">
 		<div class="overlay">
 			<div class="upload">
+				<div class="upload-mask"></div>
 				<input name="file" type="file" hidden/>
 
 				<div class="upload-group">
