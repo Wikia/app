@@ -366,7 +366,7 @@ SQL;
 	 * @param $databaseName
 	 * @return bool
 	 */
-	public function wikiDoesNotExist( $databaseName ) {
+	private function wikiDoesNotExist( $databaseName ) {
 		$host = ApiService::getHostByDbName( $databaseName );
 		return empty( $host );
 	}
