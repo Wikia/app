@@ -43,6 +43,7 @@ $wgExtensionMessagesFiles[ 'ExactTargetUpdates' ] = $dir . '/ExactTargetUpdates.
 $wgAutoloadClasses['ExactTargetBaseTask'] =  $dir . '/ExactTargetBaseTask.php' ;
 $wgAutoloadClasses['ExactTargetAddUserTask'] =  $dir . '/ExactTargetAddUserTask.php' ;
 $wgAutoloadClasses['ExactTargetUpdateUserTask'] =  $dir . '/ExactTargetUpdateUserTask.php' ;
+$wgAutoloadClasses['ExactTargetAddWikiTask'] =  $dir . '/ExactTargetAddWikiTask.php';
 $wgAutoloadClasses['ExactTargetUpdatesHooks'] =  $dir . '/ExactTargetUpdatesHooks.php' ;
 $wgAutoloadClasses['ExactTargetSoapClient'] =  $dir . '/lib/exacttarget_soap_client.php' ;
 
@@ -50,5 +51,8 @@ $wgAutoloadClasses['ExactTargetSoapClient'] =  $dir . '/lib/exacttarget_soap_cli
  * @global Array The list of hooks.
  * @see http://www.mediawiki.org/wiki/Manual:$wgHooks
  */
+/* User-related hooks */
 $wgHooks['SignupConfirmEmailComplete'][] = 'ExactTargetUpdatesHooks::onSignupConfirmEmailComplete';
 $wgHooks['UserSaveSettings'][] = 'ExactTargetUpdatesHooks::onUserSaveSettings';
+/* Wiki-related hooks */
+$wgHooks['CreateWikiLocalJob-complete'][] = 'ExactTargetUpdatesHooks::onWikiCreation';
