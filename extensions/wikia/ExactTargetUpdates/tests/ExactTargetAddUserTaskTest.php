@@ -5,30 +5,7 @@ require_once __DIR__ . '/../lib/exacttarget_soap_client.php';
 class ExactTargetAddUserTaskTest extends WikiaBaseTest {
 
 
-	function testSendNewUserShouldInvokeCreateSubscriber() {
-		/* Params to compare */
-		$aUserData = [
-			'user_id' => '12345',
-			'user_email' => 'email@email.com'
-		];
-		$aUserProperties = [
-			'property1' => 'value1',
-			'property2' => 'value2'
-		];
-
-		$addTaskMock = $this->getMockBuilder( 'ExactTargetAddUserTask' )
-			->disableOriginalConstructor()
-			->setMethods( [ 'createUserPropertiesDataExtension', 'createUserDataExtension', 'createSubscriber' ] )
-			->getMock();
-		$addTaskMock
-			->expects( $this->once() )
-			->method( 'createSubscriber' )
-			->will(  $this->returnValue( NULL ) );
-
-		$addTaskMock->sendNewUserData( $aUserData, $aUserProperties );
-	}
-
-	function testSendNewUserShouldInvokeCreateUserDataExtension() {
+	function testSendNewUserShouldInvokeFollowingMethods() {
 		/* Params to compare */
 		$aUserData = [
 			'user_id' => '12345',
@@ -36,39 +13,34 @@ class ExactTargetAddUserTaskTest extends WikiaBaseTest {
 		];
 		$aUserProperties = [];
 
+		/* @var ExactTargetAddUserTask $addTaskMock */
 		$addTaskMock = $this->getMockBuilder( 'ExactTargetAddUserTask' )
 			->disableOriginalConstructor()
-			->setMethods( [ 'createUserPropertiesDataExtension', 'createUserDataExtension', 'createSubscriber' ] )
+			->setMethods( [ 'getClient', 'createUserPropertiesDataExtension', 'createUserDataExtension', 'createSubscriber' ] )
 			->getMock();
+
+		/* require getClient once */
 		$addTaskMock
 			->expects( $this->once() )
-			->method( 'createUserDataExtension' )
-			->will(  $this->returnValue( NULL ) );
+			->method( 'getClient' );
 
+		/* require getClient once */
+		$addTaskMock
+			->expects( $this->once() )
+			->method( 'createSubscriber' );
+
+		/* require getClient once */
+		$addTaskMock
+			->expects( $this->once() )
+			->method( 'createUserDataExtension' );
+
+		/* require getClient once */
+		$addTaskMock
+			->expects( $this->once() )
+			->method( 'createSubscriber' );
+
+		/* Run tested method */
 		$addTaskMock->sendNewUserData( $aUserData, $aUserProperties );
-	}
-
-	function testSendNewUserShouldInvokeCreateUserPropertiesDataExtension() {
-		/* Params to compare */
-		$aUserData = [
-			'user_id' => '12345',
-			'user_email' => 'email@email.com'
-		];
-		$aUserProperties = [
-			'property1' => 'value1',
-			'property2' => 'value2'
-		];
-
-		$addTaskMock = $this->getMockBuilder( 'ExactTargetAddUserTask' )
-			->disableOriginalConstructor()
-			->setMethods( [ 'createUserPropertiesDataExtension', 'createUserDataExtension', 'createSubscriber' ] )
-			->getMock();
-		$addTaskMock
-			->expects( $this->once() )
-			->method( 'createUserPropertiesDataExtension' )
-			->will( $this->returnValue( NULL ) );
-
-		$addTaskMock->sendNewUserData( $aUserData['user_id'], $aUserProperties );
 	}
 
 	function testPrepareSoapVarsShouldReturnSoapVarsArray() {
@@ -179,33 +151,9 @@ class ExactTargetAddUserTaskTest extends WikiaBaseTest {
 			->expects( $this->once() )
 			->method( 'wrapCreateRequest' )
 			->will( $this->returnValue( $oRequest ) );
-		$mockAddUserTask
-			->expects( $this->once() )
-			->method( 'getClient' )
-			->will( $this->returnValue( $soapClient ) );
 
-		$mockAddUserTask->initClient();
-		/* Run test */
-		$mockAddUserTask->createUserPropertiesDataExtension( $iUserId, $aUserProperties );
+		/* Run tested method */
+		$mockAddUserTask->createUserPropertiesDataExtension( $iUserId, $aUserProperties, $soapClient );
 	}
 
-	/**
-	 * initClient method should be invoked early as it results in using ExactTargetSoapClient class
-	 * which is autoloaded and that runs a chain of including all necessary ExactTarget API classes from lib dir
-	 * so it generally means ExactTargetSoapClient class have to be used as first class from ExactTarget API classes
-	 */
-	public function testConstructorShouldCallInitClientMethod() {
-		$mockAddUserTask = $this->getMockBuilder( 'ExactTargetAddUserTask' )
-			->disableOriginalConstructor()
-			->setMethods( [ 'initClient' ] )
-			->getMock();
-
-		$mockAddUserTask
-			->expects( $this->once() )
-			->method('initClient');
-
-		$reflectedClass = new ReflectionClass( 'ExactTargetAddUserTask' );
-		$constructor = $reflectedClass->getConstructor();
-		$constructor->invoke( $mockAddUserTask );
-	}
 }
