@@ -3,12 +3,23 @@
   position: relative;
   width: 100%;
 
-  .btn-group {
-    bottom: 3px;
+  .btn-group-bottom {
+    bottom: 0;
     display: flex;
     margin: 10px;
     position: absolute;
     right: 0;
+    .new-btn {
+      margin: 0 5px;
+    }
+  }
+
+  .btn-group-top {
+    display: flex;
+    margin: 10px;
+    position: absolute;
+    right: 0;
+    top: 0;
     .new-btn {
       margin: 0 5px;
     }
@@ -59,6 +70,7 @@
 
   .overlay {
     background-color: rgba(0, 0, 0, .6);
+    display: none;
     height: 100%;
     position: absolute;
     width: 100%;

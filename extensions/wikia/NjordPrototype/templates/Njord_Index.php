@@ -13,9 +13,15 @@
 					<div class="upload-text">Drag&drop image</div>
 					<div class="upload-btn new-btn">Upload image</div>
 				</div>
+				<div class="btn-group-top">
+					<div class="toggle-upload-btn new-btn">X</div>
+				</div>
 			</div>
 		</div>
-		<div class="btn-group">
+		<div class="btn-group-top toggle-btn">
+			<div class="toggle-upload-btn new-btn">Upload</div>
+		</div>
+		<div class="btn-group-bottom">
 			<div class="discard-btn new-btn">Discard</div>
 			<div class="save-btn new-btn">Save changes</div>
 		</div>

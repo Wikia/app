@@ -102,6 +102,7 @@
 	$('.edit-btn').on('click', onEdit);
 	$('.save-btn').on('click', onSave);
 	$('.discard-btn').on('click', function () { onEdit(); revert(); });
+	$('.toggle-upload-btn').on('click', function() { $('.toggle-btn').toggle(); $('.overlay').toggle(); });
 
 	$(window).resize(onResize);
 	load();

@@ -17,7 +17,7 @@
 	$body.on('drop', function () {return false;});
 
 	//those two are needed to cancel default behaviour
-	$heroModuleUpload.on('dragover', function () {
+	$heroModuleUpload.on('dragenter', function () {
 		$('.upload').addClass('upload-hover');
 		$heroModuleUploadMask.show();
 		return false;
@@ -79,5 +79,10 @@
 			}
 		};
 		client.send(formdata);
+	}
+
+	function toggleUpload() {
+		$('.toggle-btn').toggle();
+		$('.overlay').toggle();
 	}
 })(window, jQuery);
