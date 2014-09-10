@@ -30,6 +30,7 @@ if ( ! function_exists( "wfUnserializeHandler" ) ) {
  * define hooks for WikiFactory here
  */
 $wgHooks[ "ArticleSaveComplete" ][] = "WikiFactory::updateCityDescription";
+$wgHooks[ "ArticleSaveComplete" ][] = "WikiFactory::updateCityTimestamp";
 
 class WikiFactoryDuplicateWgServer extends Exception {
 	public $city_id, $city_url, $duplicate_city_id;
@@ -2847,6 +2848,20 @@ class WikiFactory {
 				__METHOD__
 			);
 		}
+
+		return true;
+	}
+
+	static public function updateCityTimestamp( &$article, &$user ) {
+		global $wgCityId;
+
+		$db = WikiFactory::db( DB_MASTER );
+			$db->update(
+				"city_list",
+				array( "city_last_timestamp" => wfTimestamp( TS_DB ) ),
+				array( "city_id" => $wgCityId ),
+				__METHOD__
+			);
 
 		return true;
 	}
