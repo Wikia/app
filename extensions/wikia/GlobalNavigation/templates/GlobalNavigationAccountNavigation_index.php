@@ -1,12 +1,12 @@
 <ul id="AccountNavigation" class="AccountNavigation">
 	<li>
 		<?= $navItemLinkOpeningTag ?>
-		<div class="avatar-container<?= $avatarContainerAditionalClass ?>">
 			<div class="bubbles">
 				<div class="bubbles-count notifications-count"></div>
 			</div>
-			<?= $profileAvatar ?>
-		</div>
+			<div class="avatar-container<?= $avatarContainerAditionalClass ?>">
+				<?= $profileAvatar ?>
+			</div>
 		</a>
 		<?php if ( !$isAnon ): ?>
 		<ul class="user-menu subnav">
