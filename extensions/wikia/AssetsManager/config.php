@@ -1987,8 +1987,8 @@ $config['global_header_css'] = [
 	'type' => AssetsManager::TYPE_SCSS,
 	'skin' => ['oasis'],
 	'assets' => [
-		'//extensions/wikia/GlobalNavigation/css/GlobalNavigationAccountNavigation.scss',
-		'//extensions/wikia/UserLogin/styles/UserLoginDropdown.scss'
+		'//skins/oasis/css/core/AccountNavigation.scss',
+		'//extensions/wikia/UserLogin/css/UserLoginDropdown.scss'
 	]
 ];
 

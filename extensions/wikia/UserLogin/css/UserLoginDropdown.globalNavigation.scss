@@ -82,6 +82,13 @@
 		}
 
 		input[type=text],
+		input[type=password],
+		input[type=submit] {
+			-webkit-appearance: none;
+			-webkit-border-radius: 0;
+		}
+
+		input[type=text],
 		input[type=password] {
 			@include box-sizing;
 			@include clear-box-shadow;

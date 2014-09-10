@@ -407,7 +407,7 @@ class OasisController extends WikiaController {
 			$assetGroups[] = 'global_header_js';
 		}
 
-		if ( $isLoggedIn ){
+		if ( $isLoggedIn ) {
 			$assetGroups[] = 'oasis_user_js';
 		} else {
 			if ( empty( $wgEnableGlobalNavExt ) ) {
