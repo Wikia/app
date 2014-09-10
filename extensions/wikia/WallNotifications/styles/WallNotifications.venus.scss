@@ -1,3 +1,4 @@
+@import "skins/shared/mixins/clearfix";
 @import 'extensions/wikia/Venus/styles/variables';
 @import 'extensions/wikia/Venus/styles/mixins';
 
@@ -57,12 +58,14 @@ $wiki-header-bg-color: #e2e6e9;
 	}
 
 	header {
-		height: 51px;
+		height: auto;
+		min-height: 51px;
 		font-weight: bold;
 		padding: 15px 20px 0 20px;
 	}
 
 	.notifications-header {
+		@include clearfix;
 		background-color: $header-bg-color;
 		color: $border-color;
 	}
@@ -80,9 +83,10 @@ $wiki-header-bg-color: #e2e6e9;
 
 		div {
 			display: none;
+			margin: 10px 0;
 		}
 
-		&:hover div {
+		&.show div {
 			display: block;
 		}
 	}
