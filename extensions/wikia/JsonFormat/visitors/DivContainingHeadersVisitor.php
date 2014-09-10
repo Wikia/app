@@ -180,16 +180,16 @@ class DivContainingHeadersVisitor extends DOMNodeVisitorBase {
 	 * @param $tabSection
 	 */
 	protected function adjustLevel( $tabSection ) {
-		$level = 0;
+		// title has unique level: 1 (unique value of level)
+		// so, by default - we have to adjust teb section level by 1
+		$level = 1;
 		if ( $this->getJsonFormatBuilder()->getCurrentContainer()->getType() === 'section' ) {
 			$level = $this->getJsonFormatBuilder()->getCurrentContainer()->getLevel();
 		}
-		if ( $level > 0 ) {
-			if ( $level > 1 ) {
-				$level -= 1;
-			}
-			$this->addLevel( $tabSection, $level );
+		if ( $level > 1 ) {
+			$level -= 1;
 		}
+		$this->addLevel( $tabSection, $level );
 	}
 
 	protected function addLevel( $node, $level ) {

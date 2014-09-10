@@ -18,6 +18,12 @@ class DivContainingHeadersVisitorTest extends WikiaBaseTest {
 		$this->assertEquals( $expected, $getUrlWithoutPath( $url, $wgArticlePath ) );
 	}
 
+	public function testParseTabber() {
+		$generatedJson = $this->getSimpleJson( $this->getTabberHtml() );
+		$expectedJson = json_decode( $this->getParsedTabberJSON(), true );
+		$this->assertEquals( $expectedJson, $generatedJson );
+	}
+
 	public function getUrlWithoutPathDataProvider() {
 		return [
 			[
@@ -187,6 +193,99 @@ class DivContainingHeadersVisitorTest extends WikiaBaseTest {
 		];
 	}
 
+	protected function getTabberHtml() {
+		return <<<TABBER_HTML_EXAMPLE
+<?xml encoding=\"UTF-8\">
+<html>
+	<body>
+		<div class="tabber">
+			<div class="tabbertab" title="Links 1111">
+				<p>
+					<ul>
+						<li>aaaa</li>
+						<li>bbbbbb</li>
+						<li>cccc ccccc</li>
+					</ul>
+				</p>
+			</div>
+			<div class="tabbertab" title="Links 2222">
+				<p>
+					<ul>
+						<li>
+							<a rel="nofollow" class="external text" href="http://www.mtv.ca/degrassi/episodes/pid/144885/degrassi-ep-1331-you-are-not-alone">Watch You Are Not Alone on MTV</a>
+						</li>
+						<li>
+							<a rel="nofollow" class="external text" href="http://www.teennick.com/videos/clip/degrassi-1331-full-alkjsdf.html">Watch You Are Not Alone on Teennick</a>
+						</li>
+					</ul>
+				</p>
+			</div>
+		</div>
+	</body>
+</html>
+TABBER_HTML_EXAMPLE;
+		}
+
+	protected function getParsedTabberJSON() {
+		return <<<PARSED_TABBER_JSON
+{
+	"sections": [
+		{
+			"title": "test",
+            "level": 1,
+			"content": [ ],
+			"images": [ ]
+		},
+		{
+            "title": "Links 1111",
+            "level": 2,
+            "content": [
+                {
+                    "type": "list",
+                    "elements": [
+                        {
+                            "text": "aaaa",
+                            "elements": [ ]
+                        },
+                        {
+                            "text": "bbbbbb",
+                            "elements": [ ]
+                        },
+                        {
+                            "text": "cccc ccccc",
+                            "elements": [ ]
+                        }
+                    ]
+                }
+            ],
+            "images": [ ]
+		},
+		{
+            "title": "Links 2222",
+            "level": 2,
+            "content": [
+                {
+                    "type": "list",
+                    "elements": [
+                        {
+                            "text": "Watch You Are Not Alone on MTV",
+                            "elements": [ ]
+                        },
+                        {
+                            "text": "Watch You Are Not Alone on Teennick",
+                            "elements": [ ]
+                        }
+                    ]
+	            }
+            ],
+            "images": [ ]
+		}
+	]
+}
+PARSED_TABBER_JSON;
+
+	}
+
 	protected static function getFn( $obj, $name ) {
 		$class = new ReflectionClass( get_class( $obj ) );
 		$method = $class->getMethod( $name );
@@ -196,6 +295,25 @@ class DivContainingHeadersVisitorTest extends WikiaBaseTest {
 			$args = func_get_args();
 			return $method->invokeArgs( $obj, $args );
 		};
+	}
+
+	/**
+	 * Piece of logic, which traversing HTML source of article, and generating simplified JSON representation
+	 * 
+	 * @param $html
+	 * @return array
+	 */
+	protected function getSimpleJson( $html ) {
+		$doc = new \DOMDocument();
+		$doc->loadHTML( $html );
+		$body = $doc->getElementsByTagName( 'body' )->item( 0 );
+		$jsonFormatTraversingState = new \JsonFormatBuilder();
+		$visitor = ( new \Wikia\JsonFormat\HtmlParser() )->createVisitor( $jsonFormatTraversingState );
+		$visitor->visit( $body );
+		$root = $jsonFormatTraversingState->getJsonRoot();
+		$simplifier = new Wikia\JsonFormat\JsonFormatSimplifier();
+		$generatedJson = $simplifier->simplify( $root, 'test' );
+		return $generatedJson;
 	}
 
 }
