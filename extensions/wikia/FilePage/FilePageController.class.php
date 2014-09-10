@@ -483,6 +483,11 @@ SQL;
 		return $this->addSummary( $data, function ( $dbName, $articleIds ) {
 			$ids = array();
 			$result = array();
+
+			if ( $this->wikiDoesNotExist( $dbName ) ) {
+				return $result;
+			}
+
 			foreach ( $articleIds as $id ) {
 				$memcKey = $this->getMemcKeyGlobalSummary( $dbName, $id );
 				$summary = $this->wg->Memc->get( $memcKey );
@@ -515,6 +520,17 @@ SQL;
 
 			return $result;
 		});
+	}
+
+	/**
+	 * If a wiki with the given database name doesn't exist, ApiService::foreignCall inside of
+	 * $this->addGlobalSummary will default to the current wiki returning invalid results.
+	 * @param $databaseName
+	 * @return bool
+	 */
+	public function wikiDoesNotExist( $databaseName ) {
+		$host = ApiService::getHostByDbName( $databaseName );
+		return empty( $host );
 	}
 
 	/**

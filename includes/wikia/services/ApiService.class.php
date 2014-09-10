@@ -78,7 +78,7 @@ class ApiService extends Service {
 	 * @param string database name
 	 * @return string HTTP domain
 	 */
-	private static function getHostByDbName( $dbname ) {
+	public static function getHostByDbName( $dbname ) {
 		global $wgDevelEnvironment, $wgDevelEnvironmentName;
 
 		$cityId = WikiFactory::DBtoID( $dbname );
