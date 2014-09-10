@@ -350,6 +350,7 @@ require(
 					submenuDirection: 'left',
 					activate: WallNotifications.openNotifications,
 					deactivate: WallNotifications.closeNotifications,
+					enter: WallNotifications.openNotifications,
 					exitMenu: WallNotifications.closeNotifications
 			});
 		});
