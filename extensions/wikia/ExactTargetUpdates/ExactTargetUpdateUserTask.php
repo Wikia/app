@@ -8,14 +8,15 @@ class ExactTargetUpdateUserTask extends ExactTargetBaseTask {
 	 * @param array $aUserProperties Array of Wikia user gobal properties
 	 */
 	public function updateUserData( $aUserData, $aUserProperties ) {
-		$this->updateUserPropertiesDataExtension( $aUserData['user_id'], $aUserProperties );
+		$oClient = $this->getClient();
+		$this->updateUserPropertiesDataExtension( $aUserData['user_id'], $aUserProperties, $oClient );
 	}
 
 	/**
 	 * Updates DataExtension object in ExactTarget by API request that reflects Wikia user table
 	 * @param Array $aUserData Selected fields from Wikia user table
 	 */
-	public function updateUserDataExtension( $aUserData ) {
+	public function updateUserDataExtension( $aUserData, $oClient ) {
 
 		try {
 			/* Create new DataExtensionObject that reflects user table data */
@@ -38,10 +39,10 @@ class ExactTargetUpdateUserTask extends ExactTargetBaseTask {
 			$oRequest = $this->wrapUpdateRequest( [ $oSoapVar ] );
 
 			/* Send API update request */
-			$oResults = $this->oClient->Update( $oRequest );
+			$oResults = $oClient->Update( $oRequest );
 
 			/* Log response */
-			$this->info( $this->oClient->__getLastResponse() );
+			$this->info( $oClient->__getLastResponse() );
 
 		} catch ( SoapFault $e ) {
 			/* Log error */
@@ -54,18 +55,18 @@ class ExactTargetUpdateUserTask extends ExactTargetBaseTask {
 	 * @param Integer $iUserId User ID
 	 * @param Array $aUserProperties key-value array ['property_name'=>'property_value']
 	 */
-	public function updateUserPropertiesDataExtension( $iUserId, $aUserProperties ) {
+	public function updateUserPropertiesDataExtension( $iUserId, $aUserProperties, $oClient ) {
 
 		try {
 			$aDE = $this->prepareUserPropertiesDataExtensionObjectsForUpdate( $iUserId, $aUserProperties );
-			$aSoapVars = $this->wrapToSoapVar( $aDE );
+			$aSoapVars = $this->prepareSoapVars( $aDE );
 			$oRequest = $this->wrapUpdateRequest( $aSoapVars );
 
 			/* Send API request */
-			$this->oClient->Update( $oRequest );
+			$oClient->Update( $oRequest );
 
 			/* Log response */
-			$this->info( $this->oClient->__getLastResponse() );
+			$this->info( $oClient->__getLastResponse() );
 		} catch ( SoapFault $e ) {
 			/* Log error */
 			$this->error( 'SoapFault:' . $e->getMessage() . 'ErrorCode: ' . $e->getCode() );
