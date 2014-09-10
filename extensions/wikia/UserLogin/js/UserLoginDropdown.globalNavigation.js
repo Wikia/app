@@ -90,6 +90,12 @@ require( ['jquery'], function( $ ){
 	$transparentOut = $('<div class="transparent-out transparent-out-user-login"/>').appendTo('body');
 	$transparentOut.click(closeMenu);
 
+	$entryPoint.on('click', '.ajaxLogin', function(ev) {
+		ev.preventDefault();
+		ev.stopPropagation(); // BugId:16984
+		openMenu();
+	});
+
 	if ( !window.touchstart ) {
 		window.delayedHover(
 			$entryPoint.get( 0 ),
@@ -99,7 +105,5 @@ require( ['jquery'], function( $ ){
 				onActivate: openMenu
 			}
 		);
-	} else {
-		$entryPoint.click(openMenu);
 	}
 });
