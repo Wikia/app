@@ -2,6 +2,9 @@
 	'use strict';
 
 	var heroData = {
+			oTitle: null,
+			oDescription: null,
+			oImage: null,
 			title: null,
 			description: null,
 			imagename: null,
@@ -12,7 +15,15 @@
 		},
 		$heroModule = $('#MainPageHero'),
 		$heroImage = $('#MainPageHero .hero-image'),
-		onFocus = function () {
+		load = function() {
+			heroData.oTitle = $heroModule.find('.hero-title').text();
+			heroData.oDescription = $heroModule.find('.hero-description').text();
+			heroData.oImage = $heroModule.find('.hero-image').attr('src');
+		}, revert = function() {
+			$heroModule.find('.hero-title').text(heroData.oTitle);
+			$heroModule.find('.hero-description').text(heroData.oDescription);
+			$heroModule.find('.hero-image').attr('src', heroData.oImage);
+		}, onFocus = function () {
 			var $this = $(this);
 			$this.data('before', $this.html());
 			return $this;
@@ -52,6 +63,8 @@
 				},
 				callback: function () {
 					// TODO: handle success
+					onEdit();
+					load();
 				},
 				onErrorCallback: function () {
 					// TODO: handle failure
@@ -67,7 +80,7 @@
 				}
 			});
 			$('.overlay').toggle();
-			$('.upload').toggle();
+			$('.edit-btn').toggle();
 		}, onResize = function () {
 			$heroModule.height($heroModule.width() * 5 / 16);
 		};
@@ -77,6 +90,10 @@
 	$heroModule.on('change', onChange);
 	$heroModule.on('saveEvent', onSave);
 	$('.edit-btn').on('click', onEdit);
+	$('.save-btn').on('click', onSave);
+	$('.discard-btn').on('click', function() { onEdit(); revert(); });
+
 	$(window).resize(onResize);
+	load();
 
 })(window, jQuery);
