@@ -57,6 +57,7 @@
 				},
 				callback: function () {
 					$heroModule.stopThrobbing();
+					$heroImage.draggable('disable');
 					onEdit();
 					load();
 				},
