@@ -43,6 +43,8 @@ class NjordController extends WikiaController {
 	}
 
 	public function saveHeroData() {
+		wfProfileIn(__METHOD__);
+
 		$success = false;
 
 		$this->getResponse()->setFormat( 'json' );
@@ -54,12 +56,15 @@ class NjordController extends WikiaController {
 		$imageName = !empty( $wikiData['imagename'] ) ? $wikiData['imagename'] : null;
 
 		if ( $imageChanged && $imageName ) {
+			wfProfileIn(__METHOD__ . '::uploadStart');
 			$stash = RepoGroup::singleton()->getLocalRepo()->getUploadStash();
 
 			$temp_file = $stash->getFile( $imageName );
 			$file = new LocalFile( static::HERO_IMAGE_FILENAME, RepoGroup::singleton()->getLocalRepo() );
 
 			$status = $file->upload( $temp_file->getPath(), '', '' );
+			wfProfileIn(__METHOD__ . '::uploadEnd');
+
 			if ( $status->isOK() ) {
 				$wikiDataModel->setImageName($file->getTitle()->getDBKey());
 				$wikiDataModel->setImagePath($file->getFullUrl());
@@ -83,5 +88,7 @@ class NjordController extends WikiaController {
 
 		$this->getResponse()->setVal( 'success', $success );
 		$this->getResponse()->setVal( 'wikiData', $wikiDataModel);
+
+		wfProfileOut(__METHOD__);
 	}
 }
