@@ -163,7 +163,6 @@ define('wikia.ImgLzy', ['jquery', 'wikia.log', 'wikia.window'], function ($, log
 			},
 				scrollTop,
 				scrollSpeed,
-				lastScrollTop,
 				scrollBottom,
 				idx,
 				inViewport,
@@ -173,12 +172,10 @@ define('wikia.ImgLzy', ['jquery', 'wikia.log', 'wikia.window'], function ($, log
 			for (idx in this.cache) {
 				cacheItem = this.cache[idx];
 				scrollTop = cacheItem.$parent.scrollTop();
-				lastScrollTop = cacheItem.$parent.data('lastScrollTop') || 0;
-				scrollSpeed = Math.min(Math.abs(scrollTop - lastScrollTop), 1000) * 3 + 200;
+				scrollSpeed = Math.min(scrollTop, 1000) * 3 + 200;
 				scrollBottom = scrollTop + cacheItem.$parent.height() + scrollSpeed;
 				scrollTop = scrollTop - scrollSpeed;
 
-				cacheItem.$parent.data('lastScrollTop', lastScrollTop);
 				inViewport = (scrollTop < cacheItem.top && scrollBottom > cacheItem.top) ||
 					(scrollTop < cacheItem.bottom && scrollBottom > cacheItem.bottom);
 
