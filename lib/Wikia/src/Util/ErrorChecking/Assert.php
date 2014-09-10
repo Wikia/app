@@ -8,7 +8,7 @@
  * @author Nelson Monterroso <nelson@wikia-inc.com>
  */
 
-namespace Wikia\Util;
+namespace Wikia\Util\ErrorChecking;
 
 use Wikia\Logger\WikiaLogger;
 
@@ -17,11 +17,11 @@ class Assert {
 	 * @param boolean $check
 	 * @param string|null $message
 	 * @return bool true if the check passes
-	 * @throws \Exception if the check fails
+	 * @throws AssertionException if the check fails
 	 */
 	public static function boolean( $check, $message = 'Assert::boolean failed' ) {
 		if ( !$check ) {
-			$exception = new \Exception( $message );
+			$exception = new AssertionException( $message );
 			WikiaLogger::instance()->error( $message, [
 				'exception' => $exception,
 			] );

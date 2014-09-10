@@ -1,6 +1,6 @@
 <?php
 
-use Wikia\Util\Assert;
+use Wikia\Util\ErrorChecking\Assert;
 
 class AssertTest extends PHPUnit_Framework_TestCase {
 	public function testTrue() {
