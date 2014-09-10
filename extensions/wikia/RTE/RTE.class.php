@@ -563,37 +563,6 @@ HTML
 		return self::$instanceId;
 	}
 
-	public static function getTemplateParams(Title $titleObj, Parser $parser) {
-		global $wgRTETemplateParams;
-		wfProfileIn(__METHOD__);
-
-		$params = array();
-
-		$wgRTETemplateParams = true;
-		$templateDom = $parser->getTemplateDom($titleObj);
-		$wgRTETemplateParams = false;
-
-		if($templateDom[0]) {
-			// BugId:982 - use xpath to find all <tplarg> nodes
-			$xpath = $templateDom[0]->getXPath();
-
-			// <tplarg><title>foo</title></tplarg>
-			$nodes = $xpath->query('//tplarg/title');
-
-			foreach($nodes as $node) {
-				// skip nested <tplarg> tags
-				if ($node->childNodes->length == 1) {
-					$params[$node->textContent] = 1;
-				}
-			}
-		}
-
-		$ret = array_keys($params);
-
-		wfProfileOut(__METHOD__);
-		return $ret;
-	}
-
 	/**
 	 * Return list of templates to be placed in dropdown menu on CK toolbar
 	 * (moved to TemplateService)

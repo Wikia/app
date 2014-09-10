@@ -9,7 +9,7 @@
  * @copyright Copyright (C) 2008 Tomasz Odrobny (Tomek), Wikia, Inc.
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
  *
-
+ *
  */
 error_reporting(E_ALL);
 define("package_size", 100);

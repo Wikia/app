@@ -14,6 +14,7 @@ class Transaction {
 	const ENTRY_POINT_API = 'api/api';
 
 	// Parameters
+	const PARAM_ENVIRONMENT = 'env';
 	const PARAM_ENTRY_POINT = 'entry_point';
 	const PARAM_LOGGED_IN = 'logged_in';
 	const PARAM_PARSER_CACHE_USED = 'parser_cache_used';
@@ -37,6 +38,8 @@ class Transaction {
 	const SIZE_CATEGORY_AVERAGE = 'average';
 	const SIZE_CATEGORY_COMPLEX = 'complex';
 
+	const EVENT_ARTICLE_PARSE = 'article_parse';
+
 	/**
 	 * Returns TransactionTrace singleton instance
 	 *
@@ -45,10 +48,13 @@ class Transaction {
 	public static function getInstance() {
 		static $instance;
 		if ( $instance === null ) {
+			global $wgWikiaEnvironment;
 			$instance = new TransactionTrace( array(
 				// plugins
 				new TransactionTraceNewrelic(),
+				new TransactionTraceScribe(),
 			) );
+			$instance->set( self::PARAM_ENVIRONMENT, $wgWikiaEnvironment );
 		}
 		return $instance;
 	}
@@ -89,6 +95,17 @@ class Transaction {
 		}
 	}
 
+
+	/**
+	 * Records an event
+	 *
+	 * @param string $event Event name
+	 * @param array $data Event data
+	 */
+	public static function addEvent( $event, $data ) {
+		self::getInstance()->addEvent( $event, $data );
+	}
+
 	/**
 	 * Returns the automatically generated transaction type name
 	 *
@@ -99,12 +116,21 @@ class Transaction {
 	}
 
 	/**
-	 * Returns all the attributes of the current transaction
+	 * Returns all attributes of the current transaction
 	 *
 	 * @return array
 	 */
-	public static function getAll() {
-		return self::getInstance()->getAll();
+	public static function getAttributes() {
+		return self::getInstance()->getAttributes();
+	}
+
+	/**
+	 * Returns all events recorded during current transaction
+	 *
+	 * @return array
+	 */
+	public static function getEvents() {
+		return self::getInstance()->getEvents();
 	}
 
 	/**

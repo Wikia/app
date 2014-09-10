@@ -474,9 +474,14 @@
 				Lightbox.openModal.media.html('');
 			},
 			updateLightbox: function (data) {
+				var height = LightboxLoader.defaults.height;
+				if (data.extraHeight) {
+					height += data.extraHeight;
+				}
+
 				// Set lightbox css
 				var css = {
-						height: LightboxLoader.defaults.height
+						height: height
 					},
 					// prevent race conditions from timeout
 					trackingTitle = Lightbox.current.key;
