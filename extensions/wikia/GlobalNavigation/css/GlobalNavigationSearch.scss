@@ -37,12 +37,22 @@
 		div {
 			border-bottom: 1px solid $nav-alternative-color;
 			cursor: pointer;
-			padding: 15px 10px;
+			height: 55px;
+			line-height: 35px;
+			padding: 8px 10px;
 			white-space: initial;
 
 			&.selected {
 				background-color: $search-input-background;
 			}
+		}
+
+		span {
+			display: inline-block;
+			line-height: 18px;
+			max-height: 35px;
+			overflow: hidden;
+			vertical-align: middle;
 		}
 
 		div:last-child {

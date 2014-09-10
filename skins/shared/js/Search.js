@@ -46,6 +46,8 @@ WikiaSearchApp = (function() {
 
 	// download necessary dependencies (AutoComplete plugin) and initialize search suggest feature for #search_field
 	WikiaSearchApp.prototype.initSuggest = function() {
+		var autocompleteReEscape = new RegExp('(\\' + ['/', '.', '*', '+', '?', '|', '(', ')', '[', ']', '{', '}', '\\']
+			.join('|\\') + ')', 'g');
 		/*$.when(
 				$.loadJQueryAutocomplete()
 			).then($.proxy(function() {*/
@@ -81,6 +83,11 @@ WikiaSearchApp = (function() {
 					maxHeight: 1000,
 					selectedClass: 'selected',
 					width: '100%',
+					// Add span around every autocomplete result
+					fnFormatResult: function(value, data, currentValue) {
+						var pattern = '(' + currentValue.replace(autocompleteReEscape, '\\$1') + ')';
+						return '<span>' + value.replace(new RegExp(pattern, 'gi'), '<strong>$1<\/strong>') + '</span>';
+					},
 					//positionRight: this.positionRight + 'px',
 					skipBadQueries: true // BugId:4625 - always send the request even if previous one returned no suggestions
 				});
