@@ -64,7 +64,14 @@ class MercuryApiController extends WikiaController {
 	 * @return mixed
 	 */
 	private function getTopContributorsDetails( $ids ) {
-		return $this->sendRequest( 'UserApi', 'getDetails', [ 'ids' => implode( ',', $ids ) ] )->getData()[ 'items' ];
+		try {
+			return $this->sendRequest( 'UserApi', 'getDetails', [ 'ids' => implode( ',', $ids ) ] )->getData()[ 'items' ];
+		} catch (NotFoundApiException $e) {
+			// getDetails throws NotFoundApiException when no contributors are found
+			// and we want the article even if we don't have the contributors
+			return [];
+		}
+
 	}
 
 	/**
