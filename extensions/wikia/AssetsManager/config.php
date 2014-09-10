@@ -1499,6 +1499,7 @@ $config['analytics_bluekai_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => ['wikiamobile', 'venus' ],
 	'assets' => [
+		'//extensions/wikia/AdEngine/js/AdContext.js',
 		'//extensions/wikia/AdEngine/js/AdLogicPageParams.js',
 	]
 );
