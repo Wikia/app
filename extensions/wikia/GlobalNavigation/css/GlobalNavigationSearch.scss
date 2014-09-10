@@ -1,5 +1,6 @@
 @import 'GlobalNavigationColors';
-@import '../../Venus/styles/mixins';
+@import 'extensions/wikia/Venus/styles/mixins';
+@import 'extensions/wikia/Venus/styles/variables';
 
 .search-container {
 	@include grid-column-width('large', 7, 2 * $large-grid-gutter);
@@ -18,7 +19,7 @@
 	}
 
 	.search-label-bold {
-		color: $search-input-label-dark;
+		color: $nav-active-color;
 		font-weight: bold;
 		padding-left: 16px;
 		width: 0;
@@ -62,10 +63,14 @@
 			border-color: $nav-background-color;
 			border-top-color: $nav-alternative-color;
 			border-width: 5px;
-			margin-left: 6px;
+			margin-left: 2px;
 			margin-top: 14px;
 			position: relative;
 			top: 2px;
+
+			&.dark {
+				border-top-color: $nav-active-color;
+			}
 		}
 	}
 }
@@ -79,7 +84,7 @@
 		background-color: $search-input-background;
 		border: 0;
 		border-radius: 2px;
-		color: $search-input-label-dark;
+		color: $nav-active-color;
 		font-size: 16px;
 		font-weight: bold;
 		height: 36px;
@@ -102,7 +107,7 @@
 
 @media #{$small-only} {
 	.search-container {
-		@include grid-column-width('small', 7.4, 2 * $small-grid-gutter);
+		@include grid-column-width('small', 8, 2 * $small-grid-gutter - 36px);
 	}
 
 	.global-nav-search-input-wrapper {

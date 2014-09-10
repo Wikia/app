@@ -1,4 +1,4 @@
-@import '../../Venus/styles/variables';
+@import 'extensions/wikia/Venus/styles/variables';
 @import 'skins/shared/mixins/calc';
 
 $other-modules-width: 5 * $large-grid-column +  3 * $large-grid-gutter + 2 * $large-content-padding - 1px;
@@ -16,7 +16,7 @@ $other-modules-width: 5 * $large-grid-column +  3 * $large-grid-gutter + 2 * $la
 }
 
 @media #{$small-only} {
-	$other-modules-width: round(4.54 * $small-grid-column + 3 * $small-grid-gutter + 2 * $small-content-padding - 1px);
+	$other-modules-width: 4 * $small-grid-column + 3 * $small-grid-gutter + 2 * $small-content-padding - 1px + 28px;
 
 	.search-container {
 		@include width-calc('100% - #{$other-modules-width}');

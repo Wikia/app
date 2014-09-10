@@ -316,7 +316,6 @@ $config['oasis_nojquery_shared_js'] = array(
 		// oasis specific files
 		'//resources/wikia/libraries/bootstrap/tooltip.js',
 		'//resources/wikia/libraries/bootstrap/popover.js',
-		'//skins/oasis/js/hoverMenu.js',
 		'//skins/oasis/js/PageHeader.js',
 		'//skins/oasis/js/Search.js',
 		'//skins/oasis/js/WikiaFooter.js',
@@ -340,6 +339,17 @@ $config['oasis_anon_js'] = array(
 		'//extensions/wikia/UserLogin/js/UserLoginFacebook.js',
 		'//extensions/wikia/UserLogin/js/UserLoginFacebookForm.js',
 		'//extensions/wikia/UserLogin/js/UserLoginDropdown.js',
+		'//skins/oasis/js/LatestActivity.js',
+	)
+);
+
+// TODO: cleanup this after Global Navigation global release
+$config['oasis_anon_with_new_global_nav_js'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => array(
+		'//extensions/wikia/AdEngine/js/Exitstitial.js',
+		'//extensions/wikia/UserLogin/js/UserLoginFacebook.js',
+		'//extensions/wikia/UserLogin/js/UserLoginFacebookForm.js',
 		'//skins/oasis/js/LatestActivity.js',
 	)
 );
@@ -1945,12 +1955,31 @@ $config['global_navigation_oasis_scss'] = [
 	]
 ];
 
-/** this pack should be loaded only if GlobalNavigation extension is disabled */
+/** these packs should be loaded only if GlobalNavigation extension is disabled */
 $config['global_header_css'] = [
 	'type' => AssetsManager::TYPE_SCSS,
 	'skin' => ['oasis'],
 	'assets' => [
-		'//extensions/wikia/GlobalNavigation/css/GlobalNavigationAccountNavigation.scss',
+		'//skins/oasis/css/core/AccountNavigation.scss',
 		'//extensions/wikia/UserLogin/css/UserLoginDropdown.scss'
+	]
+];
+
+$config['global_header_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => ['oasis'],
+	'assets' => [
+		'//skins/oasis/js/hoverMenu.js',
+	]
+];
+
+$config['media_gallery_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => ['oasis'],
+	'assets' => [
+		'//extensions/wikia/MediaGallery/scripts/templates.mustache.js',
+		'//extensions/wikia/MediaGallery/scripts/views/media.js',
+		'//extensions/wikia/MediaGallery/scripts/views/toggler.js',
+		'//extensions/wikia/MediaGallery/scripts/controllers/index.js',
 	]
 ];

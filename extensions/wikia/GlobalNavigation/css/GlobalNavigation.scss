@@ -5,6 +5,7 @@
 .global-navigation {
 	background-color: $nav-background-color;
 	border-bottom: 1px solid $nav-alternative-color;
+	color: $nav-active-color;
 	position: fixed;
 	width: 100%;
 	z-index: $global-navigation-z-index;
@@ -20,6 +21,7 @@
 	border-left: 1px solid $nav-alternative-color;
 	float: left;
 	height: $global-navigation-height;
+	position: relative;
 }
 
 .global-navigation-link {
@@ -51,7 +53,7 @@
 }
 
 .wikia-logo {
-	padding: 0 20px; // TODO change padding when hamburger is ready
+	padding: 0 0 0 20px;
 
 	img {
 		background-image: url('/extensions/wikia/GlobalNavigation/images/wikia_logo.svg'); /* base64 */
@@ -62,7 +64,7 @@
 
 @media #{$small-only} {
 	.wikia-logo-container {
-		@include grid-column-width('small', 2.6, $small-content-padding);
+		@include grid-column-width('small', 2, $small-content-padding + 36px);
 	}
 
 	.start-wikia-container {
@@ -94,7 +96,7 @@
 @media #{$below-small} {
 	.global-navigation {
 		min-width: 767px;
-		position: static;
+		position: relative;
 	}
 
 	.wikia-page {

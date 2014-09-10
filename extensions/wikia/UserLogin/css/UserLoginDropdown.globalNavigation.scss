@@ -5,39 +5,45 @@
 @import 'extensions/wikia/Venus/styles/variables';
 @import 'extensions/wikia/Venus/styles/mixins';
 @import 'extensions/wikia/GlobalNavigation/css/GlobalNavigationColors';
-@import '../mixins/divider';
+
+.AccountNavigation.active .UserLoginDropdown {
+	display: block;
+}
 
 .UserLoginDropdown {
 	@include grid-column-width('large', 2, $large-grid-column-padding + $large-grid-gutter + $large-content-padding);
-	background-color: $color-page;
+	background-color: $nav-background-color;
 	border: 1px solid $nav-alternative-color;
-	color: $color-text;
+	color: $nav-font-alternative-color;
 	display: none;
-	font-size: 11px;
+	font-size: 12px;
 	list-style: none;
 	padding: 0;
 	position: relative;
 	right: $large-grid-column + $large-grid-gutter + $large-grid-column-padding + 1;
-
-	&.show {
-		display: block;
-	}
+	z-index: 5000100;
 
 	.ajaxRegisterContainer {
 		background-color: $nav-active-color;
+		display: table;
+		margin-bottom: 10px;
 		padding: $large-content-padding;
+		width: 100%;
 
 		.ajaxRegister {
 			background-color: $dropdown-font-color;
 			color: $nav-background-color;
-			display: block;
-			font-size: 15px;
+			display: table-cell;
 			font-weight: bold;
-			line-height: 40px;
+			height: 40px;
+			line-height: 16px;
+			padding: 4px;
 			text-align: center;
 			text-transform: uppercase;
+			vertical-align: middle;
 
 			&:hover, &:active {
+				background-color: $signup-background-hover-color;
 				text-decoration: none;
 			}
 		}
@@ -56,25 +62,30 @@
 			margin: 5px 0 20px;
 		}
 
-		.general-errors {
-			margin-top: 15px;
-		}
-
 		.input-group {
 			@include box-sizing;
 			line-height: inherit;
 			margin: 0;
 			padding: 0 10px;
 			width: 100%;
+
+			&.login-button {
+				margin-top: 10px;
+				padding: 0;
+			}
 		}
 
 		.keep-logged-in {
+			padding-bottom: 15px;
 			padding-top: 15px;
 			vertical-align: middle;
 		}
 
-		.login-button {
-			padding: 0;
+		input[type=text],
+		input[type=password],
+		input[type=submit] {
+			-webkit-appearance: none;
+			-webkit-border-radius: 0;
 		}
 
 		input[type=text],
@@ -91,8 +102,9 @@
 			border-bottom: 1px solid $nav-alternative-color;
 			color: $nav-active-color;
 			font-size: 15px;
-			height: 40px;
-			padding: 15px 0 5px;
+			height: 25px;
+			margin: 5px 0;
+			padding: 5px 0;
 			width: 100%;
 
 			&, &:focus, &:active {
@@ -105,25 +117,24 @@
 			margin: 0;
 		}
 
-		input.login-button[type="submit"] {
+		input[type=submit] {
 			@include clear-linear-gradient;
 			background-color: $nav-active-color;
 			border: 0;
 			border-radius: 0;
 			color: $nav-background-color;
-			display: block;
-			font-size: 15px;
 			font-weight: bold;
-			height: 40px;
-			line-height: 40px;
-			margin-top: 25px;
-			padding: 0 $large-content-padding;
+			line-height: 16px;
+			min-height: 40px;
+			padding: 4px;
 			text-transform: uppercase;
+			white-space: normal;
 			width: 100%;
-		}
+			word-break: break-word;
 
-		div {
-			padding: 0;
+			&:hover, &:active {
+				background-color: $dropdown-font-color;
+			}
 		}
 
 		fieldset {
@@ -135,23 +146,28 @@
 
 		label {
 			color: $nav-font-alternative-color;
-			font-size: 12px;
 			margin: 0;
 		}
 	}
 
 	.sso-login {
-		padding: $large-content-padding;
+		padding: 0 $large-content-padding $large-content-padding;
 
 		> .sso-login-divider {
-			@include divider;
-			border-color: $nav-alternative-color;
-			font-size: 12px;
-			margin-top: 0;
-			text-transform: uppercase;
+			border-top: solid 1px $nav-alternative-color;
+			height: 0;
+			margin: 20px 0;
+			text-align: center;
 
 			> span {
 				background-color: $nav-background-color;
+				color: $nav-alternative-color;
+				display: inline-block;
+				font-weight: bold;
+				padding: 0 5px;
+				position: relative;
+				text-transform: uppercase;
+				top: -8px;
 			}
 		}
 
@@ -160,10 +176,10 @@
 			border-radius: 0;
 			color: $nav-background-color;
 			display: block;
-			font-size: 15px;
 			font-weight: bold;
 			height: 40px;
 			line-height: 40px;
+			overflow: hidden;
 			padding: 0;
 			text-align: center;
 			text-transform: uppercase;
@@ -173,10 +189,14 @@
 				background-color: $facebook-background-color;
 				text-decoration: none;
 			}
+
+			&:hover, &:active {
+				background-color: $facebook-background-hover-color;
+			}
 		}
 
 		.sprite.facebook {
-			background-image: url('/skins/oasis/images/GlobalHeaderAB/fb_icon.png'); /* $wgCdnStylePath */
+			background-image: url('/extensions/wikia/UserLogin/images/facebook_icon.png'); /* base64 */
 			background-position: 15px bottom;
 			background-repeat: no-repeat;
 			border-right: 1px solid $facebook-button-divider-color;
@@ -194,7 +214,7 @@
 		right: 2 * $small-grid-column + 1;
 
 		.sso-login {
-			padding: $small-content-padding;
+			padding: 0 $small-content-padding $small-content-padding;
 		}
 
 		.ajaxRegisterContainer {
@@ -203,10 +223,6 @@
 
 		.WikiaForm {
 			padding: 0 $small-content-padding;
-
-			input.login-button[type="submit"] {
-				padding: 0 $small-content-padding;
-			}
 		}
 	}
 }
@@ -217,7 +233,7 @@
 		right: $medium-grid-column + $medium-grid-gutter + $medium-grid-column-padding + 1;
 
 		.sso-login {
-			padding: $medium-content-padding;
+			padding: 0 $medium-content-padding $medium-content-padding;
 		}
 
 		.ajaxRegisterContainer {
@@ -226,10 +242,6 @@
 
 		.WikiaForm {
 			padding: 0 $medium-content-padding;
-
-			input.login-button[type="submit"] {
-				padding: 0 $medium-content-padding;
-			}
 		}
 	}
 }
