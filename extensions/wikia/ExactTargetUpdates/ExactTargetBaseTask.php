@@ -5,6 +5,11 @@ use Wikia\Tasks\Tasks\BaseTask;
 class ExactTargetBaseTask extends BaseTask {
 	protected $oClient;
 
+	/**
+	 * Creates ExactTargetSoapClient object containing credentials to connect by API
+	 * Note: ExactTargetSoapClient should be called before other ExactTarget classes as it triggers other classes loading
+	 * @return ExactTargetSoapClient
+	 */
 	public function getClient() {
 		global $wgExactTargetApiConfig;
 		$wsdl = $wgExactTargetApiConfig[ 'wsdl' ];
@@ -12,10 +17,6 @@ class ExactTargetBaseTask extends BaseTask {
 		$oClient->username = $wgExactTargetApiConfig[ 'username' ];
 		$oClient->password = $wgExactTargetApiConfig[ 'password' ];
 		return $oClient;
-	}
-
-	public function initClient() {
-		$this->oClient = $this->getClient();
 	}
 
 	/**
