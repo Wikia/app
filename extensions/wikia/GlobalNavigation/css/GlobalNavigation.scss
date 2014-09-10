@@ -4,8 +4,8 @@
 
 .global-navigation {
 	background-color: $nav-background-color;
-	border-bottom: 1px solid $nav-alternative-color;
-	color: $nav-active-color;
+	border-bottom: 1px solid $nav-border-color;
+	color: $nav-foreground-dark-color;
 	position: fixed;
 	width: 100%;
 	z-index: $global-navigation-z-index;
@@ -13,19 +13,19 @@
 	.page-width {
 		@include clearfix;
 
-		border-right: 1px solid $nav-alternative-color;
+		border-right: 1px solid $nav-border-color;
 	}
 }
 
 .global-navigation-item {
-	border-left: 1px solid $nav-alternative-color;
+	border-left: 1px solid $nav-border-color;
 	float: left;
 	height: $global-navigation-height;
 	position: relative;
 }
 
 .global-navigation-link {
-	color: $nav-alternative-color;
+	color: $nav-border-color;
 	display: table-cell;
 	font-size: 18px;
 	font-weight: bold;
@@ -46,7 +46,7 @@
 	width: inherit;
 
 	&:hover {
-		background-color: $nav-active-color;
+		background-color: $nav-foreground-dark-color;
 		color: $nav-background-color;
 		text-decoration: none;
 	}

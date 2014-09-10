@@ -19,14 +19,14 @@
 	}
 
 	.search-label-bold {
-		color: $nav-active-color;
+		color: $nav-foreground-dark-color;
 		font-weight: bold;
 		padding-left: 16px;
 		width: 0;
 	}
 
 	.search-label-inline {
-		color: $nav-alternative-color;
+		color: $nav-border-color;
 	}
 
 	.table-cell {
@@ -61,7 +61,7 @@
 
 		.chevron {
 			border-color: $nav-background-color;
-			border-top-color: $nav-alternative-color;
+			border-top-color: $nav-border-color;
 			border-width: 5px;
 			margin-left: 2px;
 			margin-top: 14px;
@@ -69,7 +69,7 @@
 			top: 2px;
 
 			&.dark {
-				border-top-color: $nav-active-color;
+				border-top-color: $nav-foreground-dark-color;
 			}
 		}
 	}
@@ -81,10 +81,10 @@
 	width: 100%;
 
 	.search-input {
-		background-color: $search-input-background;
+		background-color: $nav-background-hover-color;
 		border: 0;
 		border-radius: 2px;
-		color: $nav-active-color;
+		color: $nav-foreground-dark-color;
 		font-size: 16px;
 		font-weight: bold;
 		height: 36px;
