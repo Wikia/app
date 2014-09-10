@@ -47,7 +47,7 @@ class WikiDataModel {
 		$this->imageName = wfGetWikiaPageProp( self::WIKI_HERO_IMAGE_PROP_ID, $pageId );
 		$this->title = wfGetWikiaPageProp( self::WIKI_HERO_TITLE_PROP_ID, $pageId );
 		$this->description = wfGetWikiaPageProp( self::WIKI_HERO_DESCRIPTION_ID, $pageId );
-		$this->cropPosition = wfGetWikiaPageProp( self::WIKI_HERO_IMAGE_CROP_POSITION_ID, $pageId );
+		$this->cropPosition = floatval(wfGetWikiaPageProp( self::WIKI_HERO_IMAGE_CROP_POSITION_ID, $pageId ));
 
 		$this->initializeImagePaths( $this->cropPosition );
 	}
