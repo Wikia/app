@@ -1,7 +1,7 @@
 <ul id="AccountNavigation" class="AccountNavigation">
 	<li>
 		<?= $navItemLinkOpeningTag ?>
-		<div class="avatar-container<?= $avatarContainerAditionalClass ?>">
+		<div class="avatar-container<?= $avatarContainerAdditionalClass ?>">
 			<?= $profileAvatar ?>
 		</div>
 		</a>

@@ -16,23 +16,23 @@ class GlobalNavigationAccountNavigationController extends WikiaController {
 
 		$this->isAnon = $wgUser->isAnon();
 		$this->username = $wgUser->getName();
-		$this->avatarContainerAditionalClass = '';
+		$this->avatarContainerAdditionalClass = '';
 		$this->profileAvatar = '';
 
 		$this->setupPersonalUrls();
 
 		if ( $this->isAnon ) {
 			$this->navItemLinkOpeningTag = $this->renderPersonalUrl( 'login', true );
-			$this->avatarContainerAditionalClass = ' anon-avatar-placeholder';
+			$this->avatarContainerAdditionalClass = ' anon-avatar-placeholder';
 			$this->registerLink = $this->renderPersonalUrl( 'register' );
 			$this->loginDropdown = F::app()->renderView( 'UserLoginSpecial', 'dropdown', [ 'template' => 'globalNavigationDropdown', 'registerLink' => $this->registerLink ] );
 		} else {
 			$this->navItemLinkOpeningTag = $this->renderPersonalUrl( 'userpage', true );
 
 			if ( AvatarService::isEmptyOrFirstDefault( $this->username ) ) {
-				$this->avatarContainerAditionalClass = ' logged-avatar-placeholder';
+				$this->avatarContainerAdditionalClass = ' logged-avatar-placeholder';
 			} else {
-				$this->profileAvatar = AvatarService::renderAvatar( $this->username, 36 );
+				$this->profileAvatar = AvatarService::renderAvatar( $this->username, AvatarService::AVATAR_SIZE_SMALL_PLUS );
 			}
 
 			$possibleItems = [ 'mytalk', 'following', 'preferences' ];
@@ -71,9 +71,9 @@ class GlobalNavigationAccountNavigationController extends WikiaController {
 	 * @return bool
 	 */
 	private static function isBlacklisted( $pageName ) {
-		$returntoBlacklist = [ 'Special:UserLogout', 'Special:UserSignup', 'Special:WikiaConfirmEmail', 'Special:Badtitle' ];
-		foreach ( $returntoBlacklist as $blackItem ) {
-			if ( strpos( $pageName, $blackItem ) === 0 ) {
+		$returntoForbiddenList = [ 'Special:UserLogout', 'Special:UserSignup', 'Special:WikiaConfirmEmail', 'Special:Badtitle' ];
+		foreach ( $returntoForbiddenList as $forbiddenPage ) {
+			if ( strpos( $pageName, $forbiddenPage ) === 0 ) {
 				return true;
 			}
 		}
