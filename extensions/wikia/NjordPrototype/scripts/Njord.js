@@ -42,6 +42,8 @@
 				heroData.imagepath = imagePath;
 				heroData.imagename = imageName;
 				heroData.imagechanged = true;
+				$('.toggle-btn').show();
+				$('.overlay').hide();
 			}
 			heroData.changed = true;
 
