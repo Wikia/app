@@ -26,7 +26,7 @@ require(
 				// Used by notifications reminder
 				this.reminderTimer = null;
 				this.reminderOffsetTop = 100;
-				this.unreadCount = parseInt(this.$notificationsCount.html());
+				this.unreadCount = parseInt(this.$notificationsCount.html(), 10);
 
 				this.$notifications
 					.mouseenter( this.proxy( this.updateCounts ) )
@@ -45,9 +45,9 @@ require(
 				}));
 
 				this.$wallNotifications.add( $('#pt-wall-notifications') )
-					.on('click', '#wall-notifications-markasread-sub', this.proxy( this.markAllAsReadPrompt ))
-					.on('click', '#wall-notifications-markasread-this-wiki', this.proxy( this.markAllAsRead ))
-					.on('click', '#wall-notifications-markasread-all-wikis', this.proxy( this.markAllAsReadAllWikis ));
+					.on('click', '#markasread-sub', this.proxy( this.markAllAsReadPrompt ))
+					.on('click', '#markasread-this-wiki', this.proxy( this.markAllAsRead ))
+					.on('click', '#markasread-all-wikis', this.proxy( this.markAllAsReadAllWikis ));
 			},
 
 			openNotifications: function(row) {
@@ -119,7 +119,7 @@ require(
 			fetchForCurrentWiki: function() {
 				if ( this.fetchedCurrent === false ) {
 					var wikiEl = this.$wallNotifications.find('.notifications-for-wiki').first(),
-						firstWikiId = wikiEl.data('wiki-id');
+						firstWikiId = parseInt(wikiEl.data('wiki-id'), 10);
 
 					if ( firstWikiId !== undefined ) {
 						wikiEl.addClass('show');
@@ -136,7 +136,7 @@ require(
 				// we update them from cache for all those that still have the same
 				// amount of unread notifications and fetch all the others
 				for (var wikiId in this.notificationsCache) {
-					this.updateWiki( wikiId );
+					this.updateWiki( parseInt(wikiId, 10) );
 				}
 			},
 
@@ -169,16 +169,7 @@ require(
 			},
 
 			markAllAsReadPrompt: function(e) {
-				e.preventDefault();
-
-				$('#wall-notifications-markasread-sub-opts').show();
-				$('#wall-notifications-dropdown').show();
-				var $markAsRead = $('#wall-notifications-markasread');
-				var height = $markAsRead.outerHeight()+4;
-				$markAsRead.closest('li').css({'height':height});
-				$('#wall-notifications-markasread-sub').addClass('disabled');
-
-				return false;
+				$(e.target).parent().addClass('show');
 			},
 
 			markAllAsRead: function(e) {
@@ -195,7 +186,7 @@ require(
 
 			showFirst: function() {
 				var wikiEl = this.$wallNotifications.find('.notifications-for-wiki').first(),
-					firstWikiId = wikiEl.data('wiki-id');
+					firstWikiId = parseInt(wikiEl.data('wiki-id'), 10);
 
 				if ( firstWikiId !== undefined ) {
 					wikiEl.addClass('show');
@@ -221,7 +212,7 @@ require(
 
 				this.$wallNotifications.find('.notifications-for-wiki').each(function() {
 					element = $(this);
-					self.wikisUrls[ element.data('wiki-id') ] = element.data('wiki-path');
+					self.wikisUrls[ parseInt(element.data('wiki-id'), 10) ] = element.data('wiki-path');
 				});
 
 				this.$wallNotifications.find('.notifications-wiki-header').click( this.proxy( this.wikiClick ) );
@@ -230,7 +221,7 @@ require(
 			wikiClick: function(e) {
 				e.preventDefault();
 				var wikiEl = $(e.target).parent('.notifications-for-wiki'),
-					wikiId = wikiEl.data('wiki-id');
+					wikiId = parseInt(wikiEl.data('wiki-id'), 10);
 
 				if( wikiEl.hasClass('show') ) {
 					wikiEl.removeClass('show');
@@ -266,9 +257,6 @@ require(
 			},
 
 			updateWikiFetch: function(wikiId) {
-				if(!Number.isInteger(wikiId)) {
-					wikiId = parseInt(wikiId, 10);
-				}
 				var isCrossWiki = (wikiId === this.cityId) ? '0' : '1';
 				nirvana.sendRequest({
 					controller: 'WallNotificationsExternalController',
