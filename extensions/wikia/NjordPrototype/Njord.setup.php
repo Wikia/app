@@ -16,7 +16,7 @@ $wgAutoloadClasses['NjordController'] =  $dir . '/NjordController.class.php';
 
 $wgHooks['ParserFirstCallInit'][] = 'NjordHooks::onParserFirstCallInit';
 
-if($wgEnableNjordExtOnNewWikias) {
+if ( !empty( $wgEnableNjordExtOnNewWikias ) ) {
 	$wgHooks['CreateWikiLocalJob-complete'][] = 'NjordHooks::onCreateNewWikiComplete';
 }
 
