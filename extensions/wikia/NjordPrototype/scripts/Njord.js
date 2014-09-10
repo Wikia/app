@@ -104,7 +104,8 @@
 	$('.edit-btn').on('click', onEdit);
 	$('.save-btn').on('click', onSave);
 	$('.discard-btn').on('click', function () { onEdit(); revert(); });
-	$('.toggle-upload-btn').on('click', function() { $('.toggle-btn').toggle(); $('.overlay').toggle(); });
+	$('.toggle-upload-btn').on('click', function() { $('.toggle-btn').hide(); $('.overlay').show(); });
+	$('.close-upload-btn').on('click', function() { $('.toggle-btn').show(); $('.overlay').hide(); });
 
 	$(window).resize(onResize);
 	load();

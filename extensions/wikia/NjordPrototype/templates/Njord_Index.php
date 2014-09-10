@@ -14,7 +14,7 @@
 					<div class="upload-btn new-btn">Upload image</div>
 				</div>
 				<div class="btn-group-top">
-					<div class="toggle-upload-btn new-btn">X</div>
+					<div class="close-upload-btn new-btn">X</div>
 				</div>
 			</div>
 		</div>
