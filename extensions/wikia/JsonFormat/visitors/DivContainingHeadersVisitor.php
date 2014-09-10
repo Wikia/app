@@ -17,8 +17,18 @@ class DivContainingHeadersVisitor extends DOMNodeVisitorBase {
 				return true;
 			}
 
-			// if this div contains tabs
+			// this div contains <tabview> tabs
 			if( strpos( $currentNode->getAttribute('id'), 'flytab' ) !== false ) {
+				return true;
+			}
+
+			// this div contains <tabber> tabs
+			if( $currentNode->getAttribute('class') == 'tabber' ) {
+				return true;
+			}
+
+			// each tab of <tabber> tabs - wrapped into div with class 'tabbertab'
+			if( $currentNode->getAttribute('class') == 'tabbertab' ) {
 				return true;
 			}
 
@@ -42,9 +52,13 @@ class DivContainingHeadersVisitor extends DOMNodeVisitorBase {
 		DomHelper::verifyDomElementArgument( $currentNode, "currentNode" );
 
 		if( strpos( $currentNode->getAttribute('id'), 'flytab' ) !== false ) {
-			// current div contains tabs
-			// so, we need to handle tabs
-			$this->parseTabs( $currentNode );
+			// current div contains <tabview> tabs (ajax tabs)
+			// each tab treated as section
+			$this->parseTabview( $currentNode );
+		} else if( $currentNode->getAttribute('class') == 'tabber' ) {
+			// current div contains <tabber> tabs (embedded tabs)
+			// each tab treated as section
+			$this->parseTabber( $currentNode );
 		} else {
 			// this is not div with tabs
 			// so, we will just visit child nodes
@@ -53,7 +67,7 @@ class DivContainingHeadersVisitor extends DOMNodeVisitorBase {
 	}
 
 	/**
-	 * This is div with tabs.
+	 * This is div with <tabview> tabs (ajax tabs).
 	 * It has following structure:
 	 *
 	 * <div id="flytabs_0">
@@ -78,7 +92,7 @@ class DivContainingHeadersVisitor extends DOMNodeVisitorBase {
 	 *
 	 * @param DOMNode $currentNode
 	 */
-	protected function parseTabs( DOMNode $currentNode ) {
+	protected function parseTabview( DOMNode $currentNode ) {
 		$xpath = new DOMXPath( $currentNode->ownerDocument );
 		$tabUrls = $xpath->query( ".//@href", $currentNode );
 
@@ -186,6 +200,46 @@ class DivContainingHeadersVisitor extends DOMNodeVisitorBase {
 			foreach( $node->getChildren() as $child ) {
 				$this->addLevel( $child, $level );
 			}
+		}
+	}
+
+	/**
+	 * This is div with <tabber> tabs (embedded tabs).
+	 * It has following structure (embedded divs with class "tabbertab"):
+	 *
+	 * <div class="tabber">
+	 *      <div class="tabbertab" title="Title of the tab">
+	 *          ...
+	 *      </div>
+	 *      ...
+	 *      <div class="tabbertab" title="Title of the other tab">
+	 *          ...
+	 *      </div>
+	 * </div>
+	 *
+	 * This structure is the same pages which use <tabber>.
+	 *
+	 * So, this method treats each tab as a separate section.
+	 *
+	 * @param DOMNode $currentNode
+	 */
+	protected function parseTabber( DOMNode $currentNode ) {
+		// extracting all divs, which corresponds to embedded tabs
+		$xpath = new DOMXPath( $currentNode->ownerDocument );
+		$tabNodes = $xpath->query( ".//div[contains(@class, 'tabbertab')]", $currentNode );
+		// parse each div, and put into its own section
+		foreach ( $tabNodes as $tabNode ) {
+			$tabTitle = $tabNode->getAttribute( 'title' );
+
+			$tabSection = new JsonFormatSectionNode( 1, $tabTitle );
+			$jsonFormatTraversingState = new \JsonFormatBuilder();
+			$jsonFormatTraversingState->pushSection( $tabSection );
+
+			$visitor = ( new \Wikia\JsonFormat\HtmlParser() )->createVisitor( $jsonFormatTraversingState );
+			$visitor->visit( $tabNode );
+
+			$this->adjustLevel( $tabSection );
+			$this->getJsonFormatBuilder()->add( $tabSection );
 		}
 	}
 }

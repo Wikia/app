@@ -63,7 +63,7 @@ class JsonFormatService extends \WikiaService {
 			 * E.g. when page contains tab, which is actually link to itself,
 			 * or if any tab contains tab, which referenced to given page.
 			 *
-			 * @see DivContainingHeadersVisitor::parseTabs
+			 * @see DivContainingHeadersVisitor::parseTabview
 			 */
 			\Wikia\JsonFormat\HtmlParser::markAsVisited( $article->getTitle()->getText() );
 			$jsonFormatRootNode = $this->getJsonFormatForArticle( $article );

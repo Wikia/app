@@ -10,7 +10,7 @@ class HtmlParser {
 	 * Prevention from circular references, when parsing articles with tabs.
 	 * Used for storing titles of articles, which been visited.
 	 * @var array
-	 * @see DivContainingHeadersVisitor::parseTabs
+	 * @see DivContainingHeadersVisitor::parseTabview
 	 */
 	protected static $VISITED_ARTICLES = [ ];
 
@@ -48,7 +48,7 @@ class HtmlParser {
 		return $root;
 	}
 
-	protected function createVisitor( $jsonFormatTraversingState ) {
+	public function createVisitor( $jsonFormatTraversingState ) {
 		$compositeVisitor = new \CompositeVisitor();
 
 		$compositeVisitor->addVisitor( new \TextNodeVisitor($compositeVisitor, $jsonFormatTraversingState) );
