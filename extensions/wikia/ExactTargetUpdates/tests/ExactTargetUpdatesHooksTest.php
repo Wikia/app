@@ -123,7 +123,10 @@ class ExactTargetUpdatesHooksTest extends WikiaBaseTest {
 			->getMock();
 
 		/* Mock ExactTargetAddUserTask */
-		$mockAddUserTask = $this->getMock( 'ExactTargetAddUserTask', [ 'call', 'queue' ] );
+		$mockAddUserTask = $this->getMockBuilder( 'ExactTargetAddUserTask' )
+			->disableOriginalConstructor()
+			->setMethods( [ 'call', 'queue' ] )
+			->getMock();
 		$mockAddUserTask
 			->expects( $this->never() )
 			->method( 'call' );
@@ -132,7 +135,9 @@ class ExactTargetUpdatesHooksTest extends WikiaBaseTest {
 			->method( 'queue' );
 
 		/* Get mock object of tested class ExactTargetUpdatesHooks */
-		$exactTargetUpdatesHooksMock = $this->getMock( 'ExactTargetUpdatesHooks', [ 'prepareUserParams' ] );
+		$exactTargetUpdatesHooksMock = $this->getMockBuilder( 'ExactTargetUpdatesHooks' )
+			->setMethods( [ 'prepareUserParams' ] )
+			->getMock();
 		$exactTargetUpdatesHooksMock
 			->expects( $this->never() )
 			->method( 'prepareUserParams' );
@@ -162,8 +167,11 @@ class ExactTargetUpdatesHooksTest extends WikiaBaseTest {
 			->disableOriginalConstructor()
 			->getMock();
 
-		/* Mock ExactTargetAddUserTask */
-		$mockUpdateUserTask = $this->getMock( 'ExactTargetUpdateUserTask', [ 'call', 'queue' ] );
+		/* Mock ExactTargetUpdateUserTask */
+		$mockUpdateUserTask = $this->getMockBuilder( 'ExactTargetUpdateUserTask' )
+			->disableOriginalConstructor()
+			->setMethods( [ 'call', 'queue' ] )
+			->getMock();
 		$mockUpdateUserTask
 			->expects( $this->once() )
 			->method( 'call' );
@@ -172,7 +180,9 @@ class ExactTargetUpdatesHooksTest extends WikiaBaseTest {
 			->method( 'queue' );
 
 		/* Get mock object of tested class ExactTargetUpdatesHooks */
-		$exactTargetUpdatesHooksMock = $this->getMock( 'ExactTargetUpdatesHooks', [ 'prepareUserParams' ] );
+		$exactTargetUpdatesHooksMock = $this->getMockBuilder( 'ExactTargetUpdatesHooks' )
+			->setMethods( [ 'prepareUserParams' ] )
+			->getMock();
 		$exactTargetUpdatesHooksMock
 			->expects( $this->once() )
 			->method( 'prepareUserParams' );
