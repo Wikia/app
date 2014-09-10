@@ -133,11 +133,8 @@ class MercuryApiController extends WikiaController {
 	 * @throws InvalidParameterApiException
 	 */
 	public function getArticleComments() {
-		$articleId = $this->request->getInt( self::ARTICLE_ID_PARAMETER_NAME, NULL );
-
-		if ( empty( $articleId ) ) {
-			throw new MissingParameterApiException( self::ARTICLE_ID_PARAMETER_NAME );
-		}
+		$title = $this->getTitleFromRequest();
+		$articleId = $title->getArticleId();
 
 		$page = $this->request->getInt( self::PARAM_PAGE, self::DEFAULT_PAGE );
 
