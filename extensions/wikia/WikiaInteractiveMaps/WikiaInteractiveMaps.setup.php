@@ -21,6 +21,7 @@ $wgAutoloadClasses[ 'WikiaInteractiveMapsParserTagController' ] = $dir . '/contr
 $wgAutoloadClasses[ 'WikiaInteractiveMapsBaseController' ] = $dir . '/controllers/WikiaInteractiveMapsBaseController.class.php';
 $wgAutoloadClasses[ 'WikiaInteractiveMapsMapController' ] = $dir . '/controllers/WikiaInteractiveMapsMapController.class.php';
 $wgAutoloadClasses[ 'WikiaInteractiveMapsPoiController' ] = $dir . '/controllers/WikiaInteractiveMapsPoiController.class.php';
+$wgAutoloadClasses[ 'WikiaInteractiveMapsPoiCategoryController' ] = $dir . '/controllers/WikiaInteractiveMapsPoiCategoryController.class.php';
 
 // helper classes
 $wgAutoloadClasses[ 'WikiaInteractiveMapsHooks' ] = $dir . 'WikiaInteractiveMapsHooks.class.php';

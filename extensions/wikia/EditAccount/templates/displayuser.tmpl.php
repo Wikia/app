@@ -63,6 +63,15 @@
 </fieldset>
 <fieldset>
 	<legend><?= wfMessage( 'editaccount-frame-close', $user )->escaped(); ?></legend>
+<?php if ( $isClosureRequested ) { ?>
+	<?= wfMessage( 'editaccount-closure-requested' )->parseAsBlock(); ?>
+	<form method="post" action="">
+		<input type="submit" value="<?= wfMessage( 'editaccount-submit-clearclosurerequest' )->escaped(); ?>" <?= $disabled; ?> />
+		<input type="hidden" name="wpAction" value="clearclosurerequest" />
+		<input type="hidden" name="wpUserName" value="<?= $user_hsc ?>" />
+		<input type="hidden" name="wpToken" value="<?= htmlspecialchars( $editToken ); ?>" />
+	</form>
+<?php } ?>
 	<p><?= wfMessage( 'editaccount-usage-close' )->escaped(); ?></p>
 	<form method="post" action="">
 		<input type="submit" value="<?= wfMessage( 'editaccount-submit-close' )->escaped(); ?>" <?= $disabled; ?> />

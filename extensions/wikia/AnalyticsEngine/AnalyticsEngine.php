@@ -57,6 +57,8 @@ class AnalyticsEngine {
 				return new AnalyticsProviderClarityRay();
 			case 'PageFair':
 				return new AnalyticsProviderPageFair();
+			case 'RubiconRTP':
+				return new AnalyticsProviderRubiconRTP();
 		}
 
 		return null;

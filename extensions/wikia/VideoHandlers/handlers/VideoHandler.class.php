@@ -88,14 +88,17 @@ abstract class VideoHandler extends BitmapHandler {
 
 	/**
 	 * Returns embed code for a provider
-	 * @param $articleId
-	 * @param $width
-	 * @param bool $autoplay
-	 * @param bool $isAjax
-	 * @param bool $postOnload
+	 *
+	 * @param int $width
+	 * @param array $options [optional] associative array which accepts the following keys
+	 *  'articleId' int // deprecated, do not use!
+	 *  'autoplay' bool
+	 *  'isAjax' bool
+	 *  'isInline' bool
+	 *  'postOnload' bool
 	 * @return string Embed HTML
 	 */
-	abstract function getEmbed( $articleId, $width, $autoplay = false, $isAjax = false, $postOnload = false );
+	abstract function getEmbed( $width, array $options = [] );
 
 	/**
 	 * Returns embed data

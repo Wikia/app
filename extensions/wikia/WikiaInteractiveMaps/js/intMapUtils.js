@@ -362,7 +362,7 @@ define(
 		 *
 		 * @param {string} action one of Wikia.Tracker.ACTIONS
 		 * @param {string} label
-		 * @param {integer} value
+		 * @param {Number} value
 		 */
 		function track(action, label, value) {
 			var trackingParams = {
@@ -403,6 +403,15 @@ define(
 			return config.actions[action];
 		}
 
+		/** @desc checks if the first param is an array and if the second param is a key of that array
+		 * @param {Array|*} array
+		 * @param {Number} key
+		 * @returns {boolean} - does array has given key
+		 */
+		function inArray(array, key) {
+			return array instanceof Array && array.indexOf(key) > -1;
+		}
+
 		return {
 			loadModal: loadModal,
 			createModal: createModal,
@@ -420,14 +429,13 @@ define(
 			showError: showError,
 			cleanUpError: cleanUpError,
 			createThumbURL: createThumbURL,
-
 			onWriteInInput: onWriteInInput,
 			escapeHtml: escapeHtml,
 			track: track,
 			trackerActions: tracker.ACTIONS,
-
 			triggerAction: triggerAction,
-			getActionConfig: getActionConfig
+			getActionConfig: getActionConfig,
+			inArray: inArray
 		};
 	}
 );
