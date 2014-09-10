@@ -1840,6 +1840,7 @@ $config['int_map_special_page_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => ['oasis'],
 	'assets' => [
+		'//extensions/wikia/WikiaInteractiveMaps/js/intMapConfig.js',
 		'//extensions/wikia/WikiaInteractiveMaps/js/intMapUtils.js',
 		'#group_int_map_ponto',
 		'//extensions/wikia/WikiaInteractiveMaps/js/WikiaInteractiveMaps.js'
@@ -1863,6 +1864,15 @@ $config['int_map_create_map_js'] = [
 		'//extensions/wikia/WikiaInteractiveMaps/js/intMapCreateMapTileSet.js',
 		'//extensions/wikia/WikiaInteractiveMaps/js/intMapCreateMapPreview.js',
 		'//extensions/wikia/WikiaInteractiveMaps/js/intMapCreateMapModal.js',
+	]
+];
+
+$config['int_map_create_map_contribute_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => ['oasis'],
+	'assets' => [
+		'//extensions/wikia/WikiaInteractiveMaps/js/intMapConfig.js',
+		'//extensions/wikia/WikiaInteractiveMaps/js/intMapUtils.js',
 	]
 ];
 
@@ -1917,6 +1927,22 @@ $config['int_map_special_page_scss_wikiamobile'] = [
 	'skin' => ['wikiamobile'],
 	'assets' => [
 		'//extensions/wikia/WikiaInteractiveMaps/css/WikiaMaps.wikiamobile.scss',
+	]
+];
+
+$config['int_map_parser_tag_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => ['oasis'],
+	'assets' => [
+		'//extensions/wikia/WikiaInteractiveMaps/js/WikiaInteractiveMapsParserTag.js',
+	]
+];
+
+$config['int_map_contribution_button_create_map_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => ['oasis'],
+	'assets' => [
+		'//extensions/wikia/WikiaInteractiveMaps/js/WikiaInteractiveMapsCreateMap.js',
 	]
 ];
 
