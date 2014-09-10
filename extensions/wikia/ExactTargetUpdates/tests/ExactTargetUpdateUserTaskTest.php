@@ -207,5 +207,5 @@ class ExactTargetUpdateUserTaskTest extends WikiaBaseTest {
 			[ $aUserData, $oUpdateRequest ]
 		];
 	}
-
 }
+
