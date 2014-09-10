@@ -331,10 +331,11 @@ class ContactForm extends SpecialPage {
 		#sending done, show message
 
 		#parse this message to allow wiki links (BugId: 1048)
-		$output->addHTML( $this->msg( 'specialcontact-submitcomplete' )->parseAsBlock() );
+		$output->addHTML( $this->msg( 'specialcontact-submitcomplete' )->parse() );
 
 		$mp = Title::newMainPage();
-		$output->addReturnTo( $mp );
+		$link = Xml::element('a', array('href'=>$mp->getLocalURL()), $mp->getPrefixedText());
+		$output->addHTML( $this->msg( 'returnto' )->rawParams( $link )->escaped() );
 
 		return;
 	}

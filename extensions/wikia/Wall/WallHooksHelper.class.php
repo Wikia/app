@@ -1051,7 +1051,8 @@ class WallHooksHelper {
 				//this will be deletion/removal/restore summary
 				$text = $rc->getAttribute('rc_comment');
 
-				$comment = Linker::commentBlock( $text );
+				if( !empty($text) ) $comment = Xml::element('span', array('class' => 'comment'), ' ('.$text.')');
+				else $comment = '';
 			} else {
 				$comment = '';
 			}

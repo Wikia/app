@@ -4,18 +4,14 @@
  *
  * @author Federico "Lox" Lucignano <federico@wikia-inc.com>
  */
-use Wikia\Search\Config;
-use Wikia\Search\QueryService\Factory;
-use Wikia\Search\QueryService\DependencyContainer;
-use Wikia\Util\GlobalStateWrapper;
+use Wikia\Search\Config, Wikia\Search\QueryService\Factory, Wikia\Search\QueryService\DependencyContainer;
 
 class ArticlesApiController extends WikiaApiController {
 
-	const CACHE_VERSION = 16;
+	const CACHE_VERSION = 15;
 
 	const POPULAR_ARTICLES_PER_WIKI = 10;
 	const POPULAR_ARTICLES_NAMESPACE = 0;
-	const TRENDING_ARTICLES_LIMIT = 100;
 
 	const MAX_ITEMS = 250;
 	const ITEMS_PER_BATCH = 25;
@@ -67,9 +63,6 @@ class ArticlesApiController extends WikiaApiController {
 		'height'
 	];
 
-	const PARAMETER_BASE_ARTICLE_ID = 'baseArticleId';
-
-	private $excludeNamespacesFromCategoryMembersDBQuery = false;
 
 	/**
 	 * Get the top articles by pageviews optionally filtering by category and/or namespaces
@@ -503,21 +496,7 @@ class ArticlesApiController extends WikiaApiController {
 					$namespaces = implode( '|', $namespaces );
 				}
 
-				/**
-				 * Wrapping global wgMiserMode.
-				 *
-				 * wgMiserMode = true (default) changes the behavior of categorymembers mediawiki API, causing it to
-				 * filter by namespace after making database query constrained by $limit and thus resulting
-				 * in Api returning fewer than $limit results
-				 *
-				 * wgMiserMode = false filters on DB level
-				 */
-				$wrapper = new GlobalStateWrapper( [
-					'wgMiserMode' => $this->excludeNamespacesFromCategoryMembersDBQuery
-				] );
-				$articles = $wrapper->wrap( function () use ( $category, $limit, $offset, $namespaces ) {
-					return self::getCategoryMembers( $category->getFullText(), $limit, $offset, $namespaces );
-				} );
+				$articles = self::getCategoryMembers( $category->getFullText(), $limit, $offset, $namespaces );
 			} else {
 				wfProfileOut( __METHOD__ );
 				throw new InvalidParameterApiException( self::PARAMETER_CATEGORY );
@@ -994,158 +973,33 @@ class ArticlesApiController extends WikiaApiController {
 	public function getPopular() {
 		$limit = $this->getRequest()->getInt( self::PARAMETER_LIMIT, self::POPULAR_ARTICLES_PER_WIKI );
 		$expand = $this->request->getBool( static::PARAMETER_EXPAND, false );
-		$baseArticleId = $this->getRequest()->getVal( self::PARAMETER_BASE_ARTICLE_ID, false );
 		if ( $limit < 1 || $limit > self::POPULAR_ARTICLES_PER_WIKI ) {
 			throw new OutOfRangeApiException( self::PARAMETER_LIMIT, 1, self::POPULAR_ARTICLES_PER_WIKI );
 		}
+		$key = self::getCacheKey( self::POPULAR_CACHE_ID, '' , [ $expand ]);
 
-		$key = self::getCacheKey( self::POPULAR_CACHE_ID, '', [ $expand, $baseArticleId ] );
-
-		$popular = $this->wg->Memc->get( $key );
-		if ( $popular === false ) {
-			$popular = $this->getResultFromConfig( $this->getConfigFromRequest() );
+		$result = $this->wg->Memc->get( $key );
+		if ( $result === false ) {
+			$result = $this->getResultFromConfig( $this->getConfigFromRequest() );
 			if ( $expand ) {
-				$articleIds = [ ];
+				$articleIds = [];
 				$params = $this->getDetailsParams();
-				foreach ( $popular as $item ) {
-					$articleIds[ ] = $item[ 'id' ];
+				foreach($result as $item){
+					$articleIds[] = $item['id'];
 				}
-				$popular = $this->getArticlesDetails( $articleIds, $params[ 'titleKeys' ], $params[ 'width' ], $params[ 'height' ], $params[ 'length' ], true );
+				$result = $this->getArticlesDetails( $articleIds, $params[ 'titleKeys' ], $params[ 'width' ], $params[ 'height' ], $params[ 'length' ], true );
 			}
 
-			if ( $baseArticleId !== false ) {
-				$popular = $this->rerankPopularToArticle( $popular, $baseArticleId );
-			}
-
-			$this->wg->set( $key, $popular, self::CLIENT_CACHE_VALIDITY );
+			$this->wg->set( $key, $result, self::CLIENT_CACHE_VALIDITY );
 		}
 
-		$popular = array_slice( $popular, 0, $limit );
-
-		global $wgServer;
+		$result = array_slice( $result, 0, $limit );
 		$this->setResponseData(
-			[ 'items' => $popular, 'basepath' => $wgServer ],
-			[ 'imgFields' => 'thumbnail', 'urlFields' => [ 'thumbnail', 'url' ] ],
+			[ 'items' => $result, 'basepath' => $this->wg->Server ],
+			[ 'imgFields'=> 'thumbnail', 'urlFields' => [ 'thumbnail', 'url' ] ],
 			self::CLIENT_CACHE_VALIDITY
 		);
 
-	}
-
-	/**
-	 * For finding trending articles - we perform reranking of popular articles:
-	 * 1) Extract list of popular articles for given wikia
-	 * 2) Extract links from given article
-	 * 3) Promote that popular articles, to which given article has links (move to top of popular list)
-	 *
-	 * If popular articles were not reranked - it means that
-	 * given article doesn't have links to any popular articles within whole wikia
-	 *
-	 * So, we perform the following fallback:
-	 * 1) Find category to which base article belongs
-	 * 2) Get most popular articles of this category
-	 * 3) Rerank these articles due to links in base article
-	 */
-	protected function rerankPopularToArticle( $popular, $baseArticleId ) {
-		$links = ( new ApiOutboundingLinksService() )->getOutboundingLinks( $baseArticleId );
-		$rerankedPopular = $this->reorderForLinks( $popular, $links );
-
-		$baseArticleTitle = Title::newFromID($baseArticleId);
-		$baseArticleUrl = $baseArticleTitle->getLocalURL();
-
-		// if base article in the list of popular - remove it from this list
-		$popular = array_filter( $popular, $this->otherUrlThan( $baseArticleUrl ) );
-
-		if ( $rerankedPopular === $popular ) {
-
-			$category = $this->getCategoryOfArticle( $baseArticleId );
-
-			if ( !empty( $category ) ) {
-
-				$popularForCategory = $this->getPopularForCategory( $category );
-
-				// if base article in the list of popular for category - remove it from this list
-				$popularForCategory = array_filter( $popularForCategory, $this->otherUrlThan( $baseArticleUrl ) );
-
-				// collect urls of popular articles for given category
-				$categoryUrls = [ ];
-				foreach( $popularForCategory  as $item ) {
-					$categoryUrls[ ] = $item[ 'url' ];
-				}
-
-				// remove articles from array of popular articles for entire wikia, which have url as popular articles for given category
-				$popular = array_filter( $popular, $this->otherUrlThan( $categoryUrls ) );
-
-				// merge: popular for category + popular for entire wikia
-				$popularForCategory = array_merge( $popularForCategory, $popular );
-
-				$rerankedPopularForCategory = $this->reorderForLinks( $popularForCategory, $links );
-
-				$popular = $rerankedPopularForCategory;
-			}
-
-		} else {
-			$popular = $rerankedPopular;
-		}
-
-		return $popular;
-	}
-
-	/**
-	 * Return function (predicate), which consumes objects, which contains field 'url'
-	 * and compares value of this field with list of $urls
-	 * if this list doesn't contain given url - predicate returns true
-	 *
-	 * This function used for filtering array
-	 */
-	protected function otherUrlThan( $urls ) {
-		if( !is_array( $urls ) ) {
-			$urls = [ $urls ];
-		}
-
-		$hashSet = [ ];
-		foreach( $urls as $url ) {
-			$hashSet[ $url ] = true;
-		}
-
-		return function( $item ) use ( $hashSet ) {
-			$url = $item[ 'url' ];
-			return $hashSet[ $url ] !== true;
-		};
-	}
-
-	protected function getCategoryOfArticle( $articleId ) {
-
-		// querying Solr for all categories for given article
-
-		global $wgCityId;
-
-		$categoriesConfig = ( new Wikia\Search\Config() )
-			->setDirectLuceneQuery( true )
-			->setQuery( 'id:' . $wgCityId . '_' . $articleId )
-			->setLimit( 1 );
-
-		$categories = ( new Factory )->getFromConfig( $categoriesConfig )->searchAsApi( [ 'categories_mv_en' ] );
-
-		if ( !empty( $categories[ 0 ][ 'categories_mv_en' ][ 0 ] ) ) {
-			// returning first category from Solr response
-			return $categories[ 0 ][ 'categories_mv_en' ][ 0 ];
-		}
-
-		return null;
-	}
-
-	protected function getPopularForCategory( $category ) {
-		global $wgCityId;
-
-		$popularForCategoryConfig = ( new Wikia\Search\Config() )
-			->setLimit( self::TRENDING_ARTICLES_LIMIT )
-			->setDirectLuceneQuery( true )
-			->setRank( \Wikia\Search\Config::RANK_MOST_VIEWED )
-			->setQuery( '(wid:' . $wgCityId . ') AND (ns:' . NS_MAIN . ') AND (categories_mv_en:' . $category . ')' );
-
-		$popularForCategory = $this->getResultFromConfig( $popularForCategoryConfig );
-
-		return $popularForCategory;
 	}
 
 	/**
@@ -1177,16 +1031,9 @@ class ArticlesApiController extends WikiaApiController {
 	 */
 	protected function getConfigFromRequest() {
 		$request = $this->getRequest();
-
-		$limit = self::POPULAR_ARTICLES_PER_WIKI;
-		$baseArticleId = $request->getVal( self::PARAMETER_BASE_ARTICLE_ID, false );
-		if( $baseArticleId !== false ) {
-			$limit = self::TRENDING_ARTICLES_LIMIT;
-		}
-
 		$searchConfig = new Wikia\Search\Config;
 		$searchConfig
-			->setLimit( $limit )
+			->setLimit( self::POPULAR_ARTICLES_PER_WIKI )
 			->setRank( \Wikia\Search\Config::RANK_MOST_VIEWED )
 			->setOnWiki( true )
 			->setNamespaces( [ self::POPULAR_ARTICLES_NAMESPACE ] )
@@ -1211,70 +1058,5 @@ class ArticlesApiController extends WikiaApiController {
 		$memc = F::app()->wg->Memc;
 		$memc->delete( self::getCacheKey( $id, self::ARTICLE_CACHE_ID ) );
 		$memc->delete( self::getCacheKey( $id, self::DETAILS_CACHE_ID ) );
-	}
-
-	/**
-	 * Reorders array $popular in such way:
-	 * that items, which urls are in array $links - will be moved to the beginning of array.
-	 *
-	 * Example:
-	 *
-	 * Assume that:
-	 * $popular = [ [ url => '1'], [ url => '2'], [ url => '3'], [ url => '4'], [ url => '5'], [ url => '6'] ]
-	 *
-	 * Assume that:
-	 * $links = [ '2', '4', '5', '100', '200' ]
-	 *
-	 * This method will returns the following array:
-	 * [ [ url => '2'], [ url => '4'], [ url => '5'], [ url => '1'], [ url => '3'], [ url => '6'] ]
-	 *
-	 * @param popular - array of objects, which contains field 'url'
-	 * @param links - array of strings
-	 */
-	protected function reorderForLinks( $popular, $links ) {
-		if( empty( $popular ) ) {
-			return [ ];
-		}
-
-		if( empty( $links ) ) {
-			return $popular;
-		}
-
-		$linksHashSet = [ ];
-		foreach( $links as $link ) {
-			$linksHashSet[ $link ] = true;
-		}
-
-		$popularForArticle = [ ];
-		foreach ( $popular as $key => $item ) {
-			$link = $item[ 'url' ];
-			if ( array_key_exists( $link, $linksHashSet ) ) {
-				$popularForArticle[ ] = $item;
-			}
-		}
-
-		foreach ( $popular as $key => $item ) {
-			$link = $item[ 'url' ];
-			if ( !array_key_exists( $link, $linksHashSet ) ) {
-				$popularForArticle[ ] = $item;
-			}
-		}
-		return $popularForArticle;
-	}
-
-	/**
-	 * @param $value boolean
-	 *
-	 * @see wgMiserMode
-	 */
-	public function setExcludeNamespacesFromCategoryMembersDBQuery($value) {
-		$this->excludeNamespacesFromCategoryMembersDBQuery = $value;
-	}
-
-	/**
-	 * @return bool
-	 */
-	public function getExcludeNamespacesFromCategoryMembersDBQuery() {
-		return $this->excludeNamespacesFromCategoryMembersDBQuery;
 	}
 }

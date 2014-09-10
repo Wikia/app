@@ -87,7 +87,6 @@ class TvApiController extends WikiaApiController {
 		if ( !empty( $wikis ) ) {
 			$episodeService = $this->getEpisodeService();
 			$episodeService->setLang( $lang )
-				->setSeries( $seriesName )
 				->setQuality( ($quality !== null ) ? $quality : self::DEFAULT_QUALITY );
 			$result = null;
 			foreach ( $wikis as $wiki ) {

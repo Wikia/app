@@ -306,7 +306,7 @@ class WikiaApiController extends WikiaController {
 
 
 class ApiNonCommercialOnlyException extends ForbiddenException {
-	protected $details = "API access to this wiki is disabled because its license disallows commercial use outside of Wikia.";
+	protected $details = "API access to this wiki is disabled because it's license disallows commercial use outside of Wikia.";
 }
 
 	

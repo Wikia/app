@@ -20,8 +20,6 @@
 		<script src="<?php echo $src ?>"></script>
 	<?php endforeach;?>
 
-	<!-- temporary hack -->
-	<script src="https://cdn.socket.io/socket.io-1.0.6.js"></script>
 	<?= $globalVariablesScript ?>
 	<?php //TODO: use js var?>
 

@@ -145,7 +145,7 @@ class ArticleServiceTest extends WikiaBaseTest {
 		    ->will   ( $this->returnValue( 'foo' ) )
 		;
 
-		$this->mockClass( 'SolrDocumentService', $mockDocumentService );
+		$this->proxyClass( 'SolrDocumentService', $mockDocumentService );
 
 		$this->assertEquals(
 				'foo',

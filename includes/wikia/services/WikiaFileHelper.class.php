@@ -7,33 +7,6 @@ class WikiaFileHelper extends Service {
 	const maxWideoWidth = 1200;
 
 	/**
-	 * Ogg files are the only video file type we allow upload.  As such we treat them differently
-	 * than other video, externally stored video.  It would be best if this functionality could be
-	 * incorporated into our VideoHandlers extension but given the OGG usage this is low priority.
-	 *
-	 * @param Title|File $file
-	 *
-	 * @return bool
-	 */
-	public static function isFileTypeOgg( $file ) {
-		// File can be video only when new video logic is enabled for the wiki
-		if ( $file instanceof Title ) {
-			$file = wfFindFile( $file );
-		}
-		return self::isOggFile( $file );
-	}
-
-	/**
-	 * Checks whether this file is an OGG file or not
-	 * @param File $file
-	 *
-	 * @return bool
-	 */
-	public static function isOggFile( $file ) {
-		return ( $file instanceof LocalFile && $file->getHandler() instanceof OggHandler );
-	}
-
-	/**
 	 * Checks if given File is video
 	 * @param File|Title $file object or Title object eventually
 	 * @return boolean
@@ -626,56 +599,4 @@ class WikiaFileHelper extends Service {
 		return $addedBy;
 	}
 
-	/**
-	 * Return a URL that displays $file shrunk to have the closest dimension meet $box.  Images smaller than the
-	 * bounding box will not be affected.  The part of the image that extends beyond the $box dimensions will be
-	 * cropped out.  The result is an image that completely fills the box with no empty space, but is cropped.
-	 *
-	 * @param File $file
-	 * @param $dimension
-	 * @return String
-	 */
-	public static function getSquaredThumbnailUrl( File $file, $dimension ) {
-		$height = ( int ) $file->getHeight();
-		$width = ( int ) $file->getWidth();
-
-		if ( $height > $width ) {
-			// portrait
-			$cropStr = sprintf( "%dx%d-0,%d,0,%d", $dimension, $dimension, $width, $width );
-		} else {
-			// landscape
-
-			$thumbEndWidth = null;
-			// Thumbnailer does not return a perfect square for images with height > dimension in AxBxC format
-			// Also it does not return square images at all when height < dimension in AxB-X0,X1,Y0,Y1 format
-			// Therefore this check is necessary
-			if ( $width > $dimension ) {
-				// If thumbnail fits within original image, X-offset is based on width/height difference
-				// Otherwise, width/dimension difference determines horizontal windowing.
-				if ( $height >= $dimension ) {
-					$xOffset = ( int ) round( ( $width - $height ) / 2 );
-					$thumbEndWidth = $width - $xOffset;
-					$thumbHeight = $height;
-				} else {
-					$xOffset = ( int ) round( ( $width - $dimension ) / 2 );
-				}
-			} else {
-				$xOffset = 0;
-			}
-
-			if ( !$thumbEndWidth ) {
-				$thumbEndWidth = max( $width, $dimension ) - $xOffset;
-				$thumbHeight = min( $height, $dimension );
-			}
-			$cropStr = sprintf( "%dx%d-%d,%d,%d,%d", $dimension, $dimension, $xOffset, $thumbEndWidth, 0, $thumbHeight );
-		}
-
-		$append = '';
-		$mime = strtolower( $file->getMimeType() );
-		if ( $mime == 'image/svg+xml' || $mime == 'image/svg' ) {
-			$append = '.png';
-		}
-
-		return wfReplaceImageServer( $file->getThumbUrl( $cropStr . '-' . $file->getName() . $append ) );
-	}
 }

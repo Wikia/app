@@ -8,17 +8,6 @@
 
 $color-subtle-text: mix($color-page, $color-alternate-text, 50%);
 
-.image-thumbnail,
-.video-thumbnail {
-	&.fluid {
-		width: 100%;
-
-		> img {
-			width: 100%;
-		}
-	}
-}
-
 // Generic title thumbnails
 .title-thumbnail {
 	.title {

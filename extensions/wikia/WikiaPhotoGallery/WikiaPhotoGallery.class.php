@@ -76,6 +76,13 @@ class WikiaPhotoGallery extends ImageGallery {
 	public $mFiles = array();
 
 	/**
+	 * List of external images - have to be different from mFiles as it has different type of data
+	 *
+	 * @var $mExternalImages array
+	 */
+	private $mExternalImages = false;
+
+	/**
 	 * @var string play button html
 	 * @todo refactor this extension so it's easier to insert a template instead of hard coded strings
 	 */
@@ -202,7 +209,7 @@ class WikiaPhotoGallery extends ImageGallery {
 		$this->mData['params'] = $params;
 
 		// lowercase parameters
-		foreach ( $params as &$param ) {
+		foreach( $params as $key => &$param ) {
 			$param = strtolower( $param );
 		}
 
@@ -251,8 +258,7 @@ class WikiaPhotoGallery extends ImageGallery {
 		} elseif ( !empty($params['type']) && $params['type'] == 'slider' ) {
 
 			$this->mType = self::WIKIA_PHOTO_SLIDER;
-
-			// choose slideshow alignment
+						// choose slideshow alignment
 			if (isset($params['orientation']) && in_array($params['orientation'], array('bottom', 'right', 'mosaic'))) {
 				$this->setParam('orientation', $params['orientation']);
 			} else {
@@ -303,10 +309,6 @@ class WikiaPhotoGallery extends ImageGallery {
 			$this->cleanupColorParam('captiontextcolor');
 		}
 
-		// Read the 'navigation' parameter common to all gallery types
-		$useNavigation = !empty( $params['navigation'] ) && strtolower( $params['navigation'] ) == 'true';
-		$this->setParam( 'navigation', $useNavigation );
-
 		wfProfileOut(__METHOD__);
 	}
 
@@ -341,10 +343,9 @@ class WikiaPhotoGallery extends ImageGallery {
 	/**
 	 * Add an image to the gallery.
 	 *
-	 * @param Title $title Title object of the image that is added to the gallery
-	 * @param string $html Additional HTML text to be shown. The name and size of the image are always shown.
-	 * @param string $link Value of link= parameter
-	 * @param string $wikitext
+	 * @param $title Title object of the image that is added to the gallery
+	 * @param $html  String: additional HTML text to be shown. The name and size of the image are always shown.
+	 * @param $link  String: value of link= parameter
 	 */
 	function add($title, $html='', $link='', $wikitext='') {
 		if ($title instanceof Title) {
@@ -490,7 +491,6 @@ class WikiaPhotoGallery extends ImageGallery {
 
 		// add recently uploaded images to slideshow
 		if ( !empty( $uploadedImages ) ) {
-			/** @var Title $image */
 			foreach ($uploadedImages as $image) {
 				$this->add($image);
 
@@ -572,87 +572,21 @@ class WikiaPhotoGallery extends ImageGallery {
 	}
 
 	/**
-	 * Determine if media gallery should be rendered
-	 * @return bool
-	 */
-	private function canRenderMediaGallery() {
-		// Do not render media gallery for special pages - It is only for UGC pages
-		if ( F::app()->wg->Title->getNamespace() === NS_SPECIAL ) {
-			return false;
-		}
-
-		// If the extension isn't enabled we aren't rendering this as a media gallery
-		if ( ! F::app()->wg->EnableMediaGalleryExt ) {
-			return false;
-		}
-
-		// We don't support new features in monobook
-		if ( F::app()->checkSkin( 'monobook' ) ) {
-			return false;
-		}
-
-		// Don't render navigational galleries.
-		if ( $this->getParam( 'navigation' ) ) {
-			return false;
-		}
-
-		// Don't render gallery sliders
-		if ( $this->mType == self::WIKIA_PHOTO_SLIDER ) {
-			return false;
-		}
-
-		// The last test; make sure when we ignore videos and red-linked files
-		// that there are still at least two displayable images
-		foreach( $this->mFiles as $val ) {
-			$file = wfFindFile( $val[0] );
-
-			// Skip if we can't find this file
-			if ( empty( $file ) ) {
-				continue;
-			}
-
-			// We found at least one non-video file
-			if ( ! WikiaFileHelper::isFileTypeVideo( $file ) &&
-				 ! WikiaFileHelper::isFileTypeOgg( $file )) {
-				return true;
-			}
-		}
-
-		// We didn't find any images to display
-		return false;
-	}
-
-	/**
  	 * Return a HTML representation of the image gallery
 	 *
 	 * The new gallery disables the old perrow control, and automatically fit the gallery to the available space in the browser.
 	 */
 	private function renderGallery() {
+		global $wgBlankImgUrl;
+
 		wfProfileIn(__METHOD__);
 
 		// do not render empty gallery
-		if ( empty( $this->mFiles ) ) {
+		if (empty($this->mFiles)) {
 			wfProfileOut(__METHOD__);
 			return '';
 		}
 
-		// Route to the mobile gallery or the new MediaGallery
-		if ( F::app()->checkSkin( 'wikiamobile' ) ) {
-			$html = $this->renderWikiaMobileMediaGroup();
-
-			wfProfileOut(__METHOD__);
-			return $html;
-		} elseif ( $this->canRenderMediaGallery() ) {
-			$html =  $this->renderMediaGallery();
-
-			// remove spaces from html produced by mustache template
-			$html = trim( preg_replace( '/\n+/', ' ', $html ) );
-
-			wfProfileOut(__METHOD__);
-			return $html;
-		}
-
-		/** @var Skin|Linker $skin The skin object falls back to Linker methods via __call */
 		$skin = RequestContext::getMain()->getSkin();
 		$thumbSize = $this->mWidths;
 		$orientation = $this->getParam('orientation');
@@ -666,375 +600,379 @@ class WikiaPhotoGallery extends ImageGallery {
 		$widths = array();
 		$thumbParams = array();
 
-		// loop through the images and get height of the tallest one
-		foreach ($this->mFiles as $imageData) {
+		if( F::app()->checkSkin( 'wikiamobile' ) ) {
+			$html =  $this->renderWikiaMobileMediaGroup();
+		} else {
 
-			$img = $this->getImage($imageData[0]);
-			$fileObjectsCache[] = $img;
-			if (!empty($img)) {
+			// loop throught the images and get height of the tallest one
+			foreach ($this->mFiles as $imageData) {
 
-				// get thumbnail limited only by given width
-				if ( $img->width > $thumbSize ) {
-					$imageHeight = round( $img->height * ( $thumbSize / $img->width ) );
-					$imageWidth = $thumbSize;
-				} else {
-					$imageHeight = $img->height;
-					$imageWidth = $img->width;
-				}
+				$img = $this->getImage($imageData[0]);
+				$fileObjectsCache[] = $img;
+				if (!empty($img)) {
 
-				$heights[] = $imageHeight;
-				$widths[] = $imageWidth;
-
-				if ($imageHeight > $maxHeight) {
-					$maxHeight = $imageHeight;
-				}
-			}
-		}
-
-
-		// calculate height based on gallery width
-		$height = round( $thumbSize / $ratio );
-
-		if ( $orientation == 'none' ) {
-			$this->enableCropping($crop = false);
-
-			// use the biggest height found
-			if ($maxHeight > 0) {
-				$height = $maxHeight;
-			}
-
-			// limit height (RT #59355)
-			$height = min($height, $thumbSize);
-
-			// recalculate dimensions (RT #59355)
-			foreach ($this->mFiles as $index => $image) {
-				if (!empty($heights[$index]) && !empty($widths[$index])) {
-					//fix #59355, min() added to let borders wrap images with smaller width
-					//fix #63886, round ( $tmpFloat ) != floor ( $tmpFloat ) added to check if thumbnail will be generated from proper width
-					$tmpFloat = ( $widths[$index] * $height / $heights[$index] );
-					$widths[$index] = min( $widths[$index], floor( $tmpFloat ) );
-					$heights[$index] = min( $height, $heights[$index] );
-					if ( round ( $tmpFloat ) != floor ( $tmpFloat ) ){
-						$heights[$index] --;
+					// get thumbnail limited only by given width
+					if ( $img->width > $thumbSize ) {
+						$imageHeight = round( $img->height * ( $thumbSize / $img->width ) );
+						$imageWidth = $thumbSize;
+					} else {
+						$imageHeight = $img->height;
+						$imageWidth = $img->width;
 					}
-				} else {
-					$widths[$index] = $thumbSize;
-					$heights[$index] = $height;
+
+					$heights[] = $imageHeight;
+					$widths[] = $imageWidth;
+
+					if ($imageHeight > $maxHeight) {
+						$maxHeight = $imageHeight;
+					}
 				}
 			}
-		}
 
-		$useBuckets = $this->getParam('buckets');
-		$useRowDivider = $this->getParam('rowdivider');
-		$captionColor = $this->getParam('captiontextcolor');
-		$borderColor = $this->getParam('bordercolor');
 
-		$perRow = ($this->mPerRow > 0) ? $this->mPerRow : 'dynamic';
-		$position = $this->getParam('position');
-		$captionsPosition = $this->getParam('captionposition', 'below');
-		$captionsAlign = $this->getParam('captionalign');
-		$captionsSize = $this->getParam('captionsize');
-		$captionsColor = (!empty($captionColor)) ? $captionColor : null;
-		$spacing = $this->getParam('spacing');
-		$borderSize = $this->getParam('bordersize');
-		$borderColor = (!empty($borderColor)) ? $borderColor : 'accent';
-		$isTemplate = (isset($this->mData['params']['source']) && $this->mData['params']['source'] == "template\x7f");
-		$hash = $this->mData['hash'];
-		$id = 'gallery-' . $this->mData['id'];
-		$showAddButton = ($this->mShowAddButton == true);
-		$hideOverflow = $this->getParam('hideoverflow');
+			// calculate height based on gallery width
+			$height = round($thumbSize / $ratio);
 
-		if (in_array($borderColor, array('accent', 'color1'))) {
-			$borderColorClass = " {$borderColor}";
-		} else {
-			$borderColorCSS = " border-color: {$borderColor};";
+			if ($orientation == 'none') {
+				$this->enableCropping($crop = false);
 
-			if ($captionsPosition == 'within') $captionsBackgroundColor = $borderColor;
-		}
+				// use the biggest height found
+				if ($maxHeight > 0) {
+					$height = $maxHeight;
+				}
 
-		$html = Xml::openElement('div', array(
-			'id' => $id,
-			'hash' => $hash,
-			'class' =>  'wikia-gallery'.
-				(($isTemplate) ? ' template' : null).
-				" wikia-gallery-caption-{$captionsPosition}".
-				" wikia-gallery-position-{$position}".
-				" wikia-gallery-spacing-{$spacing}".
-				" wikia-gallery-border-{$borderSize}".
-				" wikia-gallery-captions-{$captionsAlign}".
-				" wikia-gallery-caption-size-{$captionsSize}"
+				// limit height (RT #59355)
+				$height = min($height, $thumbSize);
 
-		));
-
-		// render gallery caption (RT #59241)
-		if ($this->mCaption !== false) {
-			$html .= Xml::openElement('div', array('class' => 'wikia-gallery-caption')) .
-				$this->mCaption .
-				Xml::closeElement('div');
-		}
-
-		$itemWrapperWidth = $thumbSize;
-		$thumbWrapperHeight = $height;
-
-		//compensate image wrapper width depending on the border size
-		switch ($borderSize) {
-			case 'large':
-				$itemWrapperWidth += 10; //5px * 2
-				$thumbWrapperHeight += 10;
-				break;
-			case 'medium':
-				$itemWrapperWidth += 4; //2px * 2
-				$thumbWrapperHeight += 4;
-				break;
-			case 'small':
-				$itemWrapperWidth += 2; //1px * 2
-				$thumbWrapperHeight += 2;
-				break;
-		}
-
-		//adding more width for the padding
-		$outeritemWrapperWidth = $itemWrapperWidth + 20;
-
-		$rowDividerCSS = '';
-		if ($useRowDivider) {
-			$rowDividerCSS = "height: ".($thumbWrapperHeight+100)."px; padding: 30px 15px 20px 15px; margin: 0px; border-bottom: solid 1px #CCCCCC;";
-		}
-
-		if ($useBuckets) {
-			$itemSpanStyle = "width:{$outeritemWrapperWidth}px; ".($useRowDivider ? $rowDividerCSS : 'margin: 4px;');
-			$itemDivStyle = "background-color: #f9f9f9; height:{$thumbWrapperHeight}px; text-align: center; border: solid 1px #CCCCCC; padding: ".(($outeritemWrapperWidth-$thumbWrapperHeight)/2)."px 5px;";
-		} else {
-			$itemSpanStyle = "width:{$itemWrapperWidth}px; $rowDividerCSS";
-			$itemDivStyle = "height:{$thumbWrapperHeight}px;";
-		}
-
-		foreach ($this->mFiles as $index => $imageData) {
-
-			if ($perRow != 'dynamic' && ($index % $perRow) == 0){
-				$html .= Xml::openElement('div', array('class' => 'wikia-gallery-row'));
+				// recalculate dimensions (RT #59355)
+				foreach ($this->mFiles as $index => $image) {
+					if (!empty($heights[$index]) && !empty($widths[$index])) {
+						//fix #59355, min() added to let borders wrap images with smaller width
+						//fix #63886, round ( $tmpFloat ) != floor ( $tmpFloat ) added to check if thumbnail will be generated from proper width
+						$tmpFloat = ( $widths[$index] * $height / $heights[$index] );
+						$widths[$index] = min( $widths[$index], floor( $tmpFloat ) );
+						$heights[$index] = min( $height, $heights[$index] );
+						if ( round ( $tmpFloat ) != floor ( $tmpFloat ) ){
+							$heights[$index] --;
+						}
+					} else {
+						$widths[$index] = $thumbSize;
+						$heights[$index] = $height;
+					}
+				}
 			}
 
-			$html .= Xml::openElement('div', array('class' => 'wikia-gallery-item', 'style' => $itemSpanStyle));
+			$useBuckets = $this->getParam('buckets');
+			$useRowDivider = $this->getParam('rowdivider');
+			$captionColor = $this->getParam('captiontextcolor');
+			$borderColor = $this->getParam('bordercolor');
 
-			$html .= Xml::openElement('div', array('class' => 'thumb', 'style' => $itemDivStyle));
+			$perRow = ($this->mPerRow > 0) ? $this->mPerRow : 'dynamic';
+			$position = $this->getParam('position');
+			$captionsPosition = $this->getParam('captionposition', 'below');
+			$captionsAlign = $this->getParam('captionalign');
+			$captionsSize = $this->getParam('captionsize');
+			$captionsColor = (!empty($captionColor)) ? $captionColor : null;
+			$spacing = $this->getParam('spacing');
+			$borderSize = $this->getParam('bordersize');
+			$borderColor = (!empty($borderColor)) ? $borderColor : 'accent';
+			$isTemplate = (isset($this->mData['params']['source']) && $this->mData['params']['source'] == "template\x7f");
+			$hash = $this->mData['hash'];
+			$id = 'gallery-' . $this->mData['id'];
+			$showAddButton = ($this->mShowAddButton == true);
+			$hideOverflow = $this->getParam('hideoverflow');
 
-			$image = array();
-
-			// let's properly scale image (don't make it bigger than original size)
-			/**
-			 * @var $imageTitle Title
-			 * @var $fileObject LocalFile
-			 */
-			$imageTitle = $imageData[0];
-			$fileObject = $fileObjectsCache[$index];
-			$imageTitleText = $imageTitle->getText();
-
-			$image['height'] = $height;
-			$image['width'] = $thumbSize;
-			$image['caption'] = $imageData[1];
-
-			if (!is_object($fileObject) || ($imageTitle->getNamespace() != NS_FILE)) {
-				$image['linkTitle'] = $image['titleText'] = $imageTitleText;
-				$image['thumbnail'] = false;
-				$image['link'] = Skin::makeSpecialUrl("Upload", array( 'wpDestFile' => $image['linkTitle'] ) );
-				$image['classes'] = 'image broken-image accent new';
+			if (in_array($borderColor, array('accent', 'color1'))) {
+				$borderColorClass = " {$borderColor}";
 			} else {
-				$thumbParams = WikiaPhotoGalleryHelper::getThumbnailDimensions($fileObject, $thumbSize, $height, $crop);
-				$image['thumbnail'] = $fileObject->createThumb($thumbParams['width'], $thumbParams['height']);
-				$image['DBKey'] = $fileObject->getTitle()->getDBKey();
-				$image['fileTitle'] = $fileObject->getTitle()->getText();
+				$borderColorCSS = " border-color: {$borderColor};";
 
-				$image['height'] = ($orientation == 'none') ? $heights[$index] : min($thumbParams['height'], $height);
-				$imgHeightCompensation = ($height - $image['height']) / 2;
-				if ($imgHeightCompensation > 0) $image['heightCompensation'] = $imgHeightCompensation;
-
-				$image['width'] = min($widths[$index], $thumbSize);
-
-				//Fix #59914, shared.css has auto-alignment rules
-				/*$imgWidthCompensation = ($thumbSize - $image['width']) / 2;
-				if ($imgHeightCompensation > 0) $image['widthCompensation'] = $imgWidthCompensation;*/
-
-				$image['link'] = $imageData[2];
-
-				$linkAttribs = $this->parseLink($imageTitle->getLocalUrl(), $imageTitleText, $image['link']);
-
-				$image['link'] = $linkAttribs['href'];
-				$image['linkTitle'] = $linkAttribs['title'];
-				$image['classes'] = $linkAttribs['class'];
-				$image['bytes'] = $fileObject->getSize();
-
-				if ($this->mParser && $fileObject->getHandler()) {
-					$fileObject->getHandler()->parserTransformHook($this->mParser, $fileObject);
-				}
+				if ($captionsPosition == 'within') $captionsBackgroundColor = $borderColor;
 			}
 
-			wfRunHooks( 'GalleryBeforeRenderImage', array( &$image ) );
+			$html = Xml::openElement('div', array(
+				'id' => $id,
+				'hash' => $hash,
+				'class' =>  'wikia-gallery'.
+					(($isTemplate) ? ' template' : null).
+					" wikia-gallery-caption-{$captionsPosition}".
+					" wikia-gallery-position-{$position}".
+					" wikia-gallery-spacing-{$spacing}".
+					" wikia-gallery-border-{$borderSize}".
+					" wikia-gallery-captions-{$captionsAlign}".
+					" wikia-gallery-caption-size-{$captionsSize}"
 
-			//see Image SEO project
-			$wrapperId = preg_replace('/[^a-z0-9_]/i', '-', Sanitizer::escapeId($image['linkTitle']));
-
-			$html .= Xml::openElement('div',
-				array(
-				'class' => 'gallery-image-wrapper'.
-					((!$useBuckets && !empty($borderColorClass)) ? $borderColorClass : null),
-				'id' => $wrapperId,
-				'style' => 'position: relative;'.
-					($useBuckets ? " width: {$itemWrapperWidth}px; border-style: none;"
-								 : " height:{$image['height']}px; width:{$image['width']}px;").
-					((!empty($image['heightCompensation'])) ? " top:{$image['heightCompensation']}px;" : null).
-					//Fix #59914, shared.css has auto-alignment rules
-					//((!empty($image['widthCompensation'])) ? " left:{$image['widthCompensation']}px;" : null).
-					((!empty($borderColorCSS)) ? $borderColorCSS : null)
 			));
 
-			$imgStyle = null;
-
-			$isVideo = WikiaFileHelper::isFileTypeVideo( $fileObject );
-
-			# Fix 59913 - thumbnail goes as <img /> not as <a> background.
-			if ( $orientation != 'none' ) {
-
-				# margin calculation for image positioning
-
-				if ( $thumbParams['height'] > $image['height'] ){
-					$tempTopMargin = -1 * ( $thumbParams['height'] - $image['height'] ) / 2;
-				}else{
-					unset ( $tempTopMargin );
-				}
-
-				if ( $thumbParams['width'] > $image['width'] ){
-					$tempLeftMargin = -1 * ( $thumbParams['width'] - $image['width'] ) / 2;
-				}else{
-					unset ( $tempLeftMargin );
-				}
-
-				$imgStyle = ( ( !empty( $tempTopMargin ) ) ? " margin-top:".$tempTopMargin."px;" : null ).
-					( ( !empty( $tempLeftMargin ) ) ? " margin-left:".$tempLeftMargin."px;" : null );
-
-				if($isVideo) {
-					$image['classes'] .= ' force-lightbox';
-				}
+			// render gallery caption (RT #59241)
+			if ($this->mCaption !== false) {
+				$html .= Xml::openElement('div', array('class' => 'wikia-gallery-caption')) .
+					$this->mCaption .
+					Xml::closeElement('div');
 			}
 
-			$linkAttribs = array(
-				'class' => empty($image['thumbnail']) ? 'image-no-lightbox' : $image['classes'],
-				'href' => $image['link'],
-				'title' => $image['linkTitle']. (isset($image['bytes'])?' ('.$skin->formatSize($image['bytes']).')':""),
-				'style' => "height:{$image['height']}px; width:{$image['width']}px;"
-			);
+			$itemWrapperWidth = $thumbSize;
+			$thumbWrapperHeight = $height;
 
-			if (!empty($image['thumbnail'])) {
-				if ( $isVideo ) {
-					$thumbHtml = '';
-					$duration = $fileObject->getMetadataDuration();
-					if ( !empty( $duration ) ) {
-						$duration = WikiaFileHelper::formatDuration( $duration );
-						$thumbHtml .= '<span class="duration">' . $duration . '</span>';
-					}
-					$playButtonSize = ThumbnailHelper::getThumbnailSize( $image['width'] );
-					$thumbHtml .= $this->videoPlayButton;
-					$linkAttribs['class'] .= ' video video-thumbnail ' . $playButtonSize;
-				} else {
-					$thumbHtml = '';
-				}
+			//compensate image wrapper width depending on the border size
+			switch ($borderSize) {
+				case 'large':
+					$itemWrapperWidth += 10; //5px * 2
+					$thumbWrapperHeight += 10;
+					break;
+				case 'medium':
+					$itemWrapperWidth += 4; //2px * 2
+					$thumbWrapperHeight += 4;
+					break;
+				case 'small':
+					$itemWrapperWidth += 2; //1px * 2
+					$thumbWrapperHeight += 2;
+					break;
+			}
 
-				$imgAttribs = array(
-					'style' => ((!empty($image['titleText'])) ? " line-height:{$image['height']}px;" : null).$imgStyle,
-					'src' => (($image['thumbnail']) ? $image['thumbnail'] : null),
-					'title' => $image['linkTitle']. (isset($image['bytes'])?' ('.$skin->formatSize($image['bytes']).')':""),
-					'class' => 'thumbimage',
-					'alt' => preg_replace( '/\.[^\.]+$/', '', $image['linkTitle'] ),
-					//'width' => isset($thumbParams) ? $thumbParams['width'] : $image['width'], // TODO: reinstate this with some WPG refactoring (BugId:38660)
-					//'height' => isset($thumbParams) ? $thumbParams['height'] : $image['height'],
-				);
+			//adding more width for the padding
+			$outeritemWrapperWidth = $itemWrapperWidth + 20;
 
-				if ( $isVideo ) {
-					$imgAttribs['data-video-name'] = htmlspecialchars($image['fileTitle']);
-					$imgAttribs['data-video-key'] = urlencode(htmlspecialchars($image['DBKey']));
-				} else {
-					$imgAttribs['data-image-name'] = htmlspecialchars($image['fileTitle']);
-					$imgAttribs['data-image-key'] = urlencode(htmlspecialchars($image['DBKey']));
-				}
+			$rowDividerCSS = '';
+			if ($useRowDivider) {
+				$rowDividerCSS = "height: ".($thumbWrapperHeight+100)."px; padding: 30px 15px 20px 15px; margin: 0px; border-bottom: solid 1px #CCCCCC;";
+			}
 
-				if ( !empty($image['data-caption']) ) {
-					$imgAttribs['data-caption'] = $image['data-caption'];
-				}
-
-				if( isset($image['thumbnail-classes']) &&
-					isset($image['thumbnail-src']) &&
-					isset($image['thumbnail-onload']) ) {
-
-					$thumbHtml .= '<noscript>'.Xml::openElement('img', $imgAttribs).'</noscript>';
-					$imgAttribs['class'] .= ' ' . $image['thumbnail-classes'];
-					$imgAttribs['data-src'] = $imgAttribs['src'];
-					$imgAttribs['src'] = $image['thumbnail-src'];
-					$imgAttribs['onload'] = $image['thumbnail-onload'];
-				}
-
-				$thumbHtml .= Xml::openElement('img', $imgAttribs);
+			if ($useBuckets) {
+				$itemSpanStyle = "width:{$outeritemWrapperWidth}px; ".($useRowDivider ? $rowDividerCSS : 'margin: 4px;');
+				$itemDivStyle = "background-color: #f9f9f9; height:{$thumbWrapperHeight}px; text-align: center; border: solid 1px #CCCCCC; padding: ".(($outeritemWrapperWidth-$thumbWrapperHeight)/2)."px 5px;";
 			} else {
-				$thumbHtml = $image['linkTitle'];
+				$itemSpanStyle = "width:{$itemWrapperWidth}px; $rowDividerCSS";
+				$itemDivStyle = "height:{$thumbWrapperHeight}px;";
 			}
 
-			$html .= Xml::openElement('a', $linkAttribs);
-			$html .= $thumbHtml;
-			$html .= Xml::closeElement('a');
+			foreach ($this->mFiles as $index => $imageData) {
 
-			if ($captionsPosition == 'below') {
-				$html .= Xml::closeElement('div');
-				$html .= Xml::closeElement('div');
-			}
+				if ($perRow != 'dynamic' && ($index % $perRow) == 0){
+					$html .= Xml::openElement('div', array('class' => 'wikia-gallery-row'));
+				}
 
-			// Insert video titles here
-			if ($isVideo) {
-				$html .= '<div class="title">' . $imageTitleText . '</div>';
-			}
+				$html .= Xml::openElement('div', array('class' => 'wikia-gallery-item', 'style' => $itemSpanStyle));
 
-			if (!empty($image['caption'])) {
-				$html .= Xml::openElement(
-					'div',
+				$html .= Xml::openElement('div', array('class' => 'thumb', 'style' => $itemDivStyle));
+
+				$image = array();
+
+				// let's properly scale image (don't make it bigger than original size)
+				/**
+				 * @var $imageTitle Title
+				 * @var $fileObject LocalFile
+				 */
+				$imageTitle = $imageData[0];
+				$fileObject = $fileObjectsCache[$index];
+				$imageTitleText = $imageTitle->getText();
+
+				$image['height'] = $height;
+				$image['width'] = $thumbSize;
+				$image['caption'] = $imageData[1];
+
+				if (!is_object($fileObject) || ($imageTitle->getNamespace() != NS_FILE)) {
+					$image['linkTitle'] = $image['titleText'] = $imageTitleText;
+					$image['thumbnail'] = false;
+					$image['link'] = Skin::makeSpecialUrl("Upload", array( 'wpDestFile' => $image['linkTitle'] ) );
+					$image['classes'] = 'image broken-image accent new';
+				} else {
+					$thumbParams = WikiaPhotoGalleryHelper::getThumbnailDimensions($fileObject, $thumbSize, $height, $crop);
+					$image['thumbnail'] = $fileObject->createThumb($thumbParams['width'], $thumbParams['height']);
+					$image['DBKey'] = $fileObject->getTitle()->getDBKey();
+					$image['fileTitle'] = $fileObject->getTitle()->getText();
+
+					$image['height'] = ($orientation == 'none') ? $heights[$index] : min($thumbParams['height'], $height);
+					$imgHeightCompensation = ($height - $image['height']) / 2;
+					if ($imgHeightCompensation > 0) $image['heightCompensation'] = $imgHeightCompensation;
+
+					$image['width'] = min($widths[$index], $thumbSize);
+
+					//Fix #59914, shared.css has auto-alignment rules
+					/*$imgWidthCompensation = ($thumbSize - $image['width']) / 2;
+					if ($imgHeightCompensation > 0) $image['widthCompensation'] = $imgWidthCompensation;*/
+
+					$image['link'] = $imageData[2];
+
+					$linkAttribs = $this->parseLink($imageTitle->getLocalUrl(), $imageTitleText, $image['link']);
+
+					$image['link'] = $linkAttribs['href'];
+					$image['linkTitle'] = $linkAttribs['title'];
+					$image['classes'] = $linkAttribs['class'];
+					$image['bytes'] = $fileObject->getSize();
+
+					if ($this->mParser && $fileObject->getHandler()) {
+						$fileObject->getHandler()->parserTransformHook($this->mParser, $fileObject);
+					}
+				}
+
+				wfRunHooks( 'GalleryBeforeRenderImage', array( &$image ) );
+
+				//see Image SEO project
+				$wrapperId = preg_replace('/[^a-z0-9_]/i', '-', Sanitizer::escapeId($image['linkTitle']));
+
+				$html .= Xml::openElement('div',
 					array(
-						'class' => 'lightbox-caption'.
-							((!empty($borderColorClass)  && $captionsPosition == 'within') ? $borderColorClass : null),
-						'style' => (($captionsPosition == 'below') ? "width:{$thumbSize}px;" : null).
-							((!empty($captionsColor)) ? " color:{$captionsColor};" : null).
-							((!empty($captionsBackgroundColor)) ? " background-color:{$captionsBackgroundColor}" : null).
-							($useBuckets ? " margin-top: 0px;" : '').
-							((!empty($hideOverflow)) ? " overflow: hidden" : null)
-					)
+					'class' => 'gallery-image-wrapper'.
+						((!$useBuckets && !empty($borderColorClass)) ? $borderColorClass : null),
+					'id' => $wrapperId,
+					'style' => 'position: relative;'.
+						($useBuckets ? " width: {$itemWrapperWidth}px; border-style: none;"
+									 : " height:{$image['height']}px; width:{$image['width']}px;").
+						((!empty($image['heightCompensation'])) ? " top:{$image['heightCompensation']}px;" : null).
+						//Fix #59914, shared.css has auto-alignment rules
+						//((!empty($image['widthCompensation'])) ? " left:{$image['widthCompensation']}px;" : null).
+						((!empty($borderColorCSS)) ? $borderColorCSS : null)
+				));
+
+				$imgStyle = null;
+
+				$isVideo = WikiaFileHelper::isFileTypeVideo( $fileObject );
+
+				# Fix 59913 - thumbnail goes as <img /> not as <a> background.
+				if ( $orientation != 'none' ) {
+
+					# margin calculation for image positioning
+
+					if ( $thumbParams['height'] > $image['height'] ){
+						$tempTopMargin = -1 * ( $thumbParams['height'] - $image['height'] ) / 2;
+					}else{
+						unset ( $tempTopMargin );
+					}
+
+					if ( $thumbParams['width'] > $image['width'] ){
+						$tempLeftMargin = -1 * ( $thumbParams['width'] - $image['width'] ) / 2;
+					}else{
+						unset ( $tempLeftMargin );
+					}
+
+					$imgStyle = ( ( !empty( $tempTopMargin ) ) ? " margin-top:".$tempTopMargin."px;" : null ).
+						( ( !empty( $tempLeftMargin ) ) ? " margin-left:".$tempLeftMargin."px;" : null );
+
+					if($isVideo) {
+						$image['classes'] .= ' force-lightbox';
+					}
+				}
+
+				$linkAttribs = array(
+					'class' => empty($image['thumbnail']) ? 'image-no-lightbox' : $image['classes'],
+					'href' => $image['link'],
+					'title' => $image['linkTitle']. (isset($image['bytes'])?' ('.$skin->formatSize($image['bytes']).')':""),
+					'style' => "height:{$image['height']}px; width:{$image['width']}px;"
 				);
 
-				$html .= $image['caption'];
-				$html .= Xml::closeElement('div');
+				if (!empty($image['thumbnail'])) {
+					if ( $isVideo ) {
+						$thumbHtml = '';
+						$duration = $fileObject->getMetadataDuration();
+						if ( !empty( $duration ) ) {
+							$duration = WikiaFileHelper::formatDuration( $duration );
+							$thumbHtml .= '<span class="duration">' . $duration . '</span>';
+						}
+						$playButtonSize = ThumbnailHelper::getThumbnailSize( $image['width'] );
+						$thumbHtml .= $this->videoPlayButton;
+						$linkAttribs['class'] .= ' video video-thumbnail ' . $playButtonSize;
+					} else {
+						$thumbHtml = '';
+					}
+
+					$imgAttribs = array(
+						'style' => ((!empty($image['titleText'])) ? " line-height:{$image['height']}px;" : null).$imgStyle,
+						'src' => (($image['thumbnail']) ? $image['thumbnail'] : null),
+						'title' => $image['linkTitle']. (isset($image['bytes'])?' ('.$skin->formatSize($image['bytes']).')':""),
+						'class' => 'thumbimage',
+						'alt' => preg_replace( '/\.[^\.]+$/', '', $image['linkTitle'] ),
+						//'width' => isset($thumbParams) ? $thumbParams['width'] : $image['width'], // TODO: reinstate this with some WPG refactoring (BugId:38660)
+						//'height' => isset($thumbParams) ? $thumbParams['height'] : $image['height'],
+					);
+
+					if ( $isVideo ) {
+						$imgAttribs['data-video-name'] = htmlspecialchars($image['fileTitle']);
+						$imgAttribs['data-video-key'] = urlencode(htmlspecialchars($image['DBKey']));
+					} else {
+						$imgAttribs['data-image-name'] = htmlspecialchars($image['fileTitle']);
+						$imgAttribs['data-image-key'] = urlencode(htmlspecialchars($image['DBKey']));
+					}
+
+					if ( !empty($image['data-caption']) ) {
+						$imgAttribs['data-caption'] = $image['data-caption'];
+					}
+
+					if( isset($image['thumbnail-classes']) &&
+						isset($image['thumbnail-src']) &&
+						isset($image['thumbnail-onload']) ) {
+
+						$thumbHtml .= '<noscript>'.Xml::openElement('img', $imgAttribs).'</noscript>';
+						$imgAttribs['class'] .= ' ' . $image['thumbnail-classes'];
+						$imgAttribs['data-src'] = $imgAttribs['src'];
+						$imgAttribs['src'] = $image['thumbnail-src'];
+						$imgAttribs['onload'] = $image['thumbnail-onload'];
+					}
+
+					$thumbHtml .= Xml::openElement('img', $imgAttribs);
+				} else {
+					$thumbHtml = $image['linkTitle'];
+				}
+
+				$html .= Xml::openElement('a', $linkAttribs);
+				$html .= $thumbHtml;
+				$html .= Xml::closeElement('a');
+
+				if ($captionsPosition == 'below') {
+					$html .= Xml::closeElement('div');
+					$html .= Xml::closeElement('div');
+				}
+
+				// Insert video titles here
+				if ($isVideo) {
+					$html .= '<div class="title">' . $imageTitleText . '</div>';
+				}
+
+				if (!empty($image['caption'])) {
+					$html .= Xml::openElement(
+						'div',
+						array(
+							'class' => 'lightbox-caption'.
+								((!empty($borderColorClass)  && $captionsPosition == 'within') ? $borderColorClass : null),
+							'style' => (($captionsPosition == 'below') ? "width:{$thumbSize}px;" : null).
+								((!empty($captionsColor)) ? " color:{$captionsColor};" : null).
+								((!empty($captionsBackgroundColor)) ? " background-color:{$captionsBackgroundColor}" : null).
+								($useBuckets ? " margin-top: 0px;" : '').
+								((!empty($hideOverflow)) ? " overflow: hidden" : null)
+						)
+					);
+
+					$html .= $image['caption'];
+					$html .= Xml::closeElement('div');
+				}
+
+				if ($captionsPosition == 'within') {
+					$html .= Xml::closeElement('div');
+					$html .= Xml::closeElement('div');
+				}
+
+				$html .= Xml::closeElement('div'); // /div.wikia-gallery-item
+
+				if ($perRow != 'dynamic' && (($index % $perRow) == ($perRow - 1) || $index == (count($this->mFiles) - 1))) {
+					$html .= Xml::closeElement('div');
+				}
 			}
 
-			if ($captionsPosition == 'within') {
-				$html .= Xml::closeElement('div');
-				$html .= Xml::closeElement('div');
+			// "Add image to this gallery" button (this button is shown by JS only in Monaco)
+			if ($showAddButton) {
+				if ($perRow == 'dynamic') {
+					$html .= Xml::element('br');
+				}
+
+				// add button for Oasis
+				$html .= Xml::openElement('a', array('class' => 'wikia-photogallery-add wikia-button noprint', 'style' => 'display: none'));
+				$html .= Xml::element('img', array('src' => $wgBlankImgUrl, 'class' => 'sprite photo', 'width' => 26, 'height' => 16));
+				$html .= wfMessage('wikiaPhotoGallery-viewmode-addphoto')->inContentLanguage()->text();
+				$html .= Xml::closeElement('a');
 			}
 
-			$html .= Xml::closeElement('div'); // /div.wikia-gallery-item
-
-			if ($perRow != 'dynamic' && (($index % $perRow) == ($perRow - 1) || $index == (count($this->mFiles) - 1))) {
-				$html .= Xml::closeElement('div');
-			}
+			$html .= Xml::closeElement('div');
 		}
-
-		// "Add image to this gallery" button (this button is shown by JS only in Monaco)
-		if ($showAddButton) {
-			if ($perRow == 'dynamic') {
-				$html .= Xml::element('br');
-			}
-
-			// add button for Oasis
-			$html .= Xml::openElement('a', array('class' => 'wikia-photogallery-add wikia-button noprint', 'style' => 'display: none'));
-			$html .= Xml::element('img', array('src' => F::app()->wg->BlankImgUrl, 'class' => 'sprite photo', 'width' => 26, 'height' => 16));
-			$html .= wfMessage('wikiaPhotoGallery-viewmode-addphoto')->inContentLanguage()->text();
-			$html .= Xml::closeElement('a');
-		}
-
-		$html .= Xml::closeElement('div');
-
 		wfProfileOut(__METHOD__);
 
 		return $html;
@@ -1054,15 +992,6 @@ class WikiaPhotoGallery extends ImageGallery {
 			return '';
 		}
 
-		// If we can, render this as a media gallery
-		if ( $this->canRenderMediaGallery() ) {
-			$html =  $this->renderMediaGallery();
-
-			wfProfileOut(__METHOD__);
-			return trim( preg_replace( '/\n+/', ' ', $html ) );
-		}
-
-		/** @var Skin|Linker $sk The Skin object falls back to Linker methods */
 		$sk = RequestContext::getMain()->getSkin();
 
 		// slideshow wrapper CSS class
@@ -1641,29 +1570,22 @@ class WikiaPhotoGallery extends ImageGallery {
 	 *
 	 * @param File $file
 	 * @param array $box
-	 * @param int $position
-	 *
 	 * @return String
 	 */
-	public function cropURL( File $file, array $box, $position = null ) {
+	public function cropURL( File $file, array $box ) {
 		list( $adjWidth, $adjHeight ) = $this->fitClosest( $file, $box );
 
-		$height = $file->getHeight();
-		$width = $file->getWidth();
-
 		if ( $adjHeight == $box['h'] ) {
+			$height = $file->getHeight();
 			$width = $box['w'] * ($file->getHeight()/$box['h']);
 		}
 
 		if ( $adjWidth == $box['w'] ) {
 			$height = $box['h'] * ($file->getWidth()/$box['w']);
+			$width = $file->getHeight();
 		}
 
-		if ( $position ) {
-			$cropStr = sprintf( "%dx%dx%d", $width, $height, $position );
-		} else {
-			$cropStr = sprintf( "%dpx-0,%d,0,%d", $adjWidth, $width, $height );
-		}
+		$cropStr = sprintf( "%d,%d,%d,%d", 0, $width, 0, $height );
 
 		$append = '';
 		$mime = strtolower( $file->getMimeType() );
@@ -1671,7 +1593,7 @@ class WikiaPhotoGallery extends ImageGallery {
 			$append = '.png';
 		}
 
-		return wfReplaceImageServer( $file->getThumbUrl( $cropStr . '-' . $file->getName() . $append ) );
+		return wfReplaceImageServer( $file->getThumbUrl( $adjWidth . 'px-' . $cropStr . '-' . $file->getName() . $append ) );
 	}
 
 
@@ -1722,45 +1644,6 @@ class WikiaPhotoGallery extends ImageGallery {
 				[
 					'items' => $media,
 					'parser' => $this->mParser
-				]
-			);
-		}
-
-		return $result;
-	}
-
-	/**
-	 * Render Media Gallery (gallery version 2014)
-	 * @return string
-	 */
-	private function renderMediaGallery() {
-		$media = [];
-		$result = '';
-
-		foreach ( $this->mFiles as $val ) {
-			$file = wfFindFile( $val[0] );
-
-			if ( empty( $file ) ||
-				WikiaFileHelper::isFileTypeVideo( $file ) ||
-				WikiaFileHelper::isFileTypeOgg( $file ) ) {
-				continue;
-			}
-
-			$media[] = [
-				'title' => $val[0],
-				'caption' => $val[3],
-				'link' => $val[2],
-			];
-		}
-
-		if ( !empty( $media ) ) {
-			$result = F::app()->renderView(
-				'MediaGalleryController',
-				'gallery',
-				[
-					'items' => $media,
-					'parser' => $this->mParser,
-					'gallery_params' => $this->mData['params'],
 				]
 			);
 		}

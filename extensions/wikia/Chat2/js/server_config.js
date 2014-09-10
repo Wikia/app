@@ -24,9 +24,9 @@ var fs = require('fs');
 arvg.instance = arvg.instance - 1;
 var chatConfig = JSON.parse(fs.readFileSync(process.env.WIKIA_CONFIG_ROOT + '/ChatConfig.json'));
 
-var instanceCount = chatConfig[arvg.mode]['MainChatServers'][arvg.basket].length;
+var instaceNumber = chatConfig[arvg.mode]['MainChatServers'][arvg.basket].length;
 
-var chatHost = chatConfig[arvg.mode]['ChatHost'];
+
 var chatServer = chatConfig[arvg.mode]['MainChatServers'][arvg.basket][arvg.instance].split(':');
 var apiServer = chatConfig[arvg.mode]['ApiChatServers'][arvg.basket][arvg.instance].split(':');
 
@@ -58,7 +58,7 @@ exports.validateConnection = function(cityId) {
 	//TODO: take this out when we will be operating on 2 servers
 	return true;
 	if(typeof arvg.instance != 'undefined') {
-		if(arvg.instance == cityId%instanceCount){
+		if(arvg.instance == cityId%instaceNumber){
 			return true;
 		}
 		return false;

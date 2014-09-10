@@ -993,7 +993,7 @@ $config['chat_js2'] = array(
 		//depends on querystring.js and cookies.js
 		'//resources/wikia/modules/log.js',
 
-		//'//extensions/wikia/Chat2/js/lib/socket.io.client.js',
+		'//extensions/wikia/Chat2/js/lib/socket.io.client.js',
 		// must be before controllers.js
 		'//extensions/wikia/Chat2/js/emoticons.js',
 		'//extensions/wikia/Chat2/js/lib/underscore.js',
@@ -1053,7 +1053,7 @@ $config['wall_js'] = array(
 $config['wall_notifications_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
-		'//extensions/wikia/Wall/js/WallNotifications.js',
+		'//extensions/wikia/WallNotifications/scripts/WallNotifications.js',
 	)
 );
 
@@ -1824,33 +1824,6 @@ $config['bucky_js'] = array(
 		'//extensions/wikia/Bucky/js/bucky_init.js',
 		'//extensions/wikia/Bucky/js/bucky_metrics.js',
 	)
-);
-
-/* Monetization Module */
-$config['monetization_module_css'] = array(
-	'type' => AssetsManager::TYPE_SCSS,
-	'skin' => [ 'oasis' ],
-	'assets' => [
-		'//extensions/wikia/MonetizationModule/styles/MonetizationModule.scss',
-	]
-);
-
-$config['monetization_module_js'] = array(
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => [ 'oasis' ],
-	'assets' => [
-		'//extensions/wikia/MonetizationModule/scripts/MonetizationModule.js',
-
-	]
-);
-
-$config['monetization_module_top_script_js'] = array(
-    'type' => AssetsManager::TYPE_JS,
-    'skin' => [ 'oasis' ],
-    'assets' => [
-        '//extensions/wikia/MonetizationModule/scripts/MonetizationModuleTopScript.js',
-
-    ]
 );
 
 /* extension/wikia/WikiaInteractiveMaps */

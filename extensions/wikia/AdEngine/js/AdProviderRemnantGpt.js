@@ -8,7 +8,7 @@ define('ext.wikia.adEngine.provider.remnantGpt', [
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.provider.remnantGpt',
-		srcName = 'remnant',
+		srcName = 'rh',
 		slotMap = gptSlotConfig.getConfig(srcName);
 
 	function canHandleSlot(slotname) {
@@ -20,23 +20,25 @@ define('ext.wikia.adEngine.provider.remnantGpt', [
 		return true;
 	}
 
-	function fillInSlot(slotname, success, hop) {
+	function fillInSlot(slotname, success) {
+
 		log(['fillInSlot', slotname], 5, logGroup);
 
 		wikiaGpt.pushAd(
 			slotname,
-			function (adInfo) { // Success
+			function () { // Success
 				slotTweaker.removeDefaultHeight(slotname);
 				slotTweaker.removeTopButtonIfNeeded(slotname);
 				slotTweaker.adjustLeaderboardSize(slotname);
 
-				success(adInfo);
+				success();
 			},
-			function (adInfo) { // Hop
+			function () { // Hop
 				log(slotname + ' was not filled by DART', 'info', logGroup);
 
-				adInfo.method = 'hop';
-				hop(adInfo, 'Liftium');
+				slotTweaker.hide(slotname);
+
+				success();
 			},
 			srcName
 		);

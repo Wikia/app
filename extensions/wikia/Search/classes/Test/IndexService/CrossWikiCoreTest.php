@@ -155,7 +155,7 @@ class CrossWikiCoreTest extends BaseTest
 				'hostname_s' => 'hostname', 'hostname_txt' => 'hostname', 'all_domains_mv_wd' => [ 'bar.wikia.com', 'baz.wikia.com', 'foo.wikia.com' ], 'domains_txt' => [ 'bar.wikia.com', 'baz.wikia.com', 'foo.wikia.com' ],
 				'wiki_pagetitle_txt' => 'Foo Wiki - Bar, Baz and More!',
 				];
-		$this->mockClass( 'WikiFactory', $mockWiki, 'getWikiById' );
+		$this->proxyClass( 'WikiFactory', $mockWiki, 'getWikiById' );
 		$this->mockGlobalFunction( 'WfMessage', $mockMessage );
 		$ref = new ReflectionMethod( $service, 'getWikiBasics' );
 		$ref->setAccessible( true );
@@ -192,7 +192,7 @@ class CrossWikiCoreTest extends BaseTest
 		    ->will   ( $this->returnValue( $response ) )
 		;
 		$expected = [ 'views_weekly_i' => 123, 'views_monthly_i' => '456' ];
-		$this->mockClass( 'Wikia\Search\IndexService\WikiViews', $wv );
+		$this->proxyClass( 'Wikia\Search\IndexService\WikiViews', $wv );
 		$get = new ReflectionMethod( $service, 'getWikiViews' );
 		$get->setAccessible( true );
 		$this->assertEquals(
@@ -223,7 +223,7 @@ class CrossWikiCoreTest extends BaseTest
 		    ->will   ( $this->returnValue( $response ) )
 		;
 		$expected = [ 'wam_i' => 100 ];
-		$this->mockClass( 'Wikia\Search\IndexService\Wam', $wv );
+		$this->proxyClass( 'Wikia\Search\IndexService\Wam', $wv );
 		$get = new ReflectionMethod( $service, 'getWam' );
 		$get->setAccessible( true );
 		$this->assertEquals(
@@ -268,7 +268,7 @@ class CrossWikiCoreTest extends BaseTest
 		    ->with   ( 123 )
 		    ->will   ( $this->returnValue( 50 ) )
 		;
-		$this->mockClass( 'WikiService', $wikiService );
+		$this->proxyClass( 'WikiService', $wikiService );
 
 		$get = new ReflectionMethod( $service, 'getWikiStats' );
 		$get->setAccessible( true );
