@@ -8,16 +8,17 @@ class ExactTargetAddUserTask extends ExactTargetBaseTask {
 	 * @param array $aUserProperties Array of Wikia user gobal properties
 	 */
 	public function sendNewUserData( $aUserData, $aUserProperties ) {
-		$this->createSubscriber( $aUserData['user_email'] );
-		$this->createUserDataExtension( $aUserData );
-		$this->createUserPropertiesDataExtension( $aUserData['user_id'], $aUserProperties );
+		$oClient = $this->getClient();
+		$this->createSubscriber( $aUserData['user_email'], $oClient );
+		$this->createUserDataExtension( $aUserData, $oClient );
+		$this->createUserPropertiesDataExtension( $aUserData['user_id'], $aUserProperties, $oClient );
 	}
 
 	/**
 	 * Creates Subscriber object in ExactTarget by API request
 	 * @param String $sUserEmail new subscriber email address
 	 */
-	public function createSubscriber( $sUserEmail ) {
+	public function createSubscriber( $sUserEmail, $oClient ) {
 		try {
 			/* ExactTarget_Subscriber */
 			$oSubscriber = new ExactTarget_Subscriber();
@@ -29,10 +30,10 @@ class ExactTargetAddUserTask extends ExactTargetBaseTask {
 			$oRequest = $this->wrapCreateRequest( [ $oSoapVar ] );
 
 			/* Send API request */
-			$this->oClient->Create( $oRequest );
+			$oClient->Create( $oRequest );
 
 			/* Log response */
-			$this->info( $this->oClient->__getLastResponse() );
+			$this->info( $oClient->__getLastResponse() );
 
 		} catch ( SoapFault $e ) {
 			/* Log error */
@@ -44,7 +45,7 @@ class ExactTargetAddUserTask extends ExactTargetBaseTask {
 	 * Creates DataExtension object in ExactTarget by API request that reflects Wikia user table
 	 * @param Array $aUserData Selected fields from Wikia user table
 	 */
-	public function createUserDataExtension( $aUserData ) {
+	public function createUserDataExtension( $aUserData, $oClient ) {
 
 		try {
 			/* Create new DataExtensionObject that reflects user table data */
@@ -63,10 +64,10 @@ class ExactTargetAddUserTask extends ExactTargetBaseTask {
 			$oRequest = $this->wrapCreateRequest( [ $oSoapVar ] );
 
 			/* Send API request */
-			$this->oClient->Create( $oRequest );
+			$oClient->Create( $oRequest );
 
 			/* Log response */
-			$this->info( $this->oClient->__getLastResponse() );
+			$this->info( $oClient->__getLastResponse() );
 
 		} catch ( SoapFault $e ) {
 			/* Log error */
@@ -79,7 +80,7 @@ class ExactTargetAddUserTask extends ExactTargetBaseTask {
 	 * @param Integer $iUserId User ID
 	 * @param Array $aUserProperties key-value array ['property_name'=>'property_value']
 	 */
-	public function createUserPropertiesDataExtension( $iUserId, $aUserProperties ) {
+	public function createUserPropertiesDataExtension( $iUserId, $aUserProperties, $oClient ) {
 
 		try {
 			$aDE = $this->prepareUserPropertiesDataExtensionObjects( $iUserId, $aUserProperties );
@@ -87,10 +88,10 @@ class ExactTargetAddUserTask extends ExactTargetBaseTask {
 			$oRequest = $this->wrapCreateRequest( $aSoapVars );
 
 			/* Send API request */
-			$this->oClient->Create( $oRequest );
+			$oClient->Create( $oRequest );
 
 			/* Log response */
-			$this->info( $this->oClient->__getLastResponse() );
+			$this->info( $oClient->__getLastResponse() );
 		} catch ( SoapFault $e ) {
 			/* Log error */
 			$this->error( 'SoapFault:' . $e->getMessage() . 'ErrorCode: ' . $e->getCode() );
