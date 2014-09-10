@@ -5603,6 +5603,12 @@ class Parser {
 		}
 		$this->mOutput->setCacheTime( -1 ); // old style, for compatibility
 		$this->mOutput->updateCacheExpiry( 0 ); // new style, for consistency
+
+		// Wikia change - begin
+		Wikia\Logger\WikiaLogger::instance()->info(__METHOD__, [
+			'exception' => new Exception()
+		]);
+		// Wikia change - end
 	}
 
 	/**
