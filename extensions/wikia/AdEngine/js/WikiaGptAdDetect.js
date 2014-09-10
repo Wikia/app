@@ -183,7 +183,7 @@ define('ext.wikia.adEngine.wikiaGptAdDetect', [
 			}
 		}
 
-		if (adType === 'openx' || adType === 'rubicon') {
+		if (adType === 'openx' || adType === 'rubicon' || adType === 'saymedia') {
 			shouldPollForSuccess = true;
 			expectAsyncHop = true;
 		}

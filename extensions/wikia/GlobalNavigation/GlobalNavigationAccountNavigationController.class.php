@@ -14,20 +14,24 @@ class GlobalNavigationAccountNavigationController extends WikiaController {
 
 		global $wgUser;
 
-		$this->setupPersonalUrls();
 		$this->isAnon = $wgUser->isAnon();
 		$this->username = $wgUser->getName();
-		$this->accountNavigationText = $this->username;
+		$this->avatarContainerAditionalClass = '';
+		$this->profileAvatar = '';
+
+		$this->setupPersonalUrls();
 
 		if ( $this->isAnon ) {
-			$this->accountNavigationText = wfMessage( 'login' )->text();
-			$this->loginLinkOpeningTag = $this->renderPersonalUrl( 'login', true );
+			$this->navItemLinkOpeningTag = $this->renderPersonalUrl( 'login', true );
+			$this->avatarContainerAditionalClass = ' anon-avatar-placeholder';
 			$this->registerLink = $this->renderPersonalUrl( 'register' );
-			$this->loginDropdown = (string)F::app()->sendRequest( 'UserLoginSpecial', 'dropdown', [ 'template' => 'venusDropdown', 'registerLink' => $this->registerLink ] );
+			$this->loginDropdown = F::app()->renderView( 'UserLoginSpecial', 'dropdown', [ 'template' => 'globalNavigationDropdown', 'registerLink' => $this->registerLink ] );
 		} else {
-			$this->profileLink = AvatarService::getUrl( $this->username );
-			$this->profileAvatar = null;
-			if ( !AvatarService::isEmptyOrFirstDefault( $this->username ) ) {
+			$this->navItemLinkOpeningTag = $this->renderPersonalUrl( 'userpage', true );
+
+			if ( AvatarService::isEmptyOrFirstDefault( $this->username ) ) {
+				$this->avatarContainerAditionalClass = ' logged-avatar-placeholder';
+			} else {
 				$this->profileAvatar = AvatarService::renderAvatar( $this->username, 36 );
 			}
 
@@ -54,7 +58,7 @@ class GlobalNavigationAccountNavigationController extends WikiaController {
 			);
 
 			$dropdownItems[] = $this->renderPersonalUrl( 'logout', false );
-			$this->dropdown = $dropdownItems;
+			$this->userDropdown = $dropdownItems;
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -80,7 +84,7 @@ class GlobalNavigationAccountNavigationController extends WikiaController {
 	 * Render personal URLs item as HTML link.
 	 *
 	 * @param string $id
-	 * @param bool $openingTagOnly Setting to true renders the <a> tag with appropriate attributes but no content
+	 * @param bool $openingTagOnly If set to true, renders just the <a> tag with appropriate attributes but no content
 	 * @return string
 	 */
 	private function renderPersonalUrl( $id, $openingTagOnly = false ) {
@@ -94,6 +98,10 @@ class GlobalNavigationAccountNavigationController extends WikiaController {
 			$attributes[ 'rel' ] = 'nofollow';
 		}
 
+		if ( isset( $personalUrl[ 'title' ] ) ) {
+			$attributes[ 'title' ] = $personalUrl[ 'title' ];
+		}
+
 		if ( isset( $personalUrl[ 'class' ] ) ) {
 			$attributes[ 'class' ] = $personalUrl[ 'class' ];
 		}
@@ -105,28 +113,33 @@ class GlobalNavigationAccountNavigationController extends WikiaController {
 			case 'login':
 				$attributes[ 'accesskey' ] = 'o';
 				break;
+			case 'userpage':
+				$attributes[ 'accesskey' ] = '.';
+				break;
 		}
 
-		$ret = Xml::openElement( 'a', $attributes );
-		$urlText = $personalUrl[ 'text' ];
+		$markup = '<a';
+		foreach( $attributes as $name => $value ) {
+			$markup .= ' ' . $name .'="' . $value . '"';
+		}
+		$markup .= '>';
+
 		if ( !$openingTagOnly ) {
-			$ret .= $urlText;
-			$ret .= Xml::closeElement( 'a' );
+			$markup .= $personalUrl[ 'text' ];
+			$markup .= '</a>';
 		}
 
 		wfProfileOut( __METHOD__ );
-		return $ret;
+		return $markup;
 	}
 
 	/**
 	 * Modify personal URLs list.
 	 */
 	private function setupPersonalUrls() {
-		global $wgUser;
-
 		$this->personalUrls = F::app()->getSkinTemplateObj()->data[ 'personal_urls' ];
 
-		if ( $wgUser->isAnon() ) {
+		if ( $this->isAnon ) {
 			$query = F::app()->wg->Request->getValues();
 			if ( isset( $query[ 'title' ] ) && !self::isBlacklisted( $query[ 'title' ] ) ) {
 				$returnto = $query[ 'title' ];
@@ -135,10 +148,10 @@ class GlobalNavigationAccountNavigationController extends WikiaController {
 			}
 			$returnto = wfGetReturntoParam( $returnto );
 
-			$this->personalUrls[ 'login' ] = [ 'text' => wfMessage( 'login' )->text(), 'href' => Skin::makeSpecialUrl( 'UserLogin', $returnto ), 'class' => 'ajaxLogin global-navigation-link' ];
+			$this->personalUrls[ 'login' ] = [ 'title' => wfMessage( 'login' )->text(), 'href' => Skin::makeSpecialUrl( 'UserLogin', $returnto ), 'class' => 'ajaxLogin global-navigation-link' ];
 			$this->personalUrls[ 'register' ] = [ 'text' => wfMessage( 'oasis-signup' )->text(), 'href' => Skin::makeSpecialUrl( 'UserSignup' ), 'class' => 'ajaxRegister' ];
 		} else {
-			$this->personalUrls[ 'userpage' ][ 'text' ] = wfMessage( 'mypage' )->text();
+			$this->personalUrls[ 'userpage' ] = [ 'title' => wfMessage( 'mypage' )->text(), 'href' => AvatarService::getUrl( $this->username ), 'class' => 'ajaxLogin global-navigation-link' ];
 		}
 	}
 }

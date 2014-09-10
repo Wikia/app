@@ -11,38 +11,36 @@
 	padding: 0;
 	width: 100%;
 
+	&.active {
+		.user-menu {
+			display: table;
+		}
+
+		> li {
+			background-color: $search-input-background;
+
+			> a:after {
+				border-top-color: $nav-active-color;
+			}
+		}
+	}
+
 	> li {
 		border: 0;
 		list-style: none;
 		margin-top: 0;
 		padding: 0;
 
-		&:hover {
-			background: none;
-
-			> a .chevron {
-				border-top-color: $nav-active-color;
-			}
-		}
-
 		> a {
 			@include grid-column-width('large', 1, $large-grid-gutter + $large-content-padding - 2px);
-		}
 
-		.account-navigation-text {
-			display: none;
-		}
-
-		.avatar {
-			border: 0;
-			border-radius: 50%;
-
-			rect {
-				fill: $nav-alternative-color;
-			}
-
-			&.logged-user rect {
-				fill: $nav-active-color;
+			&:after {
+				border: 5px solid;
+				border-top-color: $nav-alternative-color;
+				color: transparent;
+				content: ' ';
+				float: left;
+				margin-top: 16px;
 			}
 		}
 
@@ -51,17 +49,25 @@
 			float: left;
 			height: 36px;
 			margin: 0 6px 0 38px;
+			overflow: hidden;
 			position: relative;
 			width: 36px;
+
+			&.anon-avatar-placeholder,
+			&.logged-avatar-placeholder {
+				background-image: url('/extensions/wikia/GlobalNavigation/images/avatar.svg'); /* base64 */
+				background-repeat: no-repeat;
+			}
+
+			&.anon-avatar-placeholder {
+				background-color: $nav-alternative-color;
+			}
+
+			&.logged-avatar-placeholder {
+				background-color: $nav-active-color;
+			}
 		}
 
-		.chevron {
-			border-style: solid;
-			border-top-color: $nav-alternative-color;
-			border-width: 5px;
-			color: transparent;
-			margin-top: 18px;
-		}
 	}
 
 	.user-menu {
@@ -73,10 +79,6 @@
 		position: relative;
 		right: $large-grid-column + 1px;
 
-		&.show {
-			display: table;
-		}
-
 		> li {
 			display: table-row;
 			height: 51px;
@@ -85,11 +87,12 @@
 			> a {
 				background-color: $nav-background-color;
 				border-top: 1px solid $nav-alternative-color;
+				color: $dropdown-font-color;
 				display: table-cell;
-				padding: 15px 20px;
+				padding: 8px 20px;
 				text-decoration: none;
 				vertical-align: middle;
-				word-break: break-all;
+				word-break: break-word;
 
 				&:hover {
 					background-color: $dropdown-font-color;

@@ -83,7 +83,7 @@ class WikiaInteractiveMapsPoiController extends WikiaInteractiveMapsBaseControll
 
 		$this->validatePoiData();
 
-		$results = $this->mapsModel->deletePoi( $this->getData( 'poiId' ) );
+		$results = $this->getModel()->deletePoi( $this->getData( 'poiId' ) );
 		if ( true === $results[ 'success' ] ) {
 			WikiaMapsLogger::addLogEntry(
 				WikiaMapsLogger::ACTION_DELETE_PIN,
@@ -103,7 +103,7 @@ class WikiaInteractiveMapsPoiController extends WikiaInteractiveMapsBaseControll
 	 * @return Array
 	 */
 	private function createPoi() {
-		return $this->mapsModel->savePoi( $this->getSanitizedData() );
+		return $this->getModel()->savePoi( $this->getSanitizedData() );
 	}
 
 	/**
@@ -112,7 +112,7 @@ class WikiaInteractiveMapsPoiController extends WikiaInteractiveMapsBaseControll
 	 * @return Array
 	 */
 	private function updatePoi() {
-		return $this->mapsModel->updatePoi(
+		return $this->getModel()->updatePoi(
 			$this->getData( 'poiId' ),
 			$this->getSanitizedData()
 		);
@@ -122,7 +122,7 @@ class WikiaInteractiveMapsPoiController extends WikiaInteractiveMapsBaseControll
 	 * Returns parent/default POI categories recieved from the service
 	 */
 	public function getParentPoiCategories() {
-		$parentPoiCategoriesResponse = $this->mapsModel->getParentPoiCategories();
+		$parentPoiCategoriesResponse = $this->getModel()->getParentPoiCategories();
 		$this->setVal( 'results', $parentPoiCategoriesResponse );
 	}
 
@@ -186,7 +186,7 @@ class WikiaInteractiveMapsPoiController extends WikiaInteractiveMapsBaseControll
 			// parent category
 			$poiCategoryData[ 'parent_poi_category_id' ] = ( !empty( $poiCategoryParents[ $i ] ) ) ?
 				(int) $poiCategoryParents[ $i ] :
-				$this->mapsModel->getDefaultParentPoiCategory();
+				$this->getModel()->getDefaultParentPoiCategory();
 
 			// if user didn't upload marker then this is empty string. we don't want to send it to api.
 			if ( !empty( $poiCategoryMarkers[ $i ] ) ) {
@@ -222,8 +222,8 @@ class WikiaInteractiveMapsPoiController extends WikiaInteractiveMapsBaseControll
 		$createPoiCategories = $this->getData( 'createPoiCategories' );
 		$updatePoiCategories = $this->getData( 'updatePoiCategories' );
 
-		if ( !$this->wg->User->isLoggedIn() ) {
-			throw new PermissionsException( WikiaInteractiveMapsController::PAGE_RESTRICTION );
+		if ( !$this->isUserAllowed() ) {
+			throw new WikiaInteractiveMapsPermissionException();
 		}
 
 		if ( $mapId === 0 && empty( $poiCategoryNames ) ) {
@@ -305,7 +305,7 @@ class WikiaInteractiveMapsPoiController extends WikiaInteractiveMapsBaseControll
 	 * @param array $poiCategory
 	 */
 	private function createPoiCategory( $poiCategory ) {
-		$response = $this->mapsModel->savePoiCategory( $poiCategory );
+		$response = $this->getModel()->savePoiCategory( $poiCategory );
 
 		if ( true === $response[ 'success' ] ) {
 			$this->addLogEntry( WikiaMapsLogger::newLogEntry(
@@ -325,7 +325,7 @@ class WikiaInteractiveMapsPoiController extends WikiaInteractiveMapsBaseControll
 	private function updatePoiCategory( $poiCategory ) {
 		$poiCategoryId = $poiCategory[ 'id' ];
 		unset( $poiCategory[ 'id' ] );
-		$response = $this->mapsModel->updatePoiCategory( $poiCategoryId, $poiCategory );
+		$response = $this->getModel()->updatePoiCategory( $poiCategoryId, $poiCategory );
 
 		if ( true === $response[ 'success' ] ) {
 			$this->addLogEntry( WikiaMapsLogger::newLogEntry(
@@ -353,7 +353,7 @@ class WikiaInteractiveMapsPoiController extends WikiaInteractiveMapsBaseControll
 		$poiCategoriesDeleted = $this->getData( 'poiCategoriesDeleted' );
 
 		foreach ( $poiCategoriesDeleted as $poiCategoryId ) {
-			$response = $this->mapsModel->deletePoiCategory( $poiCategoryId );
+			$response = $this->getModel()->deletePoiCategory( $poiCategoryId );
 
 			if ( true === $response[ 'success' ] ) {
 				$this->addLogEntry( WikiaMapsLogger::newLogEntry(
@@ -438,8 +438,8 @@ class WikiaInteractiveMapsPoiController extends WikiaInteractiveMapsBaseControll
 			throw new BadRequestApiException( wfMessage( 'wikia-interactive-maps-create-map-bad-request-error' )->plain() );
 		}
 
-		if ( !$this->wg->User->isLoggedIn() ) {
-			throw new PermissionsException( WikiaInteractiveMapsController::PAGE_RESTRICTION );
+		if ( !$this->isUserAllowed() ) {
+			throw new WikiaInteractiveMapsPermissionException();
 		}
 	}
 
@@ -473,7 +473,7 @@ class WikiaInteractiveMapsPoiController extends WikiaInteractiveMapsBaseControll
 	 *
 	 * @return bool
 	 */
-	private function isValidArticleTitle() {
+	public function isValidArticleTitle() {
 		$articleTitle = $this->getData( 'articleTitle' );
 		$valid = false;
 
@@ -546,7 +546,7 @@ class WikiaInteractiveMapsPoiController extends WikiaInteractiveMapsBaseControll
 		} else {
 			$results = array_map( 
 				function( $item ) {
-					$imageUrl = $this->mapsModel->getArticleImage(
+					$imageUrl = $this->getModel()->getArticleImage(
 						$item[ 0 ][ 'title' ],
 						self::POI_ARTICLE_IMAGE_THUMB_SIZE,
 						self::POI_ARTICLE_IMAGE_THUMB_SIZE
@@ -607,7 +607,7 @@ class WikiaInteractiveMapsPoiController extends WikiaInteractiveMapsBaseControll
 	 * @return Array results array
 	 */
 	private function decorateResults( $results, $fieldsList ) {
-		$response = $this->mapsModel->sendGetRequest( $results[ 'content' ]->url );
+		$response = $this->getModel()->sendGetRequest( $results[ 'content' ]->url );
 
 		foreach ( $fieldsList as $field ) {
 			if ( !empty( $response[ 'content' ]->$field ) ) {

@@ -2,18 +2,39 @@
 
 class ExactTargetUpdatesHooks {
 
+	/**
+	 * Runs a method for adding AddUserTask to job queue
+	 * Function executed on SignupConfirmEmailComplete hook
+	 * @param User $user
+	 * @return bool
+	 */
 	public static function onSignupConfirmEmailComplete( User $user ) {
-		global $wgWikiaEnvironment;
-		if ( $wgWikiaEnvironment != WIKIA_ENV_DEV && $wgWikiaEnvironment != WIKIA_ENV_INTERNAL ) {
-			$aParams = self::prepareParams( $user );
-			$task = new ExactTargetAddUserTask();
-			$task->call( 'sendNewUserData', $aParams );
-			$task->queue();
-		}
+		$thisInstance = new ExactTargetUpdatesHooks();
+		$thisInstance->addTheAddUserTask( $user, new ExactTargetAddUserTask() );
 		return true;
 	}
 
-	public static function prepareParams( User $oUser ) {
+	/**
+	 * Adds AddUserTask to job queue
+	 * @param User $user
+	 * @param ExactTargetAddUserTask $task
+	 */
+	public function addTheAddUserTask( User $user, ExactTargetAddUserTask $task ) {
+		global $wgWikiaEnvironment;
+		/* Don't add task when on dev or internal */
+		if ( $wgWikiaEnvironment != WIKIA_ENV_DEV && $wgWikiaEnvironment != WIKIA_ENV_INTERNAL ) {
+			$aParams = $this->prepareParams( $user );
+			$task->call( 'sendNewUserData', $aParams );
+			$task->queue();
+		}
+	}
+
+	/**
+	 * Prepares array of user fields needed to be passed by API
+	 * @param User $oUser
+	 * @return array
+	 */
+	public function prepareParams( User $oUser ) {
 		$aUserParams = [
 			'user_id' => $oUser->getId(),
 			'user_name' => $oUser->getName(),
