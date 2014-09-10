@@ -5,7 +5,4 @@
 		</li>
 		<li class="notification empty"><?= wfMessage('wall-notifications-loading')->text() ?></li>
 	</ul>
-	<div id="WallNotificationsReminder">
-		<a><?= wfMessage('wall-notifications-reminder', '?')->text() ?></a>
-	</div>
 <? endif; ?>
