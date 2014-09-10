@@ -24,9 +24,6 @@ $wgAutoloadClasses['VideoEmbedToolController'] = $dir . '/VideoEmbedToolControll
 
 define( 'VIDEO_PREVIEW', 350 );
 
-$wgNamespaceAliases["Video"] = 6;
-$wgNamespaceAliases["Video_talk"] = 7;
-
 #--- register special page (MW 1.1x way)
 if ( !function_exists( 'extAddSpecialPage' ) ) {
     require( "$IP/extensions/ExtensionFunctions.php" );

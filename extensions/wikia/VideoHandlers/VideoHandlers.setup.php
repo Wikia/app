@@ -30,14 +30,6 @@ $wgExtensionCredits['videohandlers'][] = array(
 	'descriptionmsg' => 'wikia-videohandlers-desc',
 );
 
-/**
- * setup
- */
-$wgNamespaceAliases[ 'Video' ] = 6;
-$wgNamespaceAliases['Video_talk'] = 7;
-define( 'NS_VIDEO', 6 );
-
-
 $wgWikiaVideoGalleryId = 0;
 $wgWikiaVETLoaded = false;
 $wgWikiaVideosFoundInTemplates = 0;
