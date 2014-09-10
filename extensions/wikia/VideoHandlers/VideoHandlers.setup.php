@@ -176,10 +176,6 @@ $wgAutoloadClasses['MyvideoVideoHandler'] =  $dir . '/handlers/MyvideoVideoHandl
 $wgAutoloadClasses['MyvideoApiWrapper'] =  $dir . '/apiwrappers/MyvideoApiWrapper.class.php';
 $wgMediaHandlers['video/myvideo'] = 'MyvideoVideoHandler';
 
-$wgAutoloadClasses['RealgravityVideoHandler'] =  $dir . '/handlers/RealgravityVideoHandler.class.php';
-$wgAutoloadClasses['RealgravityApiWrapper'] =  $dir . '/apiwrappers/RealgravityApiWrapper.class.php';
-$wgMediaHandlers['video/realgravity'] = 'RealgravityVideoHandler';
-
 // Uses Ooyala for video handler
 $wgAutoloadClasses['ScreenplayApiWrapper'] =  $dir . '/apiwrappers/ScreenplayApiWrapper.class.php';
 
@@ -247,7 +243,6 @@ $wgMediaHandlers['video/crunchyroll'] = 'CrunchyrollVideoHandler';
  * Feed ingesters
  */
 $wgAutoloadClasses[ 'VideoFeedIngester' ] = $dir . '/feedingesters/VideoFeedIngester.class.php';
-$wgAutoloadClasses[ 'RealgravityFeedIngester' ] = $dir . '/feedingesters/RealgravityFeedIngester.class.php';
 $wgAutoloadClasses[ 'ScreenplayFeedIngester' ] = $dir . '/feedingesters/ScreenplayFeedIngester.class.php';
 $wgAutoloadClasses[ 'IgnFeedIngester' ] = $dir . '/feedingesters/IgnFeedIngester.class.php';
 $wgAutoloadClasses[ 'AnyclipFeedIngester' ] = $dir . '/feedingesters/AnyclipFeedIngester.class.php';
@@ -270,7 +265,6 @@ $wgVideoMigrationProviderMap = array(
 	19 => 'Viddler',
 	21 => 'Screenplay',
 	22 => 'Movieclips',
-	23 => 'Realgravity',
 	/*
 	// a trick to make video.wikia and local files accessible via wrappers:
 	24 => 'Wikia',
