@@ -43,6 +43,9 @@ ve.ui.WikiaTemplateInsertDialog.prototype.initialize = function () {
 	this.select = new OO.ui.SelectWidget( { '$': this.$ } );
 
 	// Events
+	this.select.connect( this, {
+		'select': 'onTemplateSelect'
+	} );
 
 	// Initialization
 	this.frame.$content.addClass( 've-ui-wikiaTemplateInsertDialog' );
@@ -53,6 +56,46 @@ ve.ui.WikiaTemplateInsertDialog.prototype.initialize = function () {
 	this.$body.append( this.stackLayout.$element );
 
 	this.getMostLinkedTemplateData().done( ve.bind( this.populateOptions, this ) );
+};
+
+/**
+ * Handle selecting results.
+ *
+ * @method
+ * @param {ve.ui.OptionWidget} item Item whose state is changing or null
+ */
+ve.ui.WikiaTemplateInsertDialog.prototype.onTemplateSelect = function ( item ) {
+	var template;
+
+	if ( item ) {
+		this.transclusionModel = new ve.dm.MWTransclusionModel();
+
+		template = ve.dm.MWTemplateModel.newFromName(
+			this.transclusionModel, item.getData().title
+		);
+		this.transclusionModel.addPart( template )
+			.done( ve.bind( this.insertTemplate, this ) );
+	}
+};
+
+/**
+ * Insert template
+ */
+ve.ui.WikiaTemplateInsertDialog.prototype.insertTemplate = function () {
+	this.surface.getModel().getDocument().once( 'transact', ve.bind( this.onTransact, this ) );
+
+	// Collapse returns a new fragment, so update this.fragment
+	this.fragment = this.getFragment().collapseRangeToEnd();
+	this.transclusionModel.insertTransclusionNode( this.getFragment() );
+};
+
+/**
+ * Handle document model transaction
+ */
+ve.ui.WikiaTemplateInsertDialog.prototype.onTransact = function () {
+	ve.ui.commandRegistry.getCommandForNode(
+		this.surface.getView().getFocusedNode()
+	).execute( this.surface );
 };
 
 /**
@@ -107,6 +150,17 @@ ve.ui.WikiaTemplateInsertDialog.prototype.getMostLinkedTemplateData = function (
 	}
 
 	return this.templatesPromise;
+};
+
+/**
+ * @inheritdoc
+ */
+ve.ui.WikiaTemplateInsertDialog.prototype.getTeardownProcess = function ( data ) {
+	return ve.ui.WikiaTemplateInsertDialog.super.prototype.getTeardownProcess.call( this, data )
+		.next( function () {
+			// Unselect
+			this.select.selectItem();
+		}, this );
 };
 
 /* Registration */
