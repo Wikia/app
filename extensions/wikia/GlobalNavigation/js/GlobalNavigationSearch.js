@@ -3,6 +3,11 @@
 	document.addEventListener('DOMContentLoaded', function() {
 		var inputResultLang, formElement, selectElement, searchLabel, chevron;
 
+		selectElement = document.getElementById('search-select');
+
+		if (!selectElement) {
+			return;
+		}
 
 		function setFormOptions() {
 			var selectedOption;
@@ -20,7 +25,6 @@
 		inputResultLang = document.getElementById('search-input-resultLang');
 		chevron = document.getElementById('search-form-chevron');
 		formElement = document.getElementById('search-form');
-		selectElement = document.getElementById('search-select');
 		searchLabel = document.getElementById('search-label-inline');
 
 		setFormOptions();
