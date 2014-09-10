@@ -349,7 +349,8 @@ require(
 					tolerance: 85,
 					submenuDirection: 'left',
 					activate: WallNotifications.openNotifications,
-					deactivate: WallNotifications.closeNotifications
+					deactivate: WallNotifications.closeNotifications,
+					exitMenu: WallNotifications.closeNotifications
 			});
 		});
 	}
