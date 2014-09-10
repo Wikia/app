@@ -19,10 +19,6 @@
 	right: $large-grid-column + $large-grid-gutter + $large-grid-column-padding + 1;
 	z-index: 5000100;
 
-	&.show {
-		display: block;
-	}
-
 	.ajaxRegisterContainer {
 		background-color: $nav-active-color;
 		display: table;
@@ -199,6 +195,10 @@
 			width: 41px;
 		}
 	}
+}
+
+.AccountNavigation.active .UserLoginDropdown {
+	display: block;
 }
 
 @media #{$small-only} {

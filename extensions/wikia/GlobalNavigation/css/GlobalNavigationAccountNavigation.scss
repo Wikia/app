@@ -11,19 +11,21 @@
 	padding: 0;
 	width: 100%;
 
-	> li {
-		border: 0;
-		list-style: none;
-		margin-top: 0;
-		padding: 0;
-
-		&:hover {
+	&.active {
+		> li {
 			background-color: $search-input-background;
 
 			> a:after {
 				border-top-color: $nav-active-color;
 			}
 		}
+	}
+
+	> li {
+		border: 0;
+		list-style: none;
+		margin-top: 0;
+		padding: 0;
 
 		> a {
 			@include grid-column-width('large', 1, $large-grid-gutter + $large-content-padding - 2px);
@@ -34,7 +36,7 @@
 				color: transparent;
 				content: ' ';
 				float: left;
-				margin-top: 18px;
+				margin-top: 16px;
 			}
 		}
 
@@ -72,10 +74,6 @@
 		position: relative;
 		right: $large-grid-column + 1px;
 
-		&.show {
-			display: table;
-		}
-
 		> li {
 			display: table-row;
 			height: 51px;
@@ -102,6 +100,10 @@
 			}
 		}
 	}
+}
+
+.AccountNavigation.active .user-menu {
+	display: table;
 }
 
 @media #{$small-only} {

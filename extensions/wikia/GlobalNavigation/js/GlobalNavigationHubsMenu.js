@@ -47,7 +47,7 @@ require( ['jquery', 'wikia.globalnavigation.lazyload'], function( $, GlobalNavLa
 		$transparentOut.removeClass( 'visible' );
 	}
 
-	$transparentOut = $('<div />').addClass('transparent-out').appendTo('body');
+	$transparentOut = $('<div class="transparent-out transparent-out-hubs-menu"/>').appendTo('body');
 	$transparentOut.click(closeMenu);
 
 	if ( !window.touchstart ) {

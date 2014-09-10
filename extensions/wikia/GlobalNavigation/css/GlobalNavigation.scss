@@ -5,6 +5,7 @@
 .global-navigation {
 	background-color: $nav-background-color;
 	border-bottom: 1px solid $nav-alternative-color;
+	color: $nav-active-color;
 	position: fixed;
 	width: 100%;
 	z-index: $global-navigation-z-index;

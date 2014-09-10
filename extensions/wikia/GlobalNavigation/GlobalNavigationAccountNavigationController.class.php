@@ -25,7 +25,7 @@ class GlobalNavigationAccountNavigationController extends WikiaController {
 			$this->navItemLinkOpeningTag = $this->renderPersonalUrl( 'login', true );
 			$this->avatarContainerAditionalClass = ' anon-avatar-placeholder';
 			$this->registerLink = $this->renderPersonalUrl( 'register' );
-			$this->loginDropdown = F::app()->renderView( 'UserLoginSpecial', 'dropdown', [ 'template' => 'venusDropdown', 'registerLink' => $this->registerLink ] );
+			$this->loginDropdown = F::app()->renderView( 'UserLoginSpecial', 'dropdown', [ 'template' => 'globalNavigationDropdown', 'registerLink' => $this->registerLink ] );
 		} else {
 			$this->navItemLinkOpeningTag = $this->renderPersonalUrl( 'userpage', true );
 
