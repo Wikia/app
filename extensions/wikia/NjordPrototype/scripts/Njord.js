@@ -47,6 +47,7 @@
 
 			return $this;
 		}, onSave = function () {
+			$heroModule.startThrobbing();
 			$.nirvana.sendRequest({
 				controller: 'NjordController',
 				method: 'saveHeroData',
@@ -55,12 +56,13 @@
 					wikiData: heroData
 				},
 				callback: function () {
-					// TODO: handle success
+					$heroModule.stopThrobbing();
 					onEdit();
 					load();
 				},
 				onErrorCallback: function () {
 					// TODO: handle failure
+					$heroModule.stopThrobbing();
 				}
 			});
 		}, onEdit = function () {

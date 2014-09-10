@@ -61,13 +61,18 @@
 	});
 
 	function sendForm(formdata) {
+		$heroModule.startThrobbing();
+
 		var client = new XMLHttpRequest();
 		client.open('POST', '/wikia.php?controller=Njord&method=upload', true);
 		client.onreadystatechange = function () {
 			if (client.readyState === 4 && client.status === 200) {
 				var data = JSON.parse(client.responseText);
 
-				$heroModuleImage.bind('load',function () {$heroModule.trigger('enableDragging');});
+				$heroModuleImage.bind('load',function () {
+					$heroModule.stopThrobbing();
+					$heroModule.trigger('enableDragging');
+				});
 				$heroModuleImage.attr('src', data.url);
 				$heroModule.height($heroModule.width() * 5 / 16);
 				$heroModule.trigger('change', [data.url, data.filename]);
