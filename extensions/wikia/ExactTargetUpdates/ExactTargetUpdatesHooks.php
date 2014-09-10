@@ -51,6 +51,13 @@ class ExactTargetUpdatesHooks {
 		return true;
 	}
 
+	public static function onWikiCreation( $aParams ) {
+		wfDebug( __METHOD__ . " ETCreateWikiTask: Task initiated." );
+		$thisInstance = new ExactTargetUpdatesHooks();
+		$thisInstance->addTheAddWikiTask( $aParams, new ExactTargetAddWikiTask() );
+		return true;
+	}
+
 	/**
 	 * Adds AddUserTask to job queue
 	 * @param User $user
@@ -146,5 +153,41 @@ class ExactTargetUpdatesHooks {
 			'language' => $oUser->getOption( 'language' )
 		];
 		return $aUserPropertiesParams;
+	}
+
+	public function addTheAddWikiTask( $aParams, ExactTargetAddWikiTask $oTask ) {
+		global $wgWikiaEnvironment;
+		/* Don't add task when on dev or internal */
+		// if ( $wgWikiaEnvironment != WIKIA_ENV_DEV && $wgWikiaEnvironment != WIKIA_ENV_INTERNAL ) {
+			$aWikiData = $this->prepareWikiParams( $aParams );
+			$aWikiCatsMappingData = $this->prepareWikiCatsMappingParams( $aParams );
+			wfDebug( __METHOD__ . " ETCreateWikiTask: Params prepared." );
+			$task->call( 'sendNewWikiData', $aWikiData, $aWikiCatsMappingData );
+			$task->queue();
+		// }
+	}
+
+	public function prepareWikiParams( $aParams ) {
+		$oWiki = \WikiFactory::getWikiById( $aParams['city_id'] );
+		$aWikiParams = [
+			'city_id' => $oWiki->city_id,
+			'city_sitename' => $oWiki->city_sitename,
+			'city_url' => $oWiki->city_url,
+			'city_created' => $oWiki->city_created,
+			'city_founding_user' => $oWiki->city_founding_user,
+		];
+		return $aWikiParams;
+	}
+
+	public function prepareWikiCatsMappingParams( $aParams ) {
+		$aCategories = \WikiFactory::getCategories( $aParams['city_id'] );
+		$aWikiCatsMappingParams[];
+		foreach( $aCategories as $aCategory ) {
+			$aWikiCatsMappingParams[] = [
+				'city_id' => $aParams['city_id'],
+				'cat_id' => $aCategory['cat_id'],
+			];
+		}
+		return $aWikiCatsMappingParams;
 	}
 }
