@@ -4,6 +4,7 @@ require_once __DIR__ . '/../lib/exacttarget_soap_client.php';
 
 class ExactTargetAddUserTaskTest extends WikiaBaseTest {
 
+<<<<<<< HEAD
 	function testSendNewUserShouldDistributeParams() {
 		/* Params to compare */
 		$aUserData = [
@@ -217,5 +218,5 @@ class ExactTargetAddUserTaskTest extends WikiaBaseTest {
 		/* Run tested method */
 		$mockAddUserTask->createSubscriber( $sUserEmail, $soapClient );
 	}
-
 }
+
