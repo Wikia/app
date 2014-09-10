@@ -2,7 +2,8 @@
 /**
  * Assert
  *
- * wrapper for assertions
+ * wrapper for assertions. This is used because the php manual explicitly discourages the use of assert(), and that
+ * functionality can be disabled. This will also log using WikiaLogger when the assertion fails.
  *
  * @author Nelson Monterroso <nelson@wikia-inc.com>
  */
