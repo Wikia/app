@@ -41,14 +41,8 @@ class ApiVideoPreview extends ApiBase {
 		$tempVideo->setVideoId( $videoId );
 		$tempVideo->afterSetProps();
 
-		$options = [
-			'autoplay' => true,
-			'isAjax' => true,
-			'postOnload' => true,
-		];
-
 		return array(
-			'embedCode' => json_encode( $tempVideo->getEmbedCode( self::EMBED_WIDTH, $options ) ),
+			'embedCode' => json_encode( $tempVideo->getEmbedCode( self::EMBED_WIDTH, true, true, true ) ),
 		);
 	}
 
@@ -62,14 +56,8 @@ class ApiVideoPreview extends ApiBase {
 			$this->dieUsage( 'Wikia video doesn\'t exist', 'wikia-video-missing' );
 		}
 
-		$options = [
-			'autoplay' => true,
-			'isAjax' => true,
-			'postOnload' => true,
-		];
-
 		return array(
-			'embedCode' => json_encode( $file->getEmbedCode( self::EMBED_WIDTH, $options ) ),
+			'embedCode' => json_encode( $file->getEmbedCode( self::EMBED_WIDTH, true, true, true) ),
 		);
 	}
 

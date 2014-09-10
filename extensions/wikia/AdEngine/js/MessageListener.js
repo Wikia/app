@@ -18,24 +18,14 @@ define('ext.wikia.adEngine.messageListener', [
 	}
 
 	function eventMatch(match, msg) {
-		var matching = true,
-			matchingFrame = false,
-			msgFrame;
+		var matching = true;
 
 		if (match.dataKey) {
 			matching = matching && JSON.parse(msg.data).AdEngine.hasOwnProperty(match.dataKey);
 		}
 
 		if (match.source) {
-
-			// traverse through parents till we get to the current window
-			for (msgFrame = msg.source; msgFrame !== window; msgFrame = msgFrame.parent) {
-				if (msgFrame === match.source) {
-					matchingFrame = true;
-				}
-			}
-
-			matching = matching && matchingFrame;
+			matching = matching && msg.source === match.source;
 		}
 
 		return matching;

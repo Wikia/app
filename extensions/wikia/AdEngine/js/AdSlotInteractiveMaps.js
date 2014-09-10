@@ -1,8 +1,5 @@
 /*global define*/
-/*jshint maxlen:125*/
-define('ext.wikia.adEngine.slot.interactiveMaps', [
-	'wikia.log', 'wikia.window', 'wikia.document', 'ext.wikia.adEngine.adContext', 'ext.wikia.adEngine.adLogicPageParams'
-], function (log, window, document, adContext, adLogicPageParams) {
+define('ext.wikia.adEngine.slot.interactiveMaps', ['wikia.log', 'wikia.window', 'wikia.document', 'ext.wikia.adEngine.adLogicPageParams'], function (log, window, document, adLogicPageParams) {
 	'use strict';
 
 	var iframeCounter = 0,
@@ -11,7 +8,7 @@ define('ext.wikia.adEngine.slot.interactiveMaps', [
 	function initSlot(container) {
 		log(['initSlot', container], 'info', logGroup);
 
-		if (!adContext.getContext().opts.showAds || !container) {
+		if (!window.wgShowAds || !container) {
 			return;
 		}
 
@@ -26,7 +23,6 @@ define('ext.wikia.adEngine.slot.interactiveMaps', [
 		adParams.s2 = 'map';
 		adParams.hostpre = params.hostpre;
 		adParams.dmn = params.dmn;
-		adParams.lang = params.lang;
 
 		if (!adParams.mapid) {
 			return false;

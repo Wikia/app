@@ -3006,10 +3006,6 @@ class PoolWorkArticleView extends PoolCounterWork {
 
 		# <Wikia>
 		$this->parserOutput->setPerformanceStats( 'time', $time );
-		Transaction::addEvent( Transaction::EVENT_ARTICLE_PARSE, array(
-			'real' => $time,
-			'article' => $this->page->getTitle()->getPrefixedDBkey(),
-		));
 		# </Wikia>
 
 		# Timing hack

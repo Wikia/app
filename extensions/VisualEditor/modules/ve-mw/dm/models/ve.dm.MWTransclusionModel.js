@@ -5,6 +5,8 @@
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
+/*global mw */
+
 ( function () {
 var hasOwn = Object.hasOwnProperty,
 	specCache = {};
@@ -225,28 +227,45 @@ ve.dm.MWTransclusionModel.prototype.fetch = function () {
 	}
 
 	// Request template specs from server
-	// TODO: Wikia (ve-sprint-25): Re-implement without modifying core class
 	request = ve.init.target.constructor.static.apiRequest( {
-		'action': 'templateparameters',
-		'titles': titles.join( '|' )
+		'action': 'templatedata',
+		'titles': titles.join( '|' ),
+		'lang': mw.config.get( 'wgUserLanguage' ),
+		'redirects': '1'
 	} )
 		.done( function ( data ) {
-			var page, i, id;
+			var i, len, id, aliasMap = [];
+
 			if ( data && data.pages ) {
+				// Keep spec data on hand for future use
 				for ( id in data.pages ) {
-					page = data.pages[id];
-					specs[page.title] = {
-						'title': data.pages[id].title,
-						'description': '',
-						'params': {},
-						'paramOrder': page.params
-					};
-					// Map parameters from flat array to collection where parameter name is the key and value is empty
-					// because later it's extended with ve.dm.MWTemplateSpecModel.prototype.getDefaultParameterSpec
-					for ( i = 0; i < page.params.length; i++ ) {
-						specs[page.title].params[page.params[i]] = {};
+					specs[data.pages[id].title] = data.pages[id];
+				}
+				// Follow redirects
+				if ( data.redirects ) {
+					aliasMap = data.redirects;
+				}
+				// Follow MW's normalisation
+				if ( data.normalized ) {
+					aliasMap.push.apply( aliasMap, data.normalized );
+				}
+				// Cross-reference aliased titles.
+				for ( i = 0, len = aliasMap.length; i < len; i++ ) {
+					// Only define the alias if the target exists, otherwise
+					// we create a new property with an invalid "undefined" value.
+					if ( hasOwn.call( specs, aliasMap[i].to ) ) {
+						specs[aliasMap[i].from] = specs[aliasMap[i].to];
 					}
 				}
+
+				// Prevent asking again for templates that have no specs
+				for ( i = 0, len = titles.length; i < len; i++ ) {
+					title = titles[i];
+					if ( !specs[title] ) {
+						specs[title] = null;
+					}
+				}
+
 				ve.extendObject( specCache, specs );
 			}
 		} )

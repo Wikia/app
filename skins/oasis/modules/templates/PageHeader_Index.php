@@ -1,8 +1,3 @@
-<?php
-		if ( !empty( $wg->EnableMonetizationModuleExt ) && !empty( $monetizationModules[MonetizationModuleHelper::SLOT_TYPE_ABOVE_TITLE] ) ) {
-			echo $monetizationModules[MonetizationModuleHelper::SLOT_TYPE_ABOVE_TITLE];
-	}
-?>
 <header id="WikiaPageHeader" class="WikiaPageHeader">
     <h1><?= !empty($displaytitle) ? $title : htmlspecialchars($title) ?></h1>
 
@@ -22,7 +17,7 @@
 	// "Add a video" button
 	if (!empty($isSpecialVideos) && !empty($wg->EnableUploads) && $showAddVideoBtn): ?>
         <a class="button addVideo" href="#" rel="tooltip" title="<?=wfMsg('related-videos-tooltip-add');?>"><img src="<?=wfBlankImgUrl();?>" class="sprite addRelatedVideo" /> <?=wfMsg('videos-add-video')?></a>
-		<? endif;
+		<? endif; 
 
 	// comments & like button
 	if( !$isWallEnabled ) {
@@ -57,11 +52,6 @@
 	}
 	?>
 </header>
-<?php
-	if ( !empty( $wg->EnableMonetizationModuleExt ) && !empty( $monetizationModules[MonetizationModuleHelper::SLOT_TYPE_BELOW_TITLE] ) ) {
-		echo $monetizationModules[MonetizationModuleHelper::SLOT_TYPE_BELOW_TITLE];
-	}
-?>
 <?php
 // render search box
 if ($showSearchBox) {

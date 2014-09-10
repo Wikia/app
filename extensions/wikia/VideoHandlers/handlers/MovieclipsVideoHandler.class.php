@@ -9,8 +9,7 @@ class MovieclipsVideoHandler extends VideoHandler {
 	protected static $autoplayParam = "autoplay";
 	protected static $autoplayValue = "true";
 
-	public function getEmbed( $width, array $options = [] ) {
-		$autoplay = !empty( $options['autoplay'] );
+	public function getEmbed( $articleId, $width, $autoplay = false, $isAjax = false, $postOnload = false ) {
 		$height =  $this->getHeight( $width );
 		$autoplayParam = self::$autoplayParam;
 		$autoplayValue = $autoplay ? self::$autoplayValue : 'false';

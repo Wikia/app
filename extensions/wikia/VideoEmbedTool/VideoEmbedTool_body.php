@@ -48,13 +48,7 @@ class VideoEmbedTool {
 			return wfMessage( 'vet-non-existing' )->plain();
 		}
 
-		$options = [
-			'autoplay' => false,
-			'isAjax' => false,
-			'postOnload' => true,
-		];
-
-		$embedCode = $file->getEmbedCode( VIDEO_PREVIEW, $options );
+		$embedCode = $file->getEmbedCode( VIDEO_PREVIEW, false, false, true );
 
 		// Loading this to deal with video descriptions
 		$vHelper = new VideoHandlerHelper();
@@ -103,12 +97,6 @@ class VideoEmbedTool {
 			$nonPremiumException = $e;
 		}
 
-		$embedOptions = [
-			'autoplay' => false,
-			'isAjax' => false,
-			'postOnload' => true,
-		];
-
 		if ( !empty( $apiwrapper ) ) { // try ApiWrapper first - is it from a supported 3rd party ( non-premium ) provider?
 			$provider = $apiwrapper->getMimeType();
 
@@ -126,7 +114,7 @@ class VideoEmbedTool {
 			$props['description'] = $vHelper->getVideoDescription( $file );
 			$props['provider'] = $provider;
 
-			$embed_code = $file->getEmbedCode( VIDEO_PREVIEW, $embedOptions );
+			$embed_code = $file->getEmbedCode( VIDEO_PREVIEW, false, false, true );
 			$props['code'] = json_encode( $embed_code );
 		} else { // if not a supported 3rd party ( non-premium ) video, try to parse link for File:
 			// get the video file
@@ -154,7 +142,7 @@ class VideoEmbedTool {
 			// Loading this to deal with video descriptions
 			$vHelper = new VideoHandlerHelper();
 
-			$embedCode = $file->getEmbedCode( VIDEO_PREVIEW, $embedOptions );
+			$embedCode = $file->getEmbedCode( VIDEO_PREVIEW, false, false, true );
 
 			$props['provider'] = 'FILE';
 			$props['id'] = $file->getHandler()->getVideoId();

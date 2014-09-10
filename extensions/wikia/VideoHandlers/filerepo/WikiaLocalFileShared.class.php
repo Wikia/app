@@ -10,6 +10,7 @@ class WikiaLocalFileShared  {
 	var $forceMime = '';
 	var $oFile = null;
 	var $videoId = '';
+	var $trackingArticleId = false;
 	var $embedCodeMaxHeight = false;
 	var $metadata = null;
 
@@ -49,28 +50,28 @@ class WikiaLocalFileShared  {
 	 * Returns embed HTML
 	 *
 	 * @param string $width Desired width of video player
-	 * @param array $options [optional] associative array which accepts the following keys
-	 *  'autoplay' bool Whether the video should play on page load
-	 *  'isAjax' bool Whether the curent request is part of an ajax call
-	 *  'isInline' bool Is embed video file inline
-	 *  'postOnload' bool Whether player is loaded after page onload event (used for JWPlayer)
+	 * @param bool $autoplay Whether the video should play on page load
+	 * @param bool $isAjax Whether the curent request is part of an ajax call
+	 * @param bool $postOnload Whether player is loaded after page onload event (used for JWPlayer)
 	 * @return bool|string
 	 */
-	public function getEmbedCode( $width, array $options = [] ) {
+	public function getEmbedCode( $width, $autoplay = false, $isAjax = false, $postOnload = false ) {
 		wfProfileIn( __METHOD__ );
-
+		if ( ( $this->trackingArticleId !== false ) && ( F::app()->wg->title instanceof Title ) ) {
+			$this->trackingArticleId = F::app()->wg->title->getArticleID();
+		}
 		$handler = $this->oFile->getHandler();
 		if ( $this->isVideo() && !empty($handler) ) {
 			if ( $this->embedCodeMaxHeight !== false && $this->embedCodeMaxHeight > 0 ) {
 				$handler->setMaxHeight( $this->embedCodeMaxHeight );
 			}
 			$handler->setThumbnailImage( $this->oFile->transform( array( 'width' => $width ) ) );
-
-			$res = $handler->getEmbed( $width, $options );
-
+			$this->trackingArticleId = false;
+			$res = $handler->getEmbed( $this->trackingArticleId, $width, $autoplay, $isAjax, $postOnload );
 			$res['title'] = $this->oFile->getTitle()->getDBKey();
 			$res['provider'] = $this->getProviderName();
 		} else {
+			$this->trackingArticleId = false;
 			$res = false;
 		}
 		wfProfileOut( __METHOD__ );

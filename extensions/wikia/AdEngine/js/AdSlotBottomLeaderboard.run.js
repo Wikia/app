@@ -1,13 +1,13 @@
 /*global require*/
 require([
 	'wikia.log',
-	'ext.wikia.adEngine.adContext',
+	'wikia.window',
 	'ext.wikia.adEngine.eventDispatcher',
 	'ext.wikia.adEngine.slot.bottomLeaderboard'
-], function (log, adContext, eventDispatcher, bottomLeaderboard) {
+], function (log, window, eventDispatcher, bottomLeaderboard) {
 	'use strict';
 
-	if (!adContext.getContext().opts.showAds) {
+	if (!window.wgShowAds) {
 		return false;
 	}
 

@@ -88,17 +88,18 @@ class OoyalaAsset extends WikiaModel {
 	/**
 	 * Get assets by sourceid in metadata
 	 * @param string $sourceId
-	 * @param string $provider
+	 * @param string $source
 	 * @param string $assetType [remote_asset]
 	 * @param int $max
 	 * @return array $assets
 	 */
-	public static function getAssetsBySourceId( $sourceId, $provider, $assetType = 'remote_asset', $max = 3 ) {
+	public static function getAssetsBySourceId( $sourceId, $source, $assetType = 'remote_asset', $max = 3 ) {
 		wfProfileIn( __METHOD__ );
 
 		$cond = [
 			"asset_type='$assetType'",
 			"metadata.sourceid='$sourceId'",
+			"metadata.source='$source'",
 		];
 
 		$params = [
@@ -114,15 +115,7 @@ class OoyalaAsset extends WikiaModel {
 
 		$response = self::getApiContent( $url );
 
-		$assets = [];
-		if ( !empty( $response['items'] ) ) {
-			$asset = $response['items'][0];
-			// Make sure the video returned by Ooyala is from the same provider we're expecting (this is just
-			// in case 2 providers might share the same videoId, aka sourceId)
-			if ( !empty( $asset['metadata']['source'] ) && $asset['metadata']['source'] == $provider ) {
-				$assets = $response['items'];
-			}
-		}
+		$assets = empty( $response['items'] ) ? array() : $response['items'];
 
 		wfProfileOut( __METHOD__ );
 

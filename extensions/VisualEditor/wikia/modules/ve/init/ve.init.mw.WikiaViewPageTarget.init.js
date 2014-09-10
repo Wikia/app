@@ -30,7 +30,9 @@
 		spinnerTimeoutId = null;
 
 	function getOptimizelyExperimentId( experimentName ) {
-		if ( experimentName === 'VE Source Entry Point Anon' ) {
+		if ( experimentName === 'VE Focus Mode' ) {
+			return mw.config.get( 'wgDevelEnvironment' ) ? 1459280459 : 1673360028;
+		} else if ( experimentName === 'VE Source Entry Point Anon' ) {
 			return mw.config.get( 'wgDevelEnvironment' ) ? 1673650053 : 1783530197;
 		} else if ( experimentName === 'VE Source Entry Point User' ) {
 			return mw.config.get( 'wgDevelEnvironment' ) ? 1673650053 : 1779071141;
@@ -70,6 +72,11 @@
 	function showSpinner() {
 		var $spinner = $( '.ve-spinner[data-type="loading"]' ),
 			$message = $spinner.find( 'p.message' );
+
+		/* Optimizely */
+		if ( window.veFocusMode === 'opaque' ) {
+			$spinner.addClass( 'optimizely-opaque' );
+		}
 
 		$message.hide();
 		$spinner.fadeIn( 400 );

@@ -488,32 +488,9 @@ class LoadBalancer {
 			}
 		}
 
-		// Wikia change - begin
-		// check the status of selected master
-		if ( $i == $this->getWriterIndex() ) {
-			if ( wfGetLBFactory()->getMastersPoll()->isMasterBroken( $this->mServers[0] ) ) {
-				// handle broken master - connect to a different master
-				$clusterInfo = $this->parentInfo()['id'];
-				$newMaster = wfGetLBFactory()->getMastersPoll()->getNextMasterForSection( $clusterInfo );
-
-				// replace the master in LoadBalancer config
-				if ( !empty( $newMaster ) ) {
-					$this->mServers[$i] = $newMaster;
-				}
-			}
-		}
-		// Wikia change - end
-
 		# Now we have an explicit index into the servers array
 		$conn = $this->openConnection( $i, $wiki );
 		if ( !$conn ) {
-			// Wikia change - begin
-			# master connection error handling
-			if ( $i == $this->getWriterIndex() ) {
-				wfGetLBFactory()->getMastersPoll()->markMasterAsBroken( $this->mServers[$i] );
-			}
-			// Wikia change - end
-
 			$this->reportConnectionError( $this->mErrorConnection );
 		}
 

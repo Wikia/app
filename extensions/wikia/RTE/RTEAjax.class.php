@@ -139,11 +139,22 @@ class RTEAjax {
 	 * Get info about given wikitext with double brackets syntax (templates, magic words, parser functions)
 	 */
 	static public function resolveDoubleBrackets() {
-		global $wgRequest, $wgTitle, $wgRDBData;
+		global $wgRequest, $wgTitle, $wgRDBEnabled, $wgRDBData, $wgParser;
 
-		$templateHelper = new TemplatePageHelper();
-		$wikitext = $wgRequest->getVal( 'wikitext', '' );
-		$html = $templateHelper->getHtml( $wikitext, $wgTitle );
+		// initialization of required objects and settings
+		$wgParser->getstriplist(); //we need to create (unstub) this object, because of in_array($tagName, $stripList) in parser
+		$parser = new Parser();
+		//$parser->mDefaultStripList = $parser->mStripList = array();
+		$parser->mTagHooks = &$wgParser->mTagHooks;
+		$parser->mStripList = &$wgParser->mStripList;
+
+		$parserOptions = new ParserOptions();
+		$parserOptions->setEditSection(false);
+
+		// parsing wikitext in RDB (resolve double backets) mode
+		$wgRDBEnabled = true;
+		$wikitext = $wgRequest->getVal('wikitext', '');
+		$html = $parser->parse($wikitext, $wgTitle, $parserOptions)->getText();
 
 		// processing data from RDB mode
 		if(!is_array($wgRDBData) || !isset($wgRDBData['type']) || $wgRDBData['type'] == 'error') {
@@ -155,8 +166,7 @@ class RTEAjax {
 				$out['exists'] = $wgRDBData['title']->exists() ? true : false;
 
 				if ($out['exists']) {
-					$templateHelper->setTemplateByTitle( $wgRDBData['title'] );
-					$out['availableParams'] = $templateHelper->getTemplateParams();
+					$out['availableParams'] = RTE::getTemplateParams($wgRDBData['title'], $parser);
 				}
 
 				// Get key and value for each argument

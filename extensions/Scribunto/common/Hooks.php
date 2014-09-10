@@ -136,7 +136,7 @@ class ScribuntoHooks {
 	 * @return bool
 	 */
 	public static function handleScriptView( $text, $title, $output ) {
-		global $wgScribuntoUseGeSHi, $wgUseSiteCss;
+		global $wgScribuntoUseGeSHi;
 
 		if( $title->getNamespace() == NS_MODULE ) {
 			$engine = Scribunto::newDefaultEngine();
@@ -150,11 +150,6 @@ class ScribuntoHooks {
 					if( $code ) {
 						$output->addHeadItem( "source-{$language}", SyntaxHighlight_GeSHi::buildHeadItem( $geshi ) );
 						$output->addHTML( "<div dir=\"ltr\">{$code}</div>" );
-						/** Wikia change begin - add support for MediaWiki:Geshi.css (CE-1024) **/
-						if ( $wgUseSiteCss ) {
-							$output->addModuleStyles( 'ext.geshi.local' );
-						}
-						/** Wikia change end **/
 						return false;
 					}
 				}

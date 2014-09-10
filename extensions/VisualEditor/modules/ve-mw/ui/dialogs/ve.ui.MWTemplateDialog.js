@@ -45,8 +45,7 @@ ve.ui.MWTemplateDialog.static.modelClasses = [ ve.dm.MWTransclusionNode ];
  */
 ve.ui.MWTemplateDialog.static.bookletLayoutConfig = {
 	'continuous': true,
-	'outlined': false,
-	'autoFocus': false
+	'outlined': false
 };
 
 /* Methods */
@@ -115,8 +114,7 @@ ve.ui.MWTemplateDialog.prototype.onReplacePart = function ( removed, added ) {
 			if ( added instanceof ve.dm.MWTemplateModel && this.loaded ) {
 				// Prevent selection changes
 				this.preventReselection = true;
-				//added.addPromptedParameters();
-				added.addUnusedParameters();
+				added.addPromptedParameters();
 				this.preventReselection = false;
 				names = added.getParameterNames();
 				params = added.getParameters();
@@ -141,10 +139,10 @@ ve.ui.MWTemplateDialog.prototype.onReplacePart = function ( removed, added ) {
  * @param {ve.dm.MWParameterModel} param Added param
  */
 ve.ui.MWTemplateDialog.prototype.onAddParameter = function ( param ) {
-	var page, $parameterPages;
+	var page;
 
 	if ( param.getName() ) {
-		page = new ve.ui.WikiaParameterPage( param, param.getId(), { '$': this.$ } );
+		page = new ve.ui.MWParameterPage( param, param.getId(), { '$': this.$ } );
 	} else {
 		page = new ve.ui.MWParameterPlaceholderPage( param, param.getId(), { '$': this.$ } );
 	}
@@ -155,22 +153,18 @@ ve.ui.MWTemplateDialog.prototype.onAddParameter = function ( param ) {
 		this.onAddParameterBeforeLoad( page );
 	}
 
-	$parameterPages = this.$body.find( '.ve-ui-mwParameterPage' );
-
 	// Recalculate tab indexes
-	$parameterPages.each( function ( index ) {
+	this.$body.find( '.ve-ui-mwParameterPage' ).each( function ( index ) {
 		$( this )
 			.find( '.ve-ui-mwParameterPage-field > .oo-ui-textInputWidget > textarea' )
-				.attr( 'tabindex', index * 3 + 2 )
+				.attr( 'tabindex', index * 3 + 1 )
 			.end()
 			.find( '.ve-ui-mwParameterPage-infoButton > a' )
-				.attr( 'tabindex', index * 3 + 3 )
+				.attr( 'tabindex', index * 3 + 2 )
 			.end()
 			.find( '.ve-ui-mwParameterPage-removeButton > a' )
-				.attr( 'tabindex', index * 3 + 4 );
+				.attr( 'tabindex', index * 3 + 3 );
 	} );
-
-	this.applyButton.$button.attr( 'tabindex', $parameterPages.length * 3 + 2 );
 };
 
 /**
@@ -356,9 +350,9 @@ ve.ui.MWTemplateDialog.prototype.getSetupProcess = function ( data ) {
 					template = ve.dm.MWTemplateModel.newFromName(
 						this.transclusionModel, data.template
 					);
-					promise = this.transclusionModel.addPart( template ).done( ve.bind( function () {
-						this.initialzeNewTemplateParameters();
-					}, this ) );
+					promise = this.transclusionModel.addPart( template ).done( function () {
+						template.addPromptedParameters();
+					} );
 				} else {
 					// New template placeholder
 					promise = this.transclusionModel.addPart(
@@ -368,42 +362,13 @@ ve.ui.MWTemplateDialog.prototype.getSetupProcess = function ( data ) {
 			} else {
 				// Load existing template
 				promise = this.transclusionModel
-					.load( ve.copy( this.selectedNode.getAttribute( 'mw' ) ) )
-					.done( ve.bind( function () {
-						this.initializeTemplateParameters();
-					}, this ) );
+					.load( ve.copy( this.selectedNode.getAttribute( 'mw' ) ) );
 			}
 			this.applyButton.setDisabled( true );
 			this.pushPending();
 			promise.always( ve.bind( this.onTransclusionReady, this ) );
 		}, this );
 };
-
-/**
- * Initialize parameters for new template insertion
- * TODO: Wikia (ve-sprint-25): Re-implement to minimize amount of changes to core class.
- * Methods initialzeNewTemplateParameters and initializeTemplateParameters should be created
- * and pushed upstream. Former should call addPromptedParameters while latter should be empty.
- * In case of Wikia both should be overwriten in a subclass and both should call addUnusedParameters.
- *
- * @method
- */
-ve.ui.MWTemplateDialog.prototype.initialzeNewTemplateParameters = function () {
-	var i, parts = this.transclusionModel.getParts();
-	for ( i = 0; i < parts.length; i++ ) {
-		if ( parts[i] instanceof ve.dm.MWTemplateModel ) {
-			//parts[i].addPromptedParameters();
-			parts[i].addUnusedParameters();
-		}
-	}
-};
-
-/**
- * Initialize parameters for existing template modification
- *
- * @method
- */
-ve.ui.MWTemplateDialog.prototype.initializeTemplateParameters = ve.ui.MWTemplateDialog.prototype.initialzeNewTemplateParameters;
 
 /**
  * @inheritdoc

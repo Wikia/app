@@ -1,10 +1,10 @@
-define('wikia.intMaps.unDeleteMap', ['jquery', 'wikia.querystring', 'wikia.intMap.config'], function ($, qs, config) {
+define('wikia.intMaps.unDeleteMap', ['jquery', 'wikia.querystring', 'wikia.intMap.utils'], function ($, qs, utils) {
 	'use strict';
 	var mapId = $('iframe[name=wikia-interactive-map]').data('mapid');
 
 	/**
 	 * @desc Show error message
-	 * @param {string} error - error message
+	 * @param error error message
 	 */
 	function showError(error) {
 		GlobalNotification.show(error, 'error');
@@ -12,14 +12,14 @@ define('wikia.intMaps.unDeleteMap', ['jquery', 'wikia.querystring', 'wikia.intMa
 
 	function init() {
 		$.nirvana.sendRequest({
-			controller: 'WikiaInteractiveMapsMap',
+			controller: 'WikiaInteractiveMaps',
 			method: 'updateMapDeletionStatus',
 			type: 'POST',
 			data: {
 				mapId: mapId,
-				deleted: config.constants.mapNotDeleted
+				deleted: utils.mapDeleted.mapNotDeleted
 			},
-			callback: function (response) {
+			callback: function(response) {
 				var redirectUrl = response.redirectUrl;
 				if (redirectUrl) {
 					qs(redirectUrl).goTo();
@@ -27,8 +27,8 @@ define('wikia.intMaps.unDeleteMap', ['jquery', 'wikia.querystring', 'wikia.intMa
 					showError(response);
 				}
 			},
-			onErrorCallback: function (response) {
-				showError(utils.getNirvanaExceptionMessage(response));
+			onErrorCallback: function(error) {
+				showError(error.statusText);
 			}
 		});
 	}

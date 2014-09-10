@@ -160,10 +160,6 @@ class EditAccount extends SpecialPage {
 				$this->mStatus = $this->clearDisable();
 				$template = 'displayuser';
 				break;
-			case 'clearclosurerequest':
-				$this->mStatus = $this->clearClosureRequest();
-				$template = 'displayuser';
-				break;
 			case 'toggleadopter':
 				$this->mStatus = $this->toggleAdopterStatus();
 				$template = 'displayuser';
@@ -221,7 +217,6 @@ class EditAccount extends SpecialPage {
 					'userReg' => date( 'r', strtotime( $this->mUser->getRegistration() ) ),
 					'isUnsub' => $this->mUser->getOption('unsubscribed'),
 					'isDisabled' => $this->mUser->getOption('disabled'),
-					'isClosureRequested' => $this->isClosureRequested(),
 					'isAdopter' => $this->mUser->getOption('AllowAdoption', 1 ),
 					'userStatus' => $userStatus,
 					'emailStatus' => $emailStatus,
@@ -475,37 +470,6 @@ class EditAccount extends SpecialPage {
 		$this->mUser->saveSettings();
 
 		$this->mStatusMsg = wfMsg( 'editaccount-success-toggleadopt', $this->mUser->mName );
-
-		return true;
-	}
-
-	private function isClosureRequested() {
-		global $wgEnableCloseMyAccountExt;
-
-		if ( !empty( $wgEnableCloseMyAccountExt ) ) {
-			$closeAccountHelper = new CloseMyAccountHelper();
-			return $closeAccountHelper->isScheduledForClosure( $this->mUser ) &&
-				!$closeAccountHelper->isClosed( $this->mUser );
-		}
-
-		return false;
-	}
-
-	private function clearClosureRequest() {
-		global $wgEnableCloseMyAccountExt;
-
-		if ( !empty( $wgEnableCloseMyAccountExt ) ) {
-			$closeAccountHelper = new CloseMyAccountHelper();
-			$result = $closeAccountHelper->reactivateAccount( $this->mUser );
-
-			if ( !$result ) {
-				$this->mStatusMsg = $this->msg( 'editaccount-error-clearclosurerequest' )->text();
-			} else {
-				$this->mStatusMsg = $this->msg( 'editaccount-success-clearclosurerequest', $this->mUser->getName() )->text();
-			}
-
-			return $result;
-		}
 
 		return true;
 	}

@@ -1,8 +1,14 @@
 /*global define*/
-define('ext.wikia.adEngine.adLogicHighValueCountry', ['wikia.instantGlobals'], function (globals) {
+define('ext.wikia.adEngine.adLogicHighValueCountry', ['wikia.window', 'wikia.instantGlobals'], function (window, globals) {
 	'use strict';
 
-	var highValueCountries = globals.wgHighValueCountries || {
+	var highValueCountries,
+		defaultHighValueCountries,
+		isHighValueCountry,
+		getMaxCallsToDART;
+
+	// A copy of CommonSettings wgHighValueCountries
+	defaultHighValueCountries = {
 		'CA': 3,
 		'DE': 3,
 		'DK': 3,
@@ -18,19 +24,21 @@ define('ext.wikia.adEngine.adLogicHighValueCountry', ['wikia.instantGlobals'], f
 		'US': 3
 	};
 
-	function isHighValueCountry(country) {
+	highValueCountries = globals.wgHighValueCountries ?  globals.wgHighValueCountries : defaultHighValueCountries;
+
+	isHighValueCountry = function (country) {
 		if (country && highValueCountries) {
 			return !!highValueCountries[country.toUpperCase()];
 		}
 		return false;
-	}
+	};
 
-	function getMaxCallsToDART(country) {
+	getMaxCallsToDART = function (country) {
 		if (country && highValueCountries) {
 			return highValueCountries[country.toUpperCase()] || 0;
 		}
 		return false;
-	}
+	};
 
 	return {
 		isHighValueCountry: isHighValueCountry,

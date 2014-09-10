@@ -116,7 +116,7 @@ class SpecialVideosHelper extends WikiaModel {
 				'useTemplate' => true,
 				'fluid'       => true,
 				'forceSize'   => 'small',
-				'img-class'    => 'media',
+				'imgClass'    => 'media',
 				'dataParams'  => true,
 			];
 		} else {

@@ -171,15 +171,7 @@ ve.ce.GeneratedContentNode.prototype.render = function ( generatedContents ) {
  * @fires rerender
  */
 ve.ce.GeneratedContentNode.prototype.afterRender = function () {
-	var focusWidget;
 	this.emit( 'rerender' );
-	// Wikia change: Adjust focus widget size after node is rerendered
-	// TODO: Find a more elegant way to do this, perhaps using a re-emitted event. Focus widget should
-	// preferably not be manipulated from this class.
-	focusWidget = this.surface.getSurface().getFocusWidget();
-	if ( focusWidget ) {
-		focusWidget.adjustLayout();
-	}
 };
 
 /**

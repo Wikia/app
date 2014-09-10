@@ -66,7 +66,6 @@ module.exports = function (config) {
 			'extensions/wikia/AdEngine/js/AdConfig2.js',
 			'extensions/wikia/AdEngine/js/AdConfig2Late.js',
 			'extensions/wikia/AdEngine/js/AdConfigMobile.js',
-			'extensions/wikia/AdEngine/js/AdContext.js',
 			'extensions/wikia/AdEngine/js/AdDecoratorPageDimensions.js',
 			'extensions/wikia/AdEngine/js/AdEngine2.js',
 			'extensions/wikia/AdEngine/js/EventDispatcher.js',
@@ -162,13 +161,7 @@ module.exports = function (config) {
 			// Thumbnails
 			'extensions/wikia/Thumbnails/scripts/templates.mustache.js',
 			'extensions/wikia/Thumbnails/scripts/views/titleThumbnail.js',
-			'extensions/wikia/Thumbnails/scripts/spec/*.spec.js',
-
-			// WikiaMaps
-			'extensions/wikia/WikiaInteractiveMaps/js/intMapPoiCategories.js',
-			'extensions/wikia/WikiaInteractiveMaps/js/models/intMapPoiCategoriesModel.js',
-			'extensions/wikia/WikiaInteractiveMaps/js/intMapUtils.js',
-			'extensions/wikia/WikiaInteractiveMaps/spec/*.spec.js'
+			'extensions/wikia/Thumbnails/scripts/spec/*.spec.js'
 		]
 	});
 };

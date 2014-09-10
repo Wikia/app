@@ -69,7 +69,7 @@ class WikisApiController extends WikiaApiController {
 		}
 		$this->setResponseData(
 			$batches,
-			[ 'urlFields' => [ 'wordmark', 'image' ] ],
+			[ 'urlFields' => [ 'wordmark', 'url', 'image' ] ],
 			static::CACHE_1_WEEK
 		);
 	}
@@ -178,7 +178,7 @@ class WikisApiController extends WikiaApiController {
 
 		$this->setResponseData(
 			[ 'items' => $items ],
-			[ 'urlFields' => [ 'wordmark', 'image' ] ],
+			[ 'urlFields' => [ 'wordmark', 'url', 'image' ] ],
 			static::CACHE_1_DAY
 		);
 

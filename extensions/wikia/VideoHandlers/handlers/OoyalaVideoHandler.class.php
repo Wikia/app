@@ -9,9 +9,7 @@ class OoyalaVideoHandler extends VideoHandler {
 	protected static $providerDetailUrlTemplate = 'http://video.wikia.com/';
 	protected static $providerHomeUrl = 'http://video.wikia.com/';
 
-	public function getEmbed( $width, array $options = [] ) {
-		$autoplay = !empty( $options['autoplay'] );
-		$isAjax = !empty( $options['isAjax'] );
+	public function getEmbed( $articleId, $width, $autoplay = false, $isAjax = false, $postOnload=false ) {
 		$height = $this->getHeight($width);
 		$playerId = 'ooyalaplayer-'.$this->videoId.'-'.intval($isAjax);
 

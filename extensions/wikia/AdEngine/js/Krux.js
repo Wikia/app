@@ -1,5 +1,3 @@
-// TODO: ADEN-1332-ize
-
 // krux ad targeting. must come before dart urls are constructed
 /*global Krux,define,unescape*/
 window.Krux || ((Krux = function () {

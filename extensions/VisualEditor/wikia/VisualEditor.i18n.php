@@ -31,8 +31,7 @@ $messages['en'] = array(
 	'wikia-visualeditor-beta-warning' => 'This is Wikia\'s beta integration of the VisualEditor. There are some rough edges, but we hope you love it!',
 	'wikia-visualeditor-wikitext-warning' => 'You are using the beta VisualEditor - wikitext does not work here. Select \'Source mode\' from the \'More\' menu to use wikitext.',
 	'wikia-visualeditor-aliennode-tooltip' => 'Sorry, this element can only be edited in the Classic Editor for now.',
-	'wikia-visualeditor-dialog-transclusion-title' => 'Edit',
-	'wikia-visualeditor-dialog-transclusion-filter' => 'Search for a particular field or value',
+	'wikia-visualeditor-dialog-transclusion-title' => 'Template',
 	'wikia-visualeditor-dialogbutton-transclusion-tooltip' => 'Template',
 	'wikia-visualeditor-savedialog-label-save' => 'Publish',
 	'wikia-visualeditor-savedialog-label-restore' => 'Restore page',
@@ -56,10 +55,6 @@ $messages['en'] = array(
 	'wikia-visualeditor-dialog-map-insert-title' => 'Insert map',
 	'wikia-visualeditor-save-error-generic' => 'Error saving data to server.',
 	'wikia-visualeditor-dialogbutton-wikiasourcemode' => 'Source',
-	'wikia-visualeditor-dialog-done-button' => 'Done',
-	'wikia-visualeditor-dialog-transclusion-get-info' => 'Get info about the "$1" template',
-	'wikia-visualeditor-dialog-transclusion-preview-button' => 'Update preview',
-	'wikia-visualeditor-context-transclusion-description' => 'Edit',
 );
 
 /** Message documentation (Message documentation)
@@ -102,7 +97,6 @@ $messages['qqq'] = array(
 	'wikia-visualeditor-aliennode-tooltip' => 'Tooltip for items that VisualEditor cannot edit',
 	'wikia-visualeditor-dialog-transclusion-title' => 'Title of the transclusion dialog.
 {{Identical|Template}}',
-	'wikia-visualeditor-dialog-transclusion-filter' => 'Placeholder text that appears in the transclusion dialog filter field',
 	'wikia-visualeditor-dialogbutton-transclusion-tooltip' => 'Tooltip for the transclusion tool button.
 {{Identical|Template}}',
 	'wikia-visualeditor-savedialog-label-save' => 'Label text for save button when the user is editing a current revision of an extant page.
@@ -132,10 +126,6 @@ $messages['qqq'] = array(
 	'wikia-visualeditor-save-error-generic' => 'Generic error message for parse failures',
 	'wikia-visualeditor-dialogbutton-wikiasourcemode' => 'Call-to-action text rendered in the toolbar button for opening the dialog to edit wikitext in source mode.
 {{Identical|Source editor}}',
-	'wikia-visualeditor-dialog-done-button' => 'Button text for applying changes in a dialog.',
-	'wikia-visualeditor-dialog-transclusion-get-info' => 'Call to action to get information about the currently-displayed template.',
-	'wikia-visualeditor-dialog-transclusion-preview-button' => 'Button text for updating the preview of template edits.',
-	'wikia-visualeditor-context-transclusion-description' => 'Description text in context menu for transclusion node.',
 );
 
 /** Tunisian Spoken Arabic ( زَوُن)

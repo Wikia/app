@@ -9,8 +9,7 @@ class GamestarVideoHandler extends VideoHandler {
 	protected static $autoplayParam = "autoStart";
 	protected static $autoplayValue = "1";
 
-	public function getEmbed( $width, array $options = [] ) {
-		$autoplay = !empty( $options['autoplay'] );
+	public function getEmbed( $articleId, $width, $autoplay = false, $isAjax = false, $postOnload = false ) {
 		$height =  $this->getHeight( $width );
 		$url = $this->getEmbedUrl();
 		$autoStartParam = self::$autoplayParam;

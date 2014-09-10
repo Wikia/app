@@ -32,14 +32,10 @@ class ChatController extends WikiaController {
  		$this->chatkey = Chat::echoCookies();
 		// Set the hostname of the node server that the page will connect to.
 
-		$chathost = ChatHelper::getChatConfig('ChatHost');
+		$server = ChatHelper::getServer('Main');
 
-		$server = explode(":", $chathost);
-		$this->nodeHostname = $server[0];
-		$this->nodePort = $server[1];
-
-		$chatmain = ChatHelper::getServer('Main');
-		$this->nodeInstance = $chatmain['serverId'];
+		$this->nodePort = $server['port'];
+		$this->nodeHostname = $server['host'];
 
 		// Some building block for URLs that the UI needs.
 		$this->pathToProfilePage = Title::makeTitle( !empty($this->wg->EnableWallExt) ? NS_USER_WALL : NS_USER_TALK, '$1' )->getFullURL();
@@ -106,7 +102,6 @@ class ChatController extends WikiaController {
 		$vars['roomId'] = $this->roomId;
 		$vars['wgChatMod'] = $this->isChatMod;
 		$vars['WIKIA_NODE_HOST'] = $this->nodeHostname;
-		$vars['WIKIA_NODE_INSTANCE'] = $this->nodeInstance;
 		$vars['WIKIA_NODE_PORT'] = $this->nodePort;
 		$vars['WEB_SOCKET_SWF_LOCATION'] = $this->wg->ExtensionsPath.'/wikia/Chat/swf/WebSocketMainInsecure.swf?'.$this->wg->StyleVersion;
 		$vars['EMOTICONS'] = wfMsgForContent('emoticons');

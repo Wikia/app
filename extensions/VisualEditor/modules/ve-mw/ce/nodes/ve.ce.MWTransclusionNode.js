@@ -52,9 +52,19 @@ ve.ce.MWTransclusionNode.static.primaryCommandName = 'transclusion';
 /**
  * @inheritdoc
  */
-ve.ce.MWTransclusionNode.static.getDescription = function () {
-	// Wikia change: use "Edit" as context menu description
-	return ve.msg( 'wikia-visualeditor-context-transclusion-description' );
+ve.ce.MWTransclusionNode.static.getDescription = function ( model ) {
+	var i, len, part,
+		parts = model.getPartsList(),
+		words = [];
+
+	for ( i = 0, len = parts.length; i < len; i++ ) {
+		part = parts[i];
+		if ( part.template ) {
+			words.push( part.template );
+		}
+	}
+
+	return words.join( ', ' );
 };
 
 /* Methods */

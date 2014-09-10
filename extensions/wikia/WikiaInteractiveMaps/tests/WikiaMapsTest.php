@@ -82,42 +82,4 @@ class WikiaMapsTest extends WikiaBaseTest {
 		];
 	}
 
-	/**
-	 * @dataProvider shouldHideAttributionDataProvider
-	 */
-	public function testShouldHideAttribution( $description, $wgCityId, $mapCityId, $expected ) {
-		$wikiaMaps = new WikiaMaps( [] );
-		$this->mockGlobalVariable( 'wgCityId', $wgCityId );
-		$this->assertEquals( $expected, $wikiaMaps->shouldHideAttribution( $mapCityId ), $description );
-	}
-
-	public function shouldHideAttributionDataProvider() {
-		return [
-			[
-				'the same ids - SHOULD hide',
-				123,
-				123,
-				true
-			],
-			[
-				'different ids - SHOULD NOT hide',
-				123,
-				124,
-				false
-			],
-			[
-				'id passed as a string passed but the same - SHOULD hide',
-				'124',
-				124,
-				true
-			],
-			[
-				'id passed as a string passed and it\'s different the same - SHOULD NOT hide',
-				'125',
-				124,
-				false
-			],
-		];
-	}
-
 }

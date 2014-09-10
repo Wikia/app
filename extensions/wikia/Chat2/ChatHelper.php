@@ -62,10 +62,9 @@ class ChatHelper {
 
 		$server = self::getChatConfig($type.'ChatServers');
 		$serversCount = count($server[self::getServerBasket()]);
-		$serverId = ($wgCityId%$serversCount) + 1;
 
 		$out = explode(':', $server[self::getServerBasket()][$wgCityId%$serversCount]);
-		return array('host' => $out[0], 'port' => $out[1], 'serverId' => $serverId);
+		return array('host' => $out[0], 'port' => $out[1]);
 	}
 
 	static public function getChatCommunicationToken() {

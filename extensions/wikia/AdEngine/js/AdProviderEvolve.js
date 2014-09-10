@@ -75,7 +75,7 @@ define('ext.wikia.adEngine.provider.evolve', [
 			'sect=' + sect + ';' +
 			'mtfInline=true;' +
 			'pos=' + slotname + ';' +
-			adLogicPageParamsLegacy.getS1KeyValue() +
+			's1=_' + (window.wgDBname || 'wikia').replace('/[^0-9A-Z_a-z]/', '_') + ';' +
 			adLogicPageParamsLegacy.getCustomKeyValues() +
 			adLogicPageParamsLegacy.getKruxKeyValues();
 	}

@@ -150,12 +150,8 @@ class WikiaApiControllerTest extends PHPUnit_Framework_TestCase {
 			->will( $this->returnValue( null ) );
 
 		$mockRequest = $this->getMockBuilder( 'StdClass' )
-			->setMethods( [ 'getVal', 'isInternal' ] )
+			->setMethods( [ 'getVal' ] )
 			->getMock();
-
-		$mockRequest->expects( $this->any() )
-			->method( 'isInternal' )
-			->will( $this->returnValue( false ) );
 
 		if ( $refValue ) {
 			$mockRequest->expects( $this->any() )
@@ -180,6 +176,7 @@ class WikiaApiControllerTest extends PHPUnit_Framework_TestCase {
 		$mock->expects( $this->any() )
 			->method( 'getRequest' )
 			->will( $this->returnValue( $mockRequest ) );
+
 		$method = new ReflectionMethod( $mock, 'setResponseData' );
 		$method->setAccessible( true );
 
@@ -270,125 +267,5 @@ class WikiaApiControllerTest extends PHPUnit_Framework_TestCase {
 			],
 		];
 	}
-
-
-	/**
-	 * @covers WikiaApiController::setResponseData
-	 * @dataProvider setResponseFields_Provider
-	 */
-	public function testSetResponseData_FieldTypes( $data,$expected, $fieldTypes, $internal) {
-		$mock = $this->getMockBuilder( 'WikiaApiController' )
-			->disableOriginalConstructor()
-			->setMethods( [ 'serveImages', 'getRequest', 'getResponse' ] )
-			->getMock();
-		$mock->expects( $this->any() )
-			->method( 'serveImages' )
-			->will( $this->returnValue( true ) );
-
-		$mockResponse = $this->getMockBuilder( 'StdClass' )
-			->setMethods( [ 'setData', 'setCacheValidity' ] )
-			->getMock();
-
-		$mockResponse->expects( $this->once() )
-			->method( 'setData' )
-			->with( $expected );
-
-		$mockResponse->expects( $this->any() )
-			->method( 'getVal' )
-			->will( $this->returnValue( null ) );
-
-		$mockRequest = $this->getMockBuilder( 'StdClass' )
-			->setMethods( [ 'getVal', 'isInternal' ] )
-			->getMock();
-
-		$mockRequest->expects( $this->any() )
-				->method( 'getVal' )
-				->with( WikiaApiController::REF_URL_ARGUMENT )
-				->will( $this->returnValue( null ) );
-
-		$mockRequest->expects( $this->any() )
-			->method( 'isInternal' )
-			->will( $this->returnValue( $internal ) );
-
-		$mockRequest->expects( $this->any() )
-			->method( 'getVal' )
-			->will( $this->returnValue( null ) );
-
-		$mock->expects( $this->any() )
-			->method( 'getResponse' )
-			->will( $this->returnValue( $mockResponse ) );
-
-		$mock->expects( $this->any() )
-			->method( 'getRequest' )
-			->will( $this->returnValue( $mockRequest ) );
-
-		$setOutputFieldTypes = new ReflectionMethod( $mock, 'setOutputFieldTypes' );
-		$setOutputFieldTypes->setAccessible( true );
-		$setOutputFieldTypes->invoke($mock,$fieldTypes);
-
-		$method = new ReflectionMethod( $mock, 'setResponseData' );
-		$method->setAccessible( true );
-
-
-
-		$method->invoke( $mock, $data);
-	}
-
-	public function setResponseFields_Provider() {
-		$itemsObj = new StdClass();
-		$itemsObj->ii = 12;
-		$itemsObj->xx = "aa";
-		return [
-			[
-				[ "items" => [ [ 'title' => 't0', 'url' => 'http://a1.a', 'img' => 'www.img1.a/a.png' ] ] ],
-				[ "items" => [ [ 'title' => 't0', 'url' => 'http://a1.a', 'img' => 'www.img1.a/a.png' ] ] ],
-				[],
-				false
-			],
-			[
-				[ "items" => [ [ 'ii' => '12-3', 'xx' => 'aa' ] ] ],
-				[ "items" => [ [ 'ii' => 12, 'xx' => 'aa' ] ] ],
-				[ 'ii' => WikiaApiController::OUTPUT_FIELD_TYPE_INT ],
-				false
-			],
-			[
-				[ "items" => [ [ 'ii' => '12-3', 'xx' => 'aa' ] ] ],
-				[ "items" => [ [ 'ii' => '12-3', 'xx' => 'aa' ] ] ],
-				[ 'ii' => WikiaApiController::OUTPUT_FIELD_TYPE_INT ],
-				true
-			],
-			[
-				[ "items" => [ [ 'ii' => '12.3', 'xx' => 'bb' ] ] ],
-				[ "items" => [ [ 'ii' => 12.3, 'xx' => 'bb' ] ] ],
-				[ 'ii' => WikiaApiController::OUTPUT_FIELD_TYPE_FLOAT ],
-				false
-			],
-			[
-				[ "items" => [ [ 'ii' => [ "str" => 12 ], 'xx' => 'aa' ] ] ],
-				[ "items" => [ [ 'ii' => [ "str" => "12" ], 'xx' => 'aa' ] ] ],
-				[ 'str' => WikiaApiController::OUTPUT_FIELD_TYPE_STRING ],
-				false
-			],
-			[
-				[ "items" => [ [ 'ii' => null, 'xx' => 'aa' ] ] ],
-				[ "items" => [ [ 'ii' => null, 'xx' => 'aa' ] ] ],
-				[ 'ii' => WikiaApiController::OUTPUT_FIELD_TYPE_FLOAT ],
-				false
-			],
-			[
-				[ "items" => [ [ 'ii' => null, 'xx' => 'aa' ] ] ],
-				[ "items" => [ [ 'ii' => 0, 'xx' => 'aa' ] ] ],
-				[ 'ii' => WikiaApiController::OUTPUT_FIELD_TYPE_INT | WikiaApiController::OUTPUT_FIELD_CAST_NULLS ],
-				false
-			],
-			[
-				[ "items" => [ 'ii' => '12', 'xx' => 'aa' ] ] ,
-				[ "items" => $itemsObj ],
-				[ 'ii' => WikiaApiController::OUTPUT_FIELD_TYPE_INT , 'items' =>WikiaApiController::OUTPUT_FIELD_TYPE_OBJECT ],
-				false
-			],
-		];
-	}
-
 
 }

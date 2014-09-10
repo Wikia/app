@@ -162,6 +162,7 @@ class WikiaQuizElement {
 
 				$file = wfFindFile($videoName);
 				if (WikiaFileHelper::isVideoFile($file)) {
+					$file->trackingArticleId = $this->mQuizElementId;
 					$videoEmbedCode = $file->getEmbedCode( self::VIDEO_WIDTH );
 				}
 

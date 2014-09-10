@@ -160,10 +160,7 @@
 	window.Wikia.Tracker = tracker( window );
 
 	if ( window.define && window.define.amd ) {
-		window.define( 'wikia.tracker', function() {
-			// Returning Wikia.Tracker instance, in order to spooled events to work with AMD module.
-			return Wikia.Tracker;
-		});
+		window.define( 'wikia.tracker', [ 'wikia.window' ], tracker );
 	}
 
 })( window, undefined );

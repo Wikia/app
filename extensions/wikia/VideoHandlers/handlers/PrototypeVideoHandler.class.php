@@ -7,7 +7,7 @@ class PrototypeVideoHandler extends VideoHandler {
 	protected static $providerDetailUrlTemplate = 'http://www.wikia.com';
 	protected static $providerHomeUrl = 'http://www.wikia.com/';
 
-	public function getEmbed( $width, array $options = [] ) {
+	function getEmbed( $articleId, $width, $autoplay = false, $isAjax = false, $postOnload = false ){
 		// hardcoden but this is only a prototype. In future it will be handled in a better way
 		$width = 660;
 		$height = (integer) ( $width / self::$aspectRatio );

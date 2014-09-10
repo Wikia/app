@@ -244,7 +244,6 @@
 
 			LightboxLoader.getMediaDetail({
 					fileTitle: mediaTitle,
-					isInline: true,
 					height: targetChildImg.height(),
 					width: targetChildImg.width()
 				}, function (json) {

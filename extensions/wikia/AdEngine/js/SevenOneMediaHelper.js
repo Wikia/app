@@ -6,10 +6,9 @@ define('ext.wikia.adEngine.sevenOneMediaHelper', [
 	'wikia.window',
 	'wikia.tracker',
 	'wikia.scriptwriter',
-	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.adLogicPageParams',
 	require.optional('ext.wikia.adEngine.krux')
-], function ($, log, window, tracker, scriptWriter, adContext, adLogicPageParams, Krux) {
+], function ($, log, window, tracker, scriptWriter, adLogicPageParams, Krux) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.sevenOneMediaHelper',
@@ -153,7 +152,7 @@ define('ext.wikia.adEngine.sevenOneMediaHelper', [
 
 		scriptWriter.injectScriptByUrl(
 			javaScriptsPlaceHolder,
-			adContext.getContext().providers.sevenOneMediaCombinedUrl,
+			window.wgAdDriverSevenOneMediaCombinedUrl,
 			function () {
 				if (!window.SEVENONEMEDIA_CSS) {
 					error('sevenonemedia_css');
@@ -253,16 +252,16 @@ define('ext.wikia.adEngine.sevenOneMediaHelper', [
 	}
 
 	function initialize(firstSlotname) {
-		var subsite, sub2site, sub3site, targeting = adContext.getContext().targeting;
+		var subsite, sub2site, sub3site;
 
-		subsite = targeting.wikiVertical && targeting.wikiVertical.toLowerCase();
+		subsite = window.cscoreCat && window.cscoreCat.toLowerCase();
 
-		if (targeting.sevenOneMediaSub2Site) {
-			sub2site = targeting.sevenOneMediaSub2Site;
+		if (window.wgAdDriverSevenOneMediaOverrideSub2Site) {
+			sub2site = window.wgAdDriverSevenOneMediaOverrideSub2Site;
 			sub3site = pageLevelParams.s1.replace('_', '');
 		} else {
 			sub2site = pageLevelParams.s1.replace('_', '');
-			sub3site = subsite === 'lifestyle' ? targeting.wikiCategory : '';
+			sub3site = subsite === 'lifestyle' ? window.cityShort : '';
 		}
 
 		initialized = true;

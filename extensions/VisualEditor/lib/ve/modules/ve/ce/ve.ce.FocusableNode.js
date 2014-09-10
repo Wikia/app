@@ -410,33 +410,11 @@ ve.ce.FocusableNode.prototype.positionHighlights = function () {
 		return;
 	}
 
-	var i, l,
-		surfaceOffset = this.surface.getSurface().$element[0].getBoundingClientRect();
-
-	this.computeRects();
-	this.$highlights.empty();
-
-	for ( i = 0, l = this.outerRects.length; i < l; i++ ) {
-		this.$highlights.append(
-			this.createHighlight().css( {
-				'top': this.outerRects[i].top - surfaceOffset.top,
-				'left': this.outerRects[i].left - surfaceOffset.left,
-				'height': this.outerRects[i].height,
-				'width': this.outerRects[i].width
-			} )
-		);
-	}
-};
-
-/**
- * Compute boundingRect and outerRects
- *
- * @method
- */
-ve.ce.FocusableNode.prototype.computeRects = function () {
 	var i, l, top, left, bottom, right,
 		outerRects = [],
 		surfaceOffset = this.surface.getSurface().$element[0].getBoundingClientRect();
+
+	this.$highlights.empty();
 
 	function contains( rect1, rect2 ) {
 		return rect2.left >= rect1.left &&
@@ -493,13 +471,19 @@ ve.ce.FocusableNode.prototype.computeRects = function () {
 		left = outerRects[i].left - surfaceOffset.left;
 		bottom = outerRects[i].bottom - surfaceOffset.top;
 		right = outerRects[i].right - surfaceOffset.left;
+		this.$highlights.append(
+			this.createHighlight().css( {
+				'top': top,
+				'left': left,
+				'height': outerRects[i].height,
+				'width': outerRects[i].width
+			} )
+		);
 		this.boundingRect.top = Math.min( this.boundingRect.top, top );
 		this.boundingRect.left = Math.min( this.boundingRect.left, left );
 		this.boundingRect.bottom = Math.max( this.boundingRect.bottom, bottom );
 		this.boundingRect.right = Math.max( this.boundingRect.right, right );
 	}
-
-	this.outerRects = outerRects;
 };
 
 /**
@@ -508,21 +492,13 @@ ve.ce.FocusableNode.prototype.computeRects = function () {
  * @return {Object} Top and left offsets of the focusable node relative to the surface
  */
 ve.ce.FocusableNode.prototype.getRelativeOffset = function () {
-	this.computeRects();
+	if ( !this.highlighted ) {
+		this.createHighlights();
+	}
 	return {
 		'top': this.boundingRect.top,
 		'left': this.boundingRect.left
 	};
-};
-
-/**
- * Get the bounding rectangle of the focusable node highight relative to the surface
- *
- * @return {Object} Top, left, bottom & right positions of the focusable node relative to the surface
- */
-ve.ce.FocusableNode.prototype.getBoundingRect = function () {
-	this.computeRects();
-	return this.boundingRect;
 };
 
 /**
@@ -531,23 +507,13 @@ ve.ce.FocusableNode.prototype.getBoundingRect = function () {
  * @return {Object} Width and height of the focusable node
  */
 ve.ce.FocusableNode.prototype.getDimensions = function () {
-	this.computeRects();
+	if ( !this.highlighted ) {
+		this.createHighlights();
+	}
 	return {
 		'width': this.boundingRect.right - this.boundingRect.left,
 		'height': this.boundingRect.bottom - this.boundingRect.top
 	};
-};
-
-/**
- * Get which side of the article the node is biased toward
- *
- * @return {string} 'left' or 'right'
- */
-ve.ce.FocusableNode.prototype.getHorizontalBias = function () {
-	var articleCenter = this.surface.$element.width() / 2,
-		nodeCenter = this.getDimensions().width / 2 + this.boundingRect.left;
-
-	return ( nodeCenter <= articleCenter ) ? 'left' : 'right';
 };
 
 /**

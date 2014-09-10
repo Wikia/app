@@ -72,7 +72,6 @@
 <?= $amazonDirectTargetedBuy ?>
 <?= $dynamicYield ?>
 <?= $ivw2 ?>
-<?= $rubiconRtp ?>
 <div class="WikiaSiteWrapper">
 	<?= $body ?>
 

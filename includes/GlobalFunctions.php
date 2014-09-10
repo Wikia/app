@@ -3367,19 +3367,17 @@ function wfCheckEntropy() {
  */
 function wfFixSessionID() {
 	// If the cookie or session id is already set we already have a session and should abort
-	if ( !empty( $_COOKIE[ session_name() ] ) || session_id() ) {
+	if ( isset( $_COOKIE[ session_name() ] ) || session_id() ) {
 		return;
 	}
 
-	global $wgSessionDebugData;
-	$sOldSessionId = session_id();
-	$sNewSessionId = MWCryptRand::generateHex( 32 );
-	$wgSessionDebugData[] = [
-		'event' => __METHOD__,
-		'old_session_id' => $sOldSessionId,
-		'new_session_id' => $sNewSessionId,
-	];
-	session_id( $sNewSessionId );
+	$entropyEnabled = wfCheckEntropy();
+
+	// If built-in entropy is not enabled or not sufficient override php's built in session id generation code
+	if ( !$entropyEnabled ) {
+		wfDebug( __METHOD__ . ": PHP's built in entropy is disabled or not sufficient, overriding session id generation using our cryptrand source.\n" );
+		session_id( MWCryptRand::generateHex( 32 ) );
+	}
 }
 
 /**
@@ -3389,8 +3387,7 @@ function wfFixSessionID() {
  */
 function wfSetupSession( $sessionId = false ) {
 	global $wgSessionsInMemcached, $wgCookiePath, $wgCookieDomain,
-			$wgCookieSecure, $wgCookieHttpOnly, $wgSessionHandler,
-			$wgSessionDebugData;
+			$wgCookieSecure, $wgCookieHttpOnly, $wgSessionHandler;
 
 	if( $wgSessionsInMemcached ) {
 		if ( !defined( 'MW_COMPILED' ) ) {
@@ -3564,7 +3561,7 @@ function wfGetLB( $wiki = false ) {
 /**
  * Get the load balancer factory object
  *
- * @return LBFactory_Wikia
+ * @return LBFactory
  */
 function &wfGetLBFactory() {
 	return LBFactory::singleton();

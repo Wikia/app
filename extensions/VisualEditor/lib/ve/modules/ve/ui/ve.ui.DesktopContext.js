@@ -24,6 +24,7 @@ ve.ui.DesktopContext = function VeUiDesktopContext( surface, config ) {
 	this.$window = this.$( this.getElementWindow() );
 	this.floatThreshold = 10;
 	this.floating = false;
+	this.focusedNodeContentsHeight = null;
 	this.visible = false;
 	this.showing = false;
 	this.hiding = false;
@@ -472,6 +473,7 @@ ve.ui.DesktopContext.prototype.show = function ( transition ) {
 
 		if ( focusedNode ) {
 			this.handleFloat();
+			this.focusedNodeContentsHeight = focusedNode.getContentsHeight();
 		}
 
 		this.visible = true;

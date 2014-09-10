@@ -1,5 +1,3 @@
-// TODO: ADEN-1332-ize
-
 /**
  * Exitstitial ads
  */

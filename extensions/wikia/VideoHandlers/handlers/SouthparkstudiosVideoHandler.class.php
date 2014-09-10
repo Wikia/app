@@ -8,8 +8,7 @@ class SouthparkstudiosVideoHandler extends VideoHandler {
 	protected static $autoplayParam = "autoPlay";
 	protected static $autoplayValue = "true";
 
-	public function getEmbed( $width, array $options = [] ) {
-		$autoplay = !empty( $options['autoplay'] );
+	public function getEmbed( $articleId, $width, $autoplay = false, $isAjax = false, $postOnload = false ) {
 		$height = $this->getHeight( $width );
 		$url = $this->getEmbedUrl();
 		$autoplayStrParam = self::$autoplayParam;

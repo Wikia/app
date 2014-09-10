@@ -1,4 +1,3 @@
-// TODO: ADEN-1332-ize after ADEN-1326
 /*global define*/
 define('ext.wikia.adEngine.adConfigLate', [
 	// regular dependencies
@@ -41,7 +40,7 @@ define('ext.wikia.adEngine.adConfigLate', [
 			'TOP_BUTTON_WIDE.force': true
 		},
 		ie8 = window.navigator && window.navigator.userAgent && window.navigator.userAgent.match(/MSIE [6-8]\./),
-		sevenOneMediaDisabled = instantGlobals.wgSitewideDisableSevenOneMedia,
+		adProviderRemnant,
 
 		dartBtfCountries = {
 			US: true
@@ -62,6 +61,12 @@ define('ext.wikia.adEngine.adConfigLate', [
 				(window.wgAdDriverUseDartForSlotsBelowTheFold && dartBtfVerticals[window.cscoreCat])
 			);
 
+	if (window.wgEnableRHonDesktop) {
+		adProviderRemnant = adProviderRemnantGpt;
+	} else {
+		adProviderRemnant = instantGlobals.wgSitewideDisableLiftium ? adProviderNull : adProviderLiftium;
+	}
+
 	function getProvider(slot) {
 		var slotname = slot[0];
 
@@ -75,8 +80,8 @@ define('ext.wikia.adEngine.adConfigLate', [
 		}
 
 		if (slot[2] === 'Liftium' || window.wgAdDriverForceLiftiumAd) {
-			if (adProviderLiftium.canHandleSlot(slotname)) {
-				return adProviderLiftium;
+			if (adProviderRemnant.canHandleSlot(slotname)) {
+				return adProviderRemnant;
 			}
 			log('#' + slotname + ' disabled. Forced Liftium, but it can\'t handle it', 7, logGroup);
 			return adProviderNull;
@@ -125,12 +130,8 @@ define('ext.wikia.adEngine.adConfigLate', [
 			}
 		}
 
-		if (window.wgAdDriverUseRemnantGpt && adProviderRemnantGpt.canHandleSlot(slotname)) {
-			return adProviderRemnantGpt;
-		}
-
-		if (adProviderLiftium.canHandleSlot(slotname) && !instantGlobals.wgSitewideDisableLiftium) {
-			return adProviderLiftium;
+		if (adProviderRemnant.canHandleSlot(slotname)) {
+			return adProviderRemnant;
 		}
 
 		return adProviderNull;

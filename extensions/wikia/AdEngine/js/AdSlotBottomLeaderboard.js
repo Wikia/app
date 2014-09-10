@@ -4,11 +4,10 @@ define('ext.wikia.adEngine.slot.bottomLeaderboard', [
 	'wikia.log',
 	'wikia.window',
 	'wikia.document',
-	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.adHelper',
 	'ext.wikia.adEngine.eventDispatcher',
 	'wikia.cache'
-], function ($, log, window, document, adContext, adHelper, eventDispatcher, cache) {
+], function ($, log, window, document, adHelper, eventDispatcher, cache) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.slot.bottomLeaderboard',
@@ -23,10 +22,10 @@ define('ext.wikia.adEngine.slot.bottomLeaderboard', [
 		now = window.wgNow || new Date(),
 		impressionCacheKey = 'bottomLeaderboard_impressions',
 		forgetImpressionsAfterTime = 3600, // an hour
-		impressionCapping = adContext.getContext().slots.bottomLeaderboardImpressionCapping || [],
+		impressionCapping = window.wgAdDriverBottomLeaderboardImpressionCapping || [],
 
 		$slot,
-		pageHeight = document.documentElement.scrollHeight,
+		pageHeight = window.document.documentElement.scrollHeight,
 		wikiaBar = window.WikiaBar,
 		disabled = false;
 

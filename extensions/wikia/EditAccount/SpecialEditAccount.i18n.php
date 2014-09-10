@@ -67,10 +67,6 @@ $messages['en'] = array(
 	'editaccount-status-tempuser' => 'Temporary User',
 	'editaccount-error-tempuser-email' => 'Temporary users cannot have blank email address field, please enter an email address.',
 	'editaccount-email-change-requested' => 'User requested email change via Preferences to $1. To confirm the requested email address change for the user, enter the requested email address into the field below and click "Save and confirm."',
-	'editaccount-closure-requested' => 'This account has been scheduled for closure by their own request.',
-	'editaccount-submit-clearclosurerequest' => 'Clear closure request',
-	'editaccount-error-clearclosurerequest' => 'Error: The account is either closed already or not scheduled for closure.',
-	'editaccount-success-clearclosurerequest' => 'Closure request cleared for $1.',
 
 	# logging
 	'editaccount-log' => 'User accounts log',
@@ -118,11 +114,6 @@ $messages['qqq'] = array(
 Per [[Thread:Support/About_Wikia:Editaccount-status-realuser/ms_and_Wikia:Editaccount-status-tempuser/ms/reply|user TOR on support]]',
 	'editaccount-status-tempuser' => '"Temporary user" indicates an account is inactive. An account is activated and becomes a "real user" once the user clicks on a link in an e-mail we send them.',
 	'editaccount-email-change-requested' => 'Probable reference to button {{msg-wikia|Editaccount-submit-email}}.',
-	'editaccount-closure-requested' => 'Message shown above button to clear an account closure request for the selected user.',
-	'editaccount-submit-clearclosurerequest' => 'Submit button text to clear an account closure request for the selected user.',
-	'editaccount-error-clearclosurerequest' => 'Error message displayed when an attempt to clear an account closure request fails.',
-	'editaccount-success-clearclosurerequest' => 'Success message displayed when clearing an account closure request. Parameters:
-* $1 - The username of the selected account.',
 	'right-editaccount' => '{{doc-right|editaccount|ns=Wikia}}',
 	'action-editaccount' => '{{doc-action|editaccount}}',
 );
