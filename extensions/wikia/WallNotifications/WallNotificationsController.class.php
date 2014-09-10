@@ -20,6 +20,7 @@ class WallNotificationsController extends WikiaController {
 		if( $loggedIn && !$suppressWallNotifications ) {
 			OasisController::addSkinAssetGroup( 'wall_notifications_js' );
 			$this->response->addAsset( 'extensions/wikia/WallNotifications/styles/WallNotifications.scss' );
+			$this->response->addAsset( 'extensions/wikia/WallNotifications/styles/WallNotificationsReminder.scss' );
 			$this->response->setVal( 'prehide', ( empty( $this->wg->EnableWallExt ) && empty( $this->wg->EnableForumExt ) ) );
 		}
 
