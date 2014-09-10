@@ -5,6 +5,7 @@
 			oTitle: null,
 			oDescription: null,
 			oImage: null,
+			oCropposition: 0,
 			title: null,
 			description: null,
 			imagename: null,
@@ -19,10 +20,13 @@
 			heroData.oTitle = $heroModule.find('.hero-title').text();
 			heroData.oDescription = $heroModule.find('.hero-description').text();
 			heroData.oImage = $heroModule.find('.hero-image').attr('src');
+			heroData.oCropposition = $heroImage.data('.hero-image');
 		}, revert = function () {
 			$heroModule.find('.hero-title').text(heroData.oTitle);
 			$heroModule.find('.hero-description').text(heroData.oDescription);
 			$heroModule.find('.hero-image').attr('src', heroData.oImage);
+			$heroModule.find('.hero-image').css({top:0});
+			$heroImage.data('.hero-image', heroData.oCropposition);
 		}, onFocus = function () {
 			var $this = $(this);
 			$this.data('before', $this.html());
@@ -104,8 +108,8 @@
 	$('.edit-btn').on('click', onEdit);
 	$('.save-btn').on('click', onSave);
 	$('.discard-btn').on('click', function () { onEdit(); revert(); });
-	$('.toggle-upload-btn').on('click', function() { $('.toggle-btn').hide(); $('.overlay').show(); });
-	$('.close-upload-btn').on('click', function() { $('.toggle-btn').show(); $('.overlay').hide(); });
+	$('.toggle-upload-btn').on('click', function () { $('.toggle-btn').hide(); $('.overlay').show(); });
+	$('.close-upload-btn').on('click', function () { $('.toggle-btn').show(); $('.overlay').hide(); });
 
 	$(window).resize(onResize);
 	load();
