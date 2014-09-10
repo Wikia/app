@@ -141,8 +141,8 @@ class AdEngine2Service
 
 	public static function shouldLoadLiftium()
 	{
-		global $wgEnableRHonDesktop, $wgAdEngineDisableLateQueue;
-		return !$wgEnableRHonDesktop && !$wgAdEngineDisableLateQueue;
+		global $wgAdEngineDisableLateQueue;
+		return !$wgAdEngineDisableLateQueue;
 	}
 
 	public static function shouldLoadLateQueue()
@@ -227,11 +227,13 @@ class AdEngine2Service
 			$wgAdPageLevelCategoryLangs, $wgLanguageCode, $wgAdDriverTrackState,
 			$wgAdDriverForceDirectGptAd, $wgAdDriverForceLiftiumAd,
 			$wgOasisResponsive, $wgOasisResponsiveLimited,
-			$wgEnableRHonDesktop, $wgOut,
-			$wgRequest, $wgEnableKruxTargeting,
+			$wgAdDriverUseRemnantGpt, $wgOut,
+			$wgRequest, $wgEnableKruxTargeting, $wgAdDriverRubiconCachedOnly,
 			$wgAdVideoTargeting, $wgLiftiumOnLoad, $wgAdDriverSevenOneMediaOverrideSub2Site,
-			$wgDartCustomKeyValues, $wgWikiDirectedAtChildrenByStaff, $wgAdEngineDisableLateQueue,
-			$wgAdDriverUseBottomLeaderboard, $wgAdDriverBottomLeaderboardImpressionCapping, $wgAdDriverEnableAdsInMaps;
+			$wgDartCustomKeyValues, $wgWikiDirectedAtChildrenByStaff,
+			$wgWikiDirectedAtChildrenByFounder, $wgAdEngineDisableLateQueue,
+			$wgAdDriverUseBottomLeaderboard, $wgAdDriverBottomLeaderboardImpressionCapping,
+			$wgAdDriverEnableAdsInMaps;
 
 		$vars = [];
 
@@ -248,13 +250,14 @@ class AdEngine2Service
 			'wgAdDriverUseCatParam' => array_search($wgLanguageCode, $wgAdPageLevelCategoryLangs),
 			'wgAdDriverUseEbay' => $wgAdDriverUseEbay,
 			'wgAdDriverUseDartForSlotsBelowTheFold' => $wgAdDriverUseDartForSlotsBelowTheFold === null ? 'hub' : $wgAdDriverUseDartForSlotsBelowTheFold,
+			'wgAdDriverUseRemnantGpt' => $wgAdDriverUseRemnantGpt,
 			'wgAdDriverUseSevenOneMedia' => $wgAdDriverUseSevenOneMedia,
+			'wgAdDriverRubiconCachedOnly' => $wgAdDriverRubiconCachedOnly,
 			'wgAdDriverSevenOneMediaOverrideSub2Site' => $wgAdDriverSevenOneMediaOverrideSub2Site,
 			'wgUserShowAds' => $wgUser->getOption('showAds'),
 			'wgOutboundScreenRedirectDelay' => $wgOutboundScreenRedirectDelay,
 			'wgEnableOutboundScreenExt' => $wgEnableOutboundScreenExt,
 			'wgAdDriverTrackState' => $wgAdDriverTrackState,
-			'wgEnableRHonDesktop' => $wgEnableRHonDesktop,
 			'wgAdDriverForceDirectGptAd' => $wgAdDriverForceDirectGptAd,
 			'wgAdDriverForceLiftiumAd' => $wgAdDriverForceLiftiumAd,
 			'wgAdVideoTargeting' => $wgAdVideoTargeting,
@@ -279,7 +282,7 @@ class AdEngine2Service
 			'wgEnableKruxTargeting' => $wgEnableKruxTargeting,
 			'wgUsePostScribe' => $wgRequest->getBool('usepostscribe', false),
 			'wgDartCustomKeyValues' => $wgDartCustomKeyValues,
-			'wgWikiDirectedAtChildren' => (bool) $wgWikiDirectedAtChildrenByStaff,
+			'wgWikiDirectedAtChildren' => $wgWikiDirectedAtChildrenByStaff || $wgWikiDirectedAtChildrenByFounder,
 
 			// AdLogicPageParams.js, SevenOneMediaHelper.js, AnalyticsProviderQuantServe.php
 			'cityShort' => AdEngine2Service::getCachedCategory()['short'],

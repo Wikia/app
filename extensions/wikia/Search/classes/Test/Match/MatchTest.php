@@ -280,7 +280,7 @@ class MatchTest extends BaseTest {
 		    ->with   ( 'exactWikiMatch', true )
 		;
 
-		$this->proxyClass( 'SolrDocumentService', $mockService );
+		$this->mockClass( 'SolrDocumentService', $mockService );
 
 		$this->assertEquals(
 				$mockResult,

@@ -167,13 +167,6 @@ class PhalanxService extends Service {
 				if( !is_null( $this->user ) ) {
 					$parameters[ 'user' ][] = $this->user->getName();
 				}
-				else {
-					/**
-					 * it will be IP in worst case scenario
-					 */
-					global $wgUser;
-					$parameters[ 'user' ][] = $wgUser->getName();
-				}
 			}
 			if ($action == "match" && $this->limit != 1) {
 				$parameters['limit'] = $this->limit;
