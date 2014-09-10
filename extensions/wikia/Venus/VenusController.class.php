@@ -153,8 +153,8 @@ class VenusController extends WikiaController {
 
 		// set variables
 		$this->cssLinks = $cssLinks;
-		$this->jsBodyFiles = $jsBodyFiles;
-		$this->jsHeadScripts = $this->topScripts . $jsHeadFiles;
+		$this->jsBodyFiles = $this->skinTemplateObj->data['headscripts'] . $jsBodyFiles;
+		$this->jsHeadScripts = $this->topScripts .  $jsHeadFiles;
 //		$this->jsHeadScripts = $this->getTopScripts() . $jsHeadFiles;
 	}
 

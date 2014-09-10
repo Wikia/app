@@ -440,6 +440,9 @@ class OasisController extends WikiaController {
 
 		$tpl = $this->app->getSkinTemplateObj();
 
+//		d($this->topScripts);
+//		d($jsLoader);
+//		d($this->jsFiles);
 		// $tpl->set( 'headscripts', $out->getHeadScripts() . $out->getHeadItems() );
 		// FIXME: we need to remove head items - i.e. <meta> tags
 		$remove = $this->wg->out->getHeadItemsArray();
@@ -447,9 +450,8 @@ class OasisController extends WikiaController {
 		array_walk( $remove, 'trim' );
 		$headScripts = str_replace( $remove, '', $tpl->data[ 'headscripts' ] );
 
-//		d($this->topScripts);
-
-//		dd($headScripts);
+//		d($remove);
+//		d($headScripts);
 
 		$this->jsFiles = $headScripts . $jsLoader . $this->jsFiles;
 
@@ -461,6 +463,11 @@ class OasisController extends WikiaController {
 			$this->bottomScripts = $bottomScripts;
 			$this->jsFiles = $jsFiles;
 		}
+
+//		d($jsFiles);
+//		d($bottomScripts);
+
+//		dd($this->jsFiles);
 
 		if ($wgEnableAdEngineExt && AdEngine2Service::shouldLoadLiftium()) {
 			$this->jsFiles = AdEngine2Controller::getLiftiumOptionsScript() . $this->jsFiles;
