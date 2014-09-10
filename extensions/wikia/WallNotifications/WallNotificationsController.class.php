@@ -37,7 +37,7 @@ class WallNotificationsController extends WikiaController {
 		$notificationCounts = $this->request->getVal( 'notificationCounts' );
 		$this->response->setVal( 'notificationCounts', $notificationCounts );
 
-		$unreadCount = $this->request->getVal( 'count ');
+		$unreadCount = $this->request->getVal( 'count');
 		$this->response->setVal( 'count', $unreadCount );
 
 		$this->response->setVal( 'user', $this->wg->User );
