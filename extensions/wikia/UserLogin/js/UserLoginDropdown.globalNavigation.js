@@ -93,7 +93,11 @@ require( ['jquery'], function( $ ){
 	$entryPoint.on('click', '.ajaxLogin', function(ev) {
 		ev.preventDefault();
 		ev.stopPropagation(); // BugId:16984
-		openMenu();
+		if ($entryPoint.hasClass('active')) {
+			window.location = $(this).attr('href');
+		} else {
+			openMenu();
+		}
 	});
 
 	if ( !window.touchstart ) {
