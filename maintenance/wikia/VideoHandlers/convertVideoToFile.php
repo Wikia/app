@@ -14,8 +14,8 @@ require_once( dirname( __FILE__ ) . '/../../Maintenance.php' );
 
 class VideoToFile extends Maintenance {
 
-	var $test;
-	var $verbose;
+	private $test;
+	private $verbose;
 
 	/**
 	 * Constructor for this maintenance script class
@@ -64,9 +64,7 @@ class VideoToFile extends Maintenance {
 		$pageIDs = (new WikiaSQL())
 			->SELECT( 'DISTINCT il_from' )
 			->FROM( 'imagelinks' )
-			->WHERE( "lower(il_to) NOT LIKE '%.jpg'" )
-			->AND_( "lower(il_to) NOT LIKE '%.png'" )
-			->AND_( "lower(il_to) NOT LIKE '%.gif'" )
+			->WHERE( "lower(il_to) NOT REGEXP '\.(jpg|jpeg|png|gif)$'" )
 			->runLoop( $db, function ( &$pages, $row ) {
 				$pages[] = $row->il_from;
 			});
@@ -106,7 +104,7 @@ class VideoToFile extends Maintenance {
 			}
 
 			if ( !$success ) {
-				echo "ERR: Failed to save page with update gallery tags\n";
+				echo "ERR: Failed to save page (ID=$pageId) with update gallery tags\n";
 			}
 		}
 	}
