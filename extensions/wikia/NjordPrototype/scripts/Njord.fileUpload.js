@@ -12,9 +12,9 @@
 		$heroModuleImage = $('#MainPageHero .hero-image');
 
 	//turn off browser image handling
-	$body.on('dragover', function() {return false;});
-	$body.on('dragend', function() {return false;});
-	$body.on('drop', function() {return false;});
+	$body.on('dragover', function () {return false;});
+	$body.on('dragend', function () {return false;});
+	$body.on('drop', function () {return false;});
 
 	//those two are needed to cancel default behaviour
 	$heroModuleUpload.on('dragover', function () {
@@ -52,7 +52,7 @@
 		$heroModuleInput.click();
 	});
 
-	$heroModuleInput.on('change', function() {
+	$heroModuleInput.on('change', function () {
 		if ($heroModuleInput[0].files.length) {
 			var fd = new FormData();
 			fd.append('file', $heroModuleInput[0].files[0]);
@@ -67,8 +67,9 @@
 			if (client.readyState === 4 && client.status === 200) {
 				var data = JSON.parse(client.responseText);
 
-				$heroModule.height($heroModule.width() * 5 / 16);
+				$heroModuleImage.bind('load',function () {$heroModule.trigger('enableDragging');});
 				$heroModuleImage.attr('src', data.url);
+				$heroModule.height($heroModule.width() * 5 / 16);
 				$heroModule.trigger('change', [data.url, data.filename]);
 			}
 		};

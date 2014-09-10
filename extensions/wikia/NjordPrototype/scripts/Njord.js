@@ -15,11 +15,11 @@
 		},
 		$heroModule = $('#MainPageHero'),
 		$heroImage = $('#MainPageHero .hero-image'),
-		load = function() {
+		load = function () {
 			heroData.oTitle = $heroModule.find('.hero-title').text();
 			heroData.oDescription = $heroModule.find('.hero-description').text();
 			heroData.oImage = $heroModule.find('.hero-image').attr('src');
-		}, revert = function() {
+		}, revert = function () {
 			$heroModule.find('.hero-title').text(heroData.oTitle);
 			$heroModule.find('.hero-description').text(heroData.oDescription);
 			$heroModule.find('.hero-image').attr('src', heroData.oImage);
@@ -42,13 +42,6 @@
 				heroData.imagepath = imagePath;
 				heroData.imagename = imageName;
 				heroData.imagechanged = true;
-
-				$heroImage.draggable({
-					axis: 'y',
-					drag: function () {
-						heroData.cropposition = Math.abs($heroImage.position().top) / $heroImage.height();
-					}
-				});
 			}
 			heroData.changed = true;
 
@@ -83,15 +76,29 @@
 			$('.edit-btn').toggle();
 		}, onResize = function () {
 			$heroModule.height($heroModule.width() * 5 / 16);
+		}, onDraggingEnabled = function () {
+			var heroHeight = $heroImage.height(),
+				heroModuleHeight = $heroModule.height(),
+				heroOffsetTop = $heroImage.offset().top,
+				containment = [0, heroOffsetTop - heroHeight + heroModuleHeight, 0, heroOffsetTop];
+
+			$heroImage.draggable({
+				axis: 'y',
+				containment: containment,
+				drag: function () {
+					heroData.cropposition = Math.abs($heroImage.position().top) / $heroImage.height();
+				}
+			});
 		};
 
 	$('.hero-title').on('focus', onFocus).on('blur keyup paste input', onInput).on('change', onChange);
 	$('.hero-description').on('focus', onFocus).on('blur keyup paste input', onInput).on('change', onChange);
 	$heroModule.on('change', onChange);
 	$heroModule.on('saveEvent', onSave);
+	$heroModule.on('enableDragging', onDraggingEnabled);
 	$('.edit-btn').on('click', onEdit);
 	$('.save-btn').on('click', onSave);
-	$('.discard-btn').on('click', function() { onEdit(); revert(); });
+	$('.discard-btn').on('click', function () { onEdit(); revert(); });
 
 	$(window).resize(onResize);
 	load();
