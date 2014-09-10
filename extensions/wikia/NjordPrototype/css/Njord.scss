@@ -14,6 +14,10 @@
     }
   }
 
+  .edit-area {
+    display: none;
+  }
+
   .edit-btn {
     bottom: 3px;
     margin: 10px;
@@ -54,8 +58,7 @@
   }
 
   .overlay {
-    background-color: rgba(0, 0, 0, 0.6);
-    display: none;
+    background-color: rgba(0, 0, 0, .6);
     height: 100%;
     position: absolute;
     width: 100%;
@@ -63,11 +66,27 @@
 
   .upload {
     border: 3px dashed white;
+    display: flex;
     height: 60%;
     margin: 1%;
     position: absolute;
     text-align: center;
     width: 98%;
+  }
+
+  .upload-btn {
+    margin: 10px 30px;
+  }
+
+  .upload-group {
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+  }
+
+  .upload-text {
+    color: #FFFFFF;
+    font-size: 3em;
   }
 }
 

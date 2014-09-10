@@ -79,7 +79,7 @@
 					$this.attr('contenteditable', true);
 				}
 			});
-			$('.overlay').toggle();
+			$('.edit-area').toggle();
 			$('.edit-btn').toggle();
 		}, onResize = function () {
 			$heroModule.height($heroModule.width() * 5 / 16);
