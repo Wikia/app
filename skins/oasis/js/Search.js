@@ -1,18 +1,12 @@
 WikiaSearchApp = (function() {
 
-	// TODO
-	wgServer = '/';
-	wgScript = 'index.php';
-	wgArticlePath = '/wiki/$1';
-
 	function WikiaSearchApp(id) {
 		this.id = id;
 		this.searchForm = $(id);
-
 		// make autocomplete sticked to right, but only under inputbox (not button on it's right)
 		// 4 is border + padding of autocomplete container
-		this.positionRight = 24;
-		this.searchField = this.searchForm.find('input[type="text"]');
+		this.positionRight = this.searchForm.innerWidth() - this.searchForm.children('input:first-child').outerWidth() + 4;
+		this.searchField = this.searchForm.children('input[placeholder]');
 
 		// RT #141437 - hide HOME_TOP_RIGHT_BOXAD when showing search suggestions
 		this.ads = $("[id$='TOP_RIGHT_BOXAD']");
@@ -46,12 +40,9 @@ WikiaSearchApp = (function() {
 
 	// download necessary dependencies (AutoComplete plugin) and initialize search suggest feature for #search_field
 	WikiaSearchApp.prototype.initSuggest = function() {
-		var autocompleteReEscape = new RegExp('(\\' + ['/', '.', '*', '+', '?', '|', '(', ')', '[', ']', '{', '}', '\\']
-			.join('|\\') + ')', 'g');
-		/*$.when(
+		$.when(
 				$.loadJQueryAutocomplete()
-			).then($.proxy(function() {*/
-		// TODO recover lazy loading of autocomplete
+			).then($.proxy(function() {
 				this.searchField.autocomplete({
 					serviceUrl: wgServer + wgScript + '?action=ajax&rs=getLinkSuggest&format=json',
 					onSelect: $.proxy(function(value, data, event) {
@@ -77,25 +68,19 @@ WikiaSearchApp = (function() {
 							window.location.href = location;
 						}
 					}, this),
-					appendTo: '.global-nav-search-input-wrapper',
-					deferRequestBy: 200,
+					appendTo: this.id,
+					deferRequestBy: 400,
 					minLength: 3,
 					maxHeight: 1000,
 					selectedClass: 'selected',
 					width: '100%',
-					// Add span around every autocomplete result
-					fnFormatResult: function(value, data, currentValue) {
-						var pattern = '(' + currentValue.replace(autocompleteReEscape, '\\$1') + ')';
-						return '<span>' + value.replace(new RegExp(pattern, 'gi'), '<strong>$1<\/strong>') + '</span>';
-					},
-					//positionRight: this.positionRight + 'px',
+					positionRight: this.positionRight + 'px',
 					skipBadQueries: true // BugId:4625 - always send the request even if previous one returned no suggestions
 				});
 				if ( window.Wikia.newSearchSuggestions ) {
 					window.Wikia.newSearchSuggestions.setAsMainSuggestions('search');
 				}
-
-		/*}, this));*/
+			}, this));
 	};
 
 	return WikiaSearchApp;
@@ -104,5 +89,4 @@ WikiaSearchApp = (function() {
 $(function() {
 	new WikiaSearchApp('#WikiaSearch');
 	new WikiaSearchApp('#HeaderWikiaSearch');
-	new WikiaSearchApp('#search-form');
 });

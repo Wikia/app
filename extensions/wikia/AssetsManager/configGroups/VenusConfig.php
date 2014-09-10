@@ -51,6 +51,7 @@ $VenusConfig['global_navigation_js'] = array(
 	'skin' => ['venus', 'oasis'],
 	'assets' => array(
 		'//extensions/wikia/GlobalNavigation/js/GlobalNavigationSearch.js',
+		'//extensions/wikia/GlobalNavigation/js/SearchSuggestions.js',
 		// TODO don't load autocomplete on every pv
 		'//resources/wikia/libraries/jquery/autocomplete/jquery.autocomplete.js',
 		'//skins/shared/js/Search.js',

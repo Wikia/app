@@ -318,7 +318,7 @@ $config['oasis_nojquery_shared_js'] = array(
 		'//resources/wikia/libraries/bootstrap/popover.js',
 		'//skins/oasis/js/hoverMenu.js',
 		'//skins/oasis/js/PageHeader.js',
-		'//skins/shared/js/Search.js',
+		'//skins/oasis/js/Search.js',
 		'//skins/oasis/js/WikiaFooter.js',
 		'//skins/oasis/js/buttons.js',
 		'//skins/oasis/js/WikiHeader.js',
