@@ -635,10 +635,10 @@ $config['wikiamobile_ads_js'] = array(
 
 		// Advertisement libs
 		'//extensions/wikia/AdEngine/js/EventDispatcher.js',
-		'//extensions/wikia/AdEngine/js/AdLogicPageParams.js',
 		'//extensions/wikia/AdEngine/js/AdConfigMobile.js',
 		'//extensions/wikia/AdEngine/js/AdContext.js',
 		'//extensions/wikia/AdEngine/js/AdEngine2.js',
+		'//extensions/wikia/AdEngine/js/AdLogicPageParams.js',
 		'//extensions/wikia/AdEngine/js/AdProviderRemnantGptMobile.js',
 		'//extensions/wikia/AdEngine/js/AdProviderDirectGptMobile.js',
 		'//extensions/wikia/AdEngine/js/AdProviderEbay.js',
@@ -1444,6 +1444,7 @@ $config['analytics_bluekai_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => array( 'wikiamobile' ),
 	'assets' => array(
+		'//extensions/wikia/AdEngine/js/AdContext.js',
 		'//extensions/wikia/AdEngine/js/AdLogicPageParams.js',
 	)
 );
