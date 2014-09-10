@@ -43,6 +43,7 @@ class SharedHttp {
 		return self::request( "POST", $url, $timeout );
 	}
 
+	// TODO: use MediaWiki's HTTP class
 	static function request( $method, $url, $timeout = 'default' ) {
 		global $wgHTTPTimeout, $wgVersion, $wgTitle, $wgDevelEnvironment;
 		wfProfileIn(__METHOD__);
@@ -85,10 +86,24 @@ class SharedHttp {
 				curl_setopt( $c, CURLOPT_REFERER, $wgTitle->getFullURL() );
 			}
 
+			$requestTime = microtime( true );
+
 			ob_start();
 			curl_exec( $c );
 			$text = ob_get_contents();
 			ob_end_clean();
+
+			// log HTTP requests
+			$requestTime = (int)( ( microtime( true ) - $requestTime ) * 1000.0 );
+
+			$params = [
+				'statusCode' => curl_getinfo( $c, CURLINFO_HTTP_CODE ),
+				'reqMethod' => $method,
+				'reqUrl' => $url,
+				'caller' => __CLASS__,
+				'requestTimeMS' => $requestTime
+			];
+			\Wikia\Logger\WikiaLogger::instance()->debug( 'Http request' , $params );
 
 			# Don't return the text of error messages, return false on error
 			if ( ( curl_getinfo( $c, CURLINFO_HTTP_CODE ) != 200 ) && ( curl_getinfo( $c, CURLINFO_HTTP_CODE ) != 301 ) ) {

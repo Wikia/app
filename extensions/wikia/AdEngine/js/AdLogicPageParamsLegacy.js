@@ -1,44 +1,47 @@
 /*global define*/
 define('ext.wikia.adEngine.adLogicPageParamsLegacy', [
 	'wikia.log',
-	'wikia.window',
+	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.adLogicPageParams',
 	'ext.wikia.adEngine.krux',
 	'ext.wikia.adEngine.dartUrl'
-], function (log, window, adLogicPageParams, Krux, dartUrl) {
+], function (log, adContext, adLogicPageParams, Krux, dartUrl) {
 	'use strict';
 
-	var logGroup = 'ext.wikia.adEngine.adLogicPageParamsLegacy',
-		pageParams = adLogicPageParams.getPageLevelParams(),
-		getCustomKeyValues,
-		getDomainKV,
-		getHostnamePrefix,
-		getKruxKeyValues;
+	var pageParams = adLogicPageParams.getPageLevelParams();
 
-	getCustomKeyValues = function () {
-		if (window.wgDartCustomKeyValues) {
-			return dartUrl.trimParam(window.wgDartCustomKeyValues + ';');
+	function getCustomKeyValues() {
+		var wikiCustomKeyValues = adContext.getContext().targeting.wikiCustomKeyValues;
+
+		if (wikiCustomKeyValues) {
+			return dartUrl.trimParam(wikiCustomKeyValues + ';');
 		}
+
 		return '';
-	};
+	}
 
-	getDomainKV = function () {
+	function getS1KeyValue() {
+		return dartUrl.decorateParam('s1', pageParams.dbName);
+	}
+
+	function getDomainKV() {
 		return dartUrl.decorateParam('dmn', pageParams.dmn);
-	};
+	}
 
-	getHostnamePrefix = function () {
+	function getHostnamePrefix() {
 		return dartUrl.decorateParam('hostpre', pageParams.hostpre);
-	};
+	}
 
-	getKruxKeyValues = function () {
+	function getKruxKeyValues() {
 		if (Krux && Krux.dartKeyValues) {
 			return dartUrl.trimParam(Krux.dartKeyValues);
 		}
 		return '';
-	};
+	}
 
 	return {
 		getCustomKeyValues: getCustomKeyValues,
+		getS1KeyValue: getS1KeyValue,
 		getDomainKV: getDomainKV,
 		getHostnamePrefix: getHostnamePrefix,
 		getKruxKeyValues: getKruxKeyValues

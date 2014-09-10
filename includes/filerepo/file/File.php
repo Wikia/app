@@ -32,7 +32,7 @@
  *
  * @ingroup FileAbstraction
  */
-abstract class File {
+abstract class File implements \Wikia\Vignette\FileInterface {
 	const DELETED_FILE = 1;
 	const DELETED_COMMENT = 2;
 	const DELETED_USER = 4;

@@ -2,11 +2,9 @@
 define('ext.wikia.adEngine.adConfig', [
 	// regular dependencies
 	'wikia.log',
-	'wikia.window',
-	'wikia.document',
 	'wikia.geo',
-	'wikia.abTest',
 
+	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.adDecoratorPageDimensions',
 	'ext.wikia.adEngine.evolveSlotConfig',
 
@@ -21,11 +19,9 @@ define('ext.wikia.adEngine.adConfig', [
 ], function (
 	// regular dependencies
 	log,
-	window,
-	document,
 	geo,
-	abTest,
 
+	adContext,
 	adDecoratorPageDimensions,
 	evolveSlotConfig,
 
@@ -74,12 +70,13 @@ define('ext.wikia.adEngine.adConfig', [
 	highValueSlots = defaultHighValueSlots;
 
 	function getProvider(slot) {
-		var slotname = slot[0];
+		var slotname = slot[0],
+			context = adContext.getContext();
 
 		log(['getProvider', slot], 'info', logGroup);
 
 		// If wgShowAds set to false, hide slots
-		if (!window.wgShowAds) {
+		if (!context.opts.showAds) {
 			return adProviderNull;
 		}
 
@@ -101,19 +98,17 @@ define('ext.wikia.adEngine.adConfig', [
 			return adProviderLater;
 		}
 
-
 		// Force Liftium
-		if (window.wgAdDriverForceLiftiumAd) {
+		if (context.forceProviders.liftium) {
 			log(['getProvider', slot, 'Later (wgAdDriverForceLiftiumAd)'], 'info', logGroup);
 			return adProviderLater;
 		}
 
 		// Force DirectGpt
-		if (window.wgAdDriverForceDirectGptAd && adProviderDirectGpt.canHandleSlot(slotname)) {
+		if (context.forceProviders.directGpt) {
 			log(['getProvider', slot, 'DirectGpt (wgAdDriverForceDirectGptAd)'], 'info', logGroup);
 			return adProviderDirectGpt;
 		}
-
 
 		// All SevenOne Media ads are handled in the Later queue
 		// SevenOne Media gets all but WIKIA_BAR_BOXAD_1 and TOP_BUTTON
@@ -121,7 +116,7 @@ define('ext.wikia.adEngine.adConfig', [
 		// only WIKIA_BAR_BOXAD_1.
 		// Also we need to add an exception for GPT_FLUSH, so that WIKIA_BAR_BOXAD_1
 		// is actually requested.
-		if (window.wgAdDriverUseSevenOneMedia &&
+		if (context.providers.sevenOneMedia &&
 				slotname !== 'WIKIA_BAR_BOXAD_1' &&
 				slotname !== 'GPT_FLUSH'
 				) {

@@ -7,6 +7,8 @@
 
 namespace Wikia\Logger;
 
+use Wikia\Util\RequestId;
+
 class Hooks {
 
 	/**
@@ -141,14 +143,36 @@ class Hooks {
 			if ( isset( $_SERVER['HTTP_REFERER'] ) ) {
 				$fields['referrer'] = $_SERVER['HTTP_REFERER'];
 			}
-
-			if ( isset( $_SERVER['UNIQUE_ID'] ) ) {
-				$fields['unique_id'] = $_SERVER['UNIQUE_ID'];
-			}
 		}
+
+		$fields['request_id'] = RequestId::instance()->getRequestId();
 
 		WikiaLogger::instance()->pushContext( $fields, WebProcessor::RECORD_TYPE_FIELDS );
 
 		return true;
+	}
+
+	/**
+	 * Hook into wfDebugLog function and log errors via WikiaLogger
+	 *
+	 * @see PLATFORM-424
+	 *
+	 * @author macbre
+	 * @return bool
+	 */
+	public static function onDebug($text, $logGroup ) {
+		try {
+			// throw an exception to get a backtrace
+			throw new \Exception();
+		}
+		catch(\Exception $ex) {
+			WikiaLogger::instance()->error(rtrim($text), [
+				'logGroup' => $logGroup,
+				'exception' => $ex
+			]);
+		}
+
+		// prevent the default behaviour of wfDebugLog - we already logged all information we need
+		return false;
 	}
 }

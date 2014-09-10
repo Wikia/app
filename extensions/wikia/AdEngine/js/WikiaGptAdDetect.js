@@ -3,8 +3,9 @@
 define('ext.wikia.adEngine.wikiaGptAdDetect', [
 	'wikia.log',
 	'wikia.window',
+	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.messageListener'
-], function (log, window, messageListener) {
+], function (log, window, adContext, messageListener) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.wikiaGptAdDetect',
@@ -12,7 +13,8 @@ define('ext.wikia.adEngine.wikiaGptAdDetect', [
 			'script[src*="/ads.saymedia.com/"]',
 			'script[src*="/native.sharethrough.com/"]',
 			'.celtra-ad-v3, script[src$="/mmadlib.js"]'
-		].join(',');
+		].join(','),
+		isMobile = adContext.getContext().targeting.skin === 'wikiamobile';
 
 	function isImagePresent(document) {
 		var imgs, i, len, w, h;
@@ -101,7 +103,7 @@ define('ext.wikia.adEngine.wikiaGptAdDetect', [
 			return 'empty';
 		}
 
-		if (window.skin !== 'wikiamobile') {
+		if (!isMobile) {
 			return 'always_success';
 		}
 
@@ -183,7 +185,7 @@ define('ext.wikia.adEngine.wikiaGptAdDetect', [
 			}
 		}
 
-		if (adType === 'openx' || adType === 'rubicon') {
+		if (adType === 'openx' || adType === 'rubicon' || adType === 'saymedia') {
 			shouldPollForSuccess = true;
 			expectAsyncHop = true;
 		}
