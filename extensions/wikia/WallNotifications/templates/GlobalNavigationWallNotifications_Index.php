@@ -1,5 +1,5 @@
 <? if( $loggedIn && empty( $suppressWallNotifications ) ): ?>
-	<ul id="WallNotificationsVenus" class="WallNotifications <?php if( $prehide ): ?>prehide<?php endif; ?>">
+	<ul id="GlobalNavigationWallNotifications" class="WallNotifications <?php if( $prehide ): ?>prehide<?php endif; ?>">
 		<li>
 			<header class="notifications-header"><?= wfMessage('wall-notifications-all')->text() ?></header>
 		</li>

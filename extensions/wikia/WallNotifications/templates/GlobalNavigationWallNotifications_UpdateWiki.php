@@ -4,9 +4,9 @@
 	<? endif; ?>
 
 	<? foreach($unread as $value): ?>
-		<? echo $app->renderView( 'WallNotificationsVenus', 'Notification', [ 'notify'=>$value,'unread'=>true ] ); ?>
+		<? echo $app->renderView( 'GlobalNavigationWallNotifications', 'Notification', [ 'notify'=>$value,'unread'=>true ] ); ?>
 	<? endforeach; ?>
 	<? foreach($read as $value): ?>
-		<? echo $app->renderView( 'WallNotificationsVenus', 'Notification', [ 'notify'=>$value,'unread'=>false ] ); ?>
+		<? echo $app->renderView( 'GlobalNavigationWallNotifications', 'Notification', [ 'notify'=>$value,'unread'=>false ] ); ?>
 	<? endforeach; ?>
 <? endif; ?>

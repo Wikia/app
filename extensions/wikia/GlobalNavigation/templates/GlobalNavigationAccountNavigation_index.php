@@ -12,7 +12,7 @@
 		<ul class="user-menu subnav">
 			<li id="notifications">
 				<a href="#">Notifications <span class="notifications-count"></span></a>
-				<?= $app->renderView('WallNotificationsVenus', 'Index'); ?>
+				<?= $app->renderView('GlobalNavigationWallNotifications', 'Index'); ?>
 			</li>
 			<?php foreach( $userDropdown as $link ): ?>
 				<li><?= $link ?></li>

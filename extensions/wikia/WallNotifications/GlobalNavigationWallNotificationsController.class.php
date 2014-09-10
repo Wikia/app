@@ -4,7 +4,7 @@
  */
 
 
-class WallNotificationsVenusController extends WikiaController {
+class GlobalNavigationWallNotificationsController extends WikiaController {
 
 	const NOTIFICATION_TITLE_LIMIT = 48;
 
@@ -20,8 +20,7 @@ class WallNotificationsVenusController extends WikiaController {
 		$suppressWallNotifications = $this->areNotificationsSuppressedByExtensions();
 
 		if( $loggedIn && !$suppressWallNotifications ) {
-			$this->response->addAsset( 'extensions/wikia/WallNotifications/styles/WallNotifications.scss' );
-			$this->response->addAsset( 'extensions/wikia/WallNotifications/styles/WallNotifications.venus.scss' );
+			$this->response->addAsset( 'extensions/wikia/WallNotifications/styles/WallNotifications.globalNavigation.scss' );
 			$this->response->setVal( 'prehide', ( empty( $this->wg->EnableWallExt ) && empty( $this->wg->EnableForumExt ) ) );
 		}
 
@@ -212,7 +211,7 @@ class WallNotificationsVenusController extends WikiaController {
 		$this->response->setVal( 'iso_timestamp',  wfTimestamp(TS_ISO_8601, $data->timestamp ));
 
 		if( $unread && $data->notifyeveryone ) {
-			$this->response->getView()->setTemplate( 'WallNotificationsVenusController', 'NotifyEveryone' );
+			$this->response->getView()->setTemplate( 'GlobalNavigationWallNotificationsController', 'NotifyEveryone' );
 		}
 	}
 

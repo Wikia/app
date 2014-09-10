@@ -12,7 +12,7 @@ class WallNotificationsExternalController extends WikiaController {
 	public function init() {
 		global $wgEnableGlobalNavExt;
 		if( !empty( $wgEnableGlobalNavExt ) ) {
-			$this->controllerName = 'WallNotificationsVenus';
+			$this->controllerName = 'GlobalNavigationWallNotifications';
 		} else {
 			$this->controllerName = 'WallNotifications';
 		}

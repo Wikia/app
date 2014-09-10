@@ -48,7 +48,7 @@ $VenusConfig[ 'global_navigation_scss' ] = [
 		'//extensions/wikia/GlobalNavigation/css/GlobalNavigationAccountNavigation.scss',
 		'//extensions/wikia/GlobalNavigation/css/GlobalNavigationHubsMenu.scss',
 		'//extensions/wikia/UserLogin/css/UserLoginDropdown.globalNavigation.scss',
-		'//extensions/wikia/WallNotifications/styles/WallNotifications.venus.scss',
+		'//extensions/wikia/WallNotifications/styles/WallNotifications.globalNavigation.scss',
 	]
 ];
 
@@ -63,7 +63,7 @@ $VenusConfig[ 'global_navigation_js' ] = [
 		'//extensions/wikia/GlobalNavigation/js/GlobalNavigation.js',
 		'//extensions/wikia/GlobalNavigation/js/GlobalNavigationSearch.js',
 		'//extensions/wikia/UserLogin/js/UserLoginDropdown.globalNavigation.js',
-		'//extensions/wikia/WallNotifications/scripts/WallNotifications.venus.js',
+		'//extensions/wikia/WallNotifications/scripts/WallNotifications.globalNavigation.js',
 	]
 ];
 

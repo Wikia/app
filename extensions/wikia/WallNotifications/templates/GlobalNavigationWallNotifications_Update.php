@@ -9,7 +9,7 @@
 
 			<? if( !empty( $count ) ): ?>
 				<div class="notifications-markasread">
-				<? if( $wikiCount == 1 || $notificationCounts[0]['unread'] == 0 ): ?>
+				<? if( $wikiCount == 0 || $notificationCounts[0]['unread'] == 0 ): ?>
 					<span id="markasread-this-wiki"><?= wfMessage('wall-notifications-markasread')->text() ?></span>
 				<? else: ?>
 					<span id="markasread-sub"><?= wfMessage('wall-notifications-markasread')->text() ?></span>

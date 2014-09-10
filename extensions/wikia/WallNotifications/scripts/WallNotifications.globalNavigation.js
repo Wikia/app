@@ -20,7 +20,7 @@ require(
 				this.$notificationsCount = $('.notifications-count');
 
 				this.$notifications = $('#notifications');
-				this.$wallNotifications = $('#WallNotificationsVenus');
+				this.$wallNotifications = $('#GlobalNavigationWallNotifications');
 				this.$wallNotificationsReminder = $('#WallNotificationsReminder');
 
 				// Used by notifications reminder
@@ -52,12 +52,12 @@ require(
 
 			openNotifications: function(row) {
 				if ( row.getAttribute('id') === 'notifications' ) {
-					$('#WallNotificationsVenus').addClass('show');
+					$('#GlobalNavigationWallNotifications').addClass('show');
 				}
 			},
 
 			closeNotifications: function() {
-				$('#WallNotificationsVenus').removeClass('show');
+				$('#GlobalNavigationWallNotifications').removeClass('show');
 			},
 
 			checkIfFromMessageBubble: function() {

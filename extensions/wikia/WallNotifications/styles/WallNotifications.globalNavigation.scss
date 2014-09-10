@@ -44,7 +44,7 @@ $wiki-header-bg-color: #e2e6e9;
 	}
 }
 
-#WallNotificationsVenus {
+#GlobalNavigationWallNotifications {
 	@include grid-position('large', 2, 'right', $large-content-padding - 2);
 	@include grid-column-width('large', 4, $large-content-padding);
 	background-color: #fff;
@@ -196,7 +196,7 @@ $wiki-header-bg-color: #e2e6e9;
 }
 
 @media #{$small-only} {
-	#WallNotificationsVenus {
+	#GlobalNavigationWallNotifications {
 		@include grid-position('small', 3, 'right', $small-content-padding - 2);
 		@include grid-column-width('small', 6, $small-content-padding);
 
@@ -213,7 +213,7 @@ $wiki-header-bg-color: #e2e6e9;
 }
 
 @media #{$medium-only} {
-	#WallNotificationsVenus {
+	#GlobalNavigationWallNotifications {
 		@include grid-position('medium', 2, 'right', $medium-content-padding - 2);
 		@include grid-column-width('medium', 4, $medium-content-padding);
 
