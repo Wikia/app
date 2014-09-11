@@ -33,7 +33,7 @@ function egOgmcParserAfterTidy( Parser $parser, &$text ) {
 
 /**
  * Now that the page is far enough along, use ArticleService to set
- * the escription on the OuptutPage.  This value will then
+ * the description on the OuptutPage.  This value will then
  * be used by the OpenGraphMeta extension.
  */
 $wgParserOutputHooks['applyOpenGraphMetaCustomizations'] = 'egOgmcParserOutputApplyValues';
