@@ -374,14 +374,8 @@ class OasisController extends WikiaController {
 			$this->globalBlockingScripts .= "<script type=\"$wgJsMimeType\" src=\"$blockingFile\"></script>";
 		}
 
-//		d($blockingScripts);
-
-
 		// move JS files added to OutputPage to list of files to be loaded
 		$scripts = RequestContext::getMain()->getSkin()->getScripts();
-
-//		d($scripts);
-
 		foreach ( $scripts as $s ) {
 			//add inline scripts to jsFiles and move non-inline to the queue
 			if ( !empty( $s['url'] ) ) {
@@ -440,18 +434,12 @@ class OasisController extends WikiaController {
 
 		$tpl = $this->app->getSkinTemplateObj();
 
-//		d($this->topScripts);
-//		d($jsLoader);
-//		d($this->jsFiles);
 		// $tpl->set( 'headscripts', $out->getHeadScripts() . $out->getHeadItems() );
 		// FIXME: we need to remove head items - i.e. <meta> tags
 		$remove = $this->wg->out->getHeadItemsArray();
 		$remove[ ] = $this->topScripts;
 		array_walk( $remove, 'trim' );
 		$headScripts = str_replace( $remove, '', $tpl->data[ 'headscripts' ] );
-
-//		d($remove);
-//		d($headScripts);
 
 		$this->jsFiles = $headScripts . $jsLoader . $this->jsFiles;
 
@@ -463,11 +451,6 @@ class OasisController extends WikiaController {
 			$this->bottomScripts = $bottomScripts;
 			$this->jsFiles = $jsFiles;
 		}
-
-//		d($jsFiles);
-//		d($bottomScripts);
-
-//		dd($this->jsFiles);
 
 		if ($wgEnableAdEngineExt && AdEngine2Service::shouldLoadLiftium()) {
 			$this->jsFiles = AdEngine2Controller::getLiftiumOptionsScript() . $this->jsFiles;
