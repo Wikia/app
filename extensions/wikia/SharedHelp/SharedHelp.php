@@ -272,16 +272,11 @@ function SharedHelpHook(&$out, &$text) {
 			$skipNamespaces[] = $wgContLang->getNsText(NS_CATEGORY);
 			$skipNamespaces[] = $wgContLang->getNsText(NS_IMAGE);
 			$skipNamespaces[] = $wgContLang->getNsText(NS_FILE);
-			if ( defined( 'NS_VIDEO' ) ) {
-				$skipNamespaces[] = $wgContLang->getNsText(NS_VIDEO);
-			};
+
 			$skipNamespaces[] = "Advice";
 			if ($wgLanguageCode != 'en') {
 				$skipNamespaces[] = MWNamespace::getCanonicalName(NS_CATEGORY);
 				$skipNamespaces[] = MWNamespace::getCanonicalName(NS_IMAGE);
-				if ( defined( 'NS_VIDEO' ) ) {
-					$skipNamespaces[] = MWNamespace::getCanonicalName(NS_VIDEO);
-				}
 			}
 			$skipNamespaces[] = 'Special:Search'; // Stop hard coded Search on Community Central being removed
 
