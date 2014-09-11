@@ -1,7 +1,7 @@
 /* global UserLoginFacebook:true, UserLoginAjaxForm:true */
 require(['jquery'], function($){
 	'use strict';
-	var $entryPoint, $userLoginDropdown, $transparentOut, loginAjaxForm = false, delayedHoverOptions;
+	var $entryPoint, $userLoginDropdown, $transparentOut, loginAjaxForm = false;
 
 	function openMenu() {
 		$entryPoint.addClass('active');

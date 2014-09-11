@@ -151,7 +151,7 @@ class GlobalNavigationAccountNavigationController extends WikiaController {
 			$this->personalUrls[ 'login' ] = [ 'title' => wfMessage( 'login' )->text(), 'href' => Skin::makeSpecialUrl( 'UserLogin', $returnto ), 'class' => 'ajaxLogin global-navigation-link' ];
 			$this->personalUrls[ 'register' ] = [ 'text' => wfMessage( 'oasis-signup' )->text(), 'href' => Skin::makeSpecialUrl( 'UserSignup' ), 'class' => 'ajaxRegister' ];
 		} else {
-			$this->personalUrls[ 'userpage' ] = [ 'title' => wfMessage( 'mypage' )->text(), 'href' => AvatarService::getUrl( $this->username ), 'class' => 'ajaxLogin global-navigation-link' ];
+			$this->personalUrls[ 'userpage' ] = [ 'title' => $this->username . ' - ' . wfMessage( 'mypage' )->text(), 'href' => AvatarService::getUrl( $this->username ), 'class' => 'ajaxLogin global-navigation-link' ];
 		}
 	}
 }
