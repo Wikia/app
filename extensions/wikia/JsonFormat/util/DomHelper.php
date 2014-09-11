@@ -102,7 +102,7 @@ class DomHelper {
 	}
 
 
-	public static function getTextValue(DomNode $node, $allow = ['#text','a','b','i','u','h1','h2','h3','h4','p']) {
+	public static function getTextValue( DomNode $node, $allow = ['#text','a','b','i','u','h1','h2','h3','h4','p'], $ignoredClasses = [ ] ) {
 		$text = '';
 		foreach( $node->childNodes as $child ) {
 			if( in_array( $child->nodeName,$allow ) ) {
@@ -110,6 +110,14 @@ class DomHelper {
 					$text .= $child->nodeValue;
 				}
 				else {
+
+					if( !empty( $node->attributes ) ) {
+						$class = $node->attributes->getNamedItem('class');
+						if( $class && in_array( $class->nodeValue, $ignoredClasses ) ) {
+							continue;
+						}
+					}
+
 					$text .= self::getTextValue( $child,$allow );
 				}
 			}
