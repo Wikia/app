@@ -64,6 +64,7 @@
 			$heroModuleEditArea.hide();
 			$editButton.show();
 			$heroModuleImage.draggable({ disabled: true });
+			$heroModuleImage.removeClass('drag-cursor');
 			$heroModule.stopThrobbing();
 		}, onFocus = function () {
 			var $this = $(this);
@@ -89,6 +90,7 @@
 			heroData.changed = true;
 		}, onDataSaved = function (data) {
 			$heroModuleImage.draggable({ disabled: true });
+			$heroModuleImage.removeClass('drag-cursor');
 			$heroModuleTitle.text(heroData.oTitle = heroData.title);
 			$heroModuleTitle.text(heroData.oDescription = heroData.description);
 			$heroModuleImage.attr('src', heroData.oImage = heroData.imagepath);
@@ -136,6 +138,7 @@
 				heroOffsetTop = $heroModule.offset().top,
 				containment = [0, heroOffsetTop - heroHeight + heroModuleHeight, 0, heroOffsetTop];
 
+			$heroModuleImage.addClass('drag-cursor');
 			$heroModuleImage.draggable({
 				disabled: false,
 				axis: 'y',
