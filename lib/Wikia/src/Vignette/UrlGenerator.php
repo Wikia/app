@@ -171,7 +171,7 @@ class UrlGenerator {
 	 */
 	public function url() {
 		$bucketPath = self::bucketPath();
-		$imagePath = "{$bucketPath}/{$this->file->getRel()}/revision/{$this->revision}";
+		$imagePath = "{$bucketPath}/{$this->file->getUrlRel()}/revision/{$this->revision}";
 
 		if ($this->mode != self::MODE_ORIGINAL) {
 			$imagePath .= "/{$this->mode}/width/{$this->width}/height/{$this->height}";
