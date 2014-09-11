@@ -49,7 +49,7 @@
 		}
 	}
 
-	.hide-label > label {
+	.hide-label label {
 		display: none;
 	}
 
@@ -104,7 +104,7 @@
 			font-size: 15px;
 			height: 25px;
 			margin: 5px 0;
-			padding: 5px 0;
+			padding: 0;
 			width: 100%;
 
 			&, &:focus, &:active {
@@ -153,13 +153,13 @@
 	.sso-login {
 		padding: 0 $large-content-padding $large-content-padding;
 
-		> .sso-login-divider {
+		.sso-login-divider {
 			border-top: solid 1px $nav-border-color;
 			height: 0;
 			margin: 20px 0;
 			text-align: center;
 
-			> span {
+			span {
 				background-color: $nav-background-color;
 				color: $nav-border-color;
 				display: inline-block;

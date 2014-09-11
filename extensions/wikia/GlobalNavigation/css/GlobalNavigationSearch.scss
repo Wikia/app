@@ -96,13 +96,15 @@
 	.search-submit {
 		background-color: transparent;
 		background-image: url('/extensions/wikia/GlobalNavigation/images/search_icon.svg'); /* base64 */
-		background-size: 100% 100%;
+		background-position: 8px;
+		background-repeat: no-repeat;
+		background-size: 20px 18px;
 		border: 0;
-		height: 18px;
+		height: 36px;
+		padding: 0;
 		position: absolute;
-		right: 21px;
-		top: 9px;
-		width: 20px;
+		right: 11px;
+		width: 36px;
 	}
 }
 
@@ -115,7 +117,7 @@
 		padding-right: $small-grid-gutter;
 
 		.search-submit {
-			right: 17px;
+			right: 9px;
 		}
 	}
 }
@@ -129,7 +131,7 @@
 		padding-right: $medium-grid-gutter;
 
 		.search-submit {
-			right: 19px;
+			right: 10px;
 		}
 	}
 }
