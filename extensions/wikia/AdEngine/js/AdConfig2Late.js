@@ -1,3 +1,4 @@
+// TODO: ADEN-1332-ize after ADEN-1326
 /*global define*/
 define('ext.wikia.adEngine.adConfigLate', [
 	// regular dependencies
@@ -128,7 +129,7 @@ define('ext.wikia.adEngine.adConfigLate', [
 			return adProviderRemnantGpt;
 		}
 
-		if (adProviderLiftium.canHandleSlot(slotname)) {
+		if (adProviderLiftium.canHandleSlot(slotname) && !instantGlobals.wgSitewideDisableLiftium) {
 			return adProviderLiftium;
 		}
 

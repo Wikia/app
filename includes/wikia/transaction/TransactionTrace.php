@@ -9,6 +9,8 @@ class TransactionTrace {
 	protected $type = null;
 	protected $attributes = array();
 
+	protected $events = array();
+
 	protected $plugins = array();
 	protected $classifier;
 
@@ -42,6 +44,22 @@ class TransactionTrace {
 	}
 
 	/**
+	 * Records an event
+	 *
+	 * @param string $eventName Event name
+	 * @param array $data Event data
+	 */
+	public function addEvent( $eventName, $data ) {
+		$event = array(
+			'time' => microtime( true ),
+			'event' => $eventName,
+			'data' => $data,
+		);
+		$this->events[] = $event;
+		$this->notify( 'onEvent', $event );
+	}
+
+	/**
 	 * Returns the automatically generated transaction type name
 	 *
 	 * @return string|null
@@ -55,10 +73,19 @@ class TransactionTrace {
 	 *
 	 * @return array
 	 */
-	public function getAll() {
+	public function getAttributes() {
 		$all = $this->type !== null ? array( Transaction::PSEUDO_PARAM_TYPE => $this->type ) : array();
 		$all += $this->attributes;
 		return $all;
+	}
+
+	/**
+	 * Returns array with all recorded events
+	 *
+	 * @return array
+	 */
+	public function getEvents() {
+		return $this->events;
 	}
 
 	/**

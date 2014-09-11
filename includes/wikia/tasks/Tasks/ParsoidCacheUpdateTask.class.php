@@ -136,6 +136,15 @@ class ParsoidCacheUpdateTask extends BaseTask {
 	}
 
 	private function wikiaLog( $data ) {
+		global $wgEnableVisualEditorUI;
+		if ( !is_array ( $data ) ) {
+			$data = array();
+		}
+		if ( isset( $wgEnableVisualEditorUI ) ) {
+			$data['wgEnableVisualEditorUI'] = $wgEnableVisualEditorUI;
+		} else {
+			$data['wgEnableVisualEditorUI'] = 'notset';
+		}
 		WikiaLogger::instance()->debug( "ParsoidCacheUpdateTask", $data );
 	}
 }
