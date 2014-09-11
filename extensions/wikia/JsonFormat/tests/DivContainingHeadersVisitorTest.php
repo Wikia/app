@@ -24,6 +24,18 @@ class DivContainingHeadersVisitorTest extends WikiaBaseTest {
 		$this->assertEquals( $expectedJson, $generatedJson );
 	}
 
+	public function testParsingTabViewTitles() {
+		$body = $this->getDomBody( $this->getHtmlForTestingTabviewTitles() );
+		$divVisitor = new DivContainingHeadersVisitor( new \CompositeVisitor(), new \JsonFormatBuilder() );
+		$getTabTitle = self::getFn( $divVisitor, 'getTabTitle' );
+
+		$xpath = new DOMXPath( $body->ownerDocument );
+		$tabs = $xpath->query( '//a', $body );
+
+		$this->assertEquals( 'before span sub Test 3 after span', $getTabTitle( $xpath, $tabs->item( 0 ) ) );
+		$this->assertEquals( 'sub sub Test 3', $getTabTitle( $xpath, $tabs->item( 1 ) ) );
+	}
+
 	public function getUrlWithoutPathDataProvider() {
 		return [
 			[
@@ -304,9 +316,7 @@ PARSED_TABBER_JSON;
 	 * @return array
 	 */
 	protected function getSimpleJson( $html ) {
-		$doc = new \DOMDocument();
-		$doc->loadHTML( $html );
-		$body = $doc->getElementsByTagName( 'body' )->item( 0 );
+		$body = $this->getDomBody( $html );
 		$jsonFormatTraversingState = new \JsonFormatBuilder();
 		$visitor = ( new \Wikia\JsonFormat\HtmlParser() )->createVisitor( $jsonFormatTraversingState );
 		$visitor->visit( $body );
@@ -314,6 +324,43 @@ PARSED_TABBER_JSON;
 		$simplifier = new Wikia\JsonFormat\JsonFormatSimplifier();
 		$generatedJson = $simplifier->simplify( $root, 'test' );
 		return $generatedJson;
+	}
+
+	/**
+	 * @param $html
+	 * @return DOMNode
+	 */
+	protected function getDomBody( $html ) {
+		$doc = new \DOMDocument();
+		$doc->loadHTML( $html );
+		$body = $doc->getElementsByTagName( 'body' )->item( 0 );
+		return $body;
+	}
+
+	/**
+	 * @return string
+	 */
+	protected function getHtmlForTestingTabviewTitles() {
+		$html = <<<DUMMY_HTML
+<?xml encoding=\"UTF-8\">
+<html>
+	<body>
+		<ul class="tabs">
+			<li class="selected" data-tab="flytabs_00">
+				<a href="/wiki/Test3/subTest3?action=render">
+					before span <span>sub Test 3</span> after span
+				</a>
+			</li>
+			<li data-tab="flytabs_01">
+				<a href="/wiki/Test3/subTest3/subSubTest3?action=render">
+					<span>sub sub Test 3</span>
+				</a>
+			</li>
+		</ul>
+	</body>
+</html>
+DUMMY_HTML;
+		return $html;
 	}
 
 }

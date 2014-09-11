@@ -257,9 +257,10 @@ class DivContainingHeadersVisitor extends DOMNodeVisitorBase {
 		$tabTitleText = $xpath->query( './/text()', $tab );
 		$tabTitleTextArr = [ ];
 		foreach ( $tabTitleText as $tabTitleTextItem ) {
-			$tabTitleTextArr[ ] = $tabTitleTextItem->nodeValue;
+			$tabTitleTextArr[ ] = trim( $tabTitleTextItem->nodeValue );
 		}
 		$tabTitle = join( ' ', $tabTitleTextArr );
+		$tabTitle = trim( $tabTitle );
 		return $tabTitle;
 	}
 }
