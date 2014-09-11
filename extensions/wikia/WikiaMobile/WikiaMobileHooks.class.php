@@ -371,13 +371,11 @@ class WikiaMobileHooks {
 
 			//get all the possible variations of the File namespace
 			//and the translation in the wiki's language
-			foreach ( array( NS_FILE, NS_IMAGE, NS_VIDEO ) as $ns ) {
-				$translatedNs[] = $wgContLang->getNsText( $ns );
+			$translatedNs[] = $wgContLang->getNsText( NS_FILE );
 
-				foreach( $wgNamespaceAliases as $alias => $nsAlias ) {
-					if( $nsAlias == $ns ) {
-						$translatedNs[] = $alias;
-					}
+			foreach ( $wgNamespaceAliases as $alias => $nsAlias ) {
+				if ( $nsAlias == NS_FILE ) {
+					$translatedNs[] = $alias;
 				}
 			}
 
