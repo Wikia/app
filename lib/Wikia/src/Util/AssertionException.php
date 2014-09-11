@@ -7,7 +7,7 @@
  * @author Nelson Monterroso <nelson@wikia-inc.com>
  */
 
-namespace Wikia\Util\ErrorChecking;
+namespace Wikia\Util;
 
 
 class AssertionException extends \Exception {
