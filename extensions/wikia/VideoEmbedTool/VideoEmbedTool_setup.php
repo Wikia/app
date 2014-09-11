@@ -52,7 +52,7 @@ JSMessages::registerPackage('VideoEmbedTool', array(
  * @return bool
  */
 function VETArticleSave( $article, $user, &$text, $summary) {
-	if (NS_VIDEO == $article->mTitle->getNamespace()) {
+	if (NS_FILE == $article->mTitle->getNamespace()) {
 		$text = $article->dataline . $text;
 	}
 	return true;
