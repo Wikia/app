@@ -100,7 +100,7 @@ class DivContainingHeadersVisitor extends DOMNodeVisitorBase {
 
 		foreach ( $tabs as $tab ) {
 			$url = $xpath->query( './@href', $tab )->item( 0 );
-			$tabTitle = $xpath->query( './span/text()', $tab )->item( 0 )->nodeValue;
+			$tabTitle = $this->getTabTitle( $xpath, $tab );
 
 			$article = $this->getArticleByUrl( $url );
 			if( empty( $article ) ) {
@@ -244,5 +244,22 @@ class DivContainingHeadersVisitor extends DOMNodeVisitorBase {
 			$this->adjustLevel( $tabSection );
 			$this->getJsonFormatBuilder()->add( $tabSection );
 		}
+	}
+
+	/**
+	 * Extracting title from <tabview> tab
+	 * 
+	 * @param $xpath
+	 * @param $tab
+	 * @return string
+	 */
+	protected function getTabTitle( $xpath, $tab ) {
+		$tabTitleText = $xpath->query( './/text()', $tab );
+		$tabTitleTextArr = [ ];
+		foreach ( $tabTitleText as $tabTitleTextItem ) {
+			$tabTitleTextArr[ ] = $tabTitleTextItem->nodeValue;
+		}
+		$tabTitle = join( '', $tabTitleTextArr );
+		return $tabTitle;
 	}
 }
