@@ -94,11 +94,14 @@ class DivContainingHeadersVisitor extends DOMNodeVisitorBase {
 	 */
 	protected function parseTabview( DOMNode $currentNode ) {
 		$xpath = new DOMXPath( $currentNode->ownerDocument );
-		$tabUrls = $xpath->query( ".//@href", $currentNode );
+		$tabs = $xpath->query( ".//a", $currentNode );
 
 		$htmlParser = new Wikia\JsonFormat\HtmlParser();
 
-		foreach ( $tabUrls as $url ) {
+		foreach ( $tabs as $tab ) {
+			$url = $xpath->query( './@href', $tab )->item( 0 );
+			$tabTitle = $xpath->query( './span/text()', $tab )->item( 0 )->nodeValue;
+
 			$article = $this->getArticleByUrl( $url );
 			if( empty( $article ) ) {
 				continue;
@@ -111,7 +114,7 @@ class DivContainingHeadersVisitor extends DOMNodeVisitorBase {
 			}
 			\Wikia\JsonFormat\HtmlParser::markAsVisited( $title );
 
-			$tabSection = $this->parseArticleToSection( $article, $htmlParser );
+			$tabSection = $this->parseArticleToSection( $article, $htmlParser, $tabTitle );
 
 			$this->adjustLevel( $tabSection );
 
@@ -156,10 +159,10 @@ class DivContainingHeadersVisitor extends DOMNodeVisitorBase {
 	 * @param $htmlParser
 	 * @return JsonFormatSectionNode
 	 */
-	protected function parseArticleToSection( $article, $htmlParser ) {
+	protected function parseArticleToSection( $article, $htmlParser, $tabTitle ) {
 		$html = $article->getPage()->getParserOutput( \ParserOptions::newFromContext( new RequestContext() ) )->getText();
 		$jsonArticle = $htmlParser->parse( $html );
-		$tabSection = new JsonFormatSectionNode( 1, $article->getTitle()->getText() );
+		$tabSection = new JsonFormatSectionNode( 1, $tabTitle );
 		foreach ( $jsonArticle->getChildren() as $child ) {
 			$tabSection->addChild( $child );
 		}
