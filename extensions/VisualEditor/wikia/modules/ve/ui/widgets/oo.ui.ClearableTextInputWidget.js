@@ -60,4 +60,3 @@ OO.ui.ClearableTextInputWidget.prototype.onClearableTextInputChange = function (
 		this.$clearButton.hide();
 	}
 };
-
