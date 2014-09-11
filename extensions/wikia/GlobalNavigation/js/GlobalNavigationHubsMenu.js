@@ -1,6 +1,6 @@
 require( ['jquery', 'wikia.globalnavigation.lazyload'], function( $, GlobalNavLazyLoad ){
 	'use strict';
-	var $entryPoint, $hubLinks, $hubs, $transparentOut, $verticals;
+	var $entryPoint, $hubLinks, $hubs, $verticals;
 
 	$hubs = $( '#hubs' );
 	$hubLinks = $hubs.find( '> .hub-links' );
@@ -35,7 +35,7 @@ require( ['jquery', 'wikia.globalnavigation.lazyload'], function( $, GlobalNavLa
 
 	function openMenu() {
 		$entryPoint.addClass( 'active' );
-		$transparentOut.addClass( 'visible' );
+		window.transparentOut.show();
 
 		if (!GlobalNavLazyLoad.isMenuWorking()) {
 			GlobalNavLazyLoad.getHubLinks();
@@ -44,11 +44,10 @@ require( ['jquery', 'wikia.globalnavigation.lazyload'], function( $, GlobalNavLa
 
 	function closeMenu() {
 		$entryPoint.removeClass( 'active' );
-		$transparentOut.removeClass( 'visible' );
+		window.transparentOut.hide();
 	}
 
-	$transparentOut = $('<div />').addClass('transparent-out').appendTo('body');
-	$transparentOut.click(closeMenu);
+	window.transparentOut.bindClick(closeMenu);
 
 	if ( !window.touchstart ) {
 		window.delayedHover(

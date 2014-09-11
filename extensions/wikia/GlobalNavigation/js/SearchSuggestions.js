@@ -1,6 +1,6 @@
 $(function() {
 	'use strict';
-	
+
 	var SearchSuggestions = (function() {
 		function WikiaSearchApp(id) {
 			this.id = id;
@@ -8,13 +8,10 @@ $(function() {
 
 			this.searchField = this.searchForm.find('input[type="text"]');
 
-			// RT #141437 - hide HOME_TOP_RIGHT_BOXAD when showing search suggestions
-			this.ads = $('[id$="TOP_RIGHT_BOXAD"]');
-
 			if ( !this.searchForm.hasClass('noautocomplete') ) {
 				this.searchField.bind({
-					'suggestShow': $.proxy(this.hideAds, this),
-					'suggestHide': $.proxy(this.showAds, this)
+					'suggestShow': window.transparentOut.show,
+					'suggestHide': window.transparentOut.hide
 				});
 
 				// load autosuggest code on first focus
@@ -25,18 +22,6 @@ $(function() {
 		WikiaSearchApp.prototype.track = Wikia.Tracker.buildTrackingFunction({
 			trackingMethod: 'internal'
 		});
-
-		WikiaSearchApp.prototype.hideAds = function() {
-			this.ads.each(function() {
-				$(this).children().css('margin-left', '-9999px');
-			});
-		};
-
-		WikiaSearchApp.prototype.showAds = function() {
-			this.ads.each(function() {
-				$(this).children().css('margin-left', 'auto');
-			});
-		};
 
 		// download necessary dependencies (AutoComplete plugin) and initialize search suggest feature for #search_field
 		WikiaSearchApp.prototype.initSuggest = function() {

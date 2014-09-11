@@ -78,7 +78,8 @@ $VenusConfig['global_navigation_scss'] = array(
 	'assets' => array(
 		'//extensions/wikia/GlobalNavigation/css/GlobalNavigation.scss',
 		'//extensions/wikia/GlobalNavigation/css/GlobalNavigationHubsMenu.scss',
-		'//extensions/wikia/GlobalNavigation/css/GlobalNavigationSearch.scss'
+		'//extensions/wikia/GlobalNavigation/css/GlobalNavigationSearch.scss',
+		'//'
 	)
 );
 
@@ -92,7 +93,7 @@ $VenusConfig['global_navigation_js'] = [
 		'//extensions/wikia/GlobalNavigation/js/GlobalNavigationHubsMenu.js',
 		'//extensions/wikia/GlobalNavigation/js/GlobalNavigationSearch.js',
 		'//extensions/wikia/GlobalNavigation/js/SearchSuggestions.js',
-		'//skins/shared/js/Search.js',
+		'//skins/shared/js/transparent-out.js',
 	]
 ];
 

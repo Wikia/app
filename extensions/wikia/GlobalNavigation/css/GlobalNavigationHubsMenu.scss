@@ -1,7 +1,6 @@
 @import "../../Venus/styles/variables";
 @import "skins/shared/color";
 @import "skins/shared/mixins/columns";
-@import "skins/shared/mixins/blackout";
 @import "GlobalNavigationColors";
 
 .hubs-entry-point {
@@ -25,14 +24,6 @@
 	}
 	.hubs-entry-point:after {
 		border-top-color: $nav-active-color;
-	}
-}
-
-.transparent-out {
-	@include blackout( rgba( 1, 1, 1, 0.0 ) );
-
-	&.visible {
-		z-index: $blackout-z-index;
 	}
 }
 
