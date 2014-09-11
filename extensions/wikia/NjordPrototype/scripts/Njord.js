@@ -33,6 +33,7 @@
 		$heroModuleButton = $('#MainPageHero .upload .upload-btn'),
 		$heroModuleInput = $('#MainPageHero .upload input[name="file"]'),
 		$heroModuleImage = $('#MainPageHero .hero-image'),
+		$heroModuleEditArea = $('#MainPageHero .edit-area'),
 
 		initializeData = function () {
 			heroData.title = heroData.oTitle = $heroModuleTitle.text();
@@ -54,12 +55,14 @@
 
 			$heroModule.trigger('revertedToZeroState');
 		}, zeroState = function () {
-			$discardButton.hide();
-			$saveButton.hide();
-			$toggleButton.hide();
-			$uploadButton.hide();
+			$('.hero-title, .hero-description').each(function () {
+				$(this).removeAttr('contenteditable');
+			});
+			$toggleButton.show();
+			$overlay.hide();
+			$heroModuleEditArea.hide();
 			$editButton.show();
-			$heroModuleImage.draggable('disable');
+			$heroModuleImage.draggable({ disabled: true });
 			$heroModule.stopThrobbing();
 		}, onFocus = function () {
 			var $this = $(this);
@@ -84,8 +87,7 @@
 			}
 			heroData.changed = true;
 		}, onDataSaved = function (data) {
-			console.log(data);
-			$heroModuleImage.draggable('disable');
+			$heroModuleImage.draggable({ disabled: true });
 			$heroModuleTitle.text(heroData.oTitle = heroData.title);
 			$heroModuleTitle.text(heroData.description = heroData.oDescription);
 			$heroModuleImage.attr('src', heroData.imagepath = heroData.oImage);
@@ -109,26 +111,23 @@
 			});
 		}, onEdit = function () {
 			$heroModule.startThrobbing();
-
-			$heroModuleImage.bind('load', function () {
+			$('.hero-title, .hero-description').each(function () {
+				$(this).attr('contenteditable', true);
+			});
+			$heroModuleEditArea.show();
+			$editButton.hide();
+			if ($heroModuleImage.attr('src') !== $heroModuleImage.data('fullpath')) {
+				$heroModuleImage.attr('src', $heroModuleImage.data('fullpath'));
+			} else {
 				$heroModule.stopThrobbing();
-				$heroModuleImage.unbind('load');
-
-				$('.hero-title, .hero-description').each(function () {
-					var $this = $(this);
-					if ($this.attr('contenteditable')) {
-						$this.removeAttr('contenteditable');
-					} else {
-						$this.attr('contenteditable', true);
-					}
-				});
-				$('.edit-area').show();
-				$editButton.hide();
-				$heroModuleImage.css({top: -heroData.oCropposition * $heroModuleImage.height()});
 				$heroModule.trigger('resize');
 				$heroModule.trigger('enableDragging');
-			});
-			$heroModuleImage.attr('src', $heroModuleImage.data('fullpath'));
+			}
+		}, onImageLoad = function () {
+			$heroModule.stopThrobbing();
+			$heroModuleImage.css({top: -heroData.oCropposition * $heroModuleImage.height()});
+			$heroModule.trigger('resize');
+			$heroModule.trigger('enableDragging');
 		}, onResize = function () {
 			$heroModule.height($heroModule.width() * HERO_ASPECT_RATIO);
 		}, onDraggingEnabled = function () {
@@ -138,6 +137,7 @@
 				containment = [0, heroOffsetTop - heroHeight + heroModuleHeight, 0, heroOffsetTop];
 
 			$heroModuleImage.draggable({
+				disabled: false,
 				axis: 'y',
 				containment: containment,
 				drag: function () {
@@ -150,6 +150,7 @@
 
 	$heroModuleTitle.on('focus', onFocus).on('blur keyup paste input', onInput).on('change', onChange);
 	$('.hero-description').on('focus', onFocus).on('blur keyup paste input', onInput).on('change', onChange);
+	$heroModuleImage.on('load', onImageLoad);
 	$heroModule.on('change', onChange).on('enableDragging', onDraggingEnabled);
 	$heroModule.on('revertedToZeroState', zeroState);
 	$editButton.on('click', onEdit);
