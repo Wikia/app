@@ -131,7 +131,12 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 		return params;
 	}
 
-	function getPageLevelParams() {
+	/**
+	 * options
+	 * @param opts {includeRawDbName: bool}
+	 * @returns object
+	 */
+	function getPageLevelParams(opts) {
 		// TODO: cache results (keep in mind some of them may change while executing page)
 
 		log('getPageLevelParams', 9, logGroup);
@@ -142,6 +147,8 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 			zone2,
 			params,
 			targeting = adContext.getContext().targeting;
+
+		opts = opts || {};
 
 		dbName = '_' + (targeting.wikiDbName || 'wikia').replace('/[^0-9A-Z_a-z]/', '_');
 
@@ -160,7 +167,6 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 			s1: zone1,
 			s2: zone2,
 			artid: targeting.pageArticleId && targeting.pageArticleId.toString(),
-			dbName: dbName,
 			dmn: getDomain(),
 			hostpre: getHostname(),
 			wpage: targeting.pageName && targeting.pageName.toLowerCase(),
@@ -168,6 +174,10 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 			cat: getCategories(),
 			ab: getAb()
 		};
+
+		if (opts.includeRawDbName) {
+			params.rawDbName = rawDbName;
+		}
 
 		if (targeting.pageArticleId) {
 			params.pageid = zone1 + '/' + targeting.pageArticleId;

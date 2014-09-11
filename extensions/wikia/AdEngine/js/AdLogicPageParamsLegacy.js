@@ -8,7 +8,9 @@ define('ext.wikia.adEngine.adLogicPageParamsLegacy', [
 ], function (log, adContext, adLogicPageParams, Krux, dartUrl) {
 	'use strict';
 
-	var pageParams = adLogicPageParams.getPageLevelParams();
+	var pageParams = adLogicPageParams.getPageLevelParams({
+		includeRawDbName: true
+	});
 
 	function getCustomKeyValues() {
 		var wikiCustomKeyValues = adContext.getContext().targeting.wikiCustomKeyValues;
@@ -21,7 +23,7 @@ define('ext.wikia.adEngine.adLogicPageParamsLegacy', [
 	}
 
 	function getS1KeyValue() {
-		return dartUrl.decorateParam('s1', pageParams.dbName);
+		return dartUrl.decorateParam('s1', pageParams.rawDbName);
 	}
 
 	function getDomainKV() {
