@@ -82,15 +82,23 @@ ve.ui.WikiaTemplateInsertDialog.prototype.onTemplateSelect = function ( item ) {
  * Insert template
  */
 ve.ui.WikiaTemplateInsertDialog.prototype.insertTemplate = function () {
-	this.surface.getModel().getDocument().once( 'transact', ve.bind( this.onTransact, this ) );
-
 	// Collapse returns a new fragment, so update this.fragment
 	this.fragment = this.getFragment().collapseRangeToEnd();
+
+	// Update the surface selection to match the fragment's collapsed range.
+	// Translating an expanded range will result in a selection that covers more than just the inserted node.
+	this.surface.getModel().setSelection( this.getFragment().getRange() );
+
+	// Ask the transclusionModel to transact with the document model and listen for the 'tranact' event.
+	this.surface.getModel().getDocument().once( 'transact', ve.bind( this.onTransact, this ) );
 	this.transclusionModel.insertTransclusionNode( this.getFragment() );
 };
 
 /**
  * Handle document model transaction
+ *
+ * Once the transclusionModel has inserted the transclusion, the new node in the surface will be selected.
+ * We can ask the commandRegistry for the command for the node and execute it.
  */
 ve.ui.WikiaTemplateInsertDialog.prototype.onTransact = function () {
 	ve.ui.commandRegistry.getCommandForNode(
