@@ -50,7 +50,7 @@ class ApiHooks {
 	 * @param integer $id
 	 * @return bool true
 	 */
-	public static function onArticleDeleteComplete( &$article, User &$user, $reason, $id ) {
+	public static function onArticleDeleteComplete( Article $article, User $user, $reason, $id ) {
 		ArticlesApiController::purgeCache( $id );
 		ArticlesApiController::purgeMethods([
 			'getAsJson', ['id' => $id],
@@ -73,7 +73,8 @@ class ApiHooks {
 	 * @param $baseRevId
 	 * @return bool
 	 */
-	public static function onArticleSaveComplete( &$article, &$user, $text, $summary, $minoredit, $watchthis, $sectionanchor, &$flags, $revision, &$status, $baseRevId ) {
+	public static function onArticleSaveComplete( Article $article, User $user, $text, $summary, $minoredit, $watchthis,
+			$sectionanchor, &$flags, $revision, &$status, $baseRevId ) {
 		ArticlesApiController::purgeCache($article->getTitle()->getArticleID());
 		ArticlesApiController::purgeMethods([
 			'getAsJson', ['id' => $article->getId()],
