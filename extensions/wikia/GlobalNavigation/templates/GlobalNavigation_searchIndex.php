@@ -18,7 +18,6 @@
 			<? endif ?>
 		</div>
 		<div class="global-nav-search-input-wrapper table-cell">
-			<input id="searchInput" accesskey="f" autocomplete="off" class="search-input" name="search" type="text" value="<?= $search; ?>"/>
 			<input id="searchInput" accesskey="f" autocomplete="off" class="search-input" name="search" type="text" value="<?= $query; ?>"/>
 			<input name="fulltext" type="hidden" value="Search"/>
 			<input disabled id="searchInputResultLang" type="hidden" name="resultLang" value="<?= $lang; ?>"/>

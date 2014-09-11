@@ -29,7 +29,6 @@ $VenusConfig['venus_body_js'] = [
 		'//resources/wikia/modules/querystring.js',
 		'//resources/wikia/modules/throbber.js',
 		'//resources/wikia/modules/thumbnailer.js',
-		'//resources/wikia/modules/tracker.js',
 		'//resources/wikia/modules/window.js',
 		'//resources/wikia/modules/abTest.js',
 
@@ -91,7 +90,6 @@ $VenusConfig['global_navigation_js'] = [
 		'//resources/wikia/libraries/delayed-hover/js-delayed-hover.js',
 		'//extensions/wikia/GlobalNavigation/js/GlobalNavigationLazyLoad.js',
 		'//extensions/wikia/GlobalNavigation/js/GlobalNavigationHubsMenu.js',
-		'//extensions/wikia/GlobalNavigation/js/GlobalNavigation.js',
 		'//extensions/wikia/GlobalNavigation/js/GlobalNavigationSearch.js',
 		'//extensions/wikia/GlobalNavigation/js/SearchSuggestions.js',
 		// TODO don't load autocomplete on every pv
