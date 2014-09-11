@@ -2611,7 +2611,10 @@ class WikiFactory {
 		$aFilter = "city_cats.cat_active = 1";
 		$aOptions = array();
 
-		if ( $deprecated ) {
+		if ( $deprecated == 'skip' ) {
+			$aFilter = null;
+			$aOptions = array();
+		} elseif ( $deprecated ) {
 			$aFilter = "city_cats.cat_deprecated = 1";
 			$aOptions = array ("LIMIT" => 1);
 		}
@@ -2624,17 +2627,22 @@ class WikiFactory {
 		$memkey = sprintf("%s:%d", __METHOD__, intval($city_id));
 		$cached = $oMemc->get($memkey);
 
-		if ( empty($cached) ) {
+		if ( empty($cached) || $deprecated == 'skip' ) {
 			$dbr = self::db( DB_SLAVE );
+
+			$aWhere = array(
+				"city_id" => $city_id,
+				"city_cats.cat_id = city_cat_mapping.cat_id",
+			);
+
+			if ( !empty( $aFilter ) ) {
+				$aWhere[] = $aFilter;
+			}
 
 			$oRes = $dbr->select(
 				array( "city_cat_mapping", "city_cats" ),
 				array( "city_cats.cat_id as cat_id", "city_cats.cat_name as cat_name" ),
-				array(
-					"city_id" => $city_id,
-					"city_cats.cat_id = city_cat_mapping.cat_id",
-					$aFilter
-				),
+				$aWhere,
 				__METHOD__,
 				$aOptions
 			);
