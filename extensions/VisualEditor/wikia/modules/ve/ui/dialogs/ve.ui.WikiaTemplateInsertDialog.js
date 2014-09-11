@@ -41,11 +41,14 @@ ve.ui.WikiaTemplateInsertDialog.prototype.initialize = function () {
 	this.stackLayout = new OO.ui.StackLayout( { '$': this.$ } );
 	this.panel = new OO.ui.PanelLayout( { '$': this.$ } );
 	this.select = new OO.ui.SelectWidget( { '$': this.$ } );
+	this.offset = 0;
 
 	// Events
+	this.stackLayout.$element.on( 'scroll', ve.bind( this.onLayoutScroll, this ) );
 
 	// Initialization
 	this.frame.$content.addClass( 've-ui-wikiaTemplateInsertDialog' );
+	this.select.$element.addClass( 'clearfix' );
 
 	this.panel.$element.append( this.select.$element );
 	this.stackLayout.addItems( [ this.panel ] );
@@ -53,6 +56,18 @@ ve.ui.WikiaTemplateInsertDialog.prototype.initialize = function () {
 	this.$body.append( this.stackLayout.$element );
 
 	this.getMostLinkedTemplateData().done( ve.bind( this.populateOptions, this ) );
+};
+
+/**
+ * Handle scrolling of the layout
+ */
+ve.ui.WikiaTemplateInsertDialog.prototype.onLayoutScroll = function () {
+	var position = this.stackLayout.$element.scrollTop() + this.stackLayout.$element.outerHeight(),
+		threshold = this.select.$element.outerHeight() - 100;
+
+	if ( !this.isPending() && this.offset !== null && position > threshold ) {
+		this.getMostLinkedTemplateData().done( ve.bind( this.populateOptions, this ) );
+	}
 };
 
 /**
@@ -78,7 +93,6 @@ ve.ui.WikiaTemplateInsertDialog.prototype.populateOptions = function ( templates
 		);
 	}
 
-	this.select.clearItems();
 	this.select.addItems( options );
 };
 
@@ -88,25 +102,24 @@ ve.ui.WikiaTemplateInsertDialog.prototype.populateOptions = function ( templates
  * @returns {jQuery.Promise}
  */
 ve.ui.WikiaTemplateInsertDialog.prototype.getMostLinkedTemplateData = function () {
-	var deferred;
+	var deferred = $.Deferred();
 
-	if ( !this.templatesPromise ) {
-		deferred = $.Deferred();
+	this.pushPending();
 
-		ve.init.target.constructor.static.apiRequest( {
-			'action': 'templatesuggestions'
-		} )
-			.done( function ( data ) {
-				deferred.resolve( data.templates );
-			} )
-			.fail( function () {
-				deferred.resolve( [] );
-			} );
+	ve.init.target.constructor.static.apiRequest( {
+		'action': 'templatesuggestions',
+		'offset': this.offset
+	} )
+		.done( ve.bind( function ( data ) {
+			this.offset = data.continue ? data.continue : null;
+			this.popPending();
+			deferred.resolve( data.templates );
+		}, this ) )
+		.fail( function () {
+			deferred.resolve( [] );
+		} );
 
-		this.templatesPromise = deferred.promise();
-	}
-
-	return this.templatesPromise;
+	return deferred.promise();
 };
 
 /* Registration */
