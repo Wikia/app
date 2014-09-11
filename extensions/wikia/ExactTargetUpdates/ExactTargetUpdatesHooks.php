@@ -105,8 +105,8 @@ class ExactTargetUpdatesHooks {
 			$aWikiData = $this->prepareWikiParams( $aParams );
 			$aWikiCatsMappingData = $this->prepareWikiCatsMappingParams( $aParams );
 			wfDebug( __METHOD__ . " ETCreateWikiTask: Params prepared." );
-			$task->call( 'sendNewWikiData', $aWikiData, $aWikiCatsMappingData );
-			$task->queue();
+			$oTask->call( 'sendNewWikiData', $aWikiData, $aWikiCatsMappingData );
+			$oTask->queue();
 		// }
 	}
 
@@ -124,11 +124,11 @@ class ExactTargetUpdatesHooks {
 
 	public function prepareWikiCatsMappingParams( $aParams ) {
 		$aCategories = \WikiFactory::getCategories( $aParams['city_id'] );
-		$aWikiCatsMappingParams[];
+		$aWikiCatsMappingParams = [];
 		foreach( $aCategories as $aCategory ) {
 			$aWikiCatsMappingParams[] = [
 				'city_id' => $aParams['city_id'],
-				'cat_id' => $aCategory['cat_id'],
+				'cat_id' => $aCategory->cat_id,
 			];
 		}
 		return $aWikiCatsMappingParams;

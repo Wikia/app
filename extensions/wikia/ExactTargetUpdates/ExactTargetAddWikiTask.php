@@ -3,6 +3,7 @@
 class ExactTargetAddWikiTask extends ExactTargetBaseTask {
 
 	public function sendNewWikiData( $aWikiData ) {
+		wfDebug( "\n" . print_r( $this, true ) . "\n" );
 		$this->createWikiDataExtension( $aWikiData );
 		$this->createWikiCatsMappingDataExtension( $aWikiData );
 	}
@@ -13,7 +14,7 @@ class ExactTargetAddWikiTask extends ExactTargetBaseTask {
 			$oDE = new ExactTarget_DataExtensionObject();
 			$oDE->CustomerKey = 'city_list_dev';
 
-			$aApiProperties[];
+			$aApiProperties = [];
 			foreach( $aWikiData as $sKey => $sValue ) {
 				$aApiProperties[] = $this->wrapApiProperty( $sKey, $sValue );
 			}
@@ -49,7 +50,7 @@ class ExactTargetAddWikiTask extends ExactTargetBaseTask {
 				$oDE = new ExactTarget_DataExtensionObject();
 				$oDE->CustomerKey = 'city_cat_mapping_dev';
 				
-				$aApiProperties[];
+				$aApiProperties = [];
 				$aApiProperties[] = $this->wrapApiProperty( 'city_id', $aSingleCatMapping['city_id'] );
 				$aApiProperties[] = $this->wrapApiProperty( 'cat_id', $aSingleCatMapping['cat_id'] );
 				

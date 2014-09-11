@@ -5,10 +5,6 @@ use Wikia\Tasks\Tasks\BaseTask;
 class ExactTargetBaseTask extends BaseTask {
 	protected $oClient;
 
-	public function __construct() {
-		$this->initClient();
-	}
-
 	public function getClient() {
 		global $wgExactTargetApiConfig;
 		$wsdl = $wgExactTargetApiConfig[ 'wsdl' ];
