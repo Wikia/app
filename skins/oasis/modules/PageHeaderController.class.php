@@ -429,7 +429,12 @@ class PageHeaderController extends WikiaController {
 		// force AjaxLogin popup for "Add a page" button (moved from the template)
 		$this->loginClass = !empty( $this->wg->DisableAnonymousEditing ) ? ' require-login' : '';
 
-		wfProfileOut( __METHOD__ );
+		// render monetization module
+		if ( !empty( $params['monetizationModules'] ) ) {
+			$this->monetizationModules = $params['monetizationModules'];
+		}
+
+		wfProfileOut(__METHOD__);
 	}
 
 	/**

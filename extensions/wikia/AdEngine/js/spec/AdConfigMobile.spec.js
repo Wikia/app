@@ -1,34 +1,60 @@
-describe('AdConfigMobile', function(){
+/*global describe, it, modules, expect*/
+describe('AdConfigMobile', function () {
+	'use strict';
 
+	var adProviderNullMock = {name: 'NullMock'},
+		adProviderDirectGptMobileMock = {
+			name: 'GptMobileMock',
+			canHandleSlot: function () { return true; }
+		},
+		adProviderRemnantGptMobileMock = {
+			name: 'RemnantGptMobileMock',
+			canHandleSlot: function () { return true; }
+		},
+		logMock = function () {},
+		documentMock = {getElementById: function () { return true; }};
 
-	it('wgShowAds set to false blocks all providers on mobile', function() {
-		var adProviderNullMock = {name: 'NullMock'}
-			, adProviderDirectGptMobileMock = {name:'GptMobileMock', canHandleSlot: function() {return true}}
-			, adProviderRemnantGptMobileMock = {name: 'RemnantGptMobileMock', canHandleSlot: function() {return true}}
-			, adProviderEbayMock = {name: 'EbayMock', canHandleSlot: function() {return true}}
-			, logMock = function() {}
-			, windowMock = {wgShowAds: false}
-			, documentMock = {getElementById: function(){return true}}
-			, adConfigMobile;
+	function mockAdContext(showAds) {
+		return {
+			getContext: function () {
+				return {
+					opts: {
+						showAds: showAds,
+						pageType: 'all_ads'
+					}
+				};
+			}
+		};
+	}
 
-		adConfigMobile = modules['ext.wikia.adEngine.adConfigMobile'] (
+	it('getProvider returns GPT in the regular case', function () {
+		var adConfigMobile = modules['ext.wikia.adEngine.adConfigMobile'](
 			logMock,
-			windowMock,
 			documentMock,
+			mockAdContext(true),
 			adProviderDirectGptMobileMock,
 			adProviderRemnantGptMobileMock,
-			adProviderNullMock,
-			adProviderEbayMock
+			adProviderNullMock
+		);
+
+		expect(adConfigMobile.getProvider(['foo'])).toBe(adProviderDirectGptMobileMock, 'GPT');
+	});
+
+	it('getProviders returns Null when wgShowAds set to false', function () {
+		var adConfigMobile = modules['ext.wikia.adEngine.adConfigMobile'](
+			logMock,
+			documentMock,
+			mockAdContext(false),
+			adProviderDirectGptMobileMock,
+			adProviderRemnantGptMobileMock,
+			adProviderNullMock
 		);
 
 		// First check if NullProvider wins over Mobile GPT
-		expect(adConfigMobile.getProvider(['foo'])).toBe(adProviderNullMock, 'adProviderNullMock wgShowAds false');
+		expect(adConfigMobile.getProvider(['foo'])).toBe(adProviderNullMock, 'Null over GPT');
 
-		// Second check if NullProvider wins over Ebay
-		windowMock.wgAdDriverUseEbay = true;
-		expect(adConfigMobile.getProvider(['MOBILE_PREFOOTER'])).toBe(adProviderNullMock, 'adProviderNullMock wgShowAds false');
-
-		// Third check if NullProvider wins over Mobile Remnant
-		expect(adConfigMobile.getProvider(['foo', null, 'RemnantGptMobile'])).toBe(adProviderNullMock, 'adProviderNullMock wgShowAds false');
+		// Second check if NullProvider wins over Mobile Remnant
+		expect(adConfigMobile.getProvider(['foo', null, 'RemnantGptMobile'])).
+			toBe(adProviderNullMock, 'Null over RemnantGptMobile');
 	});
 });

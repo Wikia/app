@@ -1,7 +1,8 @@
 <nav class="global-navigation">
 	<div class="page-width">
-		<div class="global-navigation-item">
+		<div class="global-navigation-item" id="hubsEntryPoint">
 			<a href="<?= htmlspecialchars( $centralUrl ) ?>" class="global-navigation-link wikia-logo" rel="nofollow"><img src="<?= $wg->BlankImgUrl ?>" height="24" width="91" alt="Wikia"></a>
+			<?= $app->renderView('GlobalNavigation', 'hubsMenu') ?>
 		</div>
 		<div class="global-navigation-item search-container">
 			<?= $app->renderView( 'GlobalNavigation', 'searchIndex' ); ?>

@@ -151,10 +151,14 @@ class VenusController extends WikiaController {
 			}
 		}
 
+		//global variables from ResourceLoaderStartUpModule
+		$res = new ResourceVariablesGetter();
+		$vars = WikiaSkin::makeInlineVariablesScript($res->get());
+
 		// set variables
 		$this->cssLinks = $cssLinks;
-		$this->jsBodyFiles = $jsBodyFiles;
-		$this->jsHeadScripts = $wgOut->topScripts . $jsHeadFiles;
+		$this->jsBodyFiles = $this->skinTemplateObj->data['headscripts'] . $jsBodyFiles;
+		$this->jsHeadScripts = $this->topScripts .  $jsHeadFiles;
 	}
 
 	public function getGlobalNavigation() {

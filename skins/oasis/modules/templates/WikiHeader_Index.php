@@ -24,7 +24,7 @@
     </div>
 </header>
 
-<? if ( $displaySearch ): ?>
+<? if ( $displaySearch && empty( $wg->EnableGlobalNavExt ) ): ?>
 <div class="adm-dash-search">
 	<?= $app->renderView( 'Search', 'Index' ) ?>
 </div>

@@ -392,10 +392,6 @@ abstract class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 		return WikiaMockProxyAction::currentInvocation();
 	}
 
-	protected function proxyClass() {
-		return call_user_func_array( array( $this, 'mockClass' ), func_get_args() );
-	}
-
 	private function unsetGlobals() {
 		/** @var $mock WikiaGlobalVariableMock */
 		foreach ($this->mockedGlobalVariables as $globalName => $mock) {

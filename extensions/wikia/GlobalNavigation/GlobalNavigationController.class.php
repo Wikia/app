@@ -35,16 +35,109 @@ class GlobalNavigationController extends WikiaController {
 	public function searchIndex() {
 		$lang = $this->wg->Lang->getCode();
 		$centralUrl = $this->getCentralUrlForLang( $lang, false );
+		$globalSearchUrl = $this->getGlobalSearchUrl( $centralUrl, $lang );
 		$specialSearchTitle = SpecialPage::getTitleFor( 'Search' );
 		$localSearchUrl = $specialSearchTitle->getFullUrl();
-		$this->response->setVal( 'globalSearchUrl', $this->getGlobalSearchUrl( $centralUrl, $lang ) );
-		$this->response->setVal( 'localSearchUrl', $localSearchUrl );
-		$this->response->setVal( 'defaultSearchMessage', wfMessage( 'global-navigation-local-search' )->text() );
-		$this->response->setVal( 'defaultSearchUrl', $localSearchUrl );
-		$this->response->setVal( 'lang', $lang );
 		$globalRequest = $this->wg->request;
-		$this->response->setVal( 'search', $globalRequest->getVal( 'search', $globalRequest->getVal( 'query', '' ) ) );
+		$query = $globalRequest->getVal( 'search', $globalRequest->getVal( 'query', '' ) );
+
+		if (WikiaPageType::isCorporatePage() && !WikiaPageType::isWikiaHub()) {
+			$this->response->setVal( 'disableLocalSearchOptions', true );
+			$this->response->setVal( 'defaultSearchUrl', $globalSearchUrl );
+		} else {
+			$this->response->setVal( 'globalSearchUrl', $globalSearchUrl );
+			$this->response->setVal( 'localSearchUrl', $localSearchUrl );
+			$this->response->setVal( 'defaultSearchMessage', wfMessage( 'global-navigation-local-search' )->text() );
+			$this->response->setVal( 'defaultSearchUrl', $localSearchUrl );
+		}
+		$this->response->setVal( 'query', $query );
+		$this->response->setVal( 'lang', $lang );
 	}
+
+	public function hubsMenu() {
+		$menuNodes = $this->getMenuNodes();
+		$this->response->setVal('menuNodes', $menuNodes);
+
+		$activeNode = $this->getActiveNode();
+		$activeNodeIndex = $this->getActiveNodeIndex($menuNodes, $activeNode);
+		$this->response->setVal('activeNodeIndex', $activeNodeIndex);
+	}
+
+	public function hubsMenuSections() {
+		$menuSections = $this->request->getVal('menuSections', []);
+		$this->response->setVal('menuSections', $menuSections);
+	}
+
+	public function lazyLoadHubsMenu() {
+		$lazyLoadMenuNodes = $this->getMenuNodes();
+
+		$activeNode = $this->getActiveNode();
+		$activeNodeIndex = $this->getActiveNodeIndex($lazyLoadMenuNodes, $activeNode);
+		array_splice($lazyLoadMenuNodes, $activeNodeIndex, 1);
+
+		$this->response->setVal('menuSections', $lazyLoadMenuNodes);
+		$this->overrideTemplate( 'hubsMenuSections' );
+	}
+
+	private function getMenuNodes() {
+		$menuNodes = (new NavigationModel(true /* useSharedMemcKey */) )->getTree(
+			'global-navigation-hubs-menu'
+		);
+
+		return $menuNodes;
+	}
+
+	private function getActiveNodeIndex( $menuNodes, $activeNode ) {
+		$nodeIndex = 0;
+
+		foreach ( $menuNodes as $index => $hub ) {
+			if ( $hub['specialAttr'] === $activeNode ) {
+				$nodeIndex = $index;
+				break;
+			}
+		}
+		return $nodeIndex;
+	}
+
+	/**
+	 * Get active node in Hamburger menu
+	 * Temporary method until we full migrate to new verticals
+	 *
+	 * @return string
+	 */
+	private function getActiveNode() {
+		global $wgCityId;
+		$activeNode = '';
+
+		$wikiFactoryHub = WikiFactoryHub::getInstance();
+		$verticalId = $wikiFactoryHub->getVerticalId($wgCityId);
+
+		if ( $verticalId != WikiFactoryHub::HUB_ID_OTHER ) {
+			$allVerticals = $wikiFactoryHub->getAllVerticals();
+			if ( isset( $allVerticals[$verticalId]['short'] ) ) {
+				$activeNode = $allVerticals[$verticalId]['short'];
+			}
+		} else {
+			$categoryId = WikiFactory::getCategory( $wgCityId )->cat_id;
+
+			switch( $categoryId ) {
+				case WikiFactoryHub::CATEGORY_ID_GAMING:
+					$activeNode = 'games';
+					break;
+				case WikiFactoryHub::CATEGORY_ID_MUSIC:
+					$activeNode = 'music';
+					break;
+				case WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT:
+					$activeNode = 'tv';
+					break;
+				default:
+					$activeNode = 'lifestyle';
+			}
+		}
+
+		return $activeNode;
+	}
+
 
 	public function getCentralUrlForLang( $lang, $fullUrl ) {
 		$centralWikiExists = $this->centralWikiInLangExists( $lang );

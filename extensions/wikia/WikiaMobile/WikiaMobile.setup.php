@@ -38,7 +38,7 @@ $wgAutoloadClasses['WikiaMobileHooks'] = "{$dir}/WikiaMobileHooks.class.php";
 $wgAutoloadClasses['WikiaMobileCategoryItem'] = "{$dir}/models/WikiaMobileCategoryModel.class.php";
 $wgAutoloadClasses['WikiaMobileCategoryItemsCollection'] = "{$dir}/models/WikiaMobileCategoryModel.class.php";
 $wgAutoloadClasses['WikiaMobileCategoryContents'] = "{$dir}/models/WikiaMobileCategoryModel.class.php";
-$wgAutoloadClasses['ResourceVariablesGetter'] = "{$dir}/ResourceVariablesGetter.class.php";
+$wgAutoloadClasses['ResourceVariablesGetter'] = "includes/wikia/resourceloader/ResourceVariablesGetter.class.php";
 
 /**
  * services
@@ -137,15 +137,16 @@ if ( empty( $wgWikiaMobileIncludeJSGlobals ) ) {
 			'cscoreCat',
 
 			//ads
+			'adEnginePageType',
+			'cityShort',
+			'wgAdDriverUseEbay',
+			'wgAdVideoTargeting',
+			'wgDartCustomKeyValues',
 			'wgShowAds',
 			'wgUsePostScribe',
-			'wgDartCustomKeyValues',
-			'cityShort',
+			'wgWikiDirectedAtChildren',
 			'wikiaPageIsHub',
 			'wikiaPageType',
-			'wgAdVideoTargeting',
-			'wgAdDriverUseEbay',
-			'adEnginePageType',
 
 			//server/wiki
 			'wgServer',

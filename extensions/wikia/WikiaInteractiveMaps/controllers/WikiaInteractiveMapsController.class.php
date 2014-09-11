@@ -16,9 +16,6 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 	const TRANSLATION_FILENAME = 'translations.json';
 	const MAPS_WIKIA_URL = 'http://maps.wikia.com';
 
-	const MAP_NOT_DELETED = 0;
-	const MAP_DELETED = 1;
-
 	const WIKIA_MOBILE_SKIN_NAME = 'wikiamobile';
 
 	/**
@@ -114,10 +111,11 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 		$map = $model->getMapByIdFromApi( $mapId );
 
 		if( isset( $map->title ) ) {
-			$this->redirectIfForeignWiki( $map->city_id, $mapId );
+			$mapCityId = $map->city_id;
+			$this->redirectIfForeignWiki( $mapCityId, $mapId );
 			$this->wg->out->setHTMLTitle( $map->title );
 
-			$deleted = $map->deleted == self::MAP_DELETED;
+			$deleted = $map->deleted == WikiaMaps::MAP_DELETED;
 			if ( $deleted ) {
 				if ( $this->app->checkSkin( 'oasis' ) ) {
 					NotificationsController::addConfirmation(
@@ -128,12 +126,14 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 			}
 
 			$this->setVal( 'deleted', $deleted );
-			$url = $model->getMapRenderUrl([
+			$params = $model->getMapRenderParams( $mapCityId );
+
+			$url = $model->getMapRenderUrl( [
 				$mapId,
 				$zoom,
 				$lat,
 				$lon
-			]);
+			], $params );
 
 			if ( $mobileSkin ) {
 				$this->setMapOnMobile();
@@ -233,47 +233,6 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 	static function getSpecialUrl( $name = self::PAGE_NAME ) {
 		return SpecialPage::getTitleFor( $name )->getFullUrl();
 	}
-
-	/**
-	 * Ajax method for un/deleting a map from IntMaps API
-	 */
-	public function updateMapDeletionStatus() {
-		$mapId = $this->request->getVal( 'mapId', 0 );
-		$deleted = $this->request->getInt( 'deleted' );
-
-		if ( !in_array( $deleted, [ self::MAP_DELETED, self::MAP_NOT_DELETED ] ) ) {
-			$deleted = self::MAP_DELETED;
-		}
-
-		$result = false;
-		if ( $mapId && $this->wg->User->isLoggedIn() ) {
-			$result = $this->getModel()->updateMapDeletionStatus( $mapId, $deleted )[ 'success' ];
-		}
-		if ( $result ) {
-			$action = $deleted === self::MAP_DELETED
-				? WikiaMapsLogger::ACTION_DELETE_MAP
-				: WikiaMapsLogger::ACTION_UNDELETE_MAP;
-			WikiaMapsLogger::addLogEntry(
-				$action,
-				$mapId,
-				$mapId,
-				[
-					$this->wg->User->getName(),
-				]
-			);
-
-			NotificationsController::addConfirmation(
-				$deleted ?
-					wfMessage( 'wikia-interactive-maps-delete-map-success' )->text() :
-					wfMessage( 'wikia-interactive-maps-undelete-map-success' )->text()
-			);
-			$redirectUrl = $this->getSpecialUrl();
-			if ( $deleted === self::MAP_NOT_DELETED ) {
-				$redirectUrl = $this->getSpecialUrl() . '/' . $mapId;
-			}
-			$this->response->setVal( 'redirectUrl', $redirectUrl );
-		}
-	}
 	
 	/**
 	 * API Error page
@@ -323,6 +282,8 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 	 * @param String $selectedSort a sorting option passed in $_GET
 	 */
 	private function prepareTemplateData( $mapsResponse, $selectedSort ) {
+		global $wgEnableGlobalNavExt;
+
 		$isWikiaMobileSkin = $this->app->checkSkin( self::WIKIA_MOBILE_SKIN_NAME );
 
 		$thumbWidth = ( $isWikiaMobileSkin ? self::MAP_MOBILE_THUMB_WIDTH : self::MAP_THUMB_WIDTH );
@@ -348,7 +309,9 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 				'create-a-map' => wfMessage( 'wikia-interactive-maps-create-a-map' ),
 			] );
 			$this->setVal( 'sortingOptions', $this->getModel()->getSortingOptions( $selectedSort ) );
-			$this->setVal( 'searchInput', $this->app->renderView( 'Search', 'Index' ) );
+			if ( empty( $wgEnableGlobalNavExt ) ) {
+				$this->setVal( 'searchInput', $this->app->renderView( 'Search', 'Index' ) );
+			}
 		}
 
 		// template variables shared between skins

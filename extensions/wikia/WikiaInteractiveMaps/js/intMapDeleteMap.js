@@ -1,6 +1,6 @@
 define('wikia.intMaps.deleteMap',
-	['jquery', 'wikia.querystring', 'wikia.window', 'wikia.intMap.utils'],
-	function($, qs, w, utils) {
+	['jquery', 'wikia.querystring', 'wikia.window', 'wikia.intMap.config', 'wikia.intMap.utils'],
+	function ($, qs, w, config, utils) {
 	'use strict';
 	var modal,
 		modalConfig = {
@@ -54,11 +54,11 @@ define('wikia.intMaps.deleteMap',
 	function init(templates) {
 		modalConfig.vars.content = utils.render(templates[0]);
 
-		utils.createModal(modalConfig, function(_modal) {
+		utils.createModal(modalConfig, function (_modal) {
 			modal = _modal;
 			utils.bindEvents(modal, events);
 
-			modal.$error = modal.$element.find('.map-modal-error');
+			modal.$errorContainer = modal.$element.find('.map-modal-error');
 
 			modal.$element
 				.find('#intMapInnerContent')
@@ -75,14 +75,14 @@ define('wikia.intMaps.deleteMap',
 		modal.deactivate();
 		closeError();
 		$.nirvana.sendRequest({
-			controller: 'WikiaInteractiveMaps',
+			controller: 'WikiaInteractiveMapsMap',
 			method: 'updateMapDeletionStatus',
 			type: 'POST',
 			data: {
 				mapId: mapId,
-				deleted: utils.mapDeleted.mapDeleted
+				deleted: config.constants.mapDeleted
 			},
-			callback: function(response) {
+			callback: function (response) {
 				var redirectUrl = response.redirectUrl;
 				if (redirectUrl) {
 					qs(redirectUrl).goTo();
@@ -90,7 +90,8 @@ define('wikia.intMaps.deleteMap',
 					showError();
 				}
 			},
-			onErrorCallback: function(response) {
+			onErrorCallback: function (response) {
+				modal.activate();
 				utils.handleNirvanaException(modal, response);
 			}
 		});
@@ -101,7 +102,7 @@ define('wikia.intMaps.deleteMap',
 	 */
 	function showError() {
 		modal.activate();
-		modal.$error
+		modal.$errorContainer
 			.html($.msg('wikia-interactive-maps-delete-map-client-error'))
 			.removeClass('hidden');
 	}
@@ -110,7 +111,7 @@ define('wikia.intMaps.deleteMap',
 	 * @desc Hides error container
 	 */
 	function closeError() {
-		modal.$error
+		modal.$errorContainer
 			.html('')
 			.addClass('hidden');
 	}

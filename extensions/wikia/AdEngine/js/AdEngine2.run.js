@@ -1,17 +1,14 @@
-/*
- * This file is used as initializer for ad-related modules and dependency injector.
- * Once AMD is available, this file will be almost no longer needed.
- */
-
 /*global window, document, require, setTimeout*/
 /*jslint newcap:true */
 /*jshint camelcase:false */
 /*jshint maxlen:200*/
 require([
 	'wikia.log',
+	'wikia.document',
 	'wikia.window',
 	'wikia.tracker',
 	'wikia.instantGlobals',
+	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.adEngine',
 	'ext.wikia.adEngine.adConfig',
 	'ext.wikia.adEngine.evolveSlotConfig',
@@ -23,7 +20,7 @@ require([
 	'ext.wikia.adEngine.slotTweaker',
 	'ext.wikia.adEngine.messageListener',
 	require.optional('wikia.abTest')
-], function (log, window, tracker, instantGlobals, adEngine, adConfig, evolveSlotConfig, adLogicPageParams, wikiaDart, slotTracker, lateAdsQueue, adLogicHighValueCountry, slotTweaker, messageListener, abTest) {
+], function (log, document, window, tracker, instantGlobals, adContext, adEngine, adConfig, evolveSlotConfig, adLogicPageParams, wikiaDart, slotTracker, lateAdsQueue, adLogicHighValueCountry, slotTweaker, messageListener, abTest) {
 	'use strict';
 
 	var module = 'AdEngine2.run',
@@ -31,12 +28,6 @@ require([
 		param,
 		value,
 		adsInHead = abTest && abTest.inGroup('ADS_IN_HEAD', 'YES');
-
-	// Don't show ads when Sony requests the page
-	window.wgShowAds = window.wgShowAds && !window.document.referrer.match(/info.tvsideview.sony.net/);
-
-	// Use PostScribe for ScriptWriter implementation when SevenOne Media ads are enabled
-	window.wgUsePostScribe = window.wgUsePostScribe || window.wgAdDriverUseSevenOneMedia;
 
 	window.AdEngine_getTrackerStats = slotTracker.getStats;
 
@@ -120,12 +111,13 @@ require([
 		window.wgAfterContentAndJS.push(startEarlyQueue);
 	}
 
-	if (window.wgEnableRHonDesktop || instantGlobals.wgSitewideDisableLiftium) {
-		window.wgAfterContentAndJS.push(window.AdEngine_loadLateAds);
-	}
-
-	if (window.wgAdEngineDisableLateQueue) {
-		log('skipping late queue - wgAdEngineDisableLateQueue set to true', 1, module);
+	if (adContext.getContext().opts.disableLateQueue) {
+		log('Skipping late queue - wgAdEngineDisableLateQueue set to true', 1, module);
+	} else {
+		if (instantGlobals.wgSitewideDisableLiftium) {
+			log('Liftium disabled by wgSitewideDisableLiftium - running AdEngine_loadLateAds now', 1, module);
+			window.AdEngine_loadLateAds();
+		}
 	}
 });
 
@@ -152,8 +144,8 @@ window.AdEngine_loadLateAds = function () {
 		});
 	}
 
-	require([ require.optional('wikia.abTest') ], function (abTest) {
-		var adsAfterPageLoad = window.wgLoadLateAdsAfterPageLoad && abTest && abTest.inGroup('ADS_AFTER_PAGE_LOAD', 'YES');
+	require(['ext.wikia.adEngine.adContext', require.optional('wikia.abTest')], function (adContext, abTest) {
+		var adsAfterPageLoad = adContext.getContext().lateAdsAfterPageLoad && abTest && abTest.inGroup('ADS_AFTER_PAGE_LOAD', 'YES');
 
 		if (adsAfterPageLoad) {
 			if (document.readyState === 'complete') {
@@ -174,9 +166,17 @@ window.AdEngine_loadLateAds = function () {
 	'use strict';
 
 	function trackTime(timeTo) {
-		var wgNowBased, performanceBased;
+		var wgNowBased,
+			performanceBased,
+			adsInHead = window.wgLoadAdsInHead,
+			lateAdsAfterPageLoad = window.wgLoadLateAdsAfterPageLoad;
 
-		if (!window.wgLoadAdsInHead && !window.wgLoadLateAdsAfterPageLoad) {
+		if (window.ads && window.ads.context && window.ads.context.opts) {
+			adsInHead = ads.context.adsInHead;
+			lateAdsAfterPageLoad = ads.context.lateAdsAfterPageLoad;
+		}
+
+		if (!adsInHead && !lateAdsAfterPageLoad) {
 			return;
 		}
 
@@ -246,4 +246,17 @@ window.AdEngine_loadLateAds = function () {
 	window.AdEngine_trackStartLateAds = function () {
 		trackTime('startLateAds');
 	};
+
+	if (window.rp_performance) {
+		require(['wikia.tracker'], function (tracker) {
+			var action = window.rp_valuation ? 'lookupSuccess' : 'lookupError';
+			tracker.track({
+				ga_category: 'ad/' + action + '/rubicon',
+				ga_action: 'oz_cached_only=' + !!window.wgAdDriverRubiconCachedOnly,
+				ga_value: 0,
+				trackingMethod: 'ad'
+			});
+		});
+	}
+
 }(window));

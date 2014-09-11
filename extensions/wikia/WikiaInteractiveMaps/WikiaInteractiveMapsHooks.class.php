@@ -2,29 +2,17 @@
 class WikiaInteractiveMapsHooks {
 
 	/**
-	 * @brief Adds the JS asset to the bottom scripts
+	 * Adds interactive maps assets
 	 *
-	 * @param $skin
-	 * @param String $text
+	 * @param Array $assetsArray
 	 *
 	 * @return bool
 	 */
-	public static function onSkinAfterBottomScripts( $skin, &$text ) {
-		global $wgEnableWikiaInteractiveMaps, $wgExtensionsPath;
+	public static function onOasisSkinAssetGroups( &$assetsArray ) {
+		$mapsAssets = [ 'int_map_contribution_button_create_map_js' ];
+		array_unshift( $mapsAssets, ( self::isSpecialMapsPage() ? 'int_map_special_page_js' : 'int_map_parser_tag_js' ) );
 
-		if ( !empty( $wgEnableWikiaInteractiveMaps ) ) {
-			// add the asset to every page
-			$text .= Html::linkedScript( $wgExtensionsPath . '/wikia/WikiaInteractiveMaps/js/WikiaInteractiveMapsParserTag.js' );
-		}
-
-		// add the asset only on Special:Maps page
-		if ( self::isSpecialMapsPage() ) {
-			$scripts = AssetsManager::getInstance()->getURL( 'int_map_special_page_js' );
-
-			foreach ( $scripts as $script ) {
-				$text .= Html::linkedScript( $script );
-			}
-		}
+		$assetsArray = array_merge( $assetsArray, $mapsAssets );
 
 		return true;
 	}
