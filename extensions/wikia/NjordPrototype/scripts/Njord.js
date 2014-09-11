@@ -49,6 +49,7 @@
 			heroData.title = heroData.oTitle;
 			heroData.description = heroData.oDescription;
 			heroData.imagepath = heroData.oImage;
+			heroData.imagename = null;
 			heroData.cropposition = heroData.oCropposition;
 			heroData.datachanged = false;
 			heroData.imagechanged = false;
@@ -119,9 +120,7 @@
 			if ($heroModuleImage.attr('src') !== $heroModuleImage.data('fullpath')) {
 				$heroModuleImage.attr('src', $heroModuleImage.data('fullpath'));
 			} else {
-				$heroModule.stopThrobbing();
-				$heroModule.trigger('resize');
-				$heroModule.trigger('enableDragging');
+				onImageLoad();
 			}
 		}, onImageLoad = function () {
 			$heroModule.stopThrobbing();
@@ -133,7 +132,7 @@
 		}, onDraggingEnabled = function () {
 			var heroHeight = $heroModuleImage.height(),
 				heroModuleHeight = $heroModule.height(),
-				heroOffsetTop = $heroModuleImage.offset().top,
+				heroOffsetTop = $heroModule.offset().top,
 				containment = [0, heroOffsetTop - heroHeight + heroModuleHeight, 0, heroOffsetTop];
 
 			$heroModuleImage.draggable({
