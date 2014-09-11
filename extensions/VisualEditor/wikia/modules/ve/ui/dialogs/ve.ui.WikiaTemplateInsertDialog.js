@@ -28,6 +28,21 @@ ve.ui.WikiaTemplateInsertDialog.static.icon = 'template';
 
 ve.ui.WikiaTemplateInsertDialog.static.title = OO.ui.deferMsg( 'visualeditor-dialog-transclusion-insert-template' );
 
+/* Static Methods */
+
+/**
+ * Adds commas to numbers
+ *
+ * @param {number} number The number without commas
+ * @returns {string} Comma separated sting
+ */
+ve.ui.WikiaTemplateInsertDialog.static.formatNumber = function ( number ) {
+	while ( /(\d+)(\d{3})/.test( number.toString() ) ) {
+		number = number.toString().replace( /(\d+)(\d{3})/, '$1' + ',' + '$2' );
+	}
+	return number;
+};
+
 /* Methods */
 
 /**
@@ -87,7 +102,7 @@ ve.ui.WikiaTemplateInsertDialog.prototype.populateOptions = function ( templates
 					'$': this.$,
 					'icon': 'template-inverted',
 					'label': templates[i].title,
-					'appears': templates[i].uses
+					'appears': ve.ui.WikiaTemplateInsertDialog.static.formatNumber( templates[i].uses )
 				}
 			)
 		);
@@ -111,7 +126,7 @@ ve.ui.WikiaTemplateInsertDialog.prototype.getMostLinkedTemplateData = function (
 		'offset': this.offset
 	} )
 		.done( ve.bind( function ( data ) {
-			this.offset = data.continue ? data.continue : null;
+			this.offset = data['query-continue'] ? data['query-continue'] : null;
 			this.popPending();
 			deferred.resolve( data.templates );
 		}, this ) )

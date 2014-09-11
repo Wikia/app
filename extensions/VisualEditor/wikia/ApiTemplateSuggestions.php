@@ -35,7 +35,7 @@ class ApiTemplateSuggestions extends ApiBase {
 				if ( strlen( $titleText ) > 1 ) {
 					$templates[] = [
 						'title' => $titleText,
-						'uses' => number_format( $template['value'] ),
+						'uses' => $template['value'],
 					];
 				}
 			}
@@ -44,9 +44,9 @@ class ApiTemplateSuggestions extends ApiBase {
 		$this->getResult()->setIndexedTagName( $templates, 'templates' );
 		$this->getResult()->addValue( null, 'templates', $templates );
 
-		if ( array_key_exists( 'query-continue', $resultData ) ) {
-			$continue = $resultData['query-continue']['querypage']['qpoffset'];
-			$this->getResult()->addValue( null, 'continue', $continue );
+		if ( isset ( $resultData['query-continue'] ) ) {
+			$queryContinue = $resultData['query-continue']['querypage']['qpoffset'];
+			$this->getResult()->addValue( null, 'query-continue', $queryContinue );
 		}
 	}
 
