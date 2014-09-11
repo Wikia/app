@@ -133,10 +133,10 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 
 	/**
 	 * options
-	 * @param opts {includeRawDbName: bool}
+	 * @param options {includeRawDbName: bool}
 	 * @returns object
 	 */
-	function getPageLevelParams(opts) {
+	function getPageLevelParams(options) {
 		// TODO: cache results (keep in mind some of them may change while executing page)
 
 		log('getPageLevelParams', 9, logGroup);
@@ -148,7 +148,7 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 			params,
 			targeting = adContext.getContext().targeting;
 
-		opts = opts || {};
+		options = options || {};
 
 		dbName = '_' + (targeting.wikiDbName || 'wikia').replace('/[^0-9A-Z_a-z]/', '_');
 
@@ -175,8 +175,8 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 			ab: getAb()
 		};
 
-		if (opts.includeRawDbName) {
-			params.rawDbName = rawDbName;
+		if (options.includeRawDbName) {
+			params.rawDbName = dbName;
 		}
 
 		if (targeting.pageArticleId) {
