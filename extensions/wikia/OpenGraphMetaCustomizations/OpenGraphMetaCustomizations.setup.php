@@ -12,20 +12,19 @@ if ( !defined( 'MEDIAWIKI' ) ) die( 'This is an extension to the MediaWiki packa
 $wgExtensionCredits['other'][] = array(
 	'path' => __FILE__,
 	'name' => 'OpenGraphMetaCustomizations',
-	'version' => '0.2',
+	'version' => '0.3',
 	'author' => array('[http://lyrics.wikia.com/User:Sean_Colombo Sean Colombo]', '[http://www.wikia.com/wiki/User:Marooned Maciej Błaszkowski (Marooned)]'),
 	'descriptionmsg' => 'ogmc-desc',
 );
 
-$dir = dirname( __FILE__ );
-$wgExtensionMessagesFiles['OpenGraphMetaCustomizations'] = $dir . '/OpenGraphMetaCustomizations.i18n.php';
+$wgExtensionMessagesFiles['OpenGraphMetaCustomizations'] = __DIR__ . '/OpenGraphMetaCustomizations.i18n.php';
 
 $wgHooks['ParserAfterTidy'][] = 'egOgmcParserAfterTidy';
 
 /**
  * Adds an output-hook so that the parser knows to apply the customizations.
  */
-function egOgmcParserAfterTidy( &$parser, &$text ) {
+function egOgmcParserAfterTidy( Parser $parser, &$text ) {
 	$pOut = $parser->getOutput();
 	$pOut->addOutputHook('applyOpenGraphMetaCustomizations');
 
@@ -38,7 +37,8 @@ function egOgmcParserAfterTidy( &$parser, &$text ) {
  * be used by the OpenGraphMeta extension.
  */
 $wgParserOutputHooks['applyOpenGraphMetaCustomizations'] = 'egOgmcParserOutputApplyValues';
-function egOgmcParserOutputApplyValues( $out, $parserOutput, $data ) {
+function egOgmcParserOutputApplyValues( OutputPage $out, ParserOutput $parserOutput, $data ) {
+	wfProfileIn(__METHOD__);
 	global $wgTitle;
 
 	$articleId = $wgTitle->getArticleID();
@@ -53,12 +53,16 @@ function egOgmcParserOutputApplyValues( $out, $parserOutput, $data ) {
 			// 		"An image URL which should represent your object within the graph.
 			//		The image must be at least 50px by 50px and have a maximum aspect ratio of 3:1.
 			//		We support PNG, JPEG and GIF formats."
-			$imageServing = new ImageServing( $articleId );
-			foreach ( $imageServing->getImages( 1 ) as $key => $value ) {
+			wfProfileIn(__METHOD__ . '::ImageServing');
+
+			$imageServing = new ImageServing( [ $articleId ] );
+			foreach ( $imageServing->getImages( 1 ) as $value ) {
 				$titleImage = Title::newFromText( $value[0]['name'], NS_FILE );
 			}
+
+			wfProfileOut(__METHOD__ . '::ImageServing');
 		}
-		
+
 		// If ImageServing was not able to deliver a good match, fall back to the wiki's wordmark.
 		if ( empty($titleImage) && !is_object( $titleImage ) && F::app()->checkSkin( 'oasis' ) ){
 			$themeSettings = new ThemeSettings();
@@ -69,12 +73,17 @@ function egOgmcParserOutputApplyValues( $out, $parserOutput, $data ) {
 		}
 
 		// If we have a Title object for an image, convert it to an Image object and store it in mMainImage.
-		if (!empty($titleImage) && is_object($titleImage)) {
+		if ($titleImage instanceof Title) {
+			wfProfileIn(__METHOD__ . '::wfFindFile');
+			wfDebug(__METHOD__ . " {$titleImage}\n");
+
 			$mainImage = wfFindFile($titleImage);
 			if ($mainImage !== false) {
 				$parserOutput->setProperty('mainImage', $mainImage);
 				$out->mMainImage = $parserOutput->getProperty('mainImage');
 			}
+
+			wfProfileOut(__METHOD__ . '::wfFindFile');
 		} else {
 			// Fall back to using a Wikia logo.  There aren't any as "File:" pages, so we use a new config var for one that
 			// is being added to skins/common.
@@ -100,4 +109,6 @@ function egOgmcParserOutputApplyValues( $out, $parserOutput, $data ) {
 	if ($page_id = Wikia::getFacebookDomainId()) {
 		$out->addMeta('property:fb:page_id', $page_id);
 	}
+
+	wfProfileOut(__METHOD__);
 } // end egOgmcParserOutputApplyValues()
