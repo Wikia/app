@@ -20,13 +20,12 @@ class MercuryApiController extends WikiaController {
 	/**
 	 * @desc Returns user ids for top contributors
 	 *
-	 * @param Title $title
+	 * @param int $articleId
 	 *
 	 * @return int[]
 	 */
-	private function getTopContributorsPerArticle( $title ) {
-		$usersIds = $this->mercuryApi->topContributorsPerArticle( $title, self::NUMBER_CONTRIBUTORS );
-
+	private function getTopContributorsPerArticle( $articleId ) {
+		$usersIds = $this->mercuryApi->topContributorsPerArticle( $articleId, self::NUMBER_CONTRIBUTORS );
 		return $usersIds;
 	}
 
@@ -63,7 +62,7 @@ class MercuryApiController extends WikiaController {
 	 * @param int[] $ids
 	 * @return mixed
 	 */
-	private function getTopContributorsDetails( $ids ) {
+	private function getTopContributorsDetails( Array $ids ) {
 		try {
 			return $this->sendRequest( 'UserApi', 'getDetails', [ 'ids' => implode( ',', $ids ) ] )
 				->getData()[ 'items' ];

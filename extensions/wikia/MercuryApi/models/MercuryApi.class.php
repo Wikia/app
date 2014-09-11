@@ -192,7 +192,7 @@ class MercuryApi {
 	 * @param array $articleCategories List of Categories
 	 * @return array Article Ad context
 	 */
-	public function getAdsContext( Title $title, WikiaGlobalRegistry &$wg, Array $articleCategories ) {
+	public function getAdsContext( Title $title, WikiaGlobalRegistry $wg, Array $articleCategories ) {
 		$wrapper = new GlobalStateWrapper(
 			[ 'wgTitle' => $title ]
 		);
