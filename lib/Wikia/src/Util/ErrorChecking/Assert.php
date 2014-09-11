@@ -14,12 +14,12 @@ use Wikia\Logger\WikiaLogger;
 
 class Assert {
 	/**
-	 * @param boolean $check
+	 * @param mixed $check
 	 * @param string|null $message
 	 * @return bool true if the check passes
 	 * @throws AssertionException if the check fails
 	 */
-	public static function boolean( $check, $message = 'Assert::boolean failed' ) {
+	public static function true( $check, $message = 'Assert::true failed' ) {
 		if ( !$check ) {
 			$exception = new AssertionException( $message );
 			WikiaLogger::instance()->error( $message, [
