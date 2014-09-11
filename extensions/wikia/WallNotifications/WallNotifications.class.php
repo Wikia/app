@@ -151,6 +151,8 @@ class WallNotifications {
 	 * @return array
 	 */
 	public function getCounts( $userId ) {
+		global $wgMemc, $wgCityId;
+
 		wfProfileIn(__METHOD__);
 		$wikiList = $this->getWikiList( $userId );
 
@@ -161,16 +163,16 @@ class WallNotifications {
 			$keys[] = $this->getKey( $userId, $wiki['id'] );
 			$keys[] = $wno->getKey( $wiki['id'], $userId );
 		}
-		$this->app->wg->Memc->prefetch( $keys );
+		$wgMemc->prefetch( $keys );
 
 		$output = [];
 		$total = 0;
 		foreach( $wikiList as $wiki ) {
-			$wiki['unread'] = $this->getCount( $userId, $wiki['id'], $wiki['id'] == $this->app->wg->CityId );
+			$wiki['unread'] = $this->getCount( $userId, $wiki['id'], $wiki['id'] == $wgCityId );
 			$total += $wiki['unread'];
 			// show only Wikis with unread notifications
 			// current Wiki is an exception (show always)
-			if( $wiki['unread'] > 0 || $wiki['id'] == $this->app->wg->CityId )
+			if( $wiki['unread'] > 0 || $wiki['id'] == $wgCityId )
 				$output[] = $wiki;
 		}
 		wfProfileOut(__METHOD__);
@@ -207,22 +209,24 @@ class WallNotifications {
 	}
 
 	private function getWikiList( $userId ) {
+		global $wgMemc, $wgEnableWallEngine, $wgCityId, $wgSitename;
+
 		$key = $this->getKey( $userId, 'LIST' );
-		$val = $this->app->wg->memc->get( $key );
+		$val = $wgMemc->get( $key );
 
 		if( false === $val ) {
 			$val = $this->loadWikiListFromDB( $userId );
-			$this->app->wg->memc->set( $key, $val );
+			$wgMemc->set( $key, $val );
 		}
 
 		// make sure that current Wiki is on the list, as first entry, sort the rest
 		asort( $val );
-		if( !empty( $this->app->wg->EnableWallEngine ) ) {
-			unset( $val[ $this->app->wg->CityId ] );
+		if( !empty( $wgEnableWallEngine ) ) {
+			unset( $val[ $wgCityId ] );
 			$output = [ [
-				'id' => $this->app->wg->CityId,
-				'wgServer' => $this->getWgServer($this->app->wg->CityId),
-				'sitename' => $this->app->wg->sitename] ];
+				'id' => $wgCityId,
+				'wgServer' => $this->getWgServer($wgCityId),
+				'sitename' => $wgSitename] ];
 		} else {
 			$output = [];
 		}
@@ -245,9 +249,11 @@ class WallNotifications {
 	 * @return String
 	 */
 	private function getWgServer( $id ) {
+		global $wgDevelEnvironment, $wgDevelEnvironmentName;
+
 		$url = WikiFactory::getVarValueByName( "wgServer", $id );
-		if( !empty( $this->app->wg->DevelEnvironment ) ) {
-			$url = str_replace( 'wikia.com', $this->app->wg->DevelEnvironmentName . '.wikia-dev.com', $url );
+		if( !empty( $wgDevelEnvironment ) ) {
+			$url = str_replace( 'wikia.com', $wgDevelEnvironmentName . '.wikia-dev.com', $url );
 		}
 
 		return $url;
@@ -255,8 +261,10 @@ class WallNotifications {
 
 
 	private function addWikiToList( $userId, $wikiId, $wikiSitename ) {
+		global $wgMemc;
+
 		$key = $this->getKey( $userId, 'LIST' );
-		$val = $this->app->wg->memc->get( $key );
+		$val = $wgMemc->get( $key );
 
 		if( empty( $val ) ) {
 			$val = $this->loadWikiListFromDB( $userId );
@@ -264,11 +272,13 @@ class WallNotifications {
 
 		$val[$wikiId] = $wikiSitename;
 
-		$this->app->wg->memc->set( $key, $val );
+		$wgMemc->set( $key, $val );
 
 	}
 
 	private function remWikiFromList( $userId, $wikiId ) {
+		global $wgMemc;
+
 		// TODO / FIXME
 		// Currently there is a race condition in WikiList.
 		// Access to memcache key is not synchronized,
@@ -276,7 +286,7 @@ class WallNotifications {
 		// that supports update-if-key-did-not-change
 
 		$key = $this->getKey( $userId, 'LIST' );
-		$val = $this->app->wg->memc->get( $key );
+		$val = $wgMemc->get( $key );
 
 		if( empty( $val ) ) {
 			// removing Wiki from list is just speed optimization
@@ -284,7 +294,7 @@ class WallNotifications {
 			// need to recreate it from DB
 		} else {
 			unset( $val[$wikiId] );
-			$this->app->wg->memc->set( $key, $val );
+			$wgMemc->set( $key, $val );
 		}
 	}
 
@@ -450,8 +460,10 @@ class WallNotifications {
 	}
 
 	protected function sendEmail( $watcher, $data ) {
-		$from = new MailAddress( $this->app->wg->PasswordSender, 'Wikia' );
-		$replyTo = new MailAddress ( $this->app->wg->NoReplyAddress );
+		global $wgPasswordSender, $wgNoReplyAddress;
+
+		$from = new MailAddress( $wgPasswordSender, 'Wikia' );
+		$replyTo = new MailAddress ( $wgNoReplyAddress );
 
 		$keys = array_keys( $data );
 		$values =  array_values( $data );
@@ -499,9 +511,11 @@ class WallNotifications {
 	}
 
 	public function addNotificationLinks( Array $userIds, $notification ) {
+		global $wgCityId, $wgSitename;
+
 		foreach( $userIds as $userId ) {
 			$this->addNotificationLink( $userId, $notification );
-			$this->addWikiToList( $userId, $this->app->wg->CityId, $this->app->wg->sitename );
+			$this->addWikiToList( $userId, $wgCityId, $wgSitename );
 		}
 	}
 
@@ -853,8 +867,10 @@ class WallNotifications {
 	}
 
 	protected function isCachedData( $userId, $wikiId ) {
+		global $wgMemc;
+
 		$key = $this->getKey( $userId, $wikiId );
-		$val = $this->app->wg->memc->get( $key );
+		$val = $wgMemc->get( $key );
 
 		if( empty( $val ) && !is_array( $val ) ) {
 			return false;

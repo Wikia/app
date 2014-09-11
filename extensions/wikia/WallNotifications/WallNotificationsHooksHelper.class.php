@@ -9,12 +9,11 @@ class WallNotificationsHooksHelper {
 	 * @author Liz Lee
 	 */
 	static public function onSkinAfterBottomScripts( Skin $skin, &$text ) {
-		$app = F::App();
-		$user = $app->wg->User;
+		global $wgUser, $wgJsMimeType, $wgResourceBasePath, $wgExtensionsPath;
 
-		if( $user instanceof User && $user->isLoggedIn() && $skin->getSkinName() == 'monobook') {
-			$text .= "<script type=\"{$app->wg->JsMimeType}\" src=\"{$app->wg->ResourceBasePath}/resources/wikia/libraries/jquery/timeago/jquery.timeago.js\"></script>\n" .
-				"<script type=\"{$app->wg->JsMimeType}\" src=\"{$app->wg->ExtensionsPath}/wikia/WallNotifications/scripts/WallNotifications.js\"></script>\n";
+		if( $wgUser instanceof User && $wgUser->isLoggedIn() && $skin->getSkinName() == 'monobook') {
+			$text .= "<script type=\"{$wgJsMimeType}\" src=\"{$wgResourceBasePath}/resources/wikia/libraries/jquery/timeago/jquery.timeago.js\"></script>\n" .
+				"<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/WallNotifications/scripts/WallNotifications.js\"></script>\n";
 		}
 
 		return true;
@@ -29,10 +28,10 @@ class WallNotificationsHooksHelper {
 	 * @author Piotrek Bablok
 	 */
 	static public function onPersonalUrls( &$personalUrls, &$title ) {
-		$app = F::app();
-		$user = $app->wg->User;
-		if ( $user instanceof User && $user->isLoggedIn() ) {
-			if( $app->wg->User->getSkin()->getSkinName() == 'monobook' ) {
+		global $wgUser, $wgEnableWallExt, $wgEnableForumExt, $wgOut;
+
+		if ( $wgUser instanceof User && $wgUser->isLoggedIn() ) {
+			if( $wgUser->getSkin()->getSkinName() == 'monobook' ) {
 				$personalUrls['wall-notifications'] = [
 						'text' => wfMessage( 'wall-notifications' )->text(),
 						'href' => '#',
@@ -45,11 +44,11 @@ class WallNotificationsHooksHelper {
 				 * and we show it in java script when there are new notification 
 				 */
 				 
-				if( empty( $app->wg->EnableWallExt ) && empty( $app->wg->EnableForumExt ) ) {
+				if( empty( $wgEnableWallExt ) && empty( $wgEnableForumExt ) ) {
 					$personalUrls['wall-notifications']['class'] .= 'prehide';
 				}
 				
-				$app->wg->Out->addStyle( AssetsManager::getInstance()->getSassCommonURL( 'extensions/wikia/WallNotifications/styles/monobook/WallNotificationsMonobook.scss' ) );
+				$wgOut->addStyle( AssetsManager::getInstance()->getSassCommonURL( 'extensions/wikia/WallNotifications/styles/monobook/WallNotificationsMonobook.scss' ) );
 			}
 		}
 

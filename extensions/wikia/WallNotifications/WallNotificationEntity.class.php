@@ -59,6 +59,8 @@ class WallNotificationEntity {
 	}
 
 	public function loadDataFromRev( Revision $rev, $wikiId, $master = false ) {
+		global $wgSitename;
+
 		$this->id = $rev->getId(). '_' .  $wikiId;
 
 		$wm = WallMessage::newFromTitle($rev->getTitle()); /* @var $wm WallMessage */
@@ -84,7 +86,7 @@ class WallNotificationEntity {
 		$this->data_non_cached = new StdClass();
 
 		$this->data->wiki = $wikiId;
-		$this->data->wikiname = $app->wg->sitename;
+		$this->data->wikiname = $wgSitename;
 		$this->data->rev_id = $rev->getId();
 
 		$wallTitle = $wm->getArticleTitle();

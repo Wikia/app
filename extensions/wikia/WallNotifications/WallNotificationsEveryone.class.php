@@ -6,8 +6,10 @@ class WallNotificationsEveryone extends WallNotifications {
 	const DELETE_IDS_BATCH_SIZE = 100;
 
 	public function __construct() {
+		global $wgCityId;
+
 		$this->app = F::app();
-		$this->cityId = $this->app->wg->CityId;
+		$this->cityId = $wgCityId;
 	}
 
 	/**
@@ -116,18 +118,22 @@ class WallNotificationsEveryone extends WallNotifications {
 	}
 
 	public function setGlobalCacheBuster() {
+		global $wgMemc;
+
 		wfProfileIn( __METHOD__ );
 		$cacheKey = $this->getGlobalCacheBusterKey();
 		$val = time();
-		$this->app->wg->memc->set( $cacheKey, $val );
+		$wgMemc->set( $cacheKey, $val );
 		wfProfileOut( __METHOD__ );
 		return $val;
 	}
 
 	public function getGlobalCacheBuster() {
+		global $wgMemc;
+
 		wfProfileIn( __METHOD__ );
 		$cacheKey = $this->getGlobalCacheBusterKey();
-		$val = $this->app->wg->memc->get( $cacheKey );
+		$val = $wgMemc->get( $cacheKey );
 		if ( empty( $val ) ) {
 			wfProfileOut( __METHOD__ );
 			return $this->setGlobalCacheBuster();
@@ -137,10 +143,12 @@ class WallNotificationsEveryone extends WallNotifications {
 	}
 
 	public function setEntityProcessed( $userId, $entityKey ) {
+		global $wgMemc;
+
 		wfProfileIn( __METHOD__ );
 
 		$cacheKey = $this->getEntityProcessedCacheKey( $userId, $entityKey );
-		$this->app->wg->memc->set( $cacheKey, true );
+		$wgMemc->set( $cacheKey, true );
 
 		$this->getDB( true )->insert( 'wall_notification_queue_processed', [
 			'user_id' => $userId,
@@ -151,9 +159,11 @@ class WallNotificationsEveryone extends WallNotifications {
 	}
 
 	public function getEntityProcessed( $userId, $entityKey ) {
+		global $wgMemc;
+
 		wfProfileIn( __METHOD__ );
 		$cacheKey = $this->getEntityProcessedCacheKey( $userId, $entityKey );
-		$val = $this->app->wg->memc->get( $cacheKey );
+		$val = $wgMemc->get( $cacheKey );
 
 		if ( $val == true ) {
 			wfProfileOut( __METHOD__ );
@@ -180,19 +190,23 @@ class WallNotificationsEveryone extends WallNotifications {
 	}
 
 	public function setQueueProcessed( $userId ) {
+		global $wgMemc;
+
 		wfProfileIn( __METHOD__ );
 
 		$cacheKey = $this->getQueueProcessedCacheKey( $userId );
-		$this->app->wg->memc->set( $cacheKey, true );
+		$wgMemc->set( $cacheKey, true );
 
 		wfProfileOut( __METHOD__ );
 	}
 
 	public function getQueueProcessed( $userId ) {
+		global $wgMemc;
+
 		wfProfileIn( __METHOD__ );
 
 		$cacheKey = $this->getQueueProcessedCacheKey( $userId );
-		$out = $this->app->wg->memc->get( $cacheKey );
+		$out = $wgMemc->get( $cacheKey );
 
 		if ( $out == true ) {
 			wfProfileOut( __METHOD__ );

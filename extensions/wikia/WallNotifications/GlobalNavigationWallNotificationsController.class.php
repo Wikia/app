@@ -15,13 +15,15 @@ class GlobalNavigationWallNotificationsController extends WikiaController {
 	}
 
 	public function Index() {
+		global $wgUser, $wgEnableWallExt, $wgEnableForumExt;
+
 		wfProfileIn( __METHOD__ );
-		$loggedIn = $this->wg->User->isLoggedIn();
+		$loggedIn = $wgUser->isLoggedIn();
 		$suppressWallNotifications = $this->areNotificationsSuppressedByExtensions();
 
 		if( $loggedIn && !$suppressWallNotifications ) {
 			$this->response->addAsset( 'extensions/wikia/WallNotifications/styles/WallNotifications.globalNavigation.scss' );
-			$this->response->setVal( 'prehide', ( empty( $this->wg->EnableWallExt ) && empty( $this->wg->EnableForumExt ) ) );
+			$this->response->setVal( 'prehide', ( empty( $wgEnableWallExt ) && empty( $wgEnableForumExt ) ) );
 		}
 
 		$this->response->setVal( 'loggedIn', $loggedIn );
@@ -30,9 +32,11 @@ class GlobalNavigationWallNotificationsController extends WikiaController {
 	}
 
 	public function Update() {
+		global $wgUser, $wgEnableWallExt, $wgEnableForumExt;
+
 		wfProfileIn(__METHOD__);
 
-		$this->response->setVal( 'alwaysGrouped', empty( $this->app->wg->EnableWallExt ) && empty( $this->app->wg->EnableForumExt ) );
+		$this->response->setVal( 'alwaysGrouped', empty( $wgEnableWallExt ) && empty( $wgEnableForumExt ) );
 		$this->response->setVal( 'notificationKey', $this->request->getVal( 'notificationKey' ) );
 
 		$notificationCounts = $this->request->getVal( 'notificationCounts' );
@@ -42,17 +46,19 @@ class GlobalNavigationWallNotificationsController extends WikiaController {
 		$unreadCount = $this->request->getVal( 'count' );
 		$this->response->setVal( 'count', $unreadCount );
 
-		$this->response->setVal( 'user', $this->wg->User );
+		$this->response->setVal( 'user', $wgUser );
 
 		wfProfileOut(__METHOD__);
 	}
 
 	public function UpdateWiki() {
+		global $wgUser;
+
 		wfProfileIn(__METHOD__);
 
 		$all = $this->request->getVal( 'notifications' );
 
-		$this->response->setVal( 'user', $this->wg->User );
+		$this->response->setVal( 'user', $wgUser );
 		$this->response->setVal( 'unread', $all['unread'] );
 		$this->response->setVal( 'read', $all['read'] );
 
@@ -60,9 +66,11 @@ class GlobalNavigationWallNotificationsController extends WikiaController {
 	}
 
 	public function Reminder() {
+		global $wgUser;
+
 		wfProfileIn(__METHOD__);
 
-		$loggedIn = $this->wg->User->isLoggedIn();
+		$loggedIn = $wgUser->isLoggedIn();
 		$suppressWallNotifications = $this->areNotificationsSuppressedByExtensions();
 
 		$this->response->setVal( 'loggedIn', $loggedIn );
@@ -121,7 +129,9 @@ class GlobalNavigationWallNotificationsController extends WikiaController {
 	}
 
 	private function areNotificationsSuppressedByExtensions() {
-		$suppressed = $this->app->wg->atCreateNewWikiPage || !$this->app->wg->User->isAllowed( 'read' );
+		global $wgUser, $wgAtCreateNewWikiPage;
+
+		$suppressed = $wgAtCreateNewWikiPage || !$wgUser->isAllowed( 'read' );
 		return !empty($suppressed);
 	}
 
@@ -149,6 +159,8 @@ class GlobalNavigationWallNotificationsController extends WikiaController {
 	}
 
 	public function Notification() {
+		global $wgUser;
+
 		$isUnread = 'unread';
 		$notify = $this->request->getVal( 'notify' );
 
@@ -170,7 +182,10 @@ class GlobalNavigationWallNotificationsController extends WikiaController {
 			$authors[] = [
 				'displayname' => $notify_entity->data->msg_author_displayname,
 				'username' => $notify_entity->data->msg_author_username,
-				'avatar' => AvatarService::renderAvatar($firstNotify->data->msg_author_username, 36 )
+				'avatar' => AvatarService::renderAvatar(
+						$firstNotify->data->msg_author_username,
+						AvatarService::AVATAR_SIZE_SMALL_PLUS
+					)
 			];
 		}
 
@@ -185,7 +200,7 @@ class GlobalNavigationWallNotificationsController extends WikiaController {
 
 		$msg = "";
 		wfRunHooks('NotificationGetNotificationMessage',[
-			&$this, &$msg, $firstNotify->isMain(), $data, $authors, $userCount,  $this->wg->User->getName()
+			&$this, &$msg, $firstNotify->isMain(), $data, $authors, $userCount,  $wgUser->getName()
 		] );
 
 		if( empty( $msg ) ) {
@@ -194,7 +209,7 @@ class GlobalNavigationWallNotificationsController extends WikiaController {
 				$data,
 				$authors,
 				$userCount,
-				$this->wg->User->getName()
+				$wgUser->getName()
 			);
 		}
 

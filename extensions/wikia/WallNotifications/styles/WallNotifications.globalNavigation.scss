@@ -63,7 +63,7 @@ $wiki-header-bg-color: #e2e6e9;
 		height: auto;
 		min-height: 51px;
 		font-weight: bold;
-		padding: 15px 20px 0 20px;
+		padding: 15px 20px 0;
 	}
 
 	.notifications-header {
@@ -96,10 +96,9 @@ $wiki-header-bg-color: #e2e6e9;
 	.notifications-for-wiki {
 		&.show {
 			.chevron {
+				border: 5px solid transparent;
 				border-top: 0;
-				border-left: 5px solid transparent;
-				border-right: 5px solid transparent;
-				border-bottom: 5px solid $border-color;
+				border-bottom-color: $border-color;
 			}
 
 			.notifications-wiki-header:hover .chevron {
@@ -171,13 +170,13 @@ $wiki-header-bg-color: #e2e6e9;
 
 		&.admin-notification:before {
 			border-left: 5px solid $header-bg-color;
-			display:block;
-			content:".";
-			color:transparent;
-			height:100%;
-			position:absolute;
-			left:0;
-			padding-top:1px;
+			color: transparent;
+			content: ".";
+			display: block;
+			height: 100%;
+			left: 0;
+			padding-top: 1px;
+			position: absolute;
 			top: 0;
 		}
 
@@ -198,24 +197,27 @@ $wiki-header-bg-color: #e2e6e9;
 }
 
 #WallNotificationsReminder {
-	@include box-shadow(0px, 2px, 5px, darken($color-page,12%), 0, 0);
-	background: $color-page;
+	@if $is-dark-wiki {
+		@include box-shadow(0, 2px, 5px, darken($color-page,7%), 0, 0);
+		background: $color-module-background;
+	} @else {
+		@include box-shadow(0, 2px, 5px, darken($color-page,12%), 0, 0);
+		background: $color-page;
+	}
 	border: 1px solid $color-page-border;
 	border-radius: 3px;
-	@if $is-dark-wiki {
-		@include box-shadow(0px, 2px, 5px, darken($color-page,7%), 0, 0);
-		background: $color-module-background;
-	}
-	position: fixed;
-	top: 70px;
-	right: 20px;
 	color: $color-links;
-	padding: 10px;
 	display: none;
+	padding: 10px;
+	position: fixed;
+	right: 20px;
+	top: 70px;
+
 	span {
-		width: 1em;
 		overflow: hidden;
+		width: 1em;
 	}
+
 	a {
 		cursor: pointer;
 	}

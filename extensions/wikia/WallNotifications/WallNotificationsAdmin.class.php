@@ -4,8 +4,10 @@ class WallNotificationsAdmin {
 	var $cityId; 
 
 	public function __construct() {
+		global $wgCityId;
+
 		$this->app = F::App();
-		$this->cityId = $this->app->wg->CityId;
+		$this->cityId = $wgCityId;
 	}
 
 	/*

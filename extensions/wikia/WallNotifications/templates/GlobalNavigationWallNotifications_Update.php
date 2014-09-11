@@ -1,4 +1,4 @@
-<? if($user->isLoggedIn()): ?>
+<? if ( $user->isLoggedIn() ) : ?>
 	<li>
 		<header class="notifications-header">
 			<? if ( $wikiCount > 1): ?>
@@ -22,8 +22,8 @@
 			<? endif; ?>
 		</header>
 	</li>
-	<? foreach($notificationCounts as $wikiData): ?>
-		<? if (!empty($wikiData['sitename'])): ?>
+	<? foreach( $notificationCounts as $wikiData ): ?>
+		<? if ( !empty( $wikiData['sitename'] ) ) : ?>
 			<? if ($wikiCount == 1 ): ?>
 				<li class="notifications-for-wiki show"
 					data-notification-key="<?= $notificationKey ?>"
@@ -38,7 +38,7 @@
 					data-unread-count="<?= $wikiData['unread'] ?>"
 				>
 			<? endif; ?>
-				<? if ($alwaysGrouped || $wikiCount > 1): ?>
+				<? if ( $alwaysGrouped || $wikiCount > 1 ): ?>
 					<header class="notifications-wiki-header">
 				<? else: ?>
 					<header class="notifications-wiki-header" style="display: none">
