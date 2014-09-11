@@ -4,34 +4,34 @@
 	var TransparentOut = function() {
 		var $domNode,
 			initialize = function() {
-				$domNode = $( '<div class="transparent-out" />' );
-				$( 'body' ).append( $domNode );
+				$domNode = $('<div class="transparent-out" />');
+				$('body').append($domNode);
 			};
 
 		this.show = function() {
-			if ( !$domNode ) {
+			if (!$domNode) {
 				initialize();
 			}
 
-			$domNode.addClass( 'visible' );
+			$domNode.addClass('visible');
 		};
 
 		this.hide = function() {
-			if ( $domNode ) {
-				$domNode.removeClass( 'visible' );
+			if ($domNode) {
+				$domNode.removeClass('visible');
 			}
 		};
 
-		this.bindClick = function( callback ) {
-			if ( !$domNode ) {
+		this.bindClick = function(callback) {
+			if (!$domNode) {
 				initialize();
 			}
 
-			$domNode.on( 'click', $.proxy( function() {
-				callback( this );
-			}, this ) );
+			$domNode.on('click', $.proxy(function() {
+				callback(this);
+			}, this));
 		};
 	};
 
 	window.transparentOut = new TransparentOut();
-} )( jQuery );
+} )(jQuery);
