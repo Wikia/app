@@ -1,13 +1,10 @@
 /**
- * Clearable input widget.
- *
- * Mixin that adds a button to clear the text input.
+ * Text input widget with clear button.
  *
  * @class
  * @abstract
  *
  * @constructor
- * @param {OO.ui.TextInputWidget} input Input widget
  * @param {Object} [config] Configuration options
  */
 OO.ui.ClearableInputWidget = function OoUiClearableInputWidget( config ) {
@@ -40,11 +37,9 @@ OO.inheritClass( OO.ui.ClearableInputWidget, OO.ui.TextInputWidget );
 /* Methods */
 
 /**
- * Handle input click event.
- *
- * @param {jQuery.Event} e Input click event
+ * Handle clear button click event.
  */
-OO.ui.ClearableInputWidget.prototype.onClearButtonClick = function ( e ) {
+OO.ui.ClearableInputWidget.prototype.onClearButtonClick = function () {
 	this.setValue( '' );
 	this.$clearButton.hide();
 };
