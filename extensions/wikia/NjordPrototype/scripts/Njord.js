@@ -61,9 +61,9 @@
 			$editButton.show();
 			$heroModule.stopThrobbing();
 		}, onFocus = function () {
-				var $this = $(this);
-				$this.data('before', $this.html());
-				return $this;
+			var $this = $(this);
+			$this.data('before', $this.html());
+			return $this;
 		}, onInput = function () {
 			var $this = $(this);
 			if ($this.data('before') !== $this.html()) {
@@ -123,8 +123,8 @@
 				});
 				$('.edit-area').toggle();
 				$editButton.toggle();
-
 				$heroModuleImage.css({top: -heroData.oCropposition * $heroModuleImage.height()});
+				$heroModule.trigger('resize');
 				$heroModule.trigger('enableDragging');
 			});
 			$heroModuleImage.attr('src', $heroModuleImage.data('fullpath'));
@@ -230,7 +230,7 @@
 					$heroModuleImage.unbind('load');
 				});
 				$heroModuleImage.attr('src', data.url);
-				$heroModule.height($heroModule.width() * HERO_ASPECT_RATIO);
+				$heroModule.trigger('resize');
 				$heroModule.trigger('change', [data.url, data.filename]);
 			}
 		};
