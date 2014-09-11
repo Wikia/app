@@ -3,7 +3,9 @@
 
 	$.event.props.push('dataTransfer');
 
-	var heroData = {
+	var
+		HERO_ASPECT_RATIO = 5 / 16,
+		heroData = {
 			oTitle: null,
 			oDescription: null,
 			oImage: null,
@@ -17,8 +19,12 @@
 			datachanged: false
 		},
 		$body = $('body'),
+		$discardButton = $('#MainPageHero .discard-btn'),
 		$editButton = $('#MainPageHero .edit-btn'),
+		$toggleButton = $('#MainPageHero .toggle-btn'),
 		$saveButton = $('#MainPageHero .save-btn'),
+		$uploadButton = $('#MainPageHero .upload'),
+		$overlay = $('#MainPageHero .overlay'),
 		$heroModule = $('#MainPageHero'),
 		$heroModuleTitle = $('#MainPageHero .hero-title'),
 		$heroModuleDescription = $('#MainPageHero .hero-description'),
@@ -31,24 +37,33 @@
 		initializeData = function () {
 			heroData.title = heroData.oTitle = $heroModuleTitle.text();
 			heroData.description = heroData.oDescription = $heroModuleDescription.text();
-			heroData.imagepath = heroData.oImage = $heroModuleImage.attr('src');
+			heroData.imagepath = heroData.oImage = $heroModuleImage.data('fullpath');
 			heroData.cropposition = heroData.oCropposition = $heroModuleImage.data('cropposition');
 		}, revertToCurrentZeroState = function () {
 			$heroModuleTitle.text(heroData.oTitle);
 			$heroModuleDescription.text(heroData.oDescription);
 			$heroModuleImage.attr('src', heroData.oImage);
-			$heroModuleImage.css({top: 0});
+			$heroModuleImage.css({top: -heroData.oCropposition * $heroModuleImage.height()});
 			$heroModuleImage.data('.hero-image', heroData.oCropposition);
 			heroData.title = heroData.oTitle;
 			heroData.description = heroData.oDescription;
 			heroData.imagepath = heroData.oImage;
 			heroData.cropposition = heroData.oCropposition;
+			heroData.datachanged = false;
+			heroData.imagechanged = false;
 
 			$heroModule.trigger('revertedToZeroState');
+		}, zeroState = function () {
+			$discardButton.hide();
+			$saveButton.hide();
+			$toggleButton.hide();
+			$uploadButton.hide();
+			$editButton.show();
+			$heroModule.stopThrobbing();
 		}, onFocus = function () {
-			var $this = $(this);
-			$this.data('before', $this.html());
-			return $this;
+				var $this = $(this);
+				$this.data('before', $this.html());
+				return $this;
 		}, onInput = function () {
 			var $this = $(this);
 			if ($this.data('before') !== $this.html()) {
@@ -57,19 +72,25 @@
 			}
 			return $this;
 		}, onChange = function (event, imagePath, imageName) {
-			var $this = $(this);
-			heroData.title = $heroModule.find('.hero-title').text();
-			heroData.description = $heroModule.find('.hero-description').text();
+			heroData.title = $heroModuleTitle.text();
+			heroData.description = $heroModuleDescription.text();
 			if (imagePath || imageName) {
 				heroData.imagepath = imagePath;
 				heroData.imagename = imageName;
 				heroData.imagechanged = true;
-				$('.toggle-btn').show();
-				$('.overlay').hide();
+				$toggleButton.show();
+				$overlay.hide();
 			}
 			heroData.changed = true;
+		}, onDataSaved = function (data) {
+			console.log(data);
+			$heroModuleImage.draggable('disable');
+			$heroModuleTitle.text(heroData.oTitle = heroData.title);
+			$heroModuleTitle.text(heroData.description = heroData.oDescription);
+			$heroModuleImage.attr('src', heroData.imagepath = heroData.oImage);
+			$heroModuleImage.data('cropposition', heroData.cropposition = heroData.oCropposition);
 
-			return $this;
+			revertToCurrentZeroState();
 		}, onSave = function () {
 			$heroModule.startThrobbing();
 			$.nirvana.sendRequest({
@@ -79,12 +100,7 @@
 				data: {
 					wikiData: heroData
 				},
-				callback: function () {
-					$heroModuleImage.draggable('disable');
-					onEdit();
-					initializeData();
-					$heroModule.stopThrobbing();
-				},
+				callback: onDataSaved,
 				onErrorCallback: function () {
 					// TODO: handle failure
 					$heroModule.stopThrobbing();
@@ -113,7 +129,7 @@
 			});
 			$heroModuleImage.attr('src', $heroModuleImage.data('fullpath'));
 		}, onResize = function () {
-			$heroModule.height($heroModule.width() * 5 / 16);
+			$heroModule.height($heroModule.width() * HERO_ASPECT_RATIO);
 		}, onDraggingEnabled = function () {
 			var heroHeight = $heroModuleImage.height(),
 				heroModuleHeight = $heroModule.height(),
@@ -133,17 +149,18 @@
 
 	$heroModuleTitle.on('focus', onFocus).on('blur keyup paste input', onInput).on('change', onChange);
 	$('.hero-description').on('focus', onFocus).on('blur keyup paste input', onInput).on('change', onChange);
-	$heroModule.on('change', onChange).on('saveEvent', onSave).on('enableDragging', onDraggingEnabled);
+	$heroModule.on('change', onChange).on('enableDragging', onDraggingEnabled);
+	$heroModule.on('revertedToZeroState', zeroState);
 	$editButton.on('click', onEdit);
 	$saveButton.on('click', onSave);
-	$('.discard-btn').on('click', revertToCurrentZeroState);
+	$discardButton.on('click', revertToCurrentZeroState);
 	$('.toggle-upload-btn').on('click', function () {
-		$('.toggle-btn').hide();
-		$('.overlay').show();
+		$toggleButton.hide();
+		$overlay.show();
 	});
 	$('.close-upload-btn').on('click', function () {
-		$('.toggle-btn').show();
-		$('.overlay').hide();
+		$toggleButton.show();
+		$overlay.hide();
 	});
 
 	$(window).resize(onResize);
@@ -155,12 +172,12 @@
 
 	//those two are needed to cancel default behaviour
 	$heroModuleUpload.on('dragenter', function () {
-		$('.upload').addClass('upload-hover');
+		$uploadButton.addClass('upload-hover');
 		$heroModuleUploadMask.show();
 		return false;
 	});
 	$heroModuleUploadMask.on('dragleave', function () {
-		$('.upload').removeClass('upload-hover');
+		$uploadButton.removeClass('upload-hover');
 		$heroModuleUploadMask.hide();
 	});
 	$heroModuleUploadMask.on('dragend', function () {
@@ -168,7 +185,7 @@
 	});
 
 	$heroModuleUploadMask.on('drop', function (e) {
-		$('.upload').removeClass('upload-hover');
+		$uploadButton.removeClass('upload-hover');
 		$heroModuleUploadMask.hide();
 		e.preventDefault();
 		var fd = new FormData();
@@ -213,7 +230,7 @@
 					$heroModuleImage.unbind('load');
 				});
 				$heroModuleImage.attr('src', data.url);
-				$heroModule.height($heroModule.width() * 5 / 16);
+				$heroModule.height($heroModule.width() * HERO_ASPECT_RATIO);
 				$heroModule.trigger('change', [data.url, data.filename]);
 			}
 		};
