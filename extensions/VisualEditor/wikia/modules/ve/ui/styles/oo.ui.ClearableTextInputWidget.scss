@@ -1,8 +1,8 @@
-.oo-ui-clearableInputWidget input {
+.oo-ui-clearableTextInputWidget input {
 	padding-right: 26px;
 }
 
-.oo-ui-clearableInputWidget-clearButton {
+.oo-ui-clearableTextInputWidget-clearButton {
 	@include ve-icon( clear-search, wikia );
 	background-position: center;
 	background-repeat: no-repeat;
