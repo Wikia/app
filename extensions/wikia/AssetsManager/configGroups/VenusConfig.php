@@ -9,6 +9,7 @@ $VenusConfig['venus_body_js'] = [
 		'//resources/jquery/jquery-2.1.1.min.js',
 
 		//libraries/frameworks
+// TODO: This should be loaded here, but for some reason, it's already included
 //		'//resources/wikia/libraries/modil/modil.js',
 		'//resources/wikia/libraries/Ponto/ponto.js',
 		'//resources/wikia/libraries/my.class/my.class.js',
