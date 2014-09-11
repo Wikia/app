@@ -2,7 +2,7 @@
 
 $VenusConfig = [];
 
-$VenusConfig['venus_body_js'] = [
+$VenusConfig[ 'venus_body_js' ] = [
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => ['venus'],
 	'assets' => [
@@ -55,7 +55,7 @@ $VenusConfig['venus_body_js'] = [
 	]
 ];
 
-$VenusConfig['venus_head_js'] = [
+$VenusConfig[ 'venus_head_js' ] = [
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => ['venus'],
 	'assets' => [
@@ -63,7 +63,7 @@ $VenusConfig['venus_head_js'] = [
 	]
 ];
 
-$VenusConfig['venus_css'] = [
+$VenusConfig[ 'venus_css' ] = [
 	'type' => AssetsManager::TYPE_SCSS,
 	'skin' => ['venus'],
 	'assets' => [
@@ -71,20 +71,31 @@ $VenusConfig['venus_css'] = [
 	]
 ];
 
-/** GlobalNavigation extension */
-$VenusConfig['global_navigation_scss'] = array(
+/** GlobalFooter extension */
+$VenusConfig[ 'global_footer_css' ] = [
 	'type' => AssetsManager::TYPE_SCSS,
-	'skin' => ['venus', 'oasis'],
-	'assets' => array(
-		'//extensions/wikia/GlobalNavigation/css/GlobalNavigation.scss',
-		'//extensions/wikia/GlobalNavigation/css/GlobalNavigationHubsMenu.scss',
-		'//extensions/wikia/GlobalNavigation/css/GlobalNavigationSearch.scss'
-	)
-);
+	'skin' => [ 'venus' ],
+	'assets' => [
+		'//extensions/wikia/GlobalFooter/styles/GlobalFooter.scss'
+	]
+];
 
-$VenusConfig['global_navigation_js'] = [
+/** GlobalNavigation extension */
+$VenusConfig[ 'global_navigation_scss' ] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => [ 'venus', 'oasis' ],
+	'assets' => [
+		'//extensions/wikia/GlobalNavigation/css/GlobalNavigation.scss',
+		'//extensions/wikia/GlobalNavigation/css/GlobalNavigationSearch.scss',
+		'//extensions/wikia/GlobalNavigation/css/GlobalNavigationAccountNavigation.scss',
+		'//extensions/wikia/GlobalNavigation/css/GlobalNavigationHubsMenu.scss',
+		'//extensions/wikia/UserLogin/css/UserLoginDropdown.globalNavigation.scss'
+	]
+];
+
+$VenusConfig[ 'global_navigation_js' ] = [
 	'type' => AssetsManager::TYPE_JS,
-	'skin' => ['venus', 'oasis'],
+	'skin' => [ 'venus', 'oasis' ],
 	'assets' => [
 		'//resources/wikia/libraries/menu-aim/menu-aim.js',
 		'//resources/wikia/libraries/delayed-hover/js-delayed-hover.js',
@@ -92,14 +103,24 @@ $VenusConfig['global_navigation_js'] = [
 		'//extensions/wikia/GlobalNavigation/js/GlobalNavigationHubsMenu.js',
 		'//extensions/wikia/GlobalNavigation/js/GlobalNavigation.js',
 		'//extensions/wikia/GlobalNavigation/js/GlobalNavigationSearch.js',
+		'//extensions/wikia/UserLogin/js/UserLoginDropdown.globalNavigation.js',
+	]
+];
+
+$VenusConfig[ 'global_navigation_facebook_login_js' ] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => [ 'venus '],
+	'assets' => [
+		'//extensions/wikia/UserLogin/js/UserLoginFacebook.js',
+		'//extensions/wikia/UserLogin/js/UserLoginFacebookForm.js',
 	]
 ];
 
 /** GlobalFooter extension */
-$VenusConfig['global_footer_scss'] = array(
+$VenusConfig[ 'global_footer_scss' ] = [
 	'type' => AssetsManager::TYPE_SCSS,
-	'skin' => ['venus'],
-	'assets' => array(
+	'skin' => [ 'venus' ],
+	'assets' => [
 		'//extensions/wikia/GlobalFooter/styles/GlobalFooter.scss'
-	)
-);
+	]
+];

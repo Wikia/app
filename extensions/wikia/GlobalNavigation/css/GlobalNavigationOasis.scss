@@ -1,5 +1,5 @@
-@import "skins/oasis/css/core/responsive-variables";
-@import "../../Venus/styles/variables";
+@import 'skins/oasis/css/core/responsive-variables';
+@import '../../Venus/styles/variables';
 
 .page-width {
 	margin: 0 auto;
@@ -11,10 +11,31 @@
 }
 
 .global-navigation {
+	box-sizing: border-box;
 	margin-top: -$global-navigation-height - 1px;
+
+	*, *:before, *:after {
+		box-sizing: inherit;
+	}
+}
+
+body.skin-oasis ul li:last-child {
+	padding-right: 0;
+}
+
+.AccountNavigation {
+	display: block;
+
+	.avatar {
+		border: 0;
+	}
 }
 
 @media screen and (max-width: $breakpoint-content) {
+	.global-navigation {
+		min-width: $width-outside-min;
+	}
+
 	.page-width {
 		width: 100%;
 	}

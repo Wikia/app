@@ -1,10 +1,11 @@
-@import "../../Venus/styles/mixins";
-@import "../../Venus/styles/variables";
-@import "GlobalNavigationColors";
+@import '../../Venus/styles/mixins';
+@import '../../Venus/styles/variables';
+@import 'GlobalNavigationColors';
 
 .global-navigation {
 	background-color: $nav-background-color;
-	border-bottom: 1px solid $nav-alternative-color;
+	border-bottom: 1px solid $nav-border-color;
+	color: $nav-foreground-dark-color;
 	position: fixed;
 	width: 100%;
 	z-index: $global-navigation-z-index;
@@ -12,24 +13,19 @@
 	.page-width {
 		@include clearfix;
 
-		border-right: 1px solid $nav-alternative-color;
+		border-right: 1px solid $nav-border-color;
 	}
 }
 
 .global-navigation-item {
-	border-left: 1px solid $nav-alternative-color;
+	border-left: 1px solid $nav-border-color;
 	float: left;
 	height: $global-navigation-height;
 	position: relative;
 }
 
-// TODO temporary fix for menu spacing - remove when all components are ready
-.global-navigation-item:last-child {
-	width: 10px;
-}
-
 .global-navigation-link {
-	color: $nav-alternative-color;
+	color: $nav-border-color;
 	display: table-cell;
 	font-size: 18px;
 	font-weight: bold;
@@ -37,13 +33,20 @@
 	vertical-align: middle;
 }
 
-.start-wikia {
-	@include grid-column-width( 'medium', 2 );
+.wikia-logo-container {
+	@include grid-column-width('large', 2, $large-content-padding);
+}
 
+.start-wikia-container {
+	@include grid-column-width('large', 2);
+}
+
+.start-wikia {
 	text-align: center;
+	width: inherit;
 
 	&:hover {
-		background-color: $nav-active-color;
+		background-color: $nav-foreground-dark-color;
 		color: $nav-background-color;
 		text-decoration: none;
 	}
@@ -53,18 +56,24 @@
 	padding: 0 0 0 20px;
 
 	img {
-		background-image: url("/extensions/wikia/GlobalNavigation/images/wikia_logo.svg"); /* base64 */
+		background-image: url('/extensions/wikia/GlobalNavigation/images/wikia_logo.svg'); /* base64 */
 		background-position: center;
 		background-repeat: no-repeat;
 	}
 }
 
 @media #{$small-only} {
-	.start-wikia {
-		@include grid-column-width( 'small', 1 );
+	.wikia-logo-container {
+		@include grid-column-width('small', 2, $small-content-padding + 36px);
+	}
 
+	.start-wikia-container {
+		@include grid-column-width('small', 1);
+	}
+
+	.start-wikia {
 		&:after {
-			content: "+";
+			content: '+';
 			display: block;
 		}
 
@@ -74,9 +83,13 @@
 	}
 }
 
-@media #{$large-up} {
-	.start-wikia {
-		@include grid-column-width( 'large', 2 );
+@media #{$medium-only} {
+	.wikia-logo-container {
+		@include grid-column-width('medium', 2, $medium-content-padding);
+	}
+
+	.start-wikia-container {
+		@include grid-column-width('medium', 2);
 	}
 }
 
@@ -85,6 +98,7 @@
 		min-width: 767px;
 		position: relative;
 	}
+
 	.wikia-page {
 		padding-top: 0;
 	}
