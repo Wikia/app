@@ -18,9 +18,9 @@ require_once( dirname( __FILE__ ) . '/../Maintenance.php' );
 use \Wikia\Logger\WikiaLogger;
 
 /**
- * Class setWikiFactoryVariable
+ * Class SetWikiFactoryVariable
  */
-class setWikiFactoryVariable extends Maintenance {
+class SetWikiFactoryVariable extends Maintenance {
 
 	protected $dryRun  = false;
 	protected $verbose = false;
@@ -149,9 +149,9 @@ class setWikiFactoryVariable extends Maintenance {
 	* @param array $varData
 	* @return boolean
 	*/
-   protected function removeVariableFromWiki( $wikiId, $varData ) {
-	   $status = true;
-	   if ( !$this->dryRun ) {
+	protected function removeVariableFromWiki( $wikiId, $varData ) {
+		$status = true;
+		if ( !$this->dryRun ) {
 			$log = WikiaLogger::instance();
 			$resp = WikiFactory::removeVarById( $varData['cv_id'], $wikiId );
 			$logData = $varData + [ 'wikiId' => $wikiId ];
@@ -161,10 +161,10 @@ class setWikiFactoryVariable extends Maintenance {
 				$log->error( "Cannot remove variable from city_variables table.", $logData );
 				$status = false;
 			}
-		}
+		 }
 
-	   return $status;
-   }
+		return $status;
+	}
 
 	/**
 	 * Print the message if verbose is enabled
@@ -178,5 +178,5 @@ class setWikiFactoryVariable extends Maintenance {
 
 }
 
-$maintClass = "setWikiFactoryVariable";
+$maintClass = "SetWikiFactoryVariable";
 require_once( RUN_MAINTENANCE_IF_MAIN );
