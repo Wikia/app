@@ -27,7 +27,6 @@ class ExactTargetUpdatesHooks {
 	}
 
 	public static function onWikiCreation( $aParams ) {
-		wfDebug( __METHOD__ . " ETCreateWikiTask: Task initiated." );
 		$thisInstance = new ExactTargetUpdatesHooks();
 		$thisInstance->addTheAddWikiTask( $aParams, new ExactTargetAddWikiTask() );
 		return true;
@@ -104,7 +103,6 @@ class ExactTargetUpdatesHooks {
 		// if ( $wgWikiaEnvironment != WIKIA_ENV_DEV && $wgWikiaEnvironment != WIKIA_ENV_INTERNAL ) {
 			$aWikiData = $this->prepareWikiParams( $aParams );
 			$aWikiCatsMappingData = $this->prepareWikiCatsMappingParams( $aParams );
-			wfDebug( __METHOD__ . " ETCreateWikiTask: Params prepared." );
 			$oTask->call( 'sendNewWikiData', $aWikiData, $aWikiCatsMappingData );
 			$oTask->queue();
 		// }
@@ -114,6 +112,7 @@ class ExactTargetUpdatesHooks {
 		$oWiki = \WikiFactory::getWikiById( $aParams['city_id'] );
 		$aWikiParams = [
 			'city_id' => $oWiki->city_id,
+			'city_path' => $oWiki->city_path,
 			'city_sitename' => $oWiki->city_sitename,
 			'city_url' => $oWiki->city_url,
 			'city_created' => $oWiki->city_created,
@@ -123,7 +122,8 @@ class ExactTargetUpdatesHooks {
 	}
 
 	public function prepareWikiCatsMappingParams( $aParams ) {
-		$aCategories = \WikiFactory::getCategories( $aParams['city_id'] );
+		$aCategories = \WikiFactory::getCategories( $aParams['city_id'], 'skip' );
+
 		$aWikiCatsMappingParams = [];
 		foreach( $aCategories as $aCategory ) {
 			$aWikiCatsMappingParams[] = [
