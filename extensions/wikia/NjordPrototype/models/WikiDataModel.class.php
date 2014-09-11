@@ -108,7 +108,7 @@ class WikiDataModel {
 		$articleContents = $pageArticleObj->getContent();
 
 		// Remove the original hero text
-		$newContent = mb_ereg_replace( '<hero(.*?)/>', '', $articleContents, 'mi' );
+		$newContent = mb_ereg_replace( '<hero(.*?)/>\n', '', $articleContents, 'mi' );
 
 		// Prepend the hero tag
 		$heroTag = Xml::element( 'hero', $attribs = [
