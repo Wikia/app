@@ -78,8 +78,7 @@ $VenusConfig['global_navigation_scss'] = array(
 	'assets' => array(
 		'//extensions/wikia/GlobalNavigation/css/GlobalNavigation.scss',
 		'//extensions/wikia/GlobalNavigation/css/GlobalNavigationHubsMenu.scss',
-		'//extensions/wikia/GlobalNavigation/css/GlobalNavigationSearch.scss',
-		'//'
+		'//extensions/wikia/GlobalNavigation/css/GlobalNavigationSearch.scss'
 	)
 );
 
