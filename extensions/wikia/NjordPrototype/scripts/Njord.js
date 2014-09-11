@@ -17,25 +17,34 @@
 			datachanged: false
 		},
 		$body = $('body'),
+		$editButton = $('#MainPageHero .edit-btn'),
+		$saveButton = $('#MainPageHero .save-btn'),
 		$heroModule = $('#MainPageHero'),
+		$heroModuleTitle = $('#MainPageHero .hero-title'),
+		$heroModuleDescription = $('#MainPageHero .hero-description'),
 		$heroModuleUpload = $('#MainPageHero .upload'),
 		$heroModuleUploadMask = $('#MainPageHero .upload .upload-mask'),
 		$heroModuleButton = $('#MainPageHero .upload .upload-btn'),
 		$heroModuleInput = $('#MainPageHero .upload input[name="file"]'),
 		$heroModuleImage = $('#MainPageHero .hero-image'),
-		load = function () {
-			heroData.title = heroData.oTitle = $heroModule.find('.hero-title').text();
-			heroData.description = heroData.oDescription = $heroModule.find('.hero-description').text();
-			heroData.imagepath = heroData.oImage = $heroModule.find('.hero-image').attr('src');
+
+		initializeData = function () {
+			heroData.title = heroData.oTitle = $heroModuleTitle.text();
+			heroData.description = heroData.oDescription = $heroModuleDescription.text();
+			heroData.imagepath = heroData.oImage = $heroModuleImage.attr('src');
 			heroData.cropposition = heroData.oCropposition = $heroModuleImage.data('cropposition');
-		}, revert = function () {
-			$heroModule.find('.hero-title').text(heroData.oTitle);
-			$heroModule.find('.hero-description').text(heroData.oDescription);
-			$heroModule.find('.hero-image').attr('src', heroData.oImage);
-			$heroModule.find('.hero-image').css({top: 0});
+		}, revertToCurrentZeroState = function () {
+			$heroModuleTitle.text(heroData.oTitle);
+			$heroModuleDescription.text(heroData.oDescription);
+			$heroModuleImage.attr('src', heroData.oImage);
+			$heroModuleImage.css({top: 0});
 			$heroModuleImage.data('.hero-image', heroData.oCropposition);
-			$('.edit-area').toggle();
-			$('.edit-btn').toggle();
+			heroData.title = heroData.oTitle;
+			heroData.description = heroData.oDescription;
+			heroData.imagepath = heroData.oImage;
+			heroData.cropposition = heroData.oCropposition;
+
+			$heroModule.trigger('revertedToZeroState');
 		}, onFocus = function () {
 			var $this = $(this);
 			$this.data('before', $this.html());
@@ -62,7 +71,6 @@
 
 			return $this;
 		}, onSave = function () {
-			console.log('onSave');
 			$heroModule.startThrobbing();
 			$.nirvana.sendRequest({
 				controller: 'NjordController',
@@ -72,15 +80,13 @@
 					wikiData: heroData
 				},
 				callback: function () {
-					console.log('success callback');
 					$heroModuleImage.draggable('disable');
 					onEdit();
-					load();
+					initializeData();
 					$heroModule.stopThrobbing();
 				},
 				onErrorCallback: function () {
 					// TODO: handle failure
-					console.log('failure callback');
 					$heroModule.stopThrobbing();
 				}
 			});
@@ -100,7 +106,7 @@
 					}
 				});
 				$('.edit-area').toggle();
-				$('.edit-btn').toggle();
+				$editButton.toggle();
 
 				$heroModuleImage.css({top: -heroData.oCropposition * $heroModuleImage.height()});
 				$heroModule.trigger('enableDragging');
@@ -121,18 +127,16 @@
 					heroData.cropposition = Math.abs($heroModuleImage.position().top) / $heroModuleImage.height();
 				}
 			});
+		}, onDragDisabled = function () {
+			return false;
 		};
 
-	$('.hero-title').on('focus', onFocus).on('blur keyup paste input', onInput).on('change', onChange);
+	$heroModuleTitle.on('focus', onFocus).on('blur keyup paste input', onInput).on('change', onChange);
 	$('.hero-description').on('focus', onFocus).on('blur keyup paste input', onInput).on('change', onChange);
-	$heroModule.on('change', onChange);
-	$heroModule.on('saveEvent', onSave);
-	$heroModule.on('enableDragging', onDraggingEnabled);
-	$('.edit-btn').on('click', onEdit);
-	$('.save-btn').on('click', onSave);
-	$('.discard-btn').on('click', function () {
-		revert();
-	});
+	$heroModule.on('change', onChange).on('saveEvent', onSave).on('enableDragging', onDraggingEnabled);
+	$editButton.on('click', onEdit);
+	$saveButton.on('click', onSave);
+	$('.discard-btn').on('click', revertToCurrentZeroState);
 	$('.toggle-upload-btn').on('click', function () {
 		$('.toggle-btn').hide();
 		$('.overlay').show();
@@ -143,18 +147,11 @@
 	});
 
 	$(window).resize(onResize);
-	load();
+	initializeData();
 
 	//turn off browser image handling
-	$body.on('dragover', function () {
-		return false;
-	});
-	$body.on('dragend', function () {
-		return false;
-	});
-	$body.on('drop', function () {
-		return false;
-	});
+
+	$body.on('dragover', onDragDisabled).on('dragend', onDragDisabled).on('drop', onDragDisabled);
 
 	//those two are needed to cancel default behaviour
 	$heroModuleUpload.on('dragenter', function () {
@@ -169,6 +166,7 @@
 	$heroModuleUploadMask.on('dragend', function () {
 		return false;
 	});
+
 	$heroModuleUploadMask.on('drop', function (e) {
 		$('.upload').removeClass('upload-hover');
 		$heroModuleUploadMask.hide();
