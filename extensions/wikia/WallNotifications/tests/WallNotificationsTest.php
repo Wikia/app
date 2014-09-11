@@ -4,8 +4,8 @@
 $wgCanonicalNamespaceNames = $wgCanonicalNamespaceNames + $wgExtraNamespaces;
 
 class testWallNotifications extends WallNotifications {
-	public function addNotificationToData(&$data, $userId, $wikiId, $uniqueId, $entityKey, $authorId, $isReply, $read = false, $notifyeveryone = false) {
-		return parent::addNotificationToData($data, $userId, $wikiId, $uniqueId, $entityKey, $authorId, $isReply, $read, $notifyeveryone);
+	public function addNotificationToData(&$data, $userId, $wikiId, $notificationData) {
+		return parent::addNotificationToData($data, $userId, $wikiId, $notificationData);
 	}
 }
 
@@ -88,6 +88,15 @@ class WallNotificationsTest extends WikiaBaseTest {
 		$read = false;
 		$notifyeveryone = false;
 
+		$notificationData = [
+			'unique_id' => $uniqueId,
+			'entity_key' => $entityKey,
+			'is_reply' => $isReply,
+			'author_id' => $authorId,
+			'is_read' => $read,
+			'notifyeveryone' => $notifyeveryone
+		];
+
 		$dataS = array(
 			'notification' => array(
 				0 => 4444
@@ -128,7 +137,7 @@ class WallNotificationsTest extends WikiaBaseTest {
 		);
 
 		// Data Set #0
-		$tests[] = array( null, null, $uniqueId, $entityKey, $authorId, $isReply, $read, $dataS, $dataF );
+		$tests[] = array( null, null, $notificationData, $dataS, $dataF );
 
 		$dataS = $dataF;
 
@@ -157,8 +166,10 @@ class WallNotificationsTest extends WikiaBaseTest {
 
 		$entityKey = '404_102';
 
+		$notificationData['entity_key'] = $entityKey;
+
 		// Data Set #1
-		$tests[] = array( null, null, $uniqueId, $entityKey, $authorId, $isReply, $read, $dataS, $dataF );
+		$tests[] = array( null, null, $notificationData, $dataS, $dataF );
 
 		$authorId2 = 7777;
 		$entityKey  = '505_212';
@@ -190,8 +201,11 @@ class WallNotificationsTest extends WikiaBaseTest {
 			)
 		);
 
+		$notificationData['entity_key'] = $entityKey2;
+		$notificationData['author_id'] = $authorId2;
+
 		// Data Set #2
-		$tests[] = array( null, null, $uniqueId, $entityKey2, $authorId2, $isReply, $read, $dataS, $dataF );
+		$tests[] = array( null, null, $notificationData, $dataS, $dataF );
 
 		$dataS = $dataF;
 
@@ -225,8 +239,11 @@ class WallNotificationsTest extends WikiaBaseTest {
 			)
 		);
 
+		$notificationData['entity_key'] = $entityKey3;
+		$notificationData['author_id'] = $authorId3;
+
 		// Data Set #3
-		$tests[] = array( null, null, $uniqueId, $entityKey3, $authorId3, $isReply, $read, $dataS, $dataF );
+		$tests[] = array( null, null, $notificationData, $dataS, $dataF );
 
 		$dataS = $dataF;
 
@@ -260,8 +277,11 @@ class WallNotificationsTest extends WikiaBaseTest {
 			)
 		);
 
+		$notificationData['entity_key'] = $entityKey4;
+		$notificationData['author_id'] = $authorId4;
+
 		// Data Set #4
-		$tests[] = array( null, null, $uniqueId, $entityKey4, $authorId4, $isReply, $read, $dataS, $dataF );
+		$tests[] = array( null, null, $notificationData, $dataS, $dataF );
 
 		$dataS = $dataF;
 
@@ -294,18 +314,20 @@ class WallNotificationsTest extends WikiaBaseTest {
 
 		$entityKey5 = '404_106';
 
+		$notificationData['entity_key'] = $entityKey5;
+
 		// Data Set #5
-		$tests[] = array( null, null, $uniqueId, $entityKey5, $authorId4, $isReply, $read, $dataS, $dataF );
+		$tests[] = array( null, null, $notificationData, $dataS, $dataF );
 
 		return $tests;
 	}
 	/**
 	 * @dataProvider someDataProvider
 	 */
-	public function testAddNotificationToData($userId, $wikiId, $uniqueId, $entityKey, $authorId, $isReply, $read, $dataS, $dataF) {
+	public function testAddNotificationToData($userId, $wikiId, $notificationData, $dataS, $dataF) {
 		$wn = new testWallNotifications();
 
-		$wn->addNotificationToData($dataS, $userId, $wikiId, $uniqueId, $entityKey, $authorId, $isReply, $read);
+		$wn->addNotificationToData($dataS, $userId, $wikiId, $notificationData);
 
 		$this->assertEquals($dataS, $dataF);
 	}
