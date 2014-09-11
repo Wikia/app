@@ -259,7 +259,7 @@ class DivContainingHeadersVisitor extends DOMNodeVisitorBase {
 		foreach ( $tabTitleText as $tabTitleTextItem ) {
 			$tabTitleTextArr[ ] = $tabTitleTextItem->nodeValue;
 		}
-		$tabTitle = join( '', $tabTitleTextArr );
+		$tabTitle = join( ' ', $tabTitleTextArr );
 		return $tabTitle;
 	}
 }
