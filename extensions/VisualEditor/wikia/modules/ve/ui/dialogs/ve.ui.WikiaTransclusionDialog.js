@@ -51,10 +51,9 @@ ve.ui.WikiaTransclusionDialog.prototype.initialize = function () {
 		'label': ve.msg( 'visualeditor-dialog-action-cancel' ),
 		'classes': [ 've-ui-wikiaTransclusionDialog-cancelButton' ]
 	} );
-	this.filterInput = new OO.ui.TextInputWidget( {
+	this.filterInput = new OO.ui.ClearableInputWidget( {
 		'$': this.$,
 		'icon': 'search',
-		'type': 'search',
 		'placeholder': ve.msg( 'wikia-visualeditor-dialog-transclusion-filter' )
 	} );
 	this.$filter = this.$( '<div>' )
