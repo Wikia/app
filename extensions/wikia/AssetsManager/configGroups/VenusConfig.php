@@ -29,7 +29,6 @@ $VenusConfig['venus_body_js'] = [
 		'//resources/wikia/modules/querystring.js',
 		'//resources/wikia/modules/throbber.js',
 		'//resources/wikia/modules/thumbnailer.js',
-		'//resources/wikia/modules/tracker.js',
 		'//resources/wikia/modules/window.js',
 		'//resources/wikia/modules/abTest.js',
 
