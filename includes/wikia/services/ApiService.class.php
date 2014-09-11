@@ -46,6 +46,11 @@ class ApiService extends Service {
 
 		$hostName = self::getHostByDbName( $dbname );
 
+		// If hostname is empty, this will make a request to the current host.
+		if ( empty( $hostName ) ) {
+			return false;
+		}
+
 		// request JSON format of API response
 		$params['format'] = 'json';
 
@@ -78,7 +83,7 @@ class ApiService extends Service {
 	 * @param string database name
 	 * @return string HTTP domain
 	 */
-	public static function getHostByDbName( $dbname ) {
+	private static function getHostByDbName( $dbname ) {
 		global $wgDevelEnvironment, $wgDevelEnvironmentName;
 
 		$cityId = WikiFactory::DBtoID( $dbname );
