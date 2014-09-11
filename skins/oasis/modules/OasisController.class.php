@@ -378,8 +378,8 @@ class OasisController extends WikiaController {
 
 		// move JS files added to OutputPage to list of files to be loaded
 		$scripts = RequestContext::getMain()->getSkin()->getScripts();
-
-		foreach ( $scripts as $s ) {
+	
+			foreach ( $scripts as $s ) {
 			//add inline scripts to jsFiles and move non-inline to the queue
 			if ( !empty( $s['url'] ) ) {
 				// FIXME: quick hack to load MW core JavaScript at the top of the page - really, please fix me!
