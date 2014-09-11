@@ -46,7 +46,7 @@ class ApiService extends Service {
 
 		$hostName = self::getHostByDbName( $dbname );
 
-		// If hostname is empty, this will make a request to the current host.
+		// If hostName is empty, this will make a request to the current host.
 		if ( empty( $hostName ) ) {
 			return false;
 		}
