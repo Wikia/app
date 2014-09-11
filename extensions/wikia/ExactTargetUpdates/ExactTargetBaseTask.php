@@ -3,7 +3,6 @@
 use Wikia\Tasks\Tasks\BaseTask;
 
 class ExactTargetBaseTask extends BaseTask {
-	protected $oClient;
 
 	/**
 	 * Creates ExactTargetSoapClient object containing credentials to connect by API
