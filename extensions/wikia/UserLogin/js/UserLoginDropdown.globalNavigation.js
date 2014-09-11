@@ -25,7 +25,7 @@ require(['jquery'], function($){
 	$entryPoint.on('click', '.ajaxLogin', function(ev) {
 		ev.preventDefault();
 		ev.stopPropagation(); // BugId:16984
-		if ($entryPoint.hasClass('active')) {
+		if (wgUserName && $entryPoint.hasClass('active')) {
 			window.location = $(this).attr('href');
 		} else {
 			openMenu();
