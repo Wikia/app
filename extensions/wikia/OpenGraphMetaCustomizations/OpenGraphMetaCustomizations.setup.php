@@ -32,8 +32,8 @@ function egOgmcParserAfterTidy( Parser $parser, &$text ) {
 } // end egOgmcParserAfterTidy
 
 /**
- * Now that the page is far enough along, use the ImageServing and ArticleService to set
- * the mainImage and description (respectively) on the OuptutPage.  These values will then
+ * Now that the page is far enough along, use ArticleService to set
+ * the escription on the OuptutPage.  This value will then
  * be used by the OpenGraphMeta extension.
  */
 $wgParserOutputHooks['applyOpenGraphMetaCustomizations'] = 'egOgmcParserOutputApplyValues';
@@ -44,55 +44,6 @@ function egOgmcParserOutputApplyValues( OutputPage $out, ParserOutput $parserOut
 	$articleId = $wgTitle->getArticleID();
 	$titleImage = $titleDescription = null;
 	wfRunHooks('OpenGraphMeta:beforeCustomFields', array($articleId, &$titleImage, &$titleDescription));
-
-	// Only use ImageServing if no main image is already specified.  This lets people override the image with the parser function: [[File:{{#setmainimage:Whatever.png}}]].
-	if(!isset($out->mMainImage)){
-		if (is_null($titleImage)) {
-			// Get image from ImageServing
-			// TODO: Make sure we automatically respect these restrictions from Facebook:
-			// 		"An image URL which should represent your object within the graph.
-			//		The image must be at least 50px by 50px and have a maximum aspect ratio of 3:1.
-			//		We support PNG, JPEG and GIF formats."
-			wfProfileIn(__METHOD__ . '::ImageServing');
-
-			$imageServing = new ImageServing( [ $articleId ] );
-			foreach ( $imageServing->getImages( 1 ) as $value ) {
-				$titleImage = Title::newFromText( $value[0]['name'], NS_FILE );
-			}
-
-			wfProfileOut(__METHOD__ . '::ImageServing');
-		}
-
-		// If ImageServing was not able to deliver a good match, fall back to the wiki's wordmark.
-		if ( empty($titleImage) && !is_object( $titleImage ) && F::app()->checkSkin( 'oasis' ) ){
-			$themeSettings = new ThemeSettings();
-			$settings = $themeSettings->getSettings();
-			if ($settings["wordmark-type"] == "graphic") {
-				$titleImage = Title::newFromText( $settings['wordmark-image-name'], NS_FILE );
-			}
-		}
-
-		// If we have a Title object for an image, convert it to an Image object and store it in mMainImage.
-		if ($titleImage instanceof Title) {
-			wfProfileIn(__METHOD__ . '::wfFindFile');
-			wfDebug(__METHOD__ . " {$titleImage}\n");
-
-			$mainImage = wfFindFile($titleImage);
-			if ($mainImage !== false) {
-				$parserOutput->setProperty('mainImage', $mainImage);
-				$out->mMainImage = $parserOutput->getProperty('mainImage');
-			}
-
-			wfProfileOut(__METHOD__ . '::wfFindFile');
-		} else {
-			// Fall back to using a Wikia logo.  There aren't any as "File:" pages, so we use a new config var for one that
-			// is being added to skins/common.
-			global $wgBigWikiaLogo;
-			$logoUrl = wfReplaceImageServer( $wgBigWikiaLogo );
-			$parserOutput->setProperty('mainImage', $logoUrl);
-			$out->mMainImage = $parserOutput->getProperty('mainImage');
-		}
-	}
 
 	// Get description from ArticleService
 	if (is_null($titleDescription)) {
