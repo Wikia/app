@@ -90,9 +90,10 @@
 		}, onDataSaved = function (data) {
 			$heroModuleImage.draggable({ disabled: true });
 			$heroModuleTitle.text(heroData.oTitle = heroData.title);
-			$heroModuleTitle.text(heroData.description = heroData.oDescription);
-			$heroModuleImage.attr('src', heroData.imagepath = heroData.oImage);
-			$heroModuleImage.data('cropposition', heroData.cropposition = heroData.oCropposition);
+			$heroModuleTitle.text(heroData.oDescription = heroData.description);
+			$heroModuleImage.attr('src', heroData.oImage = heroData.imagepath);
+			$heroModuleImage.data('fullpath', heroData.imagepath);
+			$heroModuleImage.data('cropposition', heroData.oCropposition = heroData.cropposition);
 
 			revertToCurrentZeroState();
 		}, onSave = function () {
