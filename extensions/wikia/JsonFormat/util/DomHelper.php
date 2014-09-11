@@ -111,9 +111,9 @@ class DomHelper {
 				}
 				else {
 
-					if( !empty( $node->attributes ) ) {
-						$class = $node->attributes->getNamedItem('class');
-						if( $class && in_array( $class->nodeValue, $ignoredClasses ) ) {
+					if( !empty( $child->attributes ) ) {
+						$class = trim( $child->getAttribute( 'class' ) );
+						if( $class && in_array( $class, $ignoredClasses ) ) {
 							continue;
 						}
 					}
