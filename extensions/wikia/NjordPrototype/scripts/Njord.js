@@ -59,6 +59,7 @@
 			$toggleButton.hide();
 			$uploadButton.hide();
 			$editButton.show();
+			$heroModuleImage.draggable('disable');
 			$heroModule.stopThrobbing();
 		}, onFocus = function () {
 			var $this = $(this);
@@ -121,8 +122,8 @@
 						$this.attr('contenteditable', true);
 					}
 				});
-				$('.edit-area').toggle();
-				$editButton.toggle();
+				$('.edit-area').show();
+				$editButton.hide();
 				$heroModuleImage.css({top: -heroData.oCropposition * $heroModuleImage.height()});
 				$heroModule.trigger('resize');
 				$heroModule.trigger('enableDragging');
