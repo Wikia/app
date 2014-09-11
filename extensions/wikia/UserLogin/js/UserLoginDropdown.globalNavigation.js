@@ -18,31 +18,34 @@ require(['jquery'], function($){
 		$transparentOut.removeClass('visible');
 	}
 
-	$transparentOut = $('<div class="transparent-out transparent-out-user-login-and-account-navigation"/>').appendTo('body');
-	$transparentOut.click(closeMenu);
+	$(function(){
+		$transparentOut = $('<div class="transparent-out transparent-out-user-login-and-account-navigation"/>').appendTo('body');
+		$transparentOut.click(closeMenu);
 
-	$entryPoint = $('#AccountNavigation');
-	$entryPoint.on('click', '.ajaxLogin', function(ev) {
-		ev.preventDefault();
-		ev.stopPropagation(); // BugId:16984
-		if (wgUserName && $entryPoint.hasClass('active')) {
-			window.location = $(this).attr('href');
-		} else {
-			openMenu();
+		$entryPoint = $('#AccountNavigation');
+		$entryPoint.on('click', '.ajaxLogin', function(ev) {
+			ev.preventDefault();
+			ev.stopPropagation(); // BugId:16984
+
+			if (wgUserName && $entryPoint.hasClass('active')) {
+				window.location = $(this).attr('href');
+			} else {
+				openMenu();
+			}
+		});
+
+		$userLoginDropdown = $('#UserLoginDropdown');
+
+		if (!window.touchstart) {
+			window.delayedHover(
+				$entryPoint.get(0),
+				{
+					checkInterval: 100,
+					maxActivationDistance: 20,
+					onActivate: openMenu,
+					onDeactivate: ($userLoginDropdown.length ? Function.prototype : closeMenu)
+				}
+			);
 		}
 	});
-
-	$userLoginDropdown = $('#UserLoginDropdown');
-
-	if (!window.touchstart) {
-		window.delayedHover(
-			$entryPoint.get(0),
-			{
-				checkInterval: 100,
-				maxActivationDistance: 20,
-				onActivate: openMenu,
-				onDeactivate: ($userLoginDropdown.length ? Function.prototype : closeMenu)
-			}
-		);
-	}
 });
