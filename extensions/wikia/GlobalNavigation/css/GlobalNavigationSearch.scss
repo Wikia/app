@@ -37,13 +37,13 @@
 
 	.autocomplete {
 		background-color: $nav-background-color;
-		border: 1px solid $nav-alternative-color;
+		border: 1px solid $nav-border-color;
 		font-size: 15px;
 		line-height: 18px;
 		margin-top: 10px;
 
 		div {
-			border-bottom: 1px solid $nav-alternative-color;
+			border-bottom: 1px solid $nav-border-color;
 			cursor: pointer;
 			height: 55px;
 			line-height: 35px;
@@ -51,7 +51,7 @@
 			white-space: initial;
 
 			&.selected {
-				background-color: $search-input-background;
+				background-color: $nav-background-hover-color;
 			}
 		}
 
@@ -68,7 +68,7 @@
 		}
 
 		strong {
-			color: $nav-active-color;
+			color: $nav-foreground-dark-color;
 		}
 	}
 }
