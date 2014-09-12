@@ -6,8 +6,10 @@ class WallNotificationsEveryone extends WallNotifications {
 	const DELETE_IDS_BATCH_SIZE = 100;
 
 	public function __construct() {
+		global $wgCityId;
+
 		$this->app = F::app();
-		$this->cityId = $this->app->wg->CityId;
+		$this->cityId = $wgCityId;
 	}
 
 	/**
@@ -22,11 +24,11 @@ class WallNotificationsEveryone extends WallNotifications {
 		$pageId = $entity->data->title_id;
 
 		$this->getDB( true )->replace( 'wall_notification_queue', '',
-			array(
+			[
 				'wiki_id' => $this->cityId,
 				'entity_key' => $key,
 				'page_id' => $pageId
-			),
+			],
 			__METHOD__
 		);
 
@@ -50,10 +52,10 @@ class WallNotificationsEveryone extends WallNotifications {
 
 		// remove notification from notification queue
 		$this->getDB(true)->delete( 'wall_notification_queue',
-			array(
+			[
 				'wiki_id' => $this->cityId,
 				'page_id' => $pageId
-			),
+			],
 			__METHOD__
 		);
 
@@ -76,11 +78,11 @@ class WallNotificationsEveryone extends WallNotifications {
 
 		$preparedDbExpireTime = $this->getDbExpireDate();
 		$res = $this->getDB( false )->select( 'wall_notification_queue',
-			array( 'entity_key' ),
-			array(
+			[ 'entity_key' ],
+			[
 				'wiki_id = ' . $this->cityId,
 				'event_date > ' . $preparedDbExpireTime
-			),
+			],
 			__METHOD__
 		);
 		if ( $res ) {
@@ -105,7 +107,7 @@ class WallNotificationsEveryone extends WallNotifications {
 				$notifications = WallNotificationEntity::createFromRev( $rev, $this->cityId );
 				if ( !empty( $notifications ) ) {
 					$wn = new WallNotifications();
-					$wn->addNotificationLinks( array( $userId ), $notifications );
+					$wn->addNotificationLinks( [ $userId ], $notifications );
 				}
 			}
 
@@ -116,91 +118,102 @@ class WallNotificationsEveryone extends WallNotifications {
 	}
 
 	public function setGlobalCacheBuster() {
-		wfProfileIn(__METHOD__);
+		global $wgMemc;
+
+		wfProfileIn( __METHOD__ );
 		$cacheKey = $this->getGlobalCacheBusterKey();
 		$val = time();
-		$this->app->wg->memc->set($cacheKey, $val);
-		wfProfileOut(__METHOD__);
+		$wgMemc->set( $cacheKey, $val );
+		wfProfileOut( __METHOD__ );
 		return $val;
 	}
 
 	public function getGlobalCacheBuster() {
-		wfProfileIn(__METHOD__);
+		global $wgMemc;
+
+		wfProfileIn( __METHOD__ );
 		$cacheKey = $this->getGlobalCacheBusterKey();
-		$val = $this->app->wg->memc->get($cacheKey);
-		if (empty($val)) {
-			wfProfileOut(__METHOD__);
+		$val = $wgMemc->get( $cacheKey );
+		if ( empty( $val ) ) {
+			wfProfileOut( __METHOD__ );
 			return $this->setGlobalCacheBuster();
 		}
-		wfProfileOut(__METHOD__);
+		wfProfileOut( __METHOD__ );
 		return $val;
 	}
 
+	public function setEntityProcessed( $userId, $entityKey ) {
+		global $wgMemc;
 
-	public function setEntityProcessed($userId, $entityKey) {
-		wfProfileIn(__METHOD__);
+		wfProfileIn( __METHOD__ );
 
-		$cacheKey = $this->getEntityProcessedCacheKey($userId, $entityKey);
-		$this->app->wg->memc->set($cacheKey, true);
+		$cacheKey = $this->getEntityProcessedCacheKey( $userId, $entityKey );
+		$wgMemc->set( $cacheKey, true );
 
-		$this->getDB(true)->insert('wall_notification_queue_processed', array(
+		$this->getDB( true )->insert( 'wall_notification_queue_processed', [
 			'user_id' => $userId,
 			'entity_key' => $entityKey
-		), __METHOD__);
+		], __METHOD__);
 
 		wfProfileOut(__METHOD__);
 	}
 
-	public function getEntityProcessed($userId, $entityKey) {
-		wfProfileIn(__METHOD__);
-		$cacheKey = $this->getEntityProcessedCacheKey($userId, $entityKey);
-		$val = $this->app->wg->memc->get($cacheKey);
+	public function getEntityProcessed( $userId, $entityKey ) {
+		global $wgMemc;
 
-		if ($val == true) {
-			wfProfileOut(__METHOD__);
+		wfProfileIn( __METHOD__ );
+		$cacheKey = $this->getEntityProcessedCacheKey( $userId, $entityKey );
+		$val = $wgMemc->get( $cacheKey );
+
+		if ( $val == true ) {
+			wfProfileOut( __METHOD__ );
 			return true;
 		}
 
-		$row = $this->getDB(false)->selectRow('wall_notification_queue_processed',
-			array('count(*) as cnt'),
-			array(
+		$row = $this->getDB( false )->selectRow( 'wall_notification_queue_processed',
+			[ 'count(*) as cnt' ],
+			[
 				'user_id' => $userId,
 				'entity_key' => $entityKey
-			),
+			],
 			__METHOD__
 		);
 
-		if ($row->cnt == 0) {
-			wfProfileOut(__METHOD__);
+		if ( $row->cnt == 0 ) {
+			wfProfileOut( __METHOD__ );
 			return false;
 		}
 
-		$this->setEntityProcessed($userId, $entityKey);
-		wfProfileOut(__METHOD__);
+		$this->setEntityProcessed( $userId, $entityKey );
+		wfProfileOut( __METHOD__ );
 		return true;
 	}
 
-	public function setQueueProcessed($userId) {
-		wfProfileIn(__METHOD__);
+	public function setQueueProcessed( $userId ) {
+		global $wgMemc;
 
-		$cacheKey = $this->getQueueProcessedCacheKey($userId);
-		$this->app->wg->memc->set($cacheKey, true);
+		wfProfileIn( __METHOD__ );
 
-		wfProfileOut(__METHOD__);
+		$cacheKey = $this->getQueueProcessedCacheKey( $userId );
+		$wgMemc->set( $cacheKey, true );
+
+		wfProfileOut( __METHOD__ );
 	}
 
-	public function getQueueProcessed($userId) {
-		wfProfileIn(__METHOD__);
+	public function getQueueProcessed( $userId ) {
+		global $wgMemc;
 
-		$cacheKey = $this->getQueueProcessedCacheKey($userId);
-		$out = $this->app->wg->memc->get($cacheKey);
+		wfProfileIn( __METHOD__ );
 
-		if ($out == true) {
-			wfProfileOut(__METHOD__);
+		$cacheKey = $this->getQueueProcessedCacheKey( $userId );
+		$out = $wgMemc->get( $cacheKey );
+
+		if ( $out == true ) {
+			wfProfileOut( __METHOD__ );
 			return true;
 		}
 
-		wfProfileOut(__METHOD__);
+		wfProfileOut( __METHOD__ );
 		return false;
 	}
 
@@ -225,54 +238,56 @@ class WallNotificationsEveryone extends WallNotifications {
 	 *		- the second one contains id's to all notifications
 	 */
 	private function getExpiredNotifications( $preparedDbExpireTime ) {
-		// SELECT wn.id, wn.user_id, wn.wiki_id, wn.unique_id
-		// FROM wall_notification wn
-		// JOIN wall_notification_queue wnq ON wnq.wiki_id = wn.wiki_id AND wnq.page_id = wn.unique_id
-		// WHERE event_date < '20140113121200';
-		$db = $this->getDB(true);
+		/*
+		 * SELECT wn.id, wn.user_id, wn.wiki_id, wn.unique_id
+		 * FROM wall_notification wn
+		 * JOIN wall_notification_queue wnq ON wnq.wiki_id = wn.wiki_id AND wnq.page_id = wn.unique_id
+		 * WHERE event_date < '20140113121200';
+		 */
+		$db = $this->getDB( true );
 		$res = $db->select(
-			array(
+			[
 				'wn' => 'wall_notification',
 				'wnq' => 'wall_notification_queue'
-			),
-			array(
+			],
+			[
 				'wn.id',
 				'wn.user_id',
 				'wn.wiki_id',
 				'wn.unique_id'
-			),
-			array(
+			],
+			[
 				'event_date < ' . $preparedDbExpireTime
-			),
+			],
 			__METHOD__,
-			array(),
-			array(
-				'wnq' => array(
+			[],
+			[
+				'wnq' => [
 					'JOIN',
-					array(
+					[
 						'wnq.wiki_id = wn.wiki_id',
 						'wnq.page_id = wn.unique_id'
-					)
-				)
-			)
+					]
+				]
+			]
 		);
-		$notifications = array();
-		$notificationToDeleteIds = array();
+		$notifications = [];
+		$notificationToDeleteIds = [];
 
 		// Group notifications by user_id / wiki_id as the cache is per (user_id, wiki_id) pairs
 		while( $row = $db->fetchRow( $res ) ) {
 			$user_id = $row['user_id'];
 			$wiki_id = $row['wiki_id'];
 			if( !isset( $notifications[$user_id] ) ) {
-				$notifications[$user_id] = array();
+				$notifications[$user_id] = [];
 			}
 			if( !isset( $notifications[$user_id][$wiki_id] ) ) {
-				$notifications[$user_id][$wiki_id] = array();
+				$notifications[$user_id][$wiki_id] = [];
 			}
 			$notifications[$user_id][$wiki_id][] = $row['unique_id'];
 			$notificationToDeleteIds[] = (int)$row['id'];
 		}
-		return array( $notifications, $notificationToDeleteIds );
+		return [ $notifications, $notificationToDeleteIds ];
 	}
 
 	/**
@@ -312,8 +327,8 @@ class WallNotificationsEveryone extends WallNotifications {
 		while ( $chunk = array_splice( $notificationToDeleteIds, 0, self::DELETE_IDS_BATCH_SIZE )) {
 			$deleteIds = '(' . implode( ',', $chunk ) . ')';
 
-			$this->getDB(true)->delete( 'wall_notification',
-				array( 'id IN '. $deleteIds ),
+			$this->getDB( true )->delete( 'wall_notification',
+				[ 'id IN '. $deleteIds ],
 				__METHOD__
 			);
 		};

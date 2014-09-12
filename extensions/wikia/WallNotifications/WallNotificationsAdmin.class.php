@@ -2,38 +2,39 @@
 
 class WallNotificationsAdmin {
 	var $cityId; 
+
 	public function __construct() {
+		global $wgCityId;
+
 		$this->app = F::App();
-		$this->cityId = $this->app->wg->CityId;
+		$this->cityId = $wgCityId;
 	}
 
 	/*
 	 * Public Interface
 	 */
-	
-	
 	public function getAdminNotifications( $wikiId, $currentUserId = null ) {
 		// admin notifications are wiki specific, not user-specific
 		// as soon as one person reads them no other admin will see them
 	
-		if($this->cityId != $wikiId ) {
-			return array();
+		if( $this->cityId != $wikiId ) {
+			return [];
 		}
 		
 		$key = $this->getKey( $wikiId );
 		$val = $this->getCache()->get( $key );
 		
-		if(empty($val) ) {
-			$val = array();
+		if( empty( $val ) ) {
+			$val = [];
 		}
 
-		foreach($val as $ref=>$notif) {
-			if( !empty($notif['grouped'] ) && isset($notif['grouped'][0]->data->hide_for_userid[$currentUserId]) ) {
-				unset($val[$ref]);
+		foreach( $val as $ref => $notif ) {
+			if( !empty( $notif['grouped'] ) && isset( $notif['grouped'][0]->data->hide_for_userid[$currentUserId] ) ) {
+				unset( $val[$ref] );
 			} 
 		}
 		
-		return array_reverse($val);
+		return array_reverse( $val );
 		
 	}
 	
@@ -42,11 +43,11 @@ class WallNotificationsAdmin {
 
 		$key = $this->getKey( $wikiId );
 		$val = $this->getCache()->get( $key );
-		if(empty($val) ) {
-			$val = array();
+		if( empty( $val ) ) {
+			$val = [];
 		}
 		
-		$val[] = array( 'grouped'=> array( $notif ), 'count'=>'1' );
+		$val[] = [ 'grouped'=> [ $notif ], 'count'=>'1' ];
 		
 		$this->getCache()->set( $key, $val );
 		
@@ -54,22 +55,24 @@ class WallNotificationsAdmin {
 
 	public function removeAll( $wikiId ) {
 		$key = $this->getKey( $wikiId );
-		$this->getCache()->set( $key, array() );
+		$this->getCache()->set( $key, [] );
 		
 	}
 	
 	public function removeForThread( $wikiId, $messageId ) {
 		$key = $this->getKey( $wikiId );
 		$val = $this->getCache()->get( $key );
-		if(empty($val) ) {
-			$val = array();
+		if( empty( $val ) ) {
+			$val = [];
 		}
-		foreach($val as $ref=>$notif) {
-			if( !empty($notif['grouped'] ) ) {
-				$id = $notif['grouped'][0]->data->parent_id == 0 ? $notif['grouped'][0]->data->message_id:$notif['grouped'][0]->data->parent_id;
+		foreach( $val as $ref => $notif ) {
+			if( !empty( $notif['grouped'] ) ) {
+				$id = 	$notif['grouped'][0]->data->parent_id == 0
+						? $notif['grouped'][0]->data->message_id
+						: $notif['grouped'][0]->data->parent_id;
 
-				if( $id ==  $messageId) {
-					unset($val[$ref]);
+				if( $id ==  $messageId ) {
+					unset( $val[$ref] );
 				}
 			} 
 		}
@@ -81,14 +84,14 @@ class WallNotificationsAdmin {
 		$key = $this->getKey( $wikiId );
 		$val = $this->getCache()->get( $key );
 		if(empty($val) ) {
-			$val = array();
+			$val = [];
 		}
-		foreach($val as $ref=>$notif) {
-			if( !empty($notif['grouped'] ) ) {
+		foreach( $val as $ref => $notif ) {
+			if( !empty( $notif['grouped'] ) ) {
 				$id = $notif['grouped'][0]->data->message_id;
 
 				if( $id ==  $messageId) {
-					unset($val[$ref]);
+					unset( $val[$ref] );
 				}
 			} 
 		}
@@ -100,13 +103,13 @@ class WallNotificationsAdmin {
 		$key = $this->getKey( $wikiId );
 		$val = $this->getCache()->get( $key );
 		if(empty($val) ) {
-			$val = array();
+			$val = [];
 		}
 		
 		$hidden = false;
 		
-		foreach($val as $ref=>$notif) {
-			if( !empty($notif['grouped'] ) && !isset($notif['grouped'][0]->data->hide_for_userid[$userId]) ) {
+		foreach( $val as $notif ) {
+			if( !empty( $notif['grouped'] ) && !isset( $notif['grouped'][0]->data->hide_for_userid[$userId] ) ) {
 				$notif['grouped'][0]->data->hide_for_userid[$userId] = true;
 				$hidden = true;
 			} 
@@ -120,7 +123,6 @@ class WallNotificationsAdmin {
 	/*
 	 * Private
 	 */
-	
 	protected function getCache() {
 		global $wgMemc;
 		return $wgMemc;

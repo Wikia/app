@@ -1055,7 +1055,7 @@ $config['wall_js'] = array(
 $config['wall_notifications_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
-		'//extensions/wikia/Wall/js/WallNotifications.js',
+		'//extensions/wikia/WallNotifications/scripts/WallNotifications.js',
 	)
 );
 

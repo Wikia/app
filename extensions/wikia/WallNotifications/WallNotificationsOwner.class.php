@@ -9,16 +9,14 @@ class WallNotificationsOwner {
 	/*
 	 * Public Interface
 	 */
-	
-	
 	public function getOwnerNotifications( $wikiId, $userId ) {
 		$key = $this->getKey( $wikiId, $userId );
 		$val = $this->getCache()->get( $key );
-		if(empty($val) ) {
-			$val = array();
+		if( empty( $val ) ) {
+			$val = [];
 		}
 
-		return array_reverse($val);
+		return array_reverse( $val );
 		
 	}
 	
@@ -34,11 +32,11 @@ class WallNotificationsOwner {
 
 		$key = $this->getKey( $wikiId, $userId );
 		$val = $this->getCache()->get( $key );
-		if(empty($val) ) {
-			$val = array();
+		if( empty( $val ) ) {
+			$val = [];
 		}
 		
-		$val[] = array( 'grouped'=> array( $notif ), 'count'=>'1' );
+		$val[] = [ 'grouped'=> [ $notif ], 'count'=>'1' ];
 		
 		$this->getCache()->set( $key, $val );
 		
@@ -47,15 +45,17 @@ class WallNotificationsOwner {
 	public function removeForThread( $wikiId, $userId, $messageId ) {
 		$key = $this->getKey( $wikiId, $userId );
 		$val = $this->getCache()->get( $key );
-		if(empty($val) ) {
-			$val = array();
+		if( empty( $val ) ) {
+			$val = [];
 		}
-		foreach($val as $ref=>$notif) {
-			if( !empty($notif['grouped'] ) ) {
-				$id = $notif['grouped'][0]->data->parent_id == 0 ? $notif['grouped'][0]->data->message_id:$notif['grouped'][0]->data->parent_id;
+		foreach( $val as $ref => $notif ) {
+			if( !empty( $notif['grouped'] ) ) {
+				$id = 	$notif['grouped'][0]->data->parent_id == 0
+						? $notif['grouped'][0]->data->message_id
+						: $notif['grouped'][0]->data->parent_id;
 
-				if( $id ==  $messageId) {
-					unset($val[$ref]);
+				if( $id ==  $messageId ) {
+					unset( $val[$ref] );
 				}
 			} 
 		}
@@ -67,14 +67,14 @@ class WallNotificationsOwner {
 		$key = $this->getKey( $wikiId, $userId );
 		$val = $this->getCache()->get( $key );
 		if(empty($val) ) {
-			$val = array();
+			$val = [];
 		}
-		foreach($val as $ref=>$notif) {
-			if( !empty($notif['grouped'] ) ) {
+		foreach( $val as $ref => $notif ) {
+			if( !empty( $notif['grouped'] ) ) {
 				$id = $notif['grouped'][0]->data->message_id;
 
 				if( $id ==  $messageId) {
-					unset($val[$ref]);
+					unset( $val[$ref] );
 				}
 			} 
 		}
@@ -85,13 +85,13 @@ class WallNotificationsOwner {
 	public function removeAll( $wikiId, $userId ) {
 		$key = $this->getKey( $wikiId, $userId );
 		$val = $this->getCache()->get( $key );
-		if(empty($val) ) {
+		if( empty( $val ) ) {
 			return false;
 		}
 		$wasUnread = false;
-		foreach($val as $ref=>$notif) {
-			if( !empty($notif['grouped'] ) ) {
-				unset($val[$ref]);
+		foreach( $val as $ref => $notif ) {
+			if( !empty( $notif['grouped'] ) ) {
+				unset( $val[$ref] );
 				$wasUnread = true;
 			} 
 		}
@@ -103,7 +103,6 @@ class WallNotificationsOwner {
 	/*
 	 * Private
 	 */
-	
 	protected function getCache() {
 		global $wgMemc;
 		return $wgMemc;
