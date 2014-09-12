@@ -18,6 +18,8 @@ ve.ui.WikiaTemplateOptionWidget = function VeUiWikiaMapOptionWidget( data, confi
 	// Properties
 	this.$appears = this.$( '<div>' )
 		.addClass( 've-ui-wikiaTemplateOptionWidget-appears' );
+	this.$gradient = this.$( '<div>' )
+		.addClass( 've-ui-wikiaTemplateOptionWidget-gradient' );
 
 	// Initialization
 	if ( config.appears ) {
@@ -26,6 +28,8 @@ ve.ui.WikiaTemplateOptionWidget = function VeUiWikiaMapOptionWidget( data, confi
 	this.$element
 		.addClass( 've-ui-wikiaTemplateOptionWidget' )
 		.append( this.$appears );
+	this.$label
+		.append( this.$gradient );
 };
 
 /* Inheritance */
