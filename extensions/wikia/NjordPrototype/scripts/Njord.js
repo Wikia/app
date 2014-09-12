@@ -86,9 +86,12 @@
 				heroData.imagechanged = true;
 				$toggleButton.show();
 				$overlay.hide();
+			} else {
+				$heroModuleTitle.text($heroModuleTitle.text());
+				$heroModuleDescription.text($heroModuleDescription.text());
 			}
 			heroData.changed = true;
-		}, onDataSaved = function (data) {
+		}, onDataSaved = function () {
 			$heroModuleImage.draggable({ disabled: true });
 			$heroModuleImage.removeClass('drag-cursor');
 			$heroModuleTitle.text(heroData.oTitle = heroData.title);
