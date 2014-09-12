@@ -277,7 +277,7 @@ class DataFeedProvider {
 			self::$hiddenCategories = $wgMemc->get($memcKey);
 			if (!is_array(self::$hiddenCategories)) {
 				$dbr = wfGetDB(DB_SLAVE);
-				$res = $dbr->query("SELECT page_title FROM page JOIN page_props ON page_id=pp_page AND pp_propname='hiddencat';");
+				$res = $dbr->query("SELECT page_title FROM page JOIN page_props ON page_id=pp_page AND pp_propname='hiddencat';", __METHOD__);
 				self::$hiddenCategories = array();
 				while($row = $dbr->fetchObject($res)) {
 					self::$hiddenCategories[] = $row->page_title;
