@@ -23,6 +23,7 @@ class GlobalNavigationWallNotificationsController extends WikiaController {
 
 		if( $loggedIn && !$suppressWallNotifications ) {
 			$this->response->addAsset( 'extensions/wikia/WallNotifications/styles/WallNotifications.globalNavigation.scss' );
+			$this->response->addAsset( 'extensions/wikia/WallNotifications/scripts/WallNotifications.globalNavigation.js' );
 			$this->response->setVal( 'prehide', ( empty( $wgEnableWallExt ) && empty( $wgEnableForumExt ) ) );
 		}
 

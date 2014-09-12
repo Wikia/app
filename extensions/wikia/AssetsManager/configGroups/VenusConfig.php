@@ -106,7 +106,6 @@ $VenusConfig[ 'global_navigation_js' ] = [
 		'//extensions/wikia/GlobalNavigation/js/SearchSuggestions.js',
 		'//skins/shared/js/transparent-out.js',
 		'//extensions/wikia/UserLogin/js/UserLoginDropdown.globalNavigation.js',
-		'//extensions/wikia/WallNotifications/scripts/WallNotifications.globalNavigation.js',
 	]
 ];
 
