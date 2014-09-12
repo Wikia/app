@@ -131,9 +131,11 @@ ve.ui.WikiaTemplateInsertDialog.prototype.insertTemplate = function () {
  * We can ask the commandRegistry for the command for the node and execute it.
  */
 ve.ui.WikiaTemplateInsertDialog.prototype.onTransact = function () {
-	ve.ui.commandRegistry.getCommandForNode(
-		this.surface.getView().getFocusedNode()
-	).execute( this.surface );
+	setTimeout( ve.bind( function() {
+		ve.ui.commandRegistry.getCommandForNode(
+			this.surface.getView().getFocusedNode()
+		).execute( this.surface );
+	}, this ), 0 );
 };
 
 /**
