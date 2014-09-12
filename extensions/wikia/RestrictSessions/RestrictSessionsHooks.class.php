@@ -82,9 +82,7 @@ class RestrictSessionsHooks extends \ContextSource {
 				// If the user has opted to remember their login, check the token
 				// and update session data
 				$token = rtrim( $cookieUser->getToken( false ) );
-				if ( $restrictSession && strlen ( $token )
-					&& \hash_equals( $token, $cookieToken )
-				) {
+				if ( strlen( $token ) && \hash_equals( $token, $cookieToken ) ) {
 					$request->setSessionData( self::IP_SESSION_KEY, $reqIp );
 				}
 			}
