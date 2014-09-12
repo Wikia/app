@@ -301,19 +301,21 @@ require(
 		};
 
 		$(function () {
-			WallNotifications.init();
+			if ( window.wgUserName ) {
+				WallNotifications.init();
 
-			window.menuAim(
-				document.querySelector('.user-menu'), {
-					activeRow: '#notifications',
-					rowSelector: '> li',
-					tolerance: 85,
-					submenuDirection: 'left',
-					activate: WallNotifications.openNotifications,
-					deactivate: WallNotifications.closeNotifications,
-					enter: WallNotifications.openNotifications,
-					exitMenu: WallNotifications.closeNotifications
-			});
+				window.menuAim(
+					document.querySelector('.user-menu'), {
+						activeRow: '#notifications',
+						rowSelector: '> li',
+						tolerance: 85,
+						submenuDirection: 'left',
+						activate: WallNotifications.openNotifications,
+						deactivate: WallNotifications.closeNotifications,
+						enter: WallNotifications.openNotifications,
+						exitMenu: WallNotifications.closeNotifications
+				});
+			}
 		});
 	}
 );
