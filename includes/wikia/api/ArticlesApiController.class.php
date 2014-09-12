@@ -693,19 +693,16 @@ class ArticlesApiController extends WikiaApiController {
 
 	protected function appendMetadata( $collection ) {
 		if ( !empty( $this->wg->EnablePOIExt ) ) {
+			$helper = new QuestDetailsSolrHelper();
 			$questDetailsSearch = new QuestDetailsSearchService();
-			$result = $questDetailsSearch->newQuery()
+			$metadata = $questDetailsSearch->newQuery()
 				->withIds( array_keys( $collection ), $this->wg->CityId )
-				->metadataOnly()
 				->search();
-
-			foreach ( $collection as $key => $item ) {
-				$meta = [ ];
-				if ( !empty( $result[ $key ] ) ) {
-					$meta = $result[ $key ];
-				}
-				if( !empty( $meta ) ) {
-					$collection[ $key ] = array_merge( $collection[ $key ], [ 'metadata' => $meta ] );
+			$metadata = $helper->processMetadata( $metadata );
+			foreach ( $collection as &$item ) {
+				$key = $this->wg->CityId ."_" . $item[ "id" ];
+				if ( isset( $metadata[ $key ] ) ) {
+					$item[ "metadata" ] = $metadata[ $key ];
 				}
 			}
 		}

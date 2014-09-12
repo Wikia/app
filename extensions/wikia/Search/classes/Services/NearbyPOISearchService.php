@@ -25,9 +25,9 @@ class NearbyPOISearchService extends EntitySearchService {
 	protected $limit;
 
 	protected $wikiaId;
-	
-	public function __construct(){
-		parent::__construct( self::ARTICLE_METADATA_CORE );
+
+	protected function getCore(){
+		return self::ARTICLE_METADATA_CORE;
 	}
 
 	public function newQuery() {
