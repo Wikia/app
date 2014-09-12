@@ -38,7 +38,7 @@ class MercuryApiHooks {
 	public static function onArticleSaveComplete( WikiPage $wikiPage, User $user, $text, $summary, $minoredit, $watchthis,
 												  $sectionanchor, &$flags, $revision, &$status, $baseRevId ) {
 		if ( !$user->isAnon() ) {
-			$articleId = $wikiPage->getTitle()->getArticleId();
+			$articleId = $wikiPage->getId();
 			if ( $articleId ) {
 				$userId = $user->getId();
 				$key = MercuryApi::getTopContributorsKey( $articleId );
@@ -63,7 +63,7 @@ class MercuryApiHooks {
 	 * @param $current
 	 */
 	public static function onArticleRollbackComplete( WikiPage $wikiPage, User $user, $revision, $current ) {
-		$articleId = $wikiPage->getTitle()->getArticleId();
+		$articleId = $wikiPage->getId();
 		$key = MercuryApi::getTopContributorsKey( $articleId );
 		WikiaDataAccess::cachePurge( $key );
 		return true;
