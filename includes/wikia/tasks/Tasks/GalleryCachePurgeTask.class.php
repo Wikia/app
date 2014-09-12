@@ -17,10 +17,11 @@ class GalleryCachePurgeTask extends BaseTask {
 	public function purge() {
 		global $wgUseFileCache, $wgUseSquid;
 
-		$totalGalleryPageCount = 0;
+		$totalGalleryPageCount = 0; // Keeps track of actual existing titles with gallery
+		$dbGalleryCount = $this->getGalleryPageCount(); // All counts including those with missing titles
 
 		// Paginate the operation to prevent db/memory overload
-		do {
+		for ( $limitCount = 0; $limitCount < $dbGalleryCount; $limitCount += self::PAGE_COUNT_LIMIT ) {
 			$galleryPageIds = $this->getGalleryPageIds( $totalGalleryPageCount );
 
 			$galleryPageTitles = \Title::newFromIDs( $galleryPageIds );
@@ -29,7 +30,7 @@ class GalleryCachePurgeTask extends BaseTask {
 
 			// abort if no pages were found
 			if ( $galleryPageCount == 0 ) {
-				break;
+				continue;
 			}
 
 			// Update squid/varnish/parser cache
@@ -47,8 +48,7 @@ class GalleryCachePurgeTask extends BaseTask {
 			}
 
 			$totalGalleryPageCount += $galleryPageCount;
-
-		} while ( true ); // Bails when gallery pages are depleted
+		}
 
 		$this->info( 'Gallery page purge request', [
 			'title' => __METHOD__,
@@ -78,6 +78,26 @@ class GalleryCachePurgeTask extends BaseTask {
 			} );
 
 		return $pages;
+	}
+
+	/**
+	 * Get count of all pages with gallery tag
+	 * @return int
+	 */
+	protected function getGalleryPageCount() {
+		$app = \F::app();
+
+		$statsdb = wfGetDB( DB_SLAVE, null, $app->wg->StatsDB );
+		$count = ( new \WikiaSQL() )
+			->SELECT( 'COUNT(DISTINCT ct_page_id)' )->AS_( 'count' )
+			->FROM( 'city_used_tags' )
+			->WHERE( 'ct_wikia_id' )->EQUAL_TO( $app->wg->CityId )
+			->run( $statsdb, function ( $row ) {
+				$row = $row->fetchObject();
+				return empty($row) ? 0 : $row->count;
+			} );
+
+		return $count;
 	}
 
 }
