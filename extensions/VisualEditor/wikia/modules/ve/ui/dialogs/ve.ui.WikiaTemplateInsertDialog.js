@@ -60,6 +60,9 @@ ve.ui.WikiaTemplateInsertDialog.prototype.initialize = function () {
 
 	// Events
 	this.stackLayout.$element.on( 'scroll', ve.bind( this.onLayoutScroll, this ) );
+	this.select.connect( this, {
+		'select': 'onTemplateSelect'
+	} );
 
 	// Initialization
 	this.frame.$content.addClass( 've-ui-wikiaTemplateInsertDialog' );
@@ -83,6 +86,54 @@ ve.ui.WikiaTemplateInsertDialog.prototype.onLayoutScroll = function () {
 	if ( !this.isPending() && this.offset !== null && position > threshold ) {
 		this.getMostLinkedTemplateData().done( ve.bind( this.populateOptions, this ) );
 	}
+};
+ 
+/**
+ * Handle selecting results.
+ *
+ * @method
+ * @param {ve.ui.OptionWidget} item Item whose state is changing or null
+ */
+ve.ui.WikiaTemplateInsertDialog.prototype.onTemplateSelect = function ( item ) {
+	var template;
+
+	if ( item ) {
+		this.transclusionModel = new ve.dm.MWTransclusionModel();
+
+		template = ve.dm.MWTemplateModel.newFromName(
+			this.transclusionModel, item.getData().title
+		);
+		this.transclusionModel.addPart( template )
+			.done( ve.bind( this.insertTemplate, this ) );
+	}
+};
+
+/**
+ * Insert template
+ */
+ve.ui.WikiaTemplateInsertDialog.prototype.insertTemplate = function () {
+	// Collapse returns a new fragment, so update this.fragment
+	this.fragment = this.getFragment().collapseRangeToEnd();
+
+	// Update the surface selection to match the fragment's collapsed range.
+	// Translating an expanded range will result in a selection that covers more than just the inserted node.
+	this.surface.getModel().setSelection( this.getFragment().getRange() );
+
+	// Ask the transclusionModel to transact with the document model and listen for the 'tranact' event.
+	this.surface.getModel().getDocument().once( 'transact', ve.bind( this.onTransact, this ) );
+	this.transclusionModel.insertTransclusionNode( this.getFragment() );
+};
+
+/**
+ * Handle document model transaction
+ *
+ * Once the transclusionModel has inserted the transclusion, the new node in the surface will be selected.
+ * We can ask the commandRegistry for the command for the node and execute it.
+ */
+ve.ui.WikiaTemplateInsertDialog.prototype.onTransact = function () {
+	ve.ui.commandRegistry.getCommandForNode(
+		this.surface.getView().getFocusedNode()
+	).execute( this.surface );
 };
 
 /**
@@ -135,6 +186,17 @@ ve.ui.WikiaTemplateInsertDialog.prototype.getMostLinkedTemplateData = function (
 		} );
 
 	return deferred.promise();
+};
+
+/**
+ * @inheritdoc
+ */
+ve.ui.WikiaTemplateInsertDialog.prototype.getTeardownProcess = function ( data ) {
+	return ve.ui.WikiaTemplateInsertDialog.super.prototype.getTeardownProcess.call( this, data )
+		.next( function () {
+			// Unselect
+			this.select.selectItem();
+		}, this );
 };
 
 /* Registration */
