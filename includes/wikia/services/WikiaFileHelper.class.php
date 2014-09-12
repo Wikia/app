@@ -312,8 +312,8 @@ class WikiaFileHelper extends Service {
 				$data['exists'] = true;
 				$data['mediaType'] = self::isFileTypeVideo( $file ) ? 'video' : 'image';
 
-				$width = $file->getWidth();
-				$height = $file->getHeight();
+				$width = (int) $file->getWidth();
+				$height = (int) $file->getHeight();
 
 				if ( $data['mediaType'] == 'video' ) {
 					$width  = $config['contextWidth']  ? $config['contextWidth']  : $width;
@@ -332,7 +332,7 @@ class WikiaFileHelper extends Service {
 					$data['isAdded'] = self::isAdded( $file );
 					$mediaPage = self::getMediaPage( $fileTitle );
 				} else {
-					$width = isset( $config[ 'imageMaxWidth' ] ) ? min( $config[ 'imageMaxWidth' ], $width ) : $width;
+					$width = !empty( $config[ 'imageMaxWidth' ] ) ? min( $config[ 'imageMaxWidth' ], $width ) : $width;
 					$mediaPage = new ImagePage( $fileTitle );
 				}
 
