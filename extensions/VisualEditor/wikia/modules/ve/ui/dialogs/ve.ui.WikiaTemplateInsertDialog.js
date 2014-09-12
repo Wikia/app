@@ -28,6 +28,21 @@ ve.ui.WikiaTemplateInsertDialog.static.icon = 'template';
 
 ve.ui.WikiaTemplateInsertDialog.static.title = OO.ui.deferMsg( 'visualeditor-dialog-transclusion-insert-template' );
 
+/* Static Methods */
+
+/**
+ * Adds commas to numbers
+ *
+ * @param {number} number The number without commas
+ * @returns {string} Comma separated sting
+ */
+ve.ui.WikiaTemplateInsertDialog.static.formatNumber = function ( number ) {
+	while ( /(\d+)(\d{3})/.test( number.toString() ) ) {
+		number = number.toString().replace( /(\d+)(\d{3})/, '$1' + ',' + '$2' );
+	}
+	return number;
+};
+
 /* Methods */
 
 /**
@@ -41,14 +56,17 @@ ve.ui.WikiaTemplateInsertDialog.prototype.initialize = function () {
 	this.stackLayout = new OO.ui.StackLayout( { '$': this.$ } );
 	this.panel = new OO.ui.PanelLayout( { '$': this.$ } );
 	this.select = new OO.ui.SelectWidget( { '$': this.$ } );
+	this.offset = 0;
 
 	// Events
+	this.stackLayout.$element.on( 'scroll', ve.bind( this.onLayoutScroll, this ) );
 	this.select.connect( this, {
 		'select': 'onTemplateSelect'
 	} );
 
 	// Initialization
 	this.frame.$content.addClass( 've-ui-wikiaTemplateInsertDialog' );
+	this.select.$element.addClass( 'clearfix' );
 
 	this.panel.$element.append( this.select.$element );
 	this.stackLayout.addItems( [ this.panel ] );
@@ -56,6 +74,18 @@ ve.ui.WikiaTemplateInsertDialog.prototype.initialize = function () {
 	this.$body.append( this.stackLayout.$element );
 
 	this.getMostLinkedTemplateData().done( ve.bind( this.populateOptions, this ) );
+};
+
+/**
+ * Handle scrolling of the layout
+ */
+ve.ui.WikiaTemplateInsertDialog.prototype.onLayoutScroll = function () {
+	var position = this.stackLayout.$element.scrollTop() + this.stackLayout.$element.outerHeight(),
+		threshold = this.select.$element.outerHeight() - 100;
+
+	if ( !this.isPending() && this.offset !== null && position > threshold ) {
+		this.getMostLinkedTemplateData().done( ve.bind( this.populateOptions, this ) );
+	}
 };
 
 /**
@@ -123,13 +153,12 @@ ve.ui.WikiaTemplateInsertDialog.prototype.populateOptions = function ( templates
 					'$': this.$,
 					'icon': 'template-inverted',
 					'label': templates[i].title,
-					'appears': templates[i].uses
+					'appears': ve.ui.WikiaTemplateInsertDialog.static.formatNumber( templates[i].uses )
 				}
 			)
 		);
 	}
 
-	this.select.clearItems();
 	this.select.addItems( options );
 };
 
@@ -139,25 +168,24 @@ ve.ui.WikiaTemplateInsertDialog.prototype.populateOptions = function ( templates
  * @returns {jQuery.Promise}
  */
 ve.ui.WikiaTemplateInsertDialog.prototype.getMostLinkedTemplateData = function () {
-	var deferred;
+	var deferred = $.Deferred();
 
-	if ( !this.templatesPromise ) {
-		deferred = $.Deferred();
+	this.pushPending();
 
-		ve.init.target.constructor.static.apiRequest( {
-			'action': 'templatesuggestions'
-		} )
-			.done( function ( data ) {
-				deferred.resolve( data.templates );
-			} )
-			.fail( function () {
-				deferred.resolve( [] );
-			} );
+	ve.init.target.constructor.static.apiRequest( {
+		'action': 'templatesuggestions',
+		'offset': this.offset
+	} )
+		.done( ve.bind( function ( data ) {
+			this.offset = data['query-continue'] ? data['query-continue'] : null;
+			this.popPending();
+			deferred.resolve( data.templates );
+		}, this ) )
+		.fail( function () {
+			deferred.resolve( [] );
+		} );
 
-		this.templatesPromise = deferred.promise();
-	}
-
-	return this.templatesPromise;
+	return deferred.promise();
 };
 
 /**

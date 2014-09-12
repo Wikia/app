@@ -13,11 +13,14 @@ class ApiTemplateSuggestions extends ApiBase {
 	}
 
 	public function execute() {
+		$this->mParams = $this->extractRequestParams();
+
 		$fauxRequest = new FauxRequest( [
 			'action' => 'query',
 			'list' => 'querypage',
 			'qppage' => 'Mostlinkedtemplates',
-			'qplimit' => 50
+			'qplimit' => 50,
+			'qpoffset' => $this->mParams['offset']
 		] );
 		$api = new ApiMain( $fauxRequest );
 		$api->execute();
@@ -40,13 +43,23 @@ class ApiTemplateSuggestions extends ApiBase {
 
 		$this->getResult()->setIndexedTagName( $templates, 'templates' );
 		$this->getResult()->addValue( null, 'templates', $templates );
+
+		if ( isset ( $resultData['query-continue'] ) ) {
+			$queryContinue = $resultData['query-continue']['querypage']['qpoffset'];
+			$this->getResult()->addValue( null, 'query-continue', $queryContinue );
+		}
 	}
 
 	/**
 	 * @return array
 	 */
 	public function getAllowedParams() {
-		return [];
+		return array(
+			'offset' => array(
+				ApiBase::PARAM_TYPE => 'integer',
+				ApiBase::PARAM_REQUIRED => false
+			)
+		);
 	}
 
 	/**
