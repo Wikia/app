@@ -648,6 +648,7 @@ class ArticlesApiController extends WikiaApiController {
 	 */
 	public function getDetails() {
 		wfProfileIn( __METHOD__ );
+		$this->setOutputFieldType( "items", self::OUTPUT_FIELD_TYPE_OBJECT );
 
 		//get optional params for details
 		$params = $this->getDetailsParams();
