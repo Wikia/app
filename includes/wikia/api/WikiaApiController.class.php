@@ -10,6 +10,14 @@ class WikiaApiController extends WikiaController {
 	const API_ENDPOINT_TEST = 'test';
 	const API_ENDPOINT_INTERNAL = 'internal';
 	const REF_URL_ARGUMENT = 'ref';
+
+	const OUTPUT_FIELD_CAST_NULLS = 1;
+	const OUTPUT_FIELD_TYPE_OBJECT = 2;
+	const OUTPUT_FIELD_TYPE_INT = 4;
+	const OUTPUT_FIELD_TYPE_FLOAT = 8;
+	const OUTPUT_FIELD_TYPE_STRING = 16;
+	protected $outputFieldsTypes = [ ];
+
 	private $allowedFormats = array(
 		'json',
 		'raw'
@@ -17,6 +25,14 @@ class WikiaApiController extends WikiaController {
 
 	public function __construct(){
 		parent::__construct();
+	}
+
+	public function setOutputFieldType( $field, $forcedType ) {
+		$this->outputFieldsTypes[ $field ] = $forcedType;
+	}
+
+	public function setOutputFieldTypes( array $typesMap ) {
+		$this->outputFieldsTypes = $typesMap;
 	}
 
 	/**
@@ -248,8 +264,7 @@ class WikiaApiController extends WikiaController {
 
 		if ( $urlRef && !empty( $urlsFields ) ) {
 			self::replaceArrayValues( $data, $this->createFieldsArray( $urlsFields ),
-				function ( $inputVal ) use ( $urlRef ) {
-
+				function ( $inputVal, $key ) use ( $urlRef ) {
 					if ( is_array( $inputVal ) ) {
 						foreach ( $inputVal as $k => $orgValue ) {
 							if ( !empty( $orgValue ) ) {
@@ -268,6 +283,31 @@ class WikiaApiController extends WikiaController {
 		return $data;
 	}
 
+	protected function forceResponseTypes( $data ) {
+		if ( !empty( $this->outputFieldsTypes ) ) {
+			self::replaceArrayValues( $data, $this->outputFieldsTypes, [ $this, "replaceResponseTypes" ] );
+		}
+		return $data;
+	}
+
+	protected function replaceResponseTypes( $val, $fieldName ) {
+		$action = $this->outputFieldsTypes[ $fieldName ];
+		if ( is_null( $val ) && !( $action & self::OUTPUT_FIELD_CAST_NULLS ) ) {
+			return null;
+		}
+		$action &= ( ~self::OUTPUT_FIELD_CAST_NULLS );
+		switch ( $action ) {
+			case self::OUTPUT_FIELD_TYPE_OBJECT:
+				return (object)$val;
+			case self::OUTPUT_FIELD_TYPE_INT:
+				return intval( $val );
+			case self::OUTPUT_FIELD_TYPE_STRING:
+				return (string) $val ;
+			case self::OUTPUT_FIELD_TYPE_FLOAT:
+				return floatval( $val );
+		}
+		return $val;
+	}
 
 	/**
 	 * @param $data data to set as output
@@ -279,6 +319,9 @@ class WikiaApiController extends WikiaController {
 		if ( is_array( $data ) ) {
 			$data = $this->processImgFields( $data, $processFields );
 			$data = $this->processUrlFields( $data, $processFields );
+			if ( !$this->getRequest()->isInternal() ) {
+				$data = $this->forceResponseTypes( $data );
+			}
 		}
 		$response = $this->getResponse();
 		$response->setData( $data );
@@ -294,11 +337,13 @@ class WikiaApiController extends WikiaController {
 	 */
 	protected static function replaceArrayValues( &$input, $fields, callable $replaceFnc ) {
 		foreach ( $input as $key => &$val ) {
-			if ( isset( $fields[ $key ] ) ) {
-				$val = $replaceFnc($val);
-			} elseif ( is_array( $val ) ) {
+			if ( is_array( $val ) ) {
 				self::replaceArrayValues( $val, $fields, $replaceFnc );
 			}
+			if ( isset( $fields[ $key ] ) ) {
+				$val = $replaceFnc($val, $key);
+			}
+
 		}
 	}
 

@@ -78,6 +78,7 @@ $config['adengine2_js'] = array(
 		'//extensions/wikia/AdEngine/js/AdLogicPageDimensions.js',
 		'//extensions/wikia/AdEngine/js/AdDecoratorPageDimensions.js',
 		'//extensions/wikia/AdEngine/js/AdConfig2.js',
+		'//extensions/wikia/AdEngine/js/AdContext.js',
 		'//extensions/wikia/AdEngine/js/AdEngine2.run.js',
 		// low prio
 		// not here! @see adengine2 low prio section someplace else
@@ -195,7 +196,7 @@ $config['oasis_blocking'] = array(
 
 $config['abtesting'] = array(
 	'type' => AssetsManager::TYPE_JS,
-	'skin' => [ 'oasis', 'wikiamobile' ],
+	'skin' => [ 'oasis', 'wikiamobile', 'venus' ],
 	'assets' => array(
 		'//extensions/wikia/AbTesting/js/AbTest.js',
 	)
@@ -645,9 +646,10 @@ $config['wikiamobile_ads_js'] = array(
 
 		// Advertisement libs
 		'//extensions/wikia/AdEngine/js/EventDispatcher.js',
-		'//extensions/wikia/AdEngine/js/AdLogicPageParams.js',
 		'//extensions/wikia/AdEngine/js/AdConfigMobile.js',
+		'//extensions/wikia/AdEngine/js/AdContext.js',
 		'//extensions/wikia/AdEngine/js/AdEngine2.js',
+		'//extensions/wikia/AdEngine/js/AdLogicPageParams.js',
 		'//extensions/wikia/AdEngine/js/AdProviderRemnantGptMobile.js',
 		'//extensions/wikia/AdEngine/js/AdProviderDirectGptMobile.js',
 		'//extensions/wikia/AdEngine/js/AdProviderEbay.js',
@@ -1053,7 +1055,7 @@ $config['wall_js'] = array(
 $config['wall_notifications_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
-		'//extensions/wikia/Wall/js/WallNotifications.js',
+		'//extensions/wikia/WallNotifications/scripts/WallNotifications.js',
 	)
 );
 
@@ -1461,18 +1463,18 @@ $config['imagedrop_scss'] = array(
 /** Note: this group is also used in Oasis! */
 $config['analytics_gas_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
-	'skin' => array( 'wikiamobile' ),
-	'assets' => array(
+	'skin' => ['wikiamobile', 'venus' ],
+	'assets' => [
 		'//extensions/wikia/AnalyticsEngine/js/analytics_prod.js'
-	)
+	]
 );
 
 $config['analytics_bluekai_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
-	'skin' => array( 'wikiamobile' ),
-	'assets' => array(
+	'skin' => ['wikiamobile', 'venus' ],
+	'assets' => [
 		'//extensions/wikia/AdEngine/js/AdLogicPageParams.js',
-	)
+	]
 );
 
 /** WikiMap Extension **/
@@ -1867,6 +1869,7 @@ $config['int_map_special_page_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => ['oasis'],
 	'assets' => [
+		'//extensions/wikia/WikiaInteractiveMaps/js/intMapConfig.js',
 		'//extensions/wikia/WikiaInteractiveMaps/js/intMapUtils.js',
 		'#group_int_map_ponto',
 		'//extensions/wikia/WikiaInteractiveMaps/js/WikiaInteractiveMaps.js'
@@ -1893,12 +1896,23 @@ $config['int_map_create_map_js'] = [
 	]
 ];
 
+$config['int_map_create_map_contribute_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => ['oasis'],
+	'assets' => [
+		'//extensions/wikia/WikiaInteractiveMaps/js/intMapConfig.js',
+		'//extensions/wikia/WikiaInteractiveMaps/js/intMapUtils.js',
+	]
+];
+
 $config['int_map_poi_categories_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => ['oasis'],
 	'assets' => [
 		'//extensions/wikia/WikiaInteractiveMaps/js/intMapUtils.js',
 		'//extensions/wikia/WikiaInteractiveMaps/js/intMapPoiCategories.js',
+		'//extensions/wikia/WikiaInteractiveMaps/js/models/intMapPoiCategoriesModel.js',
+		'//resources/wikia/libraries/jquery/serialize-object/jquery.serialize-object.js',
 	]
 ];
 
@@ -1942,6 +1956,22 @@ $config['int_map_special_page_scss_wikiamobile'] = [
 	'skin' => ['wikiamobile'],
 	'assets' => [
 		'//extensions/wikia/WikiaInteractiveMaps/css/WikiaMaps.wikiamobile.scss',
+	]
+];
+
+$config['int_map_parser_tag_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => ['oasis'],
+	'assets' => [
+		'//extensions/wikia/WikiaInteractiveMaps/js/WikiaInteractiveMapsParserTag.js',
+	]
+];
+
+$config['int_map_contribution_button_create_map_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => ['oasis'],
+	'assets' => [
+		'//extensions/wikia/WikiaInteractiveMaps/js/WikiaInteractiveMapsCreateMap.js',
 	]
 ];
 

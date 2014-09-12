@@ -1,0 +1,247 @@
+@import "skins/shared/color";
+@import "skins/shared/mixins/clearfix";
+@import "skins/shared/mixins/box-shadow";
+@import 'extensions/wikia/Venus/styles/variables';
+@import 'extensions/wikia/Venus/styles/mixins';
+
+$header-bg-color: #092140;
+$border-color: #c7d1d8;
+$wiki-header-color: #2b54b5;
+$wiki-header-bg-color: #e2e6e9;
+
+.bubbles {
+	background-color: #fff;
+	border-radius: 50%;
+	display: none;
+	height: 20px;
+	left: 30px;
+	position: absolute;
+	top: 5px;
+	width: 20px;
+
+	&.show {
+		display: block;
+	}
+}
+
+.bubbles-count {
+	background-color: red;
+	border-radius: 50%;
+	color: #fff;
+	font-size: 12px;
+	font-weight: normal;
+	height: 16px;
+	left: 2px;
+	position: absolute;
+	text-align: center;
+	top: 2px;
+	width: 16px;
+}
+
+#notifications {
+	position: relative;
+
+	> a > span {
+		float: right;
+	}
+}
+
+#GlobalNavigationWallNotifications {
+	@include grid-position('large', 2, 'right', $large-content-padding - 2);
+	@include grid-column-width('large', 4, $large-content-padding);
+	background-color: #fff;
+	border: 1px solid $border-color;
+	border-top: 0;
+	display: none;
+	position: absolute;
+
+	&.show {
+		display: block;
+	}
+
+	header {
+		height: auto;
+		min-height: 51px;
+		font-weight: bold;
+		padding: 15px 20px 0;
+	}
+
+	.notifications-header {
+		@include clearfix;
+		background-color: $header-bg-color;
+		color: $border-color;
+	}
+
+	.notifications-markasread {
+		float: right;
+		font-size: 12px;
+		font-weight: normal;
+		text-align: right;
+
+		span {
+			cursor: pointer;
+			margin-left: 10px;
+		}
+
+		div {
+			display: none;
+			margin: 10px 0;
+		}
+
+		&.show div {
+			display: block;
+		}
+	}
+
+	.notifications-for-wiki {
+		&.show {
+			.chevron {
+				border: 5px solid transparent;
+				border-top: 0;
+				border-bottom-color: $border-color;
+			}
+
+			.notifications-wiki-header:hover .chevron {
+				border-bottom-color: $wiki-header-color;
+			}
+
+			.notifications-for-wiki-list {
+				display: block;
+			}
+		}
+
+		.chevron {
+			border: 5px solid transparent;
+			border-bottom: 0;
+			border-top-color: $border-color;
+			float: right;
+			margin-top: 10px;
+		}
+
+		.notifications-wiki-header {
+			background-color: $wiki-header-bg-color;
+			border-top: 1px solid $border-color;
+			color: $wiki-header-color;
+			cursor: pointer;
+
+			&:hover .chevron {
+				border-top-color: $wiki-header-color;
+			}
+		}
+
+		.notifications-for-wiki-list {
+			display: none;
+
+			a {
+				color: $header-bg-color;
+				text-decoration: none;
+			}
+		}
+	}
+
+	.notification {
+		border-top: 1px solid $border-color;
+		line-height: 22px;
+		padding: 20px 0;
+		position: relative;
+
+		.notification-message {
+			@include grid-column-width('large', 3);
+			display: inline-block;
+		}
+
+		.avatars {
+			@include grid-column-width('large', 1);
+
+			display: inline-block;
+			vertical-align: top;
+			text-align: center;
+
+			.avatar {
+				border-radius: 50%;
+			}
+		}
+
+		h4 {
+			font-size: 15px;
+			font-weight: bold;
+		}
+
+		time {
+			color: $border-color;
+			font-size: 12px;
+		}
+
+		&.empty, &.admin-notification {
+			padding: 20px;
+		}
+
+		&.admin-notification:before {
+			border-left: 5px solid $header-bg-color;
+			color: transparent;
+			content: ".";
+			display: block;
+			height: 100%;
+			left: 0;
+			padding-top: 1px;
+			position: absolute;
+			top: 0;
+		}
+
+		&.read {
+			h4, .avatars {
+				opacity: 0.7;
+			}
+		}
+
+		&:hover {
+			background-color: #eef1f3;
+
+			h4, .avatars {
+				opacity: 1;
+			}
+		}
+	}
+}
+
+@media #{$small-only} {
+	.bubbles {
+		left: 8px;
+	}
+
+	#GlobalNavigationWallNotifications {
+		@include grid-position('small', 3, 'right', $small-content-padding - 2);
+		@include grid-column-width('small', 6, $small-content-padding);
+
+		.notification {
+			.avatars {
+				@include grid-column-width('small', 1);
+			}
+
+			.notification-message {
+				@include grid-column-width('small', 5);
+			}
+		}
+	}
+}
+
+@media #{$medium-only} {
+	.bubbles {
+		left: 21px;
+	}
+
+	#GlobalNavigationWallNotifications {
+		@include grid-position('medium', 2, 'right', $medium-content-padding - 2);
+		@include grid-column-width('medium', 4, $medium-content-padding);
+
+		.notification {
+			.avatars {
+				@include grid-column-width('medium', 1);
+			}
+
+			.notification-message {
+				@include grid-column-width('medium', 3);
+			}
+		}
+	}
+}

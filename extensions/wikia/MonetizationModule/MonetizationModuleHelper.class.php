@@ -25,14 +25,14 @@ class MonetizationModuleHelper extends WikiaModel {
 	const VAR_NAME_API_TIMEOUT = 'wgMonetizationModuleTimeout';
 	const IN_CONTENT_KEYWORD = '<h2>';
 
-	const FONT_COLOR_DARK_THEME = 'd5d4d4';
-	const FONT_COLOR_LIGHT_THEME = '3a3a3a';
+	const FONT_COLOR_DARK_THEME = '#d5d4d4';
+	const FONT_COLOR_LIGHT_THEME = '#3a3a3a';
 	const THEME_SETTINGS_KEYWORD = '$theme';
 
 	protected static $mapThemeSettings = [
 		'data-color-bg'     => 'color-page',
 		'data-color-border' => 'color-page',
-		'data-color-link'   => 'color',
+		'data-color-link'   => 'color-links',
 		'data-color-url'    => 'color-links',
 		'data-color-text'   => 'color',
 	];
