@@ -20,4 +20,3 @@
 		endif; ?>
 	</li>
 </ul>
-<?= $app->renderView('GlobalNavigationWallNotifications', 'Reminder'); ?>

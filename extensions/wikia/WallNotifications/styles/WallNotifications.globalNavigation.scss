@@ -204,33 +204,6 @@ $wiki-header-bg-color: #e2e6e9;
 	}
 }
 
-#WallNotificationsReminder {
-	@if $is-dark-wiki {
-		@include box-shadow(0, 2px, 5px, darken($color-page,7%), 0, 0);
-		background: $color-module-background;
-	} @else {
-		@include box-shadow(0, 2px, 5px, darken($color-page,12%), 0, 0);
-		background: $color-page;
-	}
-	border: 1px solid $color-page-border;
-	border-radius: 3px;
-	color: $color-links;
-	display: none;
-	padding: 10px;
-	position: fixed;
-	right: 20px;
-	top: 70px;
-
-	span {
-		overflow: hidden;
-		width: 1em;
-	}
-
-	a {
-		cursor: pointer;
-	}
-}
-
 @media #{$small-only} {
 	.bubbles {
 		left: 8px;

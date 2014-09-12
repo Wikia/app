@@ -21,28 +21,12 @@ require(
 
 				this.$notifications = $('#notifications');
 				this.$wallNotifications = $('#GlobalNavigationWallNotifications');
-				this.$wallNotificationsReminder = $('#WallNotificationsReminder');
 
-				// Used by notifications reminder
-				this.reminderTimer = null;
-				this.reminderOffsetTop = 100;
 				this.unreadCount = parseInt(this.$notificationsCount.html(), 10);
 
 				this.$notifications
 					.mouseenter( this.proxy( this.updateCounts ) )
-					.mouseenter( this.proxy( this.fetchForCurrentWiki ) )
-					.one( 'mouseenter', this.proxy( this.hideReminder ) );
-
-				this.$window.on( 'scroll.WallNotificationsReminder', $.throttle( 100, this.proxy( this.showReminder )));
-
-				this.$wallNotificationsReminder.on( 'click', 'a', this.proxy(function() {
-					if($.browser.msie) { /* JSlint ignore */
-						$("html:not(:animated),body:not(:animated)").css({ scrollTop: 0 });
-					} else {
-						$("html:not(:animated),body:not(:animated)").animate({ scrollTop: 0 }, 500 );
-					}
-					this.$wallNotificationsReminder.stop().fadeOut( 200 );
-				}));
+					.mouseenter( this.proxy( this.fetchForCurrentWiki ) );
 
 				this.$wallNotifications.add( $('#pt-wall-notifications') )
 					.on('click', '#markasread-sub', this.proxy( this.markAllAsReadPrompt ))
@@ -208,8 +192,6 @@ require(
 					this.$notificationsCount.empty().parent('.bubbles').removeClass('show');
 				}
 
-				this.$wallNotificationsReminder.find('a').html(data.reminder);
-
 				this.$wallNotifications.find('.notifications-for-wiki').each(function() {
 					element = $(this);
 					self.wikisUrls[ parseInt(element.data('wiki-id'), 10) ] = element.data('wiki-path');
@@ -220,8 +202,9 @@ require(
 
 			wikiClick: function(e) {
 				e.preventDefault();
-				var wikiEl = $(e.target).parents('.notifications-for-wiki'),
+				var wikiEl = $(e.target).parent('.notifications-for-wiki'),
 					wikiId = parseInt(wikiEl.data('wiki-id'), 10);
+
 				if( wikiEl.hasClass('show') ) {
 					wikiEl.removeClass('show');
 					delete this.wikiShown[ wikiId ];
@@ -302,27 +285,6 @@ require(
 					// temporary fix, should be changed on server side
 					wikiEl.find('.read').remove();
 				}
-			},
-
-			showReminder: function() {
-				var showReminder = this.$window.scrollTop() > this.reminderOffsetTop;
-
-				if ( !this.reminderTimer && showReminder ) {
-					if ( this.unreadCount > this.getLastSeenCount() ) {
-						this.setLastSeenCount( this.unreadCount );
-						this.reminderTimer = setTimeout( this.proxy( this.hideReminder ), 3000 );
-						this.$wallNotificationsReminder.fadeIn();
-					}
-
-				} else if ( this.reminderTimer && !showReminder ) {
-					this.hideReminder( true );
-				}
-			},
-
-			hideReminder: function( hide ) {
-				clearTimeout( this.reminderTimer );
-				this.$window.off( 'scroll.WallNotificationsReminder' );
-				this.$wallNotificationsReminder[ hide ? 'hide' : 'fadeOut' ]();
 			},
 
 			getLastSeenCount: function() {

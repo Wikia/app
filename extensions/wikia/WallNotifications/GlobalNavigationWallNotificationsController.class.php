@@ -65,20 +65,6 @@ class GlobalNavigationWallNotificationsController extends WikiaController {
 		wfProfileOut(__METHOD__);
 	}
 
-	public function Reminder() {
-		global $wgUser;
-
-		wfProfileIn(__METHOD__);
-
-		$loggedIn = $wgUser->isLoggedIn();
-		$suppressWallNotifications = $this->areNotificationsSuppressedByExtensions();
-
-		$this->response->setVal( 'loggedIn', $loggedIn );
-		$this->response->setVal( 'suppressWallNotifications', $suppressWallNotifications );
-
-		wfProfileOut(__METHOD__);
-	}
-
 	public function NotificationAdmin() {
 		$notify = $this->request->getVal( 'notify' );
 		$data = $notify['grouped'][0]->data;
