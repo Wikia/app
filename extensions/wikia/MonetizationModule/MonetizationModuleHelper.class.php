@@ -135,17 +135,19 @@ class MonetizationModuleHelper extends WikiaModel {
 			];
 		}
 
-		$req = MWHttpRequest::factory( $url, $options );
-		$status = $req->execute();
-		if ( $status->isGood() ) {
-			$result = $req->getContent();
-			if ( !empty( $result ) ) {
-				$result = $this->setThemeSettings( $result, $cacheKey );
-			}
-		} else {
-			$result = false;
-			$loggingParams = array_merge( [ 'method' => __METHOD__ ], $params );
-			$log->debug( "Monetization: ".__METHOD__." - cannot get monetization units (".$status->getMessage().").", $loggingParams );
+		$method = 'GET';
+		$result = Http::request( $method, $url, $options );
+		if ( $result === false ) {
+			$loggingParams = [
+				'method' => __METHOD__,
+				'params' => $params,
+				'url' => $url,
+				'reqMethod' => $method,
+				'reqOptions' => $options,
+			];
+			$log->debug( "Monetization: ".__METHOD__." - cannot get monetization units.", $loggingParams );
+		} else if ( !empty( $result ) ) {
+			$result = $this->setThemeSettings( $result, $cacheKey );
 		}
 
 		wfProfileOut( __METHOD__ );
