@@ -39,6 +39,7 @@
 
   .edit-btn {
     bottom: 3px;
+    display: none;
     margin: 10px;
     position: absolute;
     right: 0;
@@ -125,6 +126,26 @@
     color: #fff;
     font-size: 3em;
   }
+
+  .new-btn {
+    background-color: #092140;
+    color: #fff;
+    cursor: pointer;
+    display: block;
+    font-weight: bold;
+    padding: 15px 10px;
+    text-align: center;
+    text-decoration: none;
+    text-transform: uppercase;
+
+    &:hover {
+      background-color: #0a5fa3;
+    }
+
+    &.edit-btn {
+      display: none;
+    }
+  }
 }
 
 #MainPageHero {
@@ -145,22 +166,6 @@
   input, .wikia-button {
     height: 1.4rem;
     line-height: 1.4rem;
-  }
-
-  .new-btn {
-    background-color: #092140;
-    color: #fff;
-    cursor: pointer;
-    display: block;
-    font-weight: bold;
-    padding: 15px 10px;
-    text-align: center;
-    text-decoration: none;
-    text-transform: uppercase;
-
-    &:hover {
-      background-color: #0a5fa3;
-    }
   }
 
   .wikia-button {

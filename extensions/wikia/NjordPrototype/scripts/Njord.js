@@ -156,96 +156,100 @@
 			});
 		}, onDragDisabled = function () {
 			return false;
+		}, sendForm = function (formdata) {
+			$heroModule.startThrobbing();
+
+			var client = new XMLHttpRequest();
+			client.open('POST', '/wikia.php?controller=Njord&method=upload', true);
+			client.onreadystatechange = function () {
+				if (client.readyState === 4 && client.status === 200) {
+					var data = JSON.parse(client.responseText);
+
+					$heroModuleImage.bind('load', function () {
+						$heroModule.stopThrobbing();
+						$heroModule.trigger('enableDragging');
+						$heroModuleImage.unbind('load');
+					});
+					$heroModuleImage.attr('src', data.url);
+					$heroModule.trigger('resize');
+					$heroModule.trigger('change', [data.url, data.filename]);
+				}
+			};
+			client.send(formdata);
+		}, initializeEditMode = function () {
+			$editButton.show();
+
+			$heroModuleTitle.on('focus', onFocus).on('blur keyup paste input', onInput).on('change', onChange);
+			$('.hero-description').on('focus', onFocus).on('blur keyup paste input', onInput).on('change', onChange);
+			$heroModuleImage.on('load', onImageLoad);
+			$heroModule.on('change', onChange).on('enableDragging', onDraggingEnabled);
+			$heroModule.on('revertedToZeroState', zeroState);
+			$editButton.on('click', onEdit);
+			$saveButton.on('click', onSave);
+			$discardButton.on('click', revertToCurrentZeroState);
+			$('.toggle-upload-btn').on('click', function () {
+				$toggleButton.hide();
+				$overlay.show();
+			});
+			$('.close-upload-btn').on('click', function () {
+				$toggleButton.show();
+				$overlay.hide();
+			});
+
+			$(window).resize(onResize);
+			initializeData();
+
+			//turn off browser image handling
+
+			$body.on('dragover', onDragDisabled).on('dragend', onDragDisabled).on('drop', onDragDisabled);
+
+			//those two are needed to cancel default behaviour
+			$heroModuleUpload.on('dragenter', function () {
+				$uploadButton.addClass('upload-hover');
+				$heroModuleUploadMask.show();
+				return false;
+			});
+			$heroModuleUploadMask.on('dragleave', function () {
+				$uploadButton.removeClass('upload-hover');
+				$heroModuleUploadMask.hide();
+			});
+			$heroModuleUploadMask.on('dragend', function () {
+				return false;
+			});
+
+			$heroModuleUploadMask.on('drop', function (e) {
+				$uploadButton.removeClass('upload-hover');
+				$heroModuleUploadMask.hide();
+				e.preventDefault();
+				var fd = new FormData();
+				if (e.dataTransfer.files.length) {
+					//if file is uploaded
+					fd.append('file', e.dataTransfer.files[0]);
+					sendForm(fd);
+				} else if (e.dataTransfer.getData('text/html')) {
+					//if url
+					var $img = $(e.dataTransfer.getData('text/html'));
+					if (e.target.src !== $img.attr('src')) {
+						fd.append('url', $img.attr('src'));
+						sendForm(fd);
+					}
+				}
+			});
+
+			$heroModuleButton.on('click', function () {
+				$heroModuleInput.click();
+			});
+
+			$heroModuleInput.on('change', function () {
+				if ($heroModuleInput[0].files.length) {
+					var fd = new FormData();
+					fd.append('file', $heroModuleInput[0].files[0]);
+					sendForm(fd);
+				}
+			});
 		};
 
-	$heroModuleTitle.on('focus', onFocus).on('blur keyup paste input', onInput).on('change', onChange);
-	$('.hero-description').on('focus', onFocus).on('blur keyup paste input', onInput).on('change', onChange);
-	$heroModuleImage.on('load', onImageLoad);
-	$heroModule.on('change', onChange).on('enableDragging', onDraggingEnabled);
-	$heroModule.on('revertedToZeroState', zeroState);
-	$editButton.on('click', onEdit);
-	$saveButton.on('click', onSave);
-	$discardButton.on('click', revertToCurrentZeroState);
-	$('.toggle-upload-btn').on('click', function () {
-		$toggleButton.hide();
-		$overlay.show();
-	});
-	$('.close-upload-btn').on('click', function () {
-		$toggleButton.show();
-		$overlay.hide();
-	});
-
-	$(window).resize(onResize);
-	initializeData();
-
-	//turn off browser image handling
-
-	$body.on('dragover', onDragDisabled).on('dragend', onDragDisabled).on('drop', onDragDisabled);
-
-	//those two are needed to cancel default behaviour
-	$heroModuleUpload.on('dragenter', function () {
-		$uploadButton.addClass('upload-hover');
-		$heroModuleUploadMask.show();
-		return false;
-	});
-	$heroModuleUploadMask.on('dragleave', function () {
-		$uploadButton.removeClass('upload-hover');
-		$heroModuleUploadMask.hide();
-	});
-	$heroModuleUploadMask.on('dragend', function () {
-		return false;
-	});
-
-	$heroModuleUploadMask.on('drop', function (e) {
-		$uploadButton.removeClass('upload-hover');
-		$heroModuleUploadMask.hide();
-		e.preventDefault();
-		var fd = new FormData();
-		if (e.dataTransfer.files.length) {
-			//if file is uploaded
-			fd.append('file', e.dataTransfer.files[0]);
-			sendForm(fd);
-		} else if (e.dataTransfer.getData('text/html')) {
-			//if url
-			var $img = $(e.dataTransfer.getData('text/html'));
-			if (e.target.src !== $img.attr('src')) {
-				fd.append('url', $img.attr('src'));
-				sendForm(fd);
-			}
-		}
-	});
-
-	$heroModuleButton.on('click', function () {
-		$heroModuleInput.click();
-	});
-
-	$heroModuleInput.on('change', function () {
-		if ($heroModuleInput[0].files.length) {
-			var fd = new FormData();
-			fd.append('file', $heroModuleInput[0].files[0]);
-			sendForm(fd);
-		}
-	});
-
-	function sendForm(formdata) {
-		$heroModule.startThrobbing();
-
-		var client = new XMLHttpRequest();
-		client.open('POST', '/wikia.php?controller=Njord&method=upload', true);
-		client.onreadystatechange = function () {
-			if (client.readyState === 4 && client.status === 200) {
-				var data = JSON.parse(client.responseText);
-
-				$heroModuleImage.bind('load', function () {
-					$heroModule.stopThrobbing();
-					$heroModule.trigger('enableDragging');
-					$heroModuleImage.unbind('load');
-				});
-				$heroModuleImage.attr('src', data.url);
-				$heroModule.trigger('resize');
-				$heroModule.trigger('change', [data.url, data.filename]);
-			}
-		};
-		client.send(formdata);
+	if (window.wgUserName) {
+		initializeEditMode();
 	}
 })(window, jQuery);
