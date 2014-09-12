@@ -220,9 +220,8 @@ require(
 
 			wikiClick: function(e) {
 				e.preventDefault();
-				var wikiEl = $(e.target).parent('.notifications-for-wiki'),
+				var wikiEl = $(e.target).parents('.notifications-for-wiki'),
 					wikiId = parseInt(wikiEl.data('wiki-id'), 10);
-
 				if( wikiEl.hasClass('show') ) {
 					wikiEl.removeClass('show');
 					delete this.wikiShown[ wikiId ];
