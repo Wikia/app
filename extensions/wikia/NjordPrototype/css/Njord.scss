@@ -10,6 +10,7 @@
     position: absolute;
     right: 0;
     z-index: 1;
+
     .new-btn {
       margin: 0 5px;
     }
@@ -22,6 +23,7 @@
     right: 0;
     top: 0;
     z-index: 1;
+
     .new-btn {
       margin: 0 5px;
     }
@@ -53,13 +55,13 @@
     margin: 0 auto;
     padding: .25rem .5rem;
     position: absolute;
-    text-align: center;
+    text-align: left;
     top: 2rem;
   }
 
   .hero-image {
-    width: 100%;
     vertical-align: bottom;
+    width: 100%;
   }
 
   .hero-description {
@@ -70,7 +72,7 @@
     left: 2rem;
     padding: .25rem .5rem;
     position: absolute;
-    text-align: center;
+    text-align: left;
     top: 6rem;
   }
 
@@ -105,6 +107,7 @@
 
   .upload-hover {
     background: rgba(255, 255, 255, .2);
+
     .upload-btn {
       opacity: .7;
     }
@@ -119,7 +122,7 @@
   }
 
   .upload-text {
-    color: #FFFFFF;
+    color: #fff;
     font-size: 3em;
   }
 }

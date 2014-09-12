@@ -78,6 +78,8 @@
 			}
 			return $this;
 		}, onChange = function (event, imagePath, imageName) {
+			var target = $(event.target);
+
 			heroData.title = $heroModuleTitle.text();
 			heroData.description = $heroModuleDescription.text();
 			if (imagePath || imageName) {
@@ -87,8 +89,10 @@
 				$toggleButton.show();
 				$overlay.hide();
 			} else {
+				var caretSave = target.caret();
 				$heroModuleTitle.text($heroModuleTitle.text());
 				$heroModuleDescription.text($heroModuleDescription.text());
+				target.caret(caretSave);
 			}
 			heroData.changed = true;
 		}, onDataSaved = function () {
