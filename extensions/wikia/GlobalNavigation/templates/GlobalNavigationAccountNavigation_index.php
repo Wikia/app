@@ -4,7 +4,7 @@
 			<div class="bubbles">
 				<div class="bubbles-count notifications-count"></div>
 			</div>
-			<div class="avatar-container<?= $avatarContainerAditionalClass ?>">
+			<div class="avatar-container<?= $avatarContainerAdditionalClass ?>">
 				<?= $profileAvatar ?>
 			</div>
 		</a>

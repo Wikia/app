@@ -111,6 +111,9 @@ $wiki-header-bg-color: #e2e6e9;
 		}
 
 		.chevron {
+			border: 5px solid transparent;
+			border-bottom: 0;
+			border-top-color: $border-color;
 			float: right;
 			margin-top: 10px;
 		}
@@ -149,9 +152,14 @@ $wiki-header-bg-color: #e2e6e9;
 
 		.avatars {
 			@include grid-column-width('large', 1);
+
 			display: inline-block;
 			vertical-align: top;
 			text-align: center;
+
+			.avatar {
+				border-radius: 50%;
+			}
 		}
 
 		h4 {
