@@ -87,7 +87,7 @@ ve.ui.WikiaTemplateInsertDialog.prototype.onLayoutScroll = function () {
 		this.getMostLinkedTemplateData().done( ve.bind( this.populateOptions, this ) );
 	}
 };
- 
+
 /**
  * Handle selecting results.
  *
