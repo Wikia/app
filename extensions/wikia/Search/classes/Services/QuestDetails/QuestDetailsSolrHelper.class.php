@@ -71,6 +71,7 @@ class QuestDetailsSolrHelper {
 			$metadata = $this->getMetadata( $item["metadata"] );
 			$this->addIfNotEmpty( $resultItem, 'metadata', $metadata );
 
+			$this->addThumbnailsInfo( $result );
 			$result[ ] = $resultItem;
 
 		}
