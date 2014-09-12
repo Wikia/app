@@ -34,7 +34,7 @@ class ArticleMetadataSolrCoreService {
 	protected function getConfig() {
 		$config = ( new Factory() )->getSolariumClientConfig();
 		$config[ 'adapteroptions' ][ 'core' ] = self::CORE_NAME;
-		if ( $config[ 'adapteroptions' ][ 'host' ] == 'search' ) {
+		if ( $config[ 'adapteroptions' ][ 'host' ] == 'search' )  {
 			$config[ 'adapteroptions' ][ 'host' ] = 'search-master:8983';
 		}
 		return $config;
