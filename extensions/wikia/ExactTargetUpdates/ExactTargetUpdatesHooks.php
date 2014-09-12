@@ -23,8 +23,9 @@ class ExactTargetUpdatesHooks {
 		global $wgWikiaEnvironment;
 		/* Don't add task when on dev or internal */
 		if ( $wgWikiaEnvironment != WIKIA_ENV_DEV && $wgWikiaEnvironment != WIKIA_ENV_INTERNAL ) {
-			$aParams = $this->prepareParams( $user );
-			$task->call( 'sendNewUserData', $aParams );
+			$aUserData = $this->prepareUserParams( $user );
+			$aUserProperties = $this->prepareUserPropertiesParams( $user );
+			$task->call( 'sendNewUserData', $aUserData, $aUserProperties );
 			$task->queue();
 		}
 	}
@@ -34,7 +35,7 @@ class ExactTargetUpdatesHooks {
 	 * @param User $oUser
 	 * @return array
 	 */
-	public function prepareParams( User $oUser ) {
+	public function prepareUserParams( User $oUser ) {
 		$aUserParams = [
 			'user_id' => $oUser->getId(),
 			'user_name' => $oUser->getName(),
@@ -43,9 +44,22 @@ class ExactTargetUpdatesHooks {
 			'user_email_authenticated' => $oUser->getEmailAuthenticationTimestamp(),
 			'user_registration' => $oUser->getRegistration(),
 			'user_editcount' => $oUser->getEditCount(),
-			'user_options' => $oUser->getOptions(),
 			'user_touched' => $oUser->getTouched()
 		];
 		return $aUserParams;
+	}
+
+	/**
+	 * Prepares array of user properties fields needed to be passed by API
+	 * @param User $oUser
+	 * @return array
+	 */
+	public function prepareUserPropertiesParams( User $oUser ) {
+		$aUserPropertiesParams = [
+			'marketingallowed' => $oUser->getOption( 'marketingallowed' ),
+			'unsubscribed' => $oUser->getOption( 'unsubscribed' ),
+			'language' => $oUser->getOption( 'language' )
+		];
+		return $aUserPropertiesParams;
 	}
 }

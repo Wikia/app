@@ -8,7 +8,8 @@ class ViddlerVideoHandler extends VideoHandler {
 	protected static $autoplayParam = "autoplay";
 	protected static $autoplayValue = "t";
 
-	public function getEmbed($articleId, $width, $autoplay = false, $isAjax = false, $postOnload = false) {
+	public function getEmbed( $width, array $options = [] ) {
+		$autoplay = !empty( $options['autoplay'] );
 		$height = $this->getHeight($width);
 		$url = $this->getEmbedUrl();
 		$embedVideoId = $this->getEmbedVideoId();

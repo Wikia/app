@@ -21,6 +21,7 @@ $wgAutoloadClasses[ 'WikiaInteractiveMapsParserTagController' ] = $dir . '/contr
 $wgAutoloadClasses[ 'WikiaInteractiveMapsBaseController' ] = $dir . '/controllers/WikiaInteractiveMapsBaseController.class.php';
 $wgAutoloadClasses[ 'WikiaInteractiveMapsMapController' ] = $dir . '/controllers/WikiaInteractiveMapsMapController.class.php';
 $wgAutoloadClasses[ 'WikiaInteractiveMapsPoiController' ] = $dir . '/controllers/WikiaInteractiveMapsPoiController.class.php';
+$wgAutoloadClasses[ 'WikiaInteractiveMapsPoiCategoryController' ] = $dir . '/controllers/WikiaInteractiveMapsPoiCategoryController.class.php';
 
 // helper classes
 $wgAutoloadClasses[ 'WikiaInteractiveMapsHooks' ] = $dir . 'WikiaInteractiveMapsHooks.class.php';
@@ -39,8 +40,8 @@ $wgSpecialPageGroups[ 'Maps' ] = 'wikia';
 
 // hooks
 $wgHooks[ 'ParserFirstCallInit' ][] = 'WikiaInteractiveMapsParserTagController::parserTagInit';
-$wgHooks[ 'SkinAfterBottomScripts' ][] = 'WikiaInteractiveMapsHooks::onSkinAfterBottomScripts';
 $wgHooks[ 'OutputPageBeforeHTML' ][] = 'WikiaInteractiveMapsHooks::onOutputPageBeforeHTML';
+$wgHooks[ 'OasisSkinAssetGroups' ][] = 'WikiaInteractiveMapsHooks::onOasisSkinAssetGroups';
 
 // mobile
 $wgHooks['WikiaMobileAssetsPackages'][] = 'WikiaInteractiveMapsHooks::onWikiaMobileAssetsPackages';

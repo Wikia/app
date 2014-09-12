@@ -49,6 +49,13 @@ function memsess_close() {
  * @return Mixed: session data
  */
 function memsess_read( $id ) {
+	/** Wikia change - begin - PLATFORM-308 */
+	if ( empty( $id ) ) {
+		memsess_destroy( $id );
+		return true;
+	}
+	/** Wikia change - end */
+
 	$memc =& getMemc();
 	$data = $memc->get( memsess_key( $id ) );
 
@@ -64,6 +71,13 @@ function memsess_read( $id ) {
  * @return Boolean: success
  */
 function memsess_write( $id, $data ) {
+	/** Wikia change - begin - PLATFORM-308 */
+	if ( empty( $id ) ) {
+		memsess_destroy( $id );
+		return true;
+	}
+	/** Wikia change - end */
+
 	$memc =& getMemc();
 	$memc->set( memsess_key( $id ), $data, 3600 );
 
@@ -79,7 +93,6 @@ function memsess_write( $id, $data ) {
 function memsess_destroy( $id ) {
 	$memc =& getMemc();
 	$memc->delete( memsess_key( $id ) );
-
 	return true;
 }
 
@@ -95,7 +108,29 @@ function memsess_gc( $maxlifetime ) {
 }
 
 function memsess_write_close() {
+	/** Wikia change - begin - PLATFORM-308 */
+	global $wgSessionDebugData, $wgRequest, $wgUser, $wgSessionName, $wgCookiePrefix;
+	/** Wikia change - end */
 	session_write_close();
+	/** Wikia change - begin - PLATFORM-308 */
+	if  ( !empty( $wgSessionDebugData ) ) {
+		$sBrowser = isset( $_SERVER['HTTP_USER_AGENT'] )? $_SERVER['HTTP_USER_AGENT'] : 'unknown';
+		$sCookie = isset( $_COOKIE[session_name()] )? $_COOKIE[session_name()] : 'empty';
+		\Wikia\Logger\WikiaLogger::instance()->debug(
+			'PLATFORM-308',
+			[
+				'data'       => $wgSessionDebugData,
+				'ip'         => IP::sanitizeIP( $wgRequest->getIP() ),
+				'user_id'    => $wgUser->getId(),
+				'user_name'  => $wgUser->getName(),
+				'session_id' => session_id(),
+				'user_agent' => $sBrowser,
+				'cookie'     => $sCookie
+
+			]
+		);
+	}
+	/** Wikia change - end */
 }
 
 /* Wikia */

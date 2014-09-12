@@ -17,10 +17,10 @@
 		}
 
 		> li {
-			background-color: $search-input-background;
+			background-color: $nav-background-hover-color;
 
 			> a:after {
-				border-top-color: $nav-active-color;
+				border-top-color: $nav-foreground-dark-color;
 			}
 		}
 	}
@@ -38,7 +38,7 @@
 
 			&:after {
 				border: 5px solid;
-				border-top-color: $nav-alternative-color;
+				border-top-color: $nav-border-color;
 				color: transparent;
 				content: ' ';
 				float: left;
@@ -61,11 +61,11 @@
 			}
 
 			&.anon-avatar-placeholder {
-				background-color: $nav-alternative-color;
+				background-color: $nav-border-color;
 			}
 
 			&.logged-avatar-placeholder {
-				background-color: $nav-active-color;
+				background-color: $nav-foreground-dark-color;
 			}
 		}
 
@@ -73,7 +73,7 @@
 
 	.user-menu {
 		@include grid-column-width('large', 2, $large-content-padding);
-		border: 1px solid $nav-alternative-color;
+		border: 1px solid $nav-border-color;
 		display: none;
 		font-size: 15px;
 		padding: 0;
@@ -87,8 +87,8 @@
 
 			> a {
 				background-color: $nav-background-color;
-				border-top: 1px solid $nav-alternative-color;
-				color: $dropdown-font-color;
+				border-top: 1px solid $nav-border-color;
+				color: $nav-foreground-bright-color;
 				display: table-cell;
 				padding: 8px 20px;
 				text-decoration: none;
@@ -96,7 +96,7 @@
 				word-break: break-word;
 
 				&:hover {
-					background-color: $dropdown-font-color;
+					background-color: $nav-foreground-bright-color;
 					color: $nav-background-color;
 				}
 			}

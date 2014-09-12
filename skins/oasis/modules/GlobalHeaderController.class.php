@@ -54,7 +54,7 @@ class GlobalHeaderController extends WikiaController {
 	}
 
 	public function index() {
-		Wikia::addAssetsToOutput( 'global_header_css' );
+		Wikia::addAssetsToOutput( 'global_header_scss' );
 
 		$userLang = $this->wg->Lang->getCode();
 

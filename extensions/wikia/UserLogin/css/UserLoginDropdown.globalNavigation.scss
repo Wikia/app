@@ -13,8 +13,8 @@
 .UserLoginDropdown {
 	@include grid-column-width('large', 2, $large-grid-column-padding + $large-grid-gutter + $large-content-padding);
 	background-color: $nav-background-color;
-	border: 1px solid $nav-alternative-color;
-	color: $nav-font-alternative-color;
+	border: 1px solid $nav-border-color;
+	color: $nav-foreground-alternative-color;
 	display: none;
 	font-size: 12px;
 	list-style: none;
@@ -24,14 +24,14 @@
 	z-index: 5000100;
 
 	.ajaxRegisterContainer {
-		background-color: $nav-active-color;
+		background-color: $nav-foreground-dark-color;
 		display: table;
 		margin-bottom: 10px;
 		padding: $large-content-padding;
 		width: 100%;
 
 		.ajaxRegister {
-			background-color: $dropdown-font-color;
+			background-color: $nav-foreground-bright-color;
 			color: $nav-background-color;
 			display: table-cell;
 			font-weight: bold;
@@ -49,7 +49,7 @@
 		}
 	}
 
-	.hide-label > label {
+	.hide-label label {
 		display: none;
 	}
 
@@ -57,7 +57,7 @@
 		padding: 0 $large-content-padding;
 
 		.forgot-password {
-			color: $dropdown-font-color;
+			color: $nav-foreground-bright-color;
 			font-size: 12px;
 			margin: 5px 0 20px;
 		}
@@ -94,17 +94,17 @@
 			@include clear-box-shadow;
 
 			@include placeholder {
-				color: $nav-alternative-color;
+				color: $nav-border-color;
 				font-style: italic;
 			}
 
 			border: 0;
-			border-bottom: 1px solid $nav-alternative-color;
-			color: $nav-active-color;
+			border-bottom: 1px solid $nav-border-color;
+			color: $nav-foreground-dark-color;
 			font-size: 15px;
 			height: 25px;
 			margin: 5px 0;
-			padding: 5px 0;
+			padding: 0;
 			width: 100%;
 
 			&, &:focus, &:active {
@@ -119,7 +119,7 @@
 
 		input[type=submit] {
 			@include clear-linear-gradient;
-			background-color: $nav-active-color;
+			background-color: $nav-foreground-dark-color;
 			border: 0;
 			border-radius: 0;
 			color: $nav-background-color;
@@ -133,7 +133,7 @@
 			word-break: break-word;
 
 			&:hover, &:active {
-				background-color: $dropdown-font-color;
+				background-color: $nav-foreground-bright-color;
 			}
 		}
 
@@ -145,7 +145,7 @@
 		}
 
 		label {
-			color: $nav-font-alternative-color;
+			color: $nav-foreground-alternative-color;
 			margin: 0;
 		}
 	}
@@ -153,15 +153,15 @@
 	.sso-login {
 		padding: 0 $large-content-padding $large-content-padding;
 
-		> .sso-login-divider {
-			border-top: solid 1px $nav-alternative-color;
+		.sso-login-divider {
+			border-top: solid 1px $nav-border-color;
 			height: 0;
 			margin: 20px 0;
 			text-align: center;
 
-			> span {
+			span {
 				background-color: $nav-background-color;
-				color: $nav-alternative-color;
+				color: $nav-border-color;
 				display: inline-block;
 				font-weight: bold;
 				padding: 0 5px;
