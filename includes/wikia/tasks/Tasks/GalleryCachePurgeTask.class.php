@@ -22,7 +22,7 @@ class GalleryCachePurgeTask extends BaseTask {
 
 		// Paginate the operation to prevent db/memory overload
 		for ( $limitCount = 0; $limitCount < $dbGalleryCount; $limitCount += self::PAGE_COUNT_LIMIT ) {
-			$galleryPageIds = $this->getGalleryPageIds( $totalGalleryPageCount );
+			$galleryPageIds = $this->getGalleryPageIds( $limitCount );
 
 			$galleryPageTitles = \Title::newFromIDs( $galleryPageIds );
 
