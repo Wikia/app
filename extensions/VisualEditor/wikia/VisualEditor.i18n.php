@@ -61,6 +61,8 @@ $messages['en'] = array(
 	'wikia-visualeditor-dialog-transclusion-get-info' => 'Get info about the "$1" template',
 	'wikia-visualeditor-dialog-transclusion-preview-button' => 'Update preview',
 	'wikia-visualeditor-context-transclusion-description' => 'Edit',
+	'wikia-visualeditor-dialog-wikiatemplateinsert-search' => 'Search for a template by name or article',
+	'wikia-visualeditor-wikiatemplateoptionwidget-appears' => 'Appears $1 {{PLURAL:$1|time|times}}',
 );
 
 /** Message documentation (Message documentation)
@@ -138,6 +140,7 @@ $messages['qqq'] = array(
 	'wikia-visualeditor-dialog-transclusion-get-info' => 'Call to action to get information about the currently-displayed template.',
 	'wikia-visualeditor-dialog-transclusion-preview-button' => 'Button text for updating the preview of template edits.',
 	'wikia-visualeditor-context-transclusion-description' => 'Description text in context menu for transclusion node.',
+	'wikia-visualeditor-dialog-wikiatemplateinsert-search' => 'Placeholder text that appears in the template insert dialog search field',
 );
 
 /** Tunisian Spoken Arabic ( زَوُن)
