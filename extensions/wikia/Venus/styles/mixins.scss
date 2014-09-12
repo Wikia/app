@@ -75,17 +75,17 @@
 
 // calculate column width in pixels for different screen sizes
 // $breakpoint: one of 'small', 'medium', 'large'
-@mixin grid-column-width( $breakpoint, $columns-count ) {
+@mixin grid-column-width($breakpoint, $columns-count, $aditional-width: 0) {
 	@if $breakpoint == small {
-		width: $columns-count * ($small-grid-column + $small-grid-gutter) - $small-grid-gutter;
+		width: round($columns-count * ($small-grid-column + $small-grid-gutter) - $small-grid-gutter + $aditional-width);
 	}
 
 	@if $breakpoint == medium {
-		width: $columns-count * ($medium-grid-column + $medium-grid-gutter) - $medium-grid-gutter;
+		width: round($columns-count * ($medium-grid-column + $medium-grid-gutter) - $medium-grid-gutter + $aditional-width);
 	}
 
 	@if $breakpoint == large {
-		width: $columns-count * ($large-grid-column + $large-grid-gutter) - $large-grid-gutter;
+		width: round($columns-count * ($large-grid-column + $large-grid-gutter) - $large-grid-gutter + $aditional-width);
 	}
 }
 

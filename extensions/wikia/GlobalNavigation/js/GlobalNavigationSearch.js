@@ -8,6 +8,9 @@
 			$searchLabel = $('#searchLabelInline'),
 			$chevron = $('#searchFormChevron');
 
+		if (!$selectElement) {
+			return;
+		}
 
 		function setFormOptions() {
 			var $selectedOption;
@@ -27,6 +30,7 @@
 				}
 			}
 		}
+
 		setFormOptions();
 
 		$selectElement.on('change keyup keydown', function() {

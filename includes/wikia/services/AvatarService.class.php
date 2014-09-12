@@ -2,6 +2,7 @@
 class AvatarService extends Service {
 
 	const AVATAR_SIZE_SMALL = 20;
+	const AVATAR_SIZE_SMALL_PLUS = 36;
 	const AVATAR_SIZE_MEDIUM = 50;
 	const AVATAR_SIZE_LARGE = 150;
 
@@ -154,6 +155,8 @@ class AvatarService extends Service {
 		// We allow HTML tag to resize to any size.
 		if ($avatarSize <= self::AVATAR_SIZE_SMALL) {
 			$allowedSize = self::AVATAR_SIZE_SMALL;
+		} else if ($avatarSize <= self::AVATAR_SIZE_SMALL_PLUS) {
+			$allowedSize = self::AVATAR_SIZE_SMALL_PLUS;
 		} else if ($avatarSize <= self::AVATAR_SIZE_MEDIUM) {
 			$allowedSize = self::AVATAR_SIZE_MEDIUM;
 		} else {
@@ -213,5 +216,33 @@ class AvatarService extends Service {
 
 		wfProfileOut(__METHOD__);
 		return $ret;
+	}
+
+	/**
+	 * isEmptyOrFirstDefault -- check if the user has set none or uses the first of the default avatars
+	 */
+	static public function isEmptyOrFirstDefault( $userName ) {
+		wfProfileIn( __METHOD__ );
+		global $wgStylePath;
+
+		if ( class_exists( 'Masthead' ) ) {
+			$avatarUrl = Masthead::newFromUserName($userName)->mUser->getOption( AVATAR_USER_OPTION_NAME );
+			$images = getMessageForContentAsArray( 'blog-avatar-defaults' );
+			$firstDefaultImage = $images[ 0 ];
+			if( empty( $avatarUrl ) || substr( $avatarUrl, -strlen( $firstDefaultImage ) ) === $firstDefaultImage ) {
+				wfProfileOut( __METHOD__ );
+				return true;
+			}
+		} else {
+			$avatarUrl = self::getAvatarUrl( $userName );
+			$avatarDefaultUrlStart = "{$wgStylePath}/oasis/images/generic_avatar";
+			if( $avatarUrl === '' || strpos( $avatarUrl, $avatarDefaultUrlStart ) === 0 ) {
+				wfProfileOut( __METHOD__ );
+				return true;
+			}
+		}
+
+		wfProfileOut( __METHOD__ );
+		return false;
 	}
 }

@@ -1,6 +1,10 @@
-@import "GlobalNavigationColors";
-@import "../../Venus/styles/mixins";
-@import "../../Venus/styles/variables";
+@import 'GlobalNavigationColors';
+@import 'extensions/wikia/Venus/styles/mixins';
+@import 'extensions/wikia/Venus/styles/variables';
+
+.search-container {
+	@include grid-column-width('large', 7, 2 * $large-grid-gutter);
+}
 
 .search-form-wrapper {
 	display: table;
@@ -8,20 +12,24 @@
 	margin-bottom: 10px;
 	margin-top: 10px;
 	width: 100%;
+
 	.search-form {
 		display: table-row;
 		position: relative;
 		width: 100%;
 	}
+
 	.search-label-bold {
-		color: $nav-active-color;
+		color: $nav-foreground-dark-color;
 		font-weight: bold;
 		padding-left: 16px;
 		width: 0;
 	}
+
 	.search-label-inline {
-		color: $nav-alternative-color;
+		color: $nav-border-color;
 	}
+
 	.table-cell {
 		display: table-cell;
 		white-space: nowrap;
@@ -66,48 +74,55 @@
 }
 
 .search-select-wrapper {
-	padding-right: 14px;
 	padding-left: 5px;
+	padding-right: 14px;
 	position: relative;
 	width: 0;
+
 	.search-select {
-		border: none;
+		border: 0;
 		cursor: pointer;
 		height: 100%;
 		left: 0;
 		opacity: 0;
 		position: absolute;
-		top:0;
+		top: 0;
 	}
+
 	.chevron {
 		border-style: solid;
 		width: 0;
 	}
+
 	.search-select-overlay {
 		display: inline-block;
+
 		.chevron {
 			border-color: $nav-background-color;
+			border-top-color: $nav-border-color;
 			border-width: 5px;
-			border-top-color: $nav-alternative-color;
-			margin-top: 13px;
 			margin-left: 2px;
+			margin-top: 13px;
 			position: relative;
 			top: 2px;
+
 			&.dark {
-				border-top-color: $nav-active-color;
+				border-top-color: $nav-foreground-dark-color;
 			}
 		}
 	}
 }
 
 .global-nav-search-input-wrapper {
+	padding-right: $large-grid-gutter;
 	position: relative;
 	width: 100%;
+
 	.search-input {
-		background-color: $search-input-background;
-		border: none;
+		background-color: $nav-background-hover-color;
+		border: 0;
 		border-radius: 2px;
-		color: $nav-active-color;
+		color: $nav-foreground-dark-color;
 		font-size: 16px;
 		font-weight: bold;
 		height: 36px;
@@ -115,28 +130,32 @@
 		padding-right: 39px;
 		width: 100%;
 	}
+
 	.search-submit {
 		background-color: transparent;
-		background-image: url("/extensions/wikia/GlobalNavigation/images/search_icon.svg"); /* base64 */
-		background-size: 100% 100%;
+		background-image: url('/extensions/wikia/GlobalNavigation/images/search_icon.svg'); /* base64 */
+		background-position: 8px;
+		background-repeat: no-repeat;
+		background-size: 20px 18px;
 		border: 0;
-		height: 18px;
+		height: 36px;
 		padding: 0;
 		position: absolute;
-		top: 9px;
-		width: 20px;
+		right: 11px;
+		width: 36px;
 	}
 }
 
-.search-container {
-	@include grid-attribute-size('width', 7.5, 7, 7);
-}
-
 @media #{$small-only} {
+	.search-container {
+		@include grid-column-width('small', 8, 2 * $small-grid-gutter - 36px);
+	}
+
 	.global-nav-search-input-wrapper {
-		padding-right: $small-grid-gutter + $small-content-padding;
+		padding-right: $small-grid-gutter;
+
 		.search-submit {
-			right: 34px;
+			right: 9px;
 		}
 
 		.autocomplete-container {
@@ -146,27 +165,25 @@
 }
 
 @media #{$medium-only} {
-	.global-nav-search-input-wrapper {
-		padding-right: $medium-grid-gutter + $medium-content-padding;
-		.search-submit {
-			right: 38px;
-		}
-
-		.autocomplete-container {
-			right: $medium-grid-gutter + $medium-content-padding;
-		}
+  .global-nav-search-input-wrapper {
+	padding-right: $medium-grid-gutter + $medium-content-padding;
+	.search-submit {
+	  right: 38px;
 	}
+	.autocomplete-container {
+	  right: $medium-grid-gutter + $medium-content-padding;
+	}
+  }
 }
 
 @media #{$large-up} {
-	.global-nav-search-input-wrapper {
-		padding-right: $large-grid-gutter + $large-content-padding;
-		.search-submit {
-			right: 42px;
-		}
-
-		.autocomplete-container {
-			right: $large-grid-gutter + $large-content-padding;
-		}
+  .global-nav-search-input-wrapper {
+	padding-right: $large-grid-gutter + $large-content-padding;
+	.search-submit {
+	  right: 42px;
 	}
+	.autocomplete-container {
+	  right: $large-grid-gutter + $large-content-padding;
+	}
+  }
 }

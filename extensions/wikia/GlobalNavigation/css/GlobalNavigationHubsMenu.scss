@@ -1,10 +1,11 @@
-@import "../../Venus/styles/variables";
-@import "skins/shared/color";
-@import "skins/shared/mixins/columns";
-@import "GlobalNavigationColors";
+@import '../../Venus/styles/variables';
+@import 'skins/shared/color';
+@import 'skins/shared/mixins/columns';
+@import 'skins/shared/mixins/blackout';
+@import 'GlobalNavigationColors';
 
 .hubs-entry-point {
-	background-image: url("/extensions/wikia/GlobalNavigation/images/hubs_entry_point.svg"); /* base64 */
+	background-image: url('/extensions/wikia/GlobalNavigation/images/hubs_entry_point.svg'); /* base64 */
 	background-position: 16px center;
 	background-repeat: no-repeat;
 	cursor: pointer;
@@ -12,9 +13,10 @@
 
 	&:after {
 		border: 5px solid $nav-background-color;
-		border-top-color: $nav-alternative-color;
-		content: " ";
+		border-top-color: $nav-border-color;
+		content: ' ';
 		display: inline-block;
+		margin-top: 12px;
 	}
 }
 
@@ -22,15 +24,24 @@
 	.hubs-menu {
 		display: block;
 	}
+
 	.hubs-entry-point:after {
-		border-top-color: $nav-active-color;
+		border-top-color: $nav-foreground-dark-color;
+	}
+}
+
+.transparent-out {
+	@include blackout(rgba(1, 1, 1, 0));
+
+	&.visible {
+		z-index: $blackout-z-index;
 	}
 }
 
 .hubs-menu {
 	background-color: $hubsmenu-background-color;
-	border: 1px solid $nav-alternative-color;
-	color: $nav-active-color;
+	border: 1px solid $nav-border-color;
+	color: $nav-foreground-dark-color;
 	display: none;
 	left: -1px;
 	position: absolute;
@@ -38,17 +49,18 @@
 	width: 768px;
 
 	a {
-		color: $nav-active-color;
+		color: $nav-foreground-dark-color;
 	}
 
 	.hub-list {
-		float:left;
+		float: left;
 		width: 256px;
 
 		*, *:before, *:after {
 			-webkit-backface-visibility: hidden;
 		}
 	}
+
 	nav {
 		background-color: $nav-background-color;
 		cursor: pointer;
@@ -62,17 +74,18 @@
 
 			&:before {
 				border-radius: 50%;
-				content: " ";
-				left: 16px;
-				width: 50px;
+				content: ' ';
 				height: 50px;
+				left: 16px;
 				position: absolute;
 				top: 6px;
+				width: 50px;
 			}
 
 			&:after {
 				background-color: $hubsmenu-background-color;
-				border: 31px solid transparent;
+				border-color: transparent;
+				border-style: solid;
 				border-width: 31px 0 31px 12px;
 				height: 0;
 				width: 0;
@@ -86,15 +99,15 @@
 			}
 
 			.label {
-				border: 0;
 				background-color: transparent;
+				border: 0;
 				height: 62px;
 			}
 		}
 
 		&:after {
 			background-color: $hubsmenu-background-color;
-			content: " ";
+			content: ' ';
 			float: right;
 			height: 62px;
 			width: 12px;
@@ -111,7 +124,7 @@
 
 			&:after {
 				background-color: $nav-background-color;
-				content: " ";
+				content: ' ';
 				display: inline-block;
 				float: right;
 				height: 62px;
@@ -125,17 +138,13 @@
 			display: inline-block;
 			float: left;
 			font-size: 18px;
-			height: 61px;
+			height: 62px;
 			width: 142px;
 		}
 	}
 
 	section {
-		@include column-count( 2 );
-
-		&.active {
-			display: block;
-		}
+		@include column-count(2);
 
 		display: none;
 		float: left;
@@ -143,7 +152,12 @@
 		padding-left: 22px;
 		width: 464px;
 
+		&.active {
+			display: block;
+		}
+
 		h2 {
+			display: inline-block;
 			font-size: 15px;
 			font-weight: bold;
 			margin: 0;
@@ -168,10 +182,12 @@
 				border-left-color: $color-vertical-books;
 			}
 		}
+
 		.icon {
-			background-image: url("/extensions/wikia/GlobalNavigation/images/books.svg"); /* base64 */
+			background-image: url('/extensions/wikia/GlobalNavigation/images/books.svg'); /* base64 */
 		}
 	}
+
 	.comics {
 		background-color: $color-vertical-comics;
 
@@ -184,10 +200,12 @@
 				border-left-color: $color-vertical-comics;
 			}
 		}
+
 		.icon {
-			background-image: url("/extensions/wikia/GlobalNavigation/images/comics.svg"); /* base64 */
+			background-image: url('/extensions/wikia/GlobalNavigation/images/comics.svg'); /* base64 */
 		}
 	}
+
 	.games {
 		background-color: $color-vertical-games;
 
@@ -200,10 +218,12 @@
 				border-left-color: $color-vertical-games;
 			}
 		}
+
 		.icon {
-			background-image: url("/extensions/wikia/GlobalNavigation/images/games.svg"); /* base64 */
+			background-image: url('/extensions/wikia/GlobalNavigation/images/games.svg'); /* base64 */
 		}
 	}
+
 	.lifestyle {
 		background-color: $color-vertical-lifestyle;
 
@@ -216,10 +236,12 @@
 				border-left-color: $color-vertical-lifestyle;
 			}
 		}
+
 		.icon {
-			background-image: url("/extensions/wikia/GlobalNavigation/images/lifestyle.svg"); /* base64 */
+			background-image: url('/extensions/wikia/GlobalNavigation/images/lifestyle.svg'); /* base64 */
 		}
 	}
+
 	.movies {
 		background-color: $color-vertical-movies;
 
@@ -232,10 +254,12 @@
 				border-left-color: $color-vertical-movies;
 			}
 		}
+
 		.icon {
-			background-image: url("/extensions/wikia/GlobalNavigation/images/movies.svg"); /* base64 */
+			background-image: url('/extensions/wikia/GlobalNavigation/images/movies.svg'); /* base64 */
 		}
 	}
+
 	.music {
 		background-color: $color-vertical-music;
 
@@ -248,10 +272,12 @@
 				border-left-color: $color-vertical-music;
 			}
 		}
+
 		.icon {
-			background-image: url("/extensions/wikia/GlobalNavigation/images/music.svg"); /* base64 */
+			background-image: url('/extensions/wikia/GlobalNavigation/images/music.svg'); /* base64 */
 		}
 	}
+
 	.tv {
 		background-color: $color-vertical-tv;
 
@@ -264,8 +290,9 @@
 				border-left-color: $color-vertical-tv;
 			}
 		}
+
 		.icon {
-			background-image: url("/extensions/wikia/GlobalNavigation/images/tv.svg"); /* base64 */
+			background-image: url('/extensions/wikia/GlobalNavigation/images/tv.svg'); /* base64 */
 		}
 	}
 }
@@ -302,6 +329,7 @@
 		.hub-list {
 			width: 302px;
 		}
+
 		nav {
 			&.active {
 				&:before {
