@@ -51,8 +51,8 @@ class Factory
 			$solariumConfig = array(
 				'adapter' => 'Solarium_Client_Adapter_Curl',
 				'adapteroptions' => array(
-					'host'    => "dev-search-s4",
-					'port'    => 8983,
+					'host'    => "dev-search",
+					'port'    => null,
 					'path'    => '/solr/',
 				)
 			);

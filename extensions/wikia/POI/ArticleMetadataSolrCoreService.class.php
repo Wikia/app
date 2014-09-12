@@ -71,8 +71,6 @@ class ArticleMetadataSolrCoreService {
 		$options['headers'] = ['Content-type'=>'application/json'];
 		$options['postData'] = $jsonFormattedData;
 		$options['returnInstance'] = true;
-		//TODO: temporary, as we need to wait for search-master proxy
-		$options['noProxy'] = true; // we need to omit proxy in order to reach search-master
 		$response = Http::request( "POST", $this->getCommitUrl(), $options );
 
 		return $response;
