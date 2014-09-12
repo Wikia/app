@@ -11,10 +11,47 @@ class NjordController extends WikiaController {
 		$this->wg->Out->addScriptFile( $this->wg->ExtensionsPath . '/wikia/NjordPrototype/scripts/jquery-ui-1.9.2.js' );
 		$this->wg->Out->addScriptFile( $this->wg->ExtensionsPath . '/wikia/NjordPrototype/scripts/jquery.caret.js' );
 		$this->wg->Out->addScriptFile( $this->wg->ExtensionsPath . '/wikia/NjordPrototype/scripts/Njord.js' );
+		$this->wg->out->addStyle( AssetsManager::getInstance()->getSassCommonURL( 'extensions/wikia/NjordPrototype/css/Mom.scss' ) );
+		$this->wg->Out->addScriptFile( $this->wg->ExtensionsPath . '/wikia/NjordPrototype/scripts/Mom.js' );
 
 		$wikiDataModel = new WikiDataModel( Title::newMainPage()->getText() );
 		$wikiDataModel->getFromProps();
 		$this->wikiData = $wikiDataModel;
+	}
+
+	public function modula() {
+		$this->content = $this->getRequest()->getVal('content');
+		$this->align = $this->getRequest()->getVal('align');
+		$this->ctitle = $this->getRequest()->getVal('content-title');
+	}
+
+	public function reorder() {
+		$params = $this->getRequest()->getParams();
+
+		$pageTitleObj = Title::newFromText( $params['page'] );
+		$pageArticleObj = new Article( $pageTitleObj );
+		$content = $pageArticleObj->getContent();
+
+		$content = mb_ereg_replace('<modula.*/>', '', $content, 'sU' );
+		$moduleTags = [];
+		foreach ($params['left'] as $title) {
+			$moduleTags[] = Xml::element( 'modula', $attribs = [
+				'align' => 'left',
+				'content-title' => $title,
+			] );
+		}
+		$content = mb_ereg_replace('(<mainpage-leftcolumn-start.*/>)\s*', "\\1\n" . implode($moduleTags, "\n"). "\n", $content, 'sU' );
+		$moduleTags = [];
+		foreach ($params['right'] as $title) {
+			$moduleTags[] = Xml::element( 'modula', $attribs = [
+				'align' => 'right',
+				'content-title' => $title,
+			] );
+		}
+		$content = mb_ereg_replace('(<mainpage-rightcolumn-start.*/>)\s*', "\\1\n" . implode($moduleTags, "\n"). "\n", $content, 'sU' );
+		// save and purge
+		$pageArticleObj->doEdit( $content, '' );
+		$pageArticleObj->doPurge();
 	}
 
 	public function upload() {

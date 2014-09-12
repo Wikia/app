@@ -1,0 +1,13 @@
+.mom-module {
+  position: relative;
+}
+
+.mom-overlay {
+  background-color: rgba(0, 0, 0, .7);
+  cursor: move;
+  display: none;
+  height: 100%;
+  position: absolute;
+  width: 100%;
+  z-index: 101;
+}
