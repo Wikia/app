@@ -48,11 +48,15 @@ function getVideoThumbnailIva( $sourceId ) {
 
 /**
  * Update thumbnail in the wiki
+ *
+ * @param string $videoTitle - video title on the wiki
+ * @param string $thumbnailUrl
+ * @param integer $delayIndex
+ *
  * @global integer $failed
  * @global boolean $dryRun
  * @global string $msg
- * @param string $videoTitle - video title on the wiki
- * @param string $thumbnailUrl
+ *
  * @return boolean
  */
 function updateThumbnailWiki( $videoTitle, $thumbnailUrl, $delayIndex ) {
