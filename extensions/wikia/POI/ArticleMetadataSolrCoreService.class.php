@@ -32,11 +32,8 @@ class ArticleMetadataSolrCoreService {
 	];
 
 	protected function getConfig() {
-		$config = ( new Factory() )->getSolariumClientConfig();
+		$config = ( new Factory() )->getSolariumClientConfig( true );
 		$config[ 'adapteroptions' ][ 'core' ] = self::CORE_NAME;
-		if ( $config[ 'adapteroptions' ][ 'host' ] == 'search' )  {
-			$config[ 'adapteroptions' ][ 'host' ] = 'search-master:8983';
-		}
 		return $config;
 	}
 
@@ -74,6 +71,8 @@ class ArticleMetadataSolrCoreService {
 		$options['headers'] = ['Content-type'=>'application/json'];
 		$options['postData'] = $jsonFormattedData;
 		$options['returnInstance'] = true;
+		//TODO: temporary, as we need to wait for search-master proxy
+		$options['noProxy'] = true; // we need to omit proxy in order to reach search-master
 		$response = Http::request( "POST", $this->getCommitUrl(), $options );
 
 		return $response;

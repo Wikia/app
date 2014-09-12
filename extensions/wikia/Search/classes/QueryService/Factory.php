@@ -36,20 +36,23 @@ class Factory
 		return $this->get( $container );
 	}
 
-	public function getSolariumClientConfig() {
+	public function getSolariumClientConfig($forceMaster = false) {
 		$service = (new \Wikia\Search\ProfiledClassFactory)->get( 'Wikia\Search\MediaWikiService' );
 		$host = $service->getGlobalWithDefault( 'SolrHost', 'localhost' );
 		$host = (! empty( $_GET['newsolrhost'] ) ) ? $service->getGlobal( 'AlternateSolrHost' ) : $host;
 
 		$solariumConfig = [];
+		if ( $forceMaster ) {
+			$host = "search-master";
+		}
 
 		global $wgUseDevSearch;
 		if( !empty($wgUseDevSearch) && ($wgUseDevSearch == true)) {
 			$solariumConfig = array(
 				'adapter' => 'Solarium_Client_Adapter_Curl',
 				'adapteroptions' => array(
-					'host'    => "dev-search",
-					'port'    => null,
+					'host'    => "dev-search-s4",
+					'port'    => 8983,
 					'path'    => '/solr/',
 				)
 			);
