@@ -89,12 +89,24 @@ class ArticleMetadataModel {
 	 * Save the metadata to DB ( page_wikia_props )
 	 * to prop name defined in self::article_prop_name
 	 */
-	public function save( $propagateScribeEvent = false ) {
+	public function save( $propagateToSolr = false ) {
 		$this->setWikiaProp( self::ARTICLE_PROP_NAME, $this->articleId, $this->getMetadata() );
-		if ( $propagateScribeEvent ) {
+		if ( $propagateToSolr ) {
 			$article = new Article( $this->articleTitle );
+
+			// push directly to article_metadata core
+			$this->pushToSolr(  F::app()->wg->CityId, $this->articleId, $this->getMetadata() );
+
+			// push to main core via scribe
 			ScribeEventProducerController::notifyPageHasChanged( $article->getPage() );
 		}
+	}
+
+	public function pushToSolr( $wikiId, $articleId, $data ) {
+		$am = new ArticleMetadataSolrCoreService();
+		$data[ArticleMetadataSolrCoreService::ID] = $wikiId . "_" . $articleId;
+		$data[ArticleMetadataSolrCoreService::WID] = $wikiId;
+		$am->save( $data );
 	}
 
 	/**
