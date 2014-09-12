@@ -23,7 +23,7 @@ class ArticleMetadataModel {
 	protected $solr_mapping = [
 		self::QUEST_ID => "metadata_quest_id_s",
 		self::ABILITY_ID => "metadata_ability_id_s",
-		self::FINGERPRINTS => "metadata_fingerprint_ids_ss",
+		self::FINGERPRINTS => "metadata_fingerprint_ids_mv_s",
 		self::MAP_REGION => "metadata_map_region_s"
 	];
 
