@@ -157,8 +157,8 @@ class VenusController extends WikiaController {
 
 		// set variables
 		$this->cssLinks = $cssLinks;
-		$this->jsBodyFiles = $this->skinTemplateObj->data['headscripts'] . $jsBodyFiles;
-		$this->jsHeadScripts = $this->topScripts .  $jsHeadFiles;
+		$this->jsBodyFiles =  $jsBodyFiles;
+		$this->jsHeadScripts = $this->skinTemplateObj->data['headscripts'] . $jsHeadFiles;
 	}
 
 	public function getGlobalNavigation() {

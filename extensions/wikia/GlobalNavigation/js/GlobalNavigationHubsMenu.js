@@ -1,6 +1,6 @@
 require( ['jquery', 'wikia.globalnavigation.lazyload'], function( $, GlobalNavLazyLoad ){
 	'use strict';
-	var $entryPoint, $hubLinks, $hubs, $transparentOut, $verticals;
+	var $entryPoint, $hubLinks, $hubs, $verticals;
 
 	function activateSubmenu( row ) {
 		var subMenuSelector, vertical;
@@ -17,7 +17,7 @@ require( ['jquery', 'wikia.globalnavigation.lazyload'], function( $, GlobalNavLa
 
 	function openMenu() {
 		$entryPoint.addClass( 'active' );
-		$transparentOut.addClass( 'visible' );
+		window.transparentOut.show();
 
 		if (!GlobalNavLazyLoad.isMenuWorking()) {
 			GlobalNavLazyLoad.getHubLinks();
@@ -26,8 +26,10 @@ require( ['jquery', 'wikia.globalnavigation.lazyload'], function( $, GlobalNavLa
 
 	function closeMenu() {
 		$entryPoint.removeClass( 'active' );
-		$transparentOut.removeClass( 'visible' );
+		window.transparentOut.hide();
 	}
+
+	window.transparentOut.bindClick(closeMenu);
 
 	$(function(){
 		$hubs = $( '#hubs' );
@@ -48,8 +50,7 @@ require( ['jquery', 'wikia.globalnavigation.lazyload'], function( $, GlobalNavLa
 				deactivate: deactivateSubmenu
 			});
 
-		$transparentOut = $('<div class="transparent-out transparent-out-hubs-menu"/>').appendTo('body');
-		$transparentOut.click(closeMenu);
+		window.transparentOut.bindClick(closeMenu);
 
 		if ( !window.touchstart ) {
 			window.delayedHover(

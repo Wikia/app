@@ -38,3 +38,14 @@ $other-modules-width: 5 * $large-grid-column +  3 * $large-grid-gutter + 2 * $la
 		margin: 0;
 	}
 }
+
+.autocomplete {
+	border-radius: 0;
+	box-shadow: none;
+	padding: 0;
+
+	div {
+		font-size: 15px;
+		line-height: 18px;
+	}
+}

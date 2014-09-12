@@ -1,48 +1,46 @@
-(function() {
+(function($) {
 	'use strict';
-	document.addEventListener('DOMContentLoaded', function() {
-		var inputResultLang, formElement, selectElement, searchLabel, chevron;
+	$(function() {
+		var $inputResultLang = $('#searchInputResultLang'),
+			$formElement = $('#searchForm'),
+			$selectElement = $('#searchSelect'),
+			$searchInput = $('#searchInput'),
+			$searchLabel = $('#searchLabelInline'),
+			$chevron = $('#searchFormChevron');
 
-		selectElement = document.getElementById('search-select');
-
-		if (!selectElement) {
+		if (!$selectElement) {
 			return;
 		}
 
 		function setFormOptions() {
-			var selectedOption;
+			var $selectedOption;
 
-			selectedOption = selectElement.selectedOptions[0];
-			searchLabel.textContent = selectedOption.text;
-			formElement.action = selectedOption.getAttribute('data-search-url');
-			if (selectedOption.value === 'global') {
-				inputResultLang.disabled = false;
-			} else if (selectedOption.value === 'local') {
-				inputResultLang.disabled = true;
+			$selectedOption = $selectElement.find('option:selected');
+			$searchLabel.text($selectedOption.text());
+			$formElement.attr('action', $selectedOption.attr('data-search-url'));
+			if ($selectedOption.val() === 'global') {
+				$inputResultLang.prop('disabled', false);
+				if ($searchInput.data('autocomplete')) {
+					$searchInput.data('autocomplete').disable();
+				}
+			} else {
+				$inputResultLang.prop('disabled', true);
+				if ($searchInput.data('autocomplete')) {
+					$searchInput.data('autocomplete').enable();
+				}
 			}
 		}
 
-		inputResultLang = document.getElementById('search-input-resultLang');
-		chevron = document.getElementById('search-form-chevron');
-		formElement = document.getElementById('search-form');
-		searchLabel = document.getElementById('search-label-inline');
-
 		setFormOptions();
 
-		selectElement.addEventListener('change', function() {
+		$selectElement.on('change keyup keydown', function() {
 			setFormOptions();
 		});
-		selectElement.addEventListener('keyup', function() {
-			setFormOptions();
+		$selectElement.on('focus', function() {
+			$chevron.addClass('dark');
 		});
-		selectElement.addEventListener('keydown', function() {
-			setFormOptions();
-		});
-		selectElement.addEventListener('focus', function() {
-			chevron.classList.add('dark');
-		});
-		selectElement.addEventListener('blur', function() {
-			chevron.classList.remove('dark');
+		$selectElement.on('blur', function() {
+			$chevron.removeClass('dark');
 		});
 	});
-}());
+}(jQuery));

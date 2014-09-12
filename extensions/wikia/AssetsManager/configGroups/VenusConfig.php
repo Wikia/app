@@ -101,8 +101,9 @@ $VenusConfig[ 'global_navigation_js' ] = [
 		'//resources/wikia/libraries/delayed-hover/js-delayed-hover.js',
 		'//extensions/wikia/GlobalNavigation/js/GlobalNavigationLazyLoad.js',
 		'//extensions/wikia/GlobalNavigation/js/GlobalNavigationHubsMenu.js',
-		'//extensions/wikia/GlobalNavigation/js/GlobalNavigation.js',
 		'//extensions/wikia/GlobalNavigation/js/GlobalNavigationSearch.js',
+		'//extensions/wikia/GlobalNavigation/js/SearchSuggestions.js',
+		'//skins/shared/js/transparent-out.js',
 		'//extensions/wikia/UserLogin/js/UserLoginDropdown.globalNavigation.js',
 	]
 ];
