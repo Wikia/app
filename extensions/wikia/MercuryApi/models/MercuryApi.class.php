@@ -40,10 +40,11 @@ class MercuryApi {
 	 */
 	public function topContributorsPerArticle( $articleId, $limit ) {
 		$key = self::getTopContributorsKey( $articleId );
+		$method = __METHOD__;
 		$contributions = WikiaDataAccess::cache($key, self::CACHE_TIME_TOP_CONTRIBUTORS,
-			function() use ( $articleId, $limit ) {
+			function() use ( $articleId, $limit, $method ) {
 				// Log DB hit
-				Wikia::log( __METHOD__, false, sprintf( 'Cache for aID: %d was empty', $articleId ) );
+				Wikia::log( $method, false, sprintf( 'Cache for articleId: %d was empty', $articleId ) );
 				$db = wfGetDB( DB_SLAVE );
 				$res = $db->select(
 					'revision',
@@ -55,7 +56,7 @@ class MercuryApi {
 						'rev_page' => $articleId,
 						'rev_deleted' => 0
 					],
-					__METHOD__,
+					$method,
 					[
 						'GROUP BY' => 'rev_user',
 						'ORDER BY' => 'count(1) DESC',
