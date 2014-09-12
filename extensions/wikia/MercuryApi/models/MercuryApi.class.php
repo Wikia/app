@@ -53,8 +53,9 @@ class MercuryApi {
 						'count(1) AS cntr'
 					],
 					[
-						'rev_page' => $articleId,
-						'rev_deleted' => 0
+						'rev_page = ' . $articleId,
+						'rev_deleted = 0',
+						'rev_user != 0'
 					],
 					$method,
 					[

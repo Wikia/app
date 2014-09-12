@@ -15,7 +15,7 @@ class MercuryApiHooks {
 			$contributions[ $userId ]++;
 		} else {
 			$contributions[ $userId ] = MercuryApi::getNumberOfUserContribForArticle( $articleId, $userId );
-			asort( $contributions );
+			arsort( $contributions );
 		}
 		return $contributions;
 	}
@@ -23,7 +23,7 @@ class MercuryApiHooks {
 	/**
 	 * @desc Keep track of article contribution to update the top contributors data if available
 	 *
-	 * @param Article $article
+	 * @param WikiPage $article
 	 * @param User $user
 	 * @param $text
 	 * @param $summary
@@ -35,33 +35,37 @@ class MercuryApiHooks {
 	 * @param $status
 	 * @param $baseRevId
 	 */
-	public static function onArticleSaveComplete( Article $article, User $user, $text, $summary, $minoredit, $watchthis,
+	public static function onArticleSaveComplete( WikiPage $wikiPage, User $user, $text, $summary, $minoredit, $watchthis,
 												  $sectionanchor, &$flags, $revision, &$status, $baseRevId ) {
 		if ( !$user->isAnon() ) {
-			$articleId = $article->getTitle()->getArticleId();
-			$userId = $user->getId();
-			$key = getTopContributorsKey( $articleId );
-			$wg = F::app()->wg;
-			$result = $wg->Memc->get( $key );
-			// Update the data only if the key is not empty
-			if ( $result ) {
-				$wg->Memc->set( $key, self::addUserToResult( $articleId, $userId, $result ),
-					MercuryApi::CACHE_TIME_TOP_CONTRIBUTORS );
+			$articleId = $wikiPage->getTitle()->getArticleId();
+			if ( $articleId ) {
+				$userId = $user->getId();
+				$key = MercuryApi::getTopContributorsKey( $articleId );
+				$wg = F::app()->wg;
+				$result = $wg->Memc->get( $key );
+				// Update the data only if the key is not empty
+				if ( $result ) {
+					$wg->Memc->set( $key, self::addUserToResult( $articleId, $userId, $result ),
+						MercuryApi::CACHE_TIME_TOP_CONTRIBUTORS );
+				}
 			}
 		}
+		return true;
 	}
 
 	/**
 	 * @desc Purge the contributors data to guarantee that it will be refreshed next time it is required
 	 *
-	 * @param Article $article
+	 * @param WikiPage $article
 	 * @param User $user
 	 * @param $revision
 	 * @param $current
 	 */
-	public static function onArticleRollbackComplete( Article $article, User $user, $revision, $current ) {
-		$articleId = $article->getTitle()->getArticleId();
-		$key = getTopContributorsKey( $articleId );
+	public static function onArticleRollbackComplete( WikiPage $wikiPage, User $user, $revision, $current ) {
+		$articleId = $wikiPage->getTitle()->getArticleId();
+		$key = MercuryApi::getTopContributorsKey( $articleId );
 		WikiaDataAccess::cachePurge( $key );
+		return true;
 	}
 } 
