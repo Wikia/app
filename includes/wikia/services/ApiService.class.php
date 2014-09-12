@@ -48,6 +48,7 @@ class ApiService extends Service {
 
 		// If hostName is empty, this would make a request to the current host.
 		if ( empty( $hostName ) ) {
+			wfProfileOut( __METHOD__ );
 			return false;
 		}
 
