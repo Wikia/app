@@ -10,10 +10,7 @@
 		</a>
 		<?php if ( !$isAnon ): ?>
 		<ul class="user-menu subnav">
-			<li id="notifications">
-				<a href="#">Notifications <span class="notifications-count"></span></a>
-				<?= $app->renderView('GlobalNavigationWallNotifications', 'Index'); ?>
-			</li>
+			<?= $app->renderView('GlobalNavigationWallNotifications', 'Index'); ?>
 			<?php foreach( $userDropdown as $link ): ?>
 				<li><?= $link ?></li>
 			<?php endforeach; ?>
