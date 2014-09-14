@@ -30,7 +30,7 @@ define('wikia.backgroundchanger', function()  {
 				'color-body': options.backgroundColor
 			},
 			settings = $.extend({}, window.wgSassParams, optionsForSass),
-			sassUrl = $.getSassCommonURL('/extensions/wikia/Venus/scripts/background.scss', settings);
+			sassUrl = $.getSassCommonURL('/extensions/wikia/Venus/styles/background.scss', settings);
 
 		// preload adskin image
 		imagePreload.src = options.skinImage;

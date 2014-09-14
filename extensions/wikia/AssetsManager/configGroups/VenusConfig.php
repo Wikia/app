@@ -39,9 +39,30 @@ $VenusConfig[ 'venus_body_js' ] = [
 
 		// jquery libs
 		'//resources/wikia/libraries/mustache/mustache.js',
-		'//resources/wikia/libraries/jquery/throttle-debounce/jquery.throttle-debounce.js',
 		'//resources/wikia/libraries/sloth/sloth.js',
+
+		// polyfills
+		'//resources/wikia/polyfills/jquery.wikia.placeholder.js',
+		'//resources/wikia/polyfills/array.js',
+
+		// 3rd party plugins
+		'//resources/wikia/libraries/jquery/getcss/jquery.getcss.js',
+		'//resources/wikia/libraries/jquery/cookies/jquery.cookies.2.1.0.js',
+		'//resources/wikia/libraries/jquery/timeago/jquery.timeago.js',
+		'//resources/wikia/libraries/jquery/store/jquery.store.js',
+		'//resources/wikia/libraries/jquery/throttle-debounce/jquery.throttle-debounce.js',
+		'//resources/wikia/libraries/jquery/floating-scrollbar/jquery.floating-scrollbar.js',
+
+		// Wikia plugins
 		'//resources/wikia/jquery.wikia.js',
+		'//resources/wikia/libraries/jquery/carousel/jquery.wikia.carousel.js',
+		'//resources/wikia/libraries/jquery/modal/jquery.wikia.modal.js',
+		'//resources/wikia/libraries/jquery/expirystorage/jquery.expirystorage.js',
+		'//resources/wikia/libraries/jquery/focusNoScroll/jquery.focusNoScroll.js',
+
+		// libraries loaders
+		'//resources/wikia/libraries/jquery/getResources/jquery.wikia.getResources.js',
+		'//resources/wikia/libraries/jquery/loadLibrary/jquery.wikia.loadLibrary.js',
 
 		//platform components
 		'//extensions/wikia/JSMessages/js/JSMessages.js',
