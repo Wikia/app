@@ -165,6 +165,10 @@
 }
 
 @media #{$medium-only} {
+	.search-container {
+		@include grid-column-width('medium', 7, 2 * $medium-grid-gutter);
+	}
+
   .global-nav-search-input-wrapper {
 	padding-right: $medium-grid-gutter + $medium-content-padding;
 	.search-submit {
