@@ -83,10 +83,16 @@
 		border: 0;
 		cursor: pointer;
 		height: 100%;
-		left: 0;
+		right: 14px;
 		opacity: 0;
 		position: absolute;
 		top: 0;
+	}
+
+	option {
+		color: $nav-foreground-bright-color;
+		padding: 5px 20px;
+		text-align: right;
 	}
 
 	.chevron {
