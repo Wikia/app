@@ -207,11 +207,15 @@
             });
 
             function getModuleForPage(pageTitle, processModuleHtml) {
+                var urlForGettingArticleHtml = '/wikia.php?controller=Njord&method=MainPageModule&article-title=';
+                var urlForUpdatingArticle = '/wikia.php?controller=Njord&method=MainPageModuleSave&article-title=';
+
                 $.ajax({
                     type: "GET",
-                    url: '/wikia.php?controller=Njord&method=MainPageModule&article-title=' + pageTitle,
+                    url: urlForGettingArticleHtml + pageTitle,
                     success: function (resp) {
                         var moduleHtml = $(resp);
+
                         var textArea = $('textarea#textarea-' + pageTitle, moduleHtml);
                         var contentDiv = $('div#div-' + pageTitle, moduleHtml);
                         var saveButton = $('button#save-' + pageTitle, moduleHtml);
@@ -222,6 +226,7 @@
                         saveButton.hide();
                         discardButton.hide();
 
+                        // click for editing
                         contentDiv.on('click', function () {
                             textArea.show();
                             saveButton.show();
@@ -229,6 +234,7 @@
                             contentDiv.hide();
                         });
 
+                        // discard edit
                         discardButton.on('click', function () {
                             textArea.hide();
                             textArea.val(wikiMarkup);
@@ -237,12 +243,13 @@
                             contentDiv.show();
                         });
 
+                        // save edited article
                         saveButton.on('click', function () {
                             wikiMarkup = textArea.val();
 
                             $.ajax({
                                 type: "POST",
-                                url: '/wikia.php?controller=Njord&method=MainPageModuleSave&article-title=' + pageTitle,
+                                url: urlForUpdatingArticle + pageTitle,
                                 data: {
                                     wikiMarkup: wikiMarkup,
                                     pageTitle: pageTitle
