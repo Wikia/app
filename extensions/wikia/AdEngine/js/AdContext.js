@@ -58,6 +58,7 @@ define('ext.wikia.adEngine.adContext', ['wikia.window', 'wikia.document'], funct
 			wikiCustomKeyValues: w.wgDartCustomKeyValues,
 			wikiDbName: w.wgDBname,
 			wikiDirectedAtChildren: w.wgWikiDirectedAtChildren,
+			wikiIsTop1000: w.wgAdDriverWikiIsTop1000,
 			wikiLanguage: w.wgContentLanguage,
 			wikiVertical: w.cscoreCat
 		},
