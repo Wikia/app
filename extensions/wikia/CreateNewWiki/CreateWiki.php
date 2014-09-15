@@ -669,10 +669,15 @@ class CreateWiki {
 				? "/" . strtolower( $language )
 				: "";
 
+		$iVarId = WikiFactory::getVarIdByName('wgUploadDirectory');
+
 		while ( $isExist == false ) {
 			$dirName = self::IMGROOT . $prefix . "/" . $dir_base . $suffix . $dir_lang . "/images";
 
-			if ( file_exists( $dirName ) ) {
+			// With Swift, we can't do file_exists any longer. The only sane way is
+			// to query city_variables - returns an array, empty or not.
+			$bWgUploadDirectoryTaken = (bool) WikiFactory::getCityIDsFromVarValue( $iVarId, $dirName, '' );
+			if ( $bWgUploadDirectoryTaken ) {
 				$suffix = rand(1, 9999);
 			}
 			else {
