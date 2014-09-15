@@ -53,6 +53,7 @@ $wiki-header-bg-color: #e2e6e9;
 	border: 1px solid $border-color;
 	border-top: 0;
 	display: none;
+	padding: 0;
 	position: absolute;
 
 	&.show {
@@ -64,6 +65,14 @@ $wiki-header-bg-color: #e2e6e9;
 		min-height: 51px;
 		font-weight: bold;
 		padding: 15px 20px 0;
+	}
+
+	ul {
+		padding: 0;
+	}
+
+	li {
+		list-style-type: none;
 	}
 
 	.notifications-header {
@@ -165,6 +174,7 @@ $wiki-header-bg-color: #e2e6e9;
 		h4 {
 			font-size: 15px;
 			font-weight: bold;
+			margin: 0;
 		}
 
 		time {
