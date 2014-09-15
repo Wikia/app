@@ -1022,7 +1022,7 @@ class WallNotifications {
 	}
 
 	public function getKey( $userId, $wikiId ){
-		return wfSharedMemcKey( __CLASS__, $userId, $wikiId. 'v30' );
+		return wfSharedMemcKey( __CLASS__, $userId, $wikiId. 'v31' );
 	}
 
 	/**
