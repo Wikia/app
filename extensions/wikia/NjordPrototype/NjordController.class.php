@@ -25,6 +25,8 @@ class NjordController extends WikiaController {
 		$this->ctitle = $this->getRequest()->getVal('content-title');
 	}
 
+	public function mom() {}
+
 	public function reorder() {
 		$params = $this->getRequest()->getParams();
 

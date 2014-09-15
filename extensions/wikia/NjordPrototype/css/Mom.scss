@@ -1,13 +1,92 @@
+#MomHeader {
+  margin: 2px 0;
+  .btn-group-top {
+    display: flex;
+  }
+  .layout-mode {
+    display: none;
+  }
+  .new-btn {
+    background-color: #092140;
+    color: #fff;
+    cursor: pointer;
+    font-weight: bold;
+    padding: 16px 20px;
+    text-align: center;
+    text-decoration: none;
+    text-transform: uppercase;
+
+    &:hover {
+      background-color: #0a5fa3;
+    }
+  }
+}
+
+.mom-add-module {
+  border: 1px dashed lightgray;
+  display: flex;
+  height: 200px;
+}
+
+.mom-bar {
+  border: 1px solid lightgray;
+  cursor: move;
+  display: none;
+  font-weight: bold;
+  padding: 15px 10px;
+  .btn-group-right {
+    display: flex;
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+}
+
+.mom-fixed {
+  position: fixed;
+  top: 0;
+  z-index: 101;
+}
+
+.mom-hidden {
+  height: 200px;
+  margin-bottom: 10px;
+  overflow: hidden;
+}
+
 .mom-module {
   position: relative;
+  .new-btn {
+    background-color: #092140;
+    color: #fff;
+    cursor: pointer;
+    display: block;
+    font-weight: bold;
+    margin: auto;
+    padding: 16px 20px;
+    text-align: center;
+    text-decoration: none;
+    text-transform: uppercase;
+
+    &:hover {
+      background-color: #0a5fa3;
+    }
+  }
 }
 
 .mom-overlay {
   background-color: rgba(0, 0, 0, .7);
-  cursor: move;
   display: none;
   height: 100%;
   position: absolute;
   width: 100%;
   z-index: 101;
+}
+
+.rcs-container {
+  padding-top: 10px;
+}
+
+.lcs-container {
+  padding-top: 10px;
 }
