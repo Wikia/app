@@ -196,6 +196,72 @@
 				$overlay.hide();
 			});
 
+            // Adding modules to page:
+            getModuleForPage('Episode_4303', function (moduleHtml) {
+                $('body').append('<br/><br/>').append(moduleHtml);
+            });
+            getModuleForPage('Charo', function (moduleHtml) {
+                $('body').append('<br/><br/>').append(moduleHtml);
+            });
+
+            function getModuleForPage(pageTitle, success) {
+                $.ajax({
+                    type: "GET",
+                    url: '/wikia.php?controller=Njord&method=MainPageModule&article-title=' + pageTitle,
+                    success: function (resp) {
+                        var moduleHtml = $('<div style="width: 400px; height: 300px; overflow-y: scroll; background:white;">' + resp + '</div>');
+                        var textArea = $('textarea#textarea-' + pageTitle, moduleHtml);
+                        var contentDiv = $('div#div-' + pageTitle, moduleHtml);
+                        var saveButton = $('button#save-' + pageTitle, moduleHtml);
+                        var discardButton = $('button#discard-' + pageTitle, moduleHtml);
+                        var wikiMarkup = textArea.val();
+
+                        textArea.hide();
+                        saveButton.hide();
+                        discardButton.hide();
+
+                        contentDiv.on('click', function () {
+                            textArea.show();
+                            saveButton.show();
+                            discardButton.show();
+                            contentDiv.hide();
+                        });
+
+                        discardButton.on('click', function () {
+                            textArea.hide();
+                            textArea.val(wikiMarkup);
+                            saveButton.hide();
+                            discardButton.hide();
+                            contentDiv.show();
+                        });
+
+                        saveButton.on('click', function () {
+                            wikiMarkup = textArea.val();
+
+                            $.ajax({
+                                type: "POST",
+                                url: '/wikia.php?controller=Njord&method=MainPageModuleSave&article-title=' + pageTitle,
+                                data: {
+                                    wikiMarkup: wikiMarkup,
+                                    pageTitle: pageTitle
+                                },
+                                success: function(resp) {
+                                    contentDiv.html(resp['html']);
+                                    textArea.val(wikiMarkup);
+                                    textArea.hide();
+                                    saveButton.hide();
+                                    discardButton.hide();
+                                    contentDiv.show();
+                                }
+                            });
+                        });
+
+                        success(moduleHtml);
+                    }
+                });
+            }
+
+
 			$(window).resize(onResize);
 			initializeData();
 
