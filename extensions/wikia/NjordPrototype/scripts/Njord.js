@@ -204,7 +204,7 @@
                 $('body').append('<br/><br/>').append(moduleHtml);
             });
 
-            function getModuleForPage(pageTitle, success) {
+            function getModuleForPage(pageTitle, processModuleHtml) {
                 $.ajax({
                     type: "GET",
                     url: '/wikia.php?controller=Njord&method=MainPageModule&article-title=' + pageTitle,
@@ -256,7 +256,7 @@
                             });
                         });
 
-                        success(moduleHtml);
+                        processModuleHtml(moduleHtml);
                     }
                 });
             }
