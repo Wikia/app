@@ -6,6 +6,7 @@ class ArticleAsJson extends WikiaService {
 	static $mediaDetailConfig = [
 		'imageMaxWidth' => false
 	];
+	static $parserOptions = null;
 
 	const CACHE_VERSION = '0.0.1';
 
@@ -22,6 +23,10 @@ class ArticleAsJson extends WikiaService {
 	private static function createMediaObj( $details, $imageName, $caption = "" ) {
 		wfProfileIn( __METHOD__ );
 
+		if ( is_null( self::$parserOptions ) ) {
+			self::$parserOptions = new ParserOptions();
+		}
+
 		$media = [
 			'type' => $details['mediaType'],
 			'url' => $details['rawImageUrl'],
@@ -30,7 +35,7 @@ class ArticleAsJson extends WikiaService {
 			'caption' => ParserPool::parse(
 					$caption,
 					RequestContext::getMain()->getTitle(),
-					new ParserOptions(),
+					self::$parserOptions,
 					false
 				)->getText(),
 			'user' => $details['userName']
