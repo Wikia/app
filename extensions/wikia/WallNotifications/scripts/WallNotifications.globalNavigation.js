@@ -194,7 +194,7 @@ require(
 
 				this.$wallNotifications.find('.notifications-for-wiki').each(function() {
 					element = $(this);
-					self.wikisUrls[ parseInt(element.data('wiki-id'), 10) ] = element.data('wiki-path');
+					self.wikisUrls[ parseInt(element.data('wiki-id'), 10) ] = this.getWikiUrl( element.data('wiki-path') );
 				});
 
 				this.$wallNotifications.find('.notifications-wiki-header').click( this.proxy( this.wikiClick ) );
@@ -297,6 +297,16 @@ require(
 
 			proxy: function( func ) {
 				return $.proxy( func, this );
+			},
+
+			getWikiUrl: function( url ) {
+				if ( window.wgStagingEnvironment ) {
+					var stagingEnv = window.location.hostname.split( '.' )[0];
+					if ( url.indexOf( stagingEnv ) === -1 ) {
+						url = url.replace( '://', '://' + stagingEnv + '.' );
+					}
+				}
+				return url;
 			}
 		};
 
