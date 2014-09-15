@@ -300,7 +300,7 @@ require(
 			},
 
 			getWikiUrl: function( url ) {
-				if ( window.wgStagingEnvironment ) {
+				if ( window.wgStagingEnvironment && url ) {
 					var stagingEnv = window.location.hostname.split( '.' )[0];
 					if ( url.indexOf( stagingEnv ) === -1 ) {
 						url = url.replace( '://', '://' + stagingEnv + '.' );
