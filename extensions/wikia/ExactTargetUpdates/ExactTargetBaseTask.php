@@ -68,7 +68,6 @@ class ExactTargetBaseTask extends BaseTask {
 		return $oRequest;
 	}
 
-
 	/**
 	 * Returns ExactTarget_APIProperty object
 	 * This object can be used as ExactTarget_DataExtensionObject property
