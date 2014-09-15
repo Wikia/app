@@ -1,11 +1,13 @@
 @import 'skins/oasis/css/lib/foundation.custom/foundation.custom';
 @import 'skins/shared/mixins/background-opacity.scss';
+@import 'skins/shared/color.scss';
 
 $media-margin: .5em;
 
 .media-gallery-wrapper {
 	@include grid-row();
 	margin: 0 $media-margin * -1;
+	padding: 1px; // leave room for the image outlines
 	width: auto;
 
 	// default is 8 or more images
@@ -15,6 +17,7 @@ $media-margin: .5em;
 		transition: all 1s ease-in-out;
 
 		img {
+			outline: 1px solid $color-page-border-subtle;
 			width: 100%;
 		}
 
@@ -30,7 +33,7 @@ $media-margin: .5em;
 	}
 
 	&.count-1 .media {
-		@include grid-column(5, false, false, 3);
+		@include grid-column(6, false, false, 3);
 	}
 
 	&.count-2 .media {
@@ -75,7 +78,7 @@ $media-margin: .5em;
 
 	.more {
 		clear: both;
-		margin-left: $media-margin * -2;
+		margin-left: $media-margin * -1;
 		padding: .5em;
 		text-align: center;
 
@@ -118,6 +121,10 @@ $media-margin: .5em;
 		right: $media-margin;
 		top: 100%;
 		transition: all 400ms linear;
+
+		a {
+			color: #b3b3b3;
+		}
 
 		.inner {
 			overflow: hidden;

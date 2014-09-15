@@ -32,7 +32,7 @@ class ThumbnailController extends WikiaController {
 		wfProfileIn( __METHOD__ );
 
 		$thumb = $this->getVal( 'thumb' );
-		$options = $this->getVal( 'options', array() );
+		$options = $this->getVal( 'options', [] );
 
 		ThumbnailHelper::setVideoLinkClasses( $this, $thumb, $options );
 		ThumbnailHelper::setVideoLinkAttribs( $this, $thumb, $options );
@@ -73,7 +73,7 @@ class ThumbnailController extends WikiaController {
 		$this->mediaType = 'image';
 
 		$thumb   = $this->getVal( 'thumb' );
-		$options = $this->getVal( 'options', array() );
+		$options = $this->getVal( 'options', [] );
 
 		ThumbnailHelper::setImageLinkAttribs( $this, $thumb, $options );
 		ThumbnailHelper::setImageAttribs( $this, $thumb, $options );
@@ -86,17 +86,20 @@ class ThumbnailController extends WikiaController {
 	/**
 	 * Render image tags for the MediaGallery
 	 * @requestParam MediaTransformOutput thumb
+	 * @requestParam array options This is here for consistancy, it's not used yet
 	 */
 	public function gallery() {
 		$this->mediaType = 'image';
 
-		$thumb = $this->getVal( 'thumb' );
-
 		// Use the image template
 		$this->overrideTemplate( 'image' );
 
+		$thumb = $this->getVal( 'thumb' );
+
 		$this->linkHref = $thumb->file->getTitle()->getLinkURL();
+
 		ThumbnailHelper::setImageAttribs( $this, $thumb, [ 'fluid' => true ] );
+		ThumbnailHelper::setPictureTagInfo( $this, $thumb );
 		ThumbnailHelper::setLazyLoad( $this );
 	}
 

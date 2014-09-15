@@ -1,10 +1,18 @@
 <?php
+
+use Wikia\Vignette\UrlGenerator;
+
 /**
  * Helper service to maintain new video logic / old video logic
  */
 class WikiaFileHelper extends Service {
 
 	const maxWideoWidth = 1200;
+
+	// For images smaller than the requested thumb size determines how close an images area (width x height) must be
+	// to the requested thumbnail area before it will be enlarged.  For example a value of 0.8 means that images
+	// who's area is 80% the area of the requested thumb or larger should be scaled up to the thumb dimensions.
+	const thumbEnlargeThreshold = 0.5;
 
 	/**
 	 * Ogg files are the only video file type we allow upload.  As such we treat them differently
@@ -295,6 +303,7 @@ class WikiaFileHelper extends Service {
 			'videoViews' => 0,
 			'exists' => false,
 			'isAdded' => true,
+			'extraHeight' => 0,
 		);
 
 		if ( !empty( $fileTitle ) ) {
@@ -319,12 +328,22 @@ class WikiaFileHelper extends Service {
 					if ( isset( $config['maxHeight'] ) ) {
 						$file->setEmbedCodeMaxHeight( $config['maxHeight'] );
 					}
-					$data['videoEmbedCode'] = $file->getEmbedCode( $width, true, true );
+					$options = [
+						'autoplay' => true,
+						'isAjax' => true,
+						'isInline' => !empty( $config['isInline'] ),
+					];
+					$data['videoEmbedCode'] = $file->getEmbedCode( $width, $options );
 					$data['playerAsset'] = $file->getPlayerAssetUrl();
 					$data['videoViews'] = MediaQueryService::getTotalVideoViewsByTitle( $fileTitle->getDBKey() );
 					$data['providerName'] = $file->getProviderName();
 					$data['isAdded'] = self::isAdded( $file );
 					$mediaPage = self::getMediaPage( $fileTitle );
+
+					// Extra height is needed for lightbox when more elements must be fitted
+					if ( strtolower( $data['providerName'] ) == 'crunchyroll' ) {
+						$data['extraHeight'] = CrunchyrollVideoHandler::CRUNCHYROLL_WIDGET_HEIGHT_PX;
+					}
 				} else {
 					$width = $width > $config['imageMaxWidth'] ? $config['imageMaxWidth'] : $width;
 					$mediaPage = new ImagePage( $fileTitle );
@@ -627,55 +646,53 @@ class WikiaFileHelper extends Service {
 	}
 
 	/**
-	 * Return a URL that displays $file shrunk to have the closest dimension meet $box.  Images smaller than the
-	 * bounding box will not be affected.  The part of the image that extends beyond the $box dimensions will be
-	 * cropped out.  The result is an image that completely fills the box with no empty space, but is cropped.
+	 * Return a URL that displays $file scaled and/or cropped to fill the entire square thumbnail dimensions with
+	 * no whitespace if possible.  Images smaller than the thumbnail size will be enlarged if their image area (L x W)
+	 * is above a certain threshold.  This threshold is expressed as a percentage of the requested thumb area and
+	 * given by:
+	 *
+	 *   self::thumbEnlargeThreshold
+	 *
+	 * Small images that do not meet this threshold will be centered within the thumb container and padded with a
+	 * transparent background.
 	 *
 	 * @param File $file
-	 * @param $dimension
-	 * @return String
+	 * @param int $dimension
+	 * @param bool $useWebP
+	 * @return string The URL of the image
 	 */
-	public static function getSquaredThumbnailUrl( File $file, $dimension ) {
-		$height = ( int ) $file->getHeight();
-		$width = ( int ) $file->getWidth();
+	public static function getSquaredThumbnailUrl( File $file, $dimension, $useWebP = false ) {
+		// Create a new url generator
+		$gen = ( new UrlGenerator( $file ) );
 
-		if ( $height > $width ) {
-			// portrait
-			$cropStr = sprintf( "%dx%d-0,%d,0,%d", $dimension, $dimension, $width, $width );
+		// Determine if this image falls into a small image category.  We compare the area of the image with the
+		// area of the requested thumb and use self::thumbEnlargeThreshold as the threshold for enlarging
+		$height = $file->getHeight();
+		$width = $file->getWidth();
+		$isSmallImage = $height < $dimension || $width < $dimension;
+		$imageBelowThreshold = ( $height * $width ) <= ( self::thumbEnlargeThreshold * $dimension * $dimension );
+
+		// If height or width is less than a side of our square target thumbnail, we need to decide whether we're
+		// going to enlarge it or not
+		if ( $isSmallImage && $imageBelowThreshold ) {
+			// Leave the (small) full sized image as is, but put within the requested container with transparent fill
+			$gen->fixedAspectRatioDown()->backgroundFill( 'transparent' );
 		} else {
-			// landscape
-
-			$thumbEndWidth = null;
-			// Thumbnailer does not return a perfect square for images with height > dimension in AxBxC format
-			// Also it does not return square images at all when height < dimension in AxB-X0,X1,Y0,Y1 format
-			// Therefore this check is necessary
-			if ( $width > $dimension ) {
-				// If thumbnail fits within original image, X-offset is based on width/height difference
-				// Otherwise, width/dimension difference determines horizontal windowing.
-				if ( $height >= $dimension ) {
-					$xOffset = ( int ) round( ( $width - $height ) / 2 );
-					$thumbEndWidth = $width - $xOffset;
-					$thumbHeight = $height;
-				} else {
-					$xOffset = ( int ) round( ( $width - $dimension ) / 2 );
-				}
+			if ( $height > $width ) {
+				// Portrait mode, crop at the top
+				$gen->topCrop();
 			} else {
-				$xOffset = 0;
+				// Landscape mode, crop in the middle
+				$gen->zoomCrop();
 			}
-
-			if ( !$thumbEndWidth ) {
-				$thumbEndWidth = max( $width, $dimension ) - $xOffset;
-				$thumbHeight = min( $height, $dimension );
-			}
-			$cropStr = sprintf( "%dx%d-%d,%d,%d,%d", $dimension, $dimension, $xOffset, $thumbEndWidth, 0, $thumbHeight );
 		}
 
-		$append = '';
-		$mime = strtolower( $file->getMimeType() );
-		if ( $mime == 'image/svg+xml' || $mime == 'image/svg' ) {
-			$append = '.png';
+		if ( $useWebP ) {
+			$gen->webp();
 		}
 
-		return wfReplaceImageServer( $file->getThumbUrl( $cropStr . '-' . $file->getName() . $append ) );
+		$url = $gen->width( $dimension )->height( $dimension )->url();
+
+		return $url;
 	}
 }
