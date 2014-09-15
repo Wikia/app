@@ -24,20 +24,20 @@ class ExactTargetAddUserTaskTest extends WikiaBaseTest {
 			->expects( $this->once() )
 			->method( 'getClient' );
 
-		/* require getClient once */
+		/* require createSubscriber once */
 		$addTaskMock
 			->expects( $this->once() )
 			->method( 'createSubscriber' );
 
-		/* require getClient once */
+		/* require createUserDataExtension once */
 		$addTaskMock
 			->expects( $this->once() )
 			->method( 'createUserDataExtension' );
 
-		/* require getClient once */
+		/* require createUserPropertiesDataExtension once */
 		$addTaskMock
 			->expects( $this->once() )
-			->method( 'createSubscriber' );
+			->method( 'createUserPropertiesDataExtension' );
 
 		/* Run tested method */
 		$addTaskMock->sendNewUserData( $aUserData, $aUserProperties );

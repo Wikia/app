@@ -39,7 +39,7 @@ class ExactTargetUpdateUserTask extends ExactTargetBaseTask {
 			$oRequest = $this->wrapUpdateRequest( [ $oSoapVar ] );
 
 			/* Send API update request */
-			$oResults = $oClient->Update( $oRequest );
+			$oClient->Update( $oRequest );
 
 			/* Log response */
 			$this->info( $oClient->__getLastResponse() );
