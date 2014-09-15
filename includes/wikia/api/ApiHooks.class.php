@@ -52,10 +52,10 @@ class ApiHooks {
 	 */
 	public static function onArticleDeleteComplete( WikiPage $wikiPage, User $user, $reason, $id ) {
 		ArticlesApiController::purgeCache( $id );
-		ArticlesApiController::purgeMethods([
-			'getAsJson', ['id' => $id],
-			'getAsJson', ['title' => $wikiPage->getTitle()->getPartialURL()]
-		]);
+		ArticlesApiController::purgeMethods( [
+			'getAsJson', [ 'id' => $id ],
+			'getAsJson', [ 'title' => $wikiPage->getTitle()->getPartialURL() ]
+		] );
 		return true;
 	}
 
@@ -73,13 +73,14 @@ class ApiHooks {
 	 * @param $baseRevId
 	 * @return bool
 	 */
-	public static function onArticleSaveComplete( WikiPage $wikiPage, User $user, $text, $summary, $minoredit, $watchthis,
-			$sectionanchor, &$flags, $revision, &$status, $baseRevId ) {
-		ArticlesApiController::purgeCache($wikiPage->getTitle()->getArticleID());
-		ArticlesApiController::purgeMethods([
-			'getAsJson', ['id' => $wikiPage->getId()],
-			'getAsJson', ['title' => $wikiPage->getTitle()->getPartialURL()]
-		]);
+	public static function onArticleSaveComplete( WikiPage $wikiPage, User $user, $text, $summary, $minoredit,
+												  $watchthis, $sectionanchor, &$flags, $revision, &$status,
+												  $baseRevId ) {
+		ArticlesApiController::purgeCache( $wikiPage->getTitle()->getArticleID() );
+		ArticlesApiController::purgeMethods( [
+			'getAsJson', [ 'id' => $wikiPage->getId() ],
+			'getAsJson', [ 'title' => $wikiPage->getTitle()->getPartialURL() ]
+		] );
 		return true;
 	}
 

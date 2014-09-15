@@ -11,23 +11,18 @@ class MercuryApiModelTest extends WikiaBaseTest {
 	 * Setup global variables used to generate Ads context
 	 */
 	private function setupGlobals () {
-		global $wgLoadAdsInHead, $wgAdEngineDisableLateQueue, $wgLoadLateAdsAfterPageLoad,
-		$wgAdDriverTrackState, $wgEnableWikiaHubsV3Ext, $wgAdDriverSevenOneMediaOverrideSub2Site,
-		$wgWikiDirectedAtChildren, $wgAdDriverForceLiftiumAd, $wgAdDriverForceDirectGptAd, $wgAdDriverUseSevenOneMedia,
-		$wgWikiDirectedAtChildrenByStaff, $wgAdDriverUseEbay;
-
-		$wgLoadAdsInHead = true;
-		$wgAdEngineDisableLateQueue = true;
-		$wgLoadLateAdsAfterPageLoad = true;
-		$wgAdDriverTrackState = true;
-		$wgEnableWikiaHubsV3Ext = true;
-		$wgAdDriverSevenOneMediaOverrideSub2Site = true;
-		$wgWikiDirectedAtChildren = true;
-		$wgAdDriverForceLiftiumAd = true;
-		$wgAdDriverForceDirectGptAd = true;
-		$wgAdDriverUseSevenOneMedia = false;
-		$wgWikiDirectedAtChildrenByStaff = true;
-		$wgAdDriverUseEbay = true;
+		$this->mockGlobalVariable('wgLoadAdsInHead', true);
+		$this->mockGlobalVariable('wgAdEngineDisableLateQueue', true);
+		$this->mockGlobalVariable('wgLoadLateAdsAfterPageLoad', true);
+		$this->mockGlobalVariable('wgAdDriverTrackState', true);
+		$this->mockGlobalVariable('wgEnableWikiaHubsV3Ext', true);
+		$this->mockGlobalVariable('wgAdDriverSevenOneMediaOverrideSub2Site', true);
+		$this->mockGlobalVariable('wgWikiDirectedAtChildren', true);
+		$this->mockGlobalVariable('wgAdDriverForceLiftiumAd', true);
+		$this->mockGlobalVariable('wgAdDriverForceDirectGptAd', true);
+		$this->mockGlobalVariable('wgAdDriverUseSevenOneMedia', false);
+		$this->mockGlobalVariable('wgWikiDirectedAtChildrenByStaff', true);
+		$this->mockGlobalVariable('wgAdDriverUseEbay', true);
 	}
 
 	/**
@@ -80,7 +75,6 @@ class MercuryApiModelTest extends WikiaBaseTest {
 				'sevenOneMediaSub2Site' => true,
 				'skin' => 'mercury',
 				'wikiCategory' => 'ent',
-				'wikiCustomKeyValues' => 'egnre=action;egnre=adventure;egnre=drama;egnre=scifi;media=tv;wtpx=815;wtpx=696;wtpx=408;wtpx=911;',
 				'wikiDbName' => null,
 				'wikiDirectedAtChildren' => true,
 				'wikiLanguage' => 'en',
@@ -101,6 +95,8 @@ class MercuryApiModelTest extends WikiaBaseTest {
 			],
  		];
 		$result = $mercuryApi->getAdsContext( $title, $wGReg, $articleCategories );
+		// Remove wikiCustomKeyValues from the test as it relies on hook call to NLP to add params
+		unset($result['targeting']['wikiCustomKeyValues']);
 		$this->assertEquals( $expected, $result );
 	}
 

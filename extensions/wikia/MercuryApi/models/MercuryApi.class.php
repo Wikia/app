@@ -5,6 +5,9 @@ use Wikia\Util\GlobalStateWrapper;
 class MercuryApi {
 
 	const MERCURY_SKIN_NAME = 'mercury';
+
+	const CACHE_TIME_TOP_CONTRIBUTORS = 2592000; // 30 days
+
 	/**
 	 * Aggregated list of comments users
 	 *
@@ -24,6 +27,10 @@ class MercuryApi {
 		return $articleCommentList->getCountAll();
 	}
 
+	public static function getTopContributorsKey ( $articleId, $limit ){
+		return wfMemcKey( __CLASS__, __METHOD__, $articleId, $limit );
+	}
+
 	/**
 	 * @desc Fetch all time top contributors for article
 	 *
@@ -31,29 +38,66 @@ class MercuryApi {
 	 * @param $limit - maximum number of contributors to fetch
 	 * @return array
 	 */
-	public function topContributorsPerArticle( $articleId, $limit) {
+	public function topContributorsPerArticle( $articleId, $limit ) {
+		$key = self::getTopContributorsKey( $articleId, $limit );
+		$method = __METHOD__;
+		$contributions = WikiaDataAccess::cache($key, self::CACHE_TIME_TOP_CONTRIBUTORS,
+			function() use ( $articleId, $limit, $method ) {
+				// Log DB hit
+				Wikia::log( $method, false, sprintf( 'Cache for articleId: %d was empty', $articleId ) );
+				$db = wfGetDB( DB_SLAVE );
+				$res = $db->select(
+					'revision',
+					[
+						'rev_user',
+						'count(1) AS cntr'
+					],
+					[
+						'rev_page = ' . $articleId,
+						'rev_deleted = 0',
+						'rev_user != 0'
+					],
+					$method,
+					[
+						'GROUP BY' => 'rev_user',
+						'ORDER BY' => 'count(1) DESC',
+						'LIMIT' => $limit
+					]
+				);
+				$result = [];
+				while($row = $db->fetchObject($res)) {
+					$result[ (int) $row->rev_user ] = (int) $row->cntr;
+				}
+				return $result;
+			}
+		);
+		// Cached results may contain more than the $limit results
+		$contributions = array_slice ( $contributions , 0, $limit, true );
+		return array_keys( $contributions );
+	}
+
+	/**
+	 * @desc Get number of user's contributions for article
+	 *
+	 * @param $articleId
+	 * @param $userId
+	 * @return mixed
+	 */
+	public function getNumberOfUserContribForArticle( $articleId, $userId ) {
 		$db = wfGetDB( DB_SLAVE );
-		$res = $db->select(
+		$row = $db->selectRow(
 			'revision',
 			[
-				'rev_user'
+				'count(*) AS cntr'
 			],
 			[
 				'rev_page' => $articleId,
+				'rev_user' => $userId,
 				'rev_deleted' => 0
 			],
-			__METHOD__,
-			[
-				'GROUP BY' => 'rev_user',
-				'ORDER BY' => 'count(1) DESC',
-				'LIMIT' => $limit
-			]
+			__METHOD__
 		);
-		$result = [];
-		while($row = $db->fetchObject($res)) {
-			$result[] = (int) $row->rev_user;
-		}
-		return $result;
+		return $row->cntr;
 	}
 
 	/**
