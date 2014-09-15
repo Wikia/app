@@ -669,7 +669,7 @@ class CreateWiki {
 				? "/" . strtolower( $language )
 				: "";
 
-		$iVarId = WikiFactory::getVarIdByName('wgUploadDirectory');
+		$iVarId = WikiFactory::getVarIdByName( 'wgUploadDirectory' );
 
 		while ( $isExist == false ) {
 			$dirName = self::IMGROOT . $prefix . "/" . $dir_base . $suffix . $dir_lang . "/images";
