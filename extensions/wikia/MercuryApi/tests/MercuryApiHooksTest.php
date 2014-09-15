@@ -34,4 +34,8 @@ class MercuryApiHooksTest  extends WikiaBaseTest {
 		$this->mockGlobalVariable('Memc', $memc);
 		$this->assertTrue( MercuryApiHooks::onArticleSaveComplete( $wikiPage, $user ) );
 	}
+
+	public function testOnArticleRollbackComplete() {
+
+	}
 }
