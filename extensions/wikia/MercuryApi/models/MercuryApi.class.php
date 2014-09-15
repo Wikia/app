@@ -27,8 +27,8 @@ class MercuryApi {
 		return $articleCommentList->getCountAll();
 	}
 
-	public static function getTopContributorsKey ( $articleId ){
-		return wfMemcKey( __CLASS__, __METHOD__, $articleId );
+	public static function getTopContributorsKey ( $articleId, $limit ){
+		return wfMemcKey( __CLASS__, __METHOD__, $articleId, $limit );
 	}
 
 	/**
@@ -39,7 +39,7 @@ class MercuryApi {
 	 * @return array
 	 */
 	public function topContributorsPerArticle( $articleId, $limit ) {
-		$key = self::getTopContributorsKey( $articleId );
+		$key = self::getTopContributorsKey( $articleId, $limit );
 		$method = __METHOD__;
 		$contributions = WikiaDataAccess::cache($key, self::CACHE_TIME_TOP_CONTRIBUTORS,
 			function() use ( $articleId, $limit, $method ) {

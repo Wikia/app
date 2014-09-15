@@ -24,7 +24,7 @@ class MercuryApiHooksTest  extends WikiaBaseTest {
 
 		$memc = $this->getMock( 'MemcachedPhpBagOStuff', [ 'get', 'set' ], [], '', false );
 
-		$key = wfWikiID() .':MercuryApi:MercuryApi::getTopContributorsKey:100';
+		$key = wfWikiID() .':MercuryApi:MercuryApi::getTopContributorsKey:100:6';
 
 		$memc->expects( $this->any() )
 			->method( 'get' )

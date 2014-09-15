@@ -43,7 +43,7 @@ class MercuryApiHooks {
 			$articleId = $wikiPage->getId();
 			if ( $articleId ) {
 				$userId = $user->getId();
-				$key = MercuryApi::getTopContributorsKey( $articleId );
+				$key = MercuryApi::getTopContributorsKey( $articleId, MercuryApiController::NUMBER_CONTRIBUTORS );
 				$memCache = F::app()->wg->Memc;
 				$result = $memCache->get( $key );
 				// Update the data only if the key is not empty
@@ -67,7 +67,7 @@ class MercuryApiHooks {
 	 */
 	public static function onArticleRollbackComplete( WikiPage $wikiPage, User $user, $revision, $current ) {
 		$articleId = $wikiPage->getId();
-		$key = MercuryApi::getTopContributorsKey( $articleId );
+		$key = MercuryApi::getTopContributorsKey( $articleId, MercuryApiController::NUMBER_CONTRIBUTORS );
 		WikiaDataAccess::cachePurge( $key );
 		return true;
 	}
