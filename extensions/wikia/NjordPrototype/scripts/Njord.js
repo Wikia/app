@@ -198,9 +198,11 @@
 
             // Adding modules to page:
             getModuleForPage('Episode_4303', function (moduleHtml) {
+                moduleHtml.attr('class', 'MainPageModule');
                 $('body').append('<br/><br/>').append(moduleHtml);
             });
             getModuleForPage('Charo', function (moduleHtml) {
+                moduleHtml.attr('class', 'MainPageModule');
                 $('body').append('<br/><br/>').append(moduleHtml);
             });
 
@@ -209,7 +211,7 @@
                     type: "GET",
                     url: '/wikia.php?controller=Njord&method=MainPageModule&article-title=' + pageTitle,
                     success: function (resp) {
-                        var moduleHtml = $('<div style="width: 400px; height: 300px; overflow-y: scroll; background:white;">' + resp + '</div>');
+                        var moduleHtml = $(resp);
                         var textArea = $('textarea#textarea-' + pageTitle, moduleHtml);
                         var contentDiv = $('div#div-' + pageTitle, moduleHtml);
                         var saveButton = $('button#save-' + pageTitle, moduleHtml);

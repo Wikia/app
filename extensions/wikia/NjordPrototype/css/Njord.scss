@@ -173,3 +173,15 @@
     height: 2rem;
   }
 }
+
+.MainPageModule {
+  width: 400px;
+  height: 300px;
+  overflow-y: scroll;
+  background: white;
+
+  textarea {
+    width: 90%;
+    height: 90%;
+  }
+}
