@@ -10,8 +10,8 @@ class NjordController extends WikiaController {
 		$pageArticleObj = new Article( $pageTitleObj );
 
 		$this->articleTitle = $articleTitle;
-		$this->pageHtml = $pageArticleObj->getPage()->getParserOutput( new ParserOptions( null, null ) )->getText();
-		$this->raw = $pageArticleObj->getPage()->getText();
+		$this->articleHtml = $pageArticleObj->getPage()->getParserOutput( new ParserOptions( null, null ) )->getText();
+		$this->articleWikiMarkup = $pageArticleObj->getPage()->getText();
 	}
 
 	public function MainPageModuleSave() {
