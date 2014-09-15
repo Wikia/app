@@ -8,8 +8,10 @@
  * @ingroup Watchlist
  */
 class WatchedItem {
-	/* @var User $mUser */
-	var $mTitle, $mUser, $id, $ns, $ti;
+	/* @var Title $mTitle */
+	var $mTitle;
+	/* @var User $mUser  */
+	var $mUser, $id, $ns, $ti;
 
 	/**
 	 * Create a WatchedItem object with the given user and title
@@ -42,6 +44,11 @@ class WatchedItem {
 
 		// Only loggedin user can have a watchlist
 		if ( $this->mUser->isAnon() ) {
+			return false;
+		}
+
+		// some pages cannot be watched
+		if ( !$this->mTitle->isWatchable() ) {
 			return false;
 		}
 
