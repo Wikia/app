@@ -13,6 +13,8 @@ class PalantirApiController extends WikiaApiController {
 
 	const DEFAULT_RADIUS = 180;
 
+	const METADATA_CACHE_EXPIRATION = 300; // 5 minutes
+
 	/**
 	 * @var IDSEntitySearchService
 	 */
@@ -55,7 +57,7 @@ class PalantirApiController extends WikiaApiController {
 		if( empty( $result ) ) {
 			throw new NotFoundApiException();
 		}
-		$this->setResponseData( $result );
+		$this->setResponseData( $result, null, self::METADATA_CACHE_EXPIRATION );
 	}
 
 	/**
@@ -110,7 +112,7 @@ class PalantirApiController extends WikiaApiController {
 			throw new NotFoundApiException();
 		}
 
-		$this->setResponseData( $result );
+		$this->setResponseData( $result, null, self::METADATA_CACHE_EXPIRATION );
 	}
 
 	protected function fillDataFromMain( $metadataResp, $category ) {
