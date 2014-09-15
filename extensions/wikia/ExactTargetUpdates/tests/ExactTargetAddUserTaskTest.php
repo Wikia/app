@@ -110,7 +110,7 @@ class ExactTargetAddUserTaskTest extends WikiaBaseTest {
 		/* Params to compare */
 		$aUserData = [
 			'user_id' => 12345,
-			'user_email' => 'test@test.com'
+			'user_email' => 'email@email.com'
 		];
 
 		/* Prepare request object */
@@ -160,6 +160,44 @@ class ExactTargetAddUserTaskTest extends WikiaBaseTest {
 
 		/* Run tested method */
 		$mockAddUserTask->createUserDataExtension( $aUserData, $soapClient );
+	}
+
+	function testCreateSubscriberShouldInvokeCreateMethodOnceWithRequestParam() {
+		/* Params to compare */
+		$sUserEmail = 'email@email.com';
+
+		$oSubscriber = new ExactTarget_Subscriber();
+		$oSubscriber->SubscriberKey = $sUserEmail;
+		$oSubscriber->EmailAddress = $sUserEmail;
+
+		$soapVar = new SoapVar( $oSubscriber, SOAP_ENC_OBJECT, 'Subscriber', 'http://exacttarget.com/wsdl/partnerAPI' );
+
+		$oRequest = new ExactTarget_CreateRequest();
+		$oRequest->Options = NULL;
+		$oRequest->Objects = [ $soapVar ];
+
+		$soapClient = $this->getMockBuilder( 'ExactTargetSoapClient' )
+			->disableOriginalConstructor()
+			->setMethods( [ 'Create' ] )
+			->getMock();
+		$soapClient
+			->expects( $this->once() )
+			->method( 'Create' )
+			->with( $oRequest );
+
+		/* Mock tested class */
+		/* @var ExactTargetAddUserTask $mockAddUserTask mock of ExactTargetAddUserTask */
+		$mockAddUserTask = $this->getMockBuilder( 'ExactTargetAddUserTask' )
+			->disableOriginalConstructor()
+			->setMethods( [ 'wrapCreateRequest' ] )
+			->getMock();
+		$mockAddUserTask
+			->expects( $this->once() )
+			->method( 'wrapCreateRequest' )
+			->will( $this->returnValue( $oRequest ) );
+
+		/* Run tested method */
+		$mockAddUserTask->createSubscriber( $sUserEmail, $soapClient );
 	}
 
 }
