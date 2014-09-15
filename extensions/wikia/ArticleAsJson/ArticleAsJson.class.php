@@ -144,17 +144,18 @@ class ArticleAsJson extends WikiaService {
 
 		if ( $wgArticleAsJson && !is_null( $parser->getRevisionId() ) ) {
 
-			if ( User::isIP( $parser->getRevisionUser() ) ) {
-				$userName = $parser->getRevisionUser();
+			$userName = $parser->getRevisionUser();
+
+			if ( User::isIP( $userName ) ) {
 
 				self::addUserObj([
 					'userId' => 0,
-					'userName' => $parser->getRevisionUser(),
+					'userName' => $userName,
 					'userThumbUrl' => AvatarService::getAvatarUrl($userName, AvatarService::AVATAR_SIZE_MEDIUM),
 					'userPageUrl' => Title::newFromText( $userName )->getLocalURL()
 				]);
 			} else {
-				$user = User::newFromName( $parser->getRevisionUser() );
+				$user = User::newFromName( $userName );
 
 				self::addUserObj([
 					'userId' => $user->getId(),
