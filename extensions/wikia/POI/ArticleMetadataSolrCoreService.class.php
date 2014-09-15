@@ -32,7 +32,7 @@ class ArticleMetadataSolrCoreService {
 	];
 
 	protected function getConfig() {
-		$config = ( new Factory() )->getSolariumClientConfig();
+		$config = ( new Factory() )->getSolariumClientConfig( true );
 		$config[ 'adapteroptions' ][ 'core' ] = self::CORE_NAME;
 		return $config;
 	}
@@ -70,14 +70,9 @@ class ArticleMetadataSolrCoreService {
 		$options = [];
 		$options['headers'] = ['Content-type'=>'application/json'];
 		$options['postData'] = $jsonFormattedData;
-		if ( F::app()->wg->DevelEnvironment ) {
-			//TODO: remove it after fixing proxy on devboxes
-			//TODO: alter dev-search-s4 to dev-search in QueryService/Factory.php
-			$options['noProxy'] = true;
-		}
-		//$options['proxy'] = $wgSolrProxy;
 		$options['returnInstance'] = true;
 		$response = Http::request( "POST", $this->getCommitUrl(), $options );
+
 		return $response;
 	}
 
