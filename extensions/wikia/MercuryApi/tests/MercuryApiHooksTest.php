@@ -31,9 +31,7 @@ class MercuryApiHooksTest  extends WikiaBaseTest {
 			->with( $key )
 			->will( $this->returnValue( false ) );
 
-		$originalMemCache = F::app()->wg->Memc;
-		F::app()->wg->Memc = $memc;
+		$this->mockGlobalVariable('Memc', $memc);
 		$this->assertTrue( MercuryApiHooks::onArticleSaveComplete( $wikiPage, $user ) );
-		F::app()->wg->Memc = $originalMemCache;
 	}
-} 
+}
