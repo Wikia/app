@@ -14,7 +14,9 @@ class MonetizationModuleHelper extends WikiaModel {
 	const SLOT_TYPE_ABOVE_FOOTER = 'above_footer';
 	const SLOT_TYPE_FOOTER = 'footer';
 
-	const CACHE_TTL = 3600;
+	const CACHE_TTL_MIN = 3600;
+	const CACHE_TTL_MAX = 7200;
+
 	// TODO: encapsulate in Monetization Client
 	// do not change unless monetization service changes
 	const MONETIZATION_SERVICE_CACHE_PREFIX = 'monetization';
@@ -48,8 +50,6 @@ class MonetizationModuleHelper extends WikiaModel {
 		WikiFactoryHub::HUB_ID_MUSIC       => 'music',
 		WikiFactoryHub::HUB_ID_MOVIES      => 'movies',
 	];
-
-	protected $cacheTtl = null;
 
 	/**
 	 * Show the Module only on File pages, Article pages, and Main pages
@@ -191,7 +191,7 @@ class MonetizationModuleHelper extends WikiaModel {
 			}
 
 			// set cache
-			$this->wg->Memc->set( $memcKey, json_encode( $adUnits ), $this->getCacheTtl() );
+			$this->wg->Memc->set( $memcKey, json_encode( $adUnits ), mt_rand( self::CACHE_TTL_MIN, self::CACHE_TTL_MAX ) );
 
 			$loggingParams = [ 'method' => __METHOD__, 'memcKey' => $memcKey ];
 			WikiaLogger::instance()->info( "MonetizationModule: memcache write.", $loggingParams );
@@ -200,23 +200,6 @@ class MonetizationModuleHelper extends WikiaModel {
 		wfProfileOut( __METHOD__ );
 
 		return $adUnits;
-	}
-
-	/**
-	 * Get cache TTL
-	 * @return integer
-	 */
-	public function getCacheTtl() {
-		wfProfileIn( __METHOD__ );
-
-		if ( is_null( $this->cacheTtl ) ) {
-			$range = self::CACHE_TTL / 2;
-			$this->cacheTtl = mt_rand( $range, ( self::CACHE_TTL + $range ) );
-		}
-
-		wfProfileOut( __METHOD__ );
-
-		return $this->cacheTtl;
 	}
 
 	/**
