@@ -9,6 +9,7 @@ class ExactTargetUpdateUserTask extends ExactTargetBaseTask {
 	 */
 	public function updateUserData( $aUserData, $aUserProperties ) {
 		$oClient = $this->getClient();
+		$this->updateUserDataExtension( $aUserData, $oClient );
 		$this->updateUserPropertiesDataExtension( $aUserData['user_id'], $aUserProperties, $oClient );
 	}
 
@@ -19,23 +20,8 @@ class ExactTargetUpdateUserTask extends ExactTargetBaseTask {
 	public function updateUserDataExtension( $aUserData, $oClient ) {
 
 		try {
-			/* Create new DataExtensionObject that reflects user table data */
-			$DE = new ExactTarget_DataExtensionObject();
-			/* CustomerKey is a key that indicates Wikia table reflected by DataExtension */
-			$DE->CustomerKey = 'user';
-
-			/* Prapare update data */
-			$apiProperties = [];
-			foreach ( $aUserData as $key => $value ) {
-				$apiProperties[] = $this->wrapApiProperty( $key,  $value );
-			}
-			$DE->Properties = $apiProperties;
-
-			/* Prepare query keys */
-			$DE->Keys = [ $this->wrapApiProperty( 'user_id',  $aUserData['user_id'] ) ];
-
-			$oSoapVar = $this->wrapToSoapVar( $DE );
-
+			$oDE = $this->prepareUserDataExtensionObjectsForUpdate( $aUserData );
+			$oSoapVar = $this->wrapToSoapVar( $oDE );
 			$oRequest = $this->wrapUpdateRequest( [ $oSoapVar ] );
 
 			/* Send API update request */
@@ -74,7 +60,45 @@ class ExactTargetUpdateUserTask extends ExactTargetBaseTask {
 	}
 
 	/**
-	 * Prepares array of ExactTarget_DataExtensionObject objects
+	 * Prepares array of ExactTarget_DataExtensionObject objects for user table
+	 * that can be used to send API update
+	 * @param array $aUserData user key value array
+	 * @return array of ExactTarget_DataExtensionObject objects
+	 */
+	public function prepareUserDataExtensionObjectsForUpdate( $aUserData ) {
+
+		$userId = $this->extractUserIdFromData( $aUserData );
+		/* Create new DataExtensionObject that reflects user table data */
+		$oDE = new ExactTarget_DataExtensionObject();
+		/* CustomerKey is a key that indicates Wikia table reflected by DataExtension */
+		$oDE->CustomerKey = 'user';
+
+		/* Prapare update data */
+		$apiProperties = [];
+		foreach ( $aUserData as $key => $value ) {
+			$apiProperties[] = $this->wrapApiProperty( $key,  $value );
+		}
+		$oDE->Properties = $apiProperties;
+
+		/* Prepare query keys */
+		$oDE->Keys = [ $this->wrapApiProperty( 'user_id',  $userId ) ];
+
+		return [ $oDE ];
+	}
+
+	/**
+	 * Returns user_id emelent from $aUserData array and removes it from array
+	 * @param array $aUserData key value data from user table
+	 * @return int
+	 */
+	public function extractUserIdFromData( &$aUserData ) {
+		$iUserId = $aUserData[ 'user_id' ];
+		unset( $aUserData[ 'user_id' ] );
+		return $iUserId;
+	}
+
+	/**
+	 * Prepares array of ExactTarget_DataExtensionObject objects for user_properties table
 	 * that can be used to send API update
 	 * @param int $iUserId User id
 	 * @param array $aUserProperties user_properties key value array
