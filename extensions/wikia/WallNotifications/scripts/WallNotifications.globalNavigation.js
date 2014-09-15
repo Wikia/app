@@ -194,7 +194,7 @@ require(
 
 				this.$wallNotifications.find('.notifications-for-wiki').each(function() {
 					element = $(this);
-					self.wikisUrls[ parseInt(element.data('wiki-id'), 10) ] = this.getWikiUrl( element.data('wiki-path') );
+					self.wikisUrls[ parseInt(element.data('wiki-id'), 10) ] = self.getWikiUrl( element.data('wiki-path') );
 				});
 
 				this.$wallNotifications.find('.notifications-wiki-header').click( this.proxy( this.wikiClick ) );
