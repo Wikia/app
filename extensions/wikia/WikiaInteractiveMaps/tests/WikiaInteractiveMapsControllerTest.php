@@ -51,7 +51,7 @@ class WikiaInteractiveMapsControllerTest extends WikiaBaseTest {
 		$exceptionObject->message = 'Map not found';
 		$exceptionObject->details = 'Map with given id (1) was not found.';
 
-		$mapsModelMock = $this->getMock( 'WikiaMaps', [ 'getMapByIdFromApi' ], [], '', false );
+		$mapsModelMock = $this->getWikiaMapsMock();
 		$mapsModelMock->expects( $this->once() )
 			->method( 'getMapByIdFromApi' )
 			->will( $this->returnValue( $exceptionObject ) );
@@ -76,7 +76,7 @@ class WikiaInteractiveMapsControllerTest extends WikiaBaseTest {
 		$mapMock->city_id = self::WIKI_CITY_ID;
 		$mapMock->deleted = 0;
 
-		$mapsModelMock = $this->getMock( 'WikiaMaps', [ 'getMapByIdFromApi', 'getMapRenderUrl' ], [], '', false );
+		$mapsModelMock = $this->getWikiaMapsMock();
 		$mapsModelMock->expects( $this->once() )
 			->method( 'getMapByIdFromApi' )
 			->will( $this->returnValue( $mapMock ) );
@@ -151,6 +151,19 @@ class WikiaInteractiveMapsControllerTest extends WikiaBaseTest {
 		}
 
 		return $mapsControllerMock;
+	}
+
+	private function getWikiaMapsMock() {
+		$wikiaMapsMock = $this->getMockBuilder('WikiaMaps')
+			->setMethods( [ 'getMapByIdFromApi', 'getMapRenderUrl', 'getMapRenderParams' ] )
+			->disableOriginalConstructor()
+			->getMock();
+
+		$wikiaMapsMock->expects( $this->any() )
+			->method( 'getMapRenderParams' )
+			->willReturn( [ 'uselang' => 'en' ] );
+
+		return $wikiaMapsMock;
 	}
 
 }

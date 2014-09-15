@@ -233,7 +233,7 @@ class AdEngine2Service
 			$wgDartCustomKeyValues, $wgWikiDirectedAtChildrenByStaff,
 			$wgWikiDirectedAtChildrenByFounder, $wgAdEngineDisableLateQueue,
 			$wgAdDriverUseBottomLeaderboard, $wgAdDriverBottomLeaderboardImpressionCapping,
-			$wgAdDriverEnableAdsInMaps;
+			$wgAdDriverEnableAdsInMaps, $wgAdDriverWikiIsTop1000;
 
 		$vars = [];
 
@@ -281,11 +281,12 @@ class AdEngine2Service
 			// Krux
 			'wgEnableKruxTargeting' => $wgEnableKruxTargeting,
 			'wgUsePostScribe' => $wgRequest->getBool('usepostscribe', false),
-			'wgDartCustomKeyValues' => $wgDartCustomKeyValues,
 			'wgWikiDirectedAtChildren' => $wgWikiDirectedAtChildrenByStaff || $wgWikiDirectedAtChildrenByFounder,
 
 			// AdLogicPageParams.js, SevenOneMediaHelper.js, AnalyticsProviderQuantServe.php
 			'cityShort' => AdEngine2Service::getCachedCategory()['short'],
+			'wgDartCustomKeyValues' => $wgDartCustomKeyValues,
+			'wgAdDriverWikiIsTop1000' => $wgAdDriverWikiIsTop1000,
 
 			// intMapPontoBridge.js
 			'wgAdDriverEnableAdsInMaps' => $wgAdDriverEnableAdsInMaps,
