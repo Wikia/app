@@ -24,7 +24,7 @@ class MercuryApiHooks {
 	/**
 	 * @desc Keep track of article contribution to update the top contributors data if available
 	 *
-	 * @param WikiPage $article
+	 * @param WikiPage $wikiPage
 	 * @param User $user
 	 * @param $text
 	 * @param $summary
@@ -35,6 +35,7 @@ class MercuryApiHooks {
 	 * @param $revision
 	 * @param $status
 	 * @param $baseRevId
+	 * @return bool
 	 */
 	public static function onArticleSaveComplete( WikiPage $wikiPage, User $user, $text, $summary, $minoredit, $watchthis,
 												  $sectionanchor, &$flags, $revision, &$status, $baseRevId ) {
@@ -58,10 +59,11 @@ class MercuryApiHooks {
 	/**
 	 * @desc Purge the contributors data to guarantee that it will be refreshed next time it is required
 	 *
-	 * @param WikiPage $article
+	 * @param WikiPage $wikiPage
 	 * @param User $user
 	 * @param $revision
 	 * @param $current
+	 * @return bool
 	 */
 	public static function onArticleRollbackComplete( WikiPage $wikiPage, User $user, $revision, $current ) {
 		$articleId = $wikiPage->getId();
@@ -69,4 +71,4 @@ class MercuryApiHooks {
 		WikiaDataAccess::cachePurge( $key );
 		return true;
 	}
-} 
+}
