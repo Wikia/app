@@ -14,7 +14,9 @@ class MonetizationModuleHelper extends WikiaModel {
 	const SLOT_TYPE_ABOVE_FOOTER = 'above_footer';
 	const SLOT_TYPE_FOOTER = 'footer';
 
-	const CACHE_TTL = 3600;
+	const CACHE_TTL_MIN = 3600;
+	const CACHE_TTL_MAX = 7200;
+
 	// TODO: encapsulate in Monetization Client
 	// do not change unless monetization service changes
 	const MONETIZATION_SERVICE_CACHE_PREFIX = 'monetization';
@@ -184,7 +186,7 @@ class MonetizationModuleHelper extends WikiaModel {
 			}
 
 			// set cache
-			$this->wg->Memc->set( $memcKey, json_encode( $adUnits ), self::CACHE_TTL );
+			$this->wg->Memc->set( $memcKey, json_encode( $adUnits ), mt_rand( self::CACHE_TTL_MIN, self::CACHE_TTL_MAX ) );
 		}
 
 		wfProfileOut( __METHOD__ );
