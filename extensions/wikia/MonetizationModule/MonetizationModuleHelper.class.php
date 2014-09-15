@@ -49,6 +49,8 @@ class MonetizationModuleHelper extends WikiaModel {
 		WikiFactoryHub::HUB_ID_MOVIES      => 'movies',
 	];
 
+	protected $cacheTtl = null;
+
 	/**
 	 * Show the Module only on File pages, Article pages, and Main pages
 	 * @return boolean
@@ -189,7 +191,7 @@ class MonetizationModuleHelper extends WikiaModel {
 			}
 
 			// set cache
-			$this->wg->Memc->set( $memcKey, json_encode( $adUnits ), self::CACHE_TTL );
+			$this->wg->Memc->set( $memcKey, json_encode( $adUnits ), $this->getCacheTtl() );
 
 			$loggingParams = [ 'method' => __METHOD__, 'memcKey' => $memcKey ];
 			WikiaLogger::instance()->info( "MonetizationModule: memcache write.", $loggingParams );
@@ -198,6 +200,23 @@ class MonetizationModuleHelper extends WikiaModel {
 		wfProfileOut( __METHOD__ );
 
 		return $adUnits;
+	}
+
+	/**
+	 * Get cache TTL
+	 * @return integer
+	 */
+	public function getCacheTtl() {
+		wfProfileIn( __METHOD__ );
+
+		if ( is_null( $this->cacheTtl ) ) {
+			$range = self::CACHE_TTL / 2;
+			$this->cacheTtl = mt_rand( $range, ( self::CACHE_TTL + $range ) );
+		}
+
+		wfProfileOut( __METHOD__ );
+
+		return $this->cacheTtl;
 	}
 
 	/**
