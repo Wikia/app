@@ -43,56 +43,6 @@ class ExactTargetAddUserTaskTest extends WikiaBaseTest {
 		$addTaskMock->sendNewUserData( $aUserData, $aUserProperties );
 	}
 
-	function testPrepareSoapVarsShouldReturnSoapVarsArray() {
-		/* Params to compare */
-		$iUserId = 12345;
-		$aUserProperties = [
-			'property1' => 'value1',
-			'property2' => 'value2'
-		];
-
-		/* prepare DataExtension objects array */
-		foreach ( $aUserProperties as $sProperty => $sValue ) {
-
-			$DE = new ExactTarget_DataExtensionObject();
-			$DE->CustomerKey = 'user_properties';
-
-			$apiPropertyUser = new ExactTarget_APIProperty();
-			$apiPropertyUser->Name = 'up_user';
-			$apiPropertyUser->Value = $iUserId;
-
-			$apiPropertyProperty = new ExactTarget_APIProperty();
-			$apiPropertyProperty->Name = 'up_property';
-			$apiPropertyProperty->Value = $sProperty;
-
-			$apiPropertyValue = new ExactTarget_APIProperty();
-			$apiPropertyValue->Name = 'up_value';
-			$apiPropertyValue->Value = $sValue;
-
-			$apiProperties = [ $apiPropertyUser, $apiPropertyProperty, $apiPropertyValue ];
-
-			$DE->Properties = $apiProperties;
-
-			$aDE[] = $DE;
-		}
-
-		/* prepare request mock - array of SoapVars */
-		$aSoapVarsExpected = [];
-		foreach ( $aDE as $DE ) {
-
-			$soapVar = new SoapVar( $DE, SOAP_ENC_OBJECT, 'DataExtensionObject', 'http://exacttarget.com/wsdl/partnerAPI' );
-			$aSoapVarsExpected[] = $soapVar;
-		}
-
-		/* Mock tested class */
-		/* @var ExactTargetAddUserTask $mockAddUserTask (mock of ExactTargetAddUserTask) */
-		$mockAddUserTask = $this->getMock( 'ExactTargetAddUserTask', [ 'getClient' ] );
-
-		/* Run test */
-		$aSoapVarsActual = $mockAddUserTask->prepareSoapVars( $aDE, 'DataExtensionObject' );
-		$this->assertEquals( $aSoapVarsExpected, $aSoapVarsActual );
-	}
-
 	function testCreateUserPropertiesDataExtensionShouldInvokeCreateMethodOnceWithRequestParam() {
 		/* Params to compare */
 		$iUserId = 12345;
