@@ -83,7 +83,7 @@ class MercuryApi {
 	 * @param $userId
 	 * @return mixed
 	 */
-	public static function getNumberOfUserContribForArticle( $articleId, $userId ) {
+	public function getNumberOfUserContribForArticle( $articleId, $userId ) {
 		$db = wfGetDB( DB_SLAVE );
 		$row = $db->selectRow(
 			'revision',

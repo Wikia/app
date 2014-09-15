@@ -14,7 +14,8 @@ class MercuryApiHooks {
 		if ( isset( $contributions[ $userId ] ) ) {
 			$contributions[ $userId ]++;
 		} else {
-			$contributions[ $userId ] = MercuryApi::getNumberOfUserContribForArticle( $articleId, $userId );
+			$mercuryApi = new MercuryApi();
+			$contributions[ $userId ] = $mercuryApi->getNumberOfUserContribForArticle( $articleId, $userId );
 			arsort( $contributions );
 		}
 		return $contributions;
@@ -42,11 +43,11 @@ class MercuryApiHooks {
 			if ( $articleId ) {
 				$userId = $user->getId();
 				$key = MercuryApi::getTopContributorsKey( $articleId );
-				$wg = F::app()->wg;
-				$result = $wg->Memc->get( $key );
+				$memCache = F::app()->wg->Memc;
+				$result = $memCache->get( $key );
 				// Update the data only if the key is not empty
 				if ( $result ) {
-					$wg->Memc->set( $key, self::addUserToResult( $articleId, $userId, $result ),
+					$memCache->set( $key, self::addUserToResult( $articleId, $userId, $result ),
 						MercuryApi::CACHE_TIME_TOP_CONTRIBUTORS );
 				}
 			}

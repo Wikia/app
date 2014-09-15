@@ -14,7 +14,7 @@ class MercuryApiModelTest extends WikiaBaseTest {
 		global $wgLoadAdsInHead, $wgAdEngineDisableLateQueue, $wgLoadLateAdsAfterPageLoad,
 		$wgAdDriverTrackState, $wgEnableWikiaHubsV3Ext, $wgAdDriverSevenOneMediaOverrideSub2Site,
 		$wgWikiDirectedAtChildren, $wgAdDriverForceLiftiumAd, $wgAdDriverForceDirectGptAd, $wgAdDriverUseSevenOneMedia,
-		$wgWikiDirectedAtChildrenByStaff, $wgAdDriverUseEbay;
+		$wgWikiDirectedAtChildrenByStaff, $wgAdDriverUseEbay, $wgDartCustomKeyValues;
 
 		$wgLoadAdsInHead = true;
 		$wgAdEngineDisableLateQueue = true;
@@ -28,6 +28,7 @@ class MercuryApiModelTest extends WikiaBaseTest {
 		$wgAdDriverUseSevenOneMedia = false;
 		$wgWikiDirectedAtChildrenByStaff = true;
 		$wgAdDriverUseEbay = true;
+		$wgDartCustomKeyValues = 'dart';
 	}
 
 	/**
@@ -80,7 +81,7 @@ class MercuryApiModelTest extends WikiaBaseTest {
 				'sevenOneMediaSub2Site' => true,
 				'skin' => 'mercury',
 				'wikiCategory' => 'ent',
-				'wikiCustomKeyValues' => 'egnre=action;egnre=adventure;egnre=drama;egnre=scifi;media=tv;wtpx=815;wtpx=696;wtpx=408;wtpx=911;',
+				'wikiCustomKeyValues' => 'dart;wtpx=13;',
 				'wikiDbName' => null,
 				'wikiDirectedAtChildren' => true,
 				'wikiLanguage' => 'en',
