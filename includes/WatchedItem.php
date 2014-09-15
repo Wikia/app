@@ -8,6 +8,7 @@
  * @ingroup Watchlist
  */
 class WatchedItem {
+	/* @var User $mUser */
 	var $mTitle, $mUser, $id, $ns, $ti;
 
 	/**
@@ -39,6 +40,11 @@ class WatchedItem {
 		# Pages and their talk pages are considered equivalent for watching;
 		# remember that talk namespaces are numbered as page namespace+1.
 
+		// Only loggedin user can have a watchlist
+		if ( $this->mUser->isAnon() ) {
+			return false;
+		}
+
 		$dbr = wfGetDB( DB_SLAVE );
 		$res = $dbr->select( 'watchlist', 1, array( 'wl_user' => $this->id, 'wl_namespace' => $this->ns,
 			'wl_title' => $this->ti ), __METHOD__ );
@@ -53,6 +59,13 @@ class WatchedItem {
 	 */
 	public function addWatch() {
 		wfProfileIn( __METHOD__ );
+
+		// Only loggedin user can have a watchlist
+		if ( wfReadOnly() || $this->mUser->isAnon() ) {
+			wfProfileOut( __METHOD__ );
+			return false;
+		}
+
 		$rows = array();
 
 		// Use INSERT IGNORE to avoid overwriting the notification timestamp
@@ -88,6 +101,12 @@ class WatchedItem {
 	 */
 	public function removeWatch() {
 		wfProfileIn( __METHOD__ );
+
+		// Only loggedin user can have a watchlist
+		if ( wfReadOnly() || $this->mUser->isAnon() ) {
+			wfProfileOut( __METHOD__ );
+			return false;
+		}
 
 		$success = false;
 		
