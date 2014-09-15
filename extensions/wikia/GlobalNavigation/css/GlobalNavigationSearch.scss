@@ -145,7 +145,7 @@
 	}
 
 	.autocomplete-container {
-		right: $large-grid-gutter + $large-grid-column-padding;
+		right: 0;
 	}
 }
 
@@ -157,10 +157,6 @@
 	.search-form-wrapper {
 		padding: 0 $small-grid-gutter + $small-grid-column-padding;
 	}
-
-	.global-nav-search-input-wrapper .autocomplete-container {
-		right: $small-grid-gutter + $small-grid-column-padding;
-	}
 }
 
 @media #{$medium-only} {
@@ -170,9 +166,5 @@
 
 	.search-form-wrapper {
 		padding: 0 $medium-grid-gutter + $medium-grid-column-padding;
-	}
-
-	.global-nav-search-input-wrapper .autocomplete-container {
-		right: $medium-grid-gutter + $medium-grid-column-padding;
 	}
 }
