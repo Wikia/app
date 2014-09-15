@@ -81,7 +81,6 @@ class MercuryApiModelTest extends WikiaBaseTest {
 				'sevenOneMediaSub2Site' => true,
 				'skin' => 'mercury',
 				'wikiCategory' => 'ent',
-				'wikiCustomKeyValues' => 'dart;wtpx=13;',
 				'wikiDbName' => null,
 				'wikiDirectedAtChildren' => true,
 				'wikiLanguage' => 'en',
@@ -102,6 +101,7 @@ class MercuryApiModelTest extends WikiaBaseTest {
 			],
  		];
 		$result = $mercuryApi->getAdsContext( $title, $wGReg, $articleCategories );
+		unset($result['targeting']['wikiCustomKeyValues']);
 		$this->assertEquals( $expected, $result );
 	}
 
