@@ -148,28 +148,28 @@ class ArticleAsJson extends WikiaService {
 
 			if ( User::isIP( $userName ) ) {
 
-				self::addUserObj([
+				self::addUserObj( [
 					'userId' => 0,
 					'userName' => $userName,
-					'userThumbUrl' => AvatarService::getAvatarUrl($userName, AvatarService::AVATAR_SIZE_MEDIUM),
+					'userThumbUrl' => AvatarService::getAvatarUrl( $userName, AvatarService::AVATAR_SIZE_MEDIUM ),
 					'userPageUrl' => Title::newFromText( $userName )->getLocalURL()
-				]);
+				] );
 			} else {
 				$user = User::newFromName( $userName );
 
-				self::addUserObj([
+				self::addUserObj( [
 					'userId' => $user->getId(),
 					'userName' => $user->getName(),
-					'userThumbUrl' => AvatarService::getAvatarUrl($user, AvatarService::AVATAR_SIZE_MEDIUM),
+					'userThumbUrl' => AvatarService::getAvatarUrl( $user, AvatarService::AVATAR_SIZE_MEDIUM ),
 					'userPageUrl' => $user->getUserPage()->getLocalURL()
-				]);
+				] );
 			}
 
-			$text = json_encode([
+			$text = json_encode( [
 				'content' => $text,
 				'media' => self::$media,
 				'users' => self::$users
-			]);
+			] );
 		}
 
 		wfProfileOut( __METHOD__ );
