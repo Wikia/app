@@ -228,8 +228,13 @@ class LBFactory_Multi extends LBFactory {
 			if ( isset( $groupLoadsByServer[$serverName] ) ) {
 				$serverInfo['groupLoads'] = $groupLoadsByServer[$serverName];
 			}
-			if ( isset( $this->hostsByName[$serverName] ) ) {
-				$serverInfo['host'] = $this->hostsByName[$serverName];
+
+			// Wikia change - @author macbre
+			// sectionLoads entries may contain hostnames + port numbers (eg. lb-s1:1234)
+			list( $hostName, $port ) = explode( ':', $serverName );
+
+			if ( isset( $this->hostsByName[$hostName] ) ) {
+				$serverInfo['host'] = $this->hostsByName[$hostName] . ( $port ?  ':' . $port : '' );
 			} else {
 				$serverInfo['host'] = $serverName;
 			}
