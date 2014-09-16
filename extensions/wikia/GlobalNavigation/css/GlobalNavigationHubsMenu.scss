@@ -38,6 +38,21 @@
 	}
 }
 
+html.ios70 {
+	.hubs-menu .hub-list {
+		*, *:before, *:after {
+			border-radius: 1px;
+		}
+	}
+}
+html:not(.ios70) {
+	.hubs-menu .hub-list {
+		*, *:before, *:after {
+			-webkit-backface-visibility: hidden;
+		}
+	}
+}
+
 .hubs-menu {
 	background-color: $hubsmenu-background-color;
 	border: 1px solid $nav-border-color;
@@ -55,10 +70,6 @@
 	.hub-list {
 		float: left;
 		width: 256px;
-
-		*, *:before, *:after {
-			-webkit-backface-visibility: hidden;
-		}
 	}
 
 	nav {

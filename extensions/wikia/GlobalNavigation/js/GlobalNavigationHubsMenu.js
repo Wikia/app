@@ -65,5 +65,10 @@ require( ['jquery', 'wikia.globalnavigation.lazyload'], function( $, GlobalNavLa
 		} else {
 			$entryPoint.click(openMenu);
 		}
+
+		// TODO: Remove this when we drop support for iOS 7.0
+		if (navigator.userAgent.match(/(iPad.*|iPhone.*|iPod.*);.*CPU.*OS 7_0/i)) {
+			$('html').addClass('ios70');
+		}
 	});
 });
