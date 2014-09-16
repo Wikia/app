@@ -23,6 +23,7 @@ class NjordController extends WikiaController {
 		$this->content = $this->getRequest()->getVal('content');
 		$this->align = $this->getRequest()->getVal('align');
 		$this->ctitle = $this->getRequest()->getVal('content-title');
+		$this->title = $this->getRequest()->getVal('title');
 	}
 
 	public function mom() {}
@@ -36,18 +37,22 @@ class NjordController extends WikiaController {
 
 		$content = mb_ereg_replace('<modula.*/>', '', $content, 'sU' );
 		$moduleTags = [];
-		foreach ($params['left'] as $title) {
+		foreach ($params['left'] as $raw) {
+			$data = json_decode($raw);
 			$moduleTags[] = Xml::element( 'modula', $attribs = [
 				'align' => 'left',
-				'content-title' => $title,
+				'title' => $data->text,
+				'content-title' => $data->title,
 			] );
 		}
 		$content = mb_ereg_replace('(<mainpage-leftcolumn-start.*/>)\s*', "\\1\n" . implode($moduleTags, "\n"). "\n", $content, 'sU' );
 		$moduleTags = [];
-		foreach ($params['right'] as $title) {
+		foreach ($params['right'] as $raw) {
+			$data = json_decode($raw);
 			$moduleTags[] = Xml::element( 'modula', $attribs = [
 				'align' => 'right',
-				'content-title' => $title,
+				'title' => $data->text,
+				'content-title' => $data->title,
 			] );
 		}
 		$content = mb_ereg_replace('(<mainpage-rightcolumn-start.*/>)\s*', "\\1\n" . implode($moduleTags, "\n"). "\n", $content, 'sU' );

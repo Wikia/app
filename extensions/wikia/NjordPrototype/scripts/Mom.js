@@ -13,6 +13,7 @@
 		$nonEditMode = $('.no-layout-mode'),
 		$momOverlays = $('.mom-module .mom-overlay'),
 		$momBar = $('.mom-module .mom-bar'),
+		$momBarContent = $('.mom-bar .mom-bar-content'),
 		$moms = $('.mom-module'),
 		$leftColumn = $('.lcs-container'),
 		$rightColumn = $('.rcs-container'),
@@ -24,6 +25,7 @@
 			$momBar.show();
 			$momOverlays.show();
 			var options = {
+				cancel: '.mom-bar-content',
 				handle: '.mom-bar',
 				helper: 'clone',
 				items: '.mom-module-left, .mom-module-right',
@@ -44,8 +46,11 @@
 			$leftColumn.sortable(options);
 			options['connectWith'] = '.lcs-container';
 			$rightColumn.sortable(options);
-			$leftColumn.sortable('enable').disableSelection();
-			$rightColumn.sortable('enable').disableSelection();
+			$leftColumn.sortable('enable');
+			$rightColumn.sortable('enable');
+			$momBarContent.each(function () {
+				$(this).attr('contenteditable', true);
+			});
 		}, onSave = function () {
 			removeEmpty();
 			$editMode.hide();
@@ -54,20 +59,29 @@
 			$moms.removeClass('mom-hidden');
 			$momBar.hide();
 			$momOverlays.hide();
-			$leftColumn.sortable('disable').enableSelection();
-			$rightColumn.sortable('disable').enableSelection();
+			$leftColumn.sortable('disable');
+			$rightColumn.sortable('disable');
+			$momBarContent.each(function () {
+				$(this).removeAttr('contenteditable');
+			});
 			var left = [],
 				right = [];
 			$('.lcs-container .mom-module').each(function () {
-				var title = $(this).data().title;
-				if (title) {
-					left.push(title);
+				var data = $(this).data();
+				if (data.title) {
+					left.push(JSON.stringify({
+						'title': data.title,
+						'text': $(this).find('.mom-bar .mom-bar-content').text()
+					}));
 				}
 			});
 			$('.rcs-container .mom-module').each(function () {
-				var title = $(this).data().title;
-				if (title) {
-					right.push(title);
+				var data = $(this).data();
+				if (data.title) {
+					right.push(JSON.stringify({
+						'title': data.title,
+						'text': $(this).find('.mom-bar-content').text()
+					}));
 				}
 			});
 			$.nirvana.sendRequest({
@@ -100,8 +114,11 @@
 			$moms.removeClass('mom-hidden');
 			$momBar.hide();
 			$momOverlays.hide();
-			$leftColumn.sortable('disable').enableSelection();
-			$rightColumn.sortable('disable').enableSelection();
+			$leftColumn.sortable('disable');
+			$rightColumn.sortable('disable');
+			$momBarContent.each(function () {
+				$(this).removeAttr('contenteditable');
+			});
 			//TODO: restore default on changed
 		}, addEmpty = function () {
 			var $new = $(document.createElement('div')),
