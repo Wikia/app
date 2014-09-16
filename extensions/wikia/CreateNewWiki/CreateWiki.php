@@ -652,21 +652,22 @@ class CreateWiki {
 	/**
 	 * Check if the given upload directory name is available for use.
 	 *
-	 * @access protected
+	 * @access public
 	 * @author Michał Roszka <michal@wikia-inc.com>
 	 *
 	 * @param $sDirectoryName the path to check
 	 */
-	protected function wgUploadDirectoryExists( $sDirectoryName ) {
+	public static function wgUploadDirectoryExists( $sDirectoryName ) {
 		wfProfileIn( __METHOD__ );
 
-		global $wgMemc;
-		$sMemcKey = __METHOD__ . ':wgUploadDirectory:city_variables_pool:cv_id';
-		$iVarId = $wgMemc->get( $sMemcKey );
+		$oMC = F::app()->wg->Memc;
+		$sMCKey = __METHOD__ . ':wgUploadDirectory:city_variables_pool:cv_id';
+		$iVarId = $oMC->get( $sMCKey );
 
-		if ( empty( $iVarId ) ) {
+		if ( !is_int( $iVarId ) || $iVarId <= 0 ) {
 			$iVarId = (int) WikiFactory::getVarIdByName( 'wgUploadDirectory' );
-			$wgMemc->set( $sMemcKey, $iVarId, WikiaResponse::CACHE_LONG );
+			\Wikia\Util\Assert::true( $iVarId > 0);
+			$oMC->set( $sMCKey, $iVarId, WikiaResponse::CACHE_LONG );
 		}
 
 		// returns bool, converted from an array (empty or not)
@@ -698,7 +699,7 @@ class CreateWiki {
 		while ( $isExist == false ) {
 			$dirName = self::IMGROOT . $prefix . "/" . $dir_base . $suffix . $dir_lang . "/images";
 
-			if ( $this->wgUploadDirectoryExists($dirName) ) {
+			if ( self::wgUploadDirectoryExists($dirName) ) {
 				$suffix = rand(1, 9999);
 			}
 			else {
