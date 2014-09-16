@@ -133,8 +133,13 @@
 				onImageLoad();
 			}
 		}, onImageLoad = function () {
+			var top = -heroData.cropposition * $heroModuleImage.height();
 			$heroModule.stopThrobbing();
-			$heroModuleImage.css({top: -heroData.oCropposition * $heroModuleImage.height()});
+			if (top + $heroModuleImage.height() >= $heroModule.height()) {
+				$heroModuleImage.css({top: top});
+			} else {
+				$heroModuleImage.css({top: 0});
+			}
 			$heroModule.trigger('resize');
 			$heroModule.trigger('enableDragging');
 		}, onResize = function () {
@@ -181,7 +186,8 @@
 
 			$heroModuleTitle.on('focus', onFocus).on('blur keyup paste input', onInput).on('change', onChange);
 			$('.hero-description').on('focus', onFocus).on('blur keyup paste input', onInput).on('change', onChange);
-			$heroModuleImage.on('load', onImageLoad);
+			//on(load) on img buged on this jquery
+			$heroModuleImage[0].addEventListener('load', onImageLoad);
 			$heroModule.on('change', onChange).on('enableDragging', onDraggingEnabled);
 			$heroModule.on('revertedToZeroState', zeroState);
 			$editButton.on('click', onEdit);
