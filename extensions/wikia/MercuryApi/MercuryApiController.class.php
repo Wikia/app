@@ -83,11 +83,11 @@ class MercuryApiController extends WikiaController {
 	}
 
 	/**
-	 * @desc returns related pages
+	 * @desc Returns related pages
 	 *
 	 * @param int $articleId
 	 * @param int $limit
-	 * @return null
+	 * @return mixed
 	 */
 	private function getRelatedPages( $articleId, $limit = 6 ){
 		if ( class_exists( 'RelatedPages' ) ) {
