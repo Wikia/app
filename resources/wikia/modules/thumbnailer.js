@@ -33,7 +33,6 @@
 			height = height || 0;
 			width = (width || 50) + (height ? '' : 'px');
 
-
 			if (isThumbUrl(url)) {
 				// URL points to a thumbnail, remove crop and size
 				url = clearThumbOptions(url);
@@ -133,7 +132,7 @@
 
 		function addNewThumbnailerParameters(url, type, width, height) {
 			var thumbnailRoute = (type === 'video' || type === 'nocrop') ? '/fixed-aspect-ratio' : '/zoom-crop';
-			return url + thumbnailRoute + "/width/" + width + "/height/" + height;
+			return url + thumbnailRoute + '/width/' + width + '/height/' + height;
 		}
 
 		function addOldThumbnailerParameters(url, type, width, height) {
