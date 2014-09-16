@@ -31,6 +31,7 @@ class TransactionClassifier {
 		'UserSignup',
 		'Chat',
 		'Newimages',
+		'Videos',
 	);
 	protected static $FILTER_NIRVANA_CONTROLLERS = array(
 		'Rail',
