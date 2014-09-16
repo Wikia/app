@@ -16,7 +16,7 @@
 		var extRegExp = /\.(jpg|jpeg|gif|bmp|png|svg)$/i,
 			imagePath = '/images/',
 			oldThumbnailerPath = '/images/thumb/',
-			newThumbnailerBaseURLRegex = /.*\/revision\/\w+\//;
+			newThumbnailerBaseURLRegex = /(.*\/revision\/\w+\/).*/;
 
 		/**
 		 * Converts the URL of a full size image or of a thumbnail into one of a thumbnail of
@@ -88,7 +88,7 @@
 			var clearedOptionsUrl;
 
 			if (isNewThumbnailerUrl(url)) {
-				clearedOptionsUrl = url.match(newThumbnailerBaseURLRegex)[0];
+				clearedOptionsUrl = url.replace(newThumbnailerBaseURLRegex, '$1');
 			} else {
 				//The URL of a thumbnail is in the following format:
 				//http://domain/image_path/image.ext/thumbnail_options.ext
