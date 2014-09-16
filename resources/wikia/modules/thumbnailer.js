@@ -15,7 +15,8 @@
 		//targets the image file extension
 		var extRegExp = /\.(jpg|jpeg|gif|bmp|png|svg)$/i,
 			imagePath = '/images/',
-			thumbPath = '/images/thumb/';
+			thumbPath = '/images/thumb/',
+			newThumbnailerBaseURLRegex = /.*\/revision\/\w+\//;
 
 		/**
 		 * Converts the URL of a full size image or of a thumbnail into one of a thumbnail of
@@ -41,12 +42,7 @@
 				url = switchPathTo(url, 'thumb');
 			}
 
-			//add parameters to the URL
-			var tokens = url.split('/'),
-				last = tokens.slice(-1)[0].replace(extRegExp, '');
-
-			tokens.push(width + (height ? 'x' + height : '-') + ((type === 'video' || type === 'nocrop') ? '-' :  'x2-') + last + '.png');
-			return tokens.join('/');
+			return addParametersToUrl(url, type, width, height);
 		}
 
 		/**
@@ -89,10 +85,17 @@
 		 * @return {String} The URL without the thymbnail options
 		 */
 		function clearThumbOptions(url) {
-			//The URL of a thumbnail is in the following format:
-			//http://domain/image_path/image.ext/thumbnail_options.ext
-			//so return the URL till the last / to remove the options
-			return url.substring(0, url.lastIndexOf('/'));
+			var clearedOptionsUrl;
+
+			if (isNewThumbnailerUrl(url)) {
+				clearedOptionsUrl = url.match(newThumbnailerBaseURLRegex)[0];
+			} else {
+				//The URL of a thumbnail is in the following format:
+				//http://domain/image_path/image.ext/thumbnail_options.ext
+				//so return the URL till the last / to remove the options
+				clearedOptionsUrl = url.substring(0, url.lastIndexOf('/'));
+			}
+			return clearedOptionsUrl;
 		}
 
 		/**
@@ -117,6 +120,28 @@
 
 			url = url.replace(from, to);
 			return url;
+		}
+
+		function addParametersToUrl(url, type, width, height) {
+			if (isNewThumbnailerUrl(url)) {
+				url = addNewThumbnailerParameters(url, width, height);
+			} else {
+				url = addOldThumbnailerParameters(url, type, width, height);
+			}
+			return url;
+		}
+
+		// TODO Make sure this is the correct thumbnailer route to hit
+		function addNewThumbnailerParameters(url, width, height) {
+			return url + "fixed-aspect-ratio/width/" + width + "/height/" + height;
+		}
+
+		function addOldThumbnailerParameters(url, type, width, height) {
+			var tokens = url.split('/'),
+				last = tokens.slice(-1)[0].replace(extRegExp, '');
+
+			tokens.push(width + (height ? 'x' + height : '-') + ((type === 'video' || type === 'nocrop') ? '-' :  'x2-') + last + '.png');
+			return tokens.join('/');
 		}
 
 		return {
