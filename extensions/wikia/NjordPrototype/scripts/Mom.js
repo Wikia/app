@@ -30,10 +30,7 @@
 				placeholder: 'mom-add-module',
 				tolerance: 'pointer',
 				over: function(e, ui) {
-					console.info(this);
 					var $child = $($(this).children('.mom-module')[0]);
-					console.info($child);
-					console.info(ui.item[0]);
 					if($child.hasClass('mom-add-module') || ui.item[0] === $child[0]) {
 						ui.placeholder.insertBefore($child);
 					}
