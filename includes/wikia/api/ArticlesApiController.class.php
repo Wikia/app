@@ -61,7 +61,6 @@ class ArticlesApiController extends WikiaApiController {
 	const NEW_ARTICLES_VARNISH_CACHE_EXPIRATION = 86400; //24 hours
 	const SIMPLE_JSON_VARNISH_CACHE_EXPIRATION = 86400; //24 hours
 	const SIMPLE_JSON_ARTICLE_ID_PARAMETER_NAME = "id";
-	const METADATA_CACHE_EXPIRATION = 300; // 5 minutes
 
 	private $imageDimensionFields = [
 		'width',
@@ -87,7 +86,7 @@ class ArticlesApiController extends WikiaApiController {
 			!empty( $this->wg->EnablePOIExt )
 			&&  $this->request->getBool( static::PARAMETER_EXPAND, $omitExpandParam )
 		) {
-			return self::METADATA_CACHE_EXPIRATION;
+			return PalantirApiController::METADATA_CACHE_EXPIRATION;
 		}
 		return self::CLIENT_CACHE_VALIDITY;
 	}
