@@ -18,6 +18,57 @@
 			thumbPath = '/images/thumb/';
 
 		/**
+		 * Converts the URL of a full size image or of a thumbnail into one of a thumbnail of
+		 * the specified size and returns it
+		 *
+		 * @public
+		 *
+		 * @param {String} url The URL to the full size image or a thumbnail
+		 * @param {String} type The type, either 'image' (default, the result will be cropped)
+		 * or 'video' (the result will be squeezed)
+		 * @param {Integer} width The width of the thumbnail to fetch
+		 * @param {Integer} height The height of the thumbnail to fetch
+		 */
+		function getThumbURL(url, type, width, height) {
+			url = url || '';
+			height = height || 0;
+			width = (width || 50) + (height ? '' : 'px');
+
+
+			if (isThumbUrl(url)) {
+				// URL points to a thumbnail, remove crop and size
+				url = clearThumbOptions(url);
+			} else {
+				// URL points to an image, convert to thumbnail URL
+				url = switchPathTo(url, 'thumb');
+			}
+
+			//add parameters to the URL
+			var tokens = url.split('/'),
+				last = tokens.slice(-1)[0].replace(extRegExp, '');
+
+			tokens.push(width + (height ? 'x' + height : '-') + ((type === 'video' || type === 'nocrop') ? '-' :  'x2-') + last + '.png');
+			return tokens.join('/');
+		}
+
+		/**
+		 * Converts the URL of a thumbnail into one of a full size image
+		 *
+		 * @public
+		 *
+		 * @param {String} url The URL to a thumbnail
+		 */
+		function getImageURL(url) {
+			if (isThumbUrl(url)) {
+				// URL points to a thumbnail
+				url = clearThumbOptions(url);
+				url = switchPathTo(url, 'image');
+			}
+
+			return url;
+		}
+
+		/**
 		 * Checks if a URL points to a thumbnail
 		 *
 		 * @public
@@ -73,61 +124,10 @@
 			return url;
 		}
 
-		/**
-		 * Converts the URL of a full size image or of a thumbnail into one of a thumbnail of
-		 * the specified size and returns it
-		 *
-		 * @public
-		 *
-		 * @param {String} url The URL to the full size image or a thumbnail
-		 * @param {String} type The type, either 'image' (default, the result will be cropped)
-		 * or 'video' (the result will be squeezed)
-		 * @param {Integer} width The width of the thumbnail to fetch
-		 * @param {Integer} height The height of the thumbnail to fetch
-		 */
-		function getThumbURL(url, type, width, height) {
-			url = url || '';
-			height = height || 0;
-			width = (width || 50) + (height ? '' : 'px');
-
-
-			if (isThumbUrl(url)) {
-				// URL points to a thumbnail, remove crop and size
-				url = clearThumbOptions(url);
-			} else {
-				// URL points to an image, convert to thumbnail URL
-				url = switchPathTo(url, 'thumb');
-			}
-
-			//add parameters to the URL
-			var tokens = url.split('/'),
-				last = tokens.slice(-1)[0].replace(extRegExp, '');
-
-			tokens.push(width + (height ? 'x' + height : '-') + ((type === 'video' || type === 'nocrop') ? '-' :  'x2-') + last + '.png');
-			return tokens.join('/');
-		}
-
-		/**
-		 * Converts the URL of a thumbnail into one of a full size image
-		 *
-		 * @public
-		 *
-		 * @param {String} url The URL to a thumbnail
-		 */
-		function getImageURL(url) {
-			if (isThumbUrl(url)) {
-				// URL points to a thumbnail
-				url = clearThumbOptions(url);
-				url = switchPathTo(url, 'image');
-			}
-
-			return url;
-		}
-
 		return {
-			isThumbUrl: isThumbUrl,
 			getThumbURL: getThumbURL,
-			getImageURL: getImageURL
+			getImageURL: getImageURL,
+			isThumbUrl: isThumbUrl
 		};
 	}
 
