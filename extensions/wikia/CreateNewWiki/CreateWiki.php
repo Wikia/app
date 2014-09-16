@@ -676,7 +676,7 @@ class CreateWiki {
 
 			// With Swift, we can't do file_exists any longer. The only sane way is
 			// to query city_variables - returns an array, empty or not.
-			$bWgUploadDirectoryTaken = (bool) WikiFactory::getCityIDsFromVarValue( $iVarId, $dirName, '' );
+			$bWgUploadDirectoryTaken = (bool) WikiFactory::getCityIDsFromVarValue( $iVarId, $dirName, '=' );
 			if ( $bWgUploadDirectoryTaken ) {
 				$suffix = rand(1, 9999);
 			}
@@ -686,6 +686,7 @@ class CreateWiki {
 			}
 		}
 
+		wfDebug( __METHOD__ . ": Returning '{$dir_base}'\n" );
 		wfProfileOut( __METHOD__ );
 		return $dir_base;
 	}
