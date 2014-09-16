@@ -81,6 +81,15 @@ class ArticlesApiController extends WikiaApiController {
 		);
 	}
 
+	public function getMetadataCacheTime( $omitExpandParam = false ) {
+		if (
+			!empty( $this->wg->EnablePOIExt )
+			&&  $this->request->getBool( static::PARAMETER_EXPAND, $omitExpandParam )
+		) {
+			return PalantirApiController::METADATA_CACHE_EXPIRATION;
+		}
+		return self::CLIENT_CACHE_VALIDITY;
+	}
 
 	/**
 	 * Get the top articles by pageviews optionally filtering by category and/or namespaces
@@ -234,7 +243,7 @@ class ArticlesApiController extends WikiaApiController {
 		$this->setResponseData(
 			[ 'basepath' => $this->wg->Server, 'items' => $collection ],
 			[ 'imgFields'=> 'thumbnail', 'urlFields' => [ 'thumbnail', 'url' ] ],
-			self::CLIENT_CACHE_VALIDITY
+			$this->getMetadataCacheTime()
 		);
 
 		$batches = null;
@@ -269,7 +278,7 @@ class ArticlesApiController extends WikiaApiController {
 		$this->setResponseData(
 			[ 'basepath' => $this->wg->Server, 'items' => $mostLinkedOutput ],
 			[ 'imgFields'=> 'thumbnail', 'urlFields' => [ 'thumbnail', 'url' ] ],
-			self::CLIENT_CACHE_VALIDITY
+			$this->getMetadataCacheTime()
 		);
 	}
 
@@ -614,7 +623,7 @@ class ArticlesApiController extends WikiaApiController {
 			$this->setResponseData(
 				$responseValues,
 				[ 'imgFields'=> 'thumbnail', 'urlFields' => [ 'thumbnail', 'url' ] ],
-				self::CLIENT_CACHE_VALIDITY
+				$this->getMetadataCacheTime()
 			);
 		} else {
 			wfProfileOut( __METHOD__ );
@@ -666,7 +675,7 @@ class ArticlesApiController extends WikiaApiController {
 		$this->setResponseData(
 			[ 'items' => $collection, 'basepath' => $this->wg->Server ],
 			[ 'imgFields'=> 'thumbnail', 'urlFields' => [ 'thumbnail', 'url' ] ],
-			self::CLIENT_CACHE_VALIDITY
+			$this->getMetadataCacheTime( true )
 		);
 
 		$collection = null;
@@ -1023,7 +1032,7 @@ class ArticlesApiController extends WikiaApiController {
 		$this->setResponseData(
 			[ 'items' => $popular, 'basepath' => $wgServer ],
 			[ 'imgFields' => 'thumbnail', 'urlFields' => [ 'thumbnail', 'url' ] ],
-			self::CLIENT_CACHE_VALIDITY
+			$this->getMetadataCacheTime()
 		);
 
 	}
