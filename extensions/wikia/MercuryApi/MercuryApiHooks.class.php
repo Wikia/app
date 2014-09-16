@@ -3,21 +3,17 @@
 class MercuryApiHooks {
 
 	/**
-	 * @desc Increase user's contributions if user is in the hash, otherwise, get number of user's contribution from DB
+	 * @desc Get number of user's contribution from DB
 	 *
 	 * @param int $articleId
 	 * @param int $userId
 	 * @param array $contributions
-	 * @return array Resulting arrray
+	 * @return array Resulting array
 	 */
-	private static function addUserToResult( $articleId, $userId, Array $contributions ) {
-		if ( isset( $contributions[ $userId ] ) ) {
-			$contributions[ $userId ]++;
-		} else {
-			$mercuryApi = new MercuryApi();
-			$contributions[ $userId ] = $mercuryApi->getNumberOfUserContribForArticle( $articleId, $userId );
-			arsort( $contributions );
-		}
+	private static function getNumberOfContributionsForUser( $articleId, $userId, Array $contributions ) {
+		$mercuryApi = new MercuryApi();
+		$contributions[ $userId ] = $mercuryApi->getNumberOfUserContribForArticle( $articleId, $userId );
+		arsort( $contributions );
 		return $contributions;
 	}
 
@@ -45,11 +41,17 @@ class MercuryApiHooks {
 				$userId = $user->getId();
 				$key = MercuryApi::getTopContributorsKey( $articleId, MercuryApiController::NUMBER_CONTRIBUTORS );
 				$memCache = F::app()->wg->Memc;
-				$result = $memCache->get( $key );
+				$contributions = $memCache->get( $key );
 				// Update the data only if the key is not empty
-				if ( $result ) {
-					$memCache->set( $key, self::addUserToResult( $articleId, $userId, $result ),
-						MercuryApi::CACHE_TIME_TOP_CONTRIBUTORS );
+				if ( $contributions ) {
+					if ( isset( $contributions[ $userId ] ) ) {
+						// If user is known increase the number of contributions
+						$contributions[ $userId ]++;
+					} else {
+						// Get the number User's contributions from database
+						$contributions = self::getNumberOfContributionsForUser( $articleId, $userId, $contributions );
+					}
+					$memCache->set( $key, $contributions, MercuryApi::CACHE_TIME_TOP_CONTRIBUTORS );
 				}
 			}
 		}

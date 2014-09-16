@@ -22,6 +22,12 @@ class ArticleAsJson extends WikiaService {
 	private static function createMediaObj( $details, $imageName, $caption = "" ) {
 		wfProfileIn( __METHOD__ );
 
+		static $parserOptions = null;
+
+		if ( is_null($parserOptions ) ) {
+			$parserOptions = new ParserOptions();
+		}
+
 		$media = [
 			'type' => $details['mediaType'],
 			'url' => $details['rawImageUrl'],
@@ -30,7 +36,7 @@ class ArticleAsJson extends WikiaService {
 			'caption' => ParserPool::parse(
 					$caption,
 					RequestContext::getMain()->getTitle(),
-					new ParserOptions(),
+					$parserOptions,
 					false
 				)->getText(),
 			'user' => $details['userName']
@@ -144,31 +150,32 @@ class ArticleAsJson extends WikiaService {
 
 		if ( $wgArticleAsJson && !is_null( $parser->getRevisionId() ) ) {
 
-			if ( User::isIP( $parser->getRevisionUser() ) ) {
-				$userName = $parser->getRevisionUser();
+			$userName = $parser->getRevisionUser();
 
-				self::addUserObj([
+			if ( User::isIP( $userName ) ) {
+
+				self::addUserObj( [
 					'userId' => 0,
-					'userName' => $parser->getRevisionUser(),
-					'userThumbUrl' => AvatarService::getAvatarUrl($userName, AvatarService::AVATAR_SIZE_MEDIUM),
+					'userName' => $userName,
+					'userThumbUrl' => AvatarService::getAvatarUrl( $userName, AvatarService::AVATAR_SIZE_MEDIUM ),
 					'userPageUrl' => Title::newFromText( $userName )->getLocalURL()
-				]);
+				] );
 			} else {
-				$user = User::newFromName( $parser->getRevisionUser() );
+				$user = User::newFromName( $userName );
 
-				self::addUserObj([
+				self::addUserObj( [
 					'userId' => $user->getId(),
 					'userName' => $user->getName(),
-					'userThumbUrl' => AvatarService::getAvatarUrl($user, AvatarService::AVATAR_SIZE_MEDIUM),
+					'userThumbUrl' => AvatarService::getAvatarUrl( $user, AvatarService::AVATAR_SIZE_MEDIUM ),
 					'userPageUrl' => $user->getUserPage()->getLocalURL()
-				]);
+				] );
 			}
 
-			$text = json_encode([
+			$text = json_encode( [
 				'content' => $text,
 				'media' => self::$media,
 				'users' => self::$users
-			]);
+			] );
 		}
 
 		wfProfileOut( __METHOD__ );
