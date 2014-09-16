@@ -6,7 +6,8 @@ $(function() {
 			this.id = id;
 			this.searchForm = $(id);
 
-			this.searchField = this.searchForm.find('input[type="text"]');
+			this.searchField = $('#searchInput');
+			this.searchSelect = $('#searchSelect');
 
 			if ( !this.searchForm.hasClass('noautocomplete') ) {
 				this.searchField.bind({
@@ -57,6 +58,7 @@ $(function() {
 						}, this),
 						appendTo: '.global-nav-search-input-wrapper',
 						deferRequestBy: 200,
+						disabled: (this.searchSelect.val() === 'global') ? true : false,
 						minLength: 3,
 						maxHeight: 1000,
 						selectedClass: 'selected',
@@ -71,9 +73,6 @@ $(function() {
 						// BugId:4625 - always send the request even if previous one returned no suggestions
 						skipBadQueries: true
 					});
-					if ( window.Wikia.newSearchSuggestions ) {
-						window.Wikia.newSearchSuggestions.setAsMainSuggestions('search');
-					}
 
 			}, this));
 		};
