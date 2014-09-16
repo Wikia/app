@@ -69,10 +69,22 @@
 			return isOldThumbnailerUrl(url) || isNewThumbnailerUrl(url);
 		}
 
+		/**
+		 * Checks if url points to old thumbnailer
+		 * @private
+		 * @param {String} url
+		 * @returns {Boolean}
+		 */
 		function isOldThumbnailerUrl(url) {
 			return url && url.indexOf(oldThumbnailerPath) > 0;
 		}
 
+		/**
+		 * Checks if url points to new thumbnailer
+		 * @private
+		 * @param {String} url
+		 * @returns {boolean}
+		 */
 		function isNewThumbnailerUrl(url) {
 			return url && url.indexOf('vignette') > 0;
 		}
@@ -121,6 +133,15 @@
 			return url;
 		}
 
+		/**
+		 * Constructs complete thumbnailer url by appending parameters to url
+		 * @private
+		 * @param {String} url
+		 * @param {String} type
+		 * @param {Integer} width
+		 * @param {Integer} height
+		 * @returns {String} The URL with parameters for the thumbnailer added
+		 */
 		function addParametersToUrl(url, type, width, height) {
 			if (isNewThumbnailerUrl(url)) {
 				url = addNewThumbnailerParameters(url, type, width, height);
@@ -130,11 +151,29 @@
 			return url;
 		}
 
+		/**
+		 * Constructs complete new thumbnailer url by appending parameters to url
+		 * @private
+		 * @param {String} url
+		 * @param {String} type
+		 * @param {Integer} width
+		 * @param {Integer} height
+		 * @returns {String}
+		 */
 		function addNewThumbnailerParameters(url, type, width, height) {
 			var thumbnailRoute = (type === 'video' || type === 'nocrop') ? '/fixed-aspect-ratio' : '/zoom-crop';
 			return url + thumbnailRoute + '/width/' + width + '/height/' + height;
 		}
 
+		/**
+		 * Constructs complete old thumbnailer url by appending parameters to url
+		 * @private
+		 * @param {String} url
+		 * @param {String} type
+		 * @param {Integer} width
+		 * @param {Integer} height
+		 * @returns {String}
+		 */
 		function addOldThumbnailerParameters(url, type, width, height) {
 			var tokens = url.split('/'),
 				last = tokens.slice(-1)[0].replace(extRegExp, '');
