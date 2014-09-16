@@ -176,4 +176,22 @@ class AdEngine2Hooks {
 
 		return true;
 	}
+
+	public static function onSkinAfterContent( &$text ){
+		global $wgTitle, $wgAdDriverUseTaboola;
+
+		if (!$wgAdDriverUseTaboola) {
+			return true;
+		}
+
+		$skin = RequestContext::getMain()->getSkin()->getSkinName();
+
+		// File pages handle their own rendering of related pages wrapper
+		if ( ( $skin === 'oasis' ) && $wgTitle->getNamespace() !== NS_FILE ) {
+			$text = $text . F::app()->renderView('Ad', 'Index', ['slotName' => 'NATIVE_TABOOLA']);
+		}
+
+		return true;
+	}
+
 }
