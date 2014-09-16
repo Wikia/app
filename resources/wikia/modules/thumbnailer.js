@@ -20,9 +20,7 @@
 		/**
 		 * Converts the URL of a full size image or of a thumbnail into one of a thumbnail of
 		 * the specified size and returns it
-		 *
 		 * @public
-		 *
 		 * @param {String} url The URL to the full size image or a thumbnail
 		 * @param {String} type The type, either 'image' (default, the result will be cropped)
 		 * or 'video' (the result will be squeezed)
@@ -53,9 +51,7 @@
 
 		/**
 		 * Converts the URL of a thumbnail into one of a full size image
-		 *
 		 * @public
-		 *
 		 * @param {String} url The URL to a thumbnail
 		 */
 		function getImageURL(url) {
@@ -70,11 +66,8 @@
 
 		/**
 		 * Checks if a URL points to a thumbnail
-		 *
 		 * @public
-		 *
 		 * @param {String} url The URL of an image or thumbnail
-		 *
 		 * @return {Boolean} True f it's a thumbnail or false if it's an image
 		 */
 		function isThumbUrl(url) {
@@ -83,11 +76,8 @@
 
 		/**
 		 * Removes the thumbnail options part from a thumbnail URL
-		 *
 		 * @private
-		 *
 		 * @param {String} url The URL of a thumbnail
-		 *
 		 * @return {String} The URL without the thymbnail options
 		 */
 		function clearThumbOptions(url) {
@@ -99,12 +89,9 @@
 
 		/**
 		 * Switches a thumb path into an image path and vice versa inside an URL
-		 *
 		 * @private
-		 *
 		 * @param {String} url The URL of an image or thumbnail
 		 * @param {String} type Either 'image' or 'thumb'
-		 *
 		 * @return {String} The URL with the switched path
 		 */
 		function switchPathTo(url, type) {
