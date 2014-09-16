@@ -31,7 +31,11 @@
 				tolerance: 'pointer',
 				over: function(e, ui) {
 					var $child = $($(this).children('.mom-module')[0]);
-					if($child.hasClass('mom-add-module') || ui.item[0] === $child[0]) {
+					if (ui.item[0] === $child[0]) {
+						//check second child if first (and only) child was grabbed
+						$child = $($(this).children('.mom-module')[1]);
+					}
+					if ($child.hasClass('mom-add-module')) {
 						ui.placeholder.insertBefore($child);
 					}
 				}
