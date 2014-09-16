@@ -53,7 +53,7 @@ class ExactTargetAddUserTaskTest extends WikiaBaseTest {
 		$addTaskMock->sendNewUserData( $aUserData, $aUserProperties );
 	}
 
-	function testCreateUserPropertiesDataExtensionShouldInvokeCreateMethodOnceWithRequestParam() {
+	function testCreateUserPropertiesDataExtensionShouldSendData() {
 		/* Params to compare */
 		$iUserId = 12345;
 		$aUserProperties = [
@@ -116,7 +116,7 @@ class ExactTargetAddUserTaskTest extends WikiaBaseTest {
 		$mockAddUserTask->createUserPropertiesDataExtension( $iUserId, $aUserProperties, $soapClient );
 	}
 
-	function testCreateUserDataExtensionShouldInvokeCreateMethodOnceWithRequestParam() {
+	function testCreateUserDataExtensionShouldSendData() {
 		/* Params to compare */
 		$aUserData = [
 			'user_id' => 12345,
@@ -172,7 +172,7 @@ class ExactTargetAddUserTaskTest extends WikiaBaseTest {
 		$mockAddUserTask->createUserDataExtension( $aUserData, $soapClient );
 	}
 
-	function testCreateSubscriberShouldInvokeCreateMethodOnceWithRequestParam() {
+	function testCreateSubscriberShouldSendData() {
 		/* Params to compare */
 		$sUserEmail = 'email@email.com';
 
