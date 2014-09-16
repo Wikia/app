@@ -90,6 +90,17 @@
       background-color: #0a5fa3;
     }
   }
+
+  .wiki-markup {
+    width: 100%;
+    height: 180px;
+    overflow-y: scroll;
+    display:none;
+  }
+
+  .mom-save-btn, .mom-discard-btn {
+    display:none;
+  }
 }
 
 .mom-overlay {
