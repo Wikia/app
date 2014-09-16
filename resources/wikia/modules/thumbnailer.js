@@ -71,7 +71,15 @@
 		 * @return {Boolean} True f it's a thumbnail or false if it's an image
 		 */
 		function isThumbUrl(url) {
+			return isOldThumbnailerUrl(url) || isNewThumbnailerUrl(url);
+		}
+
+		function isOldThumbnailerUrl(url) {
 			return url && url.indexOf('/thumb/') > 0;
+		}
+
+		function isNewThumbnailerUrl(url) {
+			return url && url.indexOf('vignette') > 0;
 		}
 
 		/**
