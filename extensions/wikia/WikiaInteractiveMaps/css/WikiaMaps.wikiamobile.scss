@@ -2,50 +2,45 @@
 @import "includes/wikia/services/css/pagination.scss";
 @import "skins/shared/mixins/box-sizing-border-box";
 @import "extensions/wikia/WikiaMobile/css/variables.scss";
-@import "skins/shared/mixins/flexbox.scss";
 
 $nav-height: 40px;
-$smart-banner-height: 80px;
 $map-ad-height: 70px;
 
 .error {
 	padding: 0 15px;
 }
 
-.smartbanner {
-	display: none;
-}
-
 .wikia-interactive-map-wrapper {
-	@include flexbox();
-	@include flex-direction(column);
-
 	background-color: #fff;
 	bottom: 0;
 	left: 0;
 	position: absolute;
 	top: $nav-height;
 	width: 100%;
-}
-
-.wikia-interactive-map {
-	@include flex-grow(1);
-
-	margin: 0;
-	position: relative;
-	width: 100%;
 
 	iframe {
 		border: none;
 		height: 100%;
-		margin: 0;
-		position: absolute;
-		top: 0;
-		width: 100% !important;
+	}
+
+	&.ad-shown .wikia-interactive-map {
+		top: $map-ad-height;
 	}
 }
 
+.wikia-interactive-map {
+	bottom: 0;
+	margin: 0;
+	position: absolute;
+	top: 0;
+	width: 100%;
+}
+
 .int-map-mobile-map-page {
+	.smartbanner {
+		display: none;
+	}
+
 	.WikiaPageHeader {
 		display: none;
 	}
