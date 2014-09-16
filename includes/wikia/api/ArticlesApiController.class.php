@@ -82,8 +82,11 @@ class ArticlesApiController extends WikiaApiController {
 		);
 	}
 
-	public function getMetadataCacheTime() {
-		if ( !empty( $this->wg->EnablePOIExt ) && $this->request->getBool( static::PARAMETER_EXPAND, false ) ) {
+	public function getMetadataCacheTime( $omitExpandParam = false ) {
+		if (
+			!empty( $this->wg->EnablePOIExt )
+			&&  $this->request->getBool( static::PARAMETER_EXPAND, $omitExpandParam )
+		) {
 			return self::METADATA_CACHE_EXPIRATION;
 		}
 		return self::CLIENT_CACHE_VALIDITY;
@@ -682,7 +685,7 @@ class ArticlesApiController extends WikiaApiController {
 		$this->setResponseData(
 			[ 'items' => $collection, 'basepath' => $this->wg->Server ],
 			[ 'imgFields'=> 'thumbnail', 'urlFields' => [ 'thumbnail', 'url' ] ],
-			$this->getMetadataCacheTime()
+			$this->getMetadataCacheTime( true )
 		);
 
 		$collection = null;
