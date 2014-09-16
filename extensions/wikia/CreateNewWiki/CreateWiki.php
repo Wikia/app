@@ -650,7 +650,33 @@ class CreateWiki {
 	}
 
 	/**
-	 * check folder exists
+	 * Check if the given upload directory name is available for use.
+	 *
+	 * @access protected
+	 * @author Michał Roszka <michal@wikia-inc.com>
+	 *
+	 * @param $sDirectoryName the path to check
+	 */
+	protected function wgUploadDirectoryExists( $sDirectoryName ) {
+		wfProfileIn( __METHOD__ );
+
+		global $wgMemc;
+		$sMemcKey = __METHOD__ . ':wgUploadDirectory:city_variables_pool:cv_id';
+		$iVarId = $wgMemc->get( $sMemcKey );
+
+		if ( empty( $iVarId ) ) {
+			$iVarId = (int) WikiFactory::getVarIdByName( 'wgUploadDirectory' );
+			$wgMemc->set( $sMemcKey, $iVarId, WikiaResponse::CACHE_LONG );
+		}
+
+		// returns bool, converted from an array (empty or not)
+		return (bool) WikiFactory::getCityIDsFromVarValue( $iVarId, $sDirectoryName, '=' );
+
+		wfProfileOut( __METHOD__ );
+	}
+
+	/**
+	 * "calculates" the value for wgUploadDirectory
 	 *
 	 * @access private
 	 * @author Piotr Molski (Moli)
@@ -669,15 +695,10 @@ class CreateWiki {
 				? "/" . strtolower( $language )
 				: "";
 
-		$iVarId = WikiFactory::getVarIdByName( 'wgUploadDirectory' );
-
 		while ( $isExist == false ) {
 			$dirName = self::IMGROOT . $prefix . "/" . $dir_base . $suffix . $dir_lang . "/images";
 
-			// With Swift, we can't do file_exists any longer. The only sane way is
-			// to query city_variables - returns an array, empty or not.
-			$bWgUploadDirectoryTaken = (bool) WikiFactory::getCityIDsFromVarValue( $iVarId, $dirName, '=' );
-			if ( $bWgUploadDirectoryTaken ) {
+			if ( $this->wgUploadDirectoryExists($dirName) ) {
 				$suffix = rand(1, 9999);
 			}
 			else {
