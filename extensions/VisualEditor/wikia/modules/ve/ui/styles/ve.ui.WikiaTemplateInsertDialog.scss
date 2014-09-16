@@ -1,0 +1,72 @@
+@import "skins/shared/color";
+@import "skins/shared/mixins/gradient";
+
+$option-backgroundColor: mix($color-page, #000000, 90%);
+@if $is-dark-wiki {
+        $option-backgroundColor: mix($color-page, #ffffff, 90%);
+}
+
+.ve-ui-wikiaTemplateInsertDialog {
+	.ve-ui-wikiaTemplateInsertDialog-search {
+		background: $color-page;
+		border-bottom: 1px solid $color-page-border;
+		left: 0;
+		padding: 1.5em 2em;
+		position: absolute;
+		right: 0;
+
+		.oo-ui-textInputWidget {
+			width: 100%;
+		}
+	}
+	.oo-ui-selectWidget {
+		padding-top: 10px;
+	}
+}
+
+.ve-ui-wikiaTemplateOptionWidget {
+	background: $option-backgroundColor;
+	border: 1px solid $color-page-border;
+	box-sizing: border-box;
+	float: left;
+	height: 80px;
+	margin: 7px 10px;
+	padding: 1.2em 1em .5em 60px;
+	width: 240px;
+
+	.oo-ui-iconedElement-icon {
+		background-size: 100%;
+		height: 100%;
+		left: 0;
+		margin: 0;
+		position: absolute;
+		top: 0;
+		width: 60px;
+	}
+
+	.oo-ui-labeledElement-label {
+		font-weight: bold;
+		line-height: 1.2em;
+		max-height: 2.4em;
+		position: relative;
+		white-space: normal;
+	}
+
+	.ve-ui-wikiaTemplateOptionWidget-appears {
+		color: $color-alternate-text;
+		font-size: .8em;
+	}
+
+	.ve-ui-wikiaTemplateOptionWidget-gradient {
+		@include linear-gradient( transparent, left, transparent, 0%, $option-backgroundColor, 100% );
+		height: 1.2em;
+		position: absolute;
+		right: 0;
+		top: 1.2em;
+		width: 5em;
+	}
+}
+
+.oo-ui-optionWidget-highlighted {
+	background: #e1f3ff;
+}

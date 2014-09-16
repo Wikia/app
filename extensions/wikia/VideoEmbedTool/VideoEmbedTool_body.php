@@ -51,7 +51,6 @@ class VideoEmbedTool {
 		$options = [
 			'autoplay' => false,
 			'isAjax' => false,
-			'postOnload' => true,
 		];
 
 		$embedCode = $file->getEmbedCode( VIDEO_PREVIEW, $options );
@@ -106,7 +105,6 @@ class VideoEmbedTool {
 		$embedOptions = [
 			'autoplay' => false,
 			'isAjax' => false,
-			'postOnload' => true,
 		];
 
 		if ( !empty( $apiwrapper ) ) { // try ApiWrapper first - is it from a supported 3rd party ( non-premium ) provider?

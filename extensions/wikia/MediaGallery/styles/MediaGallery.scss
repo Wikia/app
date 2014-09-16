@@ -78,7 +78,7 @@ $media-margin: .5em;
 
 	.more {
 		clear: both;
-		margin-left: $media-margin * -2;
+		margin-left: $media-margin * -1;
 		padding: .5em;
 		text-align: center;
 
@@ -121,6 +121,10 @@ $media-margin: .5em;
 		right: $media-margin;
 		top: 100%;
 		transition: all 400ms linear;
+
+		a {
+			color: #b3b3b3;
+		}
 
 		.inner {
 			overflow: hidden;

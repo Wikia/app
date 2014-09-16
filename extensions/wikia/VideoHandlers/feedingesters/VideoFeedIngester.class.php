@@ -7,7 +7,6 @@ abstract class VideoFeedIngester {
 
 	// Constants for referring to short provider names
 	const PROVIDER_SCREENPLAY = 'screenplay';
-	const PROVIDER_REALGRAVITY = 'realgravity';
 	const PROVIDER_IGN = 'ign';
 	const PROVIDER_ANYCLIP = 'anyclip';
 	const PROVIDER_OOYALA = 'ooyala';
@@ -38,7 +37,6 @@ abstract class VideoFeedIngester {
 	// These providers are not ingested daily, but can be ingested from if specifically named
 	protected static $INACTIVE_PROVIDERS = [
 		self::PROVIDER_ANYCLIP,
-		self::PROVIDER_REALGRAVITY,
 	];
 
 	protected static $API_WRAPPER;

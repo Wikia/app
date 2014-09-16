@@ -30,7 +30,7 @@ $wgQueryPages = array(
 	array( 'MostcategoriesPage',            'Mostcategories'                ),
 	array( 'MostimagesPage',                'Mostimages'                    ),
 	array( 'MostlinkedCategoriesPage',      'Mostlinkedcategories'          ),
-	array( 'MostlinkedtemplatesPage',       'Mostlinkedtemplates'           ),
+	array( 'MostlinkedTemplatesPage',       'Mostlinkedtemplates'           ),
 	array( 'MostlinkedPage',                'Mostlinked'                    ),
 	array( 'MostrevisionsPage',             'Mostrevisions'                 ),
 	array( 'FewestrevisionsPage',           'Fewestrevisions'               ),
