@@ -87,7 +87,7 @@ class ExactTargetUpdateUserTask extends ExactTargetBaseTask {
 	}
 
 	/**
-	 * Returns user_id emelent from $aUserData array and removes it from array
+	 * Returns user_id element from $aUserData array and removes it from array
 	 * @param array $aUserData key value data from user table
 	 * @return int
 	 */
