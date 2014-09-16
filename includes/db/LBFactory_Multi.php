@@ -231,7 +231,7 @@ class LBFactory_Multi extends LBFactory {
 
 			// Wikia change - @author macbre
 			// sectionLoads entries may contain hostnames + port numbers (eg. lb-s1:1234)
-			list( $hostName, $port ) = explode( ':', $serverName );
+			@list( $hostName, $port ) = explode( ':', $serverName );
 
 			if ( isset( $this->hostsByName[$hostName] ) ) {
 				$serverInfo['host'] = $this->hostsByName[$hostName] . ( $port ?  ':' . $port : '' );
