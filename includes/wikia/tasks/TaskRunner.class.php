@@ -18,7 +18,7 @@ class TaskRunner {
 	function __construct( $taskId, $taskList, $callOrder, $createdBy ) {
 		$this->taskId = $taskId;
 		$this->callOrder = json_decode( $callOrder, true );
-		$taskList = json_decode( base64_decode( $taskList ), true );
+		$taskList = json_decode( $taskList, true );
 
 		foreach ( $taskList as $taskData ) {
 			/** @var \Wikia\Tasks\Tasks\BaseTask $task */

@@ -5,7 +5,7 @@ $script = realpath( dirname( __FILE__ ) . '/../../../../maintenance/wikia/task_r
 
 $taskId = escapeshellarg( $_POST['task_id'] );
 $wikiId = escapeshellarg( $_POST['wiki_id'] );
-$list = base64_encode($_POST['task_list']);
+$list = escapeshellarg($_POST['task_list']);
 $order = $_POST['call_order'];
 $createdBy = escapeshellarg( $_POST['created_by'] );
 
