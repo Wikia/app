@@ -124,7 +124,7 @@
 
 		function addParametersToUrl(url, type, width, height) {
 			if (isNewThumbnailerUrl(url)) {
-				url = addNewThumbnailerParameters(url, width, height);
+				url = addNewThumbnailerParameters(url, type, width, height);
 			} else {
 				url = addOldThumbnailerParameters(url, type, width, height);
 			}
