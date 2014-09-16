@@ -2,13 +2,12 @@
 
 class MercuryApiController extends WikiaController {
 
-	const PARAM_ARTICLE_ID = 'articleId';
+	const PARAM_ARTICLE_ID = 'id';
 	const PARAM_PAGE = 'page';
+	const PARAM_ARTICLE_TITLE = "title";
+
 	const NUMBER_CONTRIBUTORS = 6;
 	const DEFAULT_PAGE = 1;
-
-	const ARTICLE_ID_PARAMETER_NAME = "id";
-	const ARTICLE_TITLE_PARAMETER_NAME = "title";
 
 	private $mercuryApi = null;
 
@@ -103,8 +102,8 @@ class MercuryApiController extends WikiaController {
 	 * @throws BadRequestApiException
 	 */
 	private function getTitleFromRequest(){
-		$articleId = $this->request->getInt( self::ARTICLE_ID_PARAMETER_NAME, NULL );
-		$articleTitle = $this->request->getVal( self::ARTICLE_TITLE_PARAMETER_NAME, NULL );
+		$articleId = $this->request->getInt( self::PARAM_ARTICLE_ID, NULL );
+		$articleTitle = $this->request->getVal( self::PARAM_ARTICLE_TITLE, NULL );
 
 		if ( !empty( $articleId ) && !empty( $articleTitle ) ) {
 			throw new BadRequestApiException( 'Can\'t use id and title in the same request' );
