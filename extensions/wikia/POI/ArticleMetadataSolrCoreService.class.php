@@ -12,9 +12,6 @@ class ArticleMetadataSolrCoreService {
 	const ID = "id";
 	const WID = "wid_i";
 
-	/** @var \Solarium_Client client */
-	protected $client = null;
-
 	protected $allowed_fields = [
 		self::QUEST_ID,
 		self::ABILITY_ID,
@@ -55,10 +52,10 @@ class ArticleMetadataSolrCoreService {
 			if ( $key == 'id' ) {
 				$output[$key] = $val;
 			} else {
-				$output[$key] = ['set'=>$val];
+				$output[$key] = ['set' => $val];
 			}
 		}
-		return json_encode([$output]);
+		return json_encode( [$output] );
 	}
 
 	protected function sendData( $jsonFormattedData ) {
@@ -76,11 +73,6 @@ class ArticleMetadataSolrCoreService {
 		return $response;
 	}
 
-	protected function getClient() {
-		$this->client = ( $this->client !== null ) ? $this->client : new \Solarium_Client(  $this->getConfig() );
-		return $this->client;
-	}
-
 	public function convertToSolrFieldNames( $data, $ignoreErrors = false ) {
 		$output = [];
 		foreach ( $data as $key => $val ) {
@@ -89,7 +81,7 @@ class ArticleMetadataSolrCoreService {
 			} else if ( isset( $this->solr_mapping[ $key ] ) ) {
 				$output[ $this->solr_mapping[ $key ] ] = $val;
 			} else if ( !$ignoreErrors ) {
-				throw new NotValidPOIMetadataFieldException($key);
+				throw new NotValidPOIMetadataFieldException( $key );
 			}
 		}
 		return $output;
