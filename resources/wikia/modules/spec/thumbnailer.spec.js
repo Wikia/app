@@ -10,22 +10,26 @@ describe("thumbnailer", function () {
 	it('identifies thumbnails', function() {
 		expect(thumbnailer.isThumbUrl(oldThumbnailerUrl)).toBe(true);
 		expect(thumbnailer.isThumbUrl(newThumbnailerUrl)).toBe(true);
+		expect(thumbnailer.isThumbUrl(fullSizeImageUrl)).toBe(false);
 		expect(thumbnailer.isThumbUrl(articleUrl)).toBe(false);
 	});
 
 	it('returns proper nocrop thumbnail URL', function() {
 		expect(thumbnailer.getThumbURL(oldThumbnailerUrl, 'nocrop', 660, 330)).toBe('http://images2.wikia.nocookie.net/__cb20111213221641/poznan/pl/images/thumb/0/06/Gzik.jpg/660x330-Gzik.png');
 		expect(thumbnailer.getThumbURL(newThumbnailerUrl, 'nocrop', 90, 55)).toBe('http://vignette2.wikia.nocookie.net/arresteddevelopment/f/fb/1x08_My_Mother_the_Car_%2822%29.png/revision/latest/fixed-aspect-ratio/width/90/height/55');
+		expect(thumbnailer.getThumbURL(fullSizeImageUrl, 'nocrop', 90, 55)).toBe('http://img2.wikia.nocookie.net/__cb20140419225924/thelastofus/images/thumb/f/ff/Joel.png/90x55-Joel.png');
 	});
 
 	it('returns proper video thumbnail URL', function() {
 		expect(thumbnailer.getThumbURL(oldThumbnailerUrl, 'video', 660, 330)).toBe('http://images2.wikia.nocookie.net/__cb20111213221641/poznan/pl/images/thumb/0/06/Gzik.jpg/660x330-Gzik.png');
 		expect(thumbnailer.getThumbURL(newThumbnailerUrl, 'video', 90, 55)).toBe('http://vignette2.wikia.nocookie.net/arresteddevelopment/f/fb/1x08_My_Mother_the_Car_%2822%29.png/revision/latest/fixed-aspect-ratio/width/90/height/55');
+		expect(thumbnailer.getThumbURL(fullSizeImageUrl, 'video', 90, 55)).toBe('http://img2.wikia.nocookie.net/__cb20140419225924/thelastofus/images/thumb/f/ff/Joel.png/90x55-Joel.png');
 	});
 
 	it('returns proper image thumbnail URL', function() {
 		expect(thumbnailer.getThumbURL(oldThumbnailerUrl, 'image', 660, 330)).toBe('http://images2.wikia.nocookie.net/__cb20111213221641/poznan/pl/images/thumb/0/06/Gzik.jpg/660x330x2-Gzik.png');
 		expect(thumbnailer.getThumbURL(newThumbnailerUrl, 'image', 90, 55)).toBe('http://vignette2.wikia.nocookie.net/arresteddevelopment/f/fb/1x08_My_Mother_the_Car_%2822%29.png/revision/latest/zoom-crop/width/90/height/55');
+		expect(thumbnailer.getThumbURL(fullSizeImageUrl, 'image', 90, 55)).toBe('http://img2.wikia.nocookie.net/__cb20140419225924/thelastofus/images/thumb/f/ff/Joel.png/90x55x2-Joel.png');
 	});
 
 	it('returns proper full image URL', function() {

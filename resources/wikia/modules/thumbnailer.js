@@ -71,7 +71,7 @@
 		}
 
 		function isOldThumbnailerUrl(url) {
-			return url && url.indexOf('/thumb/') > 0;
+			return url && url.indexOf(oldThumbnailerPath) > 0;
 		}
 
 		function isNewThumbnailerUrl(url) {
