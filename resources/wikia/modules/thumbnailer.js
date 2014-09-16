@@ -15,7 +15,7 @@
 		//targets the image file extension
 		var extRegExp = /\.(jpg|jpeg|gif|bmp|png|svg)$/i,
 			imagePath = '/images/',
-			thumbPath = '/images/thumb/',
+			oldThumbnailerPath = '/images/thumb/',
 			newThumbnailerBaseURLRegex = /.*\/revision\/\w+\//;
 
 		/**
@@ -112,9 +112,9 @@
 
 			if (thumb) {
 				from = imagePath;
-				to = thumbPath;
+				to = oldThumbnailerPath;
 			} else {
-				from = thumbPath;
+				from = oldThumbnailerPath;
 				to = imagePath;
 			}
 
