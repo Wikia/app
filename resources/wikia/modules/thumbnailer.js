@@ -16,7 +16,7 @@
 		var extRegExp = /\.(jpg|jpeg|gif|bmp|png|svg)$/i,
 			imagePath = '/images/',
 			oldThumbnailerPath = '/images/thumb/',
-			newThumbnailerBaseURLRegex = /(.*\/revision\/\w+\/).*/;
+			newThumbnailerBaseURLRegex = /(.*\/revision\/\w+).*/;
 
 		/**
 		 * Converts the URL of a full size image or of a thumbnail into one of a thumbnail of
@@ -131,9 +131,9 @@
 			return url;
 		}
 
-		// TODO Make sure this is the correct thumbnailer route to hit
-		function addNewThumbnailerParameters(url, width, height) {
-			return url + "fixed-aspect-ratio/width/" + width + "/height/" + height;
+		function addNewThumbnailerParameters(url, type, width, height) {
+			var thumbnailRoute = (type === 'video' || type === 'nocrop') ? '/fixed-aspect-ratio' : '/zoom-crop';
+			return url + thumbnailRoute + "/width/" + width + "/height/" + height;
 		}
 
 		function addOldThumbnailerParameters(url, type, width, height) {
