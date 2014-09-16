@@ -24,20 +24,24 @@
 			$momBar.show();
 			$momOverlays.show();
 			var options = {
-				connectWith: '.rcs-container',
 				handle: '.mom-bar',
 				helper: 'clone',
 				items: '.mom-module-left, .mom-module-right',
 				placeholder: 'mom-add-module',
 				tolerance: 'pointer',
 				over: function(e, ui) {
+					console.info(this);
 					var $child = $($(this).children('.mom-module')[0]);
-					if($child.hasClass('mom-add-module')) {
+					console.info($child);
+					console.info(ui.item[0]);
+					if($child.hasClass('mom-add-module') || ui.item[0] === $child[0]) {
 						ui.placeholder.insertBefore($child);
 					}
 				}
 			};
+			options['connectWith'] = '.rcs-container';
 			$leftColumn.sortable(options);
+			options['connectWith'] = '.lcs-container';
 			$rightColumn.sortable(options);
 			$leftColumn.sortable('enable').disableSelection();
 			$rightColumn.sortable('enable').disableSelection();
