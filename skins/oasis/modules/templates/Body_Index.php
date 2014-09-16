@@ -55,6 +55,11 @@
 		?>
 
 		<article id="WikiaMainContent" class="WikiaMainContent<?= !empty($isGridLayoutEnabled) ? $railModulesExist ? ' grid-4' : ' grid-6' : '' ?>">
+			<?php
+			if ( !empty( $wg->EnableNjordExt) && WikiaPageType::isMainPage() ) {
+				echo $app->renderView( 'Njord', 'mom' );
+			}
+			?>
 			<div id="WikiaMainContentContainer" class="WikiaMainContentContainer">
 				<?php
 					if (!empty($wg->EnableForumExt) && ForumHelper::isForum()) {
