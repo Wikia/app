@@ -5,8 +5,8 @@ $script = realpath( dirname( __FILE__ ) . '/../../../../maintenance/wikia/task_r
 
 $taskId = escapeshellarg( $_POST['task_id'] );
 $wikiId = escapeshellarg( $_POST['wiki_id'] );
-$list = escapeshellarg($_POST['task_list']);
-$order = escapeshellarg($_POST['call_order']);
+$list = escapeshellarg( $_POST['task_list'] );
+$order = escapeshellarg( $_POST['call_order'] );
 $createdBy = escapeshellarg( $_POST['created_by'] );
 
 $command = "SERVER_ID={$wikiId} php {$script} --task_id={$taskId} --task_list={$list} --call_order={$order} --created_by={$createdBy}";
