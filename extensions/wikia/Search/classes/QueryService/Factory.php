@@ -56,6 +56,13 @@ class Factory
 					'path'    => '/solr/',
 				)
 			);
+
+			$SolrProxy = $service->getGlobal( 'SolrProxy' );
+			if ( !empty( $SolrProxy ) ) {
+				$solariumConfig[ 'adapteroptions' ][ 'proxy' ] = $SolrProxy;
+				$solariumConfig[ 'adapteroptions' ][ 'port' ] = null;
+			}
+
 		} else {
 			$solariumConfig = array(
 				'adapter' => 'Solarium_Client_Adapter_Curl',
