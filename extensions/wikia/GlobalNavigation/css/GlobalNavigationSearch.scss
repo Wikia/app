@@ -3,7 +3,7 @@
 @import 'extensions/wikia/Venus/styles/variables';
 
 .search-container {
-	@include grid-column-width('large', 7, 2 * $large-grid-gutter);
+	@include grid-column-width('medium', 7, 2 * $medium-grid-gutter);
 }
 
 .search-form-wrapper {
@@ -11,7 +11,7 @@
 	font-size: 18px;
 	margin-bottom: 10px;
 	margin-top: 10px;
-	padding: 0 $large-grid-gutter + $large-grid-column-padding;
+	padding: 0 $medium-grid-gutter + $medium-grid-column-padding;
 	width: 100%;
 
 	.search-form {
@@ -151,7 +151,7 @@
 
 @media #{$small-only} {
 	.search-container {
-		@include grid-column-width('small', 8, 2 * $small-grid-gutter - 36px);
+		@include grid-column-width('small', 7, 2 * $small-grid-gutter - 36px);
 	}
 
 	.search-form-wrapper {
@@ -159,12 +159,12 @@
 	}
 }
 
-@media #{$medium-only} {
+@media #{$large-up} {
 	.search-container {
-		@include grid-column-width('medium', 7, 2 * $medium-grid-gutter);
+		@include grid-column-width('large', 7, 2 * $large-grid-gutter);
 	}
 
 	.search-form-wrapper {
-		padding: 0 $medium-grid-gutter + $medium-grid-column-padding;
+		padding: 0 $large-grid-gutter + $large-grid-column-padding;
 	}
 }

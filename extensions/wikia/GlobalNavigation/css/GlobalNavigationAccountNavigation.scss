@@ -3,7 +3,7 @@
 @import 'GlobalNavigationColors';
 
 .account-navigation-container {
-	@include grid-column-width('large', 1, $large-grid-gutter + $large-content-padding - 1px);
+	@include grid-column-width('medium', 1, $medium-grid-gutter + $medium-content-padding - 1px);
 }
 
 .AccountNavigation {
@@ -33,7 +33,7 @@
 		padding: 0;
 
 		> a {
-			@include grid-column-width('large', 1, $large-grid-gutter + $large-content-padding - 2px);
+			@include grid-column-width('medium', 1, $medium-grid-gutter + $medium-content-padding - 2px);
 
 			position: relative;
 
@@ -51,7 +51,7 @@
 			border-radius: 50%;
 			float: left;
 			height: 36px;
-			margin: 0 6px 0 38px;
+			margin: 0 6px 0 29px;
 			overflow: hidden;
 			width: 36px;
 
@@ -73,13 +73,13 @@
 	}
 
 	.user-menu {
-		@include grid-column-width('large', 2, $large-content-padding);
+		@include grid-column-width('medium', 2, $medium-content-padding);
 		border: 1px solid $nav-border-color;
 		display: none;
 		font-size: 15px;
 		padding: 0;
 		position: relative;
-		right: $large-grid-column + 1px;
+		right: $medium-grid-column + 1px;
 
 		> li {
 			display: table-row;
@@ -133,26 +133,25 @@
 	}
 }
 
-@media #{$medium-only} {
+@media #{$large-up} {
 	.account-navigation-container {
-		@include grid-column-width('medium', 1, $medium-grid-gutter + $medium-content-padding - 1px);
+		@include grid-column-width('large', 1, $large-grid-gutter + $large-content-padding - 1px);
 	}
 
 	.AccountNavigation {
 		> li {
 			> a {
-				@include grid-column-width('medium', 1, $medium-grid-gutter + $medium-content-padding - 2px);
+				@include grid-column-width('large', 1, $large-grid-gutter + $large-content-padding - 2px);
 			}
 
 			.avatar-container {
-				$width: $medium-grid-gutter + $medium-grid-column + $medium-content-padding - 1px;
-				margin-left: $width - $medium-content-padding - $medium-grid-column-padding - 42px;
+				margin-left: 38px;
 			}
 		}
 
 		.user-menu {
-			@include grid-column-width('medium', 2, $medium-content-padding);
-			right: $medium-grid-column + 1px;
+			@include grid-column-width('large', 2, $large-content-padding);
+			right: $large-grid-column + 1px;
 		}
 	}
 }
