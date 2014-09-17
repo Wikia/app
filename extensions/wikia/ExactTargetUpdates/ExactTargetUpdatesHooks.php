@@ -22,7 +22,7 @@ class ExactTargetUpdatesHooks {
 	 */
 	public static function onUserSaveSettings( User $user ) {
 		$thisInstance = new ExactTargetUpdatesHooks();
-		$thisInstance->addTheUpdateUserTask( $user, new ExactTargetUpdateUserTask() );
+		$thisInstance->addTheUpdateUserPropertiesTask( $user, new ExactTargetUpdateUserTask() );
 		return true;
 	}
 
@@ -47,13 +47,13 @@ class ExactTargetUpdatesHooks {
 	 * @param User $user
 	 * @param ExactTargetAddUserTask $task
 	 */
-	public function addTheUpdateUserTask( User $user, ExactTargetUpdateUserTask $task ) {
+	public function addTheUpdateUserPropertiesTask( User $user, ExactTargetUpdateUserTask $task ) {
 		global $wgWikiaEnvironment;
 		/* Don't add task when on dev or internal */
 		if ( $wgWikiaEnvironment != WIKIA_ENV_DEV && $wgWikiaEnvironment != WIKIA_ENV_INTERNAL ) {
 			$aUserData = $this->prepareUserParams( $user );
 			$aUserProperties = $this->prepareUserPropertiesParams( $user );
-			$task->call( 'updateUserData', $aUserData, $aUserProperties );
+			$task->call( 'updateUserPropertiesData', $aUserData, $aUserProperties );
 			$task->queue();
 		}
 	}

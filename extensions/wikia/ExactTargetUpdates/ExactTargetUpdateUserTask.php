@@ -7,9 +7,18 @@ class ExactTargetUpdateUserTask extends ExactTargetBaseTask {
 	 * @param array $aUserData Selected fields from Wikia user table
 	 * @param array $aUserProperties Array of Wikia user gobal properties
 	 */
-	public function updateUserData( $aUserData, $aUserProperties ) {
+	public function updateUserData( $aUserData ) {
 		$oClient = $this->getClient();
 		$this->updateUserDataExtension( $aUserData, $oClient );
+	}
+
+	/**
+	 * Task for updating user_properties data in ExactTarget
+	 * @param array $aUserData Selected fields from Wikia user table
+	 * @param array $aUserProperties Array of Wikia user gobal properties
+	 */
+	public function updateUserPropertiesData( $aUserData, $aUserProperties ) {
+		$oClient = $this->getClient();
 		$this->updateUserPropertiesDataExtension( $aUserData['user_id'], $aUserProperties, $oClient );
 	}
 
