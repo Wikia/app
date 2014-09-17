@@ -76,7 +76,7 @@
 		 * @returns {Boolean}
 		 */
 		function isLegacyThumbnailerUrl(url) {
-			return url && url.indexOf(legacyThumbnailerPath) > 0;
+			return url && /\/images\/thumb\//.test(url);
 		}
 
 		/**
@@ -86,7 +86,7 @@
 		 * @returns {boolean}
 		 */
 		function isThumbnailerUrl(url) {
-			return url && url.indexOf('vignette') > 0;
+			return url && /vignette\d.wikia/.test(url);
 		}
 
 		/**
