@@ -189,6 +189,6 @@ class ExactTargetUpdatesHooksTest extends WikiaBaseTest {
 
 		/* Run test */
 		/* @var ExactTargetUpdatesHooks $exactTargetUpdatesHooksMock (mock of ExactTargetUpdatesHooks) */
-		$exactTargetUpdatesHooksMock->addTheUpdateUserTask( $userMock, $mockUpdateUserTask );
+		$exactTargetUpdatesHooksMock->addTheUpdateUserPropertiesTask( $userMock, $mockUpdateUserTask );
 	}
 }
