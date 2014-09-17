@@ -49,10 +49,11 @@
     background: rgba(0, 0, 0, .6);
     color: #fff;
     display: inline-block;
-    font-weight: 900;
-    height: 2rem;
+    font-weight: 700;
+    font-size: 54px;
+    height: 4rem;
     left: 2rem;
-    line-height: 2rem;
+    line-height: 4rem;
     margin: 0 auto;
     padding: .25rem .5rem;
     position: absolute;
@@ -69,12 +70,13 @@
     background: rgba(0, 0, 0, .6);
     color: #fff;
     display: inline-block;
-    font-weight: 900;
+    font-weight: 500;
+    font-size: 32px;
     left: 2rem;
     padding: .25rem .5rem;
     position: absolute;
     text-align: left;
-    top: 6rem;
+    top: 7rem;
   }
 
   .overlay {
@@ -127,6 +129,14 @@
     font-size: 3em;
   }
 
+  .new-btn.discard-btn {
+    background-color: #FFFFFF;
+    color: #092140;
+    &:hover {
+      color: #fff;
+    }
+  }
+
   .new-btn {
     background-color: #092140;
     color: #fff;
@@ -149,6 +159,7 @@
 }
 
 #MainPageHero {
+  font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
   .WikiaSearchHeader {
     background: rgba(0, 0, 0, .3);
     height: 2rem;
