@@ -133,9 +133,6 @@ $VenusConfig[ 'global_navigation_js' ] = [
 		'//extensions/wikia/UserLogin/js/UserLoginAjaxForm.js',
 		'//extensions/wikia/WikiaStyleGuide/js/Form.js',
 		'//resources/wikia/libraries/bootstrap/tooltip.js',
-		'//resources/wikia/libraries/jquery/getResources/jquery.wikia.getResources.js',
-		'//resources/wikia/libraries/jquery/loadLibrary/jquery.wikia.loadLibrary.js',
-		'//resources/wikia/libraries/jquery/timeago/jquery.timeago.js',
 	]
 ];
 
