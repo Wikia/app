@@ -72,7 +72,7 @@ class ExactTargetUpdateUserTask extends ExactTargetBaseTask {
 	 * Prepares array of ExactTarget_DataExtensionObject objects for user table
 	 * that can be used to send API update
 	 * @param array $aUserData user key value array
-	 * @return array of ExactTarget_DataExtensionObject objects
+	 * @return ExactTarget_DataExtensionObject
 	 */
 	public function prepareUserDataExtensionObjectsForUpdate( $aUserData ) {
 
@@ -92,7 +92,7 @@ class ExactTargetUpdateUserTask extends ExactTargetBaseTask {
 		/* Prepare query keys */
 		$oDE->Keys = [ $this->wrapApiProperty( 'user_id',  $userId ) ];
 
-		return [ $oDE ];
+		return $oDE;
 	}
 
 	/**
