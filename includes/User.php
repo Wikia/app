@@ -2252,6 +2252,20 @@ class User {
 		/* Wikia change begin - @author: Macbre */
 		/* invalidate empty email - RT #44046 */
 		if ($str == '') {
+
+			// Wikia change - begin - CONN-463 - user email is becoming unconfirmed
+
+			\Wikia\Logger\WikiaLogger::instance()->debug(
+				'CONN-463 - user email is becoming unconfirmed - User setEmail',
+				[
+					'user_id' => $this->getId(),
+					'user_name' => $this->getName(),
+					'user_email' => $this->getEmail(),
+				]
+			);
+
+			// Wikia change - end
+
 			$this->invalidateEmail();
 		}
 		/* Wikia change end */
