@@ -161,8 +161,8 @@
 		 * @returns {String}
 		 */
 		function addNewThumbnailerParameters(url, type, width, height) {
-			var thumbnailRoute = (type === 'video' || type === 'nocrop') ? '/fixed-aspect-ratio' : '/zoom-crop';
-			return url + thumbnailRoute + '/width/' + width + '/height/' + height;
+			var thumbnailerRoute = (type === 'video' || type === 'nocrop') ? '/fixed-aspect-ratio' : '/zoom-crop';
+			return url + thumbnailerRoute + '/width/' + width + '/height/' + height;
 		}
 
 		/**
