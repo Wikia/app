@@ -9,6 +9,7 @@ class VideoHandlerController extends WikiaController {
 	const VIDEO_LIMIT = 100;
 	const DEFAULT_THUMBNAIL_WIDTH = 250;
 	const DEFAULT_THUMBNAIL_HEIGHT = 250;
+	const CACHE_TTL = 43200; // 12 hours
 
 	/**
 	 * Get the embed code for the title given by fileTitle
@@ -279,16 +280,22 @@ class VideoHandlerController extends WikiaController {
 			$videoOptions['thumbHeight'] = self::DEFAULT_THUMBNAIL_HEIGHT;
 		}
 
-		$videos = [];
-		$helper = new VideoHandlerHelper();
-		foreach ( $fileTitles as $fileTitle ) {
-			$detail = $helper->getVideoDetail( [ 'title' => $fileTitle ], $videoOptions );
-			if ( !empty( $detail ) ) {
-				$videos[] = $detail;
+		$memcKey= wfMemcKey( 'getVideoDetail', md5( serialize( [ $fileTitles, $videoOptions ] ) ) );
+		$videos = $this->wg->Memc->get( $memcKey );
+		if ( !is_array( $videos ) ) {
+			$videos = [];
+			$helper = new VideoHandlerHelper();
+			foreach ( $fileTitles as $fileTitle ) {
+				$detail = $helper->getVideoDetail( [ 'title' => $fileTitle ], $videoOptions );
+				if ( !empty( $detail ) ) {
+					$videos[] = $detail;
+				}
 			}
+			$this->wg->Memc->set( $memcKey, $videos, self::CACHE_TTL );
 		}
 
 		$this->detail = ( !empty( $videos ) && $singleFile ) ? array_pop( $videos ) : $videos;
+		$this->response->setCacheValidity( self::CACHE_TTL );
 
 		wfProfileOut( __METHOD__ );
 	}
