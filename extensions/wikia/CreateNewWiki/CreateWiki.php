@@ -659,15 +659,14 @@ class CreateWiki {
 	 */
 	public static function wgUploadDirectoryExists( $sDirectoryName ) {
 		wfProfileIn( __METHOD__ );
-
 		$iVarId = WikiFactory::getVarIdByName( 'wgUploadDirectory' );
-		// crash if $iVarId is not a positive integer
+
+		// Crash immediately if $iVarId is not a positive integer!
 		\Wikia\Util\Assert::true( $iVarId );
 
+		$aCityIds = WikiFactory::getCityIDsFromVarValue( $iVarId, $sDirectoryName, '=' );
 		wfProfileOut( __METHOD__ );
-
-		// returns bool, converted from an array (empty or not)
-		return !empty( WikiFactory::getCityIDsFromVarValue( $iVarId, $sDirectoryName, '=' ) );
+		return !empty( $aCityIds );
 	}
 
 	/**
