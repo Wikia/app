@@ -200,6 +200,10 @@ class WikiaMobileMediaService extends WikiaService {
 			$attribs['data-params'] = htmlentities( json_encode( $params ) , ENT_QUOTES );
 		}
 
+		if ( !empty( $linkAttribs['title'] ) ) {
+			$linkAttribs['title'] = htmlentities( $linkAttribs['title'] , ENT_QUOTES );
+		}
+
 		$this->response->setVal( 'attributes', $attribs );
 		$this->response->setVal( 'anchorAttributes', $linkAttribs );
 		$this->response->setVal( 'noscript', $noscript );
