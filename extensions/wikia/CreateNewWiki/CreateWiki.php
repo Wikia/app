@@ -670,10 +670,10 @@ class CreateWiki {
 			$oMC->set( $sMCKey, $iVarId, WikiaResponse::CACHE_LONG );
 		}
 
+		wfProfileOut( __METHOD__ );
+
 		// returns bool, converted from an array (empty or not)
 		return (bool) WikiFactory::getCityIDsFromVarValue( $iVarId, $sDirectoryName, '=' );
-
-		wfProfileOut( __METHOD__ );
 	}
 
 	/**
