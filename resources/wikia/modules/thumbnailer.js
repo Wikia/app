@@ -86,7 +86,7 @@
 		 * @returns {boolean}
 		 */
 		function isThumbnailerUrl(url) {
-			return url && /vignette\d.wikia/.test(url);
+			return url && /vignette\d?\.wikia/.test(url);
 		}
 
 		/**
