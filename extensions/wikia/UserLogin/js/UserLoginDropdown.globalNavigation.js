@@ -1,37 +1,48 @@
 /* global UserLoginFacebook:true, UserLoginAjaxForm:true */
 require(['jquery'], function($){
 	'use strict';
-	var $entryPoint, $userLoginDropdown, $transparentOut, loginAjaxForm = false;
+	var $entryPoint, $userLoginDropdown, loginAjaxForm = false;
 
 	function openMenu() {
 		$entryPoint.addClass('active');
-		$transparentOut.addClass('visible');
+		window.transparentOut.show();
 
 		if (!loginAjaxForm) {
-			loginAjaxForm = new UserLoginAjaxForm($entryPoint);
+			loginAjaxForm = new UserLoginAjaxForm($entryPoint, {skipFocus: true});
 			UserLoginFacebook.init(UserLoginFacebook.origins.DROPDOWN);
 		}
 	}
 
 	function closeMenu() {
 		$entryPoint.removeClass('active');
-		$transparentOut.removeClass('visible');
+		window.transparentOut.hide();
+	}
+
+	function closeMenuIfNotFocused() {
+		var id = document.activeElement.id;
+		if ( !( id === 'usernameInput' || id === 'passwordInput' ) ) {
+			closeMenu();
+		}
 	}
 
 	$(function(){
-		$transparentOut = $('<div class="transparent-out transparent-out-user-login-and-account-navigation"/>').appendTo('body');
-		$transparentOut.click(closeMenu);
+		window.transparentOut.bindClick(closeMenu);
 
 		$entryPoint = $('#AccountNavigation');
 		$entryPoint.on('click touchstart', '.ajaxLogin', function(ev) {
 			ev.preventDefault();
-			ev.stopPropagation(); // BugId:16984
+			ev.stopImmediatePropagation();
 
-			if (wgUserName && $entryPoint.hasClass('active')) {
-				window.location = $(this).attr('href');
+			if ( $entryPoint.hasClass('active') ) {
+				if ( !!wgUserName ) {
+					window.location = $(this).attr('href');
+				} else {
+					closeMenu();
+				}
 			} else {
 				openMenu();
 			}
+
 		});
 
 		$userLoginDropdown = $('#UserLoginDropdown');
@@ -43,7 +54,8 @@ require(['jquery'], function($){
 					checkInterval: 100,
 					maxActivationDistance: 20,
 					onActivate: openMenu,
-					onDeactivate: ($userLoginDropdown.length ? Function.prototype : closeMenu)
+					onDeactivate: ($userLoginDropdown.length ? closeMenuIfNotFocused : closeMenu),
+					activateOnClick: false
 				}
 			);
 		}
