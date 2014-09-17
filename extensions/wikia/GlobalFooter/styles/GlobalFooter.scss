@@ -100,10 +100,6 @@
 	}
 }
 
-body.skin-oasis {
-	.global-footer{
-		.branding {
-			left: 10px;
-		}
-	}
+body.skin-oasis .global-footer .branding {
+	left: 10px;
 }
