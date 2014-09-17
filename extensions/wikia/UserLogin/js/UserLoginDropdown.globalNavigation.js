@@ -8,7 +8,7 @@ require(['jquery'], function($){
 		window.transparentOut.show();
 
 		if (!loginAjaxForm) {
-			loginAjaxForm = new UserLoginAjaxForm($entryPoint);
+			loginAjaxForm = new UserLoginAjaxForm($entryPoint, {skipFocus: true});
 			UserLoginFacebook.init(UserLoginFacebook.origins.DROPDOWN);
 		}
 	}
