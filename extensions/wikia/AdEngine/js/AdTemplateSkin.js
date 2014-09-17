@@ -31,7 +31,7 @@ define('ext.wikia.adEngine.template.skin', [
 				pixelElement,
 				pixelUrl;
 
-			if (window.wgOasisResponsive || window.skin == 'venus') {
+			if (window.wgOasisResponsive || window.skin === 'venus') {
 				require(['wikia.backgroundchanger'], function (backgroundchanger) {
 					var bcParams = {
 						skinImage: params.skinImage,
