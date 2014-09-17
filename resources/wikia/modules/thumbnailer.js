@@ -15,8 +15,8 @@
 		//targets the image file extension
 		var extRegExp = /\.(jpg|jpeg|gif|bmp|png|svg)$/i,
 			imagePath = '/images/',
-			oldThumbnailerPath = '/images/thumb/',
-			newThumbnailerBaseURLRegex = /(.*\/revision\/\w+).*/;
+			legacyThumbnailerPath = '/images/thumb/',
+			thumbnailerBaseURLRegex = /(.*\/revision\/\w+).*/;
 
 		/**
 		 * Converts the URL of a full size image or of a thumbnail into one of a thumbnail of
@@ -66,26 +66,26 @@
 		 * @return {Boolean} True f it's a thumbnail or false if it's an image
 		 */
 		function isThumbUrl(url) {
-			return isOldThumbnailerUrl(url) || isNewThumbnailerUrl(url);
+			return isLegacyThumbnailerUrl(url) || isThumbnailerUrl(url);
 		}
 
 		/**
-		 * Checks if url points to old thumbnailer
+		 * Checks if url points to legacy thumbnailer
 		 * @private
 		 * @param {String} url
 		 * @returns {Boolean}
 		 */
-		function isOldThumbnailerUrl(url) {
-			return url && url.indexOf(oldThumbnailerPath) > 0;
+		function isLegacyThumbnailerUrl(url) {
+			return url && url.indexOf(legacyThumbnailerPath) > 0;
 		}
 
 		/**
-		 * Checks if url points to new thumbnailer
+		 * Checks if url points to thumbnailer
 		 * @private
 		 * @param {String} url
 		 * @returns {boolean}
 		 */
-		function isNewThumbnailerUrl(url) {
+		function isThumbnailerUrl(url) {
 			return url && url.indexOf('vignette') > 0;
 		}
 
@@ -93,15 +93,15 @@
 		 * Removes the thumbnail options part from a thumbnail URL
 		 * @private
 		 * @param {String} url The URL of a thumbnail
-		 * @return {String} The URL without the thymbnail options
+		 * @return {String} The URL without the thumbnail options
 		 */
 		function clearThumbOptions(url) {
 			var clearedOptionsUrl;
 
-			if (isNewThumbnailerUrl(url)) {
-				clearedOptionsUrl = url.replace(newThumbnailerBaseURLRegex, '$1');
+			if (isThumbnailerUrl(url)) {
+				clearedOptionsUrl = url.replace(thumbnailerBaseURLRegex, '$1');
 			} else {
-				//The URL of a thumbnail is in the following format:
+				//The URL of a legacy thumbnail is in the following format:
 				//http://domain/image_path/image.ext/thumbnail_options.ext
 				//so return the URL till the last / to remove the options
 				clearedOptionsUrl = url.substring(0, url.lastIndexOf('/'));
@@ -123,9 +123,9 @@
 
 			if (thumb) {
 				from = imagePath;
-				to = oldThumbnailerPath;
+				to = legacyThumbnailerPath;
 			} else {
-				from = oldThumbnailerPath;
+				from = legacyThumbnailerPath;
 				to = imagePath;
 			}
 
@@ -143,16 +143,16 @@
 		 * @returns {String} The URL with parameters for the thumbnailer added
 		 */
 		function addParametersToUrl(url, type, width, height) {
-			if (isNewThumbnailerUrl(url)) {
-				url = addNewThumbnailerParameters(url, type, width, height);
+			if (isThumbnailerUrl(url)) {
+				url = addThumbnailerParameters(url, type, width, height);
 			} else {
-				url = addOldThumbnailerParameters(url, type, width, height);
+				url = addLegacyThumbnailerParameters(url, type, width, height);
 			}
 			return url;
 		}
 
 		/**
-		 * Constructs complete new thumbnailer url by appending parameters to url
+		 * Constructs complete thumbnailer url by appending parameters to url
 		 * @private
 		 * @param {String} url
 		 * @param {String} type
@@ -160,13 +160,13 @@
 		 * @param {Integer} height
 		 * @returns {String}
 		 */
-		function addNewThumbnailerParameters(url, type, width, height) {
+		function addThumbnailerParameters(url, type, width, height) {
 			var thumbnailerRoute = (type === 'video' || type === 'nocrop') ? '/fixed-aspect-ratio' : '/zoom-crop';
 			return url + thumbnailerRoute + '/width/' + width + '/height/' + height;
 		}
 
 		/**
-		 * Constructs complete old thumbnailer url by appending parameters to url
+		 * Constructs complete legacy thumbnailer url by appending parameters to url
 		 * @private
 		 * @param {String} url
 		 * @param {String} type
@@ -174,7 +174,7 @@
 		 * @param {Integer} height
 		 * @returns {String}
 		 */
-		function addOldThumbnailerParameters(url, type, width, height) {
+		function addLegacyThumbnailerParameters(url, type, width, height) {
 			var tokens = url.split('/'),
 				last = tokens.slice(-1)[0].replace(extRegExp, '');
 
