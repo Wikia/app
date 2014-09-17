@@ -29,17 +29,14 @@ class MediaGalleryController extends WikiaController {
 				'height' => $dimension,
 			];
 
-			list( $thumbUrl, $smallerThanDim ) = WikiaFileHelper::getSquaredThumbnailUrl( $file, $dimension );
+			$thumbUrl = WikiaFileHelper::getSquaredThumbnailUrl( $file, $dimension );
 			$thumb = $file->transform( $dimensions );
 			$thumb->setUrl( $thumbUrl );
 
 			$markup = $this->app->renderView(
 				'ThumbnailController',
 				'gallery',
-				[
-					'thumb' => $thumb,
-					'options' => [ 'border' => $smallerThanDim ],
-				]
+				['thumb' => $thumb]
 			);
 
 			// Hide overflow items
@@ -48,10 +45,19 @@ class MediaGalleryController extends WikiaController {
 				$classes[] = "fade";
 			}
 
+			$caption = '';
+			if ( !empty( $item['caption'] ) ) {
+				// parse any wikitext in caption. Logic borrowed from WikiaMobileMediaService::renderMediaGroup.
+				$parser = $this->wg->Parser;
+				$caption = $parser->internalParse( $item['caption'] );
+				$parser->replaceLinkHolders( $caption );
+				$caption = $parser->killMarkers( $caption );
+			}
+
 			$media[] = [
 				'thumbnail' => $markup,
 				'classes' => join( " ", $classes ),
-				'caption' => $item['caption'],
+				'caption' => $caption,
 			];
 			++$dimensionIndex;
 		}

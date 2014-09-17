@@ -86,9 +86,7 @@ class ThumbnailController extends WikiaController {
 	/**
 	 * Render image tags for the MediaGallery
 	 * @requestParam MediaTransformOutput thumb
-	 * @requestParam array options
-	 *   Keys:
-	 *   boolean border - Whether to add a border to this image
+	 * @requestParam array options This is here for consistancy, it's not used yet
 	 */
 	public function gallery() {
 		$this->mediaType = 'image';
@@ -96,14 +94,12 @@ class ThumbnailController extends WikiaController {
 		// Use the image template
 		$this->overrideTemplate( 'image' );
 
-		$options = $this->getVal( 'options', [] );
-		$options['fluid'] = true;
-		$options['img-class'] = empty( $options['border'] ) ? '' : 'border';
-
 		$thumb = $this->getVal( 'thumb' );
 
 		$this->linkHref = $thumb->file->getTitle()->getLinkURL();
-		ThumbnailHelper::setImageAttribs( $this, $thumb, $options );
+
+		ThumbnailHelper::setImageAttribs( $this, $thumb, [ 'fluid' => true ] );
+		ThumbnailHelper::setPictureTagInfo( $this, $thumb );
 		ThumbnailHelper::setLazyLoad( $this );
 	}
 

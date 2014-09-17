@@ -491,10 +491,13 @@ class LoadBalancer {
 		// Wikia change - begin
 		// check the status of selected master
 		if ( $i == $this->getWriterIndex() ) {
-			if ( wfGetLBFactory()->getMastersPoll()->isMasterBroken( $this->mServers[0] ) ) {
+			// will return an instance of MastersPoll when LBFactory_Wikia is used
+			$mastersPoll = wfGetLBFactory()->getMastersPoll();
+
+			if ( $mastersPoll instanceof \Wikia\MastersPoll && $mastersPoll->isMasterBroken( $this->mServers[0] ) ) {
 				// handle broken master - connect to a different master
 				$clusterInfo = $this->parentInfo()['id'];
-				$newMaster = wfGetLBFactory()->getMastersPoll()->getNextMasterForSection( $clusterInfo );
+				$newMaster = $mastersPoll->getNextMasterForSection( $clusterInfo );
 
 				// replace the master in LoadBalancer config
 				if ( !empty( $newMaster ) ) {
@@ -509,8 +512,13 @@ class LoadBalancer {
 		if ( !$conn ) {
 			// Wikia change - begin
 			# master connection error handling
+			// will return an instance of MastersPoll when LBFactory_Wikia is used
+			$mastersPoll = wfGetLBFactory()->getMastersPoll();
+
 			if ( $i == $this->getWriterIndex() ) {
-				wfGetLBFactory()->getMastersPoll()->markMasterAsBroken( $this->mServers[$i] );
+				if ( $mastersPoll instanceof \Wikia\MastersPoll ) {
+					$mastersPoll->markMasterAsBroken( $this->mServers[$i] );
+				}
 			}
 			// Wikia change - end
 

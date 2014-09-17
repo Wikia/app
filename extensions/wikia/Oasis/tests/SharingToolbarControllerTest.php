@@ -44,9 +44,6 @@ class SharingToolbarControllerTest extends WikiaBaseTest
 			'NS_CATEGORY' => array(
 				'required' => true,
 			),
-			'NS_VIDEO' => array(
-				'required' => false,
-			),
 			'NS_BLOG_LISTING' => array(
 				'required' => false,
 			),
