@@ -13,7 +13,7 @@
 
   $.fn.autocomplete = function(options) {
     return this.each(function() {
-		$(this).data('autocomplete', new Autocomplete(this, options));
+        $(this).data('autocomplete', new Autocomplete(this, options));
     });
   };
 
@@ -32,7 +32,6 @@
     this.el.attr('autocomplete', 'off');
     this.suggestions = [];
     this.data = [];
-	this.disabled = false;
     this.badQueries = [];
     this.selectedIndex = -1;
     this.currentValue = this.el.val();
@@ -47,6 +46,7 @@
       minChars: 1,
       maxHeight: 300,
       deferRequestBy: 0,
+      disabled: false,
       width: 0,
       highlight: true,
       params: {},
@@ -118,14 +118,14 @@
       this.container.css({ maxHeight: this.options.maxHeight + 'px' });
     },
 
-	disable: function() {
-		this.disabled = true;
-		this.hide();
-	},
+    disable: function() {
+        this.options.disabled = true;
+        this.hide();
+    },
 
-	enable: function() {
-		this.disabled = false;
-	},
+    enable: function() {
+        this.options.disabled = false;
+    },
 
     fixPosition: function() {
       var offset = this.el.offset();
@@ -190,9 +190,9 @@
     },
 
     onKeyUp: function(e) {
-		if (this.disabled) {
-			return;
-		}
+        if (this.options.disabled) {
+            return;
+        }
 
       switch (e.keyCode) {
         case 38: //Event.KEY_UP:
@@ -260,10 +260,10 @@
       } else if (!this.isBadQuery(q)) {
         me = this;
 
-		/* Wikia change - allow custom param name */
-		//me.options.params.query = q;
-		var requestParams = me.options.params;
-		requestParams[me.options.queryParamName] = q;
+        /* Wikia change - allow custom param name */
+        //me.options.params.query = q;
+        var requestParams = me.options.params;
+        requestParams[me.options.queryParamName] = q;
         $.get(this.serviceUrl, requestParams, function(txt) { me.processResponse(txt); }, 'text');
       }
     },
@@ -281,8 +281,8 @@
       this.selectedIndex = -1;
       this.container.hide();
 
-	  // Wikia: fire event when suggestions are shown
-	  this.el.trigger('suggestHide');
+      // Wikia: fire event when suggestions are shown
+      this.el.trigger('suggestHide');
     },
 
     suggest: function() {
@@ -299,11 +299,11 @@
       this.container.hide().empty();
 
       for (var i = 0; i < len; i++) {
-      	// wikia change - start
-      	suggestion = this.suggestions[i];
+          // wikia change - start
+          suggestion = this.suggestions[i];
         div = $((me.selectedIndex === i ? '<div class="' + this.options.selectedClass + '"' : '<div')
-        	+ ' title="' + suggestion + '">' + f(suggestion, this.data[i], v)
-        	+ '</div>');
+            + ' title="' + suggestion + '">' + f(suggestion, this.data[i], v)
+            + '</div>');
         // wikia change - end
         div.mouseover((function(xi) { return function() { me.activate(xi); }; })(i));
         // wikia change - start
@@ -315,8 +315,8 @@
       this.enabled = true;
       this.container.show();
 
-	  // Wikia: fire event when suggestions are shown
-	  this.el.trigger('suggestShow');
+      // Wikia: fire event when suggestions are shown
+      this.el.trigger('suggestShow');
     },
 
     processResponse: function(text) {
@@ -325,10 +325,10 @@
         response = eval('(' + text + ')');
       } catch (err) { return; }
 
-	  /* Wikia change - allow function to preprocess result data into a format this plugin understands*/
-	  if(this.options.fnPreprocessResults != null){
-		response = this.options.fnPreprocessResults(response);
-	  }
+      /* Wikia change - allow function to preprocess result data into a format this plugin understands*/
+      if(this.options.fnPreprocessResults != null){
+        response = this.options.fnPreprocessResults(response);
+      }
 
       if (!$.isArray(response.data)) { response.data = []; }
       this.suggestions = response.suggestions;
@@ -370,7 +370,7 @@
         this.ignoreValueChange = true;
         // wikia change - start
         if (this.onSelect(i, e) !== false) {
-	        this.hide();
+            this.hide();
         }
         // wikia change - end
       }

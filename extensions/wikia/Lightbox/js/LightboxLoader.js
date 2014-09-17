@@ -76,7 +76,7 @@
 				.off('.lightbox')
 				.on('click.lightbox', '.lightbox, a.image', function (e) {
 					var $this = $(this),
-						$thumb = $this.children('img').first(),
+						$thumb = $this.find('img').first(),
 						fileKey = $thumb.attr('data-image-key') || $thumb.attr('data-video-key'),
 						$parent,
 						isVideo,
@@ -252,6 +252,8 @@
 						inlineDiv = $('<div class="inline-video"></div>').insertAfter(target.hide()),
 						videoIndex;
 
+					target.closest('.article-thumb').addClass('inline-video-playing');
+
 					require(['wikia.videoBootstrap'], function (VideoBootstrap) {
 						self.videoInstance = new VideoBootstrap(inlineDiv[0], embedCode, clickSource);
 					});
@@ -278,7 +280,11 @@
 
 		removeInlineVideos: function () {
 			clearTimeout(LightboxTracker.inlineVideoTrackingTimeout);
-			LightboxLoader.inlineVideoLinks.show().next().remove();
+			LightboxLoader.inlineVideoLinks
+				.show()
+				.parent().removeClass('inline-video-playing') // figure tag
+				.end()
+				.next().remove(); // video player container
 		},
 
 		getMediaDetail: function (mediaParams, callback, nocache) {

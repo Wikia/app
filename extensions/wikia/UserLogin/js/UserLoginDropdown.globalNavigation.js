@@ -23,7 +23,7 @@ require(['jquery'], function($){
 		$transparentOut.click(closeMenu);
 
 		$entryPoint = $('#AccountNavigation');
-		$entryPoint.on('click', '.ajaxLogin', function(ev) {
+		$entryPoint.on('click touchstart', '.ajaxLogin', function(ev) {
 			ev.preventDefault();
 			ev.stopPropagation(); // BugId:16984
 

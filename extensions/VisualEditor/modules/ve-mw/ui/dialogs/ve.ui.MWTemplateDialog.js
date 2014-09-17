@@ -144,7 +144,7 @@ ve.ui.MWTemplateDialog.prototype.onAddParameter = function ( param ) {
 	var page, $parameterPages;
 
 	if ( param.getName() ) {
-		page = new ve.ui.WikiaParameterPage( param, param.getId(), { '$': this.$ } );
+		page = new ve.ui.MWParameterPage( param, param.getId(), { '$': this.$ } );
 	} else {
 		page = new ve.ui.MWParameterPlaceholderPage( param, param.getId(), { '$': this.$ } );
 	}

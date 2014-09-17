@@ -1,5 +1,5 @@
 // TODO: ADEN-1332-ize after ADEN-1326
-/*global define*/
+/*global define,require*/
 define('ext.wikia.adEngine.adConfigLate', [
 	// regular dependencies
 	'wikia.log',
@@ -12,9 +12,11 @@ define('ext.wikia.adEngine.adConfigLate', [
 	'ext.wikia.adEngine.provider.liftium',
 	'ext.wikia.adEngine.provider.directGpt',
 	'ext.wikia.adEngine.provider.remnantGpt',
+	'ext.wikia.adEngine.provider.taboola',
 	'ext.wikia.adEngine.provider.null',
 	'ext.wikia.adEngine.provider.sevenOneMedia',
-	'ext.wikia.adEngine.provider.ebay'
+	'ext.wikia.adEngine.provider.ebay',
+	require.optional('wikia.abTest')
 ], function (
 	// regular dependencies
 	log,
@@ -27,9 +29,11 @@ define('ext.wikia.adEngine.adConfigLate', [
 	adProviderLiftium,
 	adProviderDirectGpt,
 	adProviderRemnantGpt,
+	adProviderTaboola,
 	adProviderNull,
 	adProviderSevenOneMedia, // TODO: move this to the early queue (remove jQuery dependency first)
-	adProviderEbay
+	adProviderEbay,
+	abTest
 ) {
 	'use strict';
 
@@ -41,7 +45,19 @@ define('ext.wikia.adEngine.adConfigLate', [
 			'TOP_BUTTON_WIDE.force': true
 		},
 		ie8 = window.navigator && window.navigator.userAgent && window.navigator.userAgent.match(/MSIE [6-8]\./),
-		sevenOneMediaDisabled = instantGlobals.wgSitewideDisableSevenOneMedia,
+
+		taboolaEnabledWikis = {
+			darksouls: true,
+			gameofthrones: true,
+			harrypotter: true,
+			helloproject: true,
+			ladygaga: true,
+			onedirection: true
+		},
+		taboolaEnabled = country === 'US' &&
+			taboolaEnabledWikis[window.wgDBname] &&
+			window.wgIsArticle && window.wgAdDriverUseTaboola &&
+			abTest && abTest.inGroup('NATIVE_ADS_TABOOLA', 'YES'),
 
 		dartBtfCountries = {
 			US: true
@@ -108,6 +124,10 @@ define('ext.wikia.adEngine.adConfigLate', [
 				log(['getProvider', slot, 'Evolve'], 'info', logGroup);
 				return adProviderEvolve;
 			}
+		}
+
+		if (taboolaEnabled && adProviderTaboola.canHandleSlot(slotname)) {
+			return adProviderTaboola;
 		}
 
 		// DART for some slots below the fold a.k.a. coffee cup

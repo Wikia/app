@@ -247,9 +247,7 @@ class PageHeaderController extends WikiaController {
 
 		// remove namespaces prefix from title
 		$namespaces = array( NS_MEDIAWIKI, NS_TEMPLATE, NS_CATEGORY, NS_FILE );
-		if ( defined( 'NS_VIDEO' ) ) {
-			$namespaces[] = NS_VIDEO;
-		}
+
 		if ( in_array( $ns, array_merge( $namespaces, $wgSuppressNamespacePrefix ) ) ) {
 			$this->title = $wgTitle->getText();
 			$this->displaytitle = false;
@@ -606,9 +604,7 @@ class PageHeaderController extends WikiaController {
 
 		// remove namespaces prefix from title
 		$namespaces = array( NS_MEDIAWIKI, NS_TEMPLATE, NS_CATEGORY, NS_FILE );
-		if ( defined( 'NS_VIDEO' ) ) {
-			$namespaces[] = NS_VIDEO;
-		}
+
 		if ( in_array( $ns, array_merge( $namespaces, $wgSuppressNamespacePrefix ) ) ) {
 			$this->title = $wgTitle->getText();
 			$this->displaytitle = false;

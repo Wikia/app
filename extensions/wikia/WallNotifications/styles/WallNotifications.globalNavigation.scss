@@ -11,13 +11,14 @@ $wiki-header-bg-color: #e2e6e9;
 
 .bubbles {
 	background-color: #fff;
-	border-radius: 50%;
+	border-radius: 10px;
 	display: none;
 	height: 20px;
 	left: 30px;
+	min-width: 20px;
+	padding: 2px;
 	position: absolute;
 	top: 5px;
-	width: 20px;
 
 	&.show {
 		display: block;
@@ -26,16 +27,14 @@ $wiki-header-bg-color: #e2e6e9;
 
 .bubbles-count {
 	background-color: red;
-	border-radius: 50%;
+	border-radius: 8px;
 	color: #fff;
 	font-size: 12px;
 	font-weight: normal;
 	height: 16px;
-	left: 2px;
-	position: absolute;
+	min-width: 16px;
+	padding: 0 2px;
 	text-align: center;
-	top: 2px;
-	width: 16px;
 }
 
 #notifications {
@@ -53,6 +52,7 @@ $wiki-header-bg-color: #e2e6e9;
 	border: 1px solid $border-color;
 	border-top: 0;
 	display: none;
+	padding: 0;
 	position: absolute;
 
 	&.show {
@@ -64,6 +64,14 @@ $wiki-header-bg-color: #e2e6e9;
 		min-height: 51px;
 		font-weight: bold;
 		padding: 15px 20px 0;
+	}
+
+	ul {
+		padding: 0;
+	}
+
+	li {
+		list-style-type: none;
 	}
 
 	.notifications-header {
@@ -165,6 +173,7 @@ $wiki-header-bg-color: #e2e6e9;
 		h4 {
 			font-size: 15px;
 			font-weight: bold;
+			margin: 0;
 		}
 
 		time {
