@@ -28,7 +28,7 @@ UserLoginAjaxForm.prototype.init = function() {
 	// forgot password handler
 	this.forgotPasswordLink.click($.proxy(this.mailPassword, this));
 
-	if ( !this.inputs['skipFocus'] ) {
+	if ( !this.options['skipFocus'] ) {
 		this.inputs['username'].focus();
 	}
 };
