@@ -13,12 +13,11 @@ class CreateWikiTest extends WikiaBaseTest {
 	public function setUp() {
 		$this->setupFile = __DIR__ . '/../CreateNewWiki_setup.php';
 		parent::setUp();
-		$this->mockGlobalVariable( 'wgMemc', new EmptyBagOStuff() );
 	}
 
 	public function testWgUploadDirectoryExistsAssertion() {
 		$this->setExpectedException('\Wikia\Util\AssertionException');
-		$this->mockStaticMethod( 'WikiFactory', 'getVarIdByName', null);
+		$this->mockStaticMethod( 'WikiFactory', 'getVarIdByName', false);
 		CreateWiki::wgUploadDirectoryExists( 'whatever-input' );
 	}
 	
