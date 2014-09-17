@@ -660,15 +660,9 @@ class CreateWiki {
 	public static function wgUploadDirectoryExists( $sDirectoryName ) {
 		wfProfileIn( __METHOD__ );
 
-		$oMC = F::app()->wg->Memc;
-		$sMCKey = __METHOD__ . ':wgUploadDirectory:city_variables_pool:cv_id';
-		$iVarId = $oMC->get( $sMCKey );
-
-		if ( !is_int( $iVarId ) || $iVarId <= 0 ) {
-			$iVarId = (int) WikiFactory::getVarIdByName( 'wgUploadDirectory' );
-			\Wikia\Util\Assert::true( $iVarId > 0);
-			$oMC->set( $sMCKey, $iVarId, WikiaResponse::CACHE_LONG );
-		}
+		$iVarId = WikiFactory::getVarIdByName( 'wgUploadDirectory' );
+		// crash if $iVarId is not a positive integer
+		\Wikia\Util\Assert::true( $iVarId );
 
 		wfProfileOut( __METHOD__ );
 
