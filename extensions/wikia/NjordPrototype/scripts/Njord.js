@@ -129,8 +129,10 @@
 			$editButton.hide();
 			if ($heroModuleImage.attr('src') !== $heroModuleImage.data('fullpath')) {
 				$heroModuleImage.attr('src', $heroModuleImage.data('fullpath'));
+				$heroModule.trigger('enableDragging');
 			} else {
 				onImageLoad();
+				$heroModule.trigger('enableDragging');
 			}
 		}, onImageLoad = function () {
 			var top = -heroData.cropposition * $heroModuleImage.height();
@@ -141,7 +143,6 @@
 				$heroModuleImage.css({top: 0});
 			}
 			$heroModule.trigger('resize');
-			$heroModule.trigger('enableDragging');
 		}, onResize = function () {
 			$heroModule.height($heroModule.width() * HERO_ASPECT_RATIO);
 		}, onDraggingEnabled = function () {
