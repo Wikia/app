@@ -40,6 +40,8 @@ class Transaction {
 
 	const EVENT_ARTICLE_PARSE = 'article_parse';
 
+	const PARSER_CACHE_DISABLED = 'parser_cache_disabled';
+
 	/**
 	 * Returns TransactionTrace singleton instance
 	 *

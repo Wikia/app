@@ -72,6 +72,7 @@ class TransactionClassifier {
 	protected static $MAP_PARSER_CACHED_USED = array(
 		false => 'parser',
 		true => 'no_parser',
+		Transaction::PARSER_CACHE_DISABLED => 'parser_disabled',
 	);
 
 
