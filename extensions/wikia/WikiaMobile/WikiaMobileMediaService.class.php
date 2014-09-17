@@ -192,16 +192,20 @@ class WikiaMobileMediaService extends WikiaService {
 		$includeInModal = !$linked && !$isSmall;
 		$notClickable = !$linked && $isSmall;
 
+		foreach ($linkAttribs as $linkAttribKey => $linkAttribValue) {
+			$linkAttribs[$linkAttribKey] = htmlentities( $linkAttribValue, ENT_QUOTES );
+		}
+
+		foreach ($attribs as $attribKey => $attribValue) {
+			$attribs[$attribKey] = htmlentities($attribValue, ENT_QUOTES);
+		}
+
 		$attribs['data-src'] = $attribs['src'];
 		$attribs['src'] = wfBlankImgUrl();
 		$attribs['class'] = ( ( !empty( $attribs['class'] ) ) ? "{$attribs['class']} " : '' ) . self::CLASS_LAZYLOAD . ' ' . ( $includeInModal  ? ' ' . self::CLASS_MEDIA : '' ) . ( $notClickable  ? ' ' . self::CLASS_SMALL : '' );
 
 		if ( !empty( $params ) ) {
-			$attribs['data-params'] = htmlentities( json_encode( $params ) , ENT_QUOTES );
-		}
-
-		if ( !empty( $linkAttribs['title'] ) ) {
-			$linkAttribs['title'] = htmlentities( $linkAttribs['title'] , ENT_QUOTES );
+			$attribs['data-params'] = htmlentities( json_encode( $params ), ENT_QUOTES );
 		}
 
 		$this->response->setVal( 'attributes', $attribs );
