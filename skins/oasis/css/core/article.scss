@@ -136,8 +136,6 @@
 	}
 
 	.center {
-		@include clearfix;
-		clear: both;
 		text-align: center;
 		width: 100%;
 
