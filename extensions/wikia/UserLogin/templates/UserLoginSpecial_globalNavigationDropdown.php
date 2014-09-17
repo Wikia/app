@@ -24,6 +24,7 @@
 				'value' => Sanitizer::encodeAttribute( $returntoquery ),
 			],
 			[
+				'id' => 'usernameInput',
 				'type' => 'text',
 				'name' => 'username',
 				'class' => 'hide-label',
@@ -33,6 +34,7 @@
 				'tabindex' => ++$tabIndex,
 			],
 			[
+				'id' => 'passwordInput',
 				'type' => 'password',
 				'name' => 'password',
 				'class' => 'hide-label',
