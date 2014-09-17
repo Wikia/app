@@ -251,6 +251,9 @@
 					var fd = new FormData();
 					fd.append('file', $heroModuleInput[0].files[0]);
 					sendForm(fd);
+					//reset input
+					$heroModuleInput.wrap('<form>').closest('form').get(0).reset();
+					$heroModuleInput.unwrap();
 				}
 			});
 		};
