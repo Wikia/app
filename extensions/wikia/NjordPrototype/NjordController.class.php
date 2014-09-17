@@ -3,10 +3,11 @@
 class NjordController extends WikiaController {
 
 	const HERO_IMAGE_FILENAME = 'wikia-hero-image';
+	const THUMBNAILER_SIZE_SUFIX = '1600px-0';
 
 	public function index() {
 		$this->wg->SuppressPageHeader = true;
-		
+
 		$this->wg->out->addStyle( AssetsManager::getInstance()->getSassCommonURL( 'extensions/wikia/NjordPrototype/css/Njord.scss' ) );
 		$this->wg->Out->addScriptFile( $this->wg->ExtensionsPath . '/wikia/NjordPrototype/scripts/jquery-ui-1.10.4.js' );
 		$this->wg->Out->addScriptFile( $this->wg->ExtensionsPath . '/wikia/NjordPrototype/scripts/jquery.caret.js' );
@@ -20,42 +21,43 @@ class NjordController extends WikiaController {
 	}
 
 	public function modula() {
-		$this->content = $this->getRequest()->getVal('content');
-		$this->align = $this->getRequest()->getVal('align');
-		$this->ctitle = $this->getRequest()->getVal('content-title');
-		$this->title = $this->getRequest()->getVal('title');
+		$this->content = $this->getRequest()->getVal( 'content' );
+		$this->align = $this->getRequest()->getVal( 'align' );
+		$this->ctitle = $this->getRequest()->getVal( 'content-title' );
+		$this->title = $this->getRequest()->getVal( 'title' );
 	}
 
-	public function mom() {}
+	public function mom() {
+	}
 
 	public function reorder() {
 		$params = $this->getRequest()->getParams();
 
-		$pageTitleObj = Title::newFromText( $params['page'] );
+		$pageTitleObj = Title::newFromText( $params[ 'page' ] );
 		$pageArticleObj = new Article( $pageTitleObj );
 		$content = $pageArticleObj->getContent();
 
-		$content = mb_ereg_replace('<modula.*/>', '', $content, 'sU' );
-		$moduleTags = [];
-		foreach ($params['left'] as $raw) {
-			$data = json_decode($raw);
-			$moduleTags[] = Xml::element( 'modula', $attribs = [
+		$content = mb_ereg_replace( '<modula.*/>', '', $content, 'sU' );
+		$moduleTags = [ ];
+		foreach ( $params[ 'left' ] as $raw ) {
+			$data = json_decode( $raw );
+			$moduleTags[ ] = Xml::element( 'modula', $attribs = [
 				'align' => 'left',
 				'title' => $data->text,
 				'content-title' => $data->title,
 			] );
 		}
-		$content = mb_ereg_replace('(<mainpage-leftcolumn-start.*/>)\s*', "\\1\n" . implode($moduleTags, "\n"). "\n", $content, 'sU' );
-		$moduleTags = [];
-		foreach ($params['right'] as $raw) {
-			$data = json_decode($raw);
-			$moduleTags[] = Xml::element( 'modula', $attribs = [
+		$content = mb_ereg_replace( '(<mainpage-leftcolumn-start.*/>)\s*', "\\1\n" . implode( $moduleTags, "\n" ) . "\n", $content, 'sU' );
+		$moduleTags = [ ];
+		foreach ( $params[ 'right' ] as $raw ) {
+			$data = json_decode( $raw );
+			$moduleTags[ ] = Xml::element( 'modula', $attribs = [
 				'align' => 'right',
 				'title' => $data->text,
 				'content-title' => $data->title,
 			] );
 		}
-		$content = mb_ereg_replace('(<mainpage-rightcolumn-start.*/>)\s*', "\\1\n" . implode($moduleTags, "\n"). "\n", $content, 'sU' );
+		$content = mb_ereg_replace( '(<mainpage-rightcolumn-start.*/>)\s*', "\\1\n" . implode( $moduleTags, "\n" ) . "\n", $content, 'sU' );
 		// save and purge
 		$pageArticleObj->doEdit( $content, '' );
 		$pageArticleObj->doPurge();
@@ -80,16 +82,16 @@ class NjordController extends WikiaController {
 				$uploader = new UploadFromFile();
 				$uploader->initialize( $webRequest->getFileName( 'file' ), $webRequest->getUpload( 'file' ) );
 			}
-			$stash = new UploadStash( RepoGroup::singleton()->getLocalRepo(), $this->getContext()->getUser() );
+			$stash = RepoGroup::singleton()->getLocalRepo()->getUploadStash();
 			$stashFile = $stash->stashFile( $uploader->getTempPath() );
 			$this->getResponse()->setFormat( 'json' );
-			$this->getResponse()->setVal( 'url', $stashFile->getFullUrl() );
+			$this->getResponse()->setVal( 'url', wfReplaceImageServer( $stashFile->getThumbUrl( static::THUMBNAILER_SIZE_SUFIX ) ) );
 			$this->getResponse()->setVal( 'filename', $stashFile->getFileKey() );
 		}
 	}
 
 	public function saveHeroData() {
-		wfProfileIn(__METHOD__);
+		wfProfileIn( __METHOD__ );
 
 		$success = false;
 
@@ -98,22 +100,22 @@ class NjordController extends WikiaController {
 		$wikiData = $this->request->getVal( 'wikiData', [ ] );
 		$wikiDataModel = new WikiDataModel( Title::newMainPage()->getText() );
 		$wikiDataModel->setFromAttributes( $wikiData );
-		$imageChanged = !empty( $wikiData['imagechanged'] );
-		$imageName = !empty( $wikiData['imagename'] ) ? $wikiData['imagename'] : null;
+		$imageChanged = !empty( $wikiData[ 'imagechanged' ] );
+		$imageName = !empty( $wikiData[ 'imagename' ] ) ? $wikiData[ 'imagename' ] : null;
 
 		if ( $imageChanged && $imageName ) {
-			wfProfileIn(__METHOD__ . '::uploadStart');
+			wfProfileIn( __METHOD__ . '::uploadStart' );
 			$stash = RepoGroup::singleton()->getLocalRepo()->getUploadStash();
 
 			$temp_file = $stash->getFile( $imageName );
 			$file = new LocalFile( static::HERO_IMAGE_FILENAME, RepoGroup::singleton()->getLocalRepo() );
 
 			$status = $file->upload( $temp_file->getPath(), '', '' );
-			wfProfileIn(__METHOD__ . '::uploadEnd');
+			wfProfileIn( __METHOD__ . '::uploadEnd' );
 
 			if ( $status->isOK() ) {
-				$wikiDataModel->setImageName($file->getTitle()->getDBKey());
-				$wikiDataModel->setImagePath($file->getFullUrl());
+				$wikiDataModel->setImageName( $file->getTitle()->getDBKey() );
+				$wikiDataModel->setImagePath( $file->getFullUrl() );
 
 				$wikiDataModel->storeInPage();
 				$wikiDataModel->storeInProps();
@@ -128,13 +130,13 @@ class NjordController extends WikiaController {
 			$wikiDataModel->storeInProps();
 			$success = true;
 		}
-		if(!$success) {
+		if ( !$success ) {
 			$wikiDataModel->getFromProps();
 		}
 
 		$this->getResponse()->setVal( 'success', $success );
-		$this->getResponse()->setVal( 'wikiData', $wikiDataModel);
+		$this->getResponse()->setVal( 'wikiData', $wikiDataModel );
 
-		wfProfileOut(__METHOD__);
+		wfProfileOut( __METHOD__ );
 	}
 }
