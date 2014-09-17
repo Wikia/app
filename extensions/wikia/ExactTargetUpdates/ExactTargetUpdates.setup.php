@@ -40,7 +40,9 @@ $wgExtensionCredits['other'][] = array(
 
 $wgExtensionMessagesFiles[ 'ExactTargetUpdates' ] = $dir . '/ExactTargetUpdates.i18n.php';
 
+$wgAutoloadClasses['ExactTargetBaseTask'] =  $dir . '/ExactTargetBaseTask.php' ;
 $wgAutoloadClasses['ExactTargetAddUserTask'] =  $dir . '/ExactTargetAddUserTask.php' ;
+$wgAutoloadClasses['ExactTargetUpdateUserTask'] =  $dir . '/ExactTargetUpdateUserTask.php' ;
 $wgAutoloadClasses['ExactTargetUpdatesHooks'] =  $dir . '/ExactTargetUpdatesHooks.php' ;
 $wgAutoloadClasses['ExactTargetSoapClient'] =  $dir . '/lib/exacttarget_soap_client.php' ;
 
@@ -49,3 +51,4 @@ $wgAutoloadClasses['ExactTargetSoapClient'] =  $dir . '/lib/exacttarget_soap_cli
  * @see http://www.mediawiki.org/wiki/Manual:$wgHooks
  */
 $wgHooks['SignupConfirmEmailComplete'][] = 'ExactTargetUpdatesHooks::onSignupConfirmEmailComplete';
+$wgHooks['UserSaveSettings'][] = 'ExactTargetUpdatesHooks::onUserSaveSettings';
