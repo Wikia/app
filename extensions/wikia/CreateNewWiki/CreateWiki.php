@@ -673,7 +673,7 @@ class CreateWiki {
 		wfProfileOut( __METHOD__ );
 
 		// returns bool, converted from an array (empty or not)
-		return (bool) WikiFactory::getCityIDsFromVarValue( $iVarId, $sDirectoryName, '=' );
+		return !empty( WikiFactory::getCityIDsFromVarValue( $iVarId, $sDirectoryName, '=' ) );
 	}
 
 	/**
