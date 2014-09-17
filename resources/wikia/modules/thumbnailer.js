@@ -153,6 +153,8 @@
 
 		/**
 		 * Constructs complete thumbnailer url by appending parameters to url
+		 * URL before: http://vignette2.wikia.nocookie.net/thelastofus/f/ff/Joel.png/revision/latest
+		 * URL after: http://vignette2.wikia.nocookie.net/thelastofus/f/ff/Joel.png/revision/latest/zoom-crop/width/240/height/240
 		 * @private
 		 * @param {String} url
 		 * @param {String} type
@@ -167,6 +169,8 @@
 
 		/**
 		 * Constructs complete legacy thumbnailer url by appending parameters to url
+		 * URL before: http://img2.wikia.nocookie.net/__cb0/thelastofus/images/f/ff/Joel.png
+		 * URL after: http://img2.wikia.nocookie.net/__cb0/thelastofus/images/thumb/f/ff/Joel.png/90x55-Joel.png
 		 * @private
 		 * @param {String} url
 		 * @param {String} type
@@ -178,6 +182,8 @@
 			var tokens = url.split('/'),
 				last = tokens.slice(-1)[0].replace(extRegExp, '');
 
+			// See examples above and https://one.wikia-inc.com/wiki/Engineering/Thumbnailer_URLs for more information
+			// on the tokenization here.
 			tokens.push(width + (height ? 'x' + height : '-') + ((type === 'video' || type === 'nocrop') ? '-' :  'x2-') + last + '.png');
 			return tokens.join('/');
 		}
