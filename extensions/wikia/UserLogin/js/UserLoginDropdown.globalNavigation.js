@@ -18,7 +18,7 @@ require(['jquery'], function($){
 		window.transparentOut.hide();
 	}
 
-	function maybeCloseMenu() {
+	function closeMenuIfNotFocused() {
 		var id = document.activeElement.id;
 		if ( !( id === 'usernameInput' || id === 'passwordInput' ) ) {
 			closeMenu();
@@ -54,7 +54,7 @@ require(['jquery'], function($){
 					checkInterval: 100,
 					maxActivationDistance: 20,
 					onActivate: openMenu,
-					onDeactivate: ($userLoginDropdown.length ? maybeCloseMenu : closeMenu),
+					onDeactivate: ($userLoginDropdown.length ? closeMenuIfNotFocused : closeMenu),
 					activateOnClick: false
 				}
 			);
