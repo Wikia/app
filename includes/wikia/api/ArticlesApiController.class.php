@@ -81,6 +81,15 @@ class ArticlesApiController extends WikiaApiController {
 		);
 	}
 
+	public function getMetadataCacheTime( $omitExpandParam = false ) {
+		if (
+			!empty( $this->wg->EnablePOIExt )
+			&&  $this->request->getBool( static::PARAMETER_EXPAND, $omitExpandParam )
+		) {
+			return PalantirApiController::METADATA_CACHE_EXPIRATION;
+		}
+		return self::CLIENT_CACHE_VALIDITY;
+	}
 
 	/**
 	 * Get the top articles by pageviews optionally filtering by category and/or namespaces
@@ -242,7 +251,7 @@ class ArticlesApiController extends WikiaApiController {
 		$this->setResponseData(
 			[ 'basepath' => $this->wg->Server, 'items' => $collection ],
 			[ 'imgFields'=> 'thumbnail', 'urlFields' => [ 'thumbnail', 'url' ] ],
-			self::CLIENT_CACHE_VALIDITY
+			$this->getMetadataCacheTime()
 		);
 
 		$batches = null;
@@ -277,7 +286,7 @@ class ArticlesApiController extends WikiaApiController {
 		$this->setResponseData(
 			[ 'basepath' => $this->wg->Server, 'items' => $mostLinkedOutput ],
 			[ 'imgFields'=> 'thumbnail', 'urlFields' => [ 'thumbnail', 'url' ] ],
-			self::CLIENT_CACHE_VALIDITY
+			$this->getMetadataCacheTime()
 		);
 	}
 
@@ -622,7 +631,7 @@ class ArticlesApiController extends WikiaApiController {
 			$this->setResponseData(
 				$responseValues,
 				[ 'imgFields'=> 'thumbnail', 'urlFields' => [ 'thumbnail', 'url' ] ],
-				self::CLIENT_CACHE_VALIDITY
+				$this->getMetadataCacheTime()
 			);
 		} else {
 			wfProfileOut( __METHOD__ );
@@ -675,7 +684,7 @@ class ArticlesApiController extends WikiaApiController {
 		$this->setResponseData(
 			[ 'items' => $collection, 'basepath' => $this->wg->Server ],
 			[ 'imgFields'=> 'thumbnail', 'urlFields' => [ 'thumbnail', 'url' ] ],
-			self::CLIENT_CACHE_VALIDITY
+			$this->getMetadataCacheTime( true )
 		);
 
 		$collection = null;
@@ -693,19 +702,16 @@ class ArticlesApiController extends WikiaApiController {
 
 	protected function appendMetadata( $collection ) {
 		if ( !empty( $this->wg->EnablePOIExt ) ) {
+			$helper = new QuestDetailsSolrHelper();
 			$questDetailsSearch = new QuestDetailsSearchService();
-			$result = $questDetailsSearch->newQuery()
+			$metadata = $questDetailsSearch->newQuery()
 				->withIds( array_keys( $collection ), $this->wg->CityId )
-				->metadataOnly()
 				->search();
-
-			foreach ( $collection as $key => $item ) {
-				$meta = [ ];
-				if ( !empty( $result[ $key ] ) ) {
-					$meta = $result[ $key ];
-				}
-				if( !empty( $meta ) ) {
-					$collection[ $key ] = array_merge( $collection[ $key ], [ 'metadata' => $meta ] );
+			$metadata = $helper->processMetadata( $metadata );
+			foreach ( $collection as &$item ) {
+				$key = $this->wg->CityId ."_" . $item[ "id" ];
+				if ( isset( $metadata[ $key ] ) ) {
+					$item[ "metadata" ] = $metadata[ $key ];
 				}
 			}
 		}
@@ -1031,7 +1037,7 @@ class ArticlesApiController extends WikiaApiController {
 		$this->setResponseData(
 			[ 'items' => $popular, 'basepath' => $wgServer ],
 			[ 'imgFields' => 'thumbnail', 'urlFields' => [ 'thumbnail', 'url' ] ],
-			self::CLIENT_CACHE_VALIDITY
+			$this->getMetadataCacheTime()
 		);
 
 	}
