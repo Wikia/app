@@ -34,6 +34,9 @@
 			$(window).on('scroll', onScroll);
 		}, onEdit = function () {
 			$clonedMain = $mwContent.clone(true, true);
+			$('html, body').animate({
+				scrollTop: $momHeader.offset().top - 2
+			}, 600);
 			addEmpty();
 			$moms.addClass('mom-hidden');
 			$editMode.show();
@@ -152,6 +155,7 @@
 		}, removeEmpty = function () {
 			$('.mom-add-module').remove();
 		}, addNewModule = function (ev) {
+			$mainContentContainer.startThrobbing();
 			//add placeholder will be replace after loaded
 			$('<div id="MomNewPlaceHolder" class="mom-no-display"></div>').insertBefore($(this).parent());
 			$.nirvana.sendRequest({
@@ -165,6 +169,7 @@
 				},
 				callback: onAddNewBlock,
 				onErrorCallback: function () {
+					$mainContentContainer.stopThrobbing();
 					// TODO: handle failure
 				}
 			});
@@ -178,6 +183,7 @@
 				$(this).attr('contenteditable', true);
 			});
 			$deleteButton.on('click', function(){ $(this).parents('.mom-module').remove(); });
+			$mainContentContainer.stopThrobbing();
 		}, refresh = function () {
 			$deleteButton.refresh();
 			$momOverlays.refresh();
