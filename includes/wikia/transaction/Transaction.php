@@ -18,6 +18,7 @@ class Transaction {
 	const PARAM_ENTRY_POINT = 'entry_point';
 	const PARAM_LOGGED_IN = 'logged_in';
 	const PARAM_PARSER_CACHE_USED = 'parser_cache_used';
+	const PARAM_PARSER_CACHE_DISABLED = 'parser_cache_disabled';
 	const PARAM_SIZE_CATEGORY = 'size_category';
 	const PARAM_NAMESPACE = 'namespace';
 	const PARAM_ACTION = 'action';
@@ -39,8 +40,6 @@ class Transaction {
 	const SIZE_CATEGORY_COMPLEX = 'complex';
 
 	const EVENT_ARTICLE_PARSE = 'article_parse';
-
-	const PARSER_CACHE_DISABLED = 'parser_cache_disabled';
 
 	/**
 	 * Returns TransactionTrace singleton instance
