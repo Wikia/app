@@ -20,6 +20,14 @@ class WikiaInteractiveMapsHooks {
 		return true;
 	}
 
+	/**
+	 * Adds assets on the bottom of the body tag for special maps page
+	 *
+	 * @param {String} $skin
+	 * @param {String} $text
+	 *
+	 * @return bool
+	 */
 	public static function onSkinAfterBottomScripts( $skin, &$text ) {
 		if ( self::isSpecialMapsPage() ) {
 			$scripts = AssetsManager::getInstance()->getURL( 'int_map_special_page_js' );
