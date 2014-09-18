@@ -26,7 +26,7 @@ ve.ui.WikiaTemplateInsertDialog.static.name = 'wikiaTemplateInsert';
 
 ve.ui.WikiaTemplateInsertDialog.static.icon = 'template';
 
-ve.ui.WikiaTemplateInsertDialog.static.title = OO.ui.deferMsg( 'visualeditor-dialog-transclusion-insert-template' );
+ve.ui.WikiaTemplateInsertDialog.static.title = OO.ui.deferMsg( 'wikia-visualeditor-dialog-template-insert-title' );
 
 /* Static Methods */
 
