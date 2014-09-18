@@ -39,6 +39,7 @@ class GlobalNavigationController extends WikiaController {
 		$globalSearchUrl = $this->getGlobalSearchUrl( $centralUrl, $lang );
 		$specialSearchTitle = SpecialPage::getTitleFor( 'Search' );
 		$localSearchUrl = $specialSearchTitle->getFullUrl();
+		$fulltext = $this->wg->User->getOption('enableGoSearch') ? 0 : 'Search';
 		$globalRequest = $this->wg->request;
 		$query = $globalRequest->getVal( 'search', $globalRequest->getVal( 'query', '' ) );
 
@@ -51,6 +52,7 @@ class GlobalNavigationController extends WikiaController {
 			$this->response->setVal( 'defaultSearchMessage', wfMessage( 'global-navigation-local-search' )->text() );
 			$this->response->setVal( 'defaultSearchUrl', $localSearchUrl );
 		}
+		$this->response->setVal( 'fulltext', $fulltext );
 		$this->response->setVal( 'query', $query );
 		$this->response->setVal( 'lang', $lang );
 	}
