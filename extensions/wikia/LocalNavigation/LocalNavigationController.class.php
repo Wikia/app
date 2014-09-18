@@ -2,19 +2,8 @@
 
 class LocalNavigationController extends WikiaController {
 
-	public function executeIndex() {
-		//fb#1090
-		$this->response->setVal( 'showMenu', ( $this->wg->User->isAllowed( 'read' ) && !( $this->wg->IsPrivateWiki && $this->wg->User->isAnon() ) ) );
-
-		$model = new NavigationModel();
-
-		$this->response->setVal( 'wikiMenuNodes', $model->getWiki(
-			$this->request->getVal( 'msgName', false ),
-			$this->request->getVal( 'wikitext', '' )
-		) );
-
-		// report wiki nav parse errors (BugId:15240)
-		$this->response->setVal( 'parseErrors', $model->getErrors() );
+	public function Index() {
+		Wikia::addAssetsToOutput( 'local_navigation_scss' );
 	}
 
 	/**

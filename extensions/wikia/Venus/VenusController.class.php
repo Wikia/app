@@ -58,7 +58,7 @@ class VenusController extends WikiaController {
 		$this->globalNavigation = $this->getGlobalNavigation();
 		$this->notifications = $this->getNotifications();
 		$this->topAds = $this->getTopAds();
-		$this->wikiHeader = $this->getWikiHeader();
+		$this->localNavigation = $this->getLocalNavigation();
 		$this->globalFooter = $this->getGlobalFooter();
 		$this->corporateFooter = $this->getCorporateFootet();
 	}
@@ -169,8 +169,8 @@ class VenusController extends WikiaController {
 		//return $this->app->renderView('Notifications', 'Confirmation');
 	}
 
-	private function getWikiHeader() {
-		//return $this->app->renderView( 'LocalHeader', 'Index' );
+	private function getLocalNavigation() {
+		return $this->app->renderView( 'LocalNavigation', 'Index' );
 	}
 
 	private function getTopAds() {
