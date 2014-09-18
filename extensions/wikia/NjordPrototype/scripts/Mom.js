@@ -81,6 +81,7 @@
 			$nonEditMode.show();
 			$mainContent.startThrobbing();
 			$moms.removeClass('mom-hidden');
+			$moms.removeClass('mom-edit');
 			$momBar.css('display', 'none');
 			$momOverlays.hide();
 			$leftColumn.sortable('disable');
@@ -88,6 +89,9 @@
 			$momBarContent.each(function () {
 				$(this).removeAttr('contenteditable');
 			});
+			$('.mom-save-btn').hide();
+			$('.mom-discard-btn').hide();
+			$('.mom-wiki-markup').hide();
 			var left = [],
 				right = [];
 			$('.lcs-container .mom-module').each(function () {
@@ -146,6 +150,9 @@
 			$deleteButton.on('click', function () {
 				$(this).parents('.mom-module').remove();
 			});
+			$('.mom-save-btn').hide();
+			$('.mom-discard-btn').hide();
+			$('.mom-wiki-markup').hide();
 		}, addEmpty = function () {
 			var $new = $(document.createElement('div')),
 				$button = $(document.createElement('div'));
@@ -230,7 +237,7 @@
 				$('.mom-overlay', $moduleContainer).hide();
 
 				$('.mom-wiki-markup .wiki-markup', $moduleContainer).val(resp['wikiMarkup']);
-				$('.mom-wiki-markup .wiki-markup', $moduleContainer).show();
+				$('.mom-wiki-markup', $moduleContainer).show();
 				$moduleContainer.stopThrobbing();
 			},
 			onErrorCallback: function () {
@@ -252,7 +259,7 @@
         $('.mom-overlay', $moduleContainer).show();
         $('.mom-content', $moduleContainer).show();
 
-		$('.mom-wiki-markup .wiki-markup', $moduleContainer).hide();
+		$('.mom-wiki-markup', $moduleContainer).hide();
 	});
 
 	$mwContent.on('click', '.mom-save-btn', function () {
@@ -281,7 +288,7 @@
 				$('.mom-bar-info', $moduleContainer).html('content of this module might be outdated, refresh page for updated version');
 				$('.mom-content', $moduleContainer).show();
 
-				$('.mom-wiki-markup .wiki-markup', $moduleContainer).hide();
+				$('.mom-wiki-markup', $moduleContainer).hide();
 				$moduleContainer.stopThrobbing();
 			},
 			onErrorCallback: function () {
