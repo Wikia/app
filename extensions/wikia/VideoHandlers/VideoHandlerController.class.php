@@ -281,21 +281,24 @@ class VideoHandlerController extends WikiaController {
 		}
 
 		$memcKey= wfMemcKey( 'getVideoDetail', md5( serialize( [ $fileTitles, $videoOptions ] ) ) );
-		$videos = $this->wg->Memc->get( $memcKey );
-		if ( !is_array( $videos ) ) {
-			$videos = [];
-			$helper = new VideoHandlerHelper();
-			foreach ( $fileTitles as $fileTitle ) {
-				$detail = $helper->getVideoDetail( [ 'title' => $fileTitle ], $videoOptions );
-				if ( !empty( $detail ) ) {
-					$videos[] = $detail;
+		$videos = WikiaDataAccess::cache(
+			$memcKey,
+			WikiaResponse::CACHE_STANDARD,
+			function() use ( $fileTitles, $videoOptions ) {
+				$videos = [];
+				$helper = new VideoHandlerHelper();
+				foreach ( $fileTitles as $fileTitle ) {
+					$detail = $helper->getVideoDetail( [ 'title' => $fileTitle ], $videoOptions );
+					if ( !empty( $detail ) ) {
+						$videos[] = $detail;
+					}
 				}
+				return $videos;
 			}
-			$this->wg->Memc->set( $memcKey, $videos, self::CACHE_TTL );
-		}
+		);
 
 		$this->detail = ( !empty( $videos ) && $singleFile ) ? array_pop( $videos ) : $videos;
-		$this->response->setCacheValidity( self::CACHE_TTL );
+		$this->response->setCacheValidity( WikiaResponse::CACHE_STANDARD );
 
 		wfProfileOut( __METHOD__ );
 	}
