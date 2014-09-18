@@ -2,7 +2,7 @@ define('mediaGallery.views.toggler', ['mediaGallery.templates.mustache'], functi
 	'use strict';
 
 	// workaround for nirvana template naming conventions and JSHint conflict
-	var templateName = 'MediaGalleryController_showMore';
+	var templateName = 'MediaGallery_showMore';
 
 	/**
 	 * Toggle number of images shown in a gallery
