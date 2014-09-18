@@ -261,11 +261,8 @@ class VideoHandlerController extends WikiaController {
 	public function getVideoDetail() {
 		wfProfileIn( __METHOD__ );
 
-		$fileTitles = $this->getVal( 'fileTitle', [] );
-		$videoOptions = $this->getVal( 'videoOptions', [] );
-
-		$fileTitles = $this->makeFileTitlesAnArray( $fileTitles );
-		$videoOptions = $this->setThumbnailSizes( $videoOptions );
+		$fileTitles = $this->makeFileTitlesAnArray( $this->getVal( 'fileTitle', [] ) );
+		$videoOptions = $this->setThumbnailSizes( $this->getVal( 'videoOptions', [] ) );
 
 		$memcKey= wfMemcKey( 'getVideoDetail', md5( serialize( [ $fileTitles, $videoOptions ] ) ) );
 		$videos = WikiaDataAccess::cache(
