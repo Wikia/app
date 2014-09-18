@@ -5,19 +5,23 @@ class NjordController extends WikiaController {
 	const HERO_IMAGE_FILENAME = 'wikia-hero-image';
 	const THUMBNAILER_SIZE_SUFIX = '1600px-0';
 
-	public function getWikiMarkup() {
-		$articleTitle = $this->getRequest()->getVal('articleTitle');
-		$pageTitleObj = Title::newFromText( $articleTitle );
-		$pageArticleObj = new Article( $pageTitleObj );
+	const MAINPAGE_PAGE = 'mainpage';
 
-		$articleWikiMarkup = $pageArticleObj->getPage()->getText();
+	public function getWikiMarkup() {
+		$articleWikiMarkup = '';
+		$articleTitle = $this->getRequest()->getVal( 'articleTitle' );
+		$pageTitleObj = Title::newFromText( $articleTitle );
+		if( $pageTitleObj->exists() ) {
+			$pageArticleObj = new Article( $pageTitleObj );
+			$articleWikiMarkup = $pageArticleObj->getPage()->getText();
+		}
 		$this->getResponse()->setFormat( 'json' );
-		$this->getResponse()->setVal('wikiMarkup', $articleWikiMarkup);
+		$this->getResponse()->setVal( 'wikiMarkup', $articleWikiMarkup );
 	}
 
 	public function MainPageModuleSave() {
-		$articleTitle = $this->getRequest()->getVal('pageTitle');
-		$wikiMarkup = $this->getRequest()->getVal('wikiMarkup');
+		$articleTitle = $this->getRequest()->getVal( 'pageTitle' );
+		$wikiMarkup = $this->getRequest()->getVal( 'wikiMarkup' );
 		$pageTitleObj = Title::newFromText( $articleTitle );
 		$pageArticleObj = new Article( $pageTitleObj );
 
@@ -26,7 +30,7 @@ class NjordController extends WikiaController {
 		$newHtml = $pageArticleObj->getPage()->getParserOutput( new ParserOptions( null, null ) )->getText();
 
 		$this->getResponse()->setFormat( 'json' );
-		$this->getResponse()->setVal('html', $newHtml);
+		$this->getResponse()->setVal( 'html', $newHtml );
 	}
 
 	public function index() {
@@ -49,6 +53,20 @@ class NjordController extends WikiaController {
 		$this->align = $this->getRequest()->getVal( 'align' );
 		$this->ctitle = $this->getRequest()->getVal( 'content-title' );
 		$this->title = $this->getRequest()->getVal( 'title' );
+
+		if ( empty( $this->ctitle ) ) {
+			$mainpage = Title::newFromText( self::MAINPAGE_PAGE );
+			$subpages = $mainpage->getSubpages();
+			$current = 1;
+			while( $subpages->valid() ) {
+				$curSub = $subpages->current();
+				if ( $current == $curSub->getSubpageText() ) {
+					$current++;
+				}
+				$subpages->next();
+			}
+			$this->ctitle = self::MAINPAGE_PAGE . "/" . $current;
+		}
 	}
 
 	public function mom() {

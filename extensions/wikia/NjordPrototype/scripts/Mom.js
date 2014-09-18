@@ -199,12 +199,15 @@
 			$momBar.refresh();
 			$momBarContent.refresh();
 			$moms.refresh();
+			$moduleEditButton.refresh();
+			$moduleDiscardButton.refresh();
+			$moduleSaveButton.refresh();
 		};
 
 	if (window.wgUserName) {
 		initMom();
 	}
-	$moduleEditButton.on('click', function () {
+	$mwContent.on('click', '.mom-edit-btn', function () {
 		var $moduleContainer = $(this).parents('.mom-module');
 		$moduleContainer.startThrobbing();
 
@@ -236,7 +239,7 @@
 		});
 	});
 
-	$moduleDiscardButton.on('click', function () {
+	$mwContent.on('click', '.mom-discard-btn', function () {
 		var $moduleContainer = $(this).parents('.mom-module');
 		$moduleContainer.addClass('mom-hidden');
 		$moduleContainer.removeClass('mom-edit');
@@ -252,7 +255,7 @@
 		$('.mom-wiki-markup .wiki-markup', $moduleContainer).hide();
 	});
 
-	$moduleSaveButton.on('click', function () {
+	$mwContent.on('click', '.mom-save-btn', function () {
 		var $moduleContainer = $(this).parents('.mom-module');
 		$moduleContainer.startThrobbing();
 
