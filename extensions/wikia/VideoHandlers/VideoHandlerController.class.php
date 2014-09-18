@@ -279,6 +279,10 @@ class VideoHandlerController extends WikiaController {
 		wfProfileOut( __METHOD__ );
 	}
 
+	/**
+	 * @param string|array $fileTitles
+	 * @return array
+	 */
 	private function makeFileTitlesAnArray( $fileTitles ) {
 		if ( !is_array( $fileTitles ) ) {
 			$fileTitles = [ $fileTitles ];
@@ -286,7 +290,11 @@ class VideoHandlerController extends WikiaController {
 		return $fileTitles;
 	}
 
-	public function setThumbnailSizes( $videoOptions ) {
+	/**
+	 * @param array $videoOptions
+	 * @return array
+	 */
+	private function setThumbnailSizes( array $videoOptions ) {
 		if ( !array_key_exists( 'thumbWidth', $videoOptions ) ) {
 			$videoOptions['thumbWidth'] = self::DEFAULT_THUMBNAIL_WIDTH;
 		}
@@ -296,7 +304,12 @@ class VideoHandlerController extends WikiaController {
 		return $videoOptions;
 	}
 
-	private function getDetailsForVideoTitles( $fileTitles, $videoOptions ) {
+	/**
+	 * @param array $fileTitles
+	 * @param array $videoOptions
+	 * @return array
+	 */
+	private function getDetailsForVideoTitles( array $fileTitles, array $videoOptions ) {
 		$videos = [];
 		$helper = new VideoHandlerHelper();
 		foreach ( $fileTitles as $fileTitle ) {
