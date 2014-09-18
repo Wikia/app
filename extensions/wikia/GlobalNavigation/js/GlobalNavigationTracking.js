@@ -1,6 +1,6 @@
-$(function ($) {
+$(function($) {
 	'use strict';
-	var track, $globalNavigation, $globalNavigationSearch, searchSuggestionsShowed;
+	var searchSuggestionsShowed, track, $globalNavigation, $globalNavigationSearch;
 
 	$globalNavigation = $('#globalNavigation');
 	$globalNavigationSearch = $globalNavigation.find('#searchForm');
@@ -69,18 +69,16 @@ $(function ($) {
 
 	function searchSubmitButtonClickTrackingHandler(event) {
 		if (event.which === 1 && event.clientX > 0) {
-			var label = !searchSuggestionsShowed ? 'search-button' : 'search-after-suggest-button';
 			trackSearch({
-				label: label
+				label: !searchSuggestionsShowed ? 'search-button' : 'search-after-suggest-button'
 			});
 		}
 	}
 
 	function searchSubmitEnterPressTrackingHandler(event) {
 		if (event.which === 13 && $(this).is(':focus') ) {
-			var label = !searchSuggestionsShowed ? 'search-enter' : 'search-after-suggest-enter';
 			trackSearch({
-				label: label
+				label: !searchSuggestionsShowed ? 'search-enter' : 'search-after-suggest-enter'
 			});
 		}
 	}
