@@ -261,46 +261,52 @@ class VideoHandlerController extends WikiaController {
 	public function getVideoDetail() {
 		wfProfileIn( __METHOD__ );
 
-		$fileTitle = $this->getVal( 'fileTitle', array() );
-		$videoOptions = $this->getVal( 'videoOptions', array() );
+		$fileTitles = $this->getVal( 'fileTitle', [] );
+		$videoOptions = $this->getVal( 'videoOptions', [] );
 
-		if ( is_string( $fileTitle ) ) {
-			$singleFile = true;
-			$fileTitles = [ $fileTitle ];
-		} else {
-			$singleFile = false;
-			$fileTitles = $fileTitle;
-		}
-
-		if ( !array_key_exists( 'thumbWidth', $videoOptions ) ) {
-			$videoOptions['thumbWidth'] = self::DEFAULT_THUMBNAIL_WIDTH;
-		}
-
-		if ( !array_key_exists( 'thumbHeight', $videoOptions ) ) {
-			$videoOptions['thumbHeight'] = self::DEFAULT_THUMBNAIL_HEIGHT;
-		}
+		$fileTitles = $this->makeFileTitlesAnArray( $fileTitles );
+		$videoOptions = $this->setThumbnailSizes( $videoOptions );
 
 		$memcKey= wfMemcKey( 'getVideoDetail', md5( serialize( [ $fileTitles, $videoOptions ] ) ) );
 		$videos = WikiaDataAccess::cache(
 			$memcKey,
 			WikiaResponse::CACHE_STANDARD,
-			function() use ( $fileTitles, $videoOptions ) {
-				$videos = [];
-				$helper = new VideoHandlerHelper();
-				foreach ( $fileTitles as $fileTitle ) {
-					$detail = $helper->getVideoDetail( [ 'title' => $fileTitle ], $videoOptions );
-					if ( !empty( $detail ) ) {
-						$videos[] = $detail;
-					}
-				}
-				return $videos;
-			}
+			$this->getDetailsForTitles( $fileTitles, $videoOptions )
 		);
 
-		$this->detail = ( !empty( $videos ) && $singleFile ) ? array_pop( $videos ) : $videos;
+		$this->detail = ( count( $videos ) == 1 ) ? array_pop( $videos ) : $videos;
 		$this->response->setCacheValidity( WikiaResponse::CACHE_STANDARD );
 
 		wfProfileOut( __METHOD__ );
+	}
+
+	private function makeFileTitlesAnArray( $fileTitles ) {
+		if ( !is_array( $fileTitles ) ) {
+			$fileTitles = [ $fileTitles ];
+		}
+		return $fileTitles;
+	}
+
+	public function setThumbnailSizes( $videoOptions ) {
+		if ( !array_key_exists( 'thumbWidth', $videoOptions ) ) {
+			$videoOptions['thumbWidth'] = self::DEFAULT_THUMBNAIL_WIDTH;
+		}
+		if ( !array_key_exists( 'thumbHeight', $videoOptions ) ) {
+			$videoOptions['thumbHeight'] = self::DEFAULT_THUMBNAIL_HEIGHT;
+		}
+		return $videoOptions;
+	}
+
+	private function getDetailsForTitles( $fileTitles, $videoOptions ) {
+		$videos = [];
+		$helper = new VideoHandlerHelper();
+		foreach ( $fileTitles as $fileTitle ) {
+			$detail = $helper->getVideoDetail( [ 'title' => $fileTitle ], $videoOptions );
+			if ( !empty( $detail ) ) {
+				$videos[] = $detail;
+			}
+		}
+		return $videos;
 	}
 
 	/**
