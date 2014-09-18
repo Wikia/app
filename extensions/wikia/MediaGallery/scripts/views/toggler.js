@@ -10,10 +10,9 @@ define('mediaGallery.views.toggler', ['mediaGallery.templates.mustache'], functi
 	 * @constructor
 	 */
 	function Toggler(options) {
-		var $el = options.$el;
-
-		this.$el = $el;
-		this.$media = $el.find('.media');
+		return;
+		this.$el = options.$el;
+		this.$media = options.$media;
 		this.$overflow = this.$media.filter('.hidden');
 		this.interval = options.interval || 12;
 		this.visible = this.$media.not(this.$overflow).length;

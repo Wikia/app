@@ -100,7 +100,7 @@ class ThumbnailController extends WikiaController {
 
 		ThumbnailHelper::setImageAttribs( $this, $thumb, [ 'fluid' => true ] );
 		ThumbnailHelper::setPictureTagInfo( $this, $thumb );
-		ThumbnailHelper::setLazyLoad( $this );
+//		ThumbnailHelper::setLazyLoad( $this );
 	}
 
 	/**

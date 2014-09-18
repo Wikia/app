@@ -1,54 +1,29 @@
-require(['mediaGallery.views.toggler', 'mediaGallery.views.media'], function (Toggler, Media) {
+require(['mediaGallery.views.gallery'], function (Gallery) {
 	'use strict';
 	$(function () {
-		var visibleCount = 8,
+		var galleries = [],
 			$galleries = $('.media-gallery-wrapper'),
-			togglers = [];
+			data = Wikia.mediaGalleryData || [];
 
-		$galleries.each(function () {
+		// If there's no galleries on the page, we're done.
+		if (!data.length) {
+			return;
+		}
+
+		$.each($galleries, function (idx) {
 			var $this = $(this),
-				media = [],
-				toggler = new Toggler({
-					$el: $this
-				});
+				model, gallery;
 
-			// create new views for each media item
-			toggler.$media.each(function () {
-				var medium = new Media({
-					$el: $(this)
-				});
-				medium.init();
-				media.push(medium);
+			model = data[idx];
+
+			gallery = new Gallery({
+				$el: $this.find('.media-gallery-inner'),
+				model: model,
+				visible: $this.data('visible-count')
 			});
 
-			visibleCount = $this.attr('data-visible-count') || visibleCount;
-			if (toggler.$media.length > visibleCount) {
-				toggler.init();
-				togglers.push(toggler);
-
-				toggler.$media.on('click', function () {
-					Wikia.Tracker.track({
-						category: 'article',
-						action: Wikia.Tracker.ACTIONS.click,
-						label: 'show-new-gallery-lightbox',
-						trackingMethod: 'both',
-						value: 0
-					});
-				});
-			}
+			galleries.push(gallery);
 		});
 
-		$galleries.on('click', '.media > a', function () {
-			// get index of media item in gallery
-			var index = $(this).parent().index();
-
-			Wikia.Tracker.track({
-				category: 'media-gallery',
-				action: Wikia.Tracker.ACTIONS.CLICK,
-				label: 'gallery-item',
-				trackingMethod: 'both',
-				value: index
-			});
-		});
 	});
 });
