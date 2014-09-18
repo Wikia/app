@@ -18,3 +18,5 @@ $wgSpecialPages['Metadata']		= 'MetadataSpecialController';
 $wgAvailableRights[] = 'metadata';
 $wgGroupPermissions['*']['metadata'] = false;
 $wgGroupPermissions['staff']['metadata'] = true;
+
+$wgWikiaApiControllers['PalantirApiController'] =  $dir . 'PalantirApiController.class.php';
