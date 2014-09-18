@@ -23,7 +23,7 @@
 		</div>
 		<div class="btn-group-bottom">
 			<div class="discard-btn new-btn">Discard</div>
-			<div class="save-btn new-btn">Save changes</div>
+			<div class="save-btn new-btn">Publish</div>
 		</div>
 	</div>
 	<picture>

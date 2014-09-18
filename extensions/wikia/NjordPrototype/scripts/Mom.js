@@ -1,10 +1,10 @@
 (function (window, $) {
 	'use strict';
 
-	$.fn.refresh = function() {
+	$.fn.refresh = function () {
 		var elems = $(this.selector);
 		this.splice(0, this.length);
-		this.push.apply( this, elems );
+		this.push.apply(this, elems);
 		return this;
 	};
 	var
@@ -17,9 +17,9 @@
 		$saveButton = $('#MomHeader .layout-save-btn'),
 		$discardButton = $('#MomHeader .layout-cancel-btn'),
 		$deleteButton = $('.mom-delete-btn'),
-        $moduleEditButton = $('.mom-edit-btn'),
-        $moduleSaveButton = $('.mom-save-btn'),
-        $moduleDiscardButton = $('.mom-discard-btn'),
+		$moduleEditButton = $('.mom-edit-btn'),
+		$moduleSaveButton = $('.mom-save-btn'),
+		$moduleDiscardButton = $('.mom-discard-btn'),
 		$editMode = $('.layout-mode'),
 		$nonEditMode = $('.no-layout-mode'),
 		$momOverlays = $('.mom-module .mom-overlay'),
@@ -33,7 +33,9 @@
 			$editButton.on('click', onEdit);
 			$saveButton.on('click', onSave);
 			$discardButton.on('click', onDiscard);
-			$deleteButton.on('click', function(){ $(this).parents('.mom-module').remove(); });
+			$deleteButton.on('click', function () {
+				$(this).parents('.mom-module').remove();
+			});
 			$(window).on('scroll', onScroll);
 		}, onEdit = function () {
 			$clonedMain = $mwContent.clone(true, true);
@@ -44,7 +46,7 @@
 			$moms.addClass('mom-hidden');
 			$editMode.show();
 			$nonEditMode.hide();
-			$momBar.show();
+			$momBar.css('display', 'flex');
 			$momOverlays.show();
 			var options = {
 				cancel: '.mom-bar-content, .btn-group-right',
@@ -53,7 +55,7 @@
 				items: '.mom-module-left, .mom-module-right',
 				placeholder: 'mom-add-module',
 				tolerance: 'pointer',
-				over: function(e, ui) {
+				over: function (e, ui) {
 					var $child = $($(this).children('.mom-module')[0]);
 					if (ui.item[0] === $child[0]) {
 						//check second child if first (and only) child was grabbed
@@ -79,7 +81,7 @@
 			$nonEditMode.show();
 			$mainContent.startThrobbing();
 			$moms.removeClass('mom-hidden');
-			$momBar.hide();
+			$momBar.css('display', 'none');
 			$momOverlays.hide();
 			$leftColumn.sortable('disable');
 			$rightColumn.sortable('disable');
@@ -141,7 +143,9 @@
 			$moms.refresh();
 			$leftColumn.refresh();
 			$rightColumn.refresh();
-			$deleteButton.on('click', function(){ $(this).parents('.mom-module').remove(); });
+			$deleteButton.on('click', function () {
+				$(this).parents('.mom-module').remove();
+			});
 		}, addEmpty = function () {
 			var $new = $(document.createElement('div')),
 				$button = $(document.createElement('div'));
@@ -180,12 +184,14 @@
 			$('#MomNewPlaceHolder').replaceWith(d);
 			refresh();
 			$moms.addClass('mom-hidden');
-			$momBar.show();
+			$momBar.css('display', 'flex');
 			$momOverlays.show();
 			$momBarContent.each(function () {
 				$(this).attr('contenteditable', true);
 			});
-			$deleteButton.on('click', function(){ $(this).parents('.mom-module').remove(); });
+			$deleteButton.on('click', function () {
+				$(this).parents('.mom-module').remove();
+			});
 			$mainContentContainer.stopThrobbing();
 		}, refresh = function () {
 			$deleteButton.refresh();
@@ -198,74 +204,87 @@
 	if (window.wgUserName) {
 		initMom();
 	}
-    $moduleEditButton.on('click', function(){
-        var moduleContainer = $(this).parents('.mom-module');
+	$moduleEditButton.on('click', function () {
+		var $moduleContainer = $(this).parents('.mom-module');
+		$moduleContainer.startThrobbing();
 
-        $.nirvana.sendRequest({
-            controller: 'NjordController',
-            method: 'getWikiMarkup',
-            type: 'GET',
-            data: {
-                articleTitle: moduleContainer.attr('data-title')
-            },
-            callback: function(resp){
-                $('.mom-save-btn', moduleContainer).show();
-                $('.mom-discard-btn', moduleContainer).show();
+		$.nirvana.sendRequest({
+			controller: 'NjordController',
+			method: 'getWikiMarkup',
+			type: 'GET',
+			data: {
+				articleTitle: $moduleContainer.attr('data-title')
+			},
+			callback: function (resp) {
+				$moduleContainer.removeClass('mom-hidden');
+				$moduleContainer.addClass('mom-edit');
+				$('.mom-save-btn', $moduleContainer).show();
+				$('.mom-discard-btn', $moduleContainer).show();
 
-                $('.mom-edit-btn', moduleContainer).hide();
-                $('.mom-content', moduleContainer).hide();
-                $('.mom-overlay', moduleContainer).hide();
+				$('.mom-edit-btn', $moduleContainer).hide();
+				$('.mom-delete-btn', $moduleContainer).hide();
+				$('.mom-content', $moduleContainer).hide();
+				$('.mom-overlay', $moduleContainer).hide();
 
-                $('.wiki-markup', moduleContainer).val(resp['wikiMarkup']);
-                $('.wiki-markup', moduleContainer).show();
-            },
-            onErrorCallback: function () {
-                // TODO: handle failure
-            }
-        });
-    });
+				$('.mom-wiki-markup .wiki-markup', $moduleContainer).val(resp['wikiMarkup']);
+				$('.mom-wiki-markup .wiki-markup', $moduleContainer).show();
+				$moduleContainer.stopThrobbing();
+			},
+			onErrorCallback: function () {
+				// TODO: handle failure
+			}
+		});
+	});
 
-    $moduleDiscardButton.on('click', function(){
-        var moduleContainer = $(this).parents('.mom-module');
+	$moduleDiscardButton.on('click', function () {
+		var $moduleContainer = $(this).parents('.mom-module');
+		$moduleContainer.addClass('mom-hidden');
+		$moduleContainer.removeClass('mom-edit');
 
-        $('.mom-save-btn', moduleContainer).hide();
-        $('.mom-discard-btn', moduleContainer).hide();
+        $('.mom-save-btn', $moduleContainer).hide();
+        $('.mom-discard-btn', $moduleContainer).hide();
 
-        $('.mom-edit-btn', moduleContainer).show();
-        $('.mom-overlay', moduleContainer).show();
-        $('.mom-content', moduleContainer).show();
+        $('.mom-edit-btn', $moduleContainer).show();
+		$('.mom-delete-btn', $moduleContainer).show();
+        $('.mom-overlay', $moduleContainer).show();
+        $('.mom-content', $moduleContainer).show();
 
-        $('.wiki-markup', moduleContainer).hide();
-    });
+		$('.mom-wiki-markup .wiki-markup', $moduleContainer).hide();
+	});
 
-    $moduleSaveButton.on('click', function(){
-        var moduleContainer = $(this).parents('.mom-module');
+	$moduleSaveButton.on('click', function () {
+		var $moduleContainer = $(this).parents('.mom-module');
+		$moduleContainer.startThrobbing();
 
-        $.nirvana.sendRequest({
-            controller: 'NjordController',
-            method: 'MainPageModuleSave',
-            type: 'POST',
-            data: {
-                pageTitle: moduleContainer.attr('data-title'),
-                wikiMarkup: $('.wiki-markup', moduleContainer).val()
-            },
-            callback: function(resp){
-                $('.mom-save-btn', moduleContainer).hide();
-                $('.mom-discard-btn', moduleContainer).hide();
+		$.nirvana.sendRequest({
+			controller: 'NjordController',
+			method: 'MainPageModuleSave',
+			type: 'POST',
+			data: {
+				pageTitle: $moduleContainer.attr('data-title'),
+				wikiMarkup: $('.wiki-markup', $moduleContainer).val()
+			},
+			callback: function (resp) {
+				$moduleContainer.addClass('mom-hidden');
+				$moduleContainer.removeClass('mom-edit');
 
-                $('.mom-edit-btn', moduleContainer).show();
-                $('.mom-overlay', moduleContainer).show();
-                $('.mom-content', moduleContainer).html(resp['html']);
-                $('.mom-content', moduleContainer).show();
+				$('.mom-save-btn', $moduleContainer).hide();
+				$('.mom-discard-btn', $moduleContainer).hide();
 
-                $('.wiki-markup', moduleContainer).hide();
-            },
-            onErrorCallback: function () {
-                // TODO: handle failure
-            }
-        });
-    });
+				$('.mom-edit-btn', $moduleContainer).show();
+				$('.mom-delete-btn', $moduleContainer).show();
+				$('.mom-overlay', $moduleContainer).show();
+				$('.mom-content', $moduleContainer).html(resp['html']);
+				$('.mom-bar-info', $moduleContainer).html('content of this module might be outdated, refresh page for updated version');
+				$('.mom-content', $moduleContainer).show();
 
-	$(window).on('scroll', onScroll);
+				$('.mom-wiki-markup .wiki-markup', $moduleContainer).hide();
+				$moduleContainer.stopThrobbing();
+			},
+			onErrorCallback: function () {
+				// TODO: handle failure
+			}
+		});
+	});
 
 })(window, jQuery);

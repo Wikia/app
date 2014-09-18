@@ -29,7 +29,7 @@
   color: #fff;
   cursor: pointer;
   font-weight: bold;
-  padding: 16px 20px;
+  padding: 17px 20px;
   text-align: center;
   text-decoration: none;
   text-transform: uppercase;
@@ -67,6 +67,15 @@
     cursor: auto;
     width: 30%;
   }
+
+  .mom-bar-info {
+    margin-left: 10px;
+  }
+}
+
+.mom-edit {
+  height: 600px;
+  margin-bottom: 10px;
 }
 
 .mom-fixed {
@@ -121,15 +130,40 @@
     }
   }
 
-  .wiki-markup {
-    width: 100%;
-    height: 180px;
-    overflow-y: scroll;
+  .mom-edit-btn.new-btn {
+    margin-right: 5px;
+  }
+
+  .mom-discard-btn {
+    background-color: #FFFFFF;
+    border-bottom: 1px solid lightgray;
+    border-top: 1px solid lightgray;
+    color: #092140;
+    display:none;
+    margin-right: 5px;
+    &:hover {
+      background-color: #0a5fa3;
+      color: #fff;
+    }
+  }
+
+  .mom-save-btn {
     display:none;
   }
 
-  .mom-save-btn, .mom-discard-btn {
+  .mom-wiki-markup {
+    border: 1px solid lightgray;
+    border-top: none;
+  }
+
+  .wiki-markup {
+    border: none;
     display:none;
+    height: 540px;
+    overflow-y: scroll;
+    padding: 0;
+    resize: none;
+    width: 100%;
   }
 }
 
