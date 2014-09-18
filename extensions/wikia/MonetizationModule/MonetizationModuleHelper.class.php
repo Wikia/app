@@ -191,9 +191,10 @@ class MonetizationModuleHelper extends WikiaModel {
 			}
 
 			// set cache
-			$this->wg->Memc->set( $memcKey, json_encode( $adUnits ), mt_rand( self::CACHE_TTL_MIN, self::CACHE_TTL_MAX ) );
+			$cacheTtl = mt_rand( self::CACHE_TTL_MIN, self::CACHE_TTL_MAX );
+			$this->wg->Memc->set( $memcKey, json_encode( $adUnits ), $cacheTtl );
 
-			$loggingParams = [ 'method' => __METHOD__, 'memcKey' => $memcKey ];
+			$loggingParams = [ 'method' => __METHOD__, 'memcKey' => $memcKey, 'cacheTtl' => $cacheTtl ];
 			WikiaLogger::instance()->info( "MonetizationModule: memcache write.", $loggingParams );
 		}
 
