@@ -11,7 +11,7 @@ class WikiaInteractiveMapsHooks {
 	public static function onOasisSkinAssetGroups( &$assetsArray ) {
 		$mapsAssets = [ 'int_map_contribution_button_create_map_js' ];
 
-		if( self::isSpecialMapsPage() ) {
+		if ( self::isSpecialMapsPage() ) {
 			array_unshift( $mapsAssets, 'int_map_parser_tag_js' );
 		}
 
