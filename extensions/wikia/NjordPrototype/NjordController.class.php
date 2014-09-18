@@ -5,6 +5,30 @@ class NjordController extends WikiaController {
 	const HERO_IMAGE_FILENAME = 'wikia-hero-image';
 	const THUMBNAILER_SIZE_SUFIX = '1600px-0';
 
+	public function getWikiMarkup() {
+		$articleTitle = $this->getRequest()->getVal('articleTitle');
+		$pageTitleObj = Title::newFromText( $articleTitle );
+		$pageArticleObj = new Article( $pageTitleObj );
+
+		$articleWikiMarkup = $pageArticleObj->getPage()->getText();
+		$this->getResponse()->setFormat( 'json' );
+		$this->getResponse()->setVal('wikiMarkup', $articleWikiMarkup);
+	}
+
+	public function MainPageModuleSave() {
+		$articleTitle = $this->getRequest()->getVal('pageTitle');
+		$wikiMarkup = $this->getRequest()->getVal('wikiMarkup');
+		$pageTitleObj = Title::newFromText( $articleTitle );
+		$pageArticleObj = new Article( $pageTitleObj );
+
+		$pageArticleObj->doEdit( $wikiMarkup, '' );
+		$pageArticleObj->doPurge();
+		$newHtml = $pageArticleObj->getPage()->getParserOutput( new ParserOptions( null, null ) )->getText();
+
+		$this->getResponse()->setFormat( 'json' );
+		$this->getResponse()->setVal('html', $newHtml);
+	}
+
 	public function index() {
 		$this->wg->SuppressPageHeader = true;
 

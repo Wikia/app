@@ -17,6 +17,9 @@
 		$saveButton = $('#MomHeader .layout-save-btn'),
 		$discardButton = $('#MomHeader .layout-cancel-btn'),
 		$deleteButton = $('.mom-delete-btn'),
+        $moduleEditButton = $('.mom-edit-btn'),
+        $moduleSaveButton = $('.mom-save-btn'),
+        $moduleDiscardButton = $('.mom-discard-btn'),
 		$editMode = $('.layout-mode'),
 		$nonEditMode = $('.no-layout-mode'),
 		$momOverlays = $('.mom-module .mom-overlay'),
@@ -195,5 +198,74 @@
 	if (window.wgUserName) {
 		initMom();
 	}
+    $moduleEditButton.on('click', function(){
+        var moduleContainer = $(this).parents('.mom-module');
+
+        $.nirvana.sendRequest({
+            controller: 'NjordController',
+            method: 'getWikiMarkup',
+            type: 'GET',
+            data: {
+                articleTitle: moduleContainer.attr('data-title')
+            },
+            callback: function(resp){
+                $('.mom-save-btn', moduleContainer).show();
+                $('.mom-discard-btn', moduleContainer).show();
+
+                $('.mom-edit-btn', moduleContainer).hide();
+                $('.mom-content', moduleContainer).hide();
+                $('.mom-overlay', moduleContainer).hide();
+
+                $('.wiki-markup', moduleContainer).val(resp['wikiMarkup']);
+                $('.wiki-markup', moduleContainer).show();
+            },
+            onErrorCallback: function () {
+                // TODO: handle failure
+            }
+        });
+    });
+
+    $moduleDiscardButton.on('click', function(){
+        var moduleContainer = $(this).parents('.mom-module');
+
+        $('.mom-save-btn', moduleContainer).hide();
+        $('.mom-discard-btn', moduleContainer).hide();
+
+        $('.mom-edit-btn', moduleContainer).show();
+        $('.mom-overlay', moduleContainer).show();
+        $('.mom-content', moduleContainer).show();
+
+        $('.wiki-markup', moduleContainer).hide();
+    });
+
+    $moduleSaveButton.on('click', function(){
+        var moduleContainer = $(this).parents('.mom-module');
+
+        $.nirvana.sendRequest({
+            controller: 'NjordController',
+            method: 'MainPageModuleSave',
+            type: 'POST',
+            data: {
+                pageTitle: moduleContainer.attr('data-title'),
+                wikiMarkup: $('.wiki-markup', moduleContainer).val()
+            },
+            callback: function(resp){
+                $('.mom-save-btn', moduleContainer).hide();
+                $('.mom-discard-btn', moduleContainer).hide();
+
+                $('.mom-edit-btn', moduleContainer).show();
+                $('.mom-overlay', moduleContainer).show();
+                $('.mom-content', moduleContainer).html(resp['html']);
+                $('.mom-content', moduleContainer).show();
+
+                $('.wiki-markup', moduleContainer).hide();
+            },
+            onErrorCallback: function () {
+                // TODO: handle failure
+            }
+        });
+    });
+
+	$(window).on('scroll', onScroll);
 
 })(window, jQuery);
