@@ -10,11 +10,24 @@ class WikiaInteractiveMapsHooks {
 	 */
 	public static function onOasisSkinAssetGroups( &$assetsArray ) {
 		$mapsAssets = [ 'int_map_contribution_button_create_map_js' ];
-		array_unshift( $mapsAssets, ( self::isSpecialMapsPage() ? 'int_map_special_page_js' : 'int_map_parser_tag_js' ) );
+
+		if( self::isSpecialMapsPage() ) {
+			array_unshift( $mapsAssets, 'int_map_parser_tag_js' );
+		}
 
 		$assetsArray = array_merge( $assetsArray, $mapsAssets );
 
 		return true;
+	}
+
+	public static function onSkinAfterBottomScripts( $skin, &$text ) {
+		if ( self::isSpecialMapsPage() ) {
+			$scripts = AssetsManager::getInstance()->getURL( 'int_map_special_page_js' );
+
+			foreach ( $scripts as $script ) {
+				$text .= Html::linkedScript( $script );
+			}
+		}
 	}
 
 	/**
