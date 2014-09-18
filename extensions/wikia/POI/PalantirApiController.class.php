@@ -1,6 +1,7 @@
 <?php
 
 use Wikia\Search\Services\NearbyPOISearchService;
+use Wikia\Search\Services\IDSEntitySearchService;
 
 class PalantirApiController extends WikiaApiController {
 
@@ -11,6 +12,13 @@ class PalantirApiController extends WikiaApiController {
 	const DEGREES_IN_PI = 180;
 
 	const DEFAULT_RADIUS = 180;
+
+	const METADATA_CACHE_EXPIRATION = 300; // 5 minutes
+
+	/**
+	 * @var IDSEntitySearchService
+	 */
+	protected $IDSEntity;
 
 	/**
 	 * @var QuestDetailsSolrHelper
@@ -35,20 +43,21 @@ class PalantirApiController extends WikiaApiController {
 
 		$this->validateQuestDetailsParameters( $limit );
 
-		$result = $this->getQuestDetailsSearch()
+		$solrResponse = $this->getQuestDetailsSearch()
 			->newQuery()
 			->withFingerprint( $fingerprintId )
 			->withQuestId( $questId )
-			->withCategory( $category )
+
 			->withWikiId( $this->wg->CityId )
 			->limit( $limit )
 			->search();
 
+		$result = $this->fillDataFromMain( $solrResponse,$category );
+
 		if( empty( $result ) ) {
 			throw new NotFoundApiException();
 		}
-
-		$this->setResponseData( $result );
+		$this->setResponseData( $result, null, self::METADATA_CACHE_EXPIRATION );
 	}
 
 	/**
@@ -85,8 +94,6 @@ class PalantirApiController extends WikiaApiController {
 		$this->validateNearbyQuestsParameters( $lat, $long, $radius, $limit );
 
 		$radiusKilometers = $this->radiusDegreesToKilometers( $radius );
-
-		$solrHelper = $this->getSolrHelper();
 		$nearbySearch = $this->getNearbySearch();
 
 		$solrResponse = $nearbySearch->newQuery()
@@ -94,22 +101,59 @@ class PalantirApiController extends WikiaApiController {
 			->longitude( $long )
 			->radius( $radiusKilometers )
 			->region( $region )
-			->setFields( $solrHelper->getRequiredSolrFields() )
+			->setFields( "*" )
 			->limit( $limit )
 			->withWikiaId( $this->wg->CityId )
 			->search();
 
-		$result = $solrHelper->consumeResponse( $solrResponse );
+		$result = $this->fillDataFromMain( $solrResponse, null );
 
 		if( empty( $result ) ) {
 			throw new NotFoundApiException();
 		}
 
-		$this->setResponseData( $result );
+		$this->setResponseData( $result, null, self::METADATA_CACHE_EXPIRATION );
+	}
+
+	protected function fillDataFromMain( $metadataResp, $category ) {
+		if(empty($metadataResp)){
+			return [];
+		}
+		$solrHelper = $this->getSolrHelper();
+
+		$ids = [ ];
+		$metadata = [ ];
+		foreach ( $metadataResp as $item ) {
+			$ids[ ] = $item[ "id" ];
+			$metadata[ $item[ "id" ] ] = $item;
+		}
+
+		$IDSEntity = $this->getIDSEntity()
+			->setIds( $ids )
+			->setFields( $solrHelper->getRequiredSolrFields() );
+		if ( !empty( $category ) ) {
+			$IDSEntity->setCategories( [ $category ] );
+		}
+		$result = $IDSEntity->query( "*:*" );
+
+		$mapped = [ ];
+		foreach ( $result as $item ) {
+			$item[ "metadata" ] = $metadata[ $item[ "id" ] ];
+			$mapped[ $item[ "id" ] ] = $item;
+		}
+
+		$result = [ ];
+		foreach ( $ids as $id ) {
+			if ( isset( $mapped[ $id ] ) ) {
+				$result[ ] = $mapped[ $id ];
+			}
+		}
+
+		return  $solrHelper->consumeResponse( $result );
 	}
 
 	protected function radiusDegreesToKilometers( $radiusDegrees ) {
-		return $radiusDegrees * self::EARTH_RADIUS  / self::DEGREES_IN_PI * self::PI;
+		return ( $radiusDegrees / self::DEGREES_IN_PI ) * self::EARTH_RADIUS * self::PI;
 	}
 
 	/**
@@ -144,6 +188,23 @@ class PalantirApiController extends WikiaApiController {
 			$this->solrHelper = new QuestDetailsSolrHelper();
 		}
 		return $this->solrHelper;
+	}
+
+	/**
+	 * @param IDSEntitySearchService $IDSEntity
+	 */
+	public function setIDSEntity( $IDSEntity ) {
+		$this->IDSEntity = $IDSEntity;
+	}
+
+	/**
+	 * @return IDSEntitySearchService
+	 */
+	public function getIDSEntity() {
+		if(empty($this->IDSEntity)){
+			$this->IDSEntity = new IDSEntitySearchService();
+		}
+		return $this->IDSEntity;
 	}
 
 	protected function validateNearbyQuestsParameters( $lat, $long, $radius, $limit ) {
