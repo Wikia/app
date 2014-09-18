@@ -59,13 +59,30 @@ class ExactTargetBaseTask extends BaseTask {
 	/**
 	 * Returns ExactTarget_UpdateRequest object with soap vars set from param
 	 * @param Array $aSoapVars
+	 * @param ExactTarget_UpdateOptions|null $oOptions Null for simple update;
+	 *        ExactTarget_UpdateOptions for update-add etc.
 	 * @return ExactTarget_UpdateRequest
 	 */
-	public function wrapUpdateRequest( $aSoapVars ) {
+	public function wrapUpdateRequest( $aSoapVars, $oOptions = null ) {
 		$oRequest = new ExactTarget_UpdateRequest();
-		$oRequest->Options = NULL;
+		$oRequest->Options = $oOptions;
 		$oRequest->Objects = $aSoapVars;
 		return $oRequest;
+	}
+
+	/**
+	 * Prepares ExactTarget_UpdateOptions that says update or add if doesn't exist
+	 * @return ExactTarget_UpdateOptions
+	 */
+	public function prepareUpdateAddOptions() {
+		$updateOptions = new ExactTarget_UpdateOptions();
+
+		$saveOption = new ExactTarget_SaveOption();
+		$saveOption->PropertyName = "DataExtensionObject";
+		$saveOption->SaveAction = ExactTarget_SaveAction::UpdateAdd;
+
+		$updateOptions->SaveOptions[] = new SoapVar( $saveOption, SOAP_ENC_OBJECT, 'SaveOption', "http://exacttarget.com/wsdl/partnerAPI" );
+		return $updateOptions;
 	}
 
 	/**
@@ -81,6 +98,17 @@ class ExactTargetBaseTask extends BaseTask {
 		$apiProperty->Name = $key;
 		$apiProperty->Value = $value;
 		return $apiProperty;
+	}
+
+	/**
+	 * Returns user_id element from $aUserData array and removes it from array
+	 * @param array $aUserData key value data from user table
+	 * @return int
+	 */
+	public function extractUserIdFromData( &$aUserData ) {
+		$iUserId = $aUserData[ 'user_id' ];
+		unset( $aUserData[ 'user_id' ] );
+		return $iUserId;
 	}
 
 	protected function getLoggerContext() {

@@ -116,17 +116,6 @@ class ExactTargetUpdateUserTask extends ExactTargetBaseTask {
 	}
 
 	/**
-	 * Returns user_id element from $aUserData array and removes it from array
-	 * @param array $aUserData key value data from user table
-	 * @return int
-	 */
-	public function extractUserIdFromData( &$aUserData ) {
-		$iUserId = $aUserData[ 'user_id' ];
-		unset( $aUserData[ 'user_id' ] );
-		return $iUserId;
-	}
-
-	/**
 	 * Prepares array of ExactTarget_DataExtensionObject objects for user_properties table
 	 * that can be used to send API update
 	 * @param int $iUserId User id
