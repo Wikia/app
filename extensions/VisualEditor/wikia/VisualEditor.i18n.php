@@ -63,6 +63,11 @@ $messages['en'] = array(
 	'wikia-visualeditor-context-transclusion-description' => 'Edit',
 	'wikia-visualeditor-dialog-wikiatemplateinsert-search' => 'Search for a template by name or article',
 	'wikia-visualeditor-wikiatemplateoptionwidget-appears' => 'Appears $1 {{PLURAL:$1|time|times}}',
+	'wikia-visualeditor-dialog-preference-headline' => 'Greetings, Superfan!',
+	'wikia-visualeditor-dialog-preference-text' => 'Our editor just got upgraded, offering enhanced tools to help you create richer articles.',
+	'wikia-visualeditor-dialog-preference-link-help' => 'Read about new features',
+	'wikia-visualeditor-dialog-preference-link-preferences' => 'Manage your editor preferences',
+	'wikia-visualeditor-dialog-preference-start-button' => 'Got it!',
 );
 
 /** Message documentation (Message documentation)
@@ -141,6 +146,11 @@ $messages['qqq'] = array(
 	'wikia-visualeditor-dialog-transclusion-preview-button' => 'Button text for updating the preview of template edits.',
 	'wikia-visualeditor-context-transclusion-description' => 'Description text in context menu for transclusion node.',
 	'wikia-visualeditor-dialog-wikiatemplateinsert-search' => 'Placeholder text that appears in the template insert dialog search field',
+	'wikia-visualeditor-dialog-preference-headline' => 'Dialog title greeting the contributor',
+	'wikia-visualeditor-dialog-preference-text' => 'Body copy of the dialog, explaining why their user preference has been changed and some ambiguous good words about the new editor',
+	'wikia-visualeditor-dialog-preference-link-help' => 'Link text to help page',
+	'wikia-visualeditor-dialog-preference-link-preferences' => 'Link text to user preference page',
+	'wikia-visualeditor-dialog-preference-start-button' => 'Button copy that closes the dialog',
 );
 
 /** Tunisian Spoken Arabic ( زَوُن)
@@ -383,6 +393,11 @@ $messages['de'] = array(
 	'wikia-visualeditor-dialog-orientation-start-button' => 'Bearbeitung beginnen',
 	'wikia-visualeditor-dialog-meta-languages-readonlynote' => 'Dies ist eine Liste der Sprachen, in denen diese Seite verfügbar ist. Vorerst kann sie nur im Quelltext-Modus bearbeitet werden.',
 	'wikia-visualeditor-dialog-transclusion-no-template-description' => 'Du bearbeitest die Vorlage „$1“.',
+	'wikia-visualeditor-dialog-preference-headline' => 'Hallo Superfan!',
+	'wikia-visualeditor-dialog-preference-text' => 'Unser Visual Editor wurde gerade aufgerüstet und hat jetzt verbesserte Funktionen, die es euch erlauben eindrucksvollere Artikel zu erstellen.',
+	'wikia-visualeditor-dialog-preference-link-help' => 'Lies hier über die neuen Funktionen',
+	'wikia-visualeditor-dialog-preference-link-preferences' => 'Verwalte deine Editor Einstellungen',
+	'wikia-visualeditor-dialog-preference-start-button' => 'Okay!',
 );
 
 /** Zazaki (Zazaki)
@@ -483,6 +498,11 @@ $messages['es'] = array(
 	'wikia-visualeditor-dialog-orientation-start-button' => 'Comenzar a editar',
 	'wikia-visualeditor-dialog-meta-languages-readonlynote' => 'Esta es una lista de páginas en otros idiomas que estan enlazados a esta. Por ahora, solo puede ser editada en el modo fuente.',
 	'wikia-visualeditor-dialog-transclusion-no-template-description' => 'Estas editando la plantilla "$1".',
+	'wikia-visualeditor-dialog-preference-headline' => '¡Saludos!',
+	'wikia-visualeditor-dialog-preference-text' => 'Nuestro editor acaba de ser actualizado, ofreciendo herramientas mejoradas para ayudar a la creación de artículos',
+	'wikia-visualeditor-dialog-preference-link-help' => 'Lee acerca de las nueva funcionalidades',
+	'wikia-visualeditor-dialog-preference-link-preferences' => 'Maneja las preferencias de su editor',
+	'wikia-visualeditor-dialog-preference-start-button' => 'OK',
 );
 
 /** Persian (فارسی)
@@ -522,6 +542,11 @@ $messages['fi'] = array(
 	'wikia-visualeditor-dialog-wikiasourcemode-help-link' => 'Help:Wikitext',
 	'wikia-visualeditor-dialog-meta-languages-readonlynote' => 'Tämä on lista tähän sivuun linkitetyistä muiden kielten sivuista. Toistaiseksi sitä voi muokata ainoastaan lähdekooditilassa.',
 	'wikia-visualeditor-dialog-transclusion-no-template-description' => 'Olet muokkaamassa mallinetta "$1".',
+	'wikia-visualeditor-dialog-preference-headline' => 'Tervehdys, superfani!',
+	'wikia-visualeditor-dialog-preference-text' => 'Meidän muokkaintamme on juuri parannettu ja se tarjoaa nyt entistä parempia työkaluja artikkeleiden luomiseen.',
+	'wikia-visualeditor-dialog-preference-link-help' => 'Lue uusista ominaisuuksista',
+	'wikia-visualeditor-dialog-preference-link-preferences' => 'Hallinnoi muokkausasetuksiasi',
+	'wikia-visualeditor-dialog-preference-start-button' => 'Selvä!',
 );
 
 /** Faroese (føroyskt)
@@ -608,6 +633,11 @@ $messages['fr'] = array(
 	'wikia-visualeditor-dialog-orientation-start-button' => 'Commencer à modifier',
 	'wikia-visualeditor-dialog-meta-languages-readonlynote' => "Ceci est la liste des pages dans d'autres langues liées à celle-ci. Pour l'instant, elle ne peut être modifiée qu'en mode source.",
 	'wikia-visualeditor-dialog-transclusion-no-template-description' => 'Vous modifiez le modèle «$1».',
+	'wikia-visualeditor-dialog-preference-headline' => 'Salutations !',
+	'wikia-visualeditor-dialog-preference-text' => "Notre éditeur vient d'être mis à jour et propose des outils améliorés pour vous aider à créer des articles encore plus riches.",
+	'wikia-visualeditor-dialog-preference-link-help' => 'En lire plus sur les nouvelles fonctionnalités',
+	'wikia-visualeditor-dialog-preference-link-preferences' => "Gérer vos préférences pour l'éditeur",
+	'wikia-visualeditor-dialog-preference-start-button' => 'OK',
 );
 
 /** Galician (galego)
@@ -756,6 +786,11 @@ $messages['it'] = array(
 	'wikia-visualeditor-dialog-orientation-start-button' => 'Inizia a contribuire',
 	'wikia-visualeditor-dialog-meta-languages-readonlynote' => 'Questa è una lista di pagine in altre lingue collegate a questa pagina. Per il momento può essere modificata solo in modalità codice sorgente.',
 	'wikia-visualeditor-dialog-transclusion-no-template-description' => 'Stai modificando il template "$1".',
+	'wikia-visualeditor-dialog-preference-headline' => 'Saluti!',
+	'wikia-visualeditor-dialog-preference-text' => 'Il nostro editor è stato appena aggiornato per offrirti strumenti più potenti che ti aiuteranno a creare articoli più ricchi.',
+	'wikia-visualeditor-dialog-preference-link-help' => 'Scopri di più sulle nuove funzioni',
+	'wikia-visualeditor-dialog-preference-link-preferences' => "Controlla le tue impostazioni dell'editor",
+	'wikia-visualeditor-dialog-preference-start-button' => 'OK',
 );
 
 /** Japanese (日本語)
@@ -792,6 +827,11 @@ $messages['ja'] = array(
 	'wikia-visualeditor-dialog-orientation-start-button' => '編集を始める',
 	'wikia-visualeditor-dialog-meta-languages-readonlynote' => 'これはここにリンクされている他の言語がリストされているページです。今後はソースモードでのみ編集することができます。',
 	'wikia-visualeditor-dialog-transclusion-no-template-description' => '「$1」テンプレートを編集中です。',
+	'wikia-visualeditor-dialog-preference-headline' => 'こんにちは!',
+	'wikia-visualeditor-dialog-preference-text' => '我々の編集機能は向上され、より良い記事ページを作成するために質のよい機能を提供します。',
+	'wikia-visualeditor-dialog-preference-link-help' => '新しい機能について知る',
+	'wikia-visualeditor-dialog-preference-link-preferences' => 'あなたの編集方法を管理する',
+	'wikia-visualeditor-dialog-preference-start-button' => '了解しました',
 );
 
 /** Khmer (ភាសាខ្មែរ)
@@ -1097,6 +1137,11 @@ $messages['nl'] = array(
 	'wikia-visualeditor-dialog-orientation-start-button' => 'Begin met bewerken',
 	'wikia-visualeditor-dialog-meta-languages-readonlynote' => "Dit is een lijst van pagina's in andere talen die hieraan gelinkt zijn. Voorlopig kan dit enkel bewerkt worden in bronmodus.",
 	'wikia-visualeditor-dialog-transclusion-no-template-description' => 'Je bent het "$1"-sjabloon aan het bewerken.',
+	'wikia-visualeditor-dialog-preference-headline' => 'Gegroet!',
+	'wikia-visualeditor-dialog-preference-text' => 'Onze bewerker is juist opgewaardeerd, en biedt betere hulpmiddelen die je helpen rijkere artikels te schrijven',
+	'wikia-visualeditor-dialog-preference-link-help' => 'Over de nieuwe functies lezen',
+	'wikia-visualeditor-dialog-preference-link-preferences' => 'Je bewerkingsvoorkeuren beheren',
+	'wikia-visualeditor-dialog-preference-start-button' => 'Begrepen!',
 );
 
 /** Occitan (occitan)
@@ -1173,6 +1218,11 @@ $messages['pl'] = array(
 	'wikia-visualeditor-dialog-orientation-start-button' => 'Rozpocznij edycję',
 	'wikia-visualeditor-dialog-meta-languages-readonlynote' => 'To jest lista stron w innych językach połączonych z tą. Na chwilę obecną można ją edytować wyłącznie w trybie źródłowym.',
 	'wikia-visualeditor-dialog-transclusion-no-template-description' => 'Edytujesz szablon „$1”.',
+	'wikia-visualeditor-dialog-preference-headline' => 'Witaj!',
+	'wikia-visualeditor-dialog-preference-text' => 'Nasz edytor właśnie został ulepszony i zawiera lepsze narzędzia pozwalające Ci tworzyć bogatsze artykuły.',
+	'wikia-visualeditor-dialog-preference-link-help' => 'Dowiedz się więcej o nowych funkcjach',
+	'wikia-visualeditor-dialog-preference-link-preferences' => 'Dostosuj swoje preferencje edytora',
+	'wikia-visualeditor-dialog-preference-start-button' => 'OK',
 );
 
 /** Pashto (پښتو)
@@ -1209,6 +1259,11 @@ $messages['pt'] = array(
 	'wikia-visualeditor-dialog-orientation-start-button' => 'Comece a editar',
 	'wikia-visualeditor-dialog-meta-languages-readonlynote' => 'Esta é uma lista de páginas em outros idiomas que estão interligadas com esta. No momento, ela só pode editada no modo fonte.',
 	'wikia-visualeditor-dialog-transclusion-no-template-description' => 'Está a editar a predefinição "$1".',
+	'wikia-visualeditor-dialog-preference-headline' => 'Saudações!',
+	'wikia-visualeditor-dialog-preference-text' => 'O nosso editor acaba de ser atualizado, oferecendo ferramentas melhoradas para ajudá-lo na criação de artigos. ',
+	'wikia-visualeditor-dialog-preference-link-help' => 'Leia sobre as nossas novas funções',
+	'wikia-visualeditor-dialog-preference-link-preferences' => 'Controle as preferências do seu editor',
+	'wikia-visualeditor-dialog-preference-start-button' => 'OK',
 );
 
 /** Brazilian Portuguese (português do Brasil)
@@ -1380,6 +1435,11 @@ $messages['ru'] = array(
 	'wikia-visualeditor-dialog-orientation-start-button' => 'Начать редактирование',
 	'wikia-visualeditor-dialog-meta-languages-readonlynote' => 'Это список страниц на других языках, которые связаны с этой страницей. В данный момент, эти ссылки могут быть отредактированы только в режиме Исходного кода.',
 	'wikia-visualeditor-dialog-transclusion-no-template-description' => 'Вы редактируете шаблон «$1».',
+	'wikia-visualeditor-dialog-preference-headline' => 'Приветствуем!',
+	'wikia-visualeditor-dialog-preference-text' => 'Наш редактор получил обновления и предлагает расширенные инструменты для создания ещё более лучших статей.',
+	'wikia-visualeditor-dialog-preference-link-help' => 'Прочитать о новых возможностях',
+	'wikia-visualeditor-dialog-preference-link-preferences' => 'Настроить предпочтения в редакторе',
+	'wikia-visualeditor-dialog-preference-start-button' => 'Попробовать!',
 );
 
 /** Scots (Scots)
@@ -1606,6 +1666,11 @@ $messages['vi'] = array(
 	'wikia-visualeditor-notification-media-only-premium-videos-allowed' => 'Wiki này chỉ cho phép lấy nội dung được cấp phép từ <a href="http://video.wikia.com" target="_blank">thư viện Video Wikia</a> được thêm vào. Xin vui lòng đi đến <a href="http://video.wikia.com" target="_blank">video.wikia.com</a> để tìm kiếm video.',
 	'wikia-visualeditor-notification-media-query-failed' => 'Xin lỗi, chúng tôi không thể tìm thấy một hình ảnh được hỗ trợ hoặc video tại URL đó.',
 	'wikia-visualeditor-notification-media-permission-denied' => 'Cho phép đã bị từ chối',
+	'wikia-visualeditor-dialog-preference-headline' => 'Chúc mừng!',
+	'wikia-visualeditor-dialog-preference-text' => 'Trình soạn thảo của chúng tôi vừa mới nâng cấp, cung cấp những công cụ nâng cao để giúp bạn tạo ra nhiều bài viết phong phú hơn.',
+	'wikia-visualeditor-dialog-preference-link-help' => 'Tìm hiểu về tính năng mới',
+	'wikia-visualeditor-dialog-preference-link-preferences' => 'Quản lý tùy chọn soạn thảo của bạn',
+	'wikia-visualeditor-dialog-preference-start-button' => 'Hiểu rồi!',
 );
 
 /** Volapük (Volapük)
@@ -1675,4 +1740,19 @@ $messages['zh-hans'] = array(
 	'wikia-visualeditor-dialog-orientation-start-button' => '开始编辑',
 	'wikia-visualeditor-dialog-meta-languages-readonlynote' => '这是拥有其它语言链接的页面列表。当下只能使用源代码进行编辑。',
 	'wikia-visualeditor-dialog-transclusion-no-template-description' => '您正在编辑\\"$1\\"个模版。',
+	'wikia-visualeditor-dialog-preference-headline' => '您好！',
+	'wikia-visualeditor-dialog-preference-text' => '我们已经对编辑器进行升级，为您提供更多强大的工具，帮助您创建更丰富的文章内容。',
+	'wikia-visualeditor-dialog-preference-link-help' => '浏览新功能',
+	'wikia-visualeditor-dialog-preference-link-preferences' => '管理编辑器参数',
+	'wikia-visualeditor-dialog-preference-start-button' => '知道了',
+);
+
+/** Korean
+ */
+$messages['ko'] = array(
+	'wikia-visualeditor-dialog-preference-headline' => '좋은 소식입니다!',
+	'wikia-visualeditor-dialog-preference-text' => '한층 개선된 편집기 덕분에 이제 더 쉽게 문서를 알차게 만들 수 있을 것입니다.',
+	'wikia-visualeditor-dialog-preference-link-help' => '새로운 기능을 확인해보세요',
+	'wikia-visualeditor-dialog-preference-link-preferences' => '편집기 환경 설정을 변경해보세요',
+	'wikia-visualeditor-dialog-preference-start-button' => '확인',
 );
