@@ -6,19 +6,24 @@ define('mediaGallery.views.gallery', [
 
 	function Gallery(options) {
 		this.$el = options.$el;
+		this.$wrapper = options.$wrapper;
 		this.model = options.model;
-		this.visibleCount = options.visiblie || 8;
+
+		this.visibleCount = this.$wrapper.data('visible-count') || 8;
+		this.oVisibleCount = this.visibleCount;
+		this.interval = options.interval || 12;
 		this.media = [];
 
 		this.init();
 	}
 
 	Gallery.prototype.init = function () {
-		this.render();
+		this.renderMedia(this.model.slice(0, this.oVisibleCount));
 
-		if (this.media.length > this.visibleCount) {
+		if (this.model.length > this.visibleCount) {
 			this.toggler = new Toggler({
-				$el: this.$el
+				$el: this.$el,
+				gallery: this
 			});
 			this.toggler.init();
 		}
@@ -26,21 +31,56 @@ define('mediaGallery.views.gallery', [
 		this.$el.on('click', '.media > a', $.proxy(this.track, this));
 	};
 
-	Gallery.prototype.render = function () {
-		var html = '';
+	/**
+	 * Render and insert media items with only one DOM insertion per batch
+	 */
+	Gallery.prototype.renderMedia = function (data) {
+		var self = this,
+			html = '';
 
-		// create new views for each media item
-		$.each(this.model, function () {
+		$.each(data, function () {
 			var media = new Media({
 				el: document.createElement('div'),
 				model: this
 			});
-
+			self.media.push(media);
 			media.render();
+			media.show();
 			html += media.el.outerHTML;
 		});
 
 		this.$el.append(html);
+	};
+
+	/**
+	 * Incrementally show more media
+	 */
+	Gallery.prototype.showMore = function () {
+		var data = this.model.slice(this.visibleCount, this.visibleCount + this.interval),
+			toRender = [];
+
+		// If rendered, show it, otherwise, add to render stack.
+		$.each(data, function (idx, mediaData) {
+			if (mediaData.rendered) {
+				mediaData.media.show();
+			} else {
+				toRender.push(mediaData);
+			}
+		});
+
+		this.renderMedia(toRender);
+		this.visibleCount += data.length;
+	};
+
+	/**
+	 * Hide all but original media
+	 */
+	Gallery.prototype.showLess = function () {
+		var data = this.model.slice(0, this.oVisibleCount);
+		$.each(data, function () {
+			data.media.hide();
+			this.visibleCount -= 1;
+		});
 	};
 
 	// TODO: test to make sure it works as is and/or move to media view; might be more performant this way b/c

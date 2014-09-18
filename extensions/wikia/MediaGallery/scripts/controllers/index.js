@@ -18,8 +18,8 @@ require(['mediaGallery.views.gallery'], function (Gallery) {
 
 			gallery = new Gallery({
 				$el: $this.find('.media-gallery-inner'),
-				model: model,
-				visible: $this.data('visible-count')
+				$wrapper: $this,
+				model: model
 			});
 
 			galleries.push(gallery);

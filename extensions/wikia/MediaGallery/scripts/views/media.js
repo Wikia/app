@@ -11,9 +11,11 @@ define('mediaGallery.views.media', [
 		this.el = options.el;
 		this.$el = $(this.el);
 		this.model = options.model;
+		this.model.media = this;
+		this.model.rendered = false;
+		this.visible = false;
 
 		this.$caption = this.$el.find('.caption');
-		this.init();
 	}
 
 	Media.prototype.init = function () {
@@ -27,7 +29,10 @@ define('mediaGallery.views.media', [
 	};
 
 	Media.prototype.render = function () {
+		this.el.className = this.el.className + ' media';
 		this.el.innerHTML = Mustache.render(templates[templateName], this.model);
+		this.model.rendered = true;
+		this.hide();
 		return this;
 	};
 
@@ -39,6 +44,18 @@ define('mediaGallery.views.media', [
 			trackingMethod: 'both',
 			value: 0
 		});
+	};
+
+	Media.prototype.show = function () {
+		// do the showing
+		this.$el.show(); // todo: add animations and such
+		this.visible = true;
+	};
+
+	Media.prototype.hide = function () {
+		// do the hiding
+		this.$el.hide(); // todo: add animations and such
+		this.visible = false;
 	};
 
 	return Media;
