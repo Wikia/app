@@ -268,7 +268,7 @@ class VideoHandlerController extends WikiaController {
 		$videos = WikiaDataAccess::cache(
 			$memcKey,
 			WikiaResponse::CACHE_STANDARD,
-			$this->getDetailsForTitles( $fileTitles, $videoOptions )
+			$this->getDetailsForVideoTitles( $fileTitles, $videoOptions )
 		);
 
 		$this->detail = ( count( $videos ) == 1 ) ? array_pop( $videos ) : $videos;
@@ -294,7 +294,7 @@ class VideoHandlerController extends WikiaController {
 		return $videoOptions;
 	}
 
-	private function getDetailsForTitles( $fileTitles, $videoOptions ) {
+	private function getDetailsForVideoTitles( $fileTitles, $videoOptions ) {
 		$videos = [];
 		$helper = new VideoHandlerHelper();
 		foreach ( $fileTitles as $fileTitle ) {
