@@ -1,7 +1,15 @@
 (function (window, $) {
 	'use strict';
+
+	$.fn.refresh = function() {
+		var elems = $(this.selector);
+		this.splice(0, this.length);
+		this.push.apply( this, elems );
+		return this;
+	};
 	var
 		$mwContent = $('#mw-content-text'),
+		$clonedMain = null,
 		$mainContentContainer = $('#WikiaMainContentContainer'),
 		$mainContent = $('#WikiaMainContent'),
 		$momHeader = $('#MomHeader'),
@@ -18,6 +26,7 @@
 		$leftColumn = $('.lcs-container'),
 		$rightColumn = $('.rcs-container'),
 		onEdit = function () {
+			$clonedMain = $mwContent.clone(true, true);
 			addEmpty();
 			$moms.addClass('mom-hidden');
 			$editMode.show();
@@ -68,7 +77,7 @@
 				right = [];
 			$('.lcs-container .mom-module').each(function () {
 				var data = $(this).data();
-				if (data.title) {
+				if (typeof data.title != 'undefined') {
 					left.push(JSON.stringify({
 						'title': data.title,
 						'text': $(this).find('.mom-bar .mom-bar-content').text()
@@ -77,7 +86,7 @@
 			});
 			$('.rcs-container .mom-module').each(function () {
 				var data = $(this).data();
-				if (data.title) {
+				if (typeof data.title != 'undefined') {
 					right.push(JSON.stringify({
 						'title': data.title,
 						'text': $(this).find('.mom-bar-content').text()
@@ -100,7 +109,6 @@
 			});
 		}, onDataSaved = function () {
 			$mainContentContainer.stopThrobbing();
-			console.info('saved');
 		}, onScroll = function () {
 			if ($(window).scrollTop() >= $mainContent.offset().top) {
 				$momHeader.addClass('mom-fixed');
@@ -108,30 +116,67 @@
 				$momHeader.removeClass('mom-fixed');
 			}
 		}, onDiscard = function () {
-			removeEmpty();
 			$editMode.hide();
 			$nonEditMode.show();
-			$moms.removeClass('mom-hidden');
-			$momBar.hide();
-			$momOverlays.hide();
-			$leftColumn.sortable('disable');
-			$rightColumn.sortable('disable');
-			$momBarContent.each(function () {
-				$(this).removeAttr('contenteditable');
-			});
-			//TODO: restore default on changed
+			$mwContent.replaceWith($clonedMain);
+			$mwContent.refresh();
+			$mainContent.refresh();
+			$deleteButton.refresh();
+			$momOverlays.refresh();
+			$momBar.refresh();
+			$momBarContent.refresh();
+			$moms.refresh();
+			$leftColumn.refresh();
+			$rightColumn.refresh();
+			$deleteButton.on('click', function(){ $(this).parents('.mom-module').remove(); });
 		}, addEmpty = function () {
 			var $new = $(document.createElement('div')),
 				$button = $(document.createElement('div'));
 			$button.text('ADD');
-			$button.addClass('new-btn');
-			$new.append($button);
+			$button.addClass('add-btn new-btn');
 			$new.addClass('mom-module mom-add-module');
+			var $secButton = $button.clone(true),
+				$secNew = $new.clone();
+			$button.on('click', {align: 'right'}, addNewModule);
+			$secButton.on('click', {align: 'left'}, addNewModule);
 
-			$rightColumn.append($new);
-			$leftColumn.append($new.clone());
+			$rightColumn.append($new.append($button));
+			$leftColumn.append($secNew.append($secButton));
 		}, removeEmpty = function () {
 			$('.mom-add-module').remove();
+		}, addNewModule = function (ev) {
+			//add placeholder will be replace after loaded
+			$('<div id="MomNewPlaceHolder" class="mom-no-display"></div>').insertBefore($(this).parent());
+			$.nirvana.sendRequest({
+				controller: 'NjordController',
+				method: 'modula',
+				format: 'HTML',
+				type: 'GET',
+				data: {
+					align: ev.data.align,
+					title: 'new'
+				},
+				callback: onAddNewBlock,
+				onErrorCallback: function () {
+					// TODO: handle failure
+				}
+			});
+		}, onAddNewBlock = function (d) {
+			$('#MomNewPlaceHolder').replaceWith(d);
+			refresh();
+			$moms.addClass('mom-hidden');
+			$momBar.show();
+			$momOverlays.show();
+			$momBarContent.each(function () {
+				$(this).attr('contenteditable', true);
+			});
+			$deleteButton.on('click', function(){ $(this).parents('.mom-module').remove(); });
+		}, refresh = function () {
+			$deleteButton.refresh();
+			$momOverlays.refresh();
+			$momBar.refresh();
+			$momBarContent.refresh();
+			$moms.refresh();
 		};
 
 	$editButton.on('click', onEdit);

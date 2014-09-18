@@ -129,7 +129,9 @@
 			$editButton.hide();
 			if ($heroModuleImage.attr('src') !== $heroModuleImage.data('fullpath')) {
 				$heroModuleImage.attr('src', $heroModuleImage.data('fullpath'));
-				$heroModule.trigger('enableDragging');
+				$heroModuleImage.one('load', function () {
+					$heroModule.trigger('enableDragging')
+				});
 			} else {
 				onImageLoad();
 				$heroModule.trigger('enableDragging');

@@ -24,12 +24,11 @@ class NjordHooks {
 	}
 
 	public static function renderModuleContainerTag( $content, array $attributes, Parser $parser, PPFrame $frame ) {
-		$title = Title::newFromText( $attributes[ 'content-title' ] );
-		if ( $title->exists() ) {
+		if( !empty( $attributes[ 'content-title' ] ) ) {
+			$title = Title::newFromText( $attributes[ 'content-title' ] );
 			$article = Article::newFromTitle( $title, RequestContext::getMain() );
 			$attributes['content'] = $article->getParserOutput()->getText();
-			return F::app()->renderView('Njord', 'modula', $attributes);
 		}
-		return '';
+		return F::app()->renderView('Njord', 'modula', $attributes);
 	}
 }
