@@ -74,7 +74,7 @@
 			removeEmpty();
 			$editMode.hide();
 			$nonEditMode.show();
-			$mainContentContainer.startThrobbing();
+			$mainContent.startThrobbing();
 			$moms.removeClass('mom-hidden');
 			$momBar.hide();
 			$momOverlays.hide();
@@ -118,7 +118,7 @@
 				}
 			});
 		}, onDataSaved = function () {
-			$mainContentContainer.stopThrobbing();
+			$mainContent.stopThrobbing();
 		}, onScroll = function () {
 			if ($(window).scrollTop() >= $mainContent.offset().top) {
 				$momHeader.addClass('mom-fixed');
