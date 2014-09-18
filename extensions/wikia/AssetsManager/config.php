@@ -67,7 +67,6 @@ $config['adengine2_js'] = array(
 		'//extensions/wikia/AdEngine/js/WikiaGptAdDetect.js',
 		'//extensions/wikia/AdEngine/js/AdProviderDirectGpt.js',
 		'//extensions/wikia/AdEngine/js/AdProviderEbay.js',
-		'//extensions/wikia/AdEngine/js/AdProviderTaboola.js',
 		'//extensions/wikia/AdEngine/js/AdProviderLater.js',
 		'//extensions/wikia/AdEngine/js/AdProviderNull.js',
 		'//extensions/wikia/AdEngine/js/AdProviderRemnantGpt.js',

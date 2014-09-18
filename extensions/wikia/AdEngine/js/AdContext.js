@@ -67,8 +67,7 @@ define('ext.wikia.adEngine.adContext', ['wikia.window', 'wikia.document'], funct
 			ebay: w.wgAdDriverUseEbay,
 			sevenOneMedia: w.wgAdDriverUseSevenOneMedia,
 			sevenOneMediaCombinedUrl: w.wgAdDriverSevenOneMediaCombinedUrl,
-			remnantGptMobile: w.wgAdDriverEnableRemnantGptMobile,
-			taboola: w.wgAdDriverUseTaboola
+			remnantGptMobile: w.wgAdDriverEnableRemnantGptMobile
 		},
 
 		slots: {
