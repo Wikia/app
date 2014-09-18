@@ -1,31 +1,73 @@
 <?php
 
-class TransactionIsCacheableTest extends WikiaBaseTest {
+/**
+ * Unit tests for TransactionClassifier
+ *
+ * @author macbre
+ */
+class TransactionClassifierTest extends WikiaBaseTest {
 
 	/**
-	 * @dataProvider isCacheableDataProvider
+	 * @dataProvider buildDataProvider
 	 */
-	public function testIsCacheable( $header, $expected ) {
-		$this->assertEquals( $expected, Transaction::isCacheable( ['Cache-Control' => $header] ) );
+	public function testBuild( Array $attributes, $expectedName ) {
+		$classifier = new TransactionClassifier();
+
+		foreach($attributes as $key => $value) {
+			$classifier->update($key, $value);
+		}
+
+		$this->assertEquals($expectedName, $classifier->getName(), 'The transaction name should match');
 	}
 
-	public function isCacheableDataProvider() {
+	// TODO: Władek to update the test cases (2014-09-18)
+	public function buildDataProvider() {
 		return [
 			[
-				'header' => false,
-				'isCacheable' => null
+				'attributes' => [
+					Transaction::PARAM_ENTRY_POINT => Transaction::ENTRY_POINT_PAGE,
+					Transaction::PARAM_NAMESPACE => NS_MAIN,
+					Transaction::PARAM_ACTION => TransactionClassifier::ACTION_VIEW,
+					Transaction::PARAM_SKIN => 'foo-skin',
+					Transaction::PARAM_PARSER_CACHE_USED => false,
+					Transaction::PARAM_SIZE_CATEGORY => 'big-page'
+				],
+				'expectedName' => 'page/main/view/foo-skin/parser/big-page'
 			],
 			[
-				'header' => 's-maxage=86400, must-revalidate, max-age=0',
-				'isCacheable' => true
+				'attributes' => [
+					Transaction::PARAM_ENTRY_POINT => Transaction::ENTRY_POINT_PAGE,
+					Transaction::PARAM_NAMESPACE => NS_MAIN,
+					Transaction::PARAM_ACTION => TransactionClassifier::ACTION_VIEW,
+					Transaction::PARAM_SKIN => 'foo-skin',
+					Transaction::PARAM_PARSER_CACHE_USED => false,
+					Transaction::PARAM_SIZE_CATEGORY => 'small-page'
+				],
+				'expectedName' => 'page/main/view/foo-skin/parser/small-page'
 			],
 			[
-				'header' => 'public, max-age=2592000',
-				'isCacheable' => true
+				'attributes' => [
+					Transaction::PARAM_ENTRY_POINT => Transaction::ENTRY_POINT_PAGE,
+					Transaction::PARAM_NAMESPACE => NS_MAIN,
+					Transaction::PARAM_ACTION => TransactionClassifier::ACTION_VIEW,
+					Transaction::PARAM_SKIN => 'foo-skin',
+					Transaction::PARAM_PARSER_CACHE_USED => true,
+					Transaction::PARAM_PARSER_CACHE_DISABLED => true,
+					Transaction::PARAM_SIZE_CATEGORY => 'medium-page'
+				],
+				'expectedName' => 'page/main/view/foo-skin/parser_cache_disabled/medium-page'
 			],
 			[
-				'header' => 'private, must-revalidate, max-age=0',
-				'isCacheable' => false
+				'attributes' => [
+					Transaction::PARAM_ENTRY_POINT => Transaction::ENTRY_POINT_PAGE,
+					Transaction::PARAM_NAMESPACE => NS_MAIN,
+					Transaction::PARAM_ACTION => TransactionClassifier::ACTION_VIEW,
+					Transaction::PARAM_SKIN => 'foo-skin',
+					Transaction::PARAM_PARSER_CACHE_USED => true,
+					Transaction::PARAM_PARSER_CACHE_DISABLED => false,
+					Transaction::PARAM_SIZE_CATEGORY => 'medium-page'
+				],
+				'expectedName' => 'page/main/view/foo-skin/no_parser/medium-page'
 			],
 		];
 	}
