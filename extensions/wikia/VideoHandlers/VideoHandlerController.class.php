@@ -9,7 +9,6 @@ class VideoHandlerController extends WikiaController {
 	const VIDEO_LIMIT = 100;
 	const DEFAULT_THUMBNAIL_WIDTH = 250;
 	const DEFAULT_THUMBNAIL_HEIGHT = 250;
-	const CACHE_TTL = 43200; // 12 hours
 
 	/**
 	 * Get the embed code for the title given by fileTitle
