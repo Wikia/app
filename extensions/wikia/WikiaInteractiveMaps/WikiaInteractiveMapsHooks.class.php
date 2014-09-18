@@ -28,6 +28,7 @@ class WikiaInteractiveMapsHooks {
 				$text .= Html::linkedScript( $script );
 			}
 		}
+		return true;
 	}
 
 	/**
