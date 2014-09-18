@@ -1,25 +1,46 @@
 #MomHeader {
+  display: none;
   margin: 2px 0;
   .btn-group-top {
     display: flex;
   }
-  .layout-mode {
-    display: none;
-  }
-  .new-btn {
-    background-color: #092140;
-    color: #fff;
-    cursor: pointer;
-    font-weight: bold;
-    padding: 16px 20px;
-    text-align: center;
-    text-decoration: none;
-    text-transform: uppercase;
-
+  .layout-cancel-btn.new-btn {
+    background-color: #FFFFFF;
+    border: 1px solid #0a5fa3;
+    color: #092140;
+    margin-right: 5px;
     &:hover {
       background-color: #0a5fa3;
+      color: #fff;
     }
   }
+}
+
+.layout-mode {
+  display: none;
+}
+
+.layout-save-btn {
+  flex-grow: 1;
+}
+
+.new-btn {
+  background-color: #092140;
+  color: #fff;
+  cursor: pointer;
+  font-weight: bold;
+  padding: 16px 20px;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+
+  &:hover {
+    background-color: #0a5fa3;
+  }
+}
+
+.no-layout-mode {
+  flex-grow: 1;
 }
 
 .mom-add-module {
@@ -42,6 +63,7 @@
     top: 0;
   }
   .mom-bar-content {
+    border: 1px dashed lightgray;
     cursor: auto;
     width: 30%;
   }
@@ -62,17 +84,17 @@
 
 .mom-hidden:after {
   content: " ";
-  display:block;
+  display: block;
   position: absolute;
-  top:185px;
-  width:100%;
-  height:15px;
+  top: 185px;
+  width: 100%;
+  height: 15px;
   background: linear-gradient(rgba(130, 130, 130, .2) 0%, transparent 0%), linear-gradient(135deg, #FFFFFF 33.33%, transparent 33.33%) 0 0%, #FFFFFF linear-gradient(45deg, #FFFFFF 33.33%, rgba(130, 130, 130, .2) 33.33%) 0 0%;
   background: -webkit-linear-gradient(rgba(130, 130, 130, .2) 0%, transparent 0%), -webkit-linear-gradient(135deg, #FFFFFF 33.33%, transparent 33.33%) 0 0%, #FFFFFF -webkit-linear-gradient(45deg, #FFFFFF 33.33%, rgba(130, 130, 130, .2) 33.33%) 0 0%;
   background: -o-linear-gradient(rgba(130, 130, 130, .2) 0%, transparent 0%), -o-linear-gradient(135deg, #FFFFFF 33.33%, transparent 33.33%) 0 0%, #FFFFFF -o-linear-gradient(45deg, #FFFFFF 33.33%, rgba(130, 130, 130, .2) 33.33%) 0 0%;
   background: -moz-linear-gradient(rgba(130, 130, 130, .2) 0%, transparent 0%), -moz-linear-gradient(135deg, #FFFFFF 33.33%, transparent 33.33%) 0 0%, #FFFFFF -moz-linear-gradient(45deg, #FFFFFF 33.33%, rgba(130, 130, 130, .2) 33.33%) 0 0%;
   background-repeat: repeat-x;
-  background-size: 0px 100%,17px 18px,17px 18px;
+  background-size: 0px 100%, 17px 18px, 17px 18px;
   z-index: 101;
 }
 

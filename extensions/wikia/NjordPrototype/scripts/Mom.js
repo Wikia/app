@@ -25,7 +25,14 @@
 		$moms = $('.mom-module'),
 		$leftColumn = $('.lcs-container'),
 		$rightColumn = $('.rcs-container'),
-		onEdit = function () {
+		initMom = function () {
+			$momHeader.show();
+			$editButton.on('click', onEdit);
+			$saveButton.on('click', onSave);
+			$discardButton.on('click', onDiscard);
+			$deleteButton.on('click', function(){ $(this).parents('.mom-module').remove(); });
+			$(window).on('scroll', onScroll);
+		}, onEdit = function () {
 			$clonedMain = $mwContent.clone(true, true);
 			addEmpty();
 			$moms.addClass('mom-hidden');
@@ -34,7 +41,7 @@
 			$momBar.show();
 			$momOverlays.show();
 			var options = {
-				cancel: '.mom-bar-content',
+				cancel: '.mom-bar-content, .btn-group-right',
 				handle: '.mom-bar',
 				helper: 'clone',
 				items: '.mom-module-left, .mom-module-right',
@@ -179,10 +186,8 @@
 			$moms.refresh();
 		};
 
-	$editButton.on('click', onEdit);
-	$saveButton.on('click', onSave);
-	$discardButton.on('click', onDiscard);
-	$deleteButton.on('click', function(){ $(this).parents('.mom-module').remove(); });
-	$(window).on('scroll', onScroll);
+	if (window.wgUserName) {
+		initMom();
+	}
 
 })(window, jQuery);
