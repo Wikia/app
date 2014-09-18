@@ -1,7 +1,8 @@
-@import '../../Venus/styles/variables';
+@import 'extensions/wikia/Venus/styles/variables';
 @import 'skins/shared/color';
-@import 'skins/shared/mixins/columns';
 @import 'skins/shared/mixins/blackout';
+@import 'skins/shared/mixins/chevron';
+@import 'skins/shared/mixins/columns';
 @import 'GlobalNavigationColors';
 
 .hubs-entry-point {
@@ -59,6 +60,30 @@
 		*, *:before, *:after {
 			-webkit-backface-visibility: hidden;
 		}
+	}
+
+	.hub-more {
+		bottom: 40px;
+		left: 325px;
+		font-size: 16px;
+		font-weight: bold;
+		position: absolute;
+
+		li {
+			display: none;
+
+			&.active {
+				display: block;
+			}
+
+			a {
+				@include right-chevron();
+				&:after {
+					margin-left: 6px;
+				}
+			}
+		}
+
 	}
 
 	nav {
@@ -145,6 +170,8 @@
 
 	section {
 		@include column-count(2);
+		@include column-rule(1px outset $nav-border-color);
+		@include column-gap(36px);
 
 		display: none;
 		float: left;
