@@ -267,7 +267,7 @@ class VideoHandlerController extends WikiaController {
 		$videos = WikiaDataAccess::cache(
 			$memcKey,
 			WikiaResponse::CACHE_STANDARD,
-			function( $fileTitles, $videoOptions ) use ( $fileTitles, $videoOptions ) {
+			function() use ( $fileTitles, $videoOptions ) {
 				return $this->getDetailsForVideoTitles( $fileTitles, $videoOptions );
 			}
 		);
