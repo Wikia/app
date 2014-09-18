@@ -1,4 +1,4 @@
-require(['mediaGallery.toggler', 'mediaGallery.media'], function (Toggler, Media) {
+require(['mediaGallery.views.toggler', 'mediaGallery.views.media'], function (Toggler, Media) {
 	'use strict';
 	$(function () {
 		var visibleCount = 8,

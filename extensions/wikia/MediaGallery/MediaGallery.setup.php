@@ -21,6 +21,7 @@ $dir = dirname(__FILE__) . '/';
 //classes
 $wgAutoloadClasses['MediaGalleryController'] =  $dir . 'MediaGalleryController.class.php';
 $wgAutoloadClasses['MediaGalleryHelper'] =  $dir . 'MediaGalleryHelper.class.php';
+$wgAutoloadClasses['MediaGalleryModel'] =  $dir . 'MediaGalleryModel.class.php';
 
 // hooks
 $wgAutoloadClasses['MediaGalleryHooks'] =  $dir . 'MediaGalleryHooks.class.php';

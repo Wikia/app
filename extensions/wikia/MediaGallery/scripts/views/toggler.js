@@ -1,4 +1,4 @@
-define('mediaGallery.toggler', ['mediaGallery.templates.mustache'], function (templates) {
+define('mediaGallery.views.toggler', ['mediaGallery.templates.mustache'], function (templates) {
 	'use strict';
 
 	// workaround for nirvana template naming conventions and JSHint conflict

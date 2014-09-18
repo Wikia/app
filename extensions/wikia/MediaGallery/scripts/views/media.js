@@ -1,4 +1,4 @@
-define('mediaGallery.media', [], function () {
+define('mediaGallery.views.media', [], function () {
 	'use strict';
 
 	function Media(options) {
