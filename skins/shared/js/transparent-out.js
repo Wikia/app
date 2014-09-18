@@ -27,7 +27,10 @@
 				initialize();
 			}
 
-			$domNode.on('click', $.proxy(function() {
+			$domNode.on('click touchstart', $.proxy(function(e) {
+				e.preventDefault();
+				e.stopPropagation();
+
 				callback(this);
 			}, this));
 		};
