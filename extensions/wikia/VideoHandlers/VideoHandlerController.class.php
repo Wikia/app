@@ -305,6 +305,8 @@ class VideoHandlerController extends WikiaController {
 	}
 
 	/**
+	 * Given an array of video titles, and an array of videoOptions (see getVideoDetails for more info)
+	 * return a list of those videos with fleshed out details (eg thumbnail, videoKey, embedUrl, etc)
 	 * @param array $fileTitles
 	 * @param array $videoOptions
 	 * @return array
