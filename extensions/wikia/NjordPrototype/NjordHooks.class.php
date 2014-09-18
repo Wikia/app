@@ -27,7 +27,7 @@ class NjordHooks {
 		if( !empty( $attributes[ 'content-title' ] ) ) {
 			$title = Title::newFromText( $attributes[ 'content-title' ] );
 			$article = Article::newFromTitle( $title, RequestContext::getMain() );
-			$attributes['content'] = $article->getParserOutput()->getText();
+			$attributes['content'] = $parser->recursiveTagParse($article->getContent());
 		}
 		return F::app()->renderView('Njord', 'modula', $attributes);
 	}
