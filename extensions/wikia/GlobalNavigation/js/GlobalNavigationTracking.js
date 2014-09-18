@@ -7,7 +7,7 @@ $(function($) {
 	searchSuggestionsShowed = false;
 
 	function globalNavigationClickTrackingHandler(event) {
-		var $element;
+		var $element, label, $parent;
 
 		//Track only primary mouse button click
 		if (event.type === 'mousedown' && event.which !== 1) {
@@ -21,39 +21,43 @@ $(function($) {
 		});
 
 		$element = $(event.target);
-		if ($element.closest('.wikia-logo').length > 0) { // wikia logo
-			track({
-				label: 'wikia-logo'
-			});
-		} else if ($element.closest('.hub-links').length > 0 || $element.closest('.hub-list').length > 0) { // hub link
-			track({
-				label: 'hub-item'
-			});
+		if ($element.closest('.wikia-logo').length > 0) {
+			label = 'wikia-logo';
+		} else if ($element.closest('.hub-links').length > 0 || $element.closest('.hub-list').length > 0) {
+			label = 'hub-item';
 		} else if ($element.data('id') === 'logout') {
-			track({
-				label: 'user-menu-logout'
-			});
+			label = 'user-menu-logout';
 		} else if ($element.data('id') === 'help') {
-			track({
-				label: 'user-menu-help'
-			});
+			label = 'user-menu-help';
+		} else if ($element.data('id') === 'preferences') {
+			label = 'user-menu-preferences';
+		} else if ($element.data('id') === 'mytalk') {
+			label = 'user-menu-talk';
+		} else if ($element.closest('.ajaxRegisterContainer').length > 0) {
+			label = 'user-menu-register';
+		} else if ($element.closest('.notifications-for-wiki').length > 0) {
+			$parent = $element.closest('.notifications-for-wiki');
+			if ($parent.data('wiki-id') === parseInt(window.wgCityId)) {
+				label = 'notification-item-local';
+			} else {
+				label = 'notification-item-global';
+			}
 		} else if ($element.hasClass('message-wall')) {
-			track({
-				label: 'user-menu-message-wall'
-			});
-		} else if ($element.closest('.start-wikia').length > 0) { //start a wikia button
-			track({
-				label: 'start-wiki'
-			});
-		} else if ($element.hasClass('login-button')) { // log in button
-			track({
-				label: 'login'
-			});
-		} else if ($element.closest('.ajaxLogin').attr('accesskey') === '.') { //user menu profile
-			track({
-				label: 'user-menu-profile'
-			});
+			label = 'user-menu-message-wall';
+		} else if ($element.closest('.start-wikia').length > 0) {
+			label = 'start-a-wiki';
+		} else if ($element.hasClass('login-button')) {
+			label = 'login';
+		} else if ($element.closest('.ajaxLogin').attr('accesskey') === '.') {
+			label = 'user-menu-profile';
+		} else {
+			//If none of above was clicked, don't track
+			return;
 		}
+
+		track({
+			label: label
+		});
 	}
 
 	function searchSuggestionsClickTrackingHandler(event) {
