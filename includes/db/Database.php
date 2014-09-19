@@ -3524,13 +3524,17 @@ abstract class DatabaseBase implements DatabaseType {
 	 * @return void
 	 */
 	protected function logSql( $sql, $fname, $elapsedTime, $isMaster ) {
+		global $wgDBcluster;
+
 		if ($this->getSampler()->shouldSample()) {
 			$this->getWikiaLogger()->info( "SQL $sql", [
 				'method'      => $fname,
 				'elapsed'     => $elapsedTime,
-				'server_role' => $isMaster ? 'master' : 'slave'
-				]
-			);
+				'cluster'     => $wgDBcluster,
+				'server'      => $this->mServer,
+				'server_role' => $isMaster ? 'master' : 'slave',
+				'db_name'     => $this->mDBname,
+			]);
 		}
 	}
 
