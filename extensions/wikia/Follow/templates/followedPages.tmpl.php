@@ -31,7 +31,7 @@
 				echo $sk->link( $title, $value2['wl_title'], array( 'class' => 'title-link' ) );
 				?>
 				<?php if( !empty( $value2['by_user'] ) ): ?>
-					<?= wfMessage( 'wikiafollowedpages-special-blog-by', array('$1' => $value2['by_user'] ) )->escaped() ?>
+					<?= wfMessage( 'wikiafollowedpages-special-blog-by', $value2['by_user'] )->escaped() ?>
 				<?php endif; ?>
 				<?php if ( !empty( $value2['on_board'] ) ): ?>
 					<?= wfMessage( 'wikiafollowedpages-special-board' )->rawParams( $value2['on_board'] )->escaped() ?>
@@ -39,7 +39,7 @@
 			</span>
 			<?php if( !empty( $value2['other_namespace'] ) ): ?>
 			<span class="otherNs">
-					<?= wfMessage( 'wikiafollowedpages-special-namespace', array( '$1' => $value2['other_namespace'] ) )->escaped() ?>
+					<?= wfMessage( 'wikiafollowedpages-special-namespace', $value2['other_namespace'] )->escaped() ?>
 			</span>
 			<?php endif; ?>
                 </li>

@@ -18,9 +18,9 @@
 				li = target.closest( 'LI' ),
 				api = new mw.Api();
 
-			// some genius decided that there had to be a callback supplied in the case of success
-			// despite this returning a promise, so just pass $.noop to it to shut it up for now
-			// @todo change this on completion of MAIN-2490 (backporting updates to mediawiki.api.watch)
+			// there has to be a callback supplied in the case of success although this returns
+			// a promise, hence the use of $.noop
+			// @todo remove second arg on completion of MAIN-2490 (backporting updates to mediawiki.api.watch)
 			api.unwatch( title, $.noop ).done( function() {
 				li.remove();
 			} );
