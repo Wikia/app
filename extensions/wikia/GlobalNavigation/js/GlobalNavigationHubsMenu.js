@@ -1,6 +1,6 @@
 require( ['jquery', 'wikia.globalnavigation.lazyload'], function( $, GlobalNavLazyLoad ){
 	'use strict';
-	var $entryPoint, $hubLinks, $hubs, $verticals, $moreLinks;
+	var $entryPoint, $hubLinks, $hubs, $verticals;
 
 	function activateSubmenu( row ) {
 		var vertical, $row;
@@ -16,11 +16,10 @@ require( ['jquery', 'wikia.globalnavigation.lazyload'], function( $, GlobalNavLa
 		vertical = $row.addClass( 'active' ).data( 'vertical' );
 
 		$( '.' + vertical + '-links', $hubLinks ).addClass( 'active' );
-		$( '.' + vertical + '-more', $moreLinks ).addClass( 'active' );
 	}
 
 	function deactivateSubmenu( row ) {
-		$( '> section', $hubLinks ).add( '> a', $moreLinks ).add( row ).removeClass( 'active' );
+		$( '> section', $hubLinks ).add( row ).removeClass( 'active' );
 	}
 
 	function openMenu() {
@@ -41,7 +40,6 @@ require( ['jquery', 'wikia.globalnavigation.lazyload'], function( $, GlobalNavLa
 		$hubs = $( '#hubs' );
 		$hubLinks = $hubs.find( '> .hub-links' );
 		$verticals = $hubs.find( '> .hub-list' );
-		$moreLinks = $hubs.find( '> .hub-more' );
 		$entryPoint = $( '#hubsEntryPoint' );
 
 		window.transparentOut && window.transparentOut.bindClick( closeMenu );
