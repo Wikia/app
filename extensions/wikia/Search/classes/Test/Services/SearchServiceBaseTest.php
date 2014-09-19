@@ -48,21 +48,21 @@ abstract class SearchServiceBaseTest extends BaseTest {
 		return $mock;
 	}
 
-	protected function getResultMock( $responseType ) {
+	protected function getResultMock( $responseBody ) {
 		$client = new \Solarium_Client();
 		$mock = new \Solarium_Result_Select(
 			$client,
 			$client->createSelect(),
-			$this->getSolariumMainResponse( $responseType )
+			$this->getSolariumMainResponse( $responseBody )
 		);
 
 		return $mock;
 	}
 
-	protected function getSolariumMainResponse( $responseType ) {
+	protected function getSolariumMainResponse( $responseBody ) {
 		//empty solr response
 		$mock = new \Solarium_Client_Response(
-			$responseType,
+			$responseBody,
 			[ 'HTTP/1.1 200 OK' ]
 		);
 		return $mock;
