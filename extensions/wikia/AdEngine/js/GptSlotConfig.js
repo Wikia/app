@@ -70,7 +70,7 @@ define('ext.wikia.adEngine.gptSlotConfig', function () {
 	}
 
 	function extendSlotParams(src, slotName, params) {
-		if (!(slotMapConfig[src] && slotMapConfig[src][slotName])) {
+		if (!(params && slotMapConfig[src] && slotMapConfig[src][slotName])) {
 			return false;
 		}
 		for (var i in params) {
