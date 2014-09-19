@@ -116,9 +116,9 @@ class GlobalNavigationWallNotificationsController extends WikiaController {
 	}
 
 	private function areNotificationsSuppressedByExtensions() {
-		global $wgUser, $wgAtCreateNewWikiPage;
+		global $wgUser;
 
-		$suppressed = $wgAtCreateNewWikiPage || !$wgUser->isAllowed( 'read' );
+		$suppressed = !$wgUser->isAllowed( 'read' );
 		return !empty($suppressed);
 	}
 
