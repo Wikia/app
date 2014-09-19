@@ -59,6 +59,12 @@ class AnalyticsProviderRubiconRTP implements iAnalyticsProvider {
 							trackingMethod: 'ad'
 						});
 					}
+
+					window.wgAfterContentAndJS.push(function() {
+						if (window.AdEngine_trackRubicon) {
+							AdEngine_trackRubicon('End');
+						}
+					});
 				}
 			};
 
