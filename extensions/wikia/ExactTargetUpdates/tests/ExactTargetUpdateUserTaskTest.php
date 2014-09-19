@@ -85,7 +85,55 @@ class ExactTargetUpdateUserTaskTest extends WikiaBaseTest {
 		$this->assertEquals( $aDataExtensionActual[ 0 ], $aDataExtensionExpected );
 	}
 
-	function testUpdateUserEmailShouldSendData() {
+	/**
+	 * @dataProvider updateUserEmailProvider
+	 */
+	function testUpdateUserEmailShouldSendData( $aUserData, $oUpdateRequest ) {
+
+		/* Mock ExactTargetSoapClient */
+		$soapClient = $this->getMockBuilder( 'ExactTargetSoapClient' )
+			->disableOriginalConstructor()
+			->setMethods( [ 'Update' ] )
+			->getMock();
+		$soapClient
+			->expects( $this->once() )
+			->method( 'Update' )
+			->with( $oUpdateRequest );
+
+		/* Mock ExactTargetAddUserTask */
+		$mockAddUserTask = $this->getMockBuilder( 'ExactTargetAddUserTask' )
+			->disableOriginalConstructor()
+			->setMethods( [ 'createSubscriber' ] )
+			->getMock();
+		$mockAddUserTask
+			->expects( $this->once() )
+			->method( 'createSubscriber' );
+
+		/* Mock tested class */
+		/* @var ExactTargetUpdateUserTask $mockUpdateUserTask mock of ExactTargetUpdateUserTask */
+		$mockUpdateUserTask = $this->getMockBuilder( 'ExactTargetUpdateUserTask' )
+			->disableOriginalConstructor()
+			->setMethods( [ 'getClient', 'getAddUserTaskObject' ] )
+			->getMock();
+		$mockUpdateUserTask
+			->expects( $this->once() )
+			->method( 'getAddUserTaskObject' )
+			->will( $this->returnValue( $mockAddUserTask ) );
+		$mockUpdateUserTask
+			->expects( $this->once() )
+			->method( 'getClient' )
+			->will( $this->returnValue( $soapClient ) );
+
+		/* Run tested method */
+		$mockUpdateUserTask->updateUserEmail( $aUserData[ 'user_id' ], $aUserData[ 'user_email' ] );
+	}
+
+
+	/**
+	 * DATA PROVIDERS
+	 */
+
+	function updateUserEmailProvider() {
 		/* Params to compare */
 		$aUserData = [
 			'user_id' => 12345,
@@ -116,41 +164,9 @@ class ExactTargetUpdateUserTaskTest extends WikiaBaseTest {
 		$oUpdateRequest->Options = null;
 		$oUpdateRequest->Objects = [ $soapVar ];
 
-		$soapClient = $this->getMockBuilder( 'ExactTargetSoapClient' )
-			->disableOriginalConstructor()
-			->setMethods( [ 'Update' ] )
-			->getMock();
-		$soapClient
-			->expects( $this->once() )
-			->method( 'Update' )
-			->with( $oUpdateRequest );
-
-		/* @var ExactTargetAddUserTask $mockAddUserTask mock of ExactTargetAddUserTask */
-		$mockAddUserTask = $this->getMockBuilder( 'ExactTargetAddUserTask' )
-			->disableOriginalConstructor()
-			->setMethods( [ 'createSubscriber' ] )
-			->getMock();
-		$mockAddUserTask
-			->expects( $this->once() )
-			->method( 'createSubscriber' );
-
-		/* Mock tested class */
-		/* @var ExactTargetUpdateUserTask $mockUpdateUserTask mock of ExactTargetUpdateUserTask */
-		$mockUpdateUserTask = $this->getMockBuilder( 'ExactTargetUpdateUserTask' )
-			->disableOriginalConstructor()
-			->setMethods( [ 'getClient', 'getAddUserTaskObject' ] )
-			->getMock();
-		$mockUpdateUserTask
-			->expects( $this->once() )
-			->method( 'getAddUserTaskObject' )
-			->will( $this->returnValue( $mockAddUserTask ) );
-		$mockUpdateUserTask
-			->expects( $this->once() )
-			->method( 'getClient' )
-			->will( $this->returnValue( $soapClient ) );
-
-		/* Run tested method */
-		$mockUpdateUserTask->updateUserEmail( $aUserData[ 'user_id' ], $aUserData[ 'user_email' ] );
+		return [
+			[ $aUserData, $oUpdateRequest ]
+		];
 	}
 
 }
