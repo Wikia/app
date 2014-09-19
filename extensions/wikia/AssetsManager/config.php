@@ -1853,6 +1853,7 @@ $config['int_map_in_modal_display_js'] = [
 	'skin' => ['oasis'],
 	'assets' => [
 		'#group_int_map_ponto',
+		'//extensions/wikia/WikiaInteractiveMaps/js/intMapConfig.js',
 		'//extensions/wikia/WikiaInteractiveMaps/js/intMapUtils.js'
 	]
 ];
