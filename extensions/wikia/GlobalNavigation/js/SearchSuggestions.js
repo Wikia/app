@@ -17,6 +17,10 @@ $(function() {
 
 				// load autosuggest code on first focus
 				this.searchField.one('focus', $.proxy(this.initSuggest, this));
+
+				if (this.searchField.is(':focus')) {
+					this.initSuggest();
+				}
 			}
 		}
 

@@ -77,9 +77,9 @@
 	}
 	ul {
 		list-style: none;
+		padding-right: 8px;
 		margin: 0 0 8px 167px;
 		text-align: right;
-
 		li {
 			border-left: solid 1px $color-links;
 			display: inline-block;
@@ -100,11 +100,6 @@
 	}
 }
 
-body.skin-oasis {
-	.global-footer .branding {
-		left: 10px;
-	}
-	ul li:last-child {
-		padding-right: 8px;
-	}
+body.skin-oasis .global-footer .branding {
+	left: 10px;
 }

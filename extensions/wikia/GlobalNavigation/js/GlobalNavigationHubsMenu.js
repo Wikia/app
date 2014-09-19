@@ -29,14 +29,14 @@ require( ['jquery', 'wikia.globalnavigation.lazyload'], function( $, GlobalNavLa
 		window.transparentOut.hide();
 	}
 
-	window.transparentOut.bindClick(closeMenu);
-
 	$(function(){
 		$hubs = $( '#hubs' );
 		$hubLinks = $hubs.find( '> .hub-links' );
 		$verticals = $hubs.find( '> .hub-list' );
 		$moreLinks = $hubs.find( '> .hub-more' );
 		$entryPoint = $( '#hubsEntryPoint' );
+
+		window.transparentOut && window.transparentOut.bindClick( closeMenu );
 
 		/**
 		 * menuAim is a method from an external module to handle dropdown menus with very good user experience
@@ -50,8 +50,6 @@ require( ['jquery', 'wikia.globalnavigation.lazyload'], function( $, GlobalNavLa
 				activate: activateSubmenu,
 				deactivate: deactivateSubmenu
 			});
-
-		window.transparentOut.bindClick(closeMenu);
 
 		if ( !window.touchstart ) {
 			window.delayedHover(
