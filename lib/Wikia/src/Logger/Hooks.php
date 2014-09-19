@@ -108,7 +108,7 @@ class Hooks {
 	 * @return bool true
 	 */
 	public static function onWikiFactoryExecuteComplete( \WikiFactoryLoader $wikiFactoryLoader ) {
-		global $wgRequest, $wgDBname, $wgCityId;
+		global $wgRequest, $wgDBname, $wgCityId, $maintClass;
 
 		$fields = [];
 
@@ -145,6 +145,17 @@ class Hooks {
 			}
 		}
 
+		// add some context for maintenance scripts
+		if ( defined( 'RUN_MAINTENANCE_IF_MAIN' ) ) {
+			if ( isset( $_SERVER['SCRIPT_FILENAME'] ) ) {
+				$fields['maintenance_file'] = realpath( $_SERVER['SCRIPT_FILENAME'] );
+			}
+
+			if ( !empty( $maintClass ) ) {
+				$fields['maintenance_class'] = $maintClass;
+			}
+		}
+
 		$fields['request_id'] = RequestId::instance()->getRequestId();
 
 		WikiaLogger::instance()->pushContext( $fields, WebProcessor::RECORD_TYPE_FIELDS );
@@ -161,16 +172,10 @@ class Hooks {
 	 * @return bool
 	 */
 	public static function onDebug($text, $logGroup ) {
-		try {
-			// throw an exception to get a backtrace
-			throw new \Exception();
-		}
-		catch(\Exception $ex) {
-			WikiaLogger::instance()->error(rtrim($text), [
-				'logGroup' => $logGroup,
-				'exception' => $ex
-			]);
-		}
+		WikiaLogger::instance()->error(rtrim($text), [
+			'logGroup' => $logGroup,
+			'exception' => new \Exception() // report stack trace
+		]);
 
 		// prevent the default behaviour of wfDebugLog - we already logged all information we need
 		return false;

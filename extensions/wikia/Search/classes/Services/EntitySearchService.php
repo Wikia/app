@@ -109,6 +109,7 @@ class EntitySearchService {
 	 */
 	public function setIds( $ids ) {
 		$this->ids = $ids;
+		return $this;
 	}
 
 	/**

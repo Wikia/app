@@ -2,7 +2,7 @@
 /**
  * The AMD module to hold all the context needed for the client-side scripts to run.
  */
-define('ext.wikia.adEngine.adContext', ['wikia.window'], function (w, document) {
+define('ext.wikia.adEngine.adContext', ['wikia.window', 'wikia.document'], function (w, document) {
 	'use strict';
 
 	var context;
@@ -58,6 +58,7 @@ define('ext.wikia.adEngine.adContext', ['wikia.window'], function (w, document) 
 			wikiCustomKeyValues: w.wgDartCustomKeyValues,
 			wikiDbName: w.wgDBname,
 			wikiDirectedAtChildren: w.wgWikiDirectedAtChildren,
+			wikiIsTop1000: w.wgAdDriverWikiIsTop1000,
 			wikiLanguage: w.wgContentLanguage,
 			wikiVertical: w.cscoreCat
 		},

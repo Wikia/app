@@ -1,5 +1,6 @@
 <?php
-class GlobalTitleTest extends PHPUnit_Framework_TestCase {
+
+class GlobalTitleTest extends WikiaBaseTest {
 	private $wgDevelEnv;
 	private $wgDevelEnvName;
 	
