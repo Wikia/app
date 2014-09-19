@@ -99,6 +99,10 @@
 }
 
 @media #{$large-up} {
+	.wikia-logo {
+		padding: 0px 7px 0px 30px
+	}
+
 	.wikia-logo-container {
 		@include grid-column-width('large', 2, $large-content-padding);
 	}
