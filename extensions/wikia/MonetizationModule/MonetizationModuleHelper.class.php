@@ -114,7 +114,7 @@ class MonetizationModuleHelper extends WikiaModel {
 		$log->debug( "MonetizationModule: lookup with cache key: $cacheKey", $loggingParams );
 
 		$json_results = $this->wg->Memc->get( $cacheKey );
-		if ( $json_results == RENDERING_IN_PROCESS ) {
+		if ( $json_results == self::RENDERING_IN_PROCESS ) {
 			// TODO: potentially block until rendering finishes, until then return nothing
 			$log->info( "MonetizationModule: memcache hit (rendering in process).", $loggingParams );
 			wfProfileOut( __METHOD__ );
