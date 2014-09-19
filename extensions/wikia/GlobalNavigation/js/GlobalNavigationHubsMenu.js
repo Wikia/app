@@ -3,9 +3,17 @@ require( ['jquery', 'wikia.globalnavigation.lazyload'], function( $, GlobalNavLa
 	var $entryPoint, $hubLinks, $hubs, $verticals, $moreLinks;
 
 	function activateSubmenu( row ) {
-		var vertical;
+		var vertical, $row;
 
-		vertical = $( row ).addClass( 'active' ).data( 'vertical' );
+		$row = $( row );
+
+		if (window.Wikia.isTouchScreen()) {
+			if (!$row.hasClass('active')) {
+				event.preventDefault();
+			}
+		}
+
+		vertical = $row.addClass( 'active' ).data( 'vertical' );
 
 		$( '.' + vertical + '-links', $hubLinks ).addClass( 'active' );
 		$( '.' + vertical + '-more', $moreLinks ).addClass( 'active' );
@@ -45,13 +53,15 @@ require( ['jquery', 'wikia.globalnavigation.lazyload'], function( $, GlobalNavLa
 		window.menuAim(
 			$verticals.get( 0 ), {
 				activeRow:  $verticals.find( '.active' ).get( 0 ),
-				rowSelector: 'nav',
+				rowSelector: '.hub-link',
 				tolerance: 85,
 				activate: activateSubmenu,
 				deactivate: deactivateSubmenu
 			});
 
-		if ( !window.touchstart ) {
+		window.transparentOut.bindClick(closeMenu);
+
+		if ( !window.Wikia.isTouchScreen() ) {
 			window.delayedHover(
 				$entryPoint.get( 0 ),
 				{

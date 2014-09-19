@@ -62,9 +62,10 @@
 		}
 	}
 
-	nav {
+	.hub-link {
 		background-color: $nav-background-color;
 		cursor: pointer;
+		display: block;
 		height: 62px;
 		line-height: 62px;
 		position: relative;
@@ -315,7 +316,7 @@
 
 @media #{$small-only} {
 	.hubs-menu {
-		nav {
+		.hub-link {
 			&.active {
 				&:before {
 					left: 10px;
@@ -346,7 +347,7 @@
 			width: 302px;
 		}
 
-		nav {
+		.hub-link {
 			&.active {
 				&:before {
 					left: 20px;
