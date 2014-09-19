@@ -24,6 +24,9 @@ require(
 				this.$notificationsContainer = $('#notificationsContainer');
 				this.$notificationsMessages = $('> ul', this.$notificationsContainer);
 
+				this.globalNavigationHeight = $('#globalNavigation').outerHeight();
+				this.notificationsHeaderHeight = 0;
+
 				this.unreadCount = parseInt(this.$notificationsCount.html(), 10);
 
 				this.$notifications
@@ -318,7 +321,7 @@ require(
 			},
 
 			setNotificationsHeight: function() {
-				var height = this.$window.height() - 57,
+				var height = this.$window.height() - this.globalNavigationHeight,
 					msgHeight = this.$notificationsMessages.height();
 
 				if ( !msgHeight ) {
@@ -327,8 +330,12 @@ require(
 					msgHeight = this.$notificationsMessages.height();
 				}
 
+				if ( this.notificationsHeaderHeight <= 0 ) {
+					this.notificationsHeaderHeight = $('.notifications-header', this.$wallNotifications).outerHeight();
+				}
+
 				if ( height < msgHeight ) {
-					this.$notificationsContainer.css('height', height - 51).addClass('scrollable');
+					this.$notificationsContainer.css('height', height - this.notificationsHeaderHeight).addClass('scrollable');
 				} else {
 					this.$notificationsContainer.css('height', 'auto').removeClass('scrollable');
 				}

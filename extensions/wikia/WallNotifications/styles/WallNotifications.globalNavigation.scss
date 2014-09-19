@@ -15,7 +15,7 @@ $wiki-header-bg-color: rgba(0, 0, 0, .1);
 	border-radius: 10px;
 	display: none;
 	height: 20px;
-	left: 30px;
+	left: 21px;
 	min-width: 20px;
 	padding: 2px;
 	position: absolute;
@@ -47,8 +47,8 @@ $wiki-header-bg-color: rgba(0, 0, 0, .1);
 }
 
 #GlobalNavigationWallNotifications {
-	@include grid-position('large', 2, 'right', $large-content-padding - 2);
-	@include grid-column-width('large', 4, $large-content-padding);
+	@include grid-position('medium', 2, 'right', $medium-content-padding - 2);
+	@include grid-column-width('medium', 4, $medium-content-padding);
 	background-color: #fff;
 	border: 1px solid $border-color;
 	border-top: 0;
@@ -58,23 +58,23 @@ $wiki-header-bg-color: rgba(0, 0, 0, .1);
 	position: absolute;
 
 	#notificationsContainer {
-		@include grid-column-width('large', 4, $large-content-padding + 18);
+		@include grid-column-width('medium', 4, $medium-content-padding + 18);
 
 		overflow: auto;
 
 		&.scrollable {
 			background:
 				/* Shadow covers */
-				linear-gradient(white 30%, rgba(255,255,255,0)),
-				linear-gradient(rgba(255,255,255,0), white 70%) 0 100%,
+				linear-gradient(#fff 30%, rgba(255,255,255,0)),
+				linear-gradient(rgba(255,255,255,0), #fff 70%) 0 100%,
 
 					/* Shadows */
 				radial-gradient(50% 0, farthest-side, rgba(0,0,0,.6), rgba(0,0,0,0)),
 				radial-gradient(50% 100%,farthest-side, rgba(0,0,0,.6), rgba(0,0,0,0)) 0 100%;
 			background:
 				/* Shadow covers */
-				linear-gradient(white 30%, rgba(255,255,255,0)),
-				linear-gradient(rgba(255,255,255,0), white 70%) 0 100%,
+				linear-gradient(#fff 30%, rgba(255,255,255,0)),
+				linear-gradient(rgba(255,255,255,0), #fff 70%) 0 100%,
 
 					/* Shadows */
 				radial-gradient(farthest-side at 50% 0, rgba(0,0,0,.6), rgba(0,0,0,0)),
@@ -192,12 +192,12 @@ $wiki-header-bg-color: rgba(0, 0, 0, .1);
 		position: relative;
 
 		.notification-message {
-			@include grid-column-width('large', 3);
+			@include grid-column-width('medium', 3);
 			display: inline-block;
 		}
 
 		.avatars {
-			@include grid-column-width('large', 1);
+			@include grid-column-width('medium', 1);
 
 			display: inline-block;
 			vertical-align: top;
@@ -276,26 +276,28 @@ $wiki-header-bg-color: rgba(0, 0, 0, .1);
 	}
 }
 
-@media #{$medium-only} {
+
+
+@media #{$large-up} {
 	.bubbles {
-		left: 21px;
+		left: 30px;
 	}
 
 	#GlobalNavigationWallNotifications {
-		@include grid-position('medium', 2, 'right', $medium-content-padding - 2);
-		@include grid-column-width('medium', 4, $medium-content-padding);
+		@include grid-position('large', 2, 'right', $large-content-padding - 2);
+		@include grid-column-width('large', 4, $large-content-padding);
 
 		#notificationsContainer {
-			@include grid-column-width('medium', 4, $medium-content-padding + 18);
+			@include grid-column-width('large', 4, $large-content-padding + 18);
 		}
 
 		.notification {
 			.avatars {
-				@include grid-column-width('medium', 1);
+				@include grid-column-width('large', 1);
 			}
 
 			.notification-message {
-				@include grid-column-width('medium', 3);
+				@include grid-column-width('large', 3);
 			}
 		}
 	}
