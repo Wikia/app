@@ -89,6 +89,9 @@
 			$momBarContent.each(function () {
 				$(this).removeAttr('contenteditable');
 			});
+			$('.mom-edit-btn').show();
+			$('.mom-delete-btn').show();
+			$('.mom-content').show();
 			$('.mom-save-btn').hide();
 			$('.mom-discard-btn').hide();
 			$('.mom-wiki-markup').hide();
@@ -188,15 +191,14 @@
 				}
 			});
 		}, onAddNewBlock = function (d) {
-			$('#MomNewPlaceHolder').replaceWith(d);
+			var $this = $(d);
+			$('#MomNewPlaceHolder').replaceWith($this);
 			refresh();
-			$moms.addClass('mom-hidden');
-			$momBar.css('display', 'flex');
-			$momOverlays.show();
-			$momBarContent.each(function () {
-				$(this).attr('contenteditable', true);
-			});
-			$deleteButton.on('click', function () {
+			$this.addClass('mom-hidden');
+			$this.find('.mom-bar').css('display', 'flex');
+			$this.find('.mom-overlay').show();
+			$this.find('.mom-bar-content').attr('contenteditable', true);
+			$this.find('.mom-delete-btn').on('click', function () {
 				$(this).parents('.mom-module').remove();
 			});
 			$mainContentContainer.stopThrobbing();
@@ -251,13 +253,13 @@
 		$moduleContainer.addClass('mom-hidden');
 		$moduleContainer.removeClass('mom-edit');
 
-        $('.mom-save-btn', $moduleContainer).hide();
-        $('.mom-discard-btn', $moduleContainer).hide();
+		$('.mom-save-btn', $moduleContainer).hide();
+		$('.mom-discard-btn', $moduleContainer).hide();
 
-        $('.mom-edit-btn', $moduleContainer).show();
+		$('.mom-edit-btn', $moduleContainer).show();
 		$('.mom-delete-btn', $moduleContainer).show();
-        $('.mom-overlay', $moduleContainer).show();
-        $('.mom-content', $moduleContainer).show();
+		$('.mom-overlay', $moduleContainer).show();
+		$('.mom-content', $moduleContainer).show();
 
 		$('.mom-wiki-markup', $moduleContainer).hide();
 	});
@@ -297,4 +299,5 @@
 		});
 	});
 
-})(window, jQuery);
+})
+	(window, jQuery);
