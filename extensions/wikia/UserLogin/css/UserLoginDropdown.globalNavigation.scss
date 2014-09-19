@@ -59,7 +59,7 @@
 		.forgot-password {
 			color: $nav-foreground-bright-color;
 			font-size: 12px;
-			margin: 5px 0 20px;
+			margin: 5px 0 20px 5px;
 		}
 
 		.input-group {
@@ -72,6 +72,10 @@
 			&.login-button {
 				margin-top: 10px;
 				padding: 0;
+			}
+
+			&.keep-logged-in {
+				margin-left: 5px;
 			}
 		}
 
