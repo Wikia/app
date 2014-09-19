@@ -21,7 +21,7 @@ class ExactTargetUpdateUserTask extends ExactTargetBaseTask {
 		$oClient = $this->getClient();
 
 		/* Assuming email may be new - try create subscriber object using the email */
-		$addUserTask = new ExactTargetAddUserTask();
+		$addUserTask = $this->getAddUserTaskObject();
 		$addUserTask->createSubscriber( $iUserEmail, $oClient );
 
 		/* Update email in user data extension */
@@ -146,5 +146,13 @@ class ExactTargetUpdateUserTask extends ExactTargetBaseTask {
 			$aDE[] = $DE;
 		}
 		return $aDE;
+	}
+
+	/**
+	 * Returns an instance of ExactTargetAddUserTask class
+	 * @return ExactTargetAddUserTask
+	 */
+	protected function getAddUserTaskObject() {
+		return new ExactTargetAddUserTask();
 	}
 }
