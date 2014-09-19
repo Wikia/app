@@ -85,4 +85,72 @@ class ExactTargetUpdateUserTaskTest extends WikiaBaseTest {
 		$this->assertEquals( $aDataExtensionActual[ 0 ], $aDataExtensionExpected );
 	}
 
+	function testUpdateUserEmailShouldSendData() {
+		/* Params to compare */
+		$aUserData = [
+			'user_id' => 12345,
+			'user_email' => 'email@email.com'
+		];
+
+		/* Prepare request object */
+		$oUpdateRequest = new ExactTarget_UpdateRequest();
+
+		$DE = new ExactTarget_DataExtensionObject();
+		$DE->CustomerKey = 'user';
+
+		/* Prepare properties */
+		$apiProperty = new ExactTarget_APIProperty();
+		$apiProperty->Name = 'user_email';
+		$apiProperty->Value = $aUserData['user_email'];
+		$DE->Properties = [ $apiProperty ];
+
+		/* Prepare keys */
+		$apiProperty = new ExactTarget_APIProperty();
+		$apiProperty->Name = 'user_id';
+		$apiProperty->Value = $aUserData['user_id'];
+		$DE->Keys = [ $apiProperty ];
+
+		$soapVar = new SoapVar( $DE, SOAP_ENC_OBJECT, 'DataExtensionObject', 'http://exacttarget.com/wsdl/partnerAPI' );
+
+		/* Prepare update-add options */
+		$oUpdateRequest->Options = null;
+		$oUpdateRequest->Objects = [ $soapVar ];
+
+		$soapClient = $this->getMockBuilder( 'ExactTargetSoapClient' )
+			->disableOriginalConstructor()
+			->setMethods( [ 'Update' ] )
+			->getMock();
+		$soapClient
+			->expects( $this->once() )
+			->method( 'Update' )
+			->with( $oUpdateRequest );
+
+		/* @var ExactTargetAddUserTask $mockAddUserTask mock of ExactTargetAddUserTask */
+		$mockAddUserTask = $this->getMockBuilder( 'ExactTargetAddUserTask' )
+			->disableOriginalConstructor()
+			->setMethods( [ 'createSubscriber' ] )
+			->getMock();
+		$mockAddUserTask
+			->expects( $this->once() )
+			->method( 'createSubscriber' );
+
+		/* Mock tested class */
+		/* @var ExactTargetUpdateUserTask $mockUpdateUserTask mock of ExactTargetUpdateUserTask */
+		$mockUpdateUserTask = $this->getMockBuilder( 'ExactTargetUpdateUserTask' )
+			->disableOriginalConstructor()
+			->setMethods( [ 'getClient', 'getAddUserTaskObject' ] )
+			->getMock();
+		$mockUpdateUserTask
+			->expects( $this->once() )
+			->method( 'getAddUserTaskObject' )
+			->will( $this->returnValue( $mockAddUserTask ) );
+		$mockUpdateUserTask
+			->expects( $this->once() )
+			->method( 'getClient' )
+			->will( $this->returnValue( $soapClient ) );
+
+		/* Run tested method */
+		$mockUpdateUserTask->updateUserEmail( $aUserData[ 'user_id' ], $aUserData[ 'user_email' ] );
+	}
+
 }
