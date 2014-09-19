@@ -48,10 +48,10 @@ class AnalyticsProviderRubiconRTP implements iAnalyticsProvider {
 				oz_zone: {$ozZone},
 				oz_ad_slot_size: {$ozSlotSize},
 				oz_callback: function(response) {
-					var tracker = window.Wikia && window.Wikia.Tracker;
+					var i, tracker = window.Wikia && window.Wikia.Tracker;
 
 					rp_performance.End = Math.round(new Date().getTime() - window.wgNow.getTime());
-					for (var i in window.rp_performance) {
+					for (i in window.rp_performance) {
 						tracker.track({
 							ga_category: 'ad/performance/rubicon' + i + '/wgNow',
 							ga_action: 'oz_cached_only=' + !!window.wgAdDriverRubiconCachedOnly,
@@ -62,7 +62,7 @@ class AnalyticsProviderRubiconRTP implements iAnalyticsProvider {
 
 					window.wgAfterContentAndJS.push(function() {
 						if (window.AdEngine_trackRubicon) {
-							AdEngine_trackRubicon('End');
+							AdEngine_trackRubicon('End', response);
 						}
 					});
 				}

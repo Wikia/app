@@ -58,17 +58,30 @@ define('ext.wikia.adEngine.gptSlotConfig', function () {
 		}
 	};
 
+	// Return a copy of slotMap objects
 	function getConfig(src) {
 		var undef;
 
 		if (src === undef) {
-			return slotMapConfig;
+			return JSON.parse(JSON.stringify(slotMapConfig));
 		}
 
-		return slotMapConfig[src];
+		return JSON.parse(JSON.stringify(slotMapConfig[src]));
+	}
+
+	function extendSlotParams(src, slotName, params) {
+		if (!(slotMapConfig[src] && slotMapConfig[src][slotName])) {
+			return false;
+		}
+		for (var i in params) {
+			if (params.hasOwnProperty(i)) {
+				slotMapConfig[src][slotName][i] = params[i];
+			}
+		}
 	}
 
 	return {
-		getConfig: getConfig
+		getConfig: getConfig,
+		extendSlotParams: extendSlotParams
 	};
 });

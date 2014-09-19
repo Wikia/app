@@ -232,41 +232,6 @@ window.AdEngine_loadLateAds = function () {
 		});
 	}
 
-	function trackRubicon(event) {
-		require(['wikia.tracker'], function (tracker) {
-			var e = '(unknown)',
-				valuation = window.rp_valuation,
-				estimate = valuation && valuation.estimate,
-				pmp = valuation && valuation.pmp,
-				action = valuation ? [
-					'size=' + (estimate.size || e),
-					'pmp.eligible=' + (pmp && pmp.eligible || e),
-					'tier=' + (estimate.tier || e)
-				] : [];
-
-			action.push('cache=' + !!window.wgAdDriverRubiconCachedOnly);
-
-			if (estimate) {
-				tracker.track({
-					ga_category: 'ad/lookup' + event + '/rubicon',
-					ga_action: action.join(';') ,
-					ga_label: 'deals=' + ((pmp && pmp.deals && pmp.deals.join && pmp.deals.join(',')) || e),
-					ga_value: parseInt(estimate.tier),
-					trackingMethod: 'ad'
-				});
-			} else {
-				tracker.track({
-					ga_category: 'ad/lookupError/rubicon',
-					ga_action: action.join(';') ,
-					ga_value: 0,
-					trackingMethod: 'ad'
-				});
-			}
-
-		});
-
-	}
-
 	// Measure time to page interactive
 	window.AdEngine_trackPageInteractive = function () {
 		trackTime('interactivePage');
@@ -281,13 +246,66 @@ window.AdEngine_loadLateAds = function () {
 	window.AdEngine_trackStartLateAds = function () {
 		trackTime('startLateAds');
 	};
-	// Measure time to load late queue
+
+}(window));
+
+//Rubicon
+(function(window, performance, valuation){
+	'use strict';
+
+	function trackRubicon(event, valuation) {
+		require(['wikia.tracker'], function (tracker) {
+			var e = '(unknown)',
+				estimate = valuation && valuation.estimate,
+				pmp = valuation && valuation.pmp,
+				action = valuation ? [
+					'size=' + (estimate.size || e),
+					'pmp.eligible=' + ((pmp && pmp.eligible) || e),
+					'tier=' + (estimate.tier || e)
+				] : [];
+
+			action.push('cache=' + !!window.wgAdDriverRubiconCachedOnly);
+
+			if (estimate) {
+				tracker.track({
+					ga_category: 'ad/lookup' + event + '/rubicon',
+					ga_action: action.join(';') ,
+					ga_label: 'deals=' + ((pmp && pmp.deals && pmp.deals.join && pmp.deals.join(',')) || e),
+					ga_value: parseInt(estimate.tier, 10),
+					trackingMethod: 'ad'
+				});
+			} else {
+				tracker.track({
+					ga_category: 'ad/lookupError/rubicon',
+					ga_action: action.join(';') ,
+					ga_value: 0,
+					trackingMethod: 'ad'
+				});
+			}
+		});
+	}
+
+	// No rubicon call made on page;
+	if (!performance) {
+		return;
+	}
+
+	var tier = valuation && valuation.estimate && valuation.estimate.tier;
+
+	trackRubicon('Success', valuation);
+
+	if (tier) {
+		require(['ext.wikia.adEngine.gptSlotConfig'], function(gptSlotConfig) {
+			var i, slots = ['HOME_TOP_RIGHT_BOXAD', 'TOP_RIGHT_BOXAD', 'TOP_INCONTENT_BOXAD', 'CORP_TOP_RIGHT_BOXAD'];
+			for (i = 0; i < slots.length; i = i + 1) {
+				gptSlotConfig.extendSlotParams('gpt', slots[i], {rp_tier: tier});
+			}
+		});
+	}
+
+	// Measure time to load rubicon queue
 	window.AdEngine_trackRubicon = function () {
 		trackRubicon.apply(this, arguments);
 	};
 
-	if (window.rp_performance) {
-		trackRubicon('Success');
-	}
-
-}(window));
+})(window, window.rp_performance, window.rp_valuation);
