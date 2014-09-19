@@ -81,13 +81,6 @@ CKEDITOR.plugins.add('rte-media', {
 			return;
 		}
 
-		// Do not show links to gallery editor if new galleries are enabled. Once we have a new gallery editor
-		// to go along with the new galleries we can turn this back on. See VID-1990 and VID-1855.
-		// When removing this, also remove check in app/extensions/wikia/RTE/js/plugins/gallery/plugin.js
-		if (window.wgEnableMediaGalleryExt && $(media).hasClass('image-gallery')){
-			return;
-		}
-
 		// keep consistent value of RTE instance ID
 		media.attr('data-rte-instance', RTE.instanceId);
 
@@ -165,6 +158,13 @@ CKEDITOR.plugins.add('rte-media', {
 				});
 			}
 		}];
+
+		// Do not show 'modify' link to gallery editor if new galleries are enabled. Once we have a new gallery
+		// editor to go along with the new galleries we can turn this back on. See VID-1990 and VID-1855.
+		// When removing this, also remove check in app/extensions/wikia/RTE/js/plugins/gallery/plugin.js
+		if (window.wgEnableMediaGalleryExt && $(media).attr('type') === 'image-gallery'){
+			standardButtons.shift();
+		}
 
 		RTE.overlay.add(media, standardButtons);
 
