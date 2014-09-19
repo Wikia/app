@@ -15,6 +15,8 @@ class PalantirApiController extends WikiaApiController {
 
 	const METADATA_CACHE_EXPIRATION = 300; // 5 minutes
 
+	const MAX_ITEMS_RETURN = 9999;
+
 	/**
 	 * @var IDSEntitySearchService
 	 */
@@ -35,6 +37,17 @@ class PalantirApiController extends WikiaApiController {
 	 */
 	protected $questDetailsSearch;
 
+	public function __construct(){
+		parent::__construct();
+		$this->setOutputFieldTypes(
+			[
+				"width" => self::OUTPUT_FIELD_CAST_NULLS | self::OUTPUT_FIELD_TYPE_INT,
+				"height" => self::OUTPUT_FIELD_CAST_NULLS | self::OUTPUT_FIELD_TYPE_INT,
+				"id" => self::OUTPUT_FIELD_CAST_NULLS | self::OUTPUT_FIELD_TYPE_INT
+			]
+		);
+	}
+
 	public function getQuestDetails() {
 		$fingerprintId = $this->getRequest()->getVal( 'fingerprint_id' );
 		$questId = $this->getRequest()->getVal( 'quest_id' );
@@ -42,17 +55,16 @@ class PalantirApiController extends WikiaApiController {
 		$limit = $this->getRequest()->getVal( 'limit' );
 
 		$this->validateQuestDetailsParameters( $limit );
-
+		$cityId = $this->wg->CityId;
 		$solrResponse = $this->getQuestDetailsSearch()
 			->newQuery()
 			->withFingerprint( $fingerprintId )
 			->withQuestId( $questId )
-
-			->withWikiId( $this->wg->CityId )
+			->withWikiId( $cityId )
 			->limit( $limit )
 			->search();
 
-		$result = $this->fillDataFromMain( $solrResponse,$category );
+		$result = $this->fillDataFromMain( $solrResponse, $cityId, $category );
 
 		if( empty( $result ) ) {
 			throw new NotFoundApiException();
@@ -95,18 +107,18 @@ class PalantirApiController extends WikiaApiController {
 
 		$radiusKilometers = $this->radiusDegreesToKilometers( $radius );
 		$nearbySearch = $this->getNearbySearch();
-
+		$cityId = $this->wg->CityId;
 		$solrResponse = $nearbySearch->newQuery()
 			->latitude( $lat )
 			->longitude( $long )
 			->radius( $radiusKilometers )
 			->region( $region )
-			->setFields( "*" )
+			->setFields( [ "id" ] )
 			->limit( $limit )
-			->withWikiaId( $this->wg->CityId )
+			->withWikiaId( $cityId )
 			->search();
 
-		$result = $this->fillDataFromMain( $solrResponse, null );
+		$result = $this->fillDataFromMain( $solrResponse, $cityId, null );
 
 		if( empty( $result ) ) {
 			throw new NotFoundApiException();
@@ -115,41 +127,45 @@ class PalantirApiController extends WikiaApiController {
 		$this->setResponseData( $result, null, self::METADATA_CACHE_EXPIRATION );
 	}
 
-	protected function fillDataFromMain( $metadataResp, $category ) {
-		if(empty($metadataResp)){
+	protected function fillDataFromMain( $solrResponse, $cityId, $category ) {
+		if( empty( $solrResponse ) ){
 			return [];
 		}
-		$solrHelper = $this->getSolrHelper();
-
+		$remove = strlen( $cityId ) + 1;
 		$ids = [ ];
-		$metadata = [ ];
-		foreach ( $metadataResp as $item ) {
-			$ids[ ] = $item[ "id" ];
-			$metadata[ $item[ "id" ] ] = $item;
+		foreach ( $solrResponse as $item ) {
+			$ids[ ] = substr( $item[ 'id' ], $remove );
 		}
 
-		$IDSEntity = $this->getIDSEntity()
-			->setIds( $ids )
-			->setFields( $solrHelper->getRequiredSolrFields() );
+
+		$helper = $this->getSolrHelper();
+		$categories = $helper->findCategoriesForIds( $ids );
+		$category = ArticlesApiController::resolveCategoryName( $category );
 		if ( !empty( $category ) ) {
-			$IDSEntity->setCategories( [ $category ] );
-		}
-		$result = $IDSEntity->query( "*:*" );
-
-		$mapped = [ ];
-		foreach ( $result as $item ) {
-			$item[ "metadata" ] = $metadata[ $item[ "id" ] ];
-			$mapped[ $item[ "id" ] ] = $item;
+			$categoryName = $category->getBaseText();
+			$categories = $helper->filterIdsByCategory( $categories, $categoryName);
+			$ids = array_keys( $categories );
 		}
 
-		$result = [ ];
-		foreach ( $ids as $id ) {
-			if ( isset( $mapped[ $id ] ) ) {
-				$result[ ] = $mapped[ $id ];
-			}
+		$result = null;
+		if ( !empty( $ids ) ) {
+			$params = [
+				ArticlesApiController::PARAMETER_ABSTRACT => ArticleService::MAX_LENGTH,
+				ArticlesApiController::PARAMETER_ARTICLES => implode( ',', $ids ),
+				'height' => QuestDetailsSolrHelper::DEFAULT_THUMBNAIL_HEIGHT,
+				'width' => QuestDetailsSolrHelper::DEFAULT_THUMBNAIL_WIDTH,
+				ArticlesApiController::ITEMS_PER_BATCH => self::MAX_ITEMS_RETURN
+			];
+			$result = $this->app->sendRequest( 'ArticlesApiController', 'getDetails', $params )->getData();
+		}
+		if ( empty( $result ) ) {
+			throw new NotFoundApiException();
 		}
 
-		return  $solrHelper->consumeResponse( $result );
+		$items = array_values( $result[ 'items' ] );
+		$items = $helper->addCategories( $items, $categories );
+		$items = $helper->fixUrls( $items, $result[ "basepath" ] );
+		return $items;
 	}
 
 	protected function radiusDegreesToKilometers( $radiusDegrees ) {

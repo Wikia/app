@@ -484,6 +484,17 @@ class ArticlesApiController extends WikiaApiController {
 		return $results;
 	}
 
+	/**
+	 * Resolve categor param name into internal category name (incl. redirecst)
+	 * @param $category
+	 * @return mixed|Title
+	 */
+	public static function resolveCategoryName( $category ) {
+		$category = Title::makeTitleSafe( NS_CATEGORY, str_replace( ' ', '_', $category ), false, false );
+		$category = self::followRedirect( $category );
+
+		return $category;
+	}
 
 	/**
 	 * Get Articles under a category
@@ -516,11 +527,8 @@ class ArticlesApiController extends WikiaApiController {
 		$expand = $this->request->getBool( static::PARAMETER_EXPAND, false );
 
 		if ( !empty( $category ) ) {
-			$category = Title::makeTitleSafe( NS_CATEGORY, str_replace( ' ', '_', $category ), false, false );
-
+			$category = self::resolveCategoryName( $category );
 			if ( !is_null( $category ) ) {
-				$category = self::followRedirect( $category );
-
 				if ( !empty( $namespaces ) ) {
 					foreach ( $namespaces as &$n ) {
 						if ( !is_numeric( $n ) ) {
