@@ -11,11 +11,4 @@
 	<div class="hub-links">
 		<?= $app->renderView('GlobalNavigation', 'hubsMenuSections', ['menuSections' => [$menuNodes[$activeNodeIndex]]]); ?>
 	</div>
-	<ul class="hub-more">
-		<? foreach( $menuNodes as $index => $hub ): ?>
-			<li class="<?=$hub['specialAttr']; ?>-more <? if ( $activeNodeIndex == $index ):?> active<? endif ?>">
-				<a href="<?=$hub['href'];?>"><?= wfMessage('global-navigation-hubs-menu-more-of', $hub['text'])->parse(); ?></a>
-			</li>
-		<? endforeach ?>
-	</ul>
 </nav>

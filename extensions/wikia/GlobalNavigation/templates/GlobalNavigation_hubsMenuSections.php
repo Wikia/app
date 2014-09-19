@@ -6,5 +6,6 @@
 			<a href="<?=$node['href']?>"><?=$node['text']?></a>
 		<? endforeach ?>
 	<? endforeach ?>
+	<a class="more" href="<?= $sections['href']; ?>"><?= wfMessage('global-navigation-hubs-menu-more-of', $sections['text'])->parse(); ?></a>
 </section>
 <? endforeach ?>

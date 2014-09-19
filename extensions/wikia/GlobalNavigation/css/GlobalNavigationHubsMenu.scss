@@ -62,30 +62,6 @@
 		}
 	}
 
-	.hub-more {
-		bottom: 40px;
-		left: 325px;
-		font-size: 16px;
-		font-weight: bold;
-		position: absolute;
-
-		li {
-			display: none;
-
-			&.active {
-				display: block;
-			}
-
-			a {
-				@include right-chevron();
-				&:after {
-					margin-left: 6px;
-				}
-			}
-		}
-
-	}
-
 	nav {
 		background-color: $nav-background-color;
 		cursor: pointer;
@@ -194,6 +170,18 @@
 		a {
 			display: block;
 			padding: 7px 0 6px;
+
+			&.more {
+				@include right-chevron();
+				position: absolute;
+				bottom: 40px;
+				font-size: 16px;
+				font-weight: bold;
+
+				&:after {
+					margin-left: 6px;
+				}
+			}
 		}
 	}
 

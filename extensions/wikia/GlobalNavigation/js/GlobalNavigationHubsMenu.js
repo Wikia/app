@@ -12,7 +12,7 @@ require( ['jquery', 'wikia.globalnavigation.lazyload'], function( $, GlobalNavLa
 	}
 
 	function deactivateSubmenu( row ) {
-		$( '> section', $hubLinks ).add( '> li', $moreLinks ).add( row ).removeClass( 'active' );
+		$( '> section', $hubLinks ).add( '> a', $moreLinks ).add( row ).removeClass( 'active' );
 	}
 
 	function openMenu() {

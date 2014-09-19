@@ -151,7 +151,7 @@
 
 @media #{$small-only} {
 	.search-container {
-		@include grid-column-width('small', 7, 2 * $small-grid-gutter - 36px);
+		@include grid-column-width('small', 7, 2 * $small-grid-gutter);
 	}
 
 	.search-form-wrapper {
