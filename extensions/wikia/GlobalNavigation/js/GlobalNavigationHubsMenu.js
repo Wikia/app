@@ -61,7 +61,7 @@ require( ['jquery', 'wikia.globalnavigation.lazyload'], function( $, GlobalNavLa
 				deactivate: deactivateSubmenu
 			});
 
-		if ( !window.touchstart ) {
+		if ( !window.ontouchstart ) {
 			window.delayedHover(
 				$entryPoint.get( 0 ),
 				{
