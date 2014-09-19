@@ -1833,7 +1833,7 @@ $config['int_map_ponto'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => [
 		'//resources/wikia/libraries/Ponto/ponto.js',
-		'//extensions/wikia/WikiaInteractiveMaps/js/intMapPontoBridge.js'
+		'//extensions/wikia/WikiaInteractiveMaps/js/intMapPontoBridge.js',
 	]
 ];
 
@@ -1844,7 +1844,7 @@ $config['int_map_special_page_js'] = [
 		'//extensions/wikia/WikiaInteractiveMaps/js/intMapConfig.js',
 		'//extensions/wikia/WikiaInteractiveMaps/js/intMapUtils.js',
 		'#group_int_map_ponto',
-		'//extensions/wikia/WikiaInteractiveMaps/js/WikiaInteractiveMaps.js'
+		'//extensions/wikia/WikiaInteractiveMaps/js/WikiaInteractiveMaps.js',
 	]
 ];
 
@@ -1853,7 +1853,8 @@ $config['int_map_in_modal_display_js'] = [
 	'skin' => ['oasis'],
 	'assets' => [
 		'#group_int_map_ponto',
-		'//extensions/wikia/WikiaInteractiveMaps/js/intMapUtils.js'
+		'//extensions/wikia/WikiaInteractiveMaps/js/intMapConfig.js',
+		'//extensions/wikia/WikiaInteractiveMaps/js/intMapUtils.js',
 	]
 ];
 
@@ -1892,7 +1893,7 @@ $config['int_map_edit_poi_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => ['oasis'],
 	'assets' => [
-		'//extensions/wikia/WikiaInteractiveMaps/js/intMapEditPOI.js'
+		'//extensions/wikia/WikiaInteractiveMaps/js/intMapEditPOI.js',
 	]
 ];
 
@@ -1962,7 +1963,7 @@ $config['int_map_special_page_js_wikiamobile'] = [
 	'assets' => [
 		'//extensions/wikia/WikiaInteractiveMaps/js/intMapUtils.js',
 		'#group_int_map_ponto',
-		'//extensions/wikia/WikiaInteractiveMaps/js/WikiaInteractiveMaps.wikiamobile.js'
+		'//extensions/wikia/WikiaInteractiveMaps/js/WikiaInteractiveMaps.wikiamobile.js',
 	]
 ];
 
@@ -1970,7 +1971,7 @@ $config['int_map_parser_tag_js_wikiamobile'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => ['wikiamobile'],
 	'assets' => [
-		'//extensions/wikia/WikiaInteractiveMaps/js/WikiaInteractiveMapsParserTag.wikiamobile.js'
+		'//extensions/wikia/WikiaInteractiveMaps/js/WikiaInteractiveMapsParserTag.wikiamobile.js',
 	]
 ];
 
