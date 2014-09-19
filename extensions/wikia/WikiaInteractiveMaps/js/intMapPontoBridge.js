@@ -91,7 +91,8 @@ define(
 		 */
 		this.getWikiaSettings = function() {
 			var settings = {
-				enableEdit: w.skin !== 'wikiamobile',
+				cityId: parseInt(w.wgCityId, 10),
+				mobile: w.skin === 'wikiamobile',
 				skin: w.skin
 			};
 

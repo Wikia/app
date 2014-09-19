@@ -12,35 +12,6 @@ use FluentSql as sql;
 class WikiaSQL extends FluentSql\SQL {
 	private $skipIfCondition = false;
 	private $useSharedMemKey = false;
-	private $cache;
-	private $callingMethod = [];
-	private $comments = [];
-
-	public function __construct() {
-		$stack = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 2);
-
-		if (isset($stack[1])) { // 0=this, 1=whoever constructed this object
-			$caller = $stack[1];
-
-			if (isset($caller['class'])) {
-				$this->callingMethod['class'] = $caller['class'];
-			}
-
-			if (isset($caller['function'])) {
-				$this->callingMethod['function'] = $caller['function'];
-			}
-
-			$this->addComment(implode('::', $this->callingMethod));
-		}
-	}
-
-	/**
-	 * add a comment that's output along with this SQL statement
-	 * @param string $comment
-	 */
-	public function addComment($comment) {
-		$this->comments[] = $comment;
-	}
 
 	/**
 	 * @param $ttl
@@ -55,7 +26,7 @@ class WikiaSQL extends FluentSql\SQL {
 
 	protected function getCacheKey(sql\Breakdown $breakDown) {
 		$cache = $this->getCache();
-		return $cache->generateKey($breakDown);
+		return $cache->generateKey($breakDown, $this->useSharedMemKey);
 	}
 
 	protected function query($db, sql\Breakdown $breakDown, $autoIterate, callable $callback=null) {
@@ -67,14 +38,16 @@ class WikiaSQL extends FluentSql\SQL {
 	}
 
 	/**
-	 * @return sql\Cache\Cache
+	 * @return sql\Cache|WikiaSQLCache
 	 */
 	protected function getCache() {
-		if ($this->cache === null) {
-			$this->cache = new WikiaSQLCache($this->callingMethod, $this->useSharedMemKey);
+		static $cache = null;
+
+		if ($cache === null) {
+			$cache = new WikiaSQLCache();
 		}
 
-		return $this->cache;
+		return $cache;
 	}
 
 	/**
@@ -84,19 +57,6 @@ class WikiaSQL extends FluentSql\SQL {
 	 */
 	public function injectParams($db, sql\Breakdown $breakDown) {
 		return $db->fillPrepared($breakDown->getSql(), $breakDown->getParameters());
-	}
-
-	/** intercept build() and add comments */
-	public function build($bk=null, $tabs=0) {
-		if ($bk == null) {
-			$bk = new sql\Breakdown();
-		}
-
-		foreach ($this->comments as $comment) {
-			$bk->append("# $comment\n");
-		}
-
-		return parent::build($bk, $tabs);
 	}
 
 	/**

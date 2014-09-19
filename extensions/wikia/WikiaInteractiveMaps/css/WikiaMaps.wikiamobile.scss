@@ -16,13 +16,13 @@ $map-ad-height: 70px;
 }
 
 .int-map-mobile-map-page .ad-shown {
-	iframe {
+	.wikia-interactive-map {
 		padding-top: $map-ad-height + $nav-height;
 	}
 }
 
 .int-map-mobile-map-page {
-	iframe {
+	.wikia-interactive-map {
 		padding-top: $nav-height;
 	}
 }
@@ -38,10 +38,7 @@ $map-ad-height: 70px;
 		iframe {
 			border: none;
 			height: 100% !important;
-			left: 0;
 			margin: 0;
-			position: absolute;
-			top: 0;
 			width: 100% !important;
 		}
 	}
@@ -113,6 +110,14 @@ $map-ad-height: 70px;
 			vertical-align: middle;
 		}
 	}
+}
+
+.wikia-interactive-map {
+	height: 100%;
+	margin: 0;
+	position: absolute;
+	top: 0;
+	width: 100%;
 }
 
 .int-map-mobile-map-page #wkPage {

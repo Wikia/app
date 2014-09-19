@@ -1588,6 +1588,16 @@ $wgSessionsInMemcached = false;
  */
 $wgSessionHandler = null;
 
+/** Wikia change - begin - @author: Michał ‘Mix’ Roszka <mix@wikia-inc.com>
+ *
+ * See: https://wikia-inc.atlassian.net/browse/PLATFORM-308
+ *
+ * This is used for storing session data relevant to the above issue. The data
+ * are logged to Kibana on shutdown.
+ */
+$wgSessionDebugData = [];
+/** Wikia change - end */
+
 /** If enabled, will send MemCached debugging information to $wgDebugLogFile */
 $wgMemCachedDebug = false;
 

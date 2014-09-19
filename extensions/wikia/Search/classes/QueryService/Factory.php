@@ -38,7 +38,7 @@ class Factory
 
 	public function getSolariumClientConfig() {
 		$service = (new \Wikia\Search\ProfiledClassFactory)->get( 'Wikia\Search\MediaWikiService' );
-		$host = $service->isOnDbCluster() ? $service->getGlobalWithDefault( 'SolrHost', 'localhost' ) : 'staff-search-s2';
+		$host = $service->getGlobalWithDefault( 'SolrHost', 'localhost' );
 		$host = (! empty( $_GET['newsolrhost'] ) ) ? $service->getGlobal( 'AlternateSolrHost' ) : $host;
 
 		$solariumConfig = [];

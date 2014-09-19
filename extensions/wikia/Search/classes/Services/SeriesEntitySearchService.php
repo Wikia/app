@@ -13,7 +13,7 @@ class SeriesEntitySearchService extends EntitySearchService {
 	const SERIES_TYPE = 'tv_series';
 	const DEFAULT_SLOP = 1;
 
-	private static $ARTICLE_TYPES_SUPPORTED_LANGS = ['en'];
+	private static $ARTICLE_TYPES_SUPPORTED_LANGS = [ 'en' ];
 
 	public function __construct( $client = null, $helper = null ) {
 		$helper = ( $helper == null ) ? new OutputFormatter() : $helper;

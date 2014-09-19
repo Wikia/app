@@ -16,9 +16,6 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 	const TRANSLATION_FILENAME = 'translations.json';
 	const MAPS_WIKIA_URL = 'http://maps.wikia.com';
 
-	const MAP_NOT_DELETED = 0;
-	const MAP_DELETED = 1;
-
 	const WIKIA_MOBILE_SKIN_NAME = 'wikiamobile';
 
 	/**
@@ -27,7 +24,7 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 	private $mapsModel;
 
 	/**
-	 * @desc Special page constructor
+	 * Special page constructor
 	 *
 	 * @param null $name
 	 * @param string $restriction
@@ -77,7 +74,7 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 			$params[ 'deleted' ] = 1;
 		}
 
-		$mapsResponse = $this->mapsModel->getMapsFromApi( $params );
+		$mapsResponse = $this->getModel()->getMapsFromApi( $params );
 
 		if ( !$mapsResponse ) {
 			$this->forward( 'WikiaInteractiveMaps', 'error' );
@@ -104,21 +101,22 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 	 * Single map page
 	 */
 	public function map() {
-		$mobileSkin = F::app()->checkSkin( 'wikiamobile' );
+		$mobileSkin = $this->app->checkSkin( 'wikiamobile' );
 		$mapId = (int)$this->getPar();
 		$zoom = $this->request->getInt( 'zoom', WikiaInteractiveMapsParserTagController::DEFAULT_ZOOM );
 		$lat = $this->request->getInt( 'lat', WikiaInteractiveMapsParserTagController::DEFAULT_LATITUDE );
 		$lon = $this->request->getInt( 'lon', WikiaInteractiveMapsParserTagController::DEFAULT_LONGITUDE );
+		$model = $this->getModel();
 
-		$map = $this->mapsModel->getMapByIdFromApi( $mapId );
+		$map = $model->getMapByIdFromApi( $mapId );
 
-		if ( isset( $map->title ) ) {
+		if( isset( $map->title ) ) {
+			$this->redirectIfForeignWiki( $map->city_id, $mapId );
 			$this->wg->out->setHTMLTitle( $map->title );
 
-			$deleted = $map->deleted == self::MAP_DELETED;
-
+			$deleted = $map->deleted == WikiaMaps::MAP_DELETED;
 			if ( $deleted ) {
-				if ( F::app()->checkSkin( 'oasis' ) ) {
+				if ( $this->app->checkSkin( 'oasis' ) ) {
 					NotificationsController::addConfirmation(
 						wfMessage( 'wikia-interactive-maps-map-is-deleted' ),
 						NotificationsController::CONFIRMATION_WARN
@@ -127,7 +125,7 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 			}
 
 			$this->setVal( 'deleted', $deleted );
-			$url = $this->mapsModel->getMapRenderUrl([
+			$url = $model->getMapRenderUrl([
 				$mapId,
 				$zoom,
 				$lat,
@@ -158,6 +156,29 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 	}
 
 	/**
+	 * Redirects to a single map page on right wikia if the current wikia id isn't the same as the map's city_id
+	 * @param Integer $cityId
+	 * @param Integer $mapId
+	 */
+	public function redirectIfForeignWiki( $cityId, $mapId ) {
+		if ( (int) $this->wg->CityId !== $cityId ) {
+			$targetUrl = $this->getWikiPageUrl( self::PAGE_NAME, NS_SPECIAL, $cityId );
+			$this->wg->out->redirect( $targetUrl . '/' . $mapId );
+		}
+	}
+
+	/**
+	 * Returns full URL for a wiki with given $cityId
+	 * @param String $text
+	 * @param Integer $namespace
+	 * @param Integer|null $cityId
+	 * @return string
+	 */
+	protected function getWikiPageUrl( $text, $namespace = NS_MAIN, $cityId = null ) {
+		return GlobalTitle::newFromText( $text, $namespace, $cityId )->getFullURL();
+	}
+
+	/**
 	 * Makes all required adjustments for rendering single map page on mobile
 	 */
 	private function setMapOnMobile() {
@@ -175,7 +196,8 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 	}
 
 	/**
-	 * @desc Renders the menu markup for the map page from mustache
+	 * Renders the menu markup for the map page from mustache
+	 * @param Integer $deleted flag which tells if a map was deleted
 	 * @return string
 	 */
 	function getMenuMarkup( $deleted ) {
@@ -197,57 +219,16 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 			];
 		}
 
-		return F::app()->renderView( 'MenuButton', 'index', $actionButtonArray );
+		return $this->app->renderView( 'MenuButton', 'index', $actionButtonArray );
 	}
 
 	/**
-	 * @desc Obtains a url to a special page with a given path
+	 * Obtains a url to a special page with a given path
 	 * @param string $name - name of the special page
 	 * @return string
 	 */
-	static function getSpecialMapsUrl() {
-		return SpecialPage::getTitleFor( self::PAGE_NAME )->getFullUrl();
-	}
-
-	/**
-	 * @desc Ajax method for un/deleting a map from IntMaps API
-	 */
-	public function updateMapDeletionStatus() {
-		$mapId = $this->request->getVal( 'mapId', 0 );
-		$deleted = $this->request->getInt( 'deleted' );
-
-		if ( !in_array( $deleted, [ self::MAP_DELETED, self::MAP_NOT_DELETED ] ) ) {
-			$deleted = self::MAP_DELETED;
-		}
-
-		$result = false;
-		if ( $mapId && $this->wg->User->isLoggedIn() ) {
-			$result = $this->mapsModel->updateMapDeletionStatus( $mapId, $deleted )[ 'success' ];
-		}
-		if ( $result ) {
-			$action = $deleted === self::MAP_DELETED
-				? WikiaMapsLogger::ACTION_DELETE_MAP
-				: WikiaMapsLogger::ACTION_UNDELETE_MAP;
-			WikiaMapsLogger::addLogEntry(
-				$action,
-				$mapId,
-				$mapId,
-				[
-					$this->wg->User->getName(),
-				]
-			);
-
-			NotificationsController::addConfirmation(
-				$deleted ?
-					wfMessage( 'wikia-interactive-maps-delete-map-success' )->text() :
-					wfMessage( 'wikia-interactive-maps-undelete-map-success' )->text()
-			);
-			$redirectUrl = $this->getSpecialUrl( self::PAGE_NAME );
-			if ( $deleted === self::MAP_NOT_DELETED ) {
-				$redirectUrl = $this->getSpecialUrl( self::PAGE_NAME ) . '/' . $mapId;
-			}
-			$this->response->setVal( 'redirectUrl', $redirectUrl );
-		}
+	static function getSpecialUrl( $name = self::PAGE_NAME ) {
+		return SpecialPage::getTitleFor( $name )->getFullUrl();
 	}
 	
 	/**
@@ -262,10 +243,8 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 
 	/**
 	 * Generates offset value based on current page and items per page
-	 *
 	 * @param int $currentPage
 	 * @param int $itemsPerPage
-	 *
 	 * @return int mixed
 	 */
 	private function getPaginationOffset( $currentPage, $itemsPerPage ) {
@@ -284,20 +263,18 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 
 	/**
 	 * Iterates through $items and changes image URL to thumbnail
-	 *
 	 * @param Array $items
 	 * @param Integer $width
 	 * @param Integer $height
 	 */
 	private function convertImagesToThumbs( &$items, $width, $height ) {
 		foreach ( $items as $item ) {
-			$item->image = $this->mapsModel->createCroppedThumb( $item->image, $width, $height );
+			$item->image = $this->getModel()->createCroppedThumb( $item->image, $width, $height );
 		}
 	}
 
 	/**
 	 * Sets template variables depending on skin
-	 *
 	 * @param Array $mapsResponse an array taken from API response
 	 * @param String $selectedSort a sorting option passed in $_GET
 	 */
@@ -326,7 +303,7 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 				'title' => wfMessage( 'wikia-interactive-maps-title' ),
 				'create-a-map' => wfMessage( 'wikia-interactive-maps-create-a-map' ),
 			] );
-			$this->setVal( 'sortingOptions', $this->mapsModel->getSortingOptions( $selectedSort ) );
+			$this->setVal( 'sortingOptions', $this->getModel()->getSortingOptions( $selectedSort ) );
 			$this->setVal( 'searchInput', $this->app->renderView( 'Search', 'Index' ) );
 		}
 
@@ -336,12 +313,11 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 		$this->setVal( 'hasMaps', !empty( $mapsResponse->total ) );
 		$this->setVal( 'learnMoreUrl', self::MAPS_WIKIA_URL );
 
-		$this->setVal( 'baseUrl', WikiaInteractiveMapsController::getSpecialMapsUrl() );
+		$this->setVal( 'baseUrl', self::getSpecialUrl() );
 	}
 
 	/**
 	 * Renders pagination and adds it to template variables for Oasis skin
-	 *
 	 * @param Integer $totalMaps
 	 * @param Integer $currentPage
 	 * @param Array $urlParams
@@ -378,9 +354,17 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 	 * Return Real Map image URL
 	 */
 	public function getRealMapImageUrl() {
-		$this->response->setVal( 'url', $this->mapsModel->getRealMapImageUrl() );
+		$this->response->setVal( 'url', $this->getModel()->getRealMapImageUrl() );
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 		$this->response->setCacheValidity( WikiaResponse::CACHE_SHORT, WikiaResponse::CACHE_SHORT );
 	}
-}
 
+	/**
+	 * Returns WikiaMaps model
+	 * @return WikiaMaps
+	 */
+	public function getModel() {
+		return $this->mapsModel;
+	}
+
+}

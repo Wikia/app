@@ -8,30 +8,31 @@
  */
 
 class WikiaSQLCache extends FluentSql\Cache\Cache {
-	/** @var array */
-	private $keyArgs = ['sql-cache'];
-
-	/** @var bool */
-	private $useSharedKey = false;
-
-	/**
-	 * @param array $keyArgs starting state of memcache key
-	 * @param bool $useSharedKey whether or not this memkey is shared amongst wikis
-	 */
-	public function __construct($keyArgs=[], $useSharedKey=false) {
-		$this->keyArgs = array_merge($this->keyArgs, array_values($keyArgs));
-		$this->useSharedKey = $useSharedKey;
-	}
-
 	/**
 	 * @param \FluentSql\Breakdown $breakDown
+	 * @param bool $sharedKey whether or not this memkey is shared amongst wikis
 	 * @return string a memcache key to use
 	 */
-	public function generateKey(\FluentSql\Breakdown $breakDown) {
-		$this->keyArgs[] = parent::generateKey($breakDown);
-		$func = $this->useSharedKey ? 'wfSharedMemcKey' : 'wfMemcKey';
+	public function generateKey(\FluentSql\Breakdown $breakDown, $sharedKey) {
+		$stack = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 4);
+		$keyArgs = ['sql-cache'];
 
-		return call_user_func_array($func, $this->keyArgs);
+		if (isset($stack[3])) { // 0=this, 1=WikiaSQL->getCacheKey, 2=SQL->run(), 3=whoever called "run"
+			$caller = $stack[3];
+
+			if (isset($caller['class'])) {
+				$keyArgs []= $caller['class'];
+			}
+
+			if (isset($caller['function'])) {
+				$keyArgs []= $caller['function'];
+			}
+		}
+
+		$keyArgs []= parent::generateKey($breakDown);
+		$func = $sharedKey ? 'wfSharedMemcKey' : 'wfMemcKey';
+
+		return call_user_func_array($func, $keyArgs);
 	}
 
 	public function get($key) {

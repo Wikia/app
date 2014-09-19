@@ -4,6 +4,7 @@
  * Class VideoHandlerController
  */
 class VideoHandlerController extends WikiaController {
+	const DEFAULT_TEMPLATE_ENGINE = WikiaResponse::TEMPLATE_ENGINE_MUSTACHE;
 
 	const VIDEO_LIMIT = 100;
 	const DEFAULT_THUMBNAIL_WIDTH = 250;
@@ -38,7 +39,11 @@ class VideoHandlerController extends WikiaController {
 				} else {
 					$videoId = $file->getVideoId();
 					$assetUrl = $file->getPlayerAssetUrl();
-					$embedCode = $file->getEmbedCode( $width, $autoplay, true );
+					$options = [
+						'autoplay' => $autoplay,
+						'isAjax' => true,
+					];
+					$embedCode = $file->getEmbedCode( $width, $options );
 					$this->setVal( 'videoId', $videoId );
 					$this->setVal( 'asset', $assetUrl );
 					$this->setVal( 'embedCode', $embedCode );
