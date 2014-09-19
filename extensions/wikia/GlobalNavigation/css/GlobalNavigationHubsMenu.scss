@@ -177,6 +177,7 @@
 				bottom: 40px;
 				font-size: 16px;
 				font-weight: bold;
+				left: 278px;
 
 				&:after {
 					margin-left: 6px;
@@ -364,6 +365,10 @@
 			.label {
 				width: 167px;
 			}
+		}
+
+		section a.more {
+			left: 324px;
 		}
 	}
 }
