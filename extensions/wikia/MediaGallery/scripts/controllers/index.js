@@ -12,18 +12,21 @@ require(['mediaGallery.views.gallery'], function (Gallery) {
 
 		$.each($galleries, function (idx) {
 			var $this = $(this),
-				model, gallery;
-
-			model = data[idx];
+				gallery;
 
 			gallery = new Gallery({
-				$el: $this.find('.media-gallery-inner'),
+				$el: $('<div></div>').addClass('media-gallery-inner'),
 				$wrapper: $this,
-				model: model
+				model: data[idx]
 			});
+			gallery.render();
+
+			$this.append(gallery.$el);
+			if (gallery.$toggler) {
+				$this.append(gallery.$toggler);
+			}
 
 			galleries.push(gallery);
 		});
-
 	});
 });

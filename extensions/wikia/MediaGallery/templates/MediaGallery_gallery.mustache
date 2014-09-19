@@ -6,12 +6,10 @@
 		Wikia.mediaGalleryData.push({{{json}}});
 	</script>
 	<button class="add-image">{{addImageButton}}</button>
-	<div class="media-gallery-inner">
-		<noscript>
-			{{#media}}
-				<a href="{{linkHref}}"><img src="{{thumb}}" alt="{{{caption}}}"></a>
-			{{/media}}
-		</noscript>
-	</div>
+	<noscript>
+		{{#media}}
+			<a href="{{linkHref}}"><img src="{{thumb}}" alt="{{{caption}}}"></a>
+		{{/media}}
+	</noscript>
 </div>
 
