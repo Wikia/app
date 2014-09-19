@@ -530,6 +530,10 @@ class Article extends Page {
 					if ( $useParserCache ) {
 						$this->mParserOutput = $parserCache->get( $this, $parserOptions );
 
+						//Wikia Change
+						Transaction::setAttribute( Transaction::PARAM_PARSER_CACHE_USED, $this->mParserOutput !== false );
+						//Wikia Change End
+
 						if ( $this->mParserOutput !== false ) {
 							if ( $oldid ) {
 								wfDebug( __METHOD__ . ": showing parser cache contents for current rev permalink\n" );
@@ -538,6 +542,9 @@ class Article extends Page {
 								wfDebug( __METHOD__ . ": showing parser cache contents\n" );
 							}
 							$wgOut->addParserOutput( $this->mParserOutput );
+							// Wikia change - begin - @author: wladek
+							wfRunHooks('ArticleViewAddParserOutput',array( $this, $this->mParserOutput ) );
+							// Wikia change - end
 							# Ensure that UI elements requiring revision ID have
 							# the correct version information.
 							$wgOut->setRevisionId( $this->mPage->getLatest() );
@@ -549,11 +556,29 @@ class Article extends Page {
 							}
 							$outputDone = true;
 						}
+					// Wikia change - begin - @author: wladek
+					} else {
+						Transaction::setAttribute( Transaction::PARAM_PARSER_CACHE_USED, false );
+					// Wikia change - end
 					}
 					break;
 				case 3:
 					# This will set $this->mRevision if needed
 					$this->fetchContent();
+
+					// Wikia change - begin
+					// @author macbre
+					// return status different than HTTP 200 when revision is missing (BAC-630)
+					if ( !$this->mRevision instanceof Revision ) {
+						global $wgEnableParserCache;
+						wfDebug( __METHOD__ . ": no revision found - disabling parser cache and returning 404\n" );
+
+						$wgOut->getRequest()->response()->header('X-Missing-Revision: 1', true, 404);
+
+						$useParserCache = false;
+						$wgEnableParserCache = false;
+					}
+					// Wikia change - end
 
 					# Are we looking at an old revision
 					if ( $oldid && $this->mRevision ) {
@@ -619,6 +644,12 @@ class Article extends Page {
 					$this->mParserOutput = $poolArticleView->getParserOutput();
 					$wgOut->addParserOutput( $this->mParserOutput );
 
+					// Wikia change - begin - @author: wladek
+					Transaction::setAttribute( Transaction::PARAM_PARSER_CACHE_USED, $poolArticleView->getIsDirty() );
+
+					wfRunHooks('ArticleViewAddParserOutput',array( $this, $this->mParserOutput ) );
+					// Wikia change - end
+
 					# Don't cache a dirty ParserOutput object
 					if ( $poolArticleView->getIsDirty() ) {
 						$wgOut->setSquidMaxage( 0 );
@@ -627,8 +658,6 @@ class Article extends Page {
 
 					# <Wikia>
 					if ( !$poolArticleView->getIsDirty() ) {
-						$this->mParserOutput->setPerformanceStats('wikitextSize',strlen($this->getContent()));
-						$this->mParserOutput->setPerformanceStats('htmlSize',strlen($this->mParserOutput->getText()));
 						wfRunHooks('ArticleViewAfterParser',array( $this, $this->mParserOutput ) );
 					}
 					# </Wikia>

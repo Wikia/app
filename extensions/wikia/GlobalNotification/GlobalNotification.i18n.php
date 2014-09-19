@@ -50,7 +50,7 @@ $messages['ca'] = array(
 	'globalnotification-general-ajax-failure' => 'El navegador no ha pogut connectar-se a Wikia. Intenta-ho més tard.',
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Darth Daron
  */
 $messages['cs'] = array(
@@ -77,9 +77,11 @@ $messages['es'] = array(
 
 /** Finnish (suomi)
  * @author Centerlink
+ * @author Elseweyr
  * @author Nike
  */
 $messages['fi'] = array(
+	'globalnotification-desc' => 'Näyttää järjestelmän ilmoituksia sellaisista tapahtumista kuten AJAX -epäonnistumisista',
 	'globalnotification-general-ajax-failure' => 'Yhteyden muodostaminen Wikian palvelimille epäonnistui. Yritä myöhemmin uudelleen.',
 );
 
@@ -245,6 +247,13 @@ $messages['sv'] = array(
 	'globalnotification-general-ajax-failure' => 'Webbläsaren kunde inte ansluta till Wikia. Försök igen senare.',
 );
 
+/** Telugu (తెలుగు)
+ * @author Chaduvari
+ */
+$messages['te'] = array(
+	'globalnotification-general-ajax-failure' => 'బ్రౌజరు వికియాకు కనెక్టు కాలేకపోయింది. తరువాత ,మరలా ప్రయత్నించండి.',
+);
+
 /** Tagalog (Tagalog)
  * @author AnakngAraw
  */
@@ -267,6 +276,14 @@ $messages['tt-cyrl'] = array(
 $messages['uk'] = array(
 	'globalnotification-desc' => 'Відображає системні повідомлення про такі події, як помилки AJAX',
 	'globalnotification-general-ajax-failure' => 'Браузер не зміг підключитися до Wikia. Спробуйте ще раз пізніше.',
+);
+
+/** Vietnamese (Tiếng Việt)
+ * @author Baonguyen21022003
+ */
+$messages['vi'] = array(
+	'globalnotification-desc' => 'Hiển thị hệ thống thông báo cho các sự kiện như thất bại AJAX',
+	'globalnotification-general-ajax-failure' => 'Trình duyệt không thể kết nối đến Wikia. Thử lại sau.',
 );
 
 /** Simplified Chinese (中文（简体）‎)

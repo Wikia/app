@@ -26,6 +26,41 @@ class GameGuidesController extends WikiaController {
 	 */
 	private $mModel = null;
 	private $mPlatform = null;
+	//Make sure this is updated as in GameGuides.js
+	private static $disabledNamespaces = [
+		// Core MediaWiki
+		-2,
+		-1,
+		1,
+		2,
+		3,
+		4,
+		5,
+		6,
+		7,
+		10,
+		11,
+		12,
+		13,
+		15,
+		// Forum
+		110,
+		111,
+		// Blog
+		500,
+		501,
+		// Top List
+		700,
+		701,
+		// Wall
+		1200,
+		1201,
+		1202,
+		// Wikia Forum
+		2000,
+		2001,
+		2002,
+	];
 
 	function init() {
 		$requestedVersion = $this->request->getInt( 'ver', self::API_VERSION );
@@ -160,13 +195,7 @@ class GameGuidesController extends WikiaController {
 		if( isset( $period ) && isset( $factor ) ) {
 			$cacheValidityTime = $factor * $period;
 
-			$this->response->setCacheValidity(
-				$cacheValidityTime,
-				$cacheValidityTime,
-				[
-					WikiaResponse::CACHE_TARGET_VARNISH
-				]
-			);
+			$this->response->setCacheValidity($cacheValidityTime);
 		}
 	}
 
@@ -240,9 +269,12 @@ class GameGuidesController extends WikiaController {
 	 * @return bool
 	 */
 	static function onTitleGetSquidURLs( $title, &$urls ){
-		$urls[] = GameGuidesController::getUrl( 'getPage', array(
-			'page' => $title->getPartialURL()
-		));
+
+		if ( !in_array( $title->getNamespace(), self::$disabledNamespaces ) ) {
+			$urls[] = self::getUrl( 'getPage', array(
+				'page' => $title->getPrefixedText()
+			) );
+		}
 
 		return true;
 	}

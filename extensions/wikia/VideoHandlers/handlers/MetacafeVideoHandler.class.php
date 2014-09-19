@@ -9,7 +9,9 @@ class MetacafeVideoHandler extends VideoHandler {
 	protected static $autoplayParam = "autoPlay";
 	protected static $autoplayValue = "yes";
 
-	public function getEmbed($articleId, $width, $autoplay=false, $isAjax=false, $postOnload = false) {
+	public function getEmbed( $width, array $options = [] ) {
+		$autoplay = !empty( $options['autoplay'] );
+		$articleId = isset( $options['articleId'] ) ? ( int ) $options['articleId'] : null;
 		$height =  $this->getHeight( $width );
 		$sAutoPlayParam = self::$autoplayParam;
 		$sAutoPlayValue = $autoplay  ? self::$autoplayValue : 'no';
@@ -20,7 +22,11 @@ class MetacafeVideoHandler extends VideoHandler {
 <embed flashVars="playerVars={$sAutoPlayParam}={$sAutoPlayValue}" src="{$url}" $sizeString wmode="transparent" allowFullScreen="true" allowScriptAccess="always" name="Metacafe_{$articleId}" pluginspage="http://www.macromedia.com/go/getflashplayer" type="application/x-shockwave-flash"></embed>
 EOT;
 
-		return array( 'html' => $html );
+		return array(
+			'html' => $html,
+			'width' => $width,
+			'height' => $height,
+		);
 	}
 
 }

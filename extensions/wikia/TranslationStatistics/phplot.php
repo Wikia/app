@@ -119,7 +119,7 @@ class PHPlot
     public $label_format = array('x' => array(), 'xd' => array(), 'y' => array(), 'yd' => array());
     // data_units_text is retained for backward compatibility, because there was never a function
     // to set it. Use the 'suffix' argument to Set[XY]LabelType instead.
-    public $data_units_text = '';              // Units text for 'data' labels (i.e: '¤', '$', etc.)
+    public $data_units_text = '';              // Units text for 'data' labels (i.e: 'ï¿½', '$', etc.)
 
 // Legend
     public $legend = '';                       // An array with legend titles
@@ -1576,7 +1576,6 @@ class PHPlot
     {
         // Browser cache stuff submitted by Thiemo Nagel
         if ( (! $this->browser_cache) && (! $this->is_inline)) {
-            header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
             header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . 'GMT');
             header('Cache-Control: no-cache, must-revalidate');
             header('Pragma: no-cache');

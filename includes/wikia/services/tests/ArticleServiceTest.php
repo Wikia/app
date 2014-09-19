@@ -4,6 +4,8 @@ class ArticleServiceTest extends WikiaBaseTest {
 	const TEST_CITY_ID = 79860;
 
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.03939 ms
 	 * @covers ArticleService::getUncachedSnippetFromArticle
 	 * @covers ArticleService::getTextSnippet
 	 * @dataProvider getTextSnippetDataProvider
@@ -133,17 +135,17 @@ class ArticleServiceTest extends WikiaBaseTest {
 		$mockResult
 		    ->expects( $this->once() )
 		    ->method ( 'offsetExists' )
-		    ->with   ( Wikia\Search\Utilities::field( 'html' ) )
+		    ->with   ( 'snippet_s' )
 		    ->will   ( $this->returnValue( true ) )
 		;
 		$mockResult
-		    ->expects( $this->once() )
+		    ->expects( $this->any() )
 		    ->method ( 'offsetGet' )
-		    ->with   ( Wikia\Search\Utilities::field( 'html' ) )
+		    ->with   ( 'snippet_s' )
 		    ->will   ( $this->returnValue( 'foo' ) )
 		;
 
-		$this->proxyClass( 'SolrDocumentService', $mockDocumentService );
+		$this->mockClass( 'SolrDocumentService', $mockDocumentService );
 
 		$this->assertEquals(
 				'foo',

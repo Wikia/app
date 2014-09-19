@@ -15,6 +15,10 @@ function efImageReviewDisplayStatus( $imagePage, &$html ) {
 		return true;
 	}
 
+	if ( !$imagePage->getTitle()->exists() ) {
+		return true;
+	}
+
 	$html .= Xml::element( 'h2', array(), wfMsg( 'imagereview-imagepage-header' ) );
 
 	$reviews = array();

@@ -375,7 +375,16 @@ class ScribeEventProducer {
 
 
 	public function setCategory() {
+		//FIXME: This seems like a bug because getCategory returns an object with cat_id and cat_name fields
 		$this->mParams['categoryId'] = WikiFactory::getCategory( $this->app->wg->CityId );
+
+		// The code should probably be changed to this after double checking the scribe consumers
+		//$category = WikiFactory::getCategory( $this->app->wg->CityId );
+		//$this->mParams['categoryId'] = isset($category->cat_id) ? $category->cat_id : 0;
+		//
+		// And when categories are updated:
+		//$this->mParams['categories'] = WikiFactory::getCategories( $this->app->wg->CityId );
+
 	}
 
 	public function sendLog() {
@@ -398,17 +407,15 @@ class ScribeEventProducer {
 			$images = $oPage->mPreparedEdit->output->getImages();
 			if ( !empty($images) ) {
 				foreach ($images as $iname => $dummy) {
-					if ( WikiaFileHelper::isVideoStoredAsFile() ) {
-						$file = wfFindFile($iname);
-						if ($file instanceof LocalFile) {
-							$mediaType = $file->getMediaType();
-							switch ($mediaType) {
-								case MEDIATYPE_VIDEO:
-									$links['video']++;
-									break;
-								default:
-									$links['image']++;
-							}
+					$file = wfFindFile($iname);
+					if ($file instanceof LocalFile) {
+						$mediaType = $file->getMediaType();
+						switch ($mediaType) {
+							case MEDIATYPE_VIDEO:
+								$links['video']++;
+								break;
+							default:
+								$links['image']++;
 						}
 					}
 					else {

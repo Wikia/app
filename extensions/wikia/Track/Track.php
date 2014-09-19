@@ -13,23 +13,22 @@ $wgHooks['WikiaSkinTopScripts'][] = 'Track::onWikiaSkinTopScripts';
 class Track {
 	const BASE_URL = 'http://a.wikia-beacon.com/__track';
 
-	public static function getURL ($type=null, $name=null, $param=null, $for_html=true) {
-		global $wgCityId, $wgContLanguageCode, $wgDBname, $wgDBcluster, $wgUser, $wgArticle, $wgTitle, $wgAdServerTest;
+	private static function getURL ($type=null, $name=null, $param=null, $for_html=true) {
+		global $wgStyleVersion, $wgCityId, $wgContLanguageCode, $wgDBname, $wgDBcluster, $wgUser, $wgArticle, $wgTitle, $wgAdServerTest;
 
 		$sep = $for_html ? '&amp;' : '&';
-		$ip = F::app()->wg->Request->getIP();
 
 		$url = Track::BASE_URL.
 			($type ? "/$type" : '').
 			($name ? "/$name" : '').
 			'?'.
+			'cb='.$wgStyleVersion.$sep.
 			'c='.$wgCityId.$sep.
 			'lc='.$wgContLanguageCode.$sep.
 			'lid='.WikiFactory::LangCodeToId($wgContLanguageCode).$sep.
 			'x='.$wgDBname.$sep.
 			'y='.$wgDBcluster.$sep.
 			'u='.$wgUser->getID().$sep.
-			'ip='.$ip.$sep.
 			'a='.(is_object($wgArticle) ? $wgArticle->getID() : null).$sep.
 			's='.RequestContext::getMain()->getSkin()->getSkinName().
 			($wgTitle && !is_object($wgArticle) ? $sep.'pg='.urlencode($wgTitle->getPrefixedDBkey()) : '').
@@ -46,8 +45,8 @@ class Track {
 		return $url;
 	}
 
-	public static function getViewJS ($param=null) {
-		global $wgDevelEnvironment, $wgJsMimeType;
+	private static function getViewJS ($param=null) {
+		global $wgDevelEnvironment;
 
 		// Fake beacon and varnishTime values for development environment
 		if ( !empty( $wgDevelEnvironment ) ) {
@@ -71,7 +70,7 @@ class Track {
 	var utma = RegExp("__utma=([0-9\.]+)").exec(document.cookie);
 	var utmb = RegExp("__utmb=([0-9\.]+)").exec(document.cookie);
 
-	var trackUrl = "$url" + ((typeof document.referrer != "undefined") ? "&amp;r=" + escape(document.referrer) : "") + "&amp;cb=" + (new Date).valueOf() + (window.beacon_id ? "&amp;beacon=" + window.beacon_id : "") + (utma && utma[1] ? "&amp;utma=" + utma[1] : "") + (utmb && utmb[1] ? "&amp;utmb=" + utmb[1] : "");
+	var trackUrl = "$url" + ((typeof document.referrer != "undefined") ? "&amp;r=" + escape(document.referrer) : "") + "&amp;rand=" + (new Date).valueOf() + (window.beacon_id ? "&amp;beacon=" + window.beacon_id : "") + (utma && utma[1] ? "&amp;utma=" + utma[1] : "") + (utmb && utmb[1] ? "&amp;utmb=" + utmb[1] : "");
 	document.write('<'+'script type="text/javascript" src="' + trackUrl + '"><'+'/script>');
 })();
 </script>
@@ -82,6 +81,8 @@ SCRIPT1;
 	}
 
 	public static function event ($event_type, $param=null) {
+		wfProfileIn(__METHOD__);
+
 		$backtrace = debug_backtrace();
 		$class = $backtrace[1]['class'];
 		$func  = $backtrace[1]['function'];
@@ -90,8 +91,10 @@ SCRIPT1;
 
 		$url = Track::getURL('special', urlencode($event_type), $param, false);
 		if (Http::get($url) !== false) {
+			wfProfileOut(__METHOD__);
 			return true;
 		} else {
+			wfProfileOut(__METHOD__);
 			return false;
 		}
 	}
@@ -104,8 +107,7 @@ SCRIPT1;
 	public static function addGlobalVars(Array &$vars) {
 		global $wgUser;
 
-		// TODO: consider using $wgUser->isLoggedIn() instead
-		if ($wgUser->getId() && $wgUser->getId() > 0) {
+		if ($wgUser->isLoggedIn()) {
 			$vars['wgTrackID'] = $wgUser->getId();
 		}
 		return true;

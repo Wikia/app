@@ -16,14 +16,15 @@ class DataFeedProvider {
 		if ($imageObj) {
 			$width = $imageObj->getWidth();
 			$height = $imageObj->getHeight();
+			$options = [ 'noLightbox' => true ];
 
 			if ($width > self::UPLOAD_THUMB_WIDTH || $height > self::UPLOAD_THUMB_WIDTH) {
 				$thumbObj = $imageObj->transform( array( 'width' => self::UPLOAD_THUMB_WIDTH, 'height' => self::UPLOAD_THUMB_WIDTH ) );
 				$width = $thumbObj->getWidth();
 				$height = $thumbObj->getHeight();
-				$html = $thumbObj->toHtml();
+				$html = $thumbObj->toHtml( $options );
 			} else {
-				$html = $imageObj->getUnscaledThumb()->toHtml();
+				$html = $imageObj->getUnscaledThumb()->toHtml( $options );
 			}
 
 			wfProfileOut(__METHOD__);
@@ -325,7 +326,6 @@ class DataFeedProvider {
 		|| ($res['ns'] == NS_TEMPLATE && $this->proxyType == self::WL)
 		|| ($res['ns'] == NS_MEDIAWIKI && $this->proxyType == self::WL)
 		|| ($res['ns'] == NS_IMAGE && $this->proxyType == self::WL)
-		|| ($res['ns'] == NS_VIDEO && $this->proxyType == self::WL)
 		|| (defined('NS_TOPLIST') && $res['ns'] == NS_TOPLIST)) {
 			$item['title'] = $res['title'];
 			$item['url'] = $title->getLocalUrl();
@@ -344,13 +344,6 @@ class DataFeedProvider {
 				$item['articleComment'] = true;
 				$parts = ArticleComment::explode($res['title']);
 				$item['title'] = $parts['title'];
-			}
-
-		} elseif (defined('NS_RELATED_VIDEOS') && $res['ns'] == NS_RELATED_VIDEOS ) {
-			if ( class_exists( 'RelatedVideosService' ) ){
-				$oRVService = (new RelatedVideosService);
-				$item = $oRVService->editWikiActivityParams( $title, $res, $item );
-
 			}
 		}
 
@@ -422,9 +415,6 @@ class DataFeedProvider {
 		} elseif ( !empty($wgWallNS) && in_array(MWNamespace::getSubject($res['ns']), $wgWallNS) && $this->proxyType == self::AF ) {
 			$wh = (new WallHelper);
 			$item = $wh->wikiActivityFilterMessageWall($title, $res);
-		} elseif ( defined('NS_RELATED_VIDEOS') && $res['ns'] == NS_RELATED_VIDEOS ){
-			$oRVService = (new RelatedVideosService);
-			$item = $oRVService->createWikiActivityParams($title, $res, $item);
 		}
 
 		if (count($item) > 1) {

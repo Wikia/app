@@ -14,9 +14,7 @@ window.Wikia = window.Wikia || {};
  *		scripts - comma-separated list of AssetsManager groups
  *		messages - comma-separated list of JSMessages packages (messages are registered automagically)
  * 		mustache - comma-separated list of paths to Mustache-powered templates
- *		ttl - cache period for both Varnish and Browser (in seconds), is overridden by varnishTTL and BrowserTTL
- *		varnishTTL - cache period for varnish and browser (in seconds)
- *		browserTTL - cache period for browser (in seconds)
+ * 		handlebars - comma-separated list of paths to Handlebars-powered templates
  *		params - an object with all the additional parameters for the request (e.g. useskin, forceprofile, etc.)
  *		callback - function to be called with fetched JSON object
  *
@@ -41,37 +39,18 @@ window.Wikia = window.Wikia || {};
  */
 window.Wikia.getMultiTypePackage = function(options) {
 	var request = {},
-		styles = options.styles,
-		scripts = options.scripts,
-		messages = options.messages,
 		templates = options.templates,
-		mustache = options.mustache,
+		fieldsToCopy = ['styles', 'scripts', 'messages', 'mustache', 'handlebars'],
 		callback = options.callback,
 		params = options.params,
-		ttl = options.ttl,
-		varnishTTL = options.varnishTTL,
-		browserTTL = options.browserTTL,
 		send = false;
 
-	if(typeof styles === 'string'){
-		request.styles = styles;
-		send = true;
-	}
-
-	if(typeof scripts === 'string'){
-		request.scripts = scripts;
-		send = true;
-	}
-
-	if(typeof messages === 'string'){
-		request.messages = messages;
-		send = true;
-	}
-
-	if(typeof mustache === 'string'){
-		request.mustache = mustache;
-		send = true;
-	}
+	$.each(fieldsToCopy, function() {
+		if (typeof options[this] === 'string') {
+			request[this] = options[this];
+			send = true;
+		}
+	});
 
 	if(typeof templates != 'undefined'){
 		// JSON encode templates entry
@@ -82,15 +61,6 @@ window.Wikia.getMultiTypePackage = function(options) {
 	if(typeof params === 'object'){
 		request = $.extend(request, params);
 	}
-
-	if(ttl)
-		request.ttl = ~~ttl;
-
-	if(varnishTTL)
-		request.varnishTTL = ~~varnishTTL;
-
-	if(browserTTL)
-		request.browserTTL = ~~browserTTL;
 
 	if(send){
 		// add a cache buster

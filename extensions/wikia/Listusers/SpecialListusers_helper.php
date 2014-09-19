@@ -7,11 +7,6 @@
  * @version: $Id$
  */
 
-if ( !defined( 'MEDIAWIKI' ) ) {
-	echo "This is MediaWiki extension and cannot be used standalone.\n";
-	exit( 1 ) ;
-}
-
 class ListusersData {
 	var $mCityId;
 	var $mGroups;
@@ -50,7 +45,7 @@ class ListusersData {
 			'loggedin' 	=> '',
 			'dtedit' 	=> 'wiki_editdate_user_edits'
 		);
-	
+
 		if ( $load == 1 ) {
 			$this->load();
 		}
@@ -139,6 +134,7 @@ class ListusersData {
 					if ( !empty($group) ) {
 						if ( $group == Listusers::DEF_GROUP_NAME ) {
 							$whereGroup[] = " all_groups = '' ";
+							$whereGroup[] = " all_groups = 'fb-user' ";
 						} else {
 							$whereGroup[] = " all_groups " . $dbs->buildLike( $dbs->anyString(), $group );
 							$whereGroup[] = " all_groups " . $dbs->buildLike( $dbs->anyString(), sprintf("%s;", $group), $dbs->anyString() );
@@ -390,9 +386,9 @@ class ListusersData {
 						'user_is_closed' => 0
 					);
 					if ( $key != Listusers::DEF_GROUP_NAME ) {
-						$where[] = " all_groups " . $dbs->buildLike( $dbs->anyString(), $key ) . " OR all_groups " . $dbs->buildLike( $dbs->anyString(), sprintf("%s;", $key), $dbs->anyString() );						
+						$where[] = " all_groups " . $dbs->buildLike( $dbs->anyString(), $key ) . " OR all_groups " . $dbs->buildLike( $dbs->anyString(), sprintf("%s;", $key), $dbs->anyString() );
 					} else {
-						$where['cnt_groups'] = 0;
+						$where[] = " all_groups = '' OR all_groups = 'fb-user' ";
 					}
 
 					$unions[] = $dbs->selectSQLText(

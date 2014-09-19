@@ -32,7 +32,7 @@
  *
  * @ingroup FileAbstraction
  */
-abstract class File {
+abstract class File implements \Wikia\Vignette\FileInterface {
 	const DELETED_FILE = 1;
 	const DELETED_COMMENT = 2;
 	const DELETED_USER = 4;
@@ -287,14 +287,24 @@ abstract class File {
 			$this->url = $this->repo->getZoneUrl( 'public' ) . '/' . $this->getUrlRel();
 
 			# start wikia change
-			global $wgDevelEnvironment;
-			if (!empty($wgDevelEnvironment)) {
-				$this->url = wfReplaceImageServer( $this->url, $this->getTimestamp() );
-			}
+			$this->originalUrl = $this->url;
+			$this->url = wfReplaceImageServer( $this->url, $this->getTimestamp() ); // rewrite URL in all envirnoments (BAC-939)
 			# end wikia change
 		}
 		return $this->url;
 	}
+
+	# start wikia change
+	protected $originalUrl;
+
+	public function getOriginalUrl() {
+		if ( !isset( $this->url ) ) {
+			$this->getUrl();
+		}
+
+		return $this->originalUrl;
+	}
+	# end wikia change
 
 	/**
 	 * Return a fully-qualified URL to the file.
@@ -685,7 +695,7 @@ abstract class File {
 	 *
 	 * @param $handlerParams array
 	 *
-	 * @return string
+	 * @return MediaTransformOutput
 	 */
 	function getUnscaledThumb( $handlerParams = array() ) {
 		$hp =& $handlerParams;
@@ -990,8 +1000,15 @@ abstract class File {
 		// Purge cache of all pages using this file
 		$title = $this->getTitle();
 		if ( $title ) {
-			$update = new HTMLCacheUpdate( $title, 'imagelinks' );
-			$update->doUpdate();
+			// Wikia change begin @author Scott Rabin (srabin@wikia-inc.com)
+			global $wgCityId;
+
+			$task = ( new \Wikia\Tasks\Tasks\HTMLCacheUpdateTask() )
+				->wikiId( $wgCityId )
+				->title( $title );
+			$task->call( 'purge', 'imagelinks' );
+			$task->queue();
+			// Wikia change end
 		}
 	}
 
@@ -1203,6 +1220,7 @@ abstract class File {
 	function getThumbUrl( $suffix = false ) {
 		$this->assertRepoDefined();
 		$path = $this->repo->getZoneUrl( 'thumb' ) . '/' . $this->getUrlRel();
+		$path  = wfReplaceImageServer( $path, $this->getTimestamp() ); // Wikia change (BAC-1206)
 		if ( $suffix !== false ) {
 			$path .= '/' . rawurlencode( $suffix );
 		}

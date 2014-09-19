@@ -2,7 +2,7 @@
 
 /**
  * Special page-based tool to review images post-upload to screen against Terms of Use violations.
- * 
+ *
  * @date 2012-03-09
  *
  * @todo add logging of actions
@@ -11,8 +11,8 @@
 
 $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'Image Review',
-	'desc' => 'Internal tool to help review images post-upload and remove Terms of Use violations',
-	'authors' => array(
+	'descriptionmsg' => 'imagereview-desc',
+	'author' => array(
 		'[http://www.wikia.com/wiki/User:OwenDavis Owen Davis]',
 		'[http://www.wikia.com/wiki/User:TomekO Tomasz Odrobny]',
 		'Saipetch Kongkatong',
@@ -26,10 +26,7 @@ $dir = dirname(__FILE__) . '/';
 $app = F::app();
 
 // classes
-$wgAutoloadClasses['ImageReviewTask'] =  $dir . 'ImageReviewTask.php';
-if ( function_exists( 'extAddBatchTask' ) ) {
-	extAddBatchTask( $dir . "../ImageReview/ImageReviewTask.php", "imagereview", "ImageReviewTask" );
-}
+$wgAutoloadClasses['Wikia\\Tasks\\Tasks\\ImageReviewTask'] = "{$dir}ImageReviewTask.class.php";
 
 $wgAutoloadClasses['ImageReviewSpecialController'] =  $dir . 'ImageReviewSpecialController.class.php';
 $wgAutoloadClasses['ImageReviewHelperBase'] =  $dir . 'ImageReviewHelperBase.class.php';

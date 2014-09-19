@@ -342,6 +342,9 @@ class Language {
 			$this->namespaceNames = self::$dataCache->getItem( $this->mCode, 'namespaceNames' );
 			$validNamespaces = MWNamespace::getCanonicalNamespaces();
 
+			if ($this->namespaceNames == '') {
+				$this->namespaceNames = [];
+			}
 			$this->namespaceNames = $wgExtraNamespaces + $this->namespaceNames + $validNamespaces;
 
 			$this->namespaceNames[NS_PROJECT] = $wgMetaNamespace;
@@ -702,6 +705,71 @@ class Language {
 		}
 
 		return $names;
+	}
+
+	/**
+	 * Get an array of language names, indexed by code.
+	 * @param null|string $inLanguage Code of language in which to return the names
+	 *		Use null for autonyms (native names)
+	 * @param string $include One of:
+	 *		'all' all available languages
+	 *		'mw' only if the language is defined in MediaWiki or wgExtraLanguageNames (default)
+	 *		'mwfile' only if the language is in 'mw' *and* has a message file
+	 * @return array Language code => language name
+	 * @since 1.20
+	 */
+	public static function fetchLanguageNames( $inLanguage = null, $include = 'mw' ) {
+		global $wgExtraLanguageNames;
+		static $coreLanguageNames;
+
+		if ( $coreLanguageNames === null ) {
+			global $IP;
+			include "$IP/languages/Names.php";
+		}
+
+		$names = array();
+
+		if ( $inLanguage ) {
+			# TODO: also include when $inLanguage is null, when this code is more efficient
+			wfRunHooks( 'LanguageGetTranslatedLanguageNames', array( &$names, $inLanguage ) );
+		}
+
+		$mwNames = $wgExtraLanguageNames + $coreLanguageNames;
+		foreach ( $mwNames as $mwCode => $mwName ) {
+			# - Prefer own MediaWiki native name when not using the hook
+			# - For other names just add if not added through the hook
+			if ( $mwCode === $inLanguage || !isset( $names[$mwCode] ) ) {
+				$names[$mwCode] = $mwName;
+			}
+		}
+
+		if ( $include === 'all' ) {
+			return $names;
+		}
+
+		$returnMw = array();
+		$coreCodes = array_keys( $mwNames );
+		foreach ( $coreCodes as $coreCode ) {
+			$returnMw[$coreCode] = $names[$coreCode];
+		}
+
+		if ( $include === 'mwfile' ) {
+			$namesMwFile = array();
+			# We do this using a foreach over the codes instead of a directory
+			# loop so that messages files in extensions will work correctly.
+			foreach ( $returnMw as $code => $value ) {
+				if ( is_readable( self::getMessagesFileName( $code ) )
+					|| is_readable( self::getJsonMessagesFileName( $code ) )
+				) {
+					$namesMwFile[$code] = $names[$code];
+				}
+			}
+
+			return $namesMwFile;
+		}
+
+		# 'mw' option; default if it's not one of the other two options (all/mwfile)
+		return $returnMw;
 	}
 
 	/**
@@ -2672,7 +2740,7 @@ class Language {
 				array( &$this->mExtendedSpecialPageAliases, $this->getCode() ) );
 		}
 
-		return $this->mExtendedSpecialPageAliases;
+		return !empty($this->mExtendedSpecialPageAliases) ? $this->mExtendedSpecialPageAliases : [];
 	}
 
 	/**
@@ -3179,6 +3247,22 @@ class Language {
 			return $wgGrammarForms[$this->getCode()][$case][$word];
 		}
 		return $word;
+	}
+
+	/**
+	 * Get the grammar forms for the content language
+	 * @return array Array of grammar forms
+	 * @since 1.20
+	 */
+	function getGrammarForms() {
+		global $wgGrammarForms;
+		if ( isset( $wgGrammarForms[$this->getCode()] )
+			&& is_array( $wgGrammarForms[$this->getCode()] )
+		) {
+			return $wgGrammarForms[$this->getCode()];
+		}
+
+		return array();
 	}
 
 	/**
@@ -4011,4 +4095,24 @@ class Language {
 	public function getConvRuleTitle() {
 		return $this->mConverter->getConvRuleTitle();
 	}
+
+	/**
+	 * Get the plural rules for the language
+	 * @since 1.20
+	 * @return array Associative array with plural form number and plural rule as key-value pairs
+	 */
+	public function getPluralRules() {
+		$pluralRules = self::$dataCache->getItem( strtolower( $this->mCode ), 'pluralRules' );
+		$fallbacks = Language::getFallbacksFor( $this->mCode );
+		if ( !$pluralRules ) {
+			foreach ( $fallbacks as $fallbackCode ) {
+				$pluralRules = self::$dataCache->getItem( strtolower( $fallbackCode ), 'pluralRules' );
+				if ( $pluralRules ) {
+					break;
+				}
+			}
+		}
+		return $pluralRules;
+	}
+
 }

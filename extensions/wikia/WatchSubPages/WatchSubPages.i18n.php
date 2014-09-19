@@ -55,7 +55,7 @@ $messages['ca'] = array(
 	'tog-watchlistsubpages' => 'Seguir subpàgines',
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Mormegil
  */
 $messages['cs'] = array(

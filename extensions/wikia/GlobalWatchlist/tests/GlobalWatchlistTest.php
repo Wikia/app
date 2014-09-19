@@ -16,6 +16,10 @@ class GlobalWatchlistBotTest extends WikiaBaseTest {
 	
   	return $userMock;
 	}
+
+	/**
+	 * @group UsingDB
+	 */
 	public function testBlogsSection() {
 		$bot = new GlobalWatchlistBot(true, array(), array());
 		$mail = $bot->composeMail($this->mockUser("test", "test@example.com"), array(), false);

@@ -1,1 +1,0 @@
-<div id=wkFloatingAd></div>

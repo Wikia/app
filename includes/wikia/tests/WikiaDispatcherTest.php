@@ -29,10 +29,15 @@ class WikiaDispatcherTest extends WikiaBaseTest {
 		$this->assertInstanceOf( 'WikiaException', $response->getException());
 		$this->assertEquals(WikiaResponse::RESPONSE_CODE_ERROR, $response->getCode());
 
-		$response = $this->object->dispatch( $app, new WikiaRequest( array( 'controller' => 'nonExistentController' ) ) );
+		$request = new WikiaRequest( array( 'controller' => 'nonExistentController' ) );
+		$response = $this->object->dispatch( $app, $request );
 		$this->assertTrue($response->hasException());
-		$this->assertInstanceOf( 'WikiaException', $response->getException());
-		$this->assertEquals(WikiaResponse::RESPONSE_CODE_ERROR, $response->getCode());
+		$this->assertInstanceOf( 'ControllerNotFoundException', $response->getException());
+		$this->assertEquals(WikiaResponse::RESPONSE_CODE_NOT_FOUND, $response->getCode());
+		
+		$request->setInternal(true);
+		$this->setExpectedException('ControllerNotFoundException');
+		$response = $this->object->dispatch( $app, $request );
 	}
 
 	public function testDispatchUnknownMethod() {
@@ -41,10 +46,10 @@ class WikiaDispatcherTest extends WikiaBaseTest {
 		    ->method( 'runFunction' )
 		    ->will( $this->returnValue( true ) );
 
-		$response = $this->object->dispatch( $app, new WikiaRequest( array( 'controller' => 'Test', 'method' => 'nonExistentMethod' ) ) );
+		$response = $this->object->dispatch( $app, new WikiaRequest( array( 'controller' => 'Test', 'method' => 'nonExistentMethod' ) ) );	
 		$this->assertTrue($response->hasException());
-		$this->assertInstanceOf( 'WikiaException', $response->getException());
-		$this->assertEquals(WikiaResponse::RESPONSE_CODE_ERROR, $response->getCode());
+		$this->assertInstanceOf( 'MethodNotFoundException', $response->getException());
+		$this->assertEquals(WikiaResponse::RESPONSE_CODE_NOT_FOUND, $response->getCode());
 	}
 
 	public function testForwarding() {
@@ -101,5 +106,36 @@ class WikiaDispatcherTest extends WikiaBaseTest {
 		$response = $this->object->dispatch( $app, new WikiaRequest ( array( 'controller' => 'Test', 'method' => 'index' ) ) );
 		$this->assertEquals("controllerRouting", $response->getVal('wasCalled'));
 
+	}
+
+	public function testControllerNotFound() {
+		$response = $this->object->dispatch( F::app(), new WikiaRequest( array( 'controller' => 'FakeNonexistingController', 'method' => 'index' ) ) );
+
+		$this->assertNotNull( $response->getException() );
+		$this->assertInstanceOf( "ControllerNotFoundException", $response->getException() );
+		$this->assertEquals( "Controller not found: FakeNonexisting", $response->getException()->getDetails() );
+	}
+
+	public function testPermissionsException() {
+		$this->mockGlobalVariable("wgNirvanaAccessRules", [
+			[
+				"class" => "TestController",
+				"method" => "index",
+				"requiredPermissions" => ["write"],
+			],
+		]);
+		$userMock = $this->getMockBuilder("User")->disableOriginalConstructor()->getMock();
+
+		$userMock->expects($this->once())
+			->method("isAllowed")
+			->with("write")
+			->will($this->returnValue(false));
+		$this->mockGlobalVariable("wgUser", $userMock);
+
+		$response = $this->object->dispatch( F::app(), new WikiaRequest( array( 'controller' => 'Test', 'method' => 'index' ) ) );
+
+		$this->assertNotNull( $response->getException() );
+		$this->assertInstanceOf( "PermissionsException", $response->getException() );
+		$this->assertEquals( "Current User don't have required permissions: write", $response->getException()->getDetails() );
 	}
 }

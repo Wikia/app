@@ -1,5 +1,7 @@
 <?php
 
+use Wikia\Tasks\AsyncTaskList;
+
 class RenameUserProcess {
 
 	const RENAME_TAG = 'renamed_to';
@@ -55,22 +57,24 @@ class RenameUserProcess {
 		array( 'table' => 'user_newtalk', 'userid_column' => null, 'username_column' => 'user_ip' ),
 		# Core 1.16 tables
 		array( 'table' => 'logging', 'userid_column' => 'log_user', 'username_column' => 'log_user_text' ),
-		# AbuseFilter extension
-		array( 'table' => 'abuse_filter', 'userid_column' => 'af_user', 'username_column' => 'af_user_text' ),
-		array( 'table' => 'abuse_filter_log', 'userid_column' => 'afl_user', 'username_column' => 'afl_user_text' ),
-		array( 'table' => 'abuse_filter_history', 'userid_column' => 'afh_user', 'username_column' => 'afh_user_text' ),
-		# CheckUser extension
-		array( 'table' => 'cu_log', 'userid_column' => 'cul_user', 'username_column' => 'cul_user_text' ),
-		array( 'table' => 'cu_log', 'userid_column' => 'cul_target_id', 'username_column' => 'cul_target_text',
-			'conds' => array(
-				'cul_type' => array( 'useredits', 'userips' ),
-			)),
-		# Oversight extension (3rdparty)
-		array( 'table' => 'hidden', 'userid_column' => 'hidden_user', 'username_column' => 'hidden_user_text' ),
 
 		# Template entry
 //		array( 'table' => '...', 'userid_column' => '...', 'username_column' => '...' ),
 	);
+
+	/**
+	 * Stores the predefined tasks to do for every local wiki database for IP addresses.
+	 * Here should be mentioned all core tables not connected to any extension.
+	 *
+	 * @var $mLocalIpDefaults array
+	 */
+	static private $mLocalIpDefaults = [
+		[ 'table' => 'archive', 'userid_column' => 'ar_user', 'username_column' => 'ar_user_text' ],
+		[ 'table' => 'filearchive', 'userid_column' => 'fa_user', 'username_column' => 'fa_user_text' ],
+		[ 'table' => 'ipblocks', 'userid_column' => 'ipb_user', 'username_column' => 'ipb_address' ],
+		[ 'table' => 'recentchanges', 'userid_column' => 'rc_user', 'username_column' => 'rc_user_text' ],
+		[ 'table' => 'revision', 'userid_column' => 'rev_user', 'username_column' => 'rev_user_text' ],
+	];
 
 	private $mRequestData = null;
 	private $mActionConfirmed = false;
@@ -84,6 +88,7 @@ class RenameUserProcess {
 	private $mRequestorId = 0;
 	private $mRequestorName = '';
 	private $mReason = null;
+	private $mRenameIP = false;
 
 	private $mErrors = array();
 	private $mWarnings = array();
@@ -262,6 +267,18 @@ class RenameUserProcess {
 			}
 		} else {
 			$this->addError( wfMessage( 'userrenametool-error-antispoof-notinstalled' ) );
+		}
+
+		//Phalanx test
+
+		$warning = RenameUserHelper::testBlock( $oun );
+		if ( !empty( $warning ) ) {
+			$this->addWarning( $warning );
+		}
+
+		$warning = RenameUserHelper::testBlock( $nun );
+		if ( !empty( $warning ) ) {
+			$this->addWarning( $warning );
 		}
 
 		//Invalid old user name entered
@@ -473,31 +490,6 @@ class RenameUserProcess {
 			return false;
 		}
 
-		//create a new task for the Task Manager to store the logs for the global process
-		$this->mGlobalTask = new UserRenameGlobalTask();
-		$this->mGlobalTask->createTask(
-			array(
-				'requestor_id' => $this->mRequestorId,
-				'requestor_name' => $this->mRequestorName,
-				'rename_user_id' => $this->mUserId,
-				'rename_old_name' => $this->mOldUsername,
-				'rename_new_name' => $this->mNewUsername,
-				'reason' => $this->mReason,
-                                'tasks' => array()
-			),
-			TASK_STARTED,
-			BatchTask::PRIORITY_HIGH	
-		);
-
-		$this->addLogDestination(self::LOG_BATCH_TASK, $this->mGlobalTask);
-
-		$this->addLog("---USERNAMES LOG BEGIN---\n".$this->getInternalLog()."---USERNAMES LOG END---");
-
-		$tasks = array($this->mGlobalTask->getID());
-
-		// Put the starting line to log
-		$this->addMainLog("start", RenameUserLogFormatter::start($this->mRequestorName, $this->mOldUsername, $this->mNewUsername, $this->mReason, $tasks));
-
 		// Execute the worker
 		$status = false;
 
@@ -507,8 +499,6 @@ class RenameUserProcess {
 			$this->addLog($e->getMessage() . ' in ' . $e->getFile() . ' at line ' . $e->getLine());
 			$this->addError(wfMessage('userrenametool-error-cannot-rename-unexpected')->inContentLanguage()->text());
 		}
-
-		$this->mGlobalTask->closeTask($status);
 
 		// Analyze status
 		if (!$status) {
@@ -555,7 +545,7 @@ class RenameUserProcess {
 
 		// delete the record from all the secondary clusters
 		if ( class_exists( 'ExternalUser_Wikia' ) ) {
-			ExternalUser_Wikia::removeFromSecondaryClusters( $this->mUserId );	
+			ExternalUser_Wikia::removeFromSecondaryClusters( $this->mUserId );
 		}
 
 		// rename the user on the shared cluster
@@ -580,18 +570,18 @@ class RenameUserProcess {
 			global $wgAuth, $wgExternalAuthType;
 
 			$fakeUser = User::newFromName( $this->mOldUsername, 'creatable' );
-			
+
 			if ( !is_object( $fakeUser ) ) {
 				$this->addLog("Cannot create fake user: {$this->mOldUsername}");
 				wfProfileOut(__METHOD__);
 				return false;
-			} 
+			}
 
 			$fakeUser->setPassword( null );
 			$fakeUser->setEmail( null );
 			$fakeUser->setRealName( '' );
 			$fakeUser->setName( $this->mOldUsername );
-			
+
 			if ( $wgExternalAuthType ) {
 				$fakeUser = ExternalUser_Wikia::addUser( $fakeUser, '', '', '' );
 			} else {
@@ -627,7 +617,7 @@ class RenameUserProcess {
 				'lang'        => null,
 				'type'        => Phalanx::TYPE_USER
 			);
-			
+
 			wfRunHooks( "EditPhalanxBlock", array( &$data ) );
 			$this->mPhalanxBlockId = $data['id'];
 			if(!$this->mPhalanxBlockId) {
@@ -653,42 +643,20 @@ class RenameUserProcess {
 		$this->addLog("Initializing update of global shared DB's.");
 		$this->updateGlobal();
 
-		// create a new task for the Task Manager to handle all the global tables
-		$this->addLog("Setting up a task for processing global DB");
-		$task = new UserRenameGlobalTask();
-		$task->createTask(
-				array(
-					'rename_user_id'  => $this->mUserId,
-					'rename_old_name' => $this->mOldUsername,
-					'rename_new_name' => $this->mNewUsername,
-					'tasks'           => array()
-				),
-				TASK_QUEUED,
-				BatchTask::PRIORITY_HIGH
+		$callParams = array(
+			'requestor_id' => $this->mRequestorId,
+			'requestor_name' => $this->mRequestorName,
+			'rename_user_id' => $this->mUserId,
+			'rename_old_name' => $this->mOldUsername,
+			'rename_new_name' => $this->mNewUsername,
+			'rename_fake_user_id' => $this->mFakeUserId,
+			'phalanx_block_id' => $this->mPhalanxBlockId,
+			'reason' => $this->mReason,
 		);
-		$this->addLog("Task created with ID " . $task->getID());
-		$this->addLog("Setting up a task for processing local DB's");
-		//create a new task for the Task Manager to handle all the local tables per each wiki
-		$task = new UserRenameLocalTask();
-		$task->createTask(
-			array(
-				'city_ids' => $wikiIDs,
-				'requestor_id' => $this->mRequestorId,
-				'requestor_name' => $this->mRequestorName,
-				'rename_user_id' => $this->mUserId,
-				'rename_old_name' => $this->mOldUsername,
-				'rename_new_name' => $this->mNewUsername,
-				'rename_fake_user_id' => $this->mFakeUserId,
-				'phalanx_block_id' => $this->mPhalanxBlockId,
-				'reason' => $this->mReason,
-				'global_task_id' => $this->mGlobalTask->getID()
-			),
-			TASK_QUEUED,
-			BatchTask::PRIORITY_HIGH
-		);
-
-		$this->addLog("Task created with ID " . $task->getID());
-		$this->addLog("User rename global task end.");
+		$task = ( new UserRenameTask() )
+			->setPriority( \Wikia\Tasks\Queues\PriorityQueue::NAME );
+		$task->call( 'renameUser', $wikiIDs, $callParams );
+		$task->queue();
 
 		wfProfileOut(__METHOD__);
 		return true;
@@ -731,8 +699,6 @@ class RenameUserProcess {
 	 * Processes specific local wiki database and makes all needed changes
 	 *
 	 * Important: should only be run within maintenace script (bound to specified wiki)
-	 *
-	 * @param $cityId int Wiki ID
 	 */
 	public function updateLocal(){
 		global $wgCityId, $wgUser;
@@ -818,6 +784,9 @@ class RenameUserProcess {
 			$this->renameInTable($dbw, $task['table'], $this->mUserId, $this->mOldUsername, $this->mNewUsername, $task);
 		}
 
+		/* Reset local editcount */
+		$this->resetEditCountWiki();
+
 		$hookName = 'UserRename::AfterLocal';
 		$this->addLog("Broadcasting hook: {$hookName}");
 		wfRunHooks($hookName, array( $dbw, $this->mUserId, $this->mOldUsername, $this->mNewUsername, $this, $wgCityId, &$tasks));
@@ -842,6 +811,57 @@ class RenameUserProcess {
 		$wgUser = $wgOldUser;
 
 		wfProfileOut(__METHOD__);
+	}
+
+	/**
+	 * Processes specific local wiki database and makes all needed changes for an IP address
+	 *
+	 * Important: should only be run within maintenace script (bound to specified wiki)
+	 */
+	public function updateLocalIP() {
+		global $wgCityId, $wgUser;
+
+		wfProfileIn( __METHOD__ );
+
+		if ( $this->mUserId !== 0 || !IP::isIPAddress( $this->mOldUsername ) || !IP::isIPAddress( $this->mNewUsername ) ) {
+			$this->addError( wfMessage( 'userrenametool-error-invalid-ip' )->escaped() );
+			wfProfileOut( __METHOD__ );
+			return;
+		}
+
+		$wgOldUser = $wgUser;
+		$wgUser = User::newFromName( 'Wikia' );
+
+		$cityDb = WikiFactory::IDtoDB( $wgCityId );
+		$this->addLog( "Processing wiki database: {$cityDb}." );
+
+		$dbw = wfGetDB(DB_MASTER);
+		$dbw->begin();
+		$tasks = self::$mLocalIpDefaults;
+
+		$hookName = 'UserRename::LocalIP';
+		$this->addLog( "Broadcasting hook: {$hookName}" );
+		wfRunHooks( $hookName, [ $dbw, $this->mUserId, $this->mOldUsername, $this->mNewUsername, $this, $wgCityId, &$tasks ] );
+
+		foreach ( $tasks as $task ) {
+			$this->addLog( "Updating wiki \"{$cityDb}\": {$task['table']}:{$task['username_column']}" );
+			$this->renameInTable( $dbw, $task['table'], $this->mUserId, $this->mOldUsername, $this->mNewUsername, $task );
+		}
+
+		$hookName = 'UserRename::AfterLocalIP';
+		$this->addLog( "Broadcasting hook: {$hookName}" );
+		wfRunHooks( $hookName, [ $dbw, $this->mUserId, $this->mOldUsername, $this->mNewUsername, $this, $wgCityId, &$tasks ] );
+
+		$dbw->commit();
+
+		$this->addLog( "Finished updating wiki database: {$cityDb}" );
+
+		$this->addMainLog( "log", RenameUserLogFormatter::wiki( $this->mRequestorName, $this->mOldUsername, $this->mNewUsername, $wgCityId, $this->mReason,
+			!empty( $this->warnings ) || !empty( $this->errors ) ) );
+
+		$wgUser = $wgOldUser;
+
+		wfProfileOut( __METHOD__ );
 	}
 
 	/**
@@ -903,6 +923,28 @@ class RenameUserProcess {
 
 		wfProfileOut(__METHOD__);
 		return true;
+	}
+
+	/**
+	 * Reset local editcount for renamed user and fake user
+	 * @author Kamil Koterba
+	 * @since Feb 2014
+	 */
+	private function resetEditCountWiki() {
+		// Renamed user
+		$uss = new UserStatsService( $this->mUserId );
+		$uss->resetEditCountWiki();
+
+		// FakeUser
+		if ( $this->mFakeUserId != 0 ) {
+			$uss = new UserStatsService( $this->mFakeUserId );
+			$uss->resetEditCountWiki();
+		} else {
+			// use OldUsername if FakeUser isn't set
+			$oldUser = User::newFromName( $this->mOldUsername );
+			$uss = new UserStatsService( $oldUser->getId() );
+			$uss->resetEditCountWiki();
+		}
 	}
 
 	/**
@@ -985,24 +1027,24 @@ class RenameUserProcess {
 	 * @param $arg1 mixed Multiple format parameters
 	 */
 	public function addMainLog( $action, $text, $arg1 = null ) {
-            /*
-             * BugId:1030
-             * Michał Roszka (Mix) <michal@wikia-inc.com>
-             *
-             * $text is HTML and may contain % which are not vsptintf's conversion specification marks,
-             * e.g. username f"oo"bar results with <a href="http://community.wikia.com/wiki/User:F%22oo%22baz">F&quot;oo&quot;baz</a>
-             * which breaks vsprintf.
-             *
-             * There are 4 calls of this method, none of them passing any vsprintf's conversion specification marks.
-             * vsprintf seems unnecessary, let's just pass $text to StaffLogger::log()
+		/*
+		 * BugId:1030
+		 * Michał Roszka (Mix) <michal@wikia-inc.com>
+		 *
+		 * $text is HTML and may contain % which are not vsptintf's conversion specification marks,
+		 * e.g. username f"oo"bar results with <a href="http://community.wikia.com/wiki/User:F%22oo%22baz">F&quot;oo&quot;baz</a>
+		 * which breaks vsprintf.
+		 *
+		 * There are 4 calls of this method, none of them passing any vsprintf's conversion specification marks.
+		 * vsprintf seems unnecessary, let's just pass $text to StaffLogger::log()
 
-                if (func_num_args() > 1) {
+		if (func_num_args() > 1) {
 			$args = func_get_args();
 			$args = array_slice($args,1);
-                        $text = vsprintf($text,$args);
+			$text = vsprintf($text,$args);
 		}
-             */
-            StaffLogger::log("renameuser", $action, $this->mRequestorId, $this->mRequestorName, $this->mUserId, $this->mNewUsername, $text);
+		 */
+		StaffLogger::log("renameuser", $action, $this->mRequestorId, $this->mRequestorName, $this->mUserId, $this->mNewUsername, $text);
 	}
 
 	/**
@@ -1053,44 +1095,44 @@ class RenameUserProcess {
 	public function getInternalLog() {
 		return $this->mInternalLog;
 	}
-        
-        /**
-         * Checks self::$mLocalDefaults against the current database layout and lists fields, that no longer exist.
-         * 
-         * @author Michał Roszka (Mix) <michal@wikia-inc.com>
-         * @static
-         * @access public
-         * @return string
-         */
-        static public function checkDatabaseLayout() {
-            $oDB = wfGetDB( DB_SLAVE );
-            $sOut = '';
-            
-            foreach ( self::$mLocalDefaults as $aEntry ) {
-                // table.userid_column
-                if ( !empty( $aEntry['userid_column'] ) && !$oDB->fieldInfo( $aEntry['table'], $aEntry['userid_column'] ) ) {
-                    $sOut .= sprintf( "The %s.%s column does not exist in the current database layout.\n", $aEntry['table'], $aEntry['userid_column'] );
-                }
-                // table.username_column
-                if ( !empty( $aEntry['username_column'] ) && !$oDB->fieldInfo( $aEntry['table'], $aEntry['username_column'] ) ) {
-                    $sOut .= sprintf( "The %s.%s column does not exist in the current database layout.\n", $aEntry['table'], $aEntry['username_column'] );
-                }
-                // table.[columns in conditions]
-                if ( isset( $aEntry['conds'] ) ) {
-                    foreach ( $aEntry['conds'] as $key => $value ) {
-                        if ( !$oDB->fieldInfo( $aEntry['table'], $key ) ) {
-                            $sOut .= sprintf( "The %s.%s column does not exist in the current database layout.\n", $aEntry['table'], $aEntry['username_column'] );
-                        }
-                    }
-                }
-            }
-            
-            if ( empty( $sOut ) ) {
-                $sOut = 'There are no missing columns in the current database layout';
-            }
-            
-            return trim( $sOut );
-        }
+
+	/**
+	* Checks self::$mLocalDefaults against the current database layout and lists fields, that no longer exist.
+	*
+	* @author Michał Roszka (Mix) <michal@wikia-inc.com>
+	* @static
+	* @access public
+	* @return string
+	*/
+	static public function checkDatabaseLayout() {
+		$oDB = wfGetDB( DB_SLAVE );
+		$sOut = '';
+
+		foreach ( self::$mLocalDefaults as $aEntry ) {
+			// table.userid_column
+			if ( !empty( $aEntry['userid_column'] ) && !$oDB->fieldInfo( $aEntry['table'], $aEntry['userid_column'] ) ) {
+				$sOut .= sprintf( "The %s.%s column does not exist in the current database layout.\n", $aEntry['table'], $aEntry['userid_column'] );
+			}
+			// table.username_column
+			if ( !empty( $aEntry['username_column'] ) && !$oDB->fieldInfo( $aEntry['table'], $aEntry['username_column'] ) ) {
+				$sOut .= sprintf( "The %s.%s column does not exist in the current database layout.\n", $aEntry['table'], $aEntry['username_column'] );
+			}
+			// table.[columns in conditions]
+			if ( isset( $aEntry['conds'] ) ) {
+				foreach ( $aEntry['conds'] as $key => $value ) {
+					if ( !$oDB->fieldInfo( $aEntry['table'], $key ) ) {
+						$sOut .= sprintf( "The %s.%s column does not exist in the current database layout.\n", $aEntry['table'], $aEntry['username_column'] );
+					}
+				}
+			}
+		}
+
+		if ( empty( $sOut ) ) {
+			$sOut = 'There are no missing columns in the current database layout';
+		}
+
+		return trim( $sOut );
+	}
 
 	static public function newFromData( $data ) {
 		wfProfileIn(__METHOD__);
@@ -1107,6 +1149,7 @@ class RenameUserProcess {
 			'mPhalanxBlockId' => 'phalanx_block_id',
 			'mReason' => 'reason',
 			'mLogTask' => 'local_task',
+			'mRenameIP' => 'rename_ip',
 		);
 
 		foreach ($mapping as $property => $key) {
@@ -1121,21 +1164,10 @@ class RenameUserProcess {
 			$o->mRequestorName = $requestor->getName();
 		}
 
-		if (!empty($data['global_task_id'])) {
-			$o->mGlobalTask = UserRenameGlobalTask::newFromID($data['global_task_id']);
-		}
-
 		$o->addLog("newFromData(): Requestor id={$o->mRequestorId} name={$o->mRequestorName}");
 
 		wfProfileOut(__METHOD__);
 		return $o;
-	}
-
-	//TODO: remove the following functions since unused?
-	static public function hackSharedDb() {
-		global $wgSharedDB;
-		if ( preg_match("/^wikicities_/", $wgSharedDB) )
-			$wgSharedDB = "wikicities";
 	}
 
 

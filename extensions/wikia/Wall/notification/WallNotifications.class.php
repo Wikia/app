@@ -12,12 +12,17 @@
  */
 
 class WallNotifications {
+	/**
+	 * @var WikiaApp
+	 */
+	protected $app;
+
 	private $cachedUsers = array();
 
 	private $removedEntities;
 	private $notUniqueUsers = array(); //used for sicen read email.
 	public function __construct() {
-		$this->app = F::App();
+		$this->app = F::app();
 		$this->removedEntities = array();
 	}
 
@@ -31,7 +36,22 @@ class WallNotifications {
 		wfProfileIn(__METHOD__);
 
 		$memcSync = $this->getCache($userId, $wikiId);
-		$list = $this->getData($memcSync, $userId, $wikiId);
+
+		// try fetching the list of notifications from memcache
+		$list = $memcSync->get();
+		if(empty($list) && !is_array($list)) {
+			// nothing in the cache, so use the db as a fallback and store the result in cache
+			$callback = function() use( $userId, $wikiId, &$list ) {
+				$list = $this->rebuildData( $userId, $wikiId );
+				return $list;
+			};
+
+			// this memcache data is synchronized so we're making sure nothing else is modifying it at the same time
+			// we're using the same callback when we cannot aquire the lock, as we want to have the list of notifications
+			// even if we won't be able to store it in the cache
+			$memcSync->lockAndSetData( $callback, $callback );
+		}
+
 		if(empty($list)) {
 			wfProfileOut(__METHOD__);
 			return array();
@@ -39,6 +59,8 @@ class WallNotifications {
 		$read = array();
 		$unread = array();
 
+		// walk through list of ids
+		// $listval is unique_id field from wall_notification table in DB
 		foreach(array_reverse($list['notification']) as $listval) {
 			if(!empty($listval)) {
 				if(!$countonly) {
@@ -103,7 +125,30 @@ class WallNotifications {
 		return $out;
 	}
 
+	/**
+	 * Returns array with wikis' ids and number of unread notifications on that wiki
+	 *
+	 * example return
+	 * 	$output = array(
+	 * 		array(
+	 * 			'id' => 831,
+	 * 			'wgServer' => "http://muppet.wikia.com",
+	 * 			'sitename' => "Muppet Wiki",
+	 * 			'unread' => 5
+	 * 		),
+	 * 		array (
+	 * 			'id' => 5915,
+	 * 			'wgServer' => "http://poznan.wikia.com",
+	 * 			'sitename' => "Poznańska Wiki",
+	 * 			'unread' => 1
+	 * 		)
+	 * 	)
+	 *
+	 * @param int $userId
+	 * @return array
+	 */
 	public function getCounts($userId) {
+		wfProfileIn(__METHOD__);
 		$wikiList = $this->getWikiList($userId);
 
 		// prefetch data
@@ -125,7 +170,7 @@ class WallNotifications {
 			if( $wiki['unread'] > 0 || $wiki['id'] == $this->app->wg->CityId )
 				$output[] = $wiki;
 		}
-
+		wfProfileOut(__METHOD__);
 		return $output;
 	}
 
@@ -144,6 +189,13 @@ class WallNotifications {
 		return 1;
 	}
 
+	/**
+	 * Returns number of unread user's notifications for wiki
+	 * @param int $userId
+	 * @param int $wikiId
+	 * @param bool $notifyeveryone
+	 * @return int
+	 */
 	private function getCount($userId, $wikiId, $notifyeveryone = false) {
 		// fixme
 		// should not to do the whole work of WikiNotifications
@@ -156,11 +208,11 @@ class WallNotifications {
 		// $forceCurrentWiki = false - return only wikis that ever recived notifications
 
 		$key = $this->getKey($userId, 'LIST');
-		$val = $this->app->getGlobal('wgMemc')->get($key);
+		$val = $this->app->wg->memc->get($key);
 
-		if(empty($val)) {
+		if( false === $val ) {
 			$val = $this->loadWikiListFromDB($userId);
-			$this->app->getGlobal('wgMemc')->set($key, $val);
+			$this->app->wg->memc->set($key, $val);
 		}
 
 		// make sure that current Wiki is on the list, as first entry, sort the rest
@@ -186,23 +238,16 @@ class WallNotifications {
 
 	}
 
-
-	private function getWgServer($id) {
-		global $wgStagingList;
-
-		$url = WikiFactory::getVarValueByName("wgServer", $id );
-		if (!empty($this->app->wg->DevelEnvironment)) {
-			$url = str_replace('wikia.com', $this->app->wg->DevelEnvironmentName.'.wikia-dev.com',$url);
-		}
-
-		//HACK for preview
-		//TODO: create helper general function for
-		$hosts = $wgStagingList;
-		foreach($hosts as $host) {
-			$prefix = 'http://'.$host.'.';
-			if(strpos($this->app->wg->Server, $prefix)  !== false ) {
-				$url = str_replace('http://', $prefix, $url );
-			}
+	/**
+	 * @desc Helper method to get devbox urls for notifications
+	 *
+	 * @param Integer $id wiki id
+	 * @return String
+	 */
+	private function getWgServer( $id ) {
+		$url = WikiFactory::getVarValueByName( "wgServer", $id );
+		if( !empty( $this->app->wg->DevelEnvironment ) ) {
+			$url = str_replace( 'wikia.com', $this->app->wg->DevelEnvironmentName . '.wikia-dev.com', $url );
 		}
 
 		return $url;
@@ -211,7 +256,7 @@ class WallNotifications {
 
 	private function addWikiToList($userId, $wikiId, $wikiSitename) {
 		$key = $this->getKey($userId, 'LIST');
-		$val = $this->app->getGlobal('wgMemc')->get($key);
+		$val = $this->app->wg->memc->get($key);
 
 		if(empty($val)) {
 			$val = $this->loadWikiListFromDB($userId);
@@ -219,7 +264,7 @@ class WallNotifications {
 
 		$val[$wikiId] = $wikiSitename;
 
-		$this->app->getGlobal('wgMemc')->set($key, $val);
+		$this->app->wg->memc->set($key, $val);
 
 	}
 
@@ -231,7 +276,7 @@ class WallNotifications {
 		// that supports update-if-key-did-not-change
 
 		$key = $this->getKey($userId, 'LIST');
-		$val = $this->app->getGlobal('wgMemc')->get($key);
+		$val = $this->app->wg->memc->get($key);
 
 		if(empty($val)) {
 			// removing Wiki from list is just speed optimization
@@ -239,7 +284,7 @@ class WallNotifications {
 			// need to recreate it from DB
 		} else {
 			unset( $val[$wikiId] );
-			$this->app->getGlobal('wgMemc')->set($key, $val);
+			$this->app->wg->memc->set($key, $val);
 		}
 	}
 
@@ -476,10 +521,8 @@ class WallNotifications {
 
 		$memcSync = $this->getCache($userId, $wikiId);
 
-		// Try to update the data $count times before giving up
-		$count = 5;
-		while ($count--) {
-			if($memcSync->lock()) {
+		$memcSync->lockAndSetData(
+			function() use( $memcSync, $userId, $wikiId, $id, &$updateDBlist, &$wasUnread ) {
 				$data = $this->getData($memcSync, $userId, $wikiId);
 
 				if($id == 0 && !empty( $data['relation'] ) ) {
@@ -495,41 +538,22 @@ class WallNotifications {
 							$data['relation'][ $value ]['read'] = true;
 
 							$updateDBlist[] = array(
-										'user_id' => $userId,
-										'wiki_id' => $wikiId,
-										'unique_id' => $value
+								'user_id' => $userId,
+								'wiki_id' => $wikiId,
+								'unique_id' => $value
 							);
 
 						}
 					}
 				}
 
-				$success = false;
-				// Make sure we have data
-				if (isset($data)) {
-					// See if we can set it successfully
-					if ($this->setData($memcSync, $data)) {
-						$success = true;
-					}
-				} else {
-					// If there's no data don't bother doing anything
-					$success = true;
-				}
-				$memcSync->unlock();
-				if ( $success ) {
-					break;
-				}
-
-			} else {
-				$this->random_msleep($count);
+				return $data;
+			},
+			function() use( $memcSync ) {
+				// Delete the cache if we were unable to update to force a rebuild
+				$memcSync->delete();
 			}
-		}
-
-		// If count is -1 it means we left the above loop failing to update
-		if ($count == -1) {
-			// Delete the cache if we were unable to update to force a rebuild
-			$memcSync->delete();
-		}
+		);
 
 		foreach($updateDBlist as $value) {
 			$this->getDB(true)->update('wall_notification' , array('is_read' =>  1 ), $value, __METHOD__ );
@@ -573,38 +597,18 @@ class WallNotifications {
 			if($this->isCachedData($uId, $wikiId)) {
 				$memcSync = $this->getCache($uId, $wikiId);
 
-				// Try to update the data $count times before giving up
-				$count = 5;
-				while ($count--) {
-					if($memcSync->lock()) {
+				$memcSync->lockAndSetData(
+					function() use( $memcSync, $uId, $wikiId, $uniqueId ) {
 						$data = $this->getData($memcSync, $uId, $wikiId);
 						$this->remNotificationFromData($data, $uniqueId);
-
-						$success = false;
-						// Make sure we have data
-						if (isset($data)) {
-							// See if we can set it successfully
-							if ($this->setData($memcSync, $data)) {
-								$success = true;
-							}
-						} else {
-							// If there's no data don't bother doing anything
-							$success = true;
-						}
-						$memcSync->unlock();
-						if ( $success ) {
-							break;
-						}
-					} else {
-						$this->random_msleep($count);
+						return $data;
+					},
+					function() use( $memcSync ) {
+						// Delete the cache if we were unable to update to force a rebuild
+						$memcSync->delete();
 					}
-				}
+				);
 
-				// If count is -1 it means we left the above loop failing to update
-				if ($count == -1) {
-					// Delete the cache if we were unable to update to force a rebuild
-					$memcSync->delete();
-				}
 			}
 
 			$this->remNotificationsForUniqueIDDB($uId, $wikiId, $uniqueId, $hide);
@@ -690,38 +694,17 @@ class WallNotifications {
 
 		$memcSync = $this->getCache($userId, $wikiId);
 
-		// Try to update the data $count times before giving up
-		$count = 5;
-		while ($count--) {
-			if($memcSync->lock()) {
+		$memcSync->lockAndSetData(
+			function() use( $memcSync, $userId, $wikiId, $uniqueId, $entityKey, $authorId, $isReply, $notifyeveryone ) {
 				$data = $this->getData($memcSync, $userId, $wikiId);
 				$this->addNotificationToData($data, $userId, $wikiId, $uniqueId, $entityKey, $authorId, $isReply, false, $notifyeveryone );
-
-				$success = false;
-				// Make sure we have data
-				if (isset($data)) {
-					// See if we can set it successfully
-					if ($this->setData($memcSync, $data)) {
-						$success = true;
-					}
-				} else {
-					// If there's no data don't bother doing anything
-					$success = true;
-				}
-				$memcSync->unlock();
-				if ( $success ) {
-					break;
-				}
-			} else {
-				$this->random_msleep($count);
+				return $data;
+			},
+			function() use($memcSync) {
+				// Delete the cache if we were unable to update to force a rebuild
+				$memcSync->delete();
 			}
-		}
-
-		// If count is -1 it means we left the above loop failing to update
-		if ($count == -1) {
-			// Delete the cache if we were unable to update to force a rebuild
-			$memcSync->delete();
-		}
+		);
 
 		$this->cleanEntitiesFromDB();
 	}
@@ -739,7 +722,8 @@ class WallNotifications {
 
 	protected function addNotificationToData(&$data, $userId, $wikiId, $uniqueId, $entityKey, $authorId, $isReply, $read = false, $notifyeveryone) {
 		$data['notification'][] = $uniqueId;
-		$addedAtTmp = end( $data['notification'] );
+		// $addedAt remember key of added value
+		end( $data['notification'] );
 		$addedAt = key( $data['notification'] );
 		reset( $data['notification'] );
 
@@ -842,7 +826,7 @@ class WallNotifications {
 
 	protected function isCachedData($userId, $wikiId) {
 		$key = $this->getKey($userId, $wikiId);
-		$val = F::App()->getGlobal('wgMemc')->get($key);
+		$val = $this->app->wg->memc->get($key);
 
 		if(empty($val) && !is_array($val)) {
 			return False;
@@ -851,6 +835,11 @@ class WallNotifications {
 		return True;
 	}
 
+	/**
+	 * Used internally after acquiring cache entry lock
+	 * Tries to fetch the list of notifications from a memcache, and if it's not there,
+	 * it fetches it from the database
+	 */
 	protected function getData($cache, $userId, $wiki) {
 		$val = $cache->get();
 
@@ -895,21 +884,46 @@ class WallNotifications {
 		return $data;
 	}
 
+	/**
+	 * Get notification entries from database for specific user on specific wiki
+	 * Fetches bot read and unread ones that are not hidden
+	 * @param int $userId
+	 * @param int $wikiId
+	 * @param bool $master
+	 * @param int $fromId
+	 * @return array
+	 */
 	protected function getBackupData($userId, $wikiId, $master = false, $fromId = 0) {
 		$uniqueIds = array();
 		// select distinct Unique_id from wall_notification where user_id = 1 and wiki_id = 1 order by id
+		// unique_id field contains page id (like page_id in page table)
+		// for many notifications we want to make sure we 50 notifications from different pages hance distinct
 		$db = $this->getDB(true);
-		$res = $db->select('wall_notification',
-			array('distinct unique_id'),
+		$res = $db->select(
+			array ( 'wn1' => 'wall_notification','wn2' => 'wall_notification' ),
+			array ( 'wn1.unique_id' ),
 			array(
-				'user_id' => $userId,
-				'wiki_id' => $wikiId,
-				'is_hidden' => 0
+				'wn1.user_id' => $userId,
+				'wn1.wiki_id' => $wikiId,
+				'wn1.is_hidden' => 0,
+				'wn2.id' => null
 			),
 			__METHOD__,
 			array(
-				"ORDER BY" => "id desc" ,
-				"LIMIT" => 50
+				'LIMIT' => '50',
+				'ORDER BY' => 'wn1.id DESC'
+			),
+			array(
+				'wn2' => array (
+					'LEFT JOIN',
+					array (
+						'wn1.user_id = wn2.user_id',
+						'wn1.wiki_id = wn2.wiki_id',
+						'wn1.is_hidden = wn2.is_hidden',
+						'wn1.unique_id = wn2.unique_id',
+						'wn2.id < wn1.id'
+					)
+				),
 			)
 		);
 
@@ -919,6 +933,7 @@ class WallNotifications {
 
 		$out = array();
 		if(!empty($uniqueIds)) {
+			// fetch notification entries for pre fetched unique ids
 			$res = $db->select('wall_notification',
 				array('id', 'is_read', 'is_reply', 'unique_id', 'entity_key', 'author_id', 'notifyeveryone'),
 				//array('id', 'unique_id', 'entity_key', 'author_id'),
@@ -980,7 +995,7 @@ class WallNotifications {
 	 *
 	 * @author Władysław Bodzek <wladek@wikia-inc.com>
 	 *
-	 * @param $userId int User Id
+	 * @param int $userId User Id
 	 * @return User User object
 	 */
 	protected function getUser( $userId ) {
@@ -989,4 +1004,5 @@ class WallNotifications {
 		}
 		return $this->cachedUsers[$userId];
 	}
+
 }

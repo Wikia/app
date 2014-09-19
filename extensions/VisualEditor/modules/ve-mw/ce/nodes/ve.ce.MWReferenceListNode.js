@@ -1,7 +1,7 @@
 /*!
  * VisualEditor ContentEditable MWReferenceListNode class.
  *
- * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
@@ -10,18 +10,17 @@
  *
  * @class
  * @extends ve.ce.LeafNode
- * @mixins ve.ce.ProtectedNode
+ * @mixins ve.ce.FocusableNode
  *
  * @constructor
  * @param {ve.dm.MWReferenceListNode} model Model to observe
- * @param {Object} [config] Config options
+ * @param {Object} [config] Configuration options
  */
 ve.ce.MWReferenceListNode = function VeCeMWReferenceListNode( model, config ) {
 	// Parent constructor
 	ve.ce.LeafNode.call( this, model, config );
 
 	// Mixin constructors
-	ve.ce.ProtectedNode.call( this );
 	ve.ce.FocusableNode.call( this );
 
 	// Properties
@@ -29,10 +28,13 @@ ve.ce.MWReferenceListNode = function VeCeMWReferenceListNode( model, config ) {
 	this.listNode = null;
 
 	// DOM changes
-	this.$.addClass( 've-ce-mwReferenceListNode', 'reference' );
-	this.$reflist = $( '<ol class="references"></ol>' );
-	this.$refmsg = $( '<p>' )
+	this.$element.addClass( 've-ce-mwReferenceListNode', 'reference' );
+	this.$reflist = this.$( '<ol class="references"></ol>' );
+	this.$refmsg = this.$( '<p>' )
 		.addClass( 've-ce-mwReferenceListNode-muted' );
+
+	// Events
+	this.model.connect( this, { 'attributeChange': 'onAttributeChange' } );
 
 	// Initialization
 	this.update();
@@ -40,17 +42,26 @@ ve.ce.MWReferenceListNode = function VeCeMWReferenceListNode( model, config ) {
 
 /* Inheritance */
 
-ve.inheritClass( ve.ce.MWReferenceListNode, ve.ce.LeafNode );
+OO.inheritClass( ve.ce.MWReferenceListNode, ve.ce.LeafNode );
 
-ve.mixinClass( ve.ce.MWReferenceListNode, ve.ce.ProtectedNode );
-
-ve.mixinClass( ve.ce.MWReferenceListNode, ve.ce.FocusableNode );
+OO.mixinClass( ve.ce.MWReferenceListNode, ve.ce.FocusableNode );
 
 /* Static Properties */
 
 ve.ce.MWReferenceListNode.static.name = 'mwReferenceList';
 
 ve.ce.MWReferenceListNode.static.tagName = 'div';
+
+ve.ce.MWReferenceListNode.static.primaryCommandName = 'referenceList';
+
+/* Static Methods */
+
+/**
+ * @inheritdoc
+ */
+ve.ce.MWReferenceListNode.static.getDescription = function ( model ) {
+	return model.getAttribute( 'refGroup' );
+};
 
 /* Methods */
 
@@ -102,7 +113,7 @@ ve.ce.MWReferenceListNode.prototype.onInternalListUpdate = function ( groupsChan
 };
 
 /**
- * Handle attribute change events.
+ * Rerender when the 'listGroup' attribute changes in the model.
  *
  * @param {string} key Attribute key
  * @param {string} from Old value
@@ -142,8 +153,12 @@ ve.ce.MWReferenceListNode.prototype.update = function () {
 	this.$refmsg.detach();
 
 	if ( !nodes || !nodes.indexOrder.length ) {
-		this.$refmsg.text( ve.msg( 'visualeditor-referencelist-isempty', refGroup ) );
-		this.$.append( this.$refmsg );
+		if ( refGroup !== '' ) {
+			this.$refmsg.text( ve.msg( 'visualeditor-referencelist-isempty', refGroup ) );
+		} else {
+			this.$refmsg.text( ve.msg( 'visualeditor-referencelist-isempty-default' ) );
+		}
+		this.$element.append( this.$refmsg );
 	} else {
 		for ( i = 0, iLen = nodes.indexOrder.length; i < iLen; i++ ) {
 			index = nodes.indexOrder[i];
@@ -166,13 +181,13 @@ ve.ce.MWReferenceListNode.prototype.update = function () {
 				continue;
 			}
 
-			$li = $( '<li>' );
+			$li = this.$( '<li>' );
 
 			if ( keyedNodes.length > 1 ) {
 				for ( j = 0, jLen = keyedNodes.length; j < jLen; j++ ) {
 					$li.append(
-						$( '<sup>' ).append(
-							$( '<a>' ).text( ( i + 1 ) + '.' + j )
+						this.$( '<sup>' ).append(
+							this.$( '<a>' ).text( ( i + 1 ) + '.' + j )
 						)
 					).append( ' ' );
 				}
@@ -180,22 +195,31 @@ ve.ce.MWReferenceListNode.prototype.update = function () {
 
 			// Generate reference HTML from first item in key
 			modelNode = internalList.getItemNode( firstNode.getAttribute( 'listIndex' ) );
-			if ( modelNode.length ) {
+			if ( modelNode && modelNode.length ) {
 				viewNode = new ve.ce.InternalItemNode( modelNode );
 				// HACK: PHP parser doesn't wrap single lines in a paragraph
-				if ( viewNode.$.children().length === 1 && viewNode.$.children( 'p' ).length === 1 ) {
+				if (
+					viewNode.$element.children().length === 1 &&
+					viewNode.$element.children( 'p' ).length === 1
+				) {
 					// unwrap inner
-					viewNode.$.children().replaceWith( viewNode.$.children().contents() );
+					viewNode.$element.children().replaceWith(
+						viewNode.$element.children().contents()
+					);
 				}
 				$li.append(
-					$( '<span>' )
+					this.$( '<span>' )
 						.addClass( 'reference-text' )
-						.append( viewNode.$.clone().show() )
+						.append( viewNode.$element.show() )
 				);
+				// HACK: See bug 62682 - We happen to know that destroy doesn't abort async
+				// rendering for generated content nodes, but we really can't gaurantee that in the
+				// future - if you are here, debugging, because something isn't rendering properly,
+				// it's likely that something has changed and these assumptions are no longer valid
 				viewNode.destroy();
 			} else {
 				$li.append(
-					$( '<span>' )
+					this.$( '<span>' )
 						.addClass( 've-ce-mwReferenceListNode-muted' )
 						.text( ve.msg( 'visualeditor-referencelist-missingref' ) )
 				);
@@ -203,7 +227,7 @@ ve.ce.MWReferenceListNode.prototype.update = function () {
 
 			this.$reflist.append( $li );
 		}
-		this.$.append( this.$reflist );
+		this.$element.append( this.$reflist );
 	}
 };
 

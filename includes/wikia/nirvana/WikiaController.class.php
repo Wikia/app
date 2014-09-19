@@ -11,10 +11,19 @@
  * @author Federico "Lox" Lucignano <federico(at)wikia-inc.com>
  */
 abstract class WikiaController extends WikiaDispatchableObject {
+
 	final public function allowsExternalRequests(){
 		return true;
 	}
 
+	/**
+	 * Get names of methods that should not appear in public documentation, even if they're public.
+	 * Protected to allow children classes to add methods here.
+	 */
+	protected function getSkipMethods() {
+		return array();
+	}
+	
 	/**
 	 * Prints documentation for current controller
 	 * @todo implement request/responseParams tags
@@ -22,7 +31,7 @@ abstract class WikiaController extends WikiaDispatchableObject {
 	public function help() {
 		$reflection = new ReflectionClass( __CLASS__ );
 		$methods = $reflection->getMethods( ReflectionMethod::IS_PUBLIC );
-		$skipMethods = array();
+		$skipMethods = $this->getSkipMethods();
 
 		//build a list of the WikiaController base class methods to filter
 		//them out from the docs, but maintain "help"

@@ -115,7 +115,6 @@ class SpecialTranslationStats extends IncludableSpecialPage {
 				$wgOut->disable();
 				header( 'Content-Type: image/png' );
 				header( 'Cache-Control: private, max-age=3600' );
-				header( 'Expires: ' . wfTimestamp( TS_RFC2822, time() + 3600 ) );
 			}
 			$this->draw( $opts );
 

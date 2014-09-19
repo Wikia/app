@@ -117,7 +117,7 @@ $messages['ce'] = array(
 	'mostvisitedpagessearchbtn' => 'лаха',
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Dontlietome7
  * @author Reaperman
  */
@@ -167,12 +167,13 @@ $messages['dsb'] = array(
  * @author Locos epraix
  * @author McDutchie
  * @author Translationista
+ * @author VegaDark
  */
 $messages['es'] = array(
 	'mostvisitedpages' => 'Páginas más visitadas',
 	'mostvisitedpagessearchtext' => 'Nombre del artículo:',
 	'mostvisitedpagessearchbtn' => 'buscar',
-	'mostvisitedpageslatest' => 'En los últimos $1 minutos',
+	'mostvisitedpageslatest' => '{{PLURAL:$1|en el último|en los últimos}} $1 {{PLURAL:$1|minuto|minutos}}',
 	'mostvisitedpageslatestlink' => 'Ver últimas páginas visitadas',
 	'mostvisitedpagesalllink' => 'Ver páginas más visitadas',
 );
@@ -365,8 +366,16 @@ $messages['lb'] = array(
 	'mostvisitedpagessearchtext' => 'Numm vum Artikel:',
 	'mostvisitedpagessearchbtn' => 'sichen',
 	'mostvisitedpageslatest' => 'an de leschten $1 Minutten',
-	'mostvisitedpageslatestlink' => 'Déi lescht besichte Säite kucken',
-	'mostvisitedpagesalllink' => 'Déi am dackste besichte Säite kucken',
+	'mostvisitedpageslatestlink' => 'Déi lescht besicht Säite kucken',
+	'mostvisitedpagesalllink' => 'Déi am dackst besicht Säite kucken',
+);
+
+/** لوری (لوری)
+ * @author Mogoeilor
+ */
+$messages['lrc'] = array(
+	'mostvisitedpagessearchtext' => 'نوم گوتار',
+	'mostvisitedpagessearchbtn' => 'پی جوری',
 );
 
 /** Macedonian (македонски)
@@ -568,9 +577,21 @@ $messages['sv'] = array(
 	'mostvisitedpages' => 'Sidor med flest besök',
 	'mostvisitedpagessearchtext' => 'Artikelns namn:',
 	'mostvisitedpagessearchbtn' => 'sök',
-	'mostvisitedpageslatest' => 'under de senaste $1 minuterna',
+	'mostvisitedpageslatest' => 'under {{PLURAL:$1|den senaste minuten|de senaste $1 minuterna}}',
 	'mostvisitedpageslatestlink' => 'Se senast besökta sidor',
 	'mostvisitedpagesalllink' => 'Se mest besökta sidor',
+);
+
+/** Silesian (ślůnski)
+ * @author Krol111
+ */
+$messages['szl'] = array(
+	'mostvisitedpages' => 'Nojczyńśći uobźyrane zajty',
+	'mostvisitedpagessearchtext' => 'Mjano artikla:',
+	'mostvisitedpagessearchbtn' => 'sznupej',
+	'mostvisitedpageslatest' => 'bez uostatńe $1 minut', # Fuzzy
+	'mostvisitedpageslatestlink' => 'Uobejrzij ńydowno uobźyrane zajty',
+	'mostvisitedpagesalllink' => 'Uobejrzij nojczyńśći uobźyrane zajty',
 );
 
 /** Tamil (தமிழ்)
@@ -586,13 +607,16 @@ $messages['ta'] = array(
 );
 
 /** Telugu (తెలుగు)
+ * @author Chaduvari
  * @author Veeven
  */
 $messages['te'] = array(
 	'mostvisitedpages' => 'ఎక్కువగా చూసిన పేజీలు',
 	'mostvisitedpagessearchtext' => 'వ్యాసపు పేరు:',
 	'mostvisitedpagessearchbtn' => 'వెతుకు',
-	'mostvisitedpageslatest' => 'గత $1 నిమిషాలలో',
+	'mostvisitedpageslatest' => 'గత $1 {{PLURAL:$1|నిమిషంలో|నిమిషాల్లో}}',
+	'mostvisitedpageslatestlink' => 'ఇట్టీవల చూసిన పేజీలను చూడండి',
+	'mostvisitedpagesalllink' => 'అత్యధికంగా చూసిన పేజీలను చూడండి',
 );
 
 /** Tagalog (Tagalog)
@@ -664,9 +688,10 @@ $messages['vi'] = array(
 /** Simplified Chinese (中文（简体）‎)
  * @author Dimension
  * @author Hydra
+ * @author Xiaomingyan
  */
 $messages['zh-hans'] = array(
-	'mostvisitedpages' => '浏览最多的页面',
+	'mostvisitedpages' => '最多访问页面',
 	'mostvisitedpagessearchtext' => '条目名称：',
 	'mostvisitedpagessearchbtn' => '搜寻',
 	'mostvisitedpageslatest' => '在最近$1分钟内',

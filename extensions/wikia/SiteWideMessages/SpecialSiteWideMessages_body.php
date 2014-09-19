@@ -221,15 +221,13 @@ class SiteWideMessages extends SpecialPage {
 					$formData['messageContent'] = $wgOut->parse($mText);
 					$formData['sendResult'] = wfMsg('swm-msg-sent-ok');
 					if ( !empty( $mTaskId ) ) {
-						$mTaskId = intval( $mTaskId );
+						$mTaskId = $mTaskId;
 						$taskLink = Linker::linkKnown(
-							GlobalTitle::newFromText( 'TaskManager', NS_SPECIAL, 177 ),
+							GlobalTitle::newFromText( 'Tasks/log', NS_SPECIAL, 177 ),
 							"#{$mTaskId}",
 							array(),
 							array(
-								'action' => 'log',
 								'id' => $mTaskId,
-								'offset' => 0
 							)
 						);
 						$formData['sendResult'] .= wfMsg( 'swm-msg-sent-task', $taskLink );
@@ -530,24 +528,18 @@ class SiteWideMessages extends SpecialPage {
 						$dbInsertResult &= $dbResult;
 					}
 				} elseif ( $mSendModeUsers == 'USERS' ) {
-					$oTask = new SWMSendToGroupTask();
-					$oTask->createTask(
-						array(
-							'messageId'		=> $result['msgId'],
-							'sendModeWikis'	=> $mSendModeWikis,
-							'sendModeUsers'	=> $mSendModeUsers,
-							'wikiName'		=> $mWikiName,
-							'groupName'		=> $mGroupName,
-							'userNames'     => $mUserNamesArr,
-							'senderId'		=> $mSender->GetID(),
-							'senderName'	=> $mSender->GetName(),
-							'hubId'			=> $mHubId,
-							'clusterId'     => $mClusterId,
-						),
-						TASK_QUEUED,
-						BatchTask::PRIORITY_HIGH
-					);
-					$result['taskId'] = $oTask->getID();
+					$result['taskId'] = $this->queueTask([
+						'messageId'		=> $result['msgId'],
+						'sendModeWikis'	=> $mSendModeWikis,
+						'sendModeUsers'	=> $mSendModeUsers,
+						'wikiName'		=> $mWikiName,
+						'groupName'		=> $mGroupName,
+						'userNames'     => $mUserNamesArr,
+						'senderId'		=> $mSender->GetID(),
+						'senderName'	=> $mSender->GetName(),
+						'hubId'			=> $mHubId,
+						'clusterId'     => $mClusterId,
+					]);
 				} else {
 					switch ($mSendModeWikis) {
 						case 'ALL':
@@ -573,72 +565,51 @@ class SiteWideMessages extends SpecialPage {
 
 								case 'ACTIVE':
 								case 'GROUP':
-									//add task to TaskManager
-									$oTask = new SWMSendToGroupTask();
-									$oTask->createTask(
-										array(
-											'messageId'		=> $result['msgId'],
-											'sendModeWikis'	=> $mSendModeWikis,
-											'sendModeUsers'	=> $mSendModeUsers,
-											'wikiName'		=> $mWikiName,
-											'groupName'		=> $mGroupName,
-											'senderId'		=> $mSender->GetID(),
-											'senderName'	=> $mSender->GetName(),
-											'hubId'			=> $mHubId,
-											'clusterId'     => $mClusterId,
-										),
-										TASK_QUEUED,
-										BatchTask::PRIORITY_HIGH
-									);
-									$result['taskId'] = $oTask->getID();
+									$result['taskId'] = $this->queueTask([
+										'messageId'		=> $result['msgId'],
+										'sendModeWikis'	=> $mSendModeWikis,
+										'sendModeUsers'	=> $mSendModeUsers,
+										'wikiName'		=> $mWikiName,
+										'groupName'		=> $mGroupName,
+										'senderId'		=> $mSender->GetID(),
+										'senderName'	=> $mSender->GetName(),
+										'hubId'			=> $mHubId,
+										'clusterId'     => $mClusterId,
+									]);
 									break;
 
 								case 'REGISTRATION':
-									//add task to TaskManager
-									$oTask = new SWMSendToGroupTask();
-									$oTask->createTask(
-										array(
-											'messageId'		=> $result['msgId'],
-											'sendModeWikis'	=> $mSendModeWikis,
-											'sendModeUsers'	=> $mSendModeUsers,
-											'wikiName'		=> $mWikiName,
-											'groupName'		=> $mGroupName,
-											'regOption'     => $formData['registrationDateOption'],
-											'regStartDate'  => $formData['registrationDateOne'],
-											'regEndDate'    => $formData['registrationDateTwo'],
-											'senderId'		=> $mSender->getID(),
-											'senderName'	=> $mSender->getName(),
-											'hubId'			=> $mHubId,
-											'clusterId'     => $mClusterId,
-										),
-										TASK_QUEUED,
-										BatchTask::PRIORITY_HIGH
-									);
-									$result['taskId'] = $oTask->getID();
+									$result['taskId'] = $this->queueTask([
+										'messageId'		=> $result['msgId'],
+										'sendModeWikis'	=> $mSendModeWikis,
+										'sendModeUsers'	=> $mSendModeUsers,
+										'wikiName'		=> $mWikiName,
+										'groupName'		=> $mGroupName,
+										'regOption'     => $formData['registrationDateOption'],
+										'regStartDate'  => $formData['registrationDateOne'],
+										'regEndDate'    => $formData['registrationDateTwo'],
+										'senderId'		=> $mSender->getID(),
+										'senderName'	=> $mSender->getName(),
+										'hubId'			=> $mHubId,
+										'clusterId'     => $mClusterId,
+									]);
 									break;
 
 								case 'EDITCOUNT':
-									//add task to TaskManager
-									$oTask = new SWMSendToGroupTask();
-									$oTask->createTask(
-										array(
-											'messageId'			=> $result['msgId'],
-											'sendModeWikis'		=> $mSendModeWikis,
-											'sendModeUsers'		=> $mSendModeUsers,
-											'wikiName'			=> $mWikiName,
-											'groupName'			=> $mGroupName,
-											'editCountOption'	=> $formData['editCountOption'],
-											'editCountStart'	=> $formData['editCountOne'],
-											'editCountEnd'		=> $formData['editCountTwo'],
-											'senderId'			=> $mSender->getID(),
-											'senderName'		=> $mSender->getName(),
-											'hubId'				=> $mHubId,
-											'clusterId'     	=> $mClusterId,
-										),
-										TASK_QUEUED,
-										BatchTask::PRIORITY_HIGH
-									);
-									$result['taskId'] = $oTask->getID();
+									$result['taskId'] = $this->queueTask([
+										'messageId'			=> $result['msgId'],
+										'sendModeWikis'		=> $mSendModeWikis,
+										'sendModeUsers'		=> $mSendModeUsers,
+										'wikiName'			=> $mWikiName,
+										'groupName'			=> $mGroupName,
+										'editCountOption'	=> $formData['editCountOption'],
+										'editCountStart'	=> $formData['editCountOne'],
+										'editCountEnd'		=> $formData['editCountTwo'],
+										'senderId'			=> $mSender->getID(),
+										'senderName'		=> $mSender->getName(),
+										'hubId'				=> $mHubId,
+										'clusterId'     	=> $mClusterId,
+									]);
 									break;
 							}
 							break;
@@ -649,24 +620,17 @@ class SiteWideMessages extends SpecialPage {
 								case 'ACTIVE':
 								case 'GROUP':
 								case 'ANONS':
-									//add task to TaskManager
-									$oTask = new SWMSendToGroupTask();
-									$oTask->createTask(
-										array(
-											'messageId'		=> $result['msgId'],
-											'sendModeWikis'	=> $mSendModeWikis,
-											'sendModeUsers'	=> $mSendModeUsers,
-											'wikiName'		=> $mWikiName,
-											'groupName'		=> $mGroupName,
-											'senderId'		=> $mSender->GetID(),
-											'senderName'	=> $mSender->GetName(),
-											'hubId'			=> $mHubId,
-											'clusterId'     => $mClusterId,
-										),
-										TASK_QUEUED,
-										BatchTask::PRIORITY_HIGH
-									);
-									$result['taskId'] = $oTask->getID();
+									$result['taskId'] = $this->queueTask([
+										'messageId'		=> $result['msgId'],
+										'sendModeWikis'	=> $mSendModeWikis,
+										'sendModeUsers'	=> $mSendModeUsers,
+										'wikiName'		=> $mWikiName,
+										'groupName'		=> $mGroupName,
+										'senderId'		=> $mSender->GetID(),
+										'senderName'	=> $mSender->GetName(),
+										'hubId'			=> $mHubId,
+										'clusterId'     => $mClusterId,
+									]);
 									break;
 							}
 							break;
@@ -676,24 +640,17 @@ class SiteWideMessages extends SpecialPage {
 								case 'ALL':
 								case 'ACTIVE':
 								case 'GROUP':
-									//add task to TaskManager
-									$oTask = new SWMSendToGroupTask();
-									$oTask->createTask(
-										array(
-											'messageId'		=> $result['msgId'],
-											'sendModeWikis'	=> $mSendModeWikis,
-											'sendModeUsers'	=> $mSendModeUsers,
-											'wikiName'		=> $mWikiName,
-											'groupName'		=> $mGroupName,
-											'senderId'		=> $mSender->GetID(),
-											'senderName'	=> $mSender->GetName(),
-											'hubId'			=> $mHubId,
-											'clusterId'     => $mClusterId,
-										),
-										TASK_QUEUED,
-										BatchTask::PRIORITY_HIGH
-									);
-									$result['taskId'] = $oTask->getID();
+									$result['taskId'] = $this->queueTask([
+										'messageId'		=> $result['msgId'],
+										'sendModeWikis'	=> $mSendModeWikis,
+										'sendModeUsers'	=> $mSendModeUsers,
+										'wikiName'		=> $mWikiName,
+										'groupName'		=> $mGroupName,
+										'senderId'		=> $mSender->GetID(),
+										'senderName'	=> $mSender->GetName(),
+										'hubId'			=> $mHubId,
+										'clusterId'     => $mClusterId,
+									]);
 									break;
 							}
 							break;
@@ -756,48 +713,34 @@ class SiteWideMessages extends SpecialPage {
 									break;
 
 								case 'GROUP':
-									//add task to TaskManager
-									$oTask = new SWMSendToGroupTask();
-									$oTask->createTask(
-										array(
-											'messageId'		=> $result['msgId'],
-											'sendModeWikis'	=> $mSendModeWikis,
-											'sendModeUsers'	=> $mSendModeUsers,
-											'wikiName'		=> $mWikiName,
-											'groupName'		=> $mGroupName,
-											'senderId'		=> $mSender->GetID(),
-											'senderName'	=> $mSender->GetName(),
-											'hubId'			=> $mHubId,
-											'clusterId'     => $mClusterId,
-										),
-										TASK_QUEUED,
-										BatchTask::PRIORITY_HIGH
-									);
-									$result['taskId'] = $oTask->getID();
+									$result['taskId'] = $this->queueTask([
+										'messageId'		=> $result['msgId'],
+										'sendModeWikis'	=> $mSendModeWikis,
+										'sendModeUsers'	=> $mSendModeUsers,
+										'wikiName'		=> $mWikiName,
+										'groupName'		=> $mGroupName,
+										'senderId'		=> $mSender->GetID(),
+										'senderName'	=> $mSender->GetName(),
+										'hubId'			=> $mHubId,
+										'clusterId'     => $mClusterId,
+									]);
 									break;
 
 								case 'EDITCOUNT':
-									//add task to TaskManager
-									$oTask = new SWMSendToGroupTask();
-									$oTask->createTask(
-										array(
-											'messageId'			=> $result['msgId'],
-											'sendModeWikis'		=> $mSendModeWikis,
-											'sendModeUsers'		=> $mSendModeUsers,
-											'wikiName'			=> $mWikiName,
-											'groupName'			=> $mGroupName,
-											'editCountOption'	=> $formData['editCountOption'],
-											'editCountStart'	=> $formData['editCountOne'],
-											'editCountEnd'		=> $formData['editCountTwo'],
-											'senderId'			=> $mSender->getID(),
-											'senderName'		=> $mSender->getName(),
-											'hubId'				=> $mHubId,
-											'clusterId'     	=> $mClusterId,
-										),
-										TASK_QUEUED,
-										BatchTask::PRIORITY_HIGH
-									);
-									$result['taskId'] = $oTask->getID();
+									$result['taskId'] = $this->queueTask([
+										'messageId'			=> $result['msgId'],
+										'sendModeWikis'		=> $mSendModeWikis,
+										'sendModeUsers'		=> $mSendModeUsers,
+										'wikiName'			=> $mWikiName,
+										'groupName'			=> $mGroupName,
+										'editCountOption'	=> $formData['editCountOption'],
+										'editCountStart'	=> $formData['editCountOne'],
+										'editCountEnd'		=> $formData['editCountTwo'],
+										'senderId'			=> $mSender->getID(),
+										'senderName'		=> $mSender->getName(),
+										'hubId'				=> $mHubId,
+										'clusterId'     	=> $mClusterId,
+									]);
 									break;
 							}
 							break;
@@ -809,28 +752,21 @@ class SiteWideMessages extends SpecialPage {
 								case 'GROUP':
 								case 'EDITCOUNT':
 								case 'ANONS':
-									//add task to TaskManager
-									$oTask = new SWMSendToGroupTask();
-									$oTask->createTask(
-										array(
-											'messageId'			=> $result['msgId'],
-											'sendModeWikis'		=> $mSendModeWikis,
-											'sendModeUsers'		=> $mSendModeUsers,
-											'wikiName'			=> $mWikiName,
-											'wikiNames'			=> $mWikiNamesArr,
-											'groupName'			=> $mGroupName,
-											'editCountOption'	=> $formData['editCountOption'],
-											'editCountStart'	=> $formData['editCountOne'],
-											'editCountEnd'		=> $formData['editCountTwo'],
-											'senderId'			=> $mSender->GetID(),
-											'senderName'		=> $mSender->GetName(),
-											'hubId'				=> $mHubId,
-											'clusterId'     	=> $mClusterId,
-										),
-										TASK_QUEUED,
-										BatchTask::PRIORITY_HIGH
-									);
-									$result['taskId'] = $oTask->getID();
+									$result['taskId'] = $this->queueTask([
+										'messageId'			=> $result['msgId'],
+										'sendModeWikis'		=> $mSendModeWikis,
+										'sendModeUsers'		=> $mSendModeUsers,
+										'wikiName'			=> $mWikiName,
+										'wikiNames'			=> $mWikiNamesArr,
+										'groupName'			=> $mGroupName,
+										'editCountOption'	=> $formData['editCountOption'],
+										'editCountStart'	=> $formData['editCountOne'],
+										'editCountEnd'		=> $formData['editCountTwo'],
+										'senderId'			=> $mSender->GetID(),
+										'senderName'		=> $mSender->GetName(),
+										'hubId'				=> $mHubId,
+										'clusterId'     	=> $mClusterId,
+									]);
 									break;
 							}
 							break;
@@ -842,31 +778,24 @@ class SiteWideMessages extends SpecialPage {
 								case 'GROUP':
 								case 'EDITCOUNT':
 								case 'ANONS':
-									//add task to TaskManager
-									$oTask = new SWMSendToGroupTask();
-									$oTask->createTask(
-										array(
-											'messageId'			=> $result['msgId'],
-											'sendModeWikis'		=> $mSendModeWikis,
-											'sendModeUsers'		=> $mSendModeUsers,
-											'wikiName'			=> $mWikiName,
-											'wikiNames'			=> $mWikiNamesArr,
-											'groupName'			=> $mGroupName,
-											'wcOption'			=> $formData['wikiCreationDateOption'],
-											'wcStartDate'		=> $formData['wikiCreationDateOne'],
-											'wcEndDate'			=> $formData['wikiCreationDateTwo'],
-											'editCountOption'	=> $formData['editCountOption'],
-											'editCountStart'	=> $formData['editCountOne'],
-											'editCountEnd'		=> $formData['editCountTwo'],
-											'senderId'			=> $mSender->GetID(),
-											'senderName'		=> $mSender->GetName(),
-											'hubId'				=> $mHubId,
-											'clusterId'     	=> $mClusterId,
-										),
-										TASK_QUEUED,
-										BatchTask::PRIORITY_HIGH
-									);
-									$result['taskId'] = $oTask->getID();
+									$result['taskId'] = $this->queueTask([
+										'messageId'			=> $result['msgId'],
+										'sendModeWikis'		=> $mSendModeWikis,
+										'sendModeUsers'		=> $mSendModeUsers,
+										'wikiName'			=> $mWikiName,
+										'wikiNames'			=> $mWikiNamesArr,
+										'groupName'			=> $mGroupName,
+										'wcOption'			=> $formData['wikiCreationDateOption'],
+										'wcStartDate'		=> $formData['wikiCreationDateOne'],
+										'wcEndDate'			=> $formData['wikiCreationDateTwo'],
+										'editCountOption'	=> $formData['editCountOption'],
+										'editCountStart'	=> $formData['editCountOne'],
+										'editCountEnd'		=> $formData['editCountTwo'],
+										'senderId'			=> $mSender->GetID(),
+										'senderName'		=> $mSender->GetName(),
+										'hubId'				=> $mHubId,
+										'clusterId'     	=> $mClusterId,
+									]);
 									break;
 							}
 							break;
@@ -877,6 +806,14 @@ class SiteWideMessages extends SpecialPage {
 
 		wfDebug(basename(__FILE__) . ' || ' . __METHOD__ . " || SenderId=" . $mSender->GetID() . ", RecipientId=$mRecipientId, Expire=$mExpire, result=" . ($dbInsertResult ? 'true':'false') . "\n");
 		return $result;
+	}
+
+	private function queueTask($taskArgs) {
+		$task = new \Wikia\Tasks\Tasks\SiteWideMessagesTask();
+		$task->call('send', $taskArgs);
+		$taskId = $task->queue();
+
+		return $taskId;
 	}
 
 	private function saveMessage( $editMsgId, $mText, $mExpiry ) {
@@ -1230,14 +1167,6 @@ class SiteWideMessages extends SpecialPage {
 		// Keep a copy of these around to return if necessary
 		$unformatted = $tmpMsg;
 
-		//isset - fix for RT#48187
-		$tmpMsg = array_filter($tmpMsg, create_function('$row', 'return !isset($row["status"]) || $row["status"] == 0;'));
-		if (count($tmpMsg) && !wfReadOnly()) {
-			//purge browser cache
-			$user->invalidateCache();
-			wfDebug(basename(__FILE__) . ' || ' . __METHOD__ . " || userID=$userID, result=" . ($dbResult ? 'true':'false') . "\n");
-		}
-
 		if ($countDisplayed) {
 			//purge the cache
 			$key = 'wikia:talk_messages:' . $userID . ':' . str_replace(' ', '_', $user->getName());
@@ -1254,69 +1183,55 @@ class SiteWideMessages extends SpecialPage {
 		return $result;
 	}
 
-	static function getAllAnonMessages( $user, $dismissLink = true, $formatted = true ) {
-		global $wgCookiePrefix, $wgCityId, $wgLanguageCode;
-		global $wgExternalSharedDB;
+	static function getAllAnonMessages( $user ) {
+		global $wgCityId, $wgExternalSharedDB, $wgMemc, $wgTitle;
 
-		wfProfileIn(__METHOD__);
+		wfProfileIn( __METHOD__ );
 
 		$localCityId = isset( $wgCityId ) ? $wgCityId : 0;
 
-		$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
+		$memcKey = "smw:anon:{$localCityId}";
 
-		$tmpMsg = array();
+		$result = $wgMemc->get( $memcKey );
 
-		$dbResult = $dbr->query(
-			'SELECT msg_wiki_id, msg_id AS id, msg_text AS text, msg_expire AS expire, msg_lang AS lang, msg_status AS status' .
-			' FROM ' . MSG_TEXT_DB .
-			' LEFT JOIN ' . MSG_STATUS_DB . ' USING (msg_id)' .
-			' WHERE msg_mode = ' . MSG_MODE_SELECTED .
-			' AND msg_recipient_id = 0' .
-			' AND msg_recipient_name = ' . $dbr->addQuotes( MSG_RECIPIENT_ANON ) .
-			' AND msg_status IN (' . MSG_STATUS_UNSEEN . ', ' . MSG_STATUS_SEEN . ')' .
-			' AND (msg_expire IS NULL OR msg_expire > ' . $dbr->addQuotes( date( 'Y-m-d H:i:s' ) ) . ')' .
-			' AND msg_removed = ' . MSG_REMOVED_NO .
-			" AND (msg_wiki_id = 0 OR msg_wiki_id = $localCityId )" .
-			';'
-			, __METHOD__
-		);
+		if ( !is_array( $result ) ) {
+			$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
 
-		while ( $oMsg = $dbr->fetchObject( $dbResult ) ) {
-			if ( !isset( $_COOKIE[$wgCookiePrefix . 'swm-' . $oMsg->id] ) && self::getLanguageConstraintsForUser( $user, $oMsg->lang ) ) {
-				$tmpMsg[$oMsg->id] = array( 'wiki_id' => $oMsg->msg_wiki_id, 'text' => $oMsg->text, 'expire' => $oMsg->expire, 'status' => $oMsg->status );
+			$result = array();
+
+			$dbResult = $dbr->query(
+				'SELECT msg_wiki_id, msg_id AS id, msg_text AS text, msg_expire AS expire, msg_lang AS lang, msg_status AS status' .
+				' FROM ' . MSG_TEXT_DB .
+				' LEFT JOIN ' . MSG_STATUS_DB . ' USING (msg_id)' .
+				' WHERE msg_mode = ' . MSG_MODE_SELECTED .
+				' AND msg_recipient_id = 0' .
+				' AND msg_recipient_name = ' . $dbr->addQuotes( MSG_RECIPIENT_ANON ) .
+				' AND msg_status IN (' . MSG_STATUS_UNSEEN . ', ' . MSG_STATUS_SEEN . ')' .
+				' AND (msg_expire IS NULL OR msg_expire > ' . $dbr->addQuotes( date( 'Y-m-d H:i:s' ) ) . ')' .
+				' AND msg_removed = ' . MSG_REMOVED_NO .
+				" AND (msg_wiki_id = 0 OR msg_wiki_id = $localCityId )" .
+				';'
+				, __METHOD__
+			);
+
+			while ( $oMsg = $dbr->fetchObject( $dbResult ) ) {
+				if ( self::getLanguageConstraintsForUser( $user, $oMsg->lang ) ) {
+					$messageText = ParserPool::parse( $oMsg->text, $wgTitle, new ParserOptions() )->getText();
+					$result['msg_' . $oMsg->id] = array( 'msgId' => $oMsg->id, 'wiki_id' => $oMsg->msg_wiki_id, 'text' => $messageText, 'expire' => $oMsg->expire, 'status' => $oMsg->status );
+				}
 			}
-		}
-		if ( $dbResult !== false ) {
-			$dbr->freeResult($dbResult);
-		}
-		//sort from newer to older
-		krsort( $tmpMsg );
+			if ( $dbResult !== false ) {
+				$dbr->freeResult( $dbResult );
+			}
 
-		$messages = array();
-		$language = Language::factory($wgLanguageCode);
-		foreach ( $tmpMsg as $tmpMsgId => $tmpMsgData ) {
-			$messages[] = $dismissLink ?
-				"<div class=\"SWM_message\" id=\"msg_$tmpMsgId\">\n".
-				"{$tmpMsgData['text']}\n" .
-				"<span class=\"SWM_dismiss\"><nowiki>[</nowiki><span class=\"plainlinks\">[{{fullurl:Special:SiteWideMessages|action=dismiss&mID=$tmpMsgId}} " . wfMsg('swm-link-dismiss') . "]</span><nowiki>]</nowiki></span>" .
-				(is_null($tmpMsgData['expire']) ? '' : "<span class=\"SWM_expire\">" . wfMsg('swm-expire-info', array($language->timeanddate(strtotime($tmpMsgData['expire']), true, $user->getDatePreference()))) . "</span>") .
-				"<div>&nbsp;</div></div>"
-				:
-				"<div class=\"SWM_message\">{$tmpMsgData['text']}</div>";
+			//sort from newer to older
+			krsort( $result );
+
+			// Cache result for 15 minutes
+			$wgMemc->set( $memcKey, $result, 900 /* 15 minutes */ );
 		}
 
-		//prevent double execution of all those queries
-		if ( count( $messages ) ) {
-			self::$hasMessages = true;
-		}
-
-		if ($formatted) {
-			$result = implode("\n", $messages);
-		} else {
-			$result = $tmpMsg;
-		}
-
-		wfProfileOut(__METHOD__);
+		wfProfileOut( __METHOD__ );
 		return $result;
 	}
 

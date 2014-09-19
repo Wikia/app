@@ -54,8 +54,7 @@ define('share', ['wikia.cache', 'JSMessages', 'wikia.loader', 'wikia.window'], f
 							controller: 'WikiaMobileSharingService',
 							method: 'index'
 						}],
-						styles: '/extensions/wikia/WikiaMobile/css/sharing.scss',
-						ttl: 86400
+						styles: '/extensions/wikia/WikiaMobile/css/sharing.scss'
 					}
 				}).done(
 					function(res){

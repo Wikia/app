@@ -2,11 +2,10 @@
  * @brief Styles comments as speech bubbles
  * @details Used by both ArticleComments and Wall
  */
-@import "color";
-@import "../mixins/bodytext";
-@import "../mixins/border-radius";
-@import "../mixins/box-sizing";
-@import "../mixins/clearfix";
+@import "skins/shared/color";
+@import "skins/shared/mixins/bodytext";
+@import "skins/shared/mixins/box-sizing";
+@import "skins/shared/mixins/clearfix";
 
 .SpeechBubble {
 	@include clearfix;
@@ -17,9 +16,9 @@
 	}
 
 	.speech-bubble-message {
-		@include border-radius(5px);
 		background: $color-speech-bubble;
 		border: 1px solid $color-page-border;
+		border-radius: 5px;
 		margin: 0 0 0 75px;
 		padding: 15px 10px 10px 15px;
 		position: relative;

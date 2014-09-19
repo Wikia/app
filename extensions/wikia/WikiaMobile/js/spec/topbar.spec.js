@@ -7,7 +7,6 @@ describe("Topbar module", function () {
 			setHash: function(){}
 		}},
 		loader = {},
-		toc = {},
 		track = {
 			event: function(){}
 		},
@@ -27,7 +26,7 @@ describe("Topbar module", function () {
 			};
 		};
 
-	var topbar = modules.topbar(qs, loader, toc, jQuery, track, throbber, window);
+	var topbar = modules.topbar(qs, loader, jQuery, track, throbber, window);
 
 	it('should be defined', function(){
 		expect(topbar).toBeDefined();
@@ -37,5 +36,4 @@ describe("Topbar module", function () {
 		expect(typeof topbar.openSearch).toBe('function');
 		expect(typeof topbar.close).toBe('function');
 	});
-
 });

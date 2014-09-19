@@ -1,0 +1,65 @@
+[
+	{
+		"description": "styleguide-example-modal-small-description",
+		"helpers": {
+			"components": [
+				{
+					"name": "button",
+					"params": {
+						"type": "link",
+						"vars": {
+							"id": "showSmallModalExample",
+							"href": "#",
+							"classes": [ "primary" ],
+							"title": "Show small modal example",
+							"value": "Small modal"
+						}
+					}
+				}
+			]
+		}
+	},
+	{
+		"description": "styleguide-example-modal-medium-description",
+		"helpers": {
+			"components": [
+				{
+					"name": "button",
+					"params": {
+						"type": "link",
+						"vars": {
+							"id": "showMediumModalExample",
+							"href": "#",
+							"classes": [ "primary" ],
+							"title": "Show medium modal example",
+							"value": "Medium modal"
+						}
+					}
+				}
+			]
+		}
+	},
+	{
+		"description": "styleguide-example-modal-large-description",
+		"helpers": {
+			"components": [
+				{
+					"name": "button",
+					"params": {
+						"type": "link",
+						"vars": {
+							"id": "showLargeModalExample",
+							"href": "#",
+							"classes": [ "primary" ],
+							"title": "Show large modal example",
+							"value": "Large modal"
+						}
+					}
+				}
+			]
+		},
+		"assets": [
+			"//resources/wikia/ui_components/modal/js/modal_sample.js"
+		]
+	}
+]

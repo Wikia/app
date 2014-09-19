@@ -66,11 +66,17 @@ class WikiaDispatcher {
 	 *
 	 * @param WikiaApp $app
 	 * @param WikiaRequest $request
+	 * @throws WikiaException
+	 * @throws Exception
+	 * @throws WikiaHttpException
+	 * @throws WikiaDispatchedException
 	 * @return WikiaResponse
 	 */
 	public function dispatch( WikiaApp $app, WikiaRequest $request ) {
+		wfProfileIn(__METHOD__);
 		global $wgAutoloadClasses;
 		if (empty($wgAutoloadClasses)) {
+			wfProfileOut(__METHOD__);
 			throw new WikiaException( "wgAutoloadClasses is empty, cannot dispatch Request" );
 		}
 		$format = $request->getVal( 'format', WikiaResponse::FORMAT_HTML );
@@ -91,6 +97,7 @@ class WikiaDispatcher {
 				if ( $nextCall['reset'] ) $response->resetData();
 			}
 
+			$profilename = null;
 			try {
 
 				// Determine the "base" name for the controller, stripping off Controller/Service/Module
@@ -107,7 +114,7 @@ class WikiaDispatcher {
 				}
 
 				if ( empty( $wgAutoloadClasses[$controllerClassName] ) ) {
-					throw new WikiaException( "Controller class does not exist: {$controllerClassName}" );
+					throw new ControllerNotFoundException($controllerName);
 				}
 
 				// Determine the final name for the controller and method based on any routing rules
@@ -120,6 +127,7 @@ class WikiaDispatcher {
 				wfProfileIn($profilename);
 
 				$controller = new $controllerClassName; /* @var $controller WikiaController */
+				$response->setTemplateEngine($controllerClassName::DEFAULT_TEMPLATE_ENGINE);
 
 				if ( $callNext ) {
 					list ($nextController, $nextMethod, $resetData) = explode("::", $callNext);
@@ -134,7 +142,11 @@ class WikiaDispatcher {
 					// Refactor the offending class to not use executeXYZ methods or set format in request params
 					// Warning: this means you can't use the new Dispatcher routing to switch templates in modules
 					if ($format == WikiaResponse::FORMAT_HTML) {
-						$response->getView()->setTemplate( $controllerName, $method );
+						try {
+							$response->getView()->setTemplate( $controllerName, $method );
+						} catch (WikiaException $e) {
+							throw new MethodNotFoundException( "{$controllerClassName}::{$method}" );
+						}
 					}
 					$method = "execute{$method}";
 					$params = $request->getParams();  // old modules expect params in a different place
@@ -158,7 +170,11 @@ class WikiaDispatcher {
 					!method_exists( $controller, $method ) ||
 					!is_callable( array( $controller, $method ) )
 				) {
-					throw new WikiaException( "Could not dispatch {$controllerClassName}::{$method}" );
+					throw new MethodNotFoundException("{$controllerClassName}::{$method}");
+				}
+
+				if ( !$request->isInternal() ) {
+					$this->testIfUserHasPermissionsOrThrow($app, $controllerClassName, $method);
 				}
 
 				// Initialize the RequestContext object if it is not already set
@@ -177,8 +193,15 @@ class WikiaDispatcher {
 				$controller->setApp( $app );
 				$controller->init();
 
-				// Actually call the controller::method!
-				$result = $controller->$method( $params );
+				if ( method_exists( $controller, 'preventBlockedUsage' ) && $controller->preventBlockedUsage( $controller->getContext()->getUser(), $method ) ) {
+					$result = false;
+				} elseif ( method_exists( $controller, 'userAllowedRequirementCheck' ) && $controller->userAllowedRequirementCheck( $controller->getContext()->getUser(), $method ) ) {
+					$result = false;
+				} else {
+					// Actually call the controller::method!
+					$result = $controller->$method( $params );
+				}
+
 				if($result === false) {
 				   // skip template rendering when false returned
 				   $controller->skipRendering();
@@ -200,17 +223,15 @@ class WikiaDispatcher {
 			} catch ( WikiaHttpException $e ) {
 				if ( $request->isInternal() ) {
 					//if it is internal call rethrow it so we can apply normal handling
+
+					wfProfileOut(__METHOD__);
 					throw $e;
 
 				} else {
 					wfProfileOut($profilename);
+					$response->setException($e);					
 					$response->setFormat( 'json' );
-
-					$response->setHeader(
-						'HTTP/1.1',
-						$e->getCode(),
-						true
-					);
+					$response->setCode($e->getCode());
 
 					$response->setVal( 'error', get_class( $e ) );
 
@@ -221,7 +242,9 @@ class WikiaDispatcher {
 					}
 				}
 			} catch ( Exception $e ) {
-				wfProfileOut($profilename);
+				if ($profilename) {
+					wfProfileOut($profilename);
+				}
 
 				$response->setException($e);
 				Wikia::log(__METHOD__, $e->getMessage() );
@@ -238,9 +261,28 @@ class WikiaDispatcher {
 
 		if ( $request->isInternal() && $response->hasException() ) {
 			Wikia::logBacktrace(__METHOD__ . '::exception');
+			wfProfileOut(__METHOD__);
 			throw new WikiaDispatchedException( "Internal Throw ({$response->getException()->getMessage()})", $response->getException() );
 		}
 
+		wfProfileOut(__METHOD__);
 		return $response;
 	}
+
+	/**
+	 * @param WikiaApp $app
+	 * @param $controllerClassName
+	 * @param $method
+	 * @throws PermissionsException
+	 */
+	private function testIfUserHasPermissionsOrThrow(WikiaApp $app, $controllerClassName, $method) {
+		$nirvanaAccessRules = WikiaAccessRules::instance();
+		$permissions = $nirvanaAccessRules->getRequiredPermissionsFor($controllerClassName, $method);
+		foreach ($permissions as $permission) {
+			if (!$app->wg->User->isAllowed($permission)) {
+				throw new PermissionsException($permission);
+			}
+		}
+	}
 }
+

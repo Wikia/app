@@ -78,6 +78,8 @@
 		}
 
 		/**
+		 * @group Slow
+		 * @slowExecutionTime 0.01386 ms
 		 * @dataProvider toggleFeatureDataProvider
 		 */
 		public function testToggleFeature($is_allow, $feature, $enabled, $exp_result, $exp_error) {
@@ -136,8 +138,8 @@
 				'normal' => array('wgEnableAchievementsExt','wgEnablePageLayoutBuilder')
 			);
 			$exp4 = array (
-				array ('name' => 'wgEnableAchievementsExt', 'enabled' => true),
-				array ('name' => 'wgEnablePageLayoutBuilder', 'enabled' => true),
+				array ('name' => 'wgEnableAchievementsExt', 'enabled' => true, 'imageExtension' => '.png' ),
+				array ('name' => 'wgEnablePageLayoutBuilder', 'enabled' => true, 'imageExtension' => '.png' ),
 			);
 			$wiki_features5 = array_merge($wiki_features3, $wiki_features4);
 
@@ -174,7 +176,7 @@
 				'labs' => array('wgEnableChat'),
 			);
 			$exp4 = array (
-				array ('name' => 'wgEnableChat', 'enabled' => true, 'new' => false, 'active' => 500),
+				array ('name' => 'wgEnableChat', 'enabled' => true, 'new' => false, 'active' => 500, 'imageExtension' => '.png' ),
 			);
 			$cache_value4 = '500';
 			$wiki_features5 = array_merge($wiki_features3, $wiki_features4);
@@ -190,7 +192,7 @@
 			$release_date13 = array('wgEnableChat' => date('Y-m-d', strtotime('+20 days')));
 
 			$exp10 = array (
-				array ('name' => 'wgEnableChat', 'enabled' => true, 'new' => true, 'active' => 500),
+				array ('name' => 'wgEnableChat', 'enabled' => true, 'new' => true, 'active' => 500, 'imageExtension' => '.png' ),
 			);
 
 			return array(
@@ -212,14 +214,18 @@
 			);
 		}
 
-		/*
-		 * //fb#21148
-		 * //These tests doesn't have too much sense IMHO.
-		 * //They're checking static fields of class which is being tested
-		 * //with our configuration which is different on production
-		 * //and on devboxes. Any other idea what else except removing
-		 * //these tests we can do? @author nAndy
-		// check release date for all Labs Features
+		/**
+		 * check release date for all Labs Features
+		 *
+		 * @group Broken
+		 *
+		 * fb#21148
+		 * These tests doesn't have too much sense IMHO.
+		 * They're checking static fields of class which is being tested
+		 * with our configuration which is different on production
+		 * and on devboxes. Any other idea what else except removing
+		 * these tests we can do? @author nAndy
+		 */
 		public function testLabsFeaturesReleaseDate() {
 			global $wgWikiFeatures;
 
@@ -230,7 +236,18 @@
 			$this->assertEquals($exp_result, $response);
 		}
 
-		// check feedback id for all Labs Features
+		/**
+		 * check feedback id for all Labs Features
+		 *
+		 * @group Broken
+		 *
+		 * fb#21148
+		 * These tests doesn't have too much sense IMHO.
+		 * They're checking static fields of class which is being tested
+		 * with our configuration which is different on production
+		 * and on devboxes. Any other idea what else except removing
+		 * these tests we can do? @author nAndy
+		 */
 		public function testLabsFeaturesFeedbackId() {
 			global $wgWikiFeatures;
 
@@ -242,5 +259,4 @@
 				$this->assertEquals($exp_result, $response);
 			}
 		}
-		*/
 	}

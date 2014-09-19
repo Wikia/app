@@ -265,18 +265,18 @@ class AutoCreateWiki {
 		return $sResponse;
 	}
 
-	protected static function getLanguageNames() {
+	public static function getLanguageNames() {
 		return Language::getLanguageNames();
 	}
 
-	protected static function checkDomainExists($sName, $sLang, $type) {
+	public static function checkDomainExists($sName, $sLang, $type) {
 		return AutoCreateWiki::domainExists($sName, $sLang, $type);
 	}
 
 	public static function checkCategoryIsCorrect($sValue) {
 		wfProfileIn(__METHOD__);
 		$hubs = WikiFactoryHub::getInstance();
-		$aCategories = $hubs->getCategories();
+		$aCategories = $hubs->getAllCategories();
 		$sResponse = "";
 		if ($sValue == "") {
 			$sResponse = wfMsg('autocreatewiki-empty-category');
@@ -451,11 +451,16 @@ class AutoCreateWiki {
 		}
 
 		// TODO: temporary check for Phalanx (don't perform additional filtering when enabled)
-                global $wgEnablePhalanxExt;
-                if (!empty($wgEnablePhalanxExt)) {
-						wfProfileOut(__METHOD__);
-                        return true;
-                }
+		global $wgEnablePhalanxExt;
+		if (!empty($wgEnablePhalanxExt)) {
+			wfProfileOut(__METHOD__);
+			return true;
+		}
+		// TextRegexCore is disabled by default now.  If phalanx is disabled, this will fail
+		if (!class_exists('TextRegexCore')) {
+			wfProfileOut(__METHOD__);
+			return true;
+		}
 
 		$allowed = true;
 		$oRegexCore = new TextRegexCore( "creation", 0 );

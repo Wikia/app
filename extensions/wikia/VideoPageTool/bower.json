@@ -1,0 +1,18 @@
+{
+  "name": "VideoPageTool",
+  "version": "0.0.0",
+  "homepage": "https://github.com/Wikia/app",
+  "authors": [
+    "Kenneth Kouot <kenneth@wikia-inc.com>"
+  ],
+  "description": "Extension for VideoHomePage and VideoPageAdmin",
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

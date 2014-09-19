@@ -8,6 +8,7 @@ class ImagesService extends Service {
 	const EXT_JPEG = '.jpeg';
 	const EXT_PNG  = '.png';
 	const EXT_GIF  = '.gif';
+	const DATA_TAG = 'data:image';
 
 	public static $allowedExtensionsList = [self::EXT_GIF, self::EXT_PNG, self::EXT_JPG, self::EXT_JPEG];
 
@@ -17,7 +18,7 @@ class ImagesService extends Service {
 	 * @param integer $pageId
 	 * @return string imageUrl
 	 */
-	public static function getImageSrc($wikiId, $pageId, $imgSize = 250) {
+	public static function getImageSrc($wikiId, $pageId, $imgSize = 250, $imgHeight = null) {
 		wfProfileIn(__METHOD__);
 
 		$dbname = WikiFactory::IDtoDB($wikiId);
@@ -29,7 +30,11 @@ class ImagesService extends Service {
 			'imgFailOnFileNotFound' => 'true',
 		);
 
-		$response = ApiService::foreignCall($dbname, $param);
+		if($imgHeight!==null){
+			$param['imgHeight']  = $imgHeight;
+		}
+
+		$response = ApiService::foreignCall($dbname, $param, ApiService::API, true);
 
 		$imageSrc = (empty($response['image']['imagecrop'])) ? '' : $response['image']['imagecrop'];
 		$imagePage = (empty($response['imagepage']['imagecrop'])) ? '' : $response['imagepage']['imagecrop'];
@@ -79,7 +84,7 @@ class ImagesService extends Service {
 		);
 
 		$imagePage = $title->getFullUrl();
-		$response = ApiService::foreignCall($dbname, $param);
+		$response = ApiService::foreignCall($dbname, $param, ApiService::API, true);
 
 		if (!empty($response['query']['pages'])) {
 			$imagePageData = array_shift($response['query']['pages']);
@@ -124,6 +129,7 @@ class ImagesService extends Service {
 		if ( !empty($thumbUrl)
 				&& in_array($newExtension, self::$allowedExtensionsList) // only change extension if it's allowed
 				&& !self::imageUrlHasExtension($thumbUrl, $newExtension) // only change extension if it's different that current one
+				&& (substr($thumbUrl, 0, strlen(static::DATA_TAG)) != static::DATA_TAG)
 			) {
 			$thumbUrl .= $newExtension;
 		}
@@ -170,6 +176,21 @@ class ImagesService extends Service {
 		}
 
 		return $imageUrl;
+	}
+
+	/**
+	 * @desc Returns normal image URL made from thumbnail
+	 *
+	 * @param String $thumbUrl thumbnail image's URL
+	 * @return String new URL
+	 */
+	public static function getFileUrlFromThumbUrl( $thumbUrl ) {
+		if ( self::IsExternalThumbnailUrl( $thumbUrl ) ) {
+			$imageUrl = str_replace( '/images/thumb/', '/images/', $thumbUrl );
+			return preg_replace( '~/[^/]+$~', '', $imageUrl );
+		} else {
+			return $thumbUrl;
+		}
 	}
 
 	/**

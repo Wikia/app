@@ -1,7 +1,7 @@
 /*!
  * VisualEditor UserInterface MWCategoryWidget class.
  *
- * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
@@ -10,36 +10,38 @@
  *
  * @class
  * @abstract
- * @extends ve.ui.Widget
- * @mixin ve.ui.GroupElement
+ * @extends OO.ui.Widget
+ * @mixins OO.ui.GroupElement
  *
  * @constructor
- * @param {Object} [config] Config options
+ * @param {Object} [config] Configuration options
  */
 ve.ui.MWCategoryWidget = function VeUiMWCategoryWidget( config ) {
 	// Config intialization
 	config = config || {};
 
 	// Parent constructor
-	ve.ui.Widget.call( this, config );
+	OO.ui.Widget.call( this, config );
 
 	// Mixin constructors
-	ve.ui.GroupElement.call( this, this.$$( '<div>' ), config );
+	OO.ui.GroupElement.call( this, this.$( '<div>' ), config );
 
 	// Properties
 	this.categories = {};
+	this.categoryHiddenStatus = {};
+	this.categoryRedirects = {}; // Source -> target
 	this.popupState = false;
 	this.savedPopupState = false;
 	this.popup = new ve.ui.MWCategoryPopupWidget( {
-		'$$': this.$$, 'align': 'right', '$overlay': config.$overlay
+		'$': this.$, '$overlay': config.$overlay
 	} );
-	this.input = new ve.ui.MWCategoryInputWidget( this, {
-		'$$': this.$$, '$overlay': config.$overlay, '$container': this.$
+	this.input = new ve.ui.WikiaCategoryInputWidget( this, {
+		'$': this.$, '$overlay': config.$overlay
 	} );
 
 	// Events
 	this.input.$input.on( 'keydown', ve.bind( this.onLookupInputKeyDown, this ) );
-	this.input.lookupMenu.connect( this, { 'select': 'onLookupMenuItemSelect' } );
+	this.input.lookupMenu.connect( this, { 'choose': 'onLookupMenuItemChoose' } );
 	this.popup.connect( this, {
 		'removeCategory': 'onRemoveCategory',
 		'updateSortkey': 'onUpdateSortkey',
@@ -47,19 +49,19 @@ ve.ui.MWCategoryWidget = function VeUiMWCategoryWidget( config ) {
 	} );
 
 	// Initialization
-	this.$.addClass( 've-ui-mwCategoryWidget' )
+	this.$element.addClass( 've-ui-mwCategoryWidget' )
 		.append(
 			this.$group.addClass( 've-ui-mwCategoryWidget-items' ),
-			this.input.$,
-			this.$$( '<div>' ).css( 'clear', 'both' )
+			this.input.$element,
+			this.$( '<div>' ).css( 'clear', 'both' )
 		);
 };
 
 /* Inheritance */
 
-ve.inheritClass( ve.ui.MWCategoryWidget, ve.ui.Widget );
+OO.inheritClass( ve.ui.MWCategoryWidget, OO.ui.Widget );
 
-ve.mixinClass( ve.ui.MWCategoryWidget, ve.ui.GroupElement );
+OO.mixinClass( ve.ui.MWCategoryWidget, OO.ui.GroupElement );
 
 /* Events */
 
@@ -89,10 +91,11 @@ ve.mixinClass( ve.ui.MWCategoryWidget, ve.ui.GroupElement );
  */
 ve.ui.MWCategoryWidget.prototype.onLookupInputKeyDown = function ( e ) {
 	if ( this.input.getValue() !== '' && e.which === 13 ) {
-		this.emit(
-			'newCategory',
-			this.input.getCategoryItemFromValue( this.input.getValue() )
-		);
+		var item = this.input.getCategoryItemFromValue( this.input.getValue() ),
+			categoryWidget = this;
+		this.queryCategoryHiddenStatus( [item.name] ).done( function () {
+			categoryWidget.emit( 'newCategory', item );
+		} );
 		this.input.setValue( '' );
 	}
 };
@@ -101,18 +104,28 @@ ve.ui.MWCategoryWidget.prototype.onLookupInputKeyDown = function ( e ) {
  * Handle menu item select event.
  *
  * @method
- * @param {ve.ui.MenuItemWidget} item Selected item
+ * @param {OO.ui.MenuItemWidget} item Selected item
  */
-ve.ui.MWCategoryWidget.prototype.onLookupMenuItemSelect = function ( item ) {
-	var value = item && item.getData();
+ve.ui.MWCategoryWidget.prototype.onLookupMenuItemChoose = function ( item ) {
+	var categoryItem,
+		value = item && item.getData(),
+		categoryWidget = this;
 
 	if ( value && value !== '' ) {
 		// Remove existing items by value
 		if ( value in this.categories ) {
 			this.categories[value].metaItem.remove();
 		}
+		ve.track( 'wikia', {
+			'action': ve.track.actions.ADD,
+			'label': 'dialog-page-settings-category-suggestion'
+		} );
 		// Add new item
-		this.emit( 'newCategory',  this.input.getCategoryItemFromValue( value ) );
+		categoryItem = this.input.getCategoryItemFromValue( value );
+		this.queryCategoryHiddenStatus( [categoryItem.name] ).done( function () {
+			categoryWidget.emit( 'newCategory', categoryItem );
+		} );
+
 		// Reset input
 		this.input.setValue( '' );
 	}
@@ -184,43 +197,102 @@ ve.ui.MWCategoryWidget.prototype.getCategories = function () {
 };
 
 /**
+ * Starts a request to update categoryHiddenStatus for the given titles.
+ * The returned promise will be resolved with an API result if an API call was made,
+ * or no arguments if it was unnecessary.
+ *
+ * @param {string[]} categoryNames
+ * @return {jQuery.Promise}
+ */
+ve.ui.MWCategoryWidget.prototype.queryCategoryHiddenStatus = function ( categoryNames ) {
+	var categoryWidget = this, categoryNamesToQuery = [];
+	// Get rid of any we already know the hidden status of.
+	categoryNamesToQuery = $.grep( categoryNames, function ( categoryTitle ) {
+		return !Object.prototype.hasOwnProperty.call( categoryWidget.categoryHiddenStatus, categoryTitle );
+	} );
+
+	if ( !categoryNamesToQuery.length ) {
+		return $.Deferred().resolve().promise();
+	}
+
+	/*global mw*/
+	return new mw.Api().get( {
+		action: 'query',
+		prop: 'pageprops',
+		titles: categoryNamesToQuery.join( '|' ),
+		ppprop: 'hiddencat',
+		redirects: ''
+	} ).then( function ( result ) {
+		if ( result && result.query && result.query.pages ) {
+			$.each( result.query.pages, function ( index, pageInfo ) {
+				var hiddenStatus = !!( pageInfo.pageprops && pageInfo.pageprops.hiddencat !== undefined );
+				categoryWidget.categoryHiddenStatus[pageInfo.title] = hiddenStatus;
+			} );
+		}
+		if ( result && result.query && result.query.redirects ) {
+			$.each( result.query.redirects, function ( index, redirectInfo ) {
+				categoryWidget.categoryRedirects[redirectInfo.from] = redirectInfo.to;
+			} );
+		}
+	} );
+};
+
+/**
  * Adds category items.
  *
  * @method
  * @param {Object[]} items Items to add
  * @param {number} [index] Index to insert items after
- * @chainable
+ * @return {jQuery.Promise}
  */
 ve.ui.MWCategoryWidget.prototype.addItems = function ( items, index ) {
 	var i, len, item, categoryItem,
 		categoryItems = [],
-		existingCategoryItem = null;
+		existingCategoryItem = null,
+		categoryNames = $.map( items, function ( item ) {
+			return item.name;
+		} ),
+		categoryWidget = this;
 
-	for ( i = 0, len = items.length; i < len; i++ ) {
-		item = items[i];
+	return this.queryCategoryHiddenStatus( categoryNames ).then( function () {
+		var itemTitle, config;
+		for ( i = 0, len = items.length; i < len; i++ ) {
+			item = items[i];
 
-		// Create a widget using the item data
-		categoryItem = new ve.ui.MWCategoryItemWidget( { '$$': this.$$, 'item': item } );
-		categoryItem.connect( this, {
-			'savePopupState': 'onSavePopupState',
-			'togglePopupMenu': 'onTogglePopupMenu'
-		} );
+			itemTitle = new mw.Title( item.name, mw.config.get( 'wgNamespaceIds' ).category ).getPrefixedText();
+			// Create a widget using the item data
+			config = {
+				'$': categoryWidget.$,
+				'item': item,
+				'hidden': categoryWidget.categoryHiddenStatus[item.name]
+			};
+			if ( Object.prototype.hasOwnProperty.call( categoryWidget.categoryRedirects, itemTitle ) ) {
+				config.redirectTo = new mw.Title(
+					categoryWidget.categoryRedirects[itemTitle],
+					mw.config.get( 'wgNamespaceIds' ).category
+				).getMainText();
+				config.hidden = categoryWidget.categoryHiddenStatus[categoryWidget.categoryRedirects[itemTitle]];
+			}
+			categoryItem = new ve.ui.MWCategoryItemWidget( config );
+			categoryItem.connect( categoryWidget, {
+				'savePopupState': 'onSavePopupState',
+				'togglePopupMenu': 'onTogglePopupMenu'
+			} );
 
-		// Index item by value
-		this.categories[item.value] = categoryItem;
-		// Copy sortKey from old item when "moving"
-		if ( existingCategoryItem ) {
-			categoryItem.sortKey = existingCategoryItem.sortKey;
+			// Index item by value
+			categoryWidget.categories[item.value] = categoryItem;
+			// Copy sortKey from old item when "moving"
+			if ( existingCategoryItem ) {
+				categoryItem.sortKey = existingCategoryItem.sortKey;
+			}
+
+			categoryItems.push( categoryItem );
 		}
 
-		categoryItems.push( categoryItem );
-	}
+		OO.ui.GroupElement.prototype.addItems.call( categoryWidget, categoryItems, index );
 
-	ve.ui.GroupElement.prototype.addItems.call( this, categoryItems, index );
-
-	this.fitInput();
-
-	return this;
+		categoryWidget.fitInput();
+	} );
 };
 
 /**
@@ -240,7 +312,7 @@ ve.ui.MWCategoryWidget.prototype.removeItems = function ( names ) {
 		delete this.categories[names[i]];
 	}
 
-	ve.ui.GroupElement.prototype.removeItems.call( this, items );
+	OO.ui.GroupElement.prototype.removeItems.call( this, items );
 
 	this.fitInput();
 };
@@ -252,7 +324,7 @@ ve.ui.MWCategoryWidget.prototype.removeItems = function ( names ) {
  */
 ve.ui.MWCategoryWidget.prototype.fitInput = function () {
 	var gap, min, $lastItem,
-		$input = this.input.$;
+		$input = this.input.$element;
 
 	if ( !$input.is( ':visible') ) {
 		return;
@@ -262,7 +334,7 @@ ve.ui.MWCategoryWidget.prototype.fitInput = function () {
 	min = $input.outerWidth();
 
 	$input.css( { 'width': '100%' } );
-	$lastItem = this.$.find( '.ve-ui-mwCategoryItemWidget:last' );
+	$lastItem = this.$element.find( '.ve-ui-mwCategoryItemWidget:last' );
 	if ( $lastItem.length ) {
 		// Try to fit to the right of the last item
 		gap = ( $input.offset().left + $input.outerWidth() ) -

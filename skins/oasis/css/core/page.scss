@@ -1,9 +1,8 @@
-@import "color";
+@import "skins/shared/color";
 @import "layout";
-@import "../mixins/box-shadow";
-@import "../mixins/clearfix";
-@import "../mixins/gradient";
-@import "../mixins/opacity";
+@import "skins/shared/mixins/box-shadow";
+@import "skins/shared/mixins/clearfix";
+@import "skins/shared/mixins/gradient";
 
 .WikiaPage {
 	border: 1px solid $color-page-border;
@@ -29,19 +28,23 @@
 		display: none;
 	}
 	.WikiaPageBackground {
-		@include opacity($page-opacity);
 		background: $color-page;
 		height: 100%;
 		left: 0;
+		opacity: $page-opacity;
 		position: absolute;
 		top: 0;
 		width: 100%;
-		z-index: -1;
 	}
 	.WikiaPageContentWrapper {
 		@include clearfix;
 		position: relative;
 	}
+}
+
+// Change z-indexes for proper stacking with VisualEditor focus mode
+.ve .WikiaPage {
+	z-index: auto;
 }
 
 .WikiaMainContent {
@@ -100,6 +103,13 @@
 	&.grid-2 {
 		padding: 0;
 	}
+	.loading {
+		background: url(/skins/common/images/ajax.gif) no-repeat 50% 50%; /* $wgCdnStylePath */
+		height: 48px;
+		margin: 10px;
+		padding-top: 10px;
+	}
+
 	.module {
 		@include clearfix;
 		background: $color-page;
@@ -297,13 +307,13 @@
 }
 
 .wikiaThrobber {
-	@include opacity(75);
 	background: url("/skins/common/images/ajax.gif") no-repeat scroll center $color-page;/* $wgCdnStylePath */
 	height: 100%;
 	left: 0;
-	width: 100%;
+	opacity: .75;
 	position: absolute;
 	top: 0;
+	width: 100%;
 	z-index: 2;
 }
 

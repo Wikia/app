@@ -102,7 +102,7 @@ class WallExternalController extends WikiaController {
 		/**
 		 * @var $mw WallMessage
 		 */
-		$mw =  WallMessage::newFromId($this->request->getVal('id'));
+		$mw =  WallMessage::newFromId( $this->request->getVal( 'id' ) );
 
 		$this->response->setVal('list',
 			$this->app->renderView( 'WallExternalController', 'votersListItems',
@@ -113,7 +113,7 @@ class WallExternalController extends WikiaController {
 	}
 
 	public function votersListItems() {
-		//TODO: imaplmant load more button
+		//TODO: implement load more button
 
 		/**
 		 * @var $mw WallMessage
@@ -173,7 +173,6 @@ class WallExternalController extends WikiaController {
 
 	public function postNewMessage() {
 		wfProfileIn(__METHOD__);
-
 		$relatedTopics = $this->request->getVal('relatedTopics', array());
 
 		$this->response->setVal('status', true);
@@ -294,6 +293,7 @@ class WallExternalController extends WikiaController {
 		if($isDeleteOrRemove) {
 			$this->response->setVal('html', $this->app->renderView( 'WallController', 'messageRemoved', array('showundo' => true , 'comment' => $mw)));
 			$mw->getLastActionReason();
+			$mw->purgeSquid();
 			$this->response->setVal('deleteInfoBox', 'INFO BOX');
 		}
 
@@ -321,11 +321,13 @@ class WallExternalController extends WikiaController {
 			case 'close':
 				if($mw->canArchive($this->wg->User)) {
 					$result = $mw->archive($this->wg->User, $reason);
+					$mw->purgeSquid();
 				}
 				break;
 			case 'open':
 				if($mw->canReopen($this->wg->User)) {
 					$result = $mw->reopen($this->wg->User);
+					$mw->purgeSquid();
 				}
 				break;
 			default:
@@ -376,6 +378,7 @@ class WallExternalController extends WikiaController {
 
 		){
 			$mw->restore($this->wg->User);
+			$mw->purgeSquid();
 			$this->response->setVal('status', true);
 			return true;
 		}
@@ -402,6 +405,7 @@ class WallExternalController extends WikiaController {
 			}
 
 			$mw->restore($this->wg->User, $reason);
+			$mw->purgeSquid();
 
 			$this->response->setVal('buttons', $this->app->renderView( 'WallController', 'messageButtons', array('comment' => $mw)));
 			$this->response->setVal('status', true);
@@ -465,21 +469,22 @@ class WallExternalController extends WikiaController {
 	}
 
 	public function notifyEveryoneSave() {
-		$msgid = $this->request->getVal('msgid');
-		$dir = $this->request->getVal('dir');
+		$msgid = $this->request->getVal( 'msgid' );
+		$dir = $this->request->getVal( 'dir' );
 		/**
 		 * @var $mw WallMessage
 		 */
-		$mw =  WallMessage::newFromId($msgid);
-
-		if($dir == 1) {
-			$mw->setNotifyeveryone(true, true);
-			$this->response->setVal('newdir', 0);
-			$this->response->setVal('newmsg', wfMsg('wall-message-unnotifyeveryone'));
-		} else {
-			$mw->setNotifyeveryone(false, true);
-			$this->response->setVal('newdir', 1);
-			$this->response->setVal('newmsg', wfMsg('wall-message-notifyeveryone'));
+		$mw = WallMessage::newFromId( $msgid );
+		if ($mw) {
+			if( $dir == 1 ) {
+				$mw->setNotifyEveryone( true );
+				$this->response->setVal( 'newdir', 0 );
+				$this->response->setVal( 'newmsg', wfMsg( 'wall-message-unnotifyeveryone' ) );
+			} else {
+				$mw->setNotifyEveryone( false );
+				$this->response->setVal( 'newdir', 1 );
+				$this->response->setVal( 'newmsg', wfMsg( 'wall-message-notifyeveryone' ) );
+			}
 		}
 	}
 
@@ -490,7 +495,9 @@ class WallExternalController extends WikiaController {
 		$helper = new WallHelper();
 
 		$msgid = $this->request->getVal('msgid');
-		$newtitle = trim($this->request->getVal('newtitle'));
+
+		// XSS vulnerable (MAIN-1412)
+		$newtitle = strip_tags( trim($this->request->getVal('newtitle')) );
 
 		$newbody = $this->getConvertedContent($this->request->getVal('newbody'));
 

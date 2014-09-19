@@ -57,7 +57,7 @@ class WikiaApiLyricwiki extends ApiBase {
 
 		extract( $this->extractRequestParams() );
 
-		// Detect the API even if func is not defined (since that wasn't a documented requirement).  - SWC (note: did I actually mean "even if action=lyrics isn't defined"?)
+		// Detect the API function even if func is not defined (since that wasn't a documented requirement).  - SWC
 		$func = (($func == "")?"getSong":$func);
 
 		// Phase 'title' out (deprecated).  this is not the same as the soap.  I was coding too fast whilst in an IRC discussion and someone said artist/title just for the sake of argument and I didn't check against the SOAP :[ *embarassing*
@@ -67,8 +67,9 @@ class WikiaApiLyricwiki extends ApiBase {
 		$albumName = getVal($_GET, 'albumName');
 		$albumYear = getVal($_GET, 'albumYear');
 
-		// force cache these calls in varnish for an hour
-		header("Cache-Control: max-age=3600, s-maxage=3600, public");
+		// force cache these calls in varnish for a day... after edits, things will be stale for a little bit because
+		// we don't purge API requests (and there isn't a great way to do so, since the order of URL parameters varies).
+		header("Cache-Control: max-age=86400, s-maxage=86400, public");
 
 		// Special case (suggested by CantoPod) to return all of an artist's songs when no song is specified.
 		// Similarly, if the title passed in is an album, automatically detect that type of page and use the appropriate parser.
@@ -565,11 +566,15 @@ function albumResult($artist, $album, $year){
 				 * unfortunately we can't repackage the app ATM,
 				 * this is hacky but we need to get that reporting now.
 				 *
+				 * We need to be able to supress this for v2 while both apps
+				 * are in development. For LYR-87 we'll add the 'nocomscore' param.
+				 *
 				 * @TODO remove when we'll get to v2 of the app
-				 * @author Jakub Olek
+				 * @author Jakub Olek, Sean Colombo
 				 */
 				$fullApiAuth = $wgRequest->getVal('fullApiAuth');
-				if( !empty( $fullApiAuth ) ) {
+				$noComscore = $wgRequest->getVal('nocomscore');
+				if( (!empty( $fullApiAuth )) && empty($noComscore) ) {
 					$result['lyrics'] .= self::COMSCORE_TAG_PLACEHOLDER;
 				}
 

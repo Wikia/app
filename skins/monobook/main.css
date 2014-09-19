@@ -148,6 +148,36 @@ pre {
 	font-size: 94%;
 }
 
+/* Wikia changes to TOC */
+#toc {
+    display: table;
+}
+#toc h2 {
+    padding-right: 5px;;
+}
+#toc > div {
+    padding: 5px;
+}
+#toc ol {
+    list-style: decimal;
+    counter-reset: item;
+}
+#toc > ol {
+    display: none;
+}
+#toc.show > ol {
+    display: block;
+}
+#toc li {
+    display: block;
+}
+#toc li:before {
+    content: counters(item, ".") " ";
+    counter-increment: item;
+}
+
+/* End of Wikia changes */
+
 .mw-warning {
 	margin-left: 50px;
 	margin-right: 50px;
@@ -824,16 +854,16 @@ div#userloginForm .captcha {
 	background-color: white;
 }
 
-div#userlogin form#userlogin2 label { 
-	font-size: 115%; 
-	font-weight: bold; 
-} 
-  	
-div#userlogin form#userlogin2 input { 
-	margin-bottom: 4px; 
-}  
+div#userlogin form#userlogin2 label {
+	font-size: 115%;
+	font-weight: bold;
+}
 
-#signupWhyProvide { 
+div#userlogin form#userlogin2 input {
+	margin-bottom: 4px;
+}
+
+#signupWhyProvide {
 	display: none;
 }
 
@@ -973,7 +1003,7 @@ div.gallerybox div.thumb {
 }
 
 .gallerybox .bigButton {
-	font-size: 80%;	
+	font-size: 80%;
 }
 
 /*BARTEK*/
@@ -1185,7 +1215,7 @@ div.mw-lag-warn-high {
 
 .wikiaPlaceholder {
 	vertical-align: bottom;
-}	
+}
 .wikiaPlaceholder .wikia-button {
 	display: block;
 	text-align: center;
@@ -1195,12 +1225,12 @@ div.mw-lag-warn-high {
 .wikiaPlaceholder > div {
 	margin: 0.5em 1.4em 1.2em 0;
 	text-align: center;
-}		
+}
 
 .wikiaPlaceholder > div.tright {
 	margin: 0.5em 0 1.2em 1.4em;
 }
-		
+
 .wikiaPlaceholder > div.tcenter {
 	margin: 0.5em auto 1.2em;
 }

@@ -2,7 +2,9 @@
 /**
  * Class definition for WikiaSearchController.
  */
-// Someday there will be a namespace declaration here.
+
+use \Wikia\Logger\WikiaLogger;
+
 /**
  * Responsible for handling search requests.
  * @author relwell
@@ -10,6 +12,8 @@
  * @subpackage Controller
  */
 class WikiaSearchController extends WikiaSpecialPageController {
+
+	use Wikia\Search\Traits\NamespaceConfigurable;
 
 	/**
 	 * Default results per page for intra wiki search
@@ -36,13 +40,6 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	const WIKIA_DEFAULT_RESULT = 'result';
 
 	/**
-	 * Default varnish cache time for a search result
-	 * Currently 12 hours.
-	 * @var int
-	 */
-	const VARNISH_CACHE_TIME = 43200;
-
-	/**
 	 * On what max position title can occur and still snippet will be cutted shorter
 	 * @var int
 	 */
@@ -65,6 +62,9 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	 */
 	const HOT_ARTICLE_IMAGE_WIDTH_FLUID = 270;
 	const HOT_ARTICLE_IMAGE_HEIGHT_FLUID = 135;
+
+	const CROSS_WIKI_PROMO_THUMBNAIL_HEIGHT = 120;
+	const CROSS_WIKI_PROMO_THUMBNAIL_WIDTH = 180;
 
 	/**
 	 * Responsible for instantiating query services based on config.
@@ -91,21 +91,28 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	 * This is the main search action. Special:Search points here.
 	 */
 	public function index() {
+		global $wgEnableSpecialSearchCaching;
+
 		$this->handleSkinSettings();
 		//will change template depending on passed ab group
 		$searchConfig = $this->getSearchConfigFromRequest();
+
+		if ( !empty( $wgEnableSpecialSearchCaching ) ) {
+			$this->setVarnishCacheTime( WikiaResponse::CACHE_STANDARD );
+		}
+
 		$this->handleLayoutAbTest( $this->getVal( 'ab', null ), $searchConfig->getNamespaces() );
 		if ( $searchConfig->getQuery()->hasTerms() ) {
 			$search = $this->queryServiceFactory->getFromConfig( $searchConfig);
-			// explicity called to accommodate go-search
+			/* @var $search Wikia\Search\QueryService\Select\Dismax\OnWiki */
 			$search->getMatch();
+
 			$this->handleArticleMatchTracking( $searchConfig );
 			$search->search();
 		}
 
 		$this->setPageTitle( $searchConfig );
 		$this->setResponseValuesFromConfig( $searchConfig );
-		//$this->setVarnishCacheTime( self::VARNISH_CACHE_TIME );
 	}
 
 	/**
@@ -124,18 +131,18 @@ class WikiaSearchController extends WikiaSpecialPageController {
 					break;
 				}
 			}
-			if (! empty( $ids ) ) {
+			if ( ! empty( $ids ) ) {
 				$params = [ 'ids' => implode( ',', $ids ), 'height' => 80, 'width' => 80, 'abstract' => 120 ];
 				$detailResponse = $this->app->sendRequest( 'ArticlesApiController', 'getDetails', $params )->getData();
 				$dimensions = $this->getHotArticleImageDimensions();
 				foreach ( $detailResponse['items'] as $id => $item ) {
-					if (! empty( $item['thumbnail'] ) ) {
+					if ( ! empty( $item['thumbnail'] ) ) {
 						$item['thumbnailSize'] = "small";
 						//get the first one image from imageServing as it needs other size
 						if ( empty( $pages ) ) {
 							$is = new ImageServing( [ $id ], $dimensions['width'], $dimensions['height'] );
 							$result = $is->getImages( 1 );
-							if(! empty( $result[ $id ][ 0 ][ 'url' ] ) ) {
+							if ( ! empty( $result[ $id ][ 0 ][ 'url' ] ) ) {
 								$item[ 'thumbnail' ] = $result[ $id ][ 0 ][ 'url' ];
 								$item['thumbnailSize'] = "large";
 							}
@@ -188,7 +195,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	    $params = $this->getVal('params');
 
 	    $opt = $params;
-	    foreach( $namespaces as $n ) {
+	    foreach ( $namespaces as $n ) {
 	        $opt['ns' . $n] = 1;
 	    }
 
@@ -223,10 +230,14 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	/**
 	 * Delivers a JSON response for videos matching a provided title
 	 * Expects query param "title" for the title value.
+	 *
+	 * @requestParam string title Text used for searching against video titles
+	 * @requestParam int limit Limit the number of results returned
 	 */
 	public function searchVideosByTitle() {
 		$searchConfig = new Wikia\Search\Config;
 		$title = $this->getVal( 'title' );
+		$limit = $this->getVal( 'limit' );
 		$mm = $this->getVal( 'mm', '80%' );
 		if ( empty( $title ) ) {
 			throw new Exception( "Please include a value for 'title'." );
@@ -235,12 +246,124 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		    ->setVideoTitleSearch( true )
 		    ->setQuery( $title )
 		    ->setMinimumMatch( $mm );
-		$queryService = $this->queryServiceFactory->getFromConfig( $searchConfig );
-		if ( ( $minDuration = $this->getVal( 'minseconds' ) ) && ( $maxDuration = $this->getVal( 'maxseconds' ) ) ) {
-			$queryService->setMinDuration( $minDuration)->setMaxDuration( $maxDuration );
+		if ( !empty( $limit ) ) {
+			$searchConfig->setLimit( $limit );
 		}
+
+		$queryService = $this->queryServiceFactory->getFromConfig( $searchConfig );
+
+		$minDuration = $this->getVal( 'minseconds' );
+		$maxDuration = $this->getVal( 'maxseconds' );
+
+		if ( $minDuration && $maxDuration ) {
+			$queryService->setMinDuration( $minDuration )->setMaxDuration( $maxDuration );
+		}
+
+		$log = WikiaLogger::instance();
+		$log->info( __METHOD__.' - Querying SOLR', [
+			'method'      => __METHOD__,
+			'title'       => $title,
+			'limit'       => $limit,
+			'mm'          => $mm,
+			'minDuration' => $minDuration,
+			'maxDuration' => $maxDuration
+		] );
+
 		$this->getResponse()->setFormat( 'json' );
 		$this->getResponse()->setData( $queryService->searchAsApi() );
+	}
+
+	/**
+	 * A wrapper around searchVideosByTitle that passes in topics for the current Wiki.  Topics are pulled from
+	 * the WikiFactory variables:
+	 *
+	 *   wgWikiVideoSearchTopics
+	 *   wgWikiVideoSearchTopicsAutomated
+	 *
+	 * If there are no topics, the 'defaultTopic' parameter is used instead.  If that isn't given, nothing is returned.
+	 *
+	 * @requestParam string defaultTopic Text to use for the topic if no topics are found on this wiki.
+	 * @requestParam int limit Limit the number of results returned
+	 */
+	public function searchVideosByWikiTopic() {
+		$defaultTopic = $this->getVal( 'defaultTopic' );
+		$topics = $this->getTopicsAsQuery( $defaultTopic );
+
+		if ( $topics ) {
+			$this->request->setVal( 'title', $topics );
+			$this->searchVideosByTitle();
+		}
+	}
+
+	/**
+	 * Search videos by topics
+	 * @requestParam string defaultTopic - Text to use for the topic if no topics are found on this wiki.
+	 * @requestParam int limit - Limit the number of results returned
+	 */
+	public function searchVideosByTopics() {
+		$limit = $this->getVal( 'limit' );
+		$defaultTopic = $this->getVal( 'defaultTopic' );
+		$topics = $this->getTopicsAsQuery( $defaultTopic );
+		if ( !empty( $topics ) ) {
+			$searchConfig = new Wikia\Search\Config;
+			$mm = $this->getVal( 'mm', '80%' );
+			$searchConfig
+				->setVideoContentSearch( true )
+				->setQuery( $topics )
+				->setMinimumMatch( $mm );
+			if ( !empty( $limit ) ) {
+				$searchConfig->setLimit( $limit );
+			}
+
+			$queryService = $this->queryServiceFactory->getFromConfig( $searchConfig );
+			$minDuration = $this->getVal( 'minseconds' );
+			$maxDuration = $this->getVal( 'maxseconds' );
+			if ( $minDuration && $maxDuration ) {
+				$queryService->setMinDuration( $minDuration )->setMaxDuration( $maxDuration );
+			}
+
+			$log = WikiaLogger::instance();
+			$log->info( __METHOD__.' - Querying SOLR', [
+				'method'      => __METHOD__,
+				'topics'      => $topics,
+				'limit'       => $limit,
+				'mm'          => $mm,
+				'minDuration' => $minDuration,
+				'maxDuration' => $maxDuration
+			] );
+
+			$this->getResponse()->setFormat( 'json' );
+			$this->getResponse()->setData( $queryService->searchAsApi() );
+		}
+	}
+
+	/**
+	 * Returns a query string made up of topics found in the WikiFactory variables:
+	 *
+	 *   wgWikiVideoSearchTopics
+	 *   wgWikiVideoSearchTopicsAutomated
+	 *
+	 * @param string $default
+	 * @return string
+	 */
+	protected function getTopicsAsQuery( $default = '' ) {
+		$wg = \F::app()->wg;
+		$topics = [];
+
+		if ( is_array($wg->WikiVideoSearchTopics) ) {
+			foreach ( $wg->WikiVideoSearchTopics as $topic ) {
+				$topics[] = sprintf( '"%s"', $topic );
+			}
+		}
+
+		if ( is_array($wg->WikiVideoSearchTopicsAutomated) ) {
+			foreach ( $wg->WikiVideoSearchTopicsAutomated as $topic ) {
+				$topics[] = sprintf( '"%s"', $topic );
+			}
+		}
+
+		$topics = array_unique( $topics );
+		return empty( $topics ) ? '"'.$default.'"' : implode( ' OR ', $topics );
 	}
 
 	/**
@@ -259,21 +382,21 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$response->setFormat( 'json' );
 		$response->setData( $entityResponse );
 	}
-	
+
 	/**
-	 * JSON service that supports the access of video (and optionally photo) content from both 
+	 * JSON service that supports the access of video (and optionally photo) content from both
 	 * the current and premium video wiki.
-	 * 
+	 *
 	 *  Request params:
 	 *  -- q (required) the query
 	 *  -- videoOnly (optional) whether to only include videos (false by default)
 	 *  -- next (optional) pagination value
-	 *  
+	 *
 	 */
 	public function combinedMediaSearch() {
 		$request = $this->getRequest();
 		$query = $request->getVal( 'q' );
-		if ( strlen( $query ) == 0) {
+		if ( strlen( $query ) == 0 ) {
 			throw new Exception( "Please include a query value for parameter 'q'" );
 		}
 		$config = new Wikia\Search\Config;
@@ -283,12 +406,12 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		       ->setCombinedMediaSearchIsVideoOnly( $videoOnly )
 		       ->setLimit( 4 )
 		       ->setStart( $this->getVal( 'next', 0 ) );
-		
+
 		$results = $this->queryServiceFactory->getFromConfig( $config )->searchAsApi( [ 'url', 'id', 'pageid', 'wid', 'title' ], true );
 		$dimensions = [ 'width' => 120, 'height' => 90 ];
 		$service = new \Wikia\Search\MediaWikiService();
 		foreach ( $results['items'] as &$result ) {
-			if (! isset( $result['thumbnail'] ) ) {
+			if ( ! isset( $result['thumbnail'] ) ) {
 				$result['thumbnail'] = $service->getThumbnailHtmlFromFileTitle( $result['title'], $dimensions );
 			}
 		}
@@ -312,7 +435,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$pages = [];
 		$category = '';
 		$result = $this->getVal( 'result' );
-		if (! empty( $result ) ) {
+		if ( ! empty( $result ) ) {
 			try {
 				$category = $result['title'];
 				$colonSploded = explode( ':', $category );
@@ -331,7 +454,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 						break;
 					}
 				}
-				if (! empty( $ids ) ) {
+				if ( ! empty( $ids ) ) {
 					$params = [ 'ids' => implode( ',', $ids ), 'height' => 50, 'width' => 50, 'abstract' => 150 ];
 					$detailResponse = $this->app->sendRequest( 'ArticlesApiController', 'getDetails', $params )->getData();
 					foreach ( $detailResponse['items'] as $item ) {
@@ -417,8 +540,9 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		if ( $searchConfig->hasArticleMatch() ) {
 			$article = Article::newFromID( $searchConfig->getArticleMatch()->getId() );
 			$title = $article->getTitle();
-			if ( $this->getVal('fulltext', '0') === '0') {
+			if ( $this->getVal('fulltext', '0') === '0' ) {
 				wfRunHooks( 'SpecialSearchIsgomatch', array( $title, $query ) );
+				$this->setVarnishCacheTime( WikiaResponse::CACHE_DISABLED );
 				$this->response->redirect( $title->getFullUrl() );
 			}
 		} else {
@@ -448,8 +572,13 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			->setInterWiki               ( $this->isCorporateWiki() )
 			->setVideoSearch             ( $this->getVal( 'videoSearch', false ) )
 			->setFilterQueriesFromCodes  ( $this->getVal( 'filters', array() ) )
-			->setABTestGroup			 ( $this->getVal( 'ab' ) )
+			->setBoostGroup			 ( $this->getVal( 'ab' ) )
 		;
+
+		if ( $this->isCorporateWiki() ) {
+			$searchConfig->setLanguageCode($this->getVal('resultsLang'));
+		}
+
 		$this->setNamespacesFromRequest( $searchConfig, $this->wg->User );
 		if ( substr( $this->getResponse()->getFormat(), 0, 4 ) == 'json' ) {
 			$requestedFields = $searchConfig->getRequestedFields();
@@ -464,15 +593,15 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	 */
 	protected function setResponseValuesFromConfig( Wikia\Search\Config $searchConfig ) {
 
-		global $wgExtensionsPath, $wgLanguageCode;
+		global $wgLanguageCode;
 
 		$response = $this->getResponse();
 		$format = $response->getFormat();
-		if ( $format == 'json' || $format == 'jsonp' ){
+		if ( $format == 'json' || $format == 'jsonp' ) {
 			$response->setData( $searchConfig->getResults()->toArray( explode( ',', $this->getVal( 'jsonfields', 'title,url,pageid' ) ) ) );
 			return;
 		}
-		if(! $searchConfig->getInterWiki() ) {
+		if ( ! $searchConfig->getInterWiki() ) {
 			$this->setVal( 'advancedSearchBox', $this->sendSelfRequest( 'advancedBox', array( 'config' => $searchConfig ) ) );
 		}
 
@@ -484,7 +613,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 				'filters'       => $this->getVal( 'filters', array() ),
 				);
 
-		$isMonobook = $this->app->checkSkin( 'monobook') ;
+		$isMonobook = $this->app->checkSkin( 'monobook' );
 
 		$this->setVal( 'results',               $searchConfig->getResults() );
 		$this->setVal( 'resultsFound',          $searchConfig->getResultsFound() );
@@ -505,6 +634,21 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$this->setVal( 'isCorporateWiki',       $this->isCorporateWiki() );
 		$this->setVal( 'wgExtensionsPath',      $this->wg->ExtensionsPath);
 		$this->setVal( 'isGridLayoutEnabled',   $isGridLayoutEnabled);
+		$this->setVal( 'shownResultsBegin', $this->resultsPerPage * $this->currentPage - $this->resultsPerPage + 1 );
+
+		if ( $this->isCorporateWiki() ) {
+			$resultsLang = $searchConfig->getLanguageCode();
+			if ( $resultsLang != $this->app->wg->ContLang->getCode() ) {
+				$this->setVal( 'resultsLang', $resultsLang );
+			}
+		}
+
+		if( $this->currentPage == $this->pagesCount ) {
+			$this->setVal( 'shownResultsEnd', $this->resultsFound );
+		} else {
+			$this->setVal( 'shownResultsEnd', $this->resultsPerPage * $this->currentPage ) ;
+		}
+
 		$sanitizedQuery = $searchConfig->getQuery()->getSanitizedQuery();
 		if ( strlen($sanitizedQuery)>0 && in_array( 0, $searchConfig->getNamespaces() ) && !in_array( 6, $searchConfig->getNamespaces() ) ) {
 			$combinedMediaResult = $this->sendSelfRequest( 'combinedMediaSearch',
@@ -520,8 +664,8 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		}
 		$topWikiArticlesHtml = '';
 
-		if (! $searchConfig->getInterWiki() && $wgLanguageCode == 'en'
-			&& !$isMonobook) {
+		if ( ! $searchConfig->getInterWiki() && $wgLanguageCode == 'en'
+			&& !$isMonobook ) {
 			$dbname = $this->wg->DBName;
 			$cacheKey = wfMemcKey(
 				__CLASS__,
@@ -568,7 +712,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 												array( ucwords( $searchConfig->getQuery()->getSanitizedQuery() ), $this->wg->Sitename) )  );
 		}
 		else {
-			if( $searchConfig->getInterWiki() ) {
+			if ( $searchConfig->getInterWiki() ) {
 				$this->wg->Out->setPageTitle( wfMsg( 'wikiasearch2-page-title-no-query-interwiki' ) );
 			} else {
 				$this->wg->Out->setPageTitle( wfMsg( 'wikiasearch2-page-title-no-query-intrawiki',
@@ -578,46 +722,17 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	}
 
 	/**
-	 * Called in index action. Sets the SearchConfigs namespaces based on MW-core NS request style.
-	 * @see    WikiSearchControllerTest::testSetNamespacesFromRequest
-	 * @param  Wikia\Search\Config $searchConfig
-	 * @param  User $user
-	 * @return boolean true
-	 */
-	protected function setNamespacesFromRequest( $searchConfig, User $user ) {
-		$searchEngine = (new SearchEngine);
-		$searchableNamespaces = $searchEngine->searchableNamespaces();
-		$namespaces = array();
-		foreach( $searchableNamespaces as $i => $name ) {
-		    if ( $this->getVal( 'ns'.$i, false ) ) {
-		        $namespaces[] = $i;
-		    }
-		}
-		if ( empty($namespaces) ) {
-		    if ( $user->getOption( 'searchAllNamespaces' ) ) {
-			    $namespaces = array_keys($searchableNamespaces);
-		    } else {
-		    	$profiles = $searchConfig->getSearchProfiles();
-		    	// this is mostly needed for unit testing
-		    	$defaultProfile = !empty( $this->wg->DefaultSearchProfile ) ? $this->wg->DefaultSearchProfile : 'default';
-		    	$namespaces = $profiles[$defaultProfile]['namespaces'];
-		    }
-
-		}
-		$searchConfig->setNamespaces( $namespaces );
-
-		return true;
-	}
-
-	/**
 	 * Called in index action to manipulate the view based on the user's skin
 	 * @return boolean true
 	 */
 	protected function handleSkinSettings() {
+		global $wgCityId;
 		$this->wg->Out->addHTML( JSSnippets::addToStack( array( "/extensions/wikia/Search/js/WikiaSearch.js" ) ) );
 		$this->wg->SuppressRail = true;
-		if ($this->isCorporateWiki() ) {
+		if ( $this->isCorporateWiki() ) {
 			OasisController::addBodyClass('inter-wiki-search');
+
+			$this->setVal('corporateWikiId', $wgCityId );
 			$this->overrideTemplate('CrossWiki_index');
 		}
 		$skin = $this->wg->User->getSkin();
@@ -647,7 +762,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			if ( in_array( 47, $abs ) ) {
 				$categoryModule = true;
 			}
-			foreach( $abs as $abGroup ) {
+			foreach ( $abs as $abGroup ) {
 				if ( $this->templateExists( $abGroup ) ) {
 					$view = $abGroup;
 				}
@@ -671,10 +786,10 @@ class WikiaSearchController extends WikiaSpecialPageController {
 
 	/**
 	 * Determines whether we are on the corporate wiki
-	 * @see WikiaSearchControllerTest::testIsCorporateWiki
+	 * @see SearchControllerTest::testIsCorporateWiki
 	 */
 	protected function  isCorporateWiki() {
-	    return !empty($this->wg->EnableWikiaHomePageExt);
+	    return WikiaPageType::isCorporatePage();
 	}
 
 	/**
@@ -683,12 +798,12 @@ class WikiaSearchController extends WikiaSpecialPageController {
 
 	/**
 	 * This is how we generate the subtemplate for the advanced search box.
-	 * @see    WikiaSearchControllerTest::testAdvancedBox
+	 * @see    SearchControllerTest::testAdvancedBox
 	 * @throws Exception
 	 */
 	public function advancedBox() {
 		$config = $this->getVal('config', false);
-		if (! $config instanceof Wikia\Search\Config ) {
+		if ( ! $config instanceof Wikia\Search\Config ) {
 			throw new Exception("This should not be called outside of self-request context.");
 		}
 
@@ -704,13 +819,13 @@ class WikiaSearchController extends WikiaSpecialPageController {
 
 	/**
 	 * This is how we generate the search type tabs in the left-hand rail
-	 * @see    WikiaSearchControllerTest::tabs
+	 * @see    SearchControllerTest::tabs
 	 * @throws Exception
 	 */
 	public function tabs() {
 		$config = $this->getVal('config', false);
 
-		if (! $config || (! $config instanceOf Wikia\Search\Config ) ) {
+		if ( ! $config || (! $config instanceOf Wikia\Search\Config ) ) {
 		    throw new Exception("This should not be called outside of self-request context.");
 		}
 
@@ -733,7 +848,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			);
 
 		// Set video wiki to display only videos by default
-		if( $is_video_wiki && $form['no_filter'] == 1 && !in_array( 'no_filter', $this->getVal( 'filters', array() ) ) ) {
+		if ( $is_video_wiki && $form['no_filter'] == 1 && !in_array( 'no_filter', $this->getVal( 'filters', array() ) ) ) {
 			$form['is_video'] = 1;
 			$form['no_filter'] = 0;
 		}
@@ -747,17 +862,17 @@ class WikiaSearchController extends WikiaSpecialPageController {
 
 	/**
 	 * This handles pagination via a template script.
-	 * @see    WikiaSearchControllerTest::testPagination
+	 * @see    SearchControllerTest::testPagination
 	 * @throws Exception
 	 * @return boolean|null (false if we don't want pagination, fully routed to view via sendSelfRequest if we do want pagination)
 	 */
 	public function pagination() {
 		$config = $this->getVal('config', false);
-		if (! $config || (! $config instanceOf Wikia\Search\Config ) ) {
+		if ( ! $config || (! $config instanceOf Wikia\Search\Config ) ) {
 			throw new Exception("This should not be called outside of self-request context.");
 		}
 
-		if (! $config->getResultsFound() ) {
+		if ( ! $config->getResultsFound() ) {
 			return false;
 		}
 
@@ -788,4 +903,4 @@ class WikiaSearchController extends WikiaSpecialPageController {
 
 	}
 }
- 
+

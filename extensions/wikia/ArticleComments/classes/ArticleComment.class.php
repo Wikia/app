@@ -247,14 +247,10 @@ class ArticleComment {
 
 		$parser->ac_metadata = [];
 
-		// Always tidy Article Comment markup to avoid breakage of surrounding markup
-		global $wgAlwaysUseTidy;
-		$oldWgAlwaysUseTidy = $wgAlwaysUseTidy;
-		$wgAlwaysUseTidy = true;
-
 		$head = $parser->parse( $rawtext, $this->mTitle, ParserOptions::newFromContext( RequestContext::getMain() ) );
 
-		$this->mText = $head->getText();
+		$this->mText = wfFixMalformedHTML( $head->getText() );
+
 		$this->mHeadItems = $head->getHeadItems();
 
 		if( isset( $parser->ac_metadata ) ) {
@@ -264,9 +260,6 @@ class ArticleComment {
 		}
 
 		ParserPool::release( $parser );
-
-		// Restore old value of $wgAlwaysUseTidy
-		$wgAlwaysUseTidy = $oldWgAlwaysUseTidy;
 
 		return $this->mText;
 	}
@@ -363,13 +356,16 @@ class ArticleComment {
 
 			$isStaff = (int)in_array('staff', $this->mUser->getEffectiveGroups() );
 
-			$parts = self::explode($title);
+			$parts = self::explode( $title->getDBkey() );
 
 			$buttons = array();
 			$replyButton = '';
 
 			//this is for blogs we want to know if commenting on it is enabled
-			$commentingAllowed = ArticleComment::canComment( Title::newFromText( $title->getBaseText() ) );
+			// we cannot check it using $title->getBaseText, as this returns main namespace title
+			// the subjectpage for $parts title is something like 'User blog comment:SomeUser/BlogTitle' which is fine
+			$articleTitle = Title::makeTitle( MWNamespace::getSubject( $this->mNamespace ), $parts['title'] );
+			$commentingAllowed = ArticleComment::canComment( $articleTitle );
 
 			if ( ( count( $parts['partsStripped'] ) == 1 ) && $commentingAllowed && !ArticleCommentInit::isFbConnectionNeeded() ) {
 				$replyButton = '<button type="button" class="article-comm-reply wikia-button secondary actionButton">' . wfMsg('article-comments-reply') . '</button>';
@@ -568,11 +564,14 @@ class ArticleComment {
 	 * @returns boolean
 	 */
 	public static function canComment( Title $title = null ) {
-		global $wgTitle;
+		global $wgTitle, $wgArticleCommentsNamespaces;
 
 		$canComment = true;
 		$title = is_null( $title ) ? $wgTitle : $title;
 
+		if ( !in_array( $title->getNamespace(), $wgArticleCommentsNamespaces ) ) {
+			$canComment = false;
+		}
 		if ( self::isBlog( $title ) ) {
 			$props = BlogArticle::getProps( $title->getArticleID() );
 
@@ -733,21 +732,15 @@ class ArticleComment {
 
 		$editPage->summary = $summary;
 
+		$editPage->watchthis = $user->isWatched( $article->getTitle() );
+
 		if(!empty($metadata)) {
 			$editPage->textbox1 =  $text. Xml::element( 'ac_metadata', $metadata, ' ' );
 		}
 
 		$bot = $user->isAllowed('bot');
-			//this function calls Article::onArticleCreate which clears cache for article and it's talk page - TODO: is this comment still valid? Does it refer to the line above or to something that got deleted?
-		$retval = $editPage->internalAttemptSave( $result, $bot );
 
-		if( $retval->value == EditPage::AS_SUCCESS_UPDATE ) {
-			$commentsIndex = CommentsIndex::newFromId( $article->getID() );
-			if ( $commentsIndex instanceof CommentsIndex ) {
-				$commentsIndex->updateLastRevId( $article->getTitle()->getLatestRevID(Title::GAID_FOR_UPDATE) );
-			}
-		}
-		return $retval;
+		return $editPage->internalAttemptSave( $result, $bot );
 	}
 
 	/**
@@ -843,44 +836,18 @@ class ArticleComment {
 		 */
 
 		$article  = new Article( $commentTitle, 0 );
+
+		CommentsIndex::addCommentInfo($commentTitleText, $title, $parentId);
+
 		$retval = self::doSaveAsArticle($text, $article, $user, $metadata);
 
-		// add comment to database
 		if ( $retval->value == EditPage::AS_SUCCESS_NEW_ARTICLE ) {
-			if ( !empty($parentId) ) {
-				Wikia::log( __METHOD__, false, "ArticleComment::doPost (reply to " . $parentId . ") - saved an article " .
-					$commentTitleText . ', commentId is ' . $article->getID(), true );
-			}
-			$revId = $article->getRevIdFetched();
-			$data = array(
-				'namespace' => $title->getNamespace(),
-				'parentPageId' => $title->getArticleID(),
-				'commentId' => $article->getID(),
-				'parentCommentId' => intval($parentId),
-				'firstRevId' => $revId,
-				'lastRevId' => $revId,
-			);
-
-			$commentsIndex = new CommentsIndex( $data );
-			$commentsIndex->addToDatabase();
-			if ( !empty($parentId) ) {
-				Wikia::log( __METHOD__, false, "ArticleComment::doPost (reply to " . $parentId . ") - added comments index to DB for " .
-					$commentTitleText . ', commentId is ' . $article->getID(), true );
-			}
-
-			// set last child comment id
-			$commentsIndex->updateParentLastCommentId( $data['commentId'] );
-
-			if ( !empty($parentId) ) {
-				Wikia::log( __METHOD__, false, "ArticleComment::doPost (reply to " . $parentId . ") - updated parent for " .
-					$commentTitleText . ', commentId is ' . $article->getID(), true );
-			}
-
-			wfRunHooks( 'EditCommentsIndex', array($article->getTitle(), $commentsIndex) );
-		} else {
-			if ( !empty($parentId) ) {
-				Wikia::log( __METHOD__, false, "ArticleComment::doPost (reply to " . $parentId .
-					") - failed to save reply article with title " . $commentTitleText, true );
+			$commentsIndex = CommentsIndex::newFromId( $article->getID() );
+			if ( empty( $commentsIndex ) ) {
+				Wikia::log( __METHOD__, false, "ERROR ArticleComment::doPost (reply to " . $parentId .
+					") - empty commentsIndex for " . $commentTitleText, true );
+			} else {
+				wfRunHooks( 'EditCommentsIndex', [ $article->getTitle(), $commentsIndex ] );
 			}
 		}
 
@@ -910,23 +877,7 @@ class ArticleComment {
 
 		// Purge squid proxy URLs for ajax loaded content if we are lazy loading
 		if ( !empty( $wgArticleCommentsLoadOnDemand ) ) {
-			$urls = array();
-			$pages = $commentList->getCountPages();
-			$articleId = $title->getArticleId();
-
-			for ( $page = 1; $page <= $pages; $page++ ) {
-				$params[ 'page' ] = $page;
-				$urls[] = ArticleCommentsController::getUrl(
-					'Content',
-					array(
-						'format' => 'html',
-						'articleId' => $articleId,
-						'page' => $page,
-						'skin' => 'true'
-					)
-				);
-			}
-
+			$urls = self::getSquidURLs( $title );
 			$squidUpdate = new SquidUpdate( $urls );
 			$squidUpdate->doUpdate();
 
@@ -943,20 +894,31 @@ class ArticleComment {
 			}
 		}
 
-		/*
-		// TODO: use this when surrogate key purging works correctly
-		$parentTitle = Title::newFromText( $commentTitle->getBaseText() );
-
-		if ($parentTitle) {
-			if ( empty( $wgArticleCommentsLoadOnDemand ) ) {
-				// need to invalidate parsed article if it includes comments in the body
-				$parentTitle->invalidateCache();
-			}
-			SquidUpdate::VarnishPurgeKey( self::getSurrogateKey( $parentTitle->getArticleID() ) );
-		}
-		*/
-
 		wfProfileOut( __METHOD__ );
+	}
+
+	/**
+	 * @param Title $title
+	 */
+	public static function getSquidURLs( Title $title ) {
+		$urls = [];
+		$articleId = $title->getArticleId();
+
+		// Only page 1 is cached in varnish when lazy loading is on
+		// Other pages load with action=ajax&rs=ArticleCommentsAjax&method=axGetComments
+		$urls[] = ArticleCommentsController::getUrl(
+			'Content',
+			array(
+				'format' => 'html',
+				'articleId' => $articleId,
+				'page' => 1,
+				'skin' => 'true'
+			)
+		);
+
+		wfRunHooks( 'ArticleCommentGetSquidURLs', array( $title, &$urls ) );
+
+		return $urls;
 	}
 
 	/**
@@ -1162,8 +1124,11 @@ class ArticleComment {
 
 		$taskParams['page'] = $oCommentTitle->getFullText();
 		$taskParams['newpage'] = $newCommentTitle->getFullText();
-		$thisTask = new MultiMoveTask( $taskParams );
-		$submit_id = $thisTask->submitForm();
+
+		$task = new \Wikia\Tasks\Tasks\MultiTask();
+		$task->call('move', $taskParams);
+		$submit_id = $task->queue();
+
 		Wikia::log( __METHOD__, 'deletecomment', "Added move task ($submit_id) for {$taskParams['page']} page" );
 
 		wfProfileOut( __METHOD__ );

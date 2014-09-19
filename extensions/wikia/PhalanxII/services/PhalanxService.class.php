@@ -1,4 +1,5 @@
 <?php
+use \Wikia\Logger\WikiaLogger;
 
 /**
  * @method setLimit
@@ -13,6 +14,10 @@ class PhalanxService extends Service {
 	const RES_OK = 'ok';
 	const RES_FAILURE = 'failure';
 	const RES_STATUS = 'PHALANX ALIVE';
+	const PHALANX_LOG_PARAM_LENGTH_LIMIT = 64;
+
+	const PHALANX_SERVICE_TRIES_LIMIT = 3; // number of retries for phalanx POST requests
+	const PHALANX_SERVICE_TRY_USLEEP = 20000; // delay between retries - 0.2s
 
 	/**
 	 * @param $name
@@ -137,20 +142,31 @@ class PhalanxService extends Service {
 		$options = F::app()->wg->PhalanxServiceOptions;
 
 		$url = sprintf( "%s/%s", $baseurl, $action != "status" ? $action : "" );
+		$requestTime = 0;
+		$loggerPostParams = [];
+		$tries = 1;
 		/**
 		 * for status we're sending GET
 		 */
 		if( $action == "status" ) {
 			wfDebug( __METHOD__ . ": calling $url\n" );
+			$requestTime = microtime( true );
 			$response = Http::get( $url, 'default', $options );
+			$requestTime = (int)( ( microtime( true ) - $requestTime ) * 10000.0 );
 		}
 		/**
 		 * for any other we're sending POST
 		 */
 		else {
-			if (($action == "match" || $action == "check") && !is_null( $this->user ) ) {
-				$parameters[ 'wiki' ] = F::app()->wg->CityId;
-				$parameters[ 'user' ][] = $this->user->getName();
+			/**
+			 * city_id should be always known
+			 */
+			$parameters[ 'wiki' ] = F::app()->wg->CityId;
+
+			if( ( $action == "match" || $action == "check") ) {
+				if( !is_null( $this->user ) ) {
+					$parameters[ 'user' ][] = $this->user->getName();
+				}
 			}
 			if ($action == "match" && $this->limit != 1) {
 				$parameters['limit'] = $this->limit;
@@ -166,20 +182,44 @@ class PhalanxService extends Service {
 					} else {
 						$postData[] = urlencode( $key ) . '=' . urlencode( $values );
 					}
+					$loggerPostParams[ $key ] = substr( json_encode( $values ), 0, self::PHALANX_LOG_PARAM_LENGTH_LIMIT );
 				}
 			}
 
 			$options["postData"] = implode( "&", $postData );
 			wfDebug( __METHOD__ . ": calling $url with POST data " . $options["postData"] ."\n" );
 			wfDebug( __METHOD__ . ": " . json_encode($parameters) ."\n" );
-			$response = Http::post( $url, $options);
+			$requestTime = microtime( true );
+
+			// BAC-1332 - some of the phalanx service calls are breaking and we're not sure why
+			// it's better to do the retry than maintain the PHP fallback for that
+			while ( $tries <= self::PHALANX_SERVICE_TRIES_LIMIT ) {
+				$response = Http::post( $url, $options );
+				if ( false !== $response) {
+					break;
+				}
+				if ( $tries <  self::PHALANX_SERVICE_TRIES_LIMIT ) { // don't wait after the last try
+					// wait for 0.02 second
+					usleep( self::PHALANX_SERVICE_TRY_USLEEP );
+				}
+				$tries++;
+			}
+			$requestTime = (int)( ( microtime( true ) - $requestTime ) * 10000.0 );
 		}
 
 		if ( $response === false ) {
 			/* service doesn't work */
 			$res = false;
+
+			WikiaLogger::instance()->debug( "Phalanx service error", [ "phalanxUrl" => $url, 'requestTime' => $requestTime,
+				'postParams' => json_encode( $loggerPostParams ), 'tries' => $tries ] );
+
+			wfDebug( __METHOD__ . " - response failed!\n" );
 		} else {
-			wfDebug( __METHOD__ . "::response - {$response}\n" );
+			wfDebug( __METHOD__ . " - received '{$response}'\n" );
+
+			WikiaLogger::instance()->debug( "Phalanx service success", ["phalanxUrl" => $url, 'requestTime' => $requestTime,
+				'tries' => $tries ] );
 
 			switch ( $action ) {
 				case "stats":

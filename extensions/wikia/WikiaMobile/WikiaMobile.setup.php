@@ -53,6 +53,7 @@ $wgAutoloadClasses['WikiaMobileCategoryService'] = "{$dir}/WikiaMobileCategorySe
 $wgAutoloadClasses['WikiaMobileSharingService'] = "{$dir}/WikiaMobileSharingService.class.php";
 $wgAutoloadClasses['WikiaMobileErrorService'] = "{$dir}/WikiaMobileErrorService.class.php";
 $wgAutoloadClasses['WikiaMobileMediaService'] = "{$dir}/WikiaMobileMediaService.class.php";
+$wgAutoloadClasses['WikiaMobileTrendingArticlesService'] = "{$dir}/WikiaMobileTrendingArticlesService.class.php";
 
 /**
  * models
@@ -84,7 +85,7 @@ JSMessages::registerPackage( 'WkMbl', array(
 	'wikiamobile-video-not-friendly',
 	'wikiamobile-video-not-friendly-header',
 	'wikiamobile-ad-label',
-	'wikiamobile-shared-file-not-available',
+	'wikiamobile-shared-file-not-available'
 ) );
 
 JSMessages::registerPackage( 'SmartBanner', [
@@ -104,6 +105,7 @@ $wgHooks['MakeHeadline'][] = 'WikiaMobileHooks::onMakeHeadline';
 $wgHooks['LinkBegin'][] = 'WikiaMobileHooks::onLinkBegin';
 $wgHooks['CategoryPageView'][] = 'WikiaMobileHooks::onCategoryPageView';
 $wgHooks['ArticlePurge'][] = 'WikiaMobileHooks::onArticlePurge';
+$wgHooks['DoEditSectionLink'][] = 'WikiaMobileHooks::onDoEditSectionLink';
 
 //404 Pages
 $wgHooks['BeforeDisplayNoArticleText'][] = 'WikiaMobileHooks::onBeforeDisplayNoArticleText';
@@ -135,11 +137,16 @@ if ( empty( $wgWikiaMobileIncludeJSGlobals ) ) {
 			'cscoreCat',
 
 			//ads
-			'wgDartCustomKeyValues',
+			'adEnginePageType',
 			'cityShort',
+			'wgAdDriverUseEbay',
+			'wgAdVideoTargeting',
+			'wgDartCustomKeyValues',
+			'wgShowAds',
+			'wgUsePostScribe',
+			'wgWikiDirectedAtChildren',
 			'wikiaPageIsHub',
 			'wikiaPageType',
-			'wgAdVideoTargeting',
 
 			//server/wiki
 			'wgServer',
@@ -150,7 +157,6 @@ if ( empty( $wgWikiaMobileIncludeJSGlobals ) ) {
 			'wgCdnRootUrl',
 			'wgAssetsManagerQuery',
 			'wgContentLanguage',
-			'wgMedusaSlot',
 			'wgResourceBasePath',
 			'wgMainPageTitle',
 			'wgSitename',
@@ -159,6 +165,7 @@ if ( empty( $wgWikiaMobileIncludeJSGlobals ) ) {
 			'wgDisableAnonymousEditing',
 			'wgNamespaceIds',
 			'wgExtensionsPath',
+			'wikiaPageIsCorporate',
 
 			//article
 			'wgArticlePath',
@@ -186,21 +193,9 @@ if ( empty( $wgWikiaMobileIncludeJSGlobals ) ) {
 			//skin
 			'skin',
 
-			//facebook login
+			//login
 			'fbAppId',
-			'fbUseMarkup'
+			'fbUseMarkup',
+			'wgLoginToken'
 		];
-}
-
-//list of Videos provides that we support
-if ( empty( $wgWikiaMobileSupportedVideos ) ) {
-	$wgWikiaMobileSupportedVideos = [
-		'screenplay',
-		'ign',
-		'ooyala',
-		'youtube',
-		'dailymotion',
-		'vimeo',
-		'bliptv'
-	];
 }

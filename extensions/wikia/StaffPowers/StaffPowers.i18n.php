@@ -36,7 +36,7 @@ $messages['ca'] = array(
 	'staffpowers-ipblock-abort' => "No es possible bloquejar l'Staff de Wikia, als Helpers ni als membres del VSTF. Si us plau, utilitza el [[Special:Contact|formulari de contacte]] per informar de qualsevol problema amb el nostre staff.",
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Jezevec
  */
 $messages['cs'] = array(
@@ -160,10 +160,11 @@ $messages['pms'] = array(
 );
 
 /** Portuguese (português)
+ * @author Hamilton Abreu
  * @author SandroHc
  */
 $messages['pt'] = array(
-	'staffpowers-ipblock-abort' => 'Bloquear Wikia Staff, Wikia Helpers, ou membros da nossa equipa de utilizadores do "Voluntário da Task Force Contra o Spam" (VTFCS) não é possível. Por favor, use o [[Special:Contact|formulário de contacto]] para reportar alguma questão ou problema com os nossos staff.',
+	'staffpowers-ipblock-abort' => "Não é possível bloquear utilizadores da Equipa da Wikia, Ajudantes da Wikia, ou membros Voluntários da ''Task Force'' Contra o Spam (VTFCS). Use o [[Special:Contact|formulário de contacto]] para reportar qualquer questão ou problema com estes utilizadores, por favor.",
 );
 
 /** Brazilian Portuguese (português do Brasil)
@@ -214,4 +215,19 @@ $messages['uk'] = array(
  */
 $messages['vi'] = array(
 	'staffpowers-ipblock-abort' => 'Cấm Nhân viên Wikia, Hỗ trợ viên Wikia, hoặc thành viên trong nhóm tình nguyện viên chống phá hoại của chúng tôi (VSTF) là không thể. Xin vui lòng sử dụng [[Special:Contact|mẫu liên hệ này]] để báo cáo bất kỳ vấn đề hoặc sự cố về nhân viên của chúng tôi.',
+);
+
+/** Simplified Chinese (中文（简体）‎)
+ * @author Liuxinyu970226
+ */
+$messages['zh-hans'] = array(
+	'staffpowers-ipblock-abort' => '封禁Wikia工作人员、Wikia助理或我们志愿者破坏工作团队（VSTF）的成员是不可能的。请使用[[Special:Contact|联络表单]]汇报任何与我们工作人员相关的问题或建议。',
+);
+
+/** Traditional Chinese (中文（繁體）‎)
+ * @author Ffaarr
+ */
+$messages['zh-hant'] = array(
+	'staffpowers-ipblock-abort' => '您無法封禁Wikia 工作人員、 Wikia Helper或VSTF成員
+，如有問題，請使用[[special:Contact|contact 表單]]向我們的工作人員報告。', # Fuzzy
 );

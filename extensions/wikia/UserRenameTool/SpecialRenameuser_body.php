@@ -33,7 +33,7 @@ class SpecialRenameuser extends SpecialPage {
 		$oAssetsManager = AssetsManager::getInstance();
 
 		$sSrc = $oAssetsManager->getOneCommonURL( '/extensions/wikia/UserRenameTool/js/NewUsernameUrlEncoder.js' );
-        $wgOut->addScript( "<script type=\"{$wgJsMimeType}\" src=\"{$sSrc}\"></script>" );
+		$wgOut->addScript( "<script type=\"{$wgJsMimeType}\" src=\"{$sSrc}\"></script>" );
 
 		if( wfReadOnly() || !$wgStatsDBEnabled ) {
 			$wgOut->readOnlyPage();
@@ -73,7 +73,7 @@ class SpecialRenameuser extends SpecialPage {
 			$warnings = $process->getWarnings();
 			$errors = $process->getErrors();
 			if ($status) {
-				$infos[] = wfMsgForContent('userrenametool-info-in-progress');
+				$infos[] = wfMessage('userrenametool-info-in-progress')->inContentLanguage()->text();
 			}
 		}
 
@@ -90,24 +90,6 @@ class SpecialRenameuser extends SpecialPage {
 			}
 			if ( $olduser->getOption( 'wasRenamed', 0 ) ) {
 				$errors[] = wfMsg( 'userrenametool-previously-renamed', $oldusername );
-			}
-			$phalanxMatches = RenameUserHelper::testBlock( $oldusername );
-			if ( $phalanxMatches !== 'No matches found.' ) {
-				$errors[] = Xml::tags(
-					'p',
-					null,
-					wfMsg( 'userrenametool-phalanx-matches', htmlspecialchars( $oldusername ) )
-				) . $phalanxMatches;
-			}
-		}
-		if ( !empty( $newusername ) ) {
-			$phalanxMatches = RenameUserHelper::testBlock( $newusername );
-			if ( $phalanxMatches !== 'No matches found.' ) {
-				$errors[] = Xml::tags(
-					'p',
-					null,
-					wfMsg( 'userrenametool-phalanx-matches', htmlspecialchars( $newusername ) )
-				) . $phalanxMatches;
 			}
 		}
 

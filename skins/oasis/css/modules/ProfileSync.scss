@@ -1,7 +1,6 @@
-@import "../mixins/border-radius";
-@import "../mixins/clearfix";
-@import "../core/color";
-@import "../mixins/gradient";
+@import "skins/shared/mixins/clearfix";
+@import "skins/shared/color";
+@import "skins/shared/mixins/gradient";
 
 
 /* FILE: ProfileSync.scss */
@@ -53,7 +52,7 @@
 		&:hover {
 			td, th {
 				background-color: $color-page-border;
-				 @include border-radius(2px);
+				border-radius: 2px;
 				 
 				 .remove {
 					 visibility: visible;

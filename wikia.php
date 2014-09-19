@@ -6,6 +6,9 @@ if ( $_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 	return;
 }
 
+// prevent $_GET['title'] from being overwritten on API calls (BAC-906)
+define('DONT_INTERPOLATE_TITLE', true);
+
 // Initialise common MW code
 require ( dirname( __FILE__ ) . '/includes/WebStart.php' );
 
@@ -14,20 +17,22 @@ if ($wgProfiler instanceof Profiler) {
 }
 
 // Construct a tag for newrelic -- wgRequest is global in this scope
-if( function_exists( 'newrelic_name_transaction' ) ) {
-	if ( function_exists( 'newrelic_disable_autorum') ) {
-		newrelic_disable_autorum();
-	}
-	newrelic_name_transaction('Nirvana');
-	if ( function_exists( 'newrelic_add_custom_parameter' ) && is_object($wgRequest)) {
-		newrelic_add_custom_parameter( 'controller', $wgRequest->getVal( 'controller' ) );
-		newrelic_add_custom_parameter( 'method', $wgRequest->getVal( 'method' ) );
-	}
+Transaction::setEntryPoint(Transaction::ENTRY_POINT_NIRVANA);
+if ( is_object($wgRequest) ) {
+	Transaction::setAttribute(Transaction::PARAM_CONTROLLER, $wgRequest->getVal( 'controller' ));
+	Transaction::setAttribute(Transaction::PARAM_METHOD, $wgRequest->getVal( 'method' ));
 }
+
+if ( function_exists( 'newrelic_disable_autorum') ) {
+	newrelic_disable_autorum();
+}
+
 
 if ( !empty( $wgEnableNirvanaAPI ) ){
 	// temporarily force ApiDocs extension regardless of config
-	require $IP."/extensions/wikia/ApiDocs/ApiDocs.setup.php";
+	require_once $IP."/extensions/wikia/ApiDocs/ApiDocs.setup.php";
+	// same for JsonFormat
+	require_once $IP."/extensions/wikia/JsonFormat/JsonFormat.setup.php";
 	
 	$app = F::app();
 
@@ -51,12 +56,21 @@ if ( !empty( $wgEnableNirvanaAPI ) ){
 
 	if ( empty( $cacheControl ) ) {
 		$response->setHeader( 'Cache-Control', 'private', true );
+
+		Wikia\Logger\WikiaLogger::instance()->info( 'wikia-php.caching-disabled', [
+			'controller' => $response->getControllerName(),
+			'method' => $response->getMethodName()
+		] );
 	}
 
 	$response->sendHeaders();
+	wfRunHooks( 'NirvanaAfterRespond', [ $app, $response ] );
+
 	$response->render();
 
 	wfLogProfilingData();
+
+	wfRunHooks( 'RestInPeace' );
 
 } else {
 	header( "HTTP/1.1 503 Service Unavailable", true, 503 );

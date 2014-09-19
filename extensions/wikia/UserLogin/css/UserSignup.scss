@@ -1,7 +1,7 @@
-@import "skins/oasis/css/mixins/clearfix";
-@import "skins/oasis/css/mixins/forms";
-@import "skins/oasis/css/mixins/wordmark";
-@import "skins/oasis/css/core/color";
+@import "skins/shared/mixins/clearfix";
+@import "skins/shared/mixins/forms";
+@import "skins/shared/mixins/wordmark";
+@import "skins/shared/color";
 @import "skins/oasis/css/core/layout";
 @import "../mixins/submitpane";
 @import "../mixins/divider";
@@ -112,16 +112,16 @@
 
 	.form-container {
 		margin: 0 auto;
-		width: 270px;
+		width: 332px;
 		.input-group {
-			width: 256px;
+			width: 318px;
 			label {
 				display:block;
 			}
 		}
 		input[type=text],
 		input[type=password] {
-			width: 237px;
+			width: 299px;
 		}
 		.captcha {
 			.fancy-captcha {
@@ -152,7 +152,7 @@
 				width: 52%;
 				padding-left: 2%;
 				form {
-					width: 270px;
+					width: 332px;
 				}
 				.sso-login {
 					margin: 0;
@@ -167,7 +167,7 @@
 	.sso-login {
 		margin: 0 auto;
 		text-align: center;
-		width: 270px;
+		width: 332px;
 
 		.sso-login-divider {
 			@include divider;

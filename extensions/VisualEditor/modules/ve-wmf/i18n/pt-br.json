@@ -1,0 +1,23 @@
+{
+	"@metadata": {
+		"authors": [
+			"Cainamarques",
+			"Dianakc",
+			"Fúlvio",
+			"Helder.wiki",
+			"HenriqueCrang",
+			"Jaideraf",
+			"Luckas",
+			"OTAVIO1981",
+			555
+		]
+	},
+	"tag-visualeditor": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|Editor Visual]]",
+	"tag-visualeditor-description": "Edição realizada utilizando o [[{{MediaWiki:visualeditor-descriptionpagelink}}|Editor Visual]]",
+	"tag-visualeditor-needcheck": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|Editor Visual: Verificar]]",
+	"tag-visualeditor-needcheck-description": "Edição realizada com o [[{{MediaWiki:visualeditor-descriptionpagelink}}|Editor Visual]] em que o sistema detectou que o wikitexto possivelmente possui mudanças não planejadas.",
+	"visualeditor-feedback-link": "Project:Editor Visual/Comentários",
+	"visualeditor-feedback-tool": "Deixar um comentário",
+	"visualeditor-help-label": "Ler o guia do usuário",
+	"visualeditor-help-title": "Guia do usuário para saber como usar o editor"
+}

@@ -1,14 +1,11 @@
-<?php if ($showAd) { ?>
-
-<!-- BEGIN SLOTNAME: <?= htmlspecialchars($slotname) ?> -->
-<div id="<?= htmlspecialchars($slotname) ?>" class="wikia-ad noprint default-height">
-	<script>
-		window.adslots2.push(<?= json_encode([$slotname, null, 'AdEngine2']) ?>);
-	</script>
+<?php if ($showAd): ?>
+<!-- BEGIN SLOTNAME: <?= htmlspecialchars($slotName) ?> -->
+<div id="<?= htmlspecialchars($slotName) ?>" class="wikia-ad noprint default-height">
+<script>
+	window.adslots2.push(<?= json_encode([$slotName, null, 'AdEngine2']) ?>);
+</script>
 </div>
-<?php if(!empty($selfServeUrl)) { ?>
-	<div class="SelfServeUrl">Advertisement | <a href="<?= htmlspecialchars($selfServeUrl) ?>">Your ad here</a></div>
-<?php } ?>
-<!-- END SLOTNAME: <?= htmlspecialchars($slotname) ?> -->
-
-<?php } ?>
+<!-- END SLOTNAME: <?= htmlspecialchars($slotName) ?> -->
+<?php else: ?>
+<!-- NO AD <?= htmlspecialchars($slotName) ?> (levels: <?= htmlspecialchars(json_encode($pageTypes)) ?>) -->
+<?php endif; ?>

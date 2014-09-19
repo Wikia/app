@@ -7,12 +7,14 @@
  * @author Federico "Lox" Lucignano <federico(at)wikia-inc.com>
  **/
 
-require(['throbber', 'wikia.querystring', 'wikia.loader', 'wikia.nirvana'], function(throbber, qs, loader, nirvana){
+require(['throbber', 'wikia.querystring', 'wikia.loader', 'wikia.nirvana', 'sloth'],
+	function(throbber, qs, loader, nirvana, sloth){
+	'use strict';
+
 	var hash = qs().getHash(),
-		wkArtCom,
-		collSec,
+		wkArtCom = document.getElementById('wkArtCom' ),
 		open,
-		wkComm,
+		wkComm = document.getElementById('wkComm' ),
 		clickEvent = 'click';
 
 	if(hash.indexOf('comm-') > -1){
@@ -43,8 +45,6 @@ require(['throbber', 'wikia.querystring', 'wikia.loader', 'wikia.nirvana'], func
 				}
 			}
 		}
-
-		collSec.removeEventListener(clickEvent, init, true);
 	}
 
 	function init(){
@@ -75,17 +75,8 @@ require(['throbber', 'wikia.querystring', 'wikia.loader', 'wikia.nirvana'], func
 		).done(show);
 	}
 
-	$(function(){
-		wkArtCom = document.getElementById('wkArtCom');
-		collSec = wkArtCom.getElementsByClassName('collSec')[0];
-		wkComm = document.getElementById('wkComm');
-
-		if(open){
-			init();
-			collSec.className += ' open';
-			wkComm.className += ' open';
-		}else{
-			$(collSec).one(clickEvent, init);
-		}
+	sloth({
+		on: wkArtCom,
+		callback: init
 	});
 });

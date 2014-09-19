@@ -10,6 +10,7 @@ class SpecialStyleguideDataModel {
 
 	public function __construct() {
 		$helper = new StyleguideComponents();
+		$components = $this->sortComponents( $helper->getAllComponents() );
 		/** @var \Wikia\UI\Component $button */
 		$button = \Wikia\UI\Factory::getInstance()->init('button');
 		$this->sectionData = [
@@ -91,7 +92,16 @@ class SpecialStyleguideDataModel {
 				]
 			],
 			'components' => [
-				'componentsList' => $this->sortComponents( $helper->getAllComponents() )
+				'exampleHeadline' => wfMessage( 'styleguide-examples-headline' )->plain(),
+				'typesHeadline' => wfMessage( 'styleguide-types-headline' )->plain(),
+				'paramCellHeadline' => wfMessage( 'styleguide-types-param-cell-headline' )->plain(),
+				'templateVarCellHeadline' => wfMessage( 'styleguide-types-template-var-cell-headline' )->plain(),
+				'typeCellHeadline' => wfMessage( 'styleguide-types-type-cell-headline' )->plain(),
+				'valueObjectCellHeadline' => wfMessage( 'styleguide-types-value-object-cell-headline' )->plain(),
+				'descCellHeadline' => wfMessage( 'styleguide-types-desc-cell-headline' )->plain(),
+				'showParametersLink' => wfMessage( 'styleguide-show-parameters' )->plain(),
+				'componentsList' => $components,
+				'toc' => $this->renderTOC( $components )
 			]
 		];
 	}
@@ -149,6 +159,39 @@ class SpecialStyleguideDataModel {
 		array_multisort( $sortedArr, SORT_ASC, $components );
 		
 		return $components;
+	}
+
+	/**
+	 * Render Component Section TOC
+	 *
+	 * @param Array $components - array of components
+	 * @return String - HTML markup for Component Section TOC
+	 */
+
+	private function renderTOC($components) {
+		$data = [
+			"type" => "default",
+			"vars" => [
+				"id" => "styleguideTOC",
+				"sections" => []
+			]
+		];
+		$sections = &$data["vars"]["sections"];
+
+		foreach ($components as $component) {
+			$section = [
+				"id" => $component["id"],
+				"title" => $component["name"]
+			];
+			$sections[] = $section;
+		}
+
+		// set first element as active
+		if (isset($sections[0])) {
+			$sections[0]["active"] = true;
+		}
+
+		return \Wikia\UI\Factory::getInstance()->init('toc')->render($data);
 	}
 	
 }

@@ -30,11 +30,12 @@ $messages['af'] = array(
 
 /** Arabic (العربية)
  * @author Achraf94
+ * @author Kuwaity26
  */
 $messages['ar'] = array(
 	'ajaxpoll-percentVotes' => '$1%&nbsp;من مجموع التصويتات',
-	'ajaxpoll-thankyou' => 'شكرا لتصويتك!',
-	'ajaxpoll-error' => 'كانت هناك مشكلة مع تجهيز صوتك ، يرجى المحاولة مرة أخرى.',
+	'ajaxpoll-thankyou' => 'شكرًا لتصويتك!',
+	'ajaxpoll-error' => 'حدثت مشكلة في تجهيز صوتك، يرجى المحاولة مرة أخرى.',
 	'ajaxpoll-summary' => 'تم إنشاء هذا التصويت في $1 على $2، و حتى الآن صوت $3 شخصا.',
 	'ajaxpoll-submit' => 'تصويت!',
 	'ajaxpoll-closed' => 'تم إغلاق التصويت الآن. استمتع بالنتائج.',
@@ -56,8 +57,10 @@ $messages['ast'] = array(
 
 /** Azerbaijani (azərbaycanca)
  * @author Cekli829
+ * @author Mushviq Abdulla
  */
 $messages['az'] = array(
+	'ajaxpoll-thankyou' => 'Səs verdiyiniz üçün təşəkkür edirik!',
 	'ajaxpoll-submit' => 'Səs ver!',
 );
 
@@ -106,14 +109,21 @@ $messages['be-tarask'] = array(
 $messages['bg'] = array(
 	'ajaxpoll-percentVotes' => '$1%&nbsp;от всички гласове',
 	'ajaxpoll-thankyou' => 'Благодарности за участието ви в гласуването!',
+	'ajaxpoll-error' => 'Възникна проблем при обработката на гласуването, опитайте отново.',
 	'ajaxpoll-submit' => 'Гласуване!',
+	'ajaxpoll-closed' => 'Анкетата е затворена. Можете да видите резултатите.',
+	'ajaxpoll-submitting' => 'Изчакайте, гласуването се съхранява...',
 );
 
 /** Bengali (বাংলা)
  * @author Aftab1995
+ * @author Tauhid16
  */
 $messages['bn'] = array(
+	'ajaxpoll-thankyou' => 'আপনার ভোটের জন্য ধন্যবাদ!',
 	'ajaxpoll-submit' => 'ভোট!',
+	'ajaxpoll-closed' => 'জরিপ বন্ধ করা হয়েছে। ফল উপোভোগ করুন।',
+	'ajaxpoll-submitting' => 'দয়া করে অপেক্ষা করুন, আপনার ভোট দেয়া হচ্ছে....',
 );
 
 /** Tibetan (བོད་ཡིག)
@@ -152,7 +162,7 @@ $messages['ca'] = array(
 	'ajaxpoll-submitting' => "Espera si us plau, s'està processant el teu vot.",
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Dontlietome7
  */
 $messages['cs'] = array(
@@ -247,6 +257,7 @@ $messages['eo'] = array(
 
 /** Spanish (español)
  * @author Bola
+ * @author Fitoschido
  */
 $messages['es'] = array(
 	'ajaxpoll-percentVotes' => '$1%&nbsp; de todos los votos',
@@ -255,7 +266,7 @@ $messages['es'] = array(
 	'ajaxpoll-summary' => 'La encuesta fue creada el $1 $2, y hasta ahora $3 personas votaron.',
 	'ajaxpoll-submit' => '¡Vota!',
 	'ajaxpoll-closed' => 'La encuesta se cerrará ahora. Disfruta de los resultados.',
-	'ajaxpoll-submitting' => 'Por favor, espera, procesando tu voto...',
+	'ajaxpoll-submitting' => 'Se está enviando tu voto, espera un momento…',
 );
 
 /** Estonian (eesti)
@@ -292,13 +303,14 @@ $messages['fa'] = array(
 
 /** Finnish (suomi)
  * @author Crt
+ * @author Elseweyr
  * @author Ilkea
  */
 $messages['fi'] = array(
 	'ajaxpoll-percentVotes' => '$1%&nbsp;kaikista äänistä',
-	'ajaxpoll-thankyou' => 'Kiitos vastauksestasi!',
-	'ajaxpoll-error' => 'Ongelma käsitellessä vastaustasi. Yritä uudelleen.',
-	'ajaxpoll-summary' => 'Äänestys luotiin $1 kello $2, ja tähän mennessä siihen on vastannut $3 henkilöä.',
+	'ajaxpoll-thankyou' => 'Kiitos äänestäsi!',
+	'ajaxpoll-error' => 'Ääntäsi käsiteltäessä esiintyi ongelma. Yritä uudelleen.',
+	'ajaxpoll-summary' => 'Äänestys luotiin $2 kello $1, ja tähän mennessä siihen on vastannut $3 henkilöä.',
 	'ajaxpoll-submit' => 'Äänestä!',
 	'ajaxpoll-closed' => 'Äänestys on nyt sulkeutunut. Nauti tuloksista.',
 	'ajaxpoll-submitting' => 'Odota, vastaustasi lähetetään...',
@@ -391,6 +403,13 @@ $messages['hi'] = array(
 	'ajaxpoll-submitting' => 'कृपया इंतज़ार, अपने वोट प्रस्तुत करने...',
 );
 
+/** Hunsrik (Hunsrik)
+ * @author Paul Beppler
+ */
+$messages['hrx'] = array(
+	'ajaxpoll-submit' => 'Abstimmen!',
+);
+
 /** Hungarian (magyar)
  * @author Dani
  * @author Glanthor Reviol
@@ -448,6 +467,7 @@ $messages['it'] = array(
 );
 
 /** Japanese (日本語)
+ * @author BryghtShadow
  * @author Fryed-peach
  * @author Shirayuki
  * @author Tommy6
@@ -457,16 +477,31 @@ $messages['ja'] = array(
 	'ajaxpoll-thankyou' => '投票ありがとうございます！',
 	'ajaxpoll-error' => '投票の処理中に問題が発生しました。再投票してください。',
 	'ajaxpoll-summary' => 'この投票は $2 $1 に作成され、これまでに$3人が投票しました。',
-	'ajaxpoll-submit' => '投票',
+	'ajaxpoll-submit' => '投票！',
 	'ajaxpoll-closed' => '投票は既に終了しています。結果をお楽しみください。',
 	'ajaxpoll-submitting' => '投票を送信しています。お待ちください...',
 );
 
+/** Kannada (ಕನ್ನಡ)
+ * @author Dimension10
+ */
+$messages['kn'] = array(
+	'ajaxpoll-percentVotes' => 'ಯಲ್ಲ ಮತಗಳ&nbsp;$1%',
+	'ajaxpoll-thankyou' => 'ನಿಮ್ಮ ಮತಕ್ಕೆ ಧನ್ಯವಾದ!',
+	'ajaxpoll-error' => 'ನಿಮ್ಮ ಮತವನ್ನು ಪ್ರಸಂಸಕರಣ ಮಾಡುವಾಗ ಒಂದು ತ್ರುಟಿ ಆಯಿತು. ದೈವಿತ್ತು ಸ್ವಲ್ಪ ಹೊತ್ತು ಆದ ಮೇಲೆ ಪ್ರಯತ್ನ ಮಾದಿ.',
+	'ajaxpoll-summary' => '$2 ಇಗೆ $1 ಅಕ್ಕೆ ಈ ಮತದಾನ ನಿರ್ಮಾಣ ಆಯಿತು. ಇವತ್ತಿನ ವರಗೆ  $3 ಜನರು ಮತ ಕೊತ್ತಿದರೆ.',
+	'ajaxpoll-submit' => 'ಮತ ಕೊಡಿ!',
+	'ajaxpoll-closed' => 'ಮತದಾನ ಈಗ ಮುಚ್ಚಿ ಹೊಗಿದೆ. ಪರಿಣಾಮಗಳನ್ನ ಆನಂದಿಸಿ.',
+	'ajaxpoll-submitting' => 'ದಯವಿಟ್ಟು ಪ್ರತೀಕ್ಷೆ ಮದಿ. ನಿಮ್ಮ ಮತವನ್ನು ನಾವು ಒಪ್ಪಿಸುತ ಇದ್ದೇವೆ.',
+);
+
 /** Korean (한국어)
  * @author Cafeinlove
+ * @author Miri-Nae
  * @author 아라
  */
 $messages['ko'] = array(
+	'ajaxpoll-percentVotes' => '전체 투표 중 $1%',
 	'ajaxpoll-thankyou' => '투표해 주셔서 감사합니다!',
 	'ajaxpoll-error' => '투표를 처리하는 도중 문제가 발생했습니다. 다시 시도하세요.',
 	'ajaxpoll-summary' => '이 설문 조사는 $2 $1에 만들어졌으며 지금까지 $3명이 투표했습니다.',
@@ -494,9 +529,20 @@ $messages['ksh'] = array(
 $messages['lb'] = array(
 	'ajaxpoll-percentVotes' => '$1%&nbsp; vun alle Stëmmen',
 	'ajaxpoll-thankyou' => 'Merci fir Är Stëmm!',
+	'ajaxpoll-error' => 'Et gouf e Problem beim Verschaffe vun Ärer Stëmm, probéiert et w.e.g. nach eng Kéier.',
 	'ajaxpoll-submit' => 'Ofstëmmen!',
 	'ajaxpoll-closed' => "D'Ëmfro ass ofgeschloss. Kuckt d'Resultater.",
 	'ajaxpoll-submitting' => 'Waart w.e.g., Är Stëmm gëtt elo geschéckt ...',
+);
+
+/** لوری (لوری)
+ * @author Mogoeilor
+ */
+$messages['lrc'] = array(
+	'ajaxpoll-thankyou' => 'سی رایتو منمونیم!',
+	'ajaxpoll-error' => 'ایچه یه گل مشگل سی فرایند رای دئینتو پیش اومائه،خواهش می کیم هنی تلاش بکید',
+	'ajaxpoll-submit' => 'رای بئيتو',
+	'ajaxpoll-closed' => 'صنوق رای ایسه بسه بیه. د نتیجه یا علاقه داریتو',
 );
 
 /** Lithuanian (lietuvių)
@@ -514,9 +560,16 @@ $messages['lt'] = array(
 
 /** Latvian (latviešu)
  * @author Papuass
+ * @author Sg ghost
  */
 $messages['lv'] = array(
+	'ajaxpoll-percentVotes' => '$1% no visām balsīm',
+	'ajaxpoll-thankyou' => 'Paldies par jūsu atbalstu!',
+	'ajaxpoll-error' => 'Bija problēmas ar pārstrādes jūsu balsojumu, lūdzu mēģiniet vēlreiz.',
+	'ajaxpoll-summary' => 'Aptaujā tika izveidota $1, $2, un līdz šim $3 cilvēki, kas balsoja.',
 	'ajaxpoll-submit' => 'Balsot!',
+	'ajaxpoll-closed' => 'Aptauja ir slēgta tagad. Baudīt rezultātus.',
+	'ajaxpoll-submitting' => 'Lūdzu, uzgaidiet, iesniedzot jūsu balsojumu...',
 );
 
 /** Basa Banyumasan (Basa Banyumasan)
@@ -588,6 +641,19 @@ $messages['mt'] = array(
 	'ajaxpoll-submitting' => 'Jekk jogħġbok stenna, il-vot tiegħek qiegħed jintbagħat.',
 );
 
+/** Min Nan Chinese (Bân-lâm-gú)
+ * @author Ianbu
+ */
+$messages['nan'] = array(
+	'ajaxpoll-percentVotes' => '$1%&nbsp;的投票',
+	'ajaxpoll-thankyou' => '多謝你的投票',
+	'ajaxpoll-error' => '佇處理你的投票時陣有寡問題，請閣試一擺。',
+	'ajaxpoll-summary' => '這項投票是 $1 佇 $2發起的 ，目前為止有 $3 儂投票。',
+	'ajaxpoll-submit' => '投票',
+	'ajaxpoll-closed' => '投票已結束，請看結果。',
+	'ajaxpoll-submitting' => '請小等一下，當咧處理你的投票...',
+);
+
 /** Norwegian Bokmål (norsk bokmål)
  * @author Audun
  */
@@ -599,6 +665,13 @@ $messages['nb'] = array(
 	'ajaxpoll-submit' => 'Stem!',
 	'ajaxpoll-closed' => 'Avstemningen er stengt nå. Nyt resultatene.',
 	'ajaxpoll-submitting' => 'Vennligst vent, sender inn stemmen din...',
+);
+
+/** Nepali (नेपाली)
+ * @author सरोज कुमार ढकाल
+ */
+$messages['ne'] = array(
+	'ajaxpoll-submit' => 'भोट गर्नुहोस !',
 );
 
 /** Dutch (Nederlands)
@@ -707,28 +780,30 @@ $messages['ps'] = array(
 
 /** Portuguese (português)
  * @author Hamilton Abreu
+ * @author Josep Maria 15.
  */
 $messages['pt'] = array(
 	'ajaxpoll-percentVotes' => '$1%&nbsp;de todos os votos',
-	'ajaxpoll-thankyou' => 'Obrigado pelo seu voto!',
-	'ajaxpoll-error' => 'Ocorreu um problema ao processar o seu voto, por favor, tente novamente.',
+	'ajaxpoll-thankyou' => 'Obrigado pelo teu voto!',
+	'ajaxpoll-error' => 'Ocorreu um problema ao processar o teu voto, por favor, tenta-o de novo.',
 	'ajaxpoll-summary' => 'A votação foi criada às $1 de $2 e, até agora, $3 pessoas votaram.',
-	'ajaxpoll-submit' => 'Vote!',
-	'ajaxpoll-closed' => 'A votação foi encerrada. Disfrute dos resultados.',
-	'ajaxpoll-submitting' => 'Espere, por favor. A submeter o seu voto...',
+	'ajaxpoll-submit' => 'Vota!',
+	'ajaxpoll-closed' => 'A votação foi encerrada. Desfruta dos resultados.',
+	'ajaxpoll-submitting' => 'Espera, por favor. A submeter o teu voto…',
 );
 
 /** Brazilian Portuguese (português do Brasil)
+ * @author Caio1478
  * @author Jesielt
  */
 $messages['pt-br'] = array(
 	'ajaxpoll-percentVotes' => '$1%&nbsp;de todos os votos',
 	'ajaxpoll-thankyou' => 'Obrigado pelo seu voto!',
-	'ajaxpoll-error' => 'Ocorreu um problema ao processar o seu voto, por favor, tente novamente.',
-	'ajaxpoll-summary' => 'A votação foi criada às $1 de $2 e, até agora, $3 pessoas votaram.',
+	'ajaxpoll-error' => 'Houve um problema com o processamento do seu voto, por favor, tente novamente.',
+	'ajaxpoll-summary' => 'A votação foi criada às $1 de $2, e até agora $3 pessoas votaram.',
 	'ajaxpoll-submit' => 'Vote!',
-	'ajaxpoll-closed' => 'Essa votação está encerrada. Confira os resultados.',
-	'ajaxpoll-submitting' => 'Por favor, aguarde. Estamos enviando o seu voto...',
+	'ajaxpoll-closed' => 'A votação está fechada agora. Aproveite os resultados.',
+	'ajaxpoll-submitting' => 'Por favor, aguarde, estamos enviando seu voto...',
 );
 
 /** Romanian (română)
@@ -802,7 +877,7 @@ $messages['sv'] = array(
 	'ajaxpoll-summary' => 'Röstningen skapades den $2 kl. $1, och hittills har $3 personer röstat.',
 	'ajaxpoll-submit' => 'Rösta!',
 	'ajaxpoll-closed' => 'Röstningen är nu stängd. Njut av resultaten.',
-	'ajaxpoll-submitting' => 'Du skickar in din röst, var god vänta...',
+	'ajaxpoll-submitting' => 'Vänta medan din röst skickas in...',
 );
 
 /** Tamil (தமிழ்)
@@ -810,6 +885,19 @@ $messages['sv'] = array(
  */
 $messages['ta'] = array(
 	'ajaxpoll-submit' => 'வாக்களி',
+);
+
+/** Telugu (తెలుగు)
+ * @author Chaduvari
+ */
+$messages['te'] = array(
+	'ajaxpoll-percentVotes' => 'మొత్తం వోట్లలో $1%&nbsp;',
+	'ajaxpoll-thankyou' => 'మీరు వోటేసినందుకు నెనరులు!',
+	'ajaxpoll-error' => 'మీ వోటును ప్రాసెసు చెయ్యడంలో ఇబ్బంది కలిగింది. మళ్ళీ ప్రయత్నించండి.',
+	'ajaxpoll-summary' => 'ఈ పోల్‍ను $2 న $1 కు సృష్టించారు. ఇప్పటిదాకా $3 మంది వోటేసారు.',
+	'ajaxpoll-submit' => 'వోటెయ్యండి!',
+	'ajaxpoll-closed' => 'పోల్‍ను ముగించాం. ఫలితాలను చూడండి.',
+	'ajaxpoll-submitting' => 'ఒక్క క్షణం, మీ వోటును పంపిస్తున్నాం...',
 );
 
 /** Thai (ไทย)
@@ -840,10 +928,13 @@ $messages['tl'] = array(
 
 /** Turkish (Türkçe)
  * @author Gizemb
+ * @author Incelemeelemani
  */
 $messages['tr'] = array(
+	'ajaxpoll-percentVotes' => 'Tüm oylarda:&nbsp;$1%',
 	'ajaxpoll-thankyou' => 'Oy verdiğiniz için teşekkür ederiz!',
 	'ajaxpoll-error' => 'Oyunuz işleme alınırken bir sorun oluştu, lütfen tekrar deneyiniz.',
+	'ajaxpoll-summary' => '$2 üzerinde $1 anketi oluşturuldu ve $3 kişi oy verdi.',
 	'ajaxpoll-submit' => 'Oy ver!',
 	'ajaxpoll-closed' => 'Anket kapandı. Sonuçların tadını çıkarın.',
 	'ajaxpoll-submitting' => 'Lütfen bekleyin, oyunuz kaydediliyor...',

@@ -226,6 +226,7 @@ class WallHistory extends WikiaModel {
 								`action` IN (' . WH_EDIT . ', ' . WH_NEW . ')
 								AND `parent_comment_id` = `last_title`.`parent_comment_id`
 						)
+					LIMIT 1
 				) AS `metatitle`,
 				`reason`,
 				`revision_id`

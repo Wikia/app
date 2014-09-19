@@ -97,7 +97,7 @@ class UserProfilePageController extends WikiaController {
 		/**
 		 * @var $userIdentityBox UserIdentityBox
 		 */
-		$userIdentityBox = new UserIdentityBox($this->app, $user, self::MAX_TOP_WIKIS);
+		$userIdentityBox = new UserIdentityBox( $user );
 		$isUserPageOwner = (!$user->isAnon() && $user->getId() == $sessionUser->getId()) ? true : false;
 
 		if ($isUserPageOwner) {
@@ -315,6 +315,12 @@ class UserProfilePageController extends WikiaController {
 			$this->profilePage = new UserProfilePage($sessionUser);
 
 			$this->setVal('body', (string)$this->sendSelfRequest('renderLightbox', array('tab' => $selectedTab, 'userId' => $userId)));
+
+			if (!empty($this->wg->AvatarsMaintenance)) {
+				$this->setVal('avatarsDisabled', true);
+				$this->setVal('avatarsDisabledMsg', wfMessage('user-identity-avatars-maintenance')->text());
+			}
+
 			//we'll implement interview section later
 			//$this->setVal( 'interviewQuestions', $this->profilePage->getInterviewQuestions( $wikiId, false, true ) );
 		}
@@ -408,7 +414,7 @@ class UserProfilePageController extends WikiaController {
 			/**
 			 * @var $userIdentityBox UserIdentityBox
 			 */
-			$userIdentityBox = new UserIdentityBox($this->app, $user, self::MAX_TOP_WIKIS);
+			$userIdentityBox = new UserIdentityBox( $user );
 
 			if (!empty($userData->website) && 0 !== strpos($userData->website, 'http')) {
 				$userData->website = 'http://' . $userData->website;
@@ -558,12 +564,13 @@ class UserProfilePageController extends WikiaController {
 				$thumbnail = $uploadError;
 			} else {
 				$fileName = $this->app->wg->Request->getFileTempName($avatarUploadFiled);
+
 				$fileuploader = new WikiaTempFilesUpload();
 
 				$thumbnail = $this->storeInTempImage($fileName, $fileuploader);
 			}
 
-			if (is_int($thumbnail)) {
+			if( false === $thumbnail || is_int( $thumbnail ) ) {
 				$result = array('success' => false, 'error' => $this->validateUpload($thumbnail));
 				$this->setVal('result', $result);
 				wfProfileOut(__METHOD__);
@@ -614,15 +621,27 @@ class UserProfilePageController extends WikiaController {
 		}
 
 		$file = new FakeLocalFile($title, $localRepo);
-		$file->upload($fileName, '', '');
+		$status = $file->upload( $fileName, '', '' );
 
-		$width = min(self::AVATAR_DEFAULT_SIZE, $file->width);
-		$height = min(self::AVATAR_DEFAULT_SIZE, $file->height);
+		if( $status->ok ) {
+			$width = min( self::AVATAR_DEFAULT_SIZE, $file->width );
+			$height = min( self::AVATAR_DEFAULT_SIZE, $file->height );
 
-		$thumbnail = $file->transform(array(
-			'height' => $height,
-			'width' => $width,
-		));
+			$thumbnail = $file->transform( [
+				'height' => $height,
+				'width' => $width,
+			] );
+		} else {
+			$errors = $status->getErrorsArray();
+			$errMsg = 'Unable to upload temp file fo avatar. Error(s): ';
+			foreach( $errors as $error ) {
+				$errMsg .= $error[0] . ', ';
+			}
+			$errMsg = rtrim( $errMsg, ', ' );
+
+			wfDebugLog( __METHOD__, $errMsg );
+			$thumbnail = false;
+		}
 
 		wfProfileOut(__METHOD__);
 		return $thumbnail;
@@ -725,6 +744,7 @@ class UserProfilePageController extends WikiaController {
 	 */
 	public function uploadByUrl($url, $userData, &$errorMsg = '') {
 		wfProfileIn(__METHOD__);
+
 		//start by presuming there is no error
 		//$errorNo = UPLOAD_ERR_OK;
 		$user = $userData['user'];
@@ -733,13 +753,12 @@ class UserProfilePageController extends WikiaController {
 			 * @var $oAvatarObj Masthead
 			 */
 			$oAvatarObj = Masthead::newFromUser($user);
-			$oAvatarObj->purgeUrl();
 			$localPath = $this->getLocalPath($user);
 			$errorNo = $oAvatarObj->uploadByUrl($url);
 			/**
 			 * @var $userIdentityBox UserIdentityBox
 			 */
-			$userIdentityBox = new UserIdentityBox($this->app, $user, self::MAX_TOP_WIKIS);
+			$userIdentityBox = new UserIdentityBox( $user );
 			$userData = $userIdentityBox->getFullData();
 			$userData['avatar'] = $localPath;
 			$userIdentityBox->saveUserData($userData);
@@ -762,7 +781,7 @@ class UserProfilePageController extends WikiaController {
 		$user = User::newFromId($userId);
 
 		$this->setVal('defaultAvatars', $this->getDefaultAvatars());
-		$this->setVal('isUploadsPossible', $this->wg->EnableUploads && $this->wg->User->isAllowed('upload') && is_writeable($this->wg->UploadDirectory));
+		$this->setVal('isUploadsPossible', $this->wg->EnableUploads && $this->wg->User->isAllowed('upload') && empty($this->wg->AvatarsMaintenance));
 
 		$this->setVal('avatarName', $user->getOption('avatar'));
 		$this->setVal('userId', $userId);
@@ -820,7 +839,7 @@ class UserProfilePageController extends WikiaController {
 		/**
 		 * @var $userIdentityBox UserIdentityBox
 		 */
-		$userIdentityBox = new UserIdentityBox($this->app, $user, self::MAX_TOP_WIKIS);
+		$userIdentityBox = new UserIdentityBox( $user );
 
 		$userData = $userIdentityBox->getFullData();
 
@@ -1021,7 +1040,7 @@ class UserProfilePageController extends WikiaController {
 			/**
 			 * @var $userIdentityBox UserIdentityBox
 			 */
-			$userIdentityBox = new UserIdentityBox($this->app, $user, self::MAX_TOP_WIKIS);
+			$userIdentityBox = new UserIdentityBox( $user );
 			$success = $userIdentityBox->hideWiki($wikiId);
 
 			$result = array('success' => $success, 'wikis' => $userIdentityBox->getTopWikis());
@@ -1036,14 +1055,12 @@ class UserProfilePageController extends WikiaController {
 	 * @author Andrzej 'nAndy' Łukaszewski
 	 */
 	public function onRefreshFavWikis() {
-		$userId = intval($this->getVal('userId'));
+		$userId = intval( $this->getVal( 'userId' ) );
+		$user = User::newFromId( $userId );
+		$userIdentityBox = new UserIdentityBox( $user );
+		$result = array( 'success' => true, 'wikis' => $userIdentityBox->getTopWikis( true ) );
 
-		$user = User::newFromId($userId);
-
-		$userIdentityBox = new UserIdentityBox($this->app, $user, self::MAX_TOP_WIKIS);
-		$result = array('success' => true, 'wikis' => $userIdentityBox->getTopWikis(true));
-
-		$this->setVal('result', $result);
+		$this->setVal( 'result', $result );
 	}
 
 	public function getClosingModal() {
@@ -1072,13 +1089,22 @@ class UserProfilePageController extends WikiaController {
 	public function removeavatar() {
 		wfProfileIn(__METHOD__);
 		$this->setVal('status', false);
+
+		// macbre: avatars operations are disabled during maintenance
+		global $wgAvatarsMaintenance;
+		if (!empty($wgAvatarsMaintenance)) {
+			$this->setVal('error', wfMsg('user-identity-avatars-maintenance'));
+			wfProfileOut(__METHOD__);
+			return true;
+		}
+
 		if (!$this->app->wg->User->isAllowed('removeavatar')) {
 			wfProfileOut(__METHOD__);
 			return true;
 		}
 
-		if ($this->request->getVal('av_user')) {
-			$avUser = User::newFromName($this->request->getVal('av_user'));
+		if ($this->request->getVal('avUser')) {
+			$avUser = User::newFromName($this->request->getVal('avUser'));
 			if ($avUser->getID() !== 0) {
 				$avatar = Masthead::newFromUser($avUser);
 				if ($avatar->removeFile(true)) {

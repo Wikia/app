@@ -1,14 +1,14 @@
-@import "skins/oasis/css/mixins/border-radius";
-@import "skins/oasis/css/mixins/box-shadow";
-@import "skins/oasis/css/mixins/clearfix";
-@import "skins/oasis/css/mixins/forms";
-@import "skins/oasis/css/mixins/gradient";
-@import "skins/oasis/css/mixins/menus";
-@import "skins/oasis/css/mixins/opacity";
-@import "skins/oasis/css/mixins/transition";
-@import "skins/oasis/css/mixins/wordmark";
+@import "skins/shared/mixins/box-shadow";
+@import "skins/shared/mixins/calc";
+@import "skins/shared/mixins/clearfix";
+@import "skins/shared/mixins/forms";
+@import "skins/shared/mixins/gradient";
+@import "skins/shared/mixins/menus";
+@import "skins/shared/mixins/transition";
+@import "skins/shared/mixins/wordmark";
 @import "skins/oasis/css/core/layout";
-@import "skins/oasis/css/core/color";
+@import "skins/shared/color";
+@import "skins/oasis/css/core/responsive-variables";
 @import "extensions/wikia/Listusers/css/table";
 
 $admin-dashboard-content-width: 690px;
@@ -93,16 +93,20 @@ $color-highlight-column: rgba($color-page, 0);
 	border: 0;
 	padding: 10px 0 0 0;
 	position: absolute;
-	right: if( $responsive-layout-enabled, $admin-dashboard-rail-width, $width-outside - $admin-dashboard-content-width );
+	@if ( $responsive-layout-enabled ) {
+		right: $admin-dashboard-rail-width;
+	} @else {
+		right: $width-outside - $admin-dashboard-content-width;
+	}
 	top: $admin-dashboard-header-height - $nav-height - 11px;
 	z-index: $base-z - 	1;
 	&.expanded {
 		right: 10px;
 	}
 	.tab {
-		@include border-radius-ne(5px);
-		@include border-radius-nw(5px);
 		background: $color-admin-tab-inactive;
+		border-top-left-radius: 5px;
+		border-top-right-radius: 5px;
 		color: $color-admin-text;
 		display: block;
 		float: left;
@@ -160,7 +164,11 @@ $color-highlight-column: rgba($color-page, 0);
 				font-style: italic;
 				padding: 5px 20px 0;
 				position: absolute;
-				width: if( $responsive-layout-enabled, 100%, $admin-dashboard-content-width - 40px );
+				@if ( $responsive-layout-enabled ) {
+					width: 100%;
+				} @else {
+					width: $admin-dashboard-content-width - 40px;
+				}
 				h1 {
 					color: $color-admin-header-text;
 					float: left;
@@ -185,12 +193,13 @@ $color-highlight-column: rgba($color-page, 0);
 					padding: 20px 3px 0;
 					width: 74px;
 					.representation {
-						@include border-radius(7px);
+						border-radius: 7px;
 						@include linear-gradient(darken($color-admin-icon-highlight, 2%), top, $color-admin-icon-highlight, 40%, $color-admin-icon-shadow, 100%);
 						border: 1px solid $color-admin-icon-border;
 						display: block;
 						height: 50px;
 						margin: 0 auto 5px;
+						position: relative;
 						width: 50px;
 						.icon {
 							background-image: url(/extensions/wikia/AdminDashboard/images/icons.png); // $wgCdnStylePath
@@ -226,7 +235,7 @@ $color-highlight-column: rgba($color-page, 0);
 								background-position: -300px 0;
 							}
 							&.specialcsstool {
-								background-position: -900px 0;
+								background-position: -892px 0;
 							}
 
 							&.communitycorner {
@@ -256,6 +265,11 @@ $color-highlight-column: rgba($color-page, 0);
 							&.licensedvideoswap {
 								background-position: -950px 0;
 							}
+						}
+						.alert-badge {
+							position: absolute;
+							right: -.75em;
+							top: -.75em;
 						}
 					}
 					&:hover {
@@ -346,7 +360,11 @@ $color-highlight-column: rgba($color-page, 0);
 	padding: 20px 0 0 0;
 	position: relative;
 	z-index: $base-z;
-	width: if( $responsive-layout-enabled, 100%, $admin-dashboard-content-width );
+	@if ( $responsive-layout-enabled ) {
+		width: 100%;
+	} @else {
+		width: $admin-dashboard-content-width;
+	}
 
 	&.AdminDashboardChromedArticle {
 		@include box-shadow(0, 0, 0, $color-body);
@@ -354,7 +372,11 @@ $color-highlight-column: rgba($color-page, 0);
 		border-right: 0;
 		float: none;
 		padding: 0 12px 0 5px;
-		width: if( $responsive-layout-enabled, auto, $width-outside - 18px );
+		@if ( $responsive-layout-enabled ) {
+			width: auto;
+		} @else {
+			width: $width-outside - 18px;
+		}
 	}
 	fieldset {
 		border: solid 1px $color-links;
@@ -498,11 +520,23 @@ $color-highlight-column: rgba($color-page, 0);
 		.adm-dash-search {
 			display: none;
 		}
+		.AdminDashboardTabs {
+			right: 10px;
+		}
+		.AdminDashboardRail {
+			@include width-calc('100% - 30px');
+			float: none;
+			margin: 20px 15px 0;
+		}
 	}
 
-	.page-Special_AdminDashboard .WikiaMainContentContainer {
+	.mw-special-AdminDashboard .WikiaMainContentContainer {
 		margin-right: $admin-dashboard-rail-width;
 		padding: 0;
+
+		@media screen and (max-width: $breakpoint-small) {
+			margin-right: 0;
+		}
 	}
 
 	.WikiaMainContentContainer {

@@ -1,0 +1,19 @@
+{
+	"@metadata": {
+		"authors": [
+			"Fryed-peach",
+			"Miya",
+			"Penn Station",
+			"Shirayuki"
+		]
+	},
+	"tag-visualeditor": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|ビジュアルエディター]]",
+	"tag-visualeditor-description": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|ビジュアルエディター]]を使用した編集",
+	"tag-visualeditor-needcheck": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|ビジュアルエディター: 要確認]]",
+	"tag-visualeditor-needcheck-description": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|ビジュアルエディター]]を使用した編集のうち、意図しない変更点を含むおそれがあるとシステムが判断したもの",
+	"tag-visualeditor-switched-description": "ビジュアルエディターで編集を開始したあと、ウィキテキストエディターに変更したもの",
+	"visualeditor-feedback-link": "Project:ビジュアルエディター/フィードバック",
+	"visualeditor-feedback-tool": "フィードバックを送信",
+	"visualeditor-help-label": "利用者ガイドを読む",
+	"visualeditor-help-title": "エディターの使用法についての利用者ガイド"
+}

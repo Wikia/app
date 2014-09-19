@@ -13,12 +13,16 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 
 	/* @const SIGNUP_REDIRECT_OPTION_NAME Name of user option containing redirect path to return to after email confirmation */
 	const SIGNUP_REDIRECT_OPTION_NAME = 'SignupRedirect';
-	
+
 	/* @const SIGNED_UP_ON_WIKI_OPTION_NAME Name of user option containing id of wiki where user signed up */
 	const SIGNED_UP_ON_WIKI_OPTION_NAME = 'SignedUpOnWiki';
 
 	/* @var $userLoginHelper UserLoginHelper */
 	private $userLoginHelper = null;
+
+	// let's keep this fields private for security reasons
+	private $username = '';
+	private $password = '';
 
 	public function __construct() {
 		parent::__construct( 'UserLogin', '', false );
@@ -115,12 +119,14 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 				$this->msg = $response->getVal( 'msg', '' );
 			} else if ($action === wfMessage('resetpass_submit')->escaped() ) {	// change password
 				$this->editToken = $this->wg->request->getVal( 'editToken', '' );
+				$this->loginToken = $this->wg->Request->getVal( 'loginToken', '' );
 				$params = array(
 					'username' => $this->username,
 					'password' => $this->password,
 					'newpassword' => $this->wg->request->getVal( 'newpassword' ),
 					'retype' => $this->wg->request->getVal( 'retype' ),
 					'editToken' => $this->editToken,
+					'loginToken' => $this->loginToken,
 					'cancel' => $this->wg->request->getVal( 'cancel', false ),
 					'returnto' => $this->returnto
 				);
@@ -145,11 +151,15 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 				if ( $this->result == 'ok' ) {
 					// redirect page
 					$this->userLoginHelper->doRedirect();
-				} else if ( $this->result == 'unconfirm' ) {
+				} elseif ( $this->result == 'unconfirm' ) {
 					$response = $this->app->sendRequest('UserLoginSpecial', 'getUnconfirmedUserRedirectUrl', array('username' => $this->username, 'uselang' => $code));
 					$redirectUrl = $response->getVal('redirectUrl');
 					$this->wg->out->redirect( $redirectUrl );
-				} else if ( $this->result == 'resetpass') {
+				} elseif ( $this->result === 'closurerequested' ) {
+					$response = $this->app->sendRequest( 'UserLoginSpecial', 'getCloseAccountRedirectUrl' );
+					$redirectUrl = $response->getVal( 'redirectUrl' );
+					$this->wg->Out->redirect( $redirectUrl );
+				} elseif ( $this->result == 'resetpass') {
 					$this->editToken = $this->wg->User->getEditToken();
 					$this->subheading = wfMessage('resetpass_announce')->escaped();
 					$this->wg->Out->setPageTitle( wfMessage('userlogin-password-page-title')->plain() );
@@ -164,6 +174,11 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 			$this->wg->Out->setPageTitle( wfMessage('userlogin-forgot-password')->plain() );
 			return;
 		}
+
+		// we're sure at this point we'll need the private fields'
+		// values in the template let's pass them then
+		$this->response->setVal( 'username', $this->username );
+		$this->response->setVal( 'password', $this->password );
 
 		if ( $this->app->checkSkin( 'wikiamobile' ) ) {
 			$recoverParam = 'recover=1';
@@ -195,6 +210,10 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 		$this->redirectUrl = $title->getFullUrl( $params );
 	}
 
+	public function getCloseAccountRedirectUrl() {
+		$this->redirectUrl = SpecialPage::getTitleFor( 'CloseMyAccount', 'reactivate' )->getFullUrl();
+	}
+
 	/**
 	 * @brief renders html version that will be inserted into ajax based login interaction
 	 * @details
@@ -203,19 +222,57 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 	public function dropdown() {
 		$query = $this->app->wg->Request->getValues();
 
-		$this->returnto = Title::newMainPage()->getPartialURL();
-		if (isset($query['title'])) {
-			if ( !AccountNavigationController::isBlacklisted( $query['title'] ) ) {
-				$this->returnto = $query['title'] ;
-			} else {
-				$this->returnto = Title::newMainPage()->getPartialURL();
-			}
-			unset($query['title']);
-		} else {
-			$this->returnto = Title::newMainPage()->getPartialURL();
+		if ( isset( $query['password'] ) ) {
+			// remove the password from the params to prevent exposiong in into the URL
+			unset($query['password']);
 		}
 
-		$this->returntoquery = wfArrayToCGI( $query );
+		$this->returnto = $this->getReturnToFromQuery( $query );
+		$this->returntoquery = $this->getReturnToQueryFromQuery( $query );
+	}
+
+	public function getMainPagePartialUrl() {
+		return Title::newMainPage()->getPartialURL();
+	}
+
+	/**
+	 * @param String $title
+	 *
+	 * @return Boolean
+	 */
+	public function isTitleBlacklisted( $title ) {
+		return AccountNavigationController::isBlacklisted( $title );
+	}
+
+	private function getReturnToFromQuery( $query ) {
+		if( !is_array( $query ) ) {
+			return '';
+		}
+
+		$returnto = $this->getMainPagePartialUrl();
+		if( isset( $query['title'] ) && !$this->isTitleBlacklisted( $query['title'] ) ) {
+			$returnto = $query['title'] ;
+			unset( $query['title'] );
+		}
+
+		return $returnto;
+	}
+
+	private function getReturnToQueryFromQuery( $query ) {
+		if( !is_array( $query ) ) {
+			return '';
+		}
+
+		// CONN-49 an edge-case when while being on Special:UserLogin you fail in logging-in
+		// and because of that the returntoquery gets longer and longer with each failure
+		if( !empty( $query['returntoquery'] ) ) {
+			$prevReturnToQuery = wfCgiToArray( $query['returntoquery'] );
+			$query['returntoquery'] = [];
+		} else {
+			$prevReturnToQuery = [];
+		}
+
+		return wfArrayToCGI( $query, $prevReturnToQuery );
 	}
 
 	public function providers() {
@@ -299,7 +356,7 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 		switch ( $loginCase ) {
 			case LoginForm::SUCCESS:
 				// first check if user has confirmed email after sign up
-				if ( !UserLoginHelper::isTempUser( $loginForm->mUsername ) && $this->wg->User->getOption( self::NOT_CONFIRMED_SIGNUP_OPTION_NAME ) == true ) {//@TODO remove isTempUser from condition when TempUser will be globally disabled
+				if (  $this->wg->User->getOption( self::NOT_CONFIRMED_SIGNUP_OPTION_NAME ) == true ) {
 					//User not confirmed on signup
 					LoginForm::clearLoginToken();
 					$this->userLoginHelper->setNotConfirmedUserSession( $this->wg->User->getId() );
@@ -307,6 +364,14 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 					$this->result = 'unconfirm';
 					$this->msg = wfMessage( 'usersignup-confirmation-email-sent', $this->wg->User->getEmail() )->parse();
 				} else {
+					$result = '';
+					$resultMsg = '';
+					if ( !wfRunHooks( 'WikiaUserLoginSuccess', array( $this->wg->User, &$result, &$resultMsg ) ) ) {
+						$this->result = $result;
+						$this->msg = $resultMsg;
+						break;
+					}
+
 					//Login succesful
 					$injected_html = '';
 					wfRunHooks('UserLoginComplete', array(&$this->wg->User, &$injected_html));
@@ -320,13 +385,11 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 					}
 					$this->wg->User->setCookies();
 					LoginForm::clearLoginToken();
-					if ( !UserLoginHelper::isTempUser( $loginForm->mUsername ) ) {//@TODO get rid of isTempUser check when TempUser will be globally disabled
-						UserLoginHelper::clearNotConfirmedUserSession();
-					} else {
-						TempUser::clearTempUserSession();
-					}
+					UserLoginHelper::clearNotConfirmedUserSession();
 					$this->userLoginHelper->clearPasswordThrottle( $loginForm->mUsername );
-					$this->username = $loginForm->mUsername;
+					// we're sure at this point we'll need the private field'
+					// value in the template let's pass them then
+					$this->response->setVal( 'username', $loginForm->mUsername );
 					$this->result = 'ok';
 				}
 				break;
@@ -347,40 +410,9 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 				$this->errParam = 'username';
 				break;
 			case LoginForm::NOT_EXISTS:
-				if ( UserLoginHelper::isTempUser( $loginForm->mUsername ) ) {//@TODO get rid of isTempUser check when TempUser will be globally disabled
-					//TempUser case
-					if ( $this->userLoginHelper->isPasswordThrottled($loginForm->mUsername) ) {
-						$this->result = 'error';
-						$this->msg = wfMessage( 'userlogin-error-login-throttled' )->escaped();
-					} else {
-						$tempUser = TempUser::getTempUserFromName($loginForm->mUsername);
-						$user = $tempUser->mapTempUserToUser( false );
-						if ( $user->checkPassword($loginForm->mPassword) ) {
-							LoginForm::clearLoginToken();
-							$tempUser->setTempUserSession();
-							$this->userLoginHelper->clearPasswordThrottle( $loginForm->mUsername );
-
-							// set lang for unconfirmed user
-							$langCode = $user->getOption('language');
-							if ( $this->wg->User->getOption('language') != $langCode ) {
-								$this->wg->User->setOption( 'language', $langCode );
-							}
-
-							$this->result = 'unconfirm';
-							$this->msg = wfMessage( 'usersignup-confirmation-email-sent', $tempUser->getEmail() )->parse();
-						} else if ( $user->checkTemporaryPassword($loginForm->mPassword) ) {
-							$this->result = 'resetpass';
-						} else {
-							$this->result = 'error';
-							$this->msg = wfMessage( 'userlogin-error-wrongpassword' )->escaped();
-							$this->errParam = 'password';
-						}
-					}
-				} else {
-					$this->result = 'error';
-					$this->msg = wfMessage( 'userlogin-error-nosuchuser' )->escaped();
-					$this->errParam = 'username';
-				}
+				$this->result = 'error';
+				$this->msg = wfMessage( 'userlogin-error-nosuchuser' )->escaped();
+				$this->errParam = 'username';
 				break;
 			case LoginForm::WRONG_PLUGIN_PASS:
 				$this->result = 'error';
@@ -454,13 +486,7 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 			$this->result = 'error';
 			$this->msg = wfMessage('userlogin-error-blocked-mailpassword')->escaped();
 		} else {
-			$tempUser = TempUser::getTempUserFromName($loginForm->mUsername);
-			if ( $tempUser ) {
-				$user = $tempUser->mapTempUserToUser( false );
-			} else {
-				$user = User::newFromName($loginForm->mUsername);
-			}
-
+			$user = User::newFromName( $loginForm->mUsername );
 			if ( !$user instanceof User ) {
 				$this->result = 'error';
 				$this->msg = wfMessage('userlogin-error-noname')->escaped();
@@ -506,6 +532,7 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 		$this->newpassword = $this->request->getVal( 'newpassword', '' );
 		$this->retype = $this->request->getVal( 'retype', '' );
 		$this->editToken = $this->request->getVal( 'editToken', '' );
+		$this->loginToken = $this->request->getVal( 'loginToken', '' );
 		$this->returnto = $this->request->getVal( 'returnto', '' );
 
 		// since we don't support ajax GET, use of this parameter simulates a get request
@@ -526,14 +553,16 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 			}
 
 			if( $this->wg->User->matchEditToken( $this->editToken ) ) {
-				//@TODO get rid of TempUser check when TempUser will be globally disabled
-				$tempUser = TempUser::getTempUserFromName( $this->username );
-				if ( $tempUser ) {
-					$user = $tempUser->mapTempUserToUser( false );
-					$tempUser->activateUser($user);
-				} else {
-					$user =  User::newFromName( $this->username );
+
+				if ( $this->wg->User->isAnon()
+					&& $this->loginToken !== UserLoginHelper::getLoginToken()
+				) {
+					$this->result = 'error';
+					$this->msg = wfMessage( 'sessionfailure' )->escaped();
+					return;
 				}
+
+				$user =  User::newFromName( $this->username );
 
 				if( !$user || $user->isAnon() ) {
 					$this->result = 'error';
@@ -565,7 +594,6 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 
 				$user->setPassword( $this->newpassword );
 				wfRunHooks( 'PrefsPasswordAudit', array( $user, $this->newpassword, 'success' ) );
-				$user->setCookies();
 				$user->saveSettings();
 
 				$this->result = 'ok';
@@ -574,7 +602,15 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 				$this->wg->request->setVal( 'password', $this->newpassword );
 				$response = $this->app->sendRequest( 'UserLoginSpecial', 'login' );
 
-				$this->userLoginHelper->doRedirect();
+				$result = $response->getVal( 'result', '' );
+
+				if ( $result === 'closurerequested' ) {
+					$response = $this->app->sendRequest( 'UserLoginSpecial', 'getCloseAccountRedirectUrl' );
+					$redirectUrl = $response->getVal( 'redirectUrl' );
+					$this->wg->Out->redirect( $redirectUrl );
+				} else {
+					$this->userLoginHelper->doRedirect();
+				}
 			}
 		}
 	}

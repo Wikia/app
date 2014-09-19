@@ -6,7 +6,8 @@
  */
 class ArticleService extends WikiaObject {
 	const MAX_LENGTH = 500;
-	const CACHE_VERSION = 8;
+	const CACHE_VERSION = 9;
+	const SOLR_SNIPPETS_FIELD = 'snippet_s';
 
 	/** @var Article $article */
 	private $article = null;
@@ -229,8 +230,12 @@ class ArticleService extends WikiaObject {
 		$document = $service->getResult();
 
 		$text = '';
-		if ( ( $document !== null ) && ( isset( $document[$htmlField] ) ) ) {
-			$text = $document[$htmlField];
+		if ( $document !== null ) {
+			if ( !empty( $document[ static::SOLR_SNIPPETS_FIELD ] ) ) {
+				$text = $document[ static::SOLR_SNIPPETS_FIELD ];
+			} elseif ( isset( $document[$htmlField] ) ) {
+				$text = $document[$htmlField];
+			}
 		}
 		return $text;
 	}

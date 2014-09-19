@@ -27,6 +27,8 @@ if (!defined('MEDIAWIKI')) {
 	require_once ('ApiBase.php');
 }
 
+use Wikia\Logger\WikiaLogger;
+
 /**
  * API interface for running Job from job queue
  * @ingroup API
@@ -43,6 +45,9 @@ class ApiRunJob extends ApiBase {
 		parent :: __construct( $main, $action );
 	}
 
+	public function wikiaLog( $data ) {
+		WikiaLogger::instance()->debug( "ApiRunJob", $data );
+	}
 
 	/**
 	 * Main entry point, tak job from queue and run it
@@ -51,7 +56,6 @@ class ApiRunJob extends ApiBase {
 	 */
 	public function execute() {
 		global $wgUser, $wgApiRunJobsPerRequest;
-
 
 		ini_set( "memory_limit", -1 );
 		ini_set( "max_execution_time", 0 );
@@ -115,6 +119,13 @@ class ApiRunJob extends ApiBase {
 			}
 
 		}
+
+		$this->wikiaLog( array (
+			"type" => isset ( $params[ "type" ] ) ? $params[ "type" ] : "undefined",
+			"maxJobs" => $this->maxJobs,
+			"done" => $done
+		) );
+
 		$result[ "left" ]  = $this->checkQueue( $done );
 
 		$this->getResult()->addValue( null, $this->getModuleName(), $result );

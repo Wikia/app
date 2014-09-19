@@ -1029,7 +1029,7 @@ class FileRepo {
 	/**
 	 * Checks existence of a a file
 	 *
-	 * @param $file Virtual URL (or storage path) of file to check
+	 * @param $file string Virtual URL (or storage path) of file to check
 	 * @param $flags Integer: bitwise combination of the following flags:
 	 *     self::FILES_ONLY     Mark file as existing only if it is a file (not directory)
 	 * @return bool
@@ -1045,7 +1045,7 @@ class FileRepo {
 	 * @param $files Array: Virtual URLs (or storage paths) of files to check
 	 * @param $flags Integer: bitwise combination of the following flags:
 	 *     self::FILES_ONLY     Mark file as existing only if it is a file (not directory)
-	 * @return Either array of files and existence flags, or false
+	 * @return array|bool Either array of files and existence flags, or false
 	 */
 	public function fileExistsBatch( $files, $flags = 0 ) {
 		$result = array();
@@ -1099,7 +1099,6 @@ class FileRepo {
 	 */
 	public function deleteBatch( $sourceDestPairs ) {
 		$backend = $this->backend; // convenience
-
 		// Try creating directories
 		$status = $this->initZones( array( 'public', 'deleted' ) );
 		if ( !$status->isOK() ) {

@@ -18,7 +18,6 @@ ul.custom-badges {
 }
 
 ul.custom-badges li {
-  height: 190px;
   padding-bottom: 10px;
   border-bottom: 1px solid #AAAAAA;
   margin-bottom: 15px;
@@ -108,6 +107,7 @@ span.enabled-flag label {
 
 form.save-all {
 	display:inline;
+	float: right;
 }
 
 .customize-section h2 {

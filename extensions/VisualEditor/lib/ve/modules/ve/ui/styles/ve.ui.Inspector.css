@@ -1,0 +1,27 @@
+/*!
+ * ObjectOriented UserInterface Inspector styles.
+ *
+ * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
+ * @license The MIT License (MIT); see LICENSE.txt
+ */
+
+.ve-ui-inspector {
+	-webkit-transition: opacity 100ms;
+	-moz-transition: opacity 100ms;
+	-o-transition: opacity 100ms;
+	transition: opacity 100ms;
+}
+
+.ve-ui-inspector-content .ve-ui-inspector-closeButton {
+	float: left;
+}
+
+.ve-ui-inspector-content .ve-ui-inspector-removeButton {
+	float: right;
+}
+
+.ve-ui-inspector-content .oo-ui-window-body form {
+	margin: 0.25em 0 0 0;
+	padding: 0;
+	white-space: nowrap;
+}

@@ -24,9 +24,6 @@ $wgAutoloadClasses['VideoEmbedToolController'] = $dir . '/VideoEmbedToolControll
 
 define( 'VIDEO_PREVIEW', 350 );
 
-$wgNamespaceAliases["Video"] = 6;
-$wgNamespaceAliases["Video_talk"] = 7;
-
 #--- register special page (MW 1.1x way)
 if ( !function_exists( 'extAddSpecialPage' ) ) {
     require( "$IP/extensions/ExtensionFunctions.php" );
@@ -44,9 +41,8 @@ JSMessages::registerPackage('VideoEmbedTool', array(
 	'vet-warn3',
 	'vet-insert-error',
 	'vet-imagebutton',
+	'vet-error-while-loading'
 ));
-JSMessages::enqueuePackage('VideoEmbedTool', JSMessages::EXTERNAL);
-
 
 /**
  * @param $article
@@ -56,7 +52,7 @@ JSMessages::enqueuePackage('VideoEmbedTool', JSMessages::EXTERNAL);
  * @return bool
  */
 function VETArticleSave( $article, $user, &$text, $summary) {
-	if (NS_VIDEO == $article->mTitle->getNamespace()) {
+	if (NS_FILE == $article->mTitle->getNamespace()) {
 		$text = $article->dataline . $text;
 	}
 	return true;
@@ -95,9 +91,6 @@ $wgAjaxExportList[] = 'VET';
 function VET() {
 	global $wgRequest;
 
-	$dir = dirname(__FILE__).'/';
-	require_once($dir.'VideoEmbedTool_body.php');
-
 	$method = $wgRequest->getVal('method');
 	$vet = new VideoEmbedTool();
 
@@ -106,5 +99,7 @@ function VET() {
 	if(!empty($domain)) {
 		$html .= '<script type="text/javascript">document.domain = "' . $domain  . '"</script>';
 	}
-	return new AjaxResponse($html);
+	$resp = new AjaxResponse( $html );
+	$resp->setContentType( 'text/html' );
+	return $resp;
 }

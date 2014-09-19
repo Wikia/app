@@ -53,6 +53,7 @@ $wgResourceModules['ext.wikihiero'] = array(
 	'styles' => 'ext.wikihiero.css',
 	'localBasePath' => "$dir/modules",
 	'remoteExtPath' => 'wikihiero/modules',
+	'source' => 'common'
 );
 
 $wgResourceModules['ext.wikihiero.Special'] = array(

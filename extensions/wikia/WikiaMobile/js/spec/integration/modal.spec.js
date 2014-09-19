@@ -54,8 +54,6 @@ describe("Modal module", function () {
 			}
 		});
 
-		expect(window.location.hash).toBe('#Modal');
-
 		jasmine.Clock.tick(60);
 
 		expect(document.getElementById('wkMdlCnt').innerHTML).toBe('TEST');

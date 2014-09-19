@@ -52,9 +52,6 @@ table.TablePager { border: 1px solid gray;}
 	<li>
 		You can use filters in the <a href="<?php echo $title->getFullUrl() ?>/metrics"><strong>metrics interface</strong></a>
 	</li>
-	<li>
-		<a href="<?php echo $title->getFullUrl() ?>/change.log"><strong>Changelog for variables (all wikis)</strong></a>
-	</li>
 </ul>
 <!-- e:short info -->
 <br />

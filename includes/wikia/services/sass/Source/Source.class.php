@@ -75,7 +75,7 @@ abstract class Source {
 	abstract public function releaseLocalFile();
 
 
-	protected function getHumanName() {
+	public function getHumanName() {
 		return $this->humanName !== null ? $this->humanName : "(unknown)";
 	}
 

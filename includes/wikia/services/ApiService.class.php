@@ -16,19 +16,19 @@ class ApiService extends Service {
 	/**
 	 * Simple wrapper for calling MW API
 	 */
-	static function call(Array $params) {
+	static function call( Array $params ) {
 		wfProfileIn(__METHOD__);
 
 		$res = false;
 
 		try {
-			$api = new ApiMain(new FauxRequest($params));
+			$api = new ApiMain( new FauxRequest( $params ) );
 			$api->execute();
 			$res = $api->getResultData();
-		}
-		catch(Exception $e) {};
+		} catch ( Exception $e ) {};
 
 		wfProfileOut( __METHOD__ );
+
 		return $res;
 	}
 
@@ -38,41 +38,43 @@ class ApiService extends Service {
 	 * @param string database name
 	 * @param array API query parameters
 	 * @param string endpoint (api.php or wikia.php, generally)
-	 * @param string userName
+	 * @param boolean $setUser
 	 * @return mixed API response
 	 */
-	static function foreignCall( $dbname, Array $params, $endpoint = self::API, $userName  = '' ) {
+	static function foreignCall( $dbname, Array $params, $endpoint = self::API, $setUser = false ) {
 		wfProfileIn(__METHOD__);
-		$hostName = self::getHostByDbName($dbname);
+
+		$hostName = self::getHostByDbName( $dbname );
+
+		// If hostName is empty, this would make a request to the current host.
+		if ( empty( $hostName ) ) {
+			wfProfileOut( __METHOD__ );
+			return false;
+		}
 
 		// request JSON format of API response
 		$params['format'] = 'json';
 
-		$parts = array();
-		foreach($params as $key => $value) {
-			$parts[] = urlencode($key) . '=' . urlencode($value);
-		}
-
-		$url = "{$hostName}/{$endpoint}?" . implode('&', $parts);
-		wfDebug(__METHOD__ . ": {$url}\n");
+		$url = "{$hostName}/{$endpoint}?" . http_build_query( $params );
+		wfDebug( __METHOD__ . ": {$url}\n" );
 
 		$options = [];
-		if ( !empty($userName) ) {
-			$options = self::loginAsUser( $userName );
+		if ( $setUser ) {
+			$options = self::loginAsUser();
 		}
 
 		// send request and parse response
-		$resp = Http::get($url, 'default', $options);
+		$resp = Http::get( $url, 'default', $options );
 
-		if ($resp === false) {
-			wfDebug(__METHOD__ . ": failed!\n");
+		if ( $resp === false ) {
+			wfDebug( __METHOD__ . ": failed!\n" );
 			$res = false;
-		}
-		else {
-			$res = json_decode($resp, true /* $assoc */);
+		} else {
+			$res = json_decode( $resp, true /* $assoc */ );
 		}
 
-		wfProfileOut(__METHOD__);
+		wfProfileOut( __METHOD__ );
+
 		return $res;
 	}
 
@@ -82,40 +84,35 @@ class ApiService extends Service {
 	 * @param string database name
 	 * @return string HTTP domain
 	 */
-	private static function getHostByDbName($dbname) {
+	private static function getHostByDbName( $dbname ) {
 		global $wgDevelEnvironment, $wgDevelEnvironmentName;
 
-		$cityId = WikiFactory::DBtoID($dbname);
-		$hostName = WikiFactory::getVarValueByName('wgServer', $cityId);
+		$cityId = WikiFactory::DBtoID( $dbname );
+		$hostName = WikiFactory::getVarValueByName( 'wgServer', $cityId );
 
-		if (!empty($wgDevelEnvironment)) {
-			if ( strpos($hostName, "wikia.com") ) {
-				$hostName = str_replace("wikia.com", "{$wgDevelEnvironmentName}.wikia-dev.com", $hostName );
+		if ( !empty( $wgDevelEnvironment ) ) {
+			if ( strpos( $hostName, "wikia.com" ) ) {
+				$hostName = str_replace( "wikia.com", "{$wgDevelEnvironmentName}.wikia-dev.com", $hostName );
 			} else {
-				$hostName = WikiFactory::getLocalEnvURL($hostName);
+				$hostName = WikiFactory::getLocalEnvURL( $hostName );
 			}
 		}
 
-		return rtrim($hostName, '/');
+		return rtrim( $hostName, '/' );
 	}
 
 	/**
 	 * get user data
-	 * @param string $userName
 	 * @return array $options
 	 */
-	public static function loginAsUser( $userName ) {
+	public static function loginAsUser() {
 		$app = F::app();
 
 		$options = array();
-
 		if ( $app->wg->User->isLoggedIn() ) {
 			$user = $app->wg->User;
 		} else {
-			$user = User::newFromName( $userName );
-			if ( !($user instanceof User) ) {
-				return $options;
-			}
+			return $options;
 		}
 
 		$params = array(

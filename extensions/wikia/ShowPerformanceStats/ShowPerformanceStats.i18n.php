@@ -62,7 +62,7 @@ $messages['ca'] = array(
 	'performancestat-cpu' => 'CPU: $1 s',
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Dontlietome7
  */
 $messages['cs'] = array(
@@ -93,11 +93,24 @@ $messages['es'] = array(
 	'performancestat-cpu' => 'CPU: $1s',
 );
 
+/** Basque (euskara)
+ * @author Subi
+ */
+$messages['eu'] = array(
+	'performancestat-total' => 'Guztira: $1s',
+	'performancestat-apache' => 'Apache: $1s',
+	'performancestat-cpu' => 'CPU: $1s',
+);
+
 /** Finnish (suomi)
+ * @author Elseweyr
  * @author Nike
  */
 $messages['fi'] = array(
+	'showperformancestats-desc' => 'Palauttaa luettavia tehokkuustilastoja',
 	'performancestat-total' => 'Yhteensä: $1 s',
+	'performancestat-apache' => 'Apache: $1 sek',
+	'performancestat-cpu' => 'CPU: $1 sek',
 );
 
 /** Faroese (føroyskt)
@@ -352,6 +365,16 @@ $messages['uk'] = array(
 	'performancestat-total' => 'Всього: $1s',
 	'performancestat-apache' => 'Apache: $1s',
 	'performancestat-cpu' => 'ЦП: $1s',
+);
+
+/** Vietnamese (Tiếng Việt)
+ * @author Baonguyen21022003
+ */
+$messages['vi'] = array(
+	'showperformancestats-desc' => 'Trả về số liệu thống kê hiệu suất có thể đọc được con người',
+	'performancestat-total' => 'Tổng số: $1s',
+	'performancestat-apache' => 'Apache: $1s',
+	'performancestat-cpu' => 'CPU: $1s',
 );
 
 /** Simplified Chinese (中文（简体）‎)

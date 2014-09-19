@@ -8,6 +8,9 @@ class ThemeSettings {
 
 	const HistoryItemsLimit = 10;
 
+	const MIN_WIDTH_FOR_SPLIT = 1030;
+	const MIN_WIDTH_FOR_NO_SPLIT = 2000;
+
 	const WordmarkImageName = 'Wiki-wordmark.png';
 	const BackgroundImageName = 'Wiki-background';
 	const FaviconImageName = 'Favicon.ico';
@@ -55,14 +58,14 @@ class ThemeSettings {
 		$this->defaultSettings['banner-image-name'] = '';
 
 		// background
-		$this->defaultSettings['background-image'] = false;
+		$this->defaultSettings['background-image'] = '';
 		$this->defaultSettings['background-image-height'] = null;
 		$this->defaultSettings['background-image-name'] = '';
 		$this->defaultSettings['background-image-width'] = null;
 		$this->defaultSettings['background-image-revision'] = false; //what is this?
 		$this->defaultSettings['background-tiled'] = false;
 		$this->defaultSettings['background-fixed'] = false;
-		$this->defaultSettings['background-align'] = "center";
+		$this->defaultSettings['background-dynamic'] = true;
 	}
 
 	public function getSettings() {
@@ -79,13 +82,18 @@ class ThemeSettings {
 				}
 			}
 
-			// add variables that might not be saved already in WF
-			if(!isset($settings['background-fixed'])) {
-				$settings['background-fixed'] = false;
-			}
-			if(!isset($settings['page-opacity'])) {
-				$settings['page-opacity'] = 100;
-			}
+		}
+		// special check for color-body-middle
+		if (!isset($settings['color-body-middle']) || !ThemeDesignerHelper::isValidColor($settings["color-body-middle"])) {
+			$settings["color-body-middle"] = $settings["color-body"];
+		}
+
+		// add variables that might not be saved already in WF
+		if(!isset($settings['background-fixed'])) {
+			$settings['background-fixed'] = false;
+		}
+		if(!isset($settings['page-opacity'])) {
+			$settings['page-opacity'] = 100;
 		}
 
 		return $settings;
@@ -123,11 +131,26 @@ class ThemeSettings {
 		global $wgCityId, $wgUser;
 		$cityId = empty($cityId) ? $wgCityId : $cityId;
 
+		// Verify wordmark length ( CONN-116 )
+		if ( !empty( $settings[ 'wordmark-text' ]) ) {
+			$settings[ 'wordmark-text' ] = trim( $settings[ 'wordmark-text' ] );
+		}
+
+		if ( empty( $settings[ 'wordmark-text' ] ) ) {
+			// Do not save wordmark if its empty.
+			unset( $settings[ 'wordmark-text' ] );
+		} else {
+			if ( mb_strlen( $settings[ 'wordmark-text' ] ) > 50 ) {
+				$settings[ 'wordmark-text' ] = mb_substr( $settings[ 'wordmark-text' ], 0, 50 );
+			}
+		}
+
 		if(isset($settings['favicon-image-name']) && strpos($settings['favicon-image-name'], 'Temp_file_') === 0) {
 			$temp_file = new LocalFile(Title::newFromText($settings['favicon-image-name'], 6), RepoGroup::singleton()->getLocalRepo());
 			$file = new LocalFile(Title::newFromText(self::FaviconImageName, 6), RepoGroup::singleton()->getLocalRepo());
 			$file->upload($temp_file->getPath(), '', '');
 			$temp_file->delete('');
+			Wikia::invalidateFavicon();
 
 			$settings['favicon-image-url'] = $file->getURL();
 			$settings['favicon-image-name'] = $file->getName();
@@ -166,7 +189,7 @@ class ThemeSettings {
 			$settings['background-image-width'] = $file->getWidth();
 			$settings['background-image-height'] = $file->getHeight();
 
-			$imageServing = new ImageServing(null, 120, array("w"=>"120", "h"=>"100"));
+			$imageServing = new ImageServing(null, 120, array("w"=>"120", "h"=>"65"));
 			$settings['user-background-image'] = $file->getURL();
 			$settings['user-background-image-thumb'] = wfReplaceImageServer($file->getThumbUrl( $imageServing->getCut($file->getWidth(), $file->getHeight(), "origin")."-".$file->getName()));
 
@@ -234,9 +257,67 @@ class ThemeSettings {
 			}
 		}
 
-
 		WikiFactory::setVarByName(self::WikiFactoryHistory, $cityId, $history, $reason);
-
 	}
 
+	/**
+	 * Get wordmark full, up-to-date URL
+	 *
+	 * This method returns URL based on "wordmark-image-url" and performs URL rewrite
+	 * for migrated wikis with short Swift bucket name
+	 *
+	 * @see  $wgUploadPath - "http://images.wikia.com/24_/es/images"
+	 *
+	 * @author macbre
+	 * @return string wordmark URL or empty string if not found
+	 */
+	public function getWordmarkUrl() {
+		global $wgUploadPath;
+
+		$wordmarkUrl = $this->getSettings()['wordmark-image-url'];
+		$wordmarkPath = explode('/images/', $wordmarkUrl)[0];
+
+		if (!empty($wordmarkPath)) {
+			$wordmarkUrl = str_replace(
+				$wordmarkPath . '/images',
+				$wgUploadPath,
+				$wordmarkUrl
+			);
+		}
+
+		return wfReplaceImageServer($wordmarkUrl, SassUtil::getCacheBuster());
+	}
+
+	/**
+	 * Get wiki background full, up-to-date URL
+	 *
+	 * This method returns URL based on "background-image" and performs URL rewrite
+	 * for migrated wikis with short Swift bucket name
+	 *
+	 * @see  $wgUploadPath - "http://images.wikia.com/24_/es/images"
+	 *
+	 * @author macbre
+	 * @return string background URL or empty string if not found
+	 */
+	public function getBackgroundUrl() {
+		global $wgUploadPath;
+
+		$backgroundUrl = $this->getSettings()['background-image'];
+
+		if (empty($backgroundUrl)) {
+			return $backgroundUrl;
+		}
+
+		$backgroundPath = explode('/images/', $backgroundUrl)[0];
+
+		if (!empty($wordmarkPath)) {
+			$backgroundUrl = str_replace(
+				$backgroundPath . '/images',
+				$wgUploadPath,
+				$backgroundUrl
+			);
+		}
+
+		return wfReplaceImageServer($backgroundUrl, SassUtil::getCacheBuster());
+	}
 }

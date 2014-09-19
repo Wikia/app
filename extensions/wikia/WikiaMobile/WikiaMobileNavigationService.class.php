@@ -1,7 +1,7 @@
 <?php
 /**
  * WikiaMobile Naviagation
- * 
+ *
  * @author Jakub Olek <bukaj.kelo(at)gmail.com>
  * @authore Federico "Lox" Lucignano <federico(at)wikia-inc.com>
  */
@@ -10,12 +10,23 @@ class  WikiaMobileNavigationService extends WikiaService {
 	 * @var $navModel NavigationModel
 	 */
 	private $navModel = null;
+	static $skipRendering = false;
 
 	function init(){
 		$this->navModel = new NavigationModel();
 	}
 
+	static function setSkipRendering( $value = false ){
+		self::$skipRendering = $value;
+	}
+
 	public function index() {
+
+		if ( self::$skipRendering ) {
+			return false;
+		}
+
+
 		$themeSettings = new ThemeSettings();
 		$settings = $themeSettings->getSettings();
 
@@ -24,7 +35,7 @@ class  WikiaMobileNavigationService extends WikiaService {
 		$this->response->setVal( 'wordmarkFont', $settings["wordmark-font"] );
 
 		if ( $settings["wordmark-type"] == "graphic" ) {
-			$this->response->setVal( 'wordmarkUrl', wfReplaceImageServer( $settings['wordmark-image-url'], SassUtil::getCacheBuster() ) );
+			$this->response->setVal( 'wordmarkUrl', $themeSettings->getWordmarkUrl() );
 		} else {
 			$this->response->setVal( 'wikiName', ( !empty( $settings['wordmark-text'] ) ) ? $settings['wordmark-text'] : $this->wg->SiteName );
 		}
@@ -63,5 +74,12 @@ class  WikiaMobileNavigationService extends WikiaService {
 
 		// report wiki nav parse errors (BugId:15240)
 		$this->response->setVal( 'parseErrors', $this->navModel->getErrors() );
+
+		$showVideoLink = false;
+		if( $this->app->wg->EnableSpecialVideosExt ) {
+			$showVideoLink = true;
+			$this->specialVideosUrl = SpecialPage::getTitleFor("Videos")->escapeLocalUrl();
+		}
+		$this->showVideoLink = $showVideoLink;
 	}
 }

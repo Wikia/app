@@ -124,11 +124,7 @@ if(isset($wgScriptPath))
 	$wgHooks['BeforePageDisplay'][] = "gracenoteLyricsTagCss";
 
 	// This only needs to be included once between the Lyrics tag and the GracenoteLyrics tag.
-	$wgHooks['BeforePageDisplay'][] = "gracenote_installCopyProtection";
-	$wgHooks['BeforePageDisplay'][] = "gracenote_disableEdit";
 	$wgHooks['SkinAfterBottomScripts'][] = 'gracenote_outputGoogleAnalytics';
-
-	//$wgHooks['getUserPermissionsErrorsExpensive'][] = "gracenote_disableEditByPermissions";
 
 	// Use this pre-existing Wikia-specific hook to apply the index policy changes after the defaults are set (which comes after parsing).
 	$wgHooks['AfterViewUpdates'][] = "efGracenoteApplyIndexPolicy";
@@ -194,6 +190,7 @@ function renderGracenoteLyricsTag($input, $argv, Parser $parser)
 	$ringtoneLink.= "$href<img src='$imgPath/phone_left.gif' alt='phone' width='16' height='17'/> ";
 	$ringtoneLink.= "Send \"$songTitle\" Ringtone to your Cell";
 	$ringtoneLink.= " <img src='$imgPath/phone_right.gif' alt='phone' width='16' height='17'/></a>";
+	$ringtoneLink.= "<span class='adNotice'>Ad</span>";
 	$ringtoneLink.= "</div>";
 	GLOBAL $wgFirstLyricTag;
 	$wgFirstLyricTag = false; // Even though the gracenote extension ignores these, this will prevent ringtones on other <lyrics> tags.

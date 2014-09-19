@@ -1,6 +1,8 @@
-@import "../../../../skins/oasis/css/core/color";
-@import "../../../../skins/oasis/css/mixins/curation-elements";
-@import "../../../../skins/oasis/css/mixins/clearfix";
+@import "skins/shared/color";
+@import "skins/oasis/css/core/layout";
+@import "skins/shared/mixins/curation-elements";
+@import "skins/shared/mixins/calc";
+@import "skins/shared/mixins/clearfix";
 
 .slots-setup {
 	width: 250px;
@@ -28,11 +30,25 @@
 }
 
 .collections-setup {
-	width: 735px;
-	float: left;
-	padding-left: 10px;
-	margin: 0 0 20px 10px;
 	border-left: 1px solid $color-page-border;
+	float: left;
+	margin: 0 0 20px 10px;
+	padding-left: 10px;
+
+	@if ( $responsive-layout-enabled ) {
+		@include width-calc('100% - 280px');
+		width: auto;
+
+		@media screen and (max-width: 1030px) {
+			border: none;
+			margin: 0;
+			padding: 0;
+			width: 100%;
+		}
+
+	} @else {
+		width: 735px;
+	}
 
 	.collection-module {
 		@include module-box;
@@ -111,10 +127,55 @@
 	}
 }
 
+.corp-stats {
+	margin-bottom: 50px;
+
+	input[type=submit] {
+		float: none;
+	}
+	input[type=text] {
+		width: 175px;
+	}
+	label {
+		display: block;
+		float: left;
+		min-width: 175px;
+	}
+}
+
+.hubs-slots {
+	@include clearfix;
+}
+.hub-slot {
+	display: inline-block;
+	width: 30%;
+	.image-placeholder {
+		margin: 10px 0;
+	}
+	.input-group {
+		margin: 10px 0;
+	}
+	label {
+		display: block;
+	}
+	textarea {
+		height: 75px;
+		width: 80%;
+	}
+}
+.hubs-slots-submit {
+	float: none;
+}
+
+
 input[type=submit] {
 	float: right;
 }
 
 .alternative {
 	color: $color-alternate-text;
+}
+
+.export-list-button {
+	float: right;
 }

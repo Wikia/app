@@ -16,23 +16,25 @@ class PhalanxStatsSpecialController extends WikiaSpecialPageController {
 		$this->wg->Out->setPageTitle( wfMsg('phalanx-stats-title') );
 
 		if ( !$this->userCanExecute( $this->wg->User ) ) {
-			$this->displayRestrictionError();
 			wfProfileOut( __METHOD__ );
+			$this->displayRestrictionError();
 			return;
 		}
 
 		$par = $this->getPar();
-		$blockId = $this->wg->Request->getInt('blockId', intval($par));
-		if ( !empty( $blockId ) ) {
-			// show block stats
-			$this->blockStats($blockId);
-		} elseif ( strpos( $par, 'wiki' ) !== false ) {
+		if ( strpos( $par, 'wiki' ) === 0 ) {
 			// show per-wiki stats
 			list ( , $wikiId ) = explode( "/", $par, 2 );
 			$this->blockWikia($wikiId);
 		} else {
-			// show help page
-			$this->forward('PhalanxStatsSpecial', 'help');
+			$blockId = $this->wg->Request->getInt('blockId', intval($par));
+			if ( !empty( $blockId ) ) {
+				// show block stats
+				$this->blockStats($blockId);
+			} else {
+				// show help page
+				$this->forward('PhalanxStatsSpecial', 'help');
+			}
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -163,6 +165,11 @@ class PhalanxStatsSpecialController extends WikiaSpecialPageController {
 	}
 
 	public function help() {
+		if ( !$this->userCanExecute( $this->wg->User ) ) {
+			$this->displayRestrictionError();
+			return;
+		}
+
 		$this->setVal( 'action', $this->title->getFullURL() );
 	}
 }

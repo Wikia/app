@@ -54,7 +54,6 @@ class WAMPageController extends WikiaController
 	}
 
 	protected function collectRequestParameters() {
-		$this->filterLanguages = $this->model->getCorporateWikisLanguages();
 		$this->filterVerticals = $this->model->getVerticals();
 
 		$this->searchPhrase = htmlspecialchars($this->getVal('searchPhrase', null));
@@ -68,10 +67,6 @@ class WAMPageController extends WikiaController
 
 		$this->page = $this->getVal('page', $this->model->getFirstPage());
 
-		$langValidator = new WikiaValidatorSelect(array('allowed' => $this->filterLanguages));
-		if (!$langValidator->isValid($this->selectedLangCode)) {
-			$this->selectedLangCode = null;
-		}
 		$verticalValidator = new WikiaValidatorSelect(array('allowed' => array_keys($this->filterVerticals)));
 		if (!$verticalValidator->isValid($this->selectedVerticalId)) {
 			$this->selectedVerticalId = null;
@@ -84,8 +79,9 @@ class WAMPageController extends WikiaController
 				'wamFilterDateFormat' => $this->getJsDateFormat()
 			]
 		);
+
 		if (!empty($this->selectedDate)) {
-			$timestamp = $this->getTimestampFromLocalDate($this->selectedDate);
+			$timestamp = $this->selectedDate;
 
 			if (!empty($filterMinMaxDates['min_date'])) {
 				$dateValidator = new WikiaValidatorCompare(['expression' => WikiaValidatorCompare::GREATER_THAN_EQUAL]);
@@ -100,6 +96,13 @@ class WAMPageController extends WikiaController
 					$this->selectedDate = null;
 				}
 			}
+		}
+
+		$this->filterLanguages = $this->model->getWAMLanguages( $this->selectedDate );
+
+		$langValidator = new WikiaValidatorSelect(array('allowed' => $this->filterLanguages));
+		if (!$langValidator->isValid($this->selectedLangCode)) {
+			$this->selectedLangCode = null;
 		}
 
 		// combine all filter params to array
@@ -118,10 +121,8 @@ class WAMPageController extends WikiaController
 
 	protected function getIndexParams($forPaginator = false) {
 		if( $forPaginator ) {
-			$date = isset($this->selectedDate) ? $this->selectedDate : null;
 			$page = '%s';
 		} else {
-			$date = isset($this->selectedDate) ? strtotime($this->selectedDate) : null;
 			$page = $this->page;
 		}
 
@@ -129,56 +130,11 @@ class WAMPageController extends WikiaController
 			'searchPhrase' => $this->searchPhrase,
 			'verticalId' => $this->selectedVerticalId,
 			'langCode' => $this->selectedLangCode,
-			'date' => $date,
+			'date' => isset($this->selectedDate) ? $this->selectedDate : null,
 			'page' => $page,
 		];
 
 		return $indexParams;
-	}
-
-	/**
-	 * Convert date local language into timestamp (workaround for not existing locales)
-	 *
-	 * @param $localDate
-	 * @return int
-	 */
-	protected function getTimestampFromLocalDate($localDate) {
-		$engMonthNames = array_map(
-			'mb_strtolower',
-			Language::factory(self::DEFAULT_LANG_CODE)->getMonthNamesArray()
-		);
-
-		$localMonthNames = array_map(
-			'mb_strtolower',
-			$this->wg->Lang->getMonthNamesArray()
-		);
-
-		$monthMap = array_combine($localMonthNames, $engMonthNames);
-		// remove first element because it's always empty
-		array_shift($monthMap);
-
-		// get month short version
-		$engShortMonthNames = array_map(
-			'mb_strtolower',
-			Language::factory(self::DEFAULT_LANG_CODE)->getMonthAbbreviationsArray()
-		);
-
-		$localShortMonthNames = array_map(
-			'mb_strtolower',
-			$this->wg->Lang->getMonthAbbreviationsArray()
-		);
-
-		$shortMonthMap = array_combine($localShortMonthNames, $engShortMonthNames);
-		// remove first element because it's always empty
-		array_shift($shortMonthMap);
-
-		$monthMap += $shortMonthMap;
-
-		$engDate = strtr(mb_strtolower($localDate), $monthMap);
-
-		$timestamp = strtotime($engDate);
-
-		return $timestamp;
 	}
 
 	protected function getUrlWithAllParams() {
@@ -197,7 +153,7 @@ class WAMPageController extends WikiaController
 		// because this method is called after this check and isWAMPage() check
 
 		if( $title->isSubpage() && !$currentTabIndex ) {
-			$this->wg->Out->redirect($this->model->getWAMSubpageUrl($title), HTTP_REDIRECT_PERM);
+			$this->wg->Out->redirect($this->model->getWAMSubpageUrl($title), 301);
 		}
 	}
 
@@ -209,7 +165,7 @@ class WAMPageController extends WikiaController
 		$mainWAMPageUrl = $this->model->getWAMMainPageUrl($this->filterParams);
 
 		if( $isFirstTab && !empty($mainWAMPageUrl) ) {
-			$this->wg->Out->redirect($mainWAMPageUrl, HTTP_REDIRECT_PERM);
+			$this->wg->Out->redirect($mainWAMPageUrl, 301);
 		}
 	}
 
@@ -223,7 +179,7 @@ class WAMPageController extends WikiaController
 		$isMisspeledMainPage = !($dbkey === $mainPage);
 
 		if( $isMainPage && $isMisspeledMainPage ) {
-			$this->wg->Out->redirect($this->model->getWAMMainPageUrl(), HTTP_REDIRECT_PERM);
+			$this->wg->Out->redirect($this->model->getWAMMainPageUrl(), 301);
 		}
 	}
 

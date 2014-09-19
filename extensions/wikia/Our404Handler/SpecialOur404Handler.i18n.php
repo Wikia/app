@@ -101,10 +101,19 @@ $messages['be-tarask'] = array(
 );
 
 /** Bulgarian (български)
+ * @author Aquilax
  * @author DCLXVI
  */
 $messages['bg'] = array(
-	'our404handler' => 'Грешка 404: Страницата не беше намерена!',
+	'our404handler' => 'Грешка 404: Страницата не беше открита!',
+	'our404handler-oops' => 'Това не са страниците, които търсите. Продължавайте.',
+	'message404' => '"\'Много съжаляваме, но поради някаква причина, страницата, която заявихте, не съществува."\'
+
+Статия „$1“ не може да бъде открита.
+
+* Можете да опитате със статия [[$2]].
+* Можете да се възползвате от полето за търсене в лявата част на страницата.
+* За да преминете към началната страница на този сайт, щракнете тук: [{{SERVER}} {{SITENAME}}].',
 );
 
 /** Breton (brezhoneg)
@@ -138,7 +147,7 @@ L'article '''$1''' no s'ha trobat.
 * Per anar a la portada d'aquest lloc, fes clic a l'enllaç: [{{SERVER}} {{SITENAME}}]",
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Mormegil
  */
 $messages['cs'] = array(
@@ -242,6 +251,7 @@ $messages['fa'] = array(
 /** Finnish (suomi)
  * @author Crt
  * @author Jack Phoenix <jack@countervandalism.net>
+ * @author Pxos
  */
 $messages['fi'] = array(
 	'our404handler' => 'Virhe 404: Sivua ei löydy.',
@@ -250,9 +260,9 @@ $messages['fi'] = array(
 
 Artikkelia '''$1''' ei löytynyt.
 
-* Voit yrittää artikkelia [[$2]]
-* Voit käyttää sivun vasemmalla puolella olevaa hakulaatikkoa
-* Mennäksesi tämän sivuston etusivulle, napsauta linkkiä: [{{SERVER}} {{SITENAME}}]",
+* Voit kokeilla artikkelia [[$2]]
+* Voit käyttää sivulla olevaa hakutoimintoa
+* Mene tämän sivuston etusivulle napsauttamalla linkkiä: [{{SERVER}} {{SITENAME}}]",
 );
 
 /** Faroese (føroyskt)
@@ -292,6 +302,21 @@ Non se puido atopar o artigo \"'''\$1'''\".
 * Pode intentalo co artigo \"[[\$2]]\"
 * Pode usar a caixa de buscas do lado esquerdo da páxina
 * Para ir á páxina principal deste sitio web, prema na ligazón: [{{SERVER}} {{SITENAME}}]",
+);
+
+/** Goan Konkani (Latin script) (Konknni)
+ * @author The Discoverer
+ */
+$messages['gom-latn'] = array(
+	'our404handler' => '404: Pan mellunk-nam!',
+	'our404handler-oops' => 'Tum sodtai tim panam him nhoi. Fuddem sor.',
+	'message404' => "\"Tun sodtai tem pan kai karonak lagon astitvant na\"
+
+'''\$1''' hem pan mellunk-nam.
+
+* Tuven hem pan polleunk zata: [[\$2]]
+* Tuven hea panache dhaveak 'Sod' uzar korunk zata
+* Mukhel panar vochpak, hanga click kor: [{{SERVER}} {{SITENAME}}]",
 );
 
 /** Hebrew (עברית)
@@ -488,7 +513,7 @@ $messages['mk'] = array(
 
 * Обидете се со статијата [[$2]]
 * Можете да го употребите полето за пребарување од лево
-* За да отидете на главната страница на ова мрежно место, кликнете на врската: [{{SERVER}} {{SITENAME}}]",
+* За да отидете на главната страница на ова мрежно место, стиснете на врската: [{{SERVER}} {{SITENAME}}]",
 );
 
 /** Malayalam (മലയാളം)
@@ -787,10 +812,11 @@ Artikeln '''$1''' kunde inte hittas.
 );
 
 /** Telugu (తెలుగు)
+ * @author Chaduvari
  * @author Veeven
  */
 $messages['te'] = array(
-	'our404handler' => '404 పొరపాటు: పేజీ కనబడలేదు!',
+	'our404handler' => '404 లోపం: పేజీ కనబడలేదు!',
 );
 
 /** Tagalog (Tagalog)
@@ -839,11 +865,12 @@ $messages['uk'] = array(
 );
 
 /** Vietnamese (Tiếng Việt)
+ * @author Baonguyen21022003
  * @author Vinhtantran
  */
 $messages['vi'] = array(
 	'our404handler' => 'Lỗi 404: Không tìm thấy trang!',
-	'our404handler-oops' => 'Đây không phải là những trang bạn đang tìm kiếm. Xin cứ tiếp tục.',
+	'our404handler-oops' => 'Đây không phải là những trang bạn đang tìm kiếm. Xin đừng tiếp tục.',
 	'message404' => "
 '''Chúng tôi thực sự rất tiếc, nhưng vì lý do nào đó, trang bạn yêu cầu không tồn tại.'''
 

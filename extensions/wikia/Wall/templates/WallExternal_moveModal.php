@@ -18,12 +18,4 @@
 
 	echo $app->renderView('WikiaStyleGuideForm', 'index', array('form' => $form));
 ?>
-	<div class="neutral modalToolbar">
-		<button class="secondary cancel">
-			<?= wfMsg('cancel') ?>
-		</button>
-		<button class="submit">
-			<?= wfMsg('wall-action-move-thread-ok') ?>
-		</button>
-	</div>
 </section>

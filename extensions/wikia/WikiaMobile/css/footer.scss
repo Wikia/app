@@ -2,20 +2,24 @@
 @import "mixins/box-shadow.scss";
 
 #wkFtr {
-	//the height will be manipulated later by ads.js
-	min-height: 157px;
-	@include box-shadow(inset 0 30px 20px -20px rgba(0,0,0,.4));
-	text-align: center;
+	@include box-shadow(inset 0 20px 20px -20px rgba(0,0,0,.4));
+	background-color: $footerBackground;
 	color: $footerTextColor;
+	font-size: 0.8rem;
+	padding: 35px;
+	text-align: left;
 
 	ul {
-		margin: 10px;
-		padding: 0;
+		margin: 0;
+		padding: 25px 0 0 0;
+
+		&:first-of-type {
+			font-weight: bold;
+		}
 	}
 
 	li {
-		display: inline-block;
-		padding: 5px;
+		display: block;
 	}
 
 	a {
@@ -24,10 +28,13 @@
 }
 
 #wkLogo {
-	width: 100px;
-	height: 25px;
-	margin-top: 20px;
-	display: inline-block;
-	background-image: url('/extensions/wikia/WikiaMobile/images/wikialogo.png'); /* base64 */
-	background-size: 100px 25px;
+	background-image: url('/extensions/wikia/WikiaMobile/images/wikialogo.png');
+	background-size: 112px 30px;
+	display: block;
+	height: 30px;
+	width: 112px;
+}
+
+.cont-dir-rtl #wkFtr {
+	@include box-shadow(inset 0 -20px 20px 20px rgba(0,0,0,.4));
 }

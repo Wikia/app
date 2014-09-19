@@ -84,7 +84,8 @@ $messages['qqq'] = array(
 	'wikiaquiz-moreinfoheading-label' => 'Form Label for More Info Heading.',
 	'wikiaquiz-requireemail-label' => 'Label for checkbox for required email address.',
 	'wikiaquiz-moreinfolinks-label' => 'Form Label for More Info Links.',
-	'wikiaquiz-moreinfoarticle-label' => 'Form Label for More info Article.',
+	'wikiaquiz-moreinfoarticle-label' => 'Form Label for More info Article.
+{{Identical|Article}}',
 	'wikiaquiz-moreinfolinktext-label' => 'Form Label for More info Link Text.',
 	'wikiaquiz-question-label' => 'Form Label for Question.
 {{Identical|Question}}',
@@ -99,8 +100,10 @@ $messages['qqq'] = array(
 {{Identical|Answer}}',
 	'wikiaquiz-correct-label' => 'Form Label for Correct.',
 	'wikiaquiz-addnewitem-label' => 'Special Page text next to button for a new item to a quiz.',
-	'wikiaquiz-cancel-label' => 'Cancel button label.',
-	'wikiaquiz-publish-label' => 'Create/Edit Quiz button label for confirming changes.',
+	'wikiaquiz-cancel-label' => 'Cancel button label.
+{{Identical|Cancel}}',
+	'wikiaquiz-publish-label' => 'Create/Edit Quiz button label for confirming changes.
+{{Identical|Publish}}',
 	'wikiaquiz-error-duplicate-quiz' => 'Error message when user tries to create a quiz that already exists.',
 	'wikiaquiz-error-duplicate-question' => 'Error message when user tries to create a question that already exists.',
 	'wikiaquiz-error-invalid-question' => 'Error message when question is invalid/empty.',
@@ -199,6 +202,7 @@ $messages['az'] = array(
 	'wikiaquiz-cancel-label' => 'İmtina',
 	'wikiaquiz-publish-label' => 'Naşir',
 	'wikiaquiz-game-finish-button' => 'Son',
+	'wikiaquiz-game-email-placeholder' => 'yourname@youremail.com',
 );
 
 /** Bulgarian (български)
@@ -242,6 +246,7 @@ $messages['br'] = array(
 	'wikiaquiz-addnewitem-label' => 'Ouzhpennañ un elfenn nevez',
 	'wikiaquiz-cancel-label' => 'Nullañ',
 	'wikiaquiz-publish-label' => 'Embann',
+	'wikiaquiz-error-duplicate-question' => 'Ur goulenn en anv-se zo anezhañ dija.',
 	'wikiaquiz-error-invalid-question' => 'Direizh eo testenn ar goulenn.',
 	'wikiaquiz-error-invalid-image' => "N'eo ket reizh ar skeudenn : $1",
 	'wikiaquiz-error-invalid-video' => "N'eo ket reizh ar video : $1",
@@ -267,12 +272,16 @@ $messages['br'] = array(
 	'wikiaquiz-game-email-placeholder' => 'hoanv@hopostel.com',
 	'wikiaquiz-game-email-button' => 'Kas din traoù digoust',
 	'wikiaquiz-game-email-valid-please' => "Ebarzhit ur chomlec'h postel reizh, mar plij.",
+	'wikiaquiz-game-email-token-mismatch' => 'Pop ! Ar jedouer ne glot ket',
 	'wikiaquiz-game-email-subject' => "Trugarez deoc'h evit ho kasadenn !",
+	'wikiaquiz-game-email-error' => 'Ur fazi a oa bet pa oad o kas ar postel-mañ : $1',
+	'wikiaquiz-game-challenge' => "Broudit ho mignoned da c'hoari !",
 	'wikiaquiz-game-mute' => 'Hep son',
 );
 
 /** Catalan (català)
  * @author Alvaro Vidal-Abarca
+ * @author Fitoschido
  * @author Gemmaa
  */
 $messages['ca'] = array(
@@ -298,7 +307,7 @@ $messages['ca'] = array(
 	'wikiaquiz-questions-label' => 'Preguntes',
 	'wikiaquiz-answers-label' => 'Respostes',
 	'wikiaquiz-answer-label' => 'Resposta',
-	'wikiaquiz-correct-label' => 'Corregir?',
+	'wikiaquiz-correct-label' => '¿Corregir?',
 	'wikiaquiz-addnewitem-label' => 'Afegeix un nou element',
 	'wikiaquiz-cancel-label' => 'Cancel·la',
 	'wikiaquiz-publish-label' => 'Publica',
@@ -338,7 +347,14 @@ $messages['ca'] = array(
 	'wikiaquiz-game-mute' => 'Atenuar-se',
 );
 
-/** Czech (česky)
+/** Chechen (нохчийн)
+ * @author Умар
+ */
+$messages['ce'] = array(
+	'wikiaquiz-game-continue-button' => 'Кхин дӀа',
+);
+
+/** Czech (čeština)
  * @author Chmee2
  * @author Vks
  */
@@ -491,7 +507,7 @@ $messages['diq'] = array(
 	'wikiaquiz-answers-label' => 'Cıwab',
 	'wikiaquiz-answer-label' => 'Cewab',
 	'wikiaquiz-correct-label' => 'Timar bo?',
-	'wikiaquiz-cancel-label' => 'Bıterkne',
+	'wikiaquiz-cancel-label' => 'Bıtexelne',
 	'wikiaquiz-publish-label' => 'Vıla ke',
 	'wikiaquiz-game-start-button' => 'Destpêkerdışê Kayer',
 	'wikiaquiz-game-cadence-3' => 'Amade',
@@ -500,7 +516,7 @@ $messages['diq'] = array(
 	'wikiaquiz-game-question-label' => 'PERS',
 	'wikiaquiz-game-next-button' => 'Perso Bahdoyên',
 	'wikiaquiz-game-finish-button' => 'Qediya',
-	'wikiaquiz-game-incorrect-label' => 'Xırab. peh.',
+	'wikiaquiz-game-incorrect-label' => 'ĞELET. Wey.',
 	'wikiaquiz-game-your-score' => 'SKORÊ ŞIMA',
 	'wikiaquiz-game-continue-button' => 'Dewam ke',
 	'wikiaquiz-game-mute' => 'Bêveng',
@@ -575,13 +591,22 @@ $messages['es'] = array(
 
 /** Persian (فارسی)
  * @author Mjbmr
+ * @author Reza1615
  */
 $messages['fa'] = array(
+	'wikiaquiz-title-label' => 'عنوان',
+	'wikiaquiz-question-label' => 'پرسش',
+	'wikiaquiz-questions-label' => 'سوال‌ها',
+	'wikiaquiz-answers-label' => 'پاسخ‌ها',
+	'wikiaquiz-answer-label' => 'پاسخ',
+	'wikiaquiz-cancel-label' => 'لغو',
 	'wikiaquiz-game-start-button' => 'شروع بازی',
 	'wikiaquiz-game-cadence-1' => 'برو!',
 	'wikiaquiz-game-question-label' => 'سؤال',
 	'wikiaquiz-game-next-button' => 'سؤال بعدی',
 	'wikiaquiz-game-finish-button' => 'پایان',
+	'wikiaquiz-game-continue-button' => 'ادامه',
+	'wikiaquiz-game-mute' => 'صامت‌سازی',
 );
 
 /** Faroese (føroyskt)
@@ -1563,7 +1588,7 @@ $messages['ps'] = array(
 	'wikiaquiz-answers-label' => 'ځوابونه',
 	'wikiaquiz-answer-label' => 'ځواب',
 	'wikiaquiz-correct-label' => 'سم؟',
-	'wikiaquiz-cancel-label' => 'ناګارل',
+	'wikiaquiz-cancel-label' => 'ناگارل',
 	'wikiaquiz-publish-label' => 'خپرول',
 	'wikiaquiz-game-start-button' => 'لوبه پيلول',
 	'wikiaquiz-game-cadence-3' => 'چمتو شه',
@@ -2124,6 +2149,13 @@ $messages['uk'] = array(
 	'wikiaquiz-game-mute' => 'Без звуку',
 );
 
+/** Vietnamese (Tiếng Việt)
+ * @author Baonguyen21022003
+ */
+$messages['vi'] = array(
+	'wikiaquiz-game-email-placeholder' => 'tênđịachỉemail@wikia.com',
+);
+
 /** Simplified Chinese (中文（简体）‎)
  * @author Hydra
  * @author Hzy980512
@@ -2196,6 +2228,9 @@ $messages['zh-hans'] = array(
  * @author Ffaarr
  */
 $messages['zh-hant'] = array(
+	'wikiaquiz-editquiz-headline' => '編輯測驗',
+	'wikiaquiz-createquizarticle-headline' => '創建測驗的問題和答案',
+	'wikiaquiz-editquizarticle-headline' => '編輯測驗的問題和答案',
 	'wikiaquiz-title-label' => '標題',
 );
 

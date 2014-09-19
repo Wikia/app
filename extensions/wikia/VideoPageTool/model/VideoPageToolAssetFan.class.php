@@ -5,4 +5,5 @@
  */
 class VideoPageToolAssetFan extends VideoPageToolAsset {
 
+	const SECTION = 'fan';
 }

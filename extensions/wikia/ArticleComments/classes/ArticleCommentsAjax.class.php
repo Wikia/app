@@ -201,6 +201,12 @@ class ArticleCommentsAjax {
 
 			$result = array('text' => $commentsHTML, 'counter' => $countAll);
 
+			if( F::app()->checkskin( 'wikiamobile' ) ) {
+				$result['counterMessage'] = wfMessage( 'wikiamobile-article-comments-counter' )
+					->params( $countAll )
+					->text();
+			}
+
 			if ( $parentId ) {
 				$result['parentId'] = $parentId;
 			}

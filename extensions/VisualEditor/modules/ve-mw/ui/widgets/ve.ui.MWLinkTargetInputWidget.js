@@ -1,7 +1,7 @@
 /*!
  * VisualEditor UserInterface MWLinkTargetInputWidget class.
  *
- * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
@@ -12,10 +12,10 @@
  *
  * @class
  * @extends ve.ui.LinkTargetInputWidget
- * @mixins ve.ui.LookupInputWidget
+ * @mixins OO.ui.LookupInputWidget
  *
  * @constructor
- * @param {Object} [config] Config options
+ * @param {Object} [config] Configuration options
  */
 ve.ui.MWLinkTargetInputWidget = function VeUiMWLinkTargetInputWidget( config ) {
 	// Config intialization
@@ -25,21 +25,21 @@ ve.ui.MWLinkTargetInputWidget = function VeUiMWLinkTargetInputWidget( config ) {
 	ve.ui.LinkTargetInputWidget.call( this, config );
 
 	// Mixin constructors
-	ve.ui.LookupInputWidget.call( this, this, config );
+	OO.ui.LookupInputWidget.call( this, this, config );
 
 	// Events
-	this.lookupMenu.connect( this, { 'select': 'onLookupMenuItemSelect' } );
+	this.lookupMenu.connect( this, { 'choose': 'onLookupMenuItemChoose' } );
 
 	// Initialization
-	this.$.addClass( 've-ui-mwLinkTargetInputWidget' );
-	this.lookupMenu.$.addClass( 've-ui-mwLinkTargetInputWidget-menu' );
+	this.$element.addClass( 've-ui-mwLinkTargetInputWidget' );
+	this.lookupMenu.$element.addClass( 've-ui-mwLinkTargetInputWidget-menu' );
 };
 
 /* Inheritance */
 
-ve.inheritClass( ve.ui.MWLinkTargetInputWidget, ve.ui.LinkTargetInputWidget );
+OO.inheritClass( ve.ui.MWLinkTargetInputWidget, ve.ui.LinkTargetInputWidget );
 
-ve.mixinClass( ve.ui.MWLinkTargetInputWidget, ve.ui.LookupInputWidget );
+OO.mixinClass( ve.ui.MWLinkTargetInputWidget, OO.ui.LookupInputWidget );
 
 /* Methods */
 
@@ -52,9 +52,9 @@ ve.mixinClass( ve.ui.MWLinkTargetInputWidget, ve.ui.LookupInputWidget );
  * a link to "Foo".
  *
  * @method
- * @param {ve.ui.MenuItemWidget|null} item Selected item
+ * @param {OO.ui.MenuItemWidget|null} item Selected item
  */
-ve.ui.MWLinkTargetInputWidget.prototype.onLookupMenuItemSelect = function ( item ) {
+ve.ui.MWLinkTargetInputWidget.prototype.onLookupMenuItemChoose = function ( item ) {
 	if ( item ) {
 		this.setAnnotation( item.getData() );
 	} else if ( this.annotation ) {
@@ -69,19 +69,30 @@ ve.ui.MWLinkTargetInputWidget.prototype.onLookupMenuItemSelect = function ( item
  * @returns {jqXHR} AJAX object without success or fail handlers attached
  */
 ve.ui.MWLinkTargetInputWidget.prototype.getLookupRequest = function () {
-	return $.ajax( {
-		'url': mw.util.wikiScript( 'api' ),
-		'data': {
-			'format': 'json',
+	var propsJqXhr,
+		searchJqXhr = ve.init.mw.Target.static.apiRequest( {
 			'action': 'opensearch',
 			'search': this.value,
 			'namespace': 0,
 			'suggest': ''
-		},
-		'dataType': 'json'
-	} );
-};
+		} );
 
+	return searchJqXhr.then( function ( data ) {
+		propsJqXhr = ve.init.mw.Target.static.apiRequest( {
+			'action': 'query',
+			'prop': 'info|pageprops',
+			'titles': ( data[1] || [] ).join( '|' ),
+			'ppprop': 'disambiguation'
+		} );
+		return propsJqXhr;
+	} ).promise( { abort: function () {
+		searchJqXhr.abort();
+
+		if ( propsJqXhr ) {
+			propsJqXhr.abort();
+		}
+	} } );
+};
 /**
  * Get lookup cache item from server response data.
  *
@@ -89,74 +100,121 @@ ve.ui.MWLinkTargetInputWidget.prototype.getLookupRequest = function () {
  * @param {Mixed} data Response from server
  */
 ve.ui.MWLinkTargetInputWidget.prototype.getLookupCacheItemFromData = function ( data ) {
-	return ve.isArray( data ) && data.length ? data[1] : [];
+	return data.query && data.query.pages || {};
 };
 
 /**
  * Get list of menu items from a server response.
  *
  * @param {Object} data Query result
- * @returns {ve.ui.MenuItemWidget[]} Menu items
+ * @returns {OO.ui.MenuItemWidget[]} Menu items
  */
 ve.ui.MWLinkTargetInputWidget.prototype.getLookupMenuItemsFromData = function ( data ) {
-	var i, len, item,
-		menu$$ = this.lookupMenu.$$,
+	var i, len, item, pageExistsExact, pageExists, index, matchingPage,
+		menu$ = this.lookupMenu.$,
 		items = [],
-		matchingPages = data,
-		// If not found, run value through mw.Title to avoid treating a match as a
-		// mismatch where normalisation would make them matching (bug 48476)
-		pageExistsExact = ve.indexOf( this.value, matchingPages ) !== -1,
-		pageExists =
-			pageExistsExact ||
-			ve.indexOf( new mw.Title( this.value ).getPrefixedText(), matchingPages ) !== -1;
+		existingPages = [],
+		matchingPages = [],
+		disambigPages = [],
+		redirectPages = [],
+		titleObj = mw.Title.newFromText( this.value );
+
+	for ( index in data ) {
+		matchingPage = data[index];
+		existingPages.push( matchingPage.title );
+
+		if ( matchingPage.redirect !== undefined ) {
+			redirectPages.push( matchingPage.title );
+		} else if ( matchingPage.pageprops !== undefined && matchingPage.pageprops.disambiguation !== undefined ) {
+			disambigPages.push( matchingPage.title );
+		} else {
+			matchingPages.push( matchingPage.title );
+		}
+	}
+
+	// If not found, run value through mw.Title to avoid treating a match as a
+	// mismatch where normalisation would make them matching (bug 48476)
+	pageExistsExact = ve.indexOf( this.value, existingPages ) !== -1;
+	pageExists = pageExistsExact || (
+		titleObj && ve.indexOf( titleObj.getPrefixedText(), existingPages ) !== -1
+	);
 
 	// External link
 	if ( ve.init.platform.getExternalLinkUrlProtocolsRegExp().test( this.value ) ) {
-		items.push( new ve.ui.MenuSectionItemWidget(
+		items.push( new OO.ui.MenuSectionItemWidget(
 			'externalLink',
-			{ '$$': menu$$, 'label': ve.msg( 'visualeditor-linkinspector-suggest-external-link' ) }
+			{ '$': menu$, 'label': ve.msg( 'visualeditor-linkinspector-suggest-external-link' ) }
 		) );
-		items.push( new ve.ui.MenuItemWidget(
+		items.push( new OO.ui.MenuItemWidget(
 			this.getExternalLinkAnnotationFromUrl( this.value ),
-			{ '$$': menu$$, 'rel': 'externalLink', 'label': this.value }
+			{ '$': menu$, 'rel': 'externalLink', 'label': this.value }
 		) );
 	}
 
 	// Internal link
 	if ( !pageExists ) {
-		if ( ve.ui.MWLinkInspector.static.legalTitle.test( this.value ) ) {
-			items.push( new ve.ui.MenuSectionItemWidget(
+		if ( titleObj ) {
+			items.push( new OO.ui.MenuSectionItemWidget(
 				'newPage',
-				{ '$$': menu$$, 'label': ve.msg( 'visualeditor-linkinspector-suggest-new-page' ) }
+				{ '$': menu$, 'label': ve.msg( 'visualeditor-linkinspector-suggest-new-page' ) }
 			) );
-			items.push( new ve.ui.MenuItemWidget(
+			items.push( new OO.ui.MenuItemWidget(
 				this.getInternalLinkAnnotationFromTitle( this.value ),
-				{ '$$': menu$$, 'rel': 'newPage', 'label': this.value }
+				{ '$': menu$, 'rel': 'newPage', 'label': this.value }
 			) );
 		} else {
-			item = new ve.ui.MenuSectionItemWidget(
+			// If no title object could be created, it means the title is illegal
+			item = new OO.ui.MenuSectionItemWidget(
 				'illegalTitle',
-				{ '$$': menu$$, 'label': ve.msg( 'visualeditor-linkinspector-illegal-title' ) }
+				{ '$': menu$, 'label': ve.msg( 'visualeditor-linkinspector-illegal-title' ) }
 			);
-			item.$.addClass( 've-ui-mwLinkTargetInputWidget-warning' );
+			item.$element.addClass( 've-ui-mwLinkTargetInputWidget-warning' );
 			items.push( item );
 		}
 	}
 
 	// Matching pages
 	if ( matchingPages && matchingPages.length ) {
-		items.push( new ve.ui.MenuSectionItemWidget(
+		items.push( new OO.ui.MenuSectionItemWidget(
 			'matchingPages',
-			{ '$$': menu$$, 'label': ve.msg( 'visualeditor-linkinspector-suggest-matching-page' ) }
+			{ '$': menu$, 'label': ve.msg( 'visualeditor-linkinspector-suggest-matching-page', matchingPages.length ) }
 		) );
 		// Offer the exact text as a suggestion if the page exists
 		if ( pageExists && !pageExistsExact ) {
 			matchingPages.unshift( this.value );
 		}
 		for ( i = 0, len = matchingPages.length; i < len; i++ ) {
-			items.push( new ve.ui.MenuItemWidget(
+			items.push( new OO.ui.MenuItemWidget(
 				this.getInternalLinkAnnotationFromTitle( matchingPages[i] ),
-				{ '$$': menu$$, 'rel': 'matchingPage', 'label': matchingPages[i] }
+				{ '$': menu$, 'rel': 'matchingPage', 'label': matchingPages[i] }
+			) );
+		}
+	}
+
+	// Disambiguation pages
+	if ( disambigPages.length ) {
+		items.push( new OO.ui.MenuSectionItemWidget(
+			'disambigPages',
+			{ '$': menu$, 'label': ve.msg( 'visualeditor-linkinspector-suggest-disambig-page', disambigPages.length ) }
+		) );
+		for ( i = 0, len = disambigPages.length; i < len; i++ ) {
+			items.push( new OO.ui.MenuItemWidget(
+				this.getInternalLinkAnnotationFromTitle( disambigPages[i] ),
+				{ '$': menu$, 'rel': 'disambigPage', 'label': disambigPages[i] }
+			) );
+		}
+	}
+
+	// Redirect pages
+	if ( redirectPages.length ) {
+		items.push( new OO.ui.MenuSectionItemWidget(
+			'redirectPages',
+			{ '$': menu$, 'label': ve.msg( 'visualeditor-linkinspector-suggest-redirect-page', redirectPages.length ) }
+		) );
+		for ( i = 0, len = redirectPages.length; i < len; i++ ) {
+			items.push( new OO.ui.MenuItemWidget(
+				this.getInternalLinkAnnotationFromTitle( redirectPages[i] ),
+				{ '$': menu$, 'rel': 'redirectPage', 'label': redirectPages[i] }
 			) );
 		}
 	}
@@ -171,7 +229,7 @@ ve.ui.MWLinkTargetInputWidget.prototype.initializeLookupMenuSelection = function
 	var item;
 
 	// Parent method
-	ve.ui.LookupInputWidget.prototype.initializeLookupMenuSelection.call( this );
+	OO.ui.LookupInputWidget.prototype.initializeLookupMenuSelection.call( this );
 
 	// Update annotation to match selected item
 	item = this.lookupMenu.getSelectedItem();
@@ -191,7 +249,7 @@ ve.ui.MWLinkTargetInputWidget.prototype.initializeLookupMenuSelection = function
  */
 ve.ui.MWLinkTargetInputWidget.prototype.setValue = function ( value ) {
 	// Keep annotation in sync with value by skipping parent and calling grandparent method
-	ve.ui.TextInputWidget.prototype.setValue.call( this, value );
+	OO.ui.TextInputWidget.prototype.setValue.call( this, value );
 };
 
 /**
@@ -205,18 +263,20 @@ ve.ui.MWLinkTargetInputWidget.prototype.setValue = function ( value ) {
  * @returns {ve.dm.MWInternalLinkAnnotation}
  */
 ve.ui.MWLinkTargetInputWidget.prototype.getInternalLinkAnnotationFromTitle = function ( target ) {
-	var title;
-	try {
-		title = new mw.Title( target );
-		if ( title.getNamespaceId() === 6 || title.getNamespaceId() === 14 ) {
-			target = ':' + target;
-		}
-	} catch ( e ) { }
+	var title = mw.Title.newFromText( target );
+
+	if ( title && ( title.getNamespaceId() === 6 || title.getNamespaceId() === 14 ) ) {
+		// Prepend links to File and Category namespace with a colon
+		target = ':' + target;
+	}
+
 	return new ve.dm.MWInternalLinkAnnotation( {
 		'type': 'link/mwInternal',
 		'attributes': {
 			'title': target,
-			'normalizedTitle': ve.dm.MWInternalLinkAnnotation.static.normalizeTitle( target )
+			// bug 62816: we really need a builder for this stuff
+			'normalizedTitle': ve.dm.MWInternalLinkAnnotation.static.normalizeTitle( target ),
+			'lookupTitle': ve.dm.MWInternalLinkAnnotation.static.getLookupTitle( target )
 		}
 	} );
 };

@@ -38,7 +38,7 @@
 		</div>
 		<div class="timestamp">
 			<? if ($isEdited): ?>
-				<?= wfMsg('wall-message-edited', array('$1' => $editorUrl, '$2' => $editorName, '$3' => $historyUrl )) ?>
+				<?= wfMsg('wall-message-edited', array( $editorUrl, $editorName, $historyUrl )) ?>
 			<? endif ?>
 			<a class="permalink" href="<?= $fullpageurl ?>" tabindex="-1">
 				<? if (!is_null($iso_timestamp)): ?>

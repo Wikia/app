@@ -49,7 +49,7 @@ $messages['ca'] = array(
 	'scribeeventsrecords' => 'Registres',
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Dontlietome7
  */
 $messages['cs'] = array(
@@ -148,6 +148,13 @@ $messages['km'] = array(
 	'scribe-desc' => '[[Special:Scribeevents|ឧបករណ៍]]សំរាប់ស្វែងរកចំណងជើងទំព័រកំណត់មួយនៅលើវិគីទាំងអស់',
 	'scribeevents' => 'ព្រឹត្តិការណ៍នាពេលថ្មីៗ',
 	'scribeeventsrecords' => 'កំណត់ត្រា',
+);
+
+/** Kannada (ಕನ್ನಡ)
+ * @author VASANTH S.N.
+ */
+$messages['kn'] = array(
+	'scribeeventsrecords' => 'ದಾಖಲೆಗಳು',
 );
 
 /** Colognian (Ripoarisch)

@@ -44,7 +44,7 @@ class TaskManagerExecutor {
      * @access public
      * @author eloy
      *
-     * @return nothin
+     * @return void
      */
     public function execute() {
 
@@ -53,7 +53,7 @@ class TaskManagerExecutor {
 		}
 		else {
 			$this->log( "Task Manager started" );
-			foreach( range(1, self::LIMIT ) as $taskNumber ) {
+			for ($taskNumber=1;$taskNumber<=self::LIMIT;$taskNumber++) {
 				$taskClass = $this->getTask();
 				if( $taskClass instanceof BatchTask ) {
 					/**
@@ -78,6 +78,7 @@ class TaskManagerExecutor {
 				}
 				else {
 					$this->log( sprintf( "batch(%d) queue is empty", $taskNumber ) );
+					sleep(10);
 				}
 			}
 			$this->log( "Task Manager finished" );

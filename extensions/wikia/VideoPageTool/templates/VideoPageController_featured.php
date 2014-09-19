@@ -1,1 +1,0 @@
-<h1>This is the 'featured' display handler</h1>

@@ -1,23 +1,17 @@
 var UserSignup = {
 	inputsToValidate: ['userloginext01', 'email', 'userloginext02', 'birthday'],
 	notEmptyFields: ['userloginext01', 'email', 'userloginext02', 'birthday', 'birthmonth', 'birthyear'],
-	captchaField: 'wpCaptchaWord',
+	captchaField: window.wgUserLoginDisableCaptcha ? '' : 'recaptcha_response_field',
 	invalidInputs: {},
-	init: function() {
-		$('.extiw').click(function(e) {
-			e.preventDefault();
-			$.getJSON('http://www.wikia.com/api.php?callback=?', {
-				'action': 'parse',           
-				'format': 'json',           
-				'page': 'Terms_of_Use'       
-			}, function(data) { 
-				var modal = $(data.parse.text['*']).makeModal({
-					persistent: false, 
-					width: 800 });
-				modal.addClass('WikiaArticle').find('.editsection').hide();
-			});
+	init: function () {
+		'use strict';
+
+		$('.wikia_terms > a').on('click', function (event) {
+			var url = $(this).attr('href');
+			event.preventDefault();
+			window.open(url, '_blank');
 		});
-		
+
 		this.wikiaForm = new WikiaForm('#WikiaSignupForm');
 		this.signupAjaxForm = new UserSignupAjaxForm(
 			this.wikiaForm,
@@ -28,17 +22,19 @@ var UserSignup = {
 		);
 		this.wikiaForm.el
 			.find('input[name=userloginext01], input[name=email], input[name=userloginext02]')
-			.bind('blur.UserSignup', $.proxy(UserSignup.signupAjaxForm.validateInput, this.signupAjaxForm));
+			.on('blur.UserSignup', $.proxy(UserSignup.signupAjaxForm.validateInput, this.signupAjaxForm));
 		this.wikiaForm.el
 			.find('select[name=birthday], select[name=birthmonth], select[name=birthyear]')
-			.bind('change.UserSignup', $.proxy(UserSignup.signupAjaxForm.validateBirthdate, this.signupAjaxForm));
-			
+			.on('change.UserSignup', $.proxy(UserSignup.signupAjaxForm.validateBirthdate, this.signupAjaxForm));
+
 		// dom pre-cache
 		this.submitButton = this.wikiaForm.inputs['submit'];
-		this.wikiaForm.inputs['wpCaptchaWord'].bind('keyup.UserSignup', $.proxy(UserSignup.signupAjaxForm.activateSubmit, this.signupAjaxForm));
-	}
+		if( window.wgUserLoginDisableCaptcha !== true && this.wikiaForm.inputs['recaptcha_response_field']) {
+			this.wikiaForm.inputs['recaptcha_response_field'].on('keyup.UserSignup', $.proxy(UserSignup.signupAjaxForm.activateSubmit, this.signupAjaxForm));
+		}
+    }
 };
 
-$(function() {
+$( window ).on('load', function() {
 	UserSignup.init();
 });

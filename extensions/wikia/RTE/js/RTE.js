@@ -14,7 +14,7 @@
 				td: true,
 				th: true
 			},
-			baseFloatZIndex: 20000001, // $zTop from _layout.scss
+			baseFloatZIndex: 5000101, // $zTop + 1 from _layout.scss
 			bodyClass: 'WikiaArticle',
 			bodyId: 'bodyContent',
 			contentsCss: [$.getSassLocalURL('extensions/wikia/RTE/css/content.scss'), window.RTESiteCss],

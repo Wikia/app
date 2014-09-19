@@ -361,10 +361,6 @@
 		</p>
 
 		<div id="WikiaPhotoGalleryEditorPreview" class="preview WikiaArticle"></div>
-
-		<p id="WikiaPhotoGalleryEditorCheckboxes">
-			<?= WikiaPhotoGalleryHelper::renderOptionCheckbox('WikiaPhotoGalleryFeedInUse', 'wikiaPhotoGallery-preview-feed-label') ?><input id="WikiaPhotoGalleryFeedUrl" type="text" maxlength="255" size="60" />
-		</p>
 	</div>
 </div>
 
@@ -404,7 +400,6 @@
 
 		<p id="WikiaPhotoGallerySlideshowEditorCheckboxes">
 			<?= WikiaPhotoGalleryHelper::renderOptionCheckbox('WikiaPhotoGallerySlideshowRecentUploads', 'wikiaPhotoGallery-slideshowpreview-recentuploads') ?><br/>
-			<?= WikiaPhotoGalleryHelper::renderOptionCheckbox('WikiaPhotoGallerySlideshowFeedInUse', 'wikiaPhotoGallery-preview-feed-label') ?><input id="WikiaPhotoGallerySlideshowFeedUrl" type="text" maxlength="255" size="40" />
 		</p>
 	</div>
 </div>

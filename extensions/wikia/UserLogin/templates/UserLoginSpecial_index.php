@@ -1,11 +1,11 @@
 <div class="UserLogin">
 <?php
 	$tabIndex = 5;
-	
+
 	$loginTokenInput = array(
 		'type' => 'hidden',
 		'name' => 'loginToken',
-		'value' => $loginToken
+		'value' => Sanitizer::encodeAttribute( $loginToken ),
 	);
 
 	$userNameInput = array(
@@ -86,7 +86,7 @@
 		$form['inputs'][] = array(
 			'type' => 'hidden',
 			'name' => 'returnto',
-			'value' => $returnto
+			'value' => Sanitizer::encodeAttribute( $returnto )
 		);
 	}
 
@@ -94,7 +94,7 @@
 		$form['inputs'][] = array(
 			'type' => 'hidden',
 			'name' => 'returntoquery',
-			'value' => $returntoquery
+			'value' => Sanitizer::encodeAttribute( $returntoquery )
 		);
 	}
 

@@ -9,7 +9,8 @@ class FiveminVideoHandler extends VideoHandler {
 	protected static $autoplayParam = "autostart";
 	protected static $autoplayValue = "true";
 
-	public function getEmbed( $articleId, $width, $autoplay = false, $isAjax = false, $postOnload = false ) {
+	public function getEmbed( $width, array $options = [] ) {
+		$autoplay = !empty( $options['autoplay'] );
 		$height =  $this->getHeight( $width );
 		$url = $this->getEmbedUrl( $autoplay );
 		if ($autoplay) {
@@ -22,7 +23,11 @@ class FiveminVideoHandler extends VideoHandler {
 <embed src='{$url}' type='application/x-shockwave-flash' $sizeString allowfullscreen='true' allowScriptAccess='always'></embed>
 EOT;
 
-		return array( 'html' => $html );
+		return array(
+			'html' => $html,
+			'width' => $width,
+			'height' => $height,
+		);
 	}
 
 }

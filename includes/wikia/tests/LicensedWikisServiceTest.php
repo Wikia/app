@@ -64,6 +64,8 @@ class LicensedWikisServiceTest extends WikiaBaseTest {
 	}
 
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.02678 ms
 	 * @dataProvider wfDataProvider
 	 */
 	public function testGetWikisWithVar( $wikiId, $url, $wikiTitle, $dbName) {

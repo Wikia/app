@@ -1,194 +1,191 @@
-describe("Wikia Home Page", function(){
+describe('Wikia Home Page', function(){
 
-	it("remixing - default", function() {
-		var collectionId;
+	it('remixing - default', function() {
+		var collectionIndex,
+			WikiaRemixInstance = new WikiaHomePageRemix();
+
+		WikiaRemixInstance.remixCount = 0;
+		WikiaRemixInstance.collections = [
+			{shown: false},
+			{shown: false},
+			{shown: false}
+		];
+
+		collectionIndex = WikiaRemixInstance.getNextCollectionIndex();
+		expect(collectionIndex).toBe(0);
+		WikiaRemixInstance.markCollectionAsShown(collectionIndex);
+
+		expect(WikiaRemixInstance.getNextCollectionIndex()).toBe(undefined);
+		expect(WikiaRemixInstance.getNextCollectionIndex()).toBe(undefined);
+
+		collectionIndex = WikiaRemixInstance.getNextCollectionIndex();
+		expect(collectionIndex).toBe(1);
+		WikiaRemixInstance.markCollectionAsShown(collectionIndex);
+
+		expect(WikiaRemixInstance.getNextCollectionIndex()).toBe(undefined);
+
+		collectionIndex = WikiaRemixInstance.getNextCollectionIndex();
+		expect(collectionIndex).toBe(2);
+		WikiaRemixInstance.markCollectionAsShown(collectionIndex);
+		expect(WikiaRemixInstance.getNextCollectionIndex()).toBe(undefined);
+	});
+
+	it('remixing - one collection', function() {
+		var collectionIndex,
+			WikiaRemixInstance = new WikiaHomePageRemix();
+
+		WikiaRemixInstance.remixCount = 0;
+		WikiaRemixInstance.collections = [
+			{shown: false}
+		];
+
+		collectionIndex = WikiaRemixInstance.getNextCollectionIndex();
+		expect(collectionIndex).toBe(0);
+		WikiaRemixInstance.markCollectionAsShown(collectionIndex);
+
+		expect(WikiaRemixInstance.getNextCollectionIndex()).toBe(undefined);
+		expect(WikiaRemixInstance.getNextCollectionIndex()).toBe(undefined);
+		expect(WikiaRemixInstance.getNextCollectionIndex()).toBe(undefined);
+	});
+
+	it('remixing - one shown', function() {
+		var collectionIndex,
+			WikiaRemixInstance = new WikiaHomePageRemix();
+
+		WikiaRemixInstance.remixCount = 0;
+		WikiaRemixInstance.collections = [
+			{shown: true},
+			{shown: false},
+			{shown: false}
+		];
+
+		collectionIndex = WikiaRemixInstance.getNextCollectionIndex();
+		expect(collectionIndex).toBe(1);
+		WikiaRemixInstance.markCollectionAsShown(collectionIndex);
+
+		expect(WikiaRemixInstance.getNextCollectionIndex()).toBe(undefined);
+		expect(WikiaRemixInstance.getNextCollectionIndex()).toBe(undefined);
+
+		collectionIndex = WikiaRemixInstance.getNextCollectionIndex();
+		expect(collectionIndex).toBe(2);
+		WikiaRemixInstance.markCollectionAsShown(collectionIndex);
+		expect(WikiaRemixInstance.getNextCollectionIndex()).toBe(undefined);
+	});
+
+	it('remixing - other shown', function() {
+		var collectionIndex,
+			WikiaRemixInstance = new WikiaHomePageRemix();
+
+		WikiaRemixInstance.remixCount = 0;
+		WikiaRemixInstance.collections = [
+			{shown: false},
+			{shown: true},
+			{shown: false}
+		];
+
+		collectionIndex = WikiaRemixInstance.getNextCollectionIndex();
+		expect(collectionIndex).toBe(0);
+		WikiaRemixInstance.markCollectionAsShown(collectionIndex);
+
+		expect(WikiaRemixInstance.getNextCollectionIndex()).toBe(undefined);
+		expect(WikiaRemixInstance.getNextCollectionIndex()).toBe(undefined);
+
+		collectionIndex = WikiaRemixInstance.getNextCollectionIndex();
+		expect(collectionIndex).toBe(2);
+		WikiaRemixInstance.markCollectionAsShown(collectionIndex);
+		expect(WikiaRemixInstance.getNextCollectionIndex()).toBe(undefined);
+	});
+
+	it('remixing - all shown', function() {
 		var WikiaRemixInstance = new WikiaHomePageRemix();
 
 		WikiaRemixInstance.remixCount = 0;
-		WikiaRemixInstance.shownCollections = {
-			3: false,
-			10: false,
-			9: false
-		};
+		WikiaRemixInstance.collections = [
+			{shown: true},
+			{shown: true},
+			{shown: true}
+		];
 
-		collectionId = WikiaRemixInstance.getNextCollectionId();
-		expect(collectionId).toBe('3');
-		WikiaRemixInstance.markCollectionAsShown(collectionId);
-
-		expect(WikiaRemixInstance.getNextCollectionId()).toBe(undefined);
-		expect(WikiaRemixInstance.getNextCollectionId()).toBe(undefined);
-
-		collectionId = WikiaRemixInstance.getNextCollectionId();
-		expect(collectionId).toBe('10');
-		WikiaRemixInstance.markCollectionAsShown(collectionId);
-
-		expect(WikiaRemixInstance.getNextCollectionId()).toBe(undefined);
-
-		collectionId = WikiaRemixInstance.getNextCollectionId();
-		expect(collectionId).toBe('9');
-		WikiaRemixInstance.markCollectionAsShown(collectionId);
-		expect(WikiaRemixInstance.getNextCollectionId()).toBe(undefined);
+		expect(WikiaRemixInstance.getNextCollectionIndex()).toBe(undefined);
+		expect(WikiaRemixInstance.getNextCollectionIndex()).toBe(undefined);
+		expect(WikiaRemixInstance.getNextCollectionIndex()).toBe(undefined);
+		expect(WikiaRemixInstance.getNextCollectionIndex()).toBe(undefined);
+		expect(WikiaRemixInstance.getNextCollectionIndex()).toBe(undefined);
+		expect(WikiaRemixInstance.getNextCollectionIndex()).toBe(undefined);
+		expect(WikiaRemixInstance.getNextCollectionIndex()).toBe(undefined);
+		expect(WikiaRemixInstance.getNextCollectionIndex()).toBe(undefined);
+		expect(WikiaRemixInstance.getNextCollectionIndex()).toBe(undefined);
 	});
 
-	it("remixing - one collection", function() {
-		var collectionId;
+	it('remixing - no collections', function() {
 		var WikiaRemixInstance = new WikiaHomePageRemix();
 
 		WikiaRemixInstance.remixCount = 0;
-		WikiaRemixInstance.shownCollections = {
-			7: false
-		};
+		WikiaRemixInstance.shownCollectionsIndexes = [];
 
-		collectionId = WikiaRemixInstance.getNextCollectionId();
-		expect(collectionId).toBe('7');
-		WikiaRemixInstance.markCollectionAsShown(collectionId);
-
-		expect(WikiaRemixInstance.getNextCollectionId()).toBe(undefined);
-		expect(WikiaRemixInstance.getNextCollectionId()).toBe(undefined);
-		expect(WikiaRemixInstance.getNextCollectionId()).toBe(undefined);
+		expect(WikiaRemixInstance.getNextCollectionIndex()).toBe(undefined);
+		expect(WikiaRemixInstance.getNextCollectionIndex()).toBe(undefined);
+		expect(WikiaRemixInstance.getNextCollectionIndex()).toBe(undefined);
+		expect(WikiaRemixInstance.getNextCollectionIndex()).toBe(undefined);
+		expect(WikiaRemixInstance.getNextCollectionIndex()).toBe(undefined);
+		expect(WikiaRemixInstance.getNextCollectionIndex()).toBe(undefined);
+		expect(WikiaRemixInstance.getNextCollectionIndex()).toBe(undefined);
+		expect(WikiaRemixInstance.getNextCollectionIndex()).toBe(undefined);
+		expect(WikiaRemixInstance.getNextCollectionIndex()).toBe(undefined);
 	});
 
-	it("remixing - one shown", function() {
-		var collectionId;
-		var WikiaRemixInstance = new WikiaHomePageRemix();
-
-		WikiaRemixInstance.remixCount = 0;
-		WikiaRemixInstance.shownCollections = {
-			3: true,
-			10: false,
-			9: false
-		};
-
-		collectionId = WikiaRemixInstance.getNextCollectionId();
-		expect(collectionId).toBe('10');
-		WikiaRemixInstance.markCollectionAsShown(collectionId);
-
-		expect(WikiaRemixInstance.getNextCollectionId()).toBe(undefined);
-		expect(WikiaRemixInstance.getNextCollectionId()).toBe(undefined);
-
-		collectionId = WikiaRemixInstance.getNextCollectionId();
-		expect(collectionId).toBe('9');
-		WikiaRemixInstance.markCollectionAsShown(collectionId);
-		expect(WikiaRemixInstance.getNextCollectionId()).toBe(undefined);
-	});
-
-	it("remixing - other shown", function() {
-		var collectionId;
-		var WikiaRemixInstance = new WikiaHomePageRemix();
-
-		WikiaRemixInstance.remixCount = 0;
-		WikiaRemixInstance.shownCollections = {
-			3: false,
-			10: true,
-			9: false
-		};
-
-		collectionId = WikiaRemixInstance.getNextCollectionId();
-		expect(collectionId).toBe('3');
-		WikiaRemixInstance.markCollectionAsShown(collectionId);
-
-		expect(WikiaRemixInstance.getNextCollectionId()).toBe(undefined);
-		expect(WikiaRemixInstance.getNextCollectionId()).toBe(undefined);
-
-		collectionId = WikiaRemixInstance.getNextCollectionId();
-		expect(collectionId).toBe('9');
-		WikiaRemixInstance.markCollectionAsShown(collectionId);
-		expect(WikiaRemixInstance.getNextCollectionId()).toBe(undefined);
-	});
-
-	it("remixing - all shown", function() {
-		var collectionId;
-		var WikiaRemixInstance = new WikiaHomePageRemix();
-
-		WikiaRemixInstance.remixCount = 0;
-		WikiaRemixInstance.shownCollections = {
-			3: true,
-			10: true,
-			9: true
-		};
-
-		expect(WikiaRemixInstance.getNextCollectionId()).toBe(undefined);
-		expect(WikiaRemixInstance.getNextCollectionId()).toBe(undefined);
-		expect(WikiaRemixInstance.getNextCollectionId()).toBe(undefined);
-		expect(WikiaRemixInstance.getNextCollectionId()).toBe(undefined);
-		expect(WikiaRemixInstance.getNextCollectionId()).toBe(undefined);
-		expect(WikiaRemixInstance.getNextCollectionId()).toBe(undefined);
-		expect(WikiaRemixInstance.getNextCollectionId()).toBe(undefined);
-		expect(WikiaRemixInstance.getNextCollectionId()).toBe(undefined);
-		expect(WikiaRemixInstance.getNextCollectionId()).toBe(undefined);
-	});
-
-	it("remixing - no collections", function() {
-		var collectionId;
-		var WikiaRemixInstance = new WikiaHomePageRemix();
-
-		WikiaRemixInstance.remixCount = 0;
-		WikiaRemixInstance.shownCollections = {
-		};
-
-		expect(WikiaRemixInstance.getNextCollectionId()).toBe(undefined);
-		expect(WikiaRemixInstance.getNextCollectionId()).toBe(undefined);
-		expect(WikiaRemixInstance.getNextCollectionId()).toBe(undefined);
-		expect(WikiaRemixInstance.getNextCollectionId()).toBe(undefined);
-		expect(WikiaRemixInstance.getNextCollectionId()).toBe(undefined);
-		expect(WikiaRemixInstance.getNextCollectionId()).toBe(undefined);
-		expect(WikiaRemixInstance.getNextCollectionId()).toBe(undefined);
-		expect(WikiaRemixInstance.getNextCollectionId()).toBe(undefined);
-		expect(WikiaRemixInstance.getNextCollectionId()).toBe(undefined);
-	});
-
-	it("remixing - counter increased", function() {
-		var collectionId;
-		var WikiaRemixInstance = new WikiaHomePageRemix();
+	it('remixing - counter increased', function() {
+		var collectionIndex,
+			WikiaRemixInstance = new WikiaHomePageRemix();
 
 		WikiaRemixInstance.remixCount = 2;
-		WikiaRemixInstance.shownCollections = {
-			3: false,
-			10: false,
-			9: false
-		};
+		WikiaRemixInstance.collections = [
+			{shown: false},
+			{shown: false},
+			{shown: false}
+		];
 
-		expect(WikiaRemixInstance.getNextCollectionId()).toBe(undefined);
-		collectionId = WikiaRemixInstance.getNextCollectionId();
-		expect(collectionId).toBe('3');
-		WikiaRemixInstance.markCollectionAsShown(collectionId);
+		expect(WikiaRemixInstance.getNextCollectionIndex()).toBe(undefined);
+		collectionIndex = WikiaRemixInstance.getNextCollectionIndex();
+		expect(collectionIndex).toBe(0);
+		WikiaRemixInstance.markCollectionAsShown(collectionIndex);
 
-		expect(WikiaRemixInstance.getNextCollectionId()).toBe(undefined);
+		expect(WikiaRemixInstance.getNextCollectionIndex()).toBe(undefined);
 
-		collectionId = WikiaRemixInstance.getNextCollectionId();
-		expect(collectionId).toBe('10');
-		WikiaRemixInstance.markCollectionAsShown(collectionId);
-		expect(WikiaRemixInstance.getNextCollectionId()).toBe(undefined);
-		expect(WikiaRemixInstance.getNextCollectionId()).toBe(undefined);
-		expect(WikiaRemixInstance.getNextCollectionId()).toBe(undefined);
-		expect(WikiaRemixInstance.getNextCollectionId()).toBe(undefined);
+		collectionIndex = WikiaRemixInstance.getNextCollectionIndex();
+		expect(collectionIndex).toBe(1);
+		WikiaRemixInstance.markCollectionAsShown(collectionIndex);
+		expect(WikiaRemixInstance.getNextCollectionIndex()).toBe(undefined);
+		expect(WikiaRemixInstance.getNextCollectionIndex()).toBe(undefined);
+		expect(WikiaRemixInstance.getNextCollectionIndex()).toBe(undefined);
+		expect(WikiaRemixInstance.getNextCollectionIndex()).toBe(undefined);
 	});
 
-	it("remixing - counter increased one shown", function() {
-		var collectionId;
-		var WikiaRemixInstance = new WikiaHomePageRemix();
+	it('remixing - counter increased one shown', function() {
+		var collectionIndex,
+			WikiaRemixInstance = new WikiaHomePageRemix();
 
 		WikiaRemixInstance.remixCount = 2;
-		WikiaRemixInstance.shownCollections = {
-			3: true,
-			10: false,
-			9: false
-		};
+		WikiaRemixInstance.collections = [
+			{shown: true},
+			{shown: false},
+			{shown: false}
+		];
 
-		expect(WikiaRemixInstance.getNextCollectionId()).toBe(undefined);
-		collectionId = WikiaRemixInstance.getNextCollectionId();
-		expect(collectionId).toBe('10');
-		WikiaRemixInstance.markCollectionAsShown(collectionId);
+		expect(WikiaRemixInstance.getNextCollectionIndex()).toBe(undefined);
+		collectionIndex = WikiaRemixInstance.getNextCollectionIndex();
+		expect(collectionIndex).toBe(1);
+		WikiaRemixInstance.markCollectionAsShown(collectionIndex);
 
-		expect(WikiaRemixInstance.getNextCollectionId()).toBe(undefined);
+		expect(WikiaRemixInstance.getNextCollectionIndex()).toBe(undefined);
 
-		collectionId = WikiaRemixInstance.getNextCollectionId();
-		expect(collectionId).toBe('9');
-		WikiaRemixInstance.markCollectionAsShown(collectionId);
-		expect(WikiaRemixInstance.getNextCollectionId()).toBe(undefined);
-		expect(WikiaRemixInstance.getNextCollectionId()).toBe(undefined);
-		expect(WikiaRemixInstance.getNextCollectionId()).toBe(undefined);
-		expect(WikiaRemixInstance.getNextCollectionId()).toBe(undefined);
+		collectionIndex = WikiaRemixInstance.getNextCollectionIndex();
+		expect(collectionIndex).toBe(2);
+		WikiaRemixInstance.markCollectionAsShown(collectionIndex);
+		expect(WikiaRemixInstance.getNextCollectionIndex()).toBe(undefined);
+		expect(WikiaRemixInstance.getNextCollectionIndex()).toBe(undefined);
+		expect(WikiaRemixInstance.getNextCollectionIndex()).toBe(undefined);
+		expect(WikiaRemixInstance.getNextCollectionIndex()).toBe(undefined);
 	});
 });
 

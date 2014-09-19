@@ -2,7 +2,8 @@
 /**
  * How to run this script:
  * $ cd maintenance/wikia/ImageReview/PromoteImage/upload.php
- * To remove an image from wikia.com as a WikiaBot:
+ * To remove an image from wikia.com as a WikiaBot run without userid parameter
+ *
  * $ SERVER_ID=80433 php remove.php --conf /usr/wikia/docroot/wiki.factory/LocalSettings.php --imagename="Wikia-Visualization-Add-3,starwars.jpg" --userid=4663069
  */
 $dir = dirname(__FILE__) . '/';
@@ -10,7 +11,12 @@ $cmdLineScript = realpath($dir . '../../../commandLine.inc');
 require_once($cmdLineScript);
 
 $imageName = $options['imagename'];
-$user = User::newFromName('WikiaBot');
+if (empty($options['userid'])){
+	$user = User::newFromName('WikiaBot');
+} else {
+	$user = User::newFromId($options['userid']);
+}
+
 
 if( !($user instanceof User) ) {
 	echo 'ERROR: Could not get bot user object'."\n";
@@ -32,6 +38,11 @@ $imageTitle = Title::newFromText($imageName, NS_FILE);
 if( !($imageTitle instanceof Title) ) {
 	echo 'ERROR: Could not get title object';
 	exit(5);
+}
+
+if ( empty( $wgEnableUploads ) ) {
+	echo 'ERROR: File uploads disabled'."\n";
+	exit(6);
 }
 
 $file = wfFindFile($imageTitle);

@@ -214,6 +214,18 @@ use Swagger\Annotations as SWG;
  * 		required="true",
  * 		description="Object containing original image dimensions"
  * 	)
+ * 	@SWG\Property(
+ * 		name="wordmark",
+ * 		type="string",
+ * 		required="true",
+ * 		description="Wiki wordmark image URL, might be empty"
+ * 	)
+ * 	@SWG\Property(
+ * 		name="wam_score",
+ * 		type="float",
+ * 		required="true",
+ * 		description="Wiki WAM score"
+ * 	)
  * 
  * @SWG\Model( id="WikiaStats" )
  * 	@SWG\Property(
@@ -280,7 +292,7 @@ use Swagger\Annotations as SWG;
  * 	)
  * 
  * @SWG\Api(
- * 	path="/api/v1/Wikis/List",
+ * 	path="/Wikis/List",
  * 	description="Get the top wikis by pageviews",
  * 	@SWG\Operations(
  * 		@SWG\Operation(
@@ -332,7 +344,7 @@ use Swagger\Annotations as SWG;
  * )
  * 
  * @SWG\Api(
- * 	path="/api/v1/Wikis/List?expand=1",
+ * 	path="/Wikis/List?expand=1",
  * 	description="Get the top wikis by pageviews (extended response)",
  * 	@SWG\Operations(
  * 		@SWG\Operation(
@@ -384,7 +396,7 @@ use Swagger\Annotations as SWG;
  * )
  * 
  * @SWG\Api(
- * 	path="/api/v1/Wikis/ByString",
+ * 	path="/Wikis/ByString",
  * 	description="Get wikis which name or topic match a keyword",
  * 	@SWG\Operations(
  * 		@SWG\Operation(
@@ -454,7 +466,7 @@ use Swagger\Annotations as SWG;
  * )
  * 
  * @SWG\Api(
- * 	path="/api/v1/Wikis/ByString?expand=1",
+ * 	path="/Wikis/ByString?expand=1",
  * 	description="Get wikis which name or topic match a keyword (extended version)",
  * 	@SWG\Operations(
  * 		@SWG\Operation(
@@ -524,7 +536,7 @@ use Swagger\Annotations as SWG;
  * )
  * 
  * @SWG\Api(
- * 	path="/api/v1/Wikis/Details",
+ * 	path="/Wikis/Details",
  * 	description="Get information about wikis",
  * 	@SWG\Operations(
  * 		@SWG\Operation(

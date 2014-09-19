@@ -134,15 +134,12 @@ class AnyclipApiWrapper extends ApiWrapper {
 			throw new WikiaException( wfMsg("videohandler-error-restricted-video") );
 		}
 
-		$metadata = array();
-		if ( !isset($metadata['uniqueName']) ) {
-			$metadata['uniqueName'] = $this->getUniqueName();
+		if ( !isset( $this->metadata['uniqueName'] ) ) {
+			$this->metadata['uniqueName'] = $this->getUniqueName();
 		}
-		if ( !isset($metadata['videoUrl']) ) {
-			$metadata['videoUrl'] = $this->getVideoUrl();
+		if ( !isset( $this->metadata['videoUrl'] ) ) {
+			$this->metadata['videoUrl'] = $this->getVideoUrl();
 		}
-
-		$this->metadata = array_merge( $this->metadata, $metadata );
 	}
 
 	protected function getOriginalDescription() {

@@ -110,6 +110,14 @@ class FSFile {
 			# Get size in bytes
 			$info['size'] = $this->getSize();
 
+			# Wikia change - begin
+			# @author macbre - BAC-773
+			if (empty($info['size'])) {
+				Wikia::log(__METHOD__, 'emptySize', sprintf('filesize() returned "%s"', print_r($info['size'], true)), true);
+				Wikia::logBacktrace(__METHOD__ . '-emptySize');
+			}
+			# Wikia change - end
+
 			# Height, width and metadata
 			$handler = MediaHandler::getHandler( $info['mime'] );
 			if ( $handler ) {

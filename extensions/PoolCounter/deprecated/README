@@ -1,0 +1,2 @@
+The poolcounter proof of concept has been written in python and was later
+on replaced by a C implementation.

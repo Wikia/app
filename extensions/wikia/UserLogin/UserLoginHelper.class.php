@@ -9,7 +9,6 @@
 class UserLoginHelper extends WikiaModel {
 
 	protected static $instance = NULL;
-	protected static $isTempUser = array();
 
 	const LIMIT_EMAIL_CHANGES = 5;
 	const LIMIT_EMAILS_SENT = 5;
@@ -17,6 +16,7 @@ class UserLoginHelper extends WikiaModel {
 	const LIMIT_WIKIS = 3;
 
 	const WIKIA_CITYID_COMMUNITY = 177;
+	const WIKIA_EMAIL_DOMAIN = "@wikia-inc.com";
 
 	/**
 	 * get random avatars from the current wiki
@@ -80,6 +80,7 @@ class UserLoginHelper extends WikiaModel {
 
 		if( !$this->wg->StatsDBEnabled ) {
 			//no stats DB, can't get list of users with avatars
+			wfProfileOut( __METHOD__ );
 			return array();
 		}
 
@@ -235,76 +236,52 @@ class UserLoginHelper extends WikiaModel {
 	 * @return array result { array( 'result' => result status[error/ok/invalidsession/confirmed], 'msg' => result message ) }
 	 */
 	public function sendConfirmationEmail( $username, $user=null ) {
+		global $wgExternalSharedDB;
 		if ( empty($username) ) {
 			$result['result'] = 'error';
 			$result['msg'] = wfMessage( 'userlogin-error-noname' )->escaped();
 			return $result;
 		}
 
-		//Check whether user already exists or is already confirmed
-		if ( !$this->isTempUser( $username ) ) {//@TODO get rid of isTempUser check when TempUser will be globally disabled
-			$user = User::newFromName( $username );
-			if ( !($user instanceof User) || $user->getID() == 0 ) {
-				//User doesn't exist
-				$result['result'] = 'error';
-				$result['msg'] = wfMessage( 'userlogin-error-nosuchuser' )->escaped();
-				return $result;
-			} else {
-				if ( !$user->getOption( UserLoginSpecialController::NOT_CONFIRMED_SIGNUP_OPTION_NAME ) && $user->isEmailConfirmed()) {
-					//User already confirmed on signup
-					$result['result'] = 'confirmed';
-					$result['msg'] = wfMessage( 'usersignup-error-confirmed-user', $username, $user->getUserPage()->getFullURL() )->parse();
-					return $result;
-				}
-			}
-
-			//IF session is invalid, set invalidsession result and redirect to login page
-			if ( !(isset($_SESSION['notConfirmedUserId']) && $_SESSION['notConfirmedUserId'] == $user->getId()) ) {
-				$result['result'] = 'invalidsession';
-				$result['msg'] = wfMessage( 'usersignup-error-invalid-user' )->escaped();
-				return $result;
-			}
-
-			if ( !$this->wg->EmailAuthentication || !Sanitizer::validateEmail($user->getEmail()) ) {//Why throw an invalid email error when wgEmailAuthentication is off?
-				$result['result'] = 'error';
-				$result['msg'] = wfMessage( 'usersignup-error-invalid-email' )->escaped();
-				return $result;
-			}
-
+		// Check whether user already exists or is already confirmed
+		wfWaitForSlaves(); // Wait for local DB - Wikis that keep user data in local DB (e.g. Uncyclopedia/Internal)
+		wfWaitForSlaves( false, $wgExternalSharedDB ); // Wait for external shared DB
+		$user = User::newFromName( $username );
+		if ( !($user instanceof User) || $user->getID() == 0 ) {
+			// User doesn't exist
+			$result['result'] = 'error';
+			$result['msg'] = wfMessage( 'userlogin-error-nosuchuser' )->escaped();
+			return $result;
 		} else {
-			//TempUser part
-			/* @var $tempUser TempUser */
-			$tempUser = TempUser::getTempUserFromName( $username );
-
-			//IF session is invalid, set invalidsession result and redirect to login page
-			if ( !(isset($_SESSION['tempUserId']) && $_SESSION['tempUserId'] == $tempUser->getId()) ) {
-				$result['result'] = 'invalidsession';
-				$result['msg'] = wfMessage( 'usersignup-error-invalid-user' )->escaped();
-				return $result;
-			}
-
-			if ( !$this->wg->EmailAuthentication || !Sanitizer::validateEmail($tempUser->getEmail()) ) {//Why throw an invalid email error when wgEmailAuthentication is off?
-				$result['result'] = 'error';
-				$result['msg'] = wfMessage( 'usersignup-error-invalid-email' )->escaped();
+			if ( !$user->getOption( UserLoginSpecialController::NOT_CONFIRMED_SIGNUP_OPTION_NAME ) && $user->isEmailConfirmed()) {
+				// User already confirmed on signup
+				$result['result'] = 'confirmed';
+				$result['msg'] = wfMessage( 'usersignup-error-confirmed-user', $username, $user->getUserPage()->getFullURL() )->parse();
 				return $result;
 			}
 		}
 
-		if ( $this->isTempUser( $username ) ) {//@TODO get rid of isTempUser check when TempUser will be globally disabled
-			$user = $tempUser->mapTempUserToUser( true, $user );
+		// IF session is invalid, set invalidsession result and redirect to login page
+		if ( !( isset( $_SESSION['notConfirmedUserId'] ) && $_SESSION['notConfirmedUserId'] == $user->getId() ) ) {
+			$result['result'] = 'invalidsession';
+			$result['msg'] = wfMessage( 'usersignup-error-invalid-user' )->escaped();
+			return $result;
 		}
+
+		if ( !$this->wg->EmailAuthentication || !Sanitizer::validateEmail( $user->getEmail() ) ) {// Why throw an invalid email error when wgEmailAuthentication is off?
+			$result['result'] = 'error';
+			$result['msg'] = wfMessage( 'usersignup-error-invalid-email' )->escaped();
+			return $result;
+		}
+
 		if ( $user->isEmailConfirmed() ) {
 			$result['result'] = 'error';
 			$result['msg'] = wfMessage( 'usersignup-error-already-confirmed' )->escaped();
 			return $result;
 		}
 
-		//Signup throttle check
-		if ( !$this->isTempUser( $username ) ) {//@TODO get rid of isTempUser check when TempUser will be globally disabled
-			$memKey = $this->getMemKeyConfirmationEmailsSent( $user->getId() );
-		} else {
-			$memKey = $this->getMemKeyConfirmationEmailsSent( $tempUser->getId() );
-		}
+		// Signup throttle check
+		$memKey = $this->getMemKeyConfirmationEmailsSent( $user->getId() );
 		$emailSent = intval( $this->wg->Memc->get($memKey) );
 		if( $user->isEmailConfirmationPending() && (strtotime($user->mEmailTokenExpires) - strtotime("+6 days") > 0) && $emailSent >= self::LIMIT_EMAILS_SENT ) {
 			$result['result'] = 'error';
@@ -314,19 +291,12 @@ class UserLoginHelper extends WikiaModel {
 
 		$emailTextTemplate = $this->app->renderView( "UserLogin", "GeneralMail", array('language' => $user->getOption('language'), 'type' => 'confirmation-email') );
 		$response = $user->sendConfirmationMail( false, 'ConfirmationMail', 'usersignup-confirmation-email', true, $emailTextTemplate );
-		if ( $this->isTempUser( $username ) ) {//@TODO get rid of isTempUser check when TempUser will be globally disabled
-			$tempUser->saveSettingsTempUserToUser( $user );
-		}
 		if( !$response->isGood() ) {
 			$result['result'] = 'error';
 			$result['msg'] = wfMessage( 'userlogin-error-mail-error' )->escaped();
 		} else {
 			$result['result'] = 'ok';
-			if ( !$this->isTempUser( $username ) ) {//@TODO get rid of isTempUser check when TempUser will be globally disabled
-				$result['msg'] = wfMessage( 'usersignup-confirmation-email-sent', htmlspecialchars($user->getEmail()) )->parse();
-			} else {
-				$result['msg'] = wfMessage( 'usersignup-confirmation-email-sent', htmlspecialchars($tempUser->getEmail()) )->parse();
-			}
+			$result['msg'] = wfMessage( 'usersignup-confirmation-email-sent', htmlspecialchars($user->getEmail()) )->parse();
 			$this->incrMemc( $memKey );
 		}
 
@@ -567,49 +537,72 @@ class UserLoginHelper extends WikiaModel {
 		$user->setOption( UserLoginSpecialController::SIGNED_UP_ON_WIKI_OPTION_NAME, null );
 		$user->saveSettings();
 		$user->saveToCache();
-		self::clearIsTempUserStatic( $user->getName() );
+		wfRunHooks( 'SignupConfirmEmailComplete', array( $user ) );
 		return true;
 	}
 
 	/**
-	 * Function that helps to determine whether we have to do with TempUser case
+	 * Checks if Email belongs to the wikia domain;
 	 *
-	 * It uses self::$isTempUser static value to store result of funtion
-	 * to prevent many invokes of TempUser::getTempUserFromName
-	 *
-	 * It's a function for transitional state of getting rid of TempUser
-	 * It can be removed after TempUser global disable
-	 *
-	 * @param $username String User Name
+	 * @param string $sEmail Email to check
+	 * @static
 	 * @return bool
 	 */
-	public static function isTempUser( $username ) {
-		global $wgDisableTempUser;
-		if ( !empty( $wgDisableTempUser ) ) {
-			return false;
-		}
-
-		if ( isset( self::$isTempUser[$username] ) ) {
-			return self::$isTempUser[$username];
-		}
-		$tempuser = TempUser::getTempUserFromName( $username );
-		if ( $tempuser != false ) {
-			self::$isTempUser[$username] = true;
-		} else {
-			self::$isTempUser[$username] = false;
-		}
-		return self::$isTempUser[$username];
+	public static function isWikiaEmail( $sEmail ) {
+		return substr( $sEmail, strpos( $sEmail, '@' ) ) == self::WIKIA_EMAIL_DOMAIN;
 	}
 
 	/**
-	 * Clears static isTempUser value for provided user name
-	 * isTempUser static var is used by isTempUser function
+	 * @desc Checks if the email provided is wikia mail and within the limit specified by $wgAccountsPerEmail
 	 *
-	 * @param $username String User Name
+	 * @param $sEmail - email address to check
+	 * @return bool - TRUE if the email can be registered, otherwise FALSE
 	 */
-	public static function clearIsTempUserStatic( $username ) {
-		self::$isTempUser[$username] = null;
+	public static function withinEmailRegLimit( $sEmail ) {
+		global $wgAccountsPerEmail, $wgMemc;
+
+		if ( isset( $wgAccountsPerEmail )
+			&& is_numeric( $wgAccountsPerEmail )
+			&& !self::isWikiaEmail( $sEmail )
+		) {
+			$key = wfSharedMemcKey( "UserLogin", "AccountsPerEmail", $sEmail );
+			$count = $wgMemc->get($key);
+			if ( $count !== false
+				&& (int)$count >= (int)$wgAccountsPerEmail
+			) {
+				return false;
+			}
+		}
+		return true;
 	}
 
+	/**
+	 * @desc This function is a workaround for validating user with 'AbortNewAccount' hook without captcha validation.
+	 *
+	 * Currently this is used for both Facebook registrations and Phalanx validation, where the captcha is not
+	 * present. The captcha check is performed in \SimpleCaptcha::confirmUserCreate and is currently bypassed
+	 * by setting $wgCaptchaTriggers['createaccount'] to false.
+	 * After the custom callable is executed, $wgCaptchaTriggers['createaccount'] is reverted to its previous issue.
+	 *
+	 * @param callable $function - custom function to execute with disabled captcha chedk
+	 * @param array $params - array to be passed to the callable function
+	 * @return mixed - result, returned by the callable function
+	 */
+	public static function callWithCaptchaDisabled( $function, $params = array() ) {
+		global $wgCaptchaTriggers;
+
+		// Dissable captcha check
+		$oldValue = $wgCaptchaTriggers;
+		$wgCaptchaTriggers['createaccount'] = false;
+
+		// Execute custom callable
+		if ( is_callable( $function ) ) {
+			$result = $function( $params );
+		}
+		// and bring back the old value
+		$wgCaptchaTriggers = $oldValue;
+
+		return $result;
+	}
 
 }

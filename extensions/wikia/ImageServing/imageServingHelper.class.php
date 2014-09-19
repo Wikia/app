@@ -174,7 +174,6 @@ class ImageServingHelper {
 		}
 		wfProfileIn(__METHOD__);
 
-		$article->getRawText(); // TODO: not sure whether it's actually needed
 		$title = $article->getTitle();
 		$content = $article->getContent();
 

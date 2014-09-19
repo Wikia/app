@@ -65,19 +65,7 @@ class WikiFactoryPage extends SpecialPage {
 		$wgOut->setRobotpolicy( 'noindex,nofollow' );
 		$wgOut->setArticleRelated( false );
 
-		#--- handle chagelog
-		if ( $subpage === "change.log" ) {
-			$oPager = new ChangeLogPager;
-
-			$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
-			$oTmpl->set_vars( array(
-				"limit"     => $oPager->getForm(),
-				"body"      => $oPager->getBody(),
-				"nav"       => $oPager->getNavigationBar()
-			));
-			$wgOut->addHTML( $oTmpl->render("changelog") );
-		}
-		elseif ( in_array( strtolower($subpage), array( "metrics", "metrics/main", "metrics/monthly", "metrics/daily" ) ) ) {
+		if ( in_array( strtolower($subpage), array( "metrics", "metrics/main", "metrics/monthly", "metrics/daily" ) ) ) {
 			$oAWCMetrics = new WikiMetrics();
 			$oAWCMetrics->show( $subpage );
 		}
@@ -244,7 +232,7 @@ class WikiFactoryPage extends SpecialPage {
 	 * @return nothing
 	 */
 	public function doWikiForm() {
-		global $wgOut, $wgRequest, $wgStylePath;
+		global $wgOut, $wgRequest, $wgStylePath, $wgUser;
 		global $wgDevelEnvironment;
 
 		$info = null;
@@ -348,7 +336,8 @@ class WikiFactoryPage extends SpecialPage {
 			"groups"      => WikiFactory::getGroups(),
 			"cluster"     => WikiFactory::getVarValueByName( "wgDBcluster", $this->mWiki->city_id ),
 			"domains"     => WikiFactory::getDomains( $this->mWiki->city_id ),
-			"statuses" 	  => $this->mStatuses,
+			"protected"   => WikiFactory::getFlags ( $this->mWiki->city_id ) & WikiFactory::FLAG_PROTECTED,
+			"statuses"    => $this->mStatuses,
 			"variables"   => WikiFactory::getVariables(),
 			"variableName"=> $this->mVariableName,
 			"isDevel"     => $wgDevelEnvironment,
@@ -357,25 +346,60 @@ class WikiFactoryPage extends SpecialPage {
 		);
 		if( $this->mTab === 'info' ) {
 			$vars[ 'founder_id' ] = $this->mWiki->city_founding_user;
+			#this is the static stored email
+			$vars[ 'founder_email' ] = $this->mWiki->city_founding_email;
 
 			if( !empty( $this->mWiki->city_founding_user ) ) {
 				#if we knew who they were, get their current info
 				$fu = User::newFromId( $this->mWiki->city_founding_user );
 				$vars[ 'founder_username' ] = $fu->getName();
 				$vars[ 'founder_usermail' ] = $fu->getEmail();
-			}
-			else
+				$vars[ 'founder_metrics_url' ] = $vars[ 'wikiFactoryUrl' ] . "/Metrics?founder=" . rawurlencode( $fu->getName() );
+				$vars[ 'founder_usermail_metrics_url' ] = $vars[ 'wikiFactoryUrl' ] . "/Metrics?email=" . urlencode( $vars[ 'founder_usermail' ] );
+				$vars[ 'founder_email_metrics_url' ] = $vars[ 'wikiFactoryUrl' ] . "/Metrics?email=" . urlencode( $vars[ 'founder_email' ] );
+			} else
 			{	#dont know who made the wiki, so dont try to do lookups
 				$vars[ 'founder_username' ] = null;
 				$vars[ 'founder_usermail' ] = null;
 			}
 
-			#this is the static stored email
-			$vars[ 'founder_email' ] = $this->mWiki->city_founding_email;
+			if( $wgUser->isAllowed( 'lookupuser' ) ) {
+				$vars[ 'lookupuser_by_founder_email_url' ] = Title::newFromText( "LookupUser", NS_SPECIAL)->getFullURL(array("target" => $vars['founder_email']));
+
+				if( !empty( $vars['founder_username'] ) ) {
+					$vars[ 'lookupuser_by_founder_username_url' ] = Title::newFromText( "LookupUser", NS_SPECIAL)->getFullURL(array("target" => $vars['founder_username']));
+				}
+				if( !empty( $vars['founder_usermail'] ) ) {
+					$vars[ 'lookupuser_by_founder_usermail_url' ] = Title::newFromText( "LookupUser", NS_SPECIAL)->getFullURL(array("target" => $vars['founder_usermail']));
+				}
+			}
 		}
 		if( $this->mTab === "tags" ||  $this->mTab === "findtags" ) {
 			$vars[ 'searchTag' ] = $this->mSearchTag;
 			$vars[ 'searchTagWikiIds' ] = $this->mTagWikiIds;
+		}
+		if( $this->mTab === "hubs" ) {
+
+			$hub = WikiFactoryHub::getInstance();
+			$vars['vertical_id'] = $hub->getVerticalId( $this->mWiki->city_id );
+			$vars['verticals'] = $hub->getAllVerticals();
+
+			$wiki_old_categories = $hub->getWikiCategories ( $this->mWiki->city_id, false );
+			$wiki_new_categories = $hub->getWikiCategories( $this->mWiki->city_id, true );
+			$wiki_categories = array_merge($wiki_old_categories, $wiki_new_categories);
+
+			$wiki_cat_ids = array();
+			foreach ($wiki_categories as $cat) {
+				$wiki_cat_ids[] = $cat['cat_id'];
+			}
+			$vars['wiki_categoryids'] = $wiki_cat_ids;
+
+			$all_old_categories = $hub->getAllCategories( false );
+			$all_new_categories = $hub->getAllCategories( true );
+			$all_categories = array_replace($all_old_categories, $all_new_categories);
+
+			$vars['all_categories'] = $all_categories;
+
 		}
 		if( $this->mTab === "clog" ) {
 			$pager = new ChangeLogPager( $this->mWiki->city_id );
@@ -446,23 +470,15 @@ class WikiFactoryPage extends SpecialPage {
 	 * @return mixed	info when change, null when not changed
 	 */
 	private function doUpdateHubs( &$request ) {
-		$cat_id = $request->getVal( "wpWikiCategory", null );
+		$vertical_id = $request->getVal("wpWikiVertical", null);
+		$cat_ids = $request->getArray( "wpWikiCategory", null );
 		$reason = $request->getVal( "wpReason", null );
-		if( !is_null( $cat_id ) ){
-			$hub = WikiFactoryHub::getInstance();
-			$hub->setCategory( $this->mWiki->city_id, $cat_id, $reason );
-			$categories = $hub->getCategories();
+		$hub = WikiFactoryHub::getInstance();
 
-			// ugly fast fix for fb#9937 (until all the hub management is cleaned up)
-			global $wgMemc;
-			$key = sprintf("%s:%d", 'WikiFactory::getCategory', intval($this->mWiki->city_id));
-			$wgMemc->delete( $key );
+		$hub->setVertical( $this->mWiki->city_id, $vertical_id, $reason );
+		$hub->updateCategories( $this->mWiki->city_id, $cat_ids, $reason );
 
-			return Wikia::successbox( "Hub is now set to: ". $categories[ $cat_id ]['name'] );
-		}
-		else {
-			return Wikia::successbox( "Hub was not changed.");
-		}
+		return Wikia::successbox( "Vertical and Categories updated");
 	}
 
 	/**
@@ -518,6 +534,15 @@ class WikiFactoryPage extends SpecialPage {
 				$this->mWiki->city_public = $status;
 				WikiFactory::clearCache( $this->mWiki->city_id );
 				$message = "Status of this wiki was changed to " . $this->mStatuses[ $status ];
+			case "protect":
+				$protect = $request->getCheck( "wpProtected", false);
+				if ($protect) {
+					$message = "Wiki protected";
+					WikiFactory::setFlags( $this->mWiki->city_id, WikiFactory::FLAG_PROTECTED );
+				} else {
+					$message = "Wiki un-protected";
+					WikiFactory::resetFlags( $this->mWiki->city_id, WikiFactory::FLAG_PROTECTED );
+				}
 			break;
 		}
 		return Wikia::successmsg( $message );
@@ -1068,6 +1093,9 @@ class ChangeLogPager extends TablePager {
 				return $sRetval;
 				break;
 
+			case "cl_text":
+				return '<div class="ChangeLogPager_cl_value">' . $value . '</div>';
+				break;
 			case "cl_timestamp":
 				return wfTimestamp( TS_EXIF, $value );
 				break;
@@ -1137,6 +1165,13 @@ class ChangeLogPager extends TablePager {
 				. " = "
 				. $this->mWikiId;
 		}
+
+		$variable = $this->getRequest()->getInt( 'variable' );
+		if ( $variable > 0 ) {
+			$query[ 'conds' ][ ] = WikiFactory::table( 'city_list_log', 'cl_type' ) . '=' . WikiFactory::LOG_VARIABLE;
+			$query[ 'conds' ][ ] = WikiFactory::table( 'city_list_log', 'cl_var_id' ) . '=' . $variable;
+		}
+
 		return $query;
 	}
 

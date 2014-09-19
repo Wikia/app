@@ -1,42 +1,18 @@
-@import "color";
+@import "skins/shared/color";
 @import "layout";
-@import "../mixins/clearfix";
+@import "skins/shared/mixins/clearfix";
 
 body {
-	background: $color-body url($background-image) top $background-align repeat; /* $wgCdnStylePath */
 	color: $color-text;
 	font-family: Helvetica, Arial, sans-serif;
 	font-size: 12px;
 	margin: 0;
 	overflow-x: auto;
 	padding: 0 0 30px 0;
-	>h1 {
-		display: none;
-	}
 }
 
-body.global-header-fixed-at-top {
-	padding-top: 37px;
-}
-
-@if $background-tiled == false {
-	body {
-		background-repeat: no-repeat;
-	}
-}
-@if $background-fixed == true {
-	body {
-		background-attachment: fixed;
-	}
-}
-@if $oasisWidthType == 1 {
-	body {
-		min-width: $width-outside + 40;
-	}
-	// Don't apply min-width to RTE's iframed body tag
-	body#bodyContent {
-		min-width: auto;
-	}
+.WikiaSiteWrapper > h1 {
+	display: none;
 }
 
 a {

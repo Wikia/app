@@ -8,7 +8,6 @@ var logger = require('./logger').logger;
  */
 
 function execCMD(com, callback) {
-	var sys = require('sys');
 	var exec = require('child_process').exec;
 	var puts = function(error, stdout, stderr) { callback(parseFloat(stdout)) };	
 	exec(com, puts);
@@ -75,7 +74,7 @@ exports.startMonitoring = startMonitoring = function(interval, storage) {
         setInterval(function(){
             getStats(storage, function(out){
                     for( var i in out) {
-                            var CMDstring = 'gmetric --name="' + i + '_' + config.INSTANCE + '" --value='+ out[i] +' --type=float --unit=n --dmax=90';
+                            var CMDstring = 'gmetric --name="' + i + '_' + config.INSTANCE + '" --value='+ out[i] +' --type=float --unit=n --dmax=90 --group=Chat';
                             execCMD(CMDstring, function() {});
                             //logger.info(CMDstring);   
                     }

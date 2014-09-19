@@ -3,10 +3,10 @@
 	<? if($showStats): ?>
 		<div class="header-right">
 			<div class="first tally">
-				<?= wfMsgExt(('forum-header-total-threads'), array('parsemag'), $wg->Lang->formatNum( $threads )) ?>
+				<?= wfMessage( 'forum-header-total-threads', $wg->Lang->formatNum( $threads ) )->parse() ?>
 			</div>
 			<div class="last tally">
-				<?= wfMsgExt(('forum-header-active-threads'), array('parsemag'), $wg->Lang->formatNum( $activeThreads )) ?>
+				<?= wfMessage( 'forum-header-active-threads', $wg->Lang->formatNum( $activeThreads ) )->parse() ?>
 			</div>
 		</div>
 	<? endif; ?>

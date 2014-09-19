@@ -11,6 +11,6 @@
 		<? endif ?>
 	<? endforeach ?>
 	<? if (!empty($isRemoved) || !empty($isAdminDeleted)): ?>
-		<span class="removed"><?= '(' . wfMsg('wall-thread-' . ($isAdminDeleted ? 'deleted' : 'removed')) . ')' ?></span>
+		<span class="removed"><?= '(' . wfMessage( 'wall-thread-' . ( $isAdminDeleted ? 'deleted' : 'removed' ) )->escaped() . ')' ?></span>
 	<? endif ?>
 </nav>

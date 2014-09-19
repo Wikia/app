@@ -1,13 +1,12 @@
-@import "skins/oasis/css/mixins/arrow";
-@import "skins/oasis/css/mixins/background-opacity";
-@import "skins/oasis/css/mixins/border-radius";
-@import "skins/oasis/css/mixins/box-shadow";
-@import "skins/oasis/css/mixins/box-sizing-border-box";
-@import "skins/oasis/css/mixins/clearfix";
-@import "skins/oasis/css/mixins/opacity";
-@import "skins/oasis/css/mixins/transition";
-@import "skins/oasis/css/core/color";
+@import "skins/shared/mixins/arrow";
+@import "skins/shared/mixins/background-opacity";
+@import "skins/shared/mixins/box-shadow";
+@import "skins/shared/mixins/box-sizing-border-box";
+@import "skins/shared/mixins/clearfix";
+@import "skins/shared/mixins/transition";
+@import "skins/shared/color";
 @import "mixins/sprite-Lightbox";
+@import "extensions/wikia/VideoHandlers/css/crunchyrollWidget";
 
 $lightbox-overlay-show-duration: 200ms;
 $lightbox-overlay-hide-duration: 600ms;
@@ -41,11 +40,7 @@ $color-lightbox-border: mix($color-page-border, $color-page, 75%);
 		.LightboxCarousel,
 		.LightboxHeader {
 			@include transition-shorthand(opacity $lightbox-overlay-hide-duration ease-out);
-			@include opacity(0);
-		}
-		// Fix IE8 issues with css transitions
-		.lightbox-arrows span.disabled, .Wikia-video-play-button {
-			@include opacity(0);
+			opacity: 0;
 		}
 	}
 	&.more-info-mode, &.share-mode {
@@ -280,18 +275,10 @@ $color-lightbox-border: mix($color-page-border, $color-page, 75%);
 	.LightboxCarousel {
 		@include background-opacity($color-page, 90);
 		@include box-shadow( 0px, 0px, 5px, $color-shadow, false, 0);
-		@include opacity(100);
 		@include transition-shorthand(opacity $lightbox-overlay-show-duration ease-out);
+		opacity: 1;
 		position: absolute;
 		-webkit-backface-visibility: hidden;	/* flicker fix for webkit transition */
-		/* ie8 fix - opacity filter will not apply on positioned/floated elements to ie8 unless "filter: inherit" is applied to every element down to the actual element - fb:32565 */
-		.avatar,
-		.carousel,
-		.close,
-		div {
-			filter: inherit;
-		}
-		/* end ie8 fix */
 	}
 	.LightboxCarousel {
 		@include clearfix;
@@ -362,7 +349,7 @@ $color-lightbox-border: mix($color-page-border, $color-page, 75%);
 							width: 0px;
 
 						}
-						span {
+						b {
 							font-size: 14px;
 							&:before {
 								content: "+";
@@ -404,8 +391,8 @@ $color-lightbox-border: mix($color-page-border, $color-page, 75%);
 				}
 			}
 			&.disabled {
-				@include opacity(40);
 				cursor: default;
+				opacity: .4;
 			}
 		}
 		.content {
@@ -526,13 +513,13 @@ $color-lightbox-border: mix($color-page-border, $color-page, 75%);
 	// Left right arrows in lightbox (not carousel arrows)
 	.lightbox-arrows {
 		span {
-			@include opacity(65);
 			@include transition-shorthand(opacity $lightbox-overlay-show-duration ease-out);
 			cursor: pointer;
 			display: block;
 			height: 100%;
-			width: 50%;
+			opacity: .65;
 			position: absolute;
+			width: 50%;
 			top: 0px;
 
 			&:after {
@@ -546,7 +533,7 @@ $color-lightbox-border: mix($color-page-border, $color-page, 75%);
 				width: 50px;
 			}
 			&:hover {
-				@include opacity(100);
+				opacity: 1;
 			}
 			&.disabled {
 				display: none;
@@ -594,4 +581,8 @@ $color-lightbox-border: mix($color-page-border, $color-page, 75%);
 // Error template styles
 .modalWrapper .modalToolbar .close {
 	margin: 0;
+}
+
+.modalWrapper .media {
+	@include crunchyrollWidget;
 }

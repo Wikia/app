@@ -10,6 +10,13 @@ class SpecialThemeDesignerPreview extends UnlistedSpecialPage {
 		wfProfileIn( __METHOD__ );
 		global $wgOut, $wgExtensionsPath;
 
+		// check rights
+		if ( !ThemeDesignerHelper::checkAccess() ) {
+			$this->displayRestrictionError();
+			wfProfileOut( __METHOD__ );
+			return;
+		}
+
 		$wgOut->allowClickjacking();
 
 		$this->setHeaders();
@@ -57,7 +64,7 @@ class SpecialThemeDesignerPreview extends UnlistedSpecialPage {
 		$moduleObject->action = array("text" => "Edit this page");
 		$moduleObject->actionImage = '';
 		$moduleObject->actionName = 'edit';
-		$moduleObject->dropdown = array('foo', 'bar');
+		$moduleObject->dropdown = array(['title' => 'foo', 'text' => 'foo'], ['title' => 'bar', 'text' => 'bar']);
 
 		wfProfileOut(__METHOD__);
 		return true;

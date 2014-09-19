@@ -27,30 +27,32 @@
 			<? endif; ?>
 		</span>
 	</li>
-	<? foreach($notificationCounts as $wikiData): ?>	
-	<? if ($wikiCount == 1 ): ?>
-		<li class="notifications-for-wiki show" data-notification-key="<?= $notificationKey ?>" data-wiki-id="<?= $wikiData['id'] ?>">
-	<? else: ?>
-		<li class="notifications-for-wiki" data-notification-key="<?= $notificationKey ?>" data-wiki-path="<?= $wikiData['wgServer'] ?>" data-wiki-id="<?= $wikiData['id'] ?>">
-	<? endif; ?>
-		<? if ($alwaysGrouped || $wikiCount > 1): ?>
-		<div class="notifications-wiki-header">
-		<? else: ?>
-		<div class="notifications-wiki-header" style="display: none">
-		<? endif; ?>
-			<?= $wikiData['sitename'] ?>
-			<img src="<?= $wgBlankImgUrl ?>" class="chevron" /> 
-			<? if ($wikiData['unread'] > 0): ?>
-				<span class="notifications-wiki-count-container">
+	<? foreach($notificationCounts as $wikiData): ?>
+		<? if (!empty($wikiData['sitename'])): ?>
+			<? if ($wikiCount == 1 ): ?>
+				<li class="notifications-for-wiki show" data-notification-key="<?= $notificationKey ?>" data-wiki-id="<?= $wikiData['id'] ?>">
 			<? else: ?>
-				<span class="notifications-wiki-count-container" style="display: none">
+				<li class="notifications-for-wiki" data-notification-key="<?= $notificationKey ?>" data-wiki-path="<?= $wikiData['wgServer'] ?>" data-wiki-id="<?= $wikiData['id'] ?>">
 			<? endif; ?>
-				<span class="notifications-wiki-count"><?= $wikiData['unread'] ?></span>
-			</span>
-		</div>
-		<ul class="notifications-for-wiki-list">
-			<li class="notifications-empty"><?= wfMsg('wall-notifications-loading') ?></li>
-		</ul>
-	</li>
+				<? if ($alwaysGrouped || $wikiCount > 1): ?>
+				<div class="notifications-wiki-header">
+				<? else: ?>
+				<div class="notifications-wiki-header" style="display: none">
+				<? endif; ?>
+					<?= $wikiData['sitename'] ?>
+					<img src="<?= $wgBlankImgUrl ?>" class="chevron" />
+					<? if ($wikiData['unread'] > 0): ?>
+						<span class="notifications-wiki-count-container">
+					<? else: ?>
+						<span class="notifications-wiki-count-container" style="display: none">
+					<? endif; ?>
+						<span class="notifications-wiki-count"><?= $wikiData['unread'] ?></span>
+					</span>
+				</div>
+				<ul class="notifications-for-wiki-list">
+					<li class="notifications-empty"><?= wfMsg('wall-notifications-loading') ?></li>
+				</ul>
+			</li>
+		<? endif ?>
 	<? endforeach; ?>
 <? endif; ?>

@@ -41,9 +41,11 @@ $messages['be-tarask'] = array(
 );
 
 /** Bulgarian (български)
+ * @author Aquilax
  * @author DCLXVI
  */
 $messages['bg'] = array(
+	'randomwiki-desc' => 'Позволява на потребителите да разглеждат случайно уики',
 	'randomwiki' => 'Случайно уики',
 );
 
@@ -64,7 +66,7 @@ $messages['ca'] = array(
 	'randomwiki' => "Wiki a l'atzar",
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Mormegil
  */
 $messages['cs'] = array(
@@ -323,17 +325,19 @@ $messages['sah'] = array(
 );
 
 /** Serbian (Cyrillic script) (српски (ћирилица)‎)
+ * @author Nikola Smolenski
  * @author Rancher
  */
 $messages['sr-ec'] = array(
-	'randomwiki' => 'Насумична викија',
+	'randomwiki' => 'Насумични вики',
 );
 
 /** Swedish (svenska)
  * @author Tobulos1
+ * @author WikiPhoenix
  */
 $messages['sv'] = array(
-	'randomwiki-desc' => 'Lets users explore a random wiki',
+	'randomwiki-desc' => 'Låter användare utforska en slumpartad wiki',
 	'randomwiki' => 'Slumpmässig Wiki',
 );
 
@@ -350,6 +354,14 @@ $messages['te'] = array(
 $messages['tl'] = array(
 	'randomwiki-desc' => 'Nagpapahintulot sa mga tagagamit na magalugat ang alin mang wiki',
 	'randomwiki' => 'Alinmang Wiki',
+);
+
+/** Turkish (Türkçe)
+ * @author Incelemeelemani
+ */
+$messages['tr'] = array(
+	'randomwiki-desc' => 'Kullanıcıların rastgele bir wiki keşfetmesini sağlar',
+	'randomwiki' => 'Rastgele Wiki',
 );
 
 /** Tatar (Cyrillic script) (татарча)

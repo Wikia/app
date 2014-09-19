@@ -50,6 +50,9 @@ if ( isset( $_SERVER['MW_COMPILED'] ) ) {
 	require ( dirname( __FILE__ ) . '/includes/WebStart.php' );
 }
 
+Transaction::setEntryPoint(Transaction::ENTRY_POINT_API);
+Transaction::setAttribute(Transaction::PARAM_API_ACTION, $wgRequest->getVal('action',null));
+
 wfProfileIn( 'api.php' );
 $starttime = microtime( true );
 
@@ -151,6 +154,8 @@ if ( $wgAPIRequestLog ) {
 	wfErrorLog( implode( ',', $items ) . "\n", $wgAPIRequestLog );
 	wfDebug( "Logged API request to $wgAPIRequestLog\n" );
 }
+
+wfRunHooks( 'RestInPeace' ); // Wikia change - @author macbre
 
 // Shut down the database.  foo()->bar() syntax is not supported in PHP4: we won't ever actually
 // get here to worry about whether this should be = or =&, but the file has to parse properly.

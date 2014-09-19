@@ -121,6 +121,12 @@
           .css({ top: 0, left: 0, display: 'block' })
           .appendTo(inside ? this.$element : document.body)
 
+        /* wikia change starts (nAndy) */
+        if( this.options && this.options['z-index'] ) {
+          $tip.css( 'z-index', this.options['z-index'] );
+        }
+        /* wikia change ends) */
+
         pos = this.getPosition(inside)
 
         actualWidth = $tip[0].offsetWidth

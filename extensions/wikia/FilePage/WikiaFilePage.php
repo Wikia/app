@@ -69,7 +69,7 @@ class WikiaFilePage extends ImagePage {
 		$autoplay = $app->wg->VideoPageAutoPlay;
 
 		// JS for VideoBootstrap
-		$embedCode = $file->getEmbedCode( self::VIDEO_WIDTH, $autoplay );
+		$embedCode = $file->getEmbedCode( self::VIDEO_WIDTH, ['autoplay' => $autoplay] );
 
 		// Tell JS that HTML will already be loaded on the page.
 		$embedCode['htmlPreloaded'] = 1;
@@ -103,6 +103,7 @@ class WikiaFilePage extends ImagePage {
 			'providerUrl' => $file->getProviderHomeUrl(),
 			'detailUrl' => $file->getProviderDetailUrl(),
 			'views' => MediaQueryService::getTotalVideoViewsByTitle( $file->getTitle()->getDBKey() ),
+			'regionalRestrictions' => $file->getRegionalRestrictions(),
 		);
 
 		$caption = $app->renderView( 'FilePageController', 'videoCaption', $captionDetails );

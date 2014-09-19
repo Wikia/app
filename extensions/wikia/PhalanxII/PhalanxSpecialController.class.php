@@ -25,8 +25,8 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 
 		$this->wg->Out->setPageTitle( wfMsg('phalanx-title') );
 		if ( !$this->userCanExecute( $this->wg->User ) ) {
-			$this->displayRestrictionError();
 			wfProfileOut( __METHOD__ );
+			$this->displayRestrictionError();
 			return;
 		}
 
@@ -54,6 +54,12 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 	 */
 	public function main() {
 		wfProfileIn( __METHOD__ );
+
+		if ( !$this->userCanExecute( $this->wg->User ) ) {
+			wfProfileOut( __METHOD__ );
+			$this->displayRestrictionError();
+			return;
+		}
 
 		// creating / editing a block
 		if ( $this->wg->Request->wasPosted() ) {
@@ -138,6 +144,11 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 	 * Renders second tab - blocks testing
 	 */
 	public function test() {
+		if ( !$this->userCanExecute( $this->wg->User ) ) {
+			$this->displayRestrictionError();
+			return;
+		}
+
 		$title = SpecialPage::getTitleFor('Phalanx', 'test');
 		$this->setVal( 'action', $title->getLocalURL() );
 
@@ -154,6 +165,11 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 	 * Renders navigation tabs on special page
 	 */
 	public function tabs() {
+		if ( !$this->userCanExecute( $this->wg->User ) ) {
+			$this->displayRestrictionError();
+			return;
+		}
+
 		$this->setVal('currentTab', $this->getVal('currentTab'));
 		$this->setVal('phalanxMainTitle', $this->title);
 		$this->setVal('phalanxTestTitle', SpecialPage::getTitleFor('Phalanx', 'test'));
@@ -285,6 +301,12 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 	public function unblock() {
 		wfProfileIn( __METHOD__ );
 
+		if ( !$this->userCanExecute( $this->wg->User ) ) {
+			wfProfileOut( __METHOD__ );
+			$this->displayRestrictionError();
+			return;
+		}
+
 		$this->response->setFormat('json');
 		$this->setVal('success', false);
 
@@ -330,6 +352,12 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 	public function validate() {
 		wfProfileIn( __METHOD__ );
 
+		if ( !$this->userCanExecute( $this->wg->User ) ) {
+			wfProfileOut( __METHOD__ );
+			$this->displayRestrictionError();
+			return;
+		}
+
 		$this->response->setFormat('json');
 		$this->setVal( 'valid', false);
 
@@ -351,6 +379,11 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 	}
 
 	public function matchBlock() {
+		if ( !$this->userCanExecute( $this->wg->User ) ) {
+			$this->displayRestrictionError();
+			return;
+		}
+
 		$result = array();
 		$token = $this->request->getVal( 'token' );
 		$block = $this->request->getVal( 'block' );

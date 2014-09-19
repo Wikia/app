@@ -26,7 +26,7 @@ class SFCreateClass extends SpecialPage {
 
 		SFUtils::addJavascriptAndCSS();
 
-		$jsText =<<<END
+		$jsText = <<<END
 <script>
 var rowNum = $numStartingRows;
 function createClassAddRow() {
@@ -61,6 +61,13 @@ END;
 		$property_name_error_str = '';
 		$save_page = $wgRequest->getCheck( 'save' );
 		if ( $save_page ) {
+			// Guard against cross-site request forgeries (CSRF)
+			$validToken = $this->getUser()->matchEditToken( $wgRequest->getVal( 'csrf' ), 'CreateClass' );
+			if ( !$validToken ) {
+				$text = "This appears to be a cross-site request forgery; canceling save.";
+				$wgOut->addHTML( $text );
+				return;
+			}
 			$template_name = trim( $wgRequest->getVal( "template_name" ) );
 			$form_name = trim( $wgRequest->getVal( "form_name" ) );
 			$category_name = trim( $wgRequest->getVal( "category_name" ) );
@@ -92,7 +99,12 @@ END;
 				$params = array();
 				$params['user_id'] = $wgUser->getId();
 				$params['page_text'] = $full_text;
-				$jobs[] = new SFCreatePageJob( $property_title, $params );
+
+				// wikia change start - jobqueue migration
+				$job = new \Wikia\Tasks\Tasks\JobWrapperTask();
+				$job->call( 'createPage', $property_title, $params );
+				$jobs[] = $job;
+				// wikia change end
 			}
 
 			// create the template, and save it
@@ -111,7 +123,12 @@ END;
 			$params = array();
 			$params['user_id'] = $wgUser->getId();
 			$params['page_text'] = $full_text;
-			$jobs[] = new SFCreatePageJob( $form_title, $params );
+
+			// wikia change start - jobqueue migration
+			$job = new \Wikia\Tasks\Tasks\JobWrapperTask();
+			$job->call( 'createPage', $form_title, $params );
+			$jobs[] = $job;
+			// wikia change end
 
 			// create the category, and make a job for it
 			$full_text = SFCreateCategory::createCategoryText( $form_name, $category_name, '' );
@@ -119,8 +136,13 @@ END;
 			$params = array();
 			$params['user_id'] = $wgUser->getId();
 			$params['page_text'] = $full_text;
-			$jobs[] = new SFCreatePageJob( $category_title, $params );
-			Job::batchInsert( $jobs );
+
+			// wikia change start - jobqueue migration
+			$job = new \Wikia\Tasks\Tasks\JobWrapperTask();
+			$job->call( 'createPage', $category_title, $params );
+			$jobs[] = $job;
+			\Wikia\Tasks\Tasks\BaseTask::batch( $jobs );
+			// wikia change end
 
 			$wgOut->addWikiMsg( 'sf_createclass_success' );
 			return;
@@ -185,7 +207,7 @@ END;
 			<select name="property_type_$n">
 
 END;
-			$optionsStr ="";
+			$optionsStr = "";
 			foreach ( $datatype_labels as $label ) {
 				$text .= "				<option>$label</option>\n";
 				$optionsStr .= $label . ",";
@@ -222,6 +244,7 @@ END;
 				'value' => wfMsg( 'sf_createclass_create' )
 			)
 		);
+		$text .= Html::hidden( 'csrf', $this->getUser()->getEditToken( 'CreateClass' ) ) . "\n";
 		$text .= "</form>\n";
 		$wgOut->addHTML( $text );
 	}

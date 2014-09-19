@@ -1,26 +1,26 @@
 /*!
  * VisualEditor DataModel MWAlienExtensionNode class.
  *
- * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
 /**
- * DataModel MediaWiki math node.
+ * DataModel MediaWiki alien extension node.
  *
  * @class
- * @extends ve.dm.MWExtensionNode
+ * @extends ve.dm.MWBlockExtensionNode
  *
  * @constructor
  */
-ve.dm.MWAlienExtensionNode = function VeDmMWAlienExtensionNode( length, element ) {
+ve.dm.MWAlienExtensionNode = function VeDmMWAlienExtensionNode() {
 	// Parent constructor
-	ve.dm.MWExtensionNode.call( this, 0, element );
+	ve.dm.MWBlockExtensionNode.apply( this, arguments );
 };
 
 /* Inheritance */
 
-ve.inheritClass( ve.dm.MWAlienExtensionNode, ve.dm.MWExtensionNode );
+OO.inheritClass( ve.dm.MWAlienExtensionNode, ve.dm.MWBlockExtensionNode );
 
 /* Static members */
 

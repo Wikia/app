@@ -25,23 +25,27 @@ class WikiFeaturesHelper extends WikiaModel {
 	);
 
 	public static $feedbackAreaIDs = array (
-		'wgEnableAjaxPollExt' => 280,			// Polls
-		'wgShowTopListsInCreatePage' => 199,	// Top 10 Lists
-		'wgEnableAchievementsExt' => 247,		// Achievements
-		'wgEnableBlogArticles' => 281,			// Blogs
-		'wgEnableArticleCommentsExt' => 200,	// Article Comments
-		'wgEnableCategoryExhibitionExt' => 201,	// Category Exhibition
-		'wgEnableChat' => 258,					// Chat
-		'wgEnableWallExt' => 258,				// Wall
-		'wgEnableForumExt' => 259,				// Forum
+		'wgEnableAjaxPollExt' => 280,
+		'wgShowTopListsInCreatePage' => 199,
+		'wgEnableAchievementsExt' => 247,
+		'wgEnableBlogArticles' => 281,
+		'wgEnableArticleCommentsExt' => 200,
+		'wgEnableCategoryExhibitionExt' => 201,
+		'wgEnableChat' => 258,
+		'wgEnableWallExt' => 258,
+		'wgEnableForumExt' => 259,
+		'wgEnableVisualEditorUI' => 259,
+		'wgEnableWikiaInteractiveMaps' => 260,
 	);
 
 	// no need to add feature to $release_date if not require "new" flag
 	public static $release_date = array (
-		'wgEnableChat' => '2011-08-01',					// Chat
-		'wgShowTopListsInCreatePage' => '2012-02-12',	// Top 10 Lists
-		'wgEnableAchievementsExt' => '2012-02-12',		// Achievements
-		'wgEnableForumExt' => '2012-11-29',				// Forum
+		'wgEnableChat' => '2011-08-01',
+		'wgShowTopListsInCreatePage' => '2012-02-12',
+		'wgEnableAchievementsExt' => '2012-02-12',
+		'wgEnableForumExt' => '2012-11-29',
+		'wgEnableVisualEditorUI' => '2013-12-04',
+		'wgEnableWikiaInteractiveMaps' => '2014-07-23',
 	);
 
 	/**
@@ -71,6 +75,7 @@ class WikiFeaturesHelper extends WikiaModel {
 				$list[] = array(
 					'name' => $feature,
 					'enabled' => $this->getFeatureEnabled($feature),
+					'imageExtension' => '.png'
 				);
 			}
 		}
@@ -90,6 +95,7 @@ class WikiFeaturesHelper extends WikiaModel {
 					'enabled' => $this->getFeatureEnabled($feature),
 					'new' => self::isNew($feature),
 					'active' => $this->wg->Lang->formatNum( $this->getNumActiveWikis( $feature ) ),
+					'imageExtension' => $feature == 'wgEnableVisualEditorUI' ? '.gif' : '.png'
 				);
 			}
 		}

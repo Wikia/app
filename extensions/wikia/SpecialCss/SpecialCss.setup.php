@@ -45,7 +45,7 @@ $wgSpecialPageGroups['CSS'] = 'wikia';
 
 // message files
 $wgExtensionMessagesFiles['SpecialCss'] = $dir.'SpecialCss.i18n.php';
-(new JSMessages())->registerPackage( 'SpecialCss', array( 'special-css-*' ) );
+JSMessages::registerPackage( 'SpecialCss', array( 'special-css-*' ) );
 
 //mapping community central language to it's database name
 $wgCssUpdatesLangMap = array (

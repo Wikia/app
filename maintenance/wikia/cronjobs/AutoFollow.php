@@ -1,6 +1,6 @@
 <?php
 
-require( '../../commandLine.inc' );
+require_once( dirname(__FILE__) . '/../../commandLine.inc' );
 
 $alreadyWatchedKey = 'autowatched-already';
 
@@ -23,7 +23,7 @@ while ( $row = $dbr->fetchRow( $res ) ) {
 	$user = User::newFromId( $row['user_id'] );
 
 	if ( !is_object( $user ) ) {
-		continue;	
+		continue;
 	}
 
 	if ( $user->getOption( $alreadyWatchedKey ) == 1 ) {

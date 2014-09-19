@@ -10,6 +10,7 @@ $(document).ready(function() {
 	var ajaxRequests = [];
 
 	var oTable = $('#lookupuser-table').dataTable( {
+		bAutoWidth: false,
 		oLanguage: {
 			sLengthMenu: "<?=wfMsg('table_pager_limit', '_MENU_');?>",
 			sZeroRecords: "<?=wfMsg('table_pager_empty');?>",

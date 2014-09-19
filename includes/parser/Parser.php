@@ -220,6 +220,15 @@ class Parser {
 	}
 
 	/**
+	 * Allow extensions to clean up when the parser is cloned
+	 *
+	 * Wikia change - backported from MW 1.21 (CE-815)
+	 */
+	function __clone() {
+		wfRunHooks( 'ParserCloned', array( $this ) );
+	}
+
+	/**
 	 * Do various kinds of initialisation on the first call of the parser
 	 */
 	function firstCallInit() {
@@ -325,6 +334,10 @@ class Parser {
 		$fname = __METHOD__.'-' . wfGetCaller();
 		wfProfileIn( __METHOD__ );
 		wfProfileIn( $fname );
+
+		// Wikia change begin - @author: wladek
+		$wikitextSize = strlen($text);
+		// Wikia change end
 
 		$this->startParse( $title, $options, self::OT_HTML, $clearState );
 
@@ -455,6 +468,9 @@ class Parser {
 		}
 
 		wfRunHooks( 'ParserAfterTidy', array( &$this, &$text ) );
+		// Wikia change begin - @author: wladek
+		$this->recordPerformanceStats( $wikitextSize, strlen($text) );
+		// Wikia change end
 
 		# Information on include size limits, for the benefit of users who try to skirt them
 		if ( $this->mOptions->getEnableLimitReport() ) {
@@ -1984,7 +2000,7 @@ class Parser {
 
 			if ( $might_be_img ) { # if this is actually an invalid link
 				wfProfileIn( __METHOD__."-might_be_img" );
-				if ( ( $ns == NS_FILE || $ns == NS_VIDEO ) && $noforce ) { # but might be an image
+				if ( ( $ns == NS_FILE ) && $noforce ) { # but might be an image
 					$found = false;
 					while ( true ) {
 						# look at the next 'line' to see if we can close it there
@@ -4351,6 +4367,11 @@ class Parser {
 			$enoughToc = true;
 		}
 
+		/* Wikia change begin - @author: nAndy/Rafal */
+		/* Allow extensions to force not generating mediawiki TOC */
+		wfRunHooks('Parser::disableMWTOC', [ &$this, &$enoughToc ]);
+		/* Wikia change end */
+
 		# headline counter
 		$headlineCount = 0;
 		$numVisible = 0;
@@ -5582,6 +5603,12 @@ class Parser {
 		}
 		$this->mOutput->setCacheTime( -1 ); // old style, for compatibility
 		$this->mOutput->updateCacheExpiry( 0 ); // new style, for consistency
+
+		// Wikia change - begin
+		Wikia\Logger\WikiaLogger::instance()->info(__METHOD__, [
+			'exception' => new Exception()
+		]);
+		// Wikia change - end
 	}
 
 	/**
@@ -6136,5 +6163,23 @@ class Parser {
 	 */
 	function isValidHalfParsedText( $data ) {
 		return isset( $data['version'] ) && $data['version'] == self::HALF_PARSED_VERSION;
+	}
+
+	/**
+	 * Records parser performance stats in ParserOutput object
+	 *
+	 * @author wladek
+	 *
+	 * @param $wikitextSize int Wikitext size
+	 * @param $htmlSize int HTML size
+	 */
+	function recordPerformanceStats( $wikitextSize, $htmlSize ) {
+		$parserOutput = $this->mOutput;
+		$parserOutput->setPerformanceStats('expFuncCount',   $this->mExpensiveFunctionCount);
+		$parserOutput->setPerformanceStats('nodeCount',      $this->mPPNodeCount);
+		$parserOutput->setPerformanceStats('postExpandSize', $this->mIncludeSizes['post-expand']);
+		$parserOutput->setPerformanceStats('tempArgSize',    $this->mIncludeSizes['arg']);
+		$parserOutput->setPerformanceStats('wikitextSize',   $wikitextSize);
+		$parserOutput->setPerformanceStats('htmlSize',       $htmlSize);
 	}
 }

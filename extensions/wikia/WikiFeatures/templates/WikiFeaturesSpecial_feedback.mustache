@@ -1,0 +1,26 @@
+<div id="FeedbackDialog" class="FeedbackDialog">
+	<div class="feature-highlight">
+		<img src="{{featureImageUrl}}" alt="{{featureName}}" >
+	</div>
+
+	<form>
+		<p>{{description}}</p>
+
+		<div class="input-group">
+			<label for="feedback">{{typeLabel}}</label>
+			<select name="feedback" id="feedback">
+				{{#typeOptions}}
+					<option value="{{value}}">{{label}}</option>
+				{{/typeOptions}}
+			</select>
+		</div>
+
+		<div class="comment-group">
+			<label for="comment">{{commentLabel}}:</label>
+			<textarea name="comment" id="comment"></textarea>
+		</div>
+		<div class="comment-character-count">0 / 1000</div>
+
+		<span class="status-msg"></span>
+	</form>
+</div>

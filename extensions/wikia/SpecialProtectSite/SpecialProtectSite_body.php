@@ -129,9 +129,12 @@ class ProtectsiteForm extends SpecialPage
 			As of March 2013, always show log
 			Suppress option now only suppresses time value */
 				$log = new LogPage('protect');
-				$log->addEntry('protect', Title::makeTitle(NS_SPECIAL, 'Allpages'),
-					$doLog ? $prot['timeout'] : wfMsg('protectsite-log-suppressed') .
-					(strlen($prot['comment']) > 0 ? '; ' . $prot['comment'] : ''));
+				$log->addEntry(
+					'protect',
+					Title::makeTitle(NS_SPECIAL, 'Allpages'),
+					$doLog ? $prot['timeout'] : wfMsg('protectsite-log-suppressed') . (strlen($prot['comment']) > 0 ? '; ' . $prot['comment'] : ''),
+					array( $prot['timeout'] )
+				);
 
 			/* Call the Unprotect Form function to display the current state. */
 			$this->unProtectsiteForm($prot);
@@ -186,7 +189,6 @@ class ProtectsiteForm extends SpecialPage
 					"<br />" : '') .
 					"<br />\n" .
 					$this->textbox('ucomment') .
-					$noLogCheck .
 					'<br />' .
 					Xml::Element('input', array(
 						'type'	=> 'submit',

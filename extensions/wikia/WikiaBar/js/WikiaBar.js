@@ -31,6 +31,7 @@ var WikiaBar = {
 		this.wikiaBarCollapseWrapperObj.click($.proxy(this.clickTrackingHandler, this));
 	},
 	init: function () {
+		this.$window = $(window);
 		this.wikiaBarWrapperObj = $('#WikiaBarWrapper');
 		this.wikiaBarCollapseWrapperObj = $('.WikiaBarCollapseWrapper');
 		this.bindTracking();
@@ -55,6 +56,8 @@ var WikiaBar = {
 			placement: "wikiaBar",
 			content: wikiaBarWrapperArrow.data('tooltipshow')
 		});
+
+		this.$window.triggerHandler( 'WikiaBarReady' );
 
 		return true;
 	},
@@ -193,6 +196,15 @@ var WikiaBar = {
 	isWikiaBarHidden: function () {
 		return this.wikiaBarHidden;
 	},
+	showContainer: function() {
+		$('#WikiaBar').show();
+	},
+	hideContainer: function() {
+		$('#WikiaBar').hide();
+	},
+	isContainerHidden: function() {
+		return $('#WikiaBar').is(":visible");
+	},
 	onShownClick: function (e) {
 		this.changeBarStateData();
 		e.preventDefault();
@@ -207,6 +219,8 @@ var WikiaBar = {
 		} else {
 			this.changeLoggedInUserStateBar();
 		}
+
+		this.$window.triggerHandler( 'WikiaBarStateChanged' );
 	},
 	changeAnonBarStateData: function () {
 		var isHidden = this.hasAnonHiddenWikiaBar();
@@ -417,27 +431,5 @@ var WikiaBar = {
 if (window.wgEnableWikiaBarExt) {
 	$(function () {
 		WikiaBar.init();
-
-		// ABTEST: DAR_GlobalNavigationFixed
-		// Determine what group we're in for experiment DAR_GlobalNavigationFixed
-		group = window.Wikia.AbTest
-			? Wikia.AbTest.getGroup( "DAR_GLOBALNAVIGATIONFIXED" )
-			: null ;
-
-		switch (group) {
-        case "HIDE_WIKIA_BAR":
-            // collapse as the default state for anons
-            if (WikiaBar && WikiaBar.isUserAnon() && WikiaBar.getAnonData(false) === false) {
-                WikiaBar.hide();
-            }
-            // no break intended: for this group we should have global nav fixed too
-            // break;
-        case "SHOW_WIKIA_BAR":
-            $('body').addClass('global-header-fixed-at-top');
-            break;
-        default:
-            // no changes in behaviour
-		}
 	});
 }
-

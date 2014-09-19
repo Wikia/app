@@ -10,38 +10,6 @@
 class AssetsConfig {
 	private /* array */ $mConfig;
 
-	public static function getSiteCSS( $combine, $minify = null, $params = null, $skinname = 'oasis', $articleName = 'Wikia.css') {
-		wfProfileIn(__METHOD__);
-
-		$srcs = array();
-		global $wgSquidMaxage;
-		$siteargs = array(
-			'action' => 'raw',
-			'maxage' => $wgSquidMaxage,
-		);
-		// BugId:20929 tell (or trick) varnish to store the latest revisions of Wikia.css and Common.css.
-		$oTitleCommonCss	= Title::newFromText( 'Common.css', NS_MEDIAWIKI );
-		$oTitleWikiaCss		= Title::newFromText( 'Wikia.css',  NS_MEDIAWIKI );
-		$siteargs['maxrev'] = max( (int) $oTitleWikiaCss->getLatestRevID(), (int) $oTitleCommonCss->getLatestRevID() );
-		unset( $oTitleWikiaCss, $oTitleCommonCss );
-
-		$query = wfArrayToCGI( array(
-			'usemsgcache' => 'yes',
-			'ctype' => 'text/css',
-			'smaxage' => $wgSquidMaxage
-		) + $siteargs );
-
-		$srcs[] = Title::newFromText( $articleName, NS_MEDIAWIKI)->getFullURL( $query );
-
-		// user specific CSS based on user preferences (if logged-in)
-		$siteargs['gen'] = 'css';
-		$siteargs['useskin'] = $skinname;
-		$srcs[] = Title::newFromText( '-' )->getFullURL( wfArrayToCGI( $siteargs ) );
-
-		wfProfileOut(__METHOD__);
-		return $srcs;
-	}
-
 	public static function getSiteJS( $combine ) {
 		return array(Title::newFromText('-')->getFullURL('action=raw&smaxage=0&gen=js&useskin=oasis'));
 	}
@@ -70,12 +38,18 @@ class AssetsConfig {
 	}
 
 	public static function getEPLAssets( $combine ) {
-		// This class always exists at the moment, this is just in case it goes away at some point
+		global $wgOasisResponsive;
+		$files = [];
+
 		if (class_exists('EditPageLayoutHelper')) {
-			return EditPageLayoutHelper::getAssets();
-		} else {
-			return array();
+			$files = EditPageLayoutHelper::getAssets();
 		}
+		// $wgOasisResponsive determines if the EditPreview extension is loaded
+		if ( !empty( $wgOasisResponsive ) ) {
+			array_push( $files, 'extensions/wikia/EditPreview/js/preview.js' );
+		}
+
+		return $files;
 	}
 
 	/**
@@ -205,11 +179,5 @@ class AssetsConfig {
 		$this->load();
 
 		return array_keys( $this->mConfig );
-	}
-
-	static public function isUserDependent( $oid ) {
-		return in_array( $oid, array(
-			'site_user_css',
-		));
 	}
 }

@@ -1,7 +1,7 @@
 /*!
  * VisualEditor DataModel MWDefaultSortMetaItem class.
  *
- * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
@@ -20,7 +20,7 @@ ve.dm.MWDefaultSortMetaItem = function VeDmMWDefaultSortMetaItem( element ) {
 
 /* Inheritance */
 
-ve.inheritClass( ve.dm.MWDefaultSortMetaItem, ve.dm.MetaItem );
+OO.inheritClass( ve.dm.MWDefaultSortMetaItem, ve.dm.MetaItem );
 
 /* Static Properties */
 
@@ -45,7 +45,10 @@ ve.dm.MWDefaultSortMetaItem.static.toDataElement = function ( domElements ) {
 ve.dm.MWDefaultSortMetaItem.static.toDomElements = function ( dataElement, doc ) {
 	var meta = doc.createElement( 'meta' );
 	meta.setAttribute( 'property', 'mw:PageProp/categorydefaultsort' );
-	meta.setAttribute( 'content', dataElement.attributes.content );
+	if ( dataElement.attributes.content ) {
+		// TODO: Condition should be removed when Parsoid and VisualEditor are upstream synced.
+		meta.setAttribute( 'content', dataElement.attributes.content );
+	}
 	return [ meta ];
 };
 

@@ -97,47 +97,9 @@ define('wikia.loader', ['wikia.window', require.optional('mw'), 'wikia.nirvana',
 					};
 				}
 				// If onload is available, use it
-				// don't use it when loading CSS in WebKit
-				else if(element.onload === null && (element.all /* exclude WebKit */ || type !== loader.CSS)) {
+				else if( element.onload === null ) {
 					element.onload = success;
 					element.onerror = function(){failure(this.src || this.href)};
-				}
-				// use polling when loading CSS in Webkit :(
-				else if (type === loader.CSS) {
-					timer = window.setInterval((function (url) {
-						return function() {
-							var stylesheet,
-								stylesheets = doc.styleSheets,
-								i = stylesheets.length;
-							while (i--) {
-								stylesheet = stylesheets[i];
-								if (url === stylesheet.href) {
-									try {
-										// We store so that minifiers don't remove the code
-										var cssRules = stylesheet.cssRules;
-										// Webkit:
-										// Webkit browsers don't create the stylesheet object
-										// before the link has been loaded.
-										// When requesting rules for crossDomain links
-										// they simply return nothing (no exception thrown)
-										// Gecko:
-										// NS_ERROR_DOM_INVALID_ACCESS_ERR thrown if the stylesheet is not loaded
-										// If the stylesheet is loaded:
-										//  * no error thrown for same-domain
-										//  * NS_ERROR_DOM_SECURITY_ERR thrown for cross-domain
-										throw 'SECURITY';
-									} catch(err) {
-										// Gecko: catch NS_ERROR_DOM_SECURITY_ERR
-										// Webkit: catch SECURITY
-										if (/SECURITY/.test(err) || /SECURITY/i.test(err.name)) {
-											timer = window.clearInterval(timer);
-											success();
-										}
-									}
-								}
-							}
-						};
-					})(url), 50);
 				}
 
 				log('[' + type + '] ' + url, log.levels.info, 'loader');
@@ -210,9 +172,9 @@ define('wikia.loader', ['wikia.window', require.optional('mw'), 'wikia.nirvana',
 		 *
 		 * @example:
 		 * loader({
-			 * 		type: loader.LIBRARY,
-			 * 		resources: ['facebook', 'googlemaps']
-			 * });
+		 *   type: loader.LIBRARY,
+		 *   resources: ['facebook', 'googlemaps']
+		 * });
 		 */
 		getLibrary = function(libs, callback, failure) {
 			if(!isArray(libs)) {
@@ -283,9 +245,6 @@ define('wikia.loader', ['wikia.window', require.optional('mw'), 'wikia.nirvana',
 		 *		scripts - comma-separated list of AssetsManager groups
 		 *		messages - comma-separated list of JSMessages packages (messages are registered automagically)
 		 * 		mustache - comma-separated list of paths to Mustache-powered templates
-		 *		ttl - cache period for both Varnish and Browser (in seconds), is overridden by varnishTTL and BrowserTTL
-		 *		varnishTTL - cache period for varnish and browser (in seconds)
-		 *		browserTTL - cache period for browser (in seconds)
 		 *		params - an object with all the additional parameters for the request (e.g. useskin, forceprofile, etc.)
 		 *		callback - function to be called with fetched JSON object
 		 *

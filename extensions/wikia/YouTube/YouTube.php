@@ -210,7 +210,7 @@ function embedYouTube_url2ytid( $url ) {
 
 /**
  * Parser-function for #youtube.  The purpose of having this in addition to the parser-tag is that
- * parser-functions can receive template-parameters as input so this parserfunction can be used
+ * parser-functions can receive template-parameters as input so this parser function can be used
  * in a template.
  *
  * Example usage:

@@ -7,6 +7,7 @@
  * @author Saipetch
  */
 class WikiFeaturesSpecialController extends WikiaSpecialPageController {
+	use PreventBlockedUsersThrowsErrorTrait;
 
 	public function __construct() {
 		parent::__construct('WikiFeatures', 'wikifeaturesview');
@@ -16,12 +17,51 @@ class WikiFeaturesSpecialController extends WikiaSpecialPageController {
 
 	}
 
+	public function getFeedbackModal() {
+		if( !$this->wg->User->isLoggedIn() ) {
+			$this->setVal('errorMessage', wfMessage('wikifeatures-error-permission')->text() );
+		}
+
+		$title = wfMessage('wikifeatures-feedback-heading')->plain();
+
+		if (strlen($featureName = $this->getVal('featureName', ''))) {
+			$title .= ' - ' . $featureName;
+		}
+
+		$templateData = [
+			'featureName' => $featureName,
+			'featureImageUrl' => $this->getVal('featureImageUrl', $this->wg->BlankImgUrl),
+			'description' => wfMessage('wikifeatures-feedback-description')->text(),
+			'typeLabel' => wfMessage('wikifeatures-feedback-type-label')->plain(),
+			'commentLabel' => wfMessage('wikifeatures-feedback-comment-label')->plain(),
+			'typeOptions' => [],
+		];
+
+		foreach (WikiFeaturesHelper::$feedbackCategories as $i => $cat) {
+			$templateData['typeOptions'][] = [
+				'label' => wfMessage($cat['msg'])->text(),
+				'value' => $i,
+			];
+		}
+
+		$this->setVal( 'html', ( new Wikia\Template\MustacheEngine )
+			->setPrefix( dirname( __FILE__ ) . '/templates' )
+			->setData( $templateData )
+			->render( 'WikiFeaturesSpecial_feedback.mustache' ) );
+
+		$this->setVal( 'title', $title );
+		$this->setVal( 'labelSubmit', wfMessage( 'wikifeatures-feedback-submit-button' )->plain() );
+		$this->setVal( 'labelCancel', wfMessage( 'wikifeatures-feedback-cancel-button' )->plain() );
+	}
+
 	public function index() {
 		$this->wg->Out->setPageTitle(wfMsg('wikifeatures-title'));
 		if (!$this->wg->User->isAllowed('wikifeaturesview')) {	// show this feature to logged in users only regardless of their rights
 			$this->displayRestrictionError();
 			return false;  // skip rendering
 		}
+
+		JSMessages::enqueuePackage('WikiFeatures', JSMessages::EXTERNAL);
 
 		$this->response->addAsset('extensions/wikia/WikiFeatures/css/WikiFeatures.scss');
 		$this->response->addAsset('extensions/wikia/WikiFeatures/js/modernizr.transform.js');
@@ -36,7 +76,7 @@ class WikiFeaturesSpecialController extends WikiaSpecialPageController {
 		$this->features = WikiFeaturesHelper::getInstance()->getFeatureNormal();
 		$this->labsFeatures = WikiFeaturesHelper::getInstance()->getFeatureLabs();
 
-		$this->editable = ($this->wg->User->isAllowed('wikifeatures')) ? true : false ;	// only those with rights can make edits
+		$this->editable = $this->wg->User->isAllowed('wikifeatures') ? true : false ;	// only those with rights can make edits
 
 		if($this->getVal('simulateEmptyLabs', false)) {	// debug code
 			$this->labsFeatures = array();
@@ -89,11 +129,18 @@ class WikiFeaturesSpecialController extends WikiaSpecialPageController {
 		$log->addEntry( 'wikifeatures', SpecialPage::getTitleFor('WikiFeatures'), $logMsg, array() );
 		WikiFactory::setVarByName($feature, $this->wg->CityId, $enabled, "WikiFeatures");
 
-		if ($feature == 'wgShowTopListsInCreatePage')
-			WikiFactory::setVarByName('wgEnableTopListsExt', $this->wg->CityId, $enabled, "WikiFeatures");
+		if ($feature == 'wgShowTopListsInCreatePage') {
+			WikiFactory::setVarByName( 'wgEnableTopListsExt', $this->wg->CityId, $enabled, "WikiFeatures" );
+		} else if ( $feature == 'wgEnableMediaGalleryExt' ) {
+			// Purge cache for all pages containing gallery tags
+			$task = ( new \Wikia\Tasks\Tasks\GalleryCachePurgeTask() )
+				->wikiId( $this->wg->CityId );
+			$task->call( 'purge' );
+			$task->queue();
+		}
 
 		// clear cache for active wikis
-        WikiFactory::clearCache( $this->wg->CityId );
+		WikiFactory::clearCache( $this->wg->CityId );
 		$this->wg->Memc->delete(WikiFeaturesHelper::getInstance()->getMemcKeyNumActiveWikis($feature));
 
 
@@ -120,6 +167,7 @@ class WikiFeaturesSpecialController extends WikiaSpecialPageController {
 		if( !$user->isLoggedIn() ) {
 			$this->result = 'error';
 			$this->error = wfMsg('wikifeatures-error-permission');
+			return;
 		}
 
 		// TODO: validate feature_id

@@ -155,4 +155,96 @@ Zmień [[Special:Preferences#prefsection-1|swoje preferencje]], aby używać wid
 'hub-Video_Games' => 'Gry wideo',
 'hub-Lifestyle' => 'Lifestyle',
 'hub-Wikia' => 'Wikia',
+
+
+	'shared-Globalnavigation' => "*w:c:pl:Gry|Gry|video-games-vertical-color
+
+**w:c:pl:Gry|RPG
+***w:c:wiedzmin|Wiedźmin
+***w:c:pl.fallout|Fallout
+***w:c:pl.gothic|Gothic
+***w:c:pl.elderscrolls|Elder Scrolls
+***w:c:pl.risen|Risen
+
+**w:c:pl:Gry|Akcja
+***w:c:pl.callofduty|Call of Duty
+***w:c:pl.gta|Grand Theft Auto
+***w:c:pl.saintsrow|Saints Row
+***w:c:pl.assassinscreed|Assassin's Creed
+***w:c:pl.masseffect|Mass Effect
+
+**w:c:pl:Gry|Multiplayer
+***w:c:pl.wow|World of Warcraft
+***w:c:pl.rappelz|Rappelz
+***w:c:pl.leagueoflegends|League of Legends
+***w:c:pl.dota-2|Dota 2
+***w:c:pl.warframe|Warframe
+
+**w:c:pl:Gry|Pozostałe
+***w:c:pl.sims|The Sims
+***w:c:pl.dontstarve|Don't Starve
+***w:c:pl.slodkiflirt|Słodki Flirt
+***w:c:pl.patapon|Patapon
+***w:c:pl.bindingofisaac|Binding of Isaac
+
+*w:c:pl:Rozrywka|Rozrywka|entertainment-vertical-color
+
+**w:c:pl:Rozrywka|Filmy
+***w:c:pl.lotr|Władca Pierścieni
+***w:c:pl.harrypotter|Harry Potter
+***w:c:pl.polskapersopedia|Percy Jackson
+***w:c:pl.twilightsaga|Zmierzch
+***w:c:igrzyskasmierci|Igrzyska Śmierci
+
+**w:c:pl:Rozrywka|Seriale
+***w:c:pl.mlp|My Little Pony
+***w:c:pl.austinially|Austin i Ally
+***w:c:ranczo|Ranczo
+***w:c:pl.pora-na-przygode|Pora na Przygodę!
+***w:c:pl.nadzdolni|Nadzdolni
+
+**w:c:pl:Rozrywka|Anime
+***w:c:pl.naruto|Naruto
+***w:c:pl.bleach|Bleach
+***w:c:pl.dragonball|Dragon Ball
+***w:c:pl.fairytail|Fairy Tail
+***w:c:pl.onepiece|One Piece
+
+**w:c:pl:Rozrywka|Pozostałe
+***w:c:pl.ben10|Ben 10
+***w:c:pl.fineasziferb|Fineasz i Ferb
+***w:c:pl.pzm|Pingwiny z Madagaskaru
+***w:c:pl.slugterra|Slugterra
+***w:c:pl.yugioh|Yu-Gi-Oh!
+
+*w:c:pl:Lifestyle|Lifestyle|lifestyle-vertical-color
+
+**w:c:pl:Lifestyle|Miasta
+***w:c:warszawa|Warszawa
+***w:c:wroclaw|Wrocław
+***w:c:torun|Toruń
+***w:c:poznan|Poznań
+***w:c:krakow|Kraków
+
+**w:c:pl:Lifestyle|Kultura
+***w:c:wiersze|Wiersze
+***w:c:dziedzictwo|Dziedzictwo
+***w:c:pl.bractwoczarnegosztyletu|Bractwo Czarnego Sztyletu
+***w:c:pl.ogienilod|Pieśń Lodu i Ognia
+***w:c:pl.mitologia|Mitologia
+
+**w:c:pl:Lifestyle|Kreatywne
+***w:c:nonsensopedia|Nonsensopedia
+***w:c:pl.creepypasta|Creepypasta
+***w:c:bezsensopedia|Bezsensopedia
+***w:c:totaldramafanfick|Total Drama Polish FanFick
+***w:c:pl.bakuganfanfic|Bakugan Fan Fiction
+
+**w:c:pl:Lifestyle|Zainteresowania
+***w:c:pl.lego|Lego
+***w:c:egipt|Egipt
+***w:c:pl.monsterhigh|Monster High
+***w:c:pl.bionicle|Bionicle
+***w:c:pl.vocaloid|Vocaloid
+",
 ) );

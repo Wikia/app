@@ -1,88 +1,260 @@
-@import 'mixins/box-shadow.scss';
 @import 'variables.scss';
 
-#toc.toc {
-	-webkit-tap-highlight-color: rgba(0,0,0,0);
-	background: white;
-	width: 100%;
-	border: 1px solid $border-color;
-	border-radius: 0 0 5px 5px;
-	@include box-shadow(0 7px 15px -5px $shadow-color);
+$line-height: 40px;
+$toc-background: #F8F8F8;
+$handle-size: 44px;
+$dark-border: #D8D8D8;
+$width: 260px;
 
-	.chev{
-		width: 100%;
-		height: 30px;
-		display: block;
-		background-size: 15px;
+/* @noflip */
+.side-menu {
+	position: fixed;
+	right: -$width;
+	top: 0;
+	bottom: 0;
+	width: $width;
+	background: $toc-background;
+	z-index: $video-overlay-z-index; //For overlaying Ooyala Videos
+
+	counter-reset: level1, level2, level3;
+
+	-webkit-transition: -webkit-transform .1s ease-out;
+	-moz-transition: -moz-transform .1s ease-out;
+	transition: transform .1s ease-out;
+
+	&.active {
+		-webkit-transform: translate(-$width);
+		-moz-transform: translate(-$width);
+		-ms-transform: translate(-$width);
+		transform: translate(-$width);
+
+		z-index: $video-overlay-z-index + 2; //For overlaying Curtain
 	}
 
-	h2{
-		color: $link-color;
-		font-weight: 100;
-		font-size: 1.3em;
-		padding-left: 10px;
-		margin: 5px 0;
-	}
-
-	ul{
-		overflow: hidden;
-		padding-left: 17px;
-		margin: 0;
-		list-style: none;
-	}
-
-	a{
-		min-height: 35px;
-		line-height: 2em;
-		width: 100%;
-		display: inline-block;
+	header {
+		background: $toc-background;
+		border-bottom: 1px solid $border-color;
+		line-height: $line-height;
+		text-transform: uppercase;
+		padding-left: 20px;
+		position: relative;
+		font-weight: 600;
+		z-index: 1;
 	}
 }
 
-.toclevel-1 > a {
-	font-weight: 800;
-}
-
-//move it to the top and hide UL if js is enabled
-.js #toc.toc {
+/* @noflip */
+#wkTOCHandle {
 	position: absolute;
-	top: -41px;
+	left: -$handle-size;
+	bottom: 48px;
+	width: $handle-size;
+	height: $handle-size;
 
-	ul{
-		height: 0;
+	border-radius: 3px 0 0 3px;
+}
+
+.toc-list {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+
+	a {
+		color: $page-text-color;
+		display: block;
+		width: 100%;
+		padding-right: 15px;
+		position: relative;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+
+		&:before {
+			padding-right: 10px;
+		}
+	}
+}
+
+$level0-padding: 20px;
+$level0-border-left-width: 5px;
+
+#tocWrapper {
+	overflow: hidden;
+	height: 100%;
+}
+
+#scroller {
+	position: absolute;
+	width: 100%;
+	min-height: 101%;
+	-webkit-transform: translateZ(0);
+	-moz-transform: translateZ(0);
+	-ms-transform: translateZ(0);
+	transform: translateZ(0);
+}
+
+#scroller, #wkTOCHandle {
+	-webkit-tap-highlight-color: rgba(0,0,0,0);
+
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
+.level {
+	//on iOS7 clicking on bottom of a screen opens it's bottom bar...
+	padding: 0 0 $line-height*2 0;
+	line-height: $line-height;
+	height: 100%;
+
+	> li {
+		counter-increment: level1;
+
+		border-top: 1px solid $dark-border;
+
+		&:last-child {
+			border-bottom: 1px solid $dark-border;
+		}
+
+		> a {
+			border-left: $level0-border-left-width solid $toc-background;
+
+			font-size: 1rem;
+			padding-left: $level0-padding - $level0-border-left-width;
+
+			-webkit-transition: border-left .2s;
+
+			&:before {
+				content: counter(level1);
+			}
+		}
+
+		> .current {
+			border-left: $level0-border-left-width solid $nice-blue;
+		}
+	}
+}
+
+.level1 {
+	border-top: 1px solid $dark-border;
+
+	> li {
+		counter-increment: level2;
+
+		font-size: .9rem;
+
+		> a {
+			padding-left: 20px;
+
+			&:before {
+				content: counter(level1) '.' counter(level2);
+			}
+		}
+	}
+}
+
+.level2 {
+	border-top: 1px solid #F0F0F0;
+
+	> li {
+		counter-increment: level3;
+
+		&:first-child {
+			border-top: none;
+		}
+
+		> a {
+			padding-left: 40px;
+
+			&:before {
+				content: counter(level1) '.' counter(level2) '.' counter(level3);
+			}
+		}
+	}
+}
+
+.level1 {
+	display:none;
+
+	.open & {
+		display: block;
 	}
 
-	h2{
-		display: none;
+	> li:first-child {
+		border-top: none;
+	}
+
+	> li:last-child {
+		border-bottom: none;
+	}
+}
+
+.level1, .level2 {
+
+	li {
+		border-top: 1px solid #F0F0F0;
+	}
+
+	.current {
+		color: $nice-blue;
+		font-weight: 600;
+	}
+}
+
+.has-children {
+	background-color: transparent;
+
+	.chevron {
+		border-left-color: #C0C0C0;
+		border-width: 7px;
+		margin: 15px;
+
+		position: absolute;
+		right: -10px;
+
+		-webkit-transform-origin: 3px 7px;
+
+		&:after {
+			border-left-color: $toc-background;
+		}
 	}
 
 	&.open {
-		border-radius: 5px;
-		@include box-shadow(none);
-		z-index: 101;
-
-		td > ul {
-			margin-bottom: 10px;
+		.chevron {
+			-webkit-transform: rotate(90deg);
 		}
-
-		ul{
-			height: auto;
-		}
-
-		h2{
-			display: block;
-		}
-	}
-
-	//this helps me with normalizing clicks in toc.js
-	span, b {
-		pointer-events: none;
 	}
 }
 
-.hasToc {
-	#wkMainCnt{
-		margin-top: 40px;
-		position: relative;
+.in-page-toc {
+	.level {
+		padding: 0;
+	}
+
+	li {
+		border: none;
+
+		&:last-child {
+			border: none;
+		}
+
+		a {
+			border: none;
+		}
+	}
+
+	ol {
+		display: block;
+		border: none;
+	}
+
+	.chevron {
+		display: none;
+	}
+
+	#scroller {
+		position: static;
 	}
 }

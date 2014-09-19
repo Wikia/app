@@ -26,6 +26,14 @@ $messages['ar'] = array(
 	'confirmemailprompt-error' => 'هل هذا هو عنوان البريد الإلكتروني الخاص بك: <strong>$1</strong>؟ قم [[$2|بتأكيده]] أو [[$3|تغييره]].',
 );
 
+/** Bulgarian (български)
+ * @author Aquilax
+ */
+$messages['bg'] = array(
+	'confirmemailprompt-desc' => 'Показва предупредитело съобщение ако потребителят има непотвърден e-mail адрес.',
+	'confirmemailprompt-error' => 'Това ли е Вашият email adres: <strong>$1</strong>? [[$2|Потвърдете]] или го [[$3|променете]].',
+);
+
 /** Breton (brezhoneg)
  * @author Fohanno
  * @author Gwenn-Ael
@@ -43,7 +51,7 @@ $messages['ca'] = array(
 	'confirmemailprompt-error' => 'Es aquesta la teva direcció de correu electrònic?: <strong>$1</strong>? [[$2|Confirmar-la]] o [[$3|canvia-la]].',
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Jezevec
  */
 $messages['cs'] = array(
@@ -61,10 +69,11 @@ $messages['de'] = array(
 
 /** Spanish (español)
  * @author DJ Nietzsche
+ * @author VegaDark
  */
 $messages['es'] = array(
 	'confirmemailprompt-desc' => 'Muestra un mensaje de advertencia si el usuario tiene una dirección de correo electrónico no confirmada',
-	'confirmemailprompt-error' => '¿Es esta su dirección de correo electrónico?: <strong>$1</strong> ? [[$2| Confirmarla]] o [[$3|cambiarla]].',
+	'confirmemailprompt-error' => '¿Esta es tu dirección de correo electrónico: <strong>$1</strong>? [[$2|Confírmala]] o [[$3|cámbiala]].',
 );
 
 /** Finnish (suomi)
@@ -234,6 +243,13 @@ $messages['ru'] = array(
 $messages['sv'] = array(
 	'confirmemailprompt-desc' => 'Visar ett varningsmeddelande om en användare har en obekräftad e-postadress',
 	'confirmemailprompt-error' => 'Är detta din e-postadress: <strong>$1</strong>? [[$2|Bekräfta den]] eller [[$3|ändra den]].',
+);
+
+/** Telugu (తెలుగు)
+ * @author Chaduvari
+ */
+$messages['te'] = array(
+	'confirmemailprompt-error' => 'ఈ ఈమెయిలు చిరునామా మీదేనా: <strong>$1</strong>? [[$2|దాన్ని ధృవీకరించండి]] లేదా [[$3|మార్చండి]].',
 );
 
 /** Tagalog (Tagalog)

@@ -184,9 +184,6 @@ function ChatAjax() {
 	if (method_exists('ChatAjax', $method)) {
 		wfProfileIn(__METHOD__);
 
-		// Don't let Varnish cache this.
-		header("X-Pass-Cache-Control: max-age=0");
-
 		$key = $wgRequest->getVal('key');
 
 		// macbre: check to protect against BugId:27916

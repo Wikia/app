@@ -1,0 +1,55 @@
+.ve-ui-wikiaMapInsertDialog {
+	.oo-ui-window-body {
+		bottom: 0;
+	}
+	.oo-ui-window-foot {
+		display: none;
+	}
+	.ve-ui-wikiaMediaOptionWidget-check {
+		display: none;
+	}
+	.ve-ui-wikiaMediaResultsWidget {
+		top: 70px;
+		bottom: 20px;
+	}
+	.ve-ui-mwMediaResultWidget {
+		cursor: pointer;
+	}
+}
+.ve-ui-wikiaMapInsertDialog-results-headline {
+	height: 70px;
+	margin-left: 20px;
+	margin-right: 35px;
+}
+.ve-ui-wikiaMapInsertDialog-results-headline-text {
+	float: left;
+	line-height: 70px;
+}
+.ve-ui-wikiaMapInsertDialog-results-headline-button {
+	float: right;
+	margin-top: 20px;
+}
+.ve-ui-wikiaMapInsertDialog-empty-content {
+	margin-left: 140px;
+	margin-right: 140px;
+	margin-top: 125px;
+	text-align: center;
+	.oo-ui-buttonedElement-framed.oo-ui-flaggableElement-primary .oo-ui-buttonedElement-button {
+		font-size: 14px;
+		font-weight: bold;
+		height: 35px;
+		line-height: 35px;
+		padding: 0 14px;
+	}
+}
+.ve-ui-wikiaMapInsertDialog-empty-headline {
+	font-size: 26px;	
+}
+.ve-ui-wikiaMapInsertDialog-empty-text {
+	font-size: 15px;
+	line-height: 22px;
+	margin-top: 20px;
+}
+.ve-ui-wikiaMapInsertDialog-empty-button {
+	margin-top: 12px;
+}

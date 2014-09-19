@@ -1,7 +1,7 @@
 /*!
  * VisualEditor DataModel MWTemplateModel class.
  *
- * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
@@ -18,15 +18,15 @@
  * @param {Object} target Template target
  * @param {string} target.wt Original wikitext of target
  * @param {string} [target.href] Hypertext reference to target
- * @param {string} [origin] Origin of part, e.g. 'data' or 'user'
  */
-ve.dm.MWTemplateModel = function VeDmMWTemplateModel( transclusion, target, origin ) {
+ve.dm.MWTemplateModel = function VeDmMWTemplateModel( transclusion, target ) {
 	// Parent constructor
 	ve.dm.MWTransclusionPartModel.call( this, transclusion );
 
 	// Properties
 	this.target = target;
-	this.origin = origin;
+
+	// TODO: Either here or in uses of this constructor we need to validate the title
 	this.title = ( target.href && target.href.replace( /^(\.\.?\/)*/, '' ) ) || null;
 	this.sequence = null;
 	this.params = {};
@@ -36,18 +36,18 @@ ve.dm.MWTemplateModel = function VeDmMWTemplateModel( transclusion, target, orig
 
 /* Inheritance */
 
-ve.inheritClass( ve.dm.MWTemplateModel, ve.dm.MWTransclusionPartModel );
+OO.inheritClass( ve.dm.MWTemplateModel, ve.dm.MWTransclusionPartModel );
 
 /* Events */
 
 /**
  * @event add
- * @param {ve.dm.MWTemplateParameterModel} param Added param
+ * @param {ve.dm.MWParameterModel} param Added param
  */
 
 /**
  * @event remove
- * @param {ve.dm.MWTemplateParameterModel} param Removed param
+ * @param {ve.dm.MWParameterModel} param Removed param
  */
 
 /* Static Methods */
@@ -67,7 +67,7 @@ ve.dm.MWTemplateModel.newFromData = function ( transclusion, data ) {
 
 	for ( key in data.params ) {
 		template.addParameter(
-			new ve.dm.MWTemplateParameterModel( template, key, data.params[key].wt, 'data' )
+			new ve.dm.MWParameterModel( template, key, data.params[key].wt, 'data' )
 		);
 	}
 
@@ -92,6 +92,8 @@ ve.dm.MWTemplateModel.newFromName = function ( transclusion, name ) {
 	if ( href.charAt( 0 ) !== ':' ) {
 		href = mw.config.get( 'wgFormattedNamespaces' )[10] + ':' + href;
 	}
+
+	// TODO: Do we need to account for the title being invalid?
 	href = new mw.Title( href ).getPrefixedText();
 
 	return new ve.dm.MWTemplateModel( transclusion, { 'href': href, 'wt': name }, 'user' );
@@ -102,7 +104,6 @@ ve.dm.MWTemplateModel.newFromName = function ( transclusion, name ) {
 /**
  * Get template target.
  *
- * @method
  * @returns {Object} Template target
  */
 ve.dm.MWTemplateModel.prototype.getTarget = function () {
@@ -110,18 +111,8 @@ ve.dm.MWTemplateModel.prototype.getTarget = function () {
 };
 
 /**
- * Get template origin, e.g. 'user' or 'data'.
- *
- * @returns {string} Origin
- */
-ve.dm.MWTemplateModel.prototype.getOrigin = function () {
-	return this.origin;
-};
-
-/**
  * Get template title.
  *
- * @method
  * @returns {string|null} Template title, if available
  */
 ve.dm.MWTemplateModel.prototype.getTitle = function () {
@@ -131,7 +122,6 @@ ve.dm.MWTemplateModel.prototype.getTitle = function () {
 /**
  * Get template specification.
  *
- * @method
  * @returns {ve.dm.MWTemplateSpecModel} Template specification
  */
 ve.dm.MWTemplateModel.prototype.getSpec = function () {
@@ -141,8 +131,7 @@ ve.dm.MWTemplateModel.prototype.getSpec = function () {
 /**
  * Get all params.
  *
- * @method
- * @returns {Object.<string,ve.dm.MWTemplateParameterModel>} Parameters keyed by name
+ * @returns {Object.<string,ve.dm.MWParameterModel>} Parameters keyed by name
  */
 ve.dm.MWTemplateModel.prototype.getParameters = function () {
 	return this.params;
@@ -151,9 +140,8 @@ ve.dm.MWTemplateModel.prototype.getParameters = function () {
 /**
  * Get a parameter.
  *
- * @method
  * @param {string} name Parameter name
- * @returns {ve.dm.MWTemplateParameterModel} Parameter
+ * @returns {ve.dm.MWParameterModel} Parameter
  */
 ve.dm.MWTemplateModel.prototype.getParameter = function ( name ) {
 	return this.params[name];
@@ -162,7 +150,6 @@ ve.dm.MWTemplateModel.prototype.getParameter = function ( name ) {
 /**
  * Check if a parameter exists.
  *
- * @method
  * @param {string} name Parameter name
  * @returns {boolean} Parameter exists
  */
@@ -199,12 +186,32 @@ ve.dm.MWTemplateModel.prototype.hasParameter = function ( name ) {
  * Numeric names, whether strings or real numbers, are placed at the begining, followed by
  * alphabetically sorted names.
  *
- * @method
  * @returns {string[]} List of parameter names
  */
 ve.dm.MWTemplateModel.prototype.getParameterNames = function () {
+	var i, len, index, paramOrder, paramNames;
+
 	if ( !this.sequence ) {
-		this.sequence = ve.getObjectKeys( this.params ).sort( function ( a, b ) {
+		paramOrder = this.spec.getParameterOrder();
+		paramNames = ve.getObjectKeys( this.params );
+
+		this.sequence = [];
+		// Known parameters first
+		for ( i = 0, len = paramOrder.length; i < len; i++ ) {
+			index = paramNames.indexOf( paramOrder[i] );
+			if ( index !== -1 ) {
+				this.sequence.push( paramOrder[i] );
+				paramNames.splice( index, 1 );
+			}
+		}
+		// Unknown parameters in alpha-numeric order second, empty string at the very end
+		paramNames.sort( function ( a, b ) {
+			if ( a === '' ) {
+				return 1;
+			}
+			if ( b === '' ) {
+				return -1;
+			}
 			var aIsNaN = isNaN( a ),
 				bIsNaN = isNaN( b );
 			if ( aIsNaN && bIsNaN ) {
@@ -222,44 +229,105 @@ ve.dm.MWTemplateModel.prototype.getParameterNames = function () {
 			// Two numbers
 			return a - b;
 		} );
+		this.sequence.push.apply( this.sequence, paramNames );
 	}
 	return this.sequence;
 };
 
 /**
+ * Get parameter from its ID.
+ *
+ * @param {string} id Parameter ID
+ * @returns {ve.dm.MWParameterModel|null} Parameter with matching ID, null if no parameters match
+ */
+ve.dm.MWTemplateModel.prototype.getParameterFromId = function ( id ) {
+	var name;
+
+	for ( name in this.params ) {
+		if ( this.params[name].getId() === id ) {
+			return this.params[name];
+		}
+	}
+
+	return null;
+};
+
+/**
  * Add a parameter to template.
  *
- * @method
- * @param {ve.dm.MWTemplateParameterModel} param Parameter to add
- * @emits add
+ * @param {ve.dm.MWParameterModel} param Parameter to add
+ * @fires add
  */
 ve.dm.MWTemplateModel.prototype.addParameter = function ( param ) {
 	var name = param.getName();
 	this.sequence = null;
 	this.params[name] = param;
 	this.spec.fill();
+	param.connect( this, { 'change': [ 'emit', 'change' ] } );
 	this.emit( 'add', param );
+	this.emit( 'change' );
 };
 
 /**
  * Remove parameter from template.
  *
- * @method
- * @param {ve.dm.MWTemplateParameterModel} param Parameter to remove
- * @emits remove
+ * @param {ve.dm.MWParameterModel} param Parameter to remove
+ * @fires remove
  */
 ve.dm.MWTemplateModel.prototype.removeParameter = function ( param ) {
 	if ( param ) {
 		this.sequence = null;
 		delete this.params[param.getName()];
+		param.disconnect( this );
 		this.emit( 'remove', param );
+		this.emit( 'change' );
+	}
+};
+
+/**
+ * Add all non-existing required and suggested parameters, if any.
+ *
+ * @method
+ */
+ve.dm.MWTemplateModel.prototype.addPromptedParameters = function () {
+	var i, len,
+		spec = this.getSpec(),
+		names = spec.getParameterNames();
+
+	for ( i = 0, len = names.length; i < len; i++ ) {
+		if (
+				!this.params[name] &&
+				(
+					spec.isParameterRequired( names[i] ) ||
+					spec.isParameterSuggested( names[i] )
+				)
+			) {
+			this.addParameter( new ve.dm.MWParameterModel( this, names[i] ) );
+		}
+	}
+};
+
+/**
+ * Add all unused parameters, if any.
+ * TODO: Wikia (ve-sprint-25): Re-implement without modifying core class
+ *
+ * @method
+ */
+ve.dm.MWTemplateModel.prototype.addUnusedParameters = function () {
+	var i, len,
+		spec = this.getSpec(),
+		names = spec.getParameterNames();
+
+	for ( i = 0, len = names.length; i < len; i++ ) {
+		if ( !this.hasParameter( names[i] ) ) {
+			this.addParameter( new ve.dm.MWParameterModel( this, names[i] ) );
+		}
 	}
 };
 
 /**
  * Set original data, to be used as a base for serialization.
  *
- * @method
  * @returns {Object} Template data
  */
 ve.dm.MWTemplateModel.prototype.setOriginalData = function ( data ) {
@@ -272,13 +340,48 @@ ve.dm.MWTemplateModel.prototype.setOriginalData = function ( data ) {
 ve.dm.MWTemplateModel.prototype.serialize = function () {
 	var name,
 		template = ve.extendObject(
-			this.originalData || {}, { 'target': this.getTarget(), 'params': {} }
+			{}, this.originalData, { 'target': this.getTarget(), 'params': {} }
 		),
 		params = this.getParameters();
 
+	if ( !template.originalParams ) {
+		template.originalParams = this.originalData ? Object.keys( this.originalData.params ) : [];
+	}
+
 	for ( name in params ) {
+		if ( name === '' ) {
+			continue;
+		}
+		// TODO: Wikia (ve-sprint-25): Re-implement without modifying core class
+		if ( params[name].getValue() === '' && template.originalParams.indexOf( name ) === -1 ) {
+			continue;
+		}
 		template.params[params[name].getOriginalName()] = { 'wt': params[name].getValue() };
 	}
 
 	return { 'template': template };
+};
+
+/**
+ * @inheritdoc
+ */
+ve.dm.MWTemplateModel.prototype.getWikitext = function () {
+	var param,
+		wikitext = this.getTarget().wt,
+		params = this.getParameters(),
+		originalParams = this.originalData ? Object.keys( this.originalData.params ) : [];
+
+	for ( param in params ) {
+		if ( param === '' ) {
+			continue;
+		}
+		// TODO: Wikia (ve-sprint-25): Re-implement without modifying core class
+		if ( params[param].getValue() === '' && originalParams.indexOf( param ) === -1 ) {
+			continue;
+		}
+		wikitext += '|' + param + '=' +
+			ve.dm.MWTransclusionNode.static.escapeParameter( params[param].getValue() );
+	}
+
+	return '{{' + wikitext + '}}';
 };

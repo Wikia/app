@@ -1,10 +1,11 @@
-@import "color";
+@import "skins/shared/color";
 @import "layout";
-@import "../mixins/clearfix";
-@import "../mixins/gradient";
+@import "responsive-variables";
+@import "skins/shared/mixins/clearfix";
+@import "skins/shared/mixins/gradient";
 
-/** Hide 1x1 iframes **/
-.wikia-ad iframe[width="1"][height="1"] {
+/** Hide invisible slots and 1x1 iframes **/
+.wikia-ad[id^="INVISIBLE_"], .wikia-ad iframe[width="1"][height="1"], .wikia-ad > .hidden {
 	display: none;
 }
 
@@ -39,7 +40,7 @@
 	}
 }
 
-#TOP_BUTTON, #TOP_BUTTON_WIDE {
+#TOP_BUTTON_WIDE {
   margin-right: 10px;
 }
 
@@ -82,6 +83,17 @@
 .home-top-right-ads {
 	float: right;
 }
+
+.home-top-right-ads.top-right-ads-in-content {
+  display: none;
+  margin-left: 10px;
+  margin-bottom: 10px;
+}
+
+.home-top-right-ads.hidden {
+  display: none;
+}
+
 #HOME_TOP_RIGHT_BOXAD {
 	margin-bottom: 10px;
 	position: relative;
@@ -90,16 +102,9 @@
 }
 /* grid layout transition temp code.  remove and integrate into main code after transition is complete */
 .WikiaGrid {
-	.SelfServeUrl {
-		line-height: 10px;
-		margin: 0;
-		position: relative;
-		top: -16px;
-	}
 	#HOME_TOP_RIGHT_BOXAD,
 	#TOP_RIGHT_BOXAD {
 		background-color: mix($color-page, $color-page-opposite, 95%);
-		margin-bottom: 0;
 		padding: 15px;
 	}
 }
@@ -199,18 +204,6 @@ body >a >img[src$="noad.gif"] {
 	z-index: 0;
 }
 
-.SelfServeUrl {
-	color: #666;
-	font-size: 10px;
-	margin: -10px 0 10px 0;
-	text-align: center;
-}
-
-.home-top-right-ads .SelfServeUrl {
-	position: relative;
-	z-index: 100;
-}
-
 /** Exitstitial ad */
 #ExitstitialInfobox {
 	p {
@@ -262,4 +255,35 @@ body >a >img[src$="noad.gif"] {
 			margin-right: 15px;
 		}
 	}
+}
+
+#BOTTOM_LEADERBOARD {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  z-index: 1;
+  text-align: center;
+
+  & > div {
+    display: inline-block;
+  }
+}
+
+.wikia-ad-interactive-map {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 320px;
+  height: 50px;
+
+  & > iframe {
+    width: 320px;
+    height: 50px;
+  }
+}
+
+@media screen and (max-width: $breakpoint-small) {
+  .home-top-right-ads.top-right-ads-in-content {
+    display: block;
+  }
 }

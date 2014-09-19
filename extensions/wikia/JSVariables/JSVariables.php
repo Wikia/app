@@ -24,13 +24,11 @@ function wfJSVariablesTopScripts(Array &$vars, &$scripts) {
 		$vars['wgWikiFactoryTagNames'] = array_values( $wg->WikiFactoryTags );
 	}
 	$vars['wgCdnRootUrl'] = $wg->CdnRootUrl;
+	$vars['wgCdnApiUrl'] = $wg->CdnApiUrl;
 
 	// analytics needs it (from here till the end of the function)
 	$vars['wgDBname'] = $wg->DBname;
 	$vars['wgCityId'] = $wg->CityId;
-	if (!empty($wg->MedusaSlot)) {
-		$vars['wgMedusaSlot'] = 'slot' . $wg->MedusaSlot;
-	}
 
 	// c&p from OutputPage::getJSVars with an old 1.16 name
 	$vars['wgContentLanguage'] = $title->getPageLanguage()->getCode();
@@ -64,12 +62,15 @@ function wfJSVariablesTopScripts(Array &$vars, &$scripts) {
 		$vars["wgNoExternals"] = $wg->NoExternals;
 	}
 
+	$vars['wgTransactionContext'] = Transaction::getAttributes();
+
 	$scripts .= Html::inlineScript("var wgNow = new Date();") .	"\n";
 
 	return true;
 }
 
 /**
+ * MW1.19 - ResourceLoaderStartUpModule class adds more variables
  * @param array $vars JS variables to be added at the bottom of the page
  * @param OutputPage $out
  * @return bool return true - it's a hook
@@ -77,21 +78,19 @@ function wfJSVariablesTopScripts(Array &$vars, &$scripts) {
 function wfMakeGlobalVariablesScript(Array &$vars, OutputPage $out) {
 	wfProfileIn(__METHOD__);
 	global $wgMemc, $wgEnableAjaxLogin, $wgPrivateTracker, $wgExtensionsPath,
-		$wgArticle, $wgSitename, $wgDisableAnonymousEditing,
+		$wgArticle, $wgSitename, $wgDisableAnonymousEditing, $wgCityId,
 		$wgGroupPermissions, $wgBlankImgUrl, $wgCookieDomain, $wgCookiePath, $wgResourceBasePath;
 
 	$skin = $out->getSkin();
 	$title = $out->getTitle();
 
-	// MW1.19 - ResourceLoaderStartUpModule class adds more variables
-	$cats = wfGetBreadCrumb();
-	$idx = count($cats)-2;
-	if(isset($cats[$idx])) {
-	    $vars['wgCatId'] = $cats[$idx]['id'];
-	    $vars['wgParentCatId'] = $cats[$idx]['parentId'];
+	// FIXME: This needs to be converted to getVerticalId when the data is available (PLATFORM-267)
+	$hubService = WikiFactoryHub::getInstance();
+	$catId = $hubService->getCategoryId( $wgCityId );
+	if( isset( $catId ) ) {
+		$vars['wgCatId'] = $catId;
 	} else	{
-	    $vars['wgCatId'] = 0;
-	    $vars['wgParentCatId'] = 0;
+		$vars['wgCatId'] = 0;
 	}
 
 	$skinName = get_class($skin);

@@ -36,6 +36,9 @@ class RebuildLocalisationCache extends Maintenance {
 		$this->mDescription = "Rebuild the localisation cache";
 		$this->addOption( 'force', 'Rebuild all files, even ones not out of date' );
 		$this->addOption( 'threads', 'Fork more than one thread', false, true );
+		// Wikia change begin
+		$this->addOption( 'cache-dir', 'Override the value of $wgCacheDirectory', false, true );
+		// Wikia change end
 	}
 
 	public function memoryLimit() {
@@ -44,6 +47,11 @@ class RebuildLocalisationCache extends Maintenance {
 
 	public function execute() {
 		global $wgLocalisationCacheConf;
+
+		// Wikia change begin
+		global $wgCacheDirectory;
+		$wgCacheDirectory = $this->getOption( 'cache-dir', $wgCacheDirectory );
+		// Wikia change end
 
 		$force = $this->hasOption( 'force' );
 		$threads = $this->getOption( 'threads', 1 );
@@ -97,7 +105,9 @@ class RebuildLocalisationCache extends Maintenance {
 				mt_srand( getmypid() );
 				$numRebuilt = $this->doRebuild( $codes, $lc, $force );
 				// Abuse the exit value for the count of rebuild languages
-				exit( $numRebuilt );
+				// If --force was passed in, just report success or failure
+				$exitcode = $force ? ( count( $codes ) == $numRebuilt ? 0 : 1 ) : $numRebuilt;
+				exit( $exitcode );
 			} elseif ( $pid === -1 ) {
 				// Fork failed or one thread, do it serialized
 				$numRebuilt += $this->doRebuild( $codes, $lc, $force );
@@ -114,22 +124,27 @@ class RebuildLocalisationCache extends Maintenance {
 			$numRebuilt += pcntl_wexitstatus( $status );
 		}
 
-		$this->output( "$numRebuilt languages rebuilt out of $total\n" );
+		// Default exit code
+		$exitcode = 0;
 
-		/* Wikia-specific code starts here */
-		$taskId = $this->getOption( 'task', 0 );
-		if ( 0 < $taskId ) {
-			$oTask = RebuildLocalisationCacheTask::newFromID( $taskId );
-			if ( $oTask instanceof RebuildLocalisationCacheTask ) {
-				$sHost = php_uname( 'n' );
-				$oTask->log( "$numRebuilt languages rebuild out of $total on $sHost." );
+		if ( $force ) {
+			if ($numRebuilt == 0 ) {
+				// The rebuild was successful so assume all languages were rebuilt
+				$numRebuilt = $total;
+			} else {
+				// We have no way of knowing how many languages were rebuilt in this case
+				$numRebuilt = '???';
+				$exitcode = 1;
 			}
 		}
-		/* Wikia-specific code ends here */
+
+		$this->output( "$numRebuilt languages rebuilt out of $total\n" );
 
 		if ( $numRebuilt === 0 ) {
 			$this->output( "Use --force to rebuild the caches which are still fresh.\n" );
 		}
+
+		exit( $exitcode );
 	}
 
 	/**

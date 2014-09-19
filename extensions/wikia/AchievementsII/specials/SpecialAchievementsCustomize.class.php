@@ -19,7 +19,9 @@ class SpecialAchievementsCustomize extends SpecialPage {
 			return;
 		}
 
-		if(!$this->userCanExecute($wgUser)) {
+		if ( $wgUser->isBlocked() ) {
+			throw new UserBlockedError( $wgUser->mBlock );
+		} elseif(!$this->userCanExecute($wgUser)) {
 			$this->displayRestrictionError();
 			wfProfileOut( __METHOD__ );
 			return;

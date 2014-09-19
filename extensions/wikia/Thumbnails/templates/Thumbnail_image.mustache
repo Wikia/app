@@ -1,0 +1,22 @@
+{{#linkHref}}
+<a href="{{linkHref}}"
+	class="image image-thumbnail{{#linkClasses}} {{.}}{{/linkClasses}}"
+	{{#title}} title="{{title}}" {{/title}}
+	{{#target}} title="{{target}}" {{/target}}
+	{{#extraLinkAttrs}} {{{.}}}{{/extraLinkAttrs}}>
+{{/linkHref}}
+
+	{{#usePictureTag}}
+		{{>Thumbnail_pictureTag}}
+	{{/usePictureTag}}
+	{{^usePictureTag}}
+		{{>Thumbnail_imgTag}}
+	{{/usePictureTag}}
+
+	{{#noscript}}<noscript>{{{noscript}}}</noscript>{{/noscript}}
+
+	{{#metaAttrs}}<meta itemprop="{{itemprop}}" content="{{content}}">{{/metaAttrs}}
+
+{{#linkHref}}
+</a>
+{{/linkHref}}

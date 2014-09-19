@@ -7,7 +7,7 @@ class ExternalUser_Wikia extends ExternalUser {
 		wfDebug( __METHOD__ . ": init User from name: $name \n" );
 		$name = User::getCanonicalName( $name, 'usable' );
 
-		if ( !is_string( $name ) ) {
+		if( !is_string( $name ) ) {
 			return false;
 		}
 
@@ -20,14 +20,13 @@ class ExternalUser_Wikia extends ExternalUser {
 	}
 
 	protected function initFromUser( $user ) {
-		wfDebug( __METHOD__ . ": init User from object with user id : " . $user->getId() ." \n" );
+		wfDebug( __METHOD__ . ": init User from object with user id : " . $user->getId() . " \n" );
 		$this->mUser = $user;
 		return $this->initFromCond( array( 'user_id' => $user->getId() ) );
 	}
 
 	private function initFromCond( $cond ) {
 		global $wgExternalSharedDB;
-
 
 		wfDebug( __METHOD__ . ": init User from cond: " . wfArrayToString( $cond ) . " \n" );
 
@@ -38,7 +37,8 @@ class ExternalUser_Wikia extends ExternalUser {
 			$cond,
 			__METHOD__
 		);
-		if ( !$row ) {
+
+		if( !$row ) {
 			$this->mDb = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
 			$row = $this->mDb->selectRow(
 				'`user`',
@@ -48,7 +48,7 @@ class ExternalUser_Wikia extends ExternalUser {
 			);
 		}
 
-		if ( !$row ) {
+		if( !$row ) {
 			return false;
 		}
 
@@ -58,13 +58,13 @@ class ExternalUser_Wikia extends ExternalUser {
 	}
 
 	public function initFromCookie() {
-		global $wgMemc,$wgDBcluster, $wgCookiePrefix, $wgRequest;
+		global $wgMemc, $wgDBcluster, $wgCookiePrefix, $wgRequest;
 		wfDebug( __METHOD__ . " \n" );
 
-        if ( wfReadOnly() ) {
+		if( wfReadOnly() ) {
 			wfDebug( __METHOD__ . ": Cannot load from session - DB is running with the --read-only option " );
-            return false;
-        }
+			return false;
+		}
 
 		// Copy safety check from User.php
 		$uid = intval( isset( $_COOKIE["{$wgCookiePrefix}UserID"] ) ? $_COOKIE["{$wgCookiePrefix}UserID"] : 0 );
@@ -73,12 +73,12 @@ class ExternalUser_Wikia extends ExternalUser {
 			$wgRequest->response()->setcookie( "UserName", '', time() - 86400 );
 			$wgRequest->response()->setcookie( "_session", '', time() - 86400 );
 			$wgRequest->response()->setcookie( "Token", '', time() - 86400 );
-			trigger_error("###INEZ### {$_SESSION['wsUserID']}\n", E_USER_WARNING);
+			trigger_error( "###INEZ### {$_SESSION['wsUserID']}\n", E_USER_WARNING );
 			return false;
 		}
 
 		wfDebug( __METHOD__ . ": user from session: $uid \n" );
-		if ( empty($uid) ) {
+		if( empty( $uid ) ) {
 			return false;
 		}
 
@@ -87,13 +87,13 @@ class ExternalUser_Wikia extends ExternalUser {
 
 		// exists on local
 		$User = null;
-		if ( !empty($this->mRow) ) {
-			$memkey = sprintf("extuser:%d:%s", $this->getId(), $wgDBcluster);
+		if( !empty( $this->mRow ) ) {
+			$memkey = sprintf( "extuser:%d:%s", $this->getId(), $wgDBcluster );
 			$user_touched = $wgMemc->get( $memkey );
-			if ( $user_touched != $this->getUserTouched() ) {
+			if( $user_touched != $this->getUserTouched() ) {
 				$_key = wfSharedMemcKey( "user_touched", $this->getId() );
-				wfDebug ( __METHOD__ . ": user touched is different on central and $wgDBcluster \n" );
-				wfDebug ( __METHOD__ . ": clear $_key \n" );
+				wfDebug( __METHOD__ . ": user touched is different on central and $wgDBcluster \n" );
+				wfDebug( __METHOD__ . ": clear $_key \n" );
 				$wgMemc->set( $memkey, $this->getUserTouched() );
 				$wgMemc->delete( $_key );
 			} else {
@@ -203,23 +203,32 @@ class ExternalUser_Wikia extends ExternalUser {
 		return User::newFromRow( $this->mRow );
 	}
 
+	/**
+	 * @param User $User
+	 * @param String $password
+	 * @param String $email
+	 * @param String $realname
+	 *
+	 * @return bool
+	 */
 	protected function addToDatabase( $User, $password, $email, $realname ) {
 		global $wgExternalSharedDB, $wgEnableUserLoginExt;
 		wfProfileIn( __METHOD__ );
 
-		if( wfReadOnly() ){ // Change to wgReadOnlyDbMode if we implement that
-			wfDebug( __METHOD__ . ": Tried to add user to the $wgExternalSharedDB database while in wgReadOnly mode! " . $User->getName() . " (that's bad... fix the calling code)\n" );
+		if( wfReadOnly() ) { // Change to wgReadOnlyDbMode if we implement that
+			wfDebug( __METHOD__ . ": Tried to add user to the $wgExternalSharedDB database while in wgReadOnly mode! " . $User->getName() . " [ " . $User->getId() . " ] (that's bad... fix the calling code)\n" );
 		} else {
-			wfDebug( __METHOD__ . ": add user to the $wgExternalSharedDB database: " . $User->getName() . " \n" );
+			wfDebug( __METHOD__ . ": add user to the $wgExternalSharedDB database: " . $User->getName() . " [ " . $User->getId() . " ] \n" );
 
 			$dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
 			$seqVal = $dbw->nextSequenceValue( 'user_user_id_seq' );
-			if ( empty($wgEnableUserLoginExt) ) {
+			if( empty( $wgEnableUserLoginExt ) ) {
 				$User->setPassword( $password );
 			}
 			$User->setToken();
 
-			$dbw->insert( '`user`',
+			$dbw->insert(
+				'`user`',
 				array(
 					'user_id' => $seqVal,
 					'user_name' => $User->mName,
@@ -234,9 +243,12 @@ class ExternalUser_Wikia extends ExternalUser {
 					'user_registration' => $dbw->timestamp( $User->mRegistration ),
 					'user_editcount' => 0,
 					'user_birthdate' => $User->mBirthDate
-				), __METHOD__, array('IGNORE')
+				),
+				__METHOD__,
+				array( 'IGNORE' )
 			);
 			$User->mId = $dbw->insertId();
+			$dbw->commit( __METHOD__ );
 
 			// Clear instance cache other than user table data, which is already accurate
 			$User->clearInstanceCache();
@@ -247,56 +259,79 @@ class ExternalUser_Wikia extends ExternalUser {
 	}
 
 	/**
-	 * linkToLocal -- link central account to local account on every cluster
+	 * @desc linkToLocal -- link central account to local account on every cluster
 	 *
 	 * @param Integer $id -- user identifier in user table on central database
 	 *
 	 * @author Piotr Molski (moli) <moli@wikia-inc.com>
+	 *
+	 * @return Boolean returns false if errors occur
 	 */
 	public function linkToLocal( $id ) {
 		wfProfileIn( __METHOD__ );
 
-		if ( empty( $this->mRow ) ) {
+		if( empty( $this->mRow ) ) {
 			wfProfileOut( __METHOD__ );
 			return false;
 		}
 
-		if ( ( '' == $this->getToken() ) && ( '' == $this->getEmail() ) && ( ! $this->getEmailToken() ) ) {
+		if( ( '' == $this->getToken() ) && ( '' == $this->getEmail() ) && ( !$this->getEmailToken() ) ) {
 			wfProfileOut( __METHOD__ );
 			return false;
 		}
 
 		wfDebug( __METHOD__ . ": update local user table: $id \n" );
 
-		if ( $id != $this->getId() ) {
+		if( $id != $this->getId() ) {
 			wfProfileOut( __METHOD__ );
 			return false;
 		}
 
-		if( !wfReadOnly() ){ // Change to wgReadOnlyDbMode if we implement that
+		if( !wfReadOnly() ) { // Change to wgReadOnlyDbMode if we implement that
 			$dbw = wfGetDB( DB_MASTER );
 			$data = array();
-			foreach ( ( array )$this->mRow as $field => $value ) {
-				$data[ $field ] = $value;
+			foreach( ( array )$this->mRow as $field => $value ) {
+				$data[$field] = $value;
 			}
 
-			$row = $dbw->selectRow( 'user', array( '*' ), array( 'user_id' => $this->getId() ), __METHOD__ );
+			$row = $dbw->selectRow(
+				'user',
+				array( '*' ),
+				array( 'user_id' => $this->getId() ),
+				__METHOD__
+			);
 
-			if ( empty( $row ) ) {
-				$dbw->insert( 'user', $data, __METHOD__, array('IGNORE') );
+			if( empty( $row ) ) {
+				$dbw->insert(
+					'user',
+					$data,
+					__METHOD__,
+					array( 'IGNORE' )
+				);
 			} else {
 				$need_update = false;
-				foreach ( $row as $field => $value ) {
-					if ( isset( $data[$field] ) && ( $data[$field] != $value ) )  {
+				foreach( $row as $field => $value ) {
+					if( isset( $data[$field] ) && ( $data[$field] != $value ) ) {
 						$need_update = true;
 					}
 				}
 
-				if ( $need_update ) {
-					$dbw->update( 'user', $data, array( 'user_id' => $this->getId() ), __METHOD__ );
-					$dbw->commit();
+				if( $need_update ) {
+					$dbw->update(
+						'user',
+						$data,
+						array( 'user_id' => $this->getId() ),
+						__METHOD__
+					);
 				}
 			}
+
+			$dbw->commit( __METHOD__ );
+		} else {
+			wfDebug( __METHOD__ . ": Tried to link user to the user from local database while in wgReadOnly mode! Id: $id\n" );
+
+			wfProfileOut( __METHOD__ );
+			return false;
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -304,13 +339,13 @@ class ExternalUser_Wikia extends ExternalUser {
 
 	public function getLocalUser( $obj = true ) {
 		wfProfileIn( __METHOD__ );
-		
-		if ( empty( $this->mRow ) ) {
+
+		if( empty( $this->mRow ) ) {
 			wfProfileOut( __METHOD__ );
 			return null;
 		}
 
-		if ( $obj ) {
+		if( $obj ) {
 			$res = User::newFromRow( $this->mRow );
 		} else {
 			$res = $this->mRow;
@@ -324,14 +359,15 @@ class ExternalUser_Wikia extends ExternalUser {
 		global $wgExternalSharedDB;
 		wfProfileIn( __METHOD__ );
 
-		if( wfReadOnly() ){ // Change to wgReadOnlyDbMode if we implement that
+		if( wfReadOnly() ) { // Change to wgReadOnlyDbMode if we implement that
 			wfDebug( __METHOD__ . ": tried to updateUser while in read-only mode.\n" );
 		} else {
 			wfDebug( __METHOD__ . ": update central user data \n" );
 
 			$dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
 			$this->mUser->mTouched = User::newTouchedTimestamp();
-			$dbw->update( '`user`',
+			$dbw->update(
+				'`user`',
 				array( /* SET */
 					'user_name' => $this->mUser->mName,
 					'user_password' => $this->mUser->mPassword,
@@ -345,11 +381,13 @@ class ExternalUser_Wikia extends ExternalUser {
 					'user_token' => $this->mUser->mToken,
 					'user_email_token' => $this->mUser->mEmailToken,
 					'user_email_token_expires' => $dbw->timestampOrNull( $this->mUser->mEmailTokenExpires ),
-				), array( /* WHERE */
+				),
+				array( /* WHERE */
 					'user_id' => $this->mUser->mId
-				), __METHOD__
+				),
+				__METHOD__
 			);
-			$dbw->commit();
+			$dbw->commit( __METHOD__ );
 		}
 		wfProfileOut( __METHOD__ );
 	}
@@ -366,11 +404,11 @@ class ExternalUser_Wikia extends ExternalUser {
 		wfProfileIn( __METHOD__ );
 		$clusters = WikiFactory::getSecondaryClusters(); // wikicities with a c1 .. cx cluster suffix.
 
-		foreach ($clusters as $clusterName) {
+		foreach( $clusters as $clusterName ) {
 			// This is a classic double-check. I do not want to delete the record from the primary cluster.
 			// No, really! I do not.
-			if ( RenameUserHelper::CLUSTER_DEFAULT != $clusterName ) {
-				$memkey = sprintf("extuser:%d:%s", $id, $clusterName);
+			if( RenameUserHelper::CLUSTER_DEFAULT != $clusterName ) {
+				$memkey = sprintf( "extuser:%d:%s", $id, $clusterName );
 				$clusterName = 'wikicities_' . $clusterName;
 
 				$oDB = wfGetDB( DB_MASTER, array(), $clusterName );
@@ -379,7 +417,7 @@ class ExternalUser_Wikia extends ExternalUser {
 					array( 'user_id' => $id ),
 					__METHOD__
 				);
-				$oDB->commit();
+				$oDB->commit( __METHOD__ );
 
 				$wgMemc->delete( $memkey );
 			}

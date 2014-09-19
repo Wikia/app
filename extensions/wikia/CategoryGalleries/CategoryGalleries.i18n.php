@@ -51,6 +51,20 @@ $messages['bar'] = array(
 	'categorygalleries-desc' => "Zoagt da'raa Seiten-Galarie auf Kategorieseiten",
 );
 
+/** Belarusian (Taraškievica orthography) (беларуская (тарашкевіца)‎)
+ * @author Red Winged Duck
+ */
+$messages['be-tarask'] = array(
+	'categorygalleries-desc' => 'Паказвае галерэю старонак на старонках катэгорыяў',
+);
+
+/** Bulgarian (български)
+ * @author DCLXVI
+ */
+$messages['bg'] = array(
+	'categorygalleries-desc' => 'Показване на галерия със страници в страниците на категориите',
+);
+
 /** Breton (brezhoneg)
  * @author Fohanno
  */
@@ -72,7 +86,7 @@ $messages['ca'] = array(
 	'categorygalleries-desc' => 'Mostra una galeria de pàgines sobre les pàgines de la categoria',
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Dontlietome7
  */
 $messages['cs'] = array(
@@ -140,6 +154,13 @@ $messages['hu'] = array(
  */
 $messages['ia'] = array(
 	'categorygalleries-desc' => 'Monstra un galeria de paginas in paginas de categoria',
+);
+
+/** Indonesian (Bahasa Indonesia)
+ * @author Riemogerz
+ */
+$messages['id'] = array(
+	'categorygalleries-desc' => 'Tampilkan galeri gambar mini pada halaman kategori',
 );
 
 /** Italian (italiano)
@@ -275,6 +296,13 @@ $messages['ru'] = array(
  */
 $messages['sv'] = array(
 	'categorygalleries-desc' => 'Visar ett sido-galleri på kategorisidor',
+);
+
+/** Telugu (తెలుగు)
+ * @author Chaduvari
+ */
+$messages['te'] = array(
+	'categorygalleries-desc' => 'పేజీల గ్యాలరీని వర్గ పేజీల్లో చూపిస్తుంది',
 );
 
 /** Tagalog (Tagalog)

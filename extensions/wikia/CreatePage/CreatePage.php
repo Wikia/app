@@ -54,6 +54,7 @@ function wfCreatePageInit() {
 	$wgHooks['BeforeInitialize'][] = 'wfCreatePageOnBeforeInitialize';
 
 	$wgAjaxExportList[] = 'wfCreatePageAjaxGetDialog';
+	$wgAjaxExportList[] = 'wfCreatePageAjaxGetVEDialog';
 	$wgAjaxExportList[] = 'wfCreatePageAjaxCheckTitle';
 }
 
@@ -138,8 +139,30 @@ function wfCreatePageOnGetPreferences( $user, &$preferences ) {
 	return true;
 }
 
+function wfCreatePageAjaxGetVEDialog() {
+	global $wgRequest;
+
+	$template = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
+	$template->set_vars( array(
+			'article' => urldecode( $wgRequest->getVal( 'article' ) )
+		)
+	);
+
+	$body['html'] = $template->render( 'dialog-ve' );
+	$body['title'] = wfMsg( 'createpage-dialog-title' );
+	$body['addPageLabel'] = wfMsg( 'button-createpage' );
+	$body['cancelLabel'] = wfMsg( 'createpage-button-cancel' );
+
+	$response = new AjaxResponse( json_encode( $body ) );
+	$response->setCacheDuration( 0 ); // no caching
+	$response->setContentType( 'application/json; charset=utf-8' );
+
+	return $response;
+}
+
 function wfCreatePageAjaxGetDialog() {
-	global $wgWikiaCreatePageUseFormatOnly, $wgUser,  $wgCreatePageOptions, $wgExtensionsPath, $wgScript, $wgEnableVideoToolExt;
+	global $wgWikiaCreatePageUseFormatOnly, $wgUser,  $wgCreatePageOptions, $wgExtensionsPath, $wgScript,
+	$wgEnableVideoToolExt, $wgEnableVisualEditorUI, $wgRequest;
 
 	$template = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 	$options = array();
@@ -195,7 +218,7 @@ function wfCreatePageAjaxGetDialog() {
 	}
 
 	$template->set_vars( array(
-			'useFormatOnly' => !empty( $wgWikiaCreatePageUseFormatOnly ) ? true : false,
+			'useFormatOnly' => !empty( $wgWikiaCreatePageUseFormatOnly ),
 			'options' => $options,
 			'type' => $listtype
 		)
@@ -205,6 +228,8 @@ function wfCreatePageAjaxGetDialog() {
 	$body['width'] = $wgCreatePageDialogWidth;
 	$body['defaultOption'] = $defaultLayout;
 	$body['title'] = wfMsg( 'createpage-dialog-title' );
+	$body['addPageLabel'] = wfMsg( 'button-createpage' );
+	$body['article'] = $wgRequest->getVal( 'article' );
 
 	$response = new AjaxResponse( json_encode( $body ) );
 	$response->setCacheDuration( 0 ); // no caching

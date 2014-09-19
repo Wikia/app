@@ -52,7 +52,7 @@
 	</script>
 
 	<script id="LightboxHeaderTemplate" class="template" type="text/template">
-		<button class="share-button secondary"><?= wfMsg('lightbox-header-share-button') ?></button>
+		<a href="#" class="wikia-button share-button secondary"><?= wfMsg('lightbox-header-share-button') ?></a>
 		<a href="{{fileUrl}}" class="wikia-button more-info-button secondary"><?= wfMsg('lightbox-header-more-info-button') ?></a>
 
 		<div id="lightbox-add-to-article" class="lightbox-add-to-article">
@@ -81,9 +81,11 @@
 
 	<script id="LightboxCarouselThumbs" type="text/template">
 		{{#thumbs}}
-			<li{{#liClass}} class="{{liClass}}"{{/liClass}}>
-				{{{playButtonSpan}}}
-				<img class="thumb" src="<?= $wg->BlankImgUrl ?>" data-src="{{thumbUrl}}" data-caption="{{caption}}" width="90" height="55">
+			<li data-backfill="{{backfill}}">
+				<a class="{{thumbWrapperClass}}">
+					{{{playButtonSpan}}}
+					<img class="thumb" src="<?= $wg->BlankImgUrl ?>" data-src="{{thumbUrl}}" data-caption="{{caption}}" width="90" height="55">
+				</a>
 			</li>
 		{{/thumbs}}
 	</script>
@@ -95,7 +97,7 @@
 	</script>
 
 	<script id="LightboxCarouselProgressTemplate" type="text/template">
-		<?= wfMsg('lightbox-carousel-progress', array("{{idx1}}", "{{idx2}}", "{{{total}}}")); ?>
+		<?= wfMessage( 'lightbox-carousel-progress' )->rawParams( '{{idx1}}', '{{idx2}}', '{{{total}}}' )->parse(); ?>
 	</script>
 
 	<script id="LightboxShareTemplate" type="text/template">
@@ -145,18 +147,6 @@
 						);
 					?>
 					<?php
-						$formEmbed = array (
-							'inputs' => array (
-						        array(
-						            'label' => wfMsg('lightbox-embed-url'),
-						            'type' => 'text',
-						            'name' => 'lightbox-embed-url',
-					                'value' => "{{embedMarkup}}",
-						        ),
-						    ),
-						);
-					?>
-					<?php
 						$formFilePage = array (
 							'inputs' => array (
 						        array(
@@ -169,9 +159,6 @@
 						);
 					?>
 					<?= F::app()->renderView('WikiaStyleGuideForm', 'index', array('form' => $formHeader)); ?>
-					{{#embedMarkup}}
-						<?= F::app()->renderView('WikiaStyleGuideForm', 'index', array('form' => $formEmbed)); ?>
-					{{/embedMarkup}}
 					<?= F::app()->renderView('WikiaStyleGuideForm', 'index', array('form' => $formFilePage)); ?>
 				</div>
 				<div class="email">

@@ -1,4 +1,4 @@
-( function () {
+( function ( $, mw ) {
 
 var config = {
 	wgMonthNames: ['', 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
@@ -7,9 +7,9 @@ var config = {
 	wgContentLanguage: 'en'
 };
 
-module( 'jquery.tablesorter', QUnit.newMwEnvironment( config ) );
+QUnit.module( 'jquery.tablesorter', QUnit.newMwEnvironment( config ) );
 
-test( '-- Initial check', function() {
+QUnit.test( '-- Initial check', function( assert ) {
 	expect(1);
 	ok( $.tablesorter, '$.tablesorter defined' );
 });
@@ -385,7 +385,7 @@ tableTest(
 );
 
 /** FIXME: the diff output is not very readeable. */
-test( 'bug 32047 - caption must be before thead', 1, function() {
+QUnit.test( 'bug 32047 - caption must be before thead', 1, function( assert ) {
 	var $table;
 	$table = $(
 		'<table class="sortable">' +
@@ -398,7 +398,7 @@ test( 'bug 32047 - caption must be before thead', 1, function() {
 		);
 	$table.tablesorter();
 
-	equals(
+	assert.equal(
 		$table.children( ).get( 0 ).nodeName,
 		'CAPTION',
 		'First element after <thead> must be <caption> (bug 32047)'
@@ -522,7 +522,7 @@ tableTest( 'bug 8115: sort numbers with commas (descending)',
 );
 // TODO add numbers sorting tests for bug 8115 with a different language
 
-test( 'bug 32888 - Tables inside a tableheader cell', function() {
+QUnit.test( 'bug 32888 - Tables inside a tableheader cell', function( assert ) {
 	expect(2);
 
 	var $table;
@@ -537,16 +537,16 @@ test( 'bug 32888 - Tables inside a tableheader cell', function() {
 		);
 	$table.tablesorter();
 
-	equals(
+	assert.equal(
 		$table.find('> thead:eq(0) > tr > th.headerSort').length,
 		1,
 		'Child tables inside a headercell should not interfere with sortable headers (bug 32888)'
 	);
-	equals(
+	assert.equal(
 		$('#32888-2').find('th.headerSort').length,
 		0,
 		'The headers of child tables inside a headercell should not be sortable themselves (bug 32888)'
 	);
 });
 
-})();
+})( jQuery, mediaWiki );

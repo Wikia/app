@@ -44,8 +44,16 @@ $messages['qqq'] = array(
 	'places-geolocation-modal-error-title' => '{{Identical|Error}}',
 );
 
+/** Old English (Ænglisc)
+ * @author Espreon
+ */
+$messages['ang'] = array(
+	'places-editor-search' => 'Sēcan',
+);
+
 /** Arabic (العربية)
  * @author Achraf94
+ * @author Claw eg
  * @author ترجمان05
  */
 $messages['ar'] = array(
@@ -53,6 +61,9 @@ $messages['ar'] = array(
 	'places-desc' => 'يوفر دعم مرشد  <nowiki><place> و <places></nowiki> ليحدد جغرافيا الصفحات، كما يضع [[Special:Places|خريطة بالأماكن المحددة]]',
 	'places-in-category' => 'الأماكن في تصنيف $1',
 	'places-on-map' => '{{PLURAL:$1|مكان واحد|$1 أماكن}} على هذه الخريطة',
+	'places-modal-go-to-special' => 'عرض {{PLURAL:$1|مكان واحد|2=مكانين|$1 أماكن|$1 مكان}} ([[Special:Places|شاهد الكل]])',
+	'places-toolbar-button-tooltip' => 'اضغط لإضافة علامات جغرافية لهذه الصفحة',
+	'places-toolbar-button-address' => 'يرجى تقديم عنوان ليستخدم كإحدى العلامات جغرافية لهذه الصفحة',
 	'places-editor-search' => 'بحث',
 	'places-editor-title-create-new' => 'إضافة علامة جغرافية',
 	'places-editor-title-edit' => 'تعديل علامة جغرافية',
@@ -61,11 +72,20 @@ $messages['ar'] = array(
 	'places-geolocation-button-label' => 'إضافة مكان',
 	'places-geolocation-modal-add-title' => 'إضافة مكان',
 	'places-geolocation-modal-error-title' => 'خطأ',
+	'places-geolocation-modal-error' => 'وقع خطأ أثناء محاولة تحديد موقعك:<br />$1',
+	'places-geolocation-modal-not-available' => 'عفوًا! هذه الميزة متوفرة حاليًا للأجهزة المحمولة فقط.<br /><br />أتود تجربتها؟ قم بزيارة هذه الصفحة باستخدام جهازك المحمول المفضل.',
 	'places-error-no-article' => 'يجب أن تحدد صفحة',
 	'places-error-place-already-exists' => 'تم تحديد الموقع الجغرافي لهذه الصفحة بالفعل',
 	'places-updated-geolocation' => 'إضافة علامة جغرافية لهذه الصفحة',
 	'places-category-switch' => 'تعطيل تحديد الموقع الجغرافي',
 	'places-category-switch-off' => 'تمكين تحديد الموقع الجغرافي',
+);
+
+/** Azerbaijani (azərbaycanca)
+ * @author Cekli829
+ */
+$messages['az'] = array(
+	'places-geolocation-modal-error-title' => 'Xəta',
 );
 
 /** Breton (brezhoneg)
@@ -75,8 +95,12 @@ $messages['ar'] = array(
 $messages['br'] = array(
 	'places' => 'Lakaat war ar wiki-mañ',
 	'places-in-category' => "Lec'hioù er rummad $1",
-	'places-on-map' => '{{PLURAL:$1|$1 plas|$1 plas}} war ar gartenn-mañ', # Fuzzy
+	'places-on-map' => '{{PLURAL:$1|$1 plas|$1 a blasoù}} war ar gartenn-mañ',
+	'places-toolbar-button-tooltip' => "Klikit evit ouzhpennañ ur valizenn douaroniel d'ar bajenn-mañ",
+	'places-toolbar-button-address' => "Pourchasit ar chomlec'h da implijout da valizenn douaroniel evit ar bajenn-mañ, mar plij",
 	'places-editor-search' => 'Klask',
+	'places-editor-title-create-new' => 'Ouzhpennañ ur valizenn douaroniel',
+	'places-editor-title-edit' => 'Aozañ ur valizenn douaroniel',
 	'places-editor-show-my-location' => "Ma c'has da'm lec'h",
 	'places-editor-geoposition' => "Geolec'hiadur a-vremañ :",
 	'places-geolocation-button-label' => "Ouzhpennañ ul lec'hiadur",
@@ -84,6 +108,9 @@ $messages['br'] = array(
 	'places-geolocation-modal-error-title' => 'Fazi',
 	'places-geolocation-modal-error' => "Ur fazi zo bet pa oad o klask gouzout pelec'h emaoc'h : <br />$1",
 	'places-error-no-article' => "Ret eo deoc'h diferiñ ur bajenn",
+	'places-error-place-already-exists' => "Bez' ez eus ur valizenn douaroniel war ar bajenn-mañ dija",
+	'places-category-switch' => 'Diweredekaat ar balizennañ douaroniel',
+	'places-category-switch-off' => 'Gweredekaat ar balizennañ douaroniel',
 );
 
 /** Catalan (català)
@@ -119,9 +146,10 @@ $messages['ca'] = array(
  */
 $messages['ce'] = array(
 	'places-editor-search' => 'Лаха',
+	'places-editor-geoposition' => 'ХӀинца йолу меттиг',
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Chmee2
  */
 $messages['cs'] = array(
@@ -166,10 +194,11 @@ $messages['de'] = array(
 
 /** Zazaki (Zazaki)
  * @author Erdemaslancan
+ * @author Mirzali
  */
 $messages['diq'] = array(
 	'places-editor-search' => 'Cı geyre',
-	'places-geolocation-modal-error-title' => 'Xelato',
+	'places-geolocation-modal-error-title' => 'Xeta',
 );
 
 /** Spanish (español)
@@ -202,11 +231,23 @@ $messages['es'] = array(
 	'places-category-switch-off' => 'Activar las geoetiquetas',
 );
 
+/** Persian (فارسی)
+ * @author Reza1615
+ */
+$messages['fa'] = array(
+	'places-editor-search' => 'جستجو',
+	'places-geolocation-modal-error-title' => 'خطا',
+);
+
 /** Finnish (suomi)
  * @author Centerlink
+ * @author Elseweyr
  * @author Nike
  */
 $messages['fi'] = array(
+	'places' => 'Paikkoja tässä wikissä',
+	'places-in-category' => 'Paikat luokassa $1',
+	'places-on-map' => '{{PLURAL:$1|$1 paikka|$1 paikkaa}} tällä kartalla',
 	'places-editor-search' => 'Etsi',
 	'places-editor-title-create-new' => 'Lisää paikkatunniste',
 	'places-editor-title-edit' => 'Muokkaa paikkatunnistetta',
@@ -225,10 +266,10 @@ $messages['fi'] = array(
  * @author Wyz
  */
 $messages['fr'] = array(
-	'places' => 'Placer sur ce wiki',
+	'places' => 'Lieux sur ce wiki',
 	'places-desc' => "Fournit le support des balises <nowiki><place> et <places></nowiki> pour marquer géographiquement les pages, ainsi qu'une [[Special:Places|carte de toutes les pages marquées]]",
 	'places-in-category' => 'Endroits dans la catégorie $1',
-	'places-on-map' => '{{PLURAL:$1|$1 emplacement|$1 emplacements}} sur cette carte',
+	'places-on-map' => '{{PLURAL:$1|$1 lieu|$1 lieux}} sur cette carte',
 	'places-modal-go-to-special' => 'Afficher {{PLURAL:$1|$1 emplacement|$1 emplacements}} ([[Special:Places|voir tout]])',
 	'places-toolbar-button-tooltip' => 'Cliquez pour ajouter une balise géographique à cette page',
 	'places-toolbar-button-address' => "Veuillez indiquer l'adresse à utiliser comme balise géographique pour cette page.",
@@ -333,6 +374,21 @@ $messages['it'] = array(
 	'places-geolocation-modal-error-title' => 'Errore',
 );
 
+/** Japanese (日本語)
+ * @author Barrel0116
+ */
+$messages['ja'] = array(
+	'places-editor-search' => '検索',
+);
+
+/** Kannada (ಕನ್ನಡ)
+ * @author VASANTH S.N.
+ */
+$messages['kn'] = array(
+	'places-editor-search' => 'ಹುಡುಕು',
+	'places-geolocation-modal-error-title' => 'ದೋಷ',
+);
+
 /** Kurdish (Latin script) (Kurdî (latînî)‎)
  * @author George Animal
  */
@@ -353,12 +409,20 @@ $messages['lb'] = array(
 	'places-error-no-article' => 'Dir musst eng Säit uginn',
 );
 
+/** لوری (لوری)
+ * @author Mogoeilor
+ */
+$messages['lrc'] = array(
+	'places-editor-search' => 'پی جوری',
+	'places-geolocation-modal-error-title' => 'خطا',
+);
+
 /** Macedonian (македонски)
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
 	'places' => 'Места на ова вики',
-	'places-desc' => 'Дава парсерски куки <nowiki><place> и <places></nowiki> за страници за геоозначување и [[Special:Places|карта на сите означени страници]]',
+	'places-desc' => 'Дава расчленувачки куки <nowiki><place> и <places></nowiki> за страници за геоозначување и [[Special:Places|карта на сите означени страници]]',
 	'places-in-category' => 'Места во $1 категорија',
 	'places-on-map' => '{{PLURAL:$1|$1 место|$1 места}} на картава',
 	'places-modal-go-to-special' => 'Приказ на {{PLURAL:$1|$1 место|$1 места}} ([[Special:Places|погл. сите]])',
@@ -535,8 +599,8 @@ $messages['pms'] = array(
  */
 $messages['ps'] = array(
 	'places-editor-search' => 'پلټل',
-	'places-geolocation-button-label' => 'ځای ورګډول',
-	'places-geolocation-modal-add-title' => 'ځای ورګډول',
+	'places-geolocation-button-label' => 'ځای ورگډول',
+	'places-geolocation-modal-add-title' => 'ځای ورگډول',
 	'places-geolocation-modal-error-title' => 'تېروتنه',
 );
 
@@ -648,11 +712,12 @@ $messages['ta'] = array(
 );
 
 /** Telugu (తెలుగు)
+ * @author Chaduvari
  * @author Ravichandra
  */
 $messages['te'] = array(
 	'places-editor-search' => 'వెతుకు',
-	'places-editor-show-my-location' => 'నన్ను నా ప్రాంతానికి తీసుకువెళ్ళు',
+	'places-editor-show-my-location' => 'నన్ను నా స్థలానికి తీసుకువెళ్ళు',
 	'places-geolocation-button-label' => 'ప్రాంతాన్ని చేర్చు',
 	'places-geolocation-modal-add-title' => 'ప్రాంతాన్ని చేర్చు',
 	'places-geolocation-modal-error-title' => 'లోపం',
@@ -686,6 +751,23 @@ $messages['tl'] = array(
 	'places-category-switch-off' => 'Paganahin ang paglalagay ng tatak na pangheograpiya',
 );
 
+/** Turkish (Türkçe)
+ * @author Incelemeelemani
+ */
+$messages['tr'] = array(
+	'places-editor-search' => 'Ara',
+	'places-editor-title-create-new' => 'Bir coğrafi etiket ekle',
+	'places-editor-title-edit' => 'Coğrafi etiketi düzenle',
+	'places-editor-show-my-location' => 'Beni konumumu bul',
+	'places-editor-geoposition' => 'Mevcut coğrafi konum:',
+	'places-geolocation-button-label' => 'Konum ekle',
+	'places-geolocation-modal-add-title' => 'Konum ekle',
+	'places-geolocation-modal-error-title' => 'Hata',
+	'places-geolocation-modal-error' => 'Konumunuz belirlenmeye çalışılırken bir hata oluştu:<br />$1',
+	'places-geolocation-modal-not-available' => 'Bu özellik şu anda yalnızca mobil sürümdü kullanılabilir. <br /><br /> Tekrar denemek ister misiniz? Bu sayfayı yalnızca mobil cihazınız ile ziyaret edin.',
+	'places-error-no-article' => 'Bir sayfa belirtmelisiniz',
+);
+
 /** Ukrainian (українська)
  * @author A1
  * @author Andriykopanytsia
@@ -715,6 +797,19 @@ $messages['uk'] = array(
 	'places-updated-geolocation' => 'Додати геомітку на цю сторінку',
 	'places-category-switch' => 'Вимкнути додавання геоміток',
 	'places-category-switch-off' => 'Увімкнути додавання геоміток',
+);
+
+/** Vietnamese (Tiếng Việt)
+ * @author Baonguyen21022003
+ */
+$messages['vi'] = array(
+	'places' => 'Địa điễm trên wiki này',
+	'places-geolocation-button-label' => 'Thêm địa điểm',
+	'places-geolocation-modal-add-title' => 'Thêm địa điểm',
+	'places-geolocation-modal-error-title' => 'Lỗi',
+	'places-geolocation-modal-error' => 'Đã có lỗi trong khi cố gắng để xác định vị trí của bạn:<br />$1',
+	'places-geolocation-modal-not-available' => 'Rất tiếc! Tính năng này là hiện chỉ trên thiết bị di động.<br /><br />Bạn muốn cho nó thử? Chỉ cần truy cập trang này bằng cách sử dụng điện thoại di động của sự lựa chọn.',
+	'places-error-no-article' => 'Bạn phải chỉ định một trang',
 );
 
 /** Walloon (walon)

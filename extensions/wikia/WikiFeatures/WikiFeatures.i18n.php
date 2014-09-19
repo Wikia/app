@@ -33,6 +33,8 @@ $messages['en'] = array(
 	'wikifeatures-feedback-type-label' => 'What\'s this about?',
 	'wikifeatures-feedback-comment-label' => 'Leave us a comment',
 	'wikifeatures-feedback-success' => 'Thanks for your feedback!',
+	'wikifeatures-feedback-submit-button' => 'Submit',
+	'wikifeatures-feedback-cancel-button' => 'Cancel',
 	'wikifeatures-deactivate-heading' => 'Disable $1?',
 	'wikifeatures-deactivate-description' => 'Disabling a feature will remove it from your wiki.  Your users won\'t be able to use this feature anymore, and they won\'t see the feature anywhere on the wiki.',
 	'wikifeatures-deactivate-notification' => 'You can turn the feature on again at any time.',
@@ -40,35 +42,66 @@ $messages['en'] = array(
 	'wikifeatures-deactivate-cancel-button' => 'Cancel',
 	'wikifeatures-promotion-new' => 'New',
 	'wikifeatures-oasis-only' => 'Wiki Features is not available in Monobook.  If you would like to use this feature please switch your preference to the Wikia skin.',
+
 	// feature message list
-	
+
+	// MediaGallery
+	'wikifeatures-feature-heading-wgEnableMediaGalleryExt' => 'New Image Galleries',
+	'wikifeatures-feature-description-wgEnableMediaGalleryExt' => "Here’s a sneak peak of the [[w:c:community:Help:New Image Galleries|new image galleries]] which have been updated to present your community-curated image collections in a more sleek and modern way. During this Labs beta period, creating new galleries and modifying existing galleries will temporarily only be available in source. [[w:c:community:Help:New Image Galleries|Learn more]].",
+
+	// Forums
 	'wikifeatures-feature-heading-wgEnableForumExt' => 'Forum',
-	'wikifeatures-feature-description-wgEnableForumExt' => "Stay on top of every discussion on your wiki by utilizing Wikia's new [[w:c:community:Help:Forum|Forum]]. Attract new people to participate in conversations about your wiki's content, and keep dedicated wiki editors efficient and engaged with all of the current topics. ",	
-	
+	'wikifeatures-feature-description-wgEnableForumExt' => "Stay on top of every discussion on your wiki by utilizing Wikia's new [[w:c:community:Help:Forum|Forum]]. Attract new people to participate in conversations about your wiki's content, and keep dedicated wiki editors efficient and engaged with all of the current topics. ",
+
+	// TopLists
 	'wikifeatures-feature-heading-wgShowTopListsInCreatePage' => 'Top 10 Lists',
 	'wikifeatures-feature-description-wgShowTopListsInCreatePage' => '[[w:c:community:Help:Top 10 Lists|Top 10 Lists]] allow anyone on your wiki to create a votable list. If you\'re looking for a great way to get junior editors to interact with the wiki, this is it! Enabling this feature will add "Top 10 List" as an option when you click "Add a Page"',
+
+	// Achievements
 	'wikifeatures-feature-heading-wgEnableAchievementsExt' => 'Achievements',
 	'wikifeatures-feature-description-wgEnableAchievementsExt' => '[[w:c:community:Help:Achievements|Achievements]] will help your wiki to grow by incentivizing editors to contribute a variety of content. You can create your own challenges that are unique to your wiki, and even upload your own images for the badges.',
+
+	// ArticleComments
 	'wikifeatures-feature-heading-wgEnableArticleCommentsExt' => 'Article Comments',
 	'wikifeatures-feature-description-wgEnableArticleCommentsExt' => 'This extension will let people write [[w:c:community:Help:Comments|comments]] at the bottom of article pages. Other users can reply to the comments, and signatures and timestamps are automatically assigned. This will replace talk pages on your wiki.',
+
+	// CategoryExhibition
 	'wikifeatures-feature-heading-wgEnableCategoryExhibitionExt' => 'Category Exhibition',
 	'wikifeatures-feature-description-wgEnableCategoryExhibitionExt' => 'The most popular eight pages in your [[w:c:community:Help:Category#Category_Displays|categories]] are already displayed as images, but this feature will list all of your pages as image links sortable by name, recency, or popularity!',
+
+	// Chat
 	'wikifeatures-feature-heading-wgEnableChat' => 'Chat',
 	'wikifeatures-feature-description-wgEnableChat' => 'Instantaneously communicate with other people who love your wiki and your wiki\'s topic as much as you do! Anyone with a Wikia account can join [[w:c:community:Help:Chat|chat]] via the "Join the Chat" button in the right navigational area of your site.',
+
+	// EditPageReskin
 	'wikifeatures-feature-heading-wgEnableEditPageReskinExt' => 'Wikia Editor Redesign',
 	'wikifeatures-feature-description-wgEnableEditPageReskinExt' => 'Editing is at the heart of a wiki and having a great editor is key to having an easy and fun experience when adding content. To improve your experience, we have redesigned our edit pages.',
+
+	// AjaxPoll
 	'wikifeatures-feature-heading-wgEnableAjaxPollExt' => 'Polls',
 	'wikifeatures-feature-description-wgEnableAjaxPollExt' => 'Allow anyone on your wiki to create a poll! With [[w:c:community:Help:Poll|Polls]] enabled your users can use the poll tag to add this neat feature to any page. This feature is a great way to increase contribution on your wiki.',
+
+	// BlogArticles
 	'wikifeatures-feature-heading-wgEnableBlogArticles' => 'Blogs',
 	'wikifeatures-feature-description-wgEnableBlogArticles' => '[[w:c:community:Help:Blogs|Blogs]] allow users on your wiki to create their own blog posts on their profile page and can also be used as a great way to communicate news and events to your wiki community.',
 
+	// VisualEditor
+	'wikifeatures-feature-heading-wgEnableVisualEditorUI' => 'The New VisualEditor',
+	'wikifeatures-feature-description-wgEnableVisualEditorUI' => 'Wikia\'s new [[Help:VisualEditor|VisualEditor]] was built from the ground up to make all Wikia contributors more successful, whether they\'re making their first or their thousandth edit. The VisualEditor replaces the existing rich-text editing mode on article pages and retains the ability for all users to use source if they prefer.',
+
+	// InteractiveMaps
+	'wikifeatures-feature-heading-wgEnableWikiaInteractiveMaps' => 'Maps',
+	'wikifeatures-feature-description-wgEnableWikiaInteractiveMaps' => 'Wikia Maps allows users to create interactive maps for real world places, images, or fictional worlds. Map pins can be added, edited and customized by the community to create a rich mapping experience. These maps can also be embedded in Wikia articles or external websites.',
+
+	/// Wall
 	'wikifeatures-feature-heading-wgEnableWallExt' => 'Message Wall',
 	'wikifeatures-feature-description-wgEnableWallExt' => "Communicating with the contributors on your wiki is an essential part of building and maintaining your community. The [[w:c:community:Help:Message Wall|Message Wall]] uses a threaded conversation format and notification system that lets you control which conversations you're interested in following. No more missed messages!",
 
-
+	// GameGuides
 	'wikifeatures-feature-heading-wgGameGuidesContentForAdmins' => 'Game Guides Content',
 	'wikifeatures-feature-description-wgGameGuidesContentForAdmins' => 'Use the Special:GameGuidesContent page of your wiki to manage which categories appear in the [[w:c:community:Help:Game Guides|Game Guides]] mobile app. Expand your potential audience!',
 
+	// Empty lab message
 	'wikifeatures-feature-heading-emptylabs' => 'Looks like the lab is taking a break',
 	'wikifeatures-feature-description-emptylabs' => 'Our tech scientists are hard at work bubbling up new features for you to try out. Look for more labs here soon!',
 
@@ -83,6 +116,12 @@ $messages['en'] = array(
  */
 $messages['qqq'] = array(
 	'wikifeatures-feature-description-wgEnableChat' => 'Feel free not to translate "lol omg rolfl" if there is no proper equivalent in your language. These are acronyms for Laughing Out Loud, Oh My God, and Rolling On The Floor Laughing.',
+	'wikifeatures-feature-heading-wgEnableWikiaInteractiveMaps' => 'Heading title for the Maps feature.',
+	'wikifeatures-feature-description-wgEnableWikiaInteractiveMaps' => 'Description text for the Maps feature.',
+
+	'wikifeatures-feature-heading-wgEnableMediaGalleryExt' => 'Header text for enabling the Media Gallery feature',
+	'wikifeatures-feature-description-wgEnableMediaGalleryExt' => 'Description text for enabling the Media Gallery feature',
+
 	'action-wikifeaturesview' => '{{doc-action|wikifeaturesview}}',
 );
 
@@ -336,7 +375,7 @@ $messages['de'] = array(
 	'wikifeatures-promotion-new' => 'Neu',
 	'wikifeatures-oasis-only' => 'Wiki-Funktionen ist nicht verfügbar in Monobook. Wenn Du dieses Feature nutzen willst, dann wechsle in deinen Einstellungen zum Wikia-Skin.',
 	'wikifeatures-feature-heading-wgShowTopListsInCreatePage' => 'Top-10-Listen',
-	'wikifeatures-feature-description-wgShowTopListsInCreatePage' => 'Top-10-Listen erlauben es jedem in deinem Wiki, eine Top-Liste zu erstellen. Diese Listen können ganz einfach angelegt werden und noch einfacher kann man dort dann seine Stimme abgeben. Du kannst auch Bilder und Links einfügen, um sie noch spannender zu gestalten. 
+	'wikifeatures-feature-description-wgShowTopListsInCreatePage' => 'Top-10-Listen erlauben es jedem in deinem Wiki, eine Top-Liste zu erstellen. Diese Listen können ganz einfach angelegt werden und noch einfacher kann man dort dann seine Stimme abgeben. Du kannst auch Bilder und Links einfügen, um sie noch spannender zu gestalten.
 
 Top-10-Listen sind eine gute Möglichkeit um neuen Autoren eine Möglichkeit zu geben, untereinander und mit dem Wiki zu interagieren. Wenn du diese Funktion anschaltest, findest du einen neuen Eintrag "Top-10-Liste", wenn du "Seite erstellen" anklickst.',
 	'wikifeatures-feature-heading-wgEnableAchievementsExt' => 'Herausforderungen',

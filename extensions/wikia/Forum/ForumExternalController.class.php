@@ -18,8 +18,8 @@ class ForumExternalController extends WallExternalController {
 		return '';
 	}
 
-	public function policies() {		
-		$this->body = wfMsgExt( 'forum-policies-and-faq', array( 'parseinline' ));
+	public function policies() {
+		$this->body = wfMessage( 'forum-policies-and-faq' )->parse();
 	}
 
 	/**
@@ -67,19 +67,23 @@ class ForumExternalController extends WallExternalController {
 		}
 
 		$newTitle = Title::newFromText( $boardTitle, NS_WIKIA_FORUM_BOARD );
-
 		if ( $newTitle->exists() ) {
 			$this->status = 'error';
-			$this->errormsg = wfMsg( 'forum-board-title-validation-exists' );
+			$this->errormsg = wfMessage( 'forum-board-title-validation-exists' )->escaped();
 			return true;
 		}
 
 		$forum = new Forum();
-		$forum->createBoard( $boardTitle, $boardDescription );
+		$creation = $forum->createBoard( $boardTitle, $boardDescription );
 
-		$this->status = 'ok';
-		$this->errorfield = '';
-		$this->errormsg = '';
+		if ( false === $creation ) {
+			$this->status = 'error';
+			$this->errormsg = wfMessage( 'forum-board-title-validation-invalid' )->escaped();
+		} else {
+			$this->status = 'ok';
+			$this->errorfield = '';
+			$this->errormsg = '';
+		}
 	}
 
 	/**
@@ -104,14 +108,14 @@ class ForumExternalController extends WallExternalController {
 
 		if ( empty( $boardId ) ) {
 			$this->status = 'error';
-			$this->errormsg = wfMsg( 'forum-board-id-validation-missing' );
+			$this->errormsg = wfMessage( 'forum-board-id-validation-missing' )->escaped();
 			return true;
 		}
 
 		$board = ForumBoard::newFromId( $boardId );
 		if ( empty( $board ) ) {
 			$this->status = 'error';
-			$this->errormsg = wfMsg( 'forum-board-id-validation-missing' );
+			$this->errormsg = wfMessage( 'forum-board-id-validation-missing' )->escaped();
 			return true;
 		}
 
@@ -123,14 +127,14 @@ class ForumExternalController extends WallExternalController {
 		$newTitle = Title::newFromText( $boardTitle, NS_WIKIA_FORUM_BOARD );
 		if ( $newTitle->getArticleId() > 0 && $newTitle->getText() != $board->getTitle()->getText() && $newTitle->getArticleId() != $board->getTitle()->getArticleId() ) {
 			$this->status = 'error';
-			$this->errormsg = wfMsg( 'forum-board-title-validation-exists' );
+			$this->errormsg = wfMessage( 'forum-board-title-validation-exists' )->escaped();
 			return true;
 		}
 
 		$forum = new Forum();
 		if ( $forum->getBoardCount() == Forum::BOARD_MAX_NUMBER ) {
 			$this->status = 'error';
-			$this->errormsg = wfMsg( 'forum-board-validation-count', Forum::BOARD_MAX_NUMBER );
+			$this->errormsg = wfMessage( 'forum-board-validation-count', Forum::BOARD_MAX_NUMBER )->escaped();
 			return true;
 		}
 
@@ -168,6 +172,10 @@ class ForumExternalController extends WallExternalController {
 			return true;
 		}
 
+		/**
+		 * @var ForumBoard $board
+		 * @var ForumBoard $destinationBoard
+		 */
 		$board = ForumBoard::newFromId( $boardId );
 		$destinationBoard = ForumBoard::newFromId( $destinationBoardId );
 
@@ -202,26 +210,28 @@ class ForumExternalController extends WallExternalController {
 		$this->errorfield = '';
 		$this->errormsg = '';
 
+		// Trim spaces (CONN-167)
+		$boardTitle = WikiaSanitizer::unicodeTrim( $boardTitle );
+		$boardDescription = WikiaSanitizer::unicodeTrim( $boardDescription );
+
 		// Reject illegal characters.
 		$rxTc = Title::getTitleInvalidRegex();
-		if ( preg_match( $rxTc, $boardTitle ) ) {
+		if ( preg_match( $rxTc, $boardTitle ) || is_null( Title::newFromText( $boardTitle ) ) ) {
 			$this->errorfield = 'boardTitle';
-			$this->errormsg = wfMsg( 'forum-board-title-validation-invalid' );
+			$this->errormsg = wfMessage( 'forum-board-title-validation-invalid' )->escaped();
 			return false;
 		}
 
-		$titleLength = strlen( $boardTitle );
-		if ( $titleLength > 40 || $titleLength < 4 ) {
+		$forum = new Forum();
+		if ( $forum->validateLength( $boardTitle, 'title' ) !== Forum::LEN_OK ) {
 			$this->errorfield = 'boardTitle';
-			$this->errormsg = wfMsg( 'forum-board-title-validation-length' );
+			$this->errormsg = wfMessage( 'forum-board-title-validation-length' )->escaped();
 			return false;
 		}
 
-		$descriptionLength = strlen( $boardDescription );
-
-		if ( $descriptionLength > 255 || $descriptionLength < 4 ) {
+		if ( $forum->validateLength( $boardDescription, 'desc' ) !== Forum::LEN_OK ) {
 			$this->errorfield = 'boardDescription';
-			$this->errormsg = wfMsg( 'forum-board-description-validation-length' );
+			$this->errormsg = wfMessage( 'forum-board-description-validation-length' )->escaped();
 			return false;
 		}
 

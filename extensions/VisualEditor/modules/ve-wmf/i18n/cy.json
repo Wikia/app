@@ -1,0 +1,19 @@
+{
+	"@metadata": {
+		"authors": [
+			"Lloffiwr",
+			"Robin Owain",
+			"ОйЛ",
+			"DChan (WMF)"
+		]
+	},
+	"tag-visualeditor": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor]]",
+	"tag-visualeditor-description": "Golygwyd gyda'r [[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor]]",
+	"tag-visualeditor-needcheck": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor:Angen gwirio]]",
+	"tag-visualeditor-needcheck-description": "Golygwyd gyda'r [[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor]] pan adnabu'r sustem y gallai'r gystrawen wici arwain at newidiadau anfwriadol.",
+	"tag-visualeditor-switched-description": "Dechreuodd y defnyddiwr golygu yn VisualEditor, yna newid i'r golygydd wicitestun.",
+	"visualeditor-feedback-link": "Project:VisualEditor/Adborth",
+	"visualeditor-feedback-tool": "Anfon adborth",
+	"visualeditor-help-label": "Canllawiau",
+	"visualeditor-help-title": "Canllawiau ar sut i ddefnyddio'r golygydd"
+}

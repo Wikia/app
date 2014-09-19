@@ -16,6 +16,8 @@ $optionsWithArgs = array(
 	'rename-user-id',
 	'rename-old-name',
 	'rename-new-name',
+	'rename-old-name-enc',
+	'rename-new-name-enc',
 	'rename-fake-user-id',
 	'phalanx-block-id',
 	'task-id',
@@ -32,7 +34,15 @@ if( isset( $options['help'] ) && $options['help'] ) {
 	exit( 0 );
 }
 
-if ( empty($options['rename-user-id']) || empty($options['rename-old-name']) || empty($options['rename-new-name']) ) {
+// BAC-602: decode user names if they were encoded in the first place
+if ( !empty( $options['rename-old-name-enc'] ) ) {
+	$options['rename-old-name'] = rawurldecode($options['rename-old-name-enc']);
+}
+if ( !empty( $options['rename-new-name-enc'] ) ) {
+	$options['rename-new-name'] = rawurldecode($options['rename-new-name-enc']);
+}
+
+if ( !isset( $options['rename-user-id'] ) || !is_numeric( $options['rename-user-id'] ) || empty($options['rename-old-name']) || empty($options['rename-new-name']) ) {
 	echo( "Not enough arguments or invalid values. Required are: --rename-user-id, --rename-old-name, --rename-new-name");
 	exit( 0 );
 }
@@ -46,6 +56,10 @@ $processData = array(
 	'rename_old_name' => (string)$options['rename-old-name'],
 	'rename_new_name' => (string)$options['rename-new-name'],
 );
+
+if ( isset( $options['rename-ip-address'] ) ) {
+	$processData['rename_ip'] = true;
+}
 
 if (!empty($options['rename-fake-user-id']) && is_numeric($options['rename-fake-user-id']))
 	$processData['rename_fake_user_id'] = (int)$options['rename-fake-user-id'];
@@ -80,7 +94,11 @@ if($taskId) {
 $process->setRequestorUser();
 
 try {
-	$process->updateLocal();
+	if ( isset( $options['rename-ip-address'] ) ) {
+		$process->updateLocalIP();
+	} else {
+		$process->updateLocal();
+	}
 	$errors = $process->getErrors();
 } catch (Exception $e) {
 	$errors = $process->getErrors();

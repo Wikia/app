@@ -33,6 +33,8 @@ class SpecialLeaderboard extends SpecialPage {
 				$wgOut->addScript( "<script src=\"{$url}\"></script>" );
 			}
 		}
+		// include oasis.css override
+		$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/AchievementsII/css/oasis.scss'));
 
 		// ranking
 		$ranking = $rankingService->getUsersRanking(20, true);

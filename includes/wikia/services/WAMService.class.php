@@ -8,6 +8,7 @@ class WAMService extends Service {
 
 	const WAM_DEFAULT_ITEM_LIMIT_PER_PAGE = 20;
 	const WAM_BLACKLIST_EXT_VAR_NAME = 'wgEnableContentWarningExt';
+	const CACHE_DURATION = 86400; /* 24 hours */
 
 	protected static $verticalNames = [
 		WikiFactoryHub::CATEGORY_ID_GAMING => 'Gaming',
@@ -45,7 +46,7 @@ class WAMService extends Service {
 		$memKey = wfSharedMemcKey('datamart', 'wam', $wikiId);
 
 		$getData = function () use ($app, $wikiId) {
-			$db = wfGetDB(DB_SLAVE, array(), $app->wg->DatamartDB);
+			$db = wfGetDB(DB_SLAVE, array(), $app->wg->DWStatsDB);
 
 			$result = $db->select(
 				array('fact_wam_scores'),
@@ -65,7 +66,7 @@ class WAMService extends Service {
 			return ($row = $db->fetchObject($result)) ? $row->wam : 0;
 		};
 
-		$wamScore = WikiaDataAccess::cacheWithLock($memKey, 86400 /* 24 hours */, $getData);
+		$wamScore = WikiaDataAccess::cacheWithLock($memKey, self::CACHE_DURATION, $getData);
 		wfProfileOut(__METHOD__);
 		return $wamScore;
 	}
@@ -100,7 +101,7 @@ class WAMService extends Service {
 			'wam_results_total' => 0
 		);
 		if (!empty($app->wg->StatsDBEnabled)) {
-			$db = wfGetDB(DB_SLAVE, array(), $app->wg->DatamartDB);
+			$db = wfGetDB(DB_SLAVE, array(), $app->wg->DWStatsDB);
 
 			$tables = $this->getWamIndexTables();
 			$fields = $this->getWamIndexFields();
@@ -153,7 +154,7 @@ class WAMService extends Service {
 		wfProfileIn(__METHOD__);
 
 		if (!empty($app->wg->StatsDBEnabled)) {
-			$db = wfGetDB(DB_SLAVE, array(), $app->wg->DatamartDB);
+			$db = wfGetDB(DB_SLAVE, array(), $app->wg->DWStatsDB);
 
 			$fields = array(
 				'MAX(time_id) AS max_date',
@@ -174,6 +175,40 @@ class WAMService extends Service {
 		wfProfileOut(__METHOD__);
 
 		return $dates;
+	}
+
+	public function getWAMLanguages( $date ) {
+		$app = F::app();
+		wfProfileIn( __METHOD__ );
+
+		$date = empty( $date ) ? strtotime( '00:00 -1 day' ) : strtotime( '00:00 -1 day', $date );
+		$memKey = wfSharedMemcKey( 'wam-languages', $date );
+
+		$getData = function () use ( $app, $date ) {
+			$db = wfGetDB( DB_SLAVE, [], $app->wg->DWStatsDB );
+			$result = $db->select(
+				[
+					'fw1' => 'fact_wam_scores',
+					'dw' => 'dimension_wikis'
+				],
+				'DISTINCT dw.lang',
+				'fw1.time_id = FROM_UNIXTIME(' . $date . ')',
+				__METHOD__,
+				[ 'ORDER BY' => 'dw.lang ASC' ],
+				[ 'fw1' => [ 'INNER JOIN', 'dw.wiki_id = fw1.wiki_id' ] ]
+			);
+
+			$languages = [];
+			while ( $row = $db->fetchObject( $result ) ) {
+				$languages[] = $row->lang;
+			}
+
+			return $languages;
+		};
+
+		$wamLanguages = WikiaDataAccess::cache( $memKey, self::CACHE_DURATION, $getData );
+		wfProfileOut( __METHOD__ );
+		return $wamLanguages;
 	}
 
 	protected function getWamIndexJoinConditions ($options) {
@@ -249,8 +284,10 @@ class WAMService extends Service {
 			$conds ['dw.lang'] = $db->strencode($options['wikiLang']);
 		}
 
-		if (!empty($options['excludeBlacklist'])) {
-			$blacklistIds = $this->getIdsBlacklistedWikis();
+		if (!empty($options['excludeBlacklist']) || !empty($options['excludeNonCommercial'])) {
+			$bannedIds = !empty($options['excludeBlacklist']) ? $this->getIdsBlacklistedWikis() : [];
+			$nonCommercialIds = !empty($options['excludeNonCommercial']) ? $this->getNonCommercialWikis() : [];
+			$blacklistIds = array_merge( $bannedIds, $nonCommercialIds );
 			if (!empty($blacklistIds)) {
 				$conds[] = 'fw1.wiki_id NOT IN (' . $db->makeList( $blacklistIds ) . ')';
 			}
@@ -296,6 +333,12 @@ class WAMService extends Service {
 		return $tables;
 	}
 
+	protected function getNonCommercialWikis() {
+		$licensed = new LicensedWikisService();
+		$licensedIds = array_keys( $licensed->getCommercialUseNotAllowedWikis() );
+		return $licensedIds;
+	}
+
 	protected function getIdsBlacklistedWikis() {
 		$blacklistIds = array();
 		$blacklistExt = WikiFactory::getVarByName(self::WAM_BLACKLIST_EXT_VAR_NAME, null);
@@ -306,7 +349,7 @@ class WAMService extends Service {
 					'wam_blacklist',
 					$blacklistExt->cv_id
 				),
-				24 * 60 * 60,
+				self::CACHE_DURATION,
 				function () use ( $blacklistExt ) {
 					$blacklistWikis = WikiFactory::getListOfWikisWithVar( $blacklistExt->cv_id, 'bool', '=', true, true );
 					return array_keys( $blacklistWikis );

@@ -13,6 +13,7 @@ return [
 	// shared AMD modules loaded on each page
 	'amd.shared' => [
 		'dependencies' => [
+			'wikia.instantGlobals',
 			'wikia.cache',
 			'wikia.cookies',
 			'wikia.document',
@@ -28,6 +29,7 @@ return [
 			'wikia.thumbnailer',
 			'wikia.tracker',
 			'wikia.window',
+			'wikia.abTest',
 		],
 		'position' => 'top', // needs to be loaded before AssetsManager files
 	],
@@ -110,6 +112,20 @@ return [
 			'wikia.cookies',
 		],
 	],
+	'wikia.abTest' => [
+		'scripts' => 'resources/wikia/modules/abTest.js',
+		'dependencies' => [
+			'amd',
+			'wikia.window'
+		],
+	],
+	'wikia.instantGlobals' => [
+		'scripts' => 'resources/wikia/modules/instantGlobals.js',
+		'dependencies' => [
+			'amd',
+			'wikia.window'
+		],
+	],
 	'wikia.thumbnailer' => [
 		'scripts' => 'resources/wikia/modules/thumbnailer.js',
 		'dependencies' => 'amd',
@@ -168,6 +184,11 @@ return [
 		'dependencies' => 'amd',
 	],
 
+	'wikia.handlebars' => [
+		'scripts' => 'resources/wikia/libraries/handlebars/handlebars.js',
+		'dependencies' => 'amd',
+	],
+
 	'wikia.stringhelper' => [
 		'scripts' => 'resources/wikia/modules/stringhelper.js',
 		'dependencies' => 'amd',
@@ -197,6 +218,11 @@ return [
 	'jquery.mustache' => [
 		'scripts' => 'resources/wikia/libraries/mustache/jquery.mustache.js',
 		'dependencies' => 'wikia.mustache',
+	],
+
+	'jquery.handlebars' => [
+		'scripts' => 'resources/wikia/libraries/handlebars/jquery.handlebars.js',
+		'dependencies' => 'wikia.handlebars',
 	],
 
 	'jquery.autocomplete' => [

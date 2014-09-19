@@ -118,3 +118,11 @@ $config['LicensedVideoSwap'] = array(
 	'sprite' => "$IP/extensions/wikia/LicensedVideoSwap/images/sprite-LicensedVideoSwap.png",
 	'scss'   => "$IP/extensions/wikia/LicensedVideoSwap/css/mixins/_sprite-LicensedVideoSwap.scss"
 );
+
+$config['VideoPageTool'] = array(
+	'name' => 'VideoPageTool',
+	'source' => "$IP/extensions/wikia/VideoPageTool/images/sprite-VideoPageTool/",
+	'sprite' => "$IP/extensions/wikia/VideoPageTool/images/sprite-VideoPageTool.png",
+	'scss'   => "$IP/extensions/wikia/VideoPageTool/css/mixins/_sprite-VideoPageTool.scss"
+
+);

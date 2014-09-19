@@ -6,7 +6,7 @@
 class IgnFeedIngester extends VideoFeedIngester {
 	protected static $API_WRAPPER = 'IgnApiWrapper';
 	protected static $PROVIDER = 'ign';
-	protected static $FEED_URL = 'http://apis.ign.com/partners/v3/wikia?fromDate=$1&toDate=$2';
+	protected static $FEED_URL = 'http://apis.ign.com/partners/v3/wikia?fromDate=$1&toDate=$2&app_id=$3&app_key=$4';
 	protected static $CLIP_TYPE_BLACKLIST = array();
 	protected static $CLIP_FILTER = array(
 		'*' => array(
@@ -26,12 +26,11 @@ class IgnFeedIngester extends VideoFeedIngester {
 
 		$url = $this->initFeedUrl( $startDate, $endDate );
 
-		print("Connecting to $url...\n");
+		print( "Connecting to $url...\n" );
 
 		$content = $this->getUrlContent( $url );
-
 		if ( !$content ) {
-			print( "ERROR: problem downloading content!\n" );
+			$this->videoErrors( "ERROR: problem downloading content.\n" );
 			wfProfileOut( __METHOD__ );
 			return 0;
 		}
@@ -47,7 +46,7 @@ class IgnFeedIngester extends VideoFeedIngester {
 	 * @param array $params - A list of additional parameters that affect import
 	 * @return int - Returns the number of video created
 	 */
-	public function import( $content='', $params=array() ) {
+	public function import( $content = '', $params = array() ) {
 		wfProfileIn( __METHOD__ );
 
 		$debug = !empty( $params['debug'] );
@@ -55,14 +54,14 @@ class IgnFeedIngester extends VideoFeedIngester {
 
 		$articlesCreated = 0;
 
-		$content = json_decode( $content, true );
-		if ( empty( $content ) ) {
-			$content = array();
+		$videos = json_decode( $content, true );
+		if ( empty( $videos ) ) {
+			$videos = [];
 		}
 
-		$i = 0;
-		foreach ( $content as $video ) {
-			$i++;
+		$this->videoFound( count( $videos ) );
+
+		foreach ( $videos as $video ) {
 			$addlCategories = empty( $params['addlCategories'] ) ? array() : $params['addlCategories'];
 
 			if ( $debug ) {
@@ -76,6 +75,7 @@ class IgnFeedIngester extends VideoFeedIngester {
 
 			// If array is not empty - use only videos that exists in $this->filterByProviderVideoId array
 			if ( count( $this->filterByProviderVideoId ) > 0 && !in_array( $video['videoId'], $this->filterByProviderVideoId ) ) {
+				$this->videoSkipped();
 				continue;
 			}
 
@@ -132,7 +132,6 @@ class IgnFeedIngester extends VideoFeedIngester {
 				print "ERROR: $msg\n";
 			}
 		}
-		echo "Feed size: $i\n";
 
 		wfProfileOut( __METHOD__ );
 
@@ -190,12 +189,6 @@ class IgnFeedIngester extends VideoFeedIngester {
 		echo( "Creating request\n" );
 		$req = curl_init();
 		curl_setopt( $req, CURLOPT_URL, $url );
-		curl_setopt( $req, CURLOPT_HTTPHEADER,
-			array(
-				 "X-App-Id: ".$wgIgnApiConfig['AppId'],
-				 "X-App-Key: ".$wgIgnApiConfig['AppKey']
-			)
-		);
 		curl_setopt( $req, CURLOPT_RETURNTRANSFER, 1 );
 		curl_setopt( $req, CURLOPT_VERBOSE, 1 );
 		curl_setopt( $req, CURLOPT_STDERR, STDOUT );
@@ -218,8 +211,13 @@ class IgnFeedIngester extends VideoFeedIngester {
 	 * @return string - Return a valid feed URL
 	 */
 	private function initFeedUrl( $startDate, $endDate ) {
+		global $wgIgnApiConfig;
+
 		$url = str_replace( '$1', $startDate, static::$FEED_URL );
 		$url = str_replace( '$2', $endDate, $url );
+		$url = str_replace( '$3', $wgIgnApiConfig['AppId'], $url );
+		$url = str_replace( '$4', $wgIgnApiConfig['AppKey'], $url );
+
 		return $url;
 	}
 }

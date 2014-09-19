@@ -1,1 +1,0 @@
-<h1>This is the 'category' display handler</h1>

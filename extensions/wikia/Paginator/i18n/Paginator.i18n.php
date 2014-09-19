@@ -7,6 +7,14 @@ $messages['en'] = array(
 	'paginator-back'	=> 'Back',
 );
 
+/** Message documentation (Message documentation)
+ * @author Shirayuki
+ */
+$messages['qqq'] = array(
+	'paginator-next' => '{{Identical|Next}}',
+	'paginator-back' => '{{Identical|Back}}',
+);
+
 /** Afrikaans (Afrikaans)
  * @author Naudefj
  */
@@ -62,7 +70,7 @@ $messages['ce'] = array(
 	'paginator-next' => 'Кхин дӀа',
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Dontlietome7
  */
 $messages['cs'] = array(
@@ -97,6 +105,22 @@ $messages['diq'] = array(
 $messages['es'] = array(
 	'paginator-next' => 'Siguiente',
 	'paginator-back' => 'Atrás',
+);
+
+/** Basque (euskara)
+ * @author Subi
+ */
+$messages['eu'] = array(
+	'paginator-next' => 'Hurrengoa',
+	'paginator-back' => 'Atzera',
+);
+
+/** Persian (فارسی)
+ * @author Reza1615
+ */
+$messages['fa'] = array(
+	'paginator-next' => 'بعدی',
+	'paginator-back' => 'عقب',
 );
 
 /** Finnish (suomi)
@@ -154,6 +178,14 @@ $messages['it'] = array(
 	'paginator-back' => 'Indietro',
 );
 
+/** Kannada (ಕನ್ನಡ)
+ * @author VASANTH S.N.
+ */
+$messages['kn'] = array(
+	'paginator-next' => 'ನಂತರ',
+	'paginator-back' => 'ಹಿಂದಕ್ಕೆ',
+);
+
 /** Colognian (Ripoarisch)
  * @author Purodha
  */
@@ -167,6 +199,14 @@ $messages['ksh'] = array(
 $messages['lb'] = array(
 	'paginator-next' => 'Weider',
 	'paginator-back' => 'Zréck',
+);
+
+/** لوری (لوری)
+ * @author Mogoeilor
+ */
+$messages['lrc'] = array(
+	'paginator-next' => 'نها',
+	'paginator-back' => 'دما',
 );
 
 /** Macedonian (македонски)
@@ -314,6 +354,14 @@ $messages['sw'] = array(
 $messages['ta'] = array(
 	'paginator-next' => 'அடுத்து',
 	'paginator-back' => 'பின் செல்',
+);
+
+/** Telugu (తెలుగు)
+ * @author Chaduvari
+ */
+$messages['te'] = array(
+	'paginator-next' => 'తరువాతి',
+	'paginator-back' => 'వెనక్కి',
 );
 
 /** Tagalog (Tagalog)

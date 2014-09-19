@@ -30,7 +30,7 @@ class AssetsManagerSassBuilder extends AssetsManagerBaseBuilder {
 	}
 
 	public function getContent( $processingTimeStart = null ) {
-		global $IP;
+		global $IP, $wgEnableSASSSourceMaps;
 		wfProfileIn(__METHOD__);
 
 		$processingTimeStart = null;
@@ -50,6 +50,7 @@ class AssetsManagerSassBuilder extends AssetsManagerBaseBuilder {
 		try {
 			$sassService = SassService::newFromFile("{$IP}/{$this->mOid}");
 			$sassService->setSassVariables($this->mParams);
+			$sassService->enableSourceMaps(!empty($wgEnableSASSSourceMaps));
 			$sassService->setFilters(
 				SassService::FILTER_IMPORT_CSS | SassService::FILTER_CDN_REWRITE
 				| SassService::FILTER_BASE64 | SassService::FILTER_JANUS
@@ -79,13 +80,14 @@ class AssetsManagerSassBuilder extends AssetsManagerBaseBuilder {
 			parent::getContent( $processingTimeStart );
 
 			// Prevent cache poisoning if we are serving sass from preview server
-			if ( !empty($cacheId) && getHostPrefix() == null && !$this->mForceProfile ) {
-				$expTime = 0;
-				if ( $hasErrors ) {
-					$expTime = 10; // prevent flooding servers with sass processes
-				}
-				$memc->set( $cacheId, $this->mContent, $expTime );
+			if ( !empty($cacheId) && getHostPrefix() == null && !$this->mForceProfile && !$hasErrors ) {
+				$memc->set( $cacheId, $this->mContent, 0 );
 			}
+		}
+
+		if ($hasErrors) {
+			wfProfileOut(__METHOD__);
+			throw new Exception($this->mContent);
 		}
 
 		wfProfileOut(__METHOD__);

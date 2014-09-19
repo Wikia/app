@@ -1,37 +1,36 @@
 /*!
  * VisualEditor user interface MWBetaWelcomeDialog class.
  *
- * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
+
+/*global mw */
 
 /**
  * Dialog for inserting MediaWiki media objects.
  *
  * @class
- * @extends ve.ui.MWDialog
+ * @extends ve.ui.ActionDialog
  *
  * @constructor
- * @param {ve.ui.Surface} surface
- * @param {Object} [config] Config options
+ * @param {Object} [config] Configuration options
  */
-ve.ui.MWBetaWelcomeDialog = function VeUiMWBetaWelcomeDialog( surface, config ) {
-	// Configuration initialization
-	config = ve.extendObject( {}, config, { 'small': true, 'footless': false } );
-
+ve.ui.MWBetaWelcomeDialog = function VeUiMWBetaWelcomeDialog( config ) {
 	// Parent constructor
-	ve.ui.MWDialog.call( this, surface, config );
+	ve.ui.MWBetaWelcomeDialog.super.call( this, config );
 };
 
 /* Inheritance */
 
-ve.inheritClass( ve.ui.MWBetaWelcomeDialog, ve.ui.MWDialog );
+OO.inheritClass( ve.ui.MWBetaWelcomeDialog, ve.ui.ActionDialog );
 
 /* Static Properties */
 
 ve.ui.MWBetaWelcomeDialog.static.name = 'betaWelcome';
 
-ve.ui.MWBetaWelcomeDialog.static.titleMessage = 'visualeditor-dialog-beta-welcome-title';
+ve.ui.MWBetaWelcomeDialog.static.title =
+	OO.ui.deferMsg( 'visualeditor-dialog-beta-welcome-title' );
 
 ve.ui.MWBetaWelcomeDialog.static.icon = 'help';
 
@@ -40,33 +39,38 @@ ve.ui.MWBetaWelcomeDialog.static.icon = 'help';
 /**
  * @inheritdoc
  */
+ve.ui.MWBetaWelcomeDialog.prototype.getTitle = function () {
+	// Send the MediaWiki username along with the message for {{GENDER:}} i18n support
+	return ve.msg( this.constructor.static.title, mw.user );
+};
+
+/**
+ * @inheritdoc
+ */
+ve.ui.MWBetaWelcomeDialog.prototype.getApplyButtonLabel = function () {
+	return ve.msg( 'visualeditor-dialog-beta-welcome-action-continue' );
+};
+
+/**
+ * @inheritdoc
+ */
 ve.ui.MWBetaWelcomeDialog.prototype.initialize = function () {
 	// Parent method
-	ve.ui.MWDialog.prototype.initialize.call( this );
+	ve.ui.MWBetaWelcomeDialog.super.prototype.initialize.call( this );
 
 	// Properties
-	this.contentLayout = new ve.ui.PanelLayout( {
-		'$$': this.frame.$$,
+	this.contentPanel = new OO.ui.PanelLayout( {
+		'$': this.$,
 		'scrollable': true,
-		'padded': true
+		'padded': true,
+		'classes': [ 've-ui-mwBetaWelcomeDialog-content' ],
+		'text': ve.msg( 'visualeditor-dialog-beta-welcome-content', $( '#ca-edit' ).text() )
 	} );
-	this.continueButton = new ve.ui.ButtonWidget( {
-		'$$': this.$$,
-		'label': ve.msg( 'visualeditor-dialog-beta-welcome-action-continue' ),
-		'flags': ['primary']
-	} );
-
-	// Events
-	this.continueButton.connect( this, { 'click': [ 'close', 'close' ] } );
 
 	// Initialization
-	this.contentLayout.$
-		.addClass( 've-ui-mwBetaWelcomeDialog-content' )
-		.text( ve.msg( 'visualeditor-dialog-beta-welcome-content', $( '#ca-edit' ).text() ) );
-	this.$body.append( this.contentLayout.$ );
-	this.$foot.append( this.continueButton.$ );
+	this.panels.addItems( [ this.contentPanel ] );
 };
 
 /* Registration */
 
-ve.ui.dialogFactory.register( ve.ui.MWBetaWelcomeDialog );
+ve.ui.windowFactory.register( ve.ui.MWBetaWelcomeDialog );

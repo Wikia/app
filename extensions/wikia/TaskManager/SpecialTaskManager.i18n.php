@@ -23,9 +23,12 @@ $messages['en'] = array(
  * @author Siebrand
  */
 $messages['qqq'] = array(
+	'taskmanager' => '{{Identical|Display and manage background task}}',
+	'taskmanager_title' => '{{Identical|Display and manage background task}}',
 	'right-taskmanager' => '{{doc-right|taskmanager}}',
 	'right-taskmanager-action' => '{{doc-right|taskmanager-action}}',
-	'action-taskmanager' => '{{doc-action|taskmanager}}',
+	'action-taskmanager' => '{{doc-action|taskmanager}}
+{{Identical|Display and manage background task}}',
 );
 
 /** Afrikaans (Afrikaans)
@@ -61,12 +64,14 @@ $messages['be-tarask'] = array(
 );
 
 /** Breton (brezhoneg)
+ * @author Fohanno
  * @author Y-M D
  */
 $messages['br'] = array(
 	'taskmanager' => 'Diskouez ha merañ trevelloù an drekleur',
 	'taskmanager_title' => 'Diskouez ha merañ trevelloù an drekleur',
 	'taskmanager_tasklist' => 'Distreiñ da roll an trevelloù',
+	'taskmanager-invert' => 'Eilpennañ an diuzadenn',
 );
 
 /** Catalan (català)
@@ -84,7 +89,7 @@ $messages['ca'] = array(
 	'action-taskmanager' => 'Mostra i gestiona les tasques en segon pla',
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Dontlietome7
  * @author Jezevec
  */
@@ -134,13 +139,25 @@ $messages['es'] = array(
 	'action-taskmanager' => 'Muestra y administra tareas en segundo plano',
 );
 
+/** Persian (فارسی)
+ * @author Reza1615
+ */
+$messages['fa'] = array(
+	'taskmanager-invert' => 'وارونه‌کردن انتخاب',
+);
+
 /** Finnish (suomi)
  * @author Centerlink
+ * @author Elseweyr
  */
 $messages['fi'] = array(
 	'taskmanager' => 'Näytä ja hallinnoi taustatehtäviä',
 	'taskmanager_title' => 'Näytä ja hallinnoi taustatehtäviä',
 	'taskmanager_tasklist' => 'Palaa tehtäväluetteloon',
+	'right-taskmanager' => 'Voi näyttää taustatehtäviä',
+	'right-taskmanager-action' => 'Voi hallinnoida taustatehtäviä',
+	'taskmanager-invert' => 'Käänteinen valinta',
+	'action-taskmanager' => 'näyttää tai hallinnoida taustatehtäviä',
 );
 
 /** French (français)
@@ -366,6 +383,7 @@ $messages['pt'] = array(
 	'right-taskmanager' => 'Pode mostrar tarefas de segundo plano',
 	'right-taskmanager-action' => 'Pode administrar tarefas de segundo plano',
 	'taskmanager-invert' => 'Inverter seleção',
+	'action-taskmanager' => 'mostrar e gerir tarefas de segundo plano',
 );
 
 /** Brazilian Portuguese (português do Brasil)
@@ -481,15 +499,29 @@ $messages['tr'] = array(
  * @author Andriykopanytsia
  * @author Steve.rusyn
  * @author SteveR
+ * @author Ua2004
  */
 $messages['uk'] = array(
-	'taskmanager' => 'Показ і управління фоновими завданнями',
-	'taskmanager_title' => 'Показ і управління фоновими завданнями',
+	'taskmanager' => 'Перегляд і керування фоновими завданнями',
+	'taskmanager_title' => 'Перегляд і керування фоновими завданнями',
 	'taskmanager_tasklist' => 'Повернутися до списку завдань',
-	'right-taskmanager' => 'Можна відображати фонові завдання',
-	'right-taskmanager-action' => 'Можна управляти фоновими завданнями',
-	'taskmanager-invert' => 'Інвертувати виділення',
-	'action-taskmanager' => 'показ і управління фоновими завданнями',
+	'right-taskmanager' => 'Переглядати фонові завдання',
+	'right-taskmanager-action' => 'Керувати фоновими завданнями',
+	'taskmanager-invert' => 'Інвертувати виділене',
+	'action-taskmanager' => 'перегляд і керування фоновими завданнями',
+);
+
+/** Vietnamese (Tiếng Việt)
+ * @author Baonguyen21022003
+ */
+$messages['vi'] = array(
+	'taskmanager' => 'Hiển thị và quản lý công việc giao diện',
+	'taskmanager_title' => 'Hiển thị và quản lý công việc giao diện',
+	'taskmanager_tasklist' => 'Trở về danh sách công việc',
+	'right-taskmanager' => 'Có thể hiển thị tác vụ nền',
+	'right-taskmanager-action' => 'Có thể quản lý tác vụ nền',
+	'taskmanager-invert' => 'Đảo ngược lựa chọn',
+	'action-taskmanager' => 'Hiển thị và quản lý công việc giao diện',
 );
 
 /** Simplified Chinese (中文（简体）‎)

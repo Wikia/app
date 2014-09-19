@@ -3,18 +3,25 @@
 class HubService extends Service {
 	private static $comscore_prefix = 'comscore_';
 
+	protected static $canonicalCategoryNames = [
+		WikiFactoryHub::CATEGORY_ID_GAMING        => 'Games',
+		WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT => 'Entertainment',
+		WikiFactoryHub::CATEGORY_ID_LIFESTYLE     => 'Lifestyle',
+		WikiFactoryHub::CATEGORY_ID_CORPORATE     => 'Wikia',
+	];
+
 	/**
 	 * Get proper category to report to Comscore for given cityId
 	 * (wgTitle GLOBAL will be used in case the city is corporate wiki)
 	 *
 	 * @deprecated use getCategoryInfoForCity or getCategoryInfoForCurrentPage instead
 	 *
-	 * @param int $city_id city id
+	 * @param int $cityId The wiki ID
 	 *
 	 * @return stdClass ($row->cat_id $row->cat_name)
 	 */
 	public static function getComscoreCategory($cityId) {
-		if( self::isCorporatePage() && $cityId == F::app()->wg->CityId ) {
+		if( WikiaPageType::isCorporatePage() && $cityId == F::app()->wg->CityId ) {
 			// Page-level hub-related vertical checking only works locally
 			return self::getCategoryInfoForCurrentPage();
 		}
@@ -55,6 +62,23 @@ class HubService extends Service {
 	}
 
 	/**
+	 * Get current wikia's Cannonical Category name
+	 *
+	 * @return string current Cannonical Category's Name
+	 */
+	public static function getCurrentWikiaVerticalName() {
+		global $wgCityId;
+		if ( empty( $wgCityId ) ) {
+			return '';
+		}
+
+		$categoryId = WikiFactoryHub::getInstance()->getCategoryId( $wgCityId );
+		return !empty( $categoryId )
+			? self::$canonicalCategoryNames[ self::getCanonicalCategoryId( $categoryId ) ]
+			: '' ;
+	}
+
+	/**
 	 * Get category info for given cityId
 	 *
 	 * @param int $city_id city id
@@ -62,7 +86,7 @@ class HubService extends Service {
 	 * @return stdClass ($row->cat_id $row->cat_name)
 	 */
 	public static function getCategoryInfoForCity($cityId) {
-		return self::constructCategoryInfoFromCategoryId(self::getCategoryIdForCity($cityId));
+		return self::constructCategoryInfoFromCategoryId( self::getCategoryIdForCity( $cityId ) );
 	}
 
 	/**
@@ -73,15 +97,7 @@ class HubService extends Service {
 	public static function getCategoryInfoForCurrentPage() {
 		$cityId = F::app()->wg->CityId;
 
-		$categoryId = null;
-
-		if( self::isCorporatePage() ) {
-			$categoryId = self::getHubIdForCurrentPage();
-		}
-
-		if( empty($categoryId) ) {
-			$categoryId = self::getCategoryIdForCity($cityId);
-		}
+		$categoryId = self::getCategoryIdForCity($cityId);
 
 		return self::constructCategoryInfoFromCategoryId($categoryId);
 	}
@@ -96,7 +112,7 @@ class HubService extends Service {
 	private static function getCategoryIdForCity($cityId) {
 		$categoryId = null;
 
-		if( self::isCorporatePage() && $cityId == F::app()->wg->CityId ) {
+		if( WikiaPageType::isWikiaHomePage() && $cityId == F::app()->wg->CityId ) {
 			$categoryId = WikiFactoryHub::CATEGORY_ID_CORPORATE;
 		} else {
 			$category = WikiFactory::getCategory($cityId);
@@ -121,49 +137,6 @@ class HubService extends Service {
 		}
 
 		return $categoryId;
-	}
-
-	/**
-	 * Check if current page is a Wikia hub
-	 *
-	 * @return bool
-	 */
-	public static function isCurrentPageAWikiaHub() {
-		return ( self::isCorporatePage() && self::getHubIdForCurrentPage() );
-	}
-
-	/**
-	 * Check if given city is Wikia corporate city
-	 */
-	public static function isCorporatePage() {
-		return !empty( F::app()->wg->EnableWikiaHomePageExt );
-	}
-
-	private static function getHubIdForCurrentPage() {
-		$categoryId = null;
-		if (F::app()->wg->EnableWikiaHubsV2Ext) {
-			$categoryId = self::getHubIdForCurrentPageV2();
-		}
-		return $categoryId;
-	}
-
-	private static function getHubIdForCurrentPageV2() {
-		$baseText = F::app()->wg->Title->getBaseText();
-
-		/** @var $tmpTitle Title */
-		$tmpTitle = Title::newFromText($baseText);
-
-		$hubsPages = F::app()->wg->WikiaHubsV2Pages;
-
-		if ($tmpTitle instanceof Title) {
-			/* @var $title Title */
-			$hubName = $tmpTitle->getDbKey();
-
-			if ($hubName) {
-				return array_search($hubName, $hubsPages);
-			}
-		}
-		return false;
 	}
 
 	private static function constructCategoryInfoFromCategoryId($categoryId) {

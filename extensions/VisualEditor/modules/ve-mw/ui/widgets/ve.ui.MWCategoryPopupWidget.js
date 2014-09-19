@@ -1,7 +1,7 @@
 /*!
  * VisualEditor UserInterface MWCategoryPopupWidget class.
  *
- * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
@@ -9,33 +9,38 @@
  * Creates an ve.ui.MWCategoryPopupWidget object.
  *
  * @class
- * @extends ve.ui.PopupWidget
+ * @extends OO.ui.PopupWidget
  *
  * @constructor
- * @param {Object} [config] Config options
+ * @param {Object} [config] Configuration options
  */
-ve.ui.MWCategoryPopupWidget = function VeUiMWCategoryPopupWidget ( config ) {
+ve.ui.MWCategoryPopupWidget = function VeUiMWCategoryPopupWidget( config ) {
 	// Configuration initialization
-	config = ve.extendObject( {}, config, { 'autoClose': true } );
+	config = ve.extendObject( { 'autoClose': true }, config );
 
 	// Parent constructor
-	ve.ui.PopupWidget.call( this, config );
+	OO.ui.PopupWidget.call( this, config );
 
 	// Properties
 	this.category = null;
 	this.origSortkey = null;
 	this.removed = false;
-	this.$title = this.$$( '<label>' );
-	this.$menu = this.$$( '<div>' );
-	this.removeButton = new ve.ui.IconButtonWidget( {
-		'$$': this.$$, 'icon': 'remove', 'title': ve.msg( 'visualeditor-inspector-remove-tooltip' )
+	this.$title = this.$( '<label>' );
+	this.$menu = this.$( '<div>' );
+	this.removeButton = new OO.ui.ButtonWidget( {
+		'$': this.$,
+		'frameless': true,
+		'icon': 'remove',
+		'title': ve.msg( 'visualeditor-inspector-remove-tooltip' )
 	} );
-	this.sortKeyInput = new ve.ui.TextInputWidget( { '$$': this.$$ } );
-	this.sortKeyLabel = new ve.ui.InputLabelWidget(
-		{ '$$': this.$$, '$input': this.sortKeyInput, 'label': ve.msg ( 'visualeditor-dialog-meta-categories-sortkey-label' ) }
-	);
-	this.$sortKeyForm = this.$$( '<form>' ).addClass( 've-ui-mwCategorySortkeyForm' )
-		.append( this.sortKeyLabel.$, this.sortKeyInput.$ );
+	this.sortKeyInput = new OO.ui.TextInputWidget( { '$': this.$ } );
+	this.sortKeyField = new OO.ui.FieldLayout( this.sortKeyInput, {
+		'$': this.$,
+		'align': 'top',
+		'label': ve.msg ( 'visualeditor-dialog-meta-categories-sortkey-label' )
+	} );
+	this.$sortKeyForm = this.$( '<form>' ).addClass( 've-ui-mwCategoryPopupWidget-sortKeyForm' )
+		.append( this.sortKeyField.$element );
 
 	// Events
 	this.connect( this, { 'hide': 'onHide' } );
@@ -43,27 +48,26 @@ ve.ui.MWCategoryPopupWidget = function VeUiMWCategoryPopupWidget ( config ) {
 	this.$sortKeyForm.on( 'submit', ve.bind( this.onSortKeySubmit, this ) );
 
 	// Initialization
-	this.$.addClass( 've-ui-mwCategoryPopupMenu' ).hide();
+	this.$element.addClass( 've-ui-mwCategoryPopupWidget' ).hide();
 	this.$title
-		.addClass( 've-ui-mwCategoryPopupTitle ve-ui-icon-tag' )
+		.addClass( 've-ui-mwCategoryPopupWidget-title oo-ui-icon-tag' )
 		.text( ve.msg( 'visualeditor-dialog-meta-categories-category' ) );
-	this.$menu.append(
-		this.$title,
-		this.removeButton.$.addClass( 've-ui-mwCategoryRemoveButton' ),
-		this.$sortKeyForm
-	);
+	this.$hiddenStatus = this.$( '<div>' );
+	this.$menu
+		.addClass( 've-ui-mwCategoryPopupWidget-content' )
+		.append(
+			this.$title,
+			this.$hiddenStatus,
+			this.removeButton.$element.addClass( 've-ui-mwCategoryPopupWidget-removeButton' ),
+			this.$sortKeyForm
+		);
 	this.$body.append( this.$menu );
-	config.$overlay.append( this.$ );
+	config.$overlay.append( this.$element );
 };
-
-/**
- * @private
- * @cfg {boolean} [autoClose=true] Overridden in this subclass
- */
 
 /* Inheritance */
 
-ve.inheritClass( ve.ui.MWCategoryPopupWidget, ve.ui.PopupWidget );
+OO.inheritClass( ve.ui.MWCategoryPopupWidget, OO.ui.PopupWidget );
 
 /* Events */
 
@@ -84,9 +88,13 @@ ve.inheritClass( ve.ui.MWCategoryPopupWidget, ve.ui.PopupWidget );
  * Handle category remove events.
  *
  * @method
- * @emits removeCategory
+ * @fires removeCategory
  */
 ve.ui.MWCategoryPopupWidget.prototype.onRemoveCategory = function () {
+	ve.track( 'wikia', {
+		'action': ve.track.actions.CLICK,
+		'label': 'dialog-page-settings-button-remove-category'
+	} );
 	this.removed = true;
 	this.emit( 'removeCategory', this.category );
 	this.closePopup();
@@ -97,9 +105,13 @@ ve.ui.MWCategoryPopupWidget.prototype.onRemoveCategory = function () {
  *
  * @method
  * @param {jQuery.Event} e Form submit event
- * @emits updateSortkey
+ * @fires updateSortkey
  */
 ve.ui.MWCategoryPopupWidget.prototype.onSortKeySubmit = function () {
+	ve.track( 'wikia', {
+		'action': ve.track.actions.SUBMIT,
+		'label': 'dialog-page-settings-change-sortkey'
+	} );
 	this.closePopup();
 	return false;
 };
@@ -123,9 +135,9 @@ ve.ui.MWCategoryPopupWidget.prototype.openPopup = function ( item ) {
  *
  * @method
  */
-ve.ui.MWCategoryPopupWidget.prototype.onHide = function() {
+ve.ui.MWCategoryPopupWidget.prototype.onHide = function () {
 	var newSortkey = this.sortKeyInput.$input.val();
-	if ( !this.removed && newSortkey !== this.origSortkey ) {
+	if ( !this.removed && newSortkey !== ( this.origSortkey || '' ) ) {
 		this.emit( 'updateSortkey', this.category, this.sortKeyInput.$input.val() );
 	}
 };
@@ -138,6 +150,11 @@ ve.ui.MWCategoryPopupWidget.prototype.onHide = function() {
  */
 ve.ui.MWCategoryPopupWidget.prototype.loadCategoryIntoPopup = function ( item ) {
 	this.origSortkey = item.sortkey;
+	if ( item.isHidden ) {
+		this.$hiddenStatus.text( ve.msg( 'visualeditor-dialog-meta-categories-hidden' ) );
+	} else {
+		this.$hiddenStatus.empty();
+	}
 	this.sortKeyInput.$input.val( item.sortKey );
 };
 
@@ -168,21 +185,21 @@ ve.ui.MWCategoryPopupWidget.prototype.setDefaultSortKey = function ( value ) {
  * @param {ve.ui.MWCategoryItemWidget} item Category item
  */
 ve.ui.MWCategoryPopupWidget.prototype.setPopup = function ( item ) {
-	var left = item.$arrow.offset().left + ( item.$arrow.width() / 2 ),
-		top = item.$arrow.offset().top + item.$arrow.height(),
+	var left = item.$indicator.offset().left + ( item.$indicator.width() / 2 ),
+		top = item.$indicator.offset().top + item.$indicator.height(),
 		width = this.$menu.outerWidth( true ),
 		height = this.$menu.outerHeight( true );
 
 	// Flip for RTL:
 	if ( this.$container.attr( 'dir' ) === 'rtl' ) {
 		// flip me, I'm a mirror:
-		this.$.css( {
+		this.$element.css( {
 			'right': this.$container.outerWidth( true ) - left,
 			'top': top
 		} );
 	} else {
-		this.$.css( { 'left': left, 'top': top } );
+		this.$element.css( { 'left': left, 'top': top } );
 	}
 
-	this.display( left, top, width, height );
+	this.display( width, height );
 };

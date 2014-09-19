@@ -11,7 +11,7 @@ class WikiaMobileAppCacheController extends WikiaController {
 	public function serveManifest(){
 		if ( $this->response->getFormat() == WikiaResponse::FORMAT_HTML ) {
 			$this->response->setContentType( self::CONTENT_TYPE );
-			$this->response->setCacheValidity( self::MANIFEST_VARNISH_CACHE_TIME, self::MANIFEST_VARNISH_CACHE_TIME, array( WikiaResponse::CACHE_TARGET_VARNISH ) );
+			$this->response->setCacheValidity( self::MANIFEST_VARNISH_CACHE_TIME );
 		}
 		
 		$files = AssetsManager::getInstance()->getGroupCommonURL('wikiamobile_js');

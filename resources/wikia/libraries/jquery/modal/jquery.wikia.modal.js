@@ -51,7 +51,7 @@ $.fn.extend({
 		}
 
 		// let's have it dynamically generated, so every newly created modal will be on top
-		var zIndex = settings.zIndex ? parseInt(settings.zIndex) : (2000000001 + ($('body').children('.blackout').length) * 2);
+		var zIndex = settings.zIndex ? parseInt(settings.zIndex) : (5001101 + ($('body').children('.blackout').length) * 2);
 
 		// needed here for getModalTopOffset()
 		wrapper.data('settings', settings);
@@ -79,13 +79,13 @@ $.fn.extend({
 				modalTabs.insertBefore(wrapper.find('.modalContent'));
 			}
 
-			if(options.width != 'auto') {
+			if(settings.width != 'auto') {
 				//set up dimensions and position
 				var modalWidth = $("#WikiaMainContent").width();
 
 				// or use width provided
-				if (typeof options.width != 'undefined') {
-					modalWidth = options.width + 40 /* padding */;
+				if (typeof settings.width != 'undefined') {
+					modalWidth = settings.width + 40 /* padding */;
 				}
 			} else {
 				modalWidth = 'auto';
@@ -95,7 +95,7 @@ $.fn.extend({
 				left: "50%",
 				top: $(window).scrollTop() + settings.topOffset,
 				width: modalWidth,
-				height: options.height,
+				height: settings.height,
 				zIndex: zIndex + 1
 			}).css("margin-left", -wrapper.outerWidth(false)/2);
 
@@ -280,7 +280,7 @@ $.fn.extend({
 		var wrapper = this.closest(".modalWrapper");
 
 		// let's have it dynamically generated, so every newly created modal will be on the top
-		var zIndex = 2000000001 + ($('body').children('.blackout').length) * 2 ;
+		var zIndex = 5001101 + ($('body').children('.blackout').length) * 2 ;
 		// show associated blackout
 		var blackout = $(this).data('blackout');
 		var blackoutOpacity = blackout.attr('data-opacity');

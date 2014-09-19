@@ -1,0 +1,121 @@
+/*
+ * Creates an outline of an arrow at 90 degree angle
+ *
+ * HTML: <img class="arrow-hollow" src="<?= $wg->BlankImgUrl ?>" />
+ * SASS: .arrow-hollow { @include arrow-hollow(); }
+ */
+@mixin arrow-hollow($arrow-width: 10px, $border-width: 4px, $arrow-color: black, $background-color: white, $direction: 'left') {
+
+	$outer-arrow-width: $arrow-width;
+	$inner-arrow-width: $arrow-width - $border-width;
+
+	// Needs position relative because :before and :after are position absolute
+	// Also you can position it as you like in each usage
+	position: relative;
+
+	// Common styles
+	&:before, &:after {
+		border: solid transparent;
+		content: ' ';
+		height: 0;
+		position: absolute;
+		width: 0;
+	}
+	&:after {
+		border-width: $inner-arrow-width;
+	}
+	&:before {
+		border-width: $outer-arrow-width;
+	}
+
+	// Down facing arrows
+	@if ($direction == 'down') {
+		&:before, &:after {
+			top: 0;
+		}
+		&:after {
+			border-top-color: $background-color;
+			left: $border-width;
+		}
+		&:before {
+			border-top-color: $arrow-color;
+		}
+
+	// Left facing arrows
+	} @else if ($direction == 'left') {
+		&:before, &:after {
+			right: 0;
+		}
+		&:after {
+			border-right-color: $background-color;
+			top: $border-width;
+		}
+		&:before {
+			border-right-color: $arrow-color;
+		}
+
+	// Right facing arrows
+	} @else if ($direction == 'right') {
+		&:before, &:after {
+			left: 0;
+		}
+		&:after {
+			border-left-color: $background-color;
+			top: $border-width;
+		}
+		&:before {
+			border-left-color: $arrow-color;
+		}
+
+	// Up facing arrows
+	} @else if ($direction == 'up') {
+		&:before, &:after {
+			bottom: 0;
+		}
+		&:after {
+			border-bottom-color: $background-color;
+			left: $border-width;
+		}
+		&:before {
+			border-bottom-color: $arrow-color;
+		}
+	}
+
+
+/*	border-color: transparent;
+
+// Fixes the 'jagged line' problem for modern browsers
+// See: http://css-tricks.com/snippets/css/css-triangle/#comment-108252
+	border-color: rgba($color, 0);
+	border-width: $width;
+
+// Fixes the 'thin stroke of grey' on border edges in Firefox
+// See: http://css-tricks.com/snippets/css/css-triangle/#comment-103509
+	border-style: inset;
+	height: 0;
+
+// Center vertically with the surrounding line
+	vertical-align: middle;
+	width: 0;
+
+	@if ($direction == 'down') {
+		border-bottom: 0;
+		border-top-color: $color;
+		border-top-style: solid;
+
+	} @else if ($direction == 'left') {
+		border-left: 0;
+		border-right-color: $color;
+		border-right-style: solid;
+
+	} @else if ($direction == 'right') {
+		border-left-color: $color;
+		border-left-style: solid;
+		border-right: 0;
+
+	} @else if ($direction == 'up') {
+		border-bottom-color: $color;
+		border-bottom-style: solid;
+		border-top: 0;
+	}*/
+}

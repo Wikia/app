@@ -29,13 +29,9 @@ class SassUtil {
 	 *            Non-settable settings should be driven programmatically.
 	 */
 	public static function getApplicationThemeSettings() {
-		global $wgOasisGrid, $wgOasisHD, $wgOasisResponsive;
+		global $wgOasisGrid;
 
 		$params = array();
-
-		if ( $wgOasisHD ) {
-			$params['widthType'] = 1;
-		}
 
 		if ( $wgOasisGrid ) {
 			$params['widthType'] = 3;
@@ -55,7 +51,6 @@ class SassUtil {
 	 *  - theme chosen using usetheme URL param
 	 */
 	public static function getOasisSettings() {
-		global $wgOasisThemes, $wgContLang;
 		wfProfileIn(__METHOD__);
 
 		// Load the 5 deafult colors by theme here (eg: in case the wiki has an override but the user doesn't have overrides).
@@ -65,40 +60,42 @@ class SassUtil {
 			$themeSettings = new ThemeSettings();
 			$settings = $themeSettings->getSettings();
 
-			$oasisSettings["color-body"] = self::sanitizeColor($settings["color-body"]);
-			$oasisSettings["color-page"] = self::sanitizeColor($settings["color-page"]);
-			$oasisSettings["color-buttons"] = self::sanitizeColor($settings["color-buttons"]);
-			$oasisSettings["color-links"] = self::sanitizeColor($settings["color-links"]);
-			$oasisSettings["color-header"] = self::sanitizeColor($settings["color-header"]);
-			$oasisSettings["background-image"] = wfReplaceImageServer($settings['background-image'], self::getCacheBuster());
+			$oasisSettings['color-body'] = self::sanitizeColor($settings['color-body']);
+			$oasisSettings['color-body-middle'] = self::sanitizeColor($settings['color-body-middle']);
+			$oasisSettings['color-page'] = self::sanitizeColor($settings['color-page']);
+			$oasisSettings['color-buttons'] = self::sanitizeColor($settings['color-buttons']);
+			$oasisSettings['color-links'] = self::sanitizeColor($settings['color-links']);
+			$oasisSettings['color-header'] = self::sanitizeColor($settings['color-header']);
+			$oasisSettings["background-image"] = $themeSettings->getBackgroundUrl();
 
 			// sending width and height of background image to SASS
-			if ( isset($settings["background-image-width"]) && isset($settings["background-image-height"]) ) {
+			if ( !empty($settings['background-image-width']) && !empty($settings['background-image-height']) ) {
 				// strip 'px' from previously cached settings since we removed 'px' (sanity check)
-				$oasisSettings["background-image-width"] = str_replace( 'px', '', $settings["background-image-width"] );
-				$oasisSettings["background-image-height"] = str_replace( 'px', '', $settings["background-image-height"] );
+				$oasisSettings['background-image-width'] = str_replace( 'px', '', $settings['background-image-width'] );
+				$oasisSettings['background-image-height'] = str_replace( 'px', '', $settings['background-image-height'] );
 			} else {
 				// if not cached in theme settings
 				$bgImage = wfFindFile(ThemeSettings::BackgroundImageName);
 				if ( !empty($bgImage) ) {
-					$oasisSettings["background-image-width"] = $bgImage->getWidth();
-					$oasisSettings["background-image-height"] = $bgImage->getHeight();
-				}
+					$settings['background-image-width'] = $oasisSettings['background-image-width'] = $bgImage->getWidth();
+					$settings['background-image-height'] = $oasisSettings['background-image-height'] = $bgImage->getHeight();
 
+					$themeSettings->saveSettings($settings);
+				}
 			}
 
-			$oasisSettings["background-align"] = $settings["background-align"];
-			$oasisSettings["background-tiled"] = $settings["background-tiled"];
-			$oasisSettings["background-fixed"] = $settings["background-fixed"];
-			$oasisSettings["page-opacity"] = $settings["page-opacity"];
-			if (!empty($settings["wordmark-font"]) && $settings["wordmark-font"] != "default") {
-				$oasisSettings["wordmark-font"] = $settings["wordmark-font"];
+			$oasisSettings['background-dynamic'] = $settings['background-dynamic'];
+			$oasisSettings['page-opacity'] = $settings['page-opacity'];
+			if (!empty($settings['wordmark-font']) && $settings['wordmark-font'] != 'default') {
+				$oasisSettings['wordmark-font'] = $settings['wordmark-font'];
 			}
 
 			// RTL
-			if($wgContLang && $wgContLang->isRTL()){
+			if(self::isRTL()){
 				$oasisSettings['rtl'] = 'true';
 			}
+
+			wfRunHooks( 'AfterOasisSettingsInitialized', [ &$oasisSettings ] );
 
 			// RT:70673
 			foreach ($oasisSettings as $key => $val) {
@@ -197,7 +194,7 @@ class SassUtil {
 	 *
 	 * @see http://blog.archive.jpsykes.com/211/rgb2hsl/index.html
 	 *
-	 * @param string RGB color in hex format (#474646)
+	 * @param string $rgbhex RGB color in hex format (#474646)
 	 * @return array HSL set
 	 */
 	private static function rgb2hsl($rgbhex){
@@ -247,6 +244,24 @@ class SassUtil {
 
 		wfProfileOut(__METHOD__);
 		return array($H, $S, $L);
+	}
+
+	/**
+	 * Detects if the SASS should be returned in RTL "mode"
+	 *
+	 * @see PLATFORM-408
+	 *
+	 * RTL should be used if user language is RTL
+	 *
+	 * @return bool should RTL be used?
+	 */
+	public static function isRTL() {
+		$app = F::app();
+
+		// this will fallback to wiki content language for anons
+		$userLang = $app->wg->Lang;
+
+		return ( !empty($userLang) && $userLang->isRTL() );
 	}
 
 }

@@ -1,7 +1,7 @@
 /*!
  * VisualEditor ContentEditable MWExternalLinkAnnotation class.
  *
- * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
@@ -12,20 +12,23 @@
  * @extends ve.ce.LinkAnnotation
  * @constructor
  * @param {ve.dm.MWExternalLinkAnnotation} model Model to observe
- * @param {Object} [config] Config options
+ * @param {ve.ce.ContentBranchNode} [parentNode] Node rendering this annotation
+ * @param {Object} [config] Configuration options
  */
-ve.ce.MWExternalLinkAnnotation = function VeCeMWExternalLinkAnnotation( model, config ) {
+ve.ce.MWExternalLinkAnnotation = function VeCeMWExternalLinkAnnotation( model, parentNode, config ) {
 	// Parent constructor
-	ve.ce.LinkAnnotation.call( this, model, config );
+	ve.ce.LinkAnnotation.call( this, model, parentNode, config );
 
 	// DOM changes
-	this.$.addClass( 've-ce-mwExternalLinkAnnotation' );
-	this.$.attr( 'title', model.getAttribute( 'href' ) );
+	this.$element.addClass( 'external' );
+	// Put the href in the title
+	// Deliberately not using getResolvedAttribute() here
+	this.$element.attr( 'title', model.getAttribute( 'href' ) );
 };
 
 /* Inheritance */
 
-ve.inheritClass( ve.ce.MWExternalLinkAnnotation, ve.ce.LinkAnnotation );
+OO.inheritClass( ve.ce.MWExternalLinkAnnotation, ve.ce.LinkAnnotation );
 
 /* Static Properties */
 

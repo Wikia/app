@@ -1,14 +1,9 @@
 <section class="styleguide-components-page-body">
-	<ul class="styleguide-subnav">
-	{{#componentsList}}
-		<li>
-			<a href="#{{id}}" title="{{name}}">{{name}}</a>
-		</li>
-	{{/componentsList}}
+	{{{toc}}}
 	</ul>
-	<ul class="components">
+	<ol class="components">
 		{{#componentsList}}
 			{{>SpecialStyleguide_componentItem}}
 		{{/componentsList}}
-	</ul>
+	</ol>
 </section>

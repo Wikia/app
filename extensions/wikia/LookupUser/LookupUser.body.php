@@ -14,7 +14,7 @@ class LookupUserPage extends SpecialPage {
 	}
 
 	function getDescription() {
-		return wfMsg( 'lookupuser' );
+		return wfMessage( 'lookupuser' )->text();
 	}
 
 	/**
@@ -87,13 +87,13 @@ class LookupUserPage extends SpecialPage {
 		$title = htmlspecialchars( $this->getTitle()->getPrefixedText() );
 		$action = htmlspecialchars( $wgScript );
 		$target = htmlspecialchars( $target );
-		$ok = wfMsg( 'go' );
-		$username_label = wfMsg( 'username' );
-		$email_label = wfMsg( 'email' ) ;
-		$inputformtop = wfMsg( 'lookupuser' );
+		$ok = wfMessage( 'go' )->escaped();
+		$username_label = wfMessage( 'username' )->escaped();
+		$email_label = wfMessage( 'email' )->escaped();
+		$inputformtop = wfMessage( 'lookupuser' )->escaped();
 
 		if ( $invalidUser ) {
-			$wgOut->addWikiText( '<span class="error">' . wfMsg( 'lookupuser-nonexistent-id', $id ) . '</span>' );
+			$wgOut->addWikiText( '<span class="error">' . wfMessage( 'lookupuser-nonexistent-id', $id )->text() . '</span>' );
 		}
 
 		$wgOut->addWikiMsg('lookupuser-intro');
@@ -164,6 +164,30 @@ EOT
 				$aUsers[] = $oRow->user_name;
 				$loop++;
 			}
+
+			// Check for disabled accounts where we kept the email
+			$dRows = $dbr->select(
+				[ '`user`', 'user_properties' ],
+				[ 'user_name' ],
+				[
+					'user_id = up_user',
+					'up_property' => 'disabled-user-email',
+					'up_value' => $target,
+				],
+				__METHOD__
+			);
+
+			foreach ( $dRows as $row ) {
+				if ( $loop === 0 ) {
+					$userTarget = $oRow->user_name;
+				}
+				if ( !empty( $emailUser ) && ( $emailUser == $row->user_name ) ) {
+					$userTarget = $emailUser;
+				}
+				$aUsers[] = $row->user_name;
+				$loop++;
+			}
+
 			$count = $loop;
 		}
 
@@ -175,21 +199,11 @@ EOT
 		} else {
 			$user = User::newFromName( $targetUserName );
 		}
-		//@TODO get rid of TempUser handling when it will be globally disabled
-		$tempUser = false;
 		if ( is_object( $extUser ) && ( $extUser->getId() != 0 ) ) {
 			$user = $extUser->mapToUser();
 		} elseif ( $user == null || $user->getId() == 0 ) {
-			// Check if a temporary user is at this name
-			if ( !empty( $wgEnableUserLoginExt ) ) {
-				$tempUser = TempUser::getTempUserFromName( $targetUserName );
-			}
-			if ( $tempUser ) {
-				$user = $tempUser->mapTempUserToUser( false );
-			} else {
-				$wgOut->addWikiText( '<span class="error">' . wfMsg( 'lookupuser-nonexistent', $target ) . '</span>' );
-				return;
-			}
+			$wgOut->addWikiText( '<span class="error">' . wfMessage( 'lookupuser-nonexistent', $target )->text() . '</span>' );
+			return;
 		}
 		if ( $count > 1 ) {
 			$options = array();
@@ -211,12 +225,12 @@ EOT
 				Xml::openElement( 'table', array( 'border' => '0' ) ) . "\n" .
 				Xml::openElement( 'tr' ) . "\n" .
 				Xml::openElement( 'td', array( 'align' => 'right' ) ) .
-				wfMsgHtml( 'lookupuser-foundmoreusers' ) .
+				wfMessage( 'lookupuser-foundmoreusers' )->escaped() .
 				Xml::closeElement( 'td' ) . "\n" .
 				Xml::openElement( 'td', array( 'align' => 'left' ) ) . "\n" .
 				$selectForm . Xml::closeElement( 'td' ) . "\n" .
 				Xml::openElement( 'td', array( 'colspan' => '2', 'align' => 'center' ) ) .
-				Xml::submitButton( wfMsgHtml( 'go' ) ) .
+				Xml::submitButton( wfMessage( 'go' )->escaped() ) .
 				Xml::closeElement( 'td' ) . "\n" .
 				Xml::closeElement( 'tr' ) . "\n" .
 				Xml::closeElement( 'table' ) . "\n" .
@@ -227,47 +241,55 @@ EOT
 
 		$authTs = $user->getEmailAuthenticationTimestamp();
 		if ( $authTs ) {
-			$authenticated = wfMsg( 'lookupuser-authenticated', $wgLang->timeanddate( $authTs ) );
+			$authenticated = wfMessage( 'lookupuser-authenticated', $wgLang->timeanddate( $authTs, true ) )->text();
 		} else {
-			$authenticated = wfMsg( 'lookupuser-not-authenticated' );
+			$authenticated = wfMessage( 'lookupuser-not-authenticated' )->text();
 		}
 		$optionsString = '';
 		foreach ( $user->getOptions() as $name => $value ) {
 			$optionsString .= "$name = $value <br />";
 		}
 		$name = $user->getName();
-		if( $user->getEmail() ) {
-			$email = $user->getEmail();
-			$email_output = wfMsg( 'lookupuser-email', $email, $name );
+		$email = $user->getEmail() ?: $user->getOption( 'disabled-user-email' );
+		if( !empty( $email ) ) {
+			$email_output = wfMessage( 'lookupuser-email', $email, urlencode( $email ) )->text();
 		} else {
-			$email_output = wfMsg( 'lookupuser-no-email' );
+			$email_output = wfMessage( 'lookupuser-no-email' )->text();
 		}
 		if( $user->getRegistration() ) {
-			$registration = $wgLang->timeanddate( $user->getRegistration() );
+			$registration = $wgLang->timeanddate( $user->getRegistration(), true );
 		} else {
-			$registration = wfMsg( 'lookupuser-no-registration' );
+			$registration = wfMessage( 'lookupuser-no-registration' )->text();
 		}
-		$wgOut->addWikiText( '*' . wfMsg( 'username' ) . ' [[User:' . $name . '|' . $name . ']] (' .
+		$wgOut->addWikiText( '*' . wfMessage( 'username' )->text() . ' [[User:' . $name . '|' . $name . ']] (' .
 			$wgLang->pipeList( array(
 				'<span id="lu-tools">[[' . ( !empty( $wgEnableWallExt ) ?
-				'Message Wall:' . $name . '|' . wfMsg( 'wall-message-wall-shorten' ) :
-				'User talk:' . $name . '|' . wfMsg( 'talkpagelinktext' ) ) . ']]',
-				'[[Special:Contributions/' . $name . '|' . wfMsg( 'contribslink' ) . ']]</span>)'
+				'Message Wall:' . $name . '|' . wfMessage( 'wall-message-wall-shorten' )->text() :
+				'User talk:' . $name . '|' . wfMessage( 'talkpagelinktext' )->text() ) . ']]',
+				'[[Special:Contributions/' . $name . '|' . wfMessage( 'contribslink' )->text() . ']]</span>)'
 			) ) );
 
-		$wgOut->addWikiText( '*' . wfMsgForContent( 'lookupuser-toollinks', $name, urlencode($name) ) );
-		$wgOut->addWikiText( '*' . wfMsg( 'lookupuser-id', $user->getId() ) );
-		if ( !empty( $tempUser ) ) {
-			$userStatus = wfMsg( 'lookupuser-account-status-tempuser' );
-		} else {
-			$userStatus = wfMsg( 'lookupuser-account-status-realuser' );
-		}
-		$wgOut->addWikiText( '*' . wfMsg( 'lookupuser-account-status' ) . $userStatus );
+		$wgOut->addWikiText( '*' . wfMessage( 'lookupuser-toollinks', $name, urlencode($name) )->inContentLanguage()->text() );
+		$wgOut->addWikiText( '*' . wfMessage( 'lookupuser-id', $user->getId() )->text() );
+		$userStatus = wfMessage( 'lookupuser-account-status-realuser' )->text();
+		$wgOut->addWikiText( '*' . wfMessage( 'lookupuser-account-status' )->text() . $userStatus );
 		$wgOut->addWikiText( '*' . $email_output );
-		$wgOut->addWikiText( '*' . wfMsg( 'lookupuser-realname', $user->getRealName() ) );
-		$wgOut->addWikiText( '*' . wfMsg( 'lookupuser-registration', $registration ) );
-		$wgOut->addWikiText( '*' . wfMsg( 'lookupuser-touched', $wgLang->timeanddate( $user->mTouched ) ) );
-		$wgOut->addWikiText( '*' . wfMsg( 'lookupuser-info-authenticated', $authenticated ) );
+		$wgOut->addWikiText( '*' . wfMessage( 'lookupuser-realname', $user->getRealName() )->text() );
+		$wgOut->addWikiText( '*' . wfMessage( 'lookupuser-registration', $registration )->text() );
+		$wgOut->addWikiText( '*' . wfMessage( 'lookupuser-touched', $wgLang->timeanddate( $user->mTouched, true ) )->text() );
+		$wgOut->addWikiText( '*' . wfMessage( 'lookupuser-info-authenticated', $authenticated )->text() );
+		if ( isset( $user->mBirthDate ) ) {
+			$birthDate = $wgLang->date( strtotime( $user->mBirthDate ) );
+		} else {
+			$birthDate = wfMessage( 'lookupuser-no-birthdate' )->text();
+		}
+		$wgOut->addWikiText( '*' . wfMessage( 'lookupuser-birthdate', $birthDate )->text() );
+
+
+		$newEmail = $user->getOption( 'new_email' );
+		if ( !empty( $newEmail ) ) {
+			$wgOut->addWikiText( '*' . wfMessage( 'lookupuser-email-change-requested', $newEmail )->plain() );
+		}
 
 		$allowedAdoption = $user->getOption( 'AllowAdoption', true );
 		$wgOut->addWikiText( '*' . wfMessage( 'lookupuser-user' . ( !$allowedAdoption ? '-not' : '' ) . '-allowed-adoption' )->plain() );
@@ -289,11 +311,11 @@ EOT
 			));
 			$wgOut->addHTML( $oTmpl->render('contribution.table') );
 		} else {
-			$wgOut->addWikiText( '*' . wfMsg('lookupuser-table-cannot-be-displayed') );
+			$wgOut->addWikiText( '*' . wfMessage('lookupuser-table-cannot-be-displayed')->text() );
 		}
 		//End: Small Stuff Week
 
-		$wgOut->addWikiText( '*' . wfMsg( 'lookupuser-useroptions' ) . '<br />' . $optionsString );
+		$wgOut->addWikiText( '*' . wfMessage( 'lookupuser-useroptions' )->text() . '<br />' . $optionsString );
 	}
 
 	/**
@@ -390,7 +412,7 @@ EOT
 					}
 
 					if( true === LookupUserPage::isUserFounder($userName, $wikiId) ) {
-						$userData['groups'][] = wfMsg('lookupuser-founder');
+						$userData['groups'][] = wfMessage('lookupuser-founder')->text();
 					}
 
 					if( !isset($userData['blockedby']) ) {
@@ -429,15 +451,15 @@ EOT
 
 		foreach($groups as $group) {
 			if( $group == 'sysop') {
-				$userGroups[] = wfMsg('lookupuser-admin');
+				$userGroups[] = wfMessage('lookupuser-admin')->text();
 			}
 
 			if( $group == 'bureaucrat') {
-				$userGroups[] = wfMsg('lookupuser-bureaucrat');
+				$userGroups[] = wfMessage('lookupuser-bureaucrat')->text();
 			}
 
 			if( $group == 'chatmoderator') {
-				$userGroups[] = wfMsg('lookupuser-chatmoderator');
+				$userGroups[] = wfMessage('lookupuser-chatmoderator')->text();
 			}
 		}
 

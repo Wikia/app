@@ -8,11 +8,9 @@ class SpecialThemeDesigner extends UnlistedSpecialPage {
 
 	public function execute() {
 		wfProfileIn( __METHOD__ );
-		global $wgUser;
 
 		// check rights
-		// @FIXME when we're out of beta editinterface needs to be removed and themedesgner set to true for sysops
-		if ( !$wgUser->isAllowed( 'themedesigner' ) ) {
+		if ( !ThemeDesignerHelper::checkAccess() ) {
 			$this->displayRestrictionError();
 			wfProfileOut( __METHOD__ );
 			return;

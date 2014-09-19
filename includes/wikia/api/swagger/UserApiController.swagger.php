@@ -64,7 +64,7 @@ use Swagger\Annotations as SWG;
  *
  *
  *	@SWG\Api(
- *		path="/api/v1/User/Details",
+ *		path="/User/Details",
  *		description="Get details about one or more user",
  *		@SWG\Operations(
  *			@SWG\Operation(
@@ -79,7 +79,7 @@ use Swagger\Annotations as SWG;
  *				@SWG\Parameters(
  *					@SWG\Parameter(
  *						name="ids",
- *						description="The integer user ID values, comma-separated, max number of IDs is 100",
+ *						description="Comma-separated list of user ids. Maximum size of id list is 100.",
  *						paramType="query",
  *						required="true",
  *						allowMultiple="true",

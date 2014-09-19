@@ -16,14 +16,7 @@ class PhalanxUserModel extends PhalanxModel {
 	
 		$this->user->mBlockedby = $this->block->authorId;
 		$this->user->mBlockedGlobally = true;
-
-		if ( $type == 'exact' ) {
-			$this->user->mBlockreason = wfMsg( 'phalanx-user-block-reason-exact' );
-		} elseif ( $type = 'ip' ) {
-			$this->user->mBlockreason = wfMsg( 'phalanx-user-block-reason-ip' );
-		} else {
-			$this->user->mBlockreason = wfMsg( 'phalanx-user-block-reason-similar' );
-		}
+		$this->user->mBlockreason = UserBlock::getBlockReasonMessage( $this->block->reason, $type == 'exact', $type == 'ip' );
 
 		// set expiry information
 		$this->user->mBlock = new Block();

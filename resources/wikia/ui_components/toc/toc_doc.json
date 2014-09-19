@@ -1,0 +1,30 @@
+{
+	"name": "styleguide-name-toc",
+	"description": "styleguide-description-toc",
+	"types": {
+		"default": {
+			"params" : {
+				"sections": {
+					"templateVar" : "sections",
+					"type" : "object",
+					"objectVar" : {
+						"id": "string",
+						"title": "string",
+						"active": "boolean"
+					},
+					"description" : "styleguide-description-toc-sections"
+				},
+				"id": {
+					"templateVar" : "id",
+					"type" : "string",
+					"description" : "styleguide-description-toc-id"
+				},
+				"class": {
+					"templateVar" : "class",
+					"type" : "string",
+					"description" : "styleguide-description-toc-class"
+				}
+			}
+		}
+	}
+}

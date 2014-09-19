@@ -1,32 +1,18 @@
 <div class="WikiaTopAds" id="WikiaTopAds">
-<div class="WikiaTopAdsInner">
 
-<?php
+	<div class="WikiaTopAdsInner">
 
-if (WikiaPageType::isWikiaHub()) {
-	echo $app->renderView('Ad', 'Index', array('slotname' => 'HUB_TOP_LEADERBOARD'));
-} elseif ($wg->EnableWikiaHomePageExt) {
-	if (WikiaPageType::isSearch()) {
-		echo $app->renderView('Ad', 'Index', array('slotname' => 'TOP_LEADERBOARD'));
-	} else {
-		echo $app->renderView('Ad', 'Index', array('slotname' => 'CORP_TOP_LEADERBOARD'));
-	}
-} elseif (WikiaPageType::isMainPage()) {
-	echo $app->renderView('Ad', 'Index', array('slotname' => 'HOME_TOP_LEADERBOARD'));
-} else {
-	echo $app->renderView('Ad', 'Index', array('slotname' => 'TOP_LEADERBOARD'));
-}
 
-if ($wg->EnableTopButtonWide) {
-	echo $app->renderView('Ad', 'Index', array('slotname' => 'TOP_BUTTON_WIDE'));
-} else if ($wg->EnableTopButton) {
-	echo $app->renderView('Ad', 'Index', array('slotname' => 'TOP_BUTTON'));
-}
+		<?= $app->renderView('Ad', 'Index', [
+			'slotName' => $leaderboardName,
+			'pageFairId' => isset($wg->AnalyticsProviderPageFairSlotIds['LEADERBOARD']) ? $wg->AnalyticsProviderPageFairSlotIds['LEADERBOARD'] : null,
+			'pageTypes' => ['homepage_logged', 'corporate', 'search', 'all_ads']
+		]); ?>
 
-?>
+		<?= $app->renderView('Ad', 'Index', ['slotName' => 'TOP_BUTTON_WIDE', 'pageTypes' => ['homepage_logged', 'search', 'all_ads']]); ?>
 
-</div>
+	</div>
 
-<?= $app->renderView('Ad', 'Index', array('slotname' => 'INVISIBLE_SKIN')); ?>
+	<?= $app->renderView('Ad', 'Index', ['slotName' => 'INVISIBLE_SKIN', 'pageTypes' => ['homepage_logged', 'corporate', 'search', 'all_ads']]); ?>
 
 </div>

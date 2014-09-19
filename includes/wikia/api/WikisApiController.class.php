@@ -22,11 +22,14 @@ class WikisApiController extends WikiaApiController {
 	const DEFAULT_WIDTH = 250;
 	const DEFAULT_HEIGHT = null;
 	const DEFAULT_SNIPPET_LENGTH = null;
-	const CACHE_VERSION = 1;
+	const CACHE_VERSION = 3;
+	const WORDMARK = 'Wiki-wordmark.png';
+	const MAX_WIKIS = 250;
 	private static $flagsBlacklist = array( 'blocked', 'promoted' );
 
 	private $keys;
 	private $service;
+	private $wikiDetails;
 
 	/**
 	 * Get the top wikis by pageviews optionally filtering by vertical (hub) and/or language
@@ -58,22 +61,16 @@ class WikisApiController extends WikiaApiController {
 		}
 
 		$results = $this->getWikiService()->getTop( $langs, $hub );
+		$results = $this->filterNonCommercial( $results );
 		$batches = wfPaginateArray( $results, $limit, $batch );
 
 		if ( $expand ) {
 			$batches = $this->expandBatches( $batches );
 		}
-
-		foreach ( $batches as $name => $value ) {
-			$this->response->setVal( $name, $value );
-		}
-		$this->response->setCacheValidity(
-			static::CACHE_1_WEEK,
-			static::CACHE_1_WEEK,
-			array(
-				WikiaResponse::CACHE_TARGET_BROWSER,
-				WikiaResponse::CACHE_TARGET_VARNISH
-			)
+		$this->setResponseData(
+			$batches,
+			[ 'urlFields' => [ 'wordmark', 'image' ] ],
+			static::CACHE_1_WEEK
 		);
 	}
 
@@ -119,6 +116,7 @@ class WikisApiController extends WikiaApiController {
 		}
 
 		$results = $this->getWikiService()->getByString( $keyword, $langs, $hub, $includeDomain );
+		$results = $this->filterNonCommercial( $results );
 
 		if( is_array( $results ) ) {
 			$batches = wfPaginateArray( $results, $limit, $batch );
@@ -127,9 +125,6 @@ class WikisApiController extends WikiaApiController {
 				$batches = $this->expandBatches( $batches );
 			}
 
-			foreach ( $batches as $name => $value ) {
-				$this->response->setVal( $name, $value );
-			}
 		} else {
 			throw new NotFoundApiException();
 		}
@@ -137,13 +132,10 @@ class WikisApiController extends WikiaApiController {
 		//store only for 24h to allow new wikis
 		//to appear in a reasonable amount of time in the search
 		//results
-		$this->response->setCacheValidity(
-			static::CACHE_1_DAY,
-			static::CACHE_1_DAY,
-			array(
-				WikiaResponse::CACHE_TARGET_BROWSER,
-				WikiaResponse::CACHE_TARGET_VARNISH
-			)
+		$this->setResponseData(
+			$batches,
+			[ 'urlFields' => [ 'image', 'wordmark', 'url' ] ],
+			static::CACHE_1_DAY
 		);
 
 		wfProfileOut( __METHOD__ );
@@ -167,6 +159,7 @@ class WikisApiController extends WikiaApiController {
 
 	public function getDetails() {
 		wfProfileIn( __METHOD__ );
+		$this->setOutputFieldType( "items", self::OUTPUT_FIELD_TYPE_OBJECT );
 		$ids = $this->request->getVal( self::PARAMETER_WIKI_IDS, null );
 		if ( !empty( $ids ) ) {
 			$ids = explode( ',', $ids );
@@ -177,22 +170,19 @@ class WikisApiController extends WikiaApiController {
 		$params = $this->getDetailsParams();
 		$items = array();
 		foreach ( $ids as $wikiId ) {
-			$details = $this->getWikiDetails( $wikiId, $params[ 'imageWidth' ], $params[ 'imageHeight' ], $params[ 'length' ] );
+			$details = $this->getWikiDetailsService()
+				->getWikiDetails( $wikiId, $params[ 'imageWidth' ], $params[ 'imageHeight' ], $params[ 'length' ] );
 			if ( !empty( $details ) ) {
 				$items[ (int) $wikiId ] = $details;
 			}
 		}
-		$this->response->setVal( 'items', $items );
 
-		//set varnish caching
-		$this->response->setCacheValidity(
-			static::CACHE_1_DAY,
-			static::CACHE_1_DAY,
-			array(
-				WikiaResponse::CACHE_TARGET_BROWSER,
-				WikiaResponse::CACHE_TARGET_VARNISH
-			)
+		$this->setResponseData(
+			[ 'items' => $items ],
+			[ 'urlFields' => [ 'wordmark', 'image' ] ],
+			static::CACHE_1_DAY
 		);
+
 		wfProfileOut( __METHOD__ );
 	}
 
@@ -254,12 +244,29 @@ class WikisApiController extends WikiaApiController {
 		wfProfileOut( __METHOD__ );
 	}
 
+	protected function getNonCommercialWikis() {
+		$licensed = new LicensedWikisService();
+		return $licensed->getCommercialUseNotAllowedWikis();
+	}
+
+	protected function filterNonCommercial( $wikis ) {
+		$result =[];
+		$blackList = $this->getNonCommercialWikis();
+		foreach( $wikis as $wiki ) {
+			if ( !isset( $blackList[ $wiki['id'] ] ) ) {
+				$result[] = $wiki;
+			}
+		}
+		return array_slice($result, 0, self::MAX_WIKIS);
+	}
+
 	protected function expandBatches( $batches ) {
 		if ( isset( $batches[ 'items' ] ) ) {
 			$expanded = [];
 			$params = $this->getDetailsParams();
 			foreach( $batches[ 'items' ] as $item ) {
-				$details = $this->getWikiDetails( $item[ 'id' ], $params[ 'imageWidth' ], $params[ 'imageHeight' ], $params[ 'length' ] );
+				$details = $this->getWikiDetailsService()
+					->getWikiDetails( $item[ 'id' ], $params[ 'imageWidth' ], $params[ 'imageHeight' ], $params[ 'length' ] );
 				$expanded[] = array_merge( $item, $details );
 			}
 			$batches[ 'items' ] = $expanded;
@@ -275,118 +282,11 @@ class WikisApiController extends WikiaApiController {
 		];
 	}
 
-	protected function getWikiDetails( $wikiId, $width = null, $height = null, $snippet = null ) {
-		if ( ( $cached = $this->getFromCacheWiki( $wikiId ) ) !== false ) {
-			$wikiInfo = $cached;
-		} else {
-			//get data providers
-			$factoryData = $this->getFromWikiFactory( $wikiId, $exists );
-			if ( $exists ) {
-				$wikiInfo = array_merge(
-					[ 'id' => (int) $wikiId ],
-					$factoryData,
-					$this->getFromService( $wikiId )
-				);
-			} else {
-				$wikiInfo = [
-					'id' => (int) $wikiId,
-					'exists' => false
-				];
-			}
-			$this->cacheWikiData( $wikiInfo );
+	protected function getWikiDetailsService() {
+		if ( !isset( $this->wikiDetails ) ) {
+			$this->wikiDetails = new WikiDetailsService();
 		}
-		//return empty result if wiki does not exist
-		if ( isset( $wikiInfo[ 'exists' ] ) ) {
-			return [];
-		}
-		//post process thumbnails
-		if ( isset( $wikiInfo[ 'image' ] ) ) {
-			$wikiInfo = array_merge(
-				$wikiInfo,
-				$this->getImageData( $wikiInfo[ 'image' ], $width, $height )
-			);
-		} else {
-			$wikiInfo[ 'image' ] = '';
-		}
-		//set snippet
-		if ( isset( $wikiInfo[ 'desc' ] ) ) {
-			$length = ( $snippet !== null ) ? $snippet : static::DEFAULT_SNIPPET_LENGTH;
-			$wikiInfo[ 'desc' ] = $this->getSnippet( $wikiInfo[ 'desc' ], $length );
-		} else {
-			$wikiInfo[ 'desc' ] = '';
-		}
-		return $wikiInfo;
-	}
-
-	protected function getImageData( $imageName, $width = null, $height = null  ) {
-		$img = wfFindFile( $imageName );
-		if ( $img instanceof WikiaLocalFile ) {
-			if ( $width == null && $height == null ) {
-				//get original image if no cropping
-				$imgUrl = $img->getFullUrl();
-			} else {
-				$width = ( $width !== null ) ? $width : static::DEFAULT_WIDTH;
-				$height = ( $height !== null ) ? $height : static::DEFAULT_HEIGHT;
-				$imageServing = new ImageServing( null, $width, $height );
-				$imgUrl = $imageServing->getUrl( $img, $width, $height );
-			}
-			return [
-				'image' => $imgUrl,
-				'original_dimensions' => [
-					'width' => $img->getWidth(),
-					'height' => $img->getHeight()
-				]
-			];
-		}
-		return [];
-	}
-
-	protected function getFromWikiFactory( $id, &$exists = null ) {
-		$exists = false;
-		$wikiObj = WikiFactory::getWikiByID( $id );
-		if ( $wikiObj ) {
-			$exists = true;
-			return [
-				'title' => $wikiObj->city_title,
-				'url' => $wikiObj->city_url,
-			];
-		}
-		return [];
-	}
-
-	protected function getFromService( $id ) {
-		$service = $this->getWikiService();
-		$wikiStats = $service->getSiteStats( $id );
-		$topUsers = $service->getTopEditors( $id, static::DEFAULT_TOP_EDITORS_NUMBER, true );
-		$modelData = $service->getDetails( [ $id ] );
-
-		//filter out flags
-		$flags = [];
-		if ( isset( $modelData[ $id ] ) ) {
-			foreach ( $modelData[ $id ][ 'flags' ] as $name => $val ) {
-				if ( $val == true && !in_array( $name, static::$flagsBlacklist ) ) {
-					$flags[] = $name;
-				}
-			}
-		}
-
-		return [
-			'stats' => [
-				'edits' => (int) $wikiStats[ 'edits' ],
-				'articles' => (int) $wikiStats[ 'articles' ],
-				'pages' => (int) $wikiStats[ 'pages' ],
-				'users' => (int) $wikiStats[ 'users' ],
-				'activeUsers' => (int) $wikiStats[ 'activeUsers' ],
-				'images' => (int) $wikiStats[ 'images' ],
-				'videos' => (int) $service->getTotalVideos( $id ),
-				'admins' => count( $service->getWikiAdminIds( $id ) )
-			],
-			'topUsers' => array_keys( $topUsers ),
-			'headline' => isset( $modelData[ $id ] ) ? $modelData[ $id ][ 'headline' ] : '',
-			'flags' => $flags,
-			'desc' => isset( $modelData[ $id ] ) ? $modelData[ $id ][ 'desc' ] : '',
-			'image' => isset( $modelData[ $id ] ) ? $modelData[ $id ][ 'image' ] : '',
-		];
+		return $this->wikiDetails;
 	}
 
 	protected function getWikiService() {

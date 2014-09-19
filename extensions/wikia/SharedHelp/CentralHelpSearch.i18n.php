@@ -51,7 +51,7 @@ $messages['ca'] = array(
 	'centralhelpsearch-placeholder' => 'Buscar en Ajuda...',
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Chmee2
  * @author Darth Daron
  */
@@ -67,6 +67,13 @@ $messages['cs'] = array(
 $messages['de'] = array(
 	'centralhelpsearch-desc' => 'Ermöglicht das Hinzufügen eines Suchfeldes für die Community-Hilfe',
 	'centralhelpsearch-placeholder' => 'Durchsuche die Hilfe...',
+);
+
+/** Greek (Ελληνικά)
+ * @author Glavkos
+ */
+$messages['el'] = array(
+	'centralhelpsearch-placeholder' => 'Αναζήτηση στη Βοήθεια...',
 );
 
 /** Spanish (español)
@@ -142,11 +149,32 @@ $messages['it'] = array(
 	'centralhelpsearch-placeholder' => 'Cerca aiuto&hellip;',
 );
 
+/** Kannada (ಕನ್ನಡ)
+ * @author VASANTH S.N.
+ */
+$messages['kn'] = array(
+	'centralhelpsearch-placeholder' => 'ಸಹಾಯವನ್ನು ಹುಡುಕಿ...',
+);
+
+/** Korean (한국어)
+ * @author 관인생략
+ */
+$messages['ko'] = array(
+	'centralhelpsearch-placeholder' => '검색 도움말...',
+);
+
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */
 $messages['lb'] = array(
 	'centralhelpsearch-placeholder' => 'An der Hëllef sichen...',
+);
+
+/** لوری (لوری)
+ * @author Mogoeilor
+ */
+$messages['lrc'] = array(
+	'centralhelpsearch-placeholder' => 'پی جوری هومیاری',
 );
 
 /** Lithuanian (lietuvių)
@@ -254,6 +282,13 @@ $messages['sv'] = array(
 	'centralhelpsearch-placeholder' => 'Sök hjälp&hellip;',
 );
 
+/** Telugu (తెలుగు)
+ * @author Chaduvari
+ */
+$messages['te'] = array(
+	'centralhelpsearch-placeholder' => 'వెతుకులాట సహాయం...',
+);
+
 /** Tagalog (Tagalog)
  * @author AnakngAraw
  */
@@ -276,6 +311,14 @@ $messages['tt-cyrl'] = array(
 $messages['uk'] = array(
 	'centralhelpsearch-desc' => 'Дозволити включення форми для пошуку довідки',
 	'centralhelpsearch-placeholder' => 'Пошук довідки...',
+);
+
+/** Vietnamese (Tiếng Việt)
+ * @author Baonguyen21022003
+ */
+$messages['vi'] = array(
+	'centralhelpsearch-desc' => 'Cho phép bao gồm một hình thức tìm kiếm cộng đồng Trung tâm trợ giúp',
+	'centralhelpsearch-placeholder' => 'Tìm kiếm trợ giúp...',
 );
 
 /** Simplified Chinese (中文（简体）‎)

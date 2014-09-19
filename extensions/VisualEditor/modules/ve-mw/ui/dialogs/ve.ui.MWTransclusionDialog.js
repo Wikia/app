@@ -1,612 +1,347 @@
-/*!
+/*
  * VisualEditor user interface MWTransclusionDialog class.
  *
- * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
 /**
  * Dialog for inserting and editing MediaWiki transclusions.
  *
- * See https://raw.github.com/wikimedia/mediawiki-extensions-TemplateData/master/spec.templatedata.json
- * for the latest version of the TemplateData specification.
- *
  * @class
- * @extends ve.ui.MWDialog
- * @mixins ve.ui.PagedDialog
+ * @extends ve.ui.MWTemplateDialog
  *
  * @constructor
- * @param {ve.ui.Surface} surface
- * @param {Object} [config] Config options
+ * @param {Object} [config] Configuration options
  */
-ve.ui.MWTransclusionDialog = function VeUiMWTransclusionDialog( surface, config ) {
-	// Configuration initialization
-	config = ve.extendObject( {}, config, {
-		'editable': true,
-		'adders': [
-			{
-				'name': 'template',
-				'icon': 'template',
-				'title': ve.msg( 'visualeditor-dialog-transclusion-add-template' )
-			},
-			{
-				'name': 'content',
-				'icon': 'source',
-				'title': ve.msg( 'visualeditor-dialog-transclusion-add-content' )
-			}
-		]
-	} );
-
+ve.ui.MWTransclusionDialog = function VeUiMWTransclusionDialog( config ) {
 	// Parent constructor
-	ve.ui.MWDialog.call( this, surface, config );
-
-	// Mixin constructors
-	ve.ui.PagedDialog.call( this, surface, config );
+	ve.ui.MWTransclusionDialog.super.call( this, config );
 
 	// Properties
-	this.node = null;
-	this.transclusion = null;
-	this.pending = [];
+	this.mode = null;
 };
 
 /* Inheritance */
 
-ve.inheritClass( ve.ui.MWTransclusionDialog, ve.ui.MWDialog );
-
-ve.mixinClass( ve.ui.MWTransclusionDialog, ve.ui.PagedDialog );
+OO.inheritClass( ve.ui.MWTransclusionDialog, ve.ui.MWTemplateDialog );
 
 /* Static Properties */
 
 ve.ui.MWTransclusionDialog.static.name = 'transclusion';
 
-ve.ui.MWTransclusionDialog.static.titleMessage = 'visualeditor-dialog-transclusion-title';
+ve.ui.MWTransclusionDialog.static.title =
+	OO.ui.deferMsg( 'wikia-visualeditor-dialog-transclusion-title' );
 
-ve.ui.MWTransclusionDialog.static.icon = 'template';
+/**
+ * Map of symbolic mode names and CSS classes.
+ *
+ * @static
+ * @property {Object}
+ * @inheritable
+ */
+ve.ui.MWTransclusionDialog.static.modeCssClasses = {
+	'single': 've-ui-mwTransclusionDialog-single',
+	'multiple': 've-ui-mwTransclusionDialog-multiple'
+};
+
+ve.ui.MWTransclusionDialog.static.bookletLayoutConfig = ve.extendObject(
+	{},
+	ve.ui.MWTemplateDialog.static.bookletLayoutConfig,
+	{ 'outlined': true, 'editable': true }
+);
 
 /* Methods */
 
-/** */
-ve.ui.MWTransclusionDialog.prototype.initialize = function () {
+/**
+ * @inheritdoc
+ */
+ve.ui.MWTransclusionDialog.prototype.onTransclusionReady = function () {
 	// Parent method
-	ve.ui.MWDialog.prototype.initialize.call( this );
+	ve.ui.MWTransclusionDialog.super.prototype.onTransclusionReady.call( this );
 
-	// Setup for PagedDialog
-	this.initializePages();
-
-	// Properties
-	this.applyButton = new ve.ui.ButtonWidget( {
-		'$$': this.$$, 'label': ve.msg( 'visualeditor-dialog-action-apply' ), 'flags': ['primary']
-	} );
-
-	// Events
-	this.outlineControlsWidget.connect( this, {
-		'move': 'onOutlineControlsMove',
-		'add': 'onOutlineControlsAdd'
-	} );
-	this.applyButton.connect( this, { 'click': [ 'close', 'apply' ] } );
-
-	// Initialization
-	this.$foot.append( this.applyButton.$ );
-};
-
-/** */
-ve.ui.MWTransclusionDialog.prototype.onOpen = function () {
-	// Parent method
-	ve.ui.MWDialog.prototype.onOpen.call( this );
-
-	// Sanity check
-	this.node = this.surface.getView().getFocusedNode();
-
-	// Properties
-	this.transclusion = new ve.dm.MWTransclusionModel();
-
-	// Events
-	this.transclusion.connect( this, { 'add': 'onAddPart', 'remove': 'onRemovePart' } );
-
-	// Initialization
-	if ( this.node instanceof ve.ce.MWTransclusionNode ) {
-		this.transclusion.load( ve.copy( this.node.getModel().getAttribute( 'mw' ) ) );
-	} else {
-		this.transclusion.addPart(
-			new ve.dm.MWTemplatePlaceholderModel( this.transclusion, 'user' )
-		);
-	}
-};
-
-/** */
-ve.ui.MWTransclusionDialog.prototype.onClose = function ( action ) {
-	var surfaceModel = this.surface.getModel(),
-		obj = this.transclusion.getPlainObject();
-
-	// Parent method
-	ve.ui.MWDialog.prototype.onClose.call( this );
-
-	// Save changes
-	if ( action === 'apply' ) {
-		if ( this.node instanceof ve.ce.MWTransclusionNode ) {
-			if ( obj !== null ) {
-				surfaceModel.getFragment().changeAttributes( { 'mw': obj } );
-			} else {
-				surfaceModel.getFragment().removeContent();
-			}
-		} else if ( obj !== null ) {
-			surfaceModel.getFragment().collapseRangeToEnd().insertContent( [
-				{
-					'type': 'mwTransclusionInline',
-					'attributes': {
-						'mw': obj
-					}
-				},
-				{ 'type': '/mwTransclusionInline' }
-			] );
-		}
-	}
-
-	this.transclusion.disconnect( this );
-	this.transclusion.abortRequests();
-	this.transclusion = null;
-	this.clearPages();
-	this.node = null;
-	this.content = null;
-};
-
-/**
- * Handle add part events.
- *
- * @method
- * @param {ve.dm.MWTransclusionPartModel} part Added part
- */
-ve.ui.MWTransclusionDialog.prototype.onAddPart = function ( part ) {
-	var i, len, page, params, names, pending, item, spec;
-
-	if ( part instanceof ve.dm.MWTemplateModel ) {
-		page = this.getTemplatePage( part );
-	} else if ( part instanceof ve.dm.MWTransclusionContentModel ) {
-		page = this.getContentPage( part );
-	} else if ( part instanceof ve.dm.MWTemplatePlaceholderModel ) {
-		page = this.getPlaceholderPage( part );
-	}
-	if ( page ) {
-		page.index = this.getPageIndex( part );
-		this.addPage( part.getId(), page );
-		// Add existing params to templates
-		if ( part instanceof ve.dm.MWTemplateModel ) {
-			names = part.getParameterNames();
-			params = part.getParameters();
-			for ( i = 0, len = names.length; i < len; i++ ) {
-				this.onAddParameter( params[names[i]] );
-			}
-			part.connect( this, { 'add': 'onAddParameter', 'remove': 'onRemoveParameter' } );
-		}
-	}
-
-	// Add required params to user created templates
-	if ( part instanceof ve.dm.MWTemplateModel && part.getOrigin() === 'user' ) {
-		spec = part.getSpec();
-		names = spec.getParameterNames();
-		for ( i = 0, len = names.length; i < len; i++ ) {
-			// Only add required params
-			if ( spec.isParameterRequired( names[i] ) ) {
-				part.addParameter( new ve.dm.MWTemplateParameterModel( part, names[i] ) );
-			}
-		}
-	}
-
-	// Resolve pending placeholder
-	for ( i = 0, len = this.pending.length; i < len; i++ ) {
-		pending = this.pending[i];
-		if ( pending.part === part ) {
-			// Auto-select new part if placeholder is still selected
-			item = this.outlineWidget.getSelectedItem();
-			if ( item.getData() === pending.placeholder.getId() ) {
-				this.setPageByName( part.getId() );
-			}
-			// Cleanup
-			pending.placeholder.remove();
-			this.pending.splice( i, 1 );
-			break;
-		}
-	}
-};
-
-/**
- * Handle remove part events.
- *
- * @method
- * @param {ve.dm.MWTransclusionPartModel} part Removed part
- */
-ve.ui.MWTransclusionDialog.prototype.onRemovePart = function ( part ) {
-	var name, params;
-
-	if ( part instanceof ve.dm.MWTemplateModel ) {
-		params = part.getParameters();
-		for ( name in params ) {
-			this.removePage( params[name].getId() );
-		}
-		part.disconnect( this );
-	}
-	this.removePage( part.getId() );
-};
-
-/**
- * Handle add param events.
- *
- * @method
- * @param {ve.dm.MWTemplateParameterModel} param Added param
- */
-ve.ui.MWTransclusionDialog.prototype.onAddParameter = function ( param ) {
-	var page = this.getParameterPage( param );
-	page.index = this.getPageIndex( param );
-	this.addPage( param.getId(), page );
-};
-
-/**
- * Handle remove param events.
- *
- * @method
- * @param {ve.dm.MWTemplateParameterModel} param Removed param
- */
-ve.ui.MWTransclusionDialog.prototype.onRemoveParameter = function ( param ) {
-	this.removePage( param.getId() );
-	// Return to template page
-	this.setPageByName( param.getTemplate().getId() );
+	this.setMode( 'auto' );
 };
 
 /**
  * Handle outline controls move events.
  *
- * @method
  * @param {number} places Number of places to move the selected item
  */
 ve.ui.MWTransclusionDialog.prototype.onOutlineControlsMove = function ( places ) {
-	var part, index, name,
-		parts = this.transclusion.getParts(),
-		item = this.outlineWidget.getSelectedItem();
+	var part, promise,
+		parts = this.transclusionModel.getParts(),
+		item = this.bookletLayout.getOutline().getSelectedItem();
 
 	if ( item ) {
-		name = item.getData();
-		part = this.transclusion.getPartFromId( name );
-		index = ve.indexOf( part, parts );
-		// Auto-removes part from old location
-		this.transclusion.addPart( part, index + places )
-			.done( ve.bind( this.setPageByName, this, part.getId() ) );
-	}
-};
-
-/**
- * Handle outline controls add events.
- *
- * @method
- * @param {string} type Type of item to add
- */
-ve.ui.MWTransclusionDialog.prototype.onOutlineControlsAdd = function ( type ) {
-	var part;
-
-	if ( type === 'content' ) {
-		part = new ve.dm.MWTransclusionContentModel( this.transclusion, '', 'user' );
-	} else if ( type === 'template' ) {
-		part = new ve.dm.MWTemplatePlaceholderModel( this.transclusion, 'user' );
-	}
-	if ( part ) {
-		this.transclusion.addPart( part, this.getPartInsertionIndex() )
-			.done( ve.bind( this.setPageByName, this, part.getId() ) );
-	}
-};
-
-/**
- * Get an index for part insertion.
- *
- * @method
- * @returns {number} Index to insert new parts at
- */
-ve.ui.MWTransclusionDialog.prototype.getPartInsertionIndex = function () {
-	var parts = this.transclusion.getParts(),
-		item = this.outlineWidget.getSelectedItem();
-
-	if ( item ) {
-		return ve.indexOf( this.transclusion.getPartFromId( item.getData() ), parts ) + 1;
-	}
-	return parts.length;
-};
-
-/**
- * Set the page by name.
- *
- * Page names are always the ID of the part or param they represent.
- *
- * @method
- * @param {string} name Page name
- */
-ve.ui.MWTransclusionDialog.prototype.setPageByName = function ( name ) {
-	this.outlineWidget.selectItem( this.outlineWidget.getItemFromData( name ) );
-};
-
-/**
- * Get the page index of an item.
- *
- * @method
- * @param {ve.dm.MWTransclusionPartModel|ve.dm.MWTemplateParameterModel} item Part or parameter
- * @returns {number} Page index of item
- */
-ve.ui.MWTransclusionDialog.prototype.getPageIndex = function ( item ) {
-	// Build pages from parts
-	var i, iLen, j, jLen, part, names,
-		parts = this.transclusion.getParts(),
-		index = 0;
-
-	// Populate pages
-	for ( i = 0, iLen = parts.length; i < iLen; i++ ) {
-		part = parts[i];
-		if ( part === item ) {
-			return index;
+		part = this.transclusionModel.getPartFromId( item.getData() );
+		// Move part to new location, and if dialog is loaded switch to new part page
+		promise = this.transclusionModel.addPart( part, ve.indexOf( part, parts ) + places );
+		if ( this.loaded && !this.preventReselection ) {
+			promise.done( ve.bind( this.setPageByName, this, part.getId() ) );
 		}
-		index++;
-		if ( part instanceof ve.dm.MWTemplateModel ) {
-			names = part.getParameterNames();
-			for ( j = 0, jLen = names.length; j < jLen; j++ ) {
-				if ( part.getParameter( names[j] ) === item ) {
-					return index;
-				}
-				index++;
+	}
+};
+
+/**
+ * Handle outline controls remove events.
+ */
+ve.ui.MWTransclusionDialog.prototype.onOutlineControlsRemove = function () {
+	var id, part, param,
+		item = this.bookletLayout.getOutline().getSelectedItem();
+
+	if ( item ) {
+		id = item.getData();
+		part = this.transclusionModel.getPartFromId( id );
+		// Check if the part is the actual template, or one of its parameters
+		if ( part instanceof ve.dm.MWTemplateModel && id !== part.getId() ) {
+			param = part.getParameterFromId( id );
+			if ( param instanceof ve.dm.MWParameterModel ) {
+				part.removeParameter( param );
 			}
+		} else if ( part instanceof ve.dm.MWTransclusionPartModel ) {
+			this.transclusionModel.removePart( part );
 		}
 	}
-	return -1;
 };
 
 /**
- * Get page for transclusion content.
- *
- * @method
- * @param {ve.dm.MWTransclusionContentModel} content Content model
+ * Handle add template button click events.
  */
-ve.ui.MWTransclusionDialog.prototype.getContentPage = function ( content ) {
-	var valueFieldset, textInput, optionsFieldset, removeButton;
+ve.ui.MWTransclusionDialog.prototype.onAddTemplateButtonClick = function () {
+	this.addPart( new ve.dm.MWTemplatePlaceholderModel( this.transclusionModel ) );
+};
 
-	valueFieldset = new ve.ui.FieldsetLayout( {
-		'$$': this.frame.$$,
-		'label': ve.msg( 'visualeditor-dialog-transclusion-content' ),
-		'icon': 'source'
+/**
+ * Handle add content button click events.
+ */
+ve.ui.MWTransclusionDialog.prototype.onAddContentButtonClick = function () {
+	this.addPart( new ve.dm.MWTransclusionContentModel( this.transclusionModel, '' ) );
+};
+
+/**
+ * Handle add parameter button click events.
+ */
+ve.ui.MWTransclusionDialog.prototype.onAddParameterButtonClick = function () {
+	var part, param,
+		item = this.bookletLayout.getOutline().getSelectedItem();
+
+	if ( item ) {
+		part = this.transclusionModel.getPartFromId( item.getData() );
+		if ( part instanceof ve.dm.MWTemplateModel ) {
+			param = new ve.dm.MWParameterModel( part, '', null );
+			part.addParameter( param );
+		}
+	}
+};
+
+/**
+ * Handle mode button click events.
+ */
+ve.ui.MWTransclusionDialog.prototype.onModeButtonClick = function () {
+	this.setMode( this.mode === 'single' ? 'multiple' : 'single' );
+};
+
+/**
+ * Handle booklet layout page set events.
+ *
+ * @param {OO.ui.PageLayout} page Active page
+ */
+ve.ui.MWTransclusionDialog.prototype.onBookletLayoutSet = function ( page ) {
+	this.addParameterButton.setDisabled(
+		!( page instanceof ve.ui.MWTemplatePage || page instanceof ve.ui.MWParameterPage )
+	);
+};
+
+/**
+ * @inheritdoc
+ */
+ve.ui.MWTransclusionDialog.prototype.onReplacePart = function ( removed, added ) {
+	ve.ui.MWTransclusionDialog.super.prototype.onReplacePart.call( this, removed, added );
+	this.modeButton.setDisabled( !this.isSingleTemplateTransclusion() );
+};
+
+/**
+ * Checks if transclusion only contains a single template or template placeholder.
+ *
+ * @returns {boolean} Transclusion only contains a single template or template placeholder
+ */
+ve.ui.MWTransclusionDialog.prototype.isSingleTemplateTransclusion = function () {
+	var parts = this.transclusionModel && this.transclusionModel.getParts();
+
+	return parts && parts.length === 1 && (
+		parts[0] instanceof ve.dm.MWTemplateModel ||
+		parts[0] instanceof ve.dm.MWTemplatePlaceholderModel
+	);
+};
+
+/**
+ * @inheritdoc
+ */
+ve.ui.MWTransclusionDialog.prototype.getPageFromPart = function ( part ) {
+	var page = ve.ui.MWTransclusionDialog.super.prototype.getPageFromPart.call( this, part );
+	if ( !page && part instanceof ve.dm.MWTransclusionContentModel ) {
+		return new ve.ui.MWTransclusionContentPage( part, part.getId(), { '$': this.$ } );
+	}
+	return page;
+};
+
+/**
+ * Get a label for the apply button.
+ *
+ * @returns {string} Apply button label
+ */
+ve.ui.MWTransclusionDialog.prototype.getApplyButtonLabel = function () {
+	return !this.selectedNode && !this.isSingleTemplateTransclusion() ?
+		ve.msg( 'visualeditor-dialog-transclusion-insert-transclusion' ) :
+		ve.ui.MWTransclusionDialog.super.prototype.getApplyButtonLabel.call( this );
+};
+
+/**
+ * Set dialog mode.
+ *
+ * Auto mode will choose single if possible.
+ *
+ * @param {string} [mode='multiple'] Symbolic name of dialog mode, `multiple`, `single` or 'auto'
+ */
+ve.ui.MWTransclusionDialog.prototype.setMode = function ( mode ) {
+	var name, parts, part, single,
+		modeCssClasses = ve.ui.MWTransclusionDialog.static.modeCssClasses;
+
+	if ( this.transclusionModel ) {
+		parts = this.transclusionModel.getParts();
+		part = parts.length && parts[0];
+		if ( mode === 'auto' ) {
+			mode = this.isSingleTemplateTransclusion() ? 'single' : 'multiple';
+		}
+	}
+	if ( !modeCssClasses[mode] ) {
+		mode = 'multiple';
+	}
+	this.mode = mode;
+	single = mode === 'single';
+	if ( this.frame.$content ) {
+		for ( name in modeCssClasses ) {
+			this.frame.$content.toggleClass( modeCssClasses[name], name === mode );
+		}
+	}
+	this.setSize( single ? 'medium' : 'large' );
+	this.bookletLayout.toggleOutline( !single );
+	this.modeButton
+		.setLabel( ve.msg(
+			single ?
+				'visualeditor-dialog-transclusion-multiple-mode' :
+				'visualeditor-dialog-transclusion-single-mode'
+		) )
+		.setDisabled( !this.isSingleTemplateTransclusion() );
+	this.updateTitle();
+};
+
+/**
+ * Update the dialog title.
+ */
+ve.ui.MWTransclusionDialog.prototype.updateTitle = function () {
+	if ( this.mode === 'multiple' ) {
+		this.setTitle( this.constructor.static.title );
+	} else {
+		// Parent method
+		ve.ui.MWTransclusionDialog.super.prototype.updateTitle.call( this );
+	}
+};
+
+/**
+ * Add a part to the transclusion.
+ *
+ * @param {ve.dm.MWTransclusionPartModel} part Part to add
+ */
+ve.ui.MWTransclusionDialog.prototype.addPart = function ( part ) {
+	var index, promise,
+		parts = this.transclusionModel.getParts(),
+		item = this.bookletLayout.getOutline().getSelectedItem();
+
+	if ( part ) {
+		// Insert after selected part, or at the end if nothing is selected
+		index = item ?
+			ve.indexOf( this.transclusionModel.getPartFromId( item.getData() ), parts ) + 1 :
+			parts.length;
+		// Add the part, and if dialog is loaded switch to part page
+		promise = this.transclusionModel.addPart( part, index );
+		if ( this.loaded && !this.preventReselection ) {
+			promise.done( ve.bind( this.setPageByName, this, part.getId() ) );
+		}
+	}
+};
+
+/**
+ * @inheritdoc
+ */
+ve.ui.MWTransclusionDialog.prototype.initialize = function () {
+	// Parent method
+	ve.ui.MWTransclusionDialog.super.prototype.initialize.call( this );
+
+	// Properties
+	this.modeButton = new OO.ui.ButtonWidget( {
+		'$': this.$,
+		'flags': ['secondary']
 	} );
-
-	textInput = new ve.ui.TextInputWidget( { '$$': this.frame.$$, 'multiline': true } );
-	textInput.setValue( content.getValue() );
-	textInput.connect( this, { 'change': function () {
-		content.setValue( textInput.getValue() );
-	} } );
-	textInput.$.addClass( 've-ui-mwTransclusionDialog-input' );
-	valueFieldset.$.append( textInput.$ );
-
-	optionsFieldset = new ve.ui.FieldsetLayout( {
-		'$$': this.frame.$$,
-		'label': ve.msg( 'visualeditor-dialog-transclusion-options' ),
-		'icon': 'settings'
+	this.addTemplateButton = new OO.ui.ButtonWidget( {
+		'$': this.$,
+		'frameless': true,
+		'icon': 'template',
+		'title': ve.msg( 'visualeditor-dialog-transclusion-add-template' )
 	} );
-
-	removeButton = new ve.ui.ButtonWidget( {
-		'$$': this.frame.$$,
-		'label': ve.msg( 'visualeditor-dialog-transclusion-remove-content' ),
-		'flags': ['destructive']
-	} );
-	removeButton.connect( this, { 'click': function () {
-		content.remove();
-	} } );
-	optionsFieldset.$.append( removeButton.$ );
-
-	return {
-		'label': ve.msg( 'visualeditor-dialog-transclusion-content' ),
+	this.addContentButton = new OO.ui.ButtonWidget( {
+		'$': this.$,
+		'frameless': true,
 		'icon': 'source',
-		'$content': valueFieldset.$.add( optionsFieldset.$ ),
-		'moveable': true
-	};
-};
-
-/**
- * Get page for a template.
- *
- * @method
- * @param {ve.dm.MWTemplateModel} template Template model
- */
-ve.ui.MWTransclusionDialog.prototype.getTemplatePage = function ( template ) {
-	var infoFieldset, addParameterFieldset, addParameterSearch, optionsFieldset,
-		removeButton,
-		spec = template.getSpec(),
-		label = spec.getLabel(),
-		description = spec.getDescription();
-
-	function addParameter( name ) {
-		var param;
-
-		if ( name ) {
-			param = new ve.dm.MWTemplateParameterModel( template, name );
-			template.addParameter( param );
-			addParameterSearch.query.setValue();
-			this.setPageByName( param.getId() );
-		}
-	}
-
-	infoFieldset = new ve.ui.FieldsetLayout( {
-		'$$': this.frame.$$,
-		'label': label,
-		'icon': 'template'
+		'title': ve.msg( 'visualeditor-dialog-transclusion-add-content' )
 	} );
-
-	if ( description ) {
-		infoFieldset.$.append( this.frame.$$( '<div>' ).text( description ) );
-	}
-
-	addParameterFieldset = new ve.ui.FieldsetLayout( {
-		'$$': this.frame.$$,
-		'label': ve.msg( 'visualeditor-dialog-transclusion-add-param' ),
-		'icon': 'parameter'
-	} );
-	addParameterFieldset.$.addClass( 've-ui-mwTransclusionDialog-addParameterFieldset' );
-	addParameterSearch = new ve.ui.MWParameterSearchWidget( template, { '$$': this.frame.$$ } );
-	addParameterSearch.connect( this, { 'select': addParameter } );
-	addParameterFieldset.$.append( addParameterSearch.$ );
-
-	optionsFieldset = new ve.ui.FieldsetLayout( {
-		'$$': this.frame.$$,
-		'label': ve.msg( 'visualeditor-dialog-transclusion-options' ),
-		'icon': 'settings'
-	} );
-
-	removeButton = new ve.ui.ButtonWidget( {
-		'$$': this.frame.$$,
-		'label': ve.msg( 'visualeditor-dialog-transclusion-remove-template' ),
-		'flags': ['destructive']
-	} );
-	removeButton.connect( this, { 'click': function () {
-		template.remove();
-	} } );
-	optionsFieldset.$.append( removeButton.$ );
-
-	return {
-		'label': label,
-		'icon': 'template',
-		'$content': infoFieldset.$.add( addParameterFieldset.$ ).add( optionsFieldset.$ ),
-		'moveable': true
-	};
-};
-
-/**
- * Get page for a parameter.
- *
- * @method
- * @param {ve.dm.MWTemplateParameterModel} parameter Parameter model
- */
-ve.ui.MWTransclusionDialog.prototype.getParameterPage = function ( parameter ) {
-	var valueFieldset, optionsFieldset, textInput, inputLabel, removeButton,
-		spec = parameter.getTemplate().getSpec(),
-		name = parameter.getName(),
-		label = spec.getParameterLabel( name ),
-		description = spec.getParameterDescription( name );
-
-	valueFieldset = new ve.ui.FieldsetLayout( {
-		'$$': this.frame.$$,
-		'label': label,
-		'icon': 'parameter'
-	} );
-
-	if ( description ) {
-		inputLabel = new ve.ui.InputLabelWidget( {
-			'$$': this.frame.$$,
-			'input': textInput,
-			'label': description
-		} );
-		valueFieldset.$.append( inputLabel.$ );
-	}
-
-	textInput = new ve.ui.TextInputWidget( { '$$': this.frame.$$, 'multiline': true } );
-	textInput.setValue( parameter.getValue() );
-	textInput.connect( this, { 'change': function () {
-		parameter.setValue( textInput.getValue() );
-	} } );
-	textInput.$.addClass( 've-ui-mwTransclusionDialog-input' );
-	valueFieldset.$.append( textInput.$ );
-
-	optionsFieldset = new ve.ui.FieldsetLayout( {
-		'$$': this.frame.$$,
-		'label': ve.msg( 'visualeditor-dialog-transclusion-options' ),
-		'icon': 'settings'
-	} );
-
-	removeButton = new ve.ui.ButtonWidget( {
-		'$$': this.frame.$$,
-		'label': ve.msg( 'visualeditor-dialog-transclusion-remove-param' ),
-		'flags': ['destructive']
-	} );
-	removeButton.connect( this, { 'click': function () {
-		parameter.remove();
-	} } );
-	optionsFieldset.$.append( removeButton.$ );
-
-	// TODO: Use spec.required
-	// TODO: Use spec.deprecation
-	// TODO: Use spec.default
-	// TODO: Use spec.type
-
-	return {
-		'label': label,
+	this.addParameterButton = new OO.ui.ButtonWidget( {
+		'$': this.$,
+		'frameless': true,
 		'icon': 'parameter',
-		'level': 1,
-		'$content': valueFieldset.$.add( optionsFieldset.$ )
-	};
+		'title': ve.msg( 'visualeditor-dialog-transclusion-add-param' )
+	} );
+
+	// Events
+	this.modeButton.connect( this, { 'click': 'onModeButtonClick' } );
+	this.bookletLayout.connect( this, { 'set': 'onBookletLayoutSet' } );
+	this.addTemplateButton.connect( this, { 'click': 'onAddTemplateButtonClick' } );
+	this.addContentButton.connect( this, { 'click': 'onAddContentButtonClick' } );
+	this.addParameterButton.connect( this, { 'click': 'onAddParameterButtonClick' } );
+	this.bookletLayout.getOutlineControls()
+		.addItems( [ this.addTemplateButton, this.addContentButton, this.addParameterButton ] )
+		.connect( this, {
+			'move': 'onOutlineControlsMove',
+			'remove': 'onOutlineControlsRemove'
+		} );
+
+	// Initialization
+	this.$foot.append( this.modeButton.$element );
 };
 
 /**
- * Get page for a parameter.
- *
- * @method
- * @param {ve.dm.MWTemplateParameterModel} parameter Parameter model
+ * @inheritdoc
  */
-ve.ui.MWTransclusionDialog.prototype.getPlaceholderPage = function ( placeholder ) {
-	var addTemplateFieldset, addTemplateInput, addTemplateButton, optionsFieldset, removeButton,
-		label = ve.msg( 'visualeditor-dialog-transclusion-placeholder' );
+ve.ui.MWTransclusionDialog.prototype.getSetupProcess = function ( data ) {
+	return ve.ui.MWTransclusionDialog.super.prototype.getSetupProcess.call( this, data )
+		.first( function () {
+			this.setMode( 'single' );
+			this.modeButton.setDisabled( true );
+		}, this );
+};
 
-	function addTemplate() {
-		var parts = placeholder.getTransclusion().getParts(),
-			part = ve.dm.MWTemplateModel.newFromName(
-				this.transclusion, addTemplateInput.getValue()
-			);
-
-		this.transclusion.addPart( part, ve.indexOf( placeholder, parts ) );
-		this.pending.push( { 'part': part, 'placeholder': placeholder } );
-		addTemplateInput.pushPending();
-		addTemplateButton.setDisabled( true );
-		removeButton.setDisabled( true );
-	}
-
-	addTemplateFieldset = new ve.ui.FieldsetLayout( {
-		'$$': this.frame.$$,
-		'label': label,
-		'icon': 'template'
+/**
+ * @inheritdoc
+ */
+ve.ui.MWTransclusionDialog.prototype.onApplyButtonClick = function () {
+	ve.track( 'wikia', {
+		'action': ve.track.actions.CLICK,
+		'label': 'dialog-template-button-' + ( this.selectedNode ? 'apply-changes' : 'insert-template' )
 	} );
-	addTemplateFieldset.$.addClass( 've-ui-mwTransclusionDialog-addTemplateFieldset' );
-
-	addTemplateInput = new ve.ui.MWTitleInputWidget( {
-		'$$': this.frame.$$, '$overlay': this.$overlay, 'namespace': 10
-	} );
-	addTemplateButton = new ve.ui.ButtonWidget( {
-		'$$': this.frame.$$,
-		'label': ve.msg( 'visualeditor-dialog-transclusion-add-template' ),
-		'flags': ['constructive'],
-		'disabled': true
-	} );
-	addTemplateInput.connect( this, {
-		'change': function () {
-			addTemplateButton.setDisabled( addTemplateInput.getValue() === '' );
-		},
-		'enter': addTemplate
-	} );
-	addTemplateButton.connect( this, { 'click': addTemplate } );
-	addTemplateFieldset.$.append( addTemplateInput.$, addTemplateButton.$ );
-
-	optionsFieldset = new ve.ui.FieldsetLayout( {
-		'$$': this.frame.$$,
-		'label': ve.msg( 'visualeditor-dialog-transclusion-options' ),
-		'icon': 'settings'
-	} );
-
-	removeButton = new ve.ui.ButtonWidget( {
-		'$$': this.frame.$$,
-		'label': ve.msg( 'visualeditor-dialog-transclusion-remove-template' ),
-		'flags': ['destructive']
-	} );
-	removeButton.connect( this, { 'click': function () {
-		placeholder.remove();
-	} } );
-	optionsFieldset.$.append( removeButton.$ );
-
-	return {
-		'label': this.frame.$$( '<span>' )
-			.addClass( 've-ui-mwTransclusionDialog-placeholder-label' )
-			.text( label ),
-		'icon': 'template',
-		'$content': addTemplateFieldset.$.add( optionsFieldset.$ )
-	};
+	return ve.ui.MWTransclusionDialog.super.prototype.onApplyButtonClick.call( this );
 };
 
 /* Registration */
 
-ve.ui.dialogFactory.register( ve.ui.MWTransclusionDialog );
+ve.ui.windowFactory.register( ve.ui.MWTransclusionDialog );

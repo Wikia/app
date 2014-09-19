@@ -29,7 +29,7 @@ class OnWiki extends AbstractDismax
 	
 	/**
 	 * Passes data from the config to the MW service to instantiate a match and store it in the config.
-	 * @return Wikia\Search\Match\Article|null
+	 * @return \Wikia\Search\Match\Article|null
 	 */
 	public function extractMatch() {
 		$config = $this->getConfig();
@@ -98,11 +98,21 @@ class OnWiki extends AbstractDismax
 	 */
 	protected function getQueryClausesString() {
 		$queryClauses = array( Utilities::valueForField( 'wid', $this->config->getCityId() ) );
+		$pageId = $this->config->getPageId();
+		if ( $pageId ) {
+			$queryClauses[ ] = Utilities::valueForField( 'pageid', $pageId );
+		}
 		$nsQuery = '';
 		foreach ( $this->config->getNamespaces() as $namespace ) {
 			$nsQuery .= ( !empty( $nsQuery ) ? ' OR ' : '' ) . Utilities::valueForField( 'ns', $namespace );
 		}
 		$queryClauses[] = "({$nsQuery})";
+
+		$main = $this->config->getMainPage();
+		if ( $main !== null ) {
+			$queryClauses[ ] = "(+is_main_page:" . ( $main ? 'true' : 'false' ) . ")";
+		}
+
 		return sprintf( '(%s)', implode( ' AND ', $queryClauses ) );
 	}
 	
@@ -112,10 +122,23 @@ class OnWiki extends AbstractDismax
 	 */
 	protected function getFilterQueryString()
 	{
+
 		$namespaces = [];
 		foreach ( $this->config->getNamespaces() as $ns ) {
 			$namespaces[] = Utilities::valueForField( 'ns', $ns );
 		}
-		return implode( ' AND ', [ sprintf( '(%s)', implode( ' OR ', $namespaces ) ), Utilities::valueForField( 'wid', $this->config->getCityId() ) ] );
+
+		$minArticleQuality = $this->config->getMinArticleQuality();
+		$filters = [
+			sprintf( '(%s)', implode( ' OR ', $namespaces ) ),
+			Utilities::valueForField( 'wid', $this->config->getCityId() ),
+		];
+
+		if ( $minArticleQuality ) {
+			$filters[ ] = Utilities::rangeIntValueField( 'article_quality_i', $minArticleQuality );
+		}
+
+		return implode( ' AND ', $filters );
+
 	}
 }

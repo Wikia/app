@@ -77,7 +77,7 @@ $messages['ca'] = array(
 	'wikiawidget' => 'Ginys de Wikia',
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Mr. Richard Bolla
  */
 $messages['cs'] = array(
@@ -111,6 +111,13 @@ $messages['diq'] = array(
  */
 $messages['es'] = array(
 	'wikiawidget' => 'Wikia widgets',
+);
+
+/** Basque (euskara)
+ * @author Theklan
+ */
+$messages['eu'] = array(
+	'wikiawidget' => 'Wikia widgetak',
 );
 
 /** Finnish (suomi)
@@ -245,6 +252,13 @@ $messages['mk'] = array(
  */
 $messages['ms'] = array(
 	'wikiawidget' => 'Widget Wikia',
+);
+
+/** Min Nan Chinese (Bân-lâm-gú)
+ * @author Ianbu
+ */
+$messages['nan'] = array(
+	'wikiawidget' => 'Wikia工具集',
 );
 
 /** Norwegian Bokmål (norsk bokmål)
@@ -395,6 +409,13 @@ $messages['tt-cyrl'] = array(
  */
 $messages['uk'] = array(
 	'wikiawidget' => 'Віджети Wikia',
+);
+
+/** Vietnamese (Tiếng Việt)
+ * @author Baonguyen21022003
+ */
+$messages['vi'] = array(
+	'wikiawidget' => 'Wikia widget',
 );
 
 /** Simplified Chinese (中文（简体）‎)

@@ -29,7 +29,7 @@ class Factory
 	 * Skips instantiating dependency container, just using config and allowing default client instance.
 	 * @todo return type hinting to this method when we have a more sane way to test things than mock proxy
 	 * @param Config $config
-	 * @return Ambigous <\Wikia\Search\QueryService\Select\AbstractSelect, \Wikia\Search\QueryService\Select\InterWiki, \Wikia\Search\QueryService\Select\Video, \Wikia\Search\QueryService\Select\Lucene, \Wikia\Search\QueryService\Select\OnWiki>
+	 * @return \Wikia\Search\QueryService\Select\AbstractSelect|\Wikia\Search\QueryService\Select\Dismax\InterWiki|\Wikia\Search\QueryService\Select\Dismax\Video|\Wikia\Search\QueryService\Select\Lucene\Lucene|\Wikia\Search\QueryService\Select\Dismax\OnWiki
 	 */
 	public function getFromConfig( $config ) {
 		$container = new DependencyContainer( array( 'config' => $config ) );
@@ -38,20 +38,36 @@ class Factory
 
 	public function getSolariumClientConfig() {
 		$service = (new \Wikia\Search\ProfiledClassFactory)->get( 'Wikia\Search\MediaWikiService' );
-		$host = $service->isOnDbCluster() ? $service->getGlobalWithDefault( 'SolrHost', 'localhost' ) : 'staff-search-s1';
+		$host = $service->getGlobalWithDefault( 'SolrHost', 'localhost' );
 		$host = (! empty( $_GET['newsolrhost'] ) ) ? $service->getGlobal( 'AlternateSolrHost' ) : $host;
-		$solariumConfig = array(
-			'adapter' => 'Solarium_Client_Adapter_Curl',
-			'adapteroptions' => array(
-				'host'    => $host,
-				'port'    => empty( $_GET['newsolrhost'] ) ? $service->getGlobalWithDefault( 'SolrPort', 8180 ) : 8983,
-				'path'    => '/solr/',
-			)
-		);
-		if ( $service->isOnDbCluster() && $service->getGlobal( 'WikiaSearchUseProxy' ) && $service->getGlobalWithDefault( 'SolrProxy' ) !== null && empty( $_GET['newsolrhost'] ) ) {
-			$solariumConfig['adapteroptions']['proxy'] = $service->getGlobal( 'SolrProxy' );
-			$solariumConfig['adapteroptions']['port'] = null;
+
+		$solariumConfig = [];
+
+		global $wgUseDevSearch;
+		if( !empty($wgUseDevSearch) && ($wgUseDevSearch == true)) {
+			$solariumConfig = array(
+				'adapter' => 'Solarium_Client_Adapter_Curl',
+				'adapteroptions' => array(
+					'host'    => "dev-search-s4",
+					'port'    => 8983,
+					'path'    => '/solr/',
+				)
+			);
+		} else {
+			$solariumConfig = array(
+				'adapter' => 'Solarium_Client_Adapter_Curl',
+				'adapteroptions' => array(
+					'host'    => $host,
+					'port'    => empty( $_GET['newsolrhost'] ) ? $service->getGlobalWithDefault( 'SolrPort', 8180 ) : $service->getGlobal( 'SolrDefaultPort' ),
+					'path'    => '/solr/',
+				)
+			);
+			if ( $service->isOnDbCluster() && $service->getGlobal( 'WikiaSearchUseProxy' ) && $service->getGlobalWithDefault( 'SolrProxy' ) !== null && empty( $_GET['newsolrhost'] ) ) {
+				$solariumConfig['adapteroptions']['proxy'] = $service->getGlobal( 'SolrProxy' );
+				$solariumConfig['adapteroptions']['port'] = null;
+			}
 		}
+
 		return $solariumConfig;
 	}
 	

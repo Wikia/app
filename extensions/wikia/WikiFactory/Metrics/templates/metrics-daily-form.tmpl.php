@@ -22,6 +22,7 @@ $(document).ready(function() {
 	var baseurl = wgScript + "?action=ajax&rs=axAWCMetricsCategory";
 	var cnt = 0;
 	var oTable = $('#wfm-table').dataTable( {
+		bAutoWidth: false,
 		"oLanguage": {
 			"sLengthMenu": "<?=wfMsg('table_pager_limit', '_MENU_');?>",
 			"sZeroRecords": "<?=wfMsg('table_pager_empty');?>",

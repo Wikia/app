@@ -4,16 +4,19 @@ class AnalyticsProviderAmazonDirectTargetedBuy implements iAnalyticsProvider {
 
 	private static $code = <<< SCRIPT
 		<script>
-			require(['wikia.geo'], function (geo) {
-				if (geo.getCountryCode() === 'US') {
-					var aax_src='3006';
-					var aax_url = encodeURIComponent(document.location);
+			require(['wikia.geo', 'wikia.instantGlobals'], function (geo, globals) {
+				if (globals.wgAmazonDirectTargetedBuyCountries && globals.wgAmazonDirectTargetedBuyCountries.indexOf(geo.getCountryCode()) > -1) {
+					var aax_src='3006',
+						aax_url = encodeURIComponent(document.location),
+						s = document.createElement('script'),
+						insertLoc = document.getElementsByTagName('script')[0];
+
 					try { aax_url = encodeURIComponent("" + window.top.location); } catch(e) {}
-					var s = document.createElement('script');
+
 					s.type = 'text/javascript';
 					s.async = true;
-					s.src = '//aax-us-east.amazon-adsystem.com/e/dtb/bid?src=' + aax_src + '&u=' + aax_url + "&cb=" + Math.round(Math.random()*10000000);
-					var insertLoc = document.getElementsByTagName('script')[0];
+					s.src = '//aax.amazon-adsystem.com/e/dtb/bid?src=' + aax_src + '&u=' + aax_url + "&cb=" + Math.round(Math.random()*10000000);
+
 					insertLoc.parentNode.insertBefore(s, insertLoc);
 				}
 			});
@@ -21,22 +24,21 @@ class AnalyticsProviderAmazonDirectTargetedBuy implements iAnalyticsProvider {
 SCRIPT;
 
 	public static function isEnabled() {
-		return F::app()->wg->EnableAmazonDirectTargetedBuy
-			&& F::app()->wg->ShowAds
-			&& AdEngine2Controller::areAdsShowableOnPage();
+		global $wgEnableAmazonDirectTargetedBuy, $wgEnableAdEngineExt, $wgShowAds, $wgAdDriverUseSevenOneMedia;
+
+		return $wgEnableAmazonDirectTargetedBuy
+			&& $wgEnableAdEngineExt
+			&& $wgShowAds
+			&& AdEngine2Service::areAdsShowableOnPage()
+			&& !$wgAdDriverUseSevenOneMedia;
 	}
 
 	public function getSetupHtml($params = array()) {
 		static $called = false;
-
 		$code = '';
 
-		if (!$called) {
-			$called = true;
-
-			if (self::isEnabled()) {
-				$code = self::$code;
-			}
+		if (!$called && self::isEnabled()) {
+			$code = self::$code;
 		}
 
 		return $code;

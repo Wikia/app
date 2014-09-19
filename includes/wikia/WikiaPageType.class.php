@@ -7,7 +7,7 @@ class WikiaPageType {
 	/**
 	 * Get type of page as string
 	 *
-	 * @return string one of home, search, forum, article or extra
+	 * @return string one of corporate, home, search, forum, article or extra
 	 */
 	public static function getPageType() {
 		if (self::isMainPage()) {
@@ -81,7 +81,7 @@ class WikiaPageType {
 
 		return (
 			(defined('NS_FORUM') && $wg->Title && $wg->Title->getNamespace() === NS_FORUM) // old forum
-			|| ($wg->EnableForumExt && $wg->IsForum)                                       // new forum
+			|| ($wg->EnableForumExt && ForumHelper::isForum())                             // new forum
 		);
 	}
 
@@ -141,6 +141,41 @@ class WikiaPageType {
 	 * @return bool
 	 */
 	public static function isWikiaHub() {
-		return HubService::isCurrentPageAWikiaHub();
+		global $wgEnableWikiaHubsV3Ext;
+
+		return !empty( $wgEnableWikiaHubsV3Ext );
+	}
+
+	/**
+	 * Check if current page is Wikia hub main page ( for hubs v3 )
+	 *
+	 * @return bool
+	 */
+	public static function isWikiaHubMain() {
+		global $wgTitle;
+		$mainPageName = trim( str_replace( '_', ' ', wfMessage( 'mainpage' )->inContentLanguage()->text() ) );
+		$isMainPage = ( strcasecmp( $mainPageName, $wgTitle->getText() ) === 0 ) && $wgTitle->getNamespace() === NS_MAIN;
+
+		return ( self::isWikiaHub() && $isMainPage );
+	}
+
+	/**
+	 * Check if current page is home page
+	 *
+	 * @return bool
+	 */
+	public static function isWikiaHomePage() {
+		global $wgEnableWikiaHomePageExt;
+
+		return !empty( $wgEnableWikiaHomePageExt );
+	}
+
+	/**
+	 * Check if current page is corporate page
+	 *
+	 * @return bool
+	 */
+	public static function isCorporatePage() {
+		return self::isWikiaHub() || self::isWikiaHomePage();
 	}
 }

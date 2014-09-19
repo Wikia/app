@@ -21,7 +21,8 @@ class Redirects extends AbstractService
 	public function execute() {
 		$service = $this->getService();
 		$key = $service->getGlobal( 'AppStripsHtml' ) ? Utilities::field( 'redirect_titles' ) : 'redirect_titles';
-		$result = array( $key => $service->getRedirectTitlesForPageId( $this->currentPageId ) );
+		$titles = $service->getRedirectTitlesForPageId( $this->currentPageId );
+		$result = array( $key => $titles, 'redirect_titles_mv_em' => $titles );
 		return $result;
 	}
 }

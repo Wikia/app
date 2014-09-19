@@ -4,6 +4,8 @@
  * @author relwell
  */
 namespace Wikia\Search\IndexService;
+use JsonFormatService;
+use Wikia\JsonFormat\JsonFormatSimplifier;
 use Wikia\Search\Utilities, simple_html_dom;
 /**
  * This is intended to provide core article content
@@ -13,9 +15,11 @@ use Wikia\Search\Utilities, simple_html_dom;
  */
 class DefaultContent extends AbstractService
 {
+	const SPACE_SEQUENCE_REGEXP = "/\s+/";  
+	
 	/**
 	 * Text from selectors in this list should be removed during HTML stripping.
-	 * @var unknown_type
+	 * @var array
 	 */
 	protected $garbageSelectors = [
 				'span.editsection',
@@ -28,19 +32,19 @@ class DefaultContent extends AbstractService
 				'script',
 				'style',
 				];
-	
+
 	/**
 	 * We remove these selectors since they are unreliable indicators of textual content
-	 * @var
+	 * @var array
 	 */
 	protected $asideSelectors = [ 'table', 'figure', 'div.noprint', 'div.quote', '.dablink' ];
-	
+
 	/**
 	 * Stores multivalued nolang_txt field as we add stuff to it.
 	 * @var array
 	 */
 	protected $nolang_txt = [];
-	
+
 	/**
 	 * Returns the fields required to make the document searchable (specifically, wid and title and body content)
 	 * @see \Wikia\Search\IndexService\AbstractService::execute()
@@ -57,19 +61,20 @@ class DefaultContent extends AbstractService
 
 		// we still assume the response is the same format as MediaWiki's
 		$response   = $service->getParseResponseFromPageId( $pageId );
-		
+
 		// ensure the response is an array, even if empty.
 		$response   = $response == false ? array() : $response;
 		$titleStr   = $service->getTitleStringFromPageId( $pageId );
-		
+
 		$this->pushNolangTxt( $titleStr )
 		     ->pushNolangTxt( preg_replace( '/([[:punct:]])/', ' $1 ', $titleStr ) );
-		
+
 		$pageFields = [
 				'wid'                        => $service->getWikiId(),
 				'pageid'                     => $pageId,
 				$this->field( 'title' )      => $titleStr,
 				'titleStrict'                => $titleStr,
+				'title_em'                   => $titleStr,
 				'url'                        => $service->getUrlFromPageId( $pageId ),
 				'ns'                         => $service->getNamespaceFromPageId( $pageId ),
 				'host'                       => $service->getHostName(),
@@ -79,16 +84,25 @@ class DefaultContent extends AbstractService
 				'iscontent'                  => $service->isPageIdContent( $pageId ) ? 'true' : 'false',
 				'is_main_page'               => $service->isPageIdMainPage( $pageId ) ? 'true' : 'false',
 				];
-		return array_merge( 
-				$this->getPageContentFromParseResponse( $response ), 
+
+		$returnValue = array_merge(
+				$this->getPageContentFromParseResponse( $response ),
+				$this->getArticleSnippet( $response ),
 				$this->getCategoriesFromParseResponse( $response ),
 				$this->getHeadingsFromParseResponse( $response ),
 				$this->getOutboundLinks(),
 				$pageFields,
 				$this->getNolangTxt()
 				);
+
+		$poiMetadata = $this->getPOIMetadata();
+		if ( is_array( $poiMetadata ) && count( $poiMetadata ) > 0 ) {
+			$returnValue = array_merge( $returnValue, $poiMetadata );
+		}
+
+		return $returnValue;
 	}
-	
+
 	/**
 	 * @return Wikia\Search\IndexService\DefaultContent
 	 */
@@ -96,12 +110,10 @@ class DefaultContent extends AbstractService
 		$this->nolang_txt = [];
 		return $this;
 	}
-	
+
 	/**
 	 * Provides an array of outbound links from the current document to other doc IDs.
 	 * Filters out self-links (e.g. Edit and the like)
-	 * @param int $wid
-	 * @param int $pageid
 	 * @return array
 	 */
 	protected function getOutboundLinks() {
@@ -120,16 +132,25 @@ class DefaultContent extends AbstractService
 		}
 		return $result;
 	}
-	
+
 	/**
 	 * Optionally sets language field for field. Old backend already does this.
 	 * @param string $field
 	 * @return string
 	 */
 	protected function field( $field ) {
-		return $this->getService()->getGlobal( 'AppStripsHtml' ) ? (new Utilities)->field( $field ) : $field; 
+		return $this->getService()->getGlobal( 'AppStripsHtml' ) ? (new Utilities)->field( $field ) : $field;
 	}
-	
+
+	protected function getArticleSnippet( array $response ) {
+		$html = empty( $response['parse']['text']['*'] ) ? '' : $response['parse']['text']['*'];
+		$jsonFormatService = new JsonFormatService();
+		$text = $jsonFormatService->getArticleSnippet( $html );
+		return [
+			'snippet_s' => $text
+		];
+	}
+
 	/**
 	 * Wraps logic for creating the initial result array, based on which implementation we're using.
 	 * The old version strips HTML from the backend; the new version strips HTML within the IndexService.
@@ -143,7 +164,7 @@ class DefaultContent extends AbstractService
 		}
 		return [ 'html' => html_entity_decode($html, ENT_COMPAT, 'UTF-8') ];
 	}
-	
+
 	/**
 	 * Extracts categories from the MW parse response.
 	 * @param array $response
@@ -158,7 +179,7 @@ class DefaultContent extends AbstractService
 		}
 		return [ $this->field( 'categories' ) => $categories ];
 	}
-	
+
 	/**
 	 * Returns an array with section headings for the page.
 	 * @param array $response
@@ -173,17 +194,17 @@ class DefaultContent extends AbstractService
 		}
 		return [ $this->field( 'headings' ) => $headings ];
 	}
-	
+
 	/**
 	 * Add a language-agnostic field value
 	 * @param string $txt
-	 * @return DefaultContent 
+	 * @return DefaultContent
 	 */
 	protected function pushNolangTxt( $txt ) {
 		$this->nolang_txt[] = $txt;
 		return $this;
 	}
-	
+
 	/**
 	 * Returns language-agnostic multi-valued text
 	 * @return array
@@ -191,21 +212,23 @@ class DefaultContent extends AbstractService
 	protected function getNolangTxt() {
 		return [ 'nolang_txt' => $this->nolang_txt ];
 	}
-	
+
 	/**
 	 * Allows us to strip and parse HTML
 	 * By the way, if every document on the site was as big as the Jim Henson page,
-	 * then it would take under two minutes to parse them all using this function. 
+	 * then it would take under two minutes to parse them all using this function.
 	 * So this scales on the application side. I promise. I mathed it.
 	 * @param string $html
 	 * @return array
 	 */
+
+	
 	protected function prepValuesFromHtml( $html ) {
 		$result = array();
 		$paragraphs = array();
-		// default value; we'll overwrite if dom can parse
-		$plaintext = preg_replace( '/\s+/', ' ', html_entity_decode( strip_tags( $html ), ENT_COMPAT, 'UTF-8' ) );
 		
+		$html = str_replace(["&lt;", "&gt;"], "", $html); // workaround for bug in html_entity_decode that truncates the text
+
 		$dom = new \simple_html_dom( html_entity_decode($html, ENT_COMPAT, 'UTF-8') );
 		if ( $dom->root ) {
 			if ( $this->getService()->getGlobal( 'ExtractInfoboxes' ) ) {
@@ -214,13 +237,16 @@ class DefaultContent extends AbstractService
 			$this->removeGarbageFromDom( $dom );
 			$plaintext = $this->getPlaintextFromDom( $dom );
 			$paragraphs = $this->getParagraphsFromDom( $dom );
+		} else {
+			$plaintext = html_entity_decode( strip_tags( $html ), ENT_COMPAT, 'UTF-8' );			
 		}
-		$paragraphString = preg_replace( '/\s+/', ' ', implode( ' ', $paragraphs ) ); // can be empty
-		$words = preg_split( '/[[:space:]]+/', $paragraphString?: $plaintext);
+		$plaintext = trim(preg_replace(static::SPACE_SEQUENCE_REGEXP, ' ', $plaintext));
+		$paragraphString = trim(preg_replace( static::SPACE_SEQUENCE_REGEXP, ' ', implode( ' ', $paragraphs ) )); // can be empty
+		$words = preg_split( '/ /', $paragraphString?: $plaintext);
 		$wordCount = count( $words );
 		$upTo100Words = implode( ' ', array_slice( $words, 0, min( array( $wordCount, 100 ) ) ) );
 		$this->pushNolangTxt( $upTo100Words );
-		
+
 		return  array_merge( $result,
 				[
 				'nolang_txt'           => $upTo100Words,
@@ -228,15 +254,15 @@ class DefaultContent extends AbstractService
 				$this->field( 'html' ) => $plaintext
 				]);
 	}
-	
+
 	/**
 	 * Assigns infobox-based values to result (passed by reference), when found.
 	 * @param simple_html_dom $dom
-	 * @param array $result
+	 * @return array
 	 */
 	protected function extractInfoboxes( simple_html_dom $dom ) {
 		$result = array();
-		$infoboxes = $dom->find( 'table.infobox' );
+		$infoboxes = $dom->find( 'table.infobox,table.wikia-infobox' );
 		if ( count( $infoboxes ) > 0 ) {
 			$result['infoboxes_txt'] = [];
 			$counter = 1;
@@ -249,8 +275,13 @@ class DefaultContent extends AbstractService
 				if ( $infoboxRows ) {
 					foreach ( $infoboxRows as $row ) {
 						$infoboxCells = $row->find( 'td' );
-						if ( count( $infoboxCells ) == 2 ) {
+						$headerCells = $row->find( 'th' );
+						$infoBoxCellCount = count( $infoboxCells );
+						$headerCellCount = count( $headerCells );
+						if ( $infoBoxCellCount == 2  && $headerCellCount == 0 ) {
 							$result['infoboxes_txt'][] = "infobox_{$counter} | " . preg_replace( '/\s+/', ' ', $infoboxCells[0]->plaintext . ' | ' . $infoboxCells[1]->plaintext  );
+						} else if ( $infoBoxCellCount == 1 && $headerCellCount == 1 ) {
+							$result['infoboxes_txt'][] = "infobox_{$counter} | " . preg_replace( '/\s+/', ' ', $headerCells[0]->plaintext . ' | ' . $infoboxCells[0]->plaintext  );
 						}
 					}
 				}
@@ -259,7 +290,7 @@ class DefaultContent extends AbstractService
 		}
 		return $result;
 	}
-	
+
 	/**
 	 * Iterates through UI remnants and removes them from the dom.
 	 * Removed type hinting due to testing requirements and WikiaMockProxy
@@ -272,7 +303,7 @@ class DefaultContent extends AbstractService
 			}
 		}
 	}
-	
+
 	/**
 	 * Returns all text from tables as plaintext, and then removes them.
 	 * @param simple_html_dom $dom
@@ -284,12 +315,12 @@ class DefaultContent extends AbstractService
 			foreach( $dom->find( $aside ) as $aside ) {
 				$plaintext .= $aside->plaintext;
 				$aside->outertext = ' ';
-			} 
+			}
 		}
 		$dom->load( $dom->save() );
 		return $plaintext;
 	}
-	
+
 	/**
 	 * Returns an array of paragraph text as plaintext
 	 * @param simple_html_dom $dom
@@ -302,7 +333,7 @@ class DefaultContent extends AbstractService
 		}
 		return $paragraphs;
 	}
-	
+
 	/**
 	 * Returns HTML-free article text. Appends any tables to the bottom of the dom.
 	 * @param simple_html_dom $dom
@@ -311,5 +342,24 @@ class DefaultContent extends AbstractService
 	protected function getPlaintextFromDom( simple_html_dom $dom ) {
 		$tables = $this->extractAsidesFromDom( $dom );
 		return preg_replace( '/\s+/', ' ', strip_tags( $dom->plaintext . ' ' . $tables ) );
+	}
+
+	protected function getPOIMetadata() {
+		$service = $this->getService();
+		$extensionEnabled = $service->getGlobal( 'EnablePOIExt' );
+		if ( $extensionEnabled ) {
+			$articleMetadata = new \ArticleMetadataModel( $this->currentPageId, true );
+			$solrMapping = $articleMetadata->getSolrMapping();
+			$metadata = $articleMetadata->getMetadata();
+
+			$output = [];
+			foreach ( $metadata as $field => $value ) {
+				if ( isset($solrMapping[$field]) ) {
+					$output[ $solrMapping[$field] ] = $value;
+				}
+			}
+			return $output;
+		}
+		return null;
 	}
 }

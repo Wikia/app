@@ -37,15 +37,15 @@
 		}
 
 		protected function setMockDb($fetch_obj) {
-			$mock_result = $this->getMock('ResultWrapper', array(), array(), '', false);
+			$mock_result = $this->getMock('ResultWrapper', array('fetchObject'), array(), '', false);
+			$mock_result->expects($this->any())
+				->method('fetchObject')
+				->will($this->onConsecutiveCalls($fetch_obj[0], $fetch_obj[1], $fetch_obj[2], $fetch_obj[3], $fetch_obj[4], $fetch_obj[5], $fetch_obj[6], $fetch_obj[7], $fetch_obj[8], $fetch_obj[9], $fetch_obj[10], $fetch_obj[11], $fetch_obj[12], $fetch_obj[13], $fetch_obj[14]));
 
-			$mock_db = $this->getMock('DatabaseMysql', array('select', 'fetchObject'));
+			$mock_db = $this->getMock('DatabaseMysql', ['query']);
 			$mock_db->expects($this->any())
-					->method('select')
+					->method('query')
 					->will($this->returnValue($mock_result));
-			$mock_db->expects($this->any())
-					->method('fetchObject')
-					->will($this->onConsecutiveCalls($fetch_obj[0], $fetch_obj[1], $fetch_obj[2], $fetch_obj[3], $fetch_obj[4], $fetch_obj[5], $fetch_obj[6], $fetch_obj[7], $fetch_obj[8], $fetch_obj[9], $fetch_obj[10], $fetch_obj[11], $fetch_obj[12], $fetch_obj[13], $fetch_obj[14]));
 
 			$this->getGlobalFunctionMock( 'wfGetDB' )
 				->expects( $this->exactly( 3 ) )
@@ -56,6 +56,8 @@
 		}
 
 		/**
+		 * @group Slow
+		 * @slowExecutionTime 0.03352 ms
 		 * @dataProvider getStatsDataProvider
 		 */
 		public function testGetStats($cache_value, $expected_daily, $expected_total, $fetch_obj=null) {
@@ -220,6 +222,7 @@
 
 		/**
 		 * @dataProvider shortenNumberDecoratorDataProvider
+		 * @group UsingDB
 		 */
 		public function testShortenNumberDecorator($number,$expected) {
 			$result = QuickStatsController::shortenNumberDecorator($number);

@@ -4,6 +4,9 @@
  * TaskManager task to go through a list of images and delete them.
  */
 
+//use \Wikia\Logger\WikiaLogger; // does not autoload inside maintenance script
+ 
+
 class PromoteImageReviewTask extends BatchTask {
 	var $mType,
 		$mVisible,
@@ -92,6 +95,24 @@ class PromoteImageReviewTask extends BatchTask {
 		return false;
 	}
 
+	function finalizeImageUploadStatus($imageId, $sourceWikiId, $status){
+		$db = wfGetDB(DB_MASTER, array(), F::app()->wg->ExternalSharedDB);
+
+		$db->update(
+			'city_visualization_images',
+			array(
+				'reviewer_id = null',
+				'image_review_status' => $status,
+			),
+			array(
+				"city_id " => $sourceWikiId,
+				"page_id" => $imageId,
+				'image_review_status' => ImageReviewStatuses::STATE_APPROVED_AND_TRANSFERRING,
+			),
+			__METHOD__
+		);
+	}
+
 	/**
 	 * @desc This method uploads images from a wiki to corporate wiki (i.e. wikia.com or de.wikia.com) but also it can upload images from corporate wiki to target wikis
 	 *
@@ -100,6 +121,8 @@ class PromoteImageReviewTask extends BatchTask {
 	 * @return bool
 	 */
 	function uploadImages($targetWikiId, $wikis) {
+		$isError = false;
+
 		$targetWikiLang = WikiFactory::getVarValueByName('wgLanguageCode', $targetWikiId);
 
 		foreach($wikis as $sourceWikiId => $images) {
@@ -114,6 +137,11 @@ class PromoteImageReviewTask extends BatchTask {
 						'id' => $result['id'],
 						'name' => $result['name'],
 					);
+					$this->finalizeImageUploadStatus($image['id'], $sourceWikiId, ImageReviewStatuses::STATE_APPROVED);
+				} else {
+					//on error move image back to review, so that upload could be retried
+					$this->finalizeImageUploadStatus($image['id'], $sourceWikiId, ImageReviewStatuses::STATE_UNREVIEWED);
+					$isError = true;
 				}
 			}
 
@@ -146,39 +174,24 @@ class PromoteImageReviewTask extends BatchTask {
 		if( !empty($uploadedImages) ) {
 		//if wikis have been added by import script or regularly by Special:Promote
 			$this->model->purgeVisualizationWikisListCache($targetWikiId, $targetWikiLang);
-			return true;
 		}
 
-		return false;
+		return !$isError;
 	}
 
 	function uploadSingleImage($imageId, $destinationName, $targetWikiId, $sourceWikiId) {
 		global $IP, $wgWikiaLocalSettingsPath;
 
 		$retval = "";
-
-		$dbname = WikiFactory::IDtoDB($sourceWikiId);
 		$imageTitle = GlobalTitle::newFromId($imageId, $sourceWikiId);
 
 		$sourceImageUrl = null;
-		if($imageTitle instanceof GlobalTitle) {
-			$param = array(
-				'action' => 'query',
-				'titles' => $imageTitle->getPrefixedText(),
-				'prop' => 'imageinfo',
-				'iiprop' => 'url',
-			);
 
-			$response = ApiService::foreignCall($dbname, $param);
-
-			if( !empty($response["query"]["pages"][$imageId])
-				&&( !empty($response["query"]["pages"][$imageId]["imageinfo"][0]["url"])) ) {
-				$sourceImageUrl = wfReplaceImageServer($response["query"]["pages"][$imageId]["imageinfo"][0]["url"]);
-			}
-		}
-
-		if( empty($sourceImageUrl) ) {
-			$this->log('Apparently the image ' . $dbname . '/' . $param['titles'] . ' is unaccessible');
+		$sourceFile = \GlobalFile::newFromText($imageTitle->getText(), $sourceWikiId);
+		if ($sourceFile->exists()){
+			$sourceImageUrl = $sourceFile->getUrl();
+		} else {
+			$this->log('Apparently the image from city_id=' . $sourceWikiId . ' ' . $imageTitle->getText() . ' is unaccessible');
 			return array('status' => 1);
 		}
 
@@ -188,17 +201,24 @@ class PromoteImageReviewTask extends BatchTask {
 			return array('status' => 1);
 		}
 
-		$dbname = WikiFactory::IDtoDB($sourceWikiId);
-		$destinationName = $this->getNameWithWiki($destinationName, $dbname);
+		$destinationName = PromoImage::fromPathname($destinationName)->ensureCityIdIsSet($sourceWikiId)->getPathname();
 
 		$sCommand = "SERVER_ID={$targetWikiId} php $IP/maintenance/wikia/ImageReview/PromoteImage/upload.php";
 		$sCommand .= " --originalimageurl=" . escapeshellarg($sourceImageUrl);
 		$sCommand .= " --destimagename=" . escapeshellarg($destinationName);
 		$sCommand .= " --wikiid=" . escapeshellarg( $sourceWikiId );
 		$sCommand .= " --conf {$wgWikiaLocalSettingsPath}";
+		
+		$logdata = [
+			'command' => $sCommand,
+			'city_url' => $city_url
+		];
 
 		$output = wfShellExec($sCommand, $retval);
-
+		
+		$logdata['output'] = $output;
+		$logdata['retval'] = $retval;
+		
 		if( $retval ) {
 			$this->log('Upload error! (' . $city_url . '). Error code returned: ' . $retval . ' Error was: ' . $output);
 		} else {
@@ -220,18 +240,18 @@ class PromoteImageReviewTask extends BatchTask {
 
 		foreach($wikis as $sourceWikiId => $images) {
 			$sourceWikiLang = WikiFactory::getVarValueByName('wgLanguageCode', $sourceWikiId);
-			$sourceWikiDbName = WikiFactory::IDtoDB($sourceWikiId);
 
 			if( !empty($images) ) {
 				$removedImages = array();
-				foreach($images as $image) {
-					$imageName = $this->getNameWithWiki($image['name'], $sourceWikiDbName);
-					$result = $this->removeSingleImage($corpWikiId, $imageName);
+				foreach($images as $imageName) {
+					if (PromoImage::fromPathname($imageName)->isValid()) {
+						$result = $this->removeSingleImage($corpWikiId, $imageName);
 
-					if( $result['status'] === 0 || $app->wg->DevelEnvironment ) {
-					//almost all the time on devboxes images aren't removed because of no permissions
-					//when we run maintenance/wikia/ImageReview/PromoteImage/remove.php with sudo it works
-						$removedImages[] = $imageName;
+						if( $result['status'] === 0 ) {
+							//almost all the time on devboxes images aren't removed because of no permissions
+							//when we run maintenance/wikia/ImageReview/PromoteImage/remove.php with sudo it works
+							$removedImages[] = $imageName;
+						}
 					}
 				}
 			}
@@ -291,19 +311,6 @@ class PromoteImageReviewTask extends BatchTask {
 		);
 	}
 
-	protected function getNameWithWiki($destinationName, $wikiDBname) {
-		if( !in_array($wikiDBname, $this->dbNamesToBeSkipped) ) {
-			$destinationFileNameArr = explode('.', $destinationName);
-			$destinationFileExt = array_pop($destinationFileNameArr);
-
-			array_splice($destinationFileNameArr, 1, 0, array(',', $wikiDBname));
-
-			return implode('', $destinationFileNameArr).'.'.$destinationFileExt;
-		} else {
-			return $destinationName;
-		}
-	}
-
 	protected function getImagesToUpdateInDb($sourceWikiId, $sourceWikiLang, $images) {
 		$data = array();
 
@@ -312,20 +319,19 @@ class PromoteImageReviewTask extends BatchTask {
 
 		if( !empty($currentImages) ) {
 			foreach($currentImages as $imageName) {
-				if( $this->getImageType($imageName) === 'additional' && !in_array($imageName, $images) ) {
-					$data['city_images'][] = $imageName;
+				$promoImage = PromoImage::fromPathname($imageName);
+				if( $promoImage->isAdditional() && !in_array($promoImage->getPathname(), $images) ) {
+					$data['city_images'][] = $promoImage->getPathname();
 				}
 			}
 		}
 
 		foreach($images as $image) {
-			$imageName = $image['name'];
-			if( $this->getImageType($imageName) === 'main' ) {
-				$data['city_main_image'] = $imageName;
-			}
-
-			if( $this->getImageType($imageName) === 'additional' ) {
-				$data['city_images'][] = $imageName;
+			$promoImage = PromoImage::fromPathname($image['name']);
+			if( $promoImage->isType(PromoImage::MAIN) ) {
+				$data['city_main_image'] = $promoImage->getPathname();
+			} elseif( $promoImage->isAdditional() ) {
+				$data['city_images'][] = $promoImage->getPathname();
 			}
 		}
 
@@ -338,14 +344,6 @@ class PromoteImageReviewTask extends BatchTask {
 		return $data;
 	}
 
-	protected function getImageType($imageName) {
-		if( preg_match('/Wikia-Visualization-Add-([0-9])\.*/', $imageName) ) {
-			return 'additional';
-		}
-
-		return 'main';
-	}
-
 	protected function syncAdditionalImages($sourceWikiId, $sourceWikiLang, $deletedImages) {
 		$data = array();
 
@@ -354,8 +352,9 @@ class PromoteImageReviewTask extends BatchTask {
 			$currentImages = $wikiData['images'];
 
 			foreach($currentImages as $imageName) {
-				if( $this->getImageType($imageName) === 'additional' && !in_array($imageName, $deletedImages) ) {
-					$data['city_images'][] = $imageName;
+				$promoImage = PromoImage::fromPathname($imageName);
+				if( $promoImage->isAdditional() && !in_array($promoImage->getPathname(), $deletedImages) ) {
+					$data['city_images'][] = $promoImage->getPathname();
 				}
 			}
 		}
@@ -380,18 +379,13 @@ class PromoteImageReviewTask extends BatchTask {
 		foreach( $images as $image ) {
 			$imageData = new stdClass();
 
-			$imageName = $image['name'];
-			$imageIndex = 0;
-			$matches = array();
-			if( preg_match('/Wikia-Visualization-Add-([0-9])\.*/', $imageName, $matches) ) {
-				$imageIndex = intval($matches[1]);
-			}
+			$promoImage = PromoImage::fromPathname($image['name'])->ensureCityIdIsSet($targetWikiId);
 
 			$imageData->city_id = $targetWikiId;
 			$imageData->page_id = $image['id'];
 			$imageData->city_lang_code = $targetWikiLang;
-			$imageData->image_index = $imageIndex;
-			$imageData->image_name = $imageName;
+			$imageData->image_index =  $promoImage->getType();
+			$imageData->image_name = $promoImage->getPathname();
 			$imageData->image_review_status = ImageReviewStatuses::STATE_APPROVED;
 			$imageData->last_edited = date('Y-m-d H:i:s');
 			$imageData->review_start = null;

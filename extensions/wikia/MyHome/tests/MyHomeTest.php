@@ -52,6 +52,9 @@ class MyHomeTest extends WikiaBaseTest {
 		return $data;
 	}
 
+	/**
+	 * @group UsingDB
+	 */
 	function testNewPageCreation() {
 		// set content of new article
 		global $wgParser;

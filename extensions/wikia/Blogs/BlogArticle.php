@@ -89,11 +89,20 @@ class BlogArticle extends Article {
 		$purge   = $wgRequest->getVal( "action" ) == 'purge';
 		$page    = $wgRequest->getVal( "page", 0 );
 		$offset  = $page * $this->mCount;
+		$blogPostCount = null;
 
 		$wgOut->setSyndicated( true );
 
 		if( !$purge ) {
-			$listing  = $wgMemc->get( wfMemcKey( "blog", "listing", $userMem, $page ) );
+			$cachedValueKey  = $this->blogListingMemcacheKey( $userMem, $page );
+			$cachedValue = $wgMemc->get( $cachedValueKey );
+
+			if ( $cachedValue && isset( $cachedValue['listing'] ) ) {
+				$listing = $cachedValue['listing'];
+				if ( isset($cachedValue['blogPostCount']) ) {
+					$blogPostCount = $cachedValue['blogPostCount'];
+				}
+			}
 		}
 
 		if( !$listing ) {
@@ -109,9 +118,13 @@ class BlogArticle extends Article {
 				</bloglist>";
 			$parserOutput = $wgParser->parse($text, $this->mTitle,  new ParserOptions());
 			$listing = $parserOutput->getText();
-			$wgMemc->set( wfMemcKey( "blog", "listing", $userMem, $page ), $listing, 3600 );
+			$blogPostCount = $parserOutput->getProperty("blogPostCount");
+			$wgMemc->set( $this->blogListingMemcacheKey( $userMem, $page ), [ 'listing'=> $listing, 'blogPostCount' => $blogPostCount ], 3600 );
 		}
-
+		if ( isset($blogPostCount) && $blogPostCount == 0 ) {
+			// bugid: PLA-844
+			$wgOut->setRobotPolicy( "noindex,nofollow" );
+		}
 		$wgOut->addHTML( $listing );
 	}
 
@@ -130,13 +143,22 @@ class BlogArticle extends Article {
 
 		$user = $this->mTitle->getPrefixedDBkey();
 		foreach( range(0, 5) as $page ) {
-			$wgMemc->delete( wfMemcKey( "blog", "listing", $user, $page ) );
+			$wgMemc->delete($this->blogListingMemcacheKey($user, $page));
 		}
 		$this->doPurge();
 
 		$title = Title::newFromText( 'Category:BlogListingPage' );
 		$title->touchLinks();
 
+	}
+
+	/**
+	 * @param $user - user dbkKey
+	 * @param $page - page no
+	 * @return String - memcache key
+	 */
+	private function blogListingMemcacheKey($user, $page) {
+		return wfMemcKey("blog", "listing", "v2", $user, $page);
 	}
 
 	/**
@@ -304,14 +326,6 @@ class BlogArticle extends Article {
 		$rescnt = count( $catView->blogs );
 		$countmsg = self::getCountMessage( $catView, $rescnt, $dbcnt, 'article' );
 
-		// order blog entries alphabetically
-		ksort($catView->blogs);
-
-		$catView->blogs_start_char = array();
-		foreach($catView->blogs as $key => $entry) {
-			$catView->blogs_start_char[] = $wgContLang->convert( $wgContLang->firstChar($key) );
-		}
-
 		if( $rescnt > 0 ) {
 			$r = "<div id=\"mw-pages\">\n";
 			$r .= '<h2>' . wfMsg( "blog-header", $ti ) . "</h2>\n";
@@ -408,8 +422,9 @@ class BlogArticle extends Article {
 
 	/**
 	 * Hook
+	 * @param CategoryViewer 
 	 */
-	static public function addCategoryPage( &$catView, &$title, &$row ) {
+	static public function addCategoryPage( &$catView, &$title, &$row, $sortkey ) {
 		global $wgContLang;
 
 		if( in_array( $row->page_namespace, array( NS_BLOG_ARTICLE, NS_BLOG_LISTING ) ) ) {
@@ -418,6 +433,15 @@ class BlogArticle extends Article {
 			 */
 			if( !isset( $catView->blogs ) ) {
 				$catView->blogs = array();
+			}
+
+			if ( F::app()->checkSkin( 'wikiamobile' ) ) {
+				$catView->blogs[] = [
+					'name' => $title->getText(),
+					'url' => $title->getLocalUrl(),
+				];
+
+				return false;
 			}
 
 			/**
@@ -433,12 +457,13 @@ class BlogArticle extends Article {
 			$userName = $title->getBaseText();
 			$link = $catView->getSkin()->link($title, $userName." - ".$text);
 
-			// blogs entries will be sorted using this key
-			$index = $wgContLang->uc("{$userName}-{$text}");
-
-			$catView->blogs[$index] = $row->page_is_redirect
+			$catView->blogs[] = $row->page_is_redirect
 				? '<span class="redirect-in-category">' . $link . '</span>'
 				: $link;
+
+			// The blog entries should be sorted on the category page
+			// just like other pages
+			$catView->blogs_start_char[] = $catView->collation->getFirstLetter( $sortkey );
 
 			/**
 			 * when we return false it won't be displayed as normal category but
@@ -634,13 +659,14 @@ class BlogArticle extends Article {
 	 */
 	static public function wfMaintenance() {
 		global $wgTitle;
-		echo "Blog Article maintenance.\n";
+
+		$results = [];
 		/**
 		 * create Blog:Recent posts page if not exists
 		 */
 		$recentPosts = wfMsg("create-blog-post-recent-listing");
 		if( $recentPosts ) {
-			echo "Creating {$recentPosts}";
+			$recentPostsKey = "Creating {$recentPosts}";
 			$oTitle = Title::newFromText( $recentPosts,  NS_BLOG_LISTING );
 			if( $oTitle ) {
 				$wgTitle = $oTitle;
@@ -653,16 +679,16 @@ class BlogArticle extends Article {
 						wfMsg("create-blog-post-recent-listing-log"),
 						EDIT_NEW | EDIT_MINOR | EDIT_FORCE_BOT  # flags
 					);
-					echo "... done.\n";
+					$results[$recentPostsKey] = 'done';
 				}
 				else {
-					echo "... already exists.\n";
+					$results[$recentPostsKey] = 'already exists';
 				}
 				/**
 				 * Edit sidebar, add link to recent blog posts
 				 */
-				echo "Updating Monaco-sidebar";
 				$sidebar = wfMsg('Monaco-sidebar');
+				$sidebarKey = 'Updating Monaco sidebar';
 				$newline = sprintf("\n* %s|%s", $oTitle->getPrefixedText(), wfMsg("create-blog-post-recent-listing-title") );
 				if( strpos( $sidebar, $newline ) !== false ) {
 					$sidebar .= $newline;
@@ -675,10 +701,10 @@ class BlogArticle extends Article {
 							EDIT_MINOR | EDIT_FORCE_BOT  # flags
 						);
 					}
-					echo "... done.\n";
+					$results[$sidebarKey] = 'done';
 				}
 				else {
-					echo "... already added.\n";
+					$results[$sidebarKey] = 'already added';
 				}
 
 			}
@@ -689,7 +715,7 @@ class BlogArticle extends Article {
 		 */
 		$catName = wfMsg("create-blog-post-category");
 		if( $catName && $catName !== "-" ) {
-			echo "Creating {$catName}";
+			$catNameKey = "Creating {$catName}";
 			$oTitle = Title::newFromText( $catName, NS_CATEGORY );
 			if( $oTitle ) {
 				$oArticle = new Article( $oTitle, 0 );
@@ -699,13 +725,15 @@ class BlogArticle extends Article {
 						wfMsg( "create-blog-post-category-log" ),
 						EDIT_NEW | EDIT_MINOR | EDIT_FORCE_BOT  # flags
 					);
-					echo "... done.\n";
+					$results[$catNameKey] = 'done';
 				}
 				else {
-					echo "... already exists.\n";
+					$results[$catNameKey] = 'already exists';
 				}
 			}
 		}
+
+		return $results;
 	}
 
 	/**

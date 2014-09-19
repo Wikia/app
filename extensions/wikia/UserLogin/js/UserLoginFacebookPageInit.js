@@ -1,3 +1,3 @@
 $(function() {
-	UserLoginFacebook.init();
+	UserLoginFacebook.init( UserLoginFacebook.origins.PAGE );
 });

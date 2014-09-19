@@ -99,4 +99,15 @@ class SEOTweaksGlobalHooksHelper {
 		return true;
 	}
 
+	static public function onShowMissingArticle( $article ) {
+		global $wgOut;
+
+		if ( $article instanceof Article ) {
+			if ( $article->getTitle()->getNamespace() == NS_USER || $article->getTitle()->getNamespace() == NS_USER_TALK ) {
+				// bugId:PLA-844
+				$wgOut->setRobotPolicy( "noindex,nofollow" );
+			}
+		}
+		return true;
+	}
 }

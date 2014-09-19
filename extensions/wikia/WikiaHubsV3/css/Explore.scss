@@ -1,0 +1,35 @@
+.WikiaArticle {
+	.wikiahubs-explore {
+		margin-top: 10px;
+		.title-wrapper {
+			width: 100%;
+			@include clearfix;
+		}
+		.explore-content {
+			border-left: 1px dotted #B9B9B9;
+			border-right: 1px dotted #B9B9B9;
+			margin-top: 10px;
+			overflow: hidden;
+			padding-left:8px;
+			padding-right:8px;
+			.text {
+				margin-top: 15px;
+			}
+		}	
+		h4 {
+			font-weight: bold;
+			font-size:13px;
+			color: #3A3A3A;
+			margin: 1.5em 0 0 0;
+			&:first-child {
+				margin: 0;
+			}
+		}
+		p {
+			margin:0;	
+			a {
+				line-height:1.5em;
+			}
+		}
+	}
+}

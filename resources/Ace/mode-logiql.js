@@ -28,7 +28,7 @@
  *
  * ***** END LICENSE BLOCK ***** */
 
-define('ace/mode/logiql', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/mode/text', 'ace/tokenizer', 'ace/mode/logiql_highlight_rules', 'ace/mode/folding/coffee', 'ace/token_iterator', 'ace/range', 'ace/mode/behaviour/cstyle', 'ace/mode/matching_brace_outdent'], function(require, exports, module) {
+ace.define('ace/mode/logiql', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/mode/text', 'ace/tokenizer', 'ace/mode/logiql_highlight_rules', 'ace/mode/folding/coffee', 'ace/token_iterator', 'ace/range', 'ace/mode/behaviour/cstyle', 'ace/mode/matching_brace_outdent'], function(require, exports, module) {
 
 
 var oop = require("../lib/oop");
@@ -42,9 +42,8 @@ var CstyleBehaviour = require("./behaviour/cstyle").CstyleBehaviour;
 var MatchingBraceOutdent = require("./matching_brace_outdent").MatchingBraceOutdent;
 
 var Mode = function() {
-    var highlighter = new LogiQLHighlightRules();
+    this.HighlightRules = LogiQLHighlightRules;
     this.foldingRules = new FoldMode();
-    this.$tokenizer = new Tokenizer(highlighter.getRules());
     this.$outdent = new MatchingBraceOutdent();
     this.$behaviour = new CstyleBehaviour();
 };
@@ -57,7 +56,7 @@ oop.inherits(Mode, TextMode);
     this.getNextLineIndent = function(state, line, tab) {
         var indent = this.$getIndent(line);
 
-        var tokenizedLine = this.$tokenizer.getLineTokens(line, state);
+        var tokenizedLine = this.getTokenizer().getLineTokens(line, state);
         var tokens = tokenizedLine.tokens;
         var endState = tokenizedLine.state;
         if (/comment|string/.test(endState))  
@@ -139,7 +138,7 @@ oop.inherits(Mode, TextMode);
 exports.Mode = Mode;
 });
 
-define('ace/mode/logiql_highlight_rules', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/mode/text_highlight_rules'], function(require, exports, module) {
+ace.define('ace/mode/logiql_highlight_rules', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/mode/text_highlight_rules'], function(require, exports, module) {
 
 
 var oop = require("../lib/oop");
@@ -158,7 +157,7 @@ var LogiQLHighlightRules = function() {
            regex: '//.*',
             },
          { token: 'constant.numeric',
-           regex: '\\d+(?:\\.\\d+)?(?:[eE][+-]?\\d+)?',
+           regex: '\\d+(?:\\.\\d+)?(?:[eE][+-]?\\d+)?[fd]?',
             },
          { token: 'string',
            regex: '"',
@@ -213,7 +212,7 @@ oop.inherits(LogiQLHighlightRules, TextHighlightRules);
 exports.LogiQLHighlightRules = LogiQLHighlightRules;
 });
 
-define('ace/mode/folding/coffee', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/mode/folding/fold_mode', 'ace/range'], function(require, exports, module) {
+ace.define('ace/mode/folding/coffee', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/mode/folding/fold_mode', 'ace/range'], function(require, exports, module) {
 
 
 var oop = require("../../lib/oop");
@@ -300,7 +299,7 @@ oop.inherits(FoldMode, BaseFoldMode);
 
 });
 
-define('ace/mode/behaviour/cstyle', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/mode/behaviour', 'ace/token_iterator', 'ace/lib/lang'], function(require, exports, module) {
+ace.define('ace/mode/behaviour/cstyle', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/mode/behaviour', 'ace/token_iterator', 'ace/lib/lang'], function(require, exports, module) {
 
 
 var oop = require("../../lib/oop");
@@ -623,7 +622,7 @@ oop.inherits(CstyleBehaviour, Behaviour);
 exports.CstyleBehaviour = CstyleBehaviour;
 });
 
-define('ace/mode/matching_brace_outdent', ['require', 'exports', 'module' , 'ace/range'], function(require, exports, module) {
+ace.define('ace/mode/matching_brace_outdent', ['require', 'exports', 'module' , 'ace/range'], function(require, exports, module) {
 
 
 var Range = require("../range").Range;

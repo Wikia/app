@@ -116,7 +116,7 @@ class SquidUpdate {
 		// wikia change start
 		global $wgPurgeSquidViaScribe;
 		if( $wgPurgeSquidViaScribe == true ) {
-			SquidUpdate::ScribePurge( $urlArr );
+			ScribePurge::purge( $urlArr );
 			return;
 		}
 
@@ -232,90 +232,4 @@ class SquidUpdate {
 	static function expand( $url ) {
 		return wfExpandUrl( $url, PROTO_INTERNAL );
 	}
-
-	/**
-	 * wikia function
-	 * @
-	 * @access public
-	 * @static
-	 */
-	static function ScribePurge( $urlArr ) {
-		global $wgEnableScribeReport;
-		wfProfileIn( __METHOD__ );
-		$key = 'varnish_purges';
-
-		if ( empty($wgEnableScribeReport) ) {
-			wfProfileOut( __METHOD__ );
-			return true;
-		}
-
-		try {
-			foreach ( $urlArr as $url ) {
-				if ( !is_string( $url ) ) {
-					throw new MWException( 'Bad purge URL' );
-				}
-				$url = SquidUpdate::expand( $url );
-
-				wfDebug( "Purging URL $url via Scribe\n" );
-				$data = json_encode(
-					array(
-						'url' => $url,
-						'time' => time(),
-					)
-				);
-				WScribeClient::singleton($key)->send($data);
-			}
-		}
-		catch( TException $e ) {
-			Wikia::log( __METHOD__, 'scribeClient exception', $e->getMessage() );
-		}
-
-		wfProfileOut( __METHOD__ );
-	}
-
-	/**
-	 * wikia function
-	 * purges list of keys via surrogate key purge mechanism in Varnish
-	 * @
-	 * @access public
-	 * @static
-	 */
-	static function VarnishPurgeKey( $keyArr ) {
-		global $wgEnableScribeReport;
-		wfProfileIn( __METHOD__ );
-		$queue = 'varnish_purges_by_key';
-
-		if ( empty($wgEnableScribeReport) ) {
-			wfProfileOut( __METHOD__ );
-			return true;
-		}
-
-		if( !is_array( $keyArr ) ) {
-			$keyArr = array( $keyArr );
-		}
-
-		try {
-			foreach ( $keyArr as $key ) {
-				if ( !is_string( $key ) ) {
-					throw new MWException( 'Bad purge key' );
-				}
-
-				wfDebug( "Purging key $key via Scribe\n" );
-				$data = json_encode(
-					array(
-						'key' => $key,
-						'time' => time(),
-					)
-				);
-				WScribeClient::singleton($queue)->send($data);
-			}
-		}
-		catch( TException $e ) {
-			Wikia::log( __METHOD__, 'scribeClient exception', $e->getMessage() );
-		}
-
-		wfProfileOut( __METHOD__ );
-
-	}
-
 }

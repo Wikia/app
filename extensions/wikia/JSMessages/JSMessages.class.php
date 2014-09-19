@@ -250,9 +250,6 @@ class JSMessages {
 			$vars['wgMessages'] = self::getPackages($packages, false /* don't allow wildcards in INLINE mode (BugId:18482) */);
 		}
 
-		// messages cache buster used by JSMessages (BugId:6324)
-		$vars['wgJSMessagesCB'] = JSMessagesHelper::getMessagesCacheBuster();
-
 		self::log(__METHOD__, 'preparing list of external packages...');
 
 		$url = self::getExternalPackagesUrl();
@@ -263,6 +260,17 @@ class JSMessages {
 		}
 
 		wfProfileOut(__METHOD__);
+		return true;
+	}
+
+	/**
+	 * Add wgJSMessagesCB global variable to startup ResourceLoader module
+	 *
+	 * @param array $vars JS global variables
+	 * @return bool true
+	 */
+	static public function onResourceLoaderGetConfigVars(Array &$vars) {
+		$vars['wgJSMessagesCB'] = JSMessagesHelper::getMessagesCacheBuster();
 		return true;
 	}
 

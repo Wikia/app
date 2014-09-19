@@ -26,60 +26,42 @@ function wikia_fbconnect_init(){
  * function will check to see if the user has a Wikia Avatar and if they don't, it will attempt to
  * use this Facebook-connected user's profile picture as their Wikia Avatar.
  *
- * FIXME: Is there a way to make this fail gracefully if we ever un-include the Masthead extension?
+ * This function is depended on Masthead and UserProfilePageController classes
  */
 function wikia_fbconnect_considerProfilePic( &$specialConnect ){
-	wfProfileIn(__METHOD__);
+	wfProfileIn( __METHOD__ );
 	global $wgUser;
 
 	// We need the facebook id to have any chance of getting a profile pic.
-	$fb_ids = FBConnectDB::getFacebookIDs($wgUser);
-	if(count($fb_ids) > 0){
-		$fb_id = array_shift($fb_ids);
-		if ( class_exists( 'Masthead' ) ){
-			// If the useralready has a masthead avatar, don't overwrite it, this function shouldn't alter anything in that case.
-			$masthead = Masthead::newFromUser($wgUser);
-			if( !$masthead->hasAvatar() ) {
-				global $wgEnableUserProfilePagesV3;
+	$fb_ids = FBConnectDB::getFacebookIDs( $wgUser );
 
-				if( !empty($wgEnableUserProfilePagesV3) ) {
-				//bugId:10580
-					// Attempt to store the facebook profile pic as the Wikia avatar.
-					$picUrl = FBConnectProfilePic::getImgUrlById($fb_id, FB_PIC_BIG);
-				} else {
-					// Attempt to store the facebook profile pic as the Wikia avatar.
-					$picUrl = FBConnectProfilePic::getImgUrlById($fb_id, FB_PIC_SQUARE);
-				}
+	if( count( $fb_ids ) > 0 ) {
+		$fb_id = array_shift( $fb_ids );
 
-				if( $picUrl != "" ) {
-					if( !empty($wgEnableUserProfilePagesV3) ) {
-					//bugId:10580
-						$tmpFile = '';
-						$sUrl = $masthead->uploadByUrlToTempFile($picUrl, $tmpFile);
+		// If the user already has a masthead avatar, don't overwrite it,
+		// this function shouldn't alter anything in that case.
+		$masthead = Masthead::newFromUser( $wgUser );
 
-						$app = F::app();
-						$userProfilePageV3 = new UserProfilePageController($app);
-						$data->source = 'facebook';
-						$data->file = $tmpFile;
-						$userProfilePageV3->saveUsersAvatar($wgUser->getId(), $data);
-					} else {
-						$errorNo = $masthead->uploadByUrl($picUrl);
+		if( !$masthead->hasAvatar() ) {
+			// Attempt to store the facebook profile pic as the Wikia avatar.
+			$picUrl = FBConnectProfilePic::getImgUrlById( $fb_id, FB_PIC_BIG );
 
-						// Apply this as the user's new avatar if the image-pull went okay.
-						if($errorNo == UPLOAD_ERR_OK){
-							$sUrl = $masthead->getLocalPath();
-							if ( !empty($sUrl) ) {
-								/* set user option */
-								$wgUser->setOption( AVATAR_USER_OPTION_NAME, $sUrl );
-								$wgUser->saveSettings();
-							}
-						}
-					}
-				}
+			if( $picUrl != '' ) {
+				$app = F::app();
+
+				// UPPv3 has been enabled in 2012 sitewide
+				// https://github.com/Wikia/config/blob/dev/CommonExtensions.php#L1714
+				$userProfilePageV3 = new UserProfilePageController( $app );
+
+				$data = new stdClass();
+				$data->source = 'facebook';
+				$data->file = $picUrl;
+
+				$userProfilePageV3->saveUsersAvatar( $wgUser->getId(), $data );
 			}
 		}
 	}
 
-	wfProfileOut(__METHOD__);
+	wfProfileOut( __METHOD__ );
 	return true;
 } // end wikia_fbconnect_considerProfilePic()

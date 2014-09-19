@@ -9,7 +9,8 @@ class BliptvVideoHandler extends VideoHandler {
 	protected static $autoplayParam = "autoStart";
 	protected static $autoplayValue = "true";
 
-	public function getEmbed( $articleId, $width, $autoplay = false, $isAjax = false, $postOnload = false ) {
+	public function getEmbed( $width, array $options = [] ) {
+		$autoplay = !empty( $options['autoplay'] );
 		$height =  $this->getHeight( $width );
 		$url = $this->getEmbedUrl();
 		$embedVideoId = $this->getEmbedVideoId();
@@ -20,7 +21,11 @@ class BliptvVideoHandler extends VideoHandler {
 <iframe src="http://blip.tv/play/{$embedVideoId}.html?p=1&autoStart={$autoStartParam}" $sizeString frameborder="0" allowfullscreen></iframe><embed type="application/x-shockwave-flash" src="{$url}" style="display:none"></embed>
 EOT;
 
-		return array( 'html' => $html );
+		return array(
+			'html' => $html,
+			'width' => $width,
+			'height' => $height,
+		);
 	}
 
 	public function getProviderDetailUrl() {

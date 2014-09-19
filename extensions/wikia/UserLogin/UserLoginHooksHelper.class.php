@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 class UserLoginHooksHelper {
 
@@ -33,18 +33,7 @@ class UserLoginHooksHelper {
 		} else if ( $abortError == wfMessage('phalanx-help-type-user-email')->escaped() ) {
 			$errParam = 'email';
 		} else if ( $abortError == wfMessage('phalanx-email-block-new-account')->escaped()) {
-			$errParam = 'email';	 
-		}
-
-		return true;
-	}
-
-	// save temp user and map temp user to user when mail password
-	public static function onMailPasswordTempUser( &$u, &$tempUser ) {
-		$tempUser = TempUser::getTempUserFromName( $u->getName() );
-		if ( $tempUser ) {
-			$tempUser->saveSettingsTempUserToUser( $u );
-			$u = $tempUser->mapTempUserToUser();
+			$errParam = 'email';
 		}
 
 		return true;
@@ -64,13 +53,15 @@ class UserLoginHooksHelper {
 	}
 
 	// set parameters for User::sendConfirmationEmail()
-	public static function onUserSendConfirmationMail( &$user, &$args, &$priority, &$url, $token, $ip_arg ) {
-		$priority = 1;  // confirmation emails are higher than default priority of 0
-		$url = $user->wikiaConfirmationTokenUrl( $token );
-		if ( !$ip_arg ) {
-			$args[1] = $url;
-		} else {
-			$args[2] = $url;
+	public static function onUserSendConfirmationMail( &$user, &$args, &$priority, &$url, $token, $ip_arg, $type ) {
+		if ( $type !== 'reactivateaccount' ) {
+			$priority = 1;  // confirmation emails are higher than default priority of 0
+			$url = $user->wikiaConfirmationTokenUrl( $token );
+			if ( !$ip_arg ) {
+				$args[1] = $url;
+			} else {
+				$args[2] = $url;
+			}
 		}
 
 		return true;
@@ -148,7 +139,74 @@ class UserLoginHooksHelper {
 	 */
 	public static function onMakeGlobalVariablesScript(Array &$vars) {
 		$vars['wgEnableUserLoginExt'] = true;
+
+		if (F::app()->checkSkin('wikiamobile')) {
+			$vars['wgLoginToken'] = UserLoginHelper::getLoginToken();
+		}
+
 		return true;
 	}
 
+	/**
+	 * Returns number of activated accounts for specific email address
+	 *
+	 * @param mixed $sEmail
+	 * @static
+	 * @return integer
+	 */
+	public static function getUsersPerEmailFromDB( $sEmail ) {
+		wfProfileIn( __METHOD__ );
+		$dbw = wfGetDB( DB_SLAVE );
+		$iCount = $dbw->selectField( 'user',
+			'count(*)',
+			array(
+				'user_email' => $sEmail,
+				'user_email_authenticated IS NOT NULL',
+		    )
+		);
+		wfProfileOut( __METHOD__ );
+		return $iCount;
+	}
+
+	/**
+	 * Keeps count of registered accounts with same email
+	 *
+	 * @param User $user
+	 * @static
+	 * @return bool
+	 */
+	public static function onConfirmEmailComplete( User $user ) {
+		global $wgAccountsPerEmail, $wgMemc;
+		$sEmail = $user->getEmail();
+		if ( isset( $wgAccountsPerEmail )
+			&& is_numeric( $wgAccountsPerEmail )
+			&& !UserLoginHelper::isWikiaEmail( $sEmail )
+		) {
+			$key = wfSharedMemcKey( "UserLogin", "AccountsPerEmail", $sEmail );
+			$iCount = $wgMemc->get( $key );
+			if ( $iCount === false ) {
+				$iCount = self::getUsersPerEmailFromDB( $sEmail );
+				if ( $iCount > 0 ) {
+					$wgMemc->set( $key, $iCount );
+				}
+			} else {
+				$wgMemc->incr( $key );
+			}
+		}
+        return true;
+	}
+
+	static public function onWikiaMobileAssetsPackages( Array &$jsStaticPackages, Array &$jsExtensionPackages, Array &$scssPackages ) {
+		$title = F::app()->wg->Title;
+
+		if ( $title->isSpecial( 'UserSignup' ) ) {
+			$scssPackages[] =  'wikiamobile_usersignup_scss';
+			$jsExtensionPackages[] =  'wikiamobile_usersignup_js';
+		} else if ( $title->isSpecial( 'WikiaConfirmEmail' ) ) {
+			$scssPackages[] = 'wikiamobile_usersignup_scss';
+		}
+
+		return true;
+	}
 }
+

@@ -37,11 +37,6 @@ $app->wg->append(
 $wgAutoloadClasses['ImageTweaksHooks'] = "{$dir}/ImageTweaksHooks.class.php";
 
 /**
- * services
- */
-$wgAutoloadClasses['ImageTweaksService'] = "{$dir}/ImageTweaksService.class.php";
-
-/**
  * hooks
  */
 //hook into Linker::MakeImageLink2
@@ -50,7 +45,7 @@ $wgHooks['ImageAfterProduceHTML'][] = 'ImageTweaksHooks::onImageAfterProduceHTML
 //hook into Linker::MakeThumbLink2
 $wgHooks['ThumbnailAfterProduceHTML'][] = 'ImageTweaksHooks::onThumbnailAfterProduceHTML';
 
-//hook into ImageThumbnail::toHTML
+//hook into ThumbnailImage::toHTML
 $wgHooks['ThumbnailImageHTML'][] = 'ImageTweaksHooks::onThumbnailImageHTML';
 
 //hook into ThumbnailVideo::toHTML

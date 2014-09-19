@@ -2,6 +2,7 @@
 
 MiniEditor.Forum.NewMessageForm = $.createClass(Wall.settings.classBindings.newMessageForm, {
 	disableNewMessage: function() {
+		this.message.find('.submit').attr('disabled', 'disabled');
 		this.message.addClass('loading');
 	},
 	enableNewMessage: function() {

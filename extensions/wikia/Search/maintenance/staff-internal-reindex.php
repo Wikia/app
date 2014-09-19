@@ -5,8 +5,7 @@
  * @addtopackage maintenance
  */
 
-ini_set( "include_path", "{$IP}/maintenance/" );
-require_once( "commandLine.inc" );
+require_once( "../../../../maintenance/commandLine.inc" );
 
 include("$IP/extensions/wikia/Search/WikiaSearch.setup.php");
 
@@ -17,7 +16,7 @@ $c = RequestContext::getMain();
 $c->setUser($wgUser);
 $c->setTitle($wgTitle);
 
-$indexer = (new WikiaSearchIndexer);
+$indexer = (new Wikia\Search\Indexer);
 
 $dbr = wfGetDB( DB_MASTER );
 

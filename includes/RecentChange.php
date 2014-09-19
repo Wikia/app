@@ -268,9 +268,12 @@ class RecentChange {
 	}
 
 	public function notifyRC2UDP() {
-		global $wgRC2UDPAddress, $wgRC2UDPOmitBots;
+		global $wgRC2UDPAddress, $wgRC2UDPOmitBots, $wgRC2UDPEnabled;
 		# Notify external application via UDP
-		if( $wgRC2UDPAddress && ( !$this->mAttribs['rc_bot'] || !$wgRC2UDPOmitBots ) ) {
+		/* Wikia change begin */
+		/* Readd $wgRC2UDPEnabled variable used to disable RC feed on a per wiki basis in WikiFactory */
+		if( $wgRC2UDPEnabled && $wgRC2UDPAddress && ( !$this->mAttribs['rc_bot'] || !$wgRC2UDPOmitBots ) ) {
+		/* Wikia change end */
 			self::sendToUDP( $this->getIRCLine() );
 		}
 	}

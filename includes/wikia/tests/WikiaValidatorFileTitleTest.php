@@ -3,6 +3,9 @@
 class WikiaValidatorFileTitleTest extends WikiaBaseTest {
 
 	/**
+	 * @group Slow
+	 * @group Broken
+	 * @slowExecutionTime 0.03433 ms
 	 * @dataProvider filesDataProvider
 	 */
 	public function testFiles($fileString, $isValid, $exists) {
@@ -21,12 +24,6 @@ class WikiaValidatorFileTitleTest extends WikiaBaseTest {
 		$validator = $this->getMock('WikiaValidatorFileTitle', array('getApp'));
 
 		$titleMock = $this->getMock('Title', array('newFromText'));
-
-		$titleMock->staticExpects($this->any())
-			->method('newFromText')
-			->with($this->equalTo($fileString), $this->equalTo(NS_FILE))
-			->will($this->returnValue($titleMock));
-
 		$titleMock->expects($this->any())
 			->method('exists')
 			->will($this->returnValue($exists));

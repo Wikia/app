@@ -1,0 +1,21 @@
+@import "skins/shared/color";
+@import "color";
+
+.ve-ui-mwSaveDialog-summary {
+	background-color: $color-ve-page-secondary;
+	border-color: $color-page-border;
+	padding: 0;
+
+	textarea {
+		padding: .5em;
+	}
+}
+
+.ve-ui-mwSaveDialog-options {
+	background-color: $color-ve-page-tertiary;
+	border-color: $color-page-border;
+}
+
+.ve-ui-mwSaveDialog-editSummary-count {
+	border-color: $color-page-border;
+}

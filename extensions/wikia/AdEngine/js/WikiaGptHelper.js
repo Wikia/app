@@ -1,26 +1,150 @@
-/*global setTimeout */
-var WikiaGptHelper = function (log, window, document, adLogicPageLevelParams) {
+/*global define,setTimeout*/
+/*jshint maxlen:125, camelcase:false, maxdepth:7*/
+define('ext.wikia.adEngine.wikiaGptHelper', [
+	'wikia.log',
+	'wikia.window',
+	'wikia.document',
+	'ext.wikia.adEngine.adLogicPageParams',
+	'ext.wikia.adEngine.gptSlotConfig',
+	'ext.wikia.adEngine.wikiaGptAdDetect'
+], function (log, window, document, adLogicPageParams, gptSlotConfig, gptAdDetect) {
 	'use strict';
 
-	var logGroup = 'WikiaGptHelper',
+	var logGroup = 'ext.wikia.adEngine.wikiaGptHelper',
 		gptLoaded = false,
-		pageLevelParams = adLogicPageLevelParams.getPageLevelParams(),
-		path = '/5441/wka.' + pageLevelParams.s0 + '/' + pageLevelParams.s1 + '//' + pageLevelParams.s2,
-		slotsToDisplay = [],
-		doneCallbacks = {},// key: slot name, value: callback
-		googletag;
+		slotQueue = [],
+		providerSlotMap = gptSlotConfig.getConfig(),
+		gptSlots = {},
+		dataAttribs = {},
+		googletag,
+		pubads,
+		fallbackSize = [1, 1]; // Size to return if there are no sizes matching the screen dimensions
 
-	pageLevelParams.src = 'gpt';
+	function convertSizesToGpt(slotsize) {
+		log(['convertSizeToGpt', slotsize], 'debug', logGroup);
+		var tmp1 = slotsize.split(','),
+			sizes = [],
+			tmp2,
+			i;
 
-	function triggerDone(slotnameGpt) {
-		var callback = doneCallbacks[slotnameGpt];
-
-		log(['triggerDone', slotnameGpt], 3, logGroup);
-
-		if (callback) {
-			delete doneCallbacks[slotnameGpt];
-			setTimeout(callback, 0); // escape from GPT's error-catching
+		for (i = 0; i < tmp1.length; i += 1) {
+			tmp2 = tmp1[i].split('x');
+			sizes.push([parseInt(tmp2[0], 10), parseInt(tmp2[1], 10)]);
 		}
+
+		return sizes;
+	}
+
+	function filterOutSizesBiggerThanScreenSize(sizes) {
+		log(['filterOutSizesBiggerThanScreenSize', sizes], 'debug', logGroup);
+		var goodSizes = [], i, len, minWidth;
+
+		minWidth = document.documentElement.offsetWidth;
+
+		for (i = 0, len = sizes.length; i < len; i += 1) {
+			if (sizes[i][0] <= minWidth) {
+				goodSizes.push(sizes[i]);
+			}
+		}
+
+		if (goodSizes.length === 0) {
+			log(['filterOutSizesBiggerThanScreenSize', 'No sizes left. Returning fallbackSize only'], 'error', logGroup);
+			goodSizes.push(fallbackSize);
+		}
+
+		log(['filterOutSizesBiggerThanScreenSize', 'result', goodSizes], 'debug', logGroup);
+		return goodSizes;
+	}
+
+	function setPageLevelParams() {
+		var name,
+			value,
+			pageLevelParams = adLogicPageParams.getPageLevelParams();
+
+		log(['setPageLevelParams', pageLevelParams], 'debug', logGroup);
+
+		for (name in pageLevelParams) {
+			if (pageLevelParams.hasOwnProperty(name)) {
+				value = pageLevelParams[name];
+				if (value) {
+					log(['setPageLevelParams', 'pubads.setTargeting', name, value], 'debug', logGroup);
+					pubads.setTargeting(name, value);
+				}
+			}
+		}
+	}
+
+	function defineSlots() {
+		var	pageLevelParams = adLogicPageParams.getPageLevelParams(),
+			path = '/5441/wka.' + pageLevelParams.s0 + '/' + pageLevelParams.s1 + '//' + pageLevelParams.s2,
+			slotname,
+			slotnameGpt,
+			sizes,
+			slot,
+			slotMap,
+			slotMapSrc,
+			slotItem,
+			slotPath,
+			slotParams,
+			name,
+			value;
+
+		log(['defineSlots', providerSlotMap], 'info', logGroup);
+
+		for (slotMapSrc in providerSlotMap) {
+			if (providerSlotMap.hasOwnProperty(slotMapSrc)) {
+
+				slotMap = providerSlotMap[slotMapSrc];
+
+				for (slotname in slotMap) {
+					if (slotMap.hasOwnProperty(slotname) && slotMap[slotname].size) {
+						log(['defineSlots', 'defining slot', slotname], 'debug', logGroup);
+
+						slotnameGpt = slotname + '_' + slotMapSrc;
+						slotItem = slotMap[slotname];
+
+						sizes = convertSizesToGpt(slotItem.size);
+						if (slotname.match(/TOP_LEADERBOARD/)) {
+							sizes = filterOutSizesBiggerThanScreenSize(sizes);
+						}
+
+						slotPath = path + '/' + slotname + '_' + slotMapSrc;
+
+						log(['defineSlots', 'googletag.defineSlot', slotPath, sizes, slotnameGpt], 'debug', logGroup);
+						slot = googletag.defineSlot(slotPath, sizes, slotnameGpt);
+						slot.addService(pubads);
+
+						// Per-slot targeting keys
+						slotParams = {
+							pos: slotname,
+							loc: slotItem.loc,
+							src: slotMapSrc
+						};
+						for (name in slotParams) {
+							if (slotParams.hasOwnProperty(name)) {
+								value = slotParams[name];
+								if (value) {
+									log(['defineSlots', 'slot.setTargeting', name, value], 'debug', logGroup);
+									slot.setTargeting(name, value);
+								}
+							}
+						}
+
+						gptSlots[slotnameGpt] = slot;
+
+						dataAttribs[slotnameGpt] = {
+							'data-gpt-page-params': JSON.stringify(pageLevelParams),
+							'data-gpt-slot-params': JSON.stringify(slotParams),
+							'data-gpt-slot-sizes': JSON.stringify(sizes)
+						};
+
+						log(['defineSlots', 'defined slot', slotname, slot], 'debug', logGroup);
+					}
+				}
+			}
+		}
+
+		log(['defineSlots', 'all slots defined'], 'debug', logGroup);
 	}
 
 	function loadGpt() {
@@ -29,6 +153,7 @@ var WikiaGptHelper = function (log, window, document, adLogicPageLevelParams) {
 
 			var gads = document.createElement('script'),
 				node = document.getElementsByTagName('script')[0];
+
 			gptLoaded = true;
 
 			window.googletag = window.googletag || {};
@@ -43,199 +168,103 @@ var WikiaGptHelper = function (log, window, document, adLogicPageLevelParams) {
 			node.parentNode.insertBefore(gads, node);
 			googletag = window.googletag;
 
-			log(['loadGpt', 'googletag.cmd.push', 'bind to GPT events'], 4, logGroup);
+			// Enable services
+			log(['loadGpt', 'googletag.cmd.push'], 'info', logGroup);
 			googletag.cmd.push(function () {
-				var debug_log = googletag.debug_log,
-					oldLog = debug_log.log;
+				pubads = googletag.pubads();
 
-				// We're plugging into the log function in GPT so we get some insight of what
-				// happens in GPT internals. We're looking for logging messages and comparing them
-				// to the pattern that is the most interesting for us. We chose out of those 4
-				// (listed here in the order of appearing for each slot GPT loads):
-				//
-				//  /^Fetching ad/i
-				//  /^Receiving ad/i
-				//  /^Rendering ad/i
-				//  /^Completed rendering ad/i
-				//
-				// Inspiration: https://github.com/mcountis/dfp-events
-
-				googletag.debug_log.log = function (level, message, service, slot) {
-					var domId,
-						donePattern = /^Rendering ad/i;
-
-					// Play extra-safe with this
-					try {
-						domId = slot.getSlotId().getDomId();
-
-						if (typeof message === 'string') {
-							if (message.search(donePattern) === 0) {
-								// If the message is what we look for, trigger the event
-								triggerDone(domId);
-							}
-						}
-					} catch (e) {
-					}
-
-					// Call the original function
-					return oldLog.apply(debug_log, arguments);
-				};
-			});
-
-			// Set page level params
-			log(['loadGpt', 'googletag.cmd.push', 'page level targeting'], 4, logGroup);
-			googletag.cmd.push(function () {
-				var name, value, pubads = googletag.pubads();
+				setPageLevelParams();
+				defineSlots();
 
 				pubads.collapseEmptyDivs();
+				pubads.enableSingleRequest();
+				pubads.disableInitialLoad(); // manually request ads
 
-				log(['loadGpt', 'pageLevelParams', pageLevelParams], 9, logGroup);
+				googletag.enableServices();
 
-				for (name in pageLevelParams) {
-					if (pageLevelParams.hasOwnProperty(name)) {
-						value = pageLevelParams[name];
-						if (value) {
-							log(['pubads.setTargeting', name, value], 9, logGroup);
-							pubads.setTargeting(name, value);
-						}
-					}
-				}
+				log(['loadGpt', 'googletag.cmd.push', 'done'], 'debug', logGroup);
 			});
 		}
 	}
 
-	function convertSizesToGpt(slotsize) {
-		log(['convertSizeToGpt', slotsize], 9, logGroup);
-		var tmp1 = slotsize.split(','),
-			sizes = [],
-			tmp2,
-			i;
+	function pushAd(slotname, success, error, slotMapSrc) {
+		var slotnameGpt = slotname + '_' + slotMapSrc,
+			slotDiv = document.createElement('div');
 
-		for (i = 0; i < tmp1.length; i += 1) {
-			tmp2 = tmp1[i].split('x');
-			sizes.push([parseInt(tmp2[0], 10), parseInt(tmp2[1], 10)]);
+		function callSuccess(adInfo) {
+			if (typeof success === 'function') {
+				success(adInfo);
+			}
 		}
 
-		return sizes;
-	}
-
-	function pushAd(slotParams, success, error) {
-		var slotname = slotParams.slotname,
-			slotnameGpt = slotname + '_gpt',
-			slotDiv = document.createElement('div'),
-			sizes = convertSizesToGpt(slotParams.slotsize),
-			params = {},
-			slotPath = window.wgAdDriverUseNewGptZones ? path + '/' + slotname : path;
+		function callError(adInfo) {
+			slotDiv.className += ' hidden';
+			if (typeof error === 'function') {
+				error(adInfo);
+			}
+		}
 
 		loadGpt();
 
-		params.pos = slotParams.slotname;
-		params.positionfixed = slotParams.positionfixed;
-		params.loc = slotParams.loc;
-		//params.dcopt = slotParams.dcopt;
-
 		// Create a div for the GPT ad
 		slotDiv.id = slotnameGpt;
-		// Save page level and slot level params for easier ad delivery debugging
-		slotDiv.setAttribute('data-gpt-page-params', JSON.stringify(pageLevelParams));
-		slotDiv.setAttribute('data-gpt-slot-params', JSON.stringify(params));
-		slotDiv.setAttribute('data-gpt-slot-sizes', JSON.stringify(sizes));
+
 		document.getElementById(slotname).appendChild(slotDiv);
 
-		log(['googletag.cmd.push', slotPath, sizes, slotnameGpt, params], 4, logGroup);
-
+		log(['pushAd', slotname], 'debug', logGroup);
 		googletag.cmd.push(function () {
-			var slot = googletag.defineSlot(slotPath, sizes, slotnameGpt),
-				name,
-				value;
+			var attrName;
 
-			slot.addService(googletag.pubads());
+			log(['googletag.display', slotnameGpt], 'debug', logGroup);
+			googletag.display(slotnameGpt);
 
-			for (name in params) {
-				if (params.hasOwnProperty(name)) {
-					value = params[name];
-					if (value) {
-						slot.setTargeting(name, value);
-					}
+			slotQueue.push(gptSlots[slotnameGpt]);
+
+			googletag.pubads().addEventListener('slotRenderEnded', function (event) {
+				if (event.slot === gptSlots[slotnameGpt]) {
+					log(['slotRenderEnded', slotname, event], 'info', logGroup);
+
+					// Add debug info
+					slotDiv.setAttribute('data-gpt-line-item-id', JSON.stringify(event.lineItemId));
+					slotDiv.setAttribute('data-gpt-creative-id', JSON.stringify(event.creativeId));
+					slotDiv.setAttribute('data-gpt-creative-size', JSON.stringify(event.size));
+
+					var iframe = slotDiv.querySelector('div[id*="_container_"] iframe');
+
+					// IE doesn't allow us to inspect GPT iframe at this point.
+					// Let's launch our callback in a setTimeout instead.
+					setTimeout(function () {
+						gptAdDetect.onAdLoad(slotname, event, iframe, callSuccess, callError);
+					}, 0);
+				}
+			});
+
+			// Save page level and slot level params for easier ad delivery debugging
+			for (attrName in dataAttribs[slotnameGpt]) {
+				if (dataAttribs[slotnameGpt].hasOwnProperty(attrName)) {
+					slotDiv.setAttribute(attrName, dataAttribs[slotnameGpt][attrName]);
 				}
 			}
-
-			slotsToDisplay.push(slotnameGpt);
-			doneCallbacks[slotnameGpt] = function () {
-				// TODO: unify forced status and height based status?
-				if (window.adDriver2ForcedStatus && window.adDriver2ForcedStatus[slotname]) {
-					var status = window.adDriver2ForcedStatus[slotname];
-					log(['doneCallback', slotname, 'forced status', status], 4, logGroup);
-					if (status === 'success' && typeof success === 'function') {
-						success();
-					}
-				} else {
-
-				var height = slotDiv.offsetHeight;
-				log(['doneCallback', slotname, 'height', height], 4, logGroup);
-				if (height <= 1) {
-					log(['doneCallback', slotname, 'running error callback (hop)'], 4, logGroup);
-					if (typeof error === 'function') {
-						error();
-					}
-				} else {
-
-
-
-					// ADEN-502 HACK STARTS HERE
-					log('Detecting passBack in slot ' + slotname, 1, logGroup);
-					var hasPassBack = false;
-					try {
-						hasPassBack = document.getElementById(slotnameGpt).getElementsByTagName('iframe')[0].contentDocument.getElementById('passbackIframe');
-					} catch (e) {
-					}
-					if (hasPassBack) {
-						log('passback in slot ' + slotname, 1, logGroup);
-						document.getElementById(slotnameGpt).style.display = 'none';
-						if (typeof error === 'function') {
-							error();
-							return;
-						}
-					}
-					// ADEN-502 HACK ENDS HERE
-
-
-
-
-					log(['doneCallback', slotname, 'running success callback'], 4, logGroup);
-					if (typeof success === 'function') {
-						success();
-					}
-				}
-
-				}
-			};
 		});
 	}
 
 	function flushAds() {
-		loadGpt();
-
-		log(['googletag.cmd.push', 'enableServices'], 4, logGroup);
-		log(['googletag.cmd.push', 'display', slotsToDisplay], 4, logGroup);
+		if (!gptLoaded) {
+			log(['flushAds', 'done', 'no slots to flush'], 'info', logGroup);
+			return;
+		}
 
 		googletag.cmd.push(function () {
-			var callback, slotnameGpt;
+			log(['flushAds', 'start'], 'info', logGroup);
 
-			log(['flushAds', 'start'], 4, logGroup);
+			log(['flushAds', 'refresh', slotQueue], 'debug', logGroup);
 
-			googletag.pubads().enableSingleRequest();
-			googletag.enableServices();
-
-			while (slotsToDisplay.length > 0) {
-				slotnameGpt = slotsToDisplay.shift();
-
-				log(['flushAds', 'display', slotnameGpt], 8, logGroup);
-
-				googletag.display(slotnameGpt);
+			if (slotQueue.length) {
+				googletag.pubads().refresh(slotQueue);
+				slotQueue = [];
 			}
 
-			log(['flushAds', 'done'], 4, logGroup);
+			log(['flushAds', 'done'], 'info', logGroup);
 		});
 	}
 
@@ -243,4 +272,5 @@ var WikiaGptHelper = function (log, window, document, adLogicPageLevelParams) {
 		pushAd: pushAd,
 		flushAds: flushAds
 	};
-};
+
+});

@@ -122,7 +122,7 @@ class WikiaVideoAddForm extends SpecialPage {
 			// sanitize all video titles
 			$this->mName = VideoFileUploader::sanitizeTitle( $this->mName );
 
-			$title = Title::makeTitleSafe( NS_VIDEO, $this->mName );
+			$title = Title::makeTitleSafe( NS_FILE, $this->mName );
 			if ( $title instanceof Title ) {
 				$permErrors = $title->getUserPermissionsErrors( 'edit', $this->getUser() );
 				$permErrorsUpload = $title->getUserPermissionsErrors( 'upload', $this->getUser() );
@@ -151,13 +151,6 @@ class WikiaVideoAddForm extends SpecialPage {
 						$this->showForm($errors);
 						return;
 					}
-				}
-
-				if ( WikiaFileHelper::useWikiaVideoExtForEmbed() ) {
-					$video = new VideoPage( $title );
-					$video->parseUrl( $this->mUrl );
-					$video->setName( $this->mName );
-					$video->save();
 				}
 			} else {
 				//bad title returned

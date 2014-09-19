@@ -77,12 +77,9 @@ class BodyController extends WikiaController {
 	 * @return Boolean
 	 */
 	public static function isResponsiveLayoutEnabled() {
-		$app = F::app();
-		return !empty( $app->wg->OasisResponsive ) &&
-				// Prevent the responsive layout from being enabled on the
-				// corporate wiki as it will break styling on it.
-				// TODO: remove this check when it's safe to enable there.
-				empty( $app->wg->EnableWikiaHomePageExt );
+		global $wgOasisResponsive;
+
+		return !empty( $wgOasisResponsive );
 	}
 
 	/**
@@ -134,8 +131,8 @@ class BodyController extends WikiaController {
 		global $wgTitle, $wgUser, $wgEnableAchievementsExt, $wgContentNamespaces,
 			$wgExtraNamespaces, $wgExtraNamespacesLocal,
 			$wgEnableWikiAnswers, $wgEnableHuluVideoPanel,
-			$wgEnableGamingCalendarExt, $wgEnableWallEngine, $wgRequest,
-			$wgEnableForumExt, $wgIsForum;
+			$wgEnableWallEngine, $wgRequest,
+			$wgEnableForumExt, $wgAnalyticsProviderPageFairSlotIds;
 
 		$namespace = $wgTitle->getNamespace();
 		$subjectNamespace = MWNamespace::getSubject($namespace);
@@ -147,13 +144,20 @@ class BodyController extends WikiaController {
 		$huluVideoPanelKey = $wgUser->isAnon() ? 1390 : 1280;
 
 		// Forum Extension
-		if ($wgEnableForumExt && $wgIsForum) {
+		if ($wgEnableForumExt && ForumHelper::isForum()) {
 			$railModuleList = array (
 				1500 => array('Search', 'Index', null),
-				1002 => array('Forum', 'forumRelatedThreads', null),
-				1001 => array('Forum', 'forumActivityModule', null),
-				1490 => array('Ad', 'Index', array('slotname' => 'TOP_RIGHT_BOXAD')),
+				1202 => array('Forum', 'forumRelatedThreads', null),
+				1201 => array('Forum', 'forumActivityModule', null),
+				1490 => array('Ad', 'Index', [
+					'slotName' => 'TOP_RIGHT_BOXAD',
+					'pageFairId' => isset($wgAnalyticsProviderPageFairSlotIds['MEDREC']) ? $wgAnalyticsProviderPageFairSlotIds['MEDREC'] : null
+				]),
 			);
+
+			// Include additional modules from other extensions (like chat)
+			wfRunHooks( 'GetRailModuleList', array( &$railModuleList ) );
+
 			wfProfileOut(__METHOD__);
 			return $railModuleList;
 		}
@@ -225,7 +229,7 @@ class BodyController extends WikiaController {
 
 		// Content, category and forum namespaces.  FB:1280 Added file,video,mw,template
 		if(	$wgTitle->isSubpage() && $wgTitle->getNamespace() == NS_USER ||
-			in_array($subjectNamespace, array (NS_CATEGORY, NS_CATEGORY_TALK, NS_FORUM, NS_PROJECT, NS_FILE, NS_VIDEO, NS_MEDIAWIKI, NS_TEMPLATE, NS_HELP)) ||
+			in_array($subjectNamespace, array (NS_CATEGORY, NS_CATEGORY_TALK, NS_FORUM, NS_PROJECT, NS_FILE, NS_MEDIAWIKI, NS_TEMPLATE, NS_HELP)) ||
 			in_array($subjectNamespace, $wgContentNamespaces) ||
 			array_key_exists( $subjectNamespace, $wgExtraNamespaces ) ) {
 			// add any content page related rail modules here
@@ -286,22 +290,15 @@ class BodyController extends WikiaController {
 			return array();
 		}
 
-		$railModuleList[1440] = array('Ad', 'Index', array('slotname' => 'TOP_RIGHT_BOXAD'));
-		$railModuleList[1291] = array('Ad', 'Index', array('slotname' => 'MIDDLE_RIGHT_BOXAD'));
-		$railModuleList[1100] = array('Ad', 'Index', array('slotname' => 'LEFT_SKYSCRAPER_2'));
-
-		/**
-		 * Michał Roszka <michal@wikia-inc.com>
-		 *
-		 * SSW Gaming Calendar
-		 *
-		 * This is most likely going to be replaced with something similar to:
-		 *
-		 * $railModuleList[1260] = array( 'Ad', 'Index', array( 'slotname' => 'GAMING_CALENDAR_RAIL' ) );
-		 */
-		if ( !empty( $wgEnableGamingCalendarExt ) ) {
-			$railModuleList[1430] = array( 'GamingCalendarRail', 'Index', array( ) );
-		}
+		$railModuleList[1440] = array('Ad', 'Index', [
+			'slotName' => 'TOP_RIGHT_BOXAD',
+			'pageFairId' => isset($wgAnalyticsProviderPageFairSlotIds['MEDREC']) ? $wgAnalyticsProviderPageFairSlotIds['MEDREC'] : null
+		]);
+		$railModuleList[1291] = array('Ad', 'Index', ['slotName' => 'MIDDLE_RIGHT_BOXAD']);
+		$railModuleList[1100] = array('Ad', 'Index', [
+			'slotName' => 'LEFT_SKYSCRAPER_2',
+			'pageFairId' => isset($wgAnalyticsProviderPageFairSlotIds['SKYSCRAPER']) ? $wgAnalyticsProviderPageFairSlotIds['SKYSCRAPER'] : null
+		]);
 
 		unset($railModuleList[1450]);
 
@@ -330,7 +327,6 @@ class BodyController extends WikiaController {
 
 		// InfoBox - Testing
 		$this->wg->EnableInfoBoxTest = $wgEnableInfoBoxTest;
-		$this->isMainPage = WikiaPageType::isMainPage();
 
 		// Replaces ContentDisplayModule->index()
 		$this->bodytext = $this->app->getSkinTemplateObj()->data['bodytext'];
@@ -364,7 +360,7 @@ class BodyController extends WikiaController {
 				$this->headerModuleAction = 'BlogListing';
 			}
 		// show corporate header on this page?
-		} else if( HubService::isCorporatePage() ) {
+		} else if( WikiaPageType::isCorporatePage() || WikiaPageType::isWikiaHub()) {
 			$this->headerModuleName = 'PageHeader';
 
 			if( self::isEditPage() ) {
@@ -373,8 +369,11 @@ class BodyController extends WikiaController {
 				$this->headerModuleAction = 'Corporate';
 			}
 
+			if ( WikiaPageType::isWikiaHubMain() ) {
+				$this->headerModuleAction = 'Hubs';
+			}
 			// FIXME: move to separate module
-			if( WikiaPageType::isMainPage() ) {
+			elseif( WikiaPageType::isMainPage() ) {
 				$this->wg->SuppressFooter = true;
 				$this->wg->SuppressArticleCategories = true;
 				$this->wg->SuppressPageHeader = true;
@@ -451,8 +450,15 @@ class BodyController extends WikiaController {
 		}
 
 		// Forum Extension
-		if (!empty($this->wg->EnableForumExt) && !empty($this->wg->IsForum)) {
+		if (!empty($this->wg->EnableForumExt) && ForumHelper::isForum()) {
 			$this->wg->SuppressPageHeader = true;
+		}
+
+		// MonetizationModule Extension
+		if ( !empty( $this->wg->EnableMonetizationModuleExt ) ) {
+			$this->monetizationModules = $this->sendRequest( 'MonetizationModule', 'index' )->getData()['data'];
+			$this->headerModuleParams['monetizationModules'] = $this->monetizationModules;
+			$this->bodytext = MonetizationModuleHelper::insertIncontentUnit( $this->bodytext, $this->monetizationModules );
 		}
 
 		$namespace = $wgTitle->getNamespace();

@@ -49,7 +49,7 @@
 						<li class="community-update-item plainlinks">
 							<?= $cssUpdate['userAvatar']; ?>
 							<h4><a href="<?= $cssUpdate['url']; ?>" data-tracking="update-read-item"><?= $cssUpdate['title']; ?></a></h4>
-							<span><?= wfMessage('special-css-community-update-by')->params([$cssUpdate['timestamp'], $cssUpdate['userUrl'], $cssUpdate['userName']])->parse(); ?></span>
+							<span><?= wfMessage('special-css-community-update-by')->params([$wg->Lang->date( $cssUpdate['timestamp'] ), $cssUpdate['userUrl'], $cssUpdate['userName']])->parse(); ?></span>
 							<blockquote><?= $cssUpdate['text']; ?></blockquote>
 							<a href="<?= $cssUpdate['url']; ?>" data-tracking="update-read-item"><?= wfMessage('special-css-community-read-more')->plain(); ?></a>
 						</li>

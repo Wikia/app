@@ -3,6 +3,8 @@
 if ( !defined( 'MEDIAWIKI' ) )
 	die( 1 );
 
+use Wikia\Logger\WikiaLogger;
+
 class CategoryViewer extends ContextSource {
 	var $limit, $from, $until,
 		$articles, $articles_start_char,
@@ -337,7 +339,7 @@ class CategoryViewer extends ContextSource {
 					$this->addImage( $title, $humanSortkey, $row->page_len, $row->page_is_redirect );
 				} else {
 					# <Wikia>
-					if( wfRunHooks( "CategoryViewer::addPage", array( &$this, &$title, &$row ) ) ) {
+					if( wfRunHooks( "CategoryViewer::addPage", array( &$this, &$title, &$row, $humanSortkey ) ) ) {
 						$this->addPage( $title, $humanSortkey, $row->page_len, $row->page_is_redirect );
 					}
 					# </Wikia>

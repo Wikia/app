@@ -1,0 +1,93 @@
+$color-inactive-button: darken($color-secondary-button, 50%);
+@if lightness($color-page) < 50 {
+	$color-inactive-button: lighten($color-secondary-button, 50%);
+}
+
+.carousel-container {
+	height: 160px;
+	left: 65px;
+	overflow: hidden;
+	position: relative;
+	width: 550px;
+	& > div {
+		position: relative;
+	}
+	.carousel {
+		margin-top: 10px;
+		position: absolute;
+		li {
+			border: 0;
+			margin-right: 24px;
+			width: 160px;
+		}
+		img {
+			width: 160px;
+			height: 90px;
+		}
+		img:hover {
+			cursor: pointer;
+		}
+		li {
+			float: left;
+		}
+		.video-thumbnail {
+			display: block;
+			position: relative;
+		}
+		.video-title {
+			width: 160px;
+			line-height: 15px;
+			font-size: 12px;
+			font-weight: bold;
+			padding-top: 8px;
+			max-height: 30px;
+			overflow: hidden;
+			margin-left: 2px;
+		}
+	}
+}
+
+.WikiaArticle .wikiahubs-popular-videos {
+	padding-top: 10px;
+	.WikiaMediaCarousel {
+		height: 160px;
+		.button {
+			&.secondary {
+				@include linear-gradient($color-secondary-button, top, $color-secondary-button-highlight, 35%, $color-secondary-button, 65%);
+				&:hover {
+					@include linear-gradient($color-secondary-button, top, $color-secondary-button, 5%, $color-secondary-button, 50%);
+				}
+			}
+			height: 90px;
+			width: 15px;
+			position: absolute;
+			margin-top: 10px;
+			left: 623px;
+			.chevron {
+				border-color: transparent transparent transparent  $color-wikiahome-hubcolor;
+				border-width: 11px;
+				margin: 35px 4px;
+			}
+			&.left {
+				left: 0;
+				.chevron {
+					border-color: transparent $color-wikiahome-hubcolor transparent transparent;
+					margin: 35px -9px;
+				}
+				&.disabled {
+					img {
+						border-color: transparent $color-inactive-button transparent transparent;
+					}
+				}
+			}
+			&.disabled {
+				@include linear-gradient($color-secondary-button, left, $color-secondary-button, 5%, $color-secondary-button, 50%);
+				cursor: auto;
+				opacity: .5;
+				img {
+					border-color: transparent transparent transparent $color-inactive-button;
+				}
+			}
+		}
+	}
+}

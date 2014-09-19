@@ -1,7 +1,7 @@
 /*!
  * VisualEditor UserInterface MWExtensionInspector class.
  *
- * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
@@ -13,25 +13,44 @@
  * @extends ve.ui.Inspector
  *
  * @constructor
- * @param {ve.ui.Surface} surface
- * @param {Object} [config] Config options
+ * @param {Object} [config] Configuration options
  */
-ve.ui.MWExtensionInspector = function VeUiMWExtensionInspector( surface, config ) {
+ve.ui.MWExtensionInspector = function VeUiMWExtensionInspector( config ) {
 	// Parent constructor
-	ve.ui.Inspector.call( this, surface, config );
+	ve.ui.Inspector.call( this, config );
 };
 
 /* Inheritance */
 
-ve.inheritClass( ve.ui.MWExtensionInspector, ve.ui.Inspector );
+OO.inheritClass( ve.ui.MWExtensionInspector, ve.ui.Inspector );
 
 /* Static properties */
 
-ve.ui.MWExtensionInspector.static.nodeView = null;
+ve.ui.MWExtensionInspector.static.placeholder = null;
 
 ve.ui.MWExtensionInspector.static.nodeModel = null;
 
-ve.ui.MWExtensionInspector.static.removeable = false;
+ve.ui.MWExtensionInspector.static.removable = false;
+
+/**
+ * Extension is allowed to have empty contents
+ *
+ * @static
+ * @property {boolean}
+ * @inheritable
+ */
+ve.ui.MWExtensionInspector.static.allowedEmpty = false;
+
+/**
+ * Inspector's directionality, 'ltr' or 'rtl'
+ *
+ * Leave as null to use the directionality of the current fragment.
+ *
+ * @static
+ * @property {string|null}
+ * @inheritable
+ */
+ve.ui.MWExtensionInspector.static.dir = null;
 
 /* Methods */
 
@@ -42,79 +61,137 @@ ve.ui.MWExtensionInspector.static.removeable = false;
  */
 ve.ui.MWExtensionInspector.prototype.initialize = function () {
 	// Parent method
-	ve.ui.Inspector.prototype.initialize.call( this );
+	ve.ui.MWExtensionInspector.super.prototype.initialize.call( this );
 
-	this.input = new ve.ui.TextInputWidget( {
-		'$$': this.frame.$$,
-		'overlay': this.surface.$localOverlay,
+	this.input = new OO.ui.TextInputWidget( {
+		'$': this.$,
 		'multiline': true
 	} );
-	this.input.$.addClass( 've-ui-mwExtensionInspector-input' );
+	this.input.$element.addClass( 've-ui-mwExtensionInspector-input' );
+
+	this.isBlock = !this.constructor.static.nodeModel.static.isContent;
 
 	// Initialization
-	this.$form.append( this.input.$ );
-};
-
-
-/**
- * Handle the inspector being opened.
- */
-ve.ui.MWExtensionInspector.prototype.onOpen = function () {
-	var extsrc = '';
-
-	// Parent method
-	ve.ui.Inspector.prototype.onOpen.call( this );
-
-	this.node = this.surface.getView().getFocusedNode();
-
-	if ( this.node ) {
-		extsrc = this.node.getModel().getAttribute( 'mw' ).body.extsrc;
-	}
-
-	// Wait for animation to complete
-	setTimeout( ve.bind( function () {
-		// Setup input text
-		this.input.setValue( extsrc );
-		this.input.$input.focus().select();
-	}, this ), 200 );
+	this.$form.append( this.input.$element );
 };
 
 /**
- * Handle the inspector being closed.
+ * Get the placeholder text for the content input area.
  *
- * @param {string} action Action that caused the window to be closed
+ * @returns {string} Placeholder text
  */
-ve.ui.MWExtensionInspector.prototype.onClose = function ( action ) {
-	var mw,
-		surfaceModel = this.surface.getModel();
+ve.ui.MWExtensionInspector.prototype.getInputPlaceholder = function () {
+	return '';
+};
 
-	// Parent method
-	ve.ui.Inspector.prototype.onClose.call( this, action );
+/**
+ * @inheritdoc
+ */
+ve.ui.MWExtensionInspector.prototype.getSetupProcess = function ( data ) {
+	return ve.ui.MWExtensionInspector.super.prototype.getSetupProcess.call( this, data )
+		.next( function () {
+			var value, dir;
 
-	if ( this.node instanceof this.constructor.static.nodeView ) {
-		mw = this.node.getModel().getAttribute( 'mw' );
-		mw.body.extsrc = this.input.getValue();
-		surfaceModel.change(
-			ve.dm.Transaction.newFromAttributeChanges(
-				surfaceModel.getDocument(), this.node.getOuterRange().start, { 'mw': mw }
-			)
-		);
-	} else {
-		mw = {
-			'name': this.constructor.static.nodeModel.static.extensionName,
-			'attrs': {},
-			'body': {
-				'extsrc': this.input.getValue()
+			// Initialization
+			this.node = this.getFragment().getSelectedNode();
+			this.whitespace = [ '', '' ];
+
+			// Make sure we're inspecting the right type of node
+			if ( !( this.node instanceof this.constructor.static.nodeModel ) ) {
+				this.node = null;
 			}
-		};
-		surfaceModel.getFragment().collapseRangeToEnd().insertContent( [
-			{
-				'type': this.constructor.static.nodeModel.static.name,
-				'attributes': {
-					'mw': mw
+			if ( this.node ) {
+				value = this.node.getAttribute( 'mw' ).body.extsrc;
+				if ( this.isBlock ) {
+					// Trim leading/trailing linebreaks but remember them
+					if ( value.slice( 0, 1 ) === '\n' ) {
+						this.whitespace[0] = '\n';
+						value = value.slice( 1 );
+					}
+					if ( value.slice( -1 ) === '\n' ) {
+						this.whitespace[1] = '\n';
+						value = value.slice( 0, -1 );
+					}
 				}
-			},
-			{ 'type': '/' + this.constructor.static.nodeModel.static.name }
-		] );
-	}
+				this.input.setValue( value );
+			} else {
+				if ( this.isBlock ) {
+					// New nodes should use linebreaks for blocks
+					this.whitespace = [ '\n', '\n' ];
+				}
+				this.input.setValue( '' );
+			}
+
+			this.input.$input.attr( 'placeholder', this.getInputPlaceholder() );
+
+			dir = this.constructor.static.dir || data.dir;
+			this.input.setRTL( dir === 'rtl' );
+		}, this );
+};
+
+/**
+ * @inheritdoc
+ */
+ve.ui.MWExtensionInspector.prototype.getReadyProcess = function ( data ) {
+	return ve.ui.MWExtensionInspector.super.prototype.getReadyProcess.call( this, data )
+		.next( function () {
+			// Focus the input
+			this.input.focus();
+		}, this );
+};
+
+/**
+ * @inheritdoc
+ */
+ve.ui.MWExtensionInspector.prototype.getTeardownProcess = function ( data ) {
+	return ve.ui.MWExtensionInspector.super.prototype.getTeardownProcess.call( this, data )
+		.first( function () {
+			var mwData,
+				surfaceModel = this.getFragment().getSurface();
+
+			if ( this.constructor.static.allowedEmpty || this.input.getValue() !== '' ) {
+				if ( this.node ) {
+					mwData = ve.copy( this.node.getAttribute( 'mw' ) );
+					this.updateMwData( mwData );
+					surfaceModel.change(
+						ve.dm.Transaction.newFromAttributeChanges(
+							surfaceModel.getDocument(),
+							this.node.getOuterRange().start,
+							{ 'mw': mwData }
+						)
+					);
+				} else {
+					mwData = {
+						'name': this.constructor.static.nodeModel.static.extensionName,
+						'attrs': {},
+						'body': {}
+					};
+					this.updateMwData( mwData );
+					// Collapse returns a new fragment, so update this.fragment
+					this.fragment = this.getFragment().collapseRangeToEnd();
+					this.getFragment().insertContent( [
+						{
+							'type': this.constructor.static.nodeModel.static.name,
+							'attributes': {
+								'mw': mwData
+							}
+						},
+						{ 'type': '/' + this.constructor.static.nodeModel.static.name }
+					] );
+				}
+			} else if ( this.node && !this.constructor.static.allowedEmpty ) {
+				// Content has been emptied on a node which isn't allowed to
+				// be empty, so delete it.
+				this.getFragment().removeContent();
+			}
+		}, this );
+};
+
+/**
+ * Update mwData object with the new values from the inspector
+ *
+ * @param {Object} mwData MediaWiki data object
+ */
+ve.ui.MWExtensionInspector.prototype.updateMwData = function ( mwData ) {
+	mwData.body.extsrc = this.whitespace[0] + this.input.getValue() + this.whitespace[1];
 };

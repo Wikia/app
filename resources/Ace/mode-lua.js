@@ -28,7 +28,7 @@
  *
  * ***** END LICENSE BLOCK ***** */
 
-define('ace/mode/lua', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/mode/text', 'ace/tokenizer', 'ace/mode/lua_highlight_rules', 'ace/mode/folding/lua', 'ace/range', 'ace/worker/worker_client'], function(require, exports, module) {
+ace.define('ace/mode/lua', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/mode/text', 'ace/tokenizer', 'ace/mode/lua_highlight_rules', 'ace/mode/folding/lua', 'ace/range', 'ace/worker/worker_client'], function(require, exports, module) {
 
 
 var oop = require("../lib/oop");
@@ -40,7 +40,8 @@ var Range = require("../range").Range;
 var WorkerClient = require("../worker/worker_client").WorkerClient;
 
 var Mode = function() {
-    this.$tokenizer = new Tokenizer(new LuaHighlightRules().getRules());
+    this.HighlightRules = LuaHighlightRules;
+    
     this.foldingRules = new LuaFoldMode();
 };
 oop.inherits(Mode, TextMode);
@@ -94,7 +95,7 @@ oop.inherits(Mode, TextMode);
         var indent = this.$getIndent(line);
         var level = 0;
 
-        var tokenizedLine = this.$tokenizer.getLineTokens(line, state);
+        var tokenizedLine = this.getTokenizer().getLineTokens(line, state);
         var tokens = tokenizedLine.tokens;
 
         if (state == "start") {
@@ -117,7 +118,7 @@ oop.inherits(Mode, TextMode);
         if (line.match(/^\s*[\)\}\]]$/))
             return true;
 
-        var tokens = this.$tokenizer.getLineTokens(line.trim(), state).tokens;
+        var tokens = this.getTokenizer().getLineTokens(line.trim(), state).tokens;
 
         if (!tokens || !tokens.length)
             return false;
@@ -128,7 +129,7 @@ oop.inherits(Mode, TextMode);
     this.autoOutdent = function(state, session, row) {
         var prevLine = session.getLine(row - 1);
         var prevIndent = this.$getIndent(prevLine).length;
-        var prevTokens = this.$tokenizer.getLineTokens(prevLine, "start").tokens;
+        var prevTokens = this.getTokenizer().getLineTokens(prevLine, "start").tokens;
         var tabLength = session.getTabString().length;
         var expectedIndent = prevIndent + tabLength * getNetIndentLevel(prevTokens);
         var curIndent = this.$getIndent(session.getLine(row)).length;
@@ -158,7 +159,7 @@ oop.inherits(Mode, TextMode);
 exports.Mode = Mode;
 });
 
-define('ace/mode/lua_highlight_rules', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/mode/text_highlight_rules'], function(require, exports, module) {
+ace.define('ace/mode/lua_highlight_rules', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/mode/text_highlight_rules'], function(require, exports, module) {
 
 
 var oop = require("../lib/oop");
@@ -227,7 +228,7 @@ var LuaHighlightRules = function() {
         "start" : [{
             stateName: "bracketedComment",
             onMatch : function(value, currentState, stack){
-                stack.unshift(this.next, value.length, currentState);
+                stack.unshift(this.next, value.length - 2, currentState);
                 return "comment";
             },
             regex : /\-\-\[=*\[/,
@@ -243,7 +244,7 @@ var LuaHighlightRules = function() {
                         }
                         return "comment";
                     },
-                    regex : /(?:[^\\]|\\.)*?\]=*\]/,
+                    regex : /\]=*\]/,
                     next  : "start"
                 }, {
                     defaultToken : "comment"
@@ -275,7 +276,7 @@ var LuaHighlightRules = function() {
                         return "comment";
                     },
                     
-                    regex : /(?:[^\\]|\\.)*?\]=*\]/,
+                    regex : /\]=*\]/,
                     next  : "start"
                 }, {
                     defaultToken : "comment"
@@ -320,7 +321,7 @@ oop.inherits(LuaHighlightRules, TextHighlightRules);
 exports.LuaHighlightRules = LuaHighlightRules;
 });
 
-define('ace/mode/folding/lua', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/mode/folding/fold_mode', 'ace/range', 'ace/token_iterator'], function(require, exports, module) {
+ace.define('ace/mode/folding/lua', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/mode/folding/fold_mode', 'ace/range', 'ace/token_iterator'], function(require, exports, module) {
 
 
 var oop = require("../../lib/oop");

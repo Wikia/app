@@ -5,10 +5,14 @@ class LyricFindControllerTest extends WikiaBaseTest {
 	public function setUp() {
 		$this->setupFile = __DIR__ . '/../LyricFind.setup.php';
 		parent::setUp();
+
+		// mock title and prevent DB changes
+		$this->mockGlobalVariable('wgTitle', $this->mockClassWithMethods('Title', [
+			'getArticleID' => 123
+		]));
 	}
 
 	/**
-	 *
 	 * @dataProvider trackDataProvider
 	 * @param $amgId
 	 * @param $trackResult
@@ -20,7 +24,7 @@ class LyricFindControllerTest extends WikiaBaseTest {
 		$controller->setRequest(new WikiaRequest(['amgid' => $amgId]));
 		$controller->setResponse(new WikiaResponse('json'));
 
-		$this->mockClassWithMethods('LyricFindTrackingService', ['track' => $trackResult]);
+		$this->mockClassWithMethods('LyricFindTrackingService', ['track' => $trackResult ? Status::newGood() : Status::newFatal('foo')]);
 
 		$controller->track();
 		$this->assertEquals($responseCode, $controller->getResponse()->getCode(), 'HTTP response code should match the expected value');
@@ -31,17 +35,18 @@ class LyricFindControllerTest extends WikiaBaseTest {
 			[
 				'amgId' => 1,
 				'trackResult' => true,
-				'responseCode' => 204
+				'responseCode' => 200
 			],
 			[
 				'amgId' => 1,
 				'trackResult' => false,
 				'responseCode' => 404
 			],
+			// should be ok, despite missing amg ID
 			[
 				'amgId' => 0,
 				'trackResult' => true,
-				'responseCode' => 404
+				'responseCode' => 200
 			],
 		];
 	}

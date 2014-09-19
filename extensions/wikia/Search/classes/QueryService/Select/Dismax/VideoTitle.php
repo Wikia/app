@@ -16,13 +16,13 @@ class VideoTitle extends AbstractDismax
 	 * @var int
 	 */
 	protected $minDuration;
-	
+
 	/**
 	 * Maximum duration in seconds
 	 * @var int
 	 */
 	protected $maxDuration;
-	
+
 	/**
 	 * Totally short-circuits how we do select queries
 	 * @return \Solarium_Query_Select
@@ -47,9 +47,10 @@ class VideoTitle extends AbstractDismax
 			$params = array_merge( $params, [ $this->getMinDuration(), $this->getMaxDuration() ] );
 		}
 		$query->setQuery( $queryString, $params );
+		$query->setRows( $this->config->getLimit() );
 		return $query;
 	}
-	
+
 	/**
 	 * @return int $minDuration
 	 */
@@ -59,7 +60,7 @@ class VideoTitle extends AbstractDismax
 
 	/**
 	 * @param int $minDuration
-	 * @return Wikia\Search\QueryService\Select\VideoTitle
+	 * @return \Wikia\Search\QueryService\Select\Dismax\VideoTitle
 	 */
 	public function setMinDuration($minDuration) {
 		$this->minDuration = $minDuration;
@@ -76,7 +77,7 @@ class VideoTitle extends AbstractDismax
 
 	/**
 	 * @param int $maxDuration
-	 * @return Wikia\Search\QueryService\Select\VideoTitle
+	 * @return \Wikia\Search\QueryService\Select\Dismax\VideoTitle
 	 */
 	public function setMaxDuration($maxDuration) {
 		$this->maxDuration = $maxDuration;
@@ -91,11 +92,11 @@ class VideoTitle extends AbstractDismax
 	public function getFormulatedQuery() {
 		return '';
 	}
-	
+
 	protected function getQueryFieldsString() {
 		return '';
 	}
-	
+
 	/**
 	 * We're not using this beacuse we're trying Solarium's native prepared statement stuff in this queryservice
 	 * Probably suggests we're eventually due for a refactor

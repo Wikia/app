@@ -66,7 +66,13 @@ abstract class AbstractSelect
 	 * @var string
 	 */
 	const SOLR_CORE_CROSSWIKI = 'xwiki';
-	
+
+	/**
+	 * Number of articles found to set WikiMatch
+	 * @var int
+	 */
+	const ARTICLES_NUM_WIKIMATCH = 50;
+
 	/**
 	 * Used for tracking
 	 * @var string
@@ -93,19 +99,19 @@ abstract class AbstractSelect
 	
 	/**
 	 * The field used for highlighting
-	 * @var unknown_type
+	 * @var string
 	 */
 	protected $highlightingField = 'html';
 	
 	/**
 	 * Responsible for storing configuration values for a search.
-	 * @var Wikia\Search\Config
+	 * @var \Wikia\Search\Config
 	 */
 	protected $config;
 	
 	/**
 	 * Responsible for encapsulating logic that interacts with MediaWiki classes.
-	 * @var Wikia\Search\MediaWikiService
+	 * @var \Wikia\Search\MediaWikiService
 	 */
 	protected $service;
 	
@@ -144,6 +150,8 @@ abstract class AbstractSelect
 				'categories',
 				'hub',
 				'lang',
+				'article_quality_i',
+				'article_type_s'
 			];
 	
 	/**
@@ -163,7 +171,7 @@ abstract class AbstractSelect
 	 * is prepared and sent. The response, upon receipt, is used to create a ResultSet.
 	 * This is fault-tolerant, and will return an instance of Wikia\Search\ResultSet\EmptySet
 	 * in the event of no results or an internal exception.
-	 * @return Wikia\Search\ResultSet\AbstractResultSet
+	 * @return \Wikia\Search\ResultSet\AbstractResultSet
 	 */
 	public function search() {
 		$this->getMatch();
@@ -172,15 +180,18 @@ abstract class AbstractSelect
 		;
 		return $this->getConfig()->getResults();
 	}
-	
+
 	/**
 	 * Allows us to get an array from search results rather than search result objects.
 	 * @param array $fields allows us to apply a mapping
+	 * @param bool $metadata
+	 * @param string $keyField
 	 * @return array
 	 */
-	public function searchAsApi( $fields = null, $metadata = false ) {
+	public function searchAsApi( $fields = null, $metadata = false, $keyField = null ) {
 		$resultSet = $this->search();
 		$config = $this->getConfig();
+
 		if ( $metadata ) {
 			$total = $config->getResultsFound();
 			$numPages = $config->getNumPages();
@@ -189,20 +200,24 @@ abstract class AbstractSelect
 					'total' => $total,
 					'batches' => $total > 0 ? $numPages : 0,
 					'currentBatch' => $total > 0 ? $config->getPage() : 0,
-					'next' => $total > 0 ? min( [ $numPages * $limit, $config->getStart() + $limit ] ) : 0,
-					'items' => $resultSet->toArray( $fields )
+					'next' => 0,
+					'items' => $resultSet->toArray( $fields, $keyField )
 					];
+			if ( $total > 0 ) {
+				$response[ 'next' ] = min( [ $numPages * $limit, $config->getStart() + $limit ] ) +
+					$config->mustAddMatchedRecords() + 1;
+			}
 		} else if ( $fields ) {
-			$response = $resultSet->toArray( $fields );
+			$response = $resultSet->toArray( $fields, $keyField );
 		} else {
-			$response = $resultSet->toArray();
+			$response = $resultSet->toArray( null, $keyField );
 		}
 		return $response;
 	}
 	
 	/**
 	 * Retrieves an existing match, or forces the child class to retrieve a match. 
-	 * @return Ambigous <\Wikia\Search\Match\Article, \Wikia\Search\Match\Wiki, \Wikia\Search\false, boolean>
+	 * @return \Wikia\Search\Match\Article|\Wikia\Search\Match\Wiki|\Wikia\Search\false|boolean
 	 */
 	public function getMatch() {
 		$config = $this->getConfig();
@@ -250,7 +265,7 @@ abstract class AbstractSelect
 	/**
 	 * Registers meta-parameters for the query
 	 * @param Solarium_Query_Select $query
-	 * @return Wikia\Search\QueryService\Select\AbstractSelect
+	 * @return \Wikia\Search\QueryService\Select\AbstractSelect
 	 */
 	protected function registerQueryParams( Solarium_Query_Select $query ) {
 		$config = $this->getConfig();
@@ -273,8 +288,10 @@ abstract class AbstractSelect
 	 */
 	protected function getRequestedFields() {
 		$fields = [];
-		foreach ( array_merge( $this->requestedFields, $this->getConfig()->getRequestedFields() ) as $field ) {
-			$fields[] = Utilities::field( $field );
+		$config = $this->getConfig();
+		$language = $config->getLanguageCode();
+		foreach ( array_merge( $this->requestedFields, $config->getRequestedFields() ) as $field ) {
+			$fields[] = Utilities::field( $field, $language );
 		}
 		return $fields;
 	}
@@ -282,7 +299,7 @@ abstract class AbstractSelect
 	/**
 	 * Configures filter queries to, for instance, prevent duplicate results from PTT, or enable better caching.
 	 * @param Solarium_Query_Select $query
-	 * @return Wikia\Search\QueryService\Select\AbstractSelect
+	 * @return \Wikia\Search\QueryService\Select\AbstractSelect
 	 */
 	protected function registerFilterQueries( Solarium_Query_Select $query ) {
 		$config = $this->getConfig();
@@ -295,7 +312,7 @@ abstract class AbstractSelect
 	/**
 	 * Used to register a filter query based on settings in the config.
 	 * Children can override this method optionally.
-	 * @return Wikia\Search\QueryService\Select\AbstractSelect
+	 * @return \Wikia\Search\QueryService\Select\AbstractSelect
 	 */
 	protected function registerFilterQueryForMatch() {
 		return $this;
@@ -347,7 +364,8 @@ abstract class AbstractSelect
 	protected function prepareRequest() {
 		$config = $this->getConfig();
 		if ( $config->getPage() > 1 ) {
-			$config->setStart( ( $config->getPage() - 1 ) * $config->getLength() );
+			$start = ( ( $config->getPage() - 1  ) * $config->getLimit() ) -  $config->mustAddMatchedRecords();
+			$config->setStart( $start );
 		}
 		return $this;
 	}
@@ -355,7 +373,7 @@ abstract class AbstractSelect
 	/**
 	 * Allows us to re-search for a collated spellcheck
 	 * @param Solarium_Result_Select $result
-	 * @return Ambigous <Solarium_Result_Select, \Solarium_Result_Select_Empty>
+	 * @return Solarium_Result_Select|\Solarium_Result_Select_Empty
 	 */
 	protected function spellcheckResult( Solarium_Result_Select $result ) {
 		// re-search for spellchecked phrase in the absence of results
@@ -390,20 +408,19 @@ abstract class AbstractSelect
 	 * Builds the string used with filter queries based on search config
 	 * @return string
 	 */
-	protected function getFilterQueryString()
-	{
+	protected function getFilterQueryString() {
 		return '';
 	}
 	
 	/**
-	 * @return Wikia\Search\Config
+	 * @return \Wikia\Search\Config
 	 */
 	protected function getConfig() {
 		return $this->config;
 	}
 	
 	/**
-	 * @return Wikia\Search\MediaWikiService
+	 * @return \Wikia\Search\MediaWikiService
 	 */
 	protected function getService() {
 		return $this->service;
@@ -411,7 +428,7 @@ abstract class AbstractSelect
 	
 	/**
 	 * Reusable logic for storing matches on a wiki basis. Used in InterWiki and OnWiki Query Services.
-	 * @return Wikia\Search\Match\Wiki|null
+	 * @return \Wikia\Search\Match\Wiki|null
 	 */
 	protected function extractWikiMatch() {
 		$config = $this->getConfig();
@@ -422,17 +439,51 @@ abstract class AbstractSelect
 			strtolower( $query ) 
 		);
 		$service = $this->getService();
-		$wikiMatch = $service->getWikiMatchByHost( $domain );
+		$langs = $config->getLanguageCode();
+		$langs = is_array( $langs ) ? $langs : [ $langs ];
+		foreach( $langs as $lang ) {
+			$wikiMatch = $service->getWikiMatchByHost( $domain, $lang );
+			//if found exit, we look only for first match
+			if ( !empty( $wikiMatch ) ) {
+				break;
+			}
+		}
 		if (! empty( $wikiMatch ) && ( $wikiMatch->getId() !== $service->getWikiId() ) &&
 			( !( $config->getCommercialUse() ) ||  (new \LicensedWikisService)->isCommercialUseAllowedById($wikiMatch->getId()) ) ) {
 			$result = $wikiMatch->getResult();
-			if ( $result['articles_i'] >= 50 ) {
+			if ($this->isValidExactMatch($result)) {
 				$config->setWikiMatch( $wikiMatch );
 			}
 		}
 		return $config->getWikiMatch();
 	}
-	
+
+	/**
+	 * @param $result
+	 * @return bool
+	 */
+	protected function isValidExactMatch($result) {
+		$config = $this->getConfig();
+		$hub = $config->getHub();
+		if ( !empty( $hub ) ) {
+			if ( strtolower( $result['hub_s'] ) !== strtolower( $hub ) ) {
+				return false;
+			}
+		}
+		$hubs = $config->getHubs();
+		if ( !empty( $hubs ) ) {
+			$found = false;
+			foreach ( $hubs as $hub )
+			if ( strtolower( $result['hub_s'] ) === strtolower( trim($hub) ) ) {
+				$found = true;
+			}
+			if ( !$found ) {
+				return false;
+			}
+		}
+		return $result['articles_i'] >= 50;
+	}
+
 	/**
 	 * This allows internal manipulation of the specific core being queried by this service.
 	 * There is probably a better way to do this, but this is the least disruptive way to handle this somewhat circular dependency.
@@ -451,7 +502,7 @@ abstract class AbstractSelect
 	 * @return Solarium_Client
 	 */
 	protected function getClient() {
-		if (! $this->coreSetInClient ) {
+		if ( ! $this->coreSetInClient ) {
 			$this->setCoreInClient();
 		}
 		return $this->client;

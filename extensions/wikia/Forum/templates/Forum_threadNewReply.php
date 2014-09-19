@@ -13,12 +13,12 @@
 			<? if ($wg->EnableMiniEditorExtForWall): ?>
 				<?= $app->getView('MiniEditorController', 'Editor_Header')->render() ?>
 			<? endif ?>
-			<textarea class="replyBody" data-space-type="editarea" placeholder="<?= wfMsg('forum-thread-reply-placeholder') ?>"></textarea>
+			<textarea class="replyBody" data-space-type="editarea" placeholder="<?= wfMessage( 'forum-thread-reply-placeholder' )->escaped() ?>"></textarea>
 			<? if ($wg->EnableMiniEditorExtForWall): ?>
 				<?= $app->getView('MiniEditorController', 'Editor_Footer')->render() ?>
 			<? endif ?>
 			<div class="buttons" data-space-type="buttons">
-				<button class="submit replyButton"><?= wfMsg('forum-thread-reply-post') ?></button>
+				<button class="submit replyButton"><?= wfMessage( 'forum-thread-reply-post' )->escaped() ?></button>
 			</div>
 			<? if ($wg->EnableMiniEditorExtForWall): ?>
 				<?= $app->getView('MiniEditorController', 'Footer')->render() ?>

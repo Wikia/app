@@ -3,10 +3,9 @@
  * TODO: Make search extension use paginator extension template. 
  */
 
-@import "color";
-@import "../mixins/clearfix";
-@import "../mixins/border-radius";
-@import "../../../../skins/oasis/css/mixins/arrow";
+@import "skins/shared/color";
+@import "skins/shared/mixins/clearfix";
+@import "skins/shared/mixins/arrow";
 
 .wikia-paginator {
 	

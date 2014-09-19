@@ -13,3 +13,4 @@ $wgAutoloadClasses['SEOTweaksGlobalHooksHelper'] =  $dir . 'SEOTweaksGlobalHooks
 //hooks
 $wgHooks['OpenGraphMetaHeaders'][] = 'SEOTweaksGlobalHooksHelper::onOpenGraphMetaHeaders';
 $wgHooks['ArticleRobotPolicy'][] = 'SEOTweaksGlobalHooksHelper::onArticleRobotPolicy';
+$wgHooks['ShowMissingArticle'][] = 'SEOTweaksGlobalHooksHelper::onShowMissingArticle';

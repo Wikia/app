@@ -1,0 +1,36 @@
+// TODO "nav could be removed while cleaning up old TOC code DAR-2158
+nav.toc {
+	display: table;
+	position: relative;
+
+	> div {
+		padding: 2px;
+	}
+
+	h2 {
+		padding-right: 5px;
+	}
+
+	ol {
+		counter-reset: item;
+
+	}
+
+	> ol {
+		display: none;
+		margin: 0;
+	}
+
+	&.show > ol {
+		display: block;
+	}
+
+	li {
+		display: block;
+
+		&:before {
+			content: counters(item, ".") " ";
+			counter-increment: item;
+		}
+	}
+}

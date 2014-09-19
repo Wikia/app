@@ -1,10 +1,8 @@
-@import "../../../../skins/oasis/css/core/color";
-@import "../../../../skins/oasis/css/mixins/border-radius";
-@import "../../../../skins/oasis/css/mixins/box-shadow";
-@import "../../../../skins/oasis/css/mixins/box-sizing";
-@import "../../../../skins/oasis/css/mixins/clearfix";
-@import "../../../../skins/oasis/css/mixins/opacity";
-@import "../../../../skins/oasis/css/mixins/menus";
+@import "skins/shared/color";
+@import "skins/shared/mixins/box-shadow";
+@import "skins/shared/mixins/box-sizing";
+@import "skins/shared/mixins/clearfix";
+@import "skins/shared/mixins/menus";
 
 // TODO: all of these should be consolidated and put into oasis
 @import "../../Wall/css/WallColors";
@@ -13,8 +11,8 @@
 
 /* local mixin */
 @mixin forum-message-error() {
-	@include border-radius($wall-border-radius);
 	background-color: $color-wall-error;
+	border-radius: $wall-border-radius;
 	display: none;
 	font-size: 12px;
 	line-height: 20px;
@@ -26,7 +24,7 @@
 	textarea {
 		font: inherit;
 	}
-	
+
 	.board-description {
 		clear: both;
 		color: $color-alternate-text;
@@ -49,14 +47,14 @@
 
 	.DiscussionBox {
 		margin: 15px 0 20px 0;
-		
+
 		input[type=text],
 		textarea {
 			@include box-sizing;
 			background-color: $color-wall-input-new;
 			border: 0;
 			color: $color-text;
-			
+
 			// Chrome needs this to get rid of empty space below textarea
 			display: block;
 			font-size: 13px;
@@ -100,14 +98,14 @@
 			display: none;
 			margin-top: 10px;
 		}
-		
+
 		.board-container {
 			margin-bottom: 10px;
 			.heading {
 				display: block;
 			}
 		}
-		
+
 		.board-list-error {
 			@include forum-message-error;
 			padding: 3px 20px;
@@ -136,9 +134,9 @@
 		}
 
 		.message {
-			@include border-radius(0);
-			border: 0;
 			background-color: $color-wall-bubble;
+			border: 0;
+			border-radius: 0;
 			margin: 0 0 0 60px;
 			padding: 10px;
 			position: relative;
@@ -157,7 +155,7 @@
 
 			&.loading {
 				.message-container {
-					@include opacity(50);
+					opacity: .5;
 				}
 
 				.throbber {
@@ -165,7 +163,7 @@
 				}
 			}
 		}
-		
+
 		.notify-everyone {
 			margin: 0 5px 0 0;
 		}
@@ -197,7 +195,7 @@
 			float: left;
 		}
 	}
-	
+
 	.Pagination {
 		margin-top: 20px;
 	}
@@ -206,12 +204,16 @@
 		list-style: none;
 		margin: 0;
 
-		h4 {
+		h4 a {
+			display: block;
 			font-weight: normal;
-			margin: 0 0 3px 0;
+			height: 22px;
+			margin: 0 0 5px;
 			overflow: hidden;
-			white-space: nowrap;
 			text-overflow: ellipsis;
+			white-space: nowrap;
+			width: 100%;
+			word-wrap: normal;
 		}
 
 		.activity {
@@ -220,13 +222,7 @@
 			margin: 0;
 
 			li {
-				float: left;
 				margin: 0;
-				width: 70px;
-
-				&.threads {
-					width: 95px;
-				}
 
 				&.follow {
 					color: $color-links;
@@ -263,27 +259,35 @@
 			}
 		}
 
+		.thread-left,
+		.thread-right {
+			display: table-cell;
+			vertical-align: top;
+		}
+
 		.thread-left {
 			float: left;
-			width: 395px;
+			width: 80%;
 		}
 
 		.thread-right {
 			float: right;
-			margin-left: 20px;
-			text-align: right;
-			width: 240px;
 		}
 
 		.timestamp {
 			display: block;
 		}
 	}
+
+	.policies-link {
+		float: right;
+		margin: 10px;
+	}
 }
 
 .WikiaPage .WikiaPageHeader {
 	border-bottom: 0;
-	margin: 0 10px 0 10px;
+	margin: 0 10px 0 0;
 	padding-bottom: 0;
 	// DAR-1382 overwrite right padding to make place for larger forum tally
 	padding-right: 260px;
@@ -327,6 +331,7 @@
 		display: inherit;
 		overflow: hidden;
 		text-overflow: ellipsis;
+		word-wrap: normal;
 		a {
 			white-space: nowrap;
 		}
@@ -342,17 +347,11 @@
 	.subtle {
 		color: $color-text;
 		font-size: 11px;
-		margin-left: 3px;		
+		margin-left: 3px;
 	}
 }
 
 .ForumPolicies {
-  overflow-y: scroll;
-  border: 1px solid $color-page-border-subtle;
-  font-size: 13px;
-  height: 400px;
-  position: relative;
-  padding: 10px;
   .WikiaArticle {
     padding: 0;
     .msg-title {
@@ -367,9 +366,4 @@
   .editsection{
     display: none;
   }
-}
-
-.policies-link {
-  float: right;
-  margin: 10px;
 }

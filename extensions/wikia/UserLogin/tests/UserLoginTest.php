@@ -7,6 +7,8 @@
 		const TEST_USERNAME = 'WikiaUser';
 		const TEST_USERID = 12345;
 		const TEST_EMAIL = 'devbox+test@wikia-inc.com';
+		const MAIN_PAGE_TITLE_TXT = 'Main_Page';
+		const LOGIN_TOKEN = '1234567890';
 
 		protected $skinOrg = null;
 
@@ -33,13 +35,14 @@
 		}
 
 		/**
+		 * @group Slow
+		 * @slowExecutionTime 0.44648 ms
 		 * @dataProvider loginDataProvider
 		 */
-		public function testLogin( $requestParams, $mockLoginFormParams, $mockUserParams, $mockHelperParams, $expResult, $expMsg, $expErrParam='' ) {
+		public function testLogin( $requestParams, $mockLoginFormParams, $mockUserParams, $mockHelperParams, $expResult, $expMsg, $expErrParam='', $expUsername = null ) {
 			// setup
 			$this->setUpRequest( $requestParams );
 			$this->setUpMockObject( 'User', $mockUserParams, true, 'wgUser' );
-			$this->setUpMockObject( 'TempUser', false, true );
 			$this->setUpMockObject( 'UserLoginHelper', $mockHelperParams, true );
 			if ( !is_null($mockLoginFormParams) ) {
 				$this->setUpMockObject( 'LoginForm', $mockLoginFormParams, true, null, array(), false );
@@ -58,8 +61,15 @@
 
 			$responseData = $response->getVal( 'errParam' );
 			$this->assertEquals( $expErrParam, $responseData, 'errParam' );
+
+			$responseData = $response->getVal( 'username' );
+			$this->assertEquals( $expUsername, $responseData, 'expUsername' );
 		}
 
+		/**
+		 * @group Slow
+		 * @slowExecutionTime 0.50558 ms
+		 */
 		public function testWikiaMobileLoginTemplate() {
 			$mobileSkin = Skin::newFromKey( 'wikiamobile' );
 			$this->setUpMockObject( 'User', array( 'getSkin' => $mobileSkin ), true, 'wgUser' );
@@ -78,6 +88,10 @@
 			$this->tearDownMobileSkin();
 		}
 
+		/**
+		 * @group Slow
+		 * @slowExecutionTime 0.50775 ms
+		 */
 		public function testWikiaMobileChangePasswordTemplate(){
 			$mobileSkin = Skin::newFromKey( 'wikiamobile' );
 			$this->setUpMockObject( 'User', array( 'getSkin' => $mobileSkin ), true, 'wgUser' );
@@ -98,6 +112,8 @@
 		}
 
 		public function loginDataProvider() {
+			$testUserName = 'testUser';
+
 			// submit request
 			// no username
 			$reqParams1 = array(
@@ -112,14 +128,14 @@
 
 			// not pass token
 			$reqParams2 = array(
-				'username' => 'testUser',
+				'username' => $testUserName,
 				'action' => 'submitlogin'
 			);
 			$expMsg2 = wfMessage('userlogin-error-sessionfailure')->escaped();
 
 			// empty token
 			$reqParams3 = array(
-				'username' => 'testUser',
+				'username' => $testUserName,
 				'action' => 'submitlogin',
 				'loginToken' => '',
 			);
@@ -129,7 +145,7 @@
 			// mock authenticateUserData()
 			// error - NO_NAME
 			$reqParams101 = array(
-				'username' => 'testUser',
+				'username' => $testUserName,
 				'password' => 'testPassword',
 				'action' => 'submitlogin'
 			);
@@ -266,11 +282,13 @@
 				array($reqParams101, $mockLoginFormParams118, $mockUserParams118, $mockHelperParams118, 'unconfirm', $expMsg118),
 
 				// SUCCESS success
-				array($reqParams101, $mockLoginFormParams120, $mockUserParams120, $mockHelperParams120, 'ok', null),
+				array( $reqParams101, $mockLoginFormParams120, $mockUserParams120, $mockHelperParams120, 'ok', null, '', $testUserName ),
 			);
 		}
 
 		/**
+		 * @group Slow
+		 * @slowExecutionTime 0.49809 ms
 		 * @dataProvider mailPasswordDataProvider
 		 */
 		public function testMailPassword( $requestParams, $mockWgUserParams, $mockAuthParams, $mockUserParams, $mockLoginFormParams, $expResult, $expMsg, $expErrParam='' ) {
@@ -278,7 +296,6 @@
 			$this->setUpMockObject( 'AuthPlugin', $mockAuthParams, false, 'wgAuth' );
 			$this->setUpMockObject( 'User', $mockWgUserParams, false, 'wgUser' );
 			$this->setUpMockObject( 'User', $mockUserParams, true );
-			$this->setUpMockObject( 'TempUser', false, true );
 			if ( !is_null($mockLoginFormParams) ) {
 				$this->setUpMockObject( 'LoginForm', $mockLoginFormParams, true, null, array(), false );
 			}
@@ -404,15 +421,17 @@
 		}
 
 		/**
+		 * @group Slow
+		 * @slowExecutionTime 0.55212 ms
 		 * @dataProvider changePasswordDataProvider
 		 */
 		public function testChangePassword($params, $mockWebRequestParams, $mockWgUserParams, $mockAuthParams, $mockUserParams, $mockHelperParams, $expResult, $expMsg) {
 			// setup
+			$this->mockStaticMethod( 'UserLoginHelper', 'getLoginToken', self::LOGIN_TOKEN );
 			$this->setUpMockObject( 'WebRequest', $mockWebRequestParams, false, 'wgRequest', $params );
 			$this->setUpMockObject( 'AuthPlugin', $mockAuthParams, false, 'wgAuth' );
 			$this->setUpMockObject( 'User', $mockWgUserParams, false, 'wgUser' );
 			$this->setUpMockObject( 'User', $mockUserParams, true );
-			$this->setUpMockObject( 'TempUser', false, true );
 
 			$this->setUpMockObject( 'UserLoginHelper', $mockHelperParams, true );
 
@@ -436,6 +455,7 @@
 			// 1 do nothing -- GET
 			$params1 = array(
 				'username' => 'WikiaUser',
+				'loginToken' => self::LOGIN_TOKEN,
 			);
 			$mockWebRequest1 = array( 'wasPosted' => false );
 			$mockWgUserParams1 = null;
@@ -447,6 +467,7 @@
 			$params2 = array(
 				'username' => 'WikiaUser',
 				'fakeGet' => '1',
+				'loginToken' => self::LOGIN_TOKEN,
 			);
 			$mockWebRequest2 = array( 'wasPosted' => true, 'setVal' => null );
 
@@ -493,6 +514,7 @@
 				'username' => 'WikiaUser',
 				'newpassword' => 'testPasword',
 				'retype' => 'passwordTest',
+				'loginToken' => self::LOGIN_TOKEN,
 			);
 			$mockUserParams9 = array(
 				'load' => null,
@@ -506,6 +528,7 @@
 				'username' => 'WikiaUser',
 				'newpassword' => 'testPasword',
 				'retype' => 'testPasword',
+				'loginToken' => self::LOGIN_TOKEN,
 			);
 			$mockUserParams10 = array(
 				'load' => null,
@@ -584,7 +607,15 @@
 				'doRedirect' => null,
 			);
 
-			// 16 success -- temp user
+			// 16 error = token mismatch
+			$params16 = array(
+				'username' => 'WikiaUser',
+				'newpassword' => 'testPasword',
+				'retype' => 'testPasword',
+				'loginToken' => 'faked',
+			);
+			$expMsg16 = wfMessage( 'sessionfailure' )->escaped();
+
 
 
 			return array(
@@ -620,9 +651,132 @@
 				array( $params10, $mockWebRequest2, $mockWgUserParams7, $mockAuthParams6, $mockUserParams14, $mockHelperParams1, 'error', $expMsg14 ),
 				// 15 success -- real user
 				array( $params10, $mockWebRequest2, $mockWgUserParams7, $mockAuthParams6, $mockUserParams15, $mockHelperParams15, 'ok', $expMsg15 ),
-				// 16 success -- temp user
+				// 16 error = token mismatch
+				array( $params16, $mockWebRequest2, $mockWgUserParams7, $mockAuthParams6, $mockUserParams9, $mockHelperParams1, 'error', $expMsg16 ),
 
 			);
+		}
+
+		/**
+		 * @param String $query
+		 * @param Boolean $isTitleBlacklisted
+		 * @param String $expected
+		 * @param String $message message displayed during unit tests execution
+		 *
+		 * @dataProvider getReturnToFromQueryDataProvider
+		 */
+		public function testGetReturnToFromQuery( $query, $isTitleBlacklisted, $expected, $message ) {
+			$loginControllerMock = $this->getMock( 'UserLoginSpecialController', [ 'getMainPagePartialUrl', 'isTitleBlacklisted' ] );
+			$loginControllerMock->expects( $this->any() )
+				->method( 'getMainPagePartialUrl' )
+				->will( $this->returnValue( $expected ) );
+			$loginControllerMock->expects( $this->any() )
+				->method( 'isTitleBlacklisted' )
+				->will( $this->returnValue( $isTitleBlacklisted ) );
+
+			$getReturnToFromQueryMethod = new ReflectionMethod( 'UserLoginSpecialController', 'getReturnToFromQuery' );
+			$getReturnToFromQueryMethod->setAccessible( true );
+
+			$result = $getReturnToFromQueryMethod->invoke( $loginControllerMock, $query );
+			$this->assertEquals( $expected, $result, $message );
+		}
+
+		public function getReturnToFromQueryDataProvider() {
+			return [
+				[
+					'query' => '',
+					'isTitleBlacklisted' => false,
+					'expected' => '',
+					'message' => 'Query is not an array',
+				],
+				[
+					'query' => [],
+					'isTitleBlacklisted' => false,
+					'expected' => self::MAIN_PAGE_TITLE_TXT,
+					'message' => 'No title in query',
+				],
+				[
+					'query' => [ 'title' => 'Test title' ],
+					'isTitleBlacklisted' => false,
+					'expected' => 'Test title',
+					'message' => 'Valid title in query',
+				],
+				[
+					'query' => [ 'title' => 'Blacklisted test title' ],
+					'isTitleBlacklisted' => true,
+					'expected' => self::MAIN_PAGE_TITLE_TXT,
+					'message' => 'Invalid (blacklisted) title in query',
+				],
+			];
+		}
+
+		/**
+		 * @group Slow
+		 * @slowExecutionTime 0.05041 ms
+		 * @param String $query
+		 * @param String $expected
+		 * @param Array $wfArrayToCGI mocked results for global function wfArrayToCGI()
+		 * @param Array $wfCgiToArrayResult mocked results for global function wfCgiToArray()
+		 * @param String $message
+		 *
+		 * @dataProvider getReturnToQueryFromQueryDataProvider
+		 */
+		public function testGetReturnToQueryFromQuery( $query, $wfArrayToCGI, $wfCgiToArrayResult, $expected, $message ) {
+			$getReturnToQueryFromQueryMethod = new ReflectionMethod( 'UserLoginSpecialController', 'getReturnToQueryFromQuery' );
+			$getReturnToQueryFromQueryMethod->setAccessible( true );
+
+			$this->mockGlobalFunction( 'wfArrayToCGI', $wfArrayToCGI );
+
+			if( !empty( $wfCgiToArrayResult ) ) {
+				$this->mockGlobalFunction( 'wfCgiToArrayResult', $wfCgiToArrayResult );
+			}
+
+			$result = $getReturnToQueryFromQueryMethod->invoke( new UserLoginSpecialController(), $query );
+			$this->assertEquals( $expected, $result, $message );
+		}
+
+		public function getReturnToQueryFromQueryDataProvider() {
+			return [
+				[
+					'query' => '',
+					'wfArrayToCGI' => '',
+					'wfCgiToArrayResult' => [],
+					'expected' => '',
+					'message' => 'Query is not an array',
+				],
+				[
+					'query' => [],
+					'wfArrayToCGI' => '',
+					'wfCgiToArrayResult' => [],
+					'expected' => '',
+					'message' => 'Query without any parameters',
+				],
+				[
+					'query' => [
+						'login' => self::TEST_USERNAME,
+						'returnto' => 'Special:UserLogin',
+						'editToken' => '123456789',
+					],
+					'wfArrayToCGI' => 'login=' . self::TEST_USERNAME . '&returnto=Special%3AUserLogin&editToken=123456789',
+					'wfCgiToArrayResult' => [],
+					'expected' => 'login=' . self::TEST_USERNAME . '&returnto=Special%3AUserLogin&editToken=123456789',
+					'message' => 'Query without returntoquery parameter',
+				],
+				[
+					'query' => [
+						'login' => self::TEST_USERNAME,
+						'returnto' => 'Special:UserLogin',
+						// notice the returnto&login in previous returntoquery were different
+						// and are supposed to be overwritten
+						'returntoquery' => 'returnto=Main_page%3Alogin=Test%3AeditToken=123456789',
+						'editToken' => '123456789',
+					],
+					'wfArrayToCGI' => 'login=' . self::TEST_USERNAME . '&returnto=Special%3AUserLogin&editToken=123456789',
+					'wfCgiToArrayResult' => [],
+					'expected' => 'login=' . self::TEST_USERNAME . '&returnto=Special%3AUserLogin&editToken=123456789',
+					'message' => 'Query with returntoquery',
+				],
+			];
 		}
 
 	}

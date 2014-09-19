@@ -1,7 +1,7 @@
 /*!
  * VisualEditor UserInterface MWReferenceSearchWidget class.
  *
- * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
@@ -9,39 +9,36 @@
  * Creates an ve.ui.MWReferenceSearchWidget object.
  *
  * @class
- * @extends ve.ui.SearchWidget
+ * @extends OO.ui.SearchWidget
  *
  * @constructor
- * @param {ve.ui.Surface} [varname] [description]
- * @param {Object} [config] Config options
+ * @param {Object} [config] Configuration options
  */
-ve.ui.MWReferenceSearchWidget = function VeUiMWReferenceSearchWidget( surface, config ) {
+ve.ui.MWReferenceSearchWidget = function VeUiMWReferenceSearchWidget( config ) {
 	// Configuration intialization
-	config = ve.extendObject( {}, config, {
+	config = ve.extendObject( {
 		'placeholder': ve.msg( 'visualeditor-reference-input-placeholder' )
-	} );
+	}, config );
 
 	// Parent constructor
-	ve.ui.SearchWidget.call( this, config );
+	OO.ui.SearchWidget.call( this, config );
 
 	// Properties
-	this.surface = surface;
 	this.index = [];
 
 	// Initialization
-	this.$.addClass( 've-ui-mwReferenceSearchWidget' );
+	this.$element.addClass( 've-ui-mwReferenceSearchWidget' );
 };
 
 /* Inheritance */
 
-ve.inheritClass( ve.ui.MWReferenceSearchWidget, ve.ui.SearchWidget );
+OO.inheritClass( ve.ui.MWReferenceSearchWidget, OO.ui.SearchWidget );
 
 /* Events */
 
 /**
  * @event select
- * @param {Object|string|null} data Reference node attributes, command string (e.g. 'create') or
- *  null if no item is selected
+ * @param {ve.dm.MWReferenceModel|null} data Reference model, null if no item is selected
  */
 
 /* Methods */
@@ -54,7 +51,7 @@ ve.inheritClass( ve.ui.MWReferenceSearchWidget, ve.ui.SearchWidget );
  */
 ve.ui.MWReferenceSearchWidget.prototype.onQueryChange = function () {
 	// Parent method
-	ve.ui.SearchWidget.prototype.onQueryChange.call( this );
+	OO.ui.SearchWidget.prototype.onQueryChange.call( this );
 
 	// Populate
 	this.addResults();
@@ -64,8 +61,8 @@ ve.ui.MWReferenceSearchWidget.prototype.onQueryChange = function () {
  * Handle select widget select events.
  *
  * @method
- * @param {ve.ui.OptionWidget} item Selected item
- * @emits select
+ * @param {OO.ui.OptionWidget} item Selected item
+ * @fires select
  */
 ve.ui.MWReferenceSearchWidget.prototype.onResultsSelect = function ( item ) {
 	var data;
@@ -74,7 +71,7 @@ ve.ui.MWReferenceSearchWidget.prototype.onResultsSelect = function ( item ) {
 		data = item.getData();
 		// Resolve indexed values
 		if ( this.index[data] ) {
-			data = this.index[data].attributes;
+			data = this.index[data].reference;
 		}
 	} else {
 		data = null;
@@ -87,15 +84,15 @@ ve.ui.MWReferenceSearchWidget.prototype.onResultsSelect = function ( item ) {
  * Build a serchable index of references.
  *
  * @method
+ * @param {ve.dm.InternalList} internalList Internal list
  */
-ve.ui.MWReferenceSearchWidget.prototype.buildIndex = function () {
-	var i, iLen, j, jLen, group, groupName, groupNames, view, text, attr, firstNodes, indexOrder,
-		refnode, name, citation,
-		internalList = this.surface.getModel().getDocument().getInternalList(),
+ve.ui.MWReferenceSearchWidget.prototype.buildIndex = function ( internalList ) {
+	var i, iLen, j, jLen, ref, group, groupName, groupNames, view, text, firstNodes, indexOrder,
+		refGroup, refNode, matches, name, citation,
 		groups = internalList.getNodeGroups();
 
 	function extractAttrs() {
-		text += ' ' + $(this).attr( 'href' );
+		text += ' ' + this.getAttribute( 'href' );
 	}
 
 	this.index = [];
@@ -110,27 +107,33 @@ ve.ui.MWReferenceSearchWidget.prototype.buildIndex = function () {
 		firstNodes = group.firstNodes;
 		indexOrder = group.indexOrder;
 		for ( j = 0, jLen = indexOrder.length; j < jLen; j++ ) {
-			refnode = firstNodes[indexOrder[j]];
-			attr = ve.copy( refnode.getAttributes() );
-			view = new ve.ce.InternalItemNode( internalList.getItemNode( attr.listIndex ) );
+			refNode = firstNodes[indexOrder[j]];
+			ref = ve.dm.MWReferenceModel.static.newFromReferenceNode( refNode );
+			view = new ve.ce.InternalItemNode( internalList.getItemNode( ref.getListIndex() ) );
 
 			// HACK: PHP parser doesn't wrap single lines in a paragraph
-			if ( view.$.children().length === 1 && view.$.children( 'p' ).length === 1 ) {
+			if ( view.$element.children().length === 1 && view.$element.children( 'p' ).length === 1 ) {
 				// unwrap inner
-				view.$.children().replaceWith( view.$.children().contents() );
+				view.$element.children().replaceWith( view.$element.children().contents() );
 			}
 
-			citation = ( attr.refGroup.length ? attr.refGroup + ' ' : '' ) + ( j + 1 );
-			name = !ve.dm.InternalList.static.isUniqueListKey( attr.listKey ) ? attr.listKey : '';
+			refGroup = ref.getGroup();
+			citation = ( refGroup && refGroup.length ? refGroup + ' ' : '' ) + ( j + 1 );
+			matches = ref.getListKey().match( /^literal\/(.*)$/ );
+			name = matches && matches[1] || '';
+			// Hide previously auto-generated reference names
+			if ( name.match( /^:[0-9]+$/ ) ) {
+				name = '';
+			}
 			// Make visible text, citation and reference name searchable
-			text = [ view.$.text().toLowerCase(), citation, name ].join( ' ' );
+			text = [ view.$element.text().toLowerCase(), citation, name ].join( ' ' );
 			// Make URLs searchable
-			view.$.find( 'a[href]' ).each( extractAttrs );
+			view.$element.find( 'a[href]' ).each( extractAttrs );
 
 			this.index.push( {
-				'$': view.$.clone().show(),
+				'$element': view.$element.clone().show(),
 				'text': text,
-				'attributes': attr,
+				'reference': ref,
 				'citation': citation,
 				'name': name
 			} );
@@ -140,6 +143,15 @@ ve.ui.MWReferenceSearchWidget.prototype.buildIndex = function () {
 
 	// Re-populate
 	this.onQueryChange();
+};
+
+/**
+ * Check whether the index built by #buildIndex is empty. This will return true if
+ * #buildIndex hasn't been called yet.
+ * @returns {boolean} Index is empty
+ */
+ve.ui.MWReferenceSearchWidget.prototype.isIndexEmpty = function () {
+	return this.index.length === 0;
 };
 
 /**
@@ -156,15 +168,15 @@ ve.ui.MWReferenceSearchWidget.prototype.addResults = function () {
 	for ( i = 0, len = this.index.length; i < len; i++ ) {
 		item = this.index[i];
 		if ( item.text.indexOf( query ) >= 0 ) {
-			$citation = $( '<div>' )
+			$citation = this.$( '<div>' )
 				.addClass( 've-ui-mwReferenceSearchWidget-citation' )
 				.text( '[' + item.citation + ']' );
-			$name = $( '<div>' )
+			$name = this.$( '<div>' )
 				.addClass( 've-ui-mwReferenceSearchWidget-name' )
 				.text( item.name );
 			items.push(
 				new ve.ui.MWReferenceResultWidget( i, {
-					'$$': this.$$, 'label': $citation.add( $name ).add( item.$ )
+					'$': this.$, 'label': $citation.add( $name ).add( item.$element )
 				} )
 			);
 		}

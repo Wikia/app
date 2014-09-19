@@ -78,7 +78,7 @@ class SEOTweaksHooksHelper {
 		$title = $imgPage->getTitle();  /* @var $title Title */
 		$newTitle = '';
 
-		if ( !empty( $file ) && !empty( $title ) ) {
+		if ( !empty( $file ) && !empty( $title ) && !F::app()->checkSkin('monobook') ) {
 
 			if ( (new WikiaFileHelper)->isFileTypeVideo( $file ) ) {
 

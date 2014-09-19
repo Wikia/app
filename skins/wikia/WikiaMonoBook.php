@@ -29,7 +29,7 @@ abstract class WikiaSkinMonoBook extends WikiaSkin {
 	}
 
 	function initPage(&$out) {
-		global $wgHooks, $wgShowAds, $wgRequest, $wgOut;
+		global $wgHooks, $wgShowAds, $wgRequest;
 
 		parent::initPage( $out );
 
@@ -66,6 +66,20 @@ abstract class WikiaSkinMonoBook extends WikiaSkin {
 
 		# rt33045
 		$tpl->set('contact',    '<a href="'. $wgUser->getSkin()->makeUrl('Special:Contact') . '" title="Contact Wikia">Contact Wikia</a>');
+
+		# BAC-1036, CE-278
+		/* Replace Wikia logo path
+		   This functionality is for finding proper path of Wiki.png instead of const one from wgLogo
+		   wikia logo should be stored under File:Wiki.png on current wikia. If wfFindFile doesn't find it
+		   on current wikia it tires to fallback to starter.wikia.com where the default one is stored
+		*/
+		$logoPage = Title::newFromText( 'Wiki.png', NS_FILE );
+		$logoFile = wfFindFile( $logoPage );
+		if( $logoFile ) {
+			$tpl->set( 'logopath', $logoFile->getUrl() );
+		} else {
+			$tpl->set('logopath', wfReplaceImageServer( $tpl->data['logopath'] ));
+		}
 
 		wfProfileOut(__METHOD__);
 		return true;
@@ -119,7 +133,7 @@ abstract class WikiaSkinMonoBook extends WikiaSkin {
 		global $wgCityId;
 
 		return AnalyticsEngine::track('GA_Urchin', AnalyticsEngine::EVENT_PAGEVIEW) .
-			AnalyticsEngine::track('GA_Urchin', 'hub', AdEngine2Controller::getCachedCategory()) .
+			AnalyticsEngine::track('GA_Urchin', 'hub', AdEngine2Service::getCachedCategory()) .
 			AnalyticsEngine::track('GA_Urchin', 'onewiki', array($wgCityId)) .
 			AnalyticsEngine::track('QuantServe', AnalyticsEngine::EVENT_PAGEVIEW);
 	}

@@ -24,9 +24,9 @@
 			}
 		}
 		a {
-			@include border-radius(4px);
 			background-color: $color-epl-button;
 			border: solid 1px $color-epl-button-border;
+			border-radius: 4px;
 			color: $color-text;
 			cursor: default;
 			display: inline-block;
@@ -84,10 +84,10 @@
 
 .cke_skin_wikia {
 	.cke_panel.cke_rcombopanel {
-		@include border-radius(4px);
 		@include box-shadow(0, 0, 8px, $color-page-border);
 		@include gradient-module;
 		border: solid 1px $color-epl-button-border;
+		border-radius: 4px;
 		position: relative;
 		top: -15px;
 		iframe {

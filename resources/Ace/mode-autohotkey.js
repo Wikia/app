@@ -33,7 +33,7 @@
  *
  * ***** END LICENSE BLOCK ***** */
 
-define('ace/mode/autohotkey', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/mode/text', 'ace/tokenizer', 'ace/mode/autohotkey_highlight_rules', 'ace/mode/folding/cstyle'], function(require, exports, module) {
+ace.define('ace/mode/autohotkey', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/mode/text', 'ace/tokenizer', 'ace/mode/autohotkey_highlight_rules', 'ace/mode/folding/cstyle'], function(require, exports, module) {
 
 
 var oop = require("../lib/oop");
@@ -43,9 +43,8 @@ var AutoHotKeyHighlightRules = require("./autohotkey_highlight_rules").AutoHotKe
 var FoldMode = require("./folding/cstyle").FoldMode;
 
 var Mode = function() {
-    var highlighter = new AutoHotKeyHighlightRules();
+    this.HighlightRules = AutoHotKeyHighlightRules;
     this.foldingRules = new FoldMode();
-    this.$tokenizer = new Tokenizer(highlighter.getRules());
 };
 oop.inherits(Mode, TextMode);
 
@@ -57,7 +56,7 @@ oop.inherits(Mode, TextMode);
 exports.Mode = Mode;
 });
 
-define('ace/mode/autohotkey_highlight_rules', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/mode/text_highlight_rules'], function(require, exports, module) {
+ace.define('ace/mode/autohotkey_highlight_rules', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/mode/text_highlight_rules'], function(require, exports, module) {
 
 
 var oop = require("../lib/oop");
@@ -129,7 +128,7 @@ oop.inherits(AutoHotKeyHighlightRules, TextHighlightRules);
 exports.AutoHotKeyHighlightRules = AutoHotKeyHighlightRules;
 });
 
-define('ace/mode/folding/cstyle', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/range', 'ace/mode/folding/fold_mode'], function(require, exports, module) {
+ace.define('ace/mode/folding/cstyle', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/range', 'ace/mode/folding/fold_mode'], function(require, exports, module) {
 
 
 var oop = require("../../lib/oop");

@@ -13,9 +13,9 @@ require_once( dirname(__FILE__) . '/includes/SpecialPage.php' );
 require_once( dirname(__FILE__) . '/languages/Language.php' );
 
 function newrobots(){
-	header("Content-Type: text/plain");
-	#header("Pragma: no-cache");
-	#header("Expires: 0");
+	header('Content-Type: text/plain');
+	header('Cache-Control: s-maxage=86400');
+	header('X-Pass-Cache-Control: public, max-age=86400');
 	echo <<<EOT
 #
 # Please note: There are a lot of pages on this site, and there are
@@ -138,7 +138,7 @@ EOT;
 }
 
 function getDynamicRobots($bot=''){
-	global $wgOut, $wgCat, $wgLanguageNames, $wgContLang;
+	global $wgContLang;
 
 	if($bot == 'goog'){
 		$r = "\n";
@@ -151,6 +151,7 @@ function getDynamicRobots($bot=''){
 		$r .= "Disallow: /*action=history*\n";
 		$r .= "Disallow: /*action=delete*\n";
 		$r .= "Disallow: /*action=watch*\n";
+		$r .= "Disallow: /*action=purge*\n";
 		$r .= "Noindex: /w/\n";
 		$r .= "Noindex: /trap/\n";
 		$r .= "Noindex: /dbdumps/\n";
@@ -161,9 +162,7 @@ function getDynamicRobots($bot=''){
 		$r .= "Noindex: /*action=history*\n";
 		$r .= "Noindex: /*action=delete*\n";
 		$r .= "Noindex: /*action=watch*\n";
-
 	}else{
-
 		$r  = "\n";
 		$r .= "User-agent: *\n";
 		$r .= "Disallow: /w/\n";
@@ -174,11 +173,10 @@ function getDynamicRobots($bot=''){
 		$r .= "Disallow: /*action=history*\n";
 		$r .= "Disallow: /*action=delete*\n";
 		$r .= "Disallow: /*action=watch*\n";
-
+		$r .= "Disallow: /*action=purge*\n";
 	}
 
 	//process english first
-
 	$code = trim( $wgContLang->getCode() );
 
 	//always add english since its' namespaces are always working as aliases
@@ -201,10 +199,11 @@ function getSitemapUrl(){
 }
 
 function getLangSpecificNamespace( &$lang, $code, $bot='' ){
-	global $wgSpecialPages, $wgArticleRobotPolicies;
+	global $wgArticleRobotPolicies;
 
 	$r = '';
 
+	/* @var Language $lang */
 	$ns = $lang->getNamespaces();
 
 	if($bot == 'goog'){

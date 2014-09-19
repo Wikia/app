@@ -1,7 +1,6 @@
-@import "skins/oasis/css/mixins/arrow";
-@import "skins/oasis/css/mixins/clearfix";
-@import "skins/oasis/css/mixins/opacity";
-@import "skins/oasis/css/core/color";
+@import "skins/shared/mixins/arrow";
+@import "skins/shared/mixins/clearfix";
+@import "skins/shared/color";
 @import "skins/oasis/css/core/layout";
 
 /*
@@ -10,20 +9,15 @@
  * So the css below breaks style and naming conventions
  */
 .veeseoRA2VWwikiaV1 {
-	// clearfix
-	&:after, &:before {
-		width: 100%;
-		clear: both;
-		content: ' ';
-		display: table;
-	}
+	@include clearfix;
+	position: relative;
+	padding-bottom: 10px;
 
 	.veeseoRCWInlineVHeadline {
 			font-size: 18px;
 			font-weight: bold;
 			margin-top: 0px;
-			margin-bottom: 25px;
-			padding-left: 2px;
+			margin-bottom: 15px;
 
 			@if ( $responsive-layout-enabled ) {
 				font-size: 20px;
@@ -32,8 +26,11 @@
 
     }
 
-	// hide veeseo logo
-	.veeseoRCWInlineVLogoImg { display: none; }
+	// move veeseo logo
+	.veeseoRCWInlineVLogoImg {
+		position: absolute;
+		bottom: 0px;
+	}
 
 	// contains title and clip information
 	.veeseoRCWInlineVItem {
@@ -45,8 +42,8 @@
 			display: block;
 			float: left;
 			width: 50%;
-			
-			p { 
+
+			p {
 				// style the <p> to look like a link because
 				// veeseo doesn't let us change markup
 				// and doesn't use semantic markup ~_~

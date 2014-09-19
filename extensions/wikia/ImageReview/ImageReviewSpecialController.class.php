@@ -3,6 +3,7 @@
 class ImageReviewSpecialController extends WikiaSpecialPageController {
 	const ACTION_QUESTIONABLE = 'questionable';
 	const ACTION_REJECTED = 'rejected';
+	const ACTION_INVALID = 'invalid';
 
 	var $statsHeaders = array( 'user', 'total reviewed', 'approved', 'deleted', 'qustionable', 'distance to avg.' );
 
@@ -43,6 +44,9 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 		} elseif ( $action == self::ACTION_QUESTIONABLE && !$this->accessQuestionable ) {
 			$this->specialPage->displayRestrictionError( 'questionableimagereview' );
 			return false;
+		} elseif ( $action == self::ACTION_INVALID && !$this->accessQuestionable ) {
+			$this->specialPage->displayRestrictionError();
+			return false;
 		} elseif ( $action == self::ACTION_REJECTED && !$this->accessRejected ) {
 			$this->specialPage->displayRestrictionError( 'rejectedimagereview' );
 			return false;
@@ -53,7 +57,7 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 			$this->forward( get_class( $this ), 'csvStats' );
 		}
 
-		$this->response->setCacheValidity(0, 0, array(WikiaResponse::CACHE_TARGET_BROWSER, WikiaResponse::CACHE_TARGET_VARNISH));
+		$this->response->setCacheValidity(WikiaResponse::CACHE_DISABLED);
 		$this->response->sendHeaders();
 
 		$this->response->addAsset('extensions/wikia/ImageReview/js/jquery.onImagesLoad.js');
@@ -111,6 +115,7 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 			$do = array( 
 				self::ACTION_QUESTIONABLE	=> ImageReviewStatuses::STATE_QUESTIONABLE,
 				self::ACTION_REJECTED		=> ImageReviewStatuses::STATE_REJECTED,
+				self::ACTION_INVALID		=> ImageReviewStatuses::STATE_INVALID_IMAGE,
 				'default'			=> ImageReviewStatuses::STATE_UNREVIEWED
 			);
 			$this->imageList = $helper->getImageList( $ts, isset( $do[ $action ] ) ? $do[ $action ] : $do['default'], $order );
@@ -192,7 +197,6 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 		$name = "ImageReviewStats-$startYear-$startMonth-$startDay-to-$endYear-$endMonth-$endDay";
 
 		header("Pragma: public");
-		header("Expires: 0");
 		header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
 		header('Content-Type: text/force-download');
 

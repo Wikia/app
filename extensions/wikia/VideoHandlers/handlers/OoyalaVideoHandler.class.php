@@ -9,7 +9,9 @@ class OoyalaVideoHandler extends VideoHandler {
 	protected static $providerDetailUrlTemplate = 'http://video.wikia.com/';
 	protected static $providerHomeUrl = 'http://video.wikia.com/';
 
-	public function getEmbed( $articleId, $width, $autoplay = false, $isAjax = false, $postOnload=false ) {
+	public function getEmbed( $width, array $options = [] ) {
+		$autoplay = !empty( $options['autoplay'] );
+		$isAjax = !empty( $options['isAjax'] );
 		$height = $this->getHeight($width);
 		$playerId = 'ooyalaplayer-'.$this->videoId.'-'.intval($isAjax);
 
@@ -24,21 +26,21 @@ EOT;
 
 		return array(
 			'html' => $html,
+			'width' => $width,
+			'height' => $height,
 			'jsParams' => array(
-				'playerId'=> $playerId,
-				'videoId'=> $this->videoId,
-				'width'=> $width,
-				'height'=> $height,
-				'autoPlay'=> $autoPlayStr,
-				'title'=> $this->title,
+				'playerId' => $playerId,
+				'videoId' => $this->videoId,
+				'autoPlay' => $autoPlayStr,
+				'title' => $this->title,
 				'jsFile' => array(
 					$jsFile,
-					"extensions/wikia/VideoHandlers/js/handlers/OoyalaModule.js",
+					"extensions/wikia/VideoHandlers/js/handlers/lib/OoyalaAgeGate.js",
 				),
 			),
 			'init' => 'wikia.videohandler.ooyala',
 			'scripts' => array(
-				"extensions/wikia/VideoHandlers/js/handlers/Ooyala.js"
+				"extensions/wikia/VideoHandlers/js/handlers/Ooyala.js",
 			),
 		);
 	}

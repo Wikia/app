@@ -71,7 +71,13 @@ class PhalanxContentModel extends PhalanxModel {
 		$this->wg->Out->addHTML( Html::closeElement( 'div' ) );
 		$this->logBlock();
 	}
-	
+
+	public function getBlockMessage() {
+		$msg = wfMessage( 'spamprotectiontext' )->parse();
+		$msg .= wfMessage( 'spamprotectionmatch', $this->contentBlock() )->parse();
+		return $msg;
+	}
+
 	public function contentBlock() {
 		$msg = "{$this->block->text} (Block #{$this->block->id})";
 		$this->logBlock();

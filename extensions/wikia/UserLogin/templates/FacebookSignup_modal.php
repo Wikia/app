@@ -1,5 +1,4 @@
 <div class="UserLoginFacebook">
-	<h1><?= wfMessage('usersignup-facebook-heading')->escaped() ?></h1>
 	<section class="UserLoginFacebookWrapper">
 		<section class="UserLoginFacebookLeft">
 
@@ -25,17 +24,17 @@
 				'method' => 'index',
 				'params' => array(
 					'text' => wfMessage('email')->escaped(),
-					'tooltipIconTitle' => wfMessage('usersignup-facebook-email-tooltip')->escaped(),
+					'tooltipIconTitle' => wfMessage('usersignup-facebook-email-tooltip')->plain(),
 				),
 			),
 			array(
 				'type' => 'custom',
-				'output' => '<strong>' . $fbEmail . '</strong>'
+				'output' => '<strong>' . htmlspecialchars( $fbEmail ) . '</strong>'
 			),
 			array(
 				'type' => 'hidden',
 				'name' => 'loginToken',
-				'value' => $loginToken
+				'value' => Sanitizer::encodeAttribute( $loginToken ),
 			),
 			array(
 				'type' => 'nirvanaview',

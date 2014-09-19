@@ -8,7 +8,6 @@ class ForumHooksHelper {
 		$app = F::App();
 		if ( $title->getNamespace() == NS_WIKIA_FORUM_BOARD_THREAD ) {
 			$app->wg->Out->addStyle( AssetsManager::getInstance()->getSassCommonURL( 'extensions/wikia/Forum/css/ForumThread.scss' ) );
-			$app->wg->IsForum = true;
 		}
 		return true;
 	}
@@ -36,10 +35,10 @@ class ForumHooksHelper {
 		if ( MWNamespace::getSubject( $title->getNamespace() ) == NS_WIKIA_FORUM_BOARD ) {
 			$app = F::App();
 
-			$response->setVal( 'pageTitle', wfMsg( 'forum-board-history-title' ) );
-			$app->wg->Out->setPageTitle( wfMsg( 'forum-board-history-title' ) );
+			$response->setVal( 'pageTitle', wfMessage( 'forum-board-history-title' )->escaped() );
+			$app->wg->Out->setPageTitle( wfMessage( 'forum-board-history-title' )->plain() );
 
-			$path = array( static::getIndexPath(), array( 'title' => wfMsg( 'forum-board-title', $title->getText() ), 'url' => $title->getFullUrl() ) );
+			$path = array( static::getIndexPath(), array( 'title' => wfMessage( 'forum-board-title', $title->getText() )->escaped(), 'url' => $title->getFullUrl() ) );
 		}
 		return true;
 	}
@@ -47,7 +46,7 @@ class ForumHooksHelper {
 	static public function onWallHeader($title, &$path, &$response, &$request) {
 		if ( $title->getNamespace() === NS_WIKIA_FORUM_BOARD ) {
 			$path[] = static::getIndexPath();
-			$path[] = array( 'title' => wfMsg( 'forum-board-title', $title->getText() ), );
+			$path[] = array( 'title' => wfMessage( 'forum-board-title', $title->getText() )->escaped(), );
 
 		}
 		return true;
@@ -55,11 +54,11 @@ class ForumHooksHelper {
 
 	static public function onWallNewMessage($title, &$response) {
 		if ( $title->getNamespace() === NS_WIKIA_FORUM_BOARD) {
-			$response->setVal( 'wall_message', wfMsg( 'forum-discussion-placeholder-message', $title->getText() ) );
+			$response->setVal( 'wall_message', wfMessage( 'forum-discussion-placeholder-message', $title->getText() )->escaped() );
 		}
 
 		if ( $title->getNamespace() === NS_WIKIA_FORUM_TOPIC_BOARD ) {
-			$response->setVal( 'wall_message', wfMsg( 'forum-discussion-placeholder-message-short' ) );
+			$response->setVal( 'wall_message', wfMessage( 'forum-discussion-placeholder-message-short' )->escaped() );
 		}
 		return true;
 	}
@@ -67,15 +66,14 @@ class ForumHooksHelper {
 	static protected function getPath($wallMessage) {
 		$path = array();
 		$path[] = static::getIndexPath();
-		$path[] = array( 'title' => wfMsg( 'forum-board-title', $wallMessage->getArticleTitle()->getText() ), 'url' => $wallMessage->getArticleTitle()->getFullUrl() );
+		$path[] = array( 'title' => wfMessage( 'forum-board-title', $wallMessage->getArticleTitle()->getText() )->escaped(), 'url' => $wallMessage->getArticleTitle()->getFullUrl() );
 
 		return $path;
 	}
 
 	static protected function getIndexPath() {
-		$app = F::App();
 		$indexPage = Title::newFromText( 'Forum', NS_SPECIAL );
-		return array( 'title' => wfMsg( 'forum-forum-title', $app->wg->sitename ), 'url' => $indexPage->getFullUrl() );
+		return array( 'title' => wfMessage( 'forum-forum-title' )->escaped(), 'url' => $indexPage->getFullUrl() );
 	}
 
 	/**
@@ -95,7 +93,7 @@ class ForumHooksHelper {
 			} else {
 				// new comments on existing board - we build Title object based on id from WallMessage class logic ( getting parent )
 				$board = $wmessage->getArticleTitle();
-				$item['wall-msg'] = wfMsg( 'forum-wiki-activity-msg', '<a href="' . $board->getFullURL() . '">' . wfMsg( 'forum-wiki-activity-msg-name', $board->getText() ) . '</a>' );
+				$item['wall-msg'] = wfMessage( 'forum-wiki-activity-msg' )->rawParams( '<a href="' . $board->getFullURL() . '">' . wfMessage( 'forum-wiki-activity-msg-name', $board->getText() )->escaped() . '</a>' )->escaped();
 			}
 		}
 
@@ -108,7 +106,7 @@ class ForumHooksHelper {
 
 			$titleData = WallHelper::getWallTitleData(null, $element );
 
-			$boardText = wfMsg( 'forum-wiki-activity-msg', '<a href="' .$titleData['wallPageFullUrl'] . '">' . wfMsg( 'forum-wiki-activity-msg-name', $titleData['wallPageName'] ) . '</a>' );
+			$boardText = wfMessage( 'forum-wiki-activity-msg' )->rawParams( '<a href="' .$titleData['wallPageFullUrl'] . '">' . wfMessage( 'forum-wiki-activity-msg-name', $titleData['wallPageName'] )->escaped() . '</a>' )->escaped();
 			$link = '<a href="'.$titleData['articleFullUrl'].'">'.$titleData['articleTitleTxt'].'</a> ' . $boardText;
 		}
 		return true;
@@ -159,40 +157,10 @@ class ForumHooksHelper {
 		if ( $title->getNamespace() == NS_WIKIA_FORUM_BOARD ) {
 
 			$pageName = $title->getPrefixedText();
-			$message = wfMsgExt( 'forum-confirmation-board-deleted', array('parseinline'), $pageName );
+			$message = wfMessage( 'forum-confirmation-board-deleted', $pageName )->parse();
 		}
 
 		return true;
-	}
-
-	static public function onWallContributionsLine($pageNamespace, $wallMessage, $wfMsgOptsBase, &$ret) {
-		if ( $pageNamespace != NS_WIKIA_FORUM_BOARD ) {
-			return true;
-		}
-
-		if ( empty( $wfMsgOptsBase['articleTitleVal'] ) ) {
-			$wfMsgOptsBase['articleTitleTxt'] = wfMsg( 'forum-recentchanges-deleted-reply-title' );
-		}
-
-		$wfMsgOpts = array(
-			$wfMsgOptsBase['articleFullUrl'],
-			$wfMsgOptsBase['articleTitleTxt'],
-			$wfMsgOptsBase['wallPageFullUrl'],
-			$wfMsgOptsBase['wallPageName'],
-			$wfMsgOptsBase['createdAt'],
-			$wfMsgOptsBase['DiffLink'],
-			$wfMsgOptsBase['historyLink']
-		);
-
-		if ( $wfMsgOptsBase['isThread'] && $wfMsgOptsBase['isNew'] ) {
-			$wfMsgOpts[7] = Xml::element( 'strong', array(), wfMessage( 'newpageletter' )->plain() . ' ' );
-		} else {
-			$wfMsgOpts[7] = '';
-		}
-
-		$ret .= wfMsg( 'forum-contributions-line', $wfMsgOpts );
-
-		return false;
 	}
 
 	static public function onWallRecentchangesMessagePrefix($namespace, &$prefix) {
@@ -200,27 +168,6 @@ class ForumHooksHelper {
 			$prefix = 'forum-recentchanges';
 			return false;
 		}
-		return true;
-	}
-
-	// Hook: clear cache when editing comment
-	static public function onEditCommentsIndex($title, $commentsIndex) {
-		if ( $title->getNamespace() == NS_WIKIA_FORUM_BOARD_THREAD ) {
-			$parentPageId = $commentsIndex->getParentPageId();
-
-			$board = ForumBoard::newFromId( $parentPageId );
-			if ( $board instanceof ForumBoard ) {
-				$board->clearCacheBoardInfo();
-			} else {
-				Wikia::log(
-					__METHOD__,
-					'',
-					'Board doesn\'t exist: PageId: ' . $parentPageId .
-					' Title: ' . $title->getText()
-				);
-			}
-		}
-
 		return true;
 	}
 
@@ -258,7 +205,7 @@ class ForumHooksHelper {
 	static public function onWallMessageDeleted(&$mw, &$response) {
 		$title = $mw->getTitle();
 		if ( $title->getNamespace() == NS_WIKIA_FORUM_BOARD_THREAD ) {
-			$response->setVal( 'returnTo', wfMsg( 'forum-thread-deleted-return-to', $mw->getWallTitle()->getText() ) );
+			$response->setVal( 'returnTo', wfMessage( 'forum-thread-deleted-return-to', $mw->getArticleTitle()->getText() )->escaped() );
 		}
 		return true;
 	}
@@ -301,7 +248,7 @@ class ForumHooksHelper {
 		#check namespace(s)
 		if ( $ns == NS_FORUM || $ns == NS_FORUM_TALK ) {
 			if ( !static::canEditOldForum( $app->wg->User ) ) {
-				$action = array( 'class' => '', 'text' => wfMsg( 'viewsource' ), 'href' => $title->getLocalUrl( array( 'action' => 'edit' ) ), 'id' => 'ca-viewsource', 'primary' => 1 );
+				$action = array( 'class' => '', 'text' => wfMessage( 'viewsource' )->escaped(), 'href' => $title->getLocalUrl( array( 'action' => 'edit' ) ), 'id' => 'ca-viewsource', 'primary' => 1 );
 				$response->setVal( 'actionImage', MenuButtonController::LOCK_ICON );
 				$response->setVal( 'action', $action );
 				return false;
@@ -336,16 +283,27 @@ class ForumHooksHelper {
 
 	/**
 	 * Display Related Discussion (Forum posts) in bottom of article
+	 * @param OutputPage $out
+	 * @param string $text article HTML
+	 * @return bool: true because it is a hook
 	 */
 	static public function onOutputPageBeforeHTML( OutputPage $out, &$text ) {
-		$app = F::App();
-		if ( $out->isArticle() && $app->wg->Title->exists()
-			&& $app->wg->Title->getNamespace() == NS_MAIN && !Wikia::isMainPage()
-			&& $app->wg->Request->getVal( 'diff' ) === null
-			&& $app->wg->Request->getVal( 'action' ) !== 'render'
-			&& !( $app->checkSkin( 'wikiamobile' ) )
+		$app = F::app();
+		$title = $out->getTitle();
+		if ( $out->isArticle()
+			&& $title->exists()
+			&& $title->getNamespace() == NS_MAIN
+			&& !Wikia::isMainPage()
+			&& $out->getRequest()->getVal( 'diff' ) === null
+			&& $out->getRequest()->getVal( 'action' ) !== 'render'
+			&& !( $app->checkSkin( 'wikiamobile', $out->getSkin() ) )
 		) {
-			$text .= $app->renderView( 'RelatedForumDiscussionController', 'index');
+			// VOLDEV-46: Omit zero-state, only render if there are related forum threads
+			$messages = RelatedForumDiscussionController::getData( $title->getArticleId() );
+			unset( $messages['lastupdate'] );
+			if ( !empty( $messages ) ) {
+				$text .= $app->renderView( 'RelatedForumDiscussionController', 'index', array( 'messages' => $messages ) );
+			}
 		}
 		return true;
 	}
@@ -358,12 +316,11 @@ class ForumHooksHelper {
 	 */
 
 	static public function onWallAction($action, $parent, $comment_id) {
-		$app = F::App();
 		$title = Title::newFromId($comment_id, Title::GAID_FOR_UPDATE);
 
 		if ( !empty($title) && MWNamespace::getSubject( $title->getNamespace() ) == NS_WIKIA_FORUM_BOARD ) {
 			$threadId = empty($parent) ? $comment_id:$parent;
-			$app->sendRequest( "RelatedForumDiscussion", "purgeCache", array('threadId' => $threadId ));
+			RelatedForumDiscussionController::purgeCache( $threadId );
 
 			//cleare board info
 			$commentsIndex = CommentsIndex::newFromId( $comment_id );
@@ -375,17 +332,9 @@ class ForumHooksHelper {
 				return true;
 			}
 
-			$board->clearCacheBoardInfo();
-
 			$thread = WallThread::newFromId( $threadId );
-			if(!empty($thread)) {
+			if( !empty($thread) ) {
 				$thread->purgeLastMessage();
-				$threadTitle = Title::newFromId( $threadId );
-				// the title can be empty if this is a create action
-				if ( !empty( $threadTitle ) ) {
-					$threadTitle->purgeSquid();
-					$threadTitle->invalidateCache();
-				}
 			}
 		}
 		return true;
@@ -399,14 +348,39 @@ class ForumHooksHelper {
 	 * @return bool
 	 */
 	public static function onTitleGetSquidURLs( $title, &$urls ) {
-		if ( $title->inNamespace( NS_WIKIA_FORUM_BOARD_THREAD ) ) {
-			$wallMessage = WallMessage::newFromTitle( $title );
-			$urls = array(
-				$wallMessage->getMessagePageUrl(),
-				$wallMessage->getMessagePageUrl() . '?action=history',
-			);
+		wfProfileIn( __METHOD__ );
+
+		if( $title->inNamespaces( NS_WIKIA_FORUM_BOARD, NS_WIKIA_FORUM_BOARD_THREAD, NS_WIKIA_FORUM_TOPIC_BOARD ) ) {
+			// CONN-430: Resign from default ArticleComment purges
+			$urls = [];
 		}
 
+		if ( $title->inNamespaces( NS_WIKIA_FORUM_BOARD_THREAD, NS_WIKIA_FORUM_TOPIC_BOARD ) ) {
+			$wallMessage = WallMessage::newFromTitle( $title );
+			$urls = array_merge( $urls, $wallMessage->getSquidURLs( NS_WIKIA_FORUM_BOARD ) );
+		}
+
+		wfProfileOut( __METHOD__ );
+		return true;
+	}
+
+	/**
+	 * @desc Makes sure we don't send unnecessary ArticleComments links to purge
+	 *
+	 * @param Title $title
+	 * @param String[] $urls
+	 *
+	 * @return bool
+	 */
+	public static function onArticleCommentGetSquidURLs( $title, &$urls ) {
+		wfProfileIn( __METHOD__ );
+
+		if( $title->inNamespaces( NS_WIKIA_FORUM_BOARD, NS_WIKIA_FORUM_BOARD_THREAD, NS_WIKIA_FORUM_TOPIC_BOARD ) ) {
+			// CONN-430: Resign from default ArticleComment purges
+			$urls = [];
+		}
+
+		wfProfileOut( __METHOD__ );
 		return true;
 	}
 
@@ -488,4 +462,28 @@ class ForumHooksHelper {
 
 		return true;
 	}
+
+	/**
+	 * Ensure that the comments_index record (if it exists) for an article is marked as deleted
+	 * when an article is deleted. This event must be run inside the transaction in WikiPage::doDeleteArticleReal
+	 * otherwise the Article referenced will no longer exist and the lookup for it's associated
+	 * comments_index row will fail.
+	 *
+	 * @param WikiPage $page WikiPage object
+	 * @param User $user User object [not used]
+	 * @param string $reason [not used]
+	 * @param int $id [not used]
+	 * @return bool true
+	 *
+	 */
+	static public function onArticleDoDeleteArticleBeforeLogEntry( &$page, &$user, $reason, $id ) {
+		$title = $page->getTitle();
+		if ( $title instanceof Title ) {
+			$wallMessage = WallMessage::newFromTitle($title);
+			$wallMessage->setInCommentsIndex(WPP_WALL_ADMINDELETE, 1);
+		}
+
+		return true;
+	}
+
 }

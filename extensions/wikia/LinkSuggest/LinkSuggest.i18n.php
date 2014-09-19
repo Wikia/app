@@ -8,6 +8,13 @@ $messages['en'] = array(
 	'tog-redirected-from' => '&ndash; redirected from $1'
 );
 
+/** Message documentation (Message documentation)
+ * @author Hamilton Abreu
+ */
+$messages['qqq'] = array(
+	'tog-disablelinksuggest' => '{{Related|Source mode (wikia)}}',
+);
+
 /** Afrikaans (Afrikaans)
  * @author Naudefj
  */
@@ -59,7 +66,7 @@ $messages['ca'] = array(
 	'tog-redirected-from' => '&ndash; redirigit des de $1',
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Darth Daron
  * @author Jezevec
  * @author Mormegil
@@ -186,7 +193,9 @@ $messages['it'] = array(
  * @author Tommy6
  */
 $messages['ja'] = array(
+	'linksuggest-desc' => '編集画面で編集者に対しリンクの提案を行う',
 	'tog-disablelinksuggest' => 'ソースモードでの編集時のリンク補完を使わない',
+	'tog-redirected-from' => '&ndash; $1からのリダイレクト',
 );
 
 /** Khmer (ភាសាខ្មែរ)
@@ -315,9 +324,12 @@ $messages['ps'] = array(
 
 /** Portuguese (português)
  * @author Hamilton Abreu
+ * @author SandroHc
  */
 $messages['pt'] = array(
-	'tog-disablelinksuggest' => 'Não apresentar sugestões de links no modo de Código',
+	'linksuggest-desc' => 'Sugere links para editor no modo de edição',
+	'tog-disablelinksuggest' => 'Não apresentar sugestões de links no modo Fonte',
+	'tog-redirected-from' => '&ndash; redirecionado de $1',
 );
 
 /** Brazilian Portuguese (português do Brasil)
@@ -375,6 +387,13 @@ $messages['sv'] = array(
 	'tog-redirected-from' => '&ndash; omdirigerad från $1',
 );
 
+/** Telugu (తెలుగు)
+ * @author Chaduvari
+ */
+$messages['te'] = array(
+	'tog-redirected-from' => '&ndash; $1 నుండి దారిమార్పు చెందింది',
+);
+
 /** Thai (ไทย)
  * @author Akkhaporn
  */
@@ -391,10 +410,11 @@ $messages['tl'] = array(
 );
 
 /** Turkish (Türkçe)
+ * @author Incelemeelemani
  * @author Manco Capac
  */
 $messages['tr'] = array(
-	'tog-disablelinksuggest' => 'Bağlantı önermesini gösterme', # Fuzzy
+	'tog-disablelinksuggest' => 'Kaynak modu bağlantısını gösterme',
 );
 
 /** Tatar (Cyrillic script) (татарча)
@@ -409,8 +429,17 @@ $messages['tt-cyrl'] = array(
  */
 $messages['uk'] = array(
 	'linksuggest-desc' => 'Пропонує редакторам посилання в режимі редагування',
-	'tog-disablelinksuggest' => 'Не показувати пропозицій посилань у режимі Вихідного коду',
+	'tog-disablelinksuggest' => 'Не показувати підказки з посиланнями у режимі вихідного коду',
 	'tog-redirected-from' => '&ndash; перенаправлено з $1',
+);
+
+/** Vietnamese (Tiếng Việt)
+ * @author Baonguyen21022003
+ */
+$messages['vi'] = array(
+	'linksuggest-desc' => 'Đề nghị liên kết đến các biên tập viên chỉnh sửa quan',
+	'tog-disablelinksuggest' => 'Không hiển thị các liên kết đề nghị trong chế độ nguồn',
+	'tog-redirected-from' => '&ndash; đổi hướng từ $1',
 );
 
 /** Simplified Chinese (中文（简体）‎)
@@ -425,9 +454,12 @@ $messages['zh-hans'] = array(
 );
 
 /** Traditional Chinese (中文（繁體）‎)
+ * @author Ffaarr
  * @author Frankou
  * @author Lauhenry
  */
 $messages['zh-hant'] = array(
+	'linksuggest-desc' => '在編輯畫面中提供編輯者一些鏈接建議',
 	'tog-disablelinksuggest' => '源代碼模式時不顯示鏈接建議',
+	'tog-redirected-from' => '&ndash;重定向自$1',
 );

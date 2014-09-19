@@ -22,21 +22,13 @@ class SpecialStyleguideController extends WikiaSpecialPageController {
 
 		RenderContentOnlyHelper::setRenderContentVar( true );
 		RenderContentOnlyHelper::setRenderContentLevel( RenderContentOnlyHelper::LEAVE_NAV_ONLY );
-		$this->response->addAsset( 'ui_repo_api_js' );
 		$this->response->addAsset( 'extensions/wikia/SpecialStyleguide/css/SpecialStyleguide.scss' );
 
 		$this->wg->Out->setPageTitle( wfMessage( 'styleguide-pagetitle' )->plain() );
 
 		$wgAutoloadClasses['GlobalHeaderController'] = dirname( __FILE__ ) . '/helpers/SpecialStyleguideGlobalHeaderControllerOverride.php';
 
-		$this->response->setCacheValidity(
-			86400,
-			86400,
-			[
-				WikiaResponse::CACHE_TARGET_BROWSER,
-				WikiaResponse::CACHE_TARGET_VARNISH
-			]
-		);
+		$this->response->setCacheValidity(WikiaResponse::CACHE_STANDARD);
 
 		$subpage = mb_strtolower( $this->getFirstTextAfterSlash( $this->wg->Title->getSubpageText() ) );
 
@@ -47,6 +39,10 @@ class SpecialStyleguideController extends WikiaSpecialPageController {
 					'body' => $this->getSectionContent( 'components' ),
 					'footer' => $this->getSectionContent( 'footer' ),
 				];
+
+				$this->response->addAsset('extensions/wikia/SpecialStyleguide/js/SpecialStyleguide.js');
+				JSMessages::enqueuePackage('SpecialStyleguide', JSMessages::EXTERNAL);
+
 				break;
 			default:
 				$data = [

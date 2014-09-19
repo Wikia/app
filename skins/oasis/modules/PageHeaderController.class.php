@@ -54,7 +54,9 @@ class PageHeaderController extends WikiaController {
 		// handle protected pages (they should have viewsource link and lock icon) - BugId:9494
 		if ( isset( $this->content_actions['viewsource'] ) &&
 			!$wgTitle->isProtected() &&
-			!$wgTitle->isNamespaceProtected($wgUser) ) {
+			!$wgTitle->isNamespaceProtected($wgUser) &&
+			!$wgUser->isLoggedIn() /* VOLDEV-74: logged in users should see the viewsource button, not edit */
+		) {
 			// force login to edit page that is not protected
 			$this->content_actions['edit'] = $this->content_actions['viewsource'];
 			$this->content_actions['edit']['text'] = wfMessage('edit')->text();
@@ -89,22 +91,25 @@ class PageHeaderController extends WikiaController {
 			$this->actionName = 'form-edit';
 		}
 		// ve-edit
-		else if (isset($this->content_actions['ve-edit'])) {
+		else if ( isset($this->content_actions['ve-edit']) && $this->content_actions['ve-edit']['main'] ) {
 			$this->action = $this->content_actions['ve-edit'];
 			$this->actionImage = MenuButtonController::EDIT_ICON;
 			$this->actionName = 've-edit';
+			unset( $this->content_actions['ve-edit'] );
 		}
 		// edit
 		else if (isset($this->content_actions['edit'])) {
 			$this->action = $this->content_actions['edit'];
 			$this->actionImage = MenuButtonController::EDIT_ICON;
 			$this->actionName = 'edit';
+			unset( $this->content_actions['edit'] );
 		}
 		// view source
 		else if (isset($this->content_actions['viewsource'])) {
 			$this->action = $this->content_actions['viewsource'];
 			$this->actionImage = MenuButtonController::LOCK_ICON;
 			$this->actionName = 'source';
+			unset( $this->content_actions['ve-edit'], $this->content_actions['edit'] );
 		}
 
 		#print_pre($this->action); print_pre($this->actionImage); print_pre($this->actionName);
@@ -116,13 +121,21 @@ class PageHeaderController extends WikiaController {
 	protected function getDropdownActions() {
 		$ret = array();
 
-		// items to be added to "edit" dropdown
-		$actions = array( 'history', 'move', 'protect', 'unprotect', 'delete', 'undelete', 'replace-file' );
-
-		// add "edit" to dropdown (if action button is not an edit)
-		if (!in_array($this->actionName, array('edit', 'source'))) {
-			array_unshift($actions, 'edit');
+		$editActions = array();
+		if ( isset( $this->content_actions['edit'] ) ) {
+			array_push( $editActions, 'edit' );
 		}
+		if ( isset( $this->content_actions['ve-edit'] ) ) {
+			if ( $this->content_actions['ve-edit']['main'] ) {
+				array_unshift( $editActions, 've-edit' );
+			} else {
+				array_push( $editActions, 've-edit' );
+			}
+		}
+
+		// items to be added to "edit" dropdown
+		$actions = array_merge( $editActions,
+			array( 'history', 'move', 'protect', 'unprotect', 'delete', 'undelete', 'replace-file' ) );
 
 		foreach($actions as $action) {
 			if (isset($this->content_actions[$action])) {
@@ -229,9 +242,7 @@ class PageHeaderController extends WikiaController {
 
 		// remove namespaces prefix from title
 		$namespaces = array(NS_MEDIAWIKI, NS_TEMPLATE, NS_CATEGORY, NS_FILE);
-		if (defined('NS_VIDEO')) {
-			$namespaces[] = NS_VIDEO;
-		}
+
 		if ( in_array($ns, array_merge( $namespaces, $wgSuppressNamespacePrefix ) ) ) {
 			$this->title = $wgTitle->getText();
 			$this->displaytitle = false;
@@ -410,6 +421,11 @@ class PageHeaderController extends WikiaController {
 		// force AjaxLogin popup for "Add a page" button (moved from the template)
 		$this->loginClass = !empty($this->wg->DisableAnonymousEditing) ? ' require-login' : '';
 
+		// render monetization module
+		if ( !empty( $params['monetizationModules'] ) ) {
+			$this->monetizationModules = $params['monetizationModules'];
+		}
+
 		wfProfileOut(__METHOD__);
 	}
 
@@ -582,9 +598,7 @@ class PageHeaderController extends WikiaController {
 
 		// remove namespaces prefix from title
 		$namespaces = array(NS_MEDIAWIKI, NS_TEMPLATE, NS_CATEGORY, NS_FILE);
-		if (defined('NS_VIDEO')) {
-			$namespaces[] = NS_VIDEO;
-		}
+
 		if ( in_array($ns, array_merge( $namespaces, $wgSuppressNamespacePrefix ) ) ) {
 			$this->title = $wgTitle->getText();
 			$this->displaytitle = false;
@@ -596,6 +610,36 @@ class PageHeaderController extends WikiaController {
 		}
 
 		wfProfileOut( __METHOD__ );
+	}
+
+	/**
+	 * Render page header for Hubs
+	 *
+	 * @param: array $params
+	 *    key: showSearchBox (default: false)
+	 */
+	public function executeHubs($params) {
+		global $wgSupressPageTitle;
+
+		wfProfileIn(__METHOD__);
+
+		$this->displaytitle = true;
+		// Leave this for now. To discuss do we want PageTitle
+		if ( $this->displaytitle) {
+			$this->title = wfMessage('oasis-home')->escaped();
+		}
+
+		// number of pages on this wiki
+		$this->tallyMsg = wfMessage('oasis-total-articles-mainpage', SiteStats::articles() )->parse();
+
+		// if page is rendered using one column layout, show search box as a part of page header
+		$this->showSearchBox = isset($params['showSearchBox']) ? $params['showSearchBox'] : false ;
+
+		if (!empty($wgSupressPageTitle)) {
+			$this->title = '';
+		}
+
+		wfProfileOut(__METHOD__);
 	}
 
 	static function onArticleSaveComplete(&$article, &$user, $text, $summary,

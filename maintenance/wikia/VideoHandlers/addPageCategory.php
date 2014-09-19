@@ -39,17 +39,54 @@ require_once( "commandLine.inc" );
 
 if ( isset($options['help']) ) {
 	die( "Usage: php addPageCategory.php [--help] [--dry-run] [--provider=xyz] [--limit=123] [--add=abc] [--addPageCategories] [--remove=def] [--replace] [--old=def] [--new=abc] [--name=wxy]
-	--dry-run                   dry run
-	--provider                  provider name
-	--limit                     limit number of videos
-	--add                       add page category (seperate by semicolon)
-	--addPageCategories         add page category using category from pageCategories field in metadata to pages that have pageCategories field
-	--remove                    remove page category (seperate by semicolon)
-	--replace                   replace page category
-	--old                       old page category (for 'replace' only [required]) - case sensitive
-	--new                       new page category (for 'replace' only [required])
-	--name                      name of the file page
-	--help                      you are reading it right now\n\n" );
+	Options:
+
+	* General
+
+	--dry-run
+		Run this script without making any changes
+
+	--help
+		This help message
+
+	* Filters
+
+	--name PAGE_TITLE
+		The name of a single file page to update
+
+	--provider PROVIDER_NAME
+		Limit results based on provider name
+
+	--category CATEGORY_NAME[;CATEGORY_NAME;...]
+		Limit results to one or more specific categories separated by semicolons
+
+	--limit NUM
+		[REQUIRED] Limit number of videos returned (ordered by video title)
+
+	* Actions
+	
+	--add CATEGORY_NAME[;CATEGORY_NAME;...]
+		Add the given category or categories (separated by semicolons)
+
+	--addPageCategories
+		Add page category using the categories found in the pageCategories metadata field.  Any video that does
+		not have a pageCategories metadata field will not be effected.
+
+	--remove CATEGORY_NAME[;CATEGORY_NAME;...]
+		Remove the category given (separated by semicolons)
+
+	--replace
+		Replace the given category
+
+	* Action Targets
+
+	--old EXISTING_CATEGORY_NAME
+		The name of the old page category (for 'replace' only [required]) - case sensitive
+
+	--new NEW_CATEGORY_NAME
+		new page category (for 'replace' only [required])
+
+	\n\n" );
 }
 
 if ( empty($wgCityId) ) {
@@ -58,17 +95,21 @@ if ( empty($wgCityId) ) {
 
 $dryRun = isset( $options['dry-run'] );
 
-// provider
-$provider = isset( $options['provider'] ) ? $options['provider'] : '';
-if ( empty( $provider ) ) {
-	die( "Error: Invalid provider.\n" );
+if ( $dryRun ) {
+	echo "== DRY RUN MODE ==\n";
 }
 
-// limit
-$limit = isset( $options['limit'] ) ? $options['limit'] : 0;
+// Constrain on provider if given
+$provider = isset( $options['provider'] ) ? $options['provider'] : '';
+
+// Add a limit.  If no limit is passed, give a reasonable max
+$limit = isset( $options['limit'] ) ? $options['limit'] : 1000;
 if ( !is_numeric( $limit ) ) {
 	die( "Error: Invalid limit.\n" );
 }
+
+// See if we need to constrain on specific categories
+$matchCategories = isset( $options['category'] ) ? explode(';', $options['category']) : [];
 
 // page name
 $name = isset( $options['name'] ) ? $options['name'] : '';
@@ -116,18 +157,52 @@ $botUser = User::newFromName( 'WikiaBot' );
 
 $db = wfGetDB( DB_SLAVE );
 
-$sqlWhere = array(
-	'img_media_type' => 'VIDEO',
-	'img_minor_mime' => $provider,
+$sqlWhere = ['img_media_type' => 'VIDEO'];
 
-);
+// Add provider if it was given
+if ( $provider ) {
+	$sqlWhere['img_minor_mime'] = $provider;
+}
 
 if ( $addPageCategories ) {
 	$sqlWhere[] = "img_metadata like '%\"pageCategories%\"'";
 }
 
+// If we are adding a category don't bother selecting any pages that
+// already have this category.
+if ( $addCategories ) {
+	$values = array_map( [ $db, 'addQuotes' ], $addCategories );
+	$sqlWhere[] = "NOT EXISTS (
+		SELECT 1
+		FROM page
+			LEFT JOIN categorylinks ON page_id = cl_from
+		WHERE cl_to IN (".implode( ',', $values ).")
+		  AND page_namespace = ".NS_FILE."
+		  AND page_title = img_name
+	)";
+}
+
 if ( $replace ) {
-	$sqlWhere[] = "exists ( select 1 from page left join categorylinks on page_id = cl_from where cl_to = ".$db->addQuotes( $old )." and page_namespace = ".NS_FILE." and page_title = img_name )";
+	$sqlWhere[] = "EXISTS (
+		SELECT 1
+		FROM page
+			LEFT JOIN categorylinks ON page_id = cl_from
+		WHERE cl_to = ".$db->addQuotes( $old )."
+		  AND page_namespace = ".NS_FILE."
+		  AND page_title = img_name
+	)";
+}
+
+if ( $matchCategories ) {
+	$values = array_map( [ $db, 'addQuotes' ], $matchCategories );
+	$sqlWhere[] = "EXISTS (
+		SELECT 1
+		FROM page
+			JOIN categorylinks ON page_id = cl_from
+		WHERE cl_to IN (".implode(',', $values).")
+		  AND page_namespace = ".NS_FILE."
+		  AND page_title = img_name
+	)";
 }
 
 if ( !empty( $name ) ) {

@@ -1,6 +1,5 @@
-@import "../mixins/border-radius";
-@import "../mixins/clearfix";
-@import "../core/color";
+@import "skins/shared/mixins/clearfix";
+@import "skins/shared/color";
 
 .FollowedPagesModule {
 	line-height:20px;

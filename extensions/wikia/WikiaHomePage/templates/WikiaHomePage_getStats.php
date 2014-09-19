@@ -1,27 +1,36 @@
-<h2><?= wfMsg('wikiahome-stats-heading'); ?></h2>
+<h2><?= wfMsg('wikiastats-heading'); ?></h2>
 <div class="statisticdata">
 	<div class="datasection firstrowcell">
-		<h4><?= wfMessage('wikiahome-stats-visitors')->text(); ?></h4>
-		<strong><?= $visitors; ?></strong>
+		<h4><?=
+				$app->renderView(
+					'WikiaStyleGuideTooltipIconController',
+					'index',
+					[
+						'text' => wfMessage( 'wikiastats-visitors' )->plain(),
+						'tooltipIconTitle' => wfMessage( 'wikiastats-visitors-tooltip' )->plain()
+					]
+				);
+			?></h4>
+		<strong><?= $wg->Lang->formatNum($visitors); ?></strong>
 	</div>
     <div class="datasection">
-        <h4><?= wfMessage('wikiahome-stats-mobile-visitors')->text(); ?></h4>
-        <strong><?= $mobileVisitors; ?></strong>
+        <h4><?= wfMessage('wikiastats-mobile-percentage')->plain(); ?></h4>
+        <strong><?= wfMessage('wikiastats-mobile-percentage-value', $wg->Lang->formatNum($mobilePercentage))->plain(); ?></strong>
     </div>
     <div class="datasection firstrowcell">
-        <h4><?= wfMessage('wikiahome-stats-totalpages')->text(); ?></h4>
-        <strong><?= $totalPages; ?></strong>
+        <h4><?= wfMessage('wikiastats-totalpages')->plain(); ?></h4>
+        <strong><?= $wg->Lang->formatNum($totalPages); ?></strong>
     </div>
 	<div class="datasection">
-		<h4><?= wfMessage('wikiahome-stats-edits')->text(); ?></h4>
-		<strong><?= $edits; ?></strong>
+		<h4><?= wfMessage('wikiastats-edits')->plain(); ?></h4>
+		<strong><?= $wg->Lang->formatNum($edits); ?></strong>
 	</div>
 	<div class="datasection firstrowcell">
-		<h4><?= wfMessage('wikiahome-stats-communities')->text(); ?></h4>
-		<strong><?= $communities; ?></strong>
+		<h4><?= wfMessage('wikiastats-communities')->plain(); ?></h4>
+		<strong><?= $wg->Lang->formatNum($communities); ?></strong>
 	</div>
-    <div class="datasection">
-        <h4><?= wfMessage('wikiahome-stats-new-communities')->text(); ?></h4>
-        <strong><?= $newCommunities; ?></strong>
-    </div>
+	<div class="datasection">
+		<h4><?= wfMessage('wikiastats-new-communities')->plain(); ?></h4>
+		<strong><?= $wg->Lang->formatNum($newCommunities); ?></strong>
+	</div>
 </div>

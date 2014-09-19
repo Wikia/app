@@ -1,0 +1,12 @@
+{{#error}}
+<p class="error">{{{error}}}</p>
+{{/error}}
+{{^error}}
+<p>{{{introText}}}</p>
+{{/error}}
+
+{{#showForm}}
+<form method="POST" name="CloseMyAccountForm" id="CloseMyAccountForm" class="CloseMyAccountForm">
+	{{{submitButton}}}
+</form>
+{{/showForm}}

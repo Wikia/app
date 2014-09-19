@@ -21,6 +21,32 @@ class UIFactoryApiController extends \WikiaApiController {
 	 */
 	const PARAMETER_COMPONENTS = 'components';
 
+
+	/**
+	 * Prepare JSON description of the UI Styleguide component
+	 *
+	 * @param \Wikia\UI\Component $component
+	 * @param \Wikia\UI\Factory $factory
+	 * @return dictionary describing the component
+	 */
+	private function getComponentConfig( $component, $factory ) {
+		$componentResult = [];
+
+		$componentResult[ 'templateVarsConfig' ] = $component->getTemplateVarsConfig();
+		$componentResult[ 'templates' ] = [];
+		$componentResult[ 'name' ] = $component->getName();
+		$componentResult[ 'dependencies' ] = $component->getComponentDependencies();
+		foreach( array_keys( $componentResult[ 'templateVarsConfig' ] ) as $type ) {
+			$componentResult[ 'templates' ][ $type ] = $factory->loadComponentTemplateContent( $component, $type );
+		}
+		$componentResult[ 'assets' ] = $factory->getComponentAssetsUrls( $component );
+		$jsModule = $component->getJSWrapperModule();
+		if ( !empty( $jsModule ) ) {
+			$componentResult[ 'jsWrapperModule' ] = $jsModule;
+		}
+		return $componentResult;
+	}
+
 	/**
 	 * Return configuration of UI Styleguide components
 	 *
@@ -38,8 +64,9 @@ class UIFactoryApiController extends \WikiaApiController {
 
 		// create the Component instances for names specified in request parameter
 		$factory = Factory::getInstance();
+		$dependencies = [];
 		try {
-			$components = $factory->init( $componentNames, false );
+			$components = $factory->init( $componentNames, false, $dependencies );
 			if ( !is_array( $components ) ) {
 				$components = [ $components ];
 			}
@@ -51,27 +78,21 @@ class UIFactoryApiController extends \WikiaApiController {
 		// build the response
 		$result = [];
 		foreach( $components as $component ) {
-			$componentResult = [];
-
-			$componentResult[ 'templateVarsConfig' ] = $component->getTemplateVarsConfig();
-			$componentResult[ 'templates' ] = [];
-			foreach( array_keys( $componentResult[ 'templateVarsConfig' ] ) as $type ) {
-				$componentResult[ 'templates' ][ $type ] = $factory->loadComponentTemplateContent( $component, $type );
-			}
-			$componentResult[ 'assets' ] = $factory->getComponentAssetsUrls( $component );
-			$result[] = $componentResult;
+			$result[] = $this->getComponentConfig( $component, $factory );
 		}
 		$this->setVal( 'components', $result );
 
+		// add the dependencies to the response
+		$result = [];
+		foreach( $dependencies as $component ) {
+			// @todo - do we want to include in the dependencies the components that are already returned in the 'components' array?
+			/** @var $component \Wikia\UI\Component */
+			$result[ $component->getName() ] = $this->getComponentConfig( $component, $factory );
+		}
+		$this->setVal( 'dependencies', $result );
+
 		// set response caching
-		$this->response->setCacheValidity(
-			self::CLIENT_CACHE_VALIDITY,
-			self::CLIENT_CACHE_VALIDITY,
-			array(
-				\WikiaResponse::CACHE_TARGET_BROWSER,
-				\WikiaResponse::CACHE_TARGET_VARNISH
-			)
-		);
+		$this->response->setCacheValidity(self::CLIENT_CACHE_VALIDITY);
 
 		wfProfileOut( __METHOD__ );
 	}

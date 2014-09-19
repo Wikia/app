@@ -1,29 +1,29 @@
 -- Table to collect information about Licensed Video Swap usage across all wikis
 CREATE TABLE lvs_usage_stats (
-    wiki_id           integer PRIMARY KEY,
+    wiki_id           integer NOT NULL PRIMARY KEY,
 
     -- When this row was last changed (not including update to 'checked_on')
-    updated_on        datetime,
+    updated_on        datetime NOT NULL,
 
     -- When this wiki was last checked for new videos/suggestions
-    checked_on        datetime,
+    checked_on        datetime NOT NULL,
 
     -- Types of videos on the wiki
-    premium_videos    integer,
-    external_videos   integer,
-    swappable_videos  integer,
-    total_suggestions integer,
+    premium_videos    integer NOT NULL DEFAULT 0,
+    local_videos      integer NOT NULL DEFAULT 0,
+    swappable_videos  integer NOT NULL DEFAULT 0,
+    total_suggestions integer NOT NULL DEFAULT 0,
 
     -- User actions taken on the wiki
-    kept_videos       integer,
-    swapped_videos    integer,
-    close_swap_videos integer,
-    exact_swap_videos integer,
+    kept_videos       integer NOT NULL DEFAULT 0,
+    swapped_videos    integer NOT NULL DEFAULT 0,
+    close_swap_videos integer NOT NULL DEFAULT 0,
+    exact_swap_videos integer NOT NULL DEFAULT 0,
 
     -- Other data of interest as a JSON
     data              blob,
 
-    index(wiki_id, checked_on, updated_on),
+    index(checked_on, updated_on),
     index(swappable_videos),
     index(swapped_videos),
     index(kept_videos)

@@ -78,6 +78,7 @@ function lyricTag_InstallParser( $parser ) {
 	#install hook on the element <lyric>
 	$parser->setHook("lyric", "renderLyricTag");
 	$parser->setHook("lyrics", "renderLyricTag");
+	$parser->setHook("tonefuze", "renderToneFuzeTag");
 	return true;
 }
 
@@ -126,25 +127,17 @@ function renderLyricTag($input, $argv, $parser)
 		$imgPath = "$wgExtensionsPath/3rdparty/LyricWiki";
 		$artist = $parser->mTitle->getDBkey();
 		$colonIndex = strpos("$artist", ":");
-		$songTitle = $parser->mTitle->getText();
-		$artistLink = $artist;
-		$songLink = $songTitle;
+		$songTitle = "";
 		if($colonIndex !== false){
 			$artist = substr($artist, 0, $colonIndex);
+			$songTitle = $parser->mTitle->getText();
 			$songTitle = substr($songTitle, $colonIndex+1);
-
-			$artistLink = str_replace(" ", "+", $artist);
-			$songLink = str_replace(" ", "+", $songTitle);
 		}
-		$artistLink = str_replace("_", "+", $artistLink);
-		$songLink = str_replace("_", "+", $songLink);
-		$href = "<a href='http://www.ringtonematcher.com/co/ringtonematcher/02/noc.asp?sid=WILWros&amp;artist=".urlencode($artistLink)."&amp;song=".urlencode($songLink)."' rel='nofollow' target='_blank'>";
-		$ringtoneLink = "";
-		$ringtoneLink = "<div class='rtMatcher'>";
-		$ringtoneLink.= "$href<img src='" . $imgPath . "/phone_left.gif' alt='phone' width='16' height='17'/> ";
-		$ringtoneLink.= "Send \"$songTitle\" Ringtone to your Cell";
-		$ringtoneLink.= " <img src='" . $imgPath . "/phone_right.gif' alt='phone' width='16' height='17'/></a>";
-		$ringtoneLink.= "</div>";
+
+		// The links have different adunit_ids above/below lyrics now. This will differentiate them for tracking.
+		$aboveLink = getToneFuzeLink($isAboveLyrics=true, $artist, $songTitle);
+		$belowLink = getToneFuzeLink($isAboveLyrics=false, $artist, $songTitle);
+
 		$wgFirstLyricTag = false;
 	}
 
@@ -158,9 +151,9 @@ function renderLyricTag($input, $argv, $parser)
 
 	$retVal.= gracenote_getNoscriptTag();
 	$retVal.= "<div class='lyricbox'>";
-	$retVal.= ($isInstrumental?"":$ringtoneLink); // if this is an instrumental, just a ringtone link on the bottom is plenty.
+	$retVal.= ($isInstrumental?"":$aboveLink); // if this is an instrumental, just a ringtone link on the bottom is plenty.
 	$retVal.= gracenote_obfuscateText($transform);
-	$retVal.= $ringtoneLink;
+	$retVal.= $belowLink;
 	$retVal.= "<div class='lyricsbreak'></div>\n"; // so that we can have stuff in the box (like videos & awards) even if the lyrics are short.
 	$retVal.= "</div>";
 
@@ -169,7 +162,63 @@ function renderLyricTag($input, $argv, $parser)
 
 	wfProfileOut( __METHOD__ );
 	return $retVal;
-}
+} // end renderLyricTag()
+
+/**
+ * Parses <tonefuze> tag. This tag just lets us lay out the location of
+ * the tone-fuze ads more easily on artist pages. The tonefuze ads are
+ * automatically injected into lyrics pages by the <lyrics> tag.
+ */
+function renderToneFuzeTag($input, $argv, $parser){
+	wfProfileIn( __METHOD__ );
+	
+	// Find out if this tag is above or below main content of the page (either lyrics or artist discog).
+	$isAbove = (isset($argv['location']) && ($argv['location'] == "above"));
+
+	// Parse out artist and/or song-title from the page title.
+	$artist = $parser->mTitle->getDBkey();
+	$colonIndex = strpos("$artist", ":");
+	$songTitle = "";
+	if($colonIndex !== false){
+		$artist = substr($artist, 0, $colonIndex);
+		$songTitle = $parser->mTitle->getText();
+		$songTitle = substr($songTitle, $colonIndex+1);
+	}
+	$retVal = getToneFuzeLink($isAbove, $artist, $songTitle);	
+	
+	wfProfileOut( __METHOD__ );
+	return $retVal;
+} // end renderToneFuzeTag()
+
+/**
+ * Returns the HTML for a ToneFuze link for the given position, artist, and song title.
+ * This can be used for artist pages or song pages.
+ */
+function getToneFuzeLink($isAboveLyrics=true, $artist, $songTitle=""){
+	$ID_ABOVE_LYRICS = 39382076;
+	$ID_BELOW_LYRICS = 39382077;
+	$AD_ID_STRING = "AD_ID_STRING";
+	$ringtoneLink = "";
+	$ringtoneLink = "<script>";
+	$ringtoneLink .= "(function() {";
+	$ringtoneLink .= "var opts = {";
+	$ringtoneLink .= "artist: \"{$artist}\",";
+	$ringtoneLink .= "song: \"{$songTitle}\",";
+	$ringtoneLink .= "adunit_id: {$AD_ID_STRING},";
+	$ringtoneLink .= "div_id: \"cf_async_\" + Math.floor((Math.random() * 999999999))";
+	$ringtoneLink .= "};";
+	$ringtoneLink .= "document.write('<div id=\"'+opts.div_id+'\"></div>');var c=function(){cf.showAsyncAd(opts)};if(window.cf)c();else{cf_async=!0;var r=document.createElement(\"script\"),s=document.getElementsByTagName(\"script\")[0];r.async=!0;r.src=\"//srv.tonefuse.com/showads/showad.js\";r.readyState?r.onreadystatechange=function(){if(\"loaded\"==r.readyState||\"complete\"==r.readyState)r.onreadystatechange=null,c()}:r.onload=c;s.parentNode.insertBefore(r,s)};";
+	$ringtoneLink .= "})();";
+	$ringtoneLink .= "</script>";
+	
+	if($isAboveLyrics){
+		$ringtoneLink = str_replace($AD_ID_STRING, $ID_ABOVE_LYRICS, $ringtoneLink);
+	} else {
+		$ringtoneLink = str_replace($AD_ID_STRING, $ID_BELOW_LYRICS, $ringtoneLink);
+	}
+
+	return $ringtoneLink;
+} // end getToneFuzeLink()
 
 /**
  * The parser tag may have set a parser option (which gets cached in the parser-cache) indicating that

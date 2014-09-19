@@ -1,9 +1,9 @@
-@import "color";
+@import "skins/shared/color";
 @import "layout";
-@import "../mixins/box-shadow";
-@import "../mixins/clearfix";
-@import "../mixins/gradient";
-@import "../mixins/menus";
+@import "skins/shared/mixins/box-shadow";
+@import "skins/shared/mixins/clearfix";
+@import "skins/shared/mixins/gradient";
+@import "skins/shared/mixins/menus";
 
 .WikiaFooter, .WikiaBarWrapper {
 	clear: both;
@@ -27,7 +27,6 @@
 		margin-left: -5px;
 		position: absolute;
 		top: 0;
-		width: $width-outside + 10px;
 		&.small {
 			left: -5px;
 			margin-left: auto;
@@ -44,13 +43,13 @@
 			padding: 0 10px;
 			z-index: 1000;	/* IE7 */
 			>li {
-				border-left: 1px solid mix($color-header-text, $color-header, 20%);
+				border-right: 1px solid mix($color-header-text, $color-header, 20%);
 				float: left;
 				height: 16px;
 				line-height: 16px;
 				margin-top: 2px;
 				padding: 0 10px;
-				&:first-child {
+				&:last-child {
 					border: 0;
 				}
 				img {
@@ -93,6 +92,12 @@
 				left: 0;
 			}
 		}
+	}
+	.overflow-menu {
+		display: none;
+	}
+	.overflow-menu .overflow {
+		display: none;
 	}
 	.tools-menu {
 		@include menu-heavy;
@@ -139,79 +144,6 @@
 		border-color: transparent transparent $color-header $color-header;
 		right: -5px;
 		top: -7px;
-	}
-}
-
-.CorporateFooter  {
-	clear: left;
-	font-size: 11px;
-	padding-bottom: 10px;
-	nav {
-		@include clearfix;
-		margin-top: 15px;
-		position: relative;
-		> h1 {
-			display: none;
-		}
-	}
-	.WikiaHubBranding {
-		background: transparent;
-		left: 10px;
-		padding: 1px;
-		position: absolute;
-		top: 0;
-		.wordmark {
-			float: left;
-			position: relative;
-			width: 66px;
-		}
-		.hub {
-			background: $color-page;
-			float: left;
-			height: 10px;
-			padding: 5px 6px 8px 6px;
-			.hub2,
-			.hub3,
-			.hub9 {
-				font-size: 10px;
-				font-weight: bold;
-				letter-spacing: -0.5px;
-				text-decoration: none;
-				text-transform: uppercase;
-			}
-			.hub2 {
-				color: $color-wikiahome-videogames;
-			}
-			.hub3 {
-				color: $color-wikiahome-entertainment;
-			}
-			.hub9 {
-				color: $color-wikiahome-lifestyle;
-			}
-		}
-	}
-	.HubBrandingBlackBackground {
-		background: black;
-	}
-	ul {
-		list-style: none;
-		margin: 0 0 8px 167px;
-		text-align: right;
-
-		li {
-			border-left: solid 1px $color-links;
-			display: inline-block;
-			margin-top: 8px;
-			padding: 0 8px;
-
-			&:first-child {
-				border: none;
-			}
-
-			a {
-				color: $color-links;
-			}
-		}
 	}
 }
 

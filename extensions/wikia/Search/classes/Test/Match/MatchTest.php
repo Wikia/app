@@ -10,6 +10,8 @@ use Wikia\Search\Test\BaseTest, ReflectionProperty, ReflectionMethod, Wikia\Sear
 class MatchTest extends BaseTest {
 
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.08484 ms
 	 * @covers Wikia\Search\Match\AbstractMatch::__construct
 	 * @covers Wikia\Search\Match\AbstractMatch::getId
 	 */
@@ -18,15 +20,15 @@ class MatchTest extends BaseTest {
 		$mockMatch = $this->getMockBuilder( 'Wikia\Search\Match\AbstractMatch' )
 		                  ->setConstructorArgs( array( 123, $service ) )
 		                  ->getMockForAbstractClass();
-		
+
 		$this->assertAttributeEquals(
-				123, 
-				'id', 
+				123,
+				'id',
 				$mockMatch
 		);
 		$this->assertAttributeEquals(
-				$service, 
-				'service', 
+				$service,
+				'service',
 				$mockMatch
 		);
 		$this->assertEquals(
@@ -34,8 +36,10 @@ class MatchTest extends BaseTest {
 				$mockMatch->getId()
 		);
 	}
-	
+
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.08443 ms
 	 * @covers Wikia\Search\Match\AbstractMatch::getResult
 	 */
 	public function testAbstractGetResult() {
@@ -46,7 +50,7 @@ class MatchTest extends BaseTest {
 		$mockResult = $this->getMockBuilder( 'Wikia\Search\Result' )
 		                   ->disableOriginalConstructor()
 		                   ->getMock();
-		
+
 		$mockMatch
 		    ->expects( $this->once() )
 		    ->method ( 'createResult' )
@@ -57,8 +61,10 @@ class MatchTest extends BaseTest {
 				$mockMatch->getResult()
 		);
 	}
-	
+
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.08511 ms
 	 * @covers Wikia\Search\Match\Article::hasRedirect
 	 */
 	public function testArticleMatchHasRedirect() {
@@ -66,12 +72,12 @@ class MatchTest extends BaseTest {
 		                      ->disableOriginalConstructor()
 		                      ->setMethods( array( 'getCanonicalPageIdFromPageId' ) )
 		                      ->getMock();
-		
+
 		$mockResult = $this->getMockBuilder( 'Wikia\Search\Match\Article' )
 		                   ->setConstructorArgs( array( 123, $mockService ) )
 		                   ->setMethods( null )
 		                   ->getMock();
-		
+
 		$mockService
 		    ->expects( $this->at( 0 ) )
 		    ->method ( 'getCanonicalPageIdFromPageId' )
@@ -91,29 +97,33 @@ class MatchTest extends BaseTest {
 				$mockResult->hasRedirect()
 		);
 	}
-	
+
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.10456 ms
 	 * @covers Wikia\Search\Match\Article::createResult
 	 */
 	public function testCreateResultArticle() {
-		$serviceMethods = array( 
+		$serviceMethods = array(
 				'getWikiId', 'getTitleStringFromPageId', 'getUrlFromPageid', 'getNamespaceFromPageId',
 				'getCanonicalPageIdFromPageId', 'getFirstRevisionTimestampForPageId','getLastRevisionTimestampForPageId',
 				'getSnippetForPageId', 'getNonCanonicalTitleStringFromPageId', 'getNonCanonicalUrlFromPageId'
 				);
-		
+
 		$mockService = $this->getMockBuilder( 'Wikia\Search\MediaWikiService' )
 		                      ->disableOriginalConstructor()
 		                      ->setMethods( $serviceMethods )
 		                      ->getMock();
-		
+
 		$pageId = 123;
+		$highlight = 'long span class';
+
 		$mockMatch = $this->getMockBuilder( 'Wikia\Search\Match\Article' )
-		                   ->setConstructorArgs( array( $pageId, $mockService ) )
+		                   ->setConstructorArgs( array( $pageId, $mockService,$highlight ) )
 		                   ->setMethods( array( 'hasRedirect' ) )
 		                   ->getMock();
-		
-		
+
+
 		$wid = 321;
 		$canonicalPageId = 456;
 		$titleString = 'my title';
@@ -122,7 +132,10 @@ class MatchTest extends BaseTest {
 		$nonCanonicalUrl = 'http://foo.wikia.com/wiki/Turduckens';
 		$created = '30 days ago';
 		$touched = 'now';
-		$snippet = "This be my snippet";
+		$snippet = "This be my long snippet";
+		$highlighted = 'This be my <span class="searchmatch">long</span> snippet&hellip;';
+
+
 		$fieldsArray = array(
 				'id' => sprintf( '%s_%s', $wid, $canonicalPageId ),
 				'pageid' => $pageId,
@@ -135,7 +148,7 @@ class MatchTest extends BaseTest {
 				'created' => $created,
 				'touched' => $touched
 				);
-		
+
 		$mockService
 		    ->expects( $this->atLeastOnce() )
 		    ->method ( 'getWikiId' )
@@ -206,7 +219,7 @@ class MatchTest extends BaseTest {
 				$result
 		);
 		$this->assertEquals(
-				$snippet."&hellip;",
+				$highlighted,
 				$result->getText()
 		);
 		$this->assertEquals(
@@ -218,8 +231,10 @@ class MatchTest extends BaseTest {
 				$result->getVar( 'redirectUrl' )
 		);
 	}
-	
+
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.08899 ms
 	 * @covers Wikia\Search\Match\Wiki::createResult
 	 */
 	public function testWikiMatchCreateResult() {
@@ -228,17 +243,17 @@ class MatchTest extends BaseTest {
 		                      ->disableOriginalConstructor()
 		                      ->setMethods( $serviceMethods )
 		                      ->getMock();
-		
+
 		$mockMatch = $this->getMockBuilder( 'Wikia\Search\Match\Wiki' )
 		                  ->disableOriginalConstructor()
 		                  ->setMethods( [ 'getId' ] )
 		                  ->getMock();
-		
+
 		$mockResult = $this->getMockBuilder( 'Wikia\Search\Result' )
 		                   ->disableOriginalConstructor()
 		                   ->setMethods( [ 'offsetSet' ] )
 		                   ->getMock();
-		
+
 		$mockService
 		    ->expects( $this->once() )
 		    ->method ( 'setCrossWiki' )
@@ -264,13 +279,13 @@ class MatchTest extends BaseTest {
 		    ->method ( 'offsetSet' )
 		    ->with   ( 'exactWikiMatch', true )
 		;
-		
-		$this->proxyClass( 'SolrDocumentService', $mockService );
-		$this->mockApp();
+
+		$this->mockClass( 'SolrDocumentService', $mockService );
+
 		$this->assertEquals(
 				$mockResult,
 				$mockMatch->createResult()
 		);
-		
+
 	}
 }

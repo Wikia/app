@@ -6,7 +6,7 @@ global $wgExtensionsPath;
 $badgeName = htmlspecialchars($badge->getName());
 ?>
 <div class="AchievementsNotification accent reset" style="display: none;">
-	<img src="<?=$badge->getPictureUrl(90);?>" alt="<?=$badgeName;?>" width="90" height="90" />
+	<img src="<?=$badge->getPictureUrl(90);?>" alt="<?=$badgeName;?>" />
 	<div class="text">
 		<h1><?=wfMsg('achievements-notification-title', $user->getName());?></h1>
 		<p><?=wfMsg('achievements-notification-subtitle', $badge->getName(), $badge->getPersonalGivenFor());?></p>

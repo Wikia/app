@@ -26,20 +26,24 @@ class WikiaConfirmEmailSpecialController extends WikiaSpecialPageController {
 	 */
 	public function index() {
 		$this->response->addAsset('extensions/wikia/UserLogin/css/UserLogin.scss');
-	
+
 		// hide things in the skin
 		$this->wg->SuppressWikiHeader = false;
 		$this->wg->SuppressPageHeader = false;
 		$this->wg->SuppressFooter = true;
 		$this->wg->SuppressAds = true;
 		$this->wg->SuppressToolbar = true;
-		
+
 		$this->wg->Out->setPageTitle( wfMessage('wikiaconfirmemail-heading')->plain() );
 
 		$par = $this->request->getVal( 'par', '' );
 		$this->code = $this->request->getVal( 'code', $par );
 		$this->username = $this->request->getVal( 'username', '' );
 		$this->password = $this->request->getVal( 'password', '' );
+		$this->editToken = $this->wg->User->getEditToken();
+		$this->loginToken = UserLoginHelper::getLoginToken();
+		$editTokenReq = $this->request->getVal( 'editToken', '' );
+		$loginTokenReq = $this->request->getVal( 'loginToken', '' );
 
 		if ( $this->code == '' ) {
 			$this->result = 'error';
@@ -47,7 +51,16 @@ class WikiaConfirmEmailSpecialController extends WikiaSpecialPageController {
 			return;
 		}
 
-		if ( $this->wg->request->wasPosted() ) {
+		if ( $this->wg->request->wasPosted() && $this->wg->User->matchEditToken( $editTokenReq ) ) {
+
+			if ( $this->wg->User->isAnon()
+				&& $loginTokenReq !== UserLoginHelper::getLoginToken()
+			) {
+				$this->result = 'error';
+				$this->msg = wfMessage( 'sessionfailure' )->escaped();
+				return;
+			}
+
 			if ( $this->username == '' ) {
 				$this->result = 'error';
 				$this->msg = wfMessage( 'userlogin-error-noname' )->escaped();
@@ -69,135 +82,99 @@ class WikiaConfirmEmailSpecialController extends WikiaSpecialPageController {
 				return;
 			}
 
-			if ( UserLoginHelper::isTempUser( $this->username ) ) {//@TODO get rid of isTempUser check when TempUser will be globally disabled
-				//TEMP USER case
-				// User - activate user, confirm email and redirect to user page or create new wiki
-				$tempUser = TempUser::getTempUserFromName( $this->username );
-				if ( $tempUser->getId() != $expUser->getId() ) {
-					$this->result = 'error';
-					$this->msg = wfMessage( 'wikiaconfirmemail-error-user-not-match' )->escaped();
-					$this->errParam = 'username';
-					return;
-				}
+			// User - activate user, confirm email and redirect to user page or create new wiki
+			$user = User::newFromName( $this->username );
+			if ( $user->getId() != $expUser->getId() ) {
+				$this->result = 'error';
+				$this->msg = wfMessage( 'wikiaconfirmemail-error-user-not-match' )->escaped();
+				$this->errParam = 'username';
+				return;
+			}
 
-				$userLoginHelper = (new UserLoginHelper);
-				if ( $userLoginHelper->isPasswordThrottled($this->username) ) {
-					$this->result = 'error';
-					$this->msg = wfMessage( 'userlogin-error-login-throttled' )->escaped();
-					$this->errParam = 'password';
-					return;
-				}
+			$userLoginHelper = new UserLoginHelper ; /* @var UserLoginHelper $userLoginHelper */
+			if ( $userLoginHelper->isPasswordThrottled( $this->username ) ) {
+				$this->result = 'error';
+				$this->msg = wfMessage( 'userlogin-error-login-throttled' )->escaped();
+				$this->errParam = 'password';
+				return;
+			}
 
-				$user = $tempUser->mapTempUserToUser( false );
-				if ( $user->checkPassword($this->password) ) {
-					$this->wg->user = $tempUser->activateUser( $user );
-					$this->wg->User->setCookies();
-					LoginForm::clearLoginToken();
-					TempUser::clearTempUserSession();
-					$userLoginHelper->clearPasswordThrottle( $this->username );
+			if ( $user->checkPassword( $this->password ) ) {
+				$this->wg->User = $user;
 
-					// redirect user
-					if ( $tempUser->getSource() == '' ) {
-						$titleObj = $this->wg->User->getUserPage();
-						$query = '';
-					} else {
-						$titleObj = SpecialPage::getTitleFor( 'CreateNewWiki' );
-						$query = $tempUser->getSource();
-					}
-					$this->wg->out->redirect( $titleObj->getFullURL($query) );
-					return;
-				} else {
-					$this->result = 'error';
-					$this->msg = wfMessage( 'userlogin-error-wrongpassword' )->escaped();
-					$this->errParam = 'password';
-					return;
-				}
-
-			} else {
-
-				// User - activate user, confirm email and redirect to user page or create new wiki
-				$user = User::newFromName( $this->username );
-				if ( $user->getId() != $expUser->getId() ) {
-					$this->result = 'error';
-					$this->msg = wfMessage( 'wikiaconfirmemail-error-user-not-match' )->escaped();
-					$this->errParam = 'username';
-					return;
-				}
-
-				$userLoginHelper = ( new UserLoginHelper ); /* @var UserLoginHelper $userLoginHelper */
-				if ( $userLoginHelper->isPasswordThrottled( $this->username ) ) {
-					$this->result = 'error';
-					$this->msg = wfMessage( 'userlogin-error-login-throttled' )->escaped();
-					$this->errParam = 'password';
-					return;
-				}
-
-				if ( $user->checkPassword($this->password) ) {
-					$this->wg->User = $user;
+				if ( $user->getOption( UserLoginSpecialController::NOT_CONFIRMED_SIGNUP_OPTION_NAME ) != null ){// Signup confirm
+					// Log user in manually
 					$this->wg->User->setCookies();
 					LoginForm::clearLoginToken();
 					UserLoginHelper::clearNotConfirmedUserSession();
 					$userLoginHelper->clearPasswordThrottle( $this->username );
 
-					if ( $user->getOption( UserLoginSpecialController::NOT_CONFIRMED_SIGNUP_OPTION_NAME ) != null ){//Signup confirm
+					// Confirm
+					UserLoginHelper::removeNotConfirmedFlag( $user );
+					$user->confirmEmail();
 
-						//Confirm
-						UserLoginHelper::removeNotConfirmedFlag( $user );
-						$user->confirmEmail();
+					// Get and clear redirect page
+					$userSignupRedirect = $user->getOption( UserLoginSpecialController::SIGNUP_REDIRECT_OPTION_NAME );
+					$user->setOption( UserLoginSpecialController::SIGNUP_REDIRECT_OPTION_NAME, null );
 
-						//Get and clear redirect page
-						$userSignupRedirect = $user->getOption( UserLoginSpecialController::SIGNUP_REDIRECT_OPTION_NAME );
-						$user->setOption( UserLoginSpecialController::SIGNUP_REDIRECT_OPTION_NAME, null );
+					$user->saveSettings();
 
-						$user->saveSettings();
+					$userLoginHelper->addNewUserLogEntry( $user );
 
-						// send welcome email
-						$emailParams = array(
-							'$USERNAME' => $user->getName(),
-							'$EDITPROFILEURL' => $user->getUserPage()->getFullURL(),
-							'$LEARNBASICURL' => 'http://community.wikia.com/wiki/Help:Wikia_Basics',
-							'$EXPLOREWIKISURL' => 'http://www.wikia.com',
-						);
+					// send welcome email
+					$emailParams = array(
+						'$USERNAME' => $user->getName(),
+						'$EDITPROFILEURL' => $user->getUserPage()->getFullURL(),
+						'$LEARNBASICURL' => 'http://community.wikia.com/wiki/Help:Wikia_Basics',
+						'$EXPLOREWIKISURL' => 'http://www.wikia.com',
+					);
 
-						$userLoginHelper->sendEmail( $user, 'WelcomeMail', 'usersignup-welcome-email-subject', 'usersignup-welcome-email-body', $emailParams, 'welcome-email', 'WelcomeMail' );
+					$userLoginHelper->sendEmail( $user, 'WelcomeMail', 'usersignup-welcome-email-subject', 'usersignup-welcome-email-body', $emailParams, 'welcome-email', 'WelcomeMail' );
 
-						// redirect user
-						if ( !empty( $userSignupRedirect ) ) {//Redirect user to the point where he finished (when signup on create wiki)
-							$titleObj = SpecialPage::getTitleFor( 'CreateNewWiki' );
-							$query = $userSignupRedirect;
-						} else {
-							$titleObj = $this->wg->User->getUserPage();
-							$query = '';
-						}
-						$this->wg->out->redirect( $titleObj->getFullURL( $query ) );
-						return;
+					// redirect user
+					if ( !empty( $userSignupRedirect ) ) {// Redirect user to the point where he finished (when signup on create wiki)
+						$titleObj = SpecialPage::getTitleFor( 'CreateNewWiki' );
+						$query = $userSignupRedirect;
+					} else {
+						$titleObj = $this->wg->User->getUserPage();
+						$query = '';
+					}
+					$this->wg->out->redirect( $titleObj->getFullURL( $query ) );
+					return;
 
-					} else {//Email change
+				} else {// Email change
+					// Log user in through standard method
+					$response = $this->app->sendRequest( 'UserLoginSpecial', 'login' );
 
-						$optionNewEmail = $this->wg->User->getOption( 'new_email' );
-						if ( !empty( $optionNewEmail ) ) {
-							$user->setEmail( $optionNewEmail );
-						}
-						$user->confirmEmail();
-						$user->setOption( 'new_email', null );
-						$user->saveSettings();
+					$result = $response->getVal( 'result', '' );
 
-						// redirect user
+					$optionNewEmail = $this->wg->User->getOption( 'new_email' );
+					if ( !empty( $optionNewEmail ) ) {
+						$user->setEmail( $optionNewEmail );
+					}
+					$user->confirmEmail();
+					$user->setOption( 'new_email', null );
+					$user->saveSettings();
+
+					// redirect user
+					if ( $result === 'closurerequested' ) {
+						$response = $this->app->sendRequest( 'UserLoginSpecial', 'getCloseAccountRedirectUrl' );
+						$redirectUrl = $response->getVal( 'redirectUrl' );
+						$this->wg->Out->redirect( $redirectUrl );
+					} else {
 						$userPage = $user->getUserPage();
 						$this->wg->out->redirect( $userPage->getFullURL() );
-						return;
-
 					}
-
-				} else {
-					$this->result = 'error';
-					$this->msg = wfMessage( 'userlogin-error-wrongpassword' )->escaped();
-					$this->errParam = 'password';
 					return;
+
 				}
+
+			} else {
+				$this->result = 'error';
+				$this->msg = wfMessage( 'userlogin-error-wrongpassword' )->escaped();
+				$this->errParam = 'password';
+				return;
 			}
-
-
 		}
 	}
 

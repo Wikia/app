@@ -489,6 +489,16 @@ div.tleft {
 	border-width: .5em 1.4em .8em 0;
 }
 
+figure.tright {
+	clear: right;
+	float: right;
+}
+
+figure.tleft {
+	float: left;
+	clear: left;
+}
+
 .hiddenStructure {
 	display: none;
 	speak: none;
@@ -1130,7 +1140,7 @@ input.searchButton {
 	margin-right: 2em;
 }
 .prefsection legend {
-	font-weight: bold;   
+	font-weight: bold;
 }
 .prefsection table, .prefsection legend {
 	background-color: #F9F9F9;
@@ -1593,7 +1603,7 @@ tr.sv-space td { display: none; }
 */
 .TablePager_nav a { text-decoration: none; }
 .TablePager { border-collapse: collapse; }
-.TablePager, .TablePager td, .TablePager th { 
+.TablePager, .TablePager td, .TablePager th {
 	border: 0.15em solid #777777;
 	padding: 0 0.15em 0 0.15em;
 }
@@ -1639,9 +1649,9 @@ p.mw-ipb-conveniencelinks {
 
 /*
 	macbre: wikia addons
-	
-	- SendToAFriend CSS 
-	
+
+	- SendToAFriend CSS
+
 */
 #notifyForm
 {

@@ -1,15 +1,17 @@
 /*!
  * VisualEditor MediaWiki ViewPageTarget init styles.
  *
- * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
+
+/*csslint known-properties:false */
+/* Bug: https://github.com/stubbornella/csslint/issues/436 */
 
 /* Section edit links */
 
 .mw-editsection {
 	white-space: nowrap;
-	padding-right: 0.25em;
 	/* bidi isolation: */
 	unicode-bidi: -moz-isolate;
 	unicode-bidi: -webkit-isolate;
@@ -17,22 +19,6 @@
 }
 
 .mw-editsection-divider {
-	color: #555;
-}
-
-/* @noflip */
-.mw-content-ltr .mw-editsection-expanded .mw-editsection-bracket:first-of-type,
-.mw-content-rtl .mw-editsection-expanded .mw-editsection-bracket:not(:first-of-type) {
-	margin-left: -0.25em;
-	margin-right: 0.25em;
-	color: #555;
-}
-
-/* @noflip */
-.mw-content-rtl .mw-editsection-expanded .mw-editsection-bracket:first-of-type,
-.mw-content-ltr .mw-editsection-expanded .mw-editsection-bracket:not(:first-of-type) {
-	margin-right: -0.25em;
-	margin-left: 0.25em;
 	color: #555;
 }
 

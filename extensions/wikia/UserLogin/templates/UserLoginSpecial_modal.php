@@ -1,15 +1,14 @@
 <div class="UserLoginModal">
-	<h1><?= wfMessage('userlogin-login-heading')->escaped() ?></h1>
 <?php
 	$tabIndex = 5;
 	$specialSignupLink = SpecialPage::getTitleFor('UserSignup')->getLocalURL();
-	
+
 	$form = array(
 		'inputs' => array(
 			array(
 				'type' => 'hidden',
 				'name' => 'loginToken',
-				'value' => $loginToken
+				'value' => Sanitizer::encodeAttribute( $loginToken ),
 			),
 			array(
 				'type' => 'hidden',

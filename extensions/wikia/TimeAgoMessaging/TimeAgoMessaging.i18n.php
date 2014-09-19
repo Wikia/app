@@ -114,11 +114,18 @@ $messages['ca'] = array(
  * @author Умар
  */
 $messages['ce'] = array(
+	'timeago-year' => '$1 {{PLURAL:$1|шо}} хьалха',
 	'timeago-month' => '$1 {{PLURAL:$1|бутт}} хьалха',
+	'timeago-day' => '{{PLURAL:$1|$1 де}} хьалха',
+	'timeago-hour' => '{{PLURAL:$1|$1 сахьт}} хьалха',
+	'timeago-minute' => '$1 {{PLURAL:$1|минут}} хьалха',
+	'timeago-day-from-now' => '{{PLURAL:$1|$1 де}} хьалха',
+	'timeago-hour-from-now' => '{{PLURAL:$1|$1 сахьт}} хьалха',
+	'timeago-minute-from-now' => '$1 {{PLURAL:$1|минут}} хьалха',
 	'timeago-month-from-now' => '$1 {{PLURAL:$1|бутт}} хьалха',
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Darth Daron
  * @author Dontlietome7
  * @author Mormegil
@@ -322,6 +329,51 @@ $messages['ja'] = array(
 	'timeago-second-from-now' => '1分前',
 );
 
+/** Georgian (ქართული)
+ * @author DevaMK
+ */
+$messages['ka'] = array(
+	'timeago-day' => '$1 დღის წინ',
+	'timeago-hour' => '$1 საათის წინ',
+	'timeago-minute' => '$1 წუთის წინ',
+	'timeago-second' => '1 წუთის წინ',
+);
+
+/** Kazakh (Cyrillic script) (қазақша (кирил)‎)
+ * @author Arystanbek
+ */
+$messages['kk-cyrl'] = array(
+	'timeago-year' => '{{PLURAL:$1|$1 жыл|$1 жыл}} бұрын',
+	'timeago-month' => '{{PLURAL:$1|$1 ай|$1 ай}} бұрын',
+	'timeago-day' => '{{PLURAL:$1|$1 күн|$1 күн}} бұрын',
+	'timeago-hour' => '{{PLURAL:$1|$1 сағат|$1 сағат}} бұрын',
+	'timeago-minute' => '{{PLURAL:$1|$1 минут|$1 минут}} бұрын',
+	'timeago-second' => 'минут бұрын',
+	'timeago-day-from-now' => '{{PLURAL:$1|$1 күн|$1 күн}} бұрын',
+	'timeago-hour-from-now' => '{{PLURAL:$1|$1 сағат|$1 сағат}} бұрын',
+	'timeago-minute-from-now' => '{{PLURAL:$1|$1 минут|$1 минут}} бұрын',
+	'timeago-month-from-now' => '{{PLURAL:$1|$1 ай|$1 ай}} бұрын',
+	'timeago-second-from-now' => 'минут бұрын',
+);
+
+/** Karachay-Balkar (къарачай-малкъар)
+ * @author Iltever
+ */
+$messages['krc'] = array(
+	'timeagomessaging-desc' => 'jquery.timeago.js плагиннге i18n береди',
+	'timeago-year' => '{{PLURAL:$1|бир джыл|$1 джыл}} алгъа',
+	'timeago-month' => '{{PLURAL:$1|бир ай|$1 ай}} алгъа',
+	'timeago-day' => '{{PLURAL:$1|бир кюн|$1 кюн}} алгъа',
+	'timeago-hour' => '{{PLURAL:$1|бир сагъат|$1 сагъат}} алгъа',
+	'timeago-minute' => '{{PLURAL:$1|бир минут|$1 минут}} алгъа',
+	'timeago-second' => 'бир минут алгъа',
+	'timeago-day-from-now' => 'бусагъатдан {{PLURAL:$1|бир кюн|$1 кюн}} алгъа',
+	'timeago-hour-from-now' => 'бусагъатдан {{PLURAL:$1|бир сагъат|$1 сагъат}} алгъа',
+	'timeago-minute-from-now' => 'бусагъатдан {{PLURAL:$1|бир минут|$1 минут}} алгъа',
+	'timeago-month-from-now' => 'бусагъатдан {{PLURAL:$1|бир ай|$1 ай}} алгъа',
+	'timeago-second-from-now' => 'бусагъатдан минут алгъа',
+);
+
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */
@@ -338,13 +390,13 @@ $messages['mk'] = array(
 	'timeagomessaging-desc' => 'Овозможува i18n за приклучокот jquery.timeago.js',
 	'timeago-year' => 'пред {{PLURAL:$1|$1 година|$1 години}}',
 	'timeago-month' => '{{PLURAL:$1|пред еден месец|пред $1 месеци}}',
-	'timeago-day' => 'пред {{PLURAL:$1|1 ден|$1 дена}}',
-	'timeago-hour' => 'пред {{PLURAL:$1|1 час|$1 часа}}',
-	'timeago-minute' => 'пред {{PLURAL:$1|1 минута|$1 минути}}',
+	'timeago-day' => 'пред {{PLURAL:$1|еден ден|$1 дена}}',
+	'timeago-hour' => 'пред {{PLURAL:$1|еден час|$1 часа}}',
+	'timeago-minute' => 'пред {{PLURAL:$1|една минута|$1 минути}}',
 	'timeago-second' => 'пред една минута',
-	'timeago-day-from-now' => 'пред {{PLURAL:$1|1 ден|$1 дена}}',
-	'timeago-hour-from-now' => 'пред {{PLURAL:$1|$1 час|$1 часа}}',
-	'timeago-minute-from-now' => 'пред {{PLURAL:$1|$1 минута|$1 минути}}',
+	'timeago-day-from-now' => 'пред {{PLURAL:$1|еден ден|$1 дена}}',
+	'timeago-hour-from-now' => '{{PLURAL:$1|еден час|$1 часа}}',
+	'timeago-minute-from-now' => 'пред {{PLURAL:$1|една минута|$1 минути}}',
 	'timeago-month-from-now' => 'пред {{PLURAL:$1|$1 месец|$1 месеци}}',
 	'timeago-second-from-now' => 'пред една минута',
 );
@@ -386,6 +438,7 @@ $messages['nb'] = array(
 );
 
 /** Dutch (Nederlands)
+ * @author Flightmare
  * @author SPQRobin
  * @author Siebrand
  */
@@ -401,7 +454,7 @@ $messages['nl'] = array(
 	'timeago-hour-from-now' => 'over {{PLURAL:$1|een uur|$1 uur}}',
 	'timeago-minute-from-now' => 'over {{PLURAL:$1|een minuut|$1 minuten}}',
 	'timeago-month-from-now' => 'over {{PLURAL:$1|een maand|$1 maanden}}',
-	'timeago-second-from-now' => 'over een minuut',
+	'timeago-second-from-now' => 'een minuut van nu',
 );
 
 /** Occitan (occitan)
@@ -493,13 +546,21 @@ $messages['pt'] = array(
 
 /** Brazilian Portuguese (português do Brasil)
  * @author Aristóbulo
+ * @author 555
  */
 $messages['pt-br'] = array(
 	'timeagomessaging-desc' => 'Fornece a internacionalização do plugin jquery.timeago.js',
-	'timeago-day' => 'há {{PLURAL:$1|um dia|$1 dias}}',
-	'timeago-hour' => 'há {{PLURAL:$1|uma hora|$1 horas}}',
-	'timeago-minute' => 'há {{PLURAL:$1|um minuto|$1 minutos}}',
-	'timeago-second' => 'há um minuto',
+	'timeago-year' => '{{PLURAL:$1|um ano|$1 anos}} atrás',
+	'timeago-month' => '{{PLURAL:$1|um mês|$1 meses}} atrás',
+	'timeago-day' => '{{PLURAL:$1|um dia|$1 dias}} atrás',
+	'timeago-hour' => '{{PLURAL:$1|uma hora|$1 horas}} atrás',
+	'timeago-minute' => '{{PLURAL:$1|um minuto|$1 minutos}} atrás',
+	'timeago-second' => 'um minuto atrás',
+	'timeago-day-from-now' => 'daqui a {{PLURAL:$1|um dia|$1 dias}}',
+	'timeago-hour-from-now' => 'daqui a {{PLURAL:$1|uma hora|$1 horas}}',
+	'timeago-minute-from-now' => 'daqui a {{PLURAL:$1|um minuto|$1 minutos}}',
+	'timeago-month-from-now' => 'daqui a {{PLURAL:$1|um mês|$1 meses}}',
+	'timeago-second-from-now' => 'daqui a um minuto',
 );
 
 /** Romanian (română)
@@ -544,6 +605,18 @@ $messages['ru'] = array(
 	'timeago-minute-from-now' => '{{PLURAL:$1|$1 минута|$1 минуты|$1 минут}} назад',
 	'timeago-month-from-now' => '{{PLURAL:$1|месяц|$1 месяца|$1 месяцев}} назад',
 	'timeago-second-from-now' => 'минуту назад',
+);
+
+/** Somali (Soomaaliga)
+ * @author Abshirdheere
+ */
+$messages['so'] = array(
+	'timeago-year' => '$1 {{PLURAL:$1|sanad|sanadood}} ka hor',
+	'timeago-month' => '$1 {{PLURAL:$1|bil|bilood}} ka hor',
+	'timeago-day' => '{{PLURAL:$1|hal maalin|$1 maalin}} ka hor',
+	'timeago-hour' => '{{PLURAL:$1|saacad|$1 saacadood}} ka hor',
+	'timeago-second' => 'daqiiqad ka hor',
+	'timeago-month-from-now' => '$1 {{PLURAL:$1|bil|bilood}} muddo laga joogo',
 );
 
 /** Serbian (Cyrillic script) (српски (ћирилица)‎)
@@ -603,6 +676,13 @@ $messages['tl'] = array(
 	'timeago-second-from-now' => 'isang minuto magmula ngayon',
 );
 
+/** Tatar (Cyrillic script) (татарча)
+ * @author Ilnur efende
+ */
+$messages['tt-cyrl'] = array(
+	'timeago-minute' => '{{PLURAL:$1|$1 минут|$1 минут|$1 минут}} элек', # Fuzzy
+);
+
 /** Ukrainian (українська)
  * @author Andriykopanytsia
  * @author Тест
@@ -623,16 +703,23 @@ $messages['uk'] = array(
 );
 
 /** Vietnamese (Tiếng Việt)
+ * @author Baonguyen21022003
  * @author Minh Nguyen
  * @author Xiao Qiao
  */
 $messages['vi'] = array(
 	'timeagomessaging-desc' => 'Cung cấp i18n cho phần mềm jquery.timeago.js',
+	'timeago-year' => 'cách đây $1 năm',
 	'timeago-month' => '$1 tháng trước',
 	'timeago-day' => '{{PLURAL:$1|1 ngày|$1 ngày}} trước',
 	'timeago-hour' => '{{PLURAL:$1|1 giờ|$1 giờ}} trước',
 	'timeago-minute' => '$1 phút trước',
 	'timeago-second' => '1 phút trước',
+	'timeago-day-from-now' => '{{PLURAL:$1|1 ngày|$1 ngày}} trước',
+	'timeago-hour-from-now' => '{{PLURAL:$1|1 giờ|$1 giờ}} trước',
+	'timeago-minute-from-now' => '{{PLURAL:$1|phút|$1 phút}} từ bây giờ',
+	'timeago-month-from-now' => '{{PLURAL:$1|một thang1|$1 tháng}} từ bây giờ',
+	'timeago-second-from-now' => 'một phút từ bây giờ',
 );
 
 /** Simplified Chinese (中文（简体）‎)

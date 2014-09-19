@@ -1,0 +1,23 @@
+/*!
+ * VisualEditor UserInterface MediaSizeWidget styles.
+ *
+ * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
+ * @license The MIT License (MIT); see LICENSE.txt
+ */
+
+.ve-ui-mediaSizeWidget-input-hasError input[type="text"] {
+	background: #ffc2c2;
+}
+
+.ve-ui-mediaSizeWidget .oo-ui-fieldLayout > .oo-ui-labeledElement-label {
+	width: 6em;
+}
+
+.ve-ui-mediaSizeWidget-section-sizetype {
+	margin-bottom: 1em;
+}
+
+.ve-ui-mediaSizeWidget-section-scale  .oo-ui-fieldLayout-field > .oo-ui-textInputWidget input {
+	width: 5em;
+	margin-right: 0.5em;
+}

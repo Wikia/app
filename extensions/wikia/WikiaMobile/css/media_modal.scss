@@ -37,7 +37,8 @@ $chev-color: rgb(157,157,157);
 	display: inline-block;
 
 	video, iframe, object, embed {
-		width: 70%;
+		width: 75%;
+		min-height: 50%;
 		height: auto;
 	}
 }

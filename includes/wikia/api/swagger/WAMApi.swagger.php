@@ -23,13 +23,13 @@ use Swagger\Annotations as SWG;
  * 		name="max_date",
  * 		type="int",
  * 		required=true,
- * 		description="The Unix timestamp (in seconds) for maximal date of index"
+ * 		description="Unix timestamp (in seconds) for maximal date of index"
  * 	)
  * 	@SWG\Property(
  * 		name="min_date",
  * 		type="int",
  * 		required=true,
- * 		description="The Unix timestamp (in seconds) for minimal date of index"
+ * 		description="Unix timestamp (in seconds) for minimal date of index"
  * 	)
  * 
  * @SWG\Model( id="WAMResultSet" )
@@ -208,8 +208,30 @@ use Swagger\Annotations as SWG;
  * 		description="Join date"
  * 	)
  * 
+ * @SWG\Model( id="WAMLanguagesSet" )
+ * 	@SWG\Property(
+ * 		name="languages",
+ * 		type="Array",
+ * 		items="$ref:string",
+ * 		required="true",
+ * 		description="Object containing list of language codes of the wikis that are in the WAM ranking for a given day"
+ * 	)
+ * 
  * @SWG\Api(
- * 	path="/api/v1/WAM/WAMIndex",
+ * 	path="/WAM/MinMaxWamIndexDate",
+ * 	description="Get WAM score starting and last available dates",
+ * 	@SWG\Operations(
+ * 		@SWG\Operation(
+ * 			httpMethod="GET",
+ * 			summary="Get WAM score starting and last available dates",
+ * 			nickname="getMinMaxWamIndexDate",
+ * 			responseClass="MinMaxResultSet"
+ * 		)
+ * 	)
+ * )
+ * 
+ * @SWG\Api(
+ * 	path="/WAM/WAMIndex",
  * 	description="Get WAM index (list of wikis with their WAM ranks)",
  * 	@SWG\Operations(
  * 		@SWG\Operation(
@@ -375,14 +397,22 @@ use Swagger\Annotations as SWG;
  * )
  * 
  * @SWG\Api(
- * 	path="/api/v1/WAM/MinMaxWamIndexDate",
- * 	description="Get WAM score starting and last available dates",
+ * 	path="/WAM/WAMLanguages",
+ * 	description="Get language codes of the wikis that are in the WAM ranking for a given day",
  * 	@SWG\Operations(
  * 		@SWG\Operation(
  * 			httpMethod="GET",
- * 			summary="Get WAM score starting and last available dates",
- * 			nickname="getMinMaxWamIndexDate",
- * 			responseClass="MinMaxResultSet"
+ * 			summary="Get language codes of the wikis that are in the WAM ranking for a given day",
+ * 			nickname="getWAMLanguages",
+ * 			responseClass="WAMLanguagesSet",
+ * 			@SWG\Parameter(
+ * 				name="wam_day",
+ * 				description="Unix timestamp (in seconds) of the day for the requested language code list",
+ * 				paramType="query",
+ * 				required="false",
+ * 				allowMultiple="false",
+ * 				dataType="int"
+ * 			)
  * 		)
  * 	)
  * )

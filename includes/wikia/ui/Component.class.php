@@ -14,7 +14,7 @@ class Component {
 	 * @desc default type of a component i.e. buttons have three types: input, button and link
 	 */
 	const COMPONENT_DEFAULT_TYPE = 'default';
-	
+
 	/**
 	 * @var $templateEngine \Wikia\Template\Engine
 	 */
@@ -58,6 +58,16 @@ class Component {
 	private $assets = null;
 
 	/**
+	 * @var Array names of the components that this component depends on
+	 */
+	private $componentDependencies = [];
+
+	/**
+	 * @var String name of the JS AMD module that wraps the component functionality
+	 */
+	private $jsWrapperModule = null;
+
+	/**
 	 * @desc Sets template JS and CSS assets
 	 *
 	 * @param $assets Dictionary containing Factory::ASSET_TYPE_CSS and Factory::ASSET_TYPE_JS keys
@@ -73,6 +83,42 @@ class Component {
 	 */
 	public function getAssets() {
 		return $this->assets;
+	}
+
+	/**
+	 * @desc Set the dependency on other components
+	 *
+	 * @param $componentDependencies array containing names of the components
+	 */
+	public function setComponentDependencies( $componentDependencies ) {
+		$this->componentDependencies = $componentDependencies;
+	}
+
+	/**
+	 * @desc Returns names of the components this component depends on
+	 *
+	 * @return array containing names of the components
+	 */
+	public function getComponentDependencies() {
+		return $this->componentDependencies;
+	}
+
+	/**
+	 * @desc Sets the JS wrapper module name
+	 *
+	 * @param $jsWrapperModule String name of the AMD module
+	 */
+	public function setJSWrapperModule( $jsWrapperModule ) {
+		$this->jsWrapperModule = $jsWrapperModule;
+	}
+
+	/**
+	 * @desc Returns JS wrapper module name for the component
+	 *
+	 * @return String
+	 */
+	public function getJSWrapperModule() {
+		return $this->jsWrapperModule;
 	}
 
 	/**
@@ -146,7 +192,7 @@ class Component {
 	public function setBaseTemplatePath( $path ) {
 		return $this->templateBasePath = $path;
 	}
-	
+
 	/**
 	 * @param String $template "sub template" name of the component (i.e. a button component can have three
 	 * "sub templates": button_input.mustache, button_link.mustache and button_button.mustache the part between _ and .
@@ -160,7 +206,7 @@ class Component {
 		if ( $this->fileExists( $mustacheTplPath ) ) {
 			$this->templatePath = $mustacheTplPath;
 		} else {
-			throw new TemplateException();
+			throw new TemplateException( TemplateException::EXCEPTION_MSG_INVALID_TEMPLATE . ' (' . $mustacheTplPath . ')' );
 		}
 	}
 
@@ -193,8 +239,8 @@ class Component {
 
 	/**
 	 * @desc Sets template variables and their values
-	 * 
-	 * @param array $varsArray an array with key=>value structure; 
+	 *
+	 * @param array $varsArray an array with key=>value structure;
 	 * key is the template variable name and the second is its value
 	 */
 	public function setVarsValues( Array $varsArray ) {
@@ -203,7 +249,7 @@ class Component {
 
 	/**
 	 * @desc Gets template variables and their values
-	 * 
+	 *
 	 * @return Array
 	 */
 	public function getVarsValues() {
@@ -212,7 +258,7 @@ class Component {
 
 	/**
 	 * @desc Checks if all required variables are set; throws an exception if not
-	 * 
+	 *
 	 * @throws DataException
 	 */
 	private function validateTemplateVars() {
@@ -240,7 +286,7 @@ class Component {
 
 	/**
 	 * @desc Method using built-in PHP function; created because of unit tests
-	 * 
+	 *
 	 * @param string $file path to a file
 	 * @return bool
 	 */

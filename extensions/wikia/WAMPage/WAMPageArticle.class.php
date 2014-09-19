@@ -18,9 +18,6 @@ class WAMPageArticle extends Article {
 	public function view() {
 		wfProfileIn(__METHOD__);
 
-		// let MW handle basic stuff
-		parent::view();
-
 		$app = F::app();
 		$app->wg->Out->clearHTML();
 		
@@ -29,6 +26,8 @@ class WAMPageArticle extends Article {
 		} else {
 			$action = 'index';
 		}
+
+		$app->wg->Out->setHTMLTitle( wfMessage('wam-html-title')->inContentLanguage()->text() );
 		
 		$app->wg->Out->addHTML( $app->sendRequest('WAMPageController', $action, $app->wg->request->getValues()) );
 		wfProfileOut(__METHOD__);

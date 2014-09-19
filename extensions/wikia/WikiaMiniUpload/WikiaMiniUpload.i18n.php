@@ -74,7 +74,12 @@ $messages['en'] = array(
 	'wmu-appearance-in-article' => 'Appearance on Page',
 	'wmu-alignment' => 'Alignment',
 	'wmu-file-protected' => 'This image is protected',
-	'wmu-file-error' => 'There was an error with the upload process, sorry. Please try again.'
+	'wmu-file-error' => 'There was an error with the upload process, sorry. Please try again.',
+	'wmu-file-not-found' => 'File not found',
+	'wmu-error-exact-height' => 'Image height must be exactly $1 px (got $2 px)',
+	'wmu-error-exact-width' => 'Image width must be exactly $1 px (got $2 px)',
+	'wmu-error-exact-width-height' => 'Image width and height must be exactly $1 x $3 px (got $2 x $4 px)',
+	'wmu-error-bad-aspect-ratio' => 'Aspect ratio is incorrect ($1 x $2 px)',
 );
 
 /** Message documentation (Message documentation)
@@ -110,6 +115,12 @@ $messages['qqq'] = array(
 	'wmu-back' => 'Select a different photo from the one already chosen.',
 	'wmu-gallery' => '{{Identical|Gallery}}',
 	'wmu-column' => '{{Identical|Column}}',
+	'wmu-file-not-found' => 'Message displayed when a file cannot be found during the image insert step of this extension.
+{{Identical|File not found}}',
+	'wmu-error-exact-height' => 'Error shown when the image selected/uploaded was not the required height',
+	'wmu-error-exact-width' => 'Error shown when the image selected/uploaded was not the required width',
+	'wmu-error-exact-width-height' => 'Error shown when the image selected/uploaded was not the required dimensions',
+	'wmu-error-bad-aspect-ratio' => 'Error shown when the aspect ratio was incorrect',
 );
 
 /** Afrikaans (Afrikaans)
@@ -205,32 +216,33 @@ $messages['an'] = array(
 );
 
 /** Old English (Ænglisc)
+ * @author Espreon
  * @author Gott wisst
  */
 $messages['ang'] = array(
 	'wmu-upload' => 'Forþsendan',
-	'wmu-notlogged' => 'Inmeldian oþþe macian ȝrīman tō forþsendenne biliþ fram þīnum spearctellere',
+	'wmu-notlogged' => 'Inmeldian oþþe macian grīman tō forþsendenne biliþ fram þīnum spearctellere',
 	'wmu-find' => 'Findan',
-	'wmu-thiswiki' => 'Þis ƿiki',
+	'wmu-thiswiki' => 'Þis wiki',
 	'wmu-flickr' => 'Flickr',
 	'wmu-upload-btn' => 'Forþsendan',
 	'wmu-find-btn' => 'Findan',
-	'wmu-flickr-inf' => 'Sēcan þurh rihte forþlǣtnessȝifen uncēap biliþ fram Flickre and inlǣdan hīe in þīn ƿiki.',
-	'wmu-conflict-inf' => '<h1>Oops, ȝeƿithord berende þone naman nū ƿæs ǣr ȝemacod.</h1>Hƿæt ƿilt þū dōn mid <b>$1</b>?',
+	'wmu-flickr-inf' => 'Sēcan þurh rihte forþlǣtnessgifen uncēap biliþ fram Flickre and inlǣdan hīe in þīn wiki.',
+	'wmu-conflict-inf' => '<h1>Oops, gewithord berende þone naman nū wæs ǣr gemacod.</h1>Hwæt wilt þū dōn mid <b>$1</b>?',
 	'wmu-rename' => 'Nemnan þīn biliþ eft',
-	'wmu-existing' => 'Notian ǣr ȝemacod biliþ',
-	'wmu-overwrite' => 'Settan þīn biliþ on stede þæs ǣr ȝemacodan',
-	'wmu-insert' => 'Ȝeþēodan',
-	'wmu-details-inf' => '<h1>Ȝeƿithordes amearcunȝa</h1>. Cēosan naman tō þissum ȝeƿithorde. Macian þone naman tōmearciende.',
+	'wmu-existing' => 'Notian ǣr gemacod biliþ',
+	'wmu-overwrite' => 'Settan þīn biliþ on stede þæs ǣr gemacodan',
+	'wmu-insert' => 'Geþēodan',
+	'wmu-details-inf' => '<h1>Gewithordes amearcunga</h1>. Cēosan naman tō þissum gewithorde. Macian þone naman tōmearciende.',
 	'wmu-name' => 'Nama',
 	'wmu-license' => 'Forþlǣtness',
-	'wmu-details-inf2' => '<h1>Cēosunȝa mid ȝeƿrite</h1>Cēos hū þū ƿilt þæt þis biliþ ætīeƿie on þīnum tramete.',
+	'wmu-details-inf2' => '<h1>Cēosunga mid gewrite</h1>Cēos hū þū wilt þæt þis biliþ ætīewie on þīnum tramete.',
 	'wmu-size' => 'Micelness',
 	'wmu-thumbnail' => 'Biliþincel',
 	'wmu-fullsize' => 'Ful grēat ($1x$1px)',
 	'wmu-width' => 'Brǣdo',
 	'wmu-layout' => 'Endebyrdness',
-	'wmu-caption' => 'Andefen cƿide',
+	'wmu-caption' => 'Andefen cwide',
 	'wmu-link' => 'Hlence',
 	'wmu-optional' => '(cēosendlic)',
 	'wmu-insert2' => 'Ȝeþēodan ȝeƿithord',
@@ -255,6 +267,7 @@ $messages['ang'] = array(
 
 /** Arabic (العربية)
  * @author Achraf94
+ * @author Claw eg
  * @author Meno25
  * @author OsamaK
  */
@@ -331,6 +344,11 @@ $messages['ar'] = array(
 	'wmu-alignment' => 'المحاذاة',
 	'wmu-file-protected' => 'هذه الصورة محمية',
 	'wmu-file-error' => 'كان هناك خطأ في عملية التحميل، عذراً. الرجاء المحاولة مرة أخرى.',
+	'wmu-file-not-found' => 'الملف غير موجود',
+	'wmu-error-exact-height' => 'يجب أن يكون ارتفاع الصورة تحديدًا $1 بكسل (لديك هنا $2 بكسل)',
+	'wmu-error-exact-width' => 'يجب أن يكون عرض الصورة تحديدًا $1 بكسل (لديك هنا $2 بكسل)',
+	'wmu-error-exact-width-height' => 'عرض الصورة وارتفاعها يجب أن يكونا تحديدًا $1 × $3 بكسل (لديك هنا $2 × $4 بكسل)',
+	'wmu-error-bad-aspect-ratio' => 'نسبة العرض إلى الارتفاع غير صحيحة ($1 × $2 بكسل)',
 );
 
 /** Azerbaijani (azərbaycanca)
@@ -449,6 +467,7 @@ $messages['bg'] = array(
 	'wmu-gallery-btn1' => 'Добавяне на друго изображение',
 	'wmu-gallery-btn2' => 'Добавяне на галерия в страницата',
 	'wmu-alignment' => 'Подравняване',
+	'wmu-file-not-found' => 'Файлът не беше намерен',
 );
 
 /** Banjar (Bahasa Banjar)
@@ -537,10 +556,12 @@ $messages['br'] = array(
 	'wmu-appearance-in-article' => 'Tres er pennad',
 	'wmu-alignment' => 'Linennadur',
 	'wmu-file-protected' => 'Gwarezet eo ar skeudenn-mañ',
+	'wmu-file-not-found' => "N'eo ket bet kavet ar restr",
 );
 
 /** Catalan (català)
  * @author BroOk
+ * @author Fitoschido
  * @author Gemmaa
  * @author Paucabot
  */
@@ -603,7 +624,7 @@ $messages['ca'] = array(
 	'wmu-columns' => '$1 {{PLURAL:$1|columna|columnes}}',
 	'wmu-column' => 'Columnes',
 	'wmu-added-from-plc' => "Arxiu afegit mitjançant posicionador d'imatge",
-	'wmu-uploaddisabled' => 'La càrrega de fitxers està deshabilitada en aquest wiki',
+	'wmu-uploaddisabled' => 'La càrrega de fitxers està inhabilitada en aquest wiki',
 	'wmu-gallery-success' => 'Has afegit una imatge a una galeria nova. Clica abaix per a afegir més imatges o inserir una galeria',
 	'wmu-gallery-btn1' => 'Afegir una altra imatge',
 	'wmu-gallery-btn2' => 'Insereix una galeria a la pàgina',
@@ -624,15 +645,20 @@ $messages['ca'] = array(
  * @author Умар
  */
 $messages['ce'] = array(
+	'wmu-upload' => 'Чуяккха',
 	'wmu-find' => 'Лаха',
+	'wmu-upload-btn' => 'Чуяккха',
 	'wmu-find-btn' => 'Каро',
+	'wmu-insert' => 'Чуйилла',
+	'wmu-license' => 'Лицензи',
 	'wmu-insert2' => 'Файл чуйиллар',
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Chmee2
  * @author Darth Daron
  * @author Dontlietome7
+ * @author Littledogboy
  * @author Mr. Richard Bolla
  */
 $messages['cs'] = array(
@@ -784,6 +810,7 @@ $messages['cy'] = array(
  * @author Geitost
  * @author Inkowik
  * @author LWChris
+ * @author Metalhead64
  * @author Sebastian Wallroth
  * @author Tiin
  */
@@ -832,7 +859,7 @@ $messages['de'] = array(
 	'wmu-warn3' => 'Du musst zuerst einen Dateinamen eingeben!',
 	'wmu-imagelink' => '<b>Neu!</b> Bilder hinzufügen',
 	'wmu-imagebutton' => 'Bilder einfügen',
-	'wmu-license-cc' => 'Lizenziert unter der Creative Commons Attribution-Share Alike 3.0 Lizenz',
+	'wmu-license-cc' => "Lizenziert unter der ''Creative-Commons''-Lizenz „Namensnennung – Weitergabe unter gleichen Bedingungen 3.0“",
 	'wmu-bad-extension' => 'Du hast versucht einen nicht erlaubten Dateityp hochzuladen.',
 	'wmu-filetype-missing' => 'Diesem Upload fehlt die Dateiendung',
 	'wmu-filetype-incorrect' => 'Dieser Upload hat eine falsche Dateiendung',
@@ -860,6 +887,11 @@ $messages['de'] = array(
 	'wmu-alignment' => 'Ausrichtung',
 	'wmu-file-protected' => 'Dieses Bild ist geschützt.',
 	'wmu-file-error' => 'Es gab einen Fehler während des Hochladens. Bitte versuche es erneut.',
+	'wmu-file-not-found' => 'Datei nicht gefunden',
+	'wmu-error-exact-height' => 'Die Bildhöhe muss exakt $1 Pixel betragen ($2 Pixel erhalten)',
+	'wmu-error-exact-width' => 'Die Bildbreite muss exakt $1 Pixel betragen ($2 Pixel erhalten)',
+	'wmu-error-exact-width-height' => 'Die Bildabmessungen müssen exakt $1 × $3 Pixel betragen ($2 × $4 Pixel erhalten)',
+	'wmu-error-bad-aspect-ratio' => 'Das Seitenverhältnis ist falsch ($1 × $2 Pixel)',
 );
 
 /** German (formal address) (Deutsch (Sie-Form)‎)
@@ -909,7 +941,7 @@ $messages['de-formal'] = array(
 	'wmu-warn3' => 'Sie müssen zuerst einen Dateinamen eingeben!',
 	'wmu-imagelink' => '<b>Neu!</b> Bilder hinzufügen',
 	'wmu-imagebutton' => 'Bilder einfügen',
-	'wmu-license-cc' => 'Lizenziert unter der Creative Commons Attribution-Share Alike 3.0 Lizenz',
+	'wmu-license-cc' => "Lizenziert unter der ''Creative-Commons''-Lizenz „Namensnennung – Weitergabe unter gleichen Bedingungen 3.0“",
 	'wmu-bad-extension' => 'Sie haben versucht einen nicht erlaubten Dateityp hochzuladen.',
 	'wmu-filetype-missing' => 'Diesem Upload fehlt die Dateiendung',
 	'wmu-filetype-incorrect' => 'Dieser Upload hat eine falsche Dateiendung',
@@ -963,14 +995,14 @@ $messages['diq'] = array(
 	'wmu-next' => "8'ê peyêni",
 	'wmu-success-placeholder' => '<h1>Muaffaq</h1>',
 	'wmu-back' => 'Peyser',
-	'wmu-imagebutton' => 'Resım deke',
+	'wmu-imagebutton' => 'Resım cı ke',
 	'wmu-hide-license-msg' => 'nuşteya lisansi bınımne',
 	'wmu-show-license-msg' => 'nuşteyê lisansi bımocne',
 	'wmu-placeholder' => 'Cayê tepıstışi',
-	'wmu-gallery' => 'Galeri',
+	'wmu-gallery' => 'Galeriye',
 	'wmu-columns' => '$1 {{PLURAL:$1|Estûn|Estûni}}',
 	'wmu-column' => 'Estûni',
-	'wmu-gallery-btn1' => 'Ju na dosya deke',
+	'wmu-gallery-btn1' => 'Zewbina resım cı ke',
 	'wmu-alignment' => 'Hiza fi',
 );
 
@@ -978,8 +1010,11 @@ $messages['diq'] = array(
  * @author Shirayuki
  */
 $messages['en-gb'] = array(
+	'wmu-flickr-inf' => 'Search properly licenced free photos from Flickr and import them into your wiki.',
 	'wmu-license' => 'Licence',
 	'wmu-licensing' => 'Licencing',
+	'wmu-hide-license-msg' => 'hide licence text',
+	'wmu-show-license-msg' => 'show licence text',
 );
 
 /** Esperanto (Esperanto)
@@ -991,7 +1026,9 @@ $messages['eo'] = array(
 
 /** Spanish (español)
  * @author Armando-Martin
+ * @author Benfutbol10
  * @author Crazymadlover
+ * @author Fitoschido
  * @author McDutchie
  * @author Peter17
  * @author Translationista
@@ -1056,7 +1093,7 @@ $messages['es'] = array(
 	'wmu-columns' => '$1 {{PLURAL:$1|columna|columnas}}',
 	'wmu-column' => 'Columnas',
 	'wmu-added-from-plc' => 'Archivo añadido mediante posicionador de imagen',
-	'wmu-uploaddisabled' => 'La subida de archivos está deshabilitada en este wiki',
+	'wmu-uploaddisabled' => 'La carga de archivos está desactivada en este wiki',
 	'wmu-gallery-success' => 'Has añadido una imagen a una nueva galería. Haga click abajo para añadir más imágenes o insertar la galería',
 	'wmu-gallery-btn1' => 'Añadir otra imagen',
 	'wmu-gallery-btn2' => 'Inserte galería en la página',
@@ -1070,6 +1107,11 @@ $messages['es'] = array(
 	'wmu-alignment' => 'Alineación',
 	'wmu-file-protected' => 'Esta imagen está protegida',
 	'wmu-file-error' => 'Hubo un error durante el proceso de carga. Inténtelo de nuevo.',
+	'wmu-file-not-found' => 'Archivo no encontrado',
+	'wmu-error-exact-height' => 'La altura de la imagen debe ser exactamente de $1 px (es de $2 px)',
+	'wmu-error-exact-width' => 'El ancho de la imagen debe ser exactamente de $1 px (es de $2 px)',
+	'wmu-error-exact-width-height' => 'El ancho y la altura de la imagen deben ser exactamente de $1 x $3 px (es de $2 x $4 px)',
+	'wmu-error-bad-aspect-ratio' => 'La relación de aspecto es incorrecta ($1 x $2 px)',
 );
 
 /** Basque (euskara)
@@ -1103,15 +1145,27 @@ $messages['eu'] = array(
  * @author Ebraminio
  * @author Leyth
  * @author Mjbmr
+ * @author Reza1615
  */
 $messages['fa'] = array(
 	'wmu-upload' => 'بارگذاری',
+	'wmu-find' => 'یافتن',
 	'wmu-thiswiki' => 'این ویکی',
 	'wmu-flickr' => 'فلیکر',
 	'wmu-upload-btn' => 'بارگذاری',
 	'wmu-find-btn' => 'یافتن',
+	'wmu-insert' => 'درج',
+	'wmu-name' => 'نام',
+	'wmu-license' => 'اجازه‌نامه',
+	'wmu-size' => 'اندازه',
+	'wmu-width' => 'پهنا',
+	'wmu-caption' => 'عنوان',
+	'wmu-link' => 'پیوند',
+	'wmu-imagebutton' => 'افزودن تصویر',
+	'wmu-placeholder' => 'مکان نگه‏دار',
 	'wmu-gallery' => 'نگارخانه',
 	'wmu-added-from-plc' => 'افزودن پروندۀ جدید توسط مکان نگه‏دار تصویر',
+	'wmu-alignment' => 'تراز',
 );
 
 /** Finnish (suomi)
@@ -1146,6 +1200,7 @@ $messages['fi'] = array(
 );
 
 /** French (français)
+ * @author Gomoko
  * @author IAlex
  * @author McDutchie
  * @author Peter17
@@ -1226,20 +1281,26 @@ $messages['fr'] = array(
 	'wmu-alignment' => 'Alignement',
 	'wmu-file-protected' => 'Cette image est protégée',
 	'wmu-file-error' => 'Une erreur est survenue lors de l’importation. Veuillez réessayer.',
+	'wmu-file-not-found' => 'Fichier non trouvé',
+	'wmu-error-exact-height' => 'La hauteur de l’image doit être de $1 px ($2 px trouvés)',
+	'wmu-error-exact-width' => 'La largeur de l’image doit être de $1 px ($2 px trouvés)',
+	'wmu-error-exact-width-height' => 'La taille de l’image doit être de $1 x $3 px ($2 x $4 px trouvés)',
+	'wmu-error-bad-aspect-ratio' => 'Le ratio d’aspect n’est pas correct ($1 x $2 px)',
 );
 
 /** Galician (galego)
  * @author Toliño
+ * @author Vivaelcelta
  */
 $messages['gl'] = array(
-	'wmu-upload-image' => 'Cargar unha foto',
-	'wmu-title' => 'Cargar unha foto',
-	'wmu-upload' => 'Cargar',
-	'wmu-notlogged' => 'Acceda ao sistema ou rexístrese para cargar imaxes do seu ordenador',
+	'wmu-upload-image' => 'Subir unha foto',
+	'wmu-title' => 'Subir unha foto',
+	'wmu-upload' => 'Subir',
+	'wmu-notlogged' => 'Inicia a sesión ou rexístrate para subir imaxes do teu ordenador',
 	'wmu-find' => 'Atopar',
 	'wmu-thiswiki' => 'Este wiki',
 	'wmu-flickr' => 'Flickr',
-	'wmu-upload-btn' => 'Cargar',
+	'wmu-upload-btn' => 'Subir',
 	'wmu-find-btn' => 'Atopar',
 	'wmu-flickr-inf' => 'Busca fotografías de licenza libre de Flickr e impórtaas no seu wiki.',
 	'wmu-conflict-inf' => '<h1>Vaites!, xa existe un ficheiro con ese nome.</h1>Que quere facer con <b>$1</b>?',
@@ -1265,7 +1326,7 @@ $messages['gl'] = array(
 	'wmu-next' => '8 seguintes',
 	'wmu-flickr2' => 'Imaxes de Flickr ($1 {{PLURAL:$1|resultado|resultados}})',
 	'wmu-insert3' => 'Inserir esta imaxe',
-	'wmu-recent-inf' => 'Imaxes cargadas recentemente',
+	'wmu-recent-inf' => 'Imaxes subidas recentemente',
 	'wmu-thiswiki2' => 'Imaxes deste wiki ($1 {{PLURAL:$1|resultado|resultados}})',
 	'wmu-success' => '<h1>Feito</h1>Engadiuse a súa imaxe.',
 	'wmu-success-placeholder' => '<h1>Feito</h1>',
@@ -1277,20 +1338,20 @@ $messages['gl'] = array(
 	'wmu-imagelink' => '<b>Novo!</b> Engadir imaxes',
 	'wmu-imagebutton' => 'Engadir as imaxes',
 	'wmu-license-cc' => 'Licenciado baixo a licenza Creative Commons recoñecemento compartir igual 3.0',
-	'wmu-bad-extension' => 'Intentou cargar un tipo de ficheiro non permitido. Por favor, probe de novo.',
+	'wmu-bad-extension' => 'Intentaches subir un tipo de ficheiro non permitido. Por favor, inténtao outra vez.',
 	'wmu-filetype-missing' => 'Nesta carga falta a extensión do ficheiro',
-	'wmu-filetype-incorrect' => 'A extensión do ficheiro desta carga é incorrecta',
+	'wmu-filetype-incorrect' => 'A extensión do ficheiro desta subida é incorrecta',
 	'wmu-hide-license-msg' => 'agochar o texto da licenza',
 	'wmu-show-license-msg' => 'mostrar o texto da licenza',
 	'wmu-max-thumb' => 'superouse o tamaño máximo para unha miniatura; volvendo ao tamaño orixinal',
-	'wmu-notallowed' => 'Non pode cargar imaxes neste wiki',
+	'wmu-notallowed' => 'Non podes subir imaxes neste wiki',
 	'wmu-readonly' => 'Non pode cargar imaxes, o wiki está en modo de só lectura',
 	'wmu-placeholder' => 'Marcador de posición',
 	'wmu-gallery' => 'Galería',
 	'wmu-columns' => '$1 {{PLURAL:$1|columna|columnas}}',
 	'wmu-column' => 'Columnas',
 	'wmu-added-from-plc' => 'Ficheiro engadido a través dun marcador de posición de imaxe',
-	'wmu-uploaddisabled' => 'A carga de imaxes está desactivada neste wiki',
+	'wmu-uploaddisabled' => 'A subida de ficheiros está desactivada neste wiki',
 	'wmu-gallery-success' => 'Engadiu unha imaxe a unha nova galería. Prema a continuación para engadir máis imaxes ou para inserir a galería',
 	'wmu-gallery-btn1' => 'Engadir outra imaxe',
 	'wmu-gallery-btn2' => 'Inserir a galería no artigo',
@@ -1303,7 +1364,12 @@ $messages['gl'] = array(
 	'wmu-appearance-in-article' => 'Aspecto na páxina',
 	'wmu-alignment' => 'Aliñamento',
 	'wmu-file-protected' => 'Esta imaxe está protexida',
-	'wmu-file-error' => 'Houbo un erro durante o proceso de carga. Inténteo de novo.',
+	'wmu-file-error' => 'Houbo un erro durante o proceso de subida. Inténtao de novo.',
+	'wmu-file-not-found' => 'Non se atopou o ficheiro',
+	'wmu-error-exact-height' => 'O alto da imaxe debe ser exactamente de $1 px (obtívose $2 px)',
+	'wmu-error-exact-width' => 'O largo da imaxe debe ser exactamente de $1 px (obtívose $2 px)',
+	'wmu-error-exact-width-height' => 'O tamaño da imaxe debe ser exactamente de $1 x $3 px (obtívose $2 x $4 px)',
+	'wmu-error-bad-aspect-ratio' => 'A proporción de aspecto é incorrecta ($1 x $2 px)',
 );
 
 /** Hebrew (עברית)
@@ -1663,6 +1729,7 @@ $messages['ja'] = array(
 このファイルの名前を決めてください。わかりやすいものがお勧めです。',
 	'wmu-name' => '名前',
 	'wmu-license' => 'ライセンス',
+	'wmu-licensing' => 'ライセンス',
 	'wmu-details-inf2' => '<h1>オプション</h1>
 記事に挿入する際のオプションを選択してください。',
 	'wmu-size' => 'サイズ',
@@ -1721,6 +1788,7 @@ $messages['kn'] = array(
 );
 
 /** Korean (한국어)
+ * @author Hym411
  * @author 아라
  */
 $messages['ko'] = array(
@@ -1729,6 +1797,7 @@ $messages['ko'] = array(
 	'wmu-license' => '라이선스',
 	'wmu-caption' => '설명',
 	'wmu-added-from-plc' => '플레이스홀더를 통해 삽입된 그림',
+	'wmu-file-not-found' => '파일을 찾지 못했습니다',
 );
 
 /** Kurdish (Latin script) (Kurdî (latînî)‎)
@@ -1770,6 +1839,8 @@ $messages['la'] = array(
  * @author Robby
  */
 $messages['lb'] = array(
+	'wmu-upload-image' => 'Foto eroplueden',
+	'wmu-title' => 'Foto eroplueden',
 	'wmu-upload' => 'Eroplueden',
 	'wmu-find' => 'Fannen',
 	'wmu-thiswiki' => 'Dës Wiki',
@@ -1789,11 +1860,17 @@ $messages['lb'] = array(
 	'wmu-back' => 'Eng aner Foto eraussichen',
 	'wmu-imagelink' => '<b>Nei!</b> Biller derbäisetzenimages',
 	'wmu-imagebutton' => 'Biller derbäisetzen',
+	'wmu-hide-license-msg' => 'Text vun der Lizenz verstoppen',
+	'wmu-show-license-msg' => 'Test vun der Lizenz weisen',
 	'wmu-gallery' => 'Galerie',
 	'wmu-column' => 'Colonnen',
+	'wmu-gallery-btn1' => 'Nach e Bild deräisetzen',
 	'wmu-more-options' => 'Méi Optiounen',
 	'wmu-fewer-options' => 'Manner Optiounen',
+	'wmu-appearance-in-article' => 'Ausgesinn op der Säit',
 	'wmu-file-protected' => 'Dëst Bild ass gespaart',
+	'wmu-file-not-found' => 'Fichier gouf net fonnt',
+	'wmu-error-exact-width' => "D'Breet vum Bild muss genee $1 Pixel sinn ($2 Pixel kritt)",
 );
 
 /** Latvian (latviešu)
@@ -1866,7 +1943,7 @@ $messages['mk'] = array(
 	'wmu-column' => 'Колони',
 	'wmu-added-from-plc' => 'Податотеката е додадена преку пополнувачот на сликата',
 	'wmu-uploaddisabled' => 'Подигањето на податотеки е оневозможено на ова вики',
-	'wmu-gallery-success' => 'Додадовте слика во нова галерија. Кликнете подолу за да додадете уште слики или да ја вметнете галеријата',
+	'wmu-gallery-success' => 'Додадовте слика во нова галерија. Стиснете подолу за да додадете уште слики или да ја вметнете галеријата',
 	'wmu-gallery-btn1' => 'Додај друга слика',
 	'wmu-gallery-btn2' => 'Вметни галерија во статијата',
 	'wmu-no-preview' => 'Не можете да додавате слики од статија додека сте во прегледен режим',
@@ -1879,10 +1956,16 @@ $messages['mk'] = array(
 	'wmu-alignment' => 'Порамнување',
 	'wmu-file-protected' => 'Оваа слика е заштитена',
 	'wmu-file-error' => 'Се појави грешка при подигањето. Обидете се повторно.',
+	'wmu-file-not-found' => 'Податотеката не е пронајдена',
+	'wmu-error-exact-height' => 'Сликата мора да биде висока точно $1 px (добив $2 px)',
+	'wmu-error-exact-width' => 'Сликата мора да биде широка точно $1 px (добив $2 px)',
+	'wmu-error-exact-width-height' => 'Сликата мора да биде со ширина и висина од точно $1 x $3 px (добив $2 x $4 px)',
+	'wmu-error-bad-aspect-ratio' => 'Сразмерот е неисправен ($1 x $2 px)',
 );
 
 /** Malay (Bahasa Melayu)
  * @author Anakmalaysia
+ * @author SNN95
  */
 $messages['ms'] = array(
 	'wmu-upload-image' => 'Muat Naik Gambar',
@@ -1957,6 +2040,11 @@ $messages['ms'] = array(
 	'wmu-alignment' => 'Penjajaran',
 	'wmu-file-protected' => 'Imej ini dilindungi.',
 	'wmu-file-error' => 'Maaf, berlakunya ralat ketika proses muat naik. Sila cuba lagi.',
+	'wmu-file-not-found' => 'Fail tidak ditemui',
+	'wmu-error-exact-height' => 'Tinggi imej mestilah betul-betul $1 px (sekarang $2 px)',
+	'wmu-error-exact-width' => 'Lebar imej mestilah betul-betul $1 px (sekarang $2 px)',
+	'wmu-error-exact-width-height' => 'Lebar dan ketinggian imej mestilah betul-betul $1 x $3 px (sekarang $2 x $4 px)',
+	'wmu-error-bad-aspect-ratio' => 'Nisbah aspek tidak betul ($1 x $2 px)',
 );
 
 /** Maltese (Malti)
@@ -2154,6 +2242,11 @@ U kunt er geen afbeeldingen aan toevoegen.',
 	'wmu-alignment' => 'Uitlijning',
 	'wmu-file-protected' => 'Deze afbeelding is beveiligd.',
 	'wmu-file-error' => 'Er is een fout opgetreden tijdens het uploadproces. Probeer het opnieuw.',
+	'wmu-file-not-found' => 'Bestand niet gevonden',
+	'wmu-error-exact-height' => 'De afbeeldingshoogte moet precies  $1 px zijn ($2 px opgegeven)',
+	'wmu-error-exact-width' => 'De afbeeldingsbreeste moet precies $1 px zijn ($2 px opgegeven)',
+	'wmu-error-exact-width-height' => 'Afbeeldingsbreedte en -hoogte moeten precies  $1 x $3 px zijn ($2 x $4 px opgegeven)',
+	'wmu-error-bad-aspect-ratio' => 'De beeldverhouding is onjuist ($1 x $2 px)',
 );
 
 /** Nederlands (informeel)‎ (Nederlands (informeel)‎)
@@ -2274,6 +2367,11 @@ $messages['pl'] = array(
 	'wmu-alignment' => 'Wyrównanie',
 	'wmu-file-protected' => 'Ten obraz jest chroniony',
 	'wmu-file-error' => 'Wystąpił błąd podczas procesu przesyłania. Spróbuj ponownie.',
+	'wmu-file-not-found' => 'Nie odnaleziono pliku',
+	'wmu-error-exact-height' => 'Obraz musi mieć wysokość $1 px (ma $2 px)',
+	'wmu-error-exact-width' => 'Obraz musi mieć szerokość $1 px (ma $2 px)',
+	'wmu-error-exact-width-height' => 'Obraz musi mieć wymiary $1 x $3 px (ma $2 x $4 px)',
+	'wmu-error-bad-aspect-ratio' => 'Proporcje obrazu są niewłaściwe ($1 x $2 px)',
 );
 
 /** Piedmontese (Piemontèis)
@@ -2378,9 +2476,9 @@ $messages['ps'] = array(
 	'wmu-insert2' => 'دوتنه ورټومبل',
 	'wmu-insert3' => 'دا انځور ورټومبل',
 	'wmu-back' => 'يو بل انځور ټاکل',
-	'wmu-imagebutton' => 'انځورونه ورګډول',
+	'wmu-imagebutton' => 'انځورونه ورگډول',
 	'wmu-gallery' => 'انځورتون',
-	'wmu-gallery-btn1' => 'يو بل انځور ورګډول',
+	'wmu-gallery-btn1' => 'يو بل انځور ورگډول',
 	'wmu-more-options' => 'نورې خوښنې',
 	'wmu-fewer-options' => 'لږې خوښنې',
 );
@@ -2411,7 +2509,7 @@ $messages['pt'] = array(
 	'wmu-name' => 'Nome',
 	'wmu-license' => 'Licença',
 	'wmu-licensing' => 'Licenciamento',
-	'wmu-details-inf2' => '<h1>Opções do artigo</h1>Escolha o aspecto deste ficheiro na página.',
+	'wmu-details-inf2' => '<h1>Opções do artigo</h1>Escolha o aspeto deste ficheiro na página.',
 	'wmu-size' => 'Tamanho',
 	'wmu-thumbnail' => 'Miniatura',
 	'wmu-fullsize' => 'Tamanho original ($1x$2px)',
@@ -2584,6 +2682,7 @@ $messages['roa-tara'] = array(
  * @author Eleferen
  * @author Kuzura
  * @author Lockal
+ * @author Okras
  * @author Александр Сигачёв
  */
 $messages['ru'] = array(
@@ -2659,6 +2758,11 @@ $messages['ru'] = array(
 	'wmu-alignment' => 'Выравнивание',
 	'wmu-file-protected' => 'Это изображение защищено',
 	'wmu-file-error' => 'Произошла ошибка в процессе загрузки, извините. Пожалуйста, попробуйте снова.',
+	'wmu-file-not-found' => 'Файл не найден',
+	'wmu-error-exact-height' => 'Высота изображения должна быть точно $1 px (получено $2 px)',
+	'wmu-error-exact-width' => 'Ширина изображения должна быть точно $1 px (получено $2 px)',
+	'wmu-error-exact-width-height' => 'Ширина и высота изображения должны быть точно $1 x $3 px (получено $2 x $4 px)',
+	'wmu-error-bad-aspect-ratio' => 'Пропорции неверны ($1 x $2 px)',
 );
 
 /** Slovenian (slovenščina)
@@ -2823,6 +2927,11 @@ $messages['sv'] = array(
 	'wmu-alignment' => 'Uppställning',
 	'wmu-file-protected' => 'Denna bild är skyddad',
 	'wmu-file-error' => 'Tyvärr, det uppstod ett fel med uppladdningsprocessen. Var god försök igen.',
+	'wmu-file-not-found' => 'Fil hittades inte',
+	'wmu-error-exact-height' => 'Bildhöjden måste vara exakt $1 bildpunkter (har $2 bildpunkter)',
+	'wmu-error-exact-width' => 'Bildbredden måste vara exakt $1 bildpunkter (har $2 bildpunkter)',
+	'wmu-error-exact-width-height' => 'Bildens bredd och höjd måste vara exakt $1 x $3 bildpunkter (har $2 x $4 bildpunkter)',
+	'wmu-error-bad-aspect-ratio' => 'Bildförhållandet är inkorrekt ($1 x $2 bildpunkter)',
 );
 
 /** Swahili (Kiswahili)
@@ -2841,6 +2950,7 @@ $messages['sw'] = array(
 );
 
 /** Telugu (తెలుగు)
+ * @author Chaduvari
  * @author Veeven
  */
 $messages['te'] = array(
@@ -2852,7 +2962,7 @@ $messages['te'] = array(
 	'wmu-width' => 'వెడల్పు',
 	'wmu-link' => 'లంకె',
 	'wmu-optional' => '(ఐచ్చికం)',
-	'wmu-prev' => 'క్రితం 8',
+	'wmu-prev' => 'గత 8',
 	'wmu-next' => 'తర్వాతి 8',
 	'wmu-back' => 'వెనక్కి', # Fuzzy
 );
@@ -2944,9 +3054,14 @@ $messages['tl'] = array(
 
 /** Turkish (Türkçe)
  * @author Erdemaslancan
+ * @author Incelemeelemani
  */
 $messages['tr'] = array(
 	'wmu-optional' => '(isteğe bağlı)',
+	'wmu-imagebutton' => 'Resim ekle',
+	'wmu-license-cc' => 'Creative Commons Attribution-Share Alike 3.0 lisansı altındadır',
+	'wmu-bad-extension' => 'Geçersiz dosya türü yüklemeye çalıştınız. Lütfen yeniden deneyin.',
+	'wmu-gallery' => 'Galeri',
 	'wmu-alignment' => 'Hizalama',
 );
 
@@ -3006,29 +3121,37 @@ $messages['tt-cyrl'] = array(
 	'wmu-show-license-msg' => 'лицензия текстын яшерергә',
 );
 
+/** Tuvinian (тыва дыл)
+ * @author Agilight
+ */
+$messages['tyv'] = array(
+	'wmu-find' => 'Диле',
+);
+
 /** Ukrainian (українська)
  * @author A1
  * @author Andriykopanytsia
  * @author Prima klasy4na
+ * @author Ua2004
  * @author Тест
  */
 $messages['uk'] = array(
 	'wmu-upload-image' => 'Завантажити світлину',
 	'wmu-title' => 'Завантажити світлину',
 	'wmu-upload' => 'Завантажити',
-	'wmu-notlogged' => "Увійдіть або зареєструйтесь, щоб завантажити зображення з вашого комп'ютера",
+	'wmu-notlogged' => "Увійдіть або зареєструйтеся, щоб додавати зображення з вашого комп'ютера",
 	'wmu-find' => 'Знайти',
 	'wmu-thiswiki' => 'Ця вікі',
 	'wmu-flickr' => 'Flickr',
 	'wmu-upload-btn' => 'Завантажити',
 	'wmu-find-btn' => 'Знайти',
-	'wmu-flickr-inf' => 'Знайдіть належним чином ліцензовані безкоштовні фотографії з Flickr і імпортуйте їх до вашої вікі.',
-	'wmu-conflict-inf' => '<h1>На жаль, файл з таким іменем уже існує.</h1>Що ви хочете зробити з цього приводу <b> $1 </b>?',
+	'wmu-flickr-inf' => 'Шукайте безкоштовні фото на сайті Flickr та вставляйте їх на вашу вікі.',
+	'wmu-conflict-inf' => '<h1>Файл із такою назвою вже існує.</h1>Що робити з <b>$1</b>?',
 	'wmu-rename' => 'Перейменувати зображення',
 	'wmu-existing' => 'Використати наявне зображення',
 	'wmu-overwrite' => 'Замінити наявне зображення вашим',
 	'wmu-insert' => 'Вставити',
-	'wmu-details-inf' => "<h1>Подробиці файлу</h1>Укажіть ім'я для цього файлу. Напишіть щось змістовне.",
+	'wmu-details-inf' => '<h1>Деталі про файл</h1>Вкажіть змістовну назву для файлу.',
 	'wmu-name' => 'Назва',
 	'wmu-license' => 'Ліцензія',
 	'wmu-licensing' => 'Ліцензування',
@@ -3037,7 +3160,7 @@ $messages['uk'] = array(
 	'wmu-thumbnail' => 'Мініатюра',
 	'wmu-fullsize' => 'Повний розмір ($1x$2 пікс.)',
 	'wmu-width' => 'Ширина',
-	'wmu-layout' => 'Вирівнювання',
+	'wmu-layout' => 'Розмір',
 	'wmu-caption' => 'Підпис',
 	'wmu-link' => 'Посилання',
 	'wmu-optional' => "(необов'язково)",
@@ -3047,44 +3170,49 @@ $messages['uk'] = array(
 	'wmu-flickr2' => 'Зображення Flickr ($1 {{PLURAL:$1|знахідка|знахідки|знахідок}})',
 	'wmu-insert3' => 'Вставити зображення',
 	'wmu-recent-inf' => 'Нещодавно завантажені зображення',
-	'wmu-thiswiki2' => 'Зображення з цього вікі ($1 {{PLURAL:$1|результат|результати|результатів}})',
-	'wmu-success' => '<h1>Успіх</h1>Вставлено ваше зображення.',
-	'wmu-success-placeholder' => '<h1>Успіх</h1>',
-	'wmu-return' => 'Повернутись до редагування',
+	'wmu-thiswiki2' => 'Зображення на цій вікі ($1 {{PLURAL:$1|знахідка|знахідки|знахідок}})',
+	'wmu-success' => '<h1>Готово</h1>Ваше зображення успішно додано.',
+	'wmu-success-placeholder' => '<h1>Готово</h1>',
+	'wmu-return' => 'Назад до статті',
 	'wmu-back' => 'Виберіть інше фото',
-	'wmu-warn1' => 'Слід указати запит спочатку!',
-	'wmu-warn2' => 'Вам потрібно спочатку вибрати файл!',
-	'wmu-warn3' => "Необхідно вказати ім'я файлу спершу!",
-	'wmu-imagelink' => '<b>Нове!</b> Додати зображення',
+	'wmu-warn1' => 'Спершу вкажіть запит!',
+	'wmu-warn2' => 'Спершу оберіть файл!',
+	'wmu-warn3' => 'Спершу вкажіть назву файлу!',
+	'wmu-imagelink' => '<b>Нове!</b> Додати фото',
 	'wmu-imagebutton' => 'Додати зображення',
-	'wmu-license-cc' => 'Ліцензовано на умовах Creative Commons Attribution-Share Alike 3.0',
-	'wmu-bad-extension' => 'Ви спробували завантажити файли незаконного типу. Будь ласка, спробуйте ще раз.',
-	'wmu-filetype-missing' => 'Це вивантаження містить файл з відсутнім розширенням',
-	'wmu-filetype-incorrect' => 'Це вивантаження містить файл з невірним розширенням',
+	'wmu-license-cc' => 'Згідно ліцензії Creative Commons Attribution-Share Alike 3.0 (Із зазначенням автора - Розповсюдження на тих самих умовах 3.0)',
+	'wmu-bad-extension' => 'Такий тип файлів не підтримується!',
+	'wmu-filetype-missing' => 'У цього файлу немає розширення!',
+	'wmu-filetype-incorrect' => 'Невірне розширення файлу!',
 	'wmu-hide-license-msg' => 'приховати текст ліцензії',
 	'wmu-show-license-msg' => 'показати текст ліцензії',
-	'wmu-max-thumb' => 'максимальний розмір мініатюри перевищено, повернення до вихідного розміру',
-	'wmu-notallowed' => 'Ви не можете вивантажувати зображення на це вікі',
-	'wmu-readonly' => 'Наразі ви не можете завантажувати зображення, оскільки вікі знаходиться у стані лише для читання',
+	'wmu-max-thumb' => 'перевищено максимальний розмір мініатюри, повернення до вихідного розміру',
+	'wmu-notallowed' => 'Ви не можете завантажувати фото на цій вікі',
+	'wmu-readonly' => 'Ви не можете додавати фото, бо ця вікі закрита для редагування',
 	'wmu-placeholder' => 'Заповнювач',
 	'wmu-gallery' => 'Галерея',
 	'wmu-columns' => '$1 {{PLURAL:$1|стовпець|стовпці|стовпців}}',
 	'wmu-column' => 'Стовпці',
 	'wmu-added-from-plc' => 'Файл, доданий за допомогою заповнювача зображень',
-	'wmu-uploaddisabled' => 'Завантаження файлів вимкнено на цій вікі',
-	'wmu-gallery-success' => 'Додані зображення в нову галерею. Натисніть нижче для додавання інших зображень або вставки галереї',
-	'wmu-gallery-btn1' => 'Додати інше зображення',
+	'wmu-uploaddisabled' => 'Додавання файлів на цій вікі не дозволено',
+	'wmu-gallery-success' => 'Фото успішно додано. Натисніть нижче, щоб додати ще фото або вставити цілу галерею',
+	'wmu-gallery-btn1' => 'Додати ще одне фото',
 	'wmu-gallery-btn2' => 'Вставити галерею на сторінку',
 	'wmu-no-preview' => 'Не можна додати зображення зі сторінки в режимі попереднього перегляду',
 	'wmu-no-protect' => 'Ця сторінка захищена, ви не можете додавати зображення',
-	'wmu-no-rights' => 'Вам не дозволено додавати зображення на цій сторінці',
+	'wmu-no-rights' => 'Ви не можете додавати зображення на цій сторінці',
 	'wmu-more-options' => 'Додаткові параметри',
-	'wmu-fewer-options' => 'Менше параметрів',
+	'wmu-fewer-options' => 'Сховати',
 	'wmu-replace-default-caption' => 'замінити типовий підпис',
 	'wmu-appearance-in-article' => 'Вигляд на сторінці',
-	'wmu-alignment' => 'Вирівнювання',
+	'wmu-alignment' => 'Розташування',
 	'wmu-file-protected' => 'Це зображення захищене',
-	'wmu-file-error' => 'Сталася помилка при завантаженні, вибачте. Будь ласка, спробуйте ще раз.',
+	'wmu-file-error' => 'Помилка при завантаженні файлу. Спробуйте ще раз.',
+	'wmu-file-not-found' => 'Файл не знайдено',
+	'wmu-error-exact-height' => 'Висота зображення повинна бути в точності $1 px (отримано $2 px)',
+	'wmu-error-exact-width' => 'Ширина зображення повинна бути в точності $1 px (отримано $2 px)',
+	'wmu-error-exact-width-height' => 'Ширина і висота зображення повинно бути в точності  $1  px  $3  px (отримано $2 x $4 px)',
+	'wmu-error-bad-aspect-ratio' => 'Хибний формат зображення ($1 x $2 px)',
 );
 
 /** Uzbek (oʻzbekcha)
@@ -3092,6 +3220,89 @@ $messages['uk'] = array(
  */
 $messages['uz'] = array(
 	'wmu-find' => 'Qidiruv',
+);
+
+/** Vietnamese (Tiếng Việt)
+ * @author Baonguyen21022003
+ */
+$messages['vi'] = array(
+	'wmu-upload-image' => 'Tải lên hình ảnh',
+	'wmu-title' => 'Tải lên hình ảnh',
+	'wmu-upload' => 'Tải lên',
+	'wmu-notlogged' => 'Xin hãy đăng nhập hoặc đăng ký để có thể tải lên hình ảnh từ máy tính của bạn',
+	'wmu-find' => 'Tìm',
+	'wmu-thiswiki' => 'Trên wiki này',
+	'wmu-flickr' => 'Flickr',
+	'wmu-upload-btn' => 'Tải lên',
+	'wmu-find-btn' => 'Tìm kiếm',
+	'wmu-flickr-inf' => 'Tìm kiếm được cấp phép đúng cách miễn phí hình ảnh từ Flickr và nhập chúng vào wiki của bạn.',
+	'wmu-conflict-inf' => '<h1>Rất tiếc, một tập tin với tên đó đã tồn tại.</h1>Bạn muốn làm gì với <b>$1</b>?',
+	'wmu-rename' => 'Đổi tên hình ảnh của bạn',
+	'wmu-existing' => 'Sử dụng hình ảnh đã có sẵn',
+	'wmu-overwrite' => 'Ghi chèn lên các bức ảnh hiện có của bạn',
+	'wmu-insert' => 'Chèn',
+	'wmu-details-inf' => '<h1>Chi tiết tập tin</h1>Chỉ rõ tên cho tệp này. Làm cho nó một cái gì đó mô tả.',
+	'wmu-name' => 'Tên',
+	'wmu-license' => 'Giấy phép bản quyền',
+	'wmu-licensing' => 'Giấy phép',
+	'wmu-details-inf2' => '<h1>Tùy chọn bài viết</h1>Chọn cách bạn muốn tệp này để nhìn vào trang của bạn.',
+	'wmu-size' => 'Dung lượng',
+	'wmu-thumbnail' => 'Hình nhỏ',
+	'wmu-fullsize' => 'Kích thước đầy đủ ($1x$2px)',
+	'wmu-width' => 'Chiều ngang',
+	'wmu-layout' => 'Giao diện',
+	'wmu-caption' => 'Chú thích',
+	'wmu-link' => 'Liên kết',
+	'wmu-optional' => '(tùy chọn)',
+	'wmu-insert2' => 'Chèn tập tin',
+	'wmu-prev' => '8 ảnh kế trước',
+	'wmu-next' => '8 ảnh tiếp theo',
+	'wmu-flickr2' => 'Các hình ảnh Flickr có ($1{{PLURAL:$1|kết quả|kết quả}})',
+	'wmu-insert3' => 'Chèn hình ảnh',
+	'wmu-recent-inf' => 'Tập tin được tải lên gần đây',
+	'wmu-thiswiki2' => 'Các hình ảnh Flickr có ($1{{PLURAL:$1|kết quả|kết quả}})',
+	'wmu-success' => '<h1>Thao tác thành công</h1>Hình ảnh của bạn đã được đưa vào.',
+	'wmu-success-placeholder' => '<h1>Thành công</h1>',
+	'wmu-return' => 'Trở lại để chỉnh sửa',
+	'wmu-back' => 'Chọn một hình ảnh khác',
+	'wmu-warn1' => 'Bạn cần phải chỉ định truy vấn đầu tiên!',
+	'wmu-warn2' => 'Bạn cần phải chọn tập tin đầu tiên!',
+	'wmu-warn3' => 'Bạn cần chỉ ra tên tập tin đầu tiên!',
+	'wmu-imagelink' => '<b>Mới!</b> Thêm hình ảnh',
+	'wmu-imagebutton' => 'Thêm hình ảnh',
+	'wmu-license-cc' => 'Giấy phép bản quyền theo Creative Commons Attribution-Share Alike phiên bản 3.0',
+	'wmu-bad-extension' => 'Bạn đã cố gắng để tải lên một loại tập tin không được chấp nhận. Xin vui lòng thử lại.',
+	'wmu-filetype-missing' => 'Tập tin bị thiếu ở phần mở rộng.',
+	'wmu-filetype-incorrect' => 'Tải lên này có phần mở rộng tập tin không chính xác',
+	'wmu-hide-license-msg' => 'ẩn văn bản giấy phép',
+	'wmu-show-license-msg' => 'Hiển thị văn bản giấy phép',
+	'wmu-max-thumb' => 'tối đa kích thước hình thu nhỏ vượt quá giới hạn, xin hãy quay trở lại kích thước ban đầu',
+	'wmu-notallowed' => 'Bạn không thể tải lên các hình ảnh trên wiki này',
+	'wmu-readonly' => 'Bạn không thể tải lên hình ảnh, wiki là trong đọc chỉ nhà nước',
+	'wmu-placeholder' => 'Giữ chỗ',
+	'wmu-gallery' => 'Thư viện ảnh',
+	'wmu-columns' => '$1 {{PLURAL:$1|Cột|cột}}',
+	'wmu-column' => 'Cột',
+	'wmu-added-from-plc' => 'Tệp bổ sung thông qua hình ảnh giữ chỗ',
+	'wmu-uploaddisabled' => 'Tập tin tải lên bị vô hiệu hoá trên wiki này',
+	'wmu-gallery-success' => 'Bạn đã thêm một hình ảnh vào một thư viện mới. Nhấp vào phía bên dưới để thêm hình ảnh chi tiết hoặc để chèn bộ sưu tập',
+	'wmu-gallery-btn1' => 'Thêm hình ảnh khác',
+	'wmu-gallery-btn2' => 'Chèn bộ sưu tập vào trang',
+	'wmu-no-preview' => 'Bạn không thể thêm hình ảnh từ trang trong chế độ xem trước',
+	'wmu-no-protect' => 'Trang này đang được bảo vệ, bạn không thể thêm hình ảnh vào đó.',
+	'wmu-no-rights' => 'Bạn không có quyền để thêm hình ảnh vào trang này.',
+	'wmu-more-options' => 'Thêm tùy chọn',
+	'wmu-fewer-options' => 'Tùy chọn khác',
+	'wmu-replace-default-caption' => 'thay thế chú thích mặc định',
+	'wmu-appearance-in-article' => 'Xuất hiện trên trang',
+	'wmu-alignment' => 'Liên kết',
+	'wmu-file-protected' => 'Hình ảnh này đang bị khóa',
+	'wmu-file-error' => 'Đã có lỗi với quá trình tải lên, xin lỗi. Xin vui lòng thử lại.',
+	'wmu-file-not-found' => 'Không tìm thấy tập tin',
+	'wmu-error-exact-height' => 'Chiều cao hình ảnh phải chính xác  $1  px (có $2 px)',
+	'wmu-error-exact-width' => 'Chiều rộng của hình ảnh phải chính xác  $1 px (có $2 px)',
+	'wmu-error-exact-width-height' => 'Hình ảnh chiều rộng và chiều cao phải là chính xác $1 x $3 px (có $2 x $4 px)',
+	'wmu-error-bad-aspect-ratio' => 'Tỷ lệ khía cạnh là không chính xác ($1  x $2 px)',
 );
 
 /** Yiddish (ייִדיש)
@@ -3106,13 +3317,14 @@ $messages['yi'] = array(
  * @author Anakmalaysia
  * @author Gaoxuewei
  * @author Hydra
+ * @author Liuxinyu970226
  * @author Xiaomingyan
  * @author Yfdyh000
  */
 $messages['zh-hans'] = array(
 	'wmu-upload-image' => '上载图片',
-	'wmu-title' => '上传照片',
-	'wmu-upload' => '上传',
+	'wmu-title' => '上载图片',
+	'wmu-upload' => '上载',
 	'wmu-notlogged' => '登陆或者注册后从您的电脑中上传图片',
 	'wmu-find' => '寻找',
 	'wmu-thiswiki' => '本维基',
@@ -3141,7 +3353,7 @@ $messages['zh-hans'] = array(
 	'wmu-insert2' => '插入文件',
 	'wmu-prev' => '前 8 个',
 	'wmu-next' => '后 8 个',
-	'wmu-flickr2' => 'Flickr图片（$1 结果）',
+	'wmu-flickr2' => 'Flickr图片（$1个{{PLURAL:$1|结果|结果}}）',
 	'wmu-insert3' => '插入这个图片',
 	'wmu-recent-inf' => '最近上传的图片',
 	'wmu-thiswiki2' => '本维基图片（$1 结果）',
@@ -3182,6 +3394,7 @@ $messages['zh-hans'] = array(
 	'wmu-alignment' => '对齐',
 	'wmu-file-protected' => '本图片受到保护',
 	'wmu-file-error' => '抱歉，上传过程中出错了。请再试一次。',
+	'wmu-file-not-found' => '无法找到文件',
 );
 
 /** Traditional Chinese (中文（繁體）‎)
@@ -3191,6 +3404,78 @@ $messages['zh-hant'] = array(
 	'wmu-upload-image' => '上傳圖片',
 	'wmu-title' => '上傳圖片',
 	'wmu-upload' => '上傳',
+	'wmu-notlogged' => '登入或註冊後從您的電腦中上傳圖片',
+	'wmu-find' => '尋找',
+	'wmu-thiswiki' => '本維基',
+	'wmu-flickr' => 'Flickr',
+	'wmu-upload-btn' => '上傳',
+	'wmu-find-btn' => '尋找',
+	'wmu-flickr-inf' => '在Flickr搜尋適合的自由授權圖片並將之導入你的維基中',
+	'wmu-conflict-inf' => '<h1>抱歉，這個檔案名已存在。</h1>您打算如何處理<b>$1</b>?',
+	'wmu-rename' => '重命名您的圖片',
+	'wmu-existing' => '使用已有圖片',
+	'wmu-overwrite' => '使用您的圖片覆蓋現有的檔案',
+	'wmu-insert' => '插入',
+	'wmu-details-inf' => '<h1>檔案細節</h1>給這個檔案指定一個名字，並提供一些描述。',
+	'wmu-name' => '名稱',
+	'wmu-license' => '授權',
+	'wmu-licensing' => '授權',
+	'wmu-details-inf2' => '<h1>文章選項</h1>選擇這個檔案在您的文章之内的樣子。',
+	'wmu-size' => '大小',
+	'wmu-thumbnail' => '縮圖',
+	'wmu-fullsize' => '完整尺寸（$1x$2px）',
+	'wmu-width' => '寬度',
+	'wmu-layout' => '佈局',
+	'wmu-caption' => '標題',
+	'wmu-link' => '連結',
+	'wmu-optional' => '（可選）',
+	'wmu-insert2' => '插入檔案',
+	'wmu-prev' => '前8個',
+	'wmu-next' => '後 8 個',
+	'wmu-flickr2' => 'Flickr圖片（$1個{{PLURAL:$1|結果|結果}}）',
+	'wmu-insert3' => '插入這個圖片',
+	'wmu-recent-inf' => '最近上傳的圖片',
+	'wmu-thiswiki2' => '本維基圖片 ($1個 {{PLURAL:$1|result|結果}})',
+	'wmu-success' => '<h1>成功</h1>您已插入圖片。',
+	'wmu-success-placeholder' => '<h1>成功</h1>',
+	'wmu-return' => '返回到編輯',
+	'wmu-back' => '選擇另一張圖片',
+	'wmu-warn1' => '您需要先指定查詢條件！',
+	'wmu-warn2' => '您需要先選擇檔案 ！',
+	'wmu-warn3' => '您需要先確定檔案名稱！',
+	'wmu-imagelink' => '<b>新！</b>增加圖片',
+	'wmu-imagebutton' => '增加圖片',
+	'wmu-license-cc' => '採用知識共享-署名-相同方式共享 3.0 協議裝權',
+	'wmu-bad-extension' => '您上傳的檔案類型不被支援。請再試一次。',
+	'wmu-filetype-missing' => '本次上傳丢失了檔案副檔名',
+	'wmu-filetype-incorrect' => '這個上傳的副檔名不正確',
+	'wmu-hide-license-msg' => '隱藏授權文本',
+	'wmu-show-license-msg' => '顯示授權文本',
+	'wmu-max-thumb' => '縮圖尺寸過大，恢復為原來的尺寸',
+	'wmu-notallowed' => '您不能在本維基中上傳圖片',
+	'wmu-readonly' => '您不能上傳圖片，本維基處於唯讀狀態。',
+	'wmu-gallery' => '圖庫',
+	'wmu-columns' => '$1{{PLURAL:$1|列|列}}',
+	'wmu-column' => '列數',
+	'wmu-uploaddisabled' => '本維基禁止了檔案的上傳',
+	'wmu-gallery-success' => '您将新圖片增加到了一個新的圖庫中。點擊下面以增加更多的圖片或者插入圖庫',
+	'wmu-gallery-btn1' => '增加另一張圖片',
+	'wmu-gallery-btn2' => '將圖庫插入文章中',
+	'wmu-no-preview' => '您不能在預覽模式下增加圖片',
+	'wmu-no-protect' => '此頁受保護，不能在它上面增加圖片。',
+	'wmu-no-rights' => '您不被允許將圖片增加到此頁面',
+	'wmu-more-options' => '更多選項',
+	'wmu-fewer-options' => '更少選項',
+	'wmu-replace-default-caption' => '替換預設標題',
+	'wmu-appearance-in-article' => '頁面上的外觀',
+	'wmu-alignment' => '對齊',
+	'wmu-file-protected' => '本圖片受到保護',
+	'wmu-file-error' => '抱歉，在這次上傳過程中出了問題，請再試一次。',
+	'wmu-file-not-found' => '找不到檔案',
+	'wmu-error-exact-height' => '圖像高度必須剛好 $1 px (有 $2 px)',
+	'wmu-error-exact-width' => '圖像寬度必須剛好 $1 px (有 $2 px)',
+	'wmu-error-exact-width-height' => '圖像寬度和高度必須剛好 $1 x  $3  px (有 $2 x  $4  px)',
+	'wmu-error-bad-aspect-ratio' => '長寬比不正確 ( $1  x  $2  px)',
 );
 
 /** Chinese (Hong Kong) (中文（香港）‎)

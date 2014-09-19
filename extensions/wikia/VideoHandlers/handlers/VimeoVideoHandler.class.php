@@ -18,7 +18,8 @@ class VimeoVideoHandler extends VideoHandler {
 		return str_replace('$1', $this->getEmbedVideoId(), $this->googleSitemapCustomVideoUrl);
 	}
 
-	public function getEmbed( $articleId, $width, $autoplay = false, $isAjax = false, $postOnload=false ) {
+	public function getEmbed( $width, array $options = [] ) {
+		$autoplay = !empty( $options['autoplay'] );
 		$height =  $this->getHeight( $width );
 
 		$autoplayStrParam = self::$autoplayParam;
@@ -30,7 +31,11 @@ class VimeoVideoHandler extends VideoHandler {
 <iframe src="$url?$autoplayStrParam=$autoplayStrValue" $sizeString frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
 EOT;
 
-		return array( 'html' => $html );
+		return array(
+			'html' => $html,
+			'width' => $width,
+			'height' => $height,
+		);
 	}
 
 	public function getEmbedSrcData() {

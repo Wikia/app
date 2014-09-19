@@ -52,6 +52,7 @@ class LingoElement {
 		
 		// return textnode if
 		if ( $wgexLingoDisplayOnce && $this->mHasBeenDisplayed ) {
+			wfProfileOut( __METHOD__ );
 			return $doc->createTextNode($this->mTerm);
 		}
 		

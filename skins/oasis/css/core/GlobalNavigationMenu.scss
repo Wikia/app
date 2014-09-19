@@ -1,0 +1,288 @@
+@import "skins/shared/color";
+@import "skins/shared/mixins/box-sizing";
+@import "skins/shared/mixins/calc";
+@import "skins/shared/mixins/transition";
+
+$hubsmenu-background-color: #f7f7f7;
+$hubsmenu-font-color: #092140;
+$menu-hover-bg-color: #edf1f4;
+$new-border-color: #c7d1d8;
+$shadow-width: 1px;
+
+#GlobalNavigationMenuButton {
+	border-right: 1px solid $new-border-color;
+	cursor: pointer;
+	height: 66px;
+	margin-top: 0;
+	width: 60px;
+	fill: $hubsmenu-font-color;
+
+	#svg-chevron {
+		fill: $new-border-color;
+	}
+
+	&.active {
+		background: $menu-hover-bg-color;
+
+		#svg-chevron {
+			fill: $hubsmenu-font-color;
+		}
+	}
+}
+
+ .GlobalNavigationContainer {
+	@include width-calc('100% - 290px');
+
+	display: none;
+	position: absolute;
+	top: 66px;
+
+	* {
+		@include box-sizing;
+	}
+
+	> nav {
+		background-color: $hubsmenu-background-color;
+		border: 1px solid $new-border-color;
+		border-top: 0;
+		color: $hubsmenu-font-color;
+		margin: 0 auto;
+		position: relative;
+		width: 866px;
+		z-index: 1000;
+
+		.hubs {
+			position: absolute;
+			width: 302px;
+		}
+
+		.hub {
+			background-color: #fff;
+			background-image: url(/skins/oasis/images/GlobalNavigation/chevron-level-1.png); /* base64 */
+			background-position: center right;
+			background-repeat: no-repeat;
+			cursor: pointer;
+			display: table;
+			font-size: 21px;
+			height: 62px;
+			padding-left: 123px;
+			position: relative;
+			width: 100%;
+
+			.icon {
+				background-position: center;
+				background-repeat: no-repeat;
+				background-size: 52px;
+				display: inline-block;
+				height: 62px;
+				left: 0;
+				position: absolute;
+				top: 0;
+				width: 90px;
+
+				svg {
+					height: 52px;
+					left: 50%;
+					margin-left: -25px;
+					margin-top: -25px;
+					position: absolute;
+					top: 50%;
+					width: 52px;
+
+					circle {
+						fill-opacity: 0;
+					}
+				}
+			}
+			.label {
+				display: table-cell;
+				height: 100%;
+				vertical-align: middle;
+				width: 100%;
+			}
+			&::before {
+				background: #e9edef;
+				content: '';
+				display: inline-block;
+				height: 1px;
+				left: 112px;
+				position: absolute;
+				top: 0;
+				width: 166px;
+			}
+			&:first-child::before {
+				display: none;
+			}
+
+			&.active::before, &.active + &:not(.active)::before
+			{
+				background: none;
+			}
+
+			&.active {
+				font-weight: bold;
+				color: #fff;
+				background-image: url(/skins/oasis/images/GlobalNavigation/chevron-level-1_hover.png); /* base64 */
+
+				.icon circle {
+					fill-opacity: 1;
+				}
+			}
+
+			&.books .icon,  &.books.active {
+				background-color: #ff7f26;
+			}
+			&.comics .icon,  &.comics.active  {
+				background-color: #ff5400;
+			}
+			&.games .icon,  &.games.active  {
+				background-color: #94d11f;
+			}
+			&.lifestyle .icon,  &.lifestyle.active  {
+				background-color: #ffd000;
+			}
+			&.movies .icon,  &.movies.active  {
+				background-color: #09d3bf;
+			}
+			&.music .icon,  &.music.active  {
+				background-color: #c819ad;
+			}
+			&.tv .icon,  &.tv.active  {
+				background-color: #00b7e0;
+			}
+		}
+
+		@for $i from 1 through 7 {
+			&.count-#{$i} section,
+			&.count-#{$i} .hubs,
+			&.count-#{$i} {
+				height: $shadow-width + $i * 62px;
+			}
+		}
+
+		section {
+			background-color: $hubsmenu-background-color;
+			bottom: 1px;
+			color: $hubsmenu-font-color;
+			font-size: 15px;
+			overflow: auto;
+			position: absolute;
+
+			a, h2 {
+				color: inherit;
+				font: inherit;
+				padding-bottom: 12px;
+			}
+
+			h2 {
+				font-weight: bold;
+
+				&:not(:first-child) {
+					padding-top: 20px;
+				}
+			}
+
+			a {
+				display: inline-block;
+			}
+
+			&[data-submenu='0'] {
+				left: 302px;
+				padding: 26px 18px 12px;
+				width: 258px;
+			}
+			&[data-submenu='1'] {
+				left: 560px;
+				padding: 26px 24px 12px;
+				width: 294px;
+			}
+		}
+	}
+}
+
+@media screen and (max-width: 1023px) {
+	#GlobalNavigationMenuButton {
+		padding: 0 5px;
+	}
+	.GlobalNavigationContainer {
+		width: 100%;
+
+		> nav {
+			width: 768px;
+
+			.hubs {
+				width: 272px;
+			}
+			.hub {
+				font-size: 18px;
+				padding-left: 86px;
+
+				.icon {
+					width: 70px
+				}
+				&::before {
+					left: 82px;
+					width: 166px;
+				}
+			}
+
+			section {
+				&[data-submenu='0'] {
+					left: 272px;
+					padding-left: 0px;
+					padding-right: 8px;
+					width: 232px;
+				}
+				&[data-submenu='1'] {
+					left: 504px;
+					padding-left: 16px;
+					padding-right: 24px;
+					width: 260px;
+				}
+			}
+		}
+	}
+}
+
+@media screen and (min-width: 1024px) and (max-width: 1280px) {
+	#GlobalNavigationMenuButton {
+		padding: 0 11px;
+	}
+	.GlobalNavigationContainer {
+		@include width-calc('100% - 258px');
+
+		> nav {
+			width: 766px;
+
+			.hubs {
+				width: 268px;
+			}
+			.hub {
+				padding-left: 112px;
+
+				.icon {
+					width: 82px
+				}
+				&::before {
+					left: 102px;
+					width: 142px;
+				}
+			}
+
+			section {
+				&[data-submenu='0'] {
+					left: 268px;
+					padding-left: 10px;
+					padding-right: 10px;
+					width: 238px;
+				}
+				&[data-submenu='1'] {
+					left: 506px;
+					padding-left: 20px;
+					padding-right: 20px;
+					width: 258px;
+				}
+			}
+		}
+	}
+}

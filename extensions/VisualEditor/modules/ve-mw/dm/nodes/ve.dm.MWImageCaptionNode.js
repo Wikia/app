@@ -1,7 +1,7 @@
 /*!
  * VisualEditor DataModel MWImageCaptionNode class.
  *
- * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
@@ -10,27 +10,23 @@
  *
  * @class
  * @extends ve.dm.BranchNode
+ *
  * @constructor
- * @param {ve.dm.BranchNode[]} [children] Child nodes to attach
  * @param {Object} [element] Reference to element in linear model
+ * @param {ve.dm.Node[]} [children]
  */
-ve.dm.MWImageCaptionNode = function VeDmMWImageCaptionNode( children, element ) {
+ve.dm.MWImageCaptionNode = function VeDmMWImageCaptionNode() {
 	// Parent constructor
-	ve.dm.BranchNode.call( this, children, element );
+	ve.dm.BranchNode.apply( this, arguments );
 };
 
-ve.inheritClass( ve.dm.MWImageCaptionNode, ve.dm.BranchNode );
+OO.inheritClass( ve.dm.MWImageCaptionNode, ve.dm.BranchNode );
 
 ve.dm.MWImageCaptionNode.static.name = 'mwImageCaption';
 
 ve.dm.MWImageCaptionNode.static.matchTagNames = [];
 
 ve.dm.MWImageCaptionNode.static.parentNodeTypes = [ 'mwBlockImage' ];
-
-ve.dm.MWImageCaptionNode.static.toDataElement = function () {
-	// Probably not needed
-	return { 'type': this.name };
-};
 
 ve.dm.MWImageCaptionNode.static.toDomElements = function ( dataElement, doc ) {
 	return [ doc.createElement( 'figcaption' ) ];

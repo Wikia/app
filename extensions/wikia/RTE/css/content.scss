@@ -2,7 +2,7 @@
  * This file is used for styling the edit area of CKeditor
  */
 @import "skins/oasis/css/oasis";
-@import "skins/oasis/css/core/responsive-font-sizing";
+@import "skins/oasis/css/core/layout";
 
 head {
 	// fb#5654 Editor reskin: Firefox loading effect issue
@@ -21,7 +21,7 @@ head {
 		padding: 0 10px;
 	}
 
-	overflow-y: auto;
+	overflow: auto;
 	margin-bottom: 35px;
 
 	a {
@@ -59,8 +59,6 @@ img.video {
 /* thumbs */
 img.thumb,
 img.frame {
-	background: $color-article-thumb-background;
-	border: 1px solid $color-article-thumb-border;
 	clear: right;
 	display: inline;
 	float: right;

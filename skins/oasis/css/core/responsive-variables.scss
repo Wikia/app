@@ -1,0 +1,20 @@
+@import "skins/shared/color";
+@import "layout";
+
+// Layout
+$width-adskin: 170px;
+$width-adskins: $width-adskin * 2;
+$width-gradient: 40px;
+$width-outside-half: $width-outside / 2;
+$width-outside-min: 768px;
+$width-outside-max: 1600px;
+$width-outside-max-half: $width-outside-max / 2;
+$width-padding: $width-gutter / 2;
+
+// Breakpoints
+$breakpoint-content: $width-outside;
+$breakpoint-fluid: $width-outside + $width-adskins;
+$breakpoint-max: $width-outside-max + $width-adskins;
+$breakpoint-min: $width-outside-min;
+$breakpoint-small: 1023px;
+

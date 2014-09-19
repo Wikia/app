@@ -91,10 +91,17 @@ border: none;
     z-index: 9000;
 }
 
+#wf-category fieldset { border: 1px dotted lightgray; background: #f9f9f9; padding: 0.4em; }
+#wf-category label { display: inline-block; width: 75px; }
+
 .wf-variable-form .perror {color: #fe0000; font-weight: bold; }
 .wf-variable-form .success {color: darkgreen; font-weight: bold; }
 .wf-variable-form textarea { width: 90%; height: 8em; }
 .wf-variable-form input.input-string { width: 90%; }
+.wf-variable-form label { display: block; padding-top: 1em; }
+.wf-variable-form-inline-group { width: 45%; }
+.wf-variable-form-left { float: left; }
+.wf-variable-form-right { float: right; }
 
 .prompt {
 	color: #fe0000;

@@ -5,6 +5,10 @@
  * @author Will Lee <wlee at wikia-inc.com>
  * @author Piotr Bablok <pbablok at wikia-inc.com>
  * @author Jacek Jursza <jacek at wikia-inc.com>
+ * @author Saipetch Kongkatong <saipetch at wikia-inc.com>
+ * @author Liz Lee <Liz at wikia-inc.com>
+ * @author Garth Webb <garth at wikia-inc.com>
+ * @author James Sutterfield <james at wikia-inc.com>
  * @date 2011-12-06
  * @copyright Copyright (C) 2010 Jakub Kurcek, Wikia Inc.
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
@@ -17,18 +21,14 @@ $wgExtensionCredits['videohandlers'][] = array(
 		"Will Lee <wlee at wikia-inc.com>",
 		"Piotr Bablok <pbablok at wikia-inc.com>",
 		"Jacek Jursza <jacek at wikia-inc.com>",
+		"Saipetch Kongkatong <saipetch at wikia-inc.com>",
+		"Liz Lee <liz at wikia-inc.com>",
+		"Garth Webb <garth at wikia-inc.com>",
+		"James Sutterfield <james at wikia-inc.com>",
 	),
 	'url' => 'http://video.wikia.com',
 	'descriptionmsg' => 'wikia-videohandlers-desc',
 );
-
-/**
- * setup
- */
-$wgNamespaceAliases[ 'Video' ] = 6;
-$wgNamespaceAliases['Video_talk'] = 7;
-define( 'NS_VIDEO', 6 );
-
 
 $wgWikiaVideoGalleryId = 0;
 $wgWikiaVETLoaded = false;
@@ -37,11 +37,11 @@ $wgWikiaVideosFoundInTemplates = 0;
 $dir = dirname( __FILE__ );
 
 // Main classes
-$wgAutoloadClasses[ 'ThumbnailVideo' ] = $dir . '/ThumbnailVideo.class.php';
 $wgAutoloadClasses[ 'VideoHandlerController' ] = $dir . '/VideoHandlerController.class.php';
 $wgAutoloadClasses[ 'VideoHandlerHooks' ] = $dir . '/VideoHandlerHooks.class.php';
 $wgAutoloadClasses[ 'VideoFileUploader' ] = $dir . '/VideoFileUploader.class.php';
 $wgAutoloadClasses[ 'VideoHandlerHelper' ] = $dir . '/VideoHandlerHelper.class.php';
+$wgAutoloadClasses[ 'UpdateThumbnailTask' ] = $dir . '/UpdateThumbnailTask.class.php';
 
 // actions
 $wgAutoloadClasses[ 'WikiaRevertVideoAction'] = $dir . '/actions/WikiaRevertVideoAction.php';
@@ -97,13 +97,13 @@ $wgHooks['ParserBeforeStrip'][] = 'VideoHandlerHooks::WikiaVideoParserBeforeStri
 
 $wgHooks['FileRevertFormBeforeUpload'][] = 'VideoHandlerHooks::onFileRevertFormBeforeUpload';
 $wgHooks['SetupAfterCache'][] = 'VideoHandlerHooks::onSetupAfterCache';
-$wgHooks['BeforePageDisplay'][] = 'VideoHandlerHooks::onBeforePageDisplay';
 $wgHooks['LinkerMakeThumbLink2FileOriginalSize'][] = 'VideoHandlerHooks::onLinkerMakeThumbLink2FileOriginalSize';
 $wgHooks['ParserAfterStrip'][] = 'VideoHandlerHooks::convertOldInterwikiToNewInterwiki';
 $wgHooks['File::checkExtensionCompatibilityResult'][] = 'VideoHandlerHooks::checkExtensionCompatibilityResult';
 $wgHooks['FindRedirectedFile'][] = 'VideoHandlerHooks::onFindRedirectedFile';
+$wgHooks['UploadFromUrlReallyFetchFile'][] = 'VideoHandlerHooks::onUploadFromUrlReallyFetchFile';
 
-$wgHooks['FileUpload'][] = 'VideoInfoHooksHelper::onFileUpload';
+
 $wgHooks['ArticleSaveComplete'][] = 'VideoInfoHooksHelper::onArticleSaveComplete';
 $wgHooks['FileDeleteComplete'][] = 'VideoInfoHooksHelper::onFileDeleteComplete';
 $wgHooks['FileUndeleteComplete'][] = 'VideoInfoHooksHelper::onFileUndeleteComplete';
@@ -113,6 +113,12 @@ $wgHooks['ArticleDeleteComplete'][] = 'VideoInfoHooksHelper::onArticleDeleteComp
 $wgHooks['UndeleteComplete'][] = 'VideoInfoHooksHelper::onUndeleteComplete';
 $wgHooks['ForeignFileDeleted'][] = 'VideoInfoHooksHelper::onForeignFileDeleted';
 $wgHooks['RemovePremiumVideo'][] = 'VideoInfoHooksHelper::onRemovePremiumVideo';
+$wgHooks['WikiFilePageCheckFile'][] = 'VideoInfoHooksHelper::onCheckGhostFile';
+if ( !empty( $wgUseVideoVerticalFilters ) ) {
+	$wgHooks['ArticleDelete'][] = 'VideoInfoHooksHelper::onArticleDelete';
+	$wgHooks['ArticleUpdateBeforeRedirect'][] = 'VideoInfoHooksHelper::onArticleUpdateBeforeRedirect';
+	$wgHooks['CategorySelectSave'][] = 'VideoInfoHooksHelper::onCategorySelectSave';
+}
 
 if ( !empty($wgVideoHandlersVideosMigrated) ) {
 	$wgHooks['ParserFirstCallInit'][] = 'VideoHandlerHooks::initParserHook';
@@ -121,6 +127,10 @@ if ( !empty($wgVideoHandlersVideosMigrated) ) {
 // permissions
 $wgAvailableRights[] = 'specialvideohandler';
 $wgGroupPermissions['staff']['specialvideohandler'] = true;
+
+$wgAvailableRights[] = 'uploadpremiumvideo';
+$wgGroupPermissions['*']['uploadpremiumvideo'] = false;
+$wgGroupPermissions['staff']['uploadpremiumvideo'] = true;
 
 /*
  * handlers
@@ -158,13 +168,8 @@ $wgAutoloadClasses['MyvideoVideoHandler'] =  $dir . '/handlers/MyvideoVideoHandl
 $wgAutoloadClasses['MyvideoApiWrapper'] =  $dir . '/apiwrappers/MyvideoApiWrapper.class.php';
 $wgMediaHandlers['video/myvideo'] = 'MyvideoVideoHandler';
 
-$wgAutoloadClasses['RealgravityVideoHandler'] =  $dir . '/handlers/RealgravityVideoHandler.class.php';
-$wgAutoloadClasses['RealgravityApiWrapper'] =  $dir . '/apiwrappers/RealgravityApiWrapper.class.php';
-$wgMediaHandlers['video/realgravity'] = 'RealgravityVideoHandler';
-
-$wgAutoloadClasses['ScreenplayVideoHandler'] =  $dir . '/handlers/ScreenplayVideoHandler.class.php';
+// Uses Ooyala for video handler
 $wgAutoloadClasses['ScreenplayApiWrapper'] =  $dir . '/apiwrappers/ScreenplayApiWrapper.class.php';
-$wgMediaHandlers['video/screenplay'] = 'ScreenplayVideoHandler';
 
 $wgAutoloadClasses['IgnVideoHandler'] =  $dir . '/handlers/IgnVideoHandler.class.php';
 $wgAutoloadClasses['IgnApiWrapper'] =  $dir . '/apiwrappers/IgnApiWrapper.class.php';
@@ -214,16 +219,28 @@ $wgAutoloadClasses[ 'SnappytvVideoHandler'] =  $dir . '/handlers/SnappytvVideoHa
 $wgAutoloadClasses[ 'SnappytvApiWrapper'] =  $dir . '/apiwrappers/SnappytvApiWrapper.class.php' ;
 $wgMediaHandlers['video/snappytv'] = 'SnappytvVideoHandler';
 
+$wgAutoloadClasses['UstreamVideoHandler'] =  $dir . '/handlers/UstreamVideoHandler.class.php';
+$wgAutoloadClasses['UstreamApiWrapper'] =  $dir . '/apiwrappers/UstreamApiWrapper.class.php';
+$wgMediaHandlers['video/ustream'] = 'UstreamVideoHandler';
+
+$wgAutoloadClasses['YoukuApiWrapper'] =  $dir . '/apiwrappers/YoukuApiWrapper.class.php';
+$wgAutoloadClasses['YoukuVideoHandler'] =  $dir . '/handlers/YoukuVideoHandler.class.php';
+$wgMediaHandlers['video/youku'] = 'YoukuVideoHandler';
+
+$wgAutoloadClasses['CrunchyrollApiWrapper'] =  $dir . '/apiwrappers/CrunchyrollApiWrapper.class.php';
+$wgAutoloadClasses['CrunchyrollVideoHandler'] =  $dir . '/handlers/CrunchyrollVideoHandler.class.php';
+$wgMediaHandlers['video/crunchyroll'] = 'CrunchyrollVideoHandler';
+
 /**
  * Feed ingesters
  */
 $wgAutoloadClasses[ 'VideoFeedIngester' ] = $dir . '/feedingesters/VideoFeedIngester.class.php';
-$wgAutoloadClasses[ 'RealgravityFeedIngester' ] = $dir . '/feedingesters/RealgravityFeedIngester.class.php';
 $wgAutoloadClasses[ 'ScreenplayFeedIngester' ] = $dir . '/feedingesters/ScreenplayFeedIngester.class.php';
 $wgAutoloadClasses[ 'IgnFeedIngester' ] = $dir . '/feedingesters/IgnFeedIngester.class.php';
 $wgAutoloadClasses[ 'AnyclipFeedIngester' ] = $dir . '/feedingesters/AnyclipFeedIngester.class.php';
 $wgAutoloadClasses[ 'OoyalaFeedIngester' ] = $dir . '/feedingesters/OoyalaFeedIngester.class.php';
 $wgAutoloadClasses[ 'IvaFeedIngester' ] = $dir . '/feedingesters/IvaFeedIngester.class.php';
+$wgAutoloadClasses[ 'CrunchyrollFeedIngester' ] = $dir . '/feedingesters/CrunchyrollFeedIngester.class.php';
 
 $wgAutoloadClasses[ 'OoyalaAsset' ] = $dir . '/feedingesters/OoyalaAsset.class.php';
 
@@ -240,7 +257,6 @@ $wgVideoMigrationProviderMap = array(
 	19 => 'Viddler',
 	21 => 'Screenplay',
 	22 => 'Movieclips',
-	23 => 'Realgravity',
 	/*
 	// a trick to make video.wikia and local files accessible via wrappers:
 	24 => 'Wikia',
@@ -251,4 +267,6 @@ $wgVideoMigrationProviderMap = array(
 	28 => 'Ooyala',
 	29 => 'Iva',
 	30 => 'Snappytv',
+	31 => 'Ustream',
+	32 => 'Youku'
 );

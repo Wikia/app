@@ -22,10 +22,7 @@ $wgExtensionCredits['other'][] = array(
 
 // helper hierarchy
 // row assigners
-$wgAutoloadClasses['WikiImageRowAssigner'] = $dir.'classes/WikiImageRowAssigner.class.php';
 $wgAutoloadClasses['WikiImageRowHelper'] = $dir.'classes/WikiImageRowHelper.class.php';
-$wgAutoloadClasses['WikiImageNameRowHelper'] = $dir.'classes/WikiImageNameRowHelper.class.php';
-$wgAutoloadClasses['WikiImageReviewStatusRowHelper'] = $dir.'classes/WikiImageReviewStatusRowHelper.class.php';
 
 // getdata helpers
 $wgAutoloadClasses['WikiGetDataHelper'] = $dir.'classes/WikiGetDataHelper.class.php';
@@ -37,6 +34,7 @@ $wgAutoloadClasses['WikiDataGetterForVisualization'] = $dir.'classes/WikiDataGet
 $wgAutoloadClasses['WikiListConditioner'] = $dir.'classes/WikiListConditioner.class.php';
 $wgAutoloadClasses['WikiListConditionerForVertical'] = $dir.'classes/WikiListConditionerForVertical.class.php';
 $wgAutoloadClasses['WikiListConditionerForCollection'] = $dir.'classes/WikiListConditionerForCollection.class.php';
+$wgAutoloadClasses['PromoImage'] = $dir.'/classes/PromoImage.class.php';
 
 //classes
 $wgAutoloadClasses['WikiaHomePageHelper'] =  $dir.'/helpers/WikiaHomePageHelper.class.php';

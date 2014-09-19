@@ -79,7 +79,7 @@ class SpecialConnect extends SpecialPage {
 	 * Performs any necessary execution and outputs the resulting Special page.
 	 */
 	function execute( $par ) {
-		global $wgUser, $wgRequest;
+		global $wgUser, $wgRequest, $wgOut;
 
 		if ( $wgRequest->getVal("action", "") == "disconnect_reclamation" ) {
 			self::disconnectReclamationAction();
@@ -155,10 +155,16 @@ class SpecialConnect extends SpecialPage {
 			}
 		}
 
+		JSMessages::enqueuePackage('FBConnect', JSMessages::INLINE);
+
 		switch ( $par ) {
 		case 'ChooseName':
 			$choice = $wgRequest->getText('wpNameChoice');
+			if ( empty( $this->mEmail ) ) {
+				$this->mEmail = $wgRequest->getText( 'wpEmail' );
+			}
 			if ($wgRequest->getCheck('wpCancel')) {
+				$fb->logout();
 				$this->sendError('fbconnect-cancel', 'fbconnect-canceltext');
 			}
 			else switch ($choice) {
@@ -467,7 +473,7 @@ class SpecialConnect extends SpecialPage {
 			wfRunHooks( 'AddNewAccount', array( $user, false ) );
 
 			// Mark that the user is a Facebook user
-			$user->addGroup('fb-user');
+			// $user->addGroup('fb-user'); // Wikia change - Make fb-user a properly implicit group (CE-767)
 
 			// Store which fields should be auto-updated from Facebook when the user logs in.
 			$updateFormPrefix = "wpUpdateUserInfo";
@@ -552,6 +558,18 @@ class SpecialConnect extends SpecialPage {
 		//}
 
 		$u->setEmail( $this->mEmail );
+
+		if ( empty( $this->mEmail ) ) {
+			// Write to log in case Facebook does not provide email for the user
+			Wikia::log( __METHOD__, false,
+				sprintf( 'Facebook user "%s" [%d] without email', $this->mName, $this->mId )
+			);
+		} else {
+			// CONN-421: Auto authenticate user's email on FBConnect
+			$u->confirmEmail();
+			wfRunHooks( 'SignupConfirmEmailComplete', array( $u ) );
+		}
+
 		$u->setRealName( $this->mRealName );
 		$u->setToken();
 
@@ -594,12 +612,14 @@ class SpecialConnect extends SpecialPage {
 		if ( !$fb_user ) {
 			wfDebug("FBConnect: aborting in attachUser(): no Facebook ID was reported.\n");
 			$wgOut->showErrorPage( 'fbconnect-error', 'fbconnect-errortext' );
+			wfProfileOut(__METHOD__);
 			return;
 		}
 		// Look up the user by their name
 		$user = new FBConnectUser(User::newFromName($name));
 		if (!$user || !$user->checkPassword($password)) {
 			$this->sendPage('chooseNameForm', 'wrongpassword');
+			wfProfileOut(__METHOD__);
 			return;
 		}
 		// Attach the user to their Facebook account in the database
@@ -841,9 +861,10 @@ class SpecialConnect extends SpecialPage {
 		$wgOut->addWikiMsg( $messagekey );
 		// TODO: Format the html a little nicer
 		$wgOut->addHTML('
-		<form action="' . $this->getTitle('ChooseName')->getLocalUrl() . '" method="POST">
+		<form id="chooseNameForm" action="' . $this->getTitle('ChooseName')->getLocalUrl() . '" method="POST">
 			<fieldset id="mw-fbconnect-choosename">
 				<legend>' . wfMsg('fbconnect-chooselegend') . '</legend>
+				<input type="hidden" name="wpEmail" value="' . FBConnectUser::getOptionFromInfo( 'email', $userinfo ) . '">
 				<table>');
 		// Let them attach to an existing user if $fbConnectOnly allows it
 		if (!$fbConnectOnly) {
@@ -904,7 +925,7 @@ class SpecialConnect extends SpecialPage {
 			'<input name="wpName2" size="16" value="" id="wpName2"/></td></tr>' .
 			// Finish with two options, "Log in" or "Cancel"
 			'<tr><td></td><td class="mw-submit"><input type="submit" value="Log in" name="wpOK"/>' .
-			'<input type="submit" value="Cancel" name="wpCancel"/></td></tr></table></fieldset></form>'
+			'<input id="wpCancel" type="submit" value="Cancel" name="wpCancel"/></td></tr></table></fieldset></form>'
 		);
 	}
 

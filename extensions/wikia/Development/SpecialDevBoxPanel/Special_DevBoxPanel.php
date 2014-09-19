@@ -38,7 +38,14 @@ $wgSpecialPageGroups['DevBoxPanel'] = 'wikia';
 // Hooks
 $dir = __DIR__ . '/';
 $wgExtensionMessagesFiles['DevBoxPanel'] = $dir.'Special_DevBoxPanel.i18n.php';
-$wgHooks['WikiFactory::execute'][] = "wfDevBoxForceWiki";
+
+if (!empty($wgRunningUnitTests) && $wgNoDBUnits) {
+	Language::$dataCache = new FakeCache();
+	$wgHooks['WikiFactory::execute'] = ["wfUnitForceWiki"];
+} else {
+	$wgHooks['WikiFactory::execute'][] = "wfDevBoxForceWiki";
+}
+
 $wgHooks['WikiFactory::executeBeforeTransferToGlobals'][] = "wfDevBoxDisableWikiFactory";
 $wgHooks['PageRenderingHash'][] = 'wfDevBoxSeparateParserCache';
 $wgHooks['ResourceLoaderGetConfigVars'][] = 'wfDevBoxResourceLoaderGetConfigVars';
@@ -52,6 +59,22 @@ $wgExtensionCredits['specialpage'][] = array(
 );
 
 $wgSpecialPages['DevBoxPanel'] = 'DevBoxPanel';
+
+if (getenv('wgDevelEnvironmentName')) {
+	$wgDevelEnvironmentName = getenv('wgDevelEnvironmentName');
+} else {
+	$host = gethostname();
+	$host = explode("-", $host);
+	if ( isset( $host[ 1 ] ) ) {
+		$wgDevelEnvironmentName = trim($host[1]);
+	} else {
+		$wgDevelEnvironmentName = trim($host[0]);
+	}
+}
+
+// Asset manaager and ajax requests come in "too early" for the rest of config
+// So we need a fallback global domain.  This is kind of a hack, fixme.
+$wgDevboxDefaultWikiDomain = 'www.wikia.com';
 
 class DevBoxPanel extends SpecialPage {
 	public function __construct(){
@@ -85,8 +108,8 @@ class DevBoxPanel extends SpecialPage {
 			$tmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 			$tmpl->set_vars(array(
 								"dbComparisonHtml" => getHtmlForDatabaseComparisonTool(),
-								"infoHtml"         => getHtmlForInfo(),
-								"footer"           => wfMsg("devbox-footer", __FILE__),
+								"infoHtml"			=> getHtmlForInfo(),
+								"footer"			  => wfMsg("devbox-footer", __FILE__),
 								));
 			$wgOut->addHTML($tmpl->render('special-devboxpanel'));
 		} else {
@@ -180,6 +203,13 @@ function wfDevBoxForceWiki(WikiFactoryLoader $wikiFactoryLoader){
 	return true;
 } // end wfDevBoxForceWiki()
 
+function wfUnitForceWiki(){
+	global $wgDevelEnvironmentName, $wgDBcluster;
+	$wgDevelEnvironmentName = 'test';
+	$wgDBcluster = '';
+	return false;
+}
+
 /**
  * "Disable" WikiFactory wiki-specific settings when $wgDevboxSkipWikiFactoryVariables = true
  *
@@ -246,16 +276,6 @@ function wfDevBoxLogExceptions( $errorText ) {
 }
 
 /**
- * @return array Parts of host. used to set $wgDevelEnvironmentName;
- */
-function getHostParts() {
-	if (!isset($_SERVER['HTTP_HOST'])) return null;
-	if (count (explode(".", $_SERVER['HTTP_HOST'])) == 3) return null;
-	$aHostParts = explode(".", str_replace('.wikia-dev.com', '', $_SERVER['HTTP_HOST']));
-	return $aHostParts;
-}
-
-/**
  * @return String full domain of wiki which this dev-box should behave as.
  *
  * Hostname scheme: override.developer.wikia-dev.com
@@ -264,28 +284,24 @@ function getHostParts() {
  */
 function getForcedWikiValue(){
 	global $wgDevelEnvironmentName;
-	$aHostParts = getHostParts();
 
-	if(!empty($hostParts)) {
-		$wgDevelEnvironmentName = array_pop($hostParts);
-	} else {
-		$host = exec('hostname'); //TODO: replce it by gethostname php >= 5.3.0
-		$host = explode("-", $host);
-		$wgDevelEnvironmentName = trim($host[1]);
+	if (!isset($_SERVER['HTTP_HOST'])) {
+		return '';
 	}
 
-	if(empty($aHostParts)) {
-		return "";
+	if (count(explode(".", $_SERVER['HTTP_HOST'])) == 3) {
+		return 'wikia.com';
 	}
-	array_pop($aHostParts);  // remove developer name
-	$override = implode(".", $aHostParts);
-	return "$override.wikia.com";
+
+	$site = str_replace('.' . $wgDevelEnvironmentName . '.wikia-dev.com', '', $_SERVER['HTTP_HOST']);
+
+	return "$site.wikia.com";
 } // end getForcedWikiValue()
 
 
 /**
  * @return array - databases which are available on this cluster
- *                 use the writable devbox server instead of the production slaves.
+ *					  use the writable devbox server instead of the production slaves.
  */
 function getDevBoxOverrideDatabases(DatabaseMysql $db){
 
@@ -382,12 +398,12 @@ function getHtmlForInfo(){
 	global $wgDBname,$wgExternalSharedDB;
 
 	$settings = array(
-		"error_log"            => ini_get('error_log'),
-		"\$IP"                 => $IP,
-		"\$wgScriptPath"       => $wgScriptPath,
-		"\$wgExtensionsPath"   => $wgExtensionsPath,
-		"\$wgCityId"           => $wgCityId,
-		"\$wgDBname"           => $wgDBname,
+		"error_log"				=> ini_get('error_log'),
+		"\$IP"					  => $IP,
+		"\$wgScriptPath"		 => $wgScriptPath,
+		"\$wgExtensionsPath"	=> $wgExtensionsPath,
+		"\$wgCityId"			  => $wgCityId,
+		"\$wgDBname"			  => $wgDBname,
 		"\$wgExternalSharedDB" => $wgExternalSharedDB,
 	);
 	$html .= "<table class='devbox-settings'>\n";

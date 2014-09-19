@@ -1,7 +1,7 @@
 <footer id="WikiaFooter" class="WikiaFooter <?= $showToolbar ? '' : 'notoolbar' ?>">
 	<?php
 		if (!WikiaPageType::isMainPage()) {
-			echo F::app()->renderView('Ad', 'Index', array('slotname' => 'LEFT_SKYSCRAPER_3'));
+			echo F::app()->renderView('Ad', 'Index', array('slotName' => 'LEFT_SKYSCRAPER_3'));
 		}
 	?>
 	<?php if( $showToolbar ): ?>

@@ -2,6 +2,11 @@
 
 class ThemeDesignerHelper {
 
+	public static function checkAccess() {
+		global $wgUser;
+		// @FIXME when we're out of beta editinterface needs to be removed and themedesgner set to true for sysops
+		return $wgUser->isAllowed( 'themedesigner' );
+	}
 
 	public static function parseText($text = "") {
 		global $wgTitle;
@@ -65,5 +70,4 @@ class ThemeDesignerHelper {
 			'color-header'	=> '#3A5766'
 		);
 	}
-
 }

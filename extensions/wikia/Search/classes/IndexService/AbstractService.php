@@ -18,7 +18,7 @@ abstract class AbstractService
 	 * This allows us to abstract out logic core to MediaWiki. 
 	 * Eventually, we could have other 'drivers' for our logic interface here.
 	 * Sorry I didn't have a better name for this one -- maybe "driver"?
-	 * @var Wikia\Search\MediaWikiService
+	 * @var \Wikia\Search\MediaWikiService
 	 */
 	protected $service;
 	
@@ -158,6 +158,13 @@ abstract class AbstractService
 		}
 		return $this->service;
 	}
+
+	/**
+	 * @param \Wikia\Search\MediaWikiService $service
+	 */
+	public function setService($service) {
+		$this->service = $service;
+	}
 	
 
 	/**
@@ -172,7 +179,7 @@ abstract class AbstractService
 	 * Execute with hook to reinitialize
 	 * @return \Wikia\Search\IndexService\AbstractService
 	 */
-	protected function getResponse() {
+	public function getResponse() {
 		try {
 			$response = $this->execute();
 		} catch ( \Exception $e ) {

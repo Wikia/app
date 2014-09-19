@@ -40,6 +40,7 @@ $messages['ar'] = array(
  * @author Fohanno
  */
 $messages['br'] = array(
+	'minieditor-specialpage-title' => 'Pakenn diskouez MiniEditor',
 	'minieditor-new-heading' => 'Krouiñ ur gemennadenn nevez',
 	'minieditor-placeholder-new' => 'Skrivit ho kemennadenn amañ',
 	'minieditor-message-edit' => 'Homañ zo ur gemennadenn a zo anezhi dija',
@@ -59,7 +60,7 @@ $messages['ca'] = array(
 	'minieditor-placeholder-reply' => 'Respondre al missatge aquí',
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Jezevec
  */
 $messages['cs'] = array(
@@ -95,10 +96,26 @@ $messages['es'] = array(
 	'minieditor-placeholder-reply' => 'Responder al mensaje aquí',
 );
 
+/** Basque (euskara)
+ * @author Subi
+ */
+$messages['eu'] = array(
+	'minieditor-reply' => 'Erantzun',
+);
+
+/** Persian (فارسی)
+ * @author Reza1615
+ */
+$messages['fa'] = array(
+	'minieditor-reply' => 'پاسخ دادن',
+);
+
 /** Finnish (suomi)
  * @author Centerlink
+ * @author Elseweyr
  */
 $messages['fi'] = array(
+	'minieditor-specialpage-title' => 'MiniEditorin Demosivu',
 	'minieditor-new-heading' => 'Luo uusi viesti',
 	'minieditor-placeholder-new' => 'Kirjoita viestin teksti tähän',
 	'minieditor-message-edit' => 'Tämä on olemassa oleva viesti',
@@ -184,6 +201,13 @@ $messages['it'] = array(
 	'minieditor-placeholder-reply' => 'Rispondi qui al messaggio',
 );
 
+/** Kannada (ಕನ್ನಡ)
+ * @author VASANTH S.N.
+ */
+$messages['kn'] = array(
+	'minieditor-reply' => 'ಉತ್ತರಿಸಿ',
+);
+
 /** Kurdish (Latin script) (Kurdî (latînî)‎)
  * @author George Animal
  */
@@ -201,6 +225,13 @@ $messages['ku-latn'] = array(
  */
 $messages['lb'] = array(
 	'minieditor-reply' => 'Äntwerten',
+);
+
+/** لوری (لوری)
+ * @author Mogoeilor
+ */
+$messages['lrc'] = array(
+	'minieditor-reply' => 'جؤاو ده ئن',
 );
 
 /** Macedonian (македонски)
@@ -253,6 +284,18 @@ $messages['nl'] = array(
 	'minieditor-placeholder-reply' => 'Beantwoord het bericht hier',
 );
 
+/** Occitan (occitan)
+ * @author Cedric31
+ */
+$messages['oc'] = array(
+	'minieditor-specialpage-title' => 'Pagina de demostracion de MiniEditor',
+	'minieditor-new-heading' => 'Crear un messatge novèl',
+	'minieditor-placeholder-new' => 'Picatz vòstre messatge aicí',
+	'minieditor-message-edit' => 'Aquò es un messatge existent',
+	'minieditor-reply' => 'Respondre',
+	'minieditor-placeholder-reply' => 'Respondètz al messatge aicí',
+);
+
 /** Polish (polski)
  * @author Sovq
  */
@@ -289,7 +332,12 @@ $messages['ps'] = array(
  * @author SandroHc
  */
 $messages['pt'] = array(
+	'minieditor-specialpage-title' => 'Página de Demonstração do MiniEditor',
+	'minieditor-new-heading' => 'Criar uma nova mensagem',
+	'minieditor-placeholder-new' => 'Digita a tua mensagem aqui',
+	'minieditor-message-edit' => 'Esta é uma mensagem existente',
 	'minieditor-reply' => 'Responder',
+	'minieditor-placeholder-reply' => 'Responde à mensagem aqui',
 );
 
 /** Brazilian Portuguese (português do Brasil)
@@ -354,6 +402,18 @@ $messages['sv'] = array(
 	'minieditor-placeholder-reply' => 'Svara på meddelandet här',
 );
 
+/** Telugu (తెలుగు)
+ * @author Chaduvari
+ */
+$messages['te'] = array(
+	'minieditor-specialpage-title' => 'MiniEditor డెమో పేజీ',
+	'minieditor-new-heading' => 'కొత్త సందేశాన్ని సృష్టించండి',
+	'minieditor-placeholder-new' => 'మీ సందేశాన్ని ఇక్కడ ఇవ్వండి',
+	'minieditor-message-edit' => 'ఇది ఈసరికే ఉన్న సందేశం',
+	'minieditor-reply' => 'జవాబివ్వు',
+	'minieditor-placeholder-reply' => 'సందేశానికి జవాబు ఇక్కడ ఇవ్వండి',
+);
+
 /** Tagalog (Tagalog)
  * @author AnakngAraw
  */
@@ -364,6 +424,13 @@ $messages['tl'] = array(
 	'minieditor-message-edit' => 'Isa itong umiiral nang mensahe',
 	'minieditor-reply' => 'Tumugon',
 	'minieditor-placeholder-reply' => 'Tumugon sa mensahe rito',
+);
+
+/** Turkish (Türkçe)
+ * @author Incelemeelemani
+ */
+$messages['tr'] = array(
+	'minieditor-specialpage-title' => 'MiniEditor Demo Sayfası',
 );
 
 /** Central Atlas Tamazight (ⵜⴰⵎⴰⵣⵉⵖⵜ)
@@ -386,6 +453,18 @@ $messages['uk'] = array(
 	'minieditor-message-edit' => 'Це існуюче повідомлення',
 	'minieditor-reply' => 'Відповісти',
 	'minieditor-placeholder-reply' => 'Відповідь на повідомлення тут',
+);
+
+/** Vietnamese (Tiếng Việt)
+ * @author Baonguyen21022003
+ */
+$messages['vi'] = array(
+	'minieditor-specialpage-title' => 'Trang thử nghiệm miniEditor',
+	'minieditor-new-heading' => 'Gửi một tin nhắn mới',
+	'minieditor-placeholder-new' => 'Nhập tin nhắn của bạn vào đây',
+	'minieditor-message-edit' => 'Đây là một bài viết sẵn có',
+	'minieditor-reply' => 'Trả lời',
+	'minieditor-placeholder-reply' => 'Trả lời tin nhắn ở đây',
 );
 
 /** Simplified Chinese (中文（简体）‎)

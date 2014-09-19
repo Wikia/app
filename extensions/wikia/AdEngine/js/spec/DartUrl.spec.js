@@ -2,7 +2,7 @@ describe('DartUrl', function(){
 	it('constructor', function() {
 		var domain = 'example.com',
 			path = 'some/path',
-			dartUrl = DartUrl(),
+			dartUrl = modules['ext.wikia.adEngine.dartUrl'](),
 			url = dartUrl.urlBuilder(domain, path);
 
 		expect(url.toString()).toBe('http://example.com/some/path;');
@@ -11,7 +11,7 @@ describe('DartUrl', function(){
 	it('addParam single value', function() {
 		var domain = 'example.com',
 			path = 'some/path',
-			dartUrl = DartUrl(),
+			dartUrl = modules['ext.wikia.adEngine.dartUrl'](),
 			url = dartUrl.urlBuilder(domain, path);
 
 		url.addParam('key', 'val');
@@ -21,7 +21,7 @@ describe('DartUrl', function(){
 	it('addParam escaping value', function() {
 		var domain = 'example.com',
 			path = 'some/path',
-			dartUrl = DartUrl(),
+			dartUrl = modules['ext.wikia.adEngine.dartUrl'](),
 			url = dartUrl.urlBuilder(domain, path);
 
 		url.addParam('key', '\'&#,');
@@ -31,7 +31,7 @@ describe('DartUrl', function(){
 	it('addParam two params', function() {
 		var domain = 'example.com',
 			path = 'some/path',
-			dartUrl = DartUrl(),
+			dartUrl = modules['ext.wikia.adEngine.dartUrl'](),
 			url = dartUrl.urlBuilder(domain, path);
 
 		url.addParam('key1', 'val1');
@@ -42,7 +42,7 @@ describe('DartUrl', function(){
 	it('addParam falsy value', function() {
 		var domain = 'example.com',
 			path = 'some/path',
-			dartUrl = DartUrl(),
+			dartUrl = modules['ext.wikia.adEngine.dartUrl'](),
 			url = dartUrl.urlBuilder(domain, path),
 			undef;
 
@@ -65,7 +65,7 @@ describe('DartUrl', function(){
 	it('addParam more values packed in array', function() {
 		var domain = 'example.com',
 			path = 'some/path',
-			dartUrl = DartUrl(),
+			dartUrl = modules['ext.wikia.adEngine.dartUrl'](),
 			url = dartUrl.urlBuilder(domain, path),
 			undef;
 
@@ -76,7 +76,7 @@ describe('DartUrl', function(){
 	it('addParam more values packed in array (more params)', function() {
 		var domain = 'example.com',
 			path = 'some/path',
-			dartUrl = DartUrl(),
+			dartUrl = modules['ext.wikia.adEngine.dartUrl'](),
 			url = dartUrl.urlBuilder(domain, path),
 			undef;
 
@@ -88,7 +88,7 @@ describe('DartUrl', function(){
 	it('addParam limit length', function() {
 		var domain = 'example.com',
 			path = 'some/path',
-			dartUrl = DartUrl(),
+			dartUrl = modules['ext.wikia.adEngine.dartUrl'](),
 			url = dartUrl.urlBuilder(domain, path),
 			undef;
 
@@ -128,7 +128,7 @@ describe('DartUrl', function(){
 	it('addString regular', function() {
 		var domain = 'example.com',
 			path = 'some/path',
-			dartUrl = DartUrl(),
+			dartUrl = modules['ext.wikia.adEngine.dartUrl'](),
 			url = dartUrl.urlBuilder(domain, path);
 
 		url.addString('key=val1;key=val2;key2=val3;key3=val4;');
@@ -138,7 +138,7 @@ describe('DartUrl', function(){
 	it('addString with limit', function() {
 		var domain = 'example.com',
 			path = 'some/path',
-			dartUrl = DartUrl(),
+			dartUrl = modules['ext.wikia.adEngine.dartUrl'](),
 			url = dartUrl.urlBuilder(domain, path);
 
 		url.addString('key=val1;key=val2;key2=val3;key3=val4;', true);

@@ -1,4 +1,4 @@
 <section class="OldForumNotification">
-	<h1><?= wfMsg('forum-old-notification-message') ?></h1>
-	<a href="<?= $forumUrl ?>" class="button secondary"><?= wfMsg('forum-old-notification-navigation-button') ?></a>
+	<h1><?= wfMessage( 'forum-old-notification-message' )->escaped() ?></h1>
+	<a href="<?= $forumUrl ?>" class="button secondary"><?= wfMessage( 'forum-old-notification-navigation-button' )->escaped() ?></a>
 </section>

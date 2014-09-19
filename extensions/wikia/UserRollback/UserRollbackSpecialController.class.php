@@ -111,14 +111,23 @@ class UserRollbackSpecialController extends WikiaSpecialPageController {
 	 * @return bool Operation status
 	 */
 	protected function addTask( UserRollbackRequest $request ) {
+		global $wgCityId;
+
 		$params = $request->getTaskArguments();
-		$priority = $params['priority'] > 1 ? BatchTask::PRIORITY_HIGH : BatchTask::PRIORITY_LOW;
-		unset( $params['priority'] );
 
-		$task = new UserRollbackTask();
-		$taskId = $task->createTask( $params, TASK_QUEUED, $priority );
+		$userNames = $this->processUsers( $request );
+		$timestamp = $params['time'];
+		$queue = \Wikia\Tasks\Queues\Queue::NAME;
+		if ( $params['priority'] > 1 ) {
+			$queue = \Wikia\Tasks\Queues\PriorityQueue::NAME;
+		}
 
-		return $taskId > 0;
+		$task = ( new UserRollbackTask() )
+			->wikiId( $wgCityId )
+			->setPriority( $queue );
+		$task->call( 'enqueueRollback', $userNames, $timestamp, $queue );
+
+		return $task->queue();
 	}
 
 	public function displayErrors() {
@@ -127,4 +136,14 @@ class UserRollbackSpecialController extends WikiaSpecialPageController {
 		$this->setVal( 'errors', isset($errors[$name]) ? $errors[$name] : false );
 	}
 
+	protected function processUsers( UserRollbackRequest $request ) {
+		// split on newlines
+		$userNames = preg_split('/[\r\n]+/', $request->getUsers());
+		// trim all usernames
+		$userNames = array_map('trim', $userNames);
+		// filter empty names
+		$userNames = array_filter($userNames);
+		// reindex
+		return array_values($userNames);
+	}
 }

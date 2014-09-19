@@ -184,6 +184,7 @@
 					<li class="control" data-tooltip="<?= wfMessage("admindashboard-control-lvs-tooltip")->text() ?>">
 						<a href="<?= $urlLVS ?>" class="set" data-tracking="lvs">
 							<span class="representation">
+								<?= $badgeLicensedVideoSwap ?>
 								<span class="icon licensedvideoswap"></span>
 							</span>
 							<?= wfMessage("admindashboard-control-lvs-label")->text() ?>
