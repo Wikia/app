@@ -65,15 +65,15 @@ class MovieEntitySearchServiceTest extends SearchServiceBaseTest {
 		$mockQuery->setRows( 1 );
 
 		$mockQuery->createFilterQuery( 'ns' )->setQuery( '+(ns:0)' );
-		$mockQuery->createFilterQuery( 'type' )->setQuery( '+(article_type_s:movie)' );
+		$mockQuery->createFilterQuery( 'type' )->setQuery( '+(article_type_s:movie OR movie_mv_em:*)' );
 		$mockQuery->createFilterQuery( 'lang' )->setQuery( '+(lang:en)' );
 		$mockQuery->createFilterQuery( 'excl' )->setQuery( '-(host:uncyclopedia.wikia.com)' );
 
 		$dismax = $mockQuery->getDisMax();
 		$dismax->setQueryParser( 'edismax' );
 
-		$dismax->setQueryFields( 'title_em^10 titleStrict title_en redirect_titles_mv_en' );
-		$dismax->setPhraseFields( 'titleStrict^8 title_en^2 redirect_titles_mv_en^2' );
+		$dismax->setQueryFields( 'title_em^10 titleStrict title_en redirect_titles_mv_en movie_mv_em^10' );
+		$dismax->setPhraseFields( 'titleStrict^8 title_en^2 redirect_titles_mv_en^2 movie_mv_em^10' );
 
 		return $mockQuery;
 	}
