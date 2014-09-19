@@ -625,7 +625,7 @@ $config['wikiamobile_tables_js'] = array(
 	)
 );
 
-$config['wikiamobile_ads_js'] = array(
+$config['mobile_base_ads_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => 'wikiamobile',
 	'assets' => array(
@@ -641,7 +641,6 @@ $config['wikiamobile_ads_js'] = array(
 		'//extensions/wikia/AdEngine/js/AdLogicPageParams.js',
 		'//extensions/wikia/AdEngine/js/AdProviderRemnantGptMobile.js',
 		'//extensions/wikia/AdEngine/js/AdProviderDirectGptMobile.js',
-		'//extensions/wikia/AdEngine/js/AdProviderEbay.js',
 		'//extensions/wikia/AdEngine/js/AdProviderNull.js',
 		'//extensions/wikia/AdEngine/js/GptSlotConfig.js',
 		'//extensions/wikia/AdEngine/js/SlotTracker.js',
@@ -651,12 +650,25 @@ $config['wikiamobile_ads_js'] = array(
 
 		// Video ads
 		'//extensions/wikia/AdEngine/js/WikiaDartVideoHelper.js',
+	)
+);
 
-		// Interactive maps integration
-		'#group_adengine2_interactive_maps_js',
+$config['mercury_ads_js'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => array(
+		'//resources/wikia/libraries/modil/modil.js',
+		'#group_tracker_js',
+		'//resources/wikia/modules/log.js',
+		'//resources/wikia/modules/window.js',
+		'//resources/wikia/modules/document.js',
+		'//resources/wikia/modules/location.js',
+		'//resources/wikia/modules/querystring.js',
+		'//resources/wikia/modules/cookies.js',
+		'//resources/wikia/modules/geo.js',
 
-		// Run!
-		'//extensions/wikia/WikiaMobile/js/ads_run.js',
+		'#group_mobile_base_ads_js',
+
+		'//extensions/wikia/AdEngine/js/AdEngine.mercury.run.js',
 	)
 );
 
@@ -677,6 +689,20 @@ $config['interactivemaps_ads_js'] = array(
 		'//extensions/wikia/AdEngine/js/AdProviderDirectGptMaps.js',
 		'//extensions/wikia/AdEngine/js/WikiaGptHelper.js',
 		'//extensions/wikia/AdEngine/InteractiveMaps/ads.js'
+	)
+);
+
+$config['wikiamobile_ads_js'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => 'wikiamobile',
+	'assets' => array(
+		'#group_mobile_base_ads_js',
+		
+		// Interactive maps integration
+		'#group_adengine2_interactive_maps_js',
+		
+		// Run!
+		'//extensions/wikia/WikiaMobile/js/ads_run.js',
 	)
 );
 
