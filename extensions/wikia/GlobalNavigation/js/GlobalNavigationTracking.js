@@ -34,13 +34,13 @@ $(function($) {
 		} else if ($element.data('id') === 'mytalk') {
 			label = 'user-menu-talk';
 		} else if ($element.closest('.ajaxRegisterContainer').length > 0) {
-			label = 'user-menu-register';
+			label = 'register';
 		} else if ($element.closest('.notifications-for-wiki').length > 0) {
 			$parent = $element.closest('.notifications-for-wiki');
 			if ($parent.data('wiki-id') === parseInt(window.wgCityId)) {
 				label = 'notification-item-local';
 			} else {
-				label = 'notification-item-global';
+				label = 'notification-item-cross-wiki';
 			}
 		} else if ($element.hasClass('message-wall')) {
 			label = 'user-menu-message-wall';
