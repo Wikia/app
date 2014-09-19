@@ -51,7 +51,7 @@
 			white-space: initial;
 
 			&.selected {
-				background-color: $nav-background-hover-color;
+				background-color: $nav-background-light-gray-color;
 			}
 		}
 
@@ -118,7 +118,7 @@
 	width: 100%;
 
 	.search-input {
-		background-color: $nav-background-hover-color;
+		background-color: $nav-background-light-gray-color;
 		border: 0;
 		border-radius: 2px;
 		color: $nav-foreground-dark-color;
