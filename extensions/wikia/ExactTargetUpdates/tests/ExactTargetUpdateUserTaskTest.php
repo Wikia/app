@@ -128,10 +128,49 @@ class ExactTargetUpdateUserTaskTest extends WikiaBaseTest {
 		$mockUpdateUserTask->updateUserEmail( $aUserData[ 'user_id' ], $aUserData[ 'user_email' ] );
 	}
 
+	/**
+	 * @dataProvider updateUserDataProvider
+	 */
+	function testShouldPrepareUserDataExtensionObject( $aUserData, $oDEExpected ) {
+		$mockUpdateUserTask = $this->getMockBuilder( 'ExactTargetUpdateUserTask' )
+			->disableOriginalConstructor()
+			->setMethods( null )
+			->getMock();
+
+		$oDEActual = $mockUpdateUserTask->prepareUserDataExtensionObjectsForUpdate( $aUserData );
+		$this->assertEquals( $oDEExpected, $oDEActual );
+	}
+
 
 	/**
 	 * DATA PROVIDERS
 	 */
+
+	function updateUserDataProvider() {
+		$aUserData = [
+			'user_id' => 12345,
+			'user_editcount' => 10
+		];
+
+		$oDE = new ExactTarget_DataExtensionObject();
+		$oDE->CustomerKey = 'user';
+
+		/* Prepare properties */
+		$apiProperty = new ExactTarget_APIProperty();
+		$apiProperty->Name = 'user_editcount';
+		$apiProperty->Value = $aUserData['user_editcount'];
+		$oDE->Properties = [ $apiProperty ];
+
+		/* Prepare keys */
+		$apiProperty = new ExactTarget_APIProperty();
+		$apiProperty->Name = 'user_id';
+		$apiProperty->Value = $aUserData['user_id'];
+		$oDE->Keys = [ $apiProperty ];
+
+		return [
+			[ $aUserData, $oDE ]
+		];
+	}
 
 	function updateUserEmailProvider() {
 		/* Params to compare */
