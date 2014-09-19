@@ -32,7 +32,11 @@ $(function($) {
 		} else if ($element.data('id') === 'preferences') {
 			label = 'user-menu-preferences';
 		} else if ($element.data('id') === 'mytalk') {
-			label = 'user-menu-talk';
+			if ($element.hasClass('message-wall')) {
+				label = 'user-menu-message-wall';
+			} else {
+				label = 'user-menu-talk';
+			}
 		} else if ($element.closest('.ajaxRegisterContainer').length > 0) {
 			label = 'register';
 		} else if ($element.closest('.notifications-for-wiki').length > 0) {
@@ -42,8 +46,6 @@ $(function($) {
 			} else {
 				label = 'notification-item-cross-wiki';
 			}
-		} else if ($element.hasClass('message-wall')) {
-			label = 'user-menu-message-wall';
 		} else if ($element.closest('.start-wikia').length > 0) {
 			label = 'start-a-wiki';
 		} else if ($element.hasClass('login-button')) {
