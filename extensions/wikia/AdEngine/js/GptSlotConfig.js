@@ -71,7 +71,7 @@ define('ext.wikia.adEngine.gptSlotConfig', function () {
 
 	function extendSlotParams(src, slotName, params) {
 		if (!(params && slotMapConfig[src] && slotMapConfig[src][slotName])) {
-			return false;
+			return;
 		}
 		for (var i in params) {
 			if (params.hasOwnProperty(i)) {

@@ -39,19 +39,28 @@ describe('GptSlotConfig', function(){
 
 	it('extendSlotParams saves params', function() {
 		var gptSlotConfig = modules['ext.wikia.adEngine.gptSlotConfig'](),
-			gptConfig = gptSlotConfig.getConfig('gpt'), newConfig;
-		expect(gptSlotConfig.extendSlotParams()).toEqual(false);
-		expect(gptSlotConfig.extendSlotParams('gpt')).toEqual(false);
-		expect(gptSlotConfig.extendSlotParams('gpt', 'HOME_TOP_LEADERBOARD')).toEqual(false);
-		expect(gptSlotConfig.extendSlotParams('gpt', 'HOME_TOP_LEADERBOARD', {})).toBeUndefined();
-		expect(gptSlotConfig.extendSlotParams('gpt', 'HOME_TOP_LEADERBOARD', {'param': 'test'})).toBeUndefined();
+			newConfigGlobal, newConfigGpt, configBase = gptSlotConfig.getConfig('gpt');
 
-		newConfig = gptSlotConfig.getConfig('gpt');
+		gptSlotConfig.extendSlotParams();
+		expect(configBase).toEqual(gptSlotConfig.getConfig('gpt'));
+		gptSlotConfig.extendSlotParams('gpt');
+		expect(configBase).toEqual(gptSlotConfig.getConfig('gpt'));
+		gptSlotConfig.extendSlotParams('gpt', 'HOME_TOP_LEADERBOARD');
+		expect(configBase).toEqual(gptSlotConfig.getConfig('gpt'));
+		gptSlotConfig.extendSlotParams('gpt', 'UNDEFINED_SLOT', {});
+		expect(configBase).toEqual(gptSlotConfig.getConfig('gpt'));
+		gptSlotConfig.extendSlotParams('gpt', 'HOME_TOP_LEADERBOARD', {});
+		expect(configBase).toEqual(gptSlotConfig.getConfig('gpt'));
+		gptSlotConfig.extendSlotParams('gpt', 'HOME_TOP_LEADERBOARD', {'test': 'test'});
+		expect(configBase).not.toEqual(gptSlotConfig.getConfig('gpt'));
 
-		expect(gptConfig).not.toEqual(newConfig);
-		expect(newConfig.TOP_LEADERBOARD.param).toBeUndefined();
-		expect(newConfig.HOME_TOP_LEADERBOARD.param).not.toBeUndefined();
-		expect(newConfig.HOME_TOP_LEADERBOARD.param).toEqual('test');
+		newConfigGlobal = gptSlotConfig.getConfig();
+		newConfigGpt = gptSlotConfig.getConfig('gpt');
+
+		expect(newConfigGlobal.gpt).toEqual(newConfigGpt);
+		expect(newConfigGpt.TOP_LEADERBOARD.test).toBeUndefined();
+		expect(newConfigGpt.HOME_TOP_LEADERBOARD.test).not.toBeUndefined();
+		expect(newConfigGpt.HOME_TOP_LEADERBOARD.test).toEqual('test');
 	});
 
 });
