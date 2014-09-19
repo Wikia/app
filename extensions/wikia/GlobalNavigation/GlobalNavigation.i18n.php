@@ -435,8 +435,8 @@ $messages['es'] = [
 ***http://lifestylehub.wikia.com/wiki/Lifestyle_Hub|More...
 ",
 	'global-navigation-search-label' => 'Buscar',
-	'global-navigation-local-search' => 'this wikia',
-	'global-navigation-global-search' => 'all of Wikia',
+	'global-navigation-local-search' => 'En esta wiki',
+	'global-navigation-global-search' => 'En todas las wikis',
 ];
 
 $messages['qqq'] = [
