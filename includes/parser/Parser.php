@@ -5608,6 +5608,8 @@ class Parser {
 		Wikia\Logger\WikiaLogger::instance()->info(__METHOD__, [
 			'exception' => new Exception()
 		]);
+
+		Transaction::setAttribute( Transaction::PARAM_PARSER_CACHE_DISABLED, true );
 		// Wikia change - end
 	}
 
