@@ -224,6 +224,7 @@ $messages['en'] = [
 $messages['es'] = [
 	'global-navigation-wikia' => 'Wikia',
 	'global-navigation-create-wiki' => 'Crear un wiki',
+	'global-navigation-hubs-menu-more-of' => 'Más $1',
 	'global-navigation-hubs-menu' => "*http://es.comicshub.wikia.com/wiki/Wiki_Cómics_Hub|Cómics|comics
 
 **#|Lo último
