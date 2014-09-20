@@ -10,37 +10,25 @@ define('mediaGallery.views.media', [
 	function Media(options) {
 		this.$el = options.$el;
 		this.model = options.model;
+		this.gallery = options.gallery;
+
 		this.model.media = this;
-		this.model.rendered = false;
 		this.visible = false;
 
-		this.$caption = this.$el.find('.caption');
+		this.$el.on('mediaInserted', $.proxy(this.initCaption, this));
 	}
-
-	Media.prototype.init = function () {
-		this.render();
-		this.$el.on('click', $.proxy(this.track, this));
-
-		this.caption = new Caption({
-			$el: this.$el.find('.caption'),
-			$media: this.$el
-		});
-	};
 
 	Media.prototype.render = function () {
 		this.$el.addClass('media');
 		this.$el.html(Mustache.render(templates[templateName], this.model));
-		this.model.rendered = true;
+
 		return this;
 	};
 
-	Media.prototype.track = function () {
-		Wikia.Tracker.track({
-			category: 'article',
-			action: Wikia.Tracker.ACTIONS.click,
-			label: 'show-new-gallery-lightbox',
-			trackingMethod: 'both',
-			value: 0
+	Media.prototype.initCaption = function () {
+		this.caption = new Caption({
+			$el: this.$el.find('.caption'),
+			media: this
 		});
 	};
 

@@ -3,17 +3,16 @@ define('mediaGallery.views.caption', [], function () {
 
 	function Media(options) {
 		this.$el = options.$el;
-		this.$media = options.$media;
+		this.media = options.media;
+		this.$media = this.media.$el;
 
 		// cache some css values that don't change
 		this.mediaPadding = parseFloat(this.$media.css('padding-bottom'));
 		this.captionPadding = parseFloat(this.$el.css('padding-top'));
 		this.marginTop = parseFloat(this.$el.css('margin-top'));
-	}
 
-	Media.prototype.init = function () {
 		this.setupCaption();
-	};
+	}
 
 	Media.prototype.setupCaption = function () {
 		var self = this;

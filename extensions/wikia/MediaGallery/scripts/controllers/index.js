@@ -25,6 +25,8 @@ require(['mediaGallery.views.gallery'], function (Gallery) {
 			if (gallery.$toggler) {
 				$this.append(gallery.$toggler);
 			}
+			gallery.rendered = true;
+			gallery.$el.trigger('galleryInserted');
 
 			galleries.push(gallery);
 		});

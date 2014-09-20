@@ -1,16 +1,25 @@
 define('mediaGallery.views.gallery', [
     'mediaGallery.views.media',
-    'mediaGallery.templates.mustache'
-], function (Media, templates) {
+    'mediaGallery.templates.mustache',
+    'wikia.tracker'
+], function (Media, templates, Tracker) {
 	'use strict';
 
-	var togglerTemplateName = 'MediaGallery_showMore';
+	var track,
+		togglerTemplateName = 'MediaGallery_showMore';
+
+	track = Tracker.buildTrackingFunction({
+		category: 'media-gallery',
+		trackingMethod: 'both',
+		action: Tracker.ACTIONS.CLICK
+	});
 
 	function Gallery(options) {
 		this.$el = options.$el;
 		this.$wrapper = options.$wrapper;
 		this.model = options.model;
 
+		this.rendered = false;
 		this.visibleCount = this.$wrapper.data('visible-count') || 8;
 		this.oVisibleCount = this.visibleCount;
 		this.interval = options.interval || 12;
@@ -20,7 +29,14 @@ define('mediaGallery.views.gallery', [
 	}
 
 	Gallery.prototype.init = function () {
-		this.$el.on('click', '.media > a', $.proxy(this.track, this));
+		// Set up tracking
+		this.$wrapper.on('click', '.media > a', function () {
+			var index = $(this).parent().index();
+			track({
+				label: 'gallery-tiem',
+				value: index
+			});
+		});
 	};
 
 	/**
@@ -41,17 +57,6 @@ define('mediaGallery.views.gallery', [
 		return this;
 	};
 
-	Gallery.prototype.renderMedia = function (data) {
-		var media = new Media({
-			$el: $('<div></div>'),
-			model: data
-		});
-		this.media.push(media);
-		media.render();
-		media.show();
-		this.$el.append(media.$el);
-	};
-
 	Gallery.prototype.renderToggler = function () {
 		var $html, data;
 
@@ -70,6 +75,27 @@ define('mediaGallery.views.gallery', [
 		this.$toggler = $html;
 	};
 
+	Gallery.prototype.renderMedia = function (data) {
+		var media = new Media({
+			$el: $('<div></div>'),
+			model: data,
+			gallery: this
+		});
+		this.media.push(media);
+		media.render();
+		media.show();
+		this.$el.append(media.$el);
+
+		// fire event when media is actually rendered into DOM
+		if (this.rendered) {
+			media.$el.trigger('mediaInserted');
+		} else {
+			this.$el.on('galleryInserted', function () {
+				media.$el.trigger('mediaInserted');
+			});
+		}
+	};
+
 	/**
 	 * Incrementally show more media
 	 */
@@ -79,7 +105,7 @@ define('mediaGallery.views.gallery', [
 
 		// If rendered, show it, otherwise, add to render stack.
 		$.each(data, function (idx, mediaData) {
-			if (mediaData.rendered) {
+			if (mediaData.media) {
 				mediaData.media.show();
 			} else {
 				$.proxy(self.renderMedia(mediaData), self);
@@ -92,6 +118,11 @@ define('mediaGallery.views.gallery', [
 		if (this.visibleCount >= this.model.length) {
 			this.$showMore.addClass('hidden');
 		}
+
+		this.track({
+			label: 'show-more-items',
+			value: this.visibleCount
+		});
 	};
 
 	/**
@@ -113,8 +144,6 @@ define('mediaGallery.views.gallery', [
 		this.$showMore.removeClass('hidden');
 	};
 
-	// TODO: test to make sure it works as is and/or move to media view; might be more performant this way b/c
-	// binding to wrapper instead of each gallery anchor.
 	Gallery.prototype.track = function (e) {
 		// get index of media item in gallery
 		var index = $(e.target).parent().index();
@@ -125,17 +154,6 @@ define('mediaGallery.views.gallery', [
 			label: 'gallery-item',
 			trackingMethod: 'both',
 			value: index
-		});
-	};
-
-	// TODO: hook tracking back up
-	Gallery.prototype.trackToggler = function (label, count) {
-		Wikia.Tracker.track({
-			category: 'media-lightbox',
-			action: Wikia.Tracker.ACTIONS.CLICK,
-			label: label,
-			trackingMethod: 'both',
-			value: count || 0
 		});
 	};
 
