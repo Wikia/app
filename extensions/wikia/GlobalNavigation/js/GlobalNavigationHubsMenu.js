@@ -44,6 +44,10 @@ require( ['jquery', 'wikia.globalnavigation.lazyload'], function( $, GlobalNavLa
 
 		window.transparentOut && window.transparentOut.bindClick( closeMenu );
 
+		if ( navigator.userAgent.toLowerCase().indexOf('android') > -1 ) {
+			$verticals.addClass('backface-off');
+		}
+
 		/**
 		 * menuAim is a method from an external module to handle dropdown menus with very good user experience
 		 * @see https://github.com/Wikia/js-menu-aim

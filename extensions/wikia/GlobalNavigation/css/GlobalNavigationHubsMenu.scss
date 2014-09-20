@@ -57,8 +57,10 @@
 		float: left;
 		width: 256px;
 
-		*, *:before, *:after {
-			-webkit-backface-visibility: hidden;
+		&.backface-off {
+			*, *:before, *:after {
+				-webkit-backface-visibility: hidden;
+			}
 		}
 	}
 
