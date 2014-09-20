@@ -2513,6 +2513,7 @@ Oglejte si [[Special:BlockList|seznam blokiranih IP-naslovov]] za pregled blokad
 'unblocked'                       => '[[User:$1|$1]] je bil odblokiran',
 'unblocked-range'                 => '$1 so odblokirani',
 'unblocked-id'                    => 'Blokada $1 je odstranjena',
+'unblocked-ip'                    => '[[Special:Contributions/$1|$1]] smo odblokirali.',
 'blocklist'                       => 'Blokirani uporabniki',
 'ipblocklist'                     => 'Blokirani uporabniki',
 'ipblocklist-legend'              => 'Najdi blokiranega uporabnika',
