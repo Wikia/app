@@ -37,7 +37,7 @@ require( ['jquery', 'wikia.globalnavigation.lazyload'], function( $, GlobalNavLa
 
 		window.transparentOut && window.transparentOut.bindClick( closeMenu );
 
-		$entryPoint.on('click touchstart', '.hubs-entry-point', function(ev) {
+		$entryPoint.on('click', '.hubs-entry-point', function(ev) {
 			ev.preventDefault();
 			ev.stopPropagation();
 
