@@ -191,7 +191,7 @@
 	}
 
 	.books {
-		background-color: $color-vertical-books;
+		background: linear-gradient(to right, $color-vertical-books 99%, $hubsmenu-background-color);
 
 		&.active {
 			&:before {
@@ -209,7 +209,7 @@
 	}
 
 	.comics {
-		background-color: $color-vertical-comics;
+		background: linear-gradient(to right, $color-vertical-comics 99%, $hubsmenu-background-color);
 
 		&.active {
 			&:before {
@@ -227,7 +227,7 @@
 	}
 
 	.games {
-		background-color: $color-vertical-games;
+		background: linear-gradient(to right, $color-vertical-games 99%, $hubsmenu-background-color);
 
 		&.active {
 			&:before {
@@ -245,7 +245,8 @@
 	}
 
 	.lifestyle {
-		background-color: $color-vertical-lifestyle;
+		background: linear-gradient(to right, $color-vertical-lifestyle 99%, $hubsmenu-background-color);
+
 
 		&.active {
 			&:before {
@@ -263,7 +264,7 @@
 	}
 
 	.movies {
-		background-color: $color-vertical-movies;
+		background: linear-gradient(to right, $color-vertical-movies 99%, $hubsmenu-background-color);
 
 		&.active {
 			&:before {
@@ -281,7 +282,7 @@
 	}
 
 	.music {
-		background-color: $color-vertical-music;
+		background: linear-gradient(to right, $color-vertical-music 99%, $hubsmenu-background-color);
 
 		&.active {
 			&:before {
@@ -299,7 +300,7 @@
 	}
 
 	.tv {
-		background-color: $color-vertical-tv;
+		background: linear-gradient(to right, $color-vertical-tv 99%, $hubsmenu-background-color);
 
 		&.active {
 			&:before {
