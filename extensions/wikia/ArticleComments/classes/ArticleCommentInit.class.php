@@ -188,7 +188,7 @@ class ArticleCommentInit {
 		if ( self::ArticleCommentCheck() && !( F::app()->checkSkin( 'wikiamobile' ) ) ) {
 			$tocnumber = ++$sublevelCount[1];
 
-			$toc .= Linker::tocLine('WikiaArticleComments', wfMessage( 'article-comments-toc-item' )->text(), $tocnumber, 1);
+			$toc .= Linker::tocLine('WikiaArticleComments', wfMessage( 'article-comments-toc-item' )->escaped(), $tocnumber, 1);
 		}
 		return true;
 	}
@@ -346,7 +346,7 @@ class ArticleCommentInit {
 		
 		if ( !$user->isAllowed( 'edit' ) ) {
 			$info['error'] = self::ERROR_USER_CANNOT_EDIT;
-			$info['msg'] = wfMessage( 'article-comments-login', SpecialPage::getTitleFor( 'UserLogin' )->getLocalUrl( 'returnto=' . $title->getPrefixedUrl() ) );
+			$info['msg'] = wfMessage( 'article-comments-login', SpecialPage::getTitleFor( 'UserLogin' )->getLocalUrl( 'returnto=' . $title->getPrefixedUrl() ) )->parse();
 			return false;
 		}
 
@@ -408,11 +408,10 @@ class ArticleCommentInit {
 
 			$link = wfMessage(
 				'article-comments-file-page',
-				$title->getLocalURL(),
+				$title->getPrefixedText(),
 				self::getUserNameFromRevision($title),
-				Title::newFromText( $parentTitle )->getLocalURL(),
 				$parentTitle
-			)->text();
+			)->parse();
 
 		// format links to blog posts
 		} else if ( defined('NS_BLOG_ARTICLE_TALK') && $ns == NS_BLOG_ARTICLE_TALK ) {
@@ -422,13 +421,12 @@ class ArticleCommentInit {
 
 			$link = wfMessage(
 				'article-blog-comments-file-page',
-				$title->getLocalURL(),
+				$title->getPrefixedText(),
 				self::getUserNameFromRevision($title),
-				Title::newFromText( $baseText, NS_BLOG_ARTICLE )->getLocalURL(),
+				Title::newFromText( $baseText, NS_BLOG_ARTICLE )->getPrefixedText(),
 				$titleNames[1],
-				$userBlog->getLocalURL(),
-				$userBlog->getBaseText()
-			)->text();
+				BlogArticle::getOwner( $userBlog )
+			)->parse();
 		}
 
 		return true;

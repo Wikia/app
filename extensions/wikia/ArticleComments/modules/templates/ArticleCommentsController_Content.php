@@ -1,7 +1,7 @@
 <ul class="controls">
 	<li id="article-comments-counter-recent"><?= wfMessage( 'oasis-comments-showing-most-recent', count( $commentListRaw ) )->escaped() ?></li>
 </ul>
-<h1 id="article-comments-counter-header"><?= wfMessage( 'oasis-comments-header', $wg->Lang->FormatNum( $countCommentsNested ) )->text() ?></h1>
+<h1 id="article-comments-counter-header"><?= wfMessage( 'oasis-comments-header' )->numParams( $countCommentsNested )->escaped() ?></h1>
 <div id="article-comments" class="article-comments">
 	<? if ( !$isBlocked && $canEdit && $commentingAllowed ): ?>
 		<? if ( $isMiniEditorEnabled ): ?>
@@ -45,7 +45,7 @@
 		<p><?= wfMessage( 'article-comments-comment-cannot-add' )->escaped() ?></p>
 		<p><?= $reason ?></p>
 	<? elseif ( !$canEdit ): ?>
-		<p class="login"><?= wfMessage( 'article-comments-login', SpecialPage::getTitleFor( 'UserLogin' )->getLocalUrl() )->escaped() ?></p>
+		<p class="login"><?= wfMessage( 'article-comments-login' )->parse() ?></p>
 	<? elseif ( !$commentingAllowed ): ?>
 		<p class="no-comments-allowed"><?= wfMessage( 'article-comments-comment-cannot-add' )->escaped() ?> </p>
 	<? endif ?>
