@@ -29,7 +29,7 @@ require(['jquery'], function($){
 		window.transparentOut.bindClick(closeMenu);
 
 		$entryPoint = $('#AccountNavigation');
-		$entryPoint.on('click touchstart', '.ajaxLogin', function(ev) {
+		$entryPoint.on('click', '.ajaxLogin', function(ev) {
 			ev.preventDefault();
 			ev.stopImmediatePropagation();
 
@@ -47,7 +47,7 @@ require(['jquery'], function($){
 
 		$userLoginDropdown = $('#UserLoginDropdown');
 
-		if (!window.touchstart) {
+		if (!window.Wikia.isTouchScreen()) {
 			window.delayedHover(
 				$entryPoint.get(0),
 				{

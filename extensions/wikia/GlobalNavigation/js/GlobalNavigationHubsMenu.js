@@ -48,6 +48,17 @@ require( ['jquery', 'wikia.globalnavigation.lazyload'], function( $, GlobalNavLa
 			$verticals.addClass('backface-off');
 		}
 
+		$entryPoint.on('click', '.hubs-entry-point', function(ev) {
+			ev.preventDefault();
+			ev.stopPropagation();
+
+			if ( $entryPoint.hasClass('active') ) {
+				closeMenu();
+			} else {
+				openMenu();
+			}
+		});
+
 		/**
 		 * menuAim is a method from an external module to handle dropdown menus with very good user experience
 		 * @see https://github.com/Wikia/js-menu-aim
@@ -63,14 +74,15 @@ require( ['jquery', 'wikia.globalnavigation.lazyload'], function( $, GlobalNavLa
 
 		window.transparentOut.bindClick(closeMenu);
 
-		if ( !window.Wikia.isTouchScreen() ) {
+		if ( !window.ontouchstart ) {
 			window.delayedHover(
 				$entryPoint.get( 0 ),
 				{
 					checkInterval: 100,
 					maxActivationDistance: 20,
 					onActivate: openMenu,
-					onDeactivate: closeMenu
+					onDeactivate: closeMenu,
+					activateOnClick: false
 				}
 			);
 		} else {
