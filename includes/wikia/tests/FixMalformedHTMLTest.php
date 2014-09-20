@@ -30,11 +30,11 @@ class FixMalformedHTMLTest extends WikiaBaseTest {
 			],
 			[
 				'image markup',
-				'<figure class="thumb tright thumbinner" style="width:182px;"><a href="http://static.mech.wikia-dev.com/800wi.gif" class="image"><img alt="800wi" src="http://static.mech.wikia-dev.com/800wi.gif" width="180" height="176" class="thumbimage"></a><a href="/wiki/File:800wi.gif" class="internal sprite details magnify" title="Enlarge"></a><figcaption class="thumbcaption"><div class="picture-attribution"><img src="http://static.mech.wikia-dev.com/20px-4807210.png" width="16" class="avatar">Added by <a href="/wiki/User:QATest">QATest</a></div></figcaption></figure>'
+				'<figure class="article-thumb tright show-info-icon" style="width: 216px"><a href="http://static.liz.wikia-dev.com/__cb20140306202704/lizlux/images/9/96/Tiger-Wallpaper-tigers-16120028-1024-768.jpg" class="image image-thumbnail"><img src="http://static.liz.wikia-dev.com/__cb20140306202704/lizlux/images/thumb/9/96/Tiger-Wallpaper-tigers-16120028-1024-768.jpg/216px-Tiger-Wallpaper-tigers-16120028-1024-768.jpg" alt="Tiger-Wallpaper-tigers-16120028-1024-768" class="thumbimage" data-image-key="Tiger-Wallpaper-tigers-16120028-1024-768.jpg" data-image-name="Tiger-Wallpaper-tigers-16120028-1024-768.jpg" width="216" height="162"></a><figcaption><a href="/wiki/File:Tiger-Wallpaper-tigers-16120028-1024-768.jpg" class="sprite info-icon"></a><p class="caption">here is a nice caption</p></figcaption></figure>'
 			],
 			[
 				'video markup',
-				'<div class="floatright"><a href="/wiki/File:Surprise_BJJ_attack_-_submission_from_underneath_side_control-0" itemprop="video" itemscope="" itemtype="http://schema.org/VideoObject" class="video image lightbox"><div class="Wikia-video-play-button" style="line-height:218px;width:335px;"><img class="sprite play " src="data:image/gif;base64,R0lGODlhAQABAIABAAAAAP///yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D"></div><img alt="" src="http://static.mech.wikia-dev.com/Surprise_BJJ_attack.jpg" width="335" height="188" itemprop="thumbnail" class="Wikia-video-thumb" style="border-top: 15px solid black; border-bottom: 15px solid black;"><span class="info-overlay" style="width: 335px;"><span class="info-overlay-title" style="max-width:275px;" itemprop="name">Surprise BJJ attack - submission from underneath side control-0</span><meta itemprop="duration" content="PT02M40S"><span class="info-overlay-duration" itemprop="duration">(02:40)</span><br><span class="info-overlay-views">0 views</span><meta itemprop="interactionCount" content="UserPlays:0"></span></a></div>'
+				'<figure class="article-thumb tright show-info-icon" style="width: 330px"><a href="http://lizlux.liz.wikia-dev.com/wiki/File:Injustice_-_Explaining_Blackest_Night" class="video video-thumbnail medium image lightbox " itemprop="video" itemscope="" itemtype="http://schema.org/VideoObject"><img src="http://static.liz.wikia-dev.com/__cb20130401202327/video151/images/thumb/f/f5/Injustice_-_Explaining_Blackest_Night/330px-Injustice_-_Explaining_Blackest_Night.jpg" data-video-key="Injustice_-_Explaining_Blackest_Night" data-video-name="Injustice - Explaining Blackest Night" width="330" height="185" alt="Injustice - Explaining Blackest Night" itemprop="thumbnail"><span class="duration" itemprop="duration">02:28</span><span class="play-circle"></span><meta itemprop="duration" content="PT02M28S"></a><figcaption><a href="/wiki/File:Injustice_-_Explaining_Blackest_Night" class="sprite info-icon"></a><p class="title">Injustice - Explaining Blackest Night</p></figcaption></figure>'
 			],
 		];
 	}
@@ -69,6 +69,11 @@ class FixMalformedHTMLTest extends WikiaBaseTest {
 				'auto-closing nested tags',
 				'<table><tr><td><div>Test</td></tr></table>',
 				'<table><tr><td><div>Test</div></td></tr></table>'
+			],
+			[
+				'html5 fugure, figurecaption tags',
+				'<figure><img src="http://example.com/1.jpg"><figcaption>Added</figcaption></figure> asdasd',
+				'<figure><img src="http://example.com/1.jpg"><figcaption>Added</figcaption></figure> asdasd'
 			]
 		];
 	}

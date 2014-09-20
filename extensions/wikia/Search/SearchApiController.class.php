@@ -3,6 +3,8 @@
  * Class definition for SearchApiController
  */
 use Wikia\Search\Config, Wikia\Search\QueryService\Factory, Wikia\Search\QueryService\DependencyContainer;
+use Wikia\Search\Services\CombinedSearchService;
+
 /**
  * Controller to execute searches in the content of a wiki.
  * @author Federico "Lox" Lucignano <federico@wikia-inc.com>
@@ -17,6 +19,10 @@ class SearchApiController extends WikiaApiController {
 	const ALL_LANGUAGES_STR = 'all';
 
 	const PARAMETER_NAMESPACES = 'namespaces';
+	const MIN_ARTICLE_QUALITY_PARAM_NAME = 'minArticleQuality';
+	const DEFAULT_MIN_ARTICLE_QUALITY = 80;
+
+	protected $allowedHubs = [ 'Gaming' => true, 'Entertainment' => true, 'Lifestyle' => true ];
 
 	/**
 	 * @var \WikiDetailsService|null
@@ -75,9 +81,14 @@ class SearchApiController extends WikiaApiController {
 			$params = $this->getDetailsParams();
 		}
 
-		$resultSet = (new Factory)->getFromConfig( $this->getConfigCrossWiki() )->search();
+		$responseValues = (new Factory)->getFromConfig( $this->getConfigCrossWiki() )->searchAsApi( ['id', 'lang_s'], true );
+
+		if ( empty( $responseValues['items'] ) ) {
+			throw new NotFoundApiException();
+		}
+
 		$items = array();
-		foreach( $resultSet->getResults() as $result ) {
+		foreach( $responseValues['items'] as $result ) {
 			if ( $expand ) {
 				$items[] = $this->getWikiDetailsService()
 					->getWikiDetails( $result['id'], $params[ 'imageWidth' ], $params[ 'imageHeight' ], $params[ 'length' ] );
@@ -85,11 +96,61 @@ class SearchApiController extends WikiaApiController {
 				$items[] = [
 					'id' => (int) $result['id'],
 					'language' => $result['lang_s'],
-				];
+ 				];
+			}
+		}
+		$responseValues['items'] = $items;
+
+		$this->setResponseData(
+			$responseValues,
+			[ 'urlFields' => [ 'url', 'wordmark', 'image' ] ]
+		);
+	}
+
+	/**
+	 * Fetches results for combined search for submitted query
+	 *
+	 * @requestParam string $query The query to use for the search
+	 * @requestParam string[] $langs [OPTIONAL] list of characters
+	 * @requestParam string[] $hubs [OPTIONAL] list of hubs to filter by
+	 * @requestParam string[] $namespaces [OPTIONAL] list of namespaces to filter by
+	 * @requestParam integer $limit [OPTIONAL] The number of items
+	 *
+	 * @responseParam array $result contains list of wikias results and articles results.
+	 *
+	 * @example &query=kermit
+	 * @example &query=kermit&langs=en&limit=2
+	 */
+	public function getCombined() {
+		if ( !$this->request->getVal( 'query' ) ) {
+			throw new MissingParameterApiException( 'query' );
+		}
+		// use langs not lang
+		if ( $this->request->getVal( 'lang' ) ) {
+			throw new InvalidParameterApiException( 'lang' );
+		}
+		$minArticleQuality = $this->request->getVal(self::MIN_ARTICLE_QUALITY_PARAM_NAME, self::DEFAULT_MIN_ARTICLE_QUALITY);
+
+		$hubs = $this->request->getArray( 'hubs' );
+		foreach ( $hubs as $hub ) {
+			if ( !isset( $this->allowedHubs[ $hub ] ) ) {
+				$hub = htmlentities( $hub, ENT_QUOTES );
+				throw new InvalidParameterApiException( 'hubs (' . $hub . ')' );
 			}
 		}
 
-		$this->response->setVal( 'items', $items );
+		$query = $this->request->getVal( 'query' );
+		$langs = $this->request->getArray( 'langs', ['en'] );
+		$namespaces = $this->request->getArray( 'namespaces', [ NS_MAIN ] );
+		$limit = $this->request->getVal( 'limit', null );
+
+		$searchService = new CombinedSearchService();
+		$response = $searchService->search($query, $langs, $namespaces, $hubs, $limit, $minArticleQuality);
+
+		$this->setResponseData(
+			$response,
+			[ 'urlFields' =>  [ 'url', 'image' ] ]
+		);
 	}
 
 	/**
@@ -105,16 +166,19 @@ class SearchApiController extends WikiaApiController {
 		}
 
 		//Standard Wikia API response with pagination values
-		$responseValues = (new Factory)->getFromConfig( $searchConfig )->searchAsApi( ['pageid' => 'id', 'title', 'url', 'ns' ], true );
+		$responseValues = (new Factory)->getFromConfig( $searchConfig )
+			->searchAsApi( ['pageid' => 'id', 'title', 'url', 'ns', 'article_quality_i' => 'quality' ], true );
 
 		if ( empty( $responseValues['items'] ) ) {
 			throw new NotFoundApiException();
 		}
 
-		$response = $this->getResponse();
-		$response->setValues( $responseValues );
 
-		$response->setCacheValidity(86400);
+		$this->setResponseData(
+			$responseValues,
+			[ 'urlFields' => 'url'  ],
+			WikiaResponse::CACHE_STANDARD
+		);
 	}
 	
 	/**
@@ -145,11 +209,11 @@ class SearchApiController extends WikiaApiController {
 		$request = $this->getRequest();
 		$searchConfig = new Wikia\Search\Config;
 		$searchConfig->setQuery( $request->getVal( 'query', null ) )
-		             ->setLimit( $request->getInt( 'limit', self::ITEMS_PER_BATCH ) )
-		             ->setPage( $request->getVal( 'batch', 1 ) )
-		             ->setRank( $request->getVal( 'rank', 'default' ) )
-		             ->setVideoSearch( $request->getVal( 'type', 'articles' ) == 'videos' )
-		;
+			->setLimit( $request->getInt( 'limit', self::ITEMS_PER_BATCH ) )
+			->setPage( $request->getVal( 'batch', 1 ) )
+			->setRank( $request->getVal( 'rank', 'default' ) )
+			->setMinArticleQuality( $request->getInt( self::MIN_ARTICLE_QUALITY_PARAM_NAME ) )
+			->setVideoSearch( $request->getVal( 'type', 'articles' ) == 'videos' );
 		return $this->validateNamespacesForConfig( $searchConfig );
 	}
 
@@ -198,3 +262,4 @@ class SearchApiController extends WikiaApiController {
 		];
 	}
 }
+

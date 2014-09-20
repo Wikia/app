@@ -61,6 +61,24 @@ SQL;
 }
 
 /**
+ * Delete a video from video wiki
+ * @param $name
+ * @return bool
+ */
+function deleteFromVideoWiki( $name ) {
+	$response = F::app()->sendRequest( 'VideoHandlerController', 'removeVideo', array( 'title' => $name ) );
+	$ret = $response->getVal( 'result', '' );
+	if ( $ret == 'ok' ) {
+		$success = true;
+	} else {
+		echo "... Error: $name cannot be removed from video wiki (".$response->getVal( 'msg', '' ).")\n";
+		$success = false;
+	}
+
+	return $success;
+}
+
+/**
  * Get asset by id
  * @param type $videoId
  * @return boolean
@@ -113,11 +131,14 @@ if ( empty( $wgCityId ) ) {
 
 $dryRun = isset( $options['dry-run'] );
 $videoTitle = isset( $options['name'] ) ? $options['name'] : '';
+const VIDEO_USER = "WikiaBot";
 
 echo "Wiki: $wgCityId ($wgDBname)\n";
 
 $db = wfGetDB( DB_SLAVE );
 $ooyala = new OoyalaAsset();
+$wgUser = User::newFromName( VIDEO_USER );
+$wgUser->load();
 
 $duplicateVideos = getDuplicateVideos( $db, $videoTitle );
 
@@ -134,8 +155,15 @@ foreach ( $duplicateVideos as $video ) {
 	$names = explode( '|', $video['names'] );
 	$videoIds = explode( '|', $video['videoIds'] );
 	$sourceIds = explode( '|', $video['sourceIds'] );
+	$originalName = "";
 
 	foreach ( $names as $key => $name ) {
+
+		if ( $key == 0 ) {
+			$originalName = strtolower( $name );
+			continue;
+		}
+
 		$sourceId = '';
 		if ( !empty( $sourceIds[$key] ) ) {
 			if ( preg_match( '/s:\d:"(\d+)"/', $sourceIds[$key], $matches ) ) {
@@ -147,10 +175,8 @@ foreach ( $duplicateVideos as $video ) {
 
 		$videoId = ( empty( $videoIds[$key] ) || strlen( $videoIds[$key] ) != 32 ) ? '' : $videoIds[$key];
 
-		$possibleName = ( $key == 0 ) ? $name.'_2' : rtrim( $name, '_2');
-		if ( ( $key == 0 && strtolower( $possibleName ) == strtolower( $names[1] ) )
-			|| ( $key == 1 && strtolower( $possibleName ) == strtolower( $names[0] ) )
-			|| strtolower( $names[0] ) == strtolower( $names[1] ) ) {
+		$duplicateName = preg_replace( "/_\d+$/", "", $name );
+		if ( strtolower( $duplicateName ) == $originalName ) {
 			$isMatched = 'matched';
 		} else {
 			$isMatched = 'not matched';
@@ -163,20 +189,20 @@ foreach ( $duplicateVideos as $video ) {
 			}
 		}
 
-		echo "Set: ".$total."\t[".( $key + 1 )." of ".count( $names )."]\t$name\t$sourceId\t$videoId\t$possibleName\t$isMatched\t$isEmbedded\n";
+		echo "Set: ".$total."\t[".( $key + 1 )." of ".count( $names )."]\t$name\t$sourceId\t$videoId\t$duplicateName\t$isMatched\t$isEmbedded\n";
 
-		$msg = "\t$name [Id: $videoId]";
-		if ( $key != 0 ) {
-			$msg .= " (Orig: {$names[0]})";
-		}
+		$msg = "\t$name [Id: $videoId] (Orig: {$names[0]})";
 
-		if ( $isEmbedded != 'embedded' && $isMatched == 'matched' && !empty( $videoId ) && $key == 1 ) {
+		if ( $isEmbedded != 'embedded' && $isMatched == 'matched' && !empty( $videoId ) ) {
 			$videoData = getAssetById( $videoId );
 			if ( !empty( $videoData ) ) {
 				if ( $dryRun ) {
 					$resp = true;
 				} else {
 					$resp = $ooyala->deleteAsset( $videoId );
+					if ( $resp ) {
+						$resp = deleteFromVideoWiki( $name );
+					}
 				}
 
 				if ( $resp ) {

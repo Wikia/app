@@ -64,12 +64,14 @@ $messages['be-tarask'] = array(
 );
 
 /** Breton (brezhoneg)
+ * @author Fohanno
  * @author Y-M D
  */
 $messages['br'] = array(
 	'taskmanager' => 'Diskouez ha merañ trevelloù an drekleur',
 	'taskmanager_title' => 'Diskouez ha merañ trevelloù an drekleur',
 	'taskmanager_tasklist' => 'Distreiñ da roll an trevelloù',
+	'taskmanager-invert' => 'Eilpennañ an diuzadenn',
 );
 
 /** Catalan (català)
@@ -146,11 +148,16 @@ $messages['fa'] = array(
 
 /** Finnish (suomi)
  * @author Centerlink
+ * @author Elseweyr
  */
 $messages['fi'] = array(
 	'taskmanager' => 'Näytä ja hallinnoi taustatehtäviä',
 	'taskmanager_title' => 'Näytä ja hallinnoi taustatehtäviä',
 	'taskmanager_tasklist' => 'Palaa tehtäväluetteloon',
+	'right-taskmanager' => 'Voi näyttää taustatehtäviä',
+	'right-taskmanager-action' => 'Voi hallinnoida taustatehtäviä',
+	'taskmanager-invert' => 'Käänteinen valinta',
+	'action-taskmanager' => 'näyttää tai hallinnoida taustatehtäviä',
 );
 
 /** French (français)

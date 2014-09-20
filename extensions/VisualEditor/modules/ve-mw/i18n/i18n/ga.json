@@ -1,0 +1,23 @@
+{
+	"@metadata": {
+		"authors": [
+			"Alison",
+			"Kscanne"
+		]
+	},
+	"visualeditor-ca-ve-create": "EagarthóirAmhairc",
+	"visualeditor-ca-ve-edit": "EagarthóirAmhairc",
+	"visualeditor-ca-ve-edit-section": "EagarthóirAmhairc",
+	"visualeditor-dialog-beta-welcome-action-continue": "Lean",
+	"visualeditor-dialog-meta-categories-category": "Catagóir",
+	"visualeditor-dialog-meta-categories-data-label": "Catagóirí",
+	"visualeditor-dialog-meta-categories-options": "Roghanna",
+	"visualeditor-dialog-meta-categories-section": "Catagóirí",
+	"visualeditor-dialog-meta-languages-label": "Teangacha",
+	"visualeditor-dialog-reference-options-section": "Roghanna",
+	"visualeditor-dialog-referencelist-title": "Liosta tagairtí",
+	"visualeditor-dialog-transclusion-options": "Roghanna",
+	"visualeditor-dialogbutton-media-tooltip": "Meáin",
+	"visualeditor-preference-core-label": "EagarthóirAmhairc",
+	"visualeditor-savedialog-label-warning": "Rabhadh"
+}

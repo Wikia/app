@@ -82,7 +82,7 @@ class Base extends EmptySet
 	 * @return Wikia\Search\ResultSet\Base
 	 */
 	protected function handleMatchPrepends() {
-		if ( $this->getResultsStart() == 0 ) {
+		if ( $this->getResultsStart() == 0 && ! $this->searchConfig->mustAddMatchedRecords() ) {
 			if ( $this->searchConfig->getInterWiki() ) {
 			    $this->prependWikiMatchIfExists();
 			} else {

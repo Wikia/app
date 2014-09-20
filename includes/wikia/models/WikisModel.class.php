@@ -10,8 +10,6 @@ class WikisModel extends WikiaModel {
 	const CACHE_VERSION = '4';
 	const MAX_RESULTS = 250;
 
-	const FLAG_NEW = 1;
-	const FLAG_HOT = 2;
 	const FLAG_PROMOTED = 4;
 	const FLAG_BLOCKED = 8;
 	const FLAG_OFFICIAL = 16;
@@ -230,11 +228,12 @@ class WikisModel extends WikiaModel {
 	 * Get details about one or more wikis
 	 *
 	 * @param Array $wikiIds An array of one or more wiki ID's
+	 * @param bool $getBlocked If set to true, will return also blocked (not displayed on global page) wikias
 	 *
 	 * @return Array A collection of results, the index is the wiki ID and each item has a name,
 	 * url, lang, hubId, headline, desc, image and flags index.
 	 */
-	public function getDetails( Array $wikiIds = null ) {
+	public function getDetails( Array $wikiIds = null, $getBlocked = false ) {
 		wfProfileIn(__METHOD__);
 
 		$results = array();
@@ -263,6 +262,14 @@ class WikisModel extends WikiaModel {
 		if ( !empty( $wikiIds ) ) {
 			$db = $this->getSharedDB();
 
+			$where = array(
+				'city_list.city_public' => 1,
+				'city_list.city_id IN (' . implode( ',', $wikiIds ) . ')'
+			);
+			if ( !$getBlocked ) {
+				$where[] = '((city_visualization.city_flags & ' . self::FLAG_BLOCKED . ') != ' .
+					self::FLAG_BLOCKED . ' OR city_visualization.city_flags IS NULL)';
+			}
 			$rows = $db->select(
 				array(
 					'city_visualization',
@@ -279,11 +286,7 @@ class WikisModel extends WikiaModel {
 					'city_visualization.city_main_image',
 					'city_visualization.city_flags',
 				),
-				array(
-					'city_list.city_public' => 1,
-					'city_list.city_id IN (' . implode( ',', $wikiIds ) . ')',
-					'((city_visualization.city_flags & ' . self::FLAG_BLOCKED . ') != ' . self::FLAG_BLOCKED . ' OR city_visualization.city_flags IS NULL)'
-				),
+				$where,
 				__METHOD__,
 				array(),
 				array(
@@ -304,10 +307,8 @@ class WikisModel extends WikiaModel {
 					'desc' => $row->city_description,
 					//this is stored in a pretty peculiar format,
 					//see extensions/wikia/CityVisualization/models/CityVisualization.class.php
-					'image' => $row->city_main_image,
+					'image' => PromoImage::fromPathname($row->city_main_image)->ensureCityIdIsSet($row->city_id)->getPathname(),
 					'flags' => array(
-						'new' => ( ( $row->city_flags & self::FLAG_NEW ) == self::FLAG_NEW ),
-						'hot' => ( ( $row->city_flags & self::FLAG_HOT ) == self::FLAG_HOT ),
 						'official' => ( ( $row->city_flags & self::FLAG_OFFICIAL ) == self::FLAG_OFFICIAL ),
 						'promoted' => ( ( $row->city_flags & self::FLAG_PROMOTED ) == self::FLAG_PROMOTED )
 					)

@@ -1,36 +1,43 @@
 /*!
  * VisualEditor MediaWiki UserInterface edit mode tool classes.
  *
- * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
 /**
- * MediaWiki UserInterface media edit tool.
+ * MediaWiki UserInterface edit mode tool.
  *
  * @class
  * @abstract
- * @extends OO.ui.Tool
+ * @extends ve.ui.Tool
  * @constructor
  * @param {OO.ui.ToolGroup} toolGroup
  * @param {Object} [config] Config options
  */
 ve.ui.MWEditModeTool = function VeUiMWEditModeTool( toolGroup, config ) {
-	OO.ui.Tool.call( this, toolGroup, config );
+	ve.ui.Tool.call( this, toolGroup, config );
 };
 
 /* Inheritance */
 
-OO.inheritClass( ve.ui.MWEditModeTool, OO.ui.Tool );
+OO.inheritClass( ve.ui.MWEditModeTool, ve.ui.Tool );
 
 /* Static Properties */
 
 ve.ui.MWEditModeTool.static.group = 'editMode';
-ve.ui.MWEditModeTool.static.autoAdd = false;
+
+ve.ui.MWEditModeTool.static.autoAddToCatchall = false;
+
+ve.ui.MWEditModeTool.static.autoAddToGroup = false;
 
 /* Methods */
 
+/** */
 ve.ui.MWEditModeTool.prototype.onUpdateState = function () {
+	// Parent method
+	ve.ui.Tool.prototype.onUpdateState.apply( this, arguments );
+
 	this.setActive( false );
 };
 
@@ -49,11 +56,13 @@ ve.ui.MWEditModeSourceTool = function VeUiMWEditModeSourceTool( toolGroup, confi
 OO.inheritClass( ve.ui.MWEditModeSourceTool, ve.ui.MWEditModeTool );
 ve.ui.MWEditModeSourceTool.static.name = 'editModeSource';
 ve.ui.MWEditModeSourceTool.static.icon = 'source';
-ve.ui.MWEditModeSourceTool.static.titleMessage = 'visualeditor-mweditmodesource-title';
-
+ve.ui.MWEditModeSourceTool.static.title =
+	OO.ui.deferMsg( 'visualeditor-mweditmodesource-title' );
+/**
+ * @inheritdoc
+ */
 ve.ui.MWEditModeSourceTool.prototype.onSelect = function () {
-	this.setActive( false );
 	this.toolbar.getTarget().editSource();
+	this.setActive( false );
 };
-
 ve.ui.toolFactory.register( ve.ui.MWEditModeSourceTool );

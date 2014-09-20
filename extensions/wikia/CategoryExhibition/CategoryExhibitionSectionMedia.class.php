@@ -10,7 +10,7 @@ class CategoryExhibitionSectionMedia extends CategoryExhibitionSection {
 
 	public function getHTML() {
 
-		global $wgRequest, $wgCategoryExhibitionMediaSectionRows;
+		global $wgCategoryExhibitionMediaSectionRows;
 
 		$cachedContent = $this->getFromCache();
 		if ( empty( $cachedContent ) ){
@@ -24,6 +24,7 @@ class CategoryExhibitionSectionMedia extends CategoryExhibitionSection {
 					$itemTitle = Title::newFromID($item['page_id']);
 					$forceHeight = '';
 					$forceWidth = '';
+					$isVideo = WikiaFileHelper::isFileTypeVideo( $itemTitle );
 
 					// item is image
 					$image = wfFindFile( $itemTitle );
@@ -32,18 +33,14 @@ class CategoryExhibitionSectionMedia extends CategoryExhibitionSection {
 					if ( !is_object( $image ) || $image->height == 0 || $image->width == 0 ){
 						$imageSrc = '';
 					} else {
-						if ( WikiaFileHelper::isFileTypeVideo($image) ) {
-							$elementClass .= ' video';
-						}
-
 						$proportions = $image->width / $image->height;
 						if ( $proportions < 1 ){
 							$calculatedWidth = floor( $proportions * $this->thumbWidth );
 						} else {
 							$calculatedWidth = $this->thumbMedia;
 						}
-						$forceWidth	= floor($calculatedWidth);
-						$forceHeight	= floor($calculatedWidth / $proportions);
+						$forceWidth = floor( $calculatedWidth );
+						$forceHeight = floor( $calculatedWidth / $proportions );
 
 						$imageServing = new ImageServing( array( $item['page_id'] ), $calculatedWidth , array( "w" => $image->width, "h" => $image->height ) );
 						$imageSrc = wfReplaceImageServer(
@@ -51,6 +48,11 @@ class CategoryExhibitionSectionMedia extends CategoryExhibitionSection {
 								$imageServing->getCut( $image->width, $image->height )."-".$image->getName()
 							)
 						);
+
+						if ( $isVideo ) {
+							$videoSizeClass = ThumbnailHelper::getThumbnailSize( $forceWidth );
+							$elementClass .= ' video video-thumbnail ' . $videoSizeClass;
+						}
 					}
 					$linkedFiles = $this->getLinkedFiles( $itemTitle );
 					if ( !empty( $linkedFiles ) ){
@@ -63,17 +65,17 @@ class CategoryExhibitionSectionMedia extends CategoryExhibitionSection {
 
 					// types casting for proper caching;
 					$aData[] = array(
-						'id'			=> $item['page_id'],
-						'title'			=> $itemTitle->getText(),
-						'key'			=> $itemTitle->getDBKey(),
-						'img'			=> (string) $imageSrc,
-						'url'			=> $itemTitle->getFullURL(),
-						'dimensions'		=> array( 'w' => (int) $forceWidth, 'h' => (int) $forceHeight ),
-						'class'			=> $elementClass,
-						'data-ref'		=> $itemTitle->getPrefixedURL(),
-						'targetUrl'		=> $linkFullUrl,
-						'targetText'		=> $linkText,
-						'useVideoOverlay'	=> WikiaFileHelper::isFileTypeVideo( $itemTitle )
+						'id'         => $item['page_id'],
+						'title'      => $itemTitle->getText(),
+						'key'        => $itemTitle->getDBKey(),
+						'img'        => (string)$imageSrc,
+						'url'        => $itemTitle->getFullURL(),
+						'dimensions' => array('w' => (int)$forceWidth, 'h' => (int)$forceHeight),
+						'class'      => $elementClass,
+						'data-ref'   => $itemTitle->getPrefixedURL(),
+						'targetUrl'  => $linkFullUrl,
+						'targetText' => $linkText,
+						'isVideo'    => $isVideo,
 					);
 				};
 

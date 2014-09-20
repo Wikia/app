@@ -221,42 +221,5 @@ SQL;
 		$total++;
 	}
 
-	// get related videos - RelatedVideos Articles
-	$result = $db->select(
-		array( 'page' ),
-		array( 'page_title' ),
-		array(
-			'page_namespace' => NS_RELATED_VIDEOS
-		),
-		__METHOD__
-	);
-
-	while ( $row = $db->fetchObject($result) ) {
-		printText( "RelatedVideos Article: $row->page_title\n" );
-
-		$title = Title::newFromText( $row->page_title, NS_RELATED_VIDEOS );
-		$relatedVideosNSData = RelatedVideosNamespaceData::newFromTitle( $title );
-		$data = $relatedVideosNSData->getData();
-		foreach ( $data['lists']['WHITELIST'] as $v ) {
-			printText( 'NS'.NS_RELATED_VIDEOS.": " );
-
-			addVideo( $videoList, $v['title'] );
-			$total++;
-		}
-	}
-
-	// get related videos - Global list
-	$relatedVideosNSData = RelatedVideosNamespaceData::newFromGeneralMessage();
-	printText( "MediaWiki:RelatedVideosGlobalList\n" );
-	if ( !empty($relatedVideosNSData) ) {
-		$data = $relatedVideosNSData->getData();
-		foreach ( $data['lists']['WHITELIST'] as $v ) {
-			printText( "GlobalList: " );
-
-			addVideo( $videoList, $v['title'] );
-			$total++;
-		}
-	}
-
 	echo "Wiki $wgCityId: TOTAL: $total, ADDED: $added, DUPLICATE: $duplicate, DUPLICATE IN DB: $dupInDb, INVALID: $invalid\n";
 }

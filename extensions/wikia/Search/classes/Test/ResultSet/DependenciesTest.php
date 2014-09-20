@@ -9,6 +9,8 @@ use Wikia, ReflectionProperty, ReflectionMethod;
  */
 class DependenciesTest extends Wikia\Search\Test\BaseTest {
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.11284 ms
 	 * @covers Wikia\Search\ResultSet\Factory::get
 	 */
 	public function testFactoryGet() {
@@ -129,6 +131,8 @@ class DependenciesTest extends Wikia\Search\Test\BaseTest {
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.11218 ms
 	 * @covers Wikia\Search\ResultSet\DependencyContainer::__construct
 	 * @covers Wikia\Search\ResultSet\DependencyContainer::getConfig
 	 * @covers Wikia\Search\ResultSet\DependencyContainer::setConfig

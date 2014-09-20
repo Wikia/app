@@ -10,6 +10,8 @@ use Wikia, ReflectionProperty, ReflectionMethod;
 class LuceneTest extends Wikia\Search\Test\BaseTest {
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.09855 ms
 	 * @covers Wikia\Search\QueryService\Select\Lucene\Lucene::getQuery
 	 */
 	public function testGetQuery() {

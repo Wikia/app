@@ -47,6 +47,7 @@
 	padding: $page-padding+5px 6.25%;
 	//during loading tables might strech horizontally window - lets not show it to user
 	overflow-x: hidden;
+	background-color: white;
 }
 
 //fixes for fluid content

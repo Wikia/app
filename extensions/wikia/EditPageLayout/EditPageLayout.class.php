@@ -527,7 +527,7 @@ class EditPageLayout extends EditPage {
 	/**
 	 * Add items to loaded content
 	 */
-	function getContent() {
+	function getContent($def_text = '') {
 		$content = parent::getContent();
 		
 		$addFile = $this->app->getGlobal('wgRequest')->getVal('addFile');

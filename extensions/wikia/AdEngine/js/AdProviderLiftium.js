@@ -1,16 +1,22 @@
-/*exported AdProviderLiftium*/
+/*global define, Liftium*/
 /*jshint maxparams:false*/
-
-var AdProviderLiftium = function (log, document, slotTweaker, Liftium, scriptWriter, window) {
+define('ext.wikia.adEngine.provider.liftium', [
+	'wikia.log',
+	'wikia.window',
+	'wikia.document',
+	'wikia.scriptwriter',
+	'ext.wikia.adEngine.slotTweaker'
+], function (log, window, document, scriptWriter, slotTweaker) {
 	'use strict';
 
-	var logGroup = 'AdProviderLiftium',
+	var logGroup = 'ext.wikia.adEngine.provider.liftium',
 		adNum = 200, // TODO global-ize it (move to Liftium?)!
 		slotMap,
 		canHandleSlot,
 		fillInSlot;
 
 	slotMap = {
+		'BOTTOM_LEADERBOARD': {'size': '728x90'},
 		'EXIT_STITIAL_BOXAD_1': {'size': '300x250'},
 		'HOME_TOP_LEADERBOARD': {'size': '728x90'},
 		'HOME_TOP_RIGHT_BOXAD': {'size': '300x250'},
@@ -26,6 +32,7 @@ var AdProviderLiftium = function (log, document, slotTweaker, Liftium, scriptWri
 		// TOP_BUTTON_WIDE after TOP_LEADERBOARD hack:
 		'TOP_BUTTON_WIDE.force': 'hack',
 
+		'TOP_INCONTENT_BOXAD': {'size': '300x250'},
 		'TOP_LEADERBOARD': {'size': '728x90'},
 		'TOP_RIGHT_BOXAD': {'size': '300x250'},
 		'PREFOOTER_LEFT_BOXAD': {'size': '300x250'},
@@ -110,4 +117,4 @@ var AdProviderLiftium = function (log, document, slotTweaker, Liftium, scriptWri
 		canHandleSlot: canHandleSlot,
 		fillInSlot: fillInSlot
 	};
-};
+});

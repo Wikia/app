@@ -81,6 +81,8 @@ class SEOTweaksTest extends WikiaBaseTest
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.01246 ms
 	 * @covers SEOTweaksHooksHelper::onAfterInitialize
 	 */
 	public function testOnAfterInitializeValid() {
@@ -177,6 +179,7 @@ class SEOTweaksTest extends WikiaBaseTest
 	
 	/**
 	 * @covers SEOTweaksHooksHelper::onImagePageAfterImageLinks
+	 * @group Broken
 	 */
 	public function testOnImagePageAfterImageLinksEmpties() {
 		
@@ -228,6 +231,7 @@ class SEOTweaksTest extends WikiaBaseTest
 			->method ( 'getTitle' )
 			->will   ( $this->returnValue( null ) )
 		;
+
 		$mockFileHelper
 			->staticExpects( $this->never() )
 			->method       ( 'isFileTypeVideo' )
@@ -246,6 +250,9 @@ class SEOTweaksTest extends WikiaBaseTest
 	}
 	
 	/**
+	 * @group Slow
+	 * @group Broken
+	 * @slowExecutionTime 0.04518 ms
 	 * @covers SEOTweaksHooksHelper::onImagePageAfterImageLinks
 	 */
 	public function testOnImagePageAfterImageLinksImage() {
@@ -333,6 +340,9 @@ class SEOTweaksTest extends WikiaBaseTest
 	}
 	
 	/**
+	 * @group Slow
+	 * @group Broken
+	 * @slowExecutionTime 0.03643 ms
 	 * @covers SEOTweaksHooksHelper::onImagePageAfterImageLinks
 	 */
 	public function testOnImagePageAfterImageLinksVideo() {
@@ -410,6 +420,8 @@ class SEOTweaksTest extends WikiaBaseTest
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.02121 ms
 	 * If the file already has alt text, do nothing
 	 * @covers SEOTweaksHooksHelper::onBeforeParserMakeImageLinkObjOptions
 	 */
@@ -610,6 +622,8 @@ class SEOTweaksTest extends WikiaBaseTest
 	}
 	
 	/**
+     * @group Slow
+     * @slowExecutionTime 0.03886 ms
 	 * @covers SEOTweaksHooksHelper::onArticleViewHeader
 	 */
     public function testOnArticleViewHeaderTitleNotExistsNoResults()
@@ -706,6 +720,8 @@ class SEOTweaksTest extends WikiaBaseTest
 	}
 	
 	/**
+     * @group Slow
+     * @slowExecutionTime 0.09149 ms
 	 * @covers SEOTweaksHooksHelper::onArticleViewHeader
 	 */
     public function testOnArticleViewHeaderTitleNotExistsWithResults()

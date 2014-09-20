@@ -2,20 +2,24 @@
 @import "mixins/box-shadow.scss";
 
 #wkFtr {
-	background-color: $footerBackground;
 	@include box-shadow(inset 0 20px 20px -20px rgba(0,0,0,.4));
-	text-align: center;
+	background-color: $footerBackground;
 	color: $footerTextColor;
-	padding: 20px;
+	font-size: 0.8rem;
+	padding: 35px;
+	text-align: left;
 
 	ul {
-		margin: 10px 0 0 0;
-		padding: 0;
+		margin: 0;
+		padding: 25px 0 0 0;
+
+		&:first-of-type {
+			font-weight: bold;
+		}
 	}
 
 	li {
-		display: inline-block;
-		padding: 5px;
+		display: block;
 	}
 
 	a {
@@ -24,12 +28,11 @@
 }
 
 #wkLogo {
-	width: 100px;
-	height: 25px;
-	margin-top: 5px;
-	display: inline-block;
 	background-image: url('/extensions/wikia/WikiaMobile/images/wikialogo.png');
-	background-size: 100px 25px;
+	background-size: 112px 30px;
+	display: block;
+	height: 30px;
+	width: 112px;
 }
 
 .cont-dir-rtl #wkFtr {

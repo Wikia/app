@@ -26,5 +26,8 @@ var LatestActivity = {
 };
 
 $(window).load(function() {
-	LatestActivity.init();
+	$('.WikiaRail').on('afterLoad.rail', function() {
+		LatestActivity.init();
+	});
 });
+

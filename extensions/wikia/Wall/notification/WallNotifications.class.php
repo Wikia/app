@@ -238,23 +238,16 @@ class WallNotifications {
 
 	}
 
-
-	private function getWgServer($id) {
-		global $wgStagingList;
-
-		$url = WikiFactory::getVarValueByName("wgServer", $id );
-		if (!empty($this->app->wg->DevelEnvironment)) {
-			$url = str_replace('wikia.com', $this->app->wg->DevelEnvironmentName.'.wikia-dev.com',$url);
-		}
-
-		//HACK for preview
-		//TODO: create helper general function for
-		$hosts = $wgStagingList;
-		foreach($hosts as $host) {
-			$prefix = 'http://'.$host.'.';
-			if(strpos($this->app->wg->Server, $prefix)  !== false ) {
-				$url = str_replace('http://', $prefix, $url );
-			}
+	/**
+	 * @desc Helper method to get devbox urls for notifications
+	 *
+	 * @param Integer $id wiki id
+	 * @return String
+	 */
+	private function getWgServer( $id ) {
+		$url = WikiFactory::getVarValueByName( "wgServer", $id );
+		if( !empty( $this->app->wg->DevelEnvironment ) ) {
+			$url = str_replace( 'wikia.com', $this->app->wg->DevelEnvironmentName . '.wikia-dev.com', $url );
 		}
 
 		return $url;

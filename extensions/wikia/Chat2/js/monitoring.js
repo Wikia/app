@@ -8,7 +8,6 @@ var logger = require('./logger').logger;
  */
 
 function execCMD(com, callback) {
-	var sys = require('sys');
 	var exec = require('child_process').exec;
 	var puts = function(error, stdout, stderr) { callback(parseFloat(stdout)) };	
 	exec(com, puts);

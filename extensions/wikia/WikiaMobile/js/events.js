@@ -6,7 +6,7 @@
  */
 /*global window, define*/
 
-define('events', ['wikia.window'], function (window, undef) {
+define( 'events', ['wikia.window'], function ( window, undef ) {
 	'use strict';
 
 	return {

@@ -252,7 +252,7 @@ $messages['lad'] = array(
  * @author Robby
  */
 $messages['lb'] = array(
-	'mostpopularcategories' => 'Beléiwste Kategorien',
+	'mostpopularcategories' => 'Beléifst Kategorien',
 );
 
 /** Latvian (latviešu)
@@ -398,6 +398,13 @@ $messages['sv'] = array(
  */
 $messages['ta'] = array(
 	'mostpopularcategories' => 'மிகப் பிரபலமான பகுப்புகள்',
+);
+
+/** Telugu (తెలుగు)
+ * @author Chaduvari
+ */
+$messages['te'] = array(
+	'mostpopularcategories' => 'అత్యంత ప్రజాదరణ పొందిన వర్గాలు',
 );
 
 /** Turkmen (Türkmençe)

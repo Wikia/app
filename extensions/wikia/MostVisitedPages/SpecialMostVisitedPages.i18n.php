@@ -167,12 +167,13 @@ $messages['dsb'] = array(
  * @author Locos epraix
  * @author McDutchie
  * @author Translationista
+ * @author VegaDark
  */
 $messages['es'] = array(
 	'mostvisitedpages' => 'Páginas más visitadas',
 	'mostvisitedpagessearchtext' => 'Nombre del artículo:',
 	'mostvisitedpagessearchbtn' => 'buscar',
-	'mostvisitedpageslatest' => 'En los últimos $1 minutos',
+	'mostvisitedpageslatest' => '{{PLURAL:$1|en el último|en los últimos}} $1 {{PLURAL:$1|minuto|minutos}}',
 	'mostvisitedpageslatestlink' => 'Ver últimas páginas visitadas',
 	'mostvisitedpagesalllink' => 'Ver páginas más visitadas',
 );
@@ -365,8 +366,8 @@ $messages['lb'] = array(
 	'mostvisitedpagessearchtext' => 'Numm vum Artikel:',
 	'mostvisitedpagessearchbtn' => 'sichen',
 	'mostvisitedpageslatest' => 'an de leschten $1 Minutten',
-	'mostvisitedpageslatestlink' => 'Déi lescht besichte Säite kucken',
-	'mostvisitedpagesalllink' => 'Déi am dackste besichte Säite kucken',
+	'mostvisitedpageslatestlink' => 'Déi lescht besicht Säite kucken',
+	'mostvisitedpagesalllink' => 'Déi am dackst besicht Säite kucken',
 );
 
 /** لوری (لوری)
@@ -581,6 +582,18 @@ $messages['sv'] = array(
 	'mostvisitedpagesalllink' => 'Se mest besökta sidor',
 );
 
+/** Silesian (ślůnski)
+ * @author Krol111
+ */
+$messages['szl'] = array(
+	'mostvisitedpages' => 'Nojczyńśći uobźyrane zajty',
+	'mostvisitedpagessearchtext' => 'Mjano artikla:',
+	'mostvisitedpagessearchbtn' => 'sznupej',
+	'mostvisitedpageslatest' => 'bez uostatńe $1 minut', # Fuzzy
+	'mostvisitedpageslatestlink' => 'Uobejrzij ńydowno uobźyrane zajty',
+	'mostvisitedpagesalllink' => 'Uobejrzij nojczyńśći uobźyrane zajty',
+);
+
 /** Tamil (தமிழ்)
  * @author Karthi.dr
  */
@@ -594,13 +607,16 @@ $messages['ta'] = array(
 );
 
 /** Telugu (తెలుగు)
+ * @author Chaduvari
  * @author Veeven
  */
 $messages['te'] = array(
 	'mostvisitedpages' => 'ఎక్కువగా చూసిన పేజీలు',
 	'mostvisitedpagessearchtext' => 'వ్యాసపు పేరు:',
 	'mostvisitedpagessearchbtn' => 'వెతుకు',
-	'mostvisitedpageslatest' => 'గత $1 నిమిషాలలో',
+	'mostvisitedpageslatest' => 'గత $1 {{PLURAL:$1|నిమిషంలో|నిమిషాల్లో}}',
+	'mostvisitedpageslatestlink' => 'ఇట్టీవల చూసిన పేజీలను చూడండి',
+	'mostvisitedpagesalllink' => 'అత్యధికంగా చూసిన పేజీలను చూడండి',
 );
 
 /** Tagalog (Tagalog)

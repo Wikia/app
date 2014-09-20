@@ -291,7 +291,6 @@ WMBridge.prototype.setUsersList = function(roomId, users) {
 
 
 setInterval(function() {
-	logger.info("setUsersList")
         for (i in setUsersListQueue){
 	        setUsersList(i, setUsersListQueue[i]);
 		delete setUsersListQueue[i];

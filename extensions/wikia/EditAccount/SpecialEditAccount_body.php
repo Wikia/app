@@ -37,30 +37,36 @@ class EditAccount extends SpecialPage {
 	 * @param $par Mixed: parameter passed to the page or null
 	 */
 	public function execute( $par ) {
-		global $wgOut, $wgUser, $wgRequest, $wgEnableUserLoginExt, $wgExternalAuthType, $wgTitle;
+		global $wgEnableUserLoginExt, $wgExternalAuthType;
 
 		// Set page title and other stuff
 		$this->setHeaders();
+		$user = $this->getUser();
+		$output = $this->getOutput();
 
 		# If the user isn't permitted to access this special page, display an error
-		if ( !$wgUser->isAllowed( 'editaccount' ) ) {
+		if ( !$user->isAllowed( 'editaccount' ) ) {
 			throw new PermissionsError( 'editaccount' );
 		}
 
 		# Show a message if the database is in read-only mode
 		if ( wfReadOnly() ) {
-			$wgOut->readOnlyPage();
+			$output->readOnlyPage();
 			return;
 		}
 
 		# If user is blocked, s/he doesn't need to access this page
-		if ( $wgUser->isBlocked() ) {
+		if ( $user->isBlocked() ) {
 			throw new UserBlockedError( $this->getUser()->mBlock );
 		}
 
-		$action = $wgRequest->getVal( 'wpAction' );
+		$output->addModuleStyles( 'ext.editAccount' );
+
+		$request = $this->getRequest();
+
+		$action = $request->getVal( 'wpAction' );
 		#get name to work on. subpage is supported, but form submit name trumps
-		$userName = $wgRequest->getVal( 'wpUserName', $par );
+		$userName = $request->getVal( 'wpUserName', $par );
 
 		if( $userName !== null ) {
 			#got a name, clean it up
@@ -107,21 +113,32 @@ class EditAccount extends SpecialPage {
 		// FB:23860
 		if ( !( $this->mUser instanceof User ) ) $action = '';
 
-		$changeReason = $wgRequest->getVal( 'wpReason' );
+		// CSRF protection for EditAccount (CE-774)
+		if ( ( $action !== '' && $action !== 'displayuser' && $action !== 'closeaccount' )
+			&& ( !$request->wasPosted()
+				|| !$user->matchEditToken( $request->getVal( 'wpToken' ) ) )
+		) {
+			$output->addHTML(
+				Xml::element( 'p', [ 'class' => 'error' ], $this->msg( 'sessionfailure' )->text() )
+			);
+			return;
+		}
+
+		$changeReason = $request->getVal( 'wpReason' );
 
 		switch( $action ) {
 			case 'setemail':
-				$newEmail = $wgRequest->getVal( 'wpNewEmail' );
+				$newEmail = $request->getVal( 'wpNewEmail' );
 				$this->mStatus = $this->setEmail( $newEmail, $changeReason );
 				$template = 'displayuser';
 				break;
 			case 'setpass':
-				$newPass = $wgRequest->getVal( 'wpNewPass' );
+				$newPass = $request->getVal( 'wpNewPass' );
 				$this->mStatus = $this->setPassword( $newPass, $changeReason );
 				$template = 'displayuser';
 				break;
 			case 'setrealname':
-				$newRealName = $wgRequest->getVal( 'wpNewRealName' );
+				$newRealName = $request->getVal( 'wpNewRealName' );
 				$this->mStatus = $this->setRealName( $newRealName, $changeReason );
 				$template = 'displayuser';
 				break;
@@ -131,7 +148,8 @@ class EditAccount extends SpecialPage {
 				$this->mStatusMsg = $this->mStatus ? wfMsg( 'editaccount-requested' ) : wfMsg( 'editaccount-not-requested' );
 				break;
 			case 'closeaccountconfirm':
-				$this->mStatus = $this->closeAccount( $this->mUser, $changeReason, $this->mStatusMsg, $this->mStatusMsg2 );
+				$keepEmail = !$request->getBool( 'clearemail', false );
+				$this->mStatus = self::closeAccount( $this->mUser, $changeReason, $this->mStatusMsg, $this->mStatusMsg2, $keepEmail );
 				$template = $this->mStatus ? 'selectuser' : 'displayuser';
 				break;
 			case 'clearunsub':
@@ -140,6 +158,10 @@ class EditAccount extends SpecialPage {
 				break;
 			case 'cleardisable':
 				$this->mStatus = $this->clearDisable();
+				$template = 'displayuser';
+				break;
+			case 'clearclosurerequest':
+				$this->mStatus = $this->clearClosureRequest();
 				$template = 'displayuser';
 				break;
 			case 'toggleadopter':
@@ -153,7 +175,7 @@ class EditAccount extends SpecialPage {
 				$template = 'selectuser';
 		}
 
-		$wgOut->setPageTitle( wfMsg( 'editaccount-title' ) );
+		$output->setPageTitle( $this->msg( 'editaccount-title' )->plain() );
 
 		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . '/templates/' );
 		$oTmpl->set_Vars( array(
@@ -179,6 +201,7 @@ class EditAccount extends SpecialPage {
 				'emailStatus' => null,
 				'disabled' => null,
 				'changeEmailRequested' => null,
+				'editToken' => $user->getEditToken(),
 			) );
 
 		if( is_object( $this->mUser ) ) {
@@ -198,6 +221,7 @@ class EditAccount extends SpecialPage {
 					'userReg' => date( 'r', strtotime( $this->mUser->getRegistration() ) ),
 					'isUnsub' => $this->mUser->getOption('unsubscribed'),
 					'isDisabled' => $this->mUser->getOption('disabled'),
+					'isClosureRequested' => $this->isClosureRequested(),
 					'isAdopter' => $this->mUser->getOption('AllowAdoption', 1 ),
 					'userStatus' => $userStatus,
 					'emailStatus' => $emailStatus,
@@ -206,7 +230,7 @@ class EditAccount extends SpecialPage {
 		}
 
 		// HTML output
-		$wgOut->addHTML( $oTmpl->render( $template ) );
+		$output->addHTML( $oTmpl->render( $template ) );
 	}
 
 	/**
@@ -303,7 +327,7 @@ class EditAccount extends SpecialPage {
 			}
 			$this->mStatusMsg = wfMsgExt( $message, array( 'parsemag' ), $params );
 			return false;
-	 }
+		}
 	}
 
 	/**
@@ -335,15 +359,18 @@ class EditAccount extends SpecialPage {
 	}
 
 	/**
-	 * Scrambles the user's password, sets an empty e-mail and marks as disabled
+	 * Clears the user's password, sets an empty e-mail and marks as disabled
 	 *
-	 * @param $user User User account to close
-	 * @param $changeReason String reason for change
-	 * @param $mStatusMsg String Main error message
-	 * @param $mStatusMsg2 String Secondary (non-critical) error message
-	 * @return Boolean: true on success, false on failure
+	 * @param  User    $user         User account to close
+	 * @param  string  $changeReason Reason for change
+	 * @param  string  $mStatusMsg   Main error message
+	 * @param  string  $mStatusMsg2  Secondary (non-critical) error message
+	 * @param  boolean $keepEmail    Optionally keep the email address in a
+	 *                               user option
+	 * @return boolean               true on success, false on failure
 	 */
-	public static function closeAccount( $user = '', $changeReason = '', &$mStatusMsg = '', &$mStatusMsg2 = '' ) {
+	public static function closeAccount( $user = '', $changeReason = '', &$mStatusMsg = '', &$mStatusMsg2 = '', $keepEmail = true ) {
+		global $wgEnableFacebookConnectExt;
 		if ( empty( $user ) ) {
 			throw new Exception( 'User object is invalid.' );
 		}
@@ -371,9 +398,12 @@ class EditAccount extends SpecialPage {
 		}
 
 		# close account and invalidate cache + cluster data
-		Wikia::invalidateUser( $user, true, true );
+		Wikia::invalidateUser( $user, true, $keepEmail, true );
+		if ( !empty( $wgEnableFacebookConnectExt ) ) {
+			self::disconnectFBConnect( $user );
+		}
 
-		if ( $user->getEmail() == ''  ) {
+		if ( $user->getEmail() == '' ) {
 			$title = Title::newFromText( 'EditAccount', NS_SPECIAL );
 			// Log what was done
 			$log = new LogPage( 'editaccnt' );
@@ -387,6 +417,19 @@ class EditAccount extends SpecialPage {
 			// There were errors...inform the user about those
 			$mStatusMsg = wfMessage( 'editaccount-error-close', $user->mName )->plain();
 			return false;
+		}
+	}
+
+	/**
+	 * Disconnect Facebook account from Wikia account
+	 *
+	 * @param  User   $user The user account to disconnect
+	 * @return void
+	 */
+	public static function disconnectFBConnect( User $user ) {
+		$fbIds = FBConnectDB::getFacebookIDs( $user );
+		if ( !empty( $fbIds ) ) {
+			FBConnectDB::removeFacebookID( $user );
 		}
 	}
 
@@ -432,6 +475,37 @@ class EditAccount extends SpecialPage {
 		$this->mUser->saveSettings();
 
 		$this->mStatusMsg = wfMsg( 'editaccount-success-toggleadopt', $this->mUser->mName );
+
+		return true;
+	}
+
+	private function isClosureRequested() {
+		global $wgEnableCloseMyAccountExt;
+
+		if ( !empty( $wgEnableCloseMyAccountExt ) ) {
+			$closeAccountHelper = new CloseMyAccountHelper();
+			return $closeAccountHelper->isScheduledForClosure( $this->mUser ) &&
+				!$closeAccountHelper->isClosed( $this->mUser );
+		}
+
+		return false;
+	}
+
+	private function clearClosureRequest() {
+		global $wgEnableCloseMyAccountExt;
+
+		if ( !empty( $wgEnableCloseMyAccountExt ) ) {
+			$closeAccountHelper = new CloseMyAccountHelper();
+			$result = $closeAccountHelper->reactivateAccount( $this->mUser );
+
+			if ( !$result ) {
+				$this->mStatusMsg = $this->msg( 'editaccount-error-clearclosurerequest' )->text();
+			} else {
+				$this->mStatusMsg = $this->msg( 'editaccount-success-clearclosurerequest', $this->mUser->getName() )->text();
+			}
+
+			return $result;
+		}
 
 		return true;
 	}

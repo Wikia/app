@@ -173,9 +173,11 @@ $messages['ia'] = array(
 
 /** Indonesian (Bahasa Indonesia)
  * @author C5st4wr6ch
+ * @author Riemogerz
  */
 $messages['id'] = array(
 	'campfire-page-header' => '$1 dari $2',
+	'campfire-licensed-under' => 'Lisensi di bawah $1',
 );
 
 /** Italian (italiano)
@@ -198,6 +200,7 @@ $messages['ko'] = array(
  */
 $messages['lb'] = array(
 	'campfire-page-header' => '$1 vum $2',
+	'campfire-licensed-under' => 'Lizenséiert ënner $1',
 );
 
 /** Macedonian (македонски)
@@ -296,6 +299,14 @@ $messages['ru'] = array(
 $messages['sv'] = array(
 	'campfire-page-header' => '$1 från $2',
 	'campfire-licensed-under' => 'Gjord tillgänglig under licensen $1',
+);
+
+/** Telugu (తెలుగు)
+ * @author Chaduvari
+ */
+$messages['te'] = array(
+	'campfire-page-header' => '$2 నుండి $1',
+	'campfire-licensed-under' => '$1 లైసెన్సుకు లోబడి',
 );
 
 /** Tagalog (Tagalog)

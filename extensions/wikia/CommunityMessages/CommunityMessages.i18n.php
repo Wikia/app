@@ -341,6 +341,13 @@ $messages['sv'] = array(
 	'communitymessages-notice-msg' => '[[Special:WikiActivity|Gemenskapsmeddelanden har uppdaterats]].',
 );
 
+/** Telugu (తెలుగు)
+ * @author Chaduvari
+ */
+$messages['te'] = array(
+	'communitymessages-notice-msg' => '[[Special:WikiActivity|సామూహిక సందేశాలు తాజాకరించబడింది]].',
+);
+
 /** Tagalog (Tagalog)
  * @author AnakngAraw
  */

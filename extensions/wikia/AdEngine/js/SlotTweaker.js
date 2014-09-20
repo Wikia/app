@@ -1,24 +1,46 @@
-var SlotTweaker = function(log, document, window) {
+/*global define*/
+define('ext.wikia.adEngine.slotTweaker', [
+	'wikia.log',
+	'wikia.document',
+	'wikia.window'
+], function (log, document, window) {
 	'use strict';
 
-	var logGroup = 'SlotTweaker'
-		, addDefaultHeight, removeClass, removeDefaultHeight, hide, show, removeTopButtonIfNeeded
-		, defaultHeightClass = 'default-height'
-		, rclass = /[\t\r\n]/g
-		, isMedrec, hideSelfServeUrl
-		, isLeaderboard, isStandardLeaderboardSize, adjustLeaderboardSize
-		, standardLeaderboardSizeClass = 'standard-leaderboard'
-	;
+	var logGroup = 'ext.wikia.adEngine.slotTweaker',
+		defaultHeightClass = 'default-height',
+		rclass = /[\t\r\n]/g,
+		standardLeaderboardSizeClass = 'standard-leaderboard';
 
-	removeClass = function(element, cls) {
-		var elClasses = ' ' + element.className.replace(rclass, ' ') + ' '
-			, newClasses = elClasses.replace(' ' + cls + ' ', ' ');
+	function removeClass(element, cls) {
+		var elClasses = ' ' + element.className.replace(rclass, ' ') + ' ',
+			newClasses = elClasses.replace(' ' + cls + ' ', ' ');
 
 		log(['removeClass ' + cls, element], 8, logGroup);
 		element.className = newClasses;
-	};
+	}
 
-	removeDefaultHeight = function(slotname) {
+	// TODO: called always with usingClass=true
+	function hide(slotname) {
+		log('hide ' + slotname + ' using class hidden', 6, logGroup);
+
+		var slot = document.getElementById(slotname);
+
+		if (slot) {
+			slot.className += ' hidden';
+		}
+	}
+
+	function show(slotname) {
+		log('hide ' + slotname + ' using class hidden', 6, logGroup);
+
+		var slot = document.getElementById(slotname);
+
+		if (slot) {
+			removeClass(slot, 'hidden');
+		}
+	}
+
+	function removeDefaultHeight(slotname) {
 		var slot = document.getElementById(slotname);
 
 		log('removeDefaultHeight ' + slotname, 6, logGroup);
@@ -26,33 +48,18 @@ var SlotTweaker = function(log, document, window) {
 		if (slot) {
 			removeClass(slot, defaultHeightClass);
 		}
-	};
+	}
 
-	isMedrec = function (slotname) {
-		return slotname.match(/TOP_RIGHT_BOXAD/);
-	};
-
-	hideSelfServeUrl = function (slotname) {
-		var selfServeUrl = document.getElementsByClassName('SelfServeUrl');
-		if (isMedrec(slotname)) {
-			if (selfServeUrl.length > 0) {
-				selfServeUrl[0].className += ' hidden';
-			}
-		}
-	};
-
-	isLeaderboard = function (slotname) {
+	function isLeaderboard(slotname) {
 		return slotname.indexOf('LEADERBOARD') !== -1;
-	};
+	}
 
-	isStandardLeaderboardSize = function (slotname) {
+	function isStandardLeaderboardSize(slotname) {
 		var slot = document.getElementById(slotname),
 			isStandardSize;
 
 		if (slot) {
-			isStandardSize = slot.offsetHeight >= 90
-				&& slot.offsetHeight <= 95
-				&& slot.offsetWidth <= 728;
+			isStandardSize = slot.offsetHeight >= 90 && slot.offsetHeight <= 95 && slot.offsetWidth <= 728;
 
 			log(
 				['isStandardLeaderboardSize', slotname, slot.offsetWidth + 'x' + slot.offsetHeight, isStandardSize],
@@ -63,9 +70,9 @@ var SlotTweaker = function(log, document, window) {
 			return isStandardSize;
 		}
 		log('isStandardLeaderboardSize: ' + slotname + ' missing', 3, logGroup);
-	};
+	}
 
-	addDefaultHeight = function(slotname) {
+	function addDefaultHeight(slotname) {
 		var slot = document.getElementById(slotname);
 
 		log('addDefaultHeight ' + slotname, 6, logGroup);
@@ -73,19 +80,19 @@ var SlotTweaker = function(log, document, window) {
 		if (slot) {
 			slot.className += ' ' + defaultHeightClass;
 		}
-	};
+	}
 
 	// TODO: fix it, it's a hack!
-	adjustLeaderboardSize = function(slotname) {
+	function adjustLeaderboardSize(slotname) {
 		var slot = document.getElementById(slotname);
 
 		if (isLeaderboard(slotname) && isStandardLeaderboardSize(slotname)) {
 			slot.className += ' ' + standardLeaderboardSizeClass;
 		}
-	};
+	}
 
 	// TODO: fix it, it's a hack!
-	removeTopButtonIfNeeded = function(slotname) {
+	function removeTopButtonIfNeeded(slotname) {
 		if (isLeaderboard(slotname) && !isStandardLeaderboardSize(slotname)) {
 			log('removing TOP_BUTTON_WIDE', 3, logGroup);
 			hide('TOP_BUTTON_WIDE');
@@ -94,35 +101,7 @@ var SlotTweaker = function(log, document, window) {
 			log('pushing TOP_BUTTON_WIDE.force to Liftium2 queue', 2, logGroup);
 			window.adslots2.push(['TOP_BUTTON_WIDE.force', null, 'Liftium2']);
 		}
-	};
-
-	hide = function(slotname, usingClass) {
-		log('hide ' + slotname + (usingClass ? ' using class hidden' : ' using display: none'), 6, logGroup);
-
-		var slot = document.getElementById(slotname);
-
-		if (slot) {
-			if (usingClass) {
-				slot.className += ' hidden';
-			} else {
-				slot.style.display = 'none';
-			}
-		}
-	};
-
-	show = function(slotname, usingClass) {
-		log('hide ' + slotname + (usingClass ? ' using class hidden' : ' using display: none'), 6, logGroup);
-
-		var slot = document.getElementById(slotname);
-
-		if (slot) {
-			if (usingClass) {
-				removeClass(slot, 'hidden');
-			} else {
-				throw 'Showing slot not based on hidden class unsupported';
-			}
-		}
-	};
+	}
 
 	return {
 		addDefaultHeight: addDefaultHeight,
@@ -130,7 +109,6 @@ var SlotTweaker = function(log, document, window) {
 		removeTopButtonIfNeeded: removeTopButtonIfNeeded,
 		adjustLeaderboardSize: adjustLeaderboardSize,
 		hide: hide,
-		hideSelfServeUrl : hideSelfServeUrl,
 		show: show
 	};
-};
+});

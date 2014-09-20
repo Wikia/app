@@ -269,7 +269,7 @@ class UserIdentityBox {
 	 * @param integer $wikiId
 	 * @return String
 	 */
-	private function hasUserEditedMastheadBefore($wikiId) {
+	protected function hasUserEditedMastheadBefore($wikiId) {
 		return $this->user->getOption(self::USER_EDITED_MASTHEAD_PROPERTY . $wikiId, false);
 	}
 
@@ -291,9 +291,12 @@ class UserIdentityBox {
 					$data->$option = $this->doParserFilter($data->$option);
 
 					//phalanx filtering; bugId:10233
-					if ($option !== 'name') {
+					// For all options except `name`, if the spam check fails,
+					// then empty the option value. `name` is checked below as
+					// part of the User object
+					if ($option !== 'name' && !$this->doSpamCheck($data->$option)) {
 						//bugId:21358
-						$data->$option = $this->doPhalanxFilter($data->$option);
+						$data->$option = '';
 					}
 
 					//char limit added; bugId:15593
@@ -333,11 +336,15 @@ class UserIdentityBox {
 
 			if (isset($data->name)) {
 				//phalanx filtering; bugId:21358
-				$data->name = $this->doPhalanxFilter($data->name, Phalanx::TYPE_USER);
-				//char limit added; bugId:15593
-				$data->name = mb_substr($data->name, 0, self::USER_NAME_CHAR_LIMIT);
+				$newName = '';
+				if ($this->doSpamCheck(User::newFromName($data->name))) {
+					// if a would-be user passes the spam check, truncate and
+					// use the name given by the user
+					//char limit added; bugId:15593
+					$newName = mb_substr($data->name, 0, self::USER_NAME_CHAR_LIMIT);
+				}
 
-				$this->user->setRealName($data->name);
+				$this->user->setRealName($newName);
 				$changed = true;
 			}
 		}
@@ -385,22 +392,20 @@ class UserIdentityBox {
 	}
 
 	/**
-	 * @brief Uses Phalanx to filter spam texts
+	 * @brief Run the `SpamFilterCheck` hook over the content
 	 *
 	 * @param string $text the text to be filtered
-	 * @param string $type one of Phalanx static names consts: TYPE_CONTENT, TYPE_SUMMARY, TYPE_TITLE, TYPE_USER, TYPE_ANSWERS_QUESTION_TITLE, TYPE_ANSWERS_RECENT_QUESTIONS, TYPE_WIKI_CREATION, TYPE_COOKIE, TYPE_EMAIL; if $type is null it'll set to Phalanx::TYPE_CONTENT
 	 *
-	 * @return string empty string if text was blocked; given text otherwise
-	 * @FIXME this needs to be MOVED to Phalanx and called using hooks
+	 * @return boolean if subject passes spam check
 	 */
-	private function doPhalanxFilter( $text, $type = Phalanx::TYPE_CONTENT ) {
+	private function doSpamCheck( $spamSubject ) {
 		wfProfileIn(__METHOD__);
 
-		$blockData = array();
-		$res = wfRunHooks('SpamFilterCheck', array($text, $type, &$blockData));
+		$_ = array();
+		$res = wfRunHooks('SpamFilterCheck', array($spamSubject, null, &$_));
 
 		wfProfileOut(__METHOD__);
-		return $res === true ? $text : '';
+		return $res;
 	}
 
 	/**

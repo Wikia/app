@@ -4,11 +4,18 @@
  *
  * @author Federico "Lox" Lucignano <federico@wikia-inc.com>
  */
-use Wikia\Search\Config, Wikia\Search\QueryService\Factory, Wikia\Search\QueryService\DependencyContainer;
+use Wikia\Search\Config;
+use Wikia\Search\QueryService\Factory;
+use Wikia\Search\QueryService\DependencyContainer;
+use Wikia\Util\GlobalStateWrapper;
 
 class ArticlesApiController extends WikiaApiController {
 
-	const CACHE_VERSION = 15;
+	const CACHE_VERSION = 16;
+
+	const POPULAR_ARTICLES_PER_WIKI = 10;
+	const POPULAR_ARTICLES_NAMESPACE = 0;
+	const TRENDING_ARTICLES_LIMIT = 100;
 
 	const MAX_ITEMS = 250;
 	const ITEMS_PER_BATCH = 25;
@@ -29,6 +36,7 @@ class ArticlesApiController extends WikiaApiController {
 	const PARAMETER_EXPAND = 'expand';
 	const PARAMETER_LANGUAGES = 'lang';
 	const PARAMETER_LIMIT = 'limit';
+	const PARAM_ARTICLE_QUALITY = 'minArticleQuality';
 
 	const DEFAULT_WIDTH = 200;
 	const DEFAULT_HEIGHT = 200;
@@ -40,6 +48,7 @@ class ArticlesApiController extends WikiaApiController {
 	const CATEGORY_CACHE_ID = 'category';
 	const ARTICLE_CACHE_ID = 'article';
 	const DETAILS_CACHE_ID = 'details';
+	const POPULAR_CACHE_ID = 'popular';
 	const PAGE_CACHE_ID = 'page';
 	const NEW_ARTICLES_CACHE_ID  = 'new-articles';
 
@@ -52,6 +61,36 @@ class ArticlesApiController extends WikiaApiController {
 	const NEW_ARTICLES_VARNISH_CACHE_EXPIRATION = 86400; //24 hours
 	const SIMPLE_JSON_VARNISH_CACHE_EXPIRATION = 86400; //24 hours
 	const SIMPLE_JSON_ARTICLE_ID_PARAMETER_NAME = "id";
+	const SIMPLE_JSON_ARTICLE_TITLE_PARAMETER_NAME = "title";
+
+	private $imageDimensionFields = [
+		'width',
+		'height'
+	];
+
+	const PARAMETER_BASE_ARTICLE_ID = 'baseArticleId';
+
+	private $excludeNamespacesFromCategoryMembersDBQuery = false;
+	
+	public function __construct(){
+		parent::__construct();
+		$this->setOutputFieldTypes(
+			[
+				"width" => self::OUTPUT_FIELD_CAST_NULLS | self::OUTPUT_FIELD_TYPE_INT,
+				"height" => self::OUTPUT_FIELD_CAST_NULLS | self::OUTPUT_FIELD_TYPE_INT
+			]
+		);
+	}
+
+	public function getMetadataCacheTime( $omitExpandParam = false ) {
+		if (
+			!empty( $this->wg->EnablePOIExt )
+			&&  $this->request->getBool( static::PARAMETER_EXPAND, $omitExpandParam )
+		) {
+			return PalantirApiController::METADATA_CACHE_EXPIRATION;
+		}
+		return self::CLIENT_CACHE_VALIDITY;
+	}
 
 	/**
 	 * Get the top articles by pageviews optionally filtering by category and/or namespaces
@@ -74,6 +113,12 @@ class ArticlesApiController extends WikiaApiController {
 		$namespaces = self::processNamespaces( $this->request->getArray( self::PARAMETER_NAMESPACES, null ), __METHOD__ );
 		$category = $this->request->getVal( self::PARAMETER_CATEGORY, null );
 		$expand = $this->request->getBool( static::PARAMETER_EXPAND, false );
+		$limit = $this->request->getInt( static::PARAMETER_LIMIT, 0 );
+		$baseArticleId = $this->getRequest()->getVal( self::PARAMETER_BASE_ARTICLE_ID, false );
+		if( $baseArticleId !== false ) {
+			$this->validateBaseArticleIdOrThrow( $baseArticleId );
+		}
+
 		$ids = null;
 
 		if ( !empty( $category )) {
@@ -92,6 +137,7 @@ class ArticlesApiController extends WikiaApiController {
 					});
 				}
 			} else {
+				wfProfileOut( __METHOD__ );
 				throw new InvalidParameterApiException( self::PARAMETER_CATEGORY );
 			}
 		}
@@ -106,6 +152,20 @@ class ArticlesApiController extends WikiaApiController {
 			self::MAX_ITEMS + 1 //compensation for Main Page
 		);
 
+		if ( empty( $articles ) ) {
+			$fallbackDate = DataMartService::findLastRollupsDate( DataMartService::PERIOD_ID_WEEKLY );
+			if ( $fallbackDate ) {
+				$articles = DataMartService::getTopArticlesByPageview(
+					$this->wg->CityId,
+					$ids,
+					$namespaces,
+					false,
+					self::MAX_ITEMS + 1, //compensation for Main Page
+					$fallbackDate
+				);
+			}
+		}
+
 		$collection = [];
 
 		if ( !empty( $articles ) ) {
@@ -114,78 +174,86 @@ class ArticlesApiController extends WikiaApiController {
 				unset( $articles[ $mainPageId ] );
 			}
 			$articleIds = array_keys( $articles );
-			if ( $expand ) {
-				$params = $this->getDetailsParams();
-				$collection = $this->getArticlesDetails( $articleIds, $params[ 'titleKeys' ], $params[ 'width' ], $params[ 'height' ], $params[ 'length' ], true );
-			} else {
-				$ids = [];
+			$ids = [];
+			foreach ( array_keys( $articles ) as $i ) {
 
-				foreach ( array_keys( $articles ) as $i ) {
-
-					if ( $i == $mainPageId ) {
-						continue;
-					}
-
-					//data is cached on a per-article basis
-					//to avoid one article requiring purging
-					//the whole collection
-					$cache = $this->wg->Memc->get( self::getCacheKey( $i, self::ARTICLE_CACHE_ID ) );
-
-					if ( !is_array( $cache ) ) {
-						$ids[] = $i;
-					} else {
-						$collection[ $cache[ 'id' ] ] = $cache;
-					}
+				if ( $i == $mainPageId ) {
+					continue;
 				}
 
-				$articles = null;
+				//data is cached on a per-article basis
+				//to avoid one article requiring purging
+				//the whole collection
+				$cache = $this->wg->Memc->get( self::getCacheKey( $i, self::ARTICLE_CACHE_ID ) );
 
-				if ( count( $ids ) > 0 ) {
-					$titles = Title::newFromIDs( $ids );
-
-					if ( !empty( $titles ) ) {
-						foreach ( $titles as $t ) {
-							$id = $t->getArticleID();
-
-							$article = [
-								'id' => $id,
-								'title' => $t->getText(),
-								'url' => $t->getLocalURL(),
-								'ns' => $t->getNamespace()
-							];
-
-							$collection[ $id ] = $article;
-
-							$this->wg->Memc->set( self::getCacheKey( $id, self::ARTICLE_CACHE_ID ), $article, 86400 );
-						}
-					}
-
-					$titles = null;
+				if ( !is_array( $cache ) ) {
+					$ids[] = $i;
+				} else {
+					$collection[ $cache[ 'id' ] ] = $cache;
 				}
-
-				//sort articles correctly
-				$result = [];
-				foreach( $articleIds as $id ) {
-					if ( isset( $collection[ $id ] ) ) {
-						$result[] = $collection[ $id ];
-					}
-				}
-				$collection = $result;
 			}
+
+			$articles = null;
+
+			if ( count( $ids ) > 0 ) {
+				$titles = Title::newFromIDs( $ids );
+
+				if ( !empty( $titles ) ) {
+					foreach ( $titles as $t ) {
+						$id = $t->getArticleID();
+
+						$article = [
+							'id' => $id,
+							'title' => $t->getText(),
+							'url' => $t->getLocalURL(),
+							'ns' => $t->getNamespace()
+						];
+
+						$collection[ $id ] = $article;
+
+						$this->wg->Memc->set( self::getCacheKey( $id, self::ARTICLE_CACHE_ID ), $article, 86400 );
+					}
+				}
+
+				$titles = null;
+			}
+
+			//sort articles correctly
+			$result = [];
+			foreach( $articleIds as $id ) {
+				if ( isset( $collection[ $id ] ) ) {
+					$result[] = $collection[ $id ];
+				}
+			}
+			$collection = $result;
 		} else {
 			wfProfileOut( __METHOD__ );
-			throw new NotFoundApiException();
+			if( $baseArticleId === false ) {
+				throw new NotFoundApiException();
+			}
 		}
 
-		$this->response->setCacheValidity(self::CLIENT_CACHE_VALIDITY);
-
-		//if no mainpages were found and deleted we want to always return collection of self::MAX_ITEMS items
-		if ( count( $collection ) > self::MAX_ITEMS ) {
-			$collection = array_slice( $collection, 0, self::MAX_ITEMS );
+		if( $baseArticleId !== false ) {
+			$collection = $this->rerankPopularToArticle( $collection, $baseArticleId );
 		}
 
-		$this->response->setVal( 'items', $collection );
-		$this->response->setVal( 'basepath', $this->wg->Server );
+		$limitCollectionSize = self::MAX_ITEMS;
+		if ( $limit > 0 && $limit < self::MAX_ITEMS ) {
+			$limitCollectionSize = $limit;
+		}
+		if ( count( $collection ) > $limitCollectionSize ) {
+			$collection = array_slice( $collection, 0, $limitCollectionSize );
+		}
+
+		if ( $expand ) {
+			$collection = $this->expandArticlesDetails( $collection );
+		}
+
+		$this->setResponseData(
+			[ 'basepath' => $this->wg->Server, 'items' => $collection ],
+			[ 'imgFields'=> 'thumbnail', 'urlFields' => [ 'thumbnail', 'url' ] ],
+			$this->getMetadataCacheTime()
+		);
 
 		$batches = null;
 		wfProfileOut( __METHOD__ );
@@ -216,11 +284,11 @@ class ArticlesApiController extends WikiaApiController {
 					}
 			}
 		}
-
-		$this->response->setVal( 'basepath', $this->wg->Server );
-		$this->response->setVal( 'items', $mostLinkedOutput );
-
-		$this->response->setCacheValidity(self::CLIENT_CACHE_VALIDITY);
+		$this->setResponseData(
+			[ 'basepath' => $this->wg->Server, 'items' => $mostLinkedOutput ],
+			[ 'imgFields'=> 'thumbnail', 'urlFields' => [ 'thumbnail', 'url' ] ],
+			$this->getMetadataCacheTime()
+		);
 	}
 
 	/**
@@ -251,6 +319,7 @@ class ArticlesApiController extends WikiaApiController {
 			}
 
 			if ( !empty( $langs ) &&  count($langs) > self::LANGUAGES_LIMIT) {
+				wfProfileOut( __METHOD__ );
 				throw new LimitExceededApiException( self::PARAMETER_LANGUAGES, self::LANGUAGES_LIMIT );
 			}
 
@@ -267,6 +336,7 @@ class ArticlesApiController extends WikiaApiController {
 			$wikisCount = count( $wikis );
 
 			if ( $wikisCount < 1 ) {
+				wfProfileOut( __METHOD__ );
 				throw new NotFoundApiException();
 			}
 
@@ -317,6 +387,7 @@ class ArticlesApiController extends WikiaApiController {
 			wfProfileOut( __METHOD__ );
 
 			if ( $found == 0 ) {
+				wfProfileOut( __METHOD__ );
 				throw new NotFoundApiException();
 			}
 
@@ -333,7 +404,7 @@ class ArticlesApiController extends WikiaApiController {
 
 		$ns = $this->request->getArray( self::PARAMETER_NAMESPACES );
 		$limit = $this->request->getInt(self::PARAMETER_LIMIT, self::DEFAULT_NEW_ARTICLES_LIMIT);
-
+		$minArticleQuality = $this->request->getInt( self::PARAM_ARTICLE_QUALITY );
 		if ( $limit < 1 ) {
 			throw new InvalidParameterApiException( self::PARAMETER_LIMIT );
 		}
@@ -351,10 +422,10 @@ class ArticlesApiController extends WikiaApiController {
 			$ns = array_unique( $ns );
 		}
 
-		$key = self::getCacheKey( self::NEW_ARTICLES_CACHE_ID, '', [ implode( '-', $ns ) ] );
+		$key = self::getCacheKey( self::NEW_ARTICLES_CACHE_ID, '', [ implode( '-', $ns ) , $minArticleQuality ] );
 		$results = $this->wg->Memc->get( $key );
 		if ( $results === false ) {
-			$solrResults = $this->getNewArticlesFromSolr( $ns, self::MAX_NEW_ARTICLES_LIMIT );
+			$solrResults = $this->getNewArticlesFromSolr( $ns, self::MAX_NEW_ARTICLES_LIMIT, $minArticleQuality );
 			if ( empty( $solrResults ) ) {
 				$results = [];
 			} else {
@@ -385,16 +456,17 @@ class ArticlesApiController extends WikiaApiController {
 			throw new NotFoundApiException( 'No members' );
 		}
 
-		$response = $this->getResponse();
-		$response->setValues( [ 'items' => array_slice( $results, 0, $limit ), 'basepath' => $this->wg->Server ] );
-
-		$response->setCacheValidity(self::NEW_ARTICLES_VARNISH_CACHE_EXPIRATION);
-
+		$results = array_slice( $results, 0, $limit );
+		$this->setResponseData(
+			[ 'items' => $results, 'basepath' => $this->wg->Server ],
+			[ 'imgFields'=> 'thumbnail', 'urlFields' => [ 'thumbnail', 'url', 'avatar' ] ],
+			self::NEW_ARTICLES_VARNISH_CACHE_EXPIRATION
+		);
 		wfProfileOut( __METHOD__ );
 	}
 
 
-	protected function getNewArticlesFromSolr( $ns, $limit ) {
+	protected function getNewArticlesFromSolr( $ns, $limit, $minArticleQuality) {
 		$searchConfig = new Wikia\Search\Config;
 		$searchConfig->setQuery( '*' )
 			->setLimit( $limit )
@@ -402,11 +474,12 @@ class ArticlesApiController extends WikiaApiController {
 			->setOnWiki( true )
 			->setWikiId( $this->wg->wgCityId )
 			->setNamespaces( $ns )
+			->setMinArticleQuality( $minArticleQuality )
 			->setRank( \Wikia\Search\Config::RANK_NEWEST_PAGE_ID )
 			->setRequestedFields( [ 'html_en' ] );
 
 		$results = ( new Factory )->getFromConfig( $searchConfig )->searchAsApi(
-			[ 'pageid' => 'id', 'ns', 'title_en' => 'title', 'html_en' => 'abstract' ],
+			[ 'pageid' => 'id', 'ns', 'title_en' => 'title', 'html_en' => 'abstract' , 'article_quality_i' => 'quality' ],
 			false, 'pageid' );
 
 		return $results;
@@ -459,7 +532,21 @@ class ArticlesApiController extends WikiaApiController {
 					$namespaces = implode( '|', $namespaces );
 				}
 
-				$articles = self::getCategoryMembers( $category->getFullText(), $limit, $offset, $namespaces );
+				/**
+				 * Wrapping global wgMiserMode.
+				 *
+				 * wgMiserMode = true (default) changes the behavior of categorymembers mediawiki API, causing it to
+				 * filter by namespace after making database query constrained by $limit and thus resulting
+				 * in Api returning fewer than $limit results
+				 *
+				 * wgMiserMode = false filters on DB level
+				 */
+				$wrapper = new GlobalStateWrapper( [
+					'wgMiserMode' => $this->excludeNamespacesFromCategoryMembersDBQuery
+				] );
+				$articles = $wrapper->wrap( function () use ( $category, $limit, $offset, $namespaces ) {
+					return self::getCategoryMembers( $category->getFullText(), $limit, $offset, $namespaces );
+				} );
 			} else {
 				wfProfileOut( __METHOD__ );
 				throw new InvalidParameterApiException( self::PARAMETER_CATEGORY );
@@ -536,20 +623,21 @@ class ArticlesApiController extends WikiaApiController {
 					}
 				}
 			}
-
-			$this->response->setVal( 'items', $ret );
+			$responseValues = [ 'items' => $ret, 'basepath' => $this->wg->Server ];
 
 			if ( !empty( $articles[1] ) ) {
-				$this->response->setVal( 'offset', $articles[1] );
+				$responseValues[ 'offset' ] = $articles[ 1 ];
 			}
 
-			$this->response->setVal( 'basepath', $this->wg->Server );
+			$this->setResponseData(
+				$responseValues,
+				[ 'imgFields'=> 'thumbnail', 'urlFields' => [ 'thumbnail', 'url' ] ],
+				$this->getMetadataCacheTime()
+			);
 		} else {
 			wfProfileOut( __METHOD__ );
 			throw new NotFoundApiException( 'No members' );
 		}
-
-		$this->response->setCacheValidity(self::CLIENT_CACHE_VALIDITY);
 
 		wfProfileOut( __METHOD__ );
 	}	
@@ -570,6 +658,7 @@ class ArticlesApiController extends WikiaApiController {
 	 */
 	public function getDetails() {
 		wfProfileIn( __METHOD__ );
+		$this->setOutputFieldType( "items", self::OUTPUT_FIELD_TYPE_OBJECT );
 
 		//get optional params for details
 		$params = $this->getDetailsParams();
@@ -593,9 +682,11 @@ class ArticlesApiController extends WikiaApiController {
 		 * Varnish/Browser caching not appliable for
 		 * for this method's data to be kept up-to-date
 		 */
-
-		$this->response->setVal( 'items', $collection );
-		$this->response->setVal( 'basepath', $this->wg->Server );
+		$this->setResponseData(
+			[ 'items' => $collection, 'basepath' => $this->wg->Server ],
+			[ 'imgFields'=> 'thumbnail', 'urlFields' => [ 'thumbnail', 'url' ] ],
+			$this->getMetadataCacheTime( true )
+		);
 
 		$collection = null;
 		wfProfileOut( __METHOD__ );
@@ -608,6 +699,24 @@ class ArticlesApiController extends WikiaApiController {
 			'length' => $this->request->getInt( static::PARAMETER_ABSTRACT, static::DEFAULT_ABSTRACT_LEN ),
 			'titleKeys' => $this->request->getArray( self::PARAMETER_TITLES )
 		];
+	}
+
+	protected function appendMetadata( $collection ) {
+		if ( !empty( $this->wg->EnablePOIExt ) ) {
+			$helper = new QuestDetailsSolrHelper();
+			$questDetailsSearch = new QuestDetailsSearchService();
+			$metadata = $questDetailsSearch->newQuery()
+				->withIds( array_keys( $collection ), $this->wg->CityId )
+				->search();
+			$metadata = $helper->processMetadata( $metadata );
+			foreach ( $collection as &$item ) {
+				$key = $this->wg->CityId ."_" . $item[ "id" ];
+				if ( isset( $metadata[ $key ] ) ) {
+					$item[ "metadata" ] = $metadata[ $key ];
+				}
+			}
+		}
+		return $collection;
 	}
 
 	protected function getArticlesDetails( $articleIds, $articleKeys = [], $width = 0, $height = 0, $abstract = 0, $strict = false ) {
@@ -708,6 +817,8 @@ class ArticlesApiController extends WikiaApiController {
 			}
 		}
 
+		$collection = $this->appendMetadata( $collection );
+
 		$thumbnails = null;
 		//if strict return to original ids order
 		if ( $strict ) {
@@ -757,12 +868,17 @@ class ArticlesApiController extends WikiaApiController {
 				$data = [ 'thumbnail' => null, 'original_dimensions' => null ];
 				if ( isset( $images[ $id ] ) ) {
 					$data['thumbnail'] = $images[$id][0]['url'];
-					$data['original_dimensions'] = isset( $images[$id][0]['original_dimensions'] ) ?
-						$images[$id][0]['original_dimensions'] : null;
+
+					if( is_array( $images[$id][0]['original_dimensions'] ) ) {
+						$data['original_dimensions'] = $images[$id][0]['original_dimensions'];
+					} else {
+						$data['original_dimensions'] = null;
+					}
 				}
 				$result[ $id ] = $data;
 			}
 		}
+
 		return $result;
 	}
 
@@ -775,6 +891,7 @@ class ArticlesApiController extends WikiaApiController {
 		if ( $file instanceof LocalFile ) {
 			//media type: photo, video
 			if ( WikiaFileHelper::isFileTypeVideo( $file ) ) {
+				/* @var VideoHandler $handler */
 				$handler = VideoHandler::getHandler( $file->getMimeType() );
 				$typeInfo = explode( '/', $file->getMimeType() );
 				$metadata = ( $handler ) ? $handler->getMetadata( true ) : null;
@@ -878,11 +995,298 @@ class ArticlesApiController extends WikiaApiController {
 		$jsonFormatService = new JsonFormatService();
 		$jsonSimple = $jsonFormatService->getSimpleFormatForArticle( $article );
 
-		$response = $this->getResponse();
-		$response->setCacheValidity(self::SIMPLE_JSON_VARNISH_CACHE_EXPIRATION);
+		$this->setResponseData(
+			$jsonSimple,
+			[ 'imgFields'=>'images', 'urlFields' => 'src' ],
+			self::SIMPLE_JSON_VARNISH_CACHE_EXPIRATION
+		);
+	}
 
-		$response->setFormat("json");
-		$response->setData( $jsonSimple );
+	public function getAsJson() {
+		if ( $this->wg->EnableArticleAsJsonApi ) {
+			$articleId = $this->getRequest()->getInt(self::SIMPLE_JSON_ARTICLE_ID_PARAMETER_NAME, NULL);
+			$articleTitle = $this->getRequest()->getVal(self::SIMPLE_JSON_ARTICLE_TITLE_PARAMETER_NAME, NULL);
+			$redirect = $this->request->getVal('redirect');
+
+			if ( !empty( $articleId ) && !empty( $articleTitle ) ) {
+				throw new BadRequestApiException( 'Can\'t use id and title in the same request' );
+			}
+
+			if ( empty( $articleId ) && empty( $articleTitle ) ) {
+				throw new BadRequestApiException( 'You need to pass title or id of an article' );
+			}
+
+			if ( !empty( $articleId ) ) {
+				$article = Article::newFromID( $articleId );
+			} else {
+				$title = Title::newFromText( $articleTitle, NS_MAIN );
+
+				if ( $title instanceof Title && $title->exists() ) {
+					$article = Article::newFromTitle( $title, RequestContext::getMain() );
+				}
+			}
+
+			if ( empty( $article ) ) {
+				throw new NotFoundApiException( "Unable to find any article" );
+			}
+
+			if ( $redirect !== 'no' && $article->getPage()->isRedirect() ) {
+				$article = Article::newFromTitle( $article->getPage()->followRedirect(), RequestContext::getMain() );
+			}
+
+			//Response is based on wikiamobile skin as this already removes inline style
+			//and make response smaller
+			RequestContext::getMain()->setSkin(
+				Skin::newFromKey( 'wikiamobile' )
+			);
+
+			global $wgArticleAsJson;
+			$wgArticleAsJson = true;
+
+			$parsedArticle = $article->getParserOutput();
+
+			$articleContent = json_decode( $parsedArticle->getText() );
+
+			$wgArticleAsJson = false;
+			$categories = [];
+
+			foreach(array_keys( $parsedArticle->getCategories() ) as $category) {
+				$categoryTitle = Title::newFromText( $category, NS_CATEGORY );
+
+				$categories[] = [
+					"title" => $categoryTitle->getText(),
+					"url" => $categoryTitle->getLocalURL()
+				];
+			}
+
+			$result = [
+				'content' => $articleContent->content,
+				'media' => $articleContent->media,
+				'users' => $articleContent->users,
+				'categories' => $categories,
+			];
+
+			$this->setResponseData( $result, '', self::SIMPLE_JSON_VARNISH_CACHE_EXPIRATION );
+		} else {
+			throw new BadRequestApiException( 'This entry point is disabled' );
+		}
+	}
+
+	public function getPopular() {
+		$limit = $this->getRequest()->getInt( self::PARAMETER_LIMIT, self::POPULAR_ARTICLES_PER_WIKI );
+		if ( $limit < 1 || $limit > self::POPULAR_ARTICLES_PER_WIKI ) {
+			throw new OutOfRangeApiException( self::PARAMETER_LIMIT, 1, self::POPULAR_ARTICLES_PER_WIKI );
+		}
+
+		$baseArticleId = $this->getRequest()->getVal( self::PARAMETER_BASE_ARTICLE_ID, false );
+		if( $baseArticleId !== false ) {
+			$this->validateBaseArticleIdOrThrow( $baseArticleId );
+		}
+
+		$expand = $this->request->getBool( static::PARAMETER_EXPAND, false );
+
+		$key = self::getCacheKey( self::POPULAR_CACHE_ID, '', [ $expand, $baseArticleId ] );
+
+		$popular = $this->wg->Memc->get( $key );
+		if ( $popular === false ) {
+			$popular = $this->getResultFromConfig( $this->getConfigFromRequest() );
+
+			if ( $baseArticleId !== false ) {
+				$popular = $this->rerankPopularToArticle( $popular, $baseArticleId );
+			}
+
+			if ( $expand ) {
+				$popular = $this->expandArticlesDetails( $popular );
+			}
+
+			$this->wg->set( $key, $popular, self::CLIENT_CACHE_VALIDITY );
+		}
+
+		$popular = array_slice( $popular, 0, $limit );
+
+		global $wgServer;
+		$this->setResponseData(
+			[ 'items' => $popular, 'basepath' => $wgServer ],
+			[ 'imgFields' => 'thumbnail', 'urlFields' => [ 'thumbnail', 'url' ] ],
+			$this->getMetadataCacheTime()
+		);
+
+	}
+
+
+	protected function expandArticlesDetails( $articles ) {
+		$articleIds = [ ];
+		$params = $this->getDetailsParams();
+		foreach ( $articles as $item ) {
+			$articleIds[ ] = $item[ 'id' ];
+		}
+		$expanded = $this->getArticlesDetails( $articleIds, $params[ 'titleKeys' ], $params[ 'width' ], $params[ 'height' ], $params[ 'length' ], true );
+		return $expanded;
+	}
+
+	/**
+	 * For finding trending articles - we perform reranking of popular articles:
+	 * 1) Extract list of popular articles for given wikia
+	 * 2) Extract links from given article
+	 * 3) Promote that popular articles, to which given article has links (move to top of popular list)
+	 *
+	 * If popular articles were not reranked - it means that
+	 * given article doesn't have links to any popular articles within whole wikia
+	 *
+	 * So, we perform the following fallback:
+	 * 1) Find category to which base article belongs
+	 * 2) Get most popular articles of this category
+	 * 3) Rerank these articles due to links in base article
+	 */
+	protected function rerankPopularToArticle( $popular, $baseArticleId ) {
+		$links = ( new ApiOutboundingLinksService() )->getOutboundingLinks( $baseArticleId );
+		$rerankedPopular = $this->reorderForLinks( $popular, $links );
+
+		$baseArticleTitle = Title::newFromID( $baseArticleId );
+		$baseArticleUrl = $baseArticleTitle->getLocalURL();
+
+		// if base article in the list of popular - remove it from this list
+		$popular = array_filter( $popular, $this->otherUrlThan( $baseArticleUrl ) );
+
+		if ( $rerankedPopular === $popular ) {
+
+			$category = $this->getCategoryOfArticle( $baseArticleId );
+
+			if ( !empty( $category ) ) {
+
+				$popularForCategory = $this->getPopularForCategory( $category );
+
+				// if base article in the list of popular for category - remove it from this list
+				$popularForCategory = array_filter( $popularForCategory, $this->otherUrlThan( $baseArticleUrl ) );
+
+				// collect urls of popular articles for given category
+				$categoryUrls = [ ];
+				foreach( $popularForCategory  as $item ) {
+					$categoryUrls[ ] = $item[ 'url' ];
+				}
+
+				// remove articles from array of popular articles for entire wikia, which have url as popular articles for given category
+				$popular = array_filter( $popular, $this->otherUrlThan( $categoryUrls ) );
+
+				// merge: popular for category + popular for entire wikia
+				$popularForCategory = array_merge( $popularForCategory, $popular );
+
+				$rerankedPopularForCategory = $this->reorderForLinks( $popularForCategory, $links );
+
+				$popular = $rerankedPopularForCategory;
+			}
+
+		} else {
+			$popular = $rerankedPopular;
+		}
+
+		return $popular;
+	}
+
+	/**
+	 * Return function (predicate), which consumes objects, which contains field 'url'
+	 * and compares value of this field with list of $urls
+	 * if this list doesn't contain given url - predicate returns true
+	 *
+	 * This function used for filtering array
+	 */
+	protected function otherUrlThan( $urls ) {
+		if( !is_array( $urls ) ) {
+			$urls = [ $urls ];
+		}
+
+		$hashSet = [ ];
+		foreach( $urls as $url ) {
+			$hashSet[ $url ] = true;
+		}
+
+		return function( $item ) use ( $hashSet ) {
+			$url = $item[ 'url' ];
+			return $hashSet[ $url ] !== true;
+		};
+	}
+
+	protected function getCategoryOfArticle( $articleId ) {
+
+		// querying Solr for all categories for given article
+
+		global $wgCityId;
+
+		$categoriesConfig = ( new Wikia\Search\Config() )
+			->setDirectLuceneQuery( true )
+			->setQuery( 'id:' . $wgCityId . '_' . $articleId )
+			->setLimit( 1 );
+
+		$categories = ( new Factory )->getFromConfig( $categoriesConfig )->searchAsApi( [ 'categories_mv_en' ] );
+
+		if ( !empty( $categories[ 0 ][ 'categories_mv_en' ][ 0 ] ) ) {
+			// returning first category from Solr response
+			return $categories[ 0 ][ 'categories_mv_en' ][ 0 ];
+		}
+
+		return null;
+	}
+
+	protected function getPopularForCategory( $category ) {
+		global $wgCityId;
+
+		$popularForCategoryConfig = ( new Wikia\Search\Config() )
+			->setLimit( self::TRENDING_ARTICLES_LIMIT )
+			->setDirectLuceneQuery( true )
+			->setRank( \Wikia\Search\Config::RANK_MOST_VIEWED )
+			->setQuery( '(wid:' . $wgCityId . ') AND (ns:' . NS_MAIN . ') AND (categories_mv_en:' . $category . ')' );
+
+		$popularForCategory = $this->getResultFromConfig( $popularForCategoryConfig );
+
+		return $popularForCategory;
+	}
+
+	/**
+	 * Adds to solr result localUrl from title
+	 * @param Config $searchConfig
+	 * @return array
+	 * @throws NotFoundApiException
+	 */
+	protected function getResultFromConfig( Wikia\Search\Config $searchConfig ) {
+		$responseValues = ( new Factory )->getFromConfig( $searchConfig )->searchAsApi( [ 'pageid' => 'id', 'title' ] );
+
+		if ( empty( $responseValues ) ) {
+			throw new NotFoundApiException();
+		}
+
+		foreach ( $responseValues as &$item ) {
+			$title = Title::newFromID( $item[ 'id' ] );
+			if ( $title instanceof Title ) {
+				$item[ 'url' ] = $title->getLocalURL();
+			}
+		}
+
+		return $responseValues;
+	}
+
+	/**
+	 * Inspects request and sets config accordingly.
+	 * @return Wikia\Search\Config
+	 */
+	protected function getConfigFromRequest() {
+		$request = $this->getRequest();
+
+		$limit = self::POPULAR_ARTICLES_PER_WIKI;
+		$baseArticleId = $request->getVal( self::PARAMETER_BASE_ARTICLE_ID, false );
+		if( $baseArticleId !== false ) {
+			$limit = self::TRENDING_ARTICLES_LIMIT;
+		}
+
+		$searchConfig = new Wikia\Search\Config;
+		$searchConfig
+			->setLimit( $limit )
+			->setRank( \Wikia\Search\Config::RANK_MOST_VIEWED )
+			->setOnWiki( true )
+			->setNamespaces( [ self::POPULAR_ARTICLES_NAMESPACE ] )
+			->setQuery( '*' )
+			->setMainPage(false);
+
+		return $searchConfig;
 	}
 
 	static private function getCacheKey( $name, $type, $params = '' ) {
@@ -900,5 +1304,87 @@ class ArticlesApiController extends WikiaApiController {
 		$memc = F::app()->wg->Memc;
 		$memc->delete( self::getCacheKey( $id, self::ARTICLE_CACHE_ID ) );
 		$memc->delete( self::getCacheKey( $id, self::DETAILS_CACHE_ID ) );
+	}
+
+	/**
+	 * Reorders array $popular in such way:
+	 * that items, which urls are in array $links - will be moved to the beginning of array.
+	 *
+	 * Example:
+	 *
+	 * Assume that:
+	 * $popular = [ [ url => '1'], [ url => '2'], [ url => '3'], [ url => '4'], [ url => '5'], [ url => '6'] ]
+	 *
+	 * Assume that:
+	 * $links = [ '2', '4', '5', '100', '200' ]
+	 *
+	 * This method will returns the following array:
+	 * [ [ url => '2'], [ url => '4'], [ url => '5'], [ url => '1'], [ url => '3'], [ url => '6'] ]
+	 *
+	 * @param popular - array of objects, which contains field 'url'
+	 * @param links - array of strings
+	 */
+	protected function reorderForLinks( $popular, $links ) {
+		if( empty( $popular ) ) {
+			return [ ];
+		}
+
+		if( empty( $links ) ) {
+			return $popular;
+		}
+
+		$linksHashSet = [ ];
+		foreach( $links as $link ) {
+			$linksHashSet[ $link ] = true;
+		}
+
+		$popularForArticle = [ ];
+		foreach ( $popular as $key => $item ) {
+			$link = $item[ 'url' ];
+			if ( array_key_exists( $link, $linksHashSet ) ) {
+				$popularForArticle[ ] = $item;
+			}
+		}
+
+		foreach ( $popular as $key => $item ) {
+			$link = $item[ 'url' ];
+			if ( !array_key_exists( $link, $linksHashSet ) ) {
+				$popularForArticle[ ] = $item;
+			}
+		}
+		return $popularForArticle;
+	}
+
+	/**
+	 * @param $value boolean
+	 *
+	 * @see wgMiserMode
+	 */
+	public function setExcludeNamespacesFromCategoryMembersDBQuery($value) {
+		$this->excludeNamespacesFromCategoryMembersDBQuery = $value;
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function getExcludeNamespacesFromCategoryMembersDBQuery() {
+		return $this->excludeNamespacesFromCategoryMembersDBQuery;
+	}
+
+	/**
+	 * Checking existence of article with given $baseArtcileId
+	 *
+	 * If provided id corresponds to non-existent article,
+	 * then throwing BadRequestApiException.
+	 *
+	 * @param $baseArticleId
+	 * @throws BadRequestApiException
+	 */
+	protected function validateBaseArticleIdOrThrow( $baseArticleId ) {
+		$baseArticleTitle = Title::newFromID( $baseArticleId );
+		if ( empty( $baseArticleTitle ) ) {
+			$message = wfMessage( 'invalid-parameter-basearticleid', $baseArticleId )->text();
+			throw new BadRequestApiException( $message );
+		}
 	}
 }

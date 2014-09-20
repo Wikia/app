@@ -162,6 +162,7 @@ class SMWNotifyProcessor {
 
 		$notifications = SMWNotifyProcessor::getNotifications();
 		if ( $notifications == null || !is_array( $notifications ) ) {
+			wfProfileOut( 'SMWNotifyProcessor::updateStates (SMW)' );
 			return wfMsg( 'smw_nm_proc_nonoti' );
 		}
 		$result = true;
@@ -198,6 +199,7 @@ class SMWNotifyProcessor {
 
 		$notifications = SMWNotifyProcessor::getNotifications();
 		if ( $notifications == null || !is_array( $notifications ) ) {
+			wfProfileOut( 'SMWNotifyProcessor::updateDelegates (SMW)' );
 			return wfMsg( 'smw_nm_proc_nonoti' );
 		}
 		$result = true;
@@ -237,6 +239,7 @@ class SMWNotifyProcessor {
 
 		$notifications = SMWNotifyProcessor::getNotifications();
 		if ( $notifications == null || !is_array( $notifications ) ) {
+			wfProfileOut( 'SMWNotifyProcessor::updateReportAlls (SMW)' );
 			return wfMsg( 'smw_nm_proc_nonoti' );
 		}
 		$result = true;
@@ -257,7 +260,7 @@ class SMWNotifyProcessor {
 			if ( !$result ) break;
 		}
 
-		wfProfileOut( 'SMWNotifyProcessor::updateStates (SMW)' );
+		wfProfileOut( 'SMWNotifyProcessor::updateReportAlls (SMW)' );
 		return $result ? wfMsg( 'smw_nm_proc_reportsucc' ) : wfMsg( 'smw_nm_proc_reporterr' );
 	}
 
@@ -266,6 +269,7 @@ class SMWNotifyProcessor {
 
 		$notifications = SMWNotifyProcessor::getNotifications();
 		if ( $notifications == null || !is_array( $notifications ) ) {
+			wfProfileOut( 'SMWNotifyProcessor::updateShowAlls (SMW)' );
 			return wfMsg( 'smw_nm_proc_nonoti' );
 		}
 		$result = true;
@@ -286,7 +290,7 @@ class SMWNotifyProcessor {
 			if ( !$result ) break;
 		}
 
-		wfProfileOut( 'SMWNotifyProcessor::updateStates (SMW)' );
+		wfProfileOut( 'SMWNotifyProcessor::updateShowAlls (SMW)' );
 		return $result ? wfMsg( 'smw_nm_proc_showsucc' ) : wfMsg( 'smw_nm_proc_showerr' );
 	}
 
@@ -1642,14 +1646,20 @@ class SMWNotifyUpdate {
 						'body' => wfMsg( 'smw_nm_hint_mail_body', $name, $msg ),
 						'replyto' => new MailAddress( $wgEmergencyContact, 'Admin' ) );
 
-					$nm_send_jobs[] = new SMW_NMSendMailJob( $this->m_title, $params );
+					// wikia change start - jobqueue migration
+					$task = new \Wikia\Tasks\Tasks\JobWrapperTask();
+					$task->call( 'SMW_NMSendMailJob', $this->m_title, $params );
+					$nm_send_jobs[] = $task;
+					// wikia change end
 				}
 			}
 		}
 
 		if ( $wgEnotifyMeJob ) {
 			if ( count( $nm_send_jobs ) ) {
-				Job :: batchInsert( $nm_send_jobs );
+				// wikia change start - jobqueue migration
+				\Wikia\Tasks\Tasks\BaseTask::batch( $nm_send_jobs );
+				// wikia change end
 			}
 		} else {
 			global $phpInterpreter;

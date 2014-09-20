@@ -1,0 +1,17 @@
+{
+	"@metadata": {
+		"authors": [
+			"Lam-ang"
+		]
+	},
+	"tag-visualeditor": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor]]",
+	"tag-visualeditor-description": "Inurnos nga inusar ti [[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor]]",
+	"tag-visualeditor-needcheck": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor: Kitaen]]",
+	"tag-visualeditor-needcheck-description": "Ti urnos nga inaramid nga inusar ti [[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor]] a ti sistema ket nakaduktal ti wikitext nga adda kadagiti mabalin a saan a naikeddeng a panagbalbaliw.",
+	"tag-visualeditor-switched": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor: Sinukatan]]",
+	"tag-visualeditor-switched-description": "Ti agar-aramat ket nangrugi nga agusar ti VisualEditor kalpasanna ket sinukatanna iti editor ti wikitext.",
+	"visualeditor-feedback-link": "Project:VisualEditor/Feedback",
+	"visualeditor-feedback-tool": "Mangibati ti feedback",
+	"visualeditor-help-label": "Basaen ti alagaden ti agar-aramat",
+	"visualeditor-help-title": "Usaren ti alagaden no kasano ti agusar ti editor"
+}

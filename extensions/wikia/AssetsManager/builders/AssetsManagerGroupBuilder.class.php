@@ -28,11 +28,6 @@ class AssetsManagerGroupBuilder extends AssetsManagerBaseBuilder {
 				// Start checking the url to see if it is something we care about (BugId:30188)
 				if(isset($params['action']) && $params['action'] == 'raw' && isset($params['gen']) && $params['gen'] == 'js') {
 					//$this->mContent .= RequestContext::getMain()->getSkin()->generateUserJs(); // FIXME
-				} else if(strpos($asset, 'Wikia.css') !== false) {
-					$message = wfMsgForContent('Wikia.css');
-					if(!wfEmptyMsg('Wikia.css', $message)) {
-						$this->mContent .= $message;
-					}
 				} else if(isset($params['action']) && $params['action'] == 'raw' && isset($params['gen']) && $params['gen'] == 'css') {
 					//$this->mContent .= RequestContext::getMain()->getSkin()->generateUserStylesheet(); // FIXME
 				} else {
@@ -63,15 +58,5 @@ class AssetsManagerGroupBuilder extends AssetsManagerBaseBuilder {
 			$this->mContent = preg_replace('#^.*@Packager\\.RemoveLine.*$#m', '', $this->mContent);
 			$this->mContent = str_replace("\xEF\xBB\xBF" /* BOM */, '', $this->mContent);
 		}
-
-		if($this->mOid == 'site_user_css') {
-			$this->mCacheMode = 'private';
-		}
-	}
-
-	// vary by Cookie as well when serving site_user_css group
-	public function getVary() {
-		$isCookieDependent = AssetsConfig::isUserDependent($this->mOid);
-		return $isCookieDependent ? 'Cookie,Accept-Encoding' : 'Accept-Encoding';
 	}
 }

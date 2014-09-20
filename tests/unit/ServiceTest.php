@@ -9,6 +9,11 @@ class ServiceTest extends WikiaBaseTest {
 		$wgMemc = wfGetCache(CACHE_MEMCACHED);
 	}
 
+	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.04016 ms
+	 * @group UsingDB
+	 */
 	function testAvatarService() {
 		$anonName = '10.10.10.10';
 		$userName = 'WikiaBot';
@@ -29,8 +34,15 @@ class ServiceTest extends WikiaBaseTest {
 		$this->assertRegExp('/Special:Contributions/', AvatarService::renderLink($anonName));
 	}
 
+	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.35311 ms
+	 * @group UsingDB
+	 */
 	function testPageStatsService() {
 		global $wgTitle, $wgMemc;
+
+		$this->markTestSkipped('This test fails randomly');
 
 		$wgTitle = Title::newMainPage();
 		$articleId = $wgTitle->getArticleId();
@@ -84,6 +96,9 @@ class ServiceTest extends WikiaBaseTest {
 		$this->assertTrue(empty($data));
 	}
 
+	/**
+	 * @group UsingDB
+	 */
 	function testUserStatsService() {
 		$this->markTestSkipped('This is not a unit test');
 

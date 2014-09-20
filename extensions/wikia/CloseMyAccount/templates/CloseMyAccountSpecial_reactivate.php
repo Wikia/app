@@ -12,13 +12,23 @@ if ( empty( $code ) ) {
 			[
 				'type' => 'hidden',
 				'name' => 'code',
-				'value' => $code,
+				'value' => Sanitizer::encodeAttribute( $code ),
+			],
+			[
+				'type' => 'hidden',
+				'name' => 'editToken',
+				'value' => htmlspecialchars( $editToken )
+			],
+			[
+				'type' => 'hidden',
+				'name' => 'loginToken',
+				'value' => htmlspecialchars( $loginToken ),
 			],
 			[
 				'type' => 'text',
 				'name' => 'username',
 				'label' => wfMessage( 'wikiaconfirmemail-username' )->escaped(),
-				'value' => $username,
+				'value' => Sanitizer::encodeAttribute( $username ),
 				'isInvalid' => !empty( $errParam ) && $errParam === 'username',
 				'errorMsg' => !empty( $resultMessage ) ? $resultMessage : '',
 			],

@@ -1,7 +1,7 @@
 /*!
  * VisualEditor DataModel MWLanguageMetaItem class.
  *
- * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
@@ -28,26 +28,21 @@ ve.dm.MWLanguageMetaItem.static.name = 'mwLanguage';
 
 ve.dm.MWLanguageMetaItem.static.matchTagNames = [ 'link' ];
 
-ve.dm.MWLanguageMetaItem.static.matchRdfaTypes = [
-	'mw:WikiLink/Language', // old type, pre-bug 53432
-	'mw:PageProp/Language' // new type
-];
+ve.dm.MWLanguageMetaItem.static.matchRdfaTypes = [ 'mw:PageProp/Language' ];
 
 ve.dm.MWLanguageMetaItem.static.toDataElement = function ( domElements ) {
-	var firstDomElement = domElements[0],
-		href = firstDomElement.getAttribute( 'href' );
+	var href = domElements[0].getAttribute( 'href' );
 	return {
-		'type': 'mwLanguage',
+		'type': this.name,
 		'attributes': {
-			'href': href,
-			'origRel': firstDomElement.getAttribute( 'rel' )
+			'href': href
 		}
 	};
 };
 
 ve.dm.MWLanguageMetaItem.static.toDomElements = function ( dataElement, doc ) {
 	var domElement = doc.createElement( 'link' );
-	domElement.setAttribute( 'rel', dataElement.attributes.origRel || 'mw:WikiLink/Language' );
+	domElement.setAttribute( 'rel', 'mw:PageProp/Language' );
 	domElement.setAttribute( 'href', dataElement.attributes.href );
 	return [ domElement ];
 };

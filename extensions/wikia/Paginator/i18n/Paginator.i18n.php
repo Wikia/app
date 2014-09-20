@@ -178,6 +178,14 @@ $messages['it'] = array(
 	'paginator-back' => 'Indietro',
 );
 
+/** Kannada (ಕನ್ನಡ)
+ * @author VASANTH S.N.
+ */
+$messages['kn'] = array(
+	'paginator-next' => 'ನಂತರ',
+	'paginator-back' => 'ಹಿಂದಕ್ಕೆ',
+);
+
 /** Colognian (Ripoarisch)
  * @author Purodha
  */
@@ -346,6 +354,14 @@ $messages['sw'] = array(
 $messages['ta'] = array(
 	'paginator-next' => 'அடுத்து',
 	'paginator-back' => 'பின் செல்',
+);
+
+/** Telugu (తెలుగు)
+ * @author Chaduvari
+ */
+$messages['te'] = array(
+	'paginator-next' => 'తరువాతి',
+	'paginator-back' => 'వెనక్కి',
 );
 
 /** Tagalog (Tagalog)

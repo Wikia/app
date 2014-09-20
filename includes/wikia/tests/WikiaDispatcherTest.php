@@ -107,4 +107,35 @@ class WikiaDispatcherTest extends WikiaBaseTest {
 		$this->assertEquals("controllerRouting", $response->getVal('wasCalled'));
 
 	}
+
+	public function testControllerNotFound() {
+		$response = $this->object->dispatch( F::app(), new WikiaRequest( array( 'controller' => 'FakeNonexistingController', 'method' => 'index' ) ) );
+
+		$this->assertNotNull( $response->getException() );
+		$this->assertInstanceOf( "ControllerNotFoundException", $response->getException() );
+		$this->assertEquals( "Controller not found: FakeNonexisting", $response->getException()->getDetails() );
+	}
+
+	public function testPermissionsException() {
+		$this->mockGlobalVariable("wgNirvanaAccessRules", [
+			[
+				"class" => "TestController",
+				"method" => "index",
+				"requiredPermissions" => ["write"],
+			],
+		]);
+		$userMock = $this->getMockBuilder("User")->disableOriginalConstructor()->getMock();
+
+		$userMock->expects($this->once())
+			->method("isAllowed")
+			->with("write")
+			->will($this->returnValue(false));
+		$this->mockGlobalVariable("wgUser", $userMock);
+
+		$response = $this->object->dispatch( F::app(), new WikiaRequest( array( 'controller' => 'Test', 'method' => 'index' ) ) );
+
+		$this->assertNotNull( $response->getException() );
+		$this->assertInstanceOf( "PermissionsException", $response->getException() );
+		$this->assertEquals( "Current User don't have required permissions: write", $response->getException()->getDetails() );
+	}
 }

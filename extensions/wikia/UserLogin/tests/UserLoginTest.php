@@ -8,6 +8,7 @@
 		const TEST_USERID = 12345;
 		const TEST_EMAIL = 'devbox+test@wikia-inc.com';
 		const MAIN_PAGE_TITLE_TXT = 'Main_Page';
+		const LOGIN_TOKEN = '1234567890';
 
 		protected $skinOrg = null;
 
@@ -34,6 +35,8 @@
 		}
 
 		/**
+		 * @group Slow
+		 * @slowExecutionTime 0.44648 ms
 		 * @dataProvider loginDataProvider
 		 */
 		public function testLogin( $requestParams, $mockLoginFormParams, $mockUserParams, $mockHelperParams, $expResult, $expMsg, $expErrParam='', $expUsername = null ) {
@@ -63,6 +66,10 @@
 			$this->assertEquals( $expUsername, $responseData, 'expUsername' );
 		}
 
+		/**
+		 * @group Slow
+		 * @slowExecutionTime 0.50558 ms
+		 */
 		public function testWikiaMobileLoginTemplate() {
 			$mobileSkin = Skin::newFromKey( 'wikiamobile' );
 			$this->setUpMockObject( 'User', array( 'getSkin' => $mobileSkin ), true, 'wgUser' );
@@ -81,6 +88,10 @@
 			$this->tearDownMobileSkin();
 		}
 
+		/**
+		 * @group Slow
+		 * @slowExecutionTime 0.50775 ms
+		 */
 		public function testWikiaMobileChangePasswordTemplate(){
 			$mobileSkin = Skin::newFromKey( 'wikiamobile' );
 			$this->setUpMockObject( 'User', array( 'getSkin' => $mobileSkin ), true, 'wgUser' );
@@ -276,6 +287,8 @@
 		}
 
 		/**
+		 * @group Slow
+		 * @slowExecutionTime 0.49809 ms
 		 * @dataProvider mailPasswordDataProvider
 		 */
 		public function testMailPassword( $requestParams, $mockWgUserParams, $mockAuthParams, $mockUserParams, $mockLoginFormParams, $expResult, $expMsg, $expErrParam='' ) {
@@ -408,10 +421,13 @@
 		}
 
 		/**
+		 * @group Slow
+		 * @slowExecutionTime 0.55212 ms
 		 * @dataProvider changePasswordDataProvider
 		 */
 		public function testChangePassword($params, $mockWebRequestParams, $mockWgUserParams, $mockAuthParams, $mockUserParams, $mockHelperParams, $expResult, $expMsg) {
 			// setup
+			$this->mockStaticMethod( 'UserLoginHelper', 'getLoginToken', self::LOGIN_TOKEN );
 			$this->setUpMockObject( 'WebRequest', $mockWebRequestParams, false, 'wgRequest', $params );
 			$this->setUpMockObject( 'AuthPlugin', $mockAuthParams, false, 'wgAuth' );
 			$this->setUpMockObject( 'User', $mockWgUserParams, false, 'wgUser' );
@@ -439,6 +455,7 @@
 			// 1 do nothing -- GET
 			$params1 = array(
 				'username' => 'WikiaUser',
+				'loginToken' => self::LOGIN_TOKEN,
 			);
 			$mockWebRequest1 = array( 'wasPosted' => false );
 			$mockWgUserParams1 = null;
@@ -450,6 +467,7 @@
 			$params2 = array(
 				'username' => 'WikiaUser',
 				'fakeGet' => '1',
+				'loginToken' => self::LOGIN_TOKEN,
 			);
 			$mockWebRequest2 = array( 'wasPosted' => true, 'setVal' => null );
 
@@ -496,6 +514,7 @@
 				'username' => 'WikiaUser',
 				'newpassword' => 'testPasword',
 				'retype' => 'passwordTest',
+				'loginToken' => self::LOGIN_TOKEN,
 			);
 			$mockUserParams9 = array(
 				'load' => null,
@@ -509,6 +528,7 @@
 				'username' => 'WikiaUser',
 				'newpassword' => 'testPasword',
 				'retype' => 'testPasword',
+				'loginToken' => self::LOGIN_TOKEN,
 			);
 			$mockUserParams10 = array(
 				'load' => null,
@@ -587,7 +607,15 @@
 				'doRedirect' => null,
 			);
 
-			// 16 success -- temp user
+			// 16 error = token mismatch
+			$params16 = array(
+				'username' => 'WikiaUser',
+				'newpassword' => 'testPasword',
+				'retype' => 'testPasword',
+				'loginToken' => 'faked',
+			);
+			$expMsg16 = wfMessage( 'sessionfailure' )->escaped();
+
 
 
 			return array(
@@ -623,7 +651,8 @@
 				array( $params10, $mockWebRequest2, $mockWgUserParams7, $mockAuthParams6, $mockUserParams14, $mockHelperParams1, 'error', $expMsg14 ),
 				// 15 success -- real user
 				array( $params10, $mockWebRequest2, $mockWgUserParams7, $mockAuthParams6, $mockUserParams15, $mockHelperParams15, 'ok', $expMsg15 ),
-				// 16 success -- temp user
+				// 16 error = token mismatch
+				array( $params16, $mockWebRequest2, $mockWgUserParams7, $mockAuthParams6, $mockUserParams9, $mockHelperParams1, 'error', $expMsg16 ),
 
 			);
 		}
@@ -682,6 +711,8 @@
 		}
 
 		/**
+		 * @group Slow
+		 * @slowExecutionTime 0.05041 ms
 		 * @param String $query
 		 * @param String $expected
 		 * @param Array $wfArrayToCGI mocked results for global function wfArrayToCGI()

@@ -56,6 +56,8 @@
 		}
 
 		/**
+		 * @group Slow
+		 * @slowExecutionTime 0.03352 ms
 		 * @dataProvider getStatsDataProvider
 		 */
 		public function testGetStats($cache_value, $expected_daily, $expected_total, $fetch_obj=null) {
@@ -220,6 +222,7 @@
 
 		/**
 		 * @dataProvider shortenNumberDecoratorDataProvider
+		 * @group UsingDB
 		 */
 		public function testShortenNumberDecorator($number,$expected) {
 			$result = QuickStatsController::shortenNumberDecorator($number);

@@ -65,6 +65,7 @@ $messages['br'] = array(
 	'piggyback-otherusername' => 'Anv implijer all',
 	'piggyback-wronguser' => "N'eo ket $1 ho anv implijer",
 	'piggyback-loginprompt' => "Adebarzhit hoc'h anv implijer hag ho ker-tremen, mar plij.",
+	'action-piggyback' => 'Kevreañ gant ur gont implijer all',
 );
 
 /** Czech (čeština)
@@ -444,19 +445,20 @@ Verifique a soletração.',
 /** Brazilian Portuguese (português do Brasil)
  * @author Aristóbulo
  * @author JM Pessanha
+ * @author Luckas
  */
 $messages['pt-br'] = array(
-	'piggybac-desc' => 'Permite a autenticação em nome de outro utilizador',
+	'piggybac-desc' => 'Permite a autenticação em nome de outro usuário',
 	'piggyback' => 'Personificação',
-	'piggyback-otherusername' => 'Nome de outro utilizador:',
-	'piggyback-nosuchuser' => 'Não existe um utilizador com o nome "$1".
-Os nomes de utilizador são sensíveis a maiúsculas e minúsculas.
+	'piggyback-otherusername' => 'Outro nome de usuário:',
+	'piggyback-nosuchuser' => 'Não existe um usuário com o nome "$1".
+Os nomes de usuário são sensíveis a maiúsculas e minúsculas.
 Verifique a ortografia.',
-	'piggyback-wronguser' => '$1 não é o seu nome de utilizador',
-	'piggyback-loginprompt' => 'Reintroduza o seu nome de utilizador e a senha.',
+	'piggyback-wronguser' => '$1 não é o seu nome de usuário',
+	'piggyback-loginprompt' => 'Reintroduza o seu nome de usuário e a senha.',
 	'piggyback-firstlogout' => 'Saia primeiro de volta à sua conta, por favor.',
 	'piggyback-itisyou' => 'Não se pode personificar a si mesmo.',
-	'piggyback-issysopto' => 'Não pode personificar um utilizador que tem o direito de personificação.',
+	'piggyback-issysopto' => 'Não pode personificar um usuário que tem o direito de personificação.',
 	'action-piggyback' => 'Fazer logon como outro usuário',
 	'log-name-piggyback' => 'Registro de sobreposto',
 	'log-description-piggyback' => 'Este log é um registro de conta sobreposta.',
@@ -589,13 +591,19 @@ Hãy kiểm tra lại hoặc bạn có thể đăng ký tài khoản này.',
 /** Simplified Chinese (中文（简体）‎)
  * @author Hydra
  * @author Hzy980512
+ * @author Liuxinyu970226
  */
 $messages['zh-hans'] = array(
+	'piggybac-desc' => '允许作为其他用户登录',
 	'piggyback' => '转接',
 	'piggyback-otherusername' => '其他用户名：',
 	'piggyback-nosuchuser' => '没有名为“$1”的用户。用户名区分大小写，请再检查一遍。',
 	'piggyback-wronguser' => '$1 不是您的用户名',
 	'piggyback-loginprompt' => '请再输入一次您的用户名和密码。',
+	'piggyback-firstlogout' => '请先注销您当前的账户。',
 	'piggyback-itisyou' => '您不能转接自己。',
+	'piggyback-issysopto' => '您不能搭载已经搭载权限的用户。',
 	'action-piggyback' => '用其他账户登录',
+	'log-name-piggyback' => 'Piggyback日志',
+	'log-description-piggyback' => '此日志记录账户搭载。',
 );

@@ -26,6 +26,9 @@ class PlacesTest extends WikiaBaseTest {
 		$this->model->setPageId($mainPage->getArticleId());
 	}
 
+	/**
+	 * @group UsingDB
+	 */
 	function testPlaceModelNewFromAttributes() {
 		$this->assertInstanceOf('PlaceModel', $this->model);
 
@@ -41,6 +44,9 @@ class PlacesTest extends WikiaBaseTest {
 		$this->assertEquals(52.406878001, $this->model->getLat());
 	}
 
+	/**
+	 * @group UsingDB
+	 */
 	function testPlaceFromAttributes() {
 		$resp = $this->app->sendRequest('Places', 'placeFromAttributes', array('attributes' => $this->attribs));
 		$html = $resp->toString();
@@ -50,6 +56,9 @@ class PlacesTest extends WikiaBaseTest {
 		$this->assertContains('<meta itemprop="longitude" content="16.922124">', $html);
 	}
 
+	/**
+	 * @group UsingDB
+	 */
 	function testPlaceFromModel() {
 		$resp = $this->app->sendRequest('Places', 'placeFromModel', array('model' => $this->model));
 		$html = $resp->toString();
@@ -59,6 +68,11 @@ class PlacesTest extends WikiaBaseTest {
 		$this->assertContains('<meta itemprop="longitude" content="16.922124">', $html);
 	}
 
+	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.01362 ms
+	 * @group UsingDB
+	 */
 	function testRenderMarkers() {
 		$resp = $this->app->sendRequest('Places', 'renderMarkers', array('markers' => array($this->model)));
 		$html = $resp->toString();
@@ -68,6 +82,9 @@ class PlacesTest extends WikiaBaseTest {
 		$this->assertContains('"markers":[{"lat":52.406878,"lan":16.922124,', $html);
 	}
 
+	/**
+	 * @group UsingDB
+	 */
 	function testGetPlaceWikiTextFromModel() {
 		$resp = $this->app->sendRequest('Places', 'getPlaceWikiTextFromModel', array('model' => $this->model));
 		$html = $resp->toString();

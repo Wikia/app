@@ -1,0 +1,20 @@
+{
+	"@metadata": {
+		"authors": [
+			"Kaajawa",
+			"Mahitgar",
+			"Praju23",
+			"V.narsikar",
+			"Ydyashad",
+			"संतोष दहिवळ"
+		]
+	},
+	"tag-visualeditor": "[[{{MediaWiki:Visualeditor-descriptionpagelink}}|यथादृश्यसंपादक]]",
+	"tag-visualeditor-description": "[[{{MediaWiki:Visualeditor-descriptionpagelink}}|यथादृश्यसंपादक]] वापरून केलेले संपादन",
+	"tag-visualeditor-needcheck": "[[{{MediaWiki:Visualeditor-descriptionpagelink}}|यथादृश्यसंपादक: तपासा]]",
+	"tag-visualeditor-needcheck-description": "[[{{MediaWiki:Visualeditor-descriptionpagelink}}|यथादृश्यसंपादक]] वापरून केलेल्या संपादनात,अभिप्रेत नसलेला विकिटेक्स्ट दिसल्याचे, प्रणालीने शोधले आहे.",
+	"visualeditor-feedback-link": "Project:यथादृश्यसंपादक/प्रतिसाद",
+	"visualeditor-feedback-tool": "प्रतिसाद द्या",
+	"visualeditor-help-label": "सदस्य मार्गदर्शक वाचा",
+	"visualeditor-help-title": "संपादन सुविधा कशी वापरावी याचा सदस्य मार्गदर्शक"
+}

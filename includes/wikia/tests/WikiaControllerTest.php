@@ -32,7 +32,7 @@ class WikiaControllerTest extends PHPUnit_Framework_TestCase {
 		);
 	}
 
-	/*
+	/**
 	 * Test that the Controller response object is working properly for get/set/unset of a controller property
 	 */
 	public function testResponse() {

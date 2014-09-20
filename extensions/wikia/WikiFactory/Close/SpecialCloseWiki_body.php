@@ -396,7 +396,6 @@ class CloseWikiPage extends SpecialPage {
 			$aFiles = array(
 				'pages_current'	=> '_pages_current.xml.gz',
 				'pages_full'	=> '_pages_full.xml.gz',
-				'images'	=> '_images.tar'
 			);
 
 			foreach ( $aFiles as $sKey => $sValue ) {

@@ -1711,6 +1711,15 @@ Error message at [[Special:Upload]]",
 'uploaddisabled'              => 'Title of the Special:Upload page when upload is disabled.',
 'uploaddisabledtext'          => 'This message can have parameter $1, which contains the name of the target file. See r22243 and [https://bugzilla.wikimedia.org/show_bug.cgi?id=8818 bug 8818].',
 'php-uploaddisabledtext'      => 'This means that file uploading is disabled in PHP, not upload of PHP-files.',
+'uploadscriptednamespace' => 'Used as error message when uploading a file. This error is specific to SVG files, when they include a namespace that has not been whitelisted.
+
+Parameters:
+* $1 - the invalid namespace name
+See also:
+* {{msg-mw|zip-wrong-format}}
+* {{msg-mw|uploadjava}}
+* {{msg-mw|uploadvirus}}',
+'uploadinvalidxml' => 'Error message displayed when the uploaded file contains XML that cannot be properly parsed and checked.',
 'uploadvirus'                 => 'Note displayed when uploaded file contains a virus',
 'upload-source'               => 'Caption above a section of the [[Special:Upload]] page',
 'sourcefilename'              => 'In [[Special:Upload]]',

@@ -1,0 +1,43 @@
+{
+	"@metadata": {
+		"authors": [
+			"Chorobek",
+			"George Animal",
+			"Nrowe",
+			"Tynchtyk Chorotegin",
+			"Викиней"
+		]
+	},
+	"tooltip-ca-createsource": "Барактын баштапкы кодун түзүү",
+	"tooltip-ca-editsource": "Барактын баштапкы кодун оңдоо",
+	"tooltip-ca-ve-edit": "Бул баракты ВизуалЭдитордун жардамы менен оңдоо",
+	"visualeditor-beta-label": "бета-версиясы",
+	"visualeditor-dialog-media-content-section": "Кол тамга",
+	"visualeditor-dialog-media-insert-button": "Медиа-файл коюу",
+	"visualeditor-dialog-media-insert-title": "Медиа-файл коюу",
+	"visualeditor-dialog-meta-categories-category": "Категория",
+	"visualeditor-dialog-meta-categories-data-label": "Категориялар",
+	"visualeditor-dialog-meta-categories-input-newcategorylabel": "Жаңы категория",
+	"visualeditor-dialog-meta-categories-input-placeholder": "Категория кошуу",
+	"visualeditor-dialog-meta-categories-options": "Ырастоолор",
+	"visualeditor-dialog-meta-categories-section": "Категориялар",
+	"visualeditor-dialog-meta-languages-code-label": "Тилдин коду",
+	"visualeditor-dialog-meta-languages-label": "Тилдер",
+	"visualeditor-dialog-meta-languages-section": "Тилдер",
+	"visualeditor-dialog-reference-options-section": "Ырастоолор",
+	"visualeditor-dialog-transclusion-options": "Ырастоолор",
+	"visualeditor-dialog-transclusion-placeholder": "Жаңы калып",
+	"visualeditor-dialog-transclusion-remove-content": "Мазмунун өчүрүү",
+	"visualeditor-formatdropdown-format-mw-heading2": "Баш сөз",
+	"visualeditor-linkinspector-suggest-external-link": "Сырткы шилтеме",
+	"visualeditor-linkinspector-suggest-new-page": "Жаңы барак",
+	"visualeditor-savedialog-label-create": "Барак түзүү",
+	"visualeditor-savedialog-label-error": "Ката",
+	"visualeditor-savedialog-label-save": "Баракты сактоо",
+	"visualeditor-savedialog-label-warning": "Эскертүү",
+	"visualeditor-savedialog-title-nochanges": "Өзгөртүүлөр жок",
+	"visualeditor-savedialog-title-review": "Өзгөртүүлөрдү карап чыгуу",
+	"visualeditor-savedialog-title-save": "Өзгөртүүлөрдү сактоо",
+	"visualeditor-toolbar-cancel": "Жокко чыгаруу",
+	"visualeditor-toolbar-savedialog": "Баракты сактоо"
+}

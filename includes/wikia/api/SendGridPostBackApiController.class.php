@@ -30,7 +30,7 @@ class SendGridPostbackController extends WikiaApiController {
 			Wikia::log( __METHOD__, false, "<postback>" . $email_addr . ", " . $status . ", " . $reason . "</postback>\n", true );
 		
 			// Add the token-validated postback to the database.
-			$dbw = wfGetDb( DB_MASTER, array(), $this->wg->ExternalDatawareDB );
+			$dbw = wfGetDb( DB_MASTER, array(), $this->wg->WikiaMailerDB );
 			
 			// log postback data 
 			$insert_data = array(

@@ -254,10 +254,11 @@ $messages['diq'] = array(
 
 /** Spanish (español)
  * @author Translationista
+ * @author VegaDark
  */
 $messages['es'] = array(
 	'globalwatchlist-desc' => 'Envía correos electrónicos semanales con las páginas en seguimiento de todos los wikis',
-	'tog-watchlistdigest' => 'Envíame por correo electrónico un Boletín Semanal de mi lista de Seguimiento',
+	'tog-watchlistdigest' => 'Enviarme por correo electrónico un Boletín Semanal de mi lista de Seguimiento',
 	'tog-watchlistdigestclear' => 'Marcar todas las páginas desde mi Boletín Semanal de mi lista de Seguimiento como visitadas',
 	'globalwatchlist-see-more' => 'Por favor, comprueba tu lista de seguimiento local para más cambios',
 	'globalwatchlist-digest-email-subject' => 'Boletín Semanal',
@@ -323,6 +324,25 @@ $messages['fo'] = array(
 	'globalwatchlist-desc' => 'Sendir t-post samandráttir einaferð um vikuna við eftirlitssíðum á øllum wikium',
 	'tog-watchlistdigest' => 'Send mær ein Vikuligan eftirlitssamandrátt (Weekly Watchlist Digest)',
 	'tog-watchlistdigestclear' => 'Merk allar síður frá mínum viku-eftirlits-samandrátti sum vitjaðar',
+	'globalwatchlist-see-more' => 'Vinarliga kanna tín lokala eftirlitslista fyri at síggja fleiri broytingar',
+	'globalwatchlist-digest-email-subject' => 'Vikusamandráttur',
+	'globalwatchlist-digest-email-body' => 'Hey $1,
+
+Hetta er ein listi av síðum á tínum Wikia-eftirlistslista, sum eru blivnar broyttar síðan tú seinast vitjaði tær.
+
+$2
+
+
+Hetta er ein listi við bloggusíðum á tínum Wikia-eftirlitslista, sum eru blivnar rættaðar ella viðmerktar síðan tú seinast vitjaði tær. 
+
+$3
+
+Vinarliga vitja og rætta ofta...
+
+Wikia
+
+* Fyri at broyta tínar innstillingar til fráboðanir viðvíkjandi eftirlistslitanum, vinarliga vitja  http://www.wikia.com/wiki/Special:Preferences
+* Fyri at merkja allar síður á tínum Vikusamandrátti sum lisnar, hygg so eftir møguleikanum í "Eftirlitslista" knøttinum á síðuni fyri tínar Innstillingar',
 	'globalwatchlist-blog-page-title-comment' => '$1 ($2 {{PLURAL:$2|viðmerking|viðmerkingar}})',
 	'globalwatchlist-no-page-found' => 'Ongin síða funnin.',
 	'globalwatchlist-no-blog-page-found' => 'Ongin bloggsíða funnin.',
@@ -397,7 +417,30 @@ Wikia
  * @author Amire80
  */
 $messages['he'] = array(
-	'tog-watchlistdigest' => 'לשלוח אליי בדואר אלקטרוני סיכום רשימת מעקב שבועי',
+	'globalwatchlist-desc' => 'שליחת מכתבי סיכום שבועיים על דפים ברשימת המעקב בכל אתרי הוויקי',
+	'tog-watchlistdigest' => 'לשלוח אליי בדואר אלקטרוני סיכום רשימות מעקב שבועי',
+	'tog-watchlistdigestclear' => 'לסמן את כל הדפים מסיכום רשימות המעקב השבועי שלי כדפים שביקרתי בהם',
+	'globalwatchlist-see-more' => 'נא לבדוק את רשימות המעקב המקומיות שלך לשינויים נוספים',
+	'globalwatchlist-digest-email-subject' => 'סיכום שבועי',
+	'globalwatchlist-digest-email-body' => 'שלום $1,
+
+זוכי רשימת הדפים ברשימת המעקב שלך בוויקיה שנערכו מאז שביקרת בהם.
+
+$2
+
+זוהי רשימה של דפי בלוג ברשימת המעקב שלך בוויקיה שנערכו או שנכתבו עליהן הערות מאז שביקרת בהם.
+
+$3
+
+אנו מזמינים אותך לבוא ולערוך לעתים קרובות...
+
+ויקיה
+
+* כדי לשנות את ההעדפות שלך להודעות על רשימת המעקב, נא לבקר בדף http://www.wikia.com/wiki/Special:Preferences
+* כדי לסמן את כל הדפים בסיכום השבועי כאילו ביקרת בהם, ר\' את האפשרות "רשימת מעקב" בדף ההעדפות',
+	'globalwatchlist-blog-page-title-comment' => '$1 ({{PLURAL:$2|תגובה אחת|$2 תגובות}})',
+	'globalwatchlist-no-page-found' => 'לא נמצא שום דף.',
+	'globalwatchlist-no-blog-page-found' => 'לא נמצא דף בלוג.',
 );
 
 /** Hungarian (magyar)
@@ -790,11 +833,13 @@ Wikia
 $messages['ps'] = array(
 	'globalwatchlist-blog-page-title-comment' => '$1 ($2 {{PLURAL:$2|تبصره|تبصرې}})',
 	'globalwatchlist-no-page-found' => 'دا مخ و نه موندل شو.',
-	'globalwatchlist-no-blog-page-found' => 'د بلاګ دا مخ و نه موندل شو.',
+	'globalwatchlist-no-blog-page-found' => 'د بلاگ دا مخ و نه موندل شو.',
 );
 
 /** Portuguese (português)
  * @author Hamilton Abreu
+ * @author Luckas
+ * @author Polyethylen
  */
 $messages['pt'] = array(
 	'globalwatchlist-desc' => 'Envia mensagens mensais de resumo das páginas vigiadas em todas as wikis',
@@ -988,6 +1033,18 @@ Wikia
 	'globalwatchlist-blog-page-title-comment' => '$1 ($2 {{PLURAL:$2|kommentar|kommentarer}})',
 	'globalwatchlist-no-page-found' => 'Ingen sida hittades.',
 	'globalwatchlist-no-blog-page-found' => 'Ingen bloggsida hittades.',
+);
+
+/** Telugu (తెలుగు)
+ * @author Chaduvari
+ */
+$messages['te'] = array(
+	'globalwatchlist-desc' => 'అన్ని వికీలలోని పేజీల వారపు వీక్షణజాబితా సంగ్రహాల ఈమెయిళ్ళను పంపుతుంది',
+	'tog-watchlistdigest' => 'వారపు వీక్షణజాబితా సంగ్రహాన్ని నాకు ఈమెయిలు చెయ్యి',
+	'globalwatchlist-digest-email-subject' => 'వారపు సంగ్రహం',
+	'globalwatchlist-blog-page-title-comment' => '$1 ($2 {{PLURAL:$2|వ్యాఖ్య|వ్యాఖ్యలు}})',
+	'globalwatchlist-no-page-found' => 'పేజీ ఏదీ కనబడలేదు.',
+	'globalwatchlist-no-blog-page-found' => 'బ్లాగు పేజీ ఏదీ కనబడలేదు.',
 );
 
 /** Tagalog (Tagalog)

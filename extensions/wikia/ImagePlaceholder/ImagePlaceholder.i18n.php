@@ -100,6 +100,7 @@ $messages['ca'] = array(
 
 /** Czech (čeština)
  * @author Dontlietome7
+ * @author H4nek
  */
 $messages['cs'] = array(
 	'imgplc-add-image' => 'Přidat obrázek',
@@ -107,6 +108,7 @@ $messages['cs'] = array(
 	'imgplc-placeholder' => 'Zástupný symbol',
 	'imgplc-image' => 'Obrázek',
 	'imgplc-notinhistory' => 'Nemůžete přidat obrázek v režimu historie.',
+	'imgplc-notinhistory-video' => 'Nemůžete přidat video v režimu historie.',
 );
 
 /** German (Deutsch)
@@ -300,6 +302,14 @@ $messages['ja'] = array(
 	'imgplc-notinhistory' => '履歴表示モードでは画像を追加できません。',
 );
 
+/** Kannada (ಕನ್ನಡ)
+ * @author VASANTH S.N.
+ */
+$messages['kn'] = array(
+	'imgplc-add-image' => 'ಚಿತ್ರಗಳನ್ನು ಸೇರಿಸು',
+	'imgplc-image' => 'ಚಿತ್ರ',
+);
+
 /** Korean (한국어)
  * @author 아라
  * @author 한글화담당
@@ -471,8 +481,8 @@ $messages['pms'] = array(
  * @author Ahmed-Najib-Biabani-Ibrahimkhel
  */
 $messages['ps'] = array(
-	'imgplc-add-image' => 'انځور ورګډول',
-	'imgplc-add-video' => 'ويډيو ورګډول',
+	'imgplc-add-image' => 'انځور ورگډول',
+	'imgplc-add-video' => 'ويډيو ورگډول',
 	'imgplc-image' => 'انځور',
 );
 
@@ -553,6 +563,17 @@ $messages['sv'] = array(
 	'imgplc-notinhistory-video' => 'Du kan inte lägga till ett videoklipp i historikläget.',
 );
 
+/** Telugu (తెలుగు)
+ * @author Chaduvari
+ */
+$messages['te'] = array(
+	'imgplc-add-image' => 'బొమ్మను చేర్చు',
+	'imgplc-add-video' => 'వీడియోను చేర్చు',
+	'imgplc-image' => 'బొమ్మ',
+	'imgplc-notinhistory' => 'చరిత్ర మోడ్‍లో ఉండగా మీరు బొమ్మను చేర్చలేరు.',
+	'imgplc-notinhistory-video' => 'చరిత్ర మోడ్‍లో ఉండగా మీరు వీడియోను చేర్చలేరు.',
+);
+
 /** Tagalog (Tagalog)
  * @author AnakngAraw
  */
@@ -569,6 +590,15 @@ $messages['tl'] = array(
 $messages['tly'] = array(
 	'imgplc-add-image' => 'Шикил зијод кардеј',
 	'imgplc-image' => 'Шикил',
+);
+
+/** Turkish (Türkçe)
+ * @author Sucsuzz
+ */
+$messages['tr'] = array(
+	'imgplc-add-image' => 'Resim Ekle',
+	'imgplc-add-video' => 'Video Ekle',
+	'imgplc-image' => 'Resim',
 );
 
 /** Tatar (Cyrillic script) (татарча)
@@ -617,6 +647,14 @@ $messages['zh-hans'] = array(
 	'imgplc-image' => '照片',
 	'imgplc-notinhistory' => '您不能在历史模式中添加图片。',
 	'imgplc-notinhistory-video' => '您不能在历史模式中添加视频。',
+);
+
+/** Traditional Chinese (中文（繁體）‎)
+ * @author Ffaarr
+ */
+$messages['zh-hant'] = array(
+	'imgplc-add-image' => '增加圖片',
+	'imgplc-add-video' => '增加影片',
 );
 
 /** Chinese (Hong Kong) (中文（香港）‎)

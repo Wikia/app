@@ -69,7 +69,7 @@ if ( array_key_exists( 's', $options ) ) {
 	$start = max( 1, intval( $options['s'] ) );
 } elseif ( array_key_exists( 'startidfile', $options ) ) {
 	if ( !is_writable( file_exists( $options['startidfile'] ) ? $options['startidfile'] : dirname( $options['startidfile'] ) ) ) {
-		die("Cannot use a startidfile that we can't write to.\n");
+		die( "Cannot use a startidfile that we can't write to.\n" );
 	}
 	$writeToStartidfile = true;
 	if ( is_readable( $options['startidfile'] ) ) {
@@ -158,21 +158,22 @@ if ( $pages == false ) {
 	print "$num_files IDs refreshed.\n";
 } else {
 	print "Refreshing specified pages!\n\n";
-	
+
 	foreach ( $pages as $page ) {
 		if ( $verbose ) {
 			print "($num_files) Processing page " . $page . " ...\n";
 		}
-		
+
 		$title = Title::newFromText( $page );
-		
+
 		if ( !is_null( $title ) ) {
+			// wikia note - not migrating call to new jobqueue, since this is run directly
 			$updatejob = new SMWUpdateJob( $title );
 			$updatejob->run();
 		}
-		
+
 		$num_files++;
 	}
-	
+
 	print "$num_files pages refreshed.\n";
 }

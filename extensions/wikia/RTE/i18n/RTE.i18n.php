@@ -415,6 +415,13 @@ $messages['ja'] = array(
 	'prefs-rte' => 'リッチテキストエディタ',
 );
 
+/** Kannada (ಕನ್ನಡ)
+ * @author VASANTH S.N.
+ */
+$messages['kn'] = array(
+	'rte-edgecase-redirect' => 'ಪುನರ್ನಿರ್ದೇಶನಗಳು',
+);
+
 /** Colognian (Ripoarisch)
  * @author Purodha
  */
@@ -845,6 +852,7 @@ $messages['zh'] = array(
 
 /** Simplified Chinese (中文（简体）‎)
  * @author Anakmalaysia
+ * @author Liuxinyu970226
  * @author Yfdyh000
  */
 $messages['zh-hans'] = array(
@@ -854,10 +862,12 @@ $messages['zh-hans'] = array(
 	'rte-edgecase-triplecurls' => '模板参数',
 	'rte-edgecase-nowysiwyg' => '“禁用所见即所得”命令',
 	'rte-edgecase-complex-description' => '链接描述之内的外部URL或模板',
+	'rte-edgecase-template-with-link' => '带有作为参数连接的模板',
 	'rte-edgecase-syntax' => '不允许的语法',
 	'rte-edgecase-redirect' => '重定向',
 	'rte-edgecase-unclosed-tags' => '封闭的HTML标签',
 	'enablerichtexteditor' => '在可视模式下启用编辑（除源模式之外）',
 	'rte-enablerichtexteditormessage' => 'RTF编辑器启用！',
+	'rte-first-run-notice' => '我们对编辑器做出了一些改进。[http://www.wikia.com/wiki/User_blog:Kirkburn/Rich_text_editor_upgrade_news 点此]了解更多。',
 	'prefs-rte' => 'RTF编辑器',
 );

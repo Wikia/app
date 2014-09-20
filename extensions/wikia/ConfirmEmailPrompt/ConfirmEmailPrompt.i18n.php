@@ -69,10 +69,11 @@ $messages['de'] = array(
 
 /** Spanish (español)
  * @author DJ Nietzsche
+ * @author VegaDark
  */
 $messages['es'] = array(
 	'confirmemailprompt-desc' => 'Muestra un mensaje de advertencia si el usuario tiene una dirección de correo electrónico no confirmada',
-	'confirmemailprompt-error' => '¿Es esta su dirección de correo electrónico?: <strong>$1</strong> ? [[$2| Confirmarla]] o [[$3|cambiarla]].',
+	'confirmemailprompt-error' => '¿Esta es tu dirección de correo electrónico: <strong>$1</strong>? [[$2|Confírmala]] o [[$3|cámbiala]].',
 );
 
 /** Finnish (suomi)
@@ -242,6 +243,13 @@ $messages['ru'] = array(
 $messages['sv'] = array(
 	'confirmemailprompt-desc' => 'Visar ett varningsmeddelande om en användare har en obekräftad e-postadress',
 	'confirmemailprompt-error' => 'Är detta din e-postadress: <strong>$1</strong>? [[$2|Bekräfta den]] eller [[$3|ändra den]].',
+);
+
+/** Telugu (తెలుగు)
+ * @author Chaduvari
+ */
+$messages['te'] = array(
+	'confirmemailprompt-error' => 'ఈ ఈమెయిలు చిరునామా మీదేనా: <strong>$1</strong>? [[$2|దాన్ని ధృవీకరించండి]] లేదా [[$3|మార్చండి]].',
 );
 
 /** Tagalog (Tagalog)

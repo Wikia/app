@@ -113,6 +113,14 @@ $messages['fa'] = array(
 	'signup' => 'ثبت‌نام',
 );
 
+/** Finnish (suomi)
+ * @author Elseweyr
+ */
+$messages['fi'] = array(
+	'signup-desc' => 'Lisää alias [[{{#Special:Signup}}]] sivulle [[{{#Special:UserLogin}}/signup]]',
+	'signup' => 'Rekisteröidy',
+);
+
 /** French (français)
  * @author Wyz
  */
@@ -159,6 +167,14 @@ $messages['it'] = array(
 $messages['ja'] = array(
 	'signup-desc' => '[[{{#Special:UserLogin}}/signup]] へのエイリアス [[{{#Special:Signup}}]] を追加する',
 	'signup' => 'Signup',
+);
+
+/** Korean (한국어)
+ * @author 아라
+ */
+$messages['ko'] = array(
+	'signup-desc' => '[[{{#Special:UserLogin}}/signup]]을 위한 [[{{#Special:Signup}}]] 별칭을 추가합니다',
+	'signup' => '가입하기',
 );
 
 /** Colognian (Ripoarisch)

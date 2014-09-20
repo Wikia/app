@@ -71,7 +71,9 @@ class WikiaHomePageController extends WikiaController {
 	public function __construct() {
 		parent::__construct();
 		$this->helper = new WikiaHomePageHelper();
-		$this->wg->Out->addStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/WikiaHomePage/css/WikiaHomePage.scss'));
+		$this->wg->Out->addStyle(AssetsManager::getInstance()->getSassCommonURL(
+			'extensions/wikia/WikiaHomePage/css/WikiaHomePage.scss'
+		));
 	}
 
 
@@ -82,8 +84,7 @@ class WikiaHomePageController extends WikiaController {
 		$this->response->addAsset('wikiahomepage_scss');
 		$this->response->addAsset('wikiahomepage_js');
 
-		$response = $this->app->sendRequest('WikiaHomePageController', 'getHubImages');
-		$this->hubImages = $response->getVal('hubImages', '');
+		$this->hubsSlots = $this->prepareHubsSectionSlots();
 
 		JSMessages::enqueuePackage('WikiaHomePage', JSMessages::EXTERNAL);
 
@@ -99,70 +100,93 @@ class WikiaHomePageController extends WikiaController {
 		OasisController::addBodyClass('WikiaHome');
 	}
 
-	public function wikiaMobileIndex() {
-		//$this->response->addAsset('extensions/wikia/WikiaHomePage/css/WikiaHomePageMobile.scss');
-		$response = $this->app->sendRequest('WikiaHomePageController', 'getHubImages');
-		$this->lang = $this->wg->contLang->getCode();
-		$this->hubImages = $response->getVal('hubImages', '');
-	}
+	/**
+	 * Prepare data about hubs to display on Wikia homepage in hubs section
+	 *
+	 * @return Mixed|null
+	 */
+	public function prepareHubsSectionSlots() {
+		global $wgContLang;
+		$langCode = $wgContLang->getCode();
 
-	public function footer() {
-		$this->response->addAsset('extensions/wikia/WikiaHomePage/js/CorporateFooterTracker.js');
-		$this->interlang = HubService::isCorporatePage();
+		$hubSlot = WikiaDataAccess::cache(
+			WikiaHomePageHelper::getHubSlotsMemcacheKey( $langCode ),
+			86400 /* 24 hours */,
+			function() use( $langCode ) {
+				$hubSlot = [];
+				$hubsSlots = $this->getHubsSectionSlots();
+				$hubsV3List = $this->getHubsV3List( $langCode );
 
-		$corporateWikis = $this->helper->getVisualizationWikisData();
-		$this->selectedLang = $this->wg->ContLang->getCode();
-		$this->dropDownItems = $this->prepareDropdownItems($corporateWikis, $this->selectedLang);
+				foreach( $hubsSlots['hub_slot'] as $slot => $hubId ) {
+					if( !empty( $hubId ) ) {
+						$hubSlot[ $slot ] = $this->prepareHubV3Slot( $hubsV3List[$hubId], $slot );
+					}
+				}
 
-		if ($this->app->wg->EnableWAMPageExt) {
-			$wamModel = new WAMPageModel();
-			$this->wamPageUrl = $wamModel->getWAMMainPageUrl();
-		}
-	}
+				$index = count( $hubSlot );
 
-	protected function prepareDropdownItems($corpWikis, $selectedLang) {
-		$results = array();
-
-		foreach($corpWikis as $lang => $wiki) {
-			if( $lang !== $selectedLang ) {
-				$results[] = array(
-					'class' => $lang,
-					'href' => $wiki['url'],
-					'text' => '',
-					'title' => $wiki['wikiTitle']
-				);
+				$marketingSlot = $this->prepareMarketingSlots( $hubsSlots['marketing_slot'], $index );
+				$hubSlot = array_merge($hubSlot, $marketingSlot);
+				return $hubSlot;
 			}
-		}
-
-		return $results;
+		);
+		return $hubSlot;
 	}
 
 	/**
-	 * get stats
-	 * @responseParam integer visitors
-	 * @responseParam integer edits
-	 * @responseParam integer communities
-	 * @responseParam integer totalPages
+	 * Prepare data to display hub v3 slot in hubs section on Wikia homepage
+	 *
+	 * @param $hub
+	 * @param $slot
+	 * @return array
 	 */
+	private function prepareHubV3Slot( $hub, $slot ) {
+		return [
+			'classname' =>	'hub-slot-' . ($slot + 1),
+			'heading' => $hub['name'],
+			'heroimageurl' => $this->getHubV3Images( $hub['id'] ),
+			'herourl' => $hub['url'],
+		];
+	}
+
+	/**
+	 * Prepare data to display marketing promo slot in hubs section on Wikia homepage
+	 *
+	 * @param Array $slots data about marketing slots
+	 * @param int $index next free slot number
+	 * @return array
+	 */
+	private function prepareMarketingSlots( $slots, $index ) {
+		$marketingSlots = [];
+
+		foreach( $slots as $slot ) {
+			if( !empty( $slot['marketing_slot_image'] ) ) {
+				$imgUrl = $this->getMarketingImage($slot['marketing_slot_image']);
+				if ( !empty( $imgUrl ) ) {
+					$marketingSlots[$index] = [
+						'classname' =>		'hub-slot-' . ($index + 1),
+						'heading' => 		isset($slot['marketing_slot_title']) ? $slot['marketing_slot_title'] : '',
+						'heroimageurl' => 	$imgUrl,
+						'herourl' => 		isset($slot['marketing_slot_link']) ? $slot['marketing_slot_link'] : ''
+					];
+					$index++;
+				}
+			}
+		}
+
+		return $marketingSlots;
+	}
+
+	public function wikiaMobileIndex() {
+		$this->lang = $this->wg->contLang->getCode();
+		$this->hubsSlots = $this->prepareHubsSectionSlots();
+	}
+
 	public function getStats() {
-		wfProfileIn(__METHOD__);
-
-		$memKey = $this->helper->getStatsMemcacheKey();
-		$stats = $this->wg->Memc->get($memKey);
-		if (empty($stats)) {
-			$stats = $this->helper->getStatsIncludingFallbacks();
-			$this->wg->Memc->set($memKey, $stats, 60 * 60 * 1);
+		$data = $this->app->sendRequest('WikiaStatsController', 'getWikiaStats')->getData();
+		foreach ($data as $key => $value) {
+			$this->$key = $value;
 		}
-
-		foreach ($stats as $key => $value) {
-			$this->$key = $this->wg->Lang->formatNum($value);
-		}
-
-		if (empty($stats['edits']) && in_array('editsDefault', $stats)) {
-			$this->edits = $this->editsDefault . '+';
-		}
-
-		wfProfileOut(__METHOD__);
 	}
 
 	/**
@@ -219,6 +243,7 @@ class WikiaHomePageController extends WikiaController {
 					if (count($collection['wikis']) == WikiaHomePageHelper::SLOTS_IN_TOTAL) {
 						$processedCollection = $visualization->getCollectionsWikisData([$collection['id'] => $collection['wikis']])[0];
 						$processedCollection['name'] = $collection['name'];
+						$processedCollection['id'] = $collection['id'];
 
 						if (!empty($collection['sponsor_hero_image'])) {
 							$processedCollection['sponsor_hero_image'] = $collection['sponsor_hero_image'];
@@ -231,7 +256,7 @@ class WikiaHomePageController extends WikiaController {
 						if (!empty($collection['sponsor_url'])) {
 							$processedCollection['sponsor_url'] = $collection['sponsor_url'];
 						}
-						$collectionsBatches[$collection['id']] = $processedCollection;
+						$collectionsBatches[] = $processedCollection;
 					}
 				}
 			}
@@ -386,8 +411,6 @@ class WikiaHomePageController extends WikiaController {
 			$wikiName = trim(str_replace(self::$wikiIndicator, '', $data[0]));
 			$wikiUrl = trim($data[1]);
 			$wikiDesc = !empty($data[3]) ? trim($data[3]) : '';
-			$wikiHot = !empty($data[4]) ? trim($data[4]) : false;
-			$wikiNew = !empty($data[5]) ? trim($data[5]) : false;
 
 			$wikiImgName = trim($data[2]);
 			$wikiImg = wfFindFile($wikiImgName);
@@ -403,8 +426,6 @@ class WikiaHomePageController extends WikiaController {
 				'wikiurl' => $wikiUrl,
 				'wikidesc' => $wikiDesc,
 				'image' => $wikiImgName,
-				'wikinew' => $wikiNew,
-				'wikihot' => $wikiHot,
 				'wikipromoted' => false,
 				'wikiblocked' => false
 
@@ -413,47 +434,120 @@ class WikiaHomePageController extends WikiaController {
 			throw new Exception(wfMsg('wikia-home-parse-wiki-too-few-parameters'));
 		}
 	}
-
 	/**
-	 * get list of images for Hub
-	 * @responseParam array hubImages
+	 * Get first image from slider from selected hub v3
+	 *
+	 * @param $cityId hub wiki id
+	 * @return null|string
 	 */
-	public function getHubImages() {
-		$lang = $this->wg->contLang->getCode();
+	public function getHubV3Images( $cityId ) {
+		$imageUrl = null;
+		$sliderData = $this->getHubSliderData( [ 'city' => $cityId ] );
 
-		$hubImages = [];
-		if ($this->app->wg->EnableWikiaHubsV2Ext) {
-			$hubImages = WikiaDataAccess::cache(
-				WikiaHubsServicesHelper::getWikiaHomepageHubsMemcacheKey($lang),
-				24 * 60 * 60,
-				function () use ($lang) {
-					$hubImages = [];
+		if ( isset( $sliderData['data']['slides'][0]['photoName'] ) ) {
+			$imgName = $sliderData['data']['slides'][0]['photoName'];
 
-					foreach ($this->app->wg->WikiaHubsV2Pages as $hubId => $hubName) {
-						$sliderData = $this->getHubSliderData($lang, $hubId);
-
-						$hubImages[$hubId] = isset($sliderData['data']['slides'][0]['photoUrl'])
-							? $sliderData['data']['slides'][0]['photoUrl']
-							: null;
-					}
-					return $hubImages;
+			$title = GlobalTitle::newFromText( $imgName, NS_FILE, $cityId );
+			if ( $title !== null ) {
+				$file = new GlobalFile( $title );
+				if ( $file !== null ) {
+					$imageUrl = $file->getUrl();
 				}
-			);
+			}
 		}
 
-		$this->hubImages = $hubImages;
+		return $imageUrl;
+
 	}
 
-	protected function getHubSliderData($lang, $hubId) {
+	/**
+	 * Get image for marketing promo slot
+	 *
+	 * @param $imgName
+	 * @return string
+	 */
+	public function getMarketingImage( $imgName ) {
+		$imageUrl = '';
+
+		$title = Title::newFromText( $imgName, NS_FILE );
+		if ( $title !== null ) {
+			$file = wfFindFile( $title );
+			if ( $file !== null ) {
+				$imageUrl = $file->getUrl();
+			}
+		}
+
+		return $imageUrl;
+	}
+
+	protected function getHubSliderData($params) {
+		$sliderParams = [
+			'module' => WikiaHubsModuleSliderService::MODULE_ID
+		];
+
+		$sliderParams = array_merge( $sliderParams, $params );
 		return $this->app->sendRequest(
 			'WikiaHubsApi',
 			'getModuleData',
-			array(
-				'module' => MarketingToolboxModuleSliderService::MODULE_ID,
-				'vertical' => $hubId,
-				'lang' => $lang
-			)
+			$sliderParams
 		)->getData();
+	}
+
+	/**
+	 * Get list of hubs v3 in selected language
+	 *
+	 * @param $langCode
+	 * @return null
+	 */
+	private function getHubsV3List( $langCode ) {
+		$response = $this->app->sendRequest(
+			'WikiaHubsApiController',
+			'getHubsV3List',
+			[ 'lang' => $langCode ]
+		);
+
+		return $response->getVal('list', []);
+	}
+
+	private function getHubsSectionSlots() {
+		global $wgCityId, $wgContLang;
+		return $this->helper->getHubSlotsFromWF( $wgCityId, $wgContLang->getCode() );
+	}
+
+	/**
+	 * Add additional parameter to css url to pass them to scss file
+	 *
+	 * @param $oasisSettings
+	 * @return bool
+	 */
+	public static function onAfterOasisSettingsInitialized( &$oasisSettings ) {
+		global $wgContLang, $wgCityId;
+
+		$settings = [];
+		$helper = new WikiaHomePageHelper();
+
+		$response = F::app()->sendRequest(
+			'WikiaHubsApiController',
+			'getHubsV3List',
+			[ 'lang' => $wgContLang->getCode() ]
+		);
+		$hubsV3List = $response->getVal('list', []);
+
+		$hubsSlots = $helper->getHubSlotsFromWF( $wgCityId, $wgContLang->getCode() );
+
+		if( isset( $hubsSlots['hub_slot'] ) ) {
+			foreach( $hubsSlots['hub_slot'] as $slot => $hubId ) {
+				if( is_numeric( $hubId ) && isset( $hubsV3List[ $hubId ] ) ) {
+					$hubSettings = WikiFactory::getVarValueByName('wgOasisThemeSettings', $hubId);
+					$settings['hub-color-slot-' . ($slot+1)] = isset( $hubSettings['color-buttons'] )
+						? $hubSettings['color-buttons']
+						: null;
+				}
+			}
+		}
+
+		$oasisSettings = array_merge( $oasisSettings, $settings );
+		return true;
 	}
 
 	/**
@@ -485,9 +579,26 @@ class WikiaHomePageController extends WikiaController {
 		$this->heading = $this->request->getVal('heading');
 		$this->heroimageurl = $heroImageUrl;
 		$this->herourl = $heroUrl;
+	}
+
+	/**
+	 * renders a single hub section on mobile
+	 */
+	public function wikiaMobileRenderHubSection() {
+		// biz logic here
+		$heroUrl = $this->request->getVal('herourl');
+		$heroImageUrl = $this->request->getVal('heroimageurl');
+
+		// Don't show HUB if we don't have data ~ we don't have image URL and/or HUB URL
+		if ( empty( $heroImageUrl ) || empty( $heroUrl ) ) {
+			return false;
+		}
+
+		$this->classname = $this->request->getVal('classname');
+		$this->heading = $this->request->getVal('heading');
+		$this->heroimageurl = $heroImageUrl;
+		$this->herourl = $heroUrl;
 		$this->creative = $this->request->getVal('creative');
-		$this->moreheading = $this->request->getVal('moreheading');
-		$this->morelist = $this->request->getVal('morelist');
 	}
 
 	/**
@@ -515,6 +626,7 @@ class WikiaHomePageController extends WikiaController {
 	 * @responseParam array wikiInfo
 	 */
 	public function getInterstitial() {
+		$this->response->setCacheValidity( WikiaResponse::CACHE_SHORT );
 		$wikiId = $this->request->getVal('wikiId', 0);
 		$domain = $this->request->getVal('domain', null);
 
@@ -666,6 +778,12 @@ class WikiaHomePageController extends WikiaController {
 
 		OasisController::addBodyClass( 'wikia-contentlang-' . self::getContentLang() );
 
+		return true;
+	}
+
+	public static function onArticleFromTitle ( &$title, &$article ) {
+		$redirectService = new RedirectService('hubsv2');
+		$redirectService->redirectIfURLExists();
 		return true;
 	}
 

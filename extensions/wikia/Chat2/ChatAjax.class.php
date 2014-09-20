@@ -28,13 +28,14 @@ class ChatAjax {
 		$data = $wgMemc->get( $wgRequest->getVal('key'), false );
 		if( empty($data) ) {
 			wfProfileOut( __METHOD__ );
-			return array( 'errorMsg' => wfMsg('chat-room-is-not-on-this-wiki'));
+			return array( 'errorMsg' => "Key not found");
 		}
 
 		$user = User::newFromId( $data['user_id'] );
-		if( empty($user) || !$user->isLoggedIn() || $user->getName() != $wgRequest->getVal('name', '') ) {
+
+		if( empty($user) || !$user->isLoggedIn() || $user->getName() != urldecode($wgRequest->getVal('name', '')) ) {
 			wfProfileOut( __METHOD__ );
-			return array( 'errorMsg' => wfMsg('chat-room-is-not-on-this-wiki'));
+			return array( 'errorMsg' => "User not found");
 		}
 
 		$isCanGiveChatMod = false;
@@ -51,6 +52,7 @@ class ChatAjax {
 			'isCanGiveChatMod' => $isCanGiveChatMod,
 			'isStaff' => $user->isAllowed( 'chatstaff' ),
 			'username' => $user->getName(),
+			'username_encoded' => rawurlencode($user->getName()),
 			'avatarSrc' => AvatarService::getAvatarUrl($user->getName(), self::CHAT_AVATAR_DIMENSION),
 			'editCount' => "",
 			'since' => '',
@@ -122,8 +124,6 @@ class ChatAjax {
 		}
 
 		NodeApiClient::setChatters($wgRequest->getArray('users'));
-
-		ChatRailController::purgeMethod("content");
 
 		wfProfileOut( __METHOD__ );
 		return array('status' => $wgRequest->getArray('users') );

@@ -49,7 +49,7 @@ class CoppaToolSpecialController extends WikiaSpecialPageController {
 					'name' => 'username',
 					'isRequired' => true,
 					'label' => $this->msg( 'coppatool-label-username' )->escaped(),
-					'value' => $this->userName,
+					'value' => Sanitizer::encodeAttribute( $this->userName ),
 				],
 				[
 					'type' => 'submit',

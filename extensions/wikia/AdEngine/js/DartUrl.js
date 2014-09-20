@@ -17,8 +17,11 @@
  *
  * @return {Object}
  * @constructor
+ *
+ * TODO: This file is only used by JWPlayer. Remove it when JWPlayer is removed
  */
-var DartUrl = function () {
+/*global define*/
+define('ext.wikia.adEngine.dartUrl', function () {
 	'use strict';
 
 	var logGroup = 'DartUrlUtils';
@@ -108,11 +111,4 @@ var DartUrl = function () {
 		trimParam: trimParam,
 		urlBuilder: urlBuilder
 	};
-};
-
-(function (context) {
-	'use strict';
-	if (context.define && context.define.amd) {
-		context.define('wikia.darturl', DartUrl);
-	}
-}(this));
+});

@@ -267,19 +267,20 @@ $1
 
 /** Zazaki (Zazaki)
  * @author Erdemaslancan
+ * @author Mirzali
  */
 $messages['diq'] = array(
 	'lightbox_details_tooltip' => 'Teferruatê resimi bıvin',
 	'lightbox-forum' => 'Forum',
 	'lightbox-standard-link' => 'Standard link',
 	'lightbox-blog-link' => 'Grey blogi',
-	'lightbox-send' => 'Bırş',
+	'lightbox-send' => 'Bırışe',
 	'lightbox-share-button-email' => 'E-posta',
 	'lightbox-share-button-www' => 'Vıla ke',
 	'lightbox-share-button-embed' => 'Embed',
 	'lightbox-share-email-page-label-address' => 'Adresê e-posta',
 	'lightbox-share-email-ok-caption' => 'Tesdiqiye',
-	'lightbox-share-email-error-caption' => 'Xırab',
+	'lightbox-share-email-error-caption' => 'Xeta',
 );
 
 /** Esperanto (Esperanto)
@@ -330,14 +331,15 @@ Detalles: $2',
 );
 
 /** Persian (فارسی)
+ * @author Ebraminio
  * @author Reza1615
  */
 $messages['fa'] = array(
 	'lightbox-forum' => 'فروم',
 	'lightbox-send' => 'ارسال',
-	'lightbox-share-button-email' => 'پست الکترونیکی',
+	'lightbox-share-button-email' => 'رایانامه',
 	'lightbox-share-button-www' => 'به‌اشتراک‌گذاشتن',
-	'lightbox-share-email-page-label-address' => 'نشانی پست الکترونیکی',
+	'lightbox-share-email-page-label-address' => 'نشانی رایانامه',
 	'lightbox-share-email-ok-caption' => 'تأیید عمل',
 	'lightbox-share-email-error-caption' => 'خطا',
 );
@@ -605,10 +607,22 @@ $1
 	'lightbox-visit-the-wiki' => 'ウィキに移動:',
 );
 
+/** Kannada (ಕನ್ನಡ)
+ * @author VASANTH S.N.
+ */
+$messages['kn'] = array(
+	'lightbox-share-button-email' => 'ಇ-ಅಂಚೆ',
+	'lightbox-share-button-www' => 'ಹಂಚು',
+	'lightbox-share-email-page-label-address' => 'ಮಿಂಚಂಚೆ ವಿಳಾಸ',
+	'lightbox-share-email-error-caption' => 'ದೋಷ',
+);
+
 /** Korean (한국어)
  * @author Cafeinlove
+ * @author 관인생략
  */
 $messages['ko'] = array(
+	'lightbox-forum' => '포럼',
 	'lightbox-share-button-email' => '이메일',
 	'lightbox-share-email-page-label-address' => '이메일 주소',
 );
@@ -1035,10 +1049,38 @@ Detaljer: $2',
 );
 
 /** Telugu (తెలుగు)
+ * @author Chaduvari
  * @author Veeven
  */
 $messages['te'] = array(
+	'lightbox_details_tooltip' => 'ఫొటో వివరాలను చూపించు',
+	'lightbox-forum' => 'వేదిక',
+	'lightbox-standard-link' => 'సాధారణ లింకు',
+	'lightbox-blog-link' => 'బ్లాగు లింకు',
+	'lightbox-send' => 'పంపించు',
+	'lightbox-share-description' => '$2 లో $1 లోని ఫొటో',
+	'lightbox-share-email-subject' => '$1 వికియాలో మీకో ఫొటో పంపించారు',
+	'lightbox-share-email-body' => 'హలో,
+
+ఎవరో వికియాలో మీకో ఫొటో చూపించ దలచారు, చూడండి:
+
+$1
+
+- వికియా బృందం',
+	'lightbox-share-button-email' => 'ఈమెయిలు',
+	'lightbox-share-button-www' => 'పంచుకోండి',
+	'lightbox-share-button-embed' => 'ఇముడ్చు',
+	'lightbox-share-email-label' => 'ఈ బొమ్మను మిత్రునికి పంపించండి',
+	'lightbox-share-email-page-label' => 'ఈ పేజీని మిత్రునికి పంపించండి',
 	'lightbox-share-email-page-label-address' => 'ఈమెయిలు చిరునామా',
+	'lightbox-share-email-ok-caption' => 'ధృవీకరణ',
+	'lightbox-share-email-ok-content' => '{{PLURAL:$1|ఈమెయిలును|ఈమెయిళ్ళను}} పంపించాం.',
+	'lightbox-share-email-error-caption' => 'లోపం',
+	'lightbox-share-email-error-content' => '{{PLURAL:$1|ఈమెయిలు|ఈమెయిళ్ళను}} పంపించడంలో లోపం.
+వివరాలు: $2',
+	'lightbox-share-email-error-login' => 'ఈమెయిళ్ళు పంపాలంటే మీరు లాగిన్ అవాలి',
+	'lightbox-share-email-error-noaddress' => 'చిరునామాలేమీ ఇవ్వలేదు.',
+	'lightbox-visit-the-wiki' => 'వికీకి వెళ్ళండి:',
 );
 
 /** Tagalog (Tagalog)
@@ -1088,6 +1130,13 @@ $messages['tr'] = array(
 	'lightbox-share-button-www' => 'Paylaş',
 	'lightbox-share-email-page-label-address' => 'E-posta adresi',
 	'lightbox-share-email-error-caption' => 'Hata',
+);
+
+/** Tuvinian (тыва дыл)
+ * @author Agilight
+ */
+$messages['tyv'] = array(
+	'lightbox-forum' => 'Шуулган',
 );
 
 /** Ukrainian (українська)
@@ -1174,6 +1223,12 @@ $messages['zh-hans'] = array(
 	'lightbox-blog-link' => '博客链接',
 	'lightbox-send' => '发送',
 	'lightbox-share-description' => '照片在 $1 上$2',
+	'lightbox-share-email-subject' => '$1在Wikia上向您发送了一张照片',
+	'lightbox-share-email-body' => '嗨，有人想在Wikia向您展示一张照片。看看怎么回事：
+
+$1
+
+——Wikia团队',
 	'lightbox-share-button-email' => '电子邮件',
 	'lightbox-share-button-www' => '分享',
 	'lightbox-share-button-embed' => '嵌入',
@@ -1193,13 +1248,14 @@ $messages['zh-hans'] = array(
 /** Traditional Chinese (中文（繁體）‎)
  * @author Ffaarr
  * @author Justincheng12345
+ * @author LNDDYL
  * @author Radish10cm
  */
 $messages['zh-hant'] = array(
-	'lightbox_details_tooltip' => '查看圖片詳細資訊',
+	'lightbox_details_tooltip' => '檢視圖片詳細資訊',
 	'lightbox-blog-link' => '部落格連結',
 	'lightbox-share-button-email' => '電子郵件',
 	'lightbox-share-button-www' => '分享',
 	'lightbox-share-button-embed' => '嵌入',
-	'lightbox-share-email-page-label-address' => '電郵地址',
+	'lightbox-share-email-page-label-address' => '電郵位址',
 );

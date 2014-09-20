@@ -26,10 +26,10 @@ class Mail_wikiadb extends Mail {
 			$category = $headers['X-Msg-Category'];
 		}
 		
-		global $wgCityId, $wgExternalDatawareDB;
+		global $wgCityId, $wgWikiaMailerDB;
 		$wgCityId = ($wgCityId == null?0:$wgCityId); // fake city-id for contractor/staff.
 		// FB:4431 Write mail to archive database now
-		$dbw = wfGetDb(DB_MASTER, array(), $wgExternalDatawareDB);
+		$dbw = wfGetDb(DB_MASTER, array(), $wgWikiaMailerDB);
 		$dbw->begin(__METHOD__);
 		foreach ($recipients as $recipient) {
 

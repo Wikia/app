@@ -1,5 +1,7 @@
 <?php
 
+use Wikia\Logger\WikiaLogger;
+
 /**
  * VideoInfo Hooks Helper
  * @author Liz Lee, Saipetch Kongkatong
@@ -7,37 +9,55 @@
 class VideoInfoHooksHelper {
 
 	/**
-	 * Hook: add or reupload video and clear cache when file is uploaded
+	 * Insert or update video info record from given file
 	 * @param LocalFile $file
-	 * @param $reupload
-	 * @param $hasDescription
-	 * @return true
+	 * @param bool $reupload
+	 * @return bool
+	 * @throws Exception
 	 */
-	public static function onFileUpload( $file, $reupload, $hasDescription ) {
+	public static function upsertVideoInfo( \LocalFile $file, $reupload ) {
+		if ( !$file->isDataLoaded() ) {
+			$errMessage = 'Video file not loaded';
+			WikiaLogger::instance()->error($errMessage);
+			throw new \Exception($errMessage);
+		}
 
 		$videoInfoHelper = new VideoInfoHelper();
 		$videoData = $videoInfoHelper->getVideoDataFromFile( $file );
-		if ( !empty($videoData) ) {
-			$videoInfo = new VideoInfo( $videoData );
-			if ( $reupload ) {
-				$videoInfo->reuploadVideo();
-			} else {
-				// check if the foreign video with the same title exists
-				if ( $videoInfoHelper->videoExists($file->getTitle(), true) ) {
-					$videoInfo->reuploadVideo();
-				} else {
-					$videoInfo->addVideo();
-				}
 
-				$mediaService = new MediaQueryService();
-				$mediaService->clearCacheTotalVideos();
-				if ( !$file->isLocal() ) {
-					$mediaService->clearCacheTotalPremiumVideos();
-				}
-				if ( !empty( F::app()->wg->UseVideoVerticalFilters ) ) {
-					VideoInfoHooksHelper::clearCategories( $file->getTitle() );
-				}
-			}
+		if ( empty( $videoData ) ) {
+			return true;
+		}
+
+		$videoInfo = new VideoInfo( $videoData );
+
+		// Force a reupload if the foreign video with the same title exists
+		$reupload = $reupload || $videoInfoHelper->videoExists( $file->getTitle() , true );
+
+		if ( $reupload ) {
+			$videoInfo->reuploadVideo();
+		} else {
+			$videoInfo->addVideo();
+		}
+
+		return true;
+	}
+
+	/**
+	 * Clear cache of video info specific to given file
+	 * @param LocalFile $file
+	 * @return bool
+	 */
+	public static function purgeVideoInfoCache( \LocalFile $file ) {
+		$mediaService = new MediaQueryService();
+		$mediaService->clearCacheTotalVideos();
+
+		if ( !$file->isLocal() ) {
+			$mediaService->clearCacheTotalPremiumVideos();
+		}
+
+		if ( !empty( F::app()->wg->UseVideoVerticalFilters ) ) {
+			VideoInfoHooksHelper::clearCategories( $file->getTitle() );
 		}
 
 		return true;
@@ -267,6 +287,7 @@ class VideoInfoHooksHelper {
 
 	/**
 	 * Hook: check if the file is deleted
+	 * @todo re-implement this w/o reliance on request origination data
 	 * @param File $file
 	 * @param boolean $isDeleted
 	 * @return true
@@ -280,7 +301,13 @@ class VideoInfoHooksHelper {
 		$req = F::app()->wg->Request;
 		$controller = $req->getVal( 'controller', '' );
 		$method = $req->getVal( 'method', '' );
-		if ( $controller == 'VideoEmbedTool' || $method == 'insertVideo' || ( $controller == 'Videos' && $method == 'addVideo' ) )  {
+		$title = $req->getVal( 'title', '' );
+		if ( $controller == 'VideoEmbedTool'
+			 || $method == 'insertVideo'
+			 || $title == 'Special:WikiaVideoAdd'
+			 || ( $controller == 'Videos' && $method == 'addVideo' )
+			 || ( $controller == 'Lightbox' && $method = 'getMediaDetail' )
+		) {
 			return true;
 		}
 

@@ -7,6 +7,9 @@ class EmailsStorageTest extends WikiaBaseTest {
 		parent::setUp();
 	}
 
+	/**
+	 * @group UsingDB
+	 */
 	public function testCreateNewEntry() {
 		/* @var $entry EmailsStorageEntry */
 		$entry = (new EmailsStorage)->newEntry(EmailsStorage::SCAVENGER_HUNT);

@@ -16,17 +16,17 @@ process.argv.forEach(function (val, index, array) {
 
 console.log(arvg);
 
-//Load the configuration from media wiki conf 
+//Load the configuration from media wiki conf
 
 var dns = require('dns');
 var fs = require('fs');
 
-arvg.instance = arvg.instance - 1; 
-var chatConfig = JSON.parse(fs.readFileSync('/usr/wikia/conf/current/ChatConfig.json'));
+arvg.instance = arvg.instance - 1;
+var chatConfig = JSON.parse(fs.readFileSync(process.env.WIKIA_CONFIG_ROOT + '/ChatConfig.json'));
 
-var instaceNumber = chatConfig[arvg.mode]['MainChatServers'][arvg.basket].length;
+var instanceCount = chatConfig[arvg.mode]['MainChatServers'][arvg.basket].length;
 
-
+var chatHost = chatConfig[arvg.mode]['ChatHost'];
 var chatServer = chatConfig[arvg.mode]['MainChatServers'][arvg.basket][arvg.instance].split(':');
 var apiServer = chatConfig[arvg.mode]['ApiChatServers'][arvg.basket][arvg.instance].split(':');
 
@@ -39,24 +39,26 @@ exports.BASKET = arvg.basket;
 exports.INSTANCE = arvg.instance + 1;
 exports.API_SERVER_HOST = apiServer[0];
 exports.API_SERVER_PORT = parseInt(apiServer[1]);
-	
+
 var redisServer = chatConfig[arvg.mode]['RedisServer'][arvg.basket].split(':');
-	
+
 exports.REDIS_HOST = redisServer[0];
 exports.REDIS_PORT = redisServer[1];
-	
-// Settings for local varnish	
+
+// Settings for local varnish
 exports.WIKIA_PROXY = chatConfig[arvg.mode]['ProxyServer'];
 
 /** CONSTANTS **/
 exports.MAX_MESSAGES_IN_BACKLOG = chatConfig['MaxMessagesInBacklog']; // how many messages each room will store for now. only longer than NUM_MESSAGES_TO_SHOW_ON_CONNECT for potential debugging.
-exports.MAX_MESSAGES_IN_BACKLOG = chatConfig['NumMessagesToShowOnConnect'];
+exports.NUM_MESSAGES_TO_SHOW_ON_CONNECT = chatConfig['NumMessagesToShowOnConnect'];
 
 exports.TOKEN = chatConfig['ChatCommunicationToken'];
 
 exports.validateConnection = function(cityId) {
+	//TODO: take this out when we will be operating on 2 servers
+	return true;
 	if(typeof arvg.instance != 'undefined') {
-		if(arvg.instance == cityId%instaceNumber){
+		if(arvg.instance == cityId%instanceCount){
 			return true;
 		}
 		return false;
@@ -67,11 +69,11 @@ exports.validateConnection = function(cityId) {
 exports.validateActiveBasket = function(basket) {
 	//TODO: take this out when we will be operating on 2 servers
 	return true;
-	
+
 	if(typeof arvg.basket != 'undefined') {
 		if(arvg.basket == basket){
 			return true;
-		} 
+		}
 		return false;
 	}
 	return false;

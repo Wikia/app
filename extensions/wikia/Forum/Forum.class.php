@@ -89,6 +89,7 @@ class Forum extends Walls {
 
 			$sqlWhere = array(
 				'parent_comment_id' => 0,
+				'archived' => 0,
 				'deleted' => 0,
 				'removed' => 0,
 				'page_namespace' => NS_WIKIA_FORUM_BOARD_THREAD

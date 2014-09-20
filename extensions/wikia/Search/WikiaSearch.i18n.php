@@ -65,8 +65,7 @@ $messages['en'] = array(
 
 	'wikiamobile-wikiasearch2-next' => 'Next',
 	'wikiamobile-wikiasearch2-prev' => 'Previous',
-	'wikiamobile-wikiasearch2-results-count-of' => ' of $1 {{PLURAL:$1|result|results}}',
-	
+	'wikiamobile-wikiasearch2-count-of-results' => '$1-$2 of $3 {{PLURAL:$3|result|results}}',
 	'wikiasearch2-video-results' => 'Videos for \'$1\''
 );
 
@@ -86,7 +85,7 @@ $messages['qqq'] = array(
 	'wikiasearch2-search-ads-header' => 'Heading displayed above search advertisements.',
 	'wikiamobile-wikiasearch2-next' => 'Message is used to go to next result page',
 	'wikiamobile-wikiasearch2-prev' => 'Message is used to go to previous result page',
-	'wikiamobile-wikiasearch2-results-count-of' => 'Message is used to go to show on which results number user is and whats total result number',
+	'wikiamobile-wikiasearch2-count-of-results' => 'Message uses to show start number of first and last result shown on current page and numbet of total results',
 	'wikiasearch2-tabs-articles' => 'Name of a tab with articles. This tab is displayed in the right column on search page',
 	'wikiasearch2-tabs-photos-and-videos' => 'Name of a tab with photos and videos. This tab is displayed in the right column on search page',
 	'wikiasearch2-users' => 'Name of a tab with users. This tab is displayed in the right column on search page',

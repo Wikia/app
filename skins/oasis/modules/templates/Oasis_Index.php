@@ -33,49 +33,8 @@
 	<style type="text/css"><?= $pageCss ?></style>
 <? endif ?>
 
-<? // 1% of JavaScript errors are logged for $wgEnableJSerrorLogging=true non-devbox wikis
-if (!$wg->DevelEnvironment):?>
-	<script>
-		function syslogReport(priority, message, context) {
-			context = context || null;
-			var url = "//jserrorslog.wikia.com/",
-				i = new Image(),
-				data = {
-					'@message': message,
-					'syslog_pri': priority
-				};
-
-//			url = '//jserrorslog.nelson.wikia-dev.com/';
-			if (context) {
-				data['@context'] = context;
-			}
-
-			try {
-				data['@fields'] = { server: document.cookie.match(/server.([A-Z]*).cache/)[1] };
-			} catch (e) {}
-
-			try {
-				i.src = url+'l?'+JSON.stringify(data);
-			} catch (e) {
-				i.src = url+'e?'+e;
-			}
-		}
-	</script><?
-	if ($wg->IsGASpecialWiki || $wg->EnableJavaScriptErrorLogging):?>
-		<script>
-			window.onerror = function(m,u,l) {
-				if (Math.random() < 0.01) {
-					syslogReport(3, m, {'url': u, 'line': l}); // 3 is "error"
-				}
-
-				return false;
-			}
-		</script>
-	<? endif ?>
-<? endif ?>
-
 <?= $topScripts ?>
-<?= $wikiaScriptLoader; /*needed for jsLoader and for the async loading of CSS files.*/ ?>
+<?= $globalBlockingScripts; /*needed for jsLoader and for the async loading of CSS files.*/ ?>
 
 <!-- Make IE recognize HTML5 tags. -->
 <!--[if IE]>
@@ -113,18 +72,19 @@ if (!$wg->DevelEnvironment):?>
 <?= $amazonDirectTargetedBuy ?>
 <?= $dynamicYield ?>
 <?= $ivw2 ?>
+<?= $rubiconRtp ?>
 <div class="WikiaSiteWrapper">
 	<?= $body ?>
 
 	<?php
-		echo F::app()->renderView('Ad', 'Index', array('slotname' => 'GPT_FLUSH'));
+		echo F::app()->renderView('Ad', 'Index', ['slotName' => 'GPT_FLUSH', 'pageTypes' => ['*']]);
 		if (empty($wg->SuppressAds)) {
-			echo F::app()->renderView('Ad', 'Index', array('slotname' => 'INVISIBLE_1'));
+			echo F::app()->renderView('Ad', 'Index', ['slotName' => 'INVISIBLE_1', 'pageTypes' => ['corporate', 'all_ads']]);
 			if (!$wg->EnableWikiaHomePageExt) {
-				echo F::app()->renderView('Ad', 'Index', array('slotname' => 'INVISIBLE_2'));
+				echo F::app()->renderView('Ad', 'Index', ['slotName' => 'INVISIBLE_2']);
 			}
 		}
-		echo F::app()->renderView('Ad', 'Index', array('slotname' => 'SEVENONEMEDIA_FLUSH'));
+		echo F::app()->renderView('Ad', 'Index', ['slotName' => 'SEVENONEMEDIA_FLUSH', 'pageTypes' => ['*']]);
 	?>
 </div>
 <? if( $jsAtBottom ): ?>
@@ -141,7 +101,9 @@ if (!$wg->DevelEnvironment):?>
 <? endif ?>
 
 <script type="text/javascript">/*<![CDATA[*/ Wikia.LazyQueue.makeQueue(wgAfterContentAndJS, function(fn) {fn();}); wgAfterContentAndJS.start(); /*]]>*/</script>
-
+<?php if ($wg->EnableAdEngineExt) { ?>
+<script type="text/javascript">/*<![CDATA[*/ if (typeof AdEngine_trackPageInteractive === 'function') {wgAfterContentAndJS.push(AdEngine_trackPageInteractive);} /*]]>*/</script>
+<?php } ?>
 <?= $bottomScripts ?>
 <?= $cssPrintLinks ?>
 

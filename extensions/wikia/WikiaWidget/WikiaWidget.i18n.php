@@ -254,6 +254,13 @@ $messages['ms'] = array(
 	'wikiawidget' => 'Widget Wikia',
 );
 
+/** Min Nan Chinese (Bân-lâm-gú)
+ * @author Ianbu
+ */
+$messages['nan'] = array(
+	'wikiawidget' => 'Wikia工具集',
+);
+
 /** Norwegian Bokmål (norsk bokmål)
  * @author Audun
  * @author Nghtwlkr

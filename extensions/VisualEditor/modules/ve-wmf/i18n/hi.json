@@ -1,0 +1,18 @@
+{
+	"@metadata": {
+		"authors": [
+			"Ansumang",
+			"Devayon",
+			"Rajesh",
+			"Siddhartha Ghai"
+		]
+	},
+	"tag-visualeditor": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|विज़ुअल सम्पादक]]",
+	"tag-visualeditor-description": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|विज़ुअल सम्पादक]] के प्रयोग से किया गया सम्पादन",
+	"tag-visualeditor-needcheck": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|विज़ुअल सम्पादक: जाँच आवश्यक]]",
+	"tag-visualeditor-needcheck-description": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|विज़ुअल सम्पादक]] के प्रयोग से किये गए सम्पादन जिनमें सिस्टम ने पाया है कि विकिपाठ में अनपेक्षित बदलाव हो सकते हैं।",
+	"visualeditor-feedback-link": "Project:विज़ुअल सम्पादक/प्रतिक्रिया",
+	"visualeditor-feedback-tool": "प्रतिक्रिया छोड़ें",
+	"visualeditor-help-label": "प्रयोग मार्गदर्शिका पढ़ें",
+	"visualeditor-help-title": "सम्पादक प्रयोग के लिए मार्गदर्शिका"
+}

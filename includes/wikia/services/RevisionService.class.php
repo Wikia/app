@@ -53,15 +53,17 @@ class RevisionService {
 	 * @param int $limit limit number of results.
 	 * @param array $namespaces list of namespaces to filter by. No filter applied if null
 	 * @param bool $allowDuplicates if false there will be at most one result per page
+	 * @param string $filteringMethod optional name of filtering method
 	 * @return array
 	 */
-	public function getLatestRevisions( $limit, $namespaces, $allowDuplicates ) {
+	public function getLatestRevisions( $limit, $namespaces, $allowDuplicates, $filteringMethod = null ) {
 		$key = self::createCacheKey( $this->queryLimit, $namespaces, $allowDuplicates );
-		$listOfRevisions = WikiaDataAccess::cache( $key, $this->cacheTime, function() use( $namespaces, $allowDuplicates ) {
-			return $this->getLatestRevisionsNoCacheAllowDuplicates( $this->queryLimit, $namespaces, $allowDuplicates );
+		$listOfRevisions = WikiaDataAccess::cache( $key, $this->cacheTime, function() use( $namespaces ) {
+			return $this->getLatestRevisionsNoCacheAllowDuplicates( $this->queryLimit, $namespaces );
 		});
 		if( !$allowDuplicates ) {
-			$listOfRevisions = $this->filterDuplicates( $listOfRevisions );
+			$filteringMethod = is_null( $filteringMethod ) ? 'filterDuplicates' : $filteringMethod;
+			$listOfRevisions = $this->$filteringMethod( $listOfRevisions );
 		}
 		$listOfRevisions = $this->limitCount( $listOfRevisions, $limit );
 		return $listOfRevisions;
@@ -77,15 +79,15 @@ class RevisionService {
 
 		$result = $this->getLatestRevisionsQuery( $limit, $namespaces );
 
-		$items = array();
+		$items = [];
 		while( ( $row = $result->fetchObject() ) !== false ) {
 			$dateTime = date_create_from_format( 'YmdHis', $row->timestamp );
-			$items[  ] = array(
+			$items[] = [
 				'article'    => intval($row->pageId),
 				'user'       => intval($row->userId),
 				'revisionId' => intval($row->id),
 				'timestamp'  => $dateTime->getTimestamp()
-			);
+			];
 		}
 		return $items;
 	}
@@ -98,9 +100,10 @@ class RevisionService {
 	public function getLatestRevisionsQuery( $limit, $namespaces ) {
 		$namespaces = $this->sqlSanitizeArray($namespaces);
 
-		$tables = array('recentchanges');
-		$joinConditions = array();
-		$conditions = array();
+		$tables = [ 'recentchanges' ];
+		$joinConditions = [];
+		$conditions = [];
+		$options = [ 'LIMIT' => $limit, 'ORDER BY' => 'rc_id DESC' ];
 
 		// clear out the bots
 		$conditions[] = "rc_bot=0";
@@ -109,14 +112,14 @@ class RevisionService {
 		if ( $namespaces != null ) {
 			$conditions[] = "page_namespace in (" . implode(",",$namespaces) . ")";
 			$tables[] = 'page';
-			$joinConditions['page'] = array( "JOIN", "rc_cur_id=page_id" );
+			$joinConditions['page'] = [ "JOIN", "rc_cur_id=page_id" ];
 		}
 		$query = $this->databaseConnection->selectSQLText(
 			$tables
 			, 'rc_id as id, page_id as pageId, rc_timestamp as timestamp, rc_user as userId'
 			, $conditions
 			, __METHOD__
-			, array( 'LIMIT' => $limit, 'ORDER BY' => 'rc_id DESC' )
+			, $options
 			, $joinConditions );
 
 		$result = $this->databaseConnection->query($query);
@@ -138,7 +141,7 @@ class RevisionService {
 	 */
 	public function filterDuplicates( $listOfRevisions ) {
 		$prev = null;
-		$resultArray = array();
+		$resultArray = [];
 		foreach( $listOfRevisions as $i => $revision ) {
 			if( $prev == null
 				|| $prev['article'] != $revision['article']
@@ -151,6 +154,24 @@ class RevisionService {
 	}
 
 	/**
+	 * @param array $listOfRevisions list of revisions to remove duplicates from
+	 * @return array
+	 */
+	public function filterByArticle( $listOfRevisions ) {
+		$presentPageIds = [];
+		$result = [];
+		foreach( $listOfRevisions as $revisionData ) {
+			$pageId = $revisionData['article'];
+
+			if( !isset( $presentPageIds[$pageId] ) ) {
+				$presentPageIds[$pageId] = true;
+				$result[] = $revisionData;
+			}
+		}
+		return $result;
+	}
+
+	/**
 	 * @param array $array array to sanitize
 	 * @return array
 	 */
@@ -158,7 +179,7 @@ class RevisionService {
 		if( $array == null ) {
 			return null;
 		}
-		$resultArray = array();
+		$resultArray = [];
 		foreach( $array as $i => $v ) {
 			$resultArray[] = $this->databaseConnection->addQuotes($v);
 		}
@@ -176,12 +197,13 @@ class RevisionService {
 		if( $dbName == null ) {
 			$dbName = F::app()->wg->DBname;
 		}
-		$key = implode("_", array(
+		$key = implode("_", [
 			"RevisionService",
 			$dbName,
 			strval($limit),
 			implode(",",$namespaces),
-			strval($allowDuplicates)));
+			strval($allowDuplicates)
+		]);
 		return $key;
 	}
 

@@ -314,3 +314,10 @@ $messages['vi'] = array(
 $messages['zh-hans'] = array(
 	'sitemap-desc' => '联机生成站点地图',
 );
+
+/** Traditional Chinese (中文（繁體）‎)
+ * @author Cwlin0416
+ */
+$messages['zh-hant'] = array(
+	'sitemap-desc' => '快速產生 Wiki 網站地圖',
+);

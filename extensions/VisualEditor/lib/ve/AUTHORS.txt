@@ -1,0 +1,27 @@
+Principal Authors (major contributors, alphabetically)
+
+Christian Williams <christian@wikia-inc.com>
+David Chan <dchan@wikimedia.org>
+Ed Sanders <esanders@wikimedia.org>
+Inez Korczynski <inez@wikia-inc.com>
+Moriel Schottlender <mschottlender@wikimedia.org>
+Roan Kattouw <roan@wikimedia.org>
+Rob Moen <rmoen@wikimedia.org>
+Timo Tijhof <timo@wikimedia.org>
+Trevor Parscal <trevor@wikimedia.org>
+
+Patch Contributors (minor contributors, alphabetically)
+
+Aaron Schulz <aschulz@wikimedia.org>
+Adam Wight <spam@ludd.net>
+Antoine Musso <hashar@free.fr>
+Audrey Tang <audreyt@audreyt.org>
+Bartosz Dziewoński <matma.rex@gmail.com>
+Brion Vibber <brion@wikimedia.org>
+Erik Moeller <erik@wikimedia.org>
+Gabriel Wicke <gwicke@wikimedia.org>
+James Forrester  <jforrester@wikimedia.org>
+Neil Kandalgaonkar <neilk@brevity.org>
+Mark A. Hershberger <mah@everybody.org>
+Mark Holmquist <mtraceur@member.fsf.org>
+Subramanya Sastry <ssastry@wikimedia.org>

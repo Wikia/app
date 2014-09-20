@@ -4,6 +4,7 @@ class PromoteImageReviewHelper extends ImageReviewHelperBase {
 
 	const LIMIT_IMAGES = 20;
 	const LIMIT_IMAGES_FROM_DB = 20;
+	const INVALID_STATUS_TIMEOUT= 3600;
 
 	static $sortOptions = array(
 		'latest first' => 0,
@@ -23,14 +24,17 @@ class PromoteImageReviewHelper extends ImageReviewHelperBase {
 		$taskAdditionList = array();
 
 		$sqlWhere = array(
-			ImageReviewStatuses::STATE_APPROVED => array(),
+			ImageReviewStatuses::STATE_APPROVED_AND_TRANSFERRING => array(),
 			ImageReviewStatuses::STATE_REJECTED => array(),
 			ImageReviewStatuses::STATE_QUESTIONABLE => array(),
 		);
 
 		foreach( $images as $image ) {
 			if ($image['state'] == ImageReviewStatuses::STATE_APPROVED) {
-				$sqlWhere[ImageReviewStatuses::STATE_APPROVED][] = "( city_id = $image[wikiId] AND page_id = $image[pageId]) ";
+				//for promote Image use temporary approval state as it will be used to supervise image copy
+				$image['state'] = ImageReviewStatuses::STATE_APPROVED_AND_TRANSFERRING;
+
+				$sqlWhere[ImageReviewStatuses::STATE_APPROVED_AND_TRANSFERRING][] = "( city_id = $image[wikiId] AND page_id = $image[pageId]) ";
 				$approvalList [] = $image;
 
 				$visualization = new CityVisualization();
@@ -91,15 +95,7 @@ class PromoteImageReviewHelper extends ImageReviewHelperBase {
 	}
 
 	protected function createUploadTask($taskAdditionList) {
-		if (!empty($taskAdditionList)) {
-			$task = new PromoteImageReviewTask();
-			$task->createTask(
-				array(
-					'upload_list' => $taskAdditionList,
-				),
-				TASK_QUEUED
-			);
-		}
+		wfRunHooks('CreatePromoImageReviewTask', ['upload', $taskAdditionList]);
 	}
 
 	protected function saveStats($statsInsert, $sqlWhere, $action) {
@@ -142,11 +138,9 @@ class PromoteImageReviewHelper extends ImageReviewHelperBase {
 	/**
 	 * reset state in abandoned work
 	 */
-	public function resetAbandonedWork() {
-		wfProfileIn(__METHOD__);
-		$db = wfGetDB(DB_MASTER, array(), $this->wg->ExternalSharedDB);
 
-		$timeLimit = ($this->wg->DevelEnvironment) ? 1 : 3600; // 1 sec
+	public function resetFailedTransfers(){
+		$db = wfGetDB(DB_MASTER, array(), $this->wg->ExternalSharedDB);
 
 		$db->update(
 			'city_visualization_images',
@@ -155,8 +149,25 @@ class PromoteImageReviewHelper extends ImageReviewHelperBase {
 				'image_review_status' => ImageReviewStatuses::STATE_UNREVIEWED,
 			),
 			array(
-				"review_start < now() - " . $timeLimit,
-				'reviewer_id' => $this->wg->User->getId(),
+				"review_start < now() - " . self::INVALID_STATUS_TIMEOUT,
+				'image_review_status' => ImageReviewStatuses::STATE_APPROVED_AND_TRANSFERRING,
+			),
+			__METHOD__
+		);
+	}
+
+	public function resetAbandonedWork() {
+		wfProfileIn(__METHOD__);
+		$db = wfGetDB(DB_MASTER, array(), $this->wg->ExternalSharedDB);
+
+		$db->update(
+			'city_visualization_images',
+			array(
+				'reviewer_id = null',
+				'image_review_status' => ImageReviewStatuses::STATE_UNREVIEWED,
+			),
+			array(
+				"review_start < now() - " . self::INVALID_STATUS_TIMEOUT,
 				'image_review_status' => ImageReviewStatuses::STATE_IN_REVIEW,
 			),
 			__METHOD__
@@ -166,7 +177,7 @@ class PromoteImageReviewHelper extends ImageReviewHelperBase {
 			'city_visualization_images',
 			array('image_review_status' => ImageReviewStatuses::STATE_QUESTIONABLE),
 			array(
-				"review_start < now() - " . $timeLimit,
+				"review_start < now() - " . self::INVALID_STATUS_TIMEOUT,
 				'reviewer_id' => $this->wg->User->getId(),
 				'image_review_status' => ImageReviewStatuses::STATE_QUESTIONABLE_IN_REVIEW,
 			),
@@ -203,36 +214,38 @@ class PromoteImageReviewHelper extends ImageReviewHelperBase {
 
 		$db = wfGetDB(DB_MASTER, array(), $this->wg->ExternalSharedDB);
 
-		// for testing
+		$this->resetFailedTransfers();
 		$this->resetAbandonedWork();
 
 		// get images
 		$imageList = array();
 
-		$where = array();
-		$list = $this->getWhitelistedWikis();
-		if (!empty($list)) {
-			$where[] = 'wiki_id not in(' . implode(',', $list) . ')';
+		if ($state == ImageReviewStatuses::STATE_UNREVIEWED) {
+			$currentlyReviewedByThisUser = ' ( image_review_status = ' . ImageReviewStatuses::STATE_IN_REVIEW
+				. ' AND reviewer_id = ' . $this->wg->user->getId() . ' ) ';
+
+			$newState = ImageReviewStatuses::STATE_IN_REVIEW;
+		} elseif ($state == ImageReviewStatuses::STATE_QUESTIONABLE) {
+			$currentlyReviewedByThisUser = ' ( image_review_status = ' . ImageReviewStatuses::STATE_QUESTIONABLE_IN_REVIEW
+				. ' AND reviewer_id = ' . $this->wg->user->getId() . ' ) ';
+
+			$newState = ImageReviewStatuses::STATE_QUESTIONABLE_IN_REVIEW;
+			$values[] = " review_end = '0000-00-00 00:00:00'";
+		} else {
+			wfProfileOut(__METHOD__);
+			return $imageList; // not supported state transition
 		}
 
-		$whereState = ' image_review_status = ' . $state;
+		$where = ' image_review_status = ' . $state . ' OR ' . $currentlyReviewedByThisUser;
 
 		$values = array(
 			' reviewer_id = ' . $this->wg->user->getId(),
 			" review_start = from_unixtime($timestamp)",
+			' image_review_status = ' . $newState
 		);
 
-		if ($state == ImageReviewStatuses::STATE_QUESTIONABLE) {
-			$newState = ImageReviewStatuses::STATE_QUESTIONABLE_IN_REVIEW;
-			$values[] = " review_end = '0000-00-00 00:00:00'";
-		} else {
-			$newState = ImageReviewStatuses::STATE_IN_REVIEW;
-		}
-
-		$values[] = ' image_review_status = ' . $newState;
-
 		$query = 'SELECT * from city_visualization_images '
-			. ' WHERE ' . $whereState
+			. ' WHERE ' . $where
 			. ' ORDER BY  ' . $this->getOrder($order)
 			. ' LIMIT ' . self::LIMIT_IMAGES_FROM_DB;
 
@@ -285,15 +298,17 @@ class PromoteImageReviewHelper extends ImageReviewHelperBase {
 		}
 
 		$commit = false;
+
+
 		if (count($invalidImages) > 0) {
 			$db->update(
 				'city_visualization_images',
-				array('image_review_status' => ImageReviewStatuses::STATE_INVALID_IMAGE),
+				array('image_review_status' => ImageReviewStatuses::STATE_QUESTIONABLE),
 				array(implode(' OR ', $invalidImages)),
-				__METHOD__
+ 				__METHOD__
 			);
-			$commit = true;
-		}
+ 			$commit = true;
+ 		}
 
 		if (count($unusedImages) > 0) {
 			$db->update(
@@ -485,5 +500,37 @@ class PromoteImageReviewHelper extends ImageReviewHelperBase {
 				$ret = 'last_edited desc';
 		}
 		return $ret;
+	}
+
+	public static function onCreatePromoteImageReviewTask($type, $list) {
+		if (empty($list)) {
+			return true;
+		}
+
+		if (TaskRunner::isModern('PromoteImageReviewTask')) {
+			$batch = [];
+
+			foreach ($list as $targetWikiId => $wikis) {
+				$taskList = new \Wikia\Tasks\AsyncTaskList();
+				$task = new \Wikia\Tasks\Tasks\PromoteImageReviewTask();
+
+				$call = $task->call($type, $targetWikiId, $wikis);
+				$taskList->add($call);
+
+				$batch []= $taskList;
+			}
+
+			\Wikia\Tasks\AsyncTaskList::batch($batch);
+		} else {
+			$task = new PromoteImageReviewTask();
+			$key = $type == 'delete' ? 'deletion_list' : 'upload_list';
+			$params = [
+				$key => $list,
+			];
+
+			$task->createTask($params, TASK_QUEUED);
+		}
+
+		return true;
 	}
 }

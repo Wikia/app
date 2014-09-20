@@ -33,7 +33,7 @@ class SolrDocumentService
 	
 	/**
 	 * Whether we're doing a cross-wiki search on a different core.
-	 * @var boolhttps://wikia-inc.atlassian.net/secure/RapidBoard.jspa?rapidView=30&view=planning&selectedIssue=PLA-467#
+	 * @var bool https://wikia-inc.atlassian.net/secure/RapidBoard.jspa?rapidView=30&view=planning&selectedIssue=PLA-467#
 	 */
 	protected $crossWiki = false;
 	

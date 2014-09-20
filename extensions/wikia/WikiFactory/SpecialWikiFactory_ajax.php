@@ -112,10 +112,14 @@ function axWFactoryGetVariable() {
 		'wikiFactoryUrl' => Title::makeTitle( NS_SPECIAL, 'WikiFactory' )->getFullUrl()
 	));
 
-	return json_encode( array(
+	$response = new AjaxResponse(json_encode( array(
 		"div-body" => $oTmpl->render( "variable" ),
 		"div-name" => "wk-variable-form"
-	));
+	)));
+
+	$response->setCacheDuration(0);
+	$response->setContentType('application/json; charset=utf-8');
+	return $response;
 }
 
 /**

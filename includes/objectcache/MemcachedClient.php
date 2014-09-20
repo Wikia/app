@@ -862,6 +862,12 @@ class MWMemcached {
 		$ip = $parts[0];
 		$this->_host_dead[$ip] = time() + 30 + intval( rand( 0, 10 ) );
 		$this->_host_dead[$host] = $this->_host_dead[$ip];
+		// Wikia change - @author: mech - begin
+		// log memcache problems
+		if ( class_exists( 'Wikia\\Logger\\WikiaLogger' ) ) {
+			\Wikia\Logger\WikiaLogger::instance()->debug( 'MemcachedClient - dead host' , [ 'host' => $host ] );
+		}
+		// Wikia change - end
 		unset( $this->_cache_sock[$host] );
 	}
 

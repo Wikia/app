@@ -1,0 +1,10 @@
+{
+	"@metadata": {
+		"authors": [
+			"Jdforrester"
+		]
+	},
+	"visualeditor-formatdropdown-format-preformatted": "Pre-formatted",
+	"visualeditor-indentationbutton-indent-tooltip": "Increase indent",
+	"visualeditor-indentationbutton-outdent-tooltip": "Decrease indent"
+}

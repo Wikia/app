@@ -101,6 +101,7 @@ $messages['qqq'] = array(
 	'founderprogressbar-list-task-label' => '{{Identical|Task}}',
 	'founderprogressbar-photo-add10-label' => 'Goal.',
 	'founderprogressbar-category-add3-label' => '',
+	'founderprogressbar-browse-page-name' => '{{Identical|Browse}}',
 );
 
 /** Arabic (العربية)
@@ -195,7 +196,7 @@ $messages['br'] = array(
 	'founderprogressbar-themedesigner-visit-label' => 'Personelaat ho tem.',
 	'founderprogressbar-mainpage-edit-label' => 'Leuniañ ho pajenn bennañ',
 	'founderprogressbar-photo-add10-label' => 'Tizhout $1 {{PLURAL:$1|skeudenn}}',
-	'founderprogressbar-category-add3-label' => 'Tizhout $1 {{PLURAL:$1|Rummad|Rummad}}', # Fuzzy
+	'founderprogressbar-category-add3-label' => 'Tizhout $1 {{PLURAL:$1|Rummad}}',
 	'founderprogressbar-commcentral-visit-label' => 'Gweladenniñ kreizenn ar verourien',
 	'founderprogressbar-wikiactivity-visit-label' => 'Gweladenniñ Wiki Activity',
 	'founderprogressbar-profile-edit-label' => 'Leuniañ pajenn ho profil',
@@ -206,7 +207,7 @@ $messages['br'] = array(
 	'founderprogressbar-category-edit-label' => 'Kemmañ ur bajenn rummañ',
 	'founderprogressbar-wikialabs-visit-label' => 'Gweladenniñ Wikia Labs',
 	'founderprogressbar-fb-connect-label' => 'Kevreañ ouzh Facebook',
-	'founderprogressbar-category-add5-label' => 'Tizhout $1 {{PLURAL:$1|Rummad|Rummad}}', # Fuzzy
+	'founderprogressbar-category-add5-label' => 'Tizhout $1 {{PLURAL:$1|Rummad}}',
 	'founderprogressbar-gallery-add-label' => 'Ouzhpennañ ur skeudennaoueg',
 	'founderprogressbar-topnav-edit-label' => 'Personelaat ho merdeadur',
 	'founderprogressbar-mainpage-addslider-label' => 'Ouzhpennañ un dibuner war ar bajenn degemer',
@@ -325,11 +326,14 @@ $messages['ce'] = array(
 
 /** Czech (čeština)
  * @author Chmee2
+ * @author H4nek
  */
 $messages['cs'] = array(
 	'founderprogressbar-skip-for-now' => 'Pro teď přeskočit',
 	'founderprogressbar-task-completed' => 'Dokončeno',
+	'founderprogressbar-profile-edit-label' => 'Vyplnit svůj Profil',
 	'founderprogressbar-total-edit75-label' => 'Dosáhli jste 75 editací',
+	'founderprogressbar-gallery-add-label' => 'Přidat fotogalerii',
 	'founderprogressbar-video-add-label' => 'Přidat video',
 	'founderprogressbar-browse-page-name' => 'Procházet',
 );
@@ -463,12 +467,13 @@ $messages['de-formal'] = array(
 
 /** Zazaki (Zazaki)
  * @author Erdemaslancan
+ * @author Mirzali
  */
 $messages['diq'] = array(
 	'founderprogressbar-task-completed' => 'Temamyayo',
 	'founderprogressbar-list-task-label' => 'Wezifey',
 	'founderprogressbar-commcorner-edit-label' => 'Kışta Cemaeti bıvurne',
-	'founderprogressbar-video-add-label' => 'Video deke',
+	'founderprogressbar-video-add-label' => 'Yew video cı ke',
 	'founderprogressbar-browse-page-name' => 'Çımpawe',
 );
 
@@ -587,7 +592,7 @@ $messages['es'] = array(
 	'founderprogressbar-bonus-page-add5-description' => '¿Qué wiki puede salir perjudicado de tener más contenido? Añade cinco páginas más para completar esta tarea de bonificación.',
 	'founderprogressbar-bonus-edit50-label' => 'Editar {{PLURAL:$1|$1 página|$1 páginas}} más',
 	'founderprogressbar-bonus-edit50-description' => 'Apunta alto y consigue 50 ediciones más para completar esta tarea de bonificación.',
-	'founderprogressbar-browse-page-name' => 'Navegador',
+	'founderprogressbar-browse-page-name' => 'Explorar',
 );
 
 /** Estonian (eesti)
@@ -630,10 +635,14 @@ $messages['fa'] = array(
 
 /** Finnish (suomi)
  * @author Centerlink
+ * @author Elseweyr
+ * @author Konstaduck
  * @author Nedergard
  * @author Nike
  */
 $messages['fi'] = array(
+	'founderprogressbar-widget-label' => '{{SITENAME}}n edistyminen',
+	'founderprogressbar-progress-label' => 'Suoritetut tehtävät',
 	'founderprogressbar-progress-see-full-list' => 'Katso täydellinen luettelo',
 	'founderprogressbar-progress-hide-full-list' => 'Piilota koko luettelo',
 	'founderprogressbar-skip-for-now' => 'Ohita nyt',
@@ -643,11 +652,26 @@ $messages['fi'] = array(
 	'founderprogressbar-list-skipped-task-label' => 'Ohitetut tehtävät',
 	'founderprogressbar-list-skipped-task-desc' => 'Voit suorittaa nämä milloin tahansa.',
 	'founderprogressbar-list-bonus-task-label' => 'Bonustehtävät',
+	'founderprogressbar-task-call-to-action' => 'Siirry tehtävään',
+	'founderprogressbar-completion-message' => 'Onnittelut! Olet tehnyt mahtavan työn ja suorittanut kaikki tehtävät sataprosenttisesti. Wikisi näyttäisi jo todella päässeen vauhtiin. Jatka samaan malliin!',
+	'founderprogressbar-bonus-task-notice' => 'Huom: kukin bonustehtävä voidaan suorittaa useasti. Suorita niin monta, kuin tarvitset päästääksesi sataan prosenttiin.',
+	'founderprogressbar-page-add10-label' => 'Saavuta $1 {{PLURAL:$1|sivu|sivua}}',
+	'founderprogressbar-themedesigner-visit-label' => 'Mukauta teemaasi',
+	'founderprogressbar-total-edit75-label' => 'Saavuta 75 muokkausta',
 	'founderprogressbar-category-edit-label' => 'Muokkaa luokkasivua',
+	'founderprogressbar-fb-connect-label' => 'Facebookiin yhdistäminen',
 	'founderprogressbar-gallery-add-label' => 'Lisää kuvagalleria',
+	'founderprogressbar-topnav-edit-label' => 'Mukauta navigaatiopalkkia',
+	'founderprogressbar-commcorner-edit-label' => 'Muokkaa yhteisönurkkausta',
 	'founderprogressbar-video-add-label' => 'Lisää video',
+	'founderprogressbar-user-add5-label' => 'Saavuta 5 käyttäjäprofiilia',
+	'founderprogressbar-recentchanges-visit-label' => 'Käy sivulla Tuoreet muutokset',
+	'founderprogressbar-mostvisited-visit-label' => 'Katso useimmin vieraillut sivusi',
 	'founderprogressbar-toptenlist-add-label' => 'Lisää 10-kärjessä -luetteloon',
+	'founderprogressbar-blogpost-add-label' => 'Kirjoita blogiartikkeli',
+	'founderprogressbar-fb-likes3-label' => 'Saavuta $1 Facebook -tykkäystä',
 	'founderprogressbar-uncategorized-visit-label' => 'Näytä luokittelemattomat sivut',
+	'founderprogressbar-bonus-photo-add10-label' => 'Lisää $1 kuva(a) lisää',
 	'founderprogressbar-browse-page-name' => 'Selaa',
 );
 
@@ -956,7 +980,7 @@ $messages['ia'] = array(
 	'founderprogressbar-category-edit-label' => 'Modificar un pagina de categoria',
 	'founderprogressbar-category-edit-description' => 'Le categorias non solmente monstra ligamines a tote le paginas in le categoria, tu pote anque modificar los pro explicar al gente le thema del categoria e le typo de paginas que debe esser inserite in illo. In addition, si tu insere qualcosa in le pagina de categoria, le color del ligamines a illo cambia de rubie a blau, dante un impression plus active.',
 	'founderprogressbar-wikialabs-visit-label' => 'Visitar Wikia Labs',
-	'founderprogressbar-wikialabs-visit-description' => 'Wikia Labs permitte activar le novissime functionalitate de Wikia in tu wiki. Iste functionalitate es in stadio beta, ma es un bon maniera de vider lo que expectar de Wikia e de probar lo tu mesme.',
+	'founderprogressbar-wikialabs-visit-description' => 'Wikia Labs permitte activar le novissime functionalitate de Wikia in tu wiki. Iste functionalitate es in phase experimental, ma es un bon maniera de vider lo que expectar de Wikia e de probar lo tu mesme.',
 	'founderprogressbar-fb-connect-label' => 'Facebook Connect',
 	'founderprogressbar-fb-connect-description' => 'Diffunde tote le labor que tu face! Facebook Connect permitte divider le actiones que tu exeque in tu wiki con tu amicos de Facebook. Es possibile seliger le actiones que tu vole publicar in Facebook. Solmente un administrator debe activar isto pro completar le carga.',
 	'founderprogressbar-category-add5-label' => 'Attinger $1 {{PLURAL:$1|categoria|categorias}}',
@@ -1038,6 +1062,7 @@ $messages['id'] = array(
 );
 
 /** Japanese (日本語)
+ * @author Barrel0116
  * @author Shirayuki
  * @author Tommy6
  */
@@ -1053,28 +1078,52 @@ $messages['ja'] = array(
 	'founderprogressbar-list-description2' => 'タスク一覧には、あなたが完了する必要があるすべてのタスクを掲載しています。タスクをスキップすると、そのタスクは「スキップしたタスク」という項目に移動しますが、いつでも完了することができます。このウィキアに適していると思えないものが一覧にある場合でも心配する必要はありません ── スキップしたタスク以外を完了させ、完了待ちのタスクがあとはスキップしたものだけという状態にすれば、ボーナスタスクが開放されます。スキップしたタスクの代わりに、ボーナスタスクを完了させることでパーセンテージを上積みでき、100%に到達させることができます。',
 	'founderprogressbar-list-task-label' => 'タスク',
 	'founderprogressbar-list-skipped-task-label' => 'スキップしたタスク',
+	'founderprogressbar-list-bonus-task-label' => 'ボーナスタスク',
 	'founderprogressbar-list-bonus-task-desc' => 'ボーナスタスクを開放するにはタスク一覧のタスクをすべて完了してください',
 	'founderprogressbar-task-call-to-action' => 'タスクに移動',
 	'founderprogressbar-page-add10-label' => '記事数を$1件にする',
 	'founderprogressbar-page-add10-description' => '新しいウィキがよいスタートを切れるようにするのに最も効果的な方法は、そのウィキが扱おうとしている話題に関するページを作成していくことです。1つもしくは2つ以上の段落があり、他のページへのリンクがあるページが、良いページと言えるでしょう。',
 	'founderprogressbar-themedesigner-visit-label' => 'ウィキのテーマをカスタマイズ',
 	'founderprogressbar-themedesigner-visit-description' => 'テーマデザイナでは、ウィキアのテーマを選んだり、簡易ツールを利用して独自のテーマを作成できます。独自のテーマにより、ウィキアをよりユニークなものにできます。',
+	'founderprogressbar-mainpage-edit-label' => 'メインページを充実させる',
+	'founderprogressbar-mainpage-edit-description' => 'メインページは、ウィキアを訪問した時に一番最初に見るページです。メインページを編集し、このウィキアがどんな話題を扱っているのか、どうすればこのウィキアの手助けができるのかを示し、またこのウィキアの中でも特に優れたコンテンツを掲載しましょう。',
 	'founderprogressbar-category-add3-label' => 'カテゴリ数を$1件にする',
 	'founderprogressbar-page-add20-label' => '記事数を$1件にする',
 	'founderprogressbar-page-add20-description' => '記事をさらに作成していき、このウィキアで扱っている話題についての総合的な情報源となるように成長させましょう。ただし、ただ単にページを作成するのではなく、その内容を良質なものすることも忘れないでください。',
 	'founderprogressbar-category-edit-label' => 'カテゴリページを編集する',
 	'founderprogressbar-category-edit-description' => 'カテゴリは、カテゴリ内のすべてのページへのリンクを表示するだけでなく、カテゴリページを編集して、そのカテゴリがどのようなものであるか、あるいはどのような種類のページをそのカテゴリに入れるべきかを知らせることもできます。また、カテゴリページを編集すると、そのカテゴリへのリンクが赤リンクから青リンクに変わります。',
+	'founderprogressbar-wikialabs-visit-label' => '「ウィキア研究室」を見てみる',
+	'founderprogressbar-wikialabs-visit-description' => '「ウィキア研究室」では、ウィキアの新しい機能をこのウィキアに導入できます。研究室に掲載されている機能は全てベータ版ですが、ウィキアで今後どのようなものが導入されるのかを知り、体験するのに役立ちます。',
 	'founderprogressbar-fb-connect-label' => 'Facebookコネクト',
 	'founderprogressbar-fb-connect-description' => 'あなたの活動をシェアしましょう！Facebookコネクトを利用し、あなたがウィキアで行っている活動をFacebookの友達とシェアできます。ウィキアでのどの行動をFacebookに投稿するかは設定で変更できます。このウィキアの管理者のいずれか1人がこの機能を有効にすれば、タスクは完了になります。',
 	'founderprogressbar-category-add5-label' => 'カテゴリ数を$1件にする',
 	'founderprogressbar-gallery-add-label' => '画像ギャラリーを追加する',
 	'founderprogressbar-gallery-add-description' => '画像ギャラリーは、多数の画像をページ内で展示形式で表示させるのに適しています。また、訪問者の興味を引き続ける方法として、ウィキ内で（例えばページごとに）異なる画像表示方式を組み合わせるのが効果的です。',
+	'founderprogressbar-commcorner-edit-label' => 'コミュニティコーナーを編集',
 	'founderprogressbar-video-add-label' => '動画を追加する',
 	'founderprogressbar-user-add5-label' => 'ユーザープロフィール数を5件にする',
 	'founderprogressbar-user-add5-description' => '良いウィキを支えるのは、良いコミュニティです。たくさんの編集者が活躍する最高のウィキにするための第一歩として、編集者数5人を目指しましょう！',
 	'founderprogressbar-recentchanges-visit-label' => '「最近の更新」を見てみる',
+	'founderprogressbar-wordmark-edit-label' => 'ロゴをアップロードする',
+	'founderprogressbar-toptenlist-add-label' => 'トップ10リストを追加',
 	'founderprogressbar-blogpost-add-label' => 'ブログの記事を投稿する',
 	'founderprogressbar-bonus-photo-add10-description' => 'さらに画像を追加し、ウィキをより魅力的なものにしましょう。画像を10件追加すると、ボーナスタスクのクレジットを1つ獲得できます。',
+	'founderprogressbar-browse-page-name' => 'ブラウズ',
+);
+
+/** Kannada (ಕನ್ನಡ)
+ * @author VASANTH S.N.
+ */
+$messages['kn'] = array(
+	'founderprogressbar-task-completed' => 'ಪೂರ್ಣ',
+);
+
+/** Korean (한국어)
+ * @author 관인생략
+ */
+$messages['ko'] = array(
+	'founderprogressbar-progress-see-full-list' => '전체 목록 보기',
+	'founderprogressbar-progress-hide-full-list' => '전체 목록 숨기기',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
@@ -1485,6 +1534,14 @@ $messages['nl'] = array(
 	'founderprogressbar-browse-page-name' => 'Bladeren',
 );
 
+/** Occitan (occitan)
+ * @author Cedric31
+ * @author Hulothe
+ */
+$messages['oc'] = array(
+	'founderprogressbar-recentchanges-visit-label' => 'Visitar los Darrièrs Cambiaments',
+);
+
 /** Polish (polski)
  * @author Sovq
  * @author TOR
@@ -1886,6 +1943,61 @@ $messages['sv'] = array(
 	'founderprogressbar-browse-page-name' => 'Bläddra',
 );
 
+/** Telugu (తెలుగు)
+ * @author Chaduvari
+ */
+$messages['te'] = array(
+	'founderprogressbar-widget-label' => '{{SITENAME}} ప్రగతి',
+	'founderprogressbar-progress-label' => 'పూర్తైన పనులు',
+	'founderprogressbar-progress-see-full-list' => 'పూర్తి జాబితాను చూపించు',
+	'founderprogressbar-progress-hide-full-list' => 'పూర్తి జాబితాను దాచు',
+	'founderprogressbar-skip-for-now' => 'ప్రస్తుతానికి దాటవేయి',
+	'founderprogressbar-task-completed' => 'పూర్తయింది',
+	'founderprogressbar-list-label' => '{{SITENAME}} లోని పనులు',
+	'founderprogressbar-list-description1' => 'మీ వికీని విజయపథంలో నడిపించడానికి సిద్ధంగా ఉన్నారా? కింద చూపిన పనులన్నిటినీ పూర్తి చేసి మీ ప్రగతిపట్టీని 100% కి చేర్చండి! మీ వికీలో ఉన్న ఎవరైనా ఈ పనిలో తోడ్పడవచ్చు, ఎవరు చేసినా ఈ పనుల జాబితా లెక్కలోకి వస్తాయి.',
+	'founderprogressbar-list-task-label' => 'పనులు',
+	'founderprogressbar-list-skipped-task-label' => 'పక్కన పెట్టిన పనులు',
+	'founderprogressbar-list-skipped-task-desc' => 'వీటిని మీరు ఎప్పుడైనా పూర్తి చెయ్యవచ్చు.',
+	'founderprogressbar-list-bonus-task-label' => 'బోనసు పనులు',
+	'founderprogressbar-list-bonus-task-desc' => 'పనులా జాబితాను పూర్తి చేసి బోనసు పనులకు తాళం తీయండి',
+	'founderprogressbar-task-call-to-action' => 'పనికి వెళ్ళు',
+	'founderprogressbar-completion-message' => 'అభినందనలు! మొత్తం అన్ని పనులనూ 100% పూర్తి చేసి అద్భతం సాధించారు. మీ వికీ విజయపథాన ఉంది. అసలు ఈసరికే విజయం సాధించి ఉండవచ్చు. ఈ అద్భుతాన్ని కొనసాగించండి!',
+	'founderprogressbar-bonus-task-notice' => 'గమనిక: ఒక్కో బోనసు పనిని ఎన్నిసార్లైనా పూర్తి చెయ్యవచ్చు. 100% చేరడానికి ఎన్నిసార్లు అవసరమైతే అన్నిసార్లు పూర్తిచెయ్యండి',
+	'founderprogressbar-page-add10-label' => '$1 {{PLURAL:$1| పేజీకి|పేజీలకు}} చేరాలి',
+	'founderprogressbar-themedesigner-visit-label' => 'మీ థీమును అనుకూలీకరించుకోండి',
+	'founderprogressbar-mainpage-edit-label' => 'మీ మొటిపేజీని పూర్తి చెయ్యండి',
+	'founderprogressbar-photo-add10-label' => '$1 {{PLURAL:$1|ఫొటోకు|ఫొటోలకు}} చేరాలి',
+	'founderprogressbar-category-add3-label' => '$1 {{PLURAL:$1|వర్గానికి|వర్గాలకు}} చేరాలి',
+	'founderprogressbar-wikiactivity-visit-label' => 'వికీ కార్యకలాపాలను చూడండి',
+	'founderprogressbar-profile-edit-label' => 'మీ ప్రవర పేజీని పూరించండి',
+	'founderprogressbar-photo-add20-label' => '$1 {{PLURAL:$1|ఫొటోకు|ఫొటోలకు}} చేరాలి',
+	'founderprogressbar-photo-add20-description' => 'ప్రతిపేజీకి కనీసం ఒక ఫొటోనైనా చేరుస్తున్నారా? ప్రజలకు ఫొటోలు నచ్చుతాయి. మీ సైటు జనాల కళ్ళలో పడేందుకు అవి బాగా ఉపయోగపడతాయి!',
+	'founderprogressbar-total-edit75-label' => '75 మార్పుచేర్పులను చేరాలి',
+	'founderprogressbar-total-edit75-description' => '75 మార్పుచేర్పులను చేరేటప్పటికి, మీ వికీలో చాలానే విషయం చేరి ఉంటుంది. భలే! వికీ చేరుకోబోయే గొప్ప స్థాయికి ఇది ఒక మైలురాయి మాత్రమే.',
+	'founderprogressbar-page-add20-label' => '$1 {{PLURAL:$1| పేజీకి|పేజీలకు}} చేరాలి',
+	'founderprogressbar-category-edit-label' => 'వర్గం పేజీని మార్చు',
+	'founderprogressbar-wikialabs-visit-label' => 'వికియా ప్రయోగశాలను చూడు',
+	'founderprogressbar-category-add5-label' => '$1 {{PLURAL:$1|వర్గానికి|వర్గాలకు}} చేరాలి',
+	'founderprogressbar-category-add5-description' => 'మీ వికీలో మరిన్ని పేజీలు చేర్చారు కాబట్టి, వీటిని ఒక పద్ధతిలో పెట్టేందుకు మీకు మరిన్ని వర్గాలు అవసరం కావచ్చు.',
+	'founderprogressbar-gallery-add-label' => 'ఓ ఫొటో గాలరీని చేర్చు',
+	'founderprogressbar-mainpage-addslider-label' => 'ఓ మొదటి పేజీ స్లైడరును చేర్చండి',
+	'founderprogressbar-video-add-label' => 'ఓ వీడయోను చేర్చండి',
+	'founderprogressbar-user-add5-label' => '5 వాడుకరి ప్రవలకు చేరాలి',
+	'founderprogressbar-recentchanges-visit-label' => 'ఇటీవలి మార్పులను చూడు',
+	'founderprogressbar-mostvisited-visit-label' => 'అత్యధికంగా చూసిన పేజీలను చూడండి',
+	'founderprogressbar-blogpost-add-label' => 'ఓ బ్లాగు టపాను రాయండి',
+	'founderprogressbar-fb-likes3-label' => '$1 Facebook లైకులను చేరాలి',
+	'founderprogressbar-uncategorized-visit-label' => 'వర్గీకరణ కాని పేజీలను చూడండి',
+	'founderprogressbar-total-edit300-label' => '{{PLURAL:$1|$1 దిద్దుబాటుకు|$1 దిద్దుబాట్లకు}} చేరాలి',
+	'founderprogressbar-total-edit300-description' => '$1 మార్పుచేర్పులు ఓ గొప్ప మైలురాయి. అన్నేసి మార్పుచేర్పులతో విషయ సంగ్రహం చేరుతూ ఉంటే మీ వికీ విజయపథంలో సాగుతున్నట్లే!',
+	'founderprogressbar-bonus-photo-add10-label' => 'ఇంకా $1 ఫొటోలను చేర్చండి',
+	'founderprogressbar-bonus-photo-add10-description' => 'మీ వికీని మెరుగుపరచడానికి ఓ గొప్ప మార్గం మరిన్ని ఫొటోలను చేర్చడమే. మరో పదింటిని చేర్చి ఓ బోనసు పని కోసం క్రెడిట్‍ను పొందండి.',
+	'founderprogressbar-bonus-page-add5-label' => '{{PLURAL:$1|మరో పేజీని|మరో $1 పేజీలను}} చేర్చండి',
+	'founderprogressbar-bonus-page-add5-description' => 'మరింత విషయంతో ప్రయోజనం పొందని వికీ ఉంటుందా? మరో పది పేజీలను చేర్చి ఓ బోనసు పని కోసం క్రెడిట్‍ను పొందండి.',
+	'founderprogressbar-bonus-edit50-label' => '{{PLURAL:$1|మరో పేజీలో|మరో $1 పేజీలలో}} మార్పుచేర్పులు చెయ్యండి',
+	'founderprogressbar-browse-page-name' => 'విహరించు',
+);
+
 /** Tagalog (Tagalog)
  * @author AnakngAraw
  */
@@ -1979,9 +2091,11 @@ $messages['tl'] = array(
 );
 
 /** Turkish (Türkçe)
+ * @author Sucsuzz
  * @author Suelnur
  */
 $messages['tr'] = array(
+	'founderprogressbar-video-add-label' => 'Video ekle',
 	'founderprogressbar-recentchanges-visit-label' => 'Son Değişiklikleri ziyaret et',
 );
 
@@ -2178,6 +2292,7 @@ $messages['vi'] = array(
 
 /** Simplified Chinese (中文（简体）‎)
  * @author Dimension
+ * @author Ffaarr
  * @author Hydra
  * @author Hzy980512
  * @author Liuxinyu970226
@@ -2205,7 +2320,7 @@ $messages['zh-hans'] = array(
 	'founderprogressbar-mainpage-edit-label' => '完成您的首页',
 	'founderprogressbar-photo-add10-label' => '达到$1{{PLURAL:$1|照片|照片}}',
 	'founderprogressbar-category-add3-label' => '达到$1{{PLURAL:$1|类别|类别}}',
-	'founderprogressbar-commcentral-visit-label' => '访问创立者与管理人员在红心',
+	'founderprogressbar-commcentral-visit-label' => '访问创始人与管理员中心',
 	'founderprogressbar-commcentral-visit-description' => '你不是一个人！创始人和管理员中心是Wikia分享建议和技巧的社区，您在那里可以找到帮助页面，指导和Wikia员工的联系方式。',
 	'founderprogressbar-wikiactivity-visit-label' => '访问维基动态',
 	'founderprogressbar-profile-edit-label' => '填写您的档案页',
@@ -2240,23 +2355,37 @@ $messages['zh-hans'] = array(
  * @author Ffaarr
  */
 $messages['zh-hant'] = array(
+	'founderprogressbar-credits' => '一個為新維基創建者的任務與指南中心',
+	'founderprogressbar-widget-label' => '{{SITENAME}}的進展',
 	'founderprogressbar-progress-label' => '完成的任務',
 	'founderprogressbar-progress-see-full-list' => '查看完整清單',
 	'founderprogressbar-progress-hide-full-list' => '隱藏完整清單',
 	'founderprogressbar-skip-for-now' => '先跳過',
 	'founderprogressbar-task-completed' => '已完成',
 	'founderprogressbar-list-label' => '{{SITENAME}}的任務',
+	'founderprogressbar-list-description1' => '準備好要推動您的 wiki走上成功之路了嗎？ 完成的所有下面列出來的任務，讓您的進度條達到 100%！您的wiki上的任何人的貢獻都會加進這個任務清單中。',
+	'founderprogressbar-list-description2' => '任務區列出了所有您需要完成的任務。如果您跳過一個任務，它將移動到「已跳過的任務」之中，您仍可以在任何時候完成它們。您是否覺得列表上的某些任務永遠不適合您的維基嗎？别擔心--當只有「已跳過任務」仍未完成時，我們會解鎖您的獎勵任务。完成獎勵任務來彌補你要永遠跳過的任務，讓完成率達到夢寐以求的100%吧。',
 	'founderprogressbar-list-task-label' => '任務',
 	'founderprogressbar-list-skipped-task-label' => '跳過的任務',
 	'founderprogressbar-list-skipped-task-desc' => '您可以在任何時候完成這些。',
+	'founderprogressbar-list-bonus-task-label' => '獎勵任務',
+	'founderprogressbar-list-bonus-task-desc' => '完成任務列表以解鎖其他獎勵任務',
 	'founderprogressbar-task-call-to-action' => '進入該任務',
 	'founderprogressbar-completion-message' => '恭喜 ！你已經做了令人驚異的工作，完成的所有100%的任務 。你的 wiki 已經走向成功之路，或甚至已經成功。繼續保持優異的工作 ！',
+	'founderprogressbar-bonus-task-notice' => '注意：每個獎勵任務都可以多次完成。多完成幾次來達到100%吧。',
+	'founderprogressbar-page-add10-label' => '達到$1{{PLURAL:$1|頁|頁}}',
+	'founderprogressbar-page-add10-description' => '開始你的維基最好的方法就是增加與你的主題相關資訊的頁面。頁面最好至少要有一到二段，且連結到其他頁面。',
 	'founderprogressbar-themedesigner-visit-label' => '自訂您的樣式',
+	'founderprogressbar-themedesigner-visit-description' => '主題設計器允許您為自己的wiki選擇一種樣式，或使用我們簡單的工具，創建您自己的樣式。自訂樣式能的讓您的 wiki 變得獨特。',
 	'founderprogressbar-mainpage-edit-label' => '完成你的首頁',
 	'founderprogressbar-mainpage-edit-description' => '當人們訪問你的 wiki 時，首頁是他們首先看到的。請確保它能告訴他們你的 wiki的主題、他們可以如何編輯 wiki，並突顯出某些 wiki 中最棒的內容。',
 	'founderprogressbar-photo-add10-label' => '達到 $1   {{PLURAL:$1| Photo|圖片}}',
 	'founderprogressbar-photo-add10-description' => '圖片有助於展示你的wiki的主題，而且研究顯示，視覺效果更能吸引人。我們建議如果有的話，每一頁至少放一張圖片，',
 	'founderprogressbar-category-add3-label' => '達到 $1   {{PLURAL:$1| Category|分類}}',
+	'founderprogressbar-category-add3-description' => '分類是組織你的wiki最好的方法之一，也讓人們很容易找到想要的頁面。簡單的分類就好，過多的分類反而可能造成混淆',
+	'founderprogressbar-commcentral-visit-label' => '訪問創建者與管理員中心',
+	'founderprogressbar-commcentral-visit-description' => '你不是一個人！創始人和管理員中心是Wikia分享建議和技巧的社區，在那裡可以找到幫助頁面，指導和Wikia員工的聯繫方式。',
+	'founderprogressbar-wikiactivity-visit-label' => '訪問維基動態',
 	'founderprogressbar-profile-edit-label' => '填寫您的檔案頁',
 	'founderprogressbar-profile-edit-description' => '設定檔頁可告訴來你的 wiki的人更多關於你的事，也有助於建立社群的感覺。',
 	'founderprogressbar-photo-add20-label' => '達到 $1 {{PLURAL:$1|Photo|圖片}}',

@@ -16,11 +16,13 @@ class ChatHelper {
 	 * Hooks into GetRailModuleList and adds the chat module to the side-bar when appropriate.
 	 */
 	static public function onGetRailModuleList(&$modules) {
-		global $wgUser;
 		wfProfileIn(__METHOD__);
 
+		// Make sure this module is positioned above the VideosModule (1285) when the user is logged in.  VID-1780
+		$pos = F::app()->wg->User->isAnon() ? 1175 : 1286;
+
 		// Above spotlights, below everything else. BugzId: 4597.
-		$modules[1175] = array('ChatRail', 'placeholder', null);
+		$modules[$pos] = array('ChatRail', 'placeholder', null);
 
 		wfProfileOut(__METHOD__);
 		return true;
@@ -60,9 +62,10 @@ class ChatHelper {
 
 		$server = self::getChatConfig($type.'ChatServers');
 		$serversCount = count($server[self::getServerBasket()]);
+		$serverId = ($wgCityId%$serversCount) + 1;
 
 		$out = explode(':', $server[self::getServerBasket()][$wgCityId%$serversCount]);
-		return array('host' => $out[0], 'port' => $out[1]);
+		return array('host' => $out[0], 'port' => $out[1], 'serverId' => $serverId);
 	}
 
 	static public function getChatCommunicationToken() {
@@ -75,57 +78,33 @@ class ChatHelper {
 	}
 
 	/**
-	 * Return the name of the current configuration. This should return a config name
-	 * that exists in ChatConfig.json file.
-	 * @return string
-	 */
-	static function getEnvironmentName() {
-		global $wgDevelEnvironment;
-		if ( !empty( $wgDevelEnvironment ) ) {
-			return self::CHAT_DEVBOX_ENV;
-		}
-
-		if ( Wikia::isPreviewServer() ) {
-			return self::CHAT_PREVIEW_ENV;
-		}
-		if ( Wikia::isVerifyServer() ) {
-			return self::CHAT_VERIFY_ENV;
-		}
-
-		return self::CHAT_PRODUCTION_ENV;
-	}
-
-	/**
 	 *
 	 * laod Config of chat from json file (we need to use jsone file becasue w)
 	 * @param string $name
 	 */
 	static function getChatConfig($name) {
-		global $wgWikiaConfigDirectory;
-		wfProfileIn(__METHOD__);
+		global $wgWikiaEnvironment;
+
+		$configDir = getenv('WIKIA_CONFIG_ROOT');
 
 		if(empty(self::$configFile)) {
-			$configFilePath = $wgWikiaConfigDirectory . '/ChatConfig.json';
+			$configFilePath = $configDir . '/ChatConfig.json';
 			$string = file_get_contents( $configFilePath );
 			self::$configFile = json_decode($string, true);
 		}
 
 		if ( empty( self::$configFile ) ) {
-			wfProfileOut(__METHOD__);
 			return false;
 		}
-		$env = self::getEnvironmentName();
+		$env = $wgWikiaEnvironment;
 		if(isset(self::$configFile[$env][$name])) {
-			wfProfileOut(__METHOD__);
 			return self::$configFile[$env][$name];
 		}
 
 		if(isset(self::$configFile[$name])) {
-			wfProfileOut(__METHOD__);
 			return self::$configFile[$name];
 		}
 
-		wfProfileOut(__METHOD__);
 		return false;
 	}
 

@@ -101,12 +101,14 @@ JSMessages::registerPackage('FBConnect', array('fbconnect-logout-confirm'));
 define( 'APCOND_FB_INGROUP',   'fb*g' );
 define( 'APCOND_FB_ISOFFICER', 'fb*o' );
 define( 'APCOND_FB_ISADMIN',   'fb*a' );
+define( 'APCOND_FB_USER',      'fb*u' ); // Wikia change - Make fb-user a properly implicit group (CE-767)
 
 // Create a new group for Facebook users
 //$wgGroupPermissions['fb-user'] = $wgGroupPermissions['user'];
 //rt#68127 (dont give basic permissions to other groups, opens security holes)
 $wgGroupPermissions['fb-user'] = array('facebook-user'=>true);
 $wgImplicitGroups[] = 'fb-user';
+$wgAutopromote['fb-user'] = APCOND_FB_USER; // Wikia change - Make fb-user a properly implicit group (CE-767)
 
 // If we are configured to pull group info from Facebook, then create the group permissions
 if ($fbUserRightsFromGroup) {
@@ -127,7 +129,7 @@ $wgAjaxExportList[] = "SpecialConnect::getLoginButtonModal";
 $wgAjaxExportList[] = "SpecialConnect::checkCreateAccount";
 
 // These hooks need to be hooked up prior to init() because runhooks may be called for them before init is run.
-$fbHooksToAddImmediately = array( 'SpecialPage_initList' );
+$fbHooksToAddImmediately = array( 'SpecialPage_initList', 'AutopromoteCondition' );
 foreach( $fbHooksToAddImmediately as $hookName ) {
 	$wgHooks[$hookName][] = "FBConnectHooks::$hookName";
 }

@@ -57,6 +57,8 @@
 		}
 
 		/**
+		 * @group Slow
+		 * @slowExecutionTime 0.83832 ms
 		 * @dataProvider signupDataProvider
 		 */
 		public function testSignup( $requestParams, $mockUserParams, $mockUserLoginFormParams, $expResult, $expMsg, $expErrParam ) {
@@ -66,9 +68,15 @@
 
 			$objectName = 'ExternalUser_Wikia';
 			$mockObject = true;
-			$this->mockClass( $objectName, $mockObject, 'initFromName' );
-			$this->mockClass( $objectName, $mockObject, 'getLocalUser' );
-			$this->mockClass( $objectName, (isset($objectParams['params']['mId']) ? $objectParams['params']['mId'] : 0), 'getId' );
+
+			$mockExternalUser = $this->getMock($objectName, ['initFromName', 'getLocalUser', 'getId'], [], '', false);;
+
+			$mockExternalUser->expects( $this->any() )->method( 'initFromName' )
+				->willReturn($mockObject);
+			$mockExternalUser->expects( $this->any() )->method( 'getLocalUser' )
+				->willReturn($mockObject);
+			$mockExternalUser->expects( $this->any() )->method( 'getId' )
+				->willReturn((isset($objectParams['params']['mId']) ? $objectParams['params']['mId'] : 0));
 
 			if ( !is_null($mockUserLoginFormParams) ) {
 				$this->setUpMockObject( 'UserLoginForm', $mockUserLoginFormParams, true, null, array(), false );
@@ -324,6 +332,8 @@
 		}
 
 		/**
+		 * @group Slow
+		 * @slowExecutionTime 0.65603 ms
 		 * @dataProvider changeUnconfirmedUserEmailDataProvider
 		 */
 		public function testChangeUnconfirmedUserEmail( $params, $mockUserParams, $mockSessionParams, $mockCacheParams, $expResult, $expMsg, $expErrParam ) {
@@ -494,6 +504,8 @@
 		}
 
 		/**
+		 * @group Slow
+		 * @slowExecutionTime 0.76122 ms
 		 * @dataProvider sendConfirmationEmailDataProvider
 		 */
 		public function testSendConfirmationEmail( $mockWebRequestParams, $params, $mockEmailAuth, $mockUserParams, $mockSessionParams, $mockCacheParams, $mockMessagesMap, $mockMsgExt, $expResult, $expMsg, $expMsgEmail, $expErrParam, $expHeading, $expSubheading ) {

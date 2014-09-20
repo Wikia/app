@@ -9,8 +9,8 @@ class BopFmRailController extends WikiaController {
 		global $wgUser;
 		wfProfileIn(__METHOD__);
 
-		// 1395 is a bit below the Wikia Game Helper (1400) in case there is a game, but above most other things.
-		$modules[1395] = array('BopFmRail', 'bop', null);
+		// Move BopFm module above the TOP_RIGHT_BOXAD (side effect: this module will not be lazy-loaded). - LYR-113
+		$modules[1495] = array('BopFmRail', 'bop', null);
 
 		wfProfileOut(__METHOD__);
 		return true;
@@ -34,7 +34,7 @@ class BopFmRailController extends WikiaController {
 				$songName = "";
 			} else {
 				$artist = substr($title, 0, $colonIndex);
-				$songName = substr($title, $colonIndex);
+				$songName = substr($title, $colonIndex+1);
 			}
 			//$pageUrl = urlencode($wg->Title->getFullURL()); // don't pass this to the bop.fm widget
 

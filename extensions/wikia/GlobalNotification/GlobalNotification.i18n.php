@@ -77,9 +77,11 @@ $messages['es'] = array(
 
 /** Finnish (suomi)
  * @author Centerlink
+ * @author Elseweyr
  * @author Nike
  */
 $messages['fi'] = array(
+	'globalnotification-desc' => 'Näyttää järjestelmän ilmoituksia sellaisista tapahtumista kuten AJAX -epäonnistumisista',
 	'globalnotification-general-ajax-failure' => 'Yhteyden muodostaminen Wikian palvelimille epäonnistui. Yritä myöhemmin uudelleen.',
 );
 
@@ -243,6 +245,13 @@ $messages['ru'] = array(
 $messages['sv'] = array(
 	'globalnotification-desc' => 'Visar systemmeddelanden för händelser som AJAX-fel',
 	'globalnotification-general-ajax-failure' => 'Webbläsaren kunde inte ansluta till Wikia. Försök igen senare.',
+);
+
+/** Telugu (తెలుగు)
+ * @author Chaduvari
+ */
+$messages['te'] = array(
+	'globalnotification-general-ajax-failure' => 'బ్రౌజరు వికియాకు కనెక్టు కాలేకపోయింది. తరువాత ,మరలా ప్రయత్నించండి.',
 );
 
 /** Tagalog (Tagalog)

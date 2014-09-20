@@ -9,7 +9,10 @@ class VideoPageToolAssetCategory extends VideoPageToolAsset {
 	protected $categoryName;
 	protected $displayTitle;
 
-	protected $defaultThumbOptions = [ 'hidePlayButton' => true ];
+	protected $defaultThumbOptions = [
+		'hidePlayButton' => true,
+		'noLazyLoad'     => true,
+	];
 
 	// required data field -- array( FormFieldName => varName )
 	protected static $dataFields = array(

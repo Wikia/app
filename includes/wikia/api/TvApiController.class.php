@@ -1,183 +1,262 @@
 <?php
-use Wikia\Search\Config, Wikia\Search\QueryService\Factory, Wikia\Search\QueryService\DependencyContainer;
+
+use Wikia\Search\Config;
+use Wikia\Search\QueryService\Factory;
+use Wikia\Search\Services\WikiSeriesEntitySearchService;
+use Wikia\Search\Services\EpisodeEntitySearchService;
+use Wikia\Search\Services\SeriesEntitySearchService;
+use Wikia\Search\Services\ExactSeriesSearchService;
+
+
 class TvApiController extends WikiaApiController {
 
-	//const PARAMETER_NAMESPACES = 'namespaces';
-	const LIMIT_SETTING = 1;
-	const RANK_SETTING = 'default';
 	const LANG_SETTING = 'en';
 	const NAMESPACE_SETTING = 0;
-	const API_URL = 'api/v1/Articles/AsSimpleJson?id=';
-	const MINIMAL_WIKIA_SCORE = 0.5;
-	const MINIMAL_ARTICLE_SCORE = 1.7;
-	const WIKIA_URL_REGEXP = '~^(http(s?)://)(([^\.]+)\.wikia\.com)~';
 	const RESPONSE_CACHE_VALIDITY = 86400; /* 24h */
-	/**
-	 * @var wikiId
-	 */
-	private $wikiId;
+	const DEFAULT_QUALITY = 20;
 
-	/**
-	 * @var url for wikiId
-	 */
-	private $url;
+	const WG_EXTRA_LOCAL_NAMESPACES_KEY = 'wgExtraNamespacesLocal';
+	const WG_CONTENT_NAMESPACES_KEY = 'wgContentNamespaces';
+	/** @var Array wikis */
+	protected $wikis = [ ];
+	/** @var WikiSeriesEntitySearchService seriesService */
+	protected $wikiSeriesService;
+	/** @var SeriesEntitySearchService seriesService */
+	protected $seriesService;
+	/** @var EpisodeEntitySearchService episodeService */
+	protected $episodeService;
+	/** @var ExactSeriesSearchService $exactSeriesService */
+	protected $exactSeriesService;
 
 	public function getEpisode() {
-		global $wgStagingEnvironment, $wgDevelEnvironment;
+		$request = $this->getRequest();
+		$seriesName = $this->getRequiredParam( 'seriesName' );
+		$episodeName = $this->getRequiredParam( 'episodeName' );
+		$lang = $request->getVal( 'lang', self::LANG_SETTING );
+		$minQuality = $request->getVal( 'minArticleQuality', null );
+		if ( $minQuality !== null ) {
+			$minQuality = (int)$minQuality;
+		}
 
-		if ( !$this->setWikiVariables() ) {
+		$episodes = explode( ';', $episodeName );
+		$result = null;
+		foreach ( $episodes as $episode ) {
+			$result = $this->findEpisode( $seriesName, trim( $episode ), $lang, $minQuality );
+			if ( $result ) {
+				break;
+			}
+		}
+		if ( !$result ) {
 			throw new NotFoundApiException();
 		}
 
-		$responseValues = $this->getExactMatch();
-		if ( $responseValues === null ) {
-			$config = $this->getConfigFromRequest();
-			$responseValues = $this->getResponseFromConfig( $config );
+		$this->setResponseData(
+			$result,
+			[ 'urlFields' => [ 'contentUrl', 'url' ] ],
+			self::RESPONSE_CACHE_VALIDITY
+		);
+	}
+
+	public function getSeries() {
+		$request = $this->getRequest();
+		$name = $this->getRequiredParam( 'seriesName' );
+		$lang = $request->getVal( 'lang', self::LANG_SETTING );
+		$minQuality = $request->getVal( 'minArticleQuality', null );
+		if ( $minQuality !== null ) {
+			$minQuality = (int)$minQuality;
 		}
 
-		if ( empty($responseValues) ) {
+		$result = $this->findSeries( $name, $lang, $minQuality );
+		if ( !$result ) {
 			throw new NotFoundApiException();
 		}
 
-		if ( empty( $responseValues[ 'contentUrl' ] ) ) { //only for unit test
-			$responseValues[ 'contentUrl' ] = $this->url . self::API_URL . $responseValues[ 'articleId' ];
+		$this->setResponseData(
+			$result,
+			[ 'urlFields' => [ 'contentUrl', 'url' ] ],
+			self::RESPONSE_CACHE_VALIDITY
+		);
+	}
+
+	protected function findEpisode( $seriesName, $episodeName, $lang, $quality = null ) {
+
+		// TODO: this is a workaround to not alter schema of main index too much
+		// once the next gen search is implemented such workarounds would not be needed hopefully
+
+		// this replaces american right apostrophe with normal one
+		$episodeName = str_replace( "’", "'", $episodeName );
+
+		$seriesService = $this->getWikiSeriesService();
+		$seriesService->setLang( $lang );
+		$wikis = $seriesService->query( $seriesName );
+		if ( !empty( $wikis ) ) {
+			$episodeService = $this->getEpisodeService();
+			$episodeService->setLang( $lang )
+				->setSeries( $seriesName )
+				->setQuality( ( $quality !== null ) ? $quality : self::DEFAULT_QUALITY );
+			$result = null;
+			foreach ( $wikis as $wiki ) {
+				$episodeService->setWikiId( $wiki[ 'id' ] );
+				$namespaces = WikiFactory::getVarValueByName( self::WG_CONTENT_NAMESPACES_KEY, $wiki[ 'id' ] );
+				$episodeService->setNamespace( $namespaces );
+				$result = $episodeService->query( $episodeName );
+				if ( $result === null ) {
+					$result = $this->getTitle( $episodeName, $wiki[ 'id' ] );
+				}
+				if ( $result === null ) {
+					$namespaceNames = WikiFactory::getVarValueByName( self::WG_EXTRA_LOCAL_NAMESPACES_KEY, $wiki[ 'id' ] );
+					if ( is_array( $namespaces ) ) {
+						foreach ( $namespaces as $ns ) {
+							if ( !MWNamespace::isTalk( $ns ) && isset( $namespaceNames[ $ns ] ) ) {
+								$result = $episodeService->query( $namespaceNames[ $ns ] . ":" . $episodeName );
+								if ( $result !== null ) {
+									break;
+								}
+							}
+						}
+					}
+				}
+				if ( $result !== null ) {
+					if ( ( $quality == null ) || ( $result[ 'quality' ] !== null && $result[ 'quality' ] >= $quality ) ) {
+						return $result;
+					}
+				}
+			}
 		}
-		if ( $wgStagingEnvironment || $wgDevelEnvironment ) {
-			$responseValues[ 'contentUrl' ] = preg_replace_callback( self::WIKIA_URL_REGEXP, array( $this, 'replaceHost' ), $responseValues[ "contentUrl" ] );
-			$responseValues[ 'url' ] = preg_replace_callback( self::WIKIA_URL_REGEXP, array( $this, 'replaceHost' ), $responseValues[ "url" ] );
+		return false;
+	}
+
+	protected function getExactSeriesService() {
+		if ( !isset( $this->exactSeriesService ) ) {
+			$this->exactSeriesService = new ExactSeriesSearchService();
 		}
-
-		$responseValues = array_merge( [ 'wikiId' => (int) $this->wikiId ], $responseValues );
-
-		$response = $this->getResponse();
-		$response->setValues( $responseValues );
-
-		$response->setCacheValidity(self::RESPONSE_CACHE_VALIDITY);
+		return $this->exactSeriesService;
 	}
 
-	/**
-	 * Callback function for preg_replace
-	 * @param $details
-	 * @return string
-	 */
-	protected function replaceHost( $details ) {
-		return $details[ 1 ] . WikiFactory::getCurrentStagingHost( $details[ 4 ], $details[ 3 ] );
-	}
-
-	protected function getExactMatch() {
-		$query = $this->request->getVal( 'episodeName', null );
-		if ( $query !== null ) {
-			return $this->getTitle( $query );
+	protected function getWikiSeriesService() {
+		if ( !isset( $this->wikiSeriesService ) ) {
+			$this->wikiSeriesService = new WikiSeriesEntitySearchService();
 		}
-		return null;
+		return $this->wikiSeriesService;
 	}
 
-	protected function createTitle($text)
-	{
-		return GlobalTitle::newFromText( $text, NS_MAIN, $this->wikiId );
+	protected function getEpisodeService() {
+		if ( !isset( $this->episodeService ) ) {
+			$this->episodeService = new EpisodeEntitySearchService();
+		}
+		return $this->episodeService;
 	}
 
-	protected function getTitle( $text ) {
+	protected function getTitle( $text, $wikiId ) {
 		//try exact phrase
 		$underscoredText = str_replace( ' ', '_', $text );
-		$title = $this->createTitle( $underscoredText );
-		if( !$title->exists() ) {
+		$title = $this->createTitle( $underscoredText, $wikiId );
+		if ( !$title->exists() ) {
 			$serializedText = str_replace( ' ', '_', ucwords( strtolower( $text ) ) );
-			$title =  $this->createTitle( $serializedText );
+			$title = $this->createTitle( $serializedText, $wikiId );
 		}
 		if ( $title->isRedirect() ) {
 			$title = $title->getRedirectTarget();
 		}
-		if($title->exists()) {
+		if ( $title->exists() ) {
+			$articleId = (int)$title->getArticleID();
 			return [
-				'articleId' => (int) $title->getArticleID(),
+				'wikiId' => $wikiId,
+				'articleId' => $articleId,
 				'title' => $title->getText(),
-				'url' => $title->getFullURL()
+				'url' => $title->getFullURL(),
+				'quality' => $this->getArticleQuality( $wikiId, $articleId ),
+				'contentUrl' => $this->getContentUrl( $wikiId, $articleId )
 			];
 		}
 		return null;
 	}
 
-	protected function setWikiVariables(){
-		$config = $this->getConfigCrossWiki();
-		$resultSet = (new Factory)->getFromConfig( $config )->search();
+	protected function getContentUrl( $wikiId, $articleId ) {
+		return $this->getEpisodeService()->replaceHostUrl(
+			WikiFactory::DBtoUrl( WikiFactory::IDtoDB( $wikiId ) )
+			. EpisodeEntitySearchService::API_URL . $articleId
+		);
+	}
 
-		foreach( $resultSet->getResults() as $result ) {
-			if ( $result['id'] && $result['url'] && $result['score'] > static::MINIMAL_WIKIA_SCORE ) {
-				$this->wikiId = $result['id'];
-				$this->url = $result['url'];
-				return true;
-			}
+	protected function createTitle( $text, $wikiId ) {
+		return GlobalTitle::newFromText( $text, NS_MAIN, $wikiId );
+	}
+
+	protected function getArticleQuality( $wikiId, $articleId ) {
+		$responseValues = $this->getQualityFromSolr( $wikiId, $articleId );
+		if ( !empty( $responseValues ) && isset( $responseValues[ 0 ][ 'quality' ] ) ) {
+			return $responseValues[ 0 ][ 'quality' ];
 		}
 
+		return null;
+	}
+
+	protected function getQualityFromSolr( $wikiId, $articleId ) {
+		$config = $this->getConfigById( $wikiId, $articleId );
+		return ( new Factory )->getFromConfig( $config )->searchAsApi( [ 'article_quality_i' => 'quality' ], false );
+	}
+
+	protected function getConfigById( $wikiId, $articleId ) {
+		$searchConfig = new Config();
+		$searchConfig->setQuery( '*' )
+			->setLimit( 1 )
+			->setPage( 1 )
+			->setWikiId( (int)$wikiId )
+			->setVideoSearch( false )
+			->setOnWiki( true )
+			->setPageId( (int)$articleId )
+			->setNamespaces( [ self::NAMESPACE_SETTING ] );
+		return $searchConfig;
+	}
+
+	protected function findSeries( $seriesName, $lang, $quality = null ) {
+		$minQuality = $quality !== null ? $quality : self::DEFAULT_QUALITY;
+		//check exact match on series first
+		$result = $this->exactMatchOnSeries( $seriesName, $lang );
+		if ( $result == null ) {
+			$result = $this->searchForSeries( $seriesName, $lang, $minQuality );
+		}
+		if ( $result !== null && $result[ 'quality' ] >= $minQuality ) {
+			return $result;
+		}
 		return false;
 	}
 
-	protected function getConfigCrossWiki() {
-		$request = $this->getRequest();
-		$searchConfig = new Wikia\Search\Config;
-		$query = $request->getVal( 'seriesName', null );
-		if ( empty( $query ) || $query === null ) {
-			throw new InvalidParameterApiException( 'seriesName' );
-		}
-		$searchConfig->setQuery( $query )
-			->setLimit( static::LIMIT_SETTING )
-			->setRank( 'default' )
-			->setInterWiki( true )
-			->setCommercialUse( $this->hideNonCommercialContent() )
-			->setLanguageCode( $request->getVal( 'lang', static::LANG_SETTING ) )
-			->setHub( 'Entertainment' )
-		;
-		return $searchConfig;
-	}
-
-	/**
-	 * Inspects request and sets config accordingly.
-	 * @return Wikia\Search\Config
-	 */
-	protected function getConfigFromRequest() {
-		$request = $this->getRequest();
-		$searchConfig = new Wikia\Search\Config;
-		$searchConfig->setQuery( $request->getVal( 'episodeName', null ) )
-			->setLimit( static::LIMIT_SETTING )
-			->setPage( static::LIMIT_SETTING )
-			->setLanguageCode( static::LANG_SETTING )
-			->setRank( static::RANK_SETTING )
-			->setWikiId($this->wikiId)
-			->setVideoSearch( false )
-			->setOnWiki(true)
-			->setNamespaces( [static::NAMESPACE_SETTING] );
-		;
-
-		return $searchConfig;
-	}
-
-	protected function getResponseFromConfig( Wikia\Search\Config $searchConfig ) {
-		if (! $searchConfig->getQuery()->hasTerms() ) {
-			throw new InvalidParameterApiException( 'episodeName' );
-		}
-
-		$responseValues = (new Factory)->getFromConfig( $searchConfig )->searchAsApi( [ 'pageid' => 'articleId', 'title', 'url', 'score' ], true );
-		//post processing
-		if ( !empty( $responseValues[ 'items' ] ) ) {
-			$responseValues = $responseValues[ 'items' ][ 0 ];
-			if ( $responseValues['score'] < static::MINIMAL_ARTICLE_SCORE ) {
-				return null;
-			}
-			//remove score value from results
-			unset( $responseValues['score'] );
-
-			$subpage = strpos( $responseValues['title'], '/' );
-			if ( $subpage !== false ) {
-				//we found subpage, return only the main page then
-				$main = substr( $responseValues['title'], 0, $subpage );
-				$result = $this->getTitle( $main );
-				if ( $result !== null ) {
-					return $result;
-				}
-			}
-			return $responseValues;
+	protected function exactMatchOnSeries( $seriesName, $lang ) {
+		$exactService = $this->getExactSeriesService();
+		$exactService->setLang( $lang );
+		$result = $exactService->query( $seriesName );
+		if ( $result !== null ) {
+			return $result;
 		}
 		return null;
+	}
+
+	protected function searchForSeries( $seriesName, $lang, $quality = null ) {
+		$wikiService = $this->getWikiSeriesService();
+		$wikiService->setLang( $lang );
+		$wikis = $wikiService->query( $seriesName );
+		foreach ( $wikis as $wiki ) {
+			$seriesService = $this->getSeriesService();
+			$seriesService->setWikiId( $wiki[ 'id' ] )
+				->setLang( $lang )
+				->setQuality( ( $quality !== null ) ? $quality : self::DEFAULT_QUALITY );
+			$namespaces = WikiFactory::getVarValueByName( self::WG_CONTENT_NAMESPACES_KEY, $wiki[ 'id' ] );
+			$seriesService->setNamespace( $namespaces );
+			$result = $seriesService->query( $seriesName );
+
+			if ( $result !== null ) {
+				return $result;
+			}
+		}
+		return null;
+	}
+
+	protected function getSeriesService() {
+		if ( !isset( $this->seriesService ) ) {
+			$this->seriesService = new SeriesEntitySearchService();
+		}
+		return $this->seriesService;
 	}
 }

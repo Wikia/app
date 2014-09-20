@@ -28,6 +28,8 @@ class CloseMyAccountHelper {
 		$user->setOption( 'requested-closure-date', wfTimestamp( TS_DB ) );
 		$user->saveSettings();
 
+		$this->track( $user, 'request-closure' );
+
 		wfProfileOut( __METHOD__ );
 		return true;
 	}
@@ -39,11 +41,12 @@ class CloseMyAccountHelper {
 	 * generating a token, and emailing the link with the token, so we
 	 * can confirm that they own this account.
 	 *
-	 * @param  User    $user The user account to reactivate
-	 * @return boolean       True if the reactivation was successfully requested,
-	 *                       False otherwise
+	 * @param  User     $user The user account to reactivate
+	 * @param  WikiaApp $app  An instance of WikiaApp
+	 * @return boolean        True if the reactivation was successfully requested,
+	 *                        False otherwise
 	 */
-	public function requestReactivation( User $user ) {
+	public function requestReactivation( User $user, $app ) {
 		wfProfileIn( __METHOD__ );
 		// Not scheduled for closure or not email confirmed?
 		if ( !$this->isScheduledForClosure( $user ) || !$user->isEmailConfirmed() ) {
@@ -51,9 +54,13 @@ class CloseMyAccountHelper {
 			return false;
 		}
 
-		$emailTextTemplate = F::app()->renderView( 'CloseMyAccountSpecial', 'email', [ 'language' => $user->getOption( 'language' ) ] );
+		$emailTextTemplate = $app->renderView( 'CloseMyAccountSpecial', 'email',
+			[ 'language' => $user->getOption( 'language' ) ] );
 
-		$response = $user->sendConfirmationMail( 'reactivateaccount', 'ReactivationMail', 'closemyaccount-reactivation-email', /*$ip_arg = */true, $emailTextTemplate );
+		$response = $user->sendConfirmationMail( 'reactivateaccount', 'ReactivationMail',
+			'closemyaccount-reactivation-email', /*$ip_arg = */true, $emailTextTemplate );
+
+		$this->track( $user, 'request-reactivation' );
 
 		wfProfileOut( __METHOD__ );
 		return $response->isGood();
@@ -82,6 +89,8 @@ class CloseMyAccountHelper {
 		$user->setOption( 'requested-closure-date', null );
 		$user->saveSettings();
 
+		$this->track( $user, 'account-reactivated' );
+
 		wfProfileOut( __METHOD__ );
 		return true;
 	}
@@ -99,7 +108,7 @@ class CloseMyAccountHelper {
 
 		if ( $requestDate !== null ) {
 			// Number of days remaining until closure
-			$daysRemaining = self::CLOSE_MY_ACCOUNT_WAIT_PERIOD - floor( ( time() - strtotime( $requestDate ) ) / 60 / 60 / 24 );
+			$daysRemaining = (int)( self::CLOSE_MY_ACCOUNT_WAIT_PERIOD - floor( ( time() - strtotime( $requestDate ) ) / 86400 ) );
 			if ( $daysRemaining < 0 ) {
 				$daysRemaining = 0;
 			}
@@ -128,6 +137,32 @@ class CloseMyAccountHelper {
 	public function isScheduledForClosure( User $user ) {
 		return (bool)$user->getOption( 'requested-closure', false )
 			&& ( $user->getOption( 'requested-closure-date', false ) !== false );
+	}
+
+	/**
+	 * Track an event
+	 *
+	 * @param  User   $user   User account the event is affecting
+	 * @param  string $action The type of close account event, can be one of
+	 *                        request-closure, request-reactivation, account-reactivated,
+	 *                        account-closed
+	 * @return void
+	 */
+	public function track( User $user, $action ) {
+		global $wgUser, $wgDevelEnvironment;
+		// Make sure the right user is set for the user ID that will be collected
+		// when called from the maintenance script
+		$oldUser = $wgUser;
+		$wgUser = $user;
+
+		Track::event( 'trackingevent', [
+			'ga_action' => 'submit',
+			'ga_category' => 'closemyaccount',
+			'ga_label' => $action,
+			'beacon' => !empty( $wgDevelEnvironment ) ? 'ThisIsFake' : wfGetBeaconId(),
+		] );
+
+		$wgUser = $oldUser;
 	}
 
 }

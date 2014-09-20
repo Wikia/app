@@ -13,6 +13,8 @@ class CombinedMediaTest extends BaseTest
 	const CLASSNAME = 'Wikia\Search\QueryService\Select\Dismax\CombinedMedia';
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.10906 ms
 	 * @covers Wikia\Search\QueryService\Select\Dismax\CombinedMedia::getQueryClausesString
 	 */
 	public function testGetQueryClausesStringIncludesPhotos() {
@@ -52,6 +54,8 @@ class CombinedMediaTest extends BaseTest
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.0975 ms
 	 * @covers Wikia\Search\QueryService\Select\Dismax\CombinedMedia::getQueryClausesString
 	 */
 	public function testGetQueryClausesStringNotIncludesPhotos() {
@@ -91,6 +95,8 @@ class CombinedMediaTest extends BaseTest
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.09609 ms
 	 * @covers Wikia\Search\QueryService\Select\Dismax\CombinedMedia::getTopicsAsQuery
 	 */
 	public function testGetTopicsAsQueryWithTopics() {
@@ -122,6 +128,8 @@ class CombinedMediaTest extends BaseTest
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.09664 ms
 	 * @covers Wikia\Search\QueryService\Select\Dismax\CombinedMedia::getTopicsAsQuery
 	 */
 	public function testGetTopicsAsQueryNoTopics() {

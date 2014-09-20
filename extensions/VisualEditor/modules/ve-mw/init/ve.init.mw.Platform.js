@@ -1,7 +1,7 @@
 /*!
  * VisualEditor MediaWiki Initialization Platform class.
  *
- * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
@@ -20,14 +20,10 @@ ve.init.mw.Platform = function VeInitMwPlatform() {
 	ve.init.Platform.call( this );
 
 	// Properties
-	this.externalLinkUrlProtocolsRegExp = new RegExp( '^' + mw.config.get( 'wgUrlProtocols' ) );
+	this.externalLinkUrlProtocolsRegExp = new RegExp( '^(' + mw.config.get( 'wgUrlProtocols' ) + ')' );
 	this.modulesUrl = mw.config.get( 'wgExtensionAssetsPath' ) + '/VisualEditor/modules';
 	this.parsedMessages = {};
-	this.mediaSources = [
-		//TODO: Bug 50673
-		{ 'url': mw.util.wikiScript( 'api' ) },
-		{ 'url': '//commons.wikimedia.org/w/api.php' }
-	];
+	this.linkCache = new ve.init.mw.LinkCache();
 };
 
 /* Inheritance */
@@ -80,6 +76,33 @@ ve.init.mw.Platform.prototype.getSystemPlatform = function () {
 };
 
 /** @inheritdoc */
+ve.init.mw.Platform.prototype.getLanguageCodes = function () {
+	return Object.keys(
+		mw.language.getData( mw.config.get( 'wgUserLanguage' ), 'languageNames' ) ||
+		$.uls.data.getAutonyms()
+	);
+};
+
+/** @inheritdoc */
+ve.init.mw.Platform.prototype.getLanguageName = function ( code ) {
+	var languageNames = mw.language.getData( mw.config.get( 'wgUserLanguage' ), 'languageNames' ) ||
+		$.uls.data.getAutonyms();
+	return languageNames[code];
+};
+
+/**
+ * @method
+ * @inheritdoc
+ */
+ve.init.mw.Platform.prototype.getLanguageAutonym = $.uls.data.getAutonym;
+
+/**
+ * @method
+ * @inheritdoc
+ */
+ve.init.mw.Platform.prototype.getLanguageDirection = $.uls.data.getDir;
+
+/** @inheritdoc */
 ve.init.mw.Platform.prototype.getUserLanguages = function () {
 	var lang = mw.config.get( 'wgUserLanguage' ),
 		langParts = lang.split( '-' ),
@@ -90,16 +113,6 @@ ve.init.mw.Platform.prototype.getUserLanguages = function () {
 	}
 
 	return langs;
-};
-
-/**
- * Get a list of URLs to MediaWiki API entry points where media can be found.
- *
- * @method
- * @returns {string[]} API URLs
- */
-ve.init.mw.Platform.prototype.getMediaSources = function () {
-	return this.mediaSources;
 };
 
 /* Initialization */

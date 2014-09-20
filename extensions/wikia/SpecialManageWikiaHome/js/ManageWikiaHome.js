@@ -12,6 +12,8 @@ $(function () {
 		wikisPerCollection: [],
 		SLOTS_IN_TOTAL: 0,
 		uiModal: undefined,
+		wmuReady: undefined,
+		wmuDeffered: undefined,
 		init: function () {
 			$('#visualizationLanguagesList').on(
 				'change',
@@ -36,7 +38,12 @@ $(function () {
 			this.wikisPerCollection = window.wgWikisPerCollection || [];
 			this.visualizationLang = $('#visualizationLang').val();
 
-			$().log('ManageWikiaHome.init');
+			$('.hubs-slots')
+				.on('click', '.wmu-show', $.proxy(this.wmuInit, this))
+				.on( 'click', '.clear-marketing-slot', $.proxy(function(e){
+					e.preventDefault();
+					this.clearMarketingSlot(e);
+				}, this));
 		},
 		changeVisualizationLang: function (e) {
 			window.Wikia.Querystring().clearVals().setVal('vl', e.target.value).goTo();
@@ -54,7 +61,7 @@ $(function () {
 			return $.nirvana.sendRequest({
 				controller: 'ManageWikiaHome',
 				method: 'isWikiBlocked',
-				type: 'post',
+				type: 'get',
 				data: {
 					lang: this.visualizationLang,
 					wikiId: wikiId
@@ -68,7 +75,7 @@ $(function () {
 			return $.nirvana.sendRequest({
 				controller: 'ManageWikiaHome',
 				method: 'isWikiInCollection',
-				type: 'post',
+				type: 'get',
 				data: {
 					wikiId: wikiId
 				}
@@ -308,6 +315,75 @@ $(function () {
 						}
 					}, this));
 			}
+		},
+		wmuInit: function (event) {
+			event.preventDefault();
+			/* jshint camelcase: false */
+			this.lastActiveWmuButton = $(event.target);
+			if (!this.wmuReady) {
+				this.wmuDeffered = $.when(
+						$.loadYUI(),
+						$.loadJQueryAIM(),
+						$.getResources([
+							window.wgExtensionsPath + '/wikia/WikiaMiniUpload/js/WMU.js',
+							$.getSassCommonURL('extensions/wikia/WikiaMiniUpload/css/WMU.scss')
+						]),
+						$.loadJQueryAIM()
+					).then($.proxy(function () {
+						window.WMU_skipDetails = true;
+						window.WMU_show();
+						window.WMU_openedInEditor = false;
+						this.wmuReady = true;
+					}, this));
+				$(window).bind('WMU_addFromSpecialPage', $.proxy(function (event, wmuData) {
+					this.addImage(wmuData);
+				}, this));
+			}
+			else {
+				window.WMU_show();
+				window.WMU_openedInEditor = false;
+			}
+			/* jshint camelcase: true */
+		},
+		addImage: function(wmuData) {
+			var fileName = this.getImageNameFromFileTilte(wmuData.imageTitle);
+				$.nirvana.sendRequest({
+					controller: 'ManageWikiaHome',
+					method: 'getImageDetails',
+					type: 'get',
+					data: {
+						'fileHandler': fileName
+					},
+					callback: $.proxy(function (response) {
+						var tempImg = new Image(),
+							box = this.lastActiveWmuButton.parents('.image-input:first'),
+							imagePlaceholder;
+
+						tempImg.src = response.fileUrl;
+
+						imagePlaceholder = box.find('.image-placeholder');
+						imagePlaceholder.find('img').remove();
+						imagePlaceholder.append(tempImg);
+						$('.error-msg', box).html('');
+						box.find('.wmu-file-name-input:first').val(fileName);
+					}, this)
+				});
+
+
+		},
+		getImageNameFromFileTilte: function(title) {
+			var elems = title.split(':');
+			elems.shift();
+			return elems.join(':');
+		},
+		clearMarketingSlot: function(e) {
+			var parent = $(e.target).parents('.marketing-slot');
+			$('input', parent).each(function(){
+				if($(this).attr('type') !== 'button') {
+					$(this).val('');
+				}
+			});
+			parent.find('img').remove();
 		}
 	};
 

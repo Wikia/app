@@ -164,6 +164,30 @@ EOT
 				$aUsers[] = $oRow->user_name;
 				$loop++;
 			}
+
+			// Check for disabled accounts where we kept the email
+			$dRows = $dbr->select(
+				[ '`user`', 'user_properties' ],
+				[ 'user_name' ],
+				[
+					'user_id = up_user',
+					'up_property' => 'disabled-user-email',
+					'up_value' => $target,
+				],
+				__METHOD__
+			);
+
+			foreach ( $dRows as $row ) {
+				if ( $loop === 0 ) {
+					$userTarget = $oRow->user_name;
+				}
+				if ( !empty( $emailUser ) && ( $emailUser == $row->user_name ) ) {
+					$userTarget = $emailUser;
+				}
+				$aUsers[] = $row->user_name;
+				$loop++;
+			}
+
 			$count = $loop;
 		}
 
@@ -226,8 +250,8 @@ EOT
 			$optionsString .= "$name = $value <br />";
 		}
 		$name = $user->getName();
-		if( $user->getEmail() ) {
-			$email = $user->getEmail();
+		$email = $user->getEmail() ?: $user->getOption( 'disabled-user-email' );
+		if( !empty( $email ) ) {
 			$email_output = wfMessage( 'lookupuser-email', $email, urlencode( $email ) )->text();
 		} else {
 			$email_output = wfMessage( 'lookupuser-no-email' )->text();
@@ -254,6 +278,13 @@ EOT
 		$wgOut->addWikiText( '*' . wfMessage( 'lookupuser-registration', $registration )->text() );
 		$wgOut->addWikiText( '*' . wfMessage( 'lookupuser-touched', $wgLang->timeanddate( $user->mTouched, true ) )->text() );
 		$wgOut->addWikiText( '*' . wfMessage( 'lookupuser-info-authenticated', $authenticated )->text() );
+		if ( isset( $user->mBirthDate ) ) {
+			$birthDate = $wgLang->date( strtotime( $user->mBirthDate ) );
+		} else {
+			$birthDate = wfMessage( 'lookupuser-no-birthdate' )->text();
+		}
+		$wgOut->addWikiText( '*' . wfMessage( 'lookupuser-birthdate', $birthDate )->text() );
+
 
 		$newEmail = $user->getOption( 'new_email' );
 		if ( !empty( $newEmail ) ) {

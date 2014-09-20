@@ -320,6 +320,7 @@ class ResourceLoader {
 		// Since it must be ready before any of the test suites are executed.
 		foreach( $testModules['qunit'] as $moduleName => $moduleProps ) {
 			$testModules['qunit'][$moduleName]['dependencies'][] = 'mediawiki.tests.qunit.testrunner';
+			$testModules['qunit'][$moduleName]['position'] = 'top';
 		}
 
 		foreach( $testModules as $id => $names ) {
@@ -544,6 +545,8 @@ class ResourceLoader {
 			$response = $this->makeComment( $outputBuffer ) . $response;
 		}
 		ob_clean();
+
+		wfRunHooks( 'ResourceLoaderAfterRespond',[ $this,&$context ] );
 		// Wikia change - end
 		echo $response;
 
@@ -583,7 +586,7 @@ class ResourceLoader {
 		}
 
 		// Wikia - change begin - @author: macbre
-		wfRunHooks('ResourceLoaderModifyMaxAge',array($context,$mtime,&$maxage,&$smaxage));
+		wfRunHooks( 'ResourceLoaderModifyMaxAge',[ $this, $context, $mtime, &$maxage, &$smaxage ] );
 		// Wikia - change end
 
 		if ( $context->getOnly() === 'styles' ) {

@@ -14,7 +14,7 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 	public function __construct() {
 		parent::__construct('UserSignup', '', false);
 
-		$this->disableCaptchaForAutomatedTests();
+		$this->disableCaptcha();
 	}
 
 	public function init() {
@@ -85,6 +85,11 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 		if($this->byemail) {
 			$this->pageHeading = wfMessage('usersignup-heading-byemail')->escaped();
 			$this->createAccountButtonLabel = wfMessage('usersignup-createaccount-byemail')->escaped();
+		}
+
+		if ( $this->app->checkSkin( 'wikiamobile' )) {
+			$this->wg->Out->setPageTitle(wfMessage('usersignup-page-title-wikiamobile')->escaped());
+			$this->overrideTemplate( 'WikiaMobileIndex' );
 		}
 
 		// process signup
@@ -231,57 +236,226 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 
 		$this->result = 'ok';
 		$mailTo = htmlspecialchars($mailTo);
+		if ( F::app()->checkskin( 'wikiamobile' ) ) {
+			$this->msg = wfMessage( 'usersignup-confirmation-email-sent-wikiamobile', $mailTo )->parse();
+			$this->overrideTemplate( 'WikiaMobileSendConfirmationEmail' );
+			$this->wg->Out->setPageTitle(wfMessage('usersignup-confirm-page-title-wikiamobile')->plain());
+		} else {
+			$this->heading = wfMessage( 'usersignup-confirmation-heading' )->escaped();
+			$this->subheading = wfMessage( 'usersignup-confirmation-subheading' )->escaped();
+			$this->msg = wfMessage( 'usersignup-confirmation-email-sent', $mailTo )->parse();
+			$this->msgEmail = '';
+			$this->errParam = '';
 
-		$this->heading = wfMessage( 'usersignup-confirmation-heading' )->escaped();
-		$this->subheading = wfMessage( 'usersignup-confirmation-subheading' )->escaped();
-		$this->msg = wfMessage( 'usersignup-confirmation-email-sent', $mailTo )->parse();
-		$this->msgEmail = '';
-		$this->errParam = '';
-
-		if ($this->wg->Request->wasPosted()) {
-			$action = $this->request->getVal('action','');
-			if ( $action=='resendconfirmation' ) {
-				$response = $this->userLoginHelper->sendConfirmationEmail( $this->username );
-				$this->result = $response['result'];
-				$this->msg = $response['msg'];
-				$this->heading = wfMessage('usersignup-confirmation-heading-email-resent')->escaped();
-			} else if ( $action == 'changeemail' ) {
-				$this->email = $this->request->getVal('email', '');
-				$params = array(
-					'username' => $this->username,
-					'email' => $this->email
-				);
-
-				$response = $this->sendSelfRequest( 'changeUnconfirmedUserEmail', $params );
-
-				$this->result = $response->getVal( 'result','' );
-
-				if($this->result == 'ok') {
-					$this->msg = $response->getVal( 'msg','' );
+			if ($this->wg->Request->wasPosted()) {
+				$action = $this->request->getVal('action','');
+				if ( $action=='resendconfirmation' ) {
+					$response = $this->userLoginHelper->sendConfirmationEmail( $this->username );
+					$this->result = $response['result'];
+					$this->msg = $response['msg'];
 					$this->heading = wfMessage('usersignup-confirmation-heading-email-resent')->escaped();
-				} else if($this->result == 'error') {
-					$this->msgEmail = $response->getVal( 'msg','' );
-					$this->errParam = $response->getVal( 'errParam', '');
-				} else if ( $this->result == 'confirmed' ) {
-					$this->heading = wfMessage( 'usersignup-confirm-page-heading-confirmed-user' )->escaped();
-					$this->subheading = wfMessage( 'usersignup-confirm-page-subheading-confirmed-user' )->escaped();
-					$this->msg = $response->getVal( 'msg','' );
+				} else if ( $action == 'changeemail' ) {
+					$this->email = $this->request->getVal('email', '');
+					$params = array(
+						'username' => $this->username,
+						'email' => $this->email
+					);
+
+					$response = $this->sendSelfRequest( 'changeUnconfirmedUserEmail', $params );
+
+					$this->result = $response->getVal( 'result','' );
+
+					if($this->result == 'ok') {
+						$this->msg = $response->getVal( 'msg','' );
+						$this->heading = wfMessage('usersignup-confirmation-heading-email-resent')->escaped();
+					} else if($this->result == 'error') {
+						$this->msgEmail = $response->getVal( 'msg','' );
+						$this->errParam = $response->getVal( 'errParam', '');
+					} else if ( $this->result == 'confirmed' ) {
+						$this->heading = wfMessage( 'usersignup-confirm-page-heading-confirmed-user' )->escaped();
+						$this->subheading = wfMessage( 'usersignup-confirm-page-subheading-confirmed-user' )->escaped();
+						$this->msg = $response->getVal( 'msg','' );
+					}
+				}
+
+				// redirect to login page if invalid session
+				if ( $this->result == 'invalidsession' ) {
+					$titleObj = SpecialPage::getTitleFor( 'Userlogin' );
+					$this->wg->out->redirect( $titleObj->getFullURL() );
+					return;
+				}
+			} else {
+				if ( $this->byemail == true ) {
+					$this->heading = wfMessage( 'usersignup-account-creation-heading' )->escaped();
+					$this->subheading = wfMessage( 'usersignup-account-creation-subheading', $mailTo )->escaped();
+					$this->msg = wfMessage( 'usersignup-account-creation-email-sent', $mailTo, $this->username )->parse();
 				}
 			}
-
-			// redirect to login page if invalid session
-			if ( $this->result == 'invalidsession' ) {
-				$titleObj = SpecialPage::getTitleFor( 'Userlogin' );
-				$this->wg->out->redirect( $titleObj->getFullURL() );
-				return;
-			}
-		} else {
-			if ( $this->byemail == true ) {
-				$this->heading = wfMessage( 'usersignup-account-creation-heading' )->escaped();
-				$this->subheading = wfMessage( 'usersignup-account-creation-subheading', $mailTo )->escaped();
-				$this->msg = wfMessage( 'usersignup-account-creation-email-sent', $mailTo, $this->username )->parse();
-			}
 		}
+	}
+
+	/**
+	 * @desc Sets validation status
+	 *
+	 * @param string $result validation result
+	 * @param string $message validatation message
+	 * @param $field
+	 * @return bool
+	 */
+	private function setResponseFields($result, $message, $field = false) {
+		$this->result = $result;
+		$this->msg = $message;
+		if ( $field !== false ) {
+			$this->errParam = $field;
+		}
+		return false;
+	}
+
+	/**
+	 * @desc Checks if the email is set and is valid and sets the proper response if not
+	 *
+	 * @param string $email Email address to check
+	 * @return bool
+	 */
+	private function isValidEmailFieldValue($email) {
+		// error if empty
+		if ( empty( $email ) ) {
+			return $this->setResponseFields(
+				'error',
+				wfMessage( 'usersignup-error-empty-email' )->escaped(),
+				'email'
+			);
+		}
+
+		// validate new email
+		if ( !Sanitizer::validateEmail( $email ) ) {
+			return $this->setResponseFields(
+				'error',
+				wfMessage( 'usersignup-error-invalid-email' )->escaped(),
+				'email'
+			);
+		}
+		return true;
+	}
+
+	/**
+	 * @desc Checks if the username and sets the proper response if empty
+	 *
+	 * @param string $username
+	 * @return bool
+	 */
+	private function isValidUsernameField($username) {
+		if ( empty( $username ) ) {
+			return $this->setResponseFields(
+				'error',
+				wfMessage( 'userlogin-error-noname' )->escaped(),
+				'username'
+			);
+		}
+		return true;
+	}
+
+	/**
+	 * @desc Checks if user is valid and and sets the proper response if not
+	 * @param User $user
+	 * @return bool
+	 */
+	private function isValidUser( User $user ) {
+		if ( $user instanceof User && $user->getID() != 0 ) {
+			// break if user is already confirmed
+			if ( !$user->getOption( UserLoginSpecialController::NOT_CONFIRMED_SIGNUP_OPTION_NAME ) ) {
+				return $this->setResponseFields(
+					'confirmed',
+					wfMessage(
+						'usersignup-error-confirmed-user', $user->getName(), $user->getUserPage()->getFullURL()
+					)->parse(),
+					'username'
+				);
+			}
+		} else { // user doesn't exist
+			return $this->setResponseFields(
+				'error',
+				wfMessage( 'userlogin-error-nosuchuser' )->escaped(),
+				'username'
+			);
+		}
+		return true;
+	}
+
+	/**
+	 * @desc Checks if the the user session is valid and and sets the proper response if not
+	 *
+	 * @param $user
+	 * @return bool
+	 */
+	private function isValidSession( $user ) {
+		if ( !( isset( $_SESSION['notConfirmedUserId'] ) && $_SESSION['notConfirmedUserId'] == $user->getId() ) ) {
+			return $this->setResponseFields(
+				'invalidsession',
+				wfMessage( 'usersignup-error-invalid-user' )->escaped(),
+				'username'
+			);
+		}
+		return true;
+	}
+
+	/**
+	 * @desc Checks if the email change is below the set limit and sets the proper response if not
+	 *
+	 * @param $memKey
+	 * @return bool
+	 */
+	private function isWithinEmailChangesLimit( $memKey ) {
+		$emailChanges = intval( $this->wg->Memc->get( $memKey ) );
+		if ( $emailChanges >= UserLoginHelper::LIMIT_EMAIL_CHANGES ) {
+			return $this->setResponseFields(
+				'error',
+				wfMessage( 'usersignup-error-too-many-changes' )->escaped(),
+				'email'
+			);
+		}
+		return true;
+	}
+
+	/**
+	 * @desc Checks if the email is within registrations per email limit and sets the proper response if not
+	 *
+	 * @param $email
+	 * @return bool
+	 */
+	private function isWithinRegistrationPerEmailLimit( $email ) {
+		if ( !UserLoginHelper::withinEmailRegLimit( $email ) ) {
+			return $this->setResponseFields(
+				'error',
+				wfMessage( 'userlogin-error-userlogin-unable-info' )->escaped(),
+				'email'
+			);
+		}
+		return true;
+	}
+
+	/**
+	 * @desc Checks if the user/email is not blocked in phalanx and sets the proper response if not
+	 *
+	 * @param $user
+	 * @return bool
+	 */
+	private function isNotBlockedByPhalanx( $user ) {
+
+		return UserLoginHelper::callWithCaptchaDisabled(function($params) {
+			$abortError = '';
+			$phalanxValid = true;
+
+			if( !wfRunHooks( 'AbortNewAccount', array( $params['user'], &$abortError ) ) ) {
+				return $this->setResponseFields(
+					'error',
+					$abortError,
+					'email'
+				);
+				$phalanxValid = false;
+			}
+			return $phalanxValid;
+		}, array( 'user' => $user ) );
 	}
 
 	/**
@@ -293,76 +467,42 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 	 * @responseParam string errParam - error param
 	 */
 	public function changeUnconfirmedUserEmail() {
-
 		// get new email from request
 		$email = $this->request->getVal( 'email', '' );
-
-		// error if empty
-		if ( empty( $email ) ) {
-			$this->result = 'error';
-			$this->msg = wfMessage( 'usersignup-error-empty-email' )->escaped();
-			$this->errParam = 'email';
-			return;
-		}
-
-		// validate new email
-		if ( !Sanitizer::validateEmail( $email ) ) {
-			$this->result = 'error';
-			$this->msg = wfMessage( 'usersignup-error-invalid-email' )->escaped();
-			$this->errParam = 'email';
-			return;
-		}
-
-		// get username from request
 		$username = $this->request->getVal( 'username' );
-		if ( empty( $username ) ) {
-			$this->result = 'error';
-			$this->msg = wfMessage( 'userlogin-error-noname' )->escaped();
-			$this->errParam = 'username';
+
+		if ( !( $this->isValidEmailFieldValue( $email ) && $this->isValidUsernameField( $username ) ) )	{
 			return;
 		}
 
 		$user = User::newFromName( $username );
-		if ( $user instanceof User && $user->getID() != 0 ) {
-			// break if user is already confirmed
-			if ( !$user->getOption( UserLoginSpecialController::NOT_CONFIRMED_SIGNUP_OPTION_NAME ) ) {
-				$this->result = 'confirmed';
-				$this->msg = wfMessage( 'usersignup-error-confirmed-user', $username, $user->getUserPage()->getFullURL() )->parse();
-				$this->errParam = 'username';
-				return;
-			}
-		} else { // user doesn't exist
-			$this->result = 'error';
-			$this->msg = wfMessage( 'userlogin-error-nosuchuser' )->escaped();
-			$this->errParam = 'username';
-			return;
-		}
 
-		// error if session is invalid
-		if ( !( isset( $_SESSION['notConfirmedUserId'] ) && $_SESSION['notConfirmedUserId'] == $user->getId() ) ) {
-			$this->result = 'invalidsession';
-			$this->msg = wfMessage( 'usersignup-error-invalid-user' )->escaped();
-			$this->errParam = 'username';
+		if ( !( $this->isValidUser( $user ) && $this->isValidSession( $user ) ) ) {
 			return;
 		}
 
 		// check email changes limit
 		$memKey = wfSharedMemcKey( 'wikialogin', 'email_changes', $user->getId() );
-		$emailChanges = intval( $this->wg->Memc->get( $memKey ) );
-		if ( $emailChanges >= UserLoginHelper::LIMIT_EMAIL_CHANGES ) {
-			$this->result = 'error';
-			$this->msg = wfMessage( 'usersignup-error-too-many-changes' )->escaped();
-			$this->errParam = 'email';
+
+		// CONN-471: Respect the registration per email limit
+		if ( !( $this->isWithinEmailChangesLimit( $memKey ) && $this->isWithinRegistrationPerEmailLimit( $email ) ) ) {
 			return;
 		}
 
 		// increase counter for email changes
 		$this->userLoginHelper->incrMemc( $memKey );
 
-		$this->result = 'ok';
-		$this->msg = wfMessage( 'usersignup-reconfirmation-email-sent', $email )->escaped();
+		$this->setResponseFields(
+			'ok',
+			wfMessage( 'usersignup-reconfirmation-email-sent', $email )->escaped()
+		);
 		if ( $email != $user->getEmail() ) {
 			$user->setEmail( $email );
+
+			// CONN-471: Call AbortNewAccount to validate username/password with Phalanx
+			if ( !$this->isNotBlockedByPhalanx( $user ) ) {
+				return;
+			}
 
 			// send reconfirmation email
 			$result = $user->sendReConfirmationMail();
@@ -374,8 +514,10 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 			$this->wg->Memc->set( $memKey, 1, 24*60*60 );
 
 			if( !$result->isGood() ) {
-				$this->result = 'error';
-				$this->msg = wfMessage( 'userlogin-error-mail-error', $result->getMessage() )->parse();
+				$this->setResponseFields(
+					'error',
+					wfMessage( 'userlogin-error-mail-error', $result->getMessage() )->parse()
+				);
 			}
 		}
 	}
@@ -419,10 +561,10 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 		$this->errParam = $signupForm->errParam;
 	}
 
-	private function disableCaptchaForAutomatedTests() {
+	private function disableCaptcha() {
 		global $wgHooks;
-		//Disable captcha for automated tests
-		if ( in_array( $this->wg->Request->getIP(), $this->wg->AutomatedTestsIPsList ) && $this->wg->Request->getInt( 'nocaptchatest' ) == 1 ) {
+		//Disable captcha for automated tests and wikia mobile
+		if ( $this->app->checkSkin( 'wikiamobile' ) || (in_array( $this->wg->Request->getIP(), $this->wg->AutomatedTestsIPsList ) && $this->wg->Request->getInt( 'nocaptchatest' ) == 1) ) {
 			//Switch off global var
 			$this->wg->WikiaEnableConfirmEditExt = false;
 			//Remove hook function

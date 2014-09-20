@@ -4,6 +4,8 @@
  * @author relwell
  */
 namespace Wikia\Search\IndexService;
+use JsonFormatService;
+use Wikia\JsonFormat\JsonFormatSimplifier;
 use Wikia\Search\Utilities, simple_html_dom;
 /**
  * This is intended to provide core article content
@@ -72,6 +74,7 @@ class DefaultContent extends AbstractService
 				'pageid'                     => $pageId,
 				$this->field( 'title' )      => $titleStr,
 				'titleStrict'                => $titleStr,
+				'title_em'                   => $titleStr,
 				'url'                        => $service->getUrlFromPageId( $pageId ),
 				'ns'                         => $service->getNamespaceFromPageId( $pageId ),
 				'host'                       => $service->getHostName(),
@@ -81,14 +84,23 @@ class DefaultContent extends AbstractService
 				'iscontent'                  => $service->isPageIdContent( $pageId ) ? 'true' : 'false',
 				'is_main_page'               => $service->isPageIdMainPage( $pageId ) ? 'true' : 'false',
 				];
-		return array_merge(
+
+		$returnValue = array_merge(
 				$this->getPageContentFromParseResponse( $response ),
+				$this->getArticleSnippet( $response ),
 				$this->getCategoriesFromParseResponse( $response ),
 				$this->getHeadingsFromParseResponse( $response ),
 				$this->getOutboundLinks(),
 				$pageFields,
 				$this->getNolangTxt()
 				);
+
+		$poiMetadata = $this->getPOIMetadata();
+		if ( is_array( $poiMetadata ) && count( $poiMetadata ) > 0 ) {
+			$returnValue = array_merge( $returnValue, $poiMetadata );
+		}
+
+		return $returnValue;
 	}
 
 	/**
@@ -128,6 +140,15 @@ class DefaultContent extends AbstractService
 	 */
 	protected function field( $field ) {
 		return $this->getService()->getGlobal( 'AppStripsHtml' ) ? (new Utilities)->field( $field ) : $field;
+	}
+
+	protected function getArticleSnippet( array $response ) {
+		$html = empty( $response['parse']['text']['*'] ) ? '' : $response['parse']['text']['*'];
+		$jsonFormatService = new JsonFormatService();
+		$text = $jsonFormatService->getArticleSnippet( $html );
+		return [
+			'snippet_s' => $text
+		];
 	}
 
 	/**
@@ -241,7 +262,7 @@ class DefaultContent extends AbstractService
 	 */
 	protected function extractInfoboxes( simple_html_dom $dom ) {
 		$result = array();
-		$infoboxes = $dom->find( 'table.infobox' );
+		$infoboxes = $dom->find( 'table.infobox,table.wikia-infobox' );
 		if ( count( $infoboxes ) > 0 ) {
 			$result['infoboxes_txt'] = [];
 			$counter = 1;
@@ -254,8 +275,13 @@ class DefaultContent extends AbstractService
 				if ( $infoboxRows ) {
 					foreach ( $infoboxRows as $row ) {
 						$infoboxCells = $row->find( 'td' );
-						if ( count( $infoboxCells ) == 2 ) {
+						$headerCells = $row->find( 'th' );
+						$infoBoxCellCount = count( $infoboxCells );
+						$headerCellCount = count( $headerCells );
+						if ( $infoBoxCellCount == 2  && $headerCellCount == 0 ) {
 							$result['infoboxes_txt'][] = "infobox_{$counter} | " . preg_replace( '/\s+/', ' ', $infoboxCells[0]->plaintext . ' | ' . $infoboxCells[1]->plaintext  );
+						} else if ( $infoBoxCellCount == 1 && $headerCellCount == 1 ) {
+							$result['infoboxes_txt'][] = "infobox_{$counter} | " . preg_replace( '/\s+/', ' ', $headerCells[0]->plaintext . ' | ' . $infoboxCells[0]->plaintext  );
 						}
 					}
 				}
@@ -316,5 +342,24 @@ class DefaultContent extends AbstractService
 	protected function getPlaintextFromDom( simple_html_dom $dom ) {
 		$tables = $this->extractAsidesFromDom( $dom );
 		return preg_replace( '/\s+/', ' ', strip_tags( $dom->plaintext . ' ' . $tables ) );
+	}
+
+	protected function getPOIMetadata() {
+		$service = $this->getService();
+		$extensionEnabled = $service->getGlobal( 'EnablePOIExt' );
+		if ( $extensionEnabled ) {
+			$articleMetadata = new \ArticleMetadataModel( $this->currentPageId, true );
+			$solrMapping = $articleMetadata->getSolrMapping();
+			$metadata = $articleMetadata->getMetadata();
+
+			$output = [];
+			foreach ( $metadata as $field => $value ) {
+				if ( isset($solrMapping[$field]) ) {
+					$output[ $solrMapping[$field] ] = $value;
+				}
+			}
+			return $output;
+		}
+		return null;
 	}
 }

@@ -1,7 +1,5 @@
-@import "../../../../skins/oasis/css/core/color";
-@import "../../../../skins/oasis/css/mixins/clearfix";
-@import "../../../../skins/oasis/css/mixins/border-radius";
-
+@import "skins/shared/color";
+@import "skins/shared/mixins/clearfix";
 .descending {
 	width: 0px;
 	border-width: 6px;

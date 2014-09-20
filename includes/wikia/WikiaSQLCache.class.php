@@ -7,7 +7,7 @@
  * @author Nelson Monterroso <nelson@wikia-inc.com>
  */
 
-class WikiaSQLCache extends FluentSql\Cache {
+class WikiaSQLCache extends FluentSql\Cache\Cache {
 	/**
 	 * @param \FluentSql\Breakdown $breakDown
 	 * @param bool $sharedKey whether or not this memkey is shared amongst wikis

@@ -33,13 +33,13 @@ $wgHooks[ "ArticleSaveComplete" ][] = "WikiFactory::updateCityDescription";
 
 class WikiFactoryDuplicateWgServer extends Exception {
 	public $city_id, $city_url, $duplicate_city_id;
-	
+
 	function __construct( $city_id, $city_url, $duplicate_city_id ) {
 		$message = "Cannot set wgServer for wiki $city_id to '$city_url' because it conflicts with wiki $duplicate_city_id";
 		parent::__construct($message);
 		$this->city_id = $city_id;
 		$this->city_url = $city_url;
-		$this->duplicate_city_id = $duplicate_city_id;		
+		$this->duplicate_city_id = $duplicate_city_id;
 	}
 }
 
@@ -643,7 +643,7 @@ class WikiFactory {
 							array("city_url" => $city_url ),
 							array("city_id" => $city_id),
 							__METHOD__
-						);						
+						);
 					} catch ( DBQueryError $e ) {
 						if ( preg_match("/Duplicate entry '[^']*' for key 'urlidx'/", $e->error) ) {
 							$res = $dbw->selectRow(
@@ -651,16 +651,16 @@ class WikiFactory {
 								"city_id",
 								array("city_url" => $city_url),
 								__METHOD__
-							);							
+							);
 							if ( isset($res->city_id) ) {
-								$exc = new WikiFactoryDuplicateWgServer($city_id, $city_url, $res->city_id);								
+								$exc = new WikiFactoryDuplicateWgServer($city_id, $city_url, $res->city_id);
 								Wikia::log( __METHOD__, "", $exc->getMessage());
 								$dbw->rollback();
 								throw $exc;
 							}
-						} 
+						}
 						throw $e;
-					}					
+					}
 
 					break;
 
@@ -736,9 +736,9 @@ class WikiFactory {
 			$bStatus = false;
 			// rethrowing here does not seem to be right. Callers expect success or failure
 			// as result value, not DBQueryError exception
-			// throw $e; 
+			// throw $e;
 		}
-	
+
 
 		self::clearCache( $city_id );
 		wfProfileOut( __METHOD__ );
@@ -915,13 +915,14 @@ class WikiFactory {
 	 * @static
 	 *
 	 * @param string	$cv_name	variable name in city_variables_pool
-	 * @param integer	$city_id	wiki id in city_list
+	 * @param mixed		$city_id	wiki id in city_list (or array of those)
 	 * @param boolean	$master		choose between master & slave connection
+	 * @param mixed		$default	value to return if no value set in WikiFactory for any city_id
 	 *
-	 * @return mixed value for variable or null otherwise
+	 * @return mixed value for variable or false otherwise
 	 */
-	static public function getVarValueByName( $cv_name, $city_id, $master = false ) {
-		// don't hit memcache (or make DB query) when getting values for a current wiki (BAC-552)
+	static public function getVarValueByName( $cv_name, $city_id, $master = false, $default = false ) {
+		// Don't hit memcache (or make DB query) when getting values for a current wiki (BAC-552)
 		global $wgCityId;
 		if ( $city_id == $wgCityId ) {
 			return isset($GLOBALS[$cv_name]) ? $GLOBALS[$cv_name] : null;
@@ -929,29 +930,43 @@ class WikiFactory {
 
 		wfProfileIn( __METHOD__ );
 
-		$value = null;
-		/**
-		 * first read WF Cache for city_id -- maybe value is already stored
-		 * in memcached?
-		 */
-		global $wgWikiFactoryCacheType;
-		$oMemc = wfGetCache( $wgWikiFactoryCacheType );
-		if ( !$master ) {
-			$variables = $oMemc->get( self::getVarsKey( $city_id ) );
-			$value = isset( $variables[ "data" ][ $cv_name ] )
-				? self::substVariables( $variables[ "data" ][ $cv_name ], $city_id )
-				: null;
+		if ( is_array($city_id) ) {
+			$cityIds = $city_id;
+		} else {
+			$cityIds = array($city_id);
 		}
 
-		if ( is_null( $value ) ) {
-			$variable = self::loadVariableFromDB( false, $cv_name, $city_id, $master );
-			$value = isset( $variable->cv_value )
-				? self::substVariables( unserialize( $variable->cv_value ), $city_id )
-				: false;
+		global $wgWikiFactoryCacheType;
+		$oMemc = wfGetCache( $wgWikiFactoryCacheType );
+
+		foreach ( $cityIds as $city_id ) {
+			$value = null;
+
+			// First read WF Cache for city_id -- maybe value is already stored in memcached?
+			if ( !$master ) {
+				$variables = $oMemc->get( self::getVarsKey( $city_id ) );
+				$value = isset( $variables[ "data" ][ $cv_name ] )
+					? self::substVariables( $variables[ "data" ][ $cv_name ], $city_id )
+					: null;
+			}
+
+			// Then ask memcached or DB for specific var
+			if ( is_null( $value ) ) {
+				$variable = self::loadVariableFromDB( false, $cv_name, $city_id, $master );
+				$value = isset( $variable->cv_value )
+					? self::substVariables( unserialize( $variable->cv_value ), $city_id )
+					: null;
+			}
+
+			// If we found the value return, else proceed to the next city_id
+			if ( !is_null($value) ) {
+				wfProfileOut( __METHOD__ );
+				return $value;
+			}
 		}
 
 		wfProfileOut( __METHOD__ );
-		return $value;
+		return $default;
 	}
 
 	/**
@@ -1058,6 +1073,10 @@ class WikiFactory {
 
 		if ( $host === null ) {
 			$host = gethostname();
+		}
+
+		if ( preg_match( '/^(demo-[a-z0-9]+)-[s|r][0-9]+$/i', $host, $m ) ) {
+			return $m[ 1 ] . '.' . ( $dbName ? $dbName : 'www' ) . '.wikia.com';
 		}
 
 		if ( in_array( $host, $wgStagingList ) ) {
@@ -1930,6 +1949,8 @@ class WikiFactory {
 
 		$dbr = ( $master ) ? self::db( DB_MASTER ) : self::db( DB_SLAVE );
 
+		$caller = wfGetCallerClassMethod(__CLASS__);
+		$fname = __METHOD__ . " (from {$caller})";
 
 		if ( $master || !isset( self::$variablesCache[$cacheKey] ) ) {
 			$oRow = $dbr->selectRow(
@@ -1944,7 +1965,7 @@ class WikiFactory {
 					"cv_is_unique"
 				),
 				$condition,
-				__METHOD__
+				$fname
 			);
 			self::$variablesCache[$cacheKey] = $oRow;
 		}
@@ -1973,7 +1994,7 @@ class WikiFactory {
 					"cv_variable_id" => $oRow->cv_id,
 					"cv_city_id" => $city_id
 				),
-				__METHOD__
+				$fname
 			);
 			if ( isset( $oRow2->cv_variable_id ) ) {
 
@@ -2302,7 +2323,6 @@ class WikiFactory {
 					"city_lastdump_timestamp"=> $timestamp,
 					"city_factory_timestamp" => $timestamp,
 					"city_useshared"         => $wiki->city_useshared,
-					"ad_cat"                 => $wiki->ad_cat,
 					"city_flags"			 => $wiki->city_flags,
 					"city_cluster"			 => $wiki->city_cluster
 				),
@@ -2540,7 +2560,8 @@ class WikiFactory {
 			array( 'city_id' => $city_id ),
 			__METHOD__
 		);
-		self::log( self::LOG_STATUS, sprintf('Binary flags %s read from city_flags', decbin( $city_flags ) ), $city_id );
+		//reduce log spam in wikifactory logs
+		//self::log( self::LOG_STATUS, sprintf('Binary flags %s read from city_flags', decbin( $city_flags ) ), $city_id );
 
 		wfProfileOut( __METHOD__ );
 
@@ -2548,44 +2569,85 @@ class WikiFactory {
 	}
 
 	/**
-	 * get category/hub name and number for $city_id
+	 * get legacy category/hub name and number for $city_id
 	 *
 	 * @param integer	$city_id		wikia identifier in city_list
 	 *
 	 * @return stdClass ($row->cat_id $row->cat_name) or false
+	 * @deprecated
 	 */
-	static public function getCategory( $city_id ) {
+
+	static public function getCategory ( $city_id ) {
+		// return deprecated category list
+		$categories = self::getCategories( $city_id, true );
+		return !empty($categories) ? $categories[0] : false;
+	}
+
+
+	/**
+	 * get new category id and name for $city_id
+	 *
+	 * @param integer	$city_id		wikia identifier in city_list
+	 *
+	 * @return stdClass ($row->cat_id $row->cat_name) or false
+	 *
+	 */
+
+	static public function getCategories( $city_id, $deprecated = false ) {
+		global $wgRunningUnitTests, $wgNoDBUnits;
+
+		$aCategories = array();
 
 		if ( ! self::isUsed() ) {
 			Wikia::log( __METHOD__, "", "WikiFactory is not used." );
-			return false;
+			return $aCategories;
+		}
+
+		if ($wgRunningUnitTests && $wgNoDBUnits) {
+			return $aCategories;
+		}
+
+		// Default query using this function is to get all the new/active categories
+		$aFilter = "city_cats.cat_active = 1";
+		$aOptions = array();
+
+		if ( $deprecated ) {
+			$aFilter = "city_cats.cat_deprecated = 1";
+			$aOptions = array ("LIMIT" => 1);
 		}
 
 		/**
-		 * it is called in CommonExtensions.php so wgMemc is not initialized there
+		 * it is called in CommonExtensions.php and wgMemc is not initialized there
 		 */
 		global $wgWikiFactoryCacheType;
 		$oMemc = wfGetCache( $wgWikiFactoryCacheType );
 		$memkey = sprintf("%s:%d", __METHOD__, intval($city_id));
 		$cached = $oMemc->get($memkey);
+
 		if ( empty($cached) ) {
 			$dbr = self::db( DB_SLAVE );
 
-			$row = $dbr->selectRow(
+			$oRes = $dbr->select(
 				array( "city_cat_mapping", "city_cats" ),
 				array( "city_cats.cat_id as cat_id", "city_cats.cat_name as cat_name" ),
 				array(
 					"city_id" => $city_id,
-					"city_cats.cat_id = city_cat_mapping.cat_id"
+					"city_cats.cat_id = city_cat_mapping.cat_id",
+					$aFilter
 				),
-				__METHOD__
+				__METHOD__,
+				$aOptions
 			);
-			$oMemc->set($memkey, $row, 60*60*24);
+
+			while ( $oRow = $dbr->fetchObject( $oRes ) ) {
+				$aCategories[] = $oRow;
+			}
+			$oMemc->set($memkey, $aCategories, 60*60*24);
 		} else {
-			$row = $cached;
+			$aCategories = $cached;
 		}
 
-		return empty( $row ) ? false : $row;
+		return $aCategories;
 	}
 
 	/**
@@ -3011,14 +3073,20 @@ class WikiFactory {
 
 		$oRes = $dbr->select(
 			$aTables,
-			array('city_id', 'city_title', 'city_url', 'city_public', 'city_dbname'),
+			array('city_id', 'city_title', 'city_url', 'city_public', 'city_dbname', 'city_lang'),
 			$aWhere,
 			__METHOD__,
 			$aOptions
 		);
 
 		while ( $oRow = $dbr->fetchObject($oRes) ) {
-			$aWikis[$oRow->city_id] = array('u' => $oRow->city_url, 't' => $oRow->city_title, 'p' => ( !empty($oRow->city_public) ? true : false ), 'd' => $oRow->city_dbname );
+			$aWikis[$oRow->city_id] = [
+				'u' => $oRow->city_url,
+				't' => $oRow->city_title,
+				'p' => ( !empty($oRow->city_public) ? true : false ),
+				'd' => $oRow->city_dbname,
+				'l' => $oRow->city_lang
+			];
 		}
 		$dbr->freeResult( $oRes );
 

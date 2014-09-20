@@ -72,7 +72,6 @@ class ForumHooksHelper {
 	}
 
 	static protected function getIndexPath() {
-		$app = F::App();
 		$indexPage = Title::newFromText( 'Forum', NS_SPECIAL );
 		return array( 'title' => wfMessage( 'forum-forum-title' )->escaped(), 'url' => $indexPage->getFullUrl() );
 	}
@@ -164,62 +163,11 @@ class ForumHooksHelper {
 		return true;
 	}
 
-	static public function onWallContributionsLine($pageNamespace, $wallMessage, $wfMsgOptsBase, &$ret) {
-		if ( $pageNamespace != NS_WIKIA_FORUM_BOARD ) {
-			return true;
-		}
-
-		if ( empty( $wfMsgOptsBase['articleTitleVal'] ) ) {
-			$wfMsgOptsBase['articleTitleTxt'] = wfMessage( 'forum-recentchanges-deleted-reply-title' )->text();
-		}
-
-		$wfMsgOpts = array(
-			$wfMsgOptsBase['articleFullUrl'],
-			$wfMsgOptsBase['articleTitleTxt'],
-			$wfMsgOptsBase['wallPageFullUrl'],
-			$wfMsgOptsBase['wallPageName'],
-			$wfMsgOptsBase['createdAt'],
-			$wfMsgOptsBase['DiffLink'],
-			$wfMsgOptsBase['historyLink']
-		);
-
-		if ( $wfMsgOptsBase['isThread'] && $wfMsgOptsBase['isNew'] ) {
-			$wfMsgOpts[] = Xml::element( 'strong', array(), wfMessage( 'newpageletter' )->plain() . ' ' );
-		} else {
-			$wfMsgOpts[] = '';
-		}
-
-		$ret .= wfMessage( 'forum-contributions-line', $wfMsgOpts )->text();
-
-		return false;
-	}
-
 	static public function onWallRecentchangesMessagePrefix($namespace, &$prefix) {
 		if ( $namespace == NS_WIKIA_FORUM_BOARD ) {
 			$prefix = 'forum-recentchanges';
 			return false;
 		}
-		return true;
-	}
-
-	// Hook: clear cache when editing comment
-	static public function onEditCommentsIndex($title, $commentsIndex) {
-		if ( $title->getNamespace() == NS_WIKIA_FORUM_BOARD_THREAD ) {
-			$parentPageId = $commentsIndex->getParentPageId();
-
-			$board = ForumBoard::newFromId( $parentPageId );
-			if ( $board instanceof ForumBoard ) {
-				$board->clearCacheBoardInfo();
-			} else {
-				Wikia::log(
-					__METHOD__,
-					'',
-					'Board doesn\'t exist: PageId: ' . $parentPageId .
-					' Title: ' . $title->getText()
-				);
-			}
-		}
-
 		return true;
 	}
 
@@ -300,7 +248,7 @@ class ForumHooksHelper {
 		#check namespace(s)
 		if ( $ns == NS_FORUM || $ns == NS_FORUM_TALK ) {
 			if ( !static::canEditOldForum( $app->wg->User ) ) {
-				$action = array( 'class' => '', 'text' => wfMsg( 'viewsource' ), 'href' => $title->getLocalUrl( array( 'action' => 'edit' ) ), 'id' => 'ca-viewsource', 'primary' => 1 );
+				$action = array( 'class' => '', 'text' => wfMessage( 'viewsource' )->escaped(), 'href' => $title->getLocalUrl( array( 'action' => 'edit' ) ), 'id' => 'ca-viewsource', 'primary' => 1 );
 				$response->setVal( 'actionImage', MenuButtonController::LOCK_ICON );
 				$response->setVal( 'action', $action );
 				return false;
@@ -335,16 +283,27 @@ class ForumHooksHelper {
 
 	/**
 	 * Display Related Discussion (Forum posts) in bottom of article
+	 * @param OutputPage $out
+	 * @param string $text article HTML
+	 * @return bool: true because it is a hook
 	 */
 	static public function onOutputPageBeforeHTML( OutputPage $out, &$text ) {
-		$app = F::App();
-		if ( $out->isArticle() && $app->wg->Title->exists()
-			&& $app->wg->Title->getNamespace() == NS_MAIN && !Wikia::isMainPage()
-			&& $app->wg->Request->getVal( 'diff' ) === null
-			&& $app->wg->Request->getVal( 'action' ) !== 'render'
-			&& !( $app->checkSkin( 'wikiamobile' ) )
+		$app = F::app();
+		$title = $out->getTitle();
+		if ( $out->isArticle()
+			&& $title->exists()
+			&& $title->getNamespace() == NS_MAIN
+			&& !Wikia::isMainPage()
+			&& $out->getRequest()->getVal( 'diff' ) === null
+			&& $out->getRequest()->getVal( 'action' ) !== 'render'
+			&& !( $app->checkSkin( 'wikiamobile', $out->getSkin() ) )
 		) {
-			$text .= $app->renderView( 'RelatedForumDiscussionController', 'index');
+			// VOLDEV-46: Omit zero-state, only render if there are related forum threads
+			$messages = RelatedForumDiscussionController::getData( $title->getArticleId() );
+			unset( $messages['lastupdate'] );
+			if ( !empty( $messages ) ) {
+				$text .= $app->renderView( 'RelatedForumDiscussionController', 'index', array( 'messages' => $messages ) );
+			}
 		}
 		return true;
 	}
@@ -357,12 +316,11 @@ class ForumHooksHelper {
 	 */
 
 	static public function onWallAction($action, $parent, $comment_id) {
-		$app = F::App();
 		$title = Title::newFromId($comment_id, Title::GAID_FOR_UPDATE);
 
 		if ( !empty($title) && MWNamespace::getSubject( $title->getNamespace() ) == NS_WIKIA_FORUM_BOARD ) {
 			$threadId = empty($parent) ? $comment_id:$parent;
-			$app->sendRequest( "RelatedForumDiscussion", "purgeCache", array('threadId' => $threadId ));
+			RelatedForumDiscussionController::purgeCache( $threadId );
 
 			//cleare board info
 			$commentsIndex = CommentsIndex::newFromId( $comment_id );
@@ -374,17 +332,9 @@ class ForumHooksHelper {
 				return true;
 			}
 
-			$board->clearCacheBoardInfo();
-
 			$thread = WallThread::newFromId( $threadId );
-			if(!empty($thread)) {
+			if( !empty($thread) ) {
 				$thread->purgeLastMessage();
-				$threadTitle = Title::newFromId( $threadId );
-				// the title can be empty if this is a create action
-				if ( !empty( $threadTitle ) ) {
-					$threadTitle->purgeSquid();
-					$threadTitle->invalidateCache();
-				}
 			}
 		}
 		return true;
@@ -398,15 +348,39 @@ class ForumHooksHelper {
 	 * @return bool
 	 */
 	public static function onTitleGetSquidURLs( $title, &$urls ) {
-		if ( $title->inNamespace( NS_WIKIA_FORUM_BOARD_THREAD ) ) {
-			$wallMessage = WallMessage::newFromTitle( $title );
-			$urls = array();
-			// CONN-426: Purge cache only for main thread page. When a reply is added, the main page is also updated so
-			// we should prevent replies from being added for purging
-			if ( $wallMessage->isMain() ) {
-				$urls[] = $wallMessage->getMessagePageUrl( true );
-			}
+		wfProfileIn( __METHOD__ );
+
+		if( $title->inNamespaces( NS_WIKIA_FORUM_BOARD, NS_WIKIA_FORUM_BOARD_THREAD, NS_WIKIA_FORUM_TOPIC_BOARD ) ) {
+			// CONN-430: Resign from default ArticleComment purges
+			$urls = [];
 		}
+
+		if ( $title->inNamespaces( NS_WIKIA_FORUM_BOARD_THREAD, NS_WIKIA_FORUM_TOPIC_BOARD ) ) {
+			$wallMessage = WallMessage::newFromTitle( $title );
+			$urls = array_merge( $urls, $wallMessage->getSquidURLs( NS_WIKIA_FORUM_BOARD ) );
+		}
+
+		wfProfileOut( __METHOD__ );
+		return true;
+	}
+
+	/**
+	 * @desc Makes sure we don't send unnecessary ArticleComments links to purge
+	 *
+	 * @param Title $title
+	 * @param String[] $urls
+	 *
+	 * @return bool
+	 */
+	public static function onArticleCommentGetSquidURLs( $title, &$urls ) {
+		wfProfileIn( __METHOD__ );
+
+		if( $title->inNamespaces( NS_WIKIA_FORUM_BOARD, NS_WIKIA_FORUM_BOARD_THREAD, NS_WIKIA_FORUM_TOPIC_BOARD ) ) {
+			// CONN-430: Resign from default ArticleComment purges
+			$urls = [];
+		}
+
+		wfProfileOut( __METHOD__ );
 		return true;
 	}
 
@@ -488,4 +462,28 @@ class ForumHooksHelper {
 
 		return true;
 	}
+
+	/**
+	 * Ensure that the comments_index record (if it exists) for an article is marked as deleted
+	 * when an article is deleted. This event must be run inside the transaction in WikiPage::doDeleteArticleReal
+	 * otherwise the Article referenced will no longer exist and the lookup for it's associated
+	 * comments_index row will fail.
+	 *
+	 * @param WikiPage $page WikiPage object
+	 * @param User $user User object [not used]
+	 * @param string $reason [not used]
+	 * @param int $id [not used]
+	 * @return bool true
+	 *
+	 */
+	static public function onArticleDoDeleteArticleBeforeLogEntry( &$page, &$user, $reason, $id ) {
+		$title = $page->getTitle();
+		if ( $title instanceof Title ) {
+			$wallMessage = WallMessage::newFromTitle($title);
+			$wallMessage->setInCommentsIndex(WPP_WALL_ADMINDELETE, 1);
+		}
+
+		return true;
+	}
+
 }

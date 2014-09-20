@@ -1,7 +1,7 @@
 /*!
  * VisualEditor ContentEditable MWNumberedExternalLinkNode class.
  *
- * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
@@ -19,16 +19,20 @@ ve.ce.MWNumberedExternalLinkNode = function VeCeMWNumberedExternalLinkNode( mode
 	ve.ce.LeafNode.call( this, model, config );
 
 	// Mixin constructors
-	ve.ce.ProtectedNode.call( this );
 	ve.ce.FocusableNode.call( this );
 
 	// DOM changes
-	this.$element.addClass( 've-ce-mwNumberedExternalLinkNode' );
-	// Need CE=false to prevent selection issues
-	this.$element.prop( 'contentEditable', 'false' );
+	this.$element
+		.addClass( 've-ce-mwNumberedExternalLinkNode' )
+		// Need CE=false to prevent selection issues
+		.prop( 'contentEditable', 'false' );
 
 	// Add link
-	this.$link = this.$( '<a>' ).appendTo( this.$element );
+	this.$link = this.$( '<a>' )
+		// CSS for numbering needs rel=mw:ExtLink
+		.attr( 'rel', 'mw:ExtLink' )
+		.addClass( 'external' )
+		.appendTo( this.$element );
 
 	// Events
 	this.model.connect( this, { 'update': 'onUpdate' } );
@@ -41,8 +45,6 @@ ve.ce.MWNumberedExternalLinkNode = function VeCeMWNumberedExternalLinkNode( mode
 
 OO.inheritClass( ve.ce.MWNumberedExternalLinkNode, ve.ce.LeafNode );
 
-OO.mixinClass( ve.ce.MWNumberedExternalLinkNode, ve.ce.ProtectedNode );
-
 OO.mixinClass( ve.ce.MWNumberedExternalLinkNode, ve.ce.FocusableNode );
 
 /* Static Properties */
@@ -50,6 +52,17 @@ OO.mixinClass( ve.ce.MWNumberedExternalLinkNode, ve.ce.FocusableNode );
 ve.ce.MWNumberedExternalLinkNode.static.name = 'link/mwNumberedExternal';
 
 ve.ce.MWNumberedExternalLinkNode.static.tagName = 'span';
+
+ve.ce.MWNumberedExternalLinkNode.static.primaryCommandName = 'linkNode';
+
+/* Static Methods */
+
+/**
+ * @inheritdoc
+ */
+ve.ce.MWNumberedExternalLinkNode.static.getDescription = function ( model ) {
+	return model.getAttribute( 'href' );
+};
 
 /* Methods */
 

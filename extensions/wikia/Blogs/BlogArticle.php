@@ -659,13 +659,14 @@ class BlogArticle extends Article {
 	 */
 	static public function wfMaintenance() {
 		global $wgTitle;
-		echo "Blog Article maintenance.\n";
+
+		$results = [];
 		/**
 		 * create Blog:Recent posts page if not exists
 		 */
 		$recentPosts = wfMsg("create-blog-post-recent-listing");
 		if( $recentPosts ) {
-			echo "Creating {$recentPosts}";
+			$recentPostsKey = "Creating {$recentPosts}";
 			$oTitle = Title::newFromText( $recentPosts,  NS_BLOG_LISTING );
 			if( $oTitle ) {
 				$wgTitle = $oTitle;
@@ -678,16 +679,16 @@ class BlogArticle extends Article {
 						wfMsg("create-blog-post-recent-listing-log"),
 						EDIT_NEW | EDIT_MINOR | EDIT_FORCE_BOT  # flags
 					);
-					echo "... done.\n";
+					$results[$recentPostsKey] = 'done';
 				}
 				else {
-					echo "... already exists.\n";
+					$results[$recentPostsKey] = 'already exists';
 				}
 				/**
 				 * Edit sidebar, add link to recent blog posts
 				 */
-				echo "Updating Monaco-sidebar";
 				$sidebar = wfMsg('Monaco-sidebar');
+				$sidebarKey = 'Updating Monaco sidebar';
 				$newline = sprintf("\n* %s|%s", $oTitle->getPrefixedText(), wfMsg("create-blog-post-recent-listing-title") );
 				if( strpos( $sidebar, $newline ) !== false ) {
 					$sidebar .= $newline;
@@ -700,10 +701,10 @@ class BlogArticle extends Article {
 							EDIT_MINOR | EDIT_FORCE_BOT  # flags
 						);
 					}
-					echo "... done.\n";
+					$results[$sidebarKey] = 'done';
 				}
 				else {
-					echo "... already added.\n";
+					$results[$sidebarKey] = 'already added';
 				}
 
 			}
@@ -714,7 +715,7 @@ class BlogArticle extends Article {
 		 */
 		$catName = wfMsg("create-blog-post-category");
 		if( $catName && $catName !== "-" ) {
-			echo "Creating {$catName}";
+			$catNameKey = "Creating {$catName}";
 			$oTitle = Title::newFromText( $catName, NS_CATEGORY );
 			if( $oTitle ) {
 				$oArticle = new Article( $oTitle, 0 );
@@ -724,13 +725,15 @@ class BlogArticle extends Article {
 						wfMsg( "create-blog-post-category-log" ),
 						EDIT_NEW | EDIT_MINOR | EDIT_FORCE_BOT  # flags
 					);
-					echo "... done.\n";
+					$results[$catNameKey] = 'done';
 				}
 				else {
-					echo "... already exists.\n";
+					$results[$catNameKey] = 'already exists';
 				}
 			}
 		}
+
+		return $results;
 	}
 
 	/**

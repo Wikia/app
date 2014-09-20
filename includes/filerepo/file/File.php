@@ -32,7 +32,7 @@
  *
  * @ingroup FileAbstraction
  */
-abstract class File {
+abstract class File implements \Wikia\Vignette\FileInterface {
 	const DELETED_FILE = 1;
 	const DELETED_COMMENT = 2;
 	const DELETED_USER = 4;
@@ -695,7 +695,7 @@ abstract class File {
 	 *
 	 * @param $handlerParams array
 	 *
-	 * @return string
+	 * @return MediaTransformOutput
 	 */
 	function getUnscaledThumb( $handlerParams = array() ) {
 		$hp =& $handlerParams;
@@ -1000,8 +1000,15 @@ abstract class File {
 		// Purge cache of all pages using this file
 		$title = $this->getTitle();
 		if ( $title ) {
-			$update = new HTMLCacheUpdate( $title, 'imagelinks' );
-			$update->doUpdate();
+			// Wikia change begin @author Scott Rabin (srabin@wikia-inc.com)
+			global $wgCityId;
+
+			$task = ( new \Wikia\Tasks\Tasks\HTMLCacheUpdateTask() )
+				->wikiId( $wgCityId )
+				->title( $title );
+			$task->call( 'purge', 'imagelinks' );
+			$task->queue();
+			// Wikia change end
 		}
 	}
 

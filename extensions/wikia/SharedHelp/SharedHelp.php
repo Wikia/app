@@ -43,6 +43,7 @@ class SharedHttp {
 		return self::request( "POST", $url, $timeout );
 	}
 
+	// TODO: use MediaWiki's HTTP class
 	static function request( $method, $url, $timeout = 'default' ) {
 		global $wgHTTPTimeout, $wgVersion, $wgTitle, $wgDevelEnvironment;
 		wfProfileIn(__METHOD__);
@@ -85,10 +86,24 @@ class SharedHttp {
 				curl_setopt( $c, CURLOPT_REFERER, $wgTitle->getFullURL() );
 			}
 
+			$requestTime = microtime( true );
+
 			ob_start();
 			curl_exec( $c );
 			$text = ob_get_contents();
 			ob_end_clean();
+
+			// log HTTP requests
+			$requestTime = (int)( ( microtime( true ) - $requestTime ) * 1000.0 );
+
+			$params = [
+				'statusCode' => curl_getinfo( $c, CURLINFO_HTTP_CODE ),
+				'reqMethod' => $method,
+				'reqUrl' => $url,
+				'caller' => __CLASS__,
+				'requestTimeMS' => $requestTime
+			];
+			\Wikia\Logger\WikiaLogger::instance()->debug( 'Http request' , $params );
 
 			# Don't return the text of error messages, return false on error
 			if ( ( curl_getinfo( $c, CURLINFO_HTTP_CODE ) != 200 ) && ( curl_getinfo( $c, CURLINFO_HTTP_CODE ) != 301 ) ) {
@@ -205,7 +220,7 @@ function SharedHelpHook(&$out, &$text) {
 			if (!empty ($_SESSION ['SH_redirected'])) {
 				$from_link = Title::newfromText( $helpNs . ":" . $_SESSION ['SH_redirected'] );
 				$redir = $sk->makeKnownLinkObj( $from_link, '', 'redirect=no', '', '', 'rel="nofollow"' );
-				$s = wfMsg( 'redirectedfrom', $redir );
+				$s = wfMessage( 'redirectedfrom', $redir )->text();
 				$out->setSubtitle( $s );
 				$_SESSION ['SH_redirected'] = '';
 			}
@@ -272,16 +287,11 @@ function SharedHelpHook(&$out, &$text) {
 			$skipNamespaces[] = $wgContLang->getNsText(NS_CATEGORY);
 			$skipNamespaces[] = $wgContLang->getNsText(NS_IMAGE);
 			$skipNamespaces[] = $wgContLang->getNsText(NS_FILE);
-			if ( defined( 'NS_VIDEO' ) ) {
-				$skipNamespaces[] = $wgContLang->getNsText(NS_VIDEO);
-			};
+
 			$skipNamespaces[] = "Advice";
 			if ($wgLanguageCode != 'en') {
 				$skipNamespaces[] = MWNamespace::getCanonicalName(NS_CATEGORY);
 				$skipNamespaces[] = MWNamespace::getCanonicalName(NS_IMAGE);
-				if ( defined( 'NS_VIDEO' ) ) {
-					$skipNamespaces[] = MWNamespace::getCanonicalName(NS_VIDEO);
-				}
 			}
 			$skipNamespaces[] = 'Special:Search'; // Stop hard coded Search on Community Central being removed
 
@@ -323,7 +333,7 @@ function SharedHelpHook(&$out, &$text) {
 
 			// "this text is stored..."
 			$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL( 'extensions/wikia/SharedHelp/css/shared-help.scss' ));
-			$info = '<div class="sharedHelpInfo plainlinks" style="text-align: right; font-size: smaller;padding: 5px">' . wfMsgExt('shared_help_info', 'parseinline', $sharedServer . $sharedArticlePathClean . $articleLink, $helpSitename ) . '</div>';
+			$info = '<div class="sharedHelpInfo plainlinks" style="text-align: right; font-size: smaller;padding: 5px">' . wfMessage( 'shared_help_info' )->parse() . '</div>';
 
 			if(strpos($text, '"noarticletext"') > 0) {
 				$text = '<div class="sharedHelp">' . $info . $content . '<div style="clear:both"></div></div>';
@@ -356,7 +366,7 @@ function SharedHelpEditPageHook(&$editpage) {
 
 	$helpSitename = WikiFactory::getVarValueByName( 'wgSitename', $wgHelpWikiId );
 
-	$msg = '<div style="border: solid 1px; padding: 10px; margin: 5px" class="sharedHelpEditInfo">'.wfMsgExt('shared_help_edit_info', 'parseinline', $wgTitle->getDBkey(), $helpSitename).'</div>';
+	$msg = '<div style="border: solid 1px; padding: 10px; margin: 5px" class="sharedHelpEditInfo">' . wfMessage( 'shared_help_edit_info', $wgTitle->getDBkey(), $helpSitename )->parse() .'</div>';
 
 	$editpage->editFormPageTop .= $msg;
 

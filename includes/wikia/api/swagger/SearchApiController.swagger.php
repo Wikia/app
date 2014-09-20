@@ -33,7 +33,13 @@ use Swagger\Annotations as SWG;
  * 		name="ns",
  * 		type="int",
  * 		required="true",
- * 		description="Page namespace number, see more: http://www.mediawiki.org/wiki/help:namespaces"
+ * 		description="Page namespace number, see more: http://community.wikia.com/wiki/Help:Namespaces"
+ * 	)
+ * 	@SWG\Property(
+ * 		name="quality",
+ * 		type="int",
+ * 		required="true",
+ * 		description="Quality score of the article, ranges from 0 (low quality) to 99 (high quality)"
  * 	)
  * 
  * @SWG\Model( id="localWikiSearchResultSet" )
@@ -68,7 +74,65 @@ use Swagger\Annotations as SWG;
  * 		items="$ref:localWikiSearchResult",
  * 		description="Standard container name for element collection (list)"
  * 	)
- * 
+ *
+ *
+ * @SWG\Model ( id="CombinedSearchArticlesResultSet" )
+ *  @SWG\Property(
+ * 		name="wikiId",
+ * 		required="true",
+ * 		type="int",
+ * 		description="ID of Wikia site"
+ *  )
+ *  @SWG\Property(
+ * 		name="articleId",
+ * 		required="true",
+ * 		type="int",
+ * 		description="ID of the article on the Wikia site"
+ *  )
+ *  @SWG\Property(
+ * 		name="title",
+ * 		required="true",
+ * 		type="string",
+ * 		description="The title of the article"
+ *  )
+ *  @SWG\Property(
+ * 		name="url",
+ * 		required="true",
+ * 		type="string",
+ * 		description="URL to the article"
+ *  )
+ * @SWG\Property(
+ * 		name="lang",
+ * 		required="true",
+ * 		type="string",
+ * 		description="Language of the article"
+ *  )
+ * 	@SWG\Property(
+ * 		name="quality",
+ * 		type="int",
+ * 		required="true",
+ * 		description="Quality score of the article, ranges from 0 (low quality) to 99 (high quality)"
+ * 	)
+ * 	@SWG\Property(
+ * 		name="type",
+ * 		type="string|null",
+ * 		required="true",
+ * 		description="Type of article ( book | character | comic_book | location | movie | person | tv_episode | tv_season | tv_series | other | video_game )"
+ * 	)
+ * @SWG\Property(
+ * 		name="snippet",
+ * 		required="true",
+ * 		type="string",
+ * 		description="Text snippet for the article"
+ *  )
+ *  @SWG\Property(
+ * 		name="image",
+ * 		required="true",
+ * 		type="string",
+ * 		description="The URL of the image"
+ *  )
+ *
+ *
  * @SWG\Model( id="CrossWikiSearchResult" )
  * 	@SWG\Property(
  * 		name="id",
@@ -245,8 +309,63 @@ use Swagger\Annotations as SWG;
  * 		description="Original image height"
  * 	)
  *
+ *
+ * @SWG\Model( id="CombinedSearchResultSet" )
+ * 	@SWG\Property(
+ * 		name="wikias",
+ * 		required="true",
+ * 		type="Array",
+ * 		items="$ref:WikiasResultSet",
+ * 		description="Container for wikias collection (list)"
+ * 	)
+ *  @SWG\Property(
+ * 		name="articles",
+ * 		required="true",
+ * 		type="Array",
+ * 		items="$ref:CombinedSearchArticlesResultSet",
+ * 		description="Container for articles collection (list)"
+ * 	)
+ *
+ * @SWG\Model( id="WikiasResultSet" )
+ * 	@SWG\Property(
+ * 		name="wikiId",
+ * 		required="true",
+ * 		type="int",
+ * 		description="ID of Wikia site"
+ *  )
+ *  @SWG\Property(
+ * 		name="name",
+ * 		required="true",
+ * 		type="string",
+ * 		description="Name of Wikia site"
+ *  )
+ * 	@SWG\Property(
+ * 		name="url",
+ * 		required="true",
+ * 		type="string",
+ * 		description="URL to the main page"
+ *  )
+ *  @SWG\Property(
+ * 		name="lang",
+ * 		required="true",
+ * 		type="string",
+ * 		description="Language of the Wikia site"
+ *  )
+ * 	@SWG\Property(
+ * 		name="snippet",
+ * 		required="true",
+ * 		type="string",
+ * 		description="Description of the Wikia site"
+ *  )
+ * 	@SWG\Property(
+ * 		name="wordmark",
+ * 		required="true",
+ * 		type="string",
+ * 		description="URL for Wikia site logo"
+ *  )
+ *
  * @SWG\Api(
- * 	path="/api/v1/Search/List",
+ * 	path="/Search/List",
  * 	description="Search local Wikia for given phrase. Should not be used directly on www.wikia.com.",
  * 	@SWG\Operations(
  * 		@SWG\Operation(
@@ -261,7 +380,7 @@ use Swagger\Annotations as SWG;
  * 			@SWG\Parameters(
  * 				@SWG\Parameter(
  * 					name="query",
- * 					description="The query to use for the search",
+ * 					description="Search query",
  * 					paramType="query",
  * 					required="true",
  * 					allowMultiple="false",
@@ -289,12 +408,22 @@ use Swagger\Annotations as SWG;
  * 				),
  * 				@SWG\Parameter(
  * 					name="limit",
- * 					description="The number of items per batch",
+ * 					description="Limit the number of results",
  * 					paramType="query",
  * 					required="false",
  * 					allowMultiple="false",
  * 					dataType="int",
  * 					defaultValue="25"
+ * 				),
+ * 				@SWG\Parameter(
+ * 					name="minArticleQuality",
+ * 					description="Minimal value of article quality. Ranges from 0 to 99",
+ * 					paramType="query",
+ * 					required="false",
+ * 					allowMultiple="false",
+ * 					dataType="int",
+ * 					defaultValue="10",
+ * 					@SWG\AllowableValues(valueType="RANGE",min="0", max="99")
  * 				),
  * 				@SWG\Parameter(
  * 					name="batch",
@@ -307,7 +436,7 @@ use Swagger\Annotations as SWG;
  * 				),
  * 				@SWG\Parameter(
  * 					name="namespaces",
- * 					description="Page namespace number, see more: http://www.mediawiki.org/wiki/help:namespaces",
+ * 					description="Page namespace number, see more: http://community.wikia.com/wiki/Help:Namespaces",
  * 					paramType="query",
  * 					required="false",
  * 					allowMultiple="false",
@@ -320,7 +449,7 @@ use Swagger\Annotations as SWG;
  * )
  * 
  * @SWG\Api(
- * 	path="/api/v1/Search/CrossWiki",
+ * 	path="/Search/CrossWiki",
  * 	description="Get results for cross-wiki search for submitted query. As a result you get a list of Wikis",
  * 	@SWG\Operations(
  * 		@SWG\Operation(
@@ -334,7 +463,7 @@ use Swagger\Annotations as SWG;
  * 			@SWG\Parameters(
  * 				@SWG\Parameter(
  * 					name="query",
- * 					description="The query to use for the search",
+ * 					description="Search query",
  * 					paramType="query",
  * 					required="true",
  * 					allowMultiple="false",
@@ -344,7 +473,7 @@ use Swagger\Annotations as SWG;
  * 				@SWG\Parameter(
  * 					name="hub",
  * 					paramType="query",
- * 					description="The name of the hub (Gaming, Entertainment, Lifestyle). Separate by comma if more than one provided",
+ * 					description="Comma-separated list of verticals (e.g. Gaming, Entertainment, Lifestyle)",
  * 					required="false",
  * 					allowMultiple="true",
  * 					dataType="string",
@@ -352,7 +481,7 @@ use Swagger\Annotations as SWG;
  * 				),
  * 				@SWG\Parameter(
  * 					name="lang",
- * 					description="The two chars wiki language code, (eg.: en, de, fr, all (for any language)). Can handles multiple values, on default will use current wikia content language.",
+ * 					description="Comma separated language codes (e.g. en,de,fr)",
  * 					paramType="query",
  * 					required="false",
  * 					allowMultiple="true",
@@ -371,7 +500,7 @@ use Swagger\Annotations as SWG;
  * 				),
  * 				@SWG\Parameter(
  * 					name="limit",
- * 					description="The number of items per batch (page)",
+ * 					description="Limit the number of results",
  * 					paramType="query",
  * 					required="false",
  * 					allowMultiple="false",
@@ -393,7 +522,7 @@ use Swagger\Annotations as SWG;
  * )
  *
  * @SWG\Api(
- * 	path="/api/v1/Search/CrossWiki?expand=1",
+ * 	path="/Search/CrossWiki?expand=1",
  * 	description="Get results for cross-wiki search for submitted query. As a result you get a list of Wikis expanded with detailed data",
  * 	@SWG\Operations(
  * 		@SWG\Operation(
@@ -407,7 +536,7 @@ use Swagger\Annotations as SWG;
  * 			@SWG\Parameters(
  * 				@SWG\Parameter(
  * 					name="query",
- * 					description="The query to use for the search",
+ * 					description="Search query",
  * 					paramType="query",
  * 					required="true",
  * 					allowMultiple="false",
@@ -417,7 +546,7 @@ use Swagger\Annotations as SWG;
  * 				@SWG\Parameter(
  * 					name="hub",
  * 					paramType="query",
- * 					description="The name of the hub (Gaming, Entertainment, Lifestyle). Separate by comma if more than one provided",
+ * 					description="Comma-separated list of verticals (e.g. Gaming, Entertainment, Lifestyle)",
  * 					required="false",
  * 					allowMultiple="true",
  * 					dataType="string",
@@ -425,7 +554,7 @@ use Swagger\Annotations as SWG;
  * 				),
  * 				@SWG\Parameter(
  * 					name="lang",
- * 					description="The two chars wiki language code, (eg.: en, de, fr, all (for any language)). Can handles multiple values, on default will use current wikia content language.",
+ * 					description="Comma separated language codes (e.g. en,de,fr)",
  * 					paramType="query",
  * 					required="false",
  * 					allowMultiple="true",
@@ -444,7 +573,7 @@ use Swagger\Annotations as SWG;
  * 				),
  * 				@SWG\Parameter(
  * 					name="limit",
- * 					description="The number of items per batch (page)",
+ * 					description="Limit the number of results",
  * 					paramType="query",
  * 					required="false",
  * 					allowMultiple="false",
@@ -462,7 +591,7 @@ use Swagger\Annotations as SWG;
  * 				),
  * 				@SWG\Parameter(
  * 					name="height",
- * 					description="Thumbnail height in pixels",
+ * 					description="The desired height for the thumbnail",
  * 					paramType="query",
  * 					required="false",
  * 					allowMultiple="false",
@@ -470,7 +599,7 @@ use Swagger\Annotations as SWG;
  * 				),
  * 				@SWG\Parameter(
  * 					name="width",
- * 					description="Thumbnail width in pixels",
+ * 					description="The desired width for the thumbnail",
  * 					paramType="query",
  * 					required="false",
  * 					allowMultiple="false",
@@ -483,6 +612,80 @@ use Swagger\Annotations as SWG;
  * 					required="false",
  * 					allowMultiple="false",
  * 					dataType="int"
+ * 				)
+ * 			)
+ * 		)
+ * 	)
+ * )
+ *
+ *  @SWG\Api(
+ * 	path="/Search/Combined",
+ * 	description="Get results for combined wiki and cross-wiki search ",
+ * 	@SWG\Operations(
+ * 		@SWG\Operation(
+ * 			httpMethod="get",
+ * 			summary="Get results for combined (wiki and cross-wiki) search",
+ * 			nickname="getCombined",
+ * 			responseClass="CombinedSearchResultSet",
+ * 			@SWG\ErrorResponses(
+ * 				@SWG\ErrorResponse( code="400", reason="Query parameter is missing" )
+ * 			),
+ * 			@SWG\Parameters(
+ * 				@SWG\Parameter(
+ * 					name="query",
+ * 					description="Search query",
+ * 					paramType="query",
+ * 					required="true",
+ * 					allowMultiple="false",
+ * 					dataType="string",
+ * 					defaultValue=""
+ * 				),
+ * 				@SWG\Parameter(
+ * 					name="langs",
+ * 					description="Comma separated language codes (e.g. en,de,fr)",
+ * 					paramType="query",
+ * 					required="false",
+ * 					allowMultiple="true",
+ * 					dataType="string",
+ * 					defaultValue="en"
+ * 				),
+ * 				@SWG\Parameter(
+ * 					name="hubs",
+ * 					description="Comma-separated list of verticals (e.g. Gaming, Entertainment, Lifestyle)",
+ * 					paramType="query",
+ * 					required="false",
+ * 					allowMultiple="false",
+ * 					dataType="int",
+ * 					defaultValue=""
+ * 				),
+ * 				@SWG\Parameter(
+ * 					name="namespaces",
+ * 					description="Comma-separated namespace ids, see more: http://community.wikia.com/wiki/Help:Namespaces",
+ * 					paramType="query",
+ * 					required="false",
+ * 					allowMultiple="false",
+ * 					dataType="string",
+ * 					defaultValue="0,14"
+ * 				),
+ * 				@SWG\Parameter(
+ * 					name="limit",
+ * 					description="Will limit number of articles returned to given number",
+ * 					paramType="query",
+ * 					required="false",
+ * 					allowMultiple="false",
+ * 					dataType="int",
+ * 					defaultValue="6",
+ * 					@SWG\AllowableValues(valueType="RANGE",min="0", max="15")
+ * 				),
+ * 				@SWG\Parameter(
+ * 					name="minArticleQuality",
+ * 					description="Minimal value of article quality. Ranges from 0 to 99",
+ * 					paramType="query",
+ * 					required="false",
+ * 					allowMultiple="false",
+ * 					dataType="int",
+ * 					defaultValue="80",
+ * 					@SWG\AllowableValues(valueType="RANGE",min="0", max="99")
  * 				)
  * 			)
  * 		)

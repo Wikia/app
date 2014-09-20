@@ -1,8 +1,8 @@
-@import "color";
+@import "skins/shared/color";
 @import "layout";
-@import "../mixins/box-shadow";
-@import "../mixins/clearfix";
-@import "../mixins/gradient";
+@import "skins/shared/mixins/box-shadow";
+@import "skins/shared/mixins/clearfix";
+@import "skins/shared/mixins/gradient";
 
 .WikiaHeader {
 	@include box-shadow(0, 0, 10px, $color-page-shadow);
@@ -169,7 +169,7 @@
 		}
 	}
 
-	/* Global Header vertical-specific colors */
+	// Global Header vertical-specific colors
 	&.vertical-colors {
 		.video-games-vertical-color .subnav a {
 			color: $color-wikiahome-videogames;

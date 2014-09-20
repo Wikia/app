@@ -17,6 +17,8 @@ class DataMartService extends Service {
 	const PERIOD_ID_ROLLING_7DAYS = 1007; // every day
 	const PERIOD_ID_ROLLING_28DAYS = 1028; // every day
 	const PERIOD_ID_ROLLING_24HOURS = 10024; // every 15 minutes
+	const CACHE_TOP_ARTICLES = 86400;
+	const LOCK_TOP_ARTICLES = 10;
 
 	/**
 	 * get pageviews
@@ -353,6 +355,7 @@ class DataMartService extends Service {
 		wfProfileIn(__METHOD__);
 
 		if ( empty($userIds) ) {
+			wfProfileOut(__METHOD__);
 			return false;
 		}
 
@@ -425,6 +428,53 @@ class DataMartService extends Service {
 		return $edits;
 	}
 
+	public static function findLastRollupsDate( $period_id, $numTry = 5 ){
+		$app = F::app();
+		$db = wfGetDB( DB_SLAVE, array(), $app->wg->DatamartDB );
+		//compensation for NOW
+		$date = date( 'Y-m-d' ) . ' 00:00:01';
+		do {
+			$date = ( new WikiaSQL() )->skipIf( empty( $app->wg->StatsDBEnabled ) )
+				->SELECT( 'max(time_id) as t' )
+				->FROM( 'rollup_wiki_article_pageviews' )
+				->WHERE( 'time_id' )->LESS_THAN( $date )
+				->LIMIT( 1 )
+				->cache( self::CACHE_TOP_ARTICLES )
+				->run( $db, function ( $result ) {
+					$row = $result->fetchObject( $result );
+
+					if ( $row && isset( $row->t ) ) {
+						return $row->t;
+					}
+
+					return null;
+				} );
+			if(!$date){
+				break;
+			}
+
+			$found =  ( new WikiaSQL() )->skipIf( empty( $app->wg->StatsDBEnabled ) )
+				->SELECT( '1 as c' )
+				->FROM( 'rollup_wiki_article_pageviews' )
+				->WHERE( 'time_id' )->EQUAL_TO( $date )
+				->AND_( 'period_id' )->EQUAL_TO( $period_id )
+				->LIMIT( 1 )
+				->cache( self::CACHE_TOP_ARTICLES )
+				->run( $db, function ( $result ) {
+					$row = $result->fetchObject( $result );
+
+					if ( $row && isset( $row->c ) ) {
+						return $row->c;
+					}
+
+					return null;
+				} );
+
+			$numTry --;
+		} while ( !$found &&  $numTry > 0);
+		return $date;
+	}
+
 	/**
 	 * Gets the list of top articles for a wiki on a weekly pageviews basis
 	 *
@@ -436,7 +486,13 @@ class DataMartService extends Service {
 	 *
 	 * @return Array The list, the key contains article ID's and each item as a "namespace_id" and "pageviews" key
 	 */
-	public static function getTopArticlesByPageview( $wikiId, Array $articleIds = null, Array $namespaces = null, $excludeNamespaces = false, $limit = 200 ) {
+	public static function getTopArticlesByPageview( $wikiId,
+	                                                 Array $articleIds = null,
+	                                                 Array $namespaces = null,
+	                                                 $excludeNamespaces = false,
+	                                                 $limit = 200,
+	                                                 $rollupDate = null
+	) {
 		$app = F::app();
 		wfProfileIn( __METHOD__ );
 
@@ -464,10 +520,11 @@ class DataMartService extends Service {
 			$wikiId,
 			$limitUsed,
 			( $keyToken !== '' ) ? md5( $keyToken ) : null,
-			$excludeNamespaces
+			$excludeNamespaces,
+			$rollupDate ? $rollupDate : 'current'
 		);
 
-		$getData = function() use ( $app, $wikiId, $namespaces, $excludeNamespaces, $articleIds, $limitUsed ) {
+		$getData = function() use ( $app, $wikiId, $namespaces, $excludeNamespaces, $articleIds, $limitUsed, $rollupDate ) {
 			wfProfileIn( __CLASS__ . '::TopArticlesQuery' );
 
 			/*
@@ -479,13 +536,13 @@ class DataMartService extends Service {
 
 			$db = wfGetDB( DB_SLAVE, array(), $app->wg->DatamartDB );
 			$sql = (new WikiaSQL())->skipIf(empty($app->wg->StatsDBEnabled))
-				->SELECT('namespace_id', 'article_id')
-					->SUM('pageviews')->AS_('pv')
+				->SELECT('namespace_id', 'article_id', 'pageviews as pv')
 				->FROM('rollup_wiki_article_pageviews')
-				->WHERE('time_id')->EQUAL_TO(sql::RAW('CURDATE() - INTERVAL DAYOFWEEK(CURDATE()) - 1 DAY'))
+				->WHERE('time_id')->EQUAL_TO(
+						$rollupDate ? $rollupDate : sql::RAW('CURDATE() - INTERVAL DAYOFWEEK(CURDATE()) - 1 DAY')
+					)
 					->AND_('period_id')->EQUAL_TO(DataMartService::PERIOD_ID_WEEKLY)
 					->AND_('wiki_id')->EQUAL_TO($wikiId)
-				->GROUP_BY('namespace_id', 'article_id')
 				->ORDER_BY(['pv', 'desc'])
 				->LIMIT($limitUsed);
 
@@ -522,7 +579,14 @@ class DataMartService extends Service {
 			return $topArticles;
 		};
 
-		$topArticles = WikiaDataAccess::cacheWithLock( $memKey, 86400 /* 24 hours */, $getData );
+		$topArticles = WikiaDataAccess::cacheWithLock(
+			$memKey,
+			self::CACHE_TOP_ARTICLES,
+			$getData,
+			WikiaDataAccess::USE_CACHE,
+			self::LOCK_TOP_ARTICLES
+		);
+
 		$topArticles = array_slice( $topArticles, 0, $limit, true );
 		wfProfileOut( __METHOD__ );
 		return $topArticles;

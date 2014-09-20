@@ -303,19 +303,39 @@ Le resto del pagina essera executate solmente a fin que tu pote vider facilement
 
 /** Indonesian (Bahasa Indonesia)
  * @author C5st4wr6ch
+ * @author Riemogerz
  */
 $messages['id'] = array(
+	'batchuserrights' => 'Hak-hak pengguna',
 	'batchuserrights-desc' => 'Memperbolehkan menambahkan satu atau beberapa pengguna ke grup dalam satu tindakan',
+	'batchuserrights-names' => 'Nama pengguna untuk menambahkan dalam grup ini (satu per baris):',
 	'batchuserrights-intro' => 'Halaman ini mengizinkan Anda menambahkan sebuah grup ke banyak pengguna sekaligus.
 Untuk alasan keamanan, daftar grup yang dapat ditambahkan diatur dalam pengaturan ekstensi dan tidak dapat diubah dari dalam wiki.
 Silakan minta ke seorang pengurus sistem jika Anda butuh mengizinkan penambahan-massal dari grup-grup lain.',
+	'batchuserrights-single-progress-update' => 'Ditambahkan  {{PLURAL:$1|grup|grup}} untuk <strong> $2 </strong>.',
+	'batchuserrights-add-groups' => 'Menambahkan {{PLURAL:$1|satu pengguna|$1 pengguna}} ke {{PLURAL:$2|kelompok|kelompok-kelompok}} berikut: <strong>$3</strong>.',
+	'batchuserrights-userload-error' => "Tidak bisa memuat pengguna \"'''\$1'''\".",
+);
+
+/** Italian (italiano)
+ * @author PeppeAeco
+ */
+$messages['it'] = array(
+	'batchuserrights-userload-error' => "mpossibile caricare l'utente \"'''\$1'''\".",
+);
+
+/** Japanese (日本語)
+ * @author Barrel0116
+ */
+$messages['ja'] = array(
+	'batchuserrights' => '利用者の権限を一括処理',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */
 $messages['lb'] = array(
-	'batchuserrights' => 'Benotzerrechter automatiséieren',
+	'batchuserrights' => 'Masse-Benotzerrechter',
 	'batchuserrights-desc' => 'Erlaabt et een oder méi Benotzer an enger Aktioun an e Grupp derbäizesetzen',
 	'batchuserrights-names' => 'Benotzernimm fir an dëse Grupp derbäizesetzen (e pro Linn):',
 	'batchuserrights-userload-error' => "De Benotzer \"'''\$1'''\" konnt net geluede ginn.",
@@ -563,6 +583,21 @@ Var god be en systemadministratör om du behöver tillåta gruppaddering av andr
 	'batchuserrights-no-groups' => 'Du valde inte några grupper.
 Detta kommer inte att uppnå någonting.
 Resten av sidan kommer att tillåtas att köras bara så att du lätt kan se om några av användarnamnen inte kunde läsas in.',
+);
+
+/** Telugu (తెలుగు)
+ * @author Chaduvari
+ */
+$messages['te'] = array(
+	'batchuserrights' => 'వాడుకరి హక్కుల సముదాయం',
+	'batchuserrights-desc' => 'ఒకే చర్యతో ఒకటి లేదా అంతకంటే ఎక్కువ వాడుకరులను ఓ గుంపులో చేర్చడాన్ని అనుమతించు',
+	'batchuserrights-names' => 'ఈ గుంపు చేర్చాల్సిన వాడుకరులు (వరుసకొకటి):',
+	'batchuserrights-single-progress-update' => '<strong>$2</strong> కు {{PLURAL:$1|గుంపును|గుంపులను}} చేర్చాం.',
+	'batchuserrights-add-groups' => '{{PLURAL:$1|ఒక వాడురిని|$1 వాడుకరులను}} కింది {{PLURAL:$2|గుంపులోకి|గుంపుల్లోకి}} చేరుస్తున్నాం: <strong>$3</strong>.',
+	'batchuserrights-userload-error' => "వాడుకరి \"'''\$1'''\" ని లోడు చెయ్యలేకపోయాం.",
+	'batchuserrights-no-groups' => 'మీరు గుంపులు వేటిన ఎంచుకోలేదు.
+ఇప్పుడు పనేమీ జరగదు.
+పేజీలోని మిగిలిన భాగాన్ని నడవనిస్తాం - కానీ కేవలం వాడకరిపేర్లు ఏమైనా లోడు కావడం లేదేమో తెలుసుకునేందుకు మాత్రమే.',
 );
 
 /** Tagalog (Tagalog)

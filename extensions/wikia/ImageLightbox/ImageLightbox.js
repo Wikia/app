@@ -1,4 +1,3 @@
-/* global RelatedVideos */
 var ImageLightbox = {
 	// store element which was clicked to trigger lightbox - custom event will be fired when lightbox will be shown
 	target: false,
@@ -37,12 +36,6 @@ var ImageLightbox = {
 				self.onClick.call(self, ev);
 			});
 
-        // also bind to right rail RelatedVideos module
-        $('#RelatedVideosRL').
-            unbind('.lightbox').
-            bind('click.lightbox', function(ev) {
-                self.onClick.call(self, ev);
-            });
 	},
 
 	// get caption html for given target node
@@ -211,33 +204,6 @@ var ImageLightbox = {
 
 			// don't follow href
 			ev.preventDefault();
-
-			// click tracking
-			var eventValue = 0;
-			// Related Videos module - Not used in hubs because $('.RelatedVideosModule') doesn't exist
-			var rvModule = target.closest('.RelatedVideosModule');
-			if (rvModule && rvModule.length) {
-				var localItem = target.closest('.item');
-				var localGroup = localItem.closest('.group');
-				var container = localGroup.closest('.container');
-				var allGroups = container.children();
-				var localAllItems = localGroup.children();
-				var localItemIndex = localAllItems.index(localItem);
-				var localGroupIndex = allGroups.index(localGroup);
-				var clickedIndex = (localGroupIndex * RelatedVideos.videosPerPage) + localItemIndex;
-				eventValue = clickedIndex+1;	// tracked values must be one-indexed
-
-				Wikia.Tracker.track({
-					action: Wikia.Tracker.ACTIONS.PLAY_VIDEO,
-					browserEvent: ev,
-					category: RelatedVideos.gaCat,
-					label: (target.hasClass('video') ? 'thumbnail' : 'title'),
-					trackingMethod: 'both',
-					value: eventValue,
-					video_title: imageName
-				});
-			}
-
 		}
 	},
 

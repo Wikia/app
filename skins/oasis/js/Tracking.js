@@ -18,6 +18,9 @@ jQuery(function($){
 	});
 
 	var trackWithEventData = function(e) {
+		if ( window.veTrack && e.data.label === 'section-edit' ) {
+			veTrack( { action: ( $( '#ca-ve-edit' ).exists() ? 've-section-edit' : 'other-section-edit' ) + '-click' } );
+		}
 
 		// Primary mouse button only
 		if (e.type === 'mousedown' && e.which !== 1) {
@@ -69,6 +72,15 @@ jQuery(function($){
 				return;
 			}
 
+			if ( window.veTrack ) {
+				if ( id === 'edit' ) {
+					veTrack( { action: 'other-edit-click' } );
+				}
+				if ( id === 've-edit' ) {
+					veTrack( { action: 've-edit-click' } );
+				}
+			}
+
 			switch(id) {
 				case 'comment': {
 					label = el.hasClass('talk') ? 'talk' : 'comment';
@@ -109,6 +121,8 @@ jQuery(function($){
 				label = 'video';
 			} else if (el.hasClass('image')) {
 				label = 'image';
+			} else if (el.parents('.infobox, .wikia-infobox').length > 0) {
+				label = 'infobox';
 			} else if (el.hasClass('external')) {
 				label = 'link-external';
 			} else if (el.hasClass('wikia-photogallery-add')) {
@@ -152,6 +166,45 @@ jQuery(function($){
 			category: category,
 			label: 'category-item'
 		}, trackWithEventData);
+	})();
+
+	/** Alliance Template **/
+	(function() {
+		var alliance = $('.alliance-module', $wikiaArticle),
+			category = 'Alliance',
+			label,
+			suffix;
+		if (alliance.length) {
+			alliance.on('mousedown', 'a', function(e){
+				suffix = '-click';
+				if ($(this).attr('href').indexOf('http://www.wikia.com/Alliance') !== -1) {
+					suffix = '-logo-click';
+				}
+				label = $(e.delegateTarget).attr('data-label');
+
+				if (label !== undefined) {
+					label += suffix;
+					track({
+						category: category,
+						label: label
+					});
+				}
+			});
+
+			alliance.each(function(){
+				suffix = '-impression';
+				label = $(this).attr('data-label');
+
+				if (label !== undefined) {
+					label += suffix;
+					track({
+						action: Wikia.Tracker.ACTIONS.IMPRESSION,
+						category: category,
+						label: label
+					});
+				}
+			});
+		}
 	})();
 
 	/** contribute **/
@@ -708,13 +761,6 @@ jQuery(function($){
 				});
 			}
 		});
-
-		/** related-videos-module **/
-
-		$wikiaRail.find('.RelatedVideosModule').on('mousedown', 'a', {
-			category: 'related-videos-module',
-			label: 'video-thumbnail'
-		}, trackWithEventData);
 	}
 
 	// Exports

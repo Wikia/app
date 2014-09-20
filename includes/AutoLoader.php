@@ -380,8 +380,6 @@ $wgAutoloadLocalClasses = array(
 	'FileDependency' => 'includes/cache/CacheDependency.php',
 	'GenderCache' => 'includes/cache/GenderCache.php',
 	'GlobalDependency' => 'includes/cache/CacheDependency.php',
-	'HTMLCacheUpdate' => 'includes/cache/HTMLCacheUpdate.php',
-	'HTMLCacheUpdateJob' => 'includes/cache/HTMLCacheUpdate.php',
 	'HTMLFileCache' => 'includes/cache/HTMLFileCache.php',
 	'LinkBatch' => 'includes/cache/LinkBatch.php',
 	'LinkCache' => 'includes/cache/LinkCache.php',
@@ -564,12 +562,7 @@ $wgAutoloadLocalClasses = array(
 
 	# includes/job
 	'DoubleRedirectJob' => 'includes/job/DoubleRedirectJob.php',
-	'EmaillingJob' => 'includes/job/EmaillingJob.php',
-	'EnotifNotifyJob' => 'includes/job/EnotifNotifyJob.php',
 	'Job' => 'includes/job/JobQueue.php',
-	'RefreshLinksJob' => 'includes/job/RefreshLinksJob.php',
-	'RefreshLinksJob2' => 'includes/job/RefreshLinksJob.php',
-	'UploadFromUrlJob' => 'includes/job/UploadFromUrlJob.php',
 
 	# includes/json
 	'FormatJson' => 'includes/json/FormatJson.php',
@@ -730,6 +723,10 @@ $wgAutoloadLocalClasses = array(
 	'ResourceLoaderUserModule' => 'includes/resourceloader/ResourceLoaderUserModule.php',
 	'ResourceLoaderUserOptionsModule' => 'includes/resourceloader/ResourceLoaderUserOptionsModule.php',
 	'ResourceLoaderUserTokensModule' => 'includes/resourceloader/ResourceLoaderUserTokensModule.php',
+	'ResourceLoaderLanguageDataModule' =>
+		'includes/resourceloader/ResourceLoaderLanguageDataModule.php',
+	'ResourceLoaderLanguageNamesModule' =>
+		'includes/resourceloader/ResourceLoaderLanguageNamesModule.php',
 	'ResourceLoaderWikiModule' => 'includes/resourceloader/ResourceLoaderWikiModule.php',
 
 	# includes/revisiondelete

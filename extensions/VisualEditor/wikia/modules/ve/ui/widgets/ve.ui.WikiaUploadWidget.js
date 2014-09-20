@@ -15,14 +15,14 @@ ve.ui.WikiaUploadWidget = function VeUiWikiaUploadWidget( config ) {
 	var uploadButtonConfig;
 
 	// Parent constructor
-	OO.ui.Widget.call( this, config );
+	ve.ui.WikiaUploadWidget.super.call( this, config );
 
 	uploadButtonConfig = {
 		'$': this.$,
 		'label': ve.msg( 'wikia-visualeditor-dialog-wikiamediainsert-upload-button' ),
 		'flags': ['constructive']
 	};
-	if ( !config.hideIcon ) {
+	if ( config.icon ) {
 		uploadButtonConfig.icon = 'upload-small';
 	}
 
@@ -33,7 +33,7 @@ ve.ui.WikiaUploadWidget = function VeUiWikiaUploadWidget( config ) {
 	this.$uploadLabel = this.$( '<span>' )
 		.text( ve.msg( 'wikia-visualeditor-dialog-wikiamediainsert-upload-label' ) );
 
-	this.uploadButton = new OO.ui.PushButtonWidget( uploadButtonConfig );
+	this.uploadButton = new OO.ui.ButtonWidget( uploadButtonConfig );
 
 	this.$form = this.$( '<form>' );
 	this.$file = this.$( '<input>' ).attr( {
@@ -132,7 +132,7 @@ ve.ui.WikiaUploadWidget.prototype.onFileChange = function ( event, file ) {
 			// show filetype message first if multiple errors exist
 			ve.msg(
 				'wikia-visualeditor-dialog-wikiamediainsert-upload-error-' + fileErrors[ fileErrors.length - 1 ][ 0 ],
-				 fileErrors[ fileErrors.length - 1 ][ 1 ]
+				fileErrors[ fileErrors.length - 1 ][ 1 ]
 			),
 			'error',
 			$( '.ve-ui-frame' ).contents().find( '.ve-ui-window-body' )
@@ -187,7 +187,6 @@ ve.ui.WikiaUploadWidget.prototype.onUploadError = function () {
 	this.hideUploadAnimation();
 	window.alert( ve.msg( 'wikia-visualeditor-dialog-wikiamediainsert-upload-error' ) );
 };
-
 
 /*
  * Shows upload animation

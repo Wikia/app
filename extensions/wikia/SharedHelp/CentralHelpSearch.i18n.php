@@ -69,6 +69,13 @@ $messages['de'] = array(
 	'centralhelpsearch-placeholder' => 'Durchsuche die Hilfe...',
 );
 
+/** Greek (Ελληνικά)
+ * @author Glavkos
+ */
+$messages['el'] = array(
+	'centralhelpsearch-placeholder' => 'Αναζήτηση στη Βοήθεια...',
+);
+
 /** Spanish (español)
  * @author VegaDark
  */
@@ -140,6 +147,20 @@ $messages['id'] = array(
 $messages['it'] = array(
 	'centralhelpsearch-desc' => "Permetti l'inclusione di un form per cercare su Community Central Help",
 	'centralhelpsearch-placeholder' => 'Cerca aiuto&hellip;',
+);
+
+/** Kannada (ಕನ್ನಡ)
+ * @author VASANTH S.N.
+ */
+$messages['kn'] = array(
+	'centralhelpsearch-placeholder' => 'ಸಹಾಯವನ್ನು ಹುಡುಕಿ...',
+);
+
+/** Korean (한국어)
+ * @author 관인생략
+ */
+$messages['ko'] = array(
+	'centralhelpsearch-placeholder' => '검색 도움말...',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
@@ -259,6 +280,13 @@ $messages['ru'] = array(
 $messages['sv'] = array(
 	'centralhelpsearch-desc' => 'Låter införandet av ett formulär för att söka i Community Central Help',
 	'centralhelpsearch-placeholder' => 'Sök hjälp&hellip;',
+);
+
+/** Telugu (తెలుగు)
+ * @author Chaduvari
+ */
+$messages['te'] = array(
+	'centralhelpsearch-placeholder' => 'వెతుకులాట సహాయం...',
 );
 
 /** Tagalog (Tagalog)

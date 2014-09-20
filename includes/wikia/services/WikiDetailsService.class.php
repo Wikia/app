@@ -125,8 +125,8 @@ class WikiDetailsService extends WikiService {
 			$f = GlobalFile::newFromText( $imageName, $cityList[ $lang ][ 'wikiId' ] );
 		} else {
 			//if image wasn't found, try to find it on wiki itself
-			$imageName = UploadVisualizationImageFromFile::VISUALIZATION_MAIN_IMAGE_NAME;
-			$f = GlobalFile::newFromText( $imageName, $wikiId );
+			$promoImage = (new PromoImage(PromoImage::MAIN))->setCityId($wikiId);
+			$f = $promoImage->getOriginFile();
 		}
 
 		return $f;

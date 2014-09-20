@@ -543,6 +543,15 @@ $messages['ja'] = array(
 	'right-multilookup' => '複数ウィキにおけるユーザの情報を閲覧',
 );
 
+/** Kannada (ಕನ್ನಡ)
+ * @author VASANTH S.N.
+ */
+$messages['kn'] = array(
+	'multilookupgo' => 'ಹೋಗು',
+	'multilookupnext' => 'ನಂತರ',
+	'multilookupwiki' => 'ವಿಕಿ',
+);
+
 /** Kurdish (Latin script) (Kurdî (latînî)‎)
  * @author George Animal
  */
@@ -1056,6 +1065,14 @@ $messages['tly'] = array(
 	'multilookupwikioptions' => 'Кукон',
 );
 
+/** Turkish (Türkçe)
+ * @author Sucsuzz
+ */
+$messages['tr'] = array(
+	'multilookupwiki' => 'Viki',
+	'multilookupwikiurl' => 'URL',
+);
+
 /** Tatar (Cyrillic script) (татарча)
  * @author Ajdar
  */
@@ -1122,6 +1139,8 @@ $messages['yi'] = array(
 /** Simplified Chinese (中文（简体）‎)
  * @author Hydra
  * @author Hzy980512
+ * @author Liuxinyu970226
+ * @author Mywood
  * @author Yfdyh000
  */
 $messages['zh-hans'] = array(
@@ -1129,7 +1148,7 @@ $messages['zh-hans'] = array(
 	'multilookup' => '查询多个',
 	'multilookupstitle' => '查询多个',
 	'multilookupselectuser' => '搜索多个wiki上的同一IP地址的账户',
-	'multilookupgo' => '去',
+	'multilookupgo' => '提交',
 	'multilookupnotspecify' => '您尚未指定IP地址。',
 	'multilookupnext' => '下一步',
 	'multilookupprevious' => '前一步',
@@ -1139,6 +1158,7 @@ $messages['zh-hans'] = array(
 	'multilookupwiki' => '维基',
 	'multilookuplink' => '贡献链接',
 	'multilookupdetails' => '查看资讯',
+	'multilookuplistwikiainfo' => '由来自IP地址<b>$1</b>的用户编辑页面的wiki列表',
 	'multilookupinvaliduser' => '<p class="error">IP地址“<b>$1</b>”不存在。请检查IP地址是否存在错误。</p>',
 	'multilookuplastedit' => '最后来自此IP地址的编辑：',
 	'multilookupwikidbname' => '数据库名称',

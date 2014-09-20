@@ -26,11 +26,11 @@ class IgnFeedIngester extends VideoFeedIngester {
 
 		$url = $this->initFeedUrl( $startDate, $endDate );
 
-		print("Connecting to $url...\n");
+		print( "Connecting to $url...\n" );
 
 		$content = $this->getUrlContent( $url );
 		if ( !$content ) {
-			print( "ERROR: problem downloading content!\n" );
+			$this->videoErrors( "ERROR: problem downloading content.\n" );
 			wfProfileOut( __METHOD__ );
 			return 0;
 		}
@@ -46,7 +46,7 @@ class IgnFeedIngester extends VideoFeedIngester {
 	 * @param array $params - A list of additional parameters that affect import
 	 * @return int - Returns the number of video created
 	 */
-	public function import( $content='', $params=array() ) {
+	public function import( $content = '', $params = array() ) {
 		wfProfileIn( __METHOD__ );
 
 		$debug = !empty( $params['debug'] );
@@ -54,14 +54,14 @@ class IgnFeedIngester extends VideoFeedIngester {
 
 		$articlesCreated = 0;
 
-		$content = json_decode( $content, true );
-		if ( empty( $content ) ) {
-			$content = array();
+		$videos = json_decode( $content, true );
+		if ( empty( $videos ) ) {
+			$videos = [];
 		}
 
-		$i = 0;
-		foreach ( $content as $video ) {
-			$i++;
+		$this->videoFound( count( $videos ) );
+
+		foreach ( $videos as $video ) {
 			$addlCategories = empty( $params['addlCategories'] ) ? array() : $params['addlCategories'];
 
 			if ( $debug ) {
@@ -75,6 +75,7 @@ class IgnFeedIngester extends VideoFeedIngester {
 
 			// If array is not empty - use only videos that exists in $this->filterByProviderVideoId array
 			if ( count( $this->filterByProviderVideoId ) > 0 && !in_array( $video['videoId'], $this->filterByProviderVideoId ) ) {
+				$this->videoSkipped();
 				continue;
 			}
 
@@ -131,7 +132,6 @@ class IgnFeedIngester extends VideoFeedIngester {
 				print "ERROR: $msg\n";
 			}
 		}
-		echo "Feed size: $i\n";
 
 		wfProfileOut( __METHOD__ );
 

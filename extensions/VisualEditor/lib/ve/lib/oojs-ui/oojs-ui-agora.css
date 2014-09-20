@@ -1,0 +1,136 @@
+.oo-ui-dialog-content .oo-ui-window-closeButton {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.oo-ui-dialog-content .oo-ui-window-icon {
+  margin-left: 3.35em;
+}
+
+.oo-ui-dialog-content .oo-ui-window-body {
+  position: absolute;
+  top: 3.35em;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  overflow-y: auto;
+}
+
+.oo-ui-dialog-content .oo-ui-window-foot {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 3.35em;
+}
+
+.oo-ui-dialog-content .oo-ui-window-foot .oo-ui-buttonedElement-button {
+  height: 100%;
+}
+
+.oo-ui-dialog-content .oo-ui-window-foot .oo-ui-buttonedElement-button .oo-ui-labeledElement-label {
+  display: inline-block;
+  width: 0;
+  text-indent: -9999px;
+}
+
+.oo-ui-dialog-medium .oo-ui-window-frame {
+  top: 0;
+  bottom: 0;
+  background-color: white;
+}
+
+.oo-ui-window-head {
+  height: 3.35em;
+  border-bottom: 1px solid #dddddd;
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+.oo-ui-window-body {
+  padding: 2em 3.35em;
+}
+
+.oo-ui-window-icon {
+  width: 3.35em;
+  height: 3.35em;
+  background-size: 2em auto;
+  border-left: 1px solid #dddddd;
+}
+
+.oo-ui-window-title {
+  line-height: 3.35em;
+}
+
+.oo-ui-buttonedElement.oo-ui-indicatedElement .oo-ui-buttonedElement-button > .oo-ui-indicatedElement-indicator,
+.oo-ui-buttonedElement.oo-ui-iconedElement .oo-ui-buttonedElement-button > .oo-ui-iconedElement-icon {
+  width: 3.35em;
+  height: 3.35em;
+  background-size: 2em auto;
+}
+
+.oo-ui-bookletLayout-stackLayout .oo-ui-panelLayout {
+  padding: 0 0 1em;
+}
+
+.oo-ui-optionWidget {
+  padding: 0.8em 1em 0.8em 3.35em;
+  font-weight: bold;
+  border-bottom: 1px solid #dddddd;
+}
+
+.oo-ui-optionWidget.oo-ui-indicatedElement .oo-ui-labeledElement-label {
+  padding-right: 1.5em;
+}
+
+.oo-ui-optionWidget-level-0 {
+  padding-left: 3.5em;
+}
+
+.oo-ui-optionWidget-level-0 .oo-ui-iconedElement-icon {
+  left: 1em;
+}
+
+.oo-ui-optionWidget-level-1 {
+  padding-left: 5em;
+}
+
+.oo-ui-optionWidget-level-1 .oo-ui-iconedElement-icon {
+  left: 2.5em;
+}
+
+.oo-ui-optionWidget-level-2 {
+  padding-left: 6.5em;
+}
+
+.oo-ui-optionWidget-level-2 .oo-ui-iconedElement-icon {
+  left: 4em;
+}
+
+.oo-ui-buttonOptionWidget {
+  padding: 0;
+}
+
+.oo-ui-menuItemWidget.oo-ui-optionWidget-selected {
+  color: #ffffff;
+  background: #347bff;
+}
+
+.oo-ui-menuSectionItemWidget {
+  font-weight: normal;
+  color: #777777;
+  border: none;
+}
+
+.oo-ui-textInputWidget input,
+.oo-ui-textInputWidget textarea {
+  padding: .8em 1em;
+}
+
+/* Icons */
+
+.oo-ui-icon-check {
+  background: #347bff;
+  background-image: /* @embed */ url(themes/agora/images/icons/check.svg);
+}

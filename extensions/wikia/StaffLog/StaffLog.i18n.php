@@ -95,14 +95,17 @@ $messages['az'] = array(
 );
 
 /** Breton (brezhoneg)
+ * @author Fohanno
  * @author Y-M D
  */
 $messages['br'] = array(
+	'stafflog' => 'StaffLog',
 	'stafflog-filter-label' => 'Sil',
 	'stafflog-filter-user' => 'Implijer :',
 	'stafflog-filter-type' => 'Seurt :',
 	'stafflog-filter-apply' => 'Arloañ ar sil',
 	'stafflog-filter-type-block' => 'Stankadennoù',
+	'stafflog-filter-type-wikifactory' => 'Statud ar wiki',
 );
 
 /** Bosnian (bosanski)
@@ -328,6 +331,16 @@ $messages['id'] = array(
 	'stafflog-piggybackloginmsg' => '$1 mendukung - pengguna $2 login sebagai $3',
 	'stafflog-piggybacklogoutmsg' => '$1 mendukung - pengguna $2 logout akun $3',
 	'right-stafflog' => 'Dapat melihat stafflog',
+);
+
+/** Kannada (ಕನ್ನಡ)
+ * @author VASANTH S.N.
+ */
+$messages['kn'] = array(
+	'stafflog-filter-label' => 'ಶೋಧಕ',
+	'stafflog-filter-user' => 'ಬಳಕೆದಾರ:',
+	'stafflog-filter-type' => 'ನಮೂನೆ:',
+	'stafflog-filter-type-renameuser' => 'ಬಳಕೆದಾರ ಹೆಸರುಗಳು',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
@@ -699,18 +712,32 @@ $messages['vi'] = array(
 
 /** Simplified Chinese (中文（简体）‎)
  * @author Dimension
+ * @author Liuxinyu970226
  * @author StephDC
  * @author Yfdyh000
  */
 $messages['zh-hans'] = array(
+	'stafflog-desc' => '用于工作人员的集中登录',
+	'stafflog' => '工作人员日志',
 	'stafflog-blockmsg' => '$1 $2 试图封禁在维基系统 $4 上面的员工用户 $3，理由为 $5',
+	'stafflog-piggybackloginmsg' => '$1搭载——用户$2作为$3登录',
+	'stafflog-piggybacklogoutmsg' => '$1搭载——用户$2从账户$3退出',
 	'right-stafflog' => '可以查看stafflog',
 	'stafflog-wiki-status-change' => '$1 更改 $2 的状态到 $3。理由：$4',
 	'stafflog-filter-label' => '过滤器',
 	'stafflog-filter-user' => '用户：',
 	'stafflog-filter-type' => '类型：',
 	'stafflog-filter-apply' => '应用过滤器',
+	'stafflog-filter-type-block' => '封禁',
+	'stafflog-filter-type-piggyback' => '搭载',
 	'stafflog-filter-type-renameuser' => '重命名用户',
 	'stafflog-filter-type-wikifactory' => 'Wiki状态',
 	'action-stafflog' => '查看集中式的员工日志',
+);
+
+/** Traditional Chinese (中文（繁體）‎)
+ * @author Liuxinyu970226
+ */
+$messages['zh-hant'] = array(
+	'stafflog-filter-user' => '使用者：',
 );

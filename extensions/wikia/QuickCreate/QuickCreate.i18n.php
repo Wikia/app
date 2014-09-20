@@ -365,3 +365,11 @@ $messages['zh-hans'] = array(
 	'quickcreate-desc' => '添加“创建新页面”按钮，要求匿名用户登录编辑。',
 	'quickcreate' => '提交您的方案',
 );
+
+/** Traditional Chinese (中文（繁體）‎)
+ * @author Ffaarr
+ */
+$messages['zh-hant'] = array(
+	'quickcreate-desc' => '增加“創建新頁面”按钮，要求匿名用戶登錄編輯。',
+	'quickcreate' => '提交您的方案',
+);

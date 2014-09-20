@@ -54,24 +54,13 @@ class SkinLyricsMinimal extends SkinTemplate {
 		wfDebugLog('lyricsminimal', '##### SkinLyricsMinimal initPage #####');
 
 		wfProfileIn(__METHOD__);
-		global $wgHooks, $wgCityId, $wgCat;
+		global $wgHooks, $wgCityId;
 
 		SkinTemplate::initPage($out);
 
 		$this->skinname  = 'lyricsminimal';
 		$this->stylename = 'lyricsminimal';
 		$this->template  = 'LyricsMinimalTemplate';
-
-		// Get category information (id, name, url)
-		$cats = wfGetBreadCrumb();
-		$idx = count($cats)-2;
-		if(isset($cats[$idx])) {
-			$wgCat = $cats[$idx];
-			wfDebugLog('lyricsminimal', 'There is category info');
-		} else {
-			$wgCat = array('id' => -1);
-			wfDebugLog('lyricsminimal', 'No category info');
-		}
 
 		// Function addVariables will be called to populate all needed data to render skin
 		$wgHooks['SkinTemplateOutputPageBeforeExec'][] = array(&$this, 'addVariables');
@@ -121,7 +110,6 @@ class SkinLyricsMinimal extends SkinTemplate {
 			wfProfileIn(__METHOD__ . ' - DATA ARRAY');
 			//$data_array['footerlinks'] = $this->getFooterLinks(); // NOTE: Removed for LyricsMinimal
 			//$data_array['wikiafooterlinks'] = $this->getWikiaFooterLinks(); // NOTE: Removed for LyricsMinimal
-			$data_array['categorylist'] = DataProvider::getCategoryList();
 			$data_array['toolboxlinks'] = $this->getToolboxLinks();
 			//$data_array['sidebarmenu'] = $this->getSidebarLinks(); d// this was already removed in Monaco (prior to LyricsMinimal)
 			$data_array['relatedcommunities'] = $this->getRelatedCommunitiesLinks();
@@ -699,8 +687,7 @@ class LyricsMinimalTemplate extends QuickTemplate {
 
 	// Site-CSS.
 	global $wgUser, $wgStylePath, $wgJsMimeType;
-	$srcs = AssetsManager::getInstance()->getGroupLocalURL($wgUser->isLoggedIn() ? 'site_user_css' : 'site_anon_css');
-	$srcs[] = $wgStylePath."/lyricsminimal/article.css"; // Probably ghetto.  This whole skin needs to just be rewritten as Oasis modifications anyway though.
+	$srcs = [ $wgStylePath."/lyricsminimal/article.css" ]; // Probably ghetto.  This whole skin needs to just be rewritten as Oasis modifications anyway though.
 	foreach($srcs as $src) {
 		echo '<link rel="stylesheet" href="'. htmlspecialchars( $src ) .'">';
 	}
@@ -841,7 +828,7 @@ if(empty($wgEnableRecipesTweaksExt) || !RecipesTweaks::isHeaderStripeShown()) {
 <?php
 // Note, these were placed above the Ad calls intentionally because ad code screws with analytics
 echo AnalyticsEngine::track('GA_Urchin', AnalyticsEngine::EVENT_PAGEVIEW);
-echo AnalyticsEngine::track('GA_Urchin', 'hub', AdEngine2Controller::getCachedCategory());
+echo AnalyticsEngine::track('GA_Urchin', 'hub', AdEngine2Service::getCachedCategory());
 global $wgCityId;
 echo AnalyticsEngine::track('GA_Urchin', 'onewiki', array($wgCityId));
 echo AnalyticsEngine::track('GA_Urchin', 'pagetime', array('lean_monaco'));

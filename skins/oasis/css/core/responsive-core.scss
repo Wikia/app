@@ -1,8 +1,8 @@
 @import "layout";
 @import "responsive-variables";
 
-@import "../mixins/box-sizing";
-@import "../mixins/calc";
+@import "skins/shared/mixins/box-sizing";
+@import "skins/shared/mixins/calc";
 
 @if ( $responsive-layout-enabled ) {
 	html {
@@ -132,29 +132,23 @@
 			&.loaded,
 			&.AdminDashboardRail {
 				-moz-column-count: 2;
-				-ms-column-count: 2;
-				-o-column-count: 2;
 				-webkit-column-count: 2;
 				column-count: 2;
 			}
 
-			.SelfServeUrl {
-				display: none;
-			}
-
 			.module,
 			.admin-dashboard-module {
-				position: static;
-				@include calc(width, "100% - 35px");
+				-moz-box-sizing: border-box;
+				box-sizing: border-box;
 
 				-moz-column-break-inside: avoid;
-				-ms-column-break-inside: avoid;
-				-o-column-break-inside: avoid;
 				-webkit-column-break-inside: avoid;
 				column-break-inside: avoid;
 
 				// fallback, because column-break-inside is currently NYI
 				display: inline-block;
+				position: static;
+				width: 100%;
 			}
 		}
 

@@ -71,21 +71,18 @@ class WAMPageModel extends WikiaModel {
 	 * @param int $tabIndex
 	 * @return mixed
 	 */
-	public function getVisualizationWikis($tabIndex) {
-		if( !empty($this->app->wg->DevelEnvironment) ) {
-			$WAMData = $this->getMockedDataForDev();
-		} else {
-			switch($tabIndex) {
-				case self::TAB_INDEX_BIGGEST_GAINERS: $params = $this->getVisualizationParams( null, 'wam_change' ); break;
-				case self::TAB_INDEX_GAMING: $params = $this->getVisualizationParams( WikiFactoryHub::CATEGORY_ID_GAMING ); break;
-				case self::TAB_INDEX_ENTERTAINMENT: $params = $this->getVisualizationParams( WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT ); break;
-				case self::TAB_INDEX_LIFESTYLE: $params = $this->getVisualizationParams( WikiFactoryHub::CATEGORY_ID_LIFESTYLE ); break;
-				default: $params = $this->getVisualizationParams(); break;
-			}
-
-			$WAMData = $this->app->sendRequest('WAMApi', 'getWAMIndex', $params)->getData();
+	public function getVisualizationWikis( $tabIndex ) {
+		switch( $tabIndex ) {
+			case self::TAB_INDEX_BIGGEST_GAINERS: $params = $this->getVisualizationParams( null, 'wam_change' ); break;
+			case self::TAB_INDEX_GAMING: $params = $this->getVisualizationParams( WikiFactoryHub::CATEGORY_ID_GAMING ); break;
+			case self::TAB_INDEX_ENTERTAINMENT: $params = $this->getVisualizationParams( WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT ); break;
+			case self::TAB_INDEX_LIFESTYLE: $params = $this->getVisualizationParams( WikiFactoryHub::CATEGORY_ID_LIFESTYLE ); break;
+			default: $params = $this->getVisualizationParams(); break;
 		}
-		return $this->prepareIndex($WAMData['wam_index'], $tabIndex);
+
+		$WAMData = $this->app->sendRequest( 'WAMApi', 'getWAMIndex', $params )->getData();
+
+		return $this->prepareIndex( $WAMData[ 'wam_index' ], $tabIndex );
 	}
 
 	/**
@@ -101,13 +98,7 @@ class WAMPageModel extends WikiaModel {
 	 */
 	public function getIndexWikis($params) {
 		$params = $this->getIndexParams($params);
-
-		if( !empty($this->app->wg->DevelEnvironment) ) {
-			$WAMData = $this->getMockedDataForDev();
-		} else {
-			$WAMData = $this->app->sendRequest('WAMApi', 'getWAMIndex', $params)->getData();
-		}
-
+		$WAMData = $this->app->sendRequest('WAMApi', 'getWAMIndex', $params)->getData();
 		$WAMData['wam_index'] = $this->prepareIndex($WAMData['wam_index'], self::TAB_INDEX_TOP_WIKIS);
 
 		return $WAMData;
@@ -248,14 +239,13 @@ class WAMPageModel extends WikiaModel {
 	}
 
 	/**
-	 * Get corporate wikis languages for filters
+	 * Get all WAM languages for a specified day for filters
 	 *
 	 * @return array
 	 */
-	public function getCorporateWikisLanguages() {
-		$visualizationModel = new CityVisualization();
-		$wikisData = $visualizationModel->getVisualizationWikisData();
-		return array_keys($wikisData);
+	public function getWAMLanguages( $date ) {
+		$result = $this->app->sendRequest( 'WAMApi', 'getWAMLanguages', [ 'wam_day' => $date ] )->getData();
+		return $result[ 'languages' ];
 	}
 
 	/**
@@ -393,203 +383,6 @@ class WAMPageModel extends WikiaModel {
 
 		wfProfileOut(__METHOD__);
 		return in_array($dbKey, array_keys($this->getWamPagesDbKeysMap()));
-	}
-
-	/**
-	 * Get title where user should be redirected for given title
-	 * Redirection list is kept in $wgWAMRedirects
-	 *
-	 * @param $title
-	 * @return null|Title
-	 */
-	public function getWAMRedirect( $title ) {
-		wfProfileIn( __METHOD__ );
-		$newTabTitle = null;
-
-		if( $title instanceof Title && $title->isSubpage() ) {
-			$titleText = mb_strtolower( $title->getSubpageText() );
-
-			$wamRedirects = $this->getWAMRedirectsList();
-			if ( isset( $wamRedirects[$titleText] ) ) {
-				$newTabTitle = $this->getTitleFromText( $this->getWAMMainPageName() . '/' . $wamRedirects[$titleText] );
-			}
-		}
-
-		wfProfileOut( __METHOD__ );
-		return $newTabTitle;
-	}
-
-	protected function getWAMRedirectsList() {
-		wfProfileIn( __METHOD__ );
-		global $wgWAMRedirects;
-
-		$out = [];
-		if ( is_array( $wgWAMRedirects ) ) {
-			foreach ( $wgWAMRedirects as $oldTitle => $newTitle ) {
-				$out[mb_strtolower( $oldTitle )] = $newTitle;
-			}
-		}
-
-		wfProfileOut(__METHOD__);
-		return $out;
-	}
-
-	/**
-	 * MOCKED data for devboxes for testing
-	 * because we don't have wam data on devboxes
-	 *
-	 * @return array
-	 */
-	protected function getMockedDataForDev() {
-		return ['wam_results_total' => 3147, 'wam_index' => [
-			304 => [
-				'wiki_id' => '304',
-				'wam'=> '98.499',
-				'wam_rank' => '1',
-				'hub_wam_rank' => '1',
-				'peak_wam_rank' => '1',
-				'peak_hub_wam_rank' => '1',
-				'top_1k_days' => '431',
-				'top_1k_weeks' => '62',
-				'first_peak' => '2012-01-03',
-				'last_peak' => '2013-03-06',
-				'title' => 'RuneScape Wiki',
-				'url' => 'runescape.wikia.com',
-				'hub_id' => '2',
-				'wam_change' => '0.0045',
-				'admins' => [
-						0 => [
-							'avatarUrl' => 'http://images4.wikia.nocookie.net/__cb2/messaging/images/thumb/1/19/Avatar.jpg/28px-Avatar.jpg',
-							'edits' => 0,
-							'name' => 'Merovingian',
-							'userPageUrl' => 'http://runescape.wikia.com/wiki/User:Merovingian',
-							'userContributionsUrl' => 'http://runescape.wikia.com/wiki/Special:Contributions/Merovingian',
-							'since' => 'Apr 2005'
-						],
-						2 => [
-							'avatarUrl' => 'http://images4.wikia.nocookie.net/__cb2/messaging/images/thumb/1/19/Avatar.jpg/28px-Avatar.jpg',
-							'edits' => 0,
-							'name' => 'Oddlyoko',
-							'userPageUrl' => 'http://runescape.wikia.com/wiki/User:Oddlyoko',
-							'userContributionsUrl' => 'http://runescape.wikia.com/wiki/Special:Contributions/Oddlyoko',
-							'since' => 'Oct 2005'
-						],
-						3 => [
-							'avatarUrl' => 'http://images3.wikia.nocookie.net/__cb2/common/avatars/thumb/c/c8/15809.png/28px-15809.png',
-							'edits' => 0,
-							'name' => 'Vimescarrot',
-							'userPageUrl' => 'http://runescape.wikia.com/wiki/User:Vimescarrot',
-							'userContributionsUrl' => 'http://runescape.wikia.com/wiki/Special:Contributions/Vimescarrot',
-							'since' => 'Feb 2006'
-						],
-						4 => [
-							'avatarUrl' => 'http://images4.wikia.nocookie.net/__cb2/messaging/images/thumb/1/19/Avatar.jpg/28px-Avatar.jpg',
-							'edits' => 0,
-							'name' => 'Eucarya',
-							'userPageUrl' => 'http://runescape.wikia.com/wiki/User:Eucarya',
-							'userContributionsUrl' => 'http://runescape.wikia.com/wiki/Special:Contributions/Eucarya',
-							'since' => 'May 2006'
-						],
-						5 => [
-							'avatarUrl' => 'http://images4.wikia.nocookie.net/__cb2/messaging/images/thumb/1/19/Avatar.jpg/28px-Avatar.jpg',
-							'edits' => 0,
-							'name' => 'Hyenaste',
-							'userPageUrl' => 'http://runescape.wikia.com/wiki/User:Hyenaste',
-							'userContributionsUrl' => 'http://runescape.wikia.com/wiki/Special:Contributions/Hyenaste',
-							'since' => 'Jul 2006'
-						]
-				],
-				'wiki_image' => 'http://images1.wikia.nocookie.net/__cb20121004184329/wikiaglobal/images/thumb/8/8b/Wikia-Visualization-Main%2Crunescape.png/150px-Wikia-Visualization-Main%2Crunescape.png',
-			],
-			14764 => [
-				'wiki_id' => '14764',
-				'wam'=> '99.8767',
-				'wam_rank' => '2',
-				'hub_wam_rank' => '2',
-				'peak_wam_rank' => '1',
-				'peak_hub_wam_rank' => '1',
-				'top_1k_days' => '431',
-				'top_1k_weeks' => '62',
-				'first_peak' => '2012-04-21',
-				'last_peak' => '2013-02-18',
-				'title' => 'League of Legends Wiki',
-				'url' => 'leagueoflegends.wikia.com',
-				'hub_id' => '3',
-				'wam_change' => '0.0039',
-				'admins' => [
-					2 => [
-						'avatarUrl' => 'http://images4.wikia.nocookie.net/__cb2/messaging/images/thumb/1/19/Avatar.jpg/28px-Avatar.jpg',
-						'edits' => 0,
-						'name' => 'Oddlyoko',
-						'userPageUrl' => 'http://runescape.wikia.com/wiki/User:Oddlyoko',
-						'userContributionsUrl' => 'http://runescape.wikia.com/wiki/Special:Contributions/Oddlyoko',
-						'since' => 'Oct 2005'
-					],
-					3 => [
-						'avatarUrl' => 'http://images3.wikia.nocookie.net/__cb2/common/avatars/thumb/c/c8/15809.png/28px-15809.png',
-						'edits' => 0,
-						'name' => 'Vimescarrot',
-						'userPageUrl' => 'http://runescape.wikia.com/wiki/User:Vimescarrot',
-						'userContributionsUrl' => 'http://runescape.wikia.com/wiki/Special:Contributions/Vimescarrot',
-						'since' => 'Feb 2006'
-					],
-					4 => [
-						'avatarUrl' => 'http://images4.wikia.nocookie.net/__cb2/messaging/images/thumb/1/19/Avatar.jpg/28px-Avatar.jpg',
-						'edits' => 0,
-						'name' => 'Eucarya',
-						'userPageUrl' => 'http://runescape.wikia.com/wiki/User:Eucarya',
-						'userContributionsUrl' => 'http://runescape.wikia.com/wiki/Special:Contributions/Eucarya',
-						'since' => 'May 2006'
-					]
-				],
-				'wiki_image' => 'http://images4.wikia.nocookie.net/__cb20120828154214/wikiaglobal/images/thumb/e/ea/Wikia-Visualization-Main%2Cleagueoflegends.png/150px-Wikia-Visualization-Main%2Cleagueoflegends.png.jpeg',
-			],
-			1706 => [
-				'wiki_id' => '1706',
-				'wam'=> '99.7942',
-				'wam_rank' => '4',
-				'hub_wam_rank' => '3',
-				'peak_wam_rank' => '1',
-				'peak_hub_wam_rank' => '1',
-				'top_1k_days' => '431',
-				'top_1k_weeks' => '62',
-				'first_peak' => '2012-01-01',
-				'last_peak' => '2013-02-13',
-				'title' => 'Elder Scrolls',
-				'url' => 'elderscrolls.wikia.com',
-				'hub_id' => '2',
-				'wam_change' => '-0.0016',
-				'admins' => [
-					3 => [
-						'avatarUrl' => 'http://images3.wikia.nocookie.net/__cb2/common/avatars/thumb/c/c8/15809.png/28px-15809.png',
-						'edits' => 0,
-						'name' => 'Vimescarrot',
-						'userPageUrl' => 'http://runescape.wikia.com/wiki/User:Vimescarrot',
-						'userContributionsUrl' => 'http://runescape.wikia.com/wiki/Special:Contributions/Vimescarrot',
-						'since' => 'Feb 2006'
-					]
-				],
-				'wiki_image' => 'http://images1.wikia.nocookie.net/__cb20121214183339/wikiaglobal/images/thumb/d/d4/Wikia-Visualization-Main%2Celderscrolls.png/150px-Wikia-Visualization-Main%2Celderscrolls.png',
-			],
-			3035 => [
-				'wiki_id' => '3035',
-				'wam'=> '99.6520',
-				'wam_rank' => '9',
-				'hub_wam_rank' => '4',
-				'peak_wam_rank' => '4',
-				'peak_hub_wam_rank' => '3',
-				'top_1k_days' => '431',
-				'top_1k_weeks' => '62',
-				'first_peak' => '2012-01-02',
-				'last_peak' => '2013-09-11',
-				'title' => 'Fallout Wiki',
-				'url' => 'fallout.wikia.com',
-				'hub_id' => '9',
-				'wam_change' => '0.0001',
-				'admins' => [],
-				'wiki_image' => null,
-			],
-		]];
 	}
 
 	protected function getTitleFromText($text) {

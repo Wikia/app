@@ -16,7 +16,6 @@ class AssetsManagerBaseBuilder {
 
 	protected $mContent;
 	protected $mContentType;
-	protected $mCacheMode = 'public';
 
 	public function __construct(WebRequest $request) {
 		$this->mType = $request->getText('type');
@@ -84,10 +83,6 @@ class AssetsManagerBaseBuilder {
 		} else {
 			return $wgResourceLoaderMaxage['versioned'];
 		}
-	}
-
-	public function getCacheMode() {
-		return $this->mCacheMode;
 	}
 
 	public function getContentType() {

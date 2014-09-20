@@ -31,4 +31,23 @@ class ImageServingUnitTest extends WikiaBaseTest {
 		$this->assertEquals(300, $is->getRequestedWidth());
 		$this->assertEquals(150, $is->getRequestedHeight());
 	}
+
+	function testHasArticleIds() {
+		$is = new ImageServing(null, 200, 100);
+		$articles = array( 1234 );
+		$is->setArticleIds( $articles );
+		$this->assertTrue( $is->hasArticleIds( $articles ) );
+	}
+
+	function testHasArticleIdsDiff() {
+		$is = new ImageServing(null, 200, 100);
+		$is->setArticleIds( array( 1234 ) );
+		$this->assertFalse( $is->hasArticleIds( array( 1111 ) ) );
+	}
+
+	function testHasArticleIdsEmpty() {
+		$is = new ImageServing(null, 200, 100);
+		$articles = array( 1234 );
+		$this->assertFalse( $is->hasArticleIds( $articles ) );
+	}
 }

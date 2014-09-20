@@ -156,6 +156,13 @@ $messages['ia'] = array(
 	'categorygalleries-desc' => 'Monstra un galeria de paginas in paginas de categoria',
 );
 
+/** Indonesian (Bahasa Indonesia)
+ * @author Riemogerz
+ */
+$messages['id'] = array(
+	'categorygalleries-desc' => 'Tampilkan galeri gambar mini pada halaman kategori',
+);
+
 /** Italian (italiano)
  * @author Pietrodn
  */
@@ -289,6 +296,13 @@ $messages['ru'] = array(
  */
 $messages['sv'] = array(
 	'categorygalleries-desc' => 'Visar ett sido-galleri på kategorisidor',
+);
+
+/** Telugu (తెలుగు)
+ * @author Chaduvari
+ */
+$messages['te'] = array(
+	'categorygalleries-desc' => 'పేజీల గ్యాలరీని వర్గ పేజీల్లో చూపిస్తుంది',
 );
 
 /** Tagalog (Tagalog)

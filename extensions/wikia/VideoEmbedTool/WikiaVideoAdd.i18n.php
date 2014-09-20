@@ -196,13 +196,14 @@ $messages['de-formal'] = array(
 
 /** Zazaki (Zazaki)
  * @author Erdemaslancan
+ * @author Mirzali
  */
 $messages['diq'] = array(
 	'wva-success' => 'Vidyo pelaya $1  vıraziyaya', # Fuzzy
 	'wva-success-replaced' => 'Vidyo pelaya $1  re ca deya.', # Fuzzy
-	'wva-name' => 'Name deke:', # Fuzzy
-	'wva-url' => 'URL deke:', # Fuzzy
-	'wva-add' => 'Deke',
+	'wva-name' => 'Nameyê videoy:',
+	'wva-url' => 'URL-adresa videoy:',
+	'wva-add' => 'Cı ke',
 	'wva-protected' => 'Na vidyoya stare deya.',
 );
 
@@ -247,31 +248,33 @@ $messages['eu'] = array(
  * @author ZxxZxxZ
  */
 $messages['fa'] = array(
-	'wva-success' => 'فیلم صفحهٔ $1 موفقیت‌آمیز اضافه شد.', # Fuzzy
-	'wva-success-replaced' => 'فیلم صفحهٔ $1 موفقیت‌آمیز جایگزین شد.', # Fuzzy
-	'wva-failure' => 'لطفا ورودی‌های درستی وارد کنید.',
-	'wva-name' => 'نام را وارد کنید:', # Fuzzy
-	'wva-url' => 'نشانی اینترنتی را وارد کنید:', # Fuzzy
+	'wva-success' => 'فیلم صفحهٔ [[:$1]] باموفقیت اضافه شد.',
+	'wva-success-replaced' => 'فیلم صفحهٔ [[:$1]] موفقیت‌آمیز جایگزین شد.',
+	'wva-failure' => 'لطفاً ورودی‌های درستی وارد کنید.',
+	'wva-name' => 'نام ویدئو:',
+	'wva-url' => 'نشانی اینترنتی ویدئو:',
 	'wva-add' => 'افزودن',
 	'wva-title' => 'به سرعت فیلم را از نشانی اینترنتی واردکردن',
 	'wva-notlogged' => 'برای وارد کردن فیلم، شما باید به سامانه وارد شوید یا ثبت نام کنید.',
 	'wva-notallowed' => 'شما نمی‌توانید در این ویکی فیلم وارد کنید.',
 	'wva-protected' => 'این ویدیو محافظت شده‌است.',
+	'wva-thumbnail-upload-failed' => 'ویدئو توکار شکست خرد، ناتوان به دریافت بنداگشتی مناسب',
 );
 
 /** Finnish (suomi)
  * @author Centerlink
  * @author Crt
+ * @author Konstaduck
  * @author Nedergard
  * @author Silvonen
  * @author Tofu II
  */
 $messages['fi'] = array(
-	'wva-success' => 'Videosivun $1 lisääminen onnistui.', # Fuzzy
-	'wva-success-replaced' => 'Videosivun $1 korvaaminen onnistui.', # Fuzzy
+	'wva-success' => 'Videosivun [[:$1]] lisääminen onnistui.',
+	'wva-success-replaced' => 'Videosivun [[:$1]] korvaaminen onnistui.',
 	'wva-failure' => 'Toimita kelvolliset parametrit.',
-	'wva-name' => 'Kirjoita nimi:', # Fuzzy
-	'wva-url' => 'Anna verkko-osoite:', # Fuzzy
+	'wva-name' => 'Videon nimi:',
+	'wva-url' => 'Videon verkko-osoite:',
 	'wva-add' => 'Lisää',
 	'wva-title' => 'Lisää nopeasti video verkko-osoitteesta',
 	'wva-notlogged' => 'Sinun täytyy kirjautua sisään tai rekisteröityä, jotta voit lisätä videoita.',
@@ -417,11 +420,11 @@ $messages['ig'] = array(
  * @author Pietrodn
  */
 $messages['it'] = array(
-	'wva-success' => 'La pagina video $1 è stata aggiunta con successo.', # Fuzzy
-	'wva-success-replaced' => 'La pagina video $1 è stata sostituita con successo.', # Fuzzy
+	'wva-success' => 'La pagina video [[:$1]] è stata aggiunta con successo.',
+	'wva-success-replaced' => 'La pagina video [[:$1]] è stata sostituita con successo.',
 	'wva-failure' => 'Prego inserisci parametri validi.',
-	'wva-name' => 'Inserisci il nome:', # Fuzzy
-	'wva-url' => "Inserisci l'URL:", # Fuzzy
+	'wva-name' => 'Nome del video:',
+	'wva-url' => 'URL del video:',
 	'wva-add' => 'Aggiungi',
 	'wva-title' => 'Aggiungi rapidamente video da URL',
 	'wva-notlogged' => 'Devi accedere o registrati per inserire video.',
@@ -506,11 +509,11 @@ $messages['lb'] = array(
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
-	'wva-success' => 'Видео-страницата $1 е успешно додадена.', # Fuzzy
-	'wva-success-replaced' => 'Видео-страницата $1 е успешно заменета.', # Fuzzy
+	'wva-success' => 'Видео-страницата [[:$1]] е успешно додадена.',
+	'wva-success-replaced' => 'Видео-страницата [[:$1]] е успешно заменета.',
 	'wva-failure' => 'Наведете важечки параметри.',
-	'wva-name' => 'Внесете го името:', # Fuzzy
-	'wva-url' => 'Внесете URL-адреса:', # Fuzzy
+	'wva-name' => 'Назив на видеото:',
+	'wva-url' => 'URL на видеото:',
 	'wva-add' => 'Додај',
 	'wva-title' => 'Брзо додавање на видеоснимка од URL-адреса',
 	'wva-notlogged' => 'Треба да сте најавени или да се регистрирате за да можете да вметнувате видеоснимки.',
@@ -626,12 +629,13 @@ $messages['pap'] = array(
 /** Polish (polski)
  * @author Chrumps
  * @author Marcin Łukasz Kiejzik
+ * @author Pio387
  * @author Sovq
  * @author Sp5uhe
  */
 $messages['pl'] = array(
-	'wva-success' => 'Strona filmu [[$1]] została pomyślnie dodana.', # Fuzzy
-	'wva-success-replaced' => 'Strona filmu [[$1]] została pomyślnie zastąpiona.', # Fuzzy
+	'wva-success' => 'Strona filmu [[:$1]] została pomyślnie dodana.',
+	'wva-success-replaced' => 'Strona filmu [[:$1]] została pomyślnie zastąpiona.',
 	'wva-failure' => 'Podaj prawidłowe parametry.',
 	'wva-name' => 'Nazwa filmu:',
 	'wva-url' => 'URL filmu:',
@@ -665,11 +669,11 @@ $messages['pms'] = array(
  * @author Ahmed-Najib-Biabani-Ibrahimkhel
  */
 $messages['ps'] = array(
-	'wva-success' => 'د $1 ويډيو مخ په برياليتوب سره ورگډ شو.', # Fuzzy
-	'wva-success-replaced' => 'د $1 ويډيو مخ په برياليتوب سره ځايناستی شو.', # Fuzzy
+	'wva-success' => 'د [[:$1]] ويډيو مخ په برياليتوب سره ورگډ شو.',
+	'wva-success-replaced' => 'د [[:$1]] ويډيو مخ په برياليتوب سره ځايناستی شو.',
 	'wva-failure' => 'لطفاً سم پاراميټرونه ورکړۍ.',
-	'wva-name' => 'نوم يې وليکۍ:', # Fuzzy
-	'wva-url' => 'URL يې وليکۍ:', # Fuzzy
+	'wva-name' => 'د ويډيو نوم:',
+	'wva-url' => 'د ويډيو URL:',
 	'wva-add' => 'ورگډول',
 	'wva-title' => 'په چټکۍ له يو آر اېل (URL) نه ويډيو ورگډول',
 	'wva-notlogged' => 'د ويډيو د ورننوېستلو لپاره پکار ته چې تاسې غونډال ته ننوځۍ او يا هم ځان ثبت کړی.',
@@ -681,14 +685,15 @@ $messages['ps'] = array(
  * @author Crazymadlover
  * @author Giro720
  * @author Hamilton Abreu
+ * @author Imperadeiro98
  * @author SandroHc
  */
 $messages['pt'] = array(
-	'wva-success' => 'A página do vídeo $1 foi adicionada com sucesso.', # Fuzzy
-	'wva-success-replaced' => 'A página do vídeo $1 foi substituída com sucesso.', # Fuzzy
+	'wva-success' => 'A página do vídeo [[:$1]] foi adicionada com sucesso.',
+	'wva-success-replaced' => 'A página do vídeo [[:$1]] foi substituída com sucesso.',
 	'wva-failure' => 'Forneça parâmetros válidos, por favor.',
-	'wva-name' => 'Introduza o nome:', # Fuzzy
-	'wva-url' => 'Introduza a URL:', # Fuzzy
+	'wva-name' => 'Nome do vídeo:',
+	'wva-url' => 'URL do vídeo:',
 	'wva-add' => 'Adicionar',
 	'wva-title' => 'Adição Rápida de Vídeo a Partir da URL',
 	'wva-notlogged' => 'Precisa de se autenticar ou registar para inserir vídeos.',
@@ -932,11 +937,11 @@ $messages['zh-hans'] = array(
  * @author Ffaarr
  */
 $messages['zh-hant'] = array(
-	'wva-success' => '成功增加影片 [[:$1]]', # Fuzzy
-	'wva-success-replaced' => '成功替換影片 [[:$1]]', # Fuzzy
+	'wva-success' => '成功增加影片[[:$1]]',
+	'wva-success-replaced' => '成功替換影片 [[:$1]]',
 	'wva-failure' => '請提供有效的參數。',
-	'wva-name' => '影片名稱', # Fuzzy
-	'wva-url' => '影片連結：', # Fuzzy
+	'wva-name' => '影片名稱：',
+	'wva-url' => '影片連結：',
 	'wva-add' => '新增',
 	'wva-title' => '從網路快速新增影片',
 	'wva-notlogged' => '您需要登錄或註冊來插入影片。',

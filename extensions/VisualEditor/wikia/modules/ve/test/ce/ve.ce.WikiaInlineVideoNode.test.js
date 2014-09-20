@@ -11,7 +11,7 @@ QUnit.test( 'Build NodeView from HTMLDOM', function ( assert ) {
 		assert,
 		'inline',
 		'mw:Video',
-		function( documentNode ) {
+		function ( documentNode ) {
 			return documentNode.getChildren()[0].getChildren()[0];
 		}
 	);
@@ -22,7 +22,7 @@ QUnit.test( 'NodeView Transactions', function ( assert ) {
 		assert,
 		'inline',
 		'mw:Video',
-		function( documentNode ) {
+		function ( documentNode ) {
 			return documentNode.getChildren()[0].getChildren()[0];
 		}
 	);

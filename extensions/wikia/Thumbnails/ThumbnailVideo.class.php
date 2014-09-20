@@ -5,6 +5,8 @@
  * @ingroup Media
  */
 
+use \Wikia\Logger\WikiaLogger;
+
 class ThumbnailVideo extends ThumbnailImage {
 
 //	function ThumbnailVideo( $file, $url, $width, $height, $path = false, $page = false ) {
@@ -33,11 +35,11 @@ class ThumbnailVideo extends ThumbnailImage {
 		global $wgWikiaVideoImageHost;
 		parent::__construct( $file, $url, $width, $height, $path, $page );
 
-		// handle videos comming from shared repo (video.wikia.com)
+		// handle videos coming from shared repo (video.wikia.com)
 		if ( !empty( $wgWikiaVideoImageHost ) && ( $file instanceof WikiaForeignDBFile ) ) {
 			// replace with a proper video domain for production
-			$domain = parse_url($this->url, PHP_URL_HOST);
-			$this->url = str_replace("http://{$domain}/", $wgWikiaVideoImageHost, $this->url);
+			$domain = parse_url( $this->url, PHP_URL_HOST );
+			$this->url = str_replace( "http://{$domain}/", $wgWikiaVideoImageHost, $this->url );
 		}
 
 		#var_dump(__METHOD__); var_dump($this->url);
@@ -103,6 +105,10 @@ class ThumbnailVideo extends ThumbnailImage {
 		return $thumb->toHtml( array( 'img-class' => $options['img-class'] ) );
 	}
 
+	function mediaType() {
+		return 'video';
+	}
+
 	/**
 	 * @param array $options
 	 * @return mixed|string
@@ -117,41 +123,32 @@ class ThumbnailVideo extends ThumbnailImage {
 
 		// Check if the editor is requesting, if so, render image thumbnail instead
 		if ( !empty( $app->wg->RTEParserEnabled ) ) {
-			return $this->renderAsThumbnailImage($options);
+			return $this->renderAsThumbnailImage( $options );
 		}
 
 		wfProfileIn( __METHOD__ );
 
-		// Migrate to new system which uses a template instead of this toHtml method
-		if( !empty( $options[ 'useTemplate' ] ) ) {
-			$html = $app->renderView( 'ThumbnailVideoController', 'thumbnail',  [
-				'file' => $this->file,
-				'url' => $this->url,
-				'width' => $this->width,
-				'height' => $this->height,
-				'options' => $options,
-			] );
+		// All non-WikiaMobile skins use Nirvana to render HTML now. WikiaMobile is slowly migrating with 'useTemplate'
+		if ( !F::app()->checkSkin( 'wikiamobile' ) || !empty( $options['useTemplate'] ) ) {
+			$html = $this->renderView( $options );
 
 			wfProfileOut( __METHOD__ );
 
 			return $html;
 		}
 
+		// Only WikiaMobile beyond this point
+
+		WikiaLogger::instance()->debug('Media method '.__METHOD__.' called',
+			array_merge( $options, [
+				'url'       => $this->url,
+				'method'    => __METHOD__,
+				'page'      => $this->page,
+				'mediaType' => $this->mediaType(),
+				'fileType'  => get_class( $this->file )
+			] ) );
+
 		$alt = empty( $options['alt'] ) ? '' : $options['alt'];
-
-		/*
-		 * in order to disable RDF metadata in video thumbnails
-		 * pass disableRDF parameter to toHtml method
-		 */
-		$useRDFData = ( !empty( $options['disableRDF'] ) && $options['disableRDF'] == true ) ? false : true;
-
-
-		/**
-		 * Note: if title is empty and alt is not, make the title empty, don't
-		 * use alt; only use alt if title is not set
-		 * wikia change, Inez
-		 */
-		$title = !isset( $options['title'] ) ? $alt : $options['title'];
 
 		$videoTitle = $this->file->getTitle();
 
@@ -179,6 +176,10 @@ class ThumbnailVideo extends ThumbnailImage {
 			$extraClasses .= ' image lightbox';
 		}
 		$linkAttribs['class'] = empty( $linkAttribs['class'] ) ? $extraClasses : $linkAttribs['class'] . ' ' . $extraClasses;
+
+		if ( !empty( $options['fixedHeight'] ) ) {
+			$this->height = $options['fixedHeight'];
+		}
 
 		$attribs = array(
 			'alt' => $alt,
@@ -215,16 +216,6 @@ class ThumbnailVideo extends ThumbnailImage {
 			$attribs['class'] .= ' ' . $options['img-class'];
 		}
 
-		if ( $this->file instanceof WikiaLocalFile || $this->file instanceof WikiaForeignDBFile ) {
-			$extraBorder = $this->file->addExtraBorder( $this->width );
-		}
-		if ( !empty( $extraBorder ) ) {
-			if ( !isset( $attribs['style'] ) ) {
-				$attribs['style'] = '';
-			}
-			$attribs['style'] .= 'border-top: 15px solid black; border-bottom: '.$extraBorder.'px solid black;';
-		}
-
 		if ( isset( $options['imgExtraStyle'] ) ) {
 			if ( !isset( $attribs['style'] ) ) {
 				$attribs['style'] = '';
@@ -236,30 +227,15 @@ class ThumbnailVideo extends ThumbnailImage {
 			$duration = WikiaFileHelper::formatDuration( $this->file->getMetadataDuration() );
 		}
 
-		if ( isset( $options['constHeight'] ) ) {
-			$this->appendHtmlCrop($linkAttribs, $options);
-		}
-
-		$html = Xml::openElement( 'a', $linkAttribs );
-
 		if ( !empty( $duration ) ) {
 			$timerProp = array( 'class'=>'timer' );
 			if ( $useRDFData ) {
 				$timerProp['itemprop'] = 'duration';
 			}
-			$html .= Xml::element( 'div', $timerProp,  $duration );
-		}
-		$playButtonHeight =  ( isset( $options['constHeight'] ) && $this->height > $options['constHeight'] ) ? $options['constHeight'] : $this->height;
-		if ( !empty( $extraBorder ) ) $playButtonHeight += ( $extraBorder*2 );
-		$html .= WikiaFileHelper::videoPlayButtonOverlay( $this->width, $playButtonHeight );
-		$html .= Xml::element( 'img', $attribs, '', true );
-
-
-		if ( empty( $options['hideOverlay'] ) ) {
-			$html .= WikiaFileHelper::videoInfoOverlay( $this->width, $videoTitle );
 		}
 
-		$html .= ( $linkAttribs && isset( $linkAttribs['href'] ) ) ? Xml::closeElement( 'a' ) : '';
+		// WikiaMobile completely reconstructs the html
+		$html = '';
 
 		//give extensions a chance to modify the markup
 		wfRunHooks( 'ThumbnailVideoHTML', array( $options, $linkAttribs, $attribs, $this->file,  &$html ) );
@@ -267,23 +243,5 @@ class ThumbnailVideo extends ThumbnailImage {
 		wfProfileOut( __METHOD__ );
 
 		return $html;
-	}
-
-	private function appendHtmlCrop( &$linkAttribs, $options ) {
-
-		if ( !isset( $linkAttribs['style'] ) ) $linkAttribs['style'] = '';
-
-		$linkAttribs['style'] .= 'overlay:hidden;';
-
-		if ( $this->height <= $options['constHeight'] ) {
-
-			$linkAttribs['style'] .= "height:{$this->height}px;";
-			$linkAttribs['style'] .= 'margin-bottom:'.( $options['constHeight'] - $this->height )."px;";
-			$linkAttribs['style'] .= 'padding-top:'.floor( ($options['constHeight'] - $this->height)/2 )."px;";
-
-		} else {
-
-			$linkAttribs['style'] .= "height:{$options['constHeight']}px;";
-		}
 	}
 }

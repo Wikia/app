@@ -662,7 +662,7 @@ class WikiaPhotoGalleryHelper {
 			$image['videoPlayButton'] = false;
 			if( WikiaFileHelper::isFileTypeVideo($img) ) {
 				// Get play button overlay for video thumb
-				$image['videoPlayButton'] = WikiaFileHelper::videoPlayButtonOverlay( self::STRICT_IMG_WIDTH_PREV, self::STRICT_IMG_HEIGHT_PREV );
+				$image['videoPlayButton'] = '<span class="play-circle"></span>';
 			}
 
 			//need to use parse() - see RT#44270
@@ -975,6 +975,27 @@ class WikiaPhotoGalleryHelper {
 	}
 
 	/**
+	 * Hook handler - Add a key for new gallery to parser cache
+	 * TODO: Remove this hook once media gallery is ready to be fully deployed
+	 *
+	 * @param $hash
+	 * @return bool
+	 */
+	public static function addMediaGalleryCacheKey( &$hash ) {
+		global $wgRequest, $wgEnableMediaGalleryExt;
+
+		if ( $wgRequest->getVal( 'gallery' ) == 'new' ) {
+
+			$wgEnableMediaGalleryExt = true;
+
+			// Add a key to parser cache key
+			$hash .= '!' . 'NewGallery';
+		}
+
+		return true;
+	}
+
+	/**
 	 * Check whether upload is allowed for current user and with current config
 	 * @author Macbre
 	 */
@@ -1209,5 +1230,85 @@ class WikiaPhotoGalleryHelper {
 				return 1;
 				break;
 		}
+	}
+
+	/**
+	 * Checks if the gallery parameter navigation="true" needs to be added to or removed from galleries.
+	 * See checkNavigationParamGalleries for more information.
+	 * @param $editPage
+	 * @param $request
+	 * @return bool
+	 */
+	static public function onImportFormData( $editPage, $request ) {
+		$editPage->textbox1 = preg_replace_callback(
+			'/< *gallery([^>]*)>([^<]+)< *\/ *gallery *>/',
+			'WikiaPhotoGalleryHelper::checkNavigationParamGalleries',
+			$editPage->textbox1
+		);
+
+		return True;
+	}
+
+	/**
+	 * Checks if a gallery needs to have the parameter navigation="true" added or removed from
+	 * its tag. The spec says that if the gallery has 2 or more images, one of which is linked,
+	 * and the gallery is not a slider (ie, has type="slider" as a parameter), then the gallery
+	 * should have navigation="true" added to the tag. If it has navigation="true" already and
+	 * the gallery is edited to removed all linked images, the parameter should be removed.
+	 * See VID-1888 for more information.
+	 * @param $matches
+	 * @return string
+	 */
+	static public function checkNavigationParamGalleries( $matches ) {
+		$galleryParams = trim( $matches[1] );
+		$galleryContent = trim( $matches[2] );
+		$galleryLines = array_filter( explode( "\n", $galleryContent ) );
+		$hasNavigationParam = false;
+
+		if ( preg_match_all( "/([^ =\"']+) *= *[\"']?([^ \"']+)[\"']?/", $galleryParams, $paramMatches ) ) {
+			$paramNames = $paramMatches[1];
+			$paramValues = $paramMatches[2];
+			foreach ( $paramNames as $paramIndex => $paramName ) {
+				$paramName = strtolower( $paramName );
+
+				// If this gallery is a slider, return untouched
+				if ( $paramName == 'type' && strtolower( $paramValues[$paramIndex] ) == 'slider' ) {
+					return $matches[0];
+				}
+
+				if ( $paramName == 'navigation' ) {
+					$hasNavigationParam = true;
+				}
+
+			}
+		}
+
+		// Requirements state not to convert galleries that only contain one image
+		if ( count( $galleryLines ) <= 1 ) {
+			return $matches[0];
+		}
+
+		// Look for any linked images
+		$hasLink = false;
+		foreach ( $galleryLines as $line ) {
+			if ( preg_match( '/\| *link=/', $line ) ) {
+				$hasLink = true;
+				break;
+			}
+		}
+
+		if ( $hasLink && !$hasNavigationParam ) {
+			// Add navigation if gallery has links
+			$gallery = "<gallery".( empty( $galleryParams ) ? '' : " $galleryParams" )." navigation=\"true\">\n$galleryContent\n</gallery>";
+		} elseif ( !$hasLink && $hasNavigationParam ) {
+			// Removed navigation param if gallery has no links
+			$galleryParams = preg_replace( '/navigation\s*=[\'"]\s*true[\'"]/i', '', $galleryParams );
+			$gallery =  "<gallery".( empty( $galleryParams ) ? '' : " $galleryParams" ).">\n$galleryContent\n</gallery>";
+		} else {
+			// Return gallery tag unaltered if there are no linked gallery images
+			$gallery = $matches[0];
+		}
+
+		return $gallery;
 	}
 }

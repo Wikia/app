@@ -5,7 +5,7 @@
  * for MediaWiki itself (see mediawiki/core:/resources/startup.js).
  * Avoid use of: ES5, SVG, HTML5 DOM, ContentEditable etc.
  *
- * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
@@ -34,7 +34,13 @@
 			loadTargetDeferred = $.Deferred()
 				.done( function () {
 					var target = new ve.init.mw.ViewPageTarget();
-					ve.init.mw.targets.push( target );
+
+					// Tee tracked events to MediaWiki firehose, if available (1.23+).
+					if ( mw.track ) {
+						ve.trackSubscribeAll( function ( topic, data ) {
+							mw.track.call( null, 've.' + topic, data );
+						} );
+					}
 
 					// Transfer methods
 					ve.init.mw.ViewPageTarget.prototype.setupSectionEditLinks = init.setupSectionLinks;
@@ -75,7 +81,6 @@
 			Array.prototype.map &&
 			Date.now &&
 			Date.prototype.toJSON &&
-			Function.prototype.bind &&
 			Object.create &&
 			Object.keys &&
 			String.prototype.trim &&
@@ -83,7 +88,11 @@
 			JSON.parse &&
 			JSON.stringify
 		),
-		contentEditable: 'contentEditable' in document.createElement( 'div' )
+		contentEditable: 'contentEditable' in document.createElement( 'div' ),
+		svg: !!(
+			document.createElementNS &&
+			document.createElementNS( 'http://www.w3.org/2000/svg', 'svg' ).createSVGRect
+		)
 	};
 
 	init = {
@@ -127,7 +136,7 @@
 		 *
 		 * @param {string|Function} plugin Module name or callback that optionally returns a promise
 		 */
-		addPlugin: function( plugin ) {
+		addPlugin: function ( plugin ) {
 			plugins.push( plugin );
 		},
 
@@ -137,6 +146,14 @@
 		},
 
 		setupTabs: function () {
+			// HACK: Remove this when the Education Program offers a proper way to detect and disable.
+			if (
+				// HACK: Work around jscs.requireCamelCaseOrUpperCaseIdentifiers
+				mw.config.get( 'wgNamespaceIds' )[ true && 'education_program' ] === mw.config.get( 'wgNamespaceNumber' )
+			) {
+				return;
+			}
+
 			var caVeEdit,
 				action = pageExists ? 'edit' : 'create',
 				pTabsId = $( '#p-views' ).length ? 'p-views' : 'p-cactions',
@@ -175,7 +192,7 @@
 					$caVeEdit = $( caVeEdit );
 					$caVeEditLink = $caVeEdit.find( 'a' );
 				}
-			} else {
+			} else if ( $caEdit.length && $caVeEdit.length ) {
 				// Make the state of the page consistent with the config if needed
 				/*jshint bitwise:false */
 				if ( reverseTabOrder ^ conf.tabPosition === 'before' ) {
@@ -192,10 +209,28 @@
 				}
 			}
 
-			// Alter the edit tab (#ca-edit)
-			if ( tabMessages[action + 'source'] !== null ) {
-				$caEditLink.text( mw.msg( tabMessages[action + 'source'] ) );
+			// If the edit tab is hidden, remove it.
+			if ( !( init.isAvailable && userPrefEnabled ) ) {
+				$caVeEdit.remove();
 			}
+
+			// Alter the edit tab (#ca-edit)
+			if ( $( '#ca-view-foreign' ).length ) {
+				if ( tabMessages[action + 'localdescriptionsource'] !== null ) {
+					$caEditLink.text( mw.msg( tabMessages[action + 'localdescriptionsource'] ) );
+				}
+			} else {
+				if ( tabMessages[action + 'source'] !== null ) {
+					$caEditLink.text( mw.msg( tabMessages[action + 'source'] ) );
+				}
+			}
+
+			if ( conf.tabPosition === 'before' ) {
+				$caEdit.addClass( 'collapsible' );
+			} else {
+				$caVeEdit.addClass( 'collapsible' );
+			}
+
 			// Process appendix messages
 			if ( tabMessages[action + 'appendix'] !== null ) {
 				$caVeEditLink.append(
@@ -219,10 +254,16 @@
 		},
 
 		setupSectionLinks: function () {
-			var $editsections = $( '#mw-content-text .mw-editsection' );
+			var $editsections = $( '#mw-content-text .mw-editsection' ),
+				bodyDir = $( 'body' ).css( 'direction' );
 
-			// match direction to the user interface
-			$editsections.css( 'direction', $( 'body' ).css( 'direction' ) );
+			// Match direction of the user interface
+			// TODO: Why is this needed? It seems to work fine without.
+			if ( $editsections.css( 'direction' ) !== bodyDir ) {
+				// Avoid creating inline style attributes if the inherited value is already correct
+				$editsections.css( 'direction', bodyDir );
+			}
+
 			// The "visibility" css construct ensures we always occupy the same space in the layout.
 			// This prevents the heading from changing its wrap when the user toggles editSourceLink.
 			if ( $editsections.find( '.mw-editsection-visualeditor' ).length === 0 ) {
@@ -243,17 +284,21 @@
 					$divider
 						.addClass( 'mw-editsection-divider' )
 						.text( dividerText );
-					$editLink
-						.attr( 'href', function ( i, val ) {
-							return new mw.Uri( veEditUri ).extend( {
-								'vesection': new mw.Uri( val ).query.section
-							} );
-						} )
-						.addClass( 'mw-editsection-visualeditor' );
-					if ( conf.tabPosition === 'before' ) {
-						$editSourceLink.before( $editLink, $divider );
-					} else {
-						$editSourceLink.after( $divider, $editLink );
+					// Don't mess with section edit links on foreign file description pages
+					// (bug 54259)
+					if ( !$( '#ca-view-foreign' ).length ) {
+						$editLink
+							.attr( 'href', function ( i, val ) {
+								return new mw.Uri( veEditUri ).extend( {
+									'vesection': new mw.Uri( val ).query.section
+								} );
+							} )
+							.addClass( 'mw-editsection-visualeditor' );
+						if ( conf.tabPosition === 'before' ) {
+							$editSourceLink.before( $editLink, $divider );
+						} else {
+							$editSourceLink.after( $divider, $editLink );
+						}
 					}
 				} );
 			}
@@ -283,7 +328,6 @@
 				// init without refresh as that'd initialise for the wrong rev id (bug 50925)
 				// and would preserve the wrong DOM with a diff on top.
 				$editsections
-					.addClass( 'mw-editsection-expanded' )
 					.find( '.mw-editsection-visualeditor' )
 						.click( init.onEditSectionLinkClick )
 				;
@@ -324,6 +368,7 @@
 
 	support.visualEditor = support.es5 &&
 		support.contentEditable &&
+		support.svg &&
 		( ( 'vewhitelist' in uri.query ) || !$.client.test( init.blacklist, null, true ) );
 
 	enable = mw.user.options.get( 'visualeditor-enable', conf.defaultUserOptions.enable );
@@ -356,16 +401,6 @@
 	init.isAvailable = (
 		support.visualEditor &&
 
-		userPrefEnabled &&
-
-		// Disable on redirect pages until redirects are editable (bug 47328)
-		// Property wgIsRedirect is relatively new in core, many cached pages
-		// don't have it yet. We do a best-effort approach using the url query
-		// which will cover all working redirect (the only case where one can
-		// read a redirect page without ?redirect=no is in case of broken or
-		// double redirects).
-		!mw.config.get( 'wgIsRedirect', !!uri.query.redirect ) &&
-
 		// Only in supported skins
 		$.inArray( mw.config.get( 'skin' ), conf.skins ) !== -1 &&
 
@@ -374,6 +409,9 @@
 			new mw.Title( mw.config.get( 'wgRelevantPageName' ) ).getNamespaceId(),
 			conf.namespaces
 		) !== -1 &&
+
+		// Not on pages which are outputs of the Page Translation feature
+		mw.config.get( 'wgTranslatePageTranslation' ) !== 'translation' &&
 
 		// Only for pages with a wikitext content model
 		mw.config.get( 'wgPageContentModel' ) === 'wikitext'
@@ -391,7 +429,7 @@
 	// on this page. See above for why it may be false.
 	mw.libs.ve = init;
 
-	if ( init.isAvailable ) {
+	if ( init.isAvailable && userPrefEnabled ) {
 		$( 'html' ).addClass( 've-available' );
 	} else {
 		$( 'html' ).addClass( 've-not-available' );
@@ -399,22 +437,17 @@
 		// for e.g. "Edit" > "Edit source" even when VE is not available.
 	}
 
-	if ( !userPrefEnabled ) {
-		// However if ve is not available because of user preferences (as opposed
-		// to because of the page, namespace, browser etc.) then we do want to
-		// return early as in that case even transformation of edit source should
-		// not be done.
-		return;
-	}
-
 	$( function () {
-		if ( init.isAvailable && isViewPage ) {
-			if ( uri.query.veaction === 'edit' ) {
+		if ( init.isAvailable ) {
+			if ( isViewPage && uri.query.veaction === 'edit' ) {
 				getTarget().done( function ( target ) {
 					target.activate();
 				} );
 			}
 		}
-		init.setupSkin();
+
+		if ( userPrefEnabled ) {
+			init.setupSkin();
+		}
 	} );
 }() );

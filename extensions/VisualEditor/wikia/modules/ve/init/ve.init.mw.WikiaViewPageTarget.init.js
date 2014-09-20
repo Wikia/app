@@ -9,7 +9,7 @@
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
-/*global mw */
+/*global mw, veTrack, Wikia */
 
 /**
  * Platform preparation for the MediaWiki view page. This loads (when user needs it) the
@@ -19,47 +19,70 @@
  * @singleton
  */
 ( function () {
-	var conf, tabMessages, uri, pageExists, viewUri, veEditUri, isViewPage,
-		init, support, getTargetDeferred, userPrefEnabled, $edit, thisPageIsAvailable,
+	var conf, tabMessages, uri, pageExists, viewUri, veEditUri, viewPage,
+		init, support, getTargetDeferred, vePreferred, browserSupported,
 		plugins = [],
 		// Used by tracking calls that go out before ve.track is available.
 		trackerConfig = {
 			'category': 'editor-ve',
 			'trackingMethod': 'both'
-		};
+		},
+		spinnerTimeoutId = null;
 
-	function indicator( type, hook ) {
-		var timer,
-			$indicator = $( '<div>' ).addClass( 've-indicator visible' ),
+	function getOptimizelyExperimentId( experimentName ) {
+		if ( experimentName === 'VE Source Entry Point Anon' ) {
+			return mw.config.get( 'wgDevelEnvironment' ) ? 1673650053 : 1783530197;
+		} else if ( experimentName === 'VE Source Entry Point User' ) {
+			return mw.config.get( 'wgDevelEnvironment' ) ? 1673650053 : 1779071141;
+		}
+		return null;
+	}
+
+	function initSpinner() {
+		var $spinner = $( '<div>' )
+				.addClass( 've-spinner visible' )
+				.attr( 'data-type', 'loading' ),
 			$content = $( '<div>' ).addClass( 'content' ),
-			$icon = $( '<div>' ).addClass( type ),
+			$icon = $( '<div>' ).addClass( 'loading' ),
 			$message = $( '<p>' )
 				.addClass( 'message' )
-				.text( mw.message( 'wikia-visualeditor-' + type ).plain() );
+				.text( mw.message( 'wikia-visualeditor-loading' ).plain() );
 
 		$content
 			.append( $icon )
 			.append( $message );
 
-		$indicator
+		$spinner
 			.append( $content )
 			.appendTo( $( 'body' ) )
-			.animate( { 'opacity': 1 }, 400 );
+			.css( 'opacity', 1 )
+			.hide();
 
-		// Display the message if loading is taking awhile
-		timer = setTimeout( function () {
-			$message.slideDown( 400 );
-		}, 3000 );
-
-		// Cleanup indicator when hook is fired
-		mw.hook( hook ).add( function cleanup() {
-			clearTimeout( timer );
-			$indicator.animate( { 'opacity': 0 }, 400, function () {
-				mw.hook( hook ).remove( cleanup );
-				$indicator.remove();
-			} );
+		// Cleanup spinner when hook is fired
+		mw.hook( 've.activationComplete' ).add( function hide() {
+			if ( spinnerTimeoutId ) {
+				clearTimeout( spinnerTimeoutId );
+				spinnerTimeoutId = null;
+			}
 		} );
 	}
+
+	function showSpinner() {
+		var $spinner = $( '.ve-spinner[data-type="loading"]' ),
+			$message = $spinner.find( 'p.message' );
+
+		$message.hide();
+		$spinner.fadeIn( 400 );
+
+		// Display a message if loading is taking longer than 3 seconds
+		spinnerTimeoutId = setTimeout( function () {
+			if ( $spinner.is( ':visible' ) ) {
+				$message.slideDown( 400 );
+			}
+		}, 3000 );
+	}
+
+	initSpinner();
 
 	/**
 	 * Use deferreds to avoid loading and instantiating Target multiple times.
@@ -68,13 +91,25 @@
 	function getTarget() {
 		var loadTargetDeferred;
 
-		indicator( 'loading', 've.activationComplete' );
+		/* Optimizely */
+		window.optimizely = window.optimizely || [];
+
+		if ( mw.user.anonymous() ) {
+			window.optimizely.push( ['activate', getOptimizelyExperimentId( 'VE Source Entry Point Anon' )] );
+		} else {
+			window.optimizely.push( ['activate', getOptimizelyExperimentId( 'VE Source Entry Point User' )] );
+		}
+
+		showSpinner();
+
+		Wikia.Tracker.track( trackerConfig, {
+			'action': Wikia.Tracker.ACTIONS.IMPRESSION,
+			'label': 'edit-page'
+		} );
+		// This can't be tracked with its friends in ve.track.js because that file has not been loaded yet
+		window.gaTrackPageview( '/fake-visual-editor/edit-page/impression', 've' );
 
 		if ( !getTargetDeferred ) {
-			Wikia.Tracker.track( trackerConfig, {
-				'action': Wikia.Tracker.ACTIONS.IMPRESSION,
-				'label': 'edit-page'
-			} );
 			getTargetDeferred = $.Deferred();
 			loadTargetDeferred = $.Deferred();
 
@@ -83,7 +118,6 @@
 				$.getResources( $.getSassCommonURL( '/extensions/VisualEditor/wikia/VisualEditor.scss' ) )
 			).done( function () {
 				var target = new ve.init.mw.WikiaViewPageTarget();
-				ve.init.mw.targets.push( target );
 
 				// Transfer methods
 				ve.init.mw.WikiaViewPageTarget.prototype.setupSectionEditLinks = init.setupSectionLinks;
@@ -102,15 +136,16 @@
 	conf = mw.config.get( 'wgVisualEditorConfig' );
 	tabMessages = conf.tabMessages;
 	uri = new mw.Uri( location.href );
-	// For special pages, no information about page existence is exposed to
-	// mw.config, so we assume it exists TODO: fix this in core.
+	// BUG 49000: For special pages, no information about page existence is
+	// exposed to mw.config (see BUG 53774), so we assume it exists.
 	pageExists = !!mw.config.get( 'wgArticleId' ) || mw.config.get( 'wgNamespaceNumber' ) < 0;
 	viewUri = new mw.Uri( mw.util.getUrl( mw.config.get( 'wgRelevantPageName' ) ) );
 	veEditUri = viewUri.clone().extend( { 'veaction': 'edit' } );
-	isViewPage = (
+	viewPage = (
 		mw.config.get( 'wgIsArticle' ) &&
 		!( 'diff' in uri.query )
 	);
+	vePreferred = !!mw.config.get( 'wgVisualEditorPreferred' );
 
 	support = {
 		es5: !!(
@@ -123,7 +158,6 @@
 			Array.prototype.map &&
 			Date.now &&
 			Date.prototype.toJSON &&
-			Function.prototype.bind &&
 			Object.create &&
 			Object.keys &&
 			String.prototype.trim &&
@@ -131,7 +165,11 @@
 			JSON.parse &&
 			JSON.stringify
 		),
-		contentEditable: 'contentEditable' in document.createElement( 'div' )
+		contentEditable: 'contentEditable' in document.createElement( 'div' ),
+		svg: !!(
+			document.createElementNS &&
+			document.createElementNS( 'http://www.w3.org/2000/svg', 'svg' ).createSVGRect
+		)
 	};
 
 	init = {
@@ -176,15 +214,8 @@
 		 *
 		 * @param {string|Function} plugin Module name or callback that optionally returns a promise
 		 */
-		addPlugin: function( plugin ) {
+		addPlugin: function ( plugin ) {
 			plugins.push( plugin );
-		},
-
-		setupSkin: function () {
-			if ( isViewPage ) {
-				init.setupTabs();
-				init.setupSectionLinks();
-			}
 		},
 
 		setupTabs: function () {
@@ -201,6 +232,12 @@
 			// (e.g. not middle click or right click) and no modifier keys
 			// (e.g. cmd-click to open in new tab).
 			if ( ( e.which && e.which !== 1 ) || e.shiftKey || e.altKey || e.ctrlKey || e.metaKey ) {
+				if ( window.veTrack ) {
+					veTrack( {
+						action: 've-edit-page-ignored',
+						trigger: 'onEditTabClick'
+					} );
+				}
 				return;
 			}
 
@@ -212,6 +249,12 @@
 				'label': 've-edit'
 			} );
 
+			if ( window.veTrack ) {
+				veTrack( {
+					action: 've-edit-page-start',
+					trigger: 'onEditTabClick'
+				} );
+			}
 			getTarget().done( function ( target ) {
 				target.activate();
 			} );
@@ -219,6 +262,12 @@
 
 		onEditSectionLinkClick: function ( e ) {
 			if ( ( e.which && e.which !== 1 ) || e.shiftKey || e.altKey || e.ctrlKey || e.metaKey ) {
+				if ( window.veTrack ) {
+					veTrack( {
+						action: 've-edit-page-ignored',
+						trigger: 'onEditTabClick'
+					} );
+				}
 				return;
 			}
 
@@ -230,6 +279,12 @@
 				'label': 've-section-edit'
 			} );
 
+			if ( window.veTrack ) {
+				veTrack( {
+					action: 've-edit-page-start',
+					trigger: 'onEditSectionLinkClick'
+				} );
+			}
 			getTarget().done( function ( target ) {
 				target.saveEditSection( $( e.target ).closest( 'h1, h2, h3, h4, h5, h6' ).get( 0 ) );
 				target.activate();
@@ -237,61 +292,20 @@
 		}
 	};
 
-	support.visualEditor = support.es5 &&
+	browserSupported = support.es5 &&
 		support.contentEditable &&
 		( ( 'vewhitelist' in uri.query ) || !$.client.test( init.blacklist, null, true ) );
 
-	userPrefEnabled = (
-		// Allow disabling for anonymous users separately from changing the
-		// default preference (bug 50000)
-		!( conf.disableForAnons && mw.config.get( 'wgUserName' ) === null ) &&
+	init.isInValidNamespace = function ( article ) {
+		// Only in enabled namespaces
+		return $.inArray(
+			new mw.Title( article ).getNamespaceId(),
+			conf.namespaces
+		) !== -1;
+	};
 
-		// User has 'visualeditor-enable' preference enabled (for alpha opt-in)
-		// User has 'visualeditor-betatempdisable' preference disabled
-		// Because user.options is embedded in the HTML and cached per-page for anons on wikis
-		// with static caching (e.g. wgUseFileCache or reverse-proxy) ignore user.options for
-		// anons as it is likely outdated.
-		(
-			mw.config.get( 'wgUserName' ) === null ?
-				( conf.defaultUserOptions.enable && !conf.defaultUserOptions.betatempdisable ) :
-				(
-					mw.user.options.get( 'visualeditor-enable', conf.defaultUserOptions.enable ) &&
-						!mw.user.options.get(
-							'visualeditor-betatempdisable',
-							conf.defaultUserOptions.betatempdisable
-						)
-				)
-		)
-	);
-
-	// Whether VisualEditor should be available for the current user, page, wiki, mediawiki skin,
-	// browser etc.
-	init.isAvailable = function ( article ) {
-		return (
-			// Disable on redirect pages until redirects are editable (bug 47328)
-			// Property wgIsRedirect is relatively new in core, many cached pages
-			// don't have it yet. We do a best-effort approach using the url query
-			// which will cover all working redirect (the only case where one can
-			// read a redirect page without ?redirect=no is in case of broken or
-			// double redirects).
-			!(
-				article === mw.config.get( 'wgRelevantPageName' ) &&
-				mw.config.get( 'wgIsRedirect', !!uri.query.redirect )
-			) &&
-
-			support.visualEditor &&
-
-			userPrefEnabled &&
-
-			// Only in supported skins
-			$.inArray( mw.config.get( 'skin' ), conf.skins ) !== -1 &&
-
-			// Only in enabled namespaces
-			$.inArray(
-				new mw.Title( article ).getNamespaceId(),
-				conf.namespaces
-			) !== -1
-		);
+	init.canCreatePageUsingVE = function () {
+		return browserSupported && vePreferred;
 	};
 
 	// Note: Though VisualEditor itself only needs this exposure for a very small reason
@@ -300,42 +314,9 @@
 	//
 	// The VE global was once available always, but now that platform integration initialisation
 	// is properly separated, it doesn't exist until the platform loads VisualEditor core.
-	//
-	// Most of mw.libs.ve is considered subject to change and private.  The exception is that
-	// mw.libs.ve.isAvailable is public, and indicates whether the VE editor itself can be loaded
-	// on this page. See above for why it may be false.
-	mw.libs.ve = init;
+	window.mw.libs.ve = init;
 
-	thisPageIsAvailable = init.isAvailable( mw.config.get( 'wgRelevantPageName' ) );
-
-	if ( !thisPageIsAvailable ) {
-		$edit = $( '#ca-edit' );
-		$( 'html' ).addClass( 've-not-available' );
-		$( '#ca-ve-edit' ).attr( 'href', $edit.attr( 'href' ) );
-		$edit.parent().remove();
-	} else {
-		$( 'html' ).addClass( 've-available' );
-	}
-
-	if ( !userPrefEnabled ) {
-		return;
-	}
-
-	if ( thisPageIsAvailable ) {
-		$( function () {
-			if ( isViewPage ) {
-				if ( init.activateOnPageLoad ) {
-					getTarget().done( function ( target ) {
-						target.activate();
-					} );
-				}
-			}
-			init.setupSkin();
-		} );
-	}
-
-	// Redlinks
-	$( function () {
+	function setupRedlinks() {
 		$( document ).on(
 			'mouseover click',
 			'a[href*="action=edit"][href*="&redlink"]:not([href*="veaction=edit"])',
@@ -345,10 +326,54 @@
 					articlePath = mw.config.get( 'wgArticlePath' ).replace( '$1', '' ),
 					redlinkArticle = new mw.Uri( href ).path.replace( articlePath, '' );
 
-				if ( init.isAvailable( redlinkArticle ) ) {
+				if ( init.isInValidNamespace( decodeURIComponent( redlinkArticle ) ) ) {
 					$element.attr( 'href', href.replace( 'action=edit', 'veaction=edit' ) );
 				}
 			}
 		);
-	} );
+	}
+
+	function removeVELink() {
+		var $edit = $( '#ca-edit' ),
+			$veEdit = $( '#ca-ve-edit' );
+		// This class may still be used by CSS
+		$( 'html' ).addClass( 've-not-available' );
+		// If VE is the main edit link, clone the href into it
+		if ( vePreferred && $veEdit.length > 0 ) {
+			$veEdit.attr( 'href', $edit.attr( 'href' ) );
+			$edit.parent().remove();
+		} else {
+			$veEdit.parent().remove();
+		}
+	}
+
+	if ( browserSupported ) {
+		if ( viewPage && init.isInValidNamespace( mw.config.get( 'wgRelevantPageName' ) ) ) {
+			$( function () {
+				if ( init.activateOnPageLoad ) {
+					if ( window.veTrack ) {
+						veTrack( {
+							action: 've-edit-page-start',
+							trigger: 'activateOnPageLoad'
+						} );
+					}
+					getTarget().done( function ( target ) {
+						target.activate();
+					} );
+				}
+				init.setupTabs();
+				if ( vePreferred ) {
+					init.setupSectionLinks();
+				}
+			} );
+		} else {
+			removeVELink();
+		}
+
+		if ( vePreferred ) {
+			$( setupRedlinks );
+		}
+	} else {
+		removeVELink();
+	}
 }() );

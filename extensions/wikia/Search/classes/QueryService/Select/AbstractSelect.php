@@ -150,6 +150,8 @@ abstract class AbstractSelect
 				'categories',
 				'hub',
 				'lang',
+				'article_quality_i',
+				'article_type_s'
 			];
 	
 	/**
@@ -198,9 +200,13 @@ abstract class AbstractSelect
 					'total' => $total,
 					'batches' => $total > 0 ? $numPages : 0,
 					'currentBatch' => $total > 0 ? $config->getPage() : 0,
-					'next' => $total > 0 ? min( [ $numPages * $limit, $config->getStart() + $limit ] ) : 0,
+					'next' => 0,
 					'items' => $resultSet->toArray( $fields, $keyField )
 					];
+			if ( $total > 0 ) {
+				$response[ 'next' ] = min( [ $numPages * $limit, $config->getStart() + $limit ] ) +
+					$config->mustAddMatchedRecords() + 1;
+			}
 		} else if ( $fields ) {
 			$response = $resultSet->toArray( $fields, $keyField );
 		} else {
@@ -358,7 +364,8 @@ abstract class AbstractSelect
 	protected function prepareRequest() {
 		$config = $this->getConfig();
 		if ( $config->getPage() > 1 ) {
-			$config->setStart( ( $config->getPage() - 1 ) * $config->getLength() );
+			$start = ( ( $config->getPage() - 1  ) * $config->getLimit() ) -  $config->mustAddMatchedRecords();
+			$config->setStart( $start );
 		}
 		return $this;
 	}
@@ -433,7 +440,7 @@ abstract class AbstractSelect
 		);
 		$service = $this->getService();
 		$langs = $config->getLanguageCode();
-		$langs = is_array( $langs ) ?: [ $langs ];
+		$langs = is_array( $langs ) ? $langs : [ $langs ];
 		foreach( $langs as $lang ) {
 			$wikiMatch = $service->getWikiMatchByHost( $domain, $lang );
 			//if found exit, we look only for first match
@@ -444,15 +451,39 @@ abstract class AbstractSelect
 		if (! empty( $wikiMatch ) && ( $wikiMatch->getId() !== $service->getWikiId() ) &&
 			( !( $config->getCommercialUse() ) ||  (new \LicensedWikisService)->isCommercialUseAllowedById($wikiMatch->getId()) ) ) {
 			$result = $wikiMatch->getResult();
-			$hub = $config->getHub();
-			if ( $result['articles_i'] >= self::ARTICLES_NUM_WIKIMATCH &&
-				( empty($hub) || strtolower($hub) === strtolower( $result['hub_s'] ) ) ) {
+			if ($this->isValidExactMatch($result)) {
 				$config->setWikiMatch( $wikiMatch );
 			}
 		}
 		return $config->getWikiMatch();
 	}
-	
+
+	/**
+	 * @param $result
+	 * @return bool
+	 */
+	protected function isValidExactMatch($result) {
+		$config = $this->getConfig();
+		$hub = $config->getHub();
+		if ( !empty( $hub ) ) {
+			if ( strtolower( $result['hub_s'] ) !== strtolower( $hub ) ) {
+				return false;
+			}
+		}
+		$hubs = $config->getHubs();
+		if ( !empty( $hubs ) ) {
+			$found = false;
+			foreach ( $hubs as $hub )
+			if ( strtolower( $result['hub_s'] ) === strtolower( trim($hub) ) ) {
+				$found = true;
+			}
+			if ( !$found ) {
+				return false;
+			}
+		}
+		return $result['articles_i'] >= 50;
+	}
+
 	/**
 	 * This allows internal manipulation of the specific core being queried by this service.
 	 * There is probably a better way to do this, but this is the least disruptive way to handle this somewhat circular dependency.

@@ -13,11 +13,11 @@ define('wikia.videohandler.youtube', ['wikia.window', 'wikia.loader'], function 
 	 * @param {Object} params Player params sent from the video handler
 	 * @param {VideoBootstrap} vb Instance of video player
 	 */
-	return function(params, vb) {
+	return function (params, vb) {
 		var player,
 			started = false,
 			ended = false,
-			containerId = vb.timeStampId( 'youtubeVideoPlayer' );
+			containerId = vb.timeStampId('youtubeVideoPlayer');
 
 		// Track that the player is loaded
 		function onPlayerReady() {
@@ -26,11 +26,11 @@ define('wikia.videohandler.youtube', ['wikia.window', 'wikia.loader'], function 
 
 		// Track when the content first starts playing
 		function onPlayerStateChange(e) {
-			if ( !started && e.data === 1 ) {
+			if (!started && e.data === 1) {
 				vb.track('content-begin');
 				started = true;
 			}
-			if ( !ended && e.data === 0 ) {
+			if (!ended && e.data === 0) {
 				vb.track('content-end');
 				ended = true;
 			}
@@ -46,11 +46,11 @@ define('wikia.videohandler.youtube', ['wikia.window', 'wikia.loader'], function 
 		}
 
 		// Make sure iframe_api is fully loaded before binding onYouTubeIframeAPIReady event
-		if ( window.YT ) {
+		if (window.YT) {
 			createPlayer();
 		} else {
 
-			window.onYouTubeIframeAPIReady = function() {
+			window.onYouTubeIframeAPIReady = function () {
 				createPlayer();
 			};
 			loader({

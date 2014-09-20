@@ -9,7 +9,7 @@
  */
 
 class WikiaForeignDBFile extends ForeignDBFile {
-	
+
 	protected $oLocalFileLogic = null; // Leaf object
 
 	static function newFromTitle( $title, $repo, $unused = null ) {
@@ -40,7 +40,7 @@ class WikiaForeignDBFile extends ForeignDBFile {
 	 */
 	function __construct( $title, $repo ) {
 		parent::__construct( $title, $repo );
-		
+
 	}
 
 	function  __call( $name, $arguments ) {
@@ -86,12 +86,12 @@ class WikiaForeignDBFile extends ForeignDBFile {
 	public function getUser( $type = 'text' ) {
 		// Try to get video info for this file
 		$info = VideoInfo::newFromTitle( $this->getName() );
-		if ( !empty($info) ) {
+		if ( !empty( $info ) ) {
 			$addedBy = $info->getAddedBy();
 		}
 
 		// If we got an addedBy user ID, use that otherwise fall back to the parent method
-		if ( !empty($addedBy) ) {
+		if ( !empty( $addedBy ) ) {
 			if ( $type == 'text' ) {
 				$user = User::newFromId( $addedBy );
 				if ( $user instanceof User ) {

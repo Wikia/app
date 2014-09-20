@@ -76,169 +76,77 @@ class FilePageController extends WikiaController {
 	}
 
 	/**
-	 * This method takes the minimum data provided in summary (at least an article title
-	 * an article ID and namespace ID) and fills in additional details needed to show
-	 * an image, a snippet and some links to the source article.
-	 *
-	 * @requestParam summary array (required) An array of associative arrays.  This data is
-	 *                                        returned by fileUsage above as $summary
-	 * @requestParam type string (optional) Can be 'global' or 'local'.  Defaults to 'local'.
-	 *                                      Determines whether to grab summary data from the local wiki
-	 *                                      or from an external wiki
+	 * Figure out what articles include this file from any wiki
 	 */
-	public function fileList() {
+	public function getGlobalUsage() {
 		wfProfileIn( __METHOD__ );
 
-		$summary = $this->getVal( 'summary', '' );
-		$type = $this->getVal( 'type', '' );
-		$result = array();
-		if ( empty( $summary ) || empty( $type ) ) {
-			$this->result = $result;
+		if ( empty( $this->wg->EnableGlobalUsageExt ) ) {
+			$this->summary = array();
+			wfProfileOut( __METHOD__ );
 			return;
 		}
 
-		if ( $type === 'global' ) {
-			$expandedSummary = $this->addGlobalSummary( $summary );
-		} else {
-			$expandedSummary = $this->addLocalSummary( $summary );
-		}
+		$fileTitle = $this->getVal( 'fileTitle', '' );
+		$titleObj = empty( $fileTitle ) ? $this->wg->Title : Title::newFromText( $fileTitle );
 
-		foreach ( $expandedSummary as $wiki => $articles ) {
-			foreach ( $articles as $article ) {
-				if ( !empty( $article['url'] ) ) {
-					$result[] = $article;
+		$memcKey = $this->getMemcKeyGlobalUsage( $titleObj->getDBkey() );
+		$globalUsage = $this->wg->Memc->get( $memcKey );
+		if ( !is_array( $globalUsage ) ) {
+			// Query the global usage table to see where the current File title is used
+			$db = wfGetDB( DB_SLAVE, array(), $this->wg->GlobalUsageDatabase );
+
+			$gilTo = $db->addQuotes( $titleObj->getDBkey() );
+			$wiki = $db->addQuotes( $this->wg->DBname );
+
+			// The 'limit' parameter is used by both usage methods we forward to as a way to limit
+			// the number of rows returned.  This is a safeguard against extreme cases
+			$limit = self::LIMIT_GLOBAL_USAGE;
+
+			$sql = <<<SQL
+				SELECT *
+				FROM (
+					SELECT  *
+					FROM `globalimagelinks`
+					WHERE gil_to = $gilTo AND gil_wiki != $wiki
+					ORDER BY gil_wiki, gil_page_namespace_id
+					LIMIT 1000
+				) s
+				GROUP BY gil_wiki
+				LIMIT $limit
+SQL;
+			$result = $db->query( $sql, __METHOD__ );
+
+			// We need to make sure $globalUsage is an array. If the query below returns no rows, $globalUsage
+			// ends up being null due to it's initial assignment of $globalUsage = $this->wg->Memc->get( $memcKey );
+			$globalUsage = array();
+			while ( $row = $db->fetchObject( $result ) ) {
+
+				// Don't show private wikis in the list of global usage for a video
+				$wikiId = WikiFactory::DBtoID( $row->gil_wiki );
+				$isPrivate = WikiFactory::getVarByName( 'wgIsPrivateWiki', $wikiId )->cv_value;
+				// getVarByName returns a serialized value, eg 'b:1'
+				$isPrivate = unserialize( $isPrivate );
+
+				if ( $isPrivate ) {
+					continue;
 				}
+
+				$globalUsage[$row->gil_wiki][] = [
+					'image' => $row->gil_page_title,
+					'id' => $row->gil_page,
+					'namespace_id' => $row->gil_page_namespace_id,
+					'title' => $row->gil_to,
+					'wiki' => $row->gil_wiki,
+				];
 			}
+
+			$this->wg->Memc->set( $memcKey, $globalUsage, 60*60 );
 		}
 
-		$this->fileList = $result;
-		$this->type = $type;
+		$this->summary = $globalUsage;
 
 		wfProfileOut( __METHOD__ );
-	}
-
-	private function nameToTitle ( $dbName ) {
-		$wikiData = WikiFactory::getWikiByDB( $dbName );
-		if ( empty( $wikiData ) ) {
-			return '';
-		} else {
-			return $wikiData->city_title;
-		}
-	}
-
-	/**
-	 * Controller to handle showing pages related to the current file.  Uses
-	 * the RelatedPages extension to render the final HTML
-	 */
-	public function relatedPages() {
-		wfProfileIn( __METHOD__ );
-
-		$this->text = '';
-
-		if ( !class_exists( 'RelatedPages' ) ) {
-			wfProfileOut( __METHOD__ );
-			return;
-		}
-
-		# Find the first page that links to this current file page that has a category
-		$pageId = $this->firstPageWithCategory();
-		if ( empty( $pageId ) ) {
-			wfProfileOut( __METHOD__ );
-			return;
-		}
-
-		# Get the title object
-		$title = Title::newFromID( $pageId );
-		if ( empty($title) ) {
-			wfProfileOut( __METHOD__ );
-			return;
-		}
-
-		# Get the categories for this title
-		$cats = $title->getParentCategories();
-		if ( !count( $cats ) ) {
-			wfProfileOut( __METHOD__ );
-			return;
-		}
-		$titleCats = array();
-
-		# Construct an array of category names to feed to the RelatedPages extension
-		foreach ( $cats as $cat_text => $title_text ) {
-			$categoryTitle = Title::newFromText( $cat_text );
-			$titleCats[] = $categoryTitle->getDBkey();
-		}
-
-		# Seed the RelatedPages instance with the categories we found.  Normally
-		# categories are set via a hook in the page render process, so we have to
-		# supply our own here.
-		$relatedPages = RelatedPages::getInstance();
-		$relatedPages->setCategories( $titleCats );
-
-		# Rendering the RelatedPages index with our alternate title and pre-seeded categories.
-		$this->text = $this->app->renderView( 'RelatedPages', 'section', [ "altTitle" => $title, "anyNS" => true ] );
-
-		wfProfileOut( __METHOD__ );
-	}
-
-	/**
-	 * Controller to display a caption under the video, including provider and views
-	 */
-	public function videoCaption() {
-		wfProfileIn( __METHOD__ );
-
-		$provider = $this->getVal( 'provider' );
-		if ( !empty( $provider ) ) {
-			$providerName = explode( '/', $provider );
-			$provider = array_pop( $providerName );
-		}
-
-		$expireDate = $this->getVal( 'expireDate', '' );
-		if ( !empty( $expireDate ) ) {
-			$date = $this->wg->Lang->date( $expireDate );
-			$expireDate = wfMessage( 'video-page-expires', $date )->text();
-		}
-
-		$this->provider = ucwords( $provider );
-		$this->detailUrl = $this->getVal( 'detailUrl' );
-		$this->providerUrl = $this->getVal( 'providerUrl' );
-		$this->expireDate = $expireDate;
-		$this->viewCount = $this->getVal( 'views' );
-
-		wfProfileOut( __METHOD__ );
-	}
-
-	private function firstPageWithCategory () {
-		wfProfileIn( __METHOD__ );
-
-		$target = $this->wg->Title->getDBkey();
-		$dbr = wfGetDB( DB_SLAVE );
-
-		// We want to find the first page that has a link to the current file page AND
-		// has at least one category associated with it.  The categor(ies) are how
-		// the RelatedPages extention determines what's related.  The query looks something
-		// like:
-		//
-		//     SELECT distinct(page_id) as page_id
-		//       FROM imagelinks, page, categorylinks
-		//      WHERE il_to = 'Scooby_Eats_Scooby_Snacks'
-		//        AND il_from = page_id
-		//        AND page_is_redirect = 0
-		//        AND cl_from = page_id
-		//      LIMIT 1
-		$res = $dbr->select(
-			array( 'imagelinks', 'page', 'categorylinks' ),
-			array( 'distinct(page_id) as page_id' ),
-			array( 'il_to' => $target, 'il_from = page_id', 'page_is_redirect = 0', 'cl_from = page_id' ),
-			__METHOD__,
-			array( 'LIMIT' => 1 )
-		);
-
-		$info = $res->fetchObject();
-		$dbr->freeResult( $res );
-
-		wfProfileOut( __METHOD__ );
-
-		return empty($info) ? null : $info->page_id;
 	}
 
 	/**
@@ -309,8 +217,8 @@ class FilePageController extends WikiaController {
 				$seen[$page->page_title] = 1;
 
 				$summary[] = array("title"        => $page->page_title,
-								   "id"           => $page->page_id,
-								   "namespace_id" => $page->page_namespace,
+					"id"           => $page->page_id,
+					"namespace_id" => $page->page_namespace,
 				);
 
 				// Keep track of whether we've reach the limit
@@ -324,22 +232,6 @@ class FilePageController extends WikiaController {
 		$this->summary = $summary;
 
 		wfProfileOut( __METHOD__ );
-	}
-
-	/**
-	 * Callback for usort() to do link sorts by (namespace, title)
-	 * Function copied from Title::compare()
-	 *
-	 * @param $a object page to compare with
-	 * @param $b object page to compare with
-	 * @return Integer: result of string comparison, or namespace comparison
-	 */
-	protected function compare( $a, $b ) {
-		if ( $a->page_namespace == $b->page_namespace ) {
-			return strcmp( $a->page_title, $b->page_title );
-		} else {
-			return $a->page_namespace - $b->page_namespace;
-		}
 	}
 
 	/**
@@ -362,97 +254,62 @@ class FilePageController extends WikiaController {
 	}
 
 	/**
-	 * Figure out what articles include this file from any wiki
+	 * Callback for usort() to do link sorts by (namespace, title)
+	 * Function copied from Title::compare()
+	 *
+	 * @param $a object page to compare with
+	 * @param $b object page to compare with
+	 * @return Integer: result of string comparison, or namespace comparison
 	 */
-	public function getGlobalUsage() {
+	protected function compare( $a, $b ) {
+		if ( $a->page_namespace == $b->page_namespace ) {
+			return strcmp( $a->page_title, $b->page_title );
+		} else {
+			return $a->page_namespace - $b->page_namespace;
+		}
+	}
+
+	/**
+	 * This method takes the minimum data provided in summary (at least an article title
+	 * an article ID and namespace ID) and fills in additional details needed to show
+	 * an image, a snippet and some links to the source article.
+	 *
+	 * @requestParam summary array (required) An array of associative arrays.  This data is
+	 *                                        returned by fileUsage above as $summary
+	 * @requestParam type string (optional) Can be 'global' or 'local'.  Defaults to 'local'.
+	 *                                      Determines whether to grab summary data from the local wiki
+	 *                                      or from an external wiki
+	 */
+	public function fileList() {
 		wfProfileIn( __METHOD__ );
 
-		if ( empty( $this->wg->EnableGlobalUsageExt ) ) {
-			$this->summary = array();
+		$summary = $this->getVal( 'summary', '' );
+		$type = $this->getVal( 'type', '' );
+		$result = array();
+		if ( empty( $summary ) || empty( $type ) ) {
+			$this->result = $result;
 			wfProfileOut( __METHOD__ );
 			return;
 		}
 
-		$fileTitle = $this->getVal( 'fileTitle', '' );
-		$titleObj = empty( $fileTitle ) ? $this->wg->Title : Title::newFromText( $fileTitle );
-
-		$memcKey = $this->getMemcKeyGlobalUsage( $titleObj->getDBkey() );
-		$globalUsage = $this->wg->Memc->get( $memcKey );
-		if ( !is_array( $globalUsage ) ) {
-			// Query the global usage table to see where the current File title is used
-			$db = wfGetDB( DB_SLAVE, array(), $this->wg->GlobalUsageDatabase );
-
-			$gilTo = $db->addQuotes( $titleObj->getDBkey() );
-			$wiki = $db->addQuotes( $this->wg->DBname );
-
-			// The 'limit' parameter is used by both usage methods we forward to as a way to limit
-			// the number of rows returned.  This is a safeguard against extreme cases
-			$limit = self::LIMIT_GLOBAL_USAGE;
-
-			$sql = <<<SQL
-				SELECT *
-				FROM (
-					SELECT  *
-					FROM `globalimagelinks`
-					WHERE gil_to = $gilTo AND gil_wiki != $wiki
-					ORDER BY gil_wiki, gil_page_namespace_id
-					LIMIT 1000
-				) s
-				GROUP BY gil_wiki
-				LIMIT $limit
-SQL;
-			$result = $db->query( $sql, __METHOD__ );
-
-			// We need to make sure $globalUsage is an array. If the query below returns no rows, $globalUsage
-			// ends up being null due to it's initial assignment of $globalUsage = $this->wg->Memc->get( $memcKey );
-			$globalUsage = array();
-        
-			while ( $row = $db->fetchObject( $result ) ) {
-				$globalUsage[$row->gil_wiki][] = [
-					'image' => $row->gil_page_title,
-					'id' => $row->gil_page,
-					'namespace_id' => $row->gil_page_namespace_id,
-					'title' => $row->gil_to,
-					'wiki' => $row->gil_wiki,
-				];
-			}
-
-			$this->wg->Memc->set( $memcKey, $globalUsage, 60*60 );
+		if ( $type === 'global' ) {
+			$expandedSummary = $this->addGlobalSummary( $summary );
+		} else {
+			$expandedSummary = $this->addLocalSummary( $summary );
 		}
 
-		$this->summary = $globalUsage;
+		foreach ( $expandedSummary as $wiki => $articles ) {
+			foreach ( $articles as $article ) {
+				if ( !empty( $article['url'] ) ) {
+					$result[] = $article;
+				}
+			}
+		}
+
+		$this->fileList = $result;
+		$this->type = $type;
 
 		wfProfileOut( __METHOD__ );
-	}
-
-	/**
-	 * Get memcache key for global usage of the video
-	 * @param string $title
-	 * @return string
-	 */
-	public function getMemcKeyGlobalUsage( $title ) {
-		return wfSharedMemcKey( 'filepage', 'globalusage', md5( $title ) );
-	}
-
-	/**
-	 * Clear cache for global usage of the video
-	 * @param string $title
-	 */
-	public function invalidateCacheGlobalUsage( $title ) {
-		$this->wg->Memc->delete( $this->getMemcKeyGlobalUsage( $title ) );
-	}
-
-	/**
-	 * Add more detail for local articles to the current $data by forwarding to
-	 * the ArticleSummaryController
-	 * @param array $data
-	 * @return array
-	 */
-	public function addLocalSummary ( $data ) {
-		return $this->addSummary( $data, function ( $dbName, $articleIds ) {
-			$response = $this->sendRequest( 'ArticleSummaryController', 'blurb', array( 'ids' => implode( ',', $articleIds ) ) );
-			return $response->getData();
-		});
 	}
 
 	/**
@@ -464,6 +321,7 @@ SQL;
 		return $this->addSummary( $data, function ( $dbName, $articleIds ) {
 			$ids = array();
 			$result = array();
+
 			foreach ( $articleIds as $id ) {
 				$memcKey = $this->getMemcKeyGlobalSummary( $dbName, $id );
 				$summary = $this->wg->Memc->get( $memcKey );
@@ -499,22 +357,16 @@ SQL;
 	}
 
 	/**
-	 * Get memcache key for summary of the global usage
-	 * @param string $dbName
-	 * @param integer $pageId
-	 * @return string
+	 * Add more detail for local articles to the current $data by forwarding to
+	 * the ArticleSummaryController
+	 * @param array $data
+	 * @return array
 	 */
-	public function getMemcKeyGlobalSummary( $dbName, $pageId ) {
-		return wfSharedMemcKey( 'filepage', 'globalusage', $dbName, $pageId );
-	}
-
-	/**
-	 * Clear cache for summary of the global usage
-	 * @param string $dbName
-	 * @param integer $pageId
-	 */
-	public function invalidateCacheGlobalSummary( $dbName, $pageId ) {
-		$this->wg->Memc->delete( $this->getMemcKeyGlobalUsage( $dbName, $pageId ) );
+	public function addLocalSummary ( $data ) {
+		return $this->addSummary( $data, function ( $dbName, $articleIds ) {
+			$response = $this->sendRequest( 'ArticleSummaryController', 'blurb', array( 'ids' => implode( ',', $articleIds ) ) );
+			return $response->getData();
+		});
 	}
 
 	private function addSummary ( $data, $summaryFunc ) {
@@ -571,5 +423,174 @@ SQL;
 		wfProfileOut( __METHOD__ );
 
 		return $fullData;
+	}
+
+	/**
+	 * Controller to handle showing pages related to the current file.  Uses
+	 * the RelatedPages extension to render the final HTML
+	 */
+	public function relatedPages() {
+		wfProfileIn( __METHOD__ );
+
+		$this->text = '';
+
+		if ( !class_exists( 'RelatedPages' ) ) {
+			wfProfileOut( __METHOD__ );
+			return;
+		}
+
+		# Find the first page that links to this current file page that has a category
+		$pageId = $this->firstPageWithCategory();
+		if ( empty( $pageId ) ) {
+			wfProfileOut( __METHOD__ );
+			return;
+		}
+
+		# Get the title object
+		$title = Title::newFromID( $pageId );
+		if ( empty($title) ) {
+			wfProfileOut( __METHOD__ );
+			return;
+		}
+
+		# Get the categories for this title
+		$cats = $title->getParentCategories();
+		if ( !count( $cats ) ) {
+			wfProfileOut( __METHOD__ );
+			return;
+		}
+		$titleCats = array();
+
+		# Construct an array of category names to feed to the RelatedPages extension
+		foreach ( $cats as $cat_text => $title_text ) {
+			$categoryTitle = Title::newFromText( $cat_text );
+			$titleCats[] = $categoryTitle->getDBkey();
+		}
+
+		# Seed the RelatedPages instance with the categories we found.  Normally
+		# categories are set via a hook in the page render process, so we have to
+		# supply our own here.
+		$relatedPages = RelatedPages::getInstance();
+		$relatedPages->setCategories( $titleCats );
+
+		# Rendering the RelatedPages index with our alternate title and pre-seeded categories.
+		$this->text = $this->app->renderView( 'RelatedPages', 'section', [ "altTitle" => $title, "anyNS" => true ] );
+
+		wfProfileOut( __METHOD__ );
+	}
+
+	private function firstPageWithCategory () {
+		wfProfileIn( __METHOD__ );
+
+		$target = $this->wg->Title->getDBkey();
+		$dbr = wfGetDB( DB_SLAVE );
+
+		// We want to find the first page that has a link to the current file page AND
+		// has at least one category associated with it.  The categor(ies) are how
+		// the RelatedPages extention determines what's related.  The query looks something
+		// like:
+		//
+		//     SELECT distinct(page_id) as page_id
+		//       FROM imagelinks, page, categorylinks
+		//      WHERE il_to = 'Scooby_Eats_Scooby_Snacks'
+		//        AND il_from = page_id
+		//        AND page_is_redirect = 0
+		//        AND cl_from = page_id
+		//      LIMIT 1
+		$res = $dbr->select(
+			array( 'imagelinks', 'page', 'categorylinks' ),
+			array( 'distinct(page_id) as page_id' ),
+			array( 'il_to' => $target, 'il_from = page_id', 'page_is_redirect = 0', 'cl_from = page_id' ),
+			__METHOD__,
+			array( 'LIMIT' => 1 )
+		);
+
+		$info = $res->fetchObject();
+		$dbr->freeResult( $res );
+
+		wfProfileOut( __METHOD__ );
+
+		return empty($info) ? null : $info->page_id;
+	}
+
+
+	/**
+	 * Controller to display a caption under the video, including provider and views
+	 */
+	public function videoCaption() {
+		wfProfileIn( __METHOD__ );
+
+		$provider = $this->getVal( 'provider' );
+		if ( !empty( $provider ) ) {
+			$providerName = explode( '/', $provider );
+			$provider = array_pop( $providerName );
+		}
+
+		$expireDate = $this->getVal( 'expireDate', '' );
+		if ( !empty( $expireDate ) ) {
+			$date = $this->wg->Lang->date( $expireDate );
+			$expireDate = wfMessage( 'video-page-expires', $date )->text();
+		}
+
+		// Get restricted country list
+		$regionalRestrictions = $this->getVal( 'regionalRestrictions', '' );
+		if ( !empty( $regionalRestrictions ) ) {
+			// Create a list of restrictions to pass to the front end
+			$regionalRestrictions = json_encode( explode( ',', str_replace( ', ', ',', $regionalRestrictions ) ) );
+		}
+
+		$this->provider = ucwords( $provider );
+		$this->detailUrl = $this->getVal( 'detailUrl' );
+		$this->providerUrl = $this->getVal( 'providerUrl' );
+		$this->expireDate = $expireDate;
+		$this->regionalRestrictions = $regionalRestrictions;
+		$this->viewCount = $this->getVal( 'views' );
+
+		wfProfileOut( __METHOD__ );
+	}
+
+	/**
+	 * Get memcache key for global usage of the video
+	 * @param string $title
+	 * @return string
+	 */
+	public function getMemcKeyGlobalUsage( $title ) {
+		return wfSharedMemcKey( 'filepage', 'globalusage', md5( $title ) );
+	}
+
+	/**
+	 * Clear cache for global usage of the video
+	 * @param string $title
+	 */
+	public function invalidateCacheGlobalUsage( $title ) {
+		$this->wg->Memc->delete( $this->getMemcKeyGlobalUsage( $title ) );
+	}
+
+	/**
+	 * Get memcache key for summary of the global usage
+	 * @param string $dbName
+	 * @param integer $pageId
+	 * @return string
+	 */
+	public function getMemcKeyGlobalSummary( $dbName, $pageId ) {
+		return wfSharedMemcKey( 'filepage', 'globalusage', $dbName, $pageId );
+	}
+
+	/**
+	 * Clear cache for summary of the global usage
+	 * @param string $dbName
+	 * @param integer $pageId
+	 */
+	public function invalidateCacheGlobalSummary( $dbName, $pageId ) {
+		$this->wg->Memc->delete( $this->getMemcKeyGlobalUsage( $dbName, $pageId ) );
+	}
+
+	private function nameToTitle ( $dbName ) {
+		$wikiData = WikiFactory::getWikiByDB( $dbName );
+		if ( empty( $wikiData ) ) {
+			return '';
+		} else {
+			return $wikiData->city_title;
+		}
 	}
 }

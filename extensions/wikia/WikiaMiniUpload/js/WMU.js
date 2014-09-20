@@ -360,10 +360,29 @@ function WMU_loadMainFromView() {
 }
 
 
-function WMU_show( e, gallery, box, align, thumb, size, caption, link ) {
+//function WMU_show( e, gallery, box, align, thumb, size, caption, link ) {
+function WMU_show( event, options ) {
+	var track = options && options.track;
+
 	WMU_track({
 		action: Wikia.Tracker.ACTIONS.OPEN
 	});
+
+	// WikiaEditor sends options via event.data so see if tracking is sent that way too.
+	if (!track && event && event.data && event.data.track) {
+		track = event.data.track;
+	}
+
+	// Any extra tracking
+	if (track) {
+		Wikia.Tracker.track({
+			action: track.action || Wikia.Tracker.ACTIONS.OPEN,
+			category: track.category || 'vet',
+			label: track.label || '',
+			value: track.value || null,
+			trackingMethod: track.method || 'both'
+		});
+	}
 
 	// reset mode to support normal editor usage
 	WMU_openedInEditor = true;
@@ -390,39 +409,39 @@ function WMU_show( e, gallery, box, align, thumb, size, caption, link ) {
 	WMU_wysiwygStart = 1;
 	WMU_gallery = -1;
 
-	if(typeof gallery != "undefined") {
+	if (options && options.gallery) {
 		// if in preview mode, go away
-		if ($( '#editform' ).length && (typeof e != 'number') ) {
+		if ($( '#editform' ).length && (typeof event != 'number') ) {
 			alert( wmu_no_preview );
 			return false;
 		}
-		WMU_gallery = gallery;
-		WMU_box = box;
+		WMU_gallery = options.gallery;
+		WMU_box = options.box;
 		// they only are given when the gallery is given...
-		if(typeof align != "undefined") {
-			WMU_align = align;
+		if(options.align) {
+			WMU_align = options.align;
 		}
 
-		if(typeof thumb != "undefined") {
-			WMU_thumb = thumb;
+		if (options.thumb) {
+			WMU_thumb = options.thumb;
 		}
 
-		if(typeof size != "undefined") {
-			WMU_size = size;
+		if (options.size) {
+			WMU_size = options.size;
 		}
 
-		if(typeof caption != "undefined") {
-			WMU_caption = caption;
+		if (options.caption) {
+			WMU_caption = options.caption;
 		}
 
-		if(typeof link != "undefined") {
-			WMU_link = link;
+		if (options.link) {
+			WMU_link = options.link;
 		}
 	}
 
 	// TODO: FCK support - to be removed after full switch to RTE
-	if(typeof e == 'number') {
-		WMU_refid = e;
+	if(typeof event == 'number') {
+		WMU_refid = event;
 		if(WMU_refid != -1) {
 			if( (typeof(FCK) != 'undefined') && FCK.wysiwygData[WMU_refid].exists) {
 				// go to details page
@@ -432,16 +451,15 @@ function WMU_show( e, gallery, box, align, thumb, size, caption, link ) {
 			}
 		}
 
-	} else if( typeof e == 'object' ) { // for Opera and Chrome
-		// macbre: CK support
-		if (typeof e.type != 'undefined' && e.type == 'rte') {
+	} else if( typeof event == 'object' ) {
+		if (typeof event.type != 'undefined' && event.type == 'rte') {
 			// get image from event data
-			window.WMU_RTEImage = e.data.element;
+			window.WMU_RTEImage = event.data.element;
 			if (window.WMU_RTEImage) {
 				// edit an image
 				var data = window.WMU_RTEImage.getData();
 
-				if (e.data.isPlaceholder) {
+				if (event.data.isPlaceholder) {
 					// image placeholder
 					RTE.log('image placeholder clicked');
 

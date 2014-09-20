@@ -3,6 +3,8 @@
 if ( !defined( 'MEDIAWIKI' ) )
 	die( 1 );
 
+use Wikia\Logger\WikiaLogger;
+
 class CategoryViewer extends ContextSource {
 	var $limit, $from, $until,
 		$articles, $articles_start_char,

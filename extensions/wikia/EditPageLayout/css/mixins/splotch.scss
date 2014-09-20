@@ -1,10 +1,10 @@
 // copied from Chat.scss
 // FIXME - this should probably be in skins/oasis
 @mixin splotch {
-	@include border-radius(10px);
 	@include linear-gradient($color-epl-splotch-background, top, $color-epl-splotch-highlight, 0, $color-epl-splotch-background, 50%, $color-epl-splotch-highlight, 100%);
 	background-clip: padding-box;
 	border: 1px solid white;
+	border-radius: 10px;
 	color: white;
 	display: inline-block;
 	font-size: 9px;

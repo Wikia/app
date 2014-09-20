@@ -7,11 +7,6 @@
  * @version: $Id$
  */
 
-if ( !defined( 'MEDIAWIKI' ) ) {
-    echo "This is MediaWiki extension and cannot be used standalone.\n";
-    exit( 1 ) ;
-}
-
 class ListusersHooks {
 
 	/**

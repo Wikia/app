@@ -1,10 +1,14 @@
-/* exported AdProviderSevenOneMedia */
+/*global define*/
 /* jshint maxparams:false */
-
-var AdProviderSevenOneMedia = function (log, window, adTracker, $, sevenOneMedia) {
+define('ext.wikia.adEngine.provider.sevenOneMedia', [
+	'wikia.log',
+	'wikia.window',
+	'jquery',
+	'ext.wikia.adEngine.sevenOneMediaHelper'
+], function (log, window, $, sevenOneMedia) {
 	'use strict';
 
-	var logGroup = 'AdProviderSevenOneMedia',
+	var logGroup = 'ext.wikia.adEngine.provider.sevenOneMedia',
 		slotMap = {
 			TOP_RIGHT_BOXAD: 'rectangle1',
 			HOME_TOP_RIGHT_BOXAD: 'rectangle1',
@@ -65,19 +69,15 @@ var AdProviderSevenOneMedia = function (log, window, adTracker, $, sevenOneMedia
 		log(['fillInSlot', slotname], 'info', logGroup);
 
 		var slotDeName = slotMap[slotname],
-			$slot,
-			slotTracker = adTracker.trackSlot('sevenonemedia', slotname);
+			$slot;
 
 		function clearDefaultHeight() {
 			$('#' + slotname).removeClass('default-height');
 		}
 
 		function success() {
-			slotTracker.success();
 			pSuccess();
 		}
-
-		slotTracker.init();
 
 		if (slotDeName === 'topAds') {
 			makeTopAds();
@@ -105,4 +105,4 @@ var AdProviderSevenOneMedia = function (log, window, adTracker, $, sevenOneMedia
 		fillInSlot: fillInSlot,
 		canHandleSlot: canHandleSlot
 	};
-};
+});

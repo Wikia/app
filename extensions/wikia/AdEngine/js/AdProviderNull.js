@@ -1,8 +1,8 @@
-/*exported AdProviderNull*/
-var AdProviderNull = function (log, slotTweaker) {
+/*global define*/
+define('ext.wikia.adEngine.provider.null', ['wikia.log', 'ext.wikia.adEngine.slotTweaker'], function (log, slotTweaker) {
 	'use strict';
 
-	var logGroup = 'AdProviderNull';
+	var logGroup = 'ext.wikia.adEngine.provider.null';
 
 	function canHandleSlot() {
 		return true;
@@ -11,7 +11,6 @@ var AdProviderNull = function (log, slotTweaker) {
 	function fillInSlot(slotname, success) {
 		log(['fillInSlot', slotname], 5, logGroup);
 		slotTweaker.hide(slotname);
-		slotTweaker.hideSelfServeUrl(slotname);
 		success();
 	}
 
@@ -20,4 +19,4 @@ var AdProviderNull = function (log, slotTweaker) {
 		canHandleSlot: canHandleSlot,
 		fillInSlot: fillInSlot
 	};
-};
+});

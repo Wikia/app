@@ -854,21 +854,7 @@ class ArticleComment {
 
 		// Purge squid proxy URLs for ajax loaded content if we are lazy loading
 		if ( !empty( $wgArticleCommentsLoadOnDemand ) ) {
-			$urls = array();
-			$articleId = $title->getArticleId();
-
-			// Only page 1 is cached in varnish when lazy loading is on
-			// Other pages load with action=ajax&rs=ArticleCommentsAjax&method=axGetComments
-			$urls[] = ArticleCommentsController::getUrl(
-				'Content',
-				array(
-					'format' => 'html',
-					'articleId' => $articleId,
-					'page' => 1,
-					'skin' => 'true'
-				)
-			);
-
+			$urls = self::getSquidURLs( $title );
 			$squidUpdate = new SquidUpdate( $urls );
 			$squidUpdate->doUpdate();
 
@@ -886,6 +872,30 @@ class ArticleComment {
 		}
 
 		wfProfileOut( __METHOD__ );
+	}
+
+	/**
+	 * @param Title $title
+	 */
+	public static function getSquidURLs( Title $title ) {
+		$urls = [];
+		$articleId = $title->getArticleId();
+
+		// Only page 1 is cached in varnish when lazy loading is on
+		// Other pages load with action=ajax&rs=ArticleCommentsAjax&method=axGetComments
+		$urls[] = ArticleCommentsController::getUrl(
+			'Content',
+			array(
+				'format' => 'html',
+				'articleId' => $articleId,
+				'page' => 1,
+				'skin' => 'true'
+			)
+		);
+
+		wfRunHooks( 'ArticleCommentGetSquidURLs', array( $title, &$urls ) );
+
+		return $urls;
 	}
 
 	/**
@@ -1091,8 +1101,11 @@ class ArticleComment {
 
 		$taskParams['page'] = $oCommentTitle->getFullText();
 		$taskParams['newpage'] = $newCommentTitle->getFullText();
-		$thisTask = new MultiMoveTask( $taskParams );
-		$submit_id = $thisTask->submitForm();
+
+		$task = new \Wikia\Tasks\Tasks\MultiTask();
+		$task->call('move', $taskParams);
+		$submit_id = $task->queue();
+
 		Wikia::log( __METHOD__, 'deletecomment', "Added move task ($submit_id) for {$taskParams['page']} page" );
 
 		wfProfileOut( __METHOD__ );

@@ -13,6 +13,7 @@ class AjaxPollClass {
 	const MEMC_PREFIX_GETVOTES = 'AjaxPollClass::getVotes';
 
 	public $mId, $mBody, $mAttribs, $mParser, $mQuestion, $mStatus, $mTotal;
+	/* @var Title $mTitle */
 	public $mTitle, $mCreated;
 	public $mAnswers = array();
 
@@ -40,8 +41,6 @@ class AjaxPollClass {
 	 * @param Object $parser: Wiki Parser object
 	 */
 	static public function renderFromTag( $input, $params, $parser ) {
-		global $wgOut;
-
 		/**
 		 * ID of the poll
 		 */
@@ -155,7 +154,7 @@ class AjaxPollClass {
 			$votes = $wgMemc->get($memcKey);
 		}
 		if (!empty($votes)) {
-			foreach($votes as $ans => $ansData){
+			foreach($votes as $ansData){
 				$total += $ansData["value"];
 			}
 		} else {
@@ -186,6 +185,7 @@ class AjaxPollClass {
 				$votes[ $nr ][ "percent" ] = round($percent, 2);
 				$votes[ $nr ][ "pixels" ] = $this->percent2pixels( $percent );
 
+				/* @var Language $wgLang */
 				$percent = $wgLang->formatNum(round($percent, 2));
 				$votes[ $nr ][ "title" ] = wfMsg("ajaxpoll-percentVotes", $percent);
 				$votes[ $nr ][ "key" ] = $nr;
@@ -313,6 +313,7 @@ class AjaxPollClass {
 	private function parseInput() {
 
 		$answers = array();
+		$question = '';
 		$lines = explode( "\n", trim( $this->mBody ) );
 		if( is_array( $lines ) ) {
 			foreach( $lines as $nr => $line ) {
@@ -368,7 +369,7 @@ class AjaxPollClass {
 	 * @return array	rendered HTML answer and status of operation
 	 */
 	public function doSubmit( &$request ) {
-		global $wgUser, $wgTitle, $parserMemc;
+		global $wgTitle, $wgMemc;
 		wfProfileIn( __METHOD__ );
 
 		$status = false;
@@ -381,14 +382,8 @@ class AjaxPollClass {
 				// invalidate cache
 				$wgTitle->invalidateCache();
 
-				// clear parser cache
-				$oArticle = new Article($wgTitle);
-				$parserCache =& ParserCache::singleton();
-				$parserMemc->set( $parserCache->getKey($oArticle, $wgUser), null, 0 );
-
-				// Send purge
-				$update = SquidUpdate::newSimplePurge( $wgTitle );
-				$update->doUpdate();
+				// Send purge for the article (don't purge its history page - PLATFORM-92)
+				SquidUpdate::purge([ $wgTitle->getFullURL() ]);
 			} else {
 				$status = wfMsg( "ajaxpoll-error" );
 			}
@@ -402,7 +397,6 @@ class AjaxPollClass {
 		);
 
 		// Purge the vote stats.
-		global $wgMemc;
 		$memcKey = wfMemcKey(self::MEMC_PREFIX_GETVOTES, $this->mId);
 		$wgMemc->delete($memcKey);
 
@@ -475,9 +469,9 @@ class AjaxPollClass {
 	 * create table with update.php
 	 */
 	static public function schemaUpdate() {
-		global $wgDBtype, $wgExtNewFields, $wgExtPGNewFields, $wgExtNewIndexes, $wgExtNewTables;
-		$wgExtNewTables[] = array( "poll_vote", dirname(__FILE__) . "/patch-create-poll_vote.sql" );
-		$wgExtNewTables[] = array( "poll_info", dirname(__FILE__) . "/patch-create-poll_info.sql" );
+		global $wgExtNewTables;
+		$wgExtNewTables[] = array( "poll_vote", __DIR__ . "/patch-create-poll_vote.sql" );
+		$wgExtNewTables[] = array( "poll_info", __DIR__ . "/patch-create-poll_info.sql" );
 		return true;
 	}
 }

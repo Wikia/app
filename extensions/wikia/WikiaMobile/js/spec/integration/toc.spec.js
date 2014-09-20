@@ -7,7 +7,7 @@ describe( "toc module", function () {
 				return [];
 			},
 			list: function(){
-				return [];
+				return ['test'];
 			}
 		},
 		window = {

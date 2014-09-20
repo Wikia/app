@@ -28,7 +28,7 @@ class SpecialStyleguideController extends WikiaSpecialPageController {
 
 		$wgAutoloadClasses['GlobalHeaderController'] = dirname( __FILE__ ) . '/helpers/SpecialStyleguideGlobalHeaderControllerOverride.php';
 
-		$this->response->setCacheValidity(86400);
+		$this->response->setCacheValidity(WikiaResponse::CACHE_STANDARD);
 
 		$subpage = mb_strtolower( $this->getFirstTextAfterSlash( $this->wg->Title->getSubpageText() ) );
 

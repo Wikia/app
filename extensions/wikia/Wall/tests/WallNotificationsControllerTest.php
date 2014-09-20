@@ -16,7 +16,7 @@ class WallNotificationsControllerTest extends WikiaBaseTest {
 	 *
 	 * @dataProvider indexDataProvider
 	 */
-	public function testIndex( $isUserLoggedIn, $isUserAllowed, $wgAtCreateNewWikiPageValue, $expectedInScriptString ) {
+	public function testIndex( $isUserLoggedIn, $isUserAllowed, $wgAtCreateNewWikiPageValue, $hasPrehide ) {
 		$userMock = $this->getMock( 'User', [ 'isLoggedIn', 'isAllowed' ], [], '', false );
 		$userMock->expects( $this->once() )
 			->method( 'isLoggedIn' )
@@ -28,13 +28,8 @@ class WallNotificationsControllerTest extends WikiaBaseTest {
 		$this->mockGlobalVariable( 'wgAtCreateNewWikiPage', $wgAtCreateNewWikiPageValue );
 		$this->mockGlobalVariable( 'wgUser', $userMock );
 
-		$this->app->sendRequest( 'WallNotificationsController', 'Index' );
-
-		if( !is_null( $expectedInScriptString ) ) {
-			$this->assertContains( $expectedInScriptString, $this->app->wg->Out->getScript() );
-		} else {
-			$this->assertNotContains( $expectedInScriptString, $this->app->wg->Out->getScript() );
-		}
+		$resp = $this->app->sendRequest( 'WallNotificationsController', 'Index' );
+		$this->assertEquals( $hasPrehide, is_bool($resp->getVal('prehide')) );
 	}
 
 	public function indexDataProvider() {
@@ -43,49 +38,49 @@ class WallNotificationsControllerTest extends WikiaBaseTest {
 				'isUserLoggedIn' => true,
 				'isUserAllowed' => true,
 				'wgAtCreateNewWikiPageValue' => null,
-				'expectedInScriptString' => 'WallNotifications.js',
+				'hasPrehide' => true,
 				'undefined $wgAtCreateNewWikiPage and user IS logged-in and IS allowed to read -- assets ARE added'
 			],
 			[
 				'isUserLoggedIn' => false,
 				'isUserAllowed' => true,
 				'wgAtCreateNewWikiPageValue' => null,
-				'expectedInScriptString' => null,
+				'hasPrehide' => false,
 				'undefined $wgAtCreateNewWikiPage and user IS NOT logged-in and IS allowed to read -- assets assets ARE NOT added'
 			],
 			[
 				'isUserLoggedIn' => false,
 				'isUserAllowed' => false,
 				'wgAtCreateNewWikiPageValue' => null,
-				'expectedInScriptString' => null,
+				'hasPrehide' => false,
 				'undefined $wgAtCreateNewWikiPage and user IS NOT logged-in and IS NOT allowed to read -- assets assets ARE NOT added'
 			],
 			[
 				'isUserLoggedIn' => false,
 				'isUserAllowed' => false,
 				'wgAtCreateNewWikiPageValue' => true,
-				'expectedInScriptString' => null,
+				'hasPrehide' => false,
 				'A create new wiki page and user IS NOT logged-in and IS NOT allowed to read -- assets assets ARE NOT added'
 			],
 			[
 				'isUserLoggedIn' => true,
 				'isUserAllowed' => true,
 				'wgAtCreateNewWikiPageValue' => true,
-				'expectedInScriptString' => null,
+				'hasPrehide' => false,
 				'A create new wiki page and user IS logged-in and IS allowed to read -- assets ARE NOT added'
 			],
 			[
 				'isUserLoggedIn' => false,
 				'isUserAllowed' => false,
 				'wgAtCreateNewWikiPageValue' => false,
-				'expectedInScriptString' => null,
+				'hasPrehide' => false,
 				'NOT a create new wiki page and user IS NOT logged-in and IS NOT allowed to read -- assets ARE NOT added'
 			],
 			[
 				'isUserLoggedIn' => true,
 				'isUserAllowed' => true,
 				'wgAtCreateNewWikiPageValue' => false,
-				'expectedInScriptString' => 'WallNotifications.js',
+				'hasPrehide' => true,
 				'NOT a create new wiki page and user IS logged-in and IS allowed to read -- assets ARE added'
 			],
 		];

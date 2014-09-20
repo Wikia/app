@@ -1,2 +1,2 @@
 #!/bin/sh
-karma start karma/js-unit.config.js --single-run
+make karma-unit karma-integration

@@ -186,40 +186,10 @@ Class WikiFactoryChangedHooks {
 	static public function BlogArticle($cv_name, $city_id, $value) {
 		if ($cv_name == "wgEnableBlogArticles" && $value == true) {
 			Wikia::log(__METHOD__, $city_id, "{$cv_name} = {$value}");
-			/**
-			 * add task to TaskManager
-			 */
-			if (!class_exists('BlogTask')) {
-				global $IP;
-				extAddBatchTask("$IP/extensions/wikia/Blogs/BlogTask.php", "blog", "BlogTask");
-			}
-			$Task = new BlogTask();
-			$Task->createTask(array("city_id" => $city_id), TASK_QUEUED);
-		}
-		return true;
-	}
 
-	static public function VisualEditor($cv_name, $wiki_id, $value) {
-		global $wgOut;
-		if ($cv_name == 'wgEnableVisualEditorExt') {
-			Wikia::log(__METHOD__, $wiki_id, "{$cv_name} = {$value}");
-
-			// get resource loader url
-			$link = $wgOut->makeResourceLoaderLink('startup', ResourceLoaderModule::TYPE_SCRIPTS);
-			if ($link != null && preg_match("/\"(.*)\"/", $link, $matches)) {
-				// parsed resource loader URL
-				$resourceLoaderURL = parse_url($matches[1]);
-				// parsed wiki URL
-				$wikiURL = parse_url(GlobalTitle::newFromText('Version', NS_SPECIAL, $wiki_id )->getFullURL());
-				// URL to purge (constructed from $resourceLoaderURL and $wikiURL)
-				$purgeURL = $wikiURL['scheme'] . '://' . $wikiURL['host'] . $resourceLoaderURL['path'];
-
-				// purge
-				$update = new SquidUpdate([$purgeURL]);
-				$update->doUpdate();
-			} else {
-				Wikia::log( __METHOD__, false, "Error retreiving script tag for ResourceLoader startup js file");
-			}
+			$task = (new \Wikia\Blogs\BlogTask())->wikiId($city_id);
+			$task->call('maintenance');
+			$task->queue();
 		}
 		return true;
 	}

@@ -74,7 +74,6 @@ class AdminDashboardSpecialPageController extends WikiaSpecialPageController {
 
 		// add messages package
 		JSMessages::enqueuePackage('AdminDashboard', JSMessages::INLINE);
-		$this->response->addAsset('skins/oasis/js/LatestPhotos.js');
 	}
 
 	/**

@@ -10,7 +10,7 @@
  */
 
 (function( window, undefined ) {
-	var possible_domains, i;
+	var possible_domains, i, cookieExists;
 	/**
 	 * Main Tracker
 	 *
@@ -18,10 +18,20 @@
 	 */
 	window._gaq = window._gaq || [];
 
+	cookieExists= function(cookieName) {
+		return document.cookie.indexOf(cookieName) > -1;
+	};
+
 	// Main Roll-up Account - UA-32129070-1
 	window._gaq.push( ['_setAccount', 'UA-32129070-1'] ); // PROD
 	//window._gaq.push(['_setAccount', 'UA-32129070-2']); // DEV
-	window._gaq.push( ['_setSampleRate', '10'] ); // 10% Sampling
+
+	if(!cookieExists('qualaroo_survey_submission')) {
+		window._gaq.push(['_setSampleRate', '10']);
+	} else {
+		// 100% sampling for users who participated in Qualaroo survey
+		window._gaq.push(['_setSampleRate', '100']);
+	}
 
 	if ( window.wgIsGASpecialWiki ) {
 		// Special Wikis account - UA-32132943-1
@@ -29,6 +39,9 @@
 		//window._gaq.push(['special._setAccount', 'UA-32132943-2']); // DEV
 		window._gaq.push( ['special._setSampleRate', '100'] ); // No Sampling
 	}
+
+	window._gaq.push( ['ve._setAccount', 'UA-32132943-4'] ); // PROD
+	window._gaq.push( ['ve._setSampleRate', '100'] ); // No Sampling
 
 	/**
 	 * Wrapper function to a generic _gaq push
@@ -55,16 +68,54 @@
 				continue;
 			}
 
-			// Send to Main Account
 			window._gaq.push( args[i] );
 
-			if ( window.wgIsGASpecialWiki ) {
-				spec = args[i].slice();
-				// Send to Special Wikis Account
-				spec[0] = 'special.' + spec[0];
-				window._gaq.push( spec );
+			// Push to specific namespaces if method not already namespaced
+			if ( args[i][0].indexOf( '.' ) === -1 ) {
+				if ( window.wgIsGASpecialWiki ) {
+					spec = args[i].slice();
+					// Send to Special Wikis Account
+					spec[0] = 'special.' + spec[0];
+					window._gaq.push( spec );
+				}
+
+				// If category is editor-ve, track for VE account
+				if ( args[i][1] && args[i][1] === 'editor-ve' ) {
+					spec = args[i].slice();
+					spec[0] = 've.' + spec[0];
+					window._gaq.push( spec );
+				}
 			}
 		}
+	}
+
+	function getKruxSegment() {
+		var kruxSegment = 'not set',
+			uniqueKruxSegments = {
+				ocry7a4xg: 'Game Heroes 2014',
+				ocr1te1tc: 'Digital DNA 2014',
+				ocr6m2jd6: 'Inquisitive Minds 2014',
+				ocr05ve5z: 'Culture Caster 2014',
+				ocr88oqh9: 'Social Entertainers 2014'
+			},
+			uniqueKruxSegmentsKeys = Object.keys(uniqueKruxSegments),
+			markedSegments = [],
+			kruxSegments = [];
+
+		if (window.localStorage) {
+			kruxSegments = ( window.localStorage.kxsegs || '' ).split( ',' );
+		}
+
+		if ( kruxSegments.length ) {
+			markedSegments = uniqueKruxSegmentsKeys.filter(function(n) {
+				return kruxSegments.indexOf(n) !== -1;
+			});
+			if (markedSegments.length) {
+				kruxSegment = uniqueKruxSegments[markedSegments[0]];
+			}
+		}
+
+		return kruxSegment;
 	}
 
 	// All domains that host content for wikia.
@@ -91,11 +142,11 @@
 			!!window.wgUserName ? 'user' : 'anon', 3] );
 
 	/**** Medium-Priority CVs ****/
-	_gaqWikiaPush( ['_setCustomVar', 8, 'PageType',
-			(window.wikiaPageIsHub || window.wikiaPageIsWikiaHomePage) ? 'corporate' : window.wikiaPageType, 3],
+	_gaqWikiaPush( ['_setCustomVar', 8, 'PageType', window.wikiaPageType, 3],
 		['_setCustomVar', 9, 'CityId', window.wgCityId, 3],
-		['_setCustomVar', 12, 'MedusaSlot', window.wgMedusaSlot, 3],
-		['_setCustomVar', 14, 'HasAds', window.wgAdsShowableOnPage ? 'Yes' : 'No', 3]
+		['_setCustomVar', 14, 'HasAds', window.wgShowAds ? 'Yes' : 'No', 3],
+		['_setCustomVar', 15, 'IsCorporatePage', window.wikiaPageIsCorporate ? 'Yes' : 'No', 3],
+		['_setCustomVar', 16, 'Krux Segment', getKruxSegment(), 3]
 	);
 
 	/**** Include A/B testing status ****/
@@ -136,12 +187,6 @@
 				window.addEventListener( "load", abOnLoadHandler, false );
 			}
 		}
-
-		/**** Back-end A/B test for order of loading test ****/
-		if ( window.wgAdsInHeadGroup !== 0 ) {
-			_gaqWikiaPush( ['_setCustomVar', 39, 'ADSINHEAD', 'ADSINHEAD_' + window.wgAdsInHeadGroup, 3] );
-			abCustomVarsForAds.push( ['ads._setCustomVar', 39, 'ADSINHEAD', 'ADSINHEAD_' + window.wgAdsInHeadGroup, 3] );
-		}
 	}
 
 	// Unleash
@@ -172,8 +217,9 @@
 	/**** Medium-Priority CVs ****/
 	window._gaq.push( ['ads._setCustomVar', 8, 'PageType', window.wikiaPageType, 3],
 		['ads._setCustomVar', 9, 'CityId', window.wgCityId, 3],
-		['ads._setCustomVar', 12, 'MedusaSlot', window.wgMedusaSlot, 3],
-		['ads._setCustomVar', 14, 'HasAds', window.wgAdsShowableOnPage ? 'Yes' : 'No', 3]
+		['ads._setCustomVar', 14, 'HasAds', window.wgShowAds ? 'Yes' : 'No', 3],
+		['ads._setCustomVar', 15, 'IsCorporatePage', window.wikiaPageIsCorporate ? 'Yes' : 'No', 3],
+		['ads._setCustomVar', 16, 'Krux Segment', getKruxSegment(), 3]
 	);
 
 	/**** Include A/B testing status ****/
@@ -223,7 +269,7 @@
 	 *
 	 * @param {string} category Event Category.
 	 * @param {string} action Event Action.
-	 * @param {string=""} opt_value Event Label.
+	 * @param {string=""} opt_label Event Label.
 	 * @param {number=0} opt_value Event Value. Have to be an integer.
 	 * @param {boolean=false} opt_noninteractive Event noInteractive.
 	 */
@@ -234,6 +280,18 @@
 			_gaqWikiaPush( args );
 		} catch ( e ) {
 		}
+	};
+
+
+	/**
+	 * Track a fake pageview in Google Analytics
+	 *
+	 * @param {string} fakepage The fake URL to track. This should begin with a leading '/'.
+	 * @param {string} opt_namespace Namespace of the pageview. Used in GA reporting.
+	 */
+	window.gaTrackPageview = function( fakePage, opt_namespace ) {
+		var nsPrefix = ( opt_namespace ) ? opt_namespace + '.' : '';
+		_gaqWikiaPush( [ nsPrefix + '_trackPageview', fakePage ] );
 	};
 
 }( window ));

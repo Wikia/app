@@ -1,8 +1,7 @@
 <?php
 
 class WikiaMobileEditorController extends WikiaController {
-
-	const TEMPLATE_ENGINE = WikiaResponse::TEMPLATE_ENGINE_MUSTACHE;
+	const DEFAULT_TEMPLATE_ENGINE = WikiaResponse::TEMPLATE_ENGINE_MUSTACHE;
 
 	/**
 	 * @brief   Returns true
@@ -80,8 +79,6 @@ class WikiaMobileEditorController extends WikiaController {
 	}
 
 	public function editPage () {
-		$this->response->setTemplateEngine( self::TEMPLATE_ENGINE );
-
 		$this->response->setVal( 'articleUrl', $this->app->wg->Title->getLocalUrl() );
 
 		JSMessages::enqueuePackage( 'wikiamobileeditor', JSMessages::INLINE );

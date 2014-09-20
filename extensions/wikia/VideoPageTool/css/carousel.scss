@@ -1,6 +1,6 @@
-@import 'skins/oasis/css/core/color';
-@import 'skins/oasis/css/mixins/clearfix';
-@import 'skins/oasis/css/mixins/transform';
+@import 'skins/shared/color';
+@import 'skins/shared/mixins/clearfix';
+@import 'skins/shared/mixins/transform';
 @import './mixins/_sprite-VideoPageTool.scss';
 
 $pagination-color-normal: #e0dfdf;
@@ -100,8 +100,8 @@ $pagination-color-active: #a7a9ab;
 		margin: 0 10px;
 		font-size: 16px;
 
-		.wikia-video-thumbnail {
-			margin-bottom: 11px;
+		.video-thumbnail {
+			margin-bottom: 5px;
 		}
 
 		a {
@@ -120,6 +120,7 @@ $pagination-color-active: #a7a9ab;
 		display: none;
 		font-size: 14px;
 		line-height: 12px;
+		margin-right: 1px;
 		padding-left: 1.5em;
 
 		p {

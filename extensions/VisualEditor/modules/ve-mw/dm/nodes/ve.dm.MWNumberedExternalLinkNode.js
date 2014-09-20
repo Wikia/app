@@ -1,7 +1,7 @@
 /*!
  * VisualEditor DataModel MWNumberedExternalLinkNode class.
  *
- * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
@@ -10,13 +10,13 @@
  *
  * @class
  * @extends ve.dm.LeafNode
+ *
  * @constructor
- * @param {number} [length] Length of content data in document
  * @param {Object} [element] Reference to element in linear model
  */
-ve.dm.MWNumberedExternalLinkNode = function VeDmMWNumberedExternalLinkNode( length, element ) {
+ve.dm.MWNumberedExternalLinkNode = function VeDmMWNumberedExternalLinkNode() {
 	// Parent constructor
-	ve.dm.LeafNode.call( this, 0, element );
+	ve.dm.LeafNode.apply( this, arguments );
 };
 
 /* Inheritance */
@@ -40,7 +40,7 @@ ve.dm.MWNumberedExternalLinkNode.static.matchFunction = function ( element ) {
 
 ve.dm.MWNumberedExternalLinkNode.static.toDataElement = function ( domElements ) {
 	return {
-		'type': 'link/mwNumberedExternal',
+		'type': this.name,
 		'attributes': {
 			'href': domElements[0].getAttribute( 'href' )
 		}

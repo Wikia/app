@@ -15,7 +15,7 @@ ve.dm.wikiaExample.createExampleDocument = function ( name, store ) {
 
 ve.dm.wikiaExample.domToDataCases = {
 	'thumb image': {
-		'body': '<figure typeof="mw:Image/Thumb" class="mw-halign-right foobar" data-mw=\'{"attribution":{"username":"Foo","avatar":"Foo.png"}}\'><a href="Foo"><img src="Bar" width="1" height="2" resource="FooBar"></a><figcaption>abc</figcaption></figure>',
+		'body': '<figure typeof="mw:Image/Thumb" class="mw-halign-right foobar" data-mw=\'{"user":"Foo"}\'><a href="Foo"><img src="Bar" width="1" height="2" resource="FooBar"></a><figcaption>abc</figcaption></figure>',
 		'data': [
 			{
 				'type': 'wikiaBlockImage',
@@ -29,29 +29,26 @@ ve.dm.wikiaExample.domToDataCases = {
 					'resource': 'FooBar',
 					'originalClasses': 'mw-halign-right foobar',
 					'unrecognizedClasses': ['foobar'],
-					'attribution': {
-						'avatar': 'Foo.png',
-						'username': 'Foo'
-					}
+					'user': 'Foo'
 				},
 				'htmlAttributes': [ {
 					'values': {
-						'data-mw': '{"attribution":{"username":"Foo","avatar":"Foo.png"}}'
+						'data-mw': '{"user":"Foo"}'
 					}
 				} ]
 			},
-			{ 'type': 'wikiaMediaCaption' },
+			{ 'type': 'wikiaImageCaption' },
 			{ 'type': 'paragraph', 'internal': { 'generated': 'wrapper' } },
 			'a', 'b', 'c',
 			{ 'type': '/paragraph' },
-			{ 'type': '/wikiaMediaCaption' },
+			{ 'type': '/wikiaImageCaption' },
 			{ 'type': '/wikiaBlockImage' },
 			{ 'type': 'internalList' },
 			{ 'type': '/internalList' }
 		]
 	},
 	'thumb video': {
-		'body': '<figure typeof="mw:Video/Thumb" class="mw-halign-right foobar" data-mw=\'{"attribution":{"username":"Foo","avatar":"Foo.png"}}\'><a href="Foo"><img src="Bar" width="1" height="2" resource="FooBar"></a><figcaption>abc</figcaption></figure>',
+		'body': '<figure typeof="mw:Video/Thumb" class="mw-halign-right foobar" data-mw=\'{"user":"Foo"}\'><a href="Foo"><img src="Bar" width="1" height="2" resource="FooBar"></a><figcaption>abc</figcaption></figure>',
 		'data': [
 			{
 				'type': 'wikiaBlockVideo',
@@ -65,22 +62,19 @@ ve.dm.wikiaExample.domToDataCases = {
 					'resource': 'FooBar',
 					'originalClasses': 'mw-halign-right foobar',
 					'unrecognizedClasses': ['foobar'],
-					'attribution': {
-						'avatar': 'Foo.png',
-						'username': 'Foo'
-					}
+					'user': 'Foo'
 				},
 				'htmlAttributes': [ {
 					'values': {
-						'data-mw': '{"attribution":{"username":"Foo","avatar":"Foo.png"}}'
+						'data-mw': '{"user":"Foo"}'
 					}
 				} ]
 			},
-			{ 'type': 'wikiaMediaCaption' },
+			{ 'type': 'wikiaVideoCaption' },
 			{ 'type': 'paragraph', 'internal': { 'generated': 'wrapper' } },
 			'a', 'b', 'c',
 			{ 'type': '/paragraph' },
-			{ 'type': '/wikiaMediaCaption' },
+			{ 'type': '/wikiaVideoCaption' },
 			{ 'type': '/wikiaBlockVideo' },
 			{ 'type': 'internalList' },
 			{ 'type': '/internalList' }

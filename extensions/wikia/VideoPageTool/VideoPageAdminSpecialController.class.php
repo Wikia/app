@@ -157,7 +157,7 @@ class VideoPageAdminSpecialController extends WikiaSpecialPageController {
 					$msg = wfMessage( 'videopagetool-success-publish' )->plain();
 					NotificationsController::addConfirmation( $msg, NotificationsController::CONFIRMATION_CONFIRM );
 					$this->getContext()->getOutput()->redirect( $url );
-					return true;
+					return false;
 				}
 			// save assets
 			} else {
@@ -180,7 +180,7 @@ class VideoPageAdminSpecialController extends WikiaSpecialPageController {
 					if ( $status->isGood() ) {
 						$nextUrl = $helper->getNextMenuItemUrl( $leftMenuItems ).'&success=1';
 						$this->getContext()->getOutput()->redirect( $nextUrl );
-						return true;
+						return false;
 					} else {
 						$result = 'error';
 						$msg = $status->getMessage();
@@ -451,6 +451,7 @@ class VideoPageAdminSpecialController extends WikiaSpecialPageController {
 			// Use the default thumb options from Featured Assets since that's the only type of
 			// asset this controller returns.
 			$thumbOptions = VideoPageToolAssetFeatured::$defaultThumbOptions;
+			$thumbOptions['noLightbox'] = false;
 			$helper = new VideoPageToolHelper();
 			$video = $helper->getVideoData( $matches[1], $altThumbTitle, null, null, $thumbOptions );
 		}

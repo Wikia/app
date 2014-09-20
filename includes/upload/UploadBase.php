@@ -22,7 +22,7 @@ abstract class UploadBase {
 	protected $mFilteredName, $mFinalExtension;
 	protected $mLocalFile, $mFileSize, $mFileProps;
 	protected $mBlackListedExtensions;
-	protected $mJavaDetected;
+	protected $mJavaDetected, $mSVGNSError;
 
 	protected static $safeXmlEncodings = array( 'UTF-8', 'ISO-8859-1', 'ISO-8859-2', 'UTF-16', 'UTF-32' );
 
@@ -915,6 +915,7 @@ abstract class UploadBase {
 	public static function detectScript( $file, $mime, $extension ) {
 		global $wgAllowTitlesInSVG;
 
+		wfProfileIn( __METHOD__ );
 		# ugly hack: for text files, always look at the entire file.
 		# For binary field, just check the first K.
 
@@ -929,6 +930,7 @@ abstract class UploadBase {
 		$chunk = strtolower( $chunk );
 
 		if( !$chunk ) {
+			wfProfileOut( __METHOD__ );
 			return false;
 		}
 
@@ -952,6 +954,7 @@ abstract class UploadBase {
 
 		# check for HTML doctype
 		if ( preg_match( "/<!DOCTYPE *X?HTML/i", $chunk ) ) {
+			wfProfileOut( __METHOD__ );
 			return true;
 		}
 
@@ -997,6 +1000,7 @@ abstract class UploadBase {
 		foreach( $tags as $tag ) {
 			if( false !== strpos( $chunk, $tag ) ) {
 				wfDebug( __METHOD__ . ": found something that may make it be mistaken for html: $tag\n" );
+				wfProfileOut( __METHOD__ );
 				return true;
 			}
 		}
@@ -1011,22 +1015,26 @@ abstract class UploadBase {
 		# look for script-types
 		if( preg_match( '!type\s*=\s*[\'"]?\s*(?:\w*/)?(?:ecma|java)!sim', $chunk ) ) {
 			wfDebug( __METHOD__ . ": found script types\n" );
+			wfProfileOut( __METHOD__ );
 			return true;
 		}
 
 		# look for html-style script-urls
 		if( preg_match( '!(?:href|src|data)\s*=\s*[\'"]?\s*(?:ecma|java)script:!sim', $chunk ) ) {
 			wfDebug( __METHOD__ . ": found html-style script urls\n" );
+			wfProfileOut( __METHOD__ );
 			return true;
 		}
 
 		# look for css-style script-urls
 		if( preg_match( '!url\s*\(\s*[\'"]?\s*(?:ecma|java)script:!sim', $chunk ) ) {
 			wfDebug( __METHOD__ . ": found css-style script urls\n" );
+			wfProfileOut( __METHOD__ );
 			return true;
 		}
 
 		wfDebug( __METHOD__ . ": no scripts found\n" );
+		wfProfileOut( __METHOD__ );
 		return false;
 	}
 
@@ -1035,6 +1043,7 @@ abstract class UploadBase {
 	 * @return mixed false of the file is verified (does not contain scripts), array otherwise.
  	 */
 	protected function detectScriptInSvg( $filename ) {
+		$this->mSVGNSError = false;
 		$check = new XmlTypeCheck(
 			$filename,
 			array( $this, 'checkSvgScriptCallback' ),
@@ -1044,6 +1053,9 @@ abstract class UploadBase {
 			// Invalid xml (bug 58553)
 			return array( 'uploadinvalidxml' );
 		} elseif ( $check->filterMatch ) {
+			if ( $this->mSVGNSError ) {
+				return array( 'uploadscriptednamespace', $this->mSVGNSError );
+			}
 			return array( 'uploadscripted' );
 		}
 		return false;
@@ -1109,7 +1121,51 @@ abstract class UploadBase {
 	 * @todo Replace this with a whitelist filter!
 	 */
 	public function checkSvgScriptCallback( $element, $attribs ) {
-		$strippedElement = $this->stripXmlNamespace( $element );
+		list( $namespace, $strippedElement ) = $this->splitXmlNamespace( $element );
+
+		static $validNamespaces = array(
+			'',
+			'adobe:ns:meta/',
+			'http://creativecommons.org/ns#',
+			'http://inkscape.sourceforge.net/dtd/sodipodi-0.dtd',
+			'http://ns.adobe.com/adobeillustrator/10.0/',
+			'http://ns.adobe.com/adobesvgviewerextensions/3.0/',
+			'http://ns.adobe.com/extensibility/1.0/',
+			'http://ns.adobe.com/flows/1.0/',
+			'http://ns.adobe.com/illustrator/1.0/',
+			'http://ns.adobe.com/imagereplacement/1.0/',
+			'http://ns.adobe.com/pdf/1.3/',
+			'http://ns.adobe.com/photoshop/1.0/',
+			'http://ns.adobe.com/saveforweb/1.0/',
+			'http://ns.adobe.com/variables/1.0/',
+			'http://ns.adobe.com/xap/1.0/',
+			'http://ns.adobe.com/xap/1.0/g/',
+			'http://ns.adobe.com/xap/1.0/g/img/',
+			'http://ns.adobe.com/xap/1.0/mm/',
+			'http://ns.adobe.com/xap/1.0/rights/',
+			'http://ns.adobe.com/xap/1.0/stype/dimensions#',
+			'http://ns.adobe.com/xap/1.0/stype/font#',
+			'http://ns.adobe.com/xap/1.0/stype/manifestitem#',
+			'http://ns.adobe.com/xap/1.0/stype/resourceevent#',
+			'http://ns.adobe.com/xap/1.0/stype/resourceref#',
+			'http://ns.adobe.com/xap/1.0/t/pg/',
+			'http://purl.org/dc/elements/1.1/',
+			'http://purl.org/dc/elements/1.1',
+			'http://schemas.microsoft.com/visio/2003/svgextensions/',
+			'http://sodipodi.sourceforge.net/dtd/sodipodi-0.dtd',
+			'http://web.resource.org/cc/',
+			'http://www.freesoftware.fsf.org/bkchem/cdml',
+			'http://www.inkscape.org/namespaces/inkscape',
+			'http://www.w3.org/1999/02/22-rdf-syntax-ns#',
+			'http://www.w3.org/2000/svg',
+		);
+
+		if ( !in_array( $namespace, $validNamespaces ) ) {
+			wfDebug( __METHOD__ . ": Non-svg namespace '$namespace' in uploaded file.\n" );
+			// @TODO return a status object to a closure in XmlTypeCheck, for MW1.21+
+			$this->mSVGNSError = $namespace;
+			return true;
+		}
 
 		/*
 		 * check for elements that can contain javascript
@@ -1131,6 +1187,13 @@ abstract class UploadBase {
 			return true;
 		}
 
+		# Block iframes, in case they pass the namespace check
+		if ( $strippedElement == 'iframe' ) {
+			wfDebug( __METHOD__ . ": iframe in uploaded file.\n" );
+			return true;
+		}
+
+
 		foreach( $attribs as $attrib => $value ) {
 			$stripped = $this->stripXmlNamespace( $attrib );
 			$value = strtolower($value);
@@ -1140,10 +1203,19 @@ abstract class UploadBase {
 				return true;
 			}
 
-			# href with javascript target
-			if( $stripped == 'href' && strpos( strtolower( $value ), 'javascript:' ) !== false ) {
-				wfDebug( __METHOD__ . ": Found script in href attribute '$attrib'='$value' in uploaded file.\n" );
-				return true;
+			# href with non-local target (don't allow http://, javascript:, etc)
+			if ( $stripped == 'href'
+				&& strpos( $value, 'data:' ) !== 0
+				&& strpos( $value, '#' ) !== 0
+			) {
+				if ( !( $strippedElement === 'a'
+					&& preg_match( '!^https?://!im', $value ) )
+				) {
+					wfDebug( __METHOD__ . ": Found href attribute <$strippedElement "
+						. "'$attrib'='$value' in uploaded file.\n" );
+
+					return true;
+				}
 			}
 
 			# href with embeded svg as target
@@ -1206,6 +1278,19 @@ abstract class UploadBase {
 	}
 
  	/**
+	 * Divide the element name passed by the xml parser to the callback into URI and prifix.
+	 * @param $name string
+	 * @return array containing the namespace URI and prefix
+	 */
+	private static function splitXmlNamespace( $element ) {
+		// 'http://www.w3.org/2000/svg:script' -> array( 'http://www.w3.org/2000/svg', 'script' )
+		$parts = explode( ':', strtolower( $element ) );
+		$name = array_pop( $parts );
+		$ns = implode( ':', $parts );
+		return array( $ns, $name );
+	}
+
+	/**
 	 * Callback to filter SVG Processing Instructions.
 	 * @param $target string processing instruction name
 	 * @param $data string processing instruction attribute and value

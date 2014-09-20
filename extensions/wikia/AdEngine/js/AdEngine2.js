@@ -1,8 +1,13 @@
-/*exported AdEngine2*/
-var AdEngine2 = function (log, LazyQueue, slotTracker) {
+/*global define*/
+define('ext.wikia.adEngine.adEngine', [
+	'wikia.log',
+	'wikia.lazyqueue',
+	'ext.wikia.adEngine.slotTracker',
+	'ext.wikia.adEngine.eventDispatcher'
+], function (log, LazyQueue, slotTracker, eventDispatcher) {
 	'use strict';
 
-	var logGroup = 'AdEngine2',
+	var logGroup = 'ext.wikia.adEngine.adEngine',
 		undef;
 
 	function decorate(func, decorators) {
@@ -31,7 +36,7 @@ var AdEngine2 = function (log, LazyQueue, slotTracker) {
 
 			function success(extra) {
 				log(['success', slotname, extra], 'debug', logGroup);
-				aSlotTracker.track('success');
+				aSlotTracker.track('success', extra);
 			}
 
 			function hop(extra, hopTo) {
@@ -42,9 +47,11 @@ var AdEngine2 = function (log, LazyQueue, slotTracker) {
 				}
 			}
 
-			log('calling ' + provider.name + '.fillInSlot for ' + slotname, 'debug', logGroup);
+			if (eventDispatcher.trigger('ext.wikia.adEngine fillInSlot', slot, provider)) {
+				log('calling ' + provider.name + '.fillInSlot for ' + slotname, 'debug', logGroup);
 
-			provider.fillInSlot(slotname, success, hop);
+				provider.fillInSlot(slotname, success, hop);
+			}
 		}
 
 		log('run', 'debug', logGroup);
@@ -62,4 +69,4 @@ var AdEngine2 = function (log, LazyQueue, slotTracker) {
 	}
 
 	return {run: run};
-};
+});

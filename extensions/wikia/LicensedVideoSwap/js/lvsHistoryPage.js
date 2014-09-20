@@ -1,3 +1,5 @@
+/*global GlobalNotification*/
+
 /**
  * AJAX interrupter for Licensed Video Swap undo workflow
  * @author Kenneth Kouot <kenneth@wikia-inc.com>
@@ -5,13 +7,14 @@
 require([
 	'jquery',
 	'lvs.commonajax'
-], function($, commonAjax) {
+], function ($, commonAjax) {
+	'use strict';
 
 	function LVSHistoryPage(opts) {
 		var that = this;
 
 		// wait for DOM ready
-		$(function() {
+		$(function () {
 			that.$el = $(opts.el);
 			that.init();
 		});
@@ -19,15 +22,15 @@ require([
 	}
 
 	LVSHistoryPage.prototype = {
-		init: function() {
+		init: function () {
 			// bind click event on undo links
-			this.$el.on( 'click', '.undo-link', $.proxy( this.handleUndoClick, this ) );
+			this.$el.on('click', '.undo-link', $.proxy(this.handleUndoClick, this));
 		},
-		undoSwap: function(url) {
+		undoSwap: function (url) {
 			// returns the promise
 			return $.get(url);
 		},
-		handleUndoClick: function( evt ) {
+		handleUndoClick: function (evt) {
 			evt.preventDefault();
 
 			var target = evt.target,
@@ -37,25 +40,25 @@ require([
 			commonAjax.startLoadingGraphic();
 
 			this.undoSwap(url)
-				.success(function( data ) {
-					if ( data.result === "error" ) {
-						that.handleUndoFail( data.msg );
+				.success(function (data) {
+					if (data.result === 'error') {
+						that.handleUndoFail(data.msg);
 					} else {
-						that.handleUndoSuccess( data.msg, target );
+						that.handleUndoSuccess(data.msg, target);
 					}
 				})
-				.error(function() {
-					that.handleUndoFail( $.msg( 'oasis-generic-error' ) );
+				.error(function () {
+					that.handleUndoFail($.msg('oasis-generic-error'));
 				});
 		},
-		handleUndoFail: function( msg ) {
+		handleUndoFail: function (msg) {
 			commonAjax.stopLoadingGraphic();
-			GlobalNotification.show( msg, 'error' );
+			GlobalNotification.show(msg, 'error');
 		},
-		handleUndoSuccess: function( msg, target ) {
-			$( target ).closest( 'li' ).remove();
+		handleUndoSuccess: function (msg, target) {
+			$(target).closest('li').remove();
 			commonAjax.stopLoadingGraphic();
-			GlobalNotification.show( msg, 'confirm' );
+			GlobalNotification.show(msg, 'confirm');
 		},
 		// restore clobbered constructor
 		constructor: LVSHistoryPage

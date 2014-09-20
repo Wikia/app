@@ -63,7 +63,31 @@ class LicensedVideoSwapHelper extends WikiaModel {
 	 */
 	protected $jaccard;
 
+	protected $defaultVideoOptions = [
+		'thumbWidth'       => self::THUMBNAIL_WIDTH,
+		'thumbHeight'      => self::THUMBNAIL_HEIGHT,
+		'postedInArticles' => self::POSTED_IN_ARTICLES,
+		'getThumbnail'     => true,
+		'thumbOptions'     => [
+			'fluid'          => true,
+			'noLightbox'     => true,
+			'hidePlayButton' => true,
+		],
+	];
+
+	/**
+	 * Get the raw data about LVS from the DB
+	 * @return array
+	 */
 	public function getVideoDebugInfo() {
+		$helper = new VideoHandlerHelper();
+
+		$videoOptions = [
+			'thumbWidth'       => 200,
+			'thumbHeight'      => 200,
+			'postedInArticles' => 5,
+		];
+
 		$db = wfGetDB( DB_SLAVE );
 
 		$sql = "SELECT video_title AS title,
@@ -79,7 +103,8 @@ class LicensedVideoSwapHelper extends WikiaModel {
 						FROM page_wikia_props e
 						WHERE e.propname = 21
 						  AND e.props = 1
-				  )";
+				  )
+				ORDER BY added_at DESC";
 
 		$result = $db->query( $sql, __METHOD__ );
 
@@ -92,12 +117,12 @@ class LicensedVideoSwapHelper extends WikiaModel {
 			$val = $row->val;
 			// If this propname isn't in the list of already unserialized data, unserialize it.
 			if ( !in_array( $row->prop, $this->wg->WPPNotSerialized ) ) {
-				$val = unserialize($val);
+				$val = unserialize( $val );
 			}
 
 			$name = 'unknown';
 			// Convert the prop name
-			switch ($row->prop) {
+			switch ( $row->prop ) {
 				case 18: $name = 'Status Info'; break;
 				case 19: $name = 'Suggestions'; break;
 				case 20: $name = 'Suggestions Updated'; break;
@@ -107,9 +132,7 @@ class LicensedVideoSwapHelper extends WikiaModel {
 			}
 
 			// Reuse code from VideoHandlerHelper
-			$helper = new VideoHandlerHelper();
-			$videoDetail = $helper->getVideoDetail( ["title" => $row->title ], 200, 200, 5 );
-
+			$videoDetail = $helper->getVideoDetail( ["title" => $row->title ], $videoOptions );
 			$debugInfo[ $row->title ]['detail'] = $videoDetail;
 			$debugInfo[ $row->title ]['props'][$name] = $val;
 		}
@@ -327,9 +350,6 @@ SQL;
 	public function getRegularVideoList( $sort, $page, $useMaster = false ) {
 		wfProfileIn( __METHOD__ );
 
-		// Get the play button image to overlay on the video
-		$playButton = WikiaFileHelper::videoPlayButtonOverlay( self::THUMBNAIL_WIDTH, self::THUMBNAIL_HEIGHT );
-
 		// Get the list of videos that haven't been swapped yet
 		$videoList = $this->getUnswappedVideoList( $sort, self::VIDEOS_PER_PAGE, $page, $useMaster );
 
@@ -337,7 +357,7 @@ SQL;
 		$helper = new VideoHandlerHelper();
 
 		// Get a list of what videos the user has already looked at
-		$visitedList = unserialize($this->wg->User->getOption( LicensedVideoSwapHelper::USER_VISITED_LIST ));
+		$visitedList = unserialize( $this->wg->User->getOption( LicensedVideoSwapHelper::USER_VISITED_LIST ) );
 
 		// Go through each video and add additional detail needed to display the video
 		$videos = array();
@@ -349,12 +369,9 @@ SQL;
 				continue;
 			}
 
-			$videoDetail = $helper->getVideoDetail( $videoInfo, self::THUMBNAIL_WIDTH, self::THUMBNAIL_HEIGHT, self::POSTED_IN_ARTICLES );
-			if ( !empty($videoDetail) ) {
-				$videoOverlay =  WikiaFileHelper::videoInfoOverlay( self::THUMBNAIL_WIDTH, $videoDetail['fileTitle'] );
+			$videoDetail = $helper->getVideoDetail( $videoInfo, $this->defaultVideoOptions );
+			if ( !empty( $videoDetail ) ) {
 
-				$videoDetail['videoPlayButton'] = $playButton;
-				$videoDetail['videoOverlay'] = $videoOverlay;
 				$videoDetail['videoSuggestions'] = $suggestions;
 
 				$seeMoreLink = SpecialPage::getTitleFor( "WhatLinksHere" )->escapeLocalUrl();
@@ -366,7 +383,7 @@ SQL;
 				$videoDetail['isNew'] = $this->isStatusNew( $videoInfo['status'] );
 
 				// Unset the isNew flag if this user has already played this video
-				if ( isset($visitedList[$videoInfo['title']]) ) {
+				if ( isset( $visitedList[$videoInfo['title']] ) ) {
 					$videoDetail['isNew'] = false;
 				}
 
@@ -401,7 +418,7 @@ SQL;
 
 		// See if we've already cached suggestions for this video
 		$videos = wfGetWikiaPageProp( WPP_LVS_SUGGEST, $articleId );
-		if ( !empty($videos) ) {
+		if ( !empty( $videos ) ) {
 			$age = wfGetWikiaPageProp( WPP_LVS_SUGGEST_DATE, $articleId );
 
 			// If we're under the TTL then return these results, otherwise
@@ -426,6 +443,7 @@ SQL;
 	 * @return array - A list of suggested videos
 	 */
 	public function suggestionSearch( $title, $test = false, $verbose = false ) {
+		wfProfileIn( __METHOD__ );
 		// Accept either a title string or title object here
 		$titleObj = is_object( $title ) ? $title : Title::newFromText( $title, NS_FILE );
 		$articleId = $titleObj->getArticleID();
@@ -444,14 +462,19 @@ SQL;
 		// get current suggestions
 		$suggestTitles = array();
 		$suggest = wfGetWikiaPageProp( WPP_LVS_SUGGEST, $articleId );
-		$suggestions = array();
+		$validSuggest = [];
+
 		if ( !empty( $suggest ) ) {
 			if ( $verbose ) {
 				echo "\tExamining the ".count($suggest)." current match(es)\n";
 			}
 
 			foreach ( $suggest as $video ) {
-				$suggestTitles[$video['title']] = 1;
+				// Do some data integrity checking; clean up for VID-1446
+				if ( !array_key_exists( 'title', $video ) ) {
+					continue;
+				}
+
 				if ( $isKeptVideo && array_key_exists( $video['title'], $historicalSuggestions ) ) {
 					if ( $verbose ) {
 						echo "\t\t[FILTER] Match was already suggested in the past: '".$video['title']."'\n";
@@ -459,7 +482,15 @@ SQL;
 					continue;
 				}
 
-				$suggestions[] = $video;
+				$suggestTitles[$video['title']] = 1;
+				$validSuggest[] = $video;
+			}
+
+			// See if we cleaned up any data
+			if ( !$test && ( count( $validSuggest ) != count( $suggest ) ) ) {
+				// We call wfSetWikiaPageProp below, but only if we get new suggestions.  Write out here
+				// to make sure we get the cleaned version written when necessary.
+				wfSetWikiaPageProp( WPP_LVS_SUGGEST, $articleId, $validSuggest );
 			}
 		}
 
@@ -499,9 +530,6 @@ SQL;
 		// Reuse code from VideoHandlerHelper
 		$helper = new VideoHandlerHelper();
 
-		// Get the play button image to overlay on the video
-		$playButton = WikiaFileHelper::videoPlayButtonOverlay( self::THUMBNAIL_WIDTH, self::THUMBNAIL_HEIGHT );
-
 		foreach ( $videoRows as $videoInfo ) {
 			$rowTitle = preg_replace( '/^File:/', '',  $videoInfo['title'] );
 			$videoRowTitleTokenized = $this->getNormalizedTokens( $rowTitle );
@@ -539,11 +567,11 @@ SQL;
 			}
 
 			// get video detail
-			$videoDetail = $helper->getVideoDetailFromWiki( $this->wg->WikiaVideoRepoDBName,
-															$videoInfo['title'],
-															self::THUMBNAIL_WIDTH,
-															self::THUMBNAIL_HEIGHT,
-															self::POSTED_IN_ARTICLES );
+			$videoDetail = $helper->getVideoDetailFromWiki(
+				$this->wg->WikiaVideoRepoDBName,
+				$videoInfo['title'],
+				$this->defaultVideoOptions
+			);
 
 			// Go to the next suggestion if we can't get any details for this one
 			if ( empty( $videoDetail ) ) {
@@ -552,11 +580,6 @@ SQL;
 				}
 				continue;
 			}
-
-			// get video overlay
-			$videoOverlay =  WikiaFileHelper::videoInfoOverlay( self::THUMBNAIL_WIDTH, $videoDetail['fileTitle'] );
-			$videoDetail['videoPlayButton'] = $playButton;
-			$videoDetail['videoOverlay'] = $videoOverlay;
 
 			$videos[] = $videoDetail;
 
@@ -567,7 +590,7 @@ SQL;
 		}
 
 		// combine current suggestions and new suggestions
-		$videos = array_slice( array_merge( $videos, $suggestions ), 0 , self::NUM_SUGGESTIONS );
+		$videos = array_slice( array_merge( $videos, $validSuggest ), 0 , self::NUM_SUGGESTIONS );
 
 		// If we're just testing don't set any page props
 		if ( !$test ) {
@@ -1142,7 +1165,7 @@ SQL;
 
 			// Get the username and link to the user page
 			$userName = $userLink = '';
-			if ( !empty($props['userid']) ) {
+			if ( !empty( $props['userid'] ) ) {
 				$userObj = User::newFromId( $props['userid'] );
 				if ( $userObj ) {
 					$userName = $userObj->getName();
@@ -1151,7 +1174,7 @@ SQL;
 			}
 
 			// Get the date in the proper format
-			if ( empty($props['created']) ) {
+			if ( empty( $props['created'] ) ) {
 				$createDate = '';
 			} else {
 				$createDate = $context->getLanguage()->userTimeAndDate( $props['created'], $context->getUser() );
@@ -1165,7 +1188,7 @@ SQL;
 			// Create some links needed for linking to the file page and undoing swaps
 			$titleLink = '<a href="'.$titleURL.'">'.$titleObj->getText().'</a>';
 			$undoLink = $this->wg->Server."/wikia.php?controller=LicensedVideoSwapSpecial&method=restoreVideo&format=json&videoTitle={$dbKey}";
-			$undoText = wfMessage('lvs-undo-swap')->plain();
+			$undoText = wfMessage( 'lvs-undo-swap' )->plain();
 
 			// Generate the proper log message and undo link for the swap/keep type
 			if ( $this->isStatusSwapNorm( $props['status'] ) ) {

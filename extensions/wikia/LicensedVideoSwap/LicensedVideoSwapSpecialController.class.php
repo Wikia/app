@@ -107,6 +107,10 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 		$this->videos = $helper->getUndoList( $this->getContext() );
 	}
 
+	/**
+	 * Show debugging information for LVS
+	 * @return bool
+	 */
 	public function debugStatus() {
 		if ( !F::app()->wg->LVSDebugStatusEnabled ) {
 			$this->displayRestrictionError();
@@ -557,7 +561,10 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 		$this->msg = null;
 	}
 
-	// TODO: probably make this use mustache
+	/**
+	 *
+	 * TODO: probably make this use mustache
+	 */
 	public function row() {
 		$this->videoList = $this->getVal( 'videoList', array() );
 		$this->thumbWidth = LicensedVideoSwapHelper::THUMBNAIL_WIDTH;

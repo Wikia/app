@@ -97,9 +97,12 @@ $messages['bg'] = array(
 $messages['br'] = array(
 	'partner-feed-earned-badges' => 'Badjoù gounezet nevez zo gant ur Wiki difer',
 	'partner-feed-recent-changes' => 'Kemmoù diwezhañ',
+	'partnerfeed' => 'Keveler gwazh',
+	'error-no-article' => 'Fazi : N\'eo ket bet kaset an arventenn "pennad"',
 	'feed-title-blogposts' => 'Blogadennoù nevez',
 	'feed-title-recent-badges' => 'Badjoù diwezhañ',
 	'feed-title-recent-images' => 'Skeudennoù diwezhañ',
+	'feed-main-title' => 'Gwazh keveler Wikia',
 	'all-blog-posts' => 'an holl rummadoù',
 	'blog-posts-from-listing' => 'eus ar roll : $1',
 	'feed-title-blogcomments' => 'Evezhiadenn da $1',
@@ -199,7 +202,7 @@ $messages['diq'] = array(
  */
 $messages['es'] = array(
 	'partner-feed-achievements-leaderboard' => 'Tabla de líderes con más logros',
-	'partner-feed-earned-badges' => 'Logros recientemente ganados para una wiki específica',
+	'partner-feed-earned-badges' => 'Logros recientemente ganados para un wiki específico',
 	'partner-feed-recent-blog-posts' => 'Entradas de blog recientes relacionadas con una promoción',
 	'partner-feed-latest-images' => 'Galería de las últimas imágenes que han sido subidas',
 	'partner-feed-hotcontent' => 'Hub / "Contenido Novedoso" clasificado por el número de editores',
@@ -242,17 +245,31 @@ $messages['fa'] = array(
 
 /** Finnish (suomi)
  * @author Centerlink
+ * @author Elseweyr
  * @author Nedergard
  * @author Nike
  * @author Tofu II
  */
 $messages['fi'] = array(
+	'partner-feed-achievements-leaderboard' => 'Wikien saavutuksien tilastot',
+	'partner-feed-earned-badges' => 'Äskettäin ansaitut merkit tietyssä wikissä',
+	'partner-feed-recent-blog-posts' => 'Uusimmat promootioon liittyvät blogiartikkelit',
+	'partner-feed-latest-images' => 'Viimeisimmäksi ladattujen kuvien galleria',
+	'partner-feed-recent-blog-comments' => 'Tiettyyn blogiartikkeliin liittyvät viimeisimmät kommentit.',
 	'partner-feed-recent-changes' => 'Viimeisimmät muutokset',
+	'partnerfeed' => 'Kumppanisyöte',
+	'error-no-article' => 'Virhe: Ei "artikkeli" -parametria annettu',
 	'feed-title-blogposts' => 'Tuoreet blogimerkinnät',
 	'feed-title-recent-badges' => 'Viimeaikaiset rintanapit',
 	'feed-title-recent-images' => 'Viimeaikaiset kuvat',
+	'feed-title-leaderboard' => 'Saavutuksien leaderboard',
+	'feed-main-title' => 'Wikia kumppanisyöte',
 	'all-blog-posts' => 'kaikki kategoriat',
+	'blog-posts-from-listing' => 'listauksesta $1',
+	'feed-title-hot-content' => 'Kuuma sisältö - $1',
+	'feed-title-blogcomments' => 'Kommentit artikkelista $1',
 	'feed-title-recentchanges' => 'Tuoreet muutokset',
+	'partner-feed-error-no-blogpost-found' => '<b>Virhe:</b> Blogiartikkelia $1 ei ole olemassa.',
 );
 
 /** French (français)
@@ -354,6 +371,27 @@ $messages['it'] = array(
 	'partner-feed-achievements-leaderboard' => 'Classifica dei successi nella wiki',
 );
 
+/** Japanese (日本語)
+ * @author Barrel0116
+ */
+$messages['ja'] = array(
+	'feed-title-recentchanges' => '最近の更新',
+);
+
+/** Kannada (ಕನ್ನಡ)
+ * @author VASANTH S.N.
+ */
+$messages['kn'] = array(
+	'partner-feed-recent-changes' => 'ಇತ್ತೀಚಿನ ಬದಲಾವಣೆಗಳು',
+);
+
+/** Korean (한국어)
+ * @author 아라
+ */
+$messages['ko'] = array(
+	'feed-title-blogposts' => '최근 블로그 게시물',
+);
+
 /** Kurdish (Latin script) (Kurdî (latînî)‎)
  * @author George Animal
  */
@@ -388,6 +426,7 @@ $messages['lb'] = array(
  * @author Mogoeilor
  */
 $messages['lrc'] = array(
+	'partner-feed-recent-changes' => 'آلشتیا تازه باو',
 	'feed-title-recent-images' => 'عسکیا تازه باو',
 	'feed-title-recentchanges' => 'آلشتیا تازه باو',
 );
@@ -513,6 +552,15 @@ $messages['nl'] = array(
 	'partner-feed-error-no-blogpost-found' => '<b>Fout:</b> Blogbericht $1 bestaat niet.',
 );
 
+/** Occitan (occitan)
+ * @author Cedric31
+ * @author Hulothe
+ */
+$messages['oc'] = array(
+	'partner-feed-recent-changes' => 'Darrièrs cambiaments',
+	'feed-title-recentchanges' => 'Darrièrs cambiaments',
+);
+
 /** Polish (polski)
  * @author BeginaFelicysym
  * @author Sovq
@@ -602,6 +650,7 @@ $messages['pt'] = array(
 
 /** Brazilian Portuguese (português do Brasil)
  * @author Aristóbulo
+ * @author Cainamarques
  * @author Giro720
  */
 $messages['pt-br'] = array(
@@ -614,7 +663,7 @@ $messages['pt-br'] = array(
 	'partner-feed-recent-changes' => 'Mudanças recentes',
 	'partnerfeed' => 'Feed de um parceiro',
 	'error-no-article' => 'Erro: Não foi passado o parâmetro "article"',
-	'feed-title-blogposts' => 'Entradas recentes em blogues',
+	'feed-title-blogposts' => 'Posts recentes em blogues',
 	'feed-title-recent-badges' => 'Condecorações recentes',
 	'feed-title-recent-images' => 'Imagens recentes',
 	'feed-title-leaderboard' => 'Liderança de medalhas',
@@ -624,6 +673,7 @@ $messages['pt-br'] = array(
 	'feed-title-hot-content' => 'Conteúdo popular - $1',
 	'feed-title-blogcomments' => 'Comentários em $1',
 	'feed-title-recentchanges' => 'Mudanças recentes',
+	'partner-feed-error-no-blogpost-found' => '<b>Error:</b> O post $1 não existe.',
 );
 
 /** tarandíne (tarandíne)
@@ -747,6 +797,13 @@ $messages['tl'] = array(
 	'feed-title-recentchanges' => 'Kamakailang mga pagbabago',
 );
 
+/** Turkish (Türkçe)
+ * @author Sucsuzz
+ */
+$messages['tr'] = array(
+	'feed-title-recentchanges' => 'Son değişiklikler',
+);
+
 /** Ukrainian (українська)
  * @author A1
  * @author Andriykopanytsia
@@ -812,6 +869,7 @@ $messages['zh-hans'] = array(
 	'partner-feed-achievements-leaderboard' => 'Wiki成就排行榜',
 	'partner-feed-earned-badges' => '最近在特定wiki获得的徽章',
 	'partner-feed-recent-changes' => '最新更改',
+	'partnerfeed' => '合作伙伴订阅',
 	'feed-title-blogposts' => '最新博客帖子',
 	'feed-title-recent-badges' => '最新徽章',
 	'feed-title-recent-images' => '最近的图片',

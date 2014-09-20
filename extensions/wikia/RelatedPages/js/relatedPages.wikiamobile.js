@@ -35,7 +35,6 @@ function( window, nirvana, $, thumbnailer, lazyload, sloth, msg, mustache, secti
 				loader( {
 					type: loader.MULTI,
 					resources: {
-						ttl: 604800, // 7 days
 						mustache: 'extensions/wikia/RelatedPages/templates/RelatedPages_section.mustache'
 					}
 				} ).done( function ( data ) {
@@ -125,7 +124,7 @@ function( window, nirvana, $, thumbnailer, lazyload, sloth, msg, mustache, secti
 			sectionsLength = sectionsList.length;
 
 			$( '.trending-articles' )
-				.removeClass( 'hide' )
+				.removeClass( 'hidden' )
 				.find( 'h2' )
 				.attr( 'id', 'trendingArticles' );
 

@@ -21,8 +21,6 @@ class LatestPhotosController extends WikiaController {
 	public function executeIndex() {
 		global $wgUser, $wgMemc;
 
-		$this->response->addAsset('skins/oasis/js/LatestPhotos.js');
-
 		$this->isUserLoggedIn = $wgUser->isLoggedIn();
 
 		// get the count of images on this wiki
@@ -106,7 +104,6 @@ class LatestPhotosController extends WikiaController {
 			"thumb_url" => $thumb_url,
 			"user_href" => Wikia::link(Title::newFromText($userName, NS_USER), $userName),
 			"links" => $this->getLinkedFiles($file->name),
-			"isVideoThumb"  => WikiaFileHelper::isFileTypeVideo( $file ),
 			"date" => wfTimestamp(TS_ISO_8601, $file->timestamp));
 		return $retval;
 	}

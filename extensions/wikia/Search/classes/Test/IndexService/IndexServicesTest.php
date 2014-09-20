@@ -25,6 +25,8 @@ class IndexServicesTest extends BaseTest
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.0832 ms
 	 * @covers Wikia\Search\IndexService\BacklinkCount::execute
 	 */
 	public function testBacklinkCountExecute() {
@@ -51,6 +53,8 @@ class IndexServicesTest extends BaseTest
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.08319 ms
 	 * @covers Wikia\Search\IndexService\Metadata::execute
 	 */
 	public function testMetadataExecuteInternal() {
@@ -72,6 +76,8 @@ class IndexServicesTest extends BaseTest
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.08172 ms
 	 * @covers Wikia\Search\IndexService\Metadata::execute
 	 */
 	public function testMetadataExecuteInternalNoPageId() {
@@ -98,6 +104,8 @@ class IndexServicesTest extends BaseTest
 	}
 	
 	/**
+	  * @group Slow
+	  * @slowExecutionTime 0.08487 ms
 	 * @covers Wikia\Search\IndexService\Metadata::execute
 	 */
 	 public function testMetadataExecuteInternalSuccess() {
@@ -134,6 +142,8 @@ class IndexServicesTest extends BaseTest
 		);
 	}
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.08515 ms
 	 * @covers \Wikia\Search\IndexService\Redirects::execute
 	 */
 	public function testRedirectsService() {
@@ -157,12 +167,15 @@ class IndexServicesTest extends BaseTest
 		$this->injectService( $service, $mwservice );
 		$service->setPageId( $this->pageId );
 		$this->assertEquals(
-				array( \Wikia\Search\Utilities::field( 'redirect_titles' ) => array( 'foo', 'bar' ) ),
+				array( \Wikia\Search\Utilities::field( 'redirect_titles' ) => array( 'foo', 'bar' ),
+					'redirect_titles_mv_em' => array( 'foo', 'bar' ) ),
 				$service->execute()
 		);
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.08454 ms
 	 * @covers Wikia\Search\IndexService\VideoViews::execute
 	 */
 	public function testVideoViewsService() {
@@ -204,6 +217,8 @@ class IndexServicesTest extends BaseTest
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.08742 ms
 	 * @covers Wikia\Search\IndexService\WikiPromoData::execute
 	 */
 	public function testWikiPromoData() {
@@ -214,7 +229,7 @@ class IndexServicesTest extends BaseTest
 		                ->getMock();
 		
 		$desc = "This is my description";
-		$vizInfo = [ 'desc' => $desc, 'flags' => [ 'new' => 1, 'hot' => 0 ] ];
+		$vizInfo = [ 'desc' => $desc, 'flags' => [ 'promoted' => 1 ] ];
 		$service
 		    ->expects( $this->once() )
 		    ->method ( "getService" )
@@ -236,7 +251,7 @@ class IndexServicesTest extends BaseTest
 		    ->with   ( 123 )
 		    ->will   ( $this->returnValue( $vizInfo ) )
 		;
-		$expected = [ 'wiki_description_txt' => $desc, 'wiki_new_b' => 'true', 'wiki_hot_b' => 'false', 'wiki_official_b' => 'false', 'wiki_promoted_b' => 'false' ];
+		$expected = [ 'wiki_description_txt' => $desc, 'wiki_official_b' => 'false', 'wiki_promoted_b' => 'true' ];
 		$this->assertEquals(
 				$expected,
 				$service->execute()
@@ -249,6 +264,8 @@ class IndexServicesTest extends BaseTest
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.08654 ms
 	 * @covers Wikia\Search\IndexService\WikiStats::execute
 	 */
 	public function testWikiStatsExecute() {

@@ -14,7 +14,7 @@ class ImageServingDriverBaseTest extends WikiaBaseTest {
 	 * @param $expected
 	 * @dataProvider dataProvider
 	 */
-	public function testFormatResult( $imgExist, $imgList, $limit, $expected ) {
+	public function testFormatResult( $imgExist, $imgList, $expected ) {
 
 		$mockedIs = $this->getMockBuilder( 'ImageServing' )
 			->disableOriginalConstructor()
@@ -58,7 +58,7 @@ class ImageServingDriverBaseTest extends WikiaBaseTest {
 		$formatResult = new ReflectionMethod( 'ImageServingDriverMainNS', 'formatResult' );
 		$formatResult->setAccessible( true );
 
-		$result = $formatResult->invoke( $driver, $imgList, $this->getDbOut(), $limit );
+		$result = $formatResult->invoke( $driver, $imgList, $this->getDbOut() );
 
 		$this->assertEquals( $expected, $result );
 	}
@@ -72,38 +72,32 @@ class ImageServingDriverBaseTest extends WikiaBaseTest {
 			[
 				true,
 				[ 'img_1' => [ 'img_1' => true ] ],
-				1,
 				[ 'img_1' => $this->getResultArray( 'img_1', 100, 100, 'http://url' ) ]
 			],
 			[
 				false,
 				[ 'img_1' => [ 'img_1' => true ] ],
-				1,
 				[ 'img_1' => $this->getResultArray( 'img_1', 0, 0, '' ) ]
 			],
 			//no such element in db
 			[
 				true,
 				[ 'img_not_exist' => [ 'img_not_exist' => true ] ],
-				1,
 				[]
 			],
 			[
 				false,
 				[ 'img_not_exist' => [ 'img_not_exist' => true ] ],
-				1,
 				[]
 			],
 			[
 				true,
 				[ 'img_1' => [ 'img_1' => true ] ],
-				0,
 				[ 'img_1' => $this->getResultArray( 'img_1', 100, 100, 'http://url' ) ],
 			],
 			[
 				true,
 				[ 'img_1' => [ 'img_1' => true ], 'img_2' => [ 'img_2' => true ] ],
-				1,
 				[
 					'img_1' => $this->getResultArray( 'img_1', 100, 100, 'http://url' ),
 					'img_2' => $this->getResultArray( 'img_2', 100, 100, 'http://url' ),
@@ -112,7 +106,6 @@ class ImageServingDriverBaseTest extends WikiaBaseTest {
 			[
 				true,
 				[ 'img_1' => [ [ 'img_1', 'img_1b' ], 'img_2', 'img_3' ] ],
-				2,
 				[
 					0 => $this->getResultArray( 'img_1', 100, 100, 'http://url' ),
 					1 => $this->getResultArray( 'img_1', 100, 100, 'http://url' ),

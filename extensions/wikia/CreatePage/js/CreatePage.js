@@ -5,11 +5,11 @@ var CreatePage = {
 	loading: false,
 	context: null,
 	wgArticlePath: mw.config.get( 'wgArticlePath' ),
-	visualEditorEnabled: !!mw.config.get( 'wgVisualEditor' ),
+	canUseVisualEditor: ( mw.libs && mw.libs.ve ? mw.libs.ve.canCreatePageUsingVE() : false ),
+	redlinkParam: '',
 
 	checkTitle: function( title ) {
 		'use strict';
-
 		$.getJSON( CreatePage.context.wgScript, {
 			action: 'ajax',
 			rs: 'wfCreatePageAjaxCheckTitle',
@@ -18,12 +18,13 @@ var CreatePage = {
 		function( response ) {
 			var articlePath;
 			if ( response.result === 'ok' ) {
-				if ( CreatePage.visualEditorEnabled ) {
+				if ( CreatePage.canUseVisualEditor && mw.libs.ve.isInValidNamespace( title ) ) {
 					articlePath = CreatePage.wgArticlePath.replace( '$1', encodeURIComponent( title ) );
-					location.href =  articlePath + '?veaction=edit';
+					location.href = articlePath + '?veaction=edit' + CreatePage.redlinkParam;
 				} else {
-					location.href = CreatePage.options[ CreatePage.pageLayout ].submitUrl
-						.replace( '$1', encodeURIComponent( title ) );
+					location.href = CreatePage.options[ CreatePage.canUseVisualEditor ? 'blank' :
+						CreatePage.pageLayout ].submitUrl.replace( '$1', encodeURIComponent( title ) ) +
+						CreatePage.redlinkParam;
 				}
 			}
 			else {
@@ -32,12 +33,10 @@ var CreatePage = {
 		});
 	},
 
-	openDialog: function( e, titleText ) {
+	requestDialog: function( e, titleText ) {
 		'use strict';
 
-		if ( CreatePage.visualEditorEnabled && !$( e.target ).hasClass( 'createpage' ) ) {
-			return;
-		}
+		var rs, dialogCallback;
 
 		// BugId:4941
 		if ( Boolean( window.WikiaEnableNewCreatepage ) === false ) {
@@ -55,84 +54,179 @@ var CreatePage = {
 			e.preventDefault();
 		}
 
+		// VE and <createbox>
+		if ( CreatePage.canUseVisualEditor && $( e.target ).hasClass( 'createboxButton' ) ) {
+			CreatePage.checkTitle( titleText );
+			return;
+		}
+
 		if ( false === CreatePage.loading ) {
 			CreatePage.loading = true;
 
-			$.getJSON( CreatePage.context.wgScript, {
-				action: 'ajax',
-				rs: 'wfCreatePageAjaxGetDialog'
-			},
-			function( data ) {
-				require( [ 'wikia.ui.factory' ], function( uiFactory ) {
-					uiFactory.init( [ 'modal' ] ).then( function( uiModal ) {
-						var createPageModalConfig = {
-							vars: {
-								id: 'CreatePageModalDialog',
-								size: 'medium',
-								title: data.title,
-								content: data.html,
-								classes: [ 'modalContent' ],
-								buttons: [
-									{
-										vars: {
-											value: data.addPageLabel,
-											classes: [ 'normal', 'primary' ],
-											imageClass: 'new',
-											data: [
-												{
-													key: 'event',
-													value: 'create'
-												}
-											]
+			if ( CreatePage.canUseVisualEditor && titleText ) {
+				rs = 'wfCreatePageAjaxGetVEDialog';
+				dialogCallback = CreatePage.openVEDialog;
+			} else {
+				rs = 'wfCreatePageAjaxGetDialog';
+				dialogCallback = CreatePage.openDialog;
+			}
+
+			$.getJSON(
+				CreatePage.context.wgScript,
+				{
+					action: 'ajax',
+					rs: rs,
+					article: titleText
+				},
+				dialogCallback
+			);
+		}
+	},
+
+	openVEDialog: function( data ) {
+		require( [ 'wikia.ui.factory' ], function( uiFactory ) {
+			uiFactory.init( [ 'modal' ] ).then( function( uiModal ) {
+				var createPageModalConfig = {
+					vars: {
+						id: 'CreatePageModalDialog',
+						size: 'small',
+						title: data.title,
+						content: data.html,
+						classes: [ 'modalContent' ],
+						buttons: [
+							{
+								vars: {
+									value: data.addPageLabel,
+									classes: [ 'normal', 'primary' ],
+									imageClass: 'new',
+									data: [
+										{
+											key: 'event',
+											value: 'create'
 										}
-									}
-								]
+									]
+								}
+							},
+							{
+								vars: {
+									value: data.cancelLabel,
+									classes: [ 'normal', 'secondary' ],
+									data: [
+										{
+											key: 'event',
+											value: 'cancel'
+										}
+									]
+								}
 							}
-						};
-						uiModal.createComponent( createPageModalConfig, function( createPageModal ) {
-							var idToken,
-								elm,
-								onElementClick,
-								name;
+						]
+					}
+				};
+				uiModal.createComponent( createPageModalConfig, function( createPageModal ) {
+					CreatePage.track( { action: 'impression', label: 've-redlink-modal' } );
 
-							createPageModal.bind( 'create', function( event ) {
-								event.preventDefault();
-								CreatePage.submitDialog( false );
-							});
-
-							onElementClick = function() {
-								CreatePage.setPageLayout( $( this ).data( 'optionName' ) );
-							};
-
-							for ( name in CreatePage.options ){
-								idToken = name.charAt( 0 ).toUpperCase() + name.substring( 1 );
-								elm = $( '#CreatePageDialog' + idToken + 'Container' );
-
-								elm.data( 'optionName', name );
-								elm.click( onElementClick );
-							}
-
-							// Titles can be numbers, let's just make them strings for simplicity
-							if ( typeof titleText === 'number' ) {
-								titleText = titleText.toString();
-							}
-
-							if ( titleText ) {
-								$( '#wpCreatePageDialogTitle' ).val( decodeURIComponent( titleText ) );
-							}
-
-							CreatePage.setPageLayout( data.defaultOption );
-
-							$( '#wpCreatePageDialogTitle' ).focus();
-
-							createPageModal.show();
-
-							CreatePage.loading = false;
-						});
+					createPageModal.bind( 'create', function( event ) {
+						CreatePage.track( { action: 'click', label: 've-redlink-create' } );
+						CreatePage.submitDialog( false );
 					});
+					createPageModal.bind( 'cancel', function( event ) {
+						event.stopPropagation();
+						CreatePage.track( { action: 'click', label: 've-redlink-cancel' } );
+						createPageModal.trigger( 'close' );
+					});
+
+					createPageModal.$blackout.add( createPageModal.$close )
+						.on(
+							'click',
+							function( event ) {
+								if ( event.target === event.delegateTarget ) {
+									CreatePage.track( { action: 'click', label: 've-redlink-close' } );
+								}
+							}
+						);
+
+					CreatePage.loading = false;
+					createPageModal.show();
 				});
 			});
-		}
+		});
+	},
+
+	openDialog: function( data ) {
+		require( [ 'wikia.ui.factory' ], function( uiFactory ) {
+			uiFactory.init( [ 'modal' ] ).then( function( uiModal ) {
+				var createPageModalConfig = {
+					vars: {
+						id: 'CreatePageModalDialog',
+						size: 'medium',
+						title: data.title,
+						content: data.html,
+						classes: [ 'modalContent' ],
+						buttons: [
+							{
+								vars: {
+									value: data.addPageLabel,
+									classes: [ 'normal', 'primary' ],
+									imageClass: 'new',
+									data: [
+										{
+											key: 'event',
+											value: 'create'
+										}
+									]
+								}
+							}
+						]
+					}
+				};
+				uiModal.createComponent( createPageModalConfig, function( createPageModal ) {
+					var idToken,
+						elm,
+						onElementClick,
+						name,
+						titleText;
+
+					createPageModal.bind( 'create', function( event ) {
+						event.preventDefault();
+						CreatePage.submitDialog( false );
+					});
+
+					onElementClick = function() {
+						CreatePage.setPageLayout( $( this ).data( 'optionName' ) );
+					};
+
+					for ( name in CreatePage.options ){
+						idToken = name.charAt( 0 ).toUpperCase() + name.substring( 1 );
+						elm = $( '#CreatePageDialog' + idToken + 'Container' );
+
+						elm.data( 'optionName', name );
+						elm.click( onElementClick );
+					}
+
+					titleText = data.article;
+
+					// Titles can be numbers, let's just make them strings for simplicity
+					if ( typeof titleText === 'number' ) {
+						titleText = titleText.toString();
+					}
+
+					if ( titleText ) {
+						$( '#wpCreatePageDialogTitle' ).val( decodeURIComponent( titleText ) );
+					}
+
+					CreatePage.setPageLayout( data.defaultOption );
+
+					$( '#wpCreatePageDialogTitle' ).focus();
+
+					// Hide formats if ve is available
+					if ( CreatePage.canUseVisualEditor ) {
+						$( '#CreatePageDialogChoose, #CreatePageDialogChoices' ).hide();
+					}
+					CreatePage.loading = false;
+					createPageModal.show();
+				});
+			});
+		});
 	},
 
 	submitDialog: function( enterWasHit ) {
@@ -166,31 +260,25 @@ var CreatePage = {
 
 	redLinkClick: function( e, titleText ) {
 		'use strict';
+		var title = new mw.Title.newFromText( titleText ),
+			namespace = title.getNamespacePrefix().replace( ':', '' ),
+			visualEditorActive = $( 'html' ).hasClass( 've-activated' );
 
-		if ( CreatePage.visualEditorEnabled ) {
-			return;
+		CreatePage.redlinkParam = '&redlink=1';
+
+		if ( CreatePage.canUseVisualEditor ) {
+			CreatePage.track( { action: 'click', label: 've-redlink-click' } );
 		}
 
-		var title = titleText.split( ':' ),
-			isContentNamespace = false,
-			i;
-
-		if ( window.ContentNamespacesText && ( title.length > 1 ) ) {
-			for ( i in window.ContentNamespacesText ) {
-				if ( title[ 0 ] === window.ContentNamespacesText[ i ] ) {
-					isContentNamespace = true;
-				}
-			}
-		}
-		else {
-			isContentNamespace = true;
-		}
-
-		if ( isContentNamespace ) {
-			CreatePage.openDialog( e, titleText );
-		}
-		else {
+		if (
+			visualEditorActive ||
+			mw.config.get( 'wgNamespaceIds' )[ namespace.toLowerCase() ] &&
+			window.ContentNamespacesText &&
+			window.ContentNamespacesText.indexOf( title[0] ) === -1
+		) {
 			return false;
+		} else {
+			CreatePage.requestDialog( e, titleText );
 		}
 	},
 
@@ -202,15 +290,15 @@ var CreatePage = {
 
 			if ( !window.WikiaDisableDynamicLinkCreatePagePopup ) {
 				$( '#dynamic-links-write-article-link, #dynamic-links-write-article-icon' ).click(function( e ) {
-					CreatePage.openDialog( e, null );
+					CreatePage.requestDialog( e, null );
 				});
 				$( '.noarticletext a[href*="redlink=1"]' ).click(function( e ) {
-					CreatePage.openDialog( e, CreatePage.context.wgPageName ); return false;
+					CreatePage.requestDialog( e, CreatePage.context.wgPageName ); return false;
 				});
 			}
 
 			// CreatePage chicklet ( Oasis )
-			$( '.createpage' ).click( CreatePage.openDialog );
+			$( '.createpage' ).click( CreatePage.requestDialog );
 
 			// macbre: RT #38478
 			var addRecipeTab = $( '#add_recipe_tab' ),
@@ -220,11 +308,11 @@ var CreatePage = {
 
 				// only show popup if this tab really points to CreatePage
 				if ( addRecipeLink.attr( 'href' ).match( /CreatePage$/ ) ) {
-					addRecipeLink.click( CreatePage.openDialog );
+					addRecipeLink.click( CreatePage.requestDialog );
 				}
 			}
 
-			$( 'a.new' ).bind( 'click', function( e ) {
+			$( '#WikiaArticle' ).on( 'click', 'a.new', function( e ) {
 				CreatePage.redLinkClick( e, CreatePage.getTitleFromUrl( this.href ) );
 			});
 
@@ -241,13 +329,29 @@ var CreatePage = {
 					preloadField = form.children( 'input[name=\'preload\']' );
 
 					if ( ( typeof preloadField.val() === undefined ) || ( preloadField.val() === '' ) ) {
-						CreatePage.openDialog( e, prefix + field.val() );
+						CreatePage.requestDialog( e, prefix + field.val() );
 					}
 					else {
 						return true;
 					}
 				}
 			});
+		}
+	},
+
+	// Tracking for VE dialog only
+	track: function( data ) {
+		var defaultData;
+
+		if ( Wikia.Tracker ) {
+			defaultData = {
+				category: 'article',
+				trackingMethod: 'internal'
+			}
+
+			$.extend( defaultData, data );
+
+			Wikia.Tracker.track( defaultData );
 		}
 	}
 };

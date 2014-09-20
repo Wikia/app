@@ -1,0 +1,100 @@
+@import "skins/shared/mixins/gradient";
+@import "skins/shared/mixins/ellipses";
+@import "skins/shared/color";
+@import "skins/shared/mixins/calc";
+
+$content-color: #fff;
+$secondary-content-color: #ccc;
+$gradient-color-start: rgba(0, 0, 0, 0.6);
+$default-width: 680px;
+$default-height: 382px;
+$max-view-button-width: 230px;
+// used to calculate position of map in modal (full modal experience)
+$modal-header-footer-height: 45px;
+
+.wikia-interactive-map-thumbnail {
+	clear: both;
+	cursor: pointer;
+	height: $default-height;
+	line-height:22px;
+	position: relative;
+	text-align: left;
+	width: $default-width;
+
+	figcaption {
+		@include linear-gradient(transparent, top, transparent, 0%, $gradient-color-start, 100%);
+		bottom: 0;
+		box-sizing: border-box;
+		color: $content-color;
+		height: 40%;
+		padding: 0 20px;
+		position: absolute;
+		width: 100%;
+
+		div {
+			bottom: 20px;
+			position: absolute;
+
+			span {
+				@include ellipses();
+				display: block;
+				width: $default-width - $max-view-button-width;
+			}
+		}
+
+		img {
+			border-radius: 50%;
+			margin-right: 5px;
+		}
+
+		span {
+			color: $secondary-content-color;
+			font-size: 14px;
+		}
+	}
+
+	p {
+		@include ellipses();
+		font-size: 30px;
+		font-weight: bold;
+		line-height: normal;
+		margin-bottom: 10px;
+		width: $default-width - $max-view-button-width;
+	}
+
+	span {
+		font-size: 12px;
+	}
+
+	.view {
+		background-image: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4NCjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+DQo8c3ZnIHZlcnNpb249IjEuMSIgaWQ9IkxheWVyXzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeD0iMHB4IiB5PSIwcHgiIHdpZHRoPSIzMDBweCIgaGVpZ2h0PSIzMDBweCIgdmlld0JveD0iMCAwIDMwMCAzMDAiIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgMCAwIDMwMCAzMDAiIHhtbDpzcGFjZT0icHJlc2VydmUiPg0KPGc+DQoJPHBvbHlnb24gcG9pbnRzPSI5OC41NTcsMTI2LjQ2IDEyNS45MjUsOTkuMDkyIDc4LjA4LDUxLjIzOCAxMDguMTM4LDIxLjMyNyAyMC43OTMsMjEuMzI3IDIwLjcyNywxMDguNTM4IDUwLjU4MSw3OC40ODciIGZpbGw9IiNmZmYiIC8+DQoJPHBvbHlnb24gcG9pbnRzPSIyNDkuMDQsMjIyLjE0NSAyMDEuMDY3LDE3NC4xNzMgMTczLjcsMjAxLjU0MiAyMjEuNTQ1LDI0OS4zOTUgMTkxLjQ4OCwyNzkuMzA1IDI3OC44MzIsMjc5LjMwNSAyNzguODk2LDE5Mi4wOTQiIGZpbGw9IiNmZmYiIC8+DQoJPHBvbHlnb24gcG9pbnRzPSIyMDEuMDQxLDEyNi40MzEgMjQ4Ljg5Myw3OC41ODUgMjc4LjgwNCwxMDguNjQ0IDI3OC44MDQsMjEuMjk5IDE5MS41OTMsMjEuMjI5IDIyMS42NDQsNTEuMDg0IDE3My42NzIsOTkuMDYyIiBmaWxsPSIjZmZmIiAvPg0KCTxwb2x5Z29uIHBvaW50cz0iOTguNTg5LDE3NC4yIDUwLjczNSwyMjIuMDQ2IDIwLjgyNSwxOTEuOTg5IDIwLjgyNSwyNzkuMzMzIDEwOC4wMzYsMjc5LjQwMyA3Ny45ODUsMjQ5LjU0OCAxMjUuOTU4LDIwMS41NjkiIGZpbGw9IiNmZmYiIC8+DQo8L2c+DQo8L3N2Zz4NCg==);
+		background-position: 10px 10px;
+		background-repeat: no-repeat;
+		background-size: 16px;
+		border: 1px solid $content-color;
+		border-radius: 3px;
+		bottom: 30px;
+		color: $content-color;
+		cursor: pointer;
+		display: block;
+		font-size: 16px;
+		font-weight: bold;
+		padding: 8px 11px 8px 35px;
+		position: absolute;
+		right: 20px;
+	}
+}
+
+.modal.large .wikia-interactive-map-wrapper {
+	@include height-calc('100% - #{$modal-header-footer-height * 2}');
+	left: 0;
+	position: absolute;
+	top: $modal-header-footer-height;
+}
+
+.wikia-interactive-map-wrapper {
+	height: 100%;
+	position: relative;
+	width: 100%;
+}
+

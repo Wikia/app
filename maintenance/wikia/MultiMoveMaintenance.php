@@ -25,16 +25,18 @@ if ( $add ) {
 		'reason' => 'test moved 2',
 		'selwikia' => 177
 	);
-	$thisTask = new MultiMoveTask( $params );
-	$submit_id = $thisTask->submitForm();	
+
+	$task = new \Wikia\Tasks\Tasks\MultiTask();
+	$task->call('move', $params);
+	$task->queue();
 } elseif ( $TASK_ID ) {
 	global $wgExternalSharedDB;
 	$dbr = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
 	$aCondition = array("task_id" => $TASK_ID);
 	$oTask = $dbr->selectRow( "wikia_tasks", "*", $aCondition, __METHOD__, array( "ORDER BY" => "task_id") );
 
-	$Maintenance = new MultiMoveTask();
-	$Maintenance->execute($oTask);
+	$task = new \Wikia\Tasks\Tasks\MultiTask();
+	$task->move(unserialize($oTask->task_arguments));
 } else {
 	// do nothing 
 	echo "nothing to do \n";

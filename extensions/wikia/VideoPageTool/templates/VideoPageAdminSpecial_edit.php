@@ -4,7 +4,6 @@
 	'VideoPageAdminSpecial',
 	'Header',
 	array(
-		'publishDate' => $publishDate,
 		'section' => $section,
 		'language' => $language,
 		'savedBy' => $savedBy,

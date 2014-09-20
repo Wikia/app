@@ -3,7 +3,7 @@
 // Overrides: /extensions/wikia/RTE/css/content.scss
 //
 
-@import "../../../../../skins/oasis/css/mixins/clearfix"; 
+@import "skins/shared/mixins/clearfix";
 
 html.resizing {
 	overflow-y: hidden;

@@ -49,6 +49,16 @@ class AnalyticsEngine {
 				return new AnalyticsProviderDynamicYield();
 			case 'IVW2':
 				return new AnalyticsProviderIVW2();
+			case 'BlueKai':
+				return new AnalyticsProviderBlueKai();
+			case 'Datonics':
+				return new AnalyticsProviderDatonics();
+			case 'ClarityRay':
+				return new AnalyticsProviderClarityRay();
+			case 'PageFair':
+				return new AnalyticsProviderPageFair();
+			case 'RubiconRTP':
+				return new AnalyticsProviderRubiconRTP();
 		}
 
 		return null;

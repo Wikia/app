@@ -1,6 +1,5 @@
-@import "../../../../skins/oasis/css/mixins/border-radius";
-@import "../../../../skins/oasis/css/mixins/clearfix";
-@import "../../../../skins/oasis/css/core/color";
+@import "skins/shared/mixins/clearfix";
+@import "skins/shared/color";
 
 #WDACReviewSpecialPageHeader {
 	border-bottom: solid 1px $color-page-border;

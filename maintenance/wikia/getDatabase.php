@@ -9,6 +9,8 @@
  * It also imports WikiFactory variables from the production database
  */
 
+putenv ("SERVER_ID=177");
+require_once( dirname(__FILE__)."/../commandLine.inc" );
 
 $wgDBdevboxUser = 'devbox';
 $wgDBdevboxPass = 'devbox';
@@ -20,7 +22,7 @@ $USAGE =
 	"\t\t-h          Fetch and import to dev db by hostname (short name or fully qualified name ok)\n" .
 	"\t\t-f          Fetch a new database file from s3\n" .
 	"\t\t-i          Import a downloaded file to dev db\n" .
-	"\t\t-p          Which dev database to use for target: sjc or poz (optional, defaults to WIKIA_PROD_DATACENTER) \n".
+	"\t\t-p          Which dev database to use for target: sjc or poz (optional, defaults to WIKIA_DATACENTER) \n".
 	"\n";
 
 $opts = getopt ("h:i:f:p:?::");
@@ -29,15 +31,15 @@ if( empty( $opts ) ) die( $USAGE );
 if (array_key_exists('p', $opts)) {
 	$wgWikiaDatacenter = $opts['p'];
 } else {
-	$wgWikiaDatacenter = getenv('WIKIA_PROD_DATACENTER');
+	$wgWikiaDatacenter = getenv('WIKIA_DATACENTER');
 }
 switch($wgWikiaDatacenter) {
-	case 'poz':
+	case WIKIA_DC_POZ:
 		$wgDBdevboxServer1 = 'dev-db-a1-p1';
 		$wgDBdevboxServer2 = 'dev-db-a1-p1';
 		$wgDBdevboxCentral = 'dev-db-central-p1';
 		break;
-	case 'sjc':
+	case WIKIA_DC_SJC:
 		$wgDBdevboxServer1 = 'dev-db-a1';
 		$wgDBdevboxServer2 = 'dev-db-b1';
 		$wgDBdevboxCentral = 'dev-db-central';
@@ -66,6 +68,10 @@ if ( array_key_exists('h', $opts) || array_key_exists ('f', $opts) ) {
 		$city_id = $matches[1];
 		$cluster = strtr($matches[2], '123456', 'ABCDEF');
 		$databaseDirectory = "database_$cluster";
+		if ($cluster == 'F') {
+			// FIXME
+			$databaseDirectory = "database-f";
+		}
 		// just being lazy - easier to do this as a separate regex
 		$pattern = '/wgDBname="(.*)"/';
 		preg_match($pattern, $page, $matches);
@@ -140,6 +146,7 @@ if ( array_key_exists('h', $opts) || array_key_exists ('f', $opts) ) {
 				$response = shell_exec("s3cmd ls s3://".$databaseDirectory."/$dirname/".$dbname."_$date".".sql.gz");
 				$file_list = explode("\n", $response);
 				echo "Found " . count($file_list) . " items...\n";
+				if (count($file_list) == 1) continue;
 				foreach ($file_list as $file) {
 					$regs = array();
 					$file = preg_split('/\s+/' ,$file);
@@ -174,14 +181,24 @@ if ( array_key_exists('h', $opts) || array_key_exists ('f', $opts) ) {
 		require_once("../../../config/DB.php");
 	}
 	if (isset($wgDBbackenduser) && isset($wgDBbackendpassword) && isset($wgLBFactoryConf['hostsByName']['sharedb-s1'])) {
+		// prepare raw output for consumption as csv. changes " => \"; \t => ","; beginning of line => ", end of line => "
+		$prepareCsv = "sed 's/\"/\\\\\"/g;s/\\t/\",\"/g;s/^/\"/;s/$/\"/;s/\\n//g'";
+
 		$dbhost = $wgLBFactoryConf['hostsByName']['sharedb-s1'];
 	    // dump city_list row to local CSV file and import into local database
-		$response = `mysql -u $wgDBbackenduser -p$wgDBbackendpassword --database wikicities -h $dbhost -ss -e "SELECT * from city_list where city_id = $city_id " | sed 's/\\t/","/g;s/^/"/;s/$/"/;s/\\n//g' > /tmp/city_list.csv`;
+		$response = `mysql -u $wgDBbackenduser -p$wgDBbackendpassword --database wikicities -h $dbhost -ss -e "SELECT * from city_list where city_id = $city_id " | $prepareCsv > /tmp/city_list.csv`;
 		print "city_list dump ok\n";
 		$response = `mysqlimport -u $wgDBdevboxUser -p$wgDBdevboxPass -h $wgDBdevboxCentral --replace --fields-enclosed-by=\\" --fields-terminated-by=, --local wikicities /tmp/city_list.csv`;
 		print $response;
 		unlink ("/tmp/city_list.csv");
-		$response = `mysql -u $wgDBbackenduser -p$wgDBbackendpassword --database wikicities -h $dbhost -ss -e "SELECT * from city_variables where cv_city_id = $city_id " | sed 's/\\t/","/g;s/^/"/;s/$/"/;s/\\n//g' > /tmp/city_variables.csv`;
+		// dump city_domains rows to local CSV file and improt into local database
+		$response = `mysql -u $wgDBbackenduser -p$wgDBbackendpassword --database wikicities -h $dbhost -ss -e "SELECT * from city_domains where city_id = $city_id " | $prepareCsv > /tmp/city_domains.csv`;
+		print "city_domains dump ok\n";
+		$response = `mysqlimport -u $wgDBdevboxUser -p$wgDBdevboxPass -h $wgDBdevboxCentral --replace --fields-enclosed-by=\\" --fields-terminated-by=, --local wikicities /tmp/city_domains.csv`;
+		print $response;
+		unlink ("/tmp/city_domains.csv");
+		// dump city_vars rows to local CVS file and import into local database
+		$response = `mysql -u $wgDBbackenduser -p$wgDBbackendpassword --database wikicities -h $dbhost -ss -e "SELECT * from city_variables where cv_city_id = $city_id " | $prepareCsv > /tmp/city_variables.csv`;
 		print "city_vars dump ok\n";
 		$response = `mysqlimport -u $wgDBdevboxUser -p$wgDBdevboxPass -h $wgDBdevboxCentral --replace --fields-enclosed-by=\\" --fields-terminated-by=, --local wikicities /tmp/city_variables.csv`;
 		print $response;
@@ -194,7 +211,7 @@ if ( array_key_exists('h', $opts) || array_key_exists ('f', $opts) ) {
 }
 
 if ( array_key_exists('h', $opts) || array_key_exists ('i', $opts) ) {
-	if (file_exists($opts['i'])) {
+	if (array_key_exists('i', $opts) && file_exists($opts['i'])) {
 		$fullpath = $opts['i'];
 		$filename = basename($opts['i']);
 		preg_match("/^(.*).*.sql.gz/", $filename, $matches);

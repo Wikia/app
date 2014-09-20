@@ -1,5 +1,12 @@
-
-define( 'lvs.undo', [ 'wikia.querystring', 'lvs.commonajax', 'wikia.window', 'lvs.videocontrols', 'wikia.nirvana', 'jquery', 'lvs.tracker' ], function( QueryString, commonAjax, window, videoControls, nirvana, $, tracker ) {
+define('lvs.undo', [
+	'wikia.querystring',
+	'lvs.commonajax',
+	'lvs.videocontrols',
+	'wikia.nirvana',
+	'jquery',
+	'lvs.tracker'
+], function (QueryString, commonAjax, videoControls, nirvana, $, tracker) {
+	'use strict';
 
 	var $container,
 		videoTitle,
@@ -10,7 +17,6 @@ define( 'lvs.undo', [ 'wikia.querystring', 'lvs.commonajax', 'wikia.window', 'lv
 		sort,
 		page,
 		wasSwap;
-
 
 	function doRequest() {
 		commonAjax.startLoadingGraphic();
@@ -24,45 +30,45 @@ define( 'lvs.undo', [ 'wikia.querystring', 'lvs.commonajax', 'wikia.window', 'lv
 				sort: sort,
 				currentPage: page
 			},
-			callback: function( data ) {
+			callback: function (data) {
 				// send info to common success method: response data and tracking label
-				commonAjax.success( data, tracker.labels.UNDO );
+				commonAjax.success(data, tracker.labels.UNDO);
 			},
-			onErrorCallback: function() {
+			onErrorCallback: function () {
 				commonAjax.failure();
 			}
 		});
 	}
 
-	function init( $elem ) {
+	function init($elem) {
 		$container = $elem;
 
-		$( 'body' ).on( 'click', '.global-notification .undo', function( e ) {
+		$('body').on('click', '.global-notification .undo', function (e) {
 			e.preventDefault();
 
 			videoControls.reset();
 
-			var $this = $( this );
+			var $this = $(this);
 
-			videoTitle = $this.attr( 'data-video-title' );
-			newTitle = $this.attr( 'data-new-title' ) || '';
+			videoTitle = $this.attr('data-video-title');
+			newTitle = $this.attr('data-new-title') || '';
 			qs = new QueryString();
-			sort = qs.getVal ( 'sort', 'recent' );
-			page = qs.getVal ( 'currentPage', 1 );
-			wasSwap = !!newTitle;
+			sort = qs.getVal('sort', 'recent');
+			page = qs.getVal('currentPage', 1);
+			wasSwap = !! newTitle;
 
-			if ( wasSwap ) {
-				title = $.msg( 'lvs-confirm-undo-swap-title' );
-				msg = $.msg( 'lvs-confirm-undo-swap-message' );
+			if (wasSwap) {
+				title = $.msg('lvs-confirm-undo-swap-title');
+				msg = $.msg('lvs-confirm-undo-swap-message');
 			} else {
-				title = $.msg( 'lvs-confirm-undo-keep-title' );
-				msg = $.msg( 'lvs-confirm-undo-keep-message' );
+				title = $.msg('lvs-confirm-undo-keep-title');
+				msg = $.msg('lvs-confirm-undo-keep-message');
 			}
 
 			$.confirm({
 				title: title,
 				content: msg,
-				onOk: function() {
+				onOk: function () {
 					doRequest();
 
 					// Track click on okay button
@@ -85,5 +91,3 @@ define( 'lvs.undo', [ 'wikia.querystring', 'lvs.commonajax', 'wikia.window', 'lv
 		init: init
 	};
 });
-
-

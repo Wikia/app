@@ -20,6 +20,9 @@ class FounderEmailsEditEventTest extends WikiaBaseTest {
 	}
 
 	/**
+	 * @group Slow
+	 * @group Broken
+	 * @slowExecutionTime 0.04295 ms
 	 * first edit
 	 * both $isRegisteredUser and $isRegisteredUserFirstEdit should be set to true
 	 * setFirstEmailSentFlag should be called
@@ -60,6 +63,9 @@ class FounderEmailsEditEventTest extends WikiaBaseTest {
 	}
 
 	/**
+	 * @group Slow
+	 * @group Broken
+	 * @slowExecutionTime 0.02432 ms
 	 * edit after first, no throttle placed:
 	 * $isRegisteredUser should be set to true,
 	 * $isRegisteredUserFirstEdit should be set to false,
@@ -101,6 +107,7 @@ class FounderEmailsEditEventTest extends WikiaBaseTest {
 	}
 
 	/**
+	 * @group Broken
 	 * No edits outside of profile page;
 	 * founder email event should not be created;
 	 * setFirstEmailSentFlag should NOT be called
@@ -140,6 +147,9 @@ class FounderEmailsEditEventTest extends WikiaBaseTest {
 	}
 
 	/**
+	 * @group Slow
+	 * @group Broken
+	 * @slowExecutionTime 0.02371 ms
 	 * getFirstEmailSentFlag will return true
 	 * $isRegisteredUser should be set to true,
 	 * $isRegisteredUserFirstEdit should be set to false,

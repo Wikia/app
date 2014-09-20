@@ -212,6 +212,7 @@ class RunOnCluster extends Maintenance {
 	/**
 	 * Get the list of dbnames that exist on our cluster
 	 *
+	 * @param string $dbname
 	 * @return array An array of database names
 	 */
 	private function getClusterWikis( $dbname = '' ) {

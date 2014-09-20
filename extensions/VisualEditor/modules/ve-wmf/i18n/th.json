@@ -1,0 +1,16 @@
+{
+	"@metadata": {
+		"authors": [
+			"Supasate",
+			"Taweetham"
+		]
+	},
+	"tag-visualeditor": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor]]",
+	"tag-visualeditor-description": "แก้ไขโดยใช้ [[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor]]",
+	"tag-visualeditor-needcheck": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor: ตรวจสอบ]]",
+	"tag-visualeditor-needcheck-description": "การแก้ไขโดยใช้ [[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor]] ระบบตรวจพบ wikitext ที่อาจถูกเปลี่ยนแปลงโดยไม่ได้ตั้งใจ",
+	"visualeditor-feedback-link": "Project:VisualEditor/ความคิดเห็น",
+	"visualeditor-feedback-tool": "ฝากคำติชม",
+	"visualeditor-help-label": "อ่านคู่มือการใช้งาน",
+	"visualeditor-help-title": "คู่มือสำหรับวิธีการใช้ตัวแก้ไข"
+}

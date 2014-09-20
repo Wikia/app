@@ -12,8 +12,8 @@
  * @param {number} [length] Length of content data in document
  * @param {Object} [element] Reference to element in linear model
  */
-ve.dm.WikiaBlockVideoNode = function VeDmWikiaBlockVideoNode( length, element ) {
-	ve.dm.WikiaBlockMediaNode.call( this, 0, element );
+ve.dm.WikiaBlockVideoNode = function VeDmWikiaBlockVideoNode() {
+	ve.dm.WikiaBlockMediaNode.apply( this, arguments );
 };
 
 /* Inheritance */
@@ -23,6 +23,10 @@ OO.inheritClass( ve.dm.WikiaBlockVideoNode, ve.dm.WikiaBlockMediaNode );
 /* Static Properties */
 
 ve.dm.WikiaBlockVideoNode.static.name = 'wikiaBlockVideo';
+
+ve.dm.WikiaBlockMediaNode.static.childNodeTypes = [ 'wikiaVideoCaption' ];
+
+ve.dm.WikiaBlockMediaNode.static.captionNodeType = 'wikiaVideoCaption';
 
 ve.dm.WikiaBlockVideoNode.static.rdfaToType = {
 	'mw:Video/Thumb': 'thumb',

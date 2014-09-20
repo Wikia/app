@@ -1,0 +1,17 @@
+{
+	"@metadata": {
+		"authors": [
+			"An13sa",
+			"Unai Fdz. de Betoño",
+			"Xabier Armendaritz"
+		]
+	},
+	"tag-visualeditor": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|Ikusizko editorea]]",
+	"tag-visualeditor-description": "Edizio hau egiteko, [[{{MediaWiki:visualeditor-descriptionpagelink}}|ikusizko editorea]] erabili da",
+	"tag-visualeditor-needcheck": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|Ikusizko editorea: egiaztatzea]]",
+	"tag-visualeditor-needcheck-description": "Edizio hau egiteko, [[{{MediaWiki:visualeditor-descriptionpagelink}}|ikusizko editorea]] erabili da. Sistemak detektatu du edizio honetan wikitestuan egindako zenbait aldaketa beharbada nahi gabe egin direla.",
+	"visualeditor-feedback-link": "Project:Ikusizko editorea/Oharrak",
+	"visualeditor-feedback-tool": "Oharrak",
+	"visualeditor-help-label": "Irakurri erabiltzaile gida",
+	"visualeditor-help-title": "Editorea nola erabili azaltzen duen erabiltzaile gida"
+}

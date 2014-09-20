@@ -1,53 +1,51 @@
 <?php
 
 class VideosModuleController extends WikiaController {
-
-	const VIDEOS_PER_PAGE = 8;
+	const DEFAULT_TEMPLATE_ENGINE = WikiaResponse::TEMPLATE_ENGINE_MUSTACHE;
 
 	/**
 	 * VideosModule
-	 * Returns videos to populate the Videos Module. First try and get premium videos
-	 * related to the article page. If that's not enough add premium videos related
-	 * to the local wiki. Finally, if still more or needed, get trending premium
-	 * videos related to the vertical of the wiki.
-	 * @requestParam integer articleId (required if verticalOnly is false)
+	 * Returns videos to populate the Videos Module. First check if
+	 * local videos are being requested from the front-end (this is not
+	 * yet in use but will be used for A/B testing down the line). If not,
+	 * check if there are categories associated with this wiki for the
+	 * Videos Module and pull premium videos from those categories. Finally, if
+	 * neither of those first conditions are true, search for premium
+	 * videos related to the wiki.
 	 * @requestParam integer limit - number of videos shown in the module
-	 * @requestParam string verticalOnly [true/false] - show vertical videos only
+	 * @requestParam string local [true/false] - show local content
+	 * @requestParam string sort [recent/trend] - how to sort the results
 	 * @responseParam string $result [ok/error]
 	 * @responseParam string $msg - result message
 	 * @responseParam array $videos - list of videos
+	 * @responseParam array $staffVideos - list of staff picked videos
 	 */
-	public function executeIndex() {
+	public function index() {
 		wfProfileIn( __METHOD__ );
 
-		$articleId = $this->request->getVal( 'articleId', 0 );
-		$showVerticalOnly = ( $this->request->getVal( 'verticalOnly' ) == 'true' );
-		$numRequired = $this->request->getVal( 'limit', self::VIDEOS_PER_PAGE );
+		$this->title = wfMessage( 'videosmodule-title-default' )->plain();
+		$numRequired = $this->request->getVal( 'limit', VideosModule::LIMIT_VIDEOS );
+		$localContent = ( $this->request->getVal( 'local' ) == 'true' );
+		$sort = $this->request->getVal( 'sort', 'trend' );
+		$userRegion = $this->request->getVal( 'userRegion', VideosModule::DEFAULT_REGION );
 
-		$videos = [];
-		$module = new VideosModule();
-
-		if ( !$showVerticalOnly ) {
-			if ( empty( $articleId ) ) {
-				$this->result = 'error';
-				$this->msg = wfMessage( 'videosmodule-error-no-articleId' )->plain();
-				wfProfileOut( __METHOD__ );
-				return;
-			}
-
-			// get related videos (article related videos and wiki related videos)
-			$videos = $module->getRelatedVideos( $articleId, $numRequired );
-		}
-
-		// get vertical videos
-		$numRequired = $numRequired - count( $videos );
-		if ( $numRequired > 0 ) {
-			$videos = array_merge( $videos, $module->getVerticalVideos( $numRequired ) );
+		$module = new VideosModule( $userRegion );
+		$staffVideos = $module->getStaffPicks();
+		if ( $localContent ) {
+			$videos = $module->getLocalVideos( $numRequired, $sort );
+		} elseif ( !empty( $this->wg->VideosModuleCategories )  ) {
+			$videos = $module->getVideosByCategory();
+		} else {
+			$videos = $module->getWikiRelatedVideosTopics( $numRequired );
 		}
 
 		$this->result = "ok";
 		$this->msg = '';
-		$this->videos = $module->getVideosDetail( $videos );
+		$this->videos = $videos;
+		$this->staffVideos = $staffVideos;
+
+		// set cache
+		$this->response->setCacheValidity( 600 );
 
 		wfProfileOut( __METHOD__ );
 	}

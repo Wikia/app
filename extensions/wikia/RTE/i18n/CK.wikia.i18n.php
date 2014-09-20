@@ -167,6 +167,7 @@ $messages['qqq'] = array(
 	'rte-ck-templateEditor-editor-parameters' => '{{Identical|Parameter}}',
 	'rte-ck-templateEditor-editor-previewButton' => '{{Identical|Preview}}',
 	'rte-ck-templateEditor-editor-previewTitle' => '{{Identical|Preview}}',
+	'rte-ck-unlink' => '{{Identical|Remove link}}',
 	'rte-ck-video-video' => '{{Identical|Video}}',
 	'rte-ck-format-tag_h2' => '{{Identical|Heading}}',
 	'rte-ck-format-tag_h3' => '{{Identical|Heading}}',
@@ -981,15 +982,15 @@ $messages['de-formal'] = array(
  */
 $messages['diq'] = array(
 	'rte-ck-bucket-controls' => 'Qontroli',
-	'rte-ck-errorPopupTitle' => 'Xırab',
+	'rte-ck-errorPopupTitle' => 'Xeta!',
 	'rte-ck-hoverPreview-comment-title' => 'Vatış',
 	'rte-ck-hoverPreview-delete' => 'bestere',
 	'rte-ck-hoverPreview-edit' => 'bıvurne',
-	'rte-ck-image-add' => 'Resim Deke',
+	'rte-ck-image-add' => 'Yew resım cı ke',
 	'rte-ck-image-photo' => 'Fotraf',
 	'rte-ck-justify-center' => 'Miyan fi',
-	'rte-ck-link-add' => 'Gre deke',
-	'rte-ck-link-error-title' => 'Xırab',
+	'rte-ck-link-add' => 'Gıre cı ke',
+	'rte-ck-link-error-title' => 'Xeta',
 	'rte-ck-link-external-linkText' => 'Metnê gri',
 	'rte-ck-link-external-tab' => 'Gırêy teberi',
 	'rte-ck-link-external-url' => 'GRE',
@@ -998,12 +999,12 @@ $messages['diq'] = array(
 	'rte-ck-link-status-external' => 'Gırêy teberi',
 	'rte-ck-modeSwitch-toSource' => 'Çıme',
 	'rte-ck-photoGallery-gallery' => 'Galeri',
-	'rte-ck-photoGallery-slideshow' => 'Slaytşow',
+	'rte-ck-photoGallery-slideshow' => 'Slaydşow',
 	'rte-ck-poll-add' => 'Anket deqı',
 	'rte-ck-poll-poll' => 'Anket',
-	'rte-ck-signature-add' => 'İmzay xo deke',
+	'rte-ck-signature-add' => 'İmzaya xo cı erze',
 	'rte-ck-signature-label' => 'imza',
-	'rte-ck-table-toolbarTooltip' => 'Tablo Deke',
+	'rte-ck-table-toolbarTooltip' => 'Tablo cı ke',
 	'rte-ck-templateDropDown-showUsedList' => 'Listey şablonan de karyaya bıvin',
 	'rte-ck-templateDropDown-label' => 'Şablon',
 	'rte-ck-templateEditor-editor-parameters' => 'Parametrey',
@@ -1802,7 +1803,7 @@ $messages['inh'] = array(
 $messages['it'] = array(
 	'rte-ck-image-photo' => 'Foto',
 	'rte-ck-justify-center' => 'Allinea al centro',
-	'rte-ck-link-add' => 'Inserisci link',
+	'rte-ck-link-add' => 'Aggiungi collegamento',
 	'rte-ck-link-error-badPageTitle' => 'Per favore inserisci il titolo di una pagina.',
 	'rte-ck-link-error-badUrl' => 'Questo URL non è valido: per favore controlla che sia corretto.',
 	'rte-ck-link-error-title' => 'Errore',
@@ -1980,9 +1981,35 @@ $messages['ja'] = array(
 
 /** Kannada (ಕನ್ನಡ)
  * @author Nayvik
+ * @author VASANTH S.N.
  */
 $messages['kn'] = array(
+	'rte-ck-bucket-insert' => 'ಸೇರ್ಪಡಿಸು',
+	'rte-ck-errorPopupTitle' => 'ದೋಷ!',
+	'rte-ck-hoverPreview-comment-title' => 'ಟಿಪ್ಪಣಿ',
+	'rte-ck-hoverPreview-delete' => 'ಅಳಿಸಿ',
+	'rte-ck-hoverPreview-edit' => 'ಸಂಪಾದಿಸಿ',
+	'rte-ck-image-photo' => 'ಭಾವಚಿತ್ರಗಳು',
+	'rte-ck-link-error-title' => 'ದೋಷ',
+	'rte-ck-link-external-tab' => 'ಬಾಹ್ಯ ಸಂಪರ್ಕ',
+	'rte-ck-link-internal-pageName' => 'ಪುಟದ ಹೆಸರು',
+	'rte-ck-link-internal-tab' => 'ಆಂತರಿಕ ಸಂಪರ್ಕ',
+	'rte-ck-link-status-external' => 'ಬಾಹ್ಯ ಸಂಪರ್ಕ',
+	'rte-ck-media-delete' => 'ತೆಗೆ',
+	'rte-ck-media-edit' => 'ಪರಿಷ್ಕರಿಸು',
+	'rte-ck-modeSwitch-toSource' => 'ಆಕರ',
+	'rte-ck-signature-label' => 'ಸಹಿ',
 	'rte-ck-templateDropDown-label' => 'ಟೆಂಪ್ಲೇಟು',
+	'rte-ck-templateEditor-dialog-insert' => 'ಸೇರ್ಪಡಿಸು',
+	'rte-ck-templateEditor-dialog-magicWords' => 'ಜಾದೂ ಶಬ್ದಗಳು',
+	'rte-ck-templateEditor-editor-parameters' => 'ಪರಿಮಿತಿಗಳು',
+	'rte-ck-templateEditor-editor-previewButton' => 'ಮುನ್ನೋಟ',
+	'rte-ck-templateEditor-editor-previewTitle' => 'ಮುನ್ನೋಟ',
+	'rte-ck-templateEditor-title' => 'ಸಿದ್ಧವಿನ್ಯಾಸ ಸಂಪಾದಕರು',
+	'rte-ck-format-tag_h2' => 'ತಲೆಬರಹ ೨',
+	'rte-ck-format-tag_h3' => 'ತಲೆಬರಹ ೩',
+	'rte-ck-format-tag_h4' => 'ತಲೆಬರಹ ೪',
+	'rte-ck-format-tag_h5' => 'ತಲೆಬರಹ ೫',
 );
 
 /** Korean (한국어)
@@ -2001,6 +2028,13 @@ $messages['ko'] = array(
 	'rte-ck-link-status-exists' => '존재하는 문서',
 	'rte-ck-link-status-notexists' => '존재하지 않는 문서',
 	'rte-ck-link-status-external' => '바깥 링크',
+);
+
+/** Karachay-Balkar (къарачай-малкъар)
+ * @author Iltever
+ */
+$messages['krc'] = array(
+	'rte-ck-modeSwitch-toWysiwyg' => 'Визуал редактор',
 );
 
 /** Colognian (Ripoarisch)
@@ -2057,10 +2091,11 @@ $messages['lb'] = array(
 	'rte-ck-link-error-title' => 'Feeler',
 	'rte-ck-link-external-tab' => 'Externe Link',
 	'rte-ck-link-external-url' => 'URL',
-	'rte-ck-link-internal-pageName' => 'Säitennumm:',
+	'rte-ck-link-internal-pageName' => 'Säitennumm',
 	'rte-ck-link-internal-tab' => 'Interne Link',
 	'rte-ck-media-delete' => 'ewechhuelen',
 	'rte-ck-media-edit' => 'änneren',
+	'rte-ck-modeSwitch-toSource' => 'Quell',
 	'rte-ck-photoGallery-tooltip' => 'Dëst ass eng Galerie.',
 	'rte-ck-signature-add' => 'Setzt Är Ënnerschrëft derbäi',
 	'rte-ck-signature-label' => 'Ënnerschrëft',
@@ -2978,7 +3013,7 @@ $messages['ps'] = array(
 	'rte-ck-templateDropDown-label' => 'کينډۍ',
 	'rte-ck-templateDropDown-title' => 'يوه کينډۍ ټاکل',
 	'rte-ck-templateEditor-dialog-insert' => 'ورټومبل',
-	'rte-ck-templateEditor-dialog-magicWords' => 'کوډګريز وييونه',
+	'rte-ck-templateEditor-dialog-magicWords' => 'کوډگريز وييونه',
 	'rte-ck-templateEditor-editor-previewButton' => 'مخليدنه',
 	'rte-ck-templateEditor-editor-previewTitle' => 'مخليدنه',
 	'rte-ck-video-add' => 'يوه ويډيو ورگډول',
@@ -3578,14 +3613,16 @@ $messages['ta'] = array(
 );
 
 /** Telugu (తెలుగు)
+ * @author Chaduvari
  * @author Veeven
  */
 $messages['te'] = array(
 	'rte-ck-hoverPreview-comment-title' => 'వ్యాఖ్య',
 	'rte-ck-hoverPreview-delete' => 'తొలగించు',
+	'rte-ck-link-error-title' => 'లోపం',
 	'rte-ck-link-external-linkText' => 'లంకె పాఠ్యం',
 	'rte-ck-link-external-tab' => 'బయటి లంకె',
-	'rte-ck-link-internal-pageName' => 'పుట పేరు',
+	'rte-ck-link-internal-pageName' => 'పేజీ పేరు',
 	'rte-ck-link-internal-tab' => 'అంతర్గత లంకె',
 	'rte-ck-link-status-external' => 'బయటి లంకె',
 	'rte-ck-media-delete' => 'తొలగించు',
@@ -4070,7 +4107,7 @@ $messages['zh-hans'] = array(
 	'rte-ck-bucket-controls' => '控件',
 	'rte-ck-commentEditor-title' => '评论编辑',
 	'rte-ck-errorPopupTitle' => '出现问题！',
-	'rte-ck-hoverPreview-codedElement-intro' => '请切换模式编辑',
+	'rte-ck-hoverPreview-codedElement-intro' => '请切换代码模式编辑！',
 	'rte-ck-hoverPreview-codedElement-title' => '编码元素',
 	'rte-ck-hoverPreview-comment-intro' => '仅编辑时可见',
 	'rte-ck-hoverPreview-comment-title' => '评论',
@@ -4180,9 +4217,11 @@ $messages['zh-hans'] = array(
 
 /** Traditional Chinese (中文（繁體）‎)
  * @author Ffaarr
+ * @author Liuxinyu970226
  */
 $messages['zh-hant'] = array(
 	'rte-ck-hoverPreview-delete' => '刪除',
+	'rte-ck-templateDropDown-label' => '樣版',
 	'rte-ck-templateEditor-editor-previewButton' => '預覽',
 	'rte-ck-templateEditor-editor-previewTitle' => '預覽',
 	'rte-ck-mut-add' => '添加影片 （測試版）',

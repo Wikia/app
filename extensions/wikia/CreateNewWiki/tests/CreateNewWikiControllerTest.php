@@ -12,6 +12,8 @@ class CreateNewWikiControllerTest extends WikiaBaseTest {
 	}
 
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.07 ms
 	 * @group hyun
 	 * @dataProvider getCreateWikiDataProvider
 	 */
@@ -19,7 +21,7 @@ class CreateNewWikiControllerTest extends WikiaBaseTest {
 		$wikiName = 'Muppet is great';
 		$wikiDomain = 'muppet';
 		$wikiLanguage = 'en';
-		$wikiCategory = '3';
+		$wikiVertical = '3';
 		$wikiId = 322389;
 		$wikiAnswer = 12345;
 		$siteName = 'asdfasdf';
@@ -28,7 +30,7 @@ class CreateNewWikiControllerTest extends WikiaBaseTest {
 		$requestParams = array("wName" => $wikiName,
 			"wDomain" => $wikiDomain,
 			"wLanguage" => $wikiLanguage,
-			"wCategory" => $wikiCategory,
+			"wVertical" => $wikiVertical,
 			"wAnswer" => $wikiAnswer);
 
 		$wgRequest = $this->getMock('WebRequest');
@@ -99,6 +101,10 @@ class CreateNewWikiControllerTest extends WikiaBaseTest {
 		];
 	}
 
+	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.03212 ms
+	 */
 	public function testCheckWikiNameSuccess() {
 
 		$wikiName = 'muppet';

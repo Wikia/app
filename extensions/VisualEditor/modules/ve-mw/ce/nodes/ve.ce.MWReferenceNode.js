@@ -1,7 +1,7 @@
 /*!
  * VisualEditor ContentEditable MWReferenceNode class.
  *
- * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
@@ -11,8 +11,6 @@
  * @class
  * @extends ve.ce.LeafNode
  * @mixins ve.ce.FocusableNode
- * @mixins ve.ce.ProtectedNode
- * @mixins ve.ce.RelocatableNode
  *
  * @constructor
  * @param {ve.dm.MWReferenceNode} model Model to observe
@@ -24,8 +22,6 @@ ve.ce.MWReferenceNode = function VeCeMWReferenceNode( model, config ) {
 
 	// Mixin constructors
 	ve.ce.FocusableNode.call( this );
-	ve.ce.ProtectedNode.call( this );
-	ve.ce.RelocatableNode.call( this );
 
 	// DOM changes
 	this.$link = this.$( '<a>' ).attr( 'href', '#' );
@@ -46,14 +42,14 @@ ve.ce.MWReferenceNode = function VeCeMWReferenceNode( model, config ) {
 OO.inheritClass( ve.ce.MWReferenceNode, ve.ce.LeafNode );
 
 OO.mixinClass( ve.ce.MWReferenceNode, ve.ce.FocusableNode );
-OO.mixinClass( ve.ce.MWReferenceNode, ve.ce.ProtectedNode );
-OO.mixinClass( ve.ce.MWReferenceNode, ve.ce.RelocatableNode );
 
 /* Static Properties */
 
 ve.ce.MWReferenceNode.static.name = 'mwReference';
 
 ve.ce.MWReferenceNode.static.tagName = 'sup';
+
+ve.ce.MWReferenceNode.static.primaryCommandName = 'reference';
 
 /* Methods */
 
@@ -92,25 +88,20 @@ ve.ce.MWReferenceNode.prototype.onInternalListUpdate = function ( groupsChanged 
  * @method
  */
 ve.ce.MWReferenceNode.prototype.update = function () {
-	var listIndex = this.model.getAttribute( 'listIndex' ),
-		listGroup = this.model.getAttribute( 'listGroup' ),
-		refGroup = this.model.getAttribute( 'refGroup' ),
-		position = this.internalList.getIndexPosition( listGroup, listIndex );
-
-	this.$link.text( '[' + ( refGroup ? refGroup + ' ' : '' ) + ( position + 1 ) + ']' );
+	this.$link.text( this.model.getIndexLabel() );
 };
 
 /** */
-ve.ce.MWReferenceNode.prototype.createPhantoms = function () {
-	// Parent method
-	ve.ce.ProtectedNode.prototype.createPhantoms.call( this );
+ve.ce.MWReferenceNode.prototype.createHighlights = function () {
+	// Mixin method
+	ve.ce.FocusableNode.prototype.createHighlights.call( this );
 
 	if ( !this.getModel().isInspectable() ) {
 		// TODO: Move this into one of the classes mixin or inherit from
 		// as any focusable node that isn't inspectable should have this
 		// as it would be bad UX to have a focusable nodes where one of the
 		// same type doesn't show an inspector.
-		this.$phantoms
+		this.$highlights
 			.addClass( 've-ce-mwReferenceNode-missingref' )
 			.attr( 'title', ve.msg( 'visualeditor-referencelist-missingref' ) );
 	}

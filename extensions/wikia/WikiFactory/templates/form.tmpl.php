@@ -91,6 +91,9 @@ border: none;
     z-index: 9000;
 }
 
+#wf-category fieldset { border: 1px dotted lightgray; background: #f9f9f9; padding: 0.4em; }
+#wf-category label { display: inline-block; width: 75px; }
+
 .wf-variable-form .perror {color: #fe0000; font-weight: bold; }
 .wf-variable-form .success {color: darkgreen; font-weight: bold; }
 .wf-variable-form textarea { width: 90%; height: 8em; }

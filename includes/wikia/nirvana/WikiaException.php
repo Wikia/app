@@ -52,11 +52,16 @@ abstract class WikiaBaseException extends MWException {
  */
 class WikiaException extends WikiaBaseException {
 	public function __construct($message = '', $code = 0, Exception $previous = null) {
+		global $wgRunningUnitTests;
 		parent::__construct( $message, $code, $previous );
 
-		// log more details (macbre)
-		Wikia::log( 'exceptions-WIKIA', get_class($this), $message, true );
-		Wikia::logBacktrace( __METHOD__ );
+		if (!$wgRunningUnitTests) {
+			\Wikia\Logger\WikiaLogger::instance()->error(__CLASS__, [
+				'err' => $message,
+				'errno' => $code,
+				'exception' => $this,
+			]);
+		}
 	}
 }
 
@@ -220,4 +225,12 @@ class MethodNotFoundException extends NotFoundException {
 	function __construct($name) {
 		parent::__construct("Method not found: $name");
 	}	
+}
+
+class PermissionsException extends ForbiddenException {
+	protected $message = "No Permissions";
+
+	function __construct( $requiredPermission ) {
+		$this->details = "Current User don't have required permissions: " . $requiredPermission;
+	}
 }

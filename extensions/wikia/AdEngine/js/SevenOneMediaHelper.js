@@ -1,17 +1,35 @@
-/* exported SevenOneMediaHelper */
 /* jshint camelcase:false, maxparams:false */
-
-var SevenOneMediaHelper = function (adLogicPageLevelParams, scriptWriter, log, window, $, tracker) {
+/*global define,require*/
+define('ext.wikia.adEngine.sevenOneMediaHelper', [
+	'jquery',
+	'wikia.log',
+	'wikia.window',
+	'wikia.tracker',
+	'wikia.scriptwriter',
+	'ext.wikia.adEngine.adContext',
+	'ext.wikia.adEngine.adLogicPageParams',
+	require.optional('ext.wikia.adEngine.krux')
+], function ($, log, window, tracker, scriptWriter, adContext, adLogicPageParams, Krux) {
 	'use strict';
 
-	var logGroup = 'SevenOneMediaHelper',
+	var logGroup = 'ext.wikia.adEngine.sevenOneMediaHelper',
 		postponedContainerId = 'seven-one-media-ads-postponed',
 		$postponedContainer,
 		myAd,
 		initialized = false,
-		pageLevelParams = adLogicPageLevelParams.getPageLevelParams(),
+		pageLevelParams = adLogicPageParams.getPageLevelParams(),
 		soiKeywordsParams = ['pform', 'media', 'gnre', 'egnre', 's1'],
-
+		soiKeywordsSegments = {
+			'ocr05ve5z': true,
+			'ocr1te1tc': true,
+			'ocr2nqlbs': true,
+			'ocry7a4xg': true,
+			'ocr52415y': true,
+			'ocr7jc18a': true,
+			'ocr6m2jd6': true,
+			'ocr8h7h1n': true,
+			'ocr88oqh9': true
+		},
 		slotVars = {
 			'popup1': {
 				SOI_PU1: true,
@@ -25,7 +43,7 @@ var SevenOneMediaHelper = function (adLogicPageLevelParams, scriptWriter, log, w
 				SOI_PD: true,    // pushdown
 				SOI_BB: true,    // billboard
 				SOI_WP: true,    // wallpaper
-				SOI_FP: true     // fireplace
+				SOI_FP: false    // fireplace
 			},
 			'rectangle1': {
 				SOI_RT1: true,
@@ -135,7 +153,7 @@ var SevenOneMediaHelper = function (adLogicPageLevelParams, scriptWriter, log, w
 
 		scriptWriter.injectScriptByUrl(
 			javaScriptsPlaceHolder,
-			window.wgAdDriverSevenOneMediaCombinedUrl,
+			adContext.getContext().providers.sevenOneMediaCombinedUrl,
 			function () {
 				if (!window.SEVENONEMEDIA_CSS) {
 					error('sevenonemedia_css');
@@ -155,7 +173,7 @@ var SevenOneMediaHelper = function (adLogicPageLevelParams, scriptWriter, log, w
 				log('Sites/wikia.js loaded', 'info', logGroup);
 				myAd.loaded.site = true;
 
-				if (!window.SoiAP) {
+				if (!window.globalV6) {
 					error('globalV6');
 					return;
 				}
@@ -222,14 +240,30 @@ var SevenOneMediaHelper = function (adLogicPageLevelParams, scriptWriter, log, w
 			}
 		}
 
+		if (Krux && Krux.segments && Krux.segments.length) {
+			for (i = 0, len = Krux.segments.length; i < len; i += 1) {
+				if (soiKeywordsSegments[Krux.segments[i]]) {
+					keywords.push(Krux.segments[i]);
+				}
+			}
+		}
+
 		log(['generateSoiKeywords', keywords], 'debug', logGroup);
 		return filterSoiKeywords(keywords).join(',');
 	}
 
 	function initialize(firstSlotname) {
-		var subsite = window.cscoreCat && window.cscoreCat.toLowerCase(),
-			sub2site = pageLevelParams.s1.replace('_', ''),
-			sub3site = subsite === 'lifestyle' ? window.cityShort : '';
+		var subsite, sub2site, sub3site, targeting = adContext.getContext().targeting;
+
+		subsite = targeting.wikiVertical && targeting.wikiVertical.toLowerCase();
+
+		if (targeting.sevenOneMediaSub2Site) {
+			sub2site = targeting.sevenOneMediaSub2Site;
+			sub3site = pageLevelParams.s1.replace('_', '');
+		} else {
+			sub2site = pageLevelParams.s1.replace('_', '');
+			sub3site = subsite === 'lifestyle' ? targeting.wikiCategory : '';
+		}
 
 		initialized = true;
 
@@ -304,11 +338,13 @@ var SevenOneMediaHelper = function (adLogicPageLevelParams, scriptWriter, log, w
 
 	function trackEnd() {
 		log('trackEnd', 'info', logGroup);
-		insertAd({slotname: 'trackEnd', params: {
-			afterFinish: function () {
-				track('stage/ads');
-			}
-		}});
+		if (initialized) {
+			insertAd({slotname: 'trackEnd', params: {
+				afterFinish: function () {
+					track('stage/ads');
+				}
+			}});
+		}
 	}
 
 	return {
@@ -316,4 +352,4 @@ var SevenOneMediaHelper = function (adLogicPageLevelParams, scriptWriter, log, w
 		flushAds: flushAds,
 		trackEnd: trackEnd
 	};
-};
+});

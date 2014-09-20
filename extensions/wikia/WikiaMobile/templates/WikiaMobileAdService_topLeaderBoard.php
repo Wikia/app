@@ -1,1 +1,1 @@
-<div id=wkAdTopLeader></div>
+<div id='MOBILE_TOP_LEADERBOARD'></div>

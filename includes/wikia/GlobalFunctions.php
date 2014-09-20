@@ -263,64 +263,6 @@ function wfShortenText( $text, $chars = 25, $useContentLanguage = false ){
 	return $text;
 }
 
-function wfGetBreadCrumb( $cityId = 0 ) {
-	global $wgMemc, $wgSitename, $wgServer, $wgCats, $wgExternalSharedDB, $wgCityId;
-
-	$method = __METHOD__;
-
-	if( !empty( $wgCats ) ) {
-		return $wgCats;
-	}
-	if ( empty ($wgExternalSharedDB)) {
-		return $wgCats;
-	}
-
-	wfProfileIn( $method );
-	$memckey = 'cat_structure';
-	if ($cityId) $memckey[] = $cityId;
-	$wgCats = $wgMemc->get( wfMemcKey( $memckey ) );
-	if( empty( $wgCats ) ) {
-		if( $cityId == 0 ) {
-			if( $wgCityId == 0 ) {
-				wfProfileOut( $method );
-				return array();
-			} else {
-				$cityId = $wgCityId;
-			}
-		}
-
-		wfProfileIn( $method . "-fromdb" );
-		$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
-		$catId = $dbr->selectField(
-				"city_cat_mapping",
-				"cat_id",
-				array( "city_id" => $cityId ) );
-		$wgCats = array();
-		while( !empty( $catId ) ) {
-			$res = $dbr->select(
-				array( "city_cat_structure", "city_cats" ),
-				array( "cat_name", "cat_url", "cat_parent_id" ),
-				array( "city_cat_structure.cat_id=city_cats.cat_id", "city_cat_structure.cat_id={$catId}" )
-			);
-			if( $row = $dbr->fetchObject( $res ) ) {
-				$wgCats[] = array( "name" => $row->cat_name, "url" => $row->cat_url, "id" => intval( $catId ), "parentId" => intval( $row->cat_parent_id ) );
-				$catId = $row->cat_parent_id;
-			}
-		}
-		wfProfileOut( $method . "-fromdb" );
-
-		$wgCats = array_reverse( $wgCats );
-
-		$wgMemc->set( wfMemcKey( 'cat_structure' ), $wgCats, 3600 );
-	}
-	array_unshift( $wgCats, array('name' => 'Wikia', 'url' => 'http://www.wikia.com/wiki/Wikia', 'id' => 0, 'parentId' => 0 ) );
-	$lastId = intval( $wgCats[count($wgCats)-1]['id'] );
-	$wgCats[] = array( 'name' => $wgSitename, 'url' => $wgServer, 'id' => 0, 'parentId' => $lastId );
-
-	wfProfileOut( $method );
-	return $wgCats;
-}
-
 /**
  * wfGetImagesCommon
  *
@@ -498,7 +440,8 @@ function parseItem($line) {
 			if($title) {
 				if ($title->getNamespace() == NS_SPECIAL) {
 					$dbkey = $title->getDBkey();
-					$specialCanonicalName = array_shift(SpecialPageFactory::resolveAlias($dbkey));
+					$pageData = SpecialPageFactory::resolveAlias( $dbkey );
+					$specialCanonicalName = array_shift( $pageData );
 					if (!$specialCanonicalName) $specialCanonicalName = $dbkey;
 				}
 				$title = $title->fixSpecialName();
@@ -660,79 +603,6 @@ function wfGetCurrentUrl( $as_string = false ) {
 	return ( $as_string ) ? $arr[ "url" ]: $arr ;
 }
 
-/**
- * @TODO: remove?
- */
-global $wgAjaxExportList;
-$wgAjaxExportList[] = 'getMenu';
-function getMenu() {
-	global $wgRequest, $wgMemc, $wgScript;
-	$content = '';
-
-	$id = $wgRequest->getVal('id');
-	if($id) {
-		$menuArray = $wgMemc->get($id);
-		if(!empty($menuArray['magicWords'])) {
-			$JSurl = Xml::encodeJsVar($wgScript . '?action=ajax&rs=getMenu&v=' . $wgRequest->getVal('v') .
-				'&words=' . urlencode(implode(',', $menuArray['magicWords'])));
-
-			$content .= "wsl.loadScriptAjax({$JSurl}, function() {\n";
-			unset($menuArray['magicWords']);
-
-			$usingCallback = true;
-		}
-
-		// fallback (RT #20893)
-		if ($menuArray === null) {
-			$menuArray = array('mainMenu' => array());
-		}
-
-		$content .= 'window.menuArray = '.json_encode($menuArray).';$("#navigation_widget").mouseover(menuInit);$(function() { menuInit(); });';
-		$duration = 60 * 60 * 24 * 7; // one week
-
-		// close JS code
-		if(!empty($usingCallback)) {
-			$content .= "\n});";
-		}
-	}
-
-	$words = urldecode($wgRequest->getVal('words'));
-	if($words) {
-		$magicWords = array();
-		$map = array('voted' => array('highest_ratings', 'GetTopVotedArticles'), 'popular' => array('most_popular', 'GetMostPopularArticles'), 'visited' => array('most_visited', 'GetMostVisitedArticles'), 'newlychanged' => array('newly_changed', 'GetNewlyChangedArticles'), 'topusers' => array('community', 'GetTopFiveUsers'));
-		$words = explode(',', $words);
-		foreach($words as $word) {
-			if(isset($map[$word])) {
-				$magicWords[$word] = DataProvider::$map[$word][1]();
-				$magicWords[$word][] = array('className' => 'Monaco-sidebar_more', 'url' => Title::makeTitle(NS_SPECIAL, 'Top/'.$map[$word][0])->getLocalURL(), 'text' => '-more-');
-				if($word == 'popular') {
-					$magicWords[$word][] = array('className' => 'Monaco-sidebar_edit', 'url' => Title::makeTitle(NS_MEDIAWIKI, 'Most popular articles')->getLocalUrl(), 'text' => '-edit-');
-				}
-			} else if(substr($word, 0, 8) == 'category') {
-				$name = substr($word, 8);
-				$articles = getMenuHelper($name);
-				foreach($articles as $key => $val) {
-					$title = Title::newFromId($val);
-					if(is_object($title)) {
-						$magicWords[$word][] = array('text' => $title->getText(), 'url' => $title->getLocalUrl());
-					}
-				}
-				$magicWords[$word][] = array('className' => 'Monaco-sidebar_more', 'url' => Title::makeTitle(NS_CATEGORY, $name)->getLocalURL(), 'text' => '-more-');
-			}
-		}
-		$content .= 'window.magicWords = '.json_encode($magicWords).';';
-		$duration = 60 * 60 * 12; // two days
-	}
-
-	if(!empty($content)) {
-		header("Content-Type: text/javascript");
-//		header("Content-Length: " . strlen($content) );
-		header("Cache-Control: s-maxage={$duration}, must-revalidate, max-age=0");
-		header("X-Pass-Cache-Control: max-age={$duration}");
-		echo $content;
-		exit();
-	}
-}
 
 function getMenuHelper($name, $limit = 7) {
 	global $wgMemc;
@@ -1017,8 +887,12 @@ function wfUrlencodeExt($s_url) {
  * Given a timestamp, converts it to the "x minutes/hours/days ago" format.
  *
  * @author Maciej Brencz <macbre@wikia-inc.com>, Sean Colombo
+ *
+ * @param string $stamp
+ * @param boolean $hideCurrentYear
+ * @return string
  */
-function wfTimeFormatAgo($stamp){
+function wfTimeFormatAgo( $stamp, $hideCurrentYear = true ){
 	wfProfileIn(__METHOD__);
 	global $wgLang;
 
@@ -1053,7 +927,10 @@ function wfTimeFormatAgo($stamp){
 	else if ($ago < 365 * 86400) {
 		// Under 365 days: date, with no year (July 26)
 		//remove year from user's date format
-		$format = trim($wgLang->getDateFormatString('date', 'default'), ' ,yY');
+		$format = $wgLang->getDateFormatString( 'date', 'default' );
+		if ( $hideCurrentYear ) {
+			$format = trim( $format, ' ,yY' );
+		}
 		$res = $wgLang->sprintfDate($format, wfTimestamp(TS_MW, $stamp));
 	}
 
@@ -1775,8 +1652,6 @@ function wfWikiaErrorHandler($errno, $errstr, $errfile, $errline) {
 	return false;
 }
 
-set_error_handler('wfWikiaErrorHandler');
-
 /**
  * get namespaces
  * @global $wgContLang
@@ -1799,18 +1674,61 @@ function wfGetNamespaces() {
  * @return string - repaired HTML
  */
 function wfFixMalformedHTML( $html ) {
-	$dom_document = new DOMDocument();
+	$domDocument = new DOMDocument();
 
 	// Silence errors when loading html into DOMDocument (it complains when receiving malformed html - which is
 	// what we're using it to fix) see: http://www.php.net/manual/en/domdocument.loadhtml.php#95463
 	libxml_use_internal_errors( true );
-    // Make sure loadHTML knows that text is utf-8 (it assumes  ISO-88591)
-    $dom_document->loadHTML( '<meta http-equiv="content-type" content="text/html; charset=utf-8">' . $html );
-    // Strip doctype declaration, <html>, <body> tags created by saveHTML, as well as <meta> tag added to
-    // to html above to declare the charset as UTF-8
-    $html = preg_replace( array( '/^.*?<body>/si', '/^.*?charset=utf-8">/si', 
-        '/<\/body><\/html>$/si', '/<\/head><\/html>$/si', ), '', $dom_document->saveHTML() );
+
+	// Make sure loadHTML knows that text is utf-8 (it assumes ISO-88591)
+	// CONN-130 - Added <!DOCTYPE html> to allow HTML5 tags in the article comment
+	$htmlHeader = '<!DOCTYPE html><head><meta http-equiv="content-type" content="text/html; charset=utf-8"></head>';
+	$domDocument->loadHTML( $htmlHeader . $html );
+
+	// Strip doctype declaration, <html>, <body> tags created by saveHTML, as well as <meta> tag added to
+	// to html above to declare the charset as UTF-8
+	$html = preg_replace(
+		array(
+			'/^.*?<body>/si', '/^.*?charset=utf-8">/si',
+			'/<\/body><\/html>$/si',
+			'/<\/head><\/html>$/si',
+		),
+		'',
+		$domDocument->saveHTML()
+	);
 
 	return $html;
 }
 
+/**
+ * Go through the backtrace and return the first method that is not in the ingored class
+ * @param $ignoreClasses mixed array of ignored class names or a single class name
+ * @return string method name
+ */
+function wfGetCallerClassMethod( $ignoreClasses ) {
+	// analyze the backtrace to log the source of purge requests
+	$backtrace = wfDebugBacktrace();
+	$method = '';
+
+	if ( is_string( $ignoreClasses ) ) {
+		$ignoreClasses = [ $ignoreClasses ];
+	}
+
+	while ( $entry = array_shift( $backtrace ) ) {
+
+		if ( empty( $entry['class'] ) || in_array( $entry['class'], $ignoreClasses ) ) {
+			continue;
+		}
+
+		// skip closures
+		// e.g. "FilePageController:{closure}"
+		if ($entry['function'] === '{closure}') {
+			continue;
+		}
+
+		$method = $entry['class'] . ':' . $entry['function'];
+		break;
+	}
+
+	return $method;
+}

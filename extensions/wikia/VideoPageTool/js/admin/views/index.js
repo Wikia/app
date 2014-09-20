@@ -4,27 +4,27 @@
  * exercise, we'll just inspect window.location to decide which modules to instantiate.
  * Note that the default section is featured videos.
  */
-require( [
+require([
 	'wikia.querystring',
 	'videopageadmin.views.featured',
 	'videopageadmin.views.category'
-], function( QueryString, FeaturedView, CategoryView ) {
+], function (QueryString, FeaturedView, CategoryView) {
 	'use strict';
 
 	var qs = new QueryString(),
-		section = qs.getVal( 'section' ),
+		section = qs.getVal('section'),
 		view;
 
-	$( function() {
-		if ( section === 'category' ) {
-			view = new CategoryView( {
+	$(function () {
+		if (section === 'category') {
+			view = new CategoryView({
 				el: '#LatestVideos'
-			} );
+			});
 		} else {
 			// default is featured video form
-			view = new FeaturedView( {
+			view = new FeaturedView({
 				el: '.vpt-form'
-			} );
+			});
 		}
-	} );
-} );
+	});
+});

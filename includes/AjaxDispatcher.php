@@ -77,14 +77,11 @@ class AjaxDispatcher {
 		/*
 		 * Wikia Change - begin
 		 */
-		if( function_exists( 'newrelic_name_transaction' ) ) {
-			newrelic_name_transaction('Ajax');
-			if ( function_exists( 'newrelic_disable_autorum') ) {
-				newrelic_disable_autorum();
-			}
-			if ( function_exists( 'newrelic_add_custom_parameter' ) ) {
-				newrelic_add_custom_parameter( 'function', $this->func_name );
-			}
+		Transaction::setEntryPoint(Transaction::ENTRY_POINT_AJAX);
+		Transaction::setAttribute(Transaction::PARAM_FUNCTION,$this->func_name);
+
+		if ( function_exists( 'newrelic_disable_autorum') ) {
+			newrelic_disable_autorum();
 		}
 		/*
 		 * Wikia Change - end

@@ -29,10 +29,10 @@
 		
 		// get data from mail table in wikia_mailer database
 		protected function get_stats_wikia() {
-			global $wgExternalDatawareDB;
+			global $wgWikiaMailerDB;
 						
 			// get data
-			$db = wfGetDB(DB_SLAVE, array(), $wgExternalDatawareDB);
+			$db = wfGetDB(DB_SLAVE, array(), $wgWikiaMailerDB);
 
 			$sql_founder = ($this->category=='founder') ? "and category like '%FounderEmails%'" : '';
 

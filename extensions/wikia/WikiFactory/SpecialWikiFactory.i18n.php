@@ -119,7 +119,7 @@ $messages['en'] = array(
 	"closed-wiki-info" => "This wiki has been closed",
 	"disabled-wiki-info" => "This wiki has been disabled",
 	"closed-wiki-dump-exists" => "You can retrieve your content if you like.<br />(If your wiki was recently closed, it may take a short period of time for the files to be generated)",
-	"closed-wiki-dump-links" => "[$1 Current pages] (this version is usually best for bot use)<br />[$2 Current pages and history] (warning: this file may be very large)<br />[$3 Images] (warning: this file may be very large)",
+	"closed-wiki-dump-links" => "[$1 Current pages] (this version is usually best for bot use)<br />[$2 Current pages and history] (warning: this file may be very large)",
 	"closed-wiki-dump-noexists" => "This wiki has been closed. Content dump will be available within 24 hours. Please check back.",
 	"closed-wiki-create-wiki" => "Create a new wiki",
 	"closed-wiki-policy" => "View Wikia's Close Policy",
@@ -195,7 +195,7 @@ $messages['qqq'] = array(
 	'awc-metrics-pageviews-label' => 'Form label. For a visual explanation: http://images.wikia.com/mixtestwiki/images/9/90/2013-01-TWN_WikiFactory_Metrics.png .
 Parameters:
 * $1 is the number of pageviews the tool will set as the maximum number of pageviews.
-* $2 is the number of days the tool will set at the maximum timeframe. 
+* $2 is the number of days the tool will set at the maximum timeframe.
 
 The fact that these are maximum values is explained by [[Wikia:Awc-metrics-fewer-than]].',
 	'awc-metrics-exact-match' => '{{Identical|Exact match}}',
@@ -204,6 +204,7 @@ The fact that these are maximum values is explained by [[Wikia:Awc-metrics-fewer
 * $2 is the number of the first displayed record
 * $3 is the total number of results available (this can be more than the number of records displayed)',
 	'closed-wiki-dump-noexists' => 'Links to three files. The first one contains the contents of all pages on the wiki at their latest revisions. The second one containes the contents of all pages on the wiki and the entire revision history of those. The third one contains all the images that were added to the wiki.',
+	'closed-delete-images' => '{{Identical|Delete image}}',
 	'closed-hide-dumps' => 'The exact meaning is: "Hide database dump and hide image dump", i.e. both are dumps.',
 	'closed-reason' => '{{Identical|Reason}}',
 	'newwikisgraph' => 'Title of a special page',
@@ -448,7 +449,7 @@ $messages['ar'] = array(
 	'closed-wiki-info' => 'تم إغلاق هذه الويكي',
 	'disabled-wiki-info' => 'هذه الويكي تم غلقها',
 	'closed-wiki-dump-exists' => 'بإمكانك استرداد المحتويات إذا أردت.<br />(إن أغلقت الويكي الخاصة بك مؤخرًا، قد يستغرق استرداد الملفات فترة من الزمن لكي يتم إنشاؤها)',
-	'closed-wiki-dump-links' => '[$1 صفحات حالية] (هذه النسخة أفضل لاستخدام البوت عادةً)<br />[$2 صفحات حالية وتاريخ] (تحذير: هذا الملف قد يكون كبيرًا جدًا)<br />[$3 صور] (تحذير: هذا الملف قد يكون كبيرًا جدًا)',
+	'closed-wiki-dump-links' => '[$1 صفحات حالية] (هذه النسخة أفضل لاستخدام البوت عادةً)<br />[$2 صفحات حالية وتاريخ] (تحذير: هذا الملف قد يكون كبيرًا جدًا)',
 	'closed-wiki-dump-noexists' => 'تم إغلاق هذه الويكي. ما بقي من المحتوى سيكون متاحا في غضون 24 ساعة. يرجى العودة.',
 	'closed-wiki-create-wiki' => 'إنشاء ويكي جديدة',
 	'closed-wiki-policy' => 'أنظر سياسة ويكيا حول الإغلاق',
@@ -811,6 +812,7 @@ $messages['bjn'] = array(
 );
 
 /** Breton (brezhoneg)
+ * @author Fohanno
  * @author Fulup
  * @author Gwenn-Ael
  * @author Y-M D
@@ -847,6 +849,7 @@ $messages['br'] = array(
 	'wikifactory-label-ezsharedupload' => 'EZSharedUpload',
 	'wikifactory-label-compare' => 'Keñveriañ',
 	'right-wikifactory' => 'Kemmañ arventennoù diabarzh ar wikioù',
+	'action-wikifactory' => 'kemmañ arventennoù diabarzh ar wikioù',
 	'wikifactory-domain-edit' => "Kemmañ ar chomlec'h URL-mañ",
 	'wikifactory-domain-remove' => 'Tennañ an URL-mañ eus ar wiki',
 	'wikifactory-domain-setmain' => 'Lakaat an URL-mañ e wgServer',
@@ -1092,7 +1095,7 @@ $messages['ca'] = array(
 	'closed-wiki-info' => "S'ha tancat aquest wiki",
 	'disabled-wiki-info' => 'Aquest wiki ha estat inhabilitat',
 	'closed-wiki-dump-exists' => 'Pots [$1 recuperar el teu contingut] si ho vols.<br />(Si el teu wiki va tancar fa poc, pot trigar una mica la generació dels arxius)', # Fuzzy
-	'closed-wiki-dump-links' => '[$1 Pàgines actuals] (aquesta versió és la millor normalment per a bots)<br />[$2 Pàgines actuals i història] (advertència: aquest fitxer pot ser molt gran)<br />[$3 Imatges] (advertència: aquest fitxer pot ser molt gran)',
+	'closed-wiki-dump-links' => '[$1 Pàgines actuals] (aquesta versió és la millor normalment per a bots)<br />[$2 Pàgines actuals i història] (advertència: aquest fitxer pot ser molt gran)',
 	'closed-wiki-dump-noexists' => "S'ha tancat aquest wiki. La descàrrega de contingut estarà disponible d'aquí 24 hores. Si us plau, comprova-ho una altra vegada més tard.",
 	'closed-wiki-create-wiki' => 'Crear un nou wiki',
 	'closed-wiki-policy' => 'Veure Política de Tancament de Wikia',
@@ -1134,7 +1137,7 @@ $messages['ce'] = array(
 	'awc-metrics-close' => 'ДӀачӀагӀа',
 	'awc-metrics-close-action' => 'дӀачӀагӀа',
 	'awc-metrics-close-checked' => 'ДӀачӀагӀа билгал йинарш',
-	'closed-reason' => 'Бахьан:',
+	'closed-reason' => 'Бахьна:',
 	'newwikisgraph-param-other' => 'Кхин',
 );
 
@@ -1259,7 +1262,7 @@ $messages['cs'] = array(
 	'closed-wiki-info' => 'Tato wiki byla uzavřena',
 	'disabled-wiki-info' => 'Tato wiki byla odpojena',
 	'closed-wiki-dump-exists' => 'Pokud chcete znovu načíst obsah, klikněte sem<br />(Pokud byla vaše wiki nedávno zavřena, může generování souborů chvíli trvat.)', # Fuzzy
-	'closed-wiki-dump-links' => '[$1 Aktuální stránky] (vhodné pro využití boty)<br />[$2 Aktuální stránky a historie] (varování: tento soubor může být velmi velký)<br />[$3 Obrázky] (varování: tento soubor může být velmi velký)',
+	'closed-wiki-dump-links' => '[$1 Aktuální stránky] (vhodné pro využití boty)<br />[$2 Aktuální stránky a historie] (varování: tento soubor může být velmi velký)',
 	'closed-wiki-dump-noexists' => 'Tato wiki byla uzavřena. Obsah výstupu z databáze bude k dispozici během 24 hodin. Zkontrolujte prosím později.',
 	'closed-wiki-create-wiki' => 'Vytvořit novou wiki',
 	'closed-wiki-policy' => 'Zobrazit pravidla Wikie ohledně uzavírání wiki',
@@ -1487,7 +1490,7 @@ $messages['de'] = array(
 	'closed-wiki-info' => 'Dieses Wiki wurde geschlossen',
 	'disabled-wiki-info' => 'Dieses Wiki wurde deaktiviert',
 	'closed-wiki-dump-exists' => 'Du kannst deine Inhalte herunterladen, wenn du möchtest.<br />(Wenn dein Wiki kürzlich geschlossen worden ist, kann es eine kurze Weile dauern, bis die Daten erstellt werden.)',
-	'closed-wiki-dump-links' => '[$1 Aktuelle Seiten] (diese Version ist üblicherweise die beste für die Bot-Benutzung)<br />[$2 Aktuelle Seiten und Versionsgeschichten] (Warnung: diese Datei kann sehr groß sein)<br />[$3 Bilder] (Warnung: diese Datei kann sehr groß sein)',
+	'closed-wiki-dump-links' => '[$1 Aktuelle Seiten] (diese Version ist üblicherweise die beste für die Bot-Benutzung)<br />[$2 Aktuelle Seiten und Versionsgeschichten] (Warnung: diese Datei kann sehr groß sein)',
 	'closed-wiki-dump-noexists' => 'Dieses Wiki wurde geschlossen. Der Inhaltsdump wird innerhalb von 24 Stunden zur Verfügung stehen. Bitte sieh dann noch einmal nach.',
 	'closed-wiki-create-wiki' => 'Ein neues Wiki erstellen',
 	'closed-wiki-policy' => 'Zeige Wikias Schließungs-Richtlinie',
@@ -1537,7 +1540,7 @@ $messages['diq'] = array(
 	'wf_city_founding_user' => 'Weqıfdar',
 	'wf_city_public' => 'Weziyet',
 	'wf_city_lang' => 'Zıwan',
-	'wf_cc_name' => 'Kategori',
+	'wf_cc_name' => 'Kategoriye',
 	'wikifactory-label-info' => 'Zanışe',
 	'wikifactory-label-variables' => 'Vurnayeyî',
 	'wikifactory-label-variables2' => 'Bıngeh',
@@ -1552,7 +1555,7 @@ $messages['diq'] = array(
 	'closewiki-nbr-wiki' => 'Wikiyê $1',
 	'closewiki-unknown' => 'Nêzanayen',
 	'closewiki-return' => 'Peyser şo $1',
-	'wikifactory-button-save' => 'Vurnayîşa qeyd ke',
+	'wikifactory-button-save' => 'Vurnayışan qeyd ke',
 	'awc-metrics-wikis' => 'Wikiya Vinayış',
 	'awc-metrics-select' => 'Wiki bımocne:',
 	'awc-metrics-by-language' => 'Zıwanê cı:',
@@ -1586,7 +1589,7 @@ $messages['diq'] = array(
 	'closed-reason' => 'Sebeb:',
 	'newwikisgraph-wikis-created' => 'Wikiy vıraziyê',
 	'newwikisgraph-param-all' => 'Pêro',
-	'newwikisgraph-param-other' => 'Zewmi',
+	'newwikisgraph-param-other' => 'Zewbi',
 );
 
 /** Greek (Ελληνικά)
@@ -1746,7 +1749,7 @@ $messages['es'] = array(
 	'closed-wiki-info' => 'Este wiki ha sido cerrado',
 	'disabled-wiki-info' => 'Este wiki ha sido dishabilitado',
 	'closed-wiki-dump-exists' => 'Puedes recuperar tu contenido, si lo deseas.<br />(Si tu wiki cerró hace poco tiempo, puede tardar algo de tiempo en la generación de los archivos)',
-	'closed-wiki-dump-links' => '[$1 Páginas actuales] (esta versión es mejor para uso de bot)<br />[$2 Páginas actuales e historial] (advertencia: este archivo puede ser muy grande)<br />[$3 Imágenes] (advertencia: este archivo puede ser muy grande)',
+	'closed-wiki-dump-links' => '[$1 Páginas actuales] (esta versión es mejor para uso de bot)<br />[$2 Páginas actuales e historial] (advertencia: este archivo puede ser muy grande)',
 	'closed-wiki-dump-noexists' => 'Este wiki ha sido cerrado. La descarga del contenido estará disponible en 24 horas. Por favor compruébalo de nuevo más tarde.',
 	'closed-wiki-create-wiki' => 'Crear un nuevo wiki',
 	'closed-wiki-policy' => 'Ver Política de Cierre de Wikia',
@@ -1831,7 +1834,7 @@ $messages['fa'] = array(
 	'wf_city_title' => 'عنوان',
 	'wf_city_created' => 'ایجاد شده',
 	'wf_city_founding_user' => 'بنیان‌گذار',
-	'wf_city_founding_email' => 'پست الکترونیکی بنیان‌گذار',
+	'wf_city_founding_email' => 'رایانامهٔ بنیان‌گذار',
 	'wf_city_public' => 'وضعیت',
 	'wf_city_lang' => 'زبان',
 	'wf_cc_name' => 'رده',
@@ -1936,9 +1939,9 @@ $messages['fi'] = array(
 $messages['fr'] = array(
 	'wikifactorypagetitle' => "Configurateur de l'usine à wikis",
 	'wikifactory' => "Configurateur de l'usine à wikis",
-	'closewiki' => 'Clôturer le wiki',
+	'closewiki' => 'Fermer le wiki',
 	'wf_city_url' => 'Adresse',
-	'wf_city_id' => 'id',
+	'wf_city_id' => 'identifiant',
 	'wf_city_title' => 'Titre',
 	'wf_city_created' => 'Créé',
 	'wf_city_founding_user' => 'Fondateur',
@@ -1957,7 +1960,7 @@ $messages['fr'] = array(
 	'wikifactory-label-clog' => 'Journal des modifications',
 	'wikifactory-label-actions' => 'Actions',
 	'wikifactory-label-google' => 'Outils Google',
-	'wikifactory-label-close' => 'Clôturer',
+	'wikifactory-label-close' => 'Fermer',
 	'wikifactory-label-tags' => 'Balises',
 	'wikifactory-label-tags2' => 'Balises',
 	'wikifactory-label-masstags' => 'MasseÉtiquettes',
@@ -1975,9 +1978,9 @@ $messages['fr'] = array(
 	'closewiki-message' => 'nom de domaine $1',
 	'closewiki-confirm-button' => 'Confirmer « $1 » de $2',
 	'closewiki-nbr-wiki' => '$1 wikis',
-	'closewiki-wiki-closed' => "'''$1''' a été clôturé ($2)",
-	'closewiki-wiki-closed_removed' => "'''$1''' est maintenant clos et prévu pour être supprimé ($2)",
-	'closewiki-wiki-closed_redirect' => "'''$1''' a été clôturé ($2) et redirige maintenant vers : $3",
+	'closewiki-wiki-closed' => "'''$1''' a été fermé ($2)",
+	'closewiki-wiki-closed_removed' => "'''$1''' est maintenant fermé et sa suppression est planifiée ($2)",
+	'closewiki-wiki-closed_redirect' => "'''$1''' a été fermé ($2) et redirige maintenant vers : $3",
 	'closewiki-dump-url' => 'Dump de la base de données : $1',
 	'closewiki-images-url' => 'Archive des images : $1',
 	'closewiki-unknown' => 'Inconnu',
@@ -2019,10 +2022,10 @@ $messages['fr'] = array(
 	'awc-metrics-all-users-edit-main-ns' => 'Utilisateurs enregistrés<br />(Espace de noms principal)',
 	'awc-metrics-pageviews' => 'Visites<br />de pages',
 	'awc-metrics-statistics' => 'Statistiques (moyenne pour tous les mois)',
-	'awc-metrics-close' => 'Clôturer',
+	'awc-metrics-close' => 'Fermer',
 	'awc-metrics-close-action' => 'fermer',
 	'awc-metrics-active' => 'actif',
-	'awc-metrics-closed' => 'clos',
+	'awc-metrics-closed' => 'fermé',
 	'awc-metrics-redirected' => 'clos et redirigé',
 	'awc-metrics-removed' => 'supprimé',
 	'awc-metrics-hubs' => 'Nouveaux wikis (par mois)',
@@ -2034,18 +2037,18 @@ $messages['fr'] = array(
 	'awc-metrics-this-month' => 'ce mois',
 	'awc-metrics-last-month' => '{{PLURAL:$1|le dernier|les $1 derniers}} mois',
 	'awc-metrics-pageviews-label' => 'et $1 {{PLURAL:$1|visite de page|visites de pages}} dans {{PLURAL:$2|le dernier jour|les $2 derniers jours}}',
-	'awc-metrics-close-listed' => 'Clôturer tous les wikis listés',
-	'awc-metrics-close-checked' => 'Clôturer les wikis sélectionnés',
+	'awc-metrics-close-listed' => 'Fermer tous les wikis listés',
+	'awc-metrics-close-checked' => 'Fermer les wikis sélectionnés',
 	'awc-metrics-exact-match' => 'terme exacte',
 	'awc-metrics-recordspager' => "Affichage des enregistrements '''$1''' à '''$2''' sur '''$3'''",
-	'closed-wiki' => 'Wiki clôturé',
-	'closed-wiki-info' => 'Ce wiki a été clôturé',
+	'closed-wiki' => 'Wiki fermé',
+	'closed-wiki-info' => 'Ce wiki a été fermé',
 	'disabled-wiki-info' => 'Ce wiki a été désactivé',
 	'closed-wiki-dump-exists' => 'Vous pouvez récupérer votre contenu si vous voulez.<br />(Si votre wiki a été récemment fermé, cela peut prendre un peu de temps pour que les fichiers soient générés)',
-	'closed-wiki-dump-links' => '[$1 Pages actuelles] (cette version est en général préférable pour une utilisation de robot)<br />[$2 Pages actuelles et historique] (attention : ce fichier peut être très volumineux)<br />[$3 Images] (attention : ce fichier peut être très volumineux)',
-	'closed-wiki-dump-noexists' => 'Ce wiki a été clôturé. Un dump du contenu sera disponible dans les 24 heures. Revenez voir plus tard.',
+	'closed-wiki-dump-links' => '[$1 Pages actuelles] (cette version est en général préférable pour une utilisation de robot)<br />[$2 Pages actuelles et historique] (attention : ce fichier peut être très volumineux)',
+	'closed-wiki-dump-noexists' => 'Ce wiki a été fermé. Un dump du contenu sera disponible dans les 24 heures. Revenez plus tard.',
 	'closed-wiki-create-wiki' => 'Créer un nouveau wiki',
-	'closed-wiki-policy' => 'Voir la politique de clôture de Wikia',
+	'closed-wiki-policy' => 'Voir la politique de fermeture de Wikia',
 	'closed-create-dump' => 'Créer un dump de la base de données',
 	'closed-create-image-archive' => 'Créer une archive des images',
 	'closed-delete-database-images' => 'Supprimer la base de données et les images',
@@ -2053,7 +2056,7 @@ $messages['fr'] = array(
 	'closed-free-url' => "Libérer l'URL pour un nouveau fondateur",
 	'closed-hide-dumps' => 'Masquer les dumps de la base de données et des images',
 	'closed-redirect-url' => "Rediriger l'URL",
-	'closed-confirm-btn' => 'Confirmer la clôture',
+	'closed-confirm-btn' => 'Confirmer la fermeture',
 	'closed-redirect-alert' => 'Veuillez donner une URL de redirection !',
 	'closed-reason' => 'Motif :',
 	'newwikisgraph' => 'Graphique des nouveaux wikis',
@@ -2176,7 +2179,7 @@ $messages['gl'] = array(
 	'closed-wiki-info' => 'Este wiki foi pechado',
 	'disabled-wiki-info' => 'Este wiki foi desactivado',
 	'closed-wiki-dump-exists' => 'Podes recuperar o teu contido se queres.<br />(Se pecharon o teu wiki hai pouco, poida que a xeración dos ficheiros tarde uns intres)',
-	'closed-wiki-dump-links' => '[$1 Páxinas actuais] (esta versión normalmente é a mellor para usar o bot)<br />[$2 Páxinas actuais e historial] (atención: este ficheiro pode ser moi grande)<br />[$3 Imaxes] (atención: este ficheiro pode ser moi grande)',
+	'closed-wiki-dump-links' => '[$1 Páxinas actuais] (esta versión normalmente é a mellor para usar o bot)<br />[$2 Páxinas actuais e historial] (atención: este ficheiro pode ser moi grande)',
 	'closed-wiki-dump-noexists' => 'Este wiki foi pechado. Haberá dispoñible unha copia do contido nun prazo de 24 horas. Por favor, volva máis adiante.',
 	'closed-wiki-create-wiki' => 'Crear un novo wiki',
 	'closed-wiki-policy' => 'Ollar a política de peche de Wikia',
@@ -2993,6 +2996,7 @@ $messages['lb'] = array(
 	'closewiki-images-url' => 'Billerarchiv: $1',
 	'closewiki-unknown' => 'Onbekannt',
 	'closewiki-return' => 'Zréck op $1',
+	'wikifactory-button-save' => 'Ännerunge späicheren',
 	'awc-metrics-by-language' => 'no Sprooch:',
 	'awc-metrics-category' => "an d'Kategorie:",
 	'awc-metrics-all' => 'all Wikien',
@@ -3101,7 +3105,7 @@ $messages['mk'] = array(
 	'awc-metrics-wikians' => 'Викијанци<br/ >(>10 уредувања)',
 	'awc-metrics-articles' => 'Статии',
 	'awc-metrics-articles-per-day' => 'Статии<br />(прос. на ден)',
-	'awc-metrics-revisions-per-page' => 'Ревизии<br />(прос. по стр.)',
+	'awc-metrics-revisions-per-page' => 'Преработки<br />(прос. по стр.)',
 	'awc-metrics-article-avg-size' => 'Прос.<br/ >големина',
 	'awc-metrics-edits' => 'Уредувања',
 	'awc-metrics-db-size' => 'Големина на БП',
@@ -3132,7 +3136,8 @@ $messages['mk'] = array(
 	'closed-wiki' => 'Затворено вики',
 	'closed-wiki-info' => 'Ова вики е затворено',
 	'disabled-wiki-info' => 'Ова вики е оневозможено',
-	'closed-wiki-dump-exists' => 'Можете да си ги повратите содржините, доколку сакате.<br />(ако вашето вики е затворено од неодамна, може да треба накратко да почекате за да се создадат податотеките)', # Fuzzy
+	'closed-wiki-dump-exists' => 'Можете да си ги повратите содржините, доколку сакате.<br />(Ако вашето вики е затворено од неодамна, може да треба накратко да почекате за да се создадат податотеките)',
+	'closed-wiki-dump-links' => '[$1 Тековни страници] (оваа страница е обично најдобра за работа со ботови)<br />[$2 Тековни страници и историја] (предупредување: оваа податотека може да е многу голема)',
 	'closed-wiki-dump-noexists' => 'Ова вики е затворено. Складираната резервна содржина ќе биде достапна во рок од 24 часа. Проверете подоцна.',
 	'closed-wiki-create-wiki' => 'Создај ново вики',
 	'closed-wiki-policy' => 'Прикажи ги правилата за затворање на Викија',
@@ -3372,7 +3377,7 @@ $messages['ms'] = array(
 	'closed-wiki-info' => 'Wiki ini telah ditutup',
 	'disabled-wiki-info' => 'Wiki ini telah dimatikan',
 	'closed-wiki-dump-exists' => 'Anda boleh mengambil kandungan anda pada bila-bila masa.<br />(Jika wiki anda baru ditutup, perlukan sedikit masa untuk menjana fail-fail anda)',
-	'closed-wiki-dump-links' => '[$1 Laman semasa] (versi ini selalunya terbaik untuk kegunaan bot)<br />[$2  Laman semasa dan sejarah] (amaran: fail ini mungkin terlalu besar)<br />[$3  Imej] (amaran: fail ini mungkin terlalu besar)',
+	'closed-wiki-dump-links' => '[$1 Laman semasa] (versi ini selalunya terbaik untuk kegunaan bot)<br />[$2  Laman semasa dan sejarah] (amaran: fail ini mungkin terlalu besar)',
 	'closed-wiki-dump-noexists' => 'Wiki ini telah ditutup. Longgokan kandungan akan disediakan dalam masa 24 jam. Sila semak semula.',
 	'closed-wiki-create-wiki' => 'Cipta wiki baru',
 	'closed-wiki-policy' => 'Lihat Dasar Penutupan Wikia',
@@ -3577,6 +3582,7 @@ $messages['nb'] = array(
  * @author McDutchie
  * @author SPQRobin
  * @author Siebrand
+ * @author Southparkfan
  * @author Tjcool007
  */
 $messages['nl'] = array(
@@ -3687,7 +3693,8 @@ paginagrootte',
 	'closed-wiki' => 'Gesloten wiki',
 	'closed-wiki-info' => 'Deze wiki is gesloten',
 	'disabled-wiki-info' => 'Deze wiki is uitgeschakeld',
-	'closed-wiki-dump-exists' => 'U kunt uw inhoud ophalen als u wilt.<br />Als uw wiki recent gesloten is, kan het een tijdje duren voordat de bestanden aangemaakt zijn.', # Fuzzy
+	'closed-wiki-dump-exists' => 'U kunt uw inhoud ophalen als u wilt.<br />Als uw wiki recent gesloten is, kan het een tijdje duren voordat de bestanden aangemaakt zijn.',
+	'closed-wiki-dump-links' => "[$1 Huidige pagina's] (deze versie is in het algemeen het beste voor botgebruik)<br />[$2 Huidige pagina's en geschiedenis] (waarschuwing: dit bestand kan zeer groot zijn)",
 	'closed-wiki-dump-noexists' => 'Deze wiki is gesloten.
 Een dump van de inhoud wordt binnen 24 uur beschikbaar gemaakt.
 Kom hier dan terug.',
@@ -3738,8 +3745,8 @@ $messages['oc'] = array(
 	'wf_city_public' => 'Estatut',
 	'wf_city_lang' => 'Lenga',
 	'wf_cc_name' => 'Categoria',
-	'wikifactory_removevariable' => "Suprimir las donadas del wiki de l'amagatal",
-	'wikifactory_removeconfirm' => "Las donadas del wiki son estadas suprimidas de l'amagatal !",
+	'wikifactory_removevariable' => "Suprimir las donadas del wiki de l'escondedor",
+	'wikifactory_removeconfirm' => "Las donadas del wiki son estadas suprimidas de l'escondedor !",
 	'wikifactory-label-variables' => 'Variablas',
 	'wikifactory-label-variables2' => 'General',
 	'wikifactory-label-hubs' => 'Hubs',
@@ -3893,7 +3900,7 @@ $messages['pl'] = array(
 	'closed-wiki-info' => 'Ta wiki została zamknięta',
 	'disabled-wiki-info' => 'Ta wiki została wyłączona',
 	'closed-wiki-dump-exists' => 'Możesz pobrać stąd zawartość, jeśli chcesz.<br />(Jeśli wiki została niedawno zamknięta, może upłynąć jakiś czas zanim pliki zostaną wygenerowane)',
-	'closed-wiki-dump-links' => '[$1 Istniejące strony] (to zwykle zalecana wersja)<br />[$2 Istniejące strony i ich historia] (UWAGA: Plik może być bardzo duży)<br />[$3 Obrazy] (UWAGA: Plik może być bardzo duży)',
+	'closed-wiki-dump-links' => '[$1 Istniejące strony] (to zwykle zalecana wersja)<br />[$2 Istniejące strony i ich historia] (UWAGA: Plik może być bardzo duży)',
 	'closed-wiki-dump-noexists' => 'Ta wiki została zamknięta. Zrzut bazy danych będzie dostępny w ciągu 24 godzin. Prosimy spróbować ponownie.',
 	'closed-wiki-create-wiki' => 'Utwórz nową wiki',
 	'closed-wiki-policy' => 'Zobacz politykę Wikii zamykania wiki',
@@ -4124,6 +4131,7 @@ $messages['ps'] = array(
  * @author Hamilton Abreu
  * @author Luckas
  * @author Masked Rogue
+ * @author Polyethylen
  * @author Rhaijin
  * @author SandroHc
  * @author Waldir
@@ -4256,7 +4264,9 @@ regist.',
 
 /** Brazilian Portuguese (português do Brasil)
  * @author Aristóbulo
+ * @author Cainamarques
  * @author Caio1478
+ * @author Cybermandrake
  * @author Daemorris
  * @author Giro720
  * @author JM Pessanha
@@ -4267,17 +4277,17 @@ regist.',
 $messages['pt-br'] = array(
 	'wikifactorypagetitle' => 'Configurador da Fábrica de Wikis',
 	'wikifactory' => 'Configurador da Fábrica de Wikis',
-	'closewiki' => 'Fechar wiki',
+	'closewiki' => 'Fechar Wiki',
 	'wf_city_url' => 'Endereço',
 	'wf_city_id' => 'id',
 	'wf_city_title' => 'Título',
 	'wf_city_created' => 'Criado',
 	'wf_city_founding_user' => 'Fundador',
-	'wf_city_founding_email' => 'Endereço de e-mail do fundador',
+	'wf_city_founding_email' => 'E-mail do fundador',
 	'wf_city_public' => 'Estado',
-	'wf_city_lang' => 'Língua',
+	'wf_city_lang' => 'Idioma',
 	'wf_cc_name' => 'Categoria',
-	'wikifactory_removevariable' => 'Remover do cache os dados da wiki',
+	'wikifactory_removevariable' => 'Remover os dados da wiki do cache',
 	'wikifactory_removeconfirm' => 'Dados da wiki removidos do cache!',
 	'wikifactory-label-info' => 'Informações',
 	'wikifactory-label-variables' => 'Variáveis',
@@ -4319,7 +4329,7 @@ $messages['pt-br'] = array(
 	'awc-metrics-select' => 'Mostrar Wikis:',
 	'awc-metrics-by-language' => 'por idioma:',
 	'awc-metrics-category' => 'e categoria:',
-	'awc-metrics-all' => 'todas Wikis',
+	'awc-metrics-all' => 'todas as Wikis',
 	'awc-metrics-all-languages' => 'todos os idiomas',
 	'awc-metrics-search' => 'Opções de busca:',
 	'awc-metrics-one-week' => 'criado < 1 semana atrás',
@@ -4371,7 +4381,8 @@ $messages['pt-br'] = array(
 	'closed-wiki' => 'Wiki fechada',
 	'closed-wiki-info' => 'Essa wiki foi fechada',
 	'disabled-wiki-info' => 'Essa wiki foi desabilitada',
-	'closed-wiki-dump-exists' => 'Você pode fazer download do seu conteúdo, se desejar.<br />(Caso o seu wiki tenha sido fechado recentemente, os arquivos poderão demorar um pouco para serem gerados)', # Fuzzy
+	'closed-wiki-dump-exists' => 'Você pode recuperar seu conteúdo se desejar.<br />(Caso seu wiki tenha sido fechado recentemente, os arquivos poderão demorar um pouco para serem gerados)', # Fuzzy
+	'closed-wiki-dump-links' => '[$1 Páginas atuais] (esta versão normalmente é a melhor para a utilização por bots)<br />[$2 Páginas e histórico atuais] (atenção: este ficheiro pode ser muito grande)',
 	'closed-wiki-dump-noexists' => 'Esta wiki foi fechada. O esvaziamento do conteúdo estará disponível em 24 horas. Cheque novamente mais tarde.',
 	'closed-wiki-create-wiki' => 'Crie uma nova Wiki',
 	'closed-wiki-policy' => 'Veja a Política de Fechamento do Wikia',
@@ -4616,7 +4627,7 @@ $messages['ru'] = array(
 	'closed-wiki-info' => 'Эта вики закрыта',
 	'disabled-wiki-info' => 'Эта вики отключена',
 	'closed-wiki-dump-exists' => 'Вы можете получить ваше содержимое здесь, если вам оно нравится.<br />(Если ваша вики была закрыта недавно, то создание файла может занять короткий период времени)',
-	'closed-wiki-dump-links' => '[$1 Текущие страницы](эта версия обычно лучше всего подходит для использования ботов)<br />[ $2  Текущие страницы и история](предупреждение: этот файл может быть очень большим)<br />[ $3  Изображения](предупреждение: этот файл может быть очень большим)',
+	'closed-wiki-dump-links' => '[$1 Текущие страницы](эта версия обычно лучше всего подходит для использования ботов)<br />[ $2  Текущие страницы и история](предупреждение: этот файл может быть очень большим)',
 	'closed-wiki-dump-noexists' => 'Этот вики была закрыт. Снимок содержимого будет доступен в течение 24 часов. Пожалуйста, заходите позже.',
 	'closed-wiki-create-wiki' => 'Создать новую вики',
 	'closed-wiki-policy' => 'Просмотреть правила закрытия Викии',
@@ -4635,6 +4646,13 @@ $messages['ru'] = array(
 	'newwikisgraph-wikis-created' => 'создано викий',
 	'newwikisgraph-param-all' => 'Всего',
 	'newwikisgraph-param-other' => 'Другие',
+);
+
+/** Scots (Scots)
+ * @author John Reid
+ */
+$messages['sco'] = array(
+	'closed-wiki-dump-links' => '[$1 Nou pages] (this version is uissuallie best fer bot uiss)<br />[$2 Nou pages n histerie] (warnishmant: this file coud be aafa muckle)',
 );
 
 /** Sinhala (සිංහල)
@@ -4893,7 +4911,7 @@ $messages['sv'] = array(
 	'closed-wiki-info' => 'Denna wiki har stängts',
 	'disabled-wiki-info' => 'Denna wiki har avaktiverats',
 	'closed-wiki-dump-exists' => 'Du kan hämta ditt innehåll om du vill.<br />(Om din wiki avslutades nyligen kan det ta en kort stund för filerna att genereras)',
-	'closed-wiki-dump-links' => '[$1 Aktuella sidor] (denna version är vanligtvis bäst för användning av robotar)<br />[$2 Aktuella sidor och historik] (varning: den här filen kan vara väldigt stor)<br />[$3 Bilder] (varning: den här filen kan vara väldigt stor)',
+	'closed-wiki-dump-links' => '[$1 Aktuella sidor] (denna version är vanligtvis bäst för användning av robotar)<br />[$2 Aktuella sidor och historik] (varning: den här filen kan vara väldigt stor)',
 	'closed-wiki-dump-noexists' => 'Denna wiki har avslutats. En innehållsdump kommer att finnas tillgänglig inom 24 timmar. Var god kom tillbaka då.',
 	'closed-wiki-create-wiki' => 'Skapa en ny wiki',
 	'closed-wiki-policy' => 'Visa Wikias Stängningspolicy',
@@ -4939,28 +4957,29 @@ $messages['ta'] = array(
 );
 
 /** Telugu (తెలుగు)
+ * @author Chaduvari
  * @author Jprmvnvijay5
  * @author Veeven
  */
 $messages['te'] = array(
 	'wf_city_url' => 'చిరునామా',
 	'wf_city_title' => 'శీర్షిక',
-	'wf_city_founding_user' => 'నాటినవారు',
-	'wf_city_founding_email' => 'నాటినవారి ఈ-తపా',
+	'wf_city_founding_user' => 'వ్యవస్థాపకులు',
+	'wf_city_founding_email' => 'వ్యవస్థాపకుల ఈమెయిలు',
 	'wf_city_public' => 'స్థితి',
 	'wf_city_lang' => 'భాష',
 	'wf_cc_name' => 'వర్గం',
-	'wikifactory-label-info' => 'మందల',
-	'wikifactory-label-variables' => 'మారునవి',
-	'wikifactory-label-domains' => 'సీమలు',
-	'wikifactory-label-return' => 'జాబితాకు తిరిగిపొండి',
+	'wikifactory-label-info' => 'సమాచారం',
+	'wikifactory-label-variables' => 'చరరాశులు',
+	'wikifactory-label-domains' => 'డొమెయిన్‍లు',
+	'wikifactory-label-return' => 'తిరిగి జాబితాకు',
 	'wikifactory-label-actions' => 'చర్యలు',
 	'wikifactory-label-google' => 'గూగుల్ పనిముట్లు',
 	'wikifactory-label-close' => 'మూసివేయి',
-	'wikifactory-label-tags' => 'తోకపేర్లు',
-	'wikifactory-label-tags2' => 'తోకపేర్లు',
-	'wikifactory-label-masstags' => 'మంద తోకపేర్లు',
-	'wikifactory-label-findtags' => 'తోకపేర్లు కనుగొను',
+	'wikifactory-label-tags' => 'ట్యాగులు',
+	'wikifactory-label-tags2' => 'ట్యాగులు',
+	'wikifactory-label-masstags' => 'టోకుట్యాగులు',
+	'wikifactory-label-findtags' => 'ట్యాగులుకనుగొను',
 	'closewiki-nbr-wiki' => '$1 వికీలు',
 	'awc-metrics-by-language' => 'భాషను బట్టి:',
 	'awc-metrics-all' => 'అన్ని వికీలు',
@@ -4968,17 +4987,17 @@ $messages['te'] = array(
 	'awc-metrics-search' => 'అన్వేషణ ఎంపికలు:',
 	'awc-metrics-nbr-result' => 'ఫలితాలు:',
 	'awc-metrics-articles' => 'వ్యాసాలు',
-	'awc-metrics-articles-per-day' => 'వ్యాసాలు<br />(రోజుకి సగటు)',
+	'awc-metrics-articles-per-day' => 'వ్యాసాలు<br />(సగటున రోజుకు)',
 	'awc-metrics-edits' => 'మార్పులు',
 	'awc-metrics-close' => 'మూసివేయి',
-	'awc-metrics-redirected' => 'మూసివేయబడి తిరిగిదారిమళ్ళించబడినది',
-	'awc-metrics-hubs' => 'కొత్త వికీలు (నెలసరి)',
-	'awc-metrics-news-day' => 'కొత్త వికీలు (దినసరి)',
-	'awc-metrics-sum-month' => 'లెక్కించు (నెల ఒక్కింటికి)',
-	'awc-metrics-sum-day' => 'లెక్కించు (నాడు ఒక్కింటికి)',
+	'awc-metrics-redirected' => 'మూసివేయబడి, దారిమార్చబడింది',
+	'awc-metrics-hubs' => 'కొత్త వికీలు (నెలవారీగా)',
+	'awc-metrics-news-day' => 'కొత్త వికీలు (రోజువారీగా)',
+	'awc-metrics-sum-month' => 'లెక్క (నెలకు)',
+	'awc-metrics-sum-day' => 'లెక్క (రోజుకు)',
 	'awc-metrics-this-month' => 'ఈ నెల',
 	'awc-metrics-last-month' => 'గత {{PLURAL:$1|నెల|$1 నెలలు}}',
-	'closed-confirm-btn' => 'మూసివేతను కాయము చేయుడి',
+	'closed-confirm-btn' => 'మూసివేతను ఖాయం చెయ్యండి',
 	'closed-reason' => 'కారణం:',
 );
 
@@ -5332,7 +5351,7 @@ $messages['uk'] = array(
 	'closed-wiki-info' => 'Цю вікі було закрито',
 	'disabled-wiki-info' => 'Цю вікі було відключено',
 	'closed-wiki-dump-exists' => 'Ви можете завантажити її дамп, якщо бажаєте.<br />(Якщо вашу вікі закрито нещодавно, то створення потрібних файлів може зайняти деякий час)',
-	'closed-wiki-dump-links' => '[$1 Поточні сторінки] (цю версію краще використовувати для бота)<br />[$2 Поточні сторінки та історія] (увага: цей файл може виявитися дуже великим)<br />[$3 Зображення] (увага: цей файл може виявитися дуже великим)',
+	'closed-wiki-dump-links' => '[$1 Поточні сторінки] (цю версію краще використовувати для бота)<br />[$2 Поточні сторінки та історія] (увага: цей файл може виявитися дуже великим)',
 	'closed-wiki-dump-noexists' => 'Цю вікі було закрито. Її дамп буде доступний доби. Будь ласка, перевірте пізніше.',
 	'closed-wiki-create-wiki' => 'Створити нову вікі',
 	'closed-wiki-policy' => 'Переглянути політику закриття Вікія',
@@ -5407,6 +5426,7 @@ $messages['yi'] = array(
 /** Simplified Chinese (中文（简体）‎)
  * @author Anakmalaysia
  * @author Dimension
+ * @author Ffaarr
  * @author Hydra
  * @author Liuxinyu970226
  * @author Yfdyh000
@@ -5418,6 +5438,7 @@ $messages['zh-hans'] = array(
 	'wf_city_url' => '地址',
 	'wf_city_id' => 'id',
 	'wf_city_title' => '标题',
+	'wf_city_created' => '已创建',
 	'wf_city_founding_user' => '创始人',
 	'wf_city_founding_email' => '创始人电子邮箱',
 	'wf_city_public' => '状态',
@@ -5428,7 +5449,7 @@ $messages['zh-hans'] = array(
 	'wikifactory-label-info' => '信息',
 	'wikifactory-label-variables' => '变量',
 	'wikifactory-label-variables2' => '常规',
-	'wikifactory-label-hubs' => '中枢',
+	'wikifactory-label-hubs' => '主题',
 	'wikifactory-label-domains' => '域名',
 	'wikifactory-label-return' => '返回名单',
 	'wikifactory-label-clog' => '修改记录',
@@ -5439,6 +5460,7 @@ $messages['zh-hans'] = array(
 	'wikifactory-label-tags2' => '标签',
 	'wikifactory-label-masstags' => '标签集',
 	'wikifactory-label-findtags' => '查找标签',
+	'wikifactory-label-ezsharedupload' => 'EZ共享上传',
 	'wikifactory-label-compare' => '比较',
 	'right-wikifactory' => '对wiki更改内部设置',
 	'action-wikifactory' => '对wiki更改内部设置',
@@ -5448,8 +5470,13 @@ $messages['zh-hans'] = array(
 	'closewiki-check-and-confirm' => '检查wiki并确认操作',
 	'closewiki-redirect-to' => '重定向至',
 	'closewiki-message' => '域名 $1',
+	'closewiki-confirm-button' => "确认$2的'$1'",
 	'closewiki-nbr-wiki' => '$1 维基',
+	'closewiki-wiki-closed' => "'''$1'''已关闭（$2）",
+	'closewiki-wiki-closed_removed' => "'''$1'''现已关闭并计划删除（$2）",
+	'closewiki-wiki-closed_redirect' => "'''$1'''现已关闭（$2）并已重定向至：$3",
 	'closewiki-dump-url' => '数据库转储：$1',
+	'closewiki-images-url' => '图像存档：$1',
 	'closewiki-unknown' => '未知',
 	'closewiki-return' => '返回$1',
 	'wikifactory-button-saveparse' => '解析并保存更改',
@@ -5461,26 +5488,78 @@ $messages['zh-hans'] = array(
 	'awc-metrics-all' => '所有维基',
 	'awc-metrics-all-languages' => '所有语言',
 	'awc-metrics-search' => '搜索选项：',
+	'awc-metrics-one-week' => '创建于不到1周前',
+	'awc-metrics-two-weeks' => '创建于不到2周前',
+	'awc-metrics-three-weeks' => '创建于不到3周前',
+	'awc-metrics-one-months' => '创建于不到1月前',
+	'awc-metrics-two-months' => '创建于不到2月前',
+	'awc-metrics-three-months' => '创建于不到3月前',
+	'awc-metrics-half-year' => '创建于不到6月前',
+	'awc-metrics-by-email' => '或者（用户电子邮件）：',
+	'awc-metrics-by-user' => '创始人 (用户名):',
+	'awc-metrics-not-found' => '未找到任何wiki',
 	'awc-metrics-nbr-result' => '结果：',
+	'awc-metrics-created-between' => '创建于$1（YYYY/MM/DD）和$2（YYYY/MM/DD）之间',
+	'awc-metrics-wikians' => '维基人<br />（大于10次编辑）',
+	'awc-metrics-articles' => '条目',
+	'awc-metrics-article-avg-size' => '平均作品<br />大小',
+	'awc-metrics-edits' => '编辑',
+	'awc-metrics-db-size' => 'DB大小',
 	'awc-metrics-images' => '图像',
+	'awc-metrics-all-users' => '注册<br />用户',
+	'awc-metrics-all-users-edit-main-ns' => '注册用户<br />（内容NS）',
+	'awc-metrics-pageviews' => '页面<br />浏览',
 	'awc-metrics-close' => '关闭',
 	'awc-metrics-close-action' => '关闭',
+	'awc-metrics-active' => '活跃',
+	'awc-metrics-closed' => '已关闭',
+	'awc-metrics-redirected' => '已关闭并重定向',
+	'awc-metrics-removed' => '已移除',
+	'awc-metrics-hubs' => '新wiki（每月）',
+	'awc-metrics-news-day' => '新wiki（每日）',
+	'awc-metrics-sum-month' => '计数（每月）',
+	'awc-metrics-sum-day' => '计数（每天）',
+	'awc-metrics-edits-label' => '在$2的$1次编辑，',
+	'awc-metrics-this-month' => '本月',
+	'awc-metrics-last-month' => '上$1个月',
+	'awc-metrics-pageviews-label' => '以及$1次页面监视在过去的$2天',
+	'awc-metrics-close-listed' => '关闭列出的',
+	'awc-metrics-close-checked' => '关闭选中的',
 	'closed-wiki' => '已关闭的维基',
 	'closed-wiki-info' => '此维基已关闭',
 	'disabled-wiki-info' => '此维基已禁用',
+	'closed-wiki-dump-links' => '[$1 当前页面]（此版本对机器人非常好）<br />[$2 当前页面和历史]（警告：此文件会非常大）',
+	'closed-wiki-dump-noexists' => '此wiki已关闭。内容转储将在24小时内提供。请重新检查。',
 	'closed-wiki-create-wiki' => '创造一个新维基',
+	'closed-wiki-policy' => '查阅Wikia的关闭方针',
+	'closed-create-dump' => '创建数据库转储',
+	'closed-create-image-archive' => '创建图像存档',
+	'closed-delete-database-images' => '删除数据库和图像',
 	'closed-delete-images' => '删除图像',
+	'closed-free-url' => '为新使用者让出URL',
+	'closed-hide-dumps' => '隐藏数据库和图像转储',
+	'closed-redirect-url' => '重定向URL',
 	'closed-confirm-btn' => '确定关闭',
+	'closed-redirect-alert' => '请将其重定向至新的URL！',
 	'closed-reason' => '原因：',
+	'newwikisgraph' => '新wiki图表',
+	'newwikisgraph-report-title' => '每天创建的wiki',
+	'newwikisgraph-wikis-created' => '创建的wiki',
+	'newwikisgraph-param-all' => '所有',
+	'newwikisgraph-param-other' => '其他',
 );
 
 /** Traditional Chinese (中文（繁體）‎)
  * @author Ffaarr
+ * @author LNDDYL
  * @author Simon Shek
  * @author Wrightbus
  */
 $messages['zh-hant'] = array(
+	'wikifactorypagetitle' => 'Wiki出廠配置',
+	'wikifactory' => 'Wiki出廠配置',
 	'closewiki' => '關閉 Wiki',
+	'wf_city_url' => '地址',
 	'wf_city_id' => 'id',
 	'wf_city_title' => '標題',
 	'wf_city_created' => '已建立',
@@ -5494,21 +5573,36 @@ $messages['zh-hant'] = array(
 	'wikifactory-label-info' => '資訊',
 	'wikifactory-label-variables' => '變數',
 	'wikifactory-label-variables2' => '一般',
+	'wikifactory-label-hubs' => '主題',
 	'wikifactory-label-domains' => '域名',
 	'wikifactory-label-return' => '返回清單',
+	'wikifactory-label-clog' => '修改記錄',
+	'wikifactory-label-actions' => '操作',
 	'wikifactory-label-google' => 'Google 工具',
 	'wikifactory-label-close' => '關閉',
 	'wikifactory-label-tags' => '標籤',
 	'wikifactory-label-tags2' => '標籤',
+	'wikifactory-label-masstags' => '標籤集',
+	'wikifactory-label-findtags' => '尋找標籤',
+	'wikifactory-label-ezsharedupload' => '簡易共享上傳',
 	'wikifactory-label-compare' => '比較',
+	'right-wikifactory' => '更改wiki的內部設置',
+	'action-wikifactory' => '更改wiki的內部設置',
 	'wikifactory-domain-edit' => '編輯此網址',
 	'wikifactory-domain-remove' => '從 wiki 刪除此網址',
+	'wikifactory-domain-setmain' => '將此網址提交到wgServer',
+	'closewiki-check-and-confirm' => '檢查 wiki 並確認操作',
 	'closewiki-redirect-to' => '重定向到',
+	'closewiki-message' => '網域名 $1',
+	'closewiki-confirm-button' => "確認$2的'$1'",
+	'closewiki-nbr-wiki' => '$1 個wiki',
 	'closewiki-wiki-closed' => "'''$1''' 已關閉 ($2)",
 	'closewiki-wiki-closed_removed' => "' ' $1 '' 現在關閉並將會刪除 ( $2 )",
 	'closewiki-wiki-closed_redirect' => "' ' $1 '' 被關閉 （ $2 ） ，現在重定向到：$3",
+	'closewiki-images-url' => '圖像存檔：$1',
 	'closewiki-unknown' => '未知',
 	'closewiki-return' => '回到 $1',
+	'wikifactory-button-save' => '儲存變更',
 	'awc-metrics-wikis' => '顯示 Wiki',
 	'awc-metrics-select' => '顯示 Wiki:',
 	'awc-metrics-by-language' => '依照語言：',
@@ -5516,18 +5610,26 @@ $messages['zh-hant'] = array(
 	'awc-metrics-all' => '所有 Wiki',
 	'awc-metrics-all-languages' => '所有語言',
 	'awc-metrics-search' => '搜尋選項：',
+	'awc-metrics-one-week' => '創建於一週以內',
 	'awc-metrics-two-weeks' => '創建 < 2 周前',
 	'awc-metrics-three-weeks' => '創建 < 3 周前',
 	'awc-metrics-one-months' => '創建 < 1 個月前',
 	'awc-metrics-two-months' => '創建 < 2 個月前',
 	'awc-metrics-three-months' => '創建 < 3 個月前',
+	'awc-metrics-half-year' => '創建於六個月以內',
+	'awc-metrics-by-email' => '或者（用戶電子郵件）：',
+	'awc-metrics-by-user' => '創始人 (用户名):',
+	'awc-metrics-nbr-result' => '結果：',
+	'awc-metrics-created-between' => '創建于$1（YYYY/MM/DD）和$2（YYYY/MM/DD）之間',
 	'awc-metrics-wikians' => 'Wikia人<br />(>10 次編輯)',
 	'awc-metrics-articles' => '條目',
-	'awc-metrics-articles-per-day' => '文章數<br>(每日平均)', # Fuzzy
+	'awc-metrics-articles-per-day' => '文章數<br/>(每日平均)', # Fuzzy
 	'awc-metrics-revisions-per-page' => '修改<br />(平均每頁)',
 	'awc-metrics-edits' => '編輯次數',
 	'awc-metrics-db-size' => '資料庫大小',
 	'awc-metrics-images' => '圖片',
+	'awc-metrics-pageviews' => '頁面<br />點閱數',
+	'awc-metrics-statistics' => '統計資料 (各月平均)',
 	'awc-metrics-close' => '關閉',
 	'awc-metrics-close-action' => '關閉',
 	'awc-metrics-active' => '活躍',
@@ -5539,18 +5641,26 @@ $messages['zh-hant'] = array(
 	'awc-metrics-sum-month' => '計數 (每月)',
 	'awc-metrics-sum-day' => '計數 (每日)',
 	'awc-metrics-this-month' => '本月',
+	'awc-metrics-last-month' => '上$1個月',
+	'awc-metrics-close-listed' => '關閉所有列出的',
+	'awc-metrics-exact-match' => '精確匹配',
 	'closed-wiki' => '已關閉的wiki',
 	'closed-wiki-info' => '此wiki已關閉',
 	'disabled-wiki-info' => '此wiki已禁用',
+	'closed-wiki-dump-noexists' => '本維基已被關閉。內容轉存將在 24 小時內提供。請重新檢查。',
 	'closed-wiki-create-wiki' => '創建一個新的 wiki',
 	'closed-wiki-policy' => '查看 Wikia 的關站政策',
 	'closed-create-dump' => 'Create a database dump',
+	'closed-create-image-archive' => '創建圖像存檔',
 	'closed-delete-database-images' => '刪除資料庫和圖像',
 	'closed-delete-images' => '刪除圖像',
 	'closed-free-url' => '把這個網址讓給新的創站人',
+	'closed-hide-dumps' => '隱藏資料庫和圖像轉存',
 	'closed-redirect-url' => '重定向網址',
 	'closed-confirm-btn' => '確認關閉',
 	'closed-reason' => '原因：',
+	'newwikisgraph' => '新wiki圖表',
+	'newwikisgraph-report-title' => '每天創建的wiki',
 	'newwikisgraph-wikis-created' => '已創建的wiki',
 	'newwikisgraph-param-all' => '全部',
 	'newwikisgraph-param-other' => '其他',

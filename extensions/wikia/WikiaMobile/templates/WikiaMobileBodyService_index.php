@@ -16,12 +16,12 @@
 	<article id=wkMainCnt>
 		<?= $bodyContent ;?>
 		<footer id=wkMainCntFtr>
+			<?= !empty( $afterBodyContent ) ? $afterBodyContent : ''; ?>
 			<nav id=wkRltdCnt>
 				<?= !empty( $trendingArticles ) ? $trendingArticles : ''; ?>
 				<?= !empty( $categoryLinks ) ? $categoryLinks : ''; ?>
 			</nav>
 			<?= !empty( $afterContentHookText ) ? $afterContentHookText : ''; ?>
-			<?= !empty( $afterBodyContent ) ? $afterBodyContent : ''; ?>
 		</footer>
 	</article>
 </section>

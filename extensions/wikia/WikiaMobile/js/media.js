@@ -53,6 +53,7 @@ function(
 		currentMedia,
 		currentWrapper,
 		currentWrapperStyle,
+		disableSwipe,
 		wkMdlImages,
 		qs = querystring(),
 		shrImg = encodeURIComponent( qs.getVal( 'file', '' ) ) || null,
@@ -205,8 +206,17 @@ function(
 			if ( isMedia ) {
 				!inited && setup();
 
-				if ( className.indexOf( 'Wikia-video-thumb' ) > -1 ) {
+				if ( className.indexOf( 'video-thumbnail' ) > -1 ) {
 					track.event( 'video', track.CLICK, {label: 'article'});
+				}
+
+				// tracking call for S:Videos mobile
+				if ( document.body.className.indexOf( 'Special_Videos' ) ) {
+					track.event( 'special-videos', track.CLICK, {
+						label: 'thumbnail',
+						value: Array.prototype.indexOf.call( document.getElementsByClassName('media'), t ),
+						method: 'both'
+					});
 				}
 
 				openModal( ~~t.getAttribute( 'data-num' ) );
@@ -644,8 +654,7 @@ function(
 						type: loader.MULTI,
 						resources: {
 							styles: '/extensions/wikia/WikiaMobile/css/mediagallery.scss',
-							scripts: 'wikiamobile_mediagallery_js',
-							ttl: ttl
+							scripts: 'wikiamobile_mediagallery_js'
 						}
 					} ).done( function ( res ) {
 						var script = res.scripts,
@@ -702,7 +711,8 @@ function(
 						refresh();
 					}
 				},
-				circle: true
+				circle: true,
+				disableSwipe: disableSwipe
 			} );
 
 			function tap ( ev ) {
@@ -753,7 +763,6 @@ function(
 	}
 
 	/** @public **/
-
 	return {
 		openModal: openModal,
 		getMedia: function ( whiteList ) {
@@ -787,6 +796,14 @@ function(
 				} )
 			}
 
+		},
+		reset: function () {
+			inited = false;
+			init(document.getElementsByClassName('media'));
+			setup();
+		},
+		disableSwipe: function () {
+			disableSwipe = true;
 		},
 		skip: function () {
 			if ( currentNum - lastNum > 0 ) {

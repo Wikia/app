@@ -92,13 +92,16 @@ class SitemapPage extends UnlistedSpecialPage {
 			$this->verifyGoogle();
 		}
 		else {
+			// cache on both CDN and client
+			header( "Cache-Control: s-maxage=86400", true );
+			header( "X-Pass-Cache-Control: public, max-age=86400", true );
+
 			$this->mTitle = SpecialPage::getTitleFor( "Sitemap", $subpage );
 			$this->getNamespacesList();
 			if ( $this->mType == "namespace" ) {
 				$wgOut->disable();
 
 				header( "Content-type: application/x-gzip" );
-				header( "Cache-control: max-age=86400", true );
 				print $this->generateNamespace();
 			}
 			else if($subpage == 'sitemap-index.xml') {
@@ -513,7 +516,6 @@ class SitemapPage extends UnlistedSpecialPage {
 		$wgOut->disable();
 
 		$out = "";
-		header( "Cache-Control: no-cache" );
 		header( "HTTP/1.0 404 Not Found" );
 		$out .= "404: Page doesn't exist";
 		print $out;

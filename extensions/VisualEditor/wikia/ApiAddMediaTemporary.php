@@ -101,7 +101,6 @@ class ApiAddMediaTemporary extends ApiAddMedia {
 				$this->dieUsageMsg( 'uploaddisabled' );
 			}
 			$this->mUpload = new UploadFromUrl();
-			$this->checkPermissions();
 			$this->mUpload->initializeFromRequest( new FauxRequest(
 				array(
 					'wpUpload' => 1,
@@ -111,6 +110,7 @@ class ApiAddMediaTemporary extends ApiAddMedia {
 				true
 			) );
 			$this->mUpload->fetchFile();
+			$this->checkPermissions();
 			$this->verifyUpload();
 
 			$tempFile = $this->createTempFile( $this->mUpload->getTempPath() );
@@ -134,7 +134,7 @@ class ApiAddMediaTemporary extends ApiAddMedia {
 
 	protected function checkPermissions() {
 		// Check whether the user has the appropriate permissions to upload anyway
-		if ( $this->mUpload->isAllowed( $this->mUser ) !== true ) {
+		if ( $this->mUpload->verifyTitlePermissions( $this->mUser ) !== true ) {
 			if ( !$this->mUser->isLoggedIn() ) {
 				$this->dieUsageMsg( array( 'mustbeloggedin', 'upload' ) );
 			} else {

@@ -984,6 +984,8 @@ class LocalFile extends File {
 	function recordUpload2(
 		$oldver, $comment, $pageText, $props = false, $timestamp = false, $user = null
 	) {
+		global $wgCityId;
+
 		if ( is_null( $user ) ) {
 			global $wgUser;
 			$user = $wgUser;
@@ -1139,6 +1141,16 @@ class LocalFile extends File {
 			$wikiPage->doEdit( $pageText, $comment, EDIT_NEW | EDIT_SUPPRESS_RC, false, $user );
 		}
 
+		/* wikia change - begin (VID-1568) */
+		// Update/Insert video info
+		try {
+			\VideoInfoHooksHelper::upsertVideoInfo( $this, $reupload );
+		} catch ( \Exception $e ) {
+			$dbw->rollback();
+			return false;
+		}
+		/* wikia change - end (VID-1568) */
+
 		# Commit the transaction now, in case something goes wrong later
 		# The most important thing is that files don't get lost, especially archives
 		$dbw->commit();
@@ -1157,21 +1169,35 @@ class LocalFile extends File {
 
 			# Remove the old file from the squid cache
 			SquidUpdate::purge( array( $this->getURL() ) );
+
+			/* wikia change - begin (VID-1568) */
+			\VideoInfoHooksHelper::purgeVideoInfoCache( $this );
+			/* wikia change - end (VID-1568) */
 		}
-		
+
 		# Hooks, hooks, the magic of hooks...
 		wfRunHooks( 'FileUpload', array( $this, $reupload, $descTitle->exists() ) );
 
 		# Invalidate cache for all pages using this file
-		$update = new HTMLCacheUpdate( $this->getTitle(), 'imagelinks' );
-		$update->doUpdate();
+		// Wikia change begin @author Scott Rabin (srabin@wikia-inc.com)
+		$task = ( new \Wikia\Tasks\Tasks\HTMLCacheUpdateTask() )
+			->wikiId( $wgCityId )
+			->title( $this->getTitle() );
+		$task->call( 'purge', 'imagelinks' );
+		$task->queue();
+		// Wikia change end
 
 		# Invalidate cache for all pages that redirects on this page
 		$redirs = $this->getTitle()->getRedirectsHere();
 
 		foreach ( $redirs as $redir ) {
-			$update = new HTMLCacheUpdate( $redir, 'imagelinks' );
-			$update->doUpdate();
+			// Wikia change begin @author Scott Rabin (srabin@wikia-inc.com)
+			$task = ( new \Wikia\Tasks\Tasks\HTMLCacheUpdateTask() )
+				->wikiId( $wgCityId )
+				->title( $redir );
+			$task->call( 'purge', 'imagelinks' );
+			$task->queue();
+			// Wikia change end
 		}
 
 		return true;
@@ -1516,6 +1542,16 @@ class LocalFile extends File {
 		$dbw = $this->repo->getMasterDB();
 		$dbw->rollback();
 	}
+
+	/* wikia change - begin (VID-1568) */
+	/**
+	 * Check if file data is loaded
+	 * @return bool
+	 */
+	public function isDataLoaded() {
+		return $this->dataLoaded;
+	}
+	/* wikia change - end (VID-1568) */
 } // LocalFile class
 
 # ------------------------------------------------------------------------------
@@ -2210,6 +2246,7 @@ class LocalFileMoveBatch {
 	 */
 	var $target;
 
+	/* @var $db Database */
 	var $cur, $olds, $oldCount, $archive, $db;
 
 	function __construct( File $file, Title $target ) {
@@ -2347,6 +2384,28 @@ class LocalFileMoveBatch {
 			return $status;
 		}
 
+		// Wikia change - begin
+		// @author macbre (PLATFORM-238)
+		$rowsWithEmptyArchiveName = $dbw->selectField(
+			'oldimage',
+			'count(*)',
+			array(
+				'oi_name' => $this->oldName,
+				'oi_archive_name = ""',
+			),
+			__METHOD__
+		);
+
+		if ( $rowsWithEmptyArchiveName > 0 ) {
+			\Wikia\Logger\WikiaLogger::instance()->debug( 'Empty oi_archive_name' , [
+				'oi_name' => $this->oldName,
+				'new_name' => $this->newName,
+				'count' => $rowsWithEmptyArchiveName
+			] );
+		}
+
+		// Wikia change - end
+
 		// Update old images
 		$dbw->update(
 			'oldimage',
@@ -2354,12 +2413,15 @@ class LocalFileMoveBatch {
 				'oi_name' => $this->newName,
 				'oi_archive_name = ' . $dbw->strreplace( 'oi_archive_name', $dbw->addQuotes( $this->oldName ), $dbw->addQuotes( $this->newName ) ),
 			),
-			array( 'oi_name' => $this->oldName ),
+			array(
+				'oi_name' => $this->oldName,
+				'oi_archive_name <> ""', // Wikia change - @author macbre (PLATFORM-238)
+			),
 			__METHOD__
 		);
 
-		$affected = $dbw->affectedRows();
-		$total = $this->oldCount;
+		$affected = $dbw->affectedRows() + $rowsWithEmptyArchiveName; // Wikia change - @author macbre (PLATFORM-238)
+		$total = $this->oldCount + $rowsWithEmptyArchiveName; // Wikia change - @author macbre (PLATFORM-238)
 		$status->successCount += $affected;
 		$status->failCount += $total - $affected;
 		if ( $status->failCount ) {

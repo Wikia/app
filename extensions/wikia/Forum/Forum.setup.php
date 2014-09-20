@@ -45,7 +45,6 @@ $wgHooks['WallHistoryHeader'][] = 'ForumHooksHelper::onWallHistoryHeader';
 
 $wgHooks['WallHeader'][] = 'ForumHooksHelper::onWallHeader';
 $wgHooks['WallNewMessage'][] = 'ForumHooksHelper::onWallNewMessage';
-$wgHooks['EditCommentsIndex'][] = 'ForumHooksHelper::onEditCommentsIndex';
 $wgHooks['ArticleInsertComplete'][] = 'ForumHooksHelper::onArticleInsertComplete';
 $wgHooks['WallBeforeRenderThread'][] = 'ForumHooksHelper::onWallBeforeRenderThread';
 $wgHooks['AfterBuildNewMessageAndPost'][] = 'ForumHooksHelper::onAfterBuildNewMessageAndPost';
@@ -62,6 +61,13 @@ $wgHooks['NotificationGetMailNotificationMessage'][] = 'ForumNotificationPlugin:
 $wgHooks['getUserPermissionsErrors'][] = 'ForumHooksHelper::onGetUserPermissionsErrors';
 $wgHooks['PageHeaderIndexAfterActionButtonPrepared'][] = 'ForumHooksHelper::onPageHeaderIndexAfterActionButtonPrepared';
 $wgHooks['ArticleViewHeader'][] = 'ForumHooksHelper::onArticleViewHeader';
+
+// make sure that when an article is deleted, if it has a comments_index,
+// that record is properly marked as deleted. this needs to happen within
+// the transaction in  WikiPage::doDeleteArticleReal which is why it's being hooked
+// here and not in ArticleDeleteComplete
+$wgHooks['ArticleDoDeleteArticleBeforeLogEntry'][] = 'ForumHooksHelper::onArticleDoDeleteArticleBeforeLogEntry';
+
 
 // forum discussion on article
 //It need to be first one !!!
@@ -81,6 +87,7 @@ $wgHooks['LinkBegin'][] = 'ForumHooksHelper::onLinkBegin';
 
 // Fix URLs of thread pages when purging them.
 $wgHooks['TitleGetSquidURLs'][] = 'ForumHooksHelper::onTitleGetSquidURLs';
+$wgHooks['ArticleCommentGetSquidURLs'][] = 'ForumHooksHelper::onArticleCommentGetSquidURLs';
 
 include ($dir . '/Forum.namespace.setup.php');
 

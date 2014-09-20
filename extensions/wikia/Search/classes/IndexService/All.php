@@ -27,7 +27,8 @@ class All extends AbstractService
 			'Wikia\Search\IndexService\WikiStats'       => null,
 			'Wikia\Search\IndexService\WikiViews'       => null,
 			'Wikia\Search\IndexService\VideoViews'      => null, // note the order of operations -- AFTER metadata
-			'Wikia\Search\IndexService\ArticleQuality'  => null
+			'Wikia\Search\IndexService\ArticleQuality'  => null,
+			'Wikia\Search\IndexService\ArticleType'  => null
 			);
 	
 	/**

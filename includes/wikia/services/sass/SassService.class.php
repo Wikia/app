@@ -42,6 +42,7 @@ class SassService extends WikiaObject {
 	protected $filters = 0;
 	protected $cacheVariant = '';
 	protected $debug = null;
+	protected $useSourceMaps = false;
 
 	/**
 	 * Creates a new SassService object based on the Sass source provided.
@@ -172,6 +173,17 @@ class SassService extends WikiaObject {
 		return $this->debug !== null ? $this->debug : self::getDefaultDebug();
 	}
 
+	/**
+	 * Enable / disable source maps
+	 *
+	 * @see http://bricss.net/post/33788072565/using-sass-source-maps-in-webkit-inspector
+	 *
+	 * @param $enable bool enable?
+	 */
+	public function enableSourceMaps($enable) {
+		$this->useSourceMaps = $enable === true;
+	}
+
 	/* COMPILATION STUFF */
 
 	/**
@@ -199,9 +211,10 @@ class SassService extends WikiaObject {
 		$afterCompilation = 0;
 		$end = 0;
 		try {
-			/** @var $compiler Compiler */
+			/** @var $compiler ExternalRubyCompiler */
 			$compiler = self::getDefaultCompiler()->withOptions(array(
-				'sassVariables' => $this->getSassVariables()
+				'sassVariables' => $this->getSassVariables(),
+				'useSourceMaps' => $this->useSourceMaps
 			));
 
 			$start = microtime(true);
@@ -213,7 +226,12 @@ class SassService extends WikiaObject {
 			foreach ($filters as $filter) {
 				$styles = $filter->process($styles);
 			}
+			$styles = trim($styles);
 			$end = microtime(true);
+
+			if (empty($styles)) {
+				throw new \Wikia\Sass\Exception('Empty style');
+			}
 
 			$ok = true;
 
@@ -247,14 +265,15 @@ class SassService extends WikiaObject {
 	}
 
 	public function getCacheKey() {
-		return sprintf("%s%s",
+		return sprintf("%s%s%s",
 			$this->getCacheVariant() ? $this->getCacheVariant() . '-' : '',
 			md5(serialize([
 				$this->getHash(),
 				$this->getSassVariables(),
 				$this->getFilters(),
 				self::CACHE_VERSION
-			]))
+			])),
+			$this->useSourceMaps ? '-with-source-maps' : ''
 		);
 	}
 

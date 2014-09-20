@@ -32,6 +32,7 @@ $wgAutoloadClasses['SpecialManageWikiaHomeModel'] = $dir . '/models/SpecialManag
 // forms
 $wgAutoloadClasses['CollectionsForm'] = $dir.'/forms/CollectionsForm.class.php';
 $wgAutoloadClasses['StatsForm'] = $dir.'/forms/StatsForm.class.php';
+$wgAutoloadClasses['HubsSlotsForm'] = $dir.'/forms/HubsSlotsForm.class.php';
 
 //special page
 $wgSpecialPages['ManageWikiaHome'] = 'ManageWikiaHomeController';

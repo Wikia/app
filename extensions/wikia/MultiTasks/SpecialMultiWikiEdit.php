@@ -28,7 +28,6 @@ $wgGroupPermissions['staff']['multiwikiedit'] = true;
 $wgGroupPermissions['helper']['multiwikiedit'] = true;
 
 require_once( $IP . "/extensions/wikia/TaskManager/BatchTask.php" );
-extAddBatchTask( dirname(__FILE__)."/Tasks/MultiWikiEditTask.php", "multiwikiedit", "MultiWikiEditTask" );
 
 extAddSpecialPage( dirname(__FILE__) . '/SpecialMultiWikiEdit_body.php', 'Multiwikiedit', 'Multiwikiedit' );
 $wgSpecialPageGroups['Multiwikiedit'] = 'pagetools';

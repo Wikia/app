@@ -16,6 +16,8 @@ class ImageServingController extends WikiaController {
 	 * @responseParam Array $result a multi-dimensional array whith the Article ID as the key and an array of image URL's as the values
 	 */
 	public function getImages() {
+		$this->response->setFormat('json');
+
 		if(!$this->wg->User->isAllowed('read')) {
 			$this->setVal( 'status', 'error' );
 			$this->setVal( 'result', 'User is not allowed to read' );

@@ -1,32 +1,25 @@
 /*!
  * VisualEditor DataModel MWExtensionNode class.
  *
- * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
 /**
- * DataModel MediaWiki Extension node.
+ * DataModel MediaWiki extension node.
  *
  * @class
- * @extends ve.dm.LeafNode
+ * @abstract
  * @mixins ve.dm.GeneratedContentNode
  *
  * @constructor
- * @param {number} [length] Length of content data (ignored, forced to 0)
- * @param {Object} [element] Reference to element in linear model
  */
-ve.dm.MWExtensionNode = function VeDmMWExtensionNode( length, element ) {
-	// Parent constructor
-	ve.dm.LeafNode.call( this, 0, element );
-
+ve.dm.MWExtensionNode = function VeDmMWExtensionNode() {
 	// Mixin constructors
 	ve.dm.GeneratedContentNode.call( this );
 };
 
 /* Inheritance */
-
-OO.inheritClass( ve.dm.MWExtensionNode, ve.dm.LeafNode );
 
 OO.mixinClass( ve.dm.MWExtensionNode, ve.dm.GeneratedContentNode );
 
@@ -36,8 +29,14 @@ ve.dm.MWExtensionNode.static.enableAboutGrouping = true;
 
 ve.dm.MWExtensionNode.static.matchTagNames = null;
 
-ve.dm.MWExtensionNode.static.isContent = true;
+ve.dm.MWExtensionNode.static.childNodeTypes = [];
 
+/**
+ * HTML tag name.
+ * @static
+ * @property {string}
+ * @inheritable
+ */
 ve.dm.MWExtensionNode.static.tagName = null;
 
 /**
@@ -74,7 +73,7 @@ ve.dm.MWExtensionNode.static.toDataElement = function ( domElements, converter )
 
 ve.dm.MWExtensionNode.static.toDomElements = function ( dataElement, doc, converter ) {
 	var el,
-		index = converter.getStore().indexOfHash( OO.getHash( this.getHashObject( dataElement ) ) ),
+		index = converter.getStore().indexOfHash( OO.getHash( [ this.getHashObject( dataElement ), undefined ] ) ),
 		originalMw = dataElement.attributes.originalMw;
 
 	// If the transclusion is unchanged just send back the
@@ -123,3 +122,58 @@ ve.dm.MWExtensionNode.static.getExtensionName = function () {
 ve.dm.MWExtensionNode.prototype.getExtensionName = function () {
 	return this.constructor.static.getExtensionName( this.element );
 };
+
+/**
+ * DataModel MediaWiki inline extension node.
+ *
+ * @class
+ * @abstract
+ * @extends ve.dm.LeafNode
+ * @mixins ve.dm.MWExtensionNode
+ *
+ * @constructor
+ * @param {Object} [element] Reference to element in linear model
+ */
+ve.dm.MWInlineExtensionNode = function VeDmMWInlineExtensionNode() {
+	// Parent constructor
+	ve.dm.LeafNode.apply( this, arguments );
+
+	// Mixin constructors
+	ve.dm.MWExtensionNode.call( this );
+};
+
+/* Inheritance */
+
+OO.inheritClass( ve.dm.MWInlineExtensionNode, ve.dm.LeafNode );
+
+OO.mixinClass( ve.dm.MWInlineExtensionNode, ve.dm.MWExtensionNode );
+
+/* Static members */
+
+ve.dm.MWInlineExtensionNode.static.isContent = true;
+
+/**
+ * DataModel MediaWiki block extension node.
+ *
+ * @class
+ * @abstract
+ * @extends ve.dm.BranchNode
+ * @mixins ve.dm.MWExtensionNode
+ *
+ * @constructor
+ * @param {Object} [element] Reference to element in linear model
+ * @param {ve.dm.Node[]} [children]
+ */
+ve.dm.MWBlockExtensionNode = function VeDmMWInlineExtensionNode() {
+	// Parent constructor
+	ve.dm.BranchNode.apply( this, arguments );
+
+	// Mixin constructors
+	ve.dm.MWExtensionNode.call( this );
+};
+
+/* Inheritance */
+
+OO.inheritClass( ve.dm.MWBlockExtensionNode, ve.dm.BranchNode );
+
+OO.mixinClass( ve.dm.MWBlockExtensionNode, ve.dm.MWExtensionNode );

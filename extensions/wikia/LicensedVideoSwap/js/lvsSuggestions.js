@@ -3,32 +3,31 @@
  * thumbnails that are additional possible matches for the non-premium
  * video
  */
-define( 'lvs.suggestions', [
-	'jquery.ellipses'
-], function() {
-
+define('lvs.suggestions', [], function () {
 	'use strict';
 
-	function init( $container ) {
-		$container.find( '.suggestion-title' ).each(function( idx, val) {
-			$( val ).ellipses();
-		});
+	function init($container) {
+		var $suggestions = $container.find('.more-videos');
+		$suggestions.find('.title a').ellipses();
+		updateSizeClass($suggestions);
+		setActiveLi($suggestions, 0);
+	}
 
-		$container.on( 'click', '.more-link', function( e ) {
-			e.preventDefault();
-			var $this = $( this ),
-				$toggleDiv = $this.parent().next( '.more-videos' );
+	/**
+	 * @param {jQuery} $elem container for list elements to be set active
+	 * @param {number} idx index of LI in list
+	 */
+	function setActiveLi($elem, idx) {
+		$elem.find('li').eq(idx).addClass('selected');
+	}
 
-			// Show suggestions
-			if ( $this.hasClass( 'collapsed' ) ) {
-				$this.removeClass( 'collapsed' );
-				$toggleDiv.slideDown();
-			// Hide suggestions
-			} else {
-				$this.addClass( 'collapsed' );
-				$toggleDiv.slideUp();
-			}
-
+	/**
+	 * Suggested thumbnails come back from LVS script as large - set them to small
+	 * @param {jQuery} $elem
+	 */
+	function updateSizeClass($elem) {
+		$elem.find('.large').each(function () {
+			$(this).removeClass('large').addClass('small');
 		});
 	}
 
