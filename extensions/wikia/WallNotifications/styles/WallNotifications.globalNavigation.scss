@@ -67,6 +67,10 @@ $black-half-transparent: rgba(0,0,0,.6);
 
 		overflow: auto;
 
+		&::-webkit-scrollbar {
+			width: 18px;
+		}
+
 		&.scrollable {
 			background:
 				/* Shadow covers */
