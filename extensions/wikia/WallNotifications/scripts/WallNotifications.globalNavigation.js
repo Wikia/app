@@ -26,6 +26,7 @@ require(
 
 				this.globalNavigationHeight = $('#globalNavigation').outerHeight();
 				this.notificationsHeaderHeight = 0;
+				this.notificationsBottomPadding = 15;
 
 				this.unreadCount = parseInt(this.$notificationsCount.html(), 10);
 
@@ -321,23 +322,31 @@ require(
 			},
 
 			setNotificationsHeight: function() {
-				var height = this.$window.height() - this.globalNavigationHeight,
+				var isDropdownOpen = this.$wallNotifications.hasClass('show'),
+					height = 0,
+					msgHeight = 0;
+
+				if ( isDropdownOpen ) {
+					height = this.$window.height() - this.globalNavigationHeight - this.notificationsBottomPadding;
 					msgHeight = this.$notificationsMessages.height();
 
-				if ( !msgHeight ) {
-					this.$notificationsContainer = $('#notificationsContainer');
-					this.$notificationsMessages = $('> ul', this.$notificationsContainer);
-					msgHeight = this.$notificationsMessages.height();
-				}
+					if ( !msgHeight ) {
+						this.$notificationsContainer = $('#notificationsContainer');
+						this.$notificationsMessages = $('> ul', this.$notificationsContainer);
+						msgHeight = this.$notificationsMessages.height();
+					}
 
-				if ( this.notificationsHeaderHeight <= 0 ) {
-					this.notificationsHeaderHeight = $('.notifications-header', this.$wallNotifications).outerHeight();
-				}
+					if ( this.notificationsHeaderHeight <= 0 ) {
+						this.notificationsHeaderHeight = $('.notifications-header', this.$wallNotifications).outerHeight();
+					}
 
-				if ( height < msgHeight ) {
-					this.$notificationsContainer.css('height', height - this.notificationsHeaderHeight).addClass('scrollable');
-				} else {
-					this.$notificationsContainer.css('height', 'auto').removeClass('scrollable');
+					if ( height < msgHeight ) {
+						this.$notificationsContainer
+							.css('height', height - this.notificationsHeaderHeight)
+							.addClass('scrollable');
+					} else {
+						this.$notificationsContainer.css('height', 'auto').removeClass('scrollable');
+					}
 				}
 			}
 		};
