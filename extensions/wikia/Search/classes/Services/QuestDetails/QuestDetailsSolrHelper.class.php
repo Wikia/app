@@ -8,6 +8,8 @@ class QuestDetailsSolrHelper {
 
 	const DEFAULT_THUMBNAIL_HEIGHT = 200;
 
+	const SQL_CACHE_TIME = 600;
+
 	private $imageDimensionFields = [
 		'width',
 		'height'
@@ -77,6 +79,44 @@ class QuestDetailsSolrHelper {
 		$this->addThumbnailsInfo( $result );
 
 		return $result;
+	}
+
+	public function addCategories( $resultArray, $categoriesArray ) {
+		foreach ( $resultArray as $key => $item ) {
+			if ( isset( $categoriesArray[ $item[ 'id' ] ] ) ) {
+				$resultArray[ $key ][ 'categories' ] = $categoriesArray[ $item[ 'id' ] ];
+			}
+		}
+		return $resultArray;
+	}
+
+	public function filterIdsByCategory( array $categriesIDArray, $category ) {
+		foreach ( $categriesIDArray as $id => $categories ) {
+			if ( !in_array( $category, $categories ) ) {
+				unset ( $categriesIDArray[ $id ] );
+			}
+		}
+		return $categriesIDArray;
+	}
+
+	public function findCategoriesForIds( array $ids ) {
+		$db = wfGetDB( DB_SLAVE );
+		$out = ( new WikiaSQL() )
+			->SELECT( "cl_to, cl_from" )
+			->FROM( 'categorylinks' )
+			->WHERE( 'cl_from' )->IN( $ids )
+			->cache( self::SQL_CACHE_TIME )
+			->runLoop( $db, function ( &$out, $row ) {
+				$out[ $row->cl_from ][ ] = $row->cl_to;
+			} );
+		return $out;
+	}
+
+	public function fixUrls( array $results, $basepath ) {
+		foreach ( $results as $k => &$item ) {
+			$item[ "url" ] = $basepath . $item[ "url" ];
+		}
+		return $results;
 	}
 
 	/**
