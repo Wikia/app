@@ -142,6 +142,11 @@ define('mediaGallery.views.gallery', [
 		this.visibleCount = this.oVisibleCount;
 		this.$showLess.addClass('hidden');
 		this.$showMore.removeClass('hidden');
+
+		// scroll to the top of the gallery
+		$('body, html').animate({
+			scrollTop: this.$wrapper.offset().top - 80
+		}, 500);
 	};
 
 	Gallery.prototype.track = function (e) {
