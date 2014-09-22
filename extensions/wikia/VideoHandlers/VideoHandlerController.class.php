@@ -260,25 +260,57 @@ class VideoHandlerController extends WikiaController {
 	public function getVideoDetail() {
 		wfProfileIn( __METHOD__ );
 
-		$fileTitle = $this->getVal( 'fileTitle', array() );
-		$videoOptions = $this->getVal( 'videoOptions', array() );
+		$fileTitles = $this->makeFileTitlesAnArray( $this->getVal( 'fileTitle', [] ) );
+		$videoOptions = $this->getVideoOptionsWithDefaults( $this->getVal( 'videoOptions', [] ) );
 
-		if ( is_string( $fileTitle ) ) {
-			$singleFile = true;
-			$fileTitles = [ $fileTitle ];
-		} else {
-			$singleFile = false;
-			$fileTitles = $fileTitle;
+		$memcKey= wfMemcKey( __FUNCTION__, md5( serialize( [ $fileTitles, $videoOptions ] ) ) );
+		$videos = WikiaDataAccess::cache(
+			$memcKey,
+			WikiaResponse::CACHE_STANDARD,
+			function() use ( $fileTitles, $videoOptions ) {
+				return $this->getDetailsForVideoTitles( $fileTitles, $videoOptions );
+			}
+		);
+
+		$this->detail = ( count( $videos ) == 1 ) ? array_pop( $videos ) : $videos;
+		$this->response->setCacheValidity( WikiaResponse::CACHE_STANDARD );
+
+		wfProfileOut( __METHOD__ );
+	}
+
+	/**
+	 * @param string|array $fileTitles
+	 * @return array
+	 */
+	private function makeFileTitlesAnArray( $fileTitles ) {
+		if ( !is_array( $fileTitles ) ) {
+			$fileTitles = [ $fileTitles ];
 		}
+		return $fileTitles;
+	}
 
+	/**
+	 * @param array $videoOptions
+	 * @return array
+	 */
+	private function getVideoOptionsWithDefaults( array $videoOptions ) {
 		if ( !array_key_exists( 'thumbWidth', $videoOptions ) ) {
 			$videoOptions['thumbWidth'] = self::DEFAULT_THUMBNAIL_WIDTH;
 		}
-
 		if ( !array_key_exists( 'thumbHeight', $videoOptions ) ) {
 			$videoOptions['thumbHeight'] = self::DEFAULT_THUMBNAIL_HEIGHT;
 		}
+		return $videoOptions;
+	}
 
+	/**
+	 * Given an array of video titles, and an array of videoOptions (see getVideoDetails for more info)
+	 * return a list of those videos with fleshed out details (eg thumbnail, videoKey, embedUrl, etc)
+	 * @param array $fileTitles
+	 * @param array $videoOptions
+	 * @return array
+	 */
+	private function getDetailsForVideoTitles( array $fileTitles, array $videoOptions ) {
 		$videos = [];
 		$helper = new VideoHandlerHelper();
 		foreach ( $fileTitles as $fileTitle ) {
@@ -287,10 +319,7 @@ class VideoHandlerController extends WikiaController {
 				$videos[] = $detail;
 			}
 		}
-
-		$this->detail = ( !empty( $videos ) && $singleFile ) ? array_pop( $videos ) : $videos;
-
-		wfProfileOut( __METHOD__ );
+		return $videos;
 	}
 
 	/**
