@@ -261,7 +261,7 @@ class VideoHandlerController extends WikiaController {
 		wfProfileIn( __METHOD__ );
 
 		$fileTitles = $this->makeFileTitlesAnArray( $this->getVal( 'fileTitle', [] ) );
-		$videoOptions = $this->setThumbnailSizes( $this->getVal( 'videoOptions', [] ) );
+		$videoOptions = $this->getVideoOptionsWithDefaults( $this->getVal( 'videoOptions', [] ) );
 
 		$memcKey= wfMemcKey( 'getVideoDetail', md5( serialize( [ $fileTitles, $videoOptions ] ) ) );
 		$videos = WikiaDataAccess::cache(
@@ -293,7 +293,7 @@ class VideoHandlerController extends WikiaController {
 	 * @param array $videoOptions
 	 * @return array
 	 */
-	private function setThumbnailSizes( array $videoOptions ) {
+	private function getVideoOptionsWithDefaults( array $videoOptions ) {
 		if ( !array_key_exists( 'thumbWidth', $videoOptions ) ) {
 			$videoOptions['thumbWidth'] = self::DEFAULT_THUMBNAIL_WIDTH;
 		}
