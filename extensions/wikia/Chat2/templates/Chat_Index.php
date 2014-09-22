@@ -11,7 +11,7 @@
 
 	<!-- CSS -->
 	<link rel="stylesheet" href="<?= AssetsManager::getInstance()->getSassCommonURL('/extensions/wikia/Chat2/css/Chat.scss')?>">
-	<link rel="stylesheet" href="/load.php?lang=en&mode=articles&articles=MediaWiki%3AChat.css%7CUser%3A<?php echo $wgUserName; ?>%2Fchat.css&only=styles">
+	<link rel="stylesheet" href="/load.php?lang=en&mode=articles&articles=MediaWiki%3AChat.css%7CUser%3A<?php echo $wg->User->getName(); ?>%2Fchat.css&only=styles">
 
 	<!-- JS -->
 	<?php
@@ -132,6 +132,6 @@
 		<script src="<?php echo $src ?>"></script>
 	<?php endforeach;?>
 	<script src="<?php echo $jsMessagePackagesUrl ?>"></script>
-	<script type="text/javascript" src="/load.php?lang=en&mode=articles&articles=MediaWiki%3AChat.js%7CUser%3A<?php echo $wgUserName; ?>%2Fchat.js&only=scripts"></script>
+	<script type="text/javascript" src="/load.php?lang=en&mode=articles&articles=MediaWiki%3AChat.js%7CUser%3A<?php echo $wg->User->getName(); ?>%2Fchat.js&only=scripts"></script>
 </body>
 </html>
