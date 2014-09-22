@@ -20,7 +20,25 @@ require([
 	'ext.wikia.adEngine.slotTweaker',
 	'ext.wikia.adEngine.messageListener',
 	require.optional('wikia.abTest')
-], function (log, document, window, tracker, instantGlobals, adContext, adEngine, adConfig, evolveSlotConfig, adLogicPageParams, wikiaDart, slotTracker, lateAdsQueue, adLogicHighValueCountry, slotTweaker, messageListener, abTest) {
+], function (
+	log,
+	document,
+	window,
+	tracker,
+	instantGlobals,
+	adContext,
+	adEngine,
+	adConfig,
+	evolveSlotConfig,
+	adLogicPageParams,
+	wikiaDart,
+	slotTracker,
+	lateAdsQueue,
+	adLogicHighValueCountry,
+	slotTweaker,
+	messageListener,
+	abTest
+) {
 	'use strict';
 
 	var module = 'AdEngine2.run',
@@ -50,7 +68,7 @@ require([
 
 	// Register Evolve hop
 	window.evolve_hop = function (slotname) {
-		require(['ext.wikia.adEngine.provider.evolve'], function(adProviderEvolve) {
+		require(['ext.wikia.adEngine.provider.evolve'], function (adProviderEvolve) {
 			adProviderEvolve.hop(slotname);
 		});
 	};
@@ -169,9 +187,10 @@ window.AdEngine_loadLateAds = function () {
 		var wgNowBased,
 			performanceBased,
 			adsInHead = window.wgLoadAdsInHead,
-			lateAdsAfterPageLoad = window.wgLoadLateAdsAfterPageLoad;
+			lateAdsAfterPageLoad = window.wgLoadLateAdsAfterPageLoad,
+			ads = window.ads;
 
-		if (window.ads && window.ads.context && window.ads.context.opts) {
+		if (ads && ads.context && ads.context.opts) {
 			adsInHead = ads.context.adsInHead;
 			lateAdsAfterPageLoad = ads.context.lateAdsAfterPageLoad;
 		}
@@ -250,7 +269,7 @@ window.AdEngine_loadLateAds = function () {
 }(window));
 
 //Rubicon
-(function(window, performance, valuation){
+(function (window, performance, valuation) {
 	'use strict';
 
 	function trackRubicon(event, valuation) {
@@ -269,7 +288,7 @@ window.AdEngine_loadLateAds = function () {
 			if (estimate) {
 				tracker.track({
 					ga_category: 'ad/lookup' + event + '/rubicon',
-					ga_action: action.join(';') ,
+					ga_action: action.join(';'),
 					ga_label: 'deals=' + ((pmp && pmp.deals && pmp.deals.join && pmp.deals.join(',')) || e),
 					ga_value: parseInt(estimate.tier, 10),
 					trackingMethod: 'ad'
@@ -277,7 +296,7 @@ window.AdEngine_loadLateAds = function () {
 			} else {
 				tracker.track({
 					ga_category: 'ad/lookupError/rubicon',
-					ga_action: action.join(';') ,
+					ga_action: action.join(';'),
 					ga_value: 0,
 					trackingMethod: 'ad'
 				});
@@ -295,7 +314,7 @@ window.AdEngine_loadLateAds = function () {
 	trackRubicon('Success', valuation);
 
 	if (tier) {
-		require(['ext.wikia.adEngine.gptSlotConfig'], function(gptSlotConfig) {
+		require(['ext.wikia.adEngine.gptSlotConfig'], function (gptSlotConfig) {
 			var i, slots = ['HOME_TOP_RIGHT_BOXAD', 'TOP_RIGHT_BOXAD', 'TOP_INCONTENT_BOXAD', 'CORP_TOP_RIGHT_BOXAD'];
 			for (i = 0; i < slots.length; i = i + 1) {
 				gptSlotConfig.extendSlotParams('gpt', slots[i], { rp_tier: tier });
@@ -308,4 +327,4 @@ window.AdEngine_loadLateAds = function () {
 		trackRubicon.apply(this, arguments);
 	};
 
-})(window, window.rp_performance, window.rp_valuation);
+}(window, window.rp_performance, window.rp_valuation));
