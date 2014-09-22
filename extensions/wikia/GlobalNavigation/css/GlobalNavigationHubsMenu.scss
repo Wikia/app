@@ -1,7 +1,8 @@
-@import '../../Venus/styles/variables';
+@import 'extensions/wikia/Venus/styles/variables';
 @import 'skins/shared/color';
-@import 'skins/shared/mixins/columns';
 @import 'skins/shared/mixins/blackout';
+@import 'skins/shared/mixins/chevron';
+@import 'skins/shared/mixins/columns';
 @import 'GlobalNavigationColors';
 
 .hubs-entry-point {
@@ -57,14 +58,17 @@
 		float: left;
 		width: 256px;
 
-		*, *:before, *:after {
-			-webkit-backface-visibility: hidden;
+		&.backface-off {
+			*, *:before, *:after {
+				-webkit-backface-visibility: hidden;
+			}
 		}
 	}
 
-	nav {
+	.hub-link {
 		background-color: $nav-background-color;
 		cursor: pointer;
+		display: block;
 		height: 62px;
 		line-height: 62px;
 		position: relative;
@@ -146,6 +150,8 @@
 
 	section {
 		@include column-count(2);
+		@include column-rule(1px outset $nav-border-color);
+		@include column-gap(36px);
 
 		display: none;
 		float: left;
@@ -168,11 +174,24 @@
 		a {
 			display: block;
 			padding: 7px 0 6px;
+
+			&.more {
+				@include right-chevron();
+				position: absolute;
+				bottom: 40px;
+				font-size: 16px;
+				font-weight: bold;
+				left: 278px;
+
+				&:after {
+					margin-left: 6px;
+				}
+			}
 		}
 	}
 
 	.books {
-		background-color: $color-vertical-books;
+		background: linear-gradient(to right, $color-vertical-books 99%, $hubsmenu-background-color);
 
 		&.active {
 			&:before {
@@ -190,7 +209,7 @@
 	}
 
 	.comics {
-		background-color: $color-vertical-comics;
+		background: linear-gradient(to right, $color-vertical-comics 99%, $hubsmenu-background-color);
 
 		&.active {
 			&:before {
@@ -208,7 +227,7 @@
 	}
 
 	.games {
-		background-color: $color-vertical-games;
+		background: linear-gradient(to right, $color-vertical-games 99%, $hubsmenu-background-color);
 
 		&.active {
 			&:before {
@@ -226,7 +245,7 @@
 	}
 
 	.lifestyle {
-		background-color: $color-vertical-lifestyle;
+		background: linear-gradient(to right, $color-vertical-lifestyle 99%, $hubsmenu-background-color);
 
 		&.active {
 			&:before {
@@ -244,7 +263,7 @@
 	}
 
 	.movies {
-		background-color: $color-vertical-movies;
+		background: linear-gradient(to right, $color-vertical-movies 99%, $hubsmenu-background-color);
 
 		&.active {
 			&:before {
@@ -262,7 +281,7 @@
 	}
 
 	.music {
-		background-color: $color-vertical-music;
+		background: linear-gradient(to right, $color-vertical-music 99%, $hubsmenu-background-color);
 
 		&.active {
 			&:before {
@@ -280,7 +299,7 @@
 	}
 
 	.tv {
-		background-color: $color-vertical-tv;
+		background: linear-gradient(to right, $color-vertical-tv 99%, $hubsmenu-background-color);
 
 		&.active {
 			&:before {
@@ -300,7 +319,7 @@
 
 @media #{$small-only} {
 	.hubs-menu {
-		nav {
+		.hub-link {
 			&.active {
 				&:before {
 					left: 10px;
@@ -331,7 +350,7 @@
 			width: 302px;
 		}
 
-		nav {
+		.hub-link {
 			&.active {
 				&:before {
 					left: 20px;
@@ -350,6 +369,10 @@
 			.label {
 				width: 167px;
 			}
+		}
+
+		section a.more {
+			left: 324px;
 		}
 	}
 }

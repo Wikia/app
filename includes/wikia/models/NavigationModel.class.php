@@ -38,7 +38,8 @@ class NavigationModel extends WikiaModel {
 
 	const LEVEL_1_ITEMS_COUNT = 7;
 	const LEVEL_2_ITEMS_COUNT = 4;
-	const LEVEL_3_ITEMS_COUNT = 5;
+	const LEVEL_3_ITEMS_COUNT = 4;
+	const MEMC_VERSION = 2;
 
 	private $menuNodes;
 
@@ -166,7 +167,7 @@ class NavigationModel extends WikiaModel {
 
 	public function getTree( $messageName ) {
 		$menuData = WikiaDataAccess::cache(
-			$this->getMemcKey('global-navigation-hubs-menu-tree'),
+			$this->getMemcKey( $messageName . '-tree-' . self::MEMC_VERSION ),
 			1800,
 			function() use ( $messageName ) {
 				$menuData = [];
