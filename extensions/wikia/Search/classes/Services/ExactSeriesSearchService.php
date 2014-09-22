@@ -2,19 +2,25 @@
 
 namespace Wikia\Search\Services;
 
+use Wikia\Search\Services\Helpers\OutputFormatter;
+
 class ExactSeriesSearchService extends EntitySearchService {
 
 	const ARTICLES_LIMIT = 1;
 	const MINIMAL_ARTICLE_SCORE = 5;
 	const API_URL = 'api/v1/Articles/AsSimpleJson?id=';
-	const EXACT_MATCH_FIELD = "tv_series_mv_em";
+
+	public function __construct( $client = null, $helper = null ) {
+		$helper = ( $helper == null ) ? new OutputFormatter() : $helper;
+		parent::__construct( $client, $helper );
+	}
 
 	protected function prepareQuery( $query ) {
 		$select = $this->getSelect();
 
 		$phrase = $this->sanitizeQuery( $query );
 		$slang = $this->getLang();
-		$select->setQuery( "+(" . static::EXACT_MATCH_FIELD . ':"' . $phrase . '") AND +(lang_s:' . $slang . ')' );
+		$select->setQuery( '+(tv_series_mv_em:"' . $phrase . '") AND +(lang_s:' . $slang . ')' );
 		$select->createFilterQuery( 'no_episodes' )->setQuery( '-(tv_episode_mv_em:*)' );
 		$select->setRows( static::ARTICLES_LIMIT );
 
@@ -28,9 +34,9 @@ class ExactSeriesSearchService extends EntitySearchService {
 					'wikiId' => $item['wid'],
 					'articleId' => $item['pageid'],
 					'title' => $item['titleStrict'],
-					'url' => $this->replaceHostUrl( $item['url'] ),
+					'url' => $this->getHelper()->replaceHostUrl( $item['url'] ),
 					'quality' => $item['article_quality_i'],
-					'contentUrl' => $this->replaceHostUrl( 'http://' . $item['host'] . '/' . static::API_URL . $item['pageid'] ),
+					'contentUrl' => $this->getHelper()->replaceHostUrl( 'http://' . $item['host'] . '/' . static::API_URL . $item['pageid'] ),
 				];
 			}
 		}
