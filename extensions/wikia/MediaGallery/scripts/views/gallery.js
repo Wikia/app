@@ -19,7 +19,7 @@ define('mediaGallery.views.gallery', [
 		this.$el = options.$el;
 		this.$wrapper = options.$wrapper;
 		this.model = options.model;
-		this.oVisibleCount = options.oVisibleCount;
+		this.oVisibleCount = options.oVisible;
 		this.interval = options.interval || 12;
 
 		this.rendered = false;
@@ -161,7 +161,7 @@ define('mediaGallery.views.gallery', [
 	 * Hide all but original media
 	 */
 	Gallery.prototype.showLess = function () {
-		var media = this.media.slice(this.oVisibleCount/*, this.visibleCount*/);
+		var media = this.media.slice(this.oVisibleCount, this.visibleCount);
 
 		$.each(media, function (idx, item) {
 			item.hide();
