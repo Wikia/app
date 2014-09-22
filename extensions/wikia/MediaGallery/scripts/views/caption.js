@@ -1,7 +1,7 @@
 define('mediaGallery.views.caption', [], function () {
 	'use strict';
 
-	function Media(options) {
+	var Caption = function (options) {
 		this.$el = options.$el;
 		this.media = options.media;
 		this.$media = this.media.$el;
@@ -12,9 +12,9 @@ define('mediaGallery.views.caption', [], function () {
 		this.marginTop = parseFloat(this.$el.css('margin-top'));
 
 		this.setupCaption();
-	}
+	};
 
-	Media.prototype.setupCaption = function () {
+	Caption.prototype.setupCaption = function () {
 		var self = this;
 
 		this.$el.hover(
@@ -39,7 +39,7 @@ define('mediaGallery.views.caption', [], function () {
 	 * Toggle top margin to slide caption up into full view.
 	 * Note: it's hard to do this animation with css b/c the new top margin value is unknown
 	 */
-	Media.prototype.captionHover = function () {
+	Caption.prototype.captionHover = function () {
 		var self = this,
 			mediaHeight = this.$media.height(),
 			contentHeight,
@@ -69,11 +69,11 @@ define('mediaGallery.views.caption', [], function () {
 		}
 	};
 
-	Media.prototype.captionHoverOut = function () {
+	Caption.prototype.captionHoverOut = function () {
 		this.$el
 			.removeClass('hovered scroll clicked')
 			.removeAttr('style');
 	};
 
-	return Media;
+	return Caption;
 });

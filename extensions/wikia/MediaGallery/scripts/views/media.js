@@ -4,23 +4,24 @@ define('mediaGallery.views.media', [
 ], function (Caption, templates) {
 	'use strict';
 
-	// workaround for nirvana template naming conventions and JSHint conflict
-	var templateName = 'MediaGallery_media';
+	var Media,
+		templateName = 'MediaGallery_media'; // workaround for nirvana template naming conventions and JSHint conflict
 
-	function Media(options) {
+	Media = function (options) {
 		this.$el = options.$el;
 		this.model = options.model;
 		this.gallery = options.gallery;
 
 		this.model.media = this;
-		this.visible = false;
+		this.rendered = false;
 
 		this.$el.on('mediaInserted', $.proxy(this.initCaption, this));
-	}
+	};
 
 	Media.prototype.render = function () {
 		this.$el.addClass('media');
 		this.$el.html(Mustache.render(templates[templateName], this.model));
+		this.rendered = true;
 
 		return this;
 	};
@@ -34,12 +35,10 @@ define('mediaGallery.views.media', [
 
 	Media.prototype.show = function () {
 		this.$el.show(); // todo: add animations and such
-		this.visible = true;
 	};
 
 	Media.prototype.hide = function () {
 		this.$el.hide(); // todo: add animations and such
-		this.visible = false;
 	};
 
 	return Media;

@@ -12,14 +12,16 @@ require(['mediaGallery.views.gallery'], function (Gallery) {
 
 		$.each($galleries, function (idx) {
 			var $this = $(this),
+				oVisible = $this.data('visible-count') || 8,
 				gallery;
 
 			gallery = new Gallery({
 				$el: $('<div></div>').addClass('media-gallery-inner'),
 				$wrapper: $this,
-				model: data[idx]
+				model: data[idx],
+				oVisible: oVisible
 			});
-			gallery.render();
+			gallery.render(oVisible);
 
 			$this.append(gallery.$el);
 			if (gallery.$toggler) {
