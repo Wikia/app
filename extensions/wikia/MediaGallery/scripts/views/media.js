@@ -19,7 +19,7 @@ define('mediaGallery.views.media', [
 	};
 
 	Media.prototype.render = function () {
-		this.$el.addClass('media');
+		this.$el.addClass('media hidden fade');
 		this.$el.html(Mustache.render(templates[templateName], this.model));
 		this.rendered = true;
 
@@ -34,11 +34,26 @@ define('mediaGallery.views.media', [
 	};
 
 	Media.prototype.show = function () {
-		this.$el.show(); // todo: add animations and such
+		var self = this;
+
+		this.$el.removeClass('hidden');
+		// wait till after display:block before starting transition
+		setTimeout(function () {
+			self.$el.removeClass('fade');
+		}, 0);
 	};
 
 	Media.prototype.hide = function () {
-		this.$el.hide(); // todo: add animations and such
+		var self = this;
+
+		if (!this.fadeDuration) {
+			this.fadeDuration = parseInt(this.$el.css('transition-duration')) * 500;
+		}
+
+		this.$el.addClass('fade');
+		setTimeout(function () {
+			self.$el.addClass('hidden');
+		}, this.fadeDuration);
 	};
 
 	return Media;
