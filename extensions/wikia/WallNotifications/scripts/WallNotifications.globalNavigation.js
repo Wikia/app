@@ -21,6 +21,12 @@ require(
 
 				this.$notifications = $('#notifications');
 				this.$wallNotifications = $('#GlobalNavigationWallNotifications');
+				this.$notificationsContainer = $('#notificationsContainer');
+				this.$notificationsMessages = $('> ul', this.$notificationsContainer);
+
+				this.globalNavigationHeight = $('#globalNavigation').outerHeight();
+				this.notificationsHeaderHeight = 0;
+				this.notificationsBottomPadding = 15;
 
 				this.unreadCount = parseInt(this.$notificationsCount.html(), 10);
 
@@ -198,6 +204,8 @@ require(
 				});
 
 				this.$wallNotifications.find('.notifications-wiki-header').click( this.proxy( this.wikiClick ) );
+
+				this.setNotificationsHeight();
 			},
 
 			wikiClick: function(e) {
@@ -208,11 +216,13 @@ require(
 				if( wikiEl.hasClass('show') ) {
 					wikiEl.removeClass('show');
 					delete this.wikiShown[ wikiId ];
+					this.setNotificationsHeight();
 				} else {
 					wikiEl.addClass('show');
 					this.wikiShown[ wikiId ] = true;
 					this.updateWiki(wikiId);
 				}
+
 				return false;
 			},
 
@@ -285,6 +295,8 @@ require(
 					// temporary fix, should be changed on server side
 					wikiEl.find('.read').remove();
 				}
+
+				this.setNotificationsHeight();
 			},
 
 			getLastSeenCount: function() {
@@ -307,6 +319,35 @@ require(
 					}
 				}
 				return url;
+			},
+
+			setNotificationsHeight: function() {
+				var isDropdownOpen = this.$wallNotifications.hasClass('show'),
+					height = 0,
+					msgHeight = 0;
+
+				if ( isDropdownOpen ) {
+					height = this.$window.height() - this.globalNavigationHeight - this.notificationsBottomPadding;
+					msgHeight = this.$notificationsMessages.height();
+
+					if ( !msgHeight ) {
+						this.$notificationsContainer = $('#notificationsContainer');
+						this.$notificationsMessages = $('> ul', this.$notificationsContainer);
+						msgHeight = this.$notificationsMessages.height();
+					}
+
+					if ( this.notificationsHeaderHeight <= 0 ) {
+						this.notificationsHeaderHeight = $('.notifications-header', this.$wallNotifications).outerHeight();
+					}
+
+					if ( height < msgHeight ) {
+						this.$notificationsContainer
+							.css('height', height - this.notificationsHeaderHeight)
+							.addClass('scrollable');
+					} else {
+						this.$notificationsContainer.css('height', 'auto').removeClass('scrollable');
+					}
+				}
 			}
 		};
 

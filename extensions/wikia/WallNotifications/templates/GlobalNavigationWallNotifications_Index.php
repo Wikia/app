@@ -5,7 +5,11 @@
 			<li>
 				<header class="notifications-header"><?= wfMessage('wall-notifications-all')->text() ?></header>
 			</li>
-			<li class="notification empty"><?= wfMessage('wall-notifications-loading')->text() ?></li>
+			<li id="notificationsContainer">
+				<ul>
+					<li class="notification empty"><?= wfMessage('wall-notifications-loading')->text() ?></li>
+				</ul>
+			</li>
 		</ul>
 	</li>
 <? endif; ?>
