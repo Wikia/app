@@ -127,6 +127,20 @@ $config['adengine2_top_in_content_boxad_js'] = array(
 	),
 );
 
+$config['adengine2_tracking_js'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => array(
+		'//extensions/wikia/AdEngine/js/AdTracker.js',
+	),
+);
+
+$config['adengine2_rubicon_rtp_js'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => array(
+		'//extensions/wikia/AdEngine/js/RubiconRtp.js',
+	),
+);
+
 $config['oasis_noads_extensions_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
