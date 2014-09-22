@@ -340,7 +340,7 @@ require(
 						this.notificationsHeaderHeight = $('.notifications-header', this.$wallNotifications).outerHeight();
 					}
 
-					if ( height < msgHeight ) {
+					if ( height < msgHeight + this.notificationsHeaderHeight ) {
 						this.$notificationsContainer
 							.css('height', height - this.notificationsHeaderHeight)
 							.addClass('scrollable');
