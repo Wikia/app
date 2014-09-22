@@ -1,6 +1,11 @@
 define('mediaGallery.views.caption', [], function () {
 	'use strict';
 
+	/**
+	 * Handle bindings for caption elements. Rendering is already done at this point.
+	 * @param {Object} options
+	 * @constructor
+	 */
 	var Caption = function (options) {
 		this.$el = options.$el;
 		this.media = options.media;
@@ -14,6 +19,9 @@ define('mediaGallery.views.caption', [], function () {
 		this.setupCaption();
 	};
 
+	/**
+	 * Bind interaction events for touch and non-touch screens
+	 */
 	Caption.prototype.setupCaption = function () {
 		var self = this;
 
@@ -69,6 +77,9 @@ define('mediaGallery.views.caption', [], function () {
 		}
 	};
 
+	/**
+	 * Handle hover out state of captions
+	 */
 	Caption.prototype.captionHoverOut = function () {
 		this.$el
 			.removeClass('hovered scroll clicked')

@@ -7,6 +7,11 @@ define('mediaGallery.views.media', [
 	var Media,
 		templateName = 'MediaGallery_media'; // workaround for nirvana template naming conventions and JSHint conflict
 
+	/**
+	 * Handle rendering and bindings for media items in galleries
+	 * @param {Object} options
+	 * @constructor
+	 */
 	Media = function (options) {
 		this.$el = options.$el;
 		this.model = options.model;
@@ -15,9 +20,14 @@ define('mediaGallery.views.media', [
 		this.model.media = this;
 		this.rendered = false;
 
+		// Wait till element is inserted into DOM before binding caption events
 		this.$el.on('mediaInserted', $.proxy(this.initCaption, this));
 	};
 
+	/**
+	 * Create media html
+	 * @returns {Media}
+	 */
 	Media.prototype.render = function () {
 		this.$el.addClass('media hidden fade');
 		this.$el.html(Mustache.render(templates[templateName], this.model));
@@ -26,6 +36,9 @@ define('mediaGallery.views.media', [
 		return this;
 	};
 
+	/**
+	 * Create caption instance
+	 */
 	Media.prototype.initCaption = function () {
 		this.caption = new Caption({
 			$el: this.$el.find('.caption'),
@@ -33,6 +46,9 @@ define('mediaGallery.views.media', [
 		});
 	};
 
+	/**
+	 * Use CSS transitions to show element
+	 */
 	Media.prototype.show = function () {
 		var self = this;
 
@@ -43,10 +59,14 @@ define('mediaGallery.views.media', [
 		}, 0);
 	};
 
+	/**
+	 * Use CSS transitions to hide element
+	 */
 	Media.prototype.hide = function () {
 		var self = this;
 
 		if (!this.fadeDuration) {
+			// get duration of css fade and cut it in half
 			this.fadeDuration = parseInt(this.$el.css('transition-duration')) * 500;
 		}
 
