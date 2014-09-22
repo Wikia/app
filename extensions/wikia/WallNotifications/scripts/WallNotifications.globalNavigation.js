@@ -303,16 +303,6 @@ require(
 				return $.proxy( func, this );
 			},
 
-			getWikiUrl: function( url ) {
-				if ( window.wgStagingEnvironment && url ) {
-					var stagingEnv = window.location.hostname.split( '.' )[0];
-					if ( url.indexOf( stagingEnv ) === -1 ) {
-						url = url.replace( '://', '://' + stagingEnv + '.' );
-					}
-				}
-				return url;
-			},
-
 			setNotificationsHeight: function() {
 				var isDropdownOpen = this.$wallNotifications.hasClass('show'),
 					height = 0,
