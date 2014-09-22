@@ -59,6 +59,14 @@
 			width: 100%;
 		}
 	}
+
+	.ve-ui-wikiaTransclusionDialog-noBorder {
+		border-width: 0;
+	}
+
+	.oo-ui-buttonedElement-frameless .oo-ui-buttonedElement-button > .oo-ui-labeledElement-label {
+		color: $color-text;
+	}
 }
 
 .ve-ui-mwTemplateDialog-editFlow {
