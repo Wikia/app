@@ -31,10 +31,8 @@ class MediaGalleryModel extends WikiaObject {
 			if ( !empty( $data ) ) {
 				$media[] = $data;
 			}
-
 			++$dimensionIndex;
 		}
-
 		$this->galleryData = $media;
 	}
 

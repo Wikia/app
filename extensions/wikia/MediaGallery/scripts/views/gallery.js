@@ -2,17 +2,17 @@ define('mediaGallery.views.gallery', [
     'mediaGallery.views.media',
     'mediaGallery.templates.mustache',
     'wikia.tracker'
-], function (Media, templates, Tracker) {
+], function (Media, templates, tracker) {
 	'use strict';
 
 	var Gallery,
 		track,
 		togglerTemplateName = 'MediaGallery_showMore';
 
-	track = Tracker.buildTrackingFunction({
+	track = tracker.buildTrackingFunction({
 		category: 'media-gallery',
 		trackingMethod: 'both',
-		action: Tracker.ACTIONS.CLICK
+		action: tracker.ACTIONS.CLICK
 	});
 
 	Gallery = function (options) {
@@ -151,7 +151,7 @@ define('mediaGallery.views.gallery', [
 			this.$showMore.addClass('hidden');
 		}
 
-		this.track({
+		track({
 			label: 'show-more-items',
 			value: this.visibleCount
 		});
@@ -175,19 +175,6 @@ define('mediaGallery.views.gallery', [
 		$('body, html').animate({
 			scrollTop: this.$wrapper.offset().top - 80
 		}, 500);
-	};
-
-	Gallery.prototype.track = function (e) {
-		// get index of media item in gallery
-		var index = $(e.target).parent().index();
-
-		Wikia.Tracker.track({
-			category: 'media-gallery',
-			action: Wikia.Tracker.ACTIONS.CLICK,
-			label: 'gallery-item',
-			trackingMethod: 'both',
-			value: index
-		});
 	};
 
 	return Gallery;

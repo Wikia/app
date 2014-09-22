@@ -3,6 +3,7 @@ require(['mediaGallery.views.gallery'], function (Gallery) {
 	$(function () {
 		var galleries = [],
 			$galleries = $('.media-gallery-wrapper'),
+			// get data from script tag in DOM
 			data = Wikia.mediaGalleryData || [];
 
 		// If there's no galleries on the page, we're done.
@@ -22,14 +23,14 @@ require(['mediaGallery.views.gallery'], function (Gallery) {
 				oVisible: oVisible
 			});
 			gallery.render(oVisible);
-
 			$this.append(gallery.$el);
+
 			if (gallery.$toggler) {
 				$this.append(gallery.$toggler);
 			}
+
 			gallery.rendered = true;
 			gallery.$el.trigger('galleryInserted');
-
 			galleries.push(gallery);
 		});
 	});

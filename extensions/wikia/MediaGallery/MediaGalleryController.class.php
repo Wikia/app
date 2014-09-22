@@ -12,7 +12,8 @@ class MediaGalleryController extends WikiaController {
 
 	/**
 	 * Entry point into MediaGalleries. Data must be sent from WikiaPhotoGallery
-	 * @todo: Implement better way of getting data from anywhere
+	 * Note: A nice improvement would be to implement better way of getting data from anywhere as opposed to only at
+	 * time of article parse.
 	 */
 	public function gallery() {
 		$items = $this->getVal( 'items' );
