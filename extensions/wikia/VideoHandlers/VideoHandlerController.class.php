@@ -33,6 +33,8 @@ class VideoHandlerController extends WikiaController {
 				$error = wfMessage( 'videohandler-error-missing-parameter', 'width' )->inContentLanguage()->text();
 			} else {
 				$title = Title::newFromText( $title, NS_FILE );
+
+				/** @var LocalFile|WikiaLocalFileShared $file */
 				$file = ( $title instanceof Title ) ? wfFindFile( $title ) : false;
 				if ( $file === false ) {
 					$error = wfMessage( 'videohandler-error-video-no-exist' )->inContentLanguage()->text();
