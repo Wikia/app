@@ -6,7 +6,6 @@ $wgAutoloadClasses['AdEngine2ExitstitialHooks'] =  __DIR__ . '/AdEngine2Exitstit
 $wgAutoloadClasses['AdEngine2Hooks'] =  __DIR__ . '/AdEngine2Hooks.class.php';
 $wgAutoloadClasses['AdEngine2Service'] =  __DIR__ . '/AdEngine2Service.class.php';
 $wgAutoloadClasses['ResourceLoaderAdEngineSevenOneMediaModule'] = __DIR__ . '/ResourceLoaderAdEngineSevenOneMediaModule.php';
-$wgAutoloadClasses['AdProviderEbayController'] = __DIR__ . '/AdProviderEbayController.class.php';
 
 // Hooks for AdEngine2
 $wgHooks['AfterInitialize'][] = 'AdEngine2Hooks::onAfterInitialize';

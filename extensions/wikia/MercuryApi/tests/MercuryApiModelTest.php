@@ -80,7 +80,6 @@ class MercuryApiModelTest extends WikiaBaseTest {
 				'wikiVertical' => 'Wikia',
 			],
 			'providers' => [
-				'ebay' => true,
 				'sevenOneMedia' => null,
 				'sevenOneMediaCombinedUrl' => null,
 				'remnantGptMobile' => null,

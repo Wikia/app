@@ -15,7 +15,6 @@ define('ext.wikia.adEngine.adConfigLate', [
 	'ext.wikia.adEngine.provider.taboola',
 	'ext.wikia.adEngine.provider.null',
 	'ext.wikia.adEngine.provider.sevenOneMedia',
-	'ext.wikia.adEngine.provider.ebay',
 	require.optional('wikia.abTest')
 ], function (
 	// regular dependencies
@@ -32,7 +31,6 @@ define('ext.wikia.adEngine.adConfigLate', [
 	adProviderTaboola,
 	adProviderNull,
 	adProviderSevenOneMedia, // TODO: move this to the early queue (remove jQuery dependency first)
-	adProviderEbay,
 	abTest
 ) {
 	'use strict';
