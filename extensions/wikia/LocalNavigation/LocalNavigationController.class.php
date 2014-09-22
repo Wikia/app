@@ -14,22 +14,27 @@ class LocalNavigationController extends WikiaController {
 		$themeSettings = new ThemeSettings();
 		$settings = $themeSettings->getSettings();
 
-		$wordmarkUrl = '';
-		if ($settings['wordmark-type'] == 'graphic') {
-			wfProfileIn(__METHOD__ . 'graphicWordmark');
-			$wordmarkUrl = $themeSettings->getWordmarkUrl();
-			wfProfileOut(__METHOD__ . 'graphicWordmark');
+		$wordmarkURL = '';
+		if ( $settings['wordmark-type'] == 'graphic' ) {
+			wfProfileIn( __METHOD__ . 'graphicWordmark' );
+			$imageTitle = Title::newFromText( $themeSettings::WordmarkImageName, NS_IMAGE );
+			$file = wfFindFile( $imageTitle );
+			if ( $file instanceof File ) {
+				$wordmarkURL = $file->createThumb(
+					self::WORDMARK_MAX_WIDTH,
+					self::WORDMARK_MAX_HEIGHT
+				);
+			}
+			wfProfileOut( __METHOD__ . 'graphicWordmark' );
 		}
 
 		$mainPageURL = Title::newMainPage()->getLocalURL();
-		$wordmarkFontClass = !empty($settings['wordmark-font']) ? 'font-' . $settings['wordmark-font']  : '';
+		$wordmarkFontClass = !empty( $settings['wordmark-font'] ) ? 'font-' . $settings['wordmark-font']  : '';
 
-		$this->response->setVal('mainPageURL', $mainPageURL);
-		$this->response->setVal('wordmarkText', $settings['wordmark-text']);
-		$this->response->setVal('wordmarkSize', $settings['wordmark-font-size']);
-		$this->response->setVal('wordmarkFontClass', $wordmarkFontClass);
-		$this->response->setVal('wordmarkUrl', $wordmarkUrl);
-		$this->response->setVal('wordmarkMaxWidth', self::WORDMARK_MAX_WIDTH);
-		$this->response->setVal('wordmarkMaxHeight', self::WORDMARK_MAX_HEIGHT);
+		$this->response->setVal( 'mainPageURL', $mainPageURL );
+		$this->response->setVal( 'wordmarkText', $settings['wordmark-text'] );
+		$this->response->setVal( 'wordmarkFontSize', $settings['wordmark-font-size'] );
+		$this->response->setVal( 'wordmarkFontClass', $wordmarkFontClass );
+		$this->response->setVal( 'wordmarkUrl', $wordmarkURL );
 	}
 }
