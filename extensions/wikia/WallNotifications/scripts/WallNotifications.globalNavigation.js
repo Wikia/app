@@ -5,7 +5,6 @@ require(
 
 		var WallNotifications = {
 			init: function() {
-				this.wikisUrls = {};
 				this.updateInProgress = false; // we only want 1 update simultaneously
 				this.notificationsCache = {}; // HTML for "trays" for different Wiki ids
 				this.wikiShown = {}; // all open "trays" (Wiki Notifications) - list of Wiki ids
@@ -198,11 +197,6 @@ require(
 					this.$notificationsCount.empty().parent('.bubbles').removeClass('show');
 				}
 
-				this.$wallNotifications.find('.notifications-for-wiki').each(function() {
-					element = $(this);
-					self.wikisUrls[ parseInt(element.data('wiki-id'), 10) ] = self.getWikiUrl( element.data('wiki-path') );
-				});
-
 				this.$wallNotifications.find('.notifications-wiki-header').click( this.proxy( this.wikiClick ) );
 
 				this.setNotificationsHeight();
@@ -253,8 +247,6 @@ require(
 				nirvana.sendRequest({
 					controller: 'WallNotificationsExternalController',
 					method: 'getUpdateWiki',
-					format: 'jsonp',
-					scriptPath: this.wikisUrls[wikiId],
 					data: {
 						username: window.wgTitle,
 						wikiId: wikiId,
