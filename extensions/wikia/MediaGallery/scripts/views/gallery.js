@@ -34,7 +34,7 @@ define('mediaGallery.views.gallery', [
 		this.bindEvents();
 
 		// set up toggle buttons
-		if (this.media.length > this.visibleCount) {
+		if (this.media.length > this.oVisibleCount) {
 			this.renderToggler();
 		}
 	};
