@@ -14,12 +14,16 @@
 		width: round($height / 2);
 
 		@if ($direction == 'down') {
+			-webkit-transform: rotate(135deg);
 			transform: rotate(135deg);
 		} @else if ($direction == 'left') {
+			-webkit-transform: rotate(-135deg);
 			transform: rotate(-135deg);
 		} @else if ($direction == 'right') {
+			-webkit-transform: rotate(45deg);
 			transform: rotate(45deg);
 		} @else if ($direction == 'up') {
+			-webkit-transform: rotate(-45deg);
 			transform: rotate(-45deg);
 		}
 	}
@@ -39,12 +43,16 @@
 		width: round($height / 2);
 
 		@if ($direction == 'down') {
+			-webkit-transform: rotate(135deg);
 			transform: rotate(135deg);
 		} @else if ($direction == 'left') {
+			-webkit-transform: rotate(-135deg);
 			transform: rotate(-135deg);
 		} @else if ($direction == 'right') {
+			-webkit-transform: rotate(45deg);
 			transform: rotate(45deg);
 		} @else if ($direction == 'up') {
+			-webkit-transform: rotate(-45deg);
 			transform: rotate(-45deg);
 		}
 	}
