@@ -1,3 +1,28 @@
+@import '../../Venus/styles/variables';
+
 .local-navigation {
 	height: 80px;
+	.wordmark-container {
+		display: table;
+		height: 100%;
+		padding-left: 32px;
+		padding-right: 40px;
+		.wordmark {
+			display: table-cell;
+			vertical-align: middle;
+		}
+	}
+}
+
+@media #{$medium-only} {
+	.local-navigation .wordmark-container {
+		padding-left: 30px;
+	}
+}
+
+@media #{$small-only} {
+	.local-navigation .wordmark-container {
+		padding-left: 24px;
+		padding-right: 30px;
+	}
 }
