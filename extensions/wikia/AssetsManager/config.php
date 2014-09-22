@@ -68,7 +68,6 @@ $config['adengine2_js'] = array(
 		'//extensions/wikia/AdEngine/js/WikiaGptAdDetect.js',
 		'//extensions/wikia/AdEngine/js/AdProviderDirectGpt.js',
 		'//extensions/wikia/AdEngine/js/AdProviderEbay.js',
-		'//extensions/wikia/AdEngine/js/AdProviderTaboola.js',
 		'//extensions/wikia/AdEngine/js/AdProviderLater.js',
 		'//extensions/wikia/AdEngine/js/AdProviderNull.js',
 		'//extensions/wikia/AdEngine/js/AdProviderRemnantGpt.js',
@@ -637,7 +636,7 @@ $config['wikiamobile_tables_js'] = array(
 	)
 );
 
-$config['wikiamobile_ads_js'] = array(
+$config['mobile_base_ads_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => 'wikiamobile',
 	'assets' => array(
@@ -653,7 +652,6 @@ $config['wikiamobile_ads_js'] = array(
 		'//extensions/wikia/AdEngine/js/AdLogicPageParams.js',
 		'//extensions/wikia/AdEngine/js/AdProviderRemnantGptMobile.js',
 		'//extensions/wikia/AdEngine/js/AdProviderDirectGptMobile.js',
-		'//extensions/wikia/AdEngine/js/AdProviderEbay.js',
 		'//extensions/wikia/AdEngine/js/AdProviderNull.js',
 		'//extensions/wikia/AdEngine/js/GptSlotConfig.js',
 		'//extensions/wikia/AdEngine/js/SlotTracker.js',
@@ -663,12 +661,25 @@ $config['wikiamobile_ads_js'] = array(
 
 		// Video ads
 		'//extensions/wikia/AdEngine/js/WikiaDartVideoHelper.js',
+	)
+);
 
-		// Interactive maps integration
-		'#group_adengine2_interactive_maps_js',
+$config['mercury_ads_js'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => array(
+		'//resources/wikia/libraries/modil/modil.js',
+		'#group_tracker_js',
+		'//resources/wikia/modules/log.js',
+		'//resources/wikia/modules/window.js',
+		'//resources/wikia/modules/document.js',
+		'//resources/wikia/modules/location.js',
+		'//resources/wikia/modules/querystring.js',
+		'//resources/wikia/modules/cookies.js',
+		'//resources/wikia/modules/geo.js',
 
-		// Run!
-		'//extensions/wikia/WikiaMobile/js/ads_run.js',
+		'#group_mobile_base_ads_js',
+
+		'//extensions/wikia/AdEngine/js/AdEngine.mercury.run.js',
 	)
 );
 
@@ -689,6 +700,20 @@ $config['interactivemaps_ads_js'] = array(
 		'//extensions/wikia/AdEngine/js/AdProviderDirectGptMaps.js',
 		'//extensions/wikia/AdEngine/js/WikiaGptHelper.js',
 		'//extensions/wikia/AdEngine/InteractiveMaps/ads.js'
+	)
+);
+
+$config['wikiamobile_ads_js'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => 'wikiamobile',
+	'assets' => array(
+		'#group_mobile_base_ads_js',
+		
+		// Interactive maps integration
+		'#group_adengine2_interactive_maps_js',
+		
+		// Run!
+		'//extensions/wikia/WikiaMobile/js/ads_run.js',
 	)
 );
 
@@ -1862,7 +1887,7 @@ $config['int_map_ponto'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => [
 		'//resources/wikia/libraries/Ponto/ponto.js',
-		'//extensions/wikia/WikiaInteractiveMaps/js/intMapPontoBridge.js'
+		'//extensions/wikia/WikiaInteractiveMaps/js/intMapPontoBridge.js',
 	]
 ];
 
@@ -1873,7 +1898,7 @@ $config['int_map_special_page_js'] = [
 		'//extensions/wikia/WikiaInteractiveMaps/js/intMapConfig.js',
 		'//extensions/wikia/WikiaInteractiveMaps/js/intMapUtils.js',
 		'#group_int_map_ponto',
-		'//extensions/wikia/WikiaInteractiveMaps/js/WikiaInteractiveMaps.js'
+		'//extensions/wikia/WikiaInteractiveMaps/js/WikiaInteractiveMaps.js',
 	]
 ];
 
@@ -1882,7 +1907,8 @@ $config['int_map_in_modal_display_js'] = [
 	'skin' => ['oasis'],
 	'assets' => [
 		'#group_int_map_ponto',
-		'//extensions/wikia/WikiaInteractiveMaps/js/intMapUtils.js'
+		'//extensions/wikia/WikiaInteractiveMaps/js/intMapConfig.js',
+		'//extensions/wikia/WikiaInteractiveMaps/js/intMapUtils.js',
 	]
 ];
 
@@ -1921,7 +1947,7 @@ $config['int_map_edit_poi_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => ['oasis'],
 	'assets' => [
-		'//extensions/wikia/WikiaInteractiveMaps/js/intMapEditPOI.js'
+		'//extensions/wikia/WikiaInteractiveMaps/js/intMapEditPOI.js',
 	]
 ];
 
@@ -1991,7 +2017,7 @@ $config['int_map_special_page_js_wikiamobile'] = [
 	'assets' => [
 		'//extensions/wikia/WikiaInteractiveMaps/js/intMapUtils.js',
 		'#group_int_map_ponto',
-		'//extensions/wikia/WikiaInteractiveMaps/js/WikiaInteractiveMaps.wikiamobile.js'
+		'//extensions/wikia/WikiaInteractiveMaps/js/WikiaInteractiveMaps.wikiamobile.js',
 	]
 ];
 
@@ -1999,7 +2025,7 @@ $config['int_map_parser_tag_js_wikiamobile'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => ['wikiamobile'],
 	'assets' => [
-		'//extensions/wikia/WikiaInteractiveMaps/js/WikiaInteractiveMapsParserTag.wikiamobile.js'
+		'//extensions/wikia/WikiaInteractiveMaps/js/WikiaInteractiveMapsParserTag.wikiamobile.js',
 	]
 ];
 

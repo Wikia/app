@@ -15,6 +15,18 @@ class ExactTargetUpdatesHooks {
 	}
 
 	/**
+	 * Runs a method for adding UpdateUserTask to job queue
+	 * Function executed on UserSaveSettings hook
+	 * @param User $user
+	 * @return bool
+	 */
+	public static function onUserSaveSettings( User $user ) {
+		$thisInstance = new ExactTargetUpdatesHooks();
+		$thisInstance->addTheUpdateUserPropertiesTask( $user, new ExactTargetUpdateUserTask() );
+		return true;
+	}
+
+	/**
 	 * Adds AddUserTask to job queue
 	 * @param User $user
 	 * @param ExactTargetAddUserTask $task
@@ -26,6 +38,22 @@ class ExactTargetUpdatesHooks {
 			$aUserData = $this->prepareUserParams( $user );
 			$aUserProperties = $this->prepareUserPropertiesParams( $user );
 			$task->call( 'sendNewUserData', $aUserData, $aUserProperties );
+			$task->queue();
+		}
+	}
+
+	/**
+	 * Adds AddUserTask to job queue
+	 * @param User $user
+	 * @param ExactTargetAddUserTask $task
+	 */
+	public function addTheUpdateUserPropertiesTask( User $user, ExactTargetUpdateUserTask $task ) {
+		global $wgWikiaEnvironment;
+		/* Don't add task when on dev or internal */
+		if ( $wgWikiaEnvironment != WIKIA_ENV_DEV && $wgWikiaEnvironment != WIKIA_ENV_INTERNAL ) {
+			$aUserData = $this->prepareUserParams( $user );
+			$aUserProperties = $this->prepareUserPropertiesParams( $user );
+			$task->call( 'updateUserPropertiesData', $aUserData, $aUserProperties );
 			$task->queue();
 		}
 	}

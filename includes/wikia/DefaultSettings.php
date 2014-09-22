@@ -1238,12 +1238,6 @@ $wgEnableAdEngineExt = true;
 $wgAdDriverUseEbay = false;
 
 /**
- * @name $wgAdDriverUseTaboola
- * Whether to enable AdProviderTaboola (true) or not (false)
- */
-$wgAdDriverUseTaboola = false;
-
-/**
  * @name $wgAdDriverUseRemnantGpt
  * Enables additional call to dart before Liftium
  */

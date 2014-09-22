@@ -233,7 +233,7 @@ class AdEngine2Service
 			$wgDartCustomKeyValues, $wgWikiDirectedAtChildrenByStaff,
 			$wgWikiDirectedAtChildrenByFounder, $wgAdEngineDisableLateQueue,
 			$wgAdDriverUseBottomLeaderboard, $wgAdDriverBottomLeaderboardImpressionCapping,
-			$wgAdDriverEnableAdsInMaps, $wgAdDriverWikiIsTop1000, $wgAdDriverUseTaboola;
+			$wgAdDriverEnableAdsInMaps, $wgAdDriverWikiIsTop1000;
 
 		$vars = [];
 
@@ -252,7 +252,6 @@ class AdEngine2Service
 			'wgAdDriverUseDartForSlotsBelowTheFold' => $wgAdDriverUseDartForSlotsBelowTheFold === null ? 'hub' : $wgAdDriverUseDartForSlotsBelowTheFold,
 			'wgAdDriverUseRemnantGpt' => $wgAdDriverUseRemnantGpt,
 			'wgAdDriverUseSevenOneMedia' => $wgAdDriverUseSevenOneMedia,
-			'wgAdDriverUseTaboola' => $wgAdDriverUseTaboola,
 			'wgAdDriverRubiconCachedOnly' => $wgAdDriverRubiconCachedOnly,
 			'wgAdDriverSevenOneMediaOverrideSub2Site' => $wgAdDriverSevenOneMediaOverrideSub2Site,
 			'wgUserShowAds' => $wgUser->getOption('showAds'),

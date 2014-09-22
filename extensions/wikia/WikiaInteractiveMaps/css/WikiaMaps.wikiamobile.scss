@@ -4,60 +4,51 @@
 @import "extensions/wikia/WikiaMobile/css/variables.scss";
 
 $nav-height: 40px;
-$smart-banner-height: 80px;
 $map-ad-height: 70px;
 
 .error {
 	padding: 0 15px;
 }
 
-.smartbanner {
-	display: none;
-}
+.wikia-interactive-map-wrapper {
+	background-color: #fff;
+	bottom: 0;
+	left: 0;
+	position: absolute;
+	top: $nav-height;
+	width: 100%;
 
-.int-map-mobile-map-page .ad-shown {
-	.wikia-interactive-map {
-		padding-top: $map-ad-height + $nav-height;
+	iframe {
+		border: none;
+		height: 100%;
+	}
+
+	&.ad-shown .wikia-interactive-map {
+		top: $map-ad-height;
 	}
 }
 
-.int-map-mobile-map-page {
-	.wikia-interactive-map {
-		padding-top: $nav-height;
-	}
+.wikia-interactive-map {
+	bottom: 0;
+	margin: 0;
+	position: absolute;
+	top: 0;
+	width: 100%;
 }
 
 .int-map-mobile-map-page {
-	.WikiaPageHeader {
+	.smartbanner {
 		display: none;
 	}
 
-	#mw-content-text {
-		height: 100%;
-
-		iframe {
-			border: none;
-			height: 100% !important;
-			margin: 0;
-			width: 100% !important;
-		}
-	}
-
-	// required to fix Android bug (MOB-2174)
-	#wkMainCnt {
-		height: 100%;
+	.WikiaPageHeader {
+		display: none;
 	}
 
 	// required to be displayed over #wkPage which needs to occupy entire window - header and smartbanner.
 	// tried to set #wkPage using calc() but Android < 4.4 doesn't support it
 	#wkTopNav {
 		z-index: $highest-z-index + 1;
-	}
-
-	#wkPage {
-		@include box-sizing-border-box();
-		height: 100%;
-		width: 100%;
 	}
 }
 
@@ -110,16 +101,4 @@ $map-ad-height: 70px;
 			vertical-align: middle;
 		}
 	}
-}
-
-.wikia-interactive-map {
-	height: 100%;
-	margin: 0;
-	position: absolute;
-	top: 0;
-	width: 100%;
-}
-
-.int-map-mobile-map-page #wkPage {
-	padding: 0;
 }

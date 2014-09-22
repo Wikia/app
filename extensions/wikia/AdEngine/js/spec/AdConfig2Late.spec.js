@@ -13,7 +13,6 @@ describe('AdConfig2Late', function () {
 			adProviderEvolveMock = {name: 'EvolveMock', canHandleSlot: function () {return true;}},
 			adProviderDirectGpt = {name: 'DirectGpt', canHandleSlot: function () {return true;}},
 			adProviderRemnantGpt = {name: 'RemnantGpt', canHandleSlot: function () {return false;}},
-			adProviderTaboola = {name: 'Taboola', canHandleSlot: function () {return true;}},
 			adProviderLiftiumMock = {name: 'LiftiumMock', canHandleSlot: function () {return true;}},
 			adProviderSevenOneMedia = {name: 'SevenOneMediaMock', canHandleSlot: function () {return true;}},
 			logMock = function () {},
@@ -31,7 +30,6 @@ describe('AdConfig2Late', function () {
 			adProviderLiftiumMock,
 			adProviderDirectGpt,
 			adProviderRemnantGpt,
-			adProviderTaboola,
 			adProviderNullMock,
 			adProviderSevenOneMedia
 		);
@@ -44,7 +42,6 @@ describe('AdConfig2Late', function () {
 			adProviderEvolveMock = {name: 'EvolveMock', canHandleSlot: function () {return false;}},
 			adProviderDirectGpt = {name: 'DirectGpt', canHandleSlot: function () {return true;}},
 			adProviderRemnantGpt = {name: 'RemnantGpt', canHandleSlot: function () {return false;}},
-			adProviderTaboola = {name: 'Taboola', canHandleSlot: function () {return true;}},
 			adProviderLiftiumMock = {name: 'LiftiumMock', canHandleSlot: function () {return false;}},
 			adProviderSevenOneMedia = {name: 'SevenOneMediaMock', canHandleSlot: function () {return true;}},
 			logMock = function () {},
@@ -62,7 +59,6 @@ describe('AdConfig2Late', function () {
 			adProviderLiftiumMock,
 			adProviderDirectGpt,
 			adProviderRemnantGpt,
-			adProviderTaboola,
 			adProviderNullMock,
 			adProviderSevenOneMedia
 		);
@@ -75,7 +71,6 @@ describe('AdConfig2Late', function () {
 			adProviderEvolveMock = {name: 'EvolveMock', canHandleSlot: function () {return true;}},
 			adProviderDirectGpt = {name: 'DirectGpt', canHandleSlot: function () {return true;}},
 			adProviderRemnantGpt = {name: 'RemnantGpt', canHandleSlot: function () {return false;}},
-			adProviderTaboola = {name: 'Taboola', canHandleSlot: function () {return true;}},
 			adProviderLiftiumMock = {name: 'LiftiumMock', canHandleSlot: function () {return true;}},
 			adProviderSevenOneMedia = {name: 'SevenOneMediaMock', canHandleSlot: function () {return true;}},
 			logMock = function () {},
@@ -93,7 +88,6 @@ describe('AdConfig2Late', function () {
 			adProviderLiftiumMock,
 			adProviderDirectGpt,
 			adProviderRemnantGpt,
-			adProviderTaboola,
 			adProviderNullMock,
 			adProviderSevenOneMedia
 		);
@@ -106,7 +100,6 @@ describe('AdConfig2Late', function () {
 			adProviderEvolveMock = {name: 'EvolveMock', canHandleSlot: function () {return true;}},
 			adProviderDirectGpt = {name: 'DirectGpt', canHandleSlot: function () {return true;}},
 			adProviderRemnantGpt = {name: 'RemnantGpt', canHandleSlot: function () {return false;}},
-			adProviderTaboola = {name: 'Taboola', canHandleSlot: function () {return true;}},
 			adProviderLiftiumMock = {name: 'LiftiumMock', canHandleSlot: function () {return true;}},
 			adProviderSevenOneMedia = {name: 'SevenOneMediaMock', canHandleSlot: function () {return true;}},
 			logMock = function () {},
@@ -124,7 +117,6 @@ describe('AdConfig2Late', function () {
 			adProviderLiftiumMock,
 			adProviderDirectGpt,
 			adProviderRemnantGpt,
-			adProviderTaboola,
 			adProviderNullMock,
 			adProviderSevenOneMedia
 		);
@@ -137,7 +129,6 @@ describe('AdConfig2Late', function () {
 			adProviderEvolveMock = {name: 'EvolveMock', canHandleSlot: function () {return true;}},
 			adProviderDirectGpt = {name: 'DirectGpt', canHandleSlot: function () {return true;}},
 			adProviderRemnantGpt = {name: 'RemnantGpt', canHandleSlot: function () {return false;}},
-			adProviderTaboola = {name: 'Taboola', canHandleSlot: function () {return true;}},
 			adProviderLiftiumMock = {name: 'LiftiumMock', canHandleSlot: function () {return true;}},
 			adProviderSevenOneMedia = {name: 'SevenOneMediaMock', canHandleSlot: function () {return true;}},
 			logMock = function () {},
@@ -155,7 +146,6 @@ describe('AdConfig2Late', function () {
 			adProviderLiftiumMock,
 			adProviderDirectGpt,
 			adProviderRemnantGpt,
-			adProviderTaboola,
 			adProviderNullMock,
 			adProviderSevenOneMedia
 		);
@@ -168,7 +158,6 @@ describe('AdConfig2Late', function () {
 			adProviderEvolveMock = {name: 'EvolveMock', canHandleSlot: function () {return true;}},
 			adProviderDirectGpt = {name: 'DirectGpt', canHandleSlot: function () {return true;}},
 			adProviderRemnantGpt = {name: 'RemnantGpt', canHandleSlot: function () {return false;}},
-			adProviderTaboola = {name: 'Taboola', canHandleSlot: function () {return true;}},
 			adProviderLiftiumMock = {name: 'LiftiumMock', canHandleSlot: function () {return true;}},
 			adProviderSevenOneMedia = {name: 'SevenOneMediaMock', canHandleSlot: function () {return true;}},
 			logMock = function () {},
@@ -186,7 +175,6 @@ describe('AdConfig2Late', function () {
 			adProviderLiftiumMock,
 			adProviderDirectGpt,
 			adProviderRemnantGpt,
-			adProviderTaboola,
 			adProviderNullMock,
 			adProviderSevenOneMedia
 		);
@@ -199,7 +187,6 @@ describe('AdConfig2Late', function () {
 			adProviderEvolveMock = {name: 'EvolveMock', canHandleSlot: function () {return true;}},
 			adProviderDirectGpt = {name: 'DirectGpt', canHandleSlot: function () {return true;}},
 			adProviderRemnantGpt = {name: 'RemnantGpt', canHandleSlot: function () {return false;}},
-			adProviderTaboola = {name: 'Taboola', canHandleSlot: function () {return true;}},
 			adProviderLiftiumMock = {name: 'LiftiumMock', canHandleSlot: function () {return true;}},
 			adProviderSevenOneMedia = {name: 'SevenOneMediaMock', canHandleSlot: function () {return true;}},
 			logMock = function () {},
@@ -217,7 +204,6 @@ describe('AdConfig2Late', function () {
 			adProviderLiftiumMock,
 			adProviderDirectGpt,
 			adProviderRemnantGpt,
-			adProviderTaboola,
 			adProviderNullMock,
 			adProviderSevenOneMedia
 		);
@@ -229,7 +215,6 @@ describe('AdConfig2Late', function () {
 			adProviderEvolveMock = {name: 'EvolveMock', canHandleSlot: function () {return true;}},
 			adProviderDirectGpt = {name: 'DirectGpt', canHandleSlot: function () {return true;}},
 			adProviderRemnantGpt = {name: 'RemnantGpt', canHandleSlot: function () {return false;}},
-			adProviderTaboola = {name: 'Taboola', canHandleSlot: function () {return true;}},
 			adProviderLiftiumMock = {name: 'LiftiumMock', canHandleSlot: function () {return true;}},
 			adProviderSevenOneMedia = {name: 'SevenOneMediaMock', canHandleSlot: function () {return true;}},
 			logMock = function () {},
@@ -247,7 +232,6 @@ describe('AdConfig2Late', function () {
 			adProviderLiftiumMock,
 			adProviderDirectGpt,
 			adProviderRemnantGpt,
-			adProviderTaboola,
 			adProviderNullMock,
 			adProviderSevenOneMedia
 		);
@@ -259,7 +243,6 @@ describe('AdConfig2Late', function () {
 			adProviderEvolveMock = {name: 'EvolveMock', canHandleSlot: function () {return true;}},
 			adProviderDirectGpt = {name: 'DirectGpt', canHandleSlot: function () {return true;}},
 			adProviderRemnantGpt = {name: 'RemnantGpt', canHandleSlot: function () {return false;}},
-			adProviderTaboola = {name: 'Taboola', canHandleSlot: function () {return true;}},
 			adProviderLiftiumMock = {name: 'LiftiumMock', canHandleSlot: function () {return true;}},
 			adProviderSevenOneMedia = {name: 'SevenOneMediaMock', canHandleSlot: function () {return true;}},
 			logMock = function () {},
@@ -277,7 +260,6 @@ describe('AdConfig2Late', function () {
 			adProviderLiftiumMock,
 			adProviderDirectGpt,
 			adProviderRemnantGpt,
-			adProviderTaboola,
 			adProviderNullMock,
 			adProviderSevenOneMedia
 		);
@@ -290,7 +272,6 @@ describe('AdConfig2Late', function () {
 			adProviderEvolveMock = {name: 'EvolveMock', canHandleSlot: function () {return true;}},
 			adProviderDirectGpt = {name: 'DirectGpt', canHandleSlot: function () {return true;}},
 			adProviderRemnantGpt = {name: 'RemnantGpt', canHandleSlot: function () {return false;}},
-			adProviderTaboola = {name: 'Taboola', canHandleSlot: function () {return true;}},
 			adProviderLiftiumMock = {name: 'LiftiumMock', canHandleSlot: function () {return true;}},
 			adProviderSevenOneMedia = {name: 'SevenOneMediaMock', canHandleSlot: function () {return true;}},
 			logMock = function () {},
@@ -324,7 +305,6 @@ describe('AdConfig2Late', function () {
 			adProviderEvolveMock = {name: 'EvolveMock', canHandleSlot: function () {return true;}},
 			adProviderDirectGpt = {name: 'DirectGpt', canHandleSlot: function () {return true;}},
 			adProviderRemnantGpt = {name: 'RemnantGpt', canHandleSlot: function () {return false;}},
-			adProviderTaboola = {name: 'Taboola', canHandleSlot: function () {return true;}},
 			adProviderLiftiumMock = {name: 'LiftiumMock', canHandleSlot: function () {return true;}},
 			adProviderSevenOneMedia = {name: 'SevenOneMediaMock', canHandleSlot: function () {return true;}},
 			logMock = function () {},
@@ -342,7 +322,6 @@ describe('AdConfig2Late', function () {
 			adProviderLiftiumMock,
 			adProviderDirectGpt,
 			adProviderRemnantGpt,
-			adProviderTaboola,
 			adProviderNullMock,
 			adProviderSevenOneMedia
 		);
@@ -381,7 +360,6 @@ describe('AdConfig2Late', function () {
 			adProviderEvolveMock = {name: 'EvolveMock', canHandleSlot: function () {return true;}},
 			adProviderDirectGpt = {name: 'DirectGpt', canHandleSlot: function () {return true;}},
 			adProviderRemnantGpt = {name: 'RemnantGpt', canHandleSlot: function () {return false;}},
-			adProviderTaboola = {name: 'Taboola', canHandleSlot: function () {return true;}},
 			adProviderLiftiumMock = {name: 'LiftiumMock', canHandleSlot: function () {return true;}},
 			adProviderSevenOneMedia = {name: 'SevenOneMediaMock', canHandleSlot: function () {return true;}},
 			logMock = function () {},
@@ -399,7 +377,6 @@ describe('AdConfig2Late', function () {
 			adProviderLiftiumMock,
 			adProviderDirectGpt,
 			adProviderRemnantGpt,
-			adProviderTaboola,
 			adProviderNullMock,
 			adProviderSevenOneMedia
 		);
@@ -409,42 +386,6 @@ describe('AdConfig2Late', function () {
 		expect(adConfig.getProvider(['LEFT_SKYSCRAPER_3'])).not.toBe(adProviderDirectGpt, 'adProviderDirectGpt');
 		expect(adConfig.getProvider(['PREFOOTER_LEFT_BOXAD'])).not.toBe(adProviderDirectGpt, 'adProviderDirectGpt');
 		expect(adConfig.getProvider(['PREFOOTER_RIGHT_BOXAD'])).not.toBe(adProviderDirectGpt, 'adProviderDirectGpt');
-
-	});
-	it('getProvider returns Taboola US wikis when wgAdDriverUseTaboola enabled', function () {
-		var adProviderNullMock = {name: 'NullMock'},
-			adProviderEvolveMock = {name: 'EvolveMock', canHandleSlot: function () {return true;}},
-			adProviderDirectGpt = {name: 'DirectGpt', canHandleSlot: function () {return true;}},
-			adProviderRemnantGpt = {name: 'RemnantGpt', canHandleSlot: function () {return false;}},
-			adProviderTaboola = {name: 'Taboola', canHandleSlot: function () {return true;}, init: function(){}},
-			adProviderLiftiumMock = {name: 'LiftiumMock', canHandleSlot: function () {return true;}},
-			adProviderSevenOneMedia = {name: 'SevenOneMediaMock', canHandleSlot: function () {return true;}},
-			logMock = function () {},
-			windowMock = { wgIsArticle: true, wgAdDriverUseTaboola: true, wgDBname: 'darksouls' },
-			instantGlobalsMock = {},
-			abTestMock = { inGroup: function () {return true;} },
-			geoMock = { getCountryCode: function () {return 'US';} },
-			adConfig;
-
-		spyOn(adProviderTaboola, 'init');
-
-		adConfig = modules['ext.wikia.adEngine.adConfigLate'](
-			logMock,
-			windowMock,
-			instantGlobalsMock,
-			geoMock,
-			adProviderEvolveMock,
-			adProviderLiftiumMock,
-			adProviderDirectGpt,
-			adProviderRemnantGpt,
-			adProviderTaboola,
-			adProviderNullMock,
-			adProviderSevenOneMedia,
-			null, //adProviderEbay
-			abTestMock
-		);
-
-		expect(adConfig.getProvider(['NATIVE_TABOOLA'])).toBe(adProviderTaboola, 'adProviderTaboola');
 
 	});
 
