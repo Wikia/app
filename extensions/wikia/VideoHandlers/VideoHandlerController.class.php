@@ -13,12 +13,12 @@ class VideoHandlerController extends WikiaController {
 	/**
 	 * Get the embed code for the title given by fileTitle
 	 *
- 	 * @requestParam string|fileTitle The title of the video to find the embed code for
-	 * @requestParam int|width The desired width of video playback to return with the embed code
-	 * @requestParam boolean|autoplay Whether the video should play immediately on page load
-	 * @responseParam string|videoId A unique identifier for the video title given
-	 * @responseParam string|asset A URL for the video
-	 * @responseParam string|embedCode The HTML to embed on the page to play the video given by fileTitle
+ 	 * @requestParam string fileTitle The title of the video to find the embed code for
+	 * @requestParam int width The desired width of video playback to return with the embed code
+	 * @requestParam boolean autoplay Whether the video should play immediately on page load
+	 * @responseParam string videoId A unique identifier for the video title given
+	 * @responseParam string asset A URL for the video
+	 * @responseParam string embedCode The HTML to embed on the page to play the video given by fileTitle
 	 */
 	public function getEmbedCode( ) {
 		$title = $this->getVal( 'fileTitle', '' );
@@ -61,12 +61,12 @@ class VideoHandlerController extends WikiaController {
 	 * useful when a video of the same name from youtube (or other non-premium provider) exists on the local wiki
 	 * and we want to show the equivalent video from the video wiki.  See also getEmbedCode in this controller.
 	 *
-	 * @requestParam string|fileTitle The title of the video to find the embed code for
-	 * @requestParam int|width The desired width of video playback to return with the embed code
-	 * @requestParam boolean|autoplay Whether the video should play immediately on page load
-	 * @responseParam string|videoId A unique identifier for the video title given
-	 * @responseParam string|asset A URL for the video
-	 * @responseParam string|embedCode The HTML to embed on the page to play the video given by fileTitle
+	 * @requestParam string fileTitle The title of the video to find the embed code for
+	 * @requestParam int width The desired width of video playback to return with the embed code
+	 * @requestParam boolean autoplay Whether the video should play immediately on page load
+	 * @responseParam string videoId A unique identifier for the video title given
+	 * @responseParam string asset A URL for the video
+	 * @responseParam string embedCode The HTML to embed on the page to play the video given by fileTitle
 	 */
 	public function getPremiumEmbedCode( ) {
 		// Pass through all the same parameters
@@ -303,7 +303,7 @@ class VideoHandlerController extends WikiaController {
 	 * @requestParam integer width - the width of the thumbnail to return
 	 * @requestParam integer height - the height of the thumbnail to return
 	 * @requestParam integer detail [0/1] - check for getting video detail
-	 * @responseParam array $videos
+	 * @responseParam array
 	 *   [array('title'=>value, 'provider'=>value, 'addedAt'=>value,'addedBy'=>value, 'duration'=>value, 'viewsTotal'=>value)]
 	 */
 	public function getVideoList() {
@@ -358,5 +358,4 @@ class VideoHandlerController extends WikiaController {
 
 		wfProfileOut( __METHOD__ );
 	}
-
 }
