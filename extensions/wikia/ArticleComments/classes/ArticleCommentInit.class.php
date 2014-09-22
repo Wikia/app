@@ -424,7 +424,6 @@ class ArticleCommentInit {
 				$title->getPrefixedText(),
 				self::getUserNameFromRevision($title),
 				Title::newFromText( $baseText, NS_BLOG_ARTICLE )->getPrefixedText(),
-				$titleNames[1],
 				BlogArticle::getOwner( $userBlog )
 			)->parse();
 		}
