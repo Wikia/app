@@ -135,16 +135,6 @@ define('ext.wikia.adEngine.adConfigLate', [
 			return adProviderDirectGpt;
 		}
 
-		// Ebay integration
-		if (window.wgAdDriverUseEbay) {
-			if (slotname === 'PREFOOTER_LEFT_BOXAD') {
-				return adProviderEbay;
-			}
-			if (slotname === 'PREFOOTER_RIGHT_BOXAD') {
-				return adProviderNull;
-			}
-		}
-
 		if (window.wgAdDriverUseRemnantGpt && adProviderRemnantGpt.canHandleSlot(slotname)) {
 			return adProviderRemnantGpt;
 		}

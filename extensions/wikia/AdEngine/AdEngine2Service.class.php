@@ -223,7 +223,7 @@ class AdEngine2Service
 		global $wgCityId, $wgEnableAdsInContent, $wgEnableOpenXSPC,
 			$wgUser, $wgEnableAdMeldAPIClient, $wgEnableAdMeldAPIClientPixels,
 			$wgOutboundScreenRedirectDelay, $wgEnableOutboundScreenExt,
-			$wgAdDriverUseSevenOneMedia, $wgAdDriverUseEbay, $wgAdDriverUseDartForSlotsBelowTheFold,
+			$wgAdDriverUseSevenOneMedia, $wgAdDriverUseDartForSlotsBelowTheFold,
 			$wgAdPageLevelCategoryLangs, $wgLanguageCode, $wgAdDriverTrackState,
 			$wgAdDriverForceDirectGptAd, $wgAdDriverForceLiftiumAd,
 			$wgOasisResponsive, $wgOasisResponsiveLimited,
@@ -248,7 +248,6 @@ class AdEngine2Service
 
 			// Ad Driver
 			'wgAdDriverUseCatParam' => array_search($wgLanguageCode, $wgAdPageLevelCategoryLangs),
-			'wgAdDriverUseEbay' => $wgAdDriverUseEbay,
 			'wgAdDriverUseDartForSlotsBelowTheFold' => $wgAdDriverUseDartForSlotsBelowTheFold === null ? 'hub' : $wgAdDriverUseDartForSlotsBelowTheFold,
 			'wgAdDriverUseRemnantGpt' => $wgAdDriverUseRemnantGpt,
 			'wgAdDriverUseSevenOneMedia' => $wgAdDriverUseSevenOneMedia,

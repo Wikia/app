@@ -22,7 +22,6 @@ class MercuryApiModelTest extends WikiaBaseTest {
 		$this->mockGlobalVariable('wgAdDriverForceDirectGptAd', true);
 		$this->mockGlobalVariable('wgAdDriverUseSevenOneMedia', false);
 		$this->mockGlobalVariable('wgWikiDirectedAtChildrenByStaff', true);
-		$this->mockGlobalVariable('wgAdDriverUseEbay', true);
 	}
 
 	/**
