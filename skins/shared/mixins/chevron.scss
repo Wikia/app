@@ -1,0 +1,59 @@
+// makes a chevron
+@mixin left-chevron($height: 10px, $thickness: 2px, $direction: 'left', $color: #000) {
+	&::before {
+		border-color: $color;
+		border-style: solid;
+		border-width: $thickness $thickness 0 0;
+		content: '';
+		display: inline-block;
+		height: round($height / 2);
+		left: 0;
+		position: relative;
+		top: -1px;
+		vertical-align: middle;
+		width: round($height / 2);
+
+		@if ($direction == 'down') {
+			-webkit-transform: rotate(135deg);
+			transform: rotate(135deg);
+		} @else if ($direction == 'left') {
+			-webkit-transform: rotate(-135deg);
+			transform: rotate(-135deg);
+		} @else if ($direction == 'right') {
+			-webkit-transform: rotate(45deg);
+			transform: rotate(45deg);
+		} @else if ($direction == 'up') {
+			-webkit-transform: rotate(-45deg);
+			transform: rotate(-45deg);
+		}
+	}
+}
+@mixin right-chevron($height: 10px, $thickness: 2px, $direction: 'right', $color: #000) {
+	&::after {
+		border-color: $color;
+		border-style: solid;
+		border-width: $thickness $thickness 0 0;
+		content: '';
+		display: inline-block;
+		height: round($height / 2);
+		right: 0;
+		position: relative;
+		top: -1px;
+		vertical-align: middle;
+		width: round($height / 2);
+
+		@if ($direction == 'down') {
+			-webkit-transform: rotate(135deg);
+			transform: rotate(135deg);
+		} @else if ($direction == 'left') {
+			-webkit-transform: rotate(-135deg);
+			transform: rotate(-135deg);
+		} @else if ($direction == 'right') {
+			-webkit-transform: rotate(45deg);
+			transform: rotate(45deg);
+		} @else if ($direction == 'up') {
+			-webkit-transform: rotate(-45deg);
+			transform: rotate(-45deg);
+		}
+	}
+}

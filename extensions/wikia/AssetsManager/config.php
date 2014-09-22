@@ -1,4 +1,5 @@
 <?php
+
 $config = array();
 
 /******** Shared libraries and assets *******/
@@ -195,7 +196,7 @@ $config['oasis_blocking'] = array(
 
 $config['abtesting'] = array(
 	'type' => AssetsManager::TYPE_JS,
-	'skin' => [ 'oasis', 'wikiamobile' ],
+	'skin' => [ 'oasis', 'wikiamobile', 'venus' ],
 	'assets' => array(
 		'//extensions/wikia/AbTesting/js/AbTest.js',
 	)
@@ -316,7 +317,6 @@ $config['oasis_nojquery_shared_js'] = array(
 		// oasis specific files
 		'//resources/wikia/libraries/bootstrap/tooltip.js',
 		'//resources/wikia/libraries/bootstrap/popover.js',
-		'//skins/oasis/js/hoverMenu.js',
 		'//skins/oasis/js/PageHeader.js',
 		'//skins/oasis/js/Search.js',
 		'//skins/oasis/js/WikiaFooter.js',
@@ -340,6 +340,17 @@ $config['oasis_anon_js'] = array(
 		'//extensions/wikia/UserLogin/js/UserLoginFacebook.js',
 		'//extensions/wikia/UserLogin/js/UserLoginFacebookForm.js',
 		'//extensions/wikia/UserLogin/js/UserLoginDropdown.js',
+		'//skins/oasis/js/LatestActivity.js',
+	)
+);
+
+// TODO: cleanup this after Global Navigation global release
+$config['oasis_anon_with_new_global_nav_js'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => array(
+		'//extensions/wikia/AdEngine/js/Exitstitial.js',
+		'//extensions/wikia/UserLogin/js/UserLoginFacebook.js',
+		'//extensions/wikia/UserLogin/js/UserLoginFacebookForm.js',
 		'//skins/oasis/js/LatestActivity.js',
 	)
 );
@@ -820,6 +831,24 @@ $config['monobook_js'] = array(
 	)
 );
 
+$config['local_navigation_scss'] = array(
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => 'venus',
+	'assets' => array(
+		'//extensions/wikia/LocalNavigation/css/PageHeader.scss',
+		'//extensions/wikia/LocalNavigation/css/WikiHeader.scss'
+	)
+);
+
+$config['local_navigation_js'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => 'venus',
+	'assets' => array(
+		'//extensions/wikia/LocalNavigation/css/PageHeader.js',
+		'//extensions/wikia/LocalNavigation/css/WikiHeader.js'
+	)
+);
+
 /********** Extensions packages **********/
 
 /** Article Comments **/
@@ -1052,7 +1081,7 @@ $config['wall_js'] = array(
 $config['wall_notifications_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
-		'//extensions/wikia/Wall/js/WallNotifications.js',
+		'//extensions/wikia/WallNotifications/scripts/WallNotifications.js',
 	)
 );
 
@@ -1460,19 +1489,18 @@ $config['imagedrop_scss'] = array(
 /** Note: this group is also used in Oasis! */
 $config['analytics_gas_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
-	'skin' => array( 'wikiamobile' ),
-	'assets' => array(
+	'skin' => ['wikiamobile', 'venus' ],
+	'assets' => [
 		'//extensions/wikia/AnalyticsEngine/js/analytics_prod.js'
-	)
+	]
 );
 
 $config['analytics_bluekai_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
-	'skin' => array( 'wikiamobile' ),
-	'assets' => array(
-		'//extensions/wikia/AdEngine/js/AdContext.js',
+	'skin' => ['wikiamobile', 'venus' ],
+	'assets' => [
 		'//extensions/wikia/AdEngine/js/AdLogicPageParams.js',
-	)
+	]
 );
 
 /** WikiMap Extension **/
@@ -1791,7 +1819,7 @@ $config['qualaroo_blocking_js'] = array(
 /** Optimizely Blocking **/
 $config['optimizely_blocking_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
-	'skin' => [ 'oasis', 'wikiamobile' ],
+	'skin' => [ 'oasis', 'wikiamobile', 'venus' ],
 	'assets' => array(
 		'//extensions/wikia/Optimizely/scripts/OptimizelyBlocking.js',
 	)
@@ -1800,7 +1828,7 @@ $config['optimizely_blocking_js'] = array(
 /** GlobalFooter extension */
 $config['global_footer_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
-	'skin' => ['oasis'],
+	'skin' => ['oasis', 'venus'],
 	'assets' => array(
 		'//extensions/wikia/GlobalFooter/scripts/GlobalFooter.js'
 	)
@@ -1998,6 +2026,34 @@ $config['int_map_parser_tag_js_wikiamobile'] = [
 	'skin' => ['wikiamobile'],
 	'assets' => [
 		'//extensions/wikia/WikiaInteractiveMaps/js/WikiaInteractiveMapsParserTag.wikiamobile.js',
+	]
+];
+
+/** GlobalNavigation extension */
+$config['global_navigation_oasis_scss'] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => ['oasis'],
+	'assets' => [
+		'//extensions/wikia/GlobalNavigation/css/GlobalNavigationOasis.scss',
+		'//extensions/wikia/GlobalNavigation/css/GlobalNavigationSearchOasis.scss'
+	]
+];
+
+/** these packs should be loaded only if GlobalNavigation extension is disabled */
+$config['global_header_scss'] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => ['oasis'],
+	'assets' => [
+		'//skins/oasis/css/core/AccountNavigation.scss',
+		'//extensions/wikia/UserLogin/css/UserLoginDropdown.scss'
+	]
+];
+
+$config['global_header_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => ['oasis'],
+	'assets' => [
+		'//skins/oasis/js/hoverMenu.js',
 	]
 ];
 
