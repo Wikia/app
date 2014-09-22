@@ -209,10 +209,6 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 			extend(params, decodeLegacyDartParams(window.amzn_targs));
 		}
 
-		if (window.rp_valuation && window.rp_valuation.estimate) {
-			params.rp_tier = window.rp_valuation.estimate.tier;
-		}
-
 		log(params, 9, logGroup);
 		return params;
 	}
