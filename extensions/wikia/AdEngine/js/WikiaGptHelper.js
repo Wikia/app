@@ -129,7 +129,7 @@ define('ext.wikia.adEngine.wikiaGptHelper', [
 
 						dataAttribs[slotnameGpt] = {
 							'data-gpt-page-params': JSON.stringify(pageLevelParams),
-							'data-gpt-slot-params': JSON.stringify(slotParams),
+							'data-gpt-slot-params': JSON.stringify(slotItem),
 							'data-gpt-slot-sizes': JSON.stringify(sizes)
 						};
 

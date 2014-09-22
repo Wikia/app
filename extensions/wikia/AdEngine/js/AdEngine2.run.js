@@ -298,7 +298,7 @@ window.AdEngine_loadLateAds = function () {
 		require(['ext.wikia.adEngine.gptSlotConfig'], function(gptSlotConfig) {
 			var i, slots = ['HOME_TOP_RIGHT_BOXAD', 'TOP_RIGHT_BOXAD', 'TOP_INCONTENT_BOXAD', 'CORP_TOP_RIGHT_BOXAD'];
 			for (i = 0; i < slots.length; i = i + 1) {
-				gptSlotConfig.extendSlotParams('gpt', slots[i], {rp_tier: tier});
+				gptSlotConfig.extendSlotParams('gpt', slots[i], { rp_tier: tier });
 			}
 		});
 	}
