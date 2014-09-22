@@ -104,7 +104,6 @@ define('ext.wikia.adEngine.wikiaGptHelper', [
 						slotItem = slotMap[slotname];
 
 						sizes = convertSizesToGpt(slotItem.size);
-						delete slotItem.size;
 
 						if (slotname.match(/TOP_LEADERBOARD/)) {
 							sizes = filterOutSizesBiggerThanScreenSize(sizes);
@@ -115,7 +114,12 @@ define('ext.wikia.adEngine.wikiaGptHelper', [
 						log(['defineSlots', 'googletag.defineSlot', slotPath, sizes, slotnameGpt], 'debug', logGroup);
 						slot = googletag.defineSlot(slotPath, sizes, slotnameGpt);
 						slot.addService(pubads);
-						for (name in slotItem) {
+
+						delete slotItem.size;
+						slotItem.pos = slotname;
+						slotItem.src = slotMapSrc;
+
+                        for (name in slotItem) {
 							if (slotItem.hasOwnProperty(name)) {
 								value = slotItem[name];
 								if (value) {
