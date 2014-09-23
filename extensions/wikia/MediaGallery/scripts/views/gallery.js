@@ -160,7 +160,7 @@ define('mediaGallery.views.gallery', [
 			item.hide();
 		});
 
-		track({
+		this.track({
 			label: 'show-less-items',
 			value: this.visibleCount
 		});
