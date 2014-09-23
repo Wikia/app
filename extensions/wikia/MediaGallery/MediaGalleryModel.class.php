@@ -13,7 +13,8 @@ class MediaGalleryModel extends WikiaObject {
 
 	function __construct( array $items ) {
 		parent::__construct();
-		$this->items = $items;
+		// test: limit to 1000 items
+		$this->items = array_slice($items, 0, 1000);
 		$this->setGalleryData();
 	}
 
