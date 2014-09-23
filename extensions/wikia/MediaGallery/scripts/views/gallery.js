@@ -6,14 +6,7 @@ define('mediaGallery.views.gallery', [
 	'use strict';
 
 	var Gallery,
-		track,
 		togglerTemplateName = 'MediaGallery_showMore';
-
-	track = tracker.buildTrackingFunction({
-		category: 'media-gallery',
-		trackingMethod: 'both',
-		action: tracker.ACTIONS.CLICK
-	});
 
 	Gallery = function (options) {
 		this.$el = options.$el.addClass('media-gallery-inner');
@@ -70,7 +63,7 @@ define('mediaGallery.views.gallery', [
 		// Set up tracking
 		this.$wrapper.on('click', '.media > a', function () {
 			var index = $(this).parent().index();
-			track({
+			self.track({
 				label: 'gallery-tiem',
 				value: index
 			});
@@ -151,7 +144,7 @@ define('mediaGallery.views.gallery', [
 			this.$showMore.addClass('hidden');
 		}
 
-		track({
+		this.track({
 			label: 'show-more-items',
 			value: this.visibleCount
 		});
@@ -171,10 +164,22 @@ define('mediaGallery.views.gallery', [
 		this.$showLess.addClass('hidden');
 		this.$showMore.removeClass('hidden');
 
+		this.scrollToTop();
+	};
+
+	Gallery.prototype.scrollToTop = function () {
 		// scroll to the top of the gallery
 		$('body, html').animate({
 			scrollTop: this.$wrapper.offset().top - 80
 		}, 500);
+	};
+
+	Gallery.prototype.track = function () {
+		return tracker.buildTrackingFunction({
+			category: 'media-gallery',
+			trackingMethod: 'both',
+			action: tracker.ACTIONS.CLICK
+		});
 	};
 
 	return Gallery;

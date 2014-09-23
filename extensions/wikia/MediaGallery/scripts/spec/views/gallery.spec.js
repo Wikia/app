@@ -6,9 +6,14 @@ describe('MediaGalleries gallery', function () {
 		Media,
 		Caption,
 		templates,
-		tracker,
 		instance,
 		options,
+		tracker = {
+			buildTrackingFunction: $.noop,
+			ACTIONS: {
+				CLICK: 'click'
+			}
+		},
 		model = [
 			{
 				caption: 'My caption',
@@ -21,6 +26,18 @@ describe('MediaGalleries gallery', function () {
 				linkHref: '/wiki/File:500.jpeg',
 				thumHtml: 'thumbHTML',
 				thumbUrl: 'http://vignette.wikia-dev.com/lizlux/6/62/440.jpeg'
+			},
+			{
+				caption: 'Captions rule!',
+				linkHref: '/wiki/File:500.jpeg',
+				thumHtml: 'thumbHTML',
+				thumbUrl: 'http://vignette.wikia-dev.com/lizlux/6/62/440.jpeg'
+			},
+			{
+				caption: 'Captions rule!',
+				linkHref: '/wiki/File:500.jpeg',
+				thumHtml: 'thumbHTML',
+				thumbUrl: 'http://vignette.wikia-dev.com/lizlux/6/62/440.jpeg'
 			}
 		];
 
@@ -29,9 +46,10 @@ describe('MediaGalleries gallery', function () {
 			$el: $('<div></div>'),
 			$wrapper: $('.media-gallery-wrapper'),
 			model: model,
-			oVisible: 8
+			oVisible: 1,
+			interval: 2
 		};
-		tracker = modules['wikia.tracker']();
+		spyOn(Mustache, 'render').andReturn('okay');
 		templates = modules['mediaGallery.templates.mustache'];
 		Caption = modules['mediaGallery.views.caption']();
 		Media = modules['mediaGallery.views.media'](Caption, templates);
@@ -39,11 +57,43 @@ describe('MediaGalleries gallery', function () {
 	});
 
 	it('should export a function', function () {
+		instance = new Gallery(options);
 		expect(typeof Gallery).toBe('function');
 	});
 
 	it('should create media', function () {
 		instance = new Gallery(options);
-		expect(instance.media.length).toBe(2);
+		expect(instance.media.length).toBe(model.length);
+	});
+
+	it('should render', function () {
+		instance = new Gallery(options);
+		instance.render(1);
+		expect(instance.visibleCount).toBe(1);
+		instance.render();
+		expect(instance.visibleCount).toBe(3);
+		instance.render(0);
+		expect(instance.visibleCount).toBe(3);
+	});
+
+	it('should init toggler', function () {
+		options.oVisible = 2;
+		instance = new Gallery(options);
+		expect(instance.$toggler).toBeDefined();
+	});
+
+	it('should not init toggler', function () {
+		options.oVisible = 4;
+		instance = new Gallery(options);
+		expect(instance.$toggler).not.toBeDefined();
+	});
+
+	it('should show more and show less', function () {
+		instance = new Gallery(options);
+		instance.showMore();
+		expect(instance.visibleCount).toBe(options.interval);
+		spyOn(instance, 'scrollToTop');
+		instance.showLess();
+		expect(instance.visibleCount).toBe(options.oVisible);
 	});
 });
