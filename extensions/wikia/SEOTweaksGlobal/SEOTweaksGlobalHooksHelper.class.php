@@ -7,7 +7,10 @@
  */
 class SEOTweaksGlobalHooksHelper {
 
+	const MIN_WIDTH = 200;
 	const MAX_WIDTH = 2000;
+	const PREF_WIDTH = 600;
+	const PREF_HEIGHT = 315;
 
 	/**
 	 * Given a file, return url to file, or thumbnail url if size larger than MAX_WIDTH
@@ -15,9 +18,10 @@ class SEOTweaksGlobalHooksHelper {
 	 * @return string|false
 	 */
 	static protected function getResizeImageUrlIfLargerThanMax( $file ) {
+		$fileUrl = false;
 		$width = $file->getWidth();
 		if ( $width > self::MAX_WIDTH ) {
-			$thumbObj = $file->transform( array( 'width' => self::MAX_WIDTH ), 0 );
+			$thumbObj = $file->transform( [ 'width' => self::MAX_WIDTH ], 0 );
 			if ( $thumbObj ) $fileUrl = $thumbObj->getUrl();
 		} else {
 			$fileUrl = $file->getUrl();
@@ -36,9 +40,9 @@ class SEOTweaksGlobalHooksHelper {
 	 * @return null|Title
 	 */
 	static protected function getFirstArticleImage( $title ) {
-		$retTitle = self::getFirstArticleImageLargerThan( $title, 600, 315 );
+		$retTitle = self::getFirstArticleImageLargerThan( $title, self::PREF_WIDTH, self::PREF_HEIGHT );
 		if ( empty( $retTitle ) ) {
-			$retTitle = self::getFirstArticleImageLargerThan( $title, 200 );
+			$retTitle = self::getFirstArticleImageLargerThan( $title, self::MIN_WIDTH );
 		}
 		return $retTitle;
 	}
@@ -50,7 +54,7 @@ class SEOTweaksGlobalHooksHelper {
 	 * @return null|Title
 	 */
 	static protected function getFirstArticleImageLargerThan( $title, $width ) {
-		$imageServing = new ImageServing( array( $title->getArticleID() ), $width );
+		$imageServing = new ImageServing( [ $title->getArticleID() ], $width );
 		$out = $imageServing->getImages( 1 );
 		if ( !empty( $out ) ) {
 			///used reset instead direct call because we can get hashmap from ImageServing driver.
@@ -108,11 +112,11 @@ class SEOTweaksGlobalHooksHelper {
 
 		$ns = MWNamespace::getSubject( $title->getNamespace() );
 
-		if ( in_array( $ns, array( NS_MEDIAWIKI, NS_TEMPLATE ) ) ) {
-			$policy = array(
+		if ( in_array( $ns, [ NS_MEDIAWIKI, NS_TEMPLATE ] ) ) {
+			$policy = [
 				'index' => 'noindex',
 				'follow' => 'follow'
-			);
+			];
 		}
 		return true;
 	}
