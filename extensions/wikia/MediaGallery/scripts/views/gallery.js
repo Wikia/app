@@ -160,6 +160,11 @@ define('mediaGallery.views.gallery', [
 			item.hide();
 		});
 
+		track({
+			label: 'show-less-items',
+			value: this.visibleCount
+		});
+
 		this.visibleCount = this.oVisibleCount;
 		this.$showLess.addClass('hidden');
 		this.$showMore.removeClass('hidden');
