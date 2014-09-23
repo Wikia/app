@@ -12,7 +12,7 @@ class VideosModule extends WikiaModel {
 
 	const LIMIT_VIDEOS = 20;
 	const LIMIT_CATEGORY_VIDEOS = 40;
-	const CACHE_TTL = 3600;
+	const CACHE_TTL = 43200; // 12 hours
 	const CACHE_VERSION = 3;
 
 	const STAFF_PICK_PREFIX = 'Staff_Pick_';

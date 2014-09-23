@@ -12,6 +12,7 @@ define('ext.wikia.adEngine.template.skin', [
 	 * @param params {
 	 *   skinImage
 	 *   backgroundColor
+	 *   middleColor
 	 *   destUrl
 	 *   pixels
 	 * }

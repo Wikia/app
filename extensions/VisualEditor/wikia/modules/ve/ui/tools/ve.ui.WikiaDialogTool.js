@@ -143,6 +143,27 @@ ve.ui.WikiaMWTransclusionDialogTool.static.contextIcon = 'edit';
 ve.ui.toolFactory.register( ve.ui.WikiaMWTransclusionDialogTool );
 
 /**
+ * UserInterface WikiaTemplateInsertDialog tool.
+ *
+ * @class
+ * @extends ve.ui.TemplateInsertDialogTool
+ * @constructor
+ * @param {OO.ui.ToolGroup} toolGroup
+ * @param {Object} [config] Configuration options
+ */
+ve.ui.WikiaTemplateInsertDialogTool = function VEUIWikiaTemplateInsertDialogTool( toolGroup, config ) {
+	ve.ui.WikiaTemplateInsertDialogTool.super.call( this, toolGroup, config );
+};
+OO.inheritClass( ve.ui.WikiaTemplateInsertDialogTool, ve.ui.DialogTool );
+ve.ui.WikiaTemplateInsertDialogTool.static.name = 'wikiaTemplateInsert';
+ve.ui.WikiaTemplateInsertDialogTool.static.group = 'object';
+ve.ui.WikiaTemplateInsertDialogTool.static.icon = 'template';
+ve.ui.WikiaTemplateInsertDialogTool.static.title =
+	OO.ui.deferMsg( 'visualeditor-dialogbutton-template-tooltip' );
+ve.ui.WikiaTemplateInsertDialogTool.static.commandName = 'wikiaTemplateInsert';
+ve.ui.toolFactory.register( ve.ui.WikiaTemplateInsertDialogTool );
+
+/**
  * UserInterface WikiaMWMediaWditDialog tool.
  *
  * @class

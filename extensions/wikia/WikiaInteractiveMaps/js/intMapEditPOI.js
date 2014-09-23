@@ -1,4 +1,4 @@
-define('wikia.intMap.editPOI', ['jquery', 'wikia.intMap.utils'], function($, utils) {
+define('wikia.intMap.editPOI', ['jquery', 'wikia.intMap.config', 'wikia.intMap.utils'], function ($, config, utils) {
 	'use strict';
 
 	// placeholder for holding reference to modal instance
@@ -123,7 +123,7 @@ define('wikia.intMap.editPOI', ['jquery', 'wikia.intMap.utils'], function($, uti
 
 			// TODO: figure out if there is better place for article suggestions event bindings
 			modal.$element
-				.on('keyup', articleInputId, $.debounce(utils.constants.debounceDelay, suggestArticles))
+				.on('keyup', articleInputId, $.debounce(config.constants.debounceDelay, suggestArticles))
 				.on('click', onClickOutsideSuggestions);
 
 			modal.show();
@@ -134,15 +134,15 @@ define('wikia.intMap.editPOI', ['jquery', 'wikia.intMap.utils'], function($, uti
 			// Enter key
 			13: handleSuggestionsEnter,
 			// Esc key
-			27: function() {
+			27: function () {
 				hideSuggestions();
 			},
 			// Arrow up
-			38: function() {
+			38: function () {
 				handleSuggestionsArrow(direction.up);
 			},
 			// Arrow down
-			40: function() {
+			40: function () {
 				handleSuggestionsArrow(direction.down);
 			}
 		};
@@ -176,7 +176,7 @@ define('wikia.intMap.editPOI', ['jquery', 'wikia.intMap.utils'], function($, uti
 	 */
 	function extendTemplateData(templateData, params) {
 		// set current POI category (for edit action)
-		Object.keys(params.categories).forEach(function(key) {
+		Object.keys(params.categories).forEach(function (key) {
 			if (params.categories[key].id === parseInt(params.poi_category_id, 10)) {
 				params.categories[key].selected = true;
 			}
@@ -205,7 +205,7 @@ define('wikia.intMap.editPOI', ['jquery', 'wikia.intMap.utils'], function($, uti
 				id: params.id,
 				mapId: mapId
 			},
-			callback: function(response) {
+			callback: function (response) {
 				var data = response.results;
 
 				if (data && data.success) {
@@ -215,7 +215,7 @@ define('wikia.intMap.editPOI', ['jquery', 'wikia.intMap.utils'], function($, uti
 					utils.showError(modal, data.content.message);
 				}
 			},
-			onErrorCallback: function(response) {
+			onErrorCallback: function (response) {
 				utils.handleNirvanaException(modal, response);
 			}
 		});
@@ -227,7 +227,7 @@ define('wikia.intMap.editPOI', ['jquery', 'wikia.intMap.utils'], function($, uti
 	 */
 	function validatePOIData(data) {
 		var required = ['name', 'poi_category_id'],
-			valid = required.every(function(value) {
+			valid = required.every(function (value) {
 				if (utils.isEmpty(data[value])) {
 					utils.showError(modal, $.msg('wikia-interactive-maps-edit-poi-error-' + value.replace(/_/g, '-')));
 					return false;
@@ -301,6 +301,7 @@ define('wikia.intMap.editPOI', ['jquery', 'wikia.intMap.utils'], function($, uti
 		if (!processSuggestKeyEvents(event.keyCode)) {
 			utils.onWriteInInput(
 				event.target,
+				config.constants.minCharLength,
 				function (inputValue) {
 					getSuggestions(inputValue, showSuggestions);
 				}
@@ -433,7 +434,7 @@ define('wikia.intMap.editPOI', ['jquery', 'wikia.intMap.utils'], function($, uti
 			method: 'editPoi',
 			type: 'POST',
 			data: poiData,
-			callback: function(response) {
+			callback: function (response) {
 				var data = response.results;
 
 				if (data && data.success) {
@@ -452,7 +453,7 @@ define('wikia.intMap.editPOI', ['jquery', 'wikia.intMap.utils'], function($, uti
 					modal.activate();
 				}
 			},
-			onErrorCallback: function(response) {
+			onErrorCallback: function (response) {
 				utils.handleNirvanaException(modal, response);
 				modal.activate();
 			}
