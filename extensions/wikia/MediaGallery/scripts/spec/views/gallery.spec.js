@@ -2,7 +2,8 @@
 describe('MediaGalleries gallery', function () {
 	'use strict';
 
-	var Gallery,
+	var i,
+		Gallery,
 		Media,
 		Caption,
 		templates,
@@ -14,32 +15,18 @@ describe('MediaGalleries gallery', function () {
 				CLICK: 'click'
 			}
 		},
-		model = [
-			{
-				caption: 'My caption',
-				linkHref: '/wiki/File:440.jpeg',
-				thumHtml: 'thumbHTML',
-				thumbUrl: 'http://vignette.wikia-dev.com/lizlux/6/62/440.jpeg'
-			},
-			{
-				caption: 'Another caption',
-				linkHref: '/wiki/File:500.jpeg',
-				thumHtml: 'thumbHTML',
-				thumbUrl: 'http://vignette.wikia-dev.com/lizlux/6/62/440.jpeg'
-			},
-			{
-				caption: 'Captions rule!',
-				linkHref: '/wiki/File:500.jpeg',
-				thumHtml: 'thumbHTML',
-				thumbUrl: 'http://vignette.wikia-dev.com/lizlux/6/62/440.jpeg'
-			},
-			{
-				caption: 'Captions rule!',
-				linkHref: '/wiki/File:500.jpeg',
-				thumHtml: 'thumbHTML',
-				thumbUrl: 'http://vignette.wikia-dev.com/lizlux/6/62/440.jpeg'
-			}
-		];
+		mediaData = {
+			caption: 'My caption',
+			linkHref: '/wiki/File:440.jpeg',
+			thumHtml: 'thumbHTML',
+			thumbUrl: 'http://vignette.wikia-dev.com/lizlux/6/62/440.jpeg'
+		},
+		model = [];
+
+	// Create an abitrary data model
+	for (i = 0; i < 4; i+=1) {
+		model.push(mediaData);
+	}
 
 	beforeEach(function () {
 		options = {
