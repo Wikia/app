@@ -1,10 +1,12 @@
 <?php
 
 /**
-* Maintenance script to update Thumbnail on ooyala and video wiki for IVA videos
-* This is one time use script
-* @author Saipetch Kongkatong
-*/
+ * Maintenance script to update Thumbnail on Ooyala and video wiki for IVA videos
+ *
+ * This script is run once a week as a crobjob, and is used by UpdateThumbnailTask.class.php
+ *
+ * @author Saipetch Kongkatong
+ */
 
 /**
  * Get thumbnail from IVA
