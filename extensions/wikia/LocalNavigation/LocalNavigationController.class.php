@@ -3,7 +3,7 @@
 class LocalNavigationController extends WikiaController {
 
 	const WORDMARK_MAX_WIDTH = 160;
-	const WORDMARK_MAX_HEIGHT = 41;
+	const WORDMARK_MAX_HEIGHT = 45;
 
 	public function Index() {
 		Wikia::addAssetsToOutput( 'local_navigation_scss' );
