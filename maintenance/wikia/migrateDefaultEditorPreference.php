@@ -62,7 +62,7 @@ foreach ( $allRows as $row ) {
 		$output .= ' (registered ' . wfTimestamp( TS_DB, $row->user_registration ) . ')';
 	}
 	$user->setOption( PREFERENCE_EDITOR, EditorPreference::OPTION_EDITOR_VISUAL );
-	$user->setOption( 'ShowVisualEditorTransitionDialog', 1 );
+	$user->setOption( 'showVisualEditorTransitionDialog', 1 );
 	$output .= ' editor preference set to VisualEditor';
 
 	//$user->saveSettings();
