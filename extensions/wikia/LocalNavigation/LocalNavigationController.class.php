@@ -29,12 +29,10 @@ class LocalNavigationController extends WikiaController {
 		}
 
 		$mainPageURL = Title::newMainPage()->getLocalURL();
-		$wordmarkFontClass = !empty( $settings['wordmark-font'] ) ? 'font-' . $settings['wordmark-font']  : '';
 
 		$this->response->setVal( 'mainPageURL', $mainPageURL );
 		$this->response->setVal( 'wordmarkText', $settings['wordmark-text'] );
 		$this->response->setVal( 'wordmarkFontSize', $settings['wordmark-font-size'] );
-		$this->response->setVal( 'wordmarkFontClass', $wordmarkFontClass );
 		$this->response->setVal( 'wordmarkUrl', $wordmarkURL );
 	}
 }
