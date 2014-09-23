@@ -27,7 +27,6 @@ class ExactTargetAddWikiTask extends ExactTargetBaseTask {
 
 			$oRequest = $this->wrapCreateRequest( $oSoapVar );
 
-
 			/* Send API request */
 			$oClient->Create( $oRequest );
 

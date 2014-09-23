@@ -108,8 +108,9 @@ class ExactTargetUpdatesHooks {
 		// }
 	}
 
-	public function prepareWikiParams( $aParams ) {
+	private function prepareWikiParams( $aParams ) {
 		$oWiki = \WikiFactory::getWikiById( $aParams['city_id'] );
+
 		$aWikiParams = [
 			'city_id' => $oWiki->city_id,
 			'city_path' => $oWiki->city_path,
@@ -121,7 +122,7 @@ class ExactTargetUpdatesHooks {
 		return $aWikiParams;
 	}
 
-	public function prepareWikiCatsMappingParams( $aParams ) {
+	private function prepareWikiCatsMappingParams( $aParams ) {
 		$aCategories = \WikiFactory::getCategories( $aParams['city_id'], 'skip' );
 
 		$aWikiCatsMappingParams = [];
