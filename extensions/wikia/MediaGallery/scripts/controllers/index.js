@@ -22,8 +22,7 @@ require(['mediaGallery.views.gallery'], function (Gallery) {
 				model: data[idx],
 				oVisible: oVisible
 			});
-			gallery.render(oVisible);
-			$this.append(gallery.$el);
+			$this.append(gallery.render(oVisible).$el);
 
 			if (gallery.$toggler) {
 				$this.append(gallery.$toggler);

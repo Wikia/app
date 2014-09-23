@@ -85,8 +85,8 @@ define('mediaGallery.views.gallery', [
 		media = this.media.slice(this.visibleCount, this.visibleCount + count);
 
 		$.each(media, function (idx, item) {
-			item.render();
-			item.show();
+			item.render()
+				.show();
 			self.$el.append(item.$el);
 
 			// trigger event when media inserted into DOM

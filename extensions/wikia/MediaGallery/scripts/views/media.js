@@ -1,6 +1,6 @@
 define('mediaGallery.views.media', [
 	'mediaGallery.views.caption',
-    'mediaGallery.templates.mustache'
+	'mediaGallery.templates.mustache'
 ], function (Caption, templates) {
 	'use strict';
 
