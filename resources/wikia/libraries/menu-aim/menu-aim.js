@@ -361,11 +361,11 @@
 				// go ahead and activate immediately.
 				return 0;
 			}
-
 			offset = menu.getBoundingClientRect();
+
 			upperLeft = {
 				x: offset.left,
-				y: offset.top - options.tolerance
+				y: offset.top + window.scrollY - options.tolerance
 			};
 			upperRight = {
 				x: offset.left + menu.offsetWidth,
@@ -373,7 +373,7 @@
 			};
 			lowerLeft = {
 				x: offset.left,
-				y: offset.top + menu.offsetHeight + options.tolerance
+				y: offset.top + window.scrollY + menu.offsetHeight + options.tolerance
 			};
 			lowerRight = {
 				x: offset.left + menu.offsetWidth,
