@@ -44,6 +44,7 @@ class ApiVideoPreview extends ApiBase {
 		$options = [
 			'autoplay' => true,
 			'isAjax' => true,
+			'postOnload' => true,
 		];
 
 		return array(
@@ -64,6 +65,7 @@ class ApiVideoPreview extends ApiBase {
 		$options = [
 			'autoplay' => true,
 			'isAjax' => true,
+			'postOnload' => true,
 		];
 
 		return array(

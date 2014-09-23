@@ -230,7 +230,6 @@ class ImageServing {
 		if( !empty( $fileNames ) ) {
 			/**
 			 * @var $fileName LocalFile
-			 * @var $title Title
 			 */
 			foreach ( $fileNames as $fileName ) {
 				if(!($fileName instanceof LocalFile)) {
@@ -241,11 +240,8 @@ class ImageServing {
 				}
 			}
 
-			// do not query for page_id = 0
-			if ( $title->exists() ) {
-				$imagesIds[ $title->getArticleId() ] = $title->getDBkey();
-				$this->articles[ $title->getArticleId() ] = $title->getArticleId();
-			}
+			$imagesIds[ $title->getArticleId() ] = $title->getDBkey();
+			$this->articles[ $title->getArticleId() ] = $title->getArticleId();
 		}
 
 		$out = $this->getImages(1);

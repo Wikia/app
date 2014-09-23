@@ -5,27 +5,6 @@ namespace Wikia\JsonFormat;
 use Wikia\Measurements\Time;
 
 class HtmlParser {
-
-	/**
-	 * Prevention from circular references, when parsing articles with tabs.
-	 * Used for storing titles of articles, which been visited.
-	 * @var array
-	 * @see DivContainingHeadersVisitor::parseTabview
-	 */
-	protected static $VISITED_ARTICLES = [ ];
-
-	public static function markAsVisited( $articleTitle ) {
-		self::$VISITED_ARTICLES[ $articleTitle ] = true;
-	}
-
-	public static function isVisited( $articleTitle ) {
-		return isset( self::$VISITED_ARTICLES[ $articleTitle ] );
-	}
-
-	public static function clearVisited() {
-		self::$VISITED_ARTICLES = [ ];
-	}
-
 	/**
 	 * @param string $html
 	 * @return \JsonFormatNode
@@ -48,7 +27,7 @@ class HtmlParser {
 		return $root;
 	}
 
-	public function createVisitor( $jsonFormatTraversingState ) {
+	protected function createVisitor( $jsonFormatTraversingState ) {
 		$compositeVisitor = new \CompositeVisitor();
 
 		$compositeVisitor->addVisitor( new \TextNodeVisitor($compositeVisitor, $jsonFormatTraversingState) );

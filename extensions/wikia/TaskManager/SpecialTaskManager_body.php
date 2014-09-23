@@ -201,6 +201,36 @@ class TaskManagerPage extends SpecialPage {
 					break;
 
 				/**
+				 * add a restore task for this specific task
+				 * currently it works only for COMPLETED MultiDelete tasks
+				 */
+				case "undo":
+					#--- check if task exists
+					$oTaskData = $this->loadTaskData( $wgRequest->getVal("id") );
+					if (!empty( $oTaskData->task_id )) {
+						$oTask  = BatchTask::newFromData( $oTaskData );
+						/* add a new restore task here
+						   todo differentiate between single and multi mode
+						 */
+						$thisTask = new MultiRestoreTask (true) ;
+						if (TASK_FINISHED_UNDO != $oTaskData->task_status) {
+							$arguments = unserialize ($oTaskData->task_arguments) ;
+							$thisTask->mArguments = $arguments ;
+							$thisTask->mMode = $arguments ["mode"] ;
+							$thisTask->mAdmin = $wgUser->getName () ;
+							$thisTask->mMotherTask = $oTaskData->task_id ;
+							$submit_id = $thisTask->submitForm () ;
+							$wgOut->addHTML( Wikia::successbox("Task nr {$oTaskData->task_id} was scheduled to be undone") );
+							$this->changeTaskStatus ($oTaskData->task_id, TASK_FINISHED_UNDO) ;
+						} else {
+							$wgOut->addHTML(Wikia::errorbox("Task $oTaskData->task_id was already set to undo"));
+						}
+					}
+					$this->loadTaskForm();
+					$this->loadPager();
+					break;
+
+				/**
 				 * default action, just show task form
 				 */
 				default:
@@ -401,6 +431,19 @@ class TaskManagerPager extends TablePager {
 					$this->mTitle->getLocalUrl( "action=log&id={$taskId}&offset={$offset}"),
 					$name
 				);
+
+				// also, stuff to make a link for restore task as per #2478
+				$taskType = $this->mCurrentRow->task_type ;
+				if( ( TASK_FINISHED_SUCCESS == $value) && ('multidelete' == $taskType ) ) {
+					$return .= sprintf (
+						//restore or revert?
+						"<br /><a href=\"%s\">undo</a>",
+						//todo this is just a placeholder now
+						$this->mTitle->getLocalUrl( "action=undo&id={$taskId}")
+					) ;
+				}
+				return $return;
+				break;
 
 			case "task_actions":
 				$iTaskID = $this->mCurrentRow->task_id;

@@ -121,7 +121,7 @@ class VideoService extends WikiaModel {
 		$nsFileTranslated = $wgContLang->getNsText( NS_FILE );
 
 		// added $nsFileTransladed to fix bugId:#48874
-		$pattern = '/(File:|' . $nsFileTranslated . ':)(.+)$/';
+		$pattern = '/(File:|Video:|' . $nsFileTranslated . ':)(.+)$/';
 		if ( preg_match( $pattern, $url, $matches ) ) {
 			$file = wfFindFile( $matches[2] );
 			if ( !$file && preg_match( $pattern, urldecode( $url ), $matches ) ) { // bugID: 26721

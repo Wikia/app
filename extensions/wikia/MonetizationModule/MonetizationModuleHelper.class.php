@@ -14,9 +14,7 @@ class MonetizationModuleHelper extends WikiaModel {
 	const SLOT_TYPE_ABOVE_FOOTER = 'above_footer';
 	const SLOT_TYPE_FOOTER = 'footer';
 
-	const CACHE_TTL_MIN = 3600;
-	const CACHE_TTL_MAX = 7200;
-
+	const CACHE_TTL = 3600;
 	// TODO: encapsulate in Monetization Client
 	// do not change unless monetization service changes
 	const MONETIZATION_SERVICE_CACHE_PREFIX = 'monetization';
@@ -61,8 +59,7 @@ class MonetizationModuleHelper extends WikiaModel {
 		$app = F::app();
 		$status = false;
 		$showableNameSpaces = array_merge( $app->wg->ContentNamespaces, [ NS_FILE ] );
-		if ( !WikiaPageType::isCorporatePage()
-			&& $app->wg->Title->exists()
+		if ( $app->wg->Title->exists()
 			&& !$app->wg->Title->isMainPage()
 			&& in_array( $app->wg->Title->getNamespace(), $showableNameSpaces )
 			&& in_array( $app->wg->request->getVal( 'action' ), [ 'view', null ] )
@@ -106,26 +103,22 @@ class MonetizationModuleHelper extends WikiaModel {
 		wfProfileIn( __METHOD__ );
 
 		$log = WikiaLogger::instance();
-		$loggingParams = [ 'method' => __METHOD__, 'params' => $params ];
 
 		// this cache key must match the one set by the MonetizationService
-		// and should not use the wgCachePrefix(), wfSharedMemcKey() or wfMemcKey() methods
+		// and should not use the wgCachePrefix(), wfSharedMemcKey() or
+		// wfMemcKey() methods
 		$cacheKey = self::createCacheKey( $params );
-		$log->debug( "MonetizationModule: lookup with cache key: $cacheKey", $loggingParams );
+		$log->debug( "Monetization: " . __METHOD__ . " - lookup with cache key: $cacheKey" );
 
 		$json_results = $this->wg->Memc->get( $cacheKey );
 		if ( $json_results == RENDERING_IN_PROCESS ) {
 			// TODO: potentially block until rendering finishes, until then return nothing
-			$log->info( "MonetizationModule: memcache hit (rendering in process).", $loggingParams );
 			wfProfileOut( __METHOD__ );
 			return false;
 		} else if ( !empty( $json_results ) ) {
-			$log->info( "MonetizationModule: memcache hit.", $loggingParams );
 			wfProfileOut( __METHOD__ );
 			return $this->setThemeSettings( $json_results, $cacheKey );
 		}
-
-		$log->info( "MonetizationModule: memcache miss.", $loggingParams );
 
 		$url = $this->wg->MonetizationServiceUrl;
 		if ( !endsWith( $url, '/' ) ) {
@@ -142,17 +135,17 @@ class MonetizationModuleHelper extends WikiaModel {
 			];
 		}
 
-		$method = 'GET';
-		$result = Http::request( $method, $url, $options );
-		if ( $result === false ) {
-			$loggingParams['request'] = [
-				'url' => $url,
-				'method' => $method,
-				'options' => $options,
-			];
-			$log->debug( "MonetizationModule: cannot get monetization units.", $loggingParams );
-		} else if ( !empty( $result ) ) {
-			$result = $this->setThemeSettings( $result, $cacheKey );
+		$req = MWHttpRequest::factory( $url, $options );
+		$status = $req->execute();
+		if ( $status->isGood() ) {
+			$result = $req->getContent();
+			if ( !empty( $result ) ) {
+				$result = $this->setThemeSettings( $result, $cacheKey );
+			}
+		} else {
+			$result = false;
+			$loggingParams = array_merge( [ 'method' => __METHOD__ ], $params );
+			$log->debug( "Monetization: ".__METHOD__." - cannot get monetization units (".$status->getMessage().").", $loggingParams );
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -191,10 +184,7 @@ class MonetizationModuleHelper extends WikiaModel {
 			}
 
 			// set cache
-			$this->wg->Memc->set( $memcKey, json_encode( $adUnits ), mt_rand( self::CACHE_TTL_MIN, self::CACHE_TTL_MAX ) );
-
-			$loggingParams = [ 'method' => __METHOD__, 'memcKey' => $memcKey ];
-			WikiaLogger::instance()->info( "MonetizationModule: memcache write.", $loggingParams );
+			$this->wg->Memc->set( $memcKey, json_encode( $adUnits ), self::CACHE_TTL );
 		}
 
 		wfProfileOut( __METHOD__ );

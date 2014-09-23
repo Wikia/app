@@ -326,6 +326,7 @@ class DataFeedProvider {
 		|| ($res['ns'] == NS_TEMPLATE && $this->proxyType == self::WL)
 		|| ($res['ns'] == NS_MEDIAWIKI && $this->proxyType == self::WL)
 		|| ($res['ns'] == NS_IMAGE && $this->proxyType == self::WL)
+		|| ($res['ns'] == NS_VIDEO && $this->proxyType == self::WL)
 		|| (defined('NS_TOPLIST') && $res['ns'] == NS_TOPLIST)) {
 			$item['title'] = $res['title'];
 			$item['url'] = $title->getLocalUrl();

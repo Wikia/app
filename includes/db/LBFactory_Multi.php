@@ -87,15 +87,6 @@ class LBFactory_Multi extends LBFactory {
 	}
 
 	/**
-	 * Implemented in LBFactory_Wikia class
-	 *
-	 * @return null
-	 */
-	function getMastersPoll() {
-		return null;
-	}
-
-	/**
 	 * @param $wiki bool|string
 	 * @return string
 	 */

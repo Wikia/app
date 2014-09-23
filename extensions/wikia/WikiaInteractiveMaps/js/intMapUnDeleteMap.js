@@ -1,4 +1,4 @@
-define('wikia.intMaps.unDeleteMap', ['jquery', 'wikia.querystring', 'wikia.intMap.config'], function ($, qs, config) {
+define('wikia.intMaps.unDeleteMap', ['jquery', 'wikia.querystring', 'wikia.intMap.utils'], function ($, qs, utils) {
 	'use strict';
 	var mapId = $('iframe[name=wikia-interactive-map]').data('mapid');
 
@@ -17,7 +17,7 @@ define('wikia.intMaps.unDeleteMap', ['jquery', 'wikia.querystring', 'wikia.intMa
 			type: 'POST',
 			data: {
 				mapId: mapId,
-				deleted: config.constants.mapNotDeleted
+				deleted: utils.mapDeleted.mapNotDeleted
 			},
 			callback: function (response) {
 				var redirectUrl = response.redirectUrl;

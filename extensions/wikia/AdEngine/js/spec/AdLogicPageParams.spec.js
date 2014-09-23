@@ -32,7 +32,6 @@ describe('AdLogicPageParams', function () {
 	 *  - kruxSegments
 	 *  - abExperiments
 	 *  - hostname
-	 *  - getPageLevelParamsOptions
 	 */
 	function getParams(targeting, opts) {
 		opts = opts || {};
@@ -59,7 +58,7 @@ describe('AdLogicPageParams', function () {
 			kruxMock,
 			adLogicPageDimensionsMock,
 			abTestMock
-		).getPageLevelParams(opts.getPageLevelParamsOptions);
+		).getPageLevelParams();
 	}
 
 	it('getPageLevelParams Simple params correct', function () {
@@ -238,24 +237,6 @@ describe('AdLogicPageParams', function () {
 			{ id: 76, group: { id: 112 } }
 		]});
 		expect(params.ab).toEqual(['17_34', '19_45', '76_112'], 'ab params passed');
-	});
-
-	it('getPageLevelParams includeRawDbName', function () {
-		var params = getParams({
-			wikiDbName: 'xyz'
-		});
-
-		expect(params.rawDbName).toBeUndefined();
-
-		params = getParams({
-			wikiDbName: 'xyz'
-		}, {
-			getPageLevelParamsOptions: {
-				includeRawDbName: true
-			}
-		});
-
-		expect(params.rawDbName).toBe('_xyz');
 	});
 
 

@@ -13,8 +13,7 @@ class ExactSeriesSearchService extends EntitySearchService {
 		$select = $this->getSelect();
 
 		$phrase = $this->sanitizeQuery( $query );
-		$slang = $this->getLang();
-		$select->setQuery( "+(" . static::EXACT_MATCH_FIELD . ':"' . $phrase . '") AND +(lang_s:' . $slang . ')' );
+		$select->setQuery( static::EXACT_MATCH_FIELD . ':"' . $phrase . '"' );
 		$select->createFilterQuery( 'no_episodes' )->setQuery( '-(tv_episode_mv_em:*)' );
 		$select->setRows( static::ARTICLES_LIMIT );
 
@@ -23,14 +22,14 @@ class ExactSeriesSearchService extends EntitySearchService {
 
 	protected function consumeResponse( $response ) {
 		foreach ( $response as $item ) {
-			if ( $item['score'] > static::MINIMAL_ARTICLE_SCORE ) {
+			if ( $item[ 'score' ] > static::MINIMAL_ARTICLE_SCORE ) {
 				return [
-					'wikiId' => $item['wid'],
-					'articleId' => $item['pageid'],
-					'title' => $item['titleStrict'],
-					'url' => $this->replaceHostUrl( $item['url'] ),
-					'quality' => $item['article_quality_i'],
-					'contentUrl' => $this->replaceHostUrl( 'http://' . $item['host'] . '/' . static::API_URL . $item['pageid'] ),
+					'wikiId' => $item[ 'wid' ],
+					'articleId' => $item[ 'pageid' ],
+					'title' => $item[ 'titleStrict' ],
+					'url' => $this->replaceHostUrl( $item[ 'url' ] ),
+					'quality' => $item[ 'article_quality_i' ],
+					'contentUrl' => $this->replaceHostUrl( 'http://' . $item[ 'host' ] . '/' . static::API_URL . $item[ 'pageid' ] ),
 				];
 			}
 		}

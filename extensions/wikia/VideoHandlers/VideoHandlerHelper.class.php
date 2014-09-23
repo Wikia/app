@@ -259,7 +259,7 @@ class VideoHandlerHelper extends WikiaModel {
 
 		/** @var Title $title */
 		$title = $videoInfo['title'];
-		/** @var LocalFile|WikiaLocalFileShared $file */
+		/** @var LocalFile $file */
 		$file = WikiaFileHelper::getVideoFileFromTitle( $title );
 
 		if ( $file ) {

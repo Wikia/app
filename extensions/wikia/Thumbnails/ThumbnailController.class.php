@@ -94,12 +94,13 @@ class ThumbnailController extends WikiaController {
 		// Use the image template
 		$this->overrideTemplate( 'image' );
 
+		$options = $this->getVal( 'options', [] );
+		$options['fluid'] = true;
+
 		$thumb = $this->getVal( 'thumb' );
 
 		$this->linkHref = $thumb->file->getTitle()->getLinkURL();
-
-		ThumbnailHelper::setImageAttribs( $this, $thumb, [ 'fluid' => true ] );
-		ThumbnailHelper::setPictureTagInfo( $this, $thumb );
+		ThumbnailHelper::setImageAttribs( $this, $thumb, $options );
 		ThumbnailHelper::setLazyLoad( $this );
 	}
 

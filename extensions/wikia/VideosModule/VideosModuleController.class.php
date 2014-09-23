@@ -45,7 +45,7 @@ class VideosModuleController extends WikiaController {
 		$this->staffVideos = $staffVideos;
 
 		// set cache
-		$this->response->setCacheValidity( VideosModule::CACHE_TTL );
+		$this->response->setCacheValidity( 600 );
 
 		wfProfileOut( __METHOD__ );
 	}

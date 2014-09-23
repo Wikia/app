@@ -1,6 +1,6 @@
 define('wikia.intMaps.deleteMap',
-	['jquery', 'wikia.querystring', 'wikia.window', 'wikia.intMap.config', 'wikia.intMap.utils'],
-	function ($, qs, w, config, utils) {
+	['jquery', 'wikia.querystring', 'wikia.window', 'wikia.intMap.utils'],
+	function ($, qs, w, utils) {
 	'use strict';
 	var modal,
 		modalConfig = {
@@ -80,7 +80,7 @@ define('wikia.intMaps.deleteMap',
 			type: 'POST',
 			data: {
 				mapId: mapId,
-				deleted: config.constants.mapDeleted
+				deleted: utils.mapDeleted.mapDeleted
 			},
 			callback: function (response) {
 				var redirectUrl = response.redirectUrl;

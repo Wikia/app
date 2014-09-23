@@ -161,10 +161,16 @@ class Hooks {
 	 * @return bool
 	 */
 	public static function onDebug($text, $logGroup ) {
-		WikiaLogger::instance()->error(rtrim($text), [
-			'logGroup' => $logGroup,
-			'exception' => new \Exception() // report stack trace
-		]);
+		try {
+			// throw an exception to get a backtrace
+			throw new \Exception();
+		}
+		catch(\Exception $ex) {
+			WikiaLogger::instance()->error(rtrim($text), [
+				'logGroup' => $logGroup,
+				'exception' => $ex
+			]);
+		}
 
 		// prevent the default behaviour of wfDebugLog - we already logged all information we need
 		return false;

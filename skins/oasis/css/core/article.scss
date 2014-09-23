@@ -136,8 +136,6 @@
 	}
 
 	.center {
-		@include clearfix;
-		clear: both;
 		text-align: center;
 		width: 100%;
 
@@ -548,8 +546,8 @@
 .WikiaArticle {
 	#{$infoboxes} {
 		.article-thumb, .article-thumb.tright, .article-thumb.tleft {
-			float: none;
 			margin: 0 auto;
+			float: none;
 		}
 	}
 }

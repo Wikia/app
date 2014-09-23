@@ -152,7 +152,6 @@
 				$dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
 				$userId = $user->getId();
 				$username = $user->getName();
-				ExternalUser_Wikia::removeFromSecondaryClusters( $userId ); // otherwise they stay there
 				$dbw->delete( '`user`', array( 'user_id' => $userId ), __METHOD__ );
 				$dbw->delete( 'user_properties', array( 'up_user' => $userId ), __METHOD__ );
 

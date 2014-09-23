@@ -36,6 +36,9 @@ class MonetizationModuleController extends WikiaController {
 
 		$this->data = $helper->getMonetizationUnits( $params );
 
+		// set cache control to 1 hour
+		$this->response->setCacheValidity( MonetizationModuleHelper::CACHE_TTL );
+
 		wfProfileOut( __METHOD__ );
 	}
 

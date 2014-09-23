@@ -62,7 +62,7 @@ class SassUtilTest extends WikiaBaseTest {
 			[
 				'userRTL' => false,
 				'wikiRTL' => true,
-				'expected' => false
+				'expected' => true
 			],
 			[
 				'userRTL' => true,

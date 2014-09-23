@@ -46,12 +46,6 @@ class ApiService extends Service {
 
 		$hostName = self::getHostByDbName( $dbname );
 
-		// If hostName is empty, this would make a request to the current host.
-		if ( empty( $hostName ) ) {
-			wfProfileOut( __METHOD__ );
-			return false;
-		}
-
 		// request JSON format of API response
 		$params['format'] = 'json';
 

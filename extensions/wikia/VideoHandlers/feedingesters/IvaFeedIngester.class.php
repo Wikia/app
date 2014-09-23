@@ -762,12 +762,9 @@ class IvaFeedIngester extends VideoFeedIngester {
 
 	/**
 	 * Get clip data from asset data
-	 *
 	 * @param array $videoParams
 	 * @param array $videoAsset - asset data from API
 	 * @param array|false $clipData
-	 *
-	 * @return array|bool|false
 	 */
 	protected function getDataFromAsset( $videoParams, $videoAsset, $clipData ) {
 		wfProfileIn( __METHOD__ );
@@ -1060,10 +1057,7 @@ class IvaFeedIngester extends VideoFeedIngester {
 
 	/**
 	 * Generate an MD5 hash from the IVA App Key combined with the URL and append to the URL
-	 *
 	 * @param string $url - The URL to base the hash on
-	 * @param $bitrate
-	 *
 	 * @return string $url - URL including hash value
 	 */
 	protected function generateHash( $url, $bitrate ) {

@@ -129,15 +129,8 @@ class WikiFeaturesSpecialController extends WikiaSpecialPageController {
 		$log->addEntry( 'wikifeatures', SpecialPage::getTitleFor('WikiFeatures'), $logMsg, array() );
 		WikiFactory::setVarByName($feature, $this->wg->CityId, $enabled, "WikiFeatures");
 
-		if ($feature == 'wgShowTopListsInCreatePage') {
-			WikiFactory::setVarByName( 'wgEnableTopListsExt', $this->wg->CityId, $enabled, "WikiFeatures" );
-		} else if ( $feature == 'wgEnableMediaGalleryExt' ) {
-			// Purge cache for all pages containing gallery tags
-			$task = ( new \Wikia\Tasks\Tasks\GalleryCachePurgeTask() )
-				->wikiId( $this->wg->CityId );
-			$task->call( 'purge' );
-			$task->queue();
-		}
+		if ($feature == 'wgShowTopListsInCreatePage')
+			WikiFactory::setVarByName('wgEnableTopListsExt', $this->wg->CityId, $enabled, "WikiFeatures");
 
 		// clear cache for active wikis
 		WikiFactory::clearCache( $this->wg->CityId );

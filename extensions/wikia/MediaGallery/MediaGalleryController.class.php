@@ -45,19 +45,10 @@ class MediaGalleryController extends WikiaController {
 				$classes[] = "fade";
 			}
 
-			$caption = '';
-			if ( !empty( $item['caption'] ) ) {
-				// parse any wikitext in caption. Logic borrowed from WikiaMobileMediaService::renderMediaGroup.
-				$parser = $this->wg->Parser;
-				$caption = $parser->internalParse( $item['caption'] );
-				$parser->replaceLinkHolders( $caption );
-				$caption = $parser->killMarkers( $caption );
-			}
-
 			$media[] = [
 				'thumbnail' => $markup,
 				'classes' => join( " ", $classes ),
-				'caption' => $caption,
+				'caption' => $item['caption'],
 			];
 			++$dimensionIndex;
 		}

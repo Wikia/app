@@ -53,6 +53,7 @@ class WikiaLocalFileShared  {
 	 *  'autoplay' bool Whether the video should play on page load
 	 *  'isAjax' bool Whether the curent request is part of an ajax call
 	 *  'isInline' bool Is embed video file inline
+	 *  'postOnload' bool Whether player is loaded after page onload event (used for JWPlayer)
 	 * @return bool|string
 	 */
 	public function getEmbedCode( $width, array $options = [] ) {

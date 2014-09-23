@@ -26,7 +26,6 @@ define('ext.wikia.adEngine.slot.interactiveMaps', [
 		adParams.s2 = 'map';
 		adParams.hostpre = params.hostpre;
 		adParams.dmn = params.dmn;
-		adParams.lang = params.lang;
 
 		if (!adParams.mapid) {
 			return false;

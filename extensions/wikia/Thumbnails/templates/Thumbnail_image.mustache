@@ -6,13 +6,7 @@
 	{{#extraLinkAttrs}} {{{.}}}{{/extraLinkAttrs}}>
 {{/linkHref}}
 
-	{{#usePictureTag}}
-		{{>Thumbnail_pictureTag}}
-	{{/usePictureTag}}
-	{{^usePictureTag}}
-		{{>Thumbnail_imgTag}}
-	{{/usePictureTag}}
-
+	{{>Thumbnail_imgTag}}
 	{{#noscript}}<noscript>{{{noscript}}}</noscript>{{/noscript}}
 
 	{{#metaAttrs}}<meta itemprop="{{itemprop}}" content="{{content}}">{{/metaAttrs}}

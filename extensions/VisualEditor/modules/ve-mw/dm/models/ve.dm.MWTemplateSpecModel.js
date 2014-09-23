@@ -315,12 +315,3 @@ ve.dm.MWTemplateSpecModel.prototype.getParameterNames = function () {
 ve.dm.MWTemplateSpecModel.prototype.getParameterSets = function () {
 	return this.sets;
 };
-
-/**
- * Get template
- *
- * @returns VeDmMWTemplateModel
- */
- ve.dm.MWTemplateSpecModel.prototype.getTemplate = function () {
-	return this.template;
-};

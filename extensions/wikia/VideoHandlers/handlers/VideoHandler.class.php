@@ -95,6 +95,7 @@ abstract class VideoHandler extends BitmapHandler {
 	 *  'autoplay' bool
 	 *  'isAjax' bool
 	 *  'isInline' bool
+	 *  'postOnload' bool
 	 * @return string Embed HTML
 	 */
 	abstract function getEmbed( $width, array $options = [] );

@@ -31,7 +31,7 @@ class CategoryExhibitionSectionPages extends CategoryExhibitionSection {
 
 	protected function getExcludes() {
 		$excludes = array (
-			500, NS_FILE, NS_CATEGORY
+			500, NS_FILE, NS_VIDEO, NS_CATEGORY
 		);
 
 		// exclude 700 (NS_TOPLIST), 701 (NS_TOPLIST_TALK)

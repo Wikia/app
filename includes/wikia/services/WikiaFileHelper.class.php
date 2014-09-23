@@ -657,11 +657,10 @@ class WikiaFileHelper extends Service {
 	 * transparent background.
 	 *
 	 * @param File $file
-	 * @param int $dimension
-	 * @param bool $useWebP
+	 * @param $dimension
 	 * @return string The URL of the image
 	 */
-	public static function getSquaredThumbnailUrl( File $file, $dimension, $useWebP = false ) {
+	public static function getSquaredThumbnailUrl( File $file, $dimension ) {
 		// Create a new url generator
 		$gen = ( new UrlGenerator( $file ) );
 
@@ -685,10 +684,6 @@ class WikiaFileHelper extends Service {
 				// Landscape mode, crop in the middle
 				$gen->zoomCrop();
 			}
-		}
-
-		if ( $useWebP ) {
-			$gen->webp();
 		}
 
 		$url = $gen->width( $dimension )->height( $dimension )->url();
