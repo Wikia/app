@@ -56,7 +56,7 @@ ve.ui.WikiaPreferenceDialog.prototype.initialize = function () {
 	this.$textBody = this.$( '<div>' )
 		.addClass( 've-ui-wikiaPreferenceDialog-text' )
 		.html(
-			ve.msg( 'wikia-visualeditor-dialog-orientation-text' )
+			ve.msg( 'wikia-visualeditor-dialog-preference-text' )
 		);
 	this.startButton = new OO.ui.ButtonWidget( {
 		'$': this.$,
