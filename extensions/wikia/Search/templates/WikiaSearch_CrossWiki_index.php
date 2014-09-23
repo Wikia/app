@@ -1,5 +1,6 @@
 <section class="Search all-wikia WikiaGrid clearfix">
 	<? if ( empty( $wg->EnableGlobalNavExt ) ): ?>
+	<form class="WikiaSearch" id="search-v2-form" action="<?=$specialSearchUrl;?>">
 		<div class="SearchInput">
 			<p><?= wfMsg('wikiasearch2-global-search-headline') ?></p>
 			<input type="text" name="search" id="search-v2-input" value="<?=$query;?>" />
@@ -12,6 +13,7 @@
 			<? endif ?>
 			<button type="submit" class="wikia-button" id="search-v2-button" value="<?= wfMsg( 'searchbutton' ); ?>"><img src="<?= $wg->BlankImgUrl ?>" class="sprite search" height="17" width="21"></button>
 		</div>
+	</form>
 	<? endif ?>
 	<div class="results-wrapper">
 		<?php if (!empty($results)): ?>
@@ -65,6 +67,5 @@
 				<p class="no-result"><i><?= wfMsg('wikiasearch2-noresults') ?></i></p>
 			<?php endif; ?>
 		<?php endif; ?>
-
 	</div>
 </section>
