@@ -28,21 +28,6 @@ ve.ui.WikiaTemplateInsertDialog.static.icon = 'template';
 
 ve.ui.WikiaTemplateInsertDialog.static.title = OO.ui.deferMsg( 'visualeditor-dialog-transclusion-insert-template' );
 
-/* Static Methods */
-
-/**
- * Adds commas to numbers
- *
- * @param {number} number The number without commas
- * @returns {string} Comma separated sting
- */
-ve.ui.WikiaTemplateInsertDialog.static.formatNumber = function ( number ) {
-	while ( /(\d+)(\d{3})/.test( number.toString() ) ) {
-		number = number.toString().replace( /(\d+)(\d{3})/, '$1' + ',' + '$2' );
-	}
-	return number;
-};
-
 /* Methods */
 
 /**
