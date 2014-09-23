@@ -44,5 +44,6 @@ OO.inheritClass( ve.ui.WikiaTemplateOptionWidget, OO.ui.OptionWidget );
  * @param {number} value Number of times the template appears
  */
 ve.ui.WikiaTemplateOptionWidget.prototype.setAppears = function ( value ) {
-	this.$appears.text( ve.msg( 'wikia-visualeditor-wikiatemplateoptionwidget-appears', value ) );
+	var text = ve.msg( 'wikia-visualeditor-wikiatemplateoptionwidget-appears', value );
+	this.$appears.text( text.replace( /\d+/, ve.ui.WikiaTemplateInsertDialog.static.formatNumber( text.match( /\d+/ )[0] ) ) );
 };

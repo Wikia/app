@@ -155,7 +155,7 @@ ve.ui.WikiaTemplateInsertDialog.prototype.populateOptions = function ( templates
 					'$': this.$,
 					'icon': 'template-inverted',
 					'label': templates[i].title,
-					'appears': ve.ui.WikiaTemplateInsertDialog.static.formatNumber( templates[i].uses )
+					'appears': templates[i].uses
 				}
 			)
 		);
