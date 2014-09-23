@@ -101,15 +101,16 @@ class ExactTargetUpdatesHooks {
 		global $wgWikiaEnvironment;
 		/* Don't add task when on dev or internal */
 		// if ( $wgWikiaEnvironment != WIKIA_ENV_DEV && $wgWikiaEnvironment != WIKIA_ENV_INTERNAL ) {
-			$aWikiData = $this->prepareWikiParams( $aParams );
-			$aWikiCatsMappingData = $this->prepareWikiCatsMappingParams( $aParams );
+			$iCityId = $aParams['city_id'];
+			$aWikiData = $this->prepareWikiParams( $iCityId );
+			$aWikiCatsMappingData = $this->prepareWikiCatsMappingParams( $iCityId );
 			$oTask->call( 'sendNewWikiData', $aWikiData, $aWikiCatsMappingData );
 			$oTask->queue();
 		// }
 	}
 
-	private function prepareWikiParams( $aParams ) {
-		$oWiki = \WikiFactory::getWikiById( $aParams['city_id'] );
+	private function prepareWikiParams( $iCityId ) {
+		$oWiki = \WikiFactory::getWikiById( $iCityId );
 
 		$aWikiParams = [
 			'city_id' => $oWiki->city_id,
@@ -122,13 +123,14 @@ class ExactTargetUpdatesHooks {
 		return $aWikiParams;
 	}
 
-	private function prepareWikiCatsMappingParams( $aParams ) {
-		$aCategories = \WikiFactory::getCategories( $aParams['city_id'], 'skip' );
+	private function prepareWikiCatsMappingParams( $iCityId ) {
+		$sIncludeDepracated = 'skip';
+		$aCategories = \WikiFactory::getCategories( $iCityId, $sIncludeDepracated );
 
 		$aWikiCatsMappingParams = [];
 		foreach( $aCategories as $aCategory ) {
 			$aWikiCatsMappingParams[] = [
-				'city_id' => $aParams['city_id'],
+				'city_id' => $iCityId,
 				'cat_id' => $aCategory->cat_id,
 			];
 		}
