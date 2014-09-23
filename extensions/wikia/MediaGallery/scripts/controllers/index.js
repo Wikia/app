@@ -17,7 +17,7 @@ require(['mediaGallery.views.gallery'], function (Gallery) {
 				gallery;
 
 			gallery = new Gallery({
-				$el: $('<div></div>').addClass('media-gallery-inner'),
+				$el: $('<div></div>'),
 				$wrapper: $this,
 				model: data[idx],
 				oVisible: oVisible
