@@ -18,6 +18,7 @@ $wgExtensionCredits['api'][] = [
 // Load needed classes
 $wgAutoloadClasses[ 'MercuryApiController' ] = $dir . 'MercuryApiController.class.php';
 $wgAutoloadClasses[ 'MercuryApiHooks' ] = $dir . 'MercuryApiHooks.class.php';
+$wgAutoloadClasses[ 'MercurySpecialPageController' ] = $dir . 'MercurySpecialPageController.class.php';
 
 // model classes
 $wgAutoloadClasses[ 'MercuryApi' ] = $dir . 'models/MercuryApi.class.php';
@@ -28,3 +29,8 @@ $wgWikiaApiControllers[ 'MercuryApiController' ] = $dir . 'MercuryApiController.
 // Hooks
 $wgHooks[ 'ArticleSaveComplete' ][] = 'MercuryApiHooks::onArticleSaveComplete';
 $wgHooks[ 'ArticleRollbackComplete' ][] = 'MercuryApiHooks::onArticleRollbackComplete';
+
+
+// Special pages
+$wgSpecialPages[ 'Mercury' ] = 'MercurySpecialPageController';
+$wgSpecialPageGroups[ 'Mercury' ] = 'wikia';
