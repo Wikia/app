@@ -83,4 +83,10 @@ describe('MediaGalleries gallery', function () {
 		instance.showLess();
 		expect(instance.visibleCount).toBe(options.oVisible);
 	});
+
+	it('should not error at arbitrary render count', function () {
+		instance = new Gallery(options);
+		instance.render(model.length + 2);
+		expect(instance.media.length).toBe(model.length);
+	});
 });
