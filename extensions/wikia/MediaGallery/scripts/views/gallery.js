@@ -78,16 +78,20 @@ define('mediaGallery.views.gallery', [
 	};
 
 	/**
-	 * Render initial set of media
+	 * Render sets of media.
+	 * @param {int|null} count Optional number to be rendered, otherwise use this.interval
+	 * @returns {Gallery}
 	 */
 	Gallery.prototype.render = function (count) {
 		var self = this,
 			media;
 
+		// don't render 0 items, and don't fall through to default interval value either when count is 0.
 		if (count === 0) {
 			return this;
 		}
 
+		// if count isn't passed in, use the default interval value
 		count = count || this.interval;
 		media = this.media.slice(this.visibleCount, this.visibleCount + count);
 
