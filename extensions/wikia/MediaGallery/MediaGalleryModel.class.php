@@ -21,7 +21,6 @@ class MediaGalleryModel extends WikiaObject {
 	 * Set basic data for galleries based on info passed in from WikiaPhotoGallery
 	 */
 	public function setGalleryData() {
-		$media = [];
 		$itemCount = count( $this->items );
 		$dimensionIndex = 0;
 
@@ -29,11 +28,10 @@ class MediaGalleryModel extends WikiaObject {
 			$data = $this->getMediaData( $item, $itemCount, $dimensionIndex );
 
 			if ( !empty( $data ) ) {
-				$media[] = $data;
+				$this->galleryData[] = $data;
 			}
 			++$dimensionIndex;
 		}
-		$this->galleryData = $media;
 	}
 
 	/**
@@ -88,8 +86,7 @@ class MediaGalleryModel extends WikiaObject {
 	 * @return int
 	 */
 	public function getMediaCount() {
-		$data = $this->galleryData;
-		return count( $data );
+		return count( $this->galleryData );
 	}
 
 	public function getGalleryData() {
