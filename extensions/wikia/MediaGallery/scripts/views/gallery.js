@@ -16,7 +16,7 @@ define('mediaGallery.views.gallery', [
 	});
 
 	Gallery = function (options) {
-		this.$el = options.$el;
+		this.$el = options.$el.addClass('media-gallery-inner');
 		this.$wrapper = options.$wrapper;
 		this.model = options.model;
 		this.oVisibleCount = options.oVisible;

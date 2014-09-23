@@ -49,6 +49,8 @@ module.exports = function (config) {
 			'resources/wikia/modules/querystring.js',
 			'resources/wikia/modules/stringhelper.js',
 			'resources/wikia/modules/thumbnailer.js',
+			'resources/wikia/modules/tracker.stub.js',
+			'resources/wikia/modules/tracker.js',
 			'resources/wikia/modules/uniqueId.js',
 			'resources/wikia/libraries/mustache/mustache.js',
 			'resources/wikia/libraries/jquery/ellipses.js',
@@ -168,7 +170,13 @@ module.exports = function (config) {
 			'extensions/wikia/WikiaInteractiveMaps/js/intMapPoiCategories.js',
 			'extensions/wikia/WikiaInteractiveMaps/js/models/intMapPoiCategoriesModel.js',
 			'extensions/wikia/WikiaInteractiveMaps/js/intMapUtils.js',
-			'extensions/wikia/WikiaInteractiveMaps/spec/*.spec.js'
+			'extensions/wikia/WikiaInteractiveMaps/spec/*.spec.js',
+
+			// MediaGalleries
+			'extensions/wikia/MediaGallery/scripts/views/caption.js',
+			'extensions/wikia/MediaGallery/scripts/views/media.js',
+			'extensions/wikia/MediaGallery/scripts/views/gallery.js',
+			'extensions/wikia/MediaGallery/scripts/spec/**/*.spec.js'
 		]
 	});
 };
