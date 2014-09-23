@@ -117,7 +117,7 @@ New value:
 	<div class="clearfix">
 		<div class="wf-variable-form-inline-group wf-variable-form-left">
 			<label for="reason">
-			<strong>Reason</strong> (optional, reason text or ticket number) :</label>
+			<?= wfMessage( 'wikifactory-label-reason' )->text(); ?></label>
 			<input type="text" id="wk-reason" name="reason" value="" size="30" />
 		</div>
 		<div class="wf-variable-form-inline-group wf-variable-form-right">
