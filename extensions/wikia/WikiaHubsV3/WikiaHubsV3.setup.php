@@ -40,20 +40,3 @@ $wgExtensionMessagesFiles['WikiaHubsV3'] = $dir . 'WikiaHubsV3.i18n.php';
 $wgHooks['ArticleFromTitle'][] = 'WikiaHubsV3Hooks::onArticleFromTitle';
 $wgHooks['WikiaCanonicalHref'][] = 'WikiaHubsV3Hooks::onWikiaCanonicalHref';
 
-// foreign file repo
-$wgForeignFileRepos[] = array(
-	'class'            => 'WikiaForeignDBViaLBRepo',
-	'name'             => 'wikiahubsfiles',
-	'directory'        => $wgWikiaHubsFileRepoDirectory,
-	'url'              => 'http://images.wikia.com/' . $wgWikiaHubsFileRepoDBName . '/images',
-	'hashLevels'       => 2,
-	'thumbScriptUrl'   => '',
-	'transformVia404'  => true,
-	'hasSharedCache'   => true,
-	'descBaseUrl'      => $wgWikiaHubsFileRepoPath . 'wiki/File:',
-	'fetchDescription' => true,
-	'wiki'             => $wgWikiaHubsFileRepoDBName,
-	'checkRedirects'   => false,
-	'checkDuplicates'  => false,
-);
-
