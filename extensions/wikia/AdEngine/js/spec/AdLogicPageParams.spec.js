@@ -32,6 +32,7 @@ describe('AdLogicPageParams', function () {
 	 *  - kruxSegments
 	 *  - abExperiments
 	 *  - hostname
+	 *  - getPageLevelParamsOptions
 	 */
 	function getParams(targeting, opts) {
 		opts = opts || {};
@@ -58,7 +59,7 @@ describe('AdLogicPageParams', function () {
 			kruxMock,
 			adLogicPageDimensionsMock,
 			abTestMock
-		).getPageLevelParams();
+		).getPageLevelParams(opts.getPageLevelParamsOptions);
 	}
 
 	it('getPageLevelParams Simple params correct', function () {
@@ -239,6 +240,24 @@ describe('AdLogicPageParams', function () {
 		expect(params.ab).toEqual(['17_34', '19_45', '76_112'], 'ab params passed');
 	});
 
+	it('getPageLevelParams includeRawDbName', function () {
+		var params = getParams({
+			wikiDbName: 'xyz'
+		});
+
+		expect(params.rawDbName).toBeUndefined();
+
+		params = getParams({
+			wikiDbName: 'xyz'
+		}, {
+			getPageLevelParamsOptions: {
+				includeRawDbName: true
+			}
+		});
+
+		expect(params.rawDbName).toBe('_xyz');
+	});
+
 
 // Very specific tests for hubs:
 
@@ -314,5 +333,31 @@ describe('AdLogicPageParams', function () {
 
 		params = getParams({wikiDirectedAtChildren: true}, {kruxSegments: kruxSegments});
 		expect(params.ksgmnt).toBeUndefined('No Krux on COPPA wiki');
+	});
+
+	it('getPageLevelParams esrb + COPPA', function () {
+		var params;
+
+		params = getParams({
+			wikiCustomKeyValues: 'key1=value1;esrb=rating;key2=value2'
+		});
+		expect(params.esrb.toString()).toBe('rating', 'esrb=yes, COPPA=no');
+
+		params = getParams({
+			wikiCustomKeyValues: 'key1=value1;esrb=rating;key2=value2',
+			wikiDirectedAtChildren: true
+		});
+		expect(params.esrb.toString()).toBe('rating', 'esrb=yes, COPPA=yes');
+
+		params = getParams({
+			wikiCustomKeyValues: 'key1=value1;key2=value2'
+		});
+		expect(params.esrb.toString()).toBe('teen', 'esrb=null, COPPA=no');
+
+		params = getParams({
+			wikiCustomKeyValues: 'key1=value1;key2=value2',
+			wikiDirectedAtChildren: true
+		});
+		expect(params.esrb.toString()).toBe('ec', 'esrb=null, COPPA=yes');
 	});
 });

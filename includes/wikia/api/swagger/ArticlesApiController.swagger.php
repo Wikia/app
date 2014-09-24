@@ -624,6 +624,15 @@ use Swagger\Annotations as SWG;
  * 					allowMultiple="false",
  * 					dataType="string",
  * 					defaultValue=""
+ * 				),
+ *              @SWG\Parameter(
+ * 					name="baseArticleId",
+ * 					description="Trending and popular related to article with given id",
+ * 					paramType="query",
+ * 					required="false",
+ * 					allowMultiple="false",
+ * 					dataType="int",
+ * 					defaultValue=""
  * 				)
  * 			)
  * 		)
@@ -714,6 +723,15 @@ use Swagger\Annotations as SWG;
  * 					required="false",
  * 					allowMultiple="false",
  * 					dataType="string",
+ * 					defaultValue=""
+ * 				),
+ *              @SWG\Parameter(
+ * 					name="baseArticleId",
+ * 					description="Trending and popular related to article with given id",
+ * 					paramType="query",
+ * 					required="false",
+ * 					allowMultiple="false",
+ * 					dataType="int",
  * 					defaultValue=""
  * 				)
  * 			)

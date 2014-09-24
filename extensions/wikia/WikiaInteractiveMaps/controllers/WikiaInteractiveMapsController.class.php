@@ -111,7 +111,8 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 		$map = $model->getMapByIdFromApi( $mapId );
 
 		if( isset( $map->title ) ) {
-			$this->redirectIfForeignWiki( $map->city_id, $mapId );
+			$mapCityId = $map->city_id;
+			$this->redirectIfForeignWiki( $mapCityId, $mapId );
 			$this->wg->out->setHTMLTitle( $map->title );
 
 			$deleted = $map->deleted == WikiaMaps::MAP_DELETED;
@@ -125,12 +126,14 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 			}
 
 			$this->setVal( 'deleted', $deleted );
-			$url = $model->getMapRenderUrl([
+			$params = $model->getMapRenderParams( $mapCityId );
+
+			$url = $model->getMapRenderUrl( [
 				$mapId,
 				$zoom,
 				$lat,
 				$lon
-			]);
+			], $params );
 
 			if ( $mobileSkin ) {
 				$this->setMapOnMobile();
@@ -279,6 +282,8 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 	 * @param String $selectedSort a sorting option passed in $_GET
 	 */
 	private function prepareTemplateData( $mapsResponse, $selectedSort ) {
+		global $wgEnableGlobalNavExt;
+
 		$isWikiaMobileSkin = $this->app->checkSkin( self::WIKIA_MOBILE_SKIN_NAME );
 
 		$thumbWidth = ( $isWikiaMobileSkin ? self::MAP_MOBILE_THUMB_WIDTH : self::MAP_THUMB_WIDTH );
@@ -304,7 +309,9 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 				'create-a-map' => wfMessage( 'wikia-interactive-maps-create-a-map' ),
 			] );
 			$this->setVal( 'sortingOptions', $this->getModel()->getSortingOptions( $selectedSort ) );
-			$this->setVal( 'searchInput', $this->app->renderView( 'Search', 'Index' ) );
+			if ( empty( $wgEnableGlobalNavExt ) ) {
+				$this->setVal( 'searchInput', $this->app->renderView( 'Search', 'Index' ) );
+			}
 		}
 
 		// template variables shared between skins

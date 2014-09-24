@@ -69,7 +69,7 @@ class WikisApiController extends WikiaApiController {
 		}
 		$this->setResponseData(
 			$batches,
-			[ 'urlFields' => [ 'wordmark', 'url', 'image' ] ],
+			[ 'urlFields' => [ 'wordmark', 'image' ] ],
 			static::CACHE_1_WEEK
 		);
 	}
@@ -159,6 +159,7 @@ class WikisApiController extends WikiaApiController {
 
 	public function getDetails() {
 		wfProfileIn( __METHOD__ );
+		$this->setOutputFieldType( "items", self::OUTPUT_FIELD_TYPE_OBJECT );
 		$ids = $this->request->getVal( self::PARAMETER_WIKI_IDS, null );
 		if ( !empty( $ids ) ) {
 			$ids = explode( ',', $ids );
@@ -178,7 +179,7 @@ class WikisApiController extends WikiaApiController {
 
 		$this->setResponseData(
 			[ 'items' => $items ],
-			[ 'urlFields' => [ 'wordmark', 'url', 'image' ] ],
+			[ 'urlFields' => [ 'wordmark', 'image' ] ],
 			static::CACHE_1_DAY
 		);
 
@@ -248,7 +249,11 @@ class WikisApiController extends WikiaApiController {
 		return $licensed->getCommercialUseNotAllowedWikis();
 	}
 
-	protected function filterNonCommercial( $wikis ) {
+	/**
+	 * @param Array $wikis
+	 * @return array
+	 */
+	protected function filterNonCommercial( Array $wikis ) {
 		$result =[];
 		$blackList = $this->getNonCommercialWikis();
 		foreach( $wikis as $wiki ) {

@@ -5,11 +5,11 @@ $script = realpath( dirname( __FILE__ ) . '/../../../../maintenance/wikia/task_r
 
 $taskId = escapeshellarg( $_POST['task_id'] );
 $wikiId = escapeshellarg( $_POST['wiki_id'] );
-$list = $_POST['task_list'];
-$order = $_POST['call_order'];
+$list = escapeshellarg( $_POST['task_list'] );
+$order = escapeshellarg( $_POST['call_order'] );
 $createdBy = escapeshellarg( $_POST['created_by'] );
 
-$command = "SERVER_ID=$wikiId php $script --task_id=" . $taskId . " --task_list=" . json_encode( $list ) . " --call_order=" . json_encode( $order ) . " --created_by=$createdBy";
+$command = "SERVER_ID={$wikiId} php {$script} --task_id={$taskId} --task_list={$list} --call_order={$order} --created_by={$createdBy}";
 
 // can't use globals here, this doesn't execute within mediawiki
 if ( getenv( 'WIKIA_ENVIRONMENT' ) == 'dev' ) {

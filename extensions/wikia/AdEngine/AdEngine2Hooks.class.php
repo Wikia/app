@@ -47,6 +47,7 @@ class AdEngine2Hooks {
 		// DR
 		$vars[] = 'wgSitewideDisableLiftium';
 		$vars[] = 'wgSitewideDisableSevenOneMedia';
+		$vars[] = 'wgSitewideDisableRubiconRTP';
 
 		$vars[] = 'wgHighValueCountries';
 		$vars[] = 'wgAmazonDirectTargetedBuyCountries';

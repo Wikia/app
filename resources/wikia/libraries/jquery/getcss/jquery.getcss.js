@@ -9,7 +9,6 @@
  * http://code.google.com/p/javascript-dominoes/
  */
 (function (window, document, jQuery) {
-
 	var head = document.getElementsByTagName('head')[0],
 		loadedCompleteRegExp = /loaded|complete/,
 		callbacks = {},

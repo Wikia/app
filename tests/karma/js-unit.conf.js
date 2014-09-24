@@ -83,6 +83,7 @@ module.exports = function (config) {
 			'extensions/wikia/AdEngine/js/DartUrl.js',
 			'extensions/wikia/AdEngine/js/EvolveHelper.js',
 			'extensions/wikia/AdEngine/js/EvolveSlotConfig.js',
+			'extensions/wikia/AdEngine/js/GptSlotConfig.js',
 			'extensions/wikia/AdEngine/js/MessageListener.js',
 			'extensions/wikia/AdEngine/js/WikiaDartHelper.js',
 			'extensions/wikia/AdEngine/js/WikiaDartVideoHelper.js',
@@ -162,7 +163,13 @@ module.exports = function (config) {
 			// Thumbnails
 			'extensions/wikia/Thumbnails/scripts/templates.mustache.js',
 			'extensions/wikia/Thumbnails/scripts/views/titleThumbnail.js',
-			'extensions/wikia/Thumbnails/scripts/spec/*.spec.js'
+			'extensions/wikia/Thumbnails/scripts/spec/*.spec.js',
+
+			// WikiaMaps
+			'extensions/wikia/WikiaInteractiveMaps/js/intMapPoiCategories.js',
+			'extensions/wikia/WikiaInteractiveMaps/js/models/intMapPoiCategoriesModel.js',
+			'extensions/wikia/WikiaInteractiveMaps/js/intMapUtils.js',
+			'extensions/wikia/WikiaInteractiveMaps/spec/*.spec.js'
 		]
 	});
 };

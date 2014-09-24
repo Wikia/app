@@ -131,7 +131,12 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 		return params;
 	}
 
-	function getPageLevelParams() {
+	/**
+	 * options
+	 * @param options {includeRawDbName: bool}
+	 * @returns object
+	 */
+	function getPageLevelParams(options) {
 		// TODO: cache results (keep in mind some of them may change while executing page)
 
 		log('getPageLevelParams', 9, logGroup);
@@ -142,6 +147,8 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 			zone2,
 			params,
 			targeting = adContext.getContext().targeting;
+
+		options = options || {};
 
 		dbName = '_' + (targeting.wikiDbName || 'wikia').replace('/[^0-9A-Z_a-z]/', '_');
 
@@ -160,7 +167,6 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 			s1: zone1,
 			s2: zone2,
 			artid: targeting.pageArticleId && targeting.pageArticleId.toString(),
-			dbName: dbName,
 			dmn: getDomain(),
 			hostpre: getHostname(),
 			wpage: targeting.pageName && targeting.pageName.toLowerCase(),
@@ -168,6 +174,10 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 			cat: getCategories(),
 			ab: getAb()
 		};
+
+		if (options.includeRawDbName) {
+			params.rawDbName = dbName;
+		}
 
 		if (targeting.pageArticleId) {
 			params.pageid = zone1 + '/' + targeting.pageArticleId;
@@ -184,7 +194,15 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 			params.ksgmnt = Krux.segments && Krux.segments.slice(0, maxNumberOfKruxSegments);
 		}
 
+		if (targeting.wikiIsTop1000) {
+			params.top = '1k';
+		}
+
 		extend(params, decodeLegacyDartParams(targeting.wikiCustomKeyValues));
+
+		if (!params.esrb) {
+			params.esrb = targeting.wikiDirectedAtChildren ? 'ec' : 'teen';
+		}
 
 		if (!adsInHeadExperiment) {
 			// This is set in client side (don't move to adContext)

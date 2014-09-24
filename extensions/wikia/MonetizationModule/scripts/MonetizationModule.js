@@ -8,7 +8,7 @@ require(['wikia.tracker'], function (Tracker) {
 	var track;
 
 	track = Tracker.buildTrackingFunction({
-		trackingMethod: 'both',
+		trackingMethod: 'internal',
 		action: Tracker.ACTIONS.CLICK
 	});
 

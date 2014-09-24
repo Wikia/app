@@ -70,6 +70,19 @@ class UrlGenerator {
 	}
 
 	/**
+	 * set an image's language
+	 * @param string $lang
+	 * @return $this
+	 */
+	public function lang($lang) {
+		if (!empty($lang) && $lang != 'en') {
+			$this->query['lang'] = $lang;
+		}
+
+		return $this;
+	}
+
+	/**
 	 * Fill the background with a specific color, instead of white
 	 * @param string $color color accepted by ImageMagick (http://www.imagemagick.org/script/color.php), or a hex code.
 	 * This only applies when $this->mode = self::MODE_FIXED_ASPECT_RATIO
@@ -171,7 +184,12 @@ class UrlGenerator {
 	 */
 	public function url() {
 		$bucketPath = self::bucketPath();
-		$imagePath = "{$bucketPath}/{$this->file->getRel()}/revision/{$this->revision}";
+		$imagePath = "{$bucketPath}/{$this->file->getUrlRel()}/revision/{$this->revision}";
+
+		if (!isset($this->query['lang'])) {
+			global $wgLang;
+			$this->lang($wgLang->getCode());
+		}
 
 		if ($this->mode != self::MODE_ORIGINAL) {
 			$imagePath .= "/{$this->mode}/width/{$this->width}/height/{$this->height}";
