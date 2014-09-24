@@ -344,6 +344,6 @@ ve.init.mw.WikiaViewPageTarget.prototype.maybeShowDialogs = function () {
 	// Parent method
 	ve.init.mw.WikiaViewPageTarget.super.prototype.maybeShowDialogs.call( this );
 	if ( parseInt( mw.config.get( 'showVETransitionDialog' ) ) === 1 ) {
-		this.surface.getDialogs().getWindow( 'wikiaPreference' ).open();
+		this.surface.getDialogs().getWindow( 'wikiaPreference' ).open( null, null, this.surface );
 	}
 };

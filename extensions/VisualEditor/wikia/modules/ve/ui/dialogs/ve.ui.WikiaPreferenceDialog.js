@@ -14,7 +14,7 @@
  * @param {Object} [config] Config options
  */
 ve.ui.WikiaPreferenceDialog = function VeUiWikiaPreferenceDialog( config ) {
-	config =  $.extend( config, {
+	config = $.extend( config, {
 		width: '550px',
 		height: '350px',
 		disableAnimation: true
@@ -122,7 +122,7 @@ ve.ui.WikiaPreferenceDialog.prototype.onPreferencesButtonClick = function () {
 ve.ui.WikiaPreferenceDialog.prototype.getSetupProcess = function ( data ) {
 	return ve.ui.WikiaPreferenceDialog.super.prototype.getSetupProcess.call( this, data )
 		.next( function () {
-			this.$( '.ve-ui-wikiaFocusWidget' ).hide();
+			this.surface.getFocusWidget().$element.hide();
 		}, this );
 };
 
@@ -138,7 +138,7 @@ ve.ui.WikiaPreferenceDialog.prototype.getTeardownProcess = function ( data ) {
 					'label': 'dialog-wikia-preference-click-got-it'
 				} );
 			}
-			this.$( '.ve-ui-wikiaFocusWidget' ).show();
+			this.surface.getFocusWidget().$element.show();
 		}, this );
 };
 
