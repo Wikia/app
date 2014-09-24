@@ -298,8 +298,6 @@ var WallNotifications = $.createClass(Object, {
 		$.nirvana.sendRequest({
 			controller: 'WallNotificationsExternalController',
 			method: 'getUpdateWiki',
-			format: 'jsonp',
-			scriptPath: this.wikisUrls[wikiId],
 			data: {
 				username: wgTitle,
 				wikiId: wikiId,
