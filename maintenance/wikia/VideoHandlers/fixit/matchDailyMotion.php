@@ -6,7 +6,7 @@ ini_set('error_reporting', E_NOTICE);
 require_once( dirname( __FILE__ ) . '/../../Maintenance.php' );
 
 /**
- * Class FSCKVideos
+ * Class MatchDailyMotion
  */
 class MatchDailyMotion extends Maintenance {
 
@@ -15,7 +15,7 @@ class MatchDailyMotion extends Maintenance {
 
 	public function __construct() {
 		parent::__construct();
-		$this->mDescription = "Pre-populate LVS suggestions";
+		$this->mDescription = "Find Daily Motion video";
 		$this->addOption( 'test', 'Test mode; make no changes', false, false, 't' );
 		$this->addOption( 'verbose', 'Show extra debugging output', false, false, 'v' );
 	}
