@@ -71,7 +71,7 @@ class ArticlesApiController extends WikiaApiController {
 	const PARAMETER_BASE_ARTICLE_ID = 'baseArticleId';
 
 	private $excludeNamespacesFromCategoryMembersDBQuery = false;
-	
+
 	public function __construct(){
 		parent::__construct();
 		$this->setOutputFieldTypes(
@@ -82,11 +82,10 @@ class ArticlesApiController extends WikiaApiController {
 		);
 	}
 
-	public function getMetadataCacheTime( $omitExpandParam = false ) {
-		if (
-			!empty( $this->wg->EnablePOIExt )
-			&&  $this->request->getBool( static::PARAMETER_EXPAND, $omitExpandParam )
-		) {
+	public static function getMetadataCacheTime( $omitExpandParam = false ) {
+		$app = F::app();
+		if ( !empty( $app->wg->EnablePOIExt ) &&
+			$app->wg->request->getBool( static::PARAMETER_EXPAND, $omitExpandParam )) {
 			return PalantirApiController::METADATA_CACHE_EXPIRATION;
 		}
 		return self::CLIENT_CACHE_VALIDITY;
@@ -252,7 +251,7 @@ class ArticlesApiController extends WikiaApiController {
 		$this->setResponseData(
 			[ 'basepath' => $this->wg->Server, 'items' => $collection ],
 			[ 'imgFields'=> 'thumbnail', 'urlFields' => [ 'thumbnail', 'url' ] ],
-			$this->getMetadataCacheTime()
+			self::getMetadataCacheTime()
 		);
 
 		$batches = null;
@@ -273,21 +272,21 @@ class ArticlesApiController extends WikiaApiController {
 			$mostLinkedOutput = $this->getArticlesDetails( array_keys( $mostLinked ), $params[ 'titleKeys' ], $params[ 'width' ], $params[ 'height' ], $params[ 'length' ], true );
 		} else {
 			foreach ( $mostLinked as $item ) {
-					$title = Title::newFromText( $item['page_title'], $nameSpace );
-					if ( !empty($title) && $title instanceof Title && !$title->isMainPage() ) {
-						$mostLinkedOutput[] = [
-							'id' => $item['page_id'],
-							'title' => $item['page_title'],
-							'url' => $title->getLocalURL(),
-							'ns' => $nameSpace
-						];
-					}
+				$title = Title::newFromText( $item['page_title'], $nameSpace );
+				if ( !empty($title) && $title instanceof Title && !$title->isMainPage() ) {
+					$mostLinkedOutput[] = [
+						'id' => $item['page_id'],
+						'title' => $item['page_title'],
+						'url' => $title->getLocalURL(),
+						'ns' => $nameSpace
+					];
+				}
 			}
 		}
 		$this->setResponseData(
 			[ 'basepath' => $this->wg->Server, 'items' => $mostLinkedOutput ],
 			[ 'imgFields'=> 'thumbnail', 'urlFields' => [ 'thumbnail', 'url' ] ],
-			$this->getMetadataCacheTime()
+			self::getMetadataCacheTime()
 		);
 	}
 
@@ -640,7 +639,7 @@ class ArticlesApiController extends WikiaApiController {
 			$this->setResponseData(
 				$responseValues,
 				[ 'imgFields'=> 'thumbnail', 'urlFields' => [ 'thumbnail', 'url' ] ],
-				$this->getMetadataCacheTime()
+				self::getMetadataCacheTime()
 			);
 		} else {
 			wfProfileOut( __METHOD__ );
@@ -648,7 +647,7 @@ class ArticlesApiController extends WikiaApiController {
 		}
 
 		wfProfileOut( __METHOD__ );
-	}	
+	}
 
 	/**
 	 * Get details about one or more articles, , those in the Special namespace (NS_SPECIAL) won't produce any result
@@ -693,7 +692,7 @@ class ArticlesApiController extends WikiaApiController {
 		$this->setResponseData(
 			[ 'items' => $collection, 'basepath' => $this->wg->Server ],
 			[ 'imgFields'=> 'thumbnail', 'urlFields' => [ 'thumbnail', 'url' ] ],
-			$this->getMetadataCacheTime( true )
+			self::getMetadataCacheTime( true )
 		);
 
 		$collection = null;
@@ -928,7 +927,7 @@ class ArticlesApiController extends WikiaApiController {
 	static private function getCategoryMembers( $category, $limit = 5000, $offset = '', $namespaces = '', $sort = 'sortkey', $dir = 'asc' ){
 		return WikiaDataAccess::cache(
 			self::getCacheKey( $category, self::CATEGORY_CACHE_ID, [ $limit, $offset, $namespaces, $dir ] ),
-			self::CLIENT_CACHE_VALIDITY,
+			self::getMetadataCacheTime(),
 			function() use ( $category, $limit, $offset, $namespaces, $sort, $dir ) {
 				$ids = ApiService::call(
 					array(
@@ -1116,7 +1115,7 @@ class ArticlesApiController extends WikiaApiController {
 		$this->setResponseData(
 			[ 'items' => $popular, 'basepath' => $wgServer ],
 			[ 'imgFields' => 'thumbnail', 'urlFields' => [ 'thumbnail', 'url' ] ],
-			$this->getMetadataCacheTime()
+			self::getMetadataCacheTime()
 		);
 
 	}
