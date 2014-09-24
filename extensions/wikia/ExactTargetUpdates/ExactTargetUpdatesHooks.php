@@ -124,6 +124,7 @@ class ExactTargetUpdatesHooks {
 	}
 
 	private function prepareWikiCatsMappingParams( $iCityId ) {
+		/* @var string sIncludeDepracated Used to retrieve a full mapping of a wiki */
 		$sIncludeDepracated = 'skip';
 		$aCategories = \WikiFactory::getCategories( $iCityId, $sIncludeDepracated );
 
