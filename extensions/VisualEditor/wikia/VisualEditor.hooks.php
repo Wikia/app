@@ -49,7 +49,7 @@ class VisualEditorWikiaHooks {
 	 * Adds extra variables to the page config.
 	 */
 	public static function onMakeGlobalVariablesScript( array &$vars, OutputPage $out ) {
-		global $wgMaxUploadSize, $wgEnableVisualEditorUI, $wgEnableWikiaInteractiveMaps, $wgIntMapConfig;
+		global $wgMaxUploadSize, $wgEnableVisualEditorUI, $wgEnableWikiaInteractiveMaps, $wgIntMapConfig, $wgUser;
 		$vars[ 'wgMaxUploadSize' ] = $wgMaxUploadSize;
 		$vars[ 'wgEnableVisualEditorUI' ] = !empty( $wgEnableVisualEditorUI );
 		$vars[ 'wgEnableWikiaInteractiveMaps' ] = !empty( $wgEnableWikiaInteractiveMaps );
@@ -63,6 +63,7 @@ class VisualEditorWikiaHooks {
 				. '/api/'
 				. $wgIntMapConfig[ 'version' ];
 		}
+		$vars['showVETransitionDialog'] = $wgUser->getOption( 'showVisualEditorTransitionDialog', 0 );
 		return true;
 	}
 
