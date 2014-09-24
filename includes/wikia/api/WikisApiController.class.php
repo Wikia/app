@@ -250,7 +250,7 @@ class WikisApiController extends WikiaApiController {
 	}
 
 	/**
-	 * @param array $wikis
+	 * @param Array $wikis
 	 * @return array
 	 */
 	protected function filterNonCommercial( Array $wikis ) {
