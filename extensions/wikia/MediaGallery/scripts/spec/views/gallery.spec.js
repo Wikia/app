@@ -21,11 +21,13 @@ describe('MediaGalleries gallery', function () {
 			thumHtml: 'thumbHTML',
 			thumbUrl: 'http://vignette.wikia-dev.com/lizlux/6/62/440.jpeg'
 		},
-		model = [];
+		model = {
+			media: []
+		};
 
 	// Create an abitrary data model
 	for (i = 0; i < 4; i+=1) {
-		model.push(mediaData);
+		model.media.push(mediaData);
 	}
 
 	beforeEach(function () {
@@ -50,7 +52,7 @@ describe('MediaGalleries gallery', function () {
 
 	it('should create media', function () {
 		instance = new Gallery(options);
-		expect(instance.media.length).toBe(model.length);
+		expect(instance.media.length).toBe(model.media.length);
 	});
 
 	it('should render', function () {
@@ -86,7 +88,7 @@ describe('MediaGalleries gallery', function () {
 
 	it('should not error at arbitrary render count', function () {
 		instance = new Gallery(options);
-		instance.render(model.length + 2);
-		expect(instance.media.length).toBe(model.length);
+		instance.render(model.media.length + 2);
+		expect(instance.media.length).toBe(model.media.length);
 	});
 });
