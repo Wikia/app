@@ -120,6 +120,12 @@ ve.ui.WikiaTemplateInsertDialog.prototype.onTransact = function () {
 		ve.ui.commandRegistry.getCommandForNode(
 			this.surface.getView().getFocusedNode()
 		).execute( this.surface );
+
+		ve.track( 'wikia', {
+			'action': ve.track.actions.ADD,
+			'label': 'dialog-template-insert'
+		} );
+
 	}, this ), 0 );
 };
 
