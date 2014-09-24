@@ -89,26 +89,6 @@ class VideoHandlerController extends WikiaController {
 		}
 	}
 
-	public function getSanitizedOldVideoTitleString( ) {
-		$sTitle = $this->getVal( 'videoText', '' );
-
-		$prefix = '';
-		if ( strpos( $sTitle, ':' ) === 0 ) {
-			$sTitle = substr( $sTitle, 1 );
-			$prefix = ':';
-		}
-		if ( empty( $sTitle ) ) {
-			$this->setVal( 'error', 1 );
-		}
-
-		$sTitle = VideoFileUploader::sanitizeTitle( $sTitle, '_' );
-
-		$this->setVal(
-			'result',
-			$prefix.$sTitle
-		);
-	}
-
 	/**
 	 * Remove video
 	 * @requestParam string title
