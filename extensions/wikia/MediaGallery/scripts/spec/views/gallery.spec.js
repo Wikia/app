@@ -25,6 +25,9 @@ describe('MediaGalleries gallery', function () {
 			media: []
 		};
 
+	$.fn.startThrobbing = $.noop;
+	$.fn.stopThrobbing = $.noop;
+
 	// Create an abitrary data model
 	for (i = 0; i < 4; i+=1) {
 		model.media.push(mediaData);
@@ -38,6 +41,7 @@ describe('MediaGalleries gallery', function () {
 			origVisibleCount: 1,
 			interval: 2
 		};
+
 		spyOn(Mustache, 'render').andReturn('okay');
 		templates = modules['mediaGallery.templates.mustache'];
 		Caption = modules['mediaGallery.views.caption']();
@@ -59,9 +63,9 @@ describe('MediaGalleries gallery', function () {
 		instance = new Gallery(options);
 		instance.render(1);
 		expect(instance.visibleCount).toBe(1);
-		instance.render();
+		instance.render(2);
 		expect(instance.visibleCount).toBe(3);
-		instance.render(0);
+		instance.render();
 		expect(instance.visibleCount).toBe(3);
 	});
 
