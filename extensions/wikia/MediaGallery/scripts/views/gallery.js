@@ -11,9 +11,10 @@ define('mediaGallery.views.gallery', [
 	Gallery = function (options) {
 		this.$el = options.$el.addClass('media-gallery-inner');
 		this.$wrapper = options.$wrapper;
-		this.model = options.model.slice(0, 200);
+		this.model = options.model;
 		this.oVisibleCount = options.oVisible;
 		this.interval = options.interval || 12;
+		this.throttleVal = options.throttleVal || 200;
 
 		this.rendered = false;
 		this.visibleCount = 0;
@@ -27,18 +28,24 @@ define('mediaGallery.views.gallery', [
 		this.bindEvents();
 
 		// set up toggle buttons
-		if (this.media.length > this.oVisibleCount) {
+		if (this.model.media.length > this.oVisibleCount) {
 			this.renderToggler();
 		}
 	};
 
 	/**
-	 * create all media instances
+	 * Create media instances.Throttle based on user interaction, but always stay well ahead of what's visible.
 	 */
 	Gallery.prototype.createMedia = function () {
-		var self = this;
+		var self = this,
+			// get the next bunch of media to instantiate
+			throttled = this.model.media.slice(this.media.length, this.media.length + this.throttleVal);
 
-		$.each(this.model, function (idx, data) {
+		if (!throttled.length) {
+			return;
+		}
+
+		$.each(throttled, function (idx, data) {
 			var media = new Media({
 				$el: $('<div></div>'),
 				model: data,
@@ -144,7 +151,7 @@ define('mediaGallery.views.gallery', [
 
 		// hide and show appropriate buttons
 		this.$showLess.removeClass('hidden');
-		if (this.visibleCount >= this.media.length) {
+		if (this.visibleCount >= this.model.media.length) {
 			this.$showMore.addClass('hidden');
 		}
 
@@ -152,6 +159,9 @@ define('mediaGallery.views.gallery', [
 			label: 'show-more-items',
 			value: this.visibleCount
 		});
+
+		// user has expressed interest, so let's instatiate more media.
+		this.createMedia();
 	};
 
 	/**

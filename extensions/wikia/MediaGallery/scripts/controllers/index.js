@@ -19,7 +19,9 @@ require(['mediaGallery.views.gallery'], function (Gallery) {
 			gallery = new Gallery({
 				$el: $('<div></div>'),
 				$wrapper: $this,
-				model: data[idx],
+				model: {
+					media: data[idx]
+				},
 				oVisible: oVisible
 			});
 			$this.append(gallery.render(oVisible).$el);
