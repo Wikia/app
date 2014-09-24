@@ -2,7 +2,7 @@
 describe('Module ext.wikia.adEngine.messageListener', function () {
 	'use strict';
 
-	function noop() {}
+	function noop() { return; }
 
 	var windowMock = { id: 'window', addEventListener: 'abc' },
 		gptMock = { id: 'gpt_iframe', parent: windowMock },
@@ -76,6 +76,26 @@ describe('Module ext.wikia.adEngine.messageListener', function () {
 		callEventListener('ccc', mocks.gptIframe);
 		callEventListener(JSON.stringify({AdEngine: {status: 'success'}}), mocks.otherIframe);
 		expect(mocks.callback.calls.length).toBe(0);
+	});
+
+	it('matches the event details (test without an expected source)', function () {
+		var messageListener;
+
+		spyOn(mocks.window, 'addEventListener');
+		spyOn(mocks, 'callback');
+
+		messageListener = modules['ext.wikia.adEngine.messageListener'](mocks.log, mocks.window);
+		messageListener.init();
+		messageListener.register({dataKey: 'slot_TOP_LEADERBOARD'}, mocks.callback);
+
+		checkAddEventListenerCall();
+
+		callEventListener('some random message');
+		callEventListener(JSON.stringify('some random message'));
+		callEventListener(JSON.stringify({some: 'object'}));
+		callEventListener(JSON.stringify({AdEngine: {aaa: 'bbb'}}), mocks.gptIframe);
+		callEventListener(JSON.stringify({AdEngine: {'slot_TOP_LEADERBOARD': 'bbb'}}), mocks.otherIframe);
+		expect(mocks.callback.calls.length).toBe(1);
 	});
 
 	it('listens for gptIframe but actually receives message from iframe inside GPT', function () {
