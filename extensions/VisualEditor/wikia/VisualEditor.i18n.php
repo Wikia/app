@@ -62,7 +62,7 @@ $messages['en'] = array(
 	'wikia-visualeditor-dialog-transclusion-preview-button' => 'Update preview',
 	'wikia-visualeditor-context-transclusion-description' => 'Edit',
 	'wikia-visualeditor-dialog-wikiatemplateinsert-search' => 'Search for a template by name or article',
-	'wikia-visualeditor-wikiatemplateoptionwidget-appears' => 'Appears $1 {{PLURAL:$1|time|times}}',
+	'wikia-visualeditor-wikiatemplateoptionwidget-appears' => 'Appears {{FORMATNUM:$1}} {{PLURAL:$1|time|times}}',
 	'wikia-visualeditor-wikiatemplateoptionwidget-be-first' => 'Be the first to use this',
 	'wikia-visualeditor-dialog-template-insert-title' => 'Insert template',
 );
