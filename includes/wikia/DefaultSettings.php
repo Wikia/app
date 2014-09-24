@@ -630,6 +630,7 @@ $wgSkipSkins = array(
 		'efmonaco',
 		'answers',
 		'vector',
+		'venus',
 		'campfire',
 		'wikiamobile'
 );
