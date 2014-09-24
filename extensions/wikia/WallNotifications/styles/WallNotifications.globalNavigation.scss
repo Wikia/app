@@ -8,7 +8,8 @@
 $header-bg-color: #092140;
 $border-color: #c7d1d8;
 $wiki-header-color: #2b54b5;
-$wiki-header-bg-color: rgba(0, 0, 0, .1);
+$wiki-header-bg-color: rgba(113, 133, 148, 0.2);
+$notification-hover: rgba(164, 182, 191, 0.2);
 $white-transparent: rgba(255,255,255,0);
 $white: #fff;
 $black-transparent: rgba(0,0,0,0);
@@ -77,15 +78,16 @@ $black-half-transparent: rgba(0,0,0,.6);
 				linear-gradient($white 30%, $white-transparent),
 				linear-gradient($white-transparent, $white 70%) 0 100%,
 
-					/* Shadows */
+				/* Shadows */
 				radial-gradient(50% 0, farthest-side, $black-half-transparent, $black-transparent),
 				radial-gradient(50% 100%,farthest-side, $black-half-transparent, $black-transparent) 0 100%;
+
 			background:
 				/* Shadow covers */
 				linear-gradient($white 30%, $white-transparent),
 				linear-gradient($white-transparent, $white 70%) 0 100%,
 
-					/* Shadows */
+				/* Shadows */
 				radial-gradient(farthest-side at 50% 0, $black-half-transparent, $black-transparent),
 				radial-gradient(farthest-side at 50% 100%, $black-half-transparent, $black-transparent) 0 100%;
 
@@ -251,7 +253,7 @@ $black-half-transparent: rgba(0,0,0,.6);
 		}
 
 		&:hover {
-			background-color: #eef1f3;
+			background-color: $notification-hover;
 
 			h4, .avatars {
 				opacity: 1;
