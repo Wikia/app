@@ -42,7 +42,7 @@ class AdEngine2Service
 			|| $wg->Request->getBool('noads', false)
 			|| $wg->ShowAds === false
 			|| $wg->EnableAdEngineExt === false
-			|| !F::app()->checkSkin(['oasis', 'wikiamobile'])
+			|| !F::app()->checkSkin(['oasis', 'wikiamobile', 'venus'])
 		) {
 			$pageLevel = self::PAGE_TYPE_NO_ADS;
 			return $pageLevel;

@@ -516,7 +516,7 @@ class RestrictSessionsTest extends \WikiaBaseTest {
 	}
 
 	private function getUserMock( $isAllowedResult, $isAnon, $token = false ) {
-		$userMock = $this->getMock( '\User', [ 'isAllowed', 'isAnon', 'getToken' ] );
+		$userMock = $this->getMock( '\User', [ 'isAllowed', 'isAnon', 'getToken', 'loadDefaults' ] );
 
 		$userMock->expects( $this->any() )
 			->method( 'isAnon' )
@@ -542,6 +542,9 @@ class RestrictSessionsTest extends \WikiaBaseTest {
 				->method( 'getToken' )
 				->will( $this->returnValue( $token ) );
 		}
+
+		$userMock->expects( $this->any() )
+			->method( 'loadDefaults' );
 
 		$this->mockClass( '\User', $userMock, 'newFromId' );
 

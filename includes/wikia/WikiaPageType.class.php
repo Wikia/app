@@ -46,6 +46,24 @@ class WikiaPageType {
 	}
 
 	/**
+	 * Check if current page is article
+	 *
+	 * @return bool
+	 */
+	public static function isArticlePage() {
+		$title = F::app()->wg->Title;
+
+		$isArticlePage = (
+			is_object($title)
+			&& $title->getArticleId() != 0
+			&& $title->getNamespace() == 0
+			&& !self::isMainPage()
+		);
+
+		return $isArticlePage;
+	}
+
+	/**
 	 * Check if current page is search page
 	 *
 	 * @return bool

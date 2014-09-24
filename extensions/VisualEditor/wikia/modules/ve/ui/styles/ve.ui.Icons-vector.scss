@@ -1,5 +1,4 @@
 @import "mixins/ve-icon";
-@import "color";
 
 /*
  * oojs-ui
@@ -305,9 +304,6 @@
 }
 .oo-ui-icon-template {
 	@include ve-icon(template, mw);
-}
-.oo-ui-icon-template-inverted {
-	@include ve-icon(template, mw, $color-page-opposite);
 }
 
 /*

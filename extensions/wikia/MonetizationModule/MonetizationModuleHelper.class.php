@@ -114,7 +114,7 @@ class MonetizationModuleHelper extends WikiaModel {
 		$log->debug( "MonetizationModule: lookup with cache key: $cacheKey", $loggingParams );
 
 		$json_results = $this->wg->Memc->get( $cacheKey );
-		if ( $json_results == RENDERING_IN_PROCESS ) {
+		if ( $json_results == self::RENDERING_IN_PROCESS ) {
 			// TODO: potentially block until rendering finishes, until then return nothing
 			$log->info( "MonetizationModule: memcache hit (rendering in process).", $loggingParams );
 			wfProfileOut( __METHOD__ );
@@ -191,9 +191,10 @@ class MonetizationModuleHelper extends WikiaModel {
 			}
 
 			// set cache
-			$this->wg->Memc->set( $memcKey, json_encode( $adUnits ), mt_rand( self::CACHE_TTL_MIN, self::CACHE_TTL_MAX ) );
+			$cacheTtl = mt_rand( self::CACHE_TTL_MIN, self::CACHE_TTL_MAX );
+			$this->wg->Memc->set( $memcKey, json_encode( $adUnits ), $cacheTtl );
 
-			$loggingParams = [ 'method' => __METHOD__, 'memcKey' => $memcKey ];
+			$loggingParams = [ 'method' => __METHOD__, 'memcKey' => $memcKey, 'cacheTtl' => $cacheTtl ];
 			WikiaLogger::instance()->info( "MonetizationModule: memcache write.", $loggingParams );
 		}
 
