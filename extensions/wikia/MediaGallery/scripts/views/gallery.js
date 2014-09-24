@@ -34,7 +34,7 @@ define('mediaGallery.views.gallery', [
 	};
 
 	/**
-	 * Create media instances.Throttle based on user interaction, but always stay well ahead of what's visible.
+	 * Create media instances. Throttle based on user interaction, but always stay well ahead of what's visible.
 	 */
 	Gallery.prototype.createMedia = function () {
 		var self = this,

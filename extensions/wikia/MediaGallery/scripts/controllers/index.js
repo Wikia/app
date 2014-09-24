@@ -1,8 +1,7 @@
 require(['mediaGallery.views.gallery'], function (Gallery) {
 	'use strict';
 	$(function () {
-		var galleries = [],
-			$galleries = $('.media-gallery-wrapper'),
+		var $galleries = $('.media-gallery-wrapper'),
 			// get data from script tag in DOM
 			data = Wikia.mediaGalleryData || [];
 
@@ -32,7 +31,6 @@ require(['mediaGallery.views.gallery'], function (Gallery) {
 
 			gallery.rendered = true;
 			gallery.$el.trigger('galleryInserted');
-			galleries.push(gallery);
 		});
 	});
 });

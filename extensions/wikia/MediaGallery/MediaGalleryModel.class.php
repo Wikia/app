@@ -43,7 +43,7 @@ class MediaGalleryModel extends WikiaObject {
 	 * @param int $index Where the item shows up in the gallery
 	 * @return array|null
 	 */
-	public function getMediaData( array $item, $index ) {
+	protected function getMediaData( array $item, $index ) {
 		$file = wfFindFile( $item['title'] );
 
 		// we've already checked at this point but leaving this here just in case
