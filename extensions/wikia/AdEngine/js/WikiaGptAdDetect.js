@@ -1,5 +1,6 @@
 /*global define, setTimeout, clearTimeout*/
 /*jshint camelcase:false*/
+/*jshint maxlen:127*/
 define('ext.wikia.adEngine.wikiaGptAdDetect', [
 	'wikia.log',
 	'wikia.window',
@@ -33,7 +34,7 @@ define('ext.wikia.adEngine.wikiaGptAdDetect', [
 	}
 
 	function findAdInIframe(slotname, iframe, adCallback, noAdCallback) {
-		var iframeHeight, iframeContentHeight, iframeId, iframeDoc;
+		var iframeHeight, iframeContentHeight, iframeDoc;
 
 		iframeDoc = iframe.contentWindow.document;
 
@@ -109,7 +110,7 @@ define('ext.wikia.adEngine.wikiaGptAdDetect', [
 
 		try {
 			iframeOk = !!iframe.contentWindow.document.querySelector;
-		} catch (e) {}
+		} catch (ignore) {}
 
 		if (!iframeOk) {
 			log(
@@ -137,7 +138,7 @@ define('ext.wikia.adEngine.wikiaGptAdDetect', [
 			expectAsyncSuccess = false,
 			successTimer;
 
-		function noop() {}
+		function noop() { return; }
 
 		function callAdCallback() {
 			clearTimeout(successTimer);
@@ -158,7 +159,7 @@ define('ext.wikia.adEngine.wikiaGptAdDetect', [
 		}
 
 		function msgCallback(data) {
-			log(['msgCallback', slotname, 'caught message' , data.status], 'info', logGroup);
+			log(['msgCallback', slotname, 'caught message', data.status], 'info', logGroup);
 
 			if (data.status === 'success') {
 				if (expectAsyncSuccess) {
@@ -195,7 +196,7 @@ define('ext.wikia.adEngine.wikiaGptAdDetect', [
 			expectAsyncSuccess = true;
 		}
 
-		log(['onAdLoad', slotname, 'adType' , adType], 'info', logGroup);
+		log(['onAdLoad', slotname, 'adType', adType], 'info', logGroup);
 
 		if (adType === 'forced_success' || adType === 'always_success') {
 			return callAdCallback();
