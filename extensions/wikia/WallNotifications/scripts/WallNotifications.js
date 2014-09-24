@@ -1,7 +1,6 @@
 var $window = $(window);
 var WallNotifications = $.createClass(Object, {
 	constructor: function() {
-		this.wikisUrls = {};
 		this.isMonobook = false;
 		this.updateInProgress = false; // we only want 1 update simultaneously
 		this.notificationsCache = {}; // HTML for "trays" for different Wiki ids
@@ -243,12 +242,6 @@ var WallNotifications = $.createClass(Object, {
 			}
 
 			this.$wallNotificationsReminder.find('a').html(data.reminder);
-
-			var self = this;
-			this.$wallNotificationsSubnav.find('.notifications-for-wiki').each(function() {
-				var element = $(this);
-				self.wikisUrls[ element.attr('data-wiki-id') ] = element.attr('data-wiki-path');
-			});
 
 			this.$wallNotificationsSubnav.find('.notifications-wiki-header').click( this.proxy( this.wikiClick ) );
 		}
