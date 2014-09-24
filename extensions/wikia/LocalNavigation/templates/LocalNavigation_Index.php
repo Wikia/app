@@ -1,3 +1,3 @@
 <nav id="localNavigation" class="local-navigation">
-	LOCAL NAVIGATION CONTAINER
+	<?= $app->renderView( 'LocalNavigationContributeMenu', 'Index' ) ?>
 </nav>

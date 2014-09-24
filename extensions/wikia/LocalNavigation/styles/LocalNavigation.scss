@@ -1,3 +1,80 @@
+@import 'skins/shared/color';
+@import 'skins/shared/mixins/arrow';
+
 .local-navigation {
+	background-color: $color-page;
+	box-sizing: border-box;
 	height: 80px;
+
+	*, *:before, *:after {
+		box-sizing: inherit;
+	}
+
+	.contribute {
+		background-color: $color-buttons;
+		color: $color-button-text;
+		display: inline-block;
+		position: relative;
+	}
+
+	.contribute-button {
+		display: table-cell;
+		font-size: 12px;
+		font-weight: bold;
+		height: 40px;
+		padding: 8px 15px 8px 20px;
+		position: relative;
+		text-transform: uppercase;
+		vertical-align: middle;
+
+		&:after {
+			border: 5px solid;
+			border-top-color: $color-button-text;
+			color: transparent;
+			content: ' ';
+			display: inline-block;
+			margin: 5px 0 0 15px;
+			position: relative;
+			top: 3px;
+		}
+	}
+
+	.dropdown {
+		display: table;
+		position: absolute;
+		right: 0;
+		z-index: 500050;
+
+		li {
+			display: table-row;
+			height: 51px;
+			list-style: none;
+
+			a {
+				background-color: $color-buttons;
+				border-top: 1px solid rgba($color-button-text, .2);
+				color: $color-button-text;
+				display: table-cell;
+				padding: 20px;
+				text-decoration: none;
+				vertical-align: middle;
+				white-space: nowrap;
+				width: 100%;
+
+				&:hover {
+					font-weight: bold;
+				}
+
+				&:after {
+					content: attr(data-content);
+					font-weight: bold;
+					visibility: hidden;
+				}
+
+				span {
+					position: absolute;
+				}
+			}
+		}
+	}
 }
