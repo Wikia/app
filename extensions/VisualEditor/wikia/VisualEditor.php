@@ -193,6 +193,7 @@ $wgResourceModules += array(
 			'wikia-visualeditor-context-transclusion-description',
 			'wikia-visualeditor-dialog-wikiatemplateinsert-search',
 			'wikia-visualeditor-wikiatemplateoptionwidget-appears',
+			'wikia-visualeditor-dialog-template-insert-title',
 		),
 		'dependencies' => array(
 			'ext.visualEditor.core.desktop',
