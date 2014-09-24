@@ -19,6 +19,7 @@ $wgAutoloadClasses['ApiAddMediaPermanent'] = $dir . 'ApiAddMediaPermanent.php';
 $wgAutoloadClasses['ApiVideoPreview'] = $dir . 'ApiVideoPreview.php';
 $wgAutoloadClasses['ApiTemplateParameters'] = $dir . 'ApiTemplateParameters.php';
 $wgAutoloadClasses['ApiTemplateSuggestions'] = $dir . 'ApiTemplateSuggestions.php';
+$wgAutoloadClasses['ApiTemplateSearch'] = $dir . 'ApiTemplateSearch.php';
 
 /* API Modules */
 
@@ -28,6 +29,7 @@ $wgAPIModules['addmediapermanent'] = 'ApiAddMediaPermanent';
 $wgAPIModules['videopreview'] = 'ApiVideoPreview';
 $wgAPIModules['templateparameters'] = 'ApiTemplateParameters';
 $wgAPIModules['templatesuggestions'] = 'ApiTemplateSuggestions';
+$wgAPIModules['templatesearch'] = 'ApiTemplateSearch';
 
 /* Resource Loader Modules */
 
@@ -192,11 +194,15 @@ $wgResourceModules += array(
 			'wikia-visualeditor-context-transclusion-description',
 			'wikia-visualeditor-dialog-wikiatemplateinsert-search',
 			'wikia-visualeditor-wikiatemplateoptionwidget-appears',
+<<<<<<< HEAD
 			'wikia-visualeditor-dialog-preference-headline',
 			'wikia-visualeditor-dialog-preference-text',
 			'wikia-visualeditor-dialog-preference-link-help',
 			'wikia-visualeditor-dialog-preference-link-preferences',
 			'wikia-visualeditor-dialog-preference-start-button',
+=======
+			'wikia-visualeditor-dialog-template-insert-title',
+>>>>>>> ve-sprint-27
 		),
 		'dependencies' => array(
 			'ext.visualEditor.core.desktop',
