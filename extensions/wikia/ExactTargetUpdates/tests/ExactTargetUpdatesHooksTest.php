@@ -191,4 +191,66 @@ class ExactTargetUpdatesHooksTest extends WikiaBaseTest {
 		/* @var ExactTargetUpdatesHooks $exactTargetUpdatesHooksMock (mock of ExactTargetUpdatesHooks) */
 		$exactTargetUpdatesHooksMock->addTheUpdateUserPropertiesTask( $userMock, $mockUpdateUserTask );
 	}
+
+	/**
+	 * @dataProvider addTheAddWikiTaskProvider
+	 */
+	function testAddTheAddWikiTaskOnProd( $aParams, $aWikiParams, $aWikiCatsMappingParams ) {
+		if ( !defined( 'WIKIA_ENV_PROD' ) ) {
+			define( WIKIA_ENV_PROD, 'test-prod') ;
+		}
+
+		$this->mockGlobalVariable( 'wgWikiaEnvironment', WIKIA_ENV_PROD );
+
+		/* Mock ExactTargetAddWikiTask */
+		$mockAddWikiTask = $this->getMockBuilder( 'ExactTargetAddWikiTask' )
+			->disableOriginalConstructor()
+			->setMethods( [ 'call', 'queue' ] )
+			->getMock();
+		$mockAddWikiTask
+			->expects( $this->once() )
+			->method( 'call' );
+		$mockAddWikiTask
+			->expects( $this->once() )
+			->method( 'queue' );
+
+		/* Mock ExactTargetUpdatesHooks */
+		$mockExactTargetUpdatesHooks = $this->getMockBuilder( 'ExactTargetUpdatesHooks' )
+			->setMethods( [ 'prepareWikiParams', 'prepareWikiCatsMappingParams' ] )
+			->getMock();
+
+		/* Run test */
+		/* @var ExactTargetUpdateHooks $mockExactTargetUpdatesHooks (mock of ExactTargetUpdateHooks) */
+		$mockExactTargetUpdatesHooks->addTheAddWikiTask( $aParams, $mockAddWikiTask );
+	}
+
+	/**
+	 * Data providers
+	 */
+
+	function addTheAddWikiTaskProvider() {
+		$aParams = [
+			'city_id' => 1,
+			'title' => 'examplePath',
+			'url' => 'http://example.com',
+		];
+
+		$aWikiParams = [
+			'city_id' => 1,
+			'city_path' => 'examplePath',
+			'city_sitename' => 'exampleSitename',
+			'city_url' => 'http://example.com',
+			'city_created' => '2004-11-11 23:33:14',
+			'city_founding_user' => 2,
+		];
+
+		$aWikiCatsMappingParams = [
+			[
+				'city_id' => 1,
+				'cat_id' => 1,
+			]
+		];
+
+		return [ [ $aParams, $aWikiParams, $aWikiCatsMappingParams ] ];
+	}
 }
