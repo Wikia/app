@@ -17,10 +17,7 @@ if ( $dbName !== 'wikicities' ) {
 echo "Querying $dbName database for users...\n";
 $query = ( new WikiaSQL() )
 	->SELECT( 'user_id', 'user_registration' )
-	->DISTINCT( 'user_id' )
 	->FROM( 'user' )
-	->INNER_JOIN( 'user_properties' )
-	->ON( 'user_id', 'up_user' )
 	->WHERE( 'user_registration' );
 
 if ( isset( $options['registration'] ) ) {
@@ -35,8 +32,12 @@ if ( isset( $options['registration'] ) ) {
 	$query->IS_NULL();
 }
 
-$query->AND_( 'up_property' )->EQUAL_TO( PREFERENCE_EDITOR )
-	->AND_( 'up_value' )->EQUAL_TO( EditorPreference::OPTION_EDITOR_DEFAULT );
+$subquery = ( new WikiaSQL() )
+	->SELECT( 'up_user' )
+	->FROM( 'user_properties' )
+	->WHERE( 'up_user' )->EQUAL_TO_FIELD( 'user_id' )
+	->AND_( 'up_property' )->EQUAL_TO( PREFERENCE_EDITOR );
+$query->AND_( null )->NOT_EXISTS( $subquery );
 
 if ( isset( $options['limit'] ) ) {
 	$query->LIMIT( (int)$options['limit'] );
