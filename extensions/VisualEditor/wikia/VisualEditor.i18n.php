@@ -1246,9 +1246,9 @@ $messages['pl'] = array(
 	'wikia-visualeditor-dialog-transclusion-get-info' => 'Zobacz informacje o szablonie „$1”',
 	'wikia-visualeditor-dialog-transclusion-preview-button' => 'Zaktualizuj podgląd',
 	'wikia-visualeditor-context-transclusion-description' => 'Edytuj',
-	'wikia-visualeditor-dialog-wikiatemplateinsert-search' => 'Szukaj szablonu po jego nazwie lub artykułu',
+	'wikia-visualeditor-dialog-wikiatemplateinsert-search' => 'Szukaj szablonu po jego nazwie lub artykule',
 	'wikia-visualeditor-wikiatemplateoptionwidget-appears' => 'Użyty $1 {{PLURAL:$1|raz|razy}}',
-	'wikia-visualeditor-wikiatemplateoptionwidget-be-first' => 'Bądź pierwszy kto go użyje',
+	'wikia-visualeditor-wikiatemplateoptionwidget-be-first' => 'Bądź pierwszym, który go użyje',
 	'wikia-visualeditor-dialog-template-insert-title' => 'Wstaw szablon',
 );
 
