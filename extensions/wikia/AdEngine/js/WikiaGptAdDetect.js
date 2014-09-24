@@ -135,6 +135,7 @@ define('ext.wikia.adEngine.wikiaGptAdDetect', [
 		var adType = getAdType(slotname, gptEvent, iframe),
 			shouldPollForSuccess = false,
 			expectAsyncHop = false,
+			expectAsyncHopWithSlotName = false,
 			expectAsyncSuccess = false,
 			successTimer;
 
@@ -159,7 +160,7 @@ define('ext.wikia.adEngine.wikiaGptAdDetect', [
 		}
 
 		function msgCallback(data) {
-			log(['msgCallback', slotname, 'caught message', data.status], 'info', logGroup);
+			log(['msgCallback', slotname, 'caught message', data], 'info', logGroup);
 
 			if (data.status === 'success') {
 				if (expectAsyncSuccess) {
@@ -174,7 +175,7 @@ define('ext.wikia.adEngine.wikiaGptAdDetect', [
 			}
 
 			if (data.status === 'hop') {
-				if (expectAsyncHop) {
+				if (expectAsyncHop || expectAsyncHopWithSlotName) {
 					callNoAdCallback();
 				} else {
 					log(
@@ -194,6 +195,11 @@ define('ext.wikia.adEngine.wikiaGptAdDetect', [
 		if (adType === 'async') {
 			expectAsyncHop = true;
 			expectAsyncSuccess = true;
+		}
+
+		if (adType === 'gumgum') {
+			expectAsyncHopWithSlotName = true;
+			shouldPollForSuccess = true; // TODO: there's no way to detect the GumGum success :-(
 		}
 
 		log(['onAdLoad', slotname, 'adType', adType], 'info', logGroup);
@@ -216,6 +222,10 @@ define('ext.wikia.adEngine.wikiaGptAdDetect', [
 
 		if (expectAsyncHop || expectAsyncSuccess) {
 			messageListener.register({source: iframe.contentWindow, dataKey: 'status'}, msgCallback);
+		}
+
+		if (expectAsyncHopWithSlotName) {
+			messageListener.register({dataKey: 'slot_' + slotname}, msgCallback);
 		}
 
 		if (expectAsyncHop && (shouldPollForSuccess || expectAsyncSuccess)) {
