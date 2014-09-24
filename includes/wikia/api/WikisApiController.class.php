@@ -249,7 +249,11 @@ class WikisApiController extends WikiaApiController {
 		return $licensed->getCommercialUseNotAllowedWikis();
 	}
 
-	protected function filterNonCommercial( $wikis ) {
+	/**
+	 * @param array $wikis
+	 * @return array
+	 */
+	protected function filterNonCommercial( array $wikis ) {
 		$result =[];
 		$blackList = $this->getNonCommercialWikis();
 		foreach( $wikis as $wiki ) {
