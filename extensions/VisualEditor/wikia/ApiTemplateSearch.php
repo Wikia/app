@@ -52,7 +52,7 @@ class ApiTemplateSearch extends ApiBase {
 	}
 
 	/**
-	 * Gets all templates (if any) user in given article
+	 * Gets all templates (if any) used in given article
 	 * @return array
 	 */
 	private function getArticleNameExactMatch( $text ) {
