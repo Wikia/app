@@ -12,7 +12,7 @@ require(['mediaGallery.views.gallery'], function (Gallery) {
 
 		$.each($galleries, function (idx) {
 			var $this = $(this),
-				oVisible = $this.data('visible-count') || 8,
+				origVisibleCount = $this.data('visible-count') || 8,
 				gallery;
 
 			gallery = new Gallery({
@@ -21,9 +21,9 @@ require(['mediaGallery.views.gallery'], function (Gallery) {
 				model: {
 					media: data[idx]
 				},
-				oVisible: oVisible
+				origVisibleCount: origVisibleCount
 			});
-			$this.append(gallery.render(oVisible).$el);
+			$this.append(gallery.render(origVisibleCount).$el);
 
 			if (gallery.$toggler) {
 				$this.append(gallery.$toggler);
