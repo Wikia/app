@@ -60,6 +60,7 @@ abstract class VideoFeedIngester {
 		'Entertainment' => [],
 		'Lifestyle'     => [],
 		'International' => [],
+		'Other'         => [],
 	];
 
 	protected $defaultRequestOptions = [
@@ -1262,10 +1263,18 @@ abstract class VideoFeedIngester {
 	 */
 	public function videoIngested( $msg = '', $categories = [] ) {
 		if ( !empty( $msg ) ) {
+			$addedResult = false;
 			foreach ( $categories as $category ) {
 				if ( array_key_exists( $category, $this->resultIngestedVideos ) ) {
 					$this->resultIngestedVideos[$category][] = $msg;
+					$addedResult = true;
+					break;
 				}
+			}
+
+			// If this video is in some other category, make sure it still gets into the report
+			if ( !$addedResult ) {
+				$this->resultIngestedVideos['Other'][] = $msg;
 			}
 		}
 
