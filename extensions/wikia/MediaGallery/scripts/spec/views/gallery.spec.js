@@ -38,7 +38,7 @@ describe('MediaGalleries gallery', function () {
 			$el: $('<div></div>'),
 			$wrapper: $('.media-gallery-wrapper'),
 			model: model,
-			oVisible: 1,
+			origVisibleCount: 1,
 			interval: 2
 		};
 
@@ -70,13 +70,13 @@ describe('MediaGalleries gallery', function () {
 	});
 
 	it('should init toggler', function () {
-		options.oVisible = 2;
+		options.origVisibleCount = 2;
 		instance = new Gallery(options);
 		expect(instance.$toggler).toBeDefined();
 	});
 
 	it('should not init toggler', function () {
-		options.oVisible = 4;
+		options.origVisibleCount = 4;
 		instance = new Gallery(options);
 		expect(instance.$toggler).not.toBeDefined();
 	});
@@ -87,7 +87,7 @@ describe('MediaGalleries gallery', function () {
 		expect(instance.visibleCount).toBe(options.interval);
 		spyOn(instance, 'scrollToTop');
 		instance.showLess();
-		expect(instance.visibleCount).toBe(options.oVisible);
+		expect(instance.visibleCount).toBe(options.origVisibleCount);
 	});
 
 	it('should not error at arbitrary render count', function () {

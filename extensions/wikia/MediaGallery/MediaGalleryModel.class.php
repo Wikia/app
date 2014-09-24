@@ -1,32 +1,33 @@
 <?php
 
-class MediaGalleryModel extends WikiaObject {
-	/**
-	 * @var array Raw data sent by WikiaPhotoGallery
-	 */
-	public $items = [];
+use Wikia\Logger\WikiaLogger;
 
+class MediaGalleryModel extends WikiaObject {
 	/**
 	 * @var array Basic data for MediaGalleries
 	 */
-	public $galleryData = [];
+	private $galleryData = [];
+
+	/**
+	 * @var int Total items in galleries
+	 */
+	private $itemCount = 0;
 
 	function __construct( array $items ) {
 		parent::__construct();
-		// test: limit to 1000 items
-		$this->items = $items;
-		$this->setGalleryData();
+		$this->setGalleryData( $items );
 	}
 
 	/**
 	 * Set basic data for galleries based on info passed in from WikiaPhotoGallery
+	 * @param array $items Raw gallery data
 	 */
-	public function setGalleryData() {
-		$itemCount = count( $this->items );
+	public function setGalleryData( $items ) {
+		$this->itemCount = count( $items );
 		$dimensionIndex = 0;
 
-		foreach ( $this->items as $item ) {
-			$data = $this->getMediaData( $item, $itemCount, $dimensionIndex );
+		foreach ( $items as $item ) {
+			$data = $this->getMediaData( $item, $dimensionIndex );
 
 			if ( !empty( $data ) ) {
 				$this->galleryData[] = $data;
@@ -37,19 +38,22 @@ class MediaGalleryModel extends WikiaObject {
 
 	/**
 	 * Get data for each gallery item
-	 * @param array $item
-	 * @param $count
-	 * @param $index
+	 * @param array $item Data about the media item
+	 * @param int $index Where the item shows up in the gallery
 	 * @return array|null
 	 */
-	public function getMediaData( array $item, $count, $index ) {
+	protected function getMediaData( array $item, $index ) {
 		$file = wfFindFile( $item['title'] );
 
 		if ( !$file instanceof File ) {
-			return null; // todo: possibly add error state
+			WikiaLogger::instance()->error(
+				'MediaGalleryModel',
+				'File with title: ' . $item['title'] . 'doesn\'t exist'
+			);
+			return null;
 		}
 
-		$dimension = MediaGalleryHelper::getImageWidth( $count, $index );
+		$dimension = MediaGalleryHelper::getImageWidth( $this->itemCount, $index );
 		$thumbUrl = WikiaFileHelper::getSquaredThumbnailUrl( $file, $dimension );
 
 		$dimensions = [
@@ -83,13 +87,17 @@ class MediaGalleryModel extends WikiaObject {
 	}
 
 	/**
-	 * Get count of actual gallery items (i.e. file exists)
+	 * Get total number of items in gallery
 	 * @return int
 	 */
 	public function getMediaCount() {
-		return count( $this->galleryData );
+		return $this->itemCount;
 	}
 
+	/**
+	 * Retrieve gallery data
+	 * @return array
+	 */
 	public function getGalleryData() {
 		return $this->galleryData;
 	}

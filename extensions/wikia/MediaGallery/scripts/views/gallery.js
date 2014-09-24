@@ -12,7 +12,7 @@ define('mediaGallery.views.gallery', [
 		this.$el = options.$el.addClass('media-gallery-inner');
 		this.$wrapper = options.$wrapper;
 		this.model = options.model;
-		this.oVisibleCount = options.oVisible;
+		this.origVisibleCount = options.origVisibleCount;
 		this.interval = options.interval || 12;
 		this.throttleVal = options.throttleVal || 200;
 
@@ -28,13 +28,13 @@ define('mediaGallery.views.gallery', [
 		this.bindEvents();
 
 		// set up toggle buttons
-		if (this.model.media.length > this.oVisibleCount) {
+		if (this.model.media.length > this.origVisibleCount) {
 			this.renderToggler();
 		}
 	};
 
 	/**
-	 * Create media instances.Throttle based on user interaction, but always stay well ahead of what's visible.
+	 * Create media instances. Throttle based on user interaction, but always stay well ahead of what's visible.
 	 */
 	Gallery.prototype.createMedia = function () {
 		var self = this,
@@ -175,7 +175,7 @@ define('mediaGallery.views.gallery', [
 	 * Hide all but original media
 	 */
 	Gallery.prototype.showLess = function () {
-		var media = this.media.slice(this.oVisibleCount, this.visibleCount);
+		var media = this.media.slice(this.origVisibleCount, this.visibleCount);
 
 		$.each(media, function (idx, item) {
 			item.hide();
@@ -186,7 +186,7 @@ define('mediaGallery.views.gallery', [
 			value: this.visibleCount
 		});
 
-		this.visibleCount = this.oVisibleCount;
+		this.visibleCount = this.origVisibleCount;
 		this.$showLess.addClass('hidden');
 		this.$showMore.removeClass('hidden');
 

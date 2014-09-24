@@ -1,8 +1,7 @@
 require(['mediaGallery.views.gallery'], function (Gallery) {
 	'use strict';
 	$(function () {
-		var galleries = [],
-			$galleries = $('.media-gallery-wrapper'),
+		var $galleries = $('.media-gallery-wrapper'),
 			// get data from script tag in DOM
 			data = Wikia.mediaGalleryData || [];
 
@@ -13,7 +12,7 @@ require(['mediaGallery.views.gallery'], function (Gallery) {
 
 		$.each($galleries, function (idx) {
 			var $this = $(this),
-				oVisible = $this.data('visible-count') || 8,
+				origVisibleCount = $this.data('visible-count') || 8,
 				gallery;
 
 			gallery = new Gallery({
@@ -22,9 +21,9 @@ require(['mediaGallery.views.gallery'], function (Gallery) {
 				model: {
 					media: data[idx]
 				},
-				oVisible: oVisible
+				origVisibleCount: origVisibleCount
 			});
-			$this.append(gallery.render(oVisible).$el);
+			$this.append(gallery.render(origVisibleCount).$el);
 
 			if (gallery.$toggler) {
 				$this.append(gallery.$toggler);
@@ -32,7 +31,6 @@ require(['mediaGallery.views.gallery'], function (Gallery) {
 
 			gallery.rendered = true;
 			gallery.$el.trigger('galleryInserted');
-			galleries.push(gallery);
 		});
 	});
 });

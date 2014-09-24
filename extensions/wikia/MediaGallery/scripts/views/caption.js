@@ -48,8 +48,7 @@ define('mediaGallery.views.caption', [], function () {
 	 * Note: it's hard to do this animation with css b/c the new top margin value is unknown
 	 */
 	Caption.prototype.captionHover = function () {
-		var self = this,
-			mediaHeight = this.$media.height(),
+		var mediaHeight = this.$media.height(),
 			contentHeight,
 			newMarginTop;
 
@@ -73,7 +72,7 @@ define('mediaGallery.views.caption', [], function () {
 
 		// add a scrollbar to long captions
 		if (contentHeight > mediaHeight) {
-			self.$el.addClass('scroll');
+			this.$el.addClass('scroll');
 		}
 	};
 
