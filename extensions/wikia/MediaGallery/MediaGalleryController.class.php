@@ -24,7 +24,8 @@ class MediaGalleryController extends WikiaController {
 
 		$data = $this->model->getGalleryData();
 
-		$this->media = $data;
+		// noscript tag does not need more than 100 images
+		$this->media = array_slice($data, 0, 100);
 		$this->json = json_encode( $data );
 		$this->count = $this->model->getMediaCount();
 		$this->visibleCount = $visibleCount;

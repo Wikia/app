@@ -189,7 +189,7 @@ define('mediaGallery.views.gallery', [
 	Gallery.prototype.scrollToTop = function () {
 		// scroll to the top of the gallery
 		$('body, html').animate({
-			scrollTop: this.$wrapper.offset().top - 80
+			scrollTop: this.$wrapper.offset().top - 50
 		}, 500);
 	};
 
