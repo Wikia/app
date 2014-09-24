@@ -12,8 +12,8 @@
 	@include justify-content( center );
 	opacity: 0;
 
-	&.visible {
-		z-index: $zTop + 1;
+	&.optimizely-opaque {
+		@include blackout( transparentize( $color-page, 0.15 ) );
 	}
 
 	.content {
