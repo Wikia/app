@@ -19,9 +19,10 @@ define('mediaGallery.views.media', [
 
 		this.model.media = this;
 		this.rendered = false;
+		this.$loaded = $.Deferred();
 
 		// Wait till element is inserted into DOM before binding caption events
-		this.$el.on('mediaInserted', $.proxy(this.initCaption, this));
+		this.$el.on('mediaInserted', $.proxy(this.onInsert, this));
 	};
 
 	/**
@@ -34,6 +35,16 @@ define('mediaGallery.views.media', [
 		this.rendered = true;
 
 		return this;
+	};
+
+	Media.prototype.onInsert = function () {
+		var self = this;
+
+		this.$el.find('img').on('load error', function () {
+			self.$loaded.resolve();
+		});
+
+		this.initCaption();
 	};
 
 	/**

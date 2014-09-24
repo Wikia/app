@@ -79,25 +79,17 @@ define('mediaGallery.views.gallery', [
 
 	/**
 	 * Render sets of media.
-	 * @param {int|null} count Optional number to be rendered, otherwise use this.interval
+	 * @param {int} count Number to be rendered
 	 * @returns {Gallery}
 	 */
 	Gallery.prototype.render = function (count) {
 		var self = this,
-			media;
+			media,
+			deferredImages = [];
 
-		// don't render 0 items, and don't fall through to default interval value either when count is 0.
-		if (count === 0) {
-			return this;
-		}
-
-		// if count isn't passed in, use the default interval value
-		count = count || this.interval;
 		media = this.media.slice(this.visibleCount, this.visibleCount + count);
-
 		$.each(media, function (idx, item) {
-			item.render()
-				.show();
+			item.render();
 			self.$el.append(item.$el);
 
 			// trigger event when media inserted into DOM
@@ -106,6 +98,14 @@ define('mediaGallery.views.gallery', [
 			}
 
 			self.visibleCount += 1;
+			deferredImages.push(item.$loaded);
+		});
+
+		// wait till all images are loaded before showing any
+		$.when.apply(this, deferredImages).done(function () {
+			$.each(media, function (idx, item) {
+				item.show();
+			});
 		});
 
 		return this;
