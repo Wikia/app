@@ -25,6 +25,9 @@ describe('MediaGalleries gallery', function () {
 			media: []
 		};
 
+	$.fn.startThrobbing = $.noop;
+	$.fn.stopThrobbing = $.noop;
+
 	// Create an abitrary data model
 	for (i = 0; i < 4; i+=1) {
 		model.media.push(mediaData);

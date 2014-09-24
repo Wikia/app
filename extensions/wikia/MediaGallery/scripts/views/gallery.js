@@ -82,10 +82,14 @@ define('mediaGallery.views.gallery', [
 	 * @param {int} count Number to be rendered
 	 * @returns {Gallery}
 	 */
-	Gallery.prototype.render = function (count) {
+	Gallery.prototype.render = function (count, $el) {
 		var self = this,
 			media,
 			deferredImages = [];
+
+		if ($el) {
+			$el.startThrobbing();
+		}
 
 		media = this.media.slice(this.visibleCount, this.visibleCount + count);
 		$.each(media, function (idx, item) {
@@ -103,6 +107,9 @@ define('mediaGallery.views.gallery', [
 
 		// wait till all images are loaded before showing any
 		$.when.apply(this, deferredImages).done(function () {
+			if ($el) {
+				$el.stopThrobbing();
+			}
 			$.each(media, function (idx, item) {
 				item.show();
 			});
@@ -147,7 +154,7 @@ define('mediaGallery.views.gallery', [
 			}
 		});
 
-		this.render(toRender);
+		this.render(toRender, this.$showMore);
 
 		// hide and show appropriate buttons
 		this.$showLess.removeClass('hidden');
