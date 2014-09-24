@@ -34,7 +34,17 @@ class AnalyticsProviderRubiconRTP implements iAnalyticsProvider {
 			$code = <<< SCRIPT
 <script>
 	require(['wikia.window', 'wikia.geo', 'wikia.instantGlobals'], function (window, geo, globals) {
-		if (!globals.wgSitewideDisableRubiconRTP && geo.getCountryCode() == "US" ) {
+		var enabledRtpCountries = {
+			US: 1,
+			UK: 1,
+			GB: 1,
+			DE: 1,
+			CA: 1,
+			AU: 1,
+			NZ: 1
+		};
+
+		if (!globals.wgSitewideDisableRubiconRTP && enabledRtpCountries[geo.getCountryCode()]) {
 			var s, i, config = {
 				rp_performance: {
 					Start: Math.round(new Date().getTime() - window.wgNow.getTime()),
