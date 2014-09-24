@@ -7,20 +7,21 @@
 ini_set( "include_path", dirname(__FILE__)."/../" );
 require_once( "commandLine.inc" );
 
-$dbr = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
+$dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
 
-$dbName = $dbr->getDBname();
-echo "Database name: $dbName\n";
-if ( !in_array( $dbName, array( 'wikicities', 'wikicities_c1' ) ) ) {
-	exit( "*** Database name not in list of acceptable databases for this script. Aborting.\n" );
+$dbName = $dbw->getDBname();
+if ( $dbName !== 'wikicities' ) {
+	exit( "*** Shared database name does not match expected name. Aborting.\n" );
 }
 
-echo "Querying database for users...\n";
-$query = 'SELECT u.user_id, u.user_registration FROM wikicities.user u'
-	. ' INNER JOIN wikicities.user_properties up ON u.user_id = up.up_user'
-	. ' AND up.up_property = \'' . PREFERENCE_EDITOR . '\''
-	. ' AND up.up_value = \'' . EditorPreference::OPTION_EDITOR_DEFAULT . '\''
-	. ' WHERE u.user_registration';
+echo "Querying $dbName database for users...\n";
+$query = ( new WikiaSQL() )
+	->SELECT( 'user_id', 'user_registration' )
+	->DISTINCT( 'user_id' )
+	->FROM( 'user' )
+	->INNER_JOIN( 'user_properties' )
+	->ON( 'user_id', 'up_user' )
+	->WHERE( 'user_registration' );
 
 if ( isset( $options['registration'] ) ) {
 	// Registration in DB is in the form of an integer, with year, month, date, hour, minute
@@ -29,27 +30,30 @@ if ( isset( $options['registration'] ) ) {
 		// Registration value is a date without time, so append time values (HHMMSS) as midnight
 		$options['registration'] .= '000000';
 	}
-	$query .= ' > ' . (int)$options['registration'];
+	$query->GREATER_THAN_OR_EQUAL( (int)$options['registration'] );
 } else {
-	$query .= ' IS NULL';
+	$query->IS_NULL();
 }
 
+$query->AND_( 'up_property' )->EQUAL_TO( PREFERENCE_EDITOR )
+	->AND_( 'up_value' )->EQUAL_TO( EditorPreference::OPTION_EDITOR_DEFAULT );
+
 if ( isset( $options['limit'] ) ) {
-	$query .= ' LIMIT ' . (int)$options['limit'];
+	$query->LIMIT( (int)$options['limit'] );
 }
 
 if ( isset( $options['offset'] ) ) {
-	$query .= ' OFFSET ' . (int)$options['offset'];
+	$query->OFFSET( (int)$options['offset'] );
 }
 
-$result = $dbr->query( $query );
-$allRows = array();
+$allRows = $query->run( $dbw, function( $result ) {
+	$rows = array();
+	while ( $row = $result->fetchObject( $result ) ) {
+		$rows[] = $row;
+	}
+	return $rows;
+} );
 
-while ( $row = $dbr->fetchObject( $result ) ) {
-	$allRows[] = $row;
-}
-
-$dbr->freeResult( $result );
 echo count( $allRows ) . " users to modify.\n";
 
 $userCount = 0;
@@ -65,6 +69,7 @@ foreach ( $allRows as $row ) {
 	$user->setOption( 'showVisualEditorTransitionDialog', 1 );
 	$output .= ' editor preference set to VisualEditor';
 
+	// Uncomment below before executing, to actually make changes to user settings
 	//$user->saveSettings();
 	echo "$output\n";
 	$userCount++;
