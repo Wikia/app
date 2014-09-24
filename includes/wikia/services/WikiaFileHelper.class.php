@@ -250,13 +250,7 @@ class WikiaFileHelper extends Service {
 			'userAvatarWidth'       => 16
 		);
 
-		foreach ( $configDefaults as $key => $val ) {
-			if ( empty( $config[$key] ) ) {
-				$config[$key] = $val;
-			}
-		}
-
-		return $config;
+		return array_merge($configDefaults, $config);
 	}
 
 	/**
@@ -319,8 +313,8 @@ class WikiaFileHelper extends Service {
 				$data['exists'] = true;
 				$data['mediaType'] = self::isFileTypeVideo( $file ) ? 'video' : 'image';
 
-				$width = $file->getWidth();
-				$height = $file->getHeight();
+				$width = (int) $file->getWidth();
+				$height = (int) $file->getHeight();
 
 				if ( $data['mediaType'] == 'video' ) {
 					$width  = $config['contextWidth']  ? $config['contextWidth']  : $width;
@@ -345,7 +339,7 @@ class WikiaFileHelper extends Service {
 						$data['extraHeight'] = CrunchyrollVideoHandler::CRUNCHYROLL_WIDGET_HEIGHT_PX;
 					}
 				} else {
-					$width = $width > $config['imageMaxWidth'] ? $config['imageMaxWidth'] : $width;
+					$width = !empty( $config[ 'imageMaxWidth' ] ) ? min( $config[ 'imageMaxWidth' ], $width ) : $width;
 					$mediaPage = new ImagePage( $fileTitle );
 				}
 
@@ -370,6 +364,8 @@ class WikiaFileHelper extends Service {
 				$data['userPageUrl'] = $user->getUserPage()->getFullURL();
 				$data['description']  = $mediaPage->getContent();
 				$data['articles'] = $articleList;
+				$data['width'] = $width;
+				$data['height'] = $height;
 			}
 		}
 
@@ -657,10 +653,11 @@ class WikiaFileHelper extends Service {
 	 * transparent background.
 	 *
 	 * @param File $file
-	 * @param $dimension
+	 * @param int $dimension
+	 * @param bool $useWebP
 	 * @return string The URL of the image
 	 */
-	public static function getSquaredThumbnailUrl( File $file, $dimension ) {
+	public static function getSquaredThumbnailUrl( File $file, $dimension, $useWebP = false ) {
 		// Create a new url generator
 		$gen = ( new UrlGenerator( $file ) );
 
@@ -684,6 +681,10 @@ class WikiaFileHelper extends Service {
 				// Landscape mode, crop in the middle
 				$gen->zoomCrop();
 			}
+		}
+
+		if ( $useWebP ) {
+			$gen->webp();
 		}
 
 		$url = $gen->width( $dimension )->height( $dimension )->url();

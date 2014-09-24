@@ -40,8 +40,9 @@ $wgSpecialPageGroups[ 'Maps' ] = 'wikia';
 
 // hooks
 $wgHooks[ 'ParserFirstCallInit' ][] = 'WikiaInteractiveMapsParserTagController::parserTagInit';
-$wgHooks[ 'SkinAfterBottomScripts' ][] = 'WikiaInteractiveMapsHooks::onSkinAfterBottomScripts';
 $wgHooks[ 'OutputPageBeforeHTML' ][] = 'WikiaInteractiveMapsHooks::onOutputPageBeforeHTML';
+$wgHooks[ 'OasisSkinAssetGroups' ][] = 'WikiaInteractiveMapsHooks::onOasisSkinAssetGroups';
+$wgHooks[ 'SkinAfterBottomScripts' ][] = 'WikiaInteractiveMapsHooks::onSkinAfterBottomScripts';
 
 // mobile
 $wgHooks['WikiaMobileAssetsPackages'][] = 'WikiaInteractiveMapsHooks::onWikiaMobileAssetsPackages';

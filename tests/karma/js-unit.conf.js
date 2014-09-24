@@ -83,6 +83,7 @@ module.exports = function (config) {
 			'extensions/wikia/AdEngine/js/DartUrl.js',
 			'extensions/wikia/AdEngine/js/EvolveHelper.js',
 			'extensions/wikia/AdEngine/js/EvolveSlotConfig.js',
+			'extensions/wikia/AdEngine/js/GptSlotConfig.js',
 			'extensions/wikia/AdEngine/js/MessageListener.js',
 			'extensions/wikia/AdEngine/js/WikiaDartHelper.js',
 			'extensions/wikia/AdEngine/js/WikiaDartVideoHelper.js',

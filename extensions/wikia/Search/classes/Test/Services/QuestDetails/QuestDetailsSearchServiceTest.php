@@ -115,93 +115,56 @@ class QuestDetailsSearchServiceTest extends WikiaBaseTest {
 
 	public function testShouldReturnCorrectResponseFormat() {
 		$questDetailsSearch = $this->getMockedQuestDetailsSearchService();
-
 		$result = $questDetailsSearch->newQuery()->search();
-
 		$expected = [
-			[
-				"id" => 155836,
-				"title" => "The Letter B",
-				"url" => "http://muppet.wikia.com/wiki/The_Letter_B",
-				"ns" => 0,
-				"revision" => [
-					"id" => 1234,
-					"user" => "test_user",
-					"user_id" => 1111,
-					"timestamp" => "1234567"
-				],
-				"comments" => 0,
-				"type" => "other",
-				"categories" => [
-					"Sesame Street Songs",
-					"Alphabet"
-				],
-				"abstract" => "Some text goes here",
-				"metadata" => [
-					"fingerprints" => [
-						"amazing",
-						"great_job",
-						"best"
-					],
-					"quest_id" => "very_good",
-					"map_location" => [
-						"latitude" => 1.11244,
-						"longitude" => -1.21412,
-						"region" => "Map_Region_1"
-					]
+			'1018050_2151' =>
+				[
+					'poi_id_s' => '15908',
+					'poi_category_id_s' => '5062',
+					'map_region_s' => '1b',
+					'map_id_s' => '2303',
+					'fingerprint_ids_mv_s' => [
+							0 => 'f31'
+						],
+					'parent_poi_category_id_s' => '3',
+					'map_location_sr' => '-75.737305,-112.851562',
+					'ability_id_s' => '33',
+					'quest_id_s' => 'f32',
+					'id' => '1018050_2151',
+					'wid_i' => 1018050,
+					'_version_' => 1478885727304417300
 				]
-			],
-			[
-				"id" => 8938,
-				"title" => "Ruby",
-				"url" => "http://muppet.wikia.com/wiki/Ruby",
-				"ns" => 0,
-				"revision" => [
-					"id" => 1234,
-					"user" => "test_user",
-					"user_id" => 1111,
-					"timestamp" => "1234567"
-				],
-				"comments" => 0,
-				"type" => "character",
-				"categories" => [
-					"Sesame Street Characters",
-					"Muppet Characters",
-					"Sesame Street Monsters"
-				],
-				"abstract" => "Ruby is a yellow monster",
-				"metadata" => [
-					"quest_id" => "very_good",
-					"map_location" => [
-						"latitude" => 1.11244,
-						"longitude" => 1.11412,
-						"region" => "Map_Region_1"
-					]
-				]
-			],
-			[
-				"id" => 123,
-				"title" => "Ruby",
-				"url" => "http://muppet.wikia.com/wiki/Ruby",
-				"ns" => 0,
-				"revision" => [
-					"id" => 1234,
-					"user" => "test_user",
-					"user_id" => 1111,
-					"timestamp" => "1234567"
-				],
-				"comments" => 0,
-				"type" => "character",
-				"categories" => [
-					"Sesame Street Characters",
-					"Muppet Characters",
-					"Sesame Street Monsters"
-				],
-				"abstract" => "Ruby is a yellow monster"
-			]
-		];
-
+			];
 		$this->assertEquals( $expected, $result );
+	}
+
+	public function testShouldProcessMetadata() {
+		$questDetailsSearch = $this->getMockedQuestDetailsSearchService();
+		$helper = new QuestDetailsSolrHelper();
+		$result = $questDetailsSearch->newQuery()->search();
+		$processed = $helper->processMetadata( $result );
+		$expected = [
+			'1018050_2151' =>
+				[
+					'map_location' =>
+						[
+							'region' => '1b',
+							'id' => '2303',
+							'latitude' => -75.737305,
+							'longitude' => -112.851562,
+						],
+					'poi_id' => '15908',
+					'poi_category_id' => '5062',
+					'fingerprints' =>
+						[
+							0 => 'f31',
+						],
+					'parent_poi_category_id' => '3',
+					'ability_id' => '33',
+					'quest_id' => 'f32',
+				]
+			];
+		$this->assertEquals( $expected, $processed );
 	}
 
 	protected function getMockedQuestDetailsSearchService() {
@@ -257,74 +220,31 @@ class QuestDetailsSearchServiceTest extends WikiaBaseTest {
     "status": 0,
     "QTime": 0,
     "params": {
-      "fl": "pageid,title_*,url,ns,article_type_s,categories_*,html_*,metadata_*",
       "indent": "true",
-      "q": "metadata_fingerprint_ids_ss:*",
-      "wt": "json"
+      "q": "*:*",
+      "wt": "json",
+      "fq": "+id:(1018050_2151)"
     }
   },
   "response": {
-    "numFound": 3,
+    "numFound": 1,
     "start": 0,
     "docs": [
       {
-        "pageid": 155836,
-        "categories_mv_en": [
-          "Sesame Street Songs",
-          "Alphabet"
+        "poi_id_s": "15908",
+        "poi_category_id_s": "5062",
+        "map_region_s": "1b",
+        "map_id_s": "2303",
+        "fingerprint_ids_mv_s": [
+          "f31"
         ],
-        "ns": 0,
-        "html_en": "Some text goes here",
-        "title_en": "The Letter B",
-        "url": "http://muppet.wikia.com/wiki/The_Letter_B",
-        "title_em": "The Letter B",
-        "article_type_s": "other",
-        "metadata_fingerprint_ids_ss": [
-          "amazing",
-          "great_job",
-          "best",
-          ""
-        ],
-        "metadata_quest_id_s": "very_good",
-        "metadata_map_location_sr": "1.11244,-1.21412",
-        "metadata_map_region_s": "Map_Region_1"
-      },
-      {
-        "pageid": 8938,
-        "categories_mv_en": [
-          "Sesame Street Characters",
-          "Muppet Characters",
-          "Sesame Street Monsters"
-        ],
-        "ns": 0,
-        "html_en": "Ruby is a yellow monster",
-        "title_en": "Ruby",
-        "url": "http://muppet.wikia.com/wiki/Ruby",
-        "title_em": "Ruby",
-        "article_type_s": "character",
-        "metadata_fingerprint_ids_ss": [
-          ""
-        ],
-        "metadata_quest_id_s": "very_good",
-        "metadata_map_location_sr": "1.11244,1.11412",
-        "metadata_map_region_s": "Map_Region_1"
-      },
-      {
-        "pageid": 123,
-        "categories_mv_en": [
-          "Sesame Street Characters",
-          "Muppet Characters",
-          "Sesame Street Monsters"
-        ],
-        "ns": 0,
-        "html_en": "Ruby is a yellow monster",
-        "title_en": "Ruby",
-        "url": "http://muppet.wikia.com/wiki/Ruby",
-        "title_em": "Ruby",
-        "article_type_s": "character",
-        "metadata_fingerprint_ids_ss": [
-          ""
-        ]
+        "parent_poi_category_id_s": "3",
+        "map_location_sr": "-75.737305,-112.851562",
+        "ability_id_s": "33",
+        "quest_id_s": "f32",
+        "id": "1018050_2151",
+        "wid_i": 1018050,
+        "_version_": 1478885727304417300
       }
     ]
   }
@@ -340,14 +260,14 @@ SOLR_RESPONSE_MOCK;
 
 	public function makeCriteriaQuery_Provider() {
 		return [
-			[ [ 'fingerprint' => 'test' ], 'metadata_fingerprint_ids_ss:"test"' ],
-			[ [ 'fingerprint' => 'test', 'questId' => null, 'category' => null ], 'metadata_fingerprint_ids_ss:"test"' ],
-			[ [ 'fingerprint' => 'test', 'questId' => '', 'category' => '' ], 'metadata_fingerprint_ids_ss:"test"' ],
-			[ [ 'questId' => '123' ], 'metadata_quest_id_s:"123"' ],
+			[ [ 'fingerprint' => 'test' ], 'fingerprint_ids_mv_s:"test"' ],
+			[ [ 'fingerprint' => 'test', 'questId' => null, 'category' => null ], 'fingerprint_ids_mv_s:"test"' ],
+			[ [ 'fingerprint' => 'test', 'questId' => '', 'category' => '' ], 'fingerprint_ids_mv_s:"test"' ],
+			[ [ 'questId' => '123' ], 'quest_id_s:"123"' ],
 			[ [ 'category' => 'Test' ], 'categories_mv_en:"Test"' ],
-			[ [ 'fingerprint' => 'test', 'questId' => '123' ], 'metadata_fingerprint_ids_ss:"test" AND metadata_quest_id_s:"123"' ],
-			[ [ 'fingerprint' => 'test', 'category' => 'Test' ], 'metadata_fingerprint_ids_ss:"test" AND categories_mv_en:"Test"' ],
-			[ [ 'questId' => '123', 'category' => 'Test' ], 'metadata_quest_id_s:"123" AND categories_mv_en:"Test"' ],
+			[ [ 'fingerprint' => 'test', 'questId' => '123' ], 'fingerprint_ids_mv_s:"test" AND quest_id_s:"123"' ],
+			[ [ 'fingerprint' => 'test', 'category' => 'Test' ], 'fingerprint_ids_mv_s:"test" AND categories_mv_en:"Test"' ],
+			[ [ 'questId' => '123', 'category' => 'Test' ], 'quest_id_s:"123" AND categories_mv_en:"Test"' ],
 		];
 	}
 

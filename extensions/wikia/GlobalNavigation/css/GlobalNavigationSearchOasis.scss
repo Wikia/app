@@ -1,0 +1,51 @@
+@import 'extensions/wikia/Venus/styles/variables';
+@import 'skins/shared/mixins/calc';
+
+$other-modules-width: 5 * $large-grid-column +  3 * $large-grid-gutter + 2 * $large-content-padding - 1px;
+
+.search-container {
+	@include width-calc('100% - #{$other-modules-width}');
+}
+
+@media #{$medium-only} {
+	$other-modules-width: 5 * $medium-grid-column + 3 * $medium-grid-gutter + 2 * $medium-content-padding - 1px;
+
+	.search-container {
+		@include width-calc('100% - #{$other-modules-width}');
+	}
+}
+
+@media #{$small-only} {
+	$other-modules-width: 5 * $small-grid-column + 4 * $small-grid-gutter + 2 * $small-content-padding - 1px - 8px;
+
+	.search-container {
+		@include width-calc('100% - #{$other-modules-width}');
+	}
+}
+
+.search-form-wrapper {
+	.chevron {
+		vertical-align: baseline;
+	}
+}
+
+.search-select-wrapper {
+	vertical-align: baseline;
+
+	.search-select {
+		color: inherit;
+		font: inherit;
+		margin: 0;
+	}
+}
+
+.autocomplete {
+	border-radius: 0;
+	box-shadow: none;
+	padding: 0;
+
+	div {
+		font-size: 15px;
+		line-height: 18px;
+	}
+}

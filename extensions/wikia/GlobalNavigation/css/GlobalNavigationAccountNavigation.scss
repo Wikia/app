@@ -1,0 +1,157 @@
+@import 'extensions/wikia/Venus/styles/variables';
+@import 'extensions/wikia/Venus/styles/mixins';
+@import 'GlobalNavigationColors';
+
+.account-navigation-container {
+	@include grid-column-width('medium', 1, $medium-grid-gutter + $medium-content-padding - 1px);
+}
+
+.AccountNavigation {
+	margin: 0;
+	padding: 0;
+	width: 100%;
+
+	&.active {
+		.user-menu {
+			display: table;
+			table-layout: fixed;
+		}
+
+		> li {
+			background-color: $nav-background-light-gray-color;
+
+			> a:after {
+				border-top-color: $nav-foreground-dark-color;
+			}
+		}
+	}
+
+	> li {
+		border: 0;
+		list-style: none;
+		margin-top: 0;
+		padding: 0;
+
+		> a {
+			@include grid-column-width('medium', 1, $medium-grid-gutter + $medium-content-padding - 2px);
+
+			position: relative;
+
+			&:after {
+				border: 5px solid;
+				border-top-color: $nav-border-color;
+				color: transparent;
+				content: ' ';
+				float: left;
+				margin-top: 16px;
+			}
+		}
+
+		.avatar-container {
+			border-radius: 50%;
+			float: left;
+			height: 36px;
+			margin: 0 6px 0 29px;
+			overflow: hidden;
+			width: 36px;
+
+			&.anon-avatar-placeholder,
+			&.logged-avatar-placeholder {
+				background-image: url('/extensions/wikia/GlobalNavigation/images/avatar.svg'); /* base64 */
+				background-repeat: no-repeat;
+			}
+
+			&.anon-avatar-placeholder {
+				background-color: $nav-border-color;
+			}
+
+			&.logged-avatar-placeholder {
+				background-color: $nav-foreground-dark-color;
+			}
+		}
+
+	}
+
+	.user-menu {
+		@include grid-column-width('medium', 2, $medium-content-padding);
+		border: 1px solid $nav-border-color;
+		display: none;
+		font-size: 15px;
+		padding: 0;
+		position: relative;
+		right: $medium-grid-column + 1px;
+
+		> li {
+			display: table-row;
+			height: 51px;
+			list-style: none;
+
+			> a {
+				background-color: $nav-background-color;
+				border-top: 1px solid $nav-border-color;
+				color: $nav-foreground-bright-color;
+				display: table-cell;
+				padding: 8px 20px;
+				text-decoration: none;
+				vertical-align: middle;
+				width: 100%;
+				word-break: break-word;
+
+				&:hover {
+					background-color: $nav-foreground-bright-color;
+					color: $nav-background-color;
+				}
+			}
+
+			&:first-child a {
+				border-top: 0;
+			}
+		}
+	}
+}
+
+@media #{$small-only} {
+	.account-navigation-container {
+		@include grid-column-width('small', 1, $small-grid-gutter + $small-content-padding - 1px);
+	}
+
+	.AccountNavigation {
+		> li {
+			> a {
+				@include grid-column-width('small', 1, $small-grid-gutter + $small-content-padding - 2px);
+			}
+
+			.avatar-container {
+				margin-left: $small-grid-column-padding + $small-grid-gutter;
+			}
+		}
+
+		.user-menu {
+			@include grid-column-width('small', 3, $small-content-padding);
+			right: 2 * $small-grid-column + $small-grid-gutter + 1px;
+		}
+	}
+}
+
+@media #{$large-up} {
+	.account-navigation-container {
+		@include grid-column-width('large', 1, $large-grid-gutter + $large-content-padding - 1px);
+	}
+
+	.AccountNavigation {
+		> li {
+			> a {
+				@include grid-column-width('large', 1, $large-grid-gutter + $large-content-padding - 2px);
+			}
+
+			.avatar-container {
+				margin-left: 38px;
+			}
+		}
+
+		.user-menu {
+			@include grid-column-width('large', 2, $large-content-padding);
+			right: $large-grid-column + 1px;
+		}
+	}
+}

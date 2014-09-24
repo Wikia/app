@@ -546,8 +546,8 @@
 .WikiaArticle {
 	#{$infoboxes} {
 		.article-thumb, .article-thumb.tright, .article-thumb.tleft {
-			margin: 0 auto;
 			float: none;
+			margin: 0 auto;
 		}
 	}
 }

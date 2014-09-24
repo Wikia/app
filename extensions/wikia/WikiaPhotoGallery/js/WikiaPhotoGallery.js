@@ -272,7 +272,7 @@
 					}
 
 					gallery.wikitext = this.JSONtoWikiText(gallery);
-
+// Track here
 					// update / save gallery
 					switch (this.editor.from) {
 						case 'wysiwyg':
@@ -2214,7 +2214,7 @@
 			// get full height available (RT #55203)
 			var height = parseInt($(window).height() - 125);
 
-			if (skin == 'oasis') {
+			if (skin == 'oasis' || skin == 'venus') {
 				height -= 150;
 				width = 740;
 			}
@@ -2279,7 +2279,7 @@
 					$('#WikiaPhotoGalleryEditorLoader').remove();
 
 					// mark editor dialog title node
-					if (skin == 'oasis') {
+					if (skin == 'oasis' || skin == 'venus') {
 						$('#WikiaPhotoGalleryEditor').children('h1').attr('id', 'WikiaPhotoGalleryEditorTitle');
 					}
 					else {

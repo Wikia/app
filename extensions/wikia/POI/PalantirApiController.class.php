@@ -1,6 +1,7 @@
 <?php
 
 use Wikia\Search\Services\NearbyPOISearchService;
+use Wikia\Search\Services\IDSEntitySearchService;
 
 class PalantirApiController extends WikiaApiController {
 
@@ -11,6 +12,15 @@ class PalantirApiController extends WikiaApiController {
 	const DEGREES_IN_PI = 180;
 
 	const DEFAULT_RADIUS = 180;
+
+	const METADATA_CACHE_EXPIRATION = 300; // 5 minutes
+
+	const MAX_ITEMS_RETURN = 9999;
+
+	/**
+	 * @var IDSEntitySearchService
+	 */
+	protected $IDSEntity;
 
 	/**
 	 * @var QuestDetailsSolrHelper
@@ -27,6 +37,17 @@ class PalantirApiController extends WikiaApiController {
 	 */
 	protected $questDetailsSearch;
 
+	public function __construct(){
+		parent::__construct();
+		$this->setOutputFieldTypes(
+			[
+				"width" => self::OUTPUT_FIELD_CAST_NULLS | self::OUTPUT_FIELD_TYPE_INT,
+				"height" => self::OUTPUT_FIELD_CAST_NULLS | self::OUTPUT_FIELD_TYPE_INT,
+				"id" => self::OUTPUT_FIELD_CAST_NULLS | self::OUTPUT_FIELD_TYPE_INT
+			]
+		);
+	}
+
 	public function getQuestDetails() {
 		$fingerprintId = $this->getRequest()->getVal( 'fingerprint_id' );
 		$questId = $this->getRequest()->getVal( 'quest_id' );
@@ -34,21 +55,21 @@ class PalantirApiController extends WikiaApiController {
 		$limit = $this->getRequest()->getVal( 'limit' );
 
 		$this->validateQuestDetailsParameters( $limit );
-
-		$result = $this->getQuestDetailsSearch()
+		$cityId = $this->wg->CityId;
+		$solrResponse = $this->getQuestDetailsSearch()
 			->newQuery()
 			->withFingerprint( $fingerprintId )
 			->withQuestId( $questId )
-			->withCategory( $category )
-			->withWikiId( $this->wg->CityId )
+			->withWikiId( $cityId )
 			->limit( $limit )
 			->search();
+
+		$result = $this->fillDataFromMain( $solrResponse, $cityId, $category );
 
 		if( empty( $result ) ) {
 			throw new NotFoundApiException();
 		}
-
-		$this->setResponseData( $result );
+		$this->setResponseData( $result, null, self::METADATA_CACHE_EXPIRATION );
 	}
 
 	/**
@@ -85,31 +106,70 @@ class PalantirApiController extends WikiaApiController {
 		$this->validateNearbyQuestsParameters( $lat, $long, $radius, $limit );
 
 		$radiusKilometers = $this->radiusDegreesToKilometers( $radius );
-
-		$solrHelper = $this->getSolrHelper();
 		$nearbySearch = $this->getNearbySearch();
-
+		$cityId = $this->wg->CityId;
 		$solrResponse = $nearbySearch->newQuery()
 			->latitude( $lat )
 			->longitude( $long )
 			->radius( $radiusKilometers )
 			->region( $region )
-			->setFields( $solrHelper->getRequiredSolrFields() )
+			->setFields( [ "id" ] )
 			->limit( $limit )
-			->withWikiaId( $this->wg->CityId )
+			->withWikiaId( $cityId )
 			->search();
 
-		$result = $solrHelper->consumeResponse( $solrResponse );
+		$result = $this->fillDataFromMain( $solrResponse, $cityId, null );
 
 		if( empty( $result ) ) {
 			throw new NotFoundApiException();
 		}
 
-		$this->setResponseData( $result );
+		$this->setResponseData( $result, null, self::METADATA_CACHE_EXPIRATION );
+	}
+
+	protected function fillDataFromMain( $solrResponse, $cityId, $category ) {
+		if( empty( $solrResponse ) ){
+			return [];
+		}
+		$remove = strlen( $cityId ) + 1;
+		$ids = [ ];
+		foreach ( $solrResponse as $item ) {
+			$ids[ ] = substr( $item[ 'id' ], $remove );
+		}
+
+
+		$helper = $this->getSolrHelper();
+		$categories = $helper->findCategoriesForIds( $ids );
+		$category = ArticlesApiController::resolveCategoryName( $category );
+		if ( !empty( $category ) ) {
+			$categoryName = $category->getBaseText();
+			$categories = $helper->filterIdsByCategory( $categories, $categoryName);
+			$ids = array_keys( $categories );
+		}
+
+		$result = null;
+		if ( !empty( $ids ) ) {
+			$params = [
+				ArticlesApiController::PARAMETER_ABSTRACT => ArticleService::MAX_LENGTH,
+				ArticlesApiController::PARAMETER_ARTICLES => implode( ',', $ids ),
+				'height' => QuestDetailsSolrHelper::DEFAULT_THUMBNAIL_HEIGHT,
+				'width' => QuestDetailsSolrHelper::DEFAULT_THUMBNAIL_WIDTH,
+				ArticlesApiController::ITEMS_PER_BATCH => self::MAX_ITEMS_RETURN
+			];
+			$result = $this->app->sendRequest( 'ArticlesApiController', 'getDetails', $params )->getData();
+		}
+		if ( empty( $result ) ) {
+			throw new NotFoundApiException();
+		}
+
+		$items = array_values( $result[ 'items' ] );
+		$items = $helper->addCategories( $items, $categories );
+		$items = $helper->fixUrls( $items, $result[ "basepath" ] );
+		return $items;
 	}
 
 	protected function radiusDegreesToKilometers( $radiusDegrees ) {
-		return $radiusDegrees * self::EARTH_RADIUS  / self::DEGREES_IN_PI * self::PI;
+		return ( $radiusDegrees / self::DEGREES_IN_PI ) * self::EARTH_RADIUS * self::PI;
 	}
 
 	/**
@@ -144,6 +204,23 @@ class PalantirApiController extends WikiaApiController {
 			$this->solrHelper = new QuestDetailsSolrHelper();
 		}
 		return $this->solrHelper;
+	}
+
+	/**
+	 * @param IDSEntitySearchService $IDSEntity
+	 */
+	public function setIDSEntity( $IDSEntity ) {
+		$this->IDSEntity = $IDSEntity;
+	}
+
+	/**
+	 * @return IDSEntitySearchService
+	 */
+	public function getIDSEntity() {
+		if(empty($this->IDSEntity)){
+			$this->IDSEntity = new IDSEntitySearchService();
+		}
+		return $this->IDSEntity;
 	}
 
 	protected function validateNearbyQuestsParameters( $lat, $long, $radius, $limit ) {
