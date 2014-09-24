@@ -61,7 +61,7 @@ $messages['en'] = [
 
 **#|Leading Ladies
 ***http://orange-is-the-new-black.wikia.com/wiki/Piper_Chapman|Piper Chapman
-***http://gameofthrones.wikia.com/wiki/Daenerys_Targaryen|Daenerys_Targaryen
+***http://gameofthrones.wikia.com/wiki/Daenerys_Targaryen|Daenerys Targaryen
 ***http://trueblood.wikia.com/wiki/Sookie_Stackhouse|Sookie Stackhouse
 ***http://breakingbad.wikia.com/wiki/Skyler_White|Skyler White
 ***http://tvhub.wikia.com/wiki/TV_Hub|More...
