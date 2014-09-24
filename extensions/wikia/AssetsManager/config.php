@@ -831,15 +831,6 @@ $config['monobook_js'] = array(
 	)
 );
 
-$config['local_navigation_js'] = array(
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => 'venus',
-	'assets' => array(
-		'//extensions/wikia/LocalNavigation/css/PageHeader.js',
-		'//extensions/wikia/LocalNavigation/css/WikiHeader.js'
-	)
-);
-
 /********** Extensions packages **********/
 
 /** Article Comments **/
@@ -2046,6 +2037,24 @@ $config['global_header_js'] = [
 	'skin' => ['oasis'],
 	'assets' => [
 		'//skins/oasis/js/hoverMenu.js',
+	]
+];
+
+
+/** LocalNavigation extension */
+$config[ 'local_navigation_scss' ] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => [ 'venus', 'oasis' ],
+	'assets' => [
+		'//extensions/wikia/LocalNavigation/styles/LocalNavigation.scss'
+	]
+];
+
+$config['local_navigation_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => ['venus', 'oasis'],
+	'assets' => [
+		'//extensions/wikia/LocalNavigation/scripts/LocalNavigationMenu.js',
 	]
 ];
 

@@ -3,12 +3,14 @@
  * Local Navigation
  *
  * @author Bogna 'bognix' Knychala
+ * @author Bartosz 'V.' Bentkowski
  *
  */
 
 $wgExtensionCredits[ 'specialpage' ][] = [
 	'name' => 'LocalNavigation',
-	'author' => 'Bogna Knychala',
+	'author' => ['Bogna \'bognix\' Knychala',
+		'Bartosz \'V.\' Bentkowski'],
 	'description' => 'LocalNavigation',
 	'version' => 1.0
 ];

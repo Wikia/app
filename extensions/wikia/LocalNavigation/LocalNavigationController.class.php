@@ -2,8 +2,24 @@
 
 class LocalNavigationController extends WikiaController {
 
+
 	public function Index() {
 		Wikia::addAssetsToOutput( 'local_navigation_scss' );
+		Wikia::addAssetsToOutput( 'local_navigation_js' );
+	}
+
+	public function menu() {
+		$menuNodes = $this->getMenuNodes();
+		$this->response->setVal('menuNodes', $menuNodes);
+	}
+
+	public function menuLevel2() {
+		$nodes = $this->request->getVal('nodes', []);
+		$this->response->setVal('nodes', $nodes);
+	}
+
+	private function getMenuNodes () {
+			return ( new NavigationModel( true ) )->getLocalNavigationTree( NavigationModel::WIKI_LOCAL_MESSAGE );
 	}
 
 	/**
