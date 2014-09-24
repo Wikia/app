@@ -1,5 +1,7 @@
 <?php
 
+use Wikia\Logger\WikiaLogger;
+
 class MediaGalleryModel extends WikiaObject {
 	/**
 	 * @var array Basic data for MediaGalleries
@@ -32,9 +34,6 @@ class MediaGalleryModel extends WikiaObject {
 			}
 			++$dimensionIndex;
 		}
-
-		// it shouldn't have changed but just in case it did
-		$this->itemCount = count( $this->galleryData );
 	}
 
 	/**
@@ -46,8 +45,11 @@ class MediaGalleryModel extends WikiaObject {
 	protected function getMediaData( array $item, $index ) {
 		$file = wfFindFile( $item['title'] );
 
-		// we've already checked at this point but leaving this here just in case
 		if ( !$file instanceof File ) {
+			WikiaLogger::instance()->error(
+				'MediaGalleryModel',
+				'File with title: ' . $item['title'] . 'doesn\'t exist'
+			);
 			return null;
 		}
 
