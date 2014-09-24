@@ -60,11 +60,9 @@ class ApiTemplateSearch extends ApiBase {
 		$title = $this->getTargetTitle( $text );
 		if ( $title ) {
 			$templates = $title->getLinksFrom( array(), 'templatelinks', 'tl' );
-			if ( count( $templates ) > 0 ) {
-				for ( $i = 0; $i < count ( $templates ); $i++ ) {
-					if ( !$templates[$i]->isSubpage() ) {
-						$results[] = $templates[$i]->getText();
-					}
+			for ( $i = 0; $i < count ( $templates ); $i++ ) {
+				if ( !$templates[$i]->isSubpage() ) {
+					$results[] = $templates[$i]->getText();
 				}
 			}
 		}
