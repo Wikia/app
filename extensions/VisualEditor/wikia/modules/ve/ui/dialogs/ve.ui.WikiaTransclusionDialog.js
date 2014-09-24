@@ -51,9 +51,10 @@ ve.ui.WikiaTransclusionDialog.prototype.initialize = function () {
 		'label': ve.msg( 'visualeditor-dialog-action-cancel' ),
 		'classes': [ 've-ui-wikiaTransclusionDialog-cancelButton' ]
 	} );
-	this.filterInput = new OO.ui.ClearableTextInputWidget( {
+	this.filterInput = new OO.ui.TextInputWidget( {
 		'$': this.$,
 		'icon': 'search',
+		'type': 'search',
 		'placeholder': ve.msg( 'wikia-visualeditor-dialog-transclusion-filter' )
 	} );
 	this.$filter = this.$( '<div>' )
@@ -84,47 +85,26 @@ ve.ui.WikiaTransclusionDialog.prototype.initialize = function () {
  * @inheritdoc
  */
 ve.ui.WikiaTransclusionDialog.prototype.onTransclusionReady = function () {
-	var zeroStatePage,
-		parts = this.transclusionModel.getParts(),
-		spec = parts[0].getSpec(),
-		name = spec.getLabel(),
-		getInfoPage = new ve.ui.WikiaTemplateGetInfoPage( spec, name, { '$': this.$ } );
-
+	var parts;
 	// Parent method
 	ve.ui.WikiaTransclusionDialog.super.prototype.onTransclusionReady.call( this );
 
-	if ( parts.length === 1 && parts[0] instanceof ve.dm.MWTemplateModel ) {
+	this.filterInput.focus();
 
-		// Zero state
-		if ( Object.keys( parts[0].getParameters() ).length === 0 ) {
-			// Hide stuff
-			this.$filter.hide();
-			this.frame.$content.addClass( 'oo-ui-dialog-content-footless ve-ui-wikiaTransclusionDialog-zeroState' );
+	// ve.dm.MWTransclusionModel.prototype.process emits "change" that we want to "ignore"
+	// Other way to implement this would be to override that process method
+	this.transclusionModel.once( 'change', ve.bind( function () {
+		this.transclusionModel.connect( this, { 'change': 'onParameterInputValueChange' } );
+	}, this ) );
 
-			// Content
-			zeroStatePage = new OO.ui.PageLayout( 'zeroState', {} );
-			zeroStatePage.$element.text( ve.msg( 'wikia-visualeditor-dialog-transclusion-zerostate' ) );
-			this.bookletLayout.addPages( [ zeroStatePage ] );
-
-			// Position
-			this.position( true );
-
-			// Track
-			ve.track( 'wikia', {
-				'action': ve.track.actions.OPEN,
-				'label': 'dialog-template-no-parameters'
-			} );
-		}
-
-		this.bookletLayout.addPages( [ getInfoPage ] );
-	} else {
-		this.filterInput.focus();
-
-		// ve.dm.MWTransclusionModel.prototype.process emits "change" that we want to "ignore"
-		// Other way to implement this would be to override that process method
-		this.transclusionModel.once( 'change', ve.bind( function () {
-			this.transclusionModel.connect( this, { 'change': 'onParameterInputValueChange' } );
-		}, this ) );
+	parts = this.transclusionModel.getParts();
+	if ( parts.length === 1 &&
+		parts[0] instanceof ve.dm.MWTemplateModel &&
+		Object.keys( parts[0].getParameters() ).length === 0 ) {
+		ve.track( 'wikia', {
+			'action': ve.track.actions.OPEN,
+			'label': 'dialog-template-no-parameters'
+		} );
 	}
 };
 
@@ -258,12 +238,7 @@ ve.ui.WikiaTransclusionDialog.prototype.getTeardownProcess = function ( data ) {
 				'height': '',
 				'max-height': ''
 			} );
-			this.frame.$content.removeClass( [
-				've-ui-mwTemplateDialog-insertFlow',
-				've-ui-mwTemplateDialog-editFlow',
-				'oo-ui-dialog-content-footless',
-				've-ui-wikiaTransclusionDialog-zeroState'
-			].join( ' ' ) );
+			this.frame.$content.removeClass( 've-ui-mwTemplateDialog-insertFlow ve-ui-mwTemplateDialog-editFlow' );
 		}, this );
 };
 
@@ -304,11 +279,11 @@ ve.ui.WikiaTransclusionDialog.prototype.onFilterInputBlur = function () {
  * Position dialog. Vertically in the middle of the viewport
  * and horizontally with the edge (left or right) of the surface
  *
- * @param {boolean} Position as zero state (no params) dialog or not
+ * @method
  */
-ve.ui.WikiaTransclusionDialog.prototype.position = function ( zeroState ) {
+ve.ui.WikiaTransclusionDialog.prototype.position = function () {
 	var viewportHeight = $( window ).height(),
-		dialogHeight = zeroState ? 200 : Math.min( 600, viewportHeight * 0.7 ),
+		dialogHeight = Math.min( 600, viewportHeight * 0.7 ),
 		padding = 10,
 		$surface = this.surface.getView().$element,
 		surfaceOffset = $surface.offset();
@@ -320,7 +295,7 @@ ve.ui.WikiaTransclusionDialog.prototype.position = function ( zeroState ) {
 		'max-height': 'none'
 	} );
 
-	if ( this.selectedViewNode.getHorizontalBias() === 'right' ) {
+	if ( this.surface.getView().getFocusedNode().getHorizontalBias() === 'right' ) {
 		this.frame.$element.parent()
 			.css( 'left', surfaceOffset.left - padding );
 	} else {

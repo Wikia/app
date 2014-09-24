@@ -7,17 +7,6 @@
 		display: none;
 	}
 
-	.ve-ui-mwParameterPage {
-		&:last-child {
-			.ve-ui-mwParameterPage-more {
-				display: none;
-			}
-		}
-		&.oo-ui-pageLayout:last-of-type {
-			margin-bottom: 0;
-		}
-	}
-
 	.ve-ui-mwParameterPage-info {
 		padding-left: 0.5em;
 	}
@@ -30,7 +19,7 @@
 		padding: 0.75em 0.5em;
 	}
 
-	.ve-ui-wikiaTemplateGetInfoPage {
+	.ve-ui-mwParameterPage-more {
 		.oo-ui-buttonedElement.oo-ui-iconedElement .oo-ui-iconedElement-icon {
 			float: right;
 			height: 18px;
@@ -59,6 +48,7 @@
 			width: 100%;
 		}
 	}
+
 }
 
 .ve-ui-mwTemplateDialog-editFlow {
@@ -86,12 +76,6 @@
 		.ve-ui-mwTemplateDialog-filter {
 			left: 33%;
 			margin-left: 1px;
-		}
-	}
-
-	&.ve-ui-wikiaTransclusionDialog-zeroState {
-		.oo-ui-gridLayout {
-			margin-top: 0;
 		}
 	}
 }
