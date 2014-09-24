@@ -1,5 +1,7 @@
 <?php
 
+use \Wikia\Logger\WikiaLogger;
+
 /**
  * ImageReview Helper
  *
@@ -257,9 +259,9 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 		// get images
 		$db = $this->getDatawareDB( DB_MASTER );
 		$result = $db->query('
-			SELECT pages.page_title_lower, image_review.wiki_id, image_review.page_id, image_review.state, image_review.flags, image_review.priority
+			SELECT pages.page_title_lower, image_review.wiki_id, image_review.page_id, image_review.state, image_review.flags, image_review.priority, image_review.last_edited
 			FROM (
-				SELECT image_review.wiki_id, image_review.page_id, image_review.state, image_review.flags, image_review.priority
+				SELECT image_review.wiki_id, image_review.page_id, image_review.state, image_review.flags, image_review.priority, image_review.last_edited
 				FROM `image_review`
 				WHERE state = ' . $state . ' AND top_200 = false
 				ORDER BY ' . $this->getOrder($order) . '
@@ -317,41 +319,58 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 
 			if ( count( $imageList ) < self::LIMIT_IMAGES ) {
 				$oImagePage = GlobalTitle::newFromId( $row->page_id, $row->wiki_id );
-				$oImageGlobalFile = new GlobalFile( $oImagePage );
-				$aImageInfo = array(
-					'src' => $oImageGlobalFile->getThumbUrl( self::IMAGE_REVIEW_THUMBNAIL_SIZE . 'px-' . $oImageGlobalFile->getName() ),
-					'page' => $oImagePage->getFullUrl(),
-					'extension' => pathinfo( strtolower( $aImageInfo['page'] ), PATHINFO_EXTENSION ), // this needs to use the page index since src for SVG ends in .svg.png :/
-				);
-				$bImageExists = $oImageGlobalFile->exists();
-
-				if ( !$bImageExists && $state != ImageReviewStatuses::STATE_INVALID_IMAGE ) {
-					$invalidImages[] = $record;
-					continue;
-				} elseif ( 'ico' == $aImageInfo['extension'] ) {
-					$iconsWhere[] = $record;
-					continue;
-				} else {
-					$isThumb = true;
-
-					if  ( in_array( $aImageInfo['extension'], array( 'gif', 'svg' ) ) ) {
-						$aImageInfo = ImagesService::getImageOriginalUrl( $row->wiki_id, $row->page_id );
-						$isThumb = false;
-					}
-
-					$wikiRow = WikiFactory::getWikiByID( $row->wiki_id );
-
-					$imageList[] = array(
-						'wikiId' => $row->wiki_id,
-						'pageId' => $row->page_id,
-						'state' => $row->state,
-						'src' => $aImageInfo['src'],
-						'url' => $aImageInfo['page'],
-						'priority' => $row->priority,
-						'flags' => $row->flags,
-						'isthumb' => $isThumb,
-						'wiki_url' => isset( $wikiRow->city_url ) ? $wikiRow->city_url : '',
+				if ( $oImagePage instanceof GlobalTitle ) {
+					$oImageGlobalFile = new GlobalFile( $oImagePage );
+					$aImageInfo = array(
+						'src' => $oImageGlobalFile->getThumbUrl( self::IMAGE_REVIEW_THUMBNAIL_SIZE . 'px-' . $oImageGlobalFile->getName() ),
+						'page' => $oImagePage->getFullUrl(),
+						'extension' => pathinfo( strtolower( $aImageInfo['page'] ), PATHINFO_EXTENSION ), // this needs to use the page index since src for SVG ends in .svg.png :/
 					);
+					$bImageExists = $oImageGlobalFile->exists();
+
+					if ( !$bImageExists && $state != ImageReviewStatuses::STATE_INVALID_IMAGE ) {
+						$invalidImages[] = $record;
+						continue;
+					} elseif ( 'ico' == $aImageInfo['extension'] ) {
+						$iconsWhere[] = $record;
+						continue;
+					} else {
+						$isThumb = true;
+
+						if  ( in_array( $aImageInfo['extension'], array( 'gif', 'svg' ) ) ) {
+							$aImageInfo = ImagesService::getImageOriginalUrl( $row->wiki_id, $row->page_id );
+							$isThumb = false;
+						}
+
+						$wikiRow = WikiFactory::getWikiByID( $row->wiki_id );
+
+						$imageList[] = array(
+							'wikiId' => $row->wiki_id,
+							'pageId' => $row->page_id,
+							'state' => $row->state,
+							'src' => $aImageInfo['src'],
+							'url' => $aImageInfo['page'],
+							'priority' => $row->priority,
+							'flags' => $row->flags,
+							'isthumb' => $isThumb,
+							'wiki_url' => isset( $wikiRow->city_url ) ? $wikiRow->city_url : '',
+						);
+					}
+				} else {
+					/**
+					 * CE-1068
+					 * Log page_id and wiki_id for images for which GlobalTitle::newFromId returns null.
+					 */
+					WikiaLogger::instance()->error( "ImageReview : Null GlobalTitle",
+						[
+							'method' => __METHOD__,
+							'pageId' => $row->page_id,
+							'wikiId' => $row->wiki_id,
+							'lastEdited' => $row->last_edited,
+							'exception' => new Exception()
+						]
+					);
+					continue;
 				}
 			} else {
 				$unusedImages[] = $record;
