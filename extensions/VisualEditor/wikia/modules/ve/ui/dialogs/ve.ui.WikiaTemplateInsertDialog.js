@@ -38,6 +38,10 @@ ve.ui.WikiaTemplateInsertDialog.prototype.initialize = function () {
 	ve.ui.WikiaTemplateInsertDialog.super.prototype.initialize.call( this );
 
 	// Properties
+	this.query = new ve.ui.WikiaTemplateQueryWidget( {
+		'$': this.$,
+		'placeholder': ve.msg( 'wikia-visualeditor-dialog-wikiamediainsert-search-input-placeholder' )
+	} );
 	this.stackLayout = new OO.ui.StackLayout( { '$': this.$ } );
 	this.panel = new OO.ui.PanelLayout( { '$': this.$ } );
 	this.select = new OO.ui.SelectWidget( { '$': this.$ } );
@@ -48,6 +52,9 @@ ve.ui.WikiaTemplateInsertDialog.prototype.initialize = function () {
 	this.select.connect( this, {
 		'select': 'onTemplateSelect'
 	} );
+	this.query.connect( this, {
+		'searchDone': 'onSearchDone'
+	} );
 
 	// Initialization
 	this.frame.$content.addClass( 've-ui-wikiaTemplateInsertDialog' );
@@ -56,7 +63,7 @@ ve.ui.WikiaTemplateInsertDialog.prototype.initialize = function () {
 	this.panel.$element.append( this.select.$element );
 	this.stackLayout.addItems( [ this.panel ] );
 
-	this.$body.append( this.stackLayout.$element );
+	this.$body.append( this.query.$outerWrapper, this.stackLayout.$element );
 
 	this.getMostLinkedTemplateData().done( ve.bind( this.populateOptions, this ) );
 };
@@ -68,7 +75,7 @@ ve.ui.WikiaTemplateInsertDialog.prototype.onLayoutScroll = function () {
 	var position = this.stackLayout.$element.scrollTop() + this.stackLayout.$element.outerHeight(),
 		threshold = this.select.$element.outerHeight() - 100;
 
-	if ( !this.isPending() && this.offset !== null && position > threshold ) {
+	if ( !this.hasSearchResults() && !this.isPending() && this.offset !== null && position > threshold ) {
 		this.getMostLinkedTemplateData().done( ve.bind( this.populateOptions, this ) );
 	}
 };
@@ -190,6 +197,31 @@ ve.ui.WikiaTemplateInsertDialog.prototype.getTeardownProcess = function ( data )
 			// Unselect
 			this.select.selectItem();
 		}, this );
+};
+
+/**
+ * Handles the resulting data from a template search request.
+ *
+ * @param {Object} templates An array containing template titles
+ */
+ve.ui.WikiaTemplateInsertDialog.prototype.onSearchDone = function ( templates ) {
+	var i, optionsData = [];
+
+	for ( i in templates ) {
+		optionsData.push( {
+			'title': templates[i]
+		} );
+	}
+
+	this.select.clearItems();
+	this.populateOptions( optionsData );
+};
+
+/**
+ * Checks whether the dialog is displaying search results.
+ */
+ve.ui.WikiaTemplateInsertDialog.prototype.hasSearchResults = function () {
+	return this.search.getInput().getValue().length > 0;
 };
 
 /* Registration */
