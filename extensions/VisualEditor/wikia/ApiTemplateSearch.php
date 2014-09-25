@@ -12,7 +12,11 @@ class ApiTemplateSearch extends ApiBase {
 			$templateNameResult = $this->getTemplateNameExactMatch( $query );
 
 			// Get results for article name exact match
-			$articleNameResults = $this->getArticleNameExactMatch( $query );
+			if ( strlen( $query ) >= 2 ) {
+				$articleNameResults = $this->getArticleNameExactMatch( $query );
+			} else {
+				$articleNameResults = array();
+			}
 
 			// Get results for template wildcard search
 			if ( strlen( $query ) >= 3 ) {
@@ -98,8 +102,24 @@ class ApiTemplateSearch extends ApiBase {
 	 */
 	private function getTargetTitle( $text ) {
 		$title = Title::newFromText( $text );
-		if ( !$title || !$title->exists() ) {
+		if ( !$title ) {
+			// invalid title
 			return null;
+		}
+		if ( !$title->exists() ) {
+			$page = ( new WikiaSQL() )
+				->SELECT( '*' )
+				->FROM( 'page' )
+				->WHERE( 'page_namespace' )->EQUAL_TO( $title->getNamespace() )
+				->AND_( 'page_title COLLATE LATIN1_GENERAL_CI' )->EQUAL_TO( $title->getDBkey() )
+				->LIMIT( 1 )
+				->runLoop( wfGetDB( DB_SLAVE ), function( &$page, $row ) {
+					$page = $row;
+				} );
+			if ( !$page ) {
+				return null;
+			}
+			$title = Title::newFromRow( $page );
 		}
 		if ( $title->isRedirect() ) {
 			$title = ( new WikiPage( $title ) )->getRedirectTarget();
