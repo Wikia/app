@@ -121,7 +121,7 @@ $wgResourceModules += array(
 			've/ui/widgets/ve.ui.WikiaMediaOptionWidget.js',
 			've/ui/widgets/ve.ui.WikiaPhotoOptionWidget.js',
 			've/ui/widgets/ve.ui.WikiaTemplateOptionWidget.js',
-			've/ui/widgets/ve.ui.WikiaTemplateQueryWidget.js',
+			've/ui/widgets/ve.ui.WikiaTemplateSearchWidget.js',
 			've/ui/widgets/ve.ui.WikiaVideoOptionWidget.js',
 			've/ui/widgets/ve.ui.WikiaMapOptionWidget.js',
 			've/ui/widgets/ve.ui.WikiaMediaResultsWidget.js',
@@ -222,22 +222,4 @@ $wgHooks['GetPreferences'][] = 'VisualEditorWikiaHooks::onGetPreferences';
 $wgHooks['ResourceLoaderTestModules'][] = 'VisualEditorWikiaHooks::onResourceLoaderTestModules';
 $wgHooks['MakeGlobalVariablesScript'][] = 'VisualEditorWikiaHooks::onMakeGlobalVariablesScript';
 
-/* Configuration */
-
-$wgDefaultUserOptions['useeditwarning'] = true;
-
-// Disable VE for blog namespaces
-if ( !empty( $wgEnableBlogArticles ) ) {
-	$tempArray = array();
-	foreach ( $wgVisualEditorNamespaces as $key => &$value ) {
-		if ( $value === NS_BLOG_ARTICLE || $value === NS_BLOG_ARTICLE_TALK ) {
-			continue;
-		}
-		$tempArray[] = $value;
-	}
-	$wgVisualEditorNamespaces = $tempArray;
-}
-
-// Add additional valid namespaces for Wikia
-$wgVisualEditorNamespaces[] = NS_CATEGORY;
-$wgVisualEditorNamespaces[] = NS_PROJECT;
+/* Configuration 
