@@ -7,13 +7,12 @@
 class MercurySpecialPageController extends WikiaSpecialPageController {
 
 	const PAGE_NAME = 'Mercury';
-	const PAGE_RESTRICTION = '';
 	const COOKIE_NAME = 'wk_mercury';
 	const OPT_IN = 1;
 	const COOKIE_EXPIRE_DAYS = 7;
 
-	public function __construct( $name = null, $restriction = '', $listed = true, $function = false, $file = 'default', $includable = false ) {
-		parent::__construct( self::PAGE_NAME, self::PAGE_RESTRICTION, $listed, $function, $file, $includable );
+	public function __construct() {
+		parent::__construct( self::PAGE_NAME );
 	}
 
 	public function index() {
