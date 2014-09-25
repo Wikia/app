@@ -3,6 +3,33 @@
 class ExactTargetUpdatesHooks {
 
 	/**
+	 * A private property determining if tasks should be created.
+	 * Set to false for DEV or INTERNAL if the wgExactTargetDevelopmentMode
+	 * global is set to false. Set to true otherwise.
+	 * @var boolean bShouldAddTask
+	 */
+	private $bShouldAddTask;
+
+	function __construct() {
+		$this->checkIfShouldAddTask();
+	}
+
+	/**
+	 * Sets a boolean $bShouldAddTask member.
+	 * Should be set to false for DEV or INTERNAL enviroment,
+	 * unless wgExactTargetDevelopmentMode is set to true.
+	 */
+	private function checkIfShouldAddTask() {
+		global $wgWikiaEnvironment, $wgExactTargetDevelopmentMode;
+
+		if ( ( $wgWikiaEnvironment == WIKIA_ENV_DEV || $wgWikiaEnvironment == WIKIA_ENV_INTERNAL ) && $wgExactTargetDevelopmentMode == false ) {
+			$this->bShouldAddTask = false;
+		} else {
+			$this->bShouldAddTask = true;
+		}
+	}
+
+	/**
 	 * Runs a method for adding AddUserTask to job queue
 	 * Function executed on SignupConfirmEmailComplete hook
 	 * @param User $user
@@ -26,9 +53,32 @@ class ExactTargetUpdatesHooks {
 		return true;
 	}
 
+	/**
+	 * Runs a method for adding an AddWikiTask to job queue.
+	 * Executed on CreateWikiLocalJob-complete hook.
+	 * @param  array $aParams  Contains a wiki's id, url and title.
+	 * @return true
+	 */
 	public static function onWikiCreation( $aParams ) {
-		$thisInstance = new ExactTargetUpdatesHooks();
-		$thisInstance->addTheAddWikiTask( $aParams, new ExactTargetAddWikiTask() );
+		if ( $this->bShouldAddTask ) {
+			$thisInstance = new ExactTargetUpdatesHooks();
+			$thisInstance->addTheAddWikiTask( $aParams, new ExactTargetAddWikiTask() );
+		}
+		return true;
+	}
+
+	/**
+	 * Runs a method for adding an UpdateWikiTask to job queue.
+	 * Executed on WikiFactoryChanged hook.
+	 * @param  array $aVarParams  Contains a var's name, a wiki's id and a new value.
+	 * @return true
+	 */
+	public static function onWikiDataChange( $aVarParams ) {
+		if ( $this->bShouldAddTask ) {
+			$sVarName = $aVarParams[0];
+			$thisInstance = new ExactTargetUpdatesHooks();
+			$thisInstance->addTheUpdateWikiTask( $aVar, new ExactTargetUpdateWikiTask() );
+		}
 		return true;
 	}
 
@@ -97,24 +147,43 @@ class ExactTargetUpdatesHooks {
 		return $aUserPropertiesParams;
 	}
 
+	/**
+	 * Adds a task to job queue that sends
+	 * a Create request to ExactTarget with data of a new wiki.
+	 * @param  array $aParams  Contains wiki's id, url and title.
+	 * @param  ExactTargetAddWikiTask $oTask  Task object.
+	 */
 	public function addTheAddWikiTask( $aParams, ExactTargetAddWikiTask $oTask ) {
-		global $wgWikiaEnvironment;
-		/* Don't add task when on dev or internal */
-		// if ( $wgWikiaEnvironment != WIKIA_ENV_DEV && $wgWikiaEnvironment != WIKIA_ENV_INTERNAL ) {
-			$iCityId = $aParams['city_id'];
-			$aWikiData = $this->prepareWikiParams( $iCityId );
-			$aWikiCatsMappingData = $this->prepareWikiCatsMappingParams( $iCityId );
-			$oTask->call( 'sendNewWikiData', $aWikiData, $aWikiCatsMappingData );
-			$oTask->queue();
-		// }
+		$iCityId = $aParams['city_id'];
+		$aWikiData = $this->prepareWikiParams( $iCityId );
+		$aWikiCatsMappingData = $this->prepareWikiCatsMappingParams( $iCityId );
+		$oTask->call( 'sendNewWikiData', $aWikiData, $aWikiCatsMappingData );
+		$oTask->queue();
 	}
 
+	/**
+	 * Adds a task to job queue that sends
+	 * an Update request to ExactTarget with a changed variable.
+	 * @param  array $aVarParams  Contains var's name, city_id and a new value.
+	 * @param  ExactTargetUpdateTask $oTask  Task object.
+	 */
+	public function addTheUpdateWikiTask( $aVarParams, ExactTargetUpdateWikiTask $oTask ) {
+		$iCityId = $aParams['city_id'];
+		$aWikiData = $this->prepareWikiParams( $iCityId );
+		$oTask->call( 'updateWikiData', $aWikiData );
+		$oTask->queue();
+	}
+
+	/**
+	 * Helper method returning an array of city_list fields based on wiki's id.
+	 * @param  integer $iCityId  An ID of a wiki
+	 * @return array  An array with all values sent to ExactTarget.
+	 */
 	private function prepareWikiParams( $iCityId ) {
 		$oWiki = \WikiFactory::getWikiById( $iCityId );
 
 		$aWikiParams = [
 			'city_id' => $oWiki->city_id,
-			'city_path' => $oWiki->city_path,
 			'city_sitename' => $oWiki->city_sitename,
 			'city_url' => $oWiki->city_url,
 			'city_created' => $oWiki->city_created,
@@ -123,6 +192,11 @@ class ExactTargetUpdatesHooks {
 		return $aWikiParams;
 	}
 
+	/**
+	 * Helper method returning an array mapping a wiki to categories.
+	 * @param  integer $iCityId  An ID of a wiki
+	 * @return array  An array mapping a wiki to categories
+	 */
 	private function prepareWikiCatsMappingParams( $iCityId ) {
 		/* @var string sIncludeDepracated Used to retrieve a full mapping of a wiki */
 		$sIncludeDepracated = 'skip';
