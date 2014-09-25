@@ -84,39 +84,34 @@ ve.ui.WikiaTransclusionDialog.prototype.initialize = function () {
  * @inheritdoc
  */
 ve.ui.WikiaTransclusionDialog.prototype.onTransclusionReady = function () {
-	var zeroStatePage,
-		parts = this.transclusionModel.getParts(),
-		spec = parts[0].getSpec(),
-		name = spec.getLabel(),
-		getInfoPage = new ve.ui.WikiaTemplateGetInfoPage( spec, name, { '$': this.$ } );
+	var zeroStatePage, getInfoWidget,
+		parts = this.transclusionModel.getParts();
 
 	// Parent method
 	ve.ui.WikiaTransclusionDialog.super.prototype.onTransclusionReady.call( this );
 
-	if ( parts.length === 1 && parts[0] instanceof ve.dm.MWTemplateModel ) {
+	if ( this.isSingleTemplateTransclusion() && Object.keys( parts[0].getParameters() ).length === 0 ) {
+		// Hide stuff
+		this.$filter.hide();
+		this.frame.$content.addClass( 'oo-ui-dialog-content-footless ve-ui-wikiaTransclusionDialog-zeroState' );
 
-		// Zero state
-		if ( Object.keys( parts[0].getParameters() ).length === 0 ) {
-			// Hide stuff
-			this.$filter.hide();
-			this.frame.$content.addClass( 'oo-ui-dialog-content-footless ve-ui-wikiaTransclusionDialog-zeroState' );
+		// Content
+		zeroStatePage = new OO.ui.PageLayout( 'zeroState', {} );
+		getInfoWidget = new ve.ui.WikiaTemplateGetInfoWidget( { template: parts[0] } );
+		zeroStatePage.$element
+			.text( ve.msg( 'wikia-visualeditor-dialog-transclusion-zerostate' ) )
+			.append( getInfoWidget.$element );
+		this.bookletLayout.addPages( [ zeroStatePage ] );
 
-			// Content
-			zeroStatePage = new OO.ui.PageLayout( 'zeroState', {} );
-			zeroStatePage.$element.text( ve.msg( 'wikia-visualeditor-dialog-transclusion-zerostate' ) );
-			this.bookletLayout.addPages( [ zeroStatePage ] );
+		// Position
+		this.position( true );
 
-			// Position
-			this.position( true );
+		// Track
+		ve.track( 'wikia', {
+			'action': ve.track.actions.OPEN,
+			'label': 'dialog-template-no-parameters'
+		} );
 
-			// Track
-			ve.track( 'wikia', {
-				'action': ve.track.actions.OPEN,
-				'label': 'dialog-template-no-parameters'
-			} );
-		}
-
-		this.bookletLayout.addPages( [ getInfoPage ] );
 	} else {
 		this.filterInput.focus();
 
@@ -126,6 +121,7 @@ ve.ui.WikiaTransclusionDialog.prototype.onTransclusionReady = function () {
 			this.transclusionModel.connect( this, { 'change': 'onParameterInputValueChange' } );
 		}, this ) );
 	}
+
 };
 
 /**
