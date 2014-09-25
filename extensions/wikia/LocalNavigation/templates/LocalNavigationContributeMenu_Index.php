@@ -1,4 +1,4 @@
-<div class="contribute">
+<div class="contribute-wrapper">
 	<div class="contribute-button"><?= wfMessage('oasis-button-contribute-tooltip')->text() ?></div>
 	<ul class="dropdown">
 <?php

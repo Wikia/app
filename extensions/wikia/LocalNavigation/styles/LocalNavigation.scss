@@ -10,14 +10,18 @@
 		box-sizing: inherit;
 	}
 
-	.contribute {
-		background-color: $color-buttons;
+	.contribute-wrapper {
 		color: $color-button-text;
+		direction: rtl;
 		display: inline-block;
+		float: right;
+		padding: 20px 0;
 		position: relative;
 	}
 
 	.contribute-button {
+		background-color: $color-buttons;
+		direction: ltr;
 		display: table-cell;
 		font-size: 12px;
 		font-weight: bold;
@@ -40,7 +44,9 @@
 	}
 
 	.dropdown {
+		direction: ltr;
 		display: table;
+		min-width: 100%;
 		position: absolute;
 		right: 0;
 		z-index: 500050;
