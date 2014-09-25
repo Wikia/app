@@ -39,7 +39,7 @@ ve.ui.WikiaTemplateInsertDialog.prototype.initialize = function () {
 
 	// Properties
 	this.search = new ve.ui.WikiaTemplateSearchWidget( {
-		'placeholder': ve.msg( 'wikia-visualeditor-dialog-wikiamediainsert-search-input-placeholder' )
+		'placeholder': ve.msg( 'wikia-visualeditor-dialog-wikiatemplateinsert-search' )
 	} );
 
 	// Events

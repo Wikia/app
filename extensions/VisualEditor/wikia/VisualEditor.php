@@ -222,4 +222,22 @@ $wgHooks['GetPreferences'][] = 'VisualEditorWikiaHooks::onGetPreferences';
 $wgHooks['ResourceLoaderTestModules'][] = 'VisualEditorWikiaHooks::onResourceLoaderTestModules';
 $wgHooks['MakeGlobalVariablesScript'][] = 'VisualEditorWikiaHooks::onMakeGlobalVariablesScript';
 
-/* Configuration 
+/* Configuration */
+
+$wgDefaultUserOptions['useeditwarning'] = true;
+
+// Disable VE for blog namespaces
+if ( !empty( $wgEnableBlogArticles ) ) {
+	$tempArray = array();
+	foreach ( $wgVisualEditorNamespaces as $key => &$value ) {
+		if ( $value === NS_BLOG_ARTICLE || $value === NS_BLOG_ARTICLE_TALK ) {
+			continue;
+		}
+		$tempArray[] = $value;
+	}
+	$wgVisualEditorNamespaces = $tempArray;
+}
+
+// Add additional valid namespaces for Wikia
+$wgVisualEditorNamespaces[] = NS_CATEGORY;
+$wgVisualEditorNamespaces[] = NS_PROJECT;
