@@ -50,7 +50,7 @@
 
 		&.right {
 			left: auto;
-			right: 0;
+			right: -1px;
 
 			li {
 				a, a:after {
@@ -199,6 +199,10 @@
 					@include arrow(4px, rgba($color-button-text, .8), 'left');
 				}
 			}
+			ul.third {
+				right: 100%;
+			}
+
 		}
 		li:hover, li.active {
 			ul.third {
