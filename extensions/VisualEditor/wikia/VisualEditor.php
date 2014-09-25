@@ -194,15 +194,12 @@ $wgResourceModules += array(
 			'wikia-visualeditor-context-transclusion-description',
 			'wikia-visualeditor-dialog-wikiatemplateinsert-search',
 			'wikia-visualeditor-wikiatemplateoptionwidget-appears',
-<<<<<<< HEAD
+			'wikia-visualeditor-dialog-template-insert-title',
 			'wikia-visualeditor-dialog-preference-headline',
 			'wikia-visualeditor-dialog-preference-text',
 			'wikia-visualeditor-dialog-preference-link-help',
 			'wikia-visualeditor-dialog-preference-link-preferences',
 			'wikia-visualeditor-dialog-preference-start-button',
-=======
-			'wikia-visualeditor-dialog-template-insert-title',
->>>>>>> ve-sprint-27
 		),
 		'dependencies' => array(
 			'ext.visualEditor.core.desktop',
