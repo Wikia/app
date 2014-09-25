@@ -20,24 +20,24 @@ class MercurySpecialPageController extends WikiaSpecialPageController {
 		$opt = $this->request->getVal('opt');
 		if ( !empty( $opt ) ) {
 			if ( $opt === 'in' ) {
-				$this->request->setCookie(self::COOKIE_NAME, self::OPT_IN, time() + 86400 * self::COOKIE_EXPIRE_DAYS );
+				$this->request->setCookie( self::COOKIE_NAME, self::OPT_IN, time() + 86400 * self::COOKIE_EXPIRE_DAYS );
 			} elseif ( $opt === 'out' ) {
-				$this->request->setCookie(self::COOKIE_NAME, '', time() - 3600 );
+				$this->request->setCookie( self::COOKIE_NAME, '', time() - 3600 );
 			}
 			$this->response->redirect( SpecialPage::getTitleFor( self::PAGE_NAME )->getFullUrl() );
 		}
 
-		$cookie = $this->request->getCookie(self::COOKIE_NAME);
+		$cookie = $this->request->getCookie( self::COOKIE_NAME );
 		if ( !empty( $cookie )  && (int) $cookie === self::OPT_IN ) {
 			// OPTED IN
-			$this->setVal('buttonAction', 'out');
-			$this->setVal('buttonLabel', 'Opt out');
+			$this->setVal( 'buttonAction', 'out' );
+			$this->setVal( 'buttonLabel', 'Opt out' );
 		} else {
-			$this->setVal('buttonAction', 'in');
-			$this->setVal('buttonLabel', 'Opt in');
+			$this->setVal( 'buttonAction', 'in' );
+			$this->setVal( 'buttonLabel', 'Opt in' );
 		}
 
-		$this->setVal('pageName', self::PAGE_NAME);
+		$this->setVal( 'pageName', self::PAGE_NAME );
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
 	}
 }
