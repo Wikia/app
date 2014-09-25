@@ -17,7 +17,7 @@ class MercurySpecialPageController extends WikiaSpecialPageController {
 	}
 
 	public function index() {
-		$opt = $this->request->getVal('opt');
+		$opt = $this->request->getVal( 'opt' );
 		if ( !empty( $opt ) ) {
 			if ( $opt === 'in' ) {
 				$this->request->setCookie( self::COOKIE_NAME, self::OPT_IN, time() + 86400 * self::COOKIE_EXPIRE_DAYS );
