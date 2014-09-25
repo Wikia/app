@@ -15,7 +15,10 @@ class ExactTargetAddWikiTask extends ExactTargetBaseTask {
 		try {
 			/* Create new DataExtensionObject that reflects city_list table data */
 			$oDE = new ExactTarget_DataExtensionObject();
-			$oDE->CustomerKey = 'city_list_dev';
+
+			/* Get CustomerKeys for current enviroment */
+			$aCustomerKeys = $this->getCustomerKeys();
+			$oDE->CustomerKey = $aCustomerKeys['city_list'];
 
 			$aApiProperties = [];
 			foreach( $aWikiData as $sKey => $sValue ) {
@@ -50,7 +53,10 @@ class ExactTargetAddWikiTask extends ExactTargetBaseTask {
 			foreach( $aWikiCatsMappingData as $aSingleCatMapping ) {
 				/* Create new DataExtensionObject that reflects city_list table data */
 				$oDE = new ExactTarget_DataExtensionObject();
-				$oDE->CustomerKey = 'city_cat_mapping_dev';
+
+				/* Get CustomerKeys for current enviroment */
+				$aCustomerKeys = $this->getCustomerKeys();
+				$oDE->CustomerKey = $aCustomerKeys['city_cat_mapping'];
 				
 				$aApiProperties = [];
 				$aApiProperties[] = $this->wrapApiProperty( 'city_id', $aSingleCatMapping['city_id'] );
