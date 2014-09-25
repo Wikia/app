@@ -50,6 +50,13 @@
 		&.right {
 			left: auto;
 			right: 0;
+
+			li {
+				a, a:after {
+					direction: rtl;
+					text-align: right;
+				}
+			}
 		}
 
 		li {
@@ -137,16 +144,28 @@
 	}
 	ul.second {
 		a.has-more {
-			padding-right: 40px;
+			padding: 20px 40px 20px 20px;
 			.more {
 				@include arrow(4px, rgba($color-button-text, .5), 'right');
-				margin-top: 1px;
-				margin-right: -20px;
+				margin: 1px -20px 0 0;
 				position: static;
 				float: right;
 			}
 			&:hover .more {
 				@include arrow(4px, rgba($color-button-text, .8), 'right');
+			}
+		}
+		&.right {
+			a.has-more {
+				padding: 20px 20px 20px 40px;
+				.more {
+					@include arrow(4px, rgba($color-button-text, .5), 'left');
+					margin: 1px 0 0 -20px;
+					float: left;
+				}
+				&:hover .more {
+					@include arrow(4px, rgba($color-button-text, .8), 'left');
+				}
 			}
 		}
 	}
