@@ -27,7 +27,7 @@ class MercurySpecialPageController extends WikiaSpecialPageController {
 		}
 
 		$cookie = $this->request->getCookie( self::COOKIE_NAME );
-		if ( !empty( $cookie )  && (int) $cookie === self::OPT_IN ) {
+		if ( !empty( $cookie ) && $cookie == self::OPT_IN ) {
 			// OPTED IN
 			$this->setVal( 'buttonAction', 'out' );
 			$this->setVal( 'buttonLabel', 'Opt out' );
