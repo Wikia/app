@@ -11,9 +11,9 @@ class ApiTemplateSearch extends ApiBase {
 			// Get result for template name exact match
 			$templateNameResult = $this->getTemplateNameExactMatch( $query );
 
-			// Get results for article name exact match
+			// Get results for article name match
 			if ( strlen( $query ) >= 2 ) {
-				$articleNameResults = $this->getArticleNameExactMatch( $query );
+				$articleNameResults = $this->getArticleNameMatch( $query );
 			} else {
 				$articleNameResults = array();
 			}
@@ -59,7 +59,7 @@ class ApiTemplateSearch extends ApiBase {
 	 * Gets all templates (if any) used in given article
 	 * @return array
 	 */
-	private function getArticleNameExactMatch( $text ) {
+	private function getArticleNameMatch( $text ) {
 		$results = [];
 		$title = $this->getTargetTitle( $text );
 		if ( $title ) {
