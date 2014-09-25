@@ -157,21 +157,23 @@
 				border-right: 1px solid $color-page-border;
 			}
 
-			// TODO: Change it to .action when finishing interactions
-			&:hover {
+			// TODO: Change it to .active when finishing interactions
+			&:hover, &.active {
 				background: $color-buttons;
 				border-color: $color-buttons;
 				color: $color-button-text;
 
-				ul.second, ul.dropdown {
+				ul.second {
 					display: block;
 				}
 			}
 		}
 	}
+
 	ul.dropdown {
 		display: none;
 	}
+
 	ul.second {
 		a.has-more {
 			padding: 20px 40px 20px 20px;
@@ -198,6 +200,18 @@
 				}
 			}
 		}
+		li:hover, li.active {
+			ul.third {
+				display: block;
+			}
+		}
+	}
+}
+
+.local-navigation {
+	ul.third {
+		left: auto;
+		top: 0;
 	}
 }
 

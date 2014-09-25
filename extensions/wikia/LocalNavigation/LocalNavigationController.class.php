@@ -17,6 +17,18 @@ class LocalNavigationController extends WikiaController {
 
 	public function menuLevel2() {
 		$nodes = $this->request->getVal('nodes', []);
+
+		foreach ($nodes as $key => $node) {
+			if (!empty($node['children'])) {
+				$nodes[$key]['hasChildren'] = true;
+			}
+		}
+
+		$this->response->setVal('nodes', $nodes);
+	}
+
+	public function menuLevel3() {
+		$nodes = $this->request->getVal('nodes', []);
 		$this->response->setVal('nodes', $nodes);
 	}
 
