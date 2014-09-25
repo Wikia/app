@@ -42,7 +42,7 @@ class SEOTweaksGlobalHooksHelper {
 	static protected function getFirstArticleImage( $title ) {
 		$retTitle = self::getFirstArticleImageLargerThan( $title, self::PREF_WIDTH, self::PREF_HEIGHT );
 		if ( empty( $retTitle ) ) {
-			$retTitle = self::getFirstArticleImageLargerThan( $title, self::MIN_WIDTH );
+			$retTitle = self::getFirstArticleImageLargerThan( $title, self::MIN_WIDTH, self::MIN_WIDTH );
 		}
 		return $retTitle;
 	}
@@ -53,8 +53,8 @@ class SEOTweaksGlobalHooksHelper {
 	 * @param $width
 	 * @return null|Title
 	 */
-	static protected function getFirstArticleImageLargerThan( $title, $width ) {
-		$imageServing = new ImageServing( [ $title->getArticleID() ], $width );
+	static protected function getFirstArticleImageLargerThan( $title, $width, $height ) {
+		$imageServing = new ImageServing( [ $title->getArticleID() ], $width, $height );
 		$out = $imageServing->getImages( 1 );
 		if ( !empty( $out ) ) {
 			///used reset instead direct call because we can get hashmap from ImageServing driver.
