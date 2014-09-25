@@ -2,9 +2,20 @@
 
 class ExactTargetUpdateWikiTask extends ExactTargetBaseTask {
 
+	/**
+	 * Customer Keys for different enviroments.
+	 * Set in ExactTargetUpdatesHelper.
+	 * @var array $aCustomerKeys
+	 */
+	private $aCustomerKeys;
+
 	public function updateWikiData( $aWikiData ) {
 		/* Create a Client object */
 		$oClient = $this->getClient();
+
+		/* Get Customer Keys for current enviroment */
+		$oHelper = new ExactTargetUpdatesHelper();
+		$this->aCustomerKeys = $oHelper->getCustomerKeys();
 
 		/* Make API requests */
 		$this->updateWikiDataExtension( $aWikiData, $oClient );
@@ -14,10 +25,7 @@ class ExactTargetUpdateWikiTask extends ExactTargetBaseTask {
 		try {
 			/* Create new DataExtensionObject that reflects city_list table data */
 			$oDE = new ExactTarget_DataExtensionObject();
-
-			/* Get CustomerKeys for current enviroment */
-			$aCustomerKeys = $this->getCustomerKeys();
-			$oDE->CustomerKey = $aCustomerKeys['city_list'];
+			$oDE->CustomerKey = $this->aCustomerKeys['city_list'];
 
 			$aApiProperties = [];
 			foreach( $aWikiData as $sKey => $sValue ) {

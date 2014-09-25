@@ -18,7 +18,7 @@ class ExactTargetUpdatesHelper {
 
 	function __construct() {
 		$this->setCustomerKeys();
-		$this->setWikiFactoryVarsToUpdate();
+		$this->setWfVarsTriggeringUpdate();
 	}
 
 	private function setCustomerKeys() {
@@ -41,7 +41,7 @@ class ExactTargetUpdatesHelper {
 		}
 	}
 
-	public static function getCustomerKeys() {
+	public function getCustomerKeys() {
 		return $this->aCustomerKeys;
 	}
 
@@ -52,7 +52,7 @@ class ExactTargetUpdatesHelper {
 		];
 	}
 
-	public static function getWfVarsTriggeringUpdate() {
+	public function getWfVarsTriggeringUpdate() {
 		return $this->aWfVarsTriggeringUpdate;
 	}
 }
