@@ -8,6 +8,7 @@
 class SEOTweaksGlobalHooksHelper {
 
 	const MIN_WIDTH = 200;
+	const MIN_HEIGHT = 200;
 	const MAX_WIDTH = 2000;
 	const PREF_WIDTH = 600;
 	const PREF_HEIGHT = 315;
@@ -42,7 +43,7 @@ class SEOTweaksGlobalHooksHelper {
 	static protected function getFirstArticleImage( $title ) {
 		$retTitle = self::getFirstArticleImageLargerThan( $title, self::PREF_WIDTH, self::PREF_HEIGHT );
 		if ( empty( $retTitle ) ) {
-			$retTitle = self::getFirstArticleImageLargerThan( $title, self::MIN_WIDTH, self::MIN_WIDTH );
+			$retTitle = self::getFirstArticleImageLargerThan( $title, self::MIN_WIDTH, self::MIN_HEIGHT );
 		}
 		return $retTitle;
 	}
