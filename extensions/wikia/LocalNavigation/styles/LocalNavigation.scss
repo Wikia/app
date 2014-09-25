@@ -43,8 +43,14 @@
 	.dropdown {
 		display: table;
 		position: absolute;
-		right: 0;
 		z-index: 500050;
+		left: 0;
+		right: auto;
+
+		&.right {
+			left: auto;
+			right: 0;
+		}
 
 		li {
 			display: table-row;
@@ -53,7 +59,6 @@
 
 			a {
 				background-color: $color-buttons;
-				border-top: 1px solid rgba($color-button-text, .2);
 				color: $color-button-text;
 				display: table-cell;
 				padding: 20px;
@@ -61,6 +66,10 @@
 				vertical-align: middle;
 				white-space: nowrap;
 				width: 100%;
+
+				&:not(:first-child) {
+					border-top: 1px solid rgba($color-button-text, .2);
+				}
 
 				&:hover {
 					font-weight: bold;
@@ -117,62 +126,27 @@
 				border-color: $color-buttons;
 				color: $color-button-text;
 
-				ul.second {
+				ul.second, ul.dropdown {
 					display: block;
 				}
 			}
 		}
 	}
-	ul.second {
-		background: $color-buttons;
-		color: $color-button-text;
+	ul.dropdown {
 		display: none;
-		left: 0;
-		position: absolute;
-		top: 60px;
-		z-index: 10000;
-
-		> li {
-			font-size: 15px;
-			position: relative;
-
-			&:not(:first-child) {
-				border-top: 1px solid rgba($color-button-text, .2);
-			}
-
+	}
+	ul.second {
+		a.has-more {
+			padding-right: 40px;
 			.more {
 				@include arrow(4px, rgba($color-button-text, .5), 'right');
-				margin-top: -4px;
-				position: absolute;
-				right: 20px;
-				top: 50%;
+				margin-top: 1px;
+				margin-right: -20px;
+				position: static;
+				float: right;
 			}
 			&:hover .more {
 				@include arrow(4px, rgba($color-button-text, .8), 'right');
-			}
-
-			> a {
-				display: block;
-				font-weight: bold;
-				height: 100%;
-				position: relative;
-				padding: 20px 40px 20px 20px;
-				white-space: nowrap;
-
-				.overlay {
-					background: $color-buttons;
-					font-weight: normal;
-					left: 0;
-					padding: 20px;
-					position: absolute;
-					top: 0;
-				}
-
-				&:hover {
-					.overlay {
-						display: none
-					}
-				}
 			}
 		}
 	}
