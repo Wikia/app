@@ -21,12 +21,12 @@ ve.ui.WikiaParameterPage = function VeUiWikiaParameterPage( parameter, name, con
 	ve.ui.WikiaParameterPage.super.call( this, parameter, name, config );
 
 	// Properties
-	this.getInfoWidget = new ve.ui.WikiaTemplateGetInfoWidget( { template: parameter.getTemplate() } );
+	this.templateGetInfoWidget = new ve.ui.WikiaTemplateGetInfoWidget( { template: parameter.getTemplate() } );
 
 	// Initialization
 	this.addButton.$element
 		.addClass( 've-ui-mwParameterPage-addButton' )
-		.after( this.getInfoWidget.$element );
+		.after( this.templateGetInfoWidget.$element );
 };
 
 /* Inheritance */
