@@ -214,15 +214,11 @@ ve.ui.WikiaTransclusionDialog.prototype.getSetupProcess = function ( data ) {
 					// Preview button
 					this.previewButton.$element.show();
 
-					this.bookletLayout.outlinePanel.$element.addClass( 've-ui-wikiaTransclusionDialog-noBorder' );
-
 					ve.track( 'wikia', {
 						'action': ve.track.actions.OPEN,
 						'label': 'dialog-template-single'
 					} );
 				} else {
-					this.bookletLayout.outlinePanel.$element.removeClass( 've-ui-wikiaTransclusionDialog-noBorder' );
-
 					ve.track( 'wikia', {
 						'action': ve.track.actions.OPEN,
 						'label': 'dialog-template-multiple'
