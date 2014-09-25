@@ -75,6 +75,9 @@ $messages['en'] = array(
 	'wikiahome-image-auto-uploaded-comment' => 'Auto-generated image to be used on http://wikia.com/ – stay tuned for more info on the Staff Blog: http://community.wikia.com/wiki/Blog:Wikia_Staff_Blog',
 
 	'promote-upload-image-uploads-disabled' => 'File uploads are currently disabled on your wiki. Please try again later.',
+
+	'promote-extension-under-rework-header' => 'Special:Promote disabled',
+	'promote-extension-under-rework' => 'This page has been disabled for maintenance. We are working on restoring the functionality for your convenience.'
 );
 
 $messages['de'] = array(
@@ -433,4 +436,7 @@ $messages['qqq'] = array(
 	'promote-statusbar-rejected' => 'Status information when wiki is in rejected',
 
 	'promote-upload-image-uploads-disabled' => 'Information to the user that file uploading is temporarily disabled',
+
+	'promote-extension-under-rework-header' => 'Page title stating that Special:Promote is disabled',
+	'promote-extension-under-rework' => 'Information displayed to sysops and bureaucrats that the Special:Promote page has been disabled for maintenance and is currently undergoing maintenance work.'
 );

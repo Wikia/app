@@ -24,7 +24,6 @@ class SpecialPromoteController extends WikiaSpecialPageController {
 		parent::__construct( 'Promote' );
 
 		//FIXME: this is an asset of AdminDashboard extension; why is it added here? Maybe we should use some logic of AdminDashboard to load this asset and remove it from here
-		$this->wg->Out->addStyle( AssetsManager::getInstance()->getSassCommonURL( 'extensions/wikia/AdminDashboard/css/AdminDashboard.scss' ) );
 		$this->wg->Out->addStyle( AssetsManager::getInstance()->getSassCommonURL( 'extensions/wikia/SpecialPromote/css/SpecialPromote.scss' ) );
 
 		$this->helper = new SpecialPromoteHelper();
@@ -62,10 +61,18 @@ class SpecialPromoteController extends WikiaSpecialPageController {
 	}
 
 	protected function checkAccess() {
-		if ( !$this->wg->User->isLoggedIn() || !$this->wg->User->isAllowed( 'promote' ) ) {
+		/**
+		 * We are checking if the user has perms to Disabled Promote (PLA-1823)
+		 * to display message about Promote being disabled to the user
+		 */
+		if ( !$this->wg->User->isLoggedIn() || !$this->wg->User->isAllowed( 'promotedisabled' ) ) {
 			if ( !$this->request->isXmlHttp() ) {
+
+				$this->wg->Out->clearHTML();
+				$this->wg->Out->setPageTitle( wfMessage('promote-extension-under-rework-header')->plain() );
+				$this->wg->Out->addHTML( wfMessage('promote-extension-under-rework')->plain() );
+
 				$this->skipRendering();
-				$this->specialPage->displayRestrictionError();
 			}
 
 			return false;

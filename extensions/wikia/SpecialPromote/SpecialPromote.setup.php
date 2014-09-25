@@ -48,3 +48,10 @@ $wgGroupPermissions['staff']['promote'] = true;
 $wgGroupPermissions['helper']['promote'] = true;
 $wgGroupPermissions['sysop']['promote'] = true;
 $wgGroupPermissions['bureaucrat']['promote'] = true;
+
+$wgAvailableRights[] = 'promotedisabled';
+$wgGroupPermissions['*']['promotedisabled'] = false;
+$wgGroupPermissions['staff']['promotedisabled'] = true;
+$wgGroupPermissions['helper']['promotedisabled'] = true;
+$wgGroupPermissions['sysop']['promotedisabled'] = false;
+$wgGroupPermissions['bureaucrat']['promotedisabled'] = false;
