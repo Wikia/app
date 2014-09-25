@@ -74,7 +74,7 @@ ve.ui.WikiaTemplateSearchWidget.prototype.onQueryChange = function () {
 		this.$results.show();
 	} else {
 		this.$results.hide();
-		this.$suggestions.show();	
+		this.$suggestions.show();
 	}
 };
 
