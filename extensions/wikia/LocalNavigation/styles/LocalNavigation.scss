@@ -17,6 +17,11 @@
 		float: right;
 		padding: 20px 0;
 		position: relative;
+
+		.contribute-button,
+		.dropdown {
+			direction: ltr;
+		}
 	}
 
 	.contribute-button {
@@ -44,42 +49,45 @@
 	}
 
 	.dropdown {
-		direction: ltr;
-		display: table;
+		display: none;
 		min-width: 100%;
 		position: absolute;
 		right: 0;
 		z-index: 500050;
 
+		&.active {
+			display: table;
+		}
+
 		li {
 			display: table-row;
 			height: 51px;
 			list-style: none;
+		}
 
-			a {
-				background-color: $color-buttons;
-				border-top: 1px solid rgba($color-button-text, .2);
-				color: $color-button-text;
-				display: table-cell;
-				padding: 20px;
-				text-decoration: none;
-				vertical-align: middle;
-				white-space: nowrap;
-				width: 100%;
+		a {
+			background-color: $color-buttons;
+			border-top: 1px solid rgba($color-button-text, .2);
+			color: $color-button-text;
+			display: table-cell;
+			padding: 20px;
+			text-decoration: none;
+			vertical-align: middle;
+			white-space: nowrap;
+			width: 100%;
 
-				&:hover {
-					font-weight: bold;
-				}
+			&:hover {
+				font-weight: bold;
+			}
 
-				&:after {
-					content: attr(data-content);
-					font-weight: bold;
-					visibility: hidden;
-				}
+			&:after {
+				content: attr(data-content);
+				font-weight: bold;
+				visibility: hidden;
+			}
 
-				span {
-					position: absolute;
-				}
+			span {
+				position: absolute;
 			}
 		}
 	}
