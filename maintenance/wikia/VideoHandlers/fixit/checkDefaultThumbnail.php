@@ -2,7 +2,7 @@
 
 /**
 * Maintenance script to check if the wiki has default thumbnail
-* This is one time use script
+* This is one time use script to be used with runOnCluster.php
 * @author Saipetch Kongkatong
 */
 

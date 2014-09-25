@@ -1,54 +1,36 @@
-require(['mediaGallery.toggler', 'mediaGallery.media'], function (Toggler, Media) {
+require(['mediaGallery.views.gallery'], function (Gallery) {
 	'use strict';
 	$(function () {
-		var visibleCount = 8,
-			$galleries = $('.media-gallery-wrapper'),
-			togglers = [];
+		var $galleries = $('.media-gallery-wrapper'),
+			// get data from script tag in DOM
+			data = Wikia.mediaGalleryData || [];
 
-		$galleries.each(function () {
+		// If there's no galleries on the page, we're done.
+		if (!data.length) {
+			return;
+		}
+
+		$.each($galleries, function (idx) {
 			var $this = $(this),
-				media = [],
-				toggler = new Toggler({
-					$el: $this
-				});
+				origVisibleCount = $this.data('visible-count') || 8,
+				gallery;
 
-			// create new views for each media item
-			toggler.$media.each(function () {
-				var medium = new Media({
-					$el: $(this)
-				});
-				medium.init();
-				media.push(medium);
+			gallery = new Gallery({
+				$el: $('<div></div>'),
+				$wrapper: $this,
+				model: {
+					media: data[idx]
+				},
+				origVisibleCount: origVisibleCount
 			});
+			$this.append(gallery.render(origVisibleCount).$el);
 
-			visibleCount = $this.attr('data-visible-count') || visibleCount;
-			if (toggler.$media.length > visibleCount) {
-				toggler.init();
-				togglers.push(toggler);
-
-				toggler.$media.on('click', function () {
-					Wikia.Tracker.track({
-						category: 'article',
-						action: Wikia.Tracker.ACTIONS.click,
-						label: 'show-new-gallery-lightbox',
-						trackingMethod: 'both',
-						value: 0
-					});
-				});
+			if (gallery.$toggler) {
+				$this.append(gallery.$toggler);
 			}
-		});
 
-		$galleries.on('click', '.media > a', function () {
-			// get index of media item in gallery
-			var index = $(this).parent().index();
-
-			Wikia.Tracker.track({
-				category: 'media-gallery',
-				action: Wikia.Tracker.ACTIONS.CLICK,
-				label: 'gallery-item',
-				trackingMethod: 'both',
-				value: index
-			});
+			gallery.rendered = true;
+			gallery.$el.trigger('galleryInserted');
 		});
 	});
 });
