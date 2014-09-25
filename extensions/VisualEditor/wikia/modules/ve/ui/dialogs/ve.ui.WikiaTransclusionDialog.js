@@ -84,7 +84,7 @@ ve.ui.WikiaTransclusionDialog.prototype.initialize = function () {
  * @inheritdoc
  */
 ve.ui.WikiaTransclusionDialog.prototype.onTransclusionReady = function () {
-	var zeroStatePage, getInfoWidget,
+	var zeroStatePage, templateGetInfoWidget,
 		parts = this.transclusionModel.getParts();
 
 	// Parent method
@@ -97,10 +97,10 @@ ve.ui.WikiaTransclusionDialog.prototype.onTransclusionReady = function () {
 
 		// Content
 		zeroStatePage = new OO.ui.PageLayout( 'zeroState', {} );
-		getInfoWidget = new ve.ui.WikiaTemplateGetInfoWidget( { template: parts[0] } );
+		templateGetInfoWidget = new ve.ui.WikiaTemplateGetInfoWidget( { template: parts[0] } );
 		zeroStatePage.$element
 			.text( ve.msg( 'wikia-visualeditor-dialog-transclusion-zerostate' ) )
-			.append( getInfoWidget.$element );
+			.append( templateGetInfoWidget.$element );
 		this.bookletLayout.addPages( [ zeroStatePage ] );
 
 		// Position
