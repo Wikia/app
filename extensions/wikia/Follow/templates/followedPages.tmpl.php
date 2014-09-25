@@ -8,7 +8,7 @@
 <?php $sk = RequestContext::getMain()->getSkin(); ?>
 <?php foreach ( $data as $key => $value ): ?>
 	<?php if( empty( $more ) ): ?>
-		<h2 class="firstHeading"><?= wfMessage( $value['ns'] , array( '$1' => $value['count'] ) )->escaped() ?>
+		<h2 class="firstHeading"><?= wfMessage( $value['ns'] , $value['count'] )->escaped() ?>
 
 		</h2>
                 <input type="hidden" id="count-<?= $value['ns']; ?>" value="<?= $value['count'] ?>" />
