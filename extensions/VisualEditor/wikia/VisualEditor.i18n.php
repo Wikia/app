@@ -65,6 +65,11 @@ $messages['en'] = array(
 	'wikia-visualeditor-wikiatemplateoptionwidget-appears' => 'Appears {{FORMATNUM:$1}} {{PLURAL:$1|time|times}}',
 	'wikia-visualeditor-wikiatemplateoptionwidget-be-first' => 'Be the first to use this',
 	'wikia-visualeditor-dialog-template-insert-title' => 'Insert template',
+	'wikia-visualeditor-dialog-preference-headline' => 'Greetings, Superfan!',
+	'wikia-visualeditor-dialog-preference-text' => 'Our editor just got upgraded, offering enhanced tools to help you create richer articles.',
+	'wikia-visualeditor-dialog-preference-link-help' => 'Read about new features',
+	'wikia-visualeditor-dialog-preference-link-preferences' => 'Manage your editor preferences',
+	'wikia-visualeditor-dialog-preference-start-button' => 'Got it!',
 );
 
 /** Message documentation (Message documentation)
@@ -145,6 +150,11 @@ $messages['qqq'] = array(
 	'wikia-visualeditor-dialog-wikiatemplateinsert-search' => 'Placeholder text that appears in the template insert dialog search field',
 	'wikia-visualeditor-wikiatemplateoptionwidget-be-first' => 'If a template is not used on any pages, this message appears',
 	'wikia-visualeditor-dialog-template-insert-title' => 'Title of the "insert template" dialog',
+	'wikia-visualeditor-dialog-preference-headline' => 'Dialog title greeting the contributor',
+	'wikia-visualeditor-dialog-preference-text' => 'Body copy of the dialog, explaining why their user preference has been changed and some ambiguous good words about the new editor',
+	'wikia-visualeditor-dialog-preference-link-help' => 'Link text to help page',
+	'wikia-visualeditor-dialog-preference-link-preferences' => 'Link text to user preference page',
+	'wikia-visualeditor-dialog-preference-start-button' => 'Button copy that closes the dialog',
 );
 
 /** Tunisian Spoken Arabic ( زَوُن)
@@ -396,6 +406,11 @@ $messages['de'] = array(
 	'wikia-visualeditor-wikiatemplateoptionwidget-appears' => 'Benutzt $1 {{Mehrzahl:$1|einmal|mal}}',
 	'wikia-visualeditor-wikiatemplateoptionwidget-be-first' => 'Sei der Erste Benutzer der Vorlage',
 	'wikia-visualeditor-dialog-template-insert-title' => 'Vorlage einfügen',
+	'wikia-visualeditor-dialog-preference-headline' => 'Hallo Superfan!',
+	'wikia-visualeditor-dialog-preference-text' => 'Unser Visual Editor wurde gerade aufgerüstet und hat jetzt verbesserte Funktionen, die es euch erlauben eindrucksvollere Artikel zu erstellen.',
+	'wikia-visualeditor-dialog-preference-link-help' => 'Lies hier über die neuen Funktionen',
+	'wikia-visualeditor-dialog-preference-link-preferences' => 'Verwalte deine Editor Einstellungen',
+	'wikia-visualeditor-dialog-preference-start-button' => 'Okay!',
 );
 
 /** Zazaki (Zazaki)
@@ -505,6 +520,11 @@ $messages['es'] = array(
 	'wikia-visualeditor-wikiatemplateoptionwidget-appears' => 'Aparece $1 {{PLURAL:$1|vez|veces}}',
 	'wikia-visualeditor-wikiatemplateoptionwidget-be-first' => 'Sé el primero en utilizar esto',
 	'wikia-visualeditor-dialog-template-insert-title' => 'Insertar plantilla',
+	'wikia-visualeditor-dialog-preference-headline' => '¡Saludos!',
+	'wikia-visualeditor-dialog-preference-text' => 'Nuestro editor acaba de ser actualizado, ofreciendo herramientas mejoradas para ayudar a la creación de artículos',
+	'wikia-visualeditor-dialog-preference-link-help' => 'Lee acerca de las nueva funcionalidades',
+	'wikia-visualeditor-dialog-preference-link-preferences' => 'Maneja las preferencias de su editor',
+	'wikia-visualeditor-dialog-preference-start-button' => 'OK',
 );
 
 /** Persian (فارسی)
@@ -553,6 +573,11 @@ $messages['fi'] = array(
 	'wikia-visualeditor-wikiatemplateoptionwidget-appears' => 'Esiintyy $1 kertaa',
 	'wikia-visualeditor-wikiatemplateoptionwidget-be-first' => 'Olen ensimmäinen, joka käyttää tätä',
 	'wikia-visualeditor-dialog-template-insert-title' => 'Lisää malline',
+	'wikia-visualeditor-dialog-preference-headline' => 'Tervehdys, superfani!',
+	'wikia-visualeditor-dialog-preference-text' => 'Meidän muokkaintamme on juuri parannettu ja se tarjoaa nyt entistä parempia työkaluja artikkeleiden luomiseen.',
+	'wikia-visualeditor-dialog-preference-link-help' => 'Lue uusista ominaisuuksista',
+	'wikia-visualeditor-dialog-preference-link-preferences' => 'Hallinnoi muokkausasetuksiasi',
+	'wikia-visualeditor-dialog-preference-start-button' => 'Selvä!',
 );
 
 /** Faroese (føroyskt)
@@ -648,6 +673,11 @@ $messages['fr'] = array(
 	'wikia-visualeditor-wikiatemplateoptionwidget-appears' => 'Apparaît $1 fois',
 	'wikia-visualeditor-wikiatemplateoptionwidget-be-first' => "Soyez le premier à l'utiliser",
 	'wikia-visualeditor-dialog-template-insert-title' => 'Insérer un modèle',
+	'wikia-visualeditor-dialog-preference-headline' => 'Salutations !',
+	'wikia-visualeditor-dialog-preference-text' => "Notre éditeur vient d'être mis à jour et propose des outils améliorés pour vous aider à créer des articles encore plus riches.",
+	'wikia-visualeditor-dialog-preference-link-help' => 'En lire plus sur les nouvelles fonctionnalités',
+	'wikia-visualeditor-dialog-preference-link-preferences' => "Gérer vos préférences pour l'éditeur",
+	'wikia-visualeditor-dialog-preference-start-button' => 'OK',
 );
 
 /** Galician (galego)
@@ -806,6 +836,11 @@ $messages['it'] = array(
 	'wikia-visualeditor-wikiatemplateoptionwidget-appears' => 'Appare $1 {{PLURAL:$1|volta|volte}}',
 	'wikia-visualeditor-wikiatemplateoptionwidget-be-first' => 'Sii il primo ad usare questo',
 	'wikia-visualeditor-dialog-template-insert-title' => 'Inserisci template',
+	'wikia-visualeditor-dialog-preference-headline' => 'Saluti!',
+	'wikia-visualeditor-dialog-preference-text' => 'Il nostro editor è stato appena aggiornato per offrirti strumenti più potenti che ti aiuteranno a creare articoli più ricchi.',
+	'wikia-visualeditor-dialog-preference-link-help' => 'Scopri di più sulle nuove funzioni',
+	'wikia-visualeditor-dialog-preference-link-preferences' => "Controlla le tue impostazioni dell'editor",
+	'wikia-visualeditor-dialog-preference-start-button' => 'OK',
 );
 
 /** Japanese (日本語)
@@ -851,6 +886,11 @@ $messages['ja'] = array(
 	'wikia-visualeditor-wikiatemplateoptionwidget-appears' => '$1 {{PLURAL:$1|回|回}}表示',
 	'wikia-visualeditor-wikiatemplateoptionwidget-be-first' => 'このテンプレートの初めての使用者',
 	'wikia-visualeditor-dialog-template-insert-title' => 'テンプレートを挿入',
+	'wikia-visualeditor-dialog-preference-headline' => 'こんにちは!',
+	'wikia-visualeditor-dialog-preference-text' => '我々の編集機能は向上され、より良い記事ページを作成するために質のよい機能を提供します。',
+	'wikia-visualeditor-dialog-preference-link-help' => '新しい機能について知る',
+	'wikia-visualeditor-dialog-preference-link-preferences' => 'あなたの編集方法を管理する',
+	'wikia-visualeditor-dialog-preference-start-button' => '了解しました',
 );
 
 /** Khmer (ភាសាខ្មែរ)
@@ -1165,6 +1205,11 @@ $messages['nl'] = array(
 	'wikia-visualeditor-wikiatemplateoptionwidget-appears' => 'Komt {{$1}} keer voor',
 	'wikia-visualeditor-wikiatemplateoptionwidget-be-first' => 'De eerste zijn om dit te gebruiken',
 	'wikia-visualeditor-dialog-template-insert-title' => 'Sjabloon invoegen',
+	'wikia-visualeditor-dialog-preference-headline' => 'Gegroet!',
+	'wikia-visualeditor-dialog-preference-text' => 'Onze bewerker is juist opgewaardeerd, en biedt betere hulpmiddelen die je helpen rijkere artikels te schrijven',
+	'wikia-visualeditor-dialog-preference-link-help' => 'Over de nieuwe functies lezen',
+	'wikia-visualeditor-dialog-preference-link-preferences' => 'Je bewerkingsvoorkeuren beheren',
+	'wikia-visualeditor-dialog-preference-start-button' => 'Begrepen!',
 );
 
 /** Occitan (occitan)
@@ -1250,6 +1295,11 @@ $messages['pl'] = array(
 	'wikia-visualeditor-wikiatemplateoptionwidget-appears' => 'Użyty $1 {{PLURAL:$1|raz|razy}}',
 	'wikia-visualeditor-wikiatemplateoptionwidget-be-first' => 'Bądź pierwszym, który go użyje',
 	'wikia-visualeditor-dialog-template-insert-title' => 'Wstaw szablon',
+	'wikia-visualeditor-dialog-preference-headline' => 'Witaj!',
+	'wikia-visualeditor-dialog-preference-text' => 'Nasz edytor właśnie został ulepszony i zawiera lepsze narzędzia pozwalające Ci tworzyć bogatsze artykuły.',
+	'wikia-visualeditor-dialog-preference-link-help' => 'Dowiedz się więcej o nowych funkcjach',
+	'wikia-visualeditor-dialog-preference-link-preferences' => 'Dostosuj swoje preferencje edytora',
+	'wikia-visualeditor-dialog-preference-start-button' => 'OK',
 );
 
 /** Pashto (پښتو)
@@ -1296,6 +1346,11 @@ $messages['pt'] = array(
 	'wikia-visualeditor-wikiatemplateoptionwidget-appears' => 'Aparece $1 {{PLURAL:$1|vez|vezes}}',
 	'wikia-visualeditor-wikiatemplateoptionwidget-be-first' => 'Seja o primeiro a usar isto',
 	'wikia-visualeditor-dialog-template-insert-title' => 'Inserir predefinição',
+	'wikia-visualeditor-dialog-preference-headline' => 'Saudações!',
+	'wikia-visualeditor-dialog-preference-text' => 'O nosso editor acaba de ser atualizado, oferecendo ferramentas melhoradas para ajudá-lo na criação de artigos. ',
+	'wikia-visualeditor-dialog-preference-link-help' => 'Leia sobre as nossas novas funções',
+	'wikia-visualeditor-dialog-preference-link-preferences' => 'Controle as preferências do seu editor',
+	'wikia-visualeditor-dialog-preference-start-button' => 'OK',
 );
 
 /** Brazilian Portuguese (português do Brasil)
@@ -1476,6 +1531,11 @@ $messages['ru'] = array(
 	'wikia-visualeditor-wikiatemplateoptionwidget-appears' => 'Используется $1 {{PLURAL:$1|раз|раза|раз}}',
 	'wikia-visualeditor-wikiatemplateoptionwidget-be-first' => 'Станьте первым, кто будет использовать этот шаблон',
 	'wikia-visualeditor-dialog-template-insert-title' => 'Вставка шаблона',
+	'wikia-visualeditor-dialog-preference-headline' => 'Приветствуем!',
+	'wikia-visualeditor-dialog-preference-text' => 'Наш редактор получил обновления и предлагает расширенные инструменты для создания ещё более лучших статей.',
+	'wikia-visualeditor-dialog-preference-link-help' => 'Прочитать о новых возможностях',
+	'wikia-visualeditor-dialog-preference-link-preferences' => 'Настроить предпочтения в редакторе',
+	'wikia-visualeditor-dialog-preference-start-button' => 'Попробовать!',
 );
 
 /** Scots (Scots)
@@ -1711,6 +1771,11 @@ $messages['vi'] = array(
 	'wikia-visualeditor-wikiatemplateoptionwidget-appears' => 'Xuất hiện $1 lần',
 	'wikia-visualeditor-wikiatemplateoptionwidget-be-first' => 'Hãy là người đầu tiên sử dụng nó',
 	'wikia-visualeditor-dialog-template-insert-title' => 'Chèn bản mẫu',
+	'wikia-visualeditor-dialog-preference-headline' => 'Chúc mừng!',
+	'wikia-visualeditor-dialog-preference-text' => 'Trình soạn thảo của chúng tôi vừa mới nâng cấp, cung cấp những công cụ nâng cao để giúp bạn tạo ra nhiều bài viết phong phú hơn.',
+	'wikia-visualeditor-dialog-preference-link-help' => 'Tìm hiểu về tính năng mới',
+	'wikia-visualeditor-dialog-preference-link-preferences' => 'Quản lý tùy chọn soạn thảo của bạn',
+	'wikia-visualeditor-dialog-preference-start-button' => 'Hiểu rồi!',
 );
 
 /** Volapük (Volapük)
@@ -1789,6 +1854,11 @@ $messages['zh-hans'] = array(
 	'wikia-visualeditor-wikiatemplateoptionwidget-appears' => '显示$1{{PLURAL:$1|次|次}}',
 	'wikia-visualeditor-wikiatemplateoptionwidget-be-first' => '首次使用此模版',
 	'wikia-visualeditor-dialog-template-insert-title' => '插入模版',
+	'wikia-visualeditor-dialog-preference-headline' => '您好！',
+	'wikia-visualeditor-dialog-preference-text' => '我们已经对编辑器进行升级，为您提供更多强大的工具，帮助您创建更丰富的文章内容。',
+	'wikia-visualeditor-dialog-preference-link-help' => '浏览新功能',
+	'wikia-visualeditor-dialog-preference-link-preferences' => '管理编辑器参数',
+	'wikia-visualeditor-dialog-preference-start-button' => '知道了',
 );
 
 /** Korean
@@ -1804,4 +1874,9 @@ $messages['ko'] = array(
 	'wikia-visualeditor-wikiatemplateoptionwidget-appears' => '$1{{PLURAL:$1|번|번}} 표시',
 	'wikia-visualeditor-wikiatemplateoptionwidget-be-first' => '틀을 첫 번째로 사용해 보세요',
 	'wikia-visualeditor-dialog-template-insert-title' => '틀 삽입',
+	'wikia-visualeditor-dialog-preference-headline' => '좋은 소식입니다!',
+	'wikia-visualeditor-dialog-preference-text' => '한층 개선된 편집기 덕분에 이제 더 쉽게 문서를 알차게 만들 수 있을 것입니다.',
+	'wikia-visualeditor-dialog-preference-link-help' => '새로운 기능을 확인해보세요',
+	'wikia-visualeditor-dialog-preference-link-preferences' => '편집기 환경 설정을 변경해보세요',
+	'wikia-visualeditor-dialog-preference-start-button' => '확인',
 );
