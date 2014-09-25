@@ -1,6 +1,6 @@
-<div class="contribute-container">
+<section id="contribute-container" class="contribute-container">
 	<div class="contribute-button"><?= wfMessage('oasis-button-contribute-tooltip')->text() ?></div>
-	<ul class="dropdown">
+	<ul id="contribute-dropdown" class="dropdown">
 <?php
 	foreach( $dropdownItems as $key => $item ):
 		$href = empty( $item[ 'href' ] ) ? '#' : htmlspecialchars( $item[ 'href' ] );
@@ -26,4 +26,4 @@
 		</li>
 <?php endforeach; ?>
 	</ul>
-</div>
+</section>

@@ -7,6 +7,7 @@ class LocalNavigationController extends WikiaController {
 
 	public function Index() {
 		Wikia::addAssetsToOutput( 'local_navigation_scss' );
+		Wikia::addAssetsToOutput( 'local_navigation_js' );
 	}
 
 	public function Wordmark() {
