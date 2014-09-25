@@ -1,5 +1,6 @@
 @import 'skins/shared/color';
 @import 'skins/shared/mixins/arrow';
+@import 'extensions/wikia/Venus/styles/variables';
 
 .local-navigation {
 	background-color: $color-page;
@@ -10,7 +11,37 @@
 		box-sizing: inherit;
 	}
 
-	.contribute-wrapper {
+	.wordmark-container {
+		display: table;
+		height: 100%;
+		padding: 0 40px 0 32px;
+	}
+
+	.wordmark {
+		display: table-cell;
+		vertical-align: middle;
+		width: 160px;
+	}
+
+	.wordmark-text {
+		display: inline-block;
+		max-height: 80px;
+		overflow: hidden;
+
+		&.large {
+			font-size: 27px;
+		}
+
+		&.medium {
+			font-size: 24px;
+		}
+
+		&.small {
+			font-size: 20px;
+		}
+	}
+
+	.contribute-container {
 		color: $color-button-text;
 		direction: rtl;
 		display: inline-block;
@@ -90,5 +121,17 @@
 				position: absolute;
 			}
 		}
+	}
+}
+
+@media #{$medium-only} {
+	.local-navigation .wordmark-container {
+		padding-left: 30px;
+	}
+}
+
+@media #{$small-only} {
+	.local-navigation .wordmark-container {
+		padding: 0 30px 0 24px;
 	}
 }
