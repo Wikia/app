@@ -1297,6 +1297,10 @@ class ArticlesApiController extends WikiaApiController {
 	}
 
 	static private function getCacheKey( $name, $type, $params = '' ) {
+		$app = F::app();
+		if ( !empty( $app->wg->EnablePOIExt ) ) {
+			$name .= PalantirApiController::MEMC_KEY_SUFFIX;
+		}
 		if ( $params !== '' ) {
 			$params = md5( implode( '|', $params ) );
 		}
