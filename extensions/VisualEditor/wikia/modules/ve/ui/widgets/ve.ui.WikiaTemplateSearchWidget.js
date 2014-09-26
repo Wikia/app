@@ -90,7 +90,7 @@ ve.ui.WikiaTemplateSearchWidget.prototype.onQueryChange = function () {
 ve.ui.WikiaTemplateSearchWidget.prototype.onResultsScroll = function () {
 	var position = this.$results.scrollTop() + this.$results.outerHeight(),
 		threshold = this.results.$element.outerHeight() - 100;
-	if ( !this.query.isPending() && position > threshold ) {
+	if ( !this.query.isPending() && this.resultsOffset < this.allResults.length && position > threshold ) {
 		this.displayResults();
 	}
 };
@@ -111,11 +111,9 @@ ve.ui.WikiaTemplateSearchWidget.prototype.onSuggestionsScroll = function () {
  */
 ve.ui.WikiaTemplateSearchWidget.prototype.displayResults = function () {
 	var results;
-	if ( this.resultsOffset < this.allResults.length ) {
-		results = this.allResults.slice( this.resultsOffset, this.resultsOffset + this.chunkedResults );
-		this.resultsOffset += this.chunkedResults;
-		this.results.addItems( this.getOptionsFromTemplateData( results ) );
-	}
+	results = this.allResults.slice( this.resultsOffset, this.resultsOffset + this.chunkedResults );
+	this.resultsOffset += this.chunkedResults;
+	this.results.addItems( this.getOptionsFromData( results ) );
 };
 
 /**
@@ -124,7 +122,7 @@ ve.ui.WikiaTemplateSearchWidget.prototype.displayResults = function () {
  * @param {Array} data Template info
  */
 ve.ui.WikiaTemplateSearchWidget.prototype.displaySuggestions = function ( data ) {
-	this.suggestions.addItems( this.getOptionsFromTemplateData( data ) );
+	this.suggestions.addItems( this.getOptionsFromData( data ) );
 };
 
 /**
@@ -132,7 +130,7 @@ ve.ui.WikiaTemplateSearchWidget.prototype.displaySuggestions = function ( data )
  *
  * @param {Array} data Template info
  */
-ve.ui.WikiaTemplateSearchWidget.prototype.getOptionsFromTemplateData = function ( data ) {
+ve.ui.WikiaTemplateSearchWidget.prototype.getOptionsFromData = function ( data ) {
 	var i, options = [];
 
 	for ( i = 0; i < data.length; i++ ) {
