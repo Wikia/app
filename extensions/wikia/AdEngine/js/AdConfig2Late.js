@@ -15,7 +15,6 @@ define('ext.wikia.adEngine.adConfigLate', [
 	'ext.wikia.adEngine.provider.taboola',
 	'ext.wikia.adEngine.provider.null',
 	'ext.wikia.adEngine.provider.sevenOneMedia',
-	'ext.wikia.adEngine.provider.ebay',
 	require.optional('wikia.abTest')
 ], function (
 	// regular dependencies
@@ -32,7 +31,6 @@ define('ext.wikia.adEngine.adConfigLate', [
 	adProviderTaboola,
 	adProviderNull,
 	adProviderSevenOneMedia, // TODO: move this to the early queue (remove jQuery dependency first)
-	adProviderEbay,
 	abTest
 ) {
 	'use strict';
@@ -133,16 +131,6 @@ define('ext.wikia.adEngine.adConfigLate', [
 		// DART for some slots below the fold a.k.a. coffee cup
 		if (dartBtfEnabled && dartBtfSlots[slotname] && adProviderDirectGpt.canHandleSlot(slotname)) {
 			return adProviderDirectGpt;
-		}
-
-		// Ebay integration
-		if (window.wgAdDriverUseEbay) {
-			if (slotname === 'PREFOOTER_LEFT_BOXAD') {
-				return adProviderEbay;
-			}
-			if (slotname === 'PREFOOTER_RIGHT_BOXAD') {
-				return adProviderNull;
-			}
 		}
 
 		if (window.wgAdDriverUseRemnantGpt && adProviderRemnantGpt.canHandleSlot(slotname)) {

@@ -64,7 +64,6 @@ define('ext.wikia.adEngine.adContext', ['wikia.window', 'wikia.document'], funct
 		},
 
 		providers: {
-			ebay: w.wgAdDriverUseEbay,
 			sevenOneMedia: w.wgAdDriverUseSevenOneMedia,
 			sevenOneMediaCombinedUrl: w.wgAdDriverSevenOneMediaCombinedUrl,
 			remnantGptMobile: w.wgAdDriverEnableRemnantGptMobile,

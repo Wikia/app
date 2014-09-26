@@ -288,7 +288,6 @@ class MercuryApi {
 					'wikiVertical' => $adEngineVariables[ 'cscoreCat' ],
 				],
 				'providers' => [
-					'ebay' => $adEngineVariables[ 'wgAdDriverUseEbay' ],
 					'sevenOneMedia' => $adEngineVariables[ 'wgAdDriverUseSevenOneMedia' ],
 					'sevenOneMediaCombinedUrl' => isset( $adEngineVariables[ 'wgAdDriverSevenOneMediaCombinedUrl' ] ) ?
 							$adEngineVariables[ 'wgAdDriverSevenOneMediaCombinedUrl' ] :

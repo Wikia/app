@@ -440,7 +440,6 @@ describe('AdConfig2Late', function () {
 			adProviderTaboola,
 			adProviderNullMock,
 			adProviderSevenOneMedia,
-			null, //adProviderEbay
 			abTestMock
 		);
 

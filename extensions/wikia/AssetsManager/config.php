@@ -67,11 +67,10 @@ $config['adengine2_js'] = array(
 		'//extensions/wikia/AdEngine/js/WikiaGptHelper.js',
 		'//extensions/wikia/AdEngine/js/WikiaGptAdDetect.js',
 		'//extensions/wikia/AdEngine/js/AdProviderDirectGpt.js',
-		'//extensions/wikia/AdEngine/js/AdProviderEbay.js',
-		'//extensions/wikia/AdEngine/js/AdProviderTaboola.js',
 		'//extensions/wikia/AdEngine/js/AdProviderLater.js',
 		'//extensions/wikia/AdEngine/js/AdProviderNull.js',
 		'//extensions/wikia/AdEngine/js/AdProviderRemnantGpt.js',
+		'//extensions/wikia/AdEngine/js/AdProviderTaboola.js',
 		'//extensions/wikia/AdEngine/js/AdTemplateSkin.js',
 		'//extensions/wikia/AdEngine/js/AdLogicDartSubdomain.js',
 		'//extensions/wikia/AdEngine/js/AdLogicHighValueCountry.js',
@@ -126,22 +125,6 @@ $config['adengine2_top_in_content_boxad_js'] = array(
 	'assets' => array(
 		'//extensions/wikia/AdEngine/js/AdSlotTopInContentBoxad.js',
 	),
-);
-
-$config['adengine2_ebay_scss'] = array(
-	'type' => AssetsManager::TYPE_SCSS,
-	'skin' => array( 'oasis' ),
-	'assets' => array(
-		'//extensions/wikia/AdEngine/css/AdProviderEbay_centerWell.scss'
-	)
-);
-
-$config['adengine2_ebay_scss_wikiamobile'] = array(
-	'type' => AssetsManager::TYPE_SCSS,
-	'skin' => array( 'wikiamobile' ),
-	'assets' => array(
-		'//extensions/wikia/AdEngine/css/AdProviderEbay_centerWell.wikiamobile.scss'
-	)
 );
 
 $config['oasis_noads_extensions_js'] = array(
