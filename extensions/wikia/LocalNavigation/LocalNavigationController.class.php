@@ -26,7 +26,7 @@ class LocalNavigationController extends WikiaController {
 	}
 
 	private function getMenuNodes () {
-			return ( new NavigationModel( true ) )->getLocalNavigationTree( NavigationModel::WIKI_LOCAL_MESSAGE );
+			return ( new NavigationModel() )->getLocalNavigationTree( NavigationModel::WIKI_LOCAL_MESSAGE );
 	}
 
 	public function Wordmark() {

@@ -225,15 +225,29 @@
 			height: 31px;
 		}
 		a {
-			background: rgba(white, .2);
 			padding: 10px;
 
 			&:hover {
-				background: rgba(white, .4);
 				font-weight: normal;
 			}
 			&:nth-child(n-1) {
 				border-top: 1px solid $color-buttons;
+			}
+		}
+		@if lightness($color-buttons) < 50 {
+			a {
+				background: rgba(#fff, .2);
+				&:hover {
+					background: rgba(#fff, .4);
+				}
+			}
+		}
+		@else {
+			a {
+				background: rgba(#000, .2);
+				&:hover {
+					background: rgba(#000, .4);
+				}
 			}
 		}
 	}
