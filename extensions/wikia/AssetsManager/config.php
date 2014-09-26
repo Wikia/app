@@ -127,6 +127,20 @@ $config['adengine2_top_in_content_boxad_js'] = array(
 	),
 );
 
+$config['adengine2_tracking_js'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => array(
+		'//extensions/wikia/AdEngine/js/AdTracker.js',
+	),
+);
+
+$config['adengine2_rubicon_rtp_js'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => array(
+		'//extensions/wikia/AdEngine/js/RubiconRtp.js',
+	),
+);
+
 $config['oasis_noads_extensions_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
@@ -637,6 +651,7 @@ $config['mobile_base_ads_js'] = array(
 		'//extensions/wikia/AdEngine/js/AdProviderRemnantGptMobile.js',
 		'//extensions/wikia/AdEngine/js/AdProviderDirectGptMobile.js',
 		'//extensions/wikia/AdEngine/js/AdProviderNull.js',
+		'//extensions/wikia/AdEngine/js/AdTracker.js',
 		'//extensions/wikia/AdEngine/js/GptSlotConfig.js',
 		'//extensions/wikia/AdEngine/js/SlotTracker.js',
 		'//extensions/wikia/AdEngine/js/SlotTweaker.js',
@@ -692,10 +707,10 @@ $config['wikiamobile_ads_js'] = array(
 	'skin' => 'wikiamobile',
 	'assets' => array(
 		'#group_mobile_base_ads_js',
-		
+
 		// Interactive maps integration
 		'#group_adengine2_interactive_maps_js',
-		
+
 		// Run!
 		'//extensions/wikia/WikiaMobile/js/ads_run.js',
 	)
