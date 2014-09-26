@@ -1120,7 +1120,12 @@ class ImageHistoryList {
 			}
 			$row .= '<span class="history-deleted">' . $url . '</span>';
 		} else {
-			$url = $iscur ? $this->current->getUrl() : $this->img->getUrl()->revision( $this->img->getTimestamp() );
+			global $wgEnableVignette;
+			if ($wgEnableVignette) {
+				$url = $iscur ? $this->current->getUrl() : $this->img->getUrl()->revision( $this->img->getTimestamp() );
+			} else {
+				$url = $iscur ? $this->current->getUrl() : $this->current->getArchiveUrl( $img );
+			}
 			$row .= Xml::element( 'a', array( 'href' => $url ), $wgLang->timeanddate( $timestamp, true ) );
 		}
 		$row .= "</td>";

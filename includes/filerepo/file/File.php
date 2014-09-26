@@ -286,7 +286,21 @@ abstract class File implements FileInterface {
 	 * @return string
 	 */
 	public function getUrl() {
-		return new UrlGenerator($this);
+		if ($wgEnableVignette) {
+			return new UrlGenerator($this);
+		} else {
+			if ( !isset( $this->url ) ) {
+				$this->assertRepoDefined();
+				$this->url = $this->repo->getZoneUrl( 'public' ) . '/' . $this->getUrlRel();
+
+				# start wikia change
+				$this->originalUrl = $this->url;
+				$this->url = wfReplaceImageServer( $this->url, $this->getTimestamp() ); // rewrite URL in all envirnoments (BAC-939)
+				# end wikia change
+			}
+
+			return $this->url;
+		}
 	}
 
 	# start wikia change
@@ -795,7 +809,7 @@ abstract class File implements FileInterface {
 	 * @return MediaTransformOutput|false
 	 */
 	function transform( $params, $flags = 0 ) {
-		global $wgUseSquid, $wgIgnoreImageErrors, $wgThumbnailEpoch;
+		global $wgUseSquid, $wgIgnoreImageErrors, $wgThumbnailEpoch, $wgEnableVignette;
 
 		wfProfileIn( __METHOD__ );
 		do {
@@ -825,13 +839,13 @@ abstract class File implements FileInterface {
 			// NOTE: The thumbnail URL is generated here.
 			// FIXME: Wrap the setting of $thumbUrl in a feature flag
 			$thumbName = $this->thumbName( $normalisedParams );
-			$thumbUrl = $this->getThumbUrl( $thumbName );
 			$thumbPath = $this->getThumbPath( $thumbName ); // final thumb path
 
-			$thumbUrl = $this->getUrl()
-				->width($normalisedParams['width'])
-				->height($normalisedParams['height'])
-				->thumbnail();
+			if ($wgEnableVignette) {
+				$thumbUrl = $this->getUrl();
+			} else {
+				$thumbUrl = $this->getThumbUrl( $thumbName );
+			}
 
 			if ( $this->repo ) {
 				// Defer rendering if a 404 handler is set up...
