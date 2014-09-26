@@ -1732,3 +1732,15 @@ function wfGetCallerClassMethod( $ignoreClasses ) {
 
 	return $method;
 }
+
+/**
+ * Make an array whether you've got a string or array
+ * @param string|array $value
+ * @return array
+ */
+function wfEnsureArray( $value ) {
+	if ( !is_array( $value ) ) {
+		$value = [ $value ];
+	}
+	return $value;
+}
