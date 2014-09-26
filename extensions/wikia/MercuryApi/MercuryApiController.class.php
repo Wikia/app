@@ -193,6 +193,13 @@ class MercuryApiController extends WikiaController {
 			'basePath' => $this->wg->Server
 		];
 
+		if ( $this->wg->UseETag ) {
+			$eTag = $this->mercuryApi->getArticleETag( $articleId );
+			if ( $eTag ) {
+				$data['eTag'] = $eTag;
+			}
+		}
+
 		$relatedPages = $this->getRelatedPages( $articleId );
 		if ( !empty( $relatedPages ) ) {
 			$data['relatedPages'] = $relatedPages;
