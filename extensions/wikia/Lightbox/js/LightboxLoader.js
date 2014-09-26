@@ -3,7 +3,7 @@
 (function (window, $) {
 	'use strict';
 
-	var LightboxLoader, LightboxTracker;
+	var LightboxLoader, LightboxTracker, bucky;
 
 	LightboxLoader = {
 		// cached thumbnail arrays and detailed info
@@ -64,12 +64,16 @@
 		videoThumbWidthThreshold: 400,
 		init: function () {
 			var self = this,
-				$article = $('#WikiaArticle'),
-				$photos = $('#LatestPhotosModule'),
-				$comments = $('#WikiaArticleComments'), // event handled with $footer
-				$footer = $('#WikiaArticleFooter'), // bottom videos module
-				$videosModule = $('.videos-module-rail'), // right rail videos module
-				$videoHomePage = $('#latest-videos-wrapper');
+				$article, $photos, $comments, $footer, $videosModule, $videoHomePage;
+
+			bucky.timer.start('init');
+
+			$article = $('#WikiaArticle');
+			$photos = $('#LatestPhotosModule');
+			$comments = $('#WikiaArticleComments'); // event handled with $footer
+			$footer = $('#WikiaArticleFooter'); // bottom videos module
+			$videosModule = $('.videos-module-rail'); // right rail videos module
+			$videoHomePage = $('#latest-videos-wrapper');
 
 			// Bind click event to initiate lightbox
 			$article.add($photos).add($footer).add($videosModule)
@@ -163,6 +167,7 @@
 						}
 					}
 				);
+			bucky.timer.stop('init');
 		},
 
 		/**
@@ -172,6 +177,9 @@
 		 */
 		loadLightbox: function (mediaTitle, trackingInfo) {
 			var openModal, lightboxParams, deferredList, resources, deferredTemplate;
+
+			bucky.timer.start('loadLightbox');
+
 			// restore inline videos to default state, because flash players overlaps with modal
 			LightboxLoader.removeInlineVideos();
 			LightboxLoader.lightboxLoading = true;
@@ -230,6 +238,7 @@
 				// LASTINDEX: index is last-index due to how deferred resolve works in mulitiple deferred objects
 				Lightbox.initialFileDetail = arguments[arguments.length - 1];
 				Lightbox.makeLightbox(lightboxParams);
+				bucky.timer.stop('loadLightbox');
 			});
 
 		},
@@ -293,6 +302,7 @@
 			if (!nocache && LightboxLoader.cache.details[title]) {
 				callback(LightboxLoader.cache.details[title]);
 			} else {
+				bucky.timer.start('getMediaDetail.request');
 				$.nirvana.sendRequest({
 					controller: 'Lightbox',
 					method: 'getMediaDetail',
@@ -300,6 +310,7 @@
 					format: 'json',
 					data: mediaParams,
 					callback: function (json) {
+						bucky.timer.stop('getMediaDetail.request');
 						// Don't cache videos played inline because width will be off for lightbox version bugid-42269
 						if (!nocache) {
 							LightboxLoader.cache.details[title] = json;
@@ -407,6 +418,9 @@
 
 	$(function () {
 		if (window.wgEnableLightboxExt) {
+			// performance profiling
+			bucky = window.Bucky('LightboxLoader');
+
 			LightboxLoader.init();
 			LightboxLoader.loadFromURL();
 		}
