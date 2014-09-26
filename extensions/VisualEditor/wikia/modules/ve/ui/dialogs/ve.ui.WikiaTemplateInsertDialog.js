@@ -127,7 +127,7 @@ ve.ui.WikiaTemplateInsertDialog.prototype.getReadyProcess = function ( data ) {
 	return ve.ui.WikiaTemplateInsertDialog.super.prototype.getReadyProcess.call( this, data )
 		.next( function () {
 			// Focus cursor in search input
-			this.search.setQueryFocus();
+			this.search.focusQuery();
 		}, this );
 };
 

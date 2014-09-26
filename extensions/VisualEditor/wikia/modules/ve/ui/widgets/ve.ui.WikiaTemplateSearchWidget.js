@@ -255,6 +255,6 @@ ve.ui.WikiaTemplateSearchWidget.prototype.reset = function () {
 /**
  * Set focus on the query input
  */
-ve.ui.WikiaTemplateSearchWidget.prototype.setQueryFocus = function () {
+ve.ui.WikiaTemplateSearchWidget.prototype.focusQuery = function () {
 	this.query.focus();
 };
