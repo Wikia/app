@@ -1,9 +1,7 @@
 define('bucky.mock', [], function () {
 	'use strict';
 
-	var bucky = function () {
-		return this;
-	};
+	var bucky = $.noop;
 
 	bucky.timer = {
 		start: $.noop,
