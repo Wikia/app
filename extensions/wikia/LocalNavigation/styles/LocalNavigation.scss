@@ -82,7 +82,7 @@
 				white-space: nowrap;
 				width: 100%;
 
-				&:not(:first-child) {
+				&:nth-child(n - 1) {
 					border-top: 1px solid rgba($color-button-text, .2);
 				}
 
@@ -133,9 +133,7 @@
 			}
 		}
 	}
-}
 
-.local-navigation {
 	a {
 		color: inherit;
 		&:hover {
@@ -161,8 +159,8 @@
 				padding: 0 20px;
 			}
 
-			&:not(:last-child) {
-				border-right: 1px solid $color-page-border;
+			&:nth-child(n - 1) {
+				border-left: 1px solid $color-page-border;
 			}
 
 			// TODO: Change it to .active when finishing interactions
@@ -172,7 +170,8 @@
 				color: $color-button-text;
 
 				ul.second {
-					display: block;
+					display: table;
+//					visibility: visible;
 				}
 			}
 		}
@@ -181,29 +180,45 @@
 	ul.dropdown {
 		display: none;
 	}
+	
+	ul.third {
+	  visibility: hidden;
+  }
 
 	ul.second {
+		min-width: 100%;
+
+
 		a.has-more {
-			padding: 20px 40px 20px 20px;
-			.more {
+			padding-right: 40px;
+			span {
+				left: 20px;
+				right: 40px;
+			}
+			span::after {
 				@include arrow(4px, rgba($color-button-text, .5), 'right');
 				margin: 1px -20px 0 0;
 				position: static;
 				float: right;
+				content: ' ';
 			}
-			&:hover .more {
+			&:hover span::after {
 				@include arrow(4px, rgba($color-button-text, .8), 'right');
 			}
 		}
 		&.right {
 			a.has-more {
-				padding: 20px 20px 20px 40px;
-				.more {
+				padding-left: 40px;
+				span {
+					left: 40px;
+					right: 20px;
+				}
+				span::after {
 					@include arrow(4px, rgba($color-button-text, .5), 'left');
 					margin: 1px 0 0 -20px;
 					float: left;
 				}
-				&:hover .more {
+				&:hover span::after {
 					@include arrow(4px, rgba($color-button-text, .8), 'left');
 				}
 			}
@@ -214,13 +229,16 @@
 		}
 		li.active {
 			ul.third {
-				display: block;
+				visibility: visible;
+//				display: block;
 			}
 		}
 	}
 	ul.third {
 		background: none;
 		height: 100%;
+		display: block;
+		padding: 5px;
 		li {
 			background: $color-buttons;
 			height: 31px;
@@ -244,7 +262,7 @@
 			&:hover {
 				font-weight: normal;
 			}
-			&:nth-child(n-1) {
+			&:nth-child(n - 1) {
 				border-top: 1px solid $color-buttons;
 			}
 		}
@@ -265,9 +283,7 @@
 			}
 		}
 	}
-}
 
-.local-navigation {
 	ul.third {
 		left: auto;
 		top: 0;
