@@ -146,6 +146,7 @@ if ( array_key_exists('h', $opts) || array_key_exists ('f', $opts) ) {
 				$response = shell_exec("s3cmd ls s3://".$databaseDirectory."/$dirname/".$dbname."_$date".".sql.gz");
 				$file_list = explode("\n", $response);
 				echo "Found " . count($file_list) . " items...\n";
+				if (count($file_list) == 1) continue;
 				foreach ($file_list as $file) {
 					$regs = array();
 					$file = preg_split('/\s+/' ,$file);
@@ -180,21 +181,24 @@ if ( array_key_exists('h', $opts) || array_key_exists ('f', $opts) ) {
 		require_once("../../../config/DB.php");
 	}
 	if (isset($wgDBbackenduser) && isset($wgDBbackendpassword) && isset($wgLBFactoryConf['hostsByName']['sharedb-s1'])) {
+		// prepare raw output for consumption as csv. changes " => \"; \t => ","; beginning of line => ", end of line => "
+		$prepareCsv = "sed 's/\"/\\\\\"/g;s/\\t/\",\"/g;s/^/\"/;s/$/\"/;s/\\n//g'";
+
 		$dbhost = $wgLBFactoryConf['hostsByName']['sharedb-s1'];
 	    // dump city_list row to local CSV file and import into local database
-		$response = `mysql -u $wgDBbackenduser -p$wgDBbackendpassword --database wikicities -h $dbhost -ss -e "SELECT * from city_list where city_id = $city_id " | sed 's/\\t/","/g;s/^/"/;s/$/"/;s/\\n//g' > /tmp/city_list.csv`;
+		$response = `mysql -u $wgDBbackenduser -p$wgDBbackendpassword --database wikicities -h $dbhost -ss -e "SELECT * from city_list where city_id = $city_id " | $prepareCsv > /tmp/city_list.csv`;
 		print "city_list dump ok\n";
 		$response = `mysqlimport -u $wgDBdevboxUser -p$wgDBdevboxPass -h $wgDBdevboxCentral --replace --fields-enclosed-by=\\" --fields-terminated-by=, --local wikicities /tmp/city_list.csv`;
 		print $response;
 		unlink ("/tmp/city_list.csv");
 		// dump city_domains rows to local CSV file and improt into local database
-		$response = `mysql -u $wgDBbackenduser -p$wgDBbackendpassword --database wikicities -h $dbhost -ss -e "SELECT * from city_domains where city_id = $city_id " | sed 's/\\t/","/g;s/^/"/;s/$/"/;s/\\n//g' > /tmp/city_domains.csv`;
+		$response = `mysql -u $wgDBbackenduser -p$wgDBbackendpassword --database wikicities -h $dbhost -ss -e "SELECT * from city_domains where city_id = $city_id " | $prepareCsv > /tmp/city_domains.csv`;
 		print "city_domains dump ok\n";
 		$response = `mysqlimport -u $wgDBdevboxUser -p$wgDBdevboxPass -h $wgDBdevboxCentral --replace --fields-enclosed-by=\\" --fields-terminated-by=, --local wikicities /tmp/city_domains.csv`;
 		print $response;
 		unlink ("/tmp/city_domains.csv");
 		// dump city_vars rows to local CVS file and import into local database
-		$response = `mysql -u $wgDBbackenduser -p$wgDBbackendpassword --database wikicities -h $dbhost -ss -e "SELECT * from city_variables where cv_city_id = $city_id " | sed 's/\\t/","/g;s/^/"/;s/$/"/;s/\\n//g' > /tmp/city_variables.csv`;
+		$response = `mysql -u $wgDBbackenduser -p$wgDBbackendpassword --database wikicities -h $dbhost -ss -e "SELECT * from city_variables where cv_city_id = $city_id " | $prepareCsv > /tmp/city_variables.csv`;
 		print "city_vars dump ok\n";
 		$response = `mysqlimport -u $wgDBdevboxUser -p$wgDBdevboxPass -h $wgDBdevboxCentral --replace --fields-enclosed-by=\\" --fields-terminated-by=, --local wikicities /tmp/city_variables.csv`;
 		print $response;
@@ -207,7 +211,7 @@ if ( array_key_exists('h', $opts) || array_key_exists ('f', $opts) ) {
 }
 
 if ( array_key_exists('h', $opts) || array_key_exists ('i', $opts) ) {
-	if (file_exists($opts['i'])) {
+	if (array_key_exists('i', $opts) && file_exists($opts['i'])) {
 		$fullpath = $opts['i'];
 		$filename = basename($opts['i']);
 		preg_match("/^(.*).*.sql.gz/", $filename, $matches);

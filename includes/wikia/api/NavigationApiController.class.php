@@ -20,16 +20,16 @@ class NavigationApiController extends WikiaApiController {
 		$model = new NavigationModel();
 		$nav = $model->getWiki();
 
-		$this->response->setCacheValidity(NavigationModel::CACHE_TTL);
-
 		$ret = array();
-
 		foreach( $nav as $type => $list ){
 			$ret[$type] = $this->getChildren( $list );
 		}
 
-		$this->response->setVal( 'navigation', $ret );
-
+		$this->setResponseData(
+			[ 'navigation' => $ret ],
+			[ 'urlFields' => 'href' ],
+			NavigationModel::CACHE_TTL
+		);
 		$errors = $model->getErrors();
 
 		if ( !empty( $errors ) ) {

@@ -38,7 +38,7 @@ ve.init.mw.Target = function VeInitMwTarget( $container, pageName, revisionId ) 
 	this.editToken = mw.user.tokens.get( 'editToken' );
 	this.submitUrl = ( new mw.Uri( mw.util.getUrl( this.pageName ) ) )
 		.extend( { 'action': 'submit' } );
-	this.events = new ve.init.mw.TargetEvents( this );
+	this.events = new ve.init.mw.WikiaTargetEvents( this );
 
 	this.modules = [
 			'ext.visualEditor.mwcore',
@@ -617,7 +617,7 @@ ve.init.mw.Target.prototype.onSaveError = function ( doc, saveData, jqXHR, statu
 					pageInfo = data.query && data.query.pages && data.query.pageids &&
 						data.query.pageids[0] && data.query.pages[ data.query.pageids[0] ],
 					editToken = pageInfo && pageInfo.edittoken,
-					isAnon = mw.user.isAnon();
+					isAnon = mw.user.anonymous();
 
 				if ( userInfo && editToken ) {
 					viewPage.editToken = editToken;

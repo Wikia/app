@@ -255,7 +255,7 @@ class ContactForm extends SpecialPage {
 		//smush it all together
 		$info = $this->mBrowser . "\n\n";
 		if ( !empty($uid) ) {
-		$info .= 'http://community.wikia.com/wiki/Special:LookUpUser/'. urlencode(str_replace(" ", "_", $this->mUserName)) . "\n";
+		$info .= 'http://community.wikia.com/wiki/Special:LookUpUser/'. urlencode(str_replace(" ", "_", $this->mUserName)) . "_\n";
 		}
 		$info .= 'http://community.wikia.com/wiki/Special:LookUpUser/'. $this->mEmail . "\n\n";
 		$info .= "A/B Tests: " . $this->mAbTestInfo . "\n\n"; // giving it its own line so that it stands out more
@@ -331,11 +331,10 @@ class ContactForm extends SpecialPage {
 		#sending done, show message
 
 		#parse this message to allow wiki links (BugId: 1048)
-		$output->addHTML( $this->msg( 'specialcontact-submitcomplete' )->parse() );
+		$output->addHTML( $this->msg( 'specialcontact-submitcomplete' )->parseAsBlock() );
 
 		$mp = Title::newMainPage();
-		$link = Xml::element('a', array('href'=>$mp->getLocalURL()), $mp->getPrefixedText());
-		$output->addHTML( $this->msg( 'returnto' )->rawParams( $link )->escaped() );
+		$output->addReturnTo( $mp );
 
 		return;
 	}

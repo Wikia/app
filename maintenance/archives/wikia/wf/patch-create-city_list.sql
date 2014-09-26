@@ -27,6 +27,7 @@
   `city_flags` int(10) unsigned NOT NULL default '0',
   `city_cluster` varchar(255) default NULL,
   `city_last_timestamp` timestamp NOT NULL default CURRENT_TIMESTAMP,
+  `city_vertical` int(10) unsigned NOT NULL default '0',
   PRIMARY KEY  (`city_id`),
   KEY `city_dbname_idx` (`city_dbname`),
   KEY `titleidx` (`city_title`),

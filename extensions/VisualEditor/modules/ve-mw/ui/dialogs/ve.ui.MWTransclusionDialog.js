@@ -109,10 +109,6 @@ ve.ui.MWTransclusionDialog.prototype.onOutlineControlsRemove = function () {
  * Handle add template button click events.
  */
 ve.ui.MWTransclusionDialog.prototype.onAddTemplateButtonClick = function () {
-	ve.track( 'wikia', {
-		'action': ve.track.actions.CLICK,
-		'label': 'dialog-template-button-add-template'
-	} );
 	this.addPart( new ve.dm.MWTemplatePlaceholderModel( this.transclusionModel ) );
 };
 
@@ -333,6 +329,17 @@ ve.ui.MWTransclusionDialog.prototype.getSetupProcess = function ( data ) {
 			this.setMode( 'single' );
 			this.modeButton.setDisabled( true );
 		}, this );
+};
+
+/**
+ * @inheritdoc
+ */
+ve.ui.MWTransclusionDialog.prototype.onApplyButtonClick = function () {
+	ve.track( 'wikia', {
+		'action': ve.track.actions.CLICK,
+		'label': 'dialog-template-button-' + ( this.selectedNode ? 'apply-changes' : 'insert-template' )
+	} );
+	return ve.ui.MWTransclusionDialog.super.prototype.onApplyButtonClick.call( this );
 };
 
 /* Registration */

@@ -782,7 +782,7 @@ class CityVisualization extends WikiaModel {
 	public function getVisualizationWikisData() {
 		$corporateSites = $this->getCorporateSitesList();
 		$this->addLangToCorporateSites( $corporateSites );
-		return $this->cleanVisualizationWikisArray( $corporateSites );
+		return $this->getWikiaHomePageHelper()->cleanWikisDataArray($corporateSites);
 	}
 
 	/**

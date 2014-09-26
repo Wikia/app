@@ -326,11 +326,14 @@ $messages['ce'] = array(
 
 /** Czech (čeština)
  * @author Chmee2
+ * @author H4nek
  */
 $messages['cs'] = array(
 	'founderprogressbar-skip-for-now' => 'Pro teď přeskočit',
 	'founderprogressbar-task-completed' => 'Dokončeno',
+	'founderprogressbar-profile-edit-label' => 'Vyplnit svůj Profil',
 	'founderprogressbar-total-edit75-label' => 'Dosáhli jste 75 editací',
+	'founderprogressbar-gallery-add-label' => 'Přidat fotogalerii',
 	'founderprogressbar-video-add-label' => 'Přidat video',
 	'founderprogressbar-browse-page-name' => 'Procházet',
 );
@@ -1059,6 +1062,7 @@ $messages['id'] = array(
 );
 
 /** Japanese (日本語)
+ * @author Barrel0116
  * @author Shirayuki
  * @author Tommy6
  */
@@ -1095,13 +1099,16 @@ $messages['ja'] = array(
 	'founderprogressbar-category-add5-label' => 'カテゴリ数を$1件にする',
 	'founderprogressbar-gallery-add-label' => '画像ギャラリーを追加する',
 	'founderprogressbar-gallery-add-description' => '画像ギャラリーは、多数の画像をページ内で展示形式で表示させるのに適しています。また、訪問者の興味を引き続ける方法として、ウィキ内で（例えばページごとに）異なる画像表示方式を組み合わせるのが効果的です。',
+	'founderprogressbar-commcorner-edit-label' => 'コミュニティコーナーを編集',
 	'founderprogressbar-video-add-label' => '動画を追加する',
 	'founderprogressbar-user-add5-label' => 'ユーザープロフィール数を5件にする',
 	'founderprogressbar-user-add5-description' => '良いウィキを支えるのは、良いコミュニティです。たくさんの編集者が活躍する最高のウィキにするための第一歩として、編集者数5人を目指しましょう！',
 	'founderprogressbar-recentchanges-visit-label' => '「最近の更新」を見てみる',
 	'founderprogressbar-wordmark-edit-label' => 'ロゴをアップロードする',
+	'founderprogressbar-toptenlist-add-label' => 'トップ10リストを追加',
 	'founderprogressbar-blogpost-add-label' => 'ブログの記事を投稿する',
 	'founderprogressbar-bonus-photo-add10-description' => 'さらに画像を追加し、ウィキをより魅力的なものにしましょう。画像を10件追加すると、ボーナスタスクのクレジットを1つ獲得できます。',
+	'founderprogressbar-browse-page-name' => 'ブラウズ',
 );
 
 /** Kannada (ಕನ್ನಡ)

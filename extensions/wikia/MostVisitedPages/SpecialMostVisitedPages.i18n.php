@@ -366,8 +366,8 @@ $messages['lb'] = array(
 	'mostvisitedpagessearchtext' => 'Numm vum Artikel:',
 	'mostvisitedpagessearchbtn' => 'sichen',
 	'mostvisitedpageslatest' => 'an de leschten $1 Minutten',
-	'mostvisitedpageslatestlink' => 'Déi lescht besichte Säite kucken',
-	'mostvisitedpagesalllink' => 'Déi am dackste besichte Säite kucken',
+	'mostvisitedpageslatestlink' => 'Déi lescht besicht Säite kucken',
+	'mostvisitedpagesalllink' => 'Déi am dackst besicht Säite kucken',
 );
 
 /** لوری (لوری)
@@ -580,6 +580,18 @@ $messages['sv'] = array(
 	'mostvisitedpageslatest' => 'under {{PLURAL:$1|den senaste minuten|de senaste $1 minuterna}}',
 	'mostvisitedpageslatestlink' => 'Se senast besökta sidor',
 	'mostvisitedpagesalllink' => 'Se mest besökta sidor',
+);
+
+/** Silesian (ślůnski)
+ * @author Krol111
+ */
+$messages['szl'] = array(
+	'mostvisitedpages' => 'Nojczyńśći uobźyrane zajty',
+	'mostvisitedpagessearchtext' => 'Mjano artikla:',
+	'mostvisitedpagessearchbtn' => 'sznupej',
+	'mostvisitedpageslatest' => 'bez uostatńe $1 minut', # Fuzzy
+	'mostvisitedpageslatestlink' => 'Uobejrzij ńydowno uobźyrane zajty',
+	'mostvisitedpagesalllink' => 'Uobejrzij nojczyńśći uobźyrane zajty',
 );
 
 /** Tamil (தமிழ்)

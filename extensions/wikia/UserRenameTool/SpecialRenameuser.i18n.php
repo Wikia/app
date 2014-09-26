@@ -3075,6 +3075,7 @@ $messages['ne'] = array(
  * @author Saruman
  * @author Siebrand
  * @author Southparkfan
+ * @author Yatalu
  */
 $messages['nl'] = array(
 	'userrenametool' => 'Gebruikersnaam wijzigen',
@@ -3148,7 +3149,7 @@ U wordt per e-mail op de hoogte gesteld als het proces is afgerond.',
 	'userrenametool-logpagetext' => 'Hieronder staan gebruikersnamen die gewijzigd zijn',
 	'userrenametool-logentry' => 'heeft $1 hernoemd naar "$2"',
 	'userrenametool-log' => '{{PLURAL:$1|1 bewerking|$1 bewerkingen}}. Reden: $2',
-	'userrenametool-move-log' => 'Automatisch hernoemd bij het wijzigen van gebruiker "[[User:$1|$1]]" naar "[[User:$2|$2]]"',
+	'userrenametool-move-log' => 'Pagina automatisch verplaatst bij het hernoemen van gebruiker "[[User:$1|$1]]" naar "[[User:$2|$2]]"',
 	'right-renameuser' => 'Gebruikers hernoemen',
 	'action-renameuser' => 'gebruikers te hernoemen',
 );

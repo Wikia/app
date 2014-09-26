@@ -803,7 +803,7 @@ class SiteWideMessagesTask extends BaseTask {
 				->FROM('specials.events_local_users')
 				->WHERE('wiki_id')->IN(array_keys($wikisDB))
 					->AND_(StaticSQL::RAW(
-						'(single_group = ? OR all_groups LIKE ?)', ["%{$params['groupName']}%"]
+						'(single_group = ? OR all_groups LIKE ?)', [$params['groupName'], "%{$params['groupName']}%"]
 					))
 				->GROUP_BY('wiki_id', 'user_id')
 				->runLoop($dbr, function(&$results, $row) USE ($params) {

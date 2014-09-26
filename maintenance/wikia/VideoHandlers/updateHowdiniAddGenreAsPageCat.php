@@ -15,9 +15,7 @@ class UpdateHowdiniAddGenreAsPageCat extends BaseMaintVideoScript {
 
 	protected $failedWiki;
 	protected $skippedWiki;
-	public $extra;
 	public $limit;
-	public $update1787;
 	public $singleFile;
 
 	function __construct() {
@@ -25,49 +23,7 @@ class UpdateHowdiniAddGenreAsPageCat extends BaseMaintVideoScript {
 
 		$this->failedWiki = 0;
 		$this->skippedWiki = 0;
-		$this->extra = [];
 		$this->limit = self::BATCH_LIMIT_DEFAULT;
-		$this->update1787 = false;
-	}
-
-	/**
-	 * Update Metadata (VID-1787)
-	 * @param array $video
-	 * @return array $newValues
-	 */
-	function updateMetadata1787( $video ) {
-		$newValues = [];
-
-		if ( $video['metadata']['provider'] != "ooyala/howdini" ) {
-			return $newValues;
-		}
-
-		$videoIdString = "{$video['name']} (Id: {$video['embed_code']})";
-
-		$newMetadata = $video['metadata'];
-
-		if ( !empty( $video['metadata']['pagecategories'] ) && !empty( $video['metadata']['genres'] ) ) {
-			$newMetadata['pagecategories'] = $video['metadata']['pagecategories'] . ', ' . $video['metadata']['genres'];
-			$newValues['pagecategories'] = $newMetadata['pagecategories'];
-
-			$resp = true;
-			if ( !$this->isDryRun() ) {
-				$resp = OoyalaAsset::updateMetadata( $video['embed_code'], $newMetadata );
-				if ( !$resp ) {
-					$newValues = [];
-					$this->incFailed();
-				}
-			}
-
-			if ( $resp ) {
-				$this->outputMessage( "\tUPDATED: $videoIdString ...DONE - genre added to page categories." );
-			}
-		} else {
-			$this->outputMessage( "\tSKIP: $videoIdString - No changes." );
-			$this->incSkipped();
-		}
-
-		return $newValues;
 	}
 
 	/**
@@ -78,78 +34,36 @@ class UpdateHowdiniAddGenreAsPageCat extends BaseMaintVideoScript {
 		$startTime = $this->getCurrentTimestamp();
 		$this->outputMessage( "Started ($startTime) ..." );
 
-		$nextPage = '';
-		$page = 1;
-		$total = 0;
+		// single-file option: discard all other videos
+		if ( $this->singleFile ) {
+			$video = $this->getVideoByTitle( $this->singleFile );
 
-		$apiPageSize = self::PAGE_SIZE_DEFAULT;
-		if ( !empty( $this->limit ) && $this->limit < $apiPageSize ) {
-			$apiPageSize = $this->limit;
+			if ( !$video ) {
+				$this->outputError( "Provided single-file '$this->singleFile' not found!" );
+				exit();
+			}
+
+			$videos = [$video];
+			$total = 1;
+		} else {
+			$videos = $this->getVideosByProvider( 'ooyala/howdini', $this->limit );
+			if ( !$videos ) {
+				$this->outputError( "no video files found!" );
+				exit();
+			}
+			$total = count( $videos );
 		}
 
-		do {
-			// single-file option: discard all other videos
-			if ( $this->singleFile ) {
-				$video = $this->getVideoByTitle( $this->singleFile );
+		foreach ( $videos as $video ) {
+			$videoMetadata = $this->extractMetadata( $video );
+			$this->outputMessage( "\tMetadata for {$videoMetadata['videoId']}: " );
 
-				if ( !$video ) {
-					$this->outputError( "Provided single-file '$this->singleFile' not found!" );
-					exit();
-				}
-
-				$response = OoyalaAsset::getAssetById( $video['metadata']['videoId'] );
-				if ( $response === false ) {
-					$this->outputError( "No Api response!" );
-					exit();
-				}
-				$videos = [$response];
-				$total = 1;
-			} else {
-				// connect to provider API
-				$url = OoyalaAsset::getApiUrlAssets( $apiPageSize, $nextPage, $this->extra );
-				$this->outputMessage( "\nConnecting to $url..." );
-
-				$response = OoyalaAsset::getApiContent( $url );
-				if ( $response === false ) {
-					$this->outputError( "No Api response!" );
-					exit();
-				}
-
-				$videos = empty( $response['items'] ) ? [ ] : $response['items'];
-				$nextPage = empty( $response['next_page'] ) ? '' : $response['next_page'];
-				$total += count( $videos );
+			foreach ( explode( "\n", var_export( $videoMetadata, true ) ) as $line ) {
+				$this->outputMessage( "\t\t:: $line" );
 			}
 
-			$cnt = 0;
-			foreach ( $videos as $video ) {
-				if ( $video['metadata']['provider'] != "ooyala/howdini" ) {
-					continue;
-				}
-
-				++$cnt;
-				$title = trim( $video['name'] );
-				$this->outputMessage( "[Page $page: $cnt of $total] Video: $title ({$video['embed_code']})" );
-				$this->outputMessage( "\tMetadata for {$video['embed_code']}: " );
-
-				foreach ( explode( "\n", var_export( $video['metadata'], true ) ) as $line ) {
-					$this->outputMessage( "\t\t:: $line" );
-				}
-
-				if ( !empty( $this->update1787 ) ) {
-					$newValues = $this->updateMetadata1787( $video );
-
-					if ( empty( $newValues ) ) {
-						++$this->skippedWiki;
-						$this->outputMessage( "\tSKIP (WIKI): {$video['name']} (Id: {$video['embed_code']}) - No changes." );
-					} else {
-						$this->updateMetadataVideoWiki( $video['embed_code'], $newValues );
-					}
-				}
-			}
-
-			++$page;
-
-		} while ( !empty( $nextPage ) && $total < $this->limit );
+			$this->addGenreToPageCategories( $video );
+		}
 
 		$this->report( $total );
 		$finishTime = $this->getCurrentTimestamp();
@@ -158,120 +72,72 @@ class UpdateHowdiniAddGenreAsPageCat extends BaseMaintVideoScript {
 	}
 
 	/**
-	 * Update metadata in Video wiki
-	 * @param string $videoId
-	 * @param array $newValues
-	 * @return boolean
-	 */
-	function updateMetadataVideoWiki( $videoId, array $newValues ) {
-
-		$resp = false;
-
-		$asset = OoyalaAsset::getAssetById( $videoId );
-
-		if ( $asset['asset_type'] == 'remote_asset' ) {
-			$provider = $asset['metadata']['source'];
-		} else {
-			$provider = 'ooyala';
-		}
-
-		$duplicates = $this->findVideoDuplicates( $provider, $asset['embed_code'] );
-		if ( count( $duplicates ) > 0 ) {
-			$resp = $this->updateMetadataWiki( $duplicates[0], $newValues );
-		} else {
-			$this->outputError( "VideoId: $videoId - FILE not found.", "\t" );
-			++$this->failedWiki;
-		}
-
-		return $resp;
-	}
-
-	/**
 	 * Update metadata in the wiki
 	 * @param $video
-	 * @param array $newValues
 	 * @return bool
 	 */
-	protected function updateMetadataWiki( $video, array $newValues ) {
+	protected function addGenreToPageCategories( $video ) {
 		$name = $video['img_name'];
-		$this->outputMessage( "\tUpdated (Wiki): $name" );
 
+		$this->outputMessage( "Title: $name" );
 		$title = Title::newFromText( $name, NS_FILE );
-		if ( !$title instanceof Title ) {
-			++$this->failedWiki;
-			$this->outputError( "Title NOT found.", '...FAILED! ' );
+		if ( $title instanceof Title && $title->exists() ) {
+			$article = Article::newFromID( $title->getArticleID() );
+			$content = $article->getContent();
+
+			// set default value
+			$status = Status::newGood();
+
+			// add category
+			$metadata = $this->extractMetadata( $video );
+			if ( empty( $metadata['genres'] ) ) {
+				$this->incSkipped();
+				$this->outputMessage( "File remained indifferent. no category changes." );
+				return false;
+			}
+
+			$categories = explode( ', ', $metadata['genres'] );
+			$content = $this->addCategories( $content, $categories );
+			$msg = 'Added: '.implode( ', ', $categories );
+
+			if ( !$this->isDryRun() ) {
+				$botUser = User::newFromName( 'WikiaBot' );
+				$status = $article->doEdit( $content, 'Changing categories', EDIT_UPDATE | EDIT_SUPPRESS_RC | EDIT_FORCE_BOT, false, $botUser );
+			}
+
+			if ( $status instanceof Status ) {
+				if ( $status->isOK() ) {
+					$this->outputMessage( "...DONE (".  $msg .")" );
+				} else {
+					++$this->failedWiki;
+					echo "...FAILED (".$status->getMessage().").\n";
+					return false;
+				}
+			}
+
+			$this->outputMessage( "\tUpdated (Wiki): $name" );
+		} else {
+			$this->outputError( "(Title '$name' not found).", "...FAILED " );
 			return false;
 		}
-
-		$file = wfFindFile( $title );
-		if ( empty( $file ) ) {
-			++$this->failedWiki;
-			$this->outputError( "File NOT found.", '...FAILED! ' );
-			return false;
-		}
-
-		$metadata = unserialize( $video['img_metadata'] );
-		if ( !$metadata ) {
-			++$this->failedWiki;
-			$this->outputError( "Cannot unserialized metadata.", '...FAILED! ' );
-			return false;
-		}
-
-		// check for videoId
-		if ( empty( $metadata['videoId'] ) ) {
-			++$this->skippedWiki;
-			$this->outputMessage( '...SKIPPED. (empty videoId in metadata)' );
-			return false;
-		}
-
-		// check for title
-		if ( empty( $metadata['title'] ) ) {
-			++$this->skippedWiki;
-			$this->outputMessage( '...SKIPPED. (empty title in metadata)' );
-			return false;
-		}
-
-		if ( !isset( $metadata['canEmbed'] ) ) {
-			++$this->skippedWiki;
-			$this->outputMessage( '...SKIPPED. (canEmbed field not found in metadata)' );
-			return false;
-		}
-
-		// update metadata
-		$newMetadata = array_merge( $metadata, $newValues );
-
-		// for debugging
-		/*
-		$this->outputMessage( "\n\tNEW Metadata (WIKI):" );
-		$this->compareMetadata( $metadata, $newMetadata );
-		echo "\n";
-		*/
-
-		$serializedMeta = serialize( $newMetadata );
-
-		if ( wfReadOnly() ) {
-			$this->outputMessage( "Read only mode." );
-			exit(0);
-		}
-
-		$dbw = wfGetDB( DB_MASTER );
-
-		if ( !$this->isDryRun() ) {
-			// update database
-			$dbw->update(
-				'image',
-				['img_metadata' => $serializedMeta],
-				['img_name' => $name],
-				__METHOD__
-			);
-
-			// clear cache
-			$file->purgeEverything();
-		}
-
-		$this->outputMessage( "...DONE!" );
 
 		return true;
+	}
+
+	function getCategoryTag( $catgory ) {
+		$cat = F::app()->wg->ContLang->getFormattedNsText( NS_CATEGORY );
+		return '[['.ucfirst($cat).':'.$catgory.']]';
+	}
+
+	function addCategories( $content, $categories ) {
+		foreach ( $categories as $category ) {
+			$categoryTag = $this->getCategoryTag( $category );
+			if ( stristr( $content, $categoryTag ) === false ) {
+				$content .= $categoryTag;
+			}
+		}
+
+		return $content;
 	}
 
 	protected function report( $total ) {
@@ -281,13 +147,11 @@ class UpdateHowdiniAddGenreAsPageCat extends BaseMaintVideoScript {
 			", Failed: $this->failed, Skipped: $this->skipped\n"
 		);
 
-		if ( !empty( $this->update1787 ) ) {
-			$this->outputMessage(
-				"Updated in Wiki: Total videos: " . $total .
-				", Success: " . ( $total - $this->failedWiki - $this->skippedWiki ) .
-				", Failed: $this->failedWiki, Skipped: $this->skippedWiki\n"
-			);
-		}
+		$this->outputMessage(
+			"Updated in Wiki: Total videos: " . $total .
+			", Success: " . ( $total - $this->failedWiki - $this->skippedWiki ) .
+			", Failed: $this->failedWiki, Skipped: $this->skippedWiki\n"
+		);
 
 	}
 
@@ -298,9 +162,7 @@ class UpdateHowdiniAddGenreAsPageCat extends BaseMaintVideoScript {
 require_once( "commandLine.inc" );
 
 if ( isset( $options['help'] ) ) {
-	die( 'Usage: php ' . __FILE__ . "[--help] [--dry-run] [extra=abc] [--update1787]
-	--extra            extra conditions to get video assets from ooyala (use ' AND ' to separate each condition)
-	--update1787       add genre to pageCategories
+	die( 'Usage: php ' . __FILE__ . "[--help] [--dry-run] [--single-file]
 	--limit            limit
 	--dry-run          dry run
 	--single-file      only modify a single file
@@ -310,9 +172,7 @@ if ( isset( $options['help'] ) ) {
 $instance = new UpdateHowdiniAddGenreAsPageCat();
 
 $instance->dryRun = isset( $options['dry-run'] );
-$instance->extra = isset( $options['extra'] ) ? explode( ' AND ', $options['extra'] ) : [];
 $instance->limit = empty( $options['limit'] ) ? $instance::BATCH_LIMIT_DEFAULT : $options['limit'];
-$instance->update1787 = isset( $options['update1787'] );
 $instance->singleFile = isset( $options['single-file'] ) ? $options['single-file'] : false;
 
 $instance->run();

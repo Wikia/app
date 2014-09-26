@@ -1,8 +1,9 @@
-@import 'color';
+@import 'skins/shared/color';
 @import 'layout';
 @import '../placeholders/bodytext';
-@import '../mixins/clearfix';
-@import '../mixins/gradient';
+@import 'skins/shared/mixins/clearfix';
+@import 'skins/shared/mixins/gradient';
+@import 'skins/shared/mixins/infobox';
 
 .WikiaArticle {
 	@extend %bodytext;
@@ -543,10 +544,10 @@
 }
 
 .WikiaArticle {
-	.infobox, .wikia-infobox, .infobox-table {
+	#{$infoboxes} {
 		.article-thumb, .article-thumb.tright, .article-thumb.tleft {
-			margin: 0 auto;
 			float: none;
+			margin: 0 auto;
 		}
 	}
 }

@@ -83,7 +83,7 @@ class LightboxController extends WikiaController {
 	 * converts array in format of
 	 *   title (as text or object)
 	 *   type (video or image)
-	 * into array that includes thumburl and playbutton and title is always text
+	 * into array that includes thumburl and title is always text
 	 *
 	 * @param $mediaTable
 	 * @return array
@@ -100,7 +100,7 @@ class LightboxController extends WikiaController {
 	}
 
 	/**
-	 * Creates a single carousel thumb entry
+	 * Creates a single carousel thumb entry.
 	 * @param $entry - must have 'title'(image title) and 'type'(image|video) defined
 	 * @return array|string
 	 */
@@ -120,7 +120,6 @@ class LightboxController extends WikiaController {
 				'type' => $entry['type'],
 				'key' => $media->getDBKey(),
 				'title' => $media->getText(),
-				'playButtonSpan' => $entry['type'] == 'video' ? WikiaFileHelper::videoPlayButtonOverlay( self::THUMBNAIL_WIDTH, self::THUMBNAIL_HEIGHT ) : ''
 			);
 		}
 		return $thumb;
@@ -156,6 +155,7 @@ class LightboxController extends WikiaController {
 	 */
 	public function getMediaDetail() {
 		$fileTitle = urldecode( $this->request->getVal( 'fileTitle', '' ) );
+		$isInline = $this->request->getVal( 'isInline', false );
 
 		// BugId:32939
 		// There is no sane way to check whether $fileTitle is OK other
@@ -179,6 +179,7 @@ class LightboxController extends WikiaController {
 			'contextWidth'   => $this->request->getVal( 'width', 750 ),
 			'contextHeight'  => $this->request->getVal( 'height', 415 ),
 			'userAvatarWidth'=> 16,
+			'isInline'       => $isInline,
 		);
 
 		// set max height if play in lightbox
@@ -212,6 +213,7 @@ class LightboxController extends WikiaController {
 		$this->providerName = $data['providerName'];
 		$this->exists = $data['exists'];
 		$this->isAdded = $data['isAdded'];
+		$this->extraHeight = $data['extraHeight'];
 
 		// Make sure that a request with missing &format=json does not throw a "template not found" exception
 		$this->response->setFormat( 'json' );

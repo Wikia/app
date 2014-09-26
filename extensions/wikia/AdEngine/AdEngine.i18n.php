@@ -121,9 +121,17 @@ $messages['ce'] = array(
 
 /** Czech (čeština)
  * @author Chmee2
+ * @author H4nek
  */
 $messages['cs'] = array(
+	'adengine-exitstitial-title-template' => 'Opouštíte $1…',
+	'adengine-exitstitial-redirecting' => 'Váš prohlížeč vás přesměruje na stránku kterou jste vyžádali během několika vteřin.',
+	'adengine-exitstitial-go-back' => 'Chcete se vrátit?',
 	'adengine-exitstitial-button' => 'Přeskočit tuto reklamu',
+	'adengine-ebay-deals' => 'Nabídky',
+	'adengine-ebay-empty' => 'Žádné odpovídající produkty',
+	'adengine-ebay-buy-it-now' => 'Kup teď',
+	'adengine-ebay-place-a-bid' => 'Umístit nabídku',
 );
 
 /** German (Deutsch)
@@ -530,12 +538,17 @@ $messages['ps'] = array(
 
 /** Portuguese (português)
  * @author Hamilton Abreu
+ * @author Leon saudanha
  */
 $messages['pt'] = array(
 	'adengine-exitstitial-title-template' => 'Está a sair da wiki $1...',
 	'adengine-exitstitial-redirecting' => 'O browser vai reencaminhá-lo para a página solicitada dentro de segundos.',
 	'adengine-exitstitial-go-back' => 'Quer regressar?',
 	'adengine-exitstitial-button' => 'Saltar este anúncio',
+	'adengine-ebay-deals' => 'Ofertas',
+	'adengine-ebay-empty' => 'Não a produtos correspondentes',
+	'adengine-ebay-buy-it-now' => 'Compre agora',
+	'adengine-ebay-place-a-bid' => 'Deixe uma oferta',
 );
 
 /** Brazilian Portuguese (português do Brasil)
@@ -661,17 +674,22 @@ $messages['tr'] = array(
 
 /** Ukrainian (українська)
  * @author Andriykopanytsia
+ * @author Mykola Swarnyk
  * @author Ua2004
  */
 $messages['uk'] = array(
-	'adengine-exitstitial-title-template' => 'Ви залишаєте $1...',
+	'adengine-exitstitial-title-template' => 'Ви покидаєте $1...',
 	'adengine-exitstitial-redirecting' => 'Ваш переглядач переадресує вас на запитувану вами сторінку за декілька секунд.',
 	'adengine-exitstitial-go-back' => 'Хочете повернутися?',
-	'adengine-exitstitial-button' => 'Пропустити це оголошення',
+	'adengine-exitstitial-button' => 'Пропустити цю рекламу',
+	'adengine-ebay-deals' => 'Пропозиції',
 	'adengine-ebay-empty' => 'Немає відповідних товарів',
+	'adengine-ebay-buy-it-now' => 'Купити зараз',
+	'adengine-ebay-place-a-bid' => 'Зробити ставку',
 );
 
 /** Vietnamese (Tiếng Việt)
+ * @author Baonguyen21022003
  * @author Xiao Qiao
  */
 $messages['vi'] = array(
@@ -679,6 +697,10 @@ $messages['vi'] = array(
 	'adengine-exitstitial-redirecting' => 'Trình duyệt của bạn sẽ chuyển hướng bạn đến trang web mà bạn yêu cầu trong vài giây nữa.',
 	'adengine-exitstitial-go-back' => 'Bạn muốn quay trở lại?',
 	'adengine-exitstitial-button' => 'Bỏ qua các quảng cáo này',
+	'adengine-ebay-deals' => 'Giao dịch',
+	'adengine-ebay-empty' => 'Không có sản phẩm nào phù hợp.',
+	'adengine-ebay-buy-it-now' => 'Mua nó ngay bây giờ',
+	'adengine-ebay-place-a-bid' => 'Đặt giá thầu',
 );
 
 /** Waray (Winaray)

@@ -16,7 +16,7 @@ ve.ui.WikiaMediaResultsWidget = function VeUiWikiaMediaResultsWidget( config ) {
 
 	// Properties
 	this.results = new ve.ui.WikiaMediaSelectWidget( { '$': this.$ } );
-	this.size = config.size || 160;
+	this.size = config.size || 158;
 
 	// Events
 	this.results.connect( this, {
@@ -51,7 +51,7 @@ OO.inheritClass( ve.ui.WikiaMediaResultsWidget, OO.ui.Widget );
  * @param {ve.ui.WikiaMediaOptionWidget} item Item whose state is changing
  */
 ve.ui.WikiaMediaResultsWidget.prototype.onResultsCheck = function ( item ) {
-	this.emit( 'check', item.getModel() );
+	this.emit( 'check', item.getData() );
 };
 
 /**
@@ -62,6 +62,7 @@ ve.ui.WikiaMediaResultsWidget.prototype.onResultsCheck = function ( item ) {
  */
 ve.ui.WikiaMediaResultsWidget.prototype.onResultsSelect = function ( item ) {
 	if ( item ) {
+		this.results.selectItem( null );
 		this.emit( 'preview', item );
 	}
 };
@@ -75,15 +76,13 @@ ve.ui.WikiaMediaResultsWidget.prototype.onResultsSelect = function ( item ) {
 ve.ui.WikiaMediaResultsWidget.prototype.addItems = function ( items ) {
 	var i, optionWidget,
 		results = [];
-
 	for ( i = 0; i < items.length; i++ ) {
-		optionWidget = new ve.ui.WikiaMediaOptionWidget( items[i], { '$': this.$, 'size': this.size } );
+		optionWidget = ve.ui.WikiaMediaOptionWidget.newFromData( items[i], { '$': this.$, 'size': this.size } );
 		optionWidget.on( 'check', this.onResultsCheck, [ optionWidget ], this );
 		results.push(
 			optionWidget
 		);
 	}
-
 	this.results.addItems( results );
 };
 

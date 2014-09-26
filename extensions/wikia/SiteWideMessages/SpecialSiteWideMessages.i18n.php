@@ -125,6 +125,7 @@ $messages['en'] = array(
 /** Message documentation (Message documentation)
  * @author EugeneZelenko
  * @author Hamilton Abreu
+ * @author Liuxinyu970226
  * @author Lloffiwr
  * @author Shirayuki
  * @author Siebrand
@@ -162,7 +163,8 @@ Referred to in:
 *{{msg-wikia|Swm-label-mode-wikis-wiki}}',
 	'swm-label-content' => '{{Identical|Content}}',
 	'swm-label-comment' => '{{Identical|Comment}}',
-	'swm-label-dismissed' => 'Page title after message is sent out.',
+	'swm-label-dismissed' => 'Page title after message is sent out.
+{{Identical|Dismissed}}',
 	'swm-label-language' => '{{Identical|Language}}',
 	'swm-button-preview' => '{{Identical|Preview}}',
 	'swm-button-send' => '{{Identical|Send}}',
@@ -173,12 +175,14 @@ Referred to in:
 	'swm-list-table-id' => '{{Identical|ID}}',
 	'swm-list-table-wiki' => '{{Identical|Wiki}}',
 	'swm-list-table-group' => '{{Identical|Group}}',
+	'swm-list-table-expire' => '{{Identical|Expire}}',
 	'swm-list-table-removed' => 'Column heading of a table with one message per line. The column contains either yes or no if the message was removed or not.
 {{Identical|Removed}}',
 	'swm-list-table-content' => '{{Identical|Content}}',
 	'swm-list-table-tools' => '{{Identical|Tool}}',
 	'swm-list-table-lang' => '{{Identical|Language}}',
-	'swm-list-table-hub' => 'Column heading of a table with one message per line. The column contains the hub of wikis the message was sent to.',
+	'swm-list-table-hub' => 'Column heading of a table with one message per line. The column contains the hub of wikis the message was sent to.
+{{Identical|Hub}}',
 	'swm-yes' => '{{Identical|Yes}}',
 	'swm-no' => '{{Identical|No}}',
 	'swm-error-no-wiki-list' => 'Error message to display when no wikis where entered into the list of wikis box.',
@@ -1959,12 +1963,12 @@ $messages['lb'] = array(
 	'swm-label-remove' => 'Ewechhuelen',
 	'swm-label-sent' => 'Geschéckt',
 	'swm-label-list' => 'Lëscht',
-	'swm-label-recipient-wikis' => 'Wikien:',
+	'swm-label-recipient-wikis' => 'Wikien',
 	'swm-label-recipient-users' => 'Benotzer',
 	'swm-label-mode-wikis-all' => 'All Wikien',
 	'swm-label-mode-users-all' => 'All Benotzer',
 	'swm-label-mode-users-active' => 'Aktiv Benotzer',
-	'swm-label-mode-users-user' => 'Erausgesichte Benotzer',
+	'swm-label-mode-users-user' => 'Erausgesicht Benotzer',
 	'swm-label-mode-users-user-multi' => 'Lëscht vun de Benotzer',
 	'swm-label-mode-users-anon' => 'All anonym Benotzer',
 	'swm-label-content' => 'Inhalt',
@@ -3681,6 +3685,7 @@ $messages['yi'] = array(
  * @author Dimension
  * @author Hydra
  * @author Hzy980512
+ * @author Liuxinyu970226
  * @author Sam Wang
  * @author Xiaomingyan
  */
@@ -3693,30 +3698,64 @@ $messages['zh-hans'] = array(
 	'swm-label-recipient' => '收件人',
 	'swm-label-recipient-wikis' => '维基',
 	'swm-label-recipient-users' => '用户',
+	'swm-label-expiration' => '有效期限',
 	'swm-label-mode-wikis-all' => '所有维基',
+	'swm-label-mode-wikis-hub' => '选定集线器',
+	'swm-label-mode-wikis-cluster' => '选定群集',
+	'swm-label-mode-wikis-wiki' => '选定wiki',
+	'swm-label-mode-wikis-wiki-multi' => 'Wiki列表',
+	'swm-label-mode-wikis-wiki-multi-hint' => '<i>每行输入一个wiki。</i>',
 	'swm-label-mode-users-all' => '所有用户',
 	'swm-label-mode-users-active' => '活跃用户',
+	'swm-label-mode-users-user' => '选定用户',
 	'swm-label-mode-users-user-multi' => '用户列表',
+	'swm-label-mode-users-anon' => '任何匿名用户',
 	'swm-label-content' => '内容',
 	'swm-label-comment' => '评语',
+	'swm-label-dismissed' => '已退回',
 	'swm-label-language' => '语言',
+	'swm-button-lang-checkall' => '[ 检查全部 ]',
+	'swm-button-lang-checknone' => '[ 全不检查 ]',
+	'swm-button-preview' => '[ 预览 ]',
+	'swm-button-send' => '[ 发送 ]',
 	'swm-button-save' => '[ 保存 ]',
 	'swm-button-new' => '[ 新 ]',
+	'swm-msg-sent-err' => "<h3>此消息'''尚未'''发送。</h3>更多消息参见错误日志。",
+	'swm-msg-sent-task' => '发送消息的任务已创建：$1',
+	'swm-msg-remove' => '您确信要移除此消息？它不能被撤销！',
+	'swm-expire-info' => '此消息将于$1到期。',
+	'swm-link-dismiss' => '退回此消息',
+	'swm-dismiss-content' => '<p>此消息已退回。</p><p>%s</p>',
 	'swm-list-no-messages' => '没有信息。',
 	'swm-list-table-id' => 'ID',
 	'swm-list-table-sender' => '发送者',
 	'swm-list-table-wiki' => '维基',
 	'swm-list-table-recipient' => '受信者',
 	'swm-list-table-group' => '用户组',
+	'swm-list-table-expire' => '截止',
+	'swm-list-table-date' => '发送日期',
+	'swm-list-table-removed' => '已移除',
 	'swm-list-table-content' => '内容',
 	'swm-list-table-tools' => '工具',
 	'swm-list-table-lang' => '语言',
+	'swm-list-table-hub' => '集线器',
 	'swm-yes' => '是',
 	'swm-no' => '不是',
 	'swm-error-no-such-wiki' => '没有这个维基！',
+	'swm-error-no-wiki-list' => '至少必须提供一个wiki',
+	'swm-error-no-such-user' => '指定的用户不存在。',
+	'swm-error-no-user-list' => '至少必须提供一个用户',
+	'swm-error-empty-message' => '输入消息内容。',
+	'swm-error-long-message' => '消息限定在500个字符间。',
+	'swm-error-empty-group' => '输入组名。',
+	'swm-error-invalid-time' => '提供的时间无效。',
+	'swm-lang-other' => '所有现存语言',
+	'swm-label-mode-users-registration' => '注册日期',
 	'swm-mode-users-registration-after' => '之后',
 	'swm-mode-users-registration-before' => '之前',
 	'swm-mode-users-registration-between' => '之间',
+	'swm-label-mode-users-registration-hint' => '<i>日期必须匹配格式：2012-04-01 00:00:00</i>',
+	'swm-label-mode-users-editcount' => '编辑数',
 	'swm-mode-users-editcount-more' => '更多',
 	'swm-mode-users-editcount-less' => '更少',
 	'swm-mode-users-editcount-between' => '之间',
@@ -3724,4 +3763,14 @@ $messages['zh-hans'] = array(
 	'swm-mode-wikis-created-after' => '之后',
 	'swm-mode-wikis-created-before' => '之前',
 	'swm-mode-wikis-created-between' => '之间',
+	'swm-label-mode-wikis-created-hint' => '<i>日期必须匹配格式：2012-04-01 00:00:00</i>',
+);
+
+/** Traditional Chinese (中文（繁體）‎)
+ * @author Ffaarr
+ * @author Liuxinyu970226
+ */
+$messages['zh-hant'] = array(
+	'sitewidemessages' => '全站訊息',
+	'swm-label-recipient-users' => '使用者',
 );

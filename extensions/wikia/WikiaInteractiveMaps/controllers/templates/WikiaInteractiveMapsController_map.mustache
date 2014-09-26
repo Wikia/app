@@ -1,9 +1,15 @@
-<header class="WikiaPageHeader">
+<header class="WikiaPageHeader wikia-interactive-maps-page-header">
 	<h1>{{title}}</h1>
 	{{#mapFound}}{{{menu}}}{{/mapFound}}
 </header>
 {{#mapFound}}
-<iframe src="{{url}}" name="wikia-interactive-map" width="100%" height="{{#height}}{{height}}{{/height}}{{^height}}100%{{/height}}" data-mapid={{mapId}}></iframe>
+<div class="wikia-interactive-map-wrapper">
+	<div class="wikia-ad wikia-ad-interactive-map hidden" data-map-id="{{mapId}}">
+	</div>
+	<div class="wikia-interactive-map">
+		<iframe name="wikia-interactive-map" width="100%" height="{{#height}}{{height}}{{/height}}{{^height}}100%{{/height}}" data-mapid="{{mapId}}" data-url="{{url}}"></iframe>
+	</div>
+</div>
 {{/mapFound}}
 {{^mapFound}}
 	<p>{{messages.wikia-interactive-maps-map-not-found-error}}</p>

@@ -399,6 +399,7 @@ N'haller ket cheñch ar gerioù-termen",
 	'userlogin-retypenew' => 'Adskrivañ ar ger-tremen nevez',
 	'userlogin-password-email-subject' => 'Goulenn ger-tremen ankouaet',
 	'userlogin-password-email-greeting' => 'Ac\'hanta $USERNAME,',
+	'userlogin-password-email-signature' => 'Skoazell ar gumuniezh Wikia',
 	'userlogin-provider-or' => 'Pe',
 	'userlogin-provider-tooltip-facebook' => 'Klikañ war ar bouton evit kevreañ gant Facebook',
 	'userlogin-provider-tooltip-facebook-signup' => 'Klikañ war ar bouton evit en em enskrivañ gant Facebook',
@@ -633,6 +634,7 @@ $messages['en-gb'] = array(
 
 /** Spanish (español)
  * @author Armando-Martin
+ * @author Fitoschido
  * @author Invadinado
  * @author VegaDark
  */
@@ -650,7 +652,7 @@ $messages['es'] = array(
 	'userlogin-error-resetpass_announce' => 'Parece que utilizaste una contraseña temporal. Elige aquí una nueva contraseña para continuar la sesión.',
 	'userlogin-error-login-throttled' => 'Has intentado iniciar sesión con la contraseña incorrecta demasiadas veces. Espera un rato antes de volver a intentarlo.',
 	'userlogin-error-login-userblocked' => 'Tu nombre de usuario ha sido bloqueado y no puede utilizarse para iniciar sesión.',
-	'userlogin-error-edit-account-closed-flag' => 'Tu cuenta ha sido deshabilitada por Wikia.',
+	'userlogin-error-edit-account-closed-flag' => 'Wikia ha desactivado tu cuenta.',
 	'userlogin-error-cantcreateaccount-text' => 'Tu dirección IP no está autorizada para crear cuentas nuevas.',
 	'userlogin-error-userexists' => 'Alguien ya tiene este nombre de usuario. ¡Prueba uno diferente!',
 	'userlogin-error-invalidemailaddress' => 'Por favor, introduce una dirección de correo electrónico válida.',
@@ -1228,6 +1230,7 @@ Vuoi controllare quali email ricevi? Vai alle tue <a href="{{fullurl:{{ns:specia
 );
 
 /** Japanese (日本語)
+ * @author Barrel0116
  * @author Tommy6
  */
 $messages['ja'] = array(
@@ -1271,19 +1274,19 @@ $messages['ja'] = array(
 新しいパスワードをリクエストした覚えがない場合でも、心配しないでください。アカウントの安全性は保たれています。このメールを無視し、これまで使用していたパスワードでウィキアにログインし続けることができます。<br /><br />
 質問や気になることがあれば、<a href="http://ja.community.wikia.com/wiki/Special:Contact/account-issue">遠慮なくお問い合わせください</a>。',
 	'userlogin-password-email-signature' => 'ウィキアコミュニティサポート',
-	'userlogin-password-email-body' => '$2 さん、
+	'userlogin-password-email-body' => '$2 さん、こんにちは。
 
-ウィキアにログインするには、以下の仮パスワードを使用してください: $3
+Wikiaにログインするには、以下の仮パスワードを使用してください: $3
 
 新しいパスワードをリクエストした覚えがない場合でも、心配しないでください。アカウントの安全性は保たれています。このメールを無視し、これまで使用していたパスワードでウィキアにログインし続けることができます。
 
-質問や気になることがあれば、遠慮なくお問い合わせください。
+何か質問をお持ちですか？お気軽にお問い合わせください：http://community.wikia.com/wiki/Special:Contact/account-issue
 
-ウィキアサポートチーム
+ウィキア コミュニティ サポート
 ___________________________________________
 
 ウィキアの最新情報は http://ja.wikia.com/ で確認できます。
-メール通知に関する設定は {{fullurl:{{ns:special}}:Preferences}} で行えます。', # Fuzzy
+メール通知に関する設定は {{fullurl:{{ns:special}}:Preferences}} で行えます。',
 	'userlogin-email-footer-line1' => 'ウィキアの最新情報は <a style="color:#2a87d5;text-decoration:none;" href="http://ja.wikia.com/">http://ja.wikia.com/</a> で確認できます。',
 	'userlogin-email-footer-line2' => 'メール通知に関する設定は<a href="{{fullurl:{{ns:special}}:Preferences}}" style="color:#2a87d5;text-decoration:none;">個人設定</a>のページで行えます。',
 	'userlogin-provider-or' => 'または',

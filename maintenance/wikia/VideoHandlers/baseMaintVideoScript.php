@@ -84,6 +84,43 @@ abstract class BaseMaintVideoScript {
 	}
 
 	/**
+	 * Get Videos by provider
+	 * @param $provider
+	 * @param $limit
+	 * @param int $offset
+	 * @return array|null
+	 */
+	public function getVideosByProvider( $provider, $limit, $offset = 0 ) {
+		$providerNameLen = strlen( $provider );
+
+		$db = wfGetDB( DB_SLAVE );
+		$videos = ( new WikiaSQL() )->SELECT( "image.*" )
+			->FROM( "image" )
+			->WHERE( "img_metadata" )->LIKE( '%"provider";s:' . $providerNameLen . ':"' . $provider . '";%' )
+			->ORDER_BY( "img_name" )
+			->LIMIT( $limit )
+			->OFFSET( $offset )
+			->runLoop( $db, function ( &$result, $row ) {
+				$result[] = (array) $row;
+			} );
+
+		if ( !$videos ) {
+			return null;
+		}
+
+		return (array) $videos;
+	}
+
+	/**
+	 * Get Metadata unserialized
+	 * @param array $video
+	 * @return array
+	 */
+	public function extractMetadata( array $video ) {
+		return unserialize( $video['img_metadata'] );
+	}
+
+	/**
 	 * @todo Implement fancier output, such as using Ncurses functions
 	 * @param string $message
 	 */

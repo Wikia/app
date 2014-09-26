@@ -100,6 +100,11 @@ ve.ui.MWTemplatePlaceholderPage.prototype.onAddTemplate = function () {
 	this.addTemplateInput.pushPending();
 	this.addTemplateButton.setDisabled( true );
 	this.removeButton.setDisabled( true );
+
+	ve.track( 'wikia', {
+		'action': ve.track.actions.CLICK,
+		'label': 'dialog-template-button-add-template'
+	} );
 };
 
 ve.ui.MWTemplatePlaceholderPage.prototype.onTemplateInputChange = function ( value ) {

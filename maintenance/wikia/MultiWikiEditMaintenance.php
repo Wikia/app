@@ -18,11 +18,6 @@ $dbr = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
 $aCondition = array("task_id" => $options['TASK_ID']);
 $oTask = $dbr->selectRow( "wikia_tasks", "*", $aCondition, __METHOD__, array( "ORDER BY" => "task_id") );
 
-if (TaskRunner::isModern('MultiWikiEditTask')) {
-	$task = new \Wikia\Tasks\Tasks\MultiTask();
-	$task->edit(unserialize($oTask->task_arguments));
-} else {
-	$Maintenance = new MultiWikiEditTask();
-	$Maintenance->execute($oTask);
-}
+$task = new \Wikia\Tasks\Tasks\MultiTask();
+$task->edit(unserialize($oTask->task_arguments));
 

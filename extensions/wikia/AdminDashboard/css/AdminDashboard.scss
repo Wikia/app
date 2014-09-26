@@ -1,13 +1,13 @@
-@import "skins/oasis/css/mixins/box-shadow";
-@import "skins/oasis/css/mixins/calc";
-@import "skins/oasis/css/mixins/clearfix";
-@import "skins/oasis/css/mixins/forms";
-@import "skins/oasis/css/mixins/gradient";
-@import "skins/oasis/css/mixins/menus";
-@import "skins/oasis/css/mixins/transition";
-@import "skins/oasis/css/mixins/wordmark";
+@import "skins/shared/mixins/box-shadow";
+@import "skins/shared/mixins/calc";
+@import "skins/shared/mixins/clearfix";
+@import "skins/shared/mixins/forms";
+@import "skins/shared/mixins/gradient";
+@import "skins/shared/mixins/menus";
+@import "skins/shared/mixins/transition";
+@import "skins/shared/mixins/wordmark";
 @import "skins/oasis/css/core/layout";
-@import "skins/oasis/css/core/color";
+@import "skins/shared/color";
 @import "skins/oasis/css/core/responsive-variables";
 @import "extensions/wikia/Listusers/css/table";
 

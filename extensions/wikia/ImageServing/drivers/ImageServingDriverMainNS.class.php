@@ -43,6 +43,7 @@ class ImageServingDriverMainNS extends ImageServingDriverBase {
 
 		$this->mimeTypesBlacklist = array_unique($this->mimeTypesBlacklist);
 
+		wfDebug( sprintf( "%s: minor MIME types blacklist - %s\n", __CLASS__, join( ', ', $this->mimeTypesBlacklist ) ) );
 		wfProfileOut(__METHOD__);
 	}
 
@@ -130,20 +131,20 @@ class ImageServingDriverMainNS extends ImageServingDriverBase {
 
 			// get image usage
 			$sql = [];
+			$batchResponse = [];
+
 			foreach ( $imageRedirectsMap as $fromImg => $toImg ) {
+				// prepare the results array )see PLATFORM-358)
+				$batchResponse[$toImg] = 0;
+
 				$sql[] = "(SELECT {$this->db->addQuotes($toImg)} AS il_to FROM {$imageLinksTable} JOIN {$pageTable} on page.page_id = il_from WHERE il_to = {$this->db->addQuotes($fromImg)} AND page_namespace IN ({$contentNamespaces}) LIMIT {$sqlCount} )";
 			}
 			$sql = implode(' UNION ALL ',$sql);
 			$batchResult = $this->db->query($sql, __METHOD__. '::imagelinks');
 
 			// do a "group by" on PHP side
-			$batchResponse = [];
 			foreach ($batchResult as $row) {
-				if ( !isset($batchResponse[$row->il_to]) ) {
-					$batchResponse[$row->il_to] = 1;
-				} else {
-					$batchResponse[$row->il_to]++;
-				}
+				$batchResponse[$row->il_to]++;
 			}
 			$batchResult->free();
 
@@ -196,6 +197,9 @@ class ImageServingDriverMainNS extends ImageServingDriverBase {
 				if ( $row->img_height >= $this->minHeight && $row->img_width >= $this->minWidth ) {
 					if ( !in_array( $row->img_minor_mime, $this->mimeTypesBlacklist ) ) {
 						$imageData[$row->img_name] = $row;
+					}
+					else {
+						wfDebug(__METHOD__ . ": {$row->img_name} - filtered out because of {$row->img_minor_mime} minor MIME type\n");
 					}
 				}
 			}

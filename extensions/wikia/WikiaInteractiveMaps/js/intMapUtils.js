@@ -6,9 +6,10 @@ define(
 		'wikia.cache',
 		'wikia.loader',
 		'wikia.ui.factory',
-		'wikia.mustache'
+		'wikia.mustache',
+		'wikia.tracker',
 	],
-	function($, w, cache, loader, uiFactory, mustache) {
+	function ($, w, cache, loader, uiFactory, mustache, tracker) {
 		'use strict';
 
 		/**
@@ -44,17 +45,27 @@ define(
 		 */
 		function getAssets(source, cacheKey) {
 			var dfd = new $.Deferred(),
-				assets = cache.getVersioned(cacheKey);
+				assets = cache.getVersioned(cacheKey),
+				messages;
 
 			if (assets) {
 				dfd.resolve(assets);
+			} else if (source.messages) {
+				messages = source.messages;
+				delete source.messages;
+
+				$.when(
+					loader({
+						type: loader.MULTI,
+						resources: source
+					}),
+					$.getMessages(messages)
+				).done(dfd.resolve);
 			} else {
 				loader({
 					type: loader.MULTI,
 					resources: source
-				}).done(function (assets) {
-					dfd.resolve(assets);
-				});
+				}).done(dfd.resolve);
 			}
 
 			return dfd.promise();
@@ -114,8 +125,8 @@ define(
 		 * @param {object} events - object containing array of handlers for each event type
 		 */
 		function bindEvents(modal, events) {
-			Object.keys(events).forEach(function(event) {
-				events[event].forEach(function(handler) {
+			Object.keys(events).forEach(function (event) {
+				events[event].forEach(function (handler) {
 					modal.bind(event, handler);
 				});
 			});
@@ -140,7 +151,7 @@ define(
 			// reset buttons visibility
 			modal.$buttons.addClass('hidden');
 
-			Object.keys(buttons).forEach(function(key) {
+			Object.keys(buttons).forEach(function (key) {
 				modal.$buttons
 					.filter(key)
 					.data('event', buttons[key])
@@ -204,7 +215,7 @@ define(
 				processData: false,
 				type: 'POST',
 				url: w.wgScriptPath + uploadEntryPoint,
-				success: function(response) {
+				success: function (response) {
 					var data = response.results;
 
 					if (data && data.success) {
@@ -219,7 +230,7 @@ define(
 
 					modal.activate();
 				},
-				error: function(response) {
+				error: function (response) {
 					showError(modal, response.results.error);
 					modal.activate();
 				}
@@ -242,7 +253,7 @@ define(
 		function showForceLoginModal(origin, cb) {
 			w.UserLoginModal.show({
 				origin: origin,
-				callback: function() {
+				callback: function () {
 					w.UserLogin.forceLoggedIn = true;
 					cb();
 				}
@@ -257,8 +268,25 @@ define(
 			w.UserLogin.refreshIfAfterForceLogin();
 		}
 
+		/**
+		 * @desc handle nirvana exception errors
+		 * @param {object} modal - modal instance
+		 * @param {object} response - nirvana response object
+		 */
 		function handleNirvanaException(modal, response) {
-			showError(modal, response.statusText);
+			showError(modal, getNirvanaExceptionMessage(response));
+		}
+
+		/**
+		 * @desc Returns exception message
+		 * @param {object} response XHR response object
+		 * @returns {string}
+		 */
+		function getNirvanaExceptionMessage(response) {
+			var responseText = response.responseText,
+				message = JSON.parse(responseText).exception.details;
+
+			return message || response.statusText;
 		}
 
 		/**
@@ -297,6 +325,93 @@ define(
 			return baseUrl + '/thumb/' + fileName + '/' + crop + fileName;
 		}
 
+		/**
+		 * @desc handler for writing in input field
+		 * @param {Element} input - HTML <input> element
+		 * @param {integer} minCharLength - minimal length of  a char taken from intMapsConfig cosntants
+		 * @param {function} cb - callback function fired when input text is long enough
+		 */
+		function onWriteInInput(input, minCharLength, cb) {
+			var trimmedKeyword = input.value.trim();
+
+			if (trimmedKeyword.length >= minCharLength) {
+				cb(trimmedKeyword);
+			}
+		}
+
+		/**
+		 * @desc escapes HTML entities
+		 * @param {string} string
+		 * @returns {string}
+		 */
+		function escapeHtml(string) {
+			var htmlEscapes = {
+					'&': '&amp;',
+					'<': '&lt;',
+					'>': '&gt;'
+				},
+				htmlEscapeMatcher = /[&<>]/g;
+
+			return ('' + string).replace(htmlEscapeMatcher, function (match) {
+				return htmlEscapes[match];
+			});
+		}
+
+		/**
+		 * @desc Wrapper for our Wikia.Tracker.track method - sends to GA tracking info
+		 *
+		 * @param {string} action one of Wikia.Tracker.ACTIONS
+		 * @param {string} label
+		 * @param {Number} value
+		 */
+		function track(action, label, value) {
+			var trackingParams = {
+				trackingMethod: 'ga',
+				category: 'map',
+				action: action,
+				label: label
+			};
+
+			if (typeof(value) !== 'undefined') {
+				trackingParams.value = value;
+			}
+
+			tracker.track(trackingParams);
+		}
+
+		/**
+		 * @desc Opens modal associated with chosen action preceded by forced login modal for anons
+		 * @param {object} actionConfig action configuration from intMapsConfig module
+		 */
+		function triggerAction(actionConfig) {
+			if (isUserLoggedIn()) {
+				loadModal(actionConfig);
+			} else {
+				showForceLoginModal(actionConfig.origin, function () {
+					loadModal(actionConfig);
+				});
+			}
+		}
+
+		/**
+		 * @desc Gets requested action configuration from intMapConfig module
+		 * @param {string} action an action name which configuration is placed in intMapConfig.actions
+		 * @param {object} config intMapConfig module
+		 * @returns {object}
+		 */
+		function getActionConfig(action, config) {
+			return config.actions[action];
+		}
+
+		/** @desc checks if the first param is an array and if the second param is a key of that array
+		 * @param {Array|*} array
+		 * @param {Number} key
+		 * @returns {boolean} - does array has given key
+		 */
+		function inArray(array, key) {
+			return array instanceof Array && array.indexOf(key) > -1;
+		}
+
 		return {
 			loadModal: loadModal,
 			createModal: createModal,
@@ -310,9 +425,17 @@ define(
 			showForceLoginModal: showForceLoginModal,
 			refreshIfAfterForceLogin: refreshIfAfterForceLogin,
 			handleNirvanaException: handleNirvanaException,
+			getNirvanaExceptionMessage: getNirvanaExceptionMessage,
 			showError: showError,
 			cleanUpError: cleanUpError,
-			createThumbURL: createThumbURL
-		}
+			createThumbURL: createThumbURL,
+			onWriteInInput: onWriteInInput,
+			escapeHtml: escapeHtml,
+			track: track,
+			trackerActions: tracker.ACTIONS,
+			triggerAction: triggerAction,
+			getActionConfig: getActionConfig,
+			inArray: inArray
+		};
 	}
 );

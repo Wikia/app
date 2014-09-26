@@ -54,12 +54,7 @@ class ImageServing {
 		}
 		$this->articles = array();
 
-		if( is_array( $articles ) ) {
-			foreach( $articles as $article ){
-				$articleId = ( int ) $article;
-				$this->articles[ $articleId ] = $articleId;
-			}
-		}
+		$this->setArticleIds( $articles );
 
 		$this->app = F::app();
 		$this->width = $width;
@@ -99,6 +94,15 @@ class ImageServing {
 		wfProfileIn( __METHOD__ );
 		$articles = $this->articles;
 		$out = array();
+
+		// force ImageServing to return an empty list
+		// see PLATFORM-392
+		global $wgImageServingForceNoResults;
+		if (!empty($wgImageServingForceNoResults)) {
+			wfProfileOut(__METHOD__);
+			return $out;
+		}
+
 		if( !empty( $articles ) ) {
 			if( $this->db == null ) {
 				$db = wfGetDB( DB_SLAVE, array() );
@@ -165,7 +169,7 @@ class ImageServing {
 				$out = $out + $driver->execute();
 			}
 
-			if(empty($out)){
+			if( empty( $out ) ) {
 				// Hook for finding fallback images if there were no matches. - NOTE: should this fallback any time (count($out) < $limit)? Seems like overkill.
 				wfRunHooks( 'ImageServing::fallbackOnNoResults', array( &$this, $limit, &$out ) );
 			}
@@ -226,6 +230,7 @@ class ImageServing {
 		if( !empty( $fileNames ) ) {
 			/**
 			 * @var $fileName LocalFile
+			 * @var $title Title
 			 */
 			foreach ( $fileNames as $fileName ) {
 				if(!($fileName instanceof LocalFile)) {
@@ -236,8 +241,11 @@ class ImageServing {
 				}
 			}
 
-			$imagesIds[ $title->getArticleId() ] = $title->getDBkey();
-			$this->articles[ $title->getArticleId() ] = $title->getArticleId();
+			// do not query for page_id = 0
+			if ( $title->exists() ) {
+				$imagesIds[ $title->getArticleId() ] = $title->getDBkey();
+				$this->articles[ $title->getArticleId() ] = $title->getArticleId();
+			}
 		}
 
 		$out = $this->getImages(1);
@@ -379,5 +387,19 @@ class ImageServing {
 
 	public function setDeltaY( $iCenterPosition = 0 ){
 		$this->deltaY = $iCenterPosition;
+	}
+
+	public function setArticleIds( $articleIds ) {
+		if( is_array( $articleIds ) ) {
+			foreach ( $articleIds as $article ) {
+				$articleId = ( int ) $article;
+				$this->articles[ $articleId ] = $articleId;
+			}
+		}
+	}
+
+	public function hasArticleIds( $articleIds ) {
+		$containsArticleIds = array_diff( $articleIds, array_keys( $this->articles ) );
+		return empty( $containsArticleIds );
 	}
 }

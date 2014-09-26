@@ -51,13 +51,14 @@ var OPTIONS = {
 var args = parseArgs(process.argv);
 
 // check arguments
-if (!args.jslint || !args.file) {
-	print("You need to provide a path to jslint and file name to lint\n");
+if (!args.file) {
+	print("You need to provide a file name to lint\n");
 	process.exit(1);
 }
 
 // load jslint
-var jslint = require(args.jslint).JSLINT;
+var node_jslint = require('jslint'),
+	jslint = node_jslint.load('latest');
 
 // check the existance of jslint
 if (typeof jslint == 'undefined') {

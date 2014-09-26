@@ -8,7 +8,7 @@
 
 var base = require('./karma.base.conf.js');
 
-module.exports = function(config) {
+module.exports = function (config) {
 	'use strict';
 
 	base(config);
@@ -50,6 +50,8 @@ module.exports = function(config) {
 			'resources/wikia/modules/stringhelper.js',
 			'resources/wikia/modules/thumbnailer.js',
 			'resources/wikia/modules/uniqueId.js',
+			'resources/wikia/libraries/mustache/mustache.js',
+			'resources/wikia/libraries/jquery/ellipses.js',
 
 			//UI Repo JS API
 			'resources/wikia/modules/uicomponent.js',
@@ -64,6 +66,7 @@ module.exports = function(config) {
 			'extensions/wikia/AdEngine/js/AdConfig2.js',
 			'extensions/wikia/AdEngine/js/AdConfig2Late.js',
 			'extensions/wikia/AdEngine/js/AdConfigMobile.js',
+			'extensions/wikia/AdEngine/js/AdContext.js',
 			'extensions/wikia/AdEngine/js/AdDecoratorPageDimensions.js',
 			'extensions/wikia/AdEngine/js/AdEngine2.js',
 			'extensions/wikia/AdEngine/js/EventDispatcher.js',
@@ -83,7 +86,6 @@ module.exports = function(config) {
 			'extensions/wikia/AdEngine/js/MessageListener.js',
 			'extensions/wikia/AdEngine/js/WikiaDartHelper.js',
 			'extensions/wikia/AdEngine/js/WikiaDartVideoHelper.js',
-			'extensions/wikia/AdEngine/js/WikiaGptHop.js',
 			'extensions/wikia/AdEngine/js/WikiaGptAdDetect.js',
 
 			'extensions/wikia/AdEngine/js/spec/*.spec.js',
@@ -155,7 +157,18 @@ module.exports = function(config) {
 			'resources/wikia/libraries/jquery/throttle-debounce/jquery.throttle-debounce.js', // $.throttle
 			'extensions/wikia/ImageLazyLoad/js/ImgLzy.module.js',
 			'extensions/wikia/ImageLazyLoad/js/ImageLazyLoad.js',
-			'extensions/wikia/ImageLazyLoad/spec/*.spec.js'
+			'extensions/wikia/ImageLazyLoad/spec/*.spec.js',
+
+			// Thumbnails
+			'extensions/wikia/Thumbnails/scripts/templates.mustache.js',
+			'extensions/wikia/Thumbnails/scripts/views/titleThumbnail.js',
+			'extensions/wikia/Thumbnails/scripts/spec/*.spec.js',
+
+			// WikiaMaps
+			'extensions/wikia/WikiaInteractiveMaps/js/intMapPoiCategories.js',
+			'extensions/wikia/WikiaInteractiveMaps/js/models/intMapPoiCategoriesModel.js',
+			'extensions/wikia/WikiaInteractiveMaps/js/intMapUtils.js',
+			'extensions/wikia/WikiaInteractiveMaps/spec/*.spec.js'
 		]
 	});
 };

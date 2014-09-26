@@ -5,7 +5,7 @@ $wgExtensionCredits[ 'specialpage' ][] = [
 	'name' => 'Wikia Interactive Maps',
 	'author' => [
 		'Andrzej "nAndy" Łukaszewski',
-		'Bart(łomey) K.',
+		'Bartłomiej "Bart" Kowalczyk',
 		'Evgeniy "aquilax" Vasilev',
 		'Jakub "Student" Olek',
 		'Rafał Leszczyński',
@@ -21,6 +21,7 @@ $wgAutoloadClasses[ 'WikiaInteractiveMapsParserTagController' ] = $dir . '/contr
 $wgAutoloadClasses[ 'WikiaInteractiveMapsBaseController' ] = $dir . '/controllers/WikiaInteractiveMapsBaseController.class.php';
 $wgAutoloadClasses[ 'WikiaInteractiveMapsMapController' ] = $dir . '/controllers/WikiaInteractiveMapsMapController.class.php';
 $wgAutoloadClasses[ 'WikiaInteractiveMapsPoiController' ] = $dir . '/controllers/WikiaInteractiveMapsPoiController.class.php';
+$wgAutoloadClasses[ 'WikiaInteractiveMapsPoiCategoryController' ] = $dir . '/controllers/WikiaInteractiveMapsPoiCategoryController.class.php';
 
 // helper classes
 $wgAutoloadClasses[ 'WikiaInteractiveMapsHooks' ] = $dir . 'WikiaInteractiveMapsHooks.class.php';
@@ -30,14 +31,21 @@ $wgAutoloadClasses[ 'WikiaInteractiveMapsUploadImageFromFile' ] = $dir . 'WikiaI
 $wgAutoloadClasses[ 'WikiaMaps' ] = $dir . '/models/WikiaMaps.class.php';
 $wgAutoloadClasses[ 'WikiaMapsLogger' ] = $dir . '/models/WikiaMapsLogger.class.php';
 
+// exception classes
+$wgAutoloadClasses[ 'WikiaInteractiveMapsPermissionException' ] = $dir . '/exceptions/WikiaInteractiveMapsPermissionException.class.php';
+
 // special pages
 $wgSpecialPages[ 'Maps' ] = 'WikiaInteractiveMapsController';
 $wgSpecialPageGroups[ 'Maps' ] = 'wikia';
 
 // hooks
 $wgHooks[ 'ParserFirstCallInit' ][] = 'WikiaInteractiveMapsParserTagController::parserTagInit';
-$wgHooks[ 'SkinAfterBottomScripts' ][] = 'WikiaInteractiveMapsHooks::onSkinAfterBottomScripts';
 $wgHooks[ 'OutputPageBeforeHTML' ][] = 'WikiaInteractiveMapsHooks::onOutputPageBeforeHTML';
+$wgHooks[ 'OasisSkinAssetGroups' ][] = 'WikiaInteractiveMapsHooks::onOasisSkinAssetGroups';
+$wgHooks[ 'SkinAfterBottomScripts' ][] = 'WikiaInteractiveMapsHooks::onSkinAfterBottomScripts';
+
+// mobile
+$wgHooks['WikiaMobileAssetsPackages'][] = 'WikiaInteractiveMapsHooks::onWikiaMobileAssetsPackages';
 
 // i18n mapping
 $wgExtensionMessagesFiles[ 'WikiaInteractiveMaps' ] = $dir . 'WikiaInteractiveMaps.i18n.php';
@@ -76,6 +84,7 @@ $logActionsHandler = 'WikiaMapsLogger::formatLogEntry';
 $wgLogActionsHandlers[ 'maps/create_map' ] = $logActionsHandler;
 $wgLogActionsHandlers[ 'maps/update_map' ] = $logActionsHandler;
 $wgLogActionsHandlers[ 'maps/delete_map' ] = $logActionsHandler;
+$wgLogActionsHandlers[ 'maps/undelete_map' ] = $logActionsHandler;
 
 $wgLogActionsHandlers[ 'maps/create_pin_type' ] = $logActionsHandler;
 $wgLogActionsHandlers[ 'maps/update_pin_type' ] = $logActionsHandler;

@@ -114,10 +114,6 @@ foreach ( $providersVideoFeed as $provider ) {
 			$endDate = date( 'Y-m-d', $endDateTS ).'T00:00:00-0800';
 			$file = $feedIngester->downloadFeed( $startDate, $endDate );
 			break;
-		case VideoFeedIngester::PROVIDER_REALGRAVITY:
-			// no file needed
-			$startDate = date( 'Y-m-d', $startDateTS );
-			break;
 		case VideoFeedIngester::PROVIDER_ANYCLIP:
 			$file = $feedIngester->downloadFeed( $getAllVideos );
 			break;
@@ -131,6 +127,9 @@ foreach ( $providersVideoFeed as $provider ) {
 			$startDate = date( 'Y-m-d', $startDateTS );
 			$endDate = date( 'Y-m-d', $endDateTS );
 			$remoteAsset = true;
+			break;
+		case VideoFeedIngester::PROVIDER_CRUNCHYROLL:
+			// No file needed
 			break;
 		default:
 	}
@@ -148,6 +147,7 @@ foreach ( $providersVideoFeed as $provider ) {
 	}
 
 	$numCreated = $feedIngester->import( $file, $params );
+
 	$summary[$provider] = $feedIngester->getResultSummary();
 
 	// show ingested videos by vertical

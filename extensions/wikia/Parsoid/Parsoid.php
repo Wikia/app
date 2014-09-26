@@ -15,10 +15,6 @@ class ParsoidSetup {
 		$dir = __DIR__;
 
 		$wgAutoloadClasses['ParsoidHooks'] = "$dir/Parsoid.hooks.php";
-		$wgAutoloadClasses['CurlMultiClient'] = "$dir/CurlMultiClient.php";
-
-		// modern task
-		$wgAutoloadClasses['ParsoidCacheUpdateTask'] = "$dir/ParsoidCacheUpdateTask.class.php";
 
 		self::registerHooks();
 

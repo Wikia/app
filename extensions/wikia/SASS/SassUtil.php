@@ -51,7 +51,6 @@ class SassUtil {
 	 *  - theme chosen using usetheme URL param
 	 */
 	public static function getOasisSettings() {
-		global $wgContLang;
 		wfProfileIn(__METHOD__);
 
 		// Load the 5 deafult colors by theme here (eg: in case the wiki has an override but the user doesn't have overrides).
@@ -92,7 +91,7 @@ class SassUtil {
 			}
 
 			// RTL
-			if($wgContLang && $wgContLang->isRTL()){
+			if(self::isRTL()){
 				$oasisSettings['rtl'] = 'true';
 			}
 
@@ -245,6 +244,24 @@ class SassUtil {
 
 		wfProfileOut(__METHOD__);
 		return array($H, $S, $L);
+	}
+
+	/**
+	 * Detects if the SASS should be returned in RTL "mode"
+	 *
+	 * @see PLATFORM-408
+	 *
+	 * RTL should be used if user language is RTL
+	 *
+	 * @return bool should RTL be used?
+	 */
+	public static function isRTL() {
+		$app = F::app();
+
+		// this will fallback to wiki content language for anons
+		$userLang = $app->wg->Lang;
+
+		return ( !empty($userLang) && $userLang->isRTL() );
 	}
 
 }

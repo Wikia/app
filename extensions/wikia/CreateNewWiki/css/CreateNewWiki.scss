@@ -1,10 +1,11 @@
 $color-borders: #CECECE;
 
-@import "../../../../skins/oasis/css/mixins/box-shadow";
-@import "../../../../skins/oasis/css/mixins/clearfix";
-@import "../../../../skins/oasis/css/mixins/gradient";
-@import "../../../../skins/oasis/css/core/color";
-@import "../../../../skins/oasis/css/core/layout";
+@import "skins/shared/mixins/box-shadow";
+@import "skins/shared/mixins/clearfix";
+@import "skins/shared/mixins/columns";
+@import "skins/shared/mixins/gradient";
+@import "skins/shared/color";
+@import "skins/oasis/css/core/layout";
 
 @import "../../UserLogin/mixins/tooltip-icon";
 @import "../../ThemeDesigner/css/ThemeTab";
@@ -37,7 +38,7 @@ $color-borders: #CECECE;
 	color: #747474;
 	font-size: 12px;
 	font-weight: normal;
-	margin: 135px auto 0;
+	margin: 50px auto 0;
 	padding: 30px 30px 60px 75px;
 	position: relative;
 	width: 500px;
@@ -86,7 +87,7 @@ $color-borders: #CECECE;
 			@include box-shadow(0px, 0px, 6px, #2b5e94);
 		}
 	}
-	label {
+	h3 {
 		/* following !important is used because the existing template has inline styles */
 		font-weight: normal !important;
 		font-size: 17px !important;
@@ -156,7 +157,7 @@ $color-borders: #CECECE;
 	}
 	form {
 		font-size: 17px;
-		label {
+		h3 {
 			display: block;
 			margin-top: 15px;
 		}
@@ -200,7 +201,7 @@ $color-borders: #CECECE;
 		top: 95px;
 	}
 	.fb_button {
-				
+
 	}
 	nav {
 		.signup {
@@ -324,8 +325,13 @@ div#userloginErrorBox3 {
 		@if ( $responsive-layout-enabled ) {
 
 		} @else {
+			/*
+			 * Both left and right are specified for proper ltr and rtl positioning.
+			 * TODO: Fix CSSJanus
+			 */
 			left: 515px;
 			position: absolute;
+			right: 515px;
 			top: 100px;
 			width: 265px;
 		}
@@ -353,6 +359,7 @@ div#userloginErrorBox3 {
 		}
 	}
 	textarea {
+		display: block;
 		font-size: 17px;
 		height: 170px;
 		padding: 0;
@@ -369,7 +376,7 @@ div#userloginErrorBox3 {
 	select {
 		margin-bottom:15px;
 	}
-	label {
+	h3 {
 		margin-top: 10px;
 		display: block;
 	}
@@ -379,10 +386,37 @@ div#userloginErrorBox3 {
 		}
 	}
 	.tooltip-icon-wrapper {
+		padding: 0;
 		position: relative;
 		.tooltip-icon {
 			@include tooltip-icon;
-			right: -16px;
+			display: inline-block;
+			position: static;
+		}
+	}
+	.select-container {
+		float: left;
+		min-width: 210px;
+		max-width: 490px;
+	}
+	.categories-sets {
+		display: none;
+	}
+	.categories-set {
+		display: none;
+		@include column-count( 4 );
+
+		label {
+			display: inline-block;
+			position: relative;
+			width: 100%;
+		}
+		input {
+			position: absolute;
+		}
+		span {
+			display: block;
+			margin-left: 1.75em;
 		}
 	}
 }
@@ -413,7 +447,7 @@ div#userloginErrorBox3 {
 				li {
 					padding-bottom: 0;
 					padding-top: 0;
-					label{ 
+					h3{
 						display: none;
 					}
 				}
@@ -472,6 +506,29 @@ div#userloginErrorBox3 {
 			font-size: 15px;
 			line-height: 25px;
 			width: 200px;
+		}
+	}
+}
+
+/*
+ * TODO: Fix CSSJanus
+ */
+html[dir="rtl"] {
+	#DescWiki {
+		ol {
+			@if ( $responsive-layout-enabled ) {
+
+			} @else {
+				left: auto;
+				right: 515px;
+			}
+		}
+		.select-container {
+			float: right;
+		}
+		.categories-set span {
+			margin-left: auto;
+			margin-right: 1.75em;
 		}
 	}
 }

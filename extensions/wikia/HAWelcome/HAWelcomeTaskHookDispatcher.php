@@ -9,6 +9,7 @@ use Wikia\Logger\Loggable;
 
 class HAWelcomeTaskHookDispatcher {
 	use Loggable;
+	use IncludeMessagesTrait;
 
 	/** @type \Revision */
 	private $revisionObject = null;
@@ -38,7 +39,6 @@ class HAWelcomeTaskHookDispatcher {
 
 		if ( $this->hasContributorBeenWelcomedRecently() ) {
 			$this->info( "aborting the welcome hook: user has been welcomed recently" );
-			// abort if they have contributed recently
 			return true;
 		}
 
@@ -56,12 +56,14 @@ class HAWelcomeTaskHookDispatcher {
 				return true;
 			}
 
-			$this->markHAWelcomePosted();
-			$this->queueWelcomeTask( $this->getTitleObjectFromRevision() );
-			$this->info( "queued welcome task" );
+			$this->info( "queueing welcome task for user" );
 		} else {
-			$this->info( "aborting the welcome hook for an anonymous user" );
+			$this->info( "queueing welcome task for an anonymous user" );
 		}
+
+		$this->markHAWelcomePosted();
+		$this->queueWelcomeTask( $this->getTitleObjectFromRevision() );
+		$this->info( "queued welcome task" );
 
 		return true;
 	}
@@ -105,7 +107,7 @@ class HAWelcomeTaskHookDispatcher {
 	}
 
 	public function getWelcomeUserFromMessages() {
-		return trim( wfMessage( 'welcome-user' )->inContentLanguage()->text() );
+		return trim( $this->getTextVersionOfMessage( 'welcome-user' ) );
 	}
 
 	protected function markHAWelcomePosted() {
@@ -170,7 +172,7 @@ class HAWelcomeTaskHookDispatcher {
 	}
 
 	public function welcomeMessageDisabled() {
-		if ( in_array( trim( wfMessage( 'welcome-user' )->inContentLanguage()->text() ), array( '@disabled', '-' ) ) ) {
+		if ( in_array( trim( $this->getTextVersionOfMessage( 'welcome-user' ) ), array( '@disabled', '-' ) ) ) {
 			return true;
 		}
 	}

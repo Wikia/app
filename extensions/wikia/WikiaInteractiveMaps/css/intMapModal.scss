@@ -1,11 +1,13 @@
-@import "skins/oasis/css/core/color";
+@import "skins/shared/color";
 @import "skins/oasis/css/core/responsive-variables";
-@import "skins/oasis/css/mixins/flexbox";
+@import "skins/shared/mixins/flexbox";
+@import "skins/shared/mixins/calc";
 
 $color-code-bg: mix($color-page, #000000, 95%);
 @if $is-dark-wiki {
 	$color-code-bg: mix($color-page, #ffffff, 95%);
 }
+$imagePreviewSize: 83px;
 
 .int-map-modal {
 	button {
@@ -37,6 +39,58 @@ $color-code-bg: mix($color-page, #000000, 95%);
 		margin: 0 auto;
 	}
 
+	.article-image-wrapper {
+		border: 1px solid $color-page-border;
+		box-sizing: border-box;
+		float: left;
+		height: $imagePreviewSize;
+		margin: 5px 0;
+		overflow: hidden;
+		width: $imagePreviewSize;
+
+		svg {
+			width: 50%;
+		}
+
+		path,
+		polygon {
+			fill: $color-alternate-text;
+		}
+
+		rect {
+			stroke: $color-alternate-text;
+		}
+	}
+
+	.article-suggestion {
+		cursor: pointer;
+		display: block;
+		padding: 10px;
+		text-decoration: none;
+
+		&:hover {
+			background-color: $color-code-bg;
+		}
+	}
+
+	.article-suggestions {
+		background-color: $color-page;
+		border: 1px solid $color-page-border-subtle;
+		box-sizing: border-box;
+		max-height: 134px;
+		overflow-y: auto;
+		position: absolute;
+		width: 100%;
+
+		.selected {
+			background-color: $color-code-bg;
+		}
+	}
+
+	.article-suggestions-wrapper {
+		position: relative;
+	}
+
 	.clear-search {
 		float: right;
 		margin: 7px 10px 0 0;
@@ -63,7 +117,6 @@ $color-code-bg: mix($color-page, #000000, 95%);
 	.dashed-border {
 		border: 1px dashed $color-page-border-subtle;
 	}
-
 
 	.hidden {
 		display: none !important;
@@ -203,34 +256,47 @@ $color-code-bg: mix($color-page, #000000, 95%);
 		margin-bottom: 20px;
 	}
 
-	.WikiaForm .input-group {
-		float: none;
-		padding-left: 0;
-		padding-right: 0;
-		width: 100%;
-
-		input,
-		select,
-		textarea {
-			box-sizing: border-box;
+	.WikiaForm {
+		.articleImageUrl {
+			float: left;
 		}
 
-		label {
-			font-weight: bold;
-		}
-
-		textarea {
-			height: 50px;
-			resize: none;
-		}
-
-		.tile-set-search {
-			float: right;
-			width: 252px;
-		}
-
-		.wide {
+		.input-group {
+			float: none;
+			padding-left: 0;
+			padding-right: 0;
 			width: 100%;
+
+			input,
+			select,
+			textarea {
+				box-sizing: border-box;
+			}
+
+			label {
+				font-weight: bold;
+			}
+
+			textarea {
+				height: 70px;
+				resize: none;
+			}
+
+			.tile-set-search {
+				float: right;
+				width: 252px;
+			}
+
+			.wide {
+				width: 100%;
+			}
+
+			&.next-to-thumb {
+				@include width-calc('100% - #{$imagePreviewSize + 20px}');
+				clear: none;
+				float: right;
+			}
 		}
 	}
+
 }

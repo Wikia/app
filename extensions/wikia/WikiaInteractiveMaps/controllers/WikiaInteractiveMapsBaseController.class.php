@@ -6,6 +6,8 @@ class WikiaInteractiveMapsBaseController extends WikiaController {
 
 	const MAP_PREVIEW_WIDTH = 660;
 	const POI_CATEGORY_MARKER_WIDTH = 60;
+	const IMAGE_ORIGINAL = 0;
+	const IMAGE_THUMBNAIL = 1;
 
 	/**
 	 * @var WikiaMaps
@@ -77,9 +79,8 @@ class WikiaInteractiveMapsBaseController extends WikiaController {
 			//save temp file
 			$file = $upload->stashFile();
 
-			if ( $file instanceof File && $file->exists() ) {
+			if ( $file instanceof WikiaUploadStashFile && $file->exists() ) {
 				$uploadStatus[ 'success' ] = true;
-				$originalWidth = $file->getWidth();
 
 				// $originalHeight = $file->getHeight();
 				// $imageServing = new ImageServing( null, $originalWidth );
@@ -91,7 +92,7 @@ class WikiaInteractiveMapsBaseController extends WikiaController {
 				// and write in a cleaner way
 				// TODO: Talk to Platform Team about adding possibility to add stashed files via ImageService
 
-				$uploadStatus[ 'fileUrl' ] = $this->getStashedImageThumb( $file, $originalWidth );
+				$uploadStatus[ 'fileUrl' ] = $this->getStashedImage( $file );
 
 				switch ( $uploadType ) {
 					case WikiaInteractiveMapsUploadImageFromFile::UPLOAD_TYPE_MAP:
@@ -103,7 +104,7 @@ class WikiaInteractiveMapsBaseController extends WikiaController {
 						break;
 				}
 
-				$uploadStatus[ 'fileThumbUrl' ] = $this->getStashedImageThumb( $file, $thumbWidth );
+				$uploadStatus[ 'fileThumbUrl' ] = $this->getStashedImage( $file, self::IMAGE_THUMBNAIL, $thumbWidth );
 			} else {
 				$uploadStatus[ 'success' ] = false;
 			}
@@ -113,15 +114,26 @@ class WikiaInteractiveMapsBaseController extends WikiaController {
 	}
 
 	/**
-	 * Creates stashed image's thumb url and returns it
+	 * Creates stashed image url and returns it
 	 *
-	 * @param File $file stashed upload file
-	 * @param Integer $width width of the thumbnail
+	 * @param WikiaUploadStashFile $file
+	 * @param int $type Image type to return IMAGE_ORIGINAL or IMAGE_THUMBNAIL
+	 * @param int $width optional width of the thumbnail
 	 *
-	 * @return String
+	 * @return String image url
+	 *
+	 * @throws MWException
 	 */
-	private function getStashedImageThumb( $file, $width ) {
-		return wfReplaceImageServer( $file->getThumbUrl( $width . "px-" . $file->getName() ) );
+	public function getStashedImage( WikiaUploadStashFile $file, $type = self::IMAGE_ORIGINAL, $width = 200 ) {
+		if( $type === self::IMAGE_ORIGINAL ) {
+			$url = $file->getOriginalFileUrl();
+		} else if( $type === self::IMAGE_THUMBNAIL ) {
+			$url = $file->getThumbUrl( $width . "px-" . $file->getName() );
+		} else {
+			throw new MWException( 'Invalid $type parameter' );
+		}
+
+		return wfReplaceImageServer( $url );
 	}
 
 	/**
@@ -132,7 +144,8 @@ class WikiaInteractiveMapsBaseController extends WikiaController {
 	private function translateError( $errorStatus ) {
 		switch ( $errorStatus ) {
 			case UploadBase::FILE_TOO_LARGE:
-				$errorMessage = wfMessage( 'wikia-interactive-maps-image-uploads-error-file-too-large', $this->getMaxFileSize() )->plain();
+				$maxSize = $this->wg->Lang->formatSize( $this->wg->MaxUploadSize );
+				$errorMessage = wfMessage( 'wikia-interactive-maps-image-uploads-error-file-too-large', $maxSize )->plain();
 				break;
 			case UploadBase::EMPTY_FILE:
 				$errorMessage = wfMessage( 'wikia-interactive-maps-image-uploads-error-empty-file' )->plain();
@@ -156,11 +169,21 @@ class WikiaInteractiveMapsBaseController extends WikiaController {
 	}
 
 	/**
-	 * Returns max upload file size in MB (gets it from config)
-	 * @return float
-	 * @todo Extract it somewhere to includes/wikia/
+	 * Simple getter
+	 *
+	 * @return WikiaMaps
 	 */
-	private function getMaxFileSize() {
-		return $this->wg->MaxUploadSize / 1024 / 1024;
+	public function getModel() {
+		return $this->mapsModel;
 	}
+
+	/**
+	 * Returns true if a user is allowed to use maps
+	 *
+	 * @return bool
+	 */
+	public function isUserAllowed() {
+		return $this->wg->User->isLoggedIn() && !$this->wg->User->isBlocked();
+	}
+
 }

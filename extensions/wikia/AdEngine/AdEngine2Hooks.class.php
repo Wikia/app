@@ -3,7 +3,6 @@
  * AdEngine II Hooks
  */
 class AdEngine2Hooks {
-
 	/**
 	 * Handle URL parameters and set proper global variables early enough
 	 *
@@ -13,43 +12,26 @@ class AdEngine2Hooks {
 
 		// TODO: review top and bottom vars (important for adsinhead)
 
-		global $wgAdDriverForceDirectGptAd, $wgAdDriverForceLiftiumAd, $wgEnableRHonDesktop, $wgEnableRHonMobile,
-			   $wgLiftiumOnLoad, $wgNoExternals, $wgAdVideoTargeting, $wgAdPageType, $wgEnableKruxTargeting,
+		global $wgAdDriverForceDirectGptAd, $wgAdDriverForceLiftiumAd, $wgAdDriverUseRemnantGpt,
+			   $wgLiftiumOnLoad, $wgNoExternals, $wgAdVideoTargeting, $wgEnableKruxTargeting,
 			   $wgAdEngineDisableLateQueue, $wgLoadAdsInHead, $wgLoadLateAdsAfterPageLoad;
 
 		$wgNoExternals = $request->getBool( 'noexternals', $wgNoExternals );
 		$wgLiftiumOnLoad = $request->getBool( 'liftiumonload', (bool)$wgLiftiumOnLoad );
 		$wgAdVideoTargeting = $request->getBool( 'videotargetting', (bool)$wgAdVideoTargeting );
 
-		$wgEnableRHonDesktop = $request->getBool( 'gptremnant', $wgEnableRHonDesktop );
-		$wgEnableRHonMobile = $request->getBool( 'gptremnant', $wgEnableRHonMobile );
+		$wgAdDriverUseRemnantGpt = $request->getBool( 'gptremnant', $wgAdDriverUseRemnantGpt );
 
 		$wgAdEngineDisableLateQueue = $request->getBool( 'noremnant', $wgAdEngineDisableLateQueue );
 
 		$wgAdDriverForceDirectGptAd = $request->getBool( 'forcedirectgpt', $wgAdDriverForceDirectGptAd );
 		$wgAdDriverForceLiftiumAd = $request->getBool( 'forceliftium', $wgAdDriverForceLiftiumAd );
-		$wgAdPageType = AdEngine2Service::getPageType();
 
 		$wgLoadAdsInHead = $request->getBool( 'adsinhead', $wgLoadAdsInHead );
 		$wgLoadLateAdsAfterPageLoad = $request->getBool( 'lateadsafterload', $wgLoadLateAdsAfterPageLoad );
 
 		$wgEnableKruxTargeting = !$wgAdEngineDisableLateQueue && !$wgNoExternals && $wgEnableKruxTargeting;
 
-		return true;
-	}
-
-
-	/**
-	 * Register global JS variables bottom
-	 *
-	 * @param array $vars
-	 *
-	 * @return bool
-	 */
-	static public function onMakeGlobalVariablesScript(array &$vars) {
-		foreach (AdEngine2Service::getBottomJsVariables() as $varName => $varValue) {
-			$vars[$varName] = $varValue;
-		}
 		return true;
 	}
 
@@ -62,6 +44,11 @@ class AdEngine2Hooks {
 	 */
 	static public function onInstantGlobalsGetVariables(array &$vars)
 	{
+		// DR
+		$vars[] = 'wgSitewideDisableLiftium';
+		$vars[] = 'wgSitewideDisableSevenOneMedia';
+		$vars[] = 'wgSitewideDisableRubiconRTP';
+
 		$vars[] = 'wgHighValueCountries';
 		$vars[] = 'wgAmazonDirectTargetedBuyCountries';
 
@@ -92,7 +79,7 @@ class AdEngine2Hooks {
 	 */
 	static public function onOasisSkinAssetGroups(&$jsAssets) {
 
-		global $wgAdDriverUseWikiaBarBoxad2, $wgAdDriverUseTopInContentBoxad;
+		global $wgAdDriverUseBottomLeaderboard, $wgAdDriverUseTopInContentBoxad;
 
 		$coreGroupIndex = array_search(AdEngine2Service::ASSET_GROUP_CORE, $jsAssets);
 		if ($coreGroupIndex === false) {
@@ -100,28 +87,31 @@ class AdEngine2Hooks {
 			return true;
 		}
 
-		if (!AdEngine2Service::areAdsInHead()) {
-			// Add ad asset to JavaScripts loaded on bottom (with regular JavaScripts)
-			array_splice($jsAssets, $coreGroupIndex + 1, 0, AdEngine2Service::ASSET_GROUP_ADENGINE);
-			$coreGroupIndex = $coreGroupIndex + 1;
-
-			if ($wgAdDriverUseTopInContentBoxad === true) {
-				array_unshift($jsAssets, 'adengine2_top_in_content_boxad_js');
+		if (AdEngine2Service::areAdsInHead()) {
+			if (AdEngine2Service::shouldLoadLateQueue()) {
+				array_splice($jsAssets, $coreGroupIndex + 1, 0, AdEngine2Service::ASSET_GROUP_ADENGINE_LATE);
 			}
-		}
-
-		if (AdEngine2Service::shouldLoadLateQueue()) {
-			$coreGroupIndex = $coreGroupIndex + (int)AdEngine2Service::areAdsInHead();
-			array_splice($jsAssets, $coreGroupIndex, 0, AdEngine2Service::ASSET_GROUP_ADENGINE_LATE);
+			// The ASSET_GROUP_ADENGINE_LATE package was added to the blocking group
+		} else {
+			array_splice($jsAssets, $coreGroupIndex + 1, 0, AdEngine2Service::ASSET_GROUP_ADENGINE);
+			if ($wgAdDriverUseTopInContentBoxad) {
+				array_splice($jsAssets, $coreGroupIndex + 2, 0, AdEngine2Service::ASSET_GROUP_TOP_INCONTENT_JS);
+			}
+			if (AdEngine2Service::shouldLoadLateQueue()) {
+				array_splice($jsAssets, $coreGroupIndex + 2, 0, AdEngine2Service::ASSET_GROUP_ADENGINE_LATE);
+			}
 		}
 
 		if (AdEngine2Service::shouldLoadLiftium()) {
 			$jsAssets[] = AdEngine2Service::ASSET_GROUP_LIFTIUM;
 		}
 
-		if ($wgAdDriverUseWikiaBarBoxad2 === true) {
-			$jsAssets[] = 'adengine2_wikiabar_boxad_js';
+		if ($wgAdDriverUseBottomLeaderboard === true) {
+			$jsAssets[] = 'adengine2_bottom_leaderboard_js';
 		}
+
+		$jsAssets[] = 'adengine2_interactive_maps_js';
+
 		return true;
 	}
 
@@ -141,7 +131,7 @@ class AdEngine2Hooks {
 			$jsAssets[] = AdEngine2Service::ASSET_GROUP_ADENGINE;
 
 			if ($wgAdDriverUseTopInContentBoxad === true) {
-				array_unshift($jsAssets, 'adengine2_top_in_content_boxad_js');
+				array_unshift($jsAssets, AdEngine2Service::ASSET_GROUP_TOP_INCONTENT_JS);
 			}
 		}
 		return true;
@@ -172,7 +162,7 @@ class AdEngine2Hooks {
 			$scriptModules[] = 'wikia.location';
 			$scriptModules[] = 'wikia.log';
 			$scriptModules[] = 'wikia.querystring';
-			$scriptModules[] = 'wikia.tracker';
+			$scriptModules[] = 'wikia.tracker.stub';
 		}
 		return true;
 	}

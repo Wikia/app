@@ -269,6 +269,7 @@ $messages['ckb'] = array(
  * @author Chmee2
  * @author Darth Daron
  * @author Dontlietome7
+ * @author H4nek
  */
 $messages['cs'] = array(
 	'categoryselect-desc' => 'Poskytuje rozhraní pro správu kategorií v článku bez úprav celého článku',
@@ -284,7 +285,7 @@ $messages['cs'] = array(
 	'categoryselect-error-db-locked' => 'Databáze je uzamčena.',
 	'categoryselect-error-duplicate-category-name' => 'Kategorie "$1" již existuje.',
 	'categoryselect-error-edit-abort' => 'Změna, o kterou jste se pokusili, byla zrušena rozšířením.', # Fuzzy
-	'categoryselect-error-empty-category-name' => 'Zadejte název kategorie (část před |)', # Fuzzy
+	'categoryselect-error-empty-category-name' => 'Uveďte prosím název kategorie.',
 	'categoryselect-error-user-rights' => 'Chyba uživatelských práv.', # Fuzzy
 	'categoryselect-modal-category-name' => 'Uveďte název kategorie:', # Fuzzy
 	'categoryselect-modal-category-sortkey' => 'Abecedně seřadit tento článek na stránce kategorie „$1" pod názvem:', # Fuzzy

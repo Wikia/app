@@ -56,7 +56,7 @@
 				if (LightboxLoader.videoInstance) {
 					LightboxLoader.videoInstance.clearTimeoutTrack();
 				}
-				if ( LightboxLoader.reloadOnClose ) {
+				if (LightboxLoader.reloadOnClose) {
 					window.location.reload();
 				}
 			}
@@ -69,15 +69,14 @@
 				$comments = $('#WikiaArticleComments'), // event handled with $footer
 				$footer = $('#WikiaArticleFooter'), // bottom videos module
 				$videosModule = $('.videos-module-rail'), // right rail videos module
-				$videoHomePage = $('#latest-videos-wrapper'),
-				$articleThumbs = $('.article-thumb-wrapper');
+				$videoHomePage = $('#latest-videos-wrapper');
 
 			// Bind click event to initiate lightbox
 			$article.add($photos).add($footer).add($videosModule)
 				.off('.lightbox')
 				.on('click.lightbox', '.lightbox, a.image', function (e) {
 					var $this = $(this),
-						$thumb = $this.children('img').first(),
+						$thumb = $this.find('img').first(),
 						fileKey = $thumb.attr('data-image-key') || $thumb.attr('data-video-key'),
 						$parent,
 						isVideo,
@@ -164,14 +163,6 @@
 						}
 					}
 				);
-
-			$articleThumbs
-				.on(
-					'mousedown',
-					function(event) {
-						LightboxLoader.updateAnchor(event);
-					}
-				);
 		},
 
 		/**
@@ -253,12 +244,15 @@
 
 			LightboxLoader.getMediaDetail({
 					fileTitle: mediaTitle,
+					isInline: true,
 					height: targetChildImg.height(),
 					width: targetChildImg.width()
 				}, function (json) {
 					var embedCode = json.videoEmbedCode,
 						inlineDiv = $('<div class="inline-video"></div>').insertAfter(target.hide()),
 						videoIndex;
+
+					target.closest('.article-thumb').addClass('inline-video-playing');
 
 					require(['wikia.videoBootstrap'], function (VideoBootstrap) {
 						self.videoInstance = new VideoBootstrap(inlineDiv[0], embedCode, clickSource);
@@ -286,7 +280,11 @@
 
 		removeInlineVideos: function () {
 			clearTimeout(LightboxTracker.inlineVideoTrackingTimeout);
-			LightboxLoader.inlineVideoLinks.show().next().remove();
+			LightboxLoader.inlineVideoLinks
+				.show()
+				.parent().removeClass('inline-video-playing') // figure tag
+				.end()
+				.next().remove(); // video player container
 		},
 
 		getMediaDetail: function (mediaParams, callback, nocache) {
@@ -375,29 +373,6 @@
 				event.metaKey ||
 				event.ctrlKey
 			);
-		},
-
-		/**
-		 *
-		 * @param event
-		 */
-		updateAnchor: function (event) {
-			var $img, $anchor;
-			$img = $(event.target);
-			$anchor = $img.parent('a');
-
-			// Don't redirect to raw thumbnail image for videos
-			if ($anchor.hasClass(('video-thumbnail'))) {
-				return;
-			}
-			// If right-click, control key, or meta key were used
-			if (event.which === 3 || event.crtlKey || event.metaKey) {
-				// Change to anchor to point to the raw image file
-				$anchor.attr('old-href', $anchor.attr('href'));
-				$anchor.attr('href', $img.attr('src'));
-			} else if ($anchor.attr('old-href') !== 'undefined') {
-				$anchor.attr('href', $anchor.attr('old-href'));
-			}
 		}
 	};
 
@@ -425,7 +400,6 @@
 			SHARE: 'share',
 			HUBS: 'hubs',
 			OTHER: 'other',
-			VIDEOS_MODULE_BOTTOM: 'bottomVideosModule',
 			VIDEOS_MODULE_RAIL: 'railVideosModule',
 			VIDEO_HOME_PAGE: 'videoHomePage'
 		}

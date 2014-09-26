@@ -1541,6 +1541,7 @@ $messages['zh-hans'] = array(
 
 /** Traditional Chinese (中文（繁體）‎)
  * @author Ffaarr
+ * @author LNDDYL
  * @author Vincent Liu
  */
 $messages['zh-hant'] = array(
@@ -1551,7 +1552,7 @@ $messages['zh-hant'] = array(
 	'quickstats-header-photos' => '圖片數',
 	'quickstats-header-likes' => '按讚的數目',
 	'quickstats-totals-label' => '總計',
-	'quickstats-see-more-stats-link' => '[[Special:WikiStats|查看更多統計]]',
+	'quickstats-see-more-stats-link' => '[[Special:WikiStats|檢視更多統計]]',
 	'quickstats-number-shortening' => '$1千',
 	'quickstats-number-shortening-millions' => '$1百萬',
 	'quickstats-number-shortening-billions' => '$10億',

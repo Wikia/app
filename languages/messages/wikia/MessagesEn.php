@@ -1022,14 +1022,6 @@ hu',
 ***w:c:coffee:Main_Page|Coffee
 ***homepage:Lifestyle|More...
 ",
-'shared-Oasis-footer-wikia-links' => "*http://www.wikia.com/About_Us|<span>About Us</span>
-*http://www.wikia.com/Hiring|Careers
-*http://www.wikia.com/Advertising|Advertise
-*Special:Contact|Contact
-*http://www.wikia.com/Terms_of_Use|Terms of Use
-*http://www.wikia.com/Privacy_Policy|Privacy Policy
-*_LICENSE_
-*http://www.wikia.com/Special:CreateWiki|Create a wiki",
 'shared-Monobook-footer-wikia-links' => '* [http://www.wikia.com/wiki/Wikia:Privacy_Policy Privacy]
 * [http://www.wikia.com/wiki/Wikia:About About Wikia]
 * [http://www.wikia.com/wiki/Wikia:Terms_of_use Terms of use]

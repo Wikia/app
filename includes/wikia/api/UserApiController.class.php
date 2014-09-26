@@ -52,8 +52,13 @@ class UserApiController extends WikiaApiController {
 			$items[] = $item;
 		}
 		if ( !empty( $items ) ) {
-			$this->response->setVal( 'items', $items );
-			$this->response->setVal( 'basepath', $this->wg->Server );
+
+			$this->setResponseData(
+				[ 'basepath' => $this->wg->Server, 'items' => $items ],
+				[ 'imgFields'=> 'avatar', 'urlFields' => [ 'avatar', 'url' ] ],
+				WikiaResponse::CACHE_STANDARD
+			);
+
 		} else {
 			throw new NotFoundApiException();
 		}

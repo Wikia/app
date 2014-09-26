@@ -3,9 +3,10 @@ define(
 	[
 		'jquery',
 		'wikia.window',
+		'wikia.intMap.config',
 		'wikia.intMap.utils'
 	],
-	function($, w, utils) {
+	function ($, w, config, utils) {
 		'use strict';
 
 		// reference to modal component
@@ -43,7 +44,7 @@ define(
 					chooseTileSet
 				],
 				browseTileSets: [
-					function() {
+					function () {
 						showStep('browseTileSet');
 					}
 				],
@@ -54,8 +55,8 @@ define(
 					selectTileSet
 				],
 				uploadTileSetImage: [
-					function() {
-						$uploadInput.click()
+					function () {
+						$uploadInput.click();
 					}
 				],
 				previousStep: [
@@ -80,10 +81,6 @@ define(
 			// stack for holding choose tile set steps
 			stepsStack = [],
 			cachedTileSets = {},
-			// dalay time for jQuery debounde
-			dabounceDelay = 250,
-			// minimum number of characters to trigger search request
-			searchCharLength = 2,
 			thumbSize = 116,
 			// cached selectors
 			$sections,
@@ -110,16 +107,16 @@ define(
 
 			// TODO: figure out where is better place to place it and move it there
 			modal.$element
-				.on('change', '#intMapUpload', function(event) {
+				.on('change', '#intMapUpload', function (event) {
 					uploadNewTileSetImage(event.target.parentNode);
 				})
-				.on('keyup', '#intMapTileSetSearch', $.debounce(dabounceDelay, searchForTileSets));
+				.on('keyup', '#intMapTileSetSearch', $.debounce(config.constants.debounceDelay, searchForTileSets));
 
 		}
 
 		/**
 		 * @desc Render Choose tile set modal
-		 */ 
+		 */
 		function renderChooseTileSet() {
 			modal.$innerContent.html(utils.render(uiTemplate, templateData));
 
@@ -190,7 +187,6 @@ define(
 		function previousStep() {
 			// removes current step from stack
 			stepsStack.pop();
-
 			showStep(stepsStack.pop());
 		}
 
@@ -199,10 +195,13 @@ define(
 		 * @param {Event} event
 		 */
 		function selectTileSet(event) {
-			var $target = $(event.currentTarget);
+			var $target = $(event.currentTarget),
+				mapTypeChosen = $target.data('type');
+
+			utils.track(utils.trackerActions.CLICK_LINK_IMAGE, mapTypeChosen + '-map-chosen');
 
 			modal.trigger('previewTileSet', {
-				type: $target.data('type'),
+				type: mapTypeChosen,
 				tileSetId: $target.data('id'),
 				originalImageURL: $target.data('image')
 			});
@@ -213,12 +212,10 @@ define(
 		 * @param {Event} event - search term
 		 */
 		function searchForTileSets(event) {
-			var trimmedKeyword = event.target.value.trim();
-
-			if (trimmedKeyword.length >= searchCharLength) {
-				loadTileSets(trimmedKeyword);
+			utils.onWriteInInput(event.target, config.constants.minCharLength, function (inputValue) {
+				loadTileSets(inputValue);
 				$clearSearchBtn.removeClass('hidden');
-			}
+			});
 		}
 
 		/**
@@ -236,13 +233,13 @@ define(
 			$clearSearchBtn.addClass('hidden');
 			$searchInput.val('');
 		}
-		
+
 		/**
 		 * @desc loads tile sets thumbs
 		 * @param {string=} keyWord - search term
 		 */
 		function loadTileSets(keyWord) {
-			getTileSets(keyWord || null, function(tileSetData) {
+			getTileSets(keyWord || null, function (tileSetData) {
 				updateTileSetList(renderTileSetsListMarkup(tileSetThumbTemplate, createThumbsUrls(tileSetData)));
 			});
 		}
@@ -259,7 +256,7 @@ define(
 			if (typeof tileSets !== 'undefined') {
 				cb(tileSets);
 			} else {
-				requestTileSets(keyWord, function(tileSets) {
+				requestTileSets(keyWord, function (tileSets) {
 					cacheTileSets(key, tileSets);
 					cb(tileSets);
 				});
@@ -287,7 +284,7 @@ define(
 				format: 'json',
 				type: 'GET',
 				data: searchTerm ? {searchTerm: searchTerm} : null,
-				callback: function(response) {
+				callback: function (response) {
 					var data = response.results;
 
 					if (data && data.success) {
@@ -298,7 +295,7 @@ define(
 
 					modal.activate();
 				},
-				onErrorCallback: function(response) {
+				onErrorCallback: function (response) {
 					modal.activate();
 					utils.handleNirvanaException(modal, response);
 				}
@@ -311,7 +308,7 @@ define(
 		 * @returns {array} - tileSets
 		 */
 		function createThumbsUrls(tileSets) {
-			tileSets.forEach(function(element) {
+			tileSets.forEach(function (element) {
 				element.tileSetThumb = utils.createThumbURL(element.image, thumbSize, thumbSize);
 			});
 
@@ -327,7 +324,7 @@ define(
 		function renderTileSetsListMarkup(template, tileSets) {
 			var html = '';
 
-			tileSets.forEach(function(tileSet) {
+			tileSets.forEach(function (tileSet) {
 				html += utils.render(template, tileSet);
 			});
 
@@ -367,4 +364,3 @@ define(
 		};
 	}
 );
-

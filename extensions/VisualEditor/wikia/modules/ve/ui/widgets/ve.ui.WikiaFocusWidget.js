@@ -18,17 +18,23 @@ ve.ui.WikiaFocusWidget = function VeUiWikiaFocusWidget( surface ) {
 
 	// Properties
 	this.surface = surface;
+	this.node = null;
 	this.spacing = 10;
-	this.uniqueLayoutId = 0;
-	this.$top = this.$( '<div>' ).addClass( 've-ui-wikiaFocusWidget-top' );
-	this.$right = this.$( '<div>' ).addClass( 've-ui-wikiaFocusWidget-right' );
-	this.$bottom = this.$( '<div>' ).addClass( 've-ui-wikiaFocusWidget-bottom' );
-	this.$left = this.$( '<div>' ).addClass( 've-ui-wikiaFocusWidget-left' );
+	this.layout = null;
+	this.layoutHash = null;
+	this.$top = this.$( '<div>' )
+		.addClass( 've-ui-wikiaFocusWidget-shield ve-ui-wikiaFocusWidget-topShield' );
+	this.$right = this.$( '<div>' )
+		.addClass( 've-ui-wikiaFocusWidget-shield ve-ui-wikiaFocusWidget-rightShield' );
+	this.$bottom = this.$( '<div>' )
+		.addClass( 've-ui-wikiaFocusWidget-shield ve-ui-wikiaFocusWidget-bottomShield' );
+	this.$left = this.$( '<div>' )
+		.addClass( 've-ui-wikiaFocusWidget-shield ve-ui-wikiaFocusWidget-leftShield' );
 	this.$body = this.$( this.getElementDocument() ).find( 'body:first' );
 	this.$window = this.$( this.getElementWindow() );
 	this.$surface = surface.$element;
-	this.$pageHeader = this.$( '#WikiaPageHeader' );
-	this.$pageHeaderElements = this.$pageHeader.children( ':not( h1 )' );
+	this.$pageHeaderElements = this.$( '#WikiaPageHeader' ).children( ':not( h1 )' );
+	this.$navBackground = this.$( '.WikiNav .navbackground' );
 	this.$wikiaBarWrapper = this.$( '#WikiaBarWrapper' );
 	this.$wikiaBarCollapseWrapper = this.$( '#WikiaBarCollapseWrapper' );
 	this.$wikiaAds = this.$( '.wikia-ad, #WikiaAdInContentPlaceHolder' );
@@ -60,52 +66,148 @@ ve.ui.WikiaFocusWidget = function VeUiWikiaFocusWidget( surface ) {
 OO.inheritClass( ve.ui.WikiaFocusWidget, OO.ui.Widget );
 
 /* Methods */
-ve.ui.WikiaFocusWidget.prototype.adjustLayout = function () {
-	var surfaceOffset, surfaceEdges, documentDimensions, topEdge,
-		uniqueLayoutId = this.$window.width() * this.$body.outerHeight() * this.surface.$element.height();
 
-	if ( uniqueLayoutId !== this.uniqueLayoutId ) {
-		this.uniqueLayoutId = uniqueLayoutId;
-		surfaceOffset = this.$surface.offset();
+/**
+ * Set which node should be focused
+ *
+ * @method
+ * @param {ve.ce.Node} node Node to focus on
+ */
+ve.ui.WikiaFocusWidget.prototype.setNode = function ( node ) {
+	this.node = node;
+	this.adjustLayout();
+	this.$element.addClass( 've-ui-wikiaFocusWidget-node' );
+	this.toolbar.disableFloatable();
+};
+
+/**
+ * Unset node focus and return to article focus
+ *
+ * @method
+ */
+ve.ui.WikiaFocusWidget.prototype.unsetNode = function () {
+	this.node = null;
+	this.adjustLayout();
+
+	this.toolbar.enableFloatable();
+	// The page may already be scrolled, so trigger the scroll handler
+	this.toolbar.onWindowScroll();
+
+	// Delay for animation
+	setTimeout( ve.bind( function () {
+		this.$element.removeClass( 've-ui-wikiaFocusWidget-node' );
+	}, this ), 250 );
+};
+
+/**
+ * Sets the dimensions of the focus widget shields
+ *
+ * @method
+ */
+ve.ui.WikiaFocusWidget.prototype.adjustLayout = function () {
+	var shield,
+		surfaceOffset = this.$surface.offset(),
 		surfaceEdges = {
 			right: surfaceOffset.left + this.$surface.width(),
 			bottom: surfaceOffset.top + this.$surface.height(),
 			left: surfaceOffset.left,
 			top: surfaceOffset.top
-		};
+		},
 		documentDimensions = {
 			height: this.$body.outerHeight(),
 			width: this.$window.width()
-		};
-		// Handle NS_USER
-		topEdge = mw.config.get( 'wgNamespaceNumber' ) === 2 ? surfaceEdges.top : this.$pageHeader.offset().top;
+		},
+		layout = ( this.node ) ?
+			this.getLayoutForNode( surfaceOffset, surfaceEdges, documentDimensions ) :
+			this.getLayoutForArticle( surfaceOffset, surfaceEdges, documentDimensions );
 
-		this.$top
-			.css( {
-				'height': topEdge - this.spacing,
-				'width': documentDimensions.width
-			} );
-		this.$right
-			.css( {
-				'height': documentDimensions.height,
-				'width': documentDimensions.width - surfaceEdges.right - this.spacing
-			} );
-		this.$bottom
-			.css( {
-				'top': surfaceEdges.bottom,
-				'height': documentDimensions.height - surfaceEdges.bottom + this.spacing,
-				'width': documentDimensions.width
-			} );
-		this.$left
-			.css( {
-				'height': documentDimensions.height,
-				'width': surfaceEdges.left - this.spacing
-			} );
+	if ( OO.getHash( layout ) !== this.layoutHash ) {
+		for ( shield in layout ) {
+			this['$' + shield].css( layout[shield] );
+		}
+		this.layout = layout;
+		this.layoutHash = OO.getHash( this.layout );
 	}
 };
 
+/**
+ * Gets the layout information for focusing on an article
+ *
+ * @method
+ * @param {object} surfaceOffset jQuery offset() object for this.$surface
+ * @param {object} surfaceEdges Location of the edges of the surface
+ * @param {object} documentDimensions Size of the document
+ */
+ve.ui.WikiaFocusWidget.prototype.getLayoutForArticle = function ( surfaceOffset, surfaceEdges, documentDimensions ) {
+	var topEdge;
+
+	// Handle NS_USER
+	topEdge = mw.config.get( 'wgNamespaceNumber' ) === 2 ?
+		surfaceEdges.top :
+		this.$navBackground.offset().top + this.$navBackground.height();
+
+	return {
+		'top': {
+			'height': topEdge,
+			'width': documentDimensions.width
+		},
+		'right': {
+			'height': documentDimensions.height,
+			'width': documentDimensions.width - surfaceEdges.right - this.spacing
+		},
+		'bottom': {
+			'top': surfaceEdges.bottom,
+			'height': documentDimensions.height - surfaceEdges.bottom + this.spacing,
+			'width': documentDimensions.width
+		},
+		'left': {
+			'height': documentDimensions.height,
+			'width': surfaceEdges.left - this.spacing
+		}
+	};
+};
+
+/**
+ * Gets the layout information for focusing on a node
+ *
+ * @method
+ * @param {object} surfaceOffset jQuery offset() object for this.$surface
+ * @param {object} surfaceEdges Location of the edges of the surface
+ * @param {object} documentDimensions Size of the document
+ */
+ve.ui.WikiaFocusWidget.prototype.getLayoutForNode = function ( surfaceOffset, surfaceEdges, documentDimensions ) {
+	var bounds = this.node.getBoundingRect();
+
+	return {
+		'top': {
+			'height': surfaceOffset.top + bounds.top,
+			'width': documentDimensions.width
+		},
+		'right': {
+			'height': documentDimensions.height,
+			'width': documentDimensions.width - surfaceEdges.left - bounds.right
+		},
+		'bottom': {
+			'top': surfaceEdges.top + bounds.bottom,
+			'height': documentDimensions.height - bounds.bottom - surfaceEdges.top,
+			'width': documentDimensions.width
+		},
+		'left': {
+			'height': documentDimensions.height,
+			'width': surfaceEdges.left + bounds.left
+		}
+	};
+};
+
+/**
+ * Setup for focus widget
+ *
+ * @method
+ */
 ve.ui.WikiaFocusWidget.prototype.onDocumentSetup = function () {
 	var interval, i = 0;
+
+	this.toolbar = this.surface.getTarget().getToolbar();
 
 	if ( this.surface.getDir() === 'rtl' ) {
 		this.switchDirection();
@@ -116,7 +218,6 @@ ve.ui.WikiaFocusWidget.prototype.onDocumentSetup = function () {
 
 	// Run adjustLayout() a few times while images load, etc
 	interval = setInterval( ve.bind( function () {
-		this.uniqueLayoutId = 0;
 		this.adjustLayout();
 		if ( i === 2 ) {
 			clearInterval( interval );
@@ -136,11 +237,21 @@ ve.ui.WikiaFocusWidget.prototype.switchDirection = function () {
 	this.$left = [this.$right, this.$right = this.$left][0];
 };
 
+/**
+ * Teardown focus widget
+ *
+ * @method
+ */
 ve.ui.WikiaFocusWidget.prototype.onDocumentTeardown = function () {
 	this.showDistractions();
 	this.$element.remove();
 };
 
+/**
+ * Hide all of the elements that we want hidden
+ *
+ * @method
+ */
 ve.ui.WikiaFocusWidget.prototype.hideDistractions = function () {
 	if ( mw.config.get( 'wgEnableWikiaBarExt' ) ) {
 		mw.config.get( 'WikiaBar' ).hide();
@@ -158,6 +269,11 @@ ve.ui.WikiaFocusWidget.prototype.hideDistractions = function () {
 		.addClass( 've-hidden-ad' );
 };
 
+/**
+ * Show all of the previously hidden elements
+ *
+ * @method
+ */
 ve.ui.WikiaFocusWidget.prototype.showDistractions = function () {
 	if ( this.showWikiaBar ) {
 		mw.config.get( 'WikiaBar' ).show();

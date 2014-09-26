@@ -274,7 +274,7 @@ class WikiaPoll {
 	 * Purges memcache entry and articles having current poll transcluded
 	 */
 	public function purge() {
-		global $wgMemc;
+		global $wgMemc, $wgCityId;
 		wfProfileIn(__METHOD__);
 
 		// clear data cache
@@ -287,18 +287,11 @@ class WikiaPoll {
 			$article->doPurge();
 
 			// purge articles embedding this poll
-			if ( TaskRunner::isModern('HTMLCacheUpdate') ) {
-				global $wgCityId;
-
-				$task = ( new \Wikia\Tasks\Tasks\HTMLCacheUpdateTask() )
-					->wikiId( $wgCityId )
-					->title( $article->getTitle() );
-				$task->call( 'purge', 'templatelinks' );
-				$task->queue();
-			} else {
-				$updateJob = new HTMLCacheUpdate($article->getTitle(), 'templatelinks');
-				$updateJob->doUpdate();
-			}
+			$task = ( new \Wikia\Tasks\Tasks\HTMLCacheUpdateTask() )
+				->wikiId( $wgCityId )
+				->title( $article->getTitle() );
+			$task->call( 'purge', 'templatelinks' );
+			$task->queue();
 
 			// apply changes to page_touched fields
 			$dbw = wfGetDB(DB_MASTER);

@@ -20,6 +20,7 @@ define('wikia-interactive-embed-map-code', ['jquery', 'wikia.intMap.utils'], fun
 		templateData = {
 			infoMessage: $.msg('wikia-interactive-maps-embed-map-code-info'),
 			sizeLabel:  $.msg('wikia-interactive-maps-embed-map-code-size-label'),
+			uselang: '?uselang=' + window.wgUserLanguage,
 			sizes: [
 				{
 					size: 'small',
@@ -57,6 +58,7 @@ define('wikia-interactive-embed-map-code', ['jquery', 'wikia.intMap.utils'], fun
 
 			utils.bindEvents(modal, events);
 			modal.show();
+			utils.track(utils.trackerActions.IMPRESSION, 'embed-map-modal-shown', params.mapId);
 		});
 	}
 
@@ -77,5 +79,5 @@ define('wikia-interactive-embed-map-code', ['jquery', 'wikia.intMap.utils'], fun
 
 	return {
 		init: init
-	}
+	};
 });

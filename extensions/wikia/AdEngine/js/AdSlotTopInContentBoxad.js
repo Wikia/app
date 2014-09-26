@@ -3,22 +3,22 @@ define('ext.wikia.adEngine.slot.topInContentBoxad', [
 	'wikia.log',
 	'wikia.window',
 	'wikia.document',
+	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.eventDispatcher'
-], function (log, window, document, eventDispatcher) {
+], function (log, window, document, adContext, eventDispatcher) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.slot.topInContentBoxad',
-		slotName = 'TOP_IN_CONTENT_BOXAD',
+		slotName = 'TOP_INCONTENT_BOXAD',
 		articleHeightMaxDelta = 125,
 		result = null;
 
-	function getComputedStylePropertyValue(el, cssProperty){
-		if(!window.getComputedStyle){
-			if(document.defaultView && document.defaultView.getComputedStyle){
+	function getComputedStylePropertyValue(el, cssProperty) {
+		if (!window.getComputedStyle) {
+			if (document.defaultView && document.defaultView.getComputedStyle) {
 				return document.defaultView.getComputedStyle.getPropertyValue(cssProperty);
 			}
-		}
-		else{
+		} else {
 			return window.getComputedStyle(el).getPropertyValue(cssProperty);
 		}
 	}
@@ -41,7 +41,7 @@ define('ext.wikia.adEngine.slot.topInContentBoxad', [
 			return result;
 		}
 
-		if (!window.wgIsArticle) {
+		if (!adContext.getContext().targeting.pageIsArticle) {
 			log(['doesNotBreakContent result', false, 'Page is not an article'], 'debug', logGroup);
 
 			return false;

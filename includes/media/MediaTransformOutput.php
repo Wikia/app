@@ -45,6 +45,14 @@ abstract class MediaTransformOutput {
 	}
 
 	/**
+	 * Set the URL for thumb object
+	 * @param string $url
+	 */
+	public function setUrl( $url ) {
+		$this->url = $url;
+	}
+
+	/**
 	 * @return string|false The permanent thumbnail storage path
 	 */
 	public function getStoragePath() {
@@ -59,19 +67,25 @@ abstract class MediaTransformOutput {
 		$this->storagePath = $storagePath;
 	}
 
+	/**
+	 * Wikia change start
+	 * @author Garth
+	 */
 	function mediaType() {
-		return 'image';
+		return 'unknown';
 	}
 
-	function renderView( array $options = array() ) {
-		WikiaLogger::instance()->debug( 'Media method '.__METHOD__.' called',
-			array_merge( $options, [ 'url' => $this->url, 'mediaType' => $this->mediaType() ] ) );
-
-		return F::app()->renderView( 'ThumbnailController', $this->mediaType(), [
-			'thumb'   => $this,
-			'options' => $options,
-		] );
+	/**
+	 * For any class that doesn't override renderView, fallback to the old toHtml behavior
+	 * @param array $options
+	 * @return string
+	 */
+	public function renderView( array $options = [] ) {
+		return $this->toHtml( $options );
 	}
+	/**
+	 * Wikia change end
+	 */
 
 	/**
 	 * Fetch HTML for this transform output
@@ -225,6 +239,40 @@ class ThumbnailImage extends MediaTransformOutput {
 	}
 
 	/**
+	 * Wikia change start
+	 * @author Garth
+	 */
+	function mediaType() {
+		return 'image';
+	}
+
+	function renderView( array $options = [] ) {
+		WikiaLogger::instance()->debug( 'Media method '.__METHOD__.' called',
+			array_merge( $options, [
+				'url'       => $this->url,
+				'method'    => __METHOD__,
+				'page'      => $this->page,
+				'mediaType' => $this->mediaType(),
+				'fileType'  => get_class( $this->file )
+			] ) );
+
+		// Make sure to trim the output so that there is no leading whitespace.  The output of this method
+		// may be fed back into code that will be parsed for wikitext and leading whitespace will be
+		// wrap this HTML in <pre> tags.  VID-1819
+		$html = trim( F::app()->renderView( 'ThumbnailController', $this->mediaType(), [
+			'thumb'   => $this,
+			'options' => $options,
+		] ) );
+		// Strip empty space between tags
+		$html = preg_replace( "/>\s+</", "><", $html );
+
+		return $html;
+	}
+	/**
+	 * Wikia change end
+	 */
+
+	/**
 	 * Return HTML <img ... /> tag for the thumbnail, will include
 	 * width and height attributes and a blank alt text (as required).
 	 *
@@ -255,7 +303,13 @@ class ThumbnailImage extends MediaTransformOutput {
 		}
 
 		WikiaLogger::instance()->debug('Media method '.__METHOD__.' called',
-			array_merge( $options, [ 'url' => $this->url, 'method' => __METHOD__ ] ) );
+			array_merge( $options, [
+				'url'       => $this->url,
+				'method'    => __METHOD__,
+				'page'      => $this->page,
+				'mediaType' => $this->mediaType(),
+				'fileType'  => get_class( $this->file )
+			] ) );
 
 		$alt = empty( $options['alt'] ) ? '' : $options['alt'];
 
@@ -340,11 +394,17 @@ class MediaTransformError extends MediaTransformOutput {
 		$this->url = false;
 		$this->path = false;
 	}
-
+	/**
+	 * Wikia change start
+	 * @author Garth
+	 */
 	// Keep the same error functionality as before
-	function renderView ( $options = array() ) {
+	function renderView ( array $options = [] ) {
 		return $this->toHtml( $options );
 	}
+	/**
+	 * Wikia change end
+	 */
 
 	function toHtml( $options = array() ) {
 		return "<div class=\"MediaTransformError\" style=\"" .

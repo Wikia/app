@@ -1,9 +1,10 @@
+// TODO: ADEN-1332-ize after ADEN-1326
 /*global define*/
 define('ext.wikia.adEngine.adConfigLate', [
 	// regular dependencies
 	'wikia.log',
 	'wikia.window',
-	'wikia.abTest',
+	'wikia.instantGlobals',
 	'wikia.geo',
 
 	// adProviders
@@ -18,7 +19,7 @@ define('ext.wikia.adEngine.adConfigLate', [
 	// regular dependencies
 	log,
 	window,
-	abTest,
+	instantGlobals,
 	geo,
 
 	// AdProviders
@@ -40,8 +41,7 @@ define('ext.wikia.adEngine.adConfigLate', [
 			'TOP_BUTTON_WIDE.force': true
 		},
 		ie8 = window.navigator && window.navigator.userAgent && window.navigator.userAgent.match(/MSIE [6-8]\./),
-		sevenOneMediaDisabled = abTest && abTest.inGroup('SEVENONEMEDIA_DR', 'DISABLED'),
-		adProviderRemnant,
+		sevenOneMediaDisabled = instantGlobals.wgSitewideDisableSevenOneMedia,
 
 		dartBtfCountries = {
 			US: true
@@ -53,19 +53,14 @@ define('ext.wikia.adEngine.adConfigLate', [
 			PREFOOTER_RIGHT_BOXAD: true
 		},
 		dartBtfVerticals = {
-			Entertainment: true
+			Entertainment: true,
+			Gaming: true
 		},
 
 		dartBtfEnabled = dartBtfCountries[country] && (
 				window.wgAdDriverUseDartForSlotsBelowTheFold === true ||
-				(window.wgAdDriverUseDartForSlotsBelowTheFold && dartBtfVerticals.hasOwnProperty(window.cscoreCat))
+				(window.wgAdDriverUseDartForSlotsBelowTheFold && dartBtfVerticals[window.cscoreCat])
 			);
-
-	if (window.wgEnableRHonDesktop) {
-		adProviderRemnant = adProviderRemnantGpt;
-	} else {
-		adProviderRemnant = adProviderLiftium;
-	}
 
 	function getProvider(slot) {
 		var slotname = slot[0];
@@ -80,18 +75,11 @@ define('ext.wikia.adEngine.adConfigLate', [
 		}
 
 		if (slot[2] === 'Liftium' || window.wgAdDriverForceLiftiumAd) {
-			if (adProviderRemnant.canHandleSlot(slotname)) {
-				return adProviderRemnant;
+			if (adProviderLiftium.canHandleSlot(slotname)) {
+				return adProviderLiftium;
 			}
 			log('#' + slotname + ' disabled. Forced Liftium, but it can\'t handle it', 7, logGroup);
 			return adProviderNull;
-		}
-
-		if (country === 'AU' || country === 'CA' || country === 'NZ') {
-			if (adProviderEvolve.canHandleSlot(slotname)) {
-				log(['getProvider', slot, 'Evolve'], 'info', logGroup);
-				return adProviderEvolve;
-			}
 		}
 
 		// First ask SevenOne Media
@@ -102,8 +90,8 @@ define('ext.wikia.adEngine.adConfigLate', [
 					return adProviderNull;
 				}
 
-				if (sevenOneMediaDisabled) {
-					log('SevenOneMedia disabled by A/B test. Using Null provider instead', 'warn', logGroup);
+				if (instantGlobals.wgSitewideDisableSevenOneMedia) {
+					log('SevenOneMedia disabled by DR. Using Null provider instead', 'warn', logGroup);
 					return adProviderNull;
 				}
 
@@ -112,6 +100,13 @@ define('ext.wikia.adEngine.adConfigLate', [
 
 			if (!liftiumSlotsToShowWithSevenOneMedia[slot[0]]) {
 				return adProviderNull;
+			}
+		}
+
+		if (country === 'AU' || country === 'CA' || country === 'NZ') {
+			if (adProviderEvolve.canHandleSlot(slotname)) {
+				log(['getProvider', slot, 'Evolve'], 'info', logGroup);
+				return adProviderEvolve;
 			}
 		}
 
@@ -130,8 +125,12 @@ define('ext.wikia.adEngine.adConfigLate', [
 			}
 		}
 
-		if (adProviderRemnant.canHandleSlot(slotname)) {
-			return adProviderRemnant;
+		if (window.wgAdDriverUseRemnantGpt && adProviderRemnantGpt.canHandleSlot(slotname)) {
+			return adProviderRemnantGpt;
+		}
+
+		if (adProviderLiftium.canHandleSlot(slotname) && !instantGlobals.wgSitewideDisableLiftium) {
+			return adProviderLiftium;
 		}
 
 		return adProviderNull;

@@ -2,17 +2,18 @@
 *  Ajax Autocomplete for jQuery, version 1.0.6
 *  (c) 2009 Tomas Kirda
 *
+*  Changed by Wikia - not compatible anymore
+*
 *  Ajax Autocomplete for jQuery is freely distributable under the terms of an MIT-style license.
 *  For details, see the web site: http://www.devbridge.com/projects/autocomplete/jquery/
 *
 *  Last Review: 4/24/2009
 */
-
 (function($) {
 
   $.fn.autocomplete = function(options) {
     return this.each(function() {
-      return new Autocomplete(this, options);
+        $(this).data('autocomplete', new Autocomplete(this, options));
     });
   };
 
@@ -45,6 +46,7 @@
       minChars: 1,
       maxHeight: 300,
       deferRequestBy: 0,
+      disabled: false,
       width: 0,
       highlight: true,
       params: {},
@@ -100,7 +102,7 @@
 
       this.mainContainerId = 'AutocompleteContainter_' + uid;
 
-      $('<div id="' + this.mainContainerId + '" style="position:absolute;"><div class="autocomplete-w1"><div class="autocomplete" id="' + autocompleteElId + '" style="display:none; width:' + this.options.width + ';"></div></div></div>').appendTo(this.options.appendTo);
+      $('<div id="' + this.mainContainerId + '"class="autocomplete-container" style="position:absolute;"><div class="autocomplete-w1"><div class="autocomplete" id="' + autocompleteElId + '" style="display:none; width:' + this.options.width + ';"></div></div></div>').appendTo(this.options.appendTo);
 
       this.container = $(this.options.appendTo).find('#' + autocompleteElId);
       this.fixPosition();
@@ -114,6 +116,15 @@
       this.el.focus(function() { me.fixPosition(); });
 
       this.container.css({ maxHeight: this.options.maxHeight + 'px' });
+    },
+
+    disable: function() {
+        this.options.disabled = true;
+        this.hide();
+    },
+
+    enable: function() {
+        this.options.disabled = false;
     },
 
     fixPosition: function() {
@@ -179,6 +190,10 @@
     },
 
     onKeyUp: function(e) {
+        if (this.options.disabled) {
+            return;
+        }
+
       switch (e.keyCode) {
         case 38: //Event.KEY_UP:
         case 40: //Event.KEY_DOWN:
@@ -245,10 +260,10 @@
       } else if (!this.isBadQuery(q)) {
         me = this;
 
-		/* Wikia change - allow custom param name */
-		//me.options.params.query = q;
-		var requestParams = me.options.params;
-		requestParams[me.options.queryParamName] = q;
+        /* Wikia change - allow custom param name */
+        //me.options.params.query = q;
+        var requestParams = me.options.params;
+        requestParams[me.options.queryParamName] = q;
         $.get(this.serviceUrl, requestParams, function(txt) { me.processResponse(txt); }, 'text');
       }
     },
@@ -266,8 +281,8 @@
       this.selectedIndex = -1;
       this.container.hide();
 
-	  // Wikia: fire event when suggestions are shown
-	  this.el.trigger('suggestHide');
+      // Wikia: fire event when suggestions are shown
+      this.el.trigger('suggestHide');
     },
 
     suggest: function() {
@@ -282,13 +297,13 @@
       f = this.options.fnFormatResult;
       v = this.getQuery(this.currentValue);
       this.container.hide().empty();
-      
+
       for (var i = 0; i < len; i++) {
-      	// wikia change - start
-      	suggestion = this.suggestions[i];
+          // wikia change - start
+          suggestion = this.suggestions[i];
         div = $((me.selectedIndex === i ? '<div class="' + this.options.selectedClass + '"' : '<div')
-        	+ ' title="' + suggestion + '">' + f(suggestion, this.data[i], v)
-        	+ '</div>');
+            + ' title="' + suggestion + '">' + f(suggestion, this.data[i], v)
+            + '</div>');
         // wikia change - end
         div.mouseover((function(xi) { return function() { me.activate(xi); }; })(i));
         // wikia change - start
@@ -296,12 +311,12 @@
         // wikia change - end
         this.container.append(div);
       }
-      
+
       this.enabled = true;
       this.container.show();
 
-	  // Wikia: fire event when suggestions are shown
-	  this.el.trigger('suggestShow');
+      // Wikia: fire event when suggestions are shown
+      this.el.trigger('suggestShow');
     },
 
     processResponse: function(text) {
@@ -310,10 +325,10 @@
         response = eval('(' + text + ')');
       } catch (err) { return; }
 
-	  /* Wikia change - allow function to preprocess result data into a format this plugin understands*/
-	  if(this.options.fnPreprocessResults != null){
-		response = this.options.fnPreprocessResults(response);
-	  }
+      /* Wikia change - allow function to preprocess result data into a format this plugin understands*/
+      if(this.options.fnPreprocessResults != null){
+        response = this.options.fnPreprocessResults(response);
+      }
 
       if (!$.isArray(response.data)) { response.data = []; }
       this.suggestions = response.suggestions;
@@ -355,7 +370,7 @@
         this.ignoreValueChange = true;
         // wikia change - start
         if (this.onSelect(i, e) !== false) {
-	        this.hide();
+            this.hide();
         }
         // wikia change - end
       }

@@ -4,6 +4,7 @@
 	 * Videos Module test
 	 *
 	 * @category Wikia
+	 * @group UsingDB
 	 */
 	class VideosModuleTest extends WikiaBaseTest {
 
@@ -40,6 +41,12 @@
 
 			$module = new VideosModule( self::USER_REGION );
 
+			// Mock the blacklist so that it doesn't depend on changes to the wgVideosModuleBlackList global
+			$reflection = new ReflectionClass( $module );
+			$blackListProp = $reflection->getProperty( 'blacklist' );
+			$blackListProp->setAccessible( true );
+			$blackListProp->setValue( $module, [ self::$videoBlacklist[0] ] );
+
 			$blackListedVideo = [ 'title' => self::$videoBlacklist[0] ];
 			$this->assertTrue( $module->isBlackListed( $blackListedVideo ) );
 
@@ -64,6 +71,31 @@
 
 			// Test that a video without any regional restrictions comes back as not restricted
 			$this->assertFalse( $module->isRegionallyRestricted( $videoWithoutRestrictions ) );
+		}
+
+		/**
+		 * Test that category names used by videos module are transformed properly
+		 * into database names (underscores instead of spaces)
+		 */
+		public function testTransformCatNames() {
+			$module = new VideosModule( self::USER_REGION );
+
+			$reflection = new ReflectionClass( $module );
+			$tranformCatNames = $reflection->getMethod( 'transformCatNames' );
+			$tranformCatNames->setAccessible( true );
+
+			$categoryNames = [ "The Hobbit", "The Wiggles Movie" ];
+			$databaseNames = [ "The_Hobbit", "The_Wiggles_Movie" ];
+
+			// Test that names without underscores are transformed properly
+			$result = $tranformCatNames->invoke( $module, $categoryNames );
+			$this->assertEquals( $databaseNames[0], $result[0] );
+			$this->assertEquals( $databaseNames[1], $result[1] );
+
+			// Test that names with underscores are not affected
+			$result = $tranformCatNames->invoke( $module, $databaseNames );
+			$this->assertEquals( $databaseNames[0], $result[0] );
+			$this->assertEquals( $databaseNames[1], $result[1] );
 		}
 
 	}

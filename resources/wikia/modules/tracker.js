@@ -269,6 +269,12 @@
 			browserEvent = data.browserEvent || browserEvent;
 			eventName = data.eventName || eventName;
 			trackingMethod = data.trackingMethod || trackingMethod;
+
+			// AN-672: temporarily sending all data to internal warehouse
+			if (trackingMethod === 'ga') {
+				trackingMethod = 'both';
+			}
+
 			tracking[ trackingMethod ] = true;
 
 			if ( tracking.both ) {

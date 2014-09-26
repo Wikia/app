@@ -32,17 +32,6 @@ class DeferredUpdates {
 	}
 
 	/**
-	 * HTMLCacheUpdates are the most common deferred update people use. This
-	 * is a shortcut method for that.
-	 * @see HTMLCacheUpdate::__construct()
-	 * @param $title
-	 * @param $table
-	 */
-	public static function addHTMLCacheUpdate( $title, $table ) {
-		self::addUpdate( new HTMLCacheUpdate( $title, $table ) );
-	}
-
-	/**
 	 * Do any deferred updates and clear the list
 	 *
 	 * @param $commit String: set to 'commit' to commit after every update to

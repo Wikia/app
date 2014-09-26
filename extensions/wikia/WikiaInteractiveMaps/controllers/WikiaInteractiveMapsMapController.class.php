@@ -70,6 +70,9 @@ class WikiaInteractiveMapsMapController extends WikiaInteractiveMapsBaseControll
 			if ( true === $results[ 'success' ] ) {
 				$this->setData( 'tileSetId', $results[ 'content' ]->id );
 				$results = $this->createMapFromTilesetId();
+			} elseif ( isset( $results['content']->code ) 
+				&&  $results['content']->code === WikiaMaps::DB_DUPLICATE_ENTRY ) {
+				$results['content']->message = wfMessage( 'wikia-interactive-maps-tile-set-exists-error' )->text();
 			}
 		}
 
@@ -106,8 +109,8 @@ class WikiaInteractiveMapsMapController extends WikiaInteractiveMapsBaseControll
 			throw new InvalidParameterApiException( 'title' );
 		}
 
-		if ( !$this->wg->User->isLoggedIn() ) {
-			throw new PermissionsException( 'interactive maps' );
+		if ( !$this->isUserAllowed() ) {
+			throw new WikiaInteractiveMapsPermissionException();
 		}
 	}
 
@@ -130,10 +133,14 @@ class WikiaInteractiveMapsMapController extends WikiaInteractiveMapsBaseControll
 	 * @return Array
 	 */
 	private function createMapFromTilesetId() {
+		$cityId = $this->getData( 'cityId' );
+		$wiki = WikiFactory::getWikiByID( $cityId );
 		$response = $this->mapsModel->saveMap( [
 			'title' => $this->getData( 'title' ),
 			'tile_set_id' => $this->getData( 'tileSetId' ),
-			'city_id' => $this->getData( 'cityId' ),
+			'city_id' => $cityId,
+			'city_title' => $wiki->city_title,
+			'city_url' => $wiki->city_url,
 			'created_by' => $this->getData( 'creatorName' ),
 		] );
 
@@ -149,10 +156,65 @@ class WikiaInteractiveMapsMapController extends WikiaInteractiveMapsBaseControll
 			WikiaMapsLogger::addLogEntry(
 				WikiaMapsLogger::ACTION_CREATE_MAP,
 				$mapId,
-				$this->getData( 'title' )
+				$this->getData( 'title' ),
+				[
+					$this->wg->User->getName(),
+				]
 			);
 		}
 
 		return $response;
 	}
+
+	/**
+	 * Ajax method for un/deleting a map from IntMaps API
+	 */
+	public function updateMapDeletionStatus() {
+		$mapId = $this->request->getInt( 'mapId' );
+		$deleted = $this->request->getInt( 'deleted' );
+
+		if ( !in_array( $deleted, [ WikiaMaps::MAP_DELETED, WikiaMaps::MAP_NOT_DELETED ] ) ) {
+			$deleted = WikiaMaps::MAP_DELETED;
+		}
+
+		$result = false;
+
+		if ( !$this->isUserAllowed() ) {
+			throw new WikiaInteractiveMapsPermissionException();
+		}
+
+		if ( $mapId ) {
+			$result = $this->getModel()->updateMapDeletionStatus( $mapId, $deleted )[ 'success' ];
+		}
+
+		if ( $result ) {
+			$action = $deleted === WikiaMaps::MAP_DELETED
+				? WikiaMapsLogger::ACTION_DELETE_MAP
+				: WikiaMapsLogger::ACTION_UNDELETE_MAP;
+
+			WikiaMapsLogger::addLogEntry(
+				$action,
+				$mapId,
+				$mapId,
+				[
+					$this->wg->User->getName(),
+				]
+			);
+
+			NotificationsController::addConfirmation(
+				$deleted ?
+					wfMessage( 'wikia-interactive-maps-delete-map-success' )->text() :
+					wfMessage( 'wikia-interactive-maps-undelete-map-success' )->text()
+			);
+
+			$redirectUrl = WikiaInteractiveMapsController::getSpecialUrl();
+
+			if ( $deleted === WikiaMaps::MAP_NOT_DELETED ) {
+				$redirectUrl .= '/' . $mapId;
+			}
+
+			$this->response->setVal( 'redirectUrl', $redirectUrl );
+		}
+	}
+
 }

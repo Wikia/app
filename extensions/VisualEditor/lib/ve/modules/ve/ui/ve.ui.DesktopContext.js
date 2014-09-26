@@ -24,7 +24,6 @@ ve.ui.DesktopContext = function VeUiDesktopContext( surface, config ) {
 	this.$window = this.$( this.getElementWindow() );
 	this.floatThreshold = 10;
 	this.floating = false;
-	this.focusedNodeContentsHeight = null;
 	this.visible = false;
 	this.showing = false;
 	this.hiding = false;
@@ -473,7 +472,6 @@ ve.ui.DesktopContext.prototype.show = function ( transition ) {
 
 		if ( focusedNode ) {
 			this.handleFloat();
-			this.focusedNodeContentsHeight = focusedNode.getContentsHeight();
 		}
 
 		this.visible = true;
@@ -549,21 +547,15 @@ ve.ui.DesktopContext.prototype.handleFloat = function () {
  * @return {boolean} Should the context menu be floated
  */
 ve.ui.DesktopContext.prototype.shouldFloat = function () {
-	var toolbar = this.surface.getTarget().getToolbar(),
-		toolbarHeight = toolbar.$element.height(),
+	var toolbarHeight = this.surface.getTarget().getToolbar().$element.height(),
 		focusedNode = this.surface.getView().getFocusedNode(),
-		focusedNodeOffset = focusedNode.$element.offset(),
-		windowScrollTop = this.$window.scrollTop(),
-		focusedNodeBounds = {
-			'top': focusedNodeOffset.top,
-			'bottom': this.focusedNodeContentsHeight + focusedNodeOffset.top
-		},
-		contextBounds = {
-			'top': windowScrollTop + toolbarHeight + this.floatThreshold,
-			'bottom': windowScrollTop + toolbarHeight + this.floatThreshold + this.popup.getPopup().height()
-		};
+		surfaceOffsetTop = this.surface.$element.offset().top,
+		contextTop = this.$window.scrollTop() + toolbarHeight + this.floatThreshold - surfaceOffsetTop,
+		contextBottom = contextTop + this.popup.getPopup().height(),
+		focusedNodeTop = focusedNode.getRelativeOffset().top,
+		focusedNodeBottom = focusedNodeTop + focusedNode.getDimensions().height;
 
-	return ( focusedNodeBounds.top <= contextBounds.top && focusedNodeBounds.bottom >= contextBounds.bottom );
+	return ( focusedNodeTop <= contextTop && focusedNodeBottom >= contextBottom );
 };
 
 /*

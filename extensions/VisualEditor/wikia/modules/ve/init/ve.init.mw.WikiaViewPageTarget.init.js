@@ -29,6 +29,15 @@
 		},
 		spinnerTimeoutId = null;
 
+	function getOptimizelyExperimentId( experimentName ) {
+		if ( experimentName === 'VE Source Entry Point Anon' ) {
+			return mw.config.get( 'wgDevelEnvironment' ) ? 1673650053 : 1783530197;
+		} else if ( experimentName === 'VE Source Entry Point User' ) {
+			return mw.config.get( 'wgDevelEnvironment' ) ? 1673650053 : 1779071141;
+		}
+		return null;
+	}
+
 	function initSpinner() {
 		var $spinner = $( '<div>' )
 				.addClass( 've-spinner visible' )
@@ -82,12 +91,24 @@
 	function getTarget() {
 		var loadTargetDeferred;
 
+		/* Optimizely */
+		window.optimizely = window.optimizely || [];
+
+		if ( mw.user.anonymous() ) {
+			window.optimizely.push( ['activate', getOptimizelyExperimentId( 'VE Source Entry Point Anon' )] );
+		} else {
+			window.optimizely.push( ['activate', getOptimizelyExperimentId( 'VE Source Entry Point User' )] );
+		}
+
 		showSpinner();
 
 		Wikia.Tracker.track( trackerConfig, {
 			'action': Wikia.Tracker.ACTIONS.IMPRESSION,
 			'label': 'edit-page'
 		} );
+		// This can't be tracked with its friends in ve.track.js because that file has not been loaded yet
+		window.gaTrackPageview( '/fake-visual-editor/edit-page/impression', 've' );
+
 		if ( !getTargetDeferred ) {
 			getTargetDeferred = $.Deferred();
 			loadTargetDeferred = $.Deferred();
@@ -317,9 +338,9 @@
 			$veEdit = $( '#ca-ve-edit' );
 		// This class may still be used by CSS
 		$( 'html' ).addClass( 've-not-available' );
-		// If VE is the main edit link, clone the alternate edit attributes into it
+		// If VE is the main edit link, clone the href into it
 		if ( vePreferred && $veEdit.length > 0 ) {
-			$veEdit.attr( { href: $edit.attr( 'href' ), accesskey: $edit.attr( 'accesskey' ) } );
+			$veEdit.attr( 'href', $edit.attr( 'href' ) );
 			$edit.parent().remove();
 		} else {
 			$veEdit.parent().remove();

@@ -4065,8 +4065,6 @@ Wikia
 ** Proxy, wegen Vandalismus einzelner Benutzer längerfristig gesperrt',
 	'irc' => 'Echtzeit-Hilfe',
 	'its_easy' => '...einfach und kostenlos',
-	'jwplayer-ad-message' => 'Dein Video wird in XX Sekunden starten',
-	'jwplayer-agegate-message' => 'Du erfüllst nicht die Altersanforderungen für diesen Inhalt',
 	'landingpage-buttons-about-make-the-move-link' => 'http://de.wikia.com/wiki/Neuer_Look_-_%C3%9Cbergangshilfe',
 	'landingpage-buttons-about-make-the-move' => 'Tipps zum Umbau',
 	'landingpage-buttons-about-wikia-link' => 'http://de.wikia.com/wiki/Was_ist_Wikia',
@@ -4853,12 +4851,6 @@ Ersetzte diesen Text durch deinen Artikel!',
 	'oasis-confirmation-page-undeleted' => 'Diese Seite wurde wiederhergestellt.',
 	'oasis-confirmation-user-logout' => 'Du wurdest abgemeldet.',
 	'oasis-content-picture-added-by' => 'Hinzugefügt von $1',
-	'oasis-corporatefooter-hub-Entertainment-link' => 'http://de.wikia.com/wiki/Entertainment',
-	'oasis-corporatefooter-hub-Food_and_Drink-link' => 'http://de.wikia.com/Lifestyle',
-	'oasis-corporatefooter-hub-Gaming-link' => 'http://de.wikia.com/wiki/Videospiele',
-	'oasis-corporatefooter-hub-Lifestyle-link' => 'http://de.wikia.com/Lifestyle',
-	'oasis-corporatefooter-hub-Video_Games-link' => 'http://de.wikia.com/Videospiele',
-	'oasis-corporatefooter-navigation-header' => 'Wikia Inc-Navigation',
 	'oasis-create-page' => 'Erstelle eine neue Seite in diesem Wiki',
 	'oasis-edit-my-tools-about' => 'Über den Werkzeugkasten',
 	'oasis-edit-my-tools-addtool' => 'Werkzeug hinzufügen',
@@ -5941,21 +5933,8 @@ de.wikia.com',
 ***w:c:de.community:Hilfe:Übersicht|Hilfeseiten
 ***w:c:de.community:Spezial:Forum|Community-Forum
 ***w:c:de|Mehr...',
-	'shared-Monobook-footer-wikia-links' => '* [http://de.wikia.com/Datenschutz Datenschutz]
-* [http://de.wikia.com/wiki/%C3%9Cber_Wikia Über Wikia]
-* [http://de.wikia.com/Nutzungsbedingungen Nutzungsbedingungen]<span style="color: #ff0000"> (Aktualisiert)</span>
-* [[Special:Contact|Kontakt]]
-* [http://www.wikia.com/wiki/Wikia:Advertising_on_Wikia Auf Wikia werben]',
 	'shared-News_box' => '<!-- &nbsp; -->',
-	'shared-Oasis-footer-wikia-links' => '*http://de.wikia.com/wiki/%C3%9Cber_Wikia|Über Wikia
-*http://de.community.wikia.com|Community-Wiki
-*http://de.wikia.com/Stellen|Stellenangebote
-*http://www.wikia.com/Advertising|Auf Wikia werben
-*http://api.wikia.com/|API
-*Special:Contact|Kontakt
-*http://de.wikia.com/Nutzungsbedingungen|Nutzungsbedingungen
-*http://de.wikia.com/Datenschutz|Datenschutz
-*_LICENSE_',
+	'shared-News_box' => '<!-- &nbsp; -->',
 	'shared-globalnavigation' => '#redirect [[Mediawiki:Shared-Globalnavigation/de]]',
 	'shared-problemreport' => 'Problem melden',
 	'shared_help_edit_info' => 'Dieser Artikel wird direkt aus dem Artikel [[w:c:hilfe:Hilfe:$1|Hilfe:$1]] der [[w:c:hilfe|Wikia-Hilfe]] eingebunden. Siehe [[Hilfe:Zentrale Hilfe]] für mehr Informationen.
@@ -12541,21 +12520,7 @@ ___________________________________________
 ***w:c:micronaciones|Micronaciones
 ***w:c:es.gorillaz|Gorillaz
 ***w:c:arte|Arte',
-	'shared-Monobook-footer-wikia-links' => '* [http://es.wikia.com/Pol%C3%ADtica_de_Privacidad Política de Privacidad]
-* [http://es.wikia.com/Sobre_nosotros Sobre Wikia]
-* [http://es.wikia.com/T%C3%A9rminos_de_Uso Términos de Uso]
-* [[Special:Contact|Contactar]]
-* [http://mediakit.wikia.com/wiki/Contact Publicidad]',
 	'shared-News_box' => 'Visita nuestra [[w:c:comunidad|Comunidad Central]]<br />',
-	'shared-Oasis-footer-wikia-links' => '*http://es.wikia.com/Sobre_nosotros|<span>Sobre Wikia</span>
-*http://comunidad.wikia.com|<span>Comunidad Central</span>
-*http://www.wikia.com/Hiring|Contrataciones
-*http://mediakit.wikia.com/wiki/Media_Kit_Wiki|Publicidad
-*http://api.wikia.com/|<span>API</span>
-*Special:Contact|Contacto
-*http://es.wikia.com/T%C3%A9rminos_de_Uso|Términos de Uso
-*http://es.wikia.com/Pol%C3%ADtica_de_Privacidad|Política de Privacidad
-*http://es.wikia.com/Licencia|CC-BY-SA',
 	'shared-problemreport-url' => 'http://comunidad.wikia.com/wiki/Project:Reportar_un_problema',
 	'shared-problemreport' => 'Reportar un problema',
 	'shared_help_edit_info' => 'El texto de ayuda dentro de la caja proviene de [[w:c:ayuda:Ayuda:$1|Ayuda:$1]] de Ayuda de Wikia. Puedes ver [[Help:Shared Help]] para más información.
@@ -16539,10 +16504,6 @@ Essayez en utilisant le préfixe \'\'all:\'\' pour rechercher dans tout le conte
 	'oasis-add-photo' => 'Ajouter',
 	'oasis-comments-user-prompt' => 'Connecté(e) en tant que $1',
 	'oasis-community-social-googleplus-link' => 'https://plus.google.com/u/0/102929967599324609587/posts',
-	'oasis-corporatefooter-hub-Entertainment-link' => 'http://fr.wikia.com/Divertissement',
-	'oasis-corporatefooter-hub-Gaming-link' => 'http://fr.wikia.com/Jeux_vid%C3%A9o',
-	'oasis-corporatefooter-hub-Lifestyle-link' => 'http://fr.wikia.com/Mode_de_vie',
-	'oasis-corporatefooter-hub-Video_Games-link' => 'http://fr.wikia.com/Jeux_vid%C3%A9o',
 	'oasis-global-nav-create-wiki-alt' => 'Commencer un wiki',
 	'oasis-latest-photos-empty' => 'Chacun peut aider à rendre ce wiki formidable<br /><span>Cliquez ici pour ajouter une image.</span>',
 	'oasis-latest-photos-header' => '<em>{{FORMATNUM:$1}}</em><span class="$2">{{PLURAL:$1|image sur ce wiki|images sur ce wiki}}</span>',
@@ -16854,21 +16815,7 @@ pouvez ignorer ce message et continuer à utiliser votre ancien mot de passe.<br
 **w:c:fr:Mode de vie|Mode de vie
 ***w:c:routes|Routes de France
 ***w:c:fr.encyclopedie|Encyclopédie',
-	'shared-Monobook-footer-wikia-links' => '* [http://www.wikia.com/wiki/Wikia:Privacy_Policy Confidentialité]
-* [http://fr.wikia.com/À_propos À propos de Wikia]
-* [http://fr.wikia.com/Conditions_d\'utilisation Conditions d\'utilisation]<span style="color: #ff0000"> (Mises à jour)</span>
-* [[Special:Contact|Nous contacter]]
-* [http://www.wikia.com/wiki/Wikia:Advertising_on_Wikia Publicité]',
 	'shared-News_box' => 'Visitez le [[w:c:communaute|Wiki des communautés]] pour de l’aide et les dernières nouvelles',
-	'shared-Oasis-footer-wikia-links' => '*http://fr.wikia.com/À_propos|<span>À propos</span>
-*http://communaute.wikia.com|<span>Wiki des communautés</span>
-*http://www.wikia.com/Careers|Emplois
-*http://www.wikia.com/Advertising|Publicité
-*http://api.wikia.com/|<span>API</span>
-*Special:Contact|Nous contacter
-*http://fr.wikia.com/Conditions_d\'utilisation|Conditions d’utilisation
-*http://www.wikia.com/Privacy_Policy|Politique de confidentialité
-*_LICENSE_',
 	'shared-problemreport' => 'Signaler un problème',
 	'shared-repo-from' => 'de : $1',
 	'shared_help_edit_info' => 'Le texte ci-dessous se trouve sur la page [[w:c:communaute:Aide:$1|Aide:$1]] sur le wiki $2. Voyez [[w:c:communaute:Aide:Aide partagée|Aide:Aide partagée]] pour plus d\'informations.
@@ -19658,19 +19605,6 @@ Vedi la [[Special:ProtectedPages|lista delle pagine protette]] per l\'elenco del
 ***w:c:it.lego:Lego_Wiki|Lego
 ***w:c:it.encicprotezionecivile:Enciclopedia_della_Protezione_Civile_Wiki|Protezione Civile
 ***w:c:it|Altro...',
-	'shared-Monobook-footer-wikia-links' => '* [http://www.wikia.com/wiki/Wikia:Privacy_Policy Privacy]
-* [http://www.wikia.com/wiki/Wikia:About About Wikia]
-* [http://it.community.wikia.com/wiki/Wiki_della_Community:Termini_di_utilizzo Termini di utilizzo]<span style="color: #ff0000"> (Aggiornati)</span>
-* [[Special:Contact|Contact]]
-* [http://www.wikia.com/wiki/Wikia:Advertising_on_Wikia Advertise]',
-	'shared-Oasis-footer-wikia-links' => '* http://www.wikia.com/About_Us |Su di noi
-* http://www.wikia.com/Hiring |Lavoro
-* http://www.wikia.com/Advertising |Pubblicità
-* Special:Contact|Contattaci
-* http://it.community.wikia.com/wiki/Wiki_della_Community:Termini_di_utilizzo |Termini di utilizzo
-* http://www.wikia.com/Privacy_Policy |Privacy
-* http://it.community.wikia.com/wiki/Wiki_della_Community:Licenza |Licenza
-* http://www.wikia.com/Special:CreateWiki |Crea una wiki',
 	'shared_help_edit_info' => 'La versione originale di questa pagina si trova in [[w:c:it.community:aiuto:$1|Aiuto:$1]] nella Wiki della Community. Vedi [[Aiuto:Aiuto condiviso]] per maggiori informazioni.
 
 Per applicare qualsiasi modifica a \'\'\'tutte\'\'\' le wiki, si deve modificare la versione originale nella Wiki della Community. [[w:c:it.community:Discussioni_aiuto:$1|Suggerisci le modifiche qui]].
@@ -23795,15 +23729,6 @@ $1
 	'sf-link-popup' => '이 글 공유하기',
 	'sf-link-tooltip' => '당신의 지인들과 이 글을 공유하세요.',
 	'sf-link' => '공유',
-	'shared-Oasis-footer-wikia-links' => '*http://www.wikia.com/About_Us|<span>회사 소개</span>
-*http://ko.wikia.com|<span>중앙 커뮤니티</span>
-*http://www.wikia.com/Hiring|채용정보
-*http://www.wikia.com/Advertising|광고 문의
-*http://api.wikia.com/|<span>API</span>
-*Special:Contact|문의하기
-*http://www.wikia.com/Terms_of_Use|이용약관
-*http://www.wikia.com/Privacy_Policy|개인정보보호정책
-*_LICENSE_',
 	'shared-problemreport' => '오류 보고하기',
 	'shared_help_edit_info' => '상자 안에 있는 도움말은 위키아 도움말에 있는 [[w:c:ko.help:Help:$1|Help:$1]] 문서를 그대로 보여주고 있습니다. 이에 대해서는 [[Help:Shared Help]] 문서를 참고하십시오.
 
@@ -26918,10 +26843,6 @@ ___________________________________________
 	'oasis-add-photo-to-wiki' => 'Dodaj obraz',
 	'oasis-comments-user-prompt' => 'Zalogowano jako $1',
 	'oasis-content-picture-added-by' => 'Dodany przez $1',
-	'oasis-corporatefooter-hub-Entertainment-link' => 'http://pl.wikia.com/Rozrywka',
-	'oasis-corporatefooter-hub-Gaming-link' => 'http://pl.wikia.com/Gry',
-	'oasis-corporatefooter-hub-Lifestyle-link' => 'http://pl.wikia.com/Lifestyle',
-	'oasis-corporatefooter-hub-Video_Games-link' => 'http://pl.wikia.com/Gry',
 	'oasis-global-nav-create-wiki-alt' => 'Utwórz wiki',
 	'oasis-latest-photos-empty' => 'Każdy może sprawić, aby ta wiki wyglądała niesamowicie.<br /><span>Dodaj obraz!</span>',
 	'oasis-latest-photos-header' => '<em>{{FORMATNUM:$1}}</em><span class="$2">{{PLURAL:$1|obraz|obrazy|obrazów}} na tej wiki</span>',
@@ -27227,21 +27148,7 @@ Ostatni wpis z rejestru jest pokazany poniżej.',
 ***w:c:pl.monsterhigh|Monster High
 ***w:c:pl.bionicle|Bionicle
 ***w:c:pl.vocaloid|Vocaloid',
-	'shared-Monobook-footer-wikia-links' => '* [http://pl.wikia.com/Polityka_Prywatności Polityka Prywatności]
-* [http://pl.wikia.com/O_nas O Wikii]
-* [http://pl.wikia.com/Zasady_Użytkowania Zasady Użytkowania]<span style="color: #ff0000"> (Zaktualizowane)</span>
-* [[Special:Contact|Kontakt]]
-* [http://www.wikia.com/Advertising Reklama]',
 	'shared-News_box' => 'Zajrzyj na [[w:c:spolecznosc:Specjalna:Forum|forum]].',
-	'shared-Oasis-footer-wikia-links' => '*http://pl.wikia.com/O_nas|O nas
-*http://www.spolecznosc.wikia.com|Centrum Społeczności
-*http://www.wikia.com/Careers|Kariera
-*http://www.wikia.com/Advertising|Reklama
-*http://api.wikia.com/|API
-*Special:Contact|Kontakt
-*http://pl.wikia.com/Zasady_U%C5%BCytkowania|Zasady Użytkowania
-*http://pl.wikia.com/Polityka_Prywatności|Polityka Prywatności
-*_LICENSE_',
 	'shared_help_edit_info' => 'Zawartość tej strony lub jej część może znajdować się w [[w:c:spolecznosc:Help:$1|Pomoc:$1]] w $2.
 Odwiedź artykuł [[Pomoc:Wspólna pomoc]] aby dowiedzieć się więcej.
 
@@ -28109,9 +28016,6 @@ __NOEDITSECTION__',
 	'wikiahome-stats-new-communities' => 'Społeczności dzisiaj',
 	'wikiahome-stats-totalpages' => 'Stron łącznie',
 	'wikiahome-stats-visitors' => 'Miesięcznych wizyt',
-	'wikiahome-visualisation-remix-button' => 'Miksuj',
-	'wikiahome-visualisation-remix-mixitup' => 'Miksuj wiki!',
-	'wikiahome-visualisation-remix-mixituptext' => 'Tysiące wiki na wyciągnięcie ręki. Kliknij, aby zobaczyć więcej.',
 	'wikiahubs-404-message' => 'Nie udało się odnaleźć strony. [[$1|Kliknij tutaj]] aby wrócić do strony portalu.',
 	'wikiahubs-404-title' => 'Nie udało się odnaleźć poszukiwanej strony.',
 	'wikiahubs-button-cancel' => 'Anuluj',
@@ -29480,20 +29384,6 @@ ___________________________________________
 ***w:c:ru.community:Список википроектов на русском языке|Список ru-википроектов
 ***w:c:ru.community:Викия: Запросы на статус администратора/бюрократа‎|Запрос статуса администратора
 ***w:c:ru.community|Ещё...',
-	'shared-Monobook-footer-wikia-links' => '* [http://www.wikia.com/wiki/Wikia:Privacy_Policy Privacy]
-* [http://www.wikia.com/wiki/Wikia:About About Wikia]
-* [http://ru.community.wikia.com/wiki/%D0%92%D0%B8%D0%BA%D0%B8%D1%8F:%D0%A3%D1%81%D0%BB%D0%BE%D0%B2%D0%B8%D1%8F_%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F Условия использования]
-* [[Special:Contact|Contact]]
-* [http://www.wikia.com/wiki/Wikia:Advertising_on_Wikia Advertise]',
-	'shared-Oasis-footer-wikia-links' => '*http://www.wikia.com/About_Us|<span>О Викия</span>
-*http://www.community.wikia.com|<span>Центральная Вики</span>
-*http://www.wikia.com/Careers|Карьера
-*http://www.wikia.com/Advertising|Реклама
-http://api.wikia.com/wiki/Wikia_API_Wiki|<span>API</span>
-*Special:Contact|Contact
-*http://ru.community.wikia.com/wiki/%D0%92%D0%B8%D0%BA%D0%B8%D1%8F:%D0%A3%D1%81%D0%BB%D0%BE%D0%B2%D0%B8%D1%8F_%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F|Условия использования
-*http://ru.community.wikia.com/wiki/%D0%92%D0%B8%D0%BA%D0%B8%D1%8F:%D0%9A%D0%BE%D0%BD%D1%84%D0%B8%D0%B4%D0%B5%D0%BD%D1%86%D0%B8%D0%B0%D0%BB%D1%8C%D0%BD%D0%BE%D1%81%D1%82%D1%8C|Конфиденциальность
-*_LICENSE_',
 	'shared-problemreport' => 'Сообщить о проблеме',
 	'shared_help_edit_info' => 'Текст справки из этого окна находится на [[w:c:help:Help:$1|Help:$1]] на Wikia Help. Подробнее смотрите [[Help:Shared Help]].
 
@@ -35003,7 +34893,6 @@ Write the text of your article here!',
 	'oasis-anon-header' => 'A Wikia contributor <small>$1</small>',
 	'oasis-anon-user' => 'A Wikia contributor',
 	'oasis-article-readmore-filter' => '* Sample category',
-	'oasis-corporatefooter-hub-Food_and_Drink-link' => 'http://www.wikia.com/Recipes',
 	'oasis-edit-protected-article' => 'Edit',
 	'oasis-navigation-v2-validation-next' => 'Next',
 	'oasis-page-header-edit-profile' => 'Edit page',
@@ -35493,15 +35382,6 @@ During the move process the user will be globally blocked from editing. See [[Sp
 ***w:c:coffee:Main_Page|Coffee
 ***homepage:Lifestyle|More...',
 	'shared-News_box' => '[http://www.wikia.com/Hiring Wikia is now hiring for several open positions]<br>',
-	'shared-Oasis-footer-wikia-links' => '*http://www.wikia.com/About|<span>About</span>
-*http://www.community.wikia.com|<span>Community Central</span>
-*http://www.wikia.com/Careers|Careers
-*http://www.wikia.com/Advertising|Advertise
-*http://api.wikia.com/|<span>API</span>
-*Special:Contact|Contact
-*http://www.wikia.com/Terms_of_Use|Terms of Use
-*http://www.wikia.com/Privacy_Policy|Privacy Policy
-*_LICENSE_',
 	'shared_help_search_info' => 'If you wish to search [[Help:Shared Help|shared help]], please use [http://help.wikia.com/wiki/Special:Search?search=$1 Wikia Help].',
 	'show' => 'Show',
 	'showingresults' => '<div style="margin-top: -3px;" class="emptymwmsg mediawiki_showingresults"></div>',
@@ -37140,14 +37020,6 @@ $NEWPAGE
 |}',
 	'reportproblem' => '問題回報',
 	'see_more' => '更多內容...',
-	'shared-Oasis-footer-wikia-links' => '*http://www.wikia.com/About_Us|<span>关于我们</span>
-*http://www.wikia.com/Hiring|<span>维基招聘</span>
-*http://www.wikia.com/Advertising|<span>广告服务</span>
-*http://zh.community.wikia.com/wiki/Special:Contact|<span>联系我们</span>
-*http://zh.community.wikia.com/wiki/Wikia中文:使用条款|<span>使用条款</span>
-*http://www.wikia.com/Privacy_Policy|<span>隐私政策</span>
-*http://www.wikia.com/Special:CreateWiki|<span>创建维基</span>
-*_LICENSE_',
 	'shared-problemreport' => '回報問題',
 	'showdiff' => '显示差異',
 	'signup-password' => '密码：',
@@ -42619,14 +42491,6 @@ Wikia
 ** w:ja:Blog:コミュニティサポートブログ|お知らせ
 *** w:ja:Blog:技術情報|技術情報
 ** w:c:ja:Help:目次|ヘルプ',
-	'shared-Oasis-footer-wikia-links' => '*http://www.wikia.com/About_Us|<span>ウィキアについて</span>
-*http://www.wikia.com/Hiring|キャリア
-*http://www.wikia.com/Advertising|広告
-*Special:Contact|コンタクト
-*http://ja.community.wikia.com/wiki/Wikia:%E3%82%A6%E3%82%A3%E3%82%AD%E3%82%A2%E3%81%AE%E5%88%A9%E7%94%A8%E8%A6%8F%E7%B4%84|<span>ウィキアの利用規約</span>
-*http://www.wikia.com/Privacy_Policy|Privacy Policy　
-*http://www.wikia.com/Special:CreateWiki|Create a wiki
-*_LICENSE_',
 	'shared_help_edit_info' => '枠線内にあるヘルプは、Wikia $2 の [[w:c:ja.help:Help:$1|Help:$1]] に保存されています。詳しくは [[Help:共有ヘルプ]] ([[Help:Shared Help|英語]]) をご覧ください。
 
 Wikia $2 での変更は、「すべて」のウィキアに対して適用されます。もし、記事の間違いや、何らかの変更が必要と思われる場合は、まずは、[[w:c:ja.help:Help_talk:$1|こちら]]にご提案いただければと思います。
@@ -48549,15 +48413,6 @@ ___________________________________________
 ***w:c:tea:WikiTea|Tea
 ***w:c:althistory:Main_Page|Alternative History
 ***w:c:www:Lifestyle|More...',
-	'shared-Oasis-footer-wikia-links' => '*http://www.wikia.com/About_Us|<span>دربارهٔ ما</span>
-*http://www.community.wikia.com|<span>جامعهٔ مرکزی</span>
-*http://www.wikia.com/Careers|فرصت‌های شغلی
-*http://www.wikia.com/Advertising|تبلیغات
-*http://api.wikia.com/|<span>API</span>
-*Special:Contact|تماس با ما
-*http://www.wikia.com/Terms_of_Use|شرایط استفاده
-*http://www.wikia.com/Privacy_Policy|سیاست حفظ اسرار
-*_LICENSE_',
 	'shared-problemreport' => 'گزارش‌دادن اشکال',
 	'shared_help_info' => 'این متن در راهنمای ویکیا ذخیره شده‌است. [$1 تغییر در متن را در این‌جا پیشنهاد دهید].',
 	'signup-mail' => 'پست‌الکترونیکی -',
@@ -51312,14 +51167,6 @@ Esta pagina tambem tem uma \'\'\'[[{{TALKPAGENAME}}|pagina de discussão]]\'\'\'
 	'research_wikipedia_title' => 'Procure sua resposta na Wikipedia',
 	'search_wikipedia' => 'Buscar na Wikipedia',
 	'see_all' => 'Ver todas',
-	'shared-Oasis-footer-wikia-links' => '*http://www.wikia.com/About_Us|<span>Sobre nós</span>
-*http://www.wikia.com/Hiring|Carreiras 
-*http://www.wikia.com/Advertising|Advertise
-*Special:Contact|Contate a Wikia
-*http://www.wikia.com/Terms_of_Use|Termos de Uso 
-*http://www.wikia.com/Privacy_Policy|Privacy Policy
-*_LICENSE_
-*http://www.wikia.com/Special:CreateWiki|Criar uma wiki',
 	'sidebar-popular-categories' => '<table align=center width=100%><tr><td width=50%>
 Categoria:Perguntas sem respostas|Perguntas sem respostas
 Categoria:Animais|Animais
@@ -51993,15 +51840,6 @@ Abans de contribuir al fòrum de {{SITENAME}} tingues en compte les següents pr
 	'rte-enablerichtexteditormessage' => 'Editor de text enriquit habilitat!',
 	'rte-first-run-notice' => 'Hem fet algunes millores en l\'editor. Per obtenir més informació [http://www.wikia.com/wiki/User_blog:Kirkburn/Rich_text_editor_upgrade_news llegir l\'anunci].',
 	'rte-no-js-fallback' => 'L\'editor de text enriquit no funciona si JavaScript està desactivat. Si us plau, deixeu-lo activitat a les opcions del vostre navegador, o visita les teves [[Especial:Preferències|preferències]] per canviar l\'antic editor de MediaWiki',
-	'shared-Oasis-footer-wikia-links' => '*http://ca.wikia.com/wiki/Sobre_nosaltres|<span>Sobre Wikia</span>
-*http://ca.wikia.com|<span>Comunitat Central</span>
-*http://www.wikia.com/Hiring|Contractacions
-*http://mediakit.wikia.com/wiki/Media_Kit_Wiki|Publicitat
-*http://api.wikia.com/|<span>API</span>
-*Special:Contact|Contacte
-*http://ca.wikia.com/wiki/Wikia:Termes_d%27%C3%BAs|Termes d\'Ús
-*http://ca.wikia.com/wiki/Wikia:Pol%C3%ADtica_de_Privacitat|Política de Privacitat
-*http://ca.wikia.com/wiki/Wikia:Llic%C3%A8ncia|CC-BY-SA',
 	'signup-password' => 'Contrasenya',
 	'wikia-days-ago' => 'fa $1 {{PLURAL:$1|dia|dies}}',
 	'wikia-hours-ago' => 'fa $1 {{PLURAL:$1|hora|hores}}',

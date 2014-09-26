@@ -734,3 +734,10 @@ $messages['zh-hans'] = array(
 	'stafflog-filter-type-wikifactory' => 'Wiki状态',
 	'action-stafflog' => '查看集中式的员工日志',
 );
+
+/** Traditional Chinese (中文（繁體）‎)
+ * @author Liuxinyu970226
+ */
+$messages['zh-hant'] = array(
+	'stafflog-filter-user' => '使用者：',
+);

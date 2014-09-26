@@ -14,16 +14,11 @@ class HAWelcomeHooks {
 	 * @return void
 	 */
 	public static function queueHAWelcomeTask( $wgCityId, $oTitle, $aParams ) {
-		if ( TaskRunner::isModern( 'HAWelcomeJob' ) ) {
-			$task = new HAWelcomeTask();
-			$task->call( 'sendWelcomeMessage', $aParams );
-			$task->wikiId( $wgCityId );
-			$task->title( $oTitle ); // use $this->title in the job
-			$task->queue();
-		} else {
-			$oJob = new HAWelcomeJob( $oTitle, $aParams );
-			$oJob->insert();
-		}
+		$task = new HAWelcomeTask();
+		$task->call( 'sendWelcomeMessage', $aParams );
+		$task->wikiId( $wgCityId );
+		$task->title( $oTitle ); // use $this->title in the job
+		$task->queue();
 	}
 
 	/**

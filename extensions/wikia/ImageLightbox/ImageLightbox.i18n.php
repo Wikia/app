@@ -1248,13 +1248,14 @@ $1
 /** Traditional Chinese (中文（繁體）‎)
  * @author Ffaarr
  * @author Justincheng12345
+ * @author LNDDYL
  * @author Radish10cm
  */
 $messages['zh-hant'] = array(
-	'lightbox_details_tooltip' => '查看圖片詳細資訊',
+	'lightbox_details_tooltip' => '檢視圖片詳細資訊',
 	'lightbox-blog-link' => '部落格連結',
 	'lightbox-share-button-email' => '電子郵件',
 	'lightbox-share-button-www' => '分享',
 	'lightbox-share-button-embed' => '嵌入',
-	'lightbox-share-email-page-label-address' => '電郵地址',
+	'lightbox-share-email-page-label-address' => '電郵位址',
 );

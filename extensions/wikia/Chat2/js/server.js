@@ -1,9 +1,11 @@
 /** REQUIRES, OTHER SETUP **/
 var config = require("./server_config.js");
 
-var app = require('express').createServer()
+var app = require('express')()
+	, server = require('http').Server(app)
+    , io = require('socket.io')(server)
     , jade = require('jade')
-    , sio = require('./lib/socket.io.8.7/socket.io.js')
+    , util = require('util')
     , _ = require('underscore')._
     , Backbone = require('backbone')
     , storage = require('./storage').redisFactory()
@@ -11,11 +13,9 @@ var app = require('express').createServer()
     , mwBridge = require('./WMBridge.js').WMBridge
     , loggerModule = require('./logger.js')
     , tracker = require('./tracker.js')
+    , monitoring = require('./monitoring.js')
     , logger = loggerModule.logger;
-var http = require("http");
 
-var monitoring = require('./monitoring.js');
-monitoring.startMonitoring(50000, storage);
 // TODO: Consider using this to catch uncaught exceptions (and then exit anyway):
 //process.on('uncaughtException', function (err) {
 //  logger.error('Caught exception: ' + err, 'Stacktrace: ', err.stack, 'Full, raw error: ', err);
@@ -24,6 +24,8 @@ monitoring.startMonitoring(50000, storage);
 //});
 
 /** DONE WITH CONFIGS & REQUIRES... BELOW IS THE ACTUAL APP CODE! **/
+
+monitoring.startMonitoring(50000, storage);
 
 // This includes and starts the API server (which MediaWiki makes requests to).
 logger.info("== Starting the API Server ==");
@@ -36,6 +38,11 @@ tracker.trackServerStart();
 app.set('view engine', 'jade');
 app.set('view options', {layout: false});
 
+// configure socket.io
+io.set('transports', [  'polling'  ]);
+//io.set('authorization', authConnection );
+io.use(authConnection);
+
 //setup route (just for healthcheck)
 app.get('/*', function(req, res){
     res.send('ok');
@@ -45,16 +52,14 @@ app.get('/*', function(req, res){
 logger.info("Pruning old room memberships...");
 storage.purgeAllMembers();
 
+logger.info('Configured to listen on http://' +  config.CHAT_SERVER_HOST + ':' + config.CHAT_SERVER_PORT);
 
-logger.info('i am going to listening on http://' +  config.CHAT_SERVER_HOST + ':' + config.CHAT_SERVER_PORT);
-
-app.listen(config.CHAT_SERVER_PORT, config.CHAT_SERVER_HOST, function () {
-	var addr = app.address();
+server.listen(config.CHAT_SERVER_PORT, config.CHAT_SERVER_HOST, function () {
+	var addr = server.address();
 	logger.info('   app listening on http://' + addr.address + ':' + addr.port);
 });
 
-
-var io = sio.listen(app);
+//server.listen()
 
 logger.info("Updating runtime stats");
 
@@ -78,45 +83,41 @@ storage.getRuntimeStats(function(data) {
 //create local state
 var sessionIdsByKey = {}; // for each room/username combo, store the sessionId so that we can send targeted messages.
 
-io.configure(function () {
-	io.set('flash policy port', config.FLASH_POLICY_PORT );
-	io.set('transports', [  'xhr-polling'  ]);
-	io.set('log level', loggerModule.getSocketIOLogLevel());
-	io.set('authorization', authConnection );
-});
-
 function startServer() {
 	logger.info("Chat server running on port " + config.CHAT_SERVER_PORT);
 
 	storage.resetUserCount();
 
-	io.sockets.on('connection', function(client){
+	io.on('connection', function(socket){
+
+		console.log("connection");
+		console.log(socket.handshake);
 
 		//TODO: use client.handshake.clientData and remove rewrite
-		if(!client.handshake || !client.handshake.clientData) {
+		if(!socket.handshake || !socket.handshake.clientData) {
 			return false;
 		}
 
-		for(var key in client.handshake.clientData) {
-			client[key] = client.handshake.clientData[key];
+		for(var key in socket.handshake.clientData) {
+			socket[key] = socket.handshake.clientData[key];
 		}
 		monitoring.incrEventCounter('connects');
 		storage.increaseUserCount(1);
 
 		// On initial connection, just wait around for the client to send it's authentication info.
-		client.on('message', function(msg){
-			messageDispatcher(client, io.sockets, msg);}
+		socket.on('message', function(msg){
+			messageDispatcher(socket, io.sockets, msg);}
 		);
 
-		client.on('disconnect', function(){
+		socket.on('disconnect', function(){
 			monitoring.incrEventCounter('disconnects');
 			storage.increaseUserCount(-1);
-			clientDisconnect(client, io.sockets);
+			clientDisconnect(socket, io.sockets);
 		});
 
-		client.sessionId = client.id; //for 0.6
+		socket.sessionId = socket.id; // why?
 
-		clearChatBuffer(client);
+		clearChatBuffer(socket);
 
 		logger.debug("Raw connection recieved. Waiting for authentication info from client.");
 	});
@@ -238,12 +239,16 @@ function openPrivateRoom(client, socket, data){
  * chatting on - this guarantees that the permissions checks for the room's wiki
  * are used - since users could be banned on one wiki and not another).
  */
-function authConnection(handshakeData, authcallback){
+function authConnection(socket, next){
 	logger.debug("Authentication info recieved from client. Verifying with Wikia MediaWiki app server...");
 	// Need to auth with the correct wiki. Lookup the hostname for the chat in redis.
+	handshakeData = socket.handshake;
+	console.log("auth");
+	console.log(socket.handshake);
 	if(!handshakeData.query.roomId || !handshakeData.query.name || !handshakeData.query.key) {
 		logger.warning("Wrong handshake data");
-		authcallback(null, false); // error first callback style
+		next(new Error('Wrong handshake data'));
+		//authcallback(null, false); // error first callback style
 		return false;
 	}
 
@@ -254,13 +259,15 @@ function authConnection(handshakeData, authcallback){
 	var callback = function(data) {
 		if(!config.validateConnection(data.wgCityId)) {
 			logger.warning("User failed authentication. Wrong node js server for : ", data);
-			authcallback(null, false); // error first callback style
+			//authcallback(null, false); // error first callback style
+			next(new Error('User failed authentication. Wrong node js server (1)'));
 			return false;
 		}
 
 		if(!data.activeBasket) {
 			logger.warning("User failed authentication. Wrong node js server for : " + data.wgCityId);
-			authcallback(null, false); // error first callback style
+			next(new Error('User failed authentication. Wrong node js server (2)'));
+			//authcallback(null, false); // error first callback style
 			return false;
 		}
 
@@ -270,13 +277,16 @@ function authConnection(handshakeData, authcallback){
 			});
 
 			logger.error('this basket of servers is not valid now and it should not be in use we are going to disconnect every one');
-			authcallback(null, false); // error first callback style
+			next(new Error('Invalid server configuration.'));
+			//authcallback(null, false); // error first callback style
 		}
 
-		if((data.canChat) && (data.isLoggedIn) && data.username == name ){
+		if((data.canChat) && (data.isLoggedIn) && data.username_encoded == name ){
 			var errback = function() {
-				logger.info("User try to conect with someone else private room");
-				authcallback(null, false); // error first callback style
+				logger.info("User tried to connect with someone elses private room");
+				next(new Error('User tried to connect with someone elses private room'));
+
+				//authcallback(null, false); // error first callback style
 				//it is hack attempts no meesage for this
 			};
 
@@ -304,8 +314,8 @@ function authConnection(handshakeData, authcallback){
 					handshakeData.clientData = client;
 					logger.debug("User authentication success.");
 					monitoring.incrEventCounter('logins');
-
-					authcallback(null, true); // error first callback style
+					next();
+					//authcallback(null, true); // error first callback style
 				} else {
 					errback();
 				}
@@ -315,13 +325,15 @@ function authConnection(handshakeData, authcallback){
 //			sendInlineAlertToClient(client, data.error, data.errorWfMsg, data.errorMsgParams);
 			logger.debug("Entire data was: ");
 			logger.debug(data);
-			authcallback(null, false); // error first callback style
+			next(new Error('User failed authentication (1)'));
+			//authcallback(null, false); // error first callback style
 		}
 	};
 
 	mwBridge.authenticateUser(roomId, name, key, handshakeData, callback, function(){
 		logger.error("User failed authentication: Wrong call to media wiki");
-		authcallback(null, false); // error first callback style
+		//authcallback(null, false); // error first callback style
+		next(new Error('User failed authentication (2)'));
 	});
 } // end of socket connection code
 
@@ -399,9 +411,13 @@ function finishConnectingUser(client, socket ){
 		// another browser. Kick that other instance before continuing (multiple instances cause all kinds of weirdness.
 		var existingId = sessionIdsByKey[config.getKey_userInRoom(client.myUser.get('name'), client.roomId)];
 
-		var oldClient = existingId != "undefined" ? socket.socket(existingId):false;
+		logger.debug("existingId: " + existingId );
+
+		var oldClient = existingId != "undefined" ? socket.connected[existingId] : false;
 
 		if(oldClient && oldClient.userKey != client.userKey ){
+			logger.debug("oldClient key:" + oldClient.userKey);
+
 			oldClient.donotSendPart = true;
 			if(!oldClient.logout) {
 				tracker.trackEvent(client, 'disconnect');
@@ -645,7 +661,8 @@ function ban(client, socket, msg){
     	var kickEvent = new models.KickEvent({
     		kickedUserName: userToBan,
     		time: time,
-    		moderatorName: client.myUser.get('name')
+    		moderatorName: client.myUser.get('name'),
+    		reason: reason
     	});
 
     	broadcastToRoom(client, socket, {
@@ -728,7 +745,7 @@ function kickUserFromServer(client, socket, userToKick, roomId){
 
 	if(typeof kickedClientId != 'undefined'){
 		// If we're kicking the user (for whatever reason) they shouldn't try to auto-reconnect.
-		socket.socket(kickedClientId).json.send({
+		socket.connected[kickedClientId].json.send({
 			event: 'disableReconnect'
 		});
 
@@ -736,8 +753,8 @@ function kickUserFromServer(client, socket, userToKick, roomId){
 		// redis. Setting this variable here lets clientDisconnect() know not to delete the user from the
 		// room in redis.
 		setTimeout(function(){
-			socket.socket(kickedClientId).doNotRemoveFromRedis = true;
-			socket.socket(kickedClientId).disconnect();
+			socket.connected[kickedClientId].doNotRemoveFromRedis = true;
+			socket.connected[kickedClientId].disconnect();
 		}, 1000);
 		// This closes the connection (takes a few seconds) after calling the clientDisconnect() handler which will
 		// broadcast the 'part' and delete the session id from the sessionIdsByKey hash.
@@ -911,13 +928,13 @@ function broadcastToRoom(client, socket, data, users, callback){
 				//logger.debug(socket.socket(socketId));
 				//logger.debug("============ /SOCKET "+socketId+" ==========================================");
 
-				if( typeof socket.socket(socketId).sessionId  == "undefined"){
+				if( typeof socket.connected[socketId].sessionId  == "undefined"){
 					// This happened once (and before this check was here, crashed the server).  Not sure if this is just a normal side-effect of the concurrency or is a legit
 					// problem. This logging should help in debugging if this becomes an issue.
 					logger.warning("Somehow the client socket for " + userModel.get('name') + " is totally closed but their socketId is still in the hash. Potentially a race-condition?");
 					delete sessionIdsByKey[ config.getKey_userInRoom(userModel.get('name'), roomId) ];
 				} else {
-					io.sockets.socket(socketId).json.send(data);
+					io.sockets.connected[socketId].json.send(data);
 				}
 			}
 		});

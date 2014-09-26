@@ -35,7 +35,7 @@ ve.ui.MWCategoryWidget = function VeUiMWCategoryWidget( config ) {
 	this.popup = new ve.ui.MWCategoryPopupWidget( {
 		'$': this.$, '$overlay': config.$overlay
 	} );
-	this.input = new ve.ui.MWCategoryInputWidget( this, {
+	this.input = new ve.ui.WikiaCategoryInputWidget( this, {
 		'$': this.$, '$overlay': config.$overlay
 	} );
 

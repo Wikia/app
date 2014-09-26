@@ -32,6 +32,11 @@ ve.ui.Toolbar = function VeUiToolbar( surface, options ) {
 	this.$window = null;
 	this.$surfaceView = null;
 	this.elementOffset = null;
+	// isMobileDevice logic copied from ve.init.mw.Target.js:
+	this.isMobileDevice = (
+		'ontouchstart' in window ||
+			( window.DocumentTouch && document instanceof window.DocumentTouch )
+	);
 	this.windowEvents = {
 		// jQuery puts a guid on our prototype function when we use ve.bind,
 		// we don't want that because that means calling $window.off( toolbarB.windowEvents )
@@ -285,24 +290,37 @@ ve.ui.Toolbar.prototype.destroy = function () {
  * @fires position
  */
 ve.ui.Toolbar.prototype.float = function () {
-	var update, parent, parentOffset;
-	if ( !this.floating ) {
+	var update, $parent, parentOffset;
+
+	if ( !this.floating || this.isMobileDevice ) {
 		// When switching into floating mode, set the height of the wrapper and
 		// move the bar to the same offset as the in-flow element
-		parent = this.$element.parent();
-		parentOffset = parent.offset();
-		update = {
-			'css': {
-				'left': parentOffset.left,
-				'right': this.$window.width() - parent.outerWidth() - parentOffset.left
-			},
-			'floating': true
-		};
+		$parent = this.$element.parent();
+		parentOffset = $parent.offset();
+
+		if ( this.isMobileDevice ) {
+			update = {
+				'css': {
+					'left': parentOffset.left,
+					'position': 'absolute',
+					'top': this.$window.scrollTop() - this.$element.offset().top,
+					'width': this.$element.width()
+				}
+			};
+		} else {
+			update = {
+				'css': {
+					'left': parentOffset.left,
+					'right': this.$window.width() - $parent.outerWidth() - parentOffset.left
+				}
+			};
+		}
+
 		this.$element
 			.css( 'height', this.$element.height() )
 			.addClass( 've-ui-toolbar-floating' );
 		this.$bar.css( update.css );
-		this.floating = true;
+		this.floating = update.floating = true;
 
 		this.emit( 'position', this.$bar, update );
 	}
@@ -318,7 +336,11 @@ ve.ui.Toolbar.prototype.unfloat = function () {
 		this.$element
 			.css( 'height', '' )
 			.removeClass( 've-ui-toolbar-floating' );
-		this.$bar.css( { 'left': '', 'right': '' } );
+		if ( this.isMobileDevice ) {
+			this.$bar.css( { 'left': '', 'position': '', 'top': '', 'width': '' } );
+		} else {
+			this.$bar.css( { 'left': '', 'right': '' } );
+		}
 		this.floating = false;
 
 		this.emit( 'position', this.$bar, { 'floating': false } );

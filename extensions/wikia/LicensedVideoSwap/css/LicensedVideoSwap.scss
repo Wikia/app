@@ -1,11 +1,11 @@
-@import 'skins/oasis/css/mixins/arrow';
-@import 'skins/oasis/css/mixins/box-sizing-border-box';
-@import 'skins/oasis/css/mixins/box-shadow';
-@import 'skins/oasis/css/mixins/clearfix';
-@import 'skins/oasis/css/mixins/transform';
-@import 'skins/oasis/css/mixins/ribbon';
+@import 'skins/shared/mixins/arrow';
+@import 'skins/shared/mixins/box-sizing-border-box';
+@import 'skins/shared/mixins/box-shadow';
+@import 'skins/shared/mixins/clearfix';
+@import 'skins/shared/mixins/transform';
+@import 'skins/shared/mixins/ribbon';
 @import 'skins/oasis/css/core/layout';
-@import 'skins/oasis/css/core/color';
+@import 'skins/shared/color';
 @import 'mixins/_sprite-LicensedVideoSwap';
 
 $alt-bg-color: mix($color-page-opposite, $color-page, 10%);
@@ -260,11 +260,6 @@ $button-icon-color: white;
 			&.selected > a {
 			      outline: 5px solid $color-buttons;
 			}
-		}
-
-		.Wikia-video-play-button {
-			line-height: $thumb-img-height;
-			width: $thumb-img-width;
 		}
 
 		.video > img {

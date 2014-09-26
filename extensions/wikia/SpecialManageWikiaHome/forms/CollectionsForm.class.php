@@ -19,7 +19,7 @@ class CollectionsForm extends FormBuilderService {
 								'required' => true,
 								'min' => 1
 							),
-							array('too_short' => 'marketing-toolbox-validator-string-short')
+							array('too_short' => 'wikia-hubs-validator-string-short')
 						)
 					]),
 					'isArray' => true

@@ -1137,7 +1137,7 @@ $messages['diq'] = array(
 	'usersignup-page-title' => 'Dekew Wikia',
 	'usersignup-confirm-page-title' => 'Epostay xo araşt kerê',
 	'usersignup-confirm-email-new-email-label' => 'Epostaya newi',
-	'usersignup-confirm-email-update' => 'Noroc resn',
+	'usersignup-confirm-email-update' => 'Rocane ke',
 	'usersignup-confirm-page-heading-confirmed-user' => 'Tebrik keme!',
 	'usersignup-confirmation-email-greeting' => 'Merheba $USERNAME,',
 	'usersignup-confirmation-email-signature' => 'Taxıma Wikia',
@@ -1148,7 +1148,7 @@ $messages['diq'] = array(
 	'usersignup-welcome-email-edit-profile-button' => 'Şo ri profil',
 	'usersignup-welcome-email-explore-wiki-button' => 'Şo wikia.com',
 	'usersignup-welcome-email-signature' => 'Taxıma Wikia',
-	'usersignup-heading' => 'Noroc dekewe Wikia',
+	'usersignup-heading' => 'Ewro Wikiya kewe',
 	'usersignup-marketing-community-heading' => 'Piyakarkerdış',
 	'usersignup-marketing-global-heading' => 'Vıraze',
 	'usersignup-marketing-creativity-heading' => 'Oricinal be',
@@ -4462,6 +4462,7 @@ $messages['tt-cyrl'] = array(
 
 /** Ukrainian (українська)
  * @author Andriykopanytsia
+ * @author Mykola Swarnyk
  * @author Ua2004
  * @author Wildream
  */
@@ -4513,6 +4514,9 @@ $messages['uk'] = array(
 	'usersignup-confirmation-subheading' => 'Перевірте вашу електронну пошту',
 	'usersignup-confirmation-email-sent' => "Ми направили листа до '''$1'''.
 Натисніть на посилання для підтвердження вашої електронної пошти, щоб завершити створення облікового запису.",
+	'usersignup-confirmation-email-sent-wikiamobile' => "Ми надіслали електронного листа на '''$1'''.
+
+Натисніть посилання в листі, щоб підтвердити вашу електронну адресу та завершити створення облікового запису. Дякуємо!",
 	'usersignup-confirmation-email_subject' => 'Майже все! Підтвердіть ваш обліковий запис Вікія',
 	'usersignup-confirmation-email-greeting' => 'Привіт, $USERNAME,',
 	'usersignup-confirmation-email-content' => 'Ви в одному кроці від створення облікового запису Вікія! Натисніть на посилання нижче, щоб підтвердити свою адресу електронної пошти і почати роботу.

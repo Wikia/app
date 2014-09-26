@@ -310,7 +310,7 @@ class VideoHandlerHelper extends WikiaModel {
 				'truncatedList'        => $truncatedList,
 				'isTruncated'          => $isTruncated,
 				'timestamp'            => empty( $videoInfo['addedAt'] ) ? '' : $videoInfo['addedAt'],
-				'duration'             => $file->getMetadataDuration(),
+				'duration'             => (float) $file->getMetadataDuration(),
 				'viewsTotal'           => empty( $videoInfo['viewsTotal'] ) ? 0 : $videoInfo['viewsTotal'],
 				'provider'             => $file->getProviderName(),
 				'embedUrl'             => $file->getHandler()->getEmbedUrl(),
@@ -416,7 +416,7 @@ class VideoHandlerHelper extends WikiaModel {
 	 * ApiWrapper classes.
 	 * @return FileRepoStatus The status of the publish operation
 	 */
-	public function resetVideoThumb( File $file, $thumbnailUrl = null, $delayIndex = UpdateThumbnailTask::DONT_RUN ) {
+	public function resetVideoThumb( File $file, $thumbnailUrl = null, $delayIndex = 0 ) {
 		$mime = $file->getMimeType();
 		list(, $provider) = explode('/', $mime);
 		$videoId = $file->getVideoId();

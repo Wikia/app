@@ -22,7 +22,7 @@
  * @ingroup SpecialPage
  */
 class SMWAdmin extends SpecialPage {
-	
+
 	/**
 	 * Constructor
 	 */
@@ -78,8 +78,14 @@ class SMWAdmin extends SpecialPage {
 			if ( $sure == 'yes' ) {
 				if ( is_null( $refreshjob ) ) { // careful, there might be race conditions here
 					$title = SpecialPage::getTitleFor( 'SMWAdmin' );
-					$newjob = new SMWRefreshJob( $title, array( 'spos' => 1, 'prog' => 0, 'rc' => 2 ) );
-					$newjob->insert();
+					$jobParams = array( 'spos' => 1, 'prog' => 0, 'rc' => 2 );
+
+					// wikia change start - jobqueue migration
+					$task = new \Wikia\Tasks\Tasks\JobWrapperTask();
+					$task->call( 'SMWRefreshJob', $title, $jobParams );
+					$task->queue();
+					// wikia change end
+
 					$wgOut->addHTML( '<p>' . wfMsg( 'smw_smwadmin_updatestarted' ) . '</p>' );
 				} else {
 					$wgOut->addHTML( '<p>' . wfMsg( 'smw_smwadmin_updatenotstarted' ) . '</p>' );
