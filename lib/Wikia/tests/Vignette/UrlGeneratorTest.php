@@ -34,12 +34,12 @@ class UrlGeneratorTest extends PHPUnit_Framework_TestCase {
 		);
 
 		$this->assertEquals(
-			'/tests/a/ab/SomeFile.jpg/revision/09876/thumbnail/width/50/height/75?fill=%23ababab',
-			(new UrlGenerator($file))->width(50)->height(75)->thumbnail()->revision('09876')->backgroundFill('#ababab')->url()
+			'/tests/a/ab/SomeFile.jpg/revision/latest/thumbnail/width/50/height/75?cb=12345&fill=%23ababab',
+			(new UrlGenerator($file))->width(50)->height(75)->thumbnail()->backgroundFill('#ababab')->url()
 		);
 
 		$this->assertEquals(
-			'/tests/a/ab/SomeFile.jpg/revision/latest/zoom-crop/width/50/height/75?fill=transparent&cb=12345',
+			'/tests/a/ab/SomeFile.jpg/revision/latest/zoom-crop/width/50/height/75?cb=12345&fill=transparent',
 			(new UrlGenerator($file))->width(50)->height(75)->zoomCrop()->backgroundFill('transparent')->url()
 		);
 	}
@@ -66,7 +66,7 @@ class UrlGeneratorTest extends PHPUnit_Framework_TestCase {
 
 		$this->assertEquals(
 			'/tests/a/ab/SomeFile.jpg/revision/123456/thumbnail/width/50/height/75',
-			(new UrlGenerator($file))->width(50)->height(75)->thumbnail()->revision('09876')->url()
+			(new UrlGenerator($file))->width(50)->height(75)->thumbnail()->url()
 		);
 	}
 }

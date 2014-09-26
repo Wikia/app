@@ -29,9 +29,6 @@ class UrlGenerator {
 	/** @var string mode of the image we're requesting */
 	private $mode = self::MODE_ORIGINAL;
 
-	/** @var string revision of the image we're requesting */
-	private $revision = self::REVISION_LATEST;
-
 	/** @var int width of the image, in pixels */
 	private $width = 100;
 
@@ -56,20 +53,6 @@ class UrlGenerator {
 
 	public function height($height) {
 		$this->height = $height;
-		return $this;
-	}
-
-	/**
-	 * Request a specific revision of an image. This is a no-op in URL generation
-	 * if $this->file->isOld() == true. See url() below.
-	 *
-	 * @param string $revision
-	 * @return $this
-	 */
-	public function revision($revision) {
-		if (!empty($revision)) {
-			$this->revision = $revision;
-		}
 		return $this;
 	}
 
@@ -189,16 +172,7 @@ class UrlGenerator {
 	public function url() {
 		$bucketPath = self::bucketPath();
 
-		if ($this->file->isOld()) {
-			$this->revision($this->file->getArchiveTimestamp());
-		} else {
-			if ($this->revision == self::REVISION_LATEST) {
-				$this->query['cb'] = $this->file->getTimestamp();
-			}
-		}
-
-
-		$imagePath = "{$bucketPath}/{$this->getRelativeUrl()}/revision/{$this->revision}";
+		$imagePath = "{$bucketPath}/{$this->getRelativeUrl()}/revision/{$this->getRevision()}";
 
 		if (!isset($this->query['lang'])) {
 			global $wgLang;
@@ -212,12 +186,24 @@ class UrlGenerator {
 		}
 
 		if (!empty($this->query)) {
-			$imagePath .= '?'.implode('&', array_map(function($key, $val) {
-					return "{$key}=".urlencode($val);
-				}, array_keys($this->query), $this->query));
+			ksort($this->query); // ensure that the keys we use will be ordered deterministically
+			$imagePath .= '?'.http_build_query($this->query);
 		}
 
 		return self::domainShard($imagePath);
+	}
+
+
+	private function getRevision() {
+		$revision = self::REVISION_LATEST;
+
+		if ($this->file->isOld()) {
+			$revision = $this->file->getArchiveTimestamp();
+		} else {
+			$this->query['cb'] = $this->file->getTimestamp();
+		}
+
+		return $revision;
 	}
 
 	/**

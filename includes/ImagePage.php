@@ -1018,7 +1018,7 @@ class ImageHistoryList {
 	 * @return string
 	 */
 	public function imageHistoryLine( $iscur, $file ) {
-		global $wgUser, $wgLang, $wgContLang;
+		global $wgUser, $wgLang, $wgContLang, $wgEnableVignette;
 
 		$timestamp = wfTimestamp( TS_MW, $file->getTimestamp() );
 		$img = $iscur ? $file->getName() : $file->getArchiveName();
@@ -1120,9 +1120,8 @@ class ImageHistoryList {
 			}
 			$row .= '<span class="history-deleted">' . $url . '</span>';
 		} else {
-			global $wgEnableVignette;
 			if ($wgEnableVignette) {
-				$url = $iscur ? $this->current->getUrl() : $this->img->getUrl()->revision( $this->img->getTimestamp() );
+				$url = $iscur ? $this->current->getUrl() : $file->getUrl();
 			} else {
 				$url = $iscur ? $this->current->getUrl() : $this->current->getArchiveUrl( $img );
 			}
