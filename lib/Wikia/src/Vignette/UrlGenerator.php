@@ -8,6 +8,7 @@
 namespace Wikia\Vignette;
 
 use Wikia\Logger\Loggable;
+use Wikia\Util\Assert;
 
 class UrlGenerator {
 	use Loggable;
@@ -65,11 +66,18 @@ class UrlGenerator {
 	 *
 	 * @param string $revision
 	 * @return $this
+	 * @throws AssertionException
 	 */
 	public function revision($revision) {
+		Assert::true(
+			(!$this->file->isOld() || $revision == $this->file->getArchiveTimestamp()),
+			"Error, unable to set the revision number for an archived file."
+		);
+
 		if (!empty($revision)) {
 			$this->revision = $revision;
 		}
+
 		return $this;
 	}
 
