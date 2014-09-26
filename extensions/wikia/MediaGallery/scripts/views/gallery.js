@@ -1,12 +1,16 @@
 define('mediaGallery.views.gallery', [
     'mediaGallery.views.media',
     'mediaGallery.templates.mustache',
-    'wikia.tracker'
-], function (Media, templates, tracker) {
+    'wikia.tracker',
+	'bucky'
+], function (Media, templates, tracker, bucky) {
 	'use strict';
 
 	var Gallery,
 		togglerTemplateName = 'MediaGallery_showMore';
+
+	// performance profiling
+	bucky = bucky('mediaGallery.views.gallery');
 
 	Gallery = function (options) {
 		this.$el = options.$el.addClass('media-gallery-inner');
@@ -45,6 +49,8 @@ define('mediaGallery.views.gallery', [
 			return;
 		}
 
+		bucky.timer.start('createMedia');
+
 		$.each(throttled, function (idx, data) {
 			var media = new Media({
 				$el: $('<div></div>'),
@@ -53,6 +59,8 @@ define('mediaGallery.views.gallery', [
 			});
 			self.media.push(media);
 		});
+
+		bucky.timer.stop('createMedia');
 	};
 
 	Gallery.prototype.bindEvents = function () {
@@ -80,6 +88,7 @@ define('mediaGallery.views.gallery', [
 	/**
 	 * Render sets of media.
 	 * @param {int} count Number to be rendered
+	 * @param {jQuery} $el Element to apply loading graphic
 	 * @returns {Gallery}
 	 */
 	Gallery.prototype.render = function (count, $el) {
@@ -87,6 +96,7 @@ define('mediaGallery.views.gallery', [
 			media,
 			deferredImages = [];
 
+		bucky.timer.start('render');
 		if ($el) {
 			$el.startThrobbing();
 		}
@@ -113,6 +123,7 @@ define('mediaGallery.views.gallery', [
 			$.each(media, function (idx, item) {
 				item.show();
 			});
+			bucky.timer.stop('render');
 		});
 
 		return this;
