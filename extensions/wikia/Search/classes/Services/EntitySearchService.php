@@ -26,6 +26,9 @@ class EntitySearchService {
 	protected $urls;
 	protected $wikiId;
 
+	/** @var mixed $helper Helper class */
+	protected $helper;
+
 	/**
 	 * @param mixed $filters
 	 */
@@ -116,13 +119,16 @@ class EntitySearchService {
 		return $this->ids;
 	}
 	
-	public function __construct( $client = null ) {
+	public function __construct( $client = null, $helper = null ) {
 		$config = $this->getConfig();
 		$core = $this->getCore();
 		if ( $core ) {
 			$config[ 'adapteroptions' ][ 'core' ] = $core;
 		}
 		$this->client = ( $client !== null ) ? $client : new \Solarium_Client( $config );
+		if ( $helper !== null ) {
+			$this->setHelper( $helper );
+		}
 	}
 
 	public function query( $phrase ) {
@@ -167,6 +173,7 @@ class EntitySearchService {
 
 	public function setNamespace( $namespace ) {
 		$this->namespace = $namespace;
+		return $this;
 	}
 
 	public function getHubs() {
@@ -177,6 +184,13 @@ class EntitySearchService {
 		$this->hubs = $hubs;
 	}
 
+	public function getHelper() {
+		return $this->helper;
+	}
+
+	public function setHelper( $helper ) {
+		$this->helper = $helper;
+	}
 
 	protected function prepareQuery( $query ) {
 		$select = $this->getSelect();
@@ -215,17 +229,5 @@ class EntitySearchService {
 
 	protected function withLang( $field, $lang ) {
 		return $field . '_' . $lang;
-	}
-
-	public function replaceHostUrl( $url ) { 
-		global $wgStagingEnvironment, $wgDevelEnvironment;
-		if ( $wgStagingEnvironment || $wgDevelEnvironment ) {
-			return preg_replace_callback( self::WIKIA_URL_REGEXP, array( $this, 'replaceHost' ), $url );
-		}
-		return $url;
-	}
-
-	protected function replaceHost( $details ) {
-		return $details[ 1 ] . WikiFactory::getCurrentStagingHost( $details[ 4 ], $details[ 3 ] );
 	}
 }

@@ -2,6 +2,8 @@
 
 namespace Wikia\Search\Services;
 
+use Wikia\Search\Services\Helpers\OutputFormatter;
+
 class EpisodeEntitySearchService extends EntitySearchService {
 
 	const DEFAULT_NAMESPACE = 0;
@@ -23,6 +25,11 @@ class EpisodeEntitySearchService extends EntitySearchService {
 	public function setSeries( $series ) {
 		$this->series = $series;
 		return $this;
+	}
+
+	public function __construct( $client = null, $helper = null ) {
+		$helper = ( $helper == null ) ? new OutputFormatter() : $helper;
+		parent::__construct( $client, $helper );
 	}
 
 	protected function prepareQuery( $query ) {
@@ -73,9 +80,9 @@ class EpisodeEntitySearchService extends EntitySearchService {
 					'wikiId' => $item[ 'wid' ],
 					'articleId' => $item[ 'pageid' ],
 					'title' => $item[ 'title_' . $this->getLang() ],
-					'url' => $this->replaceHostUrl( $item[ 'url' ] ),
+					'url' => $this->getHelper()->replaceHostUrl( $item[ 'url' ] ),
 					'quality' => $item[ 'article_quality_i' ],
-					'contentUrl' => $this->replaceHostUrl( 'http://' . $item[ 'host' ] . '/' . self::API_URL . $item[ 'pageid' ] ),
+					'contentUrl' => $this->getHelper()->replaceHostUrl( 'http://' . $item[ 'host' ] . '/' . self::API_URL . $item[ 'pageid' ] ),
 				];
 			}
 		}

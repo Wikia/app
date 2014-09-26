@@ -6,6 +6,7 @@ use Wikia\Search\Services\WikiSeriesEntitySearchService;
 use Wikia\Search\Services\EpisodeEntitySearchService;
 use Wikia\Search\Services\SeriesEntitySearchService;
 use Wikia\Search\Services\ExactSeriesSearchService;
+use Wikia\Search\Services\Helpers\OutputFormatter;
 
 
 class TvApiController extends WikiaApiController {
@@ -173,7 +174,7 @@ class TvApiController extends WikiaApiController {
 	}
 
 	protected function getContentUrl( $wikiId, $articleId ) {
-		return $this->getEpisodeService()->replaceHostUrl(
+		return OutputFormatter::replaceHostUrl(
 			WikiFactory::DBtoUrl( WikiFactory::IDtoDB( $wikiId ) )
 			. EpisodeEntitySearchService::API_URL . $articleId
 		);
