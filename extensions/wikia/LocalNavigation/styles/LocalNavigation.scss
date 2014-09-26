@@ -1,15 +1,22 @@
 @import 'skins/shared/mixins/arrow';
 @import 'skins/shared/mixins/calc';
+@import 'skins/shared/mixins/clearfix';
 @import 'skins/shared/color';
 @import 'extensions/wikia/Venus/styles/variables';
 
 .local-navigation {
+	@include clearfix;
+
 	background-color: $color-page;
 	box-sizing: border-box;
 	height: 80px;
 
 	*, *:before, *:after {
 		box-sizing: inherit;
+	}
+
+	> nav {
+		float: left;
 	}
 
 	.contribute {
@@ -98,6 +105,7 @@
 
 	.wordmark-container {
 		display: table;
+		float: left;
 		height: 100%;
 		padding: 0 40px 0 32px;
 
