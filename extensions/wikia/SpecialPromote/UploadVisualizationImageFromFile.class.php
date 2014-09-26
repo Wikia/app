@@ -26,7 +26,7 @@ class UploadVisualizationImageFromFile extends UploadFromFile {
 			}
 
 			// check file type (just by extension)
-			if ( !$this->checkFileExtension( $this->mFinalExtension, array( 'png' ) ) ) {
+			if ( !$this->checkFileExtension( $this->mFinalExtension, [ 'png' ] ) ) {
 				$details[ 'status' ] = self::FILETYPE_ERROR;
 			}
 		}
