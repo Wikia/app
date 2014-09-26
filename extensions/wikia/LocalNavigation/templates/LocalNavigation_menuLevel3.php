@@ -1,4 +1,4 @@
-<ul class="third dropdown">
+<ul class="dropdown third">
 	<? foreach ($nodes as $i3 => $node3): ?>
 		<li>
 			<a href="<?= $node3['href']; ?>" data-content="<?= $node3['text']; ?>">

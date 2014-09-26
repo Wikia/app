@@ -218,6 +218,25 @@
 			}
 		}
 	}
+	ul.third {
+		background: $color-buttons;
+		padding: 5px;
+		li {
+			height: 31px;
+		}
+		a {
+			background: rgba(white, .2);
+			padding: 10px;
+
+			&:hover {
+				background: rgba(white, .4);
+				font-weight: normal;
+			}
+			&:nth-child(n-1) {
+				border-top: 1px solid $color-buttons;
+			}
+		}
+	}
 }
 
 .local-navigation {
