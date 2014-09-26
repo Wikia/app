@@ -1,8 +1,6 @@
 <?php
 
 class PromoteImageReviewSpecialController extends ImageReviewSpecialController {
-	const DEFAUL_IMAGE_SIZE = 320;
-
 	public function __construct() {
 		WikiaSpecialPageController::__construct('PromoteImageReview', 'promoteimagereview', true /* $listed */);
 	}
@@ -29,31 +27,32 @@ class PromoteImageReviewSpecialController extends ImageReviewSpecialController {
 	}
 
 	protected function getToolName() {
-		return 'Admin Upload Review';
+		return 'Special Promote Review';
 	}
 
 	protected function getStatsPageTitle() {
-		return 'Admin Upload Review tool statistics';
+		return 'Special Promote Review tool statistics';
 	}
 
 	protected function parseImageData($data) {
 		$images = array();
 
 		foreach ($data as $name => $value) {
-			if (preg_match('/img-(\d*)-(\d*)$/', $name, $matches)) {
+
+
+			if (preg_match('/img-(\d*)-([a-zA-Z0-9_\.]+)$/', $name, $matches)) {
 				if (!empty($matches[1]) && !empty($matches[2])) {
-					$key = $matches[1] . '-' . $matches[2];
+					$key = $matches[2];
 					if (empty($images[$key])) {
 						$images[$key] = array();
 					}
 
 					$images[$key]['wikiId'] = $matches[1];
-					$images[$key]['pageId'] = $matches[2];
 					$images[$key]['state'] = $value;
 				}
-			} elseif (preg_match('/img-(\d*)-(\d*)-([a-z]+)/', $name, $matches)) {
+			} elseif (preg_match('/img-(\d*)-([a-zA-Z0-9_\.]+)-([a-z]+)/', $name, $matches)) {
 				if (!empty($matches[1]) && !empty($matches[2]) && !empty($matches[3])) {
-					$key = $matches[1] . '-' . $matches[2];
+					$key = $matches[2];
 
 					if (empty($images[$key])) {
 						$images[$key] = array();

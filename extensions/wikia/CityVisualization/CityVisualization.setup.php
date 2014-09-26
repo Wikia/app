@@ -26,16 +26,15 @@ $wgAutoloadClasses['WikiImageRowHelper'] = $dir.'classes/WikiImageRowHelper.clas
 
 // getdata helpers
 $wgAutoloadClasses['WikiGetDataHelper'] = $dir.'classes/WikiGetDataHelper.class.php';
-$wgAutoloadClasses['WikiGetDataForVisualizationHelper'] = $dir.'classes/WikiGetDataForVisualizationHelper.class.php';
-$wgAutoloadClasses['WikiGetDataForPromoteHelper'] = $dir.'classes/WikiGetDataForPromoteHelper.class.php';
-$wgAutoloadClasses['WikiDataGetter'] = $dir.'classes/WikiDataGetter.class.php';
-$wgAutoloadClasses['WikiDataGetterForSpecialPromote'] = $dir.'classes/WikiDataGetterForSpecialPromote.class.php';
-$wgAutoloadClasses['WikiDataGetterForVisualization'] = $dir.'classes/WikiDataGetterForVisualization.class.php';
 $wgAutoloadClasses['WikiListConditioner'] = $dir.'classes/WikiListConditioner.class.php';
 $wgAutoloadClasses['WikiListConditionerForVertical'] = $dir.'classes/WikiListConditionerForVertical.class.php';
 $wgAutoloadClasses['WikiListConditionerForCollection'] = $dir.'classes/WikiListConditionerForCollection.class.php';
-$wgAutoloadClasses['PromoImage'] = $dir.'/classes/PromoImage.class.php';
 
-//classes
+$wgAutoloadClasses['PromoImage'] = $dir.'classes/PromoImage.class.php';
+$wgAutoloadClasses['BaseXWikiImage'] = $dir.'classes/BaseXWikiImage.class.php';
+$wgAutoloadClasses['PromoXWikiImage'] = $dir.'classes/PromoXWikiImage.class.php';
+
 $wgAutoloadClasses['WikiaHomePageHelper'] =  $dir.'/helpers/WikiaHomePageHelper.class.php';
 $wgAutoloadClasses['CityVisualization'] =  $dir.'/models/CityVisualization.class.php';
+
+

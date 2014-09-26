@@ -5,6 +5,7 @@ class PromoteImageReviewHelper extends ImageReviewHelperBase {
 	const LIMIT_IMAGES = 20;
 	const LIMIT_IMAGES_FROM_DB = 20;
 	const INVALID_STATUS_TIMEOUT= 3600;
+	const THUMB_SIZE = 250;
 
 	static $sortOptions = array(
 		'latest first' => 0,
@@ -12,60 +13,45 @@ class PromoteImageReviewHelper extends ImageReviewHelperBase {
 		'oldest first' => 2,
 	);
 
-	const MEMC_VERSION = '00001';
+	const MEMC_VERSION = '2';
 
 	public function updateImageState($images, $action = '') {
+		global $wgMemc;
+
 		wfProfileIn(__METHOD__);
 
-		$approvalList = array();
-		$rejectionList = array();
-		$deletionList = array();
-		$statsInsert = array();
-		$taskAdditionList = array();
+		$approvalList = [];
+		$rejectionList = [];
+		$deletionList = [];
+		$statsInsert = [];
+		$taskAdditionList = [];
+		$wikisToPurge = [];
 
 		$sqlWhere = array(
-			ImageReviewStatuses::STATE_APPROVED_AND_TRANSFERRING => array(),
+			ImageReviewStatuses::STATE_APPROVED => array(),
 			ImageReviewStatuses::STATE_REJECTED => array(),
 			ImageReviewStatuses::STATE_QUESTIONABLE => array(),
 		);
 
 		foreach( $images as $image ) {
 			if ($image['state'] == ImageReviewStatuses::STATE_APPROVED) {
-				//for promote Image use temporary approval state as it will be used to supervise image copy
-				$image['state'] = ImageReviewStatuses::STATE_APPROVED_AND_TRANSFERRING;
-
-				$sqlWhere[ImageReviewStatuses::STATE_APPROVED_AND_TRANSFERRING][] = "( city_id = $image[wikiId] AND page_id = $image[pageId]) ";
+				$sqlWhere[ImageReviewStatuses::STATE_APPROVED][] = "( city_id = $image[wikiId] AND image_name = '$image[name]') ";
 				$approvalList [] = $image;
-
-				$visualization = new CityVisualization();
-				$targetWikiId = $visualization->getTargetWikiId($image['lang']);
-
-				if( empty($taskAdditionList[$targetWikiId]) ) {
-					$taskAdditionList[$targetWikiId] = array();
-				}
-				if (empty($taskAdditionList[$targetWikiId][$image['wikiId']])) {
-					$taskAdditionList[$targetWikiId][$image['wikiId']] = array();
-				}
-
-				$taskAdditionList[$targetWikiId][$image['wikiId']] [] = array(
-					'id' => $image['pageId'],
-					'name' => $image['name'],
-				);
-
 			} elseif ($image['state'] == ImageReviewStatuses::STATE_REJECTED) {
-				$sqlWhere[ImageReviewStatuses::STATE_REJECTED][] = "( city_id = $image[wikiId] AND page_id = $image[pageId]) ";
+				$sqlWhere[ImageReviewStatuses::STATE_REJECTED][] = "( city_id = $image[wikiId] AND image_name = '$image[name]') ";
 				$rejectionList [] = $image;
 			} elseif ($image['state'] == ImageReviewStatuses::STATE_DELETED) {
-				$sqlWhere[ImageReviewStatuses::STATE_DELETED][] = "( city_id = $image[wikiId] AND page_id = $image[pageId]) ";
+				$sqlWhere[ImageReviewStatuses::STATE_DELETED][] = "( city_id = $image[wikiId] AND image_name = '$image[name]') ";
 				$deletionList [] = $image;
 			} elseif ($image['state'] == ImageReviewStatuses::STATE_QUESTIONABLE) {
-				$sqlWhere[ImageReviewStatuses::STATE_QUESTIONABLE][] = "( city_id = $image[wikiId] AND page_id = $image[pageId]) ";
+				$sqlWhere[ImageReviewStatuses::STATE_QUESTIONABLE][] = "( city_id = $image[wikiId] AND image_name = '$image[name]') ";
 			}
+			$wikisToPurge[$image['wikiId']] =
+				unserialize(WikiFactory::getVarByName( 'wgLanguageCode', $image['wikiId'])->cv_value);
 		}
 
 		$statsInsert[] = array(
 			'city_id' => $image['wikiId'],
-			'page_id' => $image['pageId'],
 			'review_state' => $image['state'],
 			'reviewer_id' => $this->wg->user->getId()
 		);
@@ -75,21 +61,66 @@ class PromoteImageReviewHelper extends ImageReviewHelperBase {
 				$db = wfGetDB(DB_MASTER, array(), $this->wg->ExternalSharedDB);
 
 				$db->update(
-					'city_visualization_images',
-					array(
+					'city_visualization_images_xwiki',
+					[
 						'reviewer_id' => $this->wg->user->getId(),
 						'image_review_status' => $state,
 						'review_end = now()',
-					),
+					],
 					array(implode(' OR ', $where)),
 					__METHOD__
 				);
+
+				// culling
+				foreach($where as $singleImageCondition) {
+					$result = $db->select(
+						'city_visualization_images_xwiki',
+						[
+							'city_id',
+							'city_lang_code',
+							'image_type',
+							'image_index',
+							'image_name',
+							'last_edited'
+						],
+						$singleImageCondition,
+						__METHOD__
+					);
+
+					$row = $result->fetchObject();
+
+					$updateStament = (new \WikiaSQL())
+						->UPDATE('city_visualization_images_xwiki')
+						->SET('reviewer_id', $this->wg->user->getId())
+						->SET('image_review_status', ImageReviewStatuses::STATE_READY_FOR_CULLING)
+						->SET('review_end', date("Y-m-d H:i:s"))
+						->WHERE('city_id')->EQUAL_TO($row->city_id)
+						->AND_('city_lang_code')->EQUAL_TO($row->city_lang_code)
+						->AND_('image_type')->EQUAL_TO($row->image_type)
+						->AND_('image_index')->EQUAL_TO($row->image_index)
+						->AND_('image_name')->NOT_EQUAL_TO($row->image_name)
+						->AND_('last_edited')->LESS_THAN_OR_EQUAL($row->last_edited);
+
+					$updateStament->run($db);
+				}
+
 
 				$db->commit();
 			}
 		}
 
+		// Purge promote pages
+		$cv = new CityVisualization();
+		foreach($wikisToPurge as $wikiId => $lang) {
+			$cv->purgeWikiPromoteDataCache($wikiId, $lang);
+		}
+
+		/**
+		 * @deprecated - no need to do this anymore
+		 */
 		$this->createUploadTask($taskAdditionList);
+
+
 		$this->saveStats($statsInsert, $sqlWhere, $action);
 		wfProfileOut(__METHOD__);
 	}
@@ -139,29 +170,12 @@ class PromoteImageReviewHelper extends ImageReviewHelperBase {
 	 * reset state in abandoned work
 	 */
 
-	public function resetFailedTransfers(){
-		$db = wfGetDB(DB_MASTER, array(), $this->wg->ExternalSharedDB);
-
-		$db->update(
-			'city_visualization_images',
-			array(
-				'reviewer_id = null',
-				'image_review_status' => ImageReviewStatuses::STATE_UNREVIEWED,
-			),
-			array(
-				"review_start < now() - " . self::INVALID_STATUS_TIMEOUT,
-				'image_review_status' => ImageReviewStatuses::STATE_APPROVED_AND_TRANSFERRING,
-			),
-			__METHOD__
-		);
-	}
-
 	public function resetAbandonedWork() {
 		wfProfileIn(__METHOD__);
 		$db = wfGetDB(DB_MASTER, array(), $this->wg->ExternalSharedDB);
 
 		$db->update(
-			'city_visualization_images',
+			'city_visualization_images_xwiki',
 			array(
 				'reviewer_id = null',
 				'image_review_status' => ImageReviewStatuses::STATE_UNREVIEWED,
@@ -174,7 +188,7 @@ class PromoteImageReviewHelper extends ImageReviewHelperBase {
 		);
 
 		$db->update(
-			'city_visualization_images',
+			'city_visualization_images_xwiki',
 			array('image_review_status' => ImageReviewStatuses::STATE_QUESTIONABLE),
 			array(
 				"review_start < now() - " . self::INVALID_STATUS_TIMEOUT,
@@ -214,7 +228,6 @@ class PromoteImageReviewHelper extends ImageReviewHelperBase {
 
 		$db = wfGetDB(DB_MASTER, array(), $this->wg->ExternalSharedDB);
 
-		$this->resetFailedTransfers();
 		$this->resetAbandonedWork();
 
 		// get images
@@ -244,7 +257,7 @@ class PromoteImageReviewHelper extends ImageReviewHelperBase {
 			' image_review_status = ' . $newState
 		);
 
-		$query = 'SELECT * from city_visualization_images '
+		$query = 'SELECT * from city_visualization_images_xwiki '
 			. ' WHERE ' . $where
 			. ' ORDER BY  ' . $this->getOrder($order)
 			. ' LIMIT ' . self::LIMIT_IMAGES_FROM_DB;
@@ -253,16 +266,17 @@ class PromoteImageReviewHelper extends ImageReviewHelperBase {
 
 		$rows = array();
 		$updateWhere = array();
+
 		while ($row = $db->fetchObject($result)) {
 			$rows[] = $row;
-			$updateWhere[] = "(city_id = {$row->city_id} and page_id = {$row->page_id})";
+			$updateWhere[] = "(city_id = {$row->city_id} and image_name = '{$row->image_name}')";
 		}
 
 		$db->freeResult($result);
 
 		if (count($updateWhere) > 0) {
 			$db->update(
-				'city_visualization_images',
+				'city_visualization_images_xwiki',
 				$values,
 				array(implode(' OR ', $updateWhere)),
 				__METHOD__
@@ -275,25 +289,25 @@ class PromoteImageReviewHelper extends ImageReviewHelperBase {
 		$unusedImages = array();
 		foreach ($rows as $row) {
 			if (count($imageList) < self::LIMIT_IMAGES) {
-				$img = ImagesService::getImageSrc($row->city_id, $row->page_id);
+				$image = new PromoXWikiImage($row->image_name);
+				$img = $image->getThumbnailUrl(self::THUMB_SIZE);
 
-				if (empty($img['src'])) {
-					$invalidImages[] = "(city_id = {$row->city_id} and page_id = {$row->page_id})";
+				if (empty($img)) {
+					$invalidImages[] = "(city_id = {$row->city_id} and image_name = '{$row->image_name}')";
 				} else {
 					$imageList[] = array(
 						'wikiId' => $row->city_id,
-						'pageId' => $row->page_id,
 						'name' => $row->image_name,
 						'lang' => $row->city_lang_code,
 						'state' => $row->image_review_status,
-						'src' => $img['src'],
-						'url' => $img['page'],
+						'src' => $img,
+						'url' => $img,
 						'priority' => 0,
 						'flags' => 0,
 					);
 				}
 			} else {
-				$unusedImages[] = "(city_id = {$row->city_id} and page_id = {$row->page_id})";
+				$unusedImages[] = "(city_id = {$row->city_id} and image_name = '{$row->image_name}')";
 			}
 		}
 
@@ -302,7 +316,7 @@ class PromoteImageReviewHelper extends ImageReviewHelperBase {
 
 		if (count($invalidImages) > 0) {
 			$db->update(
-				'city_visualization_images',
+				'city_visualization_images_xwiki',
 				array('image_review_status' => ImageReviewStatuses::STATE_QUESTIONABLE),
 				array(implode(' OR ', $invalidImages)),
  				__METHOD__
@@ -312,7 +326,7 @@ class PromoteImageReviewHelper extends ImageReviewHelperBase {
 
 		if (count($unusedImages) > 0) {
 			$db->update(
-				'city_visualization_images',
+				'city_visualization_images_xwiki',
 				array('reviewer_id = null', 'image_review_status' => $state),
 				array(implode(' OR ', $unusedImages)),
 				__METHOD__
@@ -398,7 +412,7 @@ class PromoteImageReviewHelper extends ImageReviewHelperBase {
 
 		// select by reviewer, state and total count with rollup and then pick the data we want out
 		$result = $db->select(
-			array('city_visualization_images'),
+			array('city_visualization_images_xwiki'),
 			array('count(*) as total'),
 			$where,
 			__METHOD__,
@@ -500,37 +514,5 @@ class PromoteImageReviewHelper extends ImageReviewHelperBase {
 				$ret = 'last_edited desc';
 		}
 		return $ret;
-	}
-
-	public static function onCreatePromoteImageReviewTask($type, $list) {
-		if (empty($list)) {
-			return true;
-		}
-
-		if (TaskRunner::isModern('PromoteImageReviewTask')) {
-			$batch = [];
-
-			foreach ($list as $targetWikiId => $wikis) {
-				$taskList = new \Wikia\Tasks\AsyncTaskList();
-				$task = new \Wikia\Tasks\Tasks\PromoteImageReviewTask();
-
-				$call = $task->call($type, $targetWikiId, $wikis);
-				$taskList->add($call);
-
-				$batch []= $taskList;
-			}
-
-			\Wikia\Tasks\AsyncTaskList::batch($batch);
-		} else {
-			$task = new PromoteImageReviewTask();
-			$key = $type == 'delete' ? 'deletion_list' : 'upload_list';
-			$params = [
-				$key => $list,
-			];
-
-			$task->createTask($params, TASK_QUEUED);
-		}
-
-		return true;
 	}
 }

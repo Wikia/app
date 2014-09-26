@@ -9,12 +9,12 @@
  *
  */
 
-$wgExtensionCredits['other'][] = array(
+$wgExtensionCredits['other'][] = [
 	'name'			=> 'SpecialPromote',
 	'author'		=> 'Andrzej "nAndy" Łukaszewski, Marcin Maciejewski, Sebastian Marzjan',
 	'description'	=> 'SpecialPromote page is enable for admins to add information about their wiki. After review of those informations it can show up on wikia.com',
 	'version'		=> 1.0
-);
+];
 
 $dir = dirname(__FILE__) . '/';
 $promoteImageReviewExtDir = dirname(dirname(__FILE__)) . '/ImageReview/modules/PromoteImage/';
@@ -29,7 +29,6 @@ $wgAutoloadClasses['UploadVisualizationImageFromFile'] =  $dir . 'UploadVisualiz
 $wgAutoloadClasses['PromoteImageReviewTask'] = $promoteImageReviewExtDir  . 'PromoteImageReviewTask.php';
 
 // hooks
-$wgHooks['UploadVerification'][] = 'UploadVisualizationImageFromFile::UploadVerification';
 $wgHooks['CityVisualization::wikiDataInserted'][] = 'CityVisualization::onWikiDataUpdated';
 $wgHooks['FileDeleteComplete'][] = 'SpecialPromoteHooks::onFileDeleteComplete';
 
@@ -37,7 +36,7 @@ $wgHooks['FileDeleteComplete'][] = 'SpecialPromoteHooks::onFileDeleteComplete';
 $wgExtensionMessagesFiles['SpecialPromote'] = $dir.'SpecialPromote.i18n.php';
 $wgExtensionMessagesFiles['SpecialPromoteAliases'] = $dir . 'SpecialPromote.alias.php';
 
-JSMessages::registerPackage('SpecialPromote', array('promote-*'));
+JSMessages::registerPackage('SpecialPromote', ['promote-*']);
 
 // special pages
 $wgSpecialPages['Promote'] = 'SpecialPromoteController';

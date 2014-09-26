@@ -119,20 +119,27 @@ class SpecialPromoteController extends WikiaSpecialPageController {
 	}
 
 	public function uploadImage() {
+		global $wgCityId;
+
 		if ( !$this->checkAccess() ) {
 			return false;
 		}
-		wfProfileIn( __METHOD__ );
-		$upload = new UploadVisualizationImageFromFile();
 
-		$status = $this->helper->uploadImage( $upload );
+
+		wfProfileIn( __METHOD__ );
+
+		$errorMsg = null;
+
+		$imageName = implode( '.', [$wgCityId, time(), uniqid()] );
+		$promoImage = new PromoXWikiImage($imageName);
+
+		$errorNo = $promoImage->uploadFile( $this->wg->request, 'wpUploadFile', $errorMsg );
 
 		$result = array();
 
-		if ( $status['status'] === 'uploadattempted' && $status['isGood'] ) {
-			$file                 = $status['file'];
+		if ( $errorNo === UPLOAD_ERR_OK ) {
 			$result['uploadType'] = $this->request->getVal( 'uploadType' );
-			$result['imageIndex'] = $this->request->getVal( 'imageIndex', null );
+			$result['imageIndex'] = $this->request->getVal( 'imageIndex', 0 );
 
 			if ( $result['uploadType'] == 'additional' ) {
 				$width  = SpecialPromoteHelper::SMALL_IMAGE_WIDTH;
@@ -142,14 +149,14 @@ class SpecialPromoteController extends WikiaSpecialPageController {
 				$height = SpecialPromoteHelper::LARGE_IMAGE_HEIGHT;
 			}
 
-			$result['fileUrl']  = $this->helper->getImageUrl( $file, $width, $height );
-			$result['fileName'] = $file->getFileKey();
+			$result['fileUrl']  = $promoImage->getCroppedThumbnailUrl( $width, $height );
+			$result['fileName'] = $imageName;
 
 			if ( $result['fileUrl'] == null || $result['fileName'] == null ) {
 				$result['errorMessages'] = array( wfMsg( 'promote-error-unknown-upload-error' ) );
 			}
-		} else if ( $status['status'] === 'error' ) {
-			$result['errorMessages'] = $status['errors'];
+		} else {
+			$result['errorMessages'] = $errorMsg;
 		}
 
 		$this->result = $result;
@@ -158,7 +165,7 @@ class SpecialPromoteController extends WikiaSpecialPageController {
 	}
 
 	public function saveData() {
-		
+
 		if ( !$this->checkAccess() ) {
 			$this->success = false;
 			$this->error   = wfMsg( 'promote-wrong-rights' );

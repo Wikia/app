@@ -15,7 +15,7 @@ class WAMApiController extends WikiaApiController {
 	const DEFAULT_WIKI_IMAGE_WIDTH = 150;
 	const DEFAULT_WIKI_ADMINS_LIMIT = 5;
 	const WAM_RESPONSE_CACHE_VALIDITY = 21600;
-	const MEMCACHE_VER = '1.04';
+	const MEMCACHE_VER = '1.07';
 
 	/**
 	 * A method to get WAM index (list of wikis with their WAM ranks)

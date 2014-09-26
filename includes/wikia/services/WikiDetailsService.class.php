@@ -103,6 +103,18 @@ class WikiDetailsService extends WikiService {
 				}
 			}
 		}
+		if ( empty( $imgUrl ) && !empty( $imageName ) ) {
+			$f = PromoImage::getImage( $imageName );
+			if ( $f->exists() ) {
+				if ( !empty( $width ) ) {
+					$imgUrl = $f->getCroppedThumbnailUrl( $width, $height );
+				} else {
+					$imgUrl = $f->getUrl();
+				}
+				$imgWidth = $f->getWidth();
+				$imgHeight = $f->getHeight();
+			}
+		}
 		if ( isset( $imgUrl ) ) {
 			return [ 'image' => $imgUrl, 'original_dimensions' => [ 'width' => $imgWidth, 'height' => $imgHeight ] ];
 		}
@@ -123,10 +135,6 @@ class WikiDetailsService extends WikiService {
 
 		if ( isset( $cityList[ $lang ] ) ) {
 			$f = GlobalFile::newFromText( $imageName, $cityList[ $lang ][ 'wikiId' ] );
-		} else {
-			//if image wasn't found, try to find it on wiki itself
-			$promoImage = (new PromoImage(PromoImage::MAIN))->setCityId($wikiId);
-			$f = $promoImage->getOriginFile();
 		}
 
 		return $f;

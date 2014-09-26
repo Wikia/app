@@ -154,7 +154,6 @@ class ImagesService extends Service {
 				$imageUrl = $imageUrl;
 			}
 
-
 			/**
 			 * url is virtual base for thumbnail, so
 			 *
@@ -288,6 +287,90 @@ class ImagesService extends Service {
 		$result->height = $calculatedHeight;
 
 		return $result;
+	}
+
+	public static function getCut( $imgWidth, $proportionWidth, $proportionHeight, $srcWidth, $srcHeight, $align = "center", $issvg = false, $deltaY=null ) {
+		$d = self::getCropDimensions($proportionWidth, $proportionHeight, $srcWidth, $srcHeight, $align, $issvg, $deltaY);
+		return "${imgWidth}px-" . implode(",", [$d["left"],$d['right'],$d['top'],$d['bottom']]);
+	}
+
+	public static function getCroppedThumbnailUrl($imageUrl, $desiredWidth, $desiredHeight, $srcWidth, $srcHeight, $newExtension = null){
+		if (!empty($imageUrl)) {
+			if ( !self::IsExternalThumbnailUrl($imageUrl) ) {
+				$imageUrl = str_replace('/images/', '/images/thumb/', $imageUrl);
+			}
+
+			$parts = explode( "/", $imageUrl );
+			$file = array_pop( $parts );
+
+			$cropPart = self::getCut($desiredWidth, $desiredWidth, $desiredHeight, $srcWidth, $srcHeight);
+
+			$imageUrl = sprintf( "%s/%s-%s", $imageUrl, $cropPart, $file );
+
+			if ( !empty($newExtension) ) {
+				$imageUrl = self::overrideThumbnailFormat($imageUrl, $newExtension);
+			}
+		}
+		return $imageUrl;
+	}
+
+	public static function getCropDimensions($baseWidth, $baseHeight, $srcWidth, $srcHeight, $align = "center", $issvg = false, $deltaY ) {
+		//rescale of png always use width 512;
+		if( $issvg ) {
+			$srcHeight = round( ( 512 * $srcHeight) / $srcWidth );
+			$srcWidth = 512;
+		}
+
+		// make sure these are numeric and nonzero (BugId:20644, BugId:25965)
+		$srcWidth = max(1, intval($srcWidth));
+		$srcHeight = max(1, intval($srcHeight));
+		// in case we're missing some proportions, maintain the original aspect ratio
+		if (empty($baseHeight) && !empty($baseWidth)) {
+			$baseHeight = (float)$srcHeight * $baseWidth / $srcWidth;
+		}
+		if (empty($baseWidth) && !empty($baseHeight)) {
+			$baseWidth = (float)$srcWidth * $baseHeight / $srcHeight;
+		}
+
+		$pHeight = round( ( $srcWidth ) * ( $baseHeight / $baseWidth ) );
+
+		$top = 0;
+		$bottom = 0;
+		$left = 0;
+		if( $pHeight >= $srcHeight ) {
+			$pWidth =  round( $srcHeight * ( $baseWidth / $baseHeight ) );
+
+			if ( $align == "center" ) {
+				$left = round( $srcWidth / 2 - $pWidth / 2 );
+				if ( $pHeight != $srcHeight ) {
+					$left++;
+				}
+			}
+			$right = $left + $pWidth + 1;
+			$bottom = $srcHeight;
+		} else {
+			if ( $align == "center" ) {
+				if (empty($deltaY)){
+					$deltaY = ( $baseWidth / $baseHeight - 1 ) * 0.1;
+				}
+				$deltaYpx = round( $srcHeight * $deltaY );
+				$bottom = $pHeight + $deltaYpx;
+				$top = $deltaYpx;
+			} else if ( $align == "origin" ) {
+				$bottom = $pHeight;
+				$top = 0;
+			}
+
+			if( $bottom > $srcHeight ) {
+				$bottom = $pHeight;
+				$top = 0;
+			}
+
+			$left = 0;
+			$right = $srcWidth;
+		}
+
+		return ["left" => $left, "right" => $right, "top" => $top, "bottom" => $bottom];
 	}
 
 	/**
