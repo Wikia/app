@@ -2,20 +2,9 @@
 
 class ExactTargetAddWikiTask extends ExactTargetBaseTask {
 
-	/**
-	 * Customer Keys for different enviroments.
-	 * Set in ExactTargetUpdatesHelper.
-	 * @var array $aCustomerKeys
-	 */
-	private $aCustomerKeys;
-
 	public function sendNewWikiData( $aWikiData, $aWikiCatsMappingData ) {
 		/* Create a Client object */
 		$oClient = $this->getClient();
-
-		/* Get Customer Keys for current enviroment */
-		$oHelper = new ExactTargetUpdatesHelper();
-		$this->aCustomerKeys = $oHelper->getCustomerKeys();
 
 		/* Make API requests */
 		$this->createWikiDataExtension( $aWikiData, $oClient );
@@ -26,7 +15,10 @@ class ExactTargetAddWikiTask extends ExactTargetBaseTask {
 		try {
 			/* Create new DataExtensionObject that reflects city_list table data */
 			$oDE = new ExactTarget_DataExtensionObject();
-			$oDE->CustomerKey = $this->aCustomerKeys['city_list'];
+
+			/* Get Customer Keys specific for production or development */
+			$aCustomerKeys = ExactTargetUpdatesHelper::getCustomerKeys();
+			$oDE->CustomerKey = $aCustomerKeys['city_list'];
 
 			$aApiProperties = [];
 			foreach( $aWikiData as $sKey => $sValue ) {
@@ -61,7 +53,10 @@ class ExactTargetAddWikiTask extends ExactTargetBaseTask {
 			foreach( $aWikiCatsMappingData as $aSingleCatMapping ) {
 				/* Create new DataExtensionObject that reflects city_list table data */
 				$oDE = new ExactTarget_DataExtensionObject();
-				$oDE->CustomerKey = $this->aCustomerKeys['city_cat_mapping'];
+
+				/* Get Customer Keys specific for production or development */
+				$aCustomerKeys = ExactTargetUpdatesHelper::getCustomerKeys();
+				$oDE->CustomerKey = $aCustomerKeys['city_cat_mapping'];
 				
 				$aApiProperties = [];
 				$aApiProperties[] = $this->wrapApiProperty( 'city_id', $aSingleCatMapping['city_id'] );
