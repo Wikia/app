@@ -110,8 +110,7 @@ ve.ui.WikiaTemplateSearchWidget.prototype.onSuggestionsScroll = function () {
  * Display results
  */
 ve.ui.WikiaTemplateSearchWidget.prototype.displayResults = function () {
-	var results;
-	results = this.allResults.slice( this.resultsOffset, this.resultsOffset + this.chunkedResults );
+	var results = this.allResults.slice( this.resultsOffset, this.resultsOffset + this.chunkedResults );
 	this.resultsOffset += this.chunkedResults;
 	this.results.addItems( this.getOptionsFromData( results ) );
 };
