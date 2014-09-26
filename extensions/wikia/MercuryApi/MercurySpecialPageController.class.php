@@ -7,7 +7,6 @@
 class MercurySpecialPageController extends WikiaSpecialPageController {
 
 	const PAGE_NAME = 'Mercury';
-
 	const COOKIE_NAME = 'wk_mercury';
 	const OPT_IN = 1;
 	const COOKIE_EXPIRE_DAYS = 7;
