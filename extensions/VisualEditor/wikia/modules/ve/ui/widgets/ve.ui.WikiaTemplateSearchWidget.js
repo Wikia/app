@@ -248,7 +248,6 @@ ve.ui.WikiaTemplateSearchWidget.prototype.reset = function () {
 	this.results.selectItem();
 	// Reset search input value
 	this.query.setValue( '' );
-	// Hide the results, show the suggestions, and scroll to the top
-	this.$results.hide();
-	this.$suggestions.show().get( 0 ).scrollTop = 0;
+	// Scroll to top of suggestions
+	this.$suggestions.get( 0 ).scrollTop = 0;
 };
