@@ -286,6 +286,7 @@ abstract class File implements FileInterface {
 	 * @return string
 	 */
 	public function getUrl() {
+		global $wgEnableVignette;
 		if ($wgEnableVignette) {
 			return new UrlGenerator($this);
 		} else {
