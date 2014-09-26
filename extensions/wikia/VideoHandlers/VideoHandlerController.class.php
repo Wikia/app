@@ -232,7 +232,9 @@ class VideoHandlerController extends WikiaController {
 	}
 
 	/**
-	 * Exposes the VideoHandlerHelper::getVideoDetail method from this controller
+	 * Exposes the VideoHandlerHelper::getVideoDetail method from this controller. If fileTitle is passed
+	 * to this method as a string, return a single associative array containing details for that video. Otherwise,
+	 * return an indexed array containing one associative array per video.
 	 * @requestParam array|string fileTitle - The title of the file to get details for
 	 * @requestParam array videoOptions
 	 *   [ array( 'thumbWidth' => int, 'thumbHeight' => int, 'postedInArticles' => int, 'getThumbnail' => bool, 'thumbOptions' => array ) ]
@@ -242,8 +244,9 @@ class VideoHandlerController extends WikiaController {
 	public function getVideoDetail() {
 		wfProfileIn( __METHOD__ );
 
-		$fileTitles = $this->makeFileTitlesAnArray( $this->getVal( 'fileTitle', [] ) );
+		$fileTitles = wfEnsureArray( $this->getVal( 'fileTitle', [] ) );
 		$videoOptions = $this->getVideoOptionsWithDefaults( $this->getVal( 'videoOptions', [] ) );
+		$returnSingleVideo = is_string( $this->getVal( 'fileTitle' ) );
 
 		$memcKey= wfMemcKey( __FUNCTION__, md5( serialize( [ $fileTitles, $videoOptions ] ) ) );
 		$videos = WikiaDataAccess::cache(
@@ -254,21 +257,10 @@ class VideoHandlerController extends WikiaController {
 			}
 		);
 
-		$this->detail = ( count( $videos ) == 1 ) ? array_pop( $videos ) : $videos;
+		$this->detail = ( !empty( $videos ) && $returnSingleVideo ) ? array_pop( $videos ) : $videos;
 		$this->response->setCacheValidity( WikiaResponse::CACHE_STANDARD );
 
 		wfProfileOut( __METHOD__ );
-	}
-
-	/**
-	 * @param string|array $fileTitles
-	 * @return array
-	 */
-	private function makeFileTitlesAnArray( $fileTitles ) {
-		if ( !is_array( $fileTitles ) ) {
-			$fileTitles = [ $fileTitles ];
-		}
-		return $fileTitles;
 	}
 
 	/**
