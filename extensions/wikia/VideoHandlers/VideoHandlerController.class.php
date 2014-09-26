@@ -244,19 +244,21 @@ class VideoHandlerController extends WikiaController {
 	public function getVideoDetail() {
 		wfProfileIn( __METHOD__ );
 
-		$fileTitles = wfReturnArray( $this->getVal( 'fileTitle', [] ) );
+		$fileTitle = $this->getVal( 'fileTitle', [] );
+		$returnSingleVideo = is_string( $fileTitle );
+		$fileTitleAsArray = wfReturnArray( $fileTitle );
 		$videoOptions = $this->getVideoOptionsWithDefaults( $this->getVal( 'videoOptions', [] ) );
-		$returnSingleVideo = is_string( $this->getVal( 'fileTitle' ) );
 
-		$memcKey= wfMemcKey( __FUNCTION__, md5( serialize( [ $fileTitles, $videoOptions ] ) ) );
+		$memcKey= wfMemcKey( __FUNCTION__, md5( serialize( [ $fileTitleAsArray, $videoOptions ] ) ) );
 		$videos = WikiaDataAccess::cache(
 			$memcKey,
 			WikiaResponse::CACHE_STANDARD,
-			function() use ( $fileTitles, $videoOptions ) {
-				return $this->getDetailsForVideoTitles( $fileTitles, $videoOptions );
+			function() use ( $fileTitleAsArray, $videoOptions ) {
+				return $this->getDetailsForVideoTitles( $fileTitleAsArray, $videoOptions );
 			}
 		);
 
+		// If file title was passed in as a string, return single associative array.
 		$this->detail = ( !empty( $videos ) && $returnSingleVideo ) ? array_pop( $videos ) : $videos;
 		$this->response->setCacheValidity( WikiaResponse::CACHE_STANDARD );
 
