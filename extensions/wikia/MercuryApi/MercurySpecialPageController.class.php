@@ -7,6 +7,8 @@
 class MercurySpecialPageController extends WikiaSpecialPageController {
 
 	const PAGE_NAME = 'Mercury';
+
+	// This is an action used in both Staff and Utils groups
 	const PAGE_RESTRICTION = 'lookupuser';
 	const COOKIE_NAME = 'wk_mercury';
 	const OPT_IN = 1;
@@ -17,9 +19,7 @@ class MercurySpecialPageController extends WikiaSpecialPageController {
 	}
 
 	public function index() {
-		global $wgUser;
-
-		if( !$wgUser->isAllowed( self::PAGE_RESTRICTION ) ) {
+		if( !$this->wg->User->isAllowed( self::PAGE_RESTRICTION ) ) {
 			$this->displayRestrictionError();
 			return;
 		}
