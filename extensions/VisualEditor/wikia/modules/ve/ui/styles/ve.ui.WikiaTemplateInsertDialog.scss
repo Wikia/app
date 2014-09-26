@@ -5,6 +5,7 @@ $option-backgroundColor: mix($color-page, #000000, 90%);
 @if $is-dark-wiki {
         $option-backgroundColor: mix($color-page, #ffffff, 90%);
 }
+$option-highlightColor: #e1f3ff;
 
 .ve-ui-wikiaTemplateInsertDialog {
 
@@ -58,7 +59,7 @@ $option-backgroundColor: mix($color-page, #000000, 90%);
 	}
 
 	.ve-ui-wikiaTemplateOptionWidget-gradient {
-		@include linear-gradient( transparent, left, transparent, 0%, $option-backgroundColor, 100% );
+		@include linear-gradient( transparent, left, rgba($option-backgroundColor, 0), 0%, $option-backgroundColor, 100% );
 		height: 1.2em;
 		position: absolute;
 		right: 0;
@@ -68,5 +69,9 @@ $option-backgroundColor: mix($color-page, #000000, 90%);
 }
 
 .oo-ui-optionWidget-highlighted {
-	background: #e1f3ff;
+	background: $option-highlightColor;
+
+	.ve-ui-wikiaTemplateOptionWidget-gradient {
+		@include linear-gradient( transparent, left, rgba($option-highlightColor, 0), 0%, $option-highlightColor, 100% );
+	}
 }
