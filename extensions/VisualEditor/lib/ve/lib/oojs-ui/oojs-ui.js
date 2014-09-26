@@ -7992,8 +7992,11 @@ OO.ui.PopupButtonWidget.prototype.onClick = function ( e ) {
  * @param {Object} [config] Configuration options
  * @cfg {string|jQuery} [placeholder] Placeholder text for query input
  * @cfg {string} [value] Initial query value
+ * @cfg {boolean} [clearable] Whether to use a clearable query input
  */
 OO.ui.SearchWidget = function OoUiSearchWidget( config ) {
+	var textInputConfig;
+
 	// Configuration intialization
 	config = config || {};
 
@@ -8001,12 +8004,17 @@ OO.ui.SearchWidget = function OoUiSearchWidget( config ) {
 	OO.ui.SearchWidget.super.call( this, config );
 
 	// Properties
-	this.query = new OO.ui.TextInputWidget( {
+	textInputConfig = {
 		'$': this.$,
 		'icon': 'search',
 		'placeholder': config.placeholder,
 		'value': config.value
-	} );
+	};
+	if ( config.clearable ) {
+		this.query = new OO.ui.ClearableTextInputWidget( textInputConfig );
+	} else {
+		this.query = new OO.ui.TextInputWidget( textInputConfig );
+	}
 	this.results = new OO.ui.SelectWidget( { '$': this.$ } );
 	this.$query = this.$( '<div>' );
 	this.$results = this.$( '<div>' );

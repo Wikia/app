@@ -38,58 +38,46 @@ ve.ui.WikiaTemplateInsertDialog.prototype.initialize = function () {
 	ve.ui.WikiaTemplateInsertDialog.super.prototype.initialize.call( this );
 
 	// Properties
-	this.stackLayout = new OO.ui.StackLayout( { '$': this.$ } );
-	this.panel = new OO.ui.PanelLayout( { '$': this.$ } );
-	this.select = new OO.ui.SelectWidget( { '$': this.$ } );
-	this.offset = 0;
+	this.search = new ve.ui.WikiaTemplateSearchWidget( {
+		'placeholder': ve.msg( 'wikia-visualeditor-dialog-wikiatemplateinsert-search' ),
+		'clearable': true
+	} );
 
 	// Events
-	this.stackLayout.$element.on( 'scroll', ve.bind( this.onLayoutScroll, this ) );
-	this.select.connect( this, {
+	this.search.connect( this, {
 		'select': 'onTemplateSelect'
 	} );
 
 	// Initialization
 	this.frame.$content.addClass( 've-ui-wikiaTemplateInsertDialog' );
-	this.select.$element.addClass( 'clearfix' );
-
-	this.panel.$element.append( this.select.$element );
-	this.stackLayout.addItems( [ this.panel ] );
-
-	this.$body.append( this.stackLayout.$element );
-
-	this.getMostLinkedTemplateData().done( ve.bind( this.populateOptions, this ) );
-};
-
-/**
- * Handle scrolling of the layout
- */
-ve.ui.WikiaTemplateInsertDialog.prototype.onLayoutScroll = function () {
-	var position = this.stackLayout.$element.scrollTop() + this.stackLayout.$element.outerHeight(),
-		threshold = this.select.$element.outerHeight() - 100;
-
-	if ( !this.isPending() && this.offset !== null && position > threshold ) {
-		this.getMostLinkedTemplateData().done( ve.bind( this.populateOptions, this ) );
-	}
+	this.$body.append( this.search.$element );
 };
 
 /**
  * Handle selecting results.
  *
  * @method
- * @param {ve.ui.OptionWidget} item Item whose state is changing or null
+ * @param {Object|null} itemData Data of selected item, or null
  */
-ve.ui.WikiaTemplateInsertDialog.prototype.onTemplateSelect = function ( item ) {
+ve.ui.WikiaTemplateInsertDialog.prototype.onTemplateSelect = function ( itemData ) {
 	var template;
 
-	if ( item ) {
+	if ( itemData ) {
 		this.transclusionModel = new ve.dm.MWTransclusionModel();
 
 		template = ve.dm.MWTemplateModel.newFromName(
-			this.transclusionModel, item.getData().title
+			this.transclusionModel, itemData.title
 		);
 		this.transclusionModel.addPart( template )
 			.done( ve.bind( this.insertTemplate, this ) );
+
+		// Track
+		ve.track( 'wikia', {
+			'action': ve.track.actions.ADD,
+			// Only suggestions data have "uses" information - so use it to determine where
+			// insertion is coming from
+			'label': 'template-insert-from-' + ( 'uses' in itemData ? 'suggestions' : 'search' )
+		} );
 	}
 };
 
@@ -130,65 +118,24 @@ ve.ui.WikiaTemplateInsertDialog.prototype.onTransact = function () {
 };
 
 /**
- * Use the given template data to generate option widgets and populate the dialog's select widget
- *
- * @param {array} templates
- */
-ve.ui.WikiaTemplateInsertDialog.prototype.populateOptions = function ( templates ) {
-	var i,
-		options = [];
-
-	for ( i = 0; i < templates.length; i++ ) {
-		options.push(
-			new ve.ui.WikiaTemplateOptionWidget(
-				templates[i],
-				{
-					'$': this.$,
-					'icon': 'template-inverted',
-					'label': templates[i].title,
-					'appears': templates[i].uses
-				}
-			)
-		);
-	}
-
-	this.select.addItems( options );
-};
-
-/**
- * Fetch the most-linked templates data
- *
- * @returns {jQuery.Promise}
- */
-ve.ui.WikiaTemplateInsertDialog.prototype.getMostLinkedTemplateData = function () {
-	var deferred = $.Deferred();
-
-	this.pushPending();
-
-	ve.init.target.constructor.static.apiRequest( {
-		'action': 'templatesuggestions',
-		'offset': this.offset
-	} )
-		.done( ve.bind( function ( data ) {
-			this.offset = data['query-continue'] ? data['query-continue'] : null;
-			this.popPending();
-			deferred.resolve( data.templates );
-		}, this ) )
-		.fail( function () {
-			deferred.resolve( [] );
-		} );
-
-	return deferred.promise();
-};
-
-/**
  * @inheritdoc
  */
 ve.ui.WikiaTemplateInsertDialog.prototype.getTeardownProcess = function ( data ) {
 	return ve.ui.WikiaTemplateInsertDialog.super.prototype.getTeardownProcess.call( this, data )
 		.next( function () {
-			// Unselect
-			this.select.selectItem();
+			// Reset the search widget
+			this.search.reset();
+		}, this );
+};
+
+/**
+ * @inheritdoc
+ */
+ve.ui.WikiaTemplateInsertDialog.prototype.getReadyProcess = function ( data ) {
+	return ve.ui.WikiaTemplateInsertDialog.super.prototype.getReadyProcess.call( this, data )
+		.next( function () {
+			// Focus cursor in search input
+			this.search.focusQuery();
 		}, this );
 };
 

@@ -123,6 +123,7 @@ $wgResourceModules += array(
 			've/ui/widgets/ve.ui.WikiaPhotoOptionWidget.js',
 			've/ui/widgets/ve.ui.WikiaTemplateGetInfoWidget.js',
 			've/ui/widgets/ve.ui.WikiaTemplateOptionWidget.js',
+			've/ui/widgets/ve.ui.WikiaTemplateSearchWidget.js',
 			've/ui/widgets/ve.ui.WikiaVideoOptionWidget.js',
 			've/ui/widgets/ve.ui.WikiaMapOptionWidget.js',
 			've/ui/widgets/ve.ui.WikiaMediaResultsWidget.js',
