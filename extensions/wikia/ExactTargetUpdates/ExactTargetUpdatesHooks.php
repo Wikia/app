@@ -60,10 +60,8 @@ class ExactTargetUpdatesHooks {
 	 * @return true
 	 */
 	public static function onWikiCreation( $aParams ) {
-		if ( $this->bShouldAddTask ) {
-			$thisInstance = new ExactTargetUpdatesHooks();
-			$thisInstance->addTheAddWikiTask( $aParams, new ExactTargetAddWikiTask() );
-		}
+		$thisInstance = new ExactTargetUpdatesHooks();
+		$thisInstance->addTheAddWikiTask( $aParams, new ExactTargetAddWikiTask() );
 		return true;
 	}
 
@@ -74,11 +72,8 @@ class ExactTargetUpdatesHooks {
 	 * @return true
 	 */
 	public static function onWikiDataChange( $aVarParams ) {
-		if ( $this->bShouldAddTask ) {
-			$sVarName = $aVarParams[0];
-			$thisInstance = new ExactTargetUpdatesHooks();
-			$thisInstance->addTheUpdateWikiTask( $aVar, new ExactTargetUpdateWikiTask() );
-		}
+		$thisInstance = new ExactTargetUpdatesHooks();
+		$thisInstance->addTheUpdateWikiTask( $aVarParams, new ExactTargetUpdateWikiTask() );
 		return true;
 	}
 
@@ -154,11 +149,13 @@ class ExactTargetUpdatesHooks {
 	 * @param  ExactTargetAddWikiTask $oTask  Task object.
 	 */
 	public function addTheAddWikiTask( $aParams, ExactTargetAddWikiTask $oTask ) {
-		$iCityId = $aParams['city_id'];
-		$aWikiData = $this->prepareWikiParams( $iCityId );
-		$aWikiCatsMappingData = $this->prepareWikiCatsMappingParams( $iCityId );
-		$oTask->call( 'sendNewWikiData', $aWikiData, $aWikiCatsMappingData );
-		$oTask->queue();
+		if ( $this->bShouldAddTask ) {
+			$iCityId = $aParams['city_id'];
+			$aWikiData = $this->prepareWikiParams( $iCityId );
+			$aWikiCatsMappingData = $this->prepareWikiCatsMappingParams( $iCityId );
+			$oTask->call( 'sendNewWikiData', $aWikiData, $aWikiCatsMappingData );
+			$oTask->queue();
+		}
 	}
 
 	/**
@@ -168,10 +165,12 @@ class ExactTargetUpdatesHooks {
 	 * @param  ExactTargetUpdateTask $oTask  Task object.
 	 */
 	public function addTheUpdateWikiTask( $aVarParams, ExactTargetUpdateWikiTask $oTask ) {
-		$iCityId = $aParams['city_id'];
-		$aWikiData = $this->prepareWikiParams( $iCityId );
-		$oTask->call( 'updateWikiData', $aWikiData );
-		$oTask->queue();
+		if ( $this->bShouldAddTask ) {
+			$iCityId = $aParams['city_id'];
+			$aWikiData = $this->prepareWikiParams( $iCityId );
+			$oTask->call( 'updateWikiData', $aWikiData );
+			$oTask->queue();
+		}
 	}
 
 	/**
