@@ -53,6 +53,9 @@ module.exports = function (config) {
 			'resources/wikia/libraries/mustache/mustache.js',
 			'resources/wikia/libraries/jquery/ellipses.js',
 
+			// Performance
+			'extensions/wikia/Bucky/js/spec/bucky.mock.js',
+
 			//UI Repo JS API
 			'resources/wikia/modules/uicomponent.js',
 			'resources/wikia/modules/uifactory.js',
