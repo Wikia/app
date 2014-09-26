@@ -66,20 +66,7 @@ class UrlGeneratorTest extends PHPUnit_Framework_TestCase {
 
 		$this->assertEquals(
 			'/tests/a/ab/SomeFile.jpg/revision/123456/thumbnail/width/50/height/75',
-			(new UrlGenerator($file))->width(50)->height(75)->thumbnail()->url()
+			(new UrlGenerator($file))->width(50)->height(75)->thumbnail()->revision('09876')->url()
 		);
-	}
-
-	/**
-	 * @expectedException \Wikia\Util\AssertionException
-	 */
-	public function testOldUrlSetRevision() {
-		$file = $this->getMock('\Wikia\Vignette\FileInterface');
-		$file->expects($this->any())
-			->method('isOld')
-			->will($this->returnValue(true));
-
-		$generator = new UrlGenerator($file);
-		$generator->revision(11111);
 	}
 }
