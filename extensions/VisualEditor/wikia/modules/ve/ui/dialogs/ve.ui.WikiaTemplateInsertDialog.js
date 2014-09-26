@@ -120,6 +120,17 @@ ve.ui.WikiaTemplateInsertDialog.prototype.getTeardownProcess = function ( data )
 		}, this );
 };
 
+/**
+ * @inheritdoc
+ */
+ve.ui.WikiaTemplateInsertDialog.prototype.getReadyProcess = function ( data ) {
+	return ve.ui.WikiaTemplateInsertDialog.super.prototype.getReadyProcess.call( this, data )
+		.next( function () {
+			// Focus cursor in search input
+			this.search.setQueryFocus();
+		}, this );
+};
+
 /* Registration */
 
 ve.ui.windowFactory.register( ve.ui.WikiaTemplateInsertDialog );

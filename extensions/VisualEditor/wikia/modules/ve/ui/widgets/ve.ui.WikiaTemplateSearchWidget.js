@@ -251,3 +251,10 @@ ve.ui.WikiaTemplateSearchWidget.prototype.reset = function () {
 	// Scroll to top of suggestions
 	this.$suggestions.get( 0 ).scrollTop = 0;
 };
+
+/**
+ * Set focus on the query input
+ */
+ve.ui.WikiaTemplateSearchWidget.prototype.setQueryFocus = function () {
+	this.query.focus();
+};
