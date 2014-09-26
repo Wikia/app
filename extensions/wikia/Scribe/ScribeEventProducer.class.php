@@ -375,7 +375,7 @@ class ScribeEventProducer {
 
 
 	public function setCategory() {
-		//FIXME: This seems like a bug because getCategory returns an object with cat_id and cat_name fields
+		//This field is called categoryId but getCategory returns an object with cat_id and cat_name fields
 		$this->mParams['categoryId'] = WikiFactory::getCategory( $this->app->wg->CityId );
 
 		// The code should probably be changed to this after double checking the scribe consumers
