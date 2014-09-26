@@ -26,6 +26,7 @@ ve.ui.WikiaTemplateSearchWidget = function VeUiWikiaTemplateSearchWidget( config
 	this.request = null;
 	this.timeout = null;
 	this.suggestionsOffset = 0;
+	this.chunkedResults = 30;
 
 	// Events
 	this.$results.on( 'scroll', ve.bind( this.onResultsScroll, this ) );
@@ -109,37 +110,40 @@ ve.ui.WikiaTemplateSearchWidget.prototype.onSuggestionsScroll = function () {
  * Display results
  */
 ve.ui.WikiaTemplateSearchWidget.prototype.displayResults = function () {
-	var templateData = this.allResults.slice( this.resultsOffset, this.resultsOffset + 30 );
-	this.resultsOffset += 30;
-	this.results.addItems( this.getOptionsFromTemplateData( templateData ) );
+	var results;
+	if ( this.resultsOffset < this.allResults.length ) {
+		results = this.allResults.slice( this.resultsOffset, this.resultsOffset + this.chunkedResults );
+		this.resultsOffset += this.chunkedResults;
+		this.results.addItems( this.getOptionsFromTemplateData( results ) );
+	}
 };
 
 /**
  * Display template suggestions
  *
- * @param {Array} templateData
+ * @param {Array} data Template info
  */
-ve.ui.WikiaTemplateSearchWidget.prototype.displaySuggestions = function ( templateData ) {
-	this.suggestions.addItems( this.getOptionsFromTemplateData( templateData ) );
+ve.ui.WikiaTemplateSearchWidget.prototype.displaySuggestions = function ( data ) {
+	this.suggestions.addItems( this.getOptionsFromTemplateData( data ) );
 };
 
 /**
  * Create option widgets from the given template data
  *
- * @param {Array} templateData
+ * @param {Array} data Template info
  */
-ve.ui.WikiaTemplateSearchWidget.prototype.getOptionsFromTemplateData = function ( templateData ) {
+ve.ui.WikiaTemplateSearchWidget.prototype.getOptionsFromTemplateData = function ( data ) {
 	var i, options = [];
 
-	for ( i = 0; i < templateData.length; i++ ) {
+	for ( i = 0; i < data.length; i++ ) {
 		options.push(
 			new ve.ui.WikiaTemplateOptionWidget(
-				templateData[i],
+				data[i],
 				{
 					'$': this.$,
 					'icon': 'template-inverted',
-					'label': templateData[i].title,
-					'appears': templateData[i].uses
+					'label': data[i].title,
+					'appears': data[i].uses || null
 				}
 			)
 		);
@@ -202,7 +206,7 @@ ve.ui.WikiaTemplateSearchWidget.prototype.onRequestSearchDone = function ( data 
 		return;
 	}
 
-	for ( i in data.templates ) {
+	for ( i = 0; i < data.templates.length; i++ ) {
 		this.allResults.push( {
 			'title': data.templates[i]
 		} );
