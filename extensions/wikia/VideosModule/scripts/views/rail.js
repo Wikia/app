@@ -2,7 +2,7 @@ define('videosmodule.views.rail', [
 	'videosmodule.views.titleThumbnail',
 	'wikia.tracker',
 	'wikia.log',
-    'bucky'
+	'bucky'
 ], function (TitleThumbnailView, Tracker, log, bucky) {
 	'use strict';
 
