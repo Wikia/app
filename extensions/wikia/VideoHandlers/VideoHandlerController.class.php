@@ -244,7 +244,7 @@ class VideoHandlerController extends WikiaController {
 	public function getVideoDetail() {
 		wfProfileIn( __METHOD__ );
 
-		$fileTitles = wfEnsureArray( $this->getVal( 'fileTitle', [] ) );
+		$fileTitles = wfReturnArray( $this->getVal( 'fileTitle', [] ) );
 		$videoOptions = $this->getVideoOptionsWithDefaults( $this->getVal( 'videoOptions', [] ) );
 		$returnSingleVideo = is_string( $this->getVal( 'fileTitle' ) );
 

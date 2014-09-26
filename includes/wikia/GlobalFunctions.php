@@ -1738,7 +1738,7 @@ function wfGetCallerClassMethod( $ignoreClasses ) {
  * @param string|array $value
  * @return array
  */
-function wfEnsureArray( $value ) {
+function wfReturnArray( $value ) {
 	if ( !is_array( $value ) ) {
 		$value = [ $value ];
 	}
