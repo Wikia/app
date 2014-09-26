@@ -70,6 +70,14 @@ ve.ui.WikiaTemplateInsertDialog.prototype.onTemplateSelect = function ( itemData
 		);
 		this.transclusionModel.addPart( template )
 			.done( ve.bind( this.insertTemplate, this ) );
+
+		// Track
+		ve.track( 'wikia', {
+			'action': ve.track.actions.ADD,
+			// Only suggestions data have "uses" information - so use it to determine where
+			// insertion is coming from
+			'label': 'template-insert-from-' + ( 'uses' in itemData ? 'suggestions' : 'search' )
+		} );
 	}
 };
 
