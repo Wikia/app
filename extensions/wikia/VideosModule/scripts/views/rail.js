@@ -1,11 +1,14 @@
 define('videosmodule.views.rail', [
 	'videosmodule.views.titleThumbnail',
 	'wikia.tracker',
-	'wikia.log'
-], function (TitleThumbnailView, Tracker, log) {
+	'wikia.log',
+    'bucky'
+], function (TitleThumbnailView, Tracker, log, bucky) {
 	'use strict';
 
-	var track;
+	var VideosModule, track;
+
+	bucky = bucky('videosmodule.views.rail');
 
 	track = Tracker.buildTrackingFunction({
 		category: 'videos-module-rail',
@@ -14,7 +17,7 @@ define('videosmodule.views.rail', [
 		label: 'module-impression'
 	});
 
-	function VideoModule(options) {
+	VideosModule = function (options) {
 		// this.el is the container for the right rail videos module
 		this.el = options.el;
 		this.$el = $(options.el);
@@ -29,9 +32,9 @@ define('videosmodule.views.rail', [
 		if (this.articleId) {
 			this.init();
 		}
-	}
+	};
 
-	VideoModule.prototype.init = function () {
+	VideosModule.prototype.init = function () {
 		var self = this;
 
 		self.$thumbs.addClass('hidden');
@@ -46,7 +49,7 @@ define('videosmodule.views.rail', [
 			});
 	};
 
-	VideoModule.prototype.render = function () {
+	VideosModule.prototype.render = function () {
 		var i,
 			videos = this.model.data.videos,
 			staffPickVideos = this.model.data.staffVideos,
@@ -58,6 +61,8 @@ define('videosmodule.views.rail', [
 			StaffPicksIndex,
 			vidsNeeded;
 
+		bucky.timer.start('render');
+
 		// If we don't have enough videos to display the minimum amount, return
 		if (videos.length + staffPickVideos.length < this.minNumVids) {
 			this.$el.addClass('hidden');
@@ -67,6 +72,7 @@ define('videosmodule.views.rail', [
 				'VideosModule',
 				true
 			);
+			bucky.timer.stop('render');
 			return;
 		}
 
@@ -110,6 +116,7 @@ define('videosmodule.views.rail', [
 			.done(function () {
 				self.$thumbs.removeClass('hidden');
 				self.$el.stopThrobbing();
+				bucky.timer.stop('render');
 			});
 
 		// Remove tracking for Special Wikis Sampled at 100% -- VID-1800
@@ -123,7 +130,7 @@ define('videosmodule.views.rail', [
 	 * Using Fisher-Yates shuffle algorithm.
 	 * Slightly adapted from http://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array
 	 */
-	VideoModule.prototype.shuffle = function(array) {
+	VideosModule.prototype.shuffle = function (array) {
 		var i, j, temp;
 
 		for (i = array.length - 1; i > 0; i--) {
@@ -135,5 +142,5 @@ define('videosmodule.views.rail', [
 		return array;
 	};
 
-	return VideoModule;
+	return VideosModule;
 });
