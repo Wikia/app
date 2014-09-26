@@ -21,15 +21,15 @@ define('videosmodule.views.rail', [
 		// this.el is the container for the right rail videos module
 		this.el = options.el;
 		this.$el = $(options.el);
-		this.$thumbs = this.$el.find('.thumbnails');
 		this.model = options.model;
-		this.articleId = window.wgArticleId;
+
+		this.$thumbs = this.$el.find('.thumbnails');
 		// Default number of videos, this is the number of videos we'd like to display if possible
 		this.numVids = 5;
 		this.minNumVids = 5;
 
 		// Make sure we're on an article page
-		if (this.articleId) {
+		if (window.wgArticleId) {
 			this.init();
 		}
 	};
@@ -45,66 +45,30 @@ define('videosmodule.views.rail', [
 		this.model
 			.fetch()
 			.complete(function () {
+				self.videos = self.model.data.videos;
+				self.staffPickVideos = self.model.data.staffVideos;
 				self.render();
 			});
 	};
 
 	VideosModule.prototype.render = function () {
-		var i,
-			videos = this.model.data.videos,
-			staffPickVideos = this.model.data.staffVideos,
-			thumbHtml = [],
-			self = this,
+		var self = this,
 			$imagesLoaded = $.Deferred(),
-			imgCount = 0,
-			VideosIndex,
-			StaffPicksIndex,
-			vidsNeeded;
+			imgCount = 0;
 
 		bucky.timer.start('render');
 
-		// If we don't have enough videos to display the minimum amount, return
-		if (videos.length + staffPickVideos.length < this.minNumVids) {
-			this.$el.addClass('hidden');
-			log(
-				'Not enough videos were returned for VideosModule rail',
-				log.levels.error,
-				'VideosModule',
-				true
-			);
+		if (!this.hasEnoughVideos()) {
 			bucky.timer.stop('render');
 			return;
 		}
 
-		// If there are less related videos than our default amount, this.NumVids, pull additional
-		// videos from the staffPicks videos
-		if (videos.length < this.numVids) {
-			vidsNeeded = this.numVids - videos.length;
-			videos = videos.concat(staffPickVideos.splice(0, vidsNeeded));
-			this.numVids = videos.length;
-		}
-
-		this.shuffle(videos);
-		// If we have any staff pick videos, pick one randomly from that list and display it
-		// in a random position in the Videos Module.
-		if (staffPickVideos.length) {
-			VideosIndex = Math.floor(Math.random() * this.numVids);
-			StaffPicksIndex = Math.floor(Math.random() * staffPickVideos.length);
-			videos[VideosIndex] = staffPickVideos[StaffPicksIndex];
-		}
-
-		for (i = 0; i < this.numVids; i++) {
-			thumbHtml.push(new TitleThumbnailView({
-					el: 'li',
-					model: videos[i],
-					idx: i
-				})
-				.render()
-				.$el);
-		}
+		this.addBackfill();
+		this.shuffle(this.videos);
+		this.addStaffPick();
 
 		this.$thumbs
-			.append(thumbHtml)
+			.append(this.getThumbHtml())
 			.find('img[data-video-key]').on('load error', function () {
 				imgCount += 1;
 				if (imgCount === self.numVids) {
@@ -123,6 +87,74 @@ define('videosmodule.views.rail', [
 		if (window.wgIsGASpecialWiki !== true) {
 			track();
 		}
+	};
+
+	/**
+	 * Check if we have enough videos to show the module
+	 * @returns {boolean}
+	 */
+	VideosModule.prototype.hasEnoughVideos = function () {
+		if (this.videos.length + this.staffPickVideos.length < this.minNumVids) {
+			this.$el.addClass('hidden');
+			log(
+				'Not enough videos were returned for VideosModule rail',
+				log.levels.error,
+				'VideosModule',
+				true
+			);
+			return false;
+		}
+		return true;
+	};
+
+	/**
+	 * If we have any staff pick videos, pick one randomly from that list and display it
+	 * in a random position in the Videos Module.
+	 */
+	VideosModule.prototype.addStaffPick = function () {
+		var VideosIndex,
+			StaffPicksIndex;
+
+		if (this.staffPickVideos.length) {
+			VideosIndex = Math.floor(Math.random() * this.numVids);
+			StaffPicksIndex = Math.floor(Math.random() * this.staffPickVideos.length);
+			this.videos[VideosIndex] = this.staffPickVideos[StaffPicksIndex];
+		}
+	};
+
+	/**
+	 * If there are less related videos than our default amount, this.NumVids, pull additional
+	 * videos from the staffPicks videos
+	 */
+	VideosModule.prototype.addBackfill = function () {
+		var vidsNeeded;
+
+		if (this.videos.length < this.numVids) {
+			vidsNeeded = this.numVids - this.videos.length;
+			this.videos = this.videos.concat(this.staffPickVideos.splice(0, vidsNeeded));
+			this.numVids = this.videos.length;
+		}
+	};
+
+	/**
+	 * Render TitleThumbnail views and return generated HTML
+	 * @returns {Array}
+	 */
+	VideosModule.prototype.getThumbHtml = function () {
+		var i,
+			thumbHtml = [];
+
+		for (i = 0; i < this.numVids; i++) {
+			thumbHtml.push(new TitleThumbnailView({
+				el: 'li',
+				model: this.videos[i],
+				idx: i
+			})
+				.render()
+				.$el);
+		}
+
+		return thumbHtml;
 	};
 
 	/**
