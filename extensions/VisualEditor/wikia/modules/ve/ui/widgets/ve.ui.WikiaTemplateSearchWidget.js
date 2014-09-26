@@ -209,6 +209,12 @@ ve.ui.WikiaTemplateSearchWidget.prototype.onRequestSearchDone = function ( data 
 		} );
 	}
 
+	// Track
+	ve.track( 'wikia', {
+		'action': ve.track.actions.SUCCESS,
+		'label': 'template-insert-search'
+	} );
+
 	this.displayResults();
 };
 
