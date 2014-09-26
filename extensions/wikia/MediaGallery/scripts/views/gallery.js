@@ -1,7 +1,7 @@
 define('mediaGallery.views.gallery', [
-    'mediaGallery.views.media',
-    'mediaGallery.templates.mustache',
-    'wikia.tracker',
+	'mediaGallery.views.media',
+	'mediaGallery.templates.mustache',
+	'wikia.tracker',
 	'bucky'
 ], function (Media, templates, tracker, bucky) {
 	'use strict';
