@@ -240,9 +240,15 @@ ve.ui.WikiaTemplateSearchWidget.prototype.onRequestSuggestionsDone = function ( 
 };
 
 /**
- * Unselect any selected item in either the suggestions or results select widget
+ * Reset the widget to the default view state
  */
-ve.ui.WikiaTemplateSearchWidget.prototype.unselectItem = function () {
+ve.ui.WikiaTemplateSearchWidget.prototype.reset = function () {
+	// Unselect any selected item in either suggestions or results list
 	this.suggestions.selectItem();
 	this.results.selectItem();
+	// Reset search input value
+	this.query.setValue( '' );
+	// Hide the results, show the suggestions, and scroll to the top
+	this.$results.hide();
+	this.$suggestions.show().get( 0 ).scrollTop = 0;
 };

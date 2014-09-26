@@ -39,7 +39,8 @@ ve.ui.WikiaTemplateInsertDialog.prototype.initialize = function () {
 
 	// Properties
 	this.search = new ve.ui.WikiaTemplateSearchWidget( {
-		'placeholder': ve.msg( 'wikia-visualeditor-dialog-wikiatemplateinsert-search' )
+		'placeholder': ve.msg( 'wikia-visualeditor-dialog-wikiatemplateinsert-search' ),
+		'clearable': true
 	} );
 
 	// Events
@@ -114,8 +115,8 @@ ve.ui.WikiaTemplateInsertDialog.prototype.onTransact = function () {
 ve.ui.WikiaTemplateInsertDialog.prototype.getTeardownProcess = function ( data ) {
 	return ve.ui.WikiaTemplateInsertDialog.super.prototype.getTeardownProcess.call( this, data )
 		.next( function () {
-			// Unselect
-			this.search.unselectItem();
+			// Reset the search widget
+			this.search.reset();
 		}, this );
 };
 
