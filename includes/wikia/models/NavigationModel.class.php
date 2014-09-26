@@ -175,7 +175,10 @@ class NavigationModel extends WikiaModel {
 	}
 
 	public function getLocalNavigationTree( $messageName ) {
-		return $this->getTree( $messageName, self::LOCALNAV_LEVEL_1_ITEMS_COUNT, self::LOCALNAV_LEVEL_2_ITEMS_COUNT, self::LOCALNAV_LEVEL_3_ITEMS_COUNT );
+		$this->setShouldTranslateContent(false);
+		$s = $this->getTree( $messageName, self::LOCALNAV_LEVEL_1_ITEMS_COUNT, self::LOCALNAV_LEVEL_2_ITEMS_COUNT, self::LOCALNAV_LEVEL_3_ITEMS_COUNT );
+		$this->setShouldTranslateContent(true);
+		return $s;
 	}
 
 	private function getTreeMemcKey( /* args */ ) {
