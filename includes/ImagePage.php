@@ -435,6 +435,7 @@ class ImagePage extends Article {
 
 				$params['width'] = $width;
 				$params['height'] = $height;
+				// NOTE: the object that generates the thumbnail URL is created here
 				$thumbnail = $this->displayImg->transform( $params );
 
 				$showLink = true;

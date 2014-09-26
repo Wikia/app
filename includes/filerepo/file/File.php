@@ -32,7 +32,11 @@
  *
  * @ingroup FileAbstraction
  */
-abstract class File implements \Wikia\Vignette\FileInterface {
+
+use Wikia\Vignette\FileInterface;
+use Wikia\Vignette\UrlGenerator;
+
+abstract class File implements FileInterface {
 	const DELETED_FILE = 1;
 	const DELETED_COMMENT = 2;
 	const DELETED_USER = 4;
@@ -827,9 +831,16 @@ abstract class File implements \Wikia\Vignette\FileInterface {
 			$normalisedParams = $params;
 			$this->handler->normaliseParams( $this, $normalisedParams );
 
+			// NOTE: The thumbnail URL is generated here.
+			// FIXME: Wrap the setting of $thumbUrl in a feature flag
 			$thumbName = $this->thumbName( $normalisedParams );
 			$thumbUrl = $this->getThumbUrl( $thumbName );
 			$thumbPath = $this->getThumbPath( $thumbName ); // final thumb path
+
+			$thumbUrl = (new UrlGenerator($this))
+				->width($normalisedParams['width'])
+				->height($normalisedParams['height'])
+				->thumbnail();
 
 			if ( $this->repo ) {
 				// Defer rendering if a 404 handler is set up...
@@ -1747,4 +1758,15 @@ abstract class File implements \Wikia\Vignette\FileInterface {
 			throw new MWException( "A Title object is not set for this File.\n" );
 		}
 	}
+
+	/**
+	 * This is a stub required for any children that implement the FileInterface
+	 * and return true for isOld().
+	 *
+	 * @return false on failure, string of digits on success
+	 */
+	public function getArchiveTimestamp() {
+		return false;
+	}
+
 }

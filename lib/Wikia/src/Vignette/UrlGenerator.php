@@ -60,12 +60,16 @@ class UrlGenerator {
 	}
 
 	/**
-	 * Request a specific revision of an image
+	 * Request a specific revision of an image. This is a no-op in URL generation
+	 * if $this->file->isOld() == true. See url() below.
+	 *
 	 * @param string $revision
 	 * @return $this
 	 */
 	public function revision($revision) {
-		$this->revision = $revision;
+		if (!empty($revision)) {
+			$this->revision = $revision;
+		}
 		return $this;
 	}
 
@@ -184,19 +188,27 @@ class UrlGenerator {
 	 */
 	public function url() {
 		$bucketPath = self::bucketPath();
-		$imagePath = "{$bucketPath}/{$this->file->getUrlRel()}/revision/{$this->revision}";
+
+		if ($this->file->isOld()) {
+			$this->revision($this->file->getArchiveTimestamp());
+		} else {
+			if ($this->revision == self::REVISION_LATEST) {
+				$this->query['cb'] = $this->file->getTimestamp();
+			}
+		}
+
+
+		$imagePath = "{$bucketPath}/{$this->getRelativeUrl()}/revision/{$this->revision}";
 
 		if (!isset($this->query['lang'])) {
 			global $wgLang;
-			$this->lang($wgLang->getCode());
+			if (isset($wgLang)) {
+				$this->lang($wgLang->getCode());
+			}
 		}
 
 		if ($this->mode != self::MODE_ORIGINAL) {
 			$imagePath .= "/{$this->mode}/width/{$this->width}/height/{$this->height}";
-		}
-
-		if ($this->revision == self::REVISION_LATEST) {
-			$this->query['cb'] = $this->file->getTimestamp();
 		}
 
 		if (!empty($this->query)) {
@@ -206,6 +218,18 @@ class UrlGenerator {
 		}
 
 		return self::domainShard($imagePath);
+	}
+
+	/**
+	 * Get the relative URL for the image. The MW core code uses /archive/<hash>/<archive name>
+	 * in to generate the old image path names which won't work with vignette since the
+	 * concept of an archive is a function of the revision. This moves the File::getUrlRel
+	 * logic here so we have direct control over it.
+	 *
+	 * @return string the relative url
+	 */
+	private function getRelativeUrl() {
+		return $this->file->getHashPath() . rawurlencode($this->file->getName());
 	}
 
 	public function __toString() {

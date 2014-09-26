@@ -16,8 +16,14 @@ class UrlGeneratorTest extends PHPUnit_Framework_TestCase {
 	public function testUrl() {
 		$file = $this->getMock('\Wikia\Vignette\FileInterface');
 		$file->expects($this->any())
-			->method('getRel')
-			->will($this->returnValue('a/ab/SomeFile.jpg'));
+			->method('getHashPath')
+			->will($this->returnValue('a/ab/'));
+		$file->expects($this->any())
+			->method('getName')
+			->will($this->returnValue('SomeFile.jpg'));
+		$file->expects($this->any())
+			->method('isOld')
+			->will($this->returnValue(false));
 		$file->expects($this->any())
 			->method('getTimestamp')
 			->will($this->returnValue('12345'));
@@ -35,6 +41,32 @@ class UrlGeneratorTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals(
 			'/tests/a/ab/SomeFile.jpg/revision/latest/zoom-crop/width/50/height/75?fill=transparent&cb=12345',
 			(new UrlGenerator($file))->width(50)->height(75)->zoomCrop()->backgroundFill('transparent')->url()
+		);
+	}
+
+	public function testOldUrl() {
+		$file = $this->getMock('\Wikia\Vignette\FileInterface');
+		$file->expects($this->any())
+			->method('getHashPath')
+			->will($this->returnValue('a/ab/'));
+		$file->expects($this->any())
+			->method('getName')
+			->will($this->returnValue('SomeFile.jpg'));
+		$file->expects($this->any())
+			->method('isOld')
+			->will($this->returnValue(true));
+		$file->expects($this->any())
+			->method('getArchiveTimestamp')
+			->will($this->returnValue('123456'));
+
+		$this->assertEquals(
+			'/tests/a/ab/SomeFile.jpg/revision/123456',
+			(new UrlGenerator($file))->url()
+		);
+
+		$this->assertEquals(
+			'/tests/a/ab/SomeFile.jpg/revision/123456/thumbnail/width/50/height/75',
+			(new UrlGenerator($file))->width(50)->height(75)->thumbnail()->revision('09876')->url()
 		);
 	}
 }
