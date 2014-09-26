@@ -7,20 +7,19 @@ $option-backgroundColor: mix($color-page, #000000, 90%);
 }
 
 .ve-ui-wikiaTemplateInsertDialog {
-	.ve-ui-wikiaTemplateInsertDialog-search {
-		background: $color-page;
-		border-bottom: 1px solid $color-page-border;
-		left: 0;
-		padding: 1.5em 2em;
-		position: absolute;
-		right: 0;
+
+	.oo-ui-searchWidget-query {
+		height: 5.5em;
+		padding: 0 2em;
 
 		.oo-ui-textInputWidget {
-			width: 100%;
+			margin: 1.5em 0;
 		}
 	}
-	.oo-ui-selectWidget {
-		padding-top: 10px;
+
+	.oo-ui-searchWidget-results {
+		padding-top: 1.5em;
+		top: 5.5em;
 	}
 }
 
@@ -30,7 +29,7 @@ $option-backgroundColor: mix($color-page, #000000, 90%);
 	box-sizing: border-box;
 	float: left;
 	height: 80px;
-	margin: 7px 10px;
+	margin: 0 0 13px 13px;
 	padding: 1.2em 1em .5em 60px;
 	width: 240px;
 
@@ -55,6 +54,7 @@ $option-backgroundColor: mix($color-page, #000000, 90%);
 	.ve-ui-wikiaTemplateOptionWidget-appears {
 		color: $color-alternate-text;
 		font-size: .8em;
+		padding-top: 5px;
 	}
 
 	.ve-ui-wikiaTemplateOptionWidget-gradient {
