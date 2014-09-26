@@ -21,13 +21,6 @@ $option-backgroundColor: mix($color-page, #000000, 90%);
 		padding-top: 1.5em;
 		top: 5.5em;
 	}
-
-	.ve-ui-wikiaTemplateQueryWidget-wrapper {
-		background: $color-page;
-		border-bottom: 1px solid $color-page-border;
-		padding: 1.5em 2em;
-		position: absolute;
-	}
 }
 
 .ve-ui-wikiaTemplateOptionWidget {
@@ -36,7 +29,7 @@ $option-backgroundColor: mix($color-page, #000000, 90%);
 	box-sizing: border-box;
 	float: left;
 	height: 80px;
-	margin: 0 0 1em 1em;
+	margin: 0 0 13px 13px;
 	padding: 1.2em 1em .5em 60px;
 	width: 240px;
 

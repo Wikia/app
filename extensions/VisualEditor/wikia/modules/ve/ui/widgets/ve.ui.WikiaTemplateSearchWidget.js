@@ -24,7 +24,6 @@ ve.ui.WikiaTemplateSearchWidget = function VeUiWikiaTemplateSearchWidget( config
 	this.suggestions = new OO.ui.SelectWidget( { '$': this.$ } );
 	this.$suggestions = this.$( '<div>' );
 	this.request = null;
-	this.requestCallback = ve.bind( this.requestMedia, this );
 	this.timeout = null;
 	this.suggestionsOffset = 0;
 
@@ -32,18 +31,20 @@ ve.ui.WikiaTemplateSearchWidget = function VeUiWikiaTemplateSearchWidget( config
 	this.$results.on( 'scroll', ve.bind( this.onResultsScroll, this ) );
 	this.$suggestions.on( 'scroll', ve.bind( this.onSuggestionsScroll, this ) );
 	this.suggestions.connect( this, {
-		'highlight': 'onResultsHighlight',
-		'select': 'onResultsSelect'
+		'highlight': 'onSuggestionsHighlight',
+		'select': 'onSuggestionsSelect'
 	} );
 
 	// Initialization
 	this.$suggestions
 		.addClass( 'oo-ui-searchWidget-results ve-ui-wikiaTemplateSearchWidget-suggestions' )
 		.append( this.suggestions.$element );
+	// The "clearfix" class clears floated elements in order to give the container element
+	// a proper height. This allows checking of the container height for the scroll events.
 	this.suggestions.$element.addClass( 'clearfix' );
 	this.results.$element.addClass( 'clearfix' );
-	this.$element
-		.prepend( this.$suggestions );
+	this.$element.prepend( this.$suggestions );
+	// Hide search results in order to show suggestions first
 	this.$results.hide();
 	this.requestSuggestions();
 };
@@ -53,6 +54,10 @@ ve.ui.WikiaTemplateSearchWidget = function VeUiWikiaTemplateSearchWidget( config
 OO.inheritClass( ve.ui.WikiaTemplateSearchWidget, OO.ui.SearchWidget );
 
 /* Methods */
+
+ve.ui.WikiaTemplateSearchWidget.prototype.onSuggestionsHighlight = ve.ui.WikiaTemplateSearchWidget.super.prototype.onResultsHighlight;
+
+ve.ui.WikiaTemplateSearchWidget.prototype.onSuggestionsSelect = ve.ui.WikiaTemplateSearchWidget.super.prototype.onResultsSelect;
 
 /**
  * @inheritdoc
@@ -173,6 +178,7 @@ ve.ui.WikiaTemplateSearchWidget.prototype.requestSuggestions = function () {
 			'offset': this.suggestionsOffset
 		}
 	} )
+		.always( ve.bind( this.onRequestSuggestionsAlways, this ) )
 		.done( ve.bind( this.onRequestSuggestionsDone, this ) );
 };
 
@@ -190,20 +196,27 @@ ve.ui.WikiaTemplateSearchWidget.prototype.onRequestSearchAlways = function () {
  * @param {Object} data The response object
  */
 ve.ui.WikiaTemplateSearchWidget.prototype.onRequestSearchDone = function ( data ) {
-	var i, optionsData = [];
+	var i;
 
 	if ( !data.templates ) {
 		return;
 	}
 
 	for ( i in data.templates ) {
-		optionsData.push( {
+		this.allResults.push( {
 			'title': data.templates[i]
 		} );
 	}
 
-	this.allResults = optionsData;
 	this.displayResults();
+};
+
+/**
+ * Handle suggestions request promise.always
+ */
+ve.ui.WikiaTemplateSearchWidget.prototype.onRequestSuggestionsAlways = function () {
+	this.request = null;
+	this.suggestionsPending = false;
 };
 
 /**
@@ -212,14 +225,16 @@ ve.ui.WikiaTemplateSearchWidget.prototype.onRequestSearchDone = function ( data 
  * @param {Object} data The response object
  */
 ve.ui.WikiaTemplateSearchWidget.prototype.onRequestSuggestionsDone = function ( data ) {
-	this.suggestionsPending = false;
 	if ( !data.templates ) {
-		this.suggestionsOffset = null;
 		return;
 	}
 
-	this.suggestionsOffset = data['query-continue'] ? data['query-continue'] : null;
-	this.allSuggestions = data.templates;
+	if ( data['query-continue'] ) {
+		this.suggestionsOffset = data['query-continue'];
+	} else {
+		// Remove the scroll event handler, so that no more suggestions are requested
+		this.$suggestions.off( 'scroll' );
+	}
 	this.displaySuggestions( data.templates );
 };
 
