@@ -63,7 +63,11 @@ class VisualEditorWikiaHooks {
 				. '/api/'
 				. $wgIntMapConfig[ 'version' ];
 		}
-		$vars['showVETransitionDialog'] = $wgUser->getOption( 'showVisualEditorTransitionDialog', 0 );
+		if ( $wgUser->getOption( 'showVisualEditorTransitionDialog', 0 ) == 1 ) {
+			$vars['showVETransitionDialog'] = 1;
+			$wgUser->setOption( 'showVisualEditorTransitionDialog', 0 );
+			$wgUser->saveSettings();
+		}
 		return true;
 	}
 
