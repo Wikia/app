@@ -7,9 +7,11 @@
 	}
 
 	$(function () {
-		var config = $.extend({}, window.wgBuckyConfig, {context: window.wgTransactionContext});
+		var config = $.extend({}, context.wgBuckyConfig, {
+			'context': context.wgTransactionContext
+		});
 		Bucky.setOptions(config);
-		$(window).load(function () {
+		$(context).load(function () {
 			setTimeout(function () {
 				Bucky.sendPagePerformance(false);
 			}, 0);
