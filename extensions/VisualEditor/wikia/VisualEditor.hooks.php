@@ -63,7 +63,8 @@ class VisualEditorWikiaHooks {
 				. '/api/'
 				. $wgIntMapConfig[ 'version' ];
 		}
-		if ( $wgUser->getOption( 'showVisualEditorTransitionDialog', 0 ) == 1 ) {
+		// Note: even if set as integer, option value is retrieved as string
+		if ( $wgUser->getOption( 'showVisualEditorTransitionDialog' ) === '1' ) {
 			$vars['showVETransitionDialog'] = 1;
 			$wgUser->setOption( 'showVisualEditorTransitionDialog', 0 );
 			$wgUser->saveSettings();
