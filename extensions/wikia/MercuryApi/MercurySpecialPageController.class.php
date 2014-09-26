@@ -7,15 +7,23 @@
 class MercurySpecialPageController extends WikiaSpecialPageController {
 
 	const PAGE_NAME = 'Mercury';
+	const PAGE_RESTRICTION = 'lookupuser';
 	const COOKIE_NAME = 'wk_mercury';
 	const OPT_IN = 1;
 	const COOKIE_EXPIRE_DAYS = 7;
 
 	public function __construct() {
-		parent::__construct( self::PAGE_NAME );
+		parent::__construct( self::PAGE_NAME, self::PAGE_RESTRICTION, false );
 	}
 
 	public function index() {
+		global $wgUser;
+
+		if( !$wgUser->isAllowed( self::PAGE_RESTRICTION ) ) {
+			$this->displayRestrictionError();
+			return;
+		}
+
 		$opt = $this->request->getVal( 'opt' );
 		if ( !empty( $opt ) ) {
 			if ( $opt === 'in' ) {
