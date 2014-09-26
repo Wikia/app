@@ -166,7 +166,7 @@
 			}
 
 			// TODO: Change it to .active when finishing interactions
-			&:hover, &.active {
+			&.active {
 				background: $color-buttons;
 				border-color: $color-buttons;
 				color: $color-button-text;
@@ -212,20 +212,34 @@
 			}
 
 		}
-		li:hover, li.active {
+		li.active {
 			ul.third {
 				display: block;
 			}
 		}
 	}
 	ul.third {
-		background: $color-buttons;
-		padding: 5px;
+		background: none;
+		height: 100%;
 		li {
+			background: $color-buttons;
 			height: 31px;
+
+			&:first-child a {
+				border-top-width: 5px;
+			}
+			&:last-child a {
+				border-bottom-width: 5px;
+			}
 		}
 		a {
 			padding: 10px;
+
+			border-color: $color-buttons;
+			border-style: solid;
+			border-right-width: 5px;
+			border-left-width: 5px;
+
 
 			&:hover {
 				font-weight: normal;
@@ -258,6 +272,10 @@
 		left: auto;
 		top: 0;
 	}
+}
+
+.local-navigation-container {
+	@include clearfix;
 }
 
 @media #{$medium-only} {

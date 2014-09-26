@@ -2041,23 +2041,6 @@ $config['global_header_js'] = [
 ];
 
 
-/** LocalNavigation extension */
-$config[ 'local_navigation_scss' ] = [
-	'type' => AssetsManager::TYPE_SCSS,
-	'skin' => [ 'venus', 'oasis' ],
-	'assets' => [
-		'//extensions/wikia/LocalNavigation/styles/LocalNavigation.scss'
-	]
-];
-
-$config['local_navigation_js'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => ['venus', 'oasis'],
-	'assets' => [
-		'//extensions/wikia/LocalNavigation/scripts/LocalNavigationMenu.js',
-	]
-];
-
 $config['media_gallery_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => ['oasis'],

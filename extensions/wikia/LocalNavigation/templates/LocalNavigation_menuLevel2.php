@@ -1,6 +1,6 @@
 <ul class="second dropdown">
 	<? foreach ($nodes as $i2 => $node2): ?>
-		<li>
+		<li class="local-nav-entry">
 			<a href="<?= $node2['href']; ?>" data-content="<?= $node2['text']; ?>"
 				<?if (!empty($node2['children'])): ?>
 					class="has-more"

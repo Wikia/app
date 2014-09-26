@@ -1,7 +1,8 @@
-<nav>
+<nav id="localNavigation">
+	<div class="local-nav-container">
 	<ul class="first">
 		<? foreach ($menuNodes as $i1 => $node1): ?>
-			<li>
+			<li class="local-nav-entry">
 				<a href="<?= $node1['href']; ?>"><?= $node1['text']; ?></a>
 				<? if ( $node1['children'] ): ?>
 					<?= $app->renderView('LocalNavigation', 'menuLevel2', ['nodes' => $node1['children']]); ?>
@@ -9,4 +10,5 @@
 			</li>
 		<? endforeach; ?>
 	</ul>
+	</div>
 </nav>
