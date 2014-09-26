@@ -286,16 +286,7 @@ abstract class File implements FileInterface {
 	 * @return string
 	 */
 	public function getUrl() {
-		if ( !isset( $this->url ) ) {
-			$this->assertRepoDefined();
-			$this->url = $this->repo->getZoneUrl( 'public' ) . '/' . $this->getUrlRel();
-
-			# start wikia change
-			$this->originalUrl = $this->url;
-			$this->url = wfReplaceImageServer( $this->url, $this->getTimestamp() ); // rewrite URL in all envirnoments (BAC-939)
-			# end wikia change
-		}
-		return $this->url;
+		return new UrlGenerator($this);
 	}
 
 	# start wikia change
@@ -837,7 +828,7 @@ abstract class File implements FileInterface {
 			$thumbUrl = $this->getThumbUrl( $thumbName );
 			$thumbPath = $this->getThumbPath( $thumbName ); // final thumb path
 
-			$thumbUrl = (new UrlGenerator($this))
+			$thumbUrl = $this->getUrl()
 				->width($normalisedParams['width'])
 				->height($normalisedParams['height'])
 				->thumbnail();
