@@ -175,28 +175,32 @@ class NavigationModel extends WikiaModel {
 	}
 
 	public function getLocalNavigationTree( $messageName ) {
-		$this->setShouldTranslateContent(false);
-		$s = $this->getTree( $messageName, self::LOCALNAV_LEVEL_1_ITEMS_COUNT, self::LOCALNAV_LEVEL_2_ITEMS_COUNT, self::LOCALNAV_LEVEL_3_ITEMS_COUNT );
-		$this->setShouldTranslateContent(true);
-		return $s;
+		return $this->getTree(
+			$messageName,
+			self::LOCALNAV_LEVEL_1_ITEMS_COUNT,
+			self::LOCALNAV_LEVEL_2_ITEMS_COUNT,
+			self::LOCALNAV_LEVEL_3_ITEMS_COUNT,
+			true
+		);
 	}
 
 	private function getTreeMemcKey( /* args */ ) {
 		return $this->getMemcKey(implode('-', func_get_args() + [self::MEMC_VERSION]));
 	}
 
-	public function getTree( $messageName, $level1, $level2, $level3 ) {
+	public function getTree( $messageName, $level1, $level2, $level3, $forContent = false ) {
 		$menuData = WikiaDataAccess::cache(
-			$this->getTreeMemcKey( $messageName, $level1, $level2, $level3 ),
+			$this->getTreeMemcKey( $messageName, $level1, $level2, $level3, $forContent ),
 			1800,
-			function() use ( $messageName, $level1, $level2, $level3 ) {
+			function() use ( $messageName, $level1, $level2, $level3, $forContent ) {
 				$menuData = [];
 
 				$this->menuNodes = $this->parse(
 					NavigationModel::TYPE_MESSAGE,
 					$messageName,
 					[$level1, $level2, $level3],
-					1800 /* 3 hours */
+					1800 /* 3 hours */,
+					$forContent
 				);
 
 				foreach( $this->menuNodes[0]['children'] as $id ) {
