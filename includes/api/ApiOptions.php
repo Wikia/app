@@ -75,8 +75,13 @@ class ApiOptions extends ApiBase {
 		$prefs = Preferences::getPreferences( $user, $this->getContext() );
 
 		foreach ( $changes as $key => $value ) {
-			$field = HTMLForm::loadInputFromParameters( $key, $prefs[$key] );
-			$validation = $field->validate( $value, $user->getOptions() );
+			try {
+				$field = HTMLForm::loadInputFromParameters( $key, $prefs[$key] );
+				$validation = $field->validate( $value, $user->getOptions() );
+			} catch ( Exception $e ) {
+				// Preference does not exist or its type is invalid
+				$validation = false;
+			}
 
 			if ( $validation === true ) {
 				$user->setOption( $key, $value );
