@@ -150,7 +150,7 @@ ve.ui.WikiaPreferenceDialog.prototype.getTeardownProcess = function ( data ) {
 					'optionname': 'showVisualEditorTransitionDialog',
 					'optionvalue': 0
 				}
-			} )
+			} );
 		}, this );
 };
 
