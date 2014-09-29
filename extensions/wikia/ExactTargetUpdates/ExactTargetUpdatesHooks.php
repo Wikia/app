@@ -66,14 +66,14 @@ class ExactTargetUpdatesHooks {
 	}
 
 	/**
-	 * Runs a method for adding an UpdateWikiTask to job queue.
+	 * Runs a method for adding an UpdateWikiTask to job queue on change in WikiFactory.
 	 * Executed on WikiFactoryChanged hook.
-	 * @param  array $aVarParams  Contains a var's name, a wiki's id and a new value.
+	 * @param  array $aWfVarParams  Contains a var's name, a wiki's id and a new value.
 	 * @return true
 	 */
-	public static function onWikiDataChange( $aVarParams ) {
+	public static function onWikiFactoryChange( $aWfVarParams ) {
 		$thisInstance = new ExactTargetUpdatesHooks();
-		$thisInstance->addTheUpdateWikiTask( $aVarParams, new ExactTargetUpdateWikiTask() );
+		$thisInstance->addTheUpdateWikiTask( $aWfVarParams, new ExactTargetUpdateWikiTask() );
 		return true;
 	}
 
@@ -161,15 +161,18 @@ class ExactTargetUpdatesHooks {
 	/**
 	 * Adds a task to job queue that sends
 	 * an Update request to ExactTarget with a changed variable.
-	 * @param  array $aVarParams  Contains var's name, city_id and a new value.
+	 * @param  array $aWfVarParams  Contains var's name, city_id and a new value.
 	 * @param  ExactTargetUpdateTask $oTask  Task object.
 	 */
-	public function addTheUpdateWikiTask( $aVarParams, ExactTargetUpdateWikiTask $oTask ) {
+	public function addTheUpdateWikiTask( $aWfVarParams, ExactTargetUpdateWikiTask $oTask ) {
 		if ( $this->bShouldAddTask ) {
-			$iCityId = $aParams['city_id'];
-			$aWikiData = $this->prepareWikiParams( $iCityId );
-			$oTask->call( 'updateWikiData', $aWikiData );
-			$oTask->queue();
+			$sVarName = $aWfVarParams[0];
+			$aWfVarsTriggeringUpdate = ExactTargetUpdatesHelper::getWfVarsTriggeringUpdate();
+			if ( isset( $aWfVarsTriggeringUpdate[ $sVarName ] ) {
+				$aWikiDataForUpdate = $this->prepareWikiParamsForUpdate( $aWfVarParams );
+				$oTask->call( 'updateWikiData', $aWikiDataForUpdate );
+				$oTask->queue();
+			}
 		}
 	}
 
@@ -182,11 +185,15 @@ class ExactTargetUpdatesHooks {
 		$oWiki = \WikiFactory::getWikiById( $iCityId );
 
 		$aWikiParams = [
-			'city_id' => $oWiki->city_id,
-			'city_sitename' => $oWiki->city_sitename,
-			'city_url' => $oWiki->city_url,
-			'city_created' => $oWiki->city_created,
-			'city_founding_user' => $oWiki->city_founding_user,
+			'city_id' => $oWiki->city_id, // Not changeable
+			'city_url' => $oWiki->city_url, // DONE
+			'city_created' => $oWiki->city_created, // Not changeable
+			'city_founding_user' => $oWiki->city_founding_user, // Not changeable
+			'city_description' => $oWiki->city_description,
+			'city_title' => $oWiki->city_title, // DONE
+			'city_lang' => $oWiki->city_lang, // DONE
+			'city_cluster' => $oWiki->city_cluster, // DONE
+			'city_vertical' => $oWiki->city_vertical,
 		];
 		return $aWikiParams;
 	}
@@ -209,5 +216,35 @@ class ExactTargetUpdatesHooks {
 			];
 		}
 		return $aWikiCatsMappingParams;
+	}
+
+	private function prepareWikiDataForUpdate( $aWfVarParams ) {
+		$aWikiDataForUpdate = [];
+
+		$sVarName = $aWfVarParams[0];
+		$iCityId = $aWfVarParams[1];
+		$mVarNewValue = $aWfVarParams[2];
+
+		switch ( $sVarName ) {
+			case 'wfServer':
+				$wgScriptPath = \WikiFactory::getVarValueByName( 'wgScriptPath', $iCityId );
+				$sCityUrl = $mVarNewValue . $wgScriptPath;
+				$aWikiDataForUpdate['city_url'] = $sCityUrl;
+				break;
+
+			case 'wgSitename':
+				$aWikiDataForUpdate['city_title'] = $mVarNewValue;
+				break;
+
+			case 'wgLanguageCode':
+				$aWikiDataForUpdate['city_lang'] = $mVarNewValue;
+				break;
+
+			case 'wgDBcluster' :
+				$aWikiDataForUpdate['city_cluster'] = $mVarNewValue;
+				break;
+		}
+
+		return $aWikiDataForUpdate;
 	}
 }
