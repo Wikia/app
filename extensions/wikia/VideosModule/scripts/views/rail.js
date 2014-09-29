@@ -108,6 +108,37 @@ define('videosmodule.views.rail', [
 	};
 
 	/**
+	 * If there are less related videos than our default amount, this.NumVids, pull additional
+	 * videos from the staffPicks videos
+	 */
+	VideosModule.prototype.addBackfill = function () {
+		var vidsNeeded;
+
+		if (this.videos.length < this.numVids) {
+			vidsNeeded = this.numVids - this.videos.length;
+			this.videos = this.videos.concat(this.staffPickVideos.splice(0, vidsNeeded));
+			this.numVids = this.videos.length;
+		}
+	};
+
+	/**
+	 * Randomize array element order in-place.
+	 * Using Fisher-Yates shuffle algorithm.
+	 * Slightly adapted from http://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array
+	 */
+	VideosModule.prototype.shuffle = function (array) {
+		var i, j, temp;
+
+		for (i = array.length - 1; i > 0; i--) {
+			j = Math.floor(Math.random() * (i + 1));
+			temp = array[i];
+			array[i] = array[j];
+			array[j] = temp;
+		}
+		return array;
+	};
+
+	/**
 	 * If we have any staff pick videos, pick one randomly from that list and display it
 	 * in a random position in the Videos Module.
 	 */
@@ -119,20 +150,6 @@ define('videosmodule.views.rail', [
 			VideosIndex = Math.floor(Math.random() * this.numVids);
 			StaffPicksIndex = Math.floor(Math.random() * this.staffPickVideos.length);
 			this.videos[VideosIndex] = this.staffPickVideos[StaffPicksIndex];
-		}
-	};
-
-	/**
-	 * If there are less related videos than our default amount, this.NumVids, pull additional
-	 * videos from the staffPicks videos
-	 */
-	VideosModule.prototype.addBackfill = function () {
-		var vidsNeeded;
-
-		if (this.videos.length < this.numVids) {
-			vidsNeeded = this.numVids - this.videos.length;
-			this.videos = this.videos.concat(this.staffPickVideos.splice(0, vidsNeeded));
-			this.numVids = this.videos.length;
 		}
 	};
 
@@ -155,23 +172,6 @@ define('videosmodule.views.rail', [
 		}
 
 		return thumbHtml;
-	};
-
-	/**
-	 * Randomize array element order in-place.
-	 * Using Fisher-Yates shuffle algorithm.
-	 * Slightly adapted from http://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array
-	 */
-	VideosModule.prototype.shuffle = function (array) {
-		var i, j, temp;
-
-		for (i = array.length - 1; i > 0; i--) {
-			j = Math.floor(Math.random() * (i + 1));
-			temp = array[i];
-			array[i] = array[j];
-			array[j] = temp;
-		}
-		return array;
 	};
 
 	return VideosModule;

@@ -9,9 +9,6 @@ define('mediaGallery.views.gallery', [
 	var Gallery,
 		togglerTemplateName = 'MediaGallery_showMore';
 
-	// performance profiling
-	bucky = bucky('mediaGallery.views.gallery');
-
 	Gallery = function (options) {
 		this.$el = options.$el.addClass('media-gallery-inner');
 		this.$wrapper = options.$wrapper;
@@ -19,6 +16,8 @@ define('mediaGallery.views.gallery', [
 		this.origVisibleCount = options.origVisibleCount;
 		this.interval = options.interval || 12;
 		this.throttleVal = options.throttleVal || 200;
+		// performance profiling
+		this.bucky = bucky('mediaGallery.views.gallery.' + options.index);
 
 		this.rendered = false;
 		this.visibleCount = 0;
@@ -49,7 +48,7 @@ define('mediaGallery.views.gallery', [
 			return;
 		}
 
-		bucky.timer.start('createMedia');
+		this.bucky.timer.start('createMedia');
 
 		$.each(throttled, function (idx, data) {
 			var media = new Media({
@@ -60,7 +59,7 @@ define('mediaGallery.views.gallery', [
 			self.media.push(media);
 		});
 
-		bucky.timer.stop('createMedia');
+		this.bucky.timer.stop('createMedia');
 	};
 
 	Gallery.prototype.bindEvents = function () {
@@ -94,14 +93,17 @@ define('mediaGallery.views.gallery', [
 	Gallery.prototype.render = function (count, $el) {
 		var self = this,
 			media,
+			mediaCount,
 			deferredImages = [];
 
-		bucky.timer.start('render');
+		media = this.media.slice(this.visibleCount, this.visibleCount + count);
+		mediaCount = media.length;
+		this.bucky.timer.start('render.' + mediaCount);
+
 		if ($el) {
 			$el.startThrobbing();
 		}
 
-		media = this.media.slice(this.visibleCount, this.visibleCount + count);
 		$.each(media, function (idx, item) {
 			item.render();
 			self.$el.append(item.$el);
@@ -123,7 +125,7 @@ define('mediaGallery.views.gallery', [
 			$.each(media, function (idx, item) {
 				item.show();
 			});
-			bucky.timer.stop('render');
+			self.bucky.timer.stop('render.' + mediaCount);
 		});
 
 		return this;
