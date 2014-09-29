@@ -288,7 +288,7 @@ abstract class File implements FileInterface {
 	public function getUrl() {
 		global $wgEnableVignette;
 		if ( $wgEnableVignette ) {
-			return ( string )( new UrlGenerator( $this ) );
+			return ( string )$this->getUrlGenerator();
 		} else {
 			if ( !isset( $this->url ) ) {
 				$this->assertRepoDefined();
@@ -837,13 +837,14 @@ abstract class File implements FileInterface {
 			$normalisedParams = $params;
 			$this->handler->normaliseParams( $this, $normalisedParams );
 
-			// NOTE: The thumbnail URL is generated here.
-			// FIXME: Wrap the setting of $thumbUrl in a feature flag
 			$thumbName = $this->thumbName( $normalisedParams );
 			$thumbPath = $this->getThumbPath( $thumbName ); // final thumb path
 
 			if ( $wgEnableVignette ) {
-				$thumbUrl = $this->getUrl();
+				$thumbUrl = $this->getUrlGenerator()
+					->width( $normalisedParams['width'] )
+					->height( $normalisedParams['height'] )
+					->thumbnail();
 			} else {
 				$thumbUrl = $this->getThumbUrl( $thumbName );
 			}
@@ -1774,5 +1775,16 @@ abstract class File implements FileInterface {
 	public function getArchiveTimestamp() {
 		return false;
 	}
+
+	/**
+	 * Get the Vignette\UrlGenerator for this file.
+	 *
+	 * @return \UrlGenerator
+	 *
+	 */
+	protected function getUrlGenerator() {
+			return new UrlGenerator( $this );
+	}
+
 
 }
