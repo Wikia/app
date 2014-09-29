@@ -21,7 +21,8 @@ require(['mediaGallery.views.gallery'], function (Gallery) {
 				model: {
 					media: data[idx]
 				},
-				origVisibleCount: origVisibleCount
+				origVisibleCount: origVisibleCount,
+				index: idx
 			});
 			$this.append(gallery.render(origVisibleCount).$el);
 

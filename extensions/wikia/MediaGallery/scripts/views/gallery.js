@@ -1,8 +1,9 @@
 define('mediaGallery.views.gallery', [
-    'mediaGallery.views.media',
-    'mediaGallery.templates.mustache',
-    'wikia.tracker'
-], function (Media, templates, tracker) {
+	'mediaGallery.views.media',
+	'mediaGallery.templates.mustache',
+	'wikia.tracker',
+	'bucky'
+], function (Media, templates, tracker, bucky) {
 	'use strict';
 
 	var Gallery,
@@ -15,6 +16,8 @@ define('mediaGallery.views.gallery', [
 		this.origVisibleCount = options.origVisibleCount;
 		this.interval = options.interval || 12;
 		this.throttleVal = options.throttleVal || 200;
+		// performance profiling
+		this.bucky = bucky('mediaGallery.views.gallery.' + options.index);
 
 		this.rendered = false;
 		this.visibleCount = 0;
@@ -45,6 +48,8 @@ define('mediaGallery.views.gallery', [
 			return;
 		}
 
+		this.bucky.timer.start('createMedia');
+
 		$.each(throttled, function (idx, data) {
 			var media = new Media({
 				$el: $('<div></div>'),
@@ -53,6 +58,8 @@ define('mediaGallery.views.gallery', [
 			});
 			self.media.push(media);
 		});
+
+		this.bucky.timer.stop('createMedia');
 	};
 
 	Gallery.prototype.bindEvents = function () {
@@ -80,18 +87,23 @@ define('mediaGallery.views.gallery', [
 	/**
 	 * Render sets of media.
 	 * @param {int} count Number to be rendered
+	 * @param {jQuery} $el Element to apply loading graphic
 	 * @returns {Gallery}
 	 */
 	Gallery.prototype.render = function (count, $el) {
 		var self = this,
 			media,
+			mediaCount,
 			deferredImages = [];
+
+		media = this.media.slice(this.visibleCount, this.visibleCount + count);
+		mediaCount = media.length;
+		this.bucky.timer.start('render.' + mediaCount);
 
 		if ($el) {
 			$el.startThrobbing();
 		}
 
-		media = this.media.slice(this.visibleCount, this.visibleCount + count);
 		$.each(media, function (idx, item) {
 			item.render();
 			self.$el.append(item.$el);
@@ -113,6 +125,7 @@ define('mediaGallery.views.gallery', [
 			$.each(media, function (idx, item) {
 				item.show();
 			});
+			self.bucky.timer.stop('render.' + mediaCount);
 		});
 
 		return this;

@@ -9,6 +9,7 @@ describe('MediaGalleries gallery', function () {
 		templates,
 		instance,
 		options,
+		bucky,
 		tracker = {
 			buildTrackingFunction: $.noop,
 			ACTIONS: {
@@ -43,10 +44,11 @@ describe('MediaGalleries gallery', function () {
 		};
 
 		spyOn(Mustache, 'render').andReturn('okay');
+		bucky = modules['bucky.mock'];
 		templates = modules['mediaGallery.templates.mustache'];
 		Caption = modules['mediaGallery.views.caption']();
 		Media = modules['mediaGallery.views.media'](Caption, templates);
-		Gallery = modules['mediaGallery.views.gallery'](Media, templates, tracker);
+		Gallery = modules['mediaGallery.views.gallery'](Media, templates, tracker, bucky);
 	});
 
 	it('should export a function', function () {
