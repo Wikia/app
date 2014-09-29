@@ -2,7 +2,7 @@
 @import 'skins/shared/mixins/background-opacity.scss';
 @import 'skins/shared/color.scss';
 
-$media-margin: .5em;
+$media-margin: .2em;
 
 .media-gallery-wrapper {
 	@include grid-row();
