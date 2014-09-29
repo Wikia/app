@@ -166,7 +166,7 @@ class WikiaConfirmEmailSpecialController extends WikiaSpecialPageController {
 						$this->wg->out->redirect( $userPage->getFullURL() );
 					}
 
-					wfRunHooks( 'EmailChangeConfirmed', array( &$user ) );
+					wfRunHooks( 'EmailChangeConfirmed', array( $user ) );
 					return;
 
 				}

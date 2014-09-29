@@ -20,7 +20,7 @@ class ExactTargetUpdatesHooks {
 	 * @param User $user
 	 * @return bool
 	 */
-	public static function onEmailChangeConfirmed( User &$user ) {
+	public static function onEmailChangeConfirmed( User $user ) {
 		$thisInstance = new ExactTargetUpdatesHooks();
 		$thisInstance->addTheUpdateUserEmailTask( $user, new ExactTargetUpdateUserTask() );
 		return true;
