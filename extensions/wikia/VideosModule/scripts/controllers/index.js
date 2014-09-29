@@ -5,18 +5,28 @@
  */
 require([
 	'videosmodule.views.rail',
-	'videosmodule.models.videos'
-], function (RailModule, VideoData) {
+	'videosmodule.models.videos',
+	'bucky'
+], function (RailModule, VideoData, bucky) {
 	'use strict';
 
 	var $rail = $('#WikiaRail');
 
+	bucky = bucky('videosmodule.controller.index');
+
 	function init() {
+		var rail;
+
+		bucky.timer.start('execution');
 		// instantiate rail view
-		return new RailModule({
-			el: document.getElementById('videosModule'),
+		rail = new RailModule({
+			$el: $('#videosModule'),
 			model: new VideoData(),
 			isFluid: false
+		});
+
+		rail.$el.on('initialized.videosModule', function () {
+			bucky.timer.stop('execution');
 		});
 	}
 

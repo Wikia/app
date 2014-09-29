@@ -19,8 +19,7 @@ define('videosmodule.views.rail', [
 
 	VideosModule = function (options) {
 		// this.el is the container for the right rail videos module
-		this.el = options.el;
-		this.$el = $(options.el);
+		this.$el = options.$el;
 		this.model = options.model;
 
 		this.$thumbs = this.$el.find('.thumbnails');
@@ -79,7 +78,8 @@ define('videosmodule.views.rail', [
 		$.when($imagesLoaded)
 			.done(function () {
 				self.$thumbs.removeClass('hidden');
-				self.$el.stopThrobbing();
+				self.$el.stopThrobbing()
+					.trigger('initialized.videosModule');
 				bucky.timer.stop('render');
 			});
 
