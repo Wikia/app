@@ -25,8 +25,8 @@ class ExactTargetUpdatesHelper {
 
 	public static function getWfVarsTriggeringUpdate() {
 		$aWfVarsTriggeringUpdate = [
-			'wgServer',
-			'wgSitename',
+			'wgServer' => true,
+			'wgSitename' => true,
 		];
 		return $aWfVarsTriggeringUpdate;
 	}

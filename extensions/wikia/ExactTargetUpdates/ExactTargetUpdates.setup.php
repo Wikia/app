@@ -60,4 +60,4 @@ $wgHooks['SignupConfirmEmailComplete'][] = 'ExactTargetUpdatesHooks::onSignupCon
 $wgHooks['UserSaveSettings'][] = 'ExactTargetUpdatesHooks::onUserSaveSettings';
 /* Wiki-related hooks */
 $wgHooks['CreateWikiLocalJob-complete'][] = 'ExactTargetUpdatesHooks::onWikiCreation';
-$wgHooks['WikiFactoryChanged'][] = 'ExactTargetUpdatesHooks::onWikiDataChange';
+$wgHooks['WikiFactoryChanged'][] = 'ExactTargetUpdatesHooks::onWikiFactoryChange';
