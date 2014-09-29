@@ -288,7 +288,7 @@ abstract class File implements FileInterface {
 	public function getUrl() {
 		global $wgEnableVignette;
 		if ($wgEnableVignette) {
-			return new UrlGenerator($this);
+			return (string)(new UrlGenerator($this));
 		} else {
 			if ( !isset( $this->url ) ) {
 				$this->assertRepoDefined();
