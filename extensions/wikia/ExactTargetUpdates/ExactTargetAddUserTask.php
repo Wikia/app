@@ -42,29 +42,36 @@ class ExactTargetAddUserTask extends ExactTargetBaseTask {
 	}
 
 	/**
-	 * Creates DataExtension object in ExactTarget by API request that reflects Wikia user table
+	 * Creates (or updates if already exists) DataExtension object in ExactTarget by API request that reflects Wikia user table
 	 * @param Array $aUserData Selected fields from Wikia user table
 	 */
 	public function createUserDataExtension( $aUserData, $oClient ) {
 
 		try {
 			/* Create new DataExtensionObject that reflects user table data */
-			$DE = new ExactTarget_DataExtensionObject();
+			$oDE = new ExactTarget_DataExtensionObject();
 			/* CustomerKey is a key that indicates Wikia table reflected by DataExtension */
-			$DE->CustomerKey = 'user';
+			$oDE->CustomerKey = 'user';
+
+			$userId = $this->extractUserIdFromData( $aUserData );
 
 			$apiProperties = [];
 			foreach ( $aUserData as $key => $value ) {
 				$apiProperties[] = $this->wrapApiProperty( $key,  $value );
 			}
-			$DE->Properties = $apiProperties;
+			$oDE->Properties = $apiProperties;
 
-			$oSoapVar = $this->wrapToSoapVar( $DE );
+			/* Prepare query keys */
+			$oDE->Keys = [ $this->wrapApiProperty( 'user_id',  $userId ) ];
 
-			$oRequest = $this->wrapCreateRequest( [ $oSoapVar ] );
+			$oSoapVar = $this->wrapToSoapVar( $oDE );
+
+			$oUpdateOptions = $this->prepareUpdateAddOptions();
+
+			$oRequest = $this->wrapUpdateRequest( [ $oSoapVar ], $oUpdateOptions );
 
 			/* Send API request */
-			$oClient->Create( $oRequest );
+			$oClient->Update( $oRequest );
 
 			/* Log response */
 			$this->info( $oClient->__getLastResponse() );

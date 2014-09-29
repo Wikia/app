@@ -245,7 +245,9 @@ class MercuryApi {
 		return $wrapper->wrap(function () use ($title, $wg, $categories) {
 
 			// This function modifies wgDartCustomKeyValues
-			(new Wikia\NLP\Entities\WikiEntitiesService)->registerLdaTopicsWithDFP();
+			if ( $wg->EnableWikiaNLPExt && $wg->EnableTopicsForDFP ) {
+				(new Wikia\NLP\Entities\WikiEntitiesService)->registerLdaTopicsWithDFP();
+			}
 
 			$requestContext = RequestContext::newExtraneousContext( $title );
 
