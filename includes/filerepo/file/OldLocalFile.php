@@ -124,8 +124,8 @@ class OldLocalFile extends LocalFile {
 	 */
 	public function getArchiveTimestamp() {
 		$name = $this->getArchiveName();
-		$hit = preg_match("/^(\d+)\!.*$/", $name, $matches);
-		if ($hit && isset($matches[1])) {
+		$hit = preg_match( "/^(\d+)\!.*$/", $name, $matches );
+		if ( $hit && isset( $matches[1] ) ) {
 			return $matches[1];
 		}
 

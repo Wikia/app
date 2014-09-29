@@ -287,8 +287,8 @@ abstract class File implements FileInterface {
 	 */
 	public function getUrl() {
 		global $wgEnableVignette;
-		if ($wgEnableVignette) {
-			return (string)(new UrlGenerator($this));
+		if ( $wgEnableVignette ) {
+			return ( string )( new UrlGenerator( $this ) );
 		} else {
 			if ( !isset( $this->url ) ) {
 				$this->assertRepoDefined();
@@ -842,7 +842,7 @@ abstract class File implements FileInterface {
 			$thumbName = $this->thumbName( $normalisedParams );
 			$thumbPath = $this->getThumbPath( $thumbName ); // final thumb path
 
-			if ($wgEnableVignette) {
+			if ( $wgEnableVignette ) {
 				$thumbUrl = $this->getUrl();
 			} else {
 				$thumbUrl = $this->getThumbUrl( $thumbName );

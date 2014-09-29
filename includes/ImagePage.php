@@ -1120,7 +1120,7 @@ class ImageHistoryList {
 			}
 			$row .= '<span class="history-deleted">' . $url . '</span>';
 		} else {
-			if ($wgEnableVignette) {
+			if ( $wgEnableVignette ) {
 				$url = $iscur ? $this->current->getUrl() : $file->getUrl();
 			} else {
 				$url = $iscur ? $this->current->getUrl() : $this->current->getArchiveUrl( $img );
