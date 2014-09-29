@@ -70,7 +70,7 @@ class VisualEditorWikiaHooks {
 		}
 		// Note: even if set as integer, option value is retrieved as string
 		if ( $wgUser->getOption( 'showVisualEditorTransitionDialog' ) === '1' ) {
-			$vars['showVETransitionDialog'] = 1;
+			$vars['showVisualEditorTransitionDialog'] = 1;
 		}
 		return true;
 	}
