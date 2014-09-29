@@ -430,4 +430,4 @@
 	window.LightboxLoader = LightboxLoader;
 	window.LightboxTracker = LightboxTracker;
 
-})(this, jQuery);
+})(window, jQuery);
