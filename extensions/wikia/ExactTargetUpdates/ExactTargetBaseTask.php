@@ -78,10 +78,10 @@ class ExactTargetBaseTask extends BaseTask {
 		$updateOptions = new ExactTarget_UpdateOptions();
 
 		$saveOption = new ExactTarget_SaveOption();
-		$saveOption->PropertyName = "DataExtensionObject";
+		$saveOption->PropertyName = 'DataExtensionObject';
 		$saveOption->SaveAction = ExactTarget_SaveAction::UpdateAdd;
 
-		$updateOptions->SaveOptions[] = new SoapVar( $saveOption, SOAP_ENC_OBJECT, 'SaveOption', "http://exacttarget.com/wsdl/partnerAPI" );
+		$updateOptions->SaveOptions[] = new SoapVar( $saveOption, SOAP_ENC_OBJECT, 'SaveOption', 'http://exacttarget.com/wsdl/partnerAPI' );
 		return $updateOptions;
 	}
 
