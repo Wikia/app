@@ -41,17 +41,17 @@ class UrlGenerator {
 	/** @var array hash of query parameters to send to the thumbnailer */
 	private $query = [];
 
-	public function __construct(FileInterface $file) {
+	public function __construct( FileInterface $file ) {
 		$this->file = $file;
 		$this->original();
 	}
 
-	public function width($width) {
+	public function width( $width ) {
 		$this->width = $width;
 		return $this;
 	}
 
-	public function height($height) {
+	public function height( $height ) {
 		$this->height = $height;
 		return $this;
 	}
@@ -61,8 +61,8 @@ class UrlGenerator {
 	 * @param string $lang
 	 * @return $this
 	 */
-	public function lang($lang) {
-		if (!empty($lang) && $lang != 'en') {
+	public function lang( $lang ) {
+		if ( !empty( $lang ) && $lang != 'en' ) {
 			$this->query['lang'] = $lang;
 		}
 
@@ -75,7 +75,7 @@ class UrlGenerator {
 	 * This only applies when $this->mode = self::MODE_FIXED_ASPECT_RATIO
 	 * @return $this
 	 */
-	public function backgroundFill($color) {
+	public function backgroundFill( $color ) {
 		$this->query['fill'] = $color;
 		return $this;
 	}
@@ -85,7 +85,7 @@ class UrlGenerator {
 	 * @return $this
 	 */
 	public function original() {
-		return $this->mode(self::MODE_ORIGINAL);
+		return $this->mode( self::MODE_ORIGINAL );
 	}
 
 	/**
@@ -93,7 +93,7 @@ class UrlGenerator {
 	 * @return $this
 	 */
 	public function thumbnail() {
-		return $this->mode(self::MODE_THUMBNAIL);
+		return $this->mode( self::MODE_THUMBNAIL );
 	}
 
 	/**
@@ -101,7 +101,7 @@ class UrlGenerator {
 	 * @return $this
 	 */
 	public function thumbnailDown() {
-		return $this->mode(self::MODE_THUMBNAIL_DOWN);
+		return $this->mode( self::MODE_THUMBNAIL_DOWN );
 	}
 
 	/**
@@ -109,7 +109,7 @@ class UrlGenerator {
 	 * @return $this
 	 */
 	public function zoomCrop() {
-		return $this->mode(self::MODE_ZOOM_CROP);
+		return $this->mode( self::MODE_ZOOM_CROP );
 	}
 
 	/**
@@ -117,7 +117,7 @@ class UrlGenerator {
 	 * @return $this
 	 */
 	public function zoomCropDown() {
-		return $this->mode(self::MODE_ZOOM_CROP_DOWN);
+		return $this->mode( self::MODE_ZOOM_CROP_DOWN );
 	}
 
 	/**
@@ -128,7 +128,7 @@ class UrlGenerator {
 	 * @return $this
 	 */
 	public function fixedAspectRatio() {
-		return $this->mode(self::MODE_FIXED_ASPECT_RATIO);
+		return $this->mode( self::MODE_FIXED_ASPECT_RATIO );
 	}
 
 	/**
@@ -137,7 +137,7 @@ class UrlGenerator {
 	 * @return $this
 	 */
 	public function fixedAspectRatioDown() {
-		return $this->mode(self::MODE_FIXED_ASPECT_RATIO_DOWN);
+		return $this->mode( self::MODE_FIXED_ASPECT_RATIO_DOWN );
 	}
 
 	/**
@@ -145,7 +145,7 @@ class UrlGenerator {
 	 * @return $this
 	 */
 	public function topCrop() {
-		return $this->mode(self::MODE_TOP_CROP);
+		return $this->mode( self::MODE_TOP_CROP );
 	}
 
 	/**
@@ -153,7 +153,7 @@ class UrlGenerator {
 	 * @return $this
 	 */
 	public function topCropDown() {
-		return $this->mode(self::MODE_TOP_CROP_DOWN);
+		return $this->mode( self::MODE_TOP_CROP_DOWN );
 	}
 
 	/**
@@ -161,7 +161,7 @@ class UrlGenerator {
 	 * @return $this
 	 */
 	public function webp() {
-		return $this->format(self::FORMAT_WEBP);
+		return $this->format( self::FORMAT_WEBP );
 	}
 
 	/**
@@ -174,30 +174,30 @@ class UrlGenerator {
 
 		$imagePath = "{$bucketPath}/{$this->getRelativeUrl()}/revision/{$this->getRevision()}";
 
-		if (!isset($this->query['lang'])) {
+		if ( !isset( $this->query['lang'] ) ) {
 			global $wgLang;
-			if (isset($wgLang)) {
-				$this->lang($wgLang->getCode());
+			if ( isset( $wgLang ) ) {
+				$this->lang( $wgLang->getCode() );
 			}
 		}
 
-		if ($this->mode != self::MODE_ORIGINAL) {
+		if ( $this->mode != self::MODE_ORIGINAL ) {
 			$imagePath .= "/{$this->mode}/width/{$this->width}/height/{$this->height}";
 		}
 
-		if (!empty($this->query)) {
-			ksort($this->query); // ensure that the keys we use will be ordered deterministically
-			$imagePath .= '?'.http_build_query($this->query);
+		if ( !empty( $this->query ) ) {
+			ksort( $this->query ); // ensure that the keys we use will be ordered deterministically
+			$imagePath .= '?' . http_build_query( $this->query );
 		}
 
-		return self::domainShard($imagePath);
+		return self::domainShard( $imagePath );
 	}
 
 
 	private function getRevision() {
 		$revision = self::REVISION_LATEST;
 
-		if ($this->file->isOld()) {
+		if ( $this->file->isOld() ) {
 			$revision = $this->file->getArchiveTimestamp();
 		} else {
 			$this->query['cb'] = $this->file->getTimestamp();
@@ -215,7 +215,7 @@ class UrlGenerator {
 	 * @return string the relative url
 	 */
 	private function getRelativeUrl() {
-		return $this->file->getHashPath() . rawurlencode($this->file->getName());
+		return $this->file->getHashPath() . rawurlencode( $this->file->getName() );
 	}
 
 	public function __toString() {
@@ -234,23 +234,23 @@ class UrlGenerator {
 	 * @param string $mode one of the MODE_ constants defined above
 	 * @return $this
 	 */
-	private function mode($mode) {
+	private function mode( $mode ) {
 		$this->mode = $mode;
 		return $this;
 	}
 
-	private function format($format) {
+	private function format( $format ) {
 		$this->query['format'] = $format;
 		return $this;
 	}
 
-	private static function domainShard($imagePath) {
+	private static function domainShard( $imagePath ) {
 		global $wgVignetteUrl, $wgImagesServers;
 
-		$hash = ord(sha1($imagePath));
-		$shard = 1 + ($hash % ($wgImagesServers - 1));
+		$hash = ord( sha1( $imagePath ) );
+		$shard = 1 + ( $hash % ( $wgImagesServers - 1 ) );
 
-		return str_replace('<SHARD>', $shard, $wgVignetteUrl)."/{$imagePath}";
+		return str_replace( '<SHARD>', $shard, $wgVignetteUrl ) . "/{$imagePath}";
 	}
 
 	/**
@@ -260,7 +260,7 @@ class UrlGenerator {
 	 */
 	private static function bucketPath() {
 		global $wgUploadPath;
-		preg_match('/http(s?):\/\/(.*?)\/(.*?)\/(.*)$/', $wgUploadPath, $matches);
+		preg_match( '/http(s?):\/\/(.*?)\/(.*?)\/(.*)$/', $wgUploadPath, $matches );
 		return $matches[3];
 	}
 }
