@@ -29,11 +29,11 @@ class ExactTargetUpdatesHooks {
 	/**
 	 * Runs a method for adding UpdateUserTask to job queue
 	 * Function executed on ArticleSaveComplete hook
-	 * @param $article
+	 * @param WikiPage $article
 	 * @param User $user
 	 * @return bool
 	 */
-	public static function onArticleSaveComplete( &$article, &$user) {
+	public static function onArticleSaveComplete( WikiPage $article, User $user ) {
 		$thisInstance = new ExactTargetUpdatesHooks();
 		$thisInstance->addTheUpdateUserEditCountTask( $user, new ExactTargetUpdateUserTask() );
 		return true;
