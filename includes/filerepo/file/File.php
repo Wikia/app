@@ -841,10 +841,7 @@ abstract class File implements FileInterface {
 			$thumbPath = $this->getThumbPath( $thumbName ); // final thumb path
 
 			if ( $wgEnableVignette ) {
-				$thumbUrl = $this->getUrlGenerator()
-					->width( $normalisedParams['width'] )
-					->height( $normalisedParams['height'] )
-					->thumbnail();
+				$thumbUrl = $this->getVignetteThumbUrl( $normalisedParams );
 			} else {
 				$thumbUrl = $this->getThumbUrl( $thumbName );
 			}
@@ -1786,5 +1783,19 @@ abstract class File implements FileInterface {
 			return new UrlGenerator( $this );
 	}
 
+	/**
+	 * Get the Vignette thumbnail url.
+	 *
+	 * @param array $params the normalized thumbnail generation params
+	 * @return string the url
+	 */
+	protected function getVignetteThumbUrl( $params ) {
+		$thumbUrl = $this->getUrlGenerator()
+			->width( $params['width'] )
+			->height( $params['height'] )
+			->thumbnail();
+
+		return ( string )$thumbUrl;
+	}
 
 }
