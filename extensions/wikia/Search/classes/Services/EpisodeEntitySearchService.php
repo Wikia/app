@@ -12,7 +12,7 @@ class EpisodeEntitySearchService extends EntitySearchService {
 	const DEFAULT_SLOP = 1;
 	const EXACT_MATCH_FIELD = "tv_episode_mv_em";
 
-	private static $ARTICLE_TYPES_SUPPORTED_LANGS = [ 'en' ];
+	private static $ARTICLE_TYPES_SUPPORTED_LANGS = [ 'en', 'de' ];
 
 	protected $series;
 
