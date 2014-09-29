@@ -75,13 +75,14 @@ class ApiOptions extends ApiBase {
 		$prefs = Preferences::getPreferences( $user, $this->getContext() );
 
 		foreach ( $changes as $key => $value ) {
-			try {
-				$field = HTMLForm::loadInputFromParameters( $key, $prefs[$key] );
-				$validation = $field->validate( $value, $user->getOptions() );
-			} catch ( Exception $e ) {
-				// Preference does not exist or its type is invalid
-				$validation = false;
+			if ( empty( $prefs[$key] ) ) {
+				// This is not a default preference and cannot be modified by this API
+				$this->setWarning( "Unrecognized preference '$key' cannot be modified" );
+				continue;
 			}
+
+			$field = HTMLForm::loadInputFromParameters( $key, $prefs[$key] );
+			$validation = $field->validate( $value, $user->getOptions() );
 
 			if ( $validation === true ) {
 				$user->setOption( $key, $value );
