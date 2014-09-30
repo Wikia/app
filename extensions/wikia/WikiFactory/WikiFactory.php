@@ -1949,6 +1949,8 @@ class WikiFactory {
 
 		$dbr = ( $master ) ? self::db( DB_MASTER ) : self::db( DB_SLAVE );
 
+		$caller = wfGetCallerClassMethod(__CLASS__);
+		$fname = __METHOD__ . " (from {$caller})";
 
 		if ( $master || !isset( self::$variablesCache[$cacheKey] ) ) {
 			$oRow = $dbr->selectRow(
@@ -1963,7 +1965,7 @@ class WikiFactory {
 					"cv_is_unique"
 				),
 				$condition,
-				__METHOD__
+				$fname
 			);
 			self::$variablesCache[$cacheKey] = $oRow;
 		}
@@ -1992,7 +1994,7 @@ class WikiFactory {
 					"cv_variable_id" => $oRow->cv_id,
 					"cv_city_id" => $city_id
 				),
-				__METHOD__
+				$fname
 			);
 			if ( isset( $oRow2->cv_variable_id ) ) {
 
@@ -2587,7 +2589,7 @@ class WikiFactory {
 	 *
 	 * @param integer	$city_id		wikia identifier in city_list
 	 *
-	 * @return stdClass ($row->cat_id $row->cat_name) or false
+	 * @return stdClass ($row->cat_id $row->cat_name) or 0
 	 *
 	 */
 
