@@ -77,12 +77,11 @@ class ApiOptions extends ApiBase {
 		foreach ( $changes as $key => $value ) {
 			if ( empty( $prefs[$key] ) ) {
 				// This is not a default preference and cannot be modified by this API
-				$this->setWarning( "Unrecognized preference '$key' cannot be modified" );
-				continue;
+				$validation = 'not a valid preference';
+			} else {
+				$field = HTMLForm::loadInputFromParameters( $key, $prefs[$key] );
+				$validation = $field->validate( $value, $user->getOptions() );
 			}
-
-			$field = HTMLForm::loadInputFromParameters( $key, $prefs[$key] );
-			$validation = $field->validate( $value, $user->getOptions() );
 
 			if ( $validation === true ) {
 				$user->setOption( $key, $value );
@@ -109,16 +108,8 @@ class ApiOptions extends ApiBase {
 	}
 
 	public function getAllowedParams() {
-		$optionKinds = array( 'registered' );
-		$optionKinds[] = 'all';
-
 		return array(
 			'reset' => false,
-			'resetkinds' => array(
-				ApiBase::PARAM_TYPE => $optionKinds,
-				ApiBase::PARAM_DFLT => 'all',
-				ApiBase::PARAM_ISMULTI => true
-			),
 			'change' => array(
 				ApiBase::PARAM_ISMULTI => true,
 			),
@@ -134,7 +125,6 @@ class ApiOptions extends ApiBase {
 	public function getParamDescription() {
 		return array(
 			'reset' => 'Resets preferences to the site defaults',
-			'resetkinds' => 'List of types of options to reset when the "reset" option is set',
 			'change' => array( 'List of changes, formatted name=value (e.g. skin=vector), ' .
 				'value cannot contain pipe characters. If no value is given (not ',
 				'even an equals sign), e.g., optionname|otheroption|..., the ' .
