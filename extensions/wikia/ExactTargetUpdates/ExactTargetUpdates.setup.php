@@ -33,7 +33,7 @@ $wgExtensionCredits['other'][] = array(
 	'descriptionmsg'    => 'exacttarget-updates-description',
 	'version'           => '0.1',
 	'author'            => array(
-		"Kamil Koterba <kamil@wikia-inc.com>",
+		'Kamil Koterba <kamil@wikia-inc.com>',
 		'Adam Karmiński <adamk@wikia-inc.com'
 	),
 	'url'               => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/ExactTargetUpdates/'
@@ -54,6 +54,8 @@ $wgAutoloadClasses['ExactTargetSoapClient'] =  $dir . '/lib/exacttarget_soap_cli
  * @see http://www.mediawiki.org/wiki/Manual:$wgHooks
  */
 /* User-related hooks */
+$wgHooks['ArticleSaveComplete'][] = 'ExactTargetUpdatesHooks::onArticleSaveComplete';
+$wgHooks['EmailChangeConfirmed'][] = 'ExactTargetUpdatesHooks::onEmailChangeConfirmed';
 $wgHooks['SignupConfirmEmailComplete'][] = 'ExactTargetUpdatesHooks::onSignupConfirmEmailComplete';
 $wgHooks['UserSaveSettings'][] = 'ExactTargetUpdatesHooks::onUserSaveSettings';
 /* Wiki-related hooks */
