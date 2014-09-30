@@ -16,6 +16,13 @@ class MediaGalleryController extends WikiaController {
 	 * time of article parse.
 	 */
 	public function gallery() {
+		if ( !F::app()->wg->MediaGalleryAssetsLoaded ) {
+			$this->response->addAsset('media_gallery_js');
+			$this->response->addAsset('media_gallery_scss');
+			JSMessages::enqueuePackage( 'MediaGallery', JSMessages::EXTERNAL );
+			F::app()->wg->MediaGalleryAssetsLoaded = true;
+		}
+
 		$items = $this->getVal( 'items' );
 		$this->model = new MediaGalleryModel( $items );
 

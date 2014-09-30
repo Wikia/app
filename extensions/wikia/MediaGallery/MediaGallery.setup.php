@@ -25,7 +25,6 @@ $wgAutoloadClasses['MediaGalleryModel'] =  $dir . 'MediaGalleryModel.class.php';
 
 // hooks
 $wgAutoloadClasses['MediaGalleryHooks'] =  $dir . 'MediaGalleryHooks.class.php';
-$wgHooks['OutputPageBeforeHTML'][] = 'MediaGalleryHooks::onOutputPageBeforeHTML';
 $wgHooks['MakeGlobalVariablesScript'][] = 'MediaGalleryHooks::onMakeGlobalVariablesScript';
 
 // i18n mapping

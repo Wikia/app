@@ -2068,3 +2068,11 @@ $config['media_gallery_js'] = [
 		'//extensions/wikia/MediaGallery/scripts/controllers/index.js',
 	]
 ];
+
+$config['media_gallery_scss'] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => ['oasis'],
+	'assets' => [
+		'//extensions/wikia/MediaGallery/styles/MediaGallery.scss'
+	],
+];
