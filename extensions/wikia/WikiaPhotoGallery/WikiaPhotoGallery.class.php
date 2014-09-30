@@ -573,7 +573,7 @@ class WikiaPhotoGallery extends ImageGallery {
 	}
 
 	/**
-	 * Add JSSnippets code
+	 * Add gallery JS and CSS assets
 	 *
 	 * Every WikiaPhotoGallery instance (including sliders and slideshows) uses these assets. The newer MediaGalleries,
 	 * do not.
