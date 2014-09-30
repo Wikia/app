@@ -50,10 +50,10 @@
 
 	.dropdown {
 		display: table;
-		position: absolute;
-		z-index: 500050;
 		left: 0;
+		position: absolute;
 		right: auto;
+		z-index: 500050;
 
 		&.right {
 			left: auto;
@@ -86,7 +86,7 @@
 				width: 100%;
 
 
-				&:hover {
+				&:hover, &.active {
 					font-weight: bold;
 				}
 
@@ -142,7 +142,7 @@
 
 	a {
 		color: inherit;
-		&:hover {
+		&:hover, &.active {
 			text-decoration: none;
 		}
 	}
@@ -175,7 +175,7 @@
 				color: $color-button-text;
 
 				ul.second {
-					display: table;
+					visibility: visible;
 				}
 			}
 			&.active + li {
@@ -185,10 +185,11 @@
 	}
 
 	ul.dropdown {
-		display: none;
+		visibility: hidden;
 	}
-	
+
 	ul.second {
+		display: table;
 		min-width: -webkit-calc(100% + 1px);
 		min-width: calc(100% + 1px);
 
@@ -205,7 +206,8 @@
 				float: right;
 				content: ' ';
 			}
-			&:hover span::after {
+			&:hover span::after,
+			&.active span::after {
 				border-left-color: rgba($color-button-text, .8);
 			}
 		}
@@ -221,7 +223,8 @@
 					margin: 1px 0 0 -20px;
 					float: left;
 				}
-				&:hover span::after {
+				&:hover span::after,
+				&.active span::after {
 					border-right-color: rgba($color-button-text, .8);
 				}
 			}
@@ -266,14 +269,16 @@
 			border-right-width: 5px;
 			border-left-width: 5px;
 
-			&:hover {
+			&:hover,
+			&.active {
 				font-weight: normal;
 			}
 		}
 		@if lightness($color-buttons) < 50 {
 			a {
 				background: rgba(#fff, .2);
-				&:hover {
+				&:hover,
+				&.active {
 					background: rgba(#fff, .4);
 				}
 			}
@@ -281,7 +286,8 @@
 	@else {
 			a {
 				background: rgba(#000, .2);
-				&:hover {
+				&:hover,
+				&.active {
 					background: rgba(#000, .4);
 				}
 			}
