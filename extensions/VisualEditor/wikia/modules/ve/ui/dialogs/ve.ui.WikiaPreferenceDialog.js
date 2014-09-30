@@ -139,6 +139,18 @@ ve.ui.WikiaPreferenceDialog.prototype.getTeardownProcess = function ( data ) {
 				} );
 			}
 			this.surface.getFocusWidget().$element.show();
+
+			// Set an option confirming the user viewed this dialog
+			$.ajax( {
+				'url': mw.util.wikiScript( 'api' ),
+				'type': 'POST',
+				'data': {
+					'format': 'json',
+					'action': 'options',
+					'optionname': 'showVisualEditorTransitionDialog',
+					'optionvalue': 0
+				}
+			} );
 		}, this );
 };
 
