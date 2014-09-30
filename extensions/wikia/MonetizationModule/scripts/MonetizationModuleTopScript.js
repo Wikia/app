@@ -17,12 +17,11 @@
 		var ref = document.referrer;
 		if (document.cookie.replace(/(?:(?:^|.*;\s*)fromsearch\s*\=\s*([^;]*).*$)|^.*$/, "$1") == "1") {
 			return true;
-		} else if (ref.indexOf('https://www.google.com/') == 0 || (ref.match(/https:\/\/(www.|)google./) &&
-			ref.indexOf('mail.google.com') == -1 && ref.indexOf('url?q=') == -1)) {
+		} else if (ref.match(/^https?:\/\/(www\.)?google(\.com?)?(\.[a-z]{2}t?)?\//i)) {
 			return true;
 		} else if (ref.indexOf('bing.com') != -1 && ref.indexOf('q=') != -1) {
 			return true;
-		} else if (ref.indexOf('yahoo.com') != -1 && ref.indexOf('p=') != -1) {
+		} else if (ref.match(/^https?:\/\/r\.search\.yahoo\.com\/[^?]*$/i)) {
 			return true;
 		} else if (ref.indexOf('ask.com') != -1 && ref.indexOf('q=') != -1) {
 			return true;
