@@ -52,6 +52,20 @@ class ExactTargetUpdatesHooks {
 	}
 
 	/**
+	 * Runs a method for adding addTheUpdateUserNameTask to job queue
+	 * Function executed on UserRename::AfterAccountRename hook
+	 * @param int $iUserId
+	 * @param string $sOldUsername
+	 * @param string $sNewUsername
+	 * @return bool
+	 */
+	public static function onAfterAccountRename( $iUserId, $sOldUsername, $sNewUsername ) {
+		$thisInstance = new ExactTargetUpdatesHooks();
+		$thisInstance->addTheUpdateUserNameTask( $iUserId, $sNewUsername, new ExactTargetUpdateUserTask() );
+		return true;
+	}
+
+	/**
 	 * Adds AddUserTask to job queue
 	 * @param User $user
 	 * @param ExactTargetAddUserTask $task
@@ -93,6 +107,25 @@ class ExactTargetUpdatesHooks {
 			$aUserData = [
 				'user_id' => $user->getId(),
 				'user_editcount' => $user->getEditCount()
+			];
+			$task->call( 'updateUserData', $aUserData );
+			$task->queue();
+		}
+	}
+
+	/**
+	 * Adds Task for updating user name to job queue
+	 * @param int $iUserId
+	 * @param string $sNewUsername
+	 * @param ExactTargetUpdateUserTask $task
+	 */
+	public function addTheUpdateUserNameTask( int $iUserId, string $sNewUsername, ExactTargetUpdateUserTask $task ) {
+		global $wgWikiaEnvironment;
+		/* Don't add task when on dev or internal */
+		if ( $wgWikiaEnvironment != WIKIA_ENV_DEV && $wgWikiaEnvironment != WIKIA_ENV_INTERNAL ) {
+			$aUserData = [
+				'user_id' => $iUserId,
+				'user_name' => $sNewUsername
 			];
 			$task->call( 'updateUserData', $aUserData );
 			$task->queue();

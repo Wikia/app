@@ -54,3 +54,4 @@ $wgHooks['ArticleSaveComplete'][] = 'ExactTargetUpdatesHooks::onArticleSaveCompl
 $wgHooks['EmailChangeConfirmed'][] = 'ExactTargetUpdatesHooks::onEmailChangeConfirmed';
 $wgHooks['SignupConfirmEmailComplete'][] = 'ExactTargetUpdatesHooks::onSignupConfirmEmailComplete';
 $wgHooks['UserSaveSettings'][] = 'ExactTargetUpdatesHooks::onUserSaveSettings';
+$wgHooks['UserRename::AfterAccountRename'][] = 'ExactTargetUpdatesHooks::onAfterAccountRename';
