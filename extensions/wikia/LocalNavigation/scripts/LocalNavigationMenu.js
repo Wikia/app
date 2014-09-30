@@ -1,11 +1,13 @@
 (function($) {
 	'use strict';
-	var $entryPoints, $localNavStart, $localNav, $window,
+
+	var $localNavFirstLevel, $localNavSecondLevel, $localNav, $localNavStart, $window,
 		windowWidth, localNavCache = [];
 
 	$localNav = $('#localNavigation');
-	$entryPoints = $localNav.find('.local-nav-entry');
 	$localNavStart = $localNav.find('.first');
+	$localNavFirstLevel = $localNavStart.find('> .local-nav-entry');
+	$localNavSecondLevel = $localNav.find('.second');
 	$window = $(window);
 	windowWidth = $window.width();
 
@@ -55,36 +57,39 @@
 		}
 	}
 
+
 	function openMenu() {
 		var $target;
 		$target = $(this);
-
 		$target.addClass( 'active' );
 	}
 
 	function closeMenu() {
 		var $target;
 		$target = $(this);
-
 		$target.removeClass( 'active' );
 	}
 
-	$(window).load(function(){
-		init();
-	});
+	function openSubmenu( row ) {
+		$(row).addClass('active');
+	}
 
-	$(window).resize(recalculateSwap);
+	function closeSubmenu( row ) {
+		$(row).removeClass('active');
+	}
 
 	window.menuAim(
-		$localNavStart.get( 0 ), {
-			activeRow:  $localNavStart.find( '.active' ).get( 0 ),
-			rowSelector: '.local-nav-entry',
-			tolerance: 85,
-		});
+		$localNavSecondLevel.get(0),
+		{
+			activate: openSubmenu,
+			deactivate: closeSubmenu,
+			rowSelector: '.second-level-row'
+		}
+	);
 
 	if ( !window.ontouchstart ) {
 		window.delayedHover(
-			$entryPoints,
+			$localNavFirstLevel,
 			{
 				checkInterval: 100,
 				maxActivationDistance: 20,
@@ -94,7 +99,13 @@
 			}
 		);
 	} else {
-		$entryPoints.click(openMenu);
+		$localNavSecondLevel.click(openMenu);
 	}
+
+	$(window).load(function(){
+		init();
+	});
+
+	$(window).resize(recalculateSwap);
 
 })(jQuery);
