@@ -23,9 +23,7 @@ class SpecialPromoteController extends WikiaSpecialPageController {
 	public function __construct() {
 		parent::__construct( 'Promote' );
 
-		//FIXME: this is an asset of AdminDashboard extension; why is it added here? Maybe we should use some logic of AdminDashboard to load this asset and remove it from here
 		$this->wg->Out->addStyle( AssetsManager::getInstance()->getSassCommonURL( 'extensions/wikia/SpecialPromote/css/SpecialPromote.scss' ) );
-
 		$this->helper = new SpecialPromoteHelper();
 	}
 
@@ -70,7 +68,7 @@ class SpecialPromoteController extends WikiaSpecialPageController {
 
 				$this->wg->Out->clearHTML();
 				$this->wg->Out->setPageTitle( wfMessage('promote-extension-under-rework-header')->plain() );
-				$this->wg->Out->addHTML( wfMessage('promote-extension-under-rework')->plain() );
+				$this->wg->Out->addHTML( wfMessage('promote-extension-under-rework')->parse() );
 
 				$this->skipRendering();
 			}
