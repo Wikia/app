@@ -61,8 +61,11 @@
 
 			li {
 				a, a:after {
-//					direction: rtl;
 					text-align: right;
+				}
+				a span {
+					left: auto;
+					right: 20px;
 				}
 			}
 		}
@@ -95,6 +98,8 @@
 
 				span {
 					position: absolute;
+					left: 20px;
+					right: auto;
 				}
 			}
 
