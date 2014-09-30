@@ -266,8 +266,8 @@
 			&:hover {
 				font-weight: normal;
 			}
-			&:nth-child(n - 1) {
-				border-top: 1px solid $color-buttons;
+			&:nth-child(n + 2) {
+				border-top: 1px;
 			}
 		}
 		@if lightness($color-buttons) < 50 {
