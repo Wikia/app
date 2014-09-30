@@ -20,14 +20,21 @@ $query = ( new WikiaSQL() )
 	->FROM( 'user' )
 	->WHERE( 'user_registration' );
 
-if ( isset( $options['registration'] ) ) {
+if ( isset( $options['reg_start'] ) ) {
 	// Registration in DB is in the form of an integer, with year, month, date, hour, minute
 	// and second values concatenated in this format: YYYYMMDDHHMMSS
-	if ( strlen( $options['registration'] ) === 8 ) {
+	if ( strlen( $options['reg_start'] ) === 8 ) {
 		// Registration value is a date without time, so append time values (HHMMSS) as midnight
-		$options['registration'] .= '000000';
+		$options['reg_start'] .= '000000';
 	}
-	$query->GREATER_THAN_OR_EQUAL( (int)$options['registration'] );
+	$query->GREATER_THAN_OR_EQUAL( (int)$options['reg_start'] );
+	if ( isset( $options['reg_end'] ) ) {
+		if ( strlen( $options['reg_end'] ) === 8 ) {
+			// Append time values (HHMMSS) as midnight
+			$options['reg_end'] .= '000000';
+		}
+		$query->AND_( 'user_registration' )->LESS_THAN( (int)$options['reg_end'] );
+	}
 } else {
 	$query->IS_NULL();
 }
@@ -63,7 +70,7 @@ $start = time();
 foreach ( $allRows as $row ) {
 	$user = User::newFromId( $row->user_id );
 	$output = 'User ID ' . $row->user_id;
-	if ( isset( $options['registration'] ) ) {
+	if ( isset( $options['reg_start'] ) ) {
 		$output .= ' (registered ' . wfTimestamp( TS_DB, $row->user_registration ) . ')';
 	}
 	$user->setOption( PREFERENCE_EDITOR, EditorPreference::OPTION_EDITOR_VISUAL );
