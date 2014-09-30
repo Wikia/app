@@ -2573,14 +2573,14 @@ class WikiFactory {
 	 *
 	 * @param integer	$city_id		wikia identifier in city_list
 	 *
-	 * @return stdClass ($row->cat_id $row->cat_name) or false
+	 * @return stdClass ($row->cat_id $row->cat_name) or 0
 	 * @deprecated
 	 */
 
 	static public function getCategory ( $city_id ) {
 		// return deprecated category list
 		$categories = self::getCategories( $city_id, true );
-		return !empty($categories) ? $categories[0] : false;
+		return !empty($categories) ? $categories[0] : 0;
 	}
 
 
@@ -2589,7 +2589,7 @@ class WikiFactory {
 	 *
 	 * @param integer	$city_id		wikia identifier in city_list
 	 *
-	 * @return stdClass ($row->cat_id $row->cat_name) or 0
+	 * @return stdClass ($row->cat_id $row->cat_name) or empty array
 	 *
 	 */
 
