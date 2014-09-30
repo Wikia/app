@@ -26,7 +26,10 @@ class LocalNavigationController extends WikiaController {
 	}
 
 	private function getMenuNodes () {
-			return ( new NavigationModel() )->getLocalNavigationTree( NavigationModel::WIKI_LOCAL_MESSAGE );
+		$navigationModel = new NavigationModel();
+		$localNavigation = $navigationModel->getLocalNavigationTree( NavigationModel::WIKI_LOCAL_MESSAGE );
+		$onTheWikiNavigation = $navigationModel->getOnTheWikiNavigationTree( NavigationModel::WIKIA_GLOBAL_VARIABLE );
+		return array_merge( $localNavigation, $onTheWikiNavigation );
 	}
 
 	public function Wordmark() {

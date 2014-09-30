@@ -171,15 +171,39 @@ class NavigationModel extends WikiaModel {
 	}
 
 	public function getGlobalNavigationTree( $messageName ) {
-		return $this->getTree( $messageName, self::GLOBALNAV_LEVEL_1_ITEMS_COUNT, self::GLOBALNAV_LEVEL_2_ITEMS_COUNT, self::GLOBALNAV_LEVEL_3_ITEMS_COUNT );
+		return $this->getTree(
+			NavigationModel::TYPE_MESSAGE,
+			$messageName,
+			[
+				self::GLOBALNAV_LEVEL_1_ITEMS_COUNT,
+				self::GLOBALNAV_LEVEL_2_ITEMS_COUNT,
+				self::GLOBALNAV_LEVEL_3_ITEMS_COUNT
+			]
+		);
 	}
 
 	public function getLocalNavigationTree( $messageName ) {
 		return $this->getTree(
+			NavigationModel::TYPE_MESSAGE,
 			$messageName,
-			self::LOCALNAV_LEVEL_1_ITEMS_COUNT,
-			self::LOCALNAV_LEVEL_2_ITEMS_COUNT,
-			self::LOCALNAV_LEVEL_3_ITEMS_COUNT,
+			[
+				self::LOCALNAV_LEVEL_1_ITEMS_COUNT,
+				self::LOCALNAV_LEVEL_2_ITEMS_COUNT,
+				self::LOCALNAV_LEVEL_3_ITEMS_COUNT
+			],
+			true
+		);
+	}
+
+	public function getOnTheWikiNavigationTree( $variableName ) {
+		return $this->getTree(
+			NavigationModel::TYPE_VARIABLE,
+			$variableName,
+			[
+				1,
+				self::LOCALNAV_LEVEL_2_ITEMS_COUNT,
+				self::LOCALNAV_LEVEL_3_ITEMS_COUNT
+			],
 			true
 		);
 	}
@@ -188,17 +212,17 @@ class NavigationModel extends WikiaModel {
 		return $this->getMemcKey(implode('-', func_get_args() + [self::MEMC_VERSION]));
 	}
 
-	public function getTree( $messageName, $level1, $level2, $level3, $forContent = false ) {
+	public function getTree( $type, $source, $maxChildrenAtLevel = [], $forContent = false ) {
 		$menuData = WikiaDataAccess::cache(
-			$this->getTreeMemcKey( $messageName, $level1, $level2, $level3, $forContent ),
+			$this->getTreeMemcKey( $type, $source, implode($maxChildrenAtLevel, '-'), $forContent ),
 			1800,
-			function() use ( $messageName, $level1, $level2, $level3, $forContent ) {
+			function() use ( $type, $source, $maxChildrenAtLevel, $forContent ) {
 				$menuData = [];
 
 				$this->menuNodes = $this->parse(
-					NavigationModel::TYPE_MESSAGE,
-					$messageName,
-					[$level1, $level2, $level3],
+					$type,
+					$source,
+					$maxChildrenAtLevel,
 					1800 /* 3 hours */,
 					$forContent
 				);
