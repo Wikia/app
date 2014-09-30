@@ -12,32 +12,36 @@ class ExactTargetUpdateWikiTask extends ExactTargetBaseTask {
 
 	public function updateWikiDataExtension( $aWikiData, $oClient ) {
 		try {
-			/* Create new DataExtensionObject that reflects city_list table data */
-			$oDE = new ExactTarget_DataExtensionObject();
-
-			/* Get Customer Keys specific for production or development */
-			$aCustomerKeys = ExactTargetUpdatesHelper::getCustomerKeys();
-			$oDE->CustomerKey = $this->aCustomerKeys['city_list'];
-
-			$aApiProperties = [];
-			foreach( $aWikiData as $sKey => $sValue ) {
-				$aApiProperties[] = $this->wrapApiProperty( $sKey, $sValue );
-			}
-			$oDE->Properties = $aApiProperties;
-
+			$oDE = $this->prepareWikiDataForUpdate( $aWikiData );
 			$oSoapVar = $this->wrapToSoapVar( $oDE );
-
 			$oRequest = $this->wrapUpdateRequest( $oSoapVar );
 
 			/* Send API request */
 			$oClient->Update( $oRequest );
 
-			/* Log response */
-			$this->info( $oClient->__getLastResponse() );
+			wfDebug( $oClient->__getLastResponse() . "\n\n" );
 
+			/* Log response */
+			$this->info( $oClient->__getLastResponse() . " UpdateTask \n\n" );
 		} catch ( SoapFault $e ) {
 			/* Log error */
 			$this->error( __METHOD__ . ' SoapFault: ' . $e->getMessage() . ' ErrorCode:  ' . $e->getCode() );
 		}
+	}
+
+	public function prepareWikiDataForUpdate( $aWikiData ) {
+		$oDE = new ExactTarget_DataExtensionObject();
+
+		$aCustomerKeys = ExactTargetUpdatesHelper::getCustomerKeys();
+		$oDE->CustomerKey = $aCustomerKeys['city_list'];
+
+		$oDE->Keys = [
+			$this->wrapApiProperty( 'city_id', $aWikiData['city_id'] ),
+		];
+		$oDE->Properties = [
+			$this->wrapApiProperty( $aWikiData['field'], $aWikiData['value'] ),
+		];
+
+		return $oDE;
 	}
 }

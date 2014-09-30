@@ -46,6 +46,7 @@ $wgAutoloadClasses['ExactTargetBaseTask'] =  $dir . '/ExactTargetBaseTask.php' ;
 $wgAutoloadClasses['ExactTargetAddUserTask'] =  $dir . '/ExactTargetAddUserTask.php' ;
 $wgAutoloadClasses['ExactTargetUpdateUserTask'] =  $dir . '/ExactTargetUpdateUserTask.php' ;
 $wgAutoloadClasses['ExactTargetAddWikiTask'] =  $dir . '/ExactTargetAddWikiTask.php';
+$wgAutoloadClasses['ExactTargetUpdateWikiTask'] =  $dir . '/ExactTargetUpdateWikiTask.php';
 $wgAutoloadClasses['ExactTargetUpdatesHooks'] =  $dir . '/ExactTargetUpdatesHooks.php' ;
 $wgAutoloadClasses['ExactTargetSoapClient'] =  $dir . '/lib/exacttarget_soap_client.php' ;
 
@@ -60,4 +61,4 @@ $wgHooks['SignupConfirmEmailComplete'][] = 'ExactTargetUpdatesHooks::onSignupCon
 $wgHooks['UserSaveSettings'][] = 'ExactTargetUpdatesHooks::onUserSaveSettings';
 /* Wiki-related hooks */
 $wgHooks['CreateWikiLocalJob-complete'][] = 'ExactTargetUpdatesHooks::onWikiCreation';
-$wgHooks['WikiFactoryChanged'][] = 'ExactTargetUpdatesHooks::onWikiFactoryChange';
+$wgHooks['WikiFactoryChanged'][] = 'ExactTargetUpdatesHooks::onWikiFactoryChanged';

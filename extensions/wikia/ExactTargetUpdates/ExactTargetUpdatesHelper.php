@@ -27,6 +27,8 @@ class ExactTargetUpdatesHelper {
 		$aWfVarsTriggeringUpdate = [
 			'wgServer' => true,
 			'wgSitename' => true,
+			'wgLanguageCode' => true,
+			'wgDBcluster' => true,
 		];
 		return $aWfVarsTriggeringUpdate;
 	}

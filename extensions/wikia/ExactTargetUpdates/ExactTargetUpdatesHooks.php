@@ -96,7 +96,12 @@ class ExactTargetUpdatesHooks {
 	 * @param  array $aWfVarParams  Contains a var's name, a wiki's id and a new value.
 	 * @return true
 	 */
-	public static function onWikiFactoryChange( $aWfVarParams ) {
+	public static function onWikiFactoryChanged( $sVarName, $iCityId, $sVarNewValue ) {
+		$aWfVarParams = [
+			'city_id' => $iCityId,
+			'var_name' => $sVarName,
+			'var_value' => $sVarNewValue
+		];
 		$thisInstance = new ExactTargetUpdatesHooks();
 		$thisInstance->addTheUpdateWikiTask( $aWfVarParams, new ExactTargetUpdateWikiTask() );
 		return true;
@@ -223,9 +228,9 @@ class ExactTargetUpdatesHooks {
 	 */
 	public function addTheUpdateWikiTask( $aWfVarParams, ExactTargetUpdateWikiTask $oTask ) {
 		if ( $this->bShouldAddTask ) {
-			$sVarName = $aWfVarParams[0];
+			$sVarName = $aWfVarParams[ 'var_name' ];
 			$aWfVarsTriggeringUpdate = ExactTargetUpdatesHelper::getWfVarsTriggeringUpdate();
-			if ( isset( $aWfVarsTriggeringUpdate[ $sVarName ] ) {
+			if ( isset( $aWfVarsTriggeringUpdate[ $sVarName ] ) ) {
 				$aWikiDataForUpdate = $this->prepareWikiParamsForUpdate( $aWfVarParams );
 				$oTask->call( 'updateWikiData', $aWikiDataForUpdate );
 				$oTask->queue();
@@ -275,30 +280,28 @@ class ExactTargetUpdatesHooks {
 		return $aWikiCatsMappingParams;
 	}
 
-	private function prepareWikiDataForUpdate( $aWfVarParams ) {
-		$aWikiDataForUpdate = [];
+	private function prepareWikiParamsForUpdate( $aWfVarParams ) {
+		$aWfVarParams[ 'city_id' ] = $aWfVarParams[ 'city_id' ];
+		$aWfVarParams[ 'var_name' ] = $aWfVarParams[ 'var_name' ];
+		$aWfVarParams[ 'var_value' ] = $aWfVarParams[ 'var_value' ];
 
-		$sVarName = $aWfVarParams[0];
-		$iCityId = $aWfVarParams[1];
-		$mVarNewValue = $aWfVarParams[2];
-
-		switch ( $sVarName ) {
-			case 'wfServer':
-				$wgScriptPath = \WikiFactory::getVarValueByName( 'wgScriptPath', $iCityId );
-				$sCityUrl = $mVarNewValue . $wgScriptPath;
-				$aWikiDataForUpdate['city_url'] = $sCityUrl;
+		switch ( $aWfVarParams[ 'var_name' ] ) {
+			case 'wgServer':
+				$wgScriptPath = \WikiFactory::getVarValueByName( 'wgScriptPath', $aWfVarParams[ 'city_id' ] );
+				$sCityUrl = $aWfVarParams[ 'var_value' ] . $wgScriptPath;
+				$aWikiDataForUpdate = [ 'city_id' => $aWfVarParams[ 'city_id' ], 'field' => 'city_url', 'value' => $sCityUrl ];
 				break;
 
 			case 'wgSitename':
-				$aWikiDataForUpdate['city_title'] = $mVarNewValue;
+				$aWikiDataForUpdate = [ 'city_id' => $aWfVarParams[ 'city_id' ], 'field' => 'city_title', 'value' => $aWfVarParams[ 'var_value' ] ];
 				break;
 
 			case 'wgLanguageCode':
-				$aWikiDataForUpdate['city_lang'] = $mVarNewValue;
+				$aWikiDataForUpdate = [ 'city_id' => $aWfVarParams[ 'city_id' ], 'field' => 'city_lang', 'value' => $aWfVarParams[ 'var_value' ] ];
 				break;
 
 			case 'wgDBcluster' :
-				$aWikiDataForUpdate['city_cluster'] = $mVarNewValue;
+				$aWikiDataForUpdate = [ 'city_id' => $aWfVarParams[ 'city_id' ], 'field' => 'city_cluster', 'value' => $aWfVarParams[ 'var_value' ] ];
 				break;
 		}
 
