@@ -411,6 +411,8 @@ class EditAccount extends SpecialPage {
 
 			// All clear!
 			$mStatusMsg = wfMessage( 'editaccount-success-close', $user->mName )->plain();
+
+			wfRunHooks( 'EditAccountSuccessClose', array( $user ) );
 			return true;
 
 		} else {
