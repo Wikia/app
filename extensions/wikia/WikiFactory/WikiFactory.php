@@ -2589,7 +2589,7 @@ class WikiFactory {
 	 *
 	 * @param integer	$city_id		wikia identifier in city_list
 	 *
-	 * @return stdClass ($row->cat_id $row->cat_name) or empty array
+	 * @return array of stdClass ($row->cat_id $row->cat_name) or empty array
 	 *
 	 */
 
