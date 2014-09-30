@@ -188,10 +188,6 @@
 		display: none;
 	}
 	
-	ul.third {
-	  visibility: hidden;
-  }
-
 	ul.second {
 		min-width: -webkit-calc(100% + 1px);
 		min-width: calc(100% + 1px);
@@ -242,8 +238,12 @@
 	}
 	ul.third {
 		background: none;
-		height: 100%;
 		display: block;
+		height: 100%;
+		left: auto;
+		top: 0;
+		visibility: hidden;
+
 		li {
 			background: $color-buttons;
 			height: 31px;
@@ -253,6 +253,9 @@
 			}
 			&:last-child a {
 				border-bottom-width: 5px;
+			}
+			&:nth-child(n + 2) a {
+				border-top: 1px solid $color-buttons;
 			}
 		}
 		a {
@@ -266,9 +269,6 @@
 			&:hover {
 				font-weight: normal;
 			}
-			&:nth-child(n + 2) {
-				border-top: 1px;
-			}
 		}
 		@if lightness($color-buttons) < 50 {
 			a {
@@ -278,7 +278,7 @@
 				}
 			}
 		}
-		@else {
+	@else {
 			a {
 				background: rgba(#000, .2);
 				&:hover {
@@ -286,11 +286,6 @@
 				}
 			}
 		}
-	}
-
-	ul.third {
-		left: auto;
-		top: 0;
 	}
 }
 
