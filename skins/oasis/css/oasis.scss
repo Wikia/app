@@ -71,6 +71,7 @@
 @import 'extensions/wikia/TOC/css/toc.scss';
 @import 'extensions/wikia/VideosModule/styles/VideosModule';
 @import 'extensions/wikia/GlobalFooter/styles/GlobalFooter';
+@import 'extensions/wikia/MediaGallery/styles/MediaGallery.scss'; // relies on bulky foundation mixins
 
 // CSS (needs leading slash and file extension)
 @import '/extensions/wikia/CreatePage/css/CreatePage.css';
