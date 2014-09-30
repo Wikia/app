@@ -66,6 +66,18 @@ class ExactTargetUpdatesHooks {
 	}
 
 	/**
+	 * Runs a method for adding addTheRemoveUserNameTask to job queue
+	 * Function executed on EditAccountSuccessClose hook
+	 * @param User $oUser
+	 * @return bool
+	 */
+	public static function onEditAccountSuccessClose( $oUser ) {
+		$thisInstance = new ExactTargetUpdatesHooks();
+		$thisInstance->addTheRemoveUserTask( $oUser, new ExactTargetRemoveUserTask() );
+		return true;
+	}
+
+	/**
 	 * Adds AddUserTask to job queue
 	 * @param User $user
 	 * @param ExactTargetAddUserTask $task
@@ -128,6 +140,20 @@ class ExactTargetUpdatesHooks {
 				'user_name' => $sNewUsername
 			];
 			$task->call( 'updateUserData', $aUserData );
+			$task->queue();
+		}
+	}
+
+	/**
+	 * Adds Task for removing user to job queue
+	 * @param User $oUser
+	 * @param ExactTargetRemoveUserTask $task
+	 */
+	public function addTheRemoveUserTask( User $oUser, ExactTargetRemoveUserTask $task ) {
+		global $wgWikiaEnvironment;
+		/* Don't add task when on dev or internal */
+		if ( $wgWikiaEnvironment != WIKIA_ENV_DEV && $wgWikiaEnvironment != WIKIA_ENV_INTERNAL ) {
+			$task->call( 'removeUserData', $oUser );
 			$task->queue();
 		}
 	}
