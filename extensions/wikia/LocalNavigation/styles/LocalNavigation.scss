@@ -103,9 +103,9 @@
 				}
 			}
 
-			&:nth-child(n + 2) a {
-				border-top: 1px solid rgba($color-button-text, .2);
-			}
+		}
+		> li:nth-child(n + 2) > a {
+			border-top: 1px solid rgba($color-button-text, .2);
 		}
 	}
 
