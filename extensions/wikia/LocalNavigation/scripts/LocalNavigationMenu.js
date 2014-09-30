@@ -15,7 +15,7 @@
 		var secondLvlNav, secondLvlNavWidth = 0, secondLvlNavOffset = 0,
 			thirdLvlWidth = 0, thirdLvlMaxWidth = 0;
 
-		$('> li', $localNavStart).each(function(i){
+		$('> li', $localNavStart).each(function(){
 			secondLvlNav = $('> ul', this);
 			secondLvlNavWidth = secondLvlNav.outerWidth();
 			secondLvlNavOffset = secondLvlNav.offset().left;
@@ -110,12 +110,13 @@
 				activateOnClick: false
 			}
 		);
+	} else {
+		$localNavSecondLevel.click(openMenu);
 	}
 
-	$(window).load(function(){
-		init();
+	$window.resize(function(){
+		window.Wikia.EventsHelper.waitForFinalEvent(recalculateSwap, 300, 'localNavigation');
 	});
 
-	$(window).resize(recalculateSwap);
-
+	init();
 })(jQuery);

@@ -108,6 +108,7 @@ $VenusConfig['local_navigation_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => ['venus', 'oasis'],
 	'assets' => [
+		'//resources/wikia/modules/eventshelper.js',
 		'//extensions/wikia/LocalNavigation/scripts/LocalNavigationMenu.js',
 	]
 ];
