@@ -3468,6 +3468,7 @@ $wgGroupPermissions['*']['edit']             = true;
 $wgGroupPermissions['*']['createpage']       = true;
 $wgGroupPermissions['*']['createtalk']       = true;
 $wgGroupPermissions['*']['writeapi']         = true;
+$wgGroupPermissions['*']['editmyoptions']    = true;
 //$wgGroupPermissions['*']['patrolmarks']      = false; // let anons see what was patrolled
 
 // Implicit group for all logged-in accounts

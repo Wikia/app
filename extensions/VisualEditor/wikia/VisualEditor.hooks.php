@@ -15,6 +15,11 @@ class VisualEditorWikiaHooks {
 			$preferences['visualeditor-betatempdisable']
 		);
 
+		// For option tracking whether a user viewed the editor preference transition dialog
+		$preferences['showVisualEditorTransitionDialog'] = array(
+			'type' => 'hidden'
+		);
+
 		return true;
 	}
 
@@ -65,9 +70,7 @@ class VisualEditorWikiaHooks {
 		}
 		// Note: even if set as integer, option value is retrieved as string
 		if ( $wgUser->getOption( 'showVisualEditorTransitionDialog' ) === '1' ) {
-			$vars['showVETransitionDialog'] = 1;
-			$wgUser->setOption( 'showVisualEditorTransitionDialog', 0 );
-			$wgUser->saveSettings();
+			$vars['showVisualEditorTransitionDialog'] = 1;
 		}
 		return true;
 	}
