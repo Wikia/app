@@ -38,6 +38,8 @@
 				secondLvlNav.removeClass('right');
 			}
 		});
+
+		attachMenuAim();
 	}
 
 	function recalculateSwap() {
@@ -78,14 +80,24 @@
 		$(row).removeClass('active');
 	}
 
-	window.menuAim(
-		$localNavSecondLevel.get(0),
-		{
-			activate: openSubmenu,
-			deactivate: closeSubmenu,
-			rowSelector: '.second-level-row'
+	function attachMenuAim() {
+		var i, alwaysTrueFunc;
+
+		alwaysTrueFunc = function() {
+			return true;
+		};
+
+		for (i=0; i<$localNavSecondLevel.length; i++ ) {
+			window.menuAim(
+				$localNavSecondLevel[i],{
+					activate: openSubmenu,
+					deactivate: closeSubmenu,
+					rowSelector: '.second-level-row',
+					exitMenu: alwaysTrueFunc
+				}
+			);
 		}
-	);
+	}
 
 	if ( !window.ontouchstart ) {
 		window.delayedHover(
@@ -98,8 +110,6 @@
 				activateOnClick: false
 			}
 		);
-	} else {
-		$localNavSecondLevel.click(openMenu);
 	}
 
 	$(window).load(function(){
