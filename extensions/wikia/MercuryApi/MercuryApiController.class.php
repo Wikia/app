@@ -9,6 +9,8 @@ class MercuryApiController extends WikiaController {
 	const NUMBER_CONTRIBUTORS = 6;
 	const DEFAULT_PAGE = 1;
 
+	const HEADERS_ETAG = 'X-Mercury-ETag';
+
 	private $mercuryApi = null;
 
 	public function __construct() {
@@ -192,6 +194,13 @@ class MercuryApiController extends WikiaController {
 			'adsContext' => $this->mercuryApi->getAdsContext( $title, $this->wg, $articleAsJson[ 'categories' ] ),
 			'basePath' => $this->wg->Server
 		];
+
+		if ( $this->wg->UseETag ) {
+			$eTag = $this->mercuryApi->getArticleETag( $articleId );
+			if ( $eTag ) {
+				$this->response->setHeader( self::HEADERS_ETAG, $eTag );
+			}
+		}
 
 		$relatedPages = $this->getRelatedPages( $articleId );
 		if ( !empty( $relatedPages ) ) {

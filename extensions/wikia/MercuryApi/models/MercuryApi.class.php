@@ -310,4 +310,17 @@ class MercuryApi {
 			];
 		});
 	}
+
+	/**
+	 * Returns ETag for the article with given ID
+	 *
+	 * @param integer $articleId Article ID
+	 * @return bool|string
+	 */
+	public function getArticleETag( $articleId ) {
+		$article = Article::newFromID( $articleId );
+		$context =  RequestContext::newExtraneousContext( $article->getTitle() );
+		$parserOptions = ParserOptions::newFromContext( $context );
+		return ParserCache::singleton()->getETag( $article, $parserOptions );
+	}
 }
