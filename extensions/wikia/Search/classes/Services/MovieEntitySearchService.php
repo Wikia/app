@@ -11,7 +11,7 @@ class MovieEntitySearchService extends EntitySearchService {
 	const API_URL = 'api/v1/Articles/AsSimpleJson?id=';
 	const EXACT_MATCH_FIELD = "movie_mv_em";
 	private static $EXCLUDED_WIKIS = [ 'uncyclopedia.wikia.com' ];
-	private static $ARTICLE_TYPES_SUPPORTED_LANGS = [ 'en', 'de' ];
+	private static $ARTICLE_TYPES_SUPPORTED_LANGS = [ 'en', 'de', 'es' ];
 
 	protected function prepareQuery( $query ) {
 		$select = $this->getSelect();
