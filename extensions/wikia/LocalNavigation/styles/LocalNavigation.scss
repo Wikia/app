@@ -61,7 +61,7 @@
 
 			li {
 				a, a:after {
-					direction: rtl;
+//					direction: rtl;
 					text-align: right;
 				}
 			}
@@ -82,9 +82,6 @@
 				white-space: nowrap;
 				width: 100%;
 
-				&:nth-child(n - 1) {
-					border-top: 1px solid rgba($color-button-text, .2);
-				}
 
 				&:hover {
 					font-weight: bold;
@@ -99,6 +96,10 @@
 				span {
 					position: absolute;
 				}
+			}
+
+			&:nth-child(n + 2) a {
+				border-top: 1px solid rgba($color-button-text, .2);
 			}
 		}
 	}
@@ -159,20 +160,21 @@
 				padding: 0 20px;
 			}
 
-			&:nth-child(n - 1) {
+			&:nth-child(n + 2) {
 				border-left: 1px solid $color-page-border;
 			}
 
-			// TODO: Change it to .active when finishing interactions
 			&.active {
 				background: $color-buttons;
-				border-color: $color-buttons;
+				border-color: $color-page;
 				color: $color-button-text;
 
 				ul.second {
 					display: table;
-//					visibility: visible;
 				}
+			}
+			&.active + li {
+				border-color: $color-page;
 			}
 		}
 	}
@@ -186,8 +188,8 @@
   }
 
 	ul.second {
-		min-width: 100%;
-
+		min-width: -webkit-calc(100% + 1px);
+		min-width: calc(100% + 1px);
 
 		a.has-more {
 			padding-right: 40px;
@@ -203,7 +205,7 @@
 				content: ' ';
 			}
 			&:hover span::after {
-				@include arrow(4px, rgba($color-button-text, .8), 'right');
+				border-left-color: rgba($color-button-text, .8);
 			}
 		}
 		&.right {
@@ -219,7 +221,7 @@
 					float: left;
 				}
 				&:hover span::after {
-					@include arrow(4px, rgba($color-button-text, .8), 'left');
+					border-right-color: rgba($color-button-text, .8);
 				}
 			}
 			ul.third {
@@ -230,7 +232,6 @@
 		li.active {
 			ul.third {
 				visibility: visible;
-//				display: block;
 			}
 		}
 	}
@@ -238,7 +239,6 @@
 		background: none;
 		height: 100%;
 		display: block;
-		padding: 5px;
 		li {
 			background: $color-buttons;
 			height: 31px;
@@ -257,7 +257,6 @@
 			border-style: solid;
 			border-right-width: 5px;
 			border-left-width: 5px;
-
 
 			&:hover {
 				font-weight: normal;
