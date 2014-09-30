@@ -15,12 +15,10 @@
 
 	window.isFromSearch = function () {
 		var ref = document.referrer;
-        if (document.cookie.replace(/(?:(?:^|.*;\s*)fromsearch\s*\=\s*([^;]*).*$)|^.*$/, "$1") == "1") {
+		if (document.cookie.replace(/(?:(?:^|.*;\s*)fromsearch\s*\=\s*([^;]*).*$)|^.*$/, "$1") == "1") {
 			return true;
-		} else if (
-				ref.indexOf('https://www.google.com/') == 0 || (ref.match(/https:\/\/(www.|)google./) &&
-				ref.indexOf('mail.google.com') == -1 && ref.indexOf('url?q=') == -1)
-		) {
+		} else if (ref.indexOf('https://www.google.com/') == 0 || (ref.match(/https:\/\/(www.|)google./) &&
+			ref.indexOf('mail.google.com') == -1 && ref.indexOf('url?q=') == -1)) {
 			return true;
 		} else if (ref.indexOf('bing.com') != -1 && ref.indexOf('q=') != -1) {
 			return true;
