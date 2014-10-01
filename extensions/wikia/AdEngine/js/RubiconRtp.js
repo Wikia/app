@@ -54,6 +54,7 @@ define('ext.wikia.adEngine.rubiconRtp', [
 		log(['onRubiconResponse', response], 'debug', logGroup);
 
 		rtpStart.track();
+		rtpEnd.timeWgNowBased = rtpEnd.timeWgNowBased - rtpStart.timeWgNowBased;
 		rtpEnd.track();
 
 		rtpResponse = response;
