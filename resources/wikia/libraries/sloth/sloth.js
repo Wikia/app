@@ -3,10 +3,10 @@
  *
  * @example
  * sloth({
- * 		on: document.getElementById('lazyModule'),
- * 		callback: function(element){
- * 			element.innerHTML = ajax('/get/some/stuff');
- * 		}
+ *     on: document.getElementById('lazyModule'),
+ *     callback: function(element){
+ *         element.innerHTML = ajax('/get/some/stuff');
+ *     }
  * });
  *
  * @author Hakubo bukaj.kelo<@gmail.com>
