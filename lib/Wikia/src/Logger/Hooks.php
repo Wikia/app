@@ -20,15 +20,21 @@ class Hooks {
 	 *
 	 */
 	public static function onWikiaSkinTopScripts( &$vars, &$scripts ) {
-		global $wgDevelEnvironment, $wgIsGASpecialWiki, $wgEnableJavaScriptErrorLogging, $wgCacheBuster, $wgMemc;
+		global $wgDevelEnvironment, $wgIsGASpecialWiki, $wgEnableJavaScriptErrorLogging, $wgMemc, $wgWikiaForceSchemeInUrls;
 
 		if ( !$wgDevelEnvironment ) {
 			$onError = $wgIsGASpecialWiki || $wgEnableJavaScriptErrorLogging;
-			$key = "wikialogger-top-script-$onError";
+			$key = sprintf("wikialogger-top-script-%d-%d",
+				intval($onError), intval($wgWikiaForceSchemeInUrls));
 			$loggingJs = $wgMemc->get( $key );
 
 			if ( !$loggingJs ) {
 				$errorUrl = "//jserrorslog.wikia.com/";
+				if ( !empty($wgWikiaForceSchemeInUrls) ) {
+					# we currently don't support https so it's safe to fall back to http
+					$errorUrl = "http:{$errorUrl}";
+				}
+
 				$loggingJs = "
 					function syslogReport(priority, message, context) {
 						context = context || null;

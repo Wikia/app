@@ -1548,6 +1548,14 @@ $wgDisableWAMOnHubs = false;
 
 /**
  * Force ImageServing to return an empty list
- * see PLATFORM-392
+ * @see PLATFORM-392
  */
 $wgImageServingForceNoResults = false;
+
+/**
+ * Controls whether producing URLs without scheme (http:/https:) is accepted in current request
+ * Primary use case is iOS apps that load articles from local disk cache and URLs starting with
+ * "//domain.com" produce errors.
+ * @see PLATFORM-486
+ */
+$wgWikiaForceSchemeInUrls = false;

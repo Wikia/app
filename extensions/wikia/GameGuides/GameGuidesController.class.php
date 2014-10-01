@@ -289,6 +289,8 @@ class GameGuidesController extends WikiaController {
 
 		$titleName = $this->request->getVal( 'page' );
 
+		$this->wg->WikiaForceSchemeInUrls = true;
+
 		$html = ApiService::call(
 			array(
 				'action' => 'parse',
