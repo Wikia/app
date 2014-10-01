@@ -158,6 +158,34 @@ describe('ext.wikia.adEngine.adTracker', function () {
 		});
 	});
 
+	it('measureTime: wgNow only', function () {
+		var windowPerformanceMock = {
+				wgNow: new Date(new Date().getTime() - 888)
+			},
+			timer,
+			adTracker = modules['ext.wikia.adEngine.adTracker'](trackerMock, windowPerformanceMock);
+
+		spyOn(trackerMock, 'track');
+
+		timer = adTracker.measureTime('test/event', {abc: 'def', 'xyz': 123});
+
+		// No tracking yet
+		expect(trackerMock.track.calls.length).toBe(0);
+
+		timer.track();
+
+		expect(trackerMock.track).toHaveBeenCalledWith({
+			ga_category: 'ad/timing/test/event/wgNow',
+			ga_action: 'abc=def;xyz=123',
+			ga_label: '0.5-1',
+			ga_value: 888,
+			trackingMethod: 'ad'
+		});
+
+		expect(trackerMock.track.calls.length).toBe(1);
+
+	});
+
 	it('measureTime: both performance and wgNow available', function () {
 		var windowPerformanceMock = {
 				performance: {
@@ -172,12 +200,21 @@ describe('ext.wikia.adEngine.adTracker', function () {
 
 		spyOn(trackerMock, 'track');
 
-		timer = adTracker.measureTime('test/event', {abc: 'def', 'xyz': 123});
+		timer = adTracker.measureTime('test/event', {abc: 'def', 'xyz': 123}, true);
 
 		// No tracking yet
 		expect(trackerMock.track.calls.length).toBe(0);
 
 		timer.track();
+
+		expect(trackerMock.track).toHaveBeenCalledWith({
+			ga_category: 'ad/timing/test/event/wgNow',
+			ga_action: 'abc=def;xyz=123',
+			ga_label: '0.5-1',
+			ga_value: 888,
+			trackingMethod: 'ad'
+		});
+
 		expect(trackerMock.track).toHaveBeenCalledWith({
 			ga_category: 'ad/timing/test/event/performance',
 			ga_action: 'abc=def;xyz=123',
@@ -185,6 +222,7 @@ describe('ext.wikia.adEngine.adTracker', function () {
 			ga_value: 778,
 			trackingMethod: 'ad'
 		});
+
 		expect(trackerMock.track.calls.length).toBe(2);
 	});
 
@@ -207,6 +245,13 @@ describe('ext.wikia.adEngine.adTracker', function () {
 		expect(trackerMock.track.calls.length).toBe(0);
 
 		timer.track();
+
+		expect(trackerMock.track.calls.length).toBe(0);
+
+		timer = adTracker.measureTime('test/event', {abc: 'def', 'xyz': 123}, true);
+
+		timer.track();
+
 		expect(trackerMock.track).toHaveBeenCalledWith({
 			ga_category: 'ad/timing/test/event/performance',
 			ga_action: 'abc=def;xyz=123',
