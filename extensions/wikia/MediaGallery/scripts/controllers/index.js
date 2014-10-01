@@ -1,6 +1,6 @@
 require([
 	'mediaGallery.views.gallery',
-    'sloth'
+	'sloth'
 ], function (Gallery, sloth) {
 	'use strict';
 
