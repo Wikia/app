@@ -116,9 +116,7 @@
 		$localNavSecondLevel.click(openMenu);
 	}
 
-	$window.resize(function(){
-		window.Wikia.EventsHelper.waitForFinalEvent(recalculateSwap, 300, 'localNavigation');
-	});
+	$window.on( 'resize', $.debounce( 300, recalculateSwap ) );
 
 	init();
 })(jQuery);
