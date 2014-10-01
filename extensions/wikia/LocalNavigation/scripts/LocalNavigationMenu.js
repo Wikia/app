@@ -12,7 +12,7 @@
 	windowWidth = $window.width();
 
 	function init(){
-		var self, secondLvlNavWidth = 0, secondLvlNavOffset = 0,
+		var self, dropdownOffset = 0, secondLvlNavWidth = 0, secondLvlNavOffset = 0,
 			thirdLvlWidth = 0, thirdLvlMaxWidth = 0;
 
 		$localNavSecondLevel.each(function(){
@@ -27,12 +27,14 @@
 				}
 			});
 
+			dropdownOffset = secondLvlNavWidth + secondLvlNavOffset + thirdLvlMaxWidth;
+
 			localNavCache.push({
-				width: secondLvlNavWidth + secondLvlNavOffset + thirdLvlMaxWidth,
+				width: dropdownOffset,
 				menuElement: self
 			});
 
-			if ( secondLvlNavWidth + secondLvlNavOffset + thirdLvlMaxWidth > windowWidth ) {
+			if ( dropdownOffset > windowWidth ) {
 				self.addClass('right');
 			} else {
 				self.removeClass('right');
