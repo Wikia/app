@@ -113,6 +113,7 @@ define('mediaGallery.views.gallery', [
 			$.each(media, function (idx, item) {
 				item.show();
 			});
+			self.$el.trigger('mediaLoaded');
 		});
 
 		return this;
@@ -134,6 +135,13 @@ define('mediaGallery.views.gallery', [
 		this.$showLess.on('click', $.proxy(this.showLess, this));
 
 		this.$toggler = $html;
+	};
+
+	Gallery.prototype.appendToggler = function ($elem) {
+		if (!this.togglerAdded) {
+			$elem.append(this.$toggler);
+			this.togglerAdded = true;
+		}
 	};
 
 	/**
