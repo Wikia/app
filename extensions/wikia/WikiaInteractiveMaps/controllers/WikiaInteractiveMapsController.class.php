@@ -109,6 +109,7 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 		$model = $this->getModel();
 
 		$map = $model->getMapByIdFromApi( $mapId );
+
 		if( isset( $map->title ) ) {
 			$mapCityId = $map->city_id;
 			$this->redirectIfForeignWiki( $mapCityId, $mapId );
