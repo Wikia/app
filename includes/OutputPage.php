@@ -1292,7 +1292,7 @@ class OutputPage extends ContextSource {
 	 */
 	public function setAllowedModules( $type, $level ){
 		wfDeprecated( __METHOD__, '1.24' );
-		$this->reduceAllowedModuleOrigin( $level );
+		$this->mAllowedModuleOrigin = $level; // Wikia change - set level explicitly
 	}
 
 	/**
