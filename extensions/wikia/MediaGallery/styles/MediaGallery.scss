@@ -108,7 +108,7 @@ $media-margin: 2.5px;
 	$caption-height: ($caption-padding * 2) + $caption-line-height;
 	$caption-top-offset: -1 * ($caption-height + $media-margin);
 
-	.caption {
+	.media-gallery-caption {
 		@include background-opacity(#000, 60);
 		bottom: $media-margin;
 		color: #fff;
@@ -128,6 +128,7 @@ $media-margin: 2.5px;
 		}
 
 		.inner {
+			max-height: $caption-line-height;
 			overflow: hidden;
 			text-overflow: ellipsis;
 			white-space: nowrap;
@@ -135,6 +136,7 @@ $media-margin: 2.5px;
 
 		&.hovered {
 			.inner {
+				max-height: none;
 				white-space: normal;
 			}
 		}
