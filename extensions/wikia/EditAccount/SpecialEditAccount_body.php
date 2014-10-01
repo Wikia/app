@@ -273,6 +273,7 @@ class EditAccount extends SpecialPage {
 				} else {
 					$this->mStatusMsg = wfMsg( 'editaccount-success-email', $this->mUser->mName, $email );
 				}
+				wfRunHooks( 'EditAccountEmailChanged', array( $this->mUser ) );
 				return true;
 			} else {
 				$this->mStatusMsg = wfMsg( 'editaccount-error-email', $this->mUser->mName );

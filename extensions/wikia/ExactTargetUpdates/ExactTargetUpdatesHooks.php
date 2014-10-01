@@ -153,7 +153,7 @@ class ExactTargetUpdatesHooks {
 		global $wgWikiaEnvironment;
 		/* Don't add task when on dev or internal */
 		if ( $wgWikiaEnvironment != WIKIA_ENV_DEV && $wgWikiaEnvironment != WIKIA_ENV_INTERNAL ) {
-			$task->call( 'removeUserData', $oUser );
+			$task->call( 'removeUserData', $oUser->getId() );
 			$task->queue();
 		}
 	}
