@@ -134,7 +134,7 @@ ve.ui.WikiaTemplateInsertDialog.prototype.onParseSuccess = function ( response )
 			OO.getHash( [ ve.dm.MWTransclusionNode.static.getHashObject( linmod[0] ), null ] )
 		);
 
-		this.getFragment()
+		this.fragment = this.getFragment()
 			.collapseRangeToEnd()
 			.setAutoSelect( true )
 			.insertContent( linmod );
