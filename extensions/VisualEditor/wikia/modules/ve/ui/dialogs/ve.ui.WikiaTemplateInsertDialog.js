@@ -132,7 +132,7 @@ ve.ui.WikiaTemplateInsertDialog.prototype.onParseSuccess = function ( response )
 		this.fragment.getDocument().getStore().index(
 			contents,
 			OO.getHash( [ ve.dm.MWTransclusionNode.static.getHashObject( linmod[0] ), null ] )
-		)
+		);
 
 		this.fragment = this.getFragment().collapseRangeToEnd();
 		this.fragment.setAutoSelect( true );
