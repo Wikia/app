@@ -7,7 +7,7 @@
 				<? if ( $node1['children'] ): ?>
 					<?= $app->renderView('LocalNavigation', 'menuLevel2', [
 						'nodes' => $node1['children'],
-						'more' => ['href' => $node1['href'], 'text' => $node1['text']]
+						'more' => ( $node1['href'] === '#' ? null : ['href' => $node1['href'], 'text' => $node1['text']] ),
 					]); ?>
 				<? endif; ?>
 			</li>
