@@ -4,19 +4,27 @@
 @import 'skins/shared/color';
 @import 'extensions/wikia/Venus/styles/variables';
 
+
+.local-navigation-container {
+	@include clearfix;
+}
+
 .local-navigation {
 	@include clearfix;
 
 	background-color: $color-page;
 	box-sizing: border-box;
 	height: 80px;
+	white-space: nowrap;
 
 	*, *:before, *:after {
 		box-sizing: inherit;
 	}
 
 	> nav {
-		float: left;
+		display: inline-block;
+		vertical-align: top;
+		white-space: normal;
 	}
 
 	.contribute {
@@ -110,10 +118,15 @@
 	}
 
 	.wordmark-container {
-		display: table;
-		float: left;
+		display: inline-block;
 		height: 100%;
 		padding: 0 40px 0 32px;
+		white-space: normal;
+
+		> span {
+			display: table;
+			height: 100%;
+		}
 
 		.wordmark {
 			display: table-cell;
@@ -293,10 +306,6 @@
 			}
 		}
 	}
-}
-
-.local-navigation-container {
-	@include clearfix;
 }
 
 @media #{$medium-only} {
