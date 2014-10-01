@@ -2,7 +2,7 @@
 @import 'skins/shared/mixins/background-opacity.scss';
 @import 'skins/shared/color.scss';
 
-$media-margin: .5em;
+$media-margin: 2.5px;
 
 .media-gallery-wrapper {
 	@include grid-row();
@@ -103,8 +103,8 @@ $media-margin: .5em;
 	 *    - Expand caption content so it's height can be calculated by JS.
 	 */
 
-	$caption-line-height: 1.5em;
-	$caption-padding: .75em;
+	$caption-line-height: 18px;
+	$caption-padding: 9px;
 	$caption-height: ($caption-padding * 2) + $caption-line-height;
 	$caption-top-offset: -1 * ($caption-height + $media-margin);
 
