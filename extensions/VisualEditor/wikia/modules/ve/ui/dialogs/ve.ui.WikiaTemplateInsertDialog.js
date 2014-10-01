@@ -105,6 +105,9 @@ ve.ui.WikiaTemplateInsertDialog.prototype.insertTemplate = function () {
  * @param {Object} response Response data
  */
 ve.ui.WikiaTemplateInsertDialog.prototype.onParseSuccess = function ( response ) {
+	// Deferred is used here only to allow for reusing MWTransclusionNode.onParseSuccess
+	// method instead of having to do a code duplication. It's not a prefect approach
+	// and it is a subject to change - based on the future discussion.
 	var deferred = $.Deferred();
 	ve.ce.MWTransclusionNode.prototype.onParseSuccess( deferred, response );
 	deferred.done( ve.bind( function ( contents ) {
@@ -122,6 +125,8 @@ ve.ui.WikiaTemplateInsertDialog.prototype.onParseSuccess = function ( response )
 
 		this.surface.getModel().getDocument().once( 'transact', ve.bind( this.onTransact, this ) );
 
+		// Fill out the cache so MWTransclusionNode does not have to send exact same
+		// parsefragment request.
 		this.fragment.getDocument().getStore().index(
 			contents,
 			OO.getHash( [ ve.dm.MWTransclusionNode.static.getHashObject( linmod[0] ), null ] )
