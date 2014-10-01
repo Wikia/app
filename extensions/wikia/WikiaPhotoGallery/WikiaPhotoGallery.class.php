@@ -213,7 +213,12 @@ class WikiaPhotoGallery extends ImageGallery {
 		// generic parameters
 
 		// hide "Add photo" button
-		if (isset($params['hideaddbutton']) && $params['hideaddbutton'] == 'true') {
+		if ( (
+				isset( $params['hideaddbutton'] ) &&
+				$params['hideaddbutton'] == 'true'
+			) ||
+			F::app()->wg->EnableMediaGalleryExt
+		) {
 			$this->mShowAddButton = false;
  		}
 
