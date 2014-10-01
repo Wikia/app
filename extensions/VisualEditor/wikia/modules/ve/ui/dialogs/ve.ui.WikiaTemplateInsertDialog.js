@@ -96,7 +96,7 @@ ve.ui.WikiaTemplateInsertDialog.prototype.insertTemplate = function () {
 		'wikitext': this.transclusionModel.getWikitext()
 	}, { 'type': 'POST' } )
 		.done( ve.bind( this.onParseSuccess, this ) )
-		.fail( ve.bind( function() {
+		.fail( ve.bind( function () {
 			// TODO: Implement some proper handling, at least tracking
 		}, this ) );
 };
@@ -149,7 +149,7 @@ ve.ui.WikiaTemplateInsertDialog.prototype.onParseSuccess = function ( response )
  * @param {HTMLElement[]} domElements DOM elements being converted
  * @returns {boolean} The element is inline
  */
-ve.ui.WikiaTemplateInsertDialog.static.isHybridInline = function( domElements ) {
+ve.ui.WikiaTemplateInsertDialog.static.isHybridInline = function ( domElements ) {
 	var i, length, allTagsInline = true;
 	for ( i = 0, length = domElements.length; i < length; i++ ) {
 		if ( ve.isBlockElement( domElements[i] ) ) {
