@@ -1,9 +1,19 @@
+/**
+ * Helper for handling JS events
+ */
 (function( context ){
 	'use strict';
 
 	function eventshelper() {
 		var timers = [];
 
+		/**
+		 * Call the callback function after event is complete
+		 *
+		 * @param callback function
+		 * @param ms time after which function will be called
+		 * @param uniqueId event id
+		 */
 		function waitForFinalEvent(callback, ms, uniqueId) {
 			if (!uniqueId) {
 				return;
