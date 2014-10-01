@@ -17,7 +17,6 @@ include_once( $smwgIP . 'languages/SMW_Language.php' );
  * French language labels for important SMW labels (namespaces, datatypes,...).
  *
  * @author Pierre Matringe
- * @author LIMAFOX76
  * @ingroup SMWLanguage
  * @ingroup Language
  */
@@ -38,7 +37,7 @@ class SMWLanguageFr extends SMWLanguage {
 		'_anu' => 'Annotation-URI',  // name of the annotation URI type (OWL annotation property)
 		'_tel' => 'Numéro de téléphone',  // name of the telephone (URI) type
 		'_rec' => 'Enregistrement', // name of record data type
-		'_qty' => 'Quantité', // name of the number type with units of measurement
+		'_qty' => 'Quantity', // name of the number type with units of measurement //TODO: translate
 	);
 
 	protected $m_DatatypeAliases = array(
@@ -60,17 +59,9 @@ class SMWLanguageFr extends SMWLanguage {
 		'_SERV' => 'Fournit le service',
 		'_PVAL' => 'Valeur possible',
 		'_MDAT' => 'Date de modification',
-		'_CDAT' => 'Date de création',
-		'_NEWP' => 'Est une nouvelle page',
-		'_LEDT' => 'Le dernier contributeur est',
 		'_ERRP' => 'A une valeur incorrecte pour',
 		'_LIST' => 'A le champ',
-		'_SOBJ' => 'Possède un sous-objet',
-		'_ASK'  => 'Possède une requête',
-		'_ASKST'=> 'Champ de requête',
-		'_ASKFO'=> 'Format de requête',
-		'_ASKSI'=> 'Taille de la requête',
-		'_ASKDE'=> 'Profondeur de la requête',
+		'_SOBJ' => 'Has subobject', // TODO: translate
 	);
 
 	protected $m_SpecialPropertyAliases = array(
@@ -91,6 +82,7 @@ class SMWLanguageFr extends SMWLanguage {
 	protected $m_months = array( "janvier", "février", "mars", "avril", "mai", "juin", "juillet", "août", "septembre", "octobre", "novembre", "décembre" );
 
 	protected $m_monthsshort = array( "jan", "fév", "mar", "avr", "mai", "jun", "jul", "aoû", "sep", "oct", "nov", "déc" );
+
 }
 
 

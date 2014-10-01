@@ -51,10 +51,11 @@ class SMWPageSchemas extends PSExtensionHandler {
 				if ( empty( $prop_array ) ) {
 					continue;
 				}
-				// If property name is blank, set it to the
-				// field name.
-				if ( !array_key_exists( 'name', $prop_array ) || empty( $prop_array['name'] ) ) {
-					$prop_array['name'] = $psTemplateField->getName();
+				if ( !array_key_exists( 'name', $prop_array ) ) {
+					continue;
+				}
+				if ( empty( $prop_array['name'] ) ) {
+					continue;
 				}
 				$propertyDataArray[] = $prop_array;
 			}
@@ -126,7 +127,7 @@ class SMWPageSchemas extends PSExtensionHandler {
 				$hasExistingValues = true;
 			}
 		}
-		$html_text = '<p>' . wfMessage( 'ps-optional-name' )->text() . ' ';
+		$html_text = '<p>' . wfMsg( 'ps-optional-name' ) . ' ';
 		$propName = PageSchemas::getValueFromObject( $prop_array, 'name' );
 		$html_text .= Html::input( 'smw_property_name_num', $propName, array( 'size' => 15 ) ) . "\n";
 		$propType = PageSchemas::getValueFromObject( $prop_array, 'Type' );
@@ -185,21 +186,20 @@ class SMWPageSchemas extends PSExtensionHandler {
 	/**
 	 * Creates the text for a property page.
 	 */
-	protected function createPropertyText( $propertyType, $allowedValues ) {
-		global $smwgContLang, $wgContLang;
+	function createPropertyText( $propertyType, $allowedValues ) {
+		global $smwgContLang;
 		$propLabels = $smwgContLang->getPropertyLabels();
 		$hasTypeLabel = $propLabels['_TYPE'];
 		$typeTag = "[[$hasTypeLabel::$propertyType]]";
-		$text = wfMessage( 'smw-createproperty-isproperty', $typeTag )->inContentLanguage()->text();
+		$text = wfMsgForContent( 'smw-createproperty-isproperty', $typeTag );
 		if ( $allowedValues != null) {
-			$text .= "\n\n" . wfMessage( 'smw-createproperty-allowedvals', $wgContLang->formatNum( count( $allowedValues ) ) )->inContentLanguage()->text();
+			$text .= "\n\n" . wfMsgExt( 'smw-createproperty-allowedvals', array( 'parsemag', 'content' ), count( $allowedValues ) );
 			foreach ( $allowedValues as $value ) {
 				if ( method_exists( $smwgContLang, 'getPropertyLabels' ) ) {
 					$prop_labels = $smwgContLang->getPropertyLabels();
 					$text .= "\n* [[" . $prop_labels['_PVAL'] . "::$value]]";
 				} else {
 					$spec_props = $smwgContLang->getSpecialPropertiesArray();
-					// FIXME: SMW_SP_POSSIBLE_VALUE is undefined!
 					$text .= "\n* [[" . $spec_props[SMW_SP_POSSIBLE_VALUE] . "::$value]]";
 				}
 			}

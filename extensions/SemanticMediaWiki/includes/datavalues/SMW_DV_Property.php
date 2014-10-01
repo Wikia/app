@@ -107,16 +107,15 @@ class SMWPropertyValue extends SMWDataValue {
 		$propertyName = smwfNormalTitleText( ltrim( rtrim( $value, ' ]' ), ' [' ) ); // slightly normalise label
 		$inverse = false;
 		if ( ( $propertyName !== '' ) && ( $propertyName { 0 } == '-' ) ) { // property refers to an inverse
-			$propertyName = smwfNormalTitleText( (string)substr( $value, 1 ) );
+			$propertyName = (string)substr( $value, 1 );
 			/// NOTE The cast is necessary at least in PHP 5.3.3 to get string '' instead of boolean false.
-			/// NOTE It is necessary to normalize again here, since normalization may uppercase the first letter.
 			$inverse = true;
 		}
 
 		try {
 			$this->m_dataitem = SMWDIProperty::newFromUserLabel( $propertyName, $inverse, $this->m_typeid );
 		} catch ( SMWDataItemException $e ) { // happens, e.g., when trying to sort queries by property "-"
-			$this->addError( wfMessage( 'smw_noproperty', $value )->inContentLanguage()->text() );
+			$this->addError( wfMsgForContent( 'smw_noproperty', $value ) );
 			$this->m_dataitem = new SMWDIProperty( 'ERROR', false ); // just to have something
 		}
 	}
@@ -222,7 +221,7 @@ class SMWPropertyValue extends SMWDataValue {
 	}
 
 	public function getWikiValue() {
-		return $this->isVisible() ? $this->m_dataitem->getLabel() : '';
+		return $this->isVisible() ? ( ( $this->isInverse() ? '-' : '' ) . $this->m_dataitem->getLabel() ) : '';
 	}
 
 	/**
@@ -269,14 +268,9 @@ class SMWPropertyValue extends SMWDataValue {
 		if ( $this->m_dataitem->isUserDefined() ) {
 			return $text;
 		} else {
-			SMWOutputs::requireResource( 'ext.smw.style' );
-			return smwfContextHighlighter( array (
-				'context' => 'inline',
-				'class'   => 'smwbuiltin',
-				'type'    => 'property',
-				'title'   => $text,
-				'content' => wfMessage( 'smw_isspecprop' )->inContentLanguage()->text()
-			) );
+			SMWOutputs::requireResource( 'ext.smw.tooltips' );
+			return '<span class="smwttinline"><span class="smwbuiltin">' . $text .
+			'</span><span class="smwttcontent">' . wfMsgForContent( 'smw_isspecprop' ) . '</span></span>';
 		}
 	}
 

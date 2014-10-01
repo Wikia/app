@@ -6,9 +6,8 @@
 
 /**
  * This class implements Concept data items.
- * 
- * @note These special data items for storing concept declaration data in SMW
- * should vanish at some point since Container values could encode this data
+ * These special data items for storing concept declaration data in SMW may
+ * well vanish at some point since Container values could encode this data
  * just as well.
  *
  * @since 1.6
@@ -105,10 +104,4 @@ class SMWDIConcept extends SMWDataItem {
 		return $result;
 	}
 
-	public function equals( $di ) {
-		if ( $di->getDIType() !== SMWDataItem::TYPE_CONCEPT ) {
-			return false;
-		}
-		return $di->getSerialization() === $this->getSerialization();
-	}
 }

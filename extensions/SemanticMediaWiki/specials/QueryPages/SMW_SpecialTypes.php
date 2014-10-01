@@ -10,10 +10,13 @@
  * 
  * @ingroup SMWSpecialPage
  * @ingroup SpecialPage
+ * 
+ * @todo The messages 'smw_isnotype' and 'smw_typeunits', maybe 'smw_isaliastype', could be obsolete now.
  *
  * @author Markus Krötzsch
  */
 class SMWSpecialTypes extends SpecialPage {
+	
 	public function __construct() {
 		parent::__construct( 'Types' );
 	}
@@ -26,7 +29,7 @@ class SMWSpecialTypes extends SpecialPage {
 		$typeLabel = reset( $params );
 
 		if ( $typeLabel == false ) {
-			$wgOut->setPageTitle( wfMessage( 'types' )->text() );
+			$wgOut->setPageTitle( wfMsg( 'types' ) );
 			$html = $this->getTypesList();
 		} else {
 			$typeName = str_replace( '_', ' ', $typeLabel );
@@ -41,7 +44,7 @@ class SMWSpecialTypes extends SpecialPage {
 	}
 
 	protected function getTypesList() {
-		$html = '<p>' . wfMessage( 'smw_types_docu' )->escaped() . "</p><br />\n";
+		$html = '<p>' . htmlspecialchars( wfMsg( 'smw_types_docu' ) ) . "</p><br />\n";
 
 		$typeLabels = SMWDataValueFactory::getKnownTypeLabels();
 		asort( $typeLabels, SORT_STRING );
@@ -65,14 +68,9 @@ class SMWSpecialTypes extends SpecialPage {
 		$until = $wgRequest->getVal( 'until' );
 		$typeValue = SMWDataValueFactory::newTypeIDValue( '__typ', $typeLabel );
 
-		if ( !$typeValue->isValid() ) {
-			return $this->msg( 'smw-special-types-no-such-type' )->escaped();
-		}
-
 		$store = smwfGetStore();
 		$options = SMWPageLister::getRequestOptions( $smwgTypePagingLimit, $from, $until );
 		$diWikiPages = $store->getPropertySubjects( new SMWDIProperty( '_TYPE' ), $typeValue->getDataItem(), $options );
-
 		if ( !$options->ascending ) {
 			$diWikiPages = array_reverse( $diWikiPages );
 		}
@@ -90,11 +88,12 @@ class SMWSpecialTypes extends SpecialPage {
 			$typeName = $typeValue->getLongWikiText();
 
 			$result .= "<a name=\"SMWResults\"></a><div id=\"mw-pages\">\n" .
-			        '<h2>' . wfMessage( 'smw_type_header', $typeName )->text() . "</h2>\n<p>" .
-					wfMsgExt( 'smw_typearticlecount', array( 'parsemag' ), $resultNumber ) . "</p>\n" .
-			        $navigation . $pageLister->formatList() . $navigation . "\n</div>";
+			           '<h2>' . wfMsg( 'smw_type_header', $typeName ) . "</h2>\n<p>" .
+			           wfMsgExt( 'smw_typearticlecount', array( 'parsemag' ), $resultNumber ) . "</p>\n" .
+			           $navigation . $pageLister->formatList() . $navigation . "\n</div>";
 		}
 
 		return $result;
 	}
+	
 }

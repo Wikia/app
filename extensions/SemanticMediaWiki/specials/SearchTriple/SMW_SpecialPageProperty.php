@@ -30,15 +30,19 @@ class SMWPageProperty extends SpecialPage {
 
 	public function execute( $query ) {
 		global $wgRequest, $wgOut;
+		$linker = smwfGetLinker();
 		$this->setHeaders();
 
 		// Get parameters
 		$pagename = $wgRequest->getVal( 'from' );
 		$propname = $wgRequest->getVal( 'type' );
-		$limit = $wgRequest->getVal( 'limit', 20 );
-		$offset = $wgRequest->getVal( 'offset', 0 );
+		$limit = $wgRequest->getVal( 'limit' );
+		$offset = $wgRequest->getVal( 'offset' );
 
-		if ( $propname == '' ) { // No GET parameters? Try the URL:
+		if ( $limit === '' ) $limit =  20;
+		if ( $offset === '' ) $offset = 0;
+
+		if ( $propname === '' ) { // No GET parameters? Try the URL:
 			$queryparts = explode( '::', $query );
 			$propname = $query;
 			if ( count( $queryparts ) > 1 ) {
@@ -55,9 +59,9 @@ class SMWPageProperty extends SpecialPage {
 		// Produce output
 		$html = '';
 		if ( ( $propname === '' ) ) { // no property given, show a message
-			$html .= wfMessage( 'smw_pp_docu' )->text() . "\n";
+			$html .= wfMsg( 'smw_pp_docu' ) . "\n";
 		} else { // property given, find and display results
-			// @todo FIXME: very ugly, needs i18n
+			// FIXME: very ugly, needs i18n
 			$wgOut->setPagetitle( ( $pagename !== '' ? $pagename . ' ':'' ) . $property->getWikiValue() );
 
 			// get results (get one more, to see if we have to add a link to more)
@@ -68,10 +72,9 @@ class SMWPageProperty extends SpecialPage {
 			$results = smwfGetStore()->getPropertyValues( $pagename !== '' ? $subject->getDataItem() : null, $property->getDataItem(), $options );
 
 			// prepare navigation bar if needed
-			$navigation = '';
 			if ( ( $offset > 0 ) || ( count( $results ) > $limit ) ) {
 				if ( $offset > 0 ) {
-					$navigation .= Html::element(
+					$navigation = Html::element(
 						'a',
 						array(
 							'href' => $this->getTitle()->getLocalURL( array(
@@ -81,21 +84,20 @@ class SMWPageProperty extends SpecialPage {
 								'from' => $pagename
 							) )
 						),
-						wfMessage( 'smw_result_prev' )->text()
+						wfMsg( 'smw_result_prev' )
 					);
 				} else {
-					$navigation = wfMessage( 'smw_result_prev' )->text();
+					$navigation = wfMsg( 'smw_result_prev' );
 				}
 
-				// @todo FIXME: i18n patchwork.
 				$navigation .=
 					'&#160;&#160;&#160;&#160; <b>' .
-						wfMessage( 'smw_result_results' )->text() . ' ' .
+						wfMsg( 'smw_result_results' ) . ' ' .
 						( $offset + 1 ) . '– ' . ( $offset + min( count( $results ), $limit ) ) .
 					'</b>&#160;&#160;&#160;&#160;';
 
 				if ( count( $results ) == ( $limit + 1 ) ) {
-					$navigation .= Html::element(
+					$navigation = Html::element(
 						'a',
 						array(
 							'href' => $this->getTitle()->getLocalURL( array(
@@ -105,19 +107,20 @@ class SMWPageProperty extends SpecialPage {
 								'from' => $pagename
 							) )
 						),
-						wfMessage( 'smw_result_next' )->text()
+						wfMsg( 'smw_result_next' )
 					);
 				} else {
-					$navigation .= wfMessage( 'smw_result_next' )->text();
+					$navigation .= wfMsg( 'smw_result_next' );
 				}
+			} else {
+				$navigation = '';
 			}
 
 			// display results
 			$html .= '<br />' . $navigation;
 			if ( count( $results ) == 0 ) {
-				$html .= wfMessage( 'smw_result_noresults' )->text();
+				$html .= wfMsg( 'smw_result_noresults' );
 			} else {
-				$linker = smwfGetLinker();
 				$html .= "<ul>\n";
 				$count = $limit + 1;
 
@@ -147,11 +150,12 @@ class SMWPageProperty extends SpecialPage {
 		$html .= '<p>&#160;</p>';
 		$html .= '<form name="pageproperty" action="' . htmlspecialchars( $spectitle->getLocalURL() ) . '" method="get">' . "\n" .
 		         '<input type="hidden" name="title" value="' . $spectitle->getPrefixedText() . '"/>' ;
-		$html .= wfMessage( 'smw_pp_from' )->text() . ' <input type="text" name="from" value="' . htmlspecialchars( $pagename ) . '" />' . "&#160;&#160;&#160;\n";
-		$html .= wfMessage( 'smw_pp_type' )->text() . ' <input type="text" name="type" value="' . htmlspecialchars( $propname ) . '" />' . "\n";
-		$html .= '<input type="submit" value="' . wfMessage( 'smw_pp_submit' )->text() . "\"/>\n</form>\n";
+		$html .= wfMsg( 'smw_pp_from' ) . ' <input type="text" name="from" value="' . htmlspecialchars( $pagename ) . '" />' . "&#160;&#160;&#160;\n";
+		$html .= wfMsg( 'smw_pp_type' ) . ' <input type="text" name="type" value="' . htmlspecialchars( $propname ) . '" />' . "\n";
+		$html .= '<input type="submit" value="' . wfMsg( 'smw_pp_submit' ) . "\"/>\n</form>\n";
 
 		$wgOut->addHTML( $html );
 		SMWOutputs::commitToOutputPage( $wgOut ); // make sure locally collected output data is pushed to the output!
 	}
+
 }

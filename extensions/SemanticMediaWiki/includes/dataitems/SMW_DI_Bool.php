@@ -21,10 +21,6 @@ class SMWDIBoolean extends SMWDataItem {
 	protected $m_boolean;
 
 	public function __construct( $boolean ) {
-		if ( !is_bool( $boolean ) ) {
-			throw new SMWDataItemException( "Initialisation value '$boolean' is not a boolean." );
-		}
-
 		$this->m_boolean = ( $boolean == true );
 	}
 
@@ -53,16 +49,10 @@ class SMWDIBoolean extends SMWDataItem {
 		if ( $serialization == 't' ) {
 			return new SMWDIBoolean( true );
 		} elseif  ( $serialization == 'f' ) {
-			return new SMWDIBoolean( false );
+			return new SMWDIBoolean( true );
 		} else {
 			throw new SMWDataItemException( "Boolean data item unserialised from illegal value '$serialization'" );
 		}
 	}
 
-	public function equals( $di ) {
-		if ( $di->getDIType() !== SMWDataItem::TYPE_BOOLEAN ) {
-			return false;
-		}
-		return $di->getBoolean() === $this->m_boolean;
-	}
 }

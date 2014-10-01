@@ -181,10 +181,4 @@ class SMWDIGeoCoord extends SMWDataItem {
 		return $this->altitude;
 	}
 
-	public function equals( $di ) {
-		if ( $di->getDIType() !== SMWDataItem::TYPE_GEO ) {
-			return false;
-		}
-		return $di->getSerialization() === $this->getSerialization();
-	}
 }

@@ -1,18 +1,18 @@
 <?php
 
 /**
- * Definition for the format parameter.
+ * Parameter manipulation ensuring the value is an file url.
  * 
  * @since 1.6.2
  * 
- * @file
+ * @file SMW_ParamFormat.php
  * @ingroup SMW
- * @ingroup ParamDefinition
+ * @ingroup ParameterManipulations
  * 
- * @licence GNU GPL v2+
+ * @licence GNU GPL v3
  * @author Jeroen De Dauw < jeroendedauw@gmail.com >
  */
-class SMWParamFormat extends StringParam {
+class SMWParamFormat extends ItemParameterManipulation {
 
 	/**
 	 * List of the queries print requests, used to determine the format
@@ -21,13 +21,37 @@ class SMWParamFormat extends StringParam {
 	 * 
 	 * @since 1.6.2
 	 * 
-	 * @var array
+	 * @var array|false
 	 */
-	protected $printRequests = array();
-
+	protected $printRequests = null;
+	
+	/**
+	 * Constructor.
+	 * 
+	 * @since 1.6.2
+	 */
+	public function __construct() {
+		parent::__construct();
+	}
+	
+	/**
+	 * @see ItemParameterManipulation::doManipulation
+	 * 
+	 * @since 1.6.2
+	 */	
+	public function doManipulation( &$value, Parameter $parameter, array &$parameters ) {
+		// Make sure the format value is valid.
+		$value = self::getValidFormatName( $value );
+		
+		// Add the formats parameters to the parameter list.
+		$queryPrinter = SMWQueryProcessor::getResultPrinter( $value );
+		
+		$parameters = array_merge( $parameters, $queryPrinter->getValidatorParameters() );
+	}
+	
 	/**
 	 * Takes a format name, which can be an alias and returns a format name
-	 * which will be valid for sure. Aliases are resolved. If the given
+	 * which will be valid for sure. Aliases are resvolved. If the given
 	 * format name is invalid, the predefined default format will be returned.
 	 * 
 	 * @since 1.6.2
@@ -86,7 +110,7 @@ class SMWParamFormat extends StringParam {
 	 * @return string Array key in $smwgResultFormats
 	 */
 	protected function getDefaultFormat() {
-		if ( empty( $this->printRequests ) ) {
+		if ( is_null( $this->printRequests ) ) {
 			return 'table';
 		}
 		else {
@@ -120,31 +144,5 @@ class SMWParamFormat extends StringParam {
 	public function setPrintRequests( array /* of SMWPrintRequest */ $printRequests ) {
 		$this->printRequests = $printRequests;
 	}
-
-	/**
-	 * Formats the parameter value to it's final result.
-	 *
-	 * @since 1.8
-	 *
-	 * @param $value mixed
-	 * @param $param IParam
-	 * @param $definitions array of IParamDefinition
-	 * @param $params array of IParam
-	 *
-	 * @return mixed
-	 */
-	protected function formatValue( $value, IParam $param, array &$definitions, array $params ) {
-		$value = parent::formatValue( $value, $param, $definitions, $params );
-
-		// Make sure the format value is valid.
-		$value = self::getValidFormatName( $value );
-
-		// Add the formats parameters to the parameter list.
-		$queryPrinter = SMWQueryProcessor::getResultPrinter( $value );
-
-		$definitions = $queryPrinter->getParamDefinitions( $definitions );
-
-		return $value;
-	}
-
+	
 }

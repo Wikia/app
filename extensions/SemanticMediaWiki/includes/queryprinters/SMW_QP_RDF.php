@@ -14,7 +14,7 @@
  * 
  * @ingroup SMWQuery
  */
-class SMWRDFResultPrinter extends SMWExportPrinter {
+class SMWRDFResultPrinter extends SMWResultPrinter {
 	
 	/**
 	 * The syntax to be used for export. May be 'rdfxml' or 'turtle'.
@@ -34,29 +34,11 @@ class SMWRDFResultPrinter extends SMWExportPrinter {
 		$this->syntax = $params['syntax'];
 	}
 
-	/**
-	 * @see SMWIExportPrinter::getMimeType
-	 *
-	 * @since 1.8
-	 *
-	 * @param SMWQueryResult $queryResult
-	 *
-	 * @return string
-	 */
-	public function getMimeType( SMWQueryResult $queryResult ) {
+	public function getMimeType( $res ) {
 		return $this->syntax == 'turtle' ? 'application/x-turtle' : 'application/xml';
 	}
 
-	/**
-	 * @see SMWIExportPrinter::getFileName
-	 *
-	 * @since 1.8
-	 *
-	 * @param SMWQueryResult $queryResult
-	 *
-	 * @return string|boolean
-	 */
-	public function getFileName( SMWQueryResult $queryResult ) {
+	public function getFileName( $res ) {
 		return $this->syntax == 'turtle' ? 'result.ttl' : 'result.rdf';
 	}
 
@@ -65,7 +47,7 @@ class SMWRDFResultPrinter extends SMWExportPrinter {
 	}
 
 	public function getName() {
-		return wfMessage( 'smw_printername_rdf' )->text();
+		return wfMsg( 'smw_printername_rdf' );
 	}
 
 	protected function getResultText( SMWQueryResult $res, $outputmode ) {
@@ -108,36 +90,37 @@ class SMWRDFResultPrinter extends SMWExportPrinter {
 			
 			return $serializer->flushContent();
 		} else { // just make link to feed
+			if ( $this->getSearchLabel( $outputmode ) ) {
+				$label = $this->getSearchLabel( $outputmode );
+			} else {
+				$label = wfMsgForContent( 'smw_rdf_link' );
+			}
+
+			$link = $res->getQueryLink( $label );
+			$link->setParameter( 'rdf', 'format' );
+			$link->setParameter( $this->syntax, 'syntax' );
+			
+			if ( array_key_exists( 'limit', $this->params ) ) {
+				$link->setParameter( $this->params['limit'], 'limit' );
+			} else { // use a reasonable default limit
+				$link->setParameter( 100, 'limit' );
+			}
+			
 			$this->isHTML = ( $outputmode == SMW_OUTPUT_HTML ); // yes, our code can be viewed as HTML if requested, no more parsing needed
 			
-			return $this->getLink( $res, $outputmode )->getText( $outputmode, $this->mLinker );
+			return $link->getText( $outputmode, $this->mLinker );
 		}
 	}
 
-	/**
-	 * @see SMWResultPrinter::getParamDefinitions
-	 *
-	 * @since 1.8
-	 *
-	 * @param $definitions array of IParamDefinition
-	 *
-	 * @return array of IParamDefinition|array
-	 */
-	public function getParamDefinitions( array $definitions ) {
-		$definitions = parent::getParamDefinitions( $definitions );
-
-		$definitions['limit']->setDefault( 100 );
-
-		$definitions['searchlabel']->setDefault( wfMessage( 'smw_rdf_link' )->inContentLanguage()->text() );
-
-		$definitions[] = array(
-			'name' => 'syntax',
-			'message' => 'smw-paramdesc-rdfsyntax',
-			'values' => array( 'rdfxml', 'turtle' ),
-			'default' => 'rdfxml',
-		);
-
-		return $definitions;
+	public function getParameters() {
+		$params = array();
+		
+		$params['syntax'] = new Parameter( 'syntax' );
+		$params['syntax']->setMessage( 'smw_paramdesc_rdfsyntax' );
+		$params['syntax']->addCriteria( new CriterionInArray( 'rdfxml', 'turtle' ) );
+		$params['syntax']->setDefault( 'rdfxml' );
+		
+		return array_merge( parent::getParameters(), $this->exportFormatParameters(), $params );
 	}
 
 }

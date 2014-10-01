@@ -95,6 +95,7 @@
  * @ingroup SMWDataValues
  */
 class SMWTimeValue extends SMWDataValue {
+
 	protected $m_dataitem_greg = null;
 	protected $m_dataitem_jul = null;
 
@@ -147,7 +148,17 @@ class SMWTimeValue extends SMWDataValue {
 
 		// Check if it's parseable by wfTimestamp when it's not a year (which is wrongly interpreted).
 		if ( strlen( $value ) != 4 && wfTimestamp( TS_MW, $value ) !== false ) {
-			$this->m_dataitem = SMWDITime::newFromTimestamp( $value );
+			$timeStamp = wfTimestamp( TS_MW, $value );
+
+			$this->m_dataitem = new SMWDITime(
+				SMWDITime::CM_GREGORIAN,
+				substr( $timeStamp, 0, 4 ),
+				substr( $timeStamp, 4, 2 ),
+				substr( $timeStamp, 6, 2 ),
+				substr( $timeStamp, 8, 2 ),
+				substr( $timeStamp, 10, 2 ),
+				substr( $timeStamp, 12, 2 )
+			);
 		}
 		elseif ( $this->parseDateString( $value, $datecomponents, $calendarmodel, $era, $hours, $minutes, $seconds, $timeoffset ) ) {
 			if ( ( $calendarmodel === false ) && ( $era === false ) && ( count( $datecomponents ) == 1 ) && ( intval( end( $datecomponents ) ) >= 100000 ) ) {
@@ -161,10 +172,10 @@ class SMWTimeValue extends SMWDataValue {
 						if ( $calendarmodel == 'MJD' ) $jd += self::MJD_EPOCH;
 						$this->m_dataitem = SMWDITime::newFromJD( $jd, SMWDITime::CM_GREGORIAN, SMWDITime::PREC_YMDT, $this->m_typeid );
 					} catch ( SMWDataItemException $e ) {
-						$this->addError( wfMessage( 'smw_nodatetime', $this->m_wikivalue )->inContentLanguage()->text() );
+						$this->addError( wfMsgForContent( 'smw_nodatetime', $this->m_wikivalue ) );
 					}
 				} else {
-					$this->addError( wfMessage( 'smw_nodatetime', $this->m_wikivalue )->inContentLanguage()->text() );
+					$this->addError( wfMsgForContent( 'smw_nodatetime', $this->m_wikivalue ) );
 				}
 			} else {
 				$this->setDateFromParsedValues( $datecomponents, $calendarmodel, $era, $hours, $minutes, $seconds, $timeoffset );
@@ -262,7 +273,7 @@ class SMWTimeValue extends SMWDataValue {
 		// Abort if we found unclear or over-specific information:
 		if ( count( $unclearparts ) != 0 ||
 		     ( $timezoneoffset !== false && $timeoffset !== false ) ) {
-			$this->addError( wfMessage( 'smw_nodatetime', $this->m_wikivalue )->inContentLanguage()->text() );
+			$this->addError( wfMsgForContent( 'smw_nodatetime', $this->m_wikivalue ) );
 			return false;
 		}
 
@@ -270,7 +281,7 @@ class SMWTimeValue extends SMWDataValue {
 		// Check if the a.m. and p.m. information is meaningful
 
 		if ( $ampm !== false && ( $hours > 12 || $hours == 0 ) ) { // Note: the == 0 check subsumes $hours===false
-			$this->addError( wfMessage( 'smw_nodatetime', $this->m_wikivalue )->inContentLanguage()->text() );
+			$this->addError( wfMsgForContent( 'smw_nodatetime', $this->m_wikivalue ) );
 			return false;
 		} elseif ( $ampm == 'am' && $hours == 12 ) {
 			$hours = 0;
@@ -427,7 +438,7 @@ class SMWTimeValue extends SMWDataValue {
 			}
 		}
 		if ( ( $error ) || ( $justfounddash ) || ( count( $propercomponents ) == 0 ) || ( count( $propercomponents ) > 3 ) ) {
-			$this->addError( wfMessage( 'smw_nodatetime', $this->m_wikivalue )->inContentLanguage()->text() );
+			$this->addError( wfMsgForContent( 'smw_nodatetime', $this->m_wikivalue ) );
 			return false;
 		}
 		// Now use the bitvector to find the preferred interpretation of the date components:
@@ -444,7 +455,7 @@ class SMWTimeValue extends SMWDataValue {
 			}
 		}
 		if ( $date['y'] === false ) { // no band matches the entered date
-			$this->addError( wfMessage( 'smw_nodatetime', $this->m_wikivalue )->inContentLanguage()->text() );
+			$this->addError( wfMsgForContent( 'smw_nodatetime', $this->m_wikivalue ) );
 			return false;
 		}
 		return true;
@@ -484,7 +495,7 @@ class SMWTimeValue extends SMWDataValue {
 		try {
 			$this->m_dataitem = new SMWDITime( $calmod, $date['y'], $date['m'], $date['d'], $hours, $minutes, $seconds, $this->m_typeid );
 		} catch ( SMWDataItemException $e ) {
-			$this->addError( wfMessage( 'smw_nodatetime', $this->m_wikivalue )->inContentLanguage()->text() );
+			$this->addError( wfMsgForContent( 'smw_nodatetime', $this->m_wikivalue ) );
 			return false;
 		}
 
@@ -493,7 +504,7 @@ class SMWTimeValue extends SMWDataValue {
 		// conversion would not be reliable if JD numbers get too huge:
 		if ( ( $date['y'] <= self::PREHISTORY ) &&
 		     ( ( $this->m_dataitem->getPrecision() > SMWDITime::PREC_Y ) || ( $calendarmodel !== false ) ) ) {
-			$this->addError( wfMessage( 'smw_nodatetime', $this->m_wikivalue )->inContentLanguage()->text() );
+			$this->addError( wfMsgForContent( 'smw_nodatetime', $this->m_wikivalue ) );
 			return false;
 		}
 		if ( $timeoffset != 0 ) {
@@ -501,7 +512,7 @@ class SMWTimeValue extends SMWDataValue {
 			try {
 				$this->m_dataitem = SMWDITime::newFromJD( $newjd, $calmod, $this->m_dataitem->getPrecision(), $this->m_typeid );
 			} catch ( SMWDataItemException $e ) {
-				$this->addError( wfMessage( 'smw_nodatetime', $this->m_wikivalue )->inContentLanguage()->text() );
+				$this->addError( wfMsgForContent( 'smw_nodatetime', $this->m_wikivalue ) );
 				return false;
 			}
 		}
@@ -598,11 +609,7 @@ class SMWTimeValue extends SMWDataValue {
 	}
 
 	public function getShortWikiText( $linked = NULL ) {
-		if ( $this->isValid() ) {
-			return ( $this->m_caption !== false ) ? $this->m_caption : $this->getPreferredCaption();
-		} else {
-			return $this->getErrorText();
-		}
+		return ( $this->m_caption !== false ) ? $this->m_caption : $this->getPreferredCaption();
 	}
 
 	public function getShortHTMLText( $linker = NULL ) {
@@ -610,7 +617,7 @@ class SMWTimeValue extends SMWDataValue {
 	}
 
 	public function getLongWikiText( $linked = NULL ) {
-		return $this->isValid() ? $this->getPreferredCaption() : $this->getErrorText();
+		return  $this->isValid() ? $this->getPreferredCaption() : $this->getErrorText();
 	}
 
 	public function getLongHTMLText( $linker = NULL ) {
@@ -762,7 +769,7 @@ class SMWTimeValue extends SMWDataValue {
 		}
 
 		$time = str_replace( ':', '', $this->getTimeString() );
-		return $wgContLang->timeanddate( "$year$month$day$time", false, false );
+		return $wgContLang->timeAndDate( "$year$month$day$time", false, false );
 	}
 
 	/**
@@ -778,12 +785,12 @@ class SMWTimeValue extends SMWDataValue {
 		if ( $this->m_dataitem->getYear() <= self::PREHISTORY ) {
 			return ( $this->m_dataitem->getCalendarModel() == $calendarmodel ) ? $this->m_dataitem : null;
 		} elseif ( $calendarmodel == SMWDITime::CM_GREGORIAN ) {
-			if ( is_null( $this->m_dataitem_greg ) ) {
+			if ( $this->m_dataitem_greg === null ) {
 				$this->m_dataitem_greg = $this->m_dataitem->getForCalendarModel( SMWDITime::CM_GREGORIAN );
 			}
 			return $this->m_dataitem_greg;
 		} else {
-			if ( is_null( $this->m_dataitem_jul ) ) {
+			if ( $this->m_dataitem_jul === null ) {
 				$this->m_dataitem_jul = $this->m_dataitem->getForCalendarModel( SMWDITime::CM_JULIAN );
 			}
 			return $this->m_dataitem_jul;
@@ -830,31 +837,22 @@ class SMWTimeValue extends SMWDataValue {
 	 */
 	protected function getPreferredCaption() {
 		$year = $this->m_dataitem->getYear();
-		$format = strtoupper( $this->m_outformat );
 
-		if ( $format == 'ISO' || $this->m_outformat == '-' ) {
+		if ( strtoupper( $this->m_outformat ) === 'ISO' || $this->m_outformat == '-' ) {
 			return $this->getISO8601Date();
-		} elseif ( $format == 'MEDIAWIKI' ) {
+		} elseif ( strtoupper( $this->m_outformat ) === 'MEDIAWIKI' ) {
 			return $this->getMediaWikiDate();
-		} elseif ( $format == 'SORTKEY' ) {
+		} elseif ( strtoupper( $this->m_outformat ) === 'SORTKEY' ) {
 			return $this->m_dataitem->getSortKey();
-		} elseif ( $year > self::PREHISTORY && $this->m_dataitem->getPrecision() >= SMWDITime::PREC_YM ) {
-			// Do not convert between Gregorian and Julian if only
-			// year is given (years largely overlap in history, but
-			// assuming 1 Jan as the default date, the year number
-			// would change in conversion).
-			// Also do not convert calendars in prehistory: not
-			// meaningful (getDataForCalendarModel may return null).
-			if ( ( $format == 'JL' ) ||
-				( $this->m_dataitem->getJD() < self::J1582
-				  && $format != 'GR' ) ) {
-				$model = SMWDITime::CM_JULIAN;
-			} else {
-				$model = SMWDITime::CM_GREGORIAN;
-			}
-			return $this->getCaptionFromDataitem( $this->getDataForCalendarModel( $model ) );
 		} else {
-			return $this->getCaptionFromDataitem( $this->m_dataitem );
+			if ( $year <= self::PREHISTORY ) {
+				return $this->getCaptionFromDataitem( $this->m_dataitem ); // should be Gregorian, but don't bother here
+			} elseif ( $this->m_dataitem->getJD() < self::J1582 ) {
+				return $this->getCaptionFromDataitem( $this->getDataForCalendarModel( SMWDITime::CM_JULIAN ) );
+			} else {
+				return $this->getCaptionFromDataitem( $this->getDataForCalendarModel( SMWDITime::CM_GREGORIAN ) );
+			}
 		}
 	}
+
 }

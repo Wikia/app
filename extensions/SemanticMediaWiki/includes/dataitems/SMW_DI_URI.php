@@ -133,10 +133,4 @@ class SMWDIUri extends SMWDataItem {
 		return new SMWDIUri( $scheme, $hierpart, $query, $fragment );
 	}
 
-	public function equals( $di ) {
-		if ( $di->getDIType() !== SMWDataItem::TYPE_URI ) {
-			return false;
-		}
-		return $di->getURI() === $this->getURI();
-	}
 }

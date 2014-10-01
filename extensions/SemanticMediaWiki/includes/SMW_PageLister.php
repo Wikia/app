@@ -81,12 +81,12 @@ class SMWPageLister {
 			return '';
 		}
 
-		$prevLink = wfMessage( 'prevn', $limitText )->escaped();
+		$prevLink = htmlspecialchars( wfMsg( 'prevn', $limitText ) );
 		if ( $first !== '' ) {
 			$prevLink = $this->makeSelfLink( $title, $prevLink, $query + array( 'until' => $first ) );
 		}
 
-		$nextLink = wfMessage( 'nextn', $limitText )->escaped();
+		$nextLink = htmlspecialchars( wfMsg( 'nextn', $limitText ) );
 		if ( $last !== '' ) {
 			$nextLink = $this->makeSelfLink( $title, $nextLink, $query + array( 'from' => $last ) );
 		}
@@ -241,7 +241,7 @@ class SMWPageLister {
 					}
 
 					if ( $startChar == $prevStartChar ) {
-						$cont_msg = ' ' . wfMessage( 'listingcontinuesabbrev' )->escaped();
+						$cont_msg = ' ' . wfMsgHtml( 'listingcontinuesabbrev' );
 					} else {
 						$cont_msg = '';
 					}

@@ -29,10 +29,10 @@ class SMWImportValue extends SMWDataValue {
 		$this->m_qname = $value;
 
 		list( $onto_ns, $onto_section ) = explode( ':', $this->m_qname, 2 );
-		$msglines = preg_split( "([\n][\s]?)", wfMessage( "smw_import_$onto_ns" )->inContentLanguage()->text() ); // get the definition for "$namespace:$section"
+		$msglines = preg_split( "([\n][\s]?)", wfMsgForContent( "smw_import_$onto_ns" ) ); // get the definition for "$namespace:$section"
 
 		if ( count( $msglines ) < 2 ) { // error: no elements for this namespace
-			$this->addError( wfMessage( 'smw_unknown_importns', $onto_ns )->inContentLanguage()->text() );
+			$this->addError( wfMsgForContent( 'smw_unknown_importns', $onto_ns ) );
 			$this->m_dataitem = new SMWDIString( 'ERROR' );
 			return;
 		}
@@ -71,13 +71,36 @@ class SMWImportValue extends SMWDataValue {
 			}
 		}
 
+		// check whether element of correct type was found (extracts data from factbox)
+		/// TODO: parser needed to do that
+// 		if(SMWParseData::getSMWData($parser) instanceof SMWSemanticData) {
+// 			$this_ns = SMWParseData::getSMWData($parser)->getSubject()->getNamespace();
+// 			$error = null;
+// 			switch ($elemtype) {
+// 				case SMW_NS_PROPERTY: case NS_CATEGORY:
+// 					if ($this_ns != $elemtype) {
+// 						$error = wfMsgForContent('smw_nonright_importtype',$value, $wgContLang->getNsText($elemtype));
+// 					}
+// 					break;
+// 				case NS_MAIN:
+// 					if ( (SMW_NS_PROPERTY == $this_ns) || (NS_CATEGORY == $this_ns)) {
+// 						$error = wfMsgForContent('smw_wrong_importtype',$value, $wgContLang->getNsText($this_ns));
+// 					}
+// 					break;
+// 				case -1:
+// 					$error = wfMsgForContent('smw_no_importelement',$value);
+// 			}
+//
+// 			if (null != $error) {
+// 				$this->addError($error);
+// 				return;
+// 			}
+// 		}
+
 		try {
 			$this->m_dataitem = new SMWDIString( $this->m_namespace . ' ' . $this->m_section . ' ' . $this->m_uri );
 		} catch ( SMWStringLengthException $e ) {
-			$this->addError( wfMessage(
-				'smw_maxstring',
-				'"' . $this->m_namespace . ' ' . $this->m_section . ' ' . $this->m_uri . '"'
-			)->inContentLanguage()->text() );
+			$this->addError( wfMsgForContent( 'smw_maxstring', '"' . $this->m_namespace . ' ' . $this->m_section . ' ' . $this->m_uri . '"' ) );
 			$this->m_dataitem = new SMWDIString( 'ERROR' );
 		}
 
@@ -93,11 +116,11 @@ class SMWImportValue extends SMWDataValue {
 	 * @return boolean
 	 */
 	protected function loadDataItem( SMWDataItem $dataItem ) {
-		if ( $dataItem instanceof SMWDIBlob ) {
+		if ( $dataItem->getDIType() == SMWDataItem::TYPE_STRING ) {
 			$this->m_dataitem = $dataItem;
 			$parts = explode( ' ', $dataItem->getString(), 3 );
 			if ( count( $parts ) != 3 ) {
-				$this->addError( wfMessage( 'smw_parseerror' )->inContentLanguage()->text() );
+				$this->addError( wfMsgForContent( 'smw_parseerror' ) );
 			} else {
 				$this->m_namespace = $parts[0];
 				$this->m_section = $parts[1];
