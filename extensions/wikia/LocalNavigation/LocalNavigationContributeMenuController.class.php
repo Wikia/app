@@ -18,10 +18,10 @@ class LocalNavigationContributeMenuController extends WikiaController {
 
 	public function executeIndex() {
 		// add "edit this page" item
-		$dropdownItems = [];
-		$content_actions = $this->app->getSkinTemplateObj()->data[ 'content_actions' ];
-		if ( isset($content_actions[ 'edit' ] ) ) {
-			$dropdownItems[ 'edit' ] = $this->getEditPageItem( $content_actions[ 'edit' ][ 'href' ] );
+		$this->dropdownItems = [];
+		$contentActions = $this->app->getSkinTemplateObj()->data[ 'content_actions' ];
+		if ( isset( $contentActions[ 'edit' ] ) ) {
+			$this->dropdownItems[ 'edit' ] = $this->getEditPageItem( $contentActions[ 'edit' ][ 'href' ] );
 		}
 
 		// menu items linking to special pages
@@ -45,14 +45,14 @@ class LocalNavigationContributeMenuController extends WikiaController {
 				$attrs[ 'class' ] = $link[ 'class' ];
 			}
 
-			$dropdownItems[ strtolower( $specialPageName ) ] = $attrs;
+			$this->dropdownItems[ strtolower( $specialPageName ) ] = $attrs;
 		}
 
 		if( $this->wg->User->isAllowed( 'editinterface' ) ) {
-			$dropdownItems[ 'wikinavedit' ] = $this->getEditNavItem();
+			$this->dropdownItems[ 'wikinavedit' ] = $this->getEditNavItem();
 		}
 
-		$this->response->setVal( 'dropdownItems', $dropdownItems );
+		$this->response->setVal( 'dropdownItemsRender', $this->setLinkAttributes() );
 	}
 
 	/**
@@ -97,8 +97,10 @@ class LocalNavigationContributeMenuController extends WikiaController {
 	 * @return array
 	 */
 	public function getEditPageItem( $url ) {
+		$content = wfMessage( 'oasis-navigation-v2-edit-page' )->text();
 		return [
-			'text' => wfMessage( 'oasis-navigation-v2-edit-page' )->escaped(),
+			'text' => $content,
+			'data-content' => $content,
 			'href' => $url,
 			// don't use MenuButton module magic to get accesskey for this item (BugId:15698)
 			'accesskey' => false,
@@ -110,8 +112,10 @@ class LocalNavigationContributeMenuController extends WikiaController {
 	 * @return array
 	 */
 	public function getEditNavItem() {
+		$content = wfMessage( 'oasis-navigation-v2-edit-this-menu' )->text();
 		return [
-			'text' => wfMessage( 'oasis-navigation-v2-edit-this-menu' )->escaped(),
+			'text' => $content,
+			'data-content' => $content,
 			'href' => Title::newFromText( NavigationModel::WIKI_LOCAL_MESSAGE, NS_MEDIAWIKI )->getLocalURL( 'action=edit' ),
 		];
 	}
@@ -124,4 +128,32 @@ class LocalNavigationContributeMenuController extends WikiaController {
 		return $this->defaultSpecialPagesData;
 	}
 
+	/**
+	 * Returns a two item array with text and concatenated attributes for <a> tag to put into template
+	 * @return array
+	 */
+	private function setLinkAttributes() {
+		$dropdownItemsRender = [];
+
+		foreach( $this->dropdownItems as $itemName => $item ) {
+			$dropdownItemsRender[ $itemName ][ 'attributes' ] = ' data-id="' . $itemName . '"';
+
+			foreach ( $item as $attribute => $value ) {
+				switch ( $attribute ) {
+					case ( 'text' ):
+						$dropdownItemsRender[ $itemName ][ 'text' ] = $value;
+						break;
+					case ( 'href' ):
+						if ( empty( $value ) ) {
+							$value = '#';
+						} else {
+							htmlspecialchars( $item[ 'href' ] );
+						}
+				}
+				$dropdownItemsRender[ $itemName ][ 'attributes' ] .= empty( $value ) ? '' : ' ' . $attribute . '="' . $value . '"';
+			}
+		}
+
+		return $dropdownItemsRender;
+	}
 }

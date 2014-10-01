@@ -1,8 +1,8 @@
 (function(window) {
 	'use strict';
 
-	var entryPoint = window.document.getElementById('contribute-container'),
-		dropdown = window.document.getElementById('contribute-dropdown');
+	var entryPoint = window.document.getElementById('contributeEntryPoint'),
+		dropdown = window.document.getElementById('contributeDropdown');
 
 	entryPoint.addEventListener('mouseover', function() {
 		dropdown.classList.add('active');
