@@ -31,7 +31,6 @@ require([
 
 		gallery.rendered = true;
 		gallery.$el.trigger('galleryInserted');
-
 	}
 
 	$(function () {
