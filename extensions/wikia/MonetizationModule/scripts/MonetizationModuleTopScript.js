@@ -15,24 +15,24 @@
 
     window.isFromSearch = function () {
         var ref = document.referrer;
-        if (document.cookie.replace(/(?:(?:^|.*;\s*)fromsearch\s*\=\s*([^;]*).*$)|^.*$/, "$1") == "1") {
+        if (document.cookie.replace(/(?:(?:^|.*;\s*)fromsearch\s*\=\s*([^;]*).*$)|^.*$/, "$1") === "1") {
             return true;
-        } else if (ref.indexOf('https://www.google.com/') == 0 || (ref.indexOf('google.') != -1 &&
-                ref.indexOf('mail.google.com') == -1 &&
-                ref.indexOf('url?q=') == -1 &&
-                ref.indexOf('q=') != -1)) {
+        } else if (ref.indexOf('https://www.google.com/') === 0 || (ref.indexOf('google.') !== -1 &&
+                ref.indexOf('mail.google.com') === -1 &&
+                ref.indexOf('url?q=') === -1 &&
+                ref.indexOf('q=') !== -1)) {
             return true;
-        } else if (ref.indexOf('bing.com') != -1 && ref.indexOf('q=') != -1) {
+        } else if (ref.indexOf('bing.com') !== -1 && ref.indexOf('q=') !== -1) {
             return true;
-        } else if (ref.indexOf('yahoo.com') != -1 && ref.indexOf('p=') != -1) {
+        } else if (ref.indexOf('yahoo.com') !== -1 && ref.indexOf('p=') !== -1) {
             return true;
-        } else if (ref.indexOf('ask.com') != -1 && ref.indexOf('q=') != -1) {
+        } else if (ref.indexOf('ask.com') !== -1 && ref.indexOf('q=') !== -1) {
             return true;
-        } else if (ref.indexOf('aol.com') != -1 && ref.indexOf('q=') != -1) {
+        } else if (ref.indexOf('aol.com') !== -1 && ref.indexOf('q=') !== -1) {
             return true;
-        } else if (ref.indexOf('baidu.com') != -1 && ref.indexOf('wd=') != -1) {
+        } else if (ref.indexOf('baidu.com') !== -1 && ref.indexOf('wd=') !== -1) {
             return true;
-        } else if (ref.indexOf('yandex.com') != -1 && ref.indexOf('text=') != -1) {
+        } else if (ref.indexOf('yandex.com') !== -1 && ref.indexOf('text=') !== -1) {
             return true;
         }
         return false;
