@@ -134,9 +134,10 @@ ve.ui.WikiaTemplateInsertDialog.prototype.onParseSuccess = function ( response )
 			OO.getHash( [ ve.dm.MWTransclusionNode.static.getHashObject( linmod[0] ), null ] )
 		);
 
-		this.fragment = this.getFragment().collapseRangeToEnd();
-		this.fragment.setAutoSelect( true );
-		this.fragment.insertContent( linmod );
+		this.getFragment()
+			.collapseRangeToEnd()
+			.setAutoSelect( true )
+			.insertContent( linmod );
 	}, this ) );
 };
 
