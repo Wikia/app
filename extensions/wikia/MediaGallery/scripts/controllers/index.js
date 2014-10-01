@@ -1,5 +1,33 @@
-require(['mediaGallery.views.gallery'], function (Gallery) {
+require([
+	'mediaGallery.views.gallery',
+	'sloth'
+], function (Gallery, sloth) {
 	'use strict';
+
+	function createGallery($elem, idx, data) {
+		var origVisibleCount = $elem.data('visible-count') || 8,
+			gallery;
+
+		gallery = new Gallery({
+			$el: $('<div></div>'),
+			$wrapper: $elem,
+			model: {
+				media: data
+			},
+			origVisibleCount: origVisibleCount,
+			index: idx
+		});
+		$elem.append(gallery.render(origVisibleCount).$el);
+
+		if (gallery.$toggler) {
+			$elem.append(gallery.$toggler);
+		}
+
+		gallery.rendered = true;
+		gallery.$el.trigger('galleryInserted');
+
+	}
+
 	$(function () {
 		var $galleries = $('.media-gallery-wrapper'),
 			// get data from script tag in DOM
@@ -11,27 +39,15 @@ require(['mediaGallery.views.gallery'], function (Gallery) {
 		}
 
 		$.each($galleries, function (idx) {
-			var $this = $(this),
-				origVisibleCount = $this.data('visible-count') || 8,
-				gallery;
+			var $this = $(this);
 
-			gallery = new Gallery({
-				$el: $('<div></div>'),
-				$wrapper: $this,
-				model: {
-					media: data[idx]
-				},
-				origVisibleCount: origVisibleCount,
-				index: idx
+			sloth({
+				on: $this,
+				threshold: 400,
+				callback: function () {
+					createGallery($this, idx, data[idx]);
+				}
 			});
-			$this.append(gallery.render(origVisibleCount).$el);
-
-			if (gallery.$toggler) {
-				$this.append(gallery.$toggler);
-			}
-
-			gallery.rendered = true;
-			gallery.$el.trigger('galleryInserted');
 		});
 	});
 });
