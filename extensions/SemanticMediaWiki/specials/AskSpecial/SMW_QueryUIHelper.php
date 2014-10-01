@@ -45,10 +45,10 @@ class SMWQueryUIHelper {
 	protected $printOutStrings = array();
 
 	/**
-	 * Have errors occurred so far?
+	 * Have errors occured so far?
 	 * @var boolean
 	 */
-	private $errorsOccurred = false;
+	private $errorsOccured = false;
 
 	/**
 	 * Has the query come from a special page, or from an InfoLink?
@@ -102,12 +102,12 @@ class SMWQueryUIHelper {
 	}
 
 	/**
-	 * Returns true if any errors have occurred
+	 * Returns true if any errors have occured
 	 *
 	 * @return boolean
 	 */
 	public function hasError() {
-		return $this->errorsOccurred;
+		return $this->errorsOccured;
 	}
 
 	/**
@@ -160,7 +160,7 @@ class SMWQueryUIHelper {
 	}
 
 	/**
-	 * Returns an array of errors, if any have occurred.
+	 * Returns an array of errors, if any have occured.
 	 *
 	 * @return array of strings
 	 */
@@ -209,13 +209,13 @@ class SMWQueryUIHelper {
 		$errors = array();
 		if ( $enableValidation ) {
 			if ( $queryString === '' ) {
-				$errors[] = wfMessage( 'smw_qui_noquery' )->text();
+				$errors[] = wfMsg( 'smw_qui_noquery' );
 			} else {
 				$query = SMWQueryProcessor::createQuery( $queryString, array() );
 				$errors = $query ->getErrors();
 			}
 			if ( !empty ( $errors ) ) {
-				$this->errorsOccurred = true;
+				$this->errorsOccured = true;
 			}
 			$this->errors = array_merge( $errors, $this->errors );
 		}
@@ -249,8 +249,8 @@ class SMWQueryUIHelper {
 					$printOuts[$key] = "?" . $printOuts[$key];
 				}
 				if ( !$this->validateProperty( $prop ) ) {
-					$errors[] = wfMessage( 'smw_qui_invalidprop', $prop )->text();
-					$this->errorsOccurred = true;
+					$errors[] = wfMsg( 'smw_qui_invalidprop', $prop );
+					$this->errorsOccured = true;
 				}
 			}
 		}
@@ -294,8 +294,8 @@ class SMWQueryUIHelper {
 
 		if ( $enableValidation ) { // validating the format
 			if ( !array_key_exists( $params['format'], $smwgResultFormats ) ) {
-				$errors[] = wfMessage( 'smw_qui_invalidformat', $params['format'] )->text();
-				$this->errorsOccurred = true;
+				$errors[] = wfMsg( 'smw_qui_invalidformat', $params['format'] );
+				$this->errorsOccured = true;
 			} else { // validating parameters for result printer
 				$printer = SMWQueryProcessor::getResultPrinter( $params[ 'format' ] );
 				$para_meters = $printer->getParameters();
@@ -305,7 +305,7 @@ class SMWQueryUIHelper {
 					$validator->validateParameters();
 					if ( $validator->hasFatalError() ) {
 						array_merge ( $errors, $validator->getErrorMessages () );
-						$this->errorsOccurred = true;
+						$this->errorsOccured = true;
 					}
 				}
 			}
@@ -332,7 +332,7 @@ class SMWQueryUIHelper {
 			$rawParams = $this->parameters;
 		}
 
-		list( $this->queryString, $this->parameters, $this->m_printOuts ) = SMWQueryProcessor::getComponentsFromFunctionParams( $rawParams, false );
+		SMWQueryProcessor::processFunctionParams( $rawParams, $this->queryString, $this->parameters, $this->printOuts );
 	}
 
 	/**
@@ -352,7 +352,7 @@ class SMWQueryUIHelper {
 			// FIXME: this is a hack
 			SMWQueryProcessor::addThisPrintout( $this->printOuts, $this->parameters );
 			$params = SMWQueryProcessor::getProcessedParams( $this->parameters, $this->printOuts );
-			$this->parameters['format'] = $params['format']->getValue();
+			$this->parameters['format'] = $params['format'];
 			$this->params = $params;
 
 			$query = SMWQueryProcessor::createQuery(
@@ -368,7 +368,7 @@ class SMWQueryUIHelper {
 
 			$errors = array_merge( $errors, $res->getErrors() );
 			if ( !empty( $errors ) ) {
-				$this->errorsOccurred = true;
+				$this->errorsOccured = true;
 				$this->errors = array_merge( $errors, $this->errors );
 			}
 
@@ -449,7 +449,7 @@ class SMWQueryUIHelper {
 				$result .= $queryResult;
 			}
 		} else {
-			$result = wfMessage( 'smw_result_noresults' )->text();
+			$result = wfMsg( 'smw_result_noresults' );
 		}
 
 		return $result;
@@ -585,4 +585,5 @@ class SMWQueryUIHelper {
 			return false;
 		}
 	}
+
 }

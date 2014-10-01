@@ -11,8 +11,23 @@
  */
 class SMWTableResultPrinter extends SMWResultPrinter {
 
+	protected $mHTMLClass = '';
+
 	public function getName() {
-		return wfMessage( 'smw_printername_' . $this->mFormat )->text();
+		return wfMsg( 'smw_printername_' . $this->mFormat );
+	}
+
+	/**
+	 * @see SMWResultPrinter::handleParameters
+	 *
+	 * @since 1.6
+	 *
+	 * @param array $params
+	 * @param $outputmode
+	 */
+	protected function handleParameters( array $params, $outputmode ) {
+		parent::handleParameters( $params, $outputmode );
+		$this->mHTMLClass = $params['class'];
 	}
 
 	protected function getResultText( SMWQueryResult $res, $outputmode ) {
@@ -25,7 +40,7 @@ class SMWTableResultPrinter extends SMWResultPrinter {
 			
 			foreach ( $res->getPrintRequests() as /* SMWPrintRequest */ $pr ) {
 				$attribs = array();
-				$columnClass = str_replace( array( ' ', '_' ), '-', strip_tags( $pr->getText( SMW_OUTPUT_WIKI ) ) );
+				$columnClass = str_replace( array( ' ', '_' ), '-', $pr->getText( SMW_OUTPUT_WIKI ) );
 				$attribs['class'] = $columnClass;
 				// Also add this to the array of classes, for
 				// use in displaying each row.
@@ -65,12 +80,15 @@ class SMWTableResultPrinter extends SMWResultPrinter {
 		
 		// print further results footer
 		if ( $this->linkFurtherResults( $res ) ) {
-			$link = $this->getFurtherResultsLink( $res, $outputmode );
+			$link = $res->getQueryLink();
+			if ( $this->getSearchLabel( $outputmode ) ) {
+				$link->setCaption( $this->getSearchLabel( $outputmode ) );
+			}
 			$result .= "\t<tr class=\"smwfooter\"><td class=\"sortbottom\" colspan=\"" . $res->getColumnCount() . '"> ' . $link->getText( $outputmode, $this->mLinker ) . "</td></tr>\n";
 		}
 		
 		// Put the <table> tag around the whole thing
-		$tableAttrs = array( 'class' => $this->params['class'] );
+		$tableAttrs = array( 'class' => $this->mHTMLClass );
 		
 		if ( $this->mFormat == 'broadtable' ) {
 			$tableAttrs['width'] = '100%';
@@ -180,25 +198,14 @@ class SMWTableResultPrinter extends SMWResultPrinter {
 		
 		return implode( '<br />', $values );
 	}
-
-	/**
-	 * @see SMWResultPrinter::getParamDefinitions
-	 *
-	 * @since 1.8
-	 *
-	 * @param $definitions array of IParamDefinition
-	 *
-	 * @return array of IParamDefinition|array
-	 */
-	public function getParamDefinitions( array $definitions ) {
-		$params = parent::getParamDefinitions( $definitions );
-
-		$params['class'] = array(
-			'name' => 'class',
-			'message' => 'smw-paramdesc-table-class',
-			'default' => 'sortable wikitable smwtable',
-		);
-
+	
+	public function getParameters() {
+		$params = array_merge( parent::getParameters(), parent::textDisplayParameters() );
+		
+		$params['class'] = new Parameter( 'class', Parameter::TYPE_STRING );
+		$params['class']->setMessage( 'smw-paramdesc-table-class' );
+		$params['class']->setDefault( 'sortable wikitable smwtable' );
+		
 		return $params;
 	}
 	

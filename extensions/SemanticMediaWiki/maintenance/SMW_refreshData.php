@@ -53,7 +53,7 @@ if ( isset( $options['server'] ) ) {
 }
 
 if ( array_key_exists( 'd', $options ) ) {
-	$delay = intval( $options['d'] ) * 1000; // convert milliseconds to microseconds
+	$delay = intval( $options['d'] ) * 100000; // sleep 100 times the given time, but do so only each 100 pages
 } else {
 	$delay = false;
 }
@@ -69,7 +69,7 @@ if ( array_key_exists( 's', $options ) ) {
 	$start = max( 1, intval( $options['s'] ) );
 } elseif ( array_key_exists( 'startidfile', $options ) ) {
 	if ( !is_writable( file_exists( $options['startidfile'] ) ? $options['startidfile'] : dirname( $options['startidfile'] ) ) ) {
-		die("Cannot use a startidfile that we can't write to.\n");
+		die( "Cannot use a startidfile that we can't write to.\n" );
 	}
 	$writeToStartidfile = true;
 	if ( is_readable( $options['startidfile'] ) ) {
@@ -121,7 +121,8 @@ if (  array_key_exists( 'f', $options ) ) {
 	smwfGetStore()->drop( $verbose );
 	wfRunHooks( 'smwDropTables' );
 	print "\n";
-	SMWStore::setupStore( $verbose );
+	smwfGetStore()->setup( $verbose );
+	wfRunHooks( 'smwInitializeTables' );
 	while ( ob_get_level() > 0 ) { // be sure to have some buffer, otherwise some PHPs complain
 		ob_end_flush();
 	}
@@ -145,13 +146,11 @@ if ( $pages == false ) {
 			print "($num_files) Processing ID " . $id . " ...\n";
 		}
 		smwfGetStore()->refreshData( $id, 1, $filter, false );
-		if ( $delay !== false ) {
+		if ( ( $delay !== false ) && ( ( $num_files + 1 ) % 100 === 0 ) ) {
 			usleep( $delay );
 		}
 		$num_files++;
-		if ( $num_files % 100 === 0 ) { // every 100 pages only
-			$linkCache->clear(); // avoid memory leaks
-		}
+		$linkCache->clear(); // avoid memory leaks
 	}
 	if ( $writeToStartidfile ) {
 		file_put_contents( $options['startidfile'], "$id" );
@@ -168,6 +167,7 @@ if ( $pages == false ) {
 		$title = Title::newFromText( $page );
 
 		if ( !is_null( $title ) ) {
+			// wikia note - not migrating call to new jobqueue, since this is run directly
 			$updatejob = new SMWUpdateJob( $title );
 			$updatejob->run();
 		}

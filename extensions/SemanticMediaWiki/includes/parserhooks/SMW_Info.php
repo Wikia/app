@@ -89,18 +89,16 @@ class SMWInfo extends ParserHook {
 	 * @return array
 	 */
 	protected function getParameterInfo( $type ) {
-		return array(
-			array(
-				'name' => 'message',
-				'message' => 'smw-info-par-message',
-			),
-			array(
-				'name' => 'icon',
-				'message' => 'smw-info-par-icon',
-				'default' => 'info',
-				'values' => array( 'info', 'warning' ),
-			),
-		);
+		$params = array();
+		
+		$params['message'] = new Parameter( 'message' );
+		$params['message']->setMessage( 'smw-info-par-message' );
+		
+		$params['icon'] = new Parameter( 'icon', Parameter::TYPE_STRING, 'info' );
+		$params['icon']->addCriteria( new CriterionInArray( 'info', 'warning' ) );
+		$params['icon']->setMessage( 'smw-info-par-icon' );
+			
+		return $params;
 	}
 	
 }

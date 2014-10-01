@@ -22,6 +22,7 @@
  * @ingroup SpecialPage
  */
 class SMWAdmin extends SpecialPage {
+
 	/**
 	 * Constructor
 	 */
@@ -45,8 +46,7 @@ class SMWAdmin extends SpecialPage {
 		$row = $dbr->selectRow( 'job', '*', array( 'job_cmd' => 'SMWRefreshJob' ), __METHOD__ );
 		if ( $row !== false ) { // similar to Job::pop_type, but without deleting the job
 			$title = Title::makeTitleSafe( $row->job_namespace, $row->job_title );
-			$blob = (string)$row->job_params !== '' ? unserialize( $row->job_params ) : false;
-			$refreshjob = Job::factory( $row->job_cmd, $title, $blob, $row->job_id );
+			$refreshjob = Job::factory( $row->job_cmd, $title, Job::extractBlob( $row->job_params ), $row->job_id );
 		} else {
 			$refreshjob = null;
 		}
@@ -60,13 +60,14 @@ class SMWAdmin extends SpecialPage {
 				ob_start();
 				print "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\"  \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\n<html xmlns=\"http://www.w3.org/1999/xhtml\" xml:lang=\"en\" lang=\"en\" dir=\"ltr\">\n<head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" /><title>Setting up Storage for Semantic MediaWiki</title></head><body><p><pre>";
 				header( "Content-type: text/html; charset=UTF-8" );
-				$result = SMWStore::setupStore();
+				$result = smwfGetStore()->setup();
+				wfRunHooks( 'smwInitializeTables' );
 				print '</pre></p>';
 				if ( $result === true ) {
-					print '<p><b>' . wfMessage( 'smw_smwadmin_setupsuccess' )->text() . "</b></p>\n";
+					print '<p><b>' . wfMsg( 'smw_smwadmin_setupsuccess' ) . "</b></p>\n";
 				}
 				$returntitle = SpecialPage::getTitleFor( 'SMWAdmin' );
-				print '<p> ' . wfMessage( 'smw_smwadmin_return', '<a href="' . htmlspecialchars( $returntitle->getFullURL() ) . '">Special:SMWAdmin</a>' )->text() . "</p>\n";
+				print '<p> ' . wfMsg( 'smw_smwadmin_return', '<a href="' . htmlspecialchars( $returntitle->getFullURL() ) . '">Special:SMWAdmin</a>' ) . "</p>\n";
 				print '</body></html>';
 				ob_flush();
 				flush();
@@ -74,51 +75,57 @@ class SMWAdmin extends SpecialPage {
 			}
 		} elseif ( $smwgAdminRefreshStore && ( $action == 'refreshstore' ) ) { // managing refresh jobs for the store
 			$sure = $wgRequest->getText( 'rfsure' );
-			$title = SpecialPage::getTitleFor( 'SMWAdmin' );
 			if ( $sure == 'yes' ) {
 				if ( is_null( $refreshjob ) ) { // careful, there might be race conditions here
-					$newjob = new SMWRefreshJob( $title, array( 'spos' => 1, 'prog' => 0, 'rc' => 2 ) );
-					$newjob->insert();
-					$wgOut->addHTML( '<p>' . wfMessage( 'smw_smwadmin_updatestarted', '<a href="' . htmlspecialchars( $title->getFullURL() ) . '">Special:SMWAdmin</a>' )->text() . '</p>' );
+					$title = SpecialPage::getTitleFor( 'SMWAdmin' );
+					$jobParams = array( 'spos' => 1, 'prog' => 0, 'rc' => 2 );
+
+					// wikia change start - jobqueue migration
+					$task = new \Wikia\Tasks\Tasks\JobWrapperTask();
+					$task->call( 'SMWRefreshJob', $title, $jobParams );
+					$task->queue();
+					// wikia change end
+
+					$wgOut->addHTML( '<p>' . wfMsg( 'smw_smwadmin_updatestarted' ) . '</p>' );
 				} else {
-					$wgOut->addHTML( '<p>' . wfMessage( 'smw_smwadmin_updatenotstarted', '<a href="' . htmlspecialchars( $title->getFullURL() ) . '">Special:SMWAdmin</a>' )->text() . '</p>' );
+					$wgOut->addHTML( '<p>' . wfMsg( 'smw_smwadmin_updatenotstarted' ) . '</p>' );
 				}
 			} elseif ( $sure == 'stop' ) {
 				$dbw = wfGetDB( DB_MASTER );
 				// delete (all) existing iteration jobs
 				$dbw->delete( 'job', array( 'job_cmd' => 'SMWRefreshJob' ), __METHOD__ );
-				$wgOut->addHTML( '<p>' . wfMessage( 'smw_smwadmin_updatestopped', '<a href="' . htmlspecialchars( $title->getFullURL() ) . '">Special:SMWAdmin</a>' )->text() . '</p>' );
+				$wgOut->addHTML( '<p>' . wfMsg( 'smw_smwadmin_updatestopped' ) . '</p>' );
 			} else {
-				$wgOut->addHTML( '<p>' . wfMessage( 'smw_smwadmin_updatenotstopped', '<a href="' . htmlspecialchars( $title->getFullURL() ) . '">Special:SMWAdmin</a>' )->text() . '</p>' );
+				$wgOut->addHTML( '<p>' . wfMsg( 'smw_smwadmin_updatenotstopped' ) . '</p>' );
 			}
 			return;
 		}
 
 		/**** Normal output ****/
 
-		$html = '<p>' . wfMessage( 'smw_smwadmin_docu' )->text() . "</p>\n";
+		$html = '<p>' . wfMsg( 'smw_smwadmin_docu' ) . "</p>\n";
 		// creating tables and converting contents from older versions
 		$html .= '<form name="buildtables" action="" method="POST">' . "\n" .
 				'<input type="hidden" name="action" value="updatetables" />' . "\n";
-		$html .= '<br /><h2>' . wfMessage( 'smw_smwadmin_db' )->text() . "</h2>\n" .
-				'<p>' . wfMessage( 'smw_smwadmin_dbdocu' )->text() . "</p>\n";
-		$html .= '<p>' . wfMessage( 'smw_smwadmin_permissionswarn' )->text() . "</p>\n" .
+		$html .= '<br /><h2>' . wfMsg( 'smw_smwadmin_db' ) . "</h2>\n" .
+				'<p>' . wfMsg( 'smw_smwadmin_dbdocu' ) . "</p>\n";
+		$html .= '<p>' . wfMsg( 'smw_smwadmin_permissionswarn' ) . "</p>\n" .
 				'<input type="hidden" name="udsure" value="yes"/>' .
-				'<input type="submit" value="' . wfMessage( 'smw_smwadmin_dbbutton' )->text() . '"/></form>' . "\n";
+				'<input type="submit" value="' . wfMsg( 'smw_smwadmin_dbbutton' ) . '"/></form>' . "\n";
 
-		$html .= '<br /><h2>' . wfMessage( 'smw_smwadmin_datarefresh' )->text() . "</h2>\n" .
-				'<p>' . wfMessage( 'smw_smwadmin_datarefreshdocu' )->text() . "</p>\n";
+		$html .= '<br /><h2>' . wfMsg( 'smw_smwadmin_datarefresh' ) . "</h2>\n" .
+				'<p>' . wfMsg( 'smw_smwadmin_datarefreshdocu' ) . "</p>\n";
 		if ( !is_null( $refreshjob ) ) {
 			$prog = $refreshjob->getProgress();
-			$html .= '<p>' . wfMessage( 'smw_smwadmin_datarefreshprogress' )->text() . "</p>\n" .
+			$html .= '<p>' . wfMsg( 'smw_smwadmin_datarefreshprogress' ) . "</p>\n" .
 			'<p><div style="float: left; background: #DDDDDD; border: 1px solid grey; width: 300px; "><div style="background: #AAF; width: ' .
 				round( $prog * 300 ) . 'px; height: 20px; "> </div></div> &#160;' . round( $prog * 100, 4 ) . '%</p><br /><br />';
 			if ( $smwgAdminRefreshStore ) {
 				$html .=
 				'<form name="refreshwiki" action="" method="POST">' .
 				'<input type="hidden" name="action" value="refreshstore" />' .
-				'<input type="submit" value="' . wfMessage( 'smw_smwadmin_datarefreshstop' )->escaped() . '" /> ' .
-				' <input type="checkbox" name="rfsure" value="stop"/> ' . wfMessage( 'smw_smwadmin_datarefreshstopconfirm' )->escaped() .
+				'<input type="submit" value="' . htmlspecialchars( wfMsg( 'smw_smwadmin_datarefreshstop' ) ) . '" /> ' .
+				' <input type="checkbox" name="rfsure" value="stop"/> ' . htmlspecialchars( wfMsg( 'smw_smwadmin_datarefreshstopconfirm' ) ) .
 				'</form>' . "\n";
 			}
 		} elseif ( $smwgAdminRefreshStore ) {
@@ -126,27 +133,29 @@ class SMWAdmin extends SpecialPage {
 				'<form name="refreshwiki" action="" method="POST">' .
 				'<input type="hidden" name="action" value="refreshstore" />' .
 				'<input type="hidden" name="rfsure" value="yes"/>' .
-				'<input type="submit" value="' . wfMessage( 'smw_smwadmin_datarefreshbutton' )->text() . '"/>' .
+				'<input type="submit" value="' . wfMsg( 'smw_smwadmin_datarefreshbutton' ) . '"/>' .
 				'</form>' . "\n";
 		}
 
-		$html .= '<br /><h2>' . wfMessage( 'smw_smwadmin_announce' )->text() . "</h2>\n" .
-				'<p>' . wfMessage( 'smw_smwadmin_announcedocu' )->text() . "</p>\n" .
-				'<p>' . wfMessage( 'smw_smwadmin_announcebutton' )->text() . "</p>\n" .
+		$html .= '<br /><h2>' . wfMsg( 'smw_smwadmin_announce' ) . "</h2>\n" .
+				'<p>' . wfMsg( 'smw_smwadmin_announcedocu' ) . "</p>\n" .
+				'<p>' . wfMsg( 'smw_smwadmin_announcebutton' ) . "</p>\n" .
 				 '<form name="announcewiki" action="http://semantic-mediawiki.org/wiki/Special:SMWRegistry" method="GET">' .
 				 '<input type="hidden" name="url" value="' . $wgServer . str_replace( '$1', '', $wgArticlePath ) . '" />' .
 				 '<input type="hidden" name="return" value="Special:SMWAdmin" />' .
-				 '<input type="submit" value="' . wfMessage( 'smw_smwadmin_announce' )->text() . '"/></form>' . "\n";
+				 '<input type="submit" value="' . wfMsg( 'smw_smwadmin_announce' ) . '"/></form>' . "\n";
 
-		$html .= '<br /><h2>' . wfMessage( 'smw_smwadmin_support' )->text() . "</h2>\n" .
-				'<p>' . wfMessage( 'smw_smwadmin_supportdocu' )->text() . "</p>\n" .
+		$html .= '<br /><h2>' . wfMsg( 'smw_smwadmin_support' ) . "</h2>\n" .
+				'<p>' . wfMsg( 'smw_smwadmin_supportdocu' ) . "</p>\n" .
 				"<ul>\n" .
-				'<li>' . wfMessage( 'smw_smwadmin_installfile' )->text() . "</li>\n" .
-				'<li>' . wfMessage( 'smw_smwadmin_smwhomepage' )->text() . "</li>\n" .
-				'<li>' . wfMessage( 'smw_smwadmin_mediazilla' )->text() . "</li>\n" .
-				'<li>' . wfMessage( 'smw_smwadmin_questions' )->text() . "</li>\n" .
+				'<li>' . wfMsg( 'smw_smwadmin_installfile' ) . "</li>\n" .
+				'<li>' . wfMsg( 'smw_smwadmin_smwhomepage' ) . "</li>\n" .
+				'<li>' . wfMsg( 'smw_smwadmin_mediazilla' ) . "</li>\n" .
+				'<li>' . wfMsg( 'smw_smwadmin_questions' ) . "</li>\n" .
 				"</ul>\n";
 
 		$wgOut->addHTML( $html );
 	}
+
 }
+

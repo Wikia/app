@@ -13,6 +13,7 @@
  * @ingroup SMWDataValues
  */
 class SMWQuantityValue extends SMWNumberValue {
+
 	/// Array with format (canonical unit ID string) => (conversion factor)
 	protected $m_unitfactors = false;
 	/// Array with format (normalised unit string) => (canonical unit ID string)
@@ -126,12 +127,12 @@ class SMWQuantityValue extends SMWNumberValue {
 
 		$factors = smwfGetStore()->getPropertyValues( $propertyDiWikiPage, new SMWDIProperty( '_CONV' ) );
 		if ( count( $factors ) == 0 ) { // no custom type
-			$this->addError( wfMessage( 'smw_nounitsdeclared' )->inContentLanguage()->text() );
+			$this->addError( wfMsgForContent( 'smw_nounitsdeclared' ) );
 			return;
 		}
 		$number = $unit = '';
 		foreach ( $factors as $di ) {
-			if ( !( $di instanceof SMWDIBlob ) ||
+			if ( ( $di->getDIType() !== SMWDataItem::TYPE_STRING ) ||
 			     ( SMWNumberValue::parseNumberValue( $di->getString(), $number, $unit ) != 0 ) ||
 			     ( $number == 0 ) ) {
 				continue; // ignore corrupted data and bogus inputs
@@ -177,7 +178,7 @@ class SMWQuantityValue extends SMWNumberValue {
 		$dataItems = smwfGetStore()->getPropertyValues( $this->m_property->getDIWikiPage(), new SMWDIProperty( '_UNIT' ) );
 		$units = array();
 		foreach ( $dataItems as $di ) { // Join all if many annotations exist. Discouraged (random order) but possible.
-			if ( $di instanceof SMWDIBlob ) {
+			if ( $di->getDIType() === SMWDataItem::TYPE_STRING ) {
 				$units = $units + preg_split( '/\s*,\s*/u', $di->getString() );
 			}
 		}
@@ -188,4 +189,5 @@ class SMWQuantityValue extends SMWNumberValue {
 			} // note: we ignore unsuppported units -- no way to display them
 		}
 	}
+
 }

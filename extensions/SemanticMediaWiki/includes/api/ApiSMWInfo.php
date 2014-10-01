@@ -10,20 +10,20 @@
  * @ingroup SMW
  * @ingroup API
  *
- * @licence GNU GPL v2+
+ * @licence GNU GPL v3+
  * @author Jeroen De Dauw < jeroendedauw@gmail.com >
  */
 class ApiSMWInfo extends ApiBase {
-	
+
 	public function __construct( $main, $action ) {
 		parent::__construct( $main, $action );
 	}
-	
+
 	public function execute() {
 		$params = $this->extractRequestParams();
 		$requestedInfo = $params['info'];
 		$resultInfo = array();
-		
+
 		if ( in_array( 'proppagecount', $requestedInfo ) ) {
 			$resultInfo['proppagecount'] = wfGetDB( DB_SLAVE )->estimateRowCount(
 				'page',
@@ -31,28 +31,28 @@ class ApiSMWInfo extends ApiBase {
 				array(
 					'page_namespace' => SMW_NS_PROPERTY
 				)
-			);	
+			);
 		}
-		
+
 		if ( in_array( 'propcount', $requestedInfo )
-			|| in_array( 'usedpropcount', $requestedInfo ) 
+			|| in_array( 'usedpropcount', $requestedInfo )
 			|| in_array( 'declaredpropcount', $requestedInfo ) ) {
 
 			$semanticStats = smwfGetStore()->getStatistics();
-			
+
 			$map = array(
 				'propcount' => 'PROPUSES',
 				'usedpropcount' => 'USEDPROPS',
 				'declaredpropcount' => 'DECLPROPS',
 			);
-			
+
 			foreach ( $map as $apiName => $smwName ) {
 				if ( in_array( $apiName, $requestedInfo ) ) {
 					$resultInfo[$apiName] = $semanticStats[$smwName];
 				}
 			}
 		}
-		
+
 		$this->getResult()->addValue(
 			null,
 			'info',
@@ -74,27 +74,27 @@ class ApiSMWInfo extends ApiBase {
 			),
 		);
 	}
-	
+
 	public function getParamDescription() {
 		return array(
 			'info' => 'The info to provide.'
 		);
 	}
-	
+
 	public function getDescription() {
 		return array(
 			'API module get info about this SMW install.'
 		);
 	}
 
-	protected function getExamples() {
+	public function getExamples() {
 		return array(
 			'api.php?action=smwinfo&info=proppagecount|propcount',
 		);
-	}	
-	
+	}
+
 	public function getVersion() {
-		return __CLASS__ . ': $Id$';
-	}		
-	
+		return __CLASS__ . ': $Id: ApiSMWInfo.php 112438 2012-02-26 14:21:22Z nikerabbit $';
+	}
+
 }

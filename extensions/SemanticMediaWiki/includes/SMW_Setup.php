@@ -35,6 +35,7 @@ function enableSemantics( $namespace = null, $complete = false ) {
 	$wgExtensionMessagesFiles['SemanticMediaWikiMagic'] = $smwgIP . 'languages/SMW_Magic.php';
 
 	smwfRegisterHooks();
+	smwfRegisterResourceLoaderModules();
 	smwfRegisterClasses();
 	smwfRegisterSpecialPages();
 
@@ -71,7 +72,7 @@ function enableSemantics( $namespace = null, $complete = false ) {
  * Register all SMW hooks with MediaWiki.
  */
 function smwfRegisterHooks() {
-	global $wgHooks;
+	global $wgHooks, $wgVersion;
 
 	$wgHooks['LoadExtensionSchemaUpdates'][] = 'SMWHooks::onSchemaUpdate';
 
@@ -92,15 +93,6 @@ function smwfRegisterHooks() {
 	$wgHooks['ArticleFromTitle'][] = 'SMWHooks::onArticleFromTitle'; // special implementations for property/type articles
 	$wgHooks['ParserFirstCallInit'][] = 'SMWHooks::onParserFirstCallInit';
 
-	$wgHooks['SkinTemplateTabs'][] = 'SMWHooks::addRefreshTab'; // basic tab addition
-	$wgHooks['SkinTemplateNavigation'][] = 'SMWHooks::addStructuredRefreshTab'; // structured version for "Vector"-type skins
-
-	//UnitTests
-	$wgHooks['UnitTestsList'][] = 'SMWHooks::registerUnitTests';
-
-	// User preference
-	$wgHooks['GetPreferences'][] = 'SMWHooks::onGetPreferences';
-
 	if ( $GLOBALS['smwgToolboxBrowseLink'] ) {
 		$wgHooks['SkinTemplateToolboxEnd'][] = 'SMWHooks::showBrowseLink';
 	}
@@ -108,7 +100,83 @@ function smwfRegisterHooks() {
 	$wgHooks['SkinAfterContent'][] = 'SMWFactbox::onSkinAfterContent'; // draw Factbox below categories
 	$wgHooks['SkinGetPoweredBy'][] = 'SMWHooks::addPoweredBySMW';
 	
-	$wgHooks['ExtensionTypes'][] = 'SMWHooks::addSemanticExtensionType';
+	if ( version_compare( $wgVersion, '1.17alpha', '>=' ) ) {
+		// For MediaWiki 1.17 alpha and later.
+		$wgHooks['ExtensionTypes'][] = 'SMWHooks::addSemanticExtensionType';
+	} else {
+		// For pre-MediaWiki 1.17 alpha.
+		$wgHooks['SpecialVersionExtensionTypes'][] = 'SMWHooks::oldAddSemanticExtensionType';
+	}
+}
+
+/**
+ * Register all SMW modules with the MediaWiki Resource Loader.
+ */
+function smwfRegisterResourceLoaderModules() {
+	global $wgResourceModules, $smwgIP, $smwgScriptPath, $wgVersion, $wgStylePath, $wgStyleVersion;
+
+	$moduleTemplate = array(
+		'localBasePath' => $smwgIP,
+		'remoteBasePath' => $smwgScriptPath,
+		'group' => 'ext.smw'
+	);
+	
+	$wgResourceModules['ext.smw'] = $moduleTemplate + array(
+		'scripts' => array(
+			'resources/ext.smw.js',
+			'resources/ext.smw.compat.js',
+		),
+	);
+	
+	$wgResourceModules['ext.smw.style'] = $moduleTemplate + array(
+		'styles' => 'skins/SMW_custom.css'
+	);
+	
+	$wgResourceModules['ext.smw.tooltips'] = $moduleTemplate + array(
+		'scripts' => 'skins/SMW_tooltip.js',
+		'dependencies' => array(
+			'mediawiki.legacy.wikibits',
+			'ext.smw.style'
+		)
+	);
+
+	// Modules for jQuery UI before MW 1.17.0 (b/c code).
+	// This can vanish when dropping MW 1.16 support.
+	// Should we better do "defined( 'MW_SUPPORTS_RESOURCE_MODULES' )" here?
+	if ( version_compare( $wgVersion, '1.17alpha', '<' ) ) {
+		// TODO: should we better load our own "$smwgScriptPath/libs/jquery-1.4.2.min.js"?
+		// MW 1.16 only has jQuery 1.3.2 with some patches.
+		$wgResourceModules['jquery'] = array(
+			'scripts' => "common/jquery.min.js?$wgStyleVersion",
+			'localBasePath' => null, // irrelevant for pre 1.17 b/c code
+			'remoteBasePath' => $wgStylePath,
+			'group' => 'ext.smw'
+		);
+		$wgResourceModules['jquery.ui.core'] = $moduleTemplate + array(
+			'scripts' => 'libs/jquery-ui/jquery.ui.core.min.js',
+			'styles' => 'skins/jquery-ui/base/jquery.ui.all.css',
+			'dependencies' => 'jquery'
+		);
+		$wgResourceModules['jquery.ui.widget'] = $moduleTemplate + array(
+			'scripts' => 'libs/jquery-ui/jquery.ui.widget.min.js'
+		);
+		$wgResourceModules['jquery.ui.position'] = $moduleTemplate + array(
+			'scripts' => 'libs/jquery-ui/jquery.ui.position.min.js'
+		);
+		$wgResourceModules['jquery.ui.button'] = $moduleTemplate + array(
+			'scripts' => 'libs/jquery-ui/jquery.ui.button.min.js',
+			'dependencies' => array( 'jquery.ui.core', 'jquery.ui.widget' )
+		);
+		$wgResourceModules['jquery.ui.autocomplete'] = $moduleTemplate + array(
+			'scripts' => 'libs/jquery-ui/jquery.ui.autocomplete.min.js',
+			'dependencies' => array( 'jquery.ui.core', 'jquery.ui.widget', 'jquery.ui.position' )
+		);
+		$wgResourceModules['jquery.ui.dialog'] = $moduleTemplate + array(
+			'scripts' => 'libs/jquery-ui/jquery.ui.dialog.min.js',
+			'dependencies' => array( 'jquery.ui.core', 'jquery.ui.widget', 'jquery.ui.position', 
+				'jquery.ui.button' /*, 'jquery.ui.draggable', 'jquery.ui.mouse', 'jquery.ui.resizable'*/ )
+		);
+	}
 }
 
 /**
@@ -120,6 +188,7 @@ function smwfRegisterClasses() {
 	$wgAutoloadClasses['SMWHooks']                  = $smwgIP . 'SemanticMediaWiki.hooks.php';
 	
 	$incDir = $smwgIP . 'includes/';
+	$wgAutoloadClasses['SMWCompatibilityHelpers']   = $incDir . 'SMW_CompatibilityHelpers.php';
 	$wgAutoloadClasses['SMWDataValueFactory']       = $incDir . 'SMW_DataValueFactory.php';
 	$wgAutoloadClasses['SMWDISerializer']           = $incDir . 'SMW_DISerializer.php';
 	$wgAutoloadClasses['SMWFactbox']                = $incDir . 'SMW_Factbox.php';
@@ -139,20 +208,16 @@ function smwfRegisterClasses() {
 
 	// Printers
 	$qpDir = $smwgIP . 'includes/queryprinters/';
-	$wgAutoloadClasses['SMWExportPrinter']          = $qpDir . 'SMW_ExportPrinter.php';
-	$wgAutoloadClasses['SMWIExportPrinter']         = $qpDir . 'SMW_IExportPrinter.php';
-	$wgAutoloadClasses['SMWResultPrinter']          = $qpDir . 'SMW_ResultPrinter.php';
-	$wgAutoloadClasses['SMWIResultPrinter']         = $qpDir . 'SMW_IResultPrinter.php';
+	$wgAutoloadClasses['SMWResultPrinter']          = $qpDir . 'SMW_QueryPrinter.php';
 	$wgAutoloadClasses['SMWAggregatablePrinter']    = $qpDir . 'SMW_QP_Aggregatable.php';
 	$wgAutoloadClasses['SMWTableResultPrinter']     = $qpDir . 'SMW_QP_Table.php';
 	$wgAutoloadClasses['SMWListResultPrinter']      = $qpDir . 'SMW_QP_List.php';
 	$wgAutoloadClasses['SMWCategoryResultPrinter']  = $qpDir . 'SMW_QP_Category.php';
 	$wgAutoloadClasses['SMWEmbeddedResultPrinter']  = $qpDir . 'SMW_QP_Embedded.php';
-	$wgAutoloadClasses['SMWFeedResultPrinter']      = $qpDir . 'SMW_QP_Feed.php';
+	$wgAutoloadClasses['SMWRSSResultPrinter']       = $qpDir . 'SMW_QP_RSSlink.php';
 	$wgAutoloadClasses['SMWCsvResultPrinter']       = $qpDir . 'SMW_QP_CSV.php';
 	$wgAutoloadClasses['SMWDSVResultPrinter']       = $qpDir . 'SMW_QP_DSV.php';
 	$wgAutoloadClasses['SMWJSONResultPrinter']      = $qpDir . 'SMW_QP_JSONlink.php';
-	$wgAutoloadClasses['SMWJSON']                   = $qpDir . 'SMW_QP_JSONlink.php';
 	$wgAutoloadClasses['SMWRDFResultPrinter']       = $qpDir . 'SMW_QP_RDF.php';
 
 	// Data items
@@ -206,10 +271,9 @@ function smwfRegisterClasses() {
 	$wgAutoloadClasses['SMWRDFXMLSerializer']       = $expDir . 'SMW_Serializer_RDFXML.php';
 	$wgAutoloadClasses['SMWTurtleSerializer']       = $expDir . 'SMW_Serializer_Turtle.php';
 
-	// Param classes
+	// Parameter classes
 	$parDir = $smwgIP . 'includes/params/';
 	$wgAutoloadClasses['SMWParamFormat']            = $parDir . 'SMW_ParamFormat.php';
-	$wgAutoloadClasses['SMWParamSource']            = $parDir . 'SMW_ParamSource.php';
 	
 	// Parser hooks
 	$phDir = $smwgIP . 'includes/parserhooks/';
@@ -240,7 +304,7 @@ function smwfRegisterClasses() {
 	$wgAutoloadClasses['SMWResultArray']            = $stoDir . 'SMW_ResultArray.php';
 	$wgAutoloadClasses['SMWStore']                  = $stoDir . 'SMW_Store.php';
 	$wgAutoloadClasses['SMWStringCondition']        = $stoDir . 'SMW_Store.php';
-	$wgAutoloadClasses['SMWRequestOptions']         = $stoDir . 'SMW_RequestOptions.php';
+	$wgAutoloadClasses['SMWRequestOptions']         = $stoDir . 'SMW_Store.php';
 	$wgAutoloadClasses['SMWPrintRequest']           = $stoDir . 'SMW_PrintRequest.php';
 	$wgAutoloadClasses['SMWThingDescription']       = $stoDir . 'SMW_Description.php';
 	$wgAutoloadClasses['SMWClassDescription']       = $stoDir . 'SMW_Description.php';
@@ -250,42 +314,14 @@ function smwfRegisterClasses() {
 	$wgAutoloadClasses['SMWConjunction']            = $stoDir . 'SMW_Description.php';
 	$wgAutoloadClasses['SMWDisjunction']            = $stoDir . 'SMW_Description.php';
 	$wgAutoloadClasses['SMWSomeProperty']           = $stoDir . 'SMW_Description.php';
+	$wgAutoloadClasses['SMWSQLStore2']              = $stoDir . 'SMW_SQLStore2.php';
+	$wgAutoloadClasses['SMWSqlStubSemanticData']    = $stoDir . 'SMW_SqlStubSemanticData.php';
+	$wgAutoloadClasses['SMWSqlStore2IdCache']       = $stoDir . 'SMW_SqlStore2IdCache.php';
+	$wgAutoloadClasses['SMWSQLStore2Table']         = $stoDir . 'SMW_SQLStore2Table.php';
+	$wgAutoloadClasses['SMWSQLHelpers']             = $stoDir . 'SMW_SQLHelpers.php';
 	$wgAutoloadClasses['SMWSparqlStore']            = $stoDir . 'SMW_SparqlStore.php';
 	$wgAutoloadClasses['SMWSparqlStoreQueryEngine'] = $stoDir . 'SMW_SparqlStoreQueryEngine.php';
-	$wgAutoloadClasses['SMWSQLHelpers']             = $stoDir . 'SMW_SQLHelpers.php';
 
-	//compatSQLStore (since SMW.storerewrite)
-	$stoCompatSQL = $smwgIP . 'includes/storage/compatSQLStore/';
-	$wgAutoloadClasses['SMWSQLStore2']              = $stoCompatSQL . 'SMW_SQLStore2.php';
-	$wgAutoloadClasses['SMWSqlStubSemanticData']    = $stoCompatSQL . 'SMW_SqlStubSemanticData.php';
-	$wgAutoloadClasses['SMWSqlStore2IdCache']       = $stoCompatSQL . 'SMW_SqlStore2IdCache.php';
-	$wgAutoloadClasses['SMWSQLStore2Table']         = $stoCompatSQL . 'SMW_SQLStore2Table.php';
-	$wgAutoloadClasses['SMWCompatibilityHelpers']   = $stoCompatSQL . 'SMW_CompatibilityHelpers.php';
-
-	//SQLStore (since SMW.storerewrite)
-	$stoDirSQL = $smwgIP . 'includes/storage/SQLStore/';
-	$wgAutoloadClasses['SMWSQLStore3']                     = $stoDirSQL . 'SMW_SQLStore3.php';
-	$wgAutoloadClasses['SMWSql3StubSemanticData']          = $stoDirSQL . 'SMW_Sql3StubSemanticData.php';
-	$wgAutoloadClasses['SMWSql3SmwIds']                    = $stoDirSQL . 'SMW_Sql3SmwIds.php';
-	$wgAutoloadClasses['SMWSQLStore3Table']                = $stoDirSQL . 'SMW_SQLStore3Table.php';
-	$wgAutoloadClasses['SMWSQLStore3Readers']              = $stoDirSQL . 'SMW_SQLStore3_Readers.php';
-	$wgAutoloadClasses['SMWSQLStore3QueryEngine']          = $stoDirSQL . 'SMW_SQLStore3_Queries.php';
-	$wgAutoloadClasses['SMWSQLStore3Query']                = $stoDirSQL . 'SMW_SQLStore3_Queries.php';
-	$wgAutoloadClasses['SMWSQLStore3Writers']              = $stoDirSQL . 'SMW_SQLStore3_Writers.php';
-	$wgAutoloadClasses['SMWSQLStore3SpecialPageHandlers']  = $stoDirSQL . 'SMW_SQLStore3_SpecialPageHandlers.php';
-	$wgAutoloadClasses['SMWSQLStore3SetupHandlers']        = $stoDirSQL . 'SMW_SQLStore3_SetupHandlers.php';
-	$wgAutoloadClasses['SMWDataItemHandler']              = $stoDirSQL . 'SMW_DataItemHandler.php';
-	$wgAutoloadClasses['SMWDIHandlerProperty']            = $stoDirSQL . 'SMW_DIHandler_Property.php';
-	$wgAutoloadClasses['SMWDIHandlerBoolean']             = $stoDirSQL . 'SMW_DIHandler_Bool.php';
-	$wgAutoloadClasses['SMWDIHandlerNumber']              = $stoDirSQL . 'SMW_DIHandler_Number.php';
-	$wgAutoloadClasses['SMWDIHandlerBlob']                = $stoDirSQL . 'SMW_DIHandler_Blob.php';
-	$wgAutoloadClasses['SMWDIHandlerString']              = $stoDirSQL . 'SMW_DIHandler_String.php';
-	$wgAutoloadClasses['SMWDIHandlerUri']                 = $stoDirSQL . 'SMW_DIHandler_URI.php';
-	$wgAutoloadClasses['SMWDIHandlerWikiPage']            = $stoDirSQL . 'SMW_DIHandler_WikiPage.php';
-	$wgAutoloadClasses['SMWDIHandlerTime']                = $stoDirSQL . 'SMW_DIHandler_Time.php';
-	$wgAutoloadClasses['SMWDIHandlerConcept']             = $stoDirSQL . 'SMW_DIHandler_Concept.php';
-	$wgAutoloadClasses['SMWDIHandlerGeoCoord']            = $stoDirSQL . 'SMW_DIHandler_GeoCoord.php';
-	
 	// Special pages and closely related helper classes
 	$specDir = $smwgIP . 'specials/';
 	$wgAutoloadClasses['SMWQueryPage']                 = $specDir . 'QueryPages/SMW_QueryPage.php';
@@ -293,7 +329,6 @@ function smwfRegisterClasses() {
 	$wgAutoloadClasses['SMWQueryUIHelper']             = $specDir . 'AskSpecial/SMW_QueryUIHelper.php';
 	$wgAutoloadClasses['SMWQueryUI']                   = $specDir . 'AskSpecial/SMW_QueryUI.php';
 	$wgAutoloadClasses['SMWQueryCreatorPage']          = $specDir . 'AskSpecial/SMW_SpecialQueryCreator.php';
-	$wgAutoloadClasses['SMWQuerySpecialPage']          = $specDir . 'AskSpecial/SMW_QuerySpecialPage.php';
 	$wgAutoloadClasses['SMWSpecialBrowse']             = $specDir . 'SearchTriple/SMW_SpecialBrowse.php';
 	$wgAutoloadClasses['SMWPageProperty']              = $specDir . 'SearchTriple/SMW_SpecialPageProperty.php';
 	$wgAutoloadClasses['SMWSearchByProperty']          = $specDir . 'SearchTriple/SMW_SpecialSearchByProperty.php';
@@ -305,11 +340,6 @@ function smwfRegisterClasses() {
 	$wgAutoloadClasses['SMWSpecialTypes']              = $specDir . 'QueryPages/SMW_SpecialTypes.php';
 	$wgAutoloadClasses['SMWSpecialUnusedProperties']   = $specDir . 'QueryPages/SMW_SpecialUnusedProperties.php';
 	$wgAutoloadClasses['SMWSpecialWantedProperties']   = $specDir . 'QueryPages/SMW_SpecialWantedProperties.php';
-
-	// Special pages and closely related helper classes
-	$testsDir = $smwgIP . 'tests/phpunit/';
-	$wgAutoloadClasses['SMW\Tests\DataItemTest']		= $testsDir . 'includes/dataitems/DataItemTest.php';
-	$wgAutoloadClasses['SMW\Tests\ResultPrinterTest']	= $testsDir . 'includes/printers/ResultPrinterTest.php';
 
 	// Jobs
 	$wgJobClasses['SMWUpdateJob']       = 'SMWUpdateJob';
@@ -339,8 +369,8 @@ function smwfRegisterSpecialPages() {
 	$wgSpecialPages['Ask']                          = 'SMWAskPage';
 	$wgSpecialPageGroups['Ask']                     = 'smw_group';
 
-//	$wgSpecialPages['QueryCreator']                 = 'SMWQueryCreatorPage';
-//	$wgSpecialPageGroups['QueryCreator']            = 'smw_group';
+	$wgSpecialPages['QueryCreator']                 = 'SMWQueryCreatorPage';
+	$wgSpecialPageGroups['QueryCreator']            = 'smw_group';
 
 	$wgSpecialPages['Browse']                       = 'SMWSpecialBrowse';
 	$wgSpecialPageGroups['Browse']                  = 'smw_group';
@@ -384,15 +414,18 @@ function smwfRegisterSpecialPages() {
  */
 function smwfSetupExtension() {
 	wfProfileIn( 'smwfSetupExtension (SMW)' );
-	global $smwgScriptPath, $wgFooterIcons, $smwgMasterStore, $smwgIQRunningNumber;
+	global $smwgIP, $smwgScriptPath, $wgFooterIcons, $smwgMasterStore, $smwgIQRunningNumber;
 
 	$smwgMasterStore = null;
 	$smwgIQRunningNumber = 0;
 
-	if ( isset( $wgFooterIcons['poweredby'] )
-	  && isset( $wgFooterIcons['poweredby']['semanticmediawiki'] )
-	  && is_null( $wgFooterIcons['poweredby']['semanticmediawiki']['src'] ) ) {
-		$wgFooterIcons['poweredby']['semanticmediawiki']['src'] = "$smwgScriptPath/resources/images/smw_button.png";
+	///// register hooks /////
+	require_once( $smwgIP . 'includes/SMW_RefreshTab.php' );
+	
+	if ( isset($wgFooterIcons["poweredby"])
+	  && isset($wgFooterIcons["poweredby"]["semanticmediawiki"])
+	  && is_null( $wgFooterIcons["poweredby"]["semanticmediawiki"]["src"] ) ) {
+		$wgFooterIcons["poweredby"]["semanticmediawiki"]["src"] = "$smwgScriptPath/skins/images/smw_button.png";
 	}
 
 	wfProfileOut( 'smwfSetupExtension (SMW)' );

@@ -50,11 +50,9 @@ class SMWParseData {
 	 * This function retrieves the SMW data from a given parser, and creates
 	 * a new empty container if it is not initiated yet.
 	 *
-	 * @param Parser $parser
-	 *
 	 * @return SMWSemanticData
 	 */
-	static public function getSMWdata( Parser $parser ) {
+	static public function getSMWdata( $parser ) {
 		$output = $parser->getOutput();
 		$title = $parser->getTitle();
 
@@ -63,53 +61,12 @@ class SMWParseData {
 			return null;
 		}
 
-		$smwData = self::getSMWDataFromParserOutput( $output, $title );
-
-		return $smwData;
-	}
-
-	/**
-	 * @since 1.8
-	 *
-	 * @param ParserOutput $output
-	 * @param Title|null $title
-	 *
-	 * @return SMWSemanticData|null
-	 */
-	public static function getSMWDataFromParserOutput( ParserOutput $output, Title $title = null ) {
-		if ( method_exists( $output, 'getAdditionalData' ) ) {
-			$smwData = $output->getAdditionalData( 'smwdata' );
-		} elseif ( isset( $output->mSMWData ) ) {
-			$smwData = $output->mSMWData;
+		// No data container yet.
+		if ( !isset( $output->mSMWData ) ) {
+			$output->mSMWData = new SMWSemanticData( new SMWDIWikiPage( $title->getDBkey(), $title->getNamespace(), $title->getInterwiki() ) );
 		}
 
-		// No data container yet:
-		if ( !isset( $smwData ) ) {
-			if ( $title === null ) {
-				return null;
-			}
-
-			$smwData = new SMWSemanticData( SMWDIWikiPage::newFromTitle( $title ) );
-
-			self::setSMWData( $output, $smwData );
-		}
-
-		return $smwData;
-	}
-
-	/**
-	 * @since 1.8
-	 *
-	 * @param ParserOutput $output
-	 * @param SMWSemanticData $smwData
-	 */
-	public static function setSMWData( ParserOutput $output, SMWSemanticData $smwData ) {
-		if ( method_exists( $output, 'getAdditionalData' ) ) {
-			$output->setAdditionalData( 'smwdata', $smwData );
-		}
-		else {
-			$output->mSMWData = $smwData;
-		}
+		return $output->mSMWData;
 	}
 
 	/**
@@ -118,16 +75,14 @@ class SMWParseData {
 	 * @param Parser $parser
 	 */
 	static public function clearStorage( Parser $parser ) {
+		$output = $parser->getOutput();
 		$title = $parser->getTitle();
 
-		if ( !isset( $title ) ) {
+		if ( !isset( $output ) || !isset( $title ) ) {
 			return;
 		}
 
-		self::setSMWData(
-			$parser->getOutput(),
-			new SMWSemanticData( SMWDIWikiPage::newFromTitle( $title ) )
-		);
+		$output->mSMWData = new SMWSemanticData( new SMWDIWikiPage( $title->getDBkey(), $title->getNamespace(), $title->getInterwiki() ) );
 	}
 
 	/**
@@ -151,6 +106,7 @@ class SMWParseData {
 		$propertyDv = SMWPropertyValue::makeUserProperty( $propertyName );
 
 		if ( !$propertyDv->isValid() ) {
+			wfProfileOut( 'SMWParseData::addProperty (SMW)' );
 			return $propertyDv;
 		}
 
@@ -158,6 +114,7 @@ class SMWParseData {
 
 		// FIXME: this solves the issue of bug 29438, but is probably not what we want to do.
 		if ( $propertyDi instanceof SMWDIError ) {
+			wfProfileOut( 'SMWParseData::addProperty (SMW)' );
 			return $propertyDv;
 		}
 
@@ -171,7 +128,7 @@ class SMWParseData {
 		);
 
 		if ( $propertyDi->isInverse() ) {
-			$result->addError( wfMessage( 'smw_noinvannot' )->inContentLanguage()->text() );
+			$result->addError( wfMsgForContent( 'smw_noinvannot' ) );
 		} elseif ( $storeAnnotation && !is_null( self::getSMWData( $parser ) ) ) {
 			$semandticData->addPropertyObjectValue( $propertyDi, $result->getDataItem() );
 
@@ -212,7 +169,7 @@ class SMWParseData {
 	static public function storeData( $parseroutput, Title $title, $makejobs = true ) {
 		global $smwgEnableUpdateJobs, $smwgDeclarationProperties, $smwgPageSpecialProperties;
 
-		$semdata = self::getSMWDataFromParserOutput( $parseroutput, $title );
+		$semdata = $parseroutput->mSMWData;
 		$namespace = $title->getNamespace();
 		$processSemantics = smwfIsSemanticsProcessed( $namespace );
 
@@ -253,12 +210,7 @@ class SMWParseData {
 						$value = new SMWDIBoolean( $title->isNewPage() );
 						break;
 					case '_LEDT' :
-						// Do *not* use
-						// $revision = Revision::newFromId( $title->getLatestRevID() );
-						// When run from maintenance/runJobs.php it causes exceptions since
-						// `$title->getLatestRevID()' returns zero for *existing* page.
-						// See https://bugzilla.wikimedia.org/show_bug.cgi?id=35962 for discussion.
-						$revision = Revision::newFromTitle( $title );
+						$revision = Revision::newFromId( $title->getLatestRevID() );
 						$user = User::newFromId( $revision->getUser() );
 						$value = SMWDIWikiPage::newFromTitle( $user->getUserPage() );
 						break;
@@ -304,7 +256,11 @@ class SMWParseData {
 				foreach ( $subjects as $subject ) {
 					$subjectTitle = $subject->getTitle();
 					if ( !is_null( $subjectTitle ) ) {
-						$jobs[] = new SMWUpdateJob( $subjectTitle );
+						// wikia change start - jobqueue migration
+						$task = new \Wikia\Tasks\Tasks\JobWrapperTask();
+						$task->call( 'SMWUpdateJob', $subjectTitle );
+						$jobs[] = $task;
+						// wikia change end
 					}
 				}
 				wfRunHooks( 'smwUpdatePropertySubjects', array( &$jobs ) );
@@ -315,7 +271,11 @@ class SMWParseData {
 					$subjectTitle = $subject->getTitle();
 
 					if ( !is_null( $subjectTitle ) ) {
-						$jobs[] = new SMWUpdateJob( $subjectTitle );
+						// wikia change start - jobqueue migration
+						$task = new \Wikia\Tasks\Tasks\JobWrapperTask();
+						$task->call( 'SMWUpdateJob', $subjectTitle );
+						$jobs[] = $task;
+						// wikia change end
 					}
 				}
 			}
@@ -339,7 +299,11 @@ class SMWParseData {
 					$propertyTitle = $proppage->getTitle();
 
 					if ( !is_null( $propertyTitle ) ) {
-						$jobs[] = new SMWUpdateJob( $propertyTitle );
+						// wikia change start - jobqueue migration
+						$task = new \Wikia\Tasks\Tasks\JobWrapperTask();
+						$task->call( 'SMWUpdateJob', $propertyTitle );
+						$jobs[] = $task;
+						// wikia change end
 					}
 
 					$prop = new SMWDIProperty( $proppage->getDBkey() );
@@ -349,7 +313,11 @@ class SMWParseData {
 						$subjectTitle = $subject->getTitle();
 
 						if ( !is_null( $subjectTitle ) ) {
-							$jobs[] = new SMWUpdateJob( $subjectTitle );
+							// wikia change start - jobqueue migration
+							$task = new \Wikia\Tasks\Tasks\JobWrapperTask();
+							$task->call( 'SMWUpdateJob', $subjectTitle );
+							$jobs[] = $task;
+							// wikia change end
 						}
 					}
 
@@ -362,7 +330,11 @@ class SMWParseData {
 						$subjectTitle = $subject->getTitle();
 
 						if ( !is_null( $subjectTitle ) ) {
-							$jobs[] = new SMWUpdateJob( $subject->getTitle() );
+							// wikia change start - jobqueue migration
+							$task = new \Wikia\Tasks\Tasks\JobWrapperTask();
+							$task->call( 'SMWUpdateJob', $subjectTitle );
+							$jobs[] = $task;
+							// wikia change end
 						}
 					}
 				}
@@ -378,7 +350,9 @@ class SMWParseData {
 
 		// Finally trigger relevant Updatejobs if necessary
 		if ( $updatejobflag ) {
-			Job::batchInsert( $jobs ); ///NOTE: this only happens if $smwgEnableUpdateJobs was true above
+			// wikia change start - jobqueue migration
+			\Wikia\Tasks\Tasks\BaseTask::batch( $jobs );
+			// wikia change end
 		}
 
 		return true;
@@ -444,7 +418,7 @@ class SMWParseData {
 		$pskey = new SMWDIProperty( '_SKEY' );
 		try {
 			$sortkeyDi = new SMWDIString( $sortkey );
-		} catch (SMWStringLengthException $e) { // cut it down to a reasonable length; no further bytes should be needed for sorting
+		} catch ( SMWStringLengthException $e ) { // cut it down to a reasonable length; no further bytes should be needed for sorting
 			$sortkey = substr( $sortkey, 0, $e->getMaxLength() );
 			$sortkeyDi = new SMWDIString( $sortkey );
 		}
@@ -475,10 +449,17 @@ class SMWParseData {
 		global $smwgPageSpecialProperties;
 
 		if ( ( $article->mPreparedEdit ) && ( $article->mPreparedEdit->output instanceof ParserOutput ) ) {
-			$semdata = self::getSMWDataFromParserOutput(
-				$article->mPreparedEdit->output,
-				$article->getTitle()
-			);
+			$output = $article->mPreparedEdit->output;
+			$title = $article->getTitle();
+
+			if ( !isset( $title ) ) {
+				return true; // nothing we can do
+			}
+			if ( !isset( $output->mSMWData ) ) { // no data container yet, make one
+				$output->mSMWData = new SMWSemanticData( new SMWDIWikiPage( $title->getDBkey(), $title->getNamespace(), $title->getInterwiki() ) );
+			}
+
+			$semdata = $output->mSMWData;
 		} else { // give up, just keep the old data
 			return true;
 		}

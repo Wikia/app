@@ -19,7 +19,6 @@ include_once( $smwgIP . 'languages/SMW_Language.php' );
  * Dutch language labels for important SMW labels (namespaces, datatypes,...).
  *
  * @author Siebrand Mazeland
- * @author Jan Schoonderbeek
  * @ingroup SMWLanguage
  * @ingroup Language
  */
@@ -38,17 +37,17 @@ class SMWLanguageNl extends SMWLanguage {
 		'_ema' => 'E-mail',  // name of the email type
 		'_uri' => 'URL',  // name of the URL type
 		'_anu' => 'Annotatie-URI',  // name of the annotation URI type (OWL annotation property)
-		'_tel' => 'Telefoonnummer',  // name of the telephone (URI) type
-		'_rec' => 'Record', // name of record data type
-		'_qty' => 'Hoeveelheid', // name of the number type with units of measurement
+		'_tel' => 'Telefoonnummer',  // name of the telephone (URI) type //TODO: translate
+		'_rec' => 'Record', // name of record data type //TODO: translate
+		'_qty' => 'Quantity', // name of the number type with units of measurement //TODO: translate
 	);
 
 	protected $m_DatatypeAliases = array(
-		'URI'             => '_uri',
-		'Drijvende komma' => '_num',
-		'Integer'         => '_num',
-		'Opsomming'       => '_str',
-		'Telefoonnummer'  => '_tel',
+		'URI'         => '_uri',
+		'Drijvende komma'       => '_num',
+		'Integer'     => '_num',
+		'Opsomming' => '_str',
+		'Telefoonnummer' => '_tel',
 	);
 
 	protected $m_SpecialProperties = array(
@@ -63,17 +62,9 @@ class SMWLanguageNl extends SMWLanguage {
 		'_SERV' => 'Verleent dienst',
 		'_PVAL' => 'Geldige waarde',
 		'_MDAT' => 'Wijzigingsdatum',
-		'_CDAT' => 'Creatiedatum',
-		'_NEWP' => 'Is een nieuwe pagina',
-		'_LEDT' => 'Laatste redacteur is',
 		'_ERRP' => 'Heeft ongeldige waarde voor',
 		'_LIST' => 'Heeft velden',
-		'_SOBJ' => 'Heeft subobject',
-		'_ASK'  => 'Heeft bevraging',
-		'_ASKST'=> 'Bevragingsstring',
-		'_ASKFO'=> 'Bevragingsopmaak',
-		'_ASKSI'=> 'Bevragingsgrootte',
-		'_ASKDE'=> 'Bevragingsdiepgang',
+		'_SOBJ' => 'Has subobject', // TODO: translate
 	);
 
 	protected $m_SpecialPropertyAliases = array(

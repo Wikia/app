@@ -38,26 +38,26 @@ class SMWTypesValue extends SMWDataValue {
 	}
 
 	protected function parseUserValue( $value ) {
-		global $wgContLang, $smwgHistoricTypeNamespace;
+		global $wgContLang;
 
 		if ( $this->m_caption === false ) {
 			$this->m_caption = $value;
 		}
 
 		$valueParts = explode( ':', $value, 2 );
-		if ( $smwgHistoricTypeNamespace && count( $valueParts ) > 1 ) {
+		if ( count( $valueParts ) > 1 ) {
 			$namespace = smwfNormalTitleText( $valueParts[0] );
 			$value = $valueParts[1];
 			$typeNamespace = $wgContLang->getNsText( SMW_NS_TYPE );
 			if ( $namespace != $typeNamespace ) {
-				$this->addError( wfMessage( 'smw_wrong_namespace', $typeNamespace )->inContentLanguage()->text() );
+				$this->addError( wfMsgForContent( 'smw_wrong_namespace', $typeNamespace ) );
 			}
 		}
 
 		$this->m_givenLabel = smwfNormalTitleText( $value );
 		$this->m_typeId = SMWDataValueFactory::findTypeID( $this->m_givenLabel );
 		if ( $this->m_typeId === '' ) {
-			$this->addError( wfMessage( 'smw_unknowntype', $this->m_givenLabel )->inContentLanguage()->text() );
+			$this->addError( wfMsgForContent( 'smw_unknowntype', $this->m_givenLabel ) );
 			$this->m_realLabel = $this->m_givenLabel;
 		} else {
 			$this->m_realLabel = SMWDataValueFactory::findTypeLabel( $this->m_typeId );
@@ -68,7 +68,7 @@ class SMWTypesValue extends SMWDataValue {
 			$this->m_dataitem = self::getTypeUriFromTypeId( $this->m_typeId );
 		} catch ( SMWDataItemException $e ) {
 			$this->m_dataitem = self::getTypeUriFromTypeId( 'notype' );
-			$this->addError( wfMessage( 'smw_parseerror' )->inContentLanguage()->text() );
+			$this->addError( wfMsgForContent( 'smw_parseerror' ) );
 		}
 	}
 

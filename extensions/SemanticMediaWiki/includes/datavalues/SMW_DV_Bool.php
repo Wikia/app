@@ -36,12 +36,12 @@ class SMWBoolValue extends SMWDataValue {
 			$boolvalue = true;
 		} elseif ( $lcv === '0' ) {
 			$boolvalue = false;
-		} elseif ( in_array( $lcv, explode( ',', wfMessage( 'smw_true_words' )->inContentLanguage()->text() ), true ) ) {
+		} elseif ( in_array( $lcv, explode( ',', wfMsgForContent( 'smw_true_words' ) ), true ) ) {
 			$boolvalue = true;
-		} elseif ( in_array( $lcv, explode( ',', wfMessage( 'smw_false_words' )->inContentLanguage()->text() ), true ) ) {
+		} elseif ( in_array( $lcv, explode( ',', wfMsgForContent( 'smw_false_words' ) ), true ) ) {
 			$boolvalue = false;
 		} else {
-			$this->addError( wfMessage( 'smw_noboolean', $value )->inContentLanguage()->text() );
+			$this->addError( wfMsgForContent( 'smw_noboolean', $value ) );
 		}
 		$this->m_dataitem = new SMWDIBoolean( $boolvalue, $this->m_typeid );
 	}
@@ -119,13 +119,9 @@ class SMWBoolValue extends SMWDataValue {
 		if ( $useformat && ( isset( $this->m_truecaption ) ) ) {
 			return $this->m_dataitem->getBoolean() ? $this->m_truecaption : $this->m_falsecaption;
 		} else {
-			$vals = explode(
-				',',
-				wfMessage(
-					$this->m_dataitem->getBoolean() ? 'smw_true_words' : 'smw_false_words'
-				)->inContentLanguage()->text()
-			);
+			$vals = explode( ',', wfMsgForContent( $this->m_dataitem->getBoolean() ? 'smw_true_words' : 'smw_false_words' ) );
 			return reset( $vals );
 		}
 	}
+
 }

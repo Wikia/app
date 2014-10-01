@@ -36,13 +36,13 @@ class SMWPrintRequest {
 
 	/**
 	 * Create a print request.
-	 * @param integer $mode a constant defining what to printout
-	 * @param string $label the string label to describe this printout
-	 * @param mixed $data optional data for specifying some request, might be a property object, title, or something else; interpretation depends on $mode
-	 * @param mixed $outputformat optional string for specifying an output format, e.g. an output unit
-	 * @param array|null $params optional array of further, named parameters for the print request
+	 * @param $mode a constant defining what to printout
+	 * @param $label the string label to describe this printout
+	 * @param $data optional data for specifying some request, might be a property object, title, or something else; interpretation depends on $mode
+	 * @param $outputformat optional string for specifying an output format, e.g. an output unit
+	 * @param $params optional array of further, named parameters for the print request
 	 */
-	public function __construct( $mode, $label, $data = null, $outputformat = false, array $params = null ) {
+	public function __construct( $mode, $label, $data = null, $outputformat = false, $params = null ) {
 		if ( ( ( $mode == self::PRINT_CATS || $mode == self::PRINT_THIS ) &&
 		         !is_null( $data ) ) ||
 		     ( $mode == self::PRINT_PROP &&
@@ -57,7 +57,7 @@ class SMWPrintRequest {
 		$this->m_data = $data;
 		$this->m_outputformat = $outputformat;
 
-		if ( $mode == self::PRINT_CCAT && !$outputformat ) {
+		if ( ( $mode == self::PRINT_CCAT ) && ( $outputformat == false ) ) {
 			$this->m_outputformat = 'x'; // changed default for Boolean case
 		}
 
@@ -66,9 +66,7 @@ class SMWPrintRequest {
 			$this->m_data->setCaption( $label );
 		}
 
-		if ( $params !== null ) {
-			$this->m_params = $params;
-		}
+		if ( null != $params ) $this->m_params = $params;
 	}
 
 	public function getMode() {
