@@ -29,23 +29,17 @@ require([
 	}
 
 	$(function () {
-		var $galleries = $('.media-gallery-wrapper'),
-			// get data from script tag in DOM
-			data = Wikia.mediaGalleryData || [];
-
-		// If there's no galleries on the page, we're done.
-		if (!data.length) {
-			return;
-		}
+		var $galleries = $('.media-gallery-wrapper');
 
 		$.each($galleries, function (idx) {
-			var $this = $(this);
+			var $this = $(this),
+				data = $this.data('model');
 
 			sloth({
 				on: $this,
 				threshold: 400,
 				callback: function () {
-					createGallery($this, idx, data[idx]);
+					createGallery($this, idx, data);
 				}
 			});
 		});
