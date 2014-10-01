@@ -1,7 +1,7 @@
 <ul class="second dropdown">
 	<? foreach ($nodes as $i2 => $node2): ?>
 		<li class="local-nav-entry second-level-row">
-			<a href="<?= $node2['href']; ?>" data-content="<?= htmlspecialchars( $node2['text'] ); ?>"
+			<a href="<?= $node2['href']; ?>" data-content="<?= $node2['textEscaped']; ?>" <?= $node2['canonicalAttr']; ?>
 			<?if (!empty($node2['children'])): ?>
 				class="has-more"
 			<? endif ?>
