@@ -1,4 +1,4 @@
-<nav id="localNavigation">
+<nav>
 	<div class="local-nav-container">
 	<ul class="first">
 		<? foreach ($menuNodes as $i1 => $node1): ?>
