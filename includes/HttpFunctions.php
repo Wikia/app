@@ -353,7 +353,7 @@ class MWHttpRequest {
 	 */
 	public function proxySetup() {
 		global $wgHTTPProxy;
-
+return;
 		if ( $this->proxy ) {
 			return;
 		}

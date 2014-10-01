@@ -43,11 +43,9 @@ define(
 					function () {
 						utils.cleanUpError(modal);
 					}
-				],
-				beforeClose: [
-					utils.refreshIfAfterForceLogin
 				]
-			};
+			},
+			wasCancelled = false;
 
 		/**
 		 * @desc Entry point for create map modal
