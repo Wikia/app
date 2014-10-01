@@ -103,12 +103,12 @@ $media-margin: 2.5px;
 	 *    - Expand caption content so it's height can be calculated by JS.
 	 */
 
-	$caption-line-height: 18px;
-	$caption-padding: 9px;
-	$caption-height: ($caption-padding * 2) + $caption-line-height;
+	$caption-line-height: 24px;
+	$caption-padding-y: 6px;
+	$caption-height: ($caption-padding-y * 2) + $caption-line-height;
 	$caption-top-offset: -1 * ($caption-height + $media-margin);
 
-	.caption {
+	.media-gallery-caption {
 		@include background-opacity(#000, 60);
 		bottom: $media-margin;
 		color: #fff;
@@ -117,7 +117,7 @@ $media-margin: 2.5px;
 		line-height: $caption-line-height;
 		margin-top: $caption-top-offset;
 		overflow: hidden;
-		padding: $caption-padding;
+		padding: $caption-padding-y 9px;
 		position: absolute;
 		right: $media-margin;
 		top: 100%;
