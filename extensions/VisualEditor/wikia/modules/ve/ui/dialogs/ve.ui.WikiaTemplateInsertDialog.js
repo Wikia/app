@@ -2,6 +2,8 @@
  * VisualEditor user interface WikiaTemplateInsertDialog class.
  */
 
+/*global mw*/
+
 /**
  * Dialog for inserting templates.
  *
@@ -63,6 +65,8 @@ ve.ui.WikiaTemplateInsertDialog.prototype.onTemplateSelect = function ( itemData
 	var template;
 
 	if ( itemData ) {
+		this.$frame.startThrobbing();
+
 		this.transclusionModel = new ve.dm.MWTransclusionModel();
 
 		template = ve.dm.MWTemplateModel.newFromName(
@@ -85,16 +89,76 @@ ve.ui.WikiaTemplateInsertDialog.prototype.onTemplateSelect = function ( itemData
  * Insert template
  */
 ve.ui.WikiaTemplateInsertDialog.prototype.insertTemplate = function () {
-	// Collapse returns a new fragment, so update this.fragment
-	this.fragment = this.getFragment().collapseRangeToEnd();
+	ve.init.target.constructor.static.apiRequest( {
+		'action': 'visualeditor',
+		'paction': 'parsefragment',
+		'page': mw.config.get( 'wgRelevantPageName' ),
+		'wikitext': this.transclusionModel.getWikitext()
+	}, { 'type': 'POST' } )
+		.done( ve.bind( this.onParseSuccess, this ) )
+		.fail( ve.bind( function () {
+			// TODO: Implement some proper handling, at least tracking
+		}, this ) );
+};
 
-	// Update the surface selection to match the fragment's collapsed range.
-	// Translating an expanded range will result in a selection that covers more than just the inserted node.
-	this.surface.getModel().setSelection( this.getFragment().getRange() );
+/**
+ * Handle a successful response from the parser for the wikitext fragment.
+ *
+ * @param {Object} response Response data
+ */
+ve.ui.WikiaTemplateInsertDialog.prototype.onParseSuccess = function ( response ) {
+	// Deferred is used here only to allow for reusing MWTransclusionNode.onParseSuccess
+	// method instead of having to do a code duplication. It's not a prefect approach
+	// and it is a subject to change - based on the future discussion.
+	var deferred = $.Deferred();
+	ve.ce.MWTransclusionNode.prototype.onParseSuccess( deferred, response );
+	deferred.done( ve.bind( function ( contents ) {
+		var isInline = this.constructor.static.isHybridInline( contents ),
+			type = isInline ? 'mwTransclusionInline' : 'mwTransclusionBlock',
+			linmod = [
+				{
+					'type': type,
+					'attributes': {
+						'mw': this.transclusionModel.getPlainObject()
+					}
+				},
+				{ 'type': '/' + type }
+			];
 
-	// Ask the transclusionModel to transact with the document model and listen for the 'tranact' event.
-	this.surface.getModel().getDocument().once( 'transact', ve.bind( this.onTransact, this ) );
-	this.transclusionModel.insertTransclusionNode( this.getFragment() );
+		this.surface.getModel().getDocument().once( 'transact', ve.bind( this.onTransact, this ) );
+
+		// Fill out the cache so MWTransclusionNode does not have to send exact same
+		// parsefragment request.
+		this.fragment.getDocument().getStore().index(
+			contents,
+			OO.getHash( [ ve.dm.MWTransclusionNode.static.getHashObject( linmod[0] ), null ] )
+		);
+
+		this.fragment = this.getFragment()
+			.collapseRangeToEnd()
+			.setAutoSelect( true )
+			.insertContent( linmod );
+	}, this ) );
+};
+
+/**
+ * Determine if a hybrid element is inline and allowed to be inline in this context
+ *
+ * We generate block elements for block tags and inline elements for inline
+ * tags.
+ *
+ * @param {HTMLElement[]} domElements DOM elements being converted
+ * @returns {boolean} The element is inline
+ */
+ve.ui.WikiaTemplateInsertDialog.static.isHybridInline = function ( domElements ) {
+	var i, length, allTagsInline = true;
+	for ( i = 0, length = domElements.length; i < length; i++ ) {
+		if ( ve.isBlockElement( domElements[i] ) ) {
+			allTagsInline = false;
+			break;
+		}
+	}
+	return allTagsInline;
 };
 
 /**
@@ -104,6 +168,7 @@ ve.ui.WikiaTemplateInsertDialog.prototype.insertTemplate = function () {
  * We can ask the commandRegistry for the command for the node and execute it.
  */
 ve.ui.WikiaTemplateInsertDialog.prototype.onTransact = function () {
+	this.$frame.stopThrobbing();
 	setTimeout( ve.bind( function () {
 		ve.ui.commandRegistry.getCommandForNode(
 			this.surface.getView().getFocusedNode()

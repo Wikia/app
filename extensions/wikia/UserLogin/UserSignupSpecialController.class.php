@@ -63,6 +63,8 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 		$this->wg->SuppressAds = true;
 		$this->wg->SuppressToolbar = true;
 
+		$this->getOutput()->disallowUserJs(); // just in case...
+
 		// form params
 		$this->username = $this->request->getVal( 'userloginext01', '' );
 		$this->email = $this->request->getVal( 'email', '' );
