@@ -25,18 +25,19 @@ ob_start();
 $runner->run();
 $result = $runner->format();
 
-// for long-running tasks that end up timing out, we need to notify flower that
-// the task actually did complete successfully
-Http::post( "{$wgFlowerUrl}/api/task/status/{$options['task_id']}", [
-	'noProxy' => true,
-	'postData' => json_encode( [
-		'kwargs' => [
-			'completed' => time(),
-			'state' => $result->status,
-			'result' => ( $result->status == 'success' ? $result->retval : $result->reason ),
-		],
-	] ),
-] );
+if ($runner->runTime() > TaskRunner::TASK_NOTIFY_TIMEOUT) {
+	Http::post( "{$wgFlowerUrl}/api/task/status/{$options['task_id']}", [
+		'noProxy' => true,
+		'postData' => json_encode( [
+			'kwargs' => [
+				'completed' => time(),
+				'state' => $result->status,
+				'result' => ( $result->status == 'success' ? $result->retval : $result->reason ),
+			],
+		] ),
+	] );
+}
+
 ob_end_clean();
 
 // if the runner completes in time, this will report back to celery immediately
