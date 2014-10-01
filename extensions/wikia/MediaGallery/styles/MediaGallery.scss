@@ -103,8 +103,8 @@ $media-margin: 2.5px;
 	 *    - Expand caption content so it's height can be calculated by JS.
 	 */
 
-	$caption-line-height: 24px;
-	$caption-padding-y: 6px;
+	$caption-line-height: 18px;
+	$caption-padding-y: 9px;
 	$caption-height: ($caption-padding-y * 2) + $caption-line-height;
 	$caption-top-offset: -1 * ($caption-height + $media-margin);
 
@@ -128,13 +128,16 @@ $media-margin: 2.5px;
 		}
 
 		.inner {
+			max-height: $caption-line-height;
 			overflow: hidden;
 			text-overflow: ellipsis;
 			white-space: nowrap;
 		}
 
 		&.hovered {
+
 			.inner {
+				max-height: none;
 				white-space: normal;
 			}
 		}
