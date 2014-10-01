@@ -12,15 +12,15 @@
 	windowWidth = $window.width();
 
 	function init(){
-		var secondLvlNav, secondLvlNavWidth = 0, secondLvlNavOffset = 0,
+		var self, secondLvlNavWidth = 0, secondLvlNavOffset = 0,
 			thirdLvlWidth = 0, thirdLvlMaxWidth = 0;
 
-		$('> li', $localNavStart).each(function(){
-			secondLvlNav = $('> ul', this);
-			secondLvlNavWidth = secondLvlNav.outerWidth();
-			secondLvlNavOffset = secondLvlNav.offset().left;
+		$localNavSecondLevel.each(function(){
+			self = $(this);
+			secondLvlNavWidth = self.outerWidth();
+			secondLvlNavOffset = self.offset().left;
 
-			$('> li', secondLvlNav).each(function(){
+			$('> li', self).each(function(){
 				thirdLvlWidth = $('> ul', this).outerWidth();
 				if ( thirdLvlWidth > thirdLvlMaxWidth ) {
 					thirdLvlMaxWidth = thirdLvlWidth;
@@ -29,13 +29,13 @@
 
 			localNavCache.push({
 				width: secondLvlNavWidth + secondLvlNavOffset + thirdLvlMaxWidth,
-				menuElement: secondLvlNav
+				menuElement: self
 			});
 
 			if ( secondLvlNavWidth + secondLvlNavOffset + thirdLvlMaxWidth > windowWidth ) {
-				secondLvlNav.addClass('right');
+				self.addClass('right');
 			} else {
-				secondLvlNav.removeClass('right');
+				self.removeClass('right');
 			}
 		});
 
