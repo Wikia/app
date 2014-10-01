@@ -92,7 +92,9 @@ define('wikia.intMap.poiCategories',
 					triggerMarkerUpload
 				],
 				beforeClose: [
-					onBeforeClose
+					function (){
+						utils.onBeforeCloseModal(!changesSaved);
+					}
 				]
 			},
 			pontoTrigger,
@@ -130,14 +132,6 @@ define('wikia.intMap.poiCategories',
 				});
 		}
 
-		/**
-		 * @desc Triggers refresh if needed after forced login
-		 */
-		function onBeforeClose(){
-			if (!changesSaved) {
-				utils.refreshIfAfterForceLogin();
-			}
-		}
 		/**
 		 * @desc Sets up modal config and creates it
 		 * @param {object} data - params passed to modal

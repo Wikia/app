@@ -34,7 +34,9 @@ define(
 					showPoiCategoriesModal
 				],
 				beforeClose: [
-					onBeforeClose
+					function() {
+						utils.onBeforeCloseModal(!wasMapAdded);
+					}
 				]
 			},
 			// modal buttons and events for them in this step
@@ -82,14 +84,6 @@ define(
 			utils.bindEvents(modal, events);
 		}
 
-		/**
-		 * @desc Triggers refresh if needed after forced login
-		 */
-		function onBeforeClose() {
-			if( !wasMapAdded ) {
-				utils.refreshIfAfterForceLogin();
-			}
-		}
 		/**
 		 * @desc shows preview step before creating a map
 		 *
