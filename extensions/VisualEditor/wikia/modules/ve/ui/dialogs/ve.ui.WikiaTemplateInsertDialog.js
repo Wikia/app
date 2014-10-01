@@ -2,6 +2,8 @@
  * VisualEditor user interface WikiaTemplateInsertDialog class.
  */
 
+/*global mw*/
+
 /**
  * Dialog for inserting templates.
  *
@@ -112,7 +114,7 @@ ve.ui.WikiaTemplateInsertDialog.prototype.onParseSuccess = function ( response )
 	ve.ce.MWTransclusionNode.prototype.onParseSuccess( deferred, response );
 	deferred.done( ve.bind( function ( contents ) {
 		var isInline = this.constructor.static.isHybridInline( contents ),
-			type = isInline ? 'mwTransclusionInline' : 'mwTransclusionBlock'
+			type = isInline ? 'mwTransclusionInline' : 'mwTransclusionBlock',
 			linmod = [
 				{
 					'type': type,
