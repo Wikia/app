@@ -117,7 +117,7 @@ $media-margin: 2.5px;
 		line-height: $caption-line-height;
 		margin-top: $caption-top-offset;
 		overflow: hidden;
-		padding: $caption-padding 9px;
+		padding: $caption-padding;
 		position: absolute;
 		right: $media-margin;
 		top: 100%;
@@ -135,7 +135,6 @@ $media-margin: 2.5px;
 		}
 
 		&.hovered {
-
 			.inner {
 				max-height: none;
 				white-space: normal;
