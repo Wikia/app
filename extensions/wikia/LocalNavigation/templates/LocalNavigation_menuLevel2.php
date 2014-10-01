@@ -16,7 +16,7 @@
 			<? endif; ?>
 		</li>
 	<? endforeach; ?>
-	<? if ( !empty( $more ): ?>
+	<? if ( !empty( $more ) ): ?>
 		<li class="local-nav-entry second-level-row">
 			<a href="<?= $more['href']; ?>" data-content="<?= wfMessage('local-navigation-more-of', $more['text'])->escaped(); ?>">
 				<span>
