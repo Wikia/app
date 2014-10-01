@@ -67,6 +67,11 @@ class SMWLanguageRu extends SMWLanguage {
 		'_ERRP' => 'Has improper value for', // TODO: translate
 		'_LIST' => 'Имеет поля',
 		'_SOBJ' => 'Has subobject', // TODO: translate
+		'_ASK'  => 'Has query', // TODO: translate
+		'_ASKST'=> 'Query string', // TODO: translate
+		'_ASKFO'=> 'Query format', // TODO: translate
+		'_ASKSI'=> 'Query size', // TODO: translate
+		'_ASKDE'=> 'Query depth', // TODO: translate
 	);
 
 	protected $m_SpecialPropertyAliases = array(
@@ -86,7 +91,7 @@ class SMWLanguageRu extends SMWLanguage {
 
 	protected $m_dateformats = array( array( SMW_Y ), array( SMW_MY, SMW_YM ), array( SMW_DMY, SMW_MDY, SMW_YMD, SMW_YDM ) );
 
-	protected $m_months = array( "января", "февраля", "марта", "апреля", "мая", "июня", "июля", "августа", "сентрября", "октября", "ноября", "декабря" );
+	protected $m_months = array( "января", "февраля", "марта", "апреля", "мая", "июня", "июля", "августа", "сентября", "октября", "ноября", "декабря" );
 
 	protected $m_monthsshort = array( "янв", "фев", "мар", "апр", "мая", "июн", "июл", "авг", "сен", "окт", "ноя", "дек" );
 

@@ -38,7 +38,7 @@ class SMWEmbeddedResultPrinter extends SMWResultPrinter {
 	}
 
 	public function getName() {
-		return wfMsg( 'smw_printername_embedded' );
+		return wfMessage( 'smw_printername_embedded' )->text();
 	}
 
 	protected function getResultText( SMWQueryResult $res, $outputmode ) {
@@ -100,19 +100,11 @@ class SMWEmbeddedResultPrinter extends SMWResultPrinter {
 
 		// show link to more results
 		if ( $this->linkFurtherResults( $res ) ) {
-			$link = $res->getQueryLink();
-			if ( $this->getSearchLabel( SMW_OUTPUT_WIKI ) ) {
-				$link->setCaption( $this->getSearchLabel( SMW_OUTPUT_WIKI ) );
-			}
-			$link->setParameter( 'embedded', 'format' );
-			// ordered lists confusing in paged output
-			$format = ( $this->m_embedformat == 'ol' ) ? 'ul':$this->m_embedformat;
-			$link->setParameter( $format, 'embedformat' );
-			if ( !$this->m_showhead ) {
-				$link->setParameter( 'on', 'embedonly' );
-			}
-			$result .= $embstart . $link->getText( SMW_OUTPUT_WIKI, $this->mLinker ) . $embend;
+			$result .= $embstart
+				. $this->getFurtherResultsLink( $res, $outputmode )->getText( SMW_OUTPUT_WIKI, $this->mLinker )
+				. $embend;
 		}
+
 		$result .= $footer;
 
 		return $result;
@@ -121,15 +113,20 @@ class SMWEmbeddedResultPrinter extends SMWResultPrinter {
 	public function getParameters() {
 		$params = parent::getParameters();
 
-		$params['embedformat'] = new Parameter( 'embedformat' );
-		$params['embedformat']->setMessage( 'smw_paramdesc_embedformat' );
-		$params['embedformat']->setDefault( 'h1' );
-		$params['embedformat']->addCriteria( new CriterionInArray( 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'ol', 'ul' ) );
-		
-		$params['embedonly'] = new Parameter( 'embedonly', Parameter::TYPE_BOOLEAN );
-		$params['embedonly']->setMessage( 'smw_paramdesc_embedonly' );
-		$params['embedonly']->setDefault( false, false );	
-		
+		$params[] = array(
+			'name' => 'embedformat',
+			'message' => 'smw-paramdesc-embedformat',
+			'default' => 'h1',
+			'values' => array( 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'ol', 'ul' ),
+		);
+
+		$params[] = array(
+			'name' => 'embedonly',
+			'type' => 'boolean',
+			'message' => 'smw-paramdesc-embedonly',
+			'default' => false,
+		);
+
 		return $params;
 	}
 

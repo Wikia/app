@@ -42,7 +42,7 @@ class SMWCategoryResultPrinter extends SMWResultPrinter {
 	}	
 	
 	public function getName() {
-		return wfMsg( 'smw_printername_' . $this->mFormat );
+		return wfMessage( 'smw_printername_' . $this->mFormat )->text();
 	}
 
 	protected function getResultText( SMWQueryResult $res, $outputmode ) {
@@ -77,7 +77,7 @@ class SMWCategoryResultPrinter extends SMWResultPrinter {
 			if ( $rowindex % $rows_per_column == 0 ) {
 				$result .= "\n			<div style=\"float: left; width: $column_width%;\">\n";
 				if ( $cur_first_char == $prev_first_char )
-					$result .= "				<h3>$cur_first_char " . wfMsg( 'listingcontinuesabbrev' ) . "</h3>\n				<ul>\n";
+					$result .= "				<h3>$cur_first_char " . wfMessage( 'listingcontinuesabbrev' )->text() . "</h3>\n				<ul>\n";
 			}
 			
 			// if we're at a new first letter, end
@@ -159,25 +159,7 @@ class SMWCategoryResultPrinter extends SMWResultPrinter {
 
 		// Make label for finding further results
 		if ( $this->linkFurtherResults( $res ) ) {
-			$link = $res->getQueryLink();
-			
-			if ( $this->getSearchLabel( SMW_OUTPUT_WIKI ) ) {
-				$link->setCaption( $this->getSearchLabel( SMW_OUTPUT_WIKI ) );
-			}
-			
-			$link->setParameter( 'category', 'format' );
-			
-			if ( $this->mNumColumns != 3 ) $link->setParameter( $this->mNumColumns, 'columns' );
-			
-			if ( $this->mTemplate !== '' ) {
-				$link->setParameter( $this->mTemplate, 'template' );
-				
-				if ( array_key_exists( 'link', $this->m_params ) ) { // linking may interfere with templates
-					$link->setParameter( $this->m_params['link'], 'link' );
-				}
-			}
-			
-			$result .= '<br /><li>' . $link->getText( SMW_OUTPUT_WIKI, $this->mLinker ) . '</li>';
+			$result .= '<br /><li>' . $this->getLink( $res, $outputmode )->getText( SMW_OUTPUT_WIKI, $this->mLinker ) . '</li>';
 		}
 
 		$result .= "				</ul>\n			</div> <!-- end column -->";
@@ -188,25 +170,29 @@ class SMWCategoryResultPrinter extends SMWResultPrinter {
 	}
 
 	public function getParameters() {
-		$params = array_merge( parent::getParameters(), $this->textDisplayParameters() );
-		
-		$params['columns'] = new Parameter( 'columns', Parameter::TYPE_INTEGER );
-		$params['columns']->setDescription( wfMsg( 'smw_paramdesc_columns', 3 ) );
-		$params['columns']->setDefault( 3, false );
-		
-		$params['delim'] = new Parameter( 'delim' );
-		$params['delim']->setDescription( wfMsg( 'smw-paramdesc-category-delim' ) );
-		$params['delim']->setDefault( ',' );
-		
-		$params['template'] = new Parameter( 'template' );
-		$params['template']->setDescription( wfMsg( 'smw-paramdesc-category-template' ) );
-		$params['template']->setDefault( '' );
-		
-		$params['userparam'] = new Parameter( 'userparam' );
-		$params['userparam']->setDescription( wfMsg( 'smw-paramdesc-category-userparam' ) );
-		$params['userparam']->setDefault( '' );
-		
-		return $params;
+		return array_merge( parent::getParameters(), array(
+			array(
+				'name' => 'columns',
+				'type' => 'integer',
+				'message' => 'smw-paramdesc-columns',
+				'default' => 3,
+			),
+			array(
+				'name' => 'delim',
+				'message' => 'smw-paramdesc-category-delim',
+				'default' => '',
+			),
+			array(
+				'name' => 'template',
+				'message' => 'smw-paramdesc-category-template',
+				'default' => '',
+			),
+			array(
+				'name' => 'userparam',
+				'message' => 'smw-paramdesc-category-userparam',
+				'default' => '',
+			),
+		) );
 	}
 
 }

@@ -59,8 +59,7 @@ class SMWURIValue extends SMWDataValue {
 
 		$scheme = $hierpart = $query = $fragment = '';
 		if ( $value === '' ) { // do not accept empty strings
-			$this->addError( wfMsgForContent( 'smw_emptystring' ) );
-			$this->m_dataitem = new SMWDIUri( 'http', '//example.com', '', '', $this->m_typeid ); // define data item to have some value
+			$this->addError( wfMessage( 'smw_emptystring' )->inContentLanguage()->text() );
 			return;
 		}
 
@@ -73,12 +72,11 @@ class SMWURIValue extends SMWDataValue {
 					$parts[0] = 'http';
 				}
 				// check against blacklist
-				$uri_blacklist = explode( "\n", wfMsgForContent( 'smw_uri_blacklist' ) );
+				$uri_blacklist = explode( "\n", wfMessage( 'smw_uri_blacklist' )->inContentLanguage()->text() );
 				foreach ( $uri_blacklist as $uri ) {
 					$uri = trim( $uri );
 					if ( $uri == mb_substr( $value, 0, mb_strlen( $uri ) ) ) { // disallowed URI!
-						$this->addError( wfMsgForContent( 'smw_baduri', $value ) );
-						$this->m_dataitem = new SMWDIUri( 'http', '//example.com', '', '', $this->m_typeid ); // define data item to have some value
+						$this->addError( wfMessage( 'smw_baduri', $value )->inContentLanguage()->text() );
 						return;
 					}
 				}
@@ -123,7 +121,8 @@ class SMWURIValue extends SMWDataValue {
 				if ( ( strlen( preg_replace( '/[^0-9]/', '', $hierpart ) ) < 6 ) ||
 					( preg_match( '<[-+./][-./]>', $hierpart ) ) ||
 					( !SMWURIValue::isValidTelURI( 'tel:' . $hierpart ) ) ) { /// TODO: introduce error-message for "bad" phone number
-					$this->addError( wfMsgForContent( 'smw_baduri', $this->m_wikitext ) );
+					$this->addError( wfMessage( 'smw_baduri', $this->m_wikitext )->inContentLanguage()->text() );
+					return;
 				}
 				break;
 			case SMW_URI_MODE_EMAIL:
@@ -136,8 +135,8 @@ class SMWURIValue extends SMWDataValue {
 				$check = method_exists( 'Sanitizer', 'validateEmail' ) ? Sanitizer::validateEmail( $value ) : self::validateEmail( $value );
 				if ( !$check ) {
 					/// TODO: introduce error-message for "bad" email
-					$this->addError( wfMsgForContent( 'smw_baduri', $value ) );
-					break;
+					$this->addError( wfMessage( 'smw_baduri', $value )->inContentLanguage()->text() );
+					return;
 				}
 				$hierpart = str_replace( array( '%3A', '%2F', '%23', '%40', '%3F', '%3D', '%26', '%25' ), array( ':', '/', '#', '@', '?', '=', '&', '%' ), rawurlencode( $value ) );
 		}
@@ -146,8 +145,7 @@ class SMWURIValue extends SMWDataValue {
 		try {
 			$this->m_dataitem = new SMWDIUri( $scheme, $hierpart, $query, $fragment, $this->m_typeid );
 		} catch ( SMWDataItemException $e ) {
-			$this->addError( wfMsgForContent( 'smw_baduri', $this->m_wikitext ) );
-			$this->m_dataitem = new SMWDIUri( 'http', '//example.com', '', '', $this->m_typeid ); // define data item to have some value
+			$this->addError( wfMessage( 'smw_baduri', $this->m_wikitext )->inContentLanguage()->text() );
 		}
 	}
 
@@ -185,8 +183,11 @@ class SMWURIValue extends SMWDataValue {
 
 	public function getShortWikiText( $linked = null ) {
 		$url = $this->getURL();
-		if ( is_null( $linked ) || ( $linked === false ) || ( $this->m_outformat == '-' ) || ( $url === '' ) || ( $this->m_caption === '' ) ) {
+		if ( is_null( $linked ) || ( $linked === false ) || ( $url === '' ) ||
+			( $this->m_outformat == '-' ) || ( $this->m_caption === '' ) ) {
 			return $this->m_caption;
+		} elseif ( $this->m_outformat == 'nowiki' ) {
+			return $this->makeNonlinkedWikiText( $this->m_caption );
 		} else {
 			return '[' . $url . ' ' . $this->m_caption . ']';
 		}
@@ -194,7 +195,9 @@ class SMWURIValue extends SMWDataValue {
 
 	public function getShortHTMLText( $linker = null ) {
 		$url = $this->getURL();
-		if ( is_null( $linker ) || ( !$this->isValid() ) || ( $this->m_outformat == '-' ) || ( $url === '' ) || ( $this->m_caption === '' ) ) {
+		if ( is_null( $linker ) || ( !$this->isValid() ) || ( $url === '' ) ||
+			( $this->m_outformat == '-' ) || ( $this->m_outformat == 'nowiki' ) ||
+			( $this->m_caption === '' ) ) {
 			return $this->m_caption;
 		} else {
 			return $linker->makeExternalLink( $url, $this->m_caption );
@@ -207,8 +210,11 @@ class SMWURIValue extends SMWDataValue {
 		}
 		$url = $this->getURL();
 
-		if ( is_null( $linked ) || ( $linked === false ) || ( $this->m_outformat == '-' ) || ( $url === '' ) ) {
+		if ( is_null( $linked ) || ( $linked === false ) || ( $url === '' ) ||
+			( $this->m_outformat == '-' ) ) {
 			return $this->m_wikitext;
+		} elseif ( $this->m_outformat == 'nowiki' ) {
+			return $this->makeNonlinkedWikiText( $this->m_wikitext );
 		} else {
 			return '[' . $url . ' ' . $this->m_wikitext . ']';
 		}
@@ -221,7 +227,8 @@ class SMWURIValue extends SMWDataValue {
 
 		$url = $this->getURL();
 
-		if ( is_null( $linker ) || ( $this->m_outformat == '-' ) || ( $url === '' ) ) {
+		if ( is_null( $linker ) || ( !$this->isValid() ) || ( $url === '' ) ||
+			( $this->m_outformat == '-' ) || ( $this->m_outformat == 'nowiki' ) ) {
 			return htmlspecialchars( $this->m_wikitext );
 		} else {
 			return $linker->makeExternalLink( $url, $this->m_wikitext );
@@ -233,14 +240,14 @@ class SMWURIValue extends SMWDataValue {
 	}
 
 	public function getURI() {
-		return $this->m_dataitem->getURI();
+		return $this->getUriDataitem()->getURI();
 	}
 
 	protected function getServiceLinkParams() {
 		// Create links to mapping services based on a wiki-editable message. The parameters
 		// available to the message are:
 		// $1: urlencoded version of URI/URL value (includes mailto: for emails)
-		return array( rawurlencode( $this->m_dataitem->getURI() ) );
+		return array( rawurlencode( $this->getUriDataitem()->getURI() ) );
 	}
 
 	/**
@@ -252,12 +259,27 @@ class SMWURIValue extends SMWDataValue {
 		global $wgUrlProtocols;
 
 		foreach ( $wgUrlProtocols as $prot ) {
-			if ( ( $prot == $this->m_dataitem->getScheme() . ':' ) || ( $prot == $this->m_dataitem->getScheme() . '://' ) ) {
-				return $this->m_dataitem->getURI();
+			if ( ( $prot == $this->getUriDataitem()->getScheme() . ':' ) || ( $prot == $this->getUriDataitem()->getScheme() . '://' ) ) {
+				return $this->getUriDataitem()->getURI();
 			}
 		}
 
 		return '';
+	}
+
+	/**
+	 * Helper function to get the current dataitem, or some dummy URI
+	 * dataitem if the dataitem was not set. This makes it easier to
+	 * write code that avoids errors even if the data was not
+	 * initialized properly.
+	 * @return SMWDIUri
+	 */
+	protected function getUriDataitem() {
+		if ( isset( $this->m_dataitem ) ) {
+			return $this->m_dataitem;
+		} else { // note: use "noprotocol" to avoid accidental use in an MW link, see getURL()
+			return new SMWDIUri( 'noprotocol', 'x', '', '', $this->m_typeid );
+		}
 	}
 
 	/**
@@ -287,6 +309,19 @@ class SMWURIValue extends SMWDataValue {
 		/ix" ; // case Insensitive, eXtended
 
 		return (bool) preg_match( $HTML5_email_regexp, $addr );
+	}
+
+	/**
+	 * Helper function that changes a URL string in such a way that it
+	 * can be used in wikitext without being turned into a hyperlink,
+	 * while still displaying the same characters. The use of
+	 * &lt;nowiki&gt; is avoided, since the resulting strings may be
+	 * inserted during parsing, after this has been stripped.
+	 *
+	 * @since 1.8
+	 */
+	protected function makeNonlinkedWikiText( $url ) {
+		return str_replace( ':', '&#58;', $url );
 	}
 
 }

@@ -50,85 +50,6 @@ class SMWStringCondition {
 }
 
 /**
- * Container object for various options that can be used when retrieving
- * data from the store. These options are mostly relevant for simple,
- * direct requests -- inline queries may require more complex options due
- * to their more complex structure.
- * Options that should not be used or where default values should be used
- * can be left as initialised.
- *
- * @ingroup SMWStore
- *
- * @author Markus Krötzsch
- */
-class SMWRequestOptions {
-
-	/**
-	 * The maximum number of results that should be returned.
-	 */
-	public $limit = -1;
-
-	/**
-	 * A numerical offset. The first $offset results are skipped.
-	 * Note that this does not imply a defined order of results
-	 * (see SMWRequestOptions->$sort below).
-	 */
-	public $offset = 0;
-
-	/**
-	 * Should the result be ordered? The employed order is defined
-	 * by the type of result that are requested: wiki pages and strings
-	 * are ordered alphabetically, whereas other data is ordered
-	 * numerically. Usually, the order should be fairly "natural".
-	 */
-	public $sort = false;
-
-	/**
-	 * If SMWRequestOptions->$sort is true, this parameter defines whether
-	 * the results are ordered in ascending or descending order.
-	 */
-	public $ascending = true;
-
-	/**
-	 * Specifies a lower or upper bound for the values returned by the query.
-	 * Whether it is lower or upper is specified by the parameter "ascending"
-	 * (true->lower, false->upper).
-	 */
-	public $boundary = null;
-
-	/**
-	 * Specifies whether or not the requested boundary should be returned
-	 * as a result.
-	 */
-	public $include_boundary = true;
-
-	/**
-	 * An array of string conditions that are applied if the result has a
-	 * string label that can be subject to those patterns.
-	 */
-	private $stringcond = array();
-
-	/**
-	 * Set a new string condition applied to labels of results (if available).
-	 *
-	 * @param $string string to match
-	 * @param $condition integer type of condition, one of STRCOND_PRE, STRCOND_POST, STRCOND_MID
-	 */
-	public function addStringCondition( $string, $condition ) {
-		$this->stringcond[] = new SMWStringCondition( $string, $condition );
-	}
-
-	/**
-	 * Return the specified array of SMWStringCondition objects.
-	 */
-	public function getStringConditions() {
-		return $this->stringcond;
-	}
-
-}
-
-
-/**
  * The abstract base class for all classes that implement access to some
  * semantic store. Besides the relevant interface, this class provides default
  * implementations for some optional methods, which inform the caller that
@@ -175,12 +96,19 @@ abstract class SMWStore {
 	 * Get an array of all subjects that have the given value for the given
 	 * property. The result is an array of SMWDIWikiPage objects. If null
 	 * is given as a value, all subjects having that property are returned.
+	 *
+	 * @param SMWDIProperty $property
+	 *
+	 *
+	 * @return array of SMWDIWikiPage
 	 */
 	public abstract function getPropertySubjects( SMWDIProperty $property, $value, $requestoptions = null );
 
 	/**
 	 * Get an array of all subjects that have some value for the given
 	 * property. The result is an array of SMWDIWikiPage objects.
+	 *
+	 * @return array of SMWDIWikiPage
 	 */
 	public abstract function getAllPropertySubjects( SMWDIProperty $property, $requestoptions = null );
 
@@ -282,6 +210,9 @@ abstract class SMWStore {
 	 * @param $data SMWSemanticData
 	 */
 	public function updateData( SMWSemanticData $data ) {
+		/**
+		 * @since 1.6
+		 */
 		wfRunHooks( 'SMWStore::updateDataBefore', array( $this, $data ) );
 
 		// Invalidate the page, so data stored on it gets displayed immediately in queries.
@@ -302,6 +233,9 @@ abstract class SMWStore {
 
 		$this->doDataUpdate( $data );
 
+		/**
+		 * @since 1.6
+		 */
 		wfRunHooks( 'SMWStore::updateDataAfter', array( $this, $data ) );
 	}
 
@@ -345,13 +279,19 @@ abstract class SMWStore {
 
 	/**
 	 * Return all properties that have been used on pages in the wiki. The
-	 * result is an array of arrays, each containing a property title and a
-	 * count. The expected order is alphabetical w.r.t. to property title
-	 * texts.
+	 * result is an array of arrays, each containing a property data item
+	 * and a count. The expected order is alphabetical w.r.t. to property
+	 * names.
+	 *
+	 * If there is an error on creating some property object, then a
+	 * suitable SMWDIError object might be returned in its place. Even if
+	 * there are errors, the function should always return the number of
+	 * results requested (otherwise callers might assume that there are no
+	 * further results to ask for).
 	 *
 	 * @param SMWRequestOptions $requestoptions
 	 *
-	 * @return array
+	 * @return array of array( SMWDIProperty|SMWDIError, integer )
 	 */
 	public abstract function getPropertiesSpecial( $requestoptions = null );
 
@@ -361,9 +301,15 @@ abstract class SMWStore {
 	 * properties that have been given a type if they have no efficient
 	 * means of accessing the set of all pages in the property namespace.
 	 *
+	 * If there is an error on creating some property object, then a
+	 * suitable SMWDIError object might be returned in its place. Even if
+	 * there are errors, the function should always return the number of
+	 * results requested (otherwise callers might assume that there are no
+	 * further results to ask for).
+	 *
 	 * @param SMWRequestOptions $requestoptions
 	 *
-	 * @return array of SMWDIProperty
+	 * @return array of SMWDIProperty|SMWDIError
 	 */
 	public abstract function getUnusedPropertiesSpecial( $requestoptions = null );
 
@@ -408,6 +354,8 @@ abstract class SMWStore {
 	 * linebreaks and weak markup.
 	 *
 	 * @param boolean $verbose
+	 *
+	 * @return boolean Success indicator
 	 */
 	public abstract function setup( $verbose = true );
 
@@ -488,6 +436,34 @@ abstract class SMWStore {
 		}
 		$result .= '</div>';
 		return $result;
+	}
+
+	/**
+	 * Setup the store.
+	 *
+	 * @since 1.8
+	 *
+	 * @param bool $verbose
+	 *
+	 * @return boolean Success indicator
+	 */
+	public static function setupStore( $verbose = true ) {
+		$result = smwfGetStore()->setup( $verbose );
+		wfRunHooks( 'smwInitializeTables' );
+		return $result;
+	}
+
+	/**
+	 * Returns the tables that should be added via the
+	 * https://www.mediawiki.org/wiki/Manual:Hooks/ParserTestTables
+	 * hook when it's run.
+	 *
+	 * @since 1.8
+	 *
+	 * @return array
+	 */
+	public function getParserTestTables() {
+		return array();
 	}
 
 }

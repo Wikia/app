@@ -59,6 +59,7 @@ abstract class SMWLanguage {
 		'Number'                => '_num',
 		'Geographic coordinates'=> '_geo',
 		'Geographic coordinate' => '_geo', // deprecated, see Bug 30990
+		'Geographic polygon'    => '_gpo',
 		'Temperature'           => '_tem',
 		'Quantity'              => '_qty',
 		'Date'                  => '_dat',
@@ -85,6 +86,11 @@ abstract class SMWLanguage {
 		'Has improper value for' => '_ERRP',
 		'Has fields'        => '_LIST',
 		'Has subobject'     => '_SOBJ',
+		'Has query'         => '_ASK',
+		'Has query string'  => '_ASKST',
+		'Has query format'  => '_ASKFO',
+		'Has query size'    => '_ASKSI',
+		'Has query depth'   => '_ASKDE',
 	);
 
 	public function __construct() {
@@ -181,7 +187,7 @@ abstract class SMWLanguage {
 		}
 		if ( $this->m_useEnDefaultAliases && isset( SMWLanguage::$enPropertyAliases[$propName] ) ) {
 			return SMWLanguage::$enPropertyAliases[$propName];
-		} 
+		}
 		return null;
 	}
 

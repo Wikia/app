@@ -36,10 +36,6 @@
  *
  * The main functions of data value objects are:
  * - setUserValue() which triggers parseUserValue() to process a user-level string.
- * - getDBkeys() which provides an array that represents the current value for internal
- *   processing
- * - setDBkeys() which triggers parseDBkeys() to process an array with the internal
- *   representation
  *
  * In addition, there are a number of get-functions that provide useful output versions
  * for displaying and serializing the value.
@@ -169,7 +165,7 @@ abstract class SMWDataValue {
 		// just fails, even if parseUserValue() above might not have noticed this issue.
 		// Note: \x07 was used in MediaWiki 1.11.0, \x7f is used now (backwards compatiblity, b/c)
 		if ( ( strpos( $value, "\x7f" ) !== false ) || ( strpos( $value, "\x07" ) !== false ) ) {
-			$this->addError( wfMsgForContent( 'smw_parseerror' ) );
+			$this->addError( wfMessage( 'smw_parseerror' )->inContentLanguage()->text() );
 		}
 
 		if ( $this->isValid() ) {
@@ -205,10 +201,23 @@ abstract class SMWDataValue {
 	 * used to make settings that affect parsing and display, hence it is
 	 * sometimes needed to know them.
 	 *
+	 * @since 1.6
+	 *
 	 * @param SMWDIProperty $property
 	 */
 	public function setProperty( SMWDIProperty $property ) {
 		$this->m_property = $property;
+	}
+
+	/**
+	 * Returns the property to which this value refers.
+	 *
+	 * @since 1.8
+	 *
+	 * @return SMWDIProperty|null
+	 */
+	public function getProperty() {
+		return $this->m_property;
 	}
 
 	/**
@@ -272,9 +281,12 @@ abstract class SMWDataValue {
 		$servicelinks = smwfGetStore()->getPropertyValues( $propertyDiWikiPage, new SMWDIProperty( '_SERV' ) );
 
 		foreach ( $servicelinks as $dataItem ) {
-			if ( !( $dataItem instanceof SMWDIString ) ) continue;
+			if ( !( $dataItem instanceof SMWDIBlob ) ) {
+				continue;
+			}
 
 			$args[0] = 'smw_service_' . str_replace( ' ', '_', $dataItem->getString() ); // messages distinguish ' ' from '_'
+			// @todo FIXME: Use wfMessage/Message class here.
 			$text = call_user_func_array( 'wfMsgForContent', $args );
 			$links = preg_split( "/[\n][\s]?/u", $text );
 
@@ -331,7 +343,7 @@ abstract class SMWDataValue {
 
 	/**
 	 * Clear error messages. This function is provided temporarily to allow
-	 * n-ary to do this. Eventually, n-ary should implement its setDBkeys()
+	 * n-ary to do this.
 	 * properly so that this function will vanish again.
 	 * @note Do not use this function in external code.
 	 * @todo Check if we can remove this function again.
@@ -577,7 +589,7 @@ abstract class SMWDataValue {
 		}
 
 		if ( count( $extralinks ) > 0 ) {
-			$result .= smwfEncodeMessages( $extralinks, 'info', ', <!--br-->', false );
+			$result .= smwfEncodeMessages( $extralinks, 'service', '', false );
 		}
 
 		return $result;
@@ -660,7 +672,7 @@ abstract class SMWDataValue {
 
 	/**
 	 * Return true if a value was defined and understood by the given type,
-	 * and false if parsing errors occured or no value was given.
+	 * and false if parsing errors occurred or no value was given.
 	 *
 	 * @return boolean
 	 */
@@ -716,7 +728,7 @@ abstract class SMWDataValue {
 		$accept = false;
 		$valuestring = '';
 		foreach ( $allowedvalues as $di ) {
-			if ( $di->getDIType() === SMWDataItem::TYPE_STRING ) {
+			if ( $di instanceof SMWDIBlob ) {
 				$testdv->setUserValue( $di->getString() );
 
 				if ( $hash === $testdv->getDataItem()->getHash() ) {
@@ -732,10 +744,11 @@ abstract class SMWDataValue {
 		}
 
 		if ( !$accept ) {
-			$this->addError(
-				wfMsgForContent( 'smw_notinenum', $this->getWikiValue(), $valuestring )
+			$this->addError( wfMessage(
+					'smw_notinenum',
+					$this->getWikiValue(), $valuestring
+				)->inContentLanguage()->text()
 			);
 		}
 	}
-
 }

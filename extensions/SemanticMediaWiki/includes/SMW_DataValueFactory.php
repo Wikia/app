@@ -97,7 +97,7 @@ class SMWDataValueFactory {
 			$result = new self::$mTypeClasses[$typeId]( $typeId );
 		} else {
 			return new SMWErrorValue( $typeId,
-				wfMsgForContent( 'smw_unknowntype', $typeId ),
+				wfMessage( 'smw_unknowntype', $typeId )->inContentLanguage()->text(),
 				$valueString, $caption );
 		}
 
@@ -125,7 +125,7 @@ class SMWDataValueFactory {
 	 *
 	 * @return SMWDataValue
 	 */
-	static public function newDataItemValue( SMWDataItem $dataItem, $property, $caption = false ) {
+	static public function newDataItemValue( SMWDataItem $dataItem, SMWDIProperty $property = null, $caption = false ) {
 		if ( !is_null( $property ) ) {
 			$typeId = $property->findPropertyTypeID();
 		} else {
@@ -134,9 +134,11 @@ class SMWDataValueFactory {
 
 		$result = self::newTypeIdValue( $typeId, false, $caption, $property );
 		$result->setDataItem( $dataItem );
+
 		if ( $caption !== false ) {
 			$result->setCaption( $caption );
 		}
+
 		return $result;
 	}
 
@@ -145,6 +147,10 @@ class SMWDataValueFactory {
 	 * Get the preferred data item ID for a given type. The ID defines the
 	 * appropriate data item class for processing data of this type. See
 	 * SMWDataItem for possible values.
+	 *
+	 * @note SMWDIContainer is a pseudo dataitem type that is used only in
+	 * data input methods, but not for storing data. Types that work with
+	 * SMWDIContainer use SMWDIWikiPage as their DI type. (Since SMW 1.8)
 	 *
 	 * @param $typeId string id string for the given type
 	 * @return integer data item ID
@@ -247,8 +253,9 @@ class SMWDataValueFactory {
 			'_tem'  => SMWDataItem::TYPE_NUMBER, // Temperature type
 			'_dat'  => SMWDataItem::TYPE_TIME, // Time type
 			'_boo'  => SMWDataItem::TYPE_BOOLEAN, // Boolean type
-			'_rec'  => SMWDataItem::TYPE_CONTAINER, // Value list type (replacing former nary properties)
+			'_rec'  => SMWDataItem::TYPE_WIKIPAGE, // Value list type (replacing former nary properties)
 			'_geo'  => SMWDataItem::TYPE_GEO, // Geographical coordinates
+			'_gpo'  => SMWDataItem::TYPE_BLOB, // Geographical polygon
 			'_qty'  => SMWDataItem::TYPE_NUMBER, // Type for numbers with units of measurement
 			// Special types are not avaialble directly for users (and have no local language name):
 			'__typ' => SMWDataItem::TYPE_URI, // Special type page type
@@ -261,7 +268,7 @@ class SMWDataValueFactory {
 			'__spf' => SMWDataItem::TYPE_WIKIPAGE, // Special Form page type for Semantic Forms
 			'__sin' => SMWDataItem::TYPE_WIKIPAGE, // Special instance of type
 			'__red' => SMWDataItem::TYPE_WIKIPAGE, // Special redirect type
-			'__err' => SMWDataItem::TYPE_STRING, // Special error type
+			'__err' => SMWDataItem::TYPE_ERROR, // Special error type
 			'__imp' => SMWDataItem::TYPE_STRING, // Special import vocabulary type
 			'__pro' => SMWDataItem::TYPE_PROPERTY, // Property type (possibly predefined, no always based on a page)
 			'__key' => SMWDataItem::TYPE_STRING, // Sort key of a page

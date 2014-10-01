@@ -1,6 +1,22 @@
 <?php
 /**
  * Print query results in lists.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along
+ * with this program; if not, write to the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+ * http://www.gnu.org/copyleft/gpl.html
+ *
  * @author Markus Krötzsch
  * @file
  * @ingroup SMWQuery
@@ -37,7 +53,7 @@ class SMWListResultPrinter extends SMWResultPrinter {
 	protected function handleParameters( array $params, $outputmode ) {
 		parent::handleParameters( $params, $outputmode );
 		
-		$this->mSep = $params['sep'];
+		$this->mSep = str_replace( '_', ' ', $params['sep'] ); // allow "_" for encoding spaces, as documented
 		$this->mTemplate = trim( $params['template'] );
 		$this->mNamedArgs = $params['named args'];
 		$this->mUserParam = trim( $params['userparam'] );
@@ -47,12 +63,12 @@ class SMWListResultPrinter extends SMWResultPrinter {
 	}
 
 	public function getName() {
-		return wfMsg( 'smw_printername_' . $this->mFormat );
+		return wfMessage( 'smw_printername_' . $this->mFormat )->text();
 	}
 
 	protected function getResultText( SMWQueryResult $res, $outputmode ) {
 		if ( ( $this->mFormat == 'template' ) && ( $this->mTemplate == false ) ) {
-			$res->addErrors( array( wfMsgForContent( 'smw_notemplategiven' ) ) );
+			$res->addErrors( array( wfMessage( 'smw_notemplategiven' )->inContentLanguage()->text() ) );
 			return '';
 		}
 		
@@ -82,7 +98,7 @@ class SMWListResultPrinter extends SMWResultPrinter {
 			// $this->mFormat !== 'template'
 			
 			$listsep = ', ';
-			$finallistsep = wfMsgForContent( 'smw_finallistconjunct' ) . ' ';
+			$finallistsep = wfMessage( 'smw_finallistconjunct' )->inContentLanguage()->text() . ' ';
 		} else { // no default separators for format "template", "ul", "ol"
 			$listsep = '';
 			$finallistsep = '';
@@ -125,7 +141,7 @@ class SMWListResultPrinter extends SMWResultPrinter {
 		
 		// Make label for finding further results
 		if ( $this->linkFurtherResults( $res ) && ( ( $this->mFormat != 'ol' ) || ( $this->getSearchLabel( SMW_OUTPUT_WIKI ) ) ) ) {
-			$this->showFurtherResults( $result, $res, $rowstart, $rowend );
+			$this->showFurtherResults( $result, $res, $rowstart, $rowend, $outputmode );
 		}
 
 		// Print footer
@@ -139,6 +155,11 @@ class SMWListResultPrinter extends SMWResultPrinter {
 		
 		if ( $this->mColumns > 1 ) {
 			$result .= '<br style="clear: both" />' . "\n";
+		}
+
+		// Make sure that if the result set turns empty and if available display default
+		if ( $this->params['default'] !== '' && $result === '' ) {
+			$result = $this->params['default'];
 		}
 
 		return $result;
@@ -223,7 +244,7 @@ END;
 						}
 					}
 					
-					$result .= $text; // actual output value
+					$result .= Sanitizer::stripAllTags( $text ); // actual output value
 				}
 				
 				$first_col = false;
@@ -235,50 +256,8 @@ END;
 		$result .= $rowend;
 	}
 	
-	protected function showFurtherResults( &$result, $res, $rowstart, $rowend ) {
-		$link = $res->getQueryLink();
-		
-		if ( $this->getSearchLabel( SMW_OUTPUT_WIKI ) ) {
-			$link->setCaption( $this->getSearchLabel( SMW_OUTPUT_WIKI ) );
-		}
-		
-		if ( $this->mSep !== '' ) {
-			$link->setParameter( $this->mSep, 'sep' );
-		}
-		
-		$link->setParameter( $this->mFormat, 'format' );
-
-		if ( $this->mTemplate !== '' ) {
-			$link->setParameter( $this->mTemplate, 'template' );
-			if ( array_key_exists( 'link', $this->params ) ) { // linking may interfere with templates
-				$link->setParameter( $this->params['link'], 'link' );
-			}
-		}
-		
-		if ( $this->mUserParam !== '' ) {
-			$link->setParameter( $this->mUserParam, 'userparam' );
-		}
-		
-		if ( $this->mColumns !== '' ) {
-			$link->setParameter( $this->mColumns, 'columns' );
-		}
-		
-		if ( $this->mIntro !== '' ) {
-			$link->setParameter( $this->mIntro, 'intro' );
-		}
-		
-		if ( $this->mOutro !== '' ) {
-			$link->setParameter( $this->mOutro, 'outro' );
-		}
-		
-		if ( $this->mIntroTemplate !== '' ) {
-			$link->setParameter( $this->mIntroTemplate, 'introtemplate' );
-		}
-		
-		if ( $this->mOutroTemplate !== '' ) {
-			$link->setParameter( $this->mOutroTemplate, 'outrotemplate' );
-		}
-		
+	protected function showFurtherResults( &$result, $res, $rowstart, $rowend, $outputMode ) {
+		$link = $this->getFurtherResultsLink( $res, $outputMode );
 		$result .= $rowstart . ' '. $link->getText( SMW_OUTPUT_WIKI, $this->mLinker ) . $rowend;
 	}
 
@@ -287,38 +266,55 @@ END;
 	}
 	
 	public function getParameters() {
-		$params = array_merge( parent::getParameters(), parent::textDisplayParameters() );
-		
-		$params['sep'] = new Parameter( 'sep' );
-		$params['sep']->setMessage( 'smw_paramdesc_sep' );
-		$params['sep']->setDefault( '' );
+		$params = parent::getParameters();
 
-		$params['template'] = new Parameter( 'template' );
-		$params['template']->setMessage( 'smw_paramdesc_template' );
-		$params['template']->setDefault( '' );	
-		
-		$params['named args'] = new Parameter( 'named args', Parameter::TYPE_BOOLEAN, false );
-		$params['named args']->setMessage( 'smw_paramdesc_named_args' );
-		
+		$params[] = array(
+			'name' => 'sep',
+			'message' => 'smw-paramdesc-sep',
+			'default' => '',
+		);
+
+		$params[] = array(
+			'name' => 'template',
+			'message' => 'smw-paramdesc-template',
+			'default' => '',
+		);
+
+		$params[] = array(
+			'name' => 'named args',
+			'type' => 'boolean',
+			'message' => 'smw-paramdesc-named_args',
+			'default' => false,
+		);
+
 		if ( !$this->isPlainlist() ) {
-			$params['columns'] = new Parameter( 'columns', Parameter::TYPE_INTEGER );
-			$params['columns']->setMessage( 'smw_paramdesc_columns', 1 );
-			$params['columns']->setDefault( 1, false );
-			$params['columns']->addCriteria( new CriterionInRange( 1, 10 ) );	
+			$params[] = array(
+				'name' => 'columns',
+				'type' => 'integer',
+				'message' => 'smw-paramdesc-columns',
+				'default' => 1,
+				'range' => array( 1, 10 ),
+			);
 		}
-		
-		$params['userparam'] = new Parameter( 'userparam' );
-		$params['userparam']->setMessage( 'smw_paramdesc_userparam' );		
-		$params['userparam']->setDefault( '' );
-		
-		$params['introtemplate'] = new Parameter( 'introtemplate' );
-		$params['introtemplate']->setMessage( 'smw_paramdesc_introtemplate' );		
-		$params['introtemplate']->setDefault( '' );
-		
-		$params['outrotemplate'] = new Parameter( 'outrotemplate' );
-		$params['outrotemplate']->setMessage( 'smw_paramdesc_outrotemplate' );		
-		$params['outrotemplate']->setDefault( '' );
-		
+
+		$params[] = array(
+			'name' => 'userparam',
+			'message' => 'smw-paramdesc-userparam',
+			'default' => '',
+		);
+
+		$params[] = array(
+			'name' => 'introtemplate',
+			'message' => 'smw-paramdesc-introtemplate',
+			'default' => '',
+		);
+
+		$params[] = array(
+			'name' => 'outrotemplate',
+			'message' => 'smw-paramdesc-outrotemplate',
+			'default' => '',
+		);
+
 		return $params;
 	}
 

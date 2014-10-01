@@ -14,7 +14,6 @@
  * @ingroup SMWDataValues
  */
 class SMWPropertyListValue extends SMWDataValue {
-
 	/**
 	 * List of properte data items that are stored.
 	 * @var array of SMWDIProperty
@@ -34,7 +33,7 @@ class SMWPropertyListValue extends SMWDataValue {
 				$propertyName = $propertyNameParts[1];
 				$propertyNamespace = $wgContLang->getNsText( SMW_NS_PROPERTY );
 				if ( $namespace != $propertyNamespace ) {
-					$this->addError( wfMsgForContent( 'smw_wrong_namespace', $propertyNamespace ) );
+					$this->addError( wfMessage( 'smw_wrong_namespace', $propertyNamespace )->inContentLanguage()->text() );
 				}
 			}
 
@@ -44,7 +43,7 @@ class SMWPropertyListValue extends SMWDataValue {
 				$diProperty = SMWDIProperty::newFromUserLabel( $propertyName );
 			} catch ( SMWDataItemException $e ) {
 				$diProperty = new SMWDIProperty( 'Error' );
-				$this->addError( wfMsgForContent( 'smw_noproperty', $propertyName ) );
+				$this->addError( wfMessage( 'smw_noproperty', $propertyName )->inContentLanguage()->text() );
 			}
 
 			$this->m_diProperties[] = $diProperty;
@@ -55,7 +54,7 @@ class SMWPropertyListValue extends SMWDataValue {
 			$this->m_dataitem = new SMWDIString( $stringValue );
 		} catch ( SMWStringLengthException $e ) {
 			$this->m_dataitem = new SMWDIString( 'Error' );
-			$this->addError( wfMsgForContent( 'smw_maxstring', $stringValue ) );
+			$this->addError( wfMessage( 'smw_maxstring', $stringValue )->inContentLanguage()->text() );
 		}
 	}
 
@@ -67,7 +66,7 @@ class SMWPropertyListValue extends SMWDataValue {
 	 * @return boolean
 	 */
 	protected function loadDataItem( SMWDataItem $dataItem ) {
-		if ( $dataItem->getDIType() == SMWDataItem::TYPE_STRING ) {
+		if ( $dataItem instanceof SMWDIBlob ) {
 			$this->m_dataitem = $dataItem;
 			$this->m_diProperties = array();
 
@@ -76,7 +75,7 @@ class SMWPropertyListValue extends SMWDataValue {
 					$this->m_diProperties[] = new SMWDIProperty( $propertyKey );
 				} catch ( SMWDataItemException $e ) {
 					$this->m_diProperties[] = new SMWDIProperty( 'Error' );
-					$this->addError( wfMsgForContent( 'smw_parseerror' ) );
+					$this->addError( wfMessage( 'smw_parseerror' )->inContentLanguage()->text() );
 				}
 			}
 
@@ -137,5 +136,4 @@ class SMWPropertyListValue extends SMWDataValue {
 			case 4: return $propertyValue->getWikiValue();
 		}
 	}
-
 }
