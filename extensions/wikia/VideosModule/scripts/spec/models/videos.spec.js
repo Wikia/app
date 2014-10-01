@@ -3,12 +3,14 @@ describe('VideosModule -- sData Data: ', function () {
 	var VideosData,
 		nirvana,
 		geo,
+		bucky,
 		instance;
 
 	beforeEach(function () {
 		nirvana = modules['wikia.nirvana']();
 		geo = modules['wikia.geo']();
-		VideosData = modules['videosmodule.models.videos'](nirvana, geo);
+		bucky = modules['bucky.mock'];
+		VideosData = modules['videosmodule.models.videos'](nirvana, geo, bucky);
 		instance = new VideosData();
 		spyOn(geo, 'getCountryCode').andReturn('US');
 		spyOn(nirvana, 'getJson').andReturn({

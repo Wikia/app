@@ -1,20 +1,31 @@
 /*global define*/
 define('ext.wikia.adEngine.adConfigMobile', [
 	'wikia.log',
-	'wikia.window',
 	'wikia.document',
+	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.provider.directGptMobile',
 	'ext.wikia.adEngine.provider.remnantGptMobile',
-	'ext.wikia.adEngine.provider.null',
-	'ext.wikia.adEngine.provider.ebay'
-], function (log, window, document, adProviderDirectGpt, adProviderRemnantGpt, adProviderNull, adProviderEbay) {
+	'ext.wikia.adEngine.provider.null'
+], function (log, document, adContext, adProviderDirectGpt, adProviderRemnantGpt, adProviderNull) {
 	'use strict';
 
+	var pageTypesWithAdsOnMobile = {
+		'all_ads': true,
+		'corporate': true
+	};
+
 	function getProvider(slot) {
-		var slotName = slot[0];
+		var slotName = slot[0],
+			context = adContext.getContext();
 
 		// If wgShowAds set to false, hide slots
-		if (!window.wgShowAds) {
+		if (!context.opts.showAds) {
+			return adProviderNull;
+		}
+
+		// On pages with type other than all_ads (corporate, homepage_logged, maps), hide slots
+		// @see https://docs.google.com/a/wikia-inc.com/document/d/1Lxz0PQbERWSFvmXurvJqOjPMGB7eZR86V8tpnhGStb4/edit
+		if (!pageTypesWithAdsOnMobile[context.opts.pageType]) {
 			return adProviderNull;
 		}
 
@@ -27,11 +38,6 @@ define('ext.wikia.adEngine.adConfigMobile', [
 				return adProviderRemnantGpt;
 			}
 			return adProviderNull;
-		}
-
-		if (window.wgAdDriverUseEbay && adProviderEbay.canHandleSlot(slotName)) {
-			document.getElementById(slotName).className += ' show';
-			return adProviderEbay;
 		}
 
 		if (adProviderDirectGpt.canHandleSlot(slotName)) {

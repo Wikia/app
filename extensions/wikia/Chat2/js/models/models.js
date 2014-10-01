@@ -133,7 +133,8 @@ var STATUS_STATE_AWAY = 'away';
 		defaults: {
 			"kickedUserName": '',
 			"moderatorName": '',
-			"time": 0
+			"time": 0,
+			"reason": ''
 		},
 
 		initialize: function(info) {
@@ -141,7 +142,8 @@ var STATUS_STATE_AWAY = 'away';
 			this.set({
 				kickedUserName: info.kickedUserName,
 				moderatorName: info.moderatorName,
-				time: info.time ? info.time:0
+				time: info.time ? info.time:0,
+				reason: info.reason ? info.reason : ''
 			});
 		}
 	});

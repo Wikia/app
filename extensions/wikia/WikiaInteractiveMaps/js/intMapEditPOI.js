@@ -1,4 +1,4 @@
-define('wikia.intMap.editPOI', ['jquery', 'wikia.intMap.utils'], function($, utils) {
+define('wikia.intMap.editPOI', ['jquery', 'wikia.intMap.config', 'wikia.intMap.utils'], function ($, config, utils) {
 	'use strict';
 
 	// placeholder for holding reference to modal instance
@@ -74,7 +74,14 @@ define('wikia.intMap.editPOI', ['jquery', 'wikia.intMap.utils'], function($, uti
 			CREATE: 'create',
 			EDIT: 'edit'
 		},
-		poiModalMode;
+		poiModalMode,
+		suggestionsVisible = false,
+		suggestionSelectedClass = 'selected',
+		arrowHandlers,
+		direction = {
+			up: 1,
+			down: -1
+		};
 
 	/**
 	 * @desc Entry point for  modal
@@ -116,11 +123,30 @@ define('wikia.intMap.editPOI', ['jquery', 'wikia.intMap.utils'], function($, uti
 
 			// TODO: figure out if there is better place for article suggestions event bindings
 			modal.$element
-				.on('keyup', articleInputId, $.debounce(utils.constants.debounceDelay, suggestArticles))
+				.on('keyup', articleInputId, $.debounce(config.constants.debounceDelay, suggestArticles))
 				.on('click', onClickOutsideSuggestions);
 
 			modal.show();
 		});
+
+		// Setup suggestion key handlers
+		arrowHandlers = {
+			// Enter key
+			13: handleSuggestionsEnter,
+			// Esc key
+			27: function () {
+				hideSuggestions();
+			},
+			// Arrow up
+			38: function () {
+				handleSuggestionsArrow(direction.up);
+			},
+			// Arrow down
+			40: function () {
+				handleSuggestionsArrow(direction.down);
+			}
+		};
+
 	}
 
 	/**
@@ -150,7 +176,7 @@ define('wikia.intMap.editPOI', ['jquery', 'wikia.intMap.utils'], function($, uti
 	 */
 	function extendTemplateData(templateData, params) {
 		// set current POI category (for edit action)
-		Object.keys(params.categories).forEach(function(key) {
+		Object.keys(params.categories).forEach(function (key) {
 			if (params.categories[key].id === parseInt(params.poi_category_id, 10)) {
 				params.categories[key].selected = true;
 			}
@@ -179,7 +205,7 @@ define('wikia.intMap.editPOI', ['jquery', 'wikia.intMap.utils'], function($, uti
 				id: params.id,
 				mapId: mapId
 			},
-			callback: function(response) {
+			callback: function (response) {
 				var data = response.results;
 
 				if (data && data.success) {
@@ -189,7 +215,7 @@ define('wikia.intMap.editPOI', ['jquery', 'wikia.intMap.utils'], function($, uti
 					utils.showError(modal, data.content.message);
 				}
 			},
-			onErrorCallback: function(response) {
+			onErrorCallback: function (response) {
 				utils.handleNirvanaException(modal, response);
 			}
 		});
@@ -201,7 +227,7 @@ define('wikia.intMap.editPOI', ['jquery', 'wikia.intMap.utils'], function($, uti
 	 */
 	function validatePOIData(data) {
 		var required = ['name', 'poi_category_id'],
-			valid = required.every(function(value) {
+			valid = required.every(function (value) {
 				if (utils.isEmpty(data[value])) {
 					utils.showError(modal, $.msg('wikia-interactive-maps-edit-poi-error-' + value.replace(/_/g, '-')));
 					return false;
@@ -213,20 +239,74 @@ define('wikia.intMap.editPOI', ['jquery', 'wikia.intMap.utils'], function($, uti
 	}
 
 	/**
+	 * @desc Scrolls $container to position $element on the top
+	 * @param {object} $container
+	 * @param {object} $element
+	 */
+	function scrollToElement($container, $element) {
+		$container.scrollTop($container.scrollTop() + $element.position().top);
+	}
+
+	/**
+	 * @desc Handle Enter key on suggest
+	 */
+	function handleSuggestionsEnter() {
+		modal.$suggestions.find('.' + suggestionSelectedClass).find('a').click();
+	}
+
+	/**
+	 * @desc Handle Arrow keys on suggest
+	 *
+	 * @param {number} arrowDirection - Value defined in the direction object
+	 */
+	function handleSuggestionsArrow(arrowDirection) {
+		var $selected = modal.$suggestions.find('.' + suggestionSelectedClass),
+			isDownArrow = arrowDirection === direction.down,
+			selector = isDownArrow ? ':first' : ':last',
+			$next;
+		if ($selected.length) {
+			// go to next selected
+			$next = isDownArrow ? $selected.next() : $selected.prev();
+
+			if ($next.length) {
+				$selected.removeClass(suggestionSelectedClass);
+				$next.addClass(suggestionSelectedClass);
+				scrollToElement(modal.$suggestions, $next);
+			}
+		} else {
+			modal.$suggestions.children(selector).addClass(suggestionSelectedClass);
+		}
+	}
+
+	/**
+	 * @desc Handle control keys on suggestion
+	 * @param {number} keyCode
+	 * @returns {boolean} true if handled
+	 */
+	function processSuggestKeyEvents(keyCode) {
+		if (suggestionsVisible && arrowHandlers.hasOwnProperty(keyCode)) {
+			arrowHandlers[keyCode]();
+			return true;
+		}
+		return false;
+	}
+
+	/**
 	 * @desc handler for article suggestions
 	 * @param {Event} event
 	 */
 	function suggestArticles(event) {
 		removeImagePreview();
 
-		utils.onWriteInInput(
-			event.target,
-			function (inputValue) {
-				getSuggestions(inputValue, function (suggestions) {
-					showSuggestions(suggestions);
-				});
-			}
-		);
+		if (!processSuggestKeyEvents(event.keyCode)) {
+			utils.onWriteInInput(
+				event.target,
+				config.constants.minCharLength,
+				function (inputValue) {
+					getSuggestions(inputValue, showSuggestions);
+				}
+			);
+		}
 	}
 
 	/**
@@ -254,6 +334,7 @@ define('wikia.intMap.editPOI', ['jquery', 'wikia.intMap.utils'], function($, uti
 	 * @param {object} suggestions - object with suggestions items {items: [] }
 	 */
 	function showSuggestions(suggestions) {
+		suggestionsVisible = true;
 		modal.$suggestions
 			.html(utils.render(articleSuggestionTemplate, suggestions))
 			.removeClass('hidden');
@@ -263,6 +344,7 @@ define('wikia.intMap.editPOI', ['jquery', 'wikia.intMap.utils'], function($, uti
 	 * @desc hide suggestions list
 	 */
 	function hideSuggestions() {
+		suggestionsVisible = false;
 		modal.$suggestions
 			.html('')
 			.addClass('hidden');
@@ -352,7 +434,7 @@ define('wikia.intMap.editPOI', ['jquery', 'wikia.intMap.utils'], function($, uti
 			method: 'editPoi',
 			type: 'POST',
 			data: poiData,
-			callback: function(response) {
+			callback: function (response) {
 				var data = response.results;
 
 				if (data && data.success) {
@@ -371,7 +453,7 @@ define('wikia.intMap.editPOI', ['jquery', 'wikia.intMap.utils'], function($, uti
 					modal.activate();
 				}
 			},
-			onErrorCallback: function(response) {
+			onErrorCallback: function (response) {
 				utils.handleNirvanaException(modal, response);
 				modal.activate();
 			}

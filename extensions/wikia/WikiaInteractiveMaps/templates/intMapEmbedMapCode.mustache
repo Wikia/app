@@ -1,7 +1,7 @@
 <p class="user-guideline">{{infoMessage}}</p>
 {{#sizes}}
 	<code class="code-sample {{size}} {{^defaultSize}}hidden{{/defaultSize}}">
-		&ltiframe width="{{width}}" height="{{height}}" src="{{mapHost}}/api/v1/render/{{mapId}}" frameborder="0"&gt&lt/iframe&gt
+		&ltiframe width="{{width}}" height="{{height}}" src="{{iframeSrc}}{{uselang}}" frameborder="0"&gt&lt/iframe&gt
 	</code>
 {{/sizes}}
 <strong>{{sizeLabel}}:</strong>

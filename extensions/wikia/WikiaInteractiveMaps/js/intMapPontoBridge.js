@@ -91,7 +91,8 @@ define(
 		 */
 		this.getWikiaSettings = function() {
 			var settings = {
-				enableEdit: w.skin !== 'wikiamobile',
+				cityId: parseInt(w.wgCityId, 10),
+				mobile: w.skin === 'wikiamobile',
 				skin: w.skin
 			};
 
@@ -122,7 +123,7 @@ define(
 	 */
 	PontoBridge.init = function(iframe) {
 		ponto.setTarget(Ponto.TARGET_IFRAME, '*', iframe.contentWindow);
-		iframe.src = iframe.dataset.url;
+		iframe.src = iframe.getAttribute('data-url');
 	}
 
 	return PontoBridge;

@@ -1,12 +1,23 @@
-@import 'skins/oasis/css/mixins/background-opacity';
-@import 'skins/oasis/css/mixins/border-opacity';
-@import 'skins/oasis/css/mixins/infobox';
-@import 'skins/oasis/css/core/color';
+@import 'skins/shared/mixins/background-opacity';
+@import 'skins/shared/mixins/border-opacity';
+@import 'skins/shared/mixins/infobox';
+@import 'skins/shared/color';
 
 // Import thumbnail video styles so all are contained within thumbnails scss
 @import 'skins/oasis/css/core/thumbnails-video';
 
 $color-subtle-text: mix($color-page, $color-alternate-text, 50%);
+
+.image-thumbnail,
+.video-thumbnail {
+	&.fluid {
+		width: 100%;
+
+		> img {
+			width: 100%;
+		}
+	}
+}
 
 // Generic title thumbnails
 .title-thumbnail {
@@ -16,72 +27,76 @@ $color-subtle-text: mix($color-page, $color-alternate-text, 50%);
 }
 
 // Article thumbnails
-.WikiaArticle {
-	.article-thumb {
-		margin-bottom: 15px;
-		margin-top: 6px;
+.article-thumb {
+	margin-bottom: 15px;
+	margin-top: 6px;
 
-		// target the thumbnail image and parent anchor only
-		a.image, a.video, img[data-image-key], img[data-video-key] {
-			display: block;
+	a, img {
+		display: block;
+	}
+
+	p, p + p {
+		font-size: 12px;
+		line-height: 16px;
+		margin: 0;
+		// use padding instead of margins to ensure height consistancy for info icon negative margins
+		padding-top: 5px;
+
+		&:last-child {
+			padding-bottom: 5px;
 		}
+	}
 
-		p, p + p {
-			font-size: 12px;
-			line-height: 16px;
-			margin: 0;
-			// use padding instead of margins to ensure height consistancy for info icon negative margins
-			padding-top: 5px;
+	&.tright {
+		clear: right;
+		float: right;
+		margin-left: 20px;
+	}
 
-			&:last-child {
-				padding-bottom: 5px;
-			}
+	&.tleft {
+		clear: left;
+		float: left;
+		margin-right: 20px;
+	}
+
+	.title {
+		font-weight: bold;
+	}
+
+	figcaption {
+		text-align: left;
+	}
+
+	.caption {
+		color: $color-alternate-text;
+
+		a, img {
+			display: inline;
 		}
+	}
 
-		&.tright {
-			clear: right;
+	&.show-info-icon {
+		.info-icon {
+			display: none;
 			float: right;
-			margin-left: 20px;
+			margin: -22px 5px 0 0;
+			position: relative; // makes icon appear above image in z axis
 		}
 
-		&.tleft {
-			clear: left;
-			float: left;
-			margin-right: 20px;
-		}
-
-		.title {
-			font-weight: bold;
-		}
-
-		figcaption {
-			text-align: left;
-		}
-
-		.caption {
-			color: $color-alternate-text;
-		}
-
-		&.show-info-icon {
+		&:hover {
 			.info-icon {
-				background-image: url('/skins/oasis/images/info_icon.png');
-				display: none;
-				float: right;
-				height: 17px;
-				margin: -22px 5px 0 0;
-				position: relative; // makes icon appear above image in z axis
-				width: 17px;
+				display: block;
 			}
 
-			&:hover {
-				a.info-icon {
-					display: block;
-				}
-
-				.duration {
-					display: none;
-				}
+			.duration {
+				display: none;
 			}
 		}
 	}
+
+	// don't show the icon when a video is playing inline
+	&.inline-video-playing:hover .info-icon {
+		display: none;
+	}
 }
+

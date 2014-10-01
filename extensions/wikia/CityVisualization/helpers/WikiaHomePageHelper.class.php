@@ -17,6 +17,7 @@ class WikiaHomePageHelper extends WikiaModel {
 	const VIDEO_GAMES_SLOTS_VAR_NAME = 'wgWikiaHomePageVideoGamesSlots';
 	const ENTERTAINMENT_SLOTS_VAR_NAME = 'wgWikiaHomePageEntertainmentSlots';
 	const LIFESTYLE_SLOTS_VAR_NAME = 'wgWikiaHomePageLifestyleSlots';
+	const CORPORATE_ON_HUB_ENABLED = 'wgDisableWAMOnHubs';
 	const SLOTS_IN_TOTAL = 17;
 
 	const SLOTS_BIG = 2;
@@ -174,6 +175,7 @@ class WikiaHomePageHelper extends WikiaModel {
 	 */
 	public function updateHubSlotsToV2($hubSlots) {
 		$hubSlotsV2 = [];
+		if (empty($hubSlots)) return $hubSlotsV2;
 		foreach( $hubSlots as $slot ) {
 			$hubSlotsV2['hub_slot'][] = $slot['hub_slot'];
 		}
@@ -339,10 +341,10 @@ class WikiaHomePageHelper extends WikiaModel {
 
 		return (
 			!$user->isIP($userName)
-				&& !in_array($userId, WikiService::$excludedWikiaUsers)
-				&& !in_array('bot', $user->getRights())
-				&& !$user->isBlocked()
-				&& !$user->isBlockedGlobally()
+			&& !in_array($userId, WikiService::$excludedWikiaUsers)
+			&& !in_array('bot', $user->getRights())
+			&& !$user->isBlocked()
+			&& !$user->isBlockedGlobally()
 		);
 	}
 
@@ -802,6 +804,44 @@ class WikiaHomePageHelper extends WikiaModel {
 
 	public function getVisualizationWikisData() {
 		return $this->getVisualization()->getVisualizationWikisData();
+	}
+
+	public function getCorporateHubWikis() {
+		$wikiFactoryList = [];
+		$varId = WikiFactory::getVarIdByName( self::CORPORATE_ON_HUB_ENABLED );
+		if( is_int( $varId ) ) {
+			$wikiFactoryList = WikiaDataAccess::cache(
+				wfMemcKey( 'corporate_hub_pages_list', self::WIKIA_HOME_PAGE_HELPER_MEMC_VERSION ),
+				24 * 60 * 60,
+				function() use( $varId ) {
+					$list = WikiFactory::getListOfWikisWithVar( $varId, 'bool', '=', true );
+					return $this->cleanWikisDataArray( $list );
+				},
+				WikiaDataAccess::REFRESH_CACHE
+			);
+		}
+
+		return $wikiFactoryList;
+	}
+
+	/**
+	 * @param Array $sites lists of wikis from WikiFactory::getListOfWikisWithVar()
+	 * @return array
+	 */
+	public function cleanWikisDataArray($sites) {
+		$results = array();
+
+		foreach( $sites as $wikiId => $wiki ) {
+			$results[$wiki['l']] = [
+				'wikiId' => $wikiId,
+				'url' => $wiki['u'],
+				'db' => $wiki['d'],
+				'lang' => $wiki['l'],
+				'wikiTitle' => $wiki['t'],
+			];
+		}
+
+		return $results;
 	}
 
 	public function getWikisCountForStaffTool($options) {

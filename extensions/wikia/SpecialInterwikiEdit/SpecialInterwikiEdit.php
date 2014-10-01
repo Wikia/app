@@ -43,7 +43,7 @@ class InterwikiEdit extends SpecialPage {
 		$action = $wgRequest->getVal('action', 'choose');
 		//$lang_only = $wgRequest->getVal('lang_only', 1);
 
-		if ($action != 'choose') $ret = "<p class='subpages'>&lt; <a href=''>Back to menu</a></p>";
+		if ($action != 'choose') $ret = "<p class='subpages'>&lt; <a href='?'>Back to menu</a></p>";
 		else $ret = "";
 
 		switch ($action){

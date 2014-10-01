@@ -2,8 +2,10 @@
 
 use Wikia\Search\Config;
 use Wikia\Search\QueryService\Factory;
-use Wikia\Search\Services\SeriesEntitySearchService;
+use Wikia\Search\Services\WikiSeriesEntitySearchService;
 use Wikia\Search\Services\EpisodeEntitySearchService;
+use Wikia\Search\Services\SeriesEntitySearchService;
+use Wikia\Search\Services\ExactSeriesSearchService;
 
 
 class TvApiController extends WikiaApiController {
@@ -17,16 +19,20 @@ class TvApiController extends WikiaApiController {
 	const WG_CONTENT_NAMESPACES_KEY = 'wgContentNamespaces';
 	/** @var Array wikis */
 	protected $wikis = [ ];
+	/** @var WikiSeriesEntitySearchService seriesService */
+	protected $wikiSeriesService;
 	/** @var SeriesEntitySearchService seriesService */
 	protected $seriesService;
 	/** @var EpisodeEntitySearchService episodeService */
 	protected $episodeService;
+	/** @var ExactSeriesSearchService $exactSeriesService */
+	protected $exactSeriesService;
 
 	public function getEpisode() {
 		$request = $this->getRequest();
 		$seriesName = $this->getRequiredParam( 'seriesName' );
 		$episodeName = $this->getRequiredParam( 'episodeName' );
-		$lang = $request->getVal( 'lang', static::LANG_SETTING );
+		$lang = $request->getVal( 'lang', self::LANG_SETTING );
 		$minQuality = $request->getVal( 'minArticleQuality', null );
 		if ( $minQuality !== null ) {
 			$minQuality = (int)$minQuality;
@@ -35,17 +41,41 @@ class TvApiController extends WikiaApiController {
 		$episodes = explode( ';', $episodeName );
 		$result = null;
 		foreach ( $episodes as $episode ) {
-			$result = $this->findEpisode( $seriesName, trim($episode), $lang, $minQuality );
-			if( $result ) break;
+			$result = $this->findEpisode( $seriesName, trim( $episode ), $lang, $minQuality );
+			if ( $result ) {
+				break;
+			}
 		}
-		if (!$result) {
+		if ( !$result ) {
 			throw new NotFoundApiException();
 		}
 
-		$response = $this->getResponse();
-		$response->setValues( $result );
+		$this->setResponseData(
+			$result,
+			[ 'urlFields' => [ 'contentUrl', 'url' ] ],
+			self::RESPONSE_CACHE_VALIDITY
+		);
+	}
 
-		$response->setCacheValidity( self::RESPONSE_CACHE_VALIDITY );
+	public function getSeries() {
+		$request = $this->getRequest();
+		$name = $this->getRequiredParam( 'seriesName' );
+		$lang = $request->getVal( 'lang', self::LANG_SETTING );
+		$minQuality = $request->getVal( 'minArticleQuality', null );
+		if ( $minQuality !== null ) {
+			$minQuality = (int)$minQuality;
+		}
+
+		$result = $this->findSeries( $name, $lang, $minQuality );
+		if ( !$result ) {
+			throw new NotFoundApiException();
+		}
+
+		$this->setResponseData(
+			$result,
+			[ 'urlFields' => [ 'contentUrl', 'url' ] ],
+			self::RESPONSE_CACHE_VALIDITY
+		);
 	}
 
 	protected function findEpisode( $seriesName, $episodeName, $lang, $quality = null ) {
@@ -54,15 +84,16 @@ class TvApiController extends WikiaApiController {
 		// once the next gen search is implemented such workarounds would not be needed hopefully
 
 		// this replaces american right apostrophe with normal one
-		$episodeName = str_replace("’", "'", $episodeName);
+		$episodeName = str_replace( "’", "'", $episodeName );
 
-		$seriesService = $this->getSeriesService();
+		$seriesService = $this->getWikiSeriesService();
 		$seriesService->setLang( $lang );
 		$wikis = $seriesService->query( $seriesName );
 		if ( !empty( $wikis ) ) {
 			$episodeService = $this->getEpisodeService();
 			$episodeService->setLang( $lang )
-				->setQuality( ($quality !== null ) ? $quality : static::DEFAULT_QUALITY );
+				->setSeries( $seriesName )
+				->setQuality( ( $quality !== null ) ? $quality : self::DEFAULT_QUALITY );
 			$result = null;
 			foreach ( $wikis as $wiki ) {
 				$episodeService->setWikiId( $wiki[ 'id' ] );
@@ -76,9 +107,11 @@ class TvApiController extends WikiaApiController {
 					$namespaceNames = WikiFactory::getVarValueByName( self::WG_EXTRA_LOCAL_NAMESPACES_KEY, $wiki[ 'id' ] );
 					if ( is_array( $namespaces ) ) {
 						foreach ( $namespaces as $ns ) {
-							if ( !MWNamespace::isTalk($ns) && isset( $namespaceNames[ $ns ] ) ) {
-								$result = $episodeService->query( $namespaceNames[ $ns ].":".$episodeName );
-								if ( $result !== null ) break;
+							if ( !MWNamespace::isTalk( $ns ) && isset( $namespaceNames[ $ns ] ) ) {
+								$result = $episodeService->query( $namespaceNames[ $ns ] . ":" . $episodeName );
+								if ( $result !== null ) {
+									break;
+								}
 							}
 						}
 					}
@@ -93,11 +126,18 @@ class TvApiController extends WikiaApiController {
 		return false;
 	}
 
-	protected function getSeriesService() {
-		if ( !isset( $this->seriesService ) ) {
-			$this->seriesService = new SeriesEntitySearchService();
+	protected function getExactSeriesService() {
+		if ( !isset( $this->exactSeriesService ) ) {
+			$this->exactSeriesService = new ExactSeriesSearchService();
 		}
-		return $this->seriesService;
+		return $this->exactSeriesService;
+	}
+
+	protected function getWikiSeriesService() {
+		if ( !isset( $this->wikiSeriesService ) ) {
+			$this->wikiSeriesService = new WikiSeriesEntitySearchService();
+		}
+		return $this->wikiSeriesService;
 	}
 
 	protected function getEpisodeService() {
@@ -166,7 +206,57 @@ class TvApiController extends WikiaApiController {
 			->setVideoSearch( false )
 			->setOnWiki( true )
 			->setPageId( (int)$articleId )
-			->setNamespaces( [ static::NAMESPACE_SETTING ] );
+			->setNamespaces( [ self::NAMESPACE_SETTING ] );
 		return $searchConfig;
+	}
+
+	protected function findSeries( $seriesName, $lang, $quality = null ) {
+		$minQuality = $quality !== null ? $quality : self::DEFAULT_QUALITY;
+		//check exact match on series first
+		$result = $this->exactMatchOnSeries( $seriesName, $lang );
+		if ( $result == null ) {
+			$result = $this->searchForSeries( $seriesName, $lang, $minQuality );
+		}
+		if ( $result !== null && $result[ 'quality' ] >= $minQuality ) {
+			return $result;
+		}
+		return false;
+	}
+
+	protected function exactMatchOnSeries( $seriesName, $lang ) {
+		$exactService = $this->getExactSeriesService();
+		$exactService->setLang( $lang );
+		$result = $exactService->query( $seriesName );
+		if ( $result !== null ) {
+			return $result;
+		}
+		return null;
+	}
+
+	protected function searchForSeries( $seriesName, $lang, $quality = null ) {
+		$wikiService = $this->getWikiSeriesService();
+		$wikiService->setLang( $lang );
+		$wikis = $wikiService->query( $seriesName );
+		foreach ( $wikis as $wiki ) {
+			$seriesService = $this->getSeriesService();
+			$seriesService->setWikiId( $wiki[ 'id' ] )
+				->setLang( $lang )
+				->setQuality( ( $quality !== null ) ? $quality : self::DEFAULT_QUALITY );
+			$namespaces = WikiFactory::getVarValueByName( self::WG_CONTENT_NAMESPACES_KEY, $wiki[ 'id' ] );
+			$seriesService->setNamespace( $namespaces );
+			$result = $seriesService->query( $seriesName );
+
+			if ( $result !== null ) {
+				return $result;
+			}
+		}
+		return null;
+	}
+
+	protected function getSeriesService() {
+		if ( !isset( $this->seriesService ) ) {
+			$this->seriesService = new SeriesEntitySearchService();
+		}
+		return $this->seriesService;
 	}
 }

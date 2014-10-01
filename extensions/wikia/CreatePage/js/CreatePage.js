@@ -260,32 +260,25 @@ var CreatePage = {
 
 	redLinkClick: function( e, titleText ) {
 		'use strict';
+		var title = new mw.Title.newFromText( titleText ),
+			namespace = title.getNamespacePrefix().replace( ':', '' ),
+			visualEditorActive = $( 'html' ).hasClass( 've-activated' );
+
 		CreatePage.redlinkParam = '&redlink=1';
 
 		if ( CreatePage.canUseVisualEditor ) {
 			CreatePage.track( { action: 'click', label: 've-redlink-click' } );
 		}
 
-		var title = titleText.split( ':' ),
-			isContentNamespace = false,
-			i;
-
-		if ( window.ContentNamespacesText && ( title.length > 1 ) ) {
-			for ( i in window.ContentNamespacesText ) {
-				if ( title[ 0 ] === window.ContentNamespacesText[ i ] ) {
-					isContentNamespace = true;
-				}
-			}
-		}
-		else {
-			isContentNamespace = true;
-		}
-
-		if ( isContentNamespace ) {
-			CreatePage.requestDialog( e, titleText );
-		}
-		else {
+		if (
+			visualEditorActive ||
+			mw.config.get( 'wgNamespaceIds' )[ namespace.toLowerCase() ] &&
+			window.ContentNamespacesText &&
+			window.ContentNamespacesText.indexOf( title[0] ) === -1
+		) {
 			return false;
+		} else {
+			CreatePage.requestDialog( e, titleText );
 		}
 	},
 
@@ -319,7 +312,7 @@ var CreatePage = {
 				}
 			}
 
-			$( 'a.new' ).bind( 'click', function( e ) {
+			$( '#WikiaArticle' ).on( 'click', 'a.new', function( e ) {
 				CreatePage.redLinkClick( e, CreatePage.getTitleFromUrl( this.href ) );
 			});
 

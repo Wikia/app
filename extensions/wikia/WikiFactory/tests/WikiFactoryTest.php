@@ -10,6 +10,8 @@ class WikiFactoryTest extends WikiaBaseTest {
 	private $org_StagingList;
 
 	public function setUp() {
+		parent::setUp();
+
 		global $wgStagingList;
 		$this->org_StagingList = $wgStagingList;
 		$wgStagingList = ['teststagging'];
@@ -19,6 +21,8 @@ class WikiFactoryTest extends WikiaBaseTest {
 	}
 
 	public function tearDown() {
+		parent::tearDown();
+
 		global $wgStagingList;
 		$wgStagingList = $this->org_StagingList;
 		if ( !empty($this->serverName) ) {

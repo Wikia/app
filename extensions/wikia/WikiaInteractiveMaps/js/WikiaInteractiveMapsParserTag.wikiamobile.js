@@ -1,4 +1,4 @@
-require(['jquery', 'sloth'], function ($, sloth) {
+require(['jquery', 'sloth', require.optional('ext.wikia.adEngine.slot.interactiveMaps')], function ($, sloth, mapAds) {
 	'use strict';
 
 	/**
@@ -24,4 +24,10 @@ require(['jquery', 'sloth'], function ($, sloth) {
 		on: document.getElementsByClassName('wikia-interactive-map-thumbnail'),
 		callback: getThumbnail
 	});
+
+	if (mapAds) {
+		$('.wikia-ad-interactive-map').each(function () {
+			mapAds.initSlot(this);
+		});
+	}
 });

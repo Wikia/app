@@ -1,6 +1,6 @@
-@import "skins/oasis/css/mixins/background-opacity";
-@import "skins/oasis/css/core/color";
-@import "skins/oasis/css/mixins/gradient";
+@import "skins/shared/mixins/background-opacity";
+@import "skins/shared/color";
+@import "skins/shared/mixins/gradient";
 @import "WikiaMapsShared";
 
 .maps-controls {
@@ -60,4 +60,10 @@
 
 .wikia-interactive-maps-page-header .wikia-menu-button {
 	padding-left: 8px;
+}
+
+.wikia-interactive-map-wrapper {
+	height: 100%;
+	position: relative;
+	width: 100%;
 }

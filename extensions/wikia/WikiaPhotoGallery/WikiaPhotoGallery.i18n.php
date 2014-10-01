@@ -3455,7 +3455,7 @@ $messages['lb'] = array(
 	'wikiaPhotoGallery-upload-page-prev' => 'Vireg 8',
 	'wikiaPhotoGallery-upload-filesinsert' => 'Dës Photo drasetzen',
 	'wikiaPhotoGallery-upload-error-bad-extension' => 'Dëse Fichierstyp kann net benotzt ginn.',
-	'wikiaPhotoGallery-upload-error-conflict-rename' => 'Är Photo ëmbenennen',
+	'wikiaPhotoGallery-upload-error-conflict-rename' => 'Är Foto ëmbenennen',
 	'wikiaPhotoGallery-upload-error-conflict-insert' => 'Drasetzen',
 	'wikiaPhotoGallery-upload-select-images' => 'Eraussichen',
 	'wikiaPhotoGallery-photooptions-done' => 'Fäerdeg',
@@ -6679,6 +6679,7 @@ $messages['zh-hans'] = array(
 
 /** Traditional Chinese (中文（繁體）‎)
  * @author Ffaarr
+ * @author LNDDYL
  */
 $messages['zh-hant'] = array(
 	'wikiaPhotoGallery-back' => '返回',
@@ -6788,7 +6789,7 @@ $messages['zh-hant'] = array(
 	'wikiaPhotoGallery-slideshow-view-number' => '$2的$1',
 	'wikiaPhotoGallery-slideshow-view-startslideshow' => '播放幻燈片',
 	'wikiaPhotoGallery-slideshow-view-stopslideshow' => '停止幻燈片',
-	'wikiaPhotoGallery-slideshow-view-details-tooltip' => '查看圖片詳細資訊',
+	'wikiaPhotoGallery-slideshow-view-details-tooltip' => '檢視圖片詳細資訊',
 	'wikiaPhotoGallery-slideshow-view-link-overlay' => '到達$1',
 	'wikiaPhotoGallery-choice-title' => '增加幻燈片或圖庫',
 	'wikiaPhotoGallery-choice-intro' => '你想創建幻燈片或圖片庫嗎？',

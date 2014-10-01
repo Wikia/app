@@ -182,14 +182,9 @@ class SFFormLinker {
 				$params['page_text'] = $data_text;
 
 				// wikia change start - jobqueue migration
-				if ( TaskRunner::isModern( 'SFCreatePageJob' ) ) {
-					$task = new \Wikia\Tasks\Tasks\JobWrapperTask();
-					$task->call( 'createPage', $title, $params );
-					$task->queue();
-				} else {
-					$job = new SFCreatePageJob( $title, $params );
-					Job::batchInsert( array( $job ) );
-				}
+				$task = new \Wikia\Tasks\Tasks\JobWrapperTask();
+				$task->call( 'createPage', $title, $params );
+				$task->queue();
 				// wikia change end
 
 				return true;

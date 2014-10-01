@@ -1949,6 +1949,8 @@ class WikiFactory {
 
 		$dbr = ( $master ) ? self::db( DB_MASTER ) : self::db( DB_SLAVE );
 
+		$caller = wfGetCallerClassMethod(__CLASS__);
+		$fname = __METHOD__ . " (from {$caller})";
 
 		if ( $master || !isset( self::$variablesCache[$cacheKey] ) ) {
 			$oRow = $dbr->selectRow(
@@ -1963,7 +1965,7 @@ class WikiFactory {
 					"cv_is_unique"
 				),
 				$condition,
-				__METHOD__
+				$fname
 			);
 			self::$variablesCache[$cacheKey] = $oRow;
 		}
@@ -1992,7 +1994,7 @@ class WikiFactory {
 					"cv_variable_id" => $oRow->cv_id,
 					"cv_city_id" => $city_id
 				),
-				__METHOD__
+				$fname
 			);
 			if ( isset( $oRow2->cv_variable_id ) ) {
 
@@ -2321,7 +2323,6 @@ class WikiFactory {
 					"city_lastdump_timestamp"=> $timestamp,
 					"city_factory_timestamp" => $timestamp,
 					"city_useshared"         => $wiki->city_useshared,
-					"ad_cat"                 => $wiki->ad_cat,
 					"city_flags"			 => $wiki->city_flags,
 					"city_cluster"			 => $wiki->city_cluster
 				),
@@ -2568,48 +2569,85 @@ class WikiFactory {
 	}
 
 	/**
-	 * get category/hub name and number for $city_id
+	 * get legacy category/hub name and number for $city_id
 	 *
 	 * @param integer	$city_id		wikia identifier in city_list
 	 *
-	 * @return stdClass ($row->cat_id $row->cat_name) or false
+	 * @return stdClass ($row->cat_id $row->cat_name) or 0
+	 * @deprecated
 	 */
-	static public function getCategory( $city_id ) {
+
+	static public function getCategory ( $city_id ) {
+		// return deprecated category list
+		$categories = self::getCategories( $city_id, true );
+		return !empty($categories) ? $categories[0] : 0;
+	}
+
+
+	/**
+	 * get new category id and name for $city_id
+	 *
+	 * @param integer	$city_id		wikia identifier in city_list
+	 *
+	 * @return array of stdClass ($row->cat_id $row->cat_name) or empty array
+	 *
+	 */
+
+	static public function getCategories( $city_id, $deprecated = false ) {
 		global $wgRunningUnitTests, $wgNoDBUnits;
+
+		$aCategories = array();
+
 		if ( ! self::isUsed() ) {
 			Wikia::log( __METHOD__, "", "WikiFactory is not used." );
-			return false;
+			return $aCategories;
 		}
 
 		if ($wgRunningUnitTests && $wgNoDBUnits) {
-			return false;
+			return $aCategories;
+		}
+
+		// Default query using this function is to get all the new/active categories
+		$aFilter = "city_cats.cat_active = 1";
+		$aOptions = array();
+
+		if ( $deprecated ) {
+			$aFilter = "city_cats.cat_deprecated = 1";
+			$aOptions = array ("LIMIT" => 1);
 		}
 
 		/**
-		 * it is called in CommonExtensions.php so wgMemc is not initialized there
+		 * it is called in CommonExtensions.php and wgMemc is not initialized there
 		 */
 		global $wgWikiFactoryCacheType;
 		$oMemc = wfGetCache( $wgWikiFactoryCacheType );
 		$memkey = sprintf("%s:%d", __METHOD__, intval($city_id));
 		$cached = $oMemc->get($memkey);
+
 		if ( empty($cached) ) {
 			$dbr = self::db( DB_SLAVE );
 
-			$row = $dbr->selectRow(
+			$oRes = $dbr->select(
 				array( "city_cat_mapping", "city_cats" ),
 				array( "city_cats.cat_id as cat_id", "city_cats.cat_name as cat_name" ),
 				array(
 					"city_id" => $city_id,
-					"city_cats.cat_id = city_cat_mapping.cat_id"
+					"city_cats.cat_id = city_cat_mapping.cat_id",
+					$aFilter
 				),
-				__METHOD__
+				__METHOD__,
+				$aOptions
 			);
-			$oMemc->set($memkey, $row, 60*60*24);
+
+			while ( $oRow = $dbr->fetchObject( $oRes ) ) {
+				$aCategories[] = $oRow;
+			}
+			$oMemc->set($memkey, $aCategories, 60*60*24);
 		} else {
-			$row = $cached;
+			$aCategories = $cached;
 		}
 
-		return empty( $row ) ? false : $row;
+		return $aCategories;
 	}
 
 	/**

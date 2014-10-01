@@ -40,9 +40,6 @@ $wgAutoloadClasses['WallBaseController'] =  $dir . '/WallBaseController.class.ph
 $wgAutoloadClasses['VoteHelper'] =  $dir . '/VoteHelper.class.php';
 $wgAutoloadClasses['WallRelatedPages'] =  $dir . '/WallRelatedPages.class.php';
 
-include($dir . '/notification/WallNotifications.setup.php');
-
-
 $wgExtensionMessagesFiles['Wall'] = $dir . '/Wall.i18n.php';
 
 $wgHooks['AccountNavigationModuleAfterDropdownItems'][] = 'WallHooksHelper::onAccountNavigationModuleAfterDropdownItems';

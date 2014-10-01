@@ -15,7 +15,7 @@
 class CreateWiki {
 
 	/* @var $mDBw DatabaseMysql */
-	private $mName, $mDomain, $mLanguage, $mHub, $mStarters, $mIP,
+	private $mName, $mDomain, $mLanguage, $mVertical, $mCategories, $mStarters, $mIP,
 		$mPHPbin, $mMYSQLbin, $mMYSQLdump, $mNewWiki, $mFounder,
 		$mLangSubdomain, $mDBw, $mWFSettingVars, $mWFVars,
 		$mDefaultTables, $mAdditionalTables,
@@ -57,9 +57,8 @@ class CreateWiki {
 	 * @param string $name - name of wiki (set later as $wgSiteinfo)
 	 * @param string $domain - domain part without '.wikia.com'
 	 * @param string $language - language code
-	 * @param integer $hub - category/hub which should be set for created wiki
 	 */
-	public function __construct( $name, $domain, $language, $hub ) {
+	public function __construct( $name, $domain, $language, $vertical, $categories ) {
 		global $wgUser, $IP, $wgAutoloadClasses, $wgRequest;
 
 		// wiki containter
@@ -68,7 +67,8 @@ class CreateWiki {
 		$this->mDomain = $domain;
 		$this->mName = $name;
 		$this->mLanguage = $language;
-		$this->mHub = $hub;
+		$this->mVertical = $vertical;
+		$this->mCategories = $categories;
 		$this->mIP = $IP;
 
 		// founder of wiki
@@ -360,12 +360,14 @@ class CreateWiki {
 		wfDebugLog( "createwiki", __METHOD__ . ": Database changes commited \n", true );
 		$wgSharedDB = $tmpSharedDB;
 
-		/**
-		 * set hub/category
-		 */
+
 		$oHub = WikiFactoryHub::getInstance();
-		$oHub->setCategory( $this->mNewWiki->city_id, $this->mNewWiki->hub, "CW Setup" );
-		wfDebugLog( "createwiki", __METHOD__ . ": Wiki added to the category hub: {$this->mNewWiki->hub} \n", true );
+		$oHub->setVertical( $this->mNewWiki->city_id, $this->mNewWiki->vertical, "CW Setup" );
+		wfDebugLog( "createwiki", __METHOD__ . ": Wiki added to the vertical: {$this->mNewWiki->vertical} \n", true );
+		for($i = 0; $i < count($this->mNewWiki->categories); $i++) {
+			$oHub->addCategory( $this->mNewWiki->city_id, $this->mNewWiki->categories[$i] );
+			wfDebugLog( "createwiki", __METHOD__ . ": Wiki added to the category: {$this->mNewWiki->categories[$i]} \n", true );
+		}
 
 		/**
 		 * define wiki type
@@ -420,8 +422,6 @@ class CreateWiki {
 			$tags->addTagsByName( $langTag );
 		}
 
-		$tags->addTagsByName( $this->mNewWiki->hub );
-
 		/**
 		 * move main page -> this code exists in CreateWikiLocalJob - so it is not needed anymore
 		 */
@@ -436,7 +436,7 @@ class CreateWiki {
 		unset($oldUser);
 
 		if (TaskRunner::isModern('CreateWikiLocalJob')) {
-			$creationTask = new CreateNewWikiTask();
+			$creationTask = new \Wikia\Tasks\Tasks\CreateNewWikiTask();
 
 			(new \Wikia\Tasks\AsyncTaskList())
 				->wikiId($this->mNewWiki->city_id)
@@ -580,8 +580,18 @@ class CreateWiki {
 		$this->mDomain = preg_replace( "/^(\-)+/", "", $this->mDomain );
 		$this->mNewWiki->domain = strtolower( trim( $this->mDomain ) );
 
-		// hub
-		$this->mNewWiki->hub = $this->mHub;
+		$this->mNewWiki->vertical = $this->mVertical;
+
+		// Map new verticals to old categories while in transition so that "hub" code still works
+		// If a user selects a vertical we will also add the old category that matches best with it
+		// This code can be removed after we are fully using the new verticals (PLATFORM-403)
+
+		// uses array_unshift to make sure hub category is first, because we take the first cat from SQL
+		if ( $this->mVertical == 2 ) array_unshift($this->mCategories, 2);	// Video games
+		if ( in_array( $this->mVertical, [1,3,4,6,7] ) ) array_unshift($this->mCategories, 3); // Entertainment
+		if ( $this->mVertical == 5 ) array_unshift($this->mCategories, 9);	// Lifestyle
+
+		$this->mNewWiki->categories = $this->mCategories;
 
 		// name
 		$this->mNewWiki->name = strtolower( trim( $this->mDomain ) );
@@ -640,7 +650,27 @@ class CreateWiki {
 	}
 
 	/**
-	 * check folder exists
+	 * Check if the given upload directory name is available for use.
+	 *
+	 * @access public
+	 * @author Michał Roszka <michal@wikia-inc.com>
+	 *
+	 * @param $sDirectoryName the path to check
+	 */
+	public static function wgUploadDirectoryExists( $sDirectoryName ) {
+		wfProfileIn( __METHOD__ );
+		$iVarId = WikiFactory::getVarIdByName( 'wgUploadDirectory' );
+
+		// Crash immediately if $iVarId is not a positive integer!
+		\Wikia\Util\Assert::true( $iVarId );
+
+		$aCityIds = WikiFactory::getCityIDsFromVarValue( $iVarId, $sDirectoryName, '=' );
+		wfProfileOut( __METHOD__ );
+		return !empty( $aCityIds );
+	}
+
+	/**
+	 * "calculates" the value for wgUploadDirectory
 	 *
 	 * @access private
 	 * @author Piotr Molski (Moli)
@@ -662,7 +692,7 @@ class CreateWiki {
 		while ( $isExist == false ) {
 			$dirName = self::IMGROOT . $prefix . "/" . $dir_base . $suffix . $dir_lang . "/images";
 
-			if ( file_exists( $dirName ) ) {
+			if ( self::wgUploadDirectoryExists($dirName) ) {
 				$suffix = rand(1, 9999);
 			}
 			else {
@@ -671,6 +701,7 @@ class CreateWiki {
 			}
 		}
 
+		wfDebug( __METHOD__ . ": Returning '{$dir_base}'\n" );
 		wfProfileOut( __METHOD__ );
 		return $dir_base;
 	}

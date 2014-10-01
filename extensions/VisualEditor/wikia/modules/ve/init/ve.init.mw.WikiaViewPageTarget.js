@@ -5,7 +5,7 @@
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
-/*global mw, veTrack */
+/*global mw, veTrack, window */
 
 /**
  * Initialization MediaWiki view page target.
@@ -16,9 +16,28 @@
  * @constructor
  */
 ve.init.mw.WikiaViewPageTarget = function VeInitMwWikiaViewPageTarget() {
+	var boldItalicLink, toolbarDropdown, wikiaSourceMode;
+
+	if ( window.veSourceEntryPoint ) {
+		if ( window.veSourceEntryPoint.hideBoldItalicLink ) {
+			boldItalicLink = ve.init.mw.WikiaViewPageTarget.static.toolbarGroups.splice( 2, 1 );
+			ve.init.mw.WikiaViewPageTarget.static.toolbarGroups[ 2 ].include = [].concat(
+				boldItalicLink[ 0 ].include,
+				ve.init.mw.WikiaViewPageTarget.static.toolbarGroups[ 2 ].include
+			);
+		}
+		if ( window.veSourceEntryPoint.sourceButtonInToolbar ) {
+			toolbarDropdown = ve.init.mw.WikiaViewPageTarget.static.actionsToolbarConfig.pop();
+			wikiaSourceMode = toolbarDropdown.include.pop();
+			ve.init.mw.WikiaViewPageTarget.static.toolbarGroups.push( toolbarDropdown );
+			ve.init.mw.WikiaViewPageTarget.static.actionsToolbarConfig.push( { 'include': [ wikiaSourceMode ] } );
+		}
+	}
+
 	// Parent constructor
 	ve.init.mw.WikiaViewPageTarget.super.call( this );
 
+	// Properties
 	this.toolbarSaveButtonEnableTracked = false;
 };
 
@@ -55,7 +74,7 @@ ve.init.mw.WikiaViewPageTarget.static.toolbarGroups = [
 		'type': 'list',
 		'label': OO.ui.deferMsg( 'visualeditor-toolbar-insert' ),
 		'indicator': 'down',
-		'include': [ 'wikiaMediaInsert', 'wikiaMapInsert', 'number', 'bullet', 'transclusion', 'reference', 'referenceList' ]
+		'include': [ 'wikiaMediaInsert', 'wikiaMapInsert', 'number', 'bullet', 'wikiaTemplateInsert', 'reference', 'referenceList' ]
 	}
 ];
 
@@ -70,6 +89,8 @@ ve.init.mw.WikiaViewPageTarget.static.actionsToolbarConfig = [
 		'include': [ 'wikiaMeta', 'categories', 'wikiaHelp', 'wikiaCommandHelp', 'wikiaSourceMode' ]
 	}
 ];
+
+ve.init.mw.WikiaViewPageTarget.static.surfaceCommands.push( 'wikiaSourceMode' );
 
 ve.init.mw.WikiaViewPageTarget.prototype.getNonEditableUIElements = function () {
 	var $elements,
@@ -114,7 +135,7 @@ ve.init.mw.WikiaViewPageTarget.prototype.onSaveDialogReview = function () {
 	ve.track( 'wikia', {
 		'action': ve.track.actions.CLICK,
 		'label': 'dialog-save-review-changes-button',
-		'duration': this.events.timings.saveReview - this.events.timings.saveWorkflowBegin
+		'value': ve.track.normalizeDuration( this.events.timings.saveReview - this.events.timings.saveWorkflowBegin )
 	} );
 };
 
@@ -125,7 +146,11 @@ ve.init.mw.WikiaViewPageTarget.prototype.onToolbarCancelButtonClick = function (
 			isDirty: !this.toolbarSaveButton.isDisabled() ? 'yes' : 'no'
 		} );
 	}
-	ve.track( 'wikia', { 'action': ve.track.actions.CLICK, 'label': 'button-cancel' } );
+	ve.track( 'wikia', {
+		'action': ve.track.actions.CLICK,
+		'label': 'button-cancel',
+		'value': ve.track.normalizeDuration( ve.now() - this.events.timings.surfaceReady )
+	} );
 	mw.hook( 've.cancelButton' ).fire();
 	/*
 	// Trigger Qualaroo survey for anonymous users abandoning edit
@@ -146,12 +171,16 @@ ve.init.mw.WikiaViewPageTarget.prototype.onToolbarSaveButtonClick = function () 
 		veTrack( { action: 've-save-button-click' } );
 	}
 
-	if ( window.veOrientationEnabled !== undefined ) {
+	if ( window.veSourceEntryPoint ) {
 		window.optimizely = window.optimizely || [];
 		window.optimizely.push( ['trackEvent', 've-save-button-click'] );
 	}
 
-	ve.track( 'wikia', { 'action': ve.track.actions.CLICK, 'label': 'button-publish' } );
+	ve.track( 'wikia', {
+		'action': ve.track.actions.CLICK,
+		'label': 'button-publish',
+		'value': ve.track.normalizeDuration( ve.now() - this.events.timings.surfaceReady )
+	} );
 	ve.init.mw.ViewPageTarget.prototype.onToolbarSaveButtonClick.call( this );
 };
 
@@ -173,11 +202,15 @@ ve.init.mw.WikiaViewPageTarget.prototype.updateToolbarSaveButtonState = function
 		!this.toolbarSaveButtonEnableTracked &&
 		( this.toolbarSaveButtonEnableTracked = !this.toolbarSaveButton.isDisabled() )
 	) {
-		if ( window.veOrientationEnabled !== undefined ) {
+		if ( window.veSourceEntryPoint !== undefined ) {
 			window.optimizely = window.optimizely || [];
 			window.optimizely.push( ['trackEvent', 've-save-button-enable'] );
 		}
-		ve.track( 'wikia', { 'action': ve.track.actions.ENABLE, 'label': 'button-publish' } );
+		ve.track( 'wikia', {
+			'action': ve.track.actions.ENABLE,
+			'label': 'button-publish',
+			'value': ve.track.normalizeDuration( ve.now() - this.events.timings.surfaceReady )
+		} );
 	}
 };
 
@@ -211,26 +244,7 @@ ve.init.mw.WikiaViewPageTarget.prototype.onLoadError = function ( jqXHR, status,
 /**
  * @inheritdoc
  */
-ve.init.mw.WikiaViewPageTarget.prototype.maybeShowDialogs = function () {
-	var uri = new mw.Uri( location.href );
-	// Parent method
-	ve.init.mw.ViewPageTarget.prototype.maybeShowDialogs.call( this );
-
-	if ( mw.user.anonymous() && !uri.query.redlink ) {
-		window.optimizely = window.optimizely || [];
-		window.optimizely.push( ['activate', 1248850316] );
-
-		if ( window.veOrientationEnabled && !window.localStorage.getItem( 'WikiaVEOrientationViewed' ) ) {
-			this.surface.getDialogs().getWindow( 'wikiaOrientation' ).open();
-			window.localStorage.setItem( 'WikiaVEOrientationViewed', true );
-		}
-	}
-};
-
-/**
- * @inheritdoc
- */
-ve.init.mw.ViewPageTarget.prototype.replacePageContent = function ( html, categoriesHtml ) {
+ve.init.mw.WikiaViewPageTarget.prototype.replacePageContent = function ( html, categoriesHtml ) {
 	var insertTarget,
 		$mwContentText = $( '#mw-content-text' ),
 		$content = $( $.parseHTML( html ) );
@@ -258,4 +272,78 @@ ve.init.mw.ViewPageTarget.prototype.replacePageContent = function ( html, catego
 
 	mw.hook( 'wikipage.content' ).fire( $mwContentText );
 	$( '#catlinks' ).replaceWith( categoriesHtml );
+};
+
+/**
+ * Handle failure from serialization
+ *
+ * @method
+ * @param {object} jqXHR
+ * @param {string} status Text status message
+ */
+ve.init.mw.WikiaViewPageTarget.prototype.onSerializeError = function ( jqXHR, status ) {
+	if ( window.veTrack ) {
+		veTrack( {
+			action: 'parsoid-serialize-error',
+			status: status
+		} );
+	}
+	ve.init.mw.WikiaViewPageTarget.super.prototype.onSerializeError.call( this, jqXHR, status );
+};
+
+/**
+ * Handle failure when retrieving diff
+ *
+ * @method
+ * @param {object} jqXHR
+ * @param {string} status Text status message
+ */
+ve.init.mw.WikiaViewPageTarget.prototype.onShowChangesError = function ( jqXHR, status ) {
+	if ( window.veTrack ) {
+		veTrack( {
+			action: 'parsoid-diff-error',
+			status: status
+		} );
+	}
+	ve.init.mw.WikiaViewPageTarget.super.prototype.onShowChangesError.call( this, jqXHR, status );
+};
+
+/**
+ * @inheritdoc
+ */
+ve.init.mw.WikiaViewPageTarget.prototype.changeDocumentTitle = function () {
+	// TODO: If Wikia ever has a different message for article creating vs. editing - then use it.
+	document.title = ve.msg( 'editing', mw.config.get( 'wgTitle' ) ) +
+		' - ' + mw.config.get( 'wgSiteName' );
+};
+
+/**
+ * Handle failure when saving changes
+ *
+ * @method
+ * @param {HTMLDocument} doc HTML document we tried to save
+ * @param {object} saveData Options that were used
+ * @param {object} jqXHR
+ * @param {string} status Text status message
+ * @param {object|null} data API response data
+ */
+ve.init.mw.WikiaViewPageTarget.prototype.onSaveError = function ( doc, saveData, jqXHR, status, data ) {
+	if ( window.veTrack ) {
+		veTrack( {
+			action: 'parsoid-save-error',
+			status: status
+		} );
+	}
+	ve.init.mw.WikiaViewPageTarget.super.prototype.onSaveError.call( this, doc, saveData, jqXHR, status, data );
+};
+
+/**
+ * @inheritdoc
+ */
+ve.init.mw.WikiaViewPageTarget.prototype.maybeShowDialogs = function () {
+	// Parent method
+	ve.init.mw.WikiaViewPageTarget.super.prototype.maybeShowDialogs.call( this );
+	if ( parseInt( mw.config.get( 'showVisualEditorTransitionDialog' ) ) === 1 ) {
+		this.surface.getDialogs().getWindow( 'wikiaPreference' ).open( null, null, this.surface );
+	}
 };

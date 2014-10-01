@@ -1,7 +1,7 @@
-@import "skins/oasis/css/core/color";
+@import "skins/shared/color";
 @import "skins/oasis/css/core/responsive-variables";
-@import "skins/oasis/css/mixins/flexbox";
-@import "skins/oasis/css/mixins/calc";
+@import "skins/shared/mixins/flexbox";
+@import "skins/shared/mixins/calc";
 
 $color-code-bg: mix($color-page, #000000, 95%);
 @if $is-dark-wiki {
@@ -81,6 +81,10 @@ $imagePreviewSize: 83px;
 		overflow-y: auto;
 		position: absolute;
 		width: 100%;
+
+		.selected {
+			background-color: $color-code-bg;
+		}
 	}
 
 	.article-suggestions-wrapper {

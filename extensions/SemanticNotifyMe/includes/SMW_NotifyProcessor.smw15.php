@@ -1647,13 +1647,9 @@ class SMWNotifyUpdate {
 						'replyto' => new MailAddress( $wgEmergencyContact, 'Admin' ) );
 
 					// wikia change start - jobqueue migration
-					if ( TaskRunner::isModern( 'SMW_NMSendMailJob' ) ) {
-						$task = new \Wikia\Tasks\Tasks\JobWrapperTask();
-						$task->call( 'SMW_NMSendMailJob', $this->m_title, $params );
-						$nm_send_jobs[] = $task;
-					} else {
-						$nm_send_jobs[] = new SMW_NMSendMailJob( $this->m_title, $params );
-					}
+					$task = new \Wikia\Tasks\Tasks\JobWrapperTask();
+					$task->call( 'SMW_NMSendMailJob', $this->m_title, $params );
+					$nm_send_jobs[] = $task;
 					// wikia change end
 				}
 			}
@@ -1662,11 +1658,7 @@ class SMWNotifyUpdate {
 		if ( $wgEnotifyMeJob ) {
 			if ( count( $nm_send_jobs ) ) {
 				// wikia change start - jobqueue migration
-				if ( TaskRunner::isModern( 'SMW_NMSendMailJob' ) ) {
-					\Wikia\Tasks\Tasks\BaseTask::batch( $nm_send_jobs );
-				} else {
-					Job :: batchInsert( $nm_send_jobs );
-				}
+				\Wikia\Tasks\Tasks\BaseTask::batch( $nm_send_jobs );
 				// wikia change end
 			}
 		} else {

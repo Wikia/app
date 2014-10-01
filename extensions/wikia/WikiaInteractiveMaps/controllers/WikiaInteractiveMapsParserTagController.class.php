@@ -95,17 +95,19 @@ class WikiaInteractiveMapsParserTagController extends WikiaController {
 			$params->map->imagePlaceholder = $this->wg->BlankImgUrl;
 			$params->map->mobile = true;
 			$params->map->href =
-				WikiaInteractiveMapsController::getSpecialMapsUrl() . '/' . $params->map->id;
+				WikiaInteractiveMapsController::getSpecialUrl() . '/' . $params->map->id;
 		} else {
 			$params->map->image = $this->mapsModel->createCroppedThumb( $params->map->image, self::DEFAULT_WIDTH, self::DEFAULT_HEIGHT );
 		}
 
-		$params->map->url = $this->mapsModel->getMapRenderUrl([
+		$renderParams = $this->mapsModel->getMapRenderParams( $params->map->city_id );
+
+		$params->map->url = $this->mapsModel->getMapRenderUrl( [
 			$params->map->id,
 			$params->zoom,
 			$params->lat,
 			$params->lon,
-		]);
+		], $renderParams );
 
 		$this->setVal( 'map', (object) $params->map );
 		$this->setVal( 'params', $params );
@@ -147,7 +149,6 @@ class WikiaInteractiveMapsParserTagController extends WikiaController {
 		$params[ 'map' ] = $this->request->getVal( 'map' );
 		$params[ 'created_by' ] = $this->request->getVal( 'created_by' );
 		$params[ 'avatarUrl' ] = $this->request->getVal( 'avatarUrl' );
-
 
 		$params[ 'width' ] .= 'px';
 		$params[ 'height' ] .= 'px';

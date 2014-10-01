@@ -30,3 +30,4 @@ _misc
 spamAccountIds.txt
 
 lib/composer/**/.git
+node_modules

@@ -4,26 +4,28 @@
  * to leave this in there for now as we may at some point switch back to the bottom position.
  */
 require([
-	//'videosmodule.views.bottomModule',
 	'videosmodule.views.rail',
 	'videosmodule.models.videos'
-], function (/*BottomModule,*/ RailModule, VideoData) {
+], function (RailModule, VideoData) {
 	'use strict';
 
-	$(function () {
-		// instantiate rail view
-		$('#WikiaRail').on('afterLoad.rail', function() {
-			return new RailModule({
-				el: document.getElementById('videosModule'),
-				model: new VideoData(),
-				isFluid: false
-			});
-		});
+	var $rail = $('#WikiaRail');
 
-		/*
-		view = new BottomModule({
-			el: document.getElementById('RelatedPagesModuleWrapper'),
-			model: new VideoData()
-		});*/
+	function init() {
+		// instantiate rail view
+		return new RailModule({
+			el: document.getElementById('videosModule'),
+			model: new VideoData(),
+			isFluid: false
+		});
+	}
+
+	$(function () {
+		// check if right rail is loaded before initing. If it's not loaded, bind to load event.
+		if ($rail.hasClass('loaded')) {
+			init();
+		} else {
+			$rail.on('afterLoad.rail', init);
+		}
 	});
 });

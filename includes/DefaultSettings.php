@@ -33,7 +33,7 @@ $wgConf = new SiteConfiguration;
 /** @endcond */
 
 /** MediaWiki version number */
-$wgVersion = '1.19.17';
+$wgVersion = '1.19.19';
 
 /** Name of the site. It must be changed in LocalSettings.php */
 $wgSitename = 'MediaWiki';
@@ -1587,6 +1587,16 @@ $wgSessionsInMemcached = false;
  * useful if you're doing cross-application sessions, see bug 11381)
  */
 $wgSessionHandler = null;
+
+/** Wikia change - begin - @author: Michał ‘Mix’ Roszka <mix@wikia-inc.com>
+ *
+ * See: https://wikia-inc.atlassian.net/browse/PLATFORM-308
+ *
+ * This is used for storing session data relevant to the above issue. The data
+ * are logged to Kibana on shutdown.
+ */
+$wgSessionDebugData = [];
+/** Wikia change - end */
 
 /** If enabled, will send MemCached debugging information to $wgDebugLogFile */
 $wgMemCachedDebug = false;
@@ -3458,6 +3468,7 @@ $wgGroupPermissions['*']['edit']             = true;
 $wgGroupPermissions['*']['createpage']       = true;
 $wgGroupPermissions['*']['createtalk']       = true;
 $wgGroupPermissions['*']['writeapi']         = true;
+$wgGroupPermissions['*']['editmyoptions']    = true;
 //$wgGroupPermissions['*']['patrolmarks']      = false; // let anons see what was patrolled
 
 // Implicit group for all logged-in accounts
@@ -4905,10 +4916,6 @@ $wgHooks = &Hooks::getHandlersArray();
  * can add to this to provide custom jobs
  */
 $wgJobClasses = array(
-	'refreshLinks' => 'RefreshLinksJob',
-	'refreshLinks2' => 'RefreshLinksJob2',
-	'htmlCacheUpdate' => 'HTMLCacheUpdateJob',
-	'html_cache_update' => 'HTMLCacheUpdateJob', // backwards-compatible
 	'fixDoubleRedirect' => 'DoubleRedirectJob',
 );
 

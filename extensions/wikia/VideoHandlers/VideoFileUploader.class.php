@@ -131,7 +131,7 @@ class VideoFileUploader {
 			$content = $article->getContent();
 			$newcontent = $this->getDescription();
 			if ( $content != $newcontent ) {
-				$article->doEdit( $newcontent, 'update' );
+				$article->doEdit( $newcontent, wfMessage( 'videos-update-edit-summary' )->inContentLanguage()->text() );
 			}
 		}
 
@@ -238,14 +238,6 @@ class VideoFileUploader {
 			$task->delay( $delay );
 			$task->call( 'retryThumbUpload', $this->getDestinationTitle(), $delayIndex, $provider, $this->sVideoId );
 			$task->queue();
-			$context = [
-				'videoTitle' => $this->getDestinationTitle(),
-				'provider'   => $provider,
-				'delay'      => $delay
-			];
-			\Wikia\Logger\WikiaLogger::instance()->info(
-				"Job Queue job scheduled for missing thumbnail",
-				$context );
 		}
 	}
 

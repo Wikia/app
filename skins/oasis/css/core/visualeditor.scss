@@ -1,9 +1,9 @@
 // Keep this file small. This is only for things that need styles before
 // VisualEditor takes care of loading everything it needs.
-@import "skins/oasis/css/core/color";
-@import "skins/oasis/css/mixins/blackout";
-@import "skins/oasis/css/mixins/box-sizing";
-@import "skins/oasis/css/mixins/flexbox";
+@import "skins/shared/color";
+@import "skins/shared/mixins/blackout";
+@import "skins/shared/mixins/box-sizing";
+@import "skins/shared/mixins/flexbox";
 
 .ve-spinner {
 	@include align-items( center );
@@ -11,6 +11,10 @@
 	@include flexbox();
 	@include justify-content( center );
 	opacity: 0;
+
+	&.visible {
+		z-index: $zTop + 1;
+	}
 
 	.content {
 		@include box-shadow( 1px, 2px, 5px, rgba(0, 0, 0, .7) );

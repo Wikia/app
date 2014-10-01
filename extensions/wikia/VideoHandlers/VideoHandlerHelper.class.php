@@ -259,7 +259,7 @@ class VideoHandlerHelper extends WikiaModel {
 
 		/** @var Title $title */
 		$title = $videoInfo['title'];
-		/** @var LocalFile $file */
+		/** @var LocalFile|WikiaLocalFileShared $file */
 		$file = WikiaFileHelper::getVideoFileFromTitle( $title );
 
 		if ( $file ) {
@@ -310,7 +310,7 @@ class VideoHandlerHelper extends WikiaModel {
 				'truncatedList'        => $truncatedList,
 				'isTruncated'          => $isTruncated,
 				'timestamp'            => empty( $videoInfo['addedAt'] ) ? '' : $videoInfo['addedAt'],
-				'duration'             => $file->getMetadataDuration(),
+				'duration'             => (float) $file->getMetadataDuration(),
 				'viewsTotal'           => empty( $videoInfo['viewsTotal'] ) ? 0 : $videoInfo['viewsTotal'],
 				'provider'             => $file->getProviderName(),
 				'embedUrl'             => $file->getHandler()->getEmbedUrl(),

@@ -9,6 +9,7 @@ class WikiaMapsLogger {
 	const ACTION_CREATE_MAP = 'create_map';
 	const ACTION_UPDATE_MAP = 'update_map';
 	const ACTION_DELETE_MAP = 'delete_map';
+	const ACTION_UNDELETE_MAP = 'undelete_map';
 
 	const ACTION_CREATE_PIN_TYPE = 'create_pin_type';
 	const ACTION_UPDATE_PIN_TYPE = 'update_pin_type';
@@ -105,6 +106,7 @@ class WikiaMapsLogger {
 			self::ACTION_CREATE_MAP => 'wikia-interactive-maps-create-map-log-entry',
 			self::ACTION_UPDATE_MAP => 'wikia-interactive-maps-update-map-log-entry',
 			self::ACTION_DELETE_MAP => 'wikia-interactive-maps-delete-map-log-entry',
+			self::ACTION_UNDELETE_MAP => 'wikia-interactive-maps-undelete-map-log-entry',
 			self::ACTION_CREATE_PIN_TYPE => 'wikia-interactive-maps-create-pin-type-log-entry',
 			self::ACTION_UPDATE_PIN_TYPE => 'wikia-interactive-maps-update-pin-type-log-entry',
 			self::ACTION_DELETE_PIN_TYPE => 'wikia-interactive-maps-delete-pin-type-log-entry',

@@ -71,6 +71,10 @@ if ( mw.config.get( 'wgEnableWikiaInteractiveMaps' ) === true ) {
 ve.ui.WikiaSourceModeDialogTool = function VeUiWikiaSourceModeDialogTool( toolGroup, config ) {
 	// Parent constructor
 	ve.ui.WikiaSourceModeDialogTool.super.call( this, toolGroup, config );
+	if ( window.veSourceEntryPoint && window.veSourceEntryPoint.sourceButtonAsText ) {
+		this.title = ve.msg( 'wikia-visualeditor-dialogbutton-wikiasourcemode' );
+		this.$element.addClass( 've-ui-noIconDialogTool' );
+	}
 };
 
 OO.inheritClass( ve.ui.WikiaSourceModeDialogTool, ve.ui.DialogTool );
@@ -81,20 +85,6 @@ ve.ui.WikiaSourceModeDialogTool.static.icon = 'source';
 ve.ui.WikiaSourceModeDialogTool.static.title =
 	OO.ui.deferMsg( 'wikia-visualeditor-dialogbutton-wikiasourcemode-tooltip' );
 ve.ui.WikiaSourceModeDialogTool.static.commandName = 'wikiaSourceMode';
-
-/**
- * @inheritdoc
- */
-ve.ui.WikiaSourceModeDialogTool.prototype.onSelect = function () {
-	var command = this.getCommand();
-	if ( command.data.length < 2 ) {
-		command.data.push( { 'target': this.toolbar.getTarget() } );
-	}
-	ve.ui.DialogTool.prototype.onSelect.apply( this, arguments );
-};
-
-ve.ui.toolFactory.register( ve.ui.WikiaSourceModeDialogTool );
-
 ve.ui.toolFactory.register( ve.ui.WikiaSourceModeDialogTool );
 
 /**
@@ -151,6 +141,27 @@ ve.ui.WikiaMWTransclusionDialogTool = function VEUIMWWikiaTransclusionDialogTool
 OO.inheritClass( ve.ui.WikiaMWTransclusionDialogTool, ve.ui.MWTransclusionDialogTool );
 ve.ui.WikiaMWTransclusionDialogTool.static.contextIcon = 'edit';
 ve.ui.toolFactory.register( ve.ui.WikiaMWTransclusionDialogTool );
+
+/**
+ * UserInterface WikiaTemplateInsertDialog tool.
+ *
+ * @class
+ * @extends ve.ui.TemplateInsertDialogTool
+ * @constructor
+ * @param {OO.ui.ToolGroup} toolGroup
+ * @param {Object} [config] Configuration options
+ */
+ve.ui.WikiaTemplateInsertDialogTool = function VEUIWikiaTemplateInsertDialogTool( toolGroup, config ) {
+	ve.ui.WikiaTemplateInsertDialogTool.super.call( this, toolGroup, config );
+};
+OO.inheritClass( ve.ui.WikiaTemplateInsertDialogTool, ve.ui.DialogTool );
+ve.ui.WikiaTemplateInsertDialogTool.static.name = 'wikiaTemplateInsert';
+ve.ui.WikiaTemplateInsertDialogTool.static.group = 'object';
+ve.ui.WikiaTemplateInsertDialogTool.static.icon = 'template';
+ve.ui.WikiaTemplateInsertDialogTool.static.title =
+	OO.ui.deferMsg( 'visualeditor-dialogbutton-template-tooltip' );
+ve.ui.WikiaTemplateInsertDialogTool.static.commandName = 'wikiaTemplateInsert';
+ve.ui.toolFactory.register( ve.ui.WikiaTemplateInsertDialogTool );
 
 /**
  * UserInterface WikiaMWMediaWditDialog tool.

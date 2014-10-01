@@ -247,7 +247,10 @@ class ArticleComment {
 
 		$parser->ac_metadata = [];
 
-		$head = $parser->parse( $rawtext, $this->mTitle, ParserOptions::newFromContext( RequestContext::getMain() ) );
+		// VOLDEV-68: Remove broken section edit links
+		$opts = ParserOptions::newFromContext( RequestContext::getMain() );
+		$opts->setEditSection( false );
+		$head = $parser->parse( $rawtext, $this->mTitle, $opts );
 
 		$this->mText = wfFixMalformedHTML( $head->getText() );
 
@@ -1126,14 +1129,9 @@ class ArticleComment {
 		$taskParams['page'] = $oCommentTitle->getFullText();
 		$taskParams['newpage'] = $newCommentTitle->getFullText();
 
-		if (TaskRunner::isModern('MultiMoveTask')) {
-			$task = new \Wikia\Tasks\Tasks\MultiTask();
-			$task->call('move', $taskParams);
-			$submit_id = $task->queue();
-		} else {
-			$thisTask = new MultiMoveTask( $taskParams );
-			$submit_id = $thisTask->submitForm();
-		}
+		$task = new \Wikia\Tasks\Tasks\MultiTask();
+		$task->call('move', $taskParams);
+		$submit_id = $task->queue();
 
 		Wikia::log( __METHOD__, 'deletecomment', "Added move task ($submit_id) for {$taskParams['page']} page" );
 

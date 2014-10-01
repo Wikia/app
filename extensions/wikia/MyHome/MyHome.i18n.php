@@ -2156,6 +2156,7 @@ $messages['ku-latn'] = array(
 $messages['lb'] = array(
 	'myhome' => 'Meng Haaptsäit',
 	'myhome-watchlist-feed' => 'Iwwerwaachungslëscht',
+	'myhome-user-contributions-feed' => 'Kontributiounen',
 	'myhome-hot-spots-newest' => 'Nei Säiten op der Wiki',
 	'prefs-myhome' => 'Meng Haaptsäit',
 	'myhome-feed-newpage' => 'nei Säit',

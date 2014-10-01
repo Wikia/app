@@ -1,0 +1,14 @@
+<div class="media-gallery-wrapper count-{{count}}" data-visible-count="{{visibleCount}}">
+	<script>
+		window.Wikia = window.Wikia || {};
+		Wikia.mediaGalleryData = Wikia.mediaGalleryData || [];
+		Wikia.mediaGalleryData.push({{{json}}});
+	</script>
+	<button class="add-image">{{addImageButton}}</button>
+	<noscript>
+		{{#media}}
+			<a href="{{linkHref}}"><img src="{{thumbUrl}}" alt="{{{caption}}}"></a>
+		{{/media}}
+	</noscript>
+</div>
+

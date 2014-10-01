@@ -4,6 +4,7 @@
  * Class VideoHandlerController
  */
 class VideoHandlerController extends WikiaController {
+	const DEFAULT_TEMPLATE_ENGINE = WikiaResponse::TEMPLATE_ENGINE_MUSTACHE;
 
 	const VIDEO_LIMIT = 100;
 	const DEFAULT_THUMBNAIL_WIDTH = 250;
@@ -12,12 +13,12 @@ class VideoHandlerController extends WikiaController {
 	/**
 	 * Get the embed code for the title given by fileTitle
 	 *
- 	 * @requestParam string|fileTitle The title of the video to find the embed code for
-	 * @requestParam int|width The desired width of video playback to return with the embed code
-	 * @requestParam boolean|autoplay Whether the video should play immediately on page load
-	 * @responseParam string|videoId A unique identifier for the video title given
-	 * @responseParam string|asset A URL for the video
-	 * @responseParam string|embedCode The HTML to embed on the page to play the video given by fileTitle
+ 	 * @requestParam string fileTitle The title of the video to find the embed code for
+	 * @requestParam int width The desired width of video playback to return with the embed code
+	 * @requestParam boolean autoplay Whether the video should play immediately on page load
+	 * @responseParam string videoId A unique identifier for the video title given
+	 * @responseParam string asset A URL for the video
+	 * @responseParam string embedCode The HTML to embed on the page to play the video given by fileTitle
 	 */
 	public function getEmbedCode( ) {
 		$title = $this->getVal( 'fileTitle', '' );
@@ -32,13 +33,19 @@ class VideoHandlerController extends WikiaController {
 				$error = wfMessage( 'videohandler-error-missing-parameter', 'width' )->inContentLanguage()->text();
 			} else {
 				$title = Title::newFromText( $title, NS_FILE );
+
+				/** @var LocalFile|WikiaLocalFileShared $file */
 				$file = ( $title instanceof Title ) ? wfFindFile( $title ) : false;
 				if ( $file === false ) {
 					$error = wfMessage( 'videohandler-error-video-no-exist' )->inContentLanguage()->text();
 				} else {
 					$videoId = $file->getVideoId();
 					$assetUrl = $file->getPlayerAssetUrl();
-					$embedCode = $file->getEmbedCode( $width, $autoplay, true );
+					$options = [
+						'autoplay' => $autoplay,
+						'isAjax' => true,
+					];
+					$embedCode = $file->getEmbedCode( $width, $options );
 					$this->setVal( 'videoId', $videoId );
 					$this->setVal( 'asset', $assetUrl );
 					$this->setVal( 'embedCode', $embedCode );
@@ -56,12 +63,12 @@ class VideoHandlerController extends WikiaController {
 	 * useful when a video of the same name from youtube (or other non-premium provider) exists on the local wiki
 	 * and we want to show the equivalent video from the video wiki.  See also getEmbedCode in this controller.
 	 *
-	 * @requestParam string|fileTitle The title of the video to find the embed code for
-	 * @requestParam int|width The desired width of video playback to return with the embed code
-	 * @requestParam boolean|autoplay Whether the video should play immediately on page load
-	 * @responseParam string|videoId A unique identifier for the video title given
-	 * @responseParam string|asset A URL for the video
-	 * @responseParam string|embedCode The HTML to embed on the page to play the video given by fileTitle
+	 * @requestParam string fileTitle The title of the video to find the embed code for
+	 * @requestParam int width The desired width of video playback to return with the embed code
+	 * @requestParam boolean autoplay Whether the video should play immediately on page load
+	 * @responseParam string videoId A unique identifier for the video title given
+	 * @responseParam string asset A URL for the video
+	 * @responseParam string embedCode The HTML to embed on the page to play the video given by fileTitle
 	 */
 	public function getPremiumEmbedCode( ) {
 		// Pass through all the same parameters
@@ -80,26 +87,6 @@ class VideoHandlerController extends WikiaController {
 		foreach ( $response as $key => $val ) {
 			$this->setVal( $key, $val );
 		}
-	}
-
-	public function getSanitizedOldVideoTitleString( ) {
-		$sTitle = $this->getVal( 'videoText', '' );
-
-		$prefix = '';
-		if ( strpos( $sTitle, ':' ) === 0 ) {
-			$sTitle = substr( $sTitle, 1 );
-			$prefix = ':';
-		}
-		if ( empty( $sTitle ) ) {
-			$this->setVal( 'error', 1 );
-		}
-
-		$sTitle = VideoFileUploader::sanitizeTitle( $sTitle, '_' );
-
-		$this->setVal(
-			'result',
-			$prefix.$sTitle
-		);
 	}
 
 	/**
@@ -245,7 +232,9 @@ class VideoHandlerController extends WikiaController {
 	}
 
 	/**
-	 * Exposes the VideoHandlerHelper::getVideoDetail method from this controller
+	 * Exposes the VideoHandlerHelper::getVideoDetail method from this controller. If fileTitle is passed
+	 * to this method as a string, return a single associative array containing details for that video. Otherwise,
+	 * return an indexed array containing one associative array per video.
 	 * @requestParam array|string fileTitle - The title of the file to get details for
 	 * @requestParam array videoOptions
 	 *   [ array( 'thumbWidth' => int, 'thumbHeight' => int, 'postedInArticles' => int, 'getThumbnail' => bool, 'thumbOptions' => array ) ]
@@ -255,25 +244,49 @@ class VideoHandlerController extends WikiaController {
 	public function getVideoDetail() {
 		wfProfileIn( __METHOD__ );
 
-		$fileTitle = $this->getVal( 'fileTitle', array() );
-		$videoOptions = $this->getVal( 'videoOptions', array() );
+		$fileTitle = $this->getVal( 'fileTitle', [] );
+		$returnSingleVideo = is_string( $fileTitle );
+		$fileTitleAsArray = wfReturnArray( $fileTitle );
+		$videoOptions = $this->getVideoOptionsWithDefaults( $this->getVal( 'videoOptions', [] ) );
 
-		if ( is_string( $fileTitle ) ) {
-			$singleFile = true;
-			$fileTitles = [ $fileTitle ];
-		} else {
-			$singleFile = false;
-			$fileTitles = $fileTitle;
-		}
+		$memcKey= wfMemcKey( __FUNCTION__, md5( serialize( [ $fileTitleAsArray, $videoOptions ] ) ) );
+		$videos = WikiaDataAccess::cache(
+			$memcKey,
+			WikiaResponse::CACHE_STANDARD,
+			function() use ( $fileTitleAsArray, $videoOptions ) {
+				return $this->getDetailsForVideoTitles( $fileTitleAsArray, $videoOptions );
+			}
+		);
 
+		// If file title was passed in as a string, return single associative array.
+		$this->detail = ( !empty( $videos ) && $returnSingleVideo ) ? array_pop( $videos ) : $videos;
+		$this->response->setCacheValidity( WikiaResponse::CACHE_STANDARD );
+
+		wfProfileOut( __METHOD__ );
+	}
+
+	/**
+	 * @param array $videoOptions
+	 * @return array
+	 */
+	private function getVideoOptionsWithDefaults( array $videoOptions ) {
 		if ( !array_key_exists( 'thumbWidth', $videoOptions ) ) {
 			$videoOptions['thumbWidth'] = self::DEFAULT_THUMBNAIL_WIDTH;
 		}
-
 		if ( !array_key_exists( 'thumbHeight', $videoOptions ) ) {
 			$videoOptions['thumbHeight'] = self::DEFAULT_THUMBNAIL_HEIGHT;
 		}
+		return $videoOptions;
+	}
 
+	/**
+	 * Given an array of video titles, and an array of videoOptions (see getVideoDetails for more info)
+	 * return a list of those videos with fleshed out details (eg thumbnail, videoKey, embedUrl, etc)
+	 * @param array $fileTitles
+	 * @param array $videoOptions
+	 * @return array
+	 */
+	private function getDetailsForVideoTitles( array $fileTitles, array $videoOptions ) {
 		$videos = [];
 		$helper = new VideoHandlerHelper();
 		foreach ( $fileTitles as $fileTitle ) {
@@ -282,10 +295,7 @@ class VideoHandlerController extends WikiaController {
 				$videos[] = $detail;
 			}
 		}
-
-		$this->detail = ( !empty( $videos ) && $singleFile ) ? array_pop( $videos ) : $videos;
-
-		wfProfileOut( __METHOD__ );
+		return $videos;
 	}
 
 	/**
@@ -298,7 +308,7 @@ class VideoHandlerController extends WikiaController {
 	 * @requestParam integer width - the width of the thumbnail to return
 	 * @requestParam integer height - the height of the thumbnail to return
 	 * @requestParam integer detail [0/1] - check for getting video detail
-	 * @responseParam array $videos
+	 * @responseParam array
 	 *   [array('title'=>value, 'provider'=>value, 'addedAt'=>value,'addedBy'=>value, 'duration'=>value, 'viewsTotal'=>value)]
 	 */
 	public function getVideoList() {
@@ -353,5 +363,4 @@ class VideoHandlerController extends WikiaController {
 
 		wfProfileOut( __METHOD__ );
 	}
-
 }

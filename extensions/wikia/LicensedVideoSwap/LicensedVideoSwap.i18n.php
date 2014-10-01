@@ -333,6 +333,21 @@ $messages['ce'] = array(
 	'lvs-posted-in-more' => 'кхин дӀа',
 );
 
+/** Czech (čeština)
+ * @author H4nek
+ */
+$messages['cs'] = array(
+	'lvs-callout-title-quality' => 'Vysoká kvalita',
+	'lvs-callout-reason-quality' => 'Wikia videa jsou vysoce kvalitní',
+	'lvs-callout-title-collaborative' => 'Kolaborativní',
+	'lvs-callout-reason-collaborative' => 'Wikia videa jsou založená na spolupráci a mohou být použita napříč různými wiki',
+	'lvs-instructions-header' => 'Jak používat tuto stránku',
+	'lvs-button-keep' => 'Ponechat',
+	'lvs-button-swap' => 'Zaměnit',
+	'lvs-button-yes' => 'Ano',
+	'lvs-button-no' => 'Ne',
+);
+
 /** German (Deutsch)
  * @author Avatar
  * @author Metalhead64
@@ -729,6 +744,9 @@ $messages['ja'] = array(
 	'lvs-button-swap' => '差し替え',
 	'lvs-button-yes' => 'はい',
 	'lvs-button-no' => 'いいえ',
+	'lvs-undo-swap' => '元に戻す',
+	'lvs-undo-keep' => '元に戻す',
+	'lvs-click-here' => 'こちらをクリック',
 );
 
 /** Kannada (ಕನ್ನಡ)
@@ -1294,6 +1312,7 @@ $messages['tr'] = array(
 
 /** Ukrainian (українська)
  * @author Andriykopanytsia
+ * @author Mykola Swarnyk
  */
 $messages['uk'] = array(
 	'licensedvideoswap' => 'Обмін на ліцензійне відео',
@@ -1318,7 +1337,7 @@ $messages['uk'] = array(
 	'lvs-button-swap' => 'Обмін',
 	'lvs-button-yes' => 'Так',
 	'lvs-button-no' => 'Ні',
-	'lvs-more-suggestions' => 'більше пропозицій',
+	'lvs-more-suggestions' => 'Більше пропозицій',
 	'lvs-best-match-label' => 'Найкращий ліцензований збіг з Вікія відео',
 	'lvs-undo-swap' => 'Відмінити',
 	'lvs-undo-keep' => 'Відмінити',
@@ -1365,20 +1384,30 @@ $messages['vi'] = array(
 	'lvs-tooltip-history' => 'Nút cấp phép trao đổi Video',
 	'lvs-history-button-text' => 'Lịch sử',
 	'lvs-page-header-back-link' => 'Quay lại cấp phép trao đổi Video',
+	'lvs-callout-header' => 'Chúng tôi nhận thấy các tệp vidoe của wiki bạn trên Wikia Video. Hãy thay đổi các video của bạn thành video từ Wikia Video là một ý tưởng rất tốt, bởi vì:',
+	'lvs-match-stats-description' => 'Video<br />phù hợp',
 	'lvs-callout-title-licensed' => '100% có giấy phép',
+	'lvs-callout-reason-licensed' => 'Wikia Videos có giấy phép cho cộng đồng của chúng tôi. Được cho phép sử dụng trên wiki của bạn.',
 	'lvs-callout-title-quality' => 'Chất lượng cao',
 	'lvs-callout-reason-quality' => 'Video Wikia có chất lượng cao',
 	'lvs-callout-title-collaborative' => 'Cộng tác',
 	'lvs-callout-reason-collaborative' => 'Video Wikia được cộng tác và có thể được sử dụng trên nhiều wiki',
 	'lvs-callout-reason-more' => 'và nhiều hơn nữa... chúng tôi sẽ thêm nhiều tính năng và cách để sử dụng và quản lý video Wikia dễ dàng. Hãy chờ!',
 	'lvs-instructions-header' => 'Cách dùng trang này',
+	'lvs-instructions' => 'Bất kỳ video mà bạn đang nhúng trên wiki của bạn trước khi không có sẵn khi chúng bị xóa hoặc gỡ bỏ xuống vì vi phạm bản quyền. Đó là tại sao Wikia lại có giấy phép [[w:c:video|trên hàng nghìn video]] để sử dụng trên wiki của bạn từ các đối tác nội dung. Trên trang đặc biệt là một hướng cho bạn dễ dàng nhìn thấy nếu chúng tôi có giấy phép được sao chép giống nhau hoặc các video tương tự trên wiki của bạn. Xin vui lòng lưu ý, video giống nhau có thể chính xác và có một hình thu nhỏ video khác nhau vì vậy tốt nhất để xem xét các video trước khi bạn đưa ra quyết định. Trao đổi vui vẻ!',
 	'lvs-button-keep' => 'Giữ',
 	'lvs-button-swap' => 'Trao đổi',
 	'lvs-button-yes' => 'Có',
 	'lvs-button-no' => 'Không',
-	'lvs-more-suggestions' => 'gợi ý thêm',
+	'lvs-more-suggestions' => 'Gợi ý thêm',
+	'lvs-best-match-label' => 'Giấy phép tốt nhất tìm thấy trong Wikia Video',
 	'lvs-undo-swap' => 'Hoàn tác',
 	'lvs-undo-keep' => 'Hoàn tác',
+	'lvs-swap-video-success' => 'Xin chúc mừng. Video gốc của bạn đã bị xóa vĩnh viễn và các trường hợp trên video. Bao gồm thông tin nhung, đã đổi thành công với Wikia Video phù hợp. $1',
+	'lvs-keep-video-success' => 'Bạn đã chọn để giữ cho video của bạn. Video đã được xóa khỏi danh sách này. $1',
+	'lvs-restore-video-success' => 'Bạn đã khôi phục lại các video vào danh sách này.',
+	'lvs-click-here' => 'nhấn vào đây',
+	'lvs-new-flag' => 'Mới',
 );
 
 /** Wu (吴语)
@@ -1402,10 +1431,13 @@ $messages['zh-hans'] = array(
 	'licensedvideoswap' => '授权视频剪辑',
 	'action-licensedvideoswap' => '交换未授权的视频',
 	'lvs-page-title' => '授权视频剪辑',
+	'lvs-history-page-title' => '已授权的视频交换历史',
+	'lvs-tooltip-history' => '已授权的视频交换按钮',
 	'lvs-history-button-text' => '历史',
 	'lvs-page-header-back-link' => '回到已授权视频的交换',
 	'lvs-match-stats-description' => '匹配的<br />视频',
 	'lvs-callout-title-licensed' => '100%已授权',
+	'lvs-callout-reason-licensed' => 'Wikia视频由我们社群许可用于您的wiki',
 	'lvs-callout-title-quality' => '高清',
 	'lvs-callout-reason-quality' => 'Wikia视频都是高清的',
 	'lvs-callout-title-collaborative' => '协作',
@@ -1418,6 +1450,7 @@ $messages['zh-hans'] = array(
 	'lvs-best-match-label' => '来自Wikia视频的最好许可协议匹配',
 	'lvs-undo-swap' => '撤销',
 	'lvs-undo-keep' => '撤销',
+	'lvs-restore-video-success' => '您将视频恢复至此列表。',
 	'lvs-error-permission' => '您不能交换此视频。',
 	'lvs-error-permission-access' => '您不能访问此页面。',
 	'lvs-error-invalid-page-status' => '您无法恢复此视频。',

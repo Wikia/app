@@ -10,7 +10,11 @@
 
 <div id="ad-skin" class="wikia-ad noprint"></div>
 
-<?= $app->renderView('GlobalHeader', 'Index') ?>
+<? if ( !empty( $wg->EnableGlobalNavExt ) ): ?>
+	<?= $app->renderView('GlobalNavigation', 'index') ?>
+<? else: ?>
+	<?= $app->renderView('GlobalHeader', 'Index') ?>
+<? endif ?>
 <?= $app->renderView('Notifications', 'Confirmation') ?>
 <?= $app->renderView('Ad', 'Top') ?>
 
@@ -94,7 +98,7 @@
 						}
 
 						if (!WikiaPageType::isCorporatePage() && !WikiaPageType::isMainPage() && $wg->AdDriverUseTopInContentBoxad) {
-							echo $app->renderView('Ad', 'Index', ['slotName' => 'TOP_IN_CONTENT_BOXAD']);
+							echo $app->renderView('Ad', 'Index', ['slotName' => 'TOP_INCONTENT_BOXAD']);
 						}
 
 					?>
@@ -124,12 +128,25 @@
 				}
 				?>
 
+				<?php
+					if ( !empty( $wg->EnableMonetizationModuleExt ) && !empty( $monetizationModules[MonetizationModuleHelper::SLOT_TYPE_BELOW_CATEGORY] ) ) {
+						echo $monetizationModules[MonetizationModuleHelper::SLOT_TYPE_BELOW_CATEGORY];
+					}
+				?>
+
 				<?php if (!empty($afterContentHookText)) { ?>
 					<div id="WikiaArticleFooter" class="WikiaArticleFooter">
 						<?= $afterContentHookText ?>
 					</div>
 				<?php } ?>
 
+				<?php
+					if ( !empty( $wg->EnableMonetizationModuleExt ) ) {
+						if ( !empty( $monetizationModules[MonetizationModuleHelper::SLOT_TYPE_ABOVE_FOOTER] ) ) {
+							echo $monetizationModules[MonetizationModuleHelper::SLOT_TYPE_ABOVE_FOOTER];
+						}
+					}
+				?>
 				<div id="WikiaArticleBottomAd" class="noprint">
 					<?= $app->renderView('Ad', 'Index', ['slotName' => 'PREFOOTER_LEFT_BOXAD']) ?>
 					<?= $app->renderView('Ad', 'Index', ['slotName' => 'PREFOOTER_RIGHT_BOXAD']) ?>
@@ -148,8 +165,8 @@
 		?>
 
 		<?= empty($wg->SuppressFooter) ? $app->renderView('Footer', 'Index') : '' ?>
-		<? if(!empty($wg->EnableWikiaHomePageExt)) echo $app->renderView('WikiaHomePage', 'footer') ?>
-		<?= $app->renderView('CorporateFooter', 'Index') ?>
+		<? if(!empty($wg->EnableCorporateFooterExt)) echo $app->renderView('CorporateFooter', 'index') ?>
+		<? if(!empty($wg->EnableGlobalFooterExt)) echo $app->renderView('GlobalFooter', 'index') ?>
 	</div>
 </section><!--WikiaPage-->
 

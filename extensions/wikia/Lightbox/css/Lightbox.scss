@@ -1,11 +1,12 @@
-@import "skins/oasis/css/mixins/arrow";
-@import "skins/oasis/css/mixins/background-opacity";
-@import "skins/oasis/css/mixins/box-shadow";
-@import "skins/oasis/css/mixins/box-sizing-border-box";
-@import "skins/oasis/css/mixins/clearfix";
-@import "skins/oasis/css/mixins/transition";
-@import "skins/oasis/css/core/color";
+@import "skins/shared/mixins/arrow";
+@import "skins/shared/mixins/background-opacity";
+@import "skins/shared/mixins/box-shadow";
+@import "skins/shared/mixins/box-sizing-border-box";
+@import "skins/shared/mixins/clearfix";
+@import "skins/shared/mixins/transition";
+@import "skins/shared/color";
 @import "mixins/sprite-Lightbox";
+@import "extensions/wikia/VideoHandlers/css/crunchyrollWidget";
 
 $lightbox-overlay-show-duration: 200ms;
 $lightbox-overlay-hide-duration: 600ms;
@@ -580,4 +581,8 @@ $color-lightbox-border: mix($color-page-border, $color-page, 75%);
 // Error template styles
 .modalWrapper .modalToolbar .close {
 	margin: 0;
+}
+
+.modalWrapper .media {
+	@include crunchyrollWidget;
 }

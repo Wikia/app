@@ -3,9 +3,9 @@
  *
  * Styles for the creation/editing UI of TopLists extension, Oasis skin
  */
-@import "../../../../skins/oasis/css/core/color";
-@import "../../../../skins/oasis/css/mixins/gradient";
-@import "../../../../skins/oasis/css/mixins/forms";
+@import "skins/shared/color";
+@import "skins/shared/mixins/gradient";
+@import "skins/shared/mixins/forms";
 @import "mixins";
 
 $item-height: 60px;

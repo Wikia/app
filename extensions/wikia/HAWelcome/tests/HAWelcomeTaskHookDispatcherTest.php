@@ -29,7 +29,13 @@ class HAWelcomeTaskHookDispatcherTest extends WikiaBaseTest {
 	}
 
 	public function testDispatchAnonymousUser() {
-		$dispatcher = $this->getMock( '\HAWelcomeTaskHookDispatcher', ['welcomeMessageDisabled', 'hasContributorBeenWelcomedRecently'] );
+		$dispatcher = $this->getMock( '\HAWelcomeTaskHookDispatcher', [
+			'welcomeMessageDisabled',
+			'hasContributorBeenWelcomedRecently',
+			'markHAWelcomePosted',
+			'getTitleObjectFromRevision',
+			'queueWelcomeTask',
+			] );
 
 		$dispatcher->expects( $this->once() )
 			->method( 'welcomeMessageDisabled' )
@@ -39,12 +45,26 @@ class HAWelcomeTaskHookDispatcherTest extends WikiaBaseTest {
 			->method( 'hasContributorBeenWelcomedRecently' )
 			->will( $this->returnValue( false ) );
 
+		$dispatcher->expects( $this->once() )
+			->method( 'markHAWelcomePosted' )
+			->will( $this->returnValue( null ) );
 
 		$revision = $this->getMock( '\Revision', ['getRawUser'], [], '', false );
 
 		$revision->expects( $this->once() )
 			->method( 'getRawUser' )
 			->will( $this->returnValue( 0 ) );
+
+		$title = $this->getMock( '\Title', [] );
+
+		$dispatcher->expects( $this->once() )
+			->method( 'getTitleObjectFromRevision' )
+			->will( $this->returnValue( $title ) );
+
+		$dispatcher->expects( $this->once() )
+			->method( 'queueWelcomeTask' )
+			->with( $title )
+			->will( $this->returnValue( null ) );
 
 		$dispatcher->setRevisionObject( $revision );
 		$this->assertTrue( $dispatcher->dispatch() );

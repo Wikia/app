@@ -32,7 +32,7 @@
  *
  * @ingroup FileAbstraction
  */
-abstract class File {
+abstract class File implements \Wikia\Vignette\FileInterface {
 	const DELETED_FILE = 1;
 	const DELETED_COMMENT = 2;
 	const DELETED_USER = 4;
@@ -1001,18 +1001,13 @@ abstract class File {
 		$title = $this->getTitle();
 		if ( $title ) {
 			// Wikia change begin @author Scott Rabin (srabin@wikia-inc.com)
-			if ( TaskRunner::isModern('HTMLCacheUpdate') ) {
-				global $wgCityId;
+			global $wgCityId;
 
-				$task = ( new \Wikia\Tasks\Tasks\HTMLCacheUpdateTask() )
-					->wikiId( $wgCityId )
-					->title( $title );
-				$task->call( 'purge', 'imagelinks' );
-				$task->queue();
-			} else {
-				$update = new HTMLCacheUpdate( $title, 'imagelinks' );
-				$update->doUpdate();
-			}
+			$task = ( new \Wikia\Tasks\Tasks\HTMLCacheUpdateTask() )
+				->wikiId( $wgCityId )
+				->title( $title );
+			$task->call( 'purge', 'imagelinks' );
+			$task->queue();
 			// Wikia change end
 		}
 	}

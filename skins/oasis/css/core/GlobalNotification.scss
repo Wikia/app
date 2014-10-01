@@ -1,6 +1,6 @@
 @import "layout";
-@import "../mixins/box-sizing-border-box";
-@import "../mixins/calc";
+@import "skins/shared/mixins/box-sizing-border-box";
+@import "skins/shared/mixins/calc";
 
 .global-notification {
 	@include box-shadow(0px, 2px, 5px, darken($color-page,12%));

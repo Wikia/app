@@ -63,13 +63,9 @@ class SMWRefreshJob extends Job {
 
 		if ( !empty( $jobParams ) ) {
 			// wikia change start - jobqueue migration
-			if ( TaskRunner::isModern( 'SMWRefreshJob' ) ) {
-				$task = new \Wikia\Tasks\Tasks\JobWrapperTask();
-				$task->call( 'SMWRefreshJob', $this->title, $jobParams );
-			} else {
-				$nextjob = new SMWRefreshJob( $this->title, $jobParams );
-				$nextjob->insert();
-			}
+			$task = new \Wikia\Tasks\Tasks\JobWrapperTask();
+			$task->call( 'SMWRefreshJob', $this->title, $jobParams );
+			$task->queue();
 			// wikia change end
 		}
 

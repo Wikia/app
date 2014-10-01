@@ -17,7 +17,7 @@
  *		},
  *		insertFinalVideoParams: [], // tell the back end anything extra when inserting the video at the end
  *		startPoint: 1 | 2, // display first or second screen when VET opens
- *		searchOrder: "newest" // Used in MarketingToolbox
+ *		searchOrder: "newest" // Used in EditHub
  *	}
  */
 

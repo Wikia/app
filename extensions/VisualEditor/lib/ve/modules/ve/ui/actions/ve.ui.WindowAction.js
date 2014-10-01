@@ -58,7 +58,7 @@ ve.ui.WindowAction.prototype.open = function ( name, data ) {
 	} else if ( windowClass.prototype instanceof ve.ui.Inspector ) {
 		win = this.surface.getContext().getInspector( name );
 	}
-	win.open( fragment, data );
+	win.open( fragment, data, this.surface );
 };
 
 /* Registration */

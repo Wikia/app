@@ -363,7 +363,7 @@ class IvaFeedIngester extends VideoFeedIngester {
 		'Spin City' => array( 668757 ),
 		'Star Trek' => array( 92386 ),
 		'Star Trek, Star Trek: The Next Generation' => array( 3860 ),
-		'Star Wars, Star Wars The Clone Wars' => array( 665563, 168621 ),
+		'Star Wars, Star Wars The Clone Wars' => [ 665563, 168621, 682720 ],
 		'Storage Wars' => array( 845591 ),
 		'Storage Wars, Storage Wars: Texas' => array( 121611 ),
 		'Strikeforce' => array( 931820 ),
@@ -441,6 +441,25 @@ class IvaFeedIngester extends VideoFeedIngester {
 		'The Goodwin Games' => array( 268664 ),
 		'Deception' => array( 730834 ),
 		'The Americans' => array( 934933 ),
+		'Gotham' => [ 14924 ],
+		'Penny Dreadful' => [ 304089 ],
+		'Orphan Black' => [ 731971 ],
+		'Sleepy Hollow' => [ 326245 ],
+		'Hannibal' => [ 575155 ],
+		'Extant' => [ 941342 ],
+		'Crossbones' => [ 348355 ],
+		'Defiance' => [ 90566 ],
+		'Constantine' => [ 228617 ],
+		'Under the Dome' => [ 565426 ],
+		'State of Affairs' => [ 83930 ],
+		'Star Wars Rebels' => [ 402210 ],
+		'Adventure Time' => [ 229351 ],
+		'Star Wars Episode I: The Phantom Menace' => [ 481313 ],
+		'Return of the Jedi' => [ 2701 ],
+		'Lego Star Wars: The Empire Strikes Out' => [ 285876 ],
+		'The Empire Strikes Back' => [ 2846 ],
+		'Star Wars' => [ 3883 ],
+		'Star Wars Episode II: Attack of the Clones' => [ 862846 ],
 	);
 
 	// exclude song and movie types
@@ -562,7 +581,8 @@ class IvaFeedIngester extends VideoFeedIngester {
 
 				$videoAssets = $program['VideoAssets']['results'];
 				$numVideos = count( $videoAssets );
-				print( "{$program['title']} (Series:{$clipData['series']}): ");
+				$title =  $this->getTitleFromProgram( $program );
+				print( "$title (Series:{$clipData['series']}): ");
 				$this->videoFound( $numVideos );
 
 				// add video assets
@@ -672,8 +692,7 @@ class IvaFeedIngester extends VideoFeedIngester {
 
 		$clipData = array();
 
-		$program['title'] = empty( $program['DisplayTitle'] ) ? trim( $program['Title'] ) : trim( $program['DisplayTitle'] );
-		$program['title'] = $this->updateTitle( $program['title'] );
+		$program['title'] = $this->getTitleFromProgram( $program );
 
 		// get series
 		$clipData['series'] = empty( $videoParams['series'] ) ? $program['title'] : $videoParams['series'];
@@ -743,9 +762,12 @@ class IvaFeedIngester extends VideoFeedIngester {
 
 	/**
 	 * Get clip data from asset data
+	 *
 	 * @param array $videoParams
 	 * @param array $videoAsset - asset data from API
 	 * @param array|false $clipData
+	 *
+	 * @return array|bool|false
 	 */
 	protected function getDataFromAsset( $videoParams, $videoAsset, $clipData ) {
 		wfProfileIn( __METHOD__ );
@@ -1038,7 +1060,10 @@ class IvaFeedIngester extends VideoFeedIngester {
 
 	/**
 	 * Generate an MD5 hash from the IVA App Key combined with the URL and append to the URL
+	 *
 	 * @param string $url - The URL to base the hash on
+	 * @param $bitrate
+	 *
 	 * @return string $url - URL including hash value
 	 */
 	protected function generateHash( $url, $bitrate ) {
@@ -1062,4 +1087,13 @@ class IvaFeedIngester extends VideoFeedIngester {
 		return $title;
 	}
 
+	/**
+	 * Get the title of program - Entertainment Program data from API
+	 * @param array $program
+	 * @return string
+	 */
+	protected function getTitleFromProgram( array $program ) {
+		$title = empty( $program['DisplayTitle'] ) ? $program['Title'] : $program['DisplayTitle'];
+		return $this->updateTitle( trim( $title ) );
+	}
 }

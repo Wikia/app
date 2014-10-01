@@ -16,11 +16,13 @@ class ChatHelper {
 	 * Hooks into GetRailModuleList and adds the chat module to the side-bar when appropriate.
 	 */
 	static public function onGetRailModuleList(&$modules) {
-		global $wgUser;
 		wfProfileIn(__METHOD__);
 
+		// Make sure this module is positioned above the VideosModule (1285) when the user is logged in.  VID-1780
+		$pos = F::app()->wg->User->isAnon() ? 1175 : 1286;
+
 		// Above spotlights, below everything else. BugzId: 4597.
-		$modules[1175] = array('ChatRail', 'placeholder', null);
+		$modules[$pos] = array('ChatRail', 'placeholder', null);
 
 		wfProfileOut(__METHOD__);
 		return true;
@@ -60,9 +62,10 @@ class ChatHelper {
 
 		$server = self::getChatConfig($type.'ChatServers');
 		$serversCount = count($server[self::getServerBasket()]);
+		$serverId = ($wgCityId%$serversCount) + 1;
 
 		$out = explode(':', $server[self::getServerBasket()][$wgCityId%$serversCount]);
-		return array('host' => $out[0], 'port' => $out[1]);
+		return array('host' => $out[0], 'port' => $out[1], 'serverId' => $serverId);
 	}
 
 	static public function getChatCommunicationToken() {

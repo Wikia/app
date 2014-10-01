@@ -32,6 +32,9 @@ class WikiaMaps extends WikiaObject {
 
 	const DB_DUPLICATE_ENTRY ='ER_DUP_ENTRY';
 
+	const MAP_NOT_DELETED = 0;
+	const MAP_DELETED = 1;
+
 	/**
 	 * @var array API connection config
 	 */
@@ -194,10 +197,39 @@ class WikiaMaps extends WikiaObject {
 	 * @param array $params Additional get params
 	 * @return string URL
 	 */
-	public function getMapRenderUrl( Array $segments, Array $params = []) {
+	public function getMapRenderUrl( Array $segments, Array $params = [] ) {
 		array_unshift( $segments, self::ENTRY_POINT_RENDER );
-		$params[ 'uselang' ] = $this->wg->lang->getCode();
 		return $this->buildUrl( $segments, $params );
+	}
+
+	/**
+	 * Returns a list of params for the
+	 *
+	 * @param Integer $mapCityId
+	 *
+	 * @return array
+	 */
+	public function getMapRenderParams( $mapCityId ) {
+		$params = [];
+		$params[ 'uselang' ] = $this->wg->Lang->getCode();
+
+		if( $this->shouldHideAttribution( $mapCityId ) ) {
+			$params[ 'hideAttr' ] = '1';
+		}
+
+		return $params;
+	}
+
+	/**
+	 * Decides where to hide attribution bar on a map
+	 * For now only for usages inside community that created the map
+	 *
+	 * @param Integer $mapCityId
+	 *
+	 * @return bool
+	 */
+	public function shouldHideAttribution( $mapCityId ) {
+		return intval( $mapCityId ) === intval( $this->wg->CityId );
 	}
 
 	/**
@@ -253,12 +285,13 @@ class WikiaMaps extends WikiaObject {
 	 * Sends a request to delete a map instance
 	 *
 	 * @param integer $mapId
+	 * @param integer $deleted Is map being deleted or undeleted
 	 *
 	 * @return bool
 	 */
-	public function deleteMapById( $mapId ) {
+	public function updateMapDeletionStatus( $mapId, $deleted ) {
 		$payload = [
-			'deleted' => true
+			'deleted' => $deleted
 		];
 		$url = $this->buildUrl( [ self::ENTRY_POINT_MAP, $mapId ] );
 		return $this->putRequest( $url, $payload );
@@ -305,6 +338,18 @@ class WikiaMaps extends WikiaObject {
 		//TODO: consider caching the response
 		$response = $this->sendGetRequest( $url );
 
+		if ( $response[ 'success' ] ) {
+			foreach ( $response[ 'content' ] as &$parentPoiCategory ) {
+				if ( isset( $parentPoiCategory->name ) ) {
+					// MOB-2272 - translate default POI categories names
+					$msgKey = 'wikia-interactive-maps-poi-categories-default-' . mb_strtolower( $parentPoiCategory->name );
+					$parentPoiCategory->name = wfMessage( $msgKey )->plain();
+				}
+
+				$parentPoiCategory = array_intersect_key( (array) $parentPoiCategory, array_flip( [ 'id', 'name' ] ) );
+			}
+		}
+
 		return $response;
 	}
 
@@ -345,7 +390,7 @@ class WikiaMaps extends WikiaObject {
 	 * @return Array
 	 */
 	public function deletePoiCategory( $poiCategoryId ) {
-		$this->deleteRequest(
+		return $this->deleteRequest(
 			$this->buildUrl( [ self::ENTRY_POINT_POI_CATEGORY, $poiCategoryId ] )
 		);
 	}

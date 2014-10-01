@@ -1,7 +1,7 @@
-@import "skins/oasis/css/mixins/gradient";
-@import "skins/oasis/css/mixins/ellipses";
-@import "skins/oasis/css/core/color";
-@import "skins/oasis/css/mixins/calc";
+@import "skins/shared/mixins/gradient";
+@import "skins/shared/mixins/ellipses";
+@import "skins/shared/color";
+@import "skins/shared/mixins/calc";
 
 $content-color: #fff;
 $secondary-content-color: #ccc;
@@ -13,6 +13,7 @@ $max-view-button-width: 230px;
 $modal-header-footer-height: 45px;
 
 .wikia-interactive-map-thumbnail {
+	clear: both;
 	cursor: pointer;
 	height: $default-height;
 	line-height:22px;
@@ -81,17 +82,19 @@ $modal-header-footer-height: 45px;
 		padding: 8px 11px 8px 35px;
 		position: absolute;
 		right: 20px;
-
-		&:hover {
-			background-color: #fff;
-			color: $color-buttons;
-		}
 	}
 }
 
-.modal.large iframe[name="wikia-interactive-map"] {
+.modal.large .wikia-interactive-map-wrapper {
 	@include height-calc('100% - #{$modal-header-footer-height * 2}');
 	left: 0;
 	position: absolute;
 	top: $modal-header-footer-height;
 }
+
+.wikia-interactive-map-wrapper {
+	height: 100%;
+	position: relative;
+	width: 100%;
+}
+

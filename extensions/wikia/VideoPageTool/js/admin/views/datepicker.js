@@ -1,5 +1,5 @@
 /**
- * @description Generalized view for jQuery.ui Datepicker, based/refactored from SpecialMarketingToolbox implementation
+ * @description Generalized view for jQuery.ui Datepicker, based/refactored from SpecialEditHub implementation
  * @dependencies Model datepicker
  */
 define('videopageadmin.views.datepicker', [

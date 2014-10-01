@@ -462,7 +462,8 @@ class SIOHandler {
 
 		foreach ( $jobs as $i => $job ) {
 			// wikia change start - jobqueue migration
-			$jobTitle = TaskRunner::isModern( 'SMWUpdateJob' ) ? $job->getTitle() : $job->title;
+			/** @var \Wikia\Tasks\Tasks\BaseTask $job */
+			$jobTitle = $job->getTitle();
 			$title = Title::makeTitleSafe( $jobTitle->getNamespace(), $jobTitle->getText() );
 			$id = $title->getArticleID();
 			$uniqueTitles[$id] = $title;
@@ -472,13 +473,9 @@ class SIOHandler {
 
 		foreach ( $uniqueTitles as $id => $title ) {
 			// wikia change start - jobqueue migration
-			if ( TaskRunner::isModern( 'SMWUpdateJob' ) ) {
-				$task = new \Wikia\Tasks\Tasks\JobWrapperTask();
-				$task->call( 'SMWUpdateJob', $title );
-				$jobs[] = $task;
-			} else {
-				$jobs[] = new SMWUpdateJob( $title );
-			}
+			$task = new \Wikia\Tasks\Tasks\JobWrapperTask();
+			$task->call( 'SMWUpdateJob', $title );
+			$jobs[] = $task;
 			// wikia change end
 		}
 
@@ -498,7 +495,8 @@ class SIOHandler {
 
 	 	foreach ( $allJobs as $job ) {
 		  // wikia change start - jobqueue migration
-		  $titleText = TaskRunner::isModern( 'SMWUpdateJob' ) ? $job->getTitle()->getText() : $job->title->getText();
+		  /** @var \Wikia\Tasks\Tasks\BaseTask $job */
+		  $titleText = $job->getTitle()->getText();
 	 		if ( strpos( $titleText, '#' ) === false ) { // wikia change end
 	 			$jobs[] = $job;
 	 		}

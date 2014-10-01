@@ -4452,28 +4452,18 @@ class Title {
 	 */
 	public function touchLinks() {
 		// Wikia Change Start @author Scott Rabin (srabin@wikia-inc.com)
-		if ( TaskRunner::isModern('HTMLCacheUpdate') ) {
-			global $wgCityId;
+		global $wgCityId;
 
-			$affectedTables = [ 'pagelinks' ];
-			if ( $this->getNamespace() == NS_CATEGORY ) {
-				$affectedTables[] = 'categorylinks';
-			}
-
-			$task = ( new \Wikia\Tasks\Tasks\HTMLCacheUpdateTask() )
-				->wikiId( $wgCityId )
-				->title( $this );
-			$task->call( 'purge', $affectedTables );
-			$task->queue();
-		} else {
-			$u = new HTMLCacheUpdate( $this, 'pagelinks' );
-			$u->doUpdate();
-
-			if ( $this->getNamespace() == NS_CATEGORY ) {
-				$u = new HTMLCacheUpdate( $this, 'categorylinks' );
-				$u->doUpdate();
-			}
+		$affectedTables = [ 'pagelinks' ];
+		if ( $this->getNamespace() == NS_CATEGORY ) {
+			$affectedTables[] = 'categorylinks';
 		}
+
+		$task = ( new \Wikia\Tasks\Tasks\HTMLCacheUpdateTask() )
+			->wikiId( $wgCityId )
+			->title( $this );
+		$task->call( 'purge', $affectedTables );
+		$task->queue();
 		// Wikia Change End
 	}
 

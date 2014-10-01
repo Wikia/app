@@ -206,7 +206,7 @@
 				Lightbox.openModal.removeClass('share-mode').removeClass('more-info-mode');
 				Lightbox.openModal.share.html('');
 				Lightbox.openModal.moreInfo.html('');
-			}).on('click.Lightbox', Lightbox.openModal.pin, function (evt) {
+			}).on('click.Lightbox', Lightbox.openModal.pin.selector, function (evt) {
 				// Pin the toolbar on icon click
 				var target = $(evt.target),
 					overlayActive = Lightbox.openModal.data('overlayactive'),
@@ -474,9 +474,14 @@
 				Lightbox.openModal.media.html('');
 			},
 			updateLightbox: function (data) {
+				var height = LightboxLoader.defaults.height;
+				if (data.extraHeight) {
+					height += data.extraHeight;
+				}
+
 				// Set lightbox css
 				var css = {
-						height: LightboxLoader.defaults.height
+						height: height
 					},
 					// prevent race conditions from timeout
 					trackingTitle = Lightbox.current.key;
@@ -1336,8 +1341,7 @@
 						var $thisThumb = $(this),
 							type = 'video',
 							title = $thisThumb.attr('data-video-name'),
-							key = $thisThumb.attr('data-video-key'),
-							playButtonSpan = Lightbox.thumbPlayButton;
+							key = $thisThumb.attr('data-video-key');
 
 						if (key) {
 							// Check for dupes
@@ -1351,7 +1355,7 @@
 								title: title,
 								key: key,
 								type: type,
-								playButtonSpan: playButtonSpan,
+								playButtonSpan: Lightbox.thumbPlayButton,
 								thumbWrapperClass: Lightbox.videoWrapperClass
 							});
 						}

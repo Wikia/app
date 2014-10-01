@@ -3,7 +3,7 @@
  * VisualEditor user interface WikiaSourceModeDialog class.
  */
 
-/*global mw*/
+/*global alert, mw, veTrack */
 
 /**
  * Dialog for editing wikitext in source mode.
@@ -64,6 +64,15 @@ ve.ui.WikiaSourceModeDialog.prototype.initialize = function () {
 	this.$body.append( this.sourceModeTextarea.$element );
 	this.$foot.append( this.$helpLink, this.applyButton.$element );
 	this.frame.$content.addClass( 've-ui-wikiaSourceModeDialog-content' );
+	// Add class to iframe body that is required for linksuggest styling
+	this.$( 'body' ).addClass( 'skin-oasis' );
+	// Initialize linksuggest on the dialog textarea
+	mw.loader.using(
+		'ext.wikia.LinkSuggest',
+		ve.bind( function () {
+			this.sourceModeTextarea.$input.linksuggest();
+		}, this )
+	);
 };
 
 /**
@@ -72,13 +81,14 @@ ve.ui.WikiaSourceModeDialog.prototype.initialize = function () {
 ve.ui.WikiaSourceModeDialog.prototype.getSetupProcess = function ( data ) {
 	return ve.ui.WikiaSourceModeDialog.super.prototype.getSetupProcess.call( this, data )
 		.first( function () {
-			this.target = data.target;
+			this.target = this.surface.getTarget();
 			this.openCount++;
 			this.timings.serializeStart = ve.now();
 		}, this )
 		.next( function () {
 			var doc = this.getFragment().getDocument();
-			this.$frame.startThrobbing();
+			this.$body.startThrobbing();
+			this.applyButton.setDisabled( true );
 			// Use the WikiaViewPageTarget object as the target here
 			this.target.serialize(
 				ve.dm.converter.getDomFromModel( doc, false ),
@@ -94,7 +104,8 @@ ve.ui.WikiaSourceModeDialog.prototype.getSetupProcess = function ( data ) {
 ve.ui.WikiaSourceModeDialog.prototype.onSerialize = function ( wikitext ) {
 	this.sourceModeTextarea.setValue( wikitext );
 	this.sourceModeTextarea.$input.focus();
-	this.$frame.stopThrobbing();
+	this.$body.stopThrobbing();
+	this.applyButton.setDisabled( false );
 
 	ve.track( 'wikia', {
 		'action': ve.track.actions.SUCCESS,
@@ -152,7 +163,8 @@ ve.ui.WikiaSourceModeDialog.prototype.parse = function ( ) {
  */
 ve.ui.WikiaSourceModeDialog.prototype.onParseSuccess = function ( response ) {
 	var target, parseStart;
-	if ( !response || response.error || !response.visualeditor || response.visualeditor.result !== 'success' ) {
+	if ( !response || response.error || !response.visualeditor ||
+		response.visualeditor.result !== 'success' || response.visualeditor.content === false ) {
 		return this.onParseError.call( this );
 	}
 
@@ -178,6 +190,8 @@ ve.ui.WikiaSourceModeDialog.prototype.onParseSuccess = function ( response ) {
 	target.activating = true;
 	target.edited = true;
 	target.doc = ve.createDocumentFromHtml( response.visualeditor.content );
+	target.docToSave = null;
+	target.clearPreparedCacheKey();
 	parseStart = this.timings.parseStart;
 	target.setupSurface( target.doc, ve.bind( function () {
 		this.startSanityCheck();
@@ -199,7 +213,12 @@ ve.ui.WikiaSourceModeDialog.prototype.onParseError = function ( ) {
 		'label': 'dialog-source-parse',
 		'value': ve.now() - this.timings.parseStart
 	} );
-	// TODO: error handling?
+	if ( window.veTrack ) {
+		veTrack( {
+			action: 'parsoid-parsewt-error'
+		} );
+	}
+	alert( ve.msg( 'wikia-visualeditor-save-error-generic' ) );
 };
 
 ve.ui.windowFactory.register( ve.ui.WikiaSourceModeDialog );

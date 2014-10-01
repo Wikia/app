@@ -27,10 +27,6 @@ $app = F::app();
 
 // classes
 $wgAutoloadClasses['Wikia\\Tasks\\Tasks\\ImageReviewTask'] = "{$dir}ImageReviewTask.class.php";
-$wgAutoloadClasses['ImageReviewTask'] =  $dir . 'ImageReviewTask.php';
-if ( function_exists( 'extAddBatchTask' ) ) {
-	extAddBatchTask( $dir . "../ImageReview/ImageReviewTask.php", "imagereview", "ImageReviewTask" );
-}
 
 $wgAutoloadClasses['ImageReviewSpecialController'] =  $dir . 'ImageReviewSpecialController.class.php';
 $wgAutoloadClasses['ImageReviewHelperBase'] =  $dir . 'ImageReviewHelperBase.class.php';

@@ -1,4 +1,4 @@
-@import "color";
+@import "skins/shared/color";
 
 .skin-oasis .sprite {
 	background-color: transparent;
@@ -178,6 +178,12 @@
 		background-position: -1210px 0;
 		height: 18px;
 		width: 17px;
+	}
+
+	&.info-icon {
+		background-position: -1227px 0;
+		height: 18px;
+		width: 18px;
 	}
 
 	&.ok {

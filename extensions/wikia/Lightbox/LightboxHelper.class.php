@@ -77,13 +77,11 @@ class LightboxHelper extends WikiaModel {
 			$latestPhotos = array();
 			if ( !empty( $thumbUrls ) && is_array( $thumbUrls ) ) {
 				foreach ( $thumbUrls as $thumb ) {
-					if ( !$thumb['isVideoThumb'] ) {
-						$title = Title::newFromText( $thumb['image_filename'] );
-						$latestPhotos[] = array(
-							'title' => $title->getDBKey(),
-							'type' => 'image',
-						);
-					}
+					$title = Title::newFromText( $thumb['image_filename'] );
+					$latestPhotos[] = array(
+						'title' => $title->getDBKey(),
+						'type' => 'image',
+					);
 				}
 			}
 
@@ -144,11 +142,9 @@ class LightboxHelper extends WikiaModel {
 		$timestamp = wfTimestamp( TS_MW );
 		if ( !empty( $latestPhotos ) && is_array( $latestPhotos ) ) {
 			foreach ( $latestPhotos as $photo ) {
-				if ( !$photo['isVideoThumb'] ) {
-					$photoTimestamp = wfTimestamp( TS_MW, $photo['date'] );
-					if ( $photoTimestamp < $timestamp ) {
-						$timestamp = $photoTimestamp;
-					}
+				$photoTimestamp = wfTimestamp( TS_MW, $photo['date'] );
+				if ( $photoTimestamp < $timestamp ) {
+					$timestamp = $photoTimestamp;
 				}
 			}
 		}

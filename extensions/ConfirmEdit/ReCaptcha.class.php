@@ -13,7 +13,7 @@ class ReCaptcha extends SimpleCaptcha {
 		global $wgReCaptchaPublicKey, $wgReCaptchaTheme;
 
 		$useHttps = ( isset( $_SERVER['HTTPS'] ) && $_SERVER['HTTPS'] == 'on' );
-		$js = 'var RecaptchaOptions = ' . Xml::encodeJsVar( array( 'theme' => $wgReCaptchaTheme, 'tabindex' => 1  ) );
+		$js = 'var RecaptchaOptions = ' . Xml::encodeJsVar( array( 'theme' => $wgReCaptchaTheme /*Wikia change */ /*, 'tabindex' => 1 */ /*Wikia change end*/) );
 
 		return Html::inlineScript( $js ) . recaptcha_get_html( $wgReCaptchaPublicKey, $this->recaptcha_error, $useHttps );
 	}
