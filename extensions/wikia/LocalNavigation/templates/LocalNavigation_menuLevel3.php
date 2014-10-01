@@ -6,4 +6,11 @@
 			</a>
 		</li>
 	<? endforeach; ?>
+	<? if ( $more['href'] !== '#' ): ?>
+		<li>
+			<a href="<?= $more['href']; ?>" data-content="<?= wfMessage('local-navigation-more-of', $more['text'])->escaped(); ?>">
+				<span><?= wfMessage('local-navigation-more-of', $more['text'])->parse(); ?></span>
+			</a>
+		</li>
+	<? endif; ?>
 </ul>
