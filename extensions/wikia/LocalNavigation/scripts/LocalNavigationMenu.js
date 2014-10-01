@@ -49,7 +49,7 @@
 		windowWidth = $window.width();
 
 		if ( arrayLength ) {
-			for (i = 0; i < arrayLength; i++ ) {
+			for ( i = 0; i < arrayLength; i++ ) {
 				if ( localNavCache[i].width > windowWidth ) {
 					localNavCache[i].menuElement.addClass('right');
 				} else {
@@ -63,15 +63,11 @@
 
 
 	function openMenu() {
-		var $target;
-		$target = $(this);
-		$target.addClass( 'active' );
+		$(this).addClass( 'active' );
 	}
 
 	function closeMenu() {
-		var $target;
-		$target = $(this);
-		$target.removeClass( 'active' );
+		$(this).removeClass( 'active' );
 	}
 
 	function openSubmenu( row ) {
@@ -83,19 +79,17 @@
 	}
 
 	function attachMenuAim() {
-		var i, alwaysTrueFunc;
+		var i;
 
-		alwaysTrueFunc = function() {
-			return true;
-		};
-
-		for (i=0; i<$localNavSecondLevel.length; i++ ) {
+		for ( i = 0; i < $localNavSecondLevel.length; i++ ) {
 			window.menuAim(
 				$localNavSecondLevel[i],{
 					activate: openSubmenu,
 					deactivate: closeSubmenu,
 					rowSelector: '.second-level-row',
-					exitMenu: alwaysTrueFunc
+					exitMenu: function() {
+						return true;
+					}
 				}
 			);
 		}
