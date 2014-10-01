@@ -6,7 +6,7 @@ define('wikia.intMap.poiCategories',
 		'wikia.intMap.utils',
 		'wikia.intMap.poiCategories.model'
 	],
-	function($, qs, w, utils, poiCategoriesModel) {
+	function ($, qs, w, utils, poiCategoriesModel) {
 		'use strict';
 
 		// reference to modal component
@@ -92,7 +92,7 @@ define('wikia.intMap.poiCategories',
 					triggerMarkerUpload
 				],
 				beforeClose: [
-					function (){
+					function () {
 						utils.onBeforeCloseModal(!changesSaved);
 					}
 				]
@@ -299,7 +299,7 @@ define('wikia.intMap.poiCategories',
 
 		/**
 		 * @desc adds POI category id to hidden field
-		 * @param poiCategoryId
+		 * @param {number} poiCategoryId
 		 */
 		function markPoiCategoryAsDeleted(poiCategoryId) {
 			// add POI category id to hidden field
@@ -332,7 +332,7 @@ define('wikia.intMap.poiCategories',
 		function saveMarkerImage(data, $inputElementWrapper) {
 			$inputElementWrapper
 				.find('.poi-category-marker-image-url')
-				.val(data['fileThumbUrl']);
+				.val(data.fileThumbUrl);
 		}
 
 		/**
@@ -345,7 +345,7 @@ define('wikia.intMap.poiCategories',
 			$inputElement.val('');
 			$inputElementWrapper
 				.find('.poi-category-marker-image')
-				.attr('src', data['fileThumbUrl'])
+				.attr('src', data.fileThumbUrl)
 				.removeClass('hidden')
 				.siblings('span')
 				.addClass('hidden');
