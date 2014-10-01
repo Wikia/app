@@ -44,8 +44,7 @@ define(
 						utils.cleanUpError(modal);
 					}
 				]
-			},
-			wasCancelled = false;
+			};
 
 		/**
 		 * @desc Entry point for create map modal
