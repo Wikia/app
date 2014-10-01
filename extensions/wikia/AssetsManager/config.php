@@ -2040,6 +2040,7 @@ $config['global_header_js'] = [
 	]
 ];
 
+
 $config['media_gallery_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => ['oasis'],

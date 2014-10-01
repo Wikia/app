@@ -1,0 +1,116 @@
+(function($) {
+	'use strict';
+
+	var $localNavFirstLevel, $localNavSecondLevel, $localNav, $localNavStart, $window,
+		windowWidth, localNavCache = [];
+
+	$localNav = $('#localNavigation');
+	$localNavStart = $localNav.find('.first');
+	$localNavFirstLevel = $localNavStart.find('> .local-nav-entry');
+	$localNavSecondLevel = $localNav.find('.second');
+	$window = $(window);
+	windowWidth = $window.width();
+
+	function init(){
+		var self, dropdownOffset = 0, secondLvlNavWidth = 0, secondLvlNavOffset = 0,
+			thirdLvlWidth = 0, thirdLvlMaxWidth = 0;
+
+		$localNavSecondLevel.each(function(){
+			self = $(this);
+			secondLvlNavWidth = self.outerWidth();
+			secondLvlNavOffset = self.offset().left;
+
+			$('> li', self).each(function(){
+				thirdLvlWidth = $('> ul', this).outerWidth();
+				if ( thirdLvlWidth > thirdLvlMaxWidth ) {
+					thirdLvlMaxWidth = thirdLvlWidth;
+				}
+			});
+
+			dropdownOffset = secondLvlNavWidth + secondLvlNavOffset + thirdLvlMaxWidth;
+
+			localNavCache.push({
+				width: dropdownOffset,
+				menuElement: self
+			});
+
+			if ( dropdownOffset > windowWidth ) {
+				self.addClass('right');
+			} else {
+				self.removeClass('right');
+			}
+		});
+
+		attachMenuAim();
+	}
+
+	function recalculateSwap() {
+		var i, arrayLength = localNavCache.length;
+		windowWidth = $window.width();
+
+		if ( arrayLength ) {
+			for ( i = 0; i < arrayLength; i++ ) {
+				if ( localNavCache[i].width > windowWidth ) {
+					localNavCache[i].menuElement.addClass('right');
+				} else {
+					localNavCache[i].menuElement.removeClass('right');
+				}
+			}
+		} else {
+			init();
+		}
+	}
+
+
+	function openMenu() {
+		$(this).addClass( 'active' );
+	}
+
+	function closeMenu() {
+		$(this).removeClass( 'active' );
+	}
+
+	function openSubmenu( row ) {
+		$(row).addClass('active');
+	}
+
+	function closeSubmenu( row ) {
+		$(row).removeClass('active');
+	}
+
+	function attachMenuAim() {
+		var i;
+
+		for ( i = 0; i < $localNavSecondLevel.length; i++ ) {
+			window.menuAim(
+				$localNavSecondLevel[i],{
+					activate: openSubmenu,
+					deactivate: closeSubmenu,
+					rowSelector: '.second-level-row',
+					exitMenu: function() {
+						return true;
+					}
+				}
+			);
+		}
+	}
+
+	if ( !window.ontouchstart ) {
+		window.delayedHover(
+			$localNavFirstLevel,
+			{
+				checkInterval: 100,
+				maxActivationDistance: 20,
+				onActivate: openMenu,
+				onDeactivate: closeMenu,
+				activateOnClick: false
+			}
+		);
+	} else {
+		$localNavSecondLevel.click(openMenu);
+	}
+
+	$window.on( 'resize', $.debounce( 300, recalculateSwap ) );
+
+	init();
+})(jQuery);

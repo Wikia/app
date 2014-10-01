@@ -1,17 +1,14 @@
 (function(window) {
 	'use strict';
 
-	var entryPoint = window.document.getElementById('contributeEntryPoint'),
-		dropdown = window.document.getElementById('contributeDropdown'),
-		openMenu,
-		closeMenu;
+	var entryPoint = window.document.getElementById('contributeEntryPoint'), openMenu, closeMenu;
 
 	openMenu = function() {
-		dropdown.classList.add('active');
+		entryPoint.classList.add('active');
 	};
 
 	closeMenu = function() {
-		dropdown.classList.remove('active');
+		entryPoint.classList.remove('active');
 	};
 
 	if ( !window.ontouchstart ) {
@@ -21,8 +18,7 @@
 				checkInterval: 100,
 				maxActivationDistance: 20,
 				onActivate: openMenu,
-				onDeactivate: closeMenu,
-				activateOnClick: true
+				onDeactivate: closeMenu
 			}
 		);
 	} else {

@@ -95,6 +95,23 @@ $VenusConfig[ 'venus_css' ] = [
 	]
 ];
 
+/** LocalNavigation extension */
+$VenusConfig[ 'local_navigation_scss' ] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => [ 'venus', 'oasis' ],
+	'assets' => [
+		'//extensions/wikia/LocalNavigation/styles/LocalNavigation.scss'
+	]
+];
+
+$VenusConfig['local_navigation_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => ['venus', 'oasis'],
+	'assets' => [
+		'//extensions/wikia/LocalNavigation/scripts/LocalNavigationMenu.js',
+	]
+];
+
 /** GlobalFooter extension */
 $VenusConfig[ 'global_footer_css' ] = [
 	'type' => AssetsManager::TYPE_SCSS,
@@ -160,6 +177,7 @@ $VenusConfig[ 'local_navigation_js' ] = [
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => [ 'venus', 'oasis' ],
 	'assets' => [
+		'//extensions/wikia/LocalNavigation/scripts/LocalNavigationMenu.js',
 		'//extensions/wikia/LocalNavigation/scripts/LocalNavigation.js'
 	]
 ];

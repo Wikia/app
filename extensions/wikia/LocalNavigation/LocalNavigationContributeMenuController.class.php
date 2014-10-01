@@ -25,7 +25,7 @@ class LocalNavigationContributeMenuController extends WikiaController {
 		}
 
 		// menu items linking to special pages
-		foreach ($this->getSpecialPagesLinks() as $specialPageName => $link) {
+		foreach ( $this->getSpecialPagesLinks() as $specialPageName => $link ) {
 			$specialPageTitle = SpecialPage::getTitleFor( $specialPageName );
 			if (!$specialPageTitle instanceof Title) {
 				continue;
@@ -150,7 +150,7 @@ class LocalNavigationContributeMenuController extends WikiaController {
 							htmlspecialchars( $item[ 'href' ] );
 						}
 				}
-				$dropdownItemsRender[ $itemName ][ 'attributes' ] .= empty( $value ) ? '' : ' ' . $attribute . '="' . $value . '"';
+				$dropdownItemsRender[ $itemName ][ 'attributes' ] .= empty( $value ) ? '' : ' ' . $attribute . '="' . htmlspecialchars( $value ) . '"';
 			}
 		}
 
