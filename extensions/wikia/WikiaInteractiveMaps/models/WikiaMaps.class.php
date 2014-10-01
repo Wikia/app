@@ -19,8 +19,9 @@ class WikiaMaps extends WikiaObject {
 	const MAP_TYPE_CUSTOM = 'custom';
 	const MAP_TYPE_GEO = 'geo';
 
-	const HTTP_ACCEPTED_CODE = 202;
 	const HTTP_SUCCESS_OK = 200;
+	const HTTP_CREATED_CODE = 201;
+	const HTTP_ACCEPTED_CODE = 202;
 	const HTTP_UPDATED = 303;
 
 	const MAP_THUMB_PREFIX = '/thumb/';
@@ -518,6 +519,8 @@ class WikiaMaps extends WikiaObject {
 	 */
 	private function isSuccess( $status, $content ) {
 		$isStatusOK = in_array( $status, [
+			self::HTTP_SUCCESS_OK,
+			self::HTTP_CREATED_CODE,
 			self::HTTP_ACCEPTED_CODE,
 			self::HTTP_UPDATED
 		] );
