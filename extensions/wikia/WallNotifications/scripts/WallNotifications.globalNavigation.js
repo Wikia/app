@@ -64,7 +64,8 @@ require(
 			},
 
 			updateCounts: function() {
-				var callback = this.proxy(function(data) {
+				var data = {},
+					callback = this.proxy(function(data) {
 					if (data.status !== true || data.html === '') {
 						return;
 					}
@@ -96,10 +97,13 @@ require(
 				if ( this.updateInProgress ===  false ) {
 					this.updateInProgress = true;
 
+					data = this.getUrlParams(data);
+
 					nirvana.sendRequest({
 						controller: 'WallNotificationsExternalController',
 						method: 'getUpdateCounts',
 						format: 'json',
+						data: data,
 						callback: callback
 					});
 				}
@@ -243,15 +247,19 @@ require(
 			},
 
 			updateWikiFetch: function(wikiId) {
-				var isCrossWiki = (wikiId === this.cityId) ? '0' : '1';
-				nirvana.sendRequest({
-					controller: 'WallNotificationsExternalController',
-					method: 'getUpdateWiki',
-					data: {
+				var isCrossWiki = (wikiId === this.cityId) ? '0' : '1',
+					data = {
 						username: window.wgTitle,
 						wikiId: wikiId,
 						isCrossWiki: isCrossWiki
-					},
+					};
+
+				data = this.getUrlParams(data);
+
+				nirvana.sendRequest({
+					controller: 'WallNotificationsExternalController',
+					method: 'getUpdateWiki',
+					data: data,
 					callback: this.proxy(function(data) {
 						if(data.status !== true || data.html === '') { return; }
 						this.updateWikiHtml(wikiId, data);
@@ -301,6 +309,23 @@ require(
 
 			proxy: function( func ) {
 				return $.proxy( func, this );
+			},
+
+			getUrlParams: function( data ) {
+				var qs = Wikia.Querystring(),
+					lang, skin;
+
+				skin = qs.getVal( 'useskin' );
+				if( skin ) {
+					data.useskin = skin;
+				}
+
+				lang = qs.getVal( 'uselang' );
+				if( lang ) {
+					data.uselang = lang;
+				}
+
+				return data;
 			},
 
 			setNotificationsHeight: function() {
