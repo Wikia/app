@@ -63,7 +63,7 @@ class SpecialPromoteController extends WikiaSpecialPageController {
 		 * We are checking if the user has perms to Disabled Promote (PLA-1823)
 		 * to display message about Promote being disabled to the user
 		 */
-		if ( !$this->wg->User->isLoggedIn() || !$this->wg->User->isAllowed( 'promotedisabled' ) ) {
+		if ( !$this->wg->User->isLoggedIn() || !$this->wg->User->isAllowed( 'restricted_promote' ) ) {
 			if ( !$this->request->isXmlHttp() ) {
 
 				$this->wg->Out->clearHTML();
