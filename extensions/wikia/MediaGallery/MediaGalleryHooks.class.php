@@ -1,4 +1,4 @@
-<?
+<?php
 
 class MediaGalleryHooks {
 	/**
@@ -31,6 +31,19 @@ class MediaGalleryHooks {
 	 */
 	public static function onMakeGlobalVariablesScript(Array &$vars) {
 		$vars['wgEnableMediaGalleryExt'] = !empty( F::app()->wg->EnableMediaGalleryExt );
+		return true;
+	}
+
+	public static function afterToggleFeature( $feature, $enabled ) {
+		if ( $feature == 'wgEnableMediaGalleryExt' ) {
+			// Purge cache for all pages containing gallery tags
+			$task = ( new \Wikia\Tasks\Tasks\GalleryCachePurgeTask() )
+				->wikiId( F::app()->wg->CityId );
+			$task->dupCheck();
+			$task->call( 'purge' );
+			$task->queue();
+		}
+
 		return true;
 	}
 }
