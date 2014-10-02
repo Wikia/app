@@ -10,6 +10,9 @@ abstract class WikiaSkin extends SkinTemplate {
 	const LINK_REGEX = '/(<!--\[\s*if[^>]+>\s*<link[^>]*rel=["\']?stylesheet["\']?[^>]*>\s*<!\[\s*endif[^>]+-->|<link[^>]*rel=["\']?stylesheet["\']?[^>]*>)/imsU';
 	const STYLE_REGEX = '/(<!--\[\s*if[^>]+>\s*<style[^>]*>.*<\/style>\s*<!\[\s*endif[^>]+-->|<style[^>]*>.*<\/style>)/imsU';
 
+	const SKIN_OASIS = 'oasis';
+	const SKIN_VENUS = 'venus';
+
 	protected $app = null;
 	protected $wg = null;
 	protected $wf = null;

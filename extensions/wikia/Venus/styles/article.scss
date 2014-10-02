@@ -1,0 +1,148 @@
+@import "skins/shared/color";
+
+$color-left-nav: if($is-dark-wiki, lighten(#000000, 30%), darken(#ffffff, 30%));
+
+article {
+	margin: 0 20px 0 86px;
+
+	dl {
+		margin: 0;
+	}
+
+	header {
+		margin-bottom: 30px;
+	}
+
+	header h1 {
+		font-size: 36px;
+		font-weight: bold;
+		line-height: 36px;
+		margin: 20px 60px 50px 0;
+	}
+
+	figure {
+		display: none;
+	}
+
+	.left-nav {
+		margin-left: -60px;
+		margin-top: 85px;
+		position: absolute;
+
+		ul {
+			list-style-type: none;
+			margin: 0;
+			padding: 0;
+
+			li {
+				background-color: $color-left-nav;
+				border-radius: 20px;
+				height: 38px;
+				width: 38px;
+				margin-bottom: 6px;
+			}
+		}
+	}
+}
+
+#mw-content-text {
+	font-size: 16px;
+
+	> h2 {
+		border-bottom: 1px solid $color-page-border;
+		font-size: 27px;
+		font-weight: bold;
+		margin-bottom: 20px;
+		overflow: hidden;
+		padding-bottom: 10px;
+
+		.editsection {
+			line-height: 27px;
+		}
+	}
+
+	> h3 {
+		font-size: 18px;
+		font-weight: bold;
+		margin: 0 0 16px 0;
+
+		.editsection {
+			line-height: 22px;
+		}
+	}
+
+	> h2,
+	> h3 {
+		.editsection {
+			font-size: 12px;
+			text-transform: uppercase;
+		}
+	}
+
+
+	> div {
+		overflow: hidden;
+	}
+
+	> p,
+	> table {
+		margin-bottom: 35px;
+	}
+
+	> ul {
+		list-style-position: inside;
+		margin: 0 0 35px 10px;
+	}
+
+	.infobox {
+		margin-bottom: 20px;
+		width: 300px !important;
+
+		td,
+		th {
+			padding: 4px;
+		}
+	}
+
+	> .quote {
+		border-top: 4px solid $color-text;
+
+		dd {
+			font-size: 27px;
+			margin-left: 0;
+			padding-top: 10px;
+
+			&:first-child {
+				padding-top: 25px;
+			}
+
+			&:last-child {
+				color: $color-links;
+				font-size: 18px;
+			}
+		}
+
+		dl {
+			margin: 0 0 35px 0;
+		}
+	}
+
+	@media #{$large-only} {
+		font-size: 18px;
+
+		h3 {
+			font-size: 20px;
+		}
+	}
+}
+
+/* FOR PROTOTYPE/TESTING ONLY */
+.adUnitTest {
+	background-color: #ccc;
+	display: block;
+	float: right;
+	height: 250px;
+	margin: 0 0 20px 20px;
+	padding: 10px;
+	width: 300px;
+}
