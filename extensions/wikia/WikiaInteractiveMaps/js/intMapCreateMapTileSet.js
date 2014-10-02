@@ -351,7 +351,19 @@ define(
 		 * @param {object} form - html form node element
 		 */
 		function uploadNewTileSetImage(form) {
-			var formData = new FormData(form);
+			var formData;
+
+			try {
+				formData = new FormData(form);
+			} catch (e) {
+				// MWEB-974 - fixed image preview on IE10, IE11
+				// IE10 and IE11 officially support FormData
+				// but if we try to use it in the same way as in other browsers
+				// it throws "SCRIPT5: Access is denied." error this is a workaround for it.
+
+				formData = new FormData();
+				formData.append('wpUploadFile', $uploadInput.get(0).files[0]);
+			}
 
 			utils.upload(modal, formData, 'map', function (data) {
 				data.type = 'custom';
