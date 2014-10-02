@@ -830,15 +830,6 @@ $config['monobook_js'] = array(
 	)
 );
 
-$config['local_navigation_scss'] = array(
-	'type' => AssetsManager::TYPE_SCSS,
-	'skin' => 'venus',
-	'assets' => array(
-		'//extensions/wikia/LocalNavigation/css/PageHeader.scss',
-		'//extensions/wikia/LocalNavigation/css/WikiHeader.scss'
-	)
-);
-
 /********** Extensions packages **********/
 
 /** Article Comments **/
