@@ -1,4 +1,4 @@
-<?
+<?php
 
 class MediaGalleryHooks {
 	/**
@@ -20,14 +20,15 @@ class MediaGalleryHooks {
 			$out->addScript( "<script src='{$script}'></script>" );
 		}
 
-		$out->addStyle(
-			AssetsManager::getInstance()->getSassCommonURL('/extensions/wikia/MediaGallery/styles/MediaGallery.scss' )
-		);
-
 		wfProfileOut(__METHOD__);
 		return true;
 	}
 
+	/**
+	 * Add extension enabled flag to JS
+	 * @param array $vars
+	 * @return bool
+	 */
 	public static function onMakeGlobalVariablesScript(Array &$vars) {
 		$vars['wgEnableMediaGalleryExt'] = !empty( F::app()->wg->EnableMediaGalleryExt );
 		return true;
@@ -46,4 +47,3 @@ class MediaGalleryHooks {
 		return true;
 	}
 }
-

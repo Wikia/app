@@ -830,24 +830,6 @@ $config['monobook_js'] = array(
 	)
 );
 
-$config['local_navigation_scss'] = array(
-	'type' => AssetsManager::TYPE_SCSS,
-	'skin' => 'venus',
-	'assets' => array(
-		'//extensions/wikia/LocalNavigation/css/PageHeader.scss',
-		'//extensions/wikia/LocalNavigation/css/WikiHeader.scss'
-	)
-);
-
-$config['local_navigation_js'] = array(
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => 'venus',
-	'assets' => array(
-		'//extensions/wikia/LocalNavigation/css/PageHeader.js',
-		'//extensions/wikia/LocalNavigation/css/WikiHeader.js'
-	)
-);
-
 /********** Extensions packages **********/
 
 /** Article Comments **/
@@ -2062,9 +2044,9 @@ $config['media_gallery_js'] = [
 	'skin' => ['oasis'],
 	'assets' => [
 		'//extensions/wikia/MediaGallery/scripts/templates.mustache.js',
-		'//extensions/wikia/MediaGallery/scripts/views/gallery.js',
 		'//extensions/wikia/MediaGallery/scripts/views/caption.js',
 		'//extensions/wikia/MediaGallery/scripts/views/media.js',
+		'//extensions/wikia/MediaGallery/scripts/views/gallery.js',
 		'//extensions/wikia/MediaGallery/scripts/controllers/index.js',
 	]
 ];
