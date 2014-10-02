@@ -144,7 +144,7 @@
 					activate: openSubmenu,
 					deactivate: closeSubmenu,
 					rowSelector: '.second-level-row',
-					exitMenu: alwaysReturnTrueFunc()
+					exitMenu: alwaysReturnTrueFunc
 				}
 			);
 		}

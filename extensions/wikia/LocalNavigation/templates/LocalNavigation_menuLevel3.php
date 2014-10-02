@@ -1,7 +1,7 @@
 <ul class="dropdown third">
 	<? foreach ($nodes as $i3 => $node3): ?>
 		<li>
-			<a href="<?= $node3['href']; ?>" data-content="<?= $node3['text']; ?>">
+			<a href="<?= $node3['href']; ?>" data-content="<?= $node3['textEscaped']; ?>" <?= $node3['canonicalAttr']; ?>>
 				<span><?= $node3['text']; ?></span>
 			</a>
 		</li>
