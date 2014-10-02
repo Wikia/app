@@ -12,7 +12,7 @@
 	background-color: $color-page;
 	box-sizing: border-box;
 	height: 80px;
-	padding: 0 53px 0 32px;
+	padding: 0 30px;
 	white-space: nowrap;
 	width: 100%;
 
@@ -73,10 +73,10 @@
 	.dropdown {
 		display: table;
 		left: 0;
+		min-width: 100%;
 		position: absolute;
 		right: auto;
 		visibility: hidden;
-		min-width: 100%;
 		z-index: 500050;
 
 		&.right {
@@ -88,7 +88,7 @@
 					text-align: right;
 				}
 
-				a span {
+				span {
 					left: auto;
 					right: 20px;
 				}
@@ -105,10 +105,12 @@
 			list-style: none;
 		}
 
+		> li:nth-child(n + 2) > a {
+			border-top: 1px solid rgba($color-button-text, .2);
+		}
+
 		a {
 			background-color: $color-buttons;
-			border-top: 1px solid rgba($color-button-text, .2);
-			color: $color-button-text;
 			display: table-cell;
 			padding: 20px;
 			text-decoration: none;
@@ -126,13 +128,9 @@
 			}
 
 			span {
-				position: absolute;
 				left: 20px;
+				position: absolute;
 				right: auto;
-			}
-
-			> li:nth-child(n + 2) > a {
-				border-top: 1px solid rgba($color-button-text, .2);
 			}
 		}
 	}
@@ -165,13 +163,13 @@
 				border-color: $color-page;
 				color: $color-button-text;
 
+				+ li {
+					border-color: $color-page;
+				}
+
 				ul.second {
 					visibility: visible;
 				}
-			}
-
-			&.active + li {
-				border-color: $color-page;
 			}
 		}
 	}
@@ -191,10 +189,10 @@
 
 			span::after {
 				@include arrow(4px, rgba($color-button-text, .5), 'right');
+				content: ' ';
+				float: right;
 				margin: 1px -20px 0 0;
 				position: static;
-				float: right;
-				content: ' ';
 			}
 
 			&:hover span::after,
@@ -214,8 +212,8 @@
 
 				span::after {
 					@include arrow(4px, rgba($color-button-text, .5), 'left');
-					margin: 1px 0 0 -20px;
 					float: left;
+					margin: 1px 0 0 -20px;
 				}
 
 				&:hover span::after,
@@ -305,8 +303,15 @@
 		display: table-cell;
 		position: relative;
 
-		&.active .dropdown {
-			visibility: visible;
+		&.active {
+			.dropdown {
+				visibility: visible;
+			}
+
+			.contribute-button {
+				border-bottom: 1px solid rgba($color-button-text, .2);
+				height: 41px;
+			}
 		}
 	}
 
@@ -335,22 +340,22 @@
 	}
 }
 
-@media #{$medium-only} {
-	.local-navigation {
-		padding: 0 30px 0 30px;
-	}
-}
-
 @media #{$small-only} {
 	.local-navigation {
 		padding: 0 0 0 24px;
 
 		.wordmark-container {
-			padding-right: 30px
+			padding-right: 30px;
 		}
 
 		.contribute-container {
 			display: none;
 		}
+	}
+}
+
+@media #{$large-up} {
+	.local-navigation {
+		padding: 0 53px 0 32px;
 	}
 }
