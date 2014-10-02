@@ -5,11 +5,19 @@ require([
 	'use strict';
 
 	/**
+	 * Define primary gallery container element
+	 * @constructor
+	 */
+	var GalleryController = function () {
+		this.$galleries = $('.media-gallery-wrapper');
+	};
+
+	/**
 	 * Initialize galleries and add HTML to DOM.
 	 * @param {jQuery} $elem
 	 * @param {int} idx
 	 */
-	function createGallery($elem, idx) {
+	GalleryController.prototype.createGallery = function ($elem, idx) {
 		var origVisibleCount = $elem.data('visible-count') || 8,
 			data = $elem.data('model'),
 			gallery;
@@ -37,21 +45,37 @@ require([
 
 		gallery.rendered = true;
 		gallery.$el.trigger('galleryInserted');
-	}
 
-	$(function () {
-		var $galleries = $('.media-gallery-wrapper');
+	};
 
-		$.each($galleries, function (idx) {
+	/**
+	 * Initialize and populate gallery elements
+	 */
+	GalleryController.prototype.init = function () {
+		var self = this;
+
+		$.each(this.$galleries, function (idx) {
 			var $this = $(this);
 
 			sloth({
 				on: $this,
 				threshold: 400,
 				callback: function () {
-					createGallery($this, idx);
+					self.createGallery($this, idx);
 				}
 			});
 		});
-	});
+	};
+
+	/**
+	 * Convenience function for initializing the gallery elements
+	 */
+	function newGallery() {
+		var gallery = new GalleryController();
+		gallery.init();
+	}
+
+	// Galleries must be initialized on page-load and on preview dialog
+	$(window).on('EditPageAfterRenderPreview', newGallery);
+	$(newGallery);
 });
