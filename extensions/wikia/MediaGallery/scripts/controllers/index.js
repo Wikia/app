@@ -52,14 +52,7 @@ require([
 	 * Initialize and populate gallery elements
 	 */
 	GalleryController.prototype.init = function () {
-		// get data from script tag in DOM
-		var self = this,
-			data = Wikia.mediaGalleryData || [];
-
-		// If there's no galleries on the page, we're done.
-		if (!data.length) {
-			return;
-		}
+		var self = this;
 
 		$.each(this.$galleries, function (idx) {
 			var $this = $(this);
