@@ -8,7 +8,7 @@ require([
 	 * Define primary gallery container element
 	 * @constructor
 	 */
-	var GalleryController = function() {
+	var GalleryController = function () {
 		this.$galleries = $('.media-gallery-wrapper');
 	};
 
@@ -17,7 +17,7 @@ require([
 	 * @param {jQuery} $elem
 	 * @param {int} idx
 	 */
-	GalleryController.prototype.createGallery = function($elem, idx) {
+	GalleryController.prototype.createGallery = function ($elem, idx) {
 		var origVisibleCount = $elem.data('visible-count') || 8,
 			data = $elem.data('model'),
 			gallery;
