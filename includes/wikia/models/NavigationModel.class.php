@@ -257,10 +257,17 @@ class NavigationModel extends WikiaModel {
 		$node = $this->menuNodes[$index];
 		$returnValue = [
 			'text' => $node['text'],
+			'textEscaped' => htmlentities( $node['text'] ),
 			'href' => $node['href'],
 		];
 		if ( !empty( $node['specialAttr'] ) ) {
 			$returnValue['specialAttr'] = $node['specialAttr'];
+		}
+		if ( !empty( $node['canonicalName'] ) ) {
+			$returnValue['canonicalName'] = $node['canonicalName'];
+			$returnValue['canonicalAttr'] = 'data-canonical="' . strtolower( $node['canonicalName'] ) . '" ';
+		} else {
+			$returnValue['canonicalAttr'] = null;
 		}
 
 		if ( isset( $node['children'] ) ) {

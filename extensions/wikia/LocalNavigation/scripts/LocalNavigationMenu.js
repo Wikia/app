@@ -2,12 +2,12 @@
 	'use strict';
 
 	var $localNavFirstLevel, $localNavSecondLevel, $localNav, $localNavStart, $window,
-		windowWidth, localNavCache = [];
+		windowWidth, $openedMenu, $openedSubmenu, localNavCache = [];
 
 	$localNav = $('#localNavigation');
-	$localNavStart = $localNav.find('.first');
+	$localNavStart = $localNav.find('.first-level-menu');
 	$localNavFirstLevel = $localNavStart.find('> .local-nav-entry');
-	$localNavSecondLevel = $localNav.find('.second');
+	$localNavSecondLevel = $localNav.find('.second-level-menu');
 	$window = $(window);
 	windowWidth = $window.width();
 
@@ -78,8 +78,65 @@
 		$(row).removeClass('active');
 	}
 
+	function handleOpenMenuClick(event) {
+		var $target;
+
+		$target = $(event.currentTarget);
+
+		event.preventDefault();
+		event.stopPropagation();
+
+		if (!$target.hasClass('active') || $target.find('a').first().attr('href') !== '#') {
+			if (!$target.hasClass('active')) {
+				if ($openedMenu !== undefined) {
+					$openedMenu.removeClass('active');
+				}
+				$target.addClass('active');
+			}
+		}
+		$('body').click(handleCloseMenuClick);
+		$openedMenu = $target;
+	}
+
+	function handleCloseMenuClick(event) {
+		var $target;
+
+		$target = $(event.currentTarget);
+
+		if ($target.closest($localNav).length === 0 && $openedMenu !== undefined) {
+			$openedMenu.removeClass('active');
+			$('body').unbind('click');
+			$openedMenu = undefined;
+		}
+	}
+
+	function handleSubmenuClick(event) {
+		var $target, $targetMenuItem;
+
+		$target = $(event.target);
+
+		$targetMenuItem = $target.closest('.second-level-row');
+		event.stopPropagation();
+
+		if (
+			!$targetMenuItem.hasClass('active') &&
+			$target.closest('.has-more').length > 0 ||
+			$target.find('a').first().attr('href') === '#'
+		) {
+			event.preventDefault();
+			if ($openedSubmenu !== undefined) {
+				$openedSubmenu.removeClass('active');
+			}
+			$targetMenuItem.addClass('active');
+		}
+	}
+
 	function attachMenuAim() {
 		var i;
+
+		function alwaysReturnTrueFunc() {
+			return true;
+		}
 
 		for ( i = 0; i < $localNavSecondLevel.length; i++ ) {
 			window.menuAim(
@@ -87,15 +144,13 @@
 					activate: openSubmenu,
 					deactivate: closeSubmenu,
 					rowSelector: '.second-level-row',
-					exitMenu: function() {
-						return true;
-					}
+					exitMenu: alwaysReturnTrueFunc
 				}
 			);
 		}
 	}
 
-	if ( !window.ontouchstart ) {
+	if (!window.Wikia.isTouchScreen()) {
 		window.delayedHover(
 			$localNavFirstLevel,
 			{
@@ -107,7 +162,8 @@
 			}
 		);
 	} else {
-		$localNavSecondLevel.click(openMenu);
+		$localNavFirstLevel.click(handleOpenMenuClick);
+		$localNavSecondLevel.find('.second-level-row').click(handleSubmenuClick);
 	}
 
 	$window.on( 'resize', $.debounce( 300, recalculateSwap ) );
