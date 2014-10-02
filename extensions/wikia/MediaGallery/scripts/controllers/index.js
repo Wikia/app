@@ -4,8 +4,14 @@ require([
 ], function (Gallery, sloth) {
 	'use strict';
 
-	function createGallery($elem, idx, data) {
+	/**
+	 * Initialize galleries and add HTML to DOM.
+	 * @param {jQuery} $elem
+	 * @param {int} idx
+	 */
+	function createGallery($elem, idx) {
 		var origVisibleCount = $elem.data('visible-count') || 8,
+			data = $elem.data('model'),
 			gallery;
 
 		// Instantiate gallery view
@@ -34,14 +40,7 @@ require([
 	}
 
 	$(function () {
-		var $galleries = $('.media-gallery-wrapper'),
-		// get data from script tag in DOM
-			data = Wikia.mediaGalleryData || [];
-
-		// If there's no galleries on the page, we're done.
-		if (!data.length) {
-			return;
-		}
+		var $galleries = $('.media-gallery-wrapper');
 
 		$.each($galleries, function (idx) {
 			var $this = $(this);
@@ -50,7 +49,7 @@ require([
 				on: $this,
 				threshold: 400,
 				callback: function () {
-					createGallery($this, idx, data[idx]);
+					createGallery($this, idx);
 				}
 			});
 		});
