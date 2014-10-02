@@ -4,7 +4,21 @@ require([
 ], function (Gallery, sloth) {
 	'use strict';
 
-	function createGallery($elem, idx, data) {
+	/**
+	 * Define primary gallery container element
+	 * @constructor
+	 */
+	var GalleryController = function() {
+		this.$galleries = $('.media-gallery-wrapper');
+	};
+
+	/**
+	 * Create gallery elements
+	 * @param $elem
+	 * @param idx
+	 * @param data
+	 */
+	GalleryController.prototype.createGallery = function($elem, idx, data) {
 		var origVisibleCount = $elem.data('visible-count') || 8,
 			gallery;
 
@@ -26,11 +40,14 @@ require([
 		gallery.rendered = true;
 		gallery.$el.trigger('galleryInserted');
 
-	}
+	};
 
-	$(function () {
-		var $galleries = $('.media-gallery-wrapper'),
-			// get data from script tag in DOM
+	/**
+	 * Initialize and populate gallery elements
+	 */
+	GalleryController.prototype.init = function () {
+		// get data from script tag in DOM
+		var self = this,
 			data = Wikia.mediaGalleryData || [];
 
 		// If there's no galleries on the page, we're done.
@@ -38,16 +55,28 @@ require([
 			return;
 		}
 
-		$.each($galleries, function (idx) {
+		$.each(this.$galleries, function (idx) {
 			var $this = $(this);
 
 			sloth({
 				on: $this,
 				threshold: 400,
 				callback: function () {
-					createGallery($this, idx, data[idx]);
+					self.createGallery($this, idx, data[idx]);
 				}
 			});
 		});
-	});
+	};
+
+	/**
+	 * Convenience function for initializing the gallery elements
+	 */
+	function newGallery() {
+		var gallery = new GalleryController();
+		gallery.init();
+	}
+
+	// Galleries must be initialized on page-load and on preview dialog
+	$(window).on('EditPageAfterRenderPreview', newGallery);
+	$(newGallery);
 });
