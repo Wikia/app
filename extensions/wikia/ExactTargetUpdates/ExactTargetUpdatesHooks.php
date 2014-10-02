@@ -67,11 +67,11 @@ class ExactTargetUpdatesHooks {
 
 	/**
 	 * Runs a method for adding addTheRemoveUserNameTask to job queue
-	 * Function executed on EditAccountSuccessClose hook
+	 * Function executed on EditAccountClosed hook
 	 * @param User $oUser
 	 * @return bool
 	 */
-	public static function onEditAccountSuccessClose( $oUser ) {
+	public static function onEditAccountClosed( $oUser ) {
 		$thisInstance = new ExactTargetUpdatesHooks();
 		$thisInstance->addTheRemoveUserTask( $oUser, new ExactTargetRemoveUserTask() );
 		return true;

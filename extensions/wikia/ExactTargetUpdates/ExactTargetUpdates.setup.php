@@ -52,7 +52,7 @@ $wgAutoloadClasses['ExactTargetSoapClient'] =  $dir . '/lib/exacttarget_soap_cli
  * @see http://www.mediawiki.org/wiki/Manual:$wgHooks
  */
 $wgHooks['ArticleSaveComplete'][] = 'ExactTargetUpdatesHooks::onArticleSaveComplete';
-$wgHooks['EditAccountSuccessClose'][] = 'ExactTargetUpdatesHooks::onEditAccountSuccessClose';
+$wgHooks['EditAccountClosed'][] = 'ExactTargetUpdatesHooks::onEditAccountClosed';
 $wgHooks['EmailChangeConfirmed'][] = 'ExactTargetUpdatesHooks::onEmailChangeConfirmed';
 $wgHooks['SignupConfirmEmailComplete'][] = 'ExactTargetUpdatesHooks::onSignupConfirmEmailComplete';
 $wgHooks['UserSaveSettings'][] = 'ExactTargetUpdatesHooks::onUserSaveSettings';
