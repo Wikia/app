@@ -95,15 +95,6 @@ $VenusConfig[ 'venus_css' ] = [
 	]
 ];
 
-/** GlobalFooter extension */
-$VenusConfig[ 'global_footer_css' ] = [
-	'type' => AssetsManager::TYPE_SCSS,
-	'skin' => [ 'venus' ],
-	'assets' => [
-		'//extensions/wikia/GlobalFooter/styles/GlobalFooter.scss'
-	]
-];
-
 /** GlobalNavigation extension */
 $VenusConfig[ 'global_navigation_scss' ] = [
 	'type' => AssetsManager::TYPE_SCSS,
@@ -162,5 +153,14 @@ $VenusConfig[ 'global_footer_scss' ] = [
 	'skin' => [ 'venus' ],
 	'assets' => [
 		'//extensions/wikia/GlobalFooter/styles/GlobalFooter.scss'
+	]
+];
+
+/** Article page */
+$VenusConfig[ 'article_scss' ] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => [ 'venus' ],
+	'assets' => [
+		'//extensions/wikia/Venus/styles/article.scss'
 	]
 ];

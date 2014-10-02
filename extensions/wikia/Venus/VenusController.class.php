@@ -61,6 +61,11 @@ class VenusController extends WikiaController {
 		$this->localNavigation = $this->getLocalNavigation();
 		$this->globalFooter = $this->getGlobalFooter();
 		$this->corporateFooter = $this->getCorporateFootet();
+
+		if ( WikiaPageType::isArticlePage() ) {
+			$this->leftArticleNav = $this->getLeftArticleNavigation();
+			Wikia::addAssetsToOutput( 'article_scss' );
+		}
 	}
 
 
@@ -216,5 +221,13 @@ class VenusController extends WikiaController {
 		}
 
 		return $bodyClasses;
+	}
+
+	private function getLeftArticleNavigation() {
+		return $this->app->renderView('Venus', 'leftArticleNavigation');
+	}
+
+	public function leftArticleNavigation() {
+		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
 	}
 }
