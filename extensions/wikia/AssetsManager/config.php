@@ -353,6 +353,22 @@ $config['oasis_anon_with_new_global_nav_js'] = array(
 	)
 );
 
+$config['oasis_global_navigation_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => ['oasis'],
+	'assets' => [
+		'//resources/wikia/libraries/menu-aim/menu-aim.js',
+		'//resources/wikia/libraries/delayed-hover/js-delayed-hover.js',
+		'//extensions/wikia/GlobalNavigation/js/GlobalNavigationTracking.js',
+		'//extensions/wikia/GlobalNavigation/js/GlobalNavigationLazyLoad.js',
+		'//extensions/wikia/GlobalNavigation/js/GlobalNavigationHubsMenu.js',
+		'//extensions/wikia/GlobalNavigation/js/GlobalNavigationSearch.js',
+		'//extensions/wikia/GlobalNavigation/js/SearchSuggestions.js',
+		'//skins/shared/js/transparent-out.js',
+		'//extensions/wikia/UserLogin/js/UserLoginDropdown.globalNavigation.js',
+	]
+];
+
 //user JS
 $config['oasis_user_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
