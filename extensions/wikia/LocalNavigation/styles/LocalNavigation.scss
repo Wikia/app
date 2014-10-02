@@ -59,6 +59,7 @@
 	.dropdown {
 		display: table;
 		left: 0;
+		padding-left: 0;
 		position: absolute;
 		right: auto;
 		z-index: 500050;
@@ -161,7 +162,8 @@
 	}
 	ul.first {
 		height: 60px;
-		padding-top: 20px;
+		padding: 20px 0 0 0;
+		margin: 0;
 
 		> li {
 			display: block;
