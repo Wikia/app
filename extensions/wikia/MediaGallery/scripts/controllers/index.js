@@ -13,13 +13,13 @@ require([
 	};
 
 	/**
-	 * Create gallery elements
-	 * @param $elem
-	 * @param idx
-	 * @param data
+	 * Initialize galleries and add HTML to DOM.
+	 * @param {jQuery} $elem
+	 * @param {int} idx
 	 */
-	GalleryController.prototype.createGallery = function($elem, idx, data) {
+	GalleryController.prototype.createGallery = function($elem, idx) {
 		var origVisibleCount = $elem.data('visible-count') || 8,
+			data = $elem.data('model'),
 			gallery;
 
 		// Instantiate gallery view
@@ -68,7 +68,7 @@ require([
 				on: $this,
 				threshold: 400,
 				callback: function () {
-					self.createGallery($this, idx, data[idx]);
+					self.createGallery($this, idx);
 				}
 			});
 		});
