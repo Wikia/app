@@ -28,14 +28,8 @@
 		}
 	}
 
-	> nav {
-		float: left;
-		vertical-align: top;
-		white-space: normal;
-	}
-
 	.wordmark-container {
-		float: left;
+		display: inline-block;
 		height: 100%;
 		padding-right: 40px;
 		vertical-align: middle;
@@ -70,34 +64,35 @@
 		}
 	}
 
+	> nav {
+		display: inline-block;
+		vertical-align: top;
+		white-space: normal;
+	}
+
 	.dropdown {
 		display: table;
 		left: 0;
-		min-width: 100%;
 		position: absolute;
 		right: auto;
 		visibility: hidden;
 		z-index: 500050;
 
-		&.right {
-			left: auto;
-			right: 0;
-
-			li {
-				a, a:after {
-					text-align: right;
-				}
-
-				span {
-					left: auto;
-					right: 20px;
-				}
-			}
-		}
-
+		&.right,
 		&.contribute {
 			left: auto;
 			right: 0;
+		}
+
+		&.right li {
+			a, a:after {
+				text-align: right;
+			}
+
+			span {
+				left: auto;
+				right: 20px;
+			}
 		}
 
 		li {
@@ -117,7 +112,8 @@
 			vertical-align: middle;
 			white-space: nowrap;
 
-			&:hover, &.active {
+			&:hover,
+			&.active {
 				font-weight: bold;
 			}
 
@@ -135,7 +131,7 @@
 		}
 	}
 
-	ul.first {
+	.first {
 		height: 60px;
 		padding-top: 20px;
 
@@ -167,19 +163,19 @@
 					border-color: $color-page;
 				}
 
-				ul.second {
+				.second {
 					visibility: visible;
 				}
 			}
 		}
 	}
 
-	ul.second {
+	.second {
 		display: table;
 		min-width: -webkit-calc(100% + 1px);
 		min-width: calc(100% + 1px);
 
-		a.has-more {
+		.has-more {
 			padding-right: 40px;
 
 			span {
@@ -202,7 +198,7 @@
 		}
 
 		&.right {
-			a.has-more {
+			.has-more {
 				padding-left: 40px;
 
 				span {
@@ -222,18 +218,18 @@
 				}
 			}
 
-			ul.third {
+			.third {
 				right: 100%;
 			}
 
 		}
 
-		li.active ul.third {
+		.active .third {
 			visibility: visible;
 		}
 	}
 
-	ul.third {
+	.third {
 		background: none;
 		display: block;
 		height: 100%;
@@ -303,39 +299,43 @@
 		display: table-cell;
 		position: relative;
 
-		&.active {
-			.dropdown {
-				visibility: visible;
-			}
+		.contribute-button {
+			background-color: $color-buttons;
+			cursor: pointer;
+			display: table-cell;
+			font-size: 12px;
+			font-weight: bold;
+			height: 40px;
+			padding: 8px 15px 8px 20px;
+			position: relative;
+			text-transform: uppercase;
+			vertical-align: middle;
 
+			&::after {
+				@include arrow(5px, rgba($color-button-text, .5));
+				content: ' ';
+				display: inline-block;
+				margin: -2px 0 0 15px;
+			}
+		}
+
+		.dropdown {
+			min-width: 100%;
+		}
+
+		&.active {
 			.contribute-button {
 				border-bottom: 1px solid rgba($color-button-text, .2);
 				height: 41px;
+
+				&::after {
+					border-top-color: $color-button-text;
+				}
 			}
-		}
-	}
 
-	.contribute-button {
-		background-color: $color-buttons;
-		cursor: pointer;
-		display: table-cell;
-		font-size: 12px;
-		font-weight: bold;
-		height: 40px;
-		padding: 8px 15px 8px 20px;
-		position: relative;
-		text-transform: uppercase;
-		vertical-align: middle;
-
-		&::after {
-			border: 5px solid;
-			border-top-color: $color-button-text;
-			color: transparent;
-			content: ' ';
-			display: inline-block;
-			margin: 5px 0 0 15px;
-			position: relative;
-			top: 3px;
+			.dropdown {
+				visibility: visible;
+			}
 		}
 	}
 }
