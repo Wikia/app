@@ -4,6 +4,7 @@
 
 	track = window.Wikia.Tracker.buildTrackingFunction({
 		action: window.Wikia.Tracker.ACTIONS.CLICK,
+		category: 'wiki-nav',
 		trackingMethod: 'both'
 	});
 
@@ -15,6 +16,7 @@
 		$element = $(event.currentTarget);
 		canonical = $element.data('canonical');
 
+		// Track only primary mouse button click
 		if (event.which !== 1) {
 			return;
 		}
@@ -53,7 +55,6 @@
 		if (label !== undefined) {
 			track({
 				browserEvent: event,
-				category: 'wiki-nav',
 				label: label
 			});
 		}
