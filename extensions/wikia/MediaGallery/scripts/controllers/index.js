@@ -4,8 +4,14 @@ require([
 ], function (Gallery, sloth) {
 	'use strict';
 
-	function createGallery($elem, idx, data) {
+	/**
+	 * Initialize galleries and add HTML to DOM.
+	 * @param {jQuery} $elem
+	 * @param {int} idx
+	 */
+	function createGallery($elem, idx) {
 		var origVisibleCount = $elem.data('visible-count') || 8,
+			data = $elem.data('model'),
 			gallery;
 
 		// Instantiate gallery view
@@ -37,14 +43,13 @@ require([
 		var $galleries = $('.media-gallery-wrapper');
 
 		$.each($galleries, function (idx) {
-			var $this = $(this),
-				data = $this.data('model');
+			var $this = $(this);
 
 			sloth({
 				on: $this,
 				threshold: 400,
 				callback: function () {
-					createGallery($this, idx, data);
+					createGallery($this, idx);
 				}
 			});
 		});
