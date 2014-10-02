@@ -1,4 +1,4 @@
-<ul class="dropdown third">
+<ul class="dropdown third-level-menu">
 	<? foreach ($nodes as $i3 => $node3): ?>
 		<li>
 			<a href="<?= $node3['href']; ?>" data-content="<?= $node3['textEscaped']; ?>" <?= $node3['canonicalAttr']; ?>>

@@ -3,6 +3,7 @@
 @import 'skins/shared/mixins/clearfix';
 @import 'skins/shared/color';
 @import 'extensions/wikia/Venus/styles/variables';
+@import 'extensions/wikia/Venus/styles/z-index';
 
 
 .local-navigation-container {
@@ -13,15 +14,10 @@
 	@include clearfix;
 
 	background-color: $color-page;
-	box-sizing: border-box;
 	height: 80px;
 	white-space: nowrap;
 
-	*, *:before, *:after {
-		box-sizing: inherit;
-	}
-
-	> nav {
+	.local-nav {
 		display: inline-block;
 		vertical-align: top;
 		white-space: normal;
@@ -62,7 +58,7 @@
 		padding-left: 0;
 		position: absolute;
 		right: auto;
-		z-index: 500050;
+		z-index: $local-navigation-dropdown-z-index;
 
 		&.right {
 			left: auto;
@@ -160,7 +156,7 @@
 			text-decoration: none;
 		}
 	}
-	ul.first {
+	ul.first-level-menu {
 		height: 60px;
 		padding: 20px 0 0 0;
 		margin: 0;
@@ -189,7 +185,7 @@
 				border-color: $color-page;
 				color: $color-button-text;
 
-				ul.second {
+				ul.second-level-menu {
 					visibility: visible;
 				}
 			}
@@ -203,7 +199,7 @@
 		visibility: hidden;
 	}
 
-	ul.second {
+	ul.second-level-menu {
 		display: table;
 		min-width: -webkit-calc(100% + 1px);
 		min-width: calc(100% + 1px);
@@ -243,18 +239,18 @@
 					border-right-color: rgba($color-button-text, .8);
 				}
 			}
-			ul.third {
+			ul.third-level-menu {
 				right: 100%;
 			}
 
 		}
 		li.active {
-			ul.third {
+			ul.third-level-menu {
 				visibility: visible;
 			}
 		}
 	}
-	ul.third {
+	ul.third-level-menu {
 		background: none;
 		display: block;
 		height: 100%;

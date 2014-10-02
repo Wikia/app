@@ -1,4 +1,4 @@
-<ul class="second dropdown">
+<ul class="dropdown second-level-menu">
 	<? foreach ($nodes as $i2 => $node2): ?>
 		<li class="local-nav-entry second-level-row">
 			<a href="<?= $node2['href']; ?>" data-content="<?= $node2['textEscaped']; ?>" <?= $node2['canonicalAttr']; ?>

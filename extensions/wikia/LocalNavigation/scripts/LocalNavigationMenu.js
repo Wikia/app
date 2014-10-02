@@ -5,9 +5,9 @@
 		windowWidth, $openedMenu, $openedSubmenu, localNavCache = [];
 
 	$localNav = $('#localNavigation');
-	$localNavStart = $localNav.find('.first');
+	$localNavStart = $localNav.find('.first-level-menu');
 	$localNavFirstLevel = $localNavStart.find('> .local-nav-entry');
-	$localNavSecondLevel = $localNav.find('.second');
+	$localNavSecondLevel = $localNav.find('.second-level-menu');
 	$window = $(window);
 	windowWidth = $window.width();
 

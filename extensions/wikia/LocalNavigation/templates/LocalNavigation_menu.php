@@ -1,6 +1,6 @@
-<nav>
+<nav class="local-nav">
 	<div class="local-nav-container">
-	<ul class="first">
+	<ul class="first-level-menu">
 		<? foreach ($menuNodes as $i1 => $node1): ?>
 			<li class="local-nav-entry">
 				<a href="<?= $node1['href']; ?>" <?= $node1['canonicalAttr']; ?>><?= $node1['text']; ?></a>
