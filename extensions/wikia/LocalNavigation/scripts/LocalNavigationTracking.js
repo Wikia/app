@@ -23,7 +23,7 @@
 			label = 'wordmark';
 		} else if (canonical !== undefined) {
 			switch (canonical) {
-				case 'wiki-activity':
+				case 'wikiactivity':
 					label = 'on-the-wiki-activity';
 					break;
 				case 'random':
