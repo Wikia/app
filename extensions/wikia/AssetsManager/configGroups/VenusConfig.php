@@ -109,6 +109,7 @@ $VenusConfig['local_navigation_js'] = [
 	'skin' => ['venus', 'oasis'],
 	'assets' => [
 		'//extensions/wikia/LocalNavigation/scripts/LocalNavigationMenu.js',
+		'//extensions/wikia/LocalNavigation/scripts/LocalNavigationTracking.js',
 	]
 ];
 
