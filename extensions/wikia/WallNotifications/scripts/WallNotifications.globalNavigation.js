@@ -64,7 +64,7 @@ require(
 			},
 
 			updateCounts: function() {
-				var data = {},
+				var data,
 					callback = this.proxy(function(data) {
 					if (data.status !== true || data.html === '') {
 						return;
@@ -97,7 +97,7 @@ require(
 				if ( this.updateInProgress ===  false ) {
 					this.updateInProgress = true;
 
-					data = this.getUrlParams(data);
+					data = $.extend({}, this.getUrlParams());
 
 					nirvana.sendRequest({
 						controller: 'WallNotificationsExternalController',
@@ -254,7 +254,7 @@ require(
 						isCrossWiki: isCrossWiki
 					};
 
-				data = this.getUrlParams(data);
+				$.extend(data, this.getUrlParams());
 
 				nirvana.sendRequest({
 					controller: 'WallNotificationsExternalController',
@@ -311,8 +311,9 @@ require(
 				return $.proxy( func, this );
 			},
 
-			getUrlParams: function( data ) {
-				var qs = Wikia.Querystring(),
+			getUrlParams: function() {
+				var data = {},
+					qs = Wikia.Querystring(),
 					lang, skin;
 
 				skin = qs.getVal( 'useskin' );
