@@ -459,29 +459,31 @@ class WikiaMaps extends WikiaObject {
 	}
 
 	/**
-	 * Returns Geo tileset's id from config or 0
+	 * Returns Geo tileset's id from config
 	 *
 	 * @return integer
+	 * @throws Exception
 	 */
 	public function getGeoMapTilesetId() {
-		if ( isset( $this->config[ 'geo-tileset-id' ] ) ) {
-			return $this->config[ 'geo-tileset-id' ];
+		if ( !isset( $this->config[ 'geo-tileset-id' ] ) ) {
+			throw new WikiaInteractiveMapsConfigException( 'Geo tileset id wasn\'t found in config' );
 		}
 
-		return 0;
+		return $this->config[ 'geo-tileset-id' ];
 	}
 
 	/**
-	 * Returns default parent_poi_category_id from config or 0
+	 * Returns default parent_poi_category_id from config
 	 *
 	 * @return integer
+	 * @throws Exception
 	 */
 	public function getDefaultParentPoiCategory() {
-		if ( isset( $this->config[ 'default-parent-poi-category-id' ] ) ) {
-			return $this->config[ 'default-parent-poi-category-id' ];
+		if ( !isset( $this->config[ 'default-parent-poi-category-id' ] ) ) {
+			throw new WikiaInteractiveMapsConfigException( 'Default parent POI category wasn\'t found in config' );
 		}
 
-		return 0;
+		return $this->config[ 'default-parent-poi-category-id' ];
 	}
 
 	/**
