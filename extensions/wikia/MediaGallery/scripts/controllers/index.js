@@ -22,6 +22,7 @@ require([
 		var origVisibleCount = $elem.data('visible-count') || 8,
 			gallery;
 
+		// Instantiate gallery view
 		gallery = new Gallery({
 			$el: $('<div></div>'),
 			$wrapper: $elem,
@@ -31,10 +32,15 @@ require([
 			origVisibleCount: origVisibleCount,
 			index: idx
 		});
+
+		// Append gallery HTML to DOM
 		$elem.append(gallery.render(origVisibleCount).$el);
 
+		// After rendering the gallery and all images are loaded, append the show more/less buttons
 		if (gallery.$toggler) {
-			$elem.append(gallery.$toggler);
+			gallery.$el.on('mediaLoaded', function () {
+				$.proxy(gallery.appendToggler($elem), gallery);
+			});
 		}
 
 		gallery.rendered = true;
