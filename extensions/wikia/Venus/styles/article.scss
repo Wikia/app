@@ -1,5 +1,3 @@
-@import "skins/shared/color";
-
 $color-left-nav: if($is-dark-wiki, lighten(#000000, 30%), darken(#ffffff, 30%));
 
 article {
