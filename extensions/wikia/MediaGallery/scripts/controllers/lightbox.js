@@ -10,10 +10,14 @@ define('mediaGallery.controllers.lightbox', [], function () {
 	};
 
 	LightboxController.prototype.addMedia = function (e, lightboxData) {
-
 		$.each(this.model, function () {
 			var thumbData = {
-				thumbUrl: decodeURI(this.thumbUrl),
+				thumbUrl: Wikia.Thumbnailer.getThumbURL(
+					decodeURI(this.thumbUrl),
+					'image',
+					lightboxData.width,
+					lightboxData.height
+				),
 				title: decodeURI(this.title),
 				key: decodeURI(this.dbKey),
 				type: 'image'

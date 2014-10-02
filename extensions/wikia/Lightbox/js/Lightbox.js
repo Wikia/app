@@ -15,6 +15,8 @@
 			thumbs: [], // master list of thumbnails inside carousel; purged after closing the lightbox
 			placeholderIdx: -1
 		},
+		carouselThumbWidth: 90,
+		carouselThumbHeight: 55,
 		// Modal vars
 		openModal: false, // gets replaced with dom object of open modal
 		shortScreen: false, // flag if the screen is shorter than LightboxLoader.defaults.height
@@ -1166,7 +1168,9 @@
 
 					// Add cached media gallery data sent over from MediaGallery extension.
 					$(window).trigger('ligthboxArticleMedia', {
-						thumbArr: thumbArr
+						thumbArr: thumbArr,
+						width: Lightbox.carouselThumbWidth,
+						height: Lightbox.carouselThumbHeight
 					});
 
 					// cache keys for dupe checking later
@@ -1409,7 +1413,7 @@
 
 		thumbParams: function (url, type) {
 			//Get URL to a proper thumbnail
-			return Wikia.Thumbnailer.getThumbURL(url, type, 90, 55);
+			return Wikia.Thumbnailer.getThumbURL(url, type, Lightbox.carouselThumbWidth, Lightbox.carouselThumbHeight);
 		},
 
 		/**
