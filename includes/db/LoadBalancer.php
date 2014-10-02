@@ -444,6 +444,10 @@ class LoadBalancer {
 	public function &getConnection( $i, $groups = array(), $wiki = false ) {
 		wfProfileIn( __METHOD__ );
 
+		// Set this flag to ensure that all select operations go against master
+		// Slave lag can cause random errors during wiki creation process
+		global $wgForceMasterDatabase;
+
 		if ( $i == DB_LAST ) {
 			throw new MWException( 'Attempt to call ' . __METHOD__ . ' with deprecated server index DB_LAST' );
 		} elseif ( $i === null || $i === false ) {
@@ -455,7 +459,7 @@ class LoadBalancer {
 		}
 
 		# Query groups
-		if ( $i == DB_MASTER ) {
+		if ( $i == DB_MASTER || $wgForceMasterDatabase ) {
 			$i = $this->getWriterIndex();
 		} elseif ( !is_array( $groups ) ) {
 			$groupIndex = $this->getReaderIndex( $groups, $wiki );

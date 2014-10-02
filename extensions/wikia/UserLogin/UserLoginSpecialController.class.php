@@ -62,6 +62,8 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 		$this->wg->SuppressFooter = false;
 		$this->wg->SuppressAds = true;
 		$this->wg->SuppressToolbar = true;
+
+		$this->getOutput()->disallowUserJs(); // just in case...
 	}
 
 	/**
