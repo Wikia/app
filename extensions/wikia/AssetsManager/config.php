@@ -839,15 +839,6 @@ $config['local_navigation_scss'] = array(
 	)
 );
 
-$config['local_navigation_js'] = array(
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => 'venus',
-	'assets' => array(
-		'//extensions/wikia/LocalNavigation/js/PageHeader.js',
-		'//extensions/wikia/LocalNavigation/js/WikiHeader.js'
-	)
-);
-
 /********** Extensions packages **********/
 
 /** Article Comments **/
