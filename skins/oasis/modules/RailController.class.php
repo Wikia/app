@@ -10,7 +10,7 @@ class RailController extends WikiaController {
 
 	// Do not display Search in Right Rail if Global Navigation is enabled
 	// TODO: Remove all those modules from code above when Global Navigation is final
-	protected static function filterSearchIndexForGlobalNavigation(&$railModules) {
+	protected static function filterSearchModule(&$railModules) {
 		global $wgEnableGlobalNavExt;
 
 		if ( !empty( $wgEnableGlobalNavExt ) ) {
@@ -28,7 +28,7 @@ class RailController extends WikiaController {
 		wfProfileIn(__METHOD__);
 
 		$railModules = isset($params['railModuleList']) ? $params['railModuleList'] : [];
-		self::filterSearchIndexForGlobalNavigation($railModules);
+		self::filterSearchModule($railModules);
 
 		$this->railModuleList = $this->filterModules($railModules, self::FILTER_NON_LAZY_MODULES);
 		$this->isGridLayoutEnabled = BodyController::isGridLayoutEnabled();
@@ -80,7 +80,7 @@ class RailController extends WikiaController {
 			$wgTitle = $title;
 			$assetManager = AssetsManager::getInstance();
 			$railModules = $this->filterModules((new BodyController)->getRailModuleList(), self::FILTER_LAZY_MODULES);
-			self::filterSearchIndexForGlobalNavigation($railModules);
+			self::filterSearchModule($railModules);
 			$this->railLazyContent = '';
 			krsort($railModules);
 			foreach ($railModules as $railModule) {
