@@ -1164,6 +1164,16 @@
 						thumbs = article.find('.image, .lightbox').find('img').add(article.find('.thumbimage'));
 					}
 
+					// Add cached media gallery data sent over from MediaGallery extension.
+					$(window).trigger('ligthboxArticleMedia', {
+						thumbArr: thumbArr
+					});
+
+					// cache keys for dupe checking later
+					$.each(thumbArr, function () {
+						keys.push(this.key);
+					});
+
 					thumbs.each(function () {
 						var $thisThumb = $(this),
 							type,
