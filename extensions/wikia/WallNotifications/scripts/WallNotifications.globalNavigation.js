@@ -97,7 +97,7 @@ require(
 				if ( this.updateInProgress ===  false ) {
 					this.updateInProgress = true;
 
-					data = $.extend({}, this.getUrlParams());
+					data = this.getUrlParams();
 
 					nirvana.sendRequest({
 						controller: 'WallNotificationsExternalController',
