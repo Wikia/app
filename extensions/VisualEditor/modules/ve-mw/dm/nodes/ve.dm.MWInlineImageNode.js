@@ -149,7 +149,7 @@ ve.dm.MWInlineImageNode.static.toDomElements = function ( data, doc ) {
 
 	ve.setDomAttributes( img, data.attributes, [ 'src', 'width', 'height', 'resource' ] );
 
-	if ( !this.typeToRdfa ) {
+	if ( !this.hasOwnProperty( 'typeToRdfa' ) ) {
 		this.typeToRdfa = {};
 		for ( rdfa in this.rdfaToType ) {
 			this.typeToRdfa[this.rdfaToType[rdfa]] = rdfa;
