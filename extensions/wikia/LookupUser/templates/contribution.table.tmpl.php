@@ -194,6 +194,15 @@ $(document).ready(function() {
 </script>
 
 <input id="lu_name" type="hidden" value="<?= $username; ?>" />
+
+<ul>
+<?php if( $isUsernameGloballyBlocked ) { ?>
+	<li><?= wfMsg('lookupuser-username-blocked-globally') ?></li>
+<?php } else { ?>
+	<li><?= wfMsg('lookupuser-username-not-blocked-globally') ?></li>
+<?php }?>
+</ul>
+
 <table cellpadding="0" cellspacing="0" border="0" class="TablePager" id="lookupuser-table">
 	<thead>
 		<tr>
@@ -224,10 +233,3 @@ $(document).ready(function() {
 	</tfoot>
 </table>
 
-<ul>
-<?php if( $isUsernameGloballyBlocked ) { ?>
-	<li><?= wfMsg('lookupuser-username-blocked-globally') ?></li>
-<?php } else { ?>
-	<li><?= wfMsg('lookupuser-username-not-blocked-globally') ?></li>
-<?php }?>
-</ul>
