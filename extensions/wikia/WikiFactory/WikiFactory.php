@@ -801,9 +801,11 @@ class WikiFactory {
 					__METHOD__
 				);
 				$reason2 = ( !empty($reason) ) ? " (reason: ". (string)$reason .")" : '';
-				self::log(self::LOG_VARIABLE, sprintf(
-					"Variable %s removed%s",
-					self::getVarById($variable_id, $wiki)->cv_name, $reason2),
+				self::log(
+					self::LOG_VARIABLE,
+					sprintf("Variable %s removed%s",
+						self::getVarById($variable_id, $wiki)->cv_name,
+						$reason2),
 					$wiki,
 					$variable_id);
 				$dbw->commit();
