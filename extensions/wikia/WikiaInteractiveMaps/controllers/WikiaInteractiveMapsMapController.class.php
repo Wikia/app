@@ -179,7 +179,7 @@ class WikiaInteractiveMapsMapController extends WikiaInteractiveMapsBaseControll
 
 		$result = false;
 
-		if ( !$this->isUserAllowed() || !$this->canDelete() ) {
+		if ( !$this->isUserAllowed() || ( !$this->canUserDelete() && !$this->isUserMapCreator( $mapId ) ) ) {
 			throw new WikiaInteractiveMapsPermissionException();
 		}
 
