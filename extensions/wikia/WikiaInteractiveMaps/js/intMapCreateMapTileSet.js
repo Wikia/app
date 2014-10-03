@@ -350,7 +350,7 @@ define(
 		 * @desc uploads tile set image to backend
 		 */
 		function uploadNewTileSetImage(inputElement) {
-			var formData = utils.getFormDataInstance(inputElement);
+			var formData = utils.getFormDataForFileUpload(inputElement);
 
 			utils.upload(modal, formData, 'map', function (data) {
 				data.type = 'custom';

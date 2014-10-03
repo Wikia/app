@@ -212,7 +212,7 @@ define(
 		 * @param {String} inputFileName optional; by default it's going to be set to wpUploadFile
 		 * @returns {FormData}
 		 */
-		function getFormDataInstance(inputElement, inputFileName) {
+		function getFormDataForFileUpload(inputElement, inputFileName) {
 			inputFileName = (!inputFileName) ? 'wpUploadFile' : inputFileName;
 
 			if (!inputElement.files || !inputElement.files[0]) {
@@ -465,7 +465,7 @@ define(
 			triggerAction: triggerAction,
 			getActionConfig: getActionConfig,
 			inArray: inArray,
-			getFormDataInstance: getFormDataInstance
+			getFormDataForFileUpload: getFormDataForFileUpload
 		};
 	}
 );

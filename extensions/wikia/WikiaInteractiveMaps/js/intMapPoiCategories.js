@@ -305,7 +305,7 @@ define('wikia.intMap.poiCategories',
 		 * @param {Element} inputElement - file input element
 		 */
 		function uploadMarkerImage(inputElement) {
-			var formData = utils.getFormDataInstance(inputElement),
+			var formData = utils.getFormDataForFileUpload(inputElement),
 				$inputElement = $(inputElement),
 				$inputElementWrapper = $inputElement.closest('.poi-category-marker');
 
