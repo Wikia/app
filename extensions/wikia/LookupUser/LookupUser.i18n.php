@@ -45,7 +45,7 @@ $messages['en'] = array(
 	'lookupuser-admin' => 'Admin',
 	'lookupuser-bureaucrat' => 'Bureaucrat',
 	'lookupuser-chatmoderator' => 'Chat moderator',
-	'lookupuser-username-blocked-globally' => 'This username <strong>is</strong> blocked globally.',
+	'lookupuser-username-blocked-globally' => '<a href=\"http://www.community.wikia.com/wiki/Special:Phalanx/test?wpBlockText=$1\" style=\"color:#BB0000;\">This username <strong>is</strong> blocked globally.</a>',
 	'lookupuser-username-not-blocked-globally' => 'This username <strong>is not</strong> blocked globally.',
 	'lookupuser-user-allowed-adoption' => 'This user is allowed to auto-adopt.',
 	'lookupuser-user-not-allowed-adoption' => 'This user is not allowed to auto-adopt.',
@@ -90,6 +90,7 @@ $messages['qqq'] = array(
 	'lookupuser-account-status-tempuser' => 'The status of a temporary user account that hasn\'t been confirmed yet',
 	'lookupuser-account-status-realuser' => 'The status of a real user account',
 	'action-lookupuser' => '{{doc-action|lookupuser}}',
+	'lookupuser-username-blocked-globally' => 'Informs staff that user is globally blocked and provides a link to check block status in Phalanx. $1 represents the username. Do not change the anchor URL, just the anchor text'
 );
 
 /** Afrikaans (Afrikaans)
