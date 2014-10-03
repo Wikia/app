@@ -41,7 +41,7 @@ article {
 #mw-content-text {
 	font-size: 16px;
 
-	> figure.article-thumb {
+	> .article-thumb {
 		clear: left;
 		float: left;
 		margin: 30px 30px 50px 0;
@@ -66,7 +66,6 @@ article {
 		border-bottom: 1px solid $color-page-border;
 		font-size: 27px;
 		margin-bottom: 20px;
-		overflow: hidden;
 		padding-bottom: 10px;
 
 		.editsection {
@@ -86,6 +85,7 @@ article {
 	> h2,
 	> h3 {
 		font-weight: bold;
+		overflow: hidden;
 
 		.editsection {
 			font-size: 12px;
@@ -108,7 +108,8 @@ article {
 		margin: 0 0 35px 10px;
 	}
 
-	.infobox {
+	.infobox,
+	.infoBox {
 		margin-bottom: 20px;
 		width: 300px;
 
