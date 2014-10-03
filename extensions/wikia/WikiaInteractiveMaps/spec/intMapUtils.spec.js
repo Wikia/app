@@ -52,7 +52,7 @@ describe('WikiaMaps.utils', function () {
 			files: ['a-stub-file']
 		};
 		expect(function () {
-			utilsModule.getFormDataInstance(inputElementStub, 'just-for-test');
+			utilsModule.getFormDataForFileUpload(inputElementStub, 'just-for-test');
 		}).not.toThrow('Could not find the file');
 	});
 
@@ -61,7 +61,7 @@ describe('WikiaMaps.utils', function () {
 			files: []
 		};
 		expect(function () {
-			utilsModule.getFormDataInstance(inputElementStub, 'just-for-test');
+			utilsModule.getFormDataForFileUpload(inputElementStub, 'just-for-test');
 		}).toThrow('Could not find the file');
 	});
 
@@ -70,7 +70,7 @@ describe('WikiaMaps.utils', function () {
 			files: []
 		};
 		expect(function () {
-			utilsModule.getFormDataInstance(inputElementStub, 'just-for-test');
+			utilsModule.getFormDataForFileUpload(inputElementStub, 'just-for-test');
 		}).toThrow('Could not find the file');
 	});
 });
