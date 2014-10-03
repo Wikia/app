@@ -33,7 +33,7 @@ $wgAutoloadClasses[ 'WikiaMapsLogger' ] = $dir . '/models/WikiaMapsLogger.class.
 
 // exception classes
 $wgAutoloadClasses[ 'WikiaInteractiveMapsPermissionException' ] = $dir . '/exceptions/WikiaInteractiveMapsPermissionException.class.php';
-$wgAutoloadClasses[ 'WikiaInteractiveMapsConfigException' ] = $dir . '/exceptions/WikiaInteractiveMapsConfigException.class.php';
+$wgAutoloadClasses[ 'WikiaMapsConfigException' ] = $dir . '/exceptions/WikiaMapsConfigException.class.php';
 
 // special pages
 $wgSpecialPages[ 'Maps' ] = 'WikiaInteractiveMapsController';

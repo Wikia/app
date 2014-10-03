@@ -461,12 +461,12 @@ class WikiaMaps extends WikiaObject {
 	/**
 	 * Returns Geo tileset's id from config
 	 *
+	 * @throws WikiaMapsConfigException
 	 * @return integer
-	 * @throws Exception
 	 */
 	public function getGeoMapTilesetId() {
 		if ( !isset( $this->config[ 'geo-tileset-id' ] ) ) {
-			throw new WikiaInteractiveMapsConfigException( 'Geo tileset id wasn\'t found in config' );
+			throw new WikiaMapsConfigException( 'Geo tileset id wasn\'t found in config' );
 		}
 
 		return $this->config[ 'geo-tileset-id' ];
@@ -475,12 +475,12 @@ class WikiaMaps extends WikiaObject {
 	/**
 	 * Returns default parent_poi_category_id from config
 	 *
+	 * @throws WikiaMapsConfigException
 	 * @return integer
-	 * @throws Exception
 	 */
 	public function getDefaultParentPoiCategory() {
 		if ( !isset( $this->config[ 'default-parent-poi-category-id' ] ) ) {
-			throw new WikiaInteractiveMapsConfigException( 'Default parent POI category wasn\'t found in config' );
+			throw new WikiaMapsConfigException( 'Default parent POI category wasn\'t found in config' );
 		}
 
 		return $this->config[ 'default-parent-poi-category-id' ];

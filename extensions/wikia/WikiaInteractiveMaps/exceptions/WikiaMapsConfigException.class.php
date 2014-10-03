@@ -1,5 +1,5 @@
 <?php
-class WikiaInteractiveMapsConfigException extends WikiaHttpException {
+class WikiaMapsConfigException extends WikiaHttpException {
 	protected $code = 500;
 	protected $message = "Invalid configuration";
 
