@@ -74,6 +74,16 @@ JSMessages::registerPackage( 'WikiaInteractiveMapsEmbedMapCode', [
 	'wikia-interactive-maps-embed-map-code-*'
 ] );
 
+// Rights
+$wgAvailableRights[] = 'canremovemap';
+
+// Permissions
+// canremove -- give it to users who can remove maps or maps' items (i.e. POIs, POIs categories)
+$wgGroupPermissions['*']['canremovemap'] = false;
+$wgGroupPermissions['sysop']['canremovemap'] = true;
+$wgGroupPermissions['staff']['canremovemap'] = true;
+$wgGroupPermissions['helper']['canremovemap'] = true;
+
 // Logs
 $wgLogTypes[] = 'maps';
 $wgLogNames['maps'] = 'wikia-interactive-maps-log-name';

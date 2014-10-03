@@ -186,4 +186,22 @@ class WikiaInteractiveMapsBaseController extends WikiaController {
 		return $this->wg->User->isLoggedIn() && !$this->wg->User->isBlocked();
 	}
 
+	/**
+	 * Returns true if a user has right to remove a map or map's items
+	 *
+	 * @return bool
+	 */
+	public function canDelete() {
+		return $this->wg->User->isAllowed('canremovemap');
+	}
+
+	/**
+	 * Returns true if a user is map creator of a map
+	 *
+	 * @return bool
+	 */
+	public function isMapCreator() {
+		return false;
+	}
+
 }
