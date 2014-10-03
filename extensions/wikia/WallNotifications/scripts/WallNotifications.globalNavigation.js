@@ -39,14 +39,22 @@ require(
 					.on('click', '#markasread-all-wikis', this.proxy( this.markAllAsReadAllWikis ));
 			},
 
-			openNotifications: function(row) {
-				if ( row.getAttribute('id') === 'notifications' ) {
-					$('#GlobalNavigationWallNotifications').addClass('show');
+			openNotifications: function() {
+				if ( this.getAttribute('id') === 'notifications' ) {
+					WallNotifications.$wallNotifications.addClass('show');
 				}
 			},
 
 			closeNotifications: function() {
-				$('#GlobalNavigationWallNotifications').removeClass('show');
+				WallNotifications.$wallNotifications.removeClass('show');
+			},
+
+			toggleNotifications: function() {
+				if ( WallNotifications.$wallNotifications.hasClass('show') ) {
+					WallNotifications.closeNotifications();
+				} else {
+					WallNotifications.openNotifications.apply(this);
+				}
 			},
 
 			checkIfFromMessageBubble: function() {
@@ -342,11 +350,24 @@ require(
 					rowSelector: '> li',
 					tolerance: 85,
 					submenuDirection: 'left',
-					activate: WallNotifications.openNotifications,
 					deactivate: WallNotifications.closeNotifications,
-					enter: WallNotifications.openNotifications,
 					exitMenu: WallNotifications.closeNotifications
 			});
+
+			if ( !Wikia.isTouchScreen() ) {
+				window.delayedHover(
+					document.getElementById('notifications'),
+					{
+						checkInterval: 200,
+						maxActivationDistance: 20,
+						onActivate: WallNotifications.openNotifications,
+						activateOnClick: false
+					}
+				);
+			} else {
+				WallNotifications.$notifications.on('click', WallNotifications.toggleNotifications);
+			}
+
 		});
 	}
 );

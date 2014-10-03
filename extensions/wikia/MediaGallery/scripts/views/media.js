@@ -51,11 +51,11 @@ define('mediaGallery.views.media', [
 	 * Create caption instance
 	 */
 	Media.prototype.initCaption = function () {
-		var $caption = this.$el.find('.caption');
+		var $caption = this.$el.find('.media-gallery-caption');
 
 		if ($caption.length) {
 			this.caption = new Caption({
-				$el: this.$el.find('.caption'),
+				$el: $caption,
 				media: this
 			});
 		}

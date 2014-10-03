@@ -273,6 +273,7 @@ function axWFactoryDomainCRUD($type="add") {
     global $wgRequest, $wgUser, $wgExternalSharedDB, $wgOut;
     $sDomain = $wgRequest->getVal("domain");
     $city_id = $wgRequest->getVal("cityid");
+    $reason  = $wgRequest->getVal("reason");
 
     if ( !$wgUser->isAllowed( 'wikifactory' ) ) {
         $wgOut->readOnlyPage(); #--- later change to something reasonable
@@ -296,7 +297,7 @@ function axWFactoryDomainCRUD($type="add") {
 				$sInfo .= "Error: Domain <em>{$sDomain}</em> is invalid (or empty) so it's not added.";
 			}
 			else {
-				$added = WikiFactory::addDomain( $city_id, $sDomain );
+				$added = WikiFactory::addDomain( $city_id, $sDomain, $reason );
 				if ( $added ) {
 					$sInfo .= "Success: Domain <em>{$sDomain}</em> added.";
 				}
@@ -335,12 +336,21 @@ function axWFactoryDomainCRUD($type="add") {
                         "city_domain" => strtolower($sDomain)
                     )
                 );
-				$dbw->commit();
+
+		$sLogMessage = "Domain <em>{$sDomain}</em> changed to <em>{$sNewDomain}</em>.";
+
+		if ( !empty( $reason ) ) {
+			$sLogMessage .= " (reason: {$reason})";
+		}
+
+		WikiFactory::log( WikiFactory::LOG_DOMAIN, $sLogMessage,  $city_id );
+	
+		$dbw->commit();
                 $sInfo .= "Success: Domain <em>{$sDomain}</em> changed to <em>{$sNewDomain}</em>.";
             }
             break;
         case "remove":
-		$removed = WikiFactory::removeDomain( $city_id, $sDomain );
+		$removed = WikiFactory::removeDomain( $city_id, $sDomain, $reason );
 		if ( $removed ) {
 			$sInfo .= "Success: Domain <em>{$sDomain}</em> removed.";
 		} else {
@@ -376,7 +386,7 @@ function axWFactoryDomainCRUD($type="add") {
             break;
         case "setmain":
 						try {
-							$setmain = WikiFactory::setmainDomain( $city_id, $sDomain );
+							$setmain = WikiFactory::setmainDomain( $city_id, $sDomain, $reason );
 							if ( $setmain ) {
 								$sInfo .= "Success: Domain <em>{$sDomain}</em> set as main.";
 							} else {
