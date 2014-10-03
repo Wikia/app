@@ -41,9 +41,17 @@ article {
 #mw-content-text {
 	font-size: 16px;
 
-	> figure {
+	> figure.article-thumb {
+		clear: left;
 		float: left;
 		margin: 30px 30px 50px 0;
+
+		&.tright {
+			clear: right;
+			float: right;
+			margin-left: 30px;
+			margin-right: 0;
+		}
 
 		.caption {
 			border-top: 4px solid #ccc;
