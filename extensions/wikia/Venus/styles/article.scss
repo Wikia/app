@@ -93,14 +93,18 @@ article {
 		}
 	}
 
-
 	> div {
 		overflow: hidden;
+	}
+
+	> p {
+		padding-right: 10px;
 	}
 
 	> p,
 	> table {
 		margin-bottom: 35px;
+		overflow: hidden;
 	}
 
 	> ul {
