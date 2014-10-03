@@ -53,7 +53,7 @@ define(
 					mustache: ['extensions/wikia/WikiaMaps/templates/WikiaMapsEmbedMapCode.mustache']
 				},
 				cacheKey: 'wikia_maps_embed_map_code',
-				module: 'wikia-maps-embed-map-code'
+				module: 'wikia.maps.embedMapCode'
 			}
 		};
 

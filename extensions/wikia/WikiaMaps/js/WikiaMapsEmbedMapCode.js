@@ -1,5 +1,5 @@
 define(
-	'wikia-interactive-embed-map-code',
+	'wikia.maps.embedMapCode',
 	[
 		'jquery',
 		'wikia.maps.utils'
