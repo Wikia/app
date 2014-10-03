@@ -1167,7 +1167,7 @@
 					}
 
 					// Add cached media gallery data sent over from MediaGallery extension.
-					$(window).trigger('ligthboxArticleMedia', {
+					$(window).trigger('lightboxArticleMedia', {
 						thumbArr: thumbArr,
 						width: Lightbox.carouselThumbWidth,
 						height: Lightbox.carouselThumbHeight

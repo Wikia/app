@@ -6,7 +6,7 @@ define('mediaGallery.controllers.lightbox', [], function () {
 	};
 
 	LightboxController.prototype.init = function () {
-		$(window).on('ligthboxArticleMedia', $.proxy(this.addMedia, this));
+		$(window).on('lightboxArticleMedia', $.proxy(this.addMedia, this));
 	};
 
 	LightboxController.prototype.addMedia = function (e, lightboxData) {
