@@ -34,7 +34,7 @@ $wgExtensionCredits['other'][] = array(
 	'version'           => '0.1',
 	'author'            => array(
 		"Kamil Koterba <kamil@wikia-inc.com>",
-		'Adam Karmiński <adamk@wikia-inc.com'
+		'Adam Karmiński <adamk@wikia-inc.com>'
 	),
 	'url'               => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/ExactTargetUpdates/'
 );
@@ -59,6 +59,10 @@ $wgHooks['EmailChangeConfirmed'][] = 'ExactTargetUpdatesHooks::onEmailChangeConf
 /* User-related hooks */
 $wgHooks['SignupConfirmEmailComplete'][] = 'ExactTargetUpdatesHooks::onSignupConfirmEmailComplete';
 $wgHooks['UserSaveSettings'][] = 'ExactTargetUpdatesHooks::onUserSaveSettings';
-/* Wiki-related hooks */
+/**
+ * Wiki-related hooks
+ */
+/* Create */
 $wgHooks['CreateWikiLocalJob-complete'][] = 'ExactTargetUpdatesHooks::onWikiCreation';
-$wgHooks['WikiFactoryChanged'][] = 'ExactTargetUpdatesHooks::onWikiFactoryChanged';
+/* Update */
+$wgHooks['WikiFactoryChangeCommitted'][] = 'ExactTargetUpdatesHooks::onWikiFactoryChanged';

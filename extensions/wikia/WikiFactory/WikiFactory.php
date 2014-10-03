@@ -729,6 +729,14 @@ class WikiFactory {
 			}
 			wfProfileOut( __METHOD__."-citylist" );
 			$dbw->commit();
+
+			/* New hook added after actually committing a change */
+			$aHookParams = [
+				'city_id' => $city_id,
+				'cv_name' => $variable->cv_name,
+				'cv_value' => $value,
+			];
+			wfRunHooks( 'WikiFactoryChangeCommitted', array( $aHookParams ) );
 		}
 		catch ( DBQueryError $e ) {
 			Wikia::log( __METHOD__, "", "Database error, cannot write variable." );
@@ -738,7 +746,6 @@ class WikiFactory {
 			// as result value, not DBQueryError exception
 			// throw $e;
 		}
-
 
 		self::clearCache( $city_id );
 		wfProfileOut( __METHOD__ );
