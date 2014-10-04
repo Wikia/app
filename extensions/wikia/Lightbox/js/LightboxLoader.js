@@ -135,6 +135,8 @@
 						return;
 					}
 
+					fileKey = decodeURI(fileKey);
+
 					// Display video inline, don't open lightbox
 					isVideo = $this.children('.play-circle').length;
 					if (
@@ -422,7 +424,9 @@
 			bucky = window.Bucky('LightboxLoader');
 
 			LightboxLoader.init();
-			LightboxLoader.loadFromURL();
+
+			// wait till end of execution stack to load lightbox
+			setTimeout(LightboxLoader.loadFromURL, 0);
 		}
 
 	});

@@ -1,7 +1,8 @@
 require([
 	'mediaGallery.views.gallery',
+	'mediaGallery.controllers.lightbox',
 	'sloth'
-], function (Gallery, sloth) {
+], function (Gallery, LightboxController, sloth) {
 	'use strict';
 
 	/**
@@ -17,9 +18,8 @@ require([
 	 * @param {jQuery} $elem
 	 * @param {int} idx
 	 */
-	GalleryController.prototype.createGallery = function ($elem, idx) {
+	GalleryController.prototype.createGallery = function ($elem, idx, data) {
 		var origVisibleCount = $elem.data('visible-count') || 8,
-			data = $elem.data('model'),
 			gallery;
 
 		// Instantiate gallery view
@@ -43,9 +43,9 @@ require([
 			});
 		}
 
+		// Flags and events for other modules
 		gallery.rendered = true;
 		gallery.$el.trigger('galleryInserted');
-
 	};
 
 	/**
@@ -55,13 +55,21 @@ require([
 		var self = this;
 
 		$.each(this.$galleries, function (idx) {
-			var $this = $(this);
+			var $this = $(this),
+				data = $this.data('model'),
+				lightboxController;
+
+			// pass gallery data to lightbox
+			lightboxController = new LightboxController({
+				model: data
+			});
+			lightboxController.init();
 
 			sloth({
 				on: $this,
-				threshold: 400,
+				threshold: 200,
 				callback: function () {
-					self.createGallery($this, idx);
+					self.createGallery($this, idx, data);
 				}
 			});
 		});
