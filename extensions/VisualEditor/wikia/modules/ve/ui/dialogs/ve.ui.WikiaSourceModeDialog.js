@@ -61,7 +61,7 @@ ve.ui.WikiaSourceModeDialog.prototype.initialize = function () {
 	this.applyButton.connect( this, { 'click': [ 'onApply' ] } );
 
 	// Initialization
-	if ( mw.loader.getState( 'ext.wikia.LinkSuggest' ) ) {
+	if ( !!mw.loader.getState( 'ext.wikia.LinkSuggest' ) ) {
 		this.initLinkSuggest();
 	}
 	this.$body.append( this.sourceModeTextarea.$element );
