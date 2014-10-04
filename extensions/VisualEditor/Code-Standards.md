@@ -7,3 +7,6 @@ Contributions team. It is meant to help with onboarding new developers to the te
 and with code reviews.
 
 ## Standards
+
+* Always use strict comparison instead of type converting comparison
+ * ```===``` instead of ```==``` and ```!==``` instead of ```!=```
