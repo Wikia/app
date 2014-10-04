@@ -231,7 +231,7 @@ ve.dm.MWTransclusionModel.prototype.fetch = function () {
 };
 
 ve.dm.MWTransclusionModel.prototype.fetchRequest = function ( titles, specs, queue ) {
-	var jqXHR = ve.init.target.constructor.static.apiRequest( {
+	return ve.init.target.constructor.static.apiRequest( {
 		'action': 'templatedata',
 		'titles': titles.join( '|' ),
 		'lang': mw.config.get( 'wgUserLanguage' ),
@@ -239,8 +239,6 @@ ve.dm.MWTransclusionModel.prototype.fetchRequest = function ( titles, specs, que
 	} )
 		.done( ve.bind( this.fetchRequestDone, this, titles, specs ) )
 		.always( ve.bind( this.fetchRequestAlways, this, queue ) );
-
-	return jqXHR;
 };
 
 ve.dm.MWTransclusionModel.prototype.fetchRequestDone = function ( titles, specs, data ) {

@@ -18,14 +18,12 @@ OO.inheritClass( ve.dm.WikiaTransclusionModel, ve.dm.MWTransclusionModel );
  * @inheritdoc
  */
 ve.dm.WikiaTransclusionModel.prototype.fetchRequest = function ( titles, specs, queue ) {
-	var jqXHR = ve.init.target.constructor.static.apiRequest( {
+	return ve.init.target.constructor.static.apiRequest( {
 		'action': 'templateparameters',
 		'titles': titles.join( '|' )
 	} )
 		.done( ve.bind( this.fetchRequestDone, this, specs ) )
 		.always( ve.bind( this.fetchRequestAlways, this, queue ) );
-
-	return jqXHR;
 };
 
 /**
