@@ -10,3 +10,6 @@ and with code reviews.
 
 * Always use strict comparison instead of type converting comparison
  * ```===``` instead of ```==``` and ```!==``` instead of ```!=```
+* Do not depend on type converting
+ * Correct: ```if ( !!callToAFunctionThatReturnsString() ) { ... }```
+ * Incorrect: ```if ( callToAFunctionThatReturnsString() ) { ... }```
