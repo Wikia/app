@@ -2,7 +2,7 @@
 	'use strict';
 
 	var $localNavFirstLevel, $localNavSecondLevel, $localNav, $localNavStart, $window,
-		windowWidth, $openedMenu, $openedSubmenu, localNavCache = [];
+		windowWidth, $openedMenu, $openedSubmenu, localNavCache = [], alwaysReturnTrueFunc;
 
 	$localNav = $('#localNavigation');
 	$localNavStart = $localNav.find('.first-level-menu');
@@ -132,15 +132,26 @@
 					activate: openSubmenu,
 					deactivate: closeSubmenu,
 					rowSelector: '.second-level-row',
-					exitMenu: alwaysReturnTrueFunc
+					exitMenu: alwaysReturnTrueFunc,
+					submenuDirection: getMenuAimDirection($localNavSecondLevel[i])
 				}
 			);
 		}
 	}
 
-	function alwaysReturnTrueFunc() {
-		return true;
+	function getMenuAimDirection($localNavSecondLevel) {
+		var dropdownDirection = 'right';
+
+		if ($localNavSecondLevel.classList.contains('right')) {
+			dropdownDirection = 'left';
+		}
+
+		return dropdownDirection;
 	}
+
+	alwaysReturnTrueFunc = function() {
+		return true;
+	};
 
 	if (!window.Wikia.isTouchScreen()) {
 		window.delayedHover(
