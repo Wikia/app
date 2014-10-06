@@ -1,9 +1,9 @@
 <?php
 /**
- * Class WikiaMapsController
+ * Class WikiaMapsSpecialController
  * @desc Special:Maps controller
  */
-class WikiaMapsController extends WikiaSpecialPageController {
+class WikiaMapsSpecialController extends WikiaSpecialPageController {
 
 	const MAP_HEIGHT = 600;
 	const MAPS_PER_PAGE = 10;
@@ -46,9 +46,9 @@ class WikiaMapsController extends WikiaSpecialPageController {
 		$this->wg->out->setHTMLTitle( wfMessage( 'wikia-interactive-maps-title' )->escaped() );
 
 		if ( is_numeric( $this->getPar() ) ) {
-			$this->forward( 'WikiaMaps', 'map' );
+			$this->forward( 'WikiaMapsSpecial', 'map' );
 		} else {
-			$this->forward( 'WikiaMaps', 'main' );
+			$this->forward( 'WikiaMapsSpecial', 'main' );
 		}
 	}
 
@@ -77,7 +77,7 @@ class WikiaMapsController extends WikiaSpecialPageController {
 		$mapsResponse = $this->getModel()->getMapsFromApi( $params );
 
 		if ( !$mapsResponse ) {
-			$this->forward( 'WikiaMaps', 'error' );
+			$this->forward( 'WikiaMapsSpecial', 'error' );
 			return;
 		}
 

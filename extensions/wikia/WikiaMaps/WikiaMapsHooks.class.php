@@ -65,7 +65,7 @@ class WikiaMapsHooks {
 		global $wgEnableWikiaInteractiveMaps, $wgTitle;
 
 		return !empty( $wgEnableWikiaInteractiveMaps )
-			&& $wgTitle->isSpecial( WikiaMapsController::PAGE_NAME );
+			&& $wgTitle->isSpecial( WikiaMapsSpecialController::PAGE_NAME );
 	}
 
 	/**

@@ -95,7 +95,7 @@ class WikiaMapsParserTagController extends WikiaController {
 			$params->map->imagePlaceholder = $this->wg->BlankImgUrl;
 			$params->map->mobile = true;
 			$params->map->href =
-				WikiaMapsController::getSpecialUrl() . '/' . $params->map->id;
+				WikiaMapsSpecialController::getSpecialUrl() . '/' . $params->map->id;
 		} else {
 			$params->map->image = $this->mapsModel->createCroppedThumb( $params->map->image, self::DEFAULT_WIDTH, self::DEFAULT_HEIGHT );
 		}

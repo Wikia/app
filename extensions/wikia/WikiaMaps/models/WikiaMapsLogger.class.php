@@ -62,7 +62,7 @@ class WikiaMapsLogger {
 			foreach ( $logEntries as $logEntry ) {
 				if ( !isset( $pagesCache[ $logEntry->mapId ] ) ) {
 					$pagesCache[ $logEntry->mapId ] = SpecialPage::getTitleFor(
-						WikiaMapsController::PAGE_NAME,
+						WikiaMapsSpecialController::PAGE_NAME,
 						$logEntry->mapId
 					);
 				}

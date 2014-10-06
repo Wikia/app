@@ -148,7 +148,7 @@ class WikiaMapsMapController extends WikiaMapsBaseController {
 			$mapId = $response['content']->id;
 
 			$response[ 'content' ]->mapUrl = Title::newFromText(
-				WikiaMapsController::PAGE_NAME . '/' . $mapId,
+				WikiaMapsSpecialController::PAGE_NAME . '/' . $mapId,
 				NS_SPECIAL
 			)->getFullUrl();
 
@@ -207,7 +207,7 @@ class WikiaMapsMapController extends WikiaMapsBaseController {
 					wfMessage( 'wikia-interactive-maps-undelete-map-success' )->text()
 			);
 
-			$redirectUrl = WikiaMapsController::getSpecialUrl();
+			$redirectUrl = WikiaMapsSpecialController::getSpecialUrl();
 
 			if ( $deleted === WikiaMaps::MAP_NOT_DELETED ) {
 				$redirectUrl .= '/' . $mapId;

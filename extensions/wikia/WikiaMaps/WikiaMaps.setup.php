@@ -16,7 +16,7 @@ $wgExtensionCredits[ 'specialpage' ][] = [
 ];
 
 // controller classes
-$wgAutoloadClasses[ 'WikiaMapsController' ] = $dir . '/controllers/WikiaMapsController.class.php';
+$wgAutoloadClasses[ 'WikiaMapsSpecialController' ] = $dir . '/controllers/WikiaMapsSpecialController.class.php';
 $wgAutoloadClasses[ 'WikiaMapsParserTagController' ] = $dir . '/controllers/WikiaMapsParserTagController.class.php';
 $wgAutoloadClasses[ 'WikiaMapsBaseController' ] = $dir . '/controllers/WikiaMapsBaseController.class.php';
 $wgAutoloadClasses[ 'WikiaMapsMapController' ] = $dir . '/controllers/WikiaMapsMapController.class.php';
@@ -35,7 +35,7 @@ $wgAutoloadClasses[ 'WikiaMapsLogger' ] = $dir . '/models/WikiaMapsLogger.class.
 $wgAutoloadClasses[ 'WikiaMapsPermissionException' ] = $dir . '/exceptions/WikiaMapsPermissionException.class.php';
 
 // special pages
-$wgSpecialPages[ 'Maps' ] = 'WikiaMapsController';
+$wgSpecialPages[ 'Maps' ] = 'WikiaMapsSpecialController';
 $wgSpecialPageGroups[ 'Maps' ] = 'wikia';
 
 // hooks
