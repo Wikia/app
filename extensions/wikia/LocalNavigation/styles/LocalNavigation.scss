@@ -128,23 +128,23 @@
 			display: table-cell;
 			vertical-align: middle;
 			width: 160px;
+		}
 
-			.wordmark-text {
-				display: inline-block;
-				max-height: 80px;
-				overflow: hidden;
+		.wordmark-text {
+			display: inline-block;
+			max-height: 80px;
+			overflow: hidden;
 
-				&.large {
-					font-size: 27px;
-				}
+			&.large {
+				font-size: 27px;
+			}
 
-				&.medium {
-					font-size: 24px;
-				}
+			&.medium {
+				font-size: 24px;
+			}
 
-				&.small {
-					font-size: 20px;
-				}
+			&.small {
+				font-size: 20px;
 			}
 		}
 	}

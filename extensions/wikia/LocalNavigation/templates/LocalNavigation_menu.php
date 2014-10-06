@@ -3,7 +3,7 @@
 	<ul class="first-level-menu">
 		<? foreach ($menuNodes as $i1 => $node1): ?>
 			<li class="local-nav-entry">
-				<a href="<?= $node1['href']; ?>" <?= $node1['canonicalAttr']; ?>><?= $node1['text']; ?></a>
+				<a href="<?= $node1['href']; ?>" <?= $node1['canonicalAttr']; ?>><?= $node1['textEscaped']; ?></a>
 				<? if ( $node1['children'] ): ?>
 					<?= $app->renderView('LocalNavigation', 'menuLevel2', [
 						'nodes' => $node1['children'],
