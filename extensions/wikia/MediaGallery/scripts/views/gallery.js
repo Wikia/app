@@ -36,7 +36,8 @@ define('mediaGallery.views.gallery', [
 		}
 
 		this.track({
-			action: tracker.ACTIONS.IMPRESSION
+			action: tracker.ACTIONS.IMPRESSION,
+			value: this.model.media.length
 		});
 	};
 
