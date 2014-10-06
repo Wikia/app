@@ -52,6 +52,7 @@ $messages['az'] = array(
 $messages['bn'] = array(
 	'wikiastyleguide-dropdown-all' => 'সমস্ত',
 	'wikiastyleguide-dropdown-select-all' => 'সবগুলো নির্বাচন',
+	'wikiastyleguide-dropdown-selected-items-list' => 'আরো $1 এবং $2টি',
 );
 
 /** Breton (brezhoneg)
@@ -135,6 +136,21 @@ $messages['hu'] = array(
 	'wikiastyleguide-dropdown-all' => 'Összes',
 	'wikiastyleguide-dropdown-select-all' => 'Összes kijelölése',
 	'wikiastyleguide-dropdown-selected-items-list' => '$1 és $2 további',
+);
+
+/** Japanese (日本語)
+ * @author Plover-Y
+ */
+$messages['ja'] = array(
+	'wikiastyleguide-dropdown-all' => 'すべて',
+	'wikiastyleguide-dropdown-select-all' => 'すべて選択',
+);
+
+/** Korean (한국어)
+ * @author Miri-Nae
+ */
+$messages['ko'] = array(
+	'wikiastyleguide-dropdown-select-all' => '모두 선택',
 );
 
 /** Macedonian (македонски)

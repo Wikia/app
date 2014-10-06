@@ -296,6 +296,7 @@ $messages['eo'] = array(
  * @author Armando-Martin
  * @author Benfutbol10
  * @author Ciencia Al Poder
+ * @author Macofe
  * @author VegaDark
  * @author Vivaelcelta
  */
@@ -321,7 +322,7 @@ $1
 	'lightbox-share-email-page-label' => 'Enviar por correo electrónico esta página a un amigo',
 	'lightbox-share-email-page-label-address' => 'Dirección de correo electrónico',
 	'lightbox-share-email-ok-caption' => 'Confirmación',
-	'lightbox-share-email-ok-content' => '{{PLURAL:$1|correo ha|correos han}} sido enviado.',
+	'lightbox-share-email-ok-content' => 'Se {{PLURAL:$1|envió el mensaje|enviaron los mensajes}} de correo electrónico.',
 	'lightbox-share-email-error-caption' => 'Error',
 	'lightbox-share-email-error-content' => 'Error al enviar {{PLURAL:$1|correo|correos}}.
 Detalles: $2',
@@ -339,6 +340,7 @@ $messages['fa'] = array(
 	'lightbox-send' => 'ارسال',
 	'lightbox-share-button-email' => 'رایانامه',
 	'lightbox-share-button-www' => 'به‌اشتراک‌گذاشتن',
+	'lightbox-share-button-embed' => 'توکارکردن',
 	'lightbox-share-email-page-label-address' => 'نشانی رایانامه',
 	'lightbox-share-email-ok-caption' => 'تأیید عمل',
 	'lightbox-share-email-error-caption' => 'خطا',
@@ -619,12 +621,15 @@ $messages['kn'] = array(
 
 /** Korean (한국어)
  * @author Cafeinlove
+ * @author Miri-Nae
  * @author 관인생략
  */
 $messages['ko'] = array(
 	'lightbox-forum' => '포럼',
 	'lightbox-share-button-email' => '이메일',
+	'lightbox-share-button-www' => '공유',
 	'lightbox-share-email-page-label-address' => '이메일 주소',
+	'lightbox-share-email-error-caption' => '오류',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
@@ -635,6 +640,11 @@ $messages['lb'] = array(
 	'lightbox-send' => 'Schécken',
 	'lightbox-share-description' => 'Foto op $1 op $2',
 	'lightbox-share-email-subject' => 'De Benotzer $1 huet Iech eng Foto op Wikia geschéckt',
+	'lightbox-share-button-email' => 'E-Mail',
+	'lightbox-share-button-www' => 'Deelen',
+	'lightbox-share-button-embed' => 'Abannen',
+	'lightbox-share-email-label' => 'Dëst Bild engem Frënd per E-Mail schécken',
+	'lightbox-share-email-page-label-address' => 'E-Mail-Adress',
 	'lightbox-share-email-ok-caption' => 'Confirmatioun',
 	'lightbox-share-email-error-caption' => 'Feeler',
 	'lightbox-share-email-error-noaddress' => 'Dir hutt keng Adress uginn.',
@@ -933,6 +943,7 @@ Detalhes: $2',
 );
 
 /** Brazilian Portuguese (português do Brasil)
+ * @author Jefersonmoraes
  * @author Luckas
  * @author Luckas Blade
  */
@@ -944,6 +955,7 @@ $messages['pt-br'] = array(
 	'lightbox-share-button-embed' => 'Incorporar',
 	'lightbox-share-email-ok-caption' => 'Confirmação',
 	'lightbox-share-email-error-caption' => 'Erro',
+	'lightbox-visit-the-wiki' => 'Visite a wikia:',
 );
 
 /** tarandíne (tarandíne)
