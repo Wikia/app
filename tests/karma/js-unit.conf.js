@@ -166,10 +166,10 @@ module.exports = function (config) {
 			'extensions/wikia/Thumbnails/scripts/spec/*.spec.js',
 
 			// WikiaMaps
-			'extensions/wikia/WikiaInteractiveMaps/js/intMapPoiCategories.js',
-			'extensions/wikia/WikiaInteractiveMaps/js/models/intMapPoiCategoriesModel.js',
-			'extensions/wikia/WikiaInteractiveMaps/js/intMapUtils.js',
-			'extensions/wikia/WikiaInteractiveMaps/spec/*.spec.js',
+			'extensions/wikia/WikiaMaps/js/WikiaMapsPoiCategories.js',
+			'extensions/wikia/WikiaMaps/js/models/WikiaMapsPoiCategoriesModel.js',
+			'extensions/wikia/WikiaMaps/js/WikiaMapsUtils.js',
+			'extensions/wikia/WikiaMaps/spec/*.spec.js',
 
 			// MediaGalleries
 			'extensions/wikia/MediaGallery/scripts/templates.mustache.js',
