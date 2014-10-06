@@ -44,7 +44,7 @@
  *
  *          // Set DOM node active, by that menu knows which elem should be
  *          // deactivated before first call to activate .
- *          // This is param is useful when your menu has active row at default
+ *          // This param is useful when your menu has active row at default
  *          activeRow: null,
  *
  *          // Function to call when a row is deactivated.
@@ -80,7 +80,7 @@
  * forked from: https://github.com/kamens/jQuery-menu-aim
  *
  * Works on IE9+ (because of addEventListener...)
- */
+*/
 (function() {
 	var menuAimModule, sharedProperties, utils;
 
@@ -373,10 +373,10 @@
 				decreasingSlope, increasingSlope, prevDecreasingSlope, prevIncreasingSlope;
 
 			if (!activeRow || (
-				options.submenuSelector !== "*" &&
+					options.submenuSelector !== "*" &&
 					utils.filter( [ activeRow ], options.submenuSelector ).length === 0
 				)
-				) {
+			) {
 				// If there is no other submenu row already active, then
 				// go ahead and activate immediately.
 				return 0;
@@ -418,14 +418,14 @@
 			}
 
 			if (lastDelayLoc &&
-				loc.x == lastDelayLoc.x && loc.y == lastDelayLoc.y) {
+					loc.x == lastDelayLoc.x && loc.y == lastDelayLoc.y) {
 				// If the mouse hasn't moved since the last time we checked
 				// for activation status, immediately activate.
 				return 0;
 			}
 
 			decreasingCorner = upperRight,
-				increasingCorner = lowerRight;
+			increasingCorner = lowerRight;
 
 			// Our expectations for decreasing or increasing slope values
 			// depends on which direction the submenu opens relative to the
@@ -451,7 +451,7 @@
 			prevIncreasingSlope = utils.slope(prevLoc, increasingCorner);
 
 			if (decreasingSlope < prevDecreasingSlope &&
-				increasingSlope > prevIncreasingSlope) {
+					increasingSlope > prevIncreasingSlope) {
 				// Mouse is moving from previous location towards the
 				// currently activated submenu. Delay before activating a
 				// new menu row, because user may be moving into submenu.
