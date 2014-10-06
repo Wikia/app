@@ -33,6 +33,7 @@ describe('AdProviderEvolve', function(){
 			, adLogicPageParamsLegacyMock = {
 				getDomainKV: function() {return 'dmn=mock;';},
 				getHostnamePrefix: function() {return 'hostpre=mock;';},
+				getEsrbKeyValue: function() {return 'esrb=teen;';},
 				getCustomKeyValues: function() {return '';},
 				getKruxKeyValues: function() {return '';},
 				getS1KeyValue: function () { return 's1=_somedb;'; }
@@ -55,7 +56,7 @@ describe('AdProviderEvolve', function(){
 		windowMock.wgDartCustomKeyValues = null;
 		windowMock.cscoreCat = null;
 
-		expected = 'http://n4403ad.doubleclick.net/adj/gn.wikia4.com/randomsection;sect=randomsection;mtfInline=true;pos=TOP_LEADERBOARD;s1=_somedb;dmn=mock;hostpre=mock;sz=728x90;dcopt=ist;type=pop;type=int;tile=1;ord=1234567890?';
+		expected = 'http://n4403ad.doubleclick.net/adj/gn.wikia4.com/randomsection;sect=randomsection;mtfInline=true;pos=TOP_LEADERBOARD;esrb=teen;s1=_somedb;dmn=mock;hostpre=mock;sz=728x90;dcopt=ist;type=pop;type=int;tile=1;ord=1234567890?';
 		expected = expected.replace(/;ord=[0-9]+\?$/, ''); // ord is random cb
 
 		actual = adProviderEvolve.getUrl('TOP_LEADERBOARD');
@@ -63,7 +64,7 @@ describe('AdProviderEvolve', function(){
 
 		expect(actual).toBe(expected, 'TOP_LEADERBOARD');
 
-		expected = 'http://n4403ad.doubleclick.net/adj/gn.wikia4.com/randomsection;sect=randomsection;mtfInline=true;pos=TOP_RIGHT_BOXAD;s1=_somedb;dmn=mock;hostpre=mock;sz=300x250,300x600;type=pop;type=int;tile=2;ord=1234567890?';
+		expected = 'http://n4403ad.doubleclick.net/adj/gn.wikia4.com/randomsection;sect=randomsection;mtfInline=true;pos=TOP_RIGHT_BOXAD;esrb=teen;s1=_somedb;dmn=mock;hostpre=mock;sz=300x250,300x600;type=pop;type=int;tile=2;ord=1234567890?';
 		expected = expected.replace(/;ord=[0-9]+\?$/, ''); // ord is random cb
 
 		actual = adProviderEvolve.getUrl('TOP_RIGHT_BOXAD');
