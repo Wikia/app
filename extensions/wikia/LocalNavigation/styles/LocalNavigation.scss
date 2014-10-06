@@ -15,10 +15,6 @@
 	white-space: nowrap;
 	width: 100%;
 
-	*, *::before, *::after {
-		box-sizing: inherit;
-	}
-
 	a {
 		color: inherit;
 
@@ -268,10 +264,6 @@
 		padding-top: 20px;
 		position: absolute;
 		right: 30px;
-	}
-
-	.contribute-inner-container {
-		position: relative;
 
 		.contribute-button {
 			background-color: $color-buttons;

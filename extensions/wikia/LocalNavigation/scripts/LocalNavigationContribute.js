@@ -15,8 +15,6 @@
 		window.delayedHover(
 			entryPoint,
 			{
-				checkInterval: 100,
-				maxActivationDistance: 20,
 				onActivate: openMenu,
 				onDeactivate: closeMenu
 			}

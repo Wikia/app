@@ -2,6 +2,7 @@
 
 class LocalNavigationContributeMenuController extends WikiaController {
 
+	private $dropdownItems = [];
 	private $defaultSpecialPagesData = [
 		'Upload' => [
 			'label' => 'oasis-navigation-v2-add-photo'
@@ -27,13 +28,13 @@ class LocalNavigationContributeMenuController extends WikiaController {
 		// menu items linking to special pages
 		foreach ( $this->getSpecialPagesLinks() as $specialPageName => $link ) {
 			$specialPageTitle = SpecialPage::getTitleFor( $specialPageName );
-			if (!$specialPageTitle instanceof Title) {
+			if ( !$specialPageTitle instanceof Title ) {
 				continue;
 			}
 
 			$attrs = [
-				'text' => wfMessage( $link[ 'label' ] )->text(),
-				'data-content' => wfMessage( $link[ 'label' ] )->text(),
+				'text' => wfMessage( $link[ 'label' ] )->escaped(),
+				'data-content' => wfMessage( $link[ 'label' ] )->escaped(),
 				'href' =>  $specialPageTitle->getLocalURL(),
 			];
 
@@ -60,7 +61,7 @@ class LocalNavigationContributeMenuController extends WikiaController {
 	 * ContributeMenuController::executeIndex() to create uses the array returned by this method to build a menu items
 	 * for contribution button in Wikia Nav
 	 *
-	 * @return array
+	 * @return Array
 	 */
 	public function getSpecialPagesLinks() {
 		$specialPages = $this->getDefaultSpecialPagesData();
@@ -94,10 +95,10 @@ class LocalNavigationContributeMenuController extends WikiaController {
 	/**
 	 * Returns an array passed later to the template; It's contribute menu "Edit" item
 	 * @param String $url an URL to the page with action=edit parameter
-	 * @return array
+	 * @return Array
 	 */
 	public function getEditPageItem( $url ) {
-		$content = wfMessage( 'oasis-navigation-v2-edit-page' )->text();
+		$content = wfMessage( 'oasis-navigation-v2-edit-page' )->escaped();
 		return [
 			'text' => $content,
 			'data-content' => $content,
@@ -109,10 +110,10 @@ class LocalNavigationContributeMenuController extends WikiaController {
 
 	/**
 	 * Returns an array passed later to the template; It's contribute menu "Edit navigation" item
-	 * @return array
+	 * @return Array
 	 */
 	public function getEditNavItem() {
-		$content = wfMessage( 'oasis-navigation-v2-edit-this-menu' )->text();
+		$content = wfMessage( 'oasis-navigation-v2-edit-this-menu' )->escaped();
 		return [
 			'text' => $content,
 			'data-content' => $content,
@@ -122,7 +123,7 @@ class LocalNavigationContributeMenuController extends WikiaController {
 
 	/**
 	 * Simple getter returns ContributeMenuController::$defaultSpecialPagesData
-	 * @return array
+	 * @return Array
 	 */
 	public function getDefaultSpecialPagesData() {
 		return $this->defaultSpecialPagesData;
@@ -130,7 +131,7 @@ class LocalNavigationContributeMenuController extends WikiaController {
 
 	/**
 	 * Returns a two item array with text and concatenated attributes for <a> tag to put into template
-	 * @return array
+	 * @return Array list of rendered html for links' text contents and their attribute/value pairs
 	 */
 	private function setLinkAttributes() {
 		$dropdownItemsRender = [];
@@ -139,18 +140,14 @@ class LocalNavigationContributeMenuController extends WikiaController {
 			$dropdownItemsRender[ $itemName ][ 'attributes' ] = ' data-id="' . $itemName . '"';
 
 			foreach ( $item as $attribute => $value ) {
-				switch ( $attribute ) {
-					case ( 'text' ):
-						$dropdownItemsRender[ $itemName ][ 'text' ] = $value;
-						break;
-					case ( 'href' ):
-						if ( empty( $value ) ) {
-							$value = '#';
-						} else {
-							htmlspecialchars( $item[ 'href' ], ENT_QUOTES | ENT_HTML5, 'UTF-8' );
-						}
+				if ( $attribute === 'text' ) {
+					$dropdownItemsRender[ $itemName ][ 'text' ] = $value;
+					continue;
+				} elseif ( $attribute === 'href' ) {
+					$value = empty( $value ) ? '#' : $item[ 'href' ];
 				}
-				$dropdownItemsRender[ $itemName ][ 'attributes' ] .= empty( $value ) ? '' : ' ' . $attribute . '="' . htmlspecialchars( $value ) . '"';
+
+				$dropdownItemsRender[ $itemName ][ 'attributes' ] .= empty( $value ) ? '' : ' ' . $attribute . '="' . $value . '"';
 			}
 		}
 
