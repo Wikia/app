@@ -26,6 +26,9 @@ class AsyncTaskList {
 	/** @const int default wiki city to run tasks in (community) */
 	const DEFAULT_WIKI_ID = 177;
 
+	/** which config to grab when figuring out the executor (on the job queue side) */
+	const EXECUTOR_APP_NAME = 'mediawiki';
+
 	/** @var AMQPConnection connection to message broker */
 	protected $connection;
 
@@ -39,7 +42,7 @@ class AsyncTaskList {
 	protected $calls = [];
 
 	/** @var string celery task type */
-	protected $taskType = 'celery_workers.mediawiki.task';
+	protected $taskType = 'celery_workers.external.execute';
 
 	/** @var mixed user id and name of the user executing the task */
 	protected $createdBy = null;
@@ -210,11 +213,11 @@ class AsyncTaskList {
 			$taskList [] = $serialized;
 			$this->workId['tasks'] [] = $serialized;
 		}
-		return [
-				$this->wikiId,
-				$this->calls,
-				$taskList,
-			];
+		return [[
+			'wiki_id' => $this->wikiId,
+			'call_order' => $this->calls,
+			'task_list' => $taskList,
+		]];
 	}
 
 
@@ -224,7 +227,9 @@ class AsyncTaskList {
 	 */
 	protected function getExecutor() {
 		global $IP, $wgWikiaEnvironment;
-		$executor = null;
+		$executor = [
+			'app' => self::EXECUTOR_APP_NAME,
+		];
 
 		if ( $wgWikiaEnvironment != WIKIA_ENV_PROD ) {
 			$host = gethostname();
@@ -236,13 +241,13 @@ class AsyncTaskList {
 				$executionMethod = 'remote_shell';
 				$executionRunner = [
 					$host,
+					'php',
 					realpath( $IP . '/maintenance/wikia/task_runner.php' ),
 				];
 			}
-			$executor = [
-				'method' => $executionMethod,
-				'runner' => $executionRunner
-			];
+
+			$executor['method'] = $executionMethod;
+			$executor['runner'] = $executionRunner;
 		}
 
 		return $executor;
