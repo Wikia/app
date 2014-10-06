@@ -7,11 +7,11 @@ use Wikia\Search\Test\BaseTest;
 class ArticleTypeTest extends BaseTest {
 
 	/** @test */
-	public function shouldReturnEmptyResponseForNonEnglishWiki() {
+	public function shouldReturnEmptyResponseForNotSupportedLanguageWiki() {
 		$articleTypeService = $this->mockArticleTypeService();
 		$articleTypeService->expects($this->never())->method('getArticleType');
 		$articleTypeIndexerService = new ArticleType([123, 234]);
-		$articleTypeIndexerService->setService($this->mockMediaWikiService("de"));
+		$articleTypeIndexerService->setService($this->mockMediaWikiService("fr"));
 
 		$response = $articleTypeIndexerService->getResponseForPageIds();
 
@@ -21,7 +21,7 @@ class ArticleTypeTest extends BaseTest {
 	/** @test */
 	public function shouldReturnTypesForEnglishWiki() {
 		$articleTypeService = $this->mockArticleTypeService();
-		$articleTypeService->expects($this->any())->method('getArticleType')->will($this->returnValueMap([ [123, "movie"], [234, "other"] ]));
+		$articleTypeService->expects($this->any())->method('getArticleType')->will($this->returnValueMap([ [123, "en", "movie"], [234, "en", "other"] ]));
 		$articleTypeIndexerService = new ArticleType([123, 234]);
 		$articleTypeIndexerService->setService($this->mockMediaWikiService("en"));
 
