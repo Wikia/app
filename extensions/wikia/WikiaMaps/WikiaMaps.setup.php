@@ -16,23 +16,23 @@ $wgExtensionCredits[ 'specialpage' ][] = [
 ];
 
 // controller classes
-$wgAutoloadClasses[ 'WikiaMapsSpecialController' ] = $dir . '/controllers/WikiaMapsSpecialController.class.php';
-$wgAutoloadClasses[ 'WikiaMapsParserTagController' ] = $dir . '/controllers/WikiaMapsParserTagController.class.php';
-$wgAutoloadClasses[ 'WikiaMapsBaseController' ] = $dir . '/controllers/WikiaMapsBaseController.class.php';
-$wgAutoloadClasses[ 'WikiaMapsMapController' ] = $dir . '/controllers/WikiaMapsMapController.class.php';
-$wgAutoloadClasses[ 'WikiaMapsPoiController' ] = $dir . '/controllers/WikiaMapsPoiController.class.php';
-$wgAutoloadClasses[ 'WikiaMapsPoiCategoryController' ] = $dir . '/controllers/WikiaMapsPoiCategoryController.class.php';
+$wgAutoloadClasses[ 'WikiaMapsSpecialController' ] = $dir . 'controllers/WikiaMapsSpecialController.class.php';
+$wgAutoloadClasses[ 'WikiaMapsParserTagController' ] = $dir . 'controllers/WikiaMapsParserTagController.class.php';
+$wgAutoloadClasses[ 'WikiaMapsBaseController' ] = $dir . 'controllers/WikiaMapsBaseController.class.php';
+$wgAutoloadClasses[ 'WikiaMapsMapController' ] = $dir . 'controllers/WikiaMapsMapController.class.php';
+$wgAutoloadClasses[ 'WikiaMapsPoiController' ] = $dir . 'controllers/WikiaMapsPoiController.class.php';
+$wgAutoloadClasses[ 'WikiaMapsPoiCategoryController' ] = $dir . 'controllers/WikiaMapsPoiCategoryController.class.php';
 
 // helper classes
 $wgAutoloadClasses[ 'WikiaMapsHooks' ] = $dir . 'WikiaMapsHooks.class.php';
 $wgAutoloadClasses[ 'WikiaMapsUploadImageFromFile' ] = $dir . 'WikiaMapsUploadImageFromFile.class.php';
 
 // model classes
-$wgAutoloadClasses[ 'WikiaMaps' ] = $dir . '/models/WikiaMaps.class.php';
-$wgAutoloadClasses[ 'WikiaMapsLogger' ] = $dir . '/models/WikiaMapsLogger.class.php';
+$wgAutoloadClasses[ 'WikiaMaps' ] = $dir . 'models/WikiaMaps.class.php';
+$wgAutoloadClasses[ 'WikiaMapsLogger' ] = $dir . 'models/WikiaMapsLogger.class.php';
 
 // exception classes
-$wgAutoloadClasses[ 'WikiaMapsPermissionException' ] = $dir . '/exceptions/WikiaMapsPermissionException.class.php';
+$wgAutoloadClasses[ 'WikiaMapsPermissionException' ] = $dir . 'exceptions/WikiaMapsPermissionException.class.php';
 
 // special pages
 $wgSpecialPages[ 'Maps' ] = 'WikiaMapsSpecialController';
