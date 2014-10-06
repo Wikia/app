@@ -6,7 +6,7 @@
 				class="has-more"
 			<? endif ?>
 			>
-				<span><?= $node2['text']; ?></span>
+				<span><?= $node2['textEscaped']; ?></span>
 			</a>
 			<? if ( $node2['children'] ): ?>
 				<?= $app->renderView('LocalNavigation', 'menuLevel3', [
@@ -16,12 +16,12 @@
 			<? endif; ?>
 		</li>
 	<? endforeach; ?>
-	<? if ( !empty( $more ) ): ?>
+	<? if ( !empty( $more ) ):
+			$label = wfMessage('local-navigation-more-of', $more['text'])->escaped();
+		?>
 		<li class="local-nav-entry second-level-row">
-			<a href="<?= $more['href']; ?>" data-content="<?= wfMessage('local-navigation-more-of', $more['text'])->escaped(); ?>">
-				<span>
-					<?= wfMessage('local-navigation-more-of', $more['text'])->parse(); ?>
-				</span>
+			<a href="<?= $more['href']; ?>" data-content="<?= $label; ?>">
+				<span><?= $label; ?></span>
 			</a>
 		</li>
 	<? endif; ?>

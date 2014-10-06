@@ -1,15 +1,17 @@
 <ul class="dropdown third-level-menu">
 	<? foreach ($nodes as $i3 => $node3): ?>
-		<li>
+		<li class="third-level-row">
 			<a href="<?= $node3['href']; ?>" data-content="<?= $node3['textEscaped']; ?>" <?= $node3['canonicalAttr']; ?>>
-				<span><?= $node3['text']; ?></span>
+				<span><?= $node3['textEscaped']; ?></span>
 			</a>
 		</li>
 	<? endforeach; ?>
-	<? if ( !empty( $more ) ): ?>
-		<li>
-			<a href="<?= $more['href']; ?>" data-content="<?= wfMessage('local-navigation-more-of', $more['text'])->escaped(); ?>">
-				<span><?= wfMessage('local-navigation-more-of', $more['text'])->parse(); ?></span>
+	<? if ( !empty( $more ) ):
+		$label = wfMessage('local-navigation-more-of', $more['text'])->escaped();
+		?>
+		<li class="third-level-row">
+			<a href="<?= $more['href']; ?>" data-content="<?= $label; ?>">
+				<span><?= $label; ?></span>
 			</a>
 		</li>
 	<? endif; ?>

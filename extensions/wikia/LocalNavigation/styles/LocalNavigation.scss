@@ -69,12 +69,6 @@
 		}
 	}
 
-	> nav {
-		display: inline-block;
-		vertical-align: top;
-		white-space: normal;
-	}
-
 	.dropdown {
 		position: absolute;
 		visibility: hidden;
@@ -111,6 +105,7 @@
 			text-decoration: none;
 			vertical-align: middle;
 			white-space: nowrap;
+			width: 100%;
 
 			&:hover,
 			&.active {
@@ -164,7 +159,7 @@
 					border-color: $color-page;
 				}
 
-				ul.second-level-menu {
+				.second-level-menu {
 					visibility: visible;
 				}
 			}
@@ -172,8 +167,7 @@
 	}
 
 	.second-level-menu {
-		min-width: -webkit-calc(100% + 1px);
-		min-width: calc(100% + 1px);
+		@include calc(min-width, '100% + 1px');
 
 		.has-more {
 			padding-right: 40px;
@@ -191,8 +185,7 @@
 				position: static;
 			}
 
-			&:hover span::after,
-			&.active span::after {
+			&:hover span::after {
 				border-left-color: rgba($color-button-text, .8);
 			}
 		}
@@ -212,19 +205,18 @@
 					margin: 1px 0 0 -20px;
 				}
 
-				&:hover span::after,
 				&.active span::after {
 					border-right-color: rgba($color-button-text, .8);
 				}
 			}
 
-			ul.third-level-menu {
+			.third-level-menu {
 				left: auto;
 				right: 100%;
 			}
 		}
 
-		.active ul.third-level-menu {
+		.second-level-row.active .third-level-menu {
 			visibility: visible;
 		}
 	}
@@ -237,8 +229,9 @@
 		top: 0;
 		visibility: hidden;
 
-		li {
+		.third-level-row {
 			background: $color-buttons;
+			height: 31px;
 
 			&:first-child a {
 				border-top-width: 5px;
@@ -254,36 +247,18 @@
 		}
 
 		a {
+			$third-level-tint: if(lightness($color-buttons) < 50, #fff, #000);
+
+			background: rgba($third-level-tint, .2);
 			border-color: $color-buttons;
 			border-left-width: 5px;
 			border-right-width: 5px;
 			border-style: solid;
-			display: block;
 			padding: 10px;
 
-			&:hover,
-			&.active {
+			&:hover {
+				background: rgba($third-level-tint, .4);
 				font-weight: normal;
-			}
-		}
-
-		@if lightness($color-buttons) < 50 {
-			a {
-				background: rgba(#fff, .2);
-
-				&:hover,
-				&.active {
-					background: rgba(#fff, .4);
-				}
-			}
-		} @else {
-			a {
-				background: rgba(#000, .2);
-
-				&:hover,
-				&.active {
-					background: rgba(#000, .4);
-				}
 			}
 		}
 	}
