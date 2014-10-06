@@ -11,7 +11,9 @@ describe('MediaGalleries gallery', function () {
 		options,
 		bucky,
 		tracker = {
-			buildTrackingFunction: $.noop,
+			buildTrackingFunction: function () {
+				return $.noop;
+			},
 			ACTIONS: {
 				CLICK: 'click'
 			}
