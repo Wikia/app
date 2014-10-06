@@ -100,7 +100,10 @@ class WikiaInteractiveMapsHooks {
 	}
 
 	/**
+	 * @brief Adds fragment metatag in <head> section on single maps' pages
+	 * 
 	 * @param OutputPage $out
+	 * 
 	 * @return bool true
 	 */
 	static function onBeforePageDisplay( $out ) {
