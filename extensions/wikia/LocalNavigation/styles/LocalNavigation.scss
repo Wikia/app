@@ -155,7 +155,7 @@
 			text-decoration: none;
 		}
 	}
-	ul.first-level-menu {
+	.first-level-menu {
 		height: 60px;
 		padding: 20px 0 0 0;
 		margin: 0;
@@ -184,7 +184,7 @@
 				border-color: $color-page;
 				color: $color-button-text;
 
-				ul.second-level-menu {
+				.second-level-menu {
 					visibility: visible;
 				}
 			}
@@ -194,11 +194,11 @@
 		}
 	}
 
-	ul.dropdown {
+	.dropdown {
 		visibility: hidden;
 	}
 
-	ul.second-level-menu {
+	.second-level-menu {
 		display: table;
 		min-width: -webkit-calc(100% + 1px);
 		min-width: calc(100% + 1px);
@@ -236,18 +236,18 @@
 					border-right-color: rgba($color-button-text, .8);
 				}
 			}
-			ul.third-level-menu {
+			.third-level-menu {
 				right: 100%;
 			}
 
 		}
-		li.active {
-			ul.third-level-menu {
+		.second-level-row.active {
+			.third-level-menu {
 				visibility: visible;
 			}
 		}
 	}
-	ul.third-level-menu {
+	.third-level-menu {
 		background: none;
 		display: block;
 		height: 100%;
@@ -255,7 +255,7 @@
 		top: 0;
 		visibility: hidden;
 
-		li {
+		.third-level-row {
 			background: $color-buttons;
 			height: 31px;
 
@@ -268,20 +268,21 @@
 			&:nth-child(n + 2) a {
 				border-top: 1px solid $color-buttons;
 			}
-		}
-		a {
-			$third-level-tint: if(lightness($color-buttons) < 50, #fff, #000);
 
-			background: rgba($third-level-tint, .2);
-			border-color: $color-buttons;
-			border-style: solid;
-			border-right-width: 5px;
-			border-left-width: 5px;
-			padding: 10px;
+			a {
+				$third-level-tint: if(lightness($color-buttons) < 50, #fff, #000);
 
-			&:hover {
-				background: rgba($third-level-tint, .4);
-				font-weight: normal;
+				background: rgba($third-level-tint, .2);
+				border-color: $color-buttons;
+				border-style: solid;
+				border-right-width: 5px;
+				border-left-width: 5px;
+				padding: 10px;
+
+				&:hover {
+					background: rgba($third-level-tint, .4);
+					font-weight: normal;
+				}
 			}
 		}
 	}
