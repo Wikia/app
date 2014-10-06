@@ -26,23 +26,23 @@ class WikiaInteractiveMapsBaseControllerTest extends WikiaBaseTest {
 	 * @dataProvider isUserAllowedDataProvider
 	 */
 	public function testIsUserAllowed( $testCaseDesc, $isLoggedInMock, $isBlockedMock, $expected) {
-		$userMock = $this->getMockBuilder('User')
+		$userMock = $this->getMockBuilder( 'User' )
 			->disableOriginalConstructor()
 			->setMethods( ['isLoggedIn', 'isBlocked'] )
 			->getMock();
 
-		$userMock->expects($this->once())
-			->method('isLoggedIn')
-			->willReturn($isLoggedInMock);
+		$userMock->expects( $this->once() )
+			->method( 'isLoggedIn' )
+			->willReturn( $isLoggedInMock );
 
-		$userMock->expects($this->any())
-			->method('isBlocked')
-			->willReturn($isBlockedMock);
+		$userMock->expects( $this->any() )
+			->method( 'isBlocked' )
+			->willReturn( $isBlockedMock );
 
-		$this->mockGlobalVariable('wgUser', $userMock);
+		$this->mockGlobalVariable( 'wgUser', $userMock );
 
 		$controller = new WikiaInteractiveMapsBaseController();
-		$this->assertEquals($expected, $controller->isUserAllowed(), $testCaseDesc);
+		$this->assertEquals( $expected, $controller->isUserAllowed(), $testCaseDesc );
 	}
 
 	public function isUserAllowedDataProvider() {
