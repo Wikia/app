@@ -79,9 +79,7 @@
 	}
 
 	function handleOpenMenuClick(event) {
-		var $target;
-
-		$target = $(event.currentTarget);
+		var $target = $(event.currentTarget);
 
 		event.preventDefault();
 		event.stopPropagation();
@@ -97,21 +95,17 @@
 	}
 
 	function handleCloseMenuClick(event) {
-		var $target;
-
-		$target = $(event.currentTarget);
+		var $target = $(event.currentTarget);
 
 		if ($target.closest($localNav).length === 0 && $openedMenu !== undefined) {
 			$openedMenu.removeClass('active');
-			$('body').unbind('click', handleCloseMenuClick);
 			$openedMenu = undefined;
 		}
 	}
 
 	function handleSubmenuClick(event) {
-		var $target, $targetMenuItem;
-
-		$target = $(event.target);
+		var $target = $(event.target),
+			$targetMenuItem;
 
 		$targetMenuItem = $target.closest('.second-level-row');
 		event.stopPropagation();
