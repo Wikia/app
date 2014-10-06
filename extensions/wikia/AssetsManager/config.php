@@ -2022,6 +2022,14 @@ $config['global_navigation_oasis_scss'] = [
 	]
 ];
 
+$config[ 'local_navigation_oasis_scss' ] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => [ 'oasis' ],
+	'assets' => [
+		'//extensions/wikia/LocalNavigation/styles/LocalNavigationOasis.scss'
+	]
+];
+
 /** these packs should be loaded only if GlobalNavigation extension is disabled */
 $config['global_header_scss'] = [
 	'type' => AssetsManager::TYPE_SCSS,
@@ -2039,6 +2047,7 @@ $config['global_header_js'] = [
 		'//skins/oasis/js/hoverMenu.js',
 	]
 ];
+
 
 $config['media_gallery_js'] = [
 	'type' => AssetsManager::TYPE_JS,

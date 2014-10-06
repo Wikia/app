@@ -7,6 +7,34 @@ class LocalNavigationController extends WikiaController {
 
 	public function Index() {
 		Wikia::addAssetsToOutput( 'local_navigation_scss' );
+		Wikia::addAssetsToOutput( 'local_navigation_oasis_scss' );
+		Wikia::addAssetsToOutput( 'local_navigation_js' );
+	}
+
+	public function menu() {
+		$menuNodes = $this->getMenuNodes();
+		$this->response->setVal('menuNodes', $menuNodes);
+	}
+
+	public function menuLevel2() {
+		$nodes = $this->request->getVal('nodes', []);
+		$this->response->setVal('nodes', $nodes);
+		$more = $this->request->getVal('more', null);
+		$this->response->setVal('more', $more);
+	}
+
+	public function menuLevel3() {
+		$nodes = $this->request->getVal('nodes', []);
+		$this->response->setVal('nodes', $nodes);
+		$more = $this->request->getVal('more', null);
+		$this->response->setVal('more', $more);
+	}
+
+	private function getMenuNodes () {
+		$navigationModel = new NavigationModel();
+		$localNavigation = $navigationModel->getLocalNavigationTree( NavigationModel::WIKI_LOCAL_MESSAGE );
+		$onTheWikiNavigation = $navigationModel->getOnTheWikiNavigationTree( NavigationModel::WIKIA_GLOBAL_VARIABLE );
+		return array_merge( $localNavigation, $onTheWikiNavigation );
 	}
 
 	public function Wordmark() {
