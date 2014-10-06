@@ -194,6 +194,14 @@ $messages['kn'] = array(
 	'paginator-back' => 'ಹಿಂದಕ್ಕೆ',
 );
 
+/** Korean (한국어)
+ * @author Miri-Nae
+ */
+$messages['ko'] = array(
+	'paginator-next' => '다음',
+	'paginator-back' => '이전',
+);
+
 /** Colognian (Ripoarisch)
  * @author Purodha
  */

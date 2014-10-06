@@ -122,6 +122,7 @@ $messages['en'] = array(
  * @author IAlex
  * @author Kghbln
  * @author LWChris
+ * @author Liuxinyu970226
  * @author McDutchie
  * @author Shirayuki
  * @author Siebrand
@@ -137,6 +138,7 @@ $messages['qqq'] = array(
 	'action-multiwikiedit' => '{{doc-action|multiwikiedit}}',
 	'multidelete' => '{{Identical|Delete batch of pages}}',
 	'multidelete_button' => '{{Identical|Delete}}',
+	'multidelete_or' => '{{Identical|Or}}',
 	'multidelete_select_all' => '{{Identical|Select all}}',
 	'multidelete_reason' => 'none',
 	'multidelete_all_wikis' => '{{Identical|All wikis}}',
@@ -149,6 +151,7 @@ Parameters:
 	'action-multidelete' => '{{doc-action|multidelete}}',
 	'multiwikirecords' => 'Number of wikis found to have matched a search query. Parameters:
 * $1 is a number (example: 7 or 12).',
+	'multiwikifinder-redirect' => '{{Identical|Redirect}}',
 	'action-multiwikifinder' => '{{doc-action|multiwikifinder}}',
 );
 
@@ -1019,7 +1022,7 @@ $messages['es'] = array(
 	'multiwikiedit_list_caption' => 'Lista de wikis',
 	'multiwikiedit_minoredit_caption' => 'Edición menor',
 	'multiwikiedit_botedit_caption' => 'Edición de bot (oculta)',
-	'multiwikiedit_autosummary_caption' => 'Habilitar autoresumen',
+	'multiwikiedit_autosummary_caption' => 'Activar resumen automático',
 	'multiwikiedit_norecentchanges_caption' => 'No mostrar el cambio en cambios recientes',
 	'multiwikiedit_newonly_caption' => 'Saltar artículos existentes',
 	'multiwikiedit_choose_articles' => 'Escoger cual de los artículos encontrados debería ser editado',
@@ -1121,8 +1124,16 @@ $messages['eu'] = array(
  * @author Reza1615
  */
 $messages['fa'] = array(
+	'multiwikiedit_both_modes' => 'لطفاً یا یک صفحهٔ تعیین شده یا فهرست صفحات داده شده را انتخاب کنید.',
 	'multiwikiedit_minoredit_caption' => 'ویرایش جزئی',
+	'multiwikiedit_omitting_nonexistant' => 'حذف صفحهٔ غیر‌موجود $1',
+	'multiwikiedit_omitting_invalid' => 'حذف صفحهٔ نامعتبر $1',
+	'multidelete' => 'حذف گروهی از صفحات',
+	'multidelete_both_modes' => 'لطفاً یا یک صفحهٔ تعیین شده یا فهرست صفحات داده شده را انتخاب کنید.',
+	'multidelete_error_empty_pages' => 'لطفاً یا یک صفحهٔ تعیین شده یا فهرست صفحات داده شده را انتخاب کنید.',
 	'multidelete_select_all' => 'انتخاب همه',
+	'multidelete_omitting_nonexistant' => 'حذف صفحهٔ غیر‌موجود $1',
+	'multidelete_omitting_invalid' => 'حذف صفحهٔ نامعتبر $1',
 );
 
 /** Finnish (suomi)
@@ -1651,6 +1662,7 @@ $messages['it'] = array(
 
 /** Japanese (日本語)
  * @author BryghtShadow
+ * @author Plover-Y
  * @author Shirayuki
  * @author Tommy6
  */
@@ -1757,6 +1769,7 @@ $messages['ja'] = array(
 	'multiwikifindpagenames' => 'ページ名を検索',
 	'multiwikienterpagename' => 'ページ名を入力:',
 	'multiwikirecords' => '$1 の{{PLURAL:$1|ウィキ}}が見つかりました',
+	'multiwikifinder-redirect' => '転送',
 );
 
 /** Khmer (ភាសាខ្មែរ)
@@ -1813,6 +1826,34 @@ $messages['kn'] = array(
 	'multidelete_french_wikis' => 'ಎಲ್ಲಾ ಫ಼್ರೆಂಚ್ ವಿಕಿಗಳು',
 	'multidelete_swedish_wikis' => 'ಎಲ್ಲಾ ಸ್ವೀಡಿಷ್ ವಿಕಿಗಳು',
 	'multidelete_german_wikis' => 'ಎಲ್ಲಾ ಜರ್ಮನ್ ವಿಕಿಗಳು',
+);
+
+/** Korean (한국어)
+ * @author Miri-Nae
+ */
+$messages['ko'] = array(
+	'multiwikiedit_button' => '편집',
+	'multiwikiedit_list_caption' => '위키 목록',
+	'multiwikiedit_minoredit_caption' => '사소한 편집',
+	'multiwikiedit_botedit_caption' => '봇 (숨겨진) 편집',
+	'multidelete_select_all' => '모두 선택',
+	'multidelete_brazilian_portuguese_wikis' => '모든 브라질 포르투갈어 위키',
+	'multidelete_hebrew_wikis' => '모든 히브리어 위키',
+	'multidelete_chinese_wikis' => '모든 중국어 위키',
+	'multidelete_polish_wikis' => '모든 폴란드어 위키',
+	'multidelete_czech_wikis' => '모든 체코어 위키',
+	'multidelete_portuguese_wikis' => '모든 포르투갈어 위키',
+	'multidelete_dutch_wikis' => '모든 네덜란드어 위키',
+	'multidelete_italian_wikis' => '모든 이탈리아어 위키',
+	'multidelete_russian_wikis' => '모든 러시아어 위키',
+	'multidelete_english_wikis' => '모든 영어 위키',
+	'multidelete_japanese_wikis' => '모든 일본어 위키',
+	'multidelete_finnish_wikis' => '모든 핀란드어 위키',
+	'multidelete_spanish_wikis' => '모든 스페인어 위키',
+	'multidelete_french_wikis' => '모든 프랑스어 위키',
+	'multidelete_swedish_wikis' => '모든 스웨덴어 위키',
+	'multidelete_german_wikis' => '모든 독일어 위키',
+	'multiwikifinder-redirect' => '넘겨주기',
 );
 
 /** Colognian (Ripoarisch)
@@ -3364,6 +3405,7 @@ $messages['sv'] = array(
 );
 
 /** Tamil (தமிழ்)
+ * @author ElangoRamanujam
  * @author Jayarathina
  * @author TRYPPN
  */
@@ -3378,7 +3420,7 @@ $messages['ta'] = array(
 	'multidelete_select_all' => 'எல்லாவற்றையும் தேர்வுசெய்யவும்',
 	'multiwikifindpagenames' => 'பக்கங்களின் பெயர்களைக் கண்டுபிடி',
 	'multiwikienterpagename' => 'பக்கத்தின் பெயரொன்றை இடுக:',
-	'multiwikirecords' => '$1 விக்கி கண்டுபிடிக்கப்பட்டுவிட்டது', # Fuzzy
+	'multiwikirecords' => '$1 {{PLURAL:$1|விக்கி|விக்கிகள்}} கண்டுபிடிக்கப்பட்டுள்ளது',
 	'multiwikifinder-redirect' => 'வழிமாற்றுகள்',
 );
 
@@ -3757,41 +3799,53 @@ $messages['zh-hans'] = array(
 	'action-multiwikiedit' => '编辑一批页面',
 	'multidelete' => '批量删除页面',
 	'multidelete_button' => '删除',
+	'multidelete_help' => '通过后台任务大量删除页面。您可对此wiki、所有公开数据库的wiki、选定wiki或选定语言进行此操作。您也可以选择你或预设代码账户进行。',
 	'multidelete_caption' => '页面列表',
 	'multidelete_title' => '删除多项',
+	'multidelete_both_modes' => '请选择一个指定页面或提供页面列表。',
 	'multidelete_or' => '<b>或</b>',
-	'multidelete_task_added' => '多重删除任务#$1已加入。',
+	'multidelete_error_empty_selection' => '请提供选定wiki的列表',
+	'multidelete_error_multi_page' => '同一时间只有一个标题可用于多个wiki删除。',
+	'multidelete_info_empty_list' => '所有选定的wiki都没找到指定标题。',
+	'multidelete_task_added' => '大量删除任务#$1已加入。',
+	'multidelete_task_error' => '大量删除任务加入时出错。',
+	'multidelete_task_none_selected' => '您未选择任何条目。此任务未加入。',
 	'multidelete_select_all' => '选择全部',
 	'multidelete_page' => '待删除页面',
 	'multidelete_reason' => '删除原因',
 	'multidelete_list_caption' => '在特定wiki列表中',
+	'multidelete_choose_articles' => '选择哪些找到的条目应该被删除',
 	'multidelete_processing' => '页面删除中',
 	'multidelete_this_wiki' => '这个维基',
 	'multidelete_inbox_caption' => '或以逗号隔开',
 	'multidelete_all_wikis' => '所有维基',
 	'multidelete_selected_wikis' => '已选择的维基',
 	'multidelete_success_subtitle' => '为$1',
+	'multidelete_link_back' => '您可从$1回到大量删除。',
 	'multidelete_omitting_nonexistant' => '省略不存在页面$1。',
 	'multidelete_omitting_invalid' => '省略无效页面$1。',
 	'multidelete_file_bad_format' => '该文件应为纯文本',
 	'multidelete_file_missing' => '无法读取提供的文件',
+	'multidelete_select_script' => '指定代码账户',
+	'multidelete_no_page' => '请指定至少一个删除的页面或选择包含页面列表的文件。',
 	'multidelete_split_results' => "在单个任务中您的段落字数过高。其已被分割为'''$1'''个任务，每个任务中共'''$2'''个段落。",
-	'multidelete_brazilian_portuguese_wikis' => '所有巴西葡萄牙语维基',
-	'multidelete_hebrew_wikis' => '所有希伯来语维基',
-	'multidelete_chinese_wikis' => '所有华文维基',
-	'multidelete_polish_wikis' => '所有波兰语维基',
+	'multidelete_max_display_size' => "大量删除当前处于确认阶段的页面已爆满。您的查询已达到'''$1'''个条目的上限。选择您的条目并保存任务。之后请考虑再次运行它以捕捉所有剩余的条目。",
+	'multidelete_brazilian_portuguese_wikis' => '所有巴西葡萄牙文维基',
+	'multidelete_hebrew_wikis' => '所有希伯来文维基',
+	'multidelete_chinese_wikis' => '所有中文维基',
+	'multidelete_polish_wikis' => '所有波兰文维基',
 	'multidelete_czech_wikis' => '所有捷克文维基',
-	'multidelete_portuguese_wikis' => '所有葡萄牙语维基',
+	'multidelete_portuguese_wikis' => '所有葡萄牙文维基',
 	'multidelete_dutch_wikis' => '所有荷兰文维基',
 	'multidelete_italian_wikis' => '所有意大利文维基',
-	'multidelete_russian_wikis' => '所有俄语维基',
+	'multidelete_russian_wikis' => '所有俄文维基',
 	'multidelete_english_wikis' => '所有英文维基',
 	'multidelete_japanese_wikis' => '所有日文维基',
-	'multidelete_finnish_wikis' => '所有芬兰语维基',
-	'multidelete_spanish_wikis' => '所有西班牙语维基',
+	'multidelete_finnish_wikis' => '所有芬兰文维基',
+	'multidelete_spanish_wikis' => '所有西班牙文维基',
 	'multidelete_french_wikis' => '所有法文维基',
-	'multidelete_swedish_wikis' => '所有瑞典语维基',
-	'multidelete_german_wikis' => '所有德国维基',
+	'multidelete_swedish_wikis' => '所有瑞典文维基',
+	'multidelete_german_wikis' => '所有德文维基',
 	'action-multidelete' => '删除一批页',
 	'multiwikifinder' => '多维基标题查找程序',
 	'multiwikifindpagenames' => '查找页面名称',
@@ -3803,11 +3857,28 @@ $messages['zh-hans'] = array(
 
 /** Traditional Chinese (中文（繁體）‎)
  * @author Ffaarr
+ * @author Liuxinyu970226
  */
 $messages['zh-hant'] = array(
 	'multitasks-link-back-label' => '這裡',
 	'multiwikiedit_button' => '編輯',
-	'multidelete_hebrew_wikis' => '所有希伯來文的wiki',
+	'multidelete' => '刪除批處理的頁面',
+	'multidelete_button' => '刪除',
+	'multidelete_caption' => '頁面列表',
+	'multidelete_or' => '<b>或</b>',
+	'multidelete_select_all' => '全選',
+	'multidelete_page' => '欲刪除的頁面',
+	'multidelete_reason' => '刪除原因',
+	'multidelete_processing' => '刪除頁面',
+	'multidelete_this_wiki' => '此 Wiki',
+	'multidelete_inbox_caption' => '或用逗號隔開',
+	'multidelete_all_wikis' => '所有的 wiki',
+	'multidelete_selected_wikis' => '所選的 wiki',
+	'multidelete_success_subtitle' => '為$1',
+	'multidelete_file_bad_format' => '該檔案應該為純文字',
+	'multidelete_file_missing' => '無法讀取指定的檔案',
+	'multidelete_brazilian_portuguese_wikis' => '所有的巴西葡萄牙語 wiki',
+	'multidelete_hebrew_wikis' => '所有希伯來語的 wiki',
 	'multidelete_chinese_wikis' => '所有的中文wiki',
 	'multidelete_polish_wikis' => '所有的波蘭語wiki',
 	'multidelete_czech_wikis' => '所有的捷克語wiki',

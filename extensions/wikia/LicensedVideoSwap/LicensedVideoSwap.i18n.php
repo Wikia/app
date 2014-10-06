@@ -275,6 +275,7 @@ $messages['br'] = array(
 /** Catalan (català)
  * @author Alvaro Vidal-Abarca
  * @author Roxas Nobody 15
+ * @author Unapersona
  */
 $messages['ca'] = array(
 	'licensedvideoswap' => 'Llicència Vídeo Swap',
@@ -296,7 +297,9 @@ $messages['ca'] = array(
 	'lvs-instructions' => "Molts dels vídeos que permeten integrar en el seu wikis no estan disponibles quan es retira o baixat per violacions de drets d'autor. És per això que Wikia ha llicenciat [[w:c:video|thousands de vídeos]] per a l'ús en el seu wikis des de diversos socis de continguts. Aquesta pàgina Especial és una manera fàcil per a vostè per veure si tenim una llicència còpia de la mateixa o similar vídeos a la teva wikis. Si us plau, tingueu en compte que sovint el mateix vídeo pot tenir una altra miniatura del vídeo així que el millor és revisar els vídeos abans de prendre una decisió. Feliç el bescanvi!",
 	'lvs-button-keep' => 'Mantenir',
 	'lvs-button-swap' => 'Cambiar',
-	'lvs-more-suggestions' => 'més suggeriments',
+	'lvs-button-yes' => 'Sí',
+	'lvs-button-no' => 'No',
+	'lvs-more-suggestions' => 'Més suggeriments',
 	'lvs-best-match-label' => 'Millor amb Llicència Partit de Wikia Vídeo',
 	'lvs-undo-swap' => 'Desfés',
 	'lvs-undo-keep' => 'Desfés',
@@ -304,6 +307,7 @@ $messages['ca'] = array(
 	'lvs-keep-video-success' => "Heu seleccionat mantenir el seu corrent de vídeo. El vídeo serà eliminat d'aquesta llista.$1",
 	'lvs-restore-video-success' => "Vostè ha restaurat el vídeo d'aquesta llista.",
 	'lvs-error-permission' => 'No es pot intercanviar aquest vídeo.',
+	'lvs-error-permission-access' => 'No pots accedir a aquesta pàgina',
 	'lvs-error-invalid-page-status' => 'Vostè no pot restaurar aquest vídeo.',
 	'lvs-posted-in-label' => 'Vídeo actual publicat a',
 	'lvs-posted-in-label-none' => 'Vídeo actual no està publicat a articles',
@@ -316,7 +320,7 @@ $messages['ca'] = array(
 	'lvs-confirm-undo-keep-message' => 'Esteu segur que voleu afegir aquest vídeo nou a la llista?',
 	'lvs-no-matching-videos' => 'Actualment hi ha cap complement vídeos relacionats amb aquest vídeo',
 	'lvs-log-swap' => 'Canviat el vídeo de [[{{ns:File}}:<span class="notranslate" traduir="no">$1</span>]] a [[{{ns:File}}:<span class="notranslate" traduir="no">$2</span>]]', # Fuzzy
-	'lvs-log-restore' => 'Vídeo canviat restaurada ([[{{ns:File}}: $1 ]])', # Fuzzy
+	'lvs-log-restore' => "S'ha restaurat el vídeo canviat ([[{{ns:File}}:$1]])",
 	'lvs-log-removed-redirected-link' => "Eliminat l'enllaç redirigit",
 	'lvs-zero-state' => 'En aquest moment no disposem de cap coincidència vídeos de Wikia Vídeo per a vídeos en el seu wiki. Torna aviat!!!',
 	'lvs-history-swapped' => 'Intercanviats " $1 "amb" $2 "',
@@ -509,6 +513,7 @@ $messages['eu'] = array(
 );
 
 /** Persian (فارسی)
+ * @author Alirezaaa
  * @author Reza1615
  */
 $messages['fa'] = array(
@@ -518,7 +523,7 @@ $messages['fa'] = array(
 	'lvs-undo-swap' => 'واگردانی',
 	'lvs-undo-keep' => 'واگردانی',
 	'lvs-posted-in-more' => 'بیشتر',
-	'lvs-new-flag' => 'جدید',
+	'lvs-new-flag' => 'تازه',
 );
 
 /** Finnish (suomi)
@@ -763,6 +768,30 @@ $messages['kn'] = array(
 	'lvs-new-flag' => 'ಹೊಸ',
 );
 
+/** Korean (한국어)
+ * @author Miri-Nae
+ */
+$messages['ko'] = array(
+	'licensedvideoswap' => '허가받은 동영상 대체',
+	'lvs-page-title' => '허가받은 동영상 대체',
+	'lvs-tooltip-history' => '허가받은 동영상 대체 버튼',
+	'lvs-history-button-text' => '역사',
+	'lvs-page-header-back-link' => '허가받은 동영상 대체로 돌아가기',
+	'lvs-callout-title-licensed' => '100% 허가받음',
+	'lvs-callout-title-quality' => '고화질',
+	'lvs-button-swap' => '대체',
+	'lvs-button-yes' => '예',
+	'lvs-button-no' => '아니요',
+	'lvs-undo-swap' => '되돌리기',
+	'lvs-undo-keep' => '되돌리기',
+	'lvs-error-permission' => '이 동영상을 대체할 수 없습니다.',
+	'lvs-error-permission-access' => '접속 권한이 없습니다.',
+	'lvs-error-already-swapped' => '이 동영상은 이미 대체되었습니다.',
+	'lvs-posted-in-more' => '더 보기',
+	'lvs-history-swapped' => '"$1" 동영상을 "$2" 동영상으로 대체함',
+	'lvs-history-swapped-exact' => '"$1" 동영상을 같음 이름의 동영상으로 대체함',
+);
+
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */
@@ -842,7 +871,7 @@ $messages['ms'] = array(
 	'lvs-button-swap' => 'Tukar',
 	'lvs-button-yes' => 'Ya',
 	'lvs-button-no' => 'Tidak',
-	'lvs-more-suggestions' => 'cadangan lain',
+	'lvs-more-suggestions' => 'Cadangan Lain',
 	'lvs-best-match-label' => 'Padanan Berlesen Terbaik dari Wikia Video',
 	'lvs-undo-swap' => 'Buat asal',
 	'lvs-undo-keep' => 'Buat asal',
@@ -948,6 +977,31 @@ $messages['nl'] = array(
 	'lvs-no-monobook-support' => 'Deze pagina wordt niet ondersteund in Monobook. Om deze te openen in de indeling van Wikia, $1. Dit zal uw voorkeurs-layout niet aanpassen.',
 	'lvs-click-here' => 'klik hier',
 	'lvs-new-flag' => 'Nieuw',
+);
+
+/** Occitan (occitan)
+ * @author Cedric31
+ */
+$messages['oc'] = array(
+	'lvs-history-button-text' => 'Istoric',
+	'lvs-callout-title-quality' => 'Nauta qualitat',
+	'lvs-callout-title-collaborative' => 'Collaboratiu',
+	'lvs-button-keep' => 'Conservar',
+	'lvs-button-swap' => 'Bascuolar',
+	'lvs-button-yes' => 'Òc',
+	'lvs-button-no' => 'Non',
+	'lvs-more-suggestions' => 'Mai de suggestions',
+	'lvs-undo-swap' => 'Anullar',
+	'lvs-undo-keep' => 'Anullar',
+	'lvs-error-permission' => 'Podètz pas bascuolar aquesta vidèo.',
+	'lvs-error-permission-access' => 'Podètz pas accedir a aquesta pagina.',
+	'lvs-error-invalid-page-status' => 'Podètz pas restablir aquesta vidèo.',
+	'lvs-posted-in-more' => 'mai',
+	'lvs-confirm-keep-title' => 'Conservar la vidèo',
+	'lvs-confirm-undo-swap-title' => 'Confirmar l’anullacion',
+	'lvs-confirm-undo-keep-title' => 'Confirmar l’anullacion',
+	'lvs-history-kept' => '« $1 » conservat',
+	'lvs-new-flag' => 'Novèl',
 );
 
 /** Polish (polski)
@@ -1192,6 +1246,7 @@ $messages['sr-el'] = array(
 );
 
 /** Swedish (svenska)
+ * @author Lokal Profil
  * @author WikiPhoenix
  */
 $messages['sv'] = array(
@@ -1217,7 +1272,7 @@ $messages['sv'] = array(
 	'lvs-button-swap' => 'Byt ut',
 	'lvs-button-yes' => 'Ja',
 	'lvs-button-no' => 'Nej',
-	'lvs-more-suggestions' => 'fler förslag',
+	'lvs-more-suggestions' => 'Fler förslag',
 	'lvs-best-match-label' => 'Bästa licensierade resultaten från Wikia Video',
 	'lvs-undo-swap' => 'Ångra',
 	'lvs-undo-keep' => 'Ångra',
@@ -1247,9 +1302,17 @@ $messages['sv'] = array(
 	'lvs-history-swapped-exact' => 'Bytte ut "$1" mot en video med samma namn',
 	'lvs-history-kept' => 'Behöll "$1"',
 	'lvs-history-instructions' => 'För att se historiken över alla utbytande och ångrande åtgärder, gå till $1.',
-	'lvs-no-monobook-support' => 'Denna sida stöds inte i Monobook. För att komma åt den i Wikia-layout, $1. Detta kommer inte att ändra dina utseendeinställningar.',
+	'lvs-no-monobook-support' => 'Denna sida stöds inte i MonoBook. För att komma åt den i Wikia-layout, $1. Detta kommer inte att ändra dina utseendeinställningar.',
 	'lvs-click-here' => 'klicka här',
 	'lvs-new-flag' => 'Ny',
+);
+
+/** Tamil (தமிழ்)
+ * @author ElangoRamanujam
+ */
+$messages['ta'] = array(
+	'lvs-posted-in-more' => 'மேலும்',
+	'lvs-new-flag' => 'புதிய',
 );
 
 /** Telugu (తెలుగు)

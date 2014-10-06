@@ -364,11 +364,28 @@ Gellout a rit <a href="$4">paouez da resevout</a> kemmoù ar roll-mañ.',
 /** Catalan (català)
  * @author Light of Cosmos
  * @author Marcmpujol
+ * @author Unapersona
  */
 $messages['ca'] = array(
 	'toplists-desc' => 'Els 10 millors',
 	'right-toplists-create-edit-list' => 'Crea i edita pàgines dels 10 millors',
 	'right-toplists-create-item' => 'Crea y afegeix elements a una pàgina dels 10 millors',
+	'right-toplists-edit-item' => 'Editar elements en una llista Top 10.',
+	'right-toplists-delete-item' => "Eliminar elements d'una llista Top 10",
+	'createtoplist' => 'Crear una nova llista Top 10',
+	'edittoplist' => 'Edita la llista Top 10',
+	'toplists-category' => 'Llistes Top 10',
+	'toplists-error-invalid-title' => 'El text subministrat no és vàlid.',
+	'toplists-error-invalid-picture' => 'La imatge seleccionada no és vàlida.',
+	'toplists-error-title-exists' => 'Aquesta pàgina ja existeix. Pots anar cap a <a href="$2" target="_blank">$1</a> o donar un nou nom a la pàgina.',
+	'toplists-error-title-spam' => 'El text subministrat conté algunes paraules reconegudes com a spam.',
+	'toplists-error-article-blocked' => 'No està permès crear una pàgina amb aquest nom. Ho sentim.',
+	'toplists-error-article-not-exists' => 'La pàgina "$1" no existeix. Vols <a href="$2" target="_blank">crear-la</a>?',
+	'toplists-error-picture-not-exists' => 'El fitxer "$1" no existeix. Vols <a href="$2" target="_blank">carregar-lo</a>?',
+	'toplists-error-duplicated-entry' => "No podeu utilitzar el mateix nom més d'una vegada.",
+	'toplists-error-empty-item-name' => "El nom d'un element existent no pot estar buit.",
+	'toplists-item-cannot-delete' => "La supressió d'aquest element ha fallat.",
+	'toplists-error-image-already-exists' => 'Una imatge amb el mateix nom ja existeix.',
 	'toplists-editor-description-placeholder' => 'Introduïu una descripció',
 	'toplists-editor-image-browser-tooltip' => 'Afegir una imatge',
 	'toplists-editor-remove-item-tooltip' => 'Esborrar ítem',
@@ -708,6 +725,7 @@ Puedes <a href="$4">cancelar</a>  tu subscripción de los cambios a la lista.',
  * @author Reza1615
  */
 $messages['fa'] = array(
+	'toplists-item-cannot-delete' => 'حذف کردن این مورد ناموفق بود.',
 	'toplists-editor-title-label' => 'نام فهرست',
 	'toplists-editor-image-browser-tooltip' => 'افزودن یک تصویر',
 	'toplists-editor-remove-item-tooltip' => 'حذف مورد',
@@ -715,9 +733,15 @@ $messages['fa'] = array(
 	'toplists-update-button' => 'ذخیره فهرست',
 	'toplists-cancel-button' => 'لغو',
 	'toplists-image-browser-upload-btn' => 'انتخاب',
+	'toplists-list-related-to' => 'مرتبط با:',
 	'toplists-list-vote-up' => 'رای موافق',
+	'toplists-list-item-voted' => 'رای',
 	'toplists-createpage-dialog-label' => '۱۰ فهرست برتر',
 	'toplists-seconds' => '$1 {{PLURAL:$1|ثانیه|ثانیه}}',
+	'toplists-minutes' => '$1 دقیقه',
+	'toplists-hours' => '$1 ساعت',
+	'toplists-days' => '$1 روز',
+	'toplists-weeks' => '$1 هفته',
 );
 
 /** Finnish (suomi)
@@ -1284,6 +1308,7 @@ $messages['ku-latn'] = array(
  */
 $messages['lb'] = array(
 	'toplists-editor-title-label' => 'Numm vun der Lëscht',
+	'toplists-cancel-button' => 'Ofbriechen',
 	'toplists-seconds' => '$1 {{PLURAL:$1|Sekonn|Sekonnen}}',
 	'toplists-minutes' => '$1 {{PLURAL:$1|Minutt|Minutten}}',
 	'toplists-hours' => '$1 {{PLURAL:$1|Stonn|Stonnen}}',
@@ -2299,7 +2324,7 @@ Du kan <a href="$4">avbryta prenumerationen</a> från förändringslistan när d
 	'toplists-msg-fb-OnRateArticle-short' => 'har röstat på Topp 10 listan på $WIKINAME!',
 	'toplists-create-heading' => '<em>Nyhet!</em> Skapa Din Egen Topp Tio',
 	'toplists-create-button-msg' => 'Skapa en lista',
-	'toplists-oasis-only' => 'Skapa och redigera Topp 10-listor är inte tillgängligt i Monobook. Om du vill använda denna funktion, var god byt till Wikia-skalet i dina inställningar.',
+	'toplists-oasis-only' => 'Skapa och redigera Topp 10-listor är inte tillgängligt i MonoBook. Om du vill använda denna funktion, var god byt till Wikia-utseendet i dina inställningar.',
 );
 
 /** Telugu (తెలుగు)

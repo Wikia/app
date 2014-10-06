@@ -209,6 +209,13 @@ $messages['ia'] = array(
 	'wikiaconfirmemail-username' => 'Nomine de usator',
 );
 
+/** Korean (한국어)
+ * @author Miri-Nae
+ */
+$messages['ko'] = array(
+	'wikiaconfirmemail-username' => '사용자 이름',
+);
+
 /** Kurdish (Latin script) (Kurdî (latînî)‎)
  * @author George Animal
  */
@@ -416,15 +423,16 @@ $messages['uk'] = array(
 );
 
 /** Vietnamese (Tiếng Việt)
+ * @author Rémy Lee
  * @author Xiao Qiao
  */
 $messages['vi'] = array(
 	'wikiaconfirmemail-error-empty-code' => 'Mã xác nhận trống',
 	'wikiaconfirmemail-error-invalid-code' => 'Mã xác nhận không hợp lệ',
-	'wikiaconfirmemail-error-user-not-match' => 'Rất tiếc, liên kết xác nhận này không phù hợp với tên người dùng bạn đã nhập.  Đảm bảo rằng bạn đang nhập đúng tên người dùng. Nếu bạn muốn đăng nhập với một tài khoản khác, nhấp vào <a href="{{fullurl:{{ns:special}}:UserLogin}}">đây</a>',
+	'wikiaconfirmemail-error-user-not-match' => 'Rất tiếc, liên kết xác nhận này không phù hợp với tên người dùng bạn đã nhập. Đảm bảo rằng bạn đang nhập đúng tên người dùng. Nếu bạn muốn đăng nhập với một tài khoản khác, nhấp vào <a href="{{fullurl:{{ns:special}}:UserLogin}}">đây</a>',
 	'wikiaconfirmemail-login-button' => 'Xác nhận và đăng nhập',
-	'wikiaconfirmemail-heading' => 'Hầu như có!',
-	'wikiaconfirmemail-subheading' => 'Đăng nhập bằng tên người dùng và mật khẩu của bạn để chúng tôi biết rằng bạn đã nhận được email.',
+	'wikiaconfirmemail-heading' => 'Hình như đã được rồi!',
+	'wikiaconfirmemail-subheading' => 'Đăng nhập bằng tên người dùng và mật khẩu của bạn để chúng tôi biết rằng bạn đã nhận được thư điện tử.',
 	'wikiaconfirmemail-username' => 'Tên người dùng',
 );
 

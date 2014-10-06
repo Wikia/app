@@ -1142,6 +1142,7 @@ $messages['eu'] = array(
 );
 
 /** Persian (فارسی)
+ * @author Alirezaaa
  * @author Ebraminio
  * @author Leyth
  * @author Mjbmr
@@ -1157,15 +1158,22 @@ $messages['fa'] = array(
 	'wmu-insert' => 'درج',
 	'wmu-name' => 'نام',
 	'wmu-license' => 'اجازه‌نامه',
+	'wmu-licensing' => 'اجازه‌نامه',
 	'wmu-size' => 'اندازه',
+	'wmu-thumbnail' => 'بندانگشتی',
 	'wmu-width' => 'پهنا',
+	'wmu-layout' => 'چیدمان',
 	'wmu-caption' => 'عنوان',
 	'wmu-link' => 'پیوند',
+	'wmu-optional' => '(اختیاری)',
+	'wmu-insert2' => 'درج پرونده',
 	'wmu-imagebutton' => 'افزودن تصویر',
 	'wmu-placeholder' => 'مکان نگه‏دار',
 	'wmu-gallery' => 'نگارخانه',
-	'wmu-added-from-plc' => 'افزودن پروندۀ جدید توسط مکان نگه‏دار تصویر',
+	'wmu-column' => 'ستون‌ها',
+	'wmu-added-from-plc' => 'افزودن پروندۀ تازه توسط مکان نگه‏دار تصویر',
 	'wmu-alignment' => 'تراز',
+	'wmu-file-not-found' => 'پرونده یافت نشد',
 );
 
 /** Finnish (suomi)
@@ -1789,13 +1797,20 @@ $messages['kn'] = array(
 
 /** Korean (한국어)
  * @author Hym411
+ * @author Miri-Nae
+ * @author Revi
  * @author 아라
  */
 $messages['ko'] = array(
 	'wmu-find' => '찾기',
 	'wmu-find-btn' => '찾기',
 	'wmu-license' => '라이선스',
+	'wmu-size' => '크기',
+	'wmu-thumbnail' => '섬네일',
+	'wmu-width' => '너비',
 	'wmu-caption' => '설명',
+	'wmu-link' => '링크',
+	'wmu-gallery' => '갤러리',
 	'wmu-added-from-plc' => '플레이스홀더를 통해 삽입된 그림',
 	'wmu-file-not-found' => '파일을 찾지 못했습니다',
 );
@@ -2566,6 +2581,7 @@ $messages['pt'] = array(
 /** Brazilian Portuguese (português do Brasil)
  * @author Aristóbulo
  * @author Caio1478
+ * @author Dianakc
  * @author Giro720
  * @author JM Pessanha
  * @author Luckas
@@ -2634,7 +2650,7 @@ $messages['pt-br'] = array(
 	'wmu-gallery-success' => 'Adicionou uma imagem a uma galeria nova. Clique abaixo para adicionar mais imagens ou inserir a galeria',
 	'wmu-gallery-btn1' => 'Adicionar outra imagem',
 	'wmu-gallery-btn2' => 'Inserir galeria no artigo',
-	'wmu-no-preview' => 'Não pode adicionar imagem desde uma página em modo de antevisão',
+	'wmu-no-preview' => 'Você não pode adicionar uma imagem da página no modo de pré-visualização',
 	'wmu-no-protect' => 'Esta página está protegida, você não pode adicionar imagens a ela',
 	'wmu-no-rights' => 'Você não está autorizado a adicionar imagens nesta página',
 	'wmu-more-options' => 'Mais opções',

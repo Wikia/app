@@ -576,6 +576,11 @@ $messages['fa'] = array(
 	'lookupcontribswikiurl' => 'نشانی اینترنتی',
 	'lookupcontribswikititle' => 'عنوان',
 	'lookupcontribswikioptions' => 'گزینه',
+	'lookupcontribsnext' => 'بعدی',
+	'lookupcontribsprevious' => 'قبلی',
+	'lookupcontribspageremoved' => 'حذف شد:',
+	'lookupcontribsrestore' => 'بازیابی',
+	'lookupcontribscontribs' => 'مشارکت‌ها',
 	'lookupcontribshist' => 'تاریخچه',
 	'lookupcontribsdiff' => 'تفاوت',
 	'lookupcontribscontent' => 'محتوا',
@@ -966,9 +971,22 @@ $messages['kn'] = array(
 
 /** Korean (한국어)
  * @author Cafeinlove
+ * @author Miri-Nae
  */
 $messages['ko'] = array(
+	'lookupcontribsnoresultfound' => '결과를 찾을 수 없습니다!',
+	'lookupcontribswiki' => '위키',
+	'lookupcontribswikiurl' => 'URL',
+	'lookupcontribswikititle' => '제목',
+	'lookupcontribswikioptions' => '설정',
+	'lookupcontribsnbrresult' => '결과 수:',
+	'lookupcontribsnext' => '다음',
+	'lookupcontribsprevious' => '이전',
+	'lookupcontribspageremoved' => '삭제:',
+	'lookupcontribslog' => '기록',
 	'lookupcontribscontribs' => '기여',
+	'lookupcontribshist' => '역사',
+	'lookupcontribsdiff' => '차이',
 );
 
 /** Kurdish (Latin script) (Kurdî (latînî)‎)
@@ -1036,7 +1054,7 @@ $messages['mk'] = array(
 	'lookupcontribstitle' => 'Проверка на придонеси',
 	'lookupcontribsrecentcontributions' => 'Скорешни придонеси за $1',
 	'lookupcontribsfinalcontributions' => 'Конечни придонеси за $1',
-	'lookupcontribshelp' => 'Оваа специјална страница служи за прикажување на придонесите на некој корисник на повеќе викии. За да се прикаже список, наведете корисничко име подолу.',
+	'lookupcontribshelp' => 'Оваа службена страница служи за прикажување на придонесите на некој корисник на повеќе викии. За да се прикаже список, наведете корисничко име подолу.',
 	'lookupcontribusernotspecify' => 'Немате назначено корисник',
 	'lookupcontribsselectuser' => 'Одберете корисник:',
 	'lookupcontribsselectfor' => 'Одберете за:',
@@ -1101,7 +1119,7 @@ $messages['ml'] = array(
 	'lookupcontribsrestore' => 'പുനഃസ്ഥാപിക്കുക',
 	'lookupcontribshist' => 'നാൾവഴി',
 	'lookupcontribsdiff' => 'വ്യത്യാസം',
-	'right-lookupcontribs' => 'ഉപയോക്താവിന്റെ ആഗോള തിരുത്തലുകൾ കാണുക',
+	'right-lookupcontribs' => 'ഉപയോക്താവിന്റെ ആഗോള തിരുത്തുകൾ കാണുക',
 	'lookupcontribsshowpages' => 'എല്ലാ താളുകളും ($1 നാമമേഖലകൾ)',
 	'lookupcontribscontent' => 'ഉള്ളടക്കം',
 	'lookupcontribsall' => 'എല്ലാം',
@@ -2025,6 +2043,7 @@ $messages['zh-hans'] = array(
 	'lookupcontribstitle' => '查阅维基贡献',
 	'lookupcontribsrecentcontributions' => '最近$1的贡献',
 	'lookupcontribsfinalcontributions' => '对$1的最近贡献',
+	'lookupcontribshelp' => '此特殊页面可用于显示多个wikia的用户贡献。要显示列表，请在下方提供用户名。',
 	'lookupcontribusernotspecify' => '您还没有指定一个用户',
 	'lookupcontribsselectuser' => '选择用户：',
 	'lookupcontribsselectfor' => '搜索：',

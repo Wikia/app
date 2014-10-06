@@ -68,6 +68,19 @@ $messages['br'] = array(
 	'action-piggyback' => 'Kevreañ gant ur gont implijer all',
 );
 
+/** Catalan (català)
+ * @author Unapersona
+ */
+$messages['ca'] = array(
+	'piggybac-desc' => 'Permet entrar com a un altre usuari.',
+	'piggyback-otherusername' => "Una altre nom d'usuari:",
+	'piggyback-nosuchuser' => 'No hi ha cap d\'usuari amb el nom "$1".
+Les majúscules i les minúscules compten, revisa l\'escriptura!',
+	'piggyback-wronguser' => "$1 no és el teu nom d'usuari.",
+	'piggyback-loginprompt' => "Si us plau, torneu a introduir el vostre nom d'usuari i contrasenya.",
+	'action-piggyback' => 'registre a un altre usuari',
+);
+
 /** Czech (čeština)
  * @author Dontlietome7
  * @author Reaperman
@@ -161,7 +174,7 @@ Vérifiez l'orthographe.",
 	'piggyback-firstlogout' => 'Veuillez d’abord vous déconnecter de votre compte.',
 	'piggyback-itisyou' => 'Vous ne pouvez pas vous connecter de manière superposée sur votre propre compte.',
 	'piggyback-issysopto' => 'Vous ne pouvez pas vous connecter de manière superposée sur le compte d’un utilisateur ayant lui-même ce droit.',
-	'action-piggyback' => 'se connecter sous un autre compte utilisateur',
+	'action-piggyback' => 'vous connecter sous un autre compte utilisateur',
 	'log-name-piggyback' => 'Journal d’accès superposé',
 	'log-description-piggyback' => 'Ce journal est une liste des accès superposés à des comptes.',
 );

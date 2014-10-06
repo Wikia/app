@@ -1160,6 +1160,7 @@ $messages['diq'] = array(
 
 /** Spanish (español)
  * @author Fitoschido
+ * @author Macofe
  * @author VegaDark
  * @author Vivaelcelta
  */
@@ -1220,7 +1221,7 @@ Haz clic en el enlace de confirmación en tu correo para terminar de crear tu cu
 	'usersignup-confirmation-email-content' => '¡Estás a un paso de crear tu cuenta en Wikia! Haz clic en el enlace de abajo para confirmar tu correo electrónico y comenzar a editar.
 <br /><br />
 <a style="color:#2C85D5;" href="$CONFIRMURL">$CONFIRMURL</a>',
-	'usersignup-confirmation-email-signature' => 'El Equipo de Wikia',
+	'usersignup-confirmation-email-signature' => 'El equipo de Wikia',
 	'usersignup-confirmation-email_body' => 'Hola $2,
 
 ¡Estás a un paso de crear tu cuenta en Wikia! Haz clic en el enlace de abajo para confirmar tu correo electrónico y comenzar a editar.
@@ -1242,7 +1243,7 @@ Para consultar las últimas noticias de Wikia, visita http://es.wikia.com
 <a style="color:#2C85D5;" href="$CONFIRMURL">$CONFIRMURL</a>
 <br /><br />
 Seguirás recibiendo mensajes a tu correo electrónico viejo hasta que confirmes este otro.',
-	'usersignup-reconfirmation-email-signature' => 'El Equipo de Wikia',
+	'usersignup-reconfirmation-email-signature' => 'El equipo de Wikia',
 	'usersignup-reconfirmation-email_body' => 'Hola $2,
 
 Por favor haz clic en el enlace de abajo para confirmar el cambio de correo electrónico en Wikia.
@@ -1271,7 +1272,7 @@ Para ver las noticias más recientes en Wikia, visita http://es.wikia.com
 	'usersignup-welcome-email-explore-wiki-content' => 'Hay miles de wikis en Wikia, encuentra más wikis que te interesen revisando nuestras categorías: <a style="color:#2C85D5;" href="http://es.wikia.com/wiki/Juegos">Video Juegos</a>, <a style="color:#2C85D5;" href="http://es.wikia.com/wiki/Entretenimiento">Entretenimiento</a>, o <a style="color:#2C85D5;" href="http://es.wikia.com/wiki/Estilo_de_vida">Estilo de vida</a>.',
 	'usersignup-welcome-email-explore-wiki-button' => 'Ir a es.wikia.com',
 	'usersignup-welcome-email-content' => '¿Quieres más información? Encuentra consejos y respuestas en la comunidad de Wikia <a style="color:#2C85D5;" href="http://es.wikia.com">Wikia en Español</a>.',
-	'usersignup-welcome-email-signature' => 'El Equipo de Wikia',
+	'usersignup-welcome-email-signature' => 'El equipo de Wikia',
 	'usersignup-welcome-email-body' => 'Hola $USERNAME,
 
 ¡Estamos felices en darte la bienvenida a Wikia y a {{SITENAME}}! Aquí hay algunas cosas que puedes hacer para comenzar.
@@ -1331,7 +1332,7 @@ $2 tendrá que hacer clic en el enlace del correo que le enviamos para confirmar
 Por favor inicia sesión en <a style="color:#2C85D5;" href="{{fullurl:{{ns:special}}:UserLogin}}">{{fullurl:{{ns:special}}:UserLogin}}</a>
 
 Si no querías crear esta cuenta simplemente ignora este correo o contacta con nuestro Equipo Comunitario con cualquier pregunta.',
-	'usersignup-account-creation-email-signature' => 'El Equipo de Wikia',
+	'usersignup-account-creation-email-signature' => 'El equipo de Wikia',
 	'usersignup-account-creation-email-body' => 'Hola,
 
 Se ha creado una cuenta para ti en {{SITENAME}}. Para acceder a tu cuenta y cambiar la contraseña temporal haz clic en el enlace de abajo e identifícate con el nombre de usuario "$2" y la contraseña "$3".
@@ -1353,7 +1354,7 @@ Para ver las noticias más recientes en Wikia, visita http://es.wikia.com
 <a style="color:#2C85D5;" href="$CONFIRMURL">$CONFIRMURL</a>
 
 Si no confirmas tu cuenta en 23 días, $USERNAME estará disponible de nuevo, ¡así que no esperes!',
-	'usersignup-confirmation-reminder-email-signature' => 'El Equipo de Wikia',
+	'usersignup-confirmation-reminder-email-signature' => 'El equipo de Wikia',
 	'usersignup-confirmation-reminder-email_body' => 'Hola $2,
 
 Han paso algunos días pero parece que no has terminado de crear tu cuenta en Wikia. Es fácil. Solo haz clic en el enlace de confirmación de abajo:
@@ -1377,13 +1378,18 @@ Para ver las noticias más recientes en Wikia, visita http://es.wikia.com
  * @author Reza1615
  */
 $messages['fa'] = array(
+	'usersignup-page-title-wikiamobile' => 'ایجاد حساب کاربری',
+	'usersignup-error-invalid-email' => 'لطفاً یک نشانی رایانامه‌ای معتبر وارد کنید.',
+	'usersignup-facebook-create-account' => 'ایجاد حساب کاربری',
 	'usersignup-confirm-email-update' => 'به روز رسانی',
 	'usersignup-confirmation-email-greeting' => 'سلام $USERNAME،',
 	'usersignup-confirmation-email-signature' => 'تیم ویکیا',
 	'usersignup-reconfirmation-email-signature' => 'تیم ویکیا',
 	'usersignup-welcome-email-edit-profile-heading' => 'ویرایش مشخصات شما.',
 	'usersignup-welcome-email-signature' => 'تیم ویکیا',
+	'usersignup-marketing-community-heading' => 'همکاری',
 	'usersignup-marketing-global-heading' => 'ایجاد',
+	'usersignup-account-creation-email-greeting' => 'سلام،',
 	'usersignup-account-creation-email-signature' => 'تیم ویکیا',
 	'usersignup-confirmation-reminder-email-signature' => 'تیم ویکیا',
 );
@@ -3058,6 +3064,7 @@ Vil du kontrollere hva slags e-post du får? Gå til: {{fullurl:{{ns:special}}:P
  * @author SPQRobin
  * @author Siebrand
  * @author Southparkfan
+ * @author Trijnstel
  */
 $messages['nl'] = array(
 	'usersignup-page-title' => 'Word lid van Wikia',
@@ -3077,7 +3084,7 @@ $messages['nl'] = array(
 	'usersignup-facebook-heading' => 'Registratie afronden',
 	'usersignup-facebook-create-account' => 'Registreren',
 	'usersignup-facebook-email-tooltip' => 'Als u een ander e-mailadres wilt gebruiken, kunt u dat later in uw voorkeuren wijzigen.',
-	'usersignup-facebook-have-an-account-heading' => 'Hebt u al een gebruiker?',
+	'usersignup-facebook-have-an-account-heading' => 'Hebt u al een account?',
 	'usersignup-facebook-have-an-account' => 'Uw huidige Wikigebruiker met Facebook koppelen.',
 	'usersignup-facebook-proxy-email' => 'Anonieme e-mailadres van Facebook',
 	'usersignup-user-pref-emailconfirmlink' => 'Nieuwe bevestiging laten e-mailen',
@@ -3201,7 +3208,7 @@ Wilt u bepalen welke e-mails u ontvangt? Ga dan naar {{fullurl:{{ns:special}}:Pr
 	'usersignup-heading' => 'Word vandaag lid van Wikia',
 	'usersignup-heading-byemail' => 'Maak een gebruiker aan voor iemand anders',
 	'usersignup-marketing-wikia' => 'Begin met samenwerken met miljoenen mensen van over de hele wereld die samenkomen om te delen wat ze weten en waar ze passie voor hebben.',
-	'usersignup-marketing-login' => 'Hebt u al een gebruiker? [[Special:UserLogin|Meld u aan]]',
+	'usersignup-marketing-login' => 'Hebt u al een account?[[Special:UserLogin|Meld u aan]]',
 	'usersignup-marketing-benefits' => 'Doe mee aan iets groots',
 	'usersignup-marketing-community-heading' => 'Samenwerken',
 	'usersignup-marketing-community' => 'Ontdek en verken onderwerpen van videogames tot films en televisie. Ontmoet mensen met gelijke interesses en passies.',
@@ -3265,6 +3272,63 @@ ___________________________________________
 Ga naar http://community.wikia.com voor het laatste nieuws over Wikia.
 Wilt u bepalen welke e-mails u ontvangt? Ga dan naar {{fullurl:{{ns:special}}:Preferences}}',
 	'usersignup-facebook-problem' => 'Er is een probleem opgetreden in de communicatie met Facebook. Probeer het later opnieuw.',
+);
+
+/** Occitan (occitan)
+ * @author Cedric31
+ */
+$messages['oc'] = array(
+	'usersignup-confirm-email-update' => 'Mesa a jorn',
+	'usersignup-confirm-page-heading-confirmed-user' => 'Felicitacions!',
+	'usersignup-confirmation-heading' => 'I sèm gaireben',
+	'usersignup-confirmation-email-greeting' => 'Bonjorn $USERNAME,',
+	'usersignup-confirmation-email-signature' => '— L’equipa Wikia',
+	'usersignup-reconfirmation-email-greeting' => 'Bonjorn $USERNAME,',
+	'usersignup-reconfirmation-email-signature' => '— L’equipa Wikia',
+	'usersignup-welcome-email-greeting' => 'Bonjorn $USERNAME,',
+	'usersignup-welcome-email-explore-wiki-content' => 'I a de milierats de wikis sus Wikia; trobatz mai de wikis que vos interèssa en vos dirigissent cap a un de nòstres centres: <a style="color:#2C85D5;" href="http://www.wikia.com/Video_Games">Jòcs vidèo</a>, <a style="color:#2C85D5;" href="http://www.wikia.com/Entertainment">Divertiment</a>, o <a style="color:#2C85D5;" href="http://www.wikia.com/Lifestyle">Mòde de vida</a>.',
+	'usersignup-welcome-email-signature' => '— L’equipa Wikia',
+	'usersignup-welcome-email-body' => "Bonjorn \$USERNAME,
+
+Sèm uroses de vos aculhir sus Wikia e {{SITENAME}}! Aquí qualques unas de las causas que podètz far per començar.
+
+Modificar vòstre perfil.
+
+Apondre una fòto al perfil e qualques faches somaris sus vos-meteis sus vòstre perfil dins {{SITENAME}}.
+
+Anar sus \$EDITPROFILEURL
+
+Aprene las basas.
+
+Legir un tutorial rapid sus las basas de Wikia: cossí modificar una pagina, vòstre perfil d'utilizaire, cambiar vòstras preferéncias, etc.
+
+Agachatz (\$LEARNBASICURL)
+
+Explorar d'autres wikis.
+
+I a de milierats de wikis sus Wikia; trobatz d'autres wikis que vos interèssan en anant sus un de nòstres gropaments : Jòcs vidèo (http://www.wikia.com/Video_Games), Lésers (http://www.wikia.com/Entertainment), o Estil de vida (http://www.wikia.com/Lifestyle).
+
+Anar a \$EXPLOREWIKISURL
+
+Volètz mai d'informacion ? Trobatz de conselhs, de responsas, e la comunautat Wikia al Centre de la Comunautat (http://www.community.wikia.com). Bonas modificacions !
+
+L'equipa Wikia
+
+
+___________________________________________
+
+Per veire las darrièras nòvas sus Wikia, anatz sus http://community.wikia.com
+Volètz verificar quins corrièrs electronics recebètz ? Anatz sus {{fullurl:{{ns:special}}:Preferences}}",
+	'usersignup-marketing-community-heading' => 'Collaborar',
+	'usersignup-marketing-community' => "Descobrissètz e exploratz de subjèctes que van dels jòcs vidèo als filmes e a la television. Rencontratz de monde amb de passions e d'interèsses semblables.",
+	'usersignup-marketing-global-heading' => 'Crear',
+	'usersignup-marketing-global' => "Aviatz un wiki. Començatz pichon, puèi grandissètz, amb l'ajuda dels autres.",
+	'usersignup-marketing-creativity-heading' => 'Èsser original',
+	'usersignup-account-creation-heading' => 'Capitat !',
+	'usersignup-account-creation-email-greeting' => 'Bonjorn,',
+	'usersignup-account-creation-email-signature' => '— L’equipa Wikia',
+	'usersignup-confirmation-reminder-email-greeting' => 'Bonjorn $USERNAME,',
+	'usersignup-confirmation-reminder-email-signature' => '— L’equipa Wikia',
 );
 
 /** Polish (polski)
@@ -4965,6 +5029,14 @@ Muốn kiểm soát email mà bạn nhận được? Đi đến {{fullurl:{{ns:s
 	'usersignup-facebook-problem' => 'Đã có một vấn đề khi giao tiếp với Facebook. Xin vui lòng thử lại sau.',
 );
 
+/** Walloon (walon)
+ * @author Lucyin
+ */
+$messages['wa'] = array(
+	'usersignup-page-title-wikiamobile' => '
+Ahiver on novea conte',
+);
+
 /** Simplified Chinese (中文（简体）‎)
  * @author Dimension
  * @author Liuxinyu970226
@@ -5176,18 +5248,19 @@ ___________________________________________
 
 /** Traditional Chinese (中文（繁體）‎)
  * @author Ffaarr
+ * @author LNDDYL
  * @author Simon Shek
  */
 $messages['zh-hant'] = array(
 	'usersignup-page-title' => '加入 Wikia',
 	'usersignup-page-captcha-label' => '模糊單詞',
-	'usersignup-error-username-length' => '哎呀，您的用戶名不能超過 {{PLURAL:$1|一個字符| $1 字符}}。',
+	'usersignup-error-username-length' => '哎呀，您的使用者名稱不能超過 {{PLURAL:$1|一個字符| $1 字元}}。',
 	'usersignup-error-invalid-user' => '無效用戶，請先登錄。',
-	'usersignup-error-invalid-email' => '請輸入有效的電子郵件地址。',
+	'usersignup-error-invalid-email' => '請輸入有效的電子郵件位址。',
 	'usersignup-error-symbols-in-username' => '哎呀，您的用戶名只能包含字母和數位。',
-	'usersignup-error-empty-email' => '哎呀，請填寫您的電子郵件地址。',
+	'usersignup-error-empty-email' => '哎呀，請填寫您的電子郵件位址。',
 	'usersignup-error-empty-username' => '哎呀，請填寫用戶名。',
-	'usersignup-error-already-confirmed' => '你已經確認該電子郵件地址。',
+	'usersignup-error-already-confirmed' => '你已經確認該電子郵件位址。',
 	'usersignup-confirm-email-new-email-label' => '新電子郵件',
 	'usersignup-confirm-email-update' => '更新',
 	'usersignup-resend-email-heading-failure' => '電子郵件未重新發送',

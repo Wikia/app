@@ -373,8 +373,11 @@ $messages['it'] = array(
 
 /** Japanese (日本語)
  * @author Barrel0116
+ * @author Plover-Y
  */
 $messages['ja'] = array(
+	'partner-feed-recent-changes' => '最近の変更',
+	'all-blog-posts' => 'すべてのカテゴリ',
 	'feed-title-recentchanges' => '最近の更新',
 );
 

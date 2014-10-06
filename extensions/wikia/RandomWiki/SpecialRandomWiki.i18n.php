@@ -31,6 +31,14 @@ $messages['ar'] = array(
 	'randomwiki' => 'ويكي عشوائية',
 );
 
+/** Avaric (авар)
+ * @author Gazimagomedov
+ */
+$messages['av'] = array(
+	'randomwiki-desc' => 'ХӀалтӀизабулчагӀазе цебе ккараб вики балагьезе кумек гьабула',
+	'randomwiki' => 'Цебе ккараб вики',
+);
+
 /** Belarusian (Taraškievica orthography) (беларуская (тарашкевіца)‎)
  * @author EugeneZelenko
  * @author Jim-by
@@ -182,6 +190,13 @@ $messages['ja'] = array(
  */
 $messages['kn'] = array(
 	'randomwiki' => 'ಯಾದೃಚ್ಛಿಕ ವಿಕಿ',
+);
+
+/** Korean (한국어)
+ * @author Miri-Nae
+ */
+$messages['ko'] = array(
+	'randomwiki' => '임의 위키 보기',
 );
 
 /** Colognian (Ripoarisch)

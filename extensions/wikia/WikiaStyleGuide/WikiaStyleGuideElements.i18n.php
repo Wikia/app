@@ -52,6 +52,7 @@ $messages['az'] = array(
 $messages['bn'] = array(
 	'wikiastyleguide-dropdown-all' => 'সমস্ত',
 	'wikiastyleguide-dropdown-select-all' => 'সবগুলো নির্বাচন',
+	'wikiastyleguide-dropdown-selected-items-list' => 'আরো $1 এবং $2টি',
 );
 
 /** Breton (brezhoneg)
@@ -143,6 +144,13 @@ $messages['hu'] = array(
 $messages['ja'] = array(
 	'wikiastyleguide-dropdown-all' => 'すべて',
 	'wikiastyleguide-dropdown-select-all' => 'すべて選択',
+);
+
+/** Korean (한국어)
+ * @author Miri-Nae
+ */
+$messages['ko'] = array(
+	'wikiastyleguide-dropdown-select-all' => '모두 선택',
 );
 
 /** Macedonian (македонски)

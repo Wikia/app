@@ -2812,6 +2812,8 @@ $messages['fa'] = array(
 	'wall-message-undoremove' => 'واگردانی',
 	'wall-toolbar-history' => 'تاریخچه',
 	'wall-message-remove' => 'پاک‌کردن',
+	'wall-message-quote-button' => 'نقل قول',
+	'wall-thread-removed' => 'حذف شد',
 	'wall-thread-deleted' => 'حذف شده',
 	'wall-thread-closed' => 'بسته‌شده',
 	'wall-placeholder-reply' => 'ارسال پاسخ',
@@ -2830,15 +2832,25 @@ $messages['fa'] = array(
 	'wall-action-remove-confirm-ok' => 'پاک‌کردن',
 	'wall-action-close-confirm-ok' => 'بسته',
 	'wall-action-admin-confirm-ok' => 'حذف',
+	'wall-action-restore-confirm-ok' => 'احیا',
+	'wall-action-move-thread-ok' => 'انتقال موضوع',
 	'wall-notifications' => 'اطلاعیه‌ها',
+	'wall-notifications-markasread' => 'نشان‌گذاری همه به‌عنوان خوانده‌شده',
 	'wall-notifications-markasread-all-wikis' => 'تمام ویکی‌های',
 	'wall-notifications-markasread-this-wiki' => 'این ویکی',
 	'wall-sorting-most-active' => 'فعال ترین',
 	'wall-sorting-archived' => 'بایگانی‌شده',
+	'wall-deleted-msg-pagetitle' => 'پیام حذف شد',
 	'wall-recentchanges-namespace-selector-message-wall' => 'دیوار پیام',
 	'wall-history' => 'تاریخچه',
 	'wall-history-sorting-newest-first' => 'جدیدترین ابتدا بیاید',
 	'wall-history-summary-label' => 'خلاصه',
+	'wall-history-rail-contribs' => 'مشارکت‌ها',
+	'wall-history-rail-block' => 'بستن',
+	'wall-history-action-view' => 'نمایش',
+	'wall-history-action-restore' => 'بازیابی',
+	'wall-thread-history-title' => 'تاریخچهٔ مبحث',
+	'wall-topic-input-heading' => 'مبحث',
 	'wall-topic-edit-save' => 'ذخیره',
 	'wall-topic-edit-cancel' => 'لغو',
 );
@@ -4681,6 +4693,7 @@ $messages['kbd'] = array(
 
 /** Korean (한국어)
  * @author Cafeinlove
+ * @author Miri-Nae
  * @author Priviet
  * @author 아라
  */
@@ -4704,12 +4717,25 @@ $messages['ko'] = array(
 	'wall-thread-isnotifyeveryone' => '강조하기',
 	'wall-thread-deleted' => '삭제됨',
 	'wall-thread-closed' => '폐쇄됨',
+	'wall-button-to-cancel-preview' => '편집',
+	'wall-button-cancel-changes' => '취소',
+	'wall-button-done-source' => '완료',
+	'wall-message-edit' => '편집',
 	'wall-message-more' => '더 보기',
+	'wall-message-delete' => '삭제',
+	'wall-action-all-confirm-cancel' => '취소',
+	'wall-delete-error-title' => '오류',
+	'wall-action-remove-confirm-ok' => '제거',
+	'wall-action-admin-confirm-ok' => '삭제',
+	'wall-sorting-archived' => '보존됨',
 	'wall-recentchanges-namespace-selector-message-wall' => '메시지 담벼락',
+	'wall-history' => '역사',
 	'wall-history-who-involved-wall-title' => '이 담벼락에 메시지를 남긴 사용자',
 	'prefs-email-wall-v2' => '메시지 담벼락과 포럼',
 	'wall-quote-author' => '$1의 말:',
 	'wall-quote-reply-to' => '#$1에 대한 덧글',
+	'wall-topic-edit-save' => '저장',
+	'wall-topic-edit-cancel' => '취소',
 );
 
 /** Karachay-Balkar (къарачай-малкъар)
@@ -4781,6 +4807,7 @@ $messages['ksh'] = array(
  */
 $messages['lb'] = array(
 	'wall-no-title' => 'Keen Titel',
+	'wall-message-undoremove' => 'Réckgängeg maachen',
 	'wall-toolbar-history' => 'Versiounen',
 	'wall-message-remove' => 'Ewechhuelen',
 	'wall-thread-deleted' => 'Geläscht',
@@ -4807,6 +4834,8 @@ $messages['lb'] = array(
 	'wall-notifications-markasread-all-wikis' => 'All Wikiën',
 	'wall-notifications-markasread-this-wiki' => 'Dës Wiki',
 	'wall-recentchanges-edit' => 'Message geännert',
+	'wall-recentchanges-closed-thread' => 'huet d\'Rubrik vu(n) "[[$1|$2]]" vun der Wand vum [[$3|$4]] zougemaach',
+	'wall-recentchanges-reopened-thread' => 'huet d\'Rubrik vu(n) "[[$1|$2]]" vun der Wand vum [[$3|$4]] nees opgemaacht',
 	'wall-history' => 'Versiounen',
 	'wall-history-who-involved-wall-title' => 'Wien ass bedeelegt?',
 	'wall-history-summary-label' => 'Resumé',
@@ -6795,6 +6824,7 @@ suas preferências de e-mail aqui: http://community.wikia.com/Special:Preference
  * @author Luckas
  * @author Luckas Blade
  * @author TheGabrielZaum
+ * @author Tooguether
  */
 $messages['pt-br'] = array(
 	'wall-no-title' => 'Sem título',
@@ -6883,9 +6913,11 @@ O post original e seu sumário ainda aparecerão no histórico da wiki.',
 	'wall-notifications-wall-disabled' => 'O Mural de Mensagens foi desativado nesta wiki. Impossível carregar notificações.',
 	'wall-sorting-archived' => 'Arquivado',
 	'wall-deleted-msg-view' => '(Ver/Restaurar)',
+	'wall-recentchanges-new-message' => 'no [[$1|mural de $2]]',
 	'wall-recentchanges-edit' => 'mensagem editada',
 	'wall-recentchanges-deleted-reply-title' => 'Uma resposta no mural de mensagens',
 	'wall-recentchanges-namespace-selector-message-wall' => 'Mural de Mensagens',
+	'wall-contributions-line' => '[[$1|$2]] no [[$3|mural de $4]]',
 	'wall-wiki-activity-on' => 'no [[$1|mural de $2]]',
 	'wall-removed-thread-undo' => 'Este tópico foi removido. $1',
 	'wall-removed-reply-undo' => 'Esta resposta foi removida. $1',
@@ -9027,6 +9059,13 @@ Li messaedje d' oridjinne eyet vosse rascourti seront todi veyåves dins l' istw
 	'wall-history-rail-block' => 'bloker',
 	'wall-history-action-view' => 'vey',
 	'wall-history-action-restore' => 'rapexhî',
+);
+
+/** Yiddish (ייִדיש)
+ * @author פוילישער
+ */
+$messages['yi'] = array(
+	'wall-recentchanges-edit' => 'רעדאקטירטע מעלדונג',
 );
 
 /** Simplified Chinese (中文（简体）‎)

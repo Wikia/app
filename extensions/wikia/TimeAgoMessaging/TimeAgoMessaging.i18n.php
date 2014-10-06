@@ -118,11 +118,13 @@ $messages['ce'] = array(
 	'timeago-month' => '$1 {{PLURAL:$1|бутт}} хьалха',
 	'timeago-day' => '{{PLURAL:$1|$1 де}} хьалха',
 	'timeago-hour' => '{{PLURAL:$1|$1 сахьт}} хьалха',
-	'timeago-minute' => '$1 {{PLURAL:$1|минут}} хьалха',
+	'timeago-minute' => '$1 {{PLURAL:$1|минот}} хьалха',
+	'timeago-second' => 'минот хьалха',
 	'timeago-day-from-now' => '{{PLURAL:$1|$1 де}} хьалха',
 	'timeago-hour-from-now' => '{{PLURAL:$1|$1 сахьт}} хьалха',
-	'timeago-minute-from-now' => '$1 {{PLURAL:$1|минут}} хьалха',
+	'timeago-minute-from-now' => '$1 {{PLURAL:$1|минот}} хьалха',
 	'timeago-month-from-now' => '$1 {{PLURAL:$1|бутт}} хьалха',
+	'timeago-second-from-now' => 'минот хьалха',
 );
 
 /** Czech (čeština)
@@ -194,6 +196,13 @@ $messages['es'] = array(
 	'timeago-minute-from-now' => '{{PLURAL:$1|un minuto|$1 minutos}} desde ahora',
 	'timeago-month-from-now' => '{{PLURAL:$1|un mes|$1 mes}} desde ahora',
 	'timeago-second-from-now' => 'un minuto desde ahora',
+);
+
+/** Persian (فارسی)
+ * @author Reza1615
+ */
+$messages['fa'] = array(
+	'timeago-second' => 'یک دقیقه پیش',
 );
 
 /** Finnish (suomi)
@@ -354,6 +363,18 @@ $messages['kk-cyrl'] = array(
 	'timeago-minute-from-now' => '{{PLURAL:$1|$1 минут|$1 минут}} бұрын',
 	'timeago-month-from-now' => '{{PLURAL:$1|$1 ай|$1 ай}} бұрын',
 	'timeago-second-from-now' => 'минут бұрын',
+);
+
+/** Korean (한국어)
+ * @author Miri-Nae
+ */
+$messages['ko'] = array(
+	'timeago-year' => '{{PLURAL:$1|$1년|$1년}} 전',
+	'timeago-month' => '{{PLURAL:$1|$1개월|$1개월}} 전',
+	'timeago-day' => '{{PLURAL:$1|$1일|$1일}} 전',
+	'timeago-hour' => '{{PLURAL:$1|$1시간|$1시간}} 전',
+	'timeago-minute' => '{{PLURAL:$1|$1분|$1분}} 전',
+	'timeago-second' => '1분 전',
 );
 
 /** Karachay-Balkar (къарачай-малкъар)
@@ -712,21 +733,22 @@ $messages['uk'] = array(
 /** Vietnamese (Tiếng Việt)
  * @author Baonguyen21022003
  * @author Minh Nguyen
+ * @author Rémy Lee
  * @author Xiao Qiao
  */
 $messages['vi'] = array(
 	'timeagomessaging-desc' => 'Cung cấp i18n cho phần mềm jquery.timeago.js',
-	'timeago-year' => 'cách đây $1 năm',
-	'timeago-month' => '$1 tháng trước',
-	'timeago-day' => '{{PLURAL:$1|1 ngày|$1 ngày}} trước',
-	'timeago-hour' => '{{PLURAL:$1|1 giờ|$1 giờ}} trước',
-	'timeago-minute' => '$1 phút trước',
-	'timeago-second' => '1 phút trước',
-	'timeago-day-from-now' => '{{PLURAL:$1|1 ngày|$1 ngày}} trước',
-	'timeago-hour-from-now' => '{{PLURAL:$1|1 giờ|$1 giờ}} trước',
-	'timeago-minute-from-now' => '{{PLURAL:$1|phút|$1 phút}} từ bây giờ',
-	'timeago-month-from-now' => '{{PLURAL:$1|một thang1|$1 tháng}} từ bây giờ',
-	'timeago-second-from-now' => 'một phút từ bây giờ',
+	'timeago-year' => '{{PLURAL:$1|một năm|$1 năm}} trước',
+	'timeago-month' => '{{PLURAL:$1|một tháng|$1 tháng}} trước',
+	'timeago-day' => '{{PLURAL:$1|một ngày|$1 ngày}} trước',
+	'timeago-hour' => '{{PLURAL:$1|một giờ|$1 giờ}} trước',
+	'timeago-minute' => '{{PLURAL:$1|một phút|$1 phút}} trước',
+	'timeago-second' => 'một phút trước',
+	'timeago-day-from-now' => 'cách đây {{PLURAL:$1|một ngày|$1 ngày}}',
+	'timeago-hour-from-now' => 'cách đây {{PLURAL:$1|một giờ|$1 giờ}}',
+	'timeago-minute-from-now' => 'cách đây {{PLURAL:$1|một phút|$1 phút}}',
+	'timeago-month-from-now' => 'cách đây {{PLURAL:$1|một tháng|$1 tháng}}',
+	'timeago-second-from-now' => 'cách đây một phút',
 );
 
 /** Simplified Chinese (中文（简体）‎)
