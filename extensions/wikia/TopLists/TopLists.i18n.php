@@ -1256,6 +1256,14 @@ $1
 	'toplists-create-button-msg' => 'リストを作成',
 );
 
+/** Korean (한국어)
+ * @author Miri-Nae
+ */
+$messages['ko'] = array(
+	'toplists-cancel-button' => '취소',
+	'toplists-oasis-only' => '모노북 스킨에는 상위 10 목록이 적용되지 않습니다. 이 기능을 체험하고 싶으시다면 스킨을 위키아 스킨으로 바꿔주세요.',
+);
+
 /** Colognian (Ripoarisch)
  * @author Purodha
  */

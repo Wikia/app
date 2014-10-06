@@ -1808,13 +1808,14 @@ $messages['oc'] = array(
 
 /** Punjabi (ਪੰਜਾਬੀ)
  * @author Aalam
+ * @author Babanwalia
  */
 $messages['pa'] = array(
 	'editaccount' => 'ਅਕਾਊਂਟ ਸੋਧ',
 	'editaccount-desc' => 'ਸਟਾਫ਼ ਮੈਂਬਰ ਨੂੰ ਯੂਜ਼ਰ ਅਕਾਊਂਟ ਜਾਣਕਾਰੀ ਪਰਬੰਧ ਕਰਨ ਦਿਉ',
 	'editaccount-frame-manage' => 'ਅਕਾਊਂਟ ਸੋਧੋ',
 	'editaccount-frame-usage' => 'ਨੋਟ',
-	'editaccount-label-select' => 'ਯੂਜ਼ਰ ਅਕਾਊਂਟ ਚੁਣੋ',
+	'editaccount-label-select' => 'ਕੋਈ ਵਰਤੋਂਕਾਰ ਖਾਤਾ ਚੁਣੋ',
 	'editaccount-submit-account' => 'ਅਕਾਊਂਟ ਪਰਬੰਧ',
 	'editaccount-frame-account' => 'ਯੂਜ਼ਰ ਅਕਾਊਂਟ ਸੋਧ ਜਾਰੀ: $1',
 	'editaccount-label-email' => 'ਨਵਾਂ ਈਮੇਲ ਐਡਰੈੱਸ ਸੈੱਟ ਕਰੋ',

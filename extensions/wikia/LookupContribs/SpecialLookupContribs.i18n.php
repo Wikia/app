@@ -913,7 +913,9 @@ $messages['it'] = array(
 );
 
 /** Japanese (日本語)
+ * @author Barrel0116
  * @author Naohiro19
+ * @author Plover-Y
  * @author Tommy6
  */
 $messages['ja'] = array(
@@ -928,7 +930,10 @@ $messages['ja'] = array(
 	'lookupcontribsgo' => '表示',
 	'lookupcontribslistwikiainfo' => '<b>$1</b> が記事の編集を行ったことのあるウィキ',
 	'lookupcontribsnoresultfound' => '見つかりませんでした',
+	'lookupcontribswikititle' => 'ウィキ名',
+	'lookupcontribswikioptions' => 'オプション',
 	'lookupcontribsdetails' => '詳細を見る:',
+	'lookupcontribslastedited' => '最終編集',
 	'lookupcontribsnbrresult' => '表示件数:',
 	'lookupcontribsnext' => '次',
 	'lookupcontribsprevious' => '前',
@@ -939,6 +944,7 @@ $messages['ja'] = array(
 	'right-lookupcontribs' => '利用者のプロジェクト全体における投稿記録を見る',
 	'lookupcontribsshowpages' => '全ページ（$1名前空間）',
 	'lookupcontribscontent' => 'コンテンツ',
+	'lookupcontribsall' => 'すべて',
 );
 
 /** Kannada (ಕನ್ನಡ)

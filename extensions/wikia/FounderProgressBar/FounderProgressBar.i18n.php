@@ -1119,11 +1119,24 @@ $messages['kn'] = array(
 );
 
 /** Korean (한국어)
+ * @author Miri-Nae
  * @author 관인생략
  */
 $messages['ko'] = array(
 	'founderprogressbar-progress-see-full-list' => '전체 목록 보기',
 	'founderprogressbar-progress-hide-full-list' => '전체 목록 숨기기',
+	'founderprogressbar-task-completed' => '완료',
+	'founderprogressbar-wikiactivity-visit-label' => '위키 활동 내역 보기',
+	'founderprogressbar-profile-edit-label' => '당신의 프로필 페이지를 채워보세요',
+	'founderprogressbar-photo-add20-label' => '그림 수 $1장 달성하기',
+	'founderprogressbar-total-edit75-label' => '문서 편집 75회 달성하기',
+	'founderprogressbar-wikialabs-visit-label' => '위키아 랩 방문하기',
+	'founderprogressbar-wikialabs-visit-description' => '위키아 실험실에서는 위키아의 새로운 기능 중 일부를 사용해 볼 수 있습니다. 아직 베타 버전이지만, 앞으로 나올 위키아 기능을 미리 알아보고, 체험하고 싶다면 위키아 실험실을 추천합니다.',
+	'founderprogressbar-fb-connect-label' => '페이스북 연동',
+	'founderprogressbar-gallery-add-label' => '그림 갤러리 삽입하기',
+	'founderprogressbar-topnav-edit-label' => '내비게이션 관리하기',
+	'founderprogressbar-commcorner-edit-label' => '커뮤니티 코너 편집하기',
+	'founderprogressbar-user-add5-label' => '사용자 문서 수 5개 달성하기',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
@@ -1223,7 +1236,7 @@ $messages['mk'] = array(
 	'founderprogressbar-gallery-add-description' => 'Галериите на слики се одличен начин да истакнете повеќе слики во еден дел од страницата. Покрај тоа, мешаниот начин на поставање на сликите на викито е забавен и интересен за посетителите.',
 	'founderprogressbar-gallery-add-url' => 'http://community.wikia.com/wiki/Help:Gallery?uselang=mk',
 	'founderprogressbar-topnav-edit-label' => 'Прилагодете ја навигацијата',
-	'founderprogressbar-topnav-edit-description' => 'Паѓачките менија веднаш до жигот се навигација за вашето вики. Тука можете да ставате врски за страници за да им помогнете на посетителите да најдат статии, категории, блогови и полесно да се снаоѓаат на викито. Ако ви треба помош при уредување на навигацијата, посетете го Центарот на заедницата.',
+	'founderprogressbar-topnav-edit-description' => 'Расклопните менија веднаш до жигот се навигација за вашето вики. Тука можете да ставате врски за страници за да им помогнете на посетителите да најдат страници, категории, блогови и полесно да се снаоѓаат на викито. Ако ви треба помош при уредување на навигацијата, посетете го Центарот на заедницата.',
 	'founderprogressbar-mainpage-addslider-label' => 'Додај лизгач на главната страница',
 	'founderprogressbar-mainpage-addslider-description' => 'Лизгачот на Главната страница е прекрасен начин за да постигнете професионален изглед на страницата и да поставите убави слики. Секоја слика може да биде врска до статија, па така да ги истакнете содржините со кои најмногу се гордеете. Ако прилагодите големината на сликите во склад со лизгачот, погледајте го <a href="http://community.wikia.com/wiki/User_blog:Susan_Taylor/Tips_to_spruce_up_your_main_page"> овој блоговски запис </a>.',
 	'founderprogressbar-commcorner-edit-label' => 'Уреди го Центарот на заедницата',
@@ -1443,6 +1456,7 @@ $messages['nb'] = array(
 );
 
 /** Dutch (Nederlands)
+ * @author JurgenNL
  * @author McDutchie
  * @author SPQRobin
  * @author Siebrand
@@ -1514,7 +1528,7 @@ $messages['nl'] = array(
 	'founderprogressbar-wordmark-edit-label' => 'Woordmerk uploaden',
 	'founderprogressbar-wordmark-edit-description' => 'Het woordmerk van uw wiki is belangrijk. Het is te zien op iedere pagina en het helpt gebruikers om een idee te krijgen van uw onderwerp en om wat flair toe te voegen. Door uw eigen grafische woordmerk te uploaden kunt u ervoor zorgen dat uw merk er nog meer uitspringt.',
 	'founderprogressbar-mostvisited-visit-label' => "Meestbezochte pagina's bekijken",
-	'founderprogressbar-mostvisited-visit-description' => "Als u wiki echt op stoom komt, is het handig om te zien wat de meest populaire pagina's zijn, zodat u die kunt verbeteren en meer koppelingen kunt toevoegen naar pagina's die minder vaak bezocht worden. Kijk naar uw meest bezochte pagina's om een idee te krijgen van wat het beste werkt voor uw wiki zodat u soortgelijke verbeteringen kunt maken aan de andere pagina's!",
+	'founderprogressbar-mostvisited-visit-description' => "Als uw wiki echt op stoom komt, is het handig om te zien wat de meest populaire pagina's zijn, zodat u die kunt verbeteren en meer koppelingen kunt toevoegen naar pagina's die minder vaak bezocht worden. Kijk naar uw meest bezochte pagina's om een idee te krijgen van wat het beste werkt voor uw wiki zodat u soortgelijke verbeteringen kunt maken aan de andere pagina's!",
 	'founderprogressbar-toptenlist-add-label' => 'Top-10 lijst toevoegen',
 	'founderprogressbar-toptenlist-add-description' => 'Top-10 lijsten motiveren gebruikers die misschien wat terughoudend zijn om mee te werken aan uw wiki. Het is een leuke motivator voor de gemeenschap en het is makkelijk voor mensen die dingen die mensen aan lijsten toevoegen te waarderen.',
 	'founderprogressbar-blogpost-add-label' => 'Een blogpost schrijven',

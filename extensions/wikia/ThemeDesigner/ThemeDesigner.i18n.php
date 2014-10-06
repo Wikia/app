@@ -433,9 +433,12 @@ $messages['ca'] = array(
  */
 $messages['ce'] = array(
 	'themedesigner-header' => 'корта',
-	'themedesigner-preview-mode' => 'Хьалха муха ю хьажа...',
+	'themedesigner-preview-mode' => 'Хьалха хьажар...',
+	'themedesigner-button-upload' => 'Чуяккха',
+	'themedesigner-button-upload-wordmark' => 'Чуяккха',
 	'themedesigner-font' => 'шрифт',
-	'themedesigner-wodmark-preview' => 'Хьалха муха ю хьажа',
+	'themedesigner-upload-a-graphic' => 'чуяккха',
+	'themedesigner-wodmark-preview' => 'Хьалха хьажар',
 );
 
 /** Czech (čeština)
@@ -1200,6 +1203,8 @@ $messages['kn'] = array(
 /** Korean (한국어)
  * @author Cafeinlove
  * @author Hym411
+ * @author Miri-Nae
+ * @author Revi
  * @author 아라
  */
 $messages['ko'] = array(
@@ -1210,6 +1215,7 @@ $messages['ko'] = array(
 	'themedesigner-background' => '배경',
 	'themedesigner-page' => '문서',
 	'themedesigner-color' => '색상', # Fuzzy
+	'themedesigner-color-middle' => '가운데',
 	'themedesigner-graphic' => '그림',
 	'themedesigner-buttons' => '버튼',
 	'themedesigner-links' => '링크',
@@ -1221,6 +1227,7 @@ $messages['ko'] = array(
 	'themedesigner-large' => '크게',
 	'themedesigner-tile-background' => '바둑판식',
 	'themedesigner-fix-background' => '고치기',
+	'themedesigner-not-split-background' => '나누지 않음',
 	'themedesigner-transparency' => '투명도',
 	'themedesigner-tab-theme' => '테마',
 	'themedesigner-tab-customize' => '사용자 설정',
@@ -1229,6 +1236,14 @@ $messages['ko'] = array(
 	'themedesigner-previous-versions' => '이전 버전',
 	'themedesigner-button-save-im-done' => '저장하고 완료',
 	'themedesigner-button-cancel' => '취소',
+	'themedesigner-button-ok' => '확인',
+	'themedesigner-default' => '기본',
+	'themedesigner-font' => '글꼴',
+	'themedesigner-size' => '크기',
+	'themedesigner-button-save' => '저장',
+	'themedesigner-dont-use-a-graphic' => '제거',
+	'themedesigner-favicon-heading' => '파비콘',
+	'themedesigner-wodmark-preview' => '미리 보기',
 );
 
 /** Kurdish (Latin script) (Kurdî (latînî)‎)

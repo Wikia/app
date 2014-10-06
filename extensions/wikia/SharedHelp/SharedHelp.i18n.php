@@ -239,11 +239,13 @@ $messages['it'] = array(
 );
 
 /** Japanese (日本語)
+ * @author Plover-Y
  * @author Tommy6
  */
 $messages['ja'] = array(
 	'sharedhelp-desc' => '[[w:Help:Contents|Community Central]] のページをこのウィキの {{ns:help}} 名前空間に挿入する。',
 	'sharedhelp-autotalkcreate-summary' => 'ノートページの自動作成',
+	'sharedhelp-searchprofile' => 'ヘルプページ',
 );
 
 /** Kannada (ಕನ್ನಡ)

@@ -1444,10 +1444,12 @@ Sían kemur ekki í veg fyrir breytingar á síðu sem er þegar til.',
 );
 
 /** Japanese (日本語)
+ * @author Plover-Y
  * @author Shirayuki
  */
 $messages['ja'] = array(
 	'phalanx-type-title' => 'ページ名',
+	'phalanx-type-user' => '利用者',
 	'phalanx-type-user-email' => 'メール',
 	'phalanx-type-wiki-creation' => 'ウィキ作成',
 	'phalanx-add-block' => 'ブロックを適用',
@@ -1464,6 +1466,7 @@ $messages['ja'] = array(
 	'phalanx-test-submit' => 'テスト',
 	'phalanx-link-unblock' => 'ブロック解除',
 	'phalanx-link-modify' => '修正',
+	'phalanx-link-stats' => '統計',
 	'phalanx-reset-form' => 'フォームをリセット',
 	'phalanx-stats-block-notfound' => 'ブロック ID が見つかりません',
 	'phalanx-stats-table-id' => 'ブロック ID',
@@ -3234,4 +3237,7 @@ $messages['zh-hans'] = array(
  */
 $messages['zh-hant'] = array(
 	'phalanx-type-user' => '使用者',
+	'phalanx-label-filter' => '過濾器：',
+	'phalanx-label-reason' => '原因：',
+	'phalanx-stats-table-reason' => '原因',
 );

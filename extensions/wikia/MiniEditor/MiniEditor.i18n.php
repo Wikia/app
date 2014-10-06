@@ -201,6 +201,13 @@ $messages['it'] = array(
 	'minieditor-placeholder-reply' => 'Rispondi qui al messaggio',
 );
 
+/** Japanese (日本語)
+ * @author Plover-Y
+ */
+$messages['ja'] = array(
+	'minieditor-reply' => '返信',
+);
+
 /** Kannada (ಕನ್ನಡ)
  * @author VASANTH S.N.
  */

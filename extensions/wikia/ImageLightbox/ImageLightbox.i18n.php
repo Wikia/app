@@ -933,6 +933,7 @@ Detalhes: $2',
 );
 
 /** Brazilian Portuguese (português do Brasil)
+ * @author Jefersonmoraes
  * @author Luckas
  * @author Luckas Blade
  */
@@ -944,6 +945,7 @@ $messages['pt-br'] = array(
 	'lightbox-share-button-embed' => 'Incorporar',
 	'lightbox-share-email-ok-caption' => 'Confirmação',
 	'lightbox-share-email-error-caption' => 'Erro',
+	'lightbox-visit-the-wiki' => 'Visite a wikia:',
 );
 
 /** tarandíne (tarandíne)

@@ -698,14 +698,14 @@ $messages['ca'] = array(
  * @author Умар
  */
 $messages['ce'] = array(
-	'rte-ck-link-error-badPageTitle' => 'Дехар до, дӀаязеъе агӀона цӀе.',
+	'rte-ck-link-error-badPageTitle' => 'Дехар до, дӀаязъе агӀона цӀе.',
 	'rte-ck-media-delete' => 'дӀаяккха',
 	'rte-ck-modeSwitch-toWysiwyg' => 'Визуальни тадар',
 	'rte-ck-templateDropDown-label' => 'Кеп',
 	'rte-ck-templateEditor-dialog-insert' => 'Чуйилла',
 	'rte-ck-templateEditor-editor-parameters' => 'Параметраш',
-	'rte-ck-templateEditor-editor-previewButton' => 'Хьалха муха ю хьажа',
-	'rte-ck-templateEditor-editor-previewTitle' => 'Хьалха муха ю хьажа',
+	'rte-ck-templateEditor-editor-previewButton' => 'Хьалха хьажар',
+	'rte-ck-templateEditor-editor-previewTitle' => 'Хьалха хьажар',
 );
 
 /** Sorani Kurdish (کوردی)
@@ -1872,6 +1872,7 @@ $messages['it'] = array(
 );
 
 /** Japanese (日本語)
+ * @author Plover-Y
  * @author Shirayuki
  * @author Tommy6
  */
@@ -1949,6 +1950,7 @@ $messages['ja'] = array(
 	'rte-ck-templateEditor-dialog-browse' => 'テンプレートを閲覧',
 	'rte-ck-templateEditor-dialog-insert' => '挿入',
 	'rte-ck-templateEditor-dialog-magicWords' => 'マジックワード',
+	'rte-ck-templateEditor-dialog-magicWordsLink' => 'Help:マジックワード',
 	'rte-ck-templateEditor-dialog-mostFrequentlyUsed' => '頻繁に使用されているテンプレート',
 	'rte-ck-templateEditor-dialog-search' => 'テンプレートを検索',
 	'rte-ck-templateEditor-editor-chooseAnotherTpl' => '他のテンプレートを選択',

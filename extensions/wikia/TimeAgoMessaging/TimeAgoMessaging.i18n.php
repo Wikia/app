@@ -607,6 +607,13 @@ $messages['ru'] = array(
 	'timeago-second-from-now' => 'минуту назад',
 );
 
+/** Sardinian (sardu)
+ * @author Taxandru
+ */
+$messages['sc'] = array(
+	'timeago-minute' => '{{PLURAL:$1|unu minutu|$1 minutos}} a como',
+);
+
 /** Somali (Soomaaliga)
  * @author Abshirdheere
  */

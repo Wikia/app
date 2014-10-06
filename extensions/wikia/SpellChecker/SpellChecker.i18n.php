@@ -261,6 +261,13 @@ $messages['inh'] = array(
 	'spellchecker-info-spellcheck-languages' => 'Мотт',
 );
 
+/** Japanese (日本語)
+ * @author Plover-Y
+ */
+$messages['ja'] = array(
+	'spellchecker-info-spellcheck-languages' => '言語',
+);
+
 /** Kannada (ಕನ್ನಡ)
  * @author VASANTH S.N.
  */

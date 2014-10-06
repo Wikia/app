@@ -2264,7 +2264,7 @@ $messages['mk'] = array(
 	'myhome-community-corner-header' => 'Пораки на заедницата',
 	'oasis-myhome-community-corner-edit' => 'уреди порака &gt;',
 	'myhome-community-corner-edit' => 'уреди порака',
-	'community-corner' => "'''Добредојдовте на Вашата домашна страница!'''
+	'community-corner' => "'''Добре дојдовте на Вашата домашна страница!'''
 
 Оваа страница ќе ви помогне да бидете во тек со случувањата на викито.
 

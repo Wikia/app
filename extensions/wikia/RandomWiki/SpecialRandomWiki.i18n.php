@@ -294,10 +294,20 @@ $messages['pt'] = array(
 
 /** Brazilian Portuguese (português do Brasil)
  * @author Giro720
+ * @author Jefersonmoraes
  */
 $messages['pt-br'] = array(
-	'randomwiki-desc' => 'Permite que os usuários explorem uma wiki aleatória',
-	'randomwiki' => 'Wiki Aleatória',
+	'randomwiki-desc' => 'Permite que os usuários explorem uma wikia aleatória',
+	'randomwiki' => 'Wikia Aleatória',
+);
+
+/** Romanian (română)
+ * @author Hedwig
+ * @author Minisarm
+ */
+$messages['ro'] = array(
+	'randomwiki-desc' => 'Permite utilizatorilor să exploreze un wiki aleatoriu',
+	'randomwiki' => 'Wiki aleatoriu',
 );
 
 /** tarandíne (tarandíne)

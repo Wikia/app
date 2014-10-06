@@ -742,12 +742,12 @@ $messages['ca'] = array(
  * @author Умар
  */
 $messages['ce'] = array(
-	'swm-label-preview' => 'Хьалха муха ю хьажа',
+	'swm-label-preview' => 'Хьалха хьажар',
 	'swm-label-list' => 'МогӀа',
 	'swm-label-mode-users-active' => 'Жигара декъашхой',
 	'swm-label-content' => 'Чулацам',
 	'swm-label-language' => 'Мотт',
-	'swm-button-preview' => '[ Хьалха муха ю хьажа ]',
+	'swm-button-preview' => '[ Хьалха хьажар ]',
 	'swm-list-table-expire' => 'Чекхйолу',
 	'swm-list-table-content' => 'Чулацам',
 	'swm-list-table-tools' => 'ГӀирсаш',
@@ -1830,6 +1830,7 @@ $messages['it'] = array(
 
 /** Japanese (日本語)
  * @author Fryed-peach
+ * @author Plover-Y
  * @author Shirayuki
  */
 $messages['ja'] = array(
@@ -1848,7 +1849,12 @@ $messages['ja'] = array(
 	'swm-label-recipient-wikis' => 'ウィキ',
 	'swm-label-recipient-users' => '利用者',
 	'swm-label-expiration' => '期限',
+	'swm-label-mode-wikis-all' => 'すべてのウィキ',
 	'swm-label-mode-wikis-wiki' => '指定したウィキ',
+	'swm-label-mode-wikis-wiki-multi' => 'ウィキの一覧',
+	'swm-label-mode-users-all' => 'すべての利用者',
+	'swm-label-mode-users-user-multi' => '利用者の一覧',
+	'swm-label-mode-users-anon' => 'すべての匿名利用者',
 	'swm-label-content' => '内容',
 	'swm-label-comment' => 'コメント',
 	'swm-label-language' => '言語',
@@ -1879,6 +1885,7 @@ $messages['ja'] = array(
 	'swm-error-no-such-user' => '指定された利用者が存在していません。',
 	'swm-error-empty-message' => 'メッセージを入力してください。',
 	'swm-error-empty-group' => 'グループ名を入力してください。',
+	'swm-label-mode-users-editcount' => '編集回数',
 );
 
 /** Kannada (ಕನ್ನಡ)

@@ -1025,13 +1025,14 @@ $messages['pt'] = array(
 );
 
 /** Brazilian Portuguese (português do Brasil)
+ * @author Jefersonmoraes
  * @author Luckas
  */
 $messages['pt-br'] = array(
 	'lvs-history-button-text' => 'Histórico',
 	'lvs-callout-title-quality' => 'Alta qualidade',
 	'lvs-button-keep' => 'Manter',
-	'lvs-more-suggestions' => 'mais sugestões',
+	'lvs-more-suggestions' => 'Mais Sugestões',
 	'lvs-undo-swap' => 'Desfazer',
 	'lvs-undo-keep' => 'Desfazer',
 	'lvs-posted-in-more' => 'mais',

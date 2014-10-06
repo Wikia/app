@@ -1031,17 +1031,17 @@ $messages['mk'] = array(
 
 ==Мои придонеси==
 
-* [[Special:Contributions/$1|Кориснички придонеси]]
+* [[Special:Contributions/$1|Придонеси на корисникот]]
 
 ==Мои омилени страници==
 
 * Тука на викиво додајте врски до вашите омилени страници!
 * Омилена страница бр. 2
 * Омилена страница бр. 3",
-	'welcome-message-user' => 'Здраво и добредојдовте на {{SITENAME}}! Ви благодариме за вашето уредување на страницата [[:$1]].
+	'welcome-message-user' => 'Здраво и добре дојдовте на {{SITENAME}}! Ви благодариме за вашето уредување на страницата [[:$1]].
 
 Оставете ми порака на [[$2|мојата страница за разговор]] ако ви треба било каква помош! $3',
-	'welcome-message-anon' => "Здраво и добредојдовте на {{SITENAME}}! Ви благодариме за вашето уредување на страницата [[:$1]].
+	'welcome-message-anon' => "Здраво и добре дојдовте на {{SITENAME}}! Ви благодариме за вашето уредување на страницата [[:$1]].
 
 '''[[Special:Userlogin|Најавете се и создајте корисничко име]]'''. Ова е лесен начин на следење на вашите придонеси и ви овозможува да комуницирате со другите учесници во заедницата.
 
@@ -1061,7 +1061,7 @@ $messages['mk'] = array(
 Ако ви треба помош, а нема локални администратори, ви препорачуваме да ги посетите [[wikia:Forum:Community Central Forum|форумите на Центарот на Заедницата]] $3", # Fuzzy
 	'staffsig-text' => '[[{{ns:user}}:$1|$2]]<staff /> <small>([[w:forums|форум за помош]] | [[w:sblog|блог]])</small>',
 	'hawelcomeedit' => 'HAWelcomeEdit',
-	'welcome-message-wall-user' => 'Здраво и добредојдовте на {{SITENAME}}! Ви благодариме за вашето уредување на страницата [[:$1]].
+	'welcome-message-wall-user' => 'Здраво и добре дојдовте на {{SITENAME}}! Ви благодариме за вашето уредување на страницата [[:$1]].
 
 Оставете ми порака на ако ви треба било каква помош!',
 	'welcome-message-wall-user-staff' => 'Здраво и добредојдовте на {{SITENAME}}! Ви благодариме за вашето уредување на страницата [[:$1]].
@@ -1069,7 +1069,7 @@ $messages['mk'] = array(
 Доколку ви треба помош, а нема локални администратори, посетете ги [[wikia:Forum:Community Central Forum|форумите на Центарот на заедницата]]. Најнови вести и настани ќе најдете на [[w:c:community:Blog:Wikia_Staff_Blog|Блогот на персоналот]] на Викија.
 
 Ви посакуваме среќно уредување!', # Fuzzy
-	'welcome-message-wall-anon' => "Здраво и добредојдовте на {{SITENAME}}! Ви благодариме за вашето уредување на страницата [[:$1]].
+	'welcome-message-wall-anon' => "Здраво и добре дојдовте на {{SITENAME}}! Ви благодариме за вашето уредување на страницата [[:$1]].
 
 '''[[Special:Userlogin|Најавете се и создајте корисничко име]]'''. Ова е лесен начин на следење на вашите придонеси и ви овозможува да комуницирате со другите учесници во заедницата.
 
@@ -1579,6 +1579,7 @@ Se precisas de ajuda, primeiro olha as nossas [[Ajuda:Contents|páginas de ajuda
  * @author Daemorris
  * @author Giro720
  * @author JM Pessanha
+ * @author Jefersonmoraes
  * @author Jesielt
  */
 $messages['pt-br'] = array(
@@ -1615,7 +1616,7 @@ Wiki Community Central]] $3', # Fuzzy
 
 Olá, bem-vindo(a) à {{SITENAME}}! Obrigado pela sua edição da página [[:$1]].
 
-'''[[Special:UserLogin|Por favor, registe-se e crie uma conta de usuário]]'''. É uma forma fácil de registar as suas contribuições e facilita a comunicação com os demais usuários.
+'''[[Special:UserLogin|Por favor, registre-se e crie uma conta de usuário]]'''. É uma forma fácil de registrar as suas contribuições e facilita a comunicação com os demais usuários.
 
 Se você necessita de ajuda e não encontra administradores locais, talvez queira visitar os [[wikia:Forum:Community Central Forum|fóruns na Wiki Community Central]] $3", # Fuzzy
 	'staffsig-text' => '[[{{ns:user}}:$1|$2]]<staff /> <small>([[w:forums|fórum de ajuda]] | [[w:sblog|blogue]])</small>',
@@ -1638,6 +1639,7 @@ Por favor, deixe-me uma mensagem se eu puder te ajudar com qualquer coisa!",
 '''[[Special:Userlogin|Por favor, crie uma conta e identifique-se]]'''. É uma maneira fácil para acompanhar suas contribuições e ajuda você a se comunicar com o resto da Comunidade.
 
 Por favor, deixe-me uma mensagem se eu puder te ajudar com qualquer coisa!", # Fuzzy
+	'welcome-description' => 'Envie uma mensagem de boas-vindas para usuários depois das suas primeiras edições',
 );
 
 /** tarandíne (tarandíne)

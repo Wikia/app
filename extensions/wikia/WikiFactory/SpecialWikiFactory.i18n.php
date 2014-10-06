@@ -2731,6 +2731,7 @@ $messages['it'] = array(
  * @author Fryed-peach
  * @author Hosiryuhosi
  * @author Naohiro19
+ * @author Plover-Y
  * @author Yanajin66
  */
 $messages['ja'] = array(
@@ -2782,6 +2783,7 @@ $messages['ja'] = array(
 	'closed-delete-images' => 'イメージの削除',
 	'closed-hide-dumps' => 'データベースとイメージダンプを非表示',
 	'closed-reason' => '理由：',
+	'newwikisgraph-param-all' => 'すべて',
 );
 
 /** Georgian (ქართული)

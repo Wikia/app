@@ -137,6 +137,14 @@ $messages['hu'] = array(
 	'wikiastyleguide-dropdown-selected-items-list' => '$1 és $2 további',
 );
 
+/** Japanese (日本語)
+ * @author Plover-Y
+ */
+$messages['ja'] = array(
+	'wikiastyleguide-dropdown-all' => 'すべて',
+	'wikiastyleguide-dropdown-select-all' => 'すべて選択',
+);
+
 /** Macedonian (македонски)
  * @author Bjankuloski06
  */

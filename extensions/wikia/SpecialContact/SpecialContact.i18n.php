@@ -585,6 +585,7 @@ $messages['ko'] = array(
 $messages['lb'] = array(
 	'specialcontact-username' => 'Äre Benotzernumm',
 	'specialcontact-realname' => 'Ären Numm',
+	'specialcontact-yourmail' => 'E-Mail-Adress',
 	'specialcontact-problem' => 'Sujet',
 	'specialcontact-problemdesc' => 'Message',
 	'specialcontact-ccme' => 'Schéckt mir eng Kopie vun dësem Message',

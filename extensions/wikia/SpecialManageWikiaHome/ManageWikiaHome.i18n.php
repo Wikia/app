@@ -1048,9 +1048,23 @@ $messages['it'] = array(
 /** Japanese (日本語)
  * @author Barrel0116
  * @author Dude1717
+ * @author Plover-Y
  */
 $messages['ja'] = array(
+	'manage-wikia-home-wiki-list-headline' => 'ウィキ名',
+	'manage-wikia-home-wiki-list-blocked' => 'ブロック済',
+	'manage-wikia-home-wiki-list-blocked-no' => 'いいえ',
+	'manage-wikia-home-wiki-list-blocked-yes' => 'はい',
+	'manage-wikia-home-wiki-list-promoted-no' => 'いいえ',
+	'manage-wikia-home-wiki-list-promoted-yes' => 'はい',
+	'manage-wikia-home-wiki-list-official-no' => 'いいえ',
+	'manage-wikia-home-wiki-list-official-yes' => 'はい',
+	'manage-wikia-home-modal-content-blocked-wiki-title' => 'このwikiはブロックされています',
+	'manage-wikia-home-modal-button-no' => 'いいえ',
+	'manage-wikia-home-modal-button-yes' => 'はい',
+	'manage-wikia-home-collections-setup-save-button' => '保存',
 	'manage-wikia-home-collection-add-file-button' => '画像を追加',
+	'manage-wikia-home-stats-visitors-label' => '毎月の訪問者',
 	'manage-wikia-home-stats-failure' => 'データは保存されませんでした。フォームのエラーを修正して、やり直してください。',
 );
 

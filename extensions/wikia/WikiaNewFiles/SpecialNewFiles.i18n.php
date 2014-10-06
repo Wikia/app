@@ -188,9 +188,10 @@ $messages['ps'] = array(
 
 /** Brazilian Portuguese (português do Brasil)
  * @author Cainamarques
+ * @author Jefersonmoraes
  */
 $messages['pt-br'] = array(
-	'wikianewfiles-title' => 'Novos arquivos nesta wiki',
+	'wikianewfiles-title' => 'Novos arquivos nesta wikia',
 	'wikianewfiles-desc' => 'Amplia uma [[Special:NewFiles|página especial]] para sobrepor a formatação do cabeçalho',
 	'wikianewfiles-uploadby' => 'por {{GENDER:$2|$1}}',
 	'wikianewfiles-postedin' => 'Postado em',

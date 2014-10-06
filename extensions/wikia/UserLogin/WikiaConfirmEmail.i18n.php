@@ -334,11 +334,13 @@ $messages['pt'] = array(
 /** Brazilian Portuguese (português do Brasil)
  * @author Cainamarques
  * @author Caio1478
+ * @author Jefersonmoraes
  * @author Luckas
  */
 $messages['pt-br'] = array(
 	'wikiaconfirmemail-error-empty-code' => 'Código de confirmação vazio',
 	'wikiaconfirmemail-error-invalid-code' => 'Código de confirmação inválido',
+	'wikiaconfirmemail-error-user-not-match' => 'Opa, esse link de confirmação não corresponde com o nome de usuário que você inseriu. Verifique se você está digitando o nome de usuário correto. Se você quiser efetuar login com uma conta diferente, clique <a href="{{fullurl:{{ns:special}}:UserLogin}}"> aqui </a>',
 	'wikiaconfirmemail-login-button' => 'Confirmar e entrar',
 	'wikiaconfirmemail-heading' => 'Quase lá!',
 	'wikiaconfirmemail-subheading' => 'Entrar com seu nome de usuário e senha para que nós reconheçamos que recebeu o email.',

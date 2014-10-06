@@ -1940,6 +1940,7 @@ $messages['pt'] = array(
  * @author Cainamarques
  * @author Caio1478
  * @author JM Pessanha
+ * @author Jefersonmoraes
  * @author Luckas
  * @author Luckas Blade
  */
@@ -1951,8 +1952,8 @@ $messages['pt-br'] = array(
 	'userlogin-remembermypassword' => 'Permanecer conectado',
 	'userlogin-error-noname' => 'Ops, por favor preencha o campo de nome de usuário.',
 	'userlogin-error-sessionfailure' => 'Sua sessão de login expirou. Por favor, faça login novamente.',
-	'userlogin-error-nosuchuser' => 'Nós não reconhecemos este nome. Não se esqueça, nomes de usuário são caso sensível.',
-	'userlogin-error-wrongpassword' => 'Ops, senha errada. Certifique-se que a tecla caps lock está desativada e tente novamente.',
+	'userlogin-error-nosuchuser' => 'Hum, nós não reconhecemos este nome. Não se esqueça que os nomes de usuários são sensíveis a maiúsculas e minúsculas.',
+	'userlogin-error-wrongpassword' => 'Opa, senha errada. Certifique-se que a tecla caps lock está desativada e tente novamente.',
 	'userlogin-error-wrongpasswordempty' => 'Ops, por favor preencha o campo de senha.',
 	'userlogin-error-resetpass_announce' => 'Parece que você usou uma senha temporária. Escolha uma nova senha aqui para continuar o login.',
 	'userlogin-error-login-throttled' => 'Você tentou entrar com a senha errada muitas vezes. Espere um pouco antes de tentar novamente.',
@@ -1965,16 +1966,16 @@ $messages['pt-br'] = array(
 	'userlogin-error-invalid-username' => 'Nome de usuário inválido',
 	'userlogin-error-userlogin-unable-info' => 'Desculpe, mas não somos capazes de registrar sua conta neste momento.',
 	'userlogin-error-user-not-allowed' => 'Esse nome de usuário não é permitido.',
-	'userlogin-error-captcha-createaccount-fail' => 'A palavra que você digitou não encontrou a palavra na caixa, tente novamente!',
-	'userlogin-error-userlogin-bad-birthday' => 'Ops, por favor preencha o dia, mês e ano.',
-	'userlogin-error-externaldberror' => 'Desculpe! Nosso site está tendo um problema. Por favor, tente novamente mais tarde.',
+	'userlogin-error-captcha-createaccount-fail' => 'A palavra que você digitou não corresponde a palavra na caixa, tente novamente!',
+	'userlogin-error-userlogin-bad-birthday' => 'Ops, por favor preencha mês, dia e ano.',
+	'userlogin-error-externaldberror' => 'Desculpe! Nosso site está tendo um problema, por favor, tente novamente mais tarde.',
 	'userlogin-error-noemailtitle' => 'Por favor, digite um endereço de e-mail válido.',
 	'userlogin-error-acct_creation_throttle_hit' => 'Desculpe, este endereço de IP criou muitas contas hoje. Por favor, tente novamente mais tarde.',
 	'userlogin-error-resetpass_forbidden' => 'Senhas não podem ser alteradas',
-	'userlogin-error-blocked-mailpassword' => 'Você não pode pedir uma nova senha porque este endereço de IP é bloqueado pela Wikia.',
-	'userlogin-error-throttled-mailpassword' => 'Já enviamos um lembrete de senha para essa conta {{PLURAL:$1|na última hora|nas últimas $1 horas}}. Por favor, verifique seu e-mail.',
-	'userlogin-error-mail-error' => 'Ops, ocorreu um problema enviando seu e-mail. Por favor, [[Special:Contact/general|contate-nos]].',
-	'userlogin-password-email-sent' => 'Nós enviamos uma nova senha para o endereço de e-mail para $1.',
+	'userlogin-error-blocked-mailpassword' => 'Você não pode pedir uma nova senha porque este endereço de IP está bloqueado pela Wikia.',
+	'userlogin-error-throttled-mailpassword' => 'Nós já enviamos um lembrete de senha para essa conta {{PLURAL:$1|na última hora|nas últimas $1 horas}}. Por favor, verifique seu e-mail.',
+	'userlogin-error-mail-error' => 'Ops, ocorreu um problema no envio do seu e-mail. Por favor [[Special:Contact/general|contate-nos]].',
+	'userlogin-password-email-sent' => 'Enviamos uma nova senha para o endereço de e-mail para $1.',
 	'userlogin-error-unconfirmed-user' => 'Desculpe, você não confirmou seu endereço de e-mail. Por favor, confirme seu endereço de e-mail primeiro.',
 	'userlogin-error-confirmation-reminder-already-sent' => 'O e-mail de confirmação já foi enviado.',
 	'userlogin-password-page-title' => 'Mude sua senha',
@@ -2015,6 +2016,7 @@ Deseja controlar quais e-mails você recebe? Vá para: {{fullurl:{{ns:special}}:
 	'userlogin-changepassword-needlogin' => 'Você precisa $1 para modificar sua senha.',
 	'wikiamobile-sendpassword-label' => 'Enviar nova senha',
 	'wikiamobile-facebook-connect-fail' => 'Desculpe, atualmente sua conta do Facebook não esta vinculada com uma conta na Wikia.',
+	'wikiamobile-go-to-login' => 'Já possui uma conta? [[Special:UserLogin|Entrar agora>]]',
 );
 
 /** tarandíne (tarandíne)

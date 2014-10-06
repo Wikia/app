@@ -882,3 +882,11 @@ $messages['zh-hans'] = array(
 	'feed-title-recentchanges' => '最近更改',
 	'partner-feed-error-no-blogpost-found' => '<b>错误：</b>博客文章 $1 不存在。',
 );
+
+/** Traditional Chinese (中文（繁體）‎)
+ * @author EagerLin
+ */
+$messages['zh-hant'] = array(
+	'partner-feed-recent-changes' => '近期變更',
+	'feed-title-recentchanges' => '近期變更',
+);

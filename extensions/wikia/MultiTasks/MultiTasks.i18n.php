@@ -2874,6 +2874,7 @@ $messages['pt'] = array(
 
 /** Brazilian Portuguese (português do Brasil)
  * @author Aristóbulo
+ * @author Jefersonmoraes
  * @author Jesielt
  * @author Luckas
  * @author Luckas Blade
@@ -2892,7 +2893,7 @@ $messages['pt-br'] = array(
 	'multiwikiedit_task_added' => 'Tarefa de edição multi wiki #$1 foi adicionada.',
 	'multiwikiedit_task_error' => 'Ocorreu um erro ao adicionar a tarefa de edição multi wiki.',
 	'multiwikiedit_task_none_selected' => 'Não seleccionou nenhum artigo. A tarefa não foi adicionada.',
-	'multiwikiedit_on' => 'em', # Fuzzy
+	'multiwikiedit_on' => 'Execute o script em',
 	'multiwikiedit_page' => 'Páginas para editar',
 	'multiwikiedit_page_text' => 'Texto para salvar',
 	'multiwikiedit_reason' => 'Motivo da edição',
@@ -2980,7 +2981,7 @@ $messages['pt-br'] = array(
 	'multiwikifinder' => 'Pesquisa de Títulos Multi Wiki',
 	'multiwikifindpagenames' => 'Procurar nomes de páginas',
 	'multiwikienterpagename' => 'Introduza um nome de página:',
-	'multiwikirecords' => '$1 wiki(s) encontrada(s)', # Fuzzy
+	'multiwikirecords' => '$1 wikia(s) encontrada(s)', # Fuzzy
 );
 
 /** tarandíne (tarandíne)

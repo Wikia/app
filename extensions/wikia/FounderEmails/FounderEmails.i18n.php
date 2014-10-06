@@ -4381,12 +4381,13 @@ Puoi sempre visualizzare la wiki activity per conoscere tutte le modifiche effet
 
 /** Japanese (日本語)
  * @author Barrel0116
+ * @author Plover-Y
  * @author Tommy6
  */
 $messages['ja'] = array(
 	'founderemails-desc' => 'ウィキで行われた変更について設立者に通知する',
 	'tog-founderemailsenabled' => 'ウィキで変更が行われたときにメールを受け取る（設立者のみ）',
-	'founderemails-email-user-registered-subject' => 'だれかが$WIKINAMEに参加しました',
+	'founderemails-email-user-registered-subject' => '$WIKINAMEでアカウントが登録されました',
 	'founderemails-email-user-registered-body' => '$USERNAME さん、
 
 $EDITORNAME が $WIKINAME に参加しました。
@@ -4441,6 +4442,8 @@ Wikiaからのメールをすべて受け取りたくない場合、以下をク
 	'founderemails-answers-email-0-days-passed-subject' => 'QA Wikia へようこそ ！',
 	'founderemails-answers-email-page-edited-anon-subject' => '誰かがあなたのサイトを変更しました！',
 	'founderemails-email-lot-happening-greeting' => '$USERNAMEさん、こんにちは。',
+	'founderemails-email-lot-happening-signature' => 'ウィキアチーム',
+	'founderemails-email-0-day-addpages-heading' => 'ページを追加する。',
 	'founderemails-email-0-day-addpages-button' => 'ページを追加',
 	'founderemails-email-0-day-addphotos-heading' => '写真を追加します。',
 	'founderemails-email-0-day-addphotos-button' => '画像を追加',
@@ -4448,7 +4451,9 @@ Wikiaからのメールをすべて受け取りたくない場合、以下をク
 	'founderemails-email-0-day-customizetheme-button' => 'カスタマイズ',
 	'founderemails-email-0-day-wikiahelps-signature' => 'よいWiki運営を！<br />ウィキアチーム',
 	'founderemails-email-3-day-addphotos-button' => '画像を追加',
+	'founderemails-email-views-digest-greeting' => 'こんにちは、$USERNAME さん、',
 	'founderemails-email-views-digest-signature' => 'ウィキアチーム',
+	'founderemails-email-complete-digest-subject' => '$WIKINAMEの最近の活動',
 	'founderemails-email-complete-digest-greeting' => '$USERNAMEさん、こんにちは。',
 	'founderemails-email-complete-digest-signature' => 'ウィキアチーム',
 	'founderemails-email-complete-digest-button' => 'WikiActivityに移動',
@@ -4470,6 +4475,7 @@ $messages['kn'] = array(
 );
 
 /** Korean (한국어)
+ * @author Miri-Nae
  * @author 관인생략
  * @author 아라
  */
@@ -4495,6 +4501,29 @@ $EDITORPAGEURL
 $EDITORNAME 사용자가 위키에 등록되어 있는 것 같습니다! <a href="$EDITORTALKPAGEURL">토론문서</a>에 안녕하세요라고 말하러 가지 않겠습니까?<br /><br />
 <div style="font-style: italic; font-size: 120%;">-- 위키아 팀</div>',
 	'founderemails-email-0-days-passed-subject' => '위키아에 오신 것을 환영합니다!',
+	'founderemails-email-0-days-passed-body' => '만나서 반갑습니다, $USERNAME 사용자 님.
+
+$WIKINAME($WIKIURL) 프로젝트를 생성하신 것을 축하드립니다.
+
+여기 도움이 될 만한 몇 가지 팁이 있습니다:
+
+문서를 추가하세요. 위키에서 당신만이 아는 특별한 정보를 공유해보세요.
+
+그림을 추가하세요. 그림은 문서의 생명입니다! 문서와 대문에 그림을 추가해보세요.
+
+테마를 수정해보세요. 위키 테마를 수정하고 로고도 만들어보세요! 테마 디자이너를 이용하면 자신만의 특별한 위키를 만들 수 있습니다.
+
+저희는 당신을 혼자 내버려 두지 않을 겁니다. $WIKINAME의 발전이 이뤄질 때 마다 이곳에 와서 당신에게 유용한 정보를 드릴 것입니다. http://community.wikia.com에서 다른 사용자들과 의견을 나누고, 도움을 구해보세요. 원한다면 저희에게 메일로 질문을 하셔도 괜찮습니다!
+
+즐거운 위키 시간 보내세요! 위키아 팀
+
+___________________________________________
+
+http://community.wikia.com를 방문에 위키아에서 최근에 일어난 일들을 확인해보세요
+받을 알림을 조정하고 싶으신가요? 이곳으로 가보세요: http://messaging.wikia.com/wiki/Special:Preferences
+다음 주소를 누르고 알림을 받지 않도록 할 수도 있습니다: $UNSUBSCRIBEURL',
+	'founderemails-email-3-days-passed-subject' => '당신의 위키가 어떻게 돌아가고 있을까요?',
+	'founderemails-email-10-days-passed-subject' => '위키 개설 10일 째에 들어섰습니다!',
 	'founderemails-email-page-edited-reg-user-first-edit-subject' => '$WIKINAME에 새 편집이 있습니다!',
 	'founderemails-email-page-edited-reg-user-first-edit-body' => '$USERNAME님 안녕하세요,
 
@@ -4510,20 +4539,169 @@ $PAGEURL
 	'founderemails-email-first-edit-content' => '추가된 것을 확인하려면 $PAGETITLE(을)를 보세요.',
 	'founderemails-email-first-edit-signature' => '위키아 팀',
 	'founderemails-email-first-edit-button' => '확인하세요!',
+	'founderemails-email-page-edited-reg-user-subject' => '$WIKINAME에 새로운 편집!',
+	'founderemails-email-general-edit-greeting' => '안녕하세요, $USERNAME 사용자 님?',
+	'founderemails-email-general-edit-signature' => '위키아 팀',
+	'founderemails-email-general-edit-button' => '확인하세요!',
+	'founderemails-email-page-edited-anon-body' => '안녕하세요, $USERNAME 사용자 님?
+
+한 사용자가 $WIKINAME의 $PAGETITLE 문서를 편집했습니다.
+
+해당 사용자는 로그인 없이 문서를 편집했습니다. 그 베일에 쌓인 친구가 누구일지 확인해보세요!
+
+$PAGEURL
+
+위키아 팀',
+	'founderemails-email-anon-edit-greeting' => '안녕하세요, $USERNAME 사용자 님?',
+	'founderemails-email-anon-edit-headline' => '한 사용자가 $WIKINAME의 $PAGETITLE 문서를 편집했습니다.',
+	'founderemails-email-anon-edit-content' => '해당 사용자는 로그인 없이 문서를 편집했습니다. 그 베일에 쌓인 친구가 누구일지 확인해보세요!',
+	'founderemails-email-anon-edit-signature' => '위키아 팀',
+	'founderemails-email-anon-edit-button' => '확인하세요!',
+	'founderemails-email-page-edited-anon-body-HTML' => '$USERNAME 사용자 님!<br /><br />
+누군가 당신의 위키에 기여를 한 것 같습니다. 가서 <a href="$MYHOMEURL">확인</a>해보시는 건 어떤가요?<br /><br />
+<div style="font-style: italic; font-size: 120%;">-- 위키아 팀</div>',
+	'founderemails-answers-email-user-registered-body' => '$USERNAME 사용자 님!
+
+$EDITORNAME 사용자가 당신의 위키에 가입했습니다! $EDITORTALKPAGEURL 사용자 담벼락에 간단한 인사라도 남겨보는 건 어떨까요?
+
+-- 위키아 팀',
+	'founderemails-answers-email-user-registered-body-HTML' => '$USERNAME 사용자 님!<br /><br />
+$EDITORNAME 사용자가 당신의 위키에 가입했습니다! <a href="$EDITORTALKPAGEURL">사용자 담벼락</a>에 간단한 인사라도 남겨보는 건 어떨까요?<br /><br />
+<div style="font-style: italic; font-size: 120%;">-- 위키아 팀</div>',
+	'founderemails-answers-email-0-days-passed-subject' => 'QA 위키아에 오신 것을 환영합니다!',
+	'founderemails-answers-email-0-days-passed-body' => '$WIKINAME 위키를 만드신 것을 축하드립니다 - 이제 위키아 커뮤니티의 일원이 되셨습니다!
+
+-- 위키아 팀',
+	'founderemails-answers-email-0-days-passed-body-HTML' => '<strong>$WIKINAME</strong> 위키를 만드신 것을 축하드립니다 - 이제 위키아 커뮤니티의 일원이 되셨습니다!<br /><br />
+<div style="font-style: italic; font-size: 120%;">-- 위키아 팀</div>',
+	'founderemails-answers-email-3-days-passed-body' => '안녕하세요, $USERNAME 사용자 님?
+
+위키를 만든지 어느 정도 시간이 지났습니다. 위키아에서 할 수 있는 것들에 대해 더 알아보고 싶지 않으신가요?
+
+-- 위키아 팀',
+	'founderemails-answers-email-3-days-passed-body-HTML' => '안녕하세요, $USERNAME 사용자 님?<br /><br />
+위키를 만든지 어느 정도 시간이 지났습니다. 위키아에서 할 수 있는 것들에 대해 더 알아보고 싶지 않으신가요?<br /><br />
+<div style="font-style: italic; font-size: 120%;">-- 위키아 팀</div>',
+	'founderemails-answers-email-10-days-passed-subject' => '당신의 위키가 어떻게 돌아가고 있을까요?',
+	'founderemails-answers-email-10-days-passed-body' => '안녕하세요, $USERNAME 사용자 님?
+
+위키아를 개설한 지 꽤 많은 시간이 지났습니다 - 잘 흘러가고 있길 바랍니다! 당신이 위키를 더 편하게 이용할 수 있도록 몇 가지 도움을 드리고 싶습니다.
+
+-- 위키아 팀',
+	'founderemails-answers-email-10-days-passed-body-HTML' => '안녕하세요, $USERNAME 사용자 님?<br /><br />
+위키아를 개설한 지 꽤 많은 시간이 지났습니다 - 잘 흘러가고 있길 바랍니다! 당신이 위키를 더 편하게 이용할 수 있도록 몇 가지 도움을 드리고 싶습니다.<br /><br />
+<div style="font-style: italic; font-size: 120%;">-- 위키아 팀</div>',
+	'founderemails-answers-email-page-edited-reg-user-first-edit-subject' => '등록된 사용자가 처음으로 당신의 위키에 기여를 했습니다!',
+	'founderemails-answers-email-page-edited-reg-user-first-edit-body' => '$USERNAME 사용자 님!
+
+위키에 등록된 $EDITORNAME 사용자가 당신의 위키에 처음으로 기여를 했습니다! 사용자 담벼락($EDITORTALKPAGEURL)에 간단한 인사라도 남겨보는 건 어떨까요?
+
+-- 위키아 팀',
+	'founderemails-answers-email-page-edited-reg-user-first-edit-body-HTML' => '$USERNAME 사용자 님!<br /><br />
+위키에 등록된 $EDITORNAME 사용자가 당신의 위키에 처음으로 기여를 했습니다! <a href="$EDITORTALKPAGEURL">사용자 담벼락</a>에 간단한 인사라도 남겨보는 건 어떨까요?<br /><br />
+<div style="font-style: italic; font-size: 120%;">-- 위키아 팀</div>',
+	'founderemails-answers-email-page-edited-reg-user-subject' => '등록된 사용자가 당신의 위키에 기여를 했습니다!',
+	'founderemails-answers-email-page-edited-reg-user-body' => '$USERNAME 사용자 님!
+
+위키에 등록된 $EDITORNAME 사용자가 당신의 위키에 기여를 했습니다! 사용자 담벼락($EDITORTALKPAGEURL)에 간단한 인사라도 남겨보는 건 어떨까요?
+
+-- 위키아 팀',
+	'founderemails-answers-email-page-edited-reg-user-body-HTML' => '$USERNAME 사용자 님!<br /><br />
+위키에 등록된 $EDITORNAME 사용자가 당신의 위키에 기여를 했습니다! <a href="$EDITORTALKPAGEURL">사용자 담벼락</a>에 간단한 인사라도 남겨보는 건 어떨까요?<br /><br />
+<div style="font-style: italic; font-size: 120%;">-- 위키아 팀</div>',
 	'founderemails-answers-email-page-edited-anon-subject' => '누군가가 당신의 사이트를 바꾸었습니다!',
 	'founderemails-answers-email-page-edited-anon-body' => '여보세요 $USERNAME님,
 
 누군가가 당신의 위키를 편집한 것 같습니다! $MYHOMEURL에서 어떤 점이 바뀌었는지 확인해보지 않으시겠습니까?
 
 -- 위키아 팀',
+	'founderemails-answers-email-page-edited-anon-body-HTML' => '$USERNAME 사용자 님!<br /><br />
+누군가 당신의 위키에 기여를 한 것 같습니다! 가서 <a href="$MYHOMEURL">확인</a>해보시는 건 어떤가요?<br /><br />
+<div style="font-style: italic; font-size: 120%;">-- 위키아 팀</div>',
+	'founderemails-lot-happening-subject' => '$WIKINAME의 뜨거운 열기를 느껴보세요!',
+	'founderemails-lot-happening-body' => '안녕하세요, $USERNAME 사용자 님?
+
+$WIKINAME($WIKIURL)에 여러가지 일들이 있었던 것 같군요.
+
+위키 활동 내역에서 지금까지 있었던 멋진 일들을 확인할 수 있습니다.
+
+위키 일간 활동에 대해 알고 싶으신가요? 그렇다면 매일 위키에서 일어났던 일들을 메일로 받아보실 수 있습니다.
+
+위키아 팀',
+	'founderemails-lot-happening-body-HTML' => '$USERNAME 사용자 님!<br /><br />
+오늘 하루 동안 많은 일들이 있었습니다! $MYHOMEURL에서 무슨 일들이 있었는지 확인해보세요.<br /><br />
+<div style="font-style: italic; font-size: 120%;">-- 위키아 팀</div>',
 	'founderemails-email-lot-happening-greeting' => '$USERNAME님 안녕하세요,',
+	'founderemails-email-lot-happening-headline' => '$WIKINAME에 오늘 하루 동안 많은 일들이 있었던 것 같군요!',
 	'founderemails-email-lot-happening-signature' => '위키아 팀',
+	'founderemails-email-lot-happening-button' => '활동 내역 보기',
 	'founderemails-email-0-day-heading' => '$USERNAME님 만나서 반갑습니다,',
+	'founderemails-email-0-day-congratulations' => '축하드립니다! $HDWIKINAME를 만드셨습니다.',
+	'founderemails-email-0-day-tips-heading' => '위키아에 적응하는 데 도움이 될 만한 팁이 몇 가지 있습니다:',
+	'founderemails-email-0-day-addpages-heading' => '페이지를 추가하세요.',
+	'founderemails-email-0-day-addpages-button' => '페이지 추가',
+	'founderemails-email-0-day-addphotos-heading' => '그림 추가',
 	'founderemails-email-0-day-addphotos-button' => '사진 추가하기',
+	'founderemails-email-3-day-heading' => '안녕하세요, $USERNAME 사용자 님?',
+	'founderemails-email-3-day-addphotos-heading' => '더 많은 그림 추가하기',
 	'founderemails-email-3-day-addphotos-button' => '사진 추가하기',
+	'founderemails-email-3-day-explore-button' => '알아보기',
+	'founderemails-email-3-day-wikiahelps-signature' => '잘하고 있습니다. 계속 진행하세요!<br />위키아 팀',
+	'founderemails-email-10-day-heading' => '요즘 어떻게 지내시나요, $USERNAME 사용자 님?',
+	'founderemails-email-10-day-congratulations' => '시간 참 빠르죠! $HDWIKINAME 위키를 시작한 지 벌써 열흘이나 지났습니다.',
+	'founderemails-email-10-day-wikiahelps-text' => '<a style="color:#2a87d5;text-decoration:none;" href="http://community.wikia.com">community.wikia.com</a> 의 포럼에 글을 남겨 다른 위키아 사용자들에게서 도움을 구할 수도 있습니다.',
+	'founderemails-email-10-day-wikiahelps-signature' => '잘하고 있습니다. 계속 진행하세요!<br />위키아 팀',
+	'founderemails-email-views-digest-subject' => '$WIKINAME의 오늘 하루 조회수',
+	'founderemails-email-views-digest-body' => '안녕하세요, $USERNAME 사용자 님?
+
+오늘 $WIKINAME에 방문한 사람은 총 $1명이었습니다.
+
+계속 새로운 콘텐츠를 생성하고, 홍보를 함으로써 새로운 독자와 편집자들을 끌어들이세요.
+
+$WIKIURL
+
+위키아 팀',
 	'founderemails-email-views-digest-greeting' => '$USERNAME님 안녕하세요,',
+	'founderemails-email-views-digest-headline' => '오늘 $WIKINAME에 방문한 사람은 총 $1명이었습니다.',
+	'founderemails-email-views-digest-content' => '계속 새로운 콘텐츠를 생성하고, 홍보를 함으로써 새로운 독자와 편집자들을 끌어들이세요.',
 	'founderemails-email-views-digest-signature' => '위키아 팀',
+	'founderemails-email-views-digest-button' => '더 많은 페이지 추가하기',
+	'founderemails-email-complete-digest-subject' => '$WIKINAME에 하루 동안 있었던 최근 활동',
+	'founderemails-email-complete-digest-body' => '안녕하세요, $USERNAME 사용자 님?
+
+$WIKINAME($WIKIURL)에 하루 동안 있었던 일을 정리해드리고자 합니다.
+
+$1명이 당신의 위키에 들렀습니다.
+
+사람들이 읽을 만한 재밌는 콘텐츠를 많이 만들어 주세요!
+
+편집 $2건이 이뤄졌습니다.
+
+행복한 편집자는 행복한 위키를 만들죠. 편집자들을 확인하고 감사를 표해보세요.
+
+$3명이 당신의 위키에 가입했습니다.
+
+사용자 담벼락에서 신입 사용자를 환영해주세요.
+
+$WIKINAME에서 일어난 재밌는 일들은 언제든지 위키 활동 내역에서 확인하실 수 있습니다. 더 멋진 위키를 위해 자주 활동 내역을 확인해보세요.
+
+위키아 팀',
+	'founderemails-email-complete-digest-greeting' => '안녕하세요, $USERNAME 사용자 님?',
+	'founderemails-email-complete-digest-headline' => '$WIKINAME에 하루 동안 있었던 일을 정리해드리고자 합니다.',
+	'founderemails-email-complete-digest-content-heading1' => '$1명이 당신의 위키에 들렀습니다.',
+	'founderemails-email-complete-digest-content1' => '사람들이 읽을 만한 재밌는 콘텐츠를 많이 만들어 주세요!',
+	'founderemails-email-complete-digest-content-heading2' => '편집 $1건이 이뤄졌습니다.',
+	'founderemails-email-complete-digest-content2' => '행복한 편집자는 행복한 위키를 만들죠. 편집자들을 확인하고 감사를 표해보세요.',
+	'founderemails-email-complete-digest-content-heading3' => '$1명이 당신의 위키에 가입했습니다.',
+	'founderemails-email-complete-digest-content3' => '사용자 담벼락에서 신입 사용자를 환영해주세요.
+<br /><br />
+$WIKINAME에서 일어난 재밌는 일들은 언제든지 위키 활동 내역에서 확인하실 수 있습니다. 더 멋진 위키를 위해 자주 활동 내역을 확인해보세요.',
 	'founderemails-email-complete-digest-signature' => '위키아 팀',
+	'founderemails-email-complete-digest-button' => '위키 활동 내역 보기',
+	'founderemails-pref-joins' => '누군가 $1에 가입하면 알림',
+	'founderemails-pref-edits' => '누군가 $1에 편집을 하면 메일로 알림',
+	'founderemails-pref-views-digest' => '$1의 조회수에 대한 일간 알림 메일 받기',
+	'founderemails-pref-complete-digest' => '$1 일간 활동 요약을 메일로 받기',
 );
 
 /** Colognian (Ripoarisch)
@@ -4638,7 +4816,7 @@ $EDITORPAGEURL
 	'founderemails-email-user-registered-body-HTML' => 'Здраво $USERNAME,<br /><br />
 Корисникот $EDITORNAME се регистрираше на вашето вики! Зошто не пуштите поздрав на неговата <a href="$EDITORTALKPAGEURL">страница за разговор</a>?<br /><br />
 <div style="font-style: italic; font-size: 120%;">-- Екипата на Викија</div>',
-	'founderemails-email-0-days-passed-subject' => 'Добредојдовте на Викија!',
+	'founderemails-email-0-days-passed-subject' => 'Добре дојдовте на Викија!',
 	'founderemails-email-0-days-passed-body' => 'Чест ни е што ни се придруживте, $USERNAME
 
 Примете ги нашите честитки по повод создавањето на $WIKINAME!
@@ -4781,7 +4959,7 @@ $PAGEURL
 	'founderemails-answers-email-user-registered-body-HTML' => 'Здраво $USERNAME,<br /><br />
 Корисникот $EDITORNAME се регистрираше на вашето вики! Зошто не пуштите поздрав на неговата <a href="$EDITORTALKPAGEURL">страница ра разговор</a>?<br /><br />
 <div style="font-style: italic; font-size: 120%;">-- Екипата на Викија</div>',
-	'founderemails-answers-email-0-days-passed-subject' => 'Добредојдовте на викијата „Прашања и одговори“!',
+	'founderemails-answers-email-0-days-passed-subject' => 'Добре дојдовте на викијата „Прашања и одговори“!',
 	'founderemails-answers-email-0-days-passed-body' => 'Ви го честитаме создавањето на $WIKINAME - сега сте дел од заедницата на Викија!
 
 -- Екипата на Викија',

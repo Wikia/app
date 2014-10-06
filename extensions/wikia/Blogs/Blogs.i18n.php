@@ -910,8 +910,8 @@ $messages['ca'] = array(
  */
 $messages['ce'] = array(
 	'create-blog-save' => 'Ӏалашйе агӀо',
-	'create-blog-preview' => 'Хьалха муха ю хьажар',
-	'create-blog-listing-preview' => 'Хьалха муха ю хьажа',
+	'create-blog-preview' => 'Хьалха хьажар',
+	'create-blog-listing-preview' => 'Хьалха хьажар',
 	'blog-comment-hide' => 'къайлаяккха',
 	'blog-comment-history' => 'истори',
 	'blog-refresh-label' => 'Карлаяккха',

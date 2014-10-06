@@ -1388,6 +1388,7 @@ $messages['it'] = array(
 );
 
 /** Japanese (日本語)
+ * @author Plover-Y
  * @author Shirayuki
  */
 $messages['ja'] = array(
@@ -1405,6 +1406,13 @@ $messages['ja'] = array(
 	'scavengerhunt-button-delete' => '削除',
 	'scavengerhunt-entry-form-name' => '名前:',
 	'scavengerhunt-entry-form-email' => 'メール アドレス',
+	'scavengerhunt-quit-game-button-quit' => '終了',
+	'scavengerhunt-quit-game-button-cancel' => '中止',
+	'scavengerhunt-label-entry-form-username' => '利用者名',
+	'scavengerhunt-label-clue-color' => 'フォントの色',
+	'scavengerhunt-label-clue-size' => 'フォントサイズ',
+	'scavengerhunt-label-clue-font' => 'フォントの装飾',
+	'scavengerhunt-label-article-congrats' => 'お祝いメッセージ',
 );
 
 /** Kannada (ಕನ್ನಡ)
