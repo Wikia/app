@@ -147,7 +147,7 @@ class LocalNavigationContributeMenuController extends WikiaController {
 						if ( empty( $value ) ) {
 							$value = '#';
 						} else {
-							htmlspecialchars( $item[ 'href' ] );
+							htmlspecialchars( $item[ 'href' ], ENT_QUOTES | ENT_HTML5, 'UTF-8' );
 						}
 				}
 				$dropdownItemsRender[ $itemName ][ 'attributes' ] .= empty( $value ) ? '' : ' ' . $attribute . '="' . htmlspecialchars( $value ) . '"';

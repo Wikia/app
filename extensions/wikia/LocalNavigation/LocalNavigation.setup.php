@@ -15,6 +15,7 @@ $wgExtensionCredits[ 'specialpage' ][] = [
 		'Bogna \'bognix\' Knychala',
 		'Bartosz \'V.\' Bentkowski',
 		'Łukasz Konieczny',
+		'Mateusz \'Warkot\' Warkocki'
 	],
 	'description' => 'LocalNavigation',
 	'version' => 1.0
