@@ -10,7 +10,9 @@ describe('MediaGalleries gallery', function () {
 		instance,
 		options,
 		tracker = {
-			buildTrackingFunction: $.noop,
+			buildTrackingFunction: function () {
+				return $.noop;
+			},
 			ACTIONS: {
 				CLICK: 'click'
 			}
