@@ -12,7 +12,7 @@ class MercurySpecialPageController extends WikiaSpecialPageController {
 	const COOKIE_EXPIRE_DAYS = 7;
 
 	public function __construct() {
-		parent::__construct( self::PAGE_NAME );
+		parent::__construct( self::PAGE_NAME, '', false );
 	}
 
 	public function index() {

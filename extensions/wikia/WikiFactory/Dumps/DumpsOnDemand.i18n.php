@@ -293,6 +293,14 @@ $messages['eu'] = array(
 	'dump-database-info-more' => 'Mesedez <a href="http://community.wikia.com/wiki/Help:Database_download">ikusi</a> informazio gehiagorako',
 );
 
+/** Persian (فارسی)
+ * @author Reza1615
+ */
+$messages['fa'] = array(
+	'dump-database-request-submit' => 'ارسال درخواست',
+	'dump-database-last-unknown' => 'ناشناس',
+);
+
 /** Finnish (suomi)
  * @author Centerlink
  * @author Crt

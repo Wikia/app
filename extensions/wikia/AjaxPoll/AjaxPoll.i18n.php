@@ -120,7 +120,10 @@ $messages['bg'] = array(
  * @author Tauhid16
  */
 $messages['bn'] = array(
+	'ajaxpoll-percentVotes' => 'সব ভোটের $1%',
 	'ajaxpoll-thankyou' => 'আপনার ভোটের জন্য ধন্যবাদ!',
+	'ajaxpoll-error' => 'আপনার ভোট প্রক্রিয়াকরণের সময় একটি সমস্যা হয়েছিল, দয়া করে আবার চেষ্টা করুন।',
+	'ajaxpoll-summary' => 'এই জরিপ $1 তারিখে $2-এ তৈরি করা হয়েছে, এবং এখন পর্যন্ত $3 জন ব্যক্তি ভোট দিয়েছেন।',
 	'ajaxpoll-submit' => 'ভোট!',
 	'ajaxpoll-closed' => 'জরিপ বন্ধ করা হয়েছে। ফল উপোভোগ করুন।',
 	'ajaxpoll-submitting' => 'দয়া করে অপেক্ষা করুন, আপনার ভোট দেয়া হচ্ছে....',
@@ -146,6 +149,13 @@ $messages['br'] = array(
 	'ajaxpoll-submit' => 'Votiñ !',
 	'ajaxpoll-closed' => "Serret eo ar sontadeg bremañ. Keñverit an disoc'hoù.",
 	'ajaxpoll-submitting' => 'Gortozit mar plij, emeur o kas ho vot...',
+);
+
+/** Iriga Bicolano (Iriga Bicolano)
+ * @author Filipinayzd
+ */
+$messages['bto'] = array(
+	'ajaxpoll-submit' => 'Bumoto!',
 );
 
 /** Catalan (català)
@@ -258,6 +268,7 @@ $messages['eo'] = array(
 /** Spanish (español)
  * @author Bola
  * @author Fitoschido
+ * @author Macofe
  */
 $messages['es'] = array(
 	'ajaxpoll-percentVotes' => '$1%&nbsp; de todos los votos',
@@ -265,7 +276,7 @@ $messages['es'] = array(
 	'ajaxpoll-error' => 'Hubo un problema al procesar tu voto, por favor, inténtalo de nuevo.',
 	'ajaxpoll-summary' => 'La encuesta fue creada el $1 $2, y hasta ahora $3 personas votaron.',
 	'ajaxpoll-submit' => '¡Vota!',
-	'ajaxpoll-closed' => 'La encuesta se cerrará ahora. Disfruta de los resultados.',
+	'ajaxpoll-closed' => 'La encuesta está cerrada. Disfruta de los resultados.',
 	'ajaxpoll-submitting' => 'Se está enviando tu voto, espera un momento…',
 );
 
@@ -867,6 +878,7 @@ $messages['sr-ec'] = array(
 );
 
 /** Swedish (svenska)
+ * @author Jopparn
  * @author Tobulos1
  * @author WikiPhoenix
  */
@@ -876,7 +888,7 @@ $messages['sv'] = array(
 	'ajaxpoll-error' => 'Det uppstod ett problem med bearbetningen av din röst, var god försök igen.',
 	'ajaxpoll-summary' => 'Röstningen skapades den $2 kl. $1, och hittills har $3 personer röstat.',
 	'ajaxpoll-submit' => 'Rösta!',
-	'ajaxpoll-closed' => 'Röstningen är nu stängd. Njut av resultaten.',
+	'ajaxpoll-closed' => 'Omröstningen är nu stängd. Njut av resultaten.',
 	'ajaxpoll-submitting' => 'Vänta medan din röst skickas in...',
 );
 

@@ -7,6 +7,12 @@
 		display: none;
 	}
 
+	.ve-ui-mwParameterPage {
+		&.oo-ui-pageLayout:last-of-type {
+			margin-bottom: 0;
+		}
+	}
+
 	.ve-ui-mwParameterPage-info {
 		padding-left: 0.5em;
 	}
@@ -19,12 +25,14 @@
 		padding: 0.75em 0.5em;
 	}
 
-	.ve-ui-mwParameterPage-more {
-		.oo-ui-buttonedElement.oo-ui-iconedElement .oo-ui-iconedElement-icon {
-			float: right;
-			height: 18px;
-			margin-left: 5px;
-			width: 18px;
+	.ve-ui-wikiaTemplateGetInfoWidget-templateInfoButton {
+		.oo-ui-buttonedElement-button {
+			.oo-ui-iconedElement-icon {
+				float: right;
+				height: 18px;
+				margin-left: 5px;
+				width: 18px;
+			}
 		}
 
 		.oo-ui-labeledElement-label {
@@ -49,6 +57,9 @@
 		}
 	}
 
+	.oo-ui-buttonedElement-frameless .oo-ui-buttonedElement-button > .oo-ui-labeledElement-label {
+		color: $color-text;
+	}
 }
 
 .ve-ui-mwTemplateDialog-editFlow {
@@ -76,6 +87,20 @@
 		.ve-ui-mwTemplateDialog-filter {
 			left: 33%;
 			margin-left: 1px;
+		}
+	}
+
+	&.ve-ui-wikiaTransclusionDialog-zeroState {
+		.oo-ui-gridLayout {
+			margin-top: 0;
+		}
+
+		.ve-ui-wikiaTemplateGetInfoWidget-templateInfoButton {
+			margin-top: 1em;
+
+			.oo-ui-labeledElement-label {
+				margin-left: 0;
+			}
 		}
 	}
 }

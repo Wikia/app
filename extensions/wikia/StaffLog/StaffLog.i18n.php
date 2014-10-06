@@ -233,6 +233,8 @@ $messages['es'] = array(
 $messages['fa'] = array(
 	'stafflog-filter-label' => 'پالایه',
 	'stafflog-filter-user' => 'کاربر:',
+	'stafflog-filter-type' => 'نوع:',
+	'stafflog-filter-apply' => 'اعمال پالایش',
 	'stafflog-filter-type-block' => 'بلوک‌ها',
 );
 
@@ -341,6 +343,17 @@ $messages['kn'] = array(
 	'stafflog-filter-user' => 'ಬಳಕೆದಾರ:',
 	'stafflog-filter-type' => 'ನಮೂನೆ:',
 	'stafflog-filter-type-renameuser' => 'ಬಳಕೆದಾರ ಹೆಸರುಗಳು',
+);
+
+/** Korean (한국어)
+ * @author Miri-Nae
+ */
+$messages['ko'] = array(
+	'stafflog-filter-label' => '필터',
+	'stafflog-filter-user' => '사용자:',
+	'stafflog-filter-type' => '유형:',
+	'stafflog-filter-apply' => '필터 적용',
+	'stafflog-filter-type-wikifactory' => '위키 통계',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
@@ -739,5 +752,6 @@ $messages['zh-hans'] = array(
  * @author Liuxinyu970226
  */
 $messages['zh-hant'] = array(
+	'stafflog-filter-label' => '篩選器',
 	'stafflog-filter-user' => '使用者：',
 );

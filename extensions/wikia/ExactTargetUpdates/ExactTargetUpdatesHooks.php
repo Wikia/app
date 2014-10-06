@@ -15,7 +15,32 @@ class ExactTargetUpdatesHooks {
 	}
 
 	/**
+	 * Runs a method for updating user email
+	 * Function executed on EmailChangeConfirmed hook
+	 * @param User $user
+	 * @return bool
+	 */
+	public static function onEmailChangeConfirmed( User $user ) {
+		$thisInstance = new ExactTargetUpdatesHooks();
+		$thisInstance->addTheUpdateUserEmailTask( $user, new ExactTargetUpdateUserTask() );
+		return true;
+	}
+
+	/**
 	 * Runs a method for adding UpdateUserTask to job queue
+	 * Function executed on ArticleSaveComplete hook
+	 * @param WikiPage $article
+	 * @param User $user
+	 * @return bool
+	 */
+	public static function onArticleSaveComplete( WikiPage $article, User $user ) {
+		$thisInstance = new ExactTargetUpdatesHooks();
+		$thisInstance->addTheUpdateUserEditCountTask( $user, new ExactTargetUpdateUserTask() );
+		return true;
+	}
+
+	/**
+	 * Runs a method for adding UpdateUserPropertiesTask to job queue
 	 * Function executed on UserSaveSettings hook
 	 * @param User $user
 	 * @return bool
@@ -38,6 +63,38 @@ class ExactTargetUpdatesHooks {
 			$aUserData = $this->prepareUserParams( $user );
 			$aUserProperties = $this->prepareUserPropertiesParams( $user );
 			$task->call( 'sendNewUserData', $aUserData, $aUserProperties );
+			$task->queue();
+		}
+	}
+
+	/**
+	 * Adds Task for updating user email
+	 * @param User $user
+	 * @param ExactTargetUpdateUserTask $task
+	 */
+	public function addTheUpdateUserEmailTask( User $user, ExactTargetUpdateUserTask $task ) {
+		global $wgWikiaEnvironment;
+		/* Don't add task when on dev or internal */
+		if ( $wgWikiaEnvironment != WIKIA_ENV_DEV && $wgWikiaEnvironment != WIKIA_ENV_INTERNAL ) {
+			$task->call( 'updateUserEmail', $user->getId(), $user->getEmail() );
+			$task->queue();
+		}
+	}
+
+	/**
+	 * Adds Task for updating user editcount to job queue
+	 * @param User $user
+	 * @param ExactTargetAddUserTask $task
+	 */
+	public function addTheUpdateUserEditCountTask( User $user, ExactTargetUpdateUserTask $task ) {
+		global $wgWikiaEnvironment;
+		/* Don't add task when on dev or internal */
+		if ( $wgWikiaEnvironment != WIKIA_ENV_DEV && $wgWikiaEnvironment != WIKIA_ENV_INTERNAL ) {
+			$aUserData = [
+				'user_id' => $user->getId(),
+				'user_editcount' => $user->getEditCount()
+			];
+			$task->call( 'updateUserData', $aUserData );
 			$task->queue();
 		}
 	}

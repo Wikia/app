@@ -26,6 +26,14 @@ $messages['ar'] = array(
 	'confirmemailprompt-error' => 'هل هذا هو عنوان البريد الإلكتروني الخاص بك: <strong>$1</strong>؟ قم [[$2|بتأكيده]] أو [[$3|تغييره]].',
 );
 
+/** Asturian (asturianu)
+ * @author Xuacu
+ */
+$messages['ast'] = array(
+	'confirmemailprompt-desc' => "Amuesa un mensaxe d'alvertencia si l'usuariu tien una direición de corréu electrónicu ensin confirmar",
+	'confirmemailprompt-error' => '¿Ye esta la to direición de corréu electrónicu: <strong>$1</strong>? [[$2|Confírmala]] o [[$3|cámbiala]].',
+);
+
 /** Bulgarian (български)
  * @author Aquilax
  */
@@ -138,6 +146,21 @@ $messages['id'] = array(
 $messages['it'] = array(
 	'confirmemailprompt-desc' => "Visualizza una notifica se l'utente ha un indirizzo e-mail non confermato",
 	'confirmemailprompt-error' => 'È questa la tua e-mail: <strong>$1</strong>? [[$2|Confermala]] o [[$3|cambiala]].',
+);
+
+/** Korean (한국어)
+ * @author Miri-Nae
+ */
+$messages['ko'] = array(
+	'confirmemailprompt-desc' => '사용자가 인증되지 않은 메일 주소를 사용하면 경고 메시지를 표시합니다.',
+	'confirmemailprompt-error' => '당신의 메일 주소가 맞나요: <strong>$1</strong>? [[$2|예]] / [[$3|아니오]].',
+);
+
+/** Luxembourgish (Lëtzebuergesch)
+ * @author Robby
+ */
+$messages['lb'] = array(
+	'confirmemailprompt-error' => 'Ass dëst Är E-Mail-Adress:<strong>$1</strong>? [[$2|Confirméiert se it]] oder [[$3|ännert se]].',
 );
 
 /** Basa Banyumasan (Basa Banyumasan)
@@ -293,9 +316,10 @@ $messages['zh-hans'] = array(
 
 /** Traditional Chinese (中文（繁體）‎)
  * @author Justincheng12345
+ * @author LNDDYL
  * @author StephDC
  */
 $messages['zh-hant'] = array(
 	'confirmemailprompt-desc' => '當用戶的電郵地址尚未確認時顯示警告',
-	'confirmemailprompt-error' => '<strong>$1</strong>是否是您的電子郵箱地址？ [[$2|是]]或[[$3|不是，請修改]]。',
+	'confirmemailprompt-error' => '<strong>$1</strong>是否是您的電子郵箱位址？ [[$2|是]]或[[$3|不是，請修改]]。',
 );

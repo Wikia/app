@@ -424,18 +424,27 @@ $messages['es'] = array(
 );
 
 /** Persian (فارسی)
+ * @author Alirezaaa
  * @author Ebraminio
  * @author Reza1615
  */
 $messages['fa'] = array(
+	'preferences-v2-oldsig' => 'امضای کنونی:',
+	'prefs-appearance' => 'نمایش صفحه',
+	'preferences-v2-date' => 'آرایش تاریخ:',
+	'preferences-v2-time' => 'منطقهٔ زمانی:',
+	'preferences-v2-skin' => 'چیدمان:',
 	'prefs-emailv2' => 'رایانامه',
+	'preferences-v2-user-landing-page' => 'صفحهٔ فرود:',
 	'preferences-v2-redirect-wiki-activity' => 'فعالیت‌های ویکی',
+	'preferences-v2-redirect-main-page' => 'صفحهٔ اصلی',
 	'preferences-v2-redirect-recent-changes' => 'تغییرات اخیر',
 	'prefs-addressv2' => 'نشانی',
 	'preferences-v2-watchdefault' => 'ویرایش',
 	'preferences-v2-watchmoves' => 'انتقال',
 	'preferences-v2-watchdeletion' => 'حذف',
 	'preferences-v2-watchcreations' => 'ایجاد',
+	'tog-editondblclick-v2' => 'ویرایش صفحات با دوکلیک (نیازمند جاوااسکریپت)',
 );
 
 /** Finnish (suomi)
@@ -507,7 +516,7 @@ $messages['fr'] = array(
 	'preferences-v2-oldsig' => 'Signature actuelle :',
 	'preferences-v2-nickname' => 'Signature personnalisée :',
 	'preferences-v2-fancysig' => 'Je veux utiliser du code wiki dans ma signature<br />[[{{MediaWiki:preferences-v2-fancysig-help-page-name}}|Que sont les signatures ?]]',
-	'preferences-v2-fancysig-help-page-name' => 'Aide:Signature', # Fuzzy
+	'preferences-v2-fancysig-help-page-name' => 'Help:Signature',
 	'prefs-appearance' => 'Apparence',
 	'preferences-v2-date' => 'Format des dates :',
 	'preferences-v2-time' => 'Fuseau horaire :',
@@ -653,10 +662,16 @@ $messages['ja'] = array(
 
 /** Korean (한국어)
  * @author Hym411
+ * @author Miri-Nae
+ * @author Revi
  * @author 아라
  */
 $messages['ko'] = array(
+	'prefs-personal' => '내 정보',
+	'preferences-v2-username' => '내 사용자 이름:',
+	'preferences-v2-gender' => '내 성별:',
 	'preferences-v2-password' => '나의 비밀번호:',
+	'prefs-emailv2' => '이메일',
 	'preferences-v2-redirect-main-page' => '대문',
 	'tog-showAdsv2' => '광고:',
 	'preferences-v2-watchdefault' => '편집',
@@ -750,6 +765,27 @@ $messages['mk'] = array(
 	'preferences-v2-redirect-wiki-activity' => 'Активности на викито',
 	'preferences-v2-redirect-main-page' => 'Главна страница',
 	'preferences-v2-redirect-recent-changes' => 'Скорешни промени',
+	'preferences-v2-redirect-explanation' => 'Можноста за целна страница ви овозможува да одберете која страница да ви се отвора кога ќе внесете $1 во прелистувачот.',
+	'prefs-monobookv2' => 'Монобук',
+	'prefs-under-the-hood' => 'Погон',
+	'prefs-recent-changesv2' => 'Скорешни промени, истории и дневници',
+	'prefs-followed-pagesv2' => 'Канал на следени страници',
+	'prefs-advanced-displayv2' => 'Напредни можности за приказ',
+	'tog-highlightbrokenv2' => 'Прикажувај ги неисправните врски со црвено наместо со прашалник.',
+	'tog-showAdsv2' => 'Реклами:',
+	'prefs-addressv2' => 'Адреса',
+	'prefs-followed-pages-iv2' => 'Следи ги страници што ги...',
+	'preferences-v2-watchdefault' => 'Уредувам',
+	'preferences-v2-watchmoves' => 'Преместувам',
+	'preferences-v2-watchdeletion' => 'Бришам',
+	'preferences-v2-watchcreations' => 'Создавам',
+	'preferences-v2-showads-enable' => 'Прикажувај ги сите реклами',
+	'preferences-v2-showads-disable' => 'Не ги прикажувај сите реклами',
+	'preferences-v2-my-email-address' => 'Мои е-поштенски адреси:',
+	'prefs-patrolled-editsv2' => 'Патролирани уредувања',
+	'tog-editsectiononrightclick-v2' => 'Уредување на поднаслови со десно копче на глушецот врз нивните наслови',
+	'tog-editondblclick-v2' => 'Уредување на поднаслови со двојно стискање на глушецот',
+	'tog-hidefollowedpages-v2' => 'Скриј го списокот на страниците што ги следам, за да бидат невидливи за сите',
 );
 
 /** Malay (Bahasa Melayu)
@@ -873,8 +909,34 @@ $messages['nl'] = array(
  * @author Hulothe
  */
 $messages['oc'] = array(
+	'prefs-personal' => 'Mas informacions',
+	'preferences-v2-username' => "Mon nom d'utilizaire :",
+	'preferences-v2-usergroups' => 'Gropes d’utilizaires :',
+	'preferences-v2-password' => 'Mon senhal :',
+	'preferences-v2-oldsig' => 'Signatura actuala :',
+	'preferences-v2-nickname' => 'Signatura personalizada :',
+	'preferences-v2-fancysig' => 'Vòli utilizar de còde wiki dins ma signatura<br />[[{{MediaWiki:preferences-v2-fancysig-help-page-name}}|Qué son las signaturas ?]]',
+	'preferences-v2-fancysig-help-page-name' => 'Help:Signatura',
+	'prefs-appearance' => 'Aparéncia',
+	'preferences-v2-date' => 'Format de las datas :',
+	'preferences-v2-time' => 'Fus orari :',
+	'preferences-v2-skin' => 'Disposicion :',
+	'prefs-emailv2' => 'Corrièr electronic',
+	'prefs-email-advanced-v2' => 'Opcions avançadas',
+	'preferences-v2-user-landing-page' => "Pagina d'arribada :",
+	'preferences-v2-redirect-wiki-activity' => 'Activitat del wiki',
+	'preferences-v2-redirect-main-page' => 'Pagina principala',
 	'preferences-v2-redirect-recent-changes' => 'Darrièrs cambiaments',
+	'prefs-monobookv2' => 'MonoBook',
+	'prefs-under-the-hood' => 'Jol capòt',
 	'prefs-recent-changesv2' => 'Darrièrs cambiaments, istorics e jornals recents',
+	'tog-showAdsv2' => 'Publicitats :',
+	'prefs-addressv2' => 'Adreça',
+	'preferences-v2-watchdefault' => 'Modificar',
+	'preferences-v2-watchmoves' => 'Desplaçar',
+	'preferences-v2-watchdeletion' => 'Suprimir',
+	'preferences-v2-watchcreations' => 'Crear',
+	'preferences-v2-showads-enable' => 'Afichar totas las publicitats',
 );
 
 /** Polish (polski)
@@ -1204,6 +1266,7 @@ $messages['sr-el'] = array(
 );
 
 /** Swedish (svenska)
+ * @author Lokal Profil
  * @author WikiPhoenix
  */
 $messages['sv'] = array(
@@ -1238,7 +1301,7 @@ $messages['sv'] = array(
 	'preferences-v2-redirect-main-page' => 'Huvudsida',
 	'preferences-v2-redirect-recent-changes' => 'Senaste ändringarna',
 	'preferences-v2-redirect-explanation' => 'Alternativet för destinationssidan låter dig välja var du hamna när du skriver in $1 i din webbläsare.',
-	'prefs-monobookv2' => 'Monobook',
+	'prefs-monobookv2' => 'MonoBook',
 	'prefs-under-the-hood' => 'Under huven',
 	'prefs-recent-changesv2' => 'Senaste ändringarna, historiker och loggar',
 	'prefs-followed-pagesv2' => 'Flöde för sidor du följer',
@@ -1374,6 +1437,7 @@ $messages['uk'] = array(
 
 /** Vietnamese (Tiếng Việt)
  * @author Baonguyen21022003
+ * @author Rémy Lee
  */
 $messages['vi'] = array(
 	'prefs-personal' => 'Thông tin về tôi',
@@ -1385,34 +1449,34 @@ $messages['vi'] = array(
 	'preferences-v2-nickname' => 'Chữ ký tùy chỉnh:',
 	'preferences-v2-fancysig' => 'Tôi muốn sử dụng mã nguồn trong chữ ký của tôi<br />[[{{MediaWiki:preferences-v2-fancysig-help-page-name}}|Chữ ký là gì?]]',
 	'preferences-v2-fancysig-help-page-name' => 'Help:Chữ ký',
-	'prefs-appearance' => 'Xuất hiện',
+	'prefs-appearance' => 'Giao diện',
 	'preferences-v2-date' => 'Định dạng ngày:',
 	'preferences-v2-time' => 'Múi giờ:',
 	'preferences-v2-skin' => 'Giao diện:',
 	'prefs-emailv2' => 'Thư điện tử:',
-	'prefs-email-me-v2' => 'Gửi thư cho tôi khi...',
-	'tog-enotifwatchlistpages-v2' => '...một trang tôi đang theo dõi đã được thay mới',
+	'prefs-email-me-v2' => 'Gửi thư điện tử cho tôi khi...',
+	'tog-enotifwatchlistpages-v2' => '...một trang tôi theo dõi được thay đổi',
 	'tog-enotifusertalkpages-v2' => '...trang thảo luận của tôi thay đổi',
-	'tog-enotifminoredits-v2' => '.. .một trang tôi thoe dõi có sửa đổi nhỏ đã thay đổi',
+	'tog-enotifminoredits-v2' => '...một trang tôi theo dõi có thay đổi nhỏ',
 	'tog-marketingallowed-v2' => '...Wikia có tin tức và sự kiện',
 	'prefs-email-advanced-v2' => 'Tùy chọn nâng cao',
 	'tog-htmlemails-v2' => 'Gửi cho tôi email HTML',
-	'prefs-wikiemail' => 'Tùy chọn {{SITENAME}}. Gửi thư cho tôi khi...',
-	'prefs-email-unsubscribe' => 'Vô hiệu hoá tất cả các email',
-	'unsubscribe-preferences-toggle-v2' => 'Vô hiệu hoá tất cả các email từ Wikia (ghi đè lên tất cả các tùy chọn khác)',
-	'tog-watchlistdigest-v2' => '...tóm lược hàng tuần thay đổi trang Wikia mà tôi theo dõi là sẵn sàng',
+	'prefs-wikiemail' => 'Tùy chọn {{SITENAME}}. Gửi thư điện tử cho tôi khi...',
+	'prefs-email-unsubscribe' => 'Vô hiệu hoá tất cả thư điện tử',
+	'unsubscribe-preferences-toggle-v2' => 'Vô hiệu hoá tất cả thư điện tử từ Wikia (ghi đè lên tất cả các tùy chọn khác)',
+	'tog-watchlistdigest-v2' => '...một bản tóm lược thay đổi hàng tuần trang Wikia mà tôi theo dõi',
 	'tog-justify-v2' => 'Hiển thị hợp lý các đoạn',
-	'preferences-v2-user-landing-page' => 'Trang giới thiệu',
-	'preferences-v2-redirect-wiki-activity' => 'Hoạt động của Wiki',
+	'preferences-v2-user-landing-page' => 'Trang đến:',
+	'preferences-v2-redirect-wiki-activity' => 'Hoạt động wiki',
 	'preferences-v2-redirect-main-page' => 'Trang Chính',
 	'preferences-v2-redirect-recent-changes' => 'Thay đổi gần đây',
-	'preferences-v2-redirect-explanation' => 'Tùy chọn trang đích cho phép bạn chọn nơi bạn đi khi bạn gõ $1 vào trình duyệt của bạn.',
+	'preferences-v2-redirect-explanation' => 'Tùy chọn trang đến cho phép bạn chọn nơi bạn đi đến khi bạn gõ $1 vào trình duyệt của mình.',
 	'prefs-monobookv2' => 'MonoBook',
 	'prefs-under-the-hood' => 'Hiển thị',
-	'prefs-recent-changesv2' => 'Thay đổi gần đây, lịch sử, và các nhật trình liên quan',
-	'prefs-followed-pagesv2' => 'Theo trang nguồn cấp dữ liệu',
-	'prefs-advanced-displayv2' => 'Tùy chọn nâng cao Hiển thị',
-	'tog-highlightbrokenv2' => 'Hiển thị các liên kết bị hỏng như màu đỏ, không phải với một dấu chấm hỏi.',
+	'prefs-recent-changesv2' => 'Thay đổi gần đây, lịch sử và các nhật trình liên quan',
+	'prefs-followed-pagesv2' => 'Nguồn cấp dữ liệu trang theo dõi',
+	'prefs-advanced-displayv2' => 'Tùy chọn hiển thị nâng cao',
+	'tog-highlightbrokenv2' => 'Hiển thị các liên kết hỏng là màu đỏ, không kèm theo dấu chấm hỏi.',
 	'tog-showAdsv2' => 'Quảng cáo:',
 	'prefs-addressv2' => 'Địa chỉ',
 	'prefs-followed-pages-iv2' => 'Theo dõi trang tôi...',
@@ -1421,12 +1485,12 @@ $messages['vi'] = array(
 	'preferences-v2-watchdeletion' => 'Xóa',
 	'preferences-v2-watchcreations' => 'Tạo',
 	'preferences-v2-showads-enable' => 'Hiển thị tất cả quảng cáo',
-	'preferences-v2-showads-disable' => 'Không hiển thị tất cả quảng cáo',
+	'preferences-v2-showads-disable' => 'Không hiển thị bất cứ quảng cáo nào',
 	'preferences-v2-my-email-address' => 'Thư điện tử của bạn:',
 	'prefs-patrolled-editsv2' => 'Tuần tra sửa đổi',
-	'tog-editsectiononrightclick-v2' => 'Chỉnh sửa phần bằng cách nhấp phải vào đề mục',
-	'tog-editondblclick-v2' => 'Chỉnh sửa các trang trên nhấp đúp chuột',
-	'tog-hidefollowedpages-v2' => 'Ẩn danh sách theo trang của tôi từ tất cả mọi người',
+	'tog-editsectiononrightclick-v2' => 'Sửa đổi phần bằng cách nhấp chuột phải vào đề mục',
+	'tog-editondblclick-v2' => 'Sửa đổi trang bằng nhấp đúp chuột',
+	'tog-hidefollowedpages-v2' => 'Ẩn danh sách trang theo dõi của tôi với tất cả mọi người',
 );
 
 /** Volapük (Volapük)
@@ -1482,6 +1546,7 @@ $messages['zh-hans'] = array(
 	'preferences-v2-redirect-main-page' => '首页',
 	'preferences-v2-redirect-recent-changes' => '最近更改',
 	'prefs-monobookv2' => 'MonoBook',
+	'prefs-under-the-hood' => '高级选项',
 	'prefs-recent-changesv2' => '最近的变化、历史和日志',
 	'prefs-followed-pagesv2' => '已关注页面的订阅点',
 	'prefs-advanced-displayv2' => '高级显示选项',
@@ -1504,7 +1569,9 @@ $messages['zh-hans'] = array(
 
 /** Traditional Chinese (中文（繁體）‎)
  * @author Cwlin0416
+ * @author EagerLin
  * @author Ffaarr
+ * @author LNDDYL
  */
 $messages['zh-hant'] = array(
 	'prefs-personal' => '我的資訊',
@@ -1527,16 +1594,16 @@ $messages['zh-hant'] = array(
 	'tog-enotifminoredits-v2' => '...我關注的頁面有小修改',
 	'tog-marketingallowed-v2' => '...Wikia 有新聞和事件',
 	'prefs-email-advanced-v2' => '進階選項',
-	'tog-htmlemails-v2' => '發HTML的電子郵件給我',
+	'tog-htmlemails-v2' => '寄HTML的電子郵件給我',
 	'prefs-wikiemail' => '{{SITENAME}}的選項。發電子郵件件给我，當...',
 	'prefs-email-unsubscribe' => '禁用所有的電子郵件',
 	'unsubscribe-preferences-toggle-v2' => '禁用所有來自 Wikia的電子郵件 (覆蓋所有其他選項)',
 	'tog-watchlistdigest-v2' => '我關注頁面改變的每週摘要產生時',
 	'tog-justify-v2' => '顯示左右對齊的段落',
-	'preferences-v2-user-landing-page' => '登錄頁面',
+	'preferences-v2-user-landing-page' => '到達頁面：',
 	'preferences-v2-redirect-wiki-activity' => 'wiki動作',
 	'preferences-v2-redirect-main-page' => '首頁',
-	'preferences-v2-redirect-recent-changes' => '最近更改',
+	'preferences-v2-redirect-recent-changes' => '近期變更',
 	'preferences-v2-redirect-explanation' => '登錄頁面選項，讓你選擇你在輸入$1的時候會抵達的頁面。',
 	'prefs-monobookv2' => 'MonoBook',
 	'prefs-under-the-hood' => '進階設定',
@@ -1552,7 +1619,7 @@ $messages['zh-hant'] = array(
 	'preferences-v2-watchcreations' => '創建',
 	'preferences-v2-showads-enable' => '顯示所有廣告',
 	'preferences-v2-showads-disable' => '不顯示所有的廣告',
-	'preferences-v2-my-email-address' => '我的電子郵件地址：',
+	'preferences-v2-my-email-address' => '我的電子郵件位址：',
 	'prefs-patrolled-editsv2' => '巡查過的編輯',
 	'tog-editsectiononrightclick-v2' => '允許在標題上按右鍵編輯段落',
 	'tog-editondblclick-v2' => '雙擊來編輯頁面',

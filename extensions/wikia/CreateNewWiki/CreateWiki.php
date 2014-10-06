@@ -153,6 +153,11 @@ class CreateWiki {
 	public function create() {
 		global $wgWikiaLocalSettingsPath, $wgExternalSharedDB, $wgSharedDB, $wgUser;
 
+		// Set this flag to ensure that all select operations go against master
+		// Slave lag can cause random errors during wiki creation process
+		global $wgForceMasterDatabase;
+		$wgForceMasterDatabase = true;
+
 		wfProfileIn( __METHOD__ );
 
 		if ( wfReadOnly() ) {
@@ -292,13 +297,6 @@ class CreateWiki {
 			wfDebugLog( "createwiki", __METHOD__ . ": Creating tables not finished\n", true );
 			wfProfileOut( __METHOD__ );
 			return self::ERROR_SQL_FILE_BROKEN;
-		}
-
-		// Hack to slow down the devbox database creation because createTables() returns
-		// before the tables are created on the slave, and the uploadImage function hits the slave
-		global $wgDevelEnvironment;
-		if (isset($wgDevelEnvironment)) {
-			sleep(15);
 		}
 
 		/**

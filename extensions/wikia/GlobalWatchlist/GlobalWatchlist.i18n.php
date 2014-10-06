@@ -152,7 +152,7 @@ Wikia
  * @author Умар
  */
 $messages['ce'] = array(
-	'tog-watchlistdigestclear' => 'Билгал йе еша сана сан тергаме могӀам чура агӀонаш',
+	'tog-watchlistdigestclear' => 'Билгалъе еша сана сан тергаме могӀам чура агӀонаш',
 );
 
 /** Czech (čeština)
@@ -1033,6 +1033,13 @@ Wikia
 	'globalwatchlist-blog-page-title-comment' => '$1 ($2 {{PLURAL:$2|kommentar|kommentarer}})',
 	'globalwatchlist-no-page-found' => 'Ingen sida hittades.',
 	'globalwatchlist-no-blog-page-found' => 'Ingen bloggsida hittades.',
+);
+
+/** Tamil (தமிழ்)
+ * @author ElangoRamanujam
+ */
+$messages['ta'] = array(
+	'globalwatchlist-no-page-found' => 'பக்கங்கள் ஏதும் காணப்படவில்லை',
 );
 
 /** Telugu (తెలుగు)

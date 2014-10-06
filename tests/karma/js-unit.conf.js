@@ -53,6 +53,9 @@ module.exports = function (config) {
 			'resources/wikia/libraries/mustache/mustache.js',
 			'resources/wikia/libraries/jquery/ellipses.js',
 
+			// Performance
+			'extensions/wikia/Bucky/js/spec/bucky.mock.js',
+
 			//UI Repo JS API
 			'resources/wikia/modules/uicomponent.js',
 			'resources/wikia/modules/uifactory.js',
@@ -69,7 +72,6 @@ module.exports = function (config) {
 			'extensions/wikia/AdEngine/js/AdContext.js',
 			'extensions/wikia/AdEngine/js/AdDecoratorPageDimensions.js',
 			'extensions/wikia/AdEngine/js/AdEngine2.js',
-			'extensions/wikia/AdEngine/js/EventDispatcher.js',
 			'extensions/wikia/AdEngine/js/AdLogicDartSubdomain.js',
 			'extensions/wikia/AdEngine/js/AdLogicHighValueCountry.js',
 			'extensions/wikia/AdEngine/js/AdLogicPageDimensions.js',
@@ -81,10 +83,12 @@ module.exports = function (config) {
 			'extensions/wikia/AdEngine/js/AdProviderLiftium.js',
 			'extensions/wikia/AdEngine/js/AdProviderNull.js',
 			'extensions/wikia/AdEngine/js/DartUrl.js',
+			'extensions/wikia/AdEngine/js/EventDispatcher.js',
 			'extensions/wikia/AdEngine/js/EvolveHelper.js',
 			'extensions/wikia/AdEngine/js/EvolveSlotConfig.js',
 			'extensions/wikia/AdEngine/js/GptSlotConfig.js',
 			'extensions/wikia/AdEngine/js/MessageListener.js',
+			'extensions/wikia/AdEngine/js/AdTracker.js',
 			'extensions/wikia/AdEngine/js/WikiaDartHelper.js',
 			'extensions/wikia/AdEngine/js/WikiaDartVideoHelper.js',
 			'extensions/wikia/AdEngine/js/WikiaGptAdDetect.js',

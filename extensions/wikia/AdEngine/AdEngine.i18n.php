@@ -52,6 +52,13 @@ $messages['bcl'] = array(
 	'adengine-exitstitial-button' => 'Likwasan ining Ad',
 );
 
+/** Belarusian (беларуская)
+ * @author Чаховіч Уладзіслаў
+ */
+$messages['be'] = array(
+	'adengine-exitstitial-go-back' => 'Хочаце вярнуцца?',
+);
+
 /** Bulgarian (български)
  * @author Aquilax
  * @author DCLXVI
@@ -246,11 +253,12 @@ $messages['hrx'] = array(
 );
 
 /** Hungarian (magyar)
+ * @author Csega
  * @author Liteon
  */
 $messages['hu'] = array(
-	'adengine-exitstitial-redirecting' => 'Az Ön böngészője másodperceken belül átirányítja Önt a kívánt oldalra.',
-	'adengine-exitstitial-go-back' => 'Vissza',
+	'adengine-exitstitial-redirecting' => 'Böngésződ másodperceken belül átirányít a kívánt oldalra.',
+	'adengine-exitstitial-go-back' => 'Visszamennél?',
 	'adengine-exitstitial-button' => 'Hirdetés átugrása',
 );
 
@@ -663,11 +671,12 @@ $messages['zh'] = array(
 
 /** Simplified Chinese (中文（简体）‎)
  * @author Byfserag
+ * @author Duolaimi
  * @author Liuxinyu970226
  * @author 御坂美琴
  */
 $messages['zh-hans'] = array(
-	'adengine-exitstitial-title-template' => '您将要离开$1......',
+	'adengine-exitstitial-title-template' => '你正在离开$1...',
 	'adengine-exitstitial-redirecting' => '您的浏览器将在几秒钟后重定向至您请求的页面。',
 	'adengine-exitstitial-go-back' => '想要返回吗？',
 	'adengine-exitstitial-button' => '跳过这个广告',

@@ -108,7 +108,7 @@ define(
 			// TODO: figure out where is better place to place it and move it there
 			modal.$element
 				.on('change', '#intMapUpload', function (event) {
-					uploadNewTileSetImage(event.target.parentNode);
+					uploadNewTileSetImage(event.target);
 				})
 				.on('keyup', '#intMapTileSetSearch', $.debounce(config.constants.debounceDelay, searchForTileSets));
 
@@ -348,10 +348,9 @@ define(
 
 		/**
 		 * @desc uploads tile set image to backend
-		 * @param {object} form - html form node element
 		 */
-		function uploadNewTileSetImage(form) {
-			var formData = new FormData(form);
+		function uploadNewTileSetImage(inputElement) {
+			var formData = utils.getFormDataForFileUpload(inputElement);
 
 			utils.upload(modal, formData, 'map', function (data) {
 				data.type = 'custom';
