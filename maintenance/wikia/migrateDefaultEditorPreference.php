@@ -17,9 +17,9 @@ function formatRegDateParam( $regDate ) {
 }
 
 // Get database resource
-$dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
+$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
 
-$dbName = $dbw->getDBname();
+$dbName = $dbr->getDBname();
 if ( $dbName !== 'wikicities' ) {
 	exit( "*** Shared database name does not match expected name. Aborting.\n" );
 }
@@ -63,7 +63,7 @@ if ( isset( $options['offset'] ) ) {
 }
 
 // Run query and get results
-$allRows = $query->runLoop( $dbw, function( &$results, $row ) {
+$allRows = $query->runLoop( $dbr, function( &$results, $row ) {
 	$results[] = $row;
 } );
 
