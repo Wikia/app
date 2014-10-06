@@ -6,12 +6,14 @@ use Wikia\Search\Test\BaseTest;
 
 class ArticleTypeTest extends BaseTest {
 
+	const FICTIONAL_LANG = 'fla';
+
 	/** @test */
 	public function shouldReturnEmptyResponseForNotSupportedLanguageWiki() {
 		$articleTypeService = $this->mockArticleTypeService();
 		$articleTypeService->expects($this->never())->method('getArticleType');
 		$articleTypeIndexerService = new ArticleType([123, 234]);
-		$articleTypeIndexerService->setService($this->mockMediaWikiService("fr"));
+		$articleTypeIndexerService->setService($this->mockMediaWikiService(self::FICTIONAL_LANG));
 
 		$response = $articleTypeIndexerService->getResponseForPageIds();
 
