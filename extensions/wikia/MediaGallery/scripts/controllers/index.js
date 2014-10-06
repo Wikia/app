@@ -10,7 +10,6 @@ require([
 	 * @constructor
 	 */
 
-	// another test
 	var GalleryController = function () {
 		this.$galleries = $('.media-gallery-wrapper');
 	};
