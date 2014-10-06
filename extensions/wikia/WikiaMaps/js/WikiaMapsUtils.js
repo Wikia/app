@@ -313,9 +313,10 @@ define(
 		 */
 		function getNirvanaExceptionMessage(response) {
 			var responseText = response.responseText,
-				message = JSON.parse(responseText).exception.details;
+				exception = JSON.parse(responseText).exception,
+				message = exception.details || exception.message || response.statusText;
 
-			return message || response.statusText;
+			return message;
 		}
 
 		/**

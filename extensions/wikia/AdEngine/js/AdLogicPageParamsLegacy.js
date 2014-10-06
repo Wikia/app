@@ -26,6 +26,10 @@ define('ext.wikia.adEngine.adLogicPageParamsLegacy', [
 		return dartUrl.decorateParam('s1', pageParams.rawDbName);
 	}
 
+	function getEsrbKeyValue() {
+		return dartUrl.decorateParam('esrb', pageParams.esrb);
+	}
+
 	function getDomainKV() {
 		return dartUrl.decorateParam('dmn', pageParams.dmn);
 	}
@@ -43,6 +47,7 @@ define('ext.wikia.adEngine.adLogicPageParamsLegacy', [
 
 	return {
 		getCustomKeyValues: getCustomKeyValues,
+		getEsrbKeyValue: getEsrbKeyValue,
 		getS1KeyValue: getS1KeyValue,
 		getDomainKV: getDomainKV,
 		getHostnamePrefix: getHostnamePrefix,
