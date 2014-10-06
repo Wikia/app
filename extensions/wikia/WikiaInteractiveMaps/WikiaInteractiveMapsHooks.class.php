@@ -69,6 +69,17 @@ class WikiaInteractiveMapsHooks {
 	}
 
 	/**
+	 * @brief Returns true if the current page is not Special:Maps main page
+	 *
+	 * @return bool
+	 */
+	private static function isNotSpecialMapsMainPage() {
+		global $wgTitle;
+
+		return $wgTitle->getSubpageText() !== WikiaInteractiveMapsController::PAGE_NAME;
+	}
+
+	/**
 	 * @brief WikiaMobile hook to add assets so they are minified and concatenated
 	 *
 	 * @param Array $jsStaticPackages
@@ -88,4 +99,14 @@ class WikiaInteractiveMapsHooks {
 		return true;
 	}
 
+	/**
+	 * @param OutputPage $out
+	 * @return bool true
+	 */
+	static function onBeforePageDisplay( $out ) {
+		if ( self::isSpecialMapsPage() && self::isNotSpecialMapsMainPage() ) {
+			$out->addMeta( 'fragment', '!' );
+		}
+		return true;
+	}
 }

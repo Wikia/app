@@ -43,6 +43,7 @@ $wgHooks[ 'ParserFirstCallInit' ][] = 'WikiaInteractiveMapsParserTagController::
 $wgHooks[ 'OutputPageBeforeHTML' ][] = 'WikiaInteractiveMapsHooks::onOutputPageBeforeHTML';
 $wgHooks[ 'OasisSkinAssetGroups' ][] = 'WikiaInteractiveMapsHooks::onOasisSkinAssetGroups';
 $wgHooks[ 'SkinAfterBottomScripts' ][] = 'WikiaInteractiveMapsHooks::onSkinAfterBottomScripts';
+$wgHooks[ 'BeforePageDisplay' ][] = 'WikiaInteractiveMapsHooks::onBeforePageDisplay';
 
 // mobile
 $wgHooks['WikiaMobileAssetsPackages'][] = 'WikiaInteractiveMapsHooks::onWikiaMobileAssetsPackages';
