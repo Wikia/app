@@ -37,6 +37,7 @@ define('ext.wikia.adEngine.adContext', ['wikia.window', 'wikia.document'], funct
 			pageType: w.adEnginePageType,
 			showAds: w.wgShowAds,
 			usePostScribe: w.wgUsePostScribe,
+			adsAfterInfobox: w.wgAdDriverUseAdsAfterInfobox,
 			trackSlotState: w.wgAdDriverTrackState
 		},
 

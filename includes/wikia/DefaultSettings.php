@@ -1234,6 +1234,12 @@ $wgAdDriverEnableRemnantGptMobile = false;
 $wgEnableAdEngineExt = true;
 
 /**
+ * @name $wgAdDriverUseAdsAfterInfobox
+ * Enable new mobile_in_content slot after infobox placement
+ */
+$wgAdDriverUseAdsAfterInfobox = false;
+
+/**
  * @name $wgAdDriverUseTaboola
  * Whether to enable AdProviderTaboola (true) or not (false)
  */

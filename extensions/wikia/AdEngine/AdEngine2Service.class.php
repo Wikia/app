@@ -235,7 +235,8 @@ class AdEngine2Service
 			$wgDartCustomKeyValues, $wgWikiDirectedAtChildrenByStaff,
 			$wgWikiDirectedAtChildrenByFounder, $wgAdEngineDisableLateQueue,
 			$wgAdDriverUseBottomLeaderboard, $wgAdDriverBottomLeaderboardImpressionCapping,
-			$wgAdDriverEnableAdsInMaps, $wgAdDriverWikiIsTop1000, $wgAdDriverUseTaboola;
+			$wgAdDriverEnableAdsInMaps, $wgAdDriverWikiIsTop1000, $wgAdDriverUseTaboola,
+			$wgAdDriverUseAdsAfterInfobox;
 
 		$vars = [];
 
@@ -249,6 +250,7 @@ class AdEngine2Service
 			'adEnginePageType' => self::getPageType(),
 
 			// Ad Driver
+			'wgAdDriverUseAdsAfterInfobox' => $wgAdDriverUseAdsAfterInfobox,
 			'wgAdDriverUseCatParam' => array_search($wgLanguageCode, $wgAdPageLevelCategoryLangs),
 			'wgAdDriverUseDartForSlotsBelowTheFold' => $wgAdDriverUseDartForSlotsBelowTheFold === null ? 'hub' : $wgAdDriverUseDartForSlotsBelowTheFold,
 			'wgAdDriverUseRemnantGpt' => $wgAdDriverUseRemnantGpt,

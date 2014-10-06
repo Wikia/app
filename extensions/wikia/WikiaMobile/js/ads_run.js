@@ -1,11 +1,11 @@
 /*global require*/
 require(
 	[
-		'jquery', 'JSMessages', 'wikia.window', 'wikia.log',
+		'jquery', 'JSMessages', 'wikia.window', 'wikia.log', require.optional('wikia.abTest'),
 		'ext.wikia.adEngine.adEngine', 'ext.wikia.adEngine.adConfigMobile',
 		'ext.wikia.adEngine.messageListener'
 	],
-	function ( $, msg, window, log, adEngine, adConfigMobile, messageListener ) {
+	function ( $, msg, window, log, abTest, adEngine, adConfigMobile, messageListener ) {
 		'use strict';
 
 		// Don't show ads for Sony
@@ -22,6 +22,8 @@ require(
 			$firstSection = $( 'h2[id]' ).first(),
 			$footer = $( '#wkMainCntFtr' ),
 			firstSectionTop = ( $firstSection.length && $firstSection.offset().top) || 0,
+			infoboxSelectors = [ 'table[class*=infobox], div[class*=infobox], div[id*=infobox]', 'div.bigTable' ],
+			infoboxAdEnabled = window.wgAdDriverUseAdsAfterInfobox && abTest && abTest.inGroup('WIKIAMOBILE_ADS_AFTER_INFOBOX', 'YES'),
 			showInContent = firstSectionTop > minZerothSectionLength,
 			showPreFooter = doc.body.offsetHeight > minPageLength || firstSectionTop < minZerothSectionLength,
 			adLabel = msg( 'wikiamobile-ad-label' ),
@@ -34,6 +36,11 @@ require(
 			},
 			adSlots = [];
 
+
+		if (!infoboxAdEnabled) {
+			infoboxSelectors = [];
+		}
+
 		messageListener.init();
 
 		// Slots
@@ -43,6 +50,20 @@ require(
 		if ( window.wgArticleId && (showInContent || showPreFooter ) ) {
 			//this can wait to on load as is under the fold
 			$( window ).on( 'load', function () {
+
+				var i, elem;
+
+				for ( i = 0; i < infoboxSelectors.length; i = i + 1 ) {
+					elem = $(infoboxSelectors[i]);
+					if (elem.length) {
+						log( 'Loading slot: ' + mobileInContent, logLevel, logGroup );
+						showInContent = false;
+						elem.after( createSlot( mobileInContent ) );
+						adSlots.push( [mobileInContent] );
+						break;
+					}
+				}
+
 				if ( showInContent ) {
 					log( 'Loading slot: ' + mobileInContent, logLevel, logGroup );
 					$firstSection.before( createSlot( mobileInContent ) );
