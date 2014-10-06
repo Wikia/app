@@ -1,7 +1,7 @@
-<ul class="second dropdown">
+<ul class="dropdown second-level-menu">
 	<? foreach ($nodes as $i2 => $node2): ?>
 		<li class="local-nav-entry second-level-row">
-			<a href="<?= $node2['href']; ?>" data-content="<?= htmlspecialchars( $node2['text'] ); ?>"
+			<a href="<?= $node2['href']; ?>" data-content="<?= $node2['textEscaped']; ?>" <?= $node2['canonicalAttr']; ?>
 			<?if (!empty($node2['children'])): ?>
 				class="has-more"
 			<? endif ?>
@@ -11,12 +11,12 @@
 			<? if ( $node2['children'] ): ?>
 				<?= $app->renderView('LocalNavigation', 'menuLevel3', [
 					'nodes' => $node2['children'],
-					'more' => ['href' => $node2['href'], 'text' => $node2['text']]
+					'more' => ( $node2['href'] === '#' ? null : ['href' => $node2['href'], 'text' => $node2['text']] ),
 				]); ?>
 			<? endif; ?>
 		</li>
 	<? endforeach; ?>
-	<? if ( $more['href'] !== '#' ): ?>
+	<? if ( !empty( $more ) ): ?>
 		<li class="local-nav-entry second-level-row">
 			<a href="<?= $more['href']; ?>" data-content="<?= wfMessage('local-navigation-more-of', $more['text'])->escaped(); ?>">
 				<span>

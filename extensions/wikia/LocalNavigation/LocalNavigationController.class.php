@@ -7,6 +7,7 @@ class LocalNavigationController extends WikiaController {
 
 	public function Index() {
 		Wikia::addAssetsToOutput( 'local_navigation_scss' );
+		Wikia::addAssetsToOutput( 'local_navigation_oasis_scss' );
 		Wikia::addAssetsToOutput( 'local_navigation_js' );
 	}
 
@@ -18,14 +19,14 @@ class LocalNavigationController extends WikiaController {
 	public function menuLevel2() {
 		$nodes = $this->request->getVal('nodes', []);
 		$this->response->setVal('nodes', $nodes);
-		$more = $this->request->getVal('more', ['href' => '#', 'text' => '']);
+		$more = $this->request->getVal('more', null);
 		$this->response->setVal('more', $more);
 	}
 
 	public function menuLevel3() {
 		$nodes = $this->request->getVal('nodes', []);
 		$this->response->setVal('nodes', $nodes);
-		$more = $this->request->getVal('more', ['href' => '#', 'text' => '']);
+		$more = $this->request->getVal('more', null);
 		$this->response->setVal('more', $more);
 	}
 

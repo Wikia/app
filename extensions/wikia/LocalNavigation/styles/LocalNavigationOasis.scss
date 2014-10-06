@@ -1,0 +1,11 @@
+.WikiaPageContentWrapper {
+	padding-top: 0;
+}
+
+.local-navigation {
+	box-sizing: border-box;
+
+	*, *:before, *:after {
+		box-sizing: inherit;
+	}
+}

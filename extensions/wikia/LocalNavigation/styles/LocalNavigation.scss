@@ -3,6 +3,7 @@
 @import 'skins/shared/mixins/clearfix';
 @import 'skins/shared/color';
 @import 'extensions/wikia/Venus/styles/variables';
+@import 'extensions/wikia/Venus/styles/z-index';
 
 .local-navigation-container {
 	@include clearfix;
@@ -10,7 +11,6 @@
 
 .local-navigation {
 	background-color: $color-page;
-	box-sizing: border-box;
 	height: 80px;
 	padding: 0 30px;
 	white-space: nowrap;
@@ -26,6 +26,12 @@
 		&:hover, &.active {
 			text-decoration: none;
 		}
+	}
+
+	.local-nav {
+		display: inline-block;
+		vertical-align: top;
+		white-space: normal;
 	}
 
 	.wordmark-container {
@@ -71,9 +77,10 @@
 	}
 
 	.dropdown {
+		padding-left: 0;
 		position: absolute;
 		visibility: hidden;
-		z-index: 500050;
+		z-index: $local-navigation-dropdown-z-index;
 
 		&.right,
 		&.contribute {
@@ -126,9 +133,10 @@
 		}
 	}
 
-	.first {
+	ul.first-level-menu {
 		height: 60px;
-		padding-top: 20px;
+		padding: 20px 0 0 0;
+		margin: 0;
 
 		> li {
 			display: block;
@@ -158,14 +166,14 @@
 					border-color: $color-page;
 				}
 
-				.second {
+				ul.second-level-menu {
 					visibility: visible;
 				}
 			}
 		}
 	}
 
-	.second {
+	ul.second-level-menu {
 		min-width: -webkit-calc(100% + 1px);
 		min-width: calc(100% + 1px);
 
@@ -212,19 +220,18 @@
 				}
 			}
 
-			.third {
+			ul.third-level-menu {
 				left: auto;
 				right: 100%;
 			}
-
 		}
 
-		.active .third {
+		.active ul.third-level-menu {
 			visibility: visible;
 		}
 	}
 
-	.third {
+	ul.third-level-menu {
 		background: none;
 		display: block;
 		height: 100%;
