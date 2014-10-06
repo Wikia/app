@@ -1,5 +1,5 @@
 define(
-	'wikia.maps.editPOI',
+	'wikia.maps.poi',
 	[
 		'jquery',
 		'wikia.maps.config',
@@ -25,7 +25,7 @@ define(
 				save
 			],
 			deletePOI: [
-				deletePOI
+				deletePoi
 			],
 			selectArticle: [
 				selectArticle
@@ -40,8 +40,8 @@ define(
 			descriptionPlaceholder: $.msg('wikia-interactive-maps-edit-poi-description-placeholder'),
 			categoryPlaceholder: $.msg('wikia-interactive-maps-edit-poi-category-placeholder')
 		},
-		addPOITitle = $.msg('wikia-interactive-maps-edit-poi-header-add-poi'),
-		editPOITitle = $.msg('wikia-interactive-maps-edit-poi-header-edit-poi'),
+		addPoiTitle = $.msg('wikia-interactive-maps-edit-poi-header-add-poi'),
+		editPoiTitle = $.msg('wikia-interactive-maps-edit-poi-header-edit-poi'),
 		modalButtons = [
 			{
 				vars: {
@@ -62,7 +62,7 @@ define(
 				}
 			}
 		],
-		deletePOIButton = {
+		deletePoiButton = {
 			vars: {
 				value: $.msg('wikia-interactive-maps-edit-poi-delete'),
 				data: {
@@ -160,13 +160,13 @@ define(
 	 * @param {bool} isEditMode
 	 */
 	function setModalMode(isEditMode) {
-		var title = addPOITitle,
+		var title = addPoiTitle,
 			buttons = [].concat(modalButtons);
 
 		poiModalMode = poiModalModes.CREATE;
 		if (isEditMode) {
-			title = editPOITitle;
-			buttons.push(deletePOIButton);
+			title = editPoiTitle;
+			buttons.push(deletePoiButton);
 			poiModalMode = poiModalModes.EDIT;
 		}
 
@@ -195,14 +195,14 @@ define(
 	 * @desc calls function chain used to save POI
 	 */
 	function save() {
-		sendData(validatePOIData(utils.serializeForm(modal.$form)));
+		sendData(validatePoiData(utils.serializeForm(modal.$form)));
 	}
 
 	/**
 	 * @desc deletes POI
 	 */
 
-	function deletePOI() {
+	function deletePoi() {
 		$.nirvana.sendRequest({
 			controller: 'WikiaMapsPoi',
 			method: 'deletePoi',
@@ -231,7 +231,7 @@ define(
 	 * @desc validates form data
 	 * @param {object} data - serialized form data
 	 */
-	function validatePOIData(data) {
+	function validatePoiData(data) {
 		var required = ['name', 'poi_category_id'],
 			valid = required.every(function (value) {
 				if (utils.isEmpty(data[value])) {
@@ -419,7 +419,7 @@ define(
 	 * @desc encodes HTML entities in POI data
 	 * @param {object} poiData
 	 */
-	function encodePOIData(poiData) {
+	function encodePoiData(poiData) {
 		poiData.name = utils.escapeHtml(poiData.name);
 		poiData.description = poiData.description ? utils.escapeHtml(poiData.description) : '';
 	}
@@ -448,7 +448,7 @@ define(
 					poiData.link = data.content.link;
 					poiData.photo = data.content.photo;
 
-					encodePOIData(poiData);
+					encodePoiData(poiData);
 					trigger(poiData);
 
 					modal.activate();

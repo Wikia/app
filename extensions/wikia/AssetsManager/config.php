@@ -1925,11 +1925,11 @@ $config['wikia_maps_poi_categories_js'] = [
 	]
 ];
 
-$config['wikia_maps_edit_poi_js'] = [
+$config['wikia_maps_poi_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => ['oasis'],
 	'assets' => [
-		'//extensions/wikia/WikiaMaps/js/WikiaMapsEditPOI.js',
+		'//extensions/wikia/WikiaMaps/js/WikiaMapsPoi.js',
 	]
 ];
 

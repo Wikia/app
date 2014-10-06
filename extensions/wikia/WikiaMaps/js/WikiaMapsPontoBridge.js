@@ -12,19 +12,19 @@ define(
 	// configuration for Wikia Maps modals triggered by Ponto
 	// TODO: maybe we could move all actions config to external file?
 	var actions = {
-			editPOI: {
+			poi: {
 				source: {
-					messages: ['WikiaMapsEditPOI'],
-					scripts: ['wikia_maps_edit_poi_js'],
+					messages: ['WikiaMapsPoi'],
+					scripts: ['wikia_maps_poi_js'],
 					styles: ['extensions/wikia/WikiaMaps/css/WikiaMapsModal.scss'],
 					mustache: [
-						'extensions/wikia/WikiaMaps/templates/WikiaMapsEditPOI.mustache',
+						'extensions/wikia/WikiaMaps/templates/WikiaMapsPoi.mustache',
 						'extensions/wikia/WikiaMaps/templates/WikiaMapsArticleSuggestion.mustache'
 					]
 				},
-				cacheKey: 'wikia_maps_edit_poi',
-				module: 'wikia.maps.editPOI',
-				origin: 'wikia-maps-edit-poi'
+				cacheKey: 'wikia_maps_poi',
+				module: 'wikia.maps.poi',
+				origin: 'wikia-maps-poi'
 			},
 			poiCategories: {
 				source: {

@@ -62,7 +62,7 @@ JSMessages::registerPackage( 'WikiaMapsPoiCategories', [
 	'wikia-interactive-maps-poi-categories-*'
 ] );
 
-JSMessages::registerPackage( 'WikiaMapsEditPOI', [
+JSMessages::registerPackage( 'WikiaMapsPoi', [
 	'wikia-interactive-maps-edit-poi-*'
 ] );
 
