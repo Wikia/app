@@ -12,11 +12,10 @@
 .local-navigation {
 	background-color: $color-page;
 	height: 80px;
-	padding: 0 30px;
 	white-space: nowrap;
 	width: 100%;
 
-	*, *:before, *:after {
+	*, *::before, *::after {
 		box-sizing: inherit;
 	}
 
@@ -37,7 +36,7 @@
 	.wordmark-container {
 		display: inline-block;
 		height: 100%;
-		padding-right: 40px;
+		padding: 0 40px 0 30px;
 		vertical-align: middle;
 
 		> span {
@@ -77,7 +76,6 @@
 	}
 
 	.dropdown {
-		padding-left: 0;
 		position: absolute;
 		visibility: hidden;
 		z-index: $local-navigation-dropdown-z-index;
@@ -88,7 +86,7 @@
 		}
 
 		&.right li {
-			a, a:after {
+			a, a::after {
 				text-align: right;
 			}
 
@@ -119,7 +117,7 @@
 				font-weight: bold;
 			}
 
-			&:after {
+			&::after {
 				content: attr(data-content);
 				font-weight: bold;
 				visibility: hidden;
@@ -133,10 +131,10 @@
 		}
 	}
 
-	ul.first-level-menu {
+	.first-level-menu {
 		height: 60px;
-		padding: 20px 0 0 0;
 		margin: 0;
+		padding: 20px 0 0;
 
 		> li {
 			display: block;
@@ -173,7 +171,7 @@
 		}
 	}
 
-	ul.second-level-menu {
+	.second-level-menu {
 		min-width: -webkit-calc(100% + 1px);
 		min-width: calc(100% + 1px);
 
@@ -231,7 +229,7 @@
 		}
 	}
 
-	ul.third-level-menu {
+	.third-level-menu {
 		background: none;
 		display: block;
 		height: 100%;
@@ -292,9 +290,10 @@
 
 	.contribute-container {
 		color: $color-button-text;
-		float: right;
+		display: inline-block;
 		padding-top: 20px;
-		vertical-align: middle;
+		position: absolute;
+		right: 30px;
 	}
 
 	.contribute-inner-container {
@@ -343,10 +342,8 @@
 
 @media #{$small-only} {
 	.local-navigation {
-		padding: 0 0 0 24px;
-
 		.wordmark-container {
-			padding-right: 30px;
+			padding: 0 30px 0 24px;
 		}
 
 		.contribute-container {
@@ -357,6 +354,12 @@
 
 @media #{$large-up} {
 	.local-navigation {
-		padding: 0 53px 0 32px;
+		.wordmark-container {
+			padding-left: 32px;
+		}
+
+		.contribute-container {
+			right: 53px;
+		}
 	}
 }
