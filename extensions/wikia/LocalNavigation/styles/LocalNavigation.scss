@@ -210,10 +210,10 @@
 			}
 			span::after {
 				@include arrow(4px, rgba($color-button-text, .5), 'right');
+				content: ' ';
+				float: right;
 				margin: 1px -20px 0 0;
 				position: static;
-				float: right;
-				content: ' ';
 			}
 			&.active span::after {
 				border-left-color: rgba($color-button-text, .8);
@@ -228,8 +228,8 @@
 				}
 				span::after {
 					@include arrow(4px, rgba($color-button-text, .5), 'left');
-					margin: 1px 0 0 -20px;
 					float: left;
+					margin: 1px 0 0 -20px;
 				}
 				&.active span::after {
 					border-right-color: rgba($color-button-text, .8);
@@ -273,9 +273,9 @@
 
 				background: rgba($third-level-tint, .2);
 				border-color: $color-buttons;
-				border-style: solid;
-				border-right-width: 5px;
 				border-left-width: 5px;
+				border-right-width: 5px;
+				border-style: solid;
 				padding: 10px;
 
 				&:hover {
