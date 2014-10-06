@@ -82,7 +82,8 @@ var WallNotifications = $.createClass(Object, {
 	},
 
 	updateCounts: function() {
-		var callback = this.proxy(function(data) {
+		var data,
+			callback = this.proxy(function(data) {
 
 			if (data.status != true || data.html == '') {
 				return;
@@ -113,10 +114,13 @@ var WallNotifications = $.createClass(Object, {
 		if ( this.updateInProgress == false ) {
 			this.updateInProgress = true;
 
+			data = this.getUrlParams();
+
 			$.nirvana.sendRequest({
 				controller: 'WallNotificationsExternalController',
 				method: 'getUpdateCounts',
 				format: 'json',
+				data: data,
 				callback: callback
 			});
 		}
@@ -287,15 +291,19 @@ var WallNotifications = $.createClass(Object, {
 	},
 
 	updateWikiFetch: function(wikiId) {
-		var isCrossWiki = (wikiId == wgCityId) ? '0' : '1';
-		$.nirvana.sendRequest({
-			controller: 'WallNotificationsExternalController',
-			method: 'getUpdateWiki',
-			data: {
+		var isCrossWiki = (wikiId == wgCityId) ? '0' : '1',
+			data = {
 				username: wgTitle,
 				wikiId: wikiId,
 				isCrossWiki: isCrossWiki
-			},
+			};
+
+		$.extend(data, this.getUrlParams(data));
+
+		$.nirvana.sendRequest({
+			controller: 'WallNotificationsExternalController',
+			method: 'getUpdateWiki',
+			data: data,
 			callback: this.proxy(function(data) {
 				if(data.status != true || data.html == '') return;
 				this.updateWikiHtml(wikiId, data);
@@ -364,6 +372,24 @@ var WallNotifications = $.createClass(Object, {
 
 	proxy: function( func ) {
 		return $.proxy( func, this );
+	},
+
+	getUrlParams: function() {
+		var data = {},
+			qs = Wikia.Querystring(),
+			lang, skin;
+
+		skin = qs.getVal( 'useskin' );
+		if( skin ) {
+			data.useskin = skin;
+		}
+
+		lang = qs.getVal( 'uselang' );
+		if( lang ) {
+			data.uselang = lang;
+		}
+
+		return data;
 	}
 });
 
