@@ -192,7 +192,7 @@ class WikiaInteractiveMapsBaseController extends WikiaController {
 	 * @return bool
 	 */
 	public function canUserDelete() {
-		return $this->wg->User->isAllowed('canremovemap');
+		return $this->wg->User->isAllowed( 'canremovemap' );
 	}
 
 	/**
@@ -203,7 +203,7 @@ class WikiaInteractiveMapsBaseController extends WikiaController {
 	 * @return bool
 	 */
 	public function isUserMapCreator( $mapId ) {
-		$mapData = $this->getModel()->getMapByIdFromApi($mapId);
+		$mapData = $this->getModel()->getMapByIdFromApi( $mapId );
 		return $this->wg->User->getName() === $mapData->created_by;
 	}
 
