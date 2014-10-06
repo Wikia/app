@@ -44,7 +44,7 @@
 		attachMenuAim();
 	}
 
-	function recalculateSwap() {
+	function recalculateDropdownDirection() {
 		var i, arrayLength = localNavCache.length;
 		windowWidth = $window.width();
 
@@ -63,14 +63,14 @@
 
 
 	function openMenu() {
-		$(this).addClass( 'active' );
+		$(this).addClass('active');
 	}
 
 	function closeMenu() {
-		$(this).removeClass( 'active' );
+		$(this).removeClass('active');
 	}
 
-	function openSubmenu( row ) {
+	function openSubmenu(row) {
 		$(row).addClass('active');
 	}
 
@@ -86,15 +86,13 @@
 		event.preventDefault();
 		event.stopPropagation();
 
-		if (!$target.hasClass('active') || $target.find('a').first().attr('href') !== '#') {
-			if (!$target.hasClass('active')) {
-				if ($openedMenu !== undefined) {
-					$openedMenu.removeClass('active');
-				}
-				$target.addClass('active');
+		if (!$target.hasClass('active')) {
+			if ($openedMenu !== undefined) {
+				$openedMenu.removeClass('active');
 			}
+			$target.addClass('active');
 		}
-		$('body').click(handleCloseMenuClick);
+		$('body').one('click', handleCloseMenuClick);
 		$openedMenu = $target;
 	}
 
@@ -105,7 +103,7 @@
 
 		if ($target.closest($localNav).length === 0 && $openedMenu !== undefined) {
 			$openedMenu.removeClass('active');
-			$('body').unbind('click');
+			$('body').unbind('click', handleCloseMenuClick);
 			$openedMenu = undefined;
 		}
 	}
@@ -134,10 +132,6 @@
 	function attachMenuAim() {
 		var i;
 
-		function alwaysReturnTrueFunc() {
-			return true;
-		}
-
 		for ( i = 0; i < $localNavSecondLevel.length; i++ ) {
 			window.menuAim(
 				$localNavSecondLevel[i],{
@@ -150,12 +144,14 @@
 		}
 	}
 
+	function alwaysReturnTrueFunc() {
+		return true;
+	}
+
 	if (!window.Wikia.isTouchScreen()) {
 		window.delayedHover(
 			$localNavFirstLevel,
 			{
-				checkInterval: 100,
-				maxActivationDistance: 20,
 				onActivate: openMenu,
 				onDeactivate: closeMenu,
 				activateOnClick: false
@@ -166,7 +162,7 @@
 		$localNavSecondLevel.find('.second-level-row').click(handleSubmenuClick);
 	}
 
-	$window.on( 'resize', $.debounce( 300, recalculateSwap ) );
+	$window.on('resize', $.debounce(300, recalculateDropdownDirection));
 
 	init();
 })(jQuery);
