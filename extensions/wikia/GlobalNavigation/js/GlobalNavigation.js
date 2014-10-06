@@ -2,7 +2,7 @@ $(function() {
 	'use strict';
 
 	// fix for anchored elements
-	var fromTop = $('#globalNavigation').offset();
+	var fromTop = $('#globalNavigation').height() + 10; /* 10px of additional padding */
 
 	/**
 	 * Check a href for an anchor. If exists, and in document, scroll to it.
