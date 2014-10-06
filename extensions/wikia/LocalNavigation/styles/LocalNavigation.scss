@@ -40,7 +40,7 @@
 		text-transform: uppercase;
 		vertical-align: middle;
 
-		&:after {
+		&::after {
 			border: 5px solid;
 			border-top-color: $color-button-text;
 			color: transparent;
@@ -65,7 +65,7 @@
 			right: 0;
 
 			li {
-				a, a:after {
+				a, a::after {
 					text-align: right;
 				}
 				a span {
@@ -85,7 +85,6 @@
 				color: $color-button-text;
 				display: table-cell;
 				padding: 20px;
-				text-decoration: none;
 				vertical-align: middle;
 				white-space: nowrap;
 				width: 100%;
@@ -95,7 +94,7 @@
 					font-weight: bold;
 				}
 
-				&:after {
+				&::after {
 					content: attr(data-content);
 					font-weight: bold;
 					visibility: hidden;
@@ -204,7 +203,7 @@
 		min-width: -webkit-calc(100% + 1px);
 		min-width: calc(100% + 1px);
 
-		a.has-more {
+		.has-more {
 			padding-right: 40px;
 			span {
 				left: 20px;
@@ -217,13 +216,12 @@
 				float: right;
 				content: ' ';
 			}
-			&:hover span::after,
 			&.active span::after {
 				border-left-color: rgba($color-button-text, .8);
 			}
 		}
 		&.right {
-			a.has-more {
+			.has-more {
 				padding-left: 40px;
 				span {
 					left: 40px;
@@ -234,7 +232,6 @@
 					margin: 1px 0 0 -20px;
 					float: left;
 				}
-				&:hover span::after,
 				&.active span::after {
 					border-right-color: rgba($color-button-text, .8);
 				}
@@ -273,34 +270,18 @@
 			}
 		}
 		a {
-			padding: 10px;
+			$third-level-tint: if(lightness($color-buttons) < 50, #fff, #000);
 
+			background: rgba($third-level-tint, .2);
 			border-color: $color-buttons;
 			border-style: solid;
 			border-right-width: 5px;
 			border-left-width: 5px;
+			padding: 10px;
 
-			&:hover,
-			&.active {
+			&:hover {
+				background: rgba($third-level-tint, .4);
 				font-weight: normal;
-			}
-		}
-		@if lightness($color-buttons) < 50 {
-			a {
-				background: rgba(#fff, .2);
-				&:hover,
-				&.active {
-					background: rgba(#fff, .4);
-				}
-			}
-		}
-	@else {
-			a {
-				background: rgba(#000, .2);
-				&:hover,
-				&.active {
-					background: rgba(#000, .4);
-				}
 			}
 		}
 	}

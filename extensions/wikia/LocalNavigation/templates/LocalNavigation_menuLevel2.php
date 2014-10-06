@@ -16,11 +16,13 @@
 			<? endif; ?>
 		</li>
 	<? endforeach; ?>
-	<? if ( !empty( $more ) ): ?>
+	<? if ( !empty( $more ) ):
+			$label = wfMessage('local-navigation-more-of', $more['text']);
+		?>
 		<li class="local-nav-entry second-level-row">
-			<a href="<?= $more['href']; ?>" data-content="<?= wfMessage('local-navigation-more-of', $more['text'])->escaped(); ?>">
+			<a href="<?= $more['href']; ?>" data-content="<?= $label->escaped(); ?>">
 				<span>
-					<?= wfMessage('local-navigation-more-of', $more['text'])->parse(); ?>
+					<?= $label->parse(); ?>
 				</span>
 			</a>
 		</li>

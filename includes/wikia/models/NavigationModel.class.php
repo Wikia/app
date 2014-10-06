@@ -257,7 +257,7 @@ class NavigationModel extends WikiaModel {
 		$node = $this->menuNodes[$index];
 		$returnValue = [
 			'text' => $node['text'],
-			'textEscaped' => htmlentities( $node['text'] ),
+			'textEscaped' => htmlspecialchars( $node['text'], ENT_QUOTES | ENT_HTML5, 'UTF-8' ),
 			'href' => $node['href'],
 		];
 		if ( !empty( $node['specialAttr'] ) ) {
