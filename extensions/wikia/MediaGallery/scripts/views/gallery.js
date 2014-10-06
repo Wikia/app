@@ -34,6 +34,10 @@ define('mediaGallery.views.gallery', [
 		if (this.model.media.length > this.origVisibleCount) {
 			this.renderToggler();
 		}
+
+		this.track({
+			action: tracker.ACTIONS.IMPRESSION
+		});
 	};
 
 	/**
@@ -78,7 +82,7 @@ define('mediaGallery.views.gallery', [
 		this.$wrapper.on('click', '.media > a', function () {
 			var index = $(this).parent().index();
 			self.track({
-				label: 'gallery-tiem',
+				label: 'gallery-item',
 				value: index
 			});
 		});
@@ -221,13 +225,13 @@ define('mediaGallery.views.gallery', [
 		}, 500);
 	};
 
-	Gallery.prototype.track = function () {
-		return tracker.buildTrackingFunction({
-			category: 'media-gallery',
-			trackingMethod: 'both',
-			action: tracker.ACTIONS.CLICK
-		});
-	};
+	Gallery.prototype.track = tracker.buildTrackingFunction({
+		category: 'media-gallery',
+		label: 'gallery',
+		trackingMethod: 'both',
+		action: tracker.ACTIONS.CLICK,
+		value: 0
+	});
 
 	return Gallery;
 });
