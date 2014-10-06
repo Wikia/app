@@ -199,9 +199,8 @@
 	}
 
 	.second-level-menu {
+		@include calc(min-width, '100% + 1px');
 		display: table;
-		min-width: -webkit-calc(100% + 1px);
-		min-width: calc(100% + 1px);
 
 		.has-more {
 			padding-right: 40px;
