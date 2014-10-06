@@ -78,7 +78,7 @@ JSMessages::registerPackage( 'WikiaInteractiveMapsEmbedMapCode', [
 $wgAvailableRights[] = 'canremovemap';
 
 // Permissions
-// canremove -- give it to users who can remove maps or maps' items (i.e. POIs, POIs categories)
+// canremove -- give it to users who can remove maps
 $wgGroupPermissions['*']['canremovemap'] = false;
 $wgGroupPermissions['sysop']['canremovemap'] = true;
 $wgGroupPermissions['staff']['canremovemap'] = true;
