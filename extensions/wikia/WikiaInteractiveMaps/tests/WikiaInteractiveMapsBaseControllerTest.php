@@ -69,6 +69,61 @@ class WikiaInteractiveMapsBaseControllerTest extends WikiaBaseTest {
 	}
 
 	/**
+	 * @dataProvider isUserMapCreatorDataProvider
+	 */
+	public function testIsUserMapCreator( $testDescription, $mapIdMock, $mapDataMock, $userNameMock, $expected ) {
+		$mapsModelMock = $this->getMockBuilder( 'WikiaMaps' )
+			->disableOriginalConstructor()
+			->setMethods( [ 'getMapByIdFromApi' ] )
+			->getMock();
+
+		$mapsModelMock->expects( $this->once() )
+			->method( 'getMapByIdFromApi' )
+			->willReturn( $mapDataMock );
+
+		$userMock = $this->getMockBuilder( 'User' )
+			->disableOriginalConstructor()
+			->setMethods( [ 'getName' ] )
+			->getMock();
+
+		$userMock->expects( $this->once() )
+			->method( 'getName' )
+			->willReturn( $userNameMock );
+
+		$mapsBaseControllerMock = $this->getMockBuilder('WikiaInteractiveMapsBaseController')
+			->disableOriginalConstructor()
+			->setMethods( [ 'getModel' ] )
+			->getMock();
+
+		$mapsBaseControllerMock->expects( $this->once() )
+			->method( 'getModel' )
+			->willReturn( $mapsModelMock );
+
+		$mapsBaseControllerMock->wg->User = $userMock;
+
+		$this->assertEquals( $mapsBaseControllerMock->isUserMapCreator( $mapIdMock ), $expected, $testDescription );
+	}
+
+	public function isUserMapCreatorDataProvider() {
+		return [
+			[
+				'a user IS map creator',
+				1,
+				(object) [ 'id' => 1, 'created_by' => 'Test User' ],
+				'Test User',
+				true
+			],
+			[
+				'a user IS NOT map creator',
+				1,
+				(object) [ 'id' => 1, 'created_by' => 'Test User' ],
+				'Different Test User',
+				false
+			]
+		];
+	}
+
+	/**
 	 * Helper method returns different WikiaUploadStashFile mocks
 	 *
 	 * @param string $version
