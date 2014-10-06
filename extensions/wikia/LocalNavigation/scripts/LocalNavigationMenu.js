@@ -1,8 +1,8 @@
 (function($) {
 	'use strict';
 
-	var $localNavFirstLevel, $localNavSecondLevel, $localNav, $localNavStart, $window,
-		windowWidth, $openedMenu, $openedSubmenu, localNavCache = [], alwaysReturnTrueFunc;
+	var $localNavFirstLevel, $localNavSecondLevel, $localNav, $localNavStart, $window, windowWidth,
+		$openedMenu, $openedSubmenu, localNavCache = [], alwaysReturnTrueFunc, menuAimCache = [];
 
 	$localNav = $('#localNavigation');
 	$localNavStart = $localNav.find('.first-level-menu');
@@ -31,7 +31,7 @@
 
 			localNavCache.push({
 				width: dropdownOffset,
-				menuElement: self
+				menuElement: this
 			});
 
 			if ( dropdownOffset > windowWidth ) {
@@ -48,15 +48,20 @@
 		var i, arrayLength = localNavCache.length;
 		windowWidth = $window.width();
 
+		resetMenuAim();
+
 		if ( arrayLength ) {
 			for ( i = 0; i < arrayLength; i++ ) {
 				if ( localNavCache[i].width > windowWidth ) {
-					localNavCache[i].menuElement.addClass('right');
+					localNavCache[i].menuElement.classList.add('right');
 				} else {
-					localNavCache[i].menuElement.removeClass('right');
+					localNavCache[i].menuElement.classList.remove('right');
 				}
+
+				attachMenuAimElement(localNavCache[i].menuElement);
 			}
 		} else {
+			$localNavSecondLevel = $localNav.find('.second-level-menu');
 			init();
 		}
 	}
@@ -126,27 +131,38 @@
 	function attachMenuAim() {
 		var i;
 
-		for ( i = 0; i < $localNavSecondLevel.length; i++ ) {
-			window.menuAim(
-				$localNavSecondLevel[i],{
-					activate: openSubmenu,
-					deactivate: closeSubmenu,
-					rowSelector: '.second-level-row',
-					exitMenu: alwaysReturnTrueFunc,
-					submenuDirection: getMenuAimDirection($localNavSecondLevel[i])
-				}
-			);
+		for (i = 0; i < $localNavSecondLevel.length; i++) {
+			attachMenuAimElement($localNavSecondLevel[i]);
 		}
 	}
 
-	function getMenuAimDirection($localNavSecondLevel) {
-		var dropdownDirection = 'right';
+	function attachMenuAimElement(element) {
+		var options = getMenuAimOptions(element);
 
-		if ($localNavSecondLevel.classList.contains('right')) {
-			dropdownDirection = 'left';
+		menuAimCache.push(window.menuAim(element, options));
+	}
+
+	function getMenuAimOptions(element) {
+		var menuAimOptions = {
+			activate: openSubmenu,
+			deactivate: closeSubmenu,
+			rowSelector: '.second-level-row',
+			exitMenu: alwaysReturnTrueFunc
+		};
+
+		if (element.classList.contains('right')) {
+			$.extend(menuAimOptions, {submenuDirection: 'left'});
 		}
 
-		return dropdownDirection;
+		return menuAimOptions;
+	}
+
+	function resetMenuAim() {
+		var i;
+
+		for (i = 0; i < menuAimCache.length; i++) {
+			menuAimCache[i].reset();
+		}
 	}
 
 	alwaysReturnTrueFunc = function() {
