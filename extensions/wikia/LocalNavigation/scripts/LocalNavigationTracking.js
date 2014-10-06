@@ -44,11 +44,11 @@
 					label = 'on-the-wiki-videos';
 					break;
 			}
-		} else if ($element.closest('.third').length === 1) {
+		} else if ($element.closest('.third-level-menu').length === 1) {
 			label = 'custom-level-3';
-		} else if ($element.closest('.second').length === 1) {
+		} else if ($element.closest('.second-level-menu').length === 1) {
 			label = 'custom-level-2';
-		} else if ($element.closest('.first').length === 1) {
+		} else if ($element.closest('.first-level-menu').length === 1) {
 			label = 'custom-level-1';
 		}
 
