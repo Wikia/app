@@ -1947,7 +1947,7 @@ $config['wikia_maps_undelete_map_js'] = [
 	'skin' => ['oasis'],
 	'assets' => [
 		'//extensions/wikia/WikiaMaps/js/WikiaMapsUtils.js',
-		'//extensions/wikia/WikiaMaps/js/WikiaMapsUnDeleteMap.js',
+		'//extensions/wikia/WikiaMaps/js/WikiaMapsUndeleteMap.js',
 	]
 ];
 

@@ -1,5 +1,5 @@
 define(
-	'wikia.maps.unDeleteMap',
+	'wikia.maps.undeleteMap',
 	[
 		'jquery',
 		'wikia.querystring',

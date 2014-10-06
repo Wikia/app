@@ -26,9 +26,9 @@ require(
 				event.preventDefault();
 				utils.triggerAction(utils.getActionConfig('deleteMap', config));
 			})
-			.on('click', '#unDeleteMap', function (event) {
+			.on('click', '#undeleteMap', function (event) {
 				event.preventDefault();
-				utils.triggerAction(utils.getActionConfig('unDeleteMap', config));
+				utils.triggerAction(utils.getActionConfig('undeleteMap', config));
 			});
 
 		if (targetIframe) {

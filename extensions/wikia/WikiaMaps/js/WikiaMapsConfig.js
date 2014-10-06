@@ -37,8 +37,8 @@ define('wikia.maps.config', [], function () {
 			origin: 'wikia-maps-map-delete-map',
 			cacheKey: 'wikia_maps_delete_map'
 		},
-		unDeleteMap: {
-			module: 'wikia.maps.unDeleteMap',
+		undeleteMap: {
+			module: 'wikia.maps.undeleteMap',
 			source: {
 				scripts: ['wikia_maps_undelete_map_js']
 			},

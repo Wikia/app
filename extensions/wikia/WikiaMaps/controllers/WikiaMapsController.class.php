@@ -211,9 +211,9 @@ class WikiaMapsController extends WikiaSpecialPageController {
 			'dropdown' => [],
 		];
 		if ( $deleted ) {
-			$actionButtonArray[ 'dropdown' ][ 'unDeleteMap' ] = [
+			$actionButtonArray[ 'dropdown' ][ 'undeleteMap' ] = [
 				'text' => wfMessage( 'wikia-interactive-maps-undelete-map' )->escaped(),
-				'id' => 'unDeleteMap'
+				'id' => 'undeleteMap'
 			];
 		} else {
 			$actionButtonArray[ 'dropdown' ][ 'deleteMap' ] = [
