@@ -4,6 +4,8 @@ require([
 ], function (Gallery, sloth) {
 	'use strict';
 
+	// just a test - liz
+
 	/**
 	 * Define primary gallery container element
 	 * @constructor
