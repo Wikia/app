@@ -76,12 +76,14 @@ $messages['br'] = array(
 
 /** Catalan (català)
  * @author Marcmpujol
+ * @author Unapersona
  */
 $messages['ca'] = array(
 	'sharedhelp-desc' => "Pren pàgines de [[w:Help:Contents|Community Central]] i incereix-los en l'espai de nom {{ns:help}} en aquest wiki", # Fuzzy
 	'sharedhelp-autotalkcreate-summary' => 'Pàgina de discussió creada automàticament',
 	'sharedhelp-searchprofile' => "Pàgines d'ajuda",
 	'sharedhelp-searchprofile-tooltip' => "Cercar pàgines d'ajuda",
+	'shared_help_was_redirect' => 'Aquesta pàgina és una redirecció cap a $1',
 );
 
 /** Czech (čeština)
@@ -152,10 +154,10 @@ $messages['fi'] = array(
 	'sharedhelp-autotalkcreate-summary' => 'Keskustelusivu luotiin automaattisesti',
 	'sharedhelp-searchprofile' => 'Ohjesivut',
 	'sharedhelp-searchprofile-tooltip' => 'Etsi ohjesivuja',
-	'shared_help_info' => 'Kysymyksiä tai huolia? Apua löytyy [[w:fi:|Yhteisöwikistä]].', # Fuzzy
-	'shared_help_edit_info' => "Tämän laatikon ohjeteksti säilytetään $2n sivulla [[w:fi:Ohje:$1|Ohje:$1]]. Katso [[Ohje:Jaetut ohjeet]] saadaksesi lisätietoa.
+	'shared_help_info' => 'Kysymyksiä tai huolia? Apua löytyy [[w:c:yhteiso:Toiminnot:Forum|Yhteisöwikin foorumeista]].', # Fuzzy
+	'shared_help_edit_info' => "Tämän laatikon ohjeteksti säilytetään $2n sivulla [[w:c:yhteiso:Ohje:$1|Ohje:$1]]. Katso [[Ohje:Jaetut ohjeet]] saadaksesi lisätietoa.
 
-'''Kaikkia wikioita''' koskevat muutokset tulee tehdä $2n kappaleelle. [[w:fi:Keskustelu_ohjeesta:$1|Ehdota muutoksista täällä]].
+'''Kaikkia wikioita''' koskevat muutokset tulee tehdä $2n kappaleelle. [[w:c:yhteiso:Keskustelu_ohjeesta:$1|Ehdota muutoksista täällä]].
 
 Mikäli haluat lisätä vain sivustoa {{SITENAME}} koskevia ohjeita liittyen esimerkiksi käyttöön, käytäntöön tai tyyliin, voit muokata tätä sivua. Tähän laatikkoon lisätty teksti näkyy jaetun ohjesivun sisällön yläpuolella.", # Fuzzy
 	'shared_help_search_info' => 'Mikäli haluat hakea neuvoja muokkaamiseen, siirry [http://yhteiso.wikia.com/wiki/Special:Search?search=$1 Yhteisöwikiin]',
@@ -239,11 +241,13 @@ $messages['it'] = array(
 );
 
 /** Japanese (日本語)
+ * @author Plover-Y
  * @author Tommy6
  */
 $messages['ja'] = array(
 	'sharedhelp-desc' => '[[w:Help:Contents|Community Central]] のページをこのウィキの {{ns:help}} 名前空間に挿入する。',
 	'sharedhelp-autotalkcreate-summary' => 'ノートページの自動作成',
+	'sharedhelp-searchprofile' => 'ヘルプページ',
 );
 
 /** Kannada (ಕನ್ನಡ)
@@ -363,6 +367,7 @@ $messages['oc'] = array(
 
 /** Polish (polski)
  * @author Chrumps
+ * @author NexGaming
  * @author Pio387
  * @author Sovq
  * @author Sp5uhe
@@ -372,7 +377,7 @@ $messages['pl'] = array(
 	'sharedhelp-autotalkcreate-summary' => 'Strona dyskusji utworzona automatycznie',
 	'sharedhelp-searchprofile' => 'Strony pomocy',
 	'sharedhelp-searchprofile-tooltip' => 'Przeszukaj strony pomocy',
-	'shared_help_info' => 'Pytania? Zadaj je na [[w:c:spolecznosc:Specjalna:Forum|Forum Społeczności]].', # Fuzzy
+	'shared_help_info' => 'Masz jakieś pytania? Zadaj je na [[w:c:spolecznosc:Specjalna:Forum|Forum Społeczności]].', # Fuzzy
 	'shared_help_search_info' => 'Jeżeli szukasz pomocy z edytowaniem, odwiedź [http://pl.c.wikia.com/wiki/Special:Search?search=$1 Centrum Społeczności]',
 	'shared_help_was_redirect' => 'Ta strona jest przekierowaniem do $1',
 );

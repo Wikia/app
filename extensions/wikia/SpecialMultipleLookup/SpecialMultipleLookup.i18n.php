@@ -203,12 +203,33 @@ $messages['bs'] = array(
 /** Catalan (català)
  * @author Light of Cosmos
  * @author SMP
+ * @author Unapersona
  */
 $messages['ca'] = array(
+	'specialmultiplelookup-desc' => "Proporciona informació de l'usuari en múltiples wikis.",
 	'multilookup' => 'Revisió múltiple',
 	'multilookupstitle' => 'Revisió múltiple',
 	'multilookupselectuser' => 'Cerca de comptes amb la mateixa IP entre múltiples wikis',
+	'multilookupgo' => 'Vés-hi',
+	'multilookupnotspecify' => 'No heu especificat una adreça IP.',
+	'multilookupnext' => 'Següent',
+	'multilookupprevious' => 'Anterior',
+	'multilookupnbrresult' => 'Nombre de resultats:',
+	'multilookupinvalidresults' => 'Resultats invàlids!',
+	'multilookupnoresultfound' => "No s'han trobat resultats.",
+	'multilookupwiki' => 'Wiki',
+	'multilookuplink' => 'Enllaç de les contribucions',
+	'multilookupdetails' => 'Mostra detalls',
+	'multilookuplistwikiainfo' => "Llista de wikis amb pàgines editades pels usuaris amb l'adreça IP <b>$1</b>",
+	'multilookuplastedit' => "Última edició des d'aquesta adreça IP:",
+	'multilookupwikidbname' => 'Nom de DB',
+	'multilookupwikiurl' => 'URL',
+	'multilookupwikititle' => 'Títol',
+	'multilookupwikioptions' => 'Opcions',
+	'multilookuplastedithdr' => 'Última edició',
+	'multilookuprecordspager' => "S'estan mostrant '''$1''' per '''$2''' de '''$3''' resultats.",
 	'right-multilookup' => "Cercar informació d'usuaris en múltiples wikis",
+	'action-multilookup' => "Cercar informació d'usuaris en múltiples wikis",
 );
 
 /** Chechen (нохчийн)
@@ -349,14 +370,18 @@ $messages['eu'] = array(
 );
 
 /** Persian (فارسی)
+ * @author Alirezaaa
  * @author Reza1615
  */
 $messages['fa'] = array(
 	'multilookupgo' => 'برو',
+	'multilookupnext' => 'بعدی',
+	'multilookupprevious' => 'قبلی',
 	'multilookupwiki' => 'ویکی',
 	'multilookupwikiurl' => 'نشانی اینترنتی',
 	'multilookupwikititle' => 'عنوان',
 	'multilookupwikioptions' => 'گزینه',
+	'multilookuplastedithdr' => 'آخرین ویرایش',
 );
 
 /** Finnish (suomi)
@@ -550,6 +575,16 @@ $messages['kn'] = array(
 	'multilookupgo' => 'ಹೋಗು',
 	'multilookupnext' => 'ನಂತರ',
 	'multilookupwiki' => 'ವಿಕಿ',
+);
+
+/** Korean (한국어)
+ * @author Miri-Nae
+ */
+$messages['ko'] = array(
+	'multilookupwikiurl' => 'URL',
+	'multilookupwikititle' => '제목',
+	'multilookupwikioptions' => '설정',
+	'multilookuplastedithdr' => '마지막 편집',
 );
 
 /** Kurdish (Latin script) (Kurdî (latînî)‎)

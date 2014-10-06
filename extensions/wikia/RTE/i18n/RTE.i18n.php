@@ -162,6 +162,7 @@ $messages['ca'] = array(
  * @author Умар
  */
 $messages['ce'] = array(
+	'rte-edgecase-redirect' => 'дӀасахьажор',
 	'prefs-rte' => 'Визуальни йозан тадар (RTE)',
 );
 
@@ -422,6 +423,13 @@ $messages['kn'] = array(
 	'rte-edgecase-redirect' => 'ಪುನರ್ನಿರ್ದೇಶನಗಳು',
 );
 
+/** Korean (한국어)
+ * @author Miri-Nae
+ */
+$messages['ko'] = array(
+	'rte-edgecase-redirect' => '넘겨주기',
+);
+
 /** Colognian (Ripoarisch)
  * @author Purodha
  */
@@ -541,7 +549,7 @@ $messages['nl'] = array(
 	'enablerichtexteditor' => 'Uitgebreide tekstverwerker inschakelen (in aanvulling op broncodemodus)',
 	'rte-enablerichtexteditormessage' => 'De uitgebreide tekstverwerker is ingeschakeld.',
 	'rte-first-run-notice' => 'We hebben een aantal verbeteringen gemaakt aan de tekstverwerker. [http://www.wikia.com/wiki/User_blog:Kirkburn/Rich_text_editor_upgrade_news Lees ook de aankondiging].',
-	'prefs-rte' => 'Uitgebreide tekstbewerker',
+	'prefs-rte' => 'Uitgebreide tekstverwerker',
 );
 
 /** Nederlands (informeel)‎ (Nederlands (informeel)‎)
@@ -834,8 +842,16 @@ $messages['uk'] = array(
  * @author Baonguyen21022003
  */
 $messages['vi'] = array(
+	'rte-desc' => 'CKeditor tích hợp cho MediaWiki',
+	'rte-no-js-fallback' => 'Trình soạn thảo văn bản định dạng không hoạt động với JavaScript bị tắt. Xin vui lòng hoặc kích hoạt nó trong tuỳ chọn trình duyệt của bạn, hoặc truy cập [[Special:Preferences|tùy chọn cá nhân]] của bạn để chuyển sang dạng sửa đổi cũ của MediaWiki',
 	'rte-edgecase-info-title' => 'Chế độ nguồn yêu cầu',
 	'rte-edgecase-info' => 'Chỉnh sửa nội dung bằng chế độ trực quan đã bị vô hiệu hóa do trang chứa nhiều mã phức tạp.',
+	'rte-edgecase-comment' => 'Ý kiến về HTML',
+	'rte-edgecase-triplecurls' => 'Tham số bản mẫu',
+	'rte-edgecase-nowysiwyg' => 'lệnh "không WYSIWYG"',
+	'rte-edgecase-redirect' => 'đổi hướng',
+	'rte-enablerichtexteditormessage' => 'Trình Soạn Thảo Văn Bản đã được kích hoạt!',
+	'rte-first-run-notice' => 'Chúng tôi đã thực hiện một số cải tiến để trình biên tập. Để tìm hiểu thêm, xin vui lòng đọc [http://www.wikia.com/wiki/User_blog:Kirkburn/Rich_text_editor_upgrade_news thông báo] để biết thêm chi tiết.',
 );
 
 /** Chinese (中文)

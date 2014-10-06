@@ -177,7 +177,7 @@ $messages['br'] = array(
 	'wikiamobile-wikiapoll-open-poll' => 'Petra a soñjit ?',
 	'wikiamobile-wikiapoll-thanks-voting' => "Trugarez deoc'h da vezañ votet !",
 	'wikiamobile-wikiapoll-poll' => 'Sontadeg',
-	'wikiamobile-wikiapoll-user-voted' => 'Votet ho peus war "$1"',
+	'wikiamobile-wikiapoll-user-voted' => 'Votet hoc\'h eus evit "$1"',
 );
 
 /** Catalan (català)
@@ -347,6 +347,7 @@ $messages['fa'] = array(
 	'wikiapoll-question-mark-after' => '؟',
 	'wikiapoll-question-label' => 'پرسش',
 	'wikiapoll-cancel-label' => 'لغو',
+	'wikiapoll-publish-label' => 'انتشار',
 	'wikiamobile-wikiapoll-thanks-voting' => 'از رای دادنتان متشکریم!',
 );
 
@@ -498,6 +499,18 @@ $messages['ja'] = array(
 	'wikiamobile-wikiapoll-thanks-voting' => 'ご投票ありがとうございます!',
 	'wikiamobile-wikiapoll-poll' => '投票',
 	'wikiamobile-wikiapoll-user-voted' => '「$1」に投票しました',
+);
+
+/** Korean (한국어)
+ * @author Miri-Nae
+ */
+$messages['ko'] = array(
+	'wikiapoll-createpoll-headline' => '설문 조사 생성',
+	'wikiapoll-editpoll-headline' => '설문 조사 편집',
+	'wikiapoll-question-label' => '질문',
+	'wikiapoll-addnewitem-label' => '새 항목 추가',
+	'wikiapoll-cancel-label' => '취소',
+	'wikiamobile-wikiapoll-poll' => '설문 조사',
 );
 
 /** Kurdish (Latin script) (Kurdî (latînî)‎)

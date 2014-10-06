@@ -19,10 +19,10 @@ class WikiaMaps extends WikiaObject {
 	const MAP_TYPE_CUSTOM = 'custom';
 	const MAP_TYPE_GEO = 'geo';
 
-	const HTTP_CREATED_CODE = 201;
 	const HTTP_SUCCESS_OK = 200;
+	const HTTP_CREATED_CODE = 201;
+	const HTTP_ACCEPTED_CODE = 202;
 	const HTTP_UPDATED = 303;
-	const HTTP_NO_CONTENT = 204;
 
 	const MAP_THUMB_PREFIX = '/thumb/';
 	const DEFAULT_REAL_MAP_URL = 'http://img.wikia.nocookie.net/intmap_Geo_Map/default-geo.jpg';
@@ -165,7 +165,7 @@ class WikiaMaps extends WikiaObject {
 	/**
 	 * Sends requests to IntMap service to get data about a map and tiles it's connected with
 	 *
-	 * @param $mapId Map id
+	 * @param integer $mapId Map id
 	 * @param array $params additional parameters
 	 *
 	 * @return mixed
@@ -459,29 +459,31 @@ class WikiaMaps extends WikiaObject {
 	}
 
 	/**
-	 * Returns Geo tileset's id from config or 0
+	 * Returns Geo tileset's id from config
 	 *
+	 * @throws WikiaMapsConfigException
 	 * @return integer
 	 */
 	public function getGeoMapTilesetId() {
-		if ( isset( $this->config[ 'geo-tileset-id' ] ) ) {
-			return $this->config[ 'geo-tileset-id' ];
+		if ( !isset( $this->config[ 'geo-tileset-id' ] ) ) {
+			throw new WikiaMapsConfigException( 'Geo tileset id wasn\'t found in config' );
 		}
 
-		return 0;
+		return $this->config[ 'geo-tileset-id' ];
 	}
 
 	/**
-	 * Returns default parent_poi_category_id from config or 0
+	 * Returns default parent_poi_category_id from config
 	 *
+	 * @throws WikiaMapsConfigException
 	 * @return integer
 	 */
 	public function getDefaultParentPoiCategory() {
-		if ( isset( $this->config[ 'default-parent-poi-category-id' ] ) ) {
-			return $this->config[ 'default-parent-poi-category-id' ];
+		if ( !isset( $this->config[ 'default-parent-poi-category-id' ] ) ) {
+			throw new WikiaMapsConfigException( 'Default parent POI category wasn\'t found in config' );
 		}
 
-		return 0;
+		return $this->config[ 'default-parent-poi-category-id' ];
 	}
 
 	/**
@@ -519,9 +521,10 @@ class WikiaMaps extends WikiaObject {
 	 */
 	private function isSuccess( $status, $content ) {
 		$isStatusOK = in_array( $status, [
+			self::HTTP_SUCCESS_OK,
 			self::HTTP_CREATED_CODE,
-			self::HTTP_UPDATED,
-			self::HTTP_NO_CONTENT,
+			self::HTTP_ACCEPTED_CODE,
+			self::HTTP_UPDATED
 		] );
 
 		// MW Http::request() can return 200 HTTP code if service is offline

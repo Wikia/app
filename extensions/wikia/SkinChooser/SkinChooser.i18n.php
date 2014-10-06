@@ -156,6 +156,13 @@ $messages['kn'] = array(
 	'new-look' => 'ವಿಕಿಯಾ',
 );
 
+/** Korean (한국어)
+ * @author Miri-Nae
+ */
+$messages['ko'] = array(
+	'new-look' => '위키아',
+);
+
 /** لوری (لوری)
  * @author Mogoeilor
  */

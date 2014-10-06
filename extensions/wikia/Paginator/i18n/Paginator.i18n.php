@@ -178,12 +178,28 @@ $messages['it'] = array(
 	'paginator-back' => 'Indietro',
 );
 
+/** Japanese (日本語)
+ * @author Plover-Y
+ */
+$messages['ja'] = array(
+	'paginator-next' => '次へ',
+	'paginator-back' => '戻る',
+);
+
 /** Kannada (ಕನ್ನಡ)
  * @author VASANTH S.N.
  */
 $messages['kn'] = array(
 	'paginator-next' => 'ನಂತರ',
 	'paginator-back' => 'ಹಿಂದಕ್ಕೆ',
+);
+
+/** Korean (한국어)
+ * @author Miri-Nae
+ */
+$messages['ko'] = array(
+	'paginator-next' => '다음',
+	'paginator-back' => '이전',
 );
 
 /** Colognian (Ripoarisch)

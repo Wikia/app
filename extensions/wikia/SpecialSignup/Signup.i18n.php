@@ -270,10 +270,11 @@ $messages['pt'] = array(
 );
 
 /** Brazilian Portuguese (português do Brasil)
+ * @author Jefersonmoraes
  */
 $messages['pt-br'] = array(
-	'signup-desc' => 'Acrescenta o nome alternativo [[{{#Special:Signup}}]] para [[{{#Special:UserLogin}}/signup]]',
-	'signup' => 'Registar-se',
+	'signup-desc' => 'Adicione o nome alternativo [[{{#Special:Signup}}]] para [[{{#Special:UserLogin}}/signup]]',
+	'signup' => 'Registrar-se',
 );
 
 /** tarandíne (tarandíne)

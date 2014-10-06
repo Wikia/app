@@ -299,7 +299,7 @@ define('wikia.intMap.poiCategories',
 
 		/**
 		 * @desc adds POI category id to hidden field
-		 * @param {number} poiCategoryId
+		 * @param {Number} poiCategoryId
 		 */
 		function markPoiCategoryAsDeleted(poiCategoryId) {
 			// add POI category id to hidden field
@@ -311,12 +311,9 @@ define('wikia.intMap.poiCategories',
 		 * @param {Element} inputElement - file input element
 		 */
 		function uploadMarkerImage(inputElement) {
-			var file = inputElement.files[0],
-				formData = new FormData(),
+			var formData = utils.getFormDataForFileUpload(inputElement),
 				$inputElement = $(inputElement),
 				$inputElementWrapper = $inputElement.closest('.poi-category-marker');
-
-			formData.append('wpUploadFile', file);
 
 			utils.upload(modal, formData, 'marker', function (data) {
 				modal.trigger('saveMarkerImage', data, $inputElementWrapper);
