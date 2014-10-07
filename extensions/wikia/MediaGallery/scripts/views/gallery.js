@@ -98,12 +98,17 @@ define('mediaGallery.views.gallery', [
 	Gallery.prototype.render = function (count, $el) {
 		var self = this,
 			media,
-			mediaCount,
+			mediaRange,
 			deferredImages = [];
 
 		media = this.media.slice(this.visibleCount, this.visibleCount + count);
-		mediaCount = media.length;
-		this.bucky.timer.start('render.' + mediaCount);
+		if (!media.length) {
+			return this;
+		}
+
+		// track rendering of media in ranges of 20. "0" is 1-20, 1 is 21-40, etc.
+		mediaRange = Math.ceil(media.length / 20);
+		this.bucky.timer.start('render.' + mediaRange);
 
 		if ($el) {
 			$el.startThrobbing();
@@ -130,7 +135,7 @@ define('mediaGallery.views.gallery', [
 			$.each(media, function (idx, item) {
 				item.show();
 			});
-			self.bucky.timer.stop('render.' + mediaCount);
+			self.bucky.timer.stop('render.' + mediaRange);
 			self.$el.trigger('mediaLoaded');
 		});
 
