@@ -69,14 +69,20 @@ class WikiaInteractiveMapsHooks {
 	}
 
 	/**
-	 * @brief Returns true if the current page is not Special:Maps main page
+	 * @brief Returns true if the current page is Special:Maps single map page
 	 *
 	 * @return bool
 	 */
-	private static function isNotSpecialMapsMainPage() {
+	public static function isSpecialMapsSingleMapPage() {
 		global $wgTitle;
 
-		return $wgTitle->getSubpageText() !== WikiaInteractiveMapsController::PAGE_NAME;
+		$find = [
+			WikiaInteractiveMapsController::PAGE_NAME . '/',
+			WikiaInteractiveMapsController::PAGE_NAME
+		];
+		$titleFiltered = (int) str_replace( $find, '', $wgTitle->getSubpageText() );
+
+		return (int) $titleFiltered > 0;
 	}
 
 	/**
@@ -106,8 +112,8 @@ class WikiaInteractiveMapsHooks {
 	 * 
 	 * @return bool true
 	 */
-	static function onBeforePageDisplay( $out ) {
-		if ( self::isSpecialMapsPage() && self::isNotSpecialMapsMainPage() ) {
+	public static function onBeforePageDisplay( $out ) {
+		if ( self::isSpecialMapsPage() && self::isSpecialMapsSingleMapPage() ) {
 			$out->addMeta( 'fragment', '!' );
 		}
 		return true;
