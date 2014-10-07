@@ -274,7 +274,7 @@ class VideoHandlerController extends WikiaController {
 		$videos = WikiaDataAccess::cacheWithOptions( $memcKey, $dataGenerator, [
 			'cacheTTL' => WikiaResponse::CACHE_STANDARD,
 			'negativeCacheTTL' => 0,
-		]);
+		] );
 
 		// If file title was passed in as a string, return single associative array.
 		$this->detail = ( !empty( $videos ) && $returnSingleVideo ) ? array_pop( $videos ) : $videos;
