@@ -1166,13 +1166,6 @@
 						thumbs = article.find('.image, .lightbox').find('img').add(article.find('.thumbimage'));
 					}
 
-					// Add cached media gallery data sent over from MediaGallery extension.
-					$(window).trigger('lightboxArticleMedia', {
-						thumbArr: thumbArr,
-						width: Lightbox.carouselThumbWidth,
-						height: Lightbox.carouselThumbHeight
-					});
-
 					// cache keys for dupe checking later
 					$.each(thumbArr, function () {
 						keys.push(this.key);
@@ -1224,6 +1217,13 @@
 								thumbWrapperClass: (type === 'video') ? Lightbox.videoWrapperClass : ''
 							});
 						}
+					});
+
+					// Add cached media gallery data sent over from MediaGallery extension.
+					$(window).trigger('lightboxArticleMedia', {
+						thumbArr: thumbArr,
+						width: Lightbox.carouselThumbWidth,
+						height: Lightbox.carouselThumbHeight
 					});
 
 					// Fill articleMedia cache
