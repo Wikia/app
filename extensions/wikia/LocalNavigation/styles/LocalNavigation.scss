@@ -1,9 +1,15 @@
 @import 'skins/shared/mixins/arrow';
 @import 'skins/shared/mixins/calc';
 @import 'skins/shared/mixins/clearfix';
+@import 'skins/shared/mixins/gradient';
 @import 'skins/shared/color';
+@import 'extensions/wikia/Venus/styles/mixins';
 @import 'extensions/wikia/Venus/styles/variables';
 @import 'extensions/wikia/Venus/styles/z-index';
+
+$third-level-tint: if(lightness($color-buttons) < 50, #fff, #000);
+$third-level-color: mix($color-buttons, $third-level-tint, 83%); // ~20% of tint
+$third-level-color-hover: mix($color-buttons, $third-level-tint, 71%); // ~40% of tint
 
 .local-navigation-container {
 	@include clearfix;
@@ -97,7 +103,9 @@
 		a {
 			background-color: $color-buttons;
 			display: block;
+			overflow: hidden;
 			padding: 20px;
+			position: relative;
 			white-space: nowrap;
 			width: 100%;
 
@@ -161,7 +169,7 @@
 	}
 
 	.second-level-menu {
-		@include calc(min-width, '100% + 1px');
+		min-width: 100%;
 
 		.has-more {
 			padding-right: 40px;
@@ -220,6 +228,7 @@
 		display: block;
 		height: 100%;
 		left: 100%;
+		min-width: 100%;
 		top: 0;
 		visibility: hidden;
 
@@ -239,19 +248,28 @@
 			}
 		}
 
-		a {
-			$third-level-tint: if(lightness($color-buttons) < 50, #fff, #000);
+		.third-level-row {
+			a {
+				background: $third-level-color;
+				border-color: $color-buttons;
+				border-left-width: 5px;
+				border-right-width: 5px;
+				border-style: solid;
+				padding: 10px;
 
-			background: rgba($third-level-tint, .2);
-			border-color: $color-buttons;
-			border-left-width: 5px;
-			border-right-width: 5px;
-			border-style: solid;
-			padding: 10px;
+				&:hover {
+					background: $third-level-color-hover;
+					font-weight: normal;
+				}
 
-			&:hover {
-				background: rgba($third-level-tint, .4);
-				font-weight: normal;
+				a::after {
+					text-align: left;
+				}
+
+				span {
+					left: 10px;
+					right: auto;
+				}
 			}
 		}
 	}
@@ -302,6 +320,44 @@
 			}
 		}
 	}
+
+	.dropdown {
+		.second-level-row,
+		.third-level-row {
+			a {
+				@include grid-column-max-width('medium', 3);
+
+				&::before {
+					content: ' ';
+					position: absolute;
+					left: auto;
+					right: 0;
+					width: 20px;
+					height: 100%;
+					top: 0;
+					z-index: 1;
+				}
+			}
+		}
+		.second-level-row a::before {
+			@include linear-gradient(transparent, left, rgba($color-buttons, 0), 0%, rgba($color-buttons, 1), 100%);
+		}
+		.third-level-row a::before {
+			@include linear-gradient(transparent, left, rgba($third-level-color, 0), 0%, rgba($third-level-color, 1), 100%);
+		}
+		.third-level-row a:hover::before {
+			@include linear-gradient(transparent, left, rgba($third-level-color-hover, 0), 0%, rgba($third-level-color-hover, 1), 100%);
+		}
+
+		&.right {
+			.second-level-row > a::before {
+				@include linear-gradient(transparent, right, rgba($color-buttons, 0), 0%, rgba($color-buttons, 1), 100%);
+
+				left: 0;
+				right: auto;
+			}
+		}
+	}
 }
 
 @media #{$small-only} {
@@ -312,6 +368,15 @@
 
 		.contribute-container {
 			display: none;
+		}
+
+		.dropdown {
+			.second-level-row,
+			.third-level-row {
+				a {
+					@include grid-column-max-width('small', 3);
+				}
+			}
 		}
 	}
 }
@@ -324,6 +389,15 @@
 
 		.contribute-container {
 			right: 53px;
+		}
+
+		.dropdown {
+			.second-level-row,
+			.third-level-row {
+				a {
+					@include grid-column-max-width('large', 3);
+				}
+			}
 		}
 	}
 }
