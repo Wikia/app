@@ -19,9 +19,7 @@ class TaskRunner {
 	private $startTime;
 	private $endTime;
 
-	function __construct( $taskId, $taskList, $callOrder, $createdBy ) {
-		global $wgCityId;
-
+	function __construct( $wikiId, $taskId, $taskList, $callOrder, $createdBy ) {
 		$this->taskId = $taskId;
 		$this->callOrder = json_decode( $callOrder, true );
 		$taskList = json_decode( $taskList, true );
@@ -31,7 +29,7 @@ class TaskRunner {
 			$task = new $taskData['class']();
 			$task
 				->taskId( $taskId )
-				->wikiId( $wgCityId )
+				->wikiId( $wikiId )
 				->createdBy( $createdBy );
 			$task->unserialize( $taskData['context'], $taskData['calls'] );
 
