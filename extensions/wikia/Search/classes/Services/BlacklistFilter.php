@@ -41,9 +41,6 @@ class BlacklistFilter {
 	 */
 	protected $blacklistedHostsProvider;
 
-	/**
-	 * @var $core
-	 */
 	protected $coreName;
 
 	function __construct( $coreName ) {
