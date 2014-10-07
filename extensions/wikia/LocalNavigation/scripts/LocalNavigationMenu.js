@@ -17,6 +17,7 @@
 
 		$localNavSecondLevel.each(function(){
 			self = $(this);
+			thirdLvlMaxWidth = 0;
 			secondLvlNavWidth = self.outerWidth();
 			secondLvlNavOffset = self.offset().left;
 
