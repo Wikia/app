@@ -28,6 +28,9 @@ class WikiaDataAccess {
 	const SKIP_CACHE = 1;
 	const REFRESH_CACHE = 2;
 
+	// Default cache time of 5 minutes
+	const DEFAULT_TTL = 300;
+
 	/***********************************
 	 * Public Interface
 	 **********************************/
@@ -37,6 +40,9 @@ class WikiaDataAccess {
 	 * Simple direct data getter
 	 * Provider here for consistency
 	 * Should not be used - does not cache results
+	 *
+	 * @param callable $getData A function that returns the data the cache is backed by
+	 *
 	 * @author Piotr Bablok <pbablok@wikia-inc.com>
 	 */
 	static function simpleDirect( $getData ) {
@@ -45,19 +51,50 @@ class WikiaDataAccess {
 
 
 	/**
-	 * returns cached data if possible (up to $cacheTime old)
-	 * otherwise gets the data and saves the result in cache before returning it
+	 * Returns cached data if possible (up to $cacheTTL old) otherwise gets the data and saves the result in cache
+	 * before returning it
 	 *
 	 * @param String $key memcached key
-	 * @param Integer $cacheTime TTL of memcached data in seconds
-	 * @param Callback $getData function name (http://php.net/manual/en/language.types.callable.php)
+	 * @param Integer $cacheTTL TTL of memcached data in seconds
+	 * @param callable $getData function name (http://php.net/manual/en/language.types.callable.php)
 	 * @param Integer $command check description of constants above - USE_CACHE, SKIP_CACHE, REFRESH_CACHE
-	 * 
+	 *
+	 * @return Mixed|null
+	 *
 	 * @author Piotr Bablok <pbablok@wikia-inc.com>
 	 * @author Jakub Olek <jolek@wikia-inc.com>
 	 */
-	static function cache( $key, $cacheTime, $getData, $command = self::USE_CACHE ) {
+	static function cache( $key, $cacheTTL, $getData, $command = self::USE_CACHE ) {
+		return self::cacheWithOptions( $key, $getData, [
+			'command' => $command,
+			'cacheTTL' => $cacheTTL,
+		]);
+	}
+
+	/**
+	 * @param string $key The key to use for storing/retrieving this data.
+	 * @param int The time (in seconds) to cache this data
+	 * @param callable $getData A function to call that will return the data to cache.
+	 * @param Array $options An array of other options to control cache behavior.  Keys are:
+	 * 	[
+	 * 		command => The caching command to use.  Options are class constants USE_CACHE, SKIP_CACHE, REFRESH_CACHE above.
+	 * 		cacheTTL => The time in seconds to cache.  Default is class constant DEFAULT_TTL
+	 * 		negativeCacheTTL => The time in seconds to cache a zero|null|empty result.  Default is cacheTTL
+	 * 	]
+	 *
+	 * @return Mixed|null
+	 */
+	public static function cacheWithOptions( $key, callable $getData, Array $options = [] ) {
 		$wg = F::app()->wg;
+
+		// Set the default command to USE_CACHE
+		$command = empty( $options['command'] ) ? self::USE_CACHE : $options['command'];
+
+		// Get the cache TTL
+		$cacheTTL = empty( $options['cacheTTL'] ) ? self::DEFAULT_TTL : $options['cacheTTL'];
+
+		// Get the negative TTL, defaulting to the positive TTL.  Allow for a negative TTL of zero.
+		$negativeCacheTTL = array_key_exists( 'negativeCacheTTL', $options ) ? $options['negativeCacheTTL'] : $cacheTTL;
 
 		if ( $command == self::SKIP_CACHE ) {
 			Wikia::log( __METHOD__, 'debug', "Cache disabled for key:{$key}, if this is on production please contact the author of the code.", true);
@@ -67,7 +104,9 @@ class WikiaDataAccess {
 
 		if ( is_null( $result ) || $result === false ) {
 			$result = $getData();
-			self::setCache( $key, $result, $cacheTime, $command );
+			$ttl = empty( $result ) ? $negativeCacheTTL : $cacheTTL;
+
+			self::setCache( $key, $result, $ttl, $command );
 		}
 
 		return $result;
@@ -76,6 +115,9 @@ class WikiaDataAccess {
 	/**
 	 * Purges cached object
 	 * intended to use with function WikiaDataAccess::cache
+	 *
+	 * @param string $key Key to purge from the cache
+	 *
 	 * @author Piotr Bablok <pbablok@wikia-inc.com>
 	 */
 	static function cachePurge( $key ) {
@@ -83,7 +125,6 @@ class WikiaDataAccess {
 	}
 
 	/**
-	 *
 	 * Helper to set cache along
 	 * with Logging if getting was skipped
 	 * but refresh is made
@@ -102,18 +143,27 @@ class WikiaDataAccess {
 	}
 
 	/**
-	* returns cached data if possible
-	* if cached data is older than $cacheTime but fresher than twice that time
-	*  - first thread to request it will start getting data
-	*  - other threads in the meantime will continue receiving old data
-	* if there's no cached data fresher than double of $cacheTime
-	*  - first thread to request it will start getting data
-	*  - other threads will wait for the first thread to finish, afterwards they will receive
-	*    the same data as the first thread
-	* 
-	* @author Piotr Bablok <pbablok@wikia-inc.com>
-	* @author Jakub Olek <jolek@wikia-inc.com>
-	*/
+	 * Returns cached data if possible
+	 * if cached data is older than $cacheTime but fresher than twice that time
+	 *  - first thread to request it will start getting data
+	 *  - other threads in the meantime will continue receiving old data
+	 * if there's no cached data fresher than double of $cacheTime
+	 *  - first thread to request it will start getting data
+	 *  - other threads will wait for the first thread to finish, afterwards they will receive
+	 *    the same data as the first thread
+	 *
+	 * @param string $key memcached key
+	 * @param int $cacheTime TTL of cache in seconds
+	 * @param callable $getData Function used to get data to cache
+	 * @param int $command Whether to fully cache, write-only cache or skip cache (see method cache())
+	 * @param int $lockTimeout Time out in seconds to wait for lock
+	 *
+	 * @throws MWException
+	 * @return Mixed
+	 *
+	 * @author Piotr Bablok <pbablok@wikia-inc.com>
+	 * @author Jakub Olek <jolek@wikia-inc.com>
+	 */
 	static function cacheWithLock( $key, $cacheTime, $getData, $command = self::USE_CACHE, $lockTimeout = self::LOCK_TIMEOUT ) {
 		wfProfileIn( __METHOD__ );
 		$app = F::app();
@@ -182,6 +232,9 @@ class WikiaDataAccess {
 	 * Purges cached object
 	 * Forces object regeneration even if another thread hold the lock
 	 * intended to use with function WikiaDataAccess::cacheWithLock
+	 *
+	 * @param string $key
+	 *
 	 * @author Piotr Bablok <pbablok@wikia-inc.com>
 	 */
 	static function cacheWithLockPurge( $key ) {
@@ -196,7 +249,13 @@ class WikiaDataAccess {
 	 * Private functions
 	 **********************************/
 
-
+	/**
+	 * @param string $key
+	 * @param bool $waitForLock
+	 * @param int $lockTimeout
+	 *
+	 * @return array
+	 */
 	static private function lock( $key, $waitForLock = true, $lockTimeout =  self::LOCK_TIMEOUT   ) {
 		$app = F::app();
 		$wasLocked = false;
@@ -226,7 +285,11 @@ class WikiaDataAccess {
 	/**
 	 * Internal use by cacheWithLock code-path
 	 *
-	 * @param bool $clearCache set it to true to force checking for updated value
+	 * @param WikiaApp $app
+	 * @param string $key
+	 * @param bool $clearLocalCache set it to true to force checking for updated value
+	 *
+	 * @return null
 	 */
 	static private function getDataAndVerify( $app, $key, $clearLocalCache = false ) {
 		if ( $clearLocalCache ) {
