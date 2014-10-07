@@ -31,13 +31,13 @@ define('ext.wikia.adEngine.adContext', ['wikia.window', 'wikia.document'], funct
 
 	setContext( w.ads ? w.ads.context : {
 		opts: {
+			adsAfterInfobox: w.wgAdDriverUseAdsAfterInfobox,
 			adsInHead: w.wgLoadAdsInHead,
 			disableLateQueue: w.wgAdEngineDisableLateQueue,
 			lateAdsAfterPageLoad: w.wgLoadLateAdsAfterPageLoad,
 			pageType: w.adEnginePageType,
 			showAds: w.wgShowAds,
 			usePostScribe: w.wgUsePostScribe,
-			adsAfterInfobox: w.wgAdDriverUseAdsAfterInfobox,
 			trackSlotState: w.wgAdDriverTrackState
 		},
 
