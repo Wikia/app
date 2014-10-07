@@ -9,7 +9,13 @@ describe('wikia.maps.utils', function () {
 		expect(typeof utilsModule.inArray).toBe('function');
 	});
 
-	it('checks if a key is present in an array', function () {
+	it('triggers page refresh if requested in onBeforeClose', function() {
+		spyOn(utilsModule, 'onBeforeCloseModal');
+		utilsModule.onBeforeCloseModal(true);
+		expect(utilsModule.refreshIfAfterForceLogin);
+	});
+
+	it('checks if a key is present in an array', function() {
 		var testData = [
 			{
 				input: {
