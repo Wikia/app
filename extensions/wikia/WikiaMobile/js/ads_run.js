@@ -36,31 +36,28 @@ require(
 			},
 			adSlots = [];
 
-
-		if (!infoboxAdEnabled) {
-			infoboxSelectors = [];
-		}
-
 		messageListener.init();
 
 		// Slots
 		log( 'Loading slot: ' + mobileTopLeaderBoard, logLevel, logGroup );
 		adSlots.push( [mobileTopLeaderBoard] );
 
-		if ( window.wgArticleId && (showInContent || showPreFooter ) ) {
+		if ( window.wgArticleId ) {
 			//this can wait to on load as is under the fold
 			$( window ).on( 'load', function () {
 
 				var i, elem;
 
-				for ( i = 0; i < infoboxSelectors.length; i = i + 1 ) {
-					elem = $(infoboxSelectors[i]);
-					if (elem.length) {
-						log( 'Loading slot: ' + mobileInContent, logLevel, logGroup );
-						showInContent = false;
-						elem.after( createSlot( mobileInContent ) );
-						adSlots.push( [mobileInContent] );
-						break;
+				if ( infoboxAdEnabled ) {
+					for ( i = 0; i < infoboxSelectors.length; i = i + 1 ) {
+						elem = $(infoboxSelectors[i]);
+						if (elem.length) {
+							log( 'Loading slot: ' + mobileInContent, logLevel, logGroup );
+							showInContent = false;
+							elem.after( createSlot( mobileInContent ) );
+							adSlots.push( [mobileInContent] );
+							break;
+						}
 					}
 				}
 
