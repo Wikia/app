@@ -10,10 +10,14 @@ class MovieEntitySearchService extends EntitySearchService {
 	const MOVIE_TYPE = 'movie';
 	const API_URL = 'api/v1/Articles/AsSimpleJson?id=';
 	const EXACT_MATCH_FIELD = "movie_mv_em";
-	protected $blacklistedWikiHosts = [ 'uncyclopedia.wikia.com' ];
+	private static $HOSTS_BLACKLIST = [ 'uncyclopedia.wikia.com' ];
 	private static $ARTICLE_TYPES_SUPPORTED_LANGS = [ 'en' ];
 
 	protected function prepareQuery( $query ) {
+		$this->getBlacklist()->addBlacklistedHostsProvider(
+			BlacklistFilter::staticProvider( self::$HOSTS_BLACKLIST )
+		);
+
 		$select = $this->getSelect();
 
 		$phrase = $this->sanitizeQuery( $query );
@@ -26,7 +30,7 @@ class MovieEntitySearchService extends EntitySearchService {
 		$select->setQuery( $preparedQuery );
 		$select->setRows( static::ARTICLES_LIMIT );
 
-		$select = $this->applyBlackListedWikisQuery( $select );
+		$select = $this->getBlacklist()->applyFilters( $select );
 
 		$select->createFilterQuery( 'ns' )->setQuery( '+(ns:' . static::ALLOWED_NAMESPACE . ')' );
 		$select->createFilterQuery( 'lang' )->setQuery( '+(lang:' . $slang . ')' );
@@ -52,14 +56,14 @@ class MovieEntitySearchService extends EntitySearchService {
 
 	protected function consumeResponse( $response ) {
 		foreach ( $response as $item ) {
-			if ( $item[ 'score' ] > static::MINIMAL_MOVIE_SCORE ) {
+			if ( $item['score'] > static::MINIMAL_MOVIE_SCORE ) {
 				return [
-					'wikiId' => $item[ 'wid' ],
-					'articleId' => $item[ 'pageid' ],
-					'title' => $item[ 'title_' . $this->getLang() ],
-					'url' => $this->replaceHostUrl( $item[ 'url' ] ),
-					'quality' => $item[ 'article_quality_i' ],
-					'contentUrl' => $this->replaceHostUrl( 'http://' . $item[ 'host' ] . '/' . self::API_URL . $item[ 'pageid' ] ),
+					'wikiId' => $item['wid'],
+					'articleId' => $item['pageid'],
+					'title' => $item['title_' . $this->getLang()],
+					'url' => $this->replaceHostUrl( $item['url'] ),
+					'quality' => $item['article_quality_i'],
+					'contentUrl' => $this->replaceHostUrl( 'http://' . $item['host'] . '/' . self::API_URL . $item['pageid'] ),
 				];
 			}
 		}

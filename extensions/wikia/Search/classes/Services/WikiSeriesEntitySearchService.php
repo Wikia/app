@@ -12,10 +12,13 @@ class WikiSeriesEntitySearchService extends EntitySearchService {
 	protected $blacklistedWikiHosts = [ '*fanon.wikia.com', '*answers.wikia.com' ];
 
 	protected function getCore() {
-		return static::XWIKI_CORE;
+		return SearchCores::CORE_XWIKI;
 	}
 
 	protected function prepareQuery( $query ) {
+		$this->getBlacklist()->addBlacklistedHostsProvider(
+			BlacklistFilter::staticProvider($this->blacklistedWikiHosts)
+		);
 		$select = $this->getSelect();
 
 		$phrase = $this->sanitizeQuery( $query );
@@ -27,7 +30,7 @@ class WikiSeriesEntitySearchService extends EntitySearchService {
 		$select->setQuery( '+("' . $phrase . '") AND +(lang_s:' . $slang . ')' );
 		$select->setRows( static::WIKI_LIMIT );
 
-		$select = $this->applyBlackListedWikisQuery( $select );
+		$select = $this->getBlacklist()->applyFilters( $select );
 
 		$select->createFilterQuery( 'articles' )->setQuery( 'articles_i:[' . static::MINIMAL_WIKIA_ARTICLES . ' TO *]' );
 
