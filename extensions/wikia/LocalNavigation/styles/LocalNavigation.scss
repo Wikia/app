@@ -109,11 +109,6 @@ $third-level-color-hover: mix($color-buttons, $third-level-tint, 71%); // ~40% o
 			white-space: nowrap;
 			width: 100%;
 
-			&:hover,
-			&.active {
-				font-weight: bold;
-			}
-
 			&::after {
 				content: attr(data-content);
 				font-weight: bold;
@@ -186,8 +181,12 @@ $third-level-color-hover: mix($color-buttons, $third-level-tint, 71%); // ~40% o
 				margin: 1px -20px 0 0;
 				position: static;
 			}
+		}
 
-			&:hover span::after {
+		.active {
+			font-weight: bold;
+
+			.has-more span::after {
 				border-left-color: rgba($color-button-text, .8);
 			}
 		}
@@ -206,10 +205,10 @@ $third-level-color-hover: mix($color-buttons, $third-level-tint, 71%); // ~40% o
 					float: left;
 					margin: 1px 0 0 -20px;
 				}
+			}
 
-				&.active span::after {
-					border-right-color: rgba($color-button-text, .8);
-				}
+			&.active span::after {
+				border-right-color: rgba($color-button-text, .8);
 			}
 
 			.third-level-menu {
@@ -255,11 +254,11 @@ $third-level-color-hover: mix($color-buttons, $third-level-tint, 71%); // ~40% o
 				border-left-width: 5px;
 				border-right-width: 5px;
 				border-style: solid;
+				font-weight: normal;
 				padding: 10px;
 
 				&:hover {
 					background: $third-level-color-hover;
-					font-weight: normal;
 				}
 
 				a::after {
@@ -303,6 +302,10 @@ $third-level-color-hover: mix($color-buttons, $third-level-tint, 71%); // ~40% o
 
 		.dropdown {
 			min-width: 100%;
+
+			a:hover {
+				font-weight: bold;
+			}
 		}
 
 		&.active {
