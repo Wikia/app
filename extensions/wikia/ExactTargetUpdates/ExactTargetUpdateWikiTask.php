@@ -25,10 +25,8 @@ class ExactTargetUpdateWikiTask extends ExactTargetBaseTask {
 			/**
 			 * Unset all we don't want to update
 			 * city_id must never change
-			 * city_vertical is updated by an ExactTargetUpdateWikiCatsMappingTask class
 			 */
 			unset( $aWikiData['city_id'] );
-			unset( $aWikiData['city_vertical'] );
 
 			/* Prepare DataExtension's properties from $aWikiData */
 			$aApiProperties = [];

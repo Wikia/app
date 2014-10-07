@@ -84,7 +84,7 @@ class ExactTargetUpdatesHooks {
 	 * @param  array $aParams  Contains a wiki's id, url and title.
 	 * @return true
 	 */
-	public static function onWikiCreation( $aParams ) {
+	public static function onWikiCreation( array $aParams ) {
 		$thisInstance = new ExactTargetUpdatesHooks();
 		$thisInstance->addTheAddWikiTask( $aParams, new ExactTargetAddWikiTask() );
 		return true;
@@ -96,7 +96,7 @@ class ExactTargetUpdatesHooks {
 	 * @param  array $aWfVarParams  Contains a var's name, a wiki's id and a new value.
 	 * @return true
 	 */
-	public static function onWikiFactoryChanged( $aParams ) {
+	public static function onWikiFactoryChanged( array $aParams ) {
 		$iCityId = $aParams['city_id'];
 		$aWfVariablesTrigerringUpdate = ExactTargetUpdatesHelper::getWfVarsTriggeringUpdate();
 		if ( isset( $aWfVariablesTrigerringUpdate[ $aParams['cv_name'] ] ) ) {
@@ -106,7 +106,17 @@ class ExactTargetUpdatesHooks {
 		return true;
 	}
 
-	public static function onWikiCatsMappingChanged( $ )
+	public static function onWikiFactoryVerticalSet( array $aParams ) {
+		$thisInstance = new ExactTargetUpdatesHooks();
+		$thisInstance->addTheUpdateWikiTask( $aParams['city_id'], new ExactTargetUpdateWikiTask() );
+		return true;
+	}
+
+	public static function onCityCatMappingUpdated( array $aParams ) {
+		$thisInstance = new ExactTargetUpdatesHooks();
+		$thisInstance->addTheUpdateCityCatMappingTask( $aParams, new ExactTargetUpdateCityCatMappingTask() );
+		return true;
+	}
 
 	/**
 	 * Adds AddUserTask to job queue
@@ -215,7 +225,7 @@ class ExactTargetUpdatesHooks {
 		if ( $this->bShouldAddTask ) {
 			$iCityId = $aParams['city_id'];
 			$aWikiData = $this->prepareWikiParams( $iCityId );
-			$aWikiCatsMappingData = $this->prepareWikiCatsMappingParams( $iCityId );
+			$aWikiCatsMappingData = $this->prepareCityCatMappingParams( $iCityId );
 			$oTask->call( 'sendNewWikiData', $aWikiData, $aWikiCatsMappingData );
 			$oTask->queue();
 		}
@@ -231,6 +241,14 @@ class ExactTargetUpdatesHooks {
 		if ( $this->bShouldAddTask ) {
 			$aWikiData = $this->prepareWikiParams( $iCityId );
 			$oTask->call( 'updateWikiData', $aWikiData );
+			$oTask->queue();
+		}
+	}
+
+	public function addTheUpdateCityCatMappingTask( $aParams, ExactTargetUpdateCityCatMappingTask $oTask ) {
+		if ( $this->bShouldAddTask ) {
+			$aCityCatMappingData = $this->prepareCityCatMappingParamsForUpdate( $aParams );
+			$oTask->call( 'updateCityCatMappingData', $aCityCatMappingData );
 			$oTask->queue();
 		}
 	}
@@ -263,7 +281,7 @@ class ExactTargetUpdatesHooks {
 	 * @param  integer $iCityId  An ID of a wiki
 	 * @return array  An array mapping a wiki to categories
 	 */
-	private function prepareWikiCatsMappingParams( $iCityId ) {
+	private function prepareCityCatMappingParams( $iCityId ) {
 		/* @var string sIncludeDepracated Used to retrieve a full mapping of a wiki */
 		$sIncludeDepracated = 'skip';
 		$aCategories = \WikiFactory::getCategories( $iCityId, $sIncludeDepracated );
@@ -276,5 +294,20 @@ class ExactTargetUpdatesHooks {
 			];
 		}
 		return $aWikiCatsMappingParams;
+	}
+
+	private function prepareCityCatMappingParamsForUpdate( $aParams ) {
+		/**
+		 * We only need city_id and cat_id mapping
+		 */
+		$aOldCategories = [];
+		foreach ( $aParams['categories_old'] as $aCategory ) {
+			$aOldCategories[] = [
+				'city_id' => $aCategory['city_id'],
+				'cat_id' => $aCategory['cat_id'],
+			];
+		}
+		$aParams['categories_old'] = $aOldCategories;
+		return $aParams;
 	}
 }

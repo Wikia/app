@@ -47,6 +47,7 @@ $wgAutoloadClasses['ExactTargetAddUserTask'] =  $dir . '/ExactTargetAddUserTask.
 $wgAutoloadClasses['ExactTargetUpdateUserTask'] =  $dir . '/ExactTargetUpdateUserTask.php' ;
 $wgAutoloadClasses['ExactTargetAddWikiTask'] =  $dir . '/ExactTargetAddWikiTask.php';
 $wgAutoloadClasses['ExactTargetUpdateWikiTask'] =  $dir . '/ExactTargetUpdateWikiTask.php';
+$wgAutoloadClasses['ExactTargetUpdateCityCatMappingTask'] = $dir . '/ExactTargetUpdateCityCatMappingTask.php';
 $wgAutoloadClasses['ExactTargetUpdatesHooks'] =  $dir . '/ExactTargetUpdatesHooks.php' ;
 $wgAutoloadClasses['ExactTargetSoapClient'] =  $dir . '/lib/exacttarget_soap_client.php' ;
 
@@ -66,3 +67,5 @@ $wgHooks['UserSaveSettings'][] = 'ExactTargetUpdatesHooks::onUserSaveSettings';
 $wgHooks['CreateWikiLocalJob-complete'][] = 'ExactTargetUpdatesHooks::onWikiCreation';
 /* Update */
 $wgHooks['WikiFactoryChangeCommitted'][] = 'ExactTargetUpdatesHooks::onWikiFactoryChanged';
+$wgHooks['WikiFactoryVerticalSet'][] = 'ExactTargetUpdatesHooks::onWikiFactoryVerticalSet';
+$wgHooks['CityCatMappingUpdated'][] = 'ExactTargetUpdatesHooks::onCityCatMappingUpdated';
