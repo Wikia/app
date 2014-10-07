@@ -10,8 +10,7 @@ define('ext.wikia.adEngine.rubiconRtp', [
 
 	var logGroup = 'ext.wikia.adEngine.rubiconRtp',
 		timingEventData = {ozCachedOnly: !!window.wgAdDriverRubiconCachedOnly},
-		rtpStart,
-		rtpEnd,
+		rtpTiming,
 		rubiconCalled = false,
 		rtpResponse,
 		rtpTier;
@@ -49,13 +48,11 @@ define('ext.wikia.adEngine.rubiconRtp', [
 
 	function onRubiconResponse(response) {
 		// Track the start, end times
-		rtpEnd = adTracker.measureTime('rubiconEnd', timingEventData);
+		rtpTiming.measureDiff(timingEventData, 'end');
+		rtpTiming.track();
 
 		log(['onRubiconResponse', response], 'debug', logGroup);
 
-		rtpStart.track();
-		rtpEnd.timeWgNowBased = rtpEnd.timeWgNowBased - rtpStart.timeWgNowBased;
-		rtpEnd.track();
 
 		rtpResponse = response;
 		rtpTier = response && response.estimate && response.estimate.tier;
@@ -67,7 +64,8 @@ define('ext.wikia.adEngine.rubiconRtp', [
 		log('call', 'debug', logGroup);
 
 		rubiconCalled = true;
-		rtpStart = adTracker.measureTime('rubiconStart', timingEventData);
+		rtpTiming = adTracker.measureTime('rubicon', timingEventData, 'start');
+		rtpTiming.track();
 
 		window.oz_callback = onRubiconResponse;
 

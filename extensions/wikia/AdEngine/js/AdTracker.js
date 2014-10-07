@@ -80,24 +80,28 @@ define('ext.wikia.adEngine.adTracker', ['wikia.tracker', 'wikia.window'], functi
 	 * the time when the metric is gather from the time the metric is sent to GA
 	 *
 	 * @param {string} eventName
-	 * @param {string|object} data
-	 * @param {boolean=} trackPerformance - Whether to include performance based tracking
+	 * @param {string|object} eventData
+	 * @param {string=} eventType
 	 * @returns {{track: Function}}
 	 */
-	function measureTime(eventName, data, trackPerformance) {
-		var timeWgNowBased = window.wgNow && new Date().getTime() - window.wgNow.getTime(),
-			performance = trackPerformance && window.performance,
-			timePerformanceBased = performance && performance.now && Math.round(performance.now());
+	function measureTime(eventName, eventData, eventType) {
+
+		var timingValue = window.wgNow && new Date().getTime() - window.wgNow.getTime();
+		eventType = eventType ? '/' + eventType : '';
 
 		return {
-			timeWgNowBased: timeWgNowBased,
-			timePerformanceBased: timePerformanceBased,
+			measureDiff: function (diffData, diffType) {
+				eventType = '/' + diffType;
+				eventData = diffData;
+				timingValue = window.wgNow && new Date().getTime() - window.wgNow.getTime() - timingValue;
+
+				return {
+					track: this.track
+				};
+			},
 			track: function () {
-				if (this.timeWgNowBased) {
-					track('timing/' + eventName + '/wgNow', data, this.timeWgNowBased);
-				}
-				if (this.timePerformanceBased) {
-					track('timing/' + eventName + '/performance', data, this.timePerformanceBased);
+				if (timingValue) {
+					track('timing/' + eventName + eventType, eventData, timingValue);
 				}
 			}
 		};
