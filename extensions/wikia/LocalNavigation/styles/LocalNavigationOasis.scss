@@ -18,9 +18,12 @@
 	margin: 0 0 10px 0;
 	padding: 0 175px 5px 0;
 
-	.tally {
+	> .tally {
 		position: absolute;
 		right: 0;
 		top: 0;
+		&.mainpage-tally {
+			position: static;
+		}
 	}
 }
