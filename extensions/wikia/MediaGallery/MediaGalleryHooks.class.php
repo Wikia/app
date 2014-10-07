@@ -8,10 +8,15 @@ class MediaGalleryHooks {
 	 * @return bool
 	 */
 	static public function onOutputPageBeforeHTML( OutputPage $out, &$text ) {
-		if ( empty( F::app()->wg->EnableMediaGalleryExt ) ) {
+		wfProfileIn(__METHOD__);
+
+		$app = F::app();
+
+		// check if extension is enabled and if we already have assets
+		if ( empty( $app->wg->EnableMediaGalleryExt ) || $app->wg->MediaGalleryAssetsLoaded ) {
+			wfProfileOut(__METHOD__);
 			return true;
 		}
-		wfProfileIn(__METHOD__);
 
 		JSMessages::enqueuePackage( 'MediaGallery', JSMessages::EXTERNAL );
 
@@ -19,6 +24,8 @@ class MediaGalleryHooks {
 		foreach( $scripts as $script ){
 			$out->addScript( "<script src='{$script}'></script>" );
 		}
+
+		$app->wg->MediaGalleryAssetsLoaded = true;
 
 		wfProfileOut(__METHOD__);
 		return true;
