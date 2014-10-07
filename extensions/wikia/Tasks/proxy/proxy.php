@@ -3,8 +3,8 @@ set_time_limit( 0 );
 
 $script = realpath( dirname( __FILE__ ) . '/../../../../maintenance/wikia/task_runner.php' );
 
-$taskId = escapeshellarg( json_decode($_POST['task_id']) );
-$wikiId = escapeshellarg( json_decode($_POST['wiki_id']) );
+$taskId = escapeshellarg( $_POST['task_id'] );
+$wikiId = escapeshellarg( $_POST['wiki_id'] );
 $list = escapeshellarg( $_POST['task_list'] );
 $order = escapeshellarg( $_POST['call_order'] );
 $createdBy = escapeshellarg( $_POST['created_by'] );

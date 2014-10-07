@@ -217,6 +217,7 @@ class AsyncTaskList {
 			'wiki_id' => $this->wikiId,
 			'call_order' => $this->calls,
 			'task_list' => $taskList,
+			'created_by' => $this->createdBy,
 		]];
 	}
 
@@ -277,7 +278,6 @@ class AsyncTaskList {
 			'args' => $this->payloadArgs(),
 			'kwargs' => (object) [
 				'created_ts' => time(),
-				'created_by' => $this->createdBy,
 				'work_id' => sha1( json_encode( $this->workId ) ),
 				'force' => !$this->dupCheck,
 				'executor' => $this->getExecutor()
