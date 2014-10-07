@@ -251,6 +251,9 @@ class VideoHandlerController extends WikiaController {
 		$fileTitleAsArray = wfReturnArray( $fileTitle );
 		$videoOptions = $this->getVideoOptionsWithDefaults( $this->getVal( 'videoOptions', [] ) );
 
+		// Key to cache the data under in memcache
+		$memcKey = wfMemcKey( __FUNCTION__, md5( serialize( [ $fileTitleAsArray, $videoOptions ] ) ) );
+
 		// How we'll get the data on a cache miss
 		$dataGenerator = function() use ( $fileTitleAsArray, $videoOptions ) {
 			$videos = $this->getDetailsForVideoTitles( $fileTitleAsArray, $videoOptions );
@@ -266,9 +269,6 @@ class VideoHandlerController extends WikiaController {
 
 			return $videos;
 		};
-
-		// Key to cache the data with
-		$memcKey= wfMemcKey( __FUNCTION__, md5( serialize( [ $fileTitleAsArray, $videoOptions ] ) ) );
 
 		// Call the generator, caching the result, or not caching if we get null from the $dataGenerator
 		$videos = WikiaDataAccess::cacheWithOptions( $memcKey, $dataGenerator, [
