@@ -5,6 +5,8 @@ class AdEngine2Service
 
 	const ASSET_GROUP_CORE = 'oasis_shared_core_js';
 	const ASSET_GROUP_ADENGINE = 'adengine2_js';
+	const ASSET_GROUP_ADENGINE_RUBICON_RTP = 'adengine2_rubicon_rtp_js';
+	const ASSET_GROUP_ADENGINE_TRACKING = 'adengine2_tracking_js';
 	const ASSET_GROUP_ADENGINE_LATE = 'adengine2_late_js';
 	const ASSET_GROUP_LIFTIUM = 'liftium_ads_js';
 	const ASSET_GROUP_TOP_INCONTENT_JS = 'adengine2_top_in_content_boxad_js';
@@ -223,7 +225,7 @@ class AdEngine2Service
 		global $wgCityId, $wgEnableAdsInContent, $wgEnableOpenXSPC,
 			$wgUser, $wgEnableAdMeldAPIClient, $wgEnableAdMeldAPIClientPixels,
 			$wgOutboundScreenRedirectDelay, $wgEnableOutboundScreenExt,
-			$wgAdDriverUseSevenOneMedia, $wgAdDriverUseEbay, $wgAdDriverUseDartForSlotsBelowTheFold,
+			$wgAdDriverUseSevenOneMedia, $wgAdDriverUseDartForSlotsBelowTheFold,
 			$wgAdPageLevelCategoryLangs, $wgLanguageCode, $wgAdDriverTrackState,
 			$wgAdDriverForceDirectGptAd, $wgAdDriverForceLiftiumAd,
 			$wgOasisResponsive, $wgOasisResponsiveLimited,
@@ -233,7 +235,7 @@ class AdEngine2Service
 			$wgDartCustomKeyValues, $wgWikiDirectedAtChildrenByStaff,
 			$wgWikiDirectedAtChildrenByFounder, $wgAdEngineDisableLateQueue,
 			$wgAdDriverUseBottomLeaderboard, $wgAdDriverBottomLeaderboardImpressionCapping,
-			$wgAdDriverEnableAdsInMaps, $wgAdDriverWikiIsTop1000;
+			$wgAdDriverEnableAdsInMaps, $wgAdDriverWikiIsTop1000, $wgAdDriverUseTaboola;
 
 		$vars = [];
 
@@ -248,10 +250,10 @@ class AdEngine2Service
 
 			// Ad Driver
 			'wgAdDriverUseCatParam' => array_search($wgLanguageCode, $wgAdPageLevelCategoryLangs),
-			'wgAdDriverUseEbay' => $wgAdDriverUseEbay,
 			'wgAdDriverUseDartForSlotsBelowTheFold' => $wgAdDriverUseDartForSlotsBelowTheFold === null ? 'hub' : $wgAdDriverUseDartForSlotsBelowTheFold,
 			'wgAdDriverUseRemnantGpt' => $wgAdDriverUseRemnantGpt,
 			'wgAdDriverUseSevenOneMedia' => $wgAdDriverUseSevenOneMedia,
+			'wgAdDriverUseTaboola' => $wgAdDriverUseTaboola,
 			'wgAdDriverRubiconCachedOnly' => $wgAdDriverRubiconCachedOnly,
 			'wgAdDriverSevenOneMediaOverrideSub2Site' => $wgAdDriverSevenOneMediaOverrideSub2Site,
 			'wgUserShowAds' => $wgUser->getOption('showAds'),

@@ -39,6 +39,8 @@ $messages['en'] = array(
 	"wikifactory-label-ezsharedupload" => "EZSharedUpload",
 	"wikifactory-label-eznamespace" => "EZNamespace",
 	"wikifactory-label-compare" => "Compare",
+	"wikifactory-label-reason" => "'''Reason''' (optional, reason text or ticket number):",
+	"wikifactory-label-domain" => "'''Domain''':",
 	"right-wikifactory" => "Change internal settings for wikis",
 	'action-wikifactory' => 'change internal settings for wikis',
 	'wikifactory-domain-edit' => 'edit this URL',
@@ -171,6 +173,8 @@ $messages['qqq'] = array(
 	'wikifactory-label-masstags' => 'Label for a tab that contains a form, allowing staff to apply tags in bulk. [http://translatewiki.net/w/i.php?title=Thread:Translating_talk:Wikia/MassTag%3F_FindTag%3F/reply source]',
 	'wikifactory-label-findtags' => 'Label for a tab that contains a form, allowing staff to find wikis by tag. [http://translatewiki.net/w/i.php?title=Thread:Translating_talk:Wikia/MassTag%3F_FindTag%3F/reply source]',
 	'wikifactory-label-eznamespace' => '{{Optional}}',
+	'wikifactory-label-reason' => 'Label for a form field where a user provides the reason for which a change has been made.',
+	'wikifactory-label-domain' => 'Label for a form field where a user provides the domain name.',
 	'right-wikifactory' => '{{doc-right|wikifactory|ns=Wikia}}',
 	'action-wikifactory' => '{{doc-action|wikifactory}}',
 	'closewiki-nbr-wiki' => 'Number of wikis. $1 represents a numeric value',
@@ -1121,23 +1125,89 @@ $messages['ca'] = array(
  * @author Умар
  */
 $messages['ce'] = array(
+	'wikifactorypagetitle' => 'Конфигуратор Wiki Factory',
+	'wikifactory' => 'Конфигуратор Wiki Factory',
 	'closewiki' => 'ДӀачӀагӀа вики',
+	'wf_city_url' => 'Адрес',
+	'wf_city_id' => 'ID',
+	'wf_city_title' => 'ЦӀе',
 	'wf_city_created' => 'Кхоьллина',
+	'wf_city_founding_user' => 'Йиллинарг',
+	'wf_city_founding_email' => 'Йиличуна эл. почта',
+	'wf_city_public' => 'Статус',
 	'wf_city_lang' => 'Мотт',
+	'wf_cc_name' => 'Категори',
+	'wikifactory_removevariable' => 'Кэша чура викин хаамаш дӀабаха',
+	'wikifactory_removeconfirm' => 'Викин хаамаш кэша чура дӀабаьхьна',
+	'wikifactory-label-info' => 'Хаам',
 	'wikifactory-label-variables' => 'Хийцаме',
+	'wikifactory-label-variables2' => 'Юкъара',
+	'wikifactory-label-hubs' => 'Хабаш',
+	'wikifactory-label-domains' => 'Доменаш',
+	'wikifactory-label-return' => 'МогӀам чу юхагӀо',
+	'wikifactory-label-clog' => 'Хийцаман тептар',
+	'wikifactory-label-actions' => 'Дийраш',
 	'wikifactory-label-google' => 'Google гӀирсаш',
 	'wikifactory-label-close' => 'ДӀачӀагӀа',
+	'wikifactory-label-tags' => 'Тегаш',
+	'wikifactory-label-tags2' => 'Билгалонаш',
+	'wikifactory-label-masstags' => 'Дуккхаллин билгалонаш',
 	'wikifactory-label-findtags' => 'Лаха къастам',
+	'wikifactory-label-ezsharedupload' => 'EZSharedUpload',
 	'wikifactory-label-compare' => 'Муха ю хьажа',
+	'right-wikifactory' => 'Викин чоьхьара гӀирс нисбарш хийца',
+	'action-wikifactory' => 'Викин чоьхьара гӀирс нисбарш хийцар',
+	'wikifactory-domain-edit' => 'хӀара URL тае',
+	'wikifactory-domain-remove' => 'хӀара URL вики чура дӀаяккха',
+	'wikifactory-domain-setmain' => 'хӀара URL wgServer чу яккха',
+	'closewiki-redirect-to' => 'ДӀасахьажор тӀе',
+	'closewiki-message' => 'доменан цӀе $1',
+	'closewiki-confirm-button' => "Бакъйина '$1' $2",
+	'closewiki-nbr-wiki' => '$1 вики',
+	'closewiki-wiki-closed' => "'''$1''' дӀачӀаьгӀна ($2)",
+	'closewiki-unknown' => 'Хууш дац',
+	'closewiki-return' => 'Юха $1',
+	'wikifactory-button-saveparse' => 'Parse &amp; Save changes',
+	'wikifactory-button-save' => 'Ӏалашбе хийцамаш',
+	'awc-metrics-wikis' => 'Гайта вики',
+	'awc-metrics-select' => 'Гайта вики:',
+	'awc-metrics-by-language' => 'меттаца:',
+	'awc-metrics-category' => 'категореш чура:',
+	'awc-metrics-all' => 'массо викеш',
 	'awc-metrics-all-languages' => 'Берриге меттанаш',
+	'awc-metrics-search' => 'Лахар нисдар:',
+	'awc-metrics-one-week' => 'кхоьллина < 1 кӀира хьалха',
+	'awc-metrics-two-weeks' => 'кхоьллина < 2 кӀира хьалха',
+	'awc-metrics-three-weeks' => 'кхоьллина < 3 кӀира хьалха',
+	'awc-metrics-one-months' => 'кхоьллина < 1 бутт хьалха',
 	'awc-metrics-two-months' => 'кхоьллина < 2 бутт хьалха',
 	'awc-metrics-three-months' => 'кхоьллина < 3 бутт хьалха',
 	'awc-metrics-half-year' => 'кхоьллина < 6 бутт хьалха',
+	'awc-metrics-nbr-result' => 'Хиламаш:',
+	'awc-metrics-articles' => 'Яззамаш',
 	'awc-metrics-edits' => 'Нисдарш',
+	'awc-metrics-images' => 'Сурт',
+	'awc-metrics-all-users' => 'ДӀабаз.<br />декъаш.',
+	'awc-metrics-all-users-edit-main-ns' => 'ДӀабаз. декъаш.<br />(Коьрта цӀерийн. меттиг)',
 	'awc-metrics-close' => 'ДӀачӀагӀа',
 	'awc-metrics-close-action' => 'дӀачӀагӀа',
+	'awc-metrics-active' => 'жигара',
+	'awc-metrics-closed' => 'дӀачӀаьгӀна',
+	'awc-metrics-removed' => 'дӀаяьккхина',
+	'awc-metrics-edits-label' => '{{PLURAL:$1|$1 нисдар|$1 нисдарш}} $2,',
+	'awc-metrics-this-month' => 'хӀара бутт',
 	'awc-metrics-close-checked' => 'ДӀачӀагӀа билгал йинарш',
+	'closed-wiki' => 'ДӀачӀаьгӀна вики',
+	'closed-wiki-info' => 'ХӀара вики дӀачӀаьгӀна ю',
+	'disabled-wiki-info' => 'ХӀара вики дӀаяйина ю',
+	'closed-redirect-url' => 'URL кхечухьа хьажае URL',
+	'closed-confirm-btn' => 'Бакъде дӀачӀагӀар',
+	'closed-redirect-alert' => 'Дехар до, дӀасхьажоран керла URL язъе!',
 	'closed-reason' => 'Бахьна:',
+	'newwikisgraph' => 'Викин керла график',
+	'newwikisgraph-report-title' => 'цхьан дийнахь кхоьллина викеш',
+	'newwikisgraph-wikis-created' => 'кхоьллина вики',
+	'newwikisgraph-param-all' => 'Массо',
 	'newwikisgraph-param-other' => 'Кхин',
 );
 
@@ -1628,7 +1698,7 @@ $messages['el'] = array(
 	'awc-metrics-half-year' => 'δημιουργήθηκε πριν < 6 μήνες',
 	'awc-metrics-by-email' => 'ή (ηλεκτρονικό ταχυδρομείο του χρήστη):',
 	'awc-metrics-nbr-result' => 'Αποτελέσματα:',
-	'awc-metrics-articles' => 'Άρθρα',
+	'awc-metrics-articles' => 'Λήμματα',
 	'awc-metrics-edits' => 'Επεξεργασίες',
 	'awc-metrics-images' => 'Εικόνες',
 );
@@ -1822,6 +1892,7 @@ $messages['eu'] = array(
 );
 
 /** Persian (فارسی)
+ * @author Alirezaaa
  * @author Ebraminio
  * @author Huji
  * @author Mjbmr
@@ -1838,12 +1909,15 @@ $messages['fa'] = array(
 	'wf_city_public' => 'وضعیت',
 	'wf_city_lang' => 'زبان',
 	'wf_cc_name' => 'رده',
+	'wikifactory-label-info' => 'اطلاعات',
 	'wikifactory-label-variables' => 'متغییرها',
 	'wikifactory-label-variables2' => 'عمومی',
+	'wikifactory-label-clog' => 'سیاهه تغییرات',
 	'wikifactory-label-actions' => 'عملکردها',
 	'wikifactory-label-close' => 'بسته',
 	'wikifactory-label-tags' => 'برچسب‌ها',
 	'wikifactory-label-tags2' => 'برچسب‌ها',
+	'wikifactory-label-compare' => 'مقایسه',
 	'closewiki-nbr-wiki' => 'ویکی‌های $1',
 	'closewiki-unknown' => 'ناشناخته',
 	'wikifactory-button-saveparse' => 'تجزیه و ذخیره تغییرات',
@@ -1860,7 +1934,7 @@ $messages['fa'] = array(
 	'awc-metrics-active' => 'فعال',
 	'awc-metrics-removed' => 'حذف شده',
 	'closed-wiki' => 'ویکی بسته شده',
-	'closed-wiki-create-wiki' => 'ایجاد ویکی جدید',
+	'closed-wiki-create-wiki' => 'ایجاد ویکی تازه',
 	'closed-reason' => 'دلیل:',
 	'newwikisgraph-param-all' => 'همه',
 	'newwikisgraph-param-other' => 'دیگر',
@@ -2727,6 +2801,7 @@ $messages['it'] = array(
  * @author Fryed-peach
  * @author Hosiryuhosi
  * @author Naohiro19
+ * @author Plover-Y
  * @author Yanajin66
  */
 $messages['ja'] = array(
@@ -2778,6 +2853,7 @@ $messages['ja'] = array(
 	'closed-delete-images' => 'イメージの削除',
 	'closed-hide-dumps' => 'データベースとイメージダンプを非表示',
 	'closed-reason' => '理由：',
+	'newwikisgraph-param-all' => 'すべて',
 );
 
 /** Georgian (ქართული)
@@ -2820,12 +2896,19 @@ $messages['kn'] = array(
 
 /** Korean (한국어)
  * @author Cafeinlove
+ * @author Miri-Nae
  * @author 아라
  */
 $messages['ko'] = array(
+	'wf_city_id' => 'ID',
+	'wf_city_founding_user' => '설립자',
+	'wf_city_founding_email' => '설립자 메일',
+	'wf_city_public' => '통계',
 	'wf_city_lang' => '언어',
 	'wf_cc_name' => '분류',
+	'wikifactory-label-hubs' => '허브',
 	'closewiki-unknown' => '알 수 없음',
+	'closed-reason' => '이유:',
 );
 
 /** Karachay-Balkar (къарачай-малкъар)
@@ -5396,6 +5479,31 @@ $messages['vi'] = array(
 	'wf_city_created' => 'Khởi tạo',
 	'wf_city_founding_user' => 'Sáng lập viên',
 	'wf_city_founding_email' => 'Người sáng lập email',
+	'wf_city_public' => 'Trạng thái',
+	'wf_city_lang' => 'Ngôn ngữ',
+	'wf_cc_name' => 'Thể loại',
+	'wikifactory_removevariable' => 'Tẩy trống dữ liệu wiki từ bộ nhớ cache',
+	'wikifactory_removeconfirm' => 'Dữ liệu wiki loại bỏ khỏi bộ đệm ẩn!',
+	'wikifactory-label-info' => 'Thông tin',
+	'wikifactory-label-variables' => 'Biến',
+	'wikifactory-label-variables2' => 'Tổng quát',
+	'wikifactory-label-hubs' => 'Trung tâm',
+	'wikifactory-label-domains' => 'Tên miền:',
+	'wikifactory-label-return' => 'Trở về danh sách',
+	'wikifactory-label-clog' => 'Nhật trình thay đổi',
+	'wikifactory-label-actions' => 'Tác vụ',
+	'wikifactory-label-google' => 'Công cụ của Google',
+	'wikifactory-label-close' => 'Đóng',
+	'wikifactory-label-tags' => 'Thẻ đánh dấu',
+	'wikifactory-label-tags2' => 'Thẻ đánh dấu',
+	'wikifactory-domain-edit' => 'chỉnh sửa URL này',
+	'wikifactory-domain-remove' => 'loại bỏ URL này từ wiki',
+	'wikifactory-domain-setmain' => 'Đặt URL này vào wgServer',
+	'closewiki-check-and-confirm' => 'Kiểm tra wiki và xác nhận hoạt động',
+	'closewiki-redirect-to' => 'Đổi hướng đến',
+	'closewiki-message' => 'tên miền $1',
+	'closewiki-confirm-button' => "Xác nhận '$1' của $2",
+	'closewiki-nbr-wiki' => '$1 Wiki',
 	'awc-metrics-one-week' => 'tạo < 1 tuần trước đây',
 	'awc-metrics-two-weeks' => 'tạo < 2 tuần trước',
 	'awc-metrics-three-weeks' => 'tạo < 3 tuần trước',

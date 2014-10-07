@@ -22,7 +22,6 @@ class MercuryApiModelTest extends WikiaBaseTest {
 		$this->mockGlobalVariable('wgAdDriverForceDirectGptAd', true);
 		$this->mockGlobalVariable('wgAdDriverUseSevenOneMedia', false);
 		$this->mockGlobalVariable('wgWikiDirectedAtChildrenByStaff', true);
-		$this->mockGlobalVariable('wgAdDriverUseEbay', true);
 	}
 
 	/**
@@ -81,7 +80,6 @@ class MercuryApiModelTest extends WikiaBaseTest {
 				'wikiVertical' => 'Wikia',
 			],
 			'providers' => [
-				'ebay' => true,
 				'sevenOneMedia' => null,
 				'sevenOneMediaCombinedUrl' => null,
 				'remnantGptMobile' => null,

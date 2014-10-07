@@ -195,6 +195,7 @@ Alternatively, you can click "$2" to see the page in its updated form.',
 /** Message documentation (Message documentation)
  * @author EugeneZelenko
  * @author LWChris
+ * @author Liuxinyu970226
  * @author Shirayuki
  * @author Siebrand
  * @author Umherirrender
@@ -252,7 +253,7 @@ $messages['qqq'] = array(
 	'wikiaPhotoGallery-slideshowpreview-position-center' => '{{Identical|Center}}',
 	'wikiaPhotoGallery-slideshowpreview-position-right' => '{{Identical|Right}}',
 	'wikiaPhotoGallery-sliderpreview-addphoto' => '{{Identical|Add photo}}',
-	'wikiaPhotoGallery-upload-uploadtitle' => '{{Identical|Upload}}',
+	'wikiaPhotoGallery-upload-uploadtitle' => '',
 	'wikiaPhotoGallery-upload-existingtext-onarticle' => '{{Identical|This page}}',
 	'wikiaPhotoGallery-upload-selectbutton' => '{{Identical|Select}}',
 	'galery-slider-read-more' => '{{Identical|Read more}}',
@@ -1714,6 +1715,7 @@ $messages['eo'] = array(
  * @author Crazymadlover
  * @author Diego Grez
  * @author Drini
+ * @author Fitoschido
  * @author Mor
  * @author Translationista
  * @author VegaDark
@@ -1886,7 +1888,7 @@ De forma alternativa puedes hacer clic en "$2" para ver la página actualizada.'
 Describe esta imagen.",
 	'wikiaPhotoGallery-photooptions-linktitle' => 'Enlazar una página',
 	'wikiaPhotoGallery-photooptions-linksub' => "'''Opcional.''' Cuando se haga clic en esta imagen, ir a esta página.",
-	'wikiaPhotoGallery-photooptions-linktext' => 'Texto a mostrar para el enlace',
+	'wikiaPhotoGallery-photooptions-linktext' => 'Texto que mostrar en el enlace.',
 	'wikiaPhotoGallery-photooptions-linkurl' => 'Enlazar a (pegar nombre de página o URL)',
 	'wikiaPhotoGallery-photooptions-description' => 'Detalles de imagen.',
 	'wikiaPhotoGallery-search-tooltip' => 'Buscar imágenes en esta wiki',
@@ -1909,10 +1911,19 @@ $messages['fa'] = array(
 	'wikiaPhotoGallery-upload-error-conflict-insert' => 'درج',
 	'wikiaPhotoGallery-upload-select-images' => 'انتخاب',
 	'wikiaPhotoGallery-photooptions-done' => 'انجام شد',
+	'wikiaPhotoGallery-preview-hover-modify' => 'تغییر',
 	'wikiaPhotoGallery-preview-hover-delete' => 'حذف',
+	'wikiaPhotoGallery-preview-add-description' => 'افزودن توضیحات',
+	'wikiaPhotoGallery-preview-tab-layout' => 'چیدمان',
+	'wikiaPhotoGallery-preview-position-left' => 'سمت چپ',
+	'wikiaPhotoGallery-preview-position-center' => 'مرکز',
+	'wikiaPhotoGallery-preview-position-right' => 'درست',
 	'wikiaPhotoGallery-preview-spacing-small' => 'کوچک',
 	'wikiaPhotoGallery-preview-spacing-medium' => 'متوسط',
 	'wikiaPhotoGallery-preview-spacing-large' => 'بزرگ',
+	'wikiaPhotoGallery-preview-captionalignment-left' => 'سمت چپ',
+	'wikiaPhotoGallery-preview-captionalignment-center' => 'مرکز',
+	'wikiaPhotoGallery-preview-captionalignment-right' => 'درست',
 	'wikiaPhotoGallery-preview-captionsize-small' => 'کوچک',
 	'wikiaPhotoGallery-preview-captionsize-medium' => 'متوسط',
 	'wikiaPhotoGallery-preview-captionsize-large' => 'بزرگ',
@@ -1920,6 +1931,14 @@ $messages['fa'] = array(
 	'wikiaPhotoGallery-preview-bordersize-small' => 'کوچک',
 	'wikiaPhotoGallery-preview-bordersize-medium' => 'متوسط',
 	'wikiaPhotoGallery-preview-bordersize-large' => 'بزرگ',
+	'wikiaPhotoGallery-preview-captions' => 'عناوین:',
+	'wikiaPhotoGallery-preview-captions-left' => 'سمت چپ',
+	'wikiaPhotoGallery-preview-captions-center' => 'مرکز',
+	'wikiaPhotoGallery-preview-captions-right' => 'درست',
+	'wikiaPhotoGallery-slideshow-view-number' => '$1 از $2',
+	'wikiaPhotoGallery-slideshowpreview-position-left' => 'سمت چپ',
+	'wikiaPhotoGallery-slideshowpreview-position-center' => 'مرکز',
+	'wikiaPhotoGallery-slideshowpreview-position-right' => 'درست',
 	'wikiaPhotoGallery-upload-selectbutton' => 'انتخاب',
 );
 
@@ -2287,7 +2306,7 @@ $messages['gl'] = array(
 	'wikiaPhotoGallery-back' => 'Volver',
 	'wikiaPhotoGallery-finish' => 'Rematar',
 	'wikiaPhotoGallery-feed-caption' => '$1, mediante <a href="$2">$3</a>',
-	'wikiaPhotoGallery-lightbox-caption' => 'Mediante $1',
+	'wikiaPhotoGallery-lightbox-caption' => 'A través de $1',
 	'wikiaPhotoGallery-add-gallery' => 'Inserir unha galería de fotos ou presentación de diapositivas',
 	'wikiaPhotoGallery-viewmode-addphoto' => 'Engadir unha foto a esta galería',
 	'wikiaPhotoGallery-edit-abort' => 'Un asociador da extensión impediu a modificación que intentou realizar',
@@ -2648,6 +2667,7 @@ $messages['he'] = array(
  * @author Alquen
  * @author Dani
  * @author Glanthor Reviol
+ * @author Samat
  * @author TK-999
  */
 $messages['hu'] = array(
@@ -2761,7 +2781,7 @@ Másik lehetőségként a(z) "$2"-re kattintva megtekintheted az oldalt frissít
 	'wikiaPhotoGallery-preview-delete-title' => 'Eltávolítod ezt a képet?',
 	'wikiaPhotoGallery-preview-delete' => 'Biztosan el szeretnéd távolítani ezt a képet ebből a galériából?',
 	'wikiaPhotoGallery-preview-saving-title' => 'Mentés folyamatban',
-	'wikiaPhotoGallery-preview-saving-intro' => 'Várj, amíg elmentjük a galériádat.',
+	'wikiaPhotoGallery-preview-saving-intro' => 'Várj, amíg elmentjük a galériádat!',
 	'wikiaPhotoGallery-quit-title' => 'Kilépés a galéria-szerkesztőből',
 	'wikiaPhotoGallery-quit-intro' => 'Biztos vagy benne, hogy ki szeretnél lépni a galéria-szerkesztőből?',
 	'wikiaPhotoGallery-quit-savequit' => 'Mentés és kilépés',
@@ -3371,12 +3391,45 @@ $messages['kn'] = array(
 );
 
 /** Korean (한국어)
+ * @author Miri-Nae
  * @author 아라
  */
 $messages['ko'] = array(
+	'wikiaPhotoGallery-error-caption' => '오류',
 	'wikiaPhotoGallery-upload-findtitle' => '찾기',
 	'wikiaPhotoGallery-upload-findbutton' => '찾기',
+	'wikiaPhotoGallery-photooptions-done' => '완료',
+	'wikiaPhotoGallery-preview-hover-modify' => '수정',
+	'wikiaPhotoGallery-preview-hover-delete' => '삭제',
+	'wikiaPhotoGallery-preview-px' => 'px',
+	'wikiaPhotoGallery-preview-position' => '갤러리 위치',
+	'wikiaPhotoGallery-preview-position-left' => '왼쪽',
+	'wikiaPhotoGallery-preview-position-center' => '가운데',
+	'wikiaPhotoGallery-preview-position-right' => '오른쪽',
+	'wikiaPhotoGallery-preview-spacing-small' => '작게',
+	'wikiaPhotoGallery-preview-spacing-medium' => '보통',
+	'wikiaPhotoGallery-preview-spacing-large' => '크게',
+	'wikiaPhotoGallery-preview-captionalignment-left' => '왼쪽',
+	'wikiaPhotoGallery-preview-captionalignment-center' => '가운데',
+	'wikiaPhotoGallery-preview-captionalignment-right' => '오른쪽',
+	'wikiaPhotoGallery-preview-captionsize' => '설명 크기',
+	'wikiaPhotoGallery-preview-captionsize-small' => '작게',
+	'wikiaPhotoGallery-preview-captionsize-medium' => '보통',
+	'wikiaPhotoGallery-preview-captionsize-large' => '크게',
+	'wikiaPhotoGallery-preview-captioncolor' => '설명 색상',
+	'wikiaPhotoGallery-preview-bordersize-small' => '작게',
+	'wikiaPhotoGallery-preview-bordersize-medium' => '보통',
+	'wikiaPhotoGallery-preview-bordersize-large' => '크게',
+	'wikiaPhotoGallery-preview-size' => '그림 크기',
+	'wikiaPhotoGallery-preview-captions' => '설명',
+	'wikiaPhotoGallery-preview-captions-left' => '왼쪽',
+	'wikiaPhotoGallery-preview-captions-center' => '가운데',
+	'wikiaPhotoGallery-preview-captions-right' => '오른쪽',
 	'wikiaPhotoGallery-quit-quitonly' => '바뀐 내용을 버리고 끝내기',
+	'wikiaPhotoGallery-slideshow-view-title' => '슬라이드쇼',
+	'wikiaPhotoGallery-slideshowpreview-position-left' => '왼쪽',
+	'wikiaPhotoGallery-slideshowpreview-position-center' => '가운데',
+	'wikiaPhotoGallery-slideshowpreview-position-right' => '오른쪽',
 );
 
 /** Kurdish (Latin script) (Kurdî (latînî)‎)
@@ -5057,6 +5110,7 @@ Em alternativa, pode clicar "$2" para ver a página na forma atualizada.',
 
 /** Brazilian Portuguese (português do Brasil)
  * @author Aristóbulo
+ * @author Dianakc
  * @author Luckas
  * @author Luckas Blade
  */
@@ -5107,7 +5161,7 @@ O que pretende fazer?',
 	'wikiaPhotoGallery-preview-title' => 'Criador de galerias',
 	'wikiaPhotoGallery-preview-hover-modify' => 'modificar',
 	'wikiaPhotoGallery-preview-hover-delete' => 'apagar',
-	'wikiaPhotoGallery-preview-previewtitle' => 'Antevisão da galeria',
+	'wikiaPhotoGallery-preview-previewtitle' => 'Pré-visualização da galeria',
 	'wikiaPhotoGallery-preview-add-photo' => 'Adicionar uma foto',
 	'wikiaPhotoGallery-preview-add-caption' => 'Adicionar um título',
 	'wikiaPhotoGallery-preview-add-description' => 'Adicione uma descrição',
@@ -6680,6 +6734,7 @@ $messages['zh-hans'] = array(
 /** Traditional Chinese (中文（繁體）‎)
  * @author Ffaarr
  * @author LNDDYL
+ * @author Liuxinyu970226
  */
 $messages['zh-hant'] = array(
 	'wikiaPhotoGallery-back' => '返回',
@@ -6809,6 +6864,7 @@ $messages['zh-hant'] = array(
 	'wikiaPhotoGallery-slideshowpreview-position-right' => '右',
 	'wikiaPhotoGallery-sliderpreview-photostitle' => '滑塊圖片',
 	'wikiaPhotoGallery-sliderpreview-optionstitle' => '滑塊選項',
+	'wikiaPhotoGallery-upload-uploadtitle' => '找尋您的圖片',
 );
 
 /** Chinese (Hong Kong) (中文（香港）‎)

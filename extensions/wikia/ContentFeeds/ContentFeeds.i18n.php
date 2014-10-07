@@ -269,11 +269,13 @@ $messages['ia'] = array(
 
 /** Indonesian (Bahasa Indonesia)
  * @author C5st4wr6ch
+ * @author Riemogerz
  */
 $messages['id'] = array(
 	'contentfeeds-desc' => 'Menyediakan informasi yang kaya dan mutakhir melalui berbagai tag atau "umpan balik"',
 	'contentfeeds-firstfewarticles-tag-header' => 'Buatlah beberapa halaman pertama Anda!',
 	'contentfeeds-firstfewarticles-tag-title' => 'Judul',
+	'contentfeeds-firstfewarticles-tag-next' => 'Selanjutnya',
 	'contentfeeds-firstfewarticles-tag-empty-title-error' => 'Kesalahan: Judul halaman disyaratkan',
 );
 
@@ -316,6 +318,10 @@ $messages['kn'] = array(
  * @author Miri-Nae
  */
 $messages['ko'] = array(
+	'contentfeeds-newimages-rss-title' => '{{#Special:NewFiles}}의 RSS 피드',
+	'contentfeeds-firstfewarticles-tag-header' => '문서를 몇 개 만들어 보세요!',
+	'contentfeeds-firstfewarticles-tag-title' => '제목',
+	'contentfeeds-firstfewarticles-tag-next' => '다음',
 	'contentfeeds-firstfewarticles-tag-empty-title-error' => '오류: 문서 제목 필요',
 	'contentfeeds-firstfewarticles-tag-empty-body-error' => '오류: 문서 내용 필요',
 );
