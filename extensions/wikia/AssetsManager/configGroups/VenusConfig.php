@@ -109,7 +109,8 @@ $VenusConfig['local_navigation_js'] = [
 	'skin' => ['venus', 'oasis'],
 	'assets' => [
 		'//extensions/wikia/LocalNavigation/scripts/LocalNavigationMenu.js',
-		'//extensions/wikia/LocalNavigation/scripts/LocalNavigationTracking.js',
+		'//extensions/wikia/LocalNavigation/scripts/LocalNavigationContribute.js',
+		'//extensions/wikia/LocalNavigation/scripts/LocalNavigationTracking.js'
 	]
 ];
 
@@ -162,14 +163,5 @@ $VenusConfig[ 'global_navigation_facebook_login_js' ] = [
 		'//extensions/FBConnect/fbconnect.js',
 		'//extensions/wikia/UserLogin/js/UserLoginFacebook.js',
 		'//extensions/wikia/UserLogin/js/UserLoginFacebookForm.js',
-	]
-];
-
-/** GlobalFooter extension */
-$VenusConfig[ 'global_footer_scss' ] = [
-	'type' => AssetsManager::TYPE_SCSS,
-	'skin' => [ 'venus' ],
-	'assets' => [
-		'//extensions/wikia/GlobalFooter/styles/GlobalFooter.scss'
 	]
 ];

@@ -5,17 +5,23 @@
 @import 'extensions/wikia/Venus/styles/variables';
 @import 'extensions/wikia/Venus/styles/z-index';
 
-
 .local-navigation-container {
 	@include clearfix;
 }
 
 .local-navigation {
-	@include clearfix;
-
 	background-color: $color-page;
 	height: 80px;
 	white-space: nowrap;
+	width: 100%;
+
+	a {
+		color: inherit;
+
+		&:hover, &.active {
+			text-decoration: none;
+		}
+	}
 
 	.local-nav {
 		display: inline-block;
@@ -23,142 +29,101 @@
 		white-space: normal;
 	}
 
-	.contribute {
-		background-color: $color-buttons;
-		color: $color-button-text;
-		display: inline-block;
-		position: relative;
-	}
-
-	.contribute-button {
-		display: table-cell;
-		font-size: 12px;
-		font-weight: bold;
-		height: 40px;
-		padding: 8px 15px 8px 20px;
-		position: relative;
-		text-transform: uppercase;
-		vertical-align: middle;
-
-		&::after {
-			border: 5px solid;
-			border-top-color: $color-button-text;
-			color: transparent;
-			content: ' ';
-			display: inline-block;
-			margin: 5px 0 0 15px;
-			position: relative;
-			top: 3px;
-		}
-	}
-
-	.dropdown {
-		display: table;
-		left: 0;
-		padding-left: 0;
-		position: absolute;
-		right: auto;
-		z-index: $local-navigation-dropdown-z-index;
-
-		&.right {
-			left: auto;
-			right: 0;
-
-			li {
-				a, a::after {
-					text-align: right;
-				}
-				a span {
-					left: auto;
-					right: 20px;
-				}
-			}
-		}
-
-		li {
-			display: table-row;
-			height: 51px;
-			list-style: none;
-
-			a {
-				background-color: $color-buttons;
-				color: $color-button-text;
-				display: table-cell;
-				padding: 20px;
-				vertical-align: middle;
-				white-space: nowrap;
-				width: 100%;
-
-
-				&:hover, &.active {
-					font-weight: bold;
-				}
-
-				&::after {
-					content: attr(data-content);
-					font-weight: bold;
-					visibility: hidden;
-				}
-
-				span {
-					position: absolute;
-					left: 20px;
-					right: auto;
-				}
-			}
-
-		}
-		> li:nth-child(n + 2) > a {
-			border-top: 1px solid rgba($color-button-text, .2);
-		}
-	}
-
 	.wordmark-container {
 		display: inline-block;
 		height: 100%;
-		padding: 0 40px 0 32px;
-		white-space: normal;
+		padding: 0 40px 0 30px;
+		vertical-align: middle;
 
 		> span {
 			display: table;
 			height: 100%;
 		}
+	}
 
-		.wordmark {
-			display: table-cell;
-			vertical-align: middle;
-			width: 160px;
+	.wordmark {
+		display: table-cell;
+		vertical-align: middle;
+		width: 160px;
+	}
+
+	.wordmark-text {
+		display: inline-block;
+		max-height: 80px;
+		overflow: hidden;
+
+		&.large {
+			font-size: 27px;
 		}
 
-		.wordmark-text {
-			display: inline-block;
-			max-height: 80px;
-			overflow: hidden;
+		&.medium {
+			font-size: 24px;
+		}
 
-			&.large {
-				font-size: 27px;
+		&.small {
+			font-size: 20px;
+		}
+	}
+
+	.dropdown {
+		position: absolute;
+		visibility: hidden;
+		z-index: $local-navigation-dropdown-z-index;
+
+		&.right,
+		&.contribute {
+			right: 0;
+		}
+
+		&.right li {
+			a, a::after {
+				text-align: right;
 			}
 
-			&.medium {
-				font-size: 24px;
+			span {
+				left: auto;
+				right: 20px;
+			}
+		}
+
+		li {
+			list-style: none;
+		}
+
+		> li:nth-child(n + 2) > a {
+			border-top: 1px solid rgba($color-button-text, .2);
+		}
+
+		a {
+			background-color: $color-buttons;
+			display: block;
+			padding: 20px;
+			white-space: nowrap;
+			width: 100%;
+
+			&:hover,
+			&.active {
+				font-weight: bold;
 			}
 
-			&.small {
-				font-size: 20px;
+			&::after {
+				content: attr(data-content);
+				font-weight: bold;
+				visibility: hidden;
+			}
+
+			span {
+				left: 20px;
+				position: absolute;
+				right: auto;
 			}
 		}
 	}
 
-	a {
-		color: inherit;
-		&:hover, &.active {
-			text-decoration: none;
-		}
-	}
 	.first-level-menu {
 		height: 60px;
-		padding: 20px 0 0 0;
 		margin: 0;
+		padding: 20px 0 0;
 
 		> li {
 			display: block;
@@ -184,30 +149,28 @@
 				border-color: $color-page;
 				color: $color-button-text;
 
+				+ li {
+					border-color: $color-page;
+				}
+
 				.second-level-menu {
 					visibility: visible;
 				}
 			}
-			&.active + li {
-				border-color: $color-page;
-			}
 		}
-	}
-
-	.dropdown {
-		visibility: hidden;
 	}
 
 	.second-level-menu {
 		@include calc(min-width, '100% + 1px');
-		display: table;
 
 		.has-more {
 			padding-right: 40px;
+
 			span {
 				left: 20px;
 				right: 40px;
 			}
+
 			span::after {
 				@include arrow(4px, rgba($color-button-text, .5), 'right');
 				content: ' ';
@@ -215,86 +178,152 @@
 				margin: 1px -20px 0 0;
 				position: static;
 			}
-			&.active span::after {
+
+			&:hover span::after {
 				border-left-color: rgba($color-button-text, .8);
 			}
 		}
+
 		&.right {
 			.has-more {
 				padding-left: 40px;
+
 				span {
 					left: 40px;
 					right: 20px;
 				}
+
 				span::after {
 					@include arrow(4px, rgba($color-button-text, .5), 'left');
 					float: left;
 					margin: 1px 0 0 -20px;
 				}
+
 				&.active span::after {
 					border-right-color: rgba($color-button-text, .8);
 				}
 			}
+
 			.third-level-menu {
+				left: auto;
 				right: 100%;
 			}
-
 		}
-		.second-level-row.active {
-			.third-level-menu {
-				visibility: visible;
-			}
+
+		.second-level-row.active .third-level-menu {
+			visibility: visible;
 		}
 	}
+
 	.third-level-menu {
 		background: none;
 		display: block;
 		height: 100%;
-		left: auto;
+		left: 100%;
 		top: 0;
 		visibility: hidden;
 
 		.third-level-row {
 			background: $color-buttons;
-			height: 31px;
 
 			&:first-child a {
 				border-top-width: 5px;
 			}
+
 			&:last-child a {
 				border-bottom-width: 5px;
 			}
+
 			&:nth-child(n + 2) a {
 				border-top: 1px solid $color-buttons;
 			}
+		}
 
-			a {
-				$third-level-tint: if(lightness($color-buttons) < 50, #fff, #000);
+		a {
+			$third-level-tint: if(lightness($color-buttons) < 50, #fff, #000);
 
-				background: rgba($third-level-tint, .2);
-				border-color: $color-buttons;
-				border-left-width: 5px;
-				border-right-width: 5px;
-				border-style: solid;
-				padding: 10px;
+			background: rgba($third-level-tint, .2);
+			border-color: $color-buttons;
+			border-left-width: 5px;
+			border-right-width: 5px;
+			border-style: solid;
+			padding: 10px;
 
-				&:hover {
-					background: rgba($third-level-tint, .4);
-					font-weight: normal;
+			&:hover {
+				background: rgba($third-level-tint, .4);
+				font-weight: normal;
+			}
+		}
+	}
+
+	.contribute-container {
+		color: $color-button-text;
+		display: inline-block;
+		padding-top: 20px;
+		position: absolute;
+		right: 30px;
+
+		.contribute-button {
+			background-color: $color-buttons;
+			cursor: pointer;
+			display: table-cell;
+			font-size: 12px;
+			font-weight: bold;
+			height: 40px;
+			padding: 8px 15px 8px 20px;
+			position: relative;
+			text-transform: uppercase;
+			vertical-align: middle;
+
+			&::after {
+				@include arrow(5px, rgba($color-button-text, .5));
+				content: ' ';
+				display: inline-block;
+				margin: -2px 0 0 15px;
+			}
+		}
+
+		.dropdown {
+			min-width: 100%;
+		}
+
+		&.active {
+			.contribute-button {
+				border-bottom: 1px solid rgba($color-button-text, .2);
+				height: 41px;
+
+				&::after {
+					border-top-color: $color-button-text;
 				}
+			}
+
+			.dropdown {
+				visibility: visible;
 			}
 		}
 	}
 }
 
-@media #{$medium-only} {
-	.local-navigation .wordmark-container {
-		padding-left: 30px;
+@media #{$small-only} {
+	.local-navigation {
+		.wordmark-container {
+			padding: 0 30px 0 24px;
+		}
+
+		.contribute-container {
+			display: none;
+		}
 	}
 }
 
-@media #{$small-only} {
-	.local-navigation .wordmark-container {
-		padding: 0 30px 0 24px;
+@media #{$large-up} {
+	.local-navigation {
+		.wordmark-container {
+			padding-left: 32px;
+		}
+
+		.contribute-container {
+			right: 53px;
+		}
 	}
 }
