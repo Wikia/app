@@ -29,6 +29,7 @@ class MediaGalleryController extends WikiaController {
 		$this->json = json_encode( $data );
 		$this->count = $this->model->getMediaCount();
 		$this->visibleCount = $visibleCount;
+		$this->expanded = !empty( $galleryParams['expand'] );
 		$this->addImageButton = wfMessage('mediagallery-add-image-button')->plain();
 	}
 }

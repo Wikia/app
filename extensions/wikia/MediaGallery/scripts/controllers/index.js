@@ -21,18 +21,23 @@ require([
 	 */
 	GalleryController.prototype.createGallery = function ($elem, idx, data) {
 		var origVisibleCount = $elem.data('visible-count') || 8,
-			gallery;
+			gallery,
+			galleryOptions = {
+				$el: $('<div></div>'),
+				$wrapper: $elem,
+				model: {
+					media: data
+				},
+				origVisibleCount: origVisibleCount,
+				index: idx
+			};
+
+		if ($elem.data('expanded')) {
+			galleryOptions.interval = 100;
+		}
 
 		// Instantiate gallery view
-		gallery = new Gallery({
-			$el: $('<div></div>'),
-			$wrapper: $elem,
-			model: {
-				media: data
-			},
-			origVisibleCount: origVisibleCount,
-			index: idx
-		});
+		gallery = new Gallery(galleryOptions);
 
 		// Append gallery HTML to DOM
 		$elem.append(gallery.render(origVisibleCount).$el);
