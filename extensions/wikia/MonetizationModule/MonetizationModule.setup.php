@@ -31,5 +31,5 @@ $wgAutoloadClasses['MonetizationModuleHooks'] = $dir . 'MonetizationModuleHooks.
 $wgExtensionMessagesFiles['MonetizationModule'] = $dir . 'MonetizationModule.i18n.php';
 
 // hooks
-$wgHooks['WikiaSkinTopScripts'][] = 'MonetizationModuleHooks::onWikiaSkinTopScripts';
+$wgHooks['OasisSkinAssetGroupsBlocking'][] = 'MonetizationModuleHooks::onOasisSkinAssetGroupsBlocking';
 
