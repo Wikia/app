@@ -32,4 +32,3 @@ $wgExtensionMessagesFiles['MonetizationModule'] = $dir . 'MonetizationModule.i18
 
 // hooks
 $wgHooks['OasisSkinAssetGroupsBlocking'][] = 'MonetizationModuleHooks::onOasisSkinAssetGroupsBlocking';
-

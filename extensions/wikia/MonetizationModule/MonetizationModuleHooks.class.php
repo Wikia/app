@@ -5,7 +5,7 @@
 class MonetizationModuleHooks {
 
 	/**
-	 * Register monetization-related scripts on top
+	 * Register monetization-related scripts on the top of the page
 	 * @param array $jsAssetGroups
 	 * @return true
 	 */
