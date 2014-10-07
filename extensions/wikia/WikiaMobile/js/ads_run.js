@@ -22,7 +22,7 @@ require(
 			$firstSection = $( 'h2[id]' ).first(),
 			$footer = $( '#wkMainCntFtr' ),
 			firstSectionTop = ( $firstSection.length && $firstSection.offset().top) || 0,
-			infoboxSelectors = [ 'table[class*=infobox], div[class*=infobox], div[id*=infobox]', 'div.bigTable' ],
+			infoboxSelectors = [ 'table[class*=infobox], div[class*=infobox], div[id*=infobox]' ],
 			infoboxAdEnabled = window.wgAdDriverUseAdsAfterInfobox && abTest && abTest.inGroup('WIKIAMOBILE_ADS_AFTER_INFOBOX', 'YES'),
 			showInContent = firstSectionTop > minZerothSectionLength,
 			showPreFooter = doc.body.offsetHeight > minPageLength || firstSectionTop < minZerothSectionLength,
