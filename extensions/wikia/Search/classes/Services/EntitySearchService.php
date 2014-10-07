@@ -10,7 +10,6 @@ use WikiFactory;
 class EntitySearchService {
 	const WORDS_QUERY_LIMIT = 10;
 	const WIKIA_URL_REGEXP = '~^(http(s?)://)(([^\.]+)\.wikia\.com)~';
-	const XWIKI_CORE = 'xwiki';
 
 	/** @var \Solarium_Client client */
 	protected $client;
@@ -32,9 +31,9 @@ class EntitySearchService {
 	 */
 	private $blacklist;
 
-	public function getBlacklist(){
-		if (empty($this->blacklist)){
-			$this->blacklist = new BlacklistFilter($this->getCore());
+	public function getBlacklist() {
+		if ( empty( $this->blacklist ) ) {
+			$this->blacklist = new BlacklistFilter( $this->getCore() );
 		}
 		return $this->blacklist;
 	}
@@ -244,6 +243,4 @@ class EntitySearchService {
 	protected function replaceHost( $details ) {
 		return $details[1] . WikiFactory::getCurrentStagingHost( $details[4], $details[3] );
 	}
-
-
 }
