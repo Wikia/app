@@ -1347,13 +1347,15 @@ $wgAdDriverEnableAdsInMaps = false;
  *  'skin' : ['oasis']
  *  ]]
  *
- * Rubicon RTP configuration variable
+ * Rubicon RTP configuration variable.
+ * Only set this variable through Wiki Factory on community wiki. The setting then applies globally.
  */
 $wgAdDriverRubiconRTPConfig = null;
 
 /**
  * @name $wgAdDriverRubiconRTPCountries
- * List of countries RTP call will be issued
+ * List of countries RTP call will be issued.
+ * Only set this variable through Wiki Factory on community wiki. The setting then applies globally.
  */
 $wgAdDriverRubiconRTPCountries = null;
 
