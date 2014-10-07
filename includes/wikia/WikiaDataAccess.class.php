@@ -41,7 +41,7 @@ class WikiaDataAccess {
 	 * Provider here for consistency
 	 * Should not be used - does not cache results
 	 *
-	 * @param callable $getData A function that returns the data the cache is backed by
+	 * @param callable $getData A function that returns data for cache MISSes
 	 *
 	 * @author Piotr Bablok <pbablok@wikia-inc.com>
 	 */
