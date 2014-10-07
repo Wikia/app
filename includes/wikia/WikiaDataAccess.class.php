@@ -35,21 +35,6 @@ class WikiaDataAccess {
 	 * Public Interface
 	 **********************************/
 
-
-	/**
-	 * Simple direct data getter
-	 * Provider here for consistency
-	 * Should not be used - does not cache results
-	 *
-	 * @param callable $getData A function that returns data for cache MISSes
-	 *
-	 * @author Piotr Bablok <pbablok@wikia-inc.com>
-	 */
-	static function simpleDirect( $getData ) {
-		return $getData();
-	}
-
-
 	/**
 	 * Returns cached data if possible (up to $cacheTTL old) otherwise gets the data and saves the result in cache
 	 * before returning it
@@ -94,7 +79,7 @@ class WikiaDataAccess {
 		$cacheTTL = empty( $options['cacheTTL'] ) ? self::DEFAULT_TTL : $options['cacheTTL'];
 
 		// Get the negative TTL, defaulting to the positive TTL.  Allow for a negative TTL of zero.
-		$negativeCacheTTL = array_key_exists( 'negativeCacheTTL', $options ) ? $options['negativeCacheTTL'] : $cacheTTL;
+		$negativeCacheTTL = isset( $options['negativeCacheTTL'] ) ? $options['negativeCacheTTL'] : $cacheTTL;
 
 		if ( $command == self::SKIP_CACHE ) {
 			Wikia::log( __METHOD__, 'debug', "Cache disabled for key:{$key}, if this is on production please contact the author of the code.", true);

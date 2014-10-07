@@ -262,7 +262,7 @@ class VideoHandlerController extends WikiaController {
 			if ( empty( $videos ) ) {
 				$log = WikiaLogger::instance();
 				$log->info( __METHOD__.' empty details', [
-					'titleCount' => count($fileTitleAsArray),
+					'titleCount' => count( $fileTitleAsArray ),
 					'titleString' => implode( '|', $fileTitleAsArray ),
 				] );
 			}
