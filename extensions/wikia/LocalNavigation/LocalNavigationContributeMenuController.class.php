@@ -32,9 +32,11 @@ class LocalNavigationContributeMenuController extends WikiaController {
 				continue;
 			}
 
+			$label = wfMessage( $link[ 'label' ] )->escaped();
+
 			$attrs = [
-				'text' => wfMessage( $link[ 'label' ] )->escaped(),
-				'data-content' => wfMessage( $link[ 'label' ] )->escaped(),
+				'text' => $label,
+				'data-content' => $label,
 				'href' =>  $specialPageTitle->getLocalURL(),
 			];
 
