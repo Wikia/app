@@ -90,6 +90,11 @@ define('wikia.intMap.poiCategories',
 				],
 				triggerMarkerUpload: [
 					triggerMarkerUpload
+				],
+				beforeClose: [
+					function () {
+						utils.onBeforeCloseModal(!changesSaved);
+					}
 				]
 			},
 			pontoTrigger,
@@ -100,7 +105,8 @@ define('wikia.intMap.poiCategories',
 			modalModes = {
 				CREATE: 'create',
 				EDIT: 'edit'
-			};
+			},
+			changesSaved;
 
 		/**
 		 * @desc Entry point for modal
@@ -412,6 +418,7 @@ define('wikia.intMap.poiCategories',
 		 * @param {object} dataReceived - response from backend, array of actions done and categories affected
 		 */
 		function poiCategoriesSaved(dataSent, dataReceived) {
+			changesSaved = true;
 			if (mode === modalModes.EDIT) {
 				if (typeof pontoTrigger === 'function') {
 					pontoTrigger(poiCategoriesModel.preparePoiCategoriesForPonto(dataSent, dataReceived));

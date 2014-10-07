@@ -298,6 +298,16 @@ define(
 		}
 
 		/**
+		 * @desc Triggers refresh if needed
+		 * @param {bool} shouldRefreshAfterForceLogin
+		 */
+		function onBeforeCloseModal(shouldRefreshAfterForceLogin) {
+			if (shouldRefreshAfterForceLogin) {
+				refreshIfAfterForceLogin();
+			}
+		}
+
+		/**
 		 * @desc handle nirvana exception errors
 		 * @param {object} modal - modal instance
 		 * @param {object} response - nirvana response object
@@ -454,6 +464,7 @@ define(
 			isUserLoggedIn: isUserLoggedIn,
 			showForceLoginModal: showForceLoginModal,
 			refreshIfAfterForceLogin: refreshIfAfterForceLogin,
+			onBeforeCloseModal: onBeforeCloseModal,
 			handleNirvanaException: handleNirvanaException,
 			getNirvanaExceptionMessage: getNirvanaExceptionMessage,
 			showError: showError,
