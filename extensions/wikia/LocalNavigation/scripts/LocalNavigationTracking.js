@@ -10,24 +10,16 @@
 	$localNav = $('#localNavigation');
 
 	function trackWordmarkEvent(event) {
-		var $element = $(event.currentTarget), label;
-
 		// Track only primary mouse button click
 		if (event.which !== 1) {
 			return;
 		}
 
-		if ($element.hasClass('wordmark')) {
-			label = 'wordmark';
-		}
-
-		if (label !== undefined) {
-			track({
-				browserEvent: event,
-				category: 'wiki-nav',
-				label: label
-			});
-		}
+		track({
+			browserEvent: event,
+			category: 'wiki-nav',
+			label: 'wordmark'
+		});
 	}
 
 	function trackNavigationDropdownEvent(event) {
