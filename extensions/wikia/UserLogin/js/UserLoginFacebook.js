@@ -13,6 +13,7 @@
 		},
 		actions: {},
 		track: false,
+		bucky: window.Bucky('UserLoginFacebook'),
 
 		log: function (msg) {
 			$().log(msg, 'UserLoginFacebook');
@@ -22,6 +23,7 @@
 			var self = this;
 
 			if (!this.initialized) {
+				this.bucky.timer.start('init');
 				require(['wikia.tracker'], function (tracker) {
 					self.actions = tracker.ACTIONS;
 					self.track = tracker.buildTrackingFunction({
@@ -38,11 +40,14 @@
 				$.loadFacebookAPI();
 
 				this.log('init');
+				this.bucky.timer.stop('init');
 			}
 		},
 
 		loginSetup: function () {
 			var self = this;
+
+			this.bucky.timer.start('loginSetup');
 
 			$('body')
 				.off('fb')
@@ -64,6 +69,9 @@
 				case 'connected':
 					this.log('FB.login successful');
 
+					// begin ajax call performance tracking
+					this.bucky.timer.start('FacebookSignupControllerAjax');
+
 					// now check FB account (is it connected with Wikia account?)
 					$.nirvana.postJson('FacebookSignupController', 'index',
 						$.proxy(this.checkAccountCallback, this));
@@ -77,15 +85,23 @@
 					});
 				}
 			}
+			this.bucky.timer.stop('loginSetup');
 		},
 
 		// check FB account (is it connected with Wikia account?)
 		checkAccountCallback: function (resp) {
-			var self = this,
-				loginCallback = this.callbacks['login-success'] || '';
+			var self, loginCallback;
 
+			// end ajax call performance tracking
+			this.bucky.timer.stop('FacebookSignupControllerAjax');
+
+			self = this;
+			loginCallback = this.callbacks['login-success'] || '';
+
+			// logged in using FB account, reload the page or callback
 			if (resp.loggedIn) {
-				// logged in using FB account, reload the page or callback
+
+				this.bucky.timer.start('loggedInCallback');
 
 				// Track FB Connect Login
 				this.track({
@@ -95,6 +111,7 @@
 
 				if (loginCallback && typeof loginCallback === 'function') {
 					loginCallback();
+					this.bucky.timer.stop('loggedInCallback');
 				} else {
 					require(['wikia.querystring'], function (Qs) {
 						var w = window,
@@ -106,12 +123,16 @@
 						if (returnTo) {
 							qString.setPath(w.wgArticlePath.replace('$1', returnTo));
 						}
+						self.bucky.timer.stop('loggedInCallback');
 						qString.addCb().goTo();
 					});
 				}
 			} else if (resp.loginAborted) {
 				window.GlobalNotification.show(resp.errorMsg, 'error');
+
+			// user not logged in, show the login/signup modal
 			} else {
+				self.bucky.timer.start('loggedOutCallback');
 				require(['wikia.ui.factory'], function (uiFactory) {
 					$.when(
 						uiFactory.init('modal'),
@@ -212,6 +233,7 @@
 								label: 'facebook-login-modal'
 							});
 							facebookSignupModal.show();
+							self.bucky.timer.stop('loggedOutCallback');
 						});
 					});
 				});
