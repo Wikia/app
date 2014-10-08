@@ -85,6 +85,22 @@
 			$(row).removeClass('active');
 		}
 
+		function closeOpenedMenu() {
+			if ($openedMenu !== undefined) {
+				$openedMenu.removeClass('active');
+			}
+			$openedMenu = undefined;
+
+			closeOpenedSubmenu();
+		}
+
+		function closeOpenedSubmenu() {
+			if ($openedSubmenu !== undefined) {
+				$openedSubmenu.removeClass('active');
+			}
+			$openedSubmenu = undefined;
+		}
+
 		function handleOpenMenuClick(event) {
 			var $target = $(event.currentTarget);
 
@@ -92,9 +108,7 @@
 			event.stopPropagation();
 
 			if (!$target.hasClass('active')) {
-				if ($openedMenu !== undefined) {
-					$openedMenu.removeClass('active');
-				}
+				closeOpenedMenu();
 				$target.addClass('active');
 			}
 			$('body').one('click', handleCloseMenuClick);
@@ -123,10 +137,9 @@
 				$target.find('a').first().attr('href') === '#'
 			) {
 				event.preventDefault();
-				if ($openedSubmenu !== undefined) {
-					$openedSubmenu.removeClass('active');
-				}
+				closeOpenedSubmenu();
 				$targetMenuItem.addClass('active');
+				$openedSubmenu = $targetMenuItem;
 			}
 		}
 
