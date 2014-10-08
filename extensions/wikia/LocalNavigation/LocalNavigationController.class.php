@@ -6,12 +6,11 @@ class LocalNavigationController extends WikiaController {
 	const WORDMARK_MAX_HEIGHT = 45;
 
 	public function Index() {
-		global $wgHideNavigationHeaders;
 		Wikia::addAssetsToOutput( 'local_navigation_scss' );
 		Wikia::addAssetsToOutput( 'local_navigation_oasis_scss' );
 		Wikia::addAssetsToOutput( 'local_navigation_js' );
 
-		$this->response->setVal( 'enableContributeButton', empty( $wgHideNavigationHeaders ) );
+		$this->response->setVal( 'enableContributeButton', !WikiaPageType::isWikiaHubMain() );
 	}
 
 	public function menu() {
