@@ -1,28 +1,29 @@
-@import 'variables';
+@import '../variables';
 
 article {
-	margin: 0 20px 0 86px;
-
-	dl {
-		margin: 0;
-	}
 
 	header {
-		margin-bottom: 30px;
+		background-color: #cccccc; //only for prototype version
+		margin-bottom: 40px;
+		width: 100%;
 
 		h1 {
 			font-size: 36px;
 			font-weight: bold;
 			line-height: 36px;
-			margin: 20px 60px 50px 0;
+			margin: 0;
+			padding-bottom: 30px;
+			padding-left: 36px;
 		}
 	}
 
 	.left-nav {
-		margin-left: -60px;
 		position: absolute;
+		text-align: center;
+		width: 86px;
 
 		ul {
+			display: inline-block;
 			list-style-type: none;
 			margin: 0;
 			padding: 0;
@@ -40,33 +41,16 @@ article {
 
 #mw-content-text {
 	font-size: 16px;
-
-	> .article-thumb {
-		clear: left;
-		float: left;
-		margin: 30px 30px 50px 0;
-
-		&.tright {
-			clear: right;
-			float: right;
-			margin-left: 30px;
-			margin-right: 0;
-		}
-
-		.caption {
-			border-top: 4px solid #ccc;
-			font-size: 12px;
-			font-style: italic;
-			margin: 10px 0 0 0;
-			padding-top: 10px;
-		}
-	}
+	line-height: 28px;
+	margin: 0 round($medium-grid-column / 2) 0 86px;
 
 	> h2 {
 		border-bottom: 1px solid $color-page-border;
 		font-size: 27px;
-		margin-bottom: 20px;
 		padding-bottom: 10px;
+		margin-bottom: 30px;
+		margin-top: 40px;
+
 
 		.editsection {
 			line-height: 27px;
@@ -75,7 +59,7 @@ article {
 
 	> h3 {
 		font-size: 18px;
-		margin: 0 0 16px 0;
+		margin: 40px 0 16px 0;
 
 		.editsection {
 			line-height: 22px;
@@ -102,6 +86,7 @@ article {
 	}
 
 	> p {
+		margin-bottom: 40px;
 		padding-right: 10px;
 	}
 
@@ -116,58 +101,72 @@ article {
 		margin: 0 0 35px 10px;
 	}
 
-	.infobox,
-	.infoBox {
-		margin-bottom: 20px;
-		width: 300px;
-
-		td,
-		th {
-			padding: 4px;
-		}
+	blockquote:before {
+		background: none repeat scroll 0 0 white;
+		content: "\201c";
+		display: inline;
+		font-size: 64px;
+		height: 34px;
+		line-height: 70px;
+		padding-top: 8px;
+		position: absolute;
+		top: -33px;
 	}
 
-	> .quote {
-		border-top: 4px solid $color-text;
+	blockquote {
+		border-top: 4px solid;
+		font-size: 27px;
+		margin: 0 0 40px 0px;
+		padding-top: 30px;
+		position: relative;
+	}
 
-		dd {
-			font-size: 27px;
-			margin-left: 0;
-			padding-top: 10px;
-
-			&:first-child {
-				padding-top: 25px;
-			}
-
-			&:last-child {
-				color: $color-links;
-				font-size: 18px;
-			}
-		}
-
-		dl {
-			margin: 0 0 35px 0;
-		}
+	pre {
+		white-space: normal;
 	}
 }
 
-@media #{$large-only} {
+@media #{$large-up} {
+	article {
+		header {
+			margin-right: 316px;
+			width: auto;
+		}
+	}
+
 	#mw-content-text {
 		font-size: 18px;
+		line-height: 36px;
+		margin-right: round($large-grid-column / 2);
+
+		h2 {
+			margin-top: 30px;
+		}
 
 		h3 {
 			font-size: 20px;
+			margin-bottom: 15px;
+			margin-top: 30px;
 		}
 	}
 }
 
+@media #{$small-only} {
+	margin-right: round($small-grid-column / 2);
+}
+
 /* FOR PROTOTYPE/TESTING ONLY */
-.adUnitTest {
+.adUnitTest, .infobox-test {
 	background-color: #ccc;
 	display: block;
 	float: right;
 	height: 250px;
-	margin: 0 0 20px 20px;
+	margin: 0 20px 20px 20px;
 	padding: 10px;
 	width: 300px;
+}
+
+.infobox-test {
+	clear: right;
+	height: 500px;
 }
