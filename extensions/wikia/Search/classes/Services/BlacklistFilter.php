@@ -45,7 +45,9 @@ class BlacklistFilter {
 
 	function __construct( $coreName ) {
 		$this->coreName = $coreName;
-		$this->blacklistedIdsProvider = $this->getLicensedWikisIdsProvider(); // licenced is default provider
+		// licenced should be used by default because we are not able to syndicate
+		// non CC content
+		$this->blacklistedIdsProvider = $this->getLicensedWikisIdsProvider();
 	}
 
 	public function getLicensedWikisIdsProvider() {
