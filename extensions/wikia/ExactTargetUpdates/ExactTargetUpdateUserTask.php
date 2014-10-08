@@ -19,7 +19,8 @@ class ExactTargetUpdateUserTask extends ExactTargetBaseTask {
 	public function updateUserEmail( $iUserId, $iUserEmail ) {
 		$oClient = $this->getClient();
 
-		/* Assuming email may be new - try create subscriber object using the email */
+		/* Subscriber list contains unique emails
+		 * Assuming email may be new - try to create subscriber object using the email */
 		$addUserTask = $this->getAddUserTaskObject();
 		$addUserTask->createSubscriber( $iUserEmail, $oClient );
 

@@ -10,7 +10,7 @@ class ExactTargetUpdatesHooks {
 	 */
 	public static function onSignupConfirmEmailComplete( User $user ) {
 		$thisInstance = new ExactTargetUpdatesHooks();
-		$thisInstance->addTheAddUserTask( $user, new ExactTargetAddUserTask() );
+		$thisInstance->addTheUpdateAddUserTask( $user, new ExactTargetAddUserTask() );
 		return true;
 	}
 
@@ -71,24 +71,36 @@ class ExactTargetUpdatesHooks {
 	 * @param User $oUser
 	 * @return bool
 	 */
-	public static function onEditAccountClosed( $oUser ) {
+	public static function onEditAccountClosed( User $oUser ) {
 		$thisInstance = new ExactTargetUpdatesHooks();
 		$thisInstance->addTheRemoveUserTask( $oUser, new ExactTargetRemoveUserTask() );
 		return true;
 	}
 
 	/**
-	 * Adds AddUserTask to job queue
-	 * @param User $user
-	 * @param ExactTargetAddUserTask $task
+	 * Runs a method for adding updateAddUserData to job queue
+	 * Function executed on EditAccountEmailChanged hook
+	 * @param User $oUser
+	 * @return bool
 	 */
-	public function addTheAddUserTask( User $user, ExactTargetAddUserTask $task ) {
+	public static function onEditAccountEmailChanged( User $oUser ) {
+		$thisInstance = new ExactTargetUpdatesHooks();
+		$thisInstance->addTheUpdateAddUserTask( $oUser, new ExactTargetAddUserTask() );
+		return true;
+	}
+
+	/**
+	 * Adds Task to job queue that updates a user or adds a user if one doesn't exist
+	 * @param User $oUser
+	 * @param ExactTargetUpdateUserTask $task
+	 */
+	public function addTheUpdateAddUserTask( User $oUser, ExactTargetAddUserTask $task ) {
 		global $wgWikiaEnvironment;
 		/* Don't add task when on dev or internal */
 		if ( $wgWikiaEnvironment != WIKIA_ENV_DEV && $wgWikiaEnvironment != WIKIA_ENV_INTERNAL ) {
-			$aUserData = $this->prepareUserParams( $user );
-			$aUserProperties = $this->prepareUserPropertiesParams( $user );
-			$task->call( 'sendNewUserData', $aUserData, $aUserProperties );
+			$aUserData = $this->prepareUserParams( $oUser );
+			$aUserProperties = $this->prepareUserPropertiesParams( $oUser );
+			$task->call( 'updateAddUserData', $aUserData, $aUserProperties );
 			$task->queue();
 		}
 	}

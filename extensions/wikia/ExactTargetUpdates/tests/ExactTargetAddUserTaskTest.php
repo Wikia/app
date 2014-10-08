@@ -50,7 +50,7 @@ class ExactTargetAddUserTaskTest extends WikiaBaseTest {
 			->with( $aUserData['user_id'], $aUserProperties, $oSoapClient );
 
 		/* Run tested method */
-		$addTaskMock->sendNewUserData( $aUserData, $aUserProperties );
+		$addTaskMock->updateAddUserData( $aUserData, $aUserProperties );
 	}
 
 	function testCreateUserPropertiesDataExtensionShouldSendData() {
