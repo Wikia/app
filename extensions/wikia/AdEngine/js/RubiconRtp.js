@@ -48,8 +48,7 @@ define('ext.wikia.adEngine.rubiconRtp', [
 
 	function onRubiconResponse(response) {
 		// Track the start, end times
-		rtpTiming.measureDiff(timingEventData, 'end');
-		rtpTiming.track();
+		rtpTiming.measureDiff(timingEventData, 'end').track();
 
 		log(['onRubiconResponse', response], 'debug', logGroup);
 
