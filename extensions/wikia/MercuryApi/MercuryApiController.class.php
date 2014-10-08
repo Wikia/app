@@ -17,6 +17,24 @@ class MercuryApiController extends WikiaController {
 	}
 
 	/**
+	 * @desc Returns smart banner config that is stored in WF
+	 */
+	private function getSmartBannerConfig() {
+		wfProfileIn( __METHOD__ );
+
+		if ( !empty( $this->wg->EnableWikiaMobileSmartBanner )
+			&& !empty( $this->wg->WikiaMobileSmartBannerConfig )
+		) {
+			wfProfileOut( __METHOD__ );
+			return $this->wg->WikiaMobileSmartBannerConfig;
+		}
+
+
+		wfProfileOut( __METHOD__ );
+		return null;
+	}
+
+	/**
 	 * @desc Returns user ids for top contributors
 	 *
 	 * @param int $articleId
@@ -169,6 +187,13 @@ class MercuryApiController extends WikiaController {
 	public function getWikiVariables() {
 		$wikiVariables = $this->mercuryApi->getWikiVariables();
 		$wikiVariables['navData'] = $this->getNavigationData();
+
+		$smartBannerConfig = $this->getSmartBannerConfig();
+
+		if (!is_null($smartBannerConfig)) {
+			$wikiVariables['smartbanner'] = $smartBannerConfig;
+		}
+
 		$this->response->setVal( 'data', $wikiVariables );
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 	}
