@@ -111,6 +111,8 @@ class WikiaMapsMapControllerTest extends WikiaBaseTest {
 		$userMock->expects( $this->once() )
 			->method( 'isBlocked' )
 			->willReturn( true );
+		$userMock->expects( $this->never() )
+			->method( 'isAllowed' );
 
 		$requestMock = $this->getWikiaRequestMock();
 		$requestMock->expects( $this->any() )
@@ -131,10 +133,56 @@ class WikiaMapsMapControllerTest extends WikiaBaseTest {
 		$controllerMock->expects( $this->any() )
 			->method( 'getModel' )
 			->willReturn( $modelMock );
+		$controllerMock->expects( $this->never() )
+			->method( 'canUserDelete' );
+		$controllerMock->expects( $this->never() )
+			->method( 'isUserMapCreator' );
 		$controllerMock->request = $requestMock;
 		$controllerMock->wg->User = $userMock;
 
 		$this->setExpectedException( 'WikiaMapsPermissionException' );
+		$controllerMock->updateMapDeletionStatus();
+	}
+
+	public function testUpdateMapDeletionStatus_no_rights() {
+		$userMock = $this->getUserMock();
+		$userMock->expects( $this->once() )
+			->method( 'isLoggedIn' )
+			->willReturn( true );
+		$userMock->expects( $this->once() )
+			->method( 'isBlocked' )
+			->willReturn( false );
+
+		$requestMock = $this->getWikiaRequestMock();
+		$requestMock->expects( $this->any() )
+			->method( 'getInt' )
+			->will( $this->returnValueMap( [
+				[ 'mapId', 0, 1 ],
+				[ 'deleted', 0, WikiaMaps::MAP_DELETED ],
+			] ) );
+
+		$modelMock = $this->getMockBuilder( 'WikiaMaps' )
+			->setMethods( [ 'updateMapDeletionStatus' ] )
+			->disableOriginalConstructor()
+			->getMock();
+		$modelMock->expects( $this->never() )
+			->method( 'updateMapDeletionStatus' );
+
+		$controllerMock = $this->getWikiaMapsMapControllerMock();
+		$controllerMock->expects( $this->any() )
+			->method( 'getModel' )
+			->willReturn( $modelMock );
+		$controllerMock->expects( $this->once() )
+			->method( 'canUserDelete' )
+			->willReturn( false );
+		$controllerMock->expects( $this->once() )
+			->method( 'isUserMapCreator' )
+			->willReturn( false );
+		$controllerMock->request = $requestMock;
+		$controllerMock->wg->User = $userMock;
+
+		$this->setExpectedException( 'WikiaMapsPermissionException' );
+		/** @var WikiaMapsMapController $controllerMock */
 		$controllerMock->updateMapDeletionStatus();
 	}
 
@@ -158,7 +206,7 @@ class WikiaMapsMapControllerTest extends WikiaBaseTest {
 
 	private function getWikiaMapsMapControllerMock() {
 		$controllerMock = $this->getMockBuilder( 'WikiaMapsMapController' )
-			->setMethods( [ 'getData', 'getModel' ] )
+			->setMethods( [ 'getData', 'getModel', 'canUserDelete', 'isUserMapCreator' ] )
 			->disableOriginalConstructor()
 			->getMock();
 
