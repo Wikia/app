@@ -18,6 +18,7 @@ $third-level-color-hover: mix($color-buttons, $third-level-tint, 71%); // ~40% o
 .local-navigation {
 	background-color: $color-page;
 	height: 80px;
+	position: relative;
 	white-space: nowrap;
 	width: 100%;
 
