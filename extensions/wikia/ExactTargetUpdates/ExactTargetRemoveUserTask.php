@@ -18,7 +18,7 @@ class ExactTargetRemoveUserTask extends ExactTargetBaseTask {
 	 * @param int $iUserId
 	 * @param ExactTargetSoapClient $oClient
 	 */
-	public function removeSubscriber( int $iUserId, ExactTargetSoapClient $oClient ) {
+	public function removeSubscriber( $iUserId, ExactTargetSoapClient $oClient ) {
 		$sEmail = $this->getUserEmail( $iUserId, $oClient );
 		if ( !$this->isEmailInUse( $sEmail, $oClient, $iUserId ) ) {
 			$this->doRemoveSubscriber( $sEmail, $oClient );
@@ -171,7 +171,7 @@ class ExactTargetRemoveUserTask extends ExactTargetBaseTask {
 	 * @param ExactTargetSoapClient $oClient
 	 * @return null|string
 	 */
-	public function getUserEmail( $iUserId, $oClient ) {
+	public function getUserEmail( $iUserId, ExactTargetSoapClient $oClient ) {
 		$oRetrieveRequest = new ExactTarget_RetrieveRequest();
 		$oRetrieveRequest->ObjectType = "DataExtensionObject[user]";
 		$oRetrieveRequest->Properties =  array();
