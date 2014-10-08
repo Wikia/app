@@ -104,24 +104,8 @@ article {
 		}
 	}
 
-	> div {
-		overflow: hidden;
-	}
-
 	> p {
 		margin-bottom: 40px;
-		padding-right: 10px;
-	}
-
-	> p,
-	> table {
-		margin-bottom: 35px;
-		overflow: hidden;
-	}
-
-	> ul {
-		list-style-position: inside;
-		margin: 0 0 35px 10px;
 	}
 
 	blockquote:before {
@@ -152,7 +136,7 @@ article {
 @media #{$large-up} {
 	article {
 		header {
-			margin-right: 316px;
+			margin-right: 2* $large-grid-gutter + 300px;
 			width: auto;
 		}
 	}
@@ -171,6 +155,10 @@ article {
 			margin-bottom: 15px;
 			margin-top: 30px;
 		}
+
+		> p {
+			margin-bottom: 30px;
+		}
 	}
 }
 
@@ -184,7 +172,7 @@ article {
 	display: block;
 	float: right;
 	height: 250px;
-	margin: 0 20px 20px 20px;
+	margin: 0 $medium-grid-gutter 20px 20px;
 	padding: 10px;
 	width: 300px;
 }
