@@ -6,6 +6,7 @@
 		loginAjaxForm: false,
 		init: function () {
 			// DOM cache
+			this.bucky.timer.start('init');
 			this.dropdown = $('#UserLoginDropdown');
 
 			$('#AccountNavigation').find('.ajaxLogin')
@@ -25,8 +26,10 @@
 				});
 
 			window.HoverMenuGlobal.menus.push(UserLoginDropdown);
+			this.bucky.timer.stop('init');
 		},
 		show: function () {
+			this.bucky.timer.start('show');
 			if (!this.dropdown.hasClass('show')) {
 				this.dropdown.addClass('show');
 				this.dropdown.trigger('hovermenu-shown');
@@ -43,6 +46,7 @@
 				bind('click.loginDropdown', $.proxy(this.outsideClickHandler, this));
 			}
 			this.loginAjaxForm.inputs.username.focus();
+			this.bucky.timer.stop('show');
 		},
 		hide: function () {
 			this.dropdown.removeClass('show');
@@ -65,6 +69,8 @@
 	window.UserLoginDropdown = UserLoginDropdown;
 
 	$(function () {
+		// make sure bucky is fully loaded before calling it
+		UserLoginDropdown.bucky = window.Bucky('UserLoginDropdown');
 		UserLoginDropdown.init();
 	});
 })();
