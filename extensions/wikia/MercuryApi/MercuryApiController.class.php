@@ -190,7 +190,7 @@ class MercuryApiController extends WikiaController {
 
 		$smartBannerConfig = $this->getSmartBannerConfig();
 
-		if (!is_null($smartBannerConfig)) {
+		if ( !is_null( $smartBannerConfig ) ) {
 			$wikiVariables['smartbanner'] = $smartBannerConfig;
 		}
 
