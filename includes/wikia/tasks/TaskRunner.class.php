@@ -19,7 +19,7 @@ class TaskRunner {
 	private $startTime;
 	private $endTime;
 
-	function __construct( $taskId, $taskList, $callOrder, $createdBy ) {
+	function __construct( $wikiId, $taskId, $taskList, $callOrder, $createdBy ) {
 		$this->taskId = $taskId;
 		$this->callOrder = json_decode( $callOrder, true );
 		$taskList = json_decode( $taskList, true );
@@ -28,8 +28,10 @@ class TaskRunner {
 		foreach ( $taskList as $taskData ) {
 			/** @var \Wikia\Tasks\Tasks\BaseTask $task */
 			$task = new $taskData['class']();
-			$task->taskId( $taskId );
-			$task->createdBy( $createdBy['id'] );
+			$task
+				->taskId( $taskId )
+				->wikiId( $wikiId )
+				->createdBy( $createdBy['id'] );
 			$task->unserialize( $taskData['context'], $taskData['calls'] );
 
 			try {

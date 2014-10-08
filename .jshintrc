@@ -10,7 +10,7 @@
 	"curly": true,
 	"eqeqeq": true,
 	"immed": true,
-	"latedef": true,
+	"latedef": false,
 	"maxdepth": 3,
 	"maxlen": 120,
 	"newcap": true,

@@ -15,7 +15,7 @@ class ArticleTypeServiceTest extends WikiaBaseTest {
 			->method("post")
 			->will($this->returnValue('{"classes":{"mini_game":0.26,"tv_episode":0.022},"class":"tv_episode"}'));
 
-		$type = $this->getArticleTypeService()->getArticleType(132);
+		$type = $this->getArticleTypeService()->getArticleType(132, 'en');
 
 		$this->assertEquals($type, "tv_episode");
 	}
@@ -31,7 +31,7 @@ class ArticleTypeServiceTest extends WikiaBaseTest {
 		$httpPostMock->expects($this->never())
 			->method("post");
 
-		$type = $this->getArticleTypeService()->getArticleType(132);
+		$type = $this->getArticleTypeService()->getArticleType(132, 'de');
 
 		$this->assertEquals($type, null);
 	}
@@ -45,7 +45,7 @@ class ArticleTypeServiceTest extends WikiaBaseTest {
 			->will($this->returnValue(''));
 
 		try {
-			$type = $this->getArticleTypeService()->getArticleType(132);
+			$type = $this->getArticleTypeService()->getArticleType(132, 'es');
 			$this->assertEquals("Should", "throw exception");
 		} catch (ServiceUnavailableException $ex) {
 		}
@@ -60,7 +60,7 @@ class ArticleTypeServiceTest extends WikiaBaseTest {
 			->will($this->returnValue(false));
 
 		try {
-			$type = $this->getArticleTypeService()->getArticleType(132);
+			$type = $this->getArticleTypeService()->getArticleType(132, 'en');
 			$this->assertEquals("Should", "throw exception");
 		} catch (ServiceUnavailableException $ex) {
 		}

@@ -25,10 +25,11 @@ class ArticleTypeService {
 	/**
 	 * Returns article type for given pageId
 	 * @param int $pageId
+	 * @param string $lang
 	 * @throws ServiceUnavailableException
 	 * @return string|null
 	 */
-	public function getArticleType( $pageId ) {
+	public function getArticleType( $pageId, $lang ) {
 		if ( !$pageId ) {
 			return null;
 		}
@@ -37,6 +38,7 @@ class ArticleTypeService {
 		if ( is_null($articleData) ) {
 			return null;
 		}
+		$articleData['lang'] = $lang;
 
 		$json = json_encode( $articleData, JSON_FORCE_OBJECT );
 		$response = Http::post($this->getHolmesClassificationsEndpoint(),
@@ -74,7 +76,7 @@ class ArticleTypeService {
 			if (!empty($title) && !empty($text)) {
 				return [ 'title' => $title, 'wikiText' => $text	];
 			}
-		} 
+		}
 		return null;
 	}
 }

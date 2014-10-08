@@ -1311,7 +1311,7 @@ $wgAdDriverSevenOneMediaOverrideSub2Site = null;
  * Set to null for to restrict only to Entertainment vertical
  * TODO: add an internal page for the reasons
  */
-$wgAdDriverUseDartForSlotsBelowTheFold = null;
+$wgAdDriverUseDartForSlotsBelowTheFold = true;
 
 /**
  * @name $wgAdDriverTrackState

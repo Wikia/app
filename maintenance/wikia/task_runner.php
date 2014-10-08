@@ -24,7 +24,7 @@ class TaskRunnerMaintenance extends Maintenance {
 	}
 
 	public function execute() {
-		global $wgDevelEnvironment, $wgFlowerUrl;
+		global $wgDevelEnvironment, $wgFlowerUrl, $wgCityId;
 
 		if ( $wgDevelEnvironment ) {
 			\Wikia\Logger\WikiaLogger::instance()->setDevModeWithES();
@@ -35,6 +35,7 @@ class TaskRunnerMaintenance extends Maintenance {
 		] );
 
 		$runner = new TaskRunner(
+			$wgCityId,
 			$this->mOptions['task_id'],
 			$this->mOptions['task_list'],
 			$this->mOptions['call_order'],
