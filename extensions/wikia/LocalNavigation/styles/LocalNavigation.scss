@@ -74,6 +74,7 @@ $third-level-color-hover: mix($color-buttons, $third-level-tint, 71%); // ~40% o
 	.dropdown {
 		margin: 0;
 		padding: 0;
+		background-color: $color-buttons;
 		position: absolute;
 		visibility: hidden;
 		z-index: $local-navigation-dropdown-z-index;
@@ -103,7 +104,6 @@ $third-level-color-hover: mix($color-buttons, $third-level-tint, 71%); // ~40% o
 		}
 
 		a {
-			background-color: $color-buttons;
 			display: block;
 			overflow: hidden;
 			padding: 20px;
