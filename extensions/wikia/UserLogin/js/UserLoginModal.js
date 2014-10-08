@@ -7,6 +7,7 @@
 		uiFactory: false,
 		packagesData: false,
 		$modal: false,
+		bucky: window.Bucky('UserLoginModal'),
 
 		initModal: function (options) {
 			var self = this;
@@ -231,8 +232,6 @@
 
 	$(function () {
 		if ((typeof window.wgEnableUserLoginExt !== 'undefined') && window.wgEnableUserLoginExt) {
-			// make sure bucky is fully loaded before calling it
-			UserLoginModal.bucky = window.Bucky('UserLoginModal');
 			UserLoginModal.init();
 		}
 	});
