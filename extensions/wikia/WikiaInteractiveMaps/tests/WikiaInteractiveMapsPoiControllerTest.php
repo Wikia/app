@@ -227,7 +227,20 @@ class WikiaInteractiveMapsPoiControllerTest extends WikiaBaseTest {
 					'link' => 'http://www.wikia.com',
 					'photo' => ''
 				]
-			]
+			],
+			[
+				'external link without http',
+				'$articleTitleOrUrlMock' => 'www.wikia.com',
+				'$imageUrlMock' => '',
+				'$getArticleUrlCalls' => 'once',
+				'$articleUrlMock' => '',
+				'$isValidArticleTitleMock' => false,
+				'$expectedPoiData' => [
+					'link_title' => 'www.wikia.com',
+					'link' => 'http://www.wikia.com',
+					'photo' => ''
+				]
+			],
 		];
 	}
 

@@ -303,6 +303,10 @@ class WikiaInteractiveMapsPoiController extends WikiaInteractiveMapsBaseControll
 		// if the link created was invalid it might be an external url if not empty
 		$link = ( !empty( $linkTitle ) && !$isValidArticleUrl ) ? $linkTitle : $link;
 
+		if( !empty( $link ) && mb_substr( $link, 0, 4 ) !== 'http' ) {
+			$link = 'http://' . $link;
+		}
+
 		// if photo was passed and it was valid internal URL set the photo
 		$photo = ( !empty( $photo ) && $isValidArticleUrl ) ? $photo : '';
 		$photo = ( !$isValidArticleUrl || empty($link) ) ? '' : $photo;
