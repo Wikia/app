@@ -69,6 +69,59 @@ class WikiaInteractiveMapsPoiControllerTest extends WikiaBaseTest {
 		$controllerMock->deletePoi();
 	}
 
+	/**
+	 * @dataProvider isValidUrlDataProvider
+	 */
+	public function testIsValidUrl( $description, $urlMock, $isValidCalledTimes, $isValidMock, $expected ) {
+		$poiControllerMock = $this->getMockBuilder( 'WikiaInteractiveMapsPoiController' )
+			->disableOriginalConstructor()
+			->setMethods( [ 'getData' ] )
+			->getMock();
+
+		$poiControllerMock->expects( $this->once() )
+			->method( 'getData' )
+			->with( 'articleTitleOrExternalUrl' )
+			->willReturn( $urlMock );
+
+		$wikiaValidatorUrlMock = $this->getMockBuilder( 'WikiaValidatorUrl' )
+			->disableOriginalConstructor()
+			->setMethods( [ 'isValid' ] )
+			->getMock();
+
+		$wikiaValidatorUrlMock->expects( $this->$isValidCalledTimes() )
+			->method( 'isValid' )
+			->willReturn( $isValidMock );
+
+		/** @var WikiaInteractiveMapsPoiController $poiControllerMock */
+		$this->assertEquals( $poiControllerMock->isValidUrl( $wikiaValidatorUrlMock ), $expected, $description );
+	}
+
+	public function isValidUrlDataProvider() {
+		return [
+			[
+				'empty BUT valid URL',
+				'urlMock' => '',
+				'isValidCalledTimes' => 'never',
+				'isValidMock' => false,
+				'expected' => true,
+			],
+			[
+				'not empty, valid URL',
+				'urlMock' => 'http://www.wikia.com',
+				'isValidCalledTimes' => 'once',
+				'isValidMock' => true,
+				'expected' => true,
+			],
+			[
+				'not empty and invalid URL',
+				'urlMock' => 'This is not an URL',
+				'isValidCalledTimes' => 'once',
+				'isValidMock' => false,
+				'expected' => false,
+			]
+		];
+	}
+
 	private function getWikiaInteractiveMapsPoiControllerMock() {
 		$requestMock = $this->getMockBuilder( 'WikiaRequest' )
 			->setMethods( [ 'getVal', 'getArray', 'getInt' ] )

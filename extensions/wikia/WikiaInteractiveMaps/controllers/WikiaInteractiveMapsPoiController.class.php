@@ -236,6 +236,24 @@ class WikiaInteractiveMapsPoiController extends WikiaInteractiveMapsBaseControll
 	}
 
 	/**
+	 * Helper method for validation external URL
+	 *
+	 * @param WikiaValidator $validator an instance of WikiaValidator ie. WikiaUrlValidator
+	 *
+	 * @return bool
+	 */
+	public function isValidUrl( WikiaValidator $validator ) {
+		$externalUrl = $this->getData( 'articleTitleOrExternalUrl' );
+		$valid = false;
+
+		if ( ( !empty( $externalUrl ) && $validator->isValid( $externalUrl ) ) || empty( $externalUrl ) ) {
+			$valid = true;
+		}
+
+		return $valid;
+	}
+
+	/**
 	 * Depending on a current action prepares proper data for POST requests (create, edit)
 	 *
 	 * @return array
