@@ -13,6 +13,26 @@ class ExactTargetUpdateUserTask extends ExactTargetBaseTask {
 	}
 
 	/**
+	 * Sends update of user email to ExactTarget
+	 * @param int $iUserId
+	 * @param string $iUserEmail
+	 */
+	public function updateUserEmail( $iUserId, $iUserEmail ) {
+		$oClient = $this->getClient();
+
+		/* Assuming email may be new - try create subscriber object using the email */
+		$addUserTask = $this->getAddUserTaskObject();
+		$addUserTask->createSubscriber( $iUserEmail, $oClient );
+
+		/* Update email in user data extension */
+		$aUserData = [
+			'user_id' => $iUserId,
+			'user_email' => $iUserEmail
+		];
+		$this->updateUserDataExtension( $aUserData, $oClient );
+	}
+
+	/**
 	 * Task for updating user_properties data in ExactTarget
 	 * @param array $aUserData Selected fields from Wikia user table
 	 * @param array $aUserProperties Array of Wikia user gobal properties
@@ -72,7 +92,7 @@ class ExactTargetUpdateUserTask extends ExactTargetBaseTask {
 	 * Prepares array of ExactTarget_DataExtensionObject objects for user table
 	 * that can be used to send API update
 	 * @param array $aUserData user key value array
-	 * @return array of ExactTarget_DataExtensionObject objects
+	 * @return ExactTarget_DataExtensionObject
 	 */
 	public function prepareUserDataExtensionObjectsForUpdate( $aUserData ) {
 
@@ -92,18 +112,7 @@ class ExactTargetUpdateUserTask extends ExactTargetBaseTask {
 		/* Prepare query keys */
 		$oDE->Keys = [ $this->wrapApiProperty( 'user_id',  $userId ) ];
 
-		return [ $oDE ];
-	}
-
-	/**
-	 * Returns user_id element from $aUserData array and removes it from array
-	 * @param array $aUserData key value data from user table
-	 * @return int
-	 */
-	public function extractUserIdFromData( &$aUserData ) {
-		$iUserId = $aUserData[ 'user_id' ];
-		unset( $aUserData[ 'user_id' ] );
-		return $iUserId;
+		return $oDE;
 	}
 
 	/**
@@ -137,5 +146,13 @@ class ExactTargetUpdateUserTask extends ExactTargetBaseTask {
 			$aDE[] = $DE;
 		}
 		return $aDE;
+	}
+
+	/**
+	 * Returns an instance of ExactTargetAddUserTask class
+	 * @return ExactTargetAddUserTask
+	 */
+	protected function getAddUserTaskObject() {
+		return new ExactTargetAddUserTask();
 	}
 }

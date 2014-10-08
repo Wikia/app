@@ -118,6 +118,7 @@ class User {
 		'deleterevision',
 		'edit',
 		'editinterface',
+		'editmyoptions',
 		'editusercssjs', #deprecated
 		'editusercss',
 		'edituserjs',

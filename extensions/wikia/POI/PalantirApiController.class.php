@@ -17,6 +17,8 @@ class PalantirApiController extends WikiaApiController {
 
 	const MAX_ITEMS_RETURN = 9999;
 
+	const MEMC_KEY_SUFFIX = "POIExt";
+
 	/**
 	 * @var IDSEntitySearchService
 	 */

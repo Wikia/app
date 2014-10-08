@@ -1,0 +1,29 @@
+@import 'skins/shared/color';
+
+.WikiaPageContentWrapper {
+	padding-top: 0;
+}
+
+.local-navigation {
+	box-sizing: border-box;
+
+	*, *::before, *::after {
+		box-sizing: inherit;
+	}
+}
+
+// removing .wikinav2 class disables rules from skins/oasis/css/core/PageHeader.scss starting line #99
+.WikiaPageHeader {
+	border-bottom: solid 1px $color-page-border;
+	margin: 0 0 10px 0;
+	padding: 0 175px 5px 0;
+
+	> .tally {
+		position: absolute;
+		right: 0;
+		top: 0;
+		&.mainpage-tally {
+			position: static;
+		}
+	}
+}

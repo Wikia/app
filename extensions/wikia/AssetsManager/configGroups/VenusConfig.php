@@ -95,6 +95,34 @@ $VenusConfig[ 'venus_css' ] = [
 	]
 ];
 
+/** LocalNavigation extension */
+$VenusConfig[ 'local_navigation_scss' ] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => [ 'venus', 'oasis' ],
+	'assets' => [
+		'//extensions/wikia/LocalNavigation/styles/LocalNavigation.scss'
+	]
+];
+
+$VenusConfig['local_navigation_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => ['venus', 'oasis'],
+	'assets' => [
+		'//extensions/wikia/LocalNavigation/scripts/LocalNavigationMenu.js',
+		'//extensions/wikia/LocalNavigation/scripts/LocalNavigationContribute.js',
+		'//extensions/wikia/LocalNavigation/scripts/LocalNavigationTracking.js'
+	]
+];
+
+/** GlobalFooter extension */
+$VenusConfig[ 'global_footer_scss' ] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => [ 'venus' ],
+	'assets' => [
+		'//extensions/wikia/GlobalFooter/styles/GlobalFooter.scss'
+	]
+];
+
 /** GlobalNavigation extension */
 $VenusConfig[ 'global_navigation_scss' ] = [
 	'type' => AssetsManager::TYPE_SCSS,
@@ -135,15 +163,6 @@ $VenusConfig[ 'global_navigation_facebook_login_js' ] = [
 		'//extensions/FBConnect/fbconnect.js',
 		'//extensions/wikia/UserLogin/js/UserLoginFacebook.js',
 		'//extensions/wikia/UserLogin/js/UserLoginFacebookForm.js',
-	]
-];
-
-/** LocalNavigation extension */
-$VenusConfig[ 'local_navigation_scss' ] = [
-	'type' => AssetsManager::TYPE_SCSS,
-	'skin' => [ 'venus', 'oasis' ],
-	'assets' => [
-		'//extensions/wikia/LocalNavigation/styles/LocalNavigation.scss'
 	]
 ];
 

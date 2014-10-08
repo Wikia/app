@@ -376,9 +376,11 @@ $messages['it'] = array(
 
 /** Japanese (日本語)
  * @author Barrel0116
+ * @author Plover-Y
  */
 $messages['ja'] = array(
 	'places-editor-search' => '検索',
+	'places-geolocation-modal-error-title' => 'エラー',
 );
 
 /** Kannada (ಕನ್ನಡ)
@@ -387,6 +389,15 @@ $messages['ja'] = array(
 $messages['kn'] = array(
 	'places-editor-search' => 'ಹುಡುಕು',
 	'places-geolocation-modal-error-title' => 'ದೋಷ',
+);
+
+/** Korean (한국어)
+ * @author Miri-Nae
+ */
+$messages['ko'] = array(
+	'places-editor-search' => '검색',
+	'places-geolocation-modal-error-title' => '오류',
+	'places-geolocation-modal-not-available' => '이런! 이 기능은 아직 모바일 환경에서만 이용할 수 있습니다.<br /><br />이 기능을 이용하고 싶으시면 모바일을 통해 접속해 주세요.',
 );
 
 /** Kurdish (Latin script) (Kurdî (latînî)‎)

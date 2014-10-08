@@ -595,17 +595,21 @@ $messages['es'] = array(
  */
 $messages['fa'] = array(
 	'wikiaquiz-title-label' => 'عنوان',
+	'wikiaquiz-moreinfoarticle-label' => 'مقاله',
 	'wikiaquiz-question-label' => 'پرسش',
 	'wikiaquiz-questions-label' => 'سوال‌ها',
 	'wikiaquiz-answers-label' => 'پاسخ‌ها',
 	'wikiaquiz-answer-label' => 'پاسخ',
 	'wikiaquiz-cancel-label' => 'لغو',
+	'wikiaquiz-publish-label' => 'انتشار',
 	'wikiaquiz-game-start-button' => 'شروع بازی',
+	'wikiaquiz-game-cadence-2' => 'تنظیم کن',
 	'wikiaquiz-game-cadence-1' => 'برو!',
 	'wikiaquiz-game-question-label' => 'سؤال',
 	'wikiaquiz-game-next-button' => 'سؤال بعدی',
 	'wikiaquiz-game-finish-button' => 'پایان',
 	'wikiaquiz-game-continue-button' => 'ادامه',
+	'wikiaquiz-game-email-valid-please' => 'لطفاً یک نشانی رایانامه‌ای معتبر وارد کنید.',
 	'wikiaquiz-game-mute' => 'صامت‌سازی',
 );
 

@@ -12,6 +12,7 @@ require([
 	var $rail = $('#WikiaRail');
 
 	function init() {
+		// instantiate rail view
 		return new RailModule({
 			el: document.getElementById('videosModule'),
 			model: new VideoData(),
@@ -20,10 +21,8 @@ require([
 	}
 
 	$(function () {
-		// instantiate rail view
+		// check if right rail is loaded before initing. If it's not loaded, bind to load event.
 		if ($rail.hasClass('loaded')) {
-			// Debugging to see if there's a race condition. This fires if there's a bug. (VID-1769)
-			Wikia.syslog(Wikia.log.levels.debug, 'VideosModule', {railLoaded: true, adsShown: !!window.wgShowAds});
 			init();
 		} else {
 			$rail.on('afterLoad.rail', init);

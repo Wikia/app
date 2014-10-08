@@ -1,54 +1,81 @@
-require(['mediaGallery.toggler', 'mediaGallery.media'], function (Toggler, Media) {
+require([
+	'mediaGallery.views.gallery',
+	'sloth'
+], function (Gallery, sloth) {
 	'use strict';
-	$(function () {
-		var visibleCount = 8,
-			$galleries = $('.media-gallery-wrapper'),
-			togglers = [];
 
-		$galleries.each(function () {
-			var $this = $(this),
-				media = [],
-				toggler = new Toggler({
-					$el: $this
-				});
+	/**
+	 * Define primary gallery container element
+	 * @constructor
+	 */
+	var GalleryController = function () {
+		this.$galleries = $('.media-gallery-wrapper');
+	};
 
-			// create new views for each media item
-			toggler.$media.each(function () {
-				var medium = new Media({
-					$el: $(this)
-				});
-				medium.init();
-				media.push(medium);
-			});
+	/**
+	 * Initialize galleries and add HTML to DOM.
+	 * @param {jQuery} $elem
+	 * @param {int} idx
+	 */
+	GalleryController.prototype.createGallery = function ($elem, idx) {
+		var origVisibleCount = $elem.data('visible-count') || 8,
+			data = $elem.data('model'),
+			gallery;
 
-			visibleCount = $this.attr('data-visible-count') || visibleCount;
-			if (toggler.$media.length > visibleCount) {
-				toggler.init();
-				togglers.push(toggler);
-
-				toggler.$media.on('click', function () {
-					Wikia.Tracker.track({
-						category: 'article',
-						action: Wikia.Tracker.ACTIONS.click,
-						label: 'show-new-gallery-lightbox',
-						trackingMethod: 'both',
-						value: 0
-					});
-				});
-			}
+		// Instantiate gallery view
+		gallery = new Gallery({
+			$el: $('<div></div>'),
+			$wrapper: $elem,
+			model: {
+				media: data
+			},
+			origVisibleCount: origVisibleCount,
+			index: idx
 		});
 
-		$galleries.on('click', '.media > a', function () {
-			// get index of media item in gallery
-			var index = $(this).parent().index();
+		// Append gallery HTML to DOM
+		$elem.append(gallery.render(origVisibleCount).$el);
 
-			Wikia.Tracker.track({
-				category: 'media-gallery',
-				action: Wikia.Tracker.ACTIONS.CLICK,
-				label: 'gallery-item',
-				trackingMethod: 'both',
-				value: index
+		// After rendering the gallery and all images are loaded, append the show more/less buttons
+		if (gallery.$toggler) {
+			gallery.$el.on('mediaLoaded', function () {
+				$.proxy(gallery.appendToggler($elem), gallery);
+			});
+		}
+
+		gallery.rendered = true;
+		gallery.$el.trigger('galleryInserted');
+
+	};
+
+	/**
+	 * Initialize and populate gallery elements
+	 */
+	GalleryController.prototype.init = function () {
+		var self = this;
+
+		$.each(this.$galleries, function (idx) {
+			var $this = $(this);
+
+			sloth({
+				on: $this,
+				threshold: 400,
+				callback: function () {
+					self.createGallery($this, idx);
+				}
 			});
 		});
-	});
+	};
+
+	/**
+	 * Convenience function for initializing the gallery elements
+	 */
+	function newGallery() {
+		var gallery = new GalleryController();
+		gallery.init();
+	}
+
+	// Galleries must be initialized on page-load and on preview dialog
+	$(window).on('EditPageAfterRenderPreview', newGallery);
+	$(newGallery);
 });

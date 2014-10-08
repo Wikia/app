@@ -19,7 +19,6 @@ define('ext.wikia.adEngine.slotTweaker', [
 		element.className = newClasses;
 	}
 
-	// TODO: called always with usingClass=true
 	function hide(slotname) {
 		log('hide ' + slotname + ' using class hidden', 6, logGroup);
 

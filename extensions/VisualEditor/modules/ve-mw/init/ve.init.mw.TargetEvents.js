@@ -169,7 +169,9 @@ ve.init.mw.TargetEvents.prototype.onSaveErrorUnknown = function () {
 };
 
 ve.init.mw.TargetEvents.prototype.onSurfaceReady = function () {
-	this.track( 'performance.system.activation', { 'duration': ve.now() - this.timings.activationStart } );
+	if ( this.target.wikitext === null ) {
+		this.track( 'performance.system.activation', { 'duration': ve.now() - this.timings.activationStart } );
+	}
 	this.target.surface.getModel().getDocument().connect( this, {
 		'transact': 'recordLastTransactionTime'
 	} );
