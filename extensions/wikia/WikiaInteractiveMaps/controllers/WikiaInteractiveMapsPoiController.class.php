@@ -182,7 +182,7 @@ class WikiaInteractiveMapsPoiController extends WikiaInteractiveMapsBaseControll
 		}
 
 		if ( ( $this->isCreate() || $this->isUpdate() ) && !$this->isValidArticleTitle() && !$this->isValidUrl( new WikiaValidatorUrl() ) ) {
-			throw new BadRequestApiException( wfMessage( 'wikia-interactive-maps-edit-poi-wrong-article-name' )->params( $this->getData( 'articleTitleOrExternalUrl' ) )->plain() );
+			throw new BadRequestApiException( wfMessage( 'wikia-interactive-maps-edit-poi-wrong-article-name-or-url' )->params( $this->getData( 'articleTitleOrExternalUrl' ) )->plain() );
 		}
 
 		if ( $this->isDelete() && !$this->isValidDeleteData() ) {
