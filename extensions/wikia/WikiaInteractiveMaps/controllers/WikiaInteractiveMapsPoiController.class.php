@@ -37,7 +37,7 @@ class WikiaInteractiveMapsPoiController extends WikiaInteractiveMapsBaseControll
 		$this->setData( 'mapId', $mapId );
 		$this->setData( 'name', $name );
 		$this->setData( 'poiCategoryId', $this->request->getInt( 'poi_category_id' ) );
-		$this->setData( 'articleTitle', $this->request->getVal( 'link_title' ), '' );
+		$this->setData( 'articleTitleOrExternalUrl', $this->request->getVal( 'link_title' ), '' );
 		$this->setData( 'lat', (float) $this->request->getVal( 'lat' ) );
 		$this->setData( 'lon', (float) $this->request->getVal( 'lon' ) );
 		$this->setData( 'description', $this->request->getVal( 'description' ) );
@@ -181,8 +181,8 @@ class WikiaInteractiveMapsPoiController extends WikiaInteractiveMapsBaseControll
 			throw new BadRequestApiException( wfMessage( 'wikia-interactive-maps-create-map-bad-request-error' )->plain() );
 		}
 
-		if ( ( $this->isCreate() || $this->isUpdate() ) && !$this->isValidArticleTitle() ) {
-			throw new BadRequestApiException( wfMessage( 'wikia-interactive-maps-edit-poi-wrong-article-name' )->params( $this->getData( 'articleTitle' ) )->plain() );
+		if ( ( $this->isCreate() || $this->isUpdate() ) && !$this->isValidArticleTitle() && !$this->isValidUrl( new WikiaValidatorUrl() ) ) {
+			throw new BadRequestApiException( wfMessage( 'wikia-interactive-maps-edit-poi-wrong-article-name' )->params( $this->getData( 'articleTitleOrExternalUrl' ) )->plain() );
 		}
 
 		if ( $this->isDelete() && !$this->isValidDeleteData() ) {
@@ -225,7 +225,7 @@ class WikiaInteractiveMapsPoiController extends WikiaInteractiveMapsBaseControll
 	 * @return bool
 	 */
 	public function isValidArticleTitle() {
-		$articleTitle = $this->getData( 'articleTitle' );
+		$articleTitle = $this->getData( 'articleTitleOrExternalUrl' );
 		$valid = false;
 
 		if ( ( !empty( $articleTitle ) && Title::newFromText( $articleTitle )->exists() ) || empty( $articleTitle ) ) {
@@ -282,17 +282,22 @@ class WikiaInteractiveMapsPoiController extends WikiaInteractiveMapsBaseControll
 			$poiData[ 'description' ] = $description;
 		}
 
-		$linkTitle = $this->getData( 'articleTitle', '' );
+		$linkTitle = $this->getData( 'articleTitleOrExternalUrl', '' );
 		$photo = $this->getData( 'imageUrl' );
 		$link = '';
 		$poiData[ 'photo' ] = '';
 		if ( !empty( $linkTitle ) ) {
 			$link = $this->getArticleUrl( $linkTitle );
+		}
+		$isValidArticleUrl = $this->isValidArticleTitle();
 
-			if ( !empty( $photo ) ) {
-				// save photo only when article is chosen
-				$poiData[ 'photo' ] = $photo;
-			}
+		if ( !empty( $photo ) && $isValidArticleUrl ) {
+			// save photo only when valid article URL is passed
+			$poiData[ 'photo' ] = $photo;
+		}
+
+		if( !empty($linkTitle) && !$isValidArticleUrl ) {
+			$link = $linkTitle;
 		}
 
 		$poiData[ 'link_title' ] = $linkTitle;
