@@ -122,6 +122,115 @@ class WikiaInteractiveMapsPoiControllerTest extends WikiaBaseTest {
 		];
 	}
 
+	/**
+	 * @dataProvider appendLinkAndPhotoIfValidDataProvider
+	 */
+	public function testAppendLinkAndPhotoIfValid(
+		$description,
+		$articleTitleOrUrlMock,
+		$imageUrlMock,
+		$getArticleUrlCalls,
+		$articleUrlMock,
+		$isValidArticleTitleMock,
+		$expectedPoiData
+	) {
+		$poiControllerMock = $this->getMockBuilder( 'WikiaInteractiveMapsPoiController' )
+			->disableOriginalConstructor()
+			->setMethods( [ 'getData', 'getArticleUrl', 'isValidArticleTitle' ] )
+			->getMock();
+
+		$poiControllerMock->expects( $this->any() )
+			->method( 'getData' )
+			->will( $this->returnValueMap( [
+				[ 'articleTitleOrExternalUrl', '', $articleTitleOrUrlMock ],
+				[ 'imageUrl', false, $imageUrlMock ]
+			] ) );
+
+		$poiControllerMock->expects( $this->$getArticleUrlCalls() )
+			->method( 'getArticleUrl' )
+			->willReturn( $articleUrlMock );
+
+		$poiControllerMock->expects( $this->once() )
+			->method( 'isValidArticleTitle' )
+			->willReturn( $isValidArticleTitleMock );
+
+		$poiData = [];
+		$poiControllerMock->appendLinkAndPhotoIfValid( $poiData );
+
+		/** @var $poiControllerMock WikiaInteractiveMapsPoiController */
+		$this->assertEquals( $expectedPoiData, $poiData, $description );
+	}
+
+	public function appendLinkAndPhotoIfValidDataProvider() {
+		return [
+			[
+				'no link',
+				'$articleTitleOrUrlMock' => '',
+				'$imageUrlMock' => '',
+				'$getArticleUrlCalls' => 'never',
+				'$articleUrlMock' => '',
+				'$isValidArticleTitleMock' => false,
+				'$expectedPoiData' => [
+					'link_title' => '',
+					'link' => '',
+					'photo' => ''
+				]
+			],
+			[
+				'internal link with image',
+				'$articleTitleOrUrlMock' => 'Existing Article With An Image',
+				'$imageUrlMock' => 'http://images.nocookie.wikia.com/t/test/an_image.jpg',
+				'$getArticleUrlCalls' => 'once',
+				'$articleUrlMock' => 'http://www.test.wikia.com/wiki/Existing_Article_With_An_Image',
+				'$isValidArticleTitleMock' => true,
+				'$expectedPoiData' => [
+					'link_title' => 'Existing Article With An Image',
+					'link' => 'http://www.test.wikia.com/wiki/Existing_Article_With_An_Image',
+					'photo' => 'http://images.nocookie.wikia.com/t/test/an_image.jpg'
+				]
+			],
+			[
+				'internal link without image',
+				'$articleTitleOrUrlMock' => 'Existing Article With An Image',
+				'$imageUrlMock' => '',
+				'$getArticleUrlCalls' => 'once',
+				'$articleUrlMock' => 'http://www.test.wikia.com/wiki/Existing_Article_With_An_Image',
+				'$isValidArticleTitleMock' => true,
+				'$expectedPoiData' => [
+					'link_title' => 'Existing Article With An Image',
+					'link' => 'http://www.test.wikia.com/wiki/Existing_Article_With_An_Image',
+					'photo' => ''
+				]
+			],
+			[
+				'external link',
+				'$articleTitleOrUrlMock' => 'http://www.wikia.com',
+				'$imageUrlMock' => '',
+				'$getArticleUrlCalls' => 'once',
+				'$articleUrlMock' => '',
+				'$isValidArticleTitleMock' => false,
+				'$expectedPoiData' => [
+					'link_title' => 'http://www.wikia.com',
+					'link' => 'http://www.wikia.com',
+					'photo' => ''
+				]
+			],
+			[
+				'external link with hacked POST data and image passed',
+				'$articleTitleOrUrlMock' => 'http://www.wikia.com',
+				'$imageUrlMock' => 'http://placekitten.com/g/200/400',
+				'$getArticleUrlCalls' => 'once',
+				'$articleUrlMock' => '',
+				'$isValidArticleTitleMock' => false,
+				'$expectedPoiData' => [
+					'link_title' => 'http://www.wikia.com',
+					'link' => 'http://www.wikia.com',
+					'photo' => ''
+				]
+			]
+		];
+	}
+
 	private function getWikiaInteractiveMapsPoiControllerMock() {
 		$requestMock = $this->getMockBuilder( 'WikiaRequest' )
 			->setMethods( [ 'getVal', 'getArray', 'getInt' ] )

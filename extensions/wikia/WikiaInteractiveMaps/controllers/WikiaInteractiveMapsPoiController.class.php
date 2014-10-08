@@ -282,28 +282,34 @@ class WikiaInteractiveMapsPoiController extends WikiaInteractiveMapsBaseControll
 			$poiData[ 'description' ] = $description;
 		}
 
+		$this->appendLinkAndPhotoIfValid($poiData);
+
+		return $poiData;
+	}
+
+	/**
+	 * @brief Adds link, link_title and photo elements to an array if all requirements are met
+	 *
+	 * @param $poiData
+	 */
+	public function appendLinkAndPhotoIfValid( &$poiData ) {
 		$linkTitle = $this->getData( 'articleTitleOrExternalUrl', '' );
 		$photo = $this->getData( 'imageUrl' );
-		$link = '';
-		$poiData[ 'photo' ] = '';
-		if ( !empty( $linkTitle ) ) {
-			$link = $this->getArticleUrl( $linkTitle );
-		}
+
 		$isValidArticleUrl = $this->isValidArticleTitle();
 
-		if ( !empty( $photo ) && $isValidArticleUrl ) {
-			// save photo only when valid article URL is passed
-			$poiData[ 'photo' ] = $photo;
-		}
+		// if article title or link was passed in form get an article URL for it
+		$link = ( !empty( $linkTitle ) ) ? $this->getArticleUrl( $linkTitle ) : '';
+		// if the link created was invalid it might be an external url if not empty
+		$link = ( !empty( $linkTitle ) && !$isValidArticleUrl ) ? $linkTitle : $link;
 
-		if( !empty($linkTitle) && !$isValidArticleUrl ) {
-			$link = $linkTitle;
-		}
+		// if photo was passed and it was valid internal URL set the photo
+		$photo = ( !empty( $photo ) && $isValidArticleUrl ) ? $photo : '';
+		$photo = ( !$isValidArticleUrl || empty($link) ) ? '' : $photo;
 
 		$poiData[ 'link_title' ] = $linkTitle;
 		$poiData[ 'link' ] = $link;
-
-		return $poiData;
+		$poiData[ 'photo' ] = $photo;
 	}
 
 	/**
@@ -361,7 +367,7 @@ class WikiaInteractiveMapsPoiController extends WikiaInteractiveMapsBaseControll
 	 *
 	 * @return string - full article URL or empty string if article doesn't exist
 	 */
-	private function getArticleUrl( $title ) {
+	public function getArticleUrl( $title ) {
 		$article = Title::newFromText( $title );
 		$link = '';
 
