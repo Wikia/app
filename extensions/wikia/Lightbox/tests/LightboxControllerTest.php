@@ -340,4 +340,42 @@ class LightboxControllerTest extends WikiaBaseTest {
 		$this->assertEquals( $format, $lightboxController->getResponse()->getFormat() );
 	}
 
+	public function testGetShareCodes_fileNotFound() {
+		$fileTitle = ''; // Empty file title
+		$request = $this->getMockBuilder( 'WikiaRequest' )
+			->disableOriginalConstructor()
+			->setMethods( [ 'getVal' ] )
+			->getMock();
+		$request->expects( $this->once() )
+			->method( 'getVal' )
+			->with( 'fileTitle', $this->anything() )
+			->will( $this->returnValue( $fileTitle ) );
+
+		$shareUrl = '';
+		$articleUrl = '';
+		$fileUrl = '';
+		$thumbUrl = '';
+		$networks = [];
+		$responseArray = [
+			'shareUrl' => $shareUrl,
+			'articleUrl' => $articleUrl,
+			'fileUrl' => $fileUrl,
+			'networks' => $networks,
+			'fileTitle' => $fileTitle,
+			'imageUrl' => $thumbUrl,
+		];
+
+		$format = \WikiaResponse::FORMAT_HTML;
+		$lightboxController = new \LightboxController();
+		$lightboxController->setRequest( $request );
+		$response = new \WikiaResponse( $format );
+		$lightboxController->setResponse( $response );
+		$lightboxController->getShareCodes();
+
+		// Inspect response object
+		foreach ( $responseArray as $key => $value ) {
+			$this->assertEquals( $value, $lightboxController->getResponse()->getVal( $key ), "mismatch on $key" );
+		}
+	}
+
 }
