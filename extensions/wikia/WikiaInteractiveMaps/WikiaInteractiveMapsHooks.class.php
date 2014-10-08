@@ -73,7 +73,7 @@ class WikiaInteractiveMapsHooks {
 	 *
 	 * @return bool
 	 */
-	public static function isSpecialMapsSingleMapPage() {
+	public static function isSingleMapPage() {
 		global $wgTitle;
 
 		$find = [
@@ -82,7 +82,7 @@ class WikiaInteractiveMapsHooks {
 		];
 		$titleFiltered = (int) str_replace( $find, '', $wgTitle->getSubpageText() );
 
-		return (int) $titleFiltered > 0;
+		return $titleFiltered > 0;
 	}
 
 	/**
@@ -113,7 +113,7 @@ class WikiaInteractiveMapsHooks {
 	 * @return bool true
 	 */
 	public static function onBeforePageDisplay( $out ) {
-		if ( self::isSpecialMapsPage() && self::isSpecialMapsSingleMapPage() ) {
+		if ( self::isSpecialMapsPage() && self::isSingleMapPage() ) {
 			$out->addMeta( 'fragment', '!' );
 		}
 		return true;

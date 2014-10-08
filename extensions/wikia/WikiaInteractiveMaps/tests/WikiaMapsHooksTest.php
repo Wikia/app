@@ -8,9 +8,9 @@ class WikiaMapsHooksTest extends WikiaBaseTest {
 	}
 
 	/**
-	 * @dataProvider isSpecialMapsSingleMapPageDataProvider
+	 * @dataProvider isSingleMapPageDataProvider
 	 */
-	public function testIsSpecialMapsSingleMapPage( $subpageText, $expected ) {
+	public function testIsSingleMapPage( $subpageText, $expected ) {
 		$wgTitleMock = $this->getMock( 'wgTitle', [ 'getSubpageText' ], [], '', false );
 		$wgTitleMock->expects( $this->any() )
 			->method( 'getSubpageText' )
@@ -20,10 +20,10 @@ class WikiaMapsHooksTest extends WikiaBaseTest {
 
 		$this->getMock( 'WikiaInteractiveMapsController', [ 'getWikiPageUrl' ], [], '', false );
 
-		$this->assertEquals( $expected, WikiaInteractiveMapsHooks::isSpecialMapsSingleMapPage() );
+		$this->assertEquals( $expected, WikiaInteractiveMapsHooks::isSingleMapPage() );
 	}
 
-	public function isSpecialMapsSingleMapPageDataProvider() {
+	public function isSingleMapPageDataProvider() {
 		return [
 			[
 				'wgTitle' => 'Maps',
