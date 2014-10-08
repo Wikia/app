@@ -1,4 +1,4 @@
-(function($) {
+(function(window, $) {
 	'use strict';
 
 	$(function(){
@@ -202,4 +202,4 @@
 
 		init();
 	});
-})(jQuery);
+})(window, jQuery);

@@ -1,27 +1,29 @@
-(function(window) {
+(function(window, document, wikia) {
 	'use strict';
 
-	window.addEventListener('load', function() {
-		var openMenu, closeMenu, entryPoint = window.document.getElementById('contributeEntryPoint');
+	document.addEventListener('DOMContentLoaded', function() {
+		var openMenu, closeMenu, entryPoint = document.getElementById('contributeEntryPoint');
 
-		openMenu = function() {
-			this.classList.add('active');
-		};
+		if (entryPoint) {
+			openMenu = function() {
+				this.classList.add('active');
+			};
 
-		closeMenu = function() {
-			this.classList.remove('active');
-		};
+			closeMenu = function() {
+				this.classList.remove('active');
+			};
 
-		if (!window.Wikia.isTouchScreen()) {
-			window.delayedHover(
-				entryPoint,
-				{
-					onActivate: openMenu,
-					onDeactivate: closeMenu
-				}
-			);
-		} else {
-			entryPoint.addEventListener('click', openMenu);
+			if (!wikia.isTouchScreen()) {
+				window.delayedHover(
+					entryPoint,
+					{
+						onActivate: openMenu,
+						onDeactivate: closeMenu
+					}
+				);
+			} else {
+				entryPoint.addEventListener('click', openMenu);
+			}
 		}
 	});
-})(window);
+})(window, document, window.Wikia);
