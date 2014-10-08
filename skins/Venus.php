@@ -18,6 +18,8 @@ class SkinVenus extends WikiaSkin {
 		//non-strict checks of css/js/scss assets/packages
 		$this->strictAssetUrlCheck = false;
 	}
+
+	function setupSkinUserCss( OutputPage $out ) {}
 }
 
 

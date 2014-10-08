@@ -76,6 +76,9 @@ $VenusConfig[ 'venus_body_js' ] = [
 		'//extensions/wikia/Venus/scripts/BackgroundChanger.js',
 
 		'#group_adengine2_js',
+
+		'//resources/wikia/modules/browserDetect.js',
+		'#group_imglzy_js',
 	]
 ];
 
@@ -172,5 +175,13 @@ $VenusConfig[ 'article_scss' ] = [
 	'skin' => [ 'venus' ],
 	'assets' => [
 		'//extensions/wikia/Venus/styles/article/article.scss'
+	]
+];
+
+$VenusConfig['imglzy_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => [
+		'//extensions/wikia/ImageLazyLoad/js/ImgLzy.module.js',
+		'//extensions/wikia/ImageLazyLoad/js/ImageLazyLoad.js',
 	]
 ];

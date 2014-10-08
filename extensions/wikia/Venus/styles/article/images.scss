@@ -1,0 +1,53 @@
+@import "skins/shared/color";
+
+$caption-border-color: lighten($color-text, 30%);
+
+article {
+	.image-thumbnail img {
+		margin: 30px;
+	}
+
+	.article-thumb {
+		margin: 30px 0 50px;
+
+		img {
+			margin: 0;
+		}
+	}
+
+	.tleft,
+	.floatleft {
+		&.article-thumb {
+			margin-right: 30px;
+		}
+
+		img {
+			margin-left: 0;
+		}
+	}
+
+	.tright,
+	.floatright {
+		&.article-thumb {
+			margin-left: 30px;
+		}
+
+		img {
+			margin-right: 0;
+		}
+	}
+
+	figcaption {
+		border-top: 4px solid $caption-border-color;
+		color: $color-alternate-text;
+		font-size: 12px;
+		font-style: italic;
+		line-height: 18px;
+		margin-top: 10px;
+		padding-top: 10px;
+
+		p {
+			margin: 0;
+		}
+	}
+}

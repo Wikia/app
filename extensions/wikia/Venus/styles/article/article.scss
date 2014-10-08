@@ -1,4 +1,5 @@
 @import '../variables';
+@import 'images';
 
 article {
 
@@ -35,6 +36,28 @@ article {
 				margin-bottom: 6px;
 				width: 38px;
 			}
+		}
+	}
+
+	.floatleft,
+	.tleft {
+		clear: left;
+		float: left;
+	}
+
+	.floatright,
+	.tright {
+		clear: right;
+		float: right;
+	}
+
+	.center {
+		clear: both;
+		text-align: center;
+
+		> * {
+			margin-left: auto;
+			margin-right: auto;
 		}
 	}
 }
