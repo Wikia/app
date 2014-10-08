@@ -17,7 +17,7 @@
 	<?= F::app()->renderView('MenuButton',
 			'Index',
 			array(
-				'action' => array( "href" => $path, "text" => wfMsg('category-exhibition-'.$current), "id" => "category-exhibition-form-current" ),
+				'action' => array( "text" => wfMsg('category-exhibition-'.$current), "id" => "category-exhibition-form-current" ),
 				'class' => 'secondary',
 				'dropdown' => $dropdown,
 				'name' => 'sortType'
