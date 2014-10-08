@@ -1,20 +1,18 @@
-(function(window, $) {
+(function(window) {
 	'use strict';
 
-	$(function(){
-		var entryPoint = window.document.getElementById('contributeEntryPoint'),
-			openMenu,
-			closeMenu;
+	window.addEventListener('load', function() {
+		var openMenu, closeMenu, entryPoint = window.document.getElementById('contributeEntryPoint');
 
 		openMenu = function() {
-			entryPoint.classList.add('active');
+			this.classList.add('active');
 		};
 
 		closeMenu = function() {
-			entryPoint.classList.remove('active');
+			this.classList.remove('active');
 		};
 
-		if ( !window.ontouchstart ) {
+		if (!window.Wikia.isTouchScreen()) {
 			window.delayedHover(
 				entryPoint,
 				{
@@ -23,7 +21,7 @@
 				}
 			);
 		} else {
-			entryPoint.click(openMenu);
+			entryPoint.addEventListener('click', openMenu);
 		}
 	});
-})(window, jQuery);
+})(window);
