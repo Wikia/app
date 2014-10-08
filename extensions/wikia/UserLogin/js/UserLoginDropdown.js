@@ -4,9 +4,10 @@
 	var UserLoginDropdown = {
 		dropdown: false,
 		loginAjaxForm: false,
+		bucky: window.Bucky('UserLoginDropdown'),
 		init: function () {
-			// DOM cache
 			this.bucky.timer.start('init');
+			// DOM cache
 			this.dropdown = $('#UserLoginDropdown');
 
 			$('#AccountNavigation').find('.ajaxLogin')
@@ -69,8 +70,6 @@
 	window.UserLoginDropdown = UserLoginDropdown;
 
 	$(function () {
-		// make sure bucky is fully loaded before calling it
-		UserLoginDropdown.bucky = window.Bucky('UserLoginDropdown');
 		UserLoginDropdown.init();
 	});
 })();
