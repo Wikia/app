@@ -30,7 +30,7 @@ define('wikia.intMap.editPOI', ['jquery', 'wikia.intMap.config', 'wikia.intMap.u
 		},
 		templateData = {
 			namePlaceholder: $.msg('wikia-interactive-maps-edit-poi-name-placeholder'),
-			articlePlaceholder:  $.msg('wikia-interactive-maps-edit-poi-article-placeholder'),
+			articlePlaceholder:  $.msg('wikia-interactive-maps-edit-poi-article-or-url-placeholder'),
 			descriptionPlaceholder: $.msg('wikia-interactive-maps-edit-poi-description-placeholder'),
 			categoryPlaceholder: $.msg('wikia-interactive-maps-edit-poi-category-placeholder')
 		},
