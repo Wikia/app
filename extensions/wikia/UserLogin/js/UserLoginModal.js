@@ -8,11 +8,13 @@ var UserLoginModal = {
 	initModal: function ( options ) {
 		'use strict';
 
-		var that = this;
+		var self = this;
+
+		this.bucky.timer.start('loginModal');
 
 		require( ['wikia.tracker'], function( tracker ) {
-			that.trackerActions = tracker.ACTIONS;
-			that.track = tracker.buildTrackingFunction( {
+			self.trackerActions = tracker.ACTIONS;
+			self.track = tracker.buildTrackingFunction( {
 				category: 'force-login-modal',
 				trackingMethod: 'both'
 			} );
@@ -34,12 +36,13 @@ var UserLoginModal = {
 				require( [ 'wikia.ui.factory', 'wikia.loader' ], function ( uiFactory, loader ) {
 					loader.processStyle( packagesData.styles );
 
-					that.uiFactory = uiFactory;
-					that.packagesData = packagesData;
+					self.uiFactory = uiFactory;
+					self.packagesData = packagesData;
 
 					window.UserLoginFacebook && window.UserLoginFacebook.init( window.UserLoginFacebook.origins.MODAL );
 
-					that.buildModal( options );
+					self.buildModal( options );
+					self.bucky.timer.stop('loginModal');
 				} );
 			} );
 	},
@@ -47,9 +50,12 @@ var UserLoginModal = {
 	buildModal: function(options) {
 		'use strict';
 
-		var that = this,
+		var self = this,
 			origin = '',
 			clickAction = this.trackerActions.CLICK;
+
+		// start performance tracking
+		this.bucky.timer.start('buildModal');
 
 		this.uiFactory.init( 'modal' ).then( function ( uiModal ) {
 			var modalConfig = {
@@ -57,7 +63,7 @@ var UserLoginModal = {
 				vars: {
 					id: 'userForceLoginModal',
 					size: 'medium',
-					content: that.packagesData.templates.UserLoginSpecial_modal,
+					content: self.packagesData.templates.UserLoginSpecial_modal,
 					title: $.msg( 'userlogin-login-heading' ),
 					closeButton: true
 				}
@@ -120,39 +126,42 @@ var UserLoginModal = {
 					origin = options.origin;
 				}
 
-				that.track( {
-					action: that.trackerActions.OPEN,
+				self.track( {
+					action: self.trackerActions.OPEN,
 					label: 'from-' + origin
 				} );
 
 				// Click tracking
 				$loginModal.on( 'click', '.forgot-password', function() {
-					that.track( {
+					self.track( {
 						action: clickAction,
 						label: 'forgot-password'
 					} );
 				} ).on( 'click', 'input.keep-logged-in', function() {
-					that.track( {
+					self.track( {
 						action: clickAction,
 						label: 'keep-me-logged-in'
 					} );
 				} ).on( 'click', '.get-account a', function() {
-					that.track( {
+					self.track( {
 						action: clickAction,
 						label: 'sign-up-from-' + origin
 					} );
 				} ).on( 'click', '.sso-login-facebook', function() {
-					that.track( {
+					self.track( {
 						action: clickAction,
 						label: 'facebook-connect'
 					} );
 				}).on( 'click', 'input.login-button', function(event) {
-					that.track( {
+					self.track( {
 						action: clickAction,
 						label: 'login-from-'  + origin
 					} );
 				} );
 			} );
+
+			// End performance tracking
+			self.bucky.timer.stop('buildModal');
 		} );
 	},
 
@@ -221,6 +230,8 @@ var UserLoginModal = {
 $( function () {
 	'use strict';
 	if ( ( typeof window.wgEnableUserLoginExt !== 'undefined' ) && window.wgEnableUserLoginExt ) {
+		// make sure bucky is fully loaded before calling it
+		UserLoginModal.bucky = window.Bucky('UserLoginModal');
 		UserLoginModal.init();
 	}
 } );
