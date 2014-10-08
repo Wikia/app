@@ -338,12 +338,13 @@ class SkinChooser {
 	}
 
 	private static function showVenusSkin($title) {
-		global $wgEnableVenusSkin;
-		$isSpecialSearch = WikiaPageType::isSearch();
+		global $wgEnableVenusSkin, $wgEnableVenusSpecialSearch, $wgEnableVenusArticle;
+		$isSpecialSearch = WikiaPageType::isSearch() && $wgEnableVenusSpecialSearch;
 		$isSpecialVenusTest = $title->isSpecialPage() && $title->getText() == 'VenusTest';
+		$isVenusArticle = (WikiaPageType::isArticlePage() || WikiaPageType::isMainPage()) && $wgEnableVenusArticle;
 
 		//TODO: Add WikiaPageType::isArticlePage() to enable new skin on article pages
-		return $wgEnableVenusSkin && ( $isSpecialSearch || $isSpecialVenusTest );
+		return $wgEnableVenusSkin && ( $isSpecialSearch || $isSpecialVenusTest || $isVenusArticle);
 	}
 
 	/**

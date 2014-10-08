@@ -166,15 +166,6 @@ $VenusConfig[ 'global_navigation_facebook_login_js' ] = [
 	]
 ];
 
-/** GlobalFooter extension */
-$VenusConfig[ 'global_footer_scss' ] = [
-	'type' => AssetsManager::TYPE_SCSS,
-	'skin' => [ 'venus' ],
-	'assets' => [
-		'//extensions/wikia/GlobalFooter/styles/GlobalFooter.scss'
-	]
-];
-
 /** Article page */
 $VenusConfig[ 'article_scss' ] = [
 	'type' => AssetsManager::TYPE_SCSS,
