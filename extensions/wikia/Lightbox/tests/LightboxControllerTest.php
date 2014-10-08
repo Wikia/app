@@ -2,6 +2,170 @@
 
 class LightboxControllerTest extends WikiaBaseTest {
 
+	public function testGetThumbImages_empty() {
+		$request = $this->getMockBuilder( 'WikiaRequest' )
+			->disableOriginalConstructor()
+			->setMethods( [ 'getVal', 'getInt' ] )
+			->getMock();
+		$request->expects( $this->at( 0 ) )
+			->method( 'getInt' )
+			->with( 'count', $this->anything() )
+			->will( $this->returnValue( 20 ) );
+		$request->expects( $this->at( 1 ) )
+			->method( 'getVal' )
+			->with( 'to', $this->anything() )
+			->will( $this->returnValue( 0 ) ); // Empty timestamp
+		$request->expects( $this->at( 2 ) )
+			->method( 'getVal' )
+			->with( 'inclusive', $this->anything() )
+			->will( $this->returnValue( '' ) );
+
+		$lightboxController = new \LightboxController();
+		$lightboxController->setRequest( $request );
+		$response = new \WikiaResponse( \WikiaResponse::FORMAT_HTML );
+		$lightboxController->setResponse( $response );
+		$lightboxController->getThumbImages();
+
+		// Inspect response object
+		$this->assertEquals( [], $lightboxController->getResponse()->getVal( 'thumbs' ) );
+		$this->assertEquals( 0, $lightboxController->getResponse()->getVal( 'to' ) );
+	}
+
+	public function testGetThumbImages_exclude() {
+		$time = time();
+		$count = 5;
+		$images = [
+			'image 1',
+			'image 2',
+			'image 3',
+		];
+		$thumbs = [
+			'thumb 1',
+			'thumb 2',
+			'thumb 3',
+		];
+		$imageList = [
+			'images' => $images,
+		    'minTimestamp' => $time - 10000,
+		];
+		$request = $this->getMockBuilder( 'WikiaRequest' )
+			->disableOriginalConstructor()
+			->setMethods( [ 'getVal', 'getInt' ] )
+			->getMock();
+		$request->expects( $this->at( 0 ) )
+			->method( 'getInt' )
+			->with( 'count', $this->anything() )
+			->will( $this->returnValue( $count ) );
+		$request->expects( $this->at( 1 ) )
+			->method( 'getVal' )
+			->with( 'to', $this->anything() )
+			->will( $this->returnValue( $time ) );
+		$request->expects( $this->at( 2 ) )
+			->method( 'getVal' )
+			->with( 'inclusive', $this->anything() )
+			->will( $this->returnValue( '' ) ); // Exclude latest photos
+
+		$lightboxHelper = $this->getMockBuilder( 'LightboxHelper' )
+			->disableOriginalConstructor()
+			->setMethods( ['getImageList', 'getLatestPhotos'] )
+			->getMock();
+		$lightboxHelper->expects( $this->once() )
+			->method( 'getImageList' )
+			->with( $count, $time )
+			->will( $this->returnValue( $imageList ) );
+
+		$lightboxMock = $this->getMockBuilder( 'LightboxController' )
+			->setMethods( ['mediaTableToThumbs', 'getLightboxHelper'] )
+			->getMock();
+		$lightboxMock->expects( $this->once() )
+			->method( 'mediaTableToThumbs' )
+			->with( $imageList['images'] )
+			->will( $this->returnValue( $thumbs ) );
+		$lightboxMock->expects( $this->once() )
+			->method( 'getLightboxHelper' )
+			->will( $this->returnValue( $lightboxHelper ) );
+
+		$lightboxMock->setRequest( $request );
+		$response = new \WikiaResponse( \WikiaResponse::FORMAT_HTML );
+		$lightboxMock->setResponse( $response );
+		$lightboxMock->getThumbImages();
+
+		// Inspect response object
+		$this->assertEquals( $thumbs, $lightboxMock->getResponse()->getVal( 'thumbs' ) );
+		$this->assertEquals( $imageList['minTimestamp'], $lightboxMock->getResponse()->getVal( 'to' ) );
+	}
+
+	public function testGetThumbImages() {
+		$time = time();
+		$count = 5;
+		$images = [
+			'image 1',
+			'image 2',
+			'image 3',
+		];
+		$thumbs = [
+			'thumb 1',
+			'thumb 2',
+			'thumb 3',
+		];
+		$latestPhotos = [
+			'photo abc',
+		    'photo xyz',
+		];
+		$imageList = [
+			'images' => $images,
+		    'minTimestamp' => $time - 10000,
+		];
+		$request = $this->getMockBuilder( 'WikiaRequest' )
+			->disableOriginalConstructor()
+			->setMethods( [ 'getVal', 'getInt' ] )
+			->getMock();
+		$request->expects( $this->at( 0 ) )
+			->method( 'getInt' )
+			->with( 'count', $this->anything() )
+			->will( $this->returnValue( $count ) );
+		$request->expects( $this->at( 1 ) )
+			->method( 'getVal' )
+			->with( 'to', $this->anything() )
+			->will( $this->returnValue( $time ) );
+		$request->expects( $this->at( 2 ) )
+			->method( 'getVal' )
+			->with( 'inclusive', $this->anything() )
+			->will( $this->returnValue( 'true' ) ); // Inclusive
+
+		$lightboxHelper = $this->getMockBuilder( 'LightboxHelper' )
+			->disableOriginalConstructor()
+			->setMethods( ['getImageList', 'getLatestPhotos'] )
+			->getMock();
+		$lightboxHelper->expects( $this->once() )
+			->method( 'getImageList' )
+			->with( $count, $time )
+			->will( $this->returnValue( $imageList ) );
+		$lightboxHelper->expects( $this->once() )
+			->method( 'getLatestPhotos' )
+			->will( $this->returnValue( $latestPhotos ) );
+
+		$lightboxMock = $this->getMockBuilder( 'LightboxController' )
+			->setMethods( ['mediaTableToThumbs', 'getLightboxHelper'] )
+			->getMock();
+		$lightboxMock->expects( $this->once() )
+			->method( 'mediaTableToThumbs' )
+			->with( array_merge( $latestPhotos, $imageList['images'] ) )
+			->will( $this->returnValue( $thumbs ) );
+		$lightboxMock->expects( $this->once() )
+			->method( 'getLightboxHelper' )
+			->will( $this->returnValue( $lightboxHelper ) );
+
+		$lightboxMock->setRequest( $request );
+		$response = new \WikiaResponse( \WikiaResponse::FORMAT_HTML );
+		$lightboxMock->setResponse( $response );
+		$lightboxMock->getThumbImages();
+
+		// Inspect response object
+		$this->assertEquals( $thumbs, $lightboxMock->getResponse()->getVal( 'thumbs' ) );
+		$this->assertEquals( $imageList['minTimestamp'], $lightboxMock->getResponse()->getVal( 'to' ) );
+	}
+
 	public function testGetMediaDetail_titleNotFound() {
 		$fileTitle = ''; // Empty title!
 		$request = $this->getMockBuilder( 'WikiaRequest' )
@@ -135,7 +299,7 @@ class LightboxControllerTest extends WikiaBaseTest {
 		$exists = $data['exists'];
 		$isAdded = $data['isAdded'];
 		$extraHeight = $data['extraHeight'];
-		$format = 'json';
+		$format = \WikiaResponse::FORMAT_JSON;
 
 		global $wgLang;
 		$views = wfMessage( 'lightbox-video-views', $wgLang->formatNum( $data['videoViews'] ) )->parse();

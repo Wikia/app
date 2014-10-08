@@ -52,8 +52,8 @@ class LightboxController extends WikiaController {
 	 * thumbs = array( 'title' => image title, 'type' => [image/video], 'thumbUrl' => thumbnail link )
 	 */
 	public function getThumbImages() {
-		$count = $this->request->getVal( 'count', 20 );
-		$to = $this->request->getInt( 'to', 0 );
+		$count = $this->request->getInt( 'count', 20 );
+		$to = $this->request->getVal( 'to', 0 );
 		$includeLatestPhotos = $this->request->getVal( 'inclusive', '' );
 
 		$thumbs = array();
@@ -61,7 +61,7 @@ class LightboxController extends WikiaController {
 		if ( !empty( $to ) ) {
 			// get image list - exclude Latest Photos
 			$images = array();
-			$helper = new LightboxHelper();
+			$helper = $this->getLightboxHelper();
 			$imageList = $helper->getImageList( $count, $to );
 			extract( $imageList );
 
@@ -380,7 +380,7 @@ class LightboxController extends WikiaController {
 		$extra = $this->request->getVal( 'count', 0 );
 		$includeLatestPhotos = $this->request->getVal( 'inclusive', '' );
 
-		$helper = new LightboxHelper();
+		$helper = $this->getLightboxHelper();
 
 		// add Latest Photos if not exist
 		if ( $includeLatestPhotos == 'true' ) {
@@ -401,4 +401,11 @@ class LightboxController extends WikiaController {
 		wfProfileOut( __METHOD__ );
 	}
 
+	/**
+	 * Get an instance of the lightbox helper
+	 * @return LightboxHelper
+	 */
+	public function getLightboxHelper() {
+		return new \LightboxHelper();
+	}
 }
