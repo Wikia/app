@@ -8,10 +8,15 @@ class MediaGalleryHooks {
 	 * @return bool
 	 */
 	static public function onOutputPageBeforeHTML( OutputPage $out, &$text ) {
-		if ( empty( F::app()->wg->EnableMediaGalleryExt ) ) {
+		wfProfileIn(__METHOD__);
+
+		$app = F::app();
+
+		// check if extension is enabled and if we already have assets
+		if ( empty( $app->wg->EnableMediaGalleryExt ) || $app->wg->MediaGalleryAssetsLoaded ) {
+			wfProfileOut(__METHOD__);
 			return true;
 		}
-		wfProfileIn(__METHOD__);
 
 		JSMessages::enqueuePackage( 'MediaGallery', JSMessages::EXTERNAL );
 
@@ -20,18 +25,19 @@ class MediaGalleryHooks {
 			$out->addScript( "<script src='{$script}'></script>" );
 		}
 
-		$out->addStyle(
-			AssetsManager::getInstance()->getSassCommonURL('/extensions/wikia/MediaGallery/styles/MediaGallery.scss' )
-		);
+		$app->wg->MediaGalleryAssetsLoaded = true;
 
 		wfProfileOut(__METHOD__);
 		return true;
 	}
 
+	/**
+	 * Add extension enabled flag to JS
+	 * @param array $vars
+	 * @return bool
+	 */
 	public static function onMakeGlobalVariablesScript(Array &$vars) {
 		$vars['wgEnableMediaGalleryExt'] = !empty( F::app()->wg->EnableMediaGalleryExt );
 		return true;
 	}
-
 }
-

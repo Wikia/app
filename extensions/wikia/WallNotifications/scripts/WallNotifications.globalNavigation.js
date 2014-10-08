@@ -39,14 +39,22 @@ require(
 					.on('click', '#markasread-all-wikis', this.proxy( this.markAllAsReadAllWikis ));
 			},
 
-			openNotifications: function(row) {
-				if ( row.getAttribute('id') === 'notifications' ) {
-					$('#GlobalNavigationWallNotifications').addClass('show');
+			openNotifications: function() {
+				if ( this.getAttribute('id') === 'notifications' ) {
+					WallNotifications.$wallNotifications.addClass('show');
 				}
 			},
 
 			closeNotifications: function() {
-				$('#GlobalNavigationWallNotifications').removeClass('show');
+				WallNotifications.$wallNotifications.removeClass('show');
+			},
+
+			toggleNotifications: function() {
+				if ( WallNotifications.$wallNotifications.hasClass('show') ) {
+					WallNotifications.closeNotifications();
+				} else {
+					WallNotifications.openNotifications.apply(this);
+				}
 			},
 
 			checkIfFromMessageBubble: function() {
@@ -64,7 +72,8 @@ require(
 			},
 
 			updateCounts: function() {
-				var callback = this.proxy(function(data) {
+				var data,
+					callback = this.proxy(function(data) {
 					if (data.status !== true || data.html === '') {
 						return;
 					}
@@ -96,10 +105,13 @@ require(
 				if ( this.updateInProgress ===  false ) {
 					this.updateInProgress = true;
 
+					data = this.getUrlParams();
+
 					nirvana.sendRequest({
 						controller: 'WallNotificationsExternalController',
 						method: 'getUpdateCounts',
 						format: 'json',
+						data: data,
 						callback: callback
 					});
 				}
@@ -243,15 +255,19 @@ require(
 			},
 
 			updateWikiFetch: function(wikiId) {
-				var isCrossWiki = (wikiId === this.cityId) ? '0' : '1';
-				nirvana.sendRequest({
-					controller: 'WallNotificationsExternalController',
-					method: 'getUpdateWiki',
-					data: {
+				var isCrossWiki = (wikiId === this.cityId) ? '0' : '1',
+					data = {
 						username: window.wgTitle,
 						wikiId: wikiId,
 						isCrossWiki: isCrossWiki
-					},
+					};
+
+				$.extend(data, this.getUrlParams());
+
+				nirvana.sendRequest({
+					controller: 'WallNotificationsExternalController',
+					method: 'getUpdateWiki',
+					data: data,
 					callback: this.proxy(function(data) {
 						if(data.status !== true || data.html === '') { return; }
 						this.updateWikiHtml(wikiId, data);
@@ -303,6 +319,24 @@ require(
 				return $.proxy( func, this );
 			},
 
+			getUrlParams: function() {
+				var data = {},
+					qs = Wikia.Querystring(),
+					lang, skin;
+
+				skin = qs.getVal( 'useskin' );
+				if( skin ) {
+					data.useskin = skin;
+				}
+
+				lang = qs.getVal( 'uselang' );
+				if( lang ) {
+					data.uselang = lang;
+				}
+
+				return data;
+			},
+
 			setNotificationsHeight: function() {
 				var isDropdownOpen = this.$wallNotifications.hasClass('show'),
 					height = 0,
@@ -342,11 +376,24 @@ require(
 					rowSelector: '> li',
 					tolerance: 85,
 					submenuDirection: 'left',
-					activate: WallNotifications.openNotifications,
 					deactivate: WallNotifications.closeNotifications,
-					enter: WallNotifications.openNotifications,
 					exitMenu: WallNotifications.closeNotifications
 			});
+
+			if ( !Wikia.isTouchScreen() ) {
+				window.delayedHover(
+					document.getElementById('notifications'),
+					{
+						checkInterval: 200,
+						maxActivationDistance: 20,
+						onActivate: WallNotifications.openNotifications,
+						activateOnClick: false
+					}
+				);
+			} else {
+				WallNotifications.$notifications.on('click', WallNotifications.toggleNotifications);
+			}
+
 		});
 	}
 );

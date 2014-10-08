@@ -3,10 +3,16 @@ describe('WikiaMaps.utils', function () {
 
 	var utilsModule = modules['wikia.intMap.utils'](jQuery, {}, {}, {}, {}, {}, {});
 
-	it('registers AMD module', function() {
+	it('registers AMD module', function () {
 		expect(typeof utilsModule).toBe('object');
 
 		expect(typeof utilsModule.inArray).toBe('function');
+	});
+
+	it('triggers page refresh if requested in onBeforeClose', function() {
+		spyOn(utilsModule, 'onBeforeCloseModal');
+		utilsModule.onBeforeCloseModal(true);
+		expect(utilsModule.refreshIfAfterForceLogin);
 	});
 
 	it('checks if a key is present in an array', function() {
@@ -45,5 +51,32 @@ describe('WikiaMaps.utils', function () {
 
 			expect(output).toEqual(testCase.expectedOutput);
 		});
+	});
+
+	it('checks if there is no error if file is submitted', function () {
+		var inputElementStub = {
+			files: ['a-stub-file']
+		};
+		expect(function () {
+			utilsModule.getFormDataForFileUpload(inputElementStub, 'just-for-test');
+		}).not.toThrow('Could not find the file');
+	});
+
+	it('checks if an error is thrown where there is no file', function () {
+		var inputElementStub = {
+			files: []
+		};
+		expect(function () {
+			utilsModule.getFormDataForFileUpload(inputElementStub, 'just-for-test');
+		}).toThrow('Could not find the file');
+	});
+
+	it('checks if an error is thrown where there is no files array', function () {
+		var inputElementStub = {
+			files: []
+		};
+		expect(function () {
+			utilsModule.getFormDataForFileUpload(inputElementStub, 'just-for-test');
+		}).toThrow('Could not find the file');
 	});
 });

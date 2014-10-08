@@ -6,7 +6,7 @@ define('wikia.intMap.poiCategories',
 		'wikia.intMap.utils',
 		'wikia.intMap.poiCategories.model'
 	],
-	function($, qs, w, utils, poiCategoriesModel) {
+	function ($, qs, w, utils, poiCategoriesModel) {
 		'use strict';
 
 		// reference to modal component
@@ -90,6 +90,11 @@ define('wikia.intMap.poiCategories',
 				],
 				triggerMarkerUpload: [
 					triggerMarkerUpload
+				],
+				beforeClose: [
+					function () {
+						utils.onBeforeCloseModal(!changesSaved);
+					}
 				]
 			},
 			pontoTrigger,
@@ -100,7 +105,8 @@ define('wikia.intMap.poiCategories',
 			modalModes = {
 				CREATE: 'create',
 				EDIT: 'edit'
-			};
+			},
+			changesSaved;
 
 		/**
 		 * @desc Entry point for modal
@@ -293,7 +299,7 @@ define('wikia.intMap.poiCategories',
 
 		/**
 		 * @desc adds POI category id to hidden field
-		 * @param poiCategoryId
+		 * @param {Number} poiCategoryId
 		 */
 		function markPoiCategoryAsDeleted(poiCategoryId) {
 			// add POI category id to hidden field
@@ -305,12 +311,9 @@ define('wikia.intMap.poiCategories',
 		 * @param {Element} inputElement - file input element
 		 */
 		function uploadMarkerImage(inputElement) {
-			var file = inputElement.files[0],
-				formData = new FormData(),
+			var formData = utils.getFormDataForFileUpload(inputElement),
 				$inputElement = $(inputElement),
 				$inputElementWrapper = $inputElement.closest('.poi-category-marker');
-
-			formData.append('wpUploadFile', file);
 
 			utils.upload(modal, formData, 'marker', function (data) {
 				modal.trigger('saveMarkerImage', data, $inputElementWrapper);
@@ -326,7 +329,7 @@ define('wikia.intMap.poiCategories',
 		function saveMarkerImage(data, $inputElementWrapper) {
 			$inputElementWrapper
 				.find('.poi-category-marker-image-url')
-				.val(data['fileThumbUrl']);
+				.val(data.fileThumbUrl);
 		}
 
 		/**
@@ -339,7 +342,7 @@ define('wikia.intMap.poiCategories',
 			$inputElement.val('');
 			$inputElementWrapper
 				.find('.poi-category-marker-image')
-				.attr('src', data['fileThumbUrl'])
+				.attr('src', data.fileThumbUrl)
 				.removeClass('hidden')
 				.siblings('span')
 				.addClass('hidden');
@@ -415,6 +418,7 @@ define('wikia.intMap.poiCategories',
 		 * @param {object} dataReceived - response from backend, array of actions done and categories affected
 		 */
 		function poiCategoriesSaved(dataSent, dataReceived) {
+			changesSaved = true;
 			if (mode === modalModes.EDIT) {
 				if (typeof pontoTrigger === 'function') {
 					pontoTrigger(poiCategoriesModel.preparePoiCategoriesForPonto(dataSent, dataReceived));

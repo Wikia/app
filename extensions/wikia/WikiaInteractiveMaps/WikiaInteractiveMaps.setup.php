@@ -33,6 +33,7 @@ $wgAutoloadClasses[ 'WikiaMapsLogger' ] = $dir . '/models/WikiaMapsLogger.class.
 
 // exception classes
 $wgAutoloadClasses[ 'WikiaInteractiveMapsPermissionException' ] = $dir . '/exceptions/WikiaInteractiveMapsPermissionException.class.php';
+$wgAutoloadClasses[ 'WikiaMapsConfigException' ] = $dir . '/exceptions/WikiaMapsConfigException.class.php';
 
 // special pages
 $wgSpecialPages[ 'Maps' ] = 'WikiaInteractiveMapsController';
@@ -73,6 +74,16 @@ JSMessages::registerPackage( 'WikiaInteractiveMapsDeleteMap', [
 JSMessages::registerPackage( 'WikiaInteractiveMapsEmbedMapCode', [
 	'wikia-interactive-maps-embed-map-code-*'
 ] );
+
+// Rights
+$wgAvailableRights[] = 'canremovemap';
+
+// Permissions
+// canremove -- give it to users who can remove maps
+$wgGroupPermissions['*']['canremovemap'] = false;
+$wgGroupPermissions['sysop']['canremovemap'] = true;
+$wgGroupPermissions['staff']['canremovemap'] = true;
+$wgGroupPermissions['helper']['canremovemap'] = true;
 
 // Logs
 $wgLogTypes[] = 'maps';

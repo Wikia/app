@@ -134,7 +134,7 @@ $messages['lb'] = array(
  */
 $messages['mk'] = array(
 	'wikianewfiles-title' => 'Нови податотеки на ова вики',
-	'wikianewfiles-desc' => 'Додаток за [[Special:NewFiles|специјална страница]] што менува извесни форматирања на заглавијата',
+	'wikianewfiles-desc' => 'Додаток за [[Special:NewFiles|службена страница]] што менува извесни форматирања на заглавијата',
 	'wikianewfiles-uploadby' => 'од {{GENDER:$2|$1}}',
 	'wikianewfiles-postedin' => 'Објавено во',
 	'wikianewfiles-more' => 'повеќе...',
@@ -153,10 +153,13 @@ $messages['ms'] = array(
 
 /** Dutch (Nederlands)
  * @author SPQRobin
+ * @author Sjoerddebruin
  */
 $messages['nl'] = array(
 	'wikianewfiles-title' => 'Nieuwe bestanden op deze wiki',
 	'wikianewfiles-uploadby' => 'door {{GENDER:$2|$1}}',
+	'wikianewfiles-postedin' => 'Geplaatst in',
+	'wikianewfiles-more' => 'meer...',
 );
 
 /** Punjabi (ਪੰਜਾਬੀ)
@@ -188,9 +191,10 @@ $messages['ps'] = array(
 
 /** Brazilian Portuguese (português do Brasil)
  * @author Cainamarques
+ * @author Jefersonmoraes
  */
 $messages['pt-br'] = array(
-	'wikianewfiles-title' => 'Novos arquivos nesta wiki',
+	'wikianewfiles-title' => 'Novos arquivos nesta wikia',
 	'wikianewfiles-desc' => 'Amplia uma [[Special:NewFiles|página especial]] para sobrepor a formatação do cabeçalho',
 	'wikianewfiles-uploadby' => 'por {{GENDER:$2|$1}}',
 	'wikianewfiles-postedin' => 'Postado em',

@@ -64,6 +64,11 @@ class CreateWikiLocalJob extends Job {
 		global $wgUser, $wgErrorLog, $wgDebugLogFile,
 			$wgServer, $wgInternalServer;
 
+		// Set this flag to ensure that all select operations go against master
+		// Slave lag can cause random errors during wiki creation process
+		global $wgForceMasterDatabase;
+		$wgForceMasterDatabase = true;
+
 		wfProfileIn( __METHOD__ );
 
 		/**
@@ -131,12 +136,12 @@ class CreateWikiLocalJob extends Job {
 		$this->moveMainPage();
 		$this->changeStarterContributions();
 		$this->setWelcomeTalkPage();
-		if ( empty( $this->mParams->disableWelcome ) ) { 
+		if ( empty( $this->mParams->disableWelcome ) ) {
 			$this->sendWelcomeMail();
 		}
 		$this->populateCheckUserTables();
 		$this->protectKeyPages();
-		if ( empty( $this->mParams->disableReminder ) ) { 
+		if ( empty( $this->mParams->disableReminder ) ) {
 			$this->queueReminderMail();
 		}
 		$this->sendRevisionToScribe();
@@ -146,7 +151,7 @@ class CreateWikiLocalJob extends Job {
 			'url'	=> $this->mParams->url,
 			'city_id' => $this->mParams->city_id
 		);
-		
+
 		if ( empty( $this->mParams->disableCompleteHook ) ) {
 			wfRunHooks( 'CreateWikiLocalJob-complete', array( $params ) );
 		}

@@ -738,6 +738,7 @@ $wgExternalWikiaStatsDB = 'wikiastats';
 $wgSpecialsDB = 'specials';
 $wgSharedKeyPrefix = "wikicities"; // default value for shared key prefix, @see wfSharedMemcKey
 $wgWikiaMailerDB = 'wikia_mailer';
+$wgForceMasterDatabase = false;  // true only during wiki creation process
 
 $wgAutoloadClasses['LBFactory_Wikia'] = "$IP/includes/wikia/LBFactory_Wikia.php";
 $wgAutoloadClasses['Wikia\\MastersPoll'] = "$IP/includes/wikia/MastersPoll.php";
@@ -1310,7 +1311,7 @@ $wgAdDriverSevenOneMediaOverrideSub2Site = null;
  * Set to null for to restrict only to Entertainment vertical
  * TODO: add an internal page for the reasons
  */
-$wgAdDriverUseDartForSlotsBelowTheFold = null;
+$wgAdDriverUseDartForSlotsBelowTheFold = true;
 
 /**
  * @name $wgAdDriverTrackState

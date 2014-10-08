@@ -92,6 +92,22 @@ $messages['br'] = array(
 	'spellchecker-info-spellcheck-suggestions' => 'Kinnigoù reizhskrivañ evit "$1" : $2',
 );
 
+/** Catalan (català)
+ * @author Unapersona
+ */
+$messages['ca'] = array(
+	'enablespellchecker' => 'Habilitar el corrector ortogràfic en mode visual.',
+	'spellchecker-info' => 'Informació del corrector ortogràfic',
+	'spellchecker-info-languages' => 'Idiomes disponibles ($1)',
+	'spellchecker-info-provider' => 'Proveïdor',
+	'spellchecker-info-dictionaries' => 'Diccionaris disponibles',
+	'spellchecker-info-spellcheck-text' => 'Text per ser comprovat',
+	'spellchecker-info-spellcheck-languages' => 'Idioma',
+	'spellchecker-info-spellcheck-submit' => "Revisa l'ortografia",
+	'spellchecker-info-spellcheck-is-correct' => 'La paraula "$1" està escrita correctament',
+	'spellchecker-info-spellcheck-suggestions' => 'Suggerències per "$1": $2',
+);
+
 /** Chechen (нохчийн)
  * @author Умар
  */
@@ -261,11 +277,26 @@ $messages['inh'] = array(
 	'spellchecker-info-spellcheck-languages' => 'Мотт',
 );
 
+/** Japanese (日本語)
+ * @author Plover-Y
+ */
+$messages['ja'] = array(
+	'spellchecker-info-spellcheck-languages' => '言語',
+);
+
 /** Kannada (ಕನ್ನಡ)
  * @author VASANTH S.N.
  */
 $messages['kn'] = array(
 	'spellchecker-info-spellcheck-languages' => 'ಭಾಷೆ',
+);
+
+/** Korean (한국어)
+ * @author Miri-Nae
+ */
+$messages['ko'] = array(
+	'spellchecker-info-spellcheck-languages' => '언어',
+	'spellchecker-info-spellcheck-submit' => '맞춤법 검사',
 );
 
 /** Colognian (Ripoarisch)

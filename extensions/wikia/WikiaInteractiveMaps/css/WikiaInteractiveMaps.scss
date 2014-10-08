@@ -1,7 +1,7 @@
-@import "skins/shared/mixins/background-opacity";
-@import "skins/shared/color";
-@import "skins/shared/mixins/gradient";
-@import "WikiaMapsShared";
+@import 'skins/shared/mixins/background-opacity';
+@import 'skins/shared/color';
+@import 'skins/shared/mixins/gradient';
+@import 'WikiaMapsShared';
 
 .maps-controls {
 	position: absolute;
@@ -23,14 +23,14 @@
 	}
 
 	li {
+		margin: 0 0 1px;
 		overflow-x: hidden;
 		position: relative;
-		margin: 0px 0px 1px;
 	}
 
 	.map-status {
 		@include background-opacity(#fff, 40);
-		padding: 0.6rem;
+		padding: .6rem;
 		position: absolute;
 		right: 0;
 	}
@@ -60,6 +60,10 @@
 
 .wikia-interactive-maps-page-header .wikia-menu-button {
 	padding-left: 8px;
+
+	.WikiaMenuElement {
+		list-style-type: none;
+	}
 }
 
 .wikia-interactive-map-wrapper {

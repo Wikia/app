@@ -197,6 +197,35 @@ define(
 		}
 
 		/**
+		 * @desc Creates an instance of FormData and appends to it file from passed <input type="file" /> element
+		 *
+		 * IE10 and IE11 officially support FormData but if we try to use it in the same way as in other browsers
+		 * (by passing the optional form parameter to FormData constructor) it throws "SCRIPT5: Access is denied."
+		 * error. The solution below works on IE and works in other browsers. We use it in two other places:
+		 * - intMapCreateTileSet.js,
+		 * - intMapPoiCategories.js.
+		 *
+		 * And we might use it somewhere else where an file upload with nice preview is required. That's why the method
+		 * is in intMapUtils.js file.
+		 *
+		 * @param {Object} inputElement <input type="file" /> element passed from an event
+		 * @param {String} inputFileName optional; by default it's going to be set to wpUploadFile
+		 * @returns {FormData}
+		 */
+		function getFormDataForFileUpload(inputElement, inputFileName) {
+			inputFileName = (!inputFileName) ? 'wpUploadFile' : inputFileName;
+
+			if (!inputElement.files || !inputElement.files[0]) {
+				throw new Error('Could not find the file');
+			}
+
+			var formData = new FormData();
+			formData.append(inputFileName, inputElement.files[0]);
+
+			return formData;
+		}
+
+		/**
 		 * @desc
 		 * @param {object} modal - modal component
 		 * @param {FormData} formData - FormData object with file input named wpUploadFile
@@ -269,6 +298,16 @@ define(
 		}
 
 		/**
+		 * @desc Triggers refresh if needed
+		 * @param {bool} shouldRefreshAfterForceLogin
+		 */
+		function onBeforeCloseModal(shouldRefreshAfterForceLogin) {
+			if (shouldRefreshAfterForceLogin) {
+				refreshIfAfterForceLogin();
+			}
+		}
+
+		/**
 		 * @desc handle nirvana exception errors
 		 * @param {object} modal - modal instance
 		 * @param {object} response - nirvana response object
@@ -284,9 +323,10 @@ define(
 		 */
 		function getNirvanaExceptionMessage(response) {
 			var responseText = response.responseText,
-				message = JSON.parse(responseText).exception.details;
+				exception = JSON.parse(responseText).exception,
+				message = exception.details || exception.message || response.statusText;
 
-			return message || response.statusText;
+			return message;
 		}
 
 		/**
@@ -424,6 +464,7 @@ define(
 			isUserLoggedIn: isUserLoggedIn,
 			showForceLoginModal: showForceLoginModal,
 			refreshIfAfterForceLogin: refreshIfAfterForceLogin,
+			onBeforeCloseModal: onBeforeCloseModal,
 			handleNirvanaException: handleNirvanaException,
 			getNirvanaExceptionMessage: getNirvanaExceptionMessage,
 			showError: showError,
@@ -435,7 +476,8 @@ define(
 			trackerActions: tracker.ACTIONS,
 			triggerAction: triggerAction,
 			getActionConfig: getActionConfig,
-			inArray: inArray
+			inArray: inArray,
+			getFormDataForFileUpload: getFormDataForFileUpload
 		};
 	}
 );
