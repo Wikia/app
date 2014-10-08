@@ -126,6 +126,9 @@ class AdEngine2Hooks {
 
 		global $wgAdDriverUseTopInContentBoxad;
 
+		// Tracking should be available very early, so we can track how lookup calls (Amazon, Rubicon) perform
+		$jsAssets[] = AdEngine2Service::ASSET_GROUP_ADENGINE_TRACKING;
+
 		if (AdEngine2Service::areAdsInHead()) {
 			// Add ad asset to JavaScripts loaded on top (in <head>)
 			$jsAssets[] = AdEngine2Service::ASSET_GROUP_ADENGINE;
@@ -134,6 +137,11 @@ class AdEngine2Hooks {
 				array_unshift($jsAssets, AdEngine2Service::ASSET_GROUP_TOP_INCONTENT_JS);
 			}
 		}
+
+		if (AnalyticsProviderRubiconRTP::isEnabled()) {
+			$jsAssets[] = AdEngine2Service::ASSET_GROUP_ADENGINE_RUBICON_RTP;
+		}
+
 		return true;
 	}
 
@@ -148,30 +156,33 @@ class AdEngine2Hooks {
 	 * @return bool
 	 */
 	static public function onWikiaSkinTopModules(&$scriptModules, $skin) {
-		if (AdEngine2Service::areAdsInHead() || AnalyticsProviderAmazonDirectTargetedBuy::isEnabled()) {
-			$scriptModules[] = 'wikia.instantGlobals';
-			$scriptModules[] = 'wikia.cookies';
-			$scriptModules[] = 'wikia.geo';
-			$scriptModules[] = 'wikia.window';
-		}
-		if (AdEngine2Service::areAdsInHead()) {
-			$scriptModules[] = 'wikia.document';
-			$scriptModules[] = 'wikia.abTest';
-			$scriptModules[] = 'wikia.cache';
-			$scriptModules[] = 'wikia.localStorage';
-			$scriptModules[] = 'wikia.location';
-			$scriptModules[] = 'wikia.log';
-			$scriptModules[] = 'wikia.querystring';
-			$scriptModules[] = 'wikia.tracker.stub';
-		}
+		$scriptModules[] = 'wikia.abTest';
+		$scriptModules[] = 'wikia.cache';
+		$scriptModules[] = 'wikia.cookies';
+		$scriptModules[] = 'wikia.document';
+		$scriptModules[] = 'wikia.geo';
+		$scriptModules[] = 'wikia.instantGlobals';
+		$scriptModules[] = 'wikia.localStorage';
+		$scriptModules[] = 'wikia.location';
+		$scriptModules[] = 'wikia.log';
+		$scriptModules[] = 'wikia.querystring';
+		$scriptModules[] = 'wikia.tracker.stub';
+		$scriptModules[] = 'wikia.window';
 		return true;
 	}
 
-	public static function onWikiaMobileAssetsPackages(&$jsBodyPackages, &$jsExtensionPackages, &$scssPackages) {
-		global $wgAdDriverUseEbay;
+	public static function onSkinAfterContent( &$text ){
+		global $wgTitle, $wgAdDriverUseTaboola;
 
-		if ($wgAdDriverUseEbay) {
-			$scssPackages[] = 'adengine2_ebay_scss_wikiamobile';
+		if (!$wgAdDriverUseTaboola) {
+			return true;
+		}
+
+		$skin = RequestContext::getMain()->getSkin()->getSkinName();
+
+		// File pages handle their own rendering of related pages wrapper
+		if ( ( $skin === 'oasis' ) && $wgTitle->getNamespace() !== NS_FILE ) {
+			$text = $text . F::app()->renderView('Ad', 'Index', ['slotName' => 'NATIVE_TABOOLA']);
 		}
 
 		return true;

@@ -62,12 +62,14 @@ class RestrictSessionsHooks extends \ContextSource {
 			if ( $sessionUserId !== null ) {
 				$sessionUser = User::newFromId( $sessionUserId );
 				if ( $sessionUser->isAllowed( 'restrictsession' ) ) {
+					$user->loadDefaults();
 					$result = false;
 				}
 			}
 
 			return true;
 		} elseif ( $sessionUserId !== null && $cookieUserId != $sessionUserId ) {
+			$user->loadDefaults();
 			$result = false;
 			return true;
 		}
@@ -90,6 +92,7 @@ class RestrictSessionsHooks extends \ContextSource {
 			$ipAddr = $request->getSessionData( self::IP_SESSION_KEY );
 
 			if ( $reqIp !== $ipAddr && !$this->isWhiteListedIP( $reqIp ) ) {
+				$user->loadDefaults();
 				$result = false;
 			}
 		}

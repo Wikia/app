@@ -5,7 +5,6 @@ require(
 
 		var WallNotifications = {
 			init: function() {
-				this.wikisUrls = {};
 				this.updateInProgress = false; // we only want 1 update simultaneously
 				this.notificationsCache = {}; // HTML for "trays" for different Wiki ids
 				this.wikiShown = {}; // all open "trays" (Wiki Notifications) - list of Wiki ids
@@ -40,14 +39,22 @@ require(
 					.on('click', '#markasread-all-wikis', this.proxy( this.markAllAsReadAllWikis ));
 			},
 
-			openNotifications: function(row) {
-				if ( row.getAttribute('id') === 'notifications' ) {
-					$('#GlobalNavigationWallNotifications').addClass('show');
+			openNotifications: function() {
+				if ( this.getAttribute('id') === 'notifications' ) {
+					WallNotifications.$wallNotifications.addClass('show');
 				}
 			},
 
 			closeNotifications: function() {
-				$('#GlobalNavigationWallNotifications').removeClass('show');
+				WallNotifications.$wallNotifications.removeClass('show');
+			},
+
+			toggleNotifications: function() {
+				if ( WallNotifications.$wallNotifications.hasClass('show') ) {
+					WallNotifications.closeNotifications();
+				} else {
+					WallNotifications.openNotifications.apply(this);
+				}
 			},
 
 			checkIfFromMessageBubble: function() {
@@ -65,7 +72,8 @@ require(
 			},
 
 			updateCounts: function() {
-				var callback = this.proxy(function(data) {
+				var data,
+					callback = this.proxy(function(data) {
 					if (data.status !== true || data.html === '') {
 						return;
 					}
@@ -97,10 +105,13 @@ require(
 				if ( this.updateInProgress ===  false ) {
 					this.updateInProgress = true;
 
+					data = this.getUrlParams();
+
 					nirvana.sendRequest({
 						controller: 'WallNotificationsExternalController',
 						method: 'getUpdateCounts',
 						format: 'json',
+						data: data,
 						callback: callback
 					});
 				}
@@ -198,11 +209,6 @@ require(
 					this.$notificationsCount.empty().parent('.bubbles').removeClass('show');
 				}
 
-				this.$wallNotifications.find('.notifications-for-wiki').each(function() {
-					element = $(this);
-					self.wikisUrls[ parseInt(element.data('wiki-id'), 10) ] = self.getWikiUrl( element.data('wiki-path') );
-				});
-
 				this.$wallNotifications.find('.notifications-wiki-header').click( this.proxy( this.wikiClick ) );
 
 				this.setNotificationsHeight();
@@ -249,17 +255,19 @@ require(
 			},
 
 			updateWikiFetch: function(wikiId) {
-				var isCrossWiki = (wikiId === this.cityId) ? '0' : '1';
-				nirvana.sendRequest({
-					controller: 'WallNotificationsExternalController',
-					method: 'getUpdateWiki',
-					format: 'jsonp',
-					scriptPath: this.wikisUrls[wikiId],
-					data: {
+				var isCrossWiki = (wikiId === this.cityId) ? '0' : '1',
+					data = {
 						username: window.wgTitle,
 						wikiId: wikiId,
 						isCrossWiki: isCrossWiki
-					},
+					};
+
+				$.extend(data, this.getUrlParams());
+
+				nirvana.sendRequest({
+					controller: 'WallNotificationsExternalController',
+					method: 'getUpdateWiki',
+					data: data,
 					callback: this.proxy(function(data) {
 						if(data.status !== true || data.html === '') { return; }
 						this.updateWikiHtml(wikiId, data);
@@ -311,14 +319,22 @@ require(
 				return $.proxy( func, this );
 			},
 
-			getWikiUrl: function( url ) {
-				if ( window.wgStagingEnvironment && url ) {
-					var stagingEnv = window.location.hostname.split( '.' )[0];
-					if ( url.indexOf( stagingEnv ) === -1 ) {
-						url = url.replace( '://', '://' + stagingEnv + '.' );
-					}
+			getUrlParams: function() {
+				var data = {},
+					qs = Wikia.Querystring(),
+					lang, skin;
+
+				skin = qs.getVal( 'useskin' );
+				if( skin ) {
+					data.useskin = skin;
 				}
-				return url;
+
+				lang = qs.getVal( 'uselang' );
+				if( lang ) {
+					data.uselang = lang;
+				}
+
+				return data;
 			},
 
 			setNotificationsHeight: function() {
@@ -360,11 +376,24 @@ require(
 					rowSelector: '> li',
 					tolerance: 85,
 					submenuDirection: 'left',
-					activate: WallNotifications.openNotifications,
 					deactivate: WallNotifications.closeNotifications,
-					enter: WallNotifications.openNotifications,
 					exitMenu: WallNotifications.closeNotifications
 			});
+
+			if ( !Wikia.isTouchScreen() ) {
+				window.delayedHover(
+					document.getElementById('notifications'),
+					{
+						checkInterval: 200,
+						maxActivationDistance: 20,
+						onActivate: WallNotifications.openNotifications,
+						activateOnClick: false
+					}
+				);
+			} else {
+				WallNotifications.$notifications.on('click', WallNotifications.toggleNotifications);
+			}
+
 		});
 	}
 );

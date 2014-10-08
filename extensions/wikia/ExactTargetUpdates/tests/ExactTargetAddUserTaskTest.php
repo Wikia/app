@@ -125,47 +125,55 @@ class ExactTargetAddUserTaskTest extends WikiaBaseTest {
 
 		/* Prepare request object */
 		$aSoapVars = [];
-		$apiProperties = [];
 
 		$DE = new ExactTarget_DataExtensionObject();
 		$DE->CustomerKey = 'user';
 
-		foreach ( $aUserData as $sProperty => $sValue ) {
-			$apiProperty = new ExactTarget_APIProperty();
-			$apiProperty->Name = $sProperty;
-			$apiProperty->Value = $sValue;
+		/* Prepare properties */
+		$apiProperty = new ExactTarget_APIProperty();
+		$apiProperty->Name = 'user_email';
+		$apiProperty->Value = $aUserData['user_email'];
+		$DE->Properties = [ $apiProperty ];
 
-			$apiProperties[] = $apiProperty;
-		}
-
-		$DE->Properties = $apiProperties;
+		/* Prepare keys */
+		$apiProperty = new ExactTarget_APIProperty();
+		$apiProperty->Name = 'user_id';
+		$apiProperty->Value = $aUserData['user_id'];
+		$DE->Keys = [ $apiProperty ];
 
 		$soapVar = new SoapVar( $DE, SOAP_ENC_OBJECT, 'DataExtensionObject', 'http://exacttarget.com/wsdl/partnerAPI' );
 		$aSoapVars[] = $soapVar;
 
-		$oRequest = new ExactTarget_CreateRequest();
+		$oRequest = new ExactTarget_UpdateRequest();
 
-		$oRequest->Options = NULL;
+		/* Prepare update-add options */
+		$updateOptions = new ExactTarget_UpdateOptions();
+		$saveOption = new ExactTarget_SaveOption();
+		$saveOption->PropertyName = 'DataExtensionObject';
+		$saveOption->SaveAction = ExactTarget_SaveAction::UpdateAdd;
+		$updateOptions->SaveOptions[] = new SoapVar( $saveOption, SOAP_ENC_OBJECT, 'SaveOption', 'http://exacttarget.com/wsdl/partnerAPI' );
+
+		$oRequest->Options = $updateOptions;
 		$oRequest->Objects = $aSoapVars;
 
 		$soapClient = $this->getMockBuilder( 'ExactTargetSoapClient' )
 			->disableOriginalConstructor()
-			->setMethods( [ 'Create' ] )
+			->setMethods( [ 'Update' ] )
 			->getMock();
 		$soapClient
 			->expects( $this->once() )
-			->method( 'Create' )
+			->method( 'Update' )
 			->with( $oRequest );
 
 		/* Mock tested class */
 		/* @var ExactTargetAddUserTask $mockAddUserTask mock of ExactTargetAddUserTask */
 		$mockAddUserTask = $this->getMockBuilder( 'ExactTargetAddUserTask' )
 			->disableOriginalConstructor()
-			->setMethods( [ 'wrapCreateRequest' ] )
+			->setMethods( [ 'wrapUpdateRequest' ] )
 			->getMock();
 		$mockAddUserTask
 			->expects( $this->once() )
-			->method( 'wrapCreateRequest' )
+			->method( 'wrapUpdateRequest' )
 			->will( $this->returnValue( $oRequest ) );
 
 		/* Run tested method */

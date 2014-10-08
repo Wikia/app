@@ -178,6 +178,13 @@ $messages['es'] = array(
 	'mostvisitedpagesalllink' => 'Ver páginas más visitadas',
 );
 
+/** Persian (فارسی)
+ * @author Reza1615
+ */
+$messages['fa'] = array(
+	'mostvisitedpagessearchbtn' => 'جستجو',
+);
+
 /** Finnish (suomi)
  * @author Centerlink
  * @author Crt
@@ -347,6 +354,14 @@ $messages['kn'] = array(
 	'mostvisitedpageslatest' => 'ಕಳೆದ $1 ನಿಮಿಷದಲ್ಲಿ',
 	'mostvisitedpageslatestlink' => 'ಕೊನೆಯದಾಗಿ ಭೇಟಿಕೊಟ್ಟ ಪುಟಗಳನ್ನು ನೋಡಿ',
 	'mostvisitedpagesalllink' => 'ಅತ್ಯಂತ ಹೆಚ್ಚು ಭೇಟಿಕೊಟ್ಟ ಪುಟಗಳನ್ನು ನೋಡಿ',
+);
+
+/** Korean (한국어)
+ * @author Miri-Nae
+ */
+$messages['ko'] = array(
+	'mostvisitedpagessearchtext' => '문서 이름:',
+	'mostvisitedpagessearchbtn' => '검색',
 );
 
 /** Kurdish (Latin script) (Kurdî (latînî)‎)
@@ -688,12 +703,13 @@ $messages['vi'] = array(
 /** Simplified Chinese (中文（简体）‎)
  * @author Dimension
  * @author Hydra
+ * @author Liuxinyu970226
  * @author Xiaomingyan
  */
 $messages['zh-hans'] = array(
 	'mostvisitedpages' => '最多访问页面',
 	'mostvisitedpagessearchtext' => '条目名称：',
-	'mostvisitedpagessearchbtn' => '搜寻',
+	'mostvisitedpagessearchbtn' => '搜索',
 	'mostvisitedpageslatest' => '在最近$1分钟内',
 	'mostvisitedpageslatestlink' => '查看最近访问的页面',
 	'mostvisitedpagesalllink' => '查看访问数量最多的页面',

@@ -811,6 +811,13 @@ Artikeln '''$1''' kunde inte hittas.
 * För att gå till huvudsidan för denna sajten klickar du på länken: [{{SERVER}} {{SITENAME}}]",
 );
 
+/** Tamil (தமிழ்)
+ * @author ElangoRamanujam
+ */
+$messages['ta'] = array(
+	'our404handler' => 'பிழை 404: பக்கத்தைக் காணவில்லை!',
+);
+
 /** Telugu (తెలుగు)
  * @author Chaduvari
  * @author Veeven

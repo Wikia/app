@@ -5,6 +5,7 @@
  * @author Bogna 'bognix' Knychala
  * @author Bartosz 'V.' Bentkowski
  * @author Łukasz Konieczny
+ * @author Mateusz 'Warkot' Warkocki
  *
  */
 
@@ -14,6 +15,7 @@ $wgExtensionCredits[ 'specialpage' ][] = [
 		'Bogna \'bognix\' Knychala',
 		'Bartosz \'V.\' Bentkowski',
 		'Łukasz Konieczny',
+		'Mateusz \'Warkot\' Warkocki'
 	],
 	'description' => 'LocalNavigation',
 	'version' => 1.0

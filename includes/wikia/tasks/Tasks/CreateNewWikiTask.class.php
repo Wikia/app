@@ -20,8 +20,11 @@ class CreateNewWikiTask extends BaseTask {
 	private $wikiLang;
 
 	public function init() {
-		global $IP;
+		global $IP, $wgForceMasterDatabase;
 
+		// Set this flag to ensure that all select operations go against master
+		// Slave lag can cause random errors during wiki creation process
+		$wgForceMasterDatabase = true;
 		parent::init();
 
 		$this->title = \Title::newFromText( NS_MAIN, "Main" );
@@ -446,4 +449,4 @@ class CreateNewWikiTask extends BaseTask {
 
 		$this->info('send starter revisions to scribe', ['num_rows' => $numRows]);
 	}
-} 
+}

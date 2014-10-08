@@ -139,7 +139,7 @@ class LightboxController extends WikiaController {
 	/**
 	 * Returns complete details about a single media (file).  JSON only, no associated template to this method.
 	 * @requestParam string fileTitle
-	 * @requestParam string sourceArticleId (optional) - article id that the file belongs to
+	 * @requestParam boolean isInline (optional) - Determines whether the media file should show inline
 	 * @responseParam string mediaType - media type.  either image or video
 	 * @responseParam string videoEmbedCode - embed html code if video
 	 * @responseParam string imageUrl - thumb image url that is hard scaled
@@ -312,6 +312,7 @@ class LightboxController extends WikiaController {
  	 * AJAX function for sending share e-mails
 	 * @requestParam string addresses - comma-separated list of email addresses
 	 * @requestParam string shareUrl - share url being emailed
+	 * @requestParam string type - optional - if 'video', the message is customized for media type video
 	 */
 	public function shareFileMail() {
 		$user = $this->wg->User;

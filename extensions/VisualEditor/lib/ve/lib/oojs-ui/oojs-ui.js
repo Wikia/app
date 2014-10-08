@@ -4284,7 +4284,9 @@ OO.ui.GridLayout.prototype.update = function () {
 			dimensions = {
 				'width': Math.round( width * 100 ) + '%',
 				'height': Math.round( height * 100 ) + '%',
-				'top': Math.round( top * 100 ) + '%'
+				'top': Math.round( top * 100 ) + '%',
+				// HACK: Work around IE bug by setting visibility: hidden; if width or height is zero
+				'visibility': width === 0 || height === 0 ? 'hidden' : ''
 			};
 			// If RTL, reverse:
 			if ( OO.ui.Element.getDir( this.$.context ) === 'rtl' ) {
@@ -6794,7 +6796,7 @@ OO.ui.SelectWidget.prototype.getRelativeSelectableItem = function ( item, direct
 			// Default to n-1 instead of -1, if nothing is selected let's start at the end
 			Math.min( index, len );
 
-	while ( true ) {
+	while ( len !== 0 ) {
 		i = ( i + inc + len ) % len;
 		item = this.items[i];
 		if ( item instanceof OO.ui.OptionWidget && item.isSelectable() ) {
@@ -7990,8 +7992,11 @@ OO.ui.PopupButtonWidget.prototype.onClick = function ( e ) {
  * @param {Object} [config] Configuration options
  * @cfg {string|jQuery} [placeholder] Placeholder text for query input
  * @cfg {string} [value] Initial query value
+ * @cfg {boolean} [clearable] Whether to use a clearable query input
  */
 OO.ui.SearchWidget = function OoUiSearchWidget( config ) {
+	var textInputConfig;
+
 	// Configuration intialization
 	config = config || {};
 
@@ -7999,12 +8004,17 @@ OO.ui.SearchWidget = function OoUiSearchWidget( config ) {
 	OO.ui.SearchWidget.super.call( this, config );
 
 	// Properties
-	this.query = new OO.ui.TextInputWidget( {
+	textInputConfig = {
 		'$': this.$,
 		'icon': 'search',
 		'placeholder': config.placeholder,
 		'value': config.value
-	} );
+	};
+	if ( config.clearable ) {
+		this.query = new OO.ui.ClearableTextInputWidget( textInputConfig );
+	} else {
+		this.query = new OO.ui.TextInputWidget( textInputConfig );
+	}
 	this.results = new OO.ui.SelectWidget( { '$': this.$ } );
 	this.$query = this.$( '<div>' );
 	this.$results = this.$( '<div>' );
