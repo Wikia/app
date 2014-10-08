@@ -10,7 +10,7 @@ class LocalNavigationController extends WikiaController {
 		Wikia::addAssetsToOutput( 'local_navigation_oasis_scss' );
 		Wikia::addAssetsToOutput( 'local_navigation_js' );
 
-		$this->response->setVal( 'enableContributeButton', !WikiaPageType::isWikiaHubMain() );
+		$this->setVal( 'enableContributeButton', !WikiaPageType::isWikiaHubMain() );
 	}
 
 	public function menu() {
