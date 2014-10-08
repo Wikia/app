@@ -1,5 +1,7 @@
 <nav id="localNavigation" class="local-navigation">
 	<?= $app->renderView( 'LocalNavigation', 'Wordmark') ?>
 	<?= $app->renderView( 'LocalNavigation', 'menu' ); ?>
-	<?= $app->renderView( 'LocalNavigationContributeMenu', 'Index' ) ?>
+	<? if ( !empty( $wg->HideNavigationHeaders ) ): ?>
+		<?= $app->renderView( 'LocalNavigationContributeMenu', 'Index' ) ?>
+	<? endif; ?>
 </nav>
