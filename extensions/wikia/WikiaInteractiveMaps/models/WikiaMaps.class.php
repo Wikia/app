@@ -4,6 +4,7 @@ class WikiaMaps extends WikiaObject {
 
 	const REAL_MAP_THUMB_EXPIRE_TIME = 86400; // 1 day
 	const ENTRY_POINT_MAP = 'map';
+	const ENTRY_POINT_MAP_DATA = 'map_data';
 	const ENTRY_POINT_RENDER = 'render';
 	const ENTRY_POINT_TILE_SET = 'tile_set';
 	const ENTRY_POINT_POI_CATEGORY = 'poi_category';
@@ -188,6 +189,14 @@ class WikiaMaps extends WikiaObject {
 		}
 
 		return $map;
+	}
+
+	public function getMapDataByIdFromApi( $mapId,  $params = []) {
+		$url = $this->buildUrl( [ self::ENTRY_POINT_MAP_DATA, $mapId ], $params );
+		$response = $this->sendGetRequest( $url );
+
+		$mapData = $response[ 'content' ];
+		return $mapData;
 	}
 
 	/**
