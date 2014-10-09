@@ -13,8 +13,10 @@ class MonetizationModuleHooks {
 		wfProfileIn( __METHOD__ );
 
 		$app = F::app();
-		if ( !WikiaPageType::isCorporatePage() && $app->wg->User->isAnon() && $app->checkSkin( 'oasis' ) ) {
-			$jsAssetGroups[] = 'monetization_module_top_script_js';
+		$script = 'monetization_module_top_script_js';
+		if ( !WikiaPageType::isCorporatePage() && $app->wg->User->isAnon() && $app->checkSkin( 'oasis' )
+			&& !in_array( $script, $jsAssetGroups )) {
+			$jsAssetGroups[] = $script;
 		}
 
 		wfProfileOut( __METHOD__ );
