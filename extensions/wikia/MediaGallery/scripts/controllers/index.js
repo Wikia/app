@@ -33,7 +33,8 @@ require([
 			};
 
 		if ($elem.data('expanded')) {
-			galleryOptions.interval = 100;
+			// If expanded is set, it will be the number of images to show per interval
+			galleryOptions.interval = $elem.data('expanded');
 		}
 
 		// Instantiate gallery view
