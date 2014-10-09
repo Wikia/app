@@ -124,7 +124,8 @@
 							qString.setPath(w.wgArticlePath.replace('$1', returnTo));
 						}
 						// send bucky info immediately b/c the page is about to redirect
-						self.bucky.timer.stop('loggedInCallback').flush();
+						self.bucky.timer.stop('loggedInCallback');
+						self.bucky.flush();
 						qString.addCb().goTo();
 					});
 				}
