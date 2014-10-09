@@ -20,7 +20,6 @@ class MonetizationModuleHelper extends WikiaModel {
 	// TODO: encapsulate in Monetization Client
 	// do not change unless monetization service changes
 	const MONETIZATION_SERVICE_CACHE_PREFIX = 'monetization';
-	const RENDERING_IN_PROCESS = 1;
 
 	const API_VERSION = 'v1';
 	const API_DISPLAY = 'display/api/';
@@ -114,12 +113,7 @@ class MonetizationModuleHelper extends WikiaModel {
 		$log->debug( "MonetizationModule: lookup with cache key: $cacheKey", $loggingParams );
 
 		$json_results = $this->wg->Memc->get( $cacheKey );
-		if ( $json_results == self::RENDERING_IN_PROCESS ) {
-			// TODO: potentially block until rendering finishes, until then return nothing
-			$log->info( "MonetizationModule: memcache hit (rendering in process).", $loggingParams );
-			wfProfileOut( __METHOD__ );
-			return false;
-		} else if ( !empty( $json_results ) ) {
+		if ( !empty( $json_results ) ) {
 			$log->info( "MonetizationModule: memcache hit.", $loggingParams );
 			wfProfileOut( __METHOD__ );
 			return $this->setThemeSettings( $json_results, $cacheKey );
