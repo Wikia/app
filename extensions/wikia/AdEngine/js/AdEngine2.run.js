@@ -11,6 +11,7 @@ require([
 	'ext.wikia.adEngine.adEngine',
 	'ext.wikia.adEngine.adConfig',
 	'ext.wikia.adEngine.adLogicPageParams',
+	'ext.wikia.adEngine.adTracker',
 	'ext.wikia.adEngine.dartHelper',
 	'ext.wikia.adEngine.slotTracker',
 	'ext.wikia.adEngine.adLogicHighValueCountry',
@@ -26,6 +27,7 @@ require([
 	adEngine,
 	adConfig,
 	adLogicPageParams,
+	adTracker,
 	wikiaDart,
 	slotTracker,
 	adLogicHighValueCountry,
@@ -129,6 +131,10 @@ require([
 			log('Liftium disabled by wgSitewideDisableLiftium - running AdEngine_loadLateAds now', 1, module);
 			window.AdEngine_loadLateAds();
 		}
+	}
+
+	if (window.amzn_targs) {
+		adTracker.track('lookupSuccess/amazon', { amzn_targs: true }, 0);
 	}
 });
 
