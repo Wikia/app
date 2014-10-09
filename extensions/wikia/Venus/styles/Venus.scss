@@ -1,6 +1,9 @@
 // reset css
 @import "libs/normalize";
 
+// basic mediawiki styles
+@import "mediawiki.basic.legacy.css";
+
 // import variables and mixins
 @import "variables";
 @import "mixins";
