@@ -282,7 +282,8 @@ class WikiaMapsPoiController extends WikiaMapsBaseController {
 			$poiData[ 'description' ] = $description;
 		}
 
-		$this->appendLinkAndPhotoIfValid($poiData);
+		$this->appendLinkIfValidData($poiData);
+		$this->appendPhotoIfValidData($poiData);
 
 		return $poiData;
 	}
@@ -292,27 +293,35 @@ class WikiaMapsPoiController extends WikiaMapsBaseController {
 	 *
 	 * @param $poiData
 	 */
-	public function appendLinkAndPhotoIfValid( &$poiData ) {
+	public function appendLinkIfValidData( &$poiData ) {
 		$linkTitle = $this->getData( 'articleTitleOrExternalUrl', '' );
-		$photo = $this->getData( 'imageUrl' );
-
-		$isValidArticleUrl = $this->isValidArticleTitle();
 
 		// if article title or link was passed in form get an article URL for it
 		$link = ( !empty( $linkTitle ) ) ? $this->getArticleUrl( $linkTitle ) : '';
 		// if the link created was invalid it might be an external url if not empty
-		$link = ( !empty( $linkTitle ) && !$isValidArticleUrl ) ? $linkTitle : $link;
+		$link = ( !empty( $linkTitle ) && !$this->isValidArticleTitle() ) ? $linkTitle : $link;
 
 		if( !empty( $link ) && mb_substr( $link, 0, 4 ) !== 'http' ) {
 			$link = 'http://' . $link;
 		}
 
-		// if photo was passed and it was valid internal URL set the photo
-		$photo = ( !empty( $photo ) && $isValidArticleUrl ) ? $photo : '';
-		$photo = ( !$isValidArticleUrl || empty($link) ) ? '' : $photo;
-
 		$poiData[ 'link_title' ] = $linkTitle;
 		$poiData[ 'link' ] = $link;
+	}
+
+	/**
+	 * @brief Sends 'photo' element in an array depending on the fact if internal article has been set
+	 *
+	 * @param Array $poiData an array with POI's data
+	 */
+	public function appendPhotoIfValidData( &$poiData ) {
+		$photo = $this->getData( 'imageUrl' );
+		$isValidArticle = $this->isValidArticleTitle();
+
+		// if photo was passed and there is valid internal URL set
+		$photo = ( !empty( $photo ) && $isValidArticle ) ? $photo : '';
+		$photo = ( !$isValidArticle || empty( $poiData[ 'link' ] ) ) ? '' : $photo;
+
 		$poiData[ 'photo' ] = $photo;
 	}
 
