@@ -70,7 +70,7 @@
 					this.log('FB.login successful');
 
 					// begin ajax call performance tracking
-					this.bucky.timer.start('FacebookSignupControllerAjax');
+					this.bucky.timer.start('loginCallbackAjax');
 
 					// now check FB account (is it connected with Wikia account?)
 					$.nirvana.postJson('FacebookSignupController', 'index',
@@ -93,7 +93,7 @@
 			var self, loginCallback;
 
 			// end ajax call performance tracking
-			this.bucky.timer.stop('FacebookSignupControllerAjax');
+			this.bucky.timer.stop('loginCallbackAjax');
 
 			self = this;
 			loginCallback = this.callbacks['login-success'] || '';
