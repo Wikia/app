@@ -32,10 +32,9 @@ require([
 				index: idx
 			};
 
-		if ($elem.data('expanded')) {
-			// If expanded is set, it will be the number of images to show per interval
-			galleryOptions.interval = $elem.data('expanded');
-		}
+		// If expanded is set, it will be the number of images to show per interval.  If it's not set (zero) the gallery
+		// model will use its default
+		galleryOptions.interval = $elem.data('expanded');
 
 		// Instantiate gallery view
 		gallery = new Gallery(galleryOptions);
