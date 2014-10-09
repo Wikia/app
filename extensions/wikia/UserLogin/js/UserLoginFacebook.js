@@ -123,7 +123,8 @@
 						if (returnTo) {
 							qString.setPath(w.wgArticlePath.replace('$1', returnTo));
 						}
-						self.bucky.timer.stop('loggedInCallback');
+						// send bucky info immediately b/c the page is about to redirect
+						self.bucky.timer.stop('loggedInCallback').flush();
 						qString.addCb().goTo();
 					});
 				}
