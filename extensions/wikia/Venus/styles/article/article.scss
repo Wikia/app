@@ -1,4 +1,5 @@
-@import '../variables';
+@import 'extensions/wikia/Venus/styles/variables';
+@import 'skins/shared/color';
 @import 'images';
 
 article {
@@ -76,7 +77,7 @@ article {
 
 
 		.editsection {
-			line-height: 27px;
+			line-height: 36px;
 		}
 	}
 
@@ -85,7 +86,7 @@ article {
 		margin: 40px 0 16px 0;
 
 		.editsection {
-			line-height: 22px;
+			line-height: 27px;
 		}
 	}
 
@@ -99,8 +100,13 @@ article {
 		overflow: hidden;
 
 		.editsection {
+			float: right;
 			font-size: 12px;
 			text-transform: uppercase;
+
+			&:before {
+				background-image: url('/extensions/wikia/Venus/images/editpen.svg'); /* base64 */
+			}
 		}
 	}
 
@@ -109,8 +115,8 @@ article {
 	}
 
 	blockquote:before {
-		background: none repeat scroll 0 0 white;
-		content: "\201c";
+		background: none repeat scroll 0 0 $color-page;
+		content: '\201c';
 		display: inline;
 		font-size: 64px;
 		height: 34px;
@@ -121,7 +127,7 @@ article {
 	}
 
 	blockquote {
-		border-top: 4px solid;
+		border-top: 4px solid $color-text;
 		font-size: 27px;
 		margin: 0 0 40px 0px;
 		padding-top: 30px;
