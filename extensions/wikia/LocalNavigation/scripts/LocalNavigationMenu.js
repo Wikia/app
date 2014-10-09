@@ -3,12 +3,14 @@
 
 	$(function(){
 		var $localNavFirstLevel, $localNavSecondLevel, $localNav, $localNavStart, $window, windowWidth,
-			$openedMenu, $openedSubmenu, localNavCache = [], alwaysReturnTrueFunc, menuAimCache = [];
+			$openedMenu, $openedSubmenu, localNavCache = [], alwaysReturnTrueFunc, menuAimCache = [],
+			$contributeEntryPoint;
 
 		$localNav = $('#localNavigation');
 		$localNavStart = $localNav.find('.first-level-menu');
 		$localNavFirstLevel = $localNavStart.find('> .local-nav-entry');
 		$localNavSecondLevel = $localNav.find('.second-level-menu');
+		$contributeEntryPoint = $('#contributeEntryPoint');
 		$window = $(window);
 		windowWidth = $window.width();
 
@@ -71,6 +73,7 @@
 
 		function openMenu() {
 			$(this).addClass('active');
+			closeContributeMenu();
 		}
 
 		function closeMenu() {
@@ -112,6 +115,7 @@
 				$target.addClass('active');
 			}
 			$('body').one('click', handleCloseMenuClick);
+			closeContributeMenu();
 			$openedMenu = $target;
 		}
 
@@ -122,6 +126,8 @@
 				$openedMenu.removeClass('active');
 				$openedMenu = undefined;
 			}
+
+			closeOpenedSubmenu();
 		}
 
 		function handleSubmenuClick(event) {
@@ -180,6 +186,21 @@
 			}
 		}
 
+		function openContributeMenu(event) {
+			event.preventDefault();
+			event.stopPropagation();
+
+			$contributeEntryPoint.addClass('active');
+
+			$('body').one('click', closeContributeMenu);
+
+			closeOpenedMenu();
+		}
+
+		function closeContributeMenu() {
+			$contributeEntryPoint.removeClass('active');
+		}
+
 		alwaysReturnTrueFunc = function() {
 			return true;
 		};
@@ -196,6 +217,20 @@
 		} else {
 			$localNavFirstLevel.click(handleOpenMenuClick);
 			$localNavSecondLevel.find('.second-level-row').click(handleSubmenuClick);
+		}
+
+		if ($contributeEntryPoint.length) {
+			if (!window.Wikia.isTouchScreen()) {
+				window.delayedHover(
+					$contributeEntryPoint.get(0),
+					{
+						onActivate: openContributeMenu,
+						onDeactivate: closeContributeMenu
+					}
+				);
+			} else {
+				$contributeEntryPoint.click(openContributeMenu);
+			}
 		}
 
 		$window.on('resize', $.debounce(300, recalculateDropdownDirection));
