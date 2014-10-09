@@ -259,6 +259,8 @@ $third-level-color-hover: mix($color-buttons, $third-level-tint, 71%); // ~40% o
 				font-weight: normal;
 				padding: 10px;
 
+				-webkit-transform: translate3d(0, 0, 0);
+
 				&:hover {
 					background: $third-level-color-hover;
 				}
