@@ -182,7 +182,11 @@ class MercuryApiController extends WikiaController {
 	public function getWikiVariables() {
 		$wikiVariables = $this->mercuryApi->getWikiVariables();
 		$wikiVariables[ 'navData' ] = $this->getNavigationData();
-		$wikiVariables[ 'isGASpecialWiki' ] = $this->wg->IsGASpecialWiki;
+
+		// Used to determine GA tracking
+		if ( !empty( $this->wg->IsGASpecialWiki ) ) {
+			$wikiVariables[ 'wgIsGASpecialWiki' ] = true;
+		}
 
 		$smartBannerConfig = $this->getSmartBannerConfig();
 
