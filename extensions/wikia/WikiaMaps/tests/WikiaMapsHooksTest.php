@@ -3,7 +3,7 @@ class WikiaMapsHooksTest extends WikiaBaseTest {
 
 	public function setUp() {
 		global $IP;
-		$this->setupFile = "$IP/extensions/wikia/WikiaInteractiveMaps/WikiaInteractiveMaps.setup.php";
+		$this->setupFile = "$IP/extensions/wikia/WikiaMaps/WikiaMaps.setup.php";
 		parent::setUp();
 	}
 
@@ -18,9 +18,9 @@ class WikiaMapsHooksTest extends WikiaBaseTest {
 
 		$this->mockGlobalVariable( 'wgTitle', $wgTitleMock );
 
-		$this->getMock( 'WikiaInteractiveMapsController', [ 'getWikiPageUrl' ], [], '', false );
+		$this->getMock( 'WikiaMapsSpecialController', [ 'getWikiPageUrl' ], [], '', false );
 
-		$this->assertEquals( $expected, WikiaInteractiveMapsHooks::isSingleMapPage() );
+		$this->assertEquals( $expected, WikiaMapsHooks::isSingleMapPage() );
 	}
 
 	public function isSingleMapPageDataProvider() {
