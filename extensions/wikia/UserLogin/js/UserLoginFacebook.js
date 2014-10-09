@@ -101,8 +101,6 @@
 			// logged in using FB account, reload the page or callback
 			if (resp.loggedIn) {
 
-				this.bucky.timer.start('loggedInCallback');
-
 				// Track FB Connect Login
 				this.track({
 					action: this.actions.SUCCESS,
@@ -111,8 +109,8 @@
 
 				if (loginCallback && typeof loginCallback === 'function') {
 					loginCallback();
-					this.bucky.timer.stop('loggedInCallback');
 				} else {
+					this.bucky.timer.start('loggedInCallback');
 					require(['wikia.querystring'], function (Qs) {
 						var w = window,
 							wgCanonicalSpecialPageName = w.wgCanonicalSpecialPageName,
