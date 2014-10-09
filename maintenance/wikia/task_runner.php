@@ -19,7 +19,7 @@ if ( $wgDevelEnvironment ) {
 	'task_id' => $options['task_id']
 ] );
 
-$runner = new TaskRunner( $options['task_id'], $options['task_list'], $options['call_order'], $options['created_by'] );
+$runner = new TaskRunner( $wgCityId, $options['task_id'], $options['task_list'], $options['call_order'], $options['created_by'] );
 
 ob_start();
 $runner->run();
