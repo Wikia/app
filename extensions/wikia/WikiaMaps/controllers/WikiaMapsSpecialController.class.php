@@ -106,31 +106,20 @@ class WikiaMapsSpecialController extends WikiaSpecialPageController {
 	 */
 	public function map() {
 		$mobileSkin = $this->app->checkSkin( 'wikiamobile' );
-		$mapId = (int)$this->getPar();
 		$zoom = $this->request->getInt( 'zoom', WikiaMapsParserTagController::DEFAULT_ZOOM );
 		$lat = $this->request->getInt( 'lat', WikiaMapsParserTagController::DEFAULT_LATITUDE );
 		$lon = $this->request->getInt( 'lon', WikiaMapsParserTagController::DEFAULT_LONGITUDE );
-		$model = $this->getModel();
 
+		$mapId = (int) $this->getPar();
+		$this->setVal( 'mapId', $mapId );
+
+		$model = $this->getModel();
 		$map = $model->getMapByIdFromApi( $mapId );
 
-		if( isset( $map->title ) ) {
-			$mapCityId = $map->city_id;
-			$this->redirectIfForeignWiki( $mapCityId, $mapId );
-			$this->wg->out->setHTMLTitle( $map->title );
+		if ( isset( $map->title ) ) {
+			$this->prepareSingleMapPage( $map );
 
-			$deleted = $map->deleted == WikiaMaps::MAP_DELETED;
-			if ( $deleted ) {
-				if ( $this->app->checkSkin( 'oasis' ) ) {
-					NotificationsController::addConfirmation(
-						wfMessage( 'wikia-interactive-maps-map-is-deleted' ),
-						NotificationsController::CONFIRMATION_WARN
-					);
-				}
-			}
-
-			$this->setVal( 'deleted', $deleted );
-			$params = $model->getMapRenderParams( $mapCityId );
+			$params = $model->getMapRenderParams( $this->getVal( 'mapCityId' ) );
 
 			$url = $model->getMapRenderUrl( [
 				$mapId,
@@ -143,19 +132,14 @@ class WikiaMapsSpecialController extends WikiaSpecialPageController {
 				$this->setMapOnMobile();
 			} else {
 				$this->setVal( 'title', $map->title );
-				$this->setVal( 'menu', $this->getMenuMarkup( $deleted ) );
+				$this->setVal( 'menu', $this->getMenuMarkup( $this->getVal( 'deleted' ) ) );
 			}
 
 			$this->setVal( 'mapFound', true );
 			$this->setVal( 'url', $url );
 			$this->setVal( 'height', self::MAP_HEIGHT );
-			$this->setVal( 'mapId', $mapId );
 		} else {
-			$this->setVal( 'mapFound', false );
-			$this->setVal( 'title', wfMessage( 'error' ) );
-			$this->setVal( 'messages', [
-				'wikia-interactive-maps-map-not-found-error' => wfMessage( 'wikia-interactive-maps-map-not-found-error' )
-			] );
+			$this->mapNotFound();
 		}
 
 		$this->response->addAsset( 'extensions/wikia/WikiaMaps/css/WikiaMaps.scss' );
@@ -167,43 +151,61 @@ class WikiaMapsSpecialController extends WikiaSpecialPageController {
 	 */
 	public function mapData() {
 		$mapId = (int) $this->getPar();
-		$model = $this->getModel();
+		$this->setVal( 'mapId', $mapId );
 
+		$model = $this->getModel();
 		$mapData = $model->getMapDataByIdFromApi( $mapId );
 
 		if ( isset( $mapData->title ) ) {
-			$mapCityId = $mapData->city_id;
-			$this->redirectIfForeignWiki( $mapCityId, $mapId );
-
-			$this->wg->out->setHTMLTitle( $mapData->title );
-
-			$deleted = $mapData->deleted == WikiaMaps::MAP_DELETED;
-			if ( $deleted ) {
-				if ( $this->app->checkSkin( 'oasis' ) ) {
-					NotificationsController::addConfirmation(
-						wfMessage( 'wikia-interactive-maps-map-is-deleted' ),
-						NotificationsController::CONFIRMATION_WARN
-					);
-				}
-			}
+			$this->prepareSingleMapPage( $mapData );
 
 			$this->setVal( 'title', $mapData->title );
-			$this->setVal( 'menu', $this->getMenuMarkup( $deleted ) );
+			$this->setVal( 'menu', $this->getMenuMarkup( $this->getVal( 'deleted' ) ) );
 
 			$this->setVal( 'mapFound', true );
-			$this->setVal( 'mapId', $mapId );
 
 			$this->prepareListOfPois( $mapData );
 		} else {
-			$this->setVal( 'mapFound', false );
-			$this->setVal( 'title', wfMessage( 'error' ) );
-			$this->setVal( 'messages', [
-				'wikia-interactive-maps-map-not-found-error' => wfMessage( 'wikia-interactive-maps-map-not-found-error' )
-			] );
+			$this->mapNotFound();
 		}
 
 		$this->response->addAsset( 'extensions/wikia/WikiaMaps/css/WikiaMaps.scss' );
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
+	}
+
+	/**
+	 * Performs actions common for map() and mapData() - single map pages
+	 * @param $mapData
+	 */
+	private function prepareSingleMapPage( $mapData ) {
+		$mapCityId = $mapData->city_id;
+		$this->setVal( 'mapCityId', $mapCityId );
+
+		$this->redirectIfForeignWiki( $mapCityId, $this->getVal( 'mapId' ) );
+		$this->wg->out->setHTMLTitle( $mapData->title );
+
+		$deleted = $mapData->deleted == WikiaMaps::MAP_DELETED;
+		if ( $deleted ) {
+			if ( $this->app->checkSkin( 'oasis' ) ) {
+				NotificationsController::addConfirmation(
+					wfMessage( 'wikia-interactive-maps-map-is-deleted' ),
+					NotificationsController::CONFIRMATION_WARN
+				);
+			}
+		}
+
+		$this->setVal( 'deleted', $deleted );
+	}
+
+	/**
+	 * Shows an error when map is not found
+	 */
+	private function mapNotFound() {
+		$this->setVal( 'mapFound', false );
+		$this->setVal( 'title', wfMessage( 'error' ) );
+		$this->setVal( 'messages', [
+			'wikia-interactive-maps-map-not-found-error' => wfMessage( 'wikia-interactive-maps-map-not-found-error' )
+		] );
 	}
 
 	/**
