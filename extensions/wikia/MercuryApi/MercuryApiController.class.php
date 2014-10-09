@@ -185,7 +185,7 @@ class MercuryApiController extends WikiaController {
 
 		// Used to determine GA tracking
 		if ( !empty( $this->wg->IsGASpecialWiki ) ) {
-			$wikiVariables[ 'wgIsGASpecialWiki' ] = true;
+			$wikiVariables[ 'isGASpecialWiki' ] = true;
 		}
 
 		$smartBannerConfig = $this->getSmartBannerConfig();
