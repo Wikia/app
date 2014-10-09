@@ -202,7 +202,7 @@ class WikiaMapsSpecialController extends WikiaSpecialPageController {
 			] );
 		}
 
-		$this->response->addAsset( 'extensions/wikia/WikiaInteractiveMaps/css/WikiaInteractiveMaps.scss' );
+		$this->response->addAsset( 'extensions/wikia/WikiaMaps/css/WikiaMaps.scss' );
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
 	}
 

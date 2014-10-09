@@ -7,9 +7,9 @@ $wgExtensionCredits[ 'specialpage' ][] = [
 		'Andrzej "nAndy" Łukaszewski',
 		'Bartłomiej "Bart" Kowalczyk',
 		'Evgeniy "aquilax" Vasilev',
+		'Igor Rogatty',
 		'Jakub "Student" Olek',
-		'Rafał Leszczyński',
-		'Igor Rogatty'
+		'Rafał Leszczyński'
 	],
 	'description' => 'Create your own maps with point of interest or add your own point of interest into a real world map',
 	'version' => 0.1
@@ -44,6 +44,7 @@ $wgHooks[ 'ParserFirstCallInit' ][] = 'WikiaMapsParserTagController::parserTagIn
 $wgHooks[ 'OutputPageBeforeHTML' ][] = 'WikiaMapsHooks::onOutputPageBeforeHTML';
 $wgHooks[ 'OasisSkinAssetGroups' ][] = 'WikiaMapsHooks::onOasisSkinAssetGroups';
 $wgHooks[ 'SkinAfterBottomScripts' ][] = 'WikiaMapsHooks::onSkinAfterBottomScripts';
+$wgHooks[ 'BeforePageDisplay' ][] = 'WikiaMapsHooks::onBeforePageDisplay';
 
 // mobile
 $wgHooks['WikiaMobileAssetsPackages'][] = 'WikiaMapsHooks::onWikiaMobileAssetsPackages';
