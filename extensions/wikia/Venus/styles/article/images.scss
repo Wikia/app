@@ -1,10 +1,14 @@
 @import "skins/shared/color";
 
-$caption-border-color: lighten($color-text, 30%);
+$border-color: lighten($color-text, 30%);
 
 article {
 	.image-thumbnail img {
 		margin: 30px;
+	}
+
+	.thumbborder {
+		border: 1px solid $border-color;
 	}
 
 	.article-thumb {
@@ -38,7 +42,7 @@ article {
 	}
 
 	figcaption {
-		border-top: 4px solid $caption-border-color;
+		border-top: 4px solid $border-color;
 		color: $color-alternate-text;
 		font-size: 12px;
 		font-style: italic;
