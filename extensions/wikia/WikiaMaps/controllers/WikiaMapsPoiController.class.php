@@ -300,10 +300,7 @@ class WikiaMapsPoiController extends WikiaMapsBaseController {
 		$link = ( !empty( $linkTitle ) ) ? $this->getArticleUrl( $linkTitle ) : '';
 		// if the link created was invalid it might be an external url if not empty
 		$link = ( !empty( $linkTitle ) && !$this->isValidArticleTitle() ) ? $linkTitle : $link;
-
-		if( !empty( $link ) && mb_substr( $link, 0, 4 ) !== 'http' ) {
-			$link = 'http://' . $link;
-		}
+		$link = WikiaSanitizer::prepUrl( $link );
 
 		$poiData[ 'link_title' ] = $linkTitle;
 		$poiData[ 'link' ] = $link;
