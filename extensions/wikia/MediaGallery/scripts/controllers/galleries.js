@@ -49,8 +49,6 @@ define('mediaGallery.controllers.galleries', [
 
 		// expose gallery instances publicly
 		this.galleries.push(gallery);
-
-		return gallery;
 	};
 
 	/**
