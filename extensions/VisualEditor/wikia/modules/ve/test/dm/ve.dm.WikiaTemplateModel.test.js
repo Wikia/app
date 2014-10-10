@@ -7,7 +7,8 @@ QUnit.module( 've.dm.WikiaTemplateModel' );
 /* Tests */
 
 QUnit.test( 'WikiaTemplateModel', function ( assert ) {
-	var templateModel, serialize, wikitext, originalData = {
+	var templateModel,
+	originalData = {
 		'target': { 'wt': 'foo' },
 		'params': {
 			'name': { 'wt': 'Christian' }
@@ -23,11 +24,16 @@ QUnit.test( 'WikiaTemplateModel', function ( assert ) {
 	// Add a parameter
 	templateModel.addParameter( new ve.dm.MWParameterModel( templateModel, 'ignoreme' ) );
 
-	serialize = templateModel.serialize();
-	wikitext = templateModel.getWikitext();
-
 	QUnit.expect( 2 );
 
-	assert.deepEqual( serialize.template.params, originalData.params, 'serialize' );
-	assert.equal( wikitext, '{{foo|name=Christian}}', 'wikitext' );
+	assert.deepEqual(
+		templateModel.serialize().template.params,
+		originalData.params,
+		'Auto-suggested and unused parameter is not present in serialize() output'
+	);
+	assert.equal(
+		templateModel.getWikitext(),
+		'{{foo|name=Christian}}',
+		'Auto-suggested and unused parameter is not present in getWikitext() output'
+	);
 } );
