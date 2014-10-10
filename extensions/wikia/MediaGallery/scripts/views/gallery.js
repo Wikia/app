@@ -11,6 +11,9 @@ define('mediaGallery.views.gallery', [
 
 	/**
 	 * Instantiate gallery view
+	 * Events bound to $el:
+	 *  'galleryInserted' when gallery HTML is appended to DOM. Once per gallery instance
+	 *  'mediaLoaded' when batches of images are fully loaded.
 	 * @param {Object} options
 	 * @constructor
 	 */
@@ -84,14 +87,19 @@ define('mediaGallery.views.gallery', [
 	Gallery.prototype.bindEvents = function () {
 		var self = this;
 
-		// trigger event when media inserted into DOM
+		// handle event when gallery inserted into DOM
 		this.$el.on('galleryInserted', function () {
+			self.rendered = true;
 			$.each(self.media, function (idx, media) {
 				if (media.rendered) {
+					// trigger event when media inserted into DOM
 					media.$el.trigger('mediaInserted');
 				}
 			});
 		});
+
+		// After rendering the gallery and all images are loaded, append the show more/less buttons
+		this.$el.on('mediaLoaded', $.proxy(this.appendToggler, this));
 
 		// Set up tracking
 		this.$wrapper.on('click', '.media > a', function () {
@@ -183,11 +191,10 @@ define('mediaGallery.views.gallery', [
 
 	/**
 	 * Insert toggle buttons into DOM
-	 * @param {jQuery} $elem
 	 */
-	Gallery.prototype.appendToggler = function ($elem) {
-		if (!this.togglerAdded) {
-			$elem.append(this.$toggler);
+	Gallery.prototype.appendToggler = function () {
+		if (this.$toggler && !this.togglerAdded) {
+			this.$wrapper.append(this.$toggler);
 			this.togglerAdded = true;
 		}
 	};

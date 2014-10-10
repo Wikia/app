@@ -10,8 +10,11 @@ define('mediaGallery.controllers.galleries', [
 	 * @constructor
 	 */
 
-	var GalleryController = function () {
+	var GalleriesController = function () {
+		// cache DOM objects
 		this.$galleries = $('.media-gallery-wrapper');
+		// cache instances
+		this.galleries = [];
 	};
 
 	/**
@@ -20,7 +23,7 @@ define('mediaGallery.controllers.galleries', [
 	 * @param {int} idx
 	 * @param {Object} data
 	 */
-	GalleryController.prototype.createGallery = function ($elem, idx, data) {
+	GalleriesController.prototype.createGallery = function ($elem, idx, data) {
 		var gallery,
 			galleryOptions = {
 				$el: $('<div></div>'),
@@ -36,25 +39,18 @@ define('mediaGallery.controllers.galleries', [
 		gallery = new Gallery(galleryOptions);
 		gallery.init();
 
-		// Append gallery HTML to DOM
+		// Append gallery HTML to DOM and trigger event
 		$elem.append(gallery.render().$el);
-
-		// After rendering the gallery and all images are loaded, append the show more/less buttons
-		if (gallery.$toggler) {
-			gallery.$el.on('mediaLoaded', function () {
-				gallery.appendToggler($elem);
-			});
-		}
-
-		// Flags and events for other modules
-		gallery.rendered = true;
 		gallery.$el.trigger('galleryInserted');
+
+		// expose gallery instances publicly
+		this.galleries.push(gallery);
 	};
 
 	/**
 	 * Initialize and populate gallery elements
 	 */
-	GalleryController.prototype.init = function () {
+	GalleriesController.prototype.init = function () {
 		var self = this;
 
 		$.each(this.$galleries, function (idx) {
@@ -78,5 +74,5 @@ define('mediaGallery.controllers.galleries', [
 		});
 	};
 
-	return GalleryController;
+	return GalleriesController;
 });

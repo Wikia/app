@@ -9,6 +9,8 @@ define('mediaGallery.views.media', [
 
 	/**
 	 * Handle rendering and bindings for media items in galleries
+	 * Events bount to $el:
+	 *  'mediaInserted' when media item is inserted into DOM
 	 * @param {Object} options
 	 * @constructor
 	 */
