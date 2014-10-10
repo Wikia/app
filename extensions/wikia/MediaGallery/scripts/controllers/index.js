@@ -21,18 +21,23 @@ require([
 	 */
 	GalleryController.prototype.createGallery = function ($elem, idx, data) {
 		var origVisibleCount = $elem.data('visible-count') || 8,
-			gallery;
+			gallery,
+			galleryOptions = {
+				$el: $('<div></div>'),
+				$wrapper: $elem,
+				model: {
+					media: data
+				},
+				origVisibleCount: origVisibleCount,
+				index: idx
+			};
+
+		// If expanded is set, it will be the number of images to show per interval.  If it's not set (zero) the gallery
+		// model will use its default
+		galleryOptions.interval = $elem.data('expanded');
 
 		// Instantiate gallery view
-		gallery = new Gallery({
-			$el: $('<div></div>'),
-			$wrapper: $elem,
-			model: {
-				media: data
-			},
-			origVisibleCount: origVisibleCount,
-			index: idx
-		});
+		gallery = new Gallery(galleryOptions);
 
 		// Append gallery HTML to DOM
 		$elem.append(gallery.render(origVisibleCount).$el);
