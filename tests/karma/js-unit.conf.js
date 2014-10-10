@@ -113,31 +113,31 @@ module.exports = function (config) {
 			/*
 			 * Common VideoPageTool Deps
 			 */
-			'extensions/wikia/VideoPageTool/js/lib/lodash/dist/lodash.underscore.js',
-			'extensions/wikia/VideoPageTool/js/lib/backbone/backbone.js',
-			'extensions/wikia/VideoPageTool/js/shared/views/switcher.js',
+			'extensions/wikia/VideoPageTool/scripts/lib/lodash/dist/lodash.underscore.js',
+			'extensions/wikia/VideoPageTool/scripts/lib/backbone/backbone.js',
+			'extensions/wikia/VideoPageTool/scripts/shared/views/switcher.js',
 
 			/*
 			 * VideoPageTool: Admin Module
 			 */
 
 			// Collections
-			'extensions/wikia/VideoPageTool/js/admin/collections/category.js',
-			'extensions/wikia/VideoPageTool/js/admin/collections/categorydata.js',
+			'extensions/wikia/VideoPageTool/scripts/admin/collections/category.js',
+			'extensions/wikia/VideoPageTool/scripts/admin/collections/categorydata.js',
 			// Views
-			'extensions/wikia/VideoPageTool/js/admin/views/autocomplete.js',
+			'extensions/wikia/VideoPageTool/scripts/admin/views/autocomplete.js',
 
 			/*
 			 * VideoPageTool: Homepage Module
 			 */
-			'extensions/wikia/VideoPageTool/js/homepage/collections/featuredslides.js',
+			'extensions/wikia/VideoPageTool/scripts/homepage/collections/featuredslides.js',
 
 			/*
 			 * VideoPageTool: Source the tests
 			 */
-			'extensions/wikia/VideoPageTool/js/spec/*.spec.js',
-			'extensions/wikia/VideoPageTool/js/spec/**/*.spec.js',
-			'extensions/wikia/VideoPageTool/js/spec/**/**/*.spec.js',
+			'extensions/wikia/VideoPageTool/scripts/spec/*.spec.js',
+			'extensions/wikia/VideoPageTool/scripts/spec/**/*.spec.js',
+			'extensions/wikia/VideoPageTool/scripts/spec/**/**/*.spec.js',
 
 			/*
 			 * Extension: VideosModule
