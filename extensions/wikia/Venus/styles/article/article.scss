@@ -71,12 +71,7 @@ article {
 		line-height: 28px;
 		margin: 0 round($medium-grid-column / 2) 0 86px;
 
-		> h1,
-		> h2,
-		> h3,
-		> h4,
-		> h5,
-		> h6 {
+		h1, h2, h3, h4, h5, h6 {
 			font-weight: bold;
 			overflow: hidden;
 
@@ -101,7 +96,7 @@ article {
 			}
 		}
 
-		> h2 {
+		h2 {
 			border-bottom: 1px solid $color-page-border;
 			font-size: 27px;
 			padding-bottom: 10px;
@@ -119,12 +114,12 @@ article {
 			}
 		}
 
-		> h3 {
+		h3 {
 			font-size: 18px;
 			margin: 40px 0 16px 0;
 		}
 
-		> p {
+		p {
 			margin-bottom: 40px;
 		}
 
@@ -168,17 +163,16 @@ article {
 			line-height: 36px;
 			margin-right: round($large-grid-column / 2);
 
-			h2 {
+			h2, h3 {
 				margin-top: 30px;
 			}
 
 			h3 {
 				font-size: 20px;
 				margin-bottom: 15px;
-				margin-top: 30px;
 			}
 
-			> p {
+			p {
 				margin-bottom: 30px;
 			}
 		}
