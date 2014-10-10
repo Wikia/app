@@ -25,9 +25,7 @@ define('mediaGallery.controllers.galleries', [
 			galleryOptions = {
 				$el: $('<div></div>'),
 				$wrapper: $elem,
-				model: {
-					media: data
-				},
+				model: { media: data },
 				index: idx,
 				// if set, pass the value, otherwise, defaults will be used.
 				origVisibleCount: $elem.data('visible-count'),
