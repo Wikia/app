@@ -75,10 +75,14 @@ $VenusConfig[ 'venus_body_js' ] = [
 		// BackgroundChanger
 		'//extensions/wikia/Venus/scripts/BackgroundChanger.js',
 
-		'#group_adengine2_js',
+//		'#group_adengine2_js',
 
 		'//resources/wikia/modules/browserDetect.js',
 		'#group_imglzy_js',
+
+		// Lightbox
+		'//extensions/wikia/Lightbox/js/LightboxLoader.js',
+		'//resources/wikia/libraries/mustache/jquery.mustache.js'
 	]
 ];
 

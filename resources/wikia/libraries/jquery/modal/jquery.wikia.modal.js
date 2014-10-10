@@ -27,7 +27,7 @@ $.fn.extend({
 			wrapper;
 
 		//wrap with modal chrome
-		if (skin == "oasis") {
+		if (skin == "oasis" || skin === 'venus') {
 			/**
 			 * Generate modal content and add it to <body>
 			 * <section class="modalWrapper" id="'+id+'"><section class="modalContent">[modal content]</section></section>');
@@ -71,7 +71,7 @@ $.fn.extend({
 			headline.prependTo(wrapper);
 		}
 
-		if (skin == "oasis") {
+		if (skin == "oasis" || skin === 'venus') {
 
 			// find tabs with .modal-tabs class and move them outside modal content
 			var modalTabs = wrapper.find('.modal-tabs');

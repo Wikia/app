@@ -1381,6 +1381,8 @@
 			var carouselThumbs,
 				container = Lightbox.openModal.carouselContainer;
 
+			thumbs = thumbs.length > 0 ? thumbs : LightboxLoader.cache.wikiPhotos;
+
 			// render carousel
 			carouselThumbs = Lightbox.openModal.carouselTemplate.mustache({
 				backfill: backfill,
