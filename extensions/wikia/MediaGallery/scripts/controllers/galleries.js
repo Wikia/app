@@ -21,29 +21,30 @@ define('mediaGallery.controllers.galleries', [
 	 * @param {Object} data
 	 */
 	GalleryController.prototype.createGallery = function ($elem, idx, data) {
-		var origVisibleCount = $elem.data('visible-count') || 8,
-			gallery,
+		var gallery,
 			galleryOptions = {
 				$el: $('<div></div>'),
 				$wrapper: $elem,
 				model: {
 					media: data
 				},
-				origVisibleCount: origVisibleCount,
 				index: idx,
-				interval: $elem.data('expanded') // if set, pass the value, otherwise, default will be used.
+				// if set, pass the value, otherwise, defaults will be used.
+				origVisibleCount: $elem.data('visible-count'),
+				interval: $elem.data('expanded')
 			};
 
 		// Instantiate gallery view
 		gallery = new Gallery(galleryOptions);
+		gallery.init();
 
 		// Append gallery HTML to DOM
-		$elem.append(gallery.render(origVisibleCount).$el);
+		$elem.append(gallery.render().$el);
 
 		// After rendering the gallery and all images are loaded, append the show more/less buttons
 		if (gallery.$toggler) {
 			gallery.$el.on('mediaLoaded', function () {
-				$.proxy(gallery.appendToggler($elem), gallery);
+				gallery.appendToggler($elem);
 			});
 		}
 

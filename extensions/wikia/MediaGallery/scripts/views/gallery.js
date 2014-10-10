@@ -9,23 +9,34 @@ define('mediaGallery.views.gallery', [
 	var Gallery,
 		togglerTemplateName = 'MediaGallery_showMore';
 
+	/**
+	 * Instantiate gallery view
+	 * @param {Object} options
+	 * @constructor
+	 */
 	Gallery = function (options) {
+		// required options
 		this.$el = options.$el.addClass('media-gallery-inner');
 		this.$wrapper = options.$wrapper;
 		this.model = options.model;
-		this.origVisibleCount = options.origVisibleCount;
+
+		// optional settings with defaults
+		this.origVisibleCount = options.origVisibleCount || 8;
 		this.interval = options.interval || 12;
 		this.throttleVal = options.throttleVal || 200;
+
 		// performance profiling
 		this.bucky = bucky('mediaGallery.views.gallery.' + options.index);
 
+		// flags and state tracking
 		this.rendered = false;
 		this.visibleCount = 0;
 		this.media = [];
-
-		this.init();
 	};
 
+	/**
+	 * Set up gallery view and toggle buttons
+	 */
 	Gallery.prototype.init = function () {
 		this.createMedia();
 		this.bindEvents();
@@ -67,6 +78,9 @@ define('mediaGallery.views.gallery', [
 		this.bucky.timer.stop('createMedia');
 	};
 
+	/**
+	 * Bind any events related to this view
+	 */
 	Gallery.prototype.bindEvents = function () {
 		var self = this;
 
@@ -91,7 +105,8 @@ define('mediaGallery.views.gallery', [
 
 	/**
 	 * Render sets of media.
-	 * @param {int} count Number to be rendered
+	 * @param {int|jQuery} count Number to be rendered. If not set, use original visible count.
+	 * If count a jQuery object, it's actually $el.
 	 * @param {jQuery} $el Element to apply loading graphic
 	 * @returns {Gallery}
 	 */
@@ -100,6 +115,14 @@ define('mediaGallery.views.gallery', [
 			media,
 			mediaCount,
 			deferredImages = [];
+
+		// for initial setup so callers can be blind to internal options
+		if (typeof count !== 'number') {
+			if (count instanceof jQuery) {
+				$el = count;
+			}
+			count = this.origVisibleCount;
+		}
 
 		media = this.media.slice(this.visibleCount, this.visibleCount + count);
 		mediaCount = media.length;
@@ -137,6 +160,9 @@ define('mediaGallery.views.gallery', [
 		return this;
 	};
 
+	/**
+	 * Render the toggle buttons. Does not include DOM insertion.
+	 */
 	Gallery.prototype.renderToggler = function () {
 		var $html, data;
 
@@ -155,6 +181,10 @@ define('mediaGallery.views.gallery', [
 		this.$toggler = $html;
 	};
 
+	/**
+	 * Insert toggle buttons into DOM
+	 * @param {jQuery} $elem
+	 */
 	Gallery.prototype.appendToggler = function ($elem) {
 		if (!this.togglerAdded) {
 			$elem.append(this.$toggler);
@@ -170,7 +200,7 @@ define('mediaGallery.views.gallery', [
 			media = this.media.slice(this.visibleCount, this.visibleCount + this.interval),
 			toRender = 0;
 
-		// If rendered, show it, otherwise, add to render stack.
+		// If it's already been rendered, show it, otherwise, add to render stack.
 		$.each(media, function (idx, item) {
 			if (item.rendered) {
 				item.show();
@@ -219,13 +249,19 @@ define('mediaGallery.views.gallery', [
 		this.scrollToTop();
 	};
 
+	/**
+	 * Scroll to the top of the gallery. Good for after "show fewer" button is clicked.
+	 */
 	Gallery.prototype.scrollToTop = function () {
-		// scroll to the top of the gallery
 		$('body, html').animate({
 			scrollTop: this.$wrapper.offset().top - 50
 		}, 500);
 	};
 
+	/**
+	 * Common tracking function for this view
+	 * @type {*}
+	 */
 	Gallery.prototype.track = tracker.buildTrackingFunction({
 		category: 'media-gallery',
 		label: 'gallery',

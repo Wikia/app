@@ -37,9 +37,13 @@ define('mediaGallery.views.media', [
 		return this;
 	};
 
+	/**
+	 * Called when media element is inserted into DOM
+	 */
 	Media.prototype.onInsert = function () {
 		var self = this;
 
+		// trigger event when the image loads (or fails to load)
 		this.$el.find('img').on('load error', function () {
 			self.$loaded.resolve();
 		});
@@ -58,6 +62,7 @@ define('mediaGallery.views.media', [
 				$el: $caption,
 				media: this
 			});
+			this.caption.init();
 		}
 	};
 
@@ -81,7 +86,7 @@ define('mediaGallery.views.media', [
 		var self = this;
 
 		if (!this.fadeDuration) {
-			// get duration of css fade and cut it in half
+			// get duration of css fade and cut it in half for optimal UX
 			this.fadeDuration = parseInt(this.$el.css('transition-duration')) * 500;
 		}
 
