@@ -2049,6 +2049,7 @@ $config['media_gallery_js'] = [
 		'//extensions/wikia/MediaGallery/scripts/views/media.js',
 		'//extensions/wikia/MediaGallery/scripts/views/gallery.js',
 		'//extensions/wikia/MediaGallery/scripts/controllers/lightbox.js',
+		'//extensions/wikia/MediaGallery/scripts/controllers/galleries.js',
 		'//extensions/wikia/MediaGallery/scripts/controllers/index.js',
 	]
 ];
