@@ -166,7 +166,7 @@ class ExactTargetRemoveUserTask extends ExactTargetBaseTask {
 	}
 
 	/**
-	 * Retrives user email from ExactTarget based on provided user ID
+	 * Retrieves user email from ExactTarget based on provided user ID
 	 * @param int $iUserId
 	 * @param ExactTargetSoapClient $oClient
 	 * @return null|string
@@ -177,7 +177,7 @@ class ExactTargetRemoveUserTask extends ExactTargetBaseTask {
 		$oRetrieveRequestMessage = $this->wrapRetrieveRequestMessage( $oRetrieveRequest );
 
 		$oEmailResult = $oClient->Retrieve( $oRetrieveRequestMessage );
-		if( isset( $oEmailResult->Results->Properties->Property->Value ) ) {
+		if ( isset( $oEmailResult->Results->Properties->Property->Value ) ) {
 			return $oEmailResult->Results->Properties->Property->Value;
 		}
 
