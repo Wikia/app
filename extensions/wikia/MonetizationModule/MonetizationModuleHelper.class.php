@@ -14,12 +14,9 @@ class MonetizationModuleHelper extends WikiaModel {
 	const SLOT_TYPE_ABOVE_FOOTER = 'above_footer';
 	const SLOT_TYPE_FOOTER = 'footer';
 
+	const CACHE_VERSION = 'v1';
 	const CACHE_TTL_MIN = 3600;
 	const CACHE_TTL_MAX = 7200;
-
-	// TODO: encapsulate in Monetization Client
-	// do not change unless monetization service changes
-	const MONETIZATION_SERVICE_CACHE_PREFIX = 'monetization';
 
 	const API_VERSION = 'v1';
 	const API_DISPLAY = 'display/api/';
@@ -107,9 +104,7 @@ class MonetizationModuleHelper extends WikiaModel {
 		$log = WikiaLogger::instance();
 		$loggingParams = [ 'method' => __METHOD__, 'params' => $params ];
 
-		// this cache key must match the one set by the MonetizationService
-		// and should not use the wgCachePrefix(), wfSharedMemcKey() or wfMemcKey() methods
-		$cacheKey = self::createCacheKey( $params );
+		$cacheKey = $this->getMemcKey( $params );
 		$log->debug( "MonetizationModule: lookup with cache key: $cacheKey", $loggingParams );
 
 		$json_results = $this->wg->Memc->get( $cacheKey );
@@ -198,30 +193,15 @@ class MonetizationModuleHelper extends WikiaModel {
 	}
 
 	/**
-	 * Creates the cache key for the given parameters.
-	 * Order matters - site_id:country_code:max_slots
+	 * Get memcache key
 	 * @param array $params
 	 * @return string
 	 */
-	public static function createCacheKey( array $params ) {
-		$cacheKey = self::MONETIZATION_SERVICE_CACHE_PREFIX;
-
-		if ( !empty( $params['s_id'] ) ) {
-			$cacheKey .= ':' . $params['s_id'];
-		}
-
-		if ( !empty( $params['geo'] ) ) {
-			$cacheKey .= ':' . $params['geo'];
-		} else {
-			// set the default to be rest of world ('ROW')
-			$cacheKey .= ':ROW';
-		}
-
-		if ( isset( $params['max'] ) ) {
-			$cacheKey .= ':' . $params['max'];
-		}
-
-		return $cacheKey;
+	public function getMemcKey( $params ) {
+		$geo = empty( $params['geo'] ) ? 'ROW' : $params['geo'];
+		$maxSlot = empty( $params['max'] ) ? 0 : $params['max'];
+		$memcKey = wfMemcKey( 'monetization_module', self::CACHE_VERSION, $geo, $maxSlot );
+		return $memcKey;
 	}
 
 	/**
