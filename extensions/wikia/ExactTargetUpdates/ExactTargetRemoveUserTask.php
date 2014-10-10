@@ -172,25 +172,13 @@ class ExactTargetRemoveUserTask extends ExactTargetBaseTask {
 	 * @return null|string
 	 */
 	public function getUserEmail( $iUserId, ExactTargetSoapClient $oClient ) {
-		$oRetrieveRequest = new ExactTarget_RetrieveRequest();
-		$oRetrieveRequest->ObjectType = "DataExtensionObject[user]";
-		$oRetrieveRequest->Properties =  array();
-		$oRetrieveRequest->Properties[] = "user_email";
+		$oSimpleFilterPart = $this->wrapSimpleFilterPart( 'user_id', $iUserId );
+		$oRetrieveRequest = $this->wrapRetrieveRequest( 'user', [ 'user_email' ], $oSimpleFilterPart );
+		$oRetrieveRequestMessage = $this->wrapRetrieveRequestMessage( $oRetrieveRequest );
 
-		// Setup a simple filter based on the key column you want to match on
-		$oSimpleFilterPart = new ExactTarget_SimpleFilterPart();
-		$oSimpleFilterPart->Value =  array( $iUserId );
-		$oSimpleFilterPart->SimpleOperator = ExactTarget_SimpleOperators::equals;
-		$oSimpleFilterPart->Property = "user_id";
-
-		$oRetrieveRequest->Filter = new SoapVar( $oSimpleFilterPart, SOAP_ENC_OBJECT, 'SimpleFilterPart', 'http://exacttarget.com/wsdl/partnerAPI' );
-		$oRetrieveRequest->Options = NULL;
-		$oRetrieveRequestMessage = new ExactTarget_RetrieveRequestMsg();
-		$oRetrieveRequestMessage->RetrieveRequest = $oRetrieveRequest;
-		$results = $oClient->Retrieve( $oRetrieveRequestMessage );
-
-		if( isset( $results->Results->Properties->Property->Value ) ) {
-			return $results->Results->Properties->Property->Value;
+		$oEmailResult = $oClient->Retrieve( $oRetrieveRequestMessage );
+		if( isset( $oEmailResult->Results->Properties->Property->Value ) ) {
+			return $oEmailResult->Results->Properties->Property->Value;
 		}
 
 		$this->notice( __METHOD__ . ' user DataExtension object not found for user_id = ' . $iUserId );
@@ -243,21 +231,9 @@ class ExactTargetRemoveUserTask extends ExactTargetBaseTask {
 	 *      );
 	 */
 	public function retrieveUserIdsByEmail( $sEmail, $oClient ) {
-		$oRetrieveRequest = new ExactTarget_RetrieveRequest();
-		$oRetrieveRequest->ObjectType = "DataExtensionObject[user]";
-		$oRetrieveRequest->Properties =  array();
-		$oRetrieveRequest->Properties[] = "user_id";
-
-		// Setup a simple filter based on the key column you want to match on
-		$oSimpleFilterPart = new ExactTarget_SimpleFilterPart();
-		$oSimpleFilterPart->Value =  array( $sEmail );
-		$oSimpleFilterPart->SimpleOperator = ExactTarget_SimpleOperators::equals;
-		$oSimpleFilterPart->Property = "user_email";
-
-		$oRetrieveRequest->Filter = new SoapVar( $oSimpleFilterPart, SOAP_ENC_OBJECT, 'SimpleFilterPart', 'http://exacttarget.com/wsdl/partnerAPI' );
-		$oRetrieveRequest->Options = NULL;
-		$oRetrieveRequestMessage = new ExactTarget_RetrieveRequestMsg();
-		$oRetrieveRequestMessage->RetrieveRequest = $oRetrieveRequest;
+		$oSimpleFilterPart = $this->wrapSimpleFilterPart( 'user_email', $sEmail );
+		$oRetrieveRequest = $this->wrapRetrieveRequest( 'user', [ 'user_id' ], $oSimpleFilterPart );
+		$oRetrieveRequestMessage = $this->wrapRetrieveRequestMessage( $oRetrieveRequest );
 		return $oClient->Retrieve( $oRetrieveRequestMessage );
 	}
 

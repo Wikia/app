@@ -57,6 +57,52 @@ class ExactTargetBaseTask extends BaseTask {
 	}
 
 	/**
+	 * Returns ExactTarget_RetrieveRequest object for retriving data from ExactTarget
+	 * @param string $sObjectType Name of DataExtension object to get data from
+	 * @param array $aProperties List of fields names to retrieve
+	 * @param ExactTarget_SimpleFilterPart $oSimpleFilterPart defines results filter
+	 * @return ExactTarget_RetrieveRequest
+	 */
+	public function wrapRetrieveRequest( $sObjectType, $aProperties, ExactTarget_SimpleFilterPart $oSimpleFilterPart ) {
+		$oRequest = new ExactTarget_RetrieveRequest();
+
+		/* Set necessary params to retrieve data */
+		$oRequest->ObjectType = 'DataExtensionObject[' . $sObjectType . ']';
+		$oRequest->Properties = $aProperties;
+		$oRequest->Filter = $this->wrapToSoapVar( $oSimpleFilterPart, 'SimpleFilterPart' );
+
+		$oRequest->Options = NULL;
+
+		return $oRequest;
+	}
+
+	/**
+	 * Returns ExactTarget_RetrieveRequestMsg object with RetrieveRequest field set
+	 * @param ExactTarget_RetrieveRequest $oRetrieveRequest
+	 * @return ExactTarget_RetrieveRequestMsg
+	 */
+	public function wrapRetrieveRequestMessage( ExactTarget_RetrieveRequest $oRetrieveRequest ) {
+		$oRetrieveRequestMessage = new ExactTarget_RetrieveRequestMsg();
+		$oRetrieveRequestMessage->RetrieveRequest = $oRetrieveRequest;;
+		return $oRetrieveRequestMessage;
+	}
+
+	/**
+	 * Setup a simple filter based on the key column you want to match on
+	 * @param string $sProperty name of field to filter by
+	 * @param array $aValues array of possible values
+	 * @param string $sOperator compare operator see ExactTarget_SimpleOperators
+	 * @return ExactTarget_SimpleFilterPart
+	 */
+	public function wrapSimpleFilterPart( $sProperty, $aValues, $sOperator = ExactTarget_SimpleOperators::equals ) {
+		$oSimpleFilterPart = new ExactTarget_SimpleFilterPart();
+		$oSimpleFilterPart->Property = $sProperty;
+		$oSimpleFilterPart->Value = $aValues;
+		$oSimpleFilterPart->SimpleOperator = $sOperator;
+		return $oSimpleFilterPart;
+	}
+
+	/**
 	 * Returns ExactTarget_UpdateRequest object with soap vars set from param
 	 * @param Array $aSoapVars
 	 * @param ExactTarget_UpdateOptions|null $oOptions Null for simple update;
