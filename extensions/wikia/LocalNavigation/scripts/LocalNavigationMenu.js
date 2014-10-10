@@ -187,15 +187,14 @@
 		}
 
 		function openContributeMenu(event) {
-			if (event) {
+			if (event && event.target && $(event.target).attr('class') === 'contribute-button') {
 				event.preventDefault();
 				event.stopPropagation();
+
+				$('body').one('click', closeContributeMenu);
 			}
 
 			$contributeEntryPoint.addClass('active');
-
-			$('body').one('click', closeContributeMenu);
-
 			closeOpenedMenu();
 		}
 
@@ -227,7 +226,8 @@
 					$contributeEntryPoint.get(0),
 					{
 						onActivate: openContributeMenu,
-						onDeactivate: closeContributeMenu
+						onDeactivate: closeContributeMenu,
+						activateOnClick: false
 					}
 				);
 			} else {
