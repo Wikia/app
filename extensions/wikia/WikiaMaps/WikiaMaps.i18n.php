@@ -245,8 +245,8 @@ $messages[ 'pl' ] = [
 	'logentry-maps-update_pin_type' => '$1 {{GENDER:$1|zaktualizował|zaktualizowała}} kategorię punktów $3',
 	'logentry-maps-delete_pin_type' => '$1 {{GENDER:$1|usunął|usunęła}} kategorie punktów $3',
 	'logentry-maps-create_pin' => '$1 {{GENDER:$1|stworzył|stworzyła}} nowy punkt na mapie $3',
-	'logentry-maps-update_pin' => '$1 {{GENDER:$1|zaktualizował|zaktualizowała}} nowy punkt na mapie $3',
-	'logentry-maps-delete_pin' => '$1 {{GENDER:$1|usunął|usunęła}} nowy punkt na mapie $3',
+	'logentry-maps-update_pin' => '$1 {{GENDER:$1|zaktualizował|zaktualizowała}} punkt na mapie $3',
+	'logentry-maps-delete_pin' => '$1 {{GENDER:$1|usunął|usunęła}} punkt na mapie $3',
 	'wikia-interactive-maps-hide-filter' => 'Ukryj',
 	'wikia-interactive-maps-tile-set-exists-error' => 'Nazwa szablonu musi być unikalna',
 
