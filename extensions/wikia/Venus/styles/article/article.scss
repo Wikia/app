@@ -47,88 +47,87 @@ article {
 	}
 }
 
-	#mw-content-text {
-		font-size: 16px;
-		line-height: 28px;
-		margin: 0 round($medium-grid-column / 2) 0 86px;
+#mw-content-text {
+	font-size: 16px;
+	line-height: 28px;
+	margin: 0 round($medium-grid-column / 2) 0 86px;
 
-		h1, h2, h3, h4, h5, h6 {
-			font-weight: bold;
-			overflow: hidden;
+	h1, h2, h3, h4, h5, h6 {
+		font-weight: bold;
+		overflow: hidden;
 
-			.editsection {
-				display: inline-block;
-				float: right;
-				font-size: 12px;
-				line-height: 27px;
-				padding-left: 5px;
-				position: relative;
-				text-transform: uppercase;
-
-				&:before {
-					background-image: url('/extensions/wikia/Venus/images/editpen.svg'); /* base64 */
-					content: ' ';
-					display: inline-block;
-					height: 27px;
-					position: absolute;
-					right: 100%;
-					width: 27px;
-				}
-			}
-		}
-
-		h2 {
-			border-bottom: 1px solid $color-page-border;
-			font-size: 27px;
-			padding-bottom: 10px;
-			margin-bottom: 30px;
-			margin-top: 40px;
-
-
-			.editsection {
-				line-height: 36px;
-
-				&:before {
-					height: 36px;
-					width: 36px;
-				}
-			}
-		}
-
-		h3 {
-			font-size: 18px;
-			margin: 40px 0 16px 0;
-		}
-
-		p {
-			margin-bottom: 40px;
-		}
-
-		blockquote:before {
-			background: none repeat scroll 0 0 $color-page;
-			content: '\201c';
-			display: inline;
-			font-size: 64px;
-			height: 34px;
-			line-height: 70px;
-			padding-top: 8px;
-			position: absolute;
-			top: -33px;
-		}
-
-		blockquote {
-			border-top: 4px solid $color-text;
-			font-size: 27px;
-			margin: 0 0 40px 0px;
-			padding-top: 30px;
+		.editsection {
+			display: inline-block;
+			float: right;
+			font-size: 12px;
+			line-height: 27px;
+			padding-left: 5px;
 			position: relative;
-		}
+			text-transform: uppercase;
 
-		pre {
-			white-space: normal;
+			&:before {
+				background-image: url('/extensions/wikia/Venus/images/editpen.svg'); /* base64 */
+				content: ' ';
+				display: inline-block;
+				height: 27px;
+				position: absolute;
+				right: 100%;
+				width: 27px;
+			}
 		}
 	}
+
+	h2 {
+		border-bottom: 1px solid $color-page-border;
+		font-size: 27px;
+		padding-bottom: 10px;
+		margin-bottom: 30px;
+		margin-top: 40px;
+
+		.editsection {
+			line-height: 36px;
+
+			&:before {
+				height: 36px;
+				width: 36px;
+			}
+		}
+	}
+
+	h3 {
+		font-size: 18px;
+		margin: 40px 0 16px 0;
+	}
+
+	p {
+		margin-bottom: 40px;
+	}
+
+	blockquote:before {
+		background: none repeat scroll 0 0 $color-page;
+		content: '\201c';
+		display: inline;
+		font-size: 64px;
+		height: 34px;
+		line-height: 70px;
+		padding-top: 8px;
+		position: absolute;
+		top: -33px;
+	}
+
+	blockquote {
+		border-top: 4px solid $color-text;
+		font-size: 27px;
+		margin: 0 0 40px 0px;
+		padding-top: 30px;
+		position: relative;
+	}
+
+	pre {
+		white-space: normal;
+	}
 }
+
 
 @media #{$large-up} {
 	article {
