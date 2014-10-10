@@ -2,7 +2,7 @@
 @import 'extensions/wikia/Venus/styles/article/images';
 @import 'skins/shared/color';
 @import 'images';
-@import 'galleries';
+@import 'media';
 
 article {
 
@@ -49,27 +49,6 @@ article {
 		}
 	}
 
-	.floatleft,
-	.tleft {
-		clear: left;
-		float: left;
-	}
-
-	.floatright,
-	.tright {
-		clear: right;
-		float: right;
-	}
-
-	.center {
-		clear: both;
-		text-align: center;
-
-		.article-thumb {
-			margin-left: auto;
-			margin-right: auto;
-		}
-	}
 
 	#mw-content-text {
 		font-size: 16px;
