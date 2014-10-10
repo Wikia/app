@@ -4,7 +4,7 @@
 	$(function(){
 		var $localNavFirstLevel, $localNavSecondLevel, $localNav, $localNavStart, $window,
 			$openedMenu, $openedSubmenu, alwaysReturnTrueFunc, menuAimCache = [],
-			$contributeEntryPoint;
+			$contributeEntryPoint, previousThirdLvlWidth = 0;
 
 		$localNav = $('#localNavigation');
 		$localNavStart = $localNav.find('.first-level-menu');
@@ -14,8 +14,6 @@
 		$window = $(window);
 
 		function recalculateDropdownDirection() {
-			closeOpenedMenu();
-
 			var $this, dropdownOffset = 0, secondLvlNavWidth = 0, secondLvlNavOffset = 0,
 				thirdLvlWidth = 0, windowWidth = $window.width();
 
@@ -25,6 +23,12 @@
 			} else if (window.matchMedia("(min-width: 1497px)").matches) {
 				thirdLvlWidth = 270;
 			}
+
+			if (thirdLvlWidth === previousThirdLvlWidth) {
+				return;
+			}
+
+			closeOpenedMenu();
 
 			$localNavSecondLevel.each(function(i) {
 				$this = $(this);
@@ -42,6 +46,8 @@
 			});
 
 			attachMenuAim();
+
+			previousThirdLvlWidth = thirdLvlWidth;
 		}
 
 		function reinitDropdownDirection() {
