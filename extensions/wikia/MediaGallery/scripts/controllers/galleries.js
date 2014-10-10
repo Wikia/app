@@ -80,5 +80,4 @@ define('mediaGallery.controllers.galleries', [
 	};
 
 	return GalleryController;
-	//t est
 });
