@@ -341,18 +341,9 @@ class SkinChooser {
 		global $wgEnableVenusSkin, $wgEnableVenusSpecialSearch, $wgEnableVenusArticle;
 		$isSpecialSearch = WikiaPageType::isSearch() && $wgEnableVenusSpecialSearch;
 		$isSpecialVenusTest = $title->isSpecialPage() && $title->getText() == 'VenusTest';
-		$isVenusArticle = WikiaPageType::isArticlePage() && $wgEnableVenusArticle && !self::isEditPage();
+		$isVenusArticle = WikiaPageType::isArticlePage() && $wgEnableVenusArticle;
 
 		return $wgEnableVenusSkin && ( $isSpecialSearch || $isSpecialVenusTest || $isVenusArticle );
-	}
-
-	private static function isEditPage() {
-		global $wgRequest;
-
-		return in_array(
-			$wgRequest->getVal( 'action', 'view' ),
-			array( 'edit' /* view source page */, 'formedit' /* SMW edit pages */, 'history' /* history pages */, 'submit' /* conflicts, etc */ )
-		);
 	}
 
 	/**
