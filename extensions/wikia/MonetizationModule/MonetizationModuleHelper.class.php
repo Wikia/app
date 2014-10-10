@@ -14,13 +14,14 @@ class MonetizationModuleHelper extends WikiaModel {
 	const SLOT_TYPE_ABOVE_FOOTER = 'above_footer';
 	const SLOT_TYPE_FOOTER = 'footer';
 
-	const CACHE_VERSION = 'v1';
 	const CACHE_TTL_MIN = 3600;
 	const CACHE_TTL_MAX = 7200;
 
+	const VAR_NAME_CACHE_VERSION = 'wgMonetizationModuleCacheVersion';
+	const VAR_NAME_API_TIMEOUT = 'wgMonetizationModuleTimeout';
+
 	const API_VERSION = 'v1';
 	const API_DISPLAY = 'display/api/';
-	const VAR_NAME_API_TIMEOUT = 'wgMonetizationModuleTimeout';
 	const IN_CONTENT_KEYWORD = '<h2>';
 
 	const FONT_COLOR_DARK_THEME = '#d5d4d4';
@@ -199,9 +200,23 @@ class MonetizationModuleHelper extends WikiaModel {
 	 */
 	public function getMemcKey( $params ) {
 		$geo = empty( $params['geo'] ) ? 'ROW' : $params['geo'];
-		$maxSlot = empty( $params['max'] ) ? 0 : $params['max'];
-		$memcKey = wfMemcKey( 'monetization_module', self::CACHE_VERSION, $geo, $maxSlot );
+		$memcKey = wfMemcKey( 'monetization_module', $params['cache'], $geo, $params['max'] );
 		return $memcKey;
+	}
+
+	/**
+	 * Get cache version
+	 * @return string
+	 */
+	public function getCacheVersion() {
+		$defaultVersion = '';
+		$version = WikiFactory::getVarValueByName(
+			self::VAR_NAME_CACHE_VERSION,
+			WikiFactory::COMMUNITY_CENTRAL,
+			false,
+			$defaultVersion
+		);
+		return $version;
 	}
 
 	/**
