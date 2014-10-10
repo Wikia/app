@@ -76,6 +76,9 @@ $VenusConfig[ 'venus_body_js' ] = [
 		'//extensions/wikia/Venus/scripts/BackgroundChanger.js',
 
 		'#group_adengine2_js',
+
+		'//resources/wikia/modules/browserDetect.js',
+		'#group_imglzy_js',
 	]
 ];
 
@@ -163,5 +166,22 @@ $VenusConfig[ 'global_navigation_facebook_login_js' ] = [
 		'//extensions/FBConnect/fbconnect.js',
 		'//extensions/wikia/UserLogin/js/UserLoginFacebook.js',
 		'//extensions/wikia/UserLogin/js/UserLoginFacebookForm.js',
+	]
+];
+
+/** Article page */
+$VenusConfig[ 'article_scss' ] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => [ 'venus' ],
+	'assets' => [
+		'//extensions/wikia/Venus/styles/article/article.scss'
+	]
+];
+
+$VenusConfig['imglzy_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => [
+		'//extensions/wikia/ImageLazyLoad/js/ImgLzy.module.js',
+		'//extensions/wikia/ImageLazyLoad/js/ImageLazyLoad.js',
 	]
 ];
