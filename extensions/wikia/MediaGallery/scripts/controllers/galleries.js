@@ -6,11 +6,15 @@ define('mediaGallery.controllers.galleries', [
 	'use strict';
 
 	/**
-	 * Define primary gallery container element
+	 * Define primary gallery container element. Must be called after DOM ready
+	 * @param {Object} options Options for initialization:
+	 *  lightbox: bool - whether to pass gallery data to Lightbox
+	 *  lazyLoad: bool - whether to lazy load gallery initialization
 	 * @constructor
 	 */
-
-	var GalleriesController = function () {
+	var GalleriesController = function (options) {
+		this.lightbox = options.lightbox;
+		this.lazyLoad = options.lazyLoad;
 		// cache DOM objects
 		this.$galleries = $('.media-gallery-wrapper');
 		// cache instances
@@ -45,6 +49,8 @@ define('mediaGallery.controllers.galleries', [
 
 		// expose gallery instances publicly
 		this.galleries.push(gallery);
+
+		return gallery;
 	};
 
 	/**
@@ -58,19 +64,27 @@ define('mediaGallery.controllers.galleries', [
 				data = $this.data('model'),
 				lightboxController;
 
-			// pass gallery data to lightbox
-			lightboxController = new LightboxController({
-				model: data
-			});
-			lightboxController.init();
+			// Send gallery images to Lightbox
+			if (self.lightbox) {
+				lightboxController = new LightboxController({
+					model: data
+				});
+				lightboxController.init();
+			}
 
-			sloth({
-				on: $this,
-				threshold: 200,
-				callback: function () {
-					self.createGallery($this, idx, data);
-				}
-			});
+			if (self.lazyLoad) {
+				// Load galleries on demand
+				sloth({
+					on: $this,
+					threshold: 200,
+					callback: function () {
+						self.createGallery($this, idx, data);
+					}
+				});
+			} else {
+				// Load galleries immediately
+				self.createGallery($this, idx, data);
+			}
 		});
 	};
 

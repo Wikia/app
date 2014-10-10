@@ -8,7 +8,10 @@ require([
 	 * Local var `controller` contains array of gallery instances.
 	 */
 	function newGallery() {
-		var controller = new GalleriesController();
+		var controller = new GalleriesController({
+			lightbox: true,
+			lazyLoad: true
+		});
 		controller.init();
 	}
 
