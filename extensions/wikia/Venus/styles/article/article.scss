@@ -153,9 +153,14 @@ article {
 	article {
 
 		header {
+			float: left;
 			height: 466px; // only for prototype version
-			margin-right: 2* $large-grid-gutter + 300px;
-			width: auto;
+			width: 824px; // only for prototype version
+		}
+
+		.left-nav {
+			float: left;
+			position: static;
 		}
 
 		#mw-content-text {

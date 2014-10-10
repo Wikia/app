@@ -51,7 +51,6 @@ class WikiaPageType {
 	 * @return bool
 	 */
 	public static function isArticlePage() {
-		global $wgRequest;
 
 		$title = F::app()->wg->Title;
 
@@ -60,13 +59,24 @@ class WikiaPageType {
 			&& $title->getArticleId() != 0
 			&& $title->getNamespace() == 0
 			&& !self::isMainPage()
-			&& !in_array(
-				$wgRequest->getVal( 'action', 'view' ),
-				array( 'edit', 'formedit' , 'history' , 'submit' )
-			)
+			&& !self::isEditPage()
 		);
 
 		return $isArticlePage;
+	}
+
+	/**
+	 * Check if current page is edit, formedit, history or submit
+	 *
+	 * @return bool
+	 */
+	public static function isEditPage() {
+		global $wgRequest;
+
+		return in_array(
+			$wgRequest->getVal( 'action', 'view' ),
+			array( 'edit', 'formedit' , 'history' , 'submit' )
+		);
 	}
 
 	/**
