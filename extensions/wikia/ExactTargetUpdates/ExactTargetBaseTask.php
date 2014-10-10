@@ -18,6 +18,22 @@ class ExactTargetBaseTask extends BaseTask {
 		return $oClient;
 	}
 
+	public function performRemove( $aDE, $oClient, $objectType = 'DataExtensionObject' ) {
+		try {
+			$aSoapVars = $this->prepareSoapVars( $aDE, $objectType );
+			$oDeleteRequest = $this->wrapDeleteRequest( $aSoapVars );
+
+			/* Send API delete request */
+			$oClient->Delete( $oDeleteRequest );
+
+			/* Log response */
+			$this->info( $oClient->__getLastResponse() );
+		} catch ( SoapFault $e ) {
+			/* Log error */
+			$this->error( 'SoapFault:' . $e->getMessage() . 'ErrorCode: ' . $e->getCode() );
+		}
+	}
+
 	/**
 	 * Prepares array of SoapVar objects by looping array of objects
 	 * @param array $aObjects

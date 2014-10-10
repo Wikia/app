@@ -31,23 +31,9 @@ class ExactTargetRemoveUserTask extends ExactTargetBaseTask {
 	 * @param ExactTargetSoapClient $oClient
 	 */
 	private function doRemoveSubscriber( string $sUserEmail, ExactTargetSoapClient $oClient ) {
-
-		try {
-			$subscriber = new ExactTarget_Subscriber();
-			$subscriber->SubscriberKey = $sUserEmail;
-
-			$oSoapVar = $this->wrapToSoapVar( $subscriber, 'Subscriber' );
-			$deleteRequest = $this->wrapDeleteRequest( [ $oSoapVar ] );
-
-			$oClient->Delete( $deleteRequest );
-
-			/* Log response */
-			$this->info( $oClient->__getLastResponse() );
-
-		} catch ( SoapFault $e ) {
-			/* Log error */
-			$this->error( 'SoapFault:' . $e->getMessage() . 'ErrorCode: ' . $e->getCode() );
-		}
+		$oSubscriber = new ExactTarget_Subscriber();
+		$oSubscriber->SubscriberKey = $sUserEmail;
+		$this->performRemove( [ $oSubscriber ], $oClient, 'Subscriber' );
 	}
 
 	/**
@@ -57,21 +43,8 @@ class ExactTargetRemoveUserTask extends ExactTargetBaseTask {
 	 * @param ExactTargetSoapClient $oClient
 	 */
 	public function removeUserDataExtension( int $iUserId, ExactTargetSoapClient $oClient ) {
-
-		try {
-			$oDE = $this->prepareUserDataExtensionObjectForRemove( $iUserId );
-			$oSoapVar = $this->wrapToSoapVar( $oDE );
-			$oDeleteRequest = $this->wrapDeleteRequest( [ $oSoapVar ]);
-
-			/* Send API delete request */
-			$oClient->Delete( $oDeleteRequest );
-
-			/* Log response */
-			$this->info( $oClient->__getLastResponse() );
-		} catch ( SoapFault $e ) {
-			/* Log error */
-			$this->error( 'SoapFault:' . $e->getMessage() . 'ErrorCode: ' . $e->getCode() );
-		}
+		$oDE = $this->prepareUserDataExtensionObjectForRemove( $iUserId );
+		$this->performRemove( [ $oDE ], $oClient);
 	}
 
 	/**
@@ -81,22 +54,8 @@ class ExactTargetRemoveUserTask extends ExactTargetBaseTask {
 	 * @param ExactTargetSoapClient $oClient
 	 */
 	public function removeUserPropertiesDataExtension( int $iUserId, ExactTargetSoapClient $oClient ) {
-
-		try {
-			$aDE = $this->prepareUserPropertiesDataExtensionObjectsForRemove( $iUserId );
-
-			$aSoapVars = $this->prepareSoapVars( $aDE );
-			$oDeleteRequest = $this->wrapDeleteRequest( $aSoapVars );
-
-			/* Send API delete request */
-			$oClient->Delete( $oDeleteRequest );
-
-			/* Log response */
-			$this->info( $oClient->__getLastResponse() );
-		} catch ( SoapFault $e ) {
-			/* Log error */
-			$this->error( 'SoapFault:' . $e->getMessage() . 'ErrorCode: ' . $e->getCode() );
-		}
+		$aDE = $this->prepareUserPropertiesDataExtensionObjectsForRemove( $iUserId );
+		$this->performRemove( $aDE, $oClient);
 	}
 
 	/**
