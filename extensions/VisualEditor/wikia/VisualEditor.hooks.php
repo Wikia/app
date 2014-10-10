@@ -35,6 +35,7 @@ class VisualEditorWikiaHooks {
 				've/test/dm/ve.dm.wikiaExample.js',
 				've/test/dm/ve.dm.WikiaConverter.test.js',
 				've/test/dm/ve.dm.WikiaCart.test.js',
+				've/test/dm/ve.dm.WikiaTemplateModel.test.js',
 
 				// ce
 				've/test/ce/ve.ce.wikiaExample.js',
