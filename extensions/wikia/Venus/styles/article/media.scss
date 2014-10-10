@@ -1,0 +1,16 @@
+@import "/skins/wikia/shared.css";
+@import "video";
+
+.wikia-gallery {
+	box-sizing: initial;
+}
+
+.wikia-slideshow-images-wrapper	{
+	background-color: $color-menu-highlight;
+	border-color: $color-links;
+	color: $color-text;
+}
+
+.WikiaPhotoGalleryPreview ul {
+	list-style: none;
+}
