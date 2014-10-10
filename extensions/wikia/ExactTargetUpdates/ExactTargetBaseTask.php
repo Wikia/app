@@ -57,6 +57,18 @@ class ExactTargetBaseTask extends BaseTask {
 	}
 
 	/**
+	 * Returns ExactTarget_DeleteRequest object with soap vars set from param
+	 * @param Array $aSoapVars
+	 * @return ExactTarget_DeleteRequest
+	 */
+	public function wrapDeleteRequest( $aSoapVars ) {
+		$oRequest = new ExactTarget_DeleteRequest();
+		$oRequest->Objects = $aSoapVars;
+		$oRequest->Options = new ExactTarget_DeleteOptions();
+		return $oRequest;
+	}
+
+	/**
 	 * Returns ExactTarget_RetrieveRequest object for retriving data from ExactTarget
 	 * @param string $sObjectType Name of DataExtension object to get data from
 	 * @param array $aProperties List of fields names to retrieve
@@ -127,7 +139,8 @@ class ExactTargetBaseTask extends BaseTask {
 		$saveOption->PropertyName = 'DataExtensionObject';
 		$saveOption->SaveAction = ExactTarget_SaveAction::UpdateAdd;
 
-		$updateOptions->SaveOptions[] = new SoapVar( $saveOption, SOAP_ENC_OBJECT, 'SaveOption', 'http://exacttarget.com/wsdl/partnerAPI' );
+		$updateOptions->SaveOptions[] = $this->wrapToSoapVar( $saveOption, 'SaveOption' );
+
 		return $updateOptions;
 	}
 

@@ -36,11 +36,8 @@ class ExactTargetRemoveUserTask extends ExactTargetBaseTask {
 			$subscriber = new ExactTarget_Subscriber();
 			$subscriber->SubscriberKey = $sUserEmail;
 
-			$object = new SoapVar( $subscriber, SOAP_ENC_OBJECT, 'Subscriber', 'http://exacttarget.com/wsdl/partnerAPI' );
-
-			$deleteRequest = new ExactTarget_DeleteRequest();
-			$deleteRequest->Objects = [ $object ];
-			$deleteRequest->Options = new ExactTarget_DeleteOptions();
+			$oSoapVar = $this->wrapToSoapVar( $subscriber, 'Subscriber' );
+			$deleteRequest = $this->wrapDeleteRequest( [ $oSoapVar ] );
 
 			$oClient->Delete( $deleteRequest );
 
@@ -63,12 +60,8 @@ class ExactTargetRemoveUserTask extends ExactTargetBaseTask {
 
 		try {
 			$oDE = $this->prepareUserDataExtensionObjectForRemove( $iUserId );
-
 			$oSoapVar = $this->wrapToSoapVar( $oDE );
-
-			$oDeleteRequest = new ExactTarget_DeleteRequest();
-			$oDeleteRequest->Objects = [ $oSoapVar ];
-			$oDeleteRequest->Options = new ExactTarget_DeleteOptions();
+			$oDeleteRequest = $this->wrapDeleteRequest( [ $oSoapVar ]);
 
 			/* Send API delete request */
 			$oClient->Delete( $oDeleteRequest );
@@ -93,10 +86,7 @@ class ExactTargetRemoveUserTask extends ExactTargetBaseTask {
 			$aDE = $this->prepareUserPropertiesDataExtensionObjectsForRemove( $iUserId );
 
 			$aSoapVars = $this->prepareSoapVars( $aDE );
-
-			$oDeleteRequest = new ExactTarget_DeleteRequest();
-			$oDeleteRequest->Objects = $aSoapVars;
-			$oDeleteRequest->Options = new ExactTarget_DeleteOptions();
+			$oDeleteRequest = $this->wrapDeleteRequest( $aSoapVars );
 
 			/* Send API delete request */
 			$oClient->Delete( $oDeleteRequest );
