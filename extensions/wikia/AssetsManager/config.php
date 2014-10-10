@@ -144,6 +144,7 @@ $config['adengine2_rubicon_rtp_js'] = array(
 $config['oasis_noads_extensions_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
+		'#group_bucky_js',
 		'//resources/wikia/libraries/jquery/ellipses.js',
 		'//extensions/wikia/CreatePage/js/CreatePage.js',
 		'//extensions/wikia/VideoHandlers/js/VideoBootstrap.js',
@@ -2047,6 +2048,7 @@ $config['media_gallery_js'] = [
 		'//extensions/wikia/MediaGallery/scripts/views/caption.js',
 		'//extensions/wikia/MediaGallery/scripts/views/media.js',
 		'//extensions/wikia/MediaGallery/scripts/views/gallery.js',
+		'//extensions/wikia/MediaGallery/scripts/controllers/lightbox.js',
 		'//extensions/wikia/MediaGallery/scripts/controllers/index.js',
 	]
 ];

@@ -1,5 +1,7 @@
 <?php
 
+use \Wikia\Logger\WikiaLogger;
+
 /**
  * Class VideoHandlerController
  */
@@ -249,14 +251,30 @@ class VideoHandlerController extends WikiaController {
 		$fileTitleAsArray = wfReturnArray( $fileTitle );
 		$videoOptions = $this->getVideoOptionsWithDefaults( $this->getVal( 'videoOptions', [] ) );
 
-		$memcKey= wfMemcKey( __FUNCTION__, md5( serialize( [ $fileTitleAsArray, $videoOptions ] ) ) );
-		$videos = WikiaDataAccess::cache(
-			$memcKey,
-			WikiaResponse::CACHE_STANDARD,
-			function() use ( $fileTitleAsArray, $videoOptions ) {
-				return $this->getDetailsForVideoTitles( $fileTitleAsArray, $videoOptions );
+		// Key to cache the data under in memcache
+		$memcKey = wfMemcKey( __FUNCTION__, md5( serialize( [ $fileTitleAsArray, $videoOptions ] ) ) );
+
+		// How we'll get the data on a cache miss
+		$dataGenerator = function() use ( $fileTitleAsArray, $videoOptions ) {
+			$videos = $this->getDetailsForVideoTitles( $fileTitleAsArray, $videoOptions );
+
+			// Take note when we are unable to get any details for a set of videos
+			if ( empty( $videos ) ) {
+				$log = WikiaLogger::instance();
+				$log->info( __METHOD__.' empty details', [
+					'titleCount' => count( $fileTitleAsArray ),
+					'titleString' => implode( '|', $fileTitleAsArray ),
+				] );
 			}
-		);
+
+			return $videos;
+		};
+
+		// Call the generator, caching the result, or not caching if we get null from the $dataGenerator
+		$videos = WikiaDataAccess::cacheWithOptions( $memcKey, $dataGenerator, [
+			'cacheTTL' => WikiaResponse::CACHE_STANDARD,
+			'negativeCacheTTL' => 0,
+		] );
 
 		// If file title was passed in as a string, return single associative array.
 		$this->detail = ( !empty( $videos ) && $returnSingleVideo ) ? array_pop( $videos ) : $videos;

@@ -30,11 +30,4 @@ class Bucky {
 
 		return true;
 	}
-
-	static public function onOasisSkinAssetGroups( &$assetGroups ) {
-		$assetGroups[] = 'bucky_js';
-
-		return true;
-	}
-
 }
