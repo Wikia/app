@@ -61,8 +61,7 @@ class purgeArticlePages extends Maintenance {
 			}
 		}
 
-		echo "\nTotal wikis: $total, Success: {$this->success}, Failed: ".( $total - $this->success )."\n\n";
-
+		echo "\nWiki $wikiId: Total pages: $total, Success: {$this->success}, Failed: ".( $total - $this->success )."\n\n";
 	}
 
 	protected function getAllPages( $dbname ) {
